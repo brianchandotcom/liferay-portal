@@ -86,16 +86,16 @@ public class SortParserImpl implements SortParser {
 
 		String fieldName = sortParts.get(0);
 
-		boolean asc = _DEFAULT_ASC;
+		boolean ascending = _DEFAULT_ASC;
 
 		if (sortParts.size() > 1) {
-			asc = isAsc(sortParts.get(1));
+			ascending = isAscending(sortParts.get(1));
 		}
 
-		return Optional.of(new Sort.SortKey(fieldName, asc));
+		return Optional.of(new Sort.SortKey(fieldName, ascending));
 	}
 
-	protected boolean isAsc(String orderBy) {
+	protected boolean isAscending(String orderBy) {
 		if (orderBy == null) {
 			return _DEFAULT_ASC;
 		}

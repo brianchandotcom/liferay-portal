@@ -14,7 +14,7 @@
 
 package com.liferay.structured.content.apio.internal.architect.sort;
 
-import com.liferay.structured.content.apio.internal.architect.sort.SortParser.SortKey;
+import com.liferay.structured.content.apio.architect.sort.Sort;
 
 import java.util.List;
 import java.util.Optional;
@@ -32,15 +32,16 @@ public class SortParserTest {
 
 	@Test
 	public void testGetSortAsc() {
-		Optional<SortKey> sortOptional = _sortParser.getSortKey("field:asc");
+		Optional<Sort.SortKey> sortOptional = _sortParser.getSortKey(
+			"field:asc");
 
 		Assert.assertTrue(sortOptional.isPresent());
 
-		SortKey sortKey = sortOptional.get();
+		Sort.SortKey sortKey = sortOptional.get();
 
 		Assert.assertEquals("field", sortKey.getFieldName());
 
-		Assert.assertTrue(sortKey.isAsc());
+		Assert.assertTrue(sortKey.isAscending());
 	}
 
 	@Test
@@ -56,85 +57,86 @@ public class SortParserTest {
 
 	@Test
 	public void testGetSortDesc() {
-		Optional<SortKey> sortOptional = _sortParser.getSortKey("field:desc");
+		Optional<Sort.SortKey> sortOptional = _sortParser.getSortKey(
+			"field:desc");
 
 		Assert.assertTrue(sortOptional.isPresent());
 
-		SortKey sortKey = sortOptional.get();
+		Sort.SortKey sortKey = sortOptional.get();
 
 		Assert.assertEquals("field", sortKey.getFieldName());
 
-		Assert.assertTrue(!sortKey.isAsc());
+		Assert.assertTrue(!sortKey.isAscending());
 	}
 
 	@Test
 	public void testGetSortNoOrder() {
-		Optional<SortKey> sortOptional = _sortParser.getSortKey("field");
+		Optional<Sort.SortKey> sortOptional = _sortParser.getSortKey("field");
 
 		Assert.assertTrue(sortOptional.isPresent());
 
-		SortKey sortKey = sortOptional.get();
+		Sort.SortKey sortKey = sortOptional.get();
 
 		Assert.assertEquals("field", sortKey.getFieldName());
 
-		Assert.assertTrue(sortKey.isAsc());
+		Assert.assertTrue(sortKey.isAscending());
 	}
 
 	@Test
 	public void testGetSortNull() {
-		Optional<SortKey> sortOptional = _sortParser.getSortKey(null);
+		Optional<Sort.SortKey> sortOptional = _sortParser.getSortKey(null);
 
 		Assert.assertTrue(!sortOptional.isPresent());
 	}
 
 	@Test
 	public void testIsAscAnotherValue() {
-		Assert.assertTrue(_sortParser.isAsc("reverse"));
+		Assert.assertTrue(_sortParser.isAscending("reverse"));
 	}
 
 	@Test
 	public void testIsAscAscLower() {
-		Assert.assertTrue(_sortParser.isAsc("asc"));
+		Assert.assertTrue(_sortParser.isAscending("asc"));
 	}
 
 	@Test
 	public void testIsAscAscLowerAndUpper() {
-		Assert.assertTrue(_sortParser.isAsc("aSC"));
+		Assert.assertTrue(_sortParser.isAscending("aSC"));
 	}
 
 	@Test
 	public void testIsAscAscUpper() {
-		Assert.assertTrue(_sortParser.isAsc("ASC"));
+		Assert.assertTrue(_sortParser.isAscending("ASC"));
 	}
 
 	@Test
 	public void testIsAscDescLower() {
-		Assert.assertTrue(!_sortParser.isAsc("desc"));
+		Assert.assertTrue(!_sortParser.isAscending("desc"));
 	}
 
 	@Test
 	public void testIsAscDescLowerAndUpper() {
-		Assert.assertTrue(!_sortParser.isAsc("dESC"));
+		Assert.assertTrue(!_sortParser.isAscending("dESC"));
 	}
 
 	@Test
 	public void testIsAscDescUpper() {
-		Assert.assertTrue(!_sortParser.isAsc("DESC"));
+		Assert.assertTrue(!_sortParser.isAscending("DESC"));
 	}
 
 	@Test
 	public void testIsAscEmpty() {
-		Assert.assertTrue(_sortParser.isAsc(""));
+		Assert.assertTrue(_sortParser.isAscending(""));
 	}
 
 	@Test
 	public void testIsAscNull() {
-		Assert.assertTrue(_sortParser.isAsc(null));
+		Assert.assertTrue(_sortParser.isAscending(null));
 	}
 
 	@Test
 	public void testSortEmpty() {
-		List<SortKey> sortKeys = _sortParser.parse("");
+		List<Sort.SortKey> sortKeys = _sortParser.parse("");
 
 		Assert.assertEquals(
 			"No sort keys should be obtained: " + sortKeys, 0, sortKeys.size());
@@ -142,19 +144,19 @@ public class SortParserTest {
 
 	@Test
 	public void testSortOneField() {
-		List<SortKey> sortKeys = _sortParser.parse("field1");
+		List<Sort.SortKey> sortKeys = _sortParser.parse("field1");
 
 		Assert.assertEquals(
 			"One sort key should be obtained: " + sortKeys, 1, sortKeys.size());
 
-		SortKey sortKey = sortKeys.get(0);
+		Sort.SortKey sortKey = sortKeys.get(0);
 
 		Assert.assertEquals("field1", sortKey.getFieldName());
 	}
 
 	@Test
 	public void testSortOnlyComma() {
-		List<SortKey> sortKeys = _sortParser.parse(",");
+		List<Sort.SortKey> sortKeys = _sortParser.parse(",");
 
 		Assert.assertEquals(
 			"No sort keys should be obtained: " + sortKeys, 0, sortKeys.size());
@@ -162,67 +164,68 @@ public class SortParserTest {
 
 	@Test
 	public void testSortTwoFields() {
-		List<SortKey> sortKeys = _sortParser.parse("field1,field2");
+		List<Sort.SortKey> sortKeys = _sortParser.parse("field1,field2");
 
 		Assert.assertEquals(
 			"Two sort keys should be obtained: " + sortKeys, 2,
 			sortKeys.size());
 
-		SortKey sortKey = sortKeys.get(0);
+		Sort.SortKey sortKey = sortKeys.get(0);
 
 		Assert.assertEquals("field1", sortKey.getFieldName());
 
-		Assert.assertTrue(sortKey.isAsc());
+		Assert.assertTrue(sortKey.isAscending());
 
-		SortKey sortKey2 = sortKeys.get(1);
+		Sort.SortKey sortKey2 = sortKeys.get(1);
 
 		Assert.assertEquals("field2", sortKey2.getFieldName());
 
-		Assert.assertTrue(sortKey2.isAsc());
+		Assert.assertTrue(sortKey2.isAscending());
 	}
 
 	@Test
 	public void testSortTwoFieldsAscAndDesc() {
-		List<SortKey> sortKeys = _sortParser.parse("field1:asc,field2:desc");
+		List<Sort.SortKey> sortKeys = _sortParser.parse(
+			"field1:asc,field2:desc");
 
 		Assert.assertEquals(
 			"Two sort keys should be obtained: " + sortKeys, 2,
 			sortKeys.size());
 
-		SortKey sortKey = sortKeys.get(0);
+		Sort.SortKey sortKey = sortKeys.get(0);
 
 		Assert.assertEquals("field1", sortKey.getFieldName());
 
-		Assert.assertTrue(sortKey.isAsc());
+		Assert.assertTrue(sortKey.isAscending());
 
-		SortKey sortKey2 = sortKeys.get(1);
+		Sort.SortKey sortKey2 = sortKeys.get(1);
 
 		Assert.assertEquals("field2", sortKey2.getFieldName());
 
-		Assert.assertTrue(!sortKey2.isAsc());
+		Assert.assertTrue(!sortKey2.isAscending());
 	}
 
 	@Test
 	public void testSortTwoFieldsDefaultAndDesc() {
-		List<SortKey> sortKeys = _sortParser.parse("field1,field2:desc");
+		List<Sort.SortKey> sortKeys = _sortParser.parse("field1,field2:desc");
 
 		Assert.assertEquals(
 			"Two sort keys should be obtained: " + sortKeys, 2,
 			sortKeys.size());
 
-		SortKey sortKey = sortKeys.get(0);
+		Sort.SortKey sortKey = sortKeys.get(0);
 
 		Assert.assertEquals("field1", sortKey.getFieldName());
 
-		Assert.assertTrue(sortKey.isAsc());
+		Assert.assertTrue(sortKey.isAscending());
 
-		SortKey sortKey2 = sortKeys.get(1);
+		Sort.SortKey sortKey2 = sortKeys.get(1);
 
 		Assert.assertEquals("field2", sortKey2.getFieldName());
 
-		Assert.assertTrue(!sortKey2.isAsc());
+		Assert.assertTrue(!sortKey2.isAscending());
 	}
 
-	private static final SortParser _sortParser = new SortParser();
+	private static final SortParserImpl _sortParser = new SortParserImpl();
 
 }

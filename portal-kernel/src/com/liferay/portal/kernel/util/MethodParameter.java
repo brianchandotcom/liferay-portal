@@ -25,21 +25,28 @@ import java.util.List;
  */
 public class MethodParameter {
 
-	public MethodParameter(String name, String signatures, Class<?> type) {
+	public MethodParameter(
+		ClassLoader classLoader, String name, String signatures,
+		Class<?> type) {
+
 		_name = name;
 		_type = type;
 
 		try {
-			Thread currentThread = Thread.currentThread();
-
-			ClassLoader contextClassLoader =
-				currentThread.getContextClassLoader();
-
-			_genericTypes = _getGenericTypes(contextClassLoader, signatures);
+			_genericTypes = _getGenericTypes(classLoader, signatures);
 		}
 		catch (ClassNotFoundException cnfe) {
 			throw new IllegalArgumentException(cnfe);
 		}
+	}
+
+	/**
+	 * @deprecated As of Judson (7.1.x), replaced by {@link
+	 *             #MethodParameter(ClassLoader, String, String, Class)}
+	 */
+	@Deprecated
+	public MethodParameter(String name, String signatures, Class<?> type) {
+		this(_getContextClassLoader(), name, signatures, type);
 	}
 
 	public Class<?>[] getGenericTypes() {
@@ -52,6 +59,12 @@ public class MethodParameter {
 
 	public Class<?> getType() {
 		return _type;
+	}
+
+	private static ClassLoader _getContextClassLoader() {
+		Thread currentThread = Thread.currentThread();
+
+		return currentThread.getContextClassLoader();
 	}
 
 	private String _getClassName(String signature) {

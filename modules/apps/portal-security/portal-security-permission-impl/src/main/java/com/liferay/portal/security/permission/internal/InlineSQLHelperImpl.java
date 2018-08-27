@@ -474,8 +474,32 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 		String className, String classPKField, String userIdField,
 		String groupIdField, long[] groupIds, String permissionSQL) {
 
-		String permissionSQLContributorsSQL = _getPermissionSQLContributorsSQL(
-			className, classPKField, userIdField, groupIdField, groupIds);
+		String permissionSQLContributorsSQL = null;
+
+		if (!_permissionSQLContributors.isEmpty()) {
+			StringBundler permissionSQLContributorsSQLSB = new StringBundler(
+				_permissionSQLContributors.size() * 3);
+
+			for (PermissionSQLContributor permissionSQLContributor :
+					_permissionSQLContributors) {
+
+				String contributorPermissionSQL =
+					permissionSQLContributor.getPermissionSQL(
+						className, classPKField, userIdField, groupIdField,
+						groupIds);
+
+				if (Validator.isNull(contributorPermissionSQL)) {
+					continue;
+				}
+
+				permissionSQLContributorsSQLSB.append("OR (");
+				permissionSQLContributorsSQLSB.append(contributorPermissionSQL);
+				permissionSQLContributorsSQLSB.append(") ");
+			}
+
+			permissionSQLContributorsSQL =
+				permissionSQLContributorsSQLSB.toString();
+		}
 
 		StringBundler sb = new StringBundler(8);
 
@@ -491,37 +515,6 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 
 		if (Validator.isNotNull(permissionSQLContributorsSQL)) {
 			sb.append(permissionSQLContributorsSQL);
-			sb.append(") ");
-		}
-
-		return sb.toString();
-	}
-
-	private String _getPermissionSQLContributorsSQL(
-		String className, String classPKField, String userIdField,
-		String groupIdField, long[] groupIds) {
-
-		if (_permissionSQLContributors.isEmpty()) {
-			return StringPool.BLANK;
-		}
-
-		StringBundler sb = new StringBundler(
-			_permissionSQLContributors.size() * 3);
-
-		for (PermissionSQLContributor permissionSQLContributor :
-				_permissionSQLContributors) {
-
-			String contributorPermissionSQL =
-				permissionSQLContributor.getPermissionSQL(
-					className, classPKField, userIdField, groupIdField,
-					groupIds);
-
-			if (Validator.isNull(contributorPermissionSQL)) {
-				continue;
-			}
-
-			sb.append("OR (");
-			sb.append(contributorPermissionSQL);
 			sb.append(") ");
 		}
 

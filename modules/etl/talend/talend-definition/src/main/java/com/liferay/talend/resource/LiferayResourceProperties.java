@@ -99,7 +99,7 @@ public class LiferayResourceProperties
 						liferaySourceOrSinkRuntime.getResourceCollectionType(
 							resourceURI.toString());
 
-					resource.setValue(resourceCollectionType);
+					resourceName.setValue(resourceCollectionType);
 
 					Schema schema =
 						liferaySourceOrSinkRuntime.getResourceSchemaByType(
@@ -128,7 +128,7 @@ public class LiferayResourceProperties
 		if (validationResultMutable.getStatus() ==
 				ValidationResult.Result.ERROR) {
 
-			resource.setValue("");
+			resourceName.setValue("");
 			resourceURL.setValue("");
 		}
 
@@ -227,7 +227,7 @@ public class LiferayResourceProperties
 		super.setupProperties();
 
 		condition.setValue("");
-		resource.setValue("");
+		resourceName.setValue("");
 		resourceURL.setValue("");
 	}
 
@@ -266,8 +266,8 @@ public class LiferayResourceProperties
 
 	};
 
-	public Property<String> resource = PropertyFactory.newString(
-		"resource").setRequired();
+	public Property<String> resourceName = PropertyFactory.newString(
+		"resourceName").setRequired();
 	public StringProperty resourceURL = PropertyFactory.newString(
 		"resourceURL");
 	public ISchemaListener schemaListener;
@@ -333,11 +333,11 @@ public class LiferayResourceProperties
 
 		resourceSelectionForm.addRow(resourceURLWidget);
 
-		Widget resourceWidget = Widget.widget(resource);
+		Widget resourceNameWidget = Widget.widget(resourceName);
 
-		resourceWidget.setReadonly(true);
+		resourceNameWidget.setReadonly(true);
 
-		resourceSelectionForm.addColumn(resourceWidget);
+		resourceSelectionForm.addColumn(resourceNameWidget);
 
 		resourceSelectionForm.addRow(condition);
 
@@ -363,11 +363,11 @@ public class LiferayResourceProperties
 
 		referenceForm.addRow(resourceURLReferenceWidget);
 
-		Widget resourceReferenceWidget = Widget.widget(resource);
+		Widget resourceNameReferenceWidget = Widget.widget(resourceName);
 
-		resourceReferenceWidget.setReadonly(true);
+		resourceNameReferenceWidget.setReadonly(true);
 
-		referenceForm.addColumn(resourceReferenceWidget);
+		referenceForm.addColumn(resourceNameReferenceWidget);
 
 		referenceForm.addRow(condition);
 

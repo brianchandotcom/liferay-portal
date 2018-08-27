@@ -77,7 +77,7 @@ public class LiferayConnectionProperties
 		refreshLayout(getForm(Form.REFERENCE));
 	}
 
-	public ValidationResult afterWebSiteId() {
+	public ValidationResult afterWebSiteProperty() {
 		if (_log.isDebugEnabled()) {
 			_log.debug("Website URL: " + webSiteProperty.getWebSiteURL());
 		}
@@ -130,7 +130,7 @@ public class LiferayConnectionProperties
 		return validationResultMutable;
 	}
 
-	public ValidationResult beforeWebSiteId() {
+	public ValidationResult beforeWebSiteProperty() {
 		try (SandboxedInstance sandboxedInstance =
 				LiferayBaseComponentDefinition.getSandboxedInstance(
 					LiferayBaseComponentDefinition.
@@ -300,11 +300,11 @@ public class LiferayConnectionProperties
 
 		mainForm.addRow(webSiteURLWidget);
 
-		Widget webSiteWidget = Widget.widget(webSiteName);
+		Widget webSiteNameWidget = Widget.widget(webSiteName);
 
-		webSiteWidget.setReadonly(true);
+		webSiteNameWidget.setReadonly(true);
 
-		mainForm.addColumn(webSiteWidget);
+		mainForm.addColumn(webSiteNameWidget);
 
 		// A form for a reference to a connection, used in a tLiferayInput
 		// for example
@@ -334,20 +334,20 @@ public class LiferayConnectionProperties
 
 		referenceForm.addRow(siteFilter);
 
-		Widget webSiteURLReferenceWidget = Widget.widget(webSiteProperty);
+		Widget webSitePropertyReferenceWidget = Widget.widget(webSiteProperty);
 
-		webSiteURLReferenceWidget.setCallAfter(true);
-		webSiteURLReferenceWidget.setLongRunning(true);
-		webSiteURLReferenceWidget.setWidgetType(
+		webSitePropertyReferenceWidget.setCallAfter(true);
+		webSitePropertyReferenceWidget.setLongRunning(true);
+		webSitePropertyReferenceWidget.setWidgetType(
 			Widget.NAME_SELECTION_REFERENCE_WIDGET_TYPE);
 
-		referenceForm.addRow(webSiteURLReferenceWidget);
+		referenceForm.addRow(webSitePropertyReferenceWidget);
 
-		Widget webSiteReferenceWidget = Widget.widget(webSiteName);
+		Widget webSiteNameReferenceWidget = Widget.widget(webSiteName);
 
-		webSiteReferenceWidget.setReadonly(true);
+		webSiteNameReferenceWidget.setReadonly(true);
 
-		referenceForm.addColumn(webSiteReferenceWidget);
+		referenceForm.addColumn(webSiteNameReferenceWidget);
 
 		refreshLayout(referenceForm);
 

@@ -118,7 +118,7 @@ public class TLiferayInputProperties
 				try {
 					Schema runtimeSchema =
 						liferaySourceOrSinkRuntime.getResourceSchemaByType(
-							resource.resource.getValue());
+							resource.resourceName.getValue());
 
 					resource.main.schema.setValue(runtimeSchema);
 				}

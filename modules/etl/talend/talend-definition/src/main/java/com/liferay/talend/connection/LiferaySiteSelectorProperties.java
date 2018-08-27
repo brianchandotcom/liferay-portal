@@ -16,6 +16,7 @@ package com.liferay.talend.connection;
 
 import com.liferay.talend.LiferayBaseComponentDefinition;
 import com.liferay.talend.exception.ExceptionUtils;
+import com.liferay.talend.properties.WebSiteProperty;
 import com.liferay.talend.runtime.LiferaySourceOrSinkRuntime;
 
 import java.util.ArrayList;
@@ -36,8 +37,6 @@ import org.talend.daikon.properties.ValidationResult;
 import org.talend.daikon.properties.ValidationResultMutable;
 import org.talend.daikon.properties.presentation.Form;
 import org.talend.daikon.properties.presentation.Widget;
-import org.talend.daikon.properties.property.PropertyFactory;
-import org.talend.daikon.properties.property.StringProperty;
 import org.talend.daikon.properties.service.Repository;
 import org.talend.daikon.sandbox.SandboxedInstance;
 
@@ -78,21 +77,22 @@ public class LiferaySiteSelectorProperties
 				return validationResultMutable;
 			}
 
-			ArrayList<SimpleNamedThing> webSiteURLStoredValues =
-				(ArrayList<SimpleNamedThing>)wizardWebSiteURL.getStoredValue();
+			ArrayList<SimpleNamedThing> webSitePropertyStoredValues =
+				(ArrayList<SimpleNamedThing>)
+					wizardWebSiteProperty.getStoredValue();
 
-			if ((webSiteURLStoredValues != null) &&
-				!webSiteURLStoredValues.isEmpty()) {
+			if ((webSitePropertyStoredValues != null) &&
+				!webSitePropertyStoredValues.isEmpty()) {
 
 				connection.siteFilter.setValue(true);
-				SimpleNamedThing webSiteURLSimpleNamedThing =
-					webSiteURLStoredValues.get(0);
+				SimpleNamedThing webSitePropertySimpleNamedThing =
+					webSitePropertyStoredValues.get(0);
 
 				connection.webSiteName.setValue(
-					webSiteURLSimpleNamedThing.getDisplayName());
+					webSitePropertySimpleNamedThing.getDisplayName());
 
 				connection.webSiteProperty.setValue(
-					webSiteURLSimpleNamedThing.getName());
+					webSitePropertySimpleNamedThing.getName());
 			}
 
 			repository.storeProperties(
@@ -133,9 +133,10 @@ public class LiferaySiteSelectorProperties
 					ValidationResult.Result.OK) {
 
 				try {
-					_sites = liferaySourceOrSinkRuntime.getAvailableWebSites();
+					_webSites =
+						liferaySourceOrSinkRuntime.getAvailableWebSites();
 
-					if (_sites.isEmpty()) {
+					if (_webSites.isEmpty()) {
 						validationResultMutable.setMessage(
 							i18nMessages.getMessage(
 								"error.validation.websites"));
@@ -143,10 +144,11 @@ public class LiferaySiteSelectorProperties
 							ValidationResult.Result.ERROR);
 					}
 
-					wizardWebSiteURL.setPossibleNamedThingValues(_sites);
+					wizardWebSiteProperty.setPossibleNamedThingValues(
+						_webSites);
 
 					connection.webSiteProperty.setPossibleNamedThingValues(
-						_sites);
+						_webSites);
 
 					getForm(Form.MAIN).setAllowBack(true);
 					getForm(Form.MAIN).setAllowFinish(true);
@@ -183,20 +185,21 @@ public class LiferaySiteSelectorProperties
 
 		Form siteForm = Form.create(this, Form.MAIN);
 
-		Widget webSiteURLWizardWidget = Widget.widget(wizardWebSiteURL);
+		Widget webSitePropertyWizardWidget = Widget.widget(
+			wizardWebSiteProperty);
 
-		webSiteURLWizardWidget.setWidgetType(
+		webSitePropertyWizardWidget.setWidgetType(
 			Widget.NAME_SELECTION_AREA_WIDGET_TYPE);
 
-		siteForm.addRow(webSiteURLWizardWidget);
+		siteForm.addRow(webSitePropertyWizardWidget);
 
 		refreshLayout(siteForm);
 	}
 
 	public volatile LiferayConnectionProperties connection =
 		new LiferayConnectionProperties("connection");
-	public StringProperty wizardWebSiteURL = PropertyFactory.newString(
-		"wizardWebSiteURL");
+	public WebSiteProperty wizardWebSiteProperty = new WebSiteProperty(
+		"wizardWebSiteProperty");
 
 	protected static final I18nMessages i18nMessages;
 
@@ -219,6 +222,6 @@ public class LiferaySiteSelectorProperties
 	private static final Logger _log = LoggerFactory.getLogger(
 		LiferaySiteSelectorProperties.class);
 
-	private List<NamedThing> _sites;
+	private List<NamedThing> _webSites;
 
 }

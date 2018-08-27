@@ -35,7 +35,8 @@ public abstract class PortalWorkspace extends BaseWorkspace {
 		return false;
 	}
 
-	public void setJobProperties(Job job) {
+	@Override
+	public void setGitRepositoryJobProperties(Job job) {
 		_primaryPortalLocalGitRepository.setJobProperties(job);
 	}
 
@@ -68,7 +69,7 @@ public abstract class PortalWorkspace extends BaseWorkspace {
 		_primaryPortalLocalGitRepository = _getPortalLocalGitRepository(
 			portalGitRepositoryName, portalUpstreamBranchName);
 
-		_primaryPortalLocalGitBranch = _getCachedPortalLocalGitBranch(
+		_primaryPortalLocalGitBranch = _getPortalLocalGitBranch(
 			_primaryPortalLocalGitRepository, portalGitHubURL);
 	}
 
@@ -84,22 +85,26 @@ public abstract class PortalWorkspace extends BaseWorkspace {
 			return null;
 		}
 
-		String branchName = portalUpstreamBranchName.replace("-private", "");
+		String basePortalBranchName = portalUpstreamBranchName.replace(
+			"-private", "");
 
-		String gitRepositoryName = "liferay-portal-ee";
+		String basePortalGitRepositoryName = "liferay-portal-ee";
 
-		if (branchName.equals("master")) {
-			gitRepositoryName = gitRepositoryName.replace("-ee", "");
+		if (basePortalBranchName.equals("master")) {
+			basePortalGitRepositoryName = basePortalGitRepositoryName.replace(
+				"-ee", "");
 		}
 
-		LocalGitRepository localGitRepository =
+		LocalGitRepository basePortalLocalGitRepository =
 			GitRepositoryFactory.getLocalGitRepository(
-				gitRepositoryName, branchName);
+				basePortalGitRepositoryName, basePortalBranchName);
 
-		LocalGitBranch localGitBranch = _getLocalGitBranchFromGitCommit(
-			"git-commit-portal", localGitRepository);
+		LocalGitBranch basePortalLocalGitBranch =
+			_getLocalGitBranchFromGitCommit(
+				"git-commit-portal", basePortalLocalGitRepository);
 
-		_basePortalLocalGitBranch = (PortalLocalGitBranch)localGitBranch;
+		_basePortalLocalGitBranch =
+			(PortalLocalGitBranch)basePortalLocalGitBranch;
 
 		return _basePortalLocalGitBranch;
 	}
@@ -119,16 +124,18 @@ public abstract class PortalWorkspace extends BaseWorkspace {
 			return null;
 		}
 
-		String branchName = portalUpstreamBranchName + "-private";
+		String otherPortalBranchName = portalUpstreamBranchName + "-private";
 
-		LocalGitRepository localGitRepository =
+		LocalGitRepository otherPortalLocalGitRepository =
 			GitRepositoryFactory.getLocalGitRepository(
-				"liferay-portal-ee", branchName);
+				"liferay-portal-ee", otherPortalBranchName);
 
-		LocalGitBranch localGitBranch = _getLocalGitBranchFromGitCommit(
-			"git-commit-portal-private", localGitRepository);
+		LocalGitBranch companionPortalLocalGitBranch =
+			_getLocalGitBranchFromGitCommit(
+				"git-commit-portal-private", otherPortalLocalGitRepository);
 
-		_companionPortalLocalGitBranch = (PortalLocalGitBranch)localGitBranch;
+		_companionPortalLocalGitBranch =
+			(PortalLocalGitBranch)companionPortalLocalGitBranch;
 
 		return _companionPortalLocalGitBranch;
 	}
@@ -138,42 +145,50 @@ public abstract class PortalWorkspace extends BaseWorkspace {
 			return _otherPortalLocalGitBranch;
 		}
 
-		String branchName =
+		String portalUpstreamBranchName =
 			_primaryPortalLocalGitBranch.getUpstreamBranchName();
 
-		if (branchName.contains("7.0.x")) {
-			branchName = branchName.replace("7.0.x", "master");
+		String otherPortalBranchName;
+
+		if (portalUpstreamBranchName.contains("7.0.x")) {
+			otherPortalBranchName = portalUpstreamBranchName.replace(
+				"7.0.x", "master");
 		}
-		else if (branchName.contains("7.1.x")) {
-			branchName = branchName.replace("7.1.x", "7.0.x");
+		else if (portalUpstreamBranchName.contains("7.1.x")) {
+			otherPortalBranchName = portalUpstreamBranchName.replace(
+				"7.1.x", "7.0.x");
 		}
-		else if (branchName.contains("master")) {
-			branchName = branchName.replace("master", "7.0.x");
+		else if (portalUpstreamBranchName.contains("master")) {
+			otherPortalBranchName = portalUpstreamBranchName.replace(
+				"master", "7.0.x");
 		}
 		else {
 			return null;
 		}
 
-		String gitRepositoryName = "liferay-portal-ee";
+		String otherPortalGitRepositoryName = "liferay-portal-ee";
 
-		if (branchName.equals("master")) {
-			gitRepositoryName = gitRepositoryName.replace("-ee", "");
+		if (otherPortalBranchName.equals("master")) {
+			otherPortalGitRepositoryName = otherPortalGitRepositoryName.replace(
+				"-ee", "");
 		}
 
-		LocalGitRepository localGitRepository =
+		LocalGitRepository otherPortalLocalGitRepository =
 			GitRepositoryFactory.getLocalGitRepository(
-				gitRepositoryName, branchName);
+				otherPortalGitRepositoryName, otherPortalBranchName);
 
 		RemoteGitRef remoteGitRef = GitUtil.getRemoteGitRef(
 			JenkinsResultsParserUtil.combine(
-				"https://github.com/liferay/", gitRepositoryName, "/tree/",
-				branchName));
+				"https://github.com/liferay/", otherPortalGitRepositoryName,
+				"/tree/", otherPortalBranchName));
 
-		LocalGitBranch localGitBranch =
+		LocalGitBranch otherPortalLocalGitBranch =
 			GitHubDevSyncUtil.createCachedLocalGitBranch(
-				localGitRepository, remoteGitRef, synchronizeGitBranches());
+				otherPortalLocalGitRepository, remoteGitRef,
+				synchronizeGitBranches());
 
-		_otherPortalLocalGitBranch = (PortalLocalGitBranch)localGitBranch;
+		_otherPortalLocalGitBranch =
+			(PortalLocalGitBranch)otherPortalLocalGitBranch;
 
 		return _otherPortalLocalGitBranch;
 	}
@@ -183,28 +198,29 @@ public abstract class PortalWorkspace extends BaseWorkspace {
 			return _pluginsLocalGitBranch;
 		}
 
-		String branchName =
+		String pluginsBranchName =
 			_primaryPortalLocalGitBranch.getUpstreamBranchName();
 
-		if (branchName.contains("7.0.x") || branchName.contains("7.1.x") ||
-			branchName.contains("master")) {
+		if (pluginsBranchName.contains("7.0.x") ||
+			pluginsBranchName.contains("7.1.x") ||
+			pluginsBranchName.contains("master")) {
 
-			branchName = "7.0.x";
+			pluginsBranchName = "7.0.x";
 		}
 
-		LocalGitRepository localGitRepository =
+		LocalGitRepository pluginsLocalGitRepository =
 			GitRepositoryFactory.getLocalGitRepository(
-				"liferay-plugins-ee", branchName);
+				"liferay-plugins-ee", pluginsBranchName);
 
-		LocalGitBranch localGitBranch = _getLocalGitBranchFromGitCommit(
-			"git-commit-plugins", localGitRepository);
+		LocalGitBranch pluginsLocalGitBranch = _getLocalGitBranchFromGitCommit(
+			"git-commit-plugins", pluginsLocalGitRepository);
 
-		_pluginsLocalGitBranch = (PluginsLocalGitBranch)localGitBranch;
+		_pluginsLocalGitBranch = (PluginsLocalGitBranch)pluginsLocalGitBranch;
 
 		return _pluginsLocalGitBranch;
 	}
 
-	protected PortalLocalGitRepository getPrimaryPortalGitRepository() {
+	protected PortalLocalGitRepository getPrimaryPortalLocalGitRepository() {
 		return _primaryPortalLocalGitRepository;
 	}
 
@@ -216,7 +232,7 @@ public abstract class PortalWorkspace extends BaseWorkspace {
 			return;
 		}
 
-		checkoutBranch(basePortalLocalGitBranch);
+		checkoutLocalGitBranch(basePortalLocalGitBranch);
 
 		GitWorkingDirectory gitWorkingDirectory =
 			_primaryPortalLocalGitRepository.getGitWorkingDirectory();
@@ -248,7 +264,7 @@ public abstract class PortalWorkspace extends BaseWorkspace {
 			return;
 		}
 
-		checkoutBranch(companionPortalLocalGitBranch);
+		checkoutLocalGitBranch(companionPortalLocalGitBranch);
 
 		try {
 			String path = "modules/private";
@@ -270,7 +286,7 @@ public abstract class PortalWorkspace extends BaseWorkspace {
 			return;
 		}
 
-		checkoutBranch(otherPortalLocalGitBranch);
+		checkoutLocalGitBranch(otherPortalLocalGitBranch);
 	}
 
 	private void _checkoutPluginsLocalGitBranch() {
@@ -281,14 +297,14 @@ public abstract class PortalWorkspace extends BaseWorkspace {
 			return;
 		}
 
-		checkoutBranch(pluginsLocalGitBranch);
+		checkoutLocalGitBranch(pluginsLocalGitBranch);
 	}
 
 	private void _checkoutPrimaryPortalLocalGitBranch() {
-		checkoutBranch(_primaryPortalLocalGitBranch);
+		checkoutLocalGitBranch(_primaryPortalLocalGitBranch);
 	}
 
-	private PortalLocalGitBranch _getCachedPortalLocalGitBranch(
+	private PortalLocalGitBranch _getPortalLocalGitBranch(
 		PortalLocalGitRepository portalLocalGitRepository,
 		String portalGitHubURL) {
 
@@ -316,7 +332,7 @@ public abstract class PortalWorkspace extends BaseWorkspace {
 
 		if (!(localGitBranch instanceof PortalLocalGitBranch)) {
 			throw new RuntimeException(
-				"Invalid local git branch " + localGitBranch);
+				"Invalid local Git branch " + localGitBranch);
 		}
 
 		return (PortalLocalGitBranch)localGitBranch;
@@ -325,7 +341,7 @@ public abstract class PortalWorkspace extends BaseWorkspace {
 	private LocalGitBranch _getLocalGitBranchFromGitCommit(
 		String gitCommitFileName, LocalGitRepository localGitRepository) {
 
-		String gitCommitFileContent = _getPortalGitRepositoryFileContent(
+		String gitCommitFileContent = _getPortalLocalGitRepositoryFileContent(
 			gitCommitFileName);
 
 		LocalGitBranch localGitBranch = null;
@@ -360,17 +376,14 @@ public abstract class PortalWorkspace extends BaseWorkspace {
 		return localGitBranch;
 	}
 
-	private String _getPortalGitRepositoryFileContent(
-		String portalGitRepositoryFileName) {
-
-		File gitCommitFile = new File(
-			_primaryPortalLocalGitBranch.getDirectory(),
-			portalGitRepositoryFileName);
+	private String _getPortalLocalGitRepositoryFileContent(String fileName) {
+		File file = new File(
+			_primaryPortalLocalGitRepository.getDirectory(), fileName);
 
 		try {
-			String gitCommit = JenkinsResultsParserUtil.read(gitCommitFile);
+			String fileContent = JenkinsResultsParserUtil.read(file);
 
-			return gitCommit.trim();
+			return fileContent.trim();
 		}
 		catch (IOException ioe) {
 			throw new RuntimeException(ioe);

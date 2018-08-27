@@ -96,7 +96,7 @@ public abstract class BaseWorkspace implements Workspace {
 		}
 	}
 
-	protected void checkoutBranch(LocalGitBranch localGitBranch) {
+	protected void checkoutLocalGitBranch(LocalGitBranch localGitBranch) {
 		System.out.println();
 		System.out.println("##");
 		System.out.println("## " + localGitBranch.toString());

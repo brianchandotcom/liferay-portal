@@ -44,7 +44,7 @@ public class JunitBatchPortalWorkspace extends BatchPortalWorkspace {
 			String.valueOf(otherPortalLocalGitBranch.getDirectory()));
 
 		PortalLocalGitRepository portalLocalGitRepository =
-			getPrimaryPortalGitRepository();
+			getPrimaryPortalLocalGitRepository();
 
 		portalLocalGitRepository.setBuildProperties(properties);
 	}

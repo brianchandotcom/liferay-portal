@@ -25,7 +25,7 @@ public interface Workspace {
 
 	public String getJenkinsBranchName();
 
-	public void setJobProperties(Job job);
+	public void setGitRepositoryJobProperties(Job job);
 
 	public void setupWorkspace();
 

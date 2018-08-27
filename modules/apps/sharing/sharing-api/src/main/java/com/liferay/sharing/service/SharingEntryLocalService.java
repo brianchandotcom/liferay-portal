@@ -67,7 +67,7 @@ public interface SharingEntryLocalService extends BaseLocalService,
 	 * Never modify or reference this interface directly. Always use {@link SharingEntryLocalServiceUtil} to access the sharing entry local service. Add custom service methods to {@link com.liferay.sharing.service.impl.SharingEntryLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 	public SharingEntry addSharingEntry(long fromUserId, long toUserId,
-		long classNameId, long classPK, long groupId,
+		long classNameId, long classPK, long groupId, boolean shareable,
 		Collection<SharingEntryActionKey> sharingEntryActionKeys,
 		ServiceContext serviceContext) throws PortalException;
 
@@ -325,6 +325,11 @@ public interface SharingEntryLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<SharingEntry> getToUserSharingEntries(long toUserId,
 		long classNameId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public boolean hasShareableSharingPermission(long toUserId,
+		long classNameId, long classPK,
+		SharingEntryActionKey sharingEntryActionKey);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public boolean hasSharingPermission(long toUserId, long classNameId,

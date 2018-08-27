@@ -9,5 +9,6 @@ create table SharingEntry (
 	toUserId LONG,
 	classNameId LONG,
 	classPK LONG,
+	shareable BOOLEAN,
 	actionIds LONG
 );

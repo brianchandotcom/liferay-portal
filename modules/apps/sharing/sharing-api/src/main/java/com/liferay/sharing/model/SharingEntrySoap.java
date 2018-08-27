@@ -44,6 +44,7 @@ public class SharingEntrySoap implements Serializable {
 		soapModel.setToUserId(model.getToUserId());
 		soapModel.setClassNameId(model.getClassNameId());
 		soapModel.setClassPK(model.getClassPK());
+		soapModel.setShareable(model.isShareable());
 		soapModel.setActionIds(model.getActionIds());
 
 		return soapModel;
@@ -177,6 +178,18 @@ public class SharingEntrySoap implements Serializable {
 		_classPK = classPK;
 	}
 
+	public boolean getShareable() {
+		return _shareable;
+	}
+
+	public boolean isShareable() {
+		return _shareable;
+	}
+
+	public void setShareable(boolean shareable) {
+		_shareable = shareable;
+	}
+
 	public long getActionIds() {
 		return _actionIds;
 	}
@@ -195,5 +208,6 @@ public class SharingEntrySoap implements Serializable {
 	private long _toUserId;
 	private long _classNameId;
 	private long _classPK;
+	private boolean _shareable;
 	private long _actionIds;
 }

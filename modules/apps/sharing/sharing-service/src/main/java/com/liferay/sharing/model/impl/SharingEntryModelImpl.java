@@ -85,6 +85,7 @@ public class SharingEntryModelImpl extends BaseModelImpl<SharingEntry>
 			{ "toUserId", Types.BIGINT },
 			{ "classNameId", Types.BIGINT },
 			{ "classPK", Types.BIGINT },
+			{ "shareable", Types.BOOLEAN },
 			{ "actionIds", Types.BIGINT }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
@@ -100,10 +101,11 @@ public class SharingEntryModelImpl extends BaseModelImpl<SharingEntry>
 		TABLE_COLUMNS_MAP.put("toUserId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("classNameId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("classPK", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("shareable", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("actionIds", Types.BIGINT);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table SharingEntry (uuid_ VARCHAR(75) null,sharingEntryId LONG not null primary key,groupId LONG,companyId LONG,createDate DATE null,modifiedDate DATE null,fromUserId LONG,toUserId LONG,classNameId LONG,classPK LONG,actionIds LONG)";
+	public static final String TABLE_SQL_CREATE = "create table SharingEntry (uuid_ VARCHAR(75) null,sharingEntryId LONG not null primary key,groupId LONG,companyId LONG,createDate DATE null,modifiedDate DATE null,fromUserId LONG,toUserId LONG,classNameId LONG,classPK LONG,shareable BOOLEAN,actionIds LONG)";
 	public static final String TABLE_SQL_DROP = "drop table SharingEntry";
 	public static final String ORDER_BY_JPQL = " ORDER BY sharingEntry.sharingEntryId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY SharingEntry.sharingEntryId ASC";
@@ -151,6 +153,7 @@ public class SharingEntryModelImpl extends BaseModelImpl<SharingEntry>
 		model.setToUserId(soapModel.getToUserId());
 		model.setClassNameId(soapModel.getClassNameId());
 		model.setClassPK(soapModel.getClassPK());
+		model.setShareable(soapModel.isShareable());
 		model.setActionIds(soapModel.getActionIds());
 
 		return model;
@@ -226,6 +229,7 @@ public class SharingEntryModelImpl extends BaseModelImpl<SharingEntry>
 		attributes.put("toUserId", getToUserId());
 		attributes.put("classNameId", getClassNameId());
 		attributes.put("classPK", getClassPK());
+		attributes.put("shareable", isShareable());
 		attributes.put("actionIds", getActionIds());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
@@ -294,6 +298,12 @@ public class SharingEntryModelImpl extends BaseModelImpl<SharingEntry>
 
 		if (classPK != null) {
 			setClassPK(classPK);
+		}
+
+		Boolean shareable = (Boolean)attributes.get("shareable");
+
+		if (shareable != null) {
+			setShareable(shareable);
 		}
 
 		Long actionIds = (Long)attributes.get("actionIds");
@@ -558,6 +568,23 @@ public class SharingEntryModelImpl extends BaseModelImpl<SharingEntry>
 
 	@JSON
 	@Override
+	public boolean getShareable() {
+		return _shareable;
+	}
+
+	@JSON
+	@Override
+	public boolean isShareable() {
+		return _shareable;
+	}
+
+	@Override
+	public void setShareable(boolean shareable) {
+		_shareable = shareable;
+	}
+
+	@JSON
+	@Override
 	public long getActionIds() {
 		return _actionIds;
 	}
@@ -614,6 +641,7 @@ public class SharingEntryModelImpl extends BaseModelImpl<SharingEntry>
 		sharingEntryImpl.setToUserId(getToUserId());
 		sharingEntryImpl.setClassNameId(getClassNameId());
 		sharingEntryImpl.setClassPK(getClassPK());
+		sharingEntryImpl.setShareable(isShareable());
 		sharingEntryImpl.setActionIds(getActionIds());
 
 		sharingEntryImpl.resetOriginalValues();
@@ -752,6 +780,8 @@ public class SharingEntryModelImpl extends BaseModelImpl<SharingEntry>
 
 		sharingEntryCacheModel.classPK = getClassPK();
 
+		sharingEntryCacheModel.shareable = isShareable();
+
 		sharingEntryCacheModel.actionIds = getActionIds();
 
 		return sharingEntryCacheModel;
@@ -759,7 +789,7 @@ public class SharingEntryModelImpl extends BaseModelImpl<SharingEntry>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(23);
+		StringBundler sb = new StringBundler(25);
 
 		sb.append("{uuid=");
 		sb.append(getUuid());
@@ -781,6 +811,8 @@ public class SharingEntryModelImpl extends BaseModelImpl<SharingEntry>
 		sb.append(getClassNameId());
 		sb.append(", classPK=");
 		sb.append(getClassPK());
+		sb.append(", shareable=");
+		sb.append(isShareable());
 		sb.append(", actionIds=");
 		sb.append(getActionIds());
 		sb.append("}");
@@ -790,7 +822,7 @@ public class SharingEntryModelImpl extends BaseModelImpl<SharingEntry>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(37);
+		StringBundler sb = new StringBundler(40);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.sharing.model.SharingEntry");
@@ -837,6 +869,10 @@ public class SharingEntryModelImpl extends BaseModelImpl<SharingEntry>
 		sb.append(getClassPK());
 		sb.append("]]></column-value></column>");
 		sb.append(
+			"<column><column-name>shareable</column-name><column-value><![CDATA[");
+		sb.append(isShareable());
+		sb.append("]]></column-value></column>");
+		sb.append(
 			"<column><column-name>actionIds</column-name><column-value><![CDATA[");
 		sb.append(getActionIds());
 		sb.append("]]></column-value></column>");
@@ -874,6 +910,7 @@ public class SharingEntryModelImpl extends BaseModelImpl<SharingEntry>
 	private long _classPK;
 	private long _originalClassPK;
 	private boolean _setOriginalClassPK;
+	private boolean _shareable;
 	private long _actionIds;
 	private long _columnBitmask;
 	private SharingEntry _escapedModel;

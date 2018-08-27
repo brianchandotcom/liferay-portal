@@ -108,6 +108,13 @@ public interface JSONWebServiceClient {
 			   JSONWebServiceTransportException;
 
 	public <T> T doPostToObject(
+			Class<T> clazz, String url, Map<String, String> parameters,
+			Map<String, String> headers)
+		throws JSONWebServiceInvocationException,
+			   JSONWebServiceSerializeException,
+			   JSONWebServiceTransportException;
+
+	public <T> T doPostToObject(
 			Class<T> clazz, String url, String... parametersArray)
 		throws JSONWebServiceInvocationException,
 			   JSONWebServiceSerializeException,
@@ -125,6 +132,25 @@ public interface JSONWebServiceClient {
 
 	public String doPut(String url, String... parametersArray)
 		throws JSONWebServiceInvocationException,
+			   JSONWebServiceTransportException;
+
+	public <T> T doPutToObject(
+			Class<T> clazz, String url, Map<String, String> parameters)
+		throws JSONWebServiceInvocationException,
+			   JSONWebServiceSerializeException,
+			   JSONWebServiceTransportException;
+
+	public <T> T doPutToObject(
+			Class<T> clazz, String url, Map<String, String> parameters,
+			Map<String, String> headers)
+		throws JSONWebServiceInvocationException,
+			   JSONWebServiceSerializeException,
+			   JSONWebServiceTransportException;
+
+	public <T> T doPutToObject(
+			Class<T> clazz, String url, String... parametersArray)
+		throws JSONWebServiceInvocationException,
+			   JSONWebServiceSerializeException,
 			   JSONWebServiceTransportException;
 
 	public String getHostName();

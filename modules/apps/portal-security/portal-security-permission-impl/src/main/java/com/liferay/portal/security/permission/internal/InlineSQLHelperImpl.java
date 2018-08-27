@@ -15,6 +15,8 @@
 package com.liferay.portal.security.permission.internal;
 
 import com.liferay.asset.kernel.model.AssetTag;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -38,20 +40,17 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.permission.contributor.PermissionSQLContributor;
 import com.liferay.portal.security.permission.internal.configuration.InlinePermissionConfiguration;
 
-import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
-import java.util.concurrent.CopyOnWriteArrayList;
 
+import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferenceCardinality;
-import org.osgi.service.component.annotations.ReferencePolicy;
-import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Raymond Augé
@@ -259,20 +258,14 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 
 	@Activate
 	@Modified
-	protected void activate(Map<String, Object> properties) {
+	protected void activate(
+		BundleContext bundleContext, Map<String, Object> properties) {
+
 		_inlinePermissionConfiguration = ConfigurableUtil.createConfigurable(
 			InlinePermissionConfiguration.class, properties);
-	}
 
-	@Reference(
-		cardinality = ReferenceCardinality.MULTIPLE,
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY
-	)
-	protected void addPermissionSQLContributor(
-		PermissionSQLContributor permissionSQLContributor) {
-
-		_permissionSQLContributors.add(permissionSQLContributor);
+		_permissionSQLContributors = ServiceTrackerMapFactory.openMultiValueMap(
+			bundleContext, PermissionSQLContributor.class, "model.class.name");
 	}
 
 	protected long[] getRoleIds(long groupId) {
@@ -360,12 +353,6 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 		}
 
 		return userId;
-	}
-
-	protected void removePermissionSQLContributor(
-		PermissionSQLContributor permissionSQLContributor) {
-
-		_permissionSQLContributors.remove(permissionSQLContributor);
 	}
 
 	protected String replacePermissionCheckJoin(
@@ -477,12 +464,17 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 
 		String permissionSQLContributorsSQL = null;
 
-		if (!_permissionSQLContributors.isEmpty()) {
+		List<PermissionSQLContributor> permissionSQLContributors =
+			_permissionSQLContributors.getService(className);
+
+		if ((permissionSQLContributors != null) &&
+			!permissionSQLContributors.isEmpty()) {
+
 			StringBundler permissionSQLContributorsSQLSB = new StringBundler(
-				_permissionSQLContributors.size() * 3);
+				permissionSQLContributors.size() * 3);
 
 			for (PermissionSQLContributor permissionSQLContributor :
-					_permissionSQLContributors) {
+					permissionSQLContributors) {
 
 				String contributorPermissionSQL =
 					permissionSQLContributor.getPermissionSQL(
@@ -649,8 +641,8 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 
 	private volatile InlinePermissionConfiguration
 		_inlinePermissionConfiguration;
-	private final Collection<PermissionSQLContributor>
-		_permissionSQLContributors = new CopyOnWriteArrayList<>();
+	private ServiceTrackerMap<String, List<PermissionSQLContributor>>
+		_permissionSQLContributors;
 
 	@Reference
 	private ResourcePermissionLocalService _resourcePermissionLocalService;

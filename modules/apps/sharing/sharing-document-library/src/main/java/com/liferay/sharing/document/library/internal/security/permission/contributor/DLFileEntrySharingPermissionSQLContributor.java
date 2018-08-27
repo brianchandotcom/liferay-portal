@@ -14,9 +14,7 @@
 
 package com.liferay.sharing.document.library.internal.security.permission.contributor;
 
-import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
@@ -28,7 +26,11 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Sergio González
  */
-@Component(immediate = true, service = PermissionSQLContributor.class)
+@Component(
+	immediate = true,
+	property = "model.class.name=com.liferay.document.library.kernel.model.DLFileEntry",
+	service = PermissionSQLContributor.class
+)
 public class DLFileEntrySharingPermissionSQLContributor
 	implements PermissionSQLContributor {
 
@@ -36,10 +38,6 @@ public class DLFileEntrySharingPermissionSQLContributor
 	public String getPermissionSQL(
 		String className, String classPKField, String userIdField,
 		String groupIdField, long[] groupIds) {
-
-		if (!className.equals(DLFileEntry.class.getName())) {
-			return StringPool.BLANK;
-		}
 
 		PermissionChecker permissionChecker =
 			PermissionThreadLocal.getPermissionChecker();

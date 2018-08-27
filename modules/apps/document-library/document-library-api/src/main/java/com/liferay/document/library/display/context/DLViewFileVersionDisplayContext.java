@@ -56,11 +56,20 @@ public interface DLViewFileVersionDisplayContext extends DLDisplayContext {
 
 	public List<ToolbarItem> getToolbarItems() throws PortalException;
 
+	public default boolean hasCustomThumbnail() {
+		return false;
+	}
+
 	public boolean hasPreview();
 
 	public boolean isDownloadLinkVisible() throws PortalException;
 
 	public boolean isVersionInfoVisible() throws PortalException;
+
+	public default void renderCustomThumbnail(
+			HttpServletRequest request, HttpServletResponse response)
+		throws IOException, ServletException {
+	}
 
 	public void renderPreview(
 			HttpServletRequest request, HttpServletResponse response)

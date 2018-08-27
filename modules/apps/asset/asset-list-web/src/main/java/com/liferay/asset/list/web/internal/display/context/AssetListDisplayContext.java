@@ -14,10 +14,13 @@
 
 package com.liferay.asset.list.web.internal.display.context;
 
+import com.liferay.asset.list.constants.AssetListEntryTypeConstants;
 import com.liferay.asset.list.model.AssetListEntry;
 import com.liferay.asset.list.service.AssetListEntryServiceUtil;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -85,6 +88,19 @@ public class AssetListDisplayContext {
 		_assetListEntriesSearchContainer = assetListEntriesSearchContainer;
 
 		return _assetListEntriesSearchContainer;
+	}
+
+	public String getAssetListEntryType(int type) {
+		String assetListEntryType = StringPool.BLANK;
+
+		if (type == AssetListEntryTypeConstants.TYPE_DYNAMIC) {
+			assetListEntryType = "dynamic";
+		}
+		else if (type == AssetListEntryTypeConstants.TYPE_MANUAL) {
+			assetListEntryType = "manual";
+		}
+
+		return LanguageUtil.get(_request, assetListEntryType);
 	}
 
 	private Integer _assetListEntriesCount;

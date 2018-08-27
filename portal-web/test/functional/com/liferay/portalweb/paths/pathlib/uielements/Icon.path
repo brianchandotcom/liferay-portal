@@ -105,7 +105,7 @@
 </tr>
 <tr>
 	<td>DELETE</td>
-	<td>//*[*[name()='svg'][contains(@class,'icon-trash')]]</td>
+	<td>//*[*[name()='svg'][contains(@class,'icon-trash')]] | //button[@data-title='Delete']</td>
 	<td></td>
 </tr>
 <tr>

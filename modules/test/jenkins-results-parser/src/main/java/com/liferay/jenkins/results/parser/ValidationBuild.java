@@ -116,38 +116,38 @@ public class ValidationBuild extends BaseBuild {
 
 	protected Element getBaseBranchDetailsElement() {
 		String baseBranchURL =
-			"https://github.com/liferay/" + getBaseRepositoryName() + "/tree/" +
+			"https://github.com/liferay/" + getBaseGitRepositoryName() + "/tree/" +
 				getBranchName();
 
-		String baseRepositoryName = getBaseRepositoryName();
+		String baseGitRepositoryName = getBaseGitRepositoryName();
 
-		String baseRepositorySHA = null;
+		String baseGitRepositorySHA = null;
 
-		if (!baseRepositoryName.equals("liferay-jenkins-ee") &&
-			baseRepositoryName.endsWith("-ee")) {
+		if (!baseGitRepositoryName.equals("liferay-jenkins-ee") &&
+			baseGitRepositoryName.endsWith("-ee")) {
 
-			baseRepositorySHA = getBaseRepositorySHA(
-				baseRepositoryName.substring(
-					0, baseRepositoryName.length() - 3));
+			baseGitRepositorySHA = getBaseGitRepositorySHA(
+				baseGitRepositoryName.substring(
+					0, baseGitRepositoryName.length() - 3));
 		}
 		else {
-			baseRepositorySHA = getBaseRepositorySHA(baseRepositoryName);
+			baseGitRepositorySHA = getBaseGitRepositorySHA(baseGitRepositoryName);
 		}
 
-		String baseRepositoryCommitURL =
-			"https://github.com/liferay/" + baseRepositoryName + "/commit/" +
-				baseRepositorySHA;
+		String baseGitRepositoryCommitURL =
+			"https://github.com/liferay/" + baseGitRepositoryName + "/commit/" +
+				baseGitRepositorySHA;
 
 		Element baseBranchDetailsElement = Dom4JUtil.getNewElement(
 			"p", null, "Branch Name: ",
 			Dom4JUtil.getNewAnchorElement(baseBranchURL, getBranchName()));
 
-		if (baseRepositorySHA != null) {
+		if (baseGitRepositorySHA != null) {
 			Dom4JUtil.addToElement(
 				baseBranchDetailsElement, Dom4JUtil.getNewElement("br"),
 				"Branch GIT ID: ",
 				Dom4JUtil.getNewAnchorElement(
-					baseRepositoryCommitURL, baseRepositorySHA));
+					baseGitRepositoryCommitURL, baseGitRepositorySHA));
 		}
 
 		return baseBranchDetailsElement;

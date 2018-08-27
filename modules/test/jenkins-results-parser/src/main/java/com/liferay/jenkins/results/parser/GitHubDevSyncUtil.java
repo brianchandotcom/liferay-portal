@@ -301,16 +301,16 @@ public class GitHubDevSyncUtil {
 				long branchAge = timestamp - remoteGitBranchTimestamp;
 
 				if (branchAge > _BRANCH_EXPIRE_AGE_MILLIS) {
-					String repositoryBaseRemoteGitBranchName =
+					String gitRepositoryBaseRemoteGitBranchName =
 						remoteGitBranchName.replaceAll("(.*)-\\d+", "$1");
 
-					RemoteGitBranch repositoryBaseRemoteGitBranch =
+					RemoteGitBranch gitRepositoryBaseRemoteGitBranch =
 						remoteGitBranches.get(
-							repositoryBaseRemoteGitBranchName);
+							gitRepositoryBaseRemoteGitBranchName);
 
-					if (repositoryBaseRemoteGitBranch != null) {
+					if (gitRepositoryBaseRemoteGitBranch != null) {
 						expiredRemoteGitBranches.add(
-							repositoryBaseRemoteGitBranch);
+							gitRepositoryBaseRemoteGitBranch);
 					}
 
 					expiredRemoteGitBranches.add(remoteGitBranch);
@@ -842,7 +842,7 @@ public class GitHubDevSyncUtil {
 
 		long start = System.currentTimeMillis();
 
-		File repositoryDirectory = gitWorkingDirectory.getWorkingDirectory();
+		File gitRepositoryDirectory = gitWorkingDirectory.getWorkingDirectory();
 
 		LocalGitBranch currentLocalGitBranch =
 			gitWorkingDirectory.getCurrentLocalGitBranch();
@@ -850,7 +850,7 @@ public class GitHubDevSyncUtil {
 		System.out.println(
 			JenkinsResultsParserUtil.combine(
 				"Starting synchronization with local-git. Current repository ",
-				"directory is ", repositoryDirectory.getPath(), ". Current ",
+				"directory is ", gitRepositoryDirectory.getPath(), ". Current ",
 				"branch is ", currentLocalGitBranch.getName(), "."));
 
 		GitRemote senderGitRemote = null;

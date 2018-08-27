@@ -665,10 +665,10 @@ public class JenkinsResultsParserUtil {
 	}
 
 	public static String getGitHubApiUrl(
-		String repositoryName, String username, String path) {
+		String gitRepositoryName, String username, String path) {
 
 		return combine(
-			"https://api.github.com/repos/", username, "/", repositoryName, "/",
+			"https://api.github.com/repos/", username, "/", gitRepositoryName, "/",
 			path.replaceFirst("^/*", ""));
 	}
 
@@ -971,15 +971,15 @@ public class JenkinsResultsParserUtil {
 	public static PortalGitWorkingDirectory getPortalGitWorkingDirectory(
 		String portalBranchName) {
 
-		String portalRepositoryName = "liferay-portal";
+		String portalGitRepositoryName = "liferay-portal";
 
 		if (!portalBranchName.equals("master")) {
-			portalRepositoryName += "-ee";
+			portalGitRepositoryName += "-ee";
 		}
 
 		LocalGitRepository localGitRepository =
 			GitRepositoryFactory.getLocalGitRepository(
-				portalRepositoryName, portalBranchName);
+				portalGitRepositoryName, portalBranchName);
 
 		GitWorkingDirectory gitWorkingDirectory =
 			localGitRepository.getGitWorkingDirectory();

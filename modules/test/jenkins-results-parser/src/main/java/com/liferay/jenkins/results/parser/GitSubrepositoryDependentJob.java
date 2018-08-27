@@ -19,8 +19,8 @@ import java.io.File;
 /**
  * @author Leslie Wong
  */
-public interface SubrepositoryDependentJob extends Job {
+public interface GitSubrepositoryDependentJob extends Job {
 
-	public File getSubrepositoryWorkingDirectory();
+	public File getGitSubrepositoryWorkingDirectory();
 
 }

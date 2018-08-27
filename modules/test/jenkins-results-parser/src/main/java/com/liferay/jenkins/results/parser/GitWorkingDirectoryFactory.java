@@ -26,41 +26,41 @@ import java.util.Map;
 public class GitWorkingDirectoryFactory {
 
 	public static GitWorkingDirectory newGitWorkingDirectory(
-		String upstreamBranchName, File repositoryDir, String repositoryName) {
+		String upstreamBranchName, File gitRepositoryDir, String gitRepositoryName) {
 
-		if (!repositoryDir.exists()) {
+		if (!gitRepositoryDir.exists()) {
 			throw new RuntimeException(
-				"Directory path not found " + repositoryDir);
+				"Directory path not found " + gitRepositoryDir);
 		}
 
-		String repositoryDirName = repositoryDir.getName();
+		String gitRepositoryDirName = gitRepositoryDir.getName();
 
-		if (_gitWorkingDirectories.containsKey(repositoryDirName)) {
-			return _gitWorkingDirectories.get(repositoryDirName);
+		if (_gitWorkingDirectories.containsKey(gitRepositoryDirName)) {
+			return _gitWorkingDirectories.get(gitRepositoryDirName);
 		}
 
 		try {
 			GitWorkingDirectory gitWorkingDirectory = null;
-			String repositoryDirPath = repositoryDir.getCanonicalPath();
+			String gitRepositoryDirPath = gitRepositoryDir.getCanonicalPath();
 
-			if (repositoryDirName.startsWith("com-liferay-")) {
-				gitWorkingDirectory = new SubrepositoryGitWorkingDirectory(
-					upstreamBranchName, repositoryDirPath, repositoryName);
+			if (gitRepositoryDirName.startsWith("com-liferay-")) {
+				gitWorkingDirectory = new GitSubrepositoryGitWorkingDirectory(
+					upstreamBranchName, gitRepositoryDirPath, gitRepositoryName);
 			}
-			else if (repositoryDirName.startsWith("liferay-plugins")) {
+			else if (gitRepositoryDirName.startsWith("liferay-plugins")) {
 				gitWorkingDirectory = new PluginsGitWorkingDirectory(
-					upstreamBranchName, repositoryDirPath, repositoryName);
+					upstreamBranchName, gitRepositoryDirPath, gitRepositoryName);
 			}
-			else if (repositoryDirName.startsWith("liferay-portal")) {
+			else if (gitRepositoryDirName.startsWith("liferay-portal")) {
 				gitWorkingDirectory = new PortalGitWorkingDirectory(
-					upstreamBranchName, repositoryDirPath, repositoryName);
+					upstreamBranchName, gitRepositoryDirPath, gitRepositoryName);
 			}
 			else {
 				gitWorkingDirectory = new GitWorkingDirectory(
-					upstreamBranchName, repositoryDirPath, repositoryName);
+					upstreamBranchName, gitRepositoryDirPath, gitRepositoryName);
 			}
 
-			_gitWorkingDirectories.put(repositoryDirName, gitWorkingDirectory);
+			_gitWorkingDirectories.put(gitRepositoryDirName, gitWorkingDirectory);
 
 			return gitWorkingDirectory;
 		}
@@ -68,24 +68,24 @@ public class GitWorkingDirectoryFactory {
 			throw new RuntimeException(
 				JenkinsResultsParserUtil.combine(
 					"Unable to create Git working directory for directory ",
-					repositoryDir.getPath()),
+					gitRepositoryDir.getPath()),
 				ioe);
 		}
 	}
 
 	public static GitWorkingDirectory newGitWorkingDirectory(
-		String upstreamBranchName, String repositoryDirPath) {
+		String upstreamBranchName, String gitepositoryDirPath) {
 
 		return newGitWorkingDirectory(
-			upstreamBranchName, new File(repositoryDirPath), null);
+			upstreamBranchName, new File(gitepositoryDirPath), null);
 	}
 
 	public static GitWorkingDirectory newGitWorkingDirectory(
-		String upstreamBranchName, String repositoryDirPath,
-		String repositoryName) {
+		String upstreamBranchName, String gitRepositoryDirPath,
+		String gitRepositoryName) {
 
 		return newGitWorkingDirectory(
-			upstreamBranchName, new File(repositoryDirPath), repositoryName);
+			upstreamBranchName, new File(gitRepositoryDirPath), gitRepositoryName);
 	}
 
 	private static final Map<String, GitWorkingDirectory>

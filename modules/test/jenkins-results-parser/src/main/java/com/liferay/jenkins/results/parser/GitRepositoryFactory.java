@@ -23,9 +23,9 @@ import java.util.Map;
 public class GitRepositoryFactory {
 
 	public static LocalGitRepository getLocalGitRepository(
-		String repositoryName, String upstreamBranchName) {
+		String gitRepositoryName, String upstreamBranchName) {
 
-		String key = repositoryName + "/" + upstreamBranchName;
+		String key = gitRepositoryName + "/" + upstreamBranchName;
 
 		if (_localGitRepositories.containsKey(key)) {
 			return _localGitRepositories.get(key);
@@ -33,21 +33,21 @@ public class GitRepositoryFactory {
 
 		LocalGitRepository localGitRepository = null;
 
-		if (repositoryName.startsWith("com-liferay-")) {
-			localGitRepository = new SubrepositoryLocalGitRepository(
-				repositoryName, upstreamBranchName);
+		if (gitRepositoryName.startsWith("com-liferay-")) {
+			localGitRepository = new GitSubrepositoryLocalGitRepository(
+				gitRepositoryName, upstreamBranchName);
 		}
-		else if (repositoryName.startsWith("liferay-plugins")) {
+		else if (gitRepositoryName.startsWith("liferay-plugins")) {
 			localGitRepository = new PluginsLocalGitRepository(
-				repositoryName, upstreamBranchName);
+				gitRepositoryName, upstreamBranchName);
 		}
-		else if (repositoryName.startsWith("liferay-portal")) {
+		else if (gitRepositoryName.startsWith("liferay-portal")) {
 			localGitRepository = new PortalLocalGitRepository(
-				repositoryName, upstreamBranchName);
+				gitRepositoryName, upstreamBranchName);
 		}
 		else {
 			localGitRepository = new LocalGitRepository(
-				repositoryName, upstreamBranchName);
+				gitRepositoryName, upstreamBranchName);
 		}
 
 		_localGitRepositories.put(key, localGitRepository);
@@ -66,13 +66,13 @@ public class GitRepositoryFactory {
 	}
 
 	public static RemoteGitRepository getRemoteGitRepository(
-		String hostname, String repositoryName, String username) {
+		String hostname, String gitRepositoryName, String username) {
 
 		if (hostname.equalsIgnoreCase("github.com")) {
-			return new GitHubRemoteGitRepository(repositoryName, username);
+			return new GitHubRemoteGitRepository(gitRepositoryName, username);
 		}
 
-		return new RemoteGitRepository(hostname, repositoryName, username);
+		return new RemoteGitRepository(hostname, gitRepositoryName, username);
 	}
 
 	private static final Map<String, LocalGitRepository> _localGitRepositories =

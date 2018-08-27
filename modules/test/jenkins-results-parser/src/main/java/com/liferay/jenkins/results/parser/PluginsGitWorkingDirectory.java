@@ -33,12 +33,12 @@ public class PluginsGitWorkingDirectory extends GitWorkingDirectory {
 
 	protected PluginsGitWorkingDirectory(
 			String portalUpstreamBranchName, String workingDirectoryPath,
-			String repositoryName)
+			String gitRepositoryName)
 		throws IOException {
 
 		super(
 			_getPluginsUpstreamBranchName(portalUpstreamBranchName),
-			workingDirectoryPath, repositoryName);
+			workingDirectoryPath, gitRepositoryName);
 	}
 
 	@Override

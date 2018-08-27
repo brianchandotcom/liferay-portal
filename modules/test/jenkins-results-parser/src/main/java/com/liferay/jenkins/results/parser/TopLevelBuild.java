@@ -127,9 +127,9 @@ public class TopLevelBuild extends BaseBuild {
 	}
 
 	public Map<String, String> getBaseGitRepositoryDetailsTempMap() {
-		String repositoryType = getBaseRepositoryType();
+		String gitRepositoryType = getBaseGitRepositoryType();
 
-		String tempMapName = "git." + repositoryType + ".properties";
+		String tempMapName = "git." + gitRepositoryType + ".properties";
 
 		return getTempMap(tempMapName);
 	}
@@ -137,43 +137,43 @@ public class TopLevelBuild extends BaseBuild {
 	public String getCompanionBranchName() {
 		TopLevelBuild topLevelBuild = getTopLevelBuild();
 
-		Map<String, String> repositoryGitDetailsTempMap =
+		Map<String, String> gitRepositoryGitDetailsTempMap =
 			topLevelBuild.getCompanionGitRepositoryDetailsTempMap();
 
-		return repositoryGitDetailsTempMap.get("github.sender.branch.name");
+		return gitRepositoryGitDetailsTempMap.get("github.sender.branch.name");
 	}
 
 	public Map<String, String> getCompanionGitRepositoryDetailsTempMap() {
 		String branchName = getBranchName();
 		String branchType = "ee";
-		String repositoryType = getBaseRepositoryType();
+		String gitRepositoryType = getBaseGitRepositoryType();
 
 		if (branchName.endsWith("-private")) {
 			branchType = "base";
 		}
 
 		String tempMapName = JenkinsResultsParserUtil.combine(
-			"git.", repositoryType, ".", branchType, ".properties");
+			"git.", gitRepositoryType, ".", branchType, ".properties");
 
 		return getTempMap(tempMapName);
 	}
 
-	public String getCompanionRepositorySHA() {
+	public String getCompanionGitRepositorySHA() {
 		TopLevelBuild topLevelBuild = getTopLevelBuild();
 
-		Map<String, String> repositoryGitDetailsTempMap =
+		Map<String, String> gitRepositoryGitDetailsTempMap =
 			topLevelBuild.getCompanionGitRepositoryDetailsTempMap();
 
-		return repositoryGitDetailsTempMap.get("github.sender.branch.sha");
+		return gitRepositoryGitDetailsTempMap.get("github.sender.branch.sha");
 	}
 
 	public String getCompanionUsername() {
 		TopLevelBuild topLevelBuild = getTopLevelBuild();
 
-		Map<String, String> repositoryGitDetailsTempMap =
+		Map<String, String> gitRepositoryGitDetailsTempMap =
 			topLevelBuild.getCompanionGitRepositoryDetailsTempMap();
 
-		return repositoryGitDetailsTempMap.get("github.sender.username");
+		return gitRepositoryGitDetailsTempMap.get("github.sender.username");
 	}
 
 	@Override
@@ -361,21 +361,21 @@ public class TopLevelBuild extends BaseBuild {
 			Properties buildProperties =
 				JenkinsResultsParserUtil.getBuildProperties();
 
-			String repositoryTypes = buildProperties.getProperty(
+			String gitRepositoryTypes = buildProperties.getProperty(
 				"repository.types");
 
 			if (jobName.startsWith(
 					"test-subrepository-acceptance-pullrequest")) {
 
-				repositoryTypes += "," + getBaseRepositoryName();
+				gitRepositoryTypes += "," + getBaseGitRepositoryName();
 			}
 
-			for (String repositoryType : repositoryTypes.split(",")) {
+			for (String gitRepositoryType : gitRepositoryTypes.split(",")) {
 				try {
 					JSONObject gitRepositoryDetailsJSONObject =
 						JenkinsResultsParserUtil.toJSONObject(
 							getGitRepositoryDetailsPropertiesTempMapURL(
-								repositoryType));
+								gitRepositoryType));
 
 					Set<?> set = gitRepositoryDetailsJSONObject.keySet();
 
@@ -385,12 +385,12 @@ public class TopLevelBuild extends BaseBuild {
 
 					writeArchiveFile(
 						gitRepositoryDetailsJSONObject.toString(4),
-						getArchivePath() + "/git." + repositoryType +
+						getArchivePath() + "/git." + gitRepositoryType +
 							".properties.json");
 				}
 				catch (IOException ioe) {
 					throw new RuntimeException(
-						"Unable to create git." + repositoryType +
+						"Unable to create git." + gitRepositoryType +
 							".properties.json",
 						ioe);
 				}
@@ -481,41 +481,41 @@ public class TopLevelBuild extends BaseBuild {
 
 	protected Element getBaseBranchDetailsElement() {
 		String baseBranchURL =
-			"https://github.com/liferay/" + getBaseRepositoryName() + "/tree/" +
+			"https://github.com/liferay/" + getBaseGitRepositoryName() + "/tree/" +
 				getBranchName();
 
-		String baseRepositoryName = getBaseRepositoryName();
+		String baseGitRepositoryName = getBaseGitRepositoryName();
 
-		String baseRepositorySHA = null;
+		String baseGitRepositorySHA = null;
 
-		if (!baseRepositoryName.equals("liferay-jenkins-ee") &&
-			baseRepositoryName.endsWith("-ee")) {
+		if (!baseGitRepositoryName.equals("liferay-jenkins-ee") &&
+			baseGitRepositoryName.endsWith("-ee")) {
 
-			baseRepositorySHA = getBaseRepositorySHA(
-				baseRepositoryName.substring(
-					0, baseRepositoryName.length() - 3));
+			baseGitRepositorySHA = getBaseGitRepositorySHA(
+				baseGitRepositoryName.substring(
+					0, baseGitRepositoryName.length() - 3));
 		}
 		else {
-			baseRepositorySHA = getBaseRepositorySHA(baseRepositoryName);
+			baseGitRepositorySHA = getBaseGitRepositorySHA(baseGitRepositoryName);
 		}
 
-		String baseRepositoryCommitURL =
-			"https://github.com/liferay/" + baseRepositoryName + "/commit/" +
-				baseRepositorySHA;
+		String baseGitRepositoryCommitURL =
+			"https://github.com/liferay/" + baseGitRepositoryName + "/commit/" +
+				baseGitRepositorySHA;
 
-		Element baseBranchDetailsElement = Dom4JUtil.getNewElement(
+		Element baseGitBranchDetailsElement = Dom4JUtil.getNewElement(
 			"p", null, "Branch Name: ",
 			Dom4JUtil.getNewAnchorElement(baseBranchURL, getBranchName()));
 
-		if (baseRepositorySHA != null) {
+		if (baseGitRepositorySHA != null) {
 			Dom4JUtil.addToElement(
-				baseBranchDetailsElement, Dom4JUtil.getNewElement("br"),
+				baseGitBranchDetailsElement, Dom4JUtil.getNewElement("br"),
 				"Branch GIT ID: ",
 				Dom4JUtil.getNewAnchorElement(
-					baseRepositoryCommitURL, baseRepositorySHA));
+					baseGitRepositoryCommitURL, baseGitRepositorySHA));
 		}
 
-		return baseBranchDetailsElement;
+		return baseGitBranchDetailsElement;
 	}
 
 	protected Element[] getBuildFailureElements() {
@@ -639,45 +639,45 @@ public class TopLevelBuild extends BaseBuild {
 	}
 
 	protected Element getCompanionBranchDetailsElement() {
-		String baseRepositoryName = getBaseRepositoryName();
+		String baseGitRepositoryName = getBaseGitRepositoryName();
 		String branchName = getBranchName();
 
-		String companionRepositoryName = baseRepositoryName;
+		String companionGitRepositoryName = baseGitRepositoryName;
 
 		if (branchName.equals("master")) {
-			companionRepositoryName = companionRepositoryName + "-ee";
+			companionGitRepositoryName = companionGitRepositoryName + "-ee";
 		}
 
 		if (branchName.endsWith("-private")) {
-			companionRepositoryName = baseRepositoryName.substring(
-				0, baseRepositoryName.indexOf("-ee"));
+			companionGitRepositoryName = baseGitRepositoryName.substring(
+				0, baseGitRepositoryName.indexOf("-ee"));
 		}
 
 		String companionUsername = getCompanionUsername();
 
 		String companionBranchURL = JenkinsResultsParserUtil.combine(
 			"https://github.com/", companionUsername, "/",
-			companionRepositoryName, "/tree/", getCompanionBranchName());
+			companionGitRepositoryName, "/tree/", getCompanionBranchName());
 
-		String companionRepositorySHA = null;
+		String companionGitRepositorySHA = null;
 
-		companionRepositorySHA = getCompanionRepositorySHA();
+		companionGitRepositorySHA = getCompanionGitRepositorySHA();
 
-		String companionRepositoryCommitURL = JenkinsResultsParserUtil.combine(
+		String companionGitRepositoryCommitURL = JenkinsResultsParserUtil.combine(
 			"https://github.com/", companionUsername, "/",
-			companionRepositoryName, "/commit/", companionRepositorySHA);
+			companionGitRepositoryName, "/commit/", companionGitRepositorySHA);
 
 		Element companionBranchDetailsElement = Dom4JUtil.getNewElement(
 			"p", null, "Branch Name: ",
 			Dom4JUtil.getNewAnchorElement(
 				companionBranchURL, getCompanionBranchName()));
 
-		if (companionRepositorySHA != null) {
+		if (companionGitRepositorySHA != null) {
 			Dom4JUtil.addToElement(
 				companionBranchDetailsElement, Dom4JUtil.getNewElement("br"),
 				"Branch GIT ID: ",
 				Dom4JUtil.getNewAnchorElement(
-					companionRepositoryCommitURL, companionRepositorySHA));
+					companionGitRepositoryCommitURL, companionGitRepositorySHA));
 		}
 
 		return companionBranchDetailsElement;
@@ -761,11 +761,11 @@ public class TopLevelBuild extends BaseBuild {
 	}
 
 	protected String getGitRepositoryDetailsPropertiesTempMapURL(
-		String repositoryType) {
+		String gitRepositoryType) {
 
 		if (fromArchive) {
 			return JenkinsResultsParserUtil.combine(
-				getBuildURL(), "git.", repositoryType, ".properties.json");
+				getBuildURL(), "git.", gitRepositoryType, ".properties.json");
 		}
 
 		TopLevelBuild topLevelBuild = getTopLevelBuild();
@@ -777,7 +777,7 @@ public class TopLevelBuild extends BaseBuild {
 			TEMP_MAP_BASE_URL, topLevelBuildJenkinsMaster.getName(), "/",
 			topLevelBuild.getJobName(), "/",
 			String.valueOf(topLevelBuild.getBuildNumber()), "/",
-			topLevelBuild.getJobName(), "/git.", repositoryType, ".properties");
+			topLevelBuild.getJobName(), "/git.", gitRepositoryType, ".properties");
 	}
 
 	protected Element getJenkinsReportBodyElement() {
@@ -1201,7 +1201,7 @@ public class TopLevelBuild extends BaseBuild {
 
 		if (matcher.find()) {
 			return getGitRepositoryDetailsPropertiesTempMapURL(
-				matcher.group("repositoryType"));
+				matcher.group("gitRepositoryType"));
 		}
 
 		return null;
@@ -1260,7 +1260,7 @@ public class TopLevelBuild extends BaseBuild {
 		}
 
 		if (!branchName.startsWith("ee-") &&
-			getBaseRepositoryName().contains("liferay-portal")) {
+			getBaseGitRepositoryName().contains("liferay-portal")) {
 
 			Dom4JUtil.addToElement(
 				detailsElement,
@@ -1322,7 +1322,7 @@ public class TopLevelBuild extends BaseBuild {
 	}
 
 	protected static final Pattern gitRepositoryTempMapNamePattern =
-		Pattern.compile("git\\.(?<repositoryType>.*)\\.properties");
+		Pattern.compile("git\\.(?<gitRepositoryType>.*)\\.properties");
 
 	private static final long _DOWNSTREAM_BUILDS_LISTING_INTERVAL =
 		1000 * 60 * 5;

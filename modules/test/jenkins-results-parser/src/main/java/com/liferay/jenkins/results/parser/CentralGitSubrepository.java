@@ -27,9 +27,9 @@ import org.json.JSONObject;
 /**
  * @author Michael Hashimoto
  */
-public class CentralSubrepository {
+public class CentralGitSubrepository {
 
-	public CentralSubrepository(
+	public CentralGitSubrepository(
 			File gitrepoFile, String centralUpstreamBranchName)
 		throws IOException {
 
@@ -41,7 +41,7 @@ public class CentralSubrepository {
 
 		_gitrepoProperties.load(new FileInputStream(gitrepoFile));
 
-		_subrepositoryName = _getSubrepositoryName();
+		_gitSubrepositoryName = _getGitSubrepositoryName();
 
 		StringBuilder sb = new StringBuilder();
 
@@ -56,24 +56,24 @@ public class CentralSubrepository {
 
 		sb.append(buildProperties.getProperty("base.repository.dir"));
 		sb.append("/");
-		sb.append(_subrepositoryName);
+		sb.append(_gitSubrepositoryName);
 
-		if (!_subrepositoryName.endsWith("-private")) {
+		if (!_gitSubrepositoryName.endsWith("-private")) {
 			sb.append("-private");
 		}
 
-		_subrepositoryDirectory = sb.toString();
+		_gitSubrepositoryDirectory = sb.toString();
 
-		_subrepositoryUpstreamBranchName =
-			_getSubrepositoryUpstreamBranchName();
-		_subrepositoryUsername = _getSubrepositoryUsername();
+		_gitSubrepositoryUpstreamBranchName =
+			_getGitSubrepositoryUpstreamBranchName();
+		_gitSubrepositoryUsername = _getGitSubrepositoryUsername();
 
 		String tempBranchName = "temp-" + System.currentTimeMillis();
 
 		GitWorkingDirectory gitWorkingDirectory =
 			GitWorkingDirectoryFactory.newGitWorkingDirectory(
-				_subrepositoryUpstreamBranchName, _subrepositoryDirectory,
-				_subrepositoryName);
+				_gitSubrepositoryUpstreamBranchName, _gitSubrepositoryDirectory,
+				_gitSubrepositoryName);
 
 		LocalGitBranch upstreamLocalGitBranch = null;
 		LocalGitBranch tempLocalGitBranch = null;
@@ -88,12 +88,12 @@ public class CentralSubrepository {
 				"upstream");
 
 			upstreamLocalGitBranch = gitWorkingDirectory.getLocalGitBranch(
-				_subrepositoryUpstreamBranchName, true);
+				_gitSubrepositoryUpstreamBranchName, true);
 
 			gitWorkingDirectory.fetch(
 				upstreamLocalGitBranch,
 				gitWorkingDirectory.getRemoteGitBranch(
-					_subrepositoryUpstreamBranchName, upstreamGitRemote, true));
+					_gitSubrepositoryUpstreamBranchName, upstreamGitRemote, true));
 		}
 		finally {
 			if ((upstreamLocalGitBranch != null) &&
@@ -110,13 +110,13 @@ public class CentralSubrepository {
 
 		try {
 			File ciPropertiesFile = new File(
-				_subrepositoryDirectory, "ci.properties");
+				_gitSubrepositoryDirectory, "ci.properties");
 
 			_ciProperties.load(new FileInputStream(ciPropertiesFile));
 		}
 		catch (FileNotFoundException fnfe) {
 			System.out.println(
-				"Unable to find ci.properties in " + _subrepositoryDirectory);
+				"Unable to find ci.properties in " + _gitSubrepositoryDirectory);
 		}
 	}
 
@@ -124,16 +124,16 @@ public class CentralSubrepository {
 		return _ciProperties.getProperty(key);
 	}
 
-	public String getSubrepositoryName() {
-		return _subrepositoryName;
+	public String getGitSubrepositoryName() {
+		return _gitSubrepositoryName;
 	}
 
-	public String getSubrepositoryUpstreamCommit() throws IOException {
-		if (_subrepositoryUpstreamCommit == null) {
-			_subrepositoryUpstreamCommit = _getSubrepositoryUpstreamCommit();
+	public String getGitSubrepositoryUpstreamCommit() throws IOException {
+		if (_gitSubrepositoryUpstreamCommit == null) {
+			_gitSubrepositoryUpstreamCommit = _getGitSubrepositoryUpstreamCommit();
 		}
 
-		return _subrepositoryUpstreamCommit;
+		return _gitSubrepositoryUpstreamCommit;
 	}
 
 	public boolean isAutoPullEnabled() {
@@ -155,13 +155,13 @@ public class CentralSubrepository {
 		return _centralPullRequestCandidate;
 	}
 
-	public boolean isSubrepositoryUpstreamCommitMerged() throws IOException {
-		String subrepositoryMergedCommit = _gitrepoProperties.getProperty(
+	public boolean isGitSubrepositoryUpstreamCommitMerged() throws IOException {
+		String gitSubrepositoryMergedCommit = _gitrepoProperties.getProperty(
 			"commit", "");
 
-		String subrepositoryUpstreamCommit = getSubrepositoryUpstreamCommit();
+		String gitSubrepositoryUpstreamCommit = getGitSubrepositoryUpstreamCommit();
 
-		if (subrepositoryMergedCommit.equals(subrepositoryUpstreamCommit)) {
+		if (gitSubrepositoryMergedCommit.equals(gitSubrepositoryUpstreamCommit)) {
 			return true;
 		}
 
@@ -169,13 +169,13 @@ public class CentralSubrepository {
 	}
 
 	private String _getMergePullRequestURL() throws IOException {
-		String subrepositoryUpstreamCommit = getSubrepositoryUpstreamCommit();
+		String gitSubrepositoryUpstreamCommit = getGitSubrepositoryUpstreamCommit();
 
 		String path = JenkinsResultsParserUtil.combine(
-			"commits/", subrepositoryUpstreamCommit, "/statuses");
+			"commits/", gitSubrepositoryUpstreamCommit, "/statuses");
 
 		String url = JenkinsResultsParserUtil.getGitHubApiUrl(
-			_subrepositoryName, _subrepositoryUsername, path);
+			_gitSubrepositoryName, _gitSubrepositoryUsername, path);
 
 		for (int i = 0; i < 15; i++) {
 			JSONArray statusesJSONArray = new JSONArray(
@@ -205,7 +205,7 @@ public class CentralSubrepository {
 		return null;
 	}
 
-	private String _getSubrepositoryName() {
+	private String _getGitSubrepositoryName() {
 		String remote = _gitrepoProperties.getProperty("remote");
 
 		int x = remote.indexOf("/") + 1;
@@ -214,31 +214,31 @@ public class CentralSubrepository {
 		return remote.substring(x, y);
 	}
 
-	private String _getSubrepositoryUpstreamBranchName() {
+	private String _getGitSubrepositoryUpstreamBranchName() {
 		String remote = _gitrepoProperties.getProperty("remote");
 
-		String subrepositoryUpstreamBranchName = _centralUpstreamBranchName;
+		String gitSubrepositoryUpstreamBranchName = _centralUpstreamBranchName;
 
-		if (subrepositoryUpstreamBranchName.contains("7.0")) {
-			subrepositoryUpstreamBranchName = "7.0.x";
+		if (gitSubrepositoryUpstreamBranchName.contains("7.0")) {
+			gitSubrepositoryUpstreamBranchName = "7.0.x";
 		}
-		else if (subrepositoryUpstreamBranchName.contains("master")) {
-			subrepositoryUpstreamBranchName = "master";
+		else if (gitSubrepositoryUpstreamBranchName.contains("master")) {
+			gitSubrepositoryUpstreamBranchName = "master";
 		}
 
 		if (remote.contains("-private")) {
-			subrepositoryUpstreamBranchName += "-private";
+			gitSubrepositoryUpstreamBranchName += "-private";
 		}
 
-		return subrepositoryUpstreamBranchName;
+		return gitSubrepositoryUpstreamBranchName;
 	}
 
-	private String _getSubrepositoryUpstreamCommit() throws IOException {
+	private String _getGitSubrepositoryUpstreamCommit() throws IOException {
 		String path = JenkinsResultsParserUtil.combine(
-			"git/refs/heads/", _subrepositoryUpstreamBranchName);
+			"git/refs/heads/", _gitSubrepositoryUpstreamBranchName);
 
 		String url = JenkinsResultsParserUtil.getGitHubApiUrl(
-			_subrepositoryName, _subrepositoryUsername, path);
+			_gitSubrepositoryName, _gitSubrepositoryUsername, path);
 
 		JSONObject branchJSONObject = JenkinsResultsParserUtil.toJSONObject(
 			url, false);
@@ -248,7 +248,7 @@ public class CentralSubrepository {
 		return objectJSONObject.getString("sha");
 	}
 
-	private String _getSubrepositoryUsername() {
+	private String _getGitSubrepositoryUsername() {
 		String remote = _gitrepoProperties.getProperty("remote");
 
 		int x = remote.indexOf(":") + 1;
@@ -262,13 +262,13 @@ public class CentralSubrepository {
 			return false;
 		}
 
-		if (isSubrepositoryUpstreamCommitMerged()) {
+		if (isGitSubrepositoryUpstreamCommitMerged()) {
 			System.out.println(
 				JenkinsResultsParserUtil.combine(
-					"SKIPPED: ", _subrepositoryName,
+					"SKIPPED: ", _gitSubrepositoryName,
 					" contains merged commit https://github.com/",
-					_subrepositoryUsername, "/", _subrepositoryName, "/commit/",
-					getSubrepositoryUpstreamCommit()));
+					_gitSubrepositoryUsername, "/", _gitSubrepositoryName, "/commit/",
+					getGitSubrepositoryUpstreamCommit()));
 
 			return false;
 		}
@@ -278,7 +278,7 @@ public class CentralSubrepository {
 		if (mergePullRequestURL != null) {
 			System.out.println(
 				JenkinsResultsParserUtil.combine(
-					"SKIPPED: ", _subrepositoryName,
+					"SKIPPED: ", _gitSubrepositoryName,
 					" contains an open merge pull request ",
 					mergePullRequestURL));
 
@@ -292,10 +292,10 @@ public class CentralSubrepository {
 	private final String _centralUpstreamBranchName;
 	private final Properties _ciProperties;
 	private final Properties _gitrepoProperties;
-	private final String _subrepositoryDirectory;
-	private final String _subrepositoryName;
-	private final String _subrepositoryUpstreamBranchName;
-	private String _subrepositoryUpstreamCommit;
-	private final String _subrepositoryUsername;
+	private final String _gitSubrepositoryDirectory;
+	private final String _gitSubrepositoryName;
+	private final String _gitSubrepositoryUpstreamBranchName;
+	private String _gitSubrepositoryUpstreamCommit;
+	private final String _gitSubrepositoryUsername;
 
 }

@@ -31,7 +31,7 @@ import java.util.TreeSet;
 /**
  * @author Michael Hashimoto
  */
-public abstract class SubrepositoryJob extends RepositoryJob {
+public abstract class GitSubrepositoryJob extends GitRepositoryJob {
 
 	@Override
 	public Set<String> getBatchNames() {
@@ -61,16 +61,16 @@ public abstract class SubrepositoryJob extends RepositoryJob {
 			return gitWorkingDirectory;
 		}
 
-		checkRepositoryDir();
+		checkGitRepositoryDir();
 
 		gitWorkingDirectory = GitWorkingDirectoryFactory.newGitWorkingDirectory(
-			getBranchName(), repositoryDir.getPath());
+			getBranchName(), gitRepositoryDir.getPath());
 
 		return gitWorkingDirectory;
 	}
 
 	@Override
-	public void setRepositoryDir(File repositoryDir) {
+	public void setGitRepositoryDir(File repositoryDir) {
 		String dirName = repositoryDir.getName();
 
 		if (!dirName.endsWith("-private")) {
@@ -79,10 +79,10 @@ public abstract class SubrepositoryJob extends RepositoryJob {
 			repositoryDir = new File(repositoryDir.getParentFile(), dirName);
 		}
 
-		super.setRepositoryDir(repositoryDir);
+		super.setGitRepositoryDir(repositoryDir);
 	}
 
-	protected SubrepositoryJob(String jobName) {
+	protected GitSubrepositoryJob(String jobName) {
 		super(jobName);
 	}
 
@@ -91,7 +91,7 @@ public abstract class SubrepositoryJob extends RepositoryJob {
 			return subrepositoryTestProperties;
 		}
 
-		checkRepositoryDir();
+		checkGitRepositoryDir();
 
 		Properties buildProperties = null;
 
@@ -109,7 +109,7 @@ public abstract class SubrepositoryJob extends RepositoryJob {
 				"/test-subrepository-batch.properties"));
 
 		subrepositoryTestProperties = JenkinsResultsParserUtil.getProperties(
-			defaultPropertiesFile, new File(repositoryDir, "test.properties"));
+			defaultPropertiesFile, new File(gitRepositoryDir, "test.properties"));
 
 		return subrepositoryTestProperties;
 	}

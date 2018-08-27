@@ -34,14 +34,14 @@ public class RemoteGitRepository extends BaseGitRepository {
 
 	protected RemoteGitRepository(GitRemote gitRemote) {
 		this(
-			gitRemote.getHostname(), gitRemote.getRepositoryName(),
+			gitRemote.getHostname(), gitRemote.getGitRepositoryName(),
 			gitRemote.getUsername());
 	}
 
 	protected RemoteGitRepository(
-		String hostname, String repositoryName, String username) {
+		String hostname, String gitRepositoryName, String username) {
 
-		super(repositoryName);
+		super(gitRepositoryName);
 
 		if ((hostname == null) || hostname.isEmpty()) {
 			throw new IllegalArgumentException("Hostname is null");

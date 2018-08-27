@@ -33,9 +33,9 @@ import org.json.JSONObject;
 /**
  * @author Michael Hashimoto
  */
-public class MergeCentralSubrepositoryUtil {
+public class MergeCentralGitSubrepositoryUtil {
 
-	public static void createSubrepositoryMergePullRequests(
+	public static void createGitSubrepositoryMergePullRequests(
 			String centralWorkingDirectory, String centralUpstreamBranchName,
 			String receiverUserName, String topLevelBranchName)
 		throws IOException {
@@ -70,26 +70,26 @@ public class MergeCentralSubrepositoryUtil {
 
 				if (matcher.find() && !subrepoMergeBlacklist.isEmpty()) {
 					if (subrepoMergeBlacklist.contains(
-							matcher.group("subrepositoryName"))) {
+							matcher.group("gitSubrepositoryName"))) {
 
 						continue;
 					}
 				}
 
-				CentralSubrepository centralSubrepository =
-					new CentralSubrepository(
+				CentralGitSubrepository centralGitSubrepository =
+					new CentralGitSubrepository(
 						gitrepoFile, centralUpstreamBranchName);
 
-				if (!centralSubrepository.isAutoPullEnabled()) {
+				if (!centralGitSubrepository.isAutoPullEnabled()) {
 					continue;
 				}
 
 				String mergeBranchName = _getMergeBranchName(
 					centralUpstreamBranchName,
-					centralSubrepository.getSubrepositoryName(),
-					centralSubrepository.getSubrepositoryUpstreamCommit());
+					centralGitSubrepository.getGitSubrepositoryName(),
+					centralGitSubrepository.getGitSubrepositoryUpstreamCommit());
 
-				if (centralSubrepository.isCentralPullRequestCandidate()) {
+				if (centralGitSubrepository.isCentralPullRequestCandidate()) {
 					GitRemote upstreamGitRemote =
 						centralGitWorkingDirectory.getGitRemote("upstream");
 
@@ -106,7 +106,7 @@ public class MergeCentralSubrepositoryUtil {
 								topLevelLocalGitBranch);
 
 						_commitCiMergeFile(
-							centralGitWorkingDirectory, centralSubrepository,
+							centralGitWorkingDirectory, centralGitSubrepository,
 							gitrepoFile);
 
 						_pushMergeLocalGitBranchToRemote(
@@ -115,16 +115,16 @@ public class MergeCentralSubrepositoryUtil {
 					}
 
 					_createMergePullRequest(
-						centralGitWorkingDirectory, centralSubrepository,
+						centralGitWorkingDirectory, centralGitSubrepository,
 						mergeBranchName, receiverUserName);
 				}
 
 				_deleteStalePulls(
-					centralGitWorkingDirectory, centralSubrepository,
+					centralGitWorkingDirectory, centralGitSubrepository,
 					mergeBranchName, receiverUserName);
 
 				_deleteStaleBranches(
-					centralGitWorkingDirectory, centralSubrepository,
+					centralGitWorkingDirectory, centralGitSubrepository,
 					mergeBranchName);
 			}
 			catch (Exception e) {
@@ -146,7 +146,7 @@ public class MergeCentralSubrepositoryUtil {
 
 			try {
 				JenkinsResultsParserUtil.sendEmail(
-					message, "jenkins", "Merge Central Subrepository",
+					message, "jenkins", "Merge Central Git Subrepository",
 					buildProperties.getProperty(
 						"email.list[merge-central-subrepository]"));
 			}
@@ -159,11 +159,11 @@ public class MergeCentralSubrepositoryUtil {
 
 	private static void _commitCiMergeFile(
 			GitWorkingDirectory centralGitWorkingDirectory,
-			CentralSubrepository centralSubrepository, File gitrepoFile)
+			CentralGitSubrepository centralGitSubrepository, File gitrepoFile)
 		throws IOException {
 
-		String subrepositoryUpstreamCommit =
-			centralSubrepository.getSubrepositoryUpstreamCommit();
+		String gitSubrepositoryUpstreamCommit =
+			centralGitSubrepository.getGitSubrepositoryUpstreamCommit();
 
 		String ciMergeFilePath = _getCiMergeFilePath(
 			centralGitWorkingDirectory, gitrepoFile);
@@ -172,7 +172,7 @@ public class MergeCentralSubrepositoryUtil {
 			new File(
 				centralGitWorkingDirectory.getWorkingDirectory(),
 				ciMergeFilePath),
-			subrepositoryUpstreamCommit);
+			gitSubrepositoryUpstreamCommit);
 
 		centralGitWorkingDirectory.stageFileInCurrentLocalGitBranch(
 			ciMergeFilePath);
@@ -208,17 +208,17 @@ public class MergeCentralSubrepositoryUtil {
 
 	private static void _createMergePullRequest(
 			GitWorkingDirectory centralGitWorkingDirectory,
-			CentralSubrepository centralSubrepository, String mergeBranchName,
+			CentralGitSubrepository centralGitSubrepository, String mergeBranchName,
 			String receiverUserName)
 		throws IOException {
 
-		String subrepositoryName = centralSubrepository.getSubrepositoryName();
-		String subrepositoryUpstreamCommit =
-			centralSubrepository.getSubrepositoryUpstreamCommit();
+		String gitSubrepositoryName = centralGitSubrepository.getGitSubrepositoryName();
+		String gitSubrepositoryUpstreamCommit =
+			centralGitSubrepository.getGitSubrepositoryUpstreamCommit();
 
 		String url = JenkinsResultsParserUtil.getGitHubApiUrl(
-			subrepositoryName, receiverUserName,
-			"statuses/" + subrepositoryUpstreamCommit);
+			gitSubrepositoryName, receiverUserName,
+			"statuses/" + gitSubrepositoryUpstreamCommit);
 
 		JSONObject requestJSONObject = new JSONObject();
 
@@ -229,16 +229,16 @@ public class MergeCentralSubrepositoryUtil {
 		StringBuilder sb = new StringBuilder();
 
 		sb.append("Merging the following commit: [");
-		sb.append(subrepositoryUpstreamCommit);
+		sb.append(gitSubrepositoryUpstreamCommit);
 		sb.append("](https://github.com/");
 		sb.append(receiverUserName);
 		sb.append("/");
-		sb.append(subrepositoryName);
+		sb.append(gitSubrepositoryName);
 		sb.append("/commit/");
-		sb.append(subrepositoryUpstreamCommit);
+		sb.append(gitSubrepositoryUpstreamCommit);
 		sb.append(")");
 
-		String subrepoPullMentionUsers = centralSubrepository.getCIProperty(
+		String subrepoPullMentionUsers = centralGitSubrepository.getCIProperty(
 			"subrepo.merge.pull.mention.users");
 
 		if (subrepoPullMentionUsers != null) {
@@ -253,7 +253,7 @@ public class MergeCentralSubrepositoryUtil {
 			}
 		}
 
-		String title = subrepositoryName + " - Central Merge Pull Request";
+		String title = gitSubrepositoryName + " - Central Merge Pull Request";
 
 		String pullRequestURL = centralGitWorkingDirectory.createPullRequest(
 			sb.toString(), mergeBranchName, receiverUserName, title);
@@ -266,7 +266,7 @@ public class MergeCentralSubrepositoryUtil {
 
 	private static void _deleteStaleBranches(
 			GitWorkingDirectory centralGitWorkingDirectory,
-			CentralSubrepository centralSubrepository, String mergeBranchName)
+			CentralGitSubrepository centralGitSubrepository, String mergeBranchName)
 		throws IOException {
 
 		GitRemote upstreamGitRemote = centralGitWorkingDirectory.getGitRemote(
@@ -285,7 +285,7 @@ public class MergeCentralSubrepositoryUtil {
 				_upstreamRemoteGitBranchNames) {
 
 			if (upstreamRemoteGitBranchName.equals(mergeBranchName) &&
-				!centralSubrepository.isSubrepositoryUpstreamCommitMerged()) {
+				!centralGitSubrepository.isGitSubrepositoryUpstreamCommitMerged()) {
 
 				continue;
 			}
@@ -303,7 +303,7 @@ public class MergeCentralSubrepositoryUtil {
 
 	private static void _deleteStalePulls(
 			GitWorkingDirectory centralGitWorkingDirectory,
-			CentralSubrepository centralSubrepository, String mergeBranchName,
+			CentralGitSubrepository centralGitSubrepository, String mergeBranchName,
 			String receiverUserName)
 		throws IOException {
 
@@ -352,7 +352,7 @@ public class MergeCentralSubrepositoryUtil {
 			String refName = headJSONObject.getString("ref");
 
 			if (refName.equals(mergeBranchName) &&
-				!centralSubrepository.isSubrepositoryUpstreamCommitMerged()) {
+				!centralGitSubrepository.isGitSubrepositoryUpstreamCommitMerged()) {
 
 				continue;
 			}
@@ -398,12 +398,12 @@ public class MergeCentralSubrepositoryUtil {
 	}
 
 	private static String _getMergeBranchName(
-		String centralUpstreamBranchName, String subrepositoryName,
-		String subrepositoryUpstreamCommit) {
+		String centralUpstreamBranchName, String gitSubrepositoryName,
+		String gitSubrepositoryUpstreamCommit) {
 
 		return JenkinsResultsParserUtil.combine(
-			"ci-merge-", subrepositoryName, "-", centralUpstreamBranchName, "-",
-			subrepositoryUpstreamCommit);
+			"ci-merge-", gitSubrepositoryName, "-", centralUpstreamBranchName, "-",
+			gitSubrepositoryUpstreamCommit);
 	}
 
 	private static Properties _getPropertiesFromGitrepoFile(File gitrepoFile)
@@ -420,11 +420,11 @@ public class MergeCentralSubrepositoryUtil {
 		GitWorkingDirectory centralGitWorkingDirectory,
 		LocalGitBranch mergeLocalGitBranch, String receiverUserName) {
 
-		String centralRepositoryName =
+		String centralGitRepositoryName =
 			centralGitWorkingDirectory.getGitRepositoryName();
 
 		String originRemoteURL = JenkinsResultsParserUtil.combine(
-			"git@github.com:", receiverUserName, "/", centralRepositoryName,
+			"git@github.com:", receiverUserName, "/", centralGitRepositoryName,
 			".git");
 
 		GitRemote originGitRemote = centralGitWorkingDirectory.addGitRemote(
@@ -441,7 +441,7 @@ public class MergeCentralSubrepositoryUtil {
 	}
 
 	private static final Pattern _githubRemotePattern = Pattern.compile(
-		"git@github.com:[-\\w]+\\/(?<subrepositoryName>[-\\w]+)\\.git");
+		"git@github.com:[-\\w]+\\/(?<gitSubrepositoryName>[-\\w]+)\\.git");
 	private static JSONArray _pullsJSONArray;
 	private static List<String> _upstreamRemoteGitBranchNames;
 

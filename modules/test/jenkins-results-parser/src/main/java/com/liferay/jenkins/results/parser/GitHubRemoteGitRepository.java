@@ -101,7 +101,7 @@ public class GitHubRemoteGitRepository extends RemoteGitRepository {
 			catch (IOException ioe) {
 				throw new RuntimeException(
 					JenkinsResultsParserUtil.combine(
-						"Unable to get labels for ", getName(), " repository"),
+						"Unable to get labels for ", getName(), " Git repository"),
 					ioe);
 			}
 
@@ -137,7 +137,7 @@ public class GitHubRemoteGitRepository extends RemoteGitRepository {
 				JenkinsResultsParserUtil.combine(
 					"Unable to update or delete label ", oldLabel.getName(),
 					" because it does not exist in the ", getName(),
-					" repository"));
+					" Git repository"));
 		}
 
 		JSONObject jsonObject = null;

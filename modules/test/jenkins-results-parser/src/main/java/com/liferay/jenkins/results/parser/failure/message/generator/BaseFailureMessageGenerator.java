@@ -55,12 +55,12 @@ public abstract class BaseFailureMessageGenerator
 				topLevelBuild.getBaseGitRepositoryDetailsTempMap();
 		}
 
-		String baseRepositoryName = topLevelBuild.getBaseRepositoryName();
+		String baseGitRepositoryName = topLevelBuild.getBaseGitRepositoryName();
 
 		sb.append(pullRequestDetailsMap.get("github.origin.name"));
 
 		sb.append("/");
-		sb.append(baseRepositoryName);
+		sb.append(baseGitRepositoryName);
 		sb.append("/tree/");
 		sb.append(pullRequestDetailsMap.get("github.sender.branch.name"));
 
@@ -130,9 +130,9 @@ public abstract class BaseFailureMessageGenerator
 	protected Element getGitCommitPluginsAnchorElement(
 		TopLevelBuild topLevelBuild) {
 
-		String repositoryName = topLevelBuild.getBaseRepositoryName();
+		String gitRepositoryName = topLevelBuild.getBaseGitRepositoryName();
 
-		Map<String, String> portalRepositoryGitDetailsTempMap =
+		Map<String, String> portalGitRepositoryGitDetailsTempMap =
 			topLevelBuild.getBaseGitRepositoryDetailsTempMap();
 
 		Element gitCommitPluginsAnchorElement = Dom4JUtil.getNewElement("a");
@@ -140,12 +140,12 @@ public abstract class BaseFailureMessageGenerator
 		StringBuilder sb = new StringBuilder();
 
 		sb.append("https://github.com/");
-		sb.append(portalRepositoryGitDetailsTempMap.get("github.origin.name"));
+		sb.append(portalGitRepositoryGitDetailsTempMap.get("github.origin.name"));
 		sb.append("/");
-		sb.append(repositoryName);
+		sb.append(gitRepositoryName);
 		sb.append("/blob/");
 		sb.append(
-			portalRepositoryGitDetailsTempMap.get("github.sender.branch.name"));
+			portalGitRepositoryGitDetailsTempMap.get("github.sender.branch.name"));
 		sb.append("/git-commit-plugins");
 
 		gitCommitPluginsAnchorElement.addAttribute("href", sb.toString());

@@ -38,9 +38,9 @@ public interface Build {
 
 	public List<String> getBadBuildURLs();
 
-	public String getBaseRepositoryName();
+	public String getBaseGitRepositoryName();
 
-	public String getBaseRepositorySHA(String repositoryName);
+	public String getBaseGitRepositorySHA(String gitRepositoryName);
 
 	public String getBranchName();
 

@@ -66,10 +66,10 @@ public class PortalWorkspace extends BaseWorkspace {
 
 		_synchronizeBranches = synchronizeBranches;
 
-		String portalRepositoryName = _getPortalRepositoryName(portalGitHubURL);
+		String portalGitRepositoryName = _getPortalGitRepositoryName(portalGitHubURL);
 
 		_primaryPortalLocalGitRepository = _getPortalLocalGitRepository(
-			portalRepositoryName, portalUpstreamBranchName);
+			portalGitRepositoryName, portalUpstreamBranchName);
 
 		_primaryPortalLocalGitBranch = _getCachedPortalLocalGitBranch(
 			_primaryPortalLocalGitRepository, portalGitHubURL);
@@ -89,15 +89,15 @@ public class PortalWorkspace extends BaseWorkspace {
 
 		String branchName = portalUpstreamBranchName.replace("-private", "");
 
-		String repositoryName = "liferay-portal-ee";
+		String gitRepositoryName = "liferay-portal-ee";
 
 		if (branchName.equals("master")) {
-			repositoryName = repositoryName.replace("-ee", "");
+			gitRepositoryName = gitRepositoryName.replace("-ee", "");
 		}
 
 		LocalGitRepository localGitRepository =
 			GitRepositoryFactory.getLocalGitRepository(
-				repositoryName, branchName);
+				gitRepositoryName, branchName);
 
 		LocalGitBranch localGitBranch = _getLocalGitBranchFromGitCommit(
 			"git-commit-portal", localGitRepository, _synchronizeBranches);
@@ -158,19 +158,19 @@ public class PortalWorkspace extends BaseWorkspace {
 			return null;
 		}
 
-		String repositoryName = "liferay-portal-ee";
+		String gitRepositoryName = "liferay-portal-ee";
 
 		if (branchName.equals("master")) {
-			repositoryName = repositoryName.replace("-ee", "");
+			gitRepositoryName = gitRepositoryName.replace("-ee", "");
 		}
 
 		LocalGitRepository localGitRepository =
 			GitRepositoryFactory.getLocalGitRepository(
-				repositoryName, branchName);
+				gitRepositoryName, branchName);
 
 		RemoteGitRef remoteGitRef = GitUtil.getRemoteGitRef(
 			JenkinsResultsParserUtil.combine(
-				"https://github.com/liferay/", repositoryName, "/tree/",
+				"https://github.com/liferay/", gitRepositoryName, "/tree/",
 				branchName));
 
 		LocalGitBranch localGitBranch =
@@ -208,7 +208,7 @@ public class PortalWorkspace extends BaseWorkspace {
 		return _pluginsLocalGitBranch;
 	}
 
-	protected PortalLocalGitRepository getPrimaryPortalRepository() {
+	protected PortalLocalGitRepository getPrimaryPortalGitRepository() {
 		return _primaryPortalLocalGitRepository;
 	}
 
@@ -328,7 +328,7 @@ public class PortalWorkspace extends BaseWorkspace {
 		String gitCommitFileName, LocalGitRepository localGitRepository,
 		boolean synchronizeBranches) {
 
-		String gitCommitFileContent = _getPortalRepositoryFileContent(
+		String gitCommitFileContent = _getPortalGitRepositoryFileContent(
 			gitCommitFileName);
 
 		LocalGitBranch localGitBranch = null;
@@ -364,26 +364,26 @@ public class PortalWorkspace extends BaseWorkspace {
 	}
 
 	private PortalLocalGitRepository _getPortalLocalGitRepository(
-		String portalRepositoryName, String portalUpstreamBranchName) {
+		String portalGitRepositoryName, String portalUpstreamBranchName) {
 
 		LocalGitRepository localGitRepository =
 			GitRepositoryFactory.getLocalGitRepository(
-				portalRepositoryName, portalUpstreamBranchName);
+				portalGitRepositoryName, portalUpstreamBranchName);
 
 		if (!(localGitRepository instanceof PortalLocalGitRepository)) {
 			throw new RuntimeException(
-				"Invalid local repository " + localGitRepository);
+				"Invalid local Git repository " + localGitRepository);
 		}
 
 		return (PortalLocalGitRepository)localGitRepository;
 	}
 
-	private String _getPortalRepositoryFileContent(
-		String portalRepositoryFileName) {
+	private String _getPortalGitRepositoryFileContent(
+		String portalGitRepositoryFileName) {
 
 		File gitCommitFile = new File(
 			_primaryPortalLocalGitBranch.getDirectory(),
-			portalRepositoryFileName);
+			portalGitRepositoryFileName);
 
 		try {
 			String gitCommit = JenkinsResultsParserUtil.read(gitCommitFile);
@@ -395,7 +395,7 @@ public class PortalWorkspace extends BaseWorkspace {
 		}
 	}
 
-	private String _getPortalRepositoryName(String portalGitHubURL) {
+	private String _getPortalGitRepositoryName(String portalGitHubURL) {
 		Matcher matcher = _portalGitHubURLPattern.matcher(portalGitHubURL);
 
 		if (!matcher.find()) {
@@ -403,11 +403,11 @@ public class PortalWorkspace extends BaseWorkspace {
 				"Invalid portal GitHub URL " + portalGitHubURL);
 		}
 
-		return matcher.group("repositoryName");
+		return matcher.group("gitRepositoryName");
 	}
 
 	private static final Pattern _portalGitHubURLPattern = Pattern.compile(
-		"https://github.com/[^/]+/(?<repositoryName>liferay-portal(-ee)?)/.*");
+		"https://github.com/[^/]+/(?<gitRepositoryName>liferay-portal(-ee)?)/.*");
 
 	private PortalLocalGitBranch _basePortalLocalGitBranch;
 	private PortalLocalGitBranch _companionPortalLocalGitBranch;

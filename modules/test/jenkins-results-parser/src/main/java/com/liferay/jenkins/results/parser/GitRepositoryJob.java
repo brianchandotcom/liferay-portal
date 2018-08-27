@@ -22,7 +22,7 @@ import java.util.regex.Pattern;
 /**
  * @author Michael Hashimoto
  */
-public abstract class RepositoryJob extends BaseJob {
+public abstract class GitRepositoryJob extends BaseJob {
 
 	public String getBranchName() {
 		if (_branchName != null) {
@@ -47,41 +47,41 @@ public abstract class RepositoryJob extends BaseJob {
 			return gitWorkingDirectory;
 		}
 
-		checkRepositoryDir();
+		checkGitRepositoryDir();
 
 		gitWorkingDirectory = GitWorkingDirectoryFactory.newGitWorkingDirectory(
-			getBranchName(), repositoryDir.getAbsolutePath());
+			getBranchName(), gitRepositoryDir.getAbsolutePath());
 
 		return gitWorkingDirectory;
 	}
 
-	public void setRepositoryDir(File repositoryDir) {
-		if (this.repositoryDir != null) {
+	public void setGitRepositoryDir(File repositoryDir) {
+		if (this.gitRepositoryDir != null) {
 			throw new IllegalStateException(
 				"Repository directory is already set to " +
-					this.repositoryDir.getPath());
+					this.gitRepositoryDir.getPath());
 		}
 
-		this.repositoryDir = repositoryDir;
+		this.gitRepositoryDir = repositoryDir;
 	}
 
-	protected RepositoryJob(String jobName) {
+	protected GitRepositoryJob(String jobName) {
 		super(jobName);
 	}
 
-	protected void checkRepositoryDir() {
-		if (repositoryDir == null) {
+	protected void checkGitRepositoryDir() {
+		if (gitRepositoryDir == null) {
 			throw new IllegalStateException("Repository directory is not set");
 		}
 
-		if (!repositoryDir.exists()) {
+		if (!gitRepositoryDir.exists()) {
 			throw new IllegalStateException(
-				repositoryDir.getPath() + " does not exist");
+				gitRepositoryDir.getPath() + " does not exist");
 		}
 	}
 
 	protected GitWorkingDirectory gitWorkingDirectory;
-	protected File repositoryDir;
+	protected File gitRepositoryDir;
 
 	private static final Pattern _jobNamePattern = Pattern.compile(
 		"[^\\(]+\\((?<branchName>[^\\)]+)\\)");

@@ -20,21 +20,21 @@ import java.io.IOException;
  * @author Michael Hashimoto
  * @author Peter Yoo
  */
-public class SubrepositoryGitWorkingDirectory extends GitWorkingDirectory {
+public class GitSubrepositoryGitWorkingDirectory extends GitWorkingDirectory {
 
-	protected SubrepositoryGitWorkingDirectory(
+	protected GitSubrepositoryGitWorkingDirectory(
 			String upstreamBranchName, String workingDirectoryPath)
 		throws IOException {
 
 		super(upstreamBranchName, workingDirectoryPath);
 	}
 
-	protected SubrepositoryGitWorkingDirectory(
+	protected GitSubrepositoryGitWorkingDirectory(
 			String upstreamBranchName, String workingDirectoryPath,
-			String repositoryName)
+			String gitRepositoryName)
 		throws IOException {
 
-		super(upstreamBranchName, workingDirectoryPath, repositoryName);
+		super(upstreamBranchName, workingDirectoryPath, gitRepositoryName);
 	}
 
 	@Override

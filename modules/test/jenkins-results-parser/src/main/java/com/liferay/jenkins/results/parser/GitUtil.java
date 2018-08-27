@@ -70,7 +70,7 @@ public class GitUtil {
 
 		String remoteGitRepositoryURL = JenkinsResultsParserUtil.combine(
 			"git@github.com:", matcher.group("username"), "/",
-			matcher.group("repositoryName"), ".git");
+			matcher.group("gitRepositoryName"), ".git");
 
 		return getRemoteGitRef(
 			matcher.group("refName"), new File("."), remoteGitRepositoryURL);
@@ -125,7 +125,7 @@ public class GitUtil {
 		RemoteGitRepository remoteGitRepository =
 			GitRepositoryFactory.getRemoteGitRepository(
 				remoteURLMatcher.group("hostname"),
-				remoteURLMatcher.group("repositoryName"),
+				remoteURLMatcher.group("gitRepositoryName"),
 				remoteURLMatcher.group("username"));
 
 		for (String line : input.split("\n")) {
@@ -258,7 +258,7 @@ public class GitUtil {
 
 	private static final Pattern _gitHubRefURLPattern = Pattern.compile(
 		JenkinsResultsParserUtil.combine(
-			"https://github.com/(?<username>[^/]+)/(?<repositoryName>[^/]+)/",
+			"https://github.com/(?<username>[^/]+)/(?<gitRepositoryName>[^/]+)/",
 			"tree/(?<refName>[^/]+)"));
 
 }

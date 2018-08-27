@@ -28,7 +28,7 @@ public class GitRemote implements Comparable<GitRemote> {
 	public static final Pattern remoteURLPattern = Pattern.compile(
 		JenkinsResultsParserUtil.combine(
 			"git@(?<hostname>[^:]+):(?<username>[^/]+)/",
-			"(?<repositoryName>[^\\.]+)(.git)?"));
+			"(?<gitRepositoryName>[^\\.]+)(.git)?"));
 
 	@Override
 	public int compareTo(GitRemote otherGitRemote) {
@@ -65,8 +65,8 @@ public class GitRemote implements Comparable<GitRemote> {
 		return _fetchRemoteURL;
 	}
 
-	public String getRepositoryName() {
-		return _repositoryName;
+	public String getGitRepositoryName() {
+		return _gitRepositoryName;
 	}
 
 	public String getUsername() {
@@ -148,7 +148,7 @@ public class GitRemote implements Comparable<GitRemote> {
 
 		_hostname = remoteURLMatcher.group("hostname");
 		_username = remoteURLMatcher.group("username");
-		_repositoryName = remoteURLMatcher.group("repositoryName");
+		_gitRepositoryName = remoteURLMatcher.group("gitRepositoryName");
 	}
 
 	private static final Pattern _remotePattern = Pattern.compile(
@@ -157,16 +157,16 @@ public class GitRemote implements Comparable<GitRemote> {
 			"(?<type>[^\\s]+)\\)"));
 	private static final MultiPattern _remoteURLMultiPattern = new MultiPattern(
 		"git@(?<hostname>[^:]+):(?<username>[^/]+)" +
-			"/(?<repositoryName>[^\\.^\\s]+)(\\.git)?+\\s*",
+			"/(?<gitRepositoryName>[^\\.^\\s]+)(\\.git)?+\\s*",
 		"https://(?<hostname>[^/]+)/(?<username>[^/]+)" +
-			"/(?<repositoryName>[^\\.^\\s]+)(\\.git)?+\\s*");
+			"/(?<gitRepositoryName>[^\\.^\\s]+)(\\.git)?+\\s*");
 
 	private final String _fetchRemoteURL;
 	private final GitWorkingDirectory _gitWorkingDirectory;
 	private final String _hostname;
 	private final String _name;
 	private final String _pushRemoteURL;
-	private final String _repositoryName;
+	private final String _gitRepositoryName;
 	private final String _username;
 
 }

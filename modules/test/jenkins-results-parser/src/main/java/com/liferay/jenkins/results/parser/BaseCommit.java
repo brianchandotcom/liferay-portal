@@ -42,7 +42,7 @@ public abstract class BaseCommit implements Commit {
 	@Override
 	public String getGitHubCommitURL() {
 		return JenkinsResultsParserUtil.combine(
-			"https://github.com/", _gitHubUserName, "/", _repositoryName,
+			"https://github.com/", _gitHubUserName, "/", _gitRepositoryName,
 			"/commit/", getSHA());
 	}
 
@@ -101,19 +101,19 @@ public abstract class BaseCommit implements Commit {
 	}
 
 	protected BaseCommit(
-		String gitHubUserName, String message, String repositoryName,
+		String gitHubUserName, String message, String gitRepositoryName,
 		String sha, Type type) {
 
 		_gitHubUserName = gitHubUserName;
 		_message = message;
-		_repositoryName = repositoryName;
+		_gitRepositoryName = gitRepositoryName;
 		_sha = sha;
 		_type = type;
 	}
 
 	protected String getGitHubStatusURL() {
 		return JenkinsResultsParserUtil.getGitHubApiUrl(
-			_repositoryName, _gitHubUserName, "statuses/" + getSHA());
+			_gitRepositoryName, _gitHubUserName, "statuses/" + getSHA());
 	}
 
 	protected GitWorkingDirectory gitWorkingDirectory;
@@ -129,7 +129,7 @@ public abstract class BaseCommit implements Commit {
 
 	private final String _gitHubUserName;
 	private final String _message;
-	private final String _repositoryName;
+	private final String _gitRepositoryName;
 	private final String _sha;
 	private final Type _type;
 

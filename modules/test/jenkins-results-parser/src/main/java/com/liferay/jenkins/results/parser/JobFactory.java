@@ -56,12 +56,12 @@ public class JobFactory {
 		}
 
 		if (jobName.contains("test-plugins-acceptance-pullrequest(")) {
-			PluginsRepositoryJob pluginsRepositoryJob =
-				new PluginsRepositoryJob(jobName);
+			PluginsGitRepositoryJob pluginsGitRepositoryJob =
+				new PluginsGitRepositoryJob(jobName);
 
-			_jobs.put(jobName, pluginsRepositoryJob);
+			_jobs.put(jobName, pluginsGitRepositoryJob);
 
-			return pluginsRepositoryJob;
+			return pluginsGitRepositoryJob;
 		}
 
 		if (jobName.contains("test-portal-acceptance-pullrequest(")) {
@@ -116,7 +116,7 @@ public class JobFactory {
 
 		if (jobName.contains("test-subrepository-acceptance-pullrequest(")) {
 			_jobs.put(
-				jobName, new SubrepositoryAcceptancePullRequestJob(jobName));
+				jobName, new GitSubrepositoryAcceptancePullRequestJob(jobName));
 
 			return _jobs.get(jobName);
 		}

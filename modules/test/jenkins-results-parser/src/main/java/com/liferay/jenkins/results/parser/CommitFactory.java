@@ -27,9 +27,9 @@ import org.json.JSONObject;
 public class CommitFactory {
 
 	public static Commit newCommit(
-		String gitHubUserName, String repositoryName, String sha) {
+		String gitHubUserName, String gitRepositoryName, String sha) {
 
-		String commitURL = _getCommitURL(gitHubUserName, repositoryName, sha);
+		String commitURL = _getCommitURL(gitHubUserName, gitRepositoryName, sha);
 
 		if (_commits.containsKey(commitURL)) {
 			return _commits.get(commitURL);
@@ -43,7 +43,7 @@ public class CommitFactory {
 
 			String message = commitJSONObject.getString("message");
 
-			return newCommit(gitHubUserName, message, repositoryName, sha);
+			return newCommit(gitHubUserName, message, gitRepositoryName, sha);
 		}
 		catch (IOException ioe) {
 			throw new RuntimeException("Unable to get commit details", ioe);
@@ -51,10 +51,10 @@ public class CommitFactory {
 	}
 
 	public static Commit newCommit(
-		String gitHubUserName, String message, String repositoryName,
+		String gitHubUserName, String message, String gitRepositoryName,
 		String sha) {
 
-		String commitURL = _getCommitURL(gitHubUserName, repositoryName, sha);
+		String commitURL = _getCommitURL(gitHubUserName, gitRepositoryName, sha);
 
 		if (_commits.containsKey(commitURL)) {
 			return _commits.get(commitURL);
@@ -67,7 +67,7 @@ public class CommitFactory {
 		}
 
 		Commit commit = new DefaultCommit(
-			gitHubUserName, message, repositoryName, sha, type);
+			gitHubUserName, message, gitRepositoryName, sha, type);
 
 		_commits.put(commitURL, commit);
 
@@ -75,10 +75,10 @@ public class CommitFactory {
 	}
 
 	private static String _getCommitURL(
-		String gitHubUserName, String repositoryName, String sha) {
+		String gitHubUserName, String gitRepositoryName, String sha) {
 
 		return JenkinsResultsParserUtil.getGitHubApiUrl(
-			repositoryName, gitHubUserName, "commits/" + sha);
+			gitRepositoryName, gitHubUserName, "commits/" + sha);
 	}
 
 	private static final Map<String, Commit> _commits = new HashMap<>();

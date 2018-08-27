@@ -81,7 +81,7 @@ public class LocalGitRepository extends BaseGitRepository {
 		if (!directory.exists()) {
 			throw new RuntimeException(
 				JenkinsResultsParserUtil.combine(
-					"Unable to find repository directory for ", getName(),
+					"Unable to find Git repository directory for ", getName(),
 					" at ", directory.toString()));
 		}
 
@@ -89,7 +89,7 @@ public class LocalGitRepository extends BaseGitRepository {
 
 		if (!dotGitFile.exists()) {
 			throw new IllegalArgumentException(
-				directory + " is not a valid repository");
+				directory + " is not a valid Git repository");
 		}
 
 		_gitWorkingDirectory =

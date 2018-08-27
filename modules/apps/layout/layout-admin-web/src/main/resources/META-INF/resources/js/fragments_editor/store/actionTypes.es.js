@@ -30,9 +30,18 @@ const REMOVE_FRAGMENT_ENTRY_LINK = 'removeFragmentEntryLink';
 
 const UPDATE_DRAG_TARGET = 'updateDragTarget';
 
+/**
+ * Update translation status action type
+ * @review
+ * @type {string}
+ */
+
+const UPDATE_TRANSLATION_STATUS = 'updateTranslationStatus';
+
 export {
 	ADD_FRAGMENT_ENTRY_LINK,
 	CLEAR_DRAG_TARGET,
 	REMOVE_FRAGMENT_ENTRY_LINK,
-	UPDATE_DRAG_TARGET
+	UPDATE_DRAG_TARGET,
+	UPDATE_TRANSLATION_STATUS
 };

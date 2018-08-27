@@ -46,10 +46,6 @@
 	{@param? _selectMappingDialogMappedFieldId: string}
 	{@param? _selectMappingDialogVisible: bool}
 	{@param? _selectMappingTypeDialogVisible: bool}
-	{@param? _translationStatus: [
-		languageValues: list<[languageId: string, values: list<string>]>,
-		translationKeys: list<string>
-	]}
 	{@param? fragmentEntryLinks: list<[
 		content: html|null,
 		editableValues: ?,
@@ -74,6 +70,10 @@
 		]
 	]}
 	{@param? status: string}
+	{@param? translationStatus: [
+		languageValues: list<[languageId: string, values: list<string>]>,
+		translationKeys: list<string>
+	]}
 	{@param? updateLayoutPageTemplateEntryAssetTypeURL: any}
 	{@param? _store: ?}
 
@@ -95,7 +95,7 @@
 			{param translationAvailableLanguages: $availableLanguages /}
 			{param translationDefaultLanguageId: $defaultLanguageId /}
 			{param translationLanguageId: $languageId /}
-			{param translationStatus: $_translationStatus /}
+			{param translationStatus: $translationStatus /}
 		{/call}
 
 		{call com.liferay.layout.admin.web.FragmentsEditorSidebar.render}

@@ -11,12 +11,13 @@ import {
 	addFragmentEntryLinkReducer,
 	removeFragmentEntryLinkReducer
 } from './store/reducers/fragmentEntryLink.es';
-import {translationStatusReducer} from './store/reducers/translationStatus';
-import {updateDragTargetReducer} from './store/reducers/dragDrop.es';
+import {connect, MetalStore} from './store/MetalStore.es';
 import FragmentEntryLink from './fragment_entry_link/FragmentEntryLink.es';
 import {INITIAL_STATE} from './store/initialState.es';
-import {connect, MetalStore} from './store/MetalStore.es';
 import templates from './FragmentsEditor.soy';
+import {translationStatusReducer} from './store/reducers/translationStatus';
+import {UPDATE_TRANSLATION_STATUS} from './store/actionTypes.es';
+import {updateDragTargetReducer} from './store/reducers/dragDrop.es';
 
 /**
  * FragmentsEditor
@@ -44,17 +45,8 @@ class FragmentsEditor extends Component {
 		);
 
 		connect(this, this._store);
-	}
 
-	/**
-	 * @inheritDoc
-	 * @review
-	 */
-
-	rendered(firstRender) {
-		if (firstRender) {
-			this._store.dispatchAction(UPDATE_TRANSLATION_STATUS);
-		}
+		this._store.dispatchAction(UPDATE_TRANSLATION_STATUS);
 	}
 
 	/**

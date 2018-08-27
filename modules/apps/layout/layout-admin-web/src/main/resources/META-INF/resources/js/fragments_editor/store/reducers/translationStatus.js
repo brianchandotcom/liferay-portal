@@ -1,6 +1,7 @@
 import {
 	ADD_FRAGMENT_ENTRY_LINK,
-	REMOVE_FRAGMENT_ENTRY_LINK
+	REMOVE_FRAGMENT_ENTRY_LINK,
+	UPDATE_TRANSLATION_STATUS
 } from '../actionTypes.es';
 
 const EDITABLE_VALUES_KEY = 'com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor';
@@ -10,11 +11,12 @@ function translationStatusReducer(state, actionType) {
 
 	if (
 		actionType === ADD_FRAGMENT_ENTRY_LINK ||
+		actionType === UPDATE_TRANSLATION_STATUS ||
 		actionType === REMOVE_FRAGMENT_ENTRY_LINK
 	) {
 		nextState.translationStatus = _getTranslationStatus(
-			_getEditableValues(state.fragmentEntryLinks),
-			_getLanguageKeys(state.availableLanguages)
+			_getLanguageKeys(state.availableLanguages),
+			_getEditableValues(state.fragmentEntryLinks)
 		);
 	}
 

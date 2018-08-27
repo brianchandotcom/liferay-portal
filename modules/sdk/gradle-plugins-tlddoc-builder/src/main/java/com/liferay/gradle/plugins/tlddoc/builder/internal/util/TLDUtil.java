@@ -34,7 +34,8 @@ import org.w3c.dom.NodeList;
  */
 public class TLDUtil {
 
-	public static Map<String, File> getDTDProperties(File file)
+	public static Map<String, File> getDTDProperties(
+			File file, File gradleHomeDir)
 		throws Exception {
 
 		String fileName = file.getName();
@@ -67,7 +68,8 @@ public class TLDUtil {
 			return Collections.emptyMap();
 		}
 
-		Map<String, File> portalDefinitions = getPortalDefinitions(file);
+		Map<String, File> portalDefinitions = getPortalDefinitions(
+			gradleHomeDir);
 
 		if (!portalDefinitions.containsKey(definitionFileName)) {
 			return Collections.emptyMap();
@@ -80,7 +82,8 @@ public class TLDUtil {
 		return dtdProperties;
 	}
 
-	public static Map<String, File> getSchemaProperties(File file)
+	public static Map<String, File> getSchemaProperties(
+			File file, File gradleHomeDir)
 		throws Exception {
 
 		String fileName = file.getName();
@@ -95,7 +98,8 @@ public class TLDUtil {
 			return Collections.emptyMap();
 		}
 
-		Map<String, File> portalDefinitions = getPortalDefinitions(file);
+		Map<String, File> portalDefinitions = getPortalDefinitions(
+			gradleHomeDir);
 		Map<String, File> schemaProperties = new HashMap<>();
 
 		NodeList nodeList = document.getElementsByTagName("taglib");
@@ -173,8 +177,10 @@ public class TLDUtil {
 		return trimmedString.substring(index + 1);
 	}
 
-	protected static Map<String, File> getPortalDefinitions(File file) {
-		File dir = file.getParentFile();
+	protected static Map<String, File> getPortalDefinitions(
+		File gradleHomeDir) {
+
+		File dir = gradleHomeDir;
 
 		while (dir != null) {
 			File portalImplDir = new File(dir, "portal-impl");
@@ -195,7 +201,9 @@ public class TLDUtil {
 		File definitionsDir = new File(dir, "definitions");
 
 		for (File definitionFile : definitionsDir.listFiles()) {
-			portalDefinitions.put(definitionFile.getName(), definitionFile);
+			String definitionFileName = definitionFile.getName();
+
+			portalDefinitions.put(definitionFileName, definitionFile);
 		}
 
 		return portalDefinitions;

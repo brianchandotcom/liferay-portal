@@ -108,7 +108,7 @@ if (Validator.isNotNull(keywords)) {
 </div>
 
 <div class="lfr-content-category panel-page-category">
-	<a class="collapse-icon list-group-heading" data-toggle="collapse" href="#manageRecentPanel">
+	<a class="collapse-icon list-group-heading panel-header panel-header-link" data-toggle="collapse" href="#manageRecentPanel">
 		<liferay-ui:message key="<%= panelTitle %>" />
 	</a>
 

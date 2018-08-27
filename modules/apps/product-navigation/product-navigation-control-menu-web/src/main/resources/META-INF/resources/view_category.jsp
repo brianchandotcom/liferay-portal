@@ -85,7 +85,7 @@ if (!categories.isEmpty() || !portlets.isEmpty()) {
 	<input id="<portlet:namespace />portletCategory<%= portletCategoryIndex %>CategoryPath" type="hidden" value="<%= newCategoryPath.replace(':', '-') %>" />
 
 	<div class="lfr-content-category panel-page-category">
-		<a class="collapse-icon collapse-icon-middle collapsed list-group-heading" data-toggle="collapse" href="#<%= panelId %>">
+		<a class="collapse-icon collapse-icon-middle collapsed list-group-heading panel-header panel-header-link" data-toggle="collapse" href="#<%= panelId %>">
 			<%= title %>
 
 			<aui:icon cssClass="collapse-icon-closed" image="angle-right" markupView="lexicon" />
@@ -95,7 +95,7 @@ if (!categories.isEmpty() || !portlets.isEmpty()) {
 
 		<div class="collapse list-group-panel" id="<%= panelId %>">
 			<div class="list-group-item">
-				<ul class="nav nav-equal-height">
+				<ul class="nav nav-equal-height nav-stacked">
 
 					<%
 					for (PortletCategory category : categories) {
@@ -173,7 +173,7 @@ if (!categories.isEmpty() || !portlets.isEmpty()) {
 								%>
 
 								<c:if test="<%= ListUtil.isNotEmpty(portletItems) %>">
-									<ul class="nav nav-equal-height">
+									<ul class="nav nav-equal-height nav-stacked">
 
 										<%
 										for (PortletItem portletItem : portletItems) {

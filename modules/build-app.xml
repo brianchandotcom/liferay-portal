@@ -265,10 +265,24 @@
 	<target depends="get-app-version,init-build-app" name="check-stale-artifacts" unless="check.stale.artifacts.skip">
 		<property location="${gradle.wrapper.path}" name="gradle.wrapper.path" />
 
+		<move
+			failonerror="false"
+			file="${app.dir}/settings.gradle"
+			quiet="true"
+			tofile="${app.dir}/settings.gradle.tmp"
+		/>
+
 		<exec dir="${app.dir}" executable="${gradle.wrapper.path}" outputproperty="stale.artifacts.output">
 			<arg value="printStaleArtifact" />
 			<arg value="-q" />
 		</exec>
+
+		<move
+			failonerror="false"
+			file="${app.dir}/settings.gradle.tmp"
+			quiet="true"
+			tofile="${app.dir}/settings.gradle"
+		/>
 
 		<loadfile
 			property="module.stale.artifacts"

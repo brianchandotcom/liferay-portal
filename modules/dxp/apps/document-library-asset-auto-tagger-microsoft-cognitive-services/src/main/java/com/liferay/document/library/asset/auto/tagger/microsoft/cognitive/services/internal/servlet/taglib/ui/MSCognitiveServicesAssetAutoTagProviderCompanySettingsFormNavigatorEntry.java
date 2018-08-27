@@ -128,7 +128,7 @@ public class
 			WebKeys.THEME_DISPLAY);
 
 		MSCognitiveServicesAssetAutoTagProviderCompanyConfiguration
-			MSCognitiveServicesAssetAutoTagProviderCompanyConfiguration =
+			msCognitiveServicesAssetAutoTagProviderCompanyConfiguration =
 				_configurationProvider.getConfiguration(
 					MSCognitiveServicesAssetAutoTagProviderCompanyConfiguration.
 						class,
@@ -140,7 +140,7 @@ public class
 		request.setAttribute(
 			MSCognitiveServicesAssetAutoTagProviderCompanyConfiguration.
 				class.getName(),
-			MSCognitiveServicesAssetAutoTagProviderCompanyConfiguration);
+			msCognitiveServicesAssetAutoTagProviderCompanyConfiguration);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

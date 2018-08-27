@@ -63,10 +63,10 @@ public class MSCognitiveServicesImageAssetAutoTagProvider
 	public List<String> getTagNames(FileEntry fileEntry) {
 		try {
 			MSCognitiveServicesAssetAutoTagProviderCompanyConfiguration
-				MSCognitiveServicesAssetAutoTagProviderCompanyConfiguration =
+				msCognitiveServicesAssetAutoTagProviderCompanyConfiguration =
 					_getConfiguration(fileEntry);
 
-			if (!MSCognitiveServicesAssetAutoTagProviderCompanyConfiguration.
+			if (!msCognitiveServicesAssetAutoTagProviderCompanyConfiguration.
 					enabled() ||
 				_isTemporary(fileEntry) || (fileEntry.getSize() > _MAX_SIZE) ||
 				!_isSupportedFormat(fileEntry)) {
@@ -77,9 +77,9 @@ public class MSCognitiveServicesImageAssetAutoTagProvider
 			FileVersion fileVersion = fileEntry.getFileVersion();
 
 			JSONObject responseJSONObject = _queryComputerVisionJSONObject(
-				MSCognitiveServicesAssetAutoTagProviderCompanyConfiguration.
+				msCognitiveServicesAssetAutoTagProviderCompanyConfiguration.
 					apiEndpoint(),
-				MSCognitiveServicesAssetAutoTagProviderCompanyConfiguration.
+				msCognitiveServicesAssetAutoTagProviderCompanyConfiguration.
 					apiKey(),
 				fileVersion);
 

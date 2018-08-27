@@ -6,7 +6,7 @@ import FormSupport from './FormSupport.es';
 import Soy from 'metal-soy';
 import templates from './FormRenderer.soy.js';
 import {ClayActionsDropdown} from 'clay-dropdown';
-import {setLocalizedValue} from '../../util/internationalization.es';
+import {setLocalizedValue} from '../../util/i18n.es';
 import '../Page/PageRenderer.es';
 import { pageStructure } from '../../util/config.es';
 

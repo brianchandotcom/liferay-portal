@@ -1,4 +1,4 @@
-import {setLocalizedValue} from '../internationalization.es';
+import {setLocalizedValue} from '../i18n.es';
 
 describe(
 	'Internationlization',

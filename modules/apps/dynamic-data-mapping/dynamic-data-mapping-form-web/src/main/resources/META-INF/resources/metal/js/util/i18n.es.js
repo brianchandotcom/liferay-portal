@@ -1,4 +1,4 @@
-import {capitalize} from './string-format.es';
+import {capitalize} from './strings.es';
 
 export const setLocalizedValue = (obj, languageId, prop, val) => {
 	obj[prop] = val;

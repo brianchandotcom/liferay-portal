@@ -23,9 +23,8 @@
 	int previewFileCount = 0;
 	String previewFileURL = null;
 	String[] previewFileURLs = null;
-	String videoThumbnailURL = null;
 
-	if (hasImages || hasPDFImages || hasVideo) {
+	if (hasImages || hasPDFImages) {
 		String previewQueryString = null;
 
 		if (hasImages) {
@@ -38,35 +37,9 @@
 
 			previewFileURL = DLUtil.getPreviewURL(fileEntry, fileVersion, themeDisplay, previewQueryString);
 		}
-		else if (hasVideo) {
-			previewQueryString = "&videoPreview=1";
-
-			videoThumbnailURL = DLUtil.getPreviewURL(fileEntry, fileVersion, themeDisplay, "&videoThumbnail=1");
-		}
 
 		if (status != WorkflowConstants.STATUS_ANY) {
 			previewQueryString += "&status=" + status;
-		}
-		else if (hasVideo) {
-			emptyPreview = true;
-
-			if (PropsValues.DL_FILE_ENTRY_PREVIEW_VIDEO_CONTAINERS.length > 0) {
-				previewFileURLs = new String[PropsValues.DL_FILE_ENTRY_PREVIEW_VIDEO_CONTAINERS.length];
-
-				for (int i = 0; i < PropsValues.DL_FILE_ENTRY_PREVIEW_VIDEO_CONTAINERS.length; i++) {
-					if (VideoProcessorUtil.getPreviewFileSize(fileVersion, PropsValues.DL_FILE_ENTRY_PREVIEW_VIDEO_CONTAINERS[i]) > 0) {
-						emptyPreview = false;
-						previewFileURLs[i] = DLUtil.getPreviewURL(fileEntry, fileVersion, themeDisplay, previewQueryString + "&type=" + PropsValues.DL_FILE_ENTRY_PREVIEW_VIDEO_CONTAINERS[i]);
-					}
-				}
-			}
-			else {
-				emptyPreview = false;
-
-				previewFileURLs = new String[1];
-
-				previewFileURLs[0] = videoThumbnailURL;
-			}
 		}
 		else {
 			previewFileURLs = new String[1];
@@ -83,10 +56,7 @@
 
 	request.setAttribute("view_file_entry.jsp-randomNamespace", randomNamespace);
 
-	request.setAttribute("view_file_entry.jsp-supportedVideo", String.valueOf(hasVideo));
-
 	request.setAttribute("view_file_entry.jsp-previewFileURLs", previewFileURLs);
-	request.setAttribute("view_file_entry.jsp-videoThumbnailURL", videoThumbnailURL);
 	%>
 
 	<c:choose>
@@ -97,12 +67,12 @@
 		</c:when>
 		<c:when test="<%= previewFileCount == 0 %>">
 			<c:choose>
-				<c:when test="<%= !DLProcessorRegistryUtil.isPreviewableSize(fileVersion) && (ImageProcessorUtil.isImageSupported(fileVersion.getMimeType()) || PDFProcessorUtil.isDocumentSupported(fileVersion.getMimeType()) || VideoProcessorUtil.isVideoSupported(fileVersion.getMimeType())) %>">
+				<c:when test="<%= !DLProcessorRegistryUtil.isPreviewableSize(fileVersion) && (ImageProcessorUtil.isImageSupported(fileVersion.getMimeType()) || PDFProcessorUtil.isDocumentSupported(fileVersion.getMimeType())) %>">
 					<div class="alert alert-info">
 						<liferay-ui:message key="file-is-too-large-for-preview-or-thumbnail-generation" />
 					</div>
 				</c:when>
-				<c:when test="<%= ImageProcessorUtil.isImageSupported(fileVersion) || PDFProcessorUtil.isDocumentSupported(fileVersion) || VideoProcessorUtil.isVideoSupported(fileVersion) %>">
+				<c:when test="<%= ImageProcessorUtil.isImageSupported(fileVersion) || PDFProcessorUtil.isDocumentSupported(fileVersion) %>">
 					<div class="alert alert-info">
 						<liferay-ui:message key="generating-preview-will-take-a-few-minutes" />
 					</div>
@@ -128,17 +98,6 @@
 							<img alt="<liferay-ui:message escapeAttribute="<%= true %>" key="preview" />" class="lfr-preview-file-image-current" src="<%= previewFileURL %>" />
 						</c:otherwise>
 					</c:choose>
-				</c:when>
-				<c:when test="<%= hasVideo %>">
-					<div class="lfr-preview-file lfr-preview-video" id="<portlet:namespace /><%= randomNamespace %>previewFile">
-						<div class="lfr-preview-file-content lfr-preview-video-content">
-							<div class="lfr-preview-file-video-current-column">
-								<div id="<portlet:namespace /><%= randomNamespace %>previewFileContent"></div>
-							</div>
-						</div>
-					</div>
-
-					<liferay-util:include page="/document_library/player.jsp" servletContext="<%= application %>" />
 				</c:when>
 				<c:otherwise>
 					<div class="lfr-preview-file" id="<portlet:namespace /><%= randomNamespace %>previewFile">

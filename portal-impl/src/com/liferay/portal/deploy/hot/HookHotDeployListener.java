@@ -1256,7 +1256,7 @@ public class HookHotDeployListener
 
 		portalProperties.remove(PropsKeys.RELEASE_INFO_BUILD_NUMBER);
 		portalProperties.remove(PropsKeys.RELEASE_INFO_PREVIOUS_BUILD_NUMBER);
-		portalProperties.remove(PropsKeys.UPGRADE_PROCESSES);
+		portalProperties.remove(_PROPS_KEY_UPGRADE_PROCESSES);
 
 		_portalPropertiesMap.put(servletContextName, portalProperties);
 
@@ -1699,11 +1699,11 @@ public class HookHotDeployListener
 		if (unfilteredPortalProperties.containsKey(
 				PropsKeys.RELEASE_INFO_BUILD_NUMBER) ||
 			unfilteredPortalProperties.containsKey(
-				PropsKeys.UPGRADE_PROCESSES)) {
+				_PROPS_KEY_UPGRADE_PROCESSES)) {
 
 			String[] upgradeProcessClassNames = StringUtil.split(
 				unfilteredPortalProperties.getProperty(
-					PropsKeys.UPGRADE_PROCESSES));
+					_PROPS_KEY_UPGRADE_PROCESSES));
 
 			List<UpgradeProcess> upgradeProcesses =
 				UpgradeProcessUtil.initUpgradeProcesses(
@@ -2252,6 +2252,9 @@ public class HookHotDeployListener
 					"JdkDynamicProxy and will not work with CGLIB");
 		}
 	}
+
+	private static final String _PROPS_KEY_UPGRADE_PROCESSES =
+		"upgrade.processes";
 
 	private static final String[] _PROPS_KEYS_EVENTS = {
 		LOGIN_EVENTS_POST, LOGIN_EVENTS_PRE, LOGOUT_EVENTS_POST,

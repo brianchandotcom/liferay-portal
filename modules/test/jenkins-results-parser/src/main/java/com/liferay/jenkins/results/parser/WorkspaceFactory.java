@@ -22,6 +22,10 @@ public abstract class WorkspaceFactory {
 	public static BatchWorkspace newBatchWorkspace(
 		String gitHubURL, String upstreamBranchName, String batchName) {
 
+		if (gitHubURL == null) {
+			throw new RuntimeException("GitHub URL is null");
+		}
+
 		if (!PortalWorkspace.isPortalGitHubURL(gitHubURL)) {
 			throw new RuntimeException("Unsupported GitHub URL " + gitHubURL);
 		}
@@ -40,17 +44,21 @@ public abstract class WorkspaceFactory {
 			return new JunitBatchPortalWorkspace(gitHubURL, upstreamBranchName);
 		}
 
-		return new BatchPortalWorkspace(gitHubURL, upstreamBranchName, false);
+		return new BatchPortalWorkspace(gitHubURL, upstreamBranchName);
 	}
 
 	public static TopLevelWorkspace newTopLevelWorkspace(
 		String gitHubURL, String upstreamBranchName) {
 
+		if (gitHubURL == null) {
+			throw new RuntimeException("GitHub URL is null");
+		}
+
 		if (!PortalWorkspace.isPortalGitHubURL(gitHubURL)) {
 			throw new RuntimeException("Unsupported GitHub URL " + gitHubURL);
 		}
 
-		return new TopLevelPortalWorkspace(gitHubURL, upstreamBranchName, true);
+		return new TopLevelPortalWorkspace(gitHubURL, upstreamBranchName);
 	}
 
 }

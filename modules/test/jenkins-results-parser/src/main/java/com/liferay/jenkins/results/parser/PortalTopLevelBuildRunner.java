@@ -41,7 +41,7 @@ public class PortalTopLevelBuildRunner extends TopLevelBuildRunner {
 			throw new RuntimeException("Invalid workspace");
 		}
 
-		topLevelWorkspace.setJobProperties(getJob());
+		topLevelWorkspace.setGitRepositoryJobProperties(getJob());
 
 		workspace = topLevelWorkspace;
 	}

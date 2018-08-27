@@ -23,14 +23,12 @@ public class BatchPortalWorkspace
 	protected BatchPortalWorkspace(
 		String portalGitHubURL, String portalUpstreamBranchName) {
 
-		super(portalGitHubURL, portalUpstreamBranchName, false);
+		super(portalGitHubURL, portalUpstreamBranchName);
 	}
 
-	protected BatchPortalWorkspace(
-		String portalGitHubURL, String portalUpstreamBranchName,
-		boolean synchronizeBranches) {
-
-		super(portalGitHubURL, portalUpstreamBranchName, synchronizeBranches);
+	@Override
+	protected boolean synchronizeGitBranches() {
+		return false;
 	}
 
 }

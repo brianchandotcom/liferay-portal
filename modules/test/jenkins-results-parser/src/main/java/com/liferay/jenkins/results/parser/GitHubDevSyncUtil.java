@@ -73,6 +73,19 @@ public class GitHubDevSyncUtil {
 			synchronize);
 	}
 
+	public static String getCacheBranchName(PullRequest pullRequest) {
+		return getCacheBranchName(
+			pullRequest.getReceiverUsername(), pullRequest.getSenderUsername(),
+			pullRequest.getSenderSHA(),
+			pullRequest.getLiferayRemoteBranchSHA());
+	}
+
+	public static String getCacheBranchName(RemoteGitRef remoteGitRef) {
+		return getCacheBranchName(
+			remoteGitRef.getUsername(), remoteGitRef.getUsername(),
+			remoteGitRef.getSHA(), remoteGitRef.getSHA());
+	}
+
 	public static List<GitRemote> getGitHubDevGitRemotes(
 		GitWorkingDirectory gitWorkingDirectory) {
 

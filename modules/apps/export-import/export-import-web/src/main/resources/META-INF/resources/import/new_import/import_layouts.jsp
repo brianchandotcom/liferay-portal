@@ -33,7 +33,7 @@ portletDisplay.setURLBack(importProcessesURL.toString());
 renderResponse.setTitle(LanguageUtil.get(request, "new-import-process"));
 %>
 
-<div class="container-fluid-1280" id="<portlet:namespace />exportImportOptions">
+<div class="container-fluid-1280 container-view" id="<portlet:namespace />exportImportOptions">
 
 	<%
 	int incompleteBackgroundTaskCount = BackgroundTaskManagerUtil.getBackgroundTasksCount(groupId, BackgroundTaskExecutorNames.LAYOUT_IMPORT_BACKGROUND_TASK_EXECUTOR, false);

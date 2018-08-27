@@ -197,6 +197,8 @@ class LayoutProvider extends Component {
 			name: FormSupport.generateFieldName(field)
 		};
 
+		duplicatedField.label = 'Copy of ' + duplicatedField.label;
+
 		const newRowIndex = rowIndex + 1;
 
 		const newContext = FormSupport.addRow(pages, newRowIndex, pageIndex);

@@ -18,11 +18,8 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.asset.list.model.AssetListEntry;
 
-import com.liferay.exportimport.kernel.lar.PortletDataContext;
-
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
-import com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -181,17 +178,6 @@ public interface AssetListEntryLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public AssetListEntry fetchAssetListEntry(long assetListEntryId);
 
-	/**
-	* Returns the asset list entry matching the UUID and group.
-	*
-	* @param uuid the asset list entry's UUID
-	* @param groupId the primary key of the group
-	* @return the matching asset list entry, or <code>null</code> if a matching asset list entry could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public AssetListEntry fetchAssetListEntryByUuidAndGroupId(String uuid,
-		long groupId);
-
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
 
@@ -208,32 +194,6 @@ public interface AssetListEntryLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<AssetListEntry> getAssetListEntries(int start, int end);
-
-	/**
-	* Returns all the asset list entries matching the UUID and company.
-	*
-	* @param uuid the UUID of the asset list entries
-	* @param companyId the primary key of the company
-	* @return the matching asset list entries, or an empty list if no matches were found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<AssetListEntry> getAssetListEntriesByUuidAndCompanyId(
-		String uuid, long companyId);
-
-	/**
-	* Returns a range of asset list entries matching the UUID and company.
-	*
-	* @param uuid the UUID of the asset list entries
-	* @param companyId the primary key of the company
-	* @param start the lower bound of the range of asset list entries
-	* @param end the upper bound of the range of asset list entries (not inclusive)
-	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @return the range of matching asset list entries, or an empty list if no matches were found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<AssetListEntry> getAssetListEntriesByUuidAndCompanyId(
-		String uuid, long companyId, int start, int end,
-		OrderByComparator<AssetListEntry> orderByComparator);
 
 	/**
 	* Returns the number of asset list entries.
@@ -253,22 +213,6 @@ public interface AssetListEntryLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public AssetListEntry getAssetListEntry(long assetListEntryId)
 		throws PortalException;
-
-	/**
-	* Returns the asset list entry matching the UUID and group.
-	*
-	* @param uuid the asset list entry's UUID
-	* @param groupId the primary key of the group
-	* @return the matching asset list entry
-	* @throws PortalException if a matching asset list entry could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public AssetListEntry getAssetListEntryByUuidAndGroupId(String uuid,
-		long groupId) throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
-		PortletDataContext portletDataContext);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();

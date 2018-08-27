@@ -18,8 +18,6 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.expando.kernel.model.ExpandoBridge;
 
-import com.liferay.exportimport.kernel.lar.StagedModelType;
-
 import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.service.ServiceContext;
 
@@ -60,7 +58,6 @@ public class AssetListEntryWrapper implements AssetListEntry,
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		attributes.put("uuid", getUuid());
 		attributes.put("assetListEntryId", getAssetListEntryId());
 		attributes.put("groupId", getGroupId());
 		attributes.put("companyId", getCompanyId());
@@ -70,19 +67,12 @@ public class AssetListEntryWrapper implements AssetListEntry,
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("title", getTitle());
 		attributes.put("type", getType());
-		attributes.put("lastPublishDate", getLastPublishDate());
 
 		return attributes;
 	}
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		String uuid = (String)attributes.get("uuid");
-
-		if (uuid != null) {
-			setUuid(uuid);
-		}
-
 		Long assetListEntryId = (Long)attributes.get("assetListEntryId");
 
 		if (assetListEntryId != null) {
@@ -135,12 +125,6 @@ public class AssetListEntryWrapper implements AssetListEntry,
 
 		if (type != null) {
 			setType(type);
-		}
-
-		Date lastPublishDate = (Date)attributes.get("lastPublishDate");
-
-		if (lastPublishDate != null) {
-			setLastPublishDate(lastPublishDate);
 		}
 	}
 
@@ -197,16 +181,6 @@ public class AssetListEntryWrapper implements AssetListEntry,
 	@Override
 	public long getGroupId() {
 		return _assetListEntry.getGroupId();
-	}
-
-	/**
-	* Returns the last publish date of this asset list entry.
-	*
-	* @return the last publish date of this asset list entry
-	*/
-	@Override
-	public Date getLastPublishDate() {
-		return _assetListEntry.getLastPublishDate();
 	}
 
 	/**
@@ -282,16 +256,6 @@ public class AssetListEntryWrapper implements AssetListEntry,
 	@Override
 	public String getUserUuid() {
 		return _assetListEntry.getUserUuid();
-	}
-
-	/**
-	* Returns the uuid of this asset list entry.
-	*
-	* @return the uuid of this asset list entry
-	*/
-	@Override
-	public String getUuid() {
-		return _assetListEntry.getUuid();
 	}
 
 	@Override
@@ -381,16 +345,6 @@ public class AssetListEntryWrapper implements AssetListEntry,
 	}
 
 	/**
-	* Sets the last publish date of this asset list entry.
-	*
-	* @param lastPublishDate the last publish date of this asset list entry
-	*/
-	@Override
-	public void setLastPublishDate(Date lastPublishDate) {
-		_assetListEntry.setLastPublishDate(lastPublishDate);
-	}
-
-	/**
 	* Sets the modified date of this asset list entry.
 	*
 	* @param modifiedDate the modified date of this asset list entry
@@ -470,16 +424,6 @@ public class AssetListEntryWrapper implements AssetListEntry,
 		_assetListEntry.setUserUuid(userUuid);
 	}
 
-	/**
-	* Sets the uuid of this asset list entry.
-	*
-	* @param uuid the uuid of this asset list entry
-	*/
-	@Override
-	public void setUuid(String uuid) {
-		_assetListEntry.setUuid(uuid);
-	}
-
 	@Override
 	public com.liferay.portal.kernel.model.CacheModel<AssetListEntry> toCacheModel() {
 		return _assetListEntry.toCacheModel();
@@ -523,11 +467,6 @@ public class AssetListEntryWrapper implements AssetListEntry,
 		}
 
 		return false;
-	}
-
-	@Override
-	public StagedModelType getStagedModelType() {
-		return _assetListEntry.getStagedModelType();
 	}
 
 	@Override

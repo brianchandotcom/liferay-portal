@@ -23,8 +23,6 @@ import com.liferay.asset.list.model.AssetListEntrySoap;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 
-import com.liferay.exportimport.kernel.lar.StagedModelType;
-
 import com.liferay.petra.string.StringBundler;
 
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
@@ -37,7 +35,6 @@ import com.liferay.portal.kernel.model.impl.BaseModelImpl;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 
 import java.io.Serializable;
@@ -74,7 +71,6 @@ public class AssetListEntryModelImpl extends BaseModelImpl<AssetListEntry>
 	 */
 	public static final String TABLE_NAME = "AssetListEntry";
 	public static final Object[][] TABLE_COLUMNS = {
-			{ "uuid_", Types.VARCHAR },
 			{ "assetListEntryId", Types.BIGINT },
 			{ "groupId", Types.BIGINT },
 			{ "companyId", Types.BIGINT },
@@ -83,13 +79,11 @@ public class AssetListEntryModelImpl extends BaseModelImpl<AssetListEntry>
 			{ "createDate", Types.TIMESTAMP },
 			{ "modifiedDate", Types.TIMESTAMP },
 			{ "title", Types.VARCHAR },
-			{ "type_", Types.INTEGER },
-			{ "lastPublishDate", Types.TIMESTAMP }
+			{ "type_", Types.INTEGER }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
 	static {
-		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("assetListEntryId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
@@ -99,10 +93,9 @@ public class AssetListEntryModelImpl extends BaseModelImpl<AssetListEntry>
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("title", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("type_", Types.INTEGER);
-		TABLE_COLUMNS_MAP.put("lastPublishDate", Types.TIMESTAMP);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table AssetListEntry (uuid_ VARCHAR(75) null,assetListEntryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,title VARCHAR(75) null,type_ INTEGER,lastPublishDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table AssetListEntry (assetListEntryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,title VARCHAR(75) null,type_ INTEGER)";
 	public static final String TABLE_SQL_DROP = "drop table AssetListEntry";
 	public static final String ORDER_BY_JPQL = " ORDER BY assetListEntry.assetListEntryId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY AssetListEntry.assetListEntryId ASC";
@@ -118,12 +111,10 @@ public class AssetListEntryModelImpl extends BaseModelImpl<AssetListEntry>
 	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.asset.list.service.util.ServiceProps.get(
 				"value.object.column.bitmask.enabled.com.liferay.asset.list.model.AssetListEntry"),
 			true);
-	public static final long COMPANYID_COLUMN_BITMASK = 1L;
-	public static final long GROUPID_COLUMN_BITMASK = 2L;
-	public static final long TITLE_COLUMN_BITMASK = 4L;
-	public static final long TYPE_COLUMN_BITMASK = 8L;
-	public static final long UUID_COLUMN_BITMASK = 16L;
-	public static final long ASSETLISTENTRYID_COLUMN_BITMASK = 32L;
+	public static final long GROUPID_COLUMN_BITMASK = 1L;
+	public static final long TITLE_COLUMN_BITMASK = 2L;
+	public static final long TYPE_COLUMN_BITMASK = 4L;
+	public static final long ASSETLISTENTRYID_COLUMN_BITMASK = 8L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -138,7 +129,6 @@ public class AssetListEntryModelImpl extends BaseModelImpl<AssetListEntry>
 
 		AssetListEntry model = new AssetListEntryImpl();
 
-		model.setUuid(soapModel.getUuid());
 		model.setAssetListEntryId(soapModel.getAssetListEntryId());
 		model.setGroupId(soapModel.getGroupId());
 		model.setCompanyId(soapModel.getCompanyId());
@@ -148,7 +138,6 @@ public class AssetListEntryModelImpl extends BaseModelImpl<AssetListEntry>
 		model.setModifiedDate(soapModel.getModifiedDate());
 		model.setTitle(soapModel.getTitle());
 		model.setType(soapModel.getType());
-		model.setLastPublishDate(soapModel.getLastPublishDate());
 
 		return model;
 	}
@@ -213,7 +202,6 @@ public class AssetListEntryModelImpl extends BaseModelImpl<AssetListEntry>
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		attributes.put("uuid", getUuid());
 		attributes.put("assetListEntryId", getAssetListEntryId());
 		attributes.put("groupId", getGroupId());
 		attributes.put("companyId", getCompanyId());
@@ -223,7 +211,6 @@ public class AssetListEntryModelImpl extends BaseModelImpl<AssetListEntry>
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("title", getTitle());
 		attributes.put("type", getType());
-		attributes.put("lastPublishDate", getLastPublishDate());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -233,12 +220,6 @@ public class AssetListEntryModelImpl extends BaseModelImpl<AssetListEntry>
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		String uuid = (String)attributes.get("uuid");
-
-		if (uuid != null) {
-			setUuid(uuid);
-		}
-
 		Long assetListEntryId = (Long)attributes.get("assetListEntryId");
 
 		if (assetListEntryId != null) {
@@ -292,36 +273,6 @@ public class AssetListEntryModelImpl extends BaseModelImpl<AssetListEntry>
 		if (type != null) {
 			setType(type);
 		}
-
-		Date lastPublishDate = (Date)attributes.get("lastPublishDate");
-
-		if (lastPublishDate != null) {
-			setLastPublishDate(lastPublishDate);
-		}
-	}
-
-	@JSON
-	@Override
-	public String getUuid() {
-		if (_uuid == null) {
-			return "";
-		}
-		else {
-			return _uuid;
-		}
-	}
-
-	@Override
-	public void setUuid(String uuid) {
-		if (_originalUuid == null) {
-			_originalUuid = _uuid;
-		}
-
-		_uuid = uuid;
-	}
-
-	public String getOriginalUuid() {
-		return GetterUtil.getString(_originalUuid);
 	}
 
 	@JSON
@@ -366,19 +317,7 @@ public class AssetListEntryModelImpl extends BaseModelImpl<AssetListEntry>
 
 	@Override
 	public void setCompanyId(long companyId) {
-		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
-
-		if (!_setOriginalCompanyId) {
-			_setOriginalCompanyId = true;
-
-			_originalCompanyId = _companyId;
-		}
-
 		_companyId = companyId;
-	}
-
-	public long getOriginalCompanyId() {
-		return _originalCompanyId;
 	}
 
 	@JSON
@@ -501,23 +440,6 @@ public class AssetListEntryModelImpl extends BaseModelImpl<AssetListEntry>
 		return _originalType;
 	}
 
-	@JSON
-	@Override
-	public Date getLastPublishDate() {
-		return _lastPublishDate;
-	}
-
-	@Override
-	public void setLastPublishDate(Date lastPublishDate) {
-		_lastPublishDate = lastPublishDate;
-	}
-
-	@Override
-	public StagedModelType getStagedModelType() {
-		return new StagedModelType(PortalUtil.getClassNameId(
-				AssetListEntry.class.getName()));
-	}
-
 	public long getColumnBitmask() {
 		return _columnBitmask;
 	}
@@ -549,7 +471,6 @@ public class AssetListEntryModelImpl extends BaseModelImpl<AssetListEntry>
 	public Object clone() {
 		AssetListEntryImpl assetListEntryImpl = new AssetListEntryImpl();
 
-		assetListEntryImpl.setUuid(getUuid());
 		assetListEntryImpl.setAssetListEntryId(getAssetListEntryId());
 		assetListEntryImpl.setGroupId(getGroupId());
 		assetListEntryImpl.setCompanyId(getCompanyId());
@@ -559,7 +480,6 @@ public class AssetListEntryModelImpl extends BaseModelImpl<AssetListEntry>
 		assetListEntryImpl.setModifiedDate(getModifiedDate());
 		assetListEntryImpl.setTitle(getTitle());
 		assetListEntryImpl.setType(getType());
-		assetListEntryImpl.setLastPublishDate(getLastPublishDate());
 
 		assetListEntryImpl.resetOriginalValues();
 
@@ -622,15 +542,9 @@ public class AssetListEntryModelImpl extends BaseModelImpl<AssetListEntry>
 	public void resetOriginalValues() {
 		AssetListEntryModelImpl assetListEntryModelImpl = this;
 
-		assetListEntryModelImpl._originalUuid = assetListEntryModelImpl._uuid;
-
 		assetListEntryModelImpl._originalGroupId = assetListEntryModelImpl._groupId;
 
 		assetListEntryModelImpl._setOriginalGroupId = false;
-
-		assetListEntryModelImpl._originalCompanyId = assetListEntryModelImpl._companyId;
-
-		assetListEntryModelImpl._setOriginalCompanyId = false;
 
 		assetListEntryModelImpl._setModifiedDate = false;
 
@@ -646,14 +560,6 @@ public class AssetListEntryModelImpl extends BaseModelImpl<AssetListEntry>
 	@Override
 	public CacheModel<AssetListEntry> toCacheModel() {
 		AssetListEntryCacheModel assetListEntryCacheModel = new AssetListEntryCacheModel();
-
-		assetListEntryCacheModel.uuid = getUuid();
-
-		String uuid = assetListEntryCacheModel.uuid;
-
-		if ((uuid != null) && (uuid.length() == 0)) {
-			assetListEntryCacheModel.uuid = null;
-		}
 
 		assetListEntryCacheModel.assetListEntryId = getAssetListEntryId();
 
@@ -699,25 +605,14 @@ public class AssetListEntryModelImpl extends BaseModelImpl<AssetListEntry>
 
 		assetListEntryCacheModel.type = getType();
 
-		Date lastPublishDate = getLastPublishDate();
-
-		if (lastPublishDate != null) {
-			assetListEntryCacheModel.lastPublishDate = lastPublishDate.getTime();
-		}
-		else {
-			assetListEntryCacheModel.lastPublishDate = Long.MIN_VALUE;
-		}
-
 		return assetListEntryCacheModel;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(23);
+		StringBundler sb = new StringBundler(19);
 
-		sb.append("{uuid=");
-		sb.append(getUuid());
-		sb.append(", assetListEntryId=");
+		sb.append("{assetListEntryId=");
 		sb.append(getAssetListEntryId());
 		sb.append(", groupId=");
 		sb.append(getGroupId());
@@ -735,8 +630,6 @@ public class AssetListEntryModelImpl extends BaseModelImpl<AssetListEntry>
 		sb.append(getTitle());
 		sb.append(", type=");
 		sb.append(getType());
-		sb.append(", lastPublishDate=");
-		sb.append(getLastPublishDate());
 		sb.append("}");
 
 		return sb.toString();
@@ -744,16 +637,12 @@ public class AssetListEntryModelImpl extends BaseModelImpl<AssetListEntry>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(37);
+		StringBundler sb = new StringBundler(31);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.asset.list.model.AssetListEntry");
 		sb.append("</model-name>");
 
-		sb.append(
-			"<column><column-name>uuid</column-name><column-value><![CDATA[");
-		sb.append(getUuid());
-		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>assetListEntryId</column-name><column-value><![CDATA[");
 		sb.append(getAssetListEntryId());
@@ -790,10 +679,6 @@ public class AssetListEntryModelImpl extends BaseModelImpl<AssetListEntry>
 			"<column><column-name>type</column-name><column-value><![CDATA[");
 		sb.append(getType());
 		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>lastPublishDate</column-name><column-value><![CDATA[");
-		sb.append(getLastPublishDate());
-		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -804,15 +689,11 @@ public class AssetListEntryModelImpl extends BaseModelImpl<AssetListEntry>
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
 			AssetListEntry.class, ModelWrapper.class
 		};
-	private String _uuid;
-	private String _originalUuid;
 	private long _assetListEntryId;
 	private long _groupId;
 	private long _originalGroupId;
 	private boolean _setOriginalGroupId;
 	private long _companyId;
-	private long _originalCompanyId;
-	private boolean _setOriginalCompanyId;
 	private long _userId;
 	private String _userName;
 	private Date _createDate;
@@ -823,7 +704,6 @@ public class AssetListEntryModelImpl extends BaseModelImpl<AssetListEntry>
 	private int _type;
 	private int _originalType;
 	private boolean _setOriginalType;
-	private Date _lastPublishDate;
 	private long _columnBitmask;
 	private AssetListEntry _escapedModel;
 }

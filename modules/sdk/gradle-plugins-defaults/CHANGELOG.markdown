@@ -4386,7 +4386,7 @@ the `test` and `testIntegration` tasks with sensible defaults.
 - [LPS-84218]: Update the [Liferay Gradle Plugins] dependency to version
 3.12.112.
 
-## 5.5.21 - 2018-08-23
+## 5.5.22 - 2018-08-23
 
 ### Added
 - [LPS-83929]: Add the ability to exclude certain projects from executing the

@@ -18,6 +18,9 @@ import com.liferay.asset.list.model.AssetListEntry;
 import com.liferay.asset.list.service.base.AssetListEntryServiceBaseImpl;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.OrderByComparator;
+
+import java.util.List;
 
 /**
  * @author Jürgen Kappler
@@ -35,6 +38,18 @@ public class AssetListEntryServiceImpl extends AssetListEntryServiceBaseImpl {
 	}
 
 	@Override
+	public void deleteAssetListEntries(long[] assetListEntriesIds)
+		throws PortalException {
+
+		for (long assetListEntryId : assetListEntriesIds) {
+			AssetListEntry assetListEntry =
+				assetListEntryLocalService.getAssetListEntry(assetListEntryId);
+
+			assetListEntryLocalService.deleteAssetListEntry(assetListEntry);
+		}
+	}
+
+	@Override
 	public AssetListEntry deleteAssetListEntry(long assetListEntryId)
 		throws PortalException {
 
@@ -45,6 +60,20 @@ public class AssetListEntryServiceImpl extends AssetListEntryServiceBaseImpl {
 	@Override
 	public AssetListEntry fetchAssetListEntry(long assetListEntryId) {
 		return assetListEntryLocalService.fetchAssetListEntry(assetListEntryId);
+	}
+
+	@Override
+	public List<AssetListEntry> getAssetListEntries(
+		long groupId, int start, int end,
+		OrderByComparator<AssetListEntry> orderByComparator) {
+
+		return assetListEntryPersistence.findByGroupId(
+			groupId, start, end, orderByComparator);
+	}
+
+	@Override
+	public int getAssetListEntriesCount(long groupId) {
+		return assetListEntryPersistence.countByGroupId(groupId);
 	}
 
 	@Override

@@ -44,7 +44,7 @@ public class TLDUtil {
 			return Collections.emptyMap();
 		}
 
-		Document document = getDocument(file);
+		Document document = _getDocument(file);
 
 		if (document == null) {
 			return Collections.emptyMap();
@@ -62,13 +62,13 @@ public class TLDUtil {
 			return Collections.emptyMap();
 		}
 
-		String definitionFileName = getFileName(documentType.getSystemId());
+		String definitionFileName = _getFileName(documentType.getSystemId());
 
 		if (definitionFileName == null) {
 			return Collections.emptyMap();
 		}
 
-		Map<String, File> portalDefinitions = getPortalDefinitions(
+		Map<String, File> portalDefinitions = _getPortalDefinitions(
 			gradleHomeDir);
 
 		if (!portalDefinitions.containsKey(definitionFileName)) {
@@ -92,13 +92,13 @@ public class TLDUtil {
 			return Collections.emptyMap();
 		}
 
-		Document document = getDocument(file);
+		Document document = _getDocument(file);
 
 		if (document == null) {
 			return Collections.emptyMap();
 		}
 
-		Map<String, File> portalDefinitions = getPortalDefinitions(
+		Map<String, File> portalDefinitions = _getPortalDefinitions(
 			gradleHomeDir);
 		Map<String, File> schemaProperties = new HashMap<>();
 
@@ -128,7 +128,7 @@ public class TLDUtil {
 				continue;
 			}
 
-			String definitionFileName = getFileName(values[1]);
+			String definitionFileName = _getFileName(values[1]);
 
 			if (definitionFileName == null) {
 				continue;
@@ -142,14 +142,14 @@ public class TLDUtil {
 
 			schemaProperties.put(values[0].trim(), definitionFile);
 
-			populateSchemaProperties(
+			_populateSchemaProperties(
 				schemaProperties, portalDefinitions, definitionFile);
 		}
 
 		return schemaProperties;
 	}
 
-	protected static Document getDocument(File file) throws Exception {
+	private static Document _getDocument(File file) throws Exception {
 		DocumentBuilderFactory documentBuilderFactory =
 			DocumentBuilderFactory.newInstance();
 
@@ -161,7 +161,7 @@ public class TLDUtil {
 		return documentBuilder.parse(file);
 	}
 
-	protected static String getFileName(String s) {
+	private static String _getFileName(String s) {
 		if (s == null) {
 			return null;
 		}
@@ -177,7 +177,7 @@ public class TLDUtil {
 		return trimmedString.substring(index + 1);
 	}
 
-	protected static synchronized Map<String, File> getPortalDefinitions(
+	private static synchronized Map<String, File> _getPortalDefinitions(
 		File gradleHomeDir) {
 
 		if (_initialized) {
@@ -211,12 +211,12 @@ public class TLDUtil {
 		return _portalDefinitions;
 	}
 
-	protected static void populateSchemaProperties(
+	private static void _populateSchemaProperties(
 			Map<String, File> schemaProperties,
 			Map<String, File> portalDefinitions, File definitionFile)
 		throws Exception {
 
-		Document document = getDocument(definitionFile);
+		Document document = _getDocument(definitionFile);
 
 		if (document == null) {
 			return;
@@ -249,7 +249,7 @@ public class TLDUtil {
 				continue;
 			}
 
-			String fileName = getFileName(schemaLocation);
+			String fileName = _getFileName(schemaLocation);
 
 			if (fileName == null) {
 				continue;
@@ -263,7 +263,7 @@ public class TLDUtil {
 
 			schemaProperties.put(namespace, curDefinitionFile);
 
-			populateSchemaProperties(
+			_populateSchemaProperties(
 				schemaProperties, portalDefinitions, curDefinitionFile);
 		}
 
@@ -293,7 +293,7 @@ public class TLDUtil {
 
 			File curDefinitionFile = portalDefinitions.get(schemaLocation);
 
-			populateSchemaProperties(
+			_populateSchemaProperties(
 				schemaProperties, portalDefinitions, curDefinitionFile);
 		}
 	}

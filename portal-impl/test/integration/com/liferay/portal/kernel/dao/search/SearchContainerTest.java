@@ -14,16 +14,15 @@
 
 package com.liferay.portal.kernel.dao.search;
 
-import com.liferay.portal.kernel.test.rule.AggregateTestRule;
-import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.kernel.util.PropsUtil;
+import com.liferay.portal.util.PropsImpl;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 
 import org.junit.After;
 import org.junit.Assert;
-import org.junit.ClassRule;
-import org.junit.Rule;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import org.powermock.api.mockito.PowerMockito;
@@ -33,10 +32,10 @@ import org.powermock.api.mockito.PowerMockito;
  */
 public class SearchContainerTest {
 
-	@ClassRule
-	@Rule
-	public static final AggregateTestRule aggregateTestRule =
-		new LiferayIntegrationTestRule();
+	@BeforeClass
+	public static void setUpClass() {
+		PropsUtil.setProps(new PropsImpl());
+	}
 
 	@After
 	public void tearDown() {

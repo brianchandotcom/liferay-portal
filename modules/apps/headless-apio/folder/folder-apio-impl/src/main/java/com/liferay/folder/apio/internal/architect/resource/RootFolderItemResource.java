@@ -38,7 +38,7 @@ public class RootFolderItemResource
 
 	@Override
 	public String getName() {
-		return "root-folder";
+		return "documents-repository";
 	}
 
 	@Override

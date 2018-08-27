@@ -487,7 +487,7 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 		sb.append(classPKField);
 		sb.append(" IN (");
 		sb.append(permissionSQL);
-		sb.append("))");
+		sb.append(")) ");
 
 		if (Validator.isNotNull(permissionSQLContributorsSQL)) {
 			sb.append(permissionSQLContributorsSQL);
@@ -520,9 +520,9 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 				continue;
 			}
 
-			sb.append(" OR (");
+			sb.append("OR (");
 			sb.append(contributorPermissionSQL);
-			sb.append(")");
+			sb.append(") ");
 		}
 
 		return sb.toString();

@@ -582,6 +582,14 @@ public class JavaCombineLinesCheck extends BaseFileCheck {
 					}
 				}
 			}
+
+			if (line.endsWith(") {") && trimmedPreviousLine.matches("\\w+ :") &&
+				(getLevel(line) == -1)) {
+
+				return _getCombinedLinesContent(
+					content, line, trimmedLine, lineLength, lineNumber,
+					previousLine, null, false, true, 0);
+			}
 		}
 
 		if ((trimmedLine.length() + previousLineLength) <= getMaxLineLength()) {

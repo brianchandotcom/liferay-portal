@@ -324,8 +324,6 @@ public class BlogsEntryStagedModelDataHandler
 
 			newPrimaryKeysMap.put(
 				entry.getEntryId(), importedEntry.getEntryId());
-
-			_importFriendlyURLEntries(portletDataContext, entry, importedEntry);
 		}
 		finally {
 			ServiceContextThreadLocal.popServiceContext();
@@ -356,11 +354,6 @@ public class BlogsEntryStagedModelDataHandler
 		}
 	}
 
-	@Override
-	protected String[] getSkipImportReferenceStagedModelNames() {
-		return _SKIP_IMPORT_REFERENCE_STAGED_MODEL_NAMES;
-	}
-
 	private void _exportFriendlyURLEntries(
 			PortletDataContext portletDataContext, BlogsEntry blogsEntry)
 		throws PortletDataException {
@@ -372,45 +365,14 @@ public class BlogsEntryStagedModelDataHandler
 				blogsEntry.getGroupId(), classNameId, blogsEntry.getEntryId());
 
 		for (FriendlyURLEntry friendlyURLEntry : friendlyURLEntries) {
+			StagedModelDataHandlerUtil.exportStagedModel(
+				portletDataContext, friendlyURLEntry);
+
 			StagedModelDataHandlerUtil.exportReferenceStagedModel(
-				portletDataContext, blogsEntry, friendlyURLEntry,
+				portletDataContext, friendlyURLEntry, blogsEntry,
 				PortletDataContext.REFERENCE_TYPE_DEPENDENCY);
 		}
 	}
-
-	private void _importFriendlyURLEntries(
-			PortletDataContext portletDataContext, BlogsEntry blogsEntry,
-			BlogsEntry importedBlogsEntry)
-		throws PortalException {
-
-		List<Element> friendlyURLEntryElements =
-			portletDataContext.getReferenceDataElements(
-				blogsEntry, FriendlyURLEntry.class);
-
-		for (Element friendlyURLEntryElement : friendlyURLEntryElements) {
-			String path = friendlyURLEntryElement.attributeValue("path");
-
-			FriendlyURLEntry friendlyURLEntry =
-				(FriendlyURLEntry)portletDataContext.getZipEntryAsObject(path);
-
-			friendlyURLEntry.setClassNameId(
-				_portal.getClassNameId(BlogsEntry.class));
-
-			StagedModelDataHandlerUtil.importStagedModel(
-				portletDataContext, friendlyURLEntry);
-		}
-
-		FriendlyURLEntry mainFriendlyURLEntry =
-			_friendlyURLEntryLocalService.getMainFriendlyURLEntry(
-				BlogsEntry.class, importedBlogsEntry.getEntryId());
-
-		importedBlogsEntry.setUrlTitle(mainFriendlyURLEntry.getUrlTitle());
-
-		_blogsEntryLocalService.updateBlogsEntry(importedBlogsEntry);
-	}
-
-	private static final String[] _SKIP_IMPORT_REFERENCE_STAGED_MODEL_NAMES =
-		{FriendlyURLEntry.class.getName()};
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		BlogsEntryStagedModelDataHandler.class);

@@ -199,9 +199,16 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 
 		String friendlyURL = friendlyURLMap.get(LocaleUtil.getSiteDefault());
 
+		UnicodeProperties typeSettingsProperties = new UnicodeProperties();
+
+		typeSettingsProperties.fastLoad(typeSettings);
+
 		int priority = Integer.MAX_VALUE;
 
-		if (!hidden) {
+		boolean visible = GetterUtil.getBoolean(
+			typeSettingsProperties.getProperty("visible"), true);
+
+		if (visible) {
 			priority = layoutLocalServiceHelper.getNextPriority(
 				groupId, privateLayout, parentLayoutId, null, -1);
 		}
@@ -238,10 +245,6 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 
 		boolean layoutUpdateable = ParamUtil.getBoolean(
 			serviceContext, Sites.LAYOUT_UPDATEABLE, true);
-
-		UnicodeProperties typeSettingsProperties = new UnicodeProperties();
-
-		typeSettingsProperties.fastLoad(typeSettings);
 
 		if (!layoutUpdateable) {
 			typeSettingsProperties.put(

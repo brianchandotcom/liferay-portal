@@ -157,7 +157,7 @@ public class DefaultUserResolverTest extends BaseSamlTestCase {
 		when(
 			response.getAssertions()
 		).thenReturn(
-			Arrays.asList(new Assertion[] {assertion})
+			Arrays.asList(assertion)
 		);
 
 		samlMessageContext.setInboundSAMLMessage(response);

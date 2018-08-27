@@ -114,7 +114,7 @@ public class SharingEntryServiceTest {
 			_toUser.getUserId(), classNameId, classPK, _group.getGroupId(),
 			true,
 			Arrays.asList(
-				SharingEntryActionKey.VIEW, SharingEntryActionKey.UPDATE),
+				SharingEntryActionKey.UPDATE, SharingEntryActionKey.VIEW),
 			serviceContext);
 	}
 
@@ -139,7 +139,7 @@ public class SharingEntryServiceTest {
 	}
 
 	@Test
-	public void testAddSharingEntryWithViewAndUpdatePermission()
+	public void testAddSharingEntryWithUpdateAndViewPermission()
 		throws Exception {
 
 		_registerSharingPermissionChecker(
@@ -172,7 +172,7 @@ public class SharingEntryServiceTest {
 	}
 
 	@Test(expected = PrincipalException.MustHavePermission.class)
-	public void testAddSharingEntryWithViewAndUpdatePermissionWhenUserHasShareableViewAndAddDiscussionSharingEntryActionKey()
+	public void testAddSharingEntryWithUpdateAndViewPermissionWhenUserHasShareableAddDiscussionAndViewSharingEntryActionKey()
 		throws Exception {
 
 		_registerSharingPermissionChecker(
@@ -198,12 +198,12 @@ public class SharingEntryServiceTest {
 			_toUser.getUserId(), classNameId, classPK, _group.getGroupId(),
 			true,
 			Arrays.asList(
-				SharingEntryActionKey.VIEW, SharingEntryActionKey.UPDATE),
+				SharingEntryActionKey.UPDATE, SharingEntryActionKey.VIEW),
 			serviceContext);
 	}
 
 	@Test
-	public void testAddSharingEntryWithViewAndUpdatePermissionWhenUserHasShareableViewAndUpdateSharingEntryActionKey()
+	public void testAddSharingEntryWithUpdateAndViewPermissionWhenUserHasShareableUpdateAndViewSharingEntryActionKey()
 		throws Exception {
 
 		_registerSharingPermissionChecker(
@@ -228,12 +228,12 @@ public class SharingEntryServiceTest {
 			_toUser.getUserId(), classNameId, classPK, _group.getGroupId(),
 			true,
 			Arrays.asList(
-				SharingEntryActionKey.VIEW, SharingEntryActionKey.UPDATE),
+				SharingEntryActionKey.UPDATE, SharingEntryActionKey.VIEW),
 			serviceContext);
 	}
 
 	@Test(expected = PrincipalException.MustHavePermission.class)
-	public void testAddSharingEntryWithViewAndUpdatePermissionWhenUserHasUnshareableViewAndUpdateSharingEntryActionKey()
+	public void testAddSharingEntryWithUpdateAndViewPermissionWhenUserHasUnshareableUpdateAndViewSharingEntryActionKey()
 		throws Exception {
 
 		_registerSharingPermissionChecker(
@@ -258,12 +258,12 @@ public class SharingEntryServiceTest {
 			_toUser.getUserId(), classNameId, classPK, _group.getGroupId(),
 			true,
 			Arrays.asList(
-				SharingEntryActionKey.VIEW, SharingEntryActionKey.UPDATE),
+				SharingEntryActionKey.UPDATE, SharingEntryActionKey.VIEW),
 			serviceContext);
 	}
 
 	@Test(expected = PrincipalException.MustHavePermission.class)
-	public void testAddSharingEntryWithViewAndUpdatePermissionWhenUserHasUpdatePermissionAndShareableViewSharingEntryActionKey()
+	public void testAddSharingEntryWithUpdateAndViewPermissionWhenUserHasUpdatePermissionAndShareableViewSharingEntryActionKey()
 		throws Exception {
 
 		_registerSharingPermissionChecker(
@@ -286,12 +286,12 @@ public class SharingEntryServiceTest {
 			_toUser.getUserId(), classNameId, classPK, _group.getGroupId(),
 			true,
 			Arrays.asList(
-				SharingEntryActionKey.VIEW, SharingEntryActionKey.UPDATE),
+				SharingEntryActionKey.UPDATE, SharingEntryActionKey.VIEW),
 			serviceContext);
 	}
 
 	@Test(expected = PrincipalException.MustHavePermission.class)
-	public void testAddSharingEntryWithViewAndUpdatePermissionWhenUserHasViewPermission()
+	public void testAddSharingEntryWithUpdateAndViewPermissionWhenUserHasViewPermission()
 		throws Exception {
 
 		_registerSharingPermissionChecker(
@@ -309,7 +309,7 @@ public class SharingEntryServiceTest {
 			_toUser.getUserId(), classNameId, classPK, _group.getGroupId(),
 			true,
 			Arrays.asList(
-				SharingEntryActionKey.VIEW, SharingEntryActionKey.UPDATE),
+				SharingEntryActionKey.UPDATE, SharingEntryActionKey.VIEW),
 			serviceContext);
 	}
 
@@ -341,7 +341,7 @@ public class SharingEntryServiceTest {
 	}
 
 	@Test
-	public void testAddSharingEntryWithViewPermissionWhenUserHasShareableViewAndUpdateSharingEntryActionKey()
+	public void testAddSharingEntryWithViewPermissionWhenUserHasShareableUpdateAndViewSharingEntryActionKey()
 		throws Exception {
 
 		_registerSharingPermissionChecker(
@@ -451,7 +451,7 @@ public class SharingEntryServiceTest {
 	}
 
 	@Test
-	public void testUpdateSharingEntryWithViewAndUpdatePermission()
+	public void testUpdateSharingEntryWithUpdateAndViewPermission()
 		throws Exception {
 
 		_registerSharingPermissionChecker(
@@ -487,7 +487,7 @@ public class SharingEntryServiceTest {
 	}
 
 	@Test(expected = PrincipalException.MustHavePermission.class)
-	public void testUpdateSharingEntryWithViewAndUpdatePermissionWhenUserHasViewPermission()
+	public void testUpdateSharingEntryWithUpdateAndViewPermissionWhenUserHasViewPermission()
 		throws Exception {
 
 		_registerSharingPermissionChecker(

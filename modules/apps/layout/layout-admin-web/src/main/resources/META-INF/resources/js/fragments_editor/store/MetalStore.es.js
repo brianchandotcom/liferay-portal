@@ -8,13 +8,42 @@ import State, {Config} from 'metal-state';
  */
 
 const connect = function(component, store) {
+	let syncing = false;
+
 	store.on(
 		'change',
-		(nextState) => Object.entries(nextState).forEach(
-			([key, value]) => {
-				component[key] = value;
+		(nextState) => {
+			syncing = true;
+
+			Object.entries(nextState).forEach(
+				([key, value]) => {
+					component[key] = value;
+				}
+			);
+
+			requestAnimationFrame(
+				() => {
+					syncing = false;
+				}
+			);
+		}
+	);
+
+	component.on(
+		'stateChanged',
+		(data) => {
+			if (!syncing) {
+				const nextState = Object.assign({}, store.getState());
+
+				Object.values(data.changes).forEach(
+					(change) => {
+						nextState[change.key] = change.newVal;
+					}
+				);
+
+				store._setInitialState(nextState);
 			}
-		)
+		}
 	);
 };
 

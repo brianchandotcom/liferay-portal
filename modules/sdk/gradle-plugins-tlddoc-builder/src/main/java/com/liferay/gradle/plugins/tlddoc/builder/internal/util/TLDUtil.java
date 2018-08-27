@@ -177,8 +177,12 @@ public class TLDUtil {
 		return trimmedString.substring(index + 1);
 	}
 
-	protected static Map<String, File> getPortalDefinitions(
+	protected static synchronized Map<String, File> getPortalDefinitions(
 		File gradleHomeDir) {
+
+		if (_initialized) {
+			return _portalDefinitions;
+		}
 
 		File dir = gradleHomeDir;
 
@@ -192,21 +196,19 @@ public class TLDUtil {
 			dir = dir.getParentFile();
 		}
 
-		if (dir == null) {
-			return Collections.emptyMap();
+		if (dir != null) {
+			File definitionsDir = new File(dir, "definitions");
+
+			for (File definitionFile : definitionsDir.listFiles()) {
+				String definitionFileName = definitionFile.getName();
+
+				_portalDefinitions.put(definitionFileName, definitionFile);
+			}
 		}
 
-		Map<String, File> portalDefinitions = new HashMap<>();
+		_initialized = true;
 
-		File definitionsDir = new File(dir, "definitions");
-
-		for (File definitionFile : definitionsDir.listFiles()) {
-			String definitionFileName = definitionFile.getName();
-
-			portalDefinitions.put(definitionFileName, definitionFile);
-		}
-
-		return portalDefinitions;
+		return _portalDefinitions;
 	}
 
 	protected static void populateSchemaProperties(
@@ -298,5 +300,8 @@ public class TLDUtil {
 
 	private static final String _LOAD_EXTERNAL_DTD =
 		"http://apache.org/xml/features/nonvalidating/load-external-dtd";
+
+	private static boolean _initialized;
+	private static final Map<String, File> _portalDefinitions = new HashMap<>();
 
 }

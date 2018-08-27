@@ -119,13 +119,13 @@ describe(
 				const rowIndex = 0;
 
 				expect(
-					FormSupport.addFieldToColumn(
+					() => FormSupport.addFieldToColumn(
 						context,
 						pageIndex,
 						rowIndex,
 						columnIndex
 					)
-				).toMatchSnapshot();
+				).toThrowError();
 			}
 		);
 
@@ -162,8 +162,8 @@ describe(
 				const rowIndex = 1;
 
 				expect(
-					FormSupport.setColumnFields(context, pageIndex, rowIndex, columnIndex)
-				).toMatchSnapshot();
+					() => FormSupport.setColumnFields(context, pageIndex, rowIndex, columnIndex)
+				).toThrowError();
 			}
 		);
 

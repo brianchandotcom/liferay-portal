@@ -1,14 +1,14 @@
+import '../Page/PageRenderer.es';
 import 'clay-button';
+import 'clay-dropdown';
 import {Config} from 'metal-state';
 import {DragDrop} from 'metal-drag-drop';
+import {pageStructure} from '../../util/config.es';
+import {setLocalizedValue} from '../../util/i18n.es';
 import Component from 'metal-component';
 import FormSupport from './FormSupport.es';
 import Soy from 'metal-soy';
 import templates from './FormRenderer.soy.js';
-import {ClayActionsDropdown} from 'clay-dropdown';
-import {setLocalizedValue} from '../../util/i18n.es';
-import '../Page/PageRenderer.es';
-import { pageStructure } from '../../util/config.es';
 
 /**
  * FormRenderer.
@@ -19,7 +19,7 @@ class FormRenderer extends Component {
 	static STATE = {
 
 		/**
-		 * @default 
+		 * @default
 		 * @instance
 		 * @memberof FormRenderer
 		 * @type {?number}
@@ -54,19 +54,20 @@ class FormRenderer extends Component {
 
 		modeRenderer: Config.oneOf(['grid', 'list']).value('grid'),
 
-
 		/**
 		 * @default array
 		 * @memberof FormRenderer
 		 * @type {?array<object>}
 		 */
 
-		pageSettingsItem: Config.array().value([
-			{
-				'label': Liferay.Language.get('add-page'),
-				'settingsItem': 'add-page'
-			}
-		]),
+		pageSettingsItem: Config.array().value(
+			[
+				{
+					'label': Liferay.Language.get('add-page'),
+					'settingsItem': 'add-page'
+				}
+			]
+		),
 
 		/**
 		 * @default []
@@ -139,14 +140,14 @@ class FormRenderer extends Component {
 		const {settingsItem} = data.item;
 
 		if (settingsItem == 'add-page') {
-			return this._addPage();
+			this._addPage();
 		}
 	}
 
 	_handleChangePage({delegateTarget: {dataset}}) {
 		const {pageId} = dataset;
 
-		this.activePage = parseInt(pageId);
+		this.activePage = parseInt(pageId, 10);
 	}
 
 	/**
@@ -217,7 +218,7 @@ class FormRenderer extends Component {
 	_handleUpdatePage({page, pageId}) {
 		this.pages[pageId] = page;
 
-		this.emit('pagesUpdated', this.pages)
+		this.emit('pagesUpdated', this.pages);
 	}
 
 	/**
@@ -243,14 +244,15 @@ class FormRenderer extends Component {
 	 * @private
 	 * @returns {object}
 	 */
+
 	createNewPage() {
 		const languageId = Liferay.ThemeDisplay.getLanguageId();
 		const page = {
-			description: "",
+			description: '',
+			enabled: true,
 			rows: [],
-			title: "",
 			showRequiredFieldsWarning: true,
-			enabled: true
+			title: ''
 		};
 
 		setLocalizedValue(page, languageId, 'title', '');

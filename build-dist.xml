@@ -1987,6 +1987,13 @@ wrapper.java.additional.11="-Dfile.encoding=UTF-8"]]></replacevalue>
 	</target>
 
 	<target name="unzip-tomcat">
+		<if>
+			<available file="${app.server.tomcat.legacy.dir}" type="dir" />
+			<then>
+				<delete dir="${app.server.tomcat.legacy.dir}" />
+			</then>
+		</if>
+
 		<delete dir="${app.server.tomcat.dir}" />
 
 		<if>

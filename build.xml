@@ -420,7 +420,7 @@ message.
 				</gradle-execute>
 
 				<if>
-					<isset property="env.JENKINS_HOME" />
+					<isset property="env.MASTER_HOSTNAME" />
 					<then>
 						<if>
 							<resourcecount count="0" when="gt">

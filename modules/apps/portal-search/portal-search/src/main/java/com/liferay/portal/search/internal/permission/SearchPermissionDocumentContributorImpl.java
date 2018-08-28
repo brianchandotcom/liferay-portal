@@ -32,12 +32,18 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.permission.SearchPermissionDocumentContributor;
+import com.liferay.portal.search.spi.model.permission.SearchPermissionFieldContributor;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferenceCardinality;
+import org.osgi.service.component.annotations.ReferencePolicy;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Michael C. Han
@@ -99,9 +105,35 @@ public class SearchPermissionDocumentContributorImpl
 			companyId, groupId, className, classPK, viewActionId, document);
 	}
 
+	@Reference(
+		cardinality = ReferenceCardinality.MULTIPLE,
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY
+	)
+	protected void addSearchPermissionFieldContributor(
+		SearchPermissionFieldContributor searchPermissionFieldContributor) {
+
+		_searchPermissionFieldContributors.add(
+			searchPermissionFieldContributor);
+	}
+
+	protected void removeSearchPermissionFieldContributor(
+		SearchPermissionFieldContributor searchPermissionFieldContributor) {
+
+		_searchPermissionFieldContributors.remove(
+			searchPermissionFieldContributor);
+	}
+
 	private void _addPermissionFields(
 		long companyId, long groupId, String className, long classPK,
-		String viewActionId, Document doc) {
+		String viewActionId, Document document) {
+
+		for (SearchPermissionFieldContributor searchPermissionFieldContributor :
+				_searchPermissionFieldContributors) {
+
+			searchPermissionFieldContributor.contribute(
+				document, className, classPK);
+		}
 
 		try {
 			List<Role> roles = _resourcePermissionLocalService.getRoles(
@@ -127,9 +159,9 @@ public class SearchPermissionDocumentContributorImpl
 				}
 			}
 
-			doc.addKeyword(
+			document.addKeyword(
 				Field.ROLE_ID, roleIds.toArray(new Long[roleIds.size()]));
-			doc.addKeyword(
+			document.addKeyword(
 				Field.GROUP_ROLE_ID,
 				groupRoleIds.toArray(new String[groupRoleIds.size()]));
 		}
@@ -160,5 +192,8 @@ public class SearchPermissionDocumentContributorImpl
 
 	@Reference
 	private ResourcePermissionLocalService _resourcePermissionLocalService;
+
+	private final Collection<SearchPermissionFieldContributor>
+		_searchPermissionFieldContributors = new CopyOnWriteArrayList<>();
 
 }

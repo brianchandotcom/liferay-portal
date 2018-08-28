@@ -9,7 +9,7 @@ function ${namespace}sharing(sharingURL, title) {
 				modal: true,
 				width: 800
 			},
-			id: 'sharingDialog',
+			id: '${namespace}sharingDialog',
 			title: title,
 			uri: sharingURL
 		}

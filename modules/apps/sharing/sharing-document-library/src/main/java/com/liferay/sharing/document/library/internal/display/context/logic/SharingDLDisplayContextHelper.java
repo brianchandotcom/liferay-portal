@@ -15,6 +15,7 @@
 package com.liferay.sharing.document.library.internal.display.context.logic;
 
 import com.liferay.document.library.constants.DLPortletKeys;
+import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -26,6 +27,7 @@ import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
 import com.liferay.portal.kernel.servlet.taglib.ui.JavaScriptMenuItem;
 import com.liferay.portal.kernel.servlet.taglib.ui.JavaScriptToolbarItem;
 import com.liferay.portal.kernel.settings.PortletInstanceSettingsLocator;
@@ -168,10 +170,19 @@ public class SharingDLDisplayContextHelper {
 		PortletURL sharingURL = PortletURLFactoryUtil.create(
 			_request, sharingPortletId, PortletRequest.RENDER_PHASE);
 
+		long classNameId = ClassNameLocalServiceUtil.getClassNameId(
+			DLFileEntry.class.getName());
+
 		sharingURL.setParameter("mvcRenderCommandName", "/sharing/share");
-		sharingURL.setParameter("classNameId", "22");
+		sharingURL.setParameter("classNameId", String.valueOf(classNameId));
 		sharingURL.setParameter(
 			"classPK", String.valueOf(_fileEntry.getFileEntryId()));
+
+		LiferayPortletResponse liferayPortletResponse =
+			_getLiferayPortletResponse();
+
+		sharingURL.setParameter(
+			"refererPortletNamespace", liferayPortletResponse.getNamespace());
 
 		try {
 			sharingURL.setWindowState(LiferayWindowState.POP_UP);
@@ -179,9 +190,6 @@ public class SharingDLDisplayContextHelper {
 		catch (Exception e) {
 			throw new SystemException("Unable to set window state", e);
 		}
-
-		LiferayPortletResponse liferayPortletResponse =
-			_getLiferayPortletResponse();
 
 		StringBundler sb = new StringBundler(6);
 

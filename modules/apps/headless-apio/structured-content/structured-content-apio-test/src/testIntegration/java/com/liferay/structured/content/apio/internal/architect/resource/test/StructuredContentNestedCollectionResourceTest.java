@@ -43,7 +43,6 @@ import com.liferay.structured.content.apio.architect.util.test.PaginationTestUti
 
 import java.lang.reflect.Method;
 
-import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -94,13 +93,13 @@ public class StructuredContentNestedCollectionResourceTest {
 			stringMap, null, LocaleUtil.getDefault(), null, true, true,
 			serviceContext);
 
-		PageItems pageItems = _getPageItems(
+		PageItems<JournalArticle> pageItems = _getPageItems(
 			PaginationTestUtil.of(10, 1), _group.getGroupId(),
 			_getThemeDisplay(_group), new Sort(Collections.emptyList()));
 
 		Assert.assertEquals(1, pageItems.getTotalCount());
 
-		Collection<JournalArticle> items = pageItems.getItems();
+		List<JournalArticle> items = (List<JournalArticle>)pageItems.getItems();
 
 		Assert.assertTrue("Items " + items, items.contains(journalArticle));
 	}
@@ -134,7 +133,7 @@ public class StructuredContentNestedCollectionResourceTest {
 			stringMap2, null, LocaleUtil.getDefault(), null, true, true,
 			serviceContext);
 
-		PageItems pageItems = _getPageItems(
+		PageItems<JournalArticle> pageItems = _getPageItems(
 			PaginationTestUtil.of(10, 1), _group.getGroupId(),
 			_getThemeDisplay(_group), new Sort(_sortParser.parse("title:asc")));
 
@@ -175,7 +174,7 @@ public class StructuredContentNestedCollectionResourceTest {
 			stringMap2, null, LocaleUtil.getDefault(), null, true, true,
 			serviceContext);
 
-		PageItems pageItems = _getPageItems(
+		PageItems<JournalArticle> pageItems = _getPageItems(
 			PaginationTestUtil.of(10, 1), _group.getGroupId(),
 			_getThemeDisplay(_group), new Sort(_sortParser.parse("title")));
 
@@ -216,7 +215,7 @@ public class StructuredContentNestedCollectionResourceTest {
 			stringMap2, null, LocaleUtil.getDefault(), null, true, true,
 			serviceContext);
 
-		PageItems pageItems = _getPageItems(
+		PageItems<JournalArticle> pageItems = _getPageItems(
 			PaginationTestUtil.of(10, 1), _group.getGroupId(),
 			_getThemeDisplay(_group),
 			new Sort(_sortParser.parse("title:desc")));
@@ -229,7 +228,7 @@ public class StructuredContentNestedCollectionResourceTest {
 		Assert.assertEquals(journalArticle1, items.get(1));
 	}
 
-	private PageItems _getPageItems(
+	private PageItems<JournalArticle> _getPageItems(
 			Pagination pagination, long contentSpaceId,
 			ThemeDisplay themeDisplay, Sort sort)
 		throws Exception {

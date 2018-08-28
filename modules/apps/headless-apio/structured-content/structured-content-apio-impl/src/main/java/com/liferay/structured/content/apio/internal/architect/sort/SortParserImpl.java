@@ -28,8 +28,8 @@ import java.util.stream.Stream;
 import org.osgi.service.component.annotations.Component;
 
 /**
- * Utility for parsing Sort expressions. It uses a model to create a
- * {@link SortQuery}.
+ * Utility for parsing Sort expressions. It uses a model to create a {@link
+ * SortQuery}.
  *
  * @author Cristina González
  * @review
@@ -38,8 +38,8 @@ import org.osgi.service.component.annotations.Component;
 public class SortParserImpl implements SortParser {
 
 	/**
-	 * Returns a {@link SortQuery} obtained from a comma-separated
-	 * list of field names and sort directions.
+	 * Returns a {@link SortQuery} obtained from a comma-separated list of field
+	 * names and sort directions.
 	 *
 	 * Sort directions supported are desc and asc and can be appended to each
 	 * sort field, separated by the ':' character.

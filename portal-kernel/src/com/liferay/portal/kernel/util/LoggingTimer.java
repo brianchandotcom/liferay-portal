@@ -26,11 +26,15 @@ import java.io.Closeable;
 public class LoggingTimer implements Closeable {
 
 	public LoggingTimer() {
-		this(_getInvokerName(null), System.currentTimeMillis());
+		this(_getInvokerName(null, null), System.currentTimeMillis());
+	}
+
+	public LoggingTimer(Class<?> clazz, String name) {
+		this(_getInvokerName(clazz, name), System.currentTimeMillis());
 	}
 
 	public LoggingTimer(String name) {
-		this(_getInvokerName(name), System.currentTimeMillis());
+		this(_getInvokerName(null, name), System.currentTimeMillis());
 	}
 
 	@Override
@@ -44,7 +48,7 @@ public class LoggingTimer implements Closeable {
 		}
 	}
 
-	private static String _getInvokerName(String name) {
+	private static String _getInvokerName(Class<?> clazz, String name) {
 		Thread thread = Thread.currentThread();
 
 		StackTraceElement[] stackTraceElements = thread.getStackTrace();
@@ -53,7 +57,13 @@ public class LoggingTimer implements Closeable {
 
 		StringBundler sb = new StringBundler(5);
 
-		sb.append(stackTraceElement.getClassName());
+		if (clazz == null) {
+			sb.append(stackTraceElement.getClassName());
+		}
+		else {
+			sb.append(clazz.getName());
+		}
+
 		sb.append(StringPool.POUND);
 		sb.append(stackTraceElement.getMethodName());
 

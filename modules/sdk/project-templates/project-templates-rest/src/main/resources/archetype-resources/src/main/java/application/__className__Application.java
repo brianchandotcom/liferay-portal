@@ -12,12 +12,18 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Application;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.jaxrs.whiteboard.JaxrsWhiteboardConstants;
 
 /**
  * @author ${author}
  */
-@ApplicationPath("/greetings")
-@Component(immediate = true, service = Application.class)
+@Component(
+    property = {
+        JaxrsWhiteboardConstants.JAX_RS_APPLICATION_BASE + "=/greetings",
+        JaxrsWhiteboardConstants.JAX_RS_NAME + "=Greetings.Rest"
+    },
+    service = Application.class)
+
 public class ${className}Application extends Application {
 
 	public Set<Object> getSingletons() {

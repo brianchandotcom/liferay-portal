@@ -17,13 +17,9 @@
 <%@ include file="/init.jsp" %>
 
 <%
-long classNameId = ParamUtil.getLong(request, "classNameId");
-long classPK = ParamUtil.getLong(request, "classPK");
-long resourceClassNameId = ParamUtil.getLong(request, "resourceClassNameId");
-
 ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 
-DDMTemplate template = (DDMTemplate)row.getObject();
+DDMTemplate ddmTemplate = (DDMTemplate)row.getObject();
 %>
 
 <liferay-ui:icon-menu
@@ -33,13 +29,11 @@ DDMTemplate template = (DDMTemplate)row.getObject();
 	message="<%= StringPool.BLANK %>"
 	showWhenSingleIcon="<%= true %>"
 >
-	<c:if test="<%= DDMTemplatePermission.contains(permissionChecker, template, ActionKeys.UPDATE) %>">
+	<c:if test="<%= DDMTemplatePermission.contains(permissionChecker, ddmTemplate, ActionKeys.UPDATE) %>">
 		<portlet:renderURL var="editURL">
-			<portlet:param name="mvcPath" value="/edit_template.jsp" />
-			<portlet:param name="groupId" value="<%= String.valueOf(template.getGroupId()) %>" />
-			<portlet:param name="templateId" value="<%= String.valueOf(template.getTemplateId()) %>" />
-			<portlet:param name="type" value="<%= template.getType() %>" />
-			<portlet:param name="structureAvailableFields" value='<%= renderResponse.getNamespace() + "getAvailableFields" %>' />
+			<portlet:param name="mvcPath" value="/edit_ddm_template.jsp" />
+			<portlet:param name="redirect" value="<%= currentURL %>" />
+			<portlet:param name="ddmTemplateId" value="<%= String.valueOf(ddmTemplate.getTemplateId()) %>" />
 		</portlet:renderURL>
 
 		<liferay-ui:icon
@@ -48,11 +42,11 @@ DDMTemplate template = (DDMTemplate)row.getObject();
 		/>
 	</c:if>
 
-	<c:if test="<%= DDMTemplatePermission.contains(permissionChecker, template, ActionKeys.PERMISSIONS) %>">
+	<c:if test="<%= DDMTemplatePermission.contains(permissionChecker, ddmTemplate, ActionKeys.PERMISSIONS) %>">
 		<liferay-security:permissionsURL
-			modelResource="<%= DDMTemplatePermission.getTemplateModelResourceName(template.getResourceClassNameId()) %>"
-			modelResourceDescription="<%= template.getName(locale) %>"
-			resourcePrimKey="<%= String.valueOf(template.getTemplateId()) %>"
+			modelResource="<%= DDMTemplatePermission.getTemplateModelResourceName(ddmTemplate.getResourceClassNameId()) %>"
+			modelResourceDescription="<%= ddmTemplate.getName(locale) %>"
+			resourcePrimKey="<%= String.valueOf(ddmTemplate.getTemplateId()) %>"
 			var="permissionsURL"
 			windowState="<%= LiferayWindowState.POP_UP.toString() %>"
 		/>
@@ -65,13 +59,15 @@ DDMTemplate template = (DDMTemplate)row.getObject();
 		/>
 	</c:if>
 
-	<c:if test="<%= ddmDisplay.isShowAddButton(themeDisplay.getScopeGroup()) && DDMTemplatePermission.containsAddTemplatePermission(permissionChecker, scopeGroupId, template.getClassNameId(), template.getResourceClassNameId()) %>">
+	<%
+	Group scopeGroup = themeDisplay.getScopeGroup();
+	%>
+
+	<c:if test="<%= (!scopeGroup.hasLocalOrRemoteStagingGroup() || scopeGroup.isStagingGroup()) && DDMTemplatePermission.containsAddTemplatePermission(permissionChecker, scopeGroupId, ddmTemplate.getClassNameId(), ddmTemplate.getResourceClassNameId()) %>">
 		<portlet:renderURL var="copyURL">
-			<portlet:param name="mvcPath" value="/copy_template.jsp" />
-			<portlet:param name="templateId" value="<%= String.valueOf(template.getTemplateId()) %>" />
-			<portlet:param name="classNameId" value="<%= String.valueOf(template.getClassNameId()) %>" />
-			<portlet:param name="classPK" value="<%= String.valueOf(template.getClassPK()) %>" />
-			<portlet:param name="resourceClassNameId" value="<%= String.valueOf(template.getResourceClassNameId()) %>" />
+			<portlet:param name="mvcPath" value="/copy_ddm_template.jsp" />
+			<portlet:param name="redirect" value="<%= currentURL %>" />
+			<portlet:param name="ddmTemplateId" value="<%= String.valueOf(ddmTemplate.getTemplateId()) %>" />
 		</portlet:renderURL>
 
 		<liferay-ui:icon
@@ -80,13 +76,11 @@ DDMTemplate template = (DDMTemplate)row.getObject();
 		/>
 	</c:if>
 
-	<c:if test="<%= DDMTemplatePermission.contains(permissionChecker, template, ActionKeys.DELETE) %>">
-		<portlet:actionURL name="deleteTemplate" var="deleteURL">
-			<portlet:param name="mvcPath" value="/view_template.jsp" />
-			<portlet:param name="templateId" value="<%= String.valueOf(template.getTemplateId()) %>" />
-			<portlet:param name="classNameId" value="<%= String.valueOf(classNameId) %>" />
-			<portlet:param name="classPK" value="<%= String.valueOf(classPK) %>" />
-			<portlet:param name="resourceClassNameId" value="<%= String.valueOf(resourceClassNameId) %>" />
+	<c:if test="<%= DDMTemplatePermission.contains(permissionChecker, ddmTemplate, ActionKeys.DELETE) %>">
+		<portlet:actionURL name="/journal/delete_ddm_template" var="deleteURL">
+			<portlet:param name="mvcPath" value="/view_ddm_templates.jsp" />
+			<portlet:param name="redirect" value="<%= currentURL %>" />
+			<portlet:param name="ddmTemplateId" value="<%= String.valueOf(ddmTemplate.getTemplateId()) %>" />
 		</portlet:actionURL>
 
 		<liferay-ui:icon-delete

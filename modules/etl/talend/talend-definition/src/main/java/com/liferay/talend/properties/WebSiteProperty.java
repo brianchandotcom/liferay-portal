@@ -14,6 +14,8 @@
 
 package com.liferay.talend.properties;
 
+import com.liferay.talend.utils.StringUtils;
+
 import java.net.URI;
 
 import javax.ws.rs.core.UriBuilder;
@@ -54,11 +56,7 @@ public class WebSiteProperty extends StringProperty {
 	}
 
 	public void setHost(String host) {
-		_host = _removeQuotes(host);
-	}
-
-	private String _removeQuotes(String s) {
-		return s.replace("\"", "");
+		_host = StringUtils.removeQuotes(host);
 	}
 
 	private String _host;

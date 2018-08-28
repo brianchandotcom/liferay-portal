@@ -14,23 +14,13 @@
 
 package com.liferay.web.url.apio.internal.architect.router;
 
-import com.liferay.apio.architect.pagination.PageItems;
-import com.liferay.apio.architect.pagination.Pagination;
 import com.liferay.apio.architect.router.NestedCollectionRouter;
-import com.liferay.apio.architect.routes.NestedCollectionRoutes;
 import com.liferay.person.apio.architect.identifier.PersonIdentifier;
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.model.Contact;
-import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.Website;
-import com.liferay.portal.kernel.service.UserService;
-import com.liferay.portal.kernel.service.WebsiteService;
 import com.liferay.web.url.apio.architect.identifier.WebUrlIdentifier;
-
-import java.util.List;
+import com.liferay.web.url.apio.internal.architect.router.base.BaseUserAccountWebUrlsNestedCollectionRouter;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * Provides the information necessary to expose the <a
@@ -43,34 +33,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(immediate = true)
 public class PersonWebUrlsNestedCollectionRouter
+	extends BaseUserAccountWebUrlsNestedCollectionRouter<PersonIdentifier>
 	implements NestedCollectionRouter
 		<Website, Long, WebUrlIdentifier, Long, PersonIdentifier> {
-
-	@Override
-	public NestedCollectionRoutes<Website, Long, Long> collectionRoutes(
-		NestedCollectionRoutes.Builder<Website, Long, Long> builder) {
-
-		return builder.addGetter(
-			this::_getPageItems
-		).build();
-	}
-
-	private PageItems<Website> _getPageItems(
-			Pagination pagination, long personId)
-		throws PortalException {
-
-		User user = _userService.getUserById(personId);
-
-		List<Website> websites = _websiteService.getWebsites(
-			Contact.class.getName(), user.getContactId());
-
-		return new PageItems<>(websites, websites.size());
-	}
-
-	@Reference
-	private UserService _userService;
-
-	@Reference
-	private WebsiteService _websiteService;
-
 }

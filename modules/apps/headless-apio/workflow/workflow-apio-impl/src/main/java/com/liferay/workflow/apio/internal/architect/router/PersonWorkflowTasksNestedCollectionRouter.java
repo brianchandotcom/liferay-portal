@@ -12,28 +12,27 @@
  * details.
  */
 
-package com.liferay.address.apio.internal.architect.router;
+package com.liferay.workflow.apio.internal.architect.router;
 
-import com.liferay.address.apio.architect.identifier.AddressIdentifier;
-import com.liferay.address.apio.internal.architect.router.base.BaseUserAccountAddressNestedCollectionRouter;
 import com.liferay.apio.architect.router.NestedCollectionRouter;
 import com.liferay.person.apio.architect.identifier.PersonIdentifier;
-import com.liferay.portal.kernel.model.Address;
+import com.liferay.portal.kernel.workflow.WorkflowTask;
+import com.liferay.workflow.apio.architect.identifier.WorkflowTaskIdentifier;
+import com.liferay.workflow.apio.internal.architect.router.base.BaseUserAccountWorkflowTasksNestedCollectionRouter;
 
 import org.osgi.service.component.annotations.Component;
 
 /**
- * Provides the information necessary to expose the <a
- * href="http://schema.org/Address">Address</a> resources contained inside an <a
- * href="http://schema.org/Person">Person</a> through a web API. The resources
- * are mapped from the internal model {@link Address}.
+ * Provides the information necessary to expose user WorkflowTask resources
+ * through a web API. The resources are mapped from the internal model {@link
+ * WorkflowTask}.
  *
- * @author Javier Gamarra
+ * @author Eduardo Perez
  * @review
  */
 @Component(immediate = true)
-public class PersonAddressNestedCollectionRouter
-	extends BaseUserAccountAddressNestedCollectionRouter<PersonIdentifier>
+public class PersonWorkflowTasksNestedCollectionRouter
+	extends BaseUserAccountWorkflowTasksNestedCollectionRouter<PersonIdentifier>
 	implements NestedCollectionRouter
-		<Address, Long, AddressIdentifier, Long, PersonIdentifier> {
+		<WorkflowTask, Long, WorkflowTaskIdentifier, Long, PersonIdentifier> {
 }

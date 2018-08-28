@@ -12,28 +12,28 @@
  * details.
  */
 
-package com.liferay.address.apio.internal.architect.router;
+package com.liferay.site.apio.internal.architect.router;
 
-import com.liferay.address.apio.architect.identifier.AddressIdentifier;
-import com.liferay.address.apio.internal.architect.router.base.BaseUserAccountAddressNestedCollectionRouter;
 import com.liferay.apio.architect.router.NestedCollectionRouter;
 import com.liferay.person.apio.architect.identifier.PersonIdentifier;
-import com.liferay.portal.kernel.model.Address;
+import com.liferay.site.apio.architect.identifier.WebSiteIdentifier;
+import com.liferay.site.apio.internal.architect.router.base.BaseUserAccountWebSiteNestedCollectionRouter;
+import com.liferay.site.apio.internal.model.GroupWrapper;
 
 import org.osgi.service.component.annotations.Component;
 
 /**
  * Provides the information necessary to expose the <a
- * href="http://schema.org/Address">Address</a> resources contained inside an <a
+ * href="http://schema.org/WebSite">WebSite</a> resources contained inside a <a
  * href="http://schema.org/Person">Person</a> through a web API. The resources
- * are mapped from the internal model {@link Address}.
+ * are mapped from the internal model {@link GroupWrapper}.
  *
- * @author Javier Gamarra
+ * @author Eduardo Perez
  * @review
  */
 @Component(immediate = true)
-public class PersonAddressNestedCollectionRouter
-	extends BaseUserAccountAddressNestedCollectionRouter<PersonIdentifier>
+public class PersonWebSiteNestedCollectionRouter
+	extends BaseUserAccountWebSiteNestedCollectionRouter<PersonIdentifier>
 	implements NestedCollectionRouter
-		<Address, Long, AddressIdentifier, Long, PersonIdentifier> {
+		<GroupWrapper, Long, WebSiteIdentifier, Long, PersonIdentifier> {
 }

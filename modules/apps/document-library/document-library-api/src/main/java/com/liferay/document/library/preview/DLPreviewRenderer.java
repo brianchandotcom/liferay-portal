@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.document.library.preview.renderer;
+package com.liferay.document.library.preview;
 
 import java.io.IOException;
 

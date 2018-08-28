@@ -15,8 +15,8 @@
 package com.liferay.document.library.preview.image.internal.renderer;
 
 import com.liferay.document.library.kernel.util.ImageProcessorUtil;
-import com.liferay.document.library.preview.renderer.DLPreviewRenderer;
-import com.liferay.document.library.preview.renderer.DLPreviewRendererProvider;
+import com.liferay.document.library.preview.DLPreviewRenderer;
+import com.liferay.document.library.preview.DLPreviewRendererProvider;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.WebKeys;

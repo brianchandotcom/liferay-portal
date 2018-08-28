@@ -1,4 +1,0 @@
-Bundle-Name: Liferay Document Library Preview API
-Bundle-SymbolicName: com.liferay.document.library.preview.api
-Bundle-Version: 1.0.0
-Export-Package: com.liferay.document.library.preview.renderer

@@ -1123,6 +1123,14 @@ public class GitWorkingDirectory {
 		return modifiedFiles;
 	}
 
+	public LocalGitBranch getRebasedLocalGitBranch(PullRequest pullRequest) {
+		return getRebasedLocalGitBranch(
+			pullRequest.getLocalSenderBranchName(),
+			pullRequest.getSenderBranchName(), pullRequest.getSenderRemoteURL(),
+			pullRequest.getSenderSHA(), pullRequest.getUpstreamBranchName(),
+			pullRequest.getLiferayRemoteBranchSHA());
+	}
+
 	public LocalGitBranch getRebasedLocalGitBranch(
 		String rebasedLocalGitBranchName, String senderBranchName,
 		String senderRemoteURL, String senderSHA, String upstreamBranchName,
@@ -1184,14 +1192,6 @@ public class GitWorkingDirectory {
 				deleteLocalGitBranch(tempLocalGitBranch);
 			}
 		}
-	}
-
-	public LocalGitBranch getRebaseLocalGitBranch(PullRequest pullRequest) {
-		return getRebasedLocalGitBranch(
-			pullRequest.getLocalSenderBranchName(),
-			pullRequest.getSenderBranchName(), pullRequest.getSenderRemoteURL(),
-			pullRequest.getSenderSHA(), pullRequest.getUpstreamBranchName(),
-			pullRequest.getLiferayRemoteBranchSHA());
 	}
 
 	public RemoteGitBranch getRemoteGitBranch(

@@ -23,6 +23,8 @@ import com.liferay.portal.search.internal.analysis.SubstringFieldQueryBuilder;
 
 import java.util.Arrays;
 
+import org.junit.Test;
+
 /**
  * @author André de Oliveira
  * @author Rodrigo Paulino
@@ -30,21 +32,8 @@ import java.util.Arrays;
 public abstract class BaseSubstringFieldQueryBuilderTestCase
 	extends BaseFieldQueryBuilderTestCase {
 
-	@Override
-	protected FieldQueryBuilder createFieldQueryBuilder() {
-		return new SubstringFieldQueryBuilder() {
-			{
-				keywordTokenizer = new SimpleKeywordTokenizer();
-			}
-		};
-	}
-
-	@Override
-	protected String getField() {
-		return Field.TREE_PATH;
-	}
-
-	protected void testBasicWordMatches() throws Exception {
+	@Test
+	public void testBasicWordMatches() throws Exception {
 		addDocument("Nametag");
 		addDocument("NA-META-G");
 		addDocument("Tag Name");
@@ -84,7 +73,8 @@ public abstract class BaseSubstringFieldQueryBuilderTestCase
 		assertSearchNoHits("\"tag 1\"");
 	}
 
-	protected void testLuceneUnfriendlyTerms() throws Exception {
+	@Test
+	public void testLuceneUnfriendlyTerms() throws Exception {
 		assertSearchNoHits(StringPool.STAR);
 
 		assertSearchNoHits(StringPool.AMPERSAND);
@@ -117,7 +107,8 @@ public abstract class BaseSubstringFieldQueryBuilderTestCase
 		assertSearchNoHits("\"ONE\" NOT \"TWO\"");
 	}
 
-	protected void testMultiwordPhrasePrefixes() throws Exception {
+	@Test
+	public void testMultiwordPhrasePrefixes() throws Exception {
 		addDocument("Name Tags");
 		addDocument("Names Tab");
 		addDocument("Tag Names");
@@ -159,7 +150,8 @@ public abstract class BaseSubstringFieldQueryBuilderTestCase
 		assertSearchNoHits("\"zz tags*\"");
 	}
 
-	protected void testNull() throws Exception {
+	@Test
+	public void testNull() throws Exception {
 		addDocument("null");
 		addDocument("anulled");
 		addDocument("The word null is in this sentence");
@@ -173,7 +165,8 @@ public abstract class BaseSubstringFieldQueryBuilderTestCase
 				"ultimate nullifier"));
 	}
 
-	protected void testNumbers() throws Exception {
+	@Test
+	public void testNumbers() throws Exception {
 		addDocument("Nametag5");
 		addDocument("2Tagname");
 		addDocument("LETTERS ONLY");
@@ -198,7 +191,8 @@ public abstract class BaseSubstringFieldQueryBuilderTestCase
 		assertSearchNoHits("Tagname9");
 	}
 
-	protected void testParentheses() throws Exception {
+	@Test
+	public void testParentheses() throws Exception {
 		addDocument("401 k");
 		addDocument("401(k)");
 
@@ -224,7 +218,8 @@ public abstract class BaseSubstringFieldQueryBuilderTestCase
 		assertSearchNoHits("401k");
 	}
 
-	protected void testPhrases() throws Exception {
+	@Test
+	public void testPhrases() throws Exception {
 		addDocument("Names of Tags");
 		addDocument("More names of tags here");
 
@@ -243,7 +238,8 @@ public abstract class BaseSubstringFieldQueryBuilderTestCase
 		assertSearchNoHits("\"  tags  \"");
 	}
 
-	protected void testStopwords() throws Exception {
+	@Test
+	public void testStopwords() throws Exception {
 		addDocument("Names of Tags");
 		addDocument("More names of tags");
 
@@ -253,7 +249,8 @@ public abstract class BaseSubstringFieldQueryBuilderTestCase
 		assertSearch("ames of tags", 2);
 	}
 
-	protected void testSubstrings() throws Exception {
+	@Test
+	public void testSubstrings() throws Exception {
 		addDocument("Nametag");
 		addDocument("NA-META-G");
 		addDocument("Tag Name");
@@ -286,7 +283,8 @@ public abstract class BaseSubstringFieldQueryBuilderTestCase
 		assertSearch("*Ta*", 4);
 	}
 
-	protected void testWildcardCharacters() throws Exception {
+	@Test
+	public void testWildcardCharacters() throws Exception {
 		addDocument("AAA+BBB-CCC{DDD]");
 		addDocument("AAA BBB CCC DDD");
 		addDocument("M*A*S*H");
@@ -333,6 +331,20 @@ public abstract class BaseSubstringFieldQueryBuilderTestCase
 		assertSearch(
 			"Wh* W*en* Wher*",
 			Arrays.asList("who? when? where?", "who. when. where."));
+	}
+
+	@Override
+	protected FieldQueryBuilder createFieldQueryBuilder() {
+		return new SubstringFieldQueryBuilder() {
+			{
+				keywordTokenizer = new SimpleKeywordTokenizer();
+			}
+		};
+	}
+
+	@Override
+	protected String getField() {
+		return Field.TREE_PATH;
 	}
 
 	protected String[] toLowerCase(String[] values) {

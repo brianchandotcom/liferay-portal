@@ -22,6 +22,8 @@ import com.liferay.portal.search.internal.analysis.TitleFieldQueryBuilder;
 
 import java.util.Arrays;
 
+import org.junit.Test;
+
 /**
  * @author André de Oliveira
  * @author Rodrigo Paulino
@@ -29,21 +31,8 @@ import java.util.Arrays;
 public abstract class BaseTitleFieldQueryBuilderTestCase
 	extends BaseFieldQueryBuilderTestCase {
 
-	@Override
-	protected FieldQueryBuilder createFieldQueryBuilder() {
-		return new TitleFieldQueryBuilder() {
-			{
-				keywordTokenizer = new SimpleKeywordTokenizer();
-			}
-		};
-	}
-
-	@Override
-	protected String getField() {
-		return Field.TITLE;
-	}
-
-	protected void testBasicWordMatches() throws Exception {
+	@Test
+	public void testBasicWordMatches() throws Exception {
 		addDocument("name tag end");
 		addDocument("NA-META-G");
 		addDocument("Tag Name");
@@ -74,7 +63,8 @@ public abstract class BaseTitleFieldQueryBuilderTestCase
 		assertSearchNoHits("tag2");
 	}
 
-	protected void testExactMatchBoost() throws Exception {
+	@Test
+	public void testExactMatchBoost() throws Exception {
 		addDocument("one two three four five six seven eight");
 		addDocument("one two three four five six");
 		addDocument("three four five six seven");
@@ -106,7 +96,8 @@ public abstract class BaseTitleFieldQueryBuilderTestCase
 				"one two three four five six seven eight"));
 	}
 
-	protected void testLuceneUnfriendlyTerms() throws Exception {
+	@Test
+	public void testLuceneUnfriendlyTerms() throws Exception {
 		assertSearchNoHits(StringPool.STAR);
 
 		assertSearchNoHits(StringPool.AMPERSAND);
@@ -137,49 +128,8 @@ public abstract class BaseTitleFieldQueryBuilderTestCase
 		assertSearchNoHits("\"ONE\" NOT \"TWO\"");
 	}
 
-	protected void testMultiwordPhrasePrefixes() throws Exception {
-		addDocument("Name Tags");
-		addDocument("Names Tab");
-		addDocument("Tag Names");
-		addDocument("Tabs Names Tags");
-
-		assertSearch("\"name ta*\"", 1);
-		assertSearch("\"name tag*\"", 1);
-		assertSearch("\"name tags*\"", 1);
-		assertSearch("\"names ta*\"", 2);
-		assertSearch("\"names tab*\"", 1);
-		assertSearch("\"names tag*\"", 1);
-		assertSearch("\"names tags*\"", 1);
-		assertSearch("\"tabs name*\"", 1);
-		assertSearch("\"tabs names ta*\"", 1);
-		assertSearch("\"tabs names tag*\"", 1);
-		assertSearch("\"tabs names tags*\"", 1);
-		assertSearch("\"tabs names*\"", 1);
-		assertSearch("\"tag na*\"", 1);
-		assertSearch("\"tag name*\"", 1);
-		assertSearch("\"tag names*\"", 1);
-
-		assertSearchNoHits("\"name tab*\"");
-		assertSearchNoHits("\"name tabs*\"");
-		assertSearchNoHits("\"names tabs*\"");
-		assertSearchNoHits("\"tab na*\"");
-		assertSearchNoHits("\"tab names*\"");
-		assertSearchNoHits("\"tabs na ta*\"");
-		assertSearchNoHits("\"tabs name ta*\"");
-		assertSearchNoHits("\"tags na ta*\"");
-		assertSearchNoHits("\"tags names tabs*\"");
-		assertSearchNoHits("\"tags names*\"");
-		assertSearchNoHits("\"zz na*\"");
-		assertSearchNoHits("\"zz name*\"");
-		assertSearchNoHits("\"zz names*\"");
-		assertSearchNoHits("\"zz ta*\"");
-		assertSearchNoHits("\"zz tab*\"");
-		assertSearchNoHits("\"zz tabs*\"");
-		assertSearchNoHits("\"zz tag*\"");
-		assertSearchNoHits("\"zz tags*\"");
-	}
-
-	protected void testMultiwordPrefixes() throws Exception {
+	@Test
+	public void testMultiwordPrefixes() throws Exception {
 		addDocument("Name Tags");
 		addDocument("Names Tab");
 		addDocument("Tag Names");
@@ -217,7 +167,8 @@ public abstract class BaseTitleFieldQueryBuilderTestCase
 		assertSearchNoHits("zz ta");
 	}
 
-	protected void testNull() throws Exception {
+	@Test
+	public void testNull() throws Exception {
 		addDocument("null");
 		addDocument("anulled");
 		addDocument("The word null is in this sentence");
@@ -231,7 +182,8 @@ public abstract class BaseTitleFieldQueryBuilderTestCase
 				"Ultimate Nullifier"));
 	}
 
-	protected void testNumbers() throws Exception {
+	@Test
+	public void testNumbers() throws Exception {
 		addDocument("Nametag5");
 		addDocument("2Tagname");
 		addDocument("LETTERS ONLY");
@@ -254,7 +206,8 @@ public abstract class BaseTitleFieldQueryBuilderTestCase
 		assertSearchNoHits("Tagname9");
 	}
 
-	protected void testPhrasePrefixes() throws Exception {
+	@Test
+	public void testPhrasePrefixes() throws Exception {
 		addDocument("Nametag");
 		addDocument("NA-META-G");
 		addDocument("Tag Name");
@@ -285,7 +238,8 @@ public abstract class BaseTitleFieldQueryBuilderTestCase
 		assertSearchNoHits("\"*Ta\"");
 	}
 
-	protected void testPhrases() throws Exception {
+	@Test
+	public void testPhrases() throws Exception {
 		addDocument("Names of Tags");
 		addDocument("More names of tags here");
 
@@ -307,7 +261,8 @@ public abstract class BaseTitleFieldQueryBuilderTestCase
 		assertSearchNoHits("\"name\" of \"tags\"");
 	}
 
-	protected void testStopwords() throws Exception {
+	@Test
+	public void testStopwords() throws Exception {
 		addDocument("Names of Tags");
 		addDocument("More names of tags");
 
@@ -317,7 +272,8 @@ public abstract class BaseTitleFieldQueryBuilderTestCase
 		assertSearch("tags names", 2);
 	}
 
-	protected void testWhitespace() throws Exception {
+	@Test
+	public void testWhitespace() throws Exception {
 		String ideographicSpace = "\u3000";
 
 		assertSearchNoHits(ideographicSpace);
@@ -325,7 +281,8 @@ public abstract class BaseTitleFieldQueryBuilderTestCase
 		assertSearchNoHits("\"ONE\"" + ideographicSpace + "\"TWO\"");
 	}
 
-	protected void testWildcardCharacters() throws Exception {
+	@Test
+	public void testWildcardCharacters() throws Exception {
 		addDocument("AAA+BBB-CCC{DDD]");
 		addDocument("AAA BBB CCC DDD");
 		addDocument("M*A*S*H");
@@ -364,7 +321,8 @@ public abstract class BaseTitleFieldQueryBuilderTestCase
 		assertSearch("Wh* W*en* Wher*", Arrays.asList());
 	}
 
-	protected void testWordPrefixes() throws Exception {
+	@Test
+	public void testWordPrefixes() throws Exception {
 		addDocument("Nametag");
 		addDocument("NA-META-G");
 		addDocument("Tag Name");
@@ -393,6 +351,20 @@ public abstract class BaseTitleFieldQueryBuilderTestCase
 
 		assertSearchNoHits("ag");
 		assertSearchNoHits("amet");
+	}
+
+	@Override
+	protected FieldQueryBuilder createFieldQueryBuilder() {
+		return new TitleFieldQueryBuilder() {
+			{
+				keywordTokenizer = new SimpleKeywordTokenizer();
+			}
+		};
+	}
+
+	@Override
+	protected String getField() {
+		return Field.TITLE;
 	}
 
 }

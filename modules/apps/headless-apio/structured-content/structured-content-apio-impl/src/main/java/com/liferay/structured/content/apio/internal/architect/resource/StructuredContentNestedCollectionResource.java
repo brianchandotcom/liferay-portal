@@ -42,6 +42,7 @@ import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalArticleDisplay;
 import com.liferay.journal.service.JournalArticleService;
 import com.liferay.journal.util.JournalContent;
+import com.liferay.journal.util.comparator.ArticleTitleComparator;
 import com.liferay.media.object.apio.architect.identifier.MediaObjectIdentifier;
 import com.liferay.person.apio.architect.identifier.PersonIdentifier;
 import com.liferay.portal.apio.identifier.ClassNameClassPK;
@@ -55,9 +56,12 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.structure.apio.architect.identifier.ContentStructureIdentifier;
 import com.liferay.structured.content.apio.architect.identifier.StructuredContentIdentifier;
+import com.liferay.structured.content.apio.architect.sort.Sort;
+import com.liferay.structured.content.apio.architect.sort.SortField;
 import com.liferay.structured.content.apio.architect.util.StructuredContentUtil;
 import com.liferay.structured.content.apio.internal.architect.form.StructuredContentCreatorForm;
 import com.liferay.structured.content.apio.internal.architect.form.StructuredContentUpdaterForm;
@@ -93,7 +97,7 @@ public class StructuredContentNestedCollectionResource
 				builder) {
 
 		return builder.addGetter(
-			this::_getPageItems, ThemeDisplay.class
+			this::_getPageItems, ThemeDisplay.class, Sort.class
 		).addCreator(
 			this::_addJournalArticle, ThemeDisplay.class,
 			_hasPermission.forAddingIn(ContentSpaceIdentifier.class),
@@ -333,6 +337,25 @@ public class StructuredContentNestedCollectionResource
 		);
 	}
 
+	private OrderByComparator<JournalArticle>
+		_getJournalArticleOrderByComparator(List<SortField> sortFields) {
+
+		OrderByComparator<JournalArticle> orderByComparator = null;
+
+		for (SortField sortField : sortFields) {
+			String fieldName = sortField.getFieldName();
+
+			if (fieldName.equals("title")) {
+				orderByComparator = new ArticleTitleComparator(
+					sortField.isAscending());
+
+				break;
+			}
+		}
+
+		return orderByComparator;
+	}
+
 	private Long _getJournalArticleStructureId(
 		JournalArticleWrapper journalArticleWrapper) {
 
@@ -397,13 +420,17 @@ public class StructuredContentNestedCollectionResource
 	}
 
 	private PageItems<JournalArticleWrapper> _getPageItems(
-		Pagination pagination, long contentSpaceId, ThemeDisplay themeDisplay) {
+		Pagination pagination, long contentSpaceId, ThemeDisplay themeDisplay,
+		Sort sort) {
+
+		OrderByComparator<JournalArticle> orderByComparator =
+			_getJournalArticleOrderByComparator(sort.getSortFields());
 
 		List<JournalArticleWrapper> journalArticleWrappers = Stream.of(
 			_journalArticleService.getLatestArticles(
 				contentSpaceId, WorkflowConstants.STATUS_APPROVED,
 				pagination.getStartPosition(), pagination.getEndPosition(),
-				null)
+				orderByComparator)
 		).flatMap(
 			List::stream
 		).map(
@@ -412,6 +439,7 @@ public class StructuredContentNestedCollectionResource
 		).collect(
 			Collectors.toList()
 		);
+
 		int count = _journalArticleService.getLatestArticlesCount(
 			contentSpaceId, WorkflowConstants.STATUS_APPROVED);
 

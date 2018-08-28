@@ -16,13 +16,27 @@ package com.liferay.asset.list.model.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.asset.list.constants.AssetListEntryTypeConstants;
+import com.liferay.petra.string.StringPool;
+
 /**
- * @author Brian Wing Shun Chan
+ * @author Pavel Savinov
  */
 @ProviderType
 public class AssetListEntryImpl extends AssetListEntryBaseImpl {
 
 	public AssetListEntryImpl() {
+	}
+
+	public String getTypeLabel() {
+		if (getType() == AssetListEntryTypeConstants.TYPE_DYNAMIC) {
+			return "dynamic";
+		}
+		else if (getType() == AssetListEntryTypeConstants.TYPE_MANUAL) {
+			return "manual";
+		}
+
+		return StringPool.BLANK;
 	}
 
 }

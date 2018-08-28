@@ -29,6 +29,12 @@
 		<execute function="AssertClick" locator1="NavTab#LDAP" value1="LDAP" />
 	</command>
 
+	<command name="gotoNTLM">
+		<execute macro="PortalSettingsNavigator#expandAuthenticationPanel" />
+
+		<execute function="AssertClick" locator1="NavTab#NTLM" value1="NTLM" />
+	</command>
+
 	<command name="gotoOpenID">
 		<execute macro="PortalSettingsNavigator#expandAuthenticationPanel" />
 

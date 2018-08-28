@@ -24,8 +24,6 @@ int status = ParamUtil.getInteger(request, "status", WorkflowConstants.STATUS_AN
 FileEntry fileEntry = fileVersion.getFileEntry();
 
 boolean hasImages = ImageProcessorUtil.hasImages(fileVersion);
-
-boolean showImageContainer = true;
 %>
 
 <%@ include file="/document_library/view_file_entry_preview.jspf" %>

@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -90,21 +91,77 @@ public class AssetListDisplayContext {
 		return _assetListEntriesSearchContainer;
 	}
 
-	public String getAssetListEntryType(int type) {
-		String assetListEntryType = StringPool.BLANK;
-
-		if (type == AssetListEntryTypeConstants.TYPE_DYNAMIC) {
-			assetListEntryType = "dynamic";
-		}
-		else if (type == AssetListEntryTypeConstants.TYPE_MANUAL) {
-			assetListEntryType = "manual";
+	public AssetListEntry getAssetListEntry() {
+		if (_assetListEntry != null) {
+			return _assetListEntry;
 		}
 
-		return LanguageUtil.get(_request, assetListEntryType);
+		long assetListEntryId = getAssetListEntryId();
+
+		_assetListEntry = AssetListEntryServiceUtil.fetchAssetListEntry(
+			assetListEntryId);
+
+		return _assetListEntry;
+	}
+
+	public long getAssetListEntryId() {
+		if (_assetListEntryId != null) {
+			return _assetListEntryId;
+		}
+
+		_assetListEntryId = ParamUtil.getLong(_request, "assetListEntryId");
+
+		return _assetListEntryId;
+	}
+
+	public String getAssetListEntryTitle() {
+		String title = StringPool.BLANK;
+
+		int assetListEntryType = getAssetListEntryType();
+
+		AssetListEntry assetListEntry = getAssetListEntry();
+
+		if (assetListEntry != null) {
+			title = assetListEntry.getTitle();
+		}
+		else if (assetListEntryType ==
+					 AssetListEntryTypeConstants.TYPE_DYNAMIC) {
+
+			title = "new-dynamic-asset-list";
+		}
+		else if (assetListEntryType ==
+					 AssetListEntryTypeConstants.TYPE_MANUAL) {
+
+			title = "new-manual-asset-list";
+		}
+
+		return LanguageUtil.get(_request, title);
+	}
+
+	public int getAssetListEntryType() {
+		if (_assetListEntryType != null) {
+			return _assetListEntryType;
+		}
+
+		AssetListEntry assetListEntry = getAssetListEntry();
+
+		int assetListEntryType = ParamUtil.getInteger(
+			_request, "assetListEntryType");
+
+		if (assetListEntry != null) {
+			assetListEntryType = assetListEntry.getType();
+		}
+
+		_assetListEntryType = assetListEntryType;
+
+		return _assetListEntryType;
 	}
 
 	private Integer _assetListEntriesCount;
 	private SearchContainer _assetListEntriesSearchContainer;
+	private AssetListEntry _assetListEntry;
+	private Long _assetListEntryId;
+	private Integer _assetListEntryType;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
 	private final HttpServletRequest _request;

@@ -346,14 +346,14 @@ public abstract class BaseClientTestCase {
 
 			Response response = invocationBuilder.get();
 
-			URI location = response.getLocation();
+			URI uri = response.getLocation();
 
-			if (location == null) {
+			if (uri == null) {
 				return response;
 			}
 
 			Map<String, String[]> parameterMap = HttpUtil.getParameterMap(
-				location.getQuery());
+				uri.getQuery());
 
 			if (parameterMap.containsKey("error")) {
 				return response;
@@ -536,9 +536,9 @@ public abstract class BaseClientTestCase {
 	protected <T> T getToken(
 		String clientId, String hostname,
 		BiFunction<String, Invocation.Builder, Response> credentialsBiFunction,
-		Function<Response, T> tokenParser) {
+		Function<Response, T> tokenParserFunction) {
 
-		return tokenParser.apply(
+		return tokenParserFunction.apply(
 			credentialsBiFunction.apply(
 				clientId, getTokenInvocationBuilder(hostname)));
 	}
@@ -569,16 +569,16 @@ public abstract class BaseClientTestCase {
 	}
 
 	protected String parseAuthorizationCodeString(Response response) {
-		URI location = response.getLocation();
+		URI uri = response.getLocation();
 
-		if (location == null) {
+		if (uri == null) {
 			throw new IllegalArgumentException(
 				"Authorization service response missing Location header from " +
 					"which code is extracted");
 		}
 
 		Map<String, String[]> parameterMap = HttpUtil.getParameterMap(
-			location.getQuery());
+			uri.getQuery());
 
 		if (!parameterMap.containsKey("code")) {
 			return null;
@@ -592,16 +592,16 @@ public abstract class BaseClientTestCase {
 	}
 
 	protected String parseErrorParameter(Response response) {
-		URI location = response.getLocation();
+		URI uri = response.getLocation();
 
-		if (location == null) {
+		if (uri == null) {
 			throw new IllegalArgumentException(
 				"Authorization service response missing Location header from " +
 					"which error is extracted");
 		}
 
 		Map<String, String[]> parameterMap = HttpUtil.getParameterMap(
-			location.getQuery());
+			uri.getQuery());
 
 		if (!parameterMap.containsKey("error")) {
 			return null;

@@ -207,16 +207,16 @@ public class SecurityTest extends BaseClientTestCase {
 	}
 
 	protected String parseStateString(Response response) {
-		URI location = response.getLocation();
+		URI uri = response.getLocation();
 
-		if (location == null) {
+		if (uri == null) {
 			throw new IllegalArgumentException(
 				"Authorization service response missing Location header from " +
 					"which state is extracted");
 		}
 
 		Map<String, String[]> parameterMap = HttpUtil.getParameterMap(
-			location.getQuery());
+			uri.getQuery());
 
 		if (!parameterMap.containsKey("state")) {
 			return null;

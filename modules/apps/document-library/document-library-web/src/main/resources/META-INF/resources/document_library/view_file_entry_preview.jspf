@@ -14,91 +14,51 @@
  */
 --%>
 
-<div>
+<c:choose>
+	<c:when test="<%= !hasImages %>">
+		<c:choose>
+			<c:when test="<%= !DLProcessorRegistryUtil.isPreviewableSize(fileVersion) && ImageProcessorUtil.isImageSupported(fileVersion.getMimeType()) %>">
+				<div class="alert alert-info">
+					<liferay-ui:message key="file-is-too-large-for-preview-or-thumbnail-generation" />
+				</div>
+			</c:when>
+			<c:when test="<%= ImageProcessorUtil.isImageSupported(fileVersion) %>">
+				<div class="alert alert-info">
+					<liferay-ui:message key="generating-preview-will-take-a-few-minutes" />
+				</div>
+			</c:when>
+		</c:choose>
+	</c:when>
+	<c:otherwise>
 
-	<%
-	String randomNamespace = PortalUtil.generateRandomKey(request, "portlet_document_library_view_file_entry_preview") + StringPool.UNDERLINE;
-
-	boolean emptyPreview = false;
-	int previewFileCount = 0;
-	String previewFileURL = null;
-	String[] previewFileURLs = null;
-
-	if (hasImages) {
-		String previewQueryString = null;
-
-		if (hasImages) {
-			previewQueryString = "&imagePreview=1";
-		}
+		<%
+		String previewQueryString = "&imagePreview=1";
 
 		if (status != WorkflowConstants.STATUS_ANY) {
 			previewQueryString += "&status=" + status;
 		}
-		else {
-			previewFileURLs = new String[1];
 
-			previewFileURLs[0] = DLUtil.getPreviewURL(fileEntry, fileVersion, themeDisplay, previewQueryString);
-		}
+		String previewFileURL = DLUtil.getPreviewURL(fileEntry, fileVersion, themeDisplay, previewQueryString);
 
-		previewFileURL = previewFileURLs[0];
+		String randomNamespace = PortalUtil.generateRandomKey(request, "portlet_document_library_view_file_entry_preview") + StringPool.UNDERLINE;
+		%>
 
-		previewFileCount = 1;
-	}
-
-	request.setAttribute("view_file_entry.jsp-randomNamespace", randomNamespace);
-
-	request.setAttribute("view_file_entry.jsp-previewFileURLs", previewFileURLs);
-	%>
-
-	<c:choose>
-		<c:when test="<%= emptyPreview %>">
-			<div class="alert alert-info">
-				<liferay-ui:message arguments="<%= fileEntry.getTitle() %>" key="cannot-generate-preview-for-x" />
+		<div class="lfr-preview-file lfr-preview-image" id="<portlet:namespace /><%= randomNamespace %>previewFile">
+			<div class="lfr-preview-file-content lfr-preview-image-content" id="<portlet:namespace /><%= randomNamespace %>previewFileContent">
+				<div class="lfr-preview-file-image-current-column">
+					<div class="lfr-preview-file-image-container">
+						<img alt="<liferay-ui:message escapeAttribute="<%= true %>" key="preview" />" class="lfr-preview-file-image-current" src="<%= previewFileURL %>" />
+					</div>
+				</div>
 			</div>
-		</c:when>
-		<c:when test="<%= previewFileCount == 0 %>">
-			<c:choose>
-				<c:when test="<%= !DLProcessorRegistryUtil.isPreviewableSize(fileVersion) && ImageProcessorUtil.isImageSupported(fileVersion.getMimeType()) %>">
-					<div class="alert alert-info">
-						<liferay-ui:message key="file-is-too-large-for-preview-or-thumbnail-generation" />
-					</div>
-				</c:when>
-				<c:when test="<%= ImageProcessorUtil.isImageSupported(fileVersion) %>">
-					<div class="alert alert-info">
-						<liferay-ui:message key="generating-preview-will-take-a-few-minutes" />
-					</div>
-				</c:when>
-			</c:choose>
-		</c:when>
-		<c:otherwise>
-			<c:choose>
-				<c:when test="<%= hasImages %>">
-					<c:choose>
-						<c:when test="<%= showImageContainer %>">
-							<div class="lfr-preview-file lfr-preview-image" id="<portlet:namespace /><%= randomNamespace %>previewFile">
-								<div class="lfr-preview-file-content lfr-preview-image-content" id="<portlet:namespace /><%= randomNamespace %>previewFileContent">
-									<div class="lfr-preview-file-image-current-column">
-										<div class="lfr-preview-file-image-container">
-											<img alt="<liferay-ui:message escapeAttribute="<%= true %>" key="preview" />" class="lfr-preview-file-image-current" src="<%= previewFileURL %>" />
-										</div>
-									</div>
-								</div>
-							</div>
-						</c:when>
-						<c:otherwise>
-							<img alt="<liferay-ui:message escapeAttribute="<%= true %>" key="preview" />" class="lfr-preview-file-image-current" src="<%= previewFileURL %>" />
-						</c:otherwise>
-					</c:choose>
-				</c:when>
-			</c:choose>
-		</c:otherwise>
-	</c:choose>
-</div>
+		</div>
 
-<aui:script use="aui-base">
-	var currentImage = A.one('.lfr-preview-file-image-current');
+		<aui:script use="aui-base">
+			var currentImage = A.one('.lfr-preview-file-image-current');
 
-	if (currentImage && (currentImage.get('complete') || currentImage.get('naturalWidth'))) {
-		currentImage.setStyle('background-image', 'none');
-	}
-</aui:script>
+			if (currentImage && (currentImage.get('complete') || currentImage.get('naturalWidth'))) {
+				currentImage.setStyle('background-image', 'none');
+			}
+		</aui:script>
+	</c:otherwise>
+</c:choose>

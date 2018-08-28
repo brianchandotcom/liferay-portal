@@ -21,7 +21,8 @@ const withAppComposer = WrappedComponent => {
          * @private
          */
 
-		_handleContextChanged() {}
+		_handlePagesChanged(event) {
+		}
 
 		/**
 		 * @inheritDoc
@@ -30,7 +31,7 @@ const withAppComposer = WrappedComponent => {
 		render() {
 			const {children} = this.props;
 			const events = {
-				contextChanged: this._handleContextChanged.bind(this)
+				pagesChanged: this._handlePagesChanged.bind(this)
 			};
 
 			const props = Object.assign({}, {...this.otherProps(), events});

@@ -1,6 +1,5 @@
 import Component from 'metal-jsx';
-import dom from 'metal-dom';
-import LayoutRenderer from '../../components/Layout/index.es';
+import FormRenderer from '../../components/Form/index.es';
 import Sidebar from '../../components/Sidebar/index.es';
 
 /**
@@ -18,9 +17,18 @@ class Builder extends Component {
 
 	_handleFieldClicked(indexAllocateField) {
 		const Sidebar = this.refs.sidebar;
-
 		Sidebar.show();
+
 		this.emit('fieldClicked', indexAllocateField);
+	}
+
+	_handleAddPage(pages){
+		const Sidebar = this.refs.sidebar;
+
+		Sidebar._setMode('add');
+		Sidebar.show();
+
+		this.emit('pagesUpdated', pages);
 	}
 
 	/**
@@ -75,19 +83,12 @@ class Builder extends Component {
 
 	/**
 	 * Continues the propagation of event.
-	 * @param {!Event} event
+	 * @param {Array} pages
 	 * @private
 	 */
 
-	_handleCreationButtonClicked() {
-		const Sidebar = this.refs.sidebar;
-
-		Sidebar.props.mode = 'add';
-		Sidebar.show();
-	}
-
-	attached() {
-		dom.on('#addFieldButton', 'click', this._handleCreationButtonClicked.bind(this));
+	_handlePagesUpdated(pages) {
+		this.emit('pagesUpdated', pages);
 	}
 
 	/**
@@ -96,19 +97,22 @@ class Builder extends Component {
 
 	render() {
 		const {
-			context,
+			activePage,
 			fieldContext,
 			fieldsList,
 			focusedField,
 			mode,
+			pages,
 			spritemap
 		} = this.props;
 
-		const layoutRendererEvents = {
+		const FormRendererEvents = {
+			addPage: this._handleAddPage.bind(this),
 			deleteButtonClicked: this._handleDeleteButtonClicked.bind(this),
 			duplicateButtonClicked: this._handleDuplicateButtonClicked.bind(this),
 			fieldClicked: this._handleFieldClicked.bind(this),
-			fieldMoved: this._handleFieldMoved.bind(this)
+			fieldMoved: this._handleFieldMoved.bind(this),
+			pagesUpdated: this._handlePagesUpdated.bind(this)
 		};
 
 		const sidebarEvents = {
@@ -120,22 +124,22 @@ class Builder extends Component {
 			<div>
 				<div class="container">
 					<div class="sheet">
-						<LayoutRenderer
+						<FormRenderer
 							editable={true}
-							events={layoutRendererEvents}
-							pages={context}
-							ref="layoutRenderer"
+							events={FormRendererEvents}
+							pages={pages}
+							ref="FormRenderer"
 							spritemap={spritemap}
 						/>
 					</div>
 				</div>
 				<Sidebar
-					context={context}
 					events={sidebarEvents}
 					fieldContext={fieldContext}
 					fieldLists={fieldsList}
 					focusedField={focusedField}
 					mode={mode}
+					pages={pages}
 					ref="sidebar"
 					spritemap={spritemap}
 				/>

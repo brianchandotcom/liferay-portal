@@ -76,11 +76,10 @@ renderResponse.setTitle((formInstance == null) ? LanguageUtil.get(request, "new-
 	</div>
 
 	<aui:form action="<%= saveFormInstanceURL %>" cssClass="ddm-form-builder-form" enctype="multipart/form-data" method="post" name="editForm">
-		<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
+		<aui:input name="ddmStructureId" type="hidden" value="<%= ddmStructureId %>" />
 		<aui:input name="formInstanceId" type="hidden" value="<%= formInstanceId %>" />
 		<aui:input name="groupId" type="hidden" value="<%= groupId %>" />
-		<aui:input name="ddmStructureId" type="hidden" value="<%= ddmStructureId %>" />
-		<aui:input name="serializedSettingsContext" type="hidden" value="" />
+		<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 
 		<%@ include file="/admin/exceptions.jspf" %>
 
@@ -98,8 +97,6 @@ renderResponse.setTitle((formInstance == null) ? LanguageUtil.get(request, "new-
 					/>
 				</h1>
 
-				<aui:input name="name" type="hidden" />
-
 				<h5>
 					<liferay-ui:input-editor
 						autoCreate="<%= true %>"
@@ -111,29 +108,15 @@ renderResponse.setTitle((formInstance == null) ? LanguageUtil.get(request, "new-
 						showSource="<%= false %>"
 					/>
 				</h5>
-
-				<aui:input name="description" type="hidden" />
 			</div>
 		</div>
 
 		<div class="container-fluid-1280">
-			<aui:input name="serializedFormBuilderContext" type="hidden" />
-
 			<div id="<portlet:namespace />formBuilder"></div>
 			<div id="<portlet:namespace />ruleBuilder"></div>
 		</div>
 
 		<div id="<portlet:namespace />-container"></div>
-
-		<div class="container-fluid-1280">
-			<aui:button-row cssClass="ddm-form-builder-buttons">
-				<aui:button cssClass="btn-primary ddm-button" id="publish" value='<%= ddmFormAdminDisplayContext.isFormPublished() ? "unpublish-form": "publish-form" %>' />
-
-				<aui:button cssClass="ddm-button" id="save" value="save-form" />
-
-				<aui:button cssClass="btn-link" id="preview" value="preview-form" />
-			</aui:button-row>
-		</div>
 	</aui:form>
 
 	<div class="container-fluid-1280 ddm-form-instance-settings hide" id="<portlet:namespace />settings">
@@ -282,11 +265,15 @@ renderResponse.setTitle((formInstance == null) ? LanguageUtil.get(request, "new-
 
 	main.DDMForm(
 		{
-			context: serializedFormBuilderContext.pages,
+			context: serializedFormBuilderContext,
+			defaultLanguageId: '<%= ddmFormAdminDisplayContext.getDefaultLanguageId() %>',
 			dependencies: ['dynamic-data-mapping-form-field-type/metal'],
 			fieldContext,
 			fieldsList,
+			localizedDescription: <%= ddmFormAdminDisplayContext.getFormLocalizedDescription() %>,
+			localizedName: <%= ddmFormAdminDisplayContext.getFormLocalizedName() %>,
 			modules: Liferay.MODULES,
+			namespace: '<portlet:namespace />',
 			spritemap
 		},
 		'#<portlet:namespace />-container',

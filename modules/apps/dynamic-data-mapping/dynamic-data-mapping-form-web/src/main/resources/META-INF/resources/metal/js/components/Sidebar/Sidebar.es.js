@@ -5,7 +5,7 @@ import classnames from 'classnames';
 import ClayButton from 'clay-button';
 import Component, {Fragment} from 'metal-jsx';
 import dom from 'metal-dom';
-import LayoutRenderer, {LayoutSupport} from '../Layout/index.es.js';
+import FormRenderer, {FormSupport} from '../Form/index.es.js';
 
 /**
  * Sidebar is a tooling to mount forms.
@@ -51,7 +51,7 @@ class Sidebar extends Component {
 		 * @type {?(array<object>|undefined)}
 		 */
 
-		context: Config.array().value([]),
+		pages: Config.array().value([]),
 
 		/**
 		 * @default undefined
@@ -181,7 +181,7 @@ class Sidebar extends Component {
 			'data-ddm-field-type-index'
 		);
 		const fieldProperties = fieldLists[Number(fieldIndex)];
-		const indexTarget = LayoutSupport.getIndexes(data.target.parentElement);
+		const indexTarget = FormSupport.getIndexes(data.target.parentElement);
 
 		this.emit(
 			'fieldAdded',
@@ -355,8 +355,8 @@ class Sidebar extends Component {
 
 	willReceiveProps(nextProps) {
 		if (
-			typeof nextProps.context !== 'undefined' &&
-			nextProps.context.newVal.length
+			typeof nextProps.pages !== 'undefined' &&
+			nextProps.pages.newVal.length
 		) {
 			this._dragAndDrop.disposeInternal();
 			this._startDrag();
@@ -506,12 +506,12 @@ class Sidebar extends Component {
 						{mode === 'edit' && (
 							<div class="sidebar-body">
 								<div class="tab-content">
-									<LayoutRenderer
+									<FormRenderer
 										activePage={activeTab}
 										events={layoutRenderEvents}
 										modeRenderer="list"
 										pages={fieldContext}
-										ref="layoutRenderer"
+										ref="FormRenderer"
 										spritemap={spritemap}
 									/>
 								</div>

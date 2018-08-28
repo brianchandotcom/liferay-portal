@@ -1,4 +1,4 @@
-import LayoutRenderer from './__fixtures__/LayoutRenderer.es';
+import PageRenderer from './__fixtures__/PageRenderer.es';
 import '../Checkbox/index.es';
 import '../Date/index.es';
 import '../Grid/index.es';
@@ -15,7 +15,7 @@ describe(
 		it(
 			'should render fields',
 			() => {
-				component = new LayoutRenderer(
+				component = new PageRenderer(
 					{
 						items: [
 							{type: 'checkbox'},

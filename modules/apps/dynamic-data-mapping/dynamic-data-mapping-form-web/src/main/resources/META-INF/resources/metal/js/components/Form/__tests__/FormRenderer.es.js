@@ -1,14 +1,15 @@
-import './__fixtures__/Fields.es';
+import {dom as MetalTestUtil} from 'metal-dom';
+
 import Context from './__mock__/mockContext.es';
-import LayoutRenderer from '../LayoutRenderer.es';
-import LayoutSupport from '../LayoutSupport.es';
+import FormRenderer from '../FormRenderer.es';
+import FormSupport from '../FormSupport.es';
 
 let component;
 let context = null;
 const spritemap = 'icons.svg';
 
 describe(
-	'LayoutRenderer',
+	'FormRenderer',
 	() => {
 		beforeEach(
 			() => {
@@ -31,7 +32,7 @@ describe(
 		it(
 			'should render default markup',
 			() => {
-				component = new LayoutRenderer(
+				component = new FormRenderer(
 					{
 						spritemap
 					}
@@ -44,7 +45,7 @@ describe(
 		it(
 			'should render a layout with pages',
 			() => {
-				component = new LayoutRenderer(
+				component = new FormRenderer(
 					{
 						pages: context,
 						spritemap
@@ -58,7 +59,7 @@ describe(
 		it(
 			'should render a layout with pages in mode of list',
 			() => {
-				component = new LayoutRenderer(
+				component = new FormRenderer(
 					{
 						modeRenderer: 'list',
 						pages: context,
@@ -73,7 +74,7 @@ describe(
 		it(
 			'should render a layout in editable mode',
 			() => {
-				component = new LayoutRenderer(
+				component = new FormRenderer(
 					{
 						editable: true,
 						pages: context,
@@ -88,7 +89,7 @@ describe(
 		it(
 			'should render a layout with disabled drag and drop',
 			() => {
-				component = new LayoutRenderer(
+				component = new FormRenderer(
 					{
 						dragAndDropDisabled: true,
 						editable: true,
@@ -102,50 +103,11 @@ describe(
 		);
 
 		it(
-			'should render a layout and emit an event when delete button is clicked',
+			'should receive an update page event and propage it',
 			() => {
-				component = new LayoutRenderer(
+				component = new FormRenderer(
 					{
-						editable: true,
-						pages: context,
-						spritemap
-					}
-				);
-
-				const spy = jest.spyOn(component, 'emit');
-
-				component.element.querySelector('button[aria-label=\'trash\']').click();
-
-				expect(spy).toHaveBeenCalled();
-				expect(spy).toHaveBeenCalledWith('deleteButtonClicked', expect.any(Object));
-			}
-		);
-
-		it(
-			'should render a layout and emit an event when duplicate button is clicked',
-			() => {
-				component = new LayoutRenderer(
-					{
-						editable: true,
-						pages: context,
-						spritemap
-					}
-				);
-
-				const spy = jest.spyOn(component, 'emit');
-
-				component.element.querySelector('button[aria-label=\'paste\']').click();
-
-				expect(spy).toHaveBeenCalled();
-				expect(spy).toHaveBeenCalledWith('duplicateButtonClicked', expect.any(Object));
-			}
-		);
-
-		it(
-			'should render a layout and continue to propagate the field edit event',
-			() => {
-				component = new LayoutRenderer(
-					{
+						dragAndDropDisabled: true,
 						editable: true,
 						pages: context,
 						spritemap
@@ -156,24 +118,97 @@ describe(
 
 				jest.runAllTimers();
 
-				component.refs.field.emitFieldEdited();
+				component._handleUpdatePage(context[0], 0);
 
 				expect(spy).toHaveBeenCalled();
-				expect(spy).toHaveBeenCalledWith(
-					'fieldEdited',
+				expect(spy).toHaveBeenCalledWith('pagesUpdated', expect.any(Object));
+
+				expect(component).toMatchSnapshot();
+			}
+		);
+
+		it(
+			'should receive a delete button event and propage it',
+			() => {
+				component = new FormRenderer(
 					{
-						key: 'Bar',
-						originalEvent: {},
-						value: 'Foo'
+						dragAndDropDisabled: true,
+						editable: true,
+						pages: context,
+						spritemap
 					}
 				);
+
+				const spy = jest.spyOn(component, 'emit');
+
+				jest.runAllTimers();
+
+				component._handleDeleteButtonClicked(context);
+
+				expect(spy).toHaveBeenCalled();
+				expect(spy).toHaveBeenCalledWith('deleteButtonClicked', expect.any(Object));
+
+				expect(component).toMatchSnapshot();
+			}
+		);
+
+		it(
+			'should receive a duplicate button event and propage it',
+			() => {
+				component = new FormRenderer(
+					{
+						dragAndDropDisabled: true,
+						editable: true,
+						pages: context,
+						spritemap
+					}
+				);
+
+				const spy = jest.spyOn(component, 'emit');
+
+				jest.runAllTimers();
+
+				component._handleDuplicateButtonClicked(context);
+
+				expect(spy).toHaveBeenCalled();
+				expect(spy).toHaveBeenCalledWith('duplicateButtonClicked', expect.any(Object));
+
+				expect(component).toMatchSnapshot();
+			}
+		);
+
+		it(
+			'should change the active page',
+			() => {
+				const pages = [...context];
+
+				pages.push(pages[0]);
+
+				component = new FormRenderer(
+					{
+						dragAndDropDisabled: true,
+						editable: true,
+						pages,
+						spritemap
+					}
+				);
+
+				const spy = jest.spyOn(component, 'emit');
+
+				jest.runAllTimers();
+
+				const pageWizard = component.element.querySelector('.multi-step-item[data-page-id="1"]');
+
+				MetalTestUtil.triggerEvent(pageWizard, 'click', {});
+
+				expect(component).toMatchSnapshot();
 			}
 		);
 
 		it(
 			'should render a layout and emit the field move event',
 			() => {
-				component = new LayoutRenderer(
+				component = new FormRenderer(
 					{
 						editable: true,
 						pages: context,
@@ -216,7 +251,7 @@ describe(
 		it(
 			'should render a layout and ignore the field move when there is no target',
 			() => {
-				component = new LayoutRenderer(
+				component = new FormRenderer(
 					{
 						editable: true,
 						pages: context,
@@ -241,60 +276,9 @@ describe(
 		);
 
 		it(
-			'should render a layout with emit an field clicked event',
-			() => {
-				component = new LayoutRenderer(
-					{
-						dragAndDropDisabled: true,
-						editable: true,
-						pages: context,
-						spritemap
-					}
-				);
-
-				const spy = jest.spyOn(component, 'emit');
-
-				component.element.querySelector('.ddm-drag').click();
-
-				expect(spy).toHaveBeenCalled();
-				expect(spy).toHaveBeenCalledWith('fieldClicked', expect.any(Object));
-			}
-		);
-
-		it(
-			'should emit a fieldClicked event with the field location',
-			() => {
-				component = new LayoutRenderer(
-					{
-						dragAndDropDisabled: true,
-						editable: true,
-						pages: context,
-						spritemap
-					}
-				);
-
-				const spy = jest.spyOn(component, 'emit');
-
-				component.element.querySelector('.ddm-drag').click();
-
-				expect(spy).toHaveBeenCalled();
-				expect(spy).toHaveBeenCalledWith(
-					'fieldClicked',
-					expect.objectContaining(
-						{
-							columnIndex: expect.anything(),
-							pageIndex: expect.any(Number),
-							rowIndex: expect.any(Number)
-						}
-					)
-				);
-			}
-		);
-
-		it(
 			'should render a layout and reset drag and drop to every change of API pages when editable is true',
 			() => {
-				component = new LayoutRenderer(
+				component = new FormRenderer(
 					{
 						editable: true,
 						pages: context,
@@ -308,7 +292,7 @@ describe(
 					'disposeInternal'
 				);
 
-				const newContext = LayoutSupport.removeFields(context, 0, 1, 0);
+				const newContext = FormSupport.removeFields(context, 0, 1, 0);
 
 				component.setState(
 					{
@@ -326,7 +310,7 @@ describe(
 		it(
 			'should render a layout and if it is not editable should not reset the drag-and-drop feature for all API page changes',
 			() => {
-				component = new LayoutRenderer(
+				component = new FormRenderer(
 					{
 						editable: false,
 						pages: context,
@@ -336,7 +320,7 @@ describe(
 
 				const spy = jest.spyOn(component, '_startDrag');
 
-				const newContext = LayoutSupport.removeFields(context, 0, 1, 0);
+				const newContext = FormSupport.removeFields(context, 0, 1, 0);
 
 				component.setState(
 					{
@@ -353,7 +337,7 @@ describe(
 		it(
 			'should render a layout and if it is disabled should not reset the drag-and-drop feature for all API page changes',
 			() => {
-				component = new LayoutRenderer(
+				component = new FormRenderer(
 					{
 						dragAndDropDisabled: true,
 						editable: true,
@@ -364,7 +348,7 @@ describe(
 
 				const spy = jest.spyOn(component, '_startDrag');
 
-				const newContext = LayoutSupport.removeFields(context, 0, 1, 0);
+				const newContext = FormSupport.removeFields(context, 0, 1, 0);
 
 				component.setState(
 					{
@@ -391,7 +375,7 @@ describe(
 				const pageIndex = 0;
 				const rowIndex = 1;
 
-				const newContext = LayoutSupport.setColumnFields(
+				const newContext = FormSupport.setColumnFields(
 					context,
 					pageIndex,
 					rowIndex,
@@ -399,7 +383,7 @@ describe(
 					fields
 				);
 
-				component = new LayoutRenderer(
+				component = new FormRenderer(
 					{
 						editable: true,
 						pages: newContext,
@@ -424,7 +408,7 @@ describe(
 				const pageIndex = 0;
 				const rowIndex = 1;
 
-				const newContext = LayoutSupport.setColumnFields(
+				const newContext = FormSupport.setColumnFields(
 					context,
 					pageIndex,
 					rowIndex,
@@ -432,7 +416,7 @@ describe(
 					fields
 				);
 
-				component = new LayoutRenderer(
+				component = new FormRenderer(
 					{
 						editable: false,
 						pages: newContext,
@@ -443,5 +427,89 @@ describe(
 				expect(component).toMatchSnapshot();
 			}
 		);
+
+		it(
+			'should change the form page title',
+			() => {
+				component = new FormRenderer(
+					{
+						editable: true,
+						pages: context,
+						spritemap
+					}
+				);
+
+				const delegateTarget = component.element.querySelector('.form-builder-page-header-title');
+
+				delegateTarget.value = 'My Page Title';
+
+				MetalTestUtil.triggerEvent(delegateTarget, 'change', {
+					delegateTarget
+				});
+
+				jest.runAllTimers();
+
+				expect(component).toMatchSnapshot();
+			}
+		);
+
+		it(
+			'should change the form page description',
+			() => {
+				component = new FormRenderer(
+					{
+						editable: true,
+						pages: context,
+						spritemap
+					}
+				);
+
+				const delegateTarget = component.element.querySelector('.form-builder-page-header-description');
+
+				delegateTarget.value = 'My Page Description';
+
+				MetalTestUtil.triggerEvent(
+					delegateTarget, 
+					'change', 
+					{
+						delegateTarget
+					}
+				);
+
+				jest.runAllTimers();
+
+				expect(component).toMatchSnapshot();
+			}
+		);
+
+		describe(
+			'PagesSettings',
+			() => {
+				it(
+					'should add a new page on the layout render',
+					() => {
+						component = new FormRenderer(
+							{
+								editable: true,
+								pages: context,
+								spritemap
+							}
+						);
+
+						component._handleSettingsPageClicked({
+							data: {
+								item: {
+									settingsItem: 'add-page'
+								}
+							}
+						});
+
+						jest.runAllTimers();
+
+						expect(component).toMatchSnapshot();
+					}
+				);
+			}
+		)
 	}
 );

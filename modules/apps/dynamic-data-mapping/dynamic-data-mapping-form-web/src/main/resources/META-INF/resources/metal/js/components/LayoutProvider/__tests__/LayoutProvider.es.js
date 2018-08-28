@@ -3,7 +3,7 @@ import Context from './__mock__/mockContext.es';
 import LayoutProvider from '../LayoutProvider.es';
 
 let component;
-let context = null;
+let pages = null;
 const spritemap = 'icons.svg';
 
 class Child extends JSXComponent {
@@ -16,7 +16,7 @@ class Parent extends JSXComponent {
 	render() {
 		return (
 			<LayoutProvider
-				context={context}
+				pages={pages}
 				ref="provider"
 				spritemap={spritemap}
 			>
@@ -31,7 +31,7 @@ describe(
 	() => {
 		beforeEach(
 			() => {
-				context = JSON.parse(JSON.stringify(Context));
+				pages = JSON.parse(JSON.stringify(Context));
 
 				jest.useFakeTimers();
 			}
@@ -43,20 +43,20 @@ describe(
 					component.dispose();
 				}
 
-				context = null;
+				pages = null;
 			}
 		);
 
 		it(
-			'should receive context through PROPS and move to the internal state',
+			'should receive pages through PROPS and move to the internal state',
 			() => {
 				component = new LayoutProvider(
 					{
-						context
+						pages
 					}
 				);
 
-				expect(component.state.context).toEqual(context);
+				expect(component.state.pages).toEqual(pages);
 			}
 		);
 
@@ -80,13 +80,13 @@ describe(
 		);
 
 		it(
-			'should pass to the child component the context of the internal state',
+			'should pass to the child component the pages of the internal state',
 			() => {
 				component = new Parent();
 
 				const {child, provider} = component.refs;
 
-				expect(child.props.context).toEqual(provider.state.context);
+				expect(child.props.pages).toEqual(provider.state.pages);
 			}
 		);
 
@@ -142,7 +142,7 @@ describe(
 					'fieldMoved',
 					() => {
 						it(
-							'should listen to the fieldMoved event and move the field to the row in context',
+							'should listen to the fieldMoved event and move the field to the row in pages',
 							() => {
 								component = new Parent();
 
@@ -164,13 +164,29 @@ describe(
 
 								jest.runAllTimers();
 
-								expect(provider.state.context).toMatchSnapshot();
-								expect(child.props.context).toEqual(provider.state.context);
+								expect(provider.state.pages).toMatchSnapshot();
+								expect(child.props.pages).toEqual(provider.state.pages);
 							}
 						);
 
 						it(
-							'should listen to the fieldMoved event and move the field to the column in context',
+							'should listen to the pagesUpdated event',
+							() => {
+								component = new Parent();
+
+								const {child, provider} = component.refs;
+
+								child.emit('pagesUpdated', pages);
+
+								jest.runAllTimers();
+
+								expect(provider.state.pages).toMatchSnapshot();
+								expect(child.props.pages).toEqual(provider.state.pages);
+							}
+						);
+
+						it(
+							'should listen to the fieldMoved event and move the field to the column in pages',
 							() => {
 								component = new Parent();
 
@@ -192,13 +208,13 @@ describe(
 
 								jest.runAllTimers();
 
-								expect(provider.state.context).toMatchSnapshot();
-								expect(child.props.context).toEqual(provider.state.context);
+								expect(provider.state.pages).toMatchSnapshot();
+								expect(child.props.pages).toEqual(provider.state.pages);
 							}
 						);
 
 						it(
-							'should move the field to the column in context and remove the row if there are no fields',
+							'should move the field to the column in pages and remove the row if there are no fields',
 							() => {
 								component = new Parent();
 
@@ -220,13 +236,13 @@ describe(
 
 								jest.runAllTimers();
 
-								expect(provider.state.context).toMatchSnapshot();
-								expect(child.props.context).toEqual(provider.state.context);
+								expect(provider.state.pages).toMatchSnapshot();
+								expect(child.props.pages).toEqual(provider.state.pages);
 							}
 						);
 
 						it(
-							'should move the field to the row in context and remove the row if there are no fields',
+							'should move the field to the row in pages and remove the row if there are no fields',
 							() => {
 								component = new Parent();
 
@@ -248,8 +264,8 @@ describe(
 
 								jest.runAllTimers();
 
-								expect(provider.state.context).toMatchSnapshot();
-								expect(child.props.context).toEqual(provider.state.context);
+								expect(provider.state.pages).toMatchSnapshot();
+								expect(child.props.pages).toEqual(provider.state.pages);
 							}
 						);
 					}
@@ -259,7 +275,7 @@ describe(
 					'fieldAdded',
 					() => {
 						it(
-							'should listen the fieldAdded event and add the field in the column to the context',
+							'should listen the fieldAdded event and add the field in the column to the pages',
 							() => {
 								component = new Parent();
 
@@ -279,13 +295,13 @@ describe(
 
 								jest.runAllTimers();
 
-								expect(provider.state.context).toMatchSnapshot();
-								expect(child.props.context).toEqual(provider.state.context);
+								expect(provider.state.pages).toMatchSnapshot();
+								expect(child.props.pages).toEqual(provider.state.pages);
 							}
 						);
 
 						it(
-							'should listen the fieldAdded event and add the field in the row to the context',
+							'should listen the fieldAdded event and add the field in the row to the pages',
 							() => {
 								component = new Parent();
 
@@ -305,13 +321,13 @@ describe(
 
 								jest.runAllTimers();
 
-								expect(provider.state.context).toMatchSnapshot();
-								expect(child.props.context).toEqual(provider.state.context);
+								expect(provider.state.pages).toMatchSnapshot();
+								expect(child.props.pages).toEqual(provider.state.pages);
 							}
 						);
 
 						it(
-							'should update the focusedField with the location of the new field when adding to the context',
+							'should update the focusedField with the location of the new field when adding to the pages',
 							() => {
 								component = new Parent();
 
@@ -348,7 +364,7 @@ describe(
 					'deleteField',
 					() => {
 						it(
-							'should listen the deleteField event and delete the field in the column to the context',
+							'should listen the fieldDeleted event and delete the field in the column to the pages',
 							() => {
 								component = new Parent();
 
@@ -363,8 +379,8 @@ describe(
 
 								jest.runAllTimers();
 
-								expect(provider.state.context).toMatchSnapshot();
-								expect(child.props.context).toEqual(provider.state.context);
+								expect(provider.state.pages).toMatchSnapshot();
+								expect(child.props.pages).toEqual(provider.state.pages);
 							}
 						);
 					}
@@ -374,7 +390,7 @@ describe(
 					'duplicateField',
 					() => {
 						it(
-							'should listen the duplicate field event and add this field in the context',
+							'should listen the duplicate field event and add this field in the pages',
 							() => {
 								component = new Parent();
 
@@ -389,8 +405,8 @@ describe(
 
 								jest.runAllTimers();
 
-								expect(provider.state.context).toMatchSnapshot();
-								expect(child.props.context).toEqual(provider.state.context);
+								expect(provider.state.pages).toMatchSnapshot();
+								expect(child.props.pages).toEqual(provider.state.pages);
 							}
 						);
 					}
@@ -400,7 +416,7 @@ describe(
 					'fieldEdited',
 					() => {
 						it(
-							'should listen the fieldEdited event and edit the field to the context',
+							'should listen the fieldEdited event and edit the field to the pages',
 							() => {
 								component = new Parent();
 
@@ -421,14 +437,14 @@ describe(
 								jest.runAllTimers();
 
 								expect(
-									provider.state.context[mockFieldFocus.pageIndex].rows[
+									provider.state.pages[mockFieldFocus.pageIndex].rows[
 										mockFieldFocus.rowIndex
 									].columns[mockFieldFocus.columnIndex].fields[0][
 										mockEvent.key
 									]
 								).toBe(mockEvent.value);
-								expect(provider.state.context).toMatchSnapshot();
-								expect(child.props.context).toEqual(provider.state.context);
+								expect(provider.state.pages).toMatchSnapshot();
+								expect(child.props.pages).toEqual(provider.state.pages);
 							}
 						);
 					}

@@ -1,10 +1,11 @@
 import {Config} from 'metal-state';
-import {LayoutSupport} from '../Layout/index.es';
+import {FormSupport} from '../Form/index.es';
 import Component from 'metal-jsx';
+import {pageStructure} from '../../util/config.es';
 
 /**
  * LayoutProvider listens to your children's events to
- * control the `context` and make manipulations.
+ * control the `pages` and make manipulations.
  * @extends Component
  */
 
@@ -18,7 +19,7 @@ class LayoutProvider extends Component {
 		 * @type {?(array|undefined)}
 		 */
 
-		context: Config.array(),
+		pages: Config.arrayOf(pageStructure).value([]),
 
 		/**
 		 * @default undefined
@@ -31,6 +32,13 @@ class LayoutProvider extends Component {
 	};
 
 	static STATE = {
+		/**
+		 * @instance
+		 * @memberof FormPage
+		 * @type {?number}
+		 */
+
+		activePage: Config.number().value(0),
 
 		/**
 		 * @default undefined
@@ -39,7 +47,7 @@ class LayoutProvider extends Component {
 		 * @type {?array}
 		 */
 
-		context: Config.array(),
+		pages: Config.array(),
 
 		/**
 		 * @default undefined
@@ -76,10 +84,10 @@ class LayoutProvider extends Component {
 	 * @inheritDoc
 	 */
 
-	constructor(props, context) {
-		super(props, context);
+	constructor(props, pages) {
+		super(props, pages);
 
-		this.state.context = props.context;
+		this.state.pages = props.pages;
 	}
 
 	/**
@@ -103,7 +111,7 @@ class LayoutProvider extends Component {
 
 	_handleFieldAdd({target, fieldProperties}) {
 		const {spritemap} = this.props;
-		const {context} = this.state;
+		const {pages} = this.state;
 		const {columnIndex, pageIndex, rowIndex} = target;
 
 		fieldProperties = Object.assign({}, fieldProperties, {spritemap});
@@ -111,18 +119,18 @@ class LayoutProvider extends Component {
 		let newContext = null;
 
 		if (target.columnIndex === false) {
-			const newRow = LayoutSupport.implAddRow(12, [fieldProperties]);
+			const newRow = FormSupport.implAddRow(12, [fieldProperties]);
 
-			newContext = LayoutSupport.addRow(
-				context,
+			newContext = FormSupport.addRow(
+				pages,
 				rowIndex,
 				pageIndex,
 				newRow
 			);
 		}
 		else {
-			newContext = LayoutSupport.addFieldToColumn(
-				context,
+			newContext = FormSupport.addFieldToColumn(
+				pages,
 				pageIndex,
 				rowIndex,
 				columnIndex,
@@ -132,14 +140,14 @@ class LayoutProvider extends Component {
 
 		this.setState(
 			{
-				context: newContext,
 				focusedField: {
 					columnIndex,
 					pageIndex,
 					rowIndex,
 					type: fieldProperties.type
 				},
-				mode: 'edit'
+				mode: 'edit',
+				pages: newContext
 			}
 		);
 	}
@@ -150,9 +158,9 @@ class LayoutProvider extends Component {
 	 */
 
 	_handleDeleteField({rowIndex, pageIndex, columnIndex}) {
-		const {context} = this.state;
-		let newContext = LayoutSupport.removeFields(
-			context,
+		const {pages} = this.state;
+		let newContext = FormSupport.removeFields(
+			pages,
 			pageIndex,
 			rowIndex,
 			columnIndex
@@ -169,8 +177,8 @@ class LayoutProvider extends Component {
 
 		this.setState(
 			{
-				context: newContext,
-				focusedField: {}
+				focusedField: {},
+				pages: newContext
 			}
 		);
 	}
@@ -181,23 +189,23 @@ class LayoutProvider extends Component {
 	 */
 
 	_handleDuplicatedField({rowIndex, pageIndex, columnIndex}) {
-		const {context} = this.state;
-		const field = LayoutSupport.getField(context, pageIndex, rowIndex, columnIndex);
+		const {pages} = this.state;
+		const field = FormSupport.getField(pages, pageIndex, rowIndex, columnIndex);
 
 		const duplicatedField = {
 			...field,
-			name: LayoutSupport.generateFieldName(field)
+			name: FormSupport.generateFieldName(field)
 		};
 
 		const newRowIndex = rowIndex + 1;
 
-		const newContext = LayoutSupport.addRow(context, newRowIndex, pageIndex);
+		const newContext = FormSupport.addRow(pages, newRowIndex, pageIndex);
 
-		LayoutSupport.addFieldToColumn(newContext, pageIndex, newRowIndex, columnIndex, duplicatedField);
+		FormSupport.addFieldToColumn(newContext, pageIndex, newRowIndex, columnIndex, duplicatedField);
 
 		this.setState(
 			{
-				context: newContext
+				pages: newContext
 			}
 		);
 	}
@@ -208,10 +216,10 @@ class LayoutProvider extends Component {
 	 */
 
 	_handleFieldEdited({value, key}) {
-		const {context, focusedField} = this.state;
+		const {focusedField, pages} = this.state;
 		const {columnIndex, pageIndex, rowIndex} = focusedField;
-		const column = LayoutSupport.getColumn(
-			context,
+		const column = FormSupport.getColumn(
+			pages,
 			pageIndex,
 			rowIndex,
 			columnIndex
@@ -227,8 +235,8 @@ class LayoutProvider extends Component {
 			implPropertiesField
 		);
 
-		LayoutSupport.changeFieldsFromColumn(
-			context,
+		FormSupport.changeFieldsFromColumn(
+			pages,
 			pageIndex,
 			rowIndex,
 			columnIndex,
@@ -237,7 +245,7 @@ class LayoutProvider extends Component {
 
 		this.setState(
 			{
-				context: this.state.context
+				pages: this.state.pages
 			}
 		);
 	}
@@ -248,18 +256,18 @@ class LayoutProvider extends Component {
 	 */
 
 	_handleFieldMoved({target, source}) {
-		const {context} = this.state;
+		const {pages} = this.state;
 		const {columnIndex, pageIndex, rowIndex} = source;
-		const column = LayoutSupport.getColumn(
-			context,
+		const column = FormSupport.getColumn(
+			pages,
 			pageIndex,
 			rowIndex,
 			columnIndex
 		);
 		const {fields} = column;
 
-		let newContext = LayoutSupport.removeFields(
-			context,
+		let newContext = FormSupport.removeFields(
+			pages,
 			pageIndex,
 			rowIndex,
 			columnIndex
@@ -284,57 +292,70 @@ class LayoutProvider extends Component {
 
 		this.setState(
 			{
-				context: newContext,
-				focusedField: fields[0]
+				focusedField: fields[0],
+				pages: newContext
 			}
 		);
 	}
 
 	/**
-	 * @param {!Array} context
+	 * @param {!Array} pages
+	 * @private
+	 */
+
+	_handlePagesUpdated(pages) {
+		this.setState(
+			{
+				pages
+			}
+		);
+	}
+
+	/**
+	 * @param {!Array} pages
 	 * @param {!Object} source
 	 * @private
 	 * @return {Object}
 	 */
 
-	_removeEmptyRow(context, source) {
+	_removeEmptyRow(pages, source) {
 		const {pageIndex, rowIndex} = source;
 
-		if (!LayoutSupport.hasFieldsRow(context, pageIndex, rowIndex)) {
-			context = LayoutSupport.removeRow(context, pageIndex, rowIndex);
+		if (!FormSupport.hasFieldsRow(pages, pageIndex, rowIndex)) {
+			pages = FormSupport.removeRow(pages, pageIndex, rowIndex);
 		}
 
-		return context;
+		return pages;
 	}
 
 	/**
-	 * @param {!Array} context
+	 * @param {!Array} pages
 	 * @param {!Object} target
 	 * @param {!Object} field
 	 * @private
 	 * @return {Object}
 	 */
 
-	_addRow(context, target, fields) {
+	_addRow(pages, target, fields) {
 		const {pageIndex, rowIndex} = target;
-		const newRow = LayoutSupport.implAddRow(12, fields);
+		const newRow = FormSupport.implAddRow(12, fields);
 
-		return LayoutSupport.addRow(context, rowIndex, pageIndex, newRow);
+		return FormSupport.addRow(pages, rowIndex, pageIndex, newRow);
 	}
 
 	/**
-	 * @param {!Array} context
+	 * @param {!Array} pages
 	 * @param {!Object} target
 	 * @param {!Object} field
 	 * @private
 	 * @return {Object}
 	 */
 
-	_setColumnFields(context, target, fields) {
+	_setColumnFields(pages, target, fields) {
 		const {columnIndex, pageIndex, rowIndex} = target;
 
-		return LayoutSupport.setColumnFields(
-			context,
+		return FormSupport.setColumnFields(
+			pages,
 			pageIndex,
 			rowIndex,
 			columnIndex,
@@ -344,7 +365,7 @@ class LayoutProvider extends Component {
 
 	render() {
 		const {children, spritemap} = this.props;
-		const {context, focusedField, mode} = this.state;
+		const {focusedField, mode, pages} = this.state;
 
 		let child;
 
@@ -357,17 +378,18 @@ class LayoutProvider extends Component {
 				fieldAdded: this._handleFieldAdd.bind(this),
 				fieldClicked: this._handleClickedField.bind(this),
 				fieldEdited: this._handleFieldEdited.bind(this),
-				fieldMoved: this._handleFieldMoved.bind(this)
+				fieldMoved: this._handleFieldMoved.bind(this),
+				pagesUpdated: this._handlePagesUpdated.bind(this)
 			};
 
 			Object.assign(
 				Child.props,
 				{
 					...this.otherProps(),
-					context,
 					events,
 					focusedField,
 					mode,
+					pages,
 					spritemap
 				}
 			);

@@ -2,9 +2,9 @@ import Component from 'metal-component';
 import Soy from 'metal-soy';
 import {Config} from 'metal-state';
 
-import templates from './LayoutRenderer.soy.js';
+import templates from './PageRenderer.soy.js';
 
-class LayoutRenderer extends Component {
+class PageRenderer extends Component {
 	static STATE = {
 		items: Config.arrayOf(
 			Config.shapeOf({
@@ -14,6 +14,6 @@ class LayoutRenderer extends Component {
 	};
 }
 
-Soy.register(LayoutRenderer, templates);
+Soy.register(PageRenderer, templates);
 
-export default LayoutRenderer;
+export default PageRenderer;

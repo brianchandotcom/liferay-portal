@@ -1,0 +1,16 @@
+$c: '.ddm-form-page';
+
+#{$c} {
+	padding: 0 1.5rem;
+
+	.col.col-empty.lfr-initial-col {
+		background-color: #F7F8F9;
+		border: 2px dashed #A7A9BC;
+		border-radius: 4px;
+		color: #A7A9BC;
+		line-height: 56px;
+		margin: 44px 0 24px;
+		min-height: 56px;
+		text-align: center;
+	}
+}

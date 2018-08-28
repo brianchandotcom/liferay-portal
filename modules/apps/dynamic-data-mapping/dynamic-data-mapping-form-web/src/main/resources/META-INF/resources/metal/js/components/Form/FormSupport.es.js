@@ -17,7 +17,7 @@ const addRow = (pages, indexToAddRow, pageIndex, newRow = implAddRow(12, [])) =>
 
 const addFieldToColumn = (pages, pageIndex, rowIndex, columnIndex, field) => {
 	if (!field) {
-		console.warn(
+		throw new Error(
 			`It is not possible to add the field to column (${pageIndex}, ${rowIndex}, ${columnIndex}) when the field is not passed.`
 		);
 	}
@@ -32,7 +32,7 @@ const addFieldToColumn = (pages, pageIndex, rowIndex, columnIndex, field) => {
 
 const setColumnFields = (pages, pageIndex, rowIndex, columnIndex, fields = []) => {
 	if (!fields.length) {
-		console.warn(
+		throw new Error(
 			`Can not add empty fields to column (${pageIndex}, ${rowIndex}, ${columnIndex}), use removeFields for this.`
 		);
 	}

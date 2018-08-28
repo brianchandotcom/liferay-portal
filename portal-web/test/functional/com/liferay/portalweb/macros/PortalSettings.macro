@@ -247,12 +247,6 @@
 	</command>
 
 	<command name="editConfigurationAuthenticationCAS">
-		<execute macro="Panel#expandPanel">
-			<var name="panel" value="Authentication" />
-		</execute>
-
-		<execute function="AssertClick" locator1="NavTab#CAS" value1="CAS" />
-
 		<execute function="Check" locator1="PortalSettingsAuthentication#AUTHENTICATION_CAS_ENABLED_CHECKBOX" />
 		<execute function="Type" locator1="PortalSettingsAuthentication#AUTHENTICATION_CAS_LOGIN_URL_FIELD" value1="${casLoginURL}" />
 		<execute function="Type" locator1="PortalSettingsAuthentication#AUTHENTICATION_CAS_LOGOUT_URL_FIELD" value1="${casLogoutURL}" />

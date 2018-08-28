@@ -16,10 +16,13 @@ package com.liferay.media.object.apio.internal.architect.resource;
 
 import static com.liferay.portal.apio.idempotent.Idempotent.idempotent;
 
-import com.liferay.adaptive.media.image.media.query.Condition;
-import com.liferay.adaptive.media.image.media.query.MediaQuery;
-import com.liferay.adaptive.media.image.media.query.MediaQueryProvider;
+import com.liferay.adaptive.media.AMAttribute;
+import com.liferay.adaptive.media.AdaptiveMedia;
+import com.liferay.adaptive.media.image.finder.AMImageFinder;
+import com.liferay.adaptive.media.image.finder.AMImageQueryBuilder;
 import com.liferay.adaptive.media.image.mime.type.AMImageMimeTypeProvider;
+import com.liferay.adaptive.media.image.processor.AMImageAttribute;
+import com.liferay.adaptive.media.image.processor.AMImageProcessor;
 import com.liferay.apio.architect.functional.Try;
 import com.liferay.apio.architect.pagination.PageItems;
 import com.liferay.apio.architect.pagination.Pagination;
@@ -46,7 +49,11 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.util.ListUtil;
 
+import java.net.URI;
+
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -113,8 +120,8 @@ public class MediaObjectNestedCollectionResource
 		).addLinkedModel(
 			"creator", PersonIdentifier.class, FileEntry::getUserId
 		).addNestedList(
-			"encoding", this::_getMediaQueries,
-			this::_getMediaQueryNestedRepresentor
+			"adaptedMedia", this::_getAdaptiveMedia,
+			this::_getAdaptiveMediaNestedRepresentor
 		).addNumber(
 			"sizeInBytes", FileEntry::getSize
 		).addRelatedCollection(
@@ -130,6 +137,89 @@ public class MediaObjectNestedCollectionResource
 		).addStringList(
 			"keywords", this::_getMediaObjectAssetTags
 		).build();
+	}
+
+	private List<AdaptiveMedia<AMImageProcessor>> _getAdaptiveMedia(
+		FileEntry fileEntry) {
+
+		return Try.fromFallible(
+			fileEntry::getMimeType
+		).filter(
+			mimeType -> _amImageMimeTypeProvider.isMimeTypeSupported(mimeType)
+		).map(
+			mimeType -> _amImageFinder.getAdaptiveMediaStream(
+				amImageQueryBuilder -> amImageQueryBuilder.forFileEntry(
+					fileEntry
+				).withConfigurationStatus(
+					AMImageQueryBuilder.ConfigurationStatus.ANY
+				).done()
+			).collect(
+				Collectors.toList()
+			)
+		).orElse(
+			null
+		);
+	}
+
+	private String _getAdaptiveMediaContentUrl(AdaptiveMedia adaptiveMedia) {
+		URI uri = adaptiveMedia.getURI();
+
+		return String.valueOf(uri);
+	}
+
+	private Integer _getAdaptiveMediaHeight(
+		AdaptiveMedia<AMImageProcessor> adaptiveMedia) {
+
+		Optional<Integer> height = adaptiveMedia.getValueOptional(
+			AMImageAttribute.AM_IMAGE_ATTRIBUTE_HEIGHT);
+
+		return height.orElse(0);
+	}
+
+	private String _getAdaptiveMediaName(
+		AdaptiveMedia<AMImageProcessor> adaptiveMedia) {
+
+		Optional<String> name = adaptiveMedia.getValueOptional(
+			AMAttribute.getConfigurationUuidAMAttribute());
+
+		return name.orElse(null);
+	}
+
+	private NestedRepresentor<AdaptiveMedia<AMImageProcessor>>
+		_getAdaptiveMediaNestedRepresentor(
+			Builder<AdaptiveMedia<AMImageProcessor>> builder) {
+
+		return builder.types(
+			"ImageObject", "MediaObject"
+		).addNumber(
+			"width", this::_getAdaptiveMediaWidth
+		).addNumber(
+			"height", this::_getAdaptiveMediaHeight
+		).addString(
+			"name", this::_getAdaptiveMediaName
+		).addNumber(
+			"sizeInBytes", this::_getAdaptiveMediaSize
+		).addRelativeURL(
+			"contentUrl", this::_getAdaptiveMediaContentUrl
+		).build();
+	}
+
+	private Number _getAdaptiveMediaSize(
+		AdaptiveMedia<AMImageProcessor> adaptiveMedia) {
+
+		Optional<Long> size = adaptiveMedia.getValueOptional(
+			AMAttribute.getContentLengthAMAttribute());
+
+		return size.orElse(null);
+	}
+
+	private Integer _getAdaptiveMediaWidth(
+		AdaptiveMedia<AMImageProcessor> adaptiveMedia) {
+
+		Optional<Integer> width = adaptiveMedia.getValueOptional(
+			AMImageAttribute.AM_IMAGE_ATTRIBUTE_WIDTH);
+
+		return width.orElse(0);
 	}
 
 	private FileEntry _getFileEntry(
@@ -158,45 +248,6 @@ public class MediaObjectNestedCollectionResource
 		return ListUtil.toList(assetTags, AssetTag::getName);
 	}
 
-	private List<MediaQuery> _getMediaQueries(FileEntry fileEntry) {
-		String mimeType = fileEntry.getMimeType();
-
-		if (_amImageMimeTypeProvider.isMimeTypeSupported(mimeType)) {
-			return Try.fromFallible(
-				() -> _mediaQueryProvider.getMediaQueries(fileEntry)
-			).orElse(
-				null
-			);
-		}
-
-		return null;
-	}
-
-	private NestedRepresentor<MediaQuery> _getMediaQueryNestedRepresentor(
-		Builder<MediaQuery> builder) {
-
-		return builder.types(
-			"ImageObject", "MediaObject"
-		).addNestedList(
-			"exifData", MediaQuery::getConditions,
-			nestedBuilder -> nestedBuilder.types(
-				"ExifData", "PropertyValue"
-			).addString(
-				"name", Condition::getAttribute
-			).addString(
-				"value", Condition::getValue
-			).build()
-		).addRelativeURL(
-			"contentUrl", this::_getMediaQuerySrc
-		).build();
-	}
-
-	private String _getMediaQuerySrc(MediaQuery mediaQuery) {
-		String src = mediaQuery.getSrc();
-
-		return src.split(", ")[0];
-	}
-
 	private PageItems<FileEntry> _getPageItems(
 			Pagination pagination, long groupId)
 		throws PortalException {
@@ -208,6 +259,9 @@ public class MediaObjectNestedCollectionResource
 
 		return new PageItems<>(fileEntries, count);
 	}
+
+	@Reference
+	private AMImageFinder _amImageFinder;
 
 	@Reference
 	private AMImageMimeTypeProvider _amImageMimeTypeProvider;
@@ -225,8 +279,5 @@ public class MediaObjectNestedCollectionResource
 
 	@Reference
 	private MediaObjectHelper _mediaObjectHelper;
-
-	@Reference
-	private MediaQueryProvider _mediaQueryProvider;
 
 }

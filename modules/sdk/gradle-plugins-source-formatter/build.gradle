@@ -5,7 +5,7 @@ apply plugin: "com.gradle.plugin-publish"
 task updateReadme(type: ReplaceRegexTask)
 
 dependencies {
-	compile group: "com.liferay", name: "com.liferay.gradle.util", version: "1.0.29"
+	compile group: "com.liferay", name: "com.liferay.gradle.util", version: "1.0.30"
 
 	compileOnly fileTree(builtBy: [rootProject.tasks.extractGradleApi25], dir: new File(rootProject.buildDir, "gradle-2.5"))
 	compileOnly group: "com.liferay", name: "com.liferay.source.formatter", version: "1.0.715"

@@ -12,54 +12,53 @@
  * details.
  */
 
-package com.liferay.document.library.preview.image.internal.renderer;
+package com.liferay.document.library.preview.pdf.internal;
 
 import com.liferay.document.library.kernel.util.DLProcessorRegistryUtil;
-import com.liferay.document.library.kernel.util.ImageProcessorUtil;
+import com.liferay.document.library.kernel.util.PDFProcessorUtil;
 import com.liferay.document.library.preview.DLPreviewRenderer;
 import com.liferay.document.library.preview.DLPreviewRendererProvider;
 import com.liferay.document.library.preview.exception.DLPreviewGenerationInProcessException;
-import com.liferay.document.library.preview.exception.DLPreviewSizeException;
 import com.liferay.portal.kernel.repository.model.FileVersion;
-import com.liferay.portal.kernel.util.HashMapDictionary;
+import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.WebKeys;
 
-import java.util.Dictionary;
 import java.util.Optional;
-import java.util.Set;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 
-import org.osgi.framework.BundleContext;
-import org.osgi.framework.ServiceRegistration;
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Alejandro Tardín
  */
-@Component(immediate = true, service = ImageDLPreviewRendererFactory.class)
-public class ImageDLPreviewRendererFactory
-	implements DLPreviewRendererProvider {
+@Component(
+	immediate = true,
+	property = {
+		"content.type=" + ContentTypes.APPLICATION_PDF,
+		"content.type=" + ContentTypes.APPLICATION_X_PDF
+	},
+	service = DLPreviewRendererProvider.class
+)
+public class PDFDLPreviewRenderer implements DLPreviewRendererProvider {
 
 	@Override
 	public Optional<DLPreviewRenderer> getPreviewRenderer(
 		FileVersion fileVersion) {
 
-		if (!ImageProcessorUtil.isImageSupported(fileVersion)) {
+		if (!PDFProcessorUtil.isDocumentSupported(fileVersion)) {
 			return Optional.empty();
 		}
 
 		return Optional.of(
 			(request, response) -> {
-				if (!ImageProcessorUtil.hasImages(fileVersion)) {
+				if (!PDFProcessorUtil.hasImages(fileVersion)) {
 					if (!DLProcessorRegistryUtil.isPreviewableSize(
 							fileVersion)) {
 
-						throw new DLPreviewSizeException();
+						throw new DLPreviewGenerationInProcessException();
 					}
 
 					throw new DLPreviewGenerationInProcessException();
@@ -82,29 +81,8 @@ public class ImageDLPreviewRendererFactory
 		return Optional.empty();
 	}
 
-	@Activate
-	protected void activate(BundleContext bundleContext) {
-		Dictionary<String, Object[]> properties = new HashMapDictionary<>();
-
-		Set<String> imageMimeTypes = ImageProcessorUtil.getImageMimeTypes();
-
-		properties.put("content.type", imageMimeTypes.toArray());
-
-		_dlPreviewRendererProviderServiceRegistration =
-			bundleContext.registerService(
-				DLPreviewRendererProvider.class, this, properties);
-	}
-
-	@Deactivate
-	protected void deactivate() {
-		_dlPreviewRendererProviderServiceRegistration.unregister();
-	}
-
-	private ServiceRegistration<DLPreviewRendererProvider>
-		_dlPreviewRendererProviderServiceRegistration;
-
 	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.document.library.preview.image)"
+		target = "(osgi.web.symbolicname=com.liferay.document.library.preview.pdf)"
 	)
 	private ServletContext _servletContext;
 

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.document.library.preview.video.internal.renderer.constants;
+package com.liferay.document.library.preview.video.internal.constants;
 
 /**
  * @author Alejandro Tardín

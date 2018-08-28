@@ -12,10 +12,10 @@
  * details.
  */
 
-package com.liferay.document.library.preview.audio.internal.renderer.constants;
+package com.liferay.document.library.preview.audio.internal.constants;
 
 /**
- * @author Brian Wing Shun Chan
+ * @author Alejandro Tardín
  */
 public interface DLPreviewAudioWebKeys {
 

@@ -18,7 +18,9 @@ import java.io.File;
 
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.Map;
+import java.util.Queue;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -167,83 +169,91 @@ public class TLDUtil {
 			Map<String, File> schemaProperties, File definitionFile)
 		throws Exception {
 
-		Document document = _getDocument(definitionFile);
+		Queue<File> definitionFiles = new LinkedList<>();
 
-		if (document == null) {
-			return;
-		}
+		definitionFiles.add(definitionFile);
 
-		NodeList importNodeList = document.getElementsByTagName("xsd:import");
+		while ((definitionFile = definitionFiles.poll()) != null) {
+			Document document = _getDocument(definitionFile);
 
-		for (int i = 0; i < importNodeList.getLength(); i++) {
-			Node importNode = importNodeList.item(i);
-
-			NamedNodeMap namedNodeMap = importNode.getAttributes();
-
-			Node namespaceNode = namedNodeMap.getNamedItem("namespace");
-
-			if (namespaceNode == null) {
+			if (document == null) {
 				continue;
 			}
 
-			Node schemLocationNode = namedNodeMap.getNamedItem(
-				"schemaLocation");
+			NodeList importNodeList = document.getElementsByTagName(
+				"xsd:import");
 
-			if (schemLocationNode == null) {
-				continue;
+			for (int i = 0; i < importNodeList.getLength(); i++) {
+				Node importNode = importNodeList.item(i);
+
+				NamedNodeMap namedNodeMap = importNode.getAttributes();
+
+				Node namespaceNode = namedNodeMap.getNamedItem("namespace");
+
+				if (namespaceNode == null) {
+					continue;
+				}
+
+				Node schemLocationNode = namedNodeMap.getNamedItem(
+					"schemaLocation");
+
+				if (schemLocationNode == null) {
+					continue;
+				}
+
+				String namespace = namespaceNode.getNodeValue();
+				String schemaLocation = schemLocationNode.getNodeValue();
+
+				if ((namespace == null) || (schemaLocation == null)) {
+					continue;
+				}
+
+				String fileName = _getFileName(schemaLocation);
+
+				if (fileName == null) {
+					continue;
+				}
+
+				File curDefinitionFile = _portalDefinitions.get(fileName);
+
+				if (curDefinitionFile == null) {
+					continue;
+				}
+
+				schemaProperties.put(namespace, curDefinitionFile);
+
+				definitionFiles.add(curDefinitionFile);
 			}
 
-			String namespace = namespaceNode.getNodeValue();
-			String schemaLocation = schemLocationNode.getNodeValue();
+			NodeList includeNodeList = document.getElementsByTagName(
+				"xsd:include");
 
-			if ((namespace == null) || (schemaLocation == null)) {
-				continue;
+			for (int i = 0; i < includeNodeList.getLength(); i++) {
+				Node taglibNode = includeNodeList.item(i);
+
+				NamedNodeMap namedNodeMap = taglibNode.getAttributes();
+
+				Node schemLocationNode = namedNodeMap.getNamedItem(
+					"schemaLocation");
+
+				if (schemLocationNode == null) {
+					continue;
+				}
+
+				String schemaLocation = schemLocationNode.getNodeValue();
+
+				if (schemaLocation == null) {
+					continue;
+				}
+
+				File curDefinitionFile = _portalDefinitions.get(schemaLocation);
+
+				if (curDefinitionFile == null) {
+					continue;
+				}
+
+				definitionFiles.add(curDefinitionFile);
 			}
-
-			String fileName = _getFileName(schemaLocation);
-
-			if (fileName == null) {
-				continue;
-			}
-
-			File curDefinitionFile = _portalDefinitions.get(fileName);
-
-			if (curDefinitionFile == null) {
-				continue;
-			}
-
-			schemaProperties.put(namespace, curDefinitionFile);
-
-			_populateSchemaProperties(schemaProperties, curDefinitionFile);
-		}
-
-		NodeList includeNodeList = document.getElementsByTagName("xsd:include");
-
-		for (int i = 0; i < includeNodeList.getLength(); i++) {
-			Node taglibNode = includeNodeList.item(i);
-
-			NamedNodeMap namedNodeMap = taglibNode.getAttributes();
-
-			Node schemLocationNode = namedNodeMap.getNamedItem(
-				"schemaLocation");
-
-			if (schemLocationNode == null) {
-				continue;
-			}
-
-			String schemaLocation = schemLocationNode.getNodeValue();
-
-			if (schemaLocation == null) {
-				continue;
-			}
-
-			File curDefinitionFile = _portalDefinitions.get(schemaLocation);
-
-			if (curDefinitionFile == null) {
-				continue;
-			}
-
-			_populateSchemaProperties(schemaProperties, curDefinitionFile);
 		}
 	}
 

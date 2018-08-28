@@ -52,7 +52,12 @@ if (hasAudio) {
 			<liferay-ui:message arguments="<%= fileVersion.getTitle() %>" key="cannot-generate-preview-for-x" />
 		</div>
 	</c:when>
-	<c:when test="<%= hasAudio %>">
+	<c:when test="<%= !hasAudio %>">
+		<div class="alert alert-info">
+			<liferay-ui:message key="generating-preview-will-take-a-few-minutes" />
+		</div>
+	</c:when>
+	<c:otherwise>
 		<div class="lfr-preview-audio" id="<portlet:namespace /><%= randomNamespace %>previewFile">
 			<div class="lfr-preview-audio-content" id="<portlet:namespace /><%= randomNamespace %>previewFileContent"></div>
 		</div>
@@ -130,5 +135,5 @@ if (hasAudio) {
 				}
 			);
 		</aui:script>
-	</c:when>
+	</c:otherwise>
 </c:choose>

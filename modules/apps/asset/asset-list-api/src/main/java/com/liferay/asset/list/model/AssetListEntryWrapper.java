@@ -228,6 +228,11 @@ public class AssetListEntryWrapper implements AssetListEntry,
 		return _assetListEntry.getType();
 	}
 
+	@Override
+	public String getTypeLabel() {
+		return _assetListEntry.getTypeLabel();
+	}
+
 	/**
 	* Returns the user ID of this asset list entry.
 	*

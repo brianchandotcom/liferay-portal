@@ -12,23 +12,31 @@
  * details.
  */
 
-package com.liferay.asset.list.model.impl;
-
-import aQute.bnd.annotation.ProviderType;
-
-import com.liferay.asset.list.constants.AssetListEntryTypeConstants;
+package com.liferay.asset.list.constants;
 
 /**
- * @author Pavel Savinov
+ * @author Jürgen Kappler
  */
-@ProviderType
-public class AssetListEntryImpl extends AssetListEntryBaseImpl {
+public class AssetListEntryTypeConstants {
 
-	public AssetListEntryImpl() {
-	}
+	public static final int TYPE_DYNAMIC = 0;
 
-	public String getTypeLabel() {
-		return AssetListEntryTypeConstants.getTypeLabel(getType());
+	public static final String TYPE_DYNAMIC_LABEL = "dynamic";
+
+	public static final int TYPE_MANUAL = 1;
+
+	public static final String TYPE_MANUAL_LABEL = "manual";
+
+	public static String getTypeLabel(int type) {
+		if (type == TYPE_DYNAMIC) {
+			return TYPE_DYNAMIC_LABEL;
+		}
+		else if (type == TYPE_MANUAL) {
+			return TYPE_MANUAL_LABEL;
+		}
+		else {
+			return null;
+		}
 	}
 
 }

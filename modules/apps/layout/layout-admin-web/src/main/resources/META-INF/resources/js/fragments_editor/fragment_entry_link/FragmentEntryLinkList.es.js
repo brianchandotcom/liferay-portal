@@ -132,7 +132,29 @@ FragmentEntryLinkList.STATE = {
 				position: Config.number().required()
 			}
 		)
-	).value([])
+	).value([]),
+
+	/**
+	 * Nearest border of the hovered fragment entry link when dragging.
+	 * @default undefined
+	 * @instance
+	 * @memberOf FragmentEntryLinkList
+	 * @review
+	 * @type {!string}
+	 */
+
+	hoveredFragmentEntryLinkBorder: Config.string(),
+
+	/**
+	 * Id of the hovered fragment entry link when dragging.
+	 * @default undefined
+	 * @instance
+	 * @memberOf FragmentEntryLinkList
+	 * @review
+	 * @type {!string}
+	 */
+
+	hoveredFragmentEntryLinkId: Config.string()
 };
 
 Soy.register(FragmentEntryLinkList, templates);

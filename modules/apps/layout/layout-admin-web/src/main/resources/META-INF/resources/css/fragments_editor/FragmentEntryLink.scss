@@ -6,6 +6,18 @@
 
 @import "variables";
 
+.drag-bottom {
+	border-bottom: 5px solid #80ACFF;
+	margin-bottom: 5px;
+	padding-bottom: 5px;
+}
+
+.drag-top {
+	border-top: 5px solid #80ACFF;
+	margin-top: 5px;
+	padding-top: 5px;
+}
+
 .fragment-entry-link-wrapper {
 	box-shadow: 0 0 0 $fragmentEntryLinkBorderWidth fade_out($fragmentEntryLinkBorderColor, 1);
 	position: relative;

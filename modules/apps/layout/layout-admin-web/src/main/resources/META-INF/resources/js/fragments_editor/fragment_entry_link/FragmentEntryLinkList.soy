@@ -13,6 +13,8 @@
 	{@param spritemap: string}
 	{@param translating: bool}
 	{@param? dropTargetClass: string}
+	{@param? hoveredFragmentEntryLinkBorder: string}
+	{@param? hoveredFragmentEntryLinkId: string}
 	{@param? _handleEditableChanged: any}
 	{@param? _handleFragmentMove: any}
 	{@param? _handleFragmentRemove: any}
@@ -34,6 +36,7 @@
 			label: string
 		]
 	]}
+	{@param? store: ?}
 
 	{let $entryLinksClasses kind="text"}
 		fragment-entry-link-list
@@ -51,11 +54,17 @@
 	<div class="{$entryLinksClasses}" ref="fragmentEntryLinks">
 		{if $fragmentEntryLinks and (length($fragmentEntryLinks) > 0)}
 			{foreach $fragmentEntryLink in $fragmentEntryLinks}
+				{let $styleModifier kind="text"}
+					{if $hoveredFragmentEntryLinkId == $fragmentEntryLink.fragmentEntryLinkId}
+						{$hoveredFragmentEntryLinkBorder}
+					{/if}
+				{/let}
 				<div data-position="{index($fragmentEntryLink)}" key="{$fragmentEntryLink.fragmentEntryLinkId}">
 					{call com.liferay.layout.admin.web.FragmentEntryLink.render}
 						{param content: $fragmentEntryLink.content /}
 						{param defaultEditorConfigurations: $defaultEditorConfigurations /}
 						{param defaultLanguageId: $defaultLanguageId /}
+						{param dropTargetClass: $dropTargetClass /}
 						{param editableValues: $fragmentEntryLink.editableValues /}
 						{param events: [
 							'editableChanged': $_handleEditableChanged,
@@ -64,6 +73,7 @@
 							'remove': $_handleFragmentRemove
 						] /}
 						{param fragmentEntryLinkId: $fragmentEntryLink.fragmentEntryLinkId /}
+						{param styleModifier: $styleModifier /}
 						{param imageSelectorURL: $imageSelectorURL /}
 						{param languageId: $languageId /}
 						{param name: $fragmentEntryLink.name /}
@@ -72,6 +82,7 @@
 						{param selectedMappingTypes: $selectedMappingTypes /}
 						{param showMapping: $selectedMappingTypes and $mappingFieldsURL ? true : false /}
 						{param spritemap: $spritemap /}
+						{param store: $store /}
 					{/call}
 				</div>
 			{/foreach}

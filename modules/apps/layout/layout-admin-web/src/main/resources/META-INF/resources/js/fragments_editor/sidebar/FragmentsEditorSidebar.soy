@@ -38,6 +38,7 @@
 			label: string
 		]
 	]}
+	{@param? store: ?}
 
 	{call liferay.frontend.ContextualSidebar.render}
 		{param body kind="html"}
@@ -63,16 +64,18 @@
 
 			{if $_selectedTab == 'available'}
 				{call com.liferay.layout.admin.web.SidebarAvailableFragments.render}
+					{param dropTargetClass: $dropTargetClass /}
 					{param fragmentCollections: $fragmentCollections /}
 					{param ref: 'sidebarTab' /}
 					{param spritemap: $spritemap /}
-					{param dropTargetClass: $dropTargetClass /}
+					{param store: $store /}
 				{/call}
 			{elseif $_selectedTab == 'added'}
 				{call com.liferay.layout.admin.web.SidebarAddedFragments.render}
 					{param fragmentEntryLinks: $fragmentEntryLinks /}
 					{param ref: 'sidebarTab' /}
 					{param spritemap: $spritemap /}
+					{param store: $store /}
 				{/call}
 			{elseif $_selectedTab == 'mapping'}
 				{call com.liferay.layout.admin.web.SidebarMapping.render}
@@ -80,6 +83,7 @@
 					{param ref: 'sidebarTab' /}
 					{param selectedMappingTypes: $selectedMappingTypes /}
 					{param spritemap: $spritemap /}
+					{param store: $store /}
 				{/call}
 			{/if}
 		{/param}

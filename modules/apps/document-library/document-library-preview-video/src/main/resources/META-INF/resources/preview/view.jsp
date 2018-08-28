@@ -17,138 +17,85 @@
 <%@ include file="/preview/init.jsp" %>
 
 <%
-FileVersion fileVersion = (FileVersion)request.getAttribute(WebKeys.DOCUMENT_LIBRARY_FILE_VERSION);
+String videoThumbnailURL = (String)request.getAttribute(DLPreviewVideoWebKeys.VIDEO_THUMBNAIL_URL);
 
-int status = ParamUtil.getInteger(request, "status", WorkflowConstants.STATUS_ANY);
+String[] previewFileURLs = (String[])request.getAttribute(DLPreviewVideoWebKeys.PREVIEW_FILE_URLS);
 
 String randomNamespace = PortalUtil.generateRandomKey(request, "portlet_document_library_view_file_entry_preview") + StringPool.UNDERLINE;
+%>
 
-boolean emptyPreview = false;
-String[] previewFileURLs = null;
-String videoThumbnailURL = DLUtil.getPreviewURL(fileVersion.getFileEntry(), fileVersion, themeDisplay, "&videoThumbnail=1");
+<div class="lfr-preview-file lfr-preview-video" id="<portlet:namespace /><%= randomNamespace %>previewFile">
+	<div class="lfr-preview-file-content lfr-preview-video-content">
+		<div class="lfr-preview-file-video-current-column">
+			<div id="<portlet:namespace /><%= randomNamespace %>previewFileContent"></div>
+		</div>
+	</div>
+</div>
 
-String previewQueryString = "&videoPreview=1";
+<%
+String mp4PreviewFileURL = null;
+String ogvPreviewFileURL = null;
 
-if (status != WorkflowConstants.STATUS_ANY) {
-	previewQueryString += "&status=" + status;
-}
-
-emptyPreview = true;
-
-if (PropsValues.DL_FILE_ENTRY_PREVIEW_VIDEO_CONTAINERS.length > 0) {
-	previewFileURLs = new String[PropsValues.DL_FILE_ENTRY_PREVIEW_VIDEO_CONTAINERS.length];
-
-	for (int i = 0; i < PropsValues.DL_FILE_ENTRY_PREVIEW_VIDEO_CONTAINERS.length; i++) {
-		if (VideoProcessorUtil.getPreviewFileSize(fileVersion, PropsValues.DL_FILE_ENTRY_PREVIEW_VIDEO_CONTAINERS[i]) > 0) {
-			emptyPreview = false;
-			previewFileURLs[i] = DLUtil.getPreviewURL(fileVersion.getFileEntry(), fileVersion, themeDisplay, previewQueryString + "&type=" + PropsValues.DL_FILE_ENTRY_PREVIEW_VIDEO_CONTAINERS[i]);
+for (String previewFileURL : previewFileURLs) {
+	if (Validator.isNotNull(previewFileURL)) {
+		if (previewFileURL.endsWith("mp4")) {
+			mp4PreviewFileURL = previewFileURL;
+		}
+		else if (previewFileURL.endsWith("ogv")) {
+			ogvPreviewFileURL = previewFileURL;
 		}
 	}
 }
-else {
-	emptyPreview = false;
-
-	previewFileURLs = new String[1];
-
-	previewFileURLs[0] = videoThumbnailURL;
-}
 %>
 
-<c:choose>
-	<c:when test="<%= emptyPreview %>">
-		<div class="alert alert-info">
-			<liferay-ui:message arguments="<%= fileVersion.getTitle() %>" key="cannot-generate-preview-for-x" />
-		</div>
-	</c:when>
-	<c:when test="<%= !VideoProcessorUtil.hasVideo(fileVersion) %>">
-		<c:choose>
-			<c:when test="<%= !DLProcessorRegistryUtil.isPreviewableSize(fileVersion) %>">
-				<div class="alert alert-info">
-					<liferay-ui:message key="file-is-too-large-for-preview-or-thumbnail-generation" />
-				</div>
-			</c:when>
-			<c:otherwise>
-				<div class="alert alert-info">
-					<liferay-ui:message key="generating-preview-will-take-a-few-minutes" />
-				</div>
-			</c:otherwise>
-		</c:choose>
-	</c:when>
-	<c:otherwise>
-		<div class="lfr-preview-file lfr-preview-video" id="<portlet:namespace /><%= randomNamespace %>previewFile">
-			<div class="lfr-preview-file-content lfr-preview-video-content">
-				<div class="lfr-preview-file-video-current-column">
-					<div id="<portlet:namespace /><%= randomNamespace %>previewFileContent"></div>
-				</div>
-			</div>
-		</div>
+<aui:script use="aui-base,aui-video">
+	var playing = false;
 
-		<%
-		String mp4PreviewFileURL = null;
-		String ogvPreviewFileURL = null;
+	var video = new A.Video(
+		{
+			contentBox: '#<portlet:namespace /><%= randomNamespace %>previewFileContent',
+			fixedAttributes: {
+				allowfullscreen: 'true',
+				bgColor: '#000000',
+				wmode: 'opaque'
+			},
 
-		for (String previewFileURL : previewFileURLs) {
-			if (Validator.isNotNull(previewFileURL)) {
-				if (previewFileURL.endsWith("mp4")) {
-					mp4PreviewFileURL = previewFileURL;
-				}
-				else if (previewFileURL.endsWith("ogv")) {
-					ogvPreviewFileURL = previewFileURL;
-				}
+			on: {
+				'pause' : function() {
+				playing = false;
+			},
+			'play': function() {
+				window.parent.Liferay.fire('<portlet:namespace /><%= randomNamespace %>Video:play');
+
+				playing = true;
+			}
+		},
+
+		<c:if test="<%= Validator.isNotNull(ogvPreviewFileURL) %>">
+			ogvUrl: '<%= HtmlUtil.escapeJS(ogvPreviewFileURL) %>',
+		</c:if>
+
+		poster: '<%= HtmlUtil.escapeJS(videoThumbnailURL) %>'
+
+		<c:if test="<%= Validator.isNotNull(mp4PreviewFileURL) %>">
+			, url: '<%= HtmlUtil.escapeJS(mp4PreviewFileURL) %>'
+		</c:if>
+		}
+	).render();
+
+	window.parent.Liferay.on(
+		'<portlet:namespace /><%= randomNamespace %>ImageViewer:currentIndexChange',
+		function() {
+			if (playing) {
+				video.pause();
 			}
 		}
-		%>
+	);
 
-		<aui:script use="aui-base,aui-video">
-			var playing = false;
-
-			var video = new A.Video(
-				{
-					contentBox: '#<portlet:namespace /><%= randomNamespace %>previewFileContent',
-					fixedAttributes: {
-						allowfullscreen: 'true',
-						bgColor: '#000000',
-						wmode: 'opaque'
-					},
-
-					on: {
-						'pause' : function() {
-						playing = false;
-					},
-					'play': function() {
-						window.parent.Liferay.fire('<portlet:namespace /><%= randomNamespace %>Video:play');
-
-						playing = true;
-					}
-				},
-
-				<c:if test="<%= Validator.isNotNull(ogvPreviewFileURL) %>">
-					ogvUrl: '<%= HtmlUtil.escapeJS(ogvPreviewFileURL) %>',
-				</c:if>
-
-				poster: '<%= HtmlUtil.escapeJS(videoThumbnailURL) %>'
-
-				<c:if test="<%= Validator.isNotNull(mp4PreviewFileURL) %>">
-					, url: '<%= HtmlUtil.escapeJS(mp4PreviewFileURL) %>'
-				</c:if>
-				}
-			).render();
-
-			window.parent.Liferay.on(
-				'<portlet:namespace /><%= randomNamespace %>ImageViewer:currentIndexChange',
-				function() {
-					if (playing) {
-						video.pause();
-					}
-				}
-			);
-
-			window.parent.Liferay.on(
-				'<portlet:namespace /><%= randomNamespace %>ImageViewer:close',
-				function() {
-					video.load();
-				}
-			);
-		</aui:script>
-	</c:otherwise>
-</c:choose>
+	window.parent.Liferay.on(
+		'<portlet:namespace /><%= randomNamespace %>ImageViewer:close',
+		function() {
+			video.load();
+		}
+	);
+</aui:script>

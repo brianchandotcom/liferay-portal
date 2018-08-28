@@ -12,22 +12,15 @@
  * details.
  */
 
-package com.liferay.document.library.preview;
-
-import com.liferay.portal.kernel.exception.PortalException;
-
-import java.io.IOException;
-
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+package com.liferay.document.library.preview.video.internal.renderer.constants;
 
 /**
  * @author Alejandro Tardín
  */
-public interface DLPreviewRenderer {
+public class DLPreviewVideoWebKeys {
 
-	public void render(HttpServletRequest request, HttpServletResponse response)
-		throws IOException, PortalException, ServletException;
+	public static final String PREVIEW_FILE_URLS = "PREVIEW_FILE_URLS";
+
+	public static final String VIDEO_THUMBNAIL_URL = "VIDEO_THUMBNAIL_URL";
 
 }

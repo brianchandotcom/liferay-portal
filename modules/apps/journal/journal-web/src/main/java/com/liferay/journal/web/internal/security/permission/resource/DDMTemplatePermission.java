@@ -15,6 +15,7 @@
 package com.liferay.journal.web.internal.security.permission.resource;
 
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
+import com.liferay.dynamic.data.mapping.security.permission.DDMPermissionSupport;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
@@ -46,6 +47,29 @@ public class DDMTemplatePermission {
 			permissionChecker, ddmTemplateId, actionId);
 	}
 
+	public static boolean containsAddTemplatePermission(
+			PermissionChecker permissionChecker, long groupId, long classNameId,
+			long resourceClassNameId)
+		throws PortalException {
+
+		return _ddmPermissionSupport.containsAddTemplatePermission(
+			permissionChecker, groupId, classNameId, resourceClassNameId);
+	}
+
+	public static String getTemplateModelResourceName(long resourceClassnameId)
+		throws PortalException {
+
+		return _ddmPermissionSupport.getTemplateModelResourceName(
+			resourceClassnameId);
+	}
+
+	@Reference(unbind = "-")
+	protected void setDDMPermissionSupport(
+		DDMPermissionSupport ddmPermissionSupport) {
+
+		_ddmPermissionSupport = ddmPermissionSupport;
+	}
+
 	@Reference(
 		target = "(model.class.name=com.liferay.dynamic.data.mapping.model.DDMTemplate)",
 		unbind = "-"
@@ -56,6 +80,7 @@ public class DDMTemplatePermission {
 		_ddmTemplateModelResourcePermission = modelResourcePermission;
 	}
 
+	private static DDMPermissionSupport _ddmPermissionSupport;
 	private static ModelResourcePermission<DDMTemplate>
 		_ddmTemplateModelResourcePermission;
 

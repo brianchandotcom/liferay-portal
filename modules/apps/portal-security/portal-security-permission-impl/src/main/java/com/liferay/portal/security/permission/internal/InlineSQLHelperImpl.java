@@ -49,6 +49,7 @@ import java.util.Set;
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
@@ -266,6 +267,11 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 
 		_permissionSQLContributors = ServiceTrackerMapFactory.openMultiValueMap(
 			bundleContext, PermissionSQLContributor.class, "model.class.name");
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		_permissionSQLContributors.close();
 	}
 
 	protected long[] getRoleIds(long groupId) {

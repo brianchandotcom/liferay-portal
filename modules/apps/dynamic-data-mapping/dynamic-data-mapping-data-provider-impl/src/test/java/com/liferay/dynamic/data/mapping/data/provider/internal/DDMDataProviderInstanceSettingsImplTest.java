@@ -18,7 +18,6 @@ import com.liferay.dynamic.data.mapping.data.provider.DDMDataProvider;
 import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderTracker;
 import com.liferay.dynamic.data.mapping.data.provider.internal.rest.DDMRESTDataProviderSettings;
 import com.liferay.dynamic.data.mapping.io.DDMFormValuesDeserializer;
-import com.liferay.dynamic.data.mapping.io.DDMFormValuesDeserializerDeserializeRequest;
 import com.liferay.dynamic.data.mapping.io.DDMFormValuesDeserializerDeserializeResponse;
 import com.liferay.dynamic.data.mapping.io.DDMFormValuesDeserializerTracker;
 import com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance;
@@ -26,7 +25,6 @@ import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormValuesTestUtil;
 import com.liferay.dynamic.data.mapping.util.DDMFormFactory;
-import com.liferay.portal.kernel.exception.PortalException;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -35,6 +33,7 @@ import org.junit.runner.RunWith;
 
 import org.mockito.Matchers;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import org.powermock.api.mockito.PowerMockito;
@@ -79,12 +78,6 @@ public class DDMDataProviderInstanceSettingsImplTest extends PowerMockito {
 
 		DDMFormValues ddmFormValues = _createDDMFormValues();
 
-		DDMFormValuesDeserializerDeserializeRequest
-			ddmFormValuesDeserializerDeserializeRequest =
-				DDMFormValuesDeserializerDeserializeRequest.Builder.newBuilder(
-					"", mock(DDMForm.class)
-				).build();
-
 		DDMFormValuesDeserializerDeserializeResponse
 			ddmFormValuesDeserializerDeserializeResponse =
 				DDMFormValuesDeserializerDeserializeResponse.Builder.newBuilder(
@@ -92,8 +85,7 @@ public class DDMDataProviderInstanceSettingsImplTest extends PowerMockito {
 				).build();
 
 		when(
-			_ddmFormValuesDeserializer.deserialize(
-				ddmFormValuesDeserializerDeserializeRequest)
+			_ddmFormValuesDeserializer.deserialize(Mockito.any())
 		).thenReturn(
 			ddmFormValuesDeserializerDeserializeResponse
 		);
@@ -115,7 +107,7 @@ public class DDMDataProviderInstanceSettingsImplTest extends PowerMockito {
 		when(
 			_ddmDataProviderTracker.getDDMDataProvider(Matchers.anyString())
 		).thenThrow(
-			PortalException.class
+			IllegalStateException.class
 		);
 
 		_ddmDataProviderInstanceSettings.getSettings(

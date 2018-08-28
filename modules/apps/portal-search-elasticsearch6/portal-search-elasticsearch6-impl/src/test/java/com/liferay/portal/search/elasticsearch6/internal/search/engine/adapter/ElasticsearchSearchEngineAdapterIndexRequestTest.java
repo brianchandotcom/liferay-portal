@@ -20,6 +20,8 @@ import com.liferay.portal.search.elasticsearch6.internal.connection.Elasticsearc
 import com.liferay.portal.search.elasticsearch6.internal.connection.TestElasticsearchConnectionManager;
 import com.liferay.portal.search.elasticsearch6.internal.search.engine.adapter.index.IndexRequestExecutorFixture;
 import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
+import com.liferay.portal.search.engine.adapter.index.FlushIndexRequest;
+import com.liferay.portal.search.engine.adapter.index.FlushIndexResponse;
 import com.liferay.portal.search.engine.adapter.index.GetFieldMappingIndexRequest;
 import com.liferay.portal.search.engine.adapter.index.GetFieldMappingIndexResponse;
 import com.liferay.portal.search.engine.adapter.index.GetMappingIndexRequest;
@@ -27,6 +29,8 @@ import com.liferay.portal.search.engine.adapter.index.GetMappingIndexResponse;
 import com.liferay.portal.search.engine.adapter.index.IndexRequestExecutor;
 import com.liferay.portal.search.engine.adapter.index.PutMappingIndexRequest;
 import com.liferay.portal.search.engine.adapter.index.PutMappingIndexResponse;
+import com.liferay.portal.search.engine.adapter.index.RefreshIndexRequest;
+import com.liferay.portal.search.engine.adapter.index.RefreshIndexResponse;
 
 import java.util.Map;
 
@@ -79,6 +83,17 @@ public class ElasticsearchSearchEngineAdapterIndexRequestTest {
 		deleteIndex();
 
 		_elasticsearchFixture.tearDown();
+	}
+
+	@Test
+	public void testExecuteFlushIndexRequest() {
+		FlushIndexRequest flushIndexRequest = new FlushIndexRequest(
+			_INDEX_NAME);
+
+		FlushIndexResponse flushIndexResponse = _searchEngineAdapter.execute(
+			flushIndexRequest);
+
+		Assert.assertEquals(0, flushIndexResponse.getFailedShards());
 	}
 
 	@Ignore
@@ -162,6 +177,17 @@ public class ElasticsearchSearchEngineAdapterIndexRequestTest {
 		String mappingMetaDataSource = String.valueOf(mappingMetaData.source());
 
 		Assert.assertTrue(mappingMetaDataSource.contains(mappingSource));
+	}
+
+	@Test
+	public void testExecuteRefreshIndexRequest() {
+		RefreshIndexRequest refreshIndexRequest = new RefreshIndexRequest(
+			_INDEX_NAME);
+
+		RefreshIndexResponse refreshIndexResponse =
+			_searchEngineAdapter.execute(refreshIndexRequest);
+
+		Assert.assertEquals(0, refreshIndexResponse.getFailedShards());
 	}
 
 	protected void createIndex() {

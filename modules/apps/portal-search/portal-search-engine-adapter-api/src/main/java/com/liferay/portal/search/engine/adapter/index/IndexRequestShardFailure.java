@@ -17,27 +17,46 @@ package com.liferay.portal.search.engine.adapter.index;
 import aQute.bnd.annotation.ProviderType;
 
 /**
- * @author Dylan Rebelak
+ * @author Michael C. Han
  */
 @ProviderType
-public interface IndexRequestExecutor {
+public class IndexRequestShardFailure {
 
-	public AnalyzeIndexResponse executeIndexRequest(
-		AnalyzeIndexRequest analyzeIndexRequest);
+	public String getIndex() {
+		return _index;
+	}
 
-	public FlushIndexResponse executeIndexRequest(
-		FlushIndexRequest flushIndexRequest);
+	public String getReason() {
+		return _reason;
+	}
 
-	public GetFieldMappingIndexResponse executeIndexRequest(
-		GetFieldMappingIndexRequest getFieldMappingIndexRequest);
+	public int getRestStatus() {
+		return _restStatus;
+	}
 
-	public GetMappingIndexResponse executeIndexRequest(
-		GetMappingIndexRequest getMappingIndexRequest);
+	public int getShardId() {
+		return _shardId;
+	}
 
-	public PutMappingIndexResponse executeIndexRequest(
-		PutMappingIndexRequest putMappingIndexRequest);
+	public void setIndex(String index) {
+		_index = index;
+	}
 
-	public RefreshIndexResponse executeIndexRequest(
-		RefreshIndexRequest refreshIndexRequest);
+	public void setReason(String reason) {
+		_reason = reason;
+	}
+
+	public void setRestStatus(int restStatus) {
+		_restStatus = restStatus;
+	}
+
+	public void setShardId(int shardId) {
+		_shardId = shardId;
+	}
+
+	private String _index;
+	private String _reason;
+	private int _restStatus;
+	private int _shardId;
 
 }

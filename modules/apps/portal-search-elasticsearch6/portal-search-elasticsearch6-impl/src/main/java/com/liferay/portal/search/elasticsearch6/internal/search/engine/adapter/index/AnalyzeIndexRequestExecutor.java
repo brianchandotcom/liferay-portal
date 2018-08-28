@@ -12,27 +12,17 @@
  * details.
  */
 
-package com.liferay.portal.search.engine.adapter.index;
+package com.liferay.portal.search.elasticsearch6.internal.search.engine.adapter.index;
 
-import aQute.bnd.annotation.ProviderType;
+import com.liferay.portal.search.engine.adapter.index.AnalyzeIndexRequest;
+import com.liferay.portal.search.engine.adapter.index.AnalyzeIndexResponse;
 
 /**
  * @author Michael C. Han
  */
-@ProviderType
-public interface IndexRequest<T extends IndexResponse> {
+public interface AnalyzeIndexRequestExecutor {
 
-	public T accept(IndexRequestExecutor indexRequestExecutor);
-
-	public String[] getIndexNames();
-
-	/**
-	 * @deprecated As of Judson (7.1.x), since 1.1.0.  This method should not be
-	 *             in the parent interface.  Only certain IndexRequests work
-	 *             with mappings
-	 * @return
-	 */
-	@Deprecated
-	public String getMappingName();
+	public AnalyzeIndexResponse execute(
+		AnalyzeIndexRequest analyzeIndexRequest);
 
 }

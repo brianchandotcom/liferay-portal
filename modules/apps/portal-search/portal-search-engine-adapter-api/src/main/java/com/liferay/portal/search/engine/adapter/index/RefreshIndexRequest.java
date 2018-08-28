@@ -16,23 +16,24 @@ package com.liferay.portal.search.engine.adapter.index;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.petra.string.StringPool;
+
 /**
- * @author Dylan Rebelak
+ * @author Michael C. Han
  */
 @ProviderType
-public class PutMappingIndexRequest
-	implements IndexRequest<PutMappingIndexResponse> {
+public class RefreshIndexRequest implements IndexRequest<RefreshIndexResponse> {
 
-	public PutMappingIndexRequest(
-		String[] indexNames, String mappingName, String mapping) {
+	public RefreshIndexRequest() {
+		_indexNames = StringPool.EMPTY_ARRAY;
+	}
 
+	public RefreshIndexRequest(String... indexNames) {
 		_indexNames = indexNames;
-		_mappingName = mappingName;
-		_mapping = mapping;
 	}
 
 	@Override
-	public PutMappingIndexResponse accept(
+	public RefreshIndexResponse accept(
 		IndexRequestExecutor indexRequestExecutor) {
 
 		return indexRequestExecutor.executeIndexRequest(this);
@@ -43,16 +44,18 @@ public class PutMappingIndexRequest
 		return _indexNames;
 	}
 
-	public String getMapping() {
-		return _mapping;
-	}
-
+	/**
+	 * @deprecated As of Judson (7.1.x), since 1.1.0.  This method should not be
+	 *             in the parent interface.  Only certain IndexRequests work
+	 *             with mappings
+	 * @return
+	 */
+	@Deprecated
+	@Override
 	public String getMappingName() {
-		return _mappingName;
+		throw new UnsupportedOperationException();
 	}
 
 	private final String[] _indexNames;
-	private final String _mapping;
-	private final String _mappingName;
 
 }

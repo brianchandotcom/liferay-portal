@@ -16,43 +16,35 @@ package com.liferay.portal.search.engine.adapter.index;
 
 import aQute.bnd.annotation.ProviderType;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
- * @author Dylan Rebelak
+ * @author Michael C. Han
  */
 @ProviderType
-public class PutMappingIndexRequest
-	implements IndexRequest<PutMappingIndexResponse> {
+public class AnalyzeIndexResponse implements IndexResponse {
 
-	public PutMappingIndexRequest(
-		String[] indexNames, String mappingName, String mapping) {
+	public void addAnalysisIndexResponseTokens(
+		AnalysisIndexResponseToken analysisIndexResponseToken) {
 
-		_indexNames = indexNames;
-		_mappingName = mappingName;
-		_mapping = mapping;
+		_analysisIndexResponseTokens.add(analysisIndexResponseToken);
 	}
 
-	@Override
-	public PutMappingIndexResponse accept(
-		IndexRequestExecutor indexRequestExecutor) {
-
-		return indexRequestExecutor.executeIndexRequest(this);
+	public String getAnalysisDetails() {
+		return _analysisDetails;
 	}
 
-	@Override
-	public String[] getIndexNames() {
-		return _indexNames;
+	public List<AnalysisIndexResponseToken> getAnalysisIndexResponseTokens() {
+		return _analysisIndexResponseTokens;
 	}
 
-	public String getMapping() {
-		return _mapping;
+	public void setAnalysisDetails(String analysisDetails) {
+		_analysisDetails = analysisDetails;
 	}
 
-	public String getMappingName() {
-		return _mappingName;
-	}
-
-	private final String[] _indexNames;
-	private final String _mapping;
-	private final String _mappingName;
+	private String _analysisDetails;
+	private final List<AnalysisIndexResponseToken>
+		_analysisIndexResponseTokens = new ArrayList<>();
 
 }

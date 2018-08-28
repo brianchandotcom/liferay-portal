@@ -204,7 +204,8 @@ public class StorageEngineManagerImpl implements StorageEngineManager {
 
 	private void _validate(
 			com.liferay.dynamic.data.mapping.storage.DDMFormValues
-				ddmFormValues, ServiceContext serviceContext)
+				ddmFormValues,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		boolean validateDDMFormValues = GetterUtil.getBoolean(

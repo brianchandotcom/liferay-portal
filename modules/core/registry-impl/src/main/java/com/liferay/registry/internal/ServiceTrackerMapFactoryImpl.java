@@ -482,8 +482,8 @@ public class ServiceTrackerMapFactoryImpl implements ServiceTrackerMapFactory {
 		@Override
 		public void keyEmitted(
 			com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap
-				<K, List<S>> serviceTrackerMap, K key, S service,
-			List<S> content) {
+				<K, List<S>> serviceTrackerMap,
+			K key, S service, List<S> content) {
 
 			_serviceTrackerMapListener.keyEmitted(
 				new ServiceTrackerMapWrapper<>(serviceTrackerMap), key, service,
@@ -493,8 +493,8 @@ public class ServiceTrackerMapFactoryImpl implements ServiceTrackerMapFactory {
 		@Override
 		public void keyRemoved(
 			com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap
-				<K, List<S>> serviceTrackerMap, K key, S service,
-			List<S> content) {
+				<K, List<S>> serviceTrackerMap,
+			K key, S service, List<S> content) {
 
 			_serviceTrackerMapListener.keyRemoved(
 				new ServiceTrackerMapWrapper<>(serviceTrackerMap), key, service,

@@ -521,9 +521,12 @@ public class JavaLineBreakCheck extends LineBreakCheck {
 
 		matcher = _incorrectLineBreakPattern3.matcher(content);
 
-		if (matcher.find()) {
-			return StringUtil.replaceFirst(
-				content, "{", "{\n" + matcher.group(1) + "\t", matcher.start());
+		while (matcher.find()) {
+			if (getLevel(matcher.group(), "{", "}") > 0) {
+				return StringUtil.replaceFirst(
+					content, "{", "{\n" + matcher.group(1) + "\t",
+					matcher.start());
+			}
 		}
 
 		matcher = _incorrectLineBreakPattern4.matcher(content);

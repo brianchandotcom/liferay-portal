@@ -460,6 +460,18 @@ public class DetailASTUtil {
 		return false;
 	}
 
+	public static boolean isAtLineEnd(DetailAST detailAST, String line) {
+		String text = detailAST.getText();
+
+		if (line.endsWith(text) &&
+			((detailAST.getColumnNo() + text.length()) == line.length())) {
+
+			return true;
+		}
+
+		return false;
+	}
+
 	public static boolean isCollection(DetailAST detailAST) {
 		if (detailAST.getType() != TokenTypes.TYPE) {
 			return false;

@@ -35,7 +35,8 @@ public class AuditEventAutoEscapeBeanHandler extends AutoEscapeBeanHandler {
 
 	public static AuditEvent createProxy(
 		com.liferay.portal.security.audit.storage.model.AuditEvent
-			auditEventModel, boolean escaping) {
+			auditEventModel,
+		boolean escaping) {
 
 		AuditEventAutoEscapeBeanHandler auditEventAutoEscapeBeanHandler =
 			new AuditEventAutoEscapeBeanHandler(auditEventModel);

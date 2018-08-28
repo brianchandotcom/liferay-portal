@@ -342,7 +342,8 @@ public class ConfigurationModelToDDMFormConverterTest extends Mockito {
 
 	protected void whenGetConfigurationDDMForm(
 		ConfigurationModelToDDMFormConverter
-			configurationModelToDDMFormConverter, DDMForm ddmForm) {
+			configurationModelToDDMFormConverter,
+		DDMForm ddmForm) {
 
 		Mockito.doReturn(
 			ddmForm

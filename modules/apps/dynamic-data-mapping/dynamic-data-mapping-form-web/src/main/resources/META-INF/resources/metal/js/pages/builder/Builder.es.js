@@ -16,18 +16,16 @@ class Builder extends Component {
 	 */
 
 	_handleFieldClicked(indexAllocateField) {
-		const Sidebar = this.refs.sidebar;
-		Sidebar.show();
-
+		this._handleOpenSidebar({
+			mode: 'edit'
+		})
 		this.emit('fieldClicked', indexAllocateField);
 	}
 
-	_handleAddPage(pages) {
-		const Sidebar = this.refs.sidebar;
-
-		Sidebar._setMode('add');
-		Sidebar.show();
-
+	_handleAddPage(pages){
+		this._handleOpenSidebar({
+			mode: 'add'
+		});
 		this.emit('pagesUpdated', pages);
 	}
 
@@ -81,6 +79,30 @@ class Builder extends Component {
 		this.emit('duplicateField', indexes);
 	}
 
+
+	/**
+	 * Continues the propagation of event.
+	 * @param {String} mode
+	 * @private
+	 */
+	_handleOpenSidebar({mode}) {
+		const Sidebar = this.refs.sidebar;
+
+		Sidebar._setMode(mode);
+		Sidebar.show();
+	}
+
+	_handleUpdateActivePage({mode}) {
+		const Sidebar = this.refs.sidebar;
+
+		Sidebar._dragAndDrop.disposeInternal();
+		Sidebar._startDrag();
+
+		if(mode) {
+			this._handleOpenSidebar({mode});
+		}
+	}
+
 	/**
 	 * Continues the propagation of event.
 	 * @param {Array} pages
@@ -111,7 +133,9 @@ class Builder extends Component {
 			duplicateButtonClicked: this._handleDuplicateButtonClicked.bind(this),
 			fieldClicked: this._handleFieldClicked.bind(this),
 			fieldMoved: this._handleFieldMoved.bind(this),
-			pagesUpdated: this._handlePagesUpdated.bind(this)
+			openSidebar: this._handleOpenSidebar.bind(this),
+			pagesUpdated: this._handlePagesUpdated.bind(this),
+			updateActivePage: this._handleUpdateActivePage.bind(this)
 		};
 
 		const sidebarEvents = {

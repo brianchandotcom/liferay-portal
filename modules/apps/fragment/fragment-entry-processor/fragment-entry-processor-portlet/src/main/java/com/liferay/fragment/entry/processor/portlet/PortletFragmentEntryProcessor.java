@@ -395,7 +395,8 @@ public class PortletFragmentEntryProcessor implements FragmentEntryProcessor {
 
 	private void _updateLayoutPortletSetup(
 		List<com.liferay.portal.kernel.model.PortletPreferences>
-			portletPreferencesList, PortletPreferences jxPortletPreferences) {
+			portletPreferencesList,
+		PortletPreferences jxPortletPreferences) {
 
 		String portletPreferencesXml = PortletPreferencesFactoryUtil.toXML(
 			jxPortletPreferences);

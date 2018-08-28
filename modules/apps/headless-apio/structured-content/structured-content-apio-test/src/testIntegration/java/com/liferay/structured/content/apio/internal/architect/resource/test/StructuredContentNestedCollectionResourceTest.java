@@ -37,12 +37,16 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerTestRule;
+import com.liferay.structured.content.apio.architect.sort.Sort;
+import com.liferay.structured.content.apio.architect.sort.SortParser;
 import com.liferay.structured.content.apio.architect.util.test.PaginationTestUtil;
 
 import java.lang.reflect.Method;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -92,7 +96,7 @@ public class StructuredContentNestedCollectionResourceTest {
 
 		PageItems pageItems = _getPageItems(
 			PaginationTestUtil.of(10, 1), _group.getGroupId(),
-			_getThemeDisplay(_group));
+			_getThemeDisplay(_group), new Sort(Collections.emptyList()));
 
 		Assert.assertEquals(1, pageItems.getTotalCount());
 
@@ -101,22 +105,147 @@ public class StructuredContentNestedCollectionResourceTest {
 		Assert.assertTrue("Items " + items, items.contains(journalArticle));
 	}
 
+	@Test
+	public void testGetPageItemsSortedByTitleAsc() throws Exception {
+		Map<Locale, String> stringMap = new HashMap<>();
+
+		stringMap.put(LocaleUtil.getDefault(), "title1");
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
+
+		JournalArticle journalArticle = JournalTestUtil.addArticle(
+			_group.getGroupId(),
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			JournalArticleConstants.CLASSNAME_ID_DEFAULT,
+			RandomTestUtil.randomString(), false, stringMap, stringMap,
+			stringMap, null, LocaleUtil.getDefault(), null, true, true,
+			serviceContext);
+
+		Map<Locale, String> stringMap2 = new HashMap<>();
+
+		stringMap2.put(LocaleUtil.getDefault(), "title2");
+
+		JournalArticle journalArticle2 = JournalTestUtil.addArticle(
+			_group.getGroupId(),
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			JournalArticleConstants.CLASSNAME_ID_DEFAULT,
+			RandomTestUtil.randomString(), false, stringMap2, stringMap2,
+			stringMap2, null, LocaleUtil.getDefault(), null, true, true,
+			serviceContext);
+
+		PageItems pageItems = _getPageItems(
+			PaginationTestUtil.of(10, 1), _group.getGroupId(),
+			_getThemeDisplay(_group), new Sort(_sortParser.parse("title:asc")));
+
+		Assert.assertEquals(2, pageItems.getTotalCount());
+
+		List items = (List)pageItems.getItems();
+
+		Assert.assertEquals(journalArticle, items.get(0));
+		Assert.assertEquals(journalArticle2, items.get(1));
+	}
+
+	@Test
+	public void testGetPageItemsSortedByTitleDefaultSort() throws Exception {
+		Map<Locale, String> stringMap = new HashMap<>();
+
+		stringMap.put(LocaleUtil.getDefault(), "title1");
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
+
+		JournalArticle journalArticle = JournalTestUtil.addArticle(
+			_group.getGroupId(),
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			JournalArticleConstants.CLASSNAME_ID_DEFAULT,
+			RandomTestUtil.randomString(), false, stringMap, stringMap,
+			stringMap, null, LocaleUtil.getDefault(), null, true, true,
+			serviceContext);
+
+		Map<Locale, String> stringMap2 = new HashMap<>();
+
+		stringMap2.put(LocaleUtil.getDefault(), "title2");
+
+		JournalArticle journalArticle2 = JournalTestUtil.addArticle(
+			_group.getGroupId(),
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			JournalArticleConstants.CLASSNAME_ID_DEFAULT,
+			RandomTestUtil.randomString(), false, stringMap2, stringMap2,
+			stringMap2, null, LocaleUtil.getDefault(), null, true, true,
+			serviceContext);
+
+		PageItems pageItems = _getPageItems(
+			PaginationTestUtil.of(10, 1), _group.getGroupId(),
+			_getThemeDisplay(_group), new Sort(_sortParser.parse("title")));
+
+		Assert.assertEquals(2, pageItems.getTotalCount());
+
+		List items = (List)pageItems.getItems();
+
+		Assert.assertEquals(journalArticle, items.get(0));
+		Assert.assertEquals(journalArticle2, items.get(1));
+	}
+
+	@Test
+	public void testGetPageItemsSortedByTitleDesc() throws Exception {
+		Map<Locale, String> stringMap = new HashMap<>();
+
+		stringMap.put(LocaleUtil.getDefault(), "title1");
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
+
+		JournalArticle journalArticle = JournalTestUtil.addArticle(
+			_group.getGroupId(),
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			JournalArticleConstants.CLASSNAME_ID_DEFAULT,
+			RandomTestUtil.randomString(), false, stringMap, stringMap,
+			stringMap, null, LocaleUtil.getDefault(), null, true, true,
+			serviceContext);
+
+		Map<Locale, String> stringMap2 = new HashMap<>();
+
+		stringMap2.put(LocaleUtil.getDefault(), "title2");
+
+		JournalArticle journalArticle2 = JournalTestUtil.addArticle(
+			_group.getGroupId(),
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			JournalArticleConstants.CLASSNAME_ID_DEFAULT,
+			RandomTestUtil.randomString(), false, stringMap2, stringMap2,
+			stringMap2, null, LocaleUtil.getDefault(), null, true, true,
+			serviceContext);
+
+		PageItems pageItems = _getPageItems(
+			PaginationTestUtil.of(10, 1), _group.getGroupId(),
+			_getThemeDisplay(_group),
+			new Sort(_sortParser.parse("title:desc")));
+
+		Assert.assertEquals(2, pageItems.getTotalCount());
+
+		List items = (List)pageItems.getItems();
+
+		Assert.assertEquals(journalArticle2, items.get(0));
+		Assert.assertEquals(journalArticle, items.get(1));
+	}
+
 	private PageItems _getPageItems(
 			Pagination pagination, long contentSpaceId,
-			ThemeDisplay themeDisplay)
+			ThemeDisplay themeDisplay, Sort sort)
 		throws Exception {
 
 		Class<? extends NestedCollectionResource> clazz =
 			_nestedCollectionResource.getClass();
 
 		Method method = clazz.getDeclaredMethod(
-			"_getPageItems", Pagination.class, long.class, ThemeDisplay.class);
+			"_getPageItems", Pagination.class, long.class, ThemeDisplay.class,
+			Sort.class);
 
 		method.setAccessible(true);
 
 		return (PageItems)method.invoke(
-			_nestedCollectionResource, pagination, contentSpaceId,
-			themeDisplay);
+			_nestedCollectionResource, pagination, contentSpaceId, themeDisplay,
+			sort);
 	}
 
 	private ThemeDisplay _getThemeDisplay(Group group) throws Exception {
@@ -142,5 +271,8 @@ public class StructuredContentNestedCollectionResourceTest {
 		filter = "component.name=com.liferay.structured.content.apio.internal.architect.resource.StructuredContentNestedCollectionResource"
 	)
 	private NestedCollectionResource _nestedCollectionResource;
+
+	@Inject
+	private SortParser _sortParser;
 
 }

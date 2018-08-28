@@ -1,0 +1,8 @@
+Bundle-Name: Liferay Asset List API
+Bundle-SymbolicName: com.liferay.asset.list.api
+Bundle-Version: 1.0.0
+Export-Package:\
+	com.liferay.asset.list.exception,\
+	com.liferay.asset.list.model,\
+	com.liferay.asset.list.service,\
+	com.liferay.asset.list.service.persistence

@@ -233,6 +233,37 @@
 				JournalArticle.id_ ASC
 		]]>
 	</sql>
+	<sql id="com.liferay.journal.service.persistence.JournalArticleFinder.findByG_ST_L">
+		<![CDATA[
+			SELECT
+				JournalArticle.*
+			FROM
+				JournalArticle
+			LEFT JOIN
+				JournalArticle tempJournalArticle ON
+					(JournalArticle.groupId = tempJournalArticle.groupId) AND
+					(JournalArticle.articleId = tempJournalArticle.articleId) AND
+					(JournalArticle.version < tempJournalArticle.version)
+			LEFT JOIN
+				(
+					SELECT
+						JournalArticleLocalization.companyId, JournalArticleLocalization.articlePK, JournalArticleLocalization.title, JournalArticleLocalization.languageId
+					FROM
+						JournalArticleLocalization
+					GROUP BY
+						JournalArticleLocalization.companyId, JournalArticleLocalization.articlePK, JournalArticleLocalization.title, JournalArticleLocalization.languageId
+				) JournalArticleLocalization ON
+					(JournalArticle.companyId = JournalArticleLocalization.companyId) AND
+					(JournalArticle.id_ = JournalArticleLocalization.articlePK) AND
+					(JournalArticleLocalization.languageId = ?)
+			WHERE
+				(JournalArticle.groupId = ?) AND
+				(JournalArticle.status = ?) AND
+				(tempJournalArticle.id_ IS NULL)
+			ORDER BY
+				JournalArticle.id_ ASC
+		]]>
+	</sql>
 	<sql id="com.liferay.journal.service.persistence.JournalArticleFinder.findByG_F_L">
 		<![CDATA[
 			SELECT

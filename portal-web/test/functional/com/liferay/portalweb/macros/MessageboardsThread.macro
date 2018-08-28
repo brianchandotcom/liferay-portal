@@ -1023,6 +1023,22 @@
 		<execute macro="RecycleBin#emptyCP" />
 	</command>
 
+	<command name="unlockPG">
+		<var name="key_threadSubject" value="${threadSubject}" />
+
+		<execute function="AssertTextEquals" locator1="MessageBoards#THREAD_LIST_THREAD" value1="${threadSubject}" />
+
+		<execute function="Click" locator1="MessageBoards#THREAD_LIST_THREAD" value1="${threadSubject}" />
+
+		<execute function="Click" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
+
+		<execute macro="MenuItem#click">
+			<var name="menuItem" value="Unlock" />
+		</execute>
+
+		<execute macro="Alert#viewSuccessMessage" />
+	</command>
+
 	<command name="viewAnonymousPostingCheckboxCP">
 		<execute macro="LexiconEntry#gotoAdd" />
 

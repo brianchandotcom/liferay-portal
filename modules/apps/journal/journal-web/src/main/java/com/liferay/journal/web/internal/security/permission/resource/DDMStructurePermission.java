@@ -15,6 +15,7 @@
 package com.liferay.journal.web.internal.security.permission.resource;
 
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
+import com.liferay.dynamic.data.mapping.security.permission.DDMPermissionSupport;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
@@ -29,21 +30,42 @@ import org.osgi.service.component.annotations.Reference;
 public class DDMStructurePermission {
 
 	public static boolean contains(
-			PermissionChecker permissionChecker, DDMStructure structure,
+			PermissionChecker permissionChecker, DDMStructure ddmStructure,
 			String actionId)
 		throws PortalException {
 
 		return _ddmStructureModelResourcePermission.contains(
-			permissionChecker, structure, actionId);
+			permissionChecker, ddmStructure, actionId);
 	}
 
 	public static boolean contains(
-			PermissionChecker permissionChecker, long structureId,
+			PermissionChecker permissionChecker, long ddmStructureId,
 			String actionId)
 		throws PortalException {
 
 		return _ddmStructureModelResourcePermission.contains(
-			permissionChecker, structureId, actionId);
+			permissionChecker, ddmStructureId, actionId);
+	}
+
+	public static boolean containsAddDDMStructurePermission(
+			PermissionChecker permissionChecker, long groupId, long classNameId)
+		throws PortalException {
+
+		return _ddmPermissionSupport.containsAddStructurePermission(
+			permissionChecker, groupId, classNameId);
+	}
+
+	public static String getStructureModelResourceName(long classNameId)
+		throws PortalException {
+
+		return _ddmPermissionSupport.getStructureModelResourceName(classNameId);
+	}
+
+	@Reference(unbind = "-")
+	protected void setDDMPermissionSupport(
+		DDMPermissionSupport ddmPermissionSupport) {
+
+		_ddmPermissionSupport = ddmPermissionSupport;
 	}
 
 	@Reference(
@@ -56,6 +78,7 @@ public class DDMStructurePermission {
 		_ddmStructureModelResourcePermission = modelResourcePermission;
 	}
 
+	private static DDMPermissionSupport _ddmPermissionSupport;
 	private static ModelResourcePermission<DDMStructure>
 		_ddmStructureModelResourcePermission;
 

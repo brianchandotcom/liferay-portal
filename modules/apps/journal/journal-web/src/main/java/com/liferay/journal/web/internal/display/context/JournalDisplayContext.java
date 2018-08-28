@@ -807,7 +807,11 @@ public class JournalDisplayContext {
 				if (!group.isLayout()) {
 					add(
 						navigationItem -> {
-							navigationItem.setHref(_getStructuresURL());
+							navigationItem.setActive(
+								currentItem.equals("structures"));
+							navigationItem.setHref(
+								_liferayPortletResponse.createRenderURL(),
+								"mvcPath", "/view_ddm_structures.jsp");
 							navigationItem.setLabel(
 								LanguageUtil.get(_request, "structures"));
 						});
@@ -1688,7 +1692,7 @@ public class JournalDisplayContext {
 					dropdownItem -> {
 						dropdownItem.setActive(isNavigationStructure());
 						dropdownItem.putData(
-							"action", "openStructuresSelector");
+							"action", "openDDMStructuresSelector");
 						dropdownItem.setLabel(sb.toString());
 					});
 			}
@@ -1794,41 +1798,6 @@ public class JournalDisplayContext {
 		statuses.add(WorkflowConstants.STATUS_EXPIRED);
 
 		return statuses;
-	}
-
-	private String _getStructuresURL() {
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
-
-		Portlet portlet = PortletLocalServiceUtil.getPortletById(
-			portletDisplay.getId());
-
-		PortletURL portletURL = PortletURLFactoryUtil.create(
-			_liferayPortletRequest,
-			PortletProviderUtil.getPortletId(
-				DDMStructure.class.getName(), PortletProvider.Action.VIEW),
-			PortletRequest.RENDER_PHASE);
-
-		portletURL.setParameter("mvcPath", "/view.jsp");
-		portletURL.setParameter("backURL", themeDisplay.getURLCurrent());
-		portletURL.setParameter(
-			"groupId", String.valueOf(themeDisplay.getScopeGroupId()));
-		portletURL.setParameter(
-			"refererPortletName", JournalPortletKeys.JOURNAL);
-		portletURL.setParameter(
-			"refererWebDAVToken", WebDAVUtil.getStorageToken(portlet));
-		portletURL.setParameter(
-			"scopeTitle", LanguageUtil.get(_request, "structures"));
-		portletURL.setParameter(
-			"showAncestorScopes",
-			String.valueOf(
-				_journalWebConfiguration.showAncestorScopesByDefault()));
-		portletURL.setParameter("showCacheableInput", Boolean.TRUE.toString());
-		portletURL.setParameter("showManageTemplates", Boolean.TRUE.toString());
-
-		return portletURL.toString();
 	}
 
 	private String _getTemplatesURL() {

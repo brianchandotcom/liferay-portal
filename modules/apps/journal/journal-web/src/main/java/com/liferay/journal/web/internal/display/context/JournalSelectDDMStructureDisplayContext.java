@@ -21,6 +21,7 @@ import com.liferay.dynamic.data.mapping.util.DDMUtil;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.journal.model.JournalArticle;
+import com.liferay.journal.web.configuration.JournalWebConfiguration;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -53,6 +54,10 @@ public class JournalSelectDDMStructureDisplayContext {
 		_renderResponse = renderResponse;
 
 		_request = PortalUtil.getHttpServletRequest(renderRequest);
+
+		_journalWebConfiguration =
+			(JournalWebConfiguration)_request.getAttribute(
+				JournalWebConfiguration.class.getName());
 	}
 
 	public long getClassPK() {
@@ -73,8 +78,83 @@ public class JournalSelectDDMStructureDisplayContext {
 		return clearResultsURL.toString();
 	}
 
+	public SearchContainer getDDMStructureSearch() throws Exception {
+		if (_ddmStructureSearch != null) {
+			return _ddmStructureSearch;
+		}
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		SearchContainer ddmStructureSearch = new SearchContainer(
+			_renderRequest, _getPortletURL(), null, "there-are-no-structures");
+
+		if (Validator.isNotNull(_getKeywords())) {
+			ddmStructureSearch.setEmptyResultsMessage(
+				"no-structures-were-found");
+		}
+
+		String orderByCol = getOrderByCol();
+		String orderByType = getOrderByType();
+
+		OrderByComparator<DDMStructure> orderByComparator =
+			DDMUtil.getStructureOrderByComparator(
+				getOrderByCol(), getOrderByType());
+
+		ddmStructureSearch.setOrderByCol(orderByCol);
+		ddmStructureSearch.setOrderByComparator(orderByComparator);
+		ddmStructureSearch.setOrderByType(orderByType);
+
+		long[] groupIds = {themeDisplay.getScopeGroupId()};
+
+		if (_journalWebConfiguration.showAncestorScopesByDefault()) {
+			groupIds = PortalUtil.getCurrentAndAncestorSiteGroupIds(
+				themeDisplay.getScopeGroupId());
+		}
+
+		int total = 0;
+
+		if (_isSearchRestriction()) {
+			total = DDMStructureLinkLocalServiceUtil.getStructureLinksCount(
+				_getSearchRestrictionClassNameId(),
+				_getSearchRestrictionClassPK());
+		}
+		else {
+			total = DDMStructureServiceUtil.searchCount(
+				themeDisplay.getCompanyId(), groupIds,
+				PortalUtil.getClassNameId(JournalArticle.class.getName()),
+				_getKeywords(), WorkflowConstants.STATUS_ANY);
+		}
+
+		ddmStructureSearch.setTotal(total);
+
+		List<DDMStructure> results = null;
+
+		if (_isSearchRestriction()) {
+			results =
+				DDMStructureLinkLocalServiceUtil.getStructureLinkStructures(
+					_getSearchRestrictionClassNameId(),
+					_getSearchRestrictionClassPK(),
+					ddmStructureSearch.getStart(), ddmStructureSearch.getEnd());
+		}
+		else {
+			results = DDMStructureServiceUtil.search(
+				themeDisplay.getCompanyId(), groupIds,
+				PortalUtil.getClassNameId(JournalArticle.class.getName()),
+				_getKeywords(), WorkflowConstants.STATUS_ANY,
+				ddmStructureSearch.getStart(), ddmStructureSearch.getEnd(),
+				ddmStructureSearch.getOrderByComparator());
+		}
+
+		ddmStructureSearch.setResults(results);
+
+		_ddmStructureSearch = ddmStructureSearch;
+
+		return ddmStructureSearch;
+	}
+
 	public String getEventName() {
-		return _renderResponse.getNamespace() + "selectStructure";
+		return _renderResponse.getNamespace() + "selectDDMStructure";
 	}
 
 	public List<DropdownItem> getFilterItemsDropdownItems() {
@@ -124,7 +204,7 @@ public class JournalSelectDDMStructureDisplayContext {
 	public String getSearchActionURL() {
 		PortletURL portletURL = _renderResponse.createRenderURL();
 
-		portletURL.setParameter("mvcPath", "/select_structure.jsp");
+		portletURL.setParameter("mvcPath", "/select_ddm_structure.jsp");
 		portletURL.setParameter("classPK", String.valueOf(getClassPK()));
 		portletURL.setParameter("eventName", getEventName());
 
@@ -141,78 +221,8 @@ public class JournalSelectDDMStructureDisplayContext {
 		return sortingURL.toString();
 	}
 
-	public SearchContainer getStructureSearch() throws Exception {
-		if (_structureSearch != null) {
-			return _structureSearch;
-		}
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		SearchContainer structureSearch = new SearchContainer(
-			_renderRequest, _getPortletURL(), null, "there-are-no-structures");
-
-		if (Validator.isNotNull(_getKeywords())) {
-			structureSearch.setEmptyResultsMessage("no-structures-were-found");
-		}
-
-		String orderByCol = getOrderByCol();
-		String orderByType = getOrderByType();
-
-		OrderByComparator<DDMStructure> orderByComparator =
-			DDMUtil.getStructureOrderByComparator(
-				getOrderByCol(), getOrderByType());
-
-		structureSearch.setOrderByCol(orderByCol);
-		structureSearch.setOrderByComparator(orderByComparator);
-		structureSearch.setOrderByType(orderByType);
-
-		long[] groupIds = PortalUtil.getCurrentAndAncestorSiteGroupIds(
-			themeDisplay.getScopeGroupId());
-
-		int total = 0;
-
-		if (_isSearchRestriction()) {
-			total = DDMStructureLinkLocalServiceUtil.getStructureLinksCount(
-				_getSearchRestrictionClassNameId(),
-				_getSearchRestrictionClassPK());
-		}
-		else {
-			total = DDMStructureServiceUtil.searchCount(
-				themeDisplay.getCompanyId(), groupIds,
-				PortalUtil.getClassNameId(JournalArticle.class.getName()),
-				_getKeywords(), WorkflowConstants.STATUS_ANY);
-		}
-
-		structureSearch.setTotal(total);
-
-		List<DDMStructure> results = null;
-
-		if (_isSearchRestriction()) {
-			results =
-				DDMStructureLinkLocalServiceUtil.getStructureLinkStructures(
-					_getSearchRestrictionClassNameId(),
-					_getSearchRestrictionClassPK(), structureSearch.getStart(),
-					structureSearch.getEnd());
-		}
-		else {
-			results = DDMStructureServiceUtil.search(
-				themeDisplay.getCompanyId(), groupIds,
-				PortalUtil.getClassNameId(JournalArticle.class.getName()),
-				_getKeywords(), WorkflowConstants.STATUS_ANY,
-				structureSearch.getStart(), structureSearch.getEnd(),
-				structureSearch.getOrderByComparator());
-		}
-
-		structureSearch.setResults(results);
-
-		_structureSearch = structureSearch;
-
-		return structureSearch;
-	}
-
 	public int getTotalItems() throws Exception {
-		SearchContainer<?> searchContainer = getStructureSearch();
+		SearchContainer<?> searchContainer = getDDMStructureSearch();
 
 		return searchContainer.getTotal();
 	}
@@ -290,7 +300,7 @@ public class JournalSelectDDMStructureDisplayContext {
 	private PortletURL _getPortletURL() {
 		PortletURL portletURL = _renderResponse.createRenderURL();
 
-		portletURL.setParameter("mvcPath", "/select_structure.jsp");
+		portletURL.setParameter("mvcPath", "/select_ddm_structure.jsp");
 
 		long classPK = getClassPK();
 
@@ -353,6 +363,8 @@ public class JournalSelectDDMStructureDisplayContext {
 	}
 
 	private Long _classPK;
+	private SearchContainer _ddmStructureSearch;
+	private final JournalWebConfiguration _journalWebConfiguration;
 	private String _keywords;
 	private String _orderByCol;
 	private String _orderByType;
@@ -362,6 +374,5 @@ public class JournalSelectDDMStructureDisplayContext {
 	private Boolean _searchRestriction;
 	private Long _searchRestrictionClassNameId;
 	private Long _searchRestrictionClassPK;
-	private SearchContainer _structureSearch;
 
 }

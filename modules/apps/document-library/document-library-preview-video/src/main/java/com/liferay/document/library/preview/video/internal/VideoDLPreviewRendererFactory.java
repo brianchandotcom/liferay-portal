@@ -31,7 +31,10 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.util.PropsValues;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Dictionary;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
@@ -120,7 +123,7 @@ public class VideoDLPreviewRendererFactory
 		_dlPreviewRendererProviderServiceRegistration.unregister();
 	}
 
-	private String[] _getPreviewFileURLs(
+	private List<String> _getPreviewFileURLs(
 			FileVersion fileVersion, String videoThumbnailURL,
 			HttpServletRequest request)
 		throws PortalException {
@@ -128,62 +131,49 @@ public class VideoDLPreviewRendererFactory
 		int status = ParamUtil.getInteger(
 			request, "status", WorkflowConstants.STATUS_ANY);
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		boolean emptyPreview = false;
-		String[] previewFileURLs = null;
-
 		String previewQueryString = "&videoPreview=1";
 
 		if (status != WorkflowConstants.STATUS_ANY) {
 			previewQueryString += "&status=" + status;
 		}
 
-		emptyPreview = true;
+		if (PropsValues.DL_FILE_ENTRY_PREVIEW_VIDEO_CONTAINERS.length > 0) {
+			ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
-		String[] dlFileEntryPreviewVideoContainers =
-			PropsValues.DL_FILE_ENTRY_PREVIEW_VIDEO_CONTAINERS;
-
-		if (dlFileEntryPreviewVideoContainers.length > 0) {
-			previewFileURLs =
-				new String[dlFileEntryPreviewVideoContainers.length];
+			List<String> previewFileURLs = new ArrayList<>();
 
 			try {
-				for (int i =
-						0; i < dlFileEntryPreviewVideoContainers.length; i++) {
+				for (String dlFileEntryPreviewVideoContainer :
+						PropsValues.DL_FILE_ENTRY_PREVIEW_VIDEO_CONTAINERS) {
 
 					if (VideoProcessorUtil.getPreviewFileSize(
 							fileVersion,
-							dlFileEntryPreviewVideoContainers[i]) > 0) {
+							dlFileEntryPreviewVideoContainer) > 0) {
 
-						emptyPreview = false;
-						previewFileURLs[i] = DLUtil.getPreviewURL(
-							fileVersion.getFileEntry(), fileVersion,
-							themeDisplay,
-							previewQueryString + "&type=" +
-								dlFileEntryPreviewVideoContainers[i]);
+						previewFileURLs.add(
+							DLUtil.getPreviewURL(
+								fileVersion.getFileEntry(), fileVersion,
+								themeDisplay,
+								previewQueryString + "&type=" +
+									dlFileEntryPreviewVideoContainer));
 					}
 				}
+
+				if (previewFileURLs.isEmpty()) {
+					throw new PortalException(
+						"No preview available for " + fileVersion.getTitle());
+				}
+
+				return previewFileURLs;
 			}
 			catch (Exception e) {
 				throw new PortalException(e);
 			}
 		}
 		else {
-			emptyPreview = false;
-
-			previewFileURLs = new String[1];
-
-			previewFileURLs[0] = videoThumbnailURL;
+			return Arrays.asList(videoThumbnailURL);
 		}
-
-		if (emptyPreview) {
-			throw new PortalException(
-				"No preview available for " + fileVersion.getTitle());
-		}
-
-		return previewFileURLs;
 	}
 
 	private String _getVideoThumbnailURL(

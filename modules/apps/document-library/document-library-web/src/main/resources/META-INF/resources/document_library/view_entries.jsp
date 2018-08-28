@@ -189,7 +189,7 @@ if (portletTitleBasedNavigation && (folderId != DLFolderConstants.DEFAULT_PARENT
 										>
 
 											<%
-											dlViewFileVersionDisplayContext.renderCustomThumbnail(request, response);
+											dlViewFileVersionDisplayContext.renderCustomThumbnail(request, PipingServletResponse.createPipingServletResponse(pageContext));
 											%>
 
 										</liferay-util:buffer>

@@ -130,8 +130,7 @@ public class TLDUtil {
 
 		schemaProperties.put(values[0].trim(), definitionFile);
 
-		_populateSchemaProperties(
-			schemaProperties, _portalDefinitions, definitionFile);
+		_populateSchemaProperties(schemaProperties, definitionFile);
 
 		return schemaProperties;
 	}
@@ -165,8 +164,7 @@ public class TLDUtil {
 	}
 
 	private static void _populateSchemaProperties(
-			Map<String, File> schemaProperties,
-			Map<String, File> portalDefinitions, File definitionFile)
+			Map<String, File> schemaProperties, File definitionFile)
 		throws Exception {
 
 		Document document = _getDocument(definitionFile);
@@ -208,7 +206,7 @@ public class TLDUtil {
 				continue;
 			}
 
-			File curDefinitionFile = portalDefinitions.get(fileName);
+			File curDefinitionFile = _portalDefinitions.get(fileName);
 
 			if (curDefinitionFile == null) {
 				continue;
@@ -216,8 +214,7 @@ public class TLDUtil {
 
 			schemaProperties.put(namespace, curDefinitionFile);
 
-			_populateSchemaProperties(
-				schemaProperties, portalDefinitions, curDefinitionFile);
+			_populateSchemaProperties(schemaProperties, curDefinitionFile);
 		}
 
 		NodeList includeNodeList = document.getElementsByTagName("xsd:include");
@@ -240,14 +237,13 @@ public class TLDUtil {
 				continue;
 			}
 
-			File curDefinitionFile = portalDefinitions.get(schemaLocation);
+			File curDefinitionFile = _portalDefinitions.get(schemaLocation);
 
 			if (curDefinitionFile == null) {
 				continue;
 			}
 
-			_populateSchemaProperties(
-				schemaProperties, portalDefinitions, curDefinitionFile);
+			_populateSchemaProperties(schemaProperties, curDefinitionFile);
 		}
 	}
 

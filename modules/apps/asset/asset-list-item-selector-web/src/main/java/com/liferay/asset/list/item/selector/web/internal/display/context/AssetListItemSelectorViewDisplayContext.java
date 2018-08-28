@@ -45,6 +45,10 @@ public class AssetListItemSelectorViewDisplayContext {
 		_portletURL = portletURL;
 	}
 
+	public String getEventName() {
+		return _eventName;
+	}
+
 	public SearchContainer getSearchContainer() throws Exception {
 		if (_searchContainer != null) {
 			return _searchContainer;

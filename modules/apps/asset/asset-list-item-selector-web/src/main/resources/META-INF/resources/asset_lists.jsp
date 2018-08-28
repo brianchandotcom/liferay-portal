@@ -52,3 +52,30 @@
 		searchContainer="<%= assetListItemSelectorViewDisplayContext.getSearchContainer() %>"
 	/>
 </liferay-ui:search-container>
+
+<aui:script require="metal-dom/src/all/dom as dom">
+	var selectAssetListEntryHandler = dom.delegate(
+		document.querySelector('#<portlet:namespace/>fm'),
+		'click',
+		'.asset-list-entry',
+		function(event) {
+			dom.removeClasses(document.querySelectorAll('.asset-list-entry.active'), 'active');
+			dom.addClasses(event.delegateTarget, 'active');
+
+			Liferay.Util.getOpener().Liferay.fire(
+				'<%= assetListItemSelectorViewDisplayContext.getEventName() %>',
+				{
+					data: event.delegateTarget.querySelector('.asset-list-entry-data').dataset
+				}
+			);
+		}
+	);
+
+	function removeListener() {
+		selectAssetListEntryHandler.removeListener();
+
+		Liferay.detach('destroyPortlet', removeListener);
+	}
+
+	Liferay.on('destroyPortlet', removeListener);
+</aui:script>

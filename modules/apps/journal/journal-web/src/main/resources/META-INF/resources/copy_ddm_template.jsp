@@ -17,45 +17,30 @@
 <%@ include file="/init.jsp" %>
 
 <%
-DDMTemplate template = (DDMTemplate)request.getAttribute(DDMWebKeys.DYNAMIC_DATA_MAPPING_TEMPLATE);
+String redirect = ParamUtil.getString(request, "redirect");
 
-String portletResource = ParamUtil.getString(request, "portletResource");
-long templateId = BeanParamUtil.getLong(template, request, "templateId");
-long classNameId = BeanParamUtil.getLong(template, request, "classNameId");
-long classPK = BeanParamUtil.getLong(template, request, "classPK");
-long resourceClassNameId = BeanParamUtil.getLong(template, request, "resourceClassNameId");
+long ddmTemplateId = ParamUtil.getLong(request, "ddmTemplateId");
 
-DDMTemplateVersion templateVersion = template.getTemplateVersion();
+DDMTemplate ddmTemplate = DDMTemplateLocalServiceUtil.fetchDDMTemplate(ddmTemplateId);
 
-boolean showBackURL = ParamUtil.getBoolean(request, "showBackURL", true);
+portletDisplay.setShowBackIcon(true);
+portletDisplay.setURLBack(redirect);
+
+renderResponse.setTitle(LanguageUtil.format(request, "copy-x", ddmTemplate.getName(locale)));
 %>
 
-<portlet:actionURL name="copyTemplate" var="copyTemplateURL">
-	<portlet:param name="mvcPath" value="/copy_template.jsp" />
+<portlet:actionURL name="/journal/copy_ddm_template" var="copyDDMTemplateURL">
+	<portlet:param name="mvcPath" value="/copy_ddm_template.jsp" />
 </portlet:actionURL>
 
-<aui:form action="<%= copyTemplateURL %>" cssClass="container-fluid-1280" method="post" name="fm">
-	<aui:input name="redirect" type="hidden" value="<%= ddmDisplay.getEditTemplateBackURL(liferayPortletRequest, liferayPortletResponse, classNameId, classPK, resourceClassNameId, portletResource) %>" />
+<aui:form action="<%= copyDDMTemplateURL %>" cssClass="container-fluid-1280" method="post" name="fm">
+	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 
-	<aui:input name="templateId" type="hidden" value="<%= String.valueOf(templateId) %>" />
-	<aui:input name="status" type="hidden" value="<%= templateVersion.getStatus() %>" />
+	<aui:input name="ddmTemplateId" type="hidden" value="<%= ddmTemplateId %>" />
 
 	<liferay-ui:error exception="<%= TemplateNameException.class %>" message="please-enter-a-valid-name" />
 
-	<c:if test="<%= showBackURL && ddmDisplay.isShowBackURLInTitleBar() %>">
-
-		<%
-		String title = LanguageUtil.get(request, "copy-template");
-
-		portletDisplay.setShowBackIcon(true);
-		portletDisplay.setURLBack(ddmDisplay.getEditTemplateBackURL(liferayPortletRequest, liferayPortletResponse, classNameId, classPK, resourceClassNameId, portletResource));
-
-		renderResponse.setTitle(title);
-		%>
-
-	</c:if>
-
-	<aui:model-context bean="<%= template %>" model="<%= DDMTemplate.class %>" />
+	<aui:model-context bean="<%= ddmTemplate %>" model="<%= DDMTemplate.class %>" />
 
 	<aui:fieldset-group markupView="lexicon">
 		<aui:fieldset>
@@ -68,6 +53,6 @@ boolean showBackURL = ParamUtil.getBoolean(request, "showBackURL", true);
 	<aui:button-row>
 		<aui:button type="submit" value="copy" />
 
-		<aui:button href="<%= ddmDisplay.getEditTemplateBackURL(liferayPortletRequest, liferayPortletResponse, classNameId, classPK, resourceClassNameId, portletResource) %>" type="cancel" />
+		<aui:button href="<%= redirect %>" type="cancel" />
 	</aui:button-row>
 </aui:form>

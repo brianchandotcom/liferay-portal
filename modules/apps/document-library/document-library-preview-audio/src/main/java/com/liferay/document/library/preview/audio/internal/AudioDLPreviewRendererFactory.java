@@ -29,7 +29,9 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.util.PropsValues;
 
+import java.util.ArrayList;
 import java.util.Dictionary;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
@@ -104,15 +106,12 @@ public class AudioDLPreviewRendererFactory
 		_dlPreviewRendererProviderServiceRegistration.unregister();
 	}
 
-	private String[] _getPreviewFileURLs(
+	private List<String> _getPreviewFileURLs(
 			FileVersion fileVersion, HttpServletRequest request)
 		throws PortalException {
 
 		int status = ParamUtil.getInteger(
 			request, "status", WorkflowConstants.STATUS_ANY);
-
-		boolean emptyPreview = false;
-		String[] previewFileURLs = null;
 
 		String previewQueryString = "&audioPreview=1";
 
@@ -123,25 +122,21 @@ public class AudioDLPreviewRendererFactory
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		emptyPreview = true;
-
-		String[] dlFileEntryPreviewAudioContainers =
-			PropsValues.DL_FILE_ENTRY_PREVIEW_AUDIO_CONTAINERS;
-
-		previewFileURLs = new String[dlFileEntryPreviewAudioContainers.length];
+		List<String> previewFileURLs = new ArrayList<>();
 
 		try {
-			for (int i = 0; i < dlFileEntryPreviewAudioContainers.length; i++) {
+			for (String dlFileEntryPreviewAudioContainer :
+					PropsValues.DL_FILE_ENTRY_PREVIEW_AUDIO_CONTAINERS) {
+
 				if (AudioProcessorUtil.getPreviewFileSize(
-						fileVersion,
-						dlFileEntryPreviewAudioContainers[i]) > 0) {
+						fileVersion, dlFileEntryPreviewAudioContainer) > 0) {
 
-					emptyPreview = false;
-
-					previewFileURLs[i] = DLUtil.getPreviewURL(
-						fileVersion.getFileEntry(), fileVersion, themeDisplay,
-						previewQueryString + "&type=" +
-							dlFileEntryPreviewAudioContainers[i]);
+					previewFileURLs.add(
+						DLUtil.getPreviewURL(
+							fileVersion.getFileEntry(), fileVersion,
+							themeDisplay,
+							previewQueryString + "&type=" +
+								dlFileEntryPreviewAudioContainer));
 				}
 			}
 		}
@@ -149,7 +144,7 @@ public class AudioDLPreviewRendererFactory
 			throw new PortalException(e);
 		}
 
-		if (emptyPreview) {
+		if (previewFileURLs.isEmpty()) {
 			throw new PortalException(
 				"No preview available for " + fileVersion.getTitle());
 		}

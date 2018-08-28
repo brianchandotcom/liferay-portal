@@ -259,8 +259,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>CLOSE_SUCCESS_MESSAGE</td>
-	<td>//button[@aria-label='Close']</td>
+	<td>CLOSE_MESSAGE</td>
+	<td>//div[contains(@class,'alert-dismissible')]//button[@aria-label='Close']</td>
 	<td></td>
 </tr>
 <tr>

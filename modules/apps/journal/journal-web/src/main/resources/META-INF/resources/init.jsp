@@ -49,6 +49,7 @@ page import="com.liferay.dynamic.data.mapping.exception.StorageFieldRequiredExce
 page import="com.liferay.dynamic.data.mapping.exception.StructureDefinitionException" %><%@
 page import="com.liferay.dynamic.data.mapping.exception.StructureDuplicateElementException" %><%@
 page import="com.liferay.dynamic.data.mapping.exception.StructureNameException" %><%@
+page import="com.liferay.dynamic.data.mapping.exception.TemplateNameException" %><%@
 page import="com.liferay.dynamic.data.mapping.model.DDMForm" %><%@
 page import="com.liferay.dynamic.data.mapping.model.DDMFormField" %><%@
 page import="com.liferay.dynamic.data.mapping.model.DDMFormFieldOptions" %><%@

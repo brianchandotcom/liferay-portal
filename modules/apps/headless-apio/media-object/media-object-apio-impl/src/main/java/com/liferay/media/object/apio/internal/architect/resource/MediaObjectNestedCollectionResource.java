@@ -187,7 +187,7 @@ public class MediaObjectNestedCollectionResource
 				"value", Condition::getValue
 			).build()
 		).addRelativeURL(
-			"url", this::_getMediaQuerySrc
+			"contentUrl", this::_getMediaQuerySrc
 		).build();
 	}
 

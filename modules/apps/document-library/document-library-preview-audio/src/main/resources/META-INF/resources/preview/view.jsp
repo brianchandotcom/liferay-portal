@@ -17,123 +17,85 @@
 <%@ include file="/preview/init.jsp" %>
 
 <%
-FileVersion fileVersion = (FileVersion)request.getAttribute(WebKeys.DOCUMENT_LIBRARY_FILE_VERSION);
-
-boolean hasAudio = AudioProcessorUtil.hasAudio(fileVersion);
-int status = ParamUtil.getInteger(request, "status", WorkflowConstants.STATUS_ANY);
+String[] previewFileURLs = (String[])request.getAttribute(DLPreviewAudioWebKeys.PREVIEW_FILE_URLS);
 
 String randomNamespace = PortalUtil.generateRandomKey(request, "portlet_document_library_view_file_entry_preview") + StringPool.UNDERLINE;
+%>
 
-boolean emptyPreview = false;
-String[] previewFileURLs = null;
+<div class="lfr-preview-audio" id="<portlet:namespace /><%= randomNamespace %>previewFile">
+	<div class="lfr-preview-audio-content" id="<portlet:namespace /><%= randomNamespace %>previewFileContent"></div>
+</div>
 
-if (hasAudio) {
-	String previewQueryString = "&audioPreview=1";
+<%
+String mp3PreviewFileURL = null;
+String oggPreviewFileURL = null;
 
-	if (status != WorkflowConstants.STATUS_ANY) {
-		previewQueryString += "&status=" + status;
-	}
-
-	emptyPreview = true;
-	previewFileURLs = new String[PropsValues.DL_FILE_ENTRY_PREVIEW_AUDIO_CONTAINERS.length];
-
-	for (int i = 0; i < PropsValues.DL_FILE_ENTRY_PREVIEW_AUDIO_CONTAINERS.length; i++) {
-		if (AudioProcessorUtil.getPreviewFileSize(fileVersion, PropsValues.DL_FILE_ENTRY_PREVIEW_AUDIO_CONTAINERS[i]) > 0) {
-			emptyPreview = false;
-			previewFileURLs[i] = DLUtil.getPreviewURL(fileVersion.getFileEntry(), fileVersion, themeDisplay, previewQueryString + "&type=" + PropsValues.DL_FILE_ENTRY_PREVIEW_AUDIO_CONTAINERS[i]);
+for (String previewFileURL : previewFileURLs) {
+	if (Validator.isNotNull(previewFileURL)) {
+		if (previewFileURL.endsWith("mp3")) {
+			mp3PreviewFileURL = previewFileURL;
+		}
+		else if (previewFileURL.endsWith("ogg")) {
+			oggPreviewFileURL = previewFileURL;
 		}
 	}
 }
 %>
 
-<c:choose>
-	<c:when test="<%= emptyPreview %>">
-		<div class="alert alert-info">
-			<liferay-ui:message arguments="<%= fileVersion.getTitle() %>" key="cannot-generate-preview-for-x" />
-		</div>
-	</c:when>
-	<c:when test="<%= !hasAudio %>">
-		<div class="alert alert-info">
-			<liferay-ui:message key="generating-preview-will-take-a-few-minutes" />
-		</div>
-	</c:when>
-	<c:otherwise>
-		<div class="lfr-preview-audio" id="<portlet:namespace /><%= randomNamespace %>previewFile">
-			<div class="lfr-preview-audio-content" id="<portlet:namespace /><%= randomNamespace %>previewFileContent"></div>
-		</div>
+<aui:script use="aui-audio">
+	var playing = false;
 
-		<%
-		String mp3PreviewFileURL = null;
-		String oggPreviewFileURL = null;
+	var audio = new A.Audio(
+		{
+			contentBox: '#<portlet:namespace /><%= randomNamespace %>previewFileContent',
+			fixedAttributes: {
+				allowfullscreen: 'true',
+				wmode: 'opaque'
+			}
 
-		for (String previewFileURL : previewFileURLs) {
-			if (Validator.isNotNull(previewFileURL)) {
-				if (previewFileURL.endsWith("mp3")) {
-					mp3PreviewFileURL = previewFileURL;
-				}
-				else if (previewFileURL.endsWith("ogg")) {
-					oggPreviewFileURL = previewFileURL;
-				}
+			<c:if test="<%= Validator.isNotNull(oggPreviewFileURL) %>">
+				, oggUrl: '<%= HtmlUtil.escapeJS(oggPreviewFileURL) %>'
+			</c:if>
+
+			<c:if test="<%= Validator.isNotNull(mp3PreviewFileURL) %>">
+				, url: '<%= HtmlUtil.escapeJS(mp3PreviewFileURL) %>'
+			</c:if>
+		}
+	).render();
+
+	if (audio._audio) {
+		var audioNode = audio._audio.getDOMNode();
+
+		audioNode.addEventListener(
+			'pause',
+			function() {
+				playing = false;
+			}
+		);
+
+		audioNode.addEventListener(
+			'play',
+			function() {
+				window.parent.Liferay.fire('<portlet:namespace /><%= randomNamespace %>Audio:play');
+
+				playing = true;
+			}
+		);
+	}
+
+	window.parent.Liferay.on(
+		'<portlet:namespace /><%= randomNamespace %>ImageViewer:currentIndexChange',
+		function() {
+			if (playing) {
+				audio.pause();
 			}
 		}
-		%>
+	);
 
-		<aui:script use="aui-audio">
-			var playing = false;
-
-			var audio = new A.Audio(
-				{
-					contentBox: '#<portlet:namespace /><%= randomNamespace %>previewFileContent',
-					fixedAttributes: {
-						allowfullscreen: 'true',
-						wmode: 'opaque'
-					}
-
-					<c:if test="<%= Validator.isNotNull(oggPreviewFileURL) %>">
-						, oggUrl: '<%= HtmlUtil.escapeJS(oggPreviewFileURL) %>'
-					</c:if>
-
-					<c:if test="<%= Validator.isNotNull(mp3PreviewFileURL) %>">
-						, url: '<%= HtmlUtil.escapeJS(mp3PreviewFileURL) %>'
-					</c:if>
-				}
-			).render();
-
-			if (audio._audio) {
-				var audioNode = audio._audio.getDOMNode();
-
-				audioNode.addEventListener(
-					'pause',
-					function() {
-						playing = false;
-					}
-				);
-
-				audioNode.addEventListener(
-					'play',
-					function() {
-						window.parent.Liferay.fire('<portlet:namespace /><%= randomNamespace %>Audio:play');
-
-						playing = true;
-					}
-				);
-			}
-
-			window.parent.Liferay.on(
-				'<portlet:namespace /><%= randomNamespace %>ImageViewer:currentIndexChange',
-				function() {
-					if (playing) {
-						audio.pause();
-					}
-				}
-			);
-
-			window.parent.Liferay.on(
-				'<portlet:namespace /><%= randomNamespace %>ImageViewer:close',
-				function() {
-					audio.load();
-				}
-			);
-		</aui:script>
-	</c:otherwise>
-</c:choose>
+	window.parent.Liferay.on(
+		'<portlet:namespace /><%= randomNamespace %>ImageViewer:close',
+		function() {
+			audio.load();
+		}
+	);
+</aui:script>

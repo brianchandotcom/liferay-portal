@@ -14,12 +14,22 @@
 
 package com.liferay.document.library.preview.video.internal.renderer;
 
+import com.liferay.document.library.kernel.util.DLProcessorRegistryUtil;
+import com.liferay.document.library.kernel.util.DLUtil;
 import com.liferay.document.library.kernel.util.VideoProcessorUtil;
 import com.liferay.document.library.preview.DLPreviewRenderer;
 import com.liferay.document.library.preview.DLPreviewRendererProvider;
+import com.liferay.document.library.preview.exception.DLPreviewGenerationInProcessException;
+import com.liferay.document.library.preview.exception.DLPreviewSizeException;
+import com.liferay.document.library.preview.video.internal.renderer.constants.DLPreviewVideoWebKeys;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.FileVersion;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapDictionary;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.util.PropsValues;
 
 import java.util.Dictionary;
 import java.util.Optional;
@@ -27,6 +37,7 @@ import java.util.Set;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceRegistration;
@@ -52,8 +63,30 @@ public class VideoDLPreviewRendererFactory
 
 		return Optional.of(
 			(request, response) -> {
+				if (!VideoProcessorUtil.hasVideo(fileVersion)) {
+					if (!DLProcessorRegistryUtil.isPreviewableSize(
+							fileVersion)) {
+
+						throw new DLPreviewSizeException();
+					}
+
+					throw new DLPreviewGenerationInProcessException();
+				}
+
+				ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+					WebKeys.THEME_DISPLAY);
+
+				String videoThumbnailURL = _getVideoThumbnailURL(
+					fileVersion, themeDisplay);
+
 				request.setAttribute(
-					WebKeys.DOCUMENT_LIBRARY_FILE_VERSION, fileVersion);
+					DLPreviewVideoWebKeys.VIDEO_THUMBNAIL_URL,
+					videoThumbnailURL);
+
+				request.setAttribute(
+					DLPreviewVideoWebKeys.PREVIEW_FILE_URLS,
+					_getPreviewFileURLs(
+						fileVersion, videoThumbnailURL, request));
 
 				RequestDispatcher requestDispatcher =
 					_servletContext.getRequestDispatcher("/preview/view.jsp");
@@ -85,6 +118,81 @@ public class VideoDLPreviewRendererFactory
 	@Deactivate
 	protected void deactivate() {
 		_dlPreviewRendererProviderServiceRegistration.unregister();
+	}
+
+	private String[] _getPreviewFileURLs(
+			FileVersion fileVersion, String videoThumbnailURL,
+			HttpServletRequest request)
+		throws PortalException {
+
+		int status = ParamUtil.getInteger(
+			request, "status", WorkflowConstants.STATUS_ANY);
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		boolean emptyPreview = false;
+		String[] previewFileURLs = null;
+
+		String previewQueryString = "&videoPreview=1";
+
+		if (status != WorkflowConstants.STATUS_ANY) {
+			previewQueryString += "&status=" + status;
+		}
+
+		emptyPreview = true;
+
+		String[] dlFileEntryPreviewVideoContainers =
+			PropsValues.DL_FILE_ENTRY_PREVIEW_VIDEO_CONTAINERS;
+
+		if (dlFileEntryPreviewVideoContainers.length > 0) {
+			previewFileURLs =
+				new String[dlFileEntryPreviewVideoContainers.length];
+
+			try {
+				for (int i =
+						0; i < dlFileEntryPreviewVideoContainers.length; i++) {
+
+					if (VideoProcessorUtil.getPreviewFileSize(
+							fileVersion,
+							dlFileEntryPreviewVideoContainers[i]) > 0) {
+
+						emptyPreview = false;
+						previewFileURLs[i] = DLUtil.getPreviewURL(
+							fileVersion.getFileEntry(), fileVersion,
+							themeDisplay,
+							previewQueryString + "&type=" +
+								dlFileEntryPreviewVideoContainers[i]);
+					}
+				}
+			}
+			catch (Exception e) {
+				throw new PortalException(e);
+			}
+		}
+		else {
+			emptyPreview = false;
+
+			previewFileURLs = new String[1];
+
+			previewFileURLs[0] = videoThumbnailURL;
+		}
+
+		if (emptyPreview) {
+			throw new PortalException(
+				"No preview available for " + fileVersion.getTitle());
+		}
+
+		return previewFileURLs;
+	}
+
+	private String _getVideoThumbnailURL(
+			FileVersion fileVersion, ThemeDisplay themeDisplay)
+		throws PortalException {
+
+		return DLUtil.getPreviewURL(
+			fileVersion.getFileEntry(), fileVersion, themeDisplay,
+			"&videoThumbnail=1");
 	}
 
 	private ServiceRegistration<DLPreviewRendererProvider>

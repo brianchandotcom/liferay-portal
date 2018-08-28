@@ -14,9 +14,11 @@
 
 package com.liferay.document.library.preview.pdf.internal;
 
+import com.liferay.document.library.kernel.util.DLProcessorRegistryUtil;
 import com.liferay.document.library.kernel.util.PDFProcessorUtil;
 import com.liferay.document.library.preview.DLPreviewRenderer;
 import com.liferay.document.library.preview.DLPreviewRendererProvider;
+import com.liferay.document.library.preview.exception.DLPreviewGenerationInProcessException;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -52,6 +54,16 @@ public class PDFDLPreviewRendererProvider implements DLPreviewRendererProvider {
 
 		return Optional.of(
 			(request, response) -> {
+				if (!PDFProcessorUtil.hasImages(fileVersion)) {
+					if (!DLProcessorRegistryUtil.isPreviewableSize(
+							fileVersion)) {
+
+						throw new DLPreviewGenerationInProcessException();
+					}
+
+					throw new DLPreviewGenerationInProcessException();
+				}
+
 				request.setAttribute(
 					WebKeys.DOCUMENT_LIBRARY_FILE_VERSION, fileVersion);
 

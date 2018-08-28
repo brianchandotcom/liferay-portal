@@ -16,5 +16,39 @@
 
 <%@ include file="/init.jsp" %>
 
-<%
-%>
+<liferay-ui:search-container
+	emptyResultsMessage="there-are-no-asset-lists"
+	id="assetListEntries"
+	searchContainer="<%= assetListItemSelectorViewDisplayContext.getSearchContainer() %>"
+>
+	<liferay-ui:search-container-row
+		className="com.liferay.asset.list.model.AssetListEntry"
+		cssClass="asset-list-entry entry-display-style"
+		keyProperty="assetListEntryId"
+		modelVar="assetListEntry"
+	>
+		<liferau-ui:search-container-column-icon
+			icon="list"
+		/>
+
+		<liferay-ui:search-container-column-text
+			colspan="<%= 2 %>"
+		>
+			<div class="asset-list-entry-data" data-asset-list-entry-id="<%= assetListEntry.getAssetListEntryId() %>">
+				<h5>
+					<%= HtmlUtil.escape(assetListEntry.getTitle()) %>
+				</h5>
+
+				<h6 class="text-default">
+					<strong><liferay-ui:message key="<%= HtmlUtil.escape(assetListEntry.getTypeLabel()) %>" /></strong>
+				</h6>
+			</div>
+		</liferay-ui:search-container-column-text>
+	</liferay-ui:search-container-row>
+
+	<liferay-ui:search-iterator
+		displayStyle="descriptive"
+		markupView="lexicon"
+		searchContainer="<%= assetListItemSelectorViewDisplayContext.getSearchContainer() %>"
+	/>
+</liferay-ui:search-container>

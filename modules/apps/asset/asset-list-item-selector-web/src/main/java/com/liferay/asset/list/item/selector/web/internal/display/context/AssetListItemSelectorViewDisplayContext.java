@@ -14,6 +14,20 @@
 
 package com.liferay.asset.list.item.selector.web.internal.display.context;
 
+import com.liferay.asset.list.model.AssetListEntry;
+import com.liferay.asset.list.service.AssetListEntryServiceUtil;
+import com.liferay.portal.kernel.dao.search.SearchContainer;
+import com.liferay.portal.kernel.portlet.PortletURLUtil;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.JavaConstants;
+import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.WebKeys;
+
+import java.util.List;
+
+import javax.portlet.PortletException;
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
@@ -31,8 +45,52 @@ public class AssetListItemSelectorViewDisplayContext {
 		_portletURL = portletURL;
 	}
 
+	public SearchContainer getSearchContainer() throws Exception {
+		if (_searchContainer != null) {
+			return _searchContainer;
+		}
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		PortletRequest portletRequest = (PortletRequest)_request.getAttribute(
+			JavaConstants.JAVAX_PORTLET_REQUEST);
+
+		SearchContainer<AssetListEntry> searchContainer = new SearchContainer<>(
+			portletRequest, _getPortletURL(), null, "there-are-no-asset-lists");
+
+		List<AssetListEntry> assetListEntries =
+			AssetListEntryServiceUtil.getAssetListEntries(
+				themeDisplay.getScopeGroupId(), searchContainer.getStart(),
+				searchContainer.getEnd(),
+				searchContainer.getOrderByComparator());
+
+		int assetListEntriesCount =
+			AssetListEntryServiceUtil.getAssetListEntriesCount(
+				themeDisplay.getScopeGroupId());
+
+		searchContainer.setResults(assetListEntries);
+		searchContainer.setTotal(assetListEntriesCount);
+
+		_searchContainer = searchContainer;
+
+		return _searchContainer;
+	}
+
+	private PortletURL _getPortletURL() throws PortletException {
+		PortletResponse portletResponse =
+			(PortletResponse)_request.getAttribute(
+				JavaConstants.JAVAX_PORTLET_RESPONSE);
+
+		PortletURL portletURL = PortletURLUtil.clone(
+			_portletURL, PortalUtil.getLiferayPortletResponse(portletResponse));
+
+		return portletURL;
+	}
+
 	private final String _eventName;
 	private final PortletURL _portletURL;
 	private final HttpServletRequest _request;
+	private SearchContainer _searchContainer;
 
 }

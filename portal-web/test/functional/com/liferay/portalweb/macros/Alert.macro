@@ -54,7 +54,7 @@
 	</command>
 
 	<command name="viewRequestFailedToComplete">
-		<execute function="AssertElementPresent" locator1="Message#ERROR" />
+		<execute function="AssertElementPresent" locator1="Message#ERROR_DISMISSIBLE" />
 	</command>
 
 	<command name="viewRequiredField">
@@ -62,7 +62,7 @@
 	</command>
 
 	<command name="viewSuccessMessage">
-		<execute function="AssertElementPresent" locator1="Message#SUCCESS" />
+		<execute function="AssertElementPresent" locator1="Message#SUCCESS_DISMISSIBLE" />
 
 		<if>
 			<condition function="IsElementPresent" locator1="Button#CLOSE_SUCCESS_MESSAGE" />

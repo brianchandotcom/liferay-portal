@@ -17,6 +17,7 @@ package com.liferay.structured.content.apio.internal.architect.sort;
 import com.liferay.petra.string.StringUtil;
 import com.liferay.structured.content.apio.architect.sort.Sort;
 import com.liferay.structured.content.apio.architect.sort.SortParser;
+import com.liferay.structured.content.apio.architect.sort.SortQuery;
 
 import java.util.Collections;
 import java.util.List;
@@ -27,8 +28,8 @@ import java.util.stream.Stream;
 import org.osgi.service.component.annotations.Component;
 
 /**
- * Utility for parsing Sort expressions. It uses a model to create a list of
- * {@link Sort.SortKey}.
+ * Utility for parsing Sort expressions. It uses a model to create a
+ * {@link SortQuery}.
  *
  * @author Cristina González
  * @review
@@ -37,7 +38,7 @@ import org.osgi.service.component.annotations.Component;
 public class SortParserImpl implements SortParser {
 
 	/**
-	 * Returns a List of {@link Sort.SortKey} obtained from a comma-separated
+	 * Returns a {@link SortQuery} obtained from a comma-separated
 	 * list of field names and sort directions.
 	 *
 	 * Sort directions supported are desc and asc and can be appended to each
@@ -51,26 +52,27 @@ public class SortParserImpl implements SortParser {
 	 * - field1:asc,field2,field3:desc
 	 *
 	 * @param  sortExpressions - String to be parsed
-	 * @return a  {@link List<Sort.SortKey>}
+	 * @return a {@link SortQuery}
 	 * @review
 	 */
-	public List<Sort.SortKey> parse(String sortExpressions) {
+	public SortQuery parse(String sortExpressions) {
 		if (sortExpressions == null) {
-			return Collections.emptyList();
+			return new SortQuery(Collections.emptyList());
 		}
 
 		List<String> sortExpressionsList = StringUtil.split(sortExpressions);
 
 		Stream<String> stream = sortExpressionsList.stream();
 
-		return stream.map(
-			this::getSortKey
-		).flatMap(
-			sortKeyOptional ->
-				sortKeyOptional.map(Stream::of).orElseGet(Stream::empty)
-		).collect(
-			Collectors.toList()
-		);
+		return new SortQuery(
+			stream.map(
+				this::getSortKey
+			).flatMap(
+				sortKeyOptional ->
+					sortKeyOptional.map(Stream::of).orElseGet(Stream::empty)
+			).collect(
+				Collectors.toList()
+			));
 	}
 
 	protected Optional<Sort.SortKey> getSortKey(String sortExpression) {

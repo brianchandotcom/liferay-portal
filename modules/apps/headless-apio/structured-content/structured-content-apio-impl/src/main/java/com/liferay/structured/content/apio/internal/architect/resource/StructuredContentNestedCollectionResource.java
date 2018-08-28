@@ -61,6 +61,7 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.structure.apio.architect.identifier.ContentStructureIdentifier;
 import com.liferay.structured.content.apio.architect.identifier.StructuredContentIdentifier;
 import com.liferay.structured.content.apio.architect.sort.Sort;
+import com.liferay.structured.content.apio.architect.sort.SortQuery;
 import com.liferay.structured.content.apio.architect.util.StructuredContentUtil;
 import com.liferay.structured.content.apio.internal.architect.form.StructuredContentCreatorForm;
 import com.liferay.structured.content.apio.internal.architect.form.StructuredContentUpdaterForm;
@@ -337,9 +338,11 @@ public class StructuredContentNestedCollectionResource
 	}
 
 	private OrderByComparator<JournalArticle>
-		_getJournalArticleOrderByComparator(List<Sort.SortKey> sortKeys) {
+		_getJournalArticleOrderByComparator(SortQuery sortQuery) {
 
 		OrderByComparator<JournalArticle> orderByComparator = null;
+
+		List<Sort.SortKey> sortKeys = sortQuery.getSortKeys();
 
 		for (Sort.SortKey sortKey : sortKeys) {
 			String fieldName = sortKey.getFieldName();
@@ -424,7 +427,7 @@ public class StructuredContentNestedCollectionResource
 		throws PortalException {
 
 		OrderByComparator<JournalArticle> orderByComparator =
-			_getJournalArticleOrderByComparator(sort.getSortKeys());
+			_getJournalArticleOrderByComparator(sort.getSortQuery());
 
 		List<JournalArticleWrapper> journalArticleWrappers = Stream.of(
 			_journalArticleService.getGroupArticles(

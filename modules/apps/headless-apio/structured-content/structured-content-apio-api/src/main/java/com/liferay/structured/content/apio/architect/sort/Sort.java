@@ -16,8 +16,6 @@ package com.liferay.structured.content.apio.architect.sort;
 
 import java.io.Serializable;
 
-import java.util.List;
-
 /**
  * Models a Sort param for sorting structured content by different fields and
  * sort directives.
@@ -28,23 +26,23 @@ import java.util.List;
 public class Sort {
 
 	/**
-	 * Creates a new Sort from a list of sort keys.
+	 * Creates a new Sort from a sort query.
 	 *
-	 * @param  sortKeys - list of sort keys
+	 * @param  sortQuery - a sort query
 	 * @review
 	 */
-	public Sort(List<SortKey> sortKeys) {
-		_sortKeys = sortKeys;
+	public Sort(SortQuery sortQuery) {
+		_sortQuery = sortQuery;
 	}
 
 	/**
-	 * Returns the list of sort keys.
+	 * Returns the sort query.
 	 *
-	 * @return - the list of sort keys
+	 * @return - a sort query
 	 * @review
 	 */
-	public List<SortKey> getSortKeys() {
-		return _sortKeys;
+	public SortQuery getSortQuery() {
+		return _sortQuery;
 	}
 
 	/**
@@ -91,6 +89,6 @@ public class Sort {
 
 	}
 
-	private final List<SortKey> _sortKeys;
+	private final SortQuery _sortQuery;
 
 }

@@ -39,6 +39,7 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerTestRule;
 import com.liferay.structured.content.apio.architect.sort.Sort;
 import com.liferay.structured.content.apio.architect.sort.SortParser;
+import com.liferay.structured.content.apio.architect.sort.SortQuery;
 import com.liferay.structured.content.apio.architect.util.test.PaginationTestUtil;
 
 import java.lang.reflect.Method;
@@ -96,7 +97,8 @@ public class StructuredContentNestedCollectionResourceTest {
 
 		PageItems pageItems = _getPageItems(
 			PaginationTestUtil.of(10, 1), _group.getGroupId(),
-			_getThemeDisplay(_group), new Sort(Collections.emptyList()));
+			_getThemeDisplay(_group),
+			new Sort(new SortQuery(Collections.emptyList())));
 
 		Assert.assertEquals(1, pageItems.getTotalCount());
 

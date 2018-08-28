@@ -15,6 +15,7 @@
 package com.liferay.structured.content.apio.internal.architect.sort;
 
 import com.liferay.structured.content.apio.architect.sort.Sort;
+import com.liferay.structured.content.apio.architect.sort.SortQuery;
 
 import java.util.List;
 import java.util.Optional;
@@ -136,7 +137,9 @@ public class SortParserTest {
 
 	@Test
 	public void testSortEmpty() {
-		List<Sort.SortKey> sortKeys = _sortParser.parse("");
+		SortQuery sortQuery = _sortParser.parse("");
+
+		List<Sort.SortKey> sortKeys = sortQuery.getSortKeys();
 
 		Assert.assertEquals(
 			"No sort keys should be obtained: " + sortKeys, 0, sortKeys.size());
@@ -144,7 +147,9 @@ public class SortParserTest {
 
 	@Test
 	public void testSortOneField() {
-		List<Sort.SortKey> sortKeys = _sortParser.parse("field1");
+		SortQuery sortQuery = _sortParser.parse("field1");
+
+		List<Sort.SortKey> sortKeys = sortQuery.getSortKeys();
 
 		Assert.assertEquals(
 			"One sort key should be obtained: " + sortKeys, 1, sortKeys.size());
@@ -156,7 +161,9 @@ public class SortParserTest {
 
 	@Test
 	public void testSortOnlyComma() {
-		List<Sort.SortKey> sortKeys = _sortParser.parse(",");
+		SortQuery sortQuery = _sortParser.parse(",");
+
+		List<Sort.SortKey> sortKeys = sortQuery.getSortKeys();
 
 		Assert.assertEquals(
 			"No sort keys should be obtained: " + sortKeys, 0, sortKeys.size());
@@ -164,7 +171,9 @@ public class SortParserTest {
 
 	@Test
 	public void testSortTwoFields() {
-		List<Sort.SortKey> sortKeys = _sortParser.parse("field1,field2");
+		SortQuery sortQuery = _sortParser.parse("field1,field2");
+
+		List<Sort.SortKey> sortKeys = sortQuery.getSortKeys();
 
 		Assert.assertEquals(
 			"Two sort keys should be obtained: " + sortKeys, 2,
@@ -185,8 +194,9 @@ public class SortParserTest {
 
 	@Test
 	public void testSortTwoFieldsAscAndDesc() {
-		List<Sort.SortKey> sortKeys = _sortParser.parse(
-			"field1:asc,field2:desc");
+		SortQuery sortQuery = _sortParser.parse("field1:asc,field2:desc");
+
+		List<Sort.SortKey> sortKeys = sortQuery.getSortKeys();
 
 		Assert.assertEquals(
 			"Two sort keys should be obtained: " + sortKeys, 2,
@@ -207,7 +217,9 @@ public class SortParserTest {
 
 	@Test
 	public void testSortTwoFieldsDefaultAndDesc() {
-		List<Sort.SortKey> sortKeys = _sortParser.parse("field1,field2:desc");
+		SortQuery sortQuery = _sortParser.parse("field1,field2:desc");
+
+		List<Sort.SortKey> sortKeys = sortQuery.getSortKeys();
 
 		Assert.assertEquals(
 			"Two sort keys should be obtained: " + sortKeys, 2,

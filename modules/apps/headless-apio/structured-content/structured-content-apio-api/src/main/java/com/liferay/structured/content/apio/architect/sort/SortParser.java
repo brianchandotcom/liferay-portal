@@ -14,10 +14,8 @@
 
 package com.liferay.structured.content.apio.architect.sort;
 
-import java.util.List;
-
 /**
- * Models a Parser from String to Sort Keys.
+ * Models a Parser from String to SortQuery.
  *
  * @author Cristina González
  * @review
@@ -25,12 +23,12 @@ import java.util.List;
 public interface SortParser {
 
 	/**
-	 * Returns a List of {@link Sort.SortKey} obtained from a String.
+	 * Returns a {@link SortQuery} obtained from a String.
 	 *
-	 * @param  sortExpressions - String to be parsed
-	 * @return a  List of  {@link Sort.SortKey}
+	 * @param  sortQueryString - String to be parsed
+	 * @return a {@link SortQuery}
 	 * @review
 	 */
-	public List<Sort.SortKey> parse(String sortExpressions);
+	public SortQuery parse(String sortQueryString);
 
 }

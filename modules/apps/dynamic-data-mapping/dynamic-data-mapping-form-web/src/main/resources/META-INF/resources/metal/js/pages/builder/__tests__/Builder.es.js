@@ -151,5 +151,33 @@ describe(
 				expect(spy).toHaveBeenCalledWith('duplicateField', expect.anything());
 			}
 		);
+
+		it(
+			'should open sidebar when the active page is changed',
+			() => {
+				const {FormRenderer} = component.refs;
+				const mode = 'add';
+
+				FormRenderer.emit('updateActivePage', {mode});
+
+				jest.runAllTimers();
+
+				expect(component).toMatchSnapshot();
+			}
+		);
+
+		it(
+			'should not open sidebar when the active page is changed',
+			() => {
+				const {FormRenderer} = component.refs;
+				const mockEvent = jest.fn();
+
+				FormRenderer.emit('updateActivePage', mockEvent);
+
+				jest.runAllTimers();
+
+				expect(component).toMatchSnapshot();
+			}
+		);
 	}
 );

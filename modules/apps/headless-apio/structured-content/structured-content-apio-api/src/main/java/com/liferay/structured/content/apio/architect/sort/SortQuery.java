@@ -25,40 +25,40 @@ import java.util.List;
 public class SortQuery {
 
 	/**
-	 * Creates a new sort query from a list of sort keys.
+	 * Creates a new sort query from a list of sort query params.
 	 *
-	 * @param  sortKeys - list of sort keys
+	 * @param  sortQueryParts - list of sort query part
 	 * @review
 	 */
-	public SortQuery(List<SortKey> sortKeys) {
-		_sortKeys = sortKeys;
+	public SortQuery(List<SortQueryPart> sortQueryParts) {
+		_sortQueryParts = sortQueryParts;
 	}
 
 	/**
-	 * Returns the list of sort keys.
+	 * Returns the list of sort query parts.
 	 *
-	 * @return - the list of sort keys
+	 * @return - the list of sort query parts
 	 * @review
 	 */
-	public List<SortKey> getSortKeys() {
-		return _sortKeys;
+	public List<SortQueryPart> getSortQueryParts() {
+		return _sortQueryParts;
 	}
 
 	/**
-	 * Models a Sort Key.
+	 * Models a Sort Query part.
 	 *
 	 * @review
 	 */
-	public static class SortKey {
+	public static class SortQueryPart {
 
 		/**
-		 * Creates a new sort key.
+		 * Creates a new sort query part.
 		 *
 		 * @param  fieldName - the name of the field
-		 * @param  asc - if the sort should be ascending
+		 * @param  asc - if the sort directive is ascending
 		 * @review
 		 */
-		public SortKey(String fieldName, boolean asc) {
+		public SortQueryPart(String fieldName, boolean asc) {
 			_fieldName = fieldName;
 			_asc = asc;
 		}
@@ -74,9 +74,9 @@ public class SortQuery {
 		}
 
 		/**
-		 * Returns if the sort key is ascending or not.
+		 * Returns if the sort query part is ascending or not.
 		 *
-		 * @return - if the sort key is ascending or not
+		 * @return - if the sort query part is ascending or not
 		 * @review
 		 */
 		public boolean isAscending() {
@@ -88,6 +88,6 @@ public class SortQuery {
 
 	}
 
-	private final List<SortKey> _sortKeys;
+	private final List<SortQueryPart> _sortQueryParts;
 
 }

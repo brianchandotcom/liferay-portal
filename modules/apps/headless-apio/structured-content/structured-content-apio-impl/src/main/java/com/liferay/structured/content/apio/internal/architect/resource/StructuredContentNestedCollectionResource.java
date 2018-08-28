@@ -62,6 +62,7 @@ import com.liferay.structure.apio.architect.identifier.ContentStructureIdentifie
 import com.liferay.structured.content.apio.architect.identifier.StructuredContentIdentifier;
 import com.liferay.structured.content.apio.architect.sort.Sort;
 import com.liferay.structured.content.apio.architect.sort.SortQuery;
+import com.liferay.structured.content.apio.architect.sort.SortQuery.SortQueryPart;
 import com.liferay.structured.content.apio.architect.util.StructuredContentUtil;
 import com.liferay.structured.content.apio.internal.architect.form.StructuredContentCreatorForm;
 import com.liferay.structured.content.apio.internal.architect.form.StructuredContentUpdaterForm;
@@ -342,14 +343,14 @@ public class StructuredContentNestedCollectionResource
 
 		OrderByComparator<JournalArticle> orderByComparator = null;
 
-		List<Sort.SortKey> sortKeys = sortQuery.getSortKeys();
+		List<SortQueryPart> sortQueryParts = sortQuery.getSortQueryParts();
 
-		for (Sort.SortKey sortKey : sortKeys) {
-			String fieldName = sortKey.getFieldName();
+		for (SortQueryPart sortQueryPart : sortQueryParts) {
+			String fieldName = sortQueryPart.getFieldName();
 
 			if (fieldName.equals("title")) {
 				orderByComparator = new ArticleTitleComparator(
-					sortKey.isAscending());
+					sortQueryPart.isAscending());
 
 				break;
 			}

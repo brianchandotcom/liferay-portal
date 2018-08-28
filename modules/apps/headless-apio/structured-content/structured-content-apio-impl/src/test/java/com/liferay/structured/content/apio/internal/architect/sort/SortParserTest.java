@@ -15,7 +15,7 @@
 package com.liferay.structured.content.apio.internal.architect.sort;
 
 import com.liferay.structured.content.apio.architect.sort.SortQuery;
-import com.liferay.structured.content.apio.architect.sort.SortQuery.SortKey;
+import com.liferay.structured.content.apio.architect.sort.SortQuery.SortQueryPart;
 
 import java.util.List;
 import java.util.Optional;
@@ -32,22 +32,23 @@ import org.junit.Test;
 public class SortParserTest {
 
 	@Test
-	public void testGetSortAsc() {
-		Optional<SortKey> sortOptional = _sortParser.getSortKey("field:asc");
+	public void testGetSortQueryPartAsc() {
+		Optional<SortQueryPart> sortQueryPartOptional =
+			_sortParser.getSortQueryPart("field:asc");
 
-		Assert.assertTrue(sortOptional.isPresent());
+		Assert.assertTrue(sortQueryPartOptional.isPresent());
 
-		SortKey sortKey = sortOptional.get();
+		SortQueryPart sortQueryPart = sortQueryPartOptional.get();
 
-		Assert.assertEquals("field", sortKey.getFieldName());
+		Assert.assertEquals("field", sortQueryPart.getFieldName());
 
-		Assert.assertTrue(sortKey.isAscending());
+		Assert.assertTrue(sortQueryPart.isAscending());
 	}
 
 	@Test
-	public void testGetSortBadSyntax() {
+	public void testGetSortQueryPartBadSyntax() {
 		AbstractThrowableAssert exception = Assertions.assertThatThrownBy(
-			() -> _sortParser.getSortKey("field:desc:another")
+			() -> _sortParser.getSortQueryPart("field:desc:another")
 		).isInstanceOf(
 			RuntimeException.class
 		);
@@ -56,36 +57,39 @@ public class SortParserTest {
 	}
 
 	@Test
-	public void testGetSortDesc() {
-		Optional<SortKey> sortOptional = _sortParser.getSortKey("field:desc");
+	public void testGetSortQueryPartDesc() {
+		Optional<SortQueryPart> sortQueryPartOptional =
+			_sortParser.getSortQueryPart("field:desc");
 
-		Assert.assertTrue(sortOptional.isPresent());
+		Assert.assertTrue(sortQueryPartOptional.isPresent());
 
-		SortKey sortKey = sortOptional.get();
+		SortQueryPart sortQueryPart = sortQueryPartOptional.get();
 
-		Assert.assertEquals("field", sortKey.getFieldName());
+		Assert.assertEquals("field", sortQueryPart.getFieldName());
 
-		Assert.assertTrue(!sortKey.isAscending());
+		Assert.assertTrue(!sortQueryPart.isAscending());
 	}
 
 	@Test
-	public void testGetSortNoOrder() {
-		Optional<SortKey> sortOptional = _sortParser.getSortKey("field");
+	public void testGetSortQueryPartNoOrder() {
+		Optional<SortQueryPart> sortQueryPartOptional =
+			_sortParser.getSortQueryPart("field");
 
-		Assert.assertTrue(sortOptional.isPresent());
+		Assert.assertTrue(sortQueryPartOptional.isPresent());
 
-		SortKey sortKey = sortOptional.get();
+		SortQueryPart sortQueryPart = sortQueryPartOptional.get();
 
-		Assert.assertEquals("field", sortKey.getFieldName());
+		Assert.assertEquals("field", sortQueryPart.getFieldName());
 
-		Assert.assertTrue(sortKey.isAscending());
+		Assert.assertTrue(sortQueryPart.isAscending());
 	}
 
 	@Test
-	public void testGetSortNull() {
-		Optional<SortKey> sortOptional = _sortParser.getSortKey(null);
+	public void testGetSortQueryPartNull() {
+		Optional<SortQueryPart> sortQueryPartOptional =
+			_sortParser.getSortQueryPart(null);
 
-		Assert.assertTrue(!sortOptional.isPresent());
+		Assert.assertTrue(!sortQueryPartOptional.isPresent());
 	}
 
 	@Test
@@ -137,103 +141,106 @@ public class SortParserTest {
 	public void testSortEmpty() {
 		SortQuery sortQuery = _sortParser.parse("");
 
-		List<SortKey> sortKeys = sortQuery.getSortKeys();
+		List<SortQueryPart> sortQueryParts = sortQuery.getSortQueryParts();
 
 		Assert.assertEquals(
-			"No sort keys should be obtained: " + sortKeys, 0, sortKeys.size());
+			"No sort keys should be obtained: " + sortQueryParts, 0,
+			sortQueryParts.size());
 	}
 
 	@Test
 	public void testSortOneField() {
 		SortQuery sortQuery = _sortParser.parse("field1");
 
-		List<SortKey> sortKeys = sortQuery.getSortKeys();
+		List<SortQueryPart> sortQueryParts = sortQuery.getSortQueryParts();
 
 		Assert.assertEquals(
-			"One sort key should be obtained: " + sortKeys, 1, sortKeys.size());
+			"One sort key should be obtained: " + sortQueryParts, 1,
+			sortQueryParts.size());
 
-		SortKey sortKey = sortKeys.get(0);
+		SortQueryPart sortQueryPart = sortQueryParts.get(0);
 
-		Assert.assertEquals("field1", sortKey.getFieldName());
+		Assert.assertEquals("field1", sortQueryPart.getFieldName());
 	}
 
 	@Test
 	public void testSortOnlyComma() {
 		SortQuery sortQuery = _sortParser.parse(",");
 
-		List<SortKey> sortKeys = sortQuery.getSortKeys();
+		List<SortQueryPart> sortQueryParts = sortQuery.getSortQueryParts();
 
 		Assert.assertEquals(
-			"No sort keys should be obtained: " + sortKeys, 0, sortKeys.size());
+			"No sort keys should be obtained: " + sortQueryParts, 0,
+			sortQueryParts.size());
 	}
 
 	@Test
 	public void testSortTwoFields() {
 		SortQuery sortQuery = _sortParser.parse("field1,field2");
 
-		List<SortKey> sortKeys = sortQuery.getSortKeys();
+		List<SortQueryPart> sortQueryParts = sortQuery.getSortQueryParts();
 
 		Assert.assertEquals(
-			"Two sort keys should be obtained: " + sortKeys, 2,
-			sortKeys.size());
+			"Two sort query parts should be obtained: " + sortQueryParts, 2,
+			sortQueryParts.size());
 
-		SortKey sortKey = sortKeys.get(0);
+		SortQueryPart sortQueryPart = sortQueryParts.get(0);
 
-		Assert.assertEquals("field1", sortKey.getFieldName());
+		Assert.assertEquals("field1", sortQueryPart.getFieldName());
 
-		Assert.assertTrue(sortKey.isAscending());
+		Assert.assertTrue(sortQueryPart.isAscending());
 
-		SortKey sortKey2 = sortKeys.get(1);
+		SortQueryPart sortQueryPart2 = sortQueryParts.get(1);
 
-		Assert.assertEquals("field2", sortKey2.getFieldName());
+		Assert.assertEquals("field2", sortQueryPart2.getFieldName());
 
-		Assert.assertTrue(sortKey2.isAscending());
+		Assert.assertTrue(sortQueryPart2.isAscending());
 	}
 
 	@Test
 	public void testSortTwoFieldsAscAndDesc() {
 		SortQuery sortQuery = _sortParser.parse("field1:asc,field2:desc");
 
-		List<SortKey> sortKeys = sortQuery.getSortKeys();
+		List<SortQueryPart> sortQueryParts = sortQuery.getSortQueryParts();
 
 		Assert.assertEquals(
-			"Two sort keys should be obtained: " + sortKeys, 2,
-			sortKeys.size());
+			"Two sort query parts should be obtained: " + sortQueryParts, 2,
+			sortQueryParts.size());
 
-		SortKey sortKey = sortKeys.get(0);
+		SortQueryPart sortQueryPart = sortQueryParts.get(0);
 
-		Assert.assertEquals("field1", sortKey.getFieldName());
+		Assert.assertEquals("field1", sortQueryPart.getFieldName());
 
-		Assert.assertTrue(sortKey.isAscending());
+		Assert.assertTrue(sortQueryPart.isAscending());
 
-		SortKey sortKey2 = sortKeys.get(1);
+		SortQueryPart sortQueryPart2 = sortQueryParts.get(1);
 
-		Assert.assertEquals("field2", sortKey2.getFieldName());
+		Assert.assertEquals("field2", sortQueryPart2.getFieldName());
 
-		Assert.assertTrue(!sortKey2.isAscending());
+		Assert.assertTrue(!sortQueryPart2.isAscending());
 	}
 
 	@Test
 	public void testSortTwoFieldsDefaultAndDesc() {
 		SortQuery sortQuery = _sortParser.parse("field1,field2:desc");
 
-		List<SortKey> sortKeys = sortQuery.getSortKeys();
+		List<SortQueryPart> sortQueryParts = sortQuery.getSortQueryParts();
 
 		Assert.assertEquals(
-			"Two sort keys should be obtained: " + sortKeys, 2,
-			sortKeys.size());
+			"Two sort query parts should be obtained: " + sortQueryParts, 2,
+			sortQueryParts.size());
 
-		SortKey sortKey = sortKeys.get(0);
+		SortQueryPart sortQueryPart = sortQueryParts.get(0);
 
-		Assert.assertEquals("field1", sortKey.getFieldName());
+		Assert.assertEquals("field1", sortQueryPart.getFieldName());
 
-		Assert.assertTrue(sortKey.isAscending());
+		Assert.assertTrue(sortQueryPart.isAscending());
 
-		SortKey sortKey2 = sortKeys.get(1);
+		SortQueryPart sortQueryPart2 = sortQueryParts.get(1);
 
-		Assert.assertEquals("field2", sortKey2.getFieldName());
+		Assert.assertEquals("field2", sortQueryPart2.getFieldName());
 
-		Assert.assertTrue(!sortKey2.isAscending());
+		Assert.assertTrue(!sortQueryPart2.isAscending());
 	}
 
 	private static final SortParserImpl _sortParser = new SortParserImpl();

@@ -30,7 +30,7 @@ public class SortQuery {
 	 * @param  sortKeys - list of sort keys
 	 * @review
 	 */
-	public SortQuery(List<Sort.SortKey> sortKeys) {
+	public SortQuery(List<SortKey> sortKeys) {
 		_sortKeys = sortKeys;
 	}
 
@@ -40,10 +40,54 @@ public class SortQuery {
 	 * @return - the list of sort keys
 	 * @review
 	 */
-	public List<Sort.SortKey> getSortKeys() {
+	public List<SortKey> getSortKeys() {
 		return _sortKeys;
 	}
 
-	private final List<Sort.SortKey> _sortKeys;
+	/**
+	 * Models a Sort Key.
+	 *
+	 * @review
+	 */
+	public static class SortKey {
+
+		/**
+		 * Creates a new sort key.
+		 *
+		 * @param  fieldName - the name of the field
+		 * @param  asc - if the sort should be ascending
+		 * @review
+		 */
+		public SortKey(String fieldName, boolean asc) {
+			_fieldName = fieldName;
+			_asc = asc;
+		}
+
+		/**
+		 * Returns the name of the field.
+		 *
+		 * @return - the name of the field
+		 * @review
+		 */
+		public String getFieldName() {
+			return _fieldName;
+		}
+
+		/**
+		 * Returns if the sort key is ascending or not.
+		 *
+		 * @return - if the sort key is ascending or not
+		 * @review
+		 */
+		public boolean isAscending() {
+			return _asc;
+		}
+
+		private final boolean _asc;
+		private final String _fieldName;
+
+	}
+
+	private final List<SortKey> _sortKeys;
 
 }

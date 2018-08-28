@@ -15,9 +15,9 @@
 package com.liferay.structured.content.apio.internal.architect.sort;
 
 import com.liferay.petra.string.StringUtil;
-import com.liferay.structured.content.apio.architect.sort.Sort;
 import com.liferay.structured.content.apio.architect.sort.SortParser;
 import com.liferay.structured.content.apio.architect.sort.SortQuery;
+import com.liferay.structured.content.apio.architect.sort.SortQuery.SortKey;
 
 import java.util.Collections;
 import java.util.List;
@@ -75,7 +75,7 @@ public class SortParserImpl implements SortParser {
 			));
 	}
 
-	protected Optional<Sort.SortKey> getSortKey(String sortExpression) {
+	protected Optional<SortKey> getSortKey(String sortExpression) {
 		List<String> sortParts = StringUtil.split(sortExpression, ':');
 
 		if (sortParts.isEmpty()) {
@@ -94,7 +94,7 @@ public class SortParserImpl implements SortParser {
 			ascending = isAscending(sortParts.get(1));
 		}
 
-		return Optional.of(new Sort.SortKey(fieldName, ascending));
+		return Optional.of(new SortKey(fieldName, ascending));
 	}
 
 	protected boolean isAscending(String orderBy) {

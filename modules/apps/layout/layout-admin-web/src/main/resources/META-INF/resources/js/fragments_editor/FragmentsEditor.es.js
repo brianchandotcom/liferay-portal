@@ -424,17 +424,6 @@ FragmentsEditor.STATE = Object.assign(
 	{
 
 		/**
-		 * URL for associating fragment entries to the underlying model.
-		 * @default undefined
-		 * @instance
-		 * @memberOf FragmentsEditor
-		 * @review
-		 * @type {!string}
-		 */
-
-		addFragmentEntryLinkURL: Config.string().required(),
-
-		/**
 		 * List of available languages for translation.
 		 * @default undefined
 		 * @instance
@@ -444,28 +433,6 @@ FragmentsEditor.STATE = Object.assign(
 		 */
 
 		availableLanguages: Config.object().required(),
-
-		/**
-		 * Class name id used for storing changes.
-		 * @default undefined
-		 * @instance
-		 * @memberOf FragmentsEditor
-		 * @review
-		 * @type {!string}
-		 */
-
-		classNameId: Config.string().required(),
-
-		/**
-		 * Class primary key used for storing changes.
-		 * @default undefined
-		 * @instance
-		 * @memberOf FragmentsEditor
-		 * @review
-		 * @type {!string}
-		 */
-
-		classPK: Config.string().required(),
 
 		/**
 		 * Default configurations for AlloyEditor instances.
@@ -488,17 +455,6 @@ FragmentsEditor.STATE = Object.assign(
 		 */
 
 		defaultLanguageId: Config.string().required(),
-
-		/**
-		 * URL for removing fragment entries of the underlying model.
-		 * @default undefined
-		 * @instance
-		 * @memberOf FragmentsEditor
-		 * @review
-		 * @type {!string}
-		 */
-
-		deleteFragmentEntryLinkURL: Config.string().required(),
 
 		/**
 		 * URL for updating a distinct fragment entries of the editor.
@@ -538,38 +494,6 @@ FragmentsEditor.STATE = Object.assign(
 		).required(),
 
 		/**
-		 * List of fragment instances being used, the order
-		 * of the elements in this array defines their position.
-		 * @default []
-		 * @instance
-		 * @memberOf FragmentsEditor
-		 * @review
-		 * @type {Array<{
-		 *   config: Object,
-		 *   content: string,
-		 *   editableValues: Object,
-		 *   fragmentEntryId: !string,
-		 *   fragmentEntryLinkId: !string,
-		 *   name: !string,
-		 *   position: !number
-		 * }>}
-		 */
-
-		fragmentEntryLinks: Config.arrayOf(
-			Config.shapeOf(
-				{
-					config: Config.object().value({}),
-					content: Config.any().value(''),
-					editableValues: Config.object().value({}),
-					fragmentEntryId: Config.string().required(),
-					fragmentEntryLinkId: Config.string().required(),
-					name: Config.string().required(),
-					position: Config.number().required()
-				}
-			)
-		).value([]),
-
-		/**
 		 * URL for obtaining the class types of an asset
 		 * created.
 		 * @default undefined
@@ -592,17 +516,6 @@ FragmentsEditor.STATE = Object.assign(
 		 */
 
 		getAssetDisplayContributorsURL: Config.string(),
-
-		/**
-		 * Optional ID provided by the template system.
-		 * @default ''
-		 * @instance
-		 * @memberOf FragmentsEditor
-		 * @review
-		 * @type {string}
-		 */
-
-		id: Config.string().value(''),
 
 		/**
 		 * Image selector url
@@ -638,17 +551,6 @@ FragmentsEditor.STATE = Object.assign(
 		languageId: Config.string().required(),
 
 		/**
-		 * Portlet namespace needed for prefixing form inputs
-		 * @default undefined
-		 * @instance
-		 * @memberOf FragmentsEditor
-		 * @review
-		 * @type {!string}
-		 */
-
-		portletNamespace: Config.string().required(),
-
-		/**
 		 *
 		 * @default undefined
 		 * @instance
@@ -669,17 +571,6 @@ FragmentsEditor.STATE = Object.assign(
 		 */
 
 		redirectURL: Config.string().required(),
-
-		/**
-		 * URL for getting a fragment content.
-		 * @default undefined
-		 * @instance
-		 * @memberOf FragmentsEditor
-		 * @review
-		 * @type {!string}
-		 */
-
-		renderFragmentEntryURL: Config.string().required(),
 
 		/**
 		 * Selected mapping types

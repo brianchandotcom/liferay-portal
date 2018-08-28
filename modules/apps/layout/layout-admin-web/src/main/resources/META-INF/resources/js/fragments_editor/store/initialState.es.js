@@ -11,6 +11,50 @@ import {DRAG_POSITIONS} from './reducers/dragDrop.es';
 const INITIAL_STATE = {
 
 	/**
+	 * URL for associating fragment entries to the underlying model.
+	 * @default undefined
+	 * @instance
+	 * @memberOf FragmentsEditor
+	 * @review
+	 * @type {!string}
+	 */
+
+	addFragmentEntryLinkURL: Config.string().required(),
+
+	/**
+	 * Class name id used for storing changes.
+	 * @default undefined
+	 * @instance
+	 * @memberOf FragmentsEditor
+	 * @review
+	 * @type {!string}
+	 */
+
+	classNameId: Config.string().required(),
+
+	/**
+	 * Class primary key used for storing changes.
+	 * @default undefined
+	 * @instance
+	 * @memberOf FragmentsEditor
+	 * @review
+	 * @type {!string}
+	 */
+
+	classPK: Config.string().required(),
+
+	/**
+	 * URL for removing fragment entries of the underlying model.
+	 * @default undefined
+	 * @instance
+	 * @memberOf FragmentsEditor
+	 * @review
+	 * @type {!string}
+	 */
+
+	deleteFragmentEntryLinkURL: Config.string().required(),
+
+	/**
 	 * List of fragment instances being used, the order
 	 * of the elements in this array defines their position.
 	 * @default []
@@ -62,7 +106,29 @@ const INITIAL_STATE = {
 
 	hoveredFragmentEntryLinkId: Config
 		.string()
-		.value(null)
+		.value(null),
+
+	/**
+	 * Portlet namespace needed for prefixing form inputs
+	 * @default undefined
+	 * @instance
+	 * @memberOf FragmentsEditor
+	 * @review
+	 * @type {!string}
+	 */
+
+	portletNamespace: Config.string().required(),
+
+	/**
+	 * URL for getting a fragment content.
+	 * @default undefined
+	 * @instance
+	 * @memberOf FragmentsEditor
+	 * @review
+	 * @type {!string}
+	 */
+
+	renderFragmentEntryURL: Config.string().required()
 };
 
 export {INITIAL_STATE};

@@ -258,6 +258,27 @@ public interface SharingEntryModel extends AttachedModel, BaseModel<SharingEntry
 	public void setClassPK(long classPK);
 
 	/**
+	 * Returns the shareable of this sharing entry.
+	 *
+	 * @return the shareable of this sharing entry
+	 */
+	public boolean getShareable();
+
+	/**
+	 * Returns <code>true</code> if this sharing entry is shareable.
+	 *
+	 * @return <code>true</code> if this sharing entry is shareable; <code>false</code> otherwise
+	 */
+	public boolean isShareable();
+
+	/**
+	 * Sets whether this sharing entry is shareable.
+	 *
+	 * @param shareable the shareable of this sharing entry
+	 */
+	public void setShareable(boolean shareable);
+
+	/**
 	 * Returns the action IDs of this sharing entry.
 	 *
 	 * @return the action IDs of this sharing entry

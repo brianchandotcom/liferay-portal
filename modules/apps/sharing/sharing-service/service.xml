@@ -25,6 +25,7 @@
 		<column name="toUserId" type="long" />
 		<column name="classNameId" type="long" />
 		<column name="classPK" type="long" />
+		<column name="shareable" type="boolean" />
 		<column name="actionIds" type="long" />
 
 		<!-- Finder methods -->

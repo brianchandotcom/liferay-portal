@@ -56,7 +56,7 @@ public interface SharingEntryService extends BaseService {
 	 * Never modify or reference this interface directly. Always use {@link SharingEntryServiceUtil} to access the sharing entry remote service. Add custom service methods to {@link com.liferay.sharing.service.impl.SharingEntryServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 	public SharingEntry addSharingEntry(long toUserId, long classNameId,
-		long classPK, long groupId,
+		long classPK, long groupId, boolean shareable,
 		Collection<SharingEntryActionKey> sharingEntryActionKeys,
 		ServiceContext serviceContext) throws PortalException;
 

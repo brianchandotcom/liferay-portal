@@ -84,8 +84,8 @@ public class UserModelListenerTest {
 
 		_sharingEntryLocalService.addSharingEntry(
 			_user.getUserId(), _groupUser.getUserId(), classNameId, classPK,
-			_group.getGroupId(), Arrays.asList(SharingEntryActionKey.VIEW),
-			serviceContext);
+			_group.getGroupId(), true,
+			Arrays.asList(SharingEntryActionKey.VIEW), serviceContext);
 
 		List<SharingEntry> toUserSharingEntries =
 			_sharingEntryLocalService.getToUserSharingEntries(
@@ -117,8 +117,8 @@ public class UserModelListenerTest {
 
 		_sharingEntryLocalService.addSharingEntry(
 			_user.getUserId(), _groupUser.getUserId(), classNameId, classPK,
-			_group.getGroupId(), Arrays.asList(SharingEntryActionKey.VIEW),
-			serviceContext);
+			_group.getGroupId(), true,
+			Arrays.asList(SharingEntryActionKey.VIEW), serviceContext);
 
 		List<SharingEntry> toUserSharingEntries =
 			_sharingEntryLocalService.getToUserSharingEntries(

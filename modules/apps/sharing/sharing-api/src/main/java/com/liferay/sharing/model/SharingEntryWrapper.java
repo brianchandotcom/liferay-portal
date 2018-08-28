@@ -70,6 +70,7 @@ public class SharingEntryWrapper implements SharingEntry,
 		attributes.put("toUserId", getToUserId());
 		attributes.put("classNameId", getClassNameId());
 		attributes.put("classPK", getClassPK());
+		attributes.put("shareable", isShareable());
 		attributes.put("actionIds", getActionIds());
 
 		return attributes;
@@ -135,6 +136,12 @@ public class SharingEntryWrapper implements SharingEntry,
 
 		if (classPK != null) {
 			setClassPK(classPK);
+		}
+
+		Boolean shareable = (Boolean)attributes.get("shareable");
+
+		if (shareable != null) {
+			setShareable(shareable);
 		}
 
 		Long actionIds = (Long)attributes.get("actionIds");
@@ -275,6 +282,16 @@ public class SharingEntryWrapper implements SharingEntry,
 	}
 
 	/**
+	* Returns the shareable of this sharing entry.
+	*
+	* @return the shareable of this sharing entry
+	*/
+	@Override
+	public boolean getShareable() {
+		return _sharingEntry.getShareable();
+	}
+
+	/**
 	* Returns the sharing entry ID of this sharing entry.
 	*
 	* @return the sharing entry ID of this sharing entry
@@ -332,6 +349,16 @@ public class SharingEntryWrapper implements SharingEntry,
 	@Override
 	public boolean isNew() {
 		return _sharingEntry.isNew();
+	}
+
+	/**
+	* Returns <code>true</code> if this sharing entry is shareable.
+	*
+	* @return <code>true</code> if this sharing entry is shareable; <code>false</code> otherwise
+	*/
+	@Override
+	public boolean isShareable() {
+		return _sharingEntry.isShareable();
 	}
 
 	@Override
@@ -473,6 +500,16 @@ public class SharingEntryWrapper implements SharingEntry,
 	@Override
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
 		_sharingEntry.setPrimaryKeyObj(primaryKeyObj);
+	}
+
+	/**
+	* Sets whether this sharing entry is shareable.
+	*
+	* @param shareable the shareable of this sharing entry
+	*/
+	@Override
+	public void setShareable(boolean shareable) {
+		_sharingEntry.setShareable(shareable);
 	}
 
 	/**

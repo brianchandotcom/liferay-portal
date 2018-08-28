@@ -38,7 +38,7 @@ public class SharingEntryLocalServiceImpl
 	@Override
 	public SharingEntry addSharingEntry(
 			long fromUserId, long toUserId, long classNameId, long classPK,
-			long groupId,
+			long groupId, boolean shareable,
 			Collection<SharingEntryActionKey> sharingEntryActionKeys,
 			ServiceContext serviceContext)
 		throws PortalException {
@@ -63,6 +63,7 @@ public class SharingEntryLocalServiceImpl
 		sharingEntry.setToUserId(toUserId);
 		sharingEntry.setClassNameId(classNameId);
 		sharingEntry.setClassPK(classPK);
+		sharingEntry.setShareable(shareable);
 
 		Stream<SharingEntryActionKey> sharingEntryActionKeyStream =
 			sharingEntryActionKeys.stream();
@@ -189,6 +190,30 @@ public class SharingEntryLocalServiceImpl
 		long toUserId, long classNameId) {
 
 		return sharingEntryPersistence.findByTU_C(toUserId, classNameId);
+	}
+
+	@Override
+	public boolean hasShareableSharingPermission(
+		long toUserId, long classNameId, long classPK,
+		SharingEntryActionKey sharingEntryActionKey) {
+
+		List<SharingEntry> sharingEntries =
+			sharingEntryPersistence.findByTU_C_C(
+				toUserId, classNameId, classPK);
+
+		for (SharingEntry sharingEntry : sharingEntries) {
+			if (!sharingEntry.isShareable()) {
+				continue;
+			}
+
+			long actionIds = sharingEntry.getActionIds();
+
+			if ((actionIds & sharingEntryActionKey.getBitwiseVaue()) != 0) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	@Override

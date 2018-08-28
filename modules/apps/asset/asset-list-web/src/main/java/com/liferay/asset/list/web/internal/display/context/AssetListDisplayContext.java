@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -139,7 +140,7 @@ public class AssetListDisplayContext {
 		AssetListEntry assetListEntry = getAssetListEntry();
 
 		if (assetListEntry != null) {
-			title = assetListEntry.getTitle();
+			title = HtmlUtil.escape(assetListEntry.getTitle());
 		}
 
 		return LanguageUtil.get(_request, title);

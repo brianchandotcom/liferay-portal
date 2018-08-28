@@ -53,7 +53,7 @@
 			>
 				<h5>
 					<aui:a href="<%= editArticleURL.toString() %>">
-						<%= assetListEntry.getTitle() %>
+						<%= HtmlUtil.escape(assetListEntry.getTitle()) %>
 					</aui:a>
 				</h5>
 

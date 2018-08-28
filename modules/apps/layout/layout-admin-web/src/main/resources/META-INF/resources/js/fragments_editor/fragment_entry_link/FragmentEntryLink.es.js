@@ -6,7 +6,11 @@ import {isFunction, isObject, object} from 'metal';
 
 import FragmentEditableField from './FragmentEditableField.es';
 import MetalStore from '../store/MetalStore.es';
-import {REMOVE_FRAGMENT_ENTRY_LINK} from '../store/actionTypes.es';
+import {
+	REMOVE_FRAGMENT_ENTRY_LINK,
+	UPDATE_LAST_SAVE_DATE,
+	UPDATE_SAVING_CHANGES_STATUS
+} from '../store/actionTypes.es';
 import templates from './FragmentEntryLink.soy';
 
 const ARROW_DOWN_KEYCODE = 40;
@@ -310,8 +314,23 @@ class FragmentEntryLink extends Component {
 
 	_handleFragmentRemoveButtonClick() {
 		this.store.dispatchAction(
+			UPDATE_SAVING_CHANGES_STATUS,
+			{savingChanges: true}
+		);
+
+		this.store.dispatchAction(
 			REMOVE_FRAGMENT_ENTRY_LINK,
 			{fragmentEntryLinkId: this.fragmentEntryLinkId}
+		);
+
+		this.store.dispatchAction(
+			UPDATE_LAST_SAVE_DATE,
+			{lastSaveDate: new Date()}
+		);
+
+		this.store.dispatchAction(
+			UPDATE_SAVING_CHANGES_STATUS,
+			{savingChanges: false}
 		);
 	}
 

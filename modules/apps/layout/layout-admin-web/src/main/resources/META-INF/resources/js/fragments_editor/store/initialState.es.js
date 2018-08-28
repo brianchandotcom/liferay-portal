@@ -109,6 +109,18 @@ const INITIAL_STATE = {
 		.value(null),
 
 	/**
+	 * Last date when the autosave has been executed.
+	 * @default ''
+	 * @instance
+	 * @review
+	 * @type {string}
+	 */
+
+	lastSaveDate: Config.string()
+		.internal()
+		.value(''),
+
+	/**
 	 * Portlet namespace needed for prefixing form inputs
 	 * @default undefined
 	 * @instance
@@ -128,7 +140,19 @@ const INITIAL_STATE = {
 	 * @type {!string}
 	 */
 
-	renderFragmentEntryURL: Config.string().required()
+	renderFragmentEntryURL: Config.string().required(),
+
+	/**
+	 * When true, it indicates that are changes pending to save.
+	 * @default false
+	 * @instance
+	 * @review
+	 * @type {boolean}
+	 */
+
+	savingChanges: Config.bool()
+		.internal()
+		.value(false)
 };
 
 export {INITIAL_STATE};

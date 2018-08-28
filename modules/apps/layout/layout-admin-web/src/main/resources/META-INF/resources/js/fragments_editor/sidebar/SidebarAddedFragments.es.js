@@ -3,7 +3,11 @@ import {Config} from 'metal-state';
 import Soy from 'metal-soy';
 
 import './FragmentsEditorSidebarCard.es';
-import {REMOVE_FRAGMENT_ENTRY_LINK} from '../store/actionTypes.es';
+import {
+	REMOVE_FRAGMENT_ENTRY_LINK,
+	UPDATE_LAST_SAVE_DATE,
+	UPDATE_SAVING_CHANGES_STATUS
+} from '../store/actionTypes.es';
 import MetalStore from '../store/MetalStore.es';
 import templates from './SidebarAddedFragments.soy';
 
@@ -23,8 +27,23 @@ class SidebarAddedFragments extends Component {
 
 	_handleFragmentRemoveButtonClick(event) {
 		this.store.dispatchAction(
+			UPDATE_SAVING_CHANGES_STATUS,
+			{savingChanges: true}
+		);
+
+		this.store.dispatchAction(
 			REMOVE_FRAGMENT_ENTRY_LINK,
 			{fragmentEntryLinkId: event.itemId}
+		);
+
+		this.store.dispatchAction(
+			UPDATE_LAST_SAVE_DATE,
+			{lastSaveDate: new Date()}
+		);
+
+		this.store.dispatchAction(
+			UPDATE_SAVING_CHANGES_STATUS,
+			{savingChanges: false}
 		);
 	}
 }

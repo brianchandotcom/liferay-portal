@@ -24,7 +24,6 @@
 	{@param sidebarTabs: list<[enabled:bool, id:string, label:string]>}
 	{@param spritemap: string}
 	{@param? _contextualSidebarVisible: bool}
-	{@param? _dirty: bool}
 	{@param? _dropTargetClass: string}
 	{@param? _handleEditableChanged: any}
 	{@param? _handleFragmentMove: any}
@@ -39,7 +38,6 @@
 	{@param? _handleToggleHighlightMapping: any}
 	{@param? _handleTranslationLanguageChange: any}
 	{@param? _highlightMapping: bool}
-	{@param? _lastSaveDate: string}
 	{@param? _selectMappingDialogEditableId: string}
 	{@param? _selectMappingDialogEditableType: string}
 	{@param? _selectMappingDialogFragmentEntryLinkId: string}
@@ -57,8 +55,10 @@
 	{@param? hoveredFragmentEntryLinkBorder: string}
 	{@param? hoveredFragmentEntryLinkId: string}
 	{@param? id: string}
+	{@param? lastSaveDate: string}
 	{@param? mappingFieldsURL: string}
 	{@param? publishLayoutPageTemplateEntryURL: string}
+	{@param? savingChanges: bool}
 	{@param? selectedMappingTypes: [
 		subtype: [
 			id: string,
@@ -84,12 +84,12 @@
 				'toggleContextualSidebarButtonClick': $_handleToggleContextualSidebarButtonClick,
 				'translationLanguageChange': $_handleTranslationLanguageChange
 			] /}
-			{param lastSaveDate: $_lastSaveDate ?: '' /}
+			{param lastSaveDate: $lastSaveDate ?: '' /}
 			{param publishLayoutPageTemplateEntryURL: $publishLayoutPageTemplateEntryURL /}
 			{param publishRedirectURL: $redirectURL /}
 			{param publishStatus: $status /}
 			{param portletNamespace: $portletNamespace /}
-			{param savingChanges: $_dirty ?: false /}
+			{param savingChanges: $savingChanges ?: false /}
 			{param spritemap: $spritemap /}
 			{param store: $_store /}
 			{param translationAvailableLanguages: $availableLanguages /}

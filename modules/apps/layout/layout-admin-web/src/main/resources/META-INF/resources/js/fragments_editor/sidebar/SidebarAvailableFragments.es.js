@@ -8,7 +8,9 @@ import './FragmentsEditorSidebarCard.es';
 import {
 	ADD_FRAGMENT_ENTRY_LINK,
 	CLEAR_DRAG_TARGET,
-	UPDATE_DRAG_TARGET
+	UPDATE_DRAG_TARGET,
+	UPDATE_LAST_SAVE_DATE,
+	UPDATE_SAVING_CHANGES_STATUS
 } from '../store/actionTypes.es';
 import {DRAG_POSITIONS} from '../store/reducers/dragDrop.es';
 import MetalStore from '../store/MetalStore.es';
@@ -104,11 +106,26 @@ class SidebarAvailableFragments extends Component {
 			);
 
 			this.store.dispatchAction(
+				UPDATE_SAVING_CHANGES_STATUS,
+				{savingChanges: true}
+			);
+
+			this.store.dispatchAction(
 				ADD_FRAGMENT_ENTRY_LINK,
 				{
 					fragmentEntryId: itemId,
 					fragmentName: itemName
 				}
+			);
+
+			this.store.dispatchAction(
+				UPDATE_LAST_SAVE_DATE,
+				{lastSaveDate: new Date()}
+			);
+
+			this.store.dispatchAction(
+				UPDATE_SAVING_CHANGES_STATUS,
+				{savingChanges: false}
 			);
 
 			this.store.dispatchAction(
@@ -128,11 +145,26 @@ class SidebarAvailableFragments extends Component {
 
 	_handleEntryClick(event) {
 		this.store.dispatchAction(
+			UPDATE_SAVING_CHANGES_STATUS,
+			{savingChanges: true}
+		);
+
+		this.store.dispatchAction(
 			ADD_FRAGMENT_ENTRY_LINK,
 			{
 				fragmentEntryId: event.itemId,
 				fragmentName: event.itemName
 			}
+		);
+
+		this.store.dispatchAction(
+			UPDATE_LAST_SAVE_DATE,
+			{lastSaveDate: new Date()}
+		);
+
+		this.store.dispatchAction(
+			UPDATE_SAVING_CHANGES_STATUS,
+			{savingChanges: false}
 		);
 	}
 

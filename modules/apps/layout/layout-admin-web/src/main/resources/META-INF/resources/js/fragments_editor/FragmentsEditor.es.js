@@ -14,9 +14,14 @@ import {
 import {connect, MetalStore} from './store/MetalStore.es';
 import FragmentEntryLink from './fragment_entry_link/FragmentEntryLink.es';
 import {INITIAL_STATE} from './store/initialState.es';
+import saveChangesReducer from './store/reducers/saveChanges.es';
 import templates from './FragmentsEditor.soy';
 import {translationStatusReducer} from './store/reducers/translationStatus';
-import {UPDATE_TRANSLATION_STATUS} from './store/actionTypes.es';
+import {
+	UPDATE_LAST_SAVE_DATE,
+	UPDATE_SAVING_CHANGES_STATUS,
+	UPDATE_TRANSLATION_STATUS
+} from './store/actionTypes.es';
 import {updateDragTargetReducer} from './store/reducers/dragDrop.es';
 
 /**
@@ -39,6 +44,7 @@ class FragmentsEditor extends Component {
 			[
 				addFragmentEntryLinkReducer,
 				removeFragmentEntryLinkReducer,
+				saveChangesReducer,
 				translationStatusReducer,
 				updateDragTargetReducer
 			]
@@ -153,11 +159,15 @@ class FragmentsEditor extends Component {
 				}
 			).then(
 				() => {
-					this._lastSaveDate = new Date().toLocaleTimeString(
-						Liferay.ThemeDisplay.getBCP47LanguageId()
+					this._store.dispatchAction(
+						UPDATE_LAST_SAVE_DATE,
+						{lastSaveDate: new Date()}
 					);
 
-					this._dirty = false;
+					this._store.dispatchAction(
+						UPDATE_SAVING_CHANGES_STATUS,
+						{savingChanges: false}
+					);
 				}
 			);
 
@@ -369,15 +379,17 @@ class FragmentsEditor extends Component {
 	}
 
 	/**
-	 * Sends the change of a single fragment entry link to the server and, if
-	 * success, sets the _dirty property to false.
+	 * Sends the change of a single fragment entry link to the server.
 	 * @private
 	 * @review
 	 */
 
 	_updateFragmentEntryLink(fragmentEntryLink) {
-		if (!this._dirty) {
-			this._dirty = true;
+		if (!this.savingChanges) {
+			this._store.dispatchAction(
+				UPDATE_SAVING_CHANGES_STATUS,
+				{savingChanges: true}
+			);
 
 			const formData = new FormData();
 
@@ -400,11 +412,15 @@ class FragmentsEditor extends Component {
 				}
 			).then(
 				() => {
-					this._lastSaveDate = new Date().toLocaleTimeString(
-						Liferay.ThemeDisplay.getBCP47LanguageId()
+					this._store.dispatchAction(
+						UPDATE_LAST_SAVE_DATE,
+						{lastSaveDate: new Date()}
 					);
 
-					this._dirty = false;
+					this._store.dispatchAction(
+						UPDATE_SAVING_CHANGES_STATUS,
+						{savingChanges: false}
+					);
 
 					this._store.dispatchAction(UPDATE_TRANSLATION_STATUS);
 				}
@@ -657,20 +673,6 @@ FragmentsEditor.STATE = Object.assign(
 			.value(true),
 
 		/**
-		 * When true, it indicates that are changes pending to save.
-		 * @default false
-		 * @instance
-		 * @memberOf FragmentsEditor
-		 * @private
-		 * @review
-		 * @type {boolean}
-		 */
-
-		_dirty: Config.bool()
-			.internal()
-			.value(false),
-
-		/**
 		 * CSS class for the fragments drop target.
 		 * @default undefined
 		 * @instance
@@ -694,19 +696,6 @@ FragmentsEditor.STATE = Object.assign(
 		_highlightMapping: Config.bool()
 			.internal()
 			.value(false),
-
-		/**
-		 * Last data when the autosave has been executed.
-		 * @default ''
-		 * @instance
-		 * @memberOf FragmentsEditor
-		 * @private
-		 * @type {string}
-		 */
-
-		_lastSaveDate: Config.string()
-			.internal()
-			.value(''),
 
 		/**
 		 * Editable type of the field that is being mapped

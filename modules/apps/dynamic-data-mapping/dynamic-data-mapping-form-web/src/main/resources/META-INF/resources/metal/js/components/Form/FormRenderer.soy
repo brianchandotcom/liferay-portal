@@ -114,9 +114,10 @@
 			{/delcall}
 		{/if}
 
-		<div class="btn-group ddm-page-settings" role="group">
+		<div class="dmm-page-settings" role="group">
 			{call ClayActionsDropdown.render}
 				{param items: $pageSettingsItem /}
+				{param triggerClasses: 'component-action' /}
 				{param events: [
 					'itemClicked': $_handleSettingsPageClicked
 				] /}

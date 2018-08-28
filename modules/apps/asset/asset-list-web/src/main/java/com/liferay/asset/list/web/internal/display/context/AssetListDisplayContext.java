@@ -20,7 +20,6 @@ import com.liferay.asset.list.service.AssetListEntryServiceUtil;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -144,19 +143,6 @@ public class AssetListDisplayContext {
 		}
 
 		return LanguageUtil.get(_request, title);
-	}
-
-	public String getAssetListEntryType(int type) {
-		String assetListEntryType = StringPool.BLANK;
-
-		if (type == AssetListEntryTypeConstants.TYPE_DYNAMIC) {
-			assetListEntryType = "dynamic";
-		}
-		else if (type == AssetListEntryTypeConstants.TYPE_MANUAL) {
-			assetListEntryType = "manual";
-		}
-
-		return LanguageUtil.get(_request, assetListEntryType);
 	}
 
 	public CreationMenu getCreationMenu() {

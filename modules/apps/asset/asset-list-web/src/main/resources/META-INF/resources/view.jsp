@@ -58,7 +58,7 @@
 				</h5>
 
 				<h6 class="text-default">
-					<strong><%= assetListDisplayContext.getAssetListEntryType(assetListEntry.getType()) %></strong>
+					<strong><liferay-ui:message key="<%= HtmlUtil.escape(assetListEntry.getTypeLabel()) %>" /></strong>
 				</h6>
 			</liferay-ui:search-container-column-text>
 

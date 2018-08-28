@@ -34,14 +34,14 @@ import org.json.JSONObject;
 public class LiferayJSONSerializer extends JSONSerializer {
 
 	@Override
-	public void registerSerializer(Serializer s) {
-		if (s != null) {
-			for (Class clazz : s.getSerializableClasses()) {
+	public void registerSerializer(Serializer serializer) {
+		if (serializer != null) {
+			for (Class clazz : serializer.getSerializableClasses()) {
 				_liferayJSONDeserializationWhitelist.register(clazz.getName());
 			}
 		}
 
-		super.registerSerializer(s);
+		super.registerSerializer(serializer);
 	}
 
 	@Override

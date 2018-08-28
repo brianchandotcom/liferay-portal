@@ -64,7 +64,7 @@ public class LiferayJSONDeserializationWhitelist {
 			_log.warn(
 				StringBundler.concat(
 					"Unable to deserialize ", className,
-					" due to security restrictions. To allow deserialization ",
+					" due to security restrictions. To allow deserialization, ",
 					"please use ",
 					PropsKeys.JSON_DESERIALIZATION_WHITELIST_CLASS_NAMES, "=",
 					className,

@@ -106,7 +106,10 @@ public class JSONFactoryTest extends PowerMockito {
 			serviceTrackerMapFactory
 		);
 
-		new LiferayJSONDeserializationWhitelist().afterPropertiesSet();
+		LiferayJSONDeserializationWhitelist lfrJSONDeserializationWhitelist =
+			new LiferayJSONDeserializationWhitelist();
+
+		lfrJSONDeserializationWhitelist.afterPropertiesSet();
 	}
 
 	@Before

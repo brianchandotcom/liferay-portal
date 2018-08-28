@@ -19,6 +19,7 @@ import com.liferay.asset.list.exception.AssetListEntryTitleException;
 import com.liferay.asset.list.model.AssetListEntry;
 import com.liferay.asset.list.service.AssetListEntryServiceUtil;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -29,6 +30,8 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerTestRule;
+
+import java.util.List;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -84,6 +87,29 @@ public class AssetListEntryServiceTest {
 	}
 
 	@Test
+	public void testDeleteAssetListEntries() throws PortalException {
+		AssetListEntry assetListEntry1 = _addAssetListEntry(
+			"Asset List Title 1");
+		AssetListEntry assetListEntry2 = _addAssetListEntry(
+			"Asset List Title 2");
+
+		long[] assetListEntries = {
+			assetListEntry1.getAssetListEntryId(),
+			assetListEntry2.getAssetListEntryId()
+		};
+
+		AssetListEntryServiceUtil.deleteAssetListEntries(assetListEntries);
+
+		Assert.assertNull(
+			AssetListEntryServiceUtil.fetchAssetListEntry(
+				assetListEntry1.getAssetListEntryId()));
+
+		Assert.assertNull(
+			AssetListEntryServiceUtil.fetchAssetListEntry(
+				assetListEntry2.getAssetListEntryId()));
+	}
+
+	@Test
 	public void testDeleteAssetListEntry() throws PortalException {
 		AssetListEntry assetListEntry = _addAssetListEntry("Asset List Title");
 
@@ -93,6 +119,49 @@ public class AssetListEntryServiceTest {
 		Assert.assertNull(
 			AssetListEntryServiceUtil.fetchAssetListEntry(
 				assetListEntry.getAssetListEntryId()));
+	}
+
+	@Test
+	public void testGetAssetListEntriesByGroup() throws PortalException {
+		List<AssetListEntry> originalAssetListEntries =
+			AssetListEntryServiceUtil.getAssetListEntries(
+				_group.getGroupId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+				null);
+
+		AssetListEntry assetListEntry1 = _addAssetListEntry(
+			"Asset List Title 1");
+
+		AssetListEntry assetListEntry2 = _addAssetListEntry(
+			"Asset List Title 2");
+
+		List<AssetListEntry> actualAssetListEntries =
+			AssetListEntryServiceUtil.getAssetListEntries(
+				_group.getGroupId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+				null);
+
+		Assert.assertEquals(
+			actualAssetListEntries.toString(), actualAssetListEntries.size(),
+			originalAssetListEntries.size() + 2);
+
+		Assert.assertTrue(actualAssetListEntries.contains(assetListEntry1));
+
+		Assert.assertTrue(actualAssetListEntries.contains(assetListEntry2));
+	}
+
+	@Test
+	public void testGetAssetListEntriesCountByGroup() throws PortalException {
+		int originalAssetListEntriesCount =
+			AssetListEntryServiceUtil.getAssetListEntriesCount(
+				_group.getGroupId());
+
+		_addAssetListEntry("Asset List Title 1");
+
+		int actualAssetListEntriesCount =
+			AssetListEntryServiceUtil.getAssetListEntriesCount(
+				_group.getGroupId());
+
+		Assert.assertEquals(
+			actualAssetListEntriesCount, originalAssetListEntriesCount + 1);
 	}
 
 	@Test
@@ -113,8 +182,7 @@ public class AssetListEntryServiceTest {
 				_group.getGroupId(), TestPropsValues.getUserId());
 
 		return AssetListEntryServiceUtil.addAssetListEntry(
-			TestPropsValues.getUserId(), _group.getGroupId(), title, 0,
-			serviceContext);
+			_group.getGroupId(), title, 0, serviceContext);
 	}
 
 	@DeleteAfterTestRun

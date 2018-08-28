@@ -18,55 +18,34 @@
 
 <%
 FileVersion fileVersion = (FileVersion)request.getAttribute(WebKeys.DOCUMENT_LIBRARY_FILE_VERSION);
+
+String previewQueryString = "&imagePreview=1";
+
+int status = ParamUtil.getInteger(request, "status", WorkflowConstants.STATUS_ANY);
+
+if (status != WorkflowConstants.STATUS_ANY) {
+	previewQueryString += "&status=" + status;
+}
+
+String previewFileURL = DLUtil.getPreviewURL(fileVersion.getFileEntry(), fileVersion, themeDisplay, previewQueryString);
+
+String randomNamespace = PortalUtil.generateRandomKey(request, "portlet_document_library_view_file_entry_preview") + StringPool.UNDERLINE;
 %>
 
-<c:choose>
-	<c:when test="<%= !ImageProcessorUtil.hasImages(fileVersion) %>">
-		<c:choose>
-			<c:when test="<%= !DLProcessorRegistryUtil.isPreviewableSize(fileVersion) %>">
-				<div class="alert alert-info">
-					<liferay-ui:message key="file-is-too-large-for-preview-or-thumbnail-generation" />
-				</div>
-			</c:when>
-			<c:otherwise>
-				<div class="alert alert-info">
-					<liferay-ui:message key="generating-preview-will-take-a-few-minutes" />
-				</div>
-			</c:otherwise>
-		</c:choose>
-	</c:when>
-	<c:otherwise>
-
-		<%
-		String previewQueryString = "&imagePreview=1";
-
-		int status = ParamUtil.getInteger(request, "status", WorkflowConstants.STATUS_ANY);
-
-		if (status != WorkflowConstants.STATUS_ANY) {
-			previewQueryString += "&status=" + status;
-		}
-
-		String previewFileURL = DLUtil.getPreviewURL(fileVersion.getFileEntry(), fileVersion, themeDisplay, previewQueryString);
-
-		String randomNamespace = PortalUtil.generateRandomKey(request, "portlet_document_library_view_file_entry_preview") + StringPool.UNDERLINE;
-		%>
-
-		<div class="lfr-preview-file lfr-preview-image" id="<portlet:namespace /><%= randomNamespace %>previewFile">
-			<div class="lfr-preview-file-content lfr-preview-image-content" id="<portlet:namespace /><%= randomNamespace %>previewFileContent">
-				<div class="lfr-preview-file-image-current-column">
-					<div class="lfr-preview-file-image-container">
-						<img alt="<liferay-ui:message escapeAttribute="<%= true %>" key="preview" />" class="lfr-preview-file-image-current" src="<%= previewFileURL %>" />
-					</div>
-				</div>
+<div class="lfr-preview-file lfr-preview-image" id="<portlet:namespace /><%= randomNamespace %>previewFile">
+	<div class="lfr-preview-file-content lfr-preview-image-content" id="<portlet:namespace /><%= randomNamespace %>previewFileContent">
+		<div class="lfr-preview-file-image-current-column">
+			<div class="lfr-preview-file-image-container">
+				<img alt="<liferay-ui:message escapeAttribute="<%= true %>" key="preview" />" class="lfr-preview-file-image-current" src="<%= previewFileURL %>" />
 			</div>
 		</div>
+	</div>
+</div>
 
-		<aui:script use="aui-base">
-			var currentImage = A.one('.lfr-preview-file-image-current');
+<aui:script use="aui-base">
+	var currentImage = A.one('.lfr-preview-file-image-current');
 
-			if (currentImage && (currentImage.get('complete') || currentImage.get('naturalWidth'))) {
-			currentImage.setStyle('background-image', 'none');
-			}
-		</aui:script>
-	</c:otherwise>
-</c:choose>
+	if (currentImage && (currentImage.get('complete') || currentImage.get('naturalWidth'))) {
+	currentImage.setStyle('background-image', 'none');
+	}
+</aui:script>

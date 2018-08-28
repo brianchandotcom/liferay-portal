@@ -1,4 +1,3 @@
-<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -12,6 +11,29 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
---%>
 
-<%@ include file="/document_library/init.jsp" %>
+package com.liferay.document.library.preview.exception;
+
+import com.liferay.portal.kernel.exception.PortalException;
+
+/**
+ * @author Alejandro Tardín
+ */
+public class DLPreviewGenerationInProcessException extends PortalException {
+
+	public DLPreviewGenerationInProcessException() {
+	}
+
+	public DLPreviewGenerationInProcessException(String msg) {
+		super(msg);
+	}
+
+	public DLPreviewGenerationInProcessException(String msg, Throwable cause) {
+		super(msg, cause);
+	}
+
+	public DLPreviewGenerationInProcessException(Throwable cause) {
+		super(cause);
+	}
+
+}

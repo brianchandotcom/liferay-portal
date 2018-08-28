@@ -12,22 +12,13 @@
  * details.
  */
 
-package com.liferay.document.library.preview;
-
-import com.liferay.portal.kernel.exception.PortalException;
-
-import java.io.IOException;
-
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+package com.liferay.document.library.preview.audio.internal.renderer.constants;
 
 /**
- * @author Alejandro Tardín
+ * @author Brian Wing Shun Chan
  */
-public interface DLPreviewRenderer {
+public interface DLPreviewAudioWebKeys {
 
-	public void render(HttpServletRequest request, HttpServletResponse response)
-		throws IOException, PortalException, ServletException;
+	public static final String PREVIEW_FILE_URLS = "PREVIEW_FILE_URLS";
 
 }

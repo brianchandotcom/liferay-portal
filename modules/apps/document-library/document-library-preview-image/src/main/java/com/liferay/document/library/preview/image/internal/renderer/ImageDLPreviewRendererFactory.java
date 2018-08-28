@@ -14,9 +14,12 @@
 
 package com.liferay.document.library.preview.image.internal.renderer;
 
+import com.liferay.document.library.kernel.util.DLProcessorRegistryUtil;
 import com.liferay.document.library.kernel.util.ImageProcessorUtil;
 import com.liferay.document.library.preview.DLPreviewRenderer;
 import com.liferay.document.library.preview.DLPreviewRendererProvider;
+import com.liferay.document.library.preview.exception.DLPreviewGenerationInProcessException;
+import com.liferay.document.library.preview.exception.DLPreviewSizeException;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -52,6 +55,16 @@ public class ImageDLPreviewRendererFactory
 
 		return Optional.of(
 			(request, response) -> {
+				if (!ImageProcessorUtil.hasImages(fileVersion)) {
+					if (!DLProcessorRegistryUtil.isPreviewableSize(
+							fileVersion)) {
+
+						throw new DLPreviewSizeException();
+					}
+
+					throw new DLPreviewGenerationInProcessException();
+				}
+
 				request.setAttribute(
 					WebKeys.DOCUMENT_LIBRARY_FILE_VERSION, fileVersion);
 

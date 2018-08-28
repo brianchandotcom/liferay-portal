@@ -19,7 +19,7 @@
 <%
 String videoThumbnailURL = (String)request.getAttribute(DLPreviewVideoWebKeys.VIDEO_THUMBNAIL_URL);
 
-String[] previewFileURLs = (String[])request.getAttribute(DLPreviewVideoWebKeys.PREVIEW_FILE_URLS);
+List<String> previewFileURLs = (List<String>)request.getAttribute(DLPreviewVideoWebKeys.PREVIEW_FILE_URLS);
 
 String randomNamespace = PortalUtil.generateRandomKey(request, "portlet_document_library_view_file_entry_preview") + StringPool.UNDERLINE;
 %>

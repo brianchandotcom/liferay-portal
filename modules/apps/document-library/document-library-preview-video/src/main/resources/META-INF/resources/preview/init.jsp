@@ -27,4 +27,6 @@ page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
 page import="com.liferay.portal.kernel.util.PortalUtil" %><%@
 page import="com.liferay.portal.kernel.util.Validator" %>
 
+<%@ page import="java.util.List" %>
+
 <liferay-theme:defineObjects />

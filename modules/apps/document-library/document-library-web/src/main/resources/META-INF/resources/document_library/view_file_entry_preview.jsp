@@ -24,7 +24,6 @@ int status = ParamUtil.getInteger(request, "status", WorkflowConstants.STATUS_AN
 FileEntry fileEntry = fileVersion.getFileEntry();
 
 boolean hasImages = ImageProcessorUtil.hasImages(fileVersion);
-boolean hasPDFImages = PDFProcessorUtil.hasImages(fileVersion);
 
 boolean showImageContainer = true;
 %>

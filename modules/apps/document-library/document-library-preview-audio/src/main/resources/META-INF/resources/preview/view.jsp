@@ -28,9 +28,7 @@ boolean emptyPreview = false;
 String[] previewFileURLs = null;
 
 if (hasAudio) {
-	String previewQueryString = null;
-
-	previewQueryString = "&audioPreview=1";
+	String previewQueryString = "&audioPreview=1";
 
 	if (status != WorkflowConstants.STATUS_ANY) {
 		previewQueryString += "&status=" + status;

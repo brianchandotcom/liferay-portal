@@ -220,11 +220,11 @@ public class LDAPUserExporterImpl implements UserExporter {
 			return;
 		}
 
+		Name name = new CompositeName();
+
+		name.add(binding.getNameInNamespace());
+
 		try {
-			Name name = new CompositeName();
-
-			name.add(binding.getNameInNamespace());
-
 			Modifications modifications =
 				_portalToLDAPConverter.getLDAPGroupModifications(
 					ldapServerId, userGroup, user, groupMappings, userMappings,
@@ -251,7 +251,7 @@ public class LDAPUserExporterImpl implements UserExporter {
 				groupMappings.getProperty(GroupConverterKeys.USER));
 
 			if ((groupMembers != null) && (groupMembers.size() == 1)) {
-				ldapContext.unbind(fullGroupDN);
+				ldapContext.unbind(name);
 			}
 		}
 		finally {

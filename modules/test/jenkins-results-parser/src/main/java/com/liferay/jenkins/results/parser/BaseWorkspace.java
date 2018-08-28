@@ -20,12 +20,67 @@ package com.liferay.jenkins.results.parser;
 public abstract class BaseWorkspace implements Workspace {
 
 	@Override
-	public abstract void setJobProperties(Job job);
+	public void addJenkinsLocalGitBranch(String jenkinsGitHubURL) {
+		if (jenkinsGitHubURL == null) {
+			return;
+		}
+
+		if (!JenkinsResultsParserUtil.isCINode()) {
+			return;
+		}
+
+		LocalGitRepository jenkinsLocalGitRepository =
+			GitRepositoryFactory.getLocalGitRepository(
+				"liferay-jenkins-ee", "master");
+
+		LocalGitBranch localGitBranch;
+
+		if (PullRequest.isValidGitHubPullRequestURL(jenkinsGitHubURL)) {
+			PullRequest pullRequest = new PullRequest(jenkinsGitHubURL);
+
+			localGitBranch = GitHubDevSyncUtil.createCachedLocalGitBranch(
+				jenkinsLocalGitRepository, pullRequest, true);
+
+			_jenkinsBranchName = GitHubDevSyncUtil.getCacheBranchName(
+				pullRequest);
+		}
+		else if (GitUtil.isValidGitHubRefURL(jenkinsGitHubURL)) {
+			RemoteGitRef remoteGitRef = GitUtil.getRemoteGitRef(
+				jenkinsGitHubURL);
+
+			localGitBranch = GitHubDevSyncUtil.createCachedLocalGitBranch(
+				jenkinsLocalGitRepository, remoteGitRef, true);
+
+			_jenkinsBranchName = GitHubDevSyncUtil.getCacheBranchName(
+				remoteGitRef);
+		}
+		else {
+			throw new RuntimeException(
+				"Invalid jenkins GitHub url " + jenkinsGitHubURL);
+		}
+
+		_jenkinsLocalGitBranch = localGitBranch;
+	}
 
 	@Override
-	public abstract void setupWorkspace();
+	public String getJenkinsBranchName() {
+		return _jenkinsBranchName;
+	}
 
-	protected void checkoutBranch(LocalGitBranch localGitBranch) {
+	@Override
+	public void setupWorkspace() {
+		checkoutLocalGitBranches();
+
+		writeGitRepositoryPropertiesFiles();
+	}
+
+	protected void checkoutJenkinsLocalGitBranch() {
+		if (_jenkinsLocalGitBranch != null) {
+			checkoutLocalGitBranch(_jenkinsLocalGitBranch);
+		}
+	}
+
+	protected void checkoutLocalGitBranch(LocalGitBranch localGitBranch) {
 		System.out.println();
 		System.out.println("##");
 		System.out.println("## " + localGitBranch.toString());
@@ -45,5 +100,10 @@ public abstract class BaseWorkspace implements Workspace {
 
 		gitWorkingDirectory.displayLog();
 	}
+
+	protected abstract boolean synchronizeGitBranches();
+
+	private String _jenkinsBranchName;
+	private LocalGitBranch _jenkinsLocalGitBranch;
 
 }

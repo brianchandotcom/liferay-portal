@@ -55,6 +55,13 @@
 
 	<command name="viewRequestFailedToComplete">
 		<execute function="AssertElementPresent" locator1="Message#ERROR_DISMISSIBLE" />
+
+		<if>
+			<condition function="IsElementPresent" locator1="Button#CLOSE_MESSAGE" />
+			<then>
+				<execute function="Click" locator1="Button#CLOSE_MESSAGE" />
+			</then>
+		</if>
 	</command>
 
 	<command name="viewRequiredField">
@@ -65,9 +72,9 @@
 		<execute function="AssertElementPresent" locator1="Message#SUCCESS_DISMISSIBLE" />
 
 		<if>
-			<condition function="IsElementPresent" locator1="Button#CLOSE_SUCCESS_MESSAGE" />
+			<condition function="IsElementPresent" locator1="Button#CLOSE_MESSAGE" />
 			<then>
-				<execute function="Click" locator1="Button#CLOSE_SUCCESS_MESSAGE" />
+				<execute function="Click" locator1="Button#CLOSE_MESSAGE" />
 			</then>
 		</if>
 	</command>

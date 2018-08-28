@@ -91,51 +91,47 @@ public class TLDUtil {
 			return Collections.emptyMap();
 		}
 
+		Node taglibNode = document.getDocumentElement();
+
+		NamedNodeMap namedNodeMap = taglibNode.getAttributes();
+
+		Node schemLocationNode = namedNodeMap.getNamedItem(
+			"xsi:schemaLocation");
+
+		if (schemLocationNode == null) {
+			return Collections.emptyMap();
+		}
+
+		String schemLocation = schemLocationNode.getNodeValue();
+
+		if (schemLocation == null) {
+			return Collections.emptyMap();
+		}
+
+		String[] values = schemLocation.split("\\s+");
+
+		if (values.length != 2) {
+			return Collections.emptyMap();
+		}
+
+		String definitionFileName = _getFileName(values[1]);
+
+		if (definitionFileName == null) {
+			return Collections.emptyMap();
+		}
+
+		File definitionFile = _portalDefinitions.get(definitionFileName);
+
+		if (definitionFile == null) {
+			return Collections.emptyMap();
+		}
+
 		Map<String, File> schemaProperties = new HashMap<>();
 
-		NodeList nodeList = document.getElementsByTagName("taglib");
+		schemaProperties.put(values[0].trim(), definitionFile);
 
-		for (int i = 0; i < nodeList.getLength(); i++) {
-			Node taglibNode = nodeList.item(i);
-
-			NamedNodeMap namedNodeMap = taglibNode.getAttributes();
-
-			Node schemLocationNode = namedNodeMap.getNamedItem(
-				"xsi:schemaLocation");
-
-			if (schemLocationNode == null) {
-				continue;
-			}
-
-			String schemLocation = schemLocationNode.getNodeValue();
-
-			if (schemLocation == null) {
-				continue;
-			}
-
-			String[] values = schemLocation.split("\\s+");
-
-			if (values.length != 2) {
-				continue;
-			}
-
-			String definitionFileName = _getFileName(values[1]);
-
-			if (definitionFileName == null) {
-				continue;
-			}
-
-			File definitionFile = _portalDefinitions.get(definitionFileName);
-
-			if (definitionFile == null) {
-				continue;
-			}
-
-			schemaProperties.put(values[0].trim(), definitionFile);
-
-			_populateSchemaProperties(
-				schemaProperties, _portalDefinitions, definitionFile);
-		}
+		_populateSchemaProperties(
+			schemaProperties, _portalDefinitions, definitionFile);
 
 		return schemaProperties;
 	}

@@ -16,37 +16,100 @@
 
 <%@ include file="/init.jsp" %>
 
+<c:if test="<%= assetListDisplayContext.getAssetListEntriesCount() > 0 %>">
+	<clay:management-toolbar
+		actionDropdownItems="<%= assetListDisplayContext.getAssetListEntryActionItemsDropdownItems() %>"
+		componentId="assetListEntriesEntriesManagementToolbar"
+		creationMenu="<%= assetListDisplayContext.getCreationMenu() %>"
+		searchContainerId="assetListEntries"
+		showSearch="<%= false %>"
+	/>
+</c:if>
+
 <aui:form cssClass="container-fluid-1280" name="fm">
-	<liferay-ui:search-container
-		id="assetListEntries"
-		searchContainer="<%= assetListDisplayContext.getAssetListEntriesSearchContainer() %>"
-	>
-		<liferay-ui:search-container-row
-			className="com.liferay.asset.list.model.AssetListEntry"
-			keyProperty="assetListEntryId"
-			modelVar="assetListEntry"
-		>
-			<liferay-ui:search-container-column-icon
-				icon="list"
-				toggleRowChecker="<%= false %>"
-			/>
-
-			<liferay-ui:search-container-column-text
-				colspan="<%= 2 %>"
+	<c:choose>
+		<c:when test="<%= assetListDisplayContext.getAssetListEntriesCount() > 0 %>">
+			<liferay-ui:search-container
+				id="assetListEntries"
+				searchContainer="<%= assetListDisplayContext.getAssetListEntriesSearchContainer() %>"
 			>
-				<h5>
-					<%= assetListEntry.getTitle() %>
-				</h5>
+				<liferay-ui:search-container-row
+					className="com.liferay.asset.list.model.AssetListEntry"
+					keyProperty="assetListEntryId"
+					modelVar="assetListEntry"
+				>
 
-				<h6 class="text-default">
-					<strong><%= assetListDisplayContext.getAssetListEntryType(assetListEntry.getType()) %></strong>
-				</h6>
-			</liferay-ui:search-container-column-text>
-		</liferay-ui:search-container-row>
+					<%
+					PortletURL editArticleURL = liferayPortletResponse.createRenderURL();
 
-		<liferay-ui:search-iterator
-			displayStyle="descriptive"
-			markupView="lexicon"
-		/>
-	</liferay-ui:search-container>
+					editArticleURL.setParameter("mvcPath", "/edit_asset_list_entry.jsp");
+					editArticleURL.setParameter("redirect", currentURL);
+					editArticleURL.setParameter("assetListEntryId", String.valueOf(assetListEntry.getAssetListEntryId()));
+					%>
+
+					<liferay-ui:search-container-column-icon
+						icon="list"
+						toggleRowChecker="<%= false %>"
+					/>
+
+					<liferay-ui:search-container-column-text
+						colspan="<%= 2 %>"
+					>
+						<h5>
+							<aui:a href="<%= editArticleURL.toString() %>">
+								<%= HtmlUtil.escape(assetListEntry.getTitle()) %>
+							</aui:a>
+						</h5>
+
+						<h6 class="text-default">
+							<strong><liferay-ui:message key="<%= HtmlUtil.escape(assetListEntry.getTypeLabel()) %>" /></strong>
+						</h6>
+					</liferay-ui:search-container-column-text>
+
+					<liferay-ui:search-container-column-jsp
+						path="/asset_list_entry_action.jsp"
+					/>
+				</liferay-ui:search-container-row>
+
+				<liferay-ui:search-iterator
+					displayStyle="descriptive"
+					markupView="lexicon"
+				/>
+			</liferay-ui:search-container>
+		</c:when>
+		<c:otherwise>
+			<liferay-frontend:empty-result-message
+				actionDropdownItems="<%= assetListDisplayContext.getAddAssetListEntryDropdownItems() %>"
+				description='<%= LanguageUtil.get(request, "fortunately-it-is-very-easy-to-add-new-ones") %>'
+				elementType='<%= LanguageUtil.get(request, "asset-lists") %>'
+			/>
+		</c:otherwise>
+	</c:choose>
 </aui:form>
+
+<aui:script>
+	var deleteSelectedAssetListEntries = function() {
+		if (confirm('<liferay-ui:message key="are-you-sure-you-want-to-delete-this" />')) {
+			submitForm(document.querySelector('#<portlet:namespace />fm'), '<portlet:actionURL name="/asset_list/delete_asset_list_entry"><portlet:param name="redirect" value="<%= currentURL %>" /></portlet:actionURL>');
+		}
+	}
+
+	var ACTIONS = {
+		'deleteSelectedAssetListEntries': deleteSelectedAssetListEntries
+	};
+
+	Liferay.componentReady('assetListEntriesEntriesManagementToolbar').then(
+		function(managementToolbar) {
+			managementToolbar.on(
+				'actionItemClicked',
+					function(event) {
+						var itemData = event.data.item.data;
+
+						if (itemData && itemData.action && ACTIONS[itemData.action]) {
+							ACTIONS[itemData.action]();
+						}
+					}
+				);
+		}
+	);
+</aui:script>

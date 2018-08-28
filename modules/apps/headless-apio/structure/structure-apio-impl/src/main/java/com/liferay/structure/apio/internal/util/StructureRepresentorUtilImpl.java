@@ -23,7 +23,9 @@ import com.liferay.dynamic.data.mapping.model.DDMFormLayoutPage;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayoutRow;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
-import com.liferay.structure.apio.internal.model.FormLayoutPage;
+import com.liferay.structure.apio.architect.model.FormLayoutPage;
+import com.liferay.structure.apio.architect.util.StructureRepresentorUtil;
+import com.liferay.structure.apio.internal.model.FormLayoutPageImpl;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -36,12 +38,16 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Paulo Cruz
  */
-public final class StructureRepresentorUtil {
+@Component(immediate = true, service = StructureRepresentorUtil.class)
+public final class StructureRepresentorUtilImpl
+	implements StructureRepresentorUtil {
 
-	public static Function
+	public Function
 		<DDMFormField, List<Map.Entry<String, LocalizedValue>>> getFieldOptions(
 			Function<DDMFormField, DDMFormFieldOptions> function) {
 
@@ -58,7 +64,7 @@ public final class StructureRepresentorUtil {
 		);
 	}
 
-	public static Function
+	public Function
 		<DDMFormField, List<Map.Entry<String, LocalizedValue>>> getFieldOptions(
 			String key) {
 
@@ -66,7 +72,8 @@ public final class StructureRepresentorUtil {
 			ddmFormField -> (DDMFormFieldOptions)ddmFormField.getProperty(key));
 	}
 
-	public static <T> Function<DDMFormField, T> getFieldProperty(
+	@Override
+	public <T> Function<DDMFormField, T> getFieldProperty(
 		Function<Object, T> parseFunction, String key) {
 
 		return ddmFormField -> Try.fromFallible(
@@ -78,14 +85,8 @@ public final class StructureRepresentorUtil {
 		);
 	}
 
-	public static BiFunction<DDMFormField, Locale, String> getLocalizedString(
-		String key) {
-
-		return LocalizedValueUtil.getLocalizedString(
-			ddmFormField -> (LocalizedValue)ddmFormField.getProperty(key));
-	}
-
-	public static List<FormLayoutPage> getPages(DDMStructure ddmStructure) {
+	@Override
+	public List<FormLayoutPage> getFormLayoutPages(DDMStructure ddmStructure) {
 		return Try.fromFallible(
 			ddmStructure::getDDMFormLayout
 		).map(
@@ -99,6 +100,14 @@ public final class StructureRepresentorUtil {
 		).collect(
 			Collectors.toList()
 		);
+	}
+
+	@Override
+	public BiFunction<DDMFormField, Locale, String> getLocalizedString(
+		String key) {
+
+		return LocalizedValueUtil.getLocalizedString(
+			ddmFormField -> (LocalizedValue)ddmFormField.getProperty(key));
 	}
 
 	private static List<String> _getFieldNames(
@@ -149,7 +158,7 @@ public final class StructureRepresentorUtil {
 		).map(
 			_getFieldsPerPage(ddmStructure)
 		).map(
-			ddmFormFields -> new FormLayoutPage(
+			ddmFormFields -> new FormLayoutPageImpl(
 				ddmFormLayoutPage, ddmFormFields)
 		).orElse(
 			null

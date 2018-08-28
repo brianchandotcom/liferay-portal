@@ -258,12 +258,10 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 	}
 
 	@Activate
-	@Modified
 	protected void activate(
 		BundleContext bundleContext, Map<String, Object> properties) {
 
-		_inlinePermissionConfiguration = ConfigurableUtil.createConfigurable(
-			InlinePermissionConfiguration.class, properties);
+		modified(properties);
 
 		_permissionSQLContributors = ServiceTrackerMapFactory.openMultiValueMap(
 			bundleContext, PermissionSQLContributor.class, "model.class.name");
@@ -359,6 +357,12 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 		}
 
 		return userId;
+	}
+
+	@Modified
+	protected void modified(Map<String, Object> properties) {
+		_inlinePermissionConfiguration = ConfigurableUtil.createConfigurable(
+			InlinePermissionConfiguration.class, properties);
 	}
 
 	protected String replacePermissionCheckJoin(

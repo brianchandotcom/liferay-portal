@@ -513,6 +513,41 @@ public class JournalArticleServiceTest {
 	}
 
 	@Test
+	public void testGetLatestArticlesByStatus() throws Exception {
+		List<JournalArticle> articles = addArticles(
+			1, RandomTestUtil.randomString());
+
+		articles.add(0, _article);
+
+		int count = JournalArticleServiceUtil.getLatestArticlesCount(
+			_group.getGroupId(), WorkflowConstants.STATUS_APPROVED);
+
+		Assert.assertEquals(2, count);
+
+		List<JournalArticle> latestArticles =
+			JournalArticleServiceUtil.getLatestArticles(
+				_group.getGroupId(), WorkflowConstants.STATUS_APPROVED,
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+
+		Assert.assertEquals(latestArticles, articles);
+
+		_article = updateArticleStatus(
+			_article, WorkflowConstants.STATUS_DRAFT);
+
+		int draftCount = JournalArticleServiceUtil.getLatestArticlesCount(
+			_group.getGroupId(), WorkflowConstants.STATUS_DRAFT);
+
+		Assert.assertEquals(1, draftCount);
+
+		List<JournalArticle> draftArticles =
+			JournalArticleServiceUtil.getLatestArticles(
+				_group.getGroupId(), WorkflowConstants.STATUS_DRAFT,
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+
+		Assert.assertEquals(_article, draftArticles.get(0));
+	}
+
+	@Test
 	public void testSearchArticlesByKeyword() throws Exception {
 		List<JournalArticle> expectedArticles = createArticlesWithKeyword(2);
 

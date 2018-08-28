@@ -20,6 +20,23 @@
 				(tempJournalArticle.id_ IS NULL)
 		]]>
 	</sql>
+	<sql id="com.liferay.journal.service.persistence.JournalArticleFinder.countByG_ST">
+		<![CDATA[
+			SELECT
+				COUNT(DISTINCT JournalArticle.articleId) AS COUNT_VALUE
+			FROM
+				JournalArticle
+			LEFT JOIN
+				JournalArticle tempJournalArticle ON
+					(JournalArticle.articleId = tempJournalArticle.articleId) AND
+					(JournalArticle.groupId = tempJournalArticle.groupId) AND
+					(JournalArticle.version < tempJournalArticle.version)
+			WHERE
+				(JournalArticle.groupId = ?) AND
+				(JournalArticle.status = ?) AND
+				(tempJournalArticle.id_ IS NULL)
+		]]>
+	</sql>
 	<sql id="com.liferay.journal.service.persistence.JournalArticleFinder.countByG_C_S">
 		<![CDATA[
 			SELECT
@@ -192,6 +209,25 @@
 				(JournalArticle.groupId = ?) AND
 				([$STATUS$]) AND
 				[$FOLDER_ID$] AND
+				(tempJournalArticle.id_ IS NULL)
+			ORDER BY
+				JournalArticle.id_ ASC
+		]]>
+	</sql>
+	<sql id="com.liferay.journal.service.persistence.JournalArticleFinder.findByG_ST">
+		<![CDATA[
+			SELECT
+				JournalArticle.*
+			FROM
+				JournalArticle
+			LEFT JOIN
+				JournalArticle tempJournalArticle ON
+					(JournalArticle.articleId = tempJournalArticle.articleId) AND
+					(JournalArticle.groupId = tempJournalArticle.groupId) AND
+					(JournalArticle.version < tempJournalArticle.version)
+			WHERE
+				(JournalArticle.groupId = ?) AND
+				(JournalArticle.status = ?) AND
 				(tempJournalArticle.id_ IS NULL)
 			ORDER BY
 				JournalArticle.id_ ASC

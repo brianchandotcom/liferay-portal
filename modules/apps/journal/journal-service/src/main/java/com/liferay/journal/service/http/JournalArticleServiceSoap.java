@@ -480,8 +480,8 @@ public class JournalArticleServiceSoap {
 	* @param groupId the primary key of the web content article's group
 	* @param folderId the primary key of the web content article folder
 	* @return the matching web content articles
-	* @deprecated As of Judson (7.1.x), replaced by {@link
-	#getArticles(long groupId, long folderId, Locale locale)}
+	* @deprecated As of Judson (7.1.x), replaced by {@link #getArticles(long
+	groupId, long folderId, Locale locale)}
 	*/
 	@Deprecated
 	public static com.liferay.journal.model.JournalArticleSoap[] getArticles(
@@ -521,9 +521,9 @@ public class JournalArticleServiceSoap {
 	return (not inclusive)
 	* @param obc the comparator to order the web content articles
 	* @return the matching web content articles
-	* @deprecated As of Judson (7.1.x), replaced by {@link
-	#getArticles(long groupId, long folderId, Locale locale,
-	int start, int end, OrderByComparator obc)}
+	* @deprecated As of Judson (7.1.x), replaced by {@link #getArticles(long
+	groupId, long folderId, Locale locale, int start, int end,
+	OrderByComparator obc)}
 	*/
 	@Deprecated
 	public static com.liferay.journal.model.JournalArticleSoap[] getArticles(
@@ -1273,6 +1273,39 @@ public class JournalArticleServiceSoap {
 					className, classPK);
 
 			return com.liferay.journal.model.JournalArticleSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.journal.model.JournalArticleSoap[] getLatestArticles(
+		long groupId, int status, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.journal.model.JournalArticle> obc)
+		throws RemoteException {
+		try {
+			java.util.List<com.liferay.journal.model.JournalArticle> returnValue =
+				JournalArticleServiceUtil.getLatestArticles(groupId, status,
+					start, end, obc);
+
+			return com.liferay.journal.model.JournalArticleSoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static int getLatestArticlesCount(long groupId, int status)
+		throws RemoteException {
+		try {
+			int returnValue = JournalArticleServiceUtil.getLatestArticlesCount(groupId,
+					status);
+
+			return returnValue;
 		}
 		catch (Exception e) {
 			_log.error(e, e);

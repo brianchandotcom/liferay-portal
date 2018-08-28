@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.sharing.document.library.internal.permission.test;
+package com.liferay.sharing.document.library.internal.security.permission.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.document.library.kernel.model.DLFileEntryConstants;
@@ -50,7 +50,6 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerTestRule;
 import com.liferay.sharing.constants.SharingEntryActionKey;
 import com.liferay.sharing.security.permission.SharingPermissionChecker;
-import com.liferay.sharing.service.SharingEntryLocalService;
 
 import java.util.Arrays;
 
@@ -416,9 +415,6 @@ public class DLFileEntrySharingPermissionCheckerTest {
 
 	@Inject
 	private RoleLocalService _roleLocalService;
-
-	@Inject
-	private SharingEntryLocalService _sharingEntryLocalService;
 
 	@Inject(
 		filter = "model.class.name=com.liferay.document.library.kernel.model.DLFileEntry"

@@ -15,15 +15,3 @@
 --%>
 
 <%@ include file="/document_library/init.jsp" %>
-
-<%
-FileVersion fileVersion = (FileVersion)request.getAttribute(WebKeys.DOCUMENT_LIBRARY_FILE_VERSION);
-
-int status = ParamUtil.getInteger(request, "status", WorkflowConstants.STATUS_ANY);
-
-FileEntry fileEntry = fileVersion.getFileEntry();
-
-boolean hasImages = ImageProcessorUtil.hasImages(fileVersion);
-%>
-
-<%@ include file="/document_library/view_file_entry_preview.jspf" %>

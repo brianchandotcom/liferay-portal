@@ -53,7 +53,7 @@ public class PortletAsyncContextImpl implements LiferayPortletAsyncContext {
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws IllegalStateException {
 
-		if (!_resourceRequest.isAsyncStarted() || _calledDispatch) {
+		if (!_resourceRequest.isAsyncStarted() || _returnedToContainer) {
 			throw new IllegalStateException();
 		}
 
@@ -149,6 +149,10 @@ public class PortletAsyncContextImpl implements LiferayPortletAsyncContext {
 	public void reset(AsyncContext asyncContext) {
 	}
 
+	public void setReturnedToContainer() {
+		_returnedToContainer = true;
+	}
+
 	@Override
 	public void setTimeout(long timeout) {
 		_asyncContext.setTimeout(timeout);
@@ -170,6 +174,7 @@ public class PortletAsyncContextImpl implements LiferayPortletAsyncContext {
 
 		_calledDispatch = false;
 		_calledComplete = false;
+		_returnedToContainer = false;
 
 		if (_portletAsyncListenerAdapter == null) {
 			_portletAsyncListenerAdapter = new PortletAsyncListenerAdapter(
@@ -186,5 +191,6 @@ public class PortletAsyncContextImpl implements LiferayPortletAsyncContext {
 	private PortletAsyncListenerAdapter _portletAsyncListenerAdapter;
 	private ResourceRequest _resourceRequest;
 	private ResourceResponse _resourceResponse;
+	private boolean _returnedToContainer;
 
 }

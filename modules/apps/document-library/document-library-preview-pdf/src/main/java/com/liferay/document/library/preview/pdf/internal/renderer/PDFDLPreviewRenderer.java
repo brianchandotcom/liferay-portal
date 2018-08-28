@@ -14,6 +14,7 @@
 
 package com.liferay.document.library.preview.pdf.internal.renderer;
 
+import com.liferay.document.library.kernel.util.PDFProcessorUtil;
 import com.liferay.document.library.preview.renderer.DLPreviewRenderer;
 import com.liferay.document.library.preview.renderer.DLPreviewRendererProvider;
 import com.liferay.portal.kernel.repository.model.FileVersion;
@@ -45,13 +46,17 @@ public class PDFDLPreviewRenderer implements DLPreviewRendererProvider {
 	public Optional<DLPreviewRenderer> getPreviewRenderer(
 		FileVersion fileVersion) {
 
+		if (!PDFProcessorUtil.isDocumentSupported(fileVersion)) {
+			return Optional.empty();
+		}
+
 		return Optional.of(
 			(request, response) -> {
 				request.setAttribute(
 					WebKeys.DOCUMENT_LIBRARY_FILE_VERSION, fileVersion);
 
 				RequestDispatcher requestDispatcher =
-					_servletContext.getRequestDispatcher("/page.jsp");
+					_servletContext.getRequestDispatcher("/preview/view.jsp");
 
 				requestDispatcher.include(request, response);
 			});
@@ -61,7 +66,7 @@ public class PDFDLPreviewRenderer implements DLPreviewRendererProvider {
 	public Optional<DLPreviewRenderer> getThumbnailRenderer(
 		FileVersion fileVersion) {
 
-		return getPreviewRenderer(fileVersion);
+		return Optional.empty();
 	}
 
 	@Reference(

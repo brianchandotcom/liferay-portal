@@ -34,8 +34,7 @@ import org.w3c.dom.NodeList;
  */
 public class TLDUtil {
 
-	public static Map<String, File> getDTDProperties(
-			File file, File gradleHomeDir)
+	public static Map<String, File> getDTDProperties(File file)
 		throws Exception {
 
 		String fileName = file.getName();
@@ -68,22 +67,18 @@ public class TLDUtil {
 			return Collections.emptyMap();
 		}
 
-		Map<String, File> portalDefinitions = _getPortalDefinitions(
-			gradleHomeDir);
-
-		if (!portalDefinitions.containsKey(definitionFileName)) {
+		if (!_portalDefinitions.containsKey(definitionFileName)) {
 			return Collections.emptyMap();
 		}
 
 		Map<String, File> dtdProperties = new HashMap<>();
 
-		dtdProperties.put(publicId, portalDefinitions.get(definitionFileName));
+		dtdProperties.put(publicId, _portalDefinitions.get(definitionFileName));
 
 		return dtdProperties;
 	}
 
-	public static Map<String, File> getSchemaProperties(
-			File file, File gradleHomeDir)
+	public static Map<String, File> getSchemaProperties(File file)
 		throws Exception {
 
 		String fileName = file.getName();
@@ -98,8 +93,6 @@ public class TLDUtil {
 			return Collections.emptyMap();
 		}
 
-		Map<String, File> portalDefinitions = _getPortalDefinitions(
-			gradleHomeDir);
 		Map<String, File> schemaProperties = new HashMap<>();
 
 		NodeList nodeList = document.getElementsByTagName("taglib");
@@ -134,16 +127,16 @@ public class TLDUtil {
 				continue;
 			}
 
-			if (!portalDefinitions.containsKey(definitionFileName)) {
+			if (!_portalDefinitions.containsKey(definitionFileName)) {
 				continue;
 			}
 
-			File definitionFile = portalDefinitions.get(definitionFileName);
+			File definitionFile = _portalDefinitions.get(definitionFileName);
 
 			schemaProperties.put(values[0].trim(), definitionFile);
 
 			_populateSchemaProperties(
-				schemaProperties, portalDefinitions, definitionFile);
+				schemaProperties, _portalDefinitions, definitionFile);
 		}
 
 		return schemaProperties;
@@ -175,40 +168,6 @@ public class TLDUtil {
 		}
 
 		return trimmedString.substring(index + 1);
-	}
-
-	private static synchronized Map<String, File> _getPortalDefinitions(
-		File gradleHomeDir) {
-
-		if (_initialized) {
-			return _portalDefinitions;
-		}
-
-		File dir = gradleHomeDir;
-
-		while (dir != null) {
-			File portalImplDir = new File(dir, "portal-impl");
-
-			if (portalImplDir.exists()) {
-				break;
-			}
-
-			dir = dir.getParentFile();
-		}
-
-		if (dir != null) {
-			File definitionsDir = new File(dir, "definitions");
-
-			for (File definitionFile : definitionsDir.listFiles()) {
-				String definitionFileName = definitionFile.getName();
-
-				_portalDefinitions.put(definitionFileName, definitionFile);
-			}
-		}
-
-		_initialized = true;
-
-		return _portalDefinitions;
 	}
 
 	private static void _populateSchemaProperties(
@@ -301,7 +260,21 @@ public class TLDUtil {
 	private static final String _LOAD_EXTERNAL_DTD =
 		"http://apache.org/xml/features/nonvalidating/load-external-dtd";
 
-	private static boolean _initialized;
 	private static final Map<String, File> _portalDefinitions = new HashMap<>();
+
+	static {
+		if (System.getProperty("gradle.user.home") != null) {
+			File definitionsDir = new File(
+				System.getProperty("gradle.user.home") + "/../definitions");
+
+			if (definitionsDir.exists()) {
+				for (File definitionFile : definitionsDir.listFiles()) {
+					String definitionFileName = definitionFile.getName();
+
+					_portalDefinitions.put(definitionFileName, definitionFile);
+				}
+			}
+		}
+	}
 
 }

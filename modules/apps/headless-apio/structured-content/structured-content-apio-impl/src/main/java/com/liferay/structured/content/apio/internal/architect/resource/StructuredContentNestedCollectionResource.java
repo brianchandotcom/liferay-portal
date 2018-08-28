@@ -397,13 +397,11 @@ public class StructuredContentNestedCollectionResource
 	}
 
 	private PageItems<JournalArticleWrapper> _getPageItems(
-			Pagination pagination, long contentSpaceId,
-			ThemeDisplay themeDisplay)
-		throws PortalException {
+		Pagination pagination, long contentSpaceId, ThemeDisplay themeDisplay) {
 
 		List<JournalArticleWrapper> journalArticleWrappers = Stream.of(
-			_journalArticleService.getGroupArticles(
-				contentSpaceId, 0, 0, WorkflowConstants.STATUS_APPROVED,
+			_journalArticleService.getLatestArticles(
+				contentSpaceId, WorkflowConstants.STATUS_APPROVED,
 				pagination.getStartPosition(), pagination.getEndPosition(),
 				null)
 		).flatMap(
@@ -414,8 +412,8 @@ public class StructuredContentNestedCollectionResource
 		).collect(
 			Collectors.toList()
 		);
-		int count = _journalArticleService.getGroupArticlesCount(
-			contentSpaceId, 0, 0, WorkflowConstants.STATUS_APPROVED);
+		int count = _journalArticleService.getLatestArticlesCount(
+			contentSpaceId, WorkflowConstants.STATUS_APPROVED);
 
 		return new PageItems<>(journalArticleWrappers, count);
 	}

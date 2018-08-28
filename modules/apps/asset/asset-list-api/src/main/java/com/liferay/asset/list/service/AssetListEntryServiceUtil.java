@@ -43,12 +43,16 @@ public class AssetListEntryServiceUtil {
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.asset.list.service.impl.AssetListEntryServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static com.liferay.asset.list.model.AssetListEntry addAssetListEntry(
-		long userId, long groupId, String title, int type,
+		long groupId, String title, int type,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
-				   .addAssetListEntry(userId, groupId, title, type,
-			serviceContext);
+				   .addAssetListEntry(groupId, title, type, serviceContext);
+	}
+
+	public static void deleteAssetListEntries(long[] assetListEntriesIds)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().deleteAssetListEntries(assetListEntriesIds);
 	}
 
 	public static com.liferay.asset.list.model.AssetListEntry deleteAssetListEntry(
@@ -60,6 +64,17 @@ public class AssetListEntryServiceUtil {
 	public static com.liferay.asset.list.model.AssetListEntry fetchAssetListEntry(
 		long assetListEntryId) {
 		return getService().fetchAssetListEntry(assetListEntryId);
+	}
+
+	public static java.util.List<com.liferay.asset.list.model.AssetListEntry> getAssetListEntries(
+		long groupId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.asset.list.model.AssetListEntry> orderByComparator) {
+		return getService()
+				   .getAssetListEntries(groupId, start, end, orderByComparator);
+	}
+
+	public static int getAssetListEntriesCount(long groupId) {
+		return getService().getAssetListEntriesCount(groupId);
 	}
 
 	/**

@@ -12,31 +12,14 @@
  * details.
  */
 
-package com.liferay.asset.list.model.impl;
-
-import aQute.bnd.annotation.ProviderType;
-
-import com.liferay.asset.list.constants.AssetListEntryTypeConstants;
-import com.liferay.petra.string.StringPool;
+package com.liferay.asset.list.constants;
 
 /**
- * @author Pavel Savinov
+ * @author Jürgen Kappler
  */
-@ProviderType
-public class AssetListEntryImpl extends AssetListEntryBaseImpl {
+public class AssetListPortletKeys {
 
-	public AssetListEntryImpl() {
-	}
-
-	public String getTypeLabel() {
-		if (getType() == AssetListEntryTypeConstants.TYPE_DYNAMIC) {
-			return "dynamic";
-		}
-		else if (getType() == AssetListEntryTypeConstants.TYPE_MANUAL) {
-			return "manual";
-		}
-
-		return StringPool.BLANK;
-	}
+	public static final String ASSET_LIST =
+		"com_liferay_asset_list_web_portlet_AssetListPortlet";
 
 }

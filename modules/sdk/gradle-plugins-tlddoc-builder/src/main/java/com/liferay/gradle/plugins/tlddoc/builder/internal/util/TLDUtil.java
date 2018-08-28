@@ -67,15 +67,13 @@ public class TLDUtil {
 			return Collections.emptyMap();
 		}
 
-		if (!_portalDefinitions.containsKey(definitionFileName)) {
+		File definitionFile = _portalDefinitions.get(definitionFileName);
+
+		if (definitionFile == null) {
 			return Collections.emptyMap();
 		}
 
-		Map<String, File> dtdProperties = new HashMap<>();
-
-		dtdProperties.put(publicId, _portalDefinitions.get(definitionFileName));
-
-		return dtdProperties;
+		return Collections.singletonMap(publicId, definitionFile);
 	}
 
 	public static Map<String, File> getSchemaProperties(File file)
@@ -127,11 +125,11 @@ public class TLDUtil {
 				continue;
 			}
 
-			if (!_portalDefinitions.containsKey(definitionFileName)) {
+			File definitionFile = _portalDefinitions.get(definitionFileName);
+
+			if (definitionFile == null) {
 				continue;
 			}
-
-			File definitionFile = _portalDefinitions.get(definitionFileName);
 
 			schemaProperties.put(values[0].trim(), definitionFile);
 
@@ -214,11 +212,11 @@ public class TLDUtil {
 				continue;
 			}
 
-			if (!portalDefinitions.containsKey(fileName)) {
+			File curDefinitionFile = portalDefinitions.get(fileName);
+
+			if (curDefinitionFile == null) {
 				continue;
 			}
-
-			File curDefinitionFile = portalDefinitions.get(fileName);
 
 			schemaProperties.put(namespace, curDefinitionFile);
 
@@ -246,11 +244,11 @@ public class TLDUtil {
 				continue;
 			}
 
-			if (!portalDefinitions.containsKey(schemaLocation)) {
+			File curDefinitionFile = portalDefinitions.get(schemaLocation);
+
+			if (curDefinitionFile == null) {
 				continue;
 			}
-
-			File curDefinitionFile = portalDefinitions.get(schemaLocation);
 
 			_populateSchemaProperties(
 				schemaProperties, portalDefinitions, curDefinitionFile);
@@ -263,9 +261,10 @@ public class TLDUtil {
 	private static final Map<String, File> _portalDefinitions = new HashMap<>();
 
 	static {
-		if (System.getProperty("gradle.user.home") != null) {
-			File definitionsDir = new File(
-				System.getProperty("gradle.user.home") + "/../definitions");
+		String gradleUserHome = System.getProperty("gradle.user.home");
+
+		if (gradleUserHome != null) {
+			File definitionsDir = new File(gradleUserHome, "/../definitions");
 
 			if (definitionsDir.exists()) {
 				for (File definitionFile : definitionsDir.listFiles()) {

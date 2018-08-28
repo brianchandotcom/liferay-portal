@@ -44,12 +44,12 @@ import org.osgi.service.component.annotations.Component;
  * @author Paulo Cruz
  */
 @Component(immediate = true, service = StructureRepresentorUtil.class)
-public final class StructureRepresentorUtilImpl implements
-	StructureRepresentorUtil {
+public final class StructureRepresentorUtilImpl
+	implements StructureRepresentorUtil {
 
 	public Function
 		<DDMFormField, List<Map.Entry<String, LocalizedValue>>> getFieldOptions(
-		Function<DDMFormField, DDMFormFieldOptions> function) {
+			Function<DDMFormField, DDMFormFieldOptions> function) {
 
 		return ddmFormField -> Try.fromFallible(
 			() -> function.apply(ddmFormField)
@@ -66,7 +66,7 @@ public final class StructureRepresentorUtilImpl implements
 
 	public Function
 		<DDMFormField, List<Map.Entry<String, LocalizedValue>>> getFieldOptions(
-		String key) {
+			String key) {
 
 		return getFieldOptions(
 			ddmFormField -> (DDMFormFieldOptions)ddmFormField.getProperty(key));

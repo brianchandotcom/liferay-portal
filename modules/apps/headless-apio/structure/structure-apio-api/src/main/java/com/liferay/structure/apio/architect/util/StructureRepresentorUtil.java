@@ -31,12 +31,12 @@ import java.util.function.Function;
  */
 public interface StructureRepresentorUtil {
 
-	public Function<DDMFormField,
-		List<Map.Entry<String, LocalizedValue>>> getFieldOptions(
+	public Function
+		<DDMFormField, List<Map.Entry<String, LocalizedValue>>> getFieldOptions(
 			Function<DDMFormField, DDMFormFieldOptions> function);
 
-	public Function<DDMFormField,
-		List<Map.Entry<String, LocalizedValue>>> getFieldOptions(String key);
+	public Function<DDMFormField, List<Map.Entry<String, LocalizedValue>>>
+		getFieldOptions(String key);
 
 	public <T> Function<DDMFormField, T> getFieldProperty(
 		Function<Object, T> parseFunction, String key);

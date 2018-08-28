@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.document.library.preview.image.internal.renderer;
+package com.liferay.document.library.preview.image.internal;
 
 import com.liferay.document.library.kernel.util.DLProcessorRegistryUtil;
 import com.liferay.document.library.kernel.util.ImageProcessorUtil;

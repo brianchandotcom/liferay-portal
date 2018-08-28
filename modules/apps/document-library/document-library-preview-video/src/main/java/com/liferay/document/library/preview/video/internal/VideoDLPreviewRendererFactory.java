@@ -12,14 +12,16 @@
  * details.
  */
 
-package com.liferay.document.library.preview.audio.internal.renderer;
+package com.liferay.document.library.preview.video.internal;
 
-import com.liferay.document.library.kernel.util.AudioProcessorUtil;
+import com.liferay.document.library.kernel.util.DLProcessorRegistryUtil;
 import com.liferay.document.library.kernel.util.DLUtil;
+import com.liferay.document.library.kernel.util.VideoProcessorUtil;
 import com.liferay.document.library.preview.DLPreviewRenderer;
 import com.liferay.document.library.preview.DLPreviewRendererProvider;
-import com.liferay.document.library.preview.audio.internal.renderer.constants.DLPreviewAudioWebKeys;
 import com.liferay.document.library.preview.exception.DLPreviewGenerationInProcessException;
+import com.liferay.document.library.preview.exception.DLPreviewSizeException;
+import com.liferay.document.library.preview.video.internal.constants.DLPreviewVideoWebKeys;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -47,30 +49,44 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Alejandro Tardín
  */
-@Component(immediate = true, service = AudioDLPreviewRendererFactory.class)
-public class AudioDLPreviewRendererFactory
+@Component(immediate = true, service = VideoDLPreviewRendererFactory.class)
+public class VideoDLPreviewRendererFactory
 	implements DLPreviewRendererProvider {
 
 	@Override
 	public Optional<DLPreviewRenderer> getPreviewDLPreviewRendererOptional(
 		FileVersion fileVersion) {
 
-		if (!AudioProcessorUtil.isAudioSupported(fileVersion)) {
+		if (!VideoProcessorUtil.isVideoSupported(fileVersion)) {
 			return Optional.empty();
 		}
 
 		return Optional.of(
 			(request, response) -> {
-				if (!AudioProcessorUtil.hasAudio(fileVersion)) {
+				if (!VideoProcessorUtil.hasVideo(fileVersion)) {
+					if (!DLProcessorRegistryUtil.isPreviewableSize(
+							fileVersion)) {
+
+						throw new DLPreviewSizeException();
+					}
+
 					throw new DLPreviewGenerationInProcessException();
 				}
 
-				request.setAttribute(
-					WebKeys.DOCUMENT_LIBRARY_FILE_VERSION, fileVersion);
+				ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+					WebKeys.THEME_DISPLAY);
+
+				String videoThumbnailURL = _getVideoThumbnailURL(
+					fileVersion, themeDisplay);
 
 				request.setAttribute(
-					DLPreviewAudioWebKeys.PREVIEW_FILE_URLS,
-					_getPreviewFileURLs(fileVersion, request));
+					DLPreviewVideoWebKeys.VIDEO_THUMBNAIL_URL,
+					videoThumbnailURL);
+
+				request.setAttribute(
+					DLPreviewVideoWebKeys.PREVIEW_FILE_URLS,
+					_getPreviewFileURLs(
+						fileVersion, videoThumbnailURL, request));
 
 				RequestDispatcher requestDispatcher =
 					_servletContext.getRequestDispatcher("/preview/view.jsp");
@@ -90,9 +106,9 @@ public class AudioDLPreviewRendererFactory
 	protected void activate(BundleContext bundleContext) {
 		Dictionary<String, Object[]> properties = new HashMapDictionary<>();
 
-		Set<String> audioMimeTypes = AudioProcessorUtil.getAudioMimeTypes();
+		Set<String> videoMimeTypes = VideoProcessorUtil.getVideoMimeTypes();
 
-		properties.put("content.type", audioMimeTypes.toArray());
+		properties.put("content.type", videoMimeTypes.toArray());
 
 		_dlPreviewRendererProviderServiceRegistration =
 			bundleContext.registerService(
@@ -105,48 +121,61 @@ public class AudioDLPreviewRendererFactory
 	}
 
 	private String[] _getPreviewFileURLs(
-			FileVersion fileVersion, HttpServletRequest request)
+			FileVersion fileVersion, String videoThumbnailURL,
+			HttpServletRequest request)
 		throws PortalException {
 
 		int status = ParamUtil.getInteger(
 			request, "status", WorkflowConstants.STATUS_ANY);
 
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
 		boolean emptyPreview = false;
 		String[] previewFileURLs = null;
 
-		String previewQueryString = "&audioPreview=1";
+		String previewQueryString = "&videoPreview=1";
 
 		if (status != WorkflowConstants.STATUS_ANY) {
 			previewQueryString += "&status=" + status;
 		}
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
 		emptyPreview = true;
 
-		String[] dlFileEntryPreviewAudioContainers =
-			PropsValues.DL_FILE_ENTRY_PREVIEW_AUDIO_CONTAINERS;
+		String[] dlFileEntryPreviewVideoContainers =
+			PropsValues.DL_FILE_ENTRY_PREVIEW_VIDEO_CONTAINERS;
 
-		previewFileURLs = new String[dlFileEntryPreviewAudioContainers.length];
+		if (dlFileEntryPreviewVideoContainers.length > 0) {
+			previewFileURLs =
+				new String[dlFileEntryPreviewVideoContainers.length];
 
-		try {
-			for (int i = 0; i < dlFileEntryPreviewAudioContainers.length; i++) {
-				if (AudioProcessorUtil.getPreviewFileSize(
-						fileVersion,
-						dlFileEntryPreviewAudioContainers[i]) > 0) {
+			try {
+				for (int i =
+						0; i < dlFileEntryPreviewVideoContainers.length; i++) {
 
-					emptyPreview = false;
+					if (VideoProcessorUtil.getPreviewFileSize(
+							fileVersion,
+							dlFileEntryPreviewVideoContainers[i]) > 0) {
 
-					previewFileURLs[i] = DLUtil.getPreviewURL(
-						fileVersion.getFileEntry(), fileVersion, themeDisplay,
-						previewQueryString + "&type=" +
-							dlFileEntryPreviewAudioContainers[i]);
+						emptyPreview = false;
+						previewFileURLs[i] = DLUtil.getPreviewURL(
+							fileVersion.getFileEntry(), fileVersion,
+							themeDisplay,
+							previewQueryString + "&type=" +
+								dlFileEntryPreviewVideoContainers[i]);
+					}
 				}
 			}
+			catch (Exception e) {
+				throw new PortalException(e);
+			}
 		}
-		catch (Exception e) {
-			throw new PortalException(e);
+		else {
+			emptyPreview = false;
+
+			previewFileURLs = new String[1];
+
+			previewFileURLs[0] = videoThumbnailURL;
 		}
 
 		if (emptyPreview) {
@@ -157,11 +186,20 @@ public class AudioDLPreviewRendererFactory
 		return previewFileURLs;
 	}
 
+	private String _getVideoThumbnailURL(
+			FileVersion fileVersion, ThemeDisplay themeDisplay)
+		throws PortalException {
+
+		return DLUtil.getPreviewURL(
+			fileVersion.getFileEntry(), fileVersion, themeDisplay,
+			"&videoThumbnail=1");
+	}
+
 	private ServiceRegistration<DLPreviewRendererProvider>
 		_dlPreviewRendererProviderServiceRegistration;
 
 	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.document.library.preview.audio)"
+		target = "(osgi.web.symbolicname=com.liferay.document.library.preview.video)"
 	)
 	private ServletContext _servletContext;
 

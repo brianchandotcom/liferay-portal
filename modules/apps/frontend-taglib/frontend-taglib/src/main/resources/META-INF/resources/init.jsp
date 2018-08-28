@@ -44,8 +44,7 @@ page import="com.liferay.taglib.util.TagResourceBundleUtil" %>
 <%@ page import="java.util.HashMap" %><%@
 page import="java.util.List" %><%@
 page import="java.util.Map" %><%@
-page import="java.util.ResourceBundle" %><%@
-page import="java.util.function.BiConsumer" %>
+page import="java.util.ResourceBundle" %>
 
 <%@ page import="javax.portlet.PortletRequest" %><%@
 page import="javax.portlet.PortletResponse" %><%@

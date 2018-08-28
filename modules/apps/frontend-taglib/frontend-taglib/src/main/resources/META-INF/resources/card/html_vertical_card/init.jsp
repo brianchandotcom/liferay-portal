@@ -19,7 +19,7 @@
 <%
 String footer = (String)request.getAttribute("liferay-frontend:card:footer");
 String header = (String)request.getAttribute("liferay-frontend:card:header");
-BiConsumer<HttpServletRequest, HttpServletResponse> html = (BiConsumer<HttpServletRequest, HttpServletResponse>)request.getAttribute("liferay-frontend:card:html");
+String html = GetterUtil.getString(request.getAttribute("liferay-frontend:card:html"));
 String onClick = (String)request.getAttribute("liferay-frontend:card:onClick");
 String stickerBottom = GetterUtil.getString(request.getAttribute("liferay-frontend:card:stickerBottom"));
 String subtitle = (String)request.getAttribute("liferay-frontend:card:subtitle");

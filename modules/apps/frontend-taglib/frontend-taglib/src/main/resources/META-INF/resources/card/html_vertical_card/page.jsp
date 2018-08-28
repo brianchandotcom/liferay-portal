@@ -19,10 +19,7 @@
 <%@ include file="/card/vertical_card/start.jspf" %>
 
 <div class="aspect-ratio aspect-ratio-bg-center aspect-ratio-bg-cover vertical-card-container">
-
-	<%
-	html.accept(request, response);
-	%>
+	<%= html %>
 
 	<c:if test="<%= Validator.isNotNull(stickerBottom) %>">
 		<%= stickerBottom %>

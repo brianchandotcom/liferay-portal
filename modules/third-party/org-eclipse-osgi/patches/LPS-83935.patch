@@ -1,0 +1,88 @@
+diff --git a/org/eclipse/osgi/container/ModuleDatabase.java b/org/eclipse/osgi/container/ModuleDatabase.java
+index 56518e7..2bbeb5e 100644
+--- a/org/eclipse/osgi/container/ModuleDatabase.java
++++ b/org/eclipse/osgi/container/ModuleDatabase.java
+@@ -1018,6 +1018,14 @@ public class ModuleDatabase {
+ 
+ 			// Followed by modules which reference the strings, versions, and maps
+ 			out.writeInt(modules.size());
++
++			ModuleContainerAdaptor moduleContainerAdaptor =
++				moduleDatabase.adaptor;
++
++			out.writeUTF(
++				moduleContainerAdaptor.getProperty(
++					EquinoxConfiguration.PROP_OSGI_HOME));
++
+ 			for (Module module : modules) {
+ 				writeModule(module, moduleDatabase, out, objectTable);
+ 			}
+@@ -1134,9 +1142,14 @@ public class ModuleDatabase {
+ 					readIndexedMap(in, objectTable);
+ 				}
+ 			}
++
+ 			int numModules = in.readInt();
++
++			String oldOsgiHome = in.readUTF();
++
+ 			for (int i = 0; i < numModules; i++) {
+-				readModule(moduleDatabase, in, objectTable, version);
++				readModule(
++					moduleDatabase, in, objectTable, version, oldOsgiHome);
+ 			}
+ 
+ 			moduleDatabase.revisionsTimeStamp.set(revisionsTimeStamp);
+@@ -1215,10 +1228,21 @@ public class ModuleDatabase {
+ 			out.writeLong(module.getLastModified());
+ 		}
+ 
+-		private static void readModule(ModuleDatabase moduleDatabase, DataInputStream in, Map<Integer, Object> objectTable, int version) throws IOException {
++		private static void readModule(ModuleDatabase moduleDatabase, DataInputStream in, Map<Integer, Object> objectTable, int version, String oldOsgiHome) throws IOException {
+ 			ModuleRevisionBuilder builder = new ModuleRevisionBuilder();
+ 			int moduleIndex = in.readInt();
+ 			String location = readString(in, objectTable);
++
++			ModuleContainerAdaptor moduleContainerAdaptor =
++				moduleDatabase.adaptor;
++
++			String newOsgiHome = moduleContainerAdaptor.getProperty(
++				EquinoxConfiguration.PROP_OSGI_HOME);
++
++			if (!oldOsgiHome.equals(newOsgiHome)) {
++				location = location.replace(oldOsgiHome, newOsgiHome);
++			}
++
+ 			long id = in.readLong();
+ 			builder.setSymbolicName(readString(in, objectTable));
+ 			builder.setVersion(readVersion(in, objectTable));
+diff --git a/org/eclipse/osgi/internal/framework/EquinoxConfiguration.java b/org/eclipse/osgi/internal/framework/EquinoxConfiguration.java
+index 89c388d..9d0f39d 100644
+--- a/org/eclipse/osgi/internal/framework/EquinoxConfiguration.java
++++ b/org/eclipse/osgi/internal/framework/EquinoxConfiguration.java
+@@ -235,6 +235,8 @@ public class EquinoxConfiguration implements EnvironmentInfo {
+ 	public static final String PROP_ACTIVE_THREAD_TYPE = "osgi.framework.activeThreadType"; //$NON-NLS-1$
+ 	public static final String ACTIVE_THREAD_TYPE_NORMAL = "normal"; //$NON-NLS-1$
+ 
++	public static final String PROP_OSGI_HOME = "osgi.home";
++
+ 	public static final class ConfigValues {
+ 		/**
+ 		 * Value of {@link #localConfig} properties that should be considered
+@@ -608,6 +610,16 @@ public class EquinoxConfiguration implements EnvironmentInfo {
+ 		if (inCheckConfigurationMode && getConfiguration(PROP_CHECK_CONFIGURATION) == null) {
+ 			setConfiguration(PROP_CHECK_CONFIGURATION, "true"); //$NON-NLS-1$
+ 		}
++
++		if (getConfiguration(PROP_OSGI_HOME) == null) {
++			Location location = equinoxLocations.getInstallLocation();
++
++			URL url = location.getURL();
++
++			File file = new File(url.getPath());
++
++			setConfiguration(PROP_OSGI_HOME, file.getParent());
++		}
+ 	}
+ 
+ 	private URL getConfigIni(EquinoxLocations locations, boolean parent) {

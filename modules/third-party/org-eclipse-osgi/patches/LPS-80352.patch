@@ -1,0 +1,40 @@
+diff --git a/org/eclipse/osgi/internal/framework/EquinoxContainerAdaptor.java b/org/eclipse/osgi/internal/framework/EquinoxContainerAdaptor.java
+index 885b718..3d07109 100644
+--- a/org/eclipse/osgi/internal/framework/EquinoxContainerAdaptor.java
++++ b/org/eclipse/osgi/internal/framework/EquinoxContainerAdaptor.java
+@@ -244,7 +244,7 @@ public class EquinoxContainerAdaptor extends ModuleContainerAdaptor {
+ 			for (Module module : modules) {
+ 				for (ModuleRevision revision : module.getRevisions().getModuleRevisions()) {
+ 					Generation generation = (Generation) revision.getRevisionInfo();
+-					if (generation != null) {
++					if ((generation != null) && (generation.getContent().exists())) {
+ 						ProtectionDomain domain = generation.getDomain();
+ 						if (domain != null) {
+ 							((BundlePermissions) domain.getPermissions()).clearPermissionCache();
+@@ -379,4 +379,5 @@ public class EquinoxContainerAdaptor extends ModuleContainerAdaptor {
+ 		Generation generation = (Generation) revisionInfo;
+ 		return generation.adaptModuleRevisionBuilder(operation, origin, builder);
+ 	}
+-}
+\ No newline at end of file
++}
++/* @generated */
+\ No newline at end of file
+diff --git a/org/eclipse/osgi/internal/serviceregistry/ServiceRegistrationImpl.java b/org/eclipse/osgi/internal/serviceregistry/ServiceRegistrationImpl.java
+index fbe4996..5ae471a 100644
+--- a/org/eclipse/osgi/internal/serviceregistry/ServiceRegistrationImpl.java
++++ b/org/eclipse/osgi/internal/serviceregistry/ServiceRegistrationImpl.java
+@@ -282,7 +282,7 @@ public class ServiceRegistrationImpl<S> implements ServiceRegistration<S>, Compa
+ 		 */
+ 		synchronized (registrationLock) {
+ 			if (reference == null) {
+-				throw new IllegalStateException(Msg.SERVICE_ALREADY_UNREGISTERED_EXCEPTION);
++				throw new IllegalStateException(Msg.SERVICE_ALREADY_UNREGISTERED_EXCEPTION + " " + properties);
+ 			}
+ 
+ 			return reference;
+@@ -741,3 +741,4 @@ public class ServiceRegistrationImpl<S> implements ServiceRegistration<S>, Compa
+ 		return 1;
+ 	}
+ }
++/* @generated */

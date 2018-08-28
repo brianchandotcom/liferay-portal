@@ -2,6 +2,9 @@
 
 <suppressions>
 	<source-check>
+		<suppress checks="GradleDependenciesCheck" files="modules/apps/static/portal-osgi-web/portal-osgi-web-wab-extender/build.gradle" />
+		<suppress checks="GradleDependenciesCheck" files="modules/apps/static/portal-osgi-web/portal-osgi-web-wab-reference-support/build.gradle" />
+		<suppress checks="GradleDependenciesCheck" files="modules/apps/static/portal-osgi-web/portal-osgi-web-wab-spring-bridge-api/build.gradle" />
 		<suppress checks="JavaXMLSecurityCheck" files="modules/apps/static/portal-osgi-web/portal-osgi-web-servlet-context-helper-impl/src/main/java/com/liferay/portal/osgi/web/servlet/context/helper/internal/definition/WebXMLDefinitionLoader\.java" />
 	</source-check>
 </suppressions>

@@ -53,7 +53,7 @@ import org.osgi.service.component.annotations.Reference;
 	property = {
 		"javax.portlet.name=" + ConfigurationAdminPortletKeys.SYSTEM_SETTINGS,
 		"mvc.command.name=/edit_configuration",
-		"service.ranking:Integer=" + Integer.MAX_VALUE
+		"service.ranking:Integer=" + (Integer.MAX_VALUE - 1000)
 	},
 	service = MVCRenderCommand.class
 )

@@ -148,6 +148,11 @@ public class ClassLoaderTrackerTest {
 				throw t;
 			}
 
+			// Lazy bundles are not automatically restarted after refresh
+			// See https://osgi.org/specification/osgi.core/7.0.0/framework.lifecycle.html#i3285256
+
+			bundle.loadClass(ClassLoaderTrackerTest.class.getName());
+
 			BundleWiring newBundleWiring = bundle.adapt(BundleWiring.class);
 
 			Assert.assertSame(

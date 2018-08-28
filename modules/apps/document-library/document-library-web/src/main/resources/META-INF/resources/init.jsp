@@ -87,7 +87,6 @@ page import="com.liferay.document.library.kernel.service.DLFileEntryMetadataLoca
 page import="com.liferay.document.library.kernel.service.DLFileEntryTypeLocalServiceUtil" %><%@
 page import="com.liferay.document.library.kernel.service.DLFileEntryTypeServiceUtil" %><%@
 page import="com.liferay.document.library.kernel.util.AudioProcessorUtil" %><%@
-page import="com.liferay.document.library.kernel.util.DLProcessorRegistryUtil" %><%@
 page import="com.liferay.document.library.kernel.util.DLUtil" %><%@
 page import="com.liferay.document.library.kernel.util.ImageProcessorUtil" %><%@
 page import="com.liferay.document.library.kernel.util.PDFProcessorUtil" %><%@

@@ -398,11 +398,7 @@ public abstract class BaseJSONWebServiceClientImpl
 		throws JSONWebServiceInvocationException,
 			   JSONWebServiceTransportException {
 
-		Map<String, String> parameters = new HashMap<String, String>();
-
-		for (int i = 0; i < parametersArray.length; i += 2) {
-			parameters.put(parametersArray[i], parametersArray[i + 1]);
-		}
+		Map<String, String> parameters = _toKeyValueMap(parametersArray);
 
 		return doPost(url, parameters, Collections.<String, String>emptyMap());
 	}
@@ -448,6 +444,28 @@ public abstract class BaseJSONWebServiceClientImpl
 		httpPost.setEntity(stringEntity);
 
 		return execute(httpPost);
+	}
+
+	@Override
+	public <T> T doPostToObject(
+			Class<T> clazz, String url, Map<String, String> parameters,
+			Map<String, String> headers)
+		throws JSONWebServiceInvocationException,
+			   JSONWebServiceSerializeException,
+			   JSONWebServiceTransportException {
+
+		String json = doPost(url, parameters, headers);
+
+		if (json == null) {
+			return null;
+		}
+
+		try {
+			return _objectMapper.readValue(json, clazz);
+		}
+		catch (IOException ioe) {
+			throw _getJSONWebServiceSerializeException(json, clazz);
+		}
 	}
 
 	@Override
@@ -524,6 +542,52 @@ public abstract class BaseJSONWebServiceClientImpl
 		}
 
 		return doPut(url, parameters, Collections.<String, String>emptyMap());
+	}
+
+	@Override
+	public <T> T doPutToObject(
+			Class<T> clazz, String url, Map<String, String> parameters)
+		throws JSONWebServiceInvocationException,
+			   JSONWebServiceSerializeException,
+			   JSONWebServiceTransportException {
+
+		return doPutToObject(
+			clazz, url, parameters, Collections.<String, String>emptyMap());
+	}
+
+	@Override
+	public <T> T doPutToObject(
+			Class<T> clazz, String url, Map<String, String> parameters,
+			Map<String, String> headers)
+		throws JSONWebServiceInvocationException,
+			   JSONWebServiceSerializeException,
+			   JSONWebServiceTransportException {
+
+		String json = doPut(url, parameters, headers);
+
+		if (json == null) {
+			return null;
+		}
+
+		try {
+			return _objectMapper.readValue(json, clazz);
+		}
+		catch (IOException ioe) {
+			throw _getJSONWebServiceSerializeException(json, clazz);
+		}
+	}
+
+	@Override
+	public <T> T doPutToObject(
+			Class<T> clazz, String url, String... parametersArray)
+		throws JSONWebServiceInvocationException,
+			   JSONWebServiceSerializeException,
+			   JSONWebServiceTransportException {
+
+		Map<String, String> parameters = _toKeyValueMap(parametersArray);
+
+		return doPutToObject(
+			clazz, url, parameters, Collections.<String, String>emptyMap());
 	}
 
 	public Map<String, String> getHeaders() {
@@ -1096,6 +1160,16 @@ public abstract class BaseJSONWebServiceClientImpl
 		}
 
 		return false;
+	}
+
+	private Map<String, String> _toKeyValueMap(String... keyValuesArray) {
+		Map<String, String> map = new HashMap<String, String>();
+
+		for (int i = 0; i < keyValuesArray.length; i += 2) {
+			map.put(keyValuesArray[i], keyValuesArray[i + 1]);
+		}
+
+		return map;
 	}
 
 	private static final Charset _CHARSET = Charset.forName("UTF-8");

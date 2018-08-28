@@ -64,6 +64,7 @@ class MetalStore extends State {
 	 * any kind of information.
 	 * @param {!string} actionType
 	 * @param {string|number|array|object|undefined} [payload=undefined]
+	 * @return {MetalStore}
 	 * @review
 	 */
 
@@ -91,6 +92,8 @@ class MetalStore extends State {
 				);
 			}
 		);
+
+		return this;
 	}
 
 	/**

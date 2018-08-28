@@ -159,15 +159,15 @@ class FragmentsEditor extends Component {
 				}
 			).then(
 				() => {
-					this._store.dispatchAction(
-						UPDATE_LAST_SAVE_DATE,
-						{lastSaveDate: new Date()}
-					);
-
-					this._store.dispatchAction(
-						UPDATE_SAVING_CHANGES_STATUS,
-						{savingChanges: false}
-					);
+					this._store
+						.dispatchAction(
+							UPDATE_LAST_SAVE_DATE,
+							{lastSaveDate: new Date()}
+						)
+						.dispatchAction(
+							UPDATE_SAVING_CHANGES_STATUS,
+							{savingChanges: false}
+						);
 				}
 			);
 
@@ -412,17 +412,18 @@ class FragmentsEditor extends Component {
 				}
 			).then(
 				() => {
-					this._store.dispatchAction(
-						UPDATE_LAST_SAVE_DATE,
-						{lastSaveDate: new Date()}
-					);
-
-					this._store.dispatchAction(
-						UPDATE_SAVING_CHANGES_STATUS,
-						{savingChanges: false}
-					);
-
-					this._store.dispatchAction(UPDATE_TRANSLATION_STATUS);
+					this._store
+						.dispatchAction(
+							UPDATE_LAST_SAVE_DATE,
+							{lastSaveDate: new Date()}
+						)
+						.dispatchAction(
+							UPDATE_SAVING_CHANGES_STATUS,
+							{savingChanges: false}
+						)
+						.dispatchAction(
+							UPDATE_TRANSLATION_STATUS
+						);
 				}
 			);
 		}

@@ -105,32 +105,29 @@ class SidebarAvailableFragments extends Component {
 				}
 			);
 
-			this.store.dispatchAction(
-				UPDATE_SAVING_CHANGES_STATUS,
-				{savingChanges: true}
-			);
-
-			this.store.dispatchAction(
-				ADD_FRAGMENT_ENTRY_LINK,
-				{
-					fragmentEntryId: itemId,
-					fragmentName: itemName
-				}
-			);
-
-			this.store.dispatchAction(
-				UPDATE_LAST_SAVE_DATE,
-				{lastSaveDate: new Date()}
-			);
-
-			this.store.dispatchAction(
-				UPDATE_SAVING_CHANGES_STATUS,
-				{savingChanges: false}
-			);
-
-			this.store.dispatchAction(
-				CLEAR_DRAG_TARGET
-			);
+			this.store
+				.dispatchAction(
+					UPDATE_SAVING_CHANGES_STATUS,
+					{savingChanges: true}
+				)
+				.dispatchAction(
+					ADD_FRAGMENT_ENTRY_LINK,
+					{
+						fragmentEntryId: itemId,
+						fragmentName: itemName
+					}
+				)
+				.dispatchAction(
+					UPDATE_LAST_SAVE_DATE,
+					{lastSaveDate: new Date()}
+				)
+				.dispatchAction(
+					UPDATE_SAVING_CHANGES_STATUS,
+					{savingChanges: false}
+				)
+				.dispatchAction(
+					CLEAR_DRAG_TARGET
+				);
 		}
 	}
 
@@ -144,28 +141,26 @@ class SidebarAvailableFragments extends Component {
 	 */
 
 	_handleEntryClick(event) {
-		this.store.dispatchAction(
-			UPDATE_SAVING_CHANGES_STATUS,
-			{savingChanges: true}
-		);
-
-		this.store.dispatchAction(
-			ADD_FRAGMENT_ENTRY_LINK,
-			{
-				fragmentEntryId: event.itemId,
-				fragmentName: event.itemName
-			}
-		);
-
-		this.store.dispatchAction(
-			UPDATE_LAST_SAVE_DATE,
-			{lastSaveDate: new Date()}
-		);
-
-		this.store.dispatchAction(
-			UPDATE_SAVING_CHANGES_STATUS,
-			{savingChanges: false}
-		);
+		this.store
+			.dispatchAction(
+				UPDATE_SAVING_CHANGES_STATUS,
+				{savingChanges: true}
+			)
+			.dispatchAction(
+				ADD_FRAGMENT_ENTRY_LINK,
+				{
+					fragmentEntryId: event.itemId,
+					fragmentName: event.itemName
+				}
+			)
+			.dispatchAction(
+				UPDATE_LAST_SAVE_DATE,
+				{lastSaveDate: new Date()}
+			)
+			.dispatchAction(
+				UPDATE_SAVING_CHANGES_STATUS,
+				{savingChanges: false}
+			);
 	}
 
 	/**

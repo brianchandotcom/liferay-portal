@@ -26,25 +26,23 @@ class SidebarAddedFragments extends Component {
 	 */
 
 	_handleFragmentRemoveButtonClick(event) {
-		this.store.dispatchAction(
-			UPDATE_SAVING_CHANGES_STATUS,
-			{savingChanges: true}
-		);
-
-		this.store.dispatchAction(
-			REMOVE_FRAGMENT_ENTRY_LINK,
-			{fragmentEntryLinkId: event.itemId}
-		);
-
-		this.store.dispatchAction(
-			UPDATE_LAST_SAVE_DATE,
-			{lastSaveDate: new Date()}
-		);
-
-		this.store.dispatchAction(
-			UPDATE_SAVING_CHANGES_STATUS,
-			{savingChanges: false}
-		);
+		this.store
+			.dispatchAction(
+				UPDATE_SAVING_CHANGES_STATUS,
+				{savingChanges: true}
+			)
+			.dispatchAction(
+				REMOVE_FRAGMENT_ENTRY_LINK,
+				{fragmentEntryLinkId: event.itemId}
+			)
+			.dispatchAction(
+				UPDATE_LAST_SAVE_DATE,
+				{lastSaveDate: new Date()}
+			)
+			.dispatchAction(
+				UPDATE_SAVING_CHANGES_STATUS,
+				{savingChanges: false}
+			);
 	}
 }
 

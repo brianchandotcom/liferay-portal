@@ -14,7 +14,9 @@
 
 package com.liferay.dynamic.data.mapping.service.test;
 
-import com.liferay.dynamic.data.mapping.io.DDMFormXSDDeserializer;
+import com.liferay.dynamic.data.mapping.io.DDMFormDeserializer;
+import com.liferay.dynamic.data.mapping.io.DDMFormDeserializerDeserializeRequest;
+import com.liferay.dynamic.data.mapping.io.DDMFormDeserializerDeserializeResponse;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayout;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
@@ -40,6 +42,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 
@@ -62,7 +65,6 @@ public abstract class BaseDDMServiceTestCase {
 
 	@Before
 	public void setUp() throws Exception {
-		setUpDDMFormXSDDeserializer();
 		setUpDDMXML();
 
 		group = GroupTestUtil.addGroup();
@@ -286,13 +288,6 @@ public abstract class BaseDDMServiceTestCase {
 			clazz.getClassLoader(), getBasePath() + fileName);
 	}
 
-	protected void setUpDDMFormXSDDeserializer() {
-		Registry registry = RegistryUtil.getRegistry();
-
-		_ddmFormXSDDeserializer = registry.getService(
-			DDMFormXSDDeserializer.class);
-	}
-
 	protected void setUpDDMXML() throws Exception {
 		Registry registry = RegistryUtil.getRegistry();
 
@@ -302,7 +297,15 @@ public abstract class BaseDDMServiceTestCase {
 	protected DDMForm toDDMForm(String definition) throws Exception {
 		ddmXML.validateXML(definition);
 
-		return _ddmFormXSDDeserializer.deserialize(definition);
+		DDMFormDeserializerDeserializeRequest.Builder builder =
+			DDMFormDeserializerDeserializeRequest.Builder.newBuilder(
+				definition);
+
+		DDMFormDeserializerDeserializeResponse
+			ddmFormDeserializerDeserializeResponse =
+				_ddmFormDeserializer.deserialize(builder.build());
+
+		return ddmFormDeserializerDeserializeResponse.getDDMForm();
 	}
 
 	protected static final String DDL_RECORD_CLASS_NAME =
@@ -318,6 +321,7 @@ public abstract class BaseDDMServiceTestCase {
 	@DeleteAfterTestRun
 	protected Group group;
 
-	private DDMFormXSDDeserializer _ddmFormXSDDeserializer;
+	@Inject(filter = "ddm.form.deserializer.type=xsd")
+	private DDMFormDeserializer _ddmFormDeserializer;
 
 }

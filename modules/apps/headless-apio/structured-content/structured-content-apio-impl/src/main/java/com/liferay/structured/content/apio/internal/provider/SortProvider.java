@@ -31,9 +31,9 @@ public class SortProvider implements Provider<Sort> {
 
 	@Override
 	public Sort createContext(HttpServletRequest httpServletRequest) {
-		String sortExpressions = httpServletRequest.getParameter("sort");
+		String sortQueryString = httpServletRequest.getParameter("sort");
 
-		return new Sort(_sortParser.parse(sortExpressions));
+		return new Sort(_sortParser.parse(sortQueryString));
 	}
 
 	@Reference

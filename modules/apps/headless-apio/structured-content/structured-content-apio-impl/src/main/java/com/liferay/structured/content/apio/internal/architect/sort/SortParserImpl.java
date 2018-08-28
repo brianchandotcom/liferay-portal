@@ -51,18 +51,18 @@ public class SortParserImpl implements SortParser {
 	 * - field1:asc,field2:desc,field3
 	 * - field1:asc,field2,field3:desc
 	 *
-	 * @param  sortExpressions - String to be parsed
+	 * @param  sortQueryString - String to be parsed
 	 * @return a {@link SortQuery}
 	 * @review
 	 */
-	public SortQuery parse(String sortExpressions) {
-		if (sortExpressions == null) {
+	public SortQuery parse(String sortQueryString) {
+		if (sortQueryString == null) {
 			return new SortQuery(Collections.emptyList());
 		}
 
-		List<String> sortExpressionsList = StringUtil.split(sortExpressions);
+		List<String> sortQueryList = StringUtil.split(sortQueryString);
 
-		Stream<String> stream = sortExpressionsList.stream();
+		Stream<String> stream = sortQueryList.stream();
 
 		return new SortQuery(
 			stream.map(
@@ -75,23 +75,26 @@ public class SortParserImpl implements SortParser {
 			));
 	}
 
-	protected Optional<SortQueryPart> getSortQueryPart(String sortExpression) {
-		List<String> sortParts = StringUtil.split(sortExpression, ':');
+	protected Optional<SortQueryPart> getSortQueryPart(
+		String sortQueryPartString) {
 
-		if (sortParts.isEmpty()) {
+		List<String> sortQueryPartList = StringUtil.split(
+			sortQueryPartString, ':');
+
+		if (sortQueryPartList.isEmpty()) {
 			return Optional.empty();
 		}
 
-		if (sortParts.size() > 2) {
+		if (sortQueryPartList.size() > 2) {
 			throw new RuntimeException("Unable to parse sort expression");
 		}
 
-		String fieldName = sortParts.get(0);
+		String fieldName = sortQueryPartList.get(0);
 
 		boolean ascending = _ASC_DEFAULT;
 
-		if (sortParts.size() > 1) {
-			ascending = isAscending(sortParts.get(1));
+		if (sortQueryPartList.size() > 1) {
+			ascending = isAscending(sortQueryPartList.get(1));
 		}
 
 		return Optional.of(new SortQueryPart(fieldName, ascending));

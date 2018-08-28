@@ -16,7 +16,7 @@ package com.liferay.document.library.layout.set.prototype.internal.upgrade.v1_0_
 
 import com.liferay.portal.kernel.upgrade.BaseUpgradeLocalizedColumn;
 import com.liferay.portal.language.LanguageResources;
-import com.liferay.portal.upgrade.v7_0_6.util.LayoutSetPrototypeTable;
+import com.liferay.portal.upgrade.v7_1_x.util.LayoutSetPrototypeTable;
 import com.liferay.portal.util.PortalInstances;
 
 /**

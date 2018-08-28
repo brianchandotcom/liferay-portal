@@ -33,26 +33,32 @@ renderResponse.setTitle(LanguageUtil.format(request, "copy-x", ddmTemplate.getNa
 	<portlet:param name="mvcPath" value="/copy_ddm_template.jsp" />
 </portlet:actionURL>
 
-<aui:form action="<%= copyDDMTemplateURL %>" cssClass="container-fluid-1280" method="post" name="fm">
+<liferay-frontend:edit-form
+	action="<%= copyDDMTemplateURL %>"
+	method="post"
+	name="fm"
+>
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 
 	<aui:input name="ddmTemplateId" type="hidden" value="<%= ddmTemplateId %>" />
 
-	<liferay-ui:error exception="<%= TemplateNameException.class %>" message="please-enter-a-valid-name" />
-
 	<aui:model-context bean="<%= ddmTemplate %>" model="<%= DDMTemplate.class %>" />
 
-	<aui:fieldset-group markupView="lexicon">
-		<aui:fieldset>
-			<aui:input name="name" />
+	<liferay-frontend:edit-form-body>
+		<liferay-ui:error exception="<%= TemplateNameException.class %>" message="please-enter-a-valid-name" />
 
-			<aui:input name="description" />
-		</aui:fieldset>
-	</aui:fieldset-group>
+		<liferay-frontend:fieldset-group>
+			<liferay-frontend:fieldset>
+				<aui:input name="name" />
 
-	<aui:button-row>
+				<aui:input name="description" />
+			</liferay-frontend:fieldset>
+		</liferay-frontend:fieldset-group>
+	</liferay-frontend:edit-form-body>
+
+	<liferay-frontend:edit-form-footer>
 		<aui:button type="submit" value="copy" />
 
 		<aui:button href="<%= redirect %>" type="cancel" />
-	</aui:button-row>
-</aui:form>
+	</liferay-frontend:edit-form-footer>
+</liferay-frontend:edit-form>

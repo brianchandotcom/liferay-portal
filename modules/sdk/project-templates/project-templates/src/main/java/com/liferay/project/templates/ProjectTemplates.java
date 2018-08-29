@@ -17,7 +17,7 @@ package com.liferay.project.templates;
 import com.beust.jcommander.JCommander;
 import com.beust.jcommander.ParameterException;
 
-import com.liferay.project.templates.internal.Archetyper;
+import com.liferay.project.templates.internal.ProjectGenerator;
 import com.liferay.project.templates.internal.util.FileUtil;
 import com.liferay.project.templates.internal.util.ProjectTemplatesUtil;
 import com.liferay.project.templates.internal.util.StringUtil;
@@ -184,10 +184,11 @@ public class ProjectTemplates {
 
 		File destinationDir = projectTemplatesArgs.getDestinationDir();
 
-		Archetyper archetyper = new Archetyper();
+		ProjectGenerator projectGenerator = new ProjectGenerator();
 
 		ArchetypeGenerationResult archetypeGenerationResult =
-			archetyper.generateProject(projectTemplatesArgs, destinationDir);
+			projectGenerator.generateProject(
+				projectTemplatesArgs, destinationDir);
 
 		if (archetypeGenerationResult != null) {
 			Exception cause = archetypeGenerationResult.getCause();

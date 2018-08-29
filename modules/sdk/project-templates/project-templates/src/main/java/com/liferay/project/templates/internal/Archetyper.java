@@ -14,56 +14,24 @@
 
 package com.liferay.project.templates.internal;
 
-import aQute.bnd.version.Version;
-import aQute.bnd.version.VersionRange;
-
-import com.liferay.project.templates.ProjectTemplateCustomizer;
-import com.liferay.project.templates.ProjectTemplates;
-import com.liferay.project.templates.ProjectTemplatesArgs;
-import com.liferay.project.templates.WorkspaceUtil;
-import com.liferay.project.templates.internal.util.FileUtil;
-import com.liferay.project.templates.internal.util.ProjectTemplatesUtil;
 import com.liferay.project.templates.internal.util.ReflectionUtil;
-import com.liferay.project.templates.internal.util.Validator;
 
 import java.io.File;
-import java.io.IOException;
 
 import java.lang.reflect.Field;
 
-import java.net.MalformedURLException;
-import java.net.URI;
-import java.net.URL;
-import java.net.URLClassLoader;
-
-import java.nio.file.DirectoryStream;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.StandardCopyOption;
-
-import java.util.Enumeration;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Objects;
 import java.util.Properties;
-import java.util.ServiceLoader;
-import java.util.jar.JarEntry;
-import java.util.jar.JarFile;
 
-import org.apache.maven.archetype.ArchetypeGenerationRequest;
-import org.apache.maven.archetype.ArchetypeGenerationResult;
 import org.apache.maven.archetype.ArchetypeManager;
 import org.apache.maven.archetype.DefaultArchetypeManager;
 import org.apache.maven.archetype.common.ArchetypeArtifactManager;
-import org.apache.maven.archetype.common.DefaultArchetypeArtifactManager;
 import org.apache.maven.archetype.common.DefaultArchetypeFilesResolver;
 import org.apache.maven.archetype.common.DefaultPomManager;
-import org.apache.maven.archetype.exception.UnknownArchetype;
 import org.apache.maven.archetype.generator.ArchetypeGenerator;
 import org.apache.maven.archetype.generator.DefaultArchetypeGenerator;
 import org.apache.maven.archetype.generator.DefaultFilesetArchetypeGenerator;
 import org.apache.maven.archetype.generator.FilesetArchetypeGenerator;
-import org.apache.maven.artifact.repository.ArtifactRepository;
 import org.apache.velocity.runtime.RuntimeConstants;
 import org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader;
 
@@ -78,276 +46,7 @@ import org.codehaus.plexus.velocity.VelocityComponent;
  */
 public class Archetyper {
 
-	public ArchetypeGenerationResult generateProject(
-			ProjectTemplatesArgs projectTemplatesArgs, File destinationDir)
-		throws Exception {
-
-		List<File> archetypesDirs = projectTemplatesArgs.getArchetypesDirs();
-		String artifactId = projectTemplatesArgs.getName();
-		String author = projectTemplatesArgs.getAuthor();
-		String className = projectTemplatesArgs.getClassName();
-		boolean dependencyManagementEnabled =
-			projectTemplatesArgs.isDependencyManagementEnabled();
-		String groupId = projectTemplatesArgs.getGroupId();
-		String liferayVersion = projectTemplatesArgs.getLiferayVersion();
-		String packageName = projectTemplatesArgs.getPackageName();
-
-		File templateFile = _getTemplateFile(projectTemplatesArgs);
-
-		String liferayVersions = FileUtil.getManifestProperty(
-			templateFile, "Liferay-Versions");
-
-		if ((liferayVersions != null) &&
-			!_isInVersionRange(liferayVersion, liferayVersions)) {
-
-			throw new IllegalArgumentException(
-				"Specified Liferay version is invalid. Must be in range " +
-					liferayVersions);
-		}
-
-		if (Objects.isNull(groupId)) {
-			groupId = packageName;
-		}
-
-		File workspaceDir = WorkspaceUtil.getWorkspaceDir(destinationDir);
-
-		String projectType = "standalone";
-
-		if (workspaceDir != null) {
-			projectType = WorkspaceUtil.WORKSPACE;
-		}
-
-		String template = projectTemplatesArgs.getTemplate();
-
-		ArchetypeGenerationRequest archetypeGenerationRequest =
-			new ArchetypeGenerationRequest();
-
-		archetypeGenerationRequest.setArchetypeArtifactId(
-			ProjectTemplates.TEMPLATE_BUNDLE_PREFIX +
-				template.replace('-', '.'));
-		archetypeGenerationRequest.setArchetypeGroupId("com.liferay");
-
-		// archetypeVersion is ignored
-
-		archetypeGenerationRequest.setArchetypeVersion("0");
-
-		archetypeGenerationRequest.setArtifactId(artifactId);
-		archetypeGenerationRequest.setGroupId(groupId);
-		archetypeGenerationRequest.setInteractiveMode(false);
-		archetypeGenerationRequest.setOutputDirectory(destinationDir.getPath());
-		archetypeGenerationRequest.setPackage(packageName);
-
-		String buildType = "gradle";
-
-		if (projectTemplatesArgs.isMaven()) {
-			buildType = "maven";
-		}
-
-		Properties properties = new Properties();
-
-		_setProperty(properties, "author", author);
-		_setProperty(properties, "buildType", buildType);
-		_setProperty(properties, "className", className);
-		_setProperty(
-			properties, "dependencyManagementEnabled",
-			String.valueOf(dependencyManagementEnabled));
-		_setProperty(properties, "liferayVersion", liferayVersion);
-		_setProperty(properties, "package", packageName);
-		_setProperty(properties, "projectType", projectType);
-
-		archetypeGenerationRequest.setProperties(properties);
-
-		archetypeGenerationRequest.setVersion("1.0.0");
-
-		ArchetypeArtifactManager archetypeArtifactManager =
-			_createArchetypeArtifactManager(archetypesDirs);
-
-		ProjectTemplateCustomizer projectTemplateCustomizer =
-			_getProjectTemplateCustomizer(
-				archetypeArtifactManager.getArchetypeFile(
-					archetypeGenerationRequest.getArchetypeGroupId(),
-					archetypeGenerationRequest.getArchetypeArtifactId(),
-					archetypeGenerationRequest.getArchetypeVersion(), null,
-					null, null));
-
-		if (projectTemplateCustomizer != null) {
-			projectTemplateCustomizer.onBeforeGenerateProject(
-				projectTemplatesArgs, archetypeGenerationRequest);
-		}
-
-		ArchetypeManager archetypeManager = _createArchetypeManager(
-			archetypesDirs);
-
-		ArchetypeGenerationResult archetypeGenerationResult =
-			archetypeManager.generateProjectFromArchetype(
-				archetypeGenerationRequest);
-
-		if (projectTemplateCustomizer != null) {
-			projectTemplateCustomizer.onAfterGenerateProject(
-				projectTemplatesArgs, destinationDir,
-				archetypeGenerationResult);
-		}
-
-		return archetypeGenerationResult;
-	}
-
-	private static File _getArchetypeFile(String artifactId, File file)
-		throws IOException {
-
-		try (JarFile jarFile = new JarFile(file)) {
-			Enumeration<JarEntry> enumeration = jarFile.entries();
-
-			while (enumeration.hasMoreElements()) {
-				JarEntry jarEntry = enumeration.nextElement();
-
-				if (jarEntry.isDirectory()) {
-					continue;
-				}
-
-				String name = jarEntry.getName();
-
-				if (!name.startsWith(artifactId + "-")) {
-					continue;
-				}
-
-				Path archetypePath = Files.createTempFile(
-					"temp-archetype", null);
-
-				Files.copy(
-					jarFile.getInputStream(jarEntry), archetypePath,
-					StandardCopyOption.REPLACE_EXISTING);
-
-				File archetypeFile = archetypePath.toFile();
-
-				archetypeFile.deleteOnExit();
-
-				return archetypeFile;
-			}
-		}
-
-		return null;
-	}
-
-	private static File _getTemplateFile(
-			ProjectTemplatesArgs projectTemplatesArgs)
-		throws Exception {
-
-		String template = projectTemplatesArgs.getTemplate();
-
-		for (File archetypesDir : projectTemplatesArgs.getArchetypesDirs()) {
-			if (!archetypesDir.isDirectory()) {
-				continue;
-			}
-
-			try (DirectoryStream<Path> directoryStream =
-					Files.newDirectoryStream(
-						archetypesDir.toPath(), "*.project.templates.*")) {
-
-				for (Path path : directoryStream) {
-					String fileName = String.valueOf(path.getFileName());
-
-					String templateName = ProjectTemplatesUtil.getTemplateName(
-						fileName);
-
-					if (templateName.equals(template)) {
-						return path.toFile();
-					}
-				}
-			}
-		}
-
-		File archetypesFile = FileUtil.getJarFile(ProjectTemplates.class);
-
-		String artifactId =
-			ProjectTemplates.TEMPLATE_BUNDLE_PREFIX +
-				template.replace('-', '.');
-
-		return _getArchetypeFile(artifactId, archetypesFile);
-	}
-
-	private static boolean _isInVersionRange(
-		String versionString, String range) {
-
-		Version version = new Version(versionString);
-
-		VersionRange versionRange = new VersionRange(range);
-
-		return versionRange.includes(version);
-	}
-
-	private ArchetypeArtifactManager _createArchetypeArtifactManager(
-			List<File> archetypesDirs)
-		throws Exception {
-
-		ArchetypeArtifactManager archetypeArtifactManager =
-			new ArchetyperArchetypeArtifactManager(archetypesDirs);
-
-		ReflectionUtil.setFieldValue(
-			_loggerField, archetypeArtifactManager, _logger);
-
-		return archetypeArtifactManager;
-	}
-
-	private ArchetypeGenerator _createArchetypeGenerator(
-			List<File> archetypesDirs)
-		throws Exception {
-
-		ArchetypeGenerator archetypeGenerator = new DefaultArchetypeGenerator();
-
-		ArchetypeArtifactManager archetypeArtifactManager =
-			_createArchetypeArtifactManager(archetypesDirs);
-
-		ReflectionUtil.setFieldValue(
-			DefaultArchetypeGenerator.class, "archetypeArtifactManager",
-			archetypeGenerator, archetypeArtifactManager);
-		ReflectionUtil.setFieldValue(
-			DefaultArchetypeGenerator.class, "filesetGenerator",
-			archetypeGenerator,
-			_createFilesetArchetypeGenerator(archetypeArtifactManager));
-
-		return archetypeGenerator;
-	}
-
-	private ArchetypeManager _createArchetypeManager(List<File> archetypesDirs)
-		throws Exception {
-
-		DefaultArchetypeManager archetypeManager =
-			new DefaultArchetypeManager();
-
-		ReflectionUtil.setFieldValue(_loggerField, archetypeManager, _logger);
-		ReflectionUtil.setFieldValue(
-			DefaultArchetypeManager.class, "generator", archetypeManager,
-			_createArchetypeGenerator(archetypesDirs));
-
-		return archetypeManager;
-	}
-
-	private FilesetArchetypeGenerator _createFilesetArchetypeGenerator(
-			ArchetypeArtifactManager archetypeArtifactManager)
-		throws Exception {
-
-		FilesetArchetypeGenerator filesetArchetypeGenerator =
-			new DefaultFilesetArchetypeGenerator();
-
-		ReflectionUtil.setFieldValue(
-			_loggerField, filesetArchetypeGenerator, _logger);
-		ReflectionUtil.setFieldValue(
-			DefaultFilesetArchetypeGenerator.class, "archetypeArtifactManager",
-			filesetArchetypeGenerator, archetypeArtifactManager);
-		ReflectionUtil.setFieldValue(
-			DefaultFilesetArchetypeGenerator.class, "archetypeFilesResolver",
-			filesetArchetypeGenerator, new DefaultArchetypeFilesResolver());
-		ReflectionUtil.setFieldValue(
-			DefaultFilesetArchetypeGenerator.class, "pomManager",
-			filesetArchetypeGenerator, new DefaultPomManager());
-		ReflectionUtil.setFieldValue(
-			DefaultFilesetArchetypeGenerator.class, "velocity",
-			filesetArchetypeGenerator, _createVelocityComponent());
-
-		return filesetArchetypeGenerator;
-	}
-
-	private VelocityComponent _createVelocityComponent() throws Exception {
+	public static VelocityComponent createVelocityComponent() throws Exception {
 		DefaultVelocityComponent defaultVelocityComponent =
 			new DefaultVelocityComponent();
 
@@ -370,34 +69,83 @@ public class Archetyper {
 		return defaultVelocityComponent;
 	}
 
-	private ProjectTemplateCustomizer _getProjectTemplateCustomizer(
-			File archetypeFile)
-		throws MalformedURLException {
-
-		URI uri = archetypeFile.toURI();
-
-		URLClassLoader urlClassLoader = new URLClassLoader(
-			new URL[] {uri.toURL()});
-
-		ServiceLoader<ProjectTemplateCustomizer> serviceLoader =
-			ServiceLoader.load(ProjectTemplateCustomizer.class, urlClassLoader);
-
-		Iterator<ProjectTemplateCustomizer> iterator = serviceLoader.iterator();
-
-		if (iterator.hasNext()) {
-			return iterator.next();
-		}
-
-		return null;
+	public Archetyper(List<File> archetypesDirs) {
+		_archetypesDirs = archetypesDirs;
 	}
 
-	private void _setProperty(
-		Properties properties, String name, String value) {
+	public ArchetypeArtifactManager createArchetypeArtifactManager()
+		throws Exception {
 
-		if (Validator.isNotNull(value)) {
-			properties.setProperty(name, value);
-		}
+		ArchetypeArtifactManager archetypeArtifactManager =
+			newArchetypeArtifactManager();
+
+		ReflectionUtil.setFieldValue(
+			_loggerField, archetypeArtifactManager, _logger);
+
+		return archetypeArtifactManager;
 	}
+
+	public ArchetypeManager createArchetypeManager() throws Exception {
+		DefaultArchetypeManager archetypeManager =
+			new DefaultArchetypeManager();
+
+		ReflectionUtil.setFieldValue(_loggerField, archetypeManager, _logger);
+		ReflectionUtil.setFieldValue(
+			DefaultArchetypeManager.class, "generator", archetypeManager,
+			_createArchetypeGenerator());
+
+		return archetypeManager;
+	}
+
+	protected ArchetypeArtifactManager newArchetypeArtifactManager()
+		throws Exception {
+
+		return new ArchetyperArchetypeArtifactManager(_archetypesDirs);
+	}
+
+	private ArchetypeGenerator _createArchetypeGenerator() throws Exception {
+		ArchetypeGenerator archetypeGenerator = new DefaultArchetypeGenerator();
+
+		ArchetypeArtifactManager archetypeArtifactManager =
+			createArchetypeArtifactManager();
+
+		ReflectionUtil.setFieldValue(
+			DefaultArchetypeGenerator.class, "archetypeArtifactManager",
+			archetypeGenerator, archetypeArtifactManager);
+		ReflectionUtil.setFieldValue(
+			DefaultArchetypeGenerator.class, "filesetGenerator",
+			archetypeGenerator,
+			_createFilesetArchetypeGenerator(archetypeArtifactManager));
+
+		return archetypeGenerator;
+	}
+
+	private FilesetArchetypeGenerator _createFilesetArchetypeGenerator(
+			ArchetypeArtifactManager archetypeArtifactManager)
+		throws Exception {
+
+		FilesetArchetypeGenerator filesetArchetypeGenerator =
+			new DefaultFilesetArchetypeGenerator();
+
+		ReflectionUtil.setFieldValue(
+			_loggerField, filesetArchetypeGenerator, _logger);
+		ReflectionUtil.setFieldValue(
+			DefaultFilesetArchetypeGenerator.class, "archetypeArtifactManager",
+			filesetArchetypeGenerator, archetypeArtifactManager);
+		ReflectionUtil.setFieldValue(
+			DefaultFilesetArchetypeGenerator.class, "archetypeFilesResolver",
+			filesetArchetypeGenerator, new DefaultArchetypeFilesResolver());
+		ReflectionUtil.setFieldValue(
+			DefaultFilesetArchetypeGenerator.class, "pomManager",
+			filesetArchetypeGenerator, new DefaultPomManager());
+		ReflectionUtil.setFieldValue(
+			DefaultFilesetArchetypeGenerator.class, "velocity",
+			filesetArchetypeGenerator, createVelocityComponent());
+
+		return filesetArchetypeGenerator;
+	}
+
+	private static final Logger _logger = new ArchetyperLogger();
 
 	private static final Field _loggerField;
 
@@ -411,91 +159,7 @@ public class Archetyper {
 		}
 	}
 
-	private final Logger _logger = new ArchetyperLogger();
-
-	private static class ArchetyperArchetypeArtifactManager
-		extends DefaultArchetypeArtifactManager {
-
-		public ArchetyperArchetypeArtifactManager(List<File> archetypesDirs) {
-			_archetypesDirs = archetypesDirs;
-
-			if (_archetypesDirs.isEmpty()) {
-				try {
-					_archetypesDirs.add(FileUtil.getJarFile(Archetyper.class));
-				}
-				catch (Exception e) {
-				}
-			}
-		}
-
-		@Override
-		public boolean exists(
-			String archetypeGroupId, String archetypeArtifactId,
-			String archetypeVersion, ArtifactRepository archetypeRepository,
-			ArtifactRepository localRepository,
-			List<ArtifactRepository> remoteRepositories) {
-
-			return true;
-		}
-
-		@Override
-		public File getArchetypeFile(
-				String groupId, String artifactId, String version,
-				ArtifactRepository archetypeRepository,
-				ArtifactRepository localRepository,
-				List<ArtifactRepository> repositories)
-			throws UnknownArchetype {
-
-			File archetypeFile = null;
-
-			for (File archetypesFile : _archetypesDirs) {
-				try {
-					if (archetypesFile.isDirectory()) {
-						Path archetypePath = FileUtil.getFile(
-							archetypesFile.toPath(), artifactId + "-*.jar");
-
-						if (archetypePath != null) {
-							archetypeFile = archetypePath.toFile();
-						}
-					}
-					else {
-						archetypeFile = _getArchetypeFile(
-							artifactId, archetypesFile);
-
-						if (archetypeFile != null) {
-							break;
-						}
-					}
-				}
-				catch (Exception e) {
-					continue;
-				}
-			}
-
-			if (archetypeFile == null) {
-				throw new UnknownArchetype();
-			}
-
-			return archetypeFile;
-		}
-
-		@Override
-		public ClassLoader getArchetypeJarLoader(File archetypeFile)
-			throws UnknownArchetype {
-
-			try {
-				URI uri = archetypeFile.toURI();
-
-				return new URLClassLoader(new URL[] {uri.toURL()}, null);
-			}
-			catch (MalformedURLException murle) {
-				throw new UnknownArchetype(murle);
-			}
-		}
-
-		private final List<File> _archetypesDirs;
-
-	}
+	private final List<File> _archetypesDirs;
 
 	private static class ArchetyperLogger extends AbstractLogger {
 

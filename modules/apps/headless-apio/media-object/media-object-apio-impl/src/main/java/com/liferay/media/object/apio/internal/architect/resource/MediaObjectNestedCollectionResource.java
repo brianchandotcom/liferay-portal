@@ -143,7 +143,7 @@ public class MediaObjectNestedCollectionResource
 		FileEntry fileEntry) {
 
 		return Try.fromFallible(
-			() -> fileEntry.getMimeType()
+			fileEntry::getMimeType
 		).filter(
 			mimeType -> _amImageMimeTypeProvider.isMimeTypeSupported(mimeType)
 		).map(

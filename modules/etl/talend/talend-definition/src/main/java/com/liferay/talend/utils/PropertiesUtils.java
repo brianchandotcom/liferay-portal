@@ -35,8 +35,8 @@ public class PropertiesUtils {
 			widget.setHidden(hidden);
 		}
 		else {
-			if (_log.isDebugEnabled()) {
-				_log.debug("Unable to find: " + simpleNamedThing.getName());
+			if (_log.isTraceEnabled()) {
+				_log.trace("Unable to find: " + simpleNamedThing.getName());
 			}
 		}
 	}

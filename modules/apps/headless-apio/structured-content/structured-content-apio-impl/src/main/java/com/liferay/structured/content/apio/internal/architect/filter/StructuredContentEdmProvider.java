@@ -57,9 +57,9 @@ public class StructuredContentEdmProvider
 
 		CsdlEntityContainer csdlEntityContainer = new CsdlEntityContainer();
 
-		csdlEntityContainer.setName(_ENTITY_NAME);
 		csdlEntityContainer.setEntitySets(
 			Collections.singletonList(csdlEntitySet));
+		csdlEntityContainer.setName(_ENTITY_NAME);
 
 		return csdlEntityContainer;
 	}
@@ -86,7 +86,6 @@ public class StructuredContentEdmProvider
 		CsdlProperty csdlProperty = new CsdlProperty();
 
 		csdlProperty.setName(name);
-
 		csdlProperty.setType(fullQualifiedName);
 
 		return csdlProperty;
@@ -95,12 +94,10 @@ public class StructuredContentEdmProvider
 	private CsdlSchema _createCsdlSchema() {
 		CsdlSchema csdlSchema = new CsdlSchema();
 
-		csdlSchema.setNamespace(_NAMESPACE);
-
+		csdlSchema.setEntityContainer(_createCsdlEntityContainer());
 		csdlSchema.setEntityTypes(
 			Collections.singletonList(_createCsdlEntityType()));
-
-		csdlSchema.setEntityContainer(_createCsdlEntityContainer());
+		csdlSchema.setNamespace(_NAMESPACE);
 
 		return csdlSchema;
 	}

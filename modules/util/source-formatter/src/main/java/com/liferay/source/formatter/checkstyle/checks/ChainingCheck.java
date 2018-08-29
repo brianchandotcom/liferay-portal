@@ -130,7 +130,7 @@ public class ChainingCheck extends BaseCheck {
 			}
 
 			if (_isAllowedChainingMethodCall(detailAST, methodCallAST, chain)) {
-				if (chainSize > 2) {
+				if (chainSize > 1) {
 					_checkStyling(detailAST, methodCallAST);
 				}
 

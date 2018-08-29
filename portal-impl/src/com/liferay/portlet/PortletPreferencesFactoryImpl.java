@@ -747,7 +747,7 @@ public class PortletPreferencesFactoryImpl
 		}
 
 		long ownerId = PortletKeys.PREFS_OWNER_ID_DEFAULT;
-		int ownerType = PortletKeys.PREFS_OWNER_TYPE_LAYOUT;
+		int ownerType = 0;
 
 		Group group = GroupLocalServiceUtil.fetchGroup(siteGroupId);
 
@@ -774,11 +774,15 @@ public class PortletPreferencesFactoryImpl
 
 			ownerType = PortletKeys.PREFS_OWNER_TYPE_GROUP;
 		}
-		else {
+		else if (uniquePerCompany) {
 			plid = PortletKeys.PREFS_PLID_SHARED;
 
 			ownerId = companyId;
 			ownerType = PortletKeys.PREFS_OWNER_TYPE_COMPANY;
+		}
+
+		if ((ownerType == 0) || ((ownerId == 0) && (plid == 0))) {
+			return null;
 		}
 
 		if (strictMode) {

@@ -207,11 +207,11 @@ public class MediaObjectNestedCollectionResource
 			adaptiveMedia, AMAttribute.getContentLengthAMAttribute());
 	}
 
-	private Object _getAdaptiveMediaValue(
+	private <V> V _getAdaptiveMediaValue(
 		AdaptiveMedia<AMImageProcessor> adaptiveMedia,
-		AMAttribute amAttribute) {
+		AMAttribute<AMImageProcessor, V> amAttribute) {
 
-		Optional valueOptional = adaptiveMedia.getValueOptional(amAttribute);
+		Optional<V> valueOptional = adaptiveMedia.getValueOptional(amAttribute);
 
 		return valueOptional.orElse(null);
 	}

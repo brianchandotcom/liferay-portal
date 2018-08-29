@@ -64,6 +64,7 @@
 		"clay-checkbox": "^2.2.0",
 		"clay-icon": "^2.2.0",
 		"clay-management-toolbar": "^2.2.0",
+		"clay-modal": "^2.2.0",
 		"clay-radio": "^2.2.0",
 		"metal-dom": "^2.16.5",
 		"metal-drag-drop": "^3.1.0",

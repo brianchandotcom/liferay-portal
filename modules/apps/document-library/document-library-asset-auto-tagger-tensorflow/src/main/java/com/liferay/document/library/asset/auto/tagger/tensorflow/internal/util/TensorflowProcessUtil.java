@@ -53,7 +53,6 @@ import java.util.Dictionary;
 import java.util.concurrent.Future;
 
 import org.osgi.framework.Bundle;
-import org.osgi.framework.BundleContext;
 import org.osgi.framework.Constants;
 
 /**
@@ -61,11 +60,7 @@ import org.osgi.framework.Constants;
  */
 public class TensorflowProcessUtil {
 
-	public static void activate(BundleContext bundleContext)
-		throws IOException {
-
-		Bundle bundle = bundleContext.getBundle();
-
+	public static void activate(Bundle bundle) throws IOException {
 		_tensorflowWorkDir = bundle.getDataFile("tensorflow-workdir");
 
 		_tensorflowWorkDir.mkdirs();

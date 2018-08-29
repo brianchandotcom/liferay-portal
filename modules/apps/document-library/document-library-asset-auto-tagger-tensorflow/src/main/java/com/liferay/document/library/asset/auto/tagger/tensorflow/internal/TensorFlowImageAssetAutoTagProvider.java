@@ -108,7 +108,7 @@ public class TensorFlowImageAssetAutoTagProvider
 
 		Bundle bundle = bundleContext.getBundle();
 
-		TensorflowProcessUtil.activate(bundleContext);
+		TensorflowProcessUtil.activate(bundle);
 
 		modified(properties);
 

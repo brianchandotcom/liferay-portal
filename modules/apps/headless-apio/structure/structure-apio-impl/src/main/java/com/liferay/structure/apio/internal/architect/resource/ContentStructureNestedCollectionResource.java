@@ -53,7 +53,9 @@ public class ContentStructureNestedCollectionResource
 	public NestedCollectionRoutes<DDMStructure, Long, Long> collectionRoutes(
 		NestedCollectionRoutes.Builder<DDMStructure, Long, Long> builder) {
 
-		return builder.addGetter(this::_getPageItems).build();
+		return builder.addGetter(
+			this::_getPageItems
+		).build();
 	}
 
 	@Override
@@ -65,7 +67,9 @@ public class ContentStructureNestedCollectionResource
 	public ItemRoutes<DDMStructure, Long> itemRoutes(
 		ItemRoutes.Builder<DDMStructure, Long> builder) {
 
-		return builder.addGetter(this::_getItem).build();
+		return builder.addGetter(
+			this::_getItem
+		).build();
 	}
 
 	@Override

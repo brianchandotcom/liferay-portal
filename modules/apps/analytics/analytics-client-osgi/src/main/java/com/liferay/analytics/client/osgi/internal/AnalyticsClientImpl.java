@@ -65,7 +65,9 @@ public class AnalyticsClientImpl implements AnalyticsClient {
 			AnalyticsEventsMessage.Builder builder =
 				AnalyticsEventsMessage.builder(analyticsEventsMessage);
 
-			analyticsEventsMessage = builder.userId(userId).build();
+			analyticsEventsMessage = builder.userId(
+				userId
+			).build();
 		}
 
 		String jsonAnalyticsEventsMessage = _jsonObjectMapper.map(

@@ -62,7 +62,8 @@ public class AssetListEntryServiceUtil {
 	}
 
 	public static com.liferay.asset.list.model.AssetListEntry fetchAssetListEntry(
-		long assetListEntryId) {
+		long assetListEntryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().fetchAssetListEntry(assetListEntryId);
 	}
 

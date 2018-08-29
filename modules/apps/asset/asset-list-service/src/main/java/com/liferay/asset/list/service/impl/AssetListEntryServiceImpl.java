@@ -14,9 +14,16 @@
 
 package com.liferay.asset.list.service.impl;
 
+import com.liferay.asset.list.constants.AssetListActionKeys;
+import com.liferay.asset.list.constants.AssetListConstants;
 import com.liferay.asset.list.model.AssetListEntry;
 import com.liferay.asset.list.service.base.AssetListEntryServiceBaseImpl;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionFactory;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermissionFactory;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
@@ -32,6 +39,10 @@ public class AssetListEntryServiceImpl extends AssetListEntryServiceBaseImpl {
 			long groupId, String title, int type, ServiceContext serviceContext)
 		throws PortalException {
 
+		_portletResourcePermission.check(
+			getPermissionChecker(), groupId,
+			AssetListActionKeys.ADD_ASSET_LIST_ENTRY);
+
 		return assetListEntryLocalService.addAssetListEntry(
 			getUserId(), groupId, title, type, serviceContext);
 	}
@@ -44,6 +55,9 @@ public class AssetListEntryServiceImpl extends AssetListEntryServiceBaseImpl {
 			AssetListEntry assetListEntry =
 				assetListEntryLocalService.getAssetListEntry(assetListEntryId);
 
+			_assetListEntryModelResourcePermission.check(
+				getPermissionChecker(), assetListEntry, ActionKeys.DELETE);
+
 			assetListEntryLocalService.deleteAssetListEntry(assetListEntry);
 		}
 	}
@@ -52,12 +66,27 @@ public class AssetListEntryServiceImpl extends AssetListEntryServiceBaseImpl {
 	public AssetListEntry deleteAssetListEntry(long assetListEntryId)
 		throws PortalException {
 
-		return assetListEntryLocalService.deleteAssetListEntry(
-			assetListEntryId);
+		AssetListEntry assetListEntry =
+			assetListEntryLocalService.getAssetListEntry(assetListEntryId);
+
+		_assetListEntryModelResourcePermission.check(
+			getPermissionChecker(), assetListEntry, ActionKeys.DELETE);
+
+		return assetListEntryLocalService.deleteAssetListEntry(assetListEntry);
 	}
 
 	@Override
-	public AssetListEntry fetchAssetListEntry(long assetListEntryId) {
+	public AssetListEntry fetchAssetListEntry(long assetListEntryId)
+		throws PortalException {
+
+		AssetListEntry assetListEntry =
+			assetListEntryLocalService.fetchAssetListEntry(assetListEntryId);
+
+		if (assetListEntry != null) {
+			_assetListEntryModelResourcePermission.check(
+				getPermissionChecker(), assetListEntry, ActionKeys.VIEW);
+		}
+
 		return assetListEntryLocalService.fetchAssetListEntry(assetListEntryId);
 	}
 
@@ -80,8 +109,25 @@ public class AssetListEntryServiceImpl extends AssetListEntryServiceBaseImpl {
 			long assetListEntryId, String title)
 		throws PortalException {
 
+		AssetListEntry assetListEntry =
+			assetListEntryLocalService.getAssetListEntry(assetListEntryId);
+
+		_assetListEntryModelResourcePermission.check(
+			getPermissionChecker(), assetListEntry, ActionKeys.UPDATE);
+
 		return assetListEntryLocalService.updateAssetListEntry(
 			assetListEntryId, title);
 	}
+
+	private static volatile ModelResourcePermission<AssetListEntry>
+		_assetListEntryModelResourcePermission =
+			ModelResourcePermissionFactory.getInstance(
+				AssetListEntryServiceImpl.class,
+				"_assetListEntryModelResourcePermission", AssetListEntry.class);
+	private static volatile PortletResourcePermission
+		_portletResourcePermission =
+			PortletResourcePermissionFactory.getInstance(
+				AssetListEntryServiceImpl.class, "_portletResourcePermission",
+				AssetListConstants.RESOURCE_NAME);
 
 }

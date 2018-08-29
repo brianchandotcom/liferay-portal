@@ -14,15 +14,18 @@
 
 package com.liferay.asset.list.web.internal.display.context;
 
+import com.liferay.asset.list.constants.AssetListActionKeys;
 import com.liferay.asset.list.constants.AssetListEntryTypeConstants;
 import com.liferay.asset.list.model.AssetListEntry;
 import com.liferay.asset.list.service.AssetListEntryServiceUtil;
+import com.liferay.asset.list.web.internal.resource.AssetListPermission;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HtmlUtil;
@@ -120,7 +123,7 @@ public class AssetListDisplayContext {
 		return _assetListEntriesSearchContainer;
 	}
 
-	public AssetListEntry getAssetListEntry() {
+	public AssetListEntry getAssetListEntry() throws PortalException {
 		if (_assetListEntry != null) {
 			return _assetListEntry;
 		}
@@ -159,7 +162,7 @@ public class AssetListDisplayContext {
 		return _assetListEntryId;
 	}
 
-	public String getAssetListEntryTitle() {
+	public String getAssetListEntryTitle() throws PortalException {
 		String title = StringPool.BLANK;
 
 		int assetListEntryType = getAssetListEntryType();
@@ -183,7 +186,7 @@ public class AssetListDisplayContext {
 		return LanguageUtil.get(_request, title);
 	}
 
-	public int getAssetListEntryType() {
+	public int getAssetListEntryType() throws PortalException {
 		if (_assetListEntryType != null) {
 			return _assetListEntryType;
 		}
@@ -224,6 +227,22 @@ public class AssetListDisplayContext {
 					});
 			}
 		};
+	}
+
+	public String getEmptyResultMessageDescription() {
+		if (isShowAddAssetListEntryAction()) {
+			return LanguageUtil.get(
+				_request, "fortunately-it-is-very-easy-to-add-new-ones");
+		}
+
+		return StringPool.BLANK;
+	}
+
+	public boolean isShowAddAssetListEntryAction() {
+		return AssetListPermission.contains(
+			_themeDisplay.getPermissionChecker(),
+			_themeDisplay.getScopeGroupId(),
+			AssetListActionKeys.ADD_ASSET_LIST_ENTRY);
 	}
 
 	private String _addAssetListEntryURL(int type) {

@@ -150,7 +150,8 @@ public class AssetListEntryServiceHttp {
 	}
 
 	public static com.liferay.asset.list.model.AssetListEntry fetchAssetListEntry(
-		HttpPrincipal httpPrincipal, long assetListEntryId) {
+		HttpPrincipal httpPrincipal, long assetListEntryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(AssetListEntryServiceUtil.class,
 					"fetchAssetListEntry", _fetchAssetListEntryParameterTypes3);
@@ -164,6 +165,10 @@ public class AssetListEntryServiceHttp {
 				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
 			}
 			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 

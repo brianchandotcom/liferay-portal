@@ -35,17 +35,21 @@ AssetListEntry assetListEntry = (AssetListEntry)row.getObject();
 		<portlet:param name="assetListEntryId" value="<%= String.valueOf(assetListEntry.getAssetListEntryId()) %>" />
 	</portlet:renderURL>
 
-	<liferay-ui:icon
-		message="edit"
-		url="<%= editAssetListEntryURL %>"
-	/>
+	<c:if test="<%= AssetListEntryPermission.contains(permissionChecker, assetListEntry, ActionKeys.UPDATE) %>">
+		<liferay-ui:icon
+			message="edit"
+			url="<%= editAssetListEntryURL %>"
+		/>
+	</c:if>
 
 	<portlet:actionURL name="/asset_list/delete_asset_list_entry" var="deleteAssetListEntryURL">
 		<portlet:param name="redirect" value="<%= currentURL %>" />
 		<portlet:param name="assetListEntryId" value="<%= String.valueOf(assetListEntry.getAssetListEntryId()) %>" />
 	</portlet:actionURL>
 
-	<liferay-ui:icon-delete
-		url="<%= deleteAssetListEntryURL %>"
-	/>
+	<c:if test="<%= AssetListEntryPermission.contains(permissionChecker, assetListEntry, ActionKeys.DELETE) %>">
+		<liferay-ui:icon-delete
+			url="<%= deleteAssetListEntryURL %>"
+		/>
+	</c:if>
 </liferay-ui:icon-menu>

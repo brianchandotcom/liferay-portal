@@ -386,10 +386,6 @@
 			<var name="portletName" value="Asset Publisher" />
 		</execute>
 
-		<execute function="Close#closeWindow" locator1="title=College Landing Page - ${siteName}" />
-
-		<execute function="SelectWindow" locator1="title=Site Pages - Global - ${siteName}" />
-
 		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSite">

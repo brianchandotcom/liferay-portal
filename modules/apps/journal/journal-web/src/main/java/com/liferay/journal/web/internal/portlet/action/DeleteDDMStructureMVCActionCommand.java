@@ -19,7 +19,6 @@ import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -54,9 +53,8 @@ public class DeleteDDMStructureMVCActionCommand extends BaseMVCActionCommand {
 			deleteDDMStructureIds = new long[] {ddmStructureId};
 		}
 		else {
-			deleteDDMStructureIds = StringUtil.split(
-				ParamUtil.getString(actionRequest, "deleteDDMStructureIds"),
-				0L);
+			deleteDDMStructureIds = ParamUtil.getLongValues(
+				actionRequest, "rowIds");
 		}
 
 		for (long deleteDDMStructureId : deleteDDMStructureIds) {

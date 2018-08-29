@@ -316,3 +316,20 @@ textarea[class^="form-builder-page-header"] {
 	margin-left: 5px;
 	padding: 0;
 }
+
+.sheet {
+	.modal {
+		display: none;
+		margin: inherit;
+	}
+
+	.modal-dialog {
+		position: relative;
+	}
+}
+
+@media (min-width: 576px) {
+	.sheet .modal-sm {
+		max-width: 300px;
+	}
+}

@@ -5,6 +5,7 @@
 				"clay-management-toolbar": ">=2.1.12",
 				"clay-button": ">=2.1.12",
 				"clay-dropdown": ">=2.1.12",
+				"clay-modal": ">=2.1.12",
 				"clay-navigation-bar": ">=2.1.12"
 			},
 			"dynamic-data-mapping-form-field-type": {

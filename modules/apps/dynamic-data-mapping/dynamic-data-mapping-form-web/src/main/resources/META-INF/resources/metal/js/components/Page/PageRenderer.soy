@@ -16,6 +16,13 @@
 	{@param? empty: bool}
 	{@param? page: ?}
 	{@param? pageId: int}
+	{@param? strings: [
+		dismiss: string,
+		delete: string,
+		deleteFieldDialogQuestion: string,
+		deleteFieldDialogTitle:string
+		]
+	}
 	{@param? titlePlaceholder: string}
 
 	{delcall PageRenderer.container variant="$contentRenderer"}
@@ -34,6 +41,7 @@
 		{param page: $page /}
 		{param pageId: $pageId /}
 		{param spritemap: $spritemap /}
+		{param strings: $strings /}
 		{param titlePlaceholder: $titlePlaceholder /}
 	{/delcall}
 {/template}
@@ -54,6 +62,13 @@
 	{@param? empty: bool}
 	{@param? page: ?}
 	{@param? pageId: int}
+	{@param? strings: [
+		dismiss: string,
+		delete: string,
+		deleteFieldDialogQuestion: string,
+		deleteFieldDialogTitle:string
+		]
+	}
 	{@param? titlePlaceholder: string}
 
 	<div class="ddm-page-container-layout">
@@ -86,6 +101,31 @@
 					{/delcall}
 				</div>
 			</div>
+
+			{call ClayModal.render}
+				{param body kind="html"}
+					<h4>{$strings.deleteFieldDialogQuestion}</h4>
+				{/param}
+				{param ref: 'modal' /}
+				{param footerButtons: [
+						[
+							'alignment': 'right',
+							'label': $strings.dismiss,
+							'style': 'primary',
+							'type': 'close'
+						],
+						[
+							'alignment': 'right',
+							'label': $strings.delete,
+							'style': 'primary',
+							'type': 'button'
+						]
+					]
+				/}
+				{param size: 'sm' /}
+				{param spritemap: $spritemap /}
+				{param title: $strings.deleteFieldDialogTitle /}
+			{/call}
 		{/if}
 	</div>
 {/deltemplate}

@@ -42,7 +42,7 @@ describe(
 				expect(component).toMatchSnapshot();
 			}
 		);
-		
+
 		it(
 			'should display empty drag message when there are rows with no columns specified',
 			() => {
@@ -118,6 +118,7 @@ describe(
 				const spy = jest.spyOn(component, 'emit');
 
 				component.element.querySelector('button[aria-label=\'trash\']').click();
+				component.element.querySelector('.modal .btn-primary').click();
 
 				expect(spy).toHaveBeenCalled();
 				expect(spy).toHaveBeenCalledWith('deleteButtonClicked', expect.any(Object));

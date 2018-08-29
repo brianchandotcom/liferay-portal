@@ -107,7 +107,7 @@ class Form extends Component {
 			};
 		}
 
-		return value;
+		return context;
 	}
 
 	_getLocalizedName() {

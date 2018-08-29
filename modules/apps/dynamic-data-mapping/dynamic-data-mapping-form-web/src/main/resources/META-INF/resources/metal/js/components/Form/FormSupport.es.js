@@ -52,9 +52,29 @@ const removeColumn = (pages, pageIndex, rowIndex, columnIndex) => {
 };
 
 const removeFields = (pages, pageIndex, rowIndex, columnIndex) => {
-	pages[Number(pageIndex)].rows[Number(rowIndex)].columns[Number(columnIndex)].fields = [];
-
-	return pages;
+	return pages.map(
+		(page, currentPageIndex) => (
+			{
+				...page,
+				rows: page.rows.map(
+					(row, currentRowIndex) => (
+						{
+							...row,
+							columns: row.columns.map(
+								(column, currentColumnIndex) => {
+									const newColumn = {...column};
+									if (currentPageIndex === pageIndex && currentRowIndex === rowIndex && currentColumnIndex === columnIndex) {
+										newColumn.fields = [];
+									}
+									return newColumn;
+								}
+							)
+						}
+					)
+				)
+			}
+		)
+	);
 };
 
 const removeRow = (pages, pageIndex, rowIndex) => {

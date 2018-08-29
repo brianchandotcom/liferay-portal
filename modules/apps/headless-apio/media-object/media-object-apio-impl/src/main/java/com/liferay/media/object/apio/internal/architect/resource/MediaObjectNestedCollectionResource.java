@@ -145,7 +145,7 @@ public class MediaObjectNestedCollectionResource
 		return Try.fromFallible(
 			fileEntry::getMimeType
 		).filter(
-			mimeType -> _amImageMimeTypeProvider.isMimeTypeSupported(mimeType)
+			_amImageMimeTypeProvider::isMimeTypeSupported
 		).map(
 			mimeType -> _amImageFinder.getAdaptiveMediaStream(
 				amImageQueryBuilder -> amImageQueryBuilder.forFileEntry(

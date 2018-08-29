@@ -188,15 +188,15 @@ public class MediaObjectNestedCollectionResource
 		return builder.types(
 			"ImageObject", "MediaObject"
 		).addNumber(
-			"width", this::_getAdaptiveMediaWidth
-		).addNumber(
 			"height", this::_getAdaptiveMediaHeight
-		).addString(
-			"resolutionName", this::_getAdaptiveMediaName
 		).addNumber(
 			"sizeInBytes", this::_getAdaptiveMediaSize
+		).addNumber(
+			"width", this::_getAdaptiveMediaWidth
 		).addRelativeURL(
 			"contentUrl", this::_getAdaptiveMediaContentUrl
+		).addString(
+			"resolutionName", this::_getAdaptiveMediaName
 		).build();
 	}
 

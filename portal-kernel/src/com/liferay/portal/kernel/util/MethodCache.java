@@ -16,17 +16,22 @@ package com.liferay.portal.kernel.util;
 
 import java.lang.reflect.Method;
 
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
-
 /**
  * @author Michael C. Han
  * @author Shuyang Zhou
+ *
+ * @deprecated As of Judson (7.1.x), replaced by {@link MethodKey}
  */
+@Deprecated
 public class MethodCache {
 
+	/**
+	 * @deprecated As of Judson (7.1.x), replaced by {@link
+	 *             MethodKey#resetCache()}
+	 */
+	@Deprecated
 	public static void reset() {
-		_methods.clear();
+		MethodKey.resetCache();
 	}
 
 	/**
@@ -35,23 +40,7 @@ public class MethodCache {
 	protected static Method get(MethodKey methodKey)
 		throws NoSuchMethodException {
 
-		Method method = _methods.get(methodKey);
-
-		if (method == null) {
-			Class<?> declaringClass = methodKey.getDeclaringClass();
-
-			method = declaringClass.getDeclaredMethod(
-				methodKey.getMethodName(), methodKey.getParameterTypes());
-
-			method.setAccessible(true);
-
-			_methods.put(methodKey, method);
-		}
-
-		return method;
+		return methodKey.getMethod();
 	}
-
-	private static final Map<MethodKey, Method> _methods =
-		new ConcurrentHashMap<>();
 
 }

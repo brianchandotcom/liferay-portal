@@ -28,7 +28,9 @@ import java.lang.reflect.Method;
 import java.nio.ByteBuffer;
 
 import java.util.Arrays;
+import java.util.Map;
 import java.util.Objects;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Provides a serializable loose representation for {@link Method}, considering
@@ -45,6 +47,10 @@ import java.util.Objects;
  * @author Shuyang Zhou
  */
 public class MethodKey implements Externalizable {
+
+	public static void resetCache() {
+		_methods.clear();
+	}
 
 	/**
 	 * The empty constructor is required by {@link Externalizable}. Do not use
@@ -119,7 +125,18 @@ public class MethodKey implements Externalizable {
 	}
 
 	public Method getMethod() throws NoSuchMethodException {
-		return MethodCache.get(this);
+		Method method = _methods.get(this);
+
+		if (method == null) {
+			method = _declaringClass.getDeclaredMethod(
+				_methodName, _parameterTypes);
+
+			method.setAccessible(true);
+
+			_methods.put(this, method);
+		}
+
+		return method;
 	}
 
 	public String getMethodName() {
@@ -226,6 +243,8 @@ public class MethodKey implements Externalizable {
 			byteBuffer.array(), byteBuffer.position(), byteBuffer.remaining());
 	}
 
+	private static final Map<MethodKey, Method> _methods =
+		new ConcurrentHashMap<>();
 	private static final long serialVersionUID = 1L;
 
 	private Class<?> _declaringClass;

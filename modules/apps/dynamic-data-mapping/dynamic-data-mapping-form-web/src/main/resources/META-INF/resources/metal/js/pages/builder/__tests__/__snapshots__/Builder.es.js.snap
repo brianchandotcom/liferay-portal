@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Builder should not open sidebar when the active page is changed 1`] = `
+exports[`Builder should not open sidebar when the active page is changed and mode is not "add" 1`] = `
 <div>
   <div class="container">
     <div class="sheet">
@@ -68,7 +68,7 @@ exports[`Builder should not open sidebar when the active page is changed 1`] = `
 </div>
 `;
 
-exports[`Builder should open sidebar when the active page is changed 1`] = `
+exports[`Builder should open sidebar when active page is changed and mode is "add" 1`] = `
 <div>
   <div class="container">
     <div class="sheet">

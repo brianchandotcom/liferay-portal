@@ -2,26 +2,10 @@
 
 exports[`FormRenderer PagesSettings should add a new page on the layout render 1`] = `
 <div class="position-relative">
-  <div class="ddm-form-header pt-2 pb-3 mb-4 multiple">
-    <ol class="multi-step-indicator-label-top multi-step-nav multi-step-nav-collapse-sm">
-      <li class="multi-step-item multi-step-item-expand" data-page-id="0">
-        <div class="multi-step-divider"></div>
-        <div class="multi-step-indicator">
-          <div class="multi-step-indicator-label">Untitled name</div>
-          <a class="multi-step-icon" data-multi-step-icon="1" href="#1"></a>
-        </div>
-      </li>
-      <li class="multi-step-item active" data-page-id="1">
-        <div class="multi-step-divider"></div>
-        <div class="multi-step-indicator">
-          <div class="multi-step-indicator-label">Untitled Page</div>
-          <a class="multi-step-icon" data-multi-step-icon="2" href="#1"></a>
-        </div>
-      </li>
-    </ol>
-    <div class="btn-group ddm-page-settings" role="group">
+  <div class="ddm-form-header">
+    <div class="ddm-page-settings" role="group">
       <div class="dropdown dropdown-action">
-        <button aria-expanded="false" aria-haspopup="true" aria-label="toggle" class="dropdown-toggle btn btn-unstyled" title="actions" type="button">
+        <button aria-expanded="false" aria-haspopup="true" aria-label="toggle" class="dropdown-toggle btn component-action btn-unstyled" title="actions" type="button">
           <svg aria-hidden="true" class="lexicon-icon lexicon-icon-ellipsis-v" focusable="false">
             <title>ellipsis-v</title>
             <use xlink:href="icons.svg#ellipsis-v"></use>
@@ -31,24 +15,14 @@ exports[`FormRenderer PagesSettings should add a new page on the layout render 1
     </div>
   </div>
   <div class="ddm-page-container-layout"></div>
-  <div class="ddm-page-container-layout">
-    <div class="ddm-form-page pl-3 pr-3">
-      <textarea class="form-builder-page-header-title form-control" data-page-id="1" maxlength="120" value="" placeholder="untitled-page-x-of-x"></textarea>
-      <textarea class="form-builder-page-header-description form-control" data-page-id="1" maxlength="120" placeholder="add-a-short-description-for-this-page" value=""></textarea>
-      <div class="form-builder-layout">
-        <div class="layout-page">
-          <div class="col col-empty col-md-12 last-col lfr-initial-col">
-            <div id="lfr-initial-col-message">drag-from-sidebar-and-drop-here</div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
 </div>
 <div class="dropdown-menu" ref="menu">
   <ul class="list-unstyled">
     <li>
-      <button class="btn dropdown-item btn-sm btn-link" aria-label="add-page" type="button">add-page</button>
+      <button class="btn dropdown-item btn-sm btn-link" aria-label="add-new-page" type="button">add-new-page</button>
+    </li>
+    <li>
+      <button class="btn dropdown-item btn-sm btn-link" aria-label="delete-current-page" type="button">delete-current-page</button>
     </li>
   </ul>
 </div>
@@ -56,9 +30,9 @@ exports[`FormRenderer PagesSettings should add a new page on the layout render 1
 
 exports[`FormRenderer PagesSettings should delete the current page on layout render 1`] = `
 <div class="position-relative">
-  <div class="ddm-form-header pt-2 pb-3 mb-4 multiple">
+  <div class="ddm-form-header pt-2 mb-4 multiple">
     <ol class="multi-step-indicator-label-top multi-step-nav multi-step-nav-collapse-sm">
-      <li class="multi-step-item multi-step-item-expand" data-page-id="0">
+      <li class="multi-step-item multi-step-item-expand active" data-page-id="0">
         <div class="multi-step-divider"></div>
         <div class="multi-step-indicator">
           <div class="multi-step-indicator-label">Untitled name</div>
@@ -73,7 +47,7 @@ exports[`FormRenderer PagesSettings should delete the current page on layout ren
         </div>
       </li>
     </ol>
-    <div class="dmm-page-settings" role="group">
+    <div class="ddm-page-settings" role="group">
       <div class="dropdown dropdown-action">
         <button aria-expanded="false" aria-haspopup="true" aria-label="toggle" class="dropdown-toggle btn component-action btn-unstyled" title="actions" type="button">
           <svg aria-hidden="true" class="lexicon-icon lexicon-icon-ellipsis-v" focusable="false">
@@ -84,7 +58,140 @@ exports[`FormRenderer PagesSettings should delete the current page on layout ren
       </div>
     </div>
   </div>
-  <div class="ddm-page-container-layout"></div>
+  <div class="ddm-page-container-layout">
+    <div class="ddm-form-page pl-3 pr-3">
+      <textarea class="form-builder-page-header-title form-control" data-page-id="0" maxlength="120" value="Untitled name" placeholder="untitled-page-x-of-x"></textarea>
+      <textarea class="form-builder-page-header-description form-control" data-page-id="0" maxlength="120" placeholder="add-a-short-description-for-this-page"></textarea>
+      <div class="form-builder-layout">
+        <div class="layout-page">
+          <div class="row">
+            <div class="col-md-12" data-ddm-field-row="0" data-ddm-field-page="0">
+              <div class="col-empty ddm-target"></div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-3 col-ddm" data-ddm-field-row="0" data-ddm-field-page="0" data-ddm-field-column="0">
+              <div class="ddm-field-container">
+                <div class="ddm-resize-handle-left"></div>
+                <div class="ddm-drag">
+                  <div class="ddm-field-not-found">Field doesn't exist.</div>
+                </div>
+                <div class="ddm-field-actions-container">
+                  <button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button">
+                    <svg aria-hidden="true" class="lexicon-icon lexicon-icon-paste" focusable="false">
+                      <title>paste</title>
+                      <use xlink:href="icons.svg#paste"></use>
+                    </svg>
+                  </button>
+                  <button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button">
+                    <svg aria-hidden="true" class="lexicon-icon lexicon-icon-trash" focusable="false">
+                      <title>trash</title>
+                      <use xlink:href="icons.svg#trash"></use>
+                    </svg>
+                  </button>
+                </div>
+                <div class="ddm-resize-handle-right"></div>
+              </div>
+            </div>
+            <div class="col-md-9" data-ddm-field-row="0" data-ddm-field-page="0" data-ddm-field-column="1">
+              <div class="col-empty ddm-target"></div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12" data-ddm-field-row="1" data-ddm-field-page="0">
+              <div class="col-empty ddm-target"></div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-4 col-ddm" data-ddm-field-row="1" data-ddm-field-page="0" data-ddm-field-column="0">
+              <div class="ddm-field-container">
+                <div class="ddm-resize-handle-left"></div>
+                <div class="ddm-drag">
+                  <div class="ddm-field-not-found">Field doesn't exist.</div>
+                </div>
+                <div class="ddm-field-actions-container">
+                  <button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button">
+                    <svg aria-hidden="true" class="lexicon-icon lexicon-icon-paste" focusable="false">
+                      <title>paste</title>
+                      <use xlink:href="icons.svg#paste"></use>
+                    </svg>
+                  </button>
+                  <button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button">
+                    <svg aria-hidden="true" class="lexicon-icon lexicon-icon-trash" focusable="false">
+                      <title>trash</title>
+                      <use xlink:href="icons.svg#trash"></use>
+                    </svg>
+                  </button>
+                </div>
+                <div class="ddm-resize-handle-right"></div>
+              </div>
+            </div>
+            <div class="col-md-6 col-ddm" data-ddm-field-row="1" data-ddm-field-page="0" data-ddm-field-column="1">
+              <div class="ddm-field-container">
+                <div class="ddm-resize-handle-left"></div>
+                <div class="ddm-drag">
+                  <div class="ddm-field-not-found">Field doesn't exist.</div>
+                </div>
+                <div class="ddm-field-actions-container">
+                  <button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button">
+                    <svg aria-hidden="true" class="lexicon-icon lexicon-icon-paste" focusable="false">
+                      <title>paste</title>
+                      <use xlink:href="icons.svg#paste"></use>
+                    </svg>
+                  </button>
+                  <button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button">
+                    <svg aria-hidden="true" class="lexicon-icon lexicon-icon-trash" focusable="false">
+                      <title>trash</title>
+                      <use xlink:href="icons.svg#trash"></use>
+                    </svg>
+                  </button>
+                </div>
+                <div class="ddm-resize-handle-right"></div>
+              </div>
+            </div>
+            <div class="col-md-2" data-ddm-field-row="1" data-ddm-field-page="0" data-ddm-field-column="2">
+              <div class="col-empty ddm-target"></div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12" data-ddm-field-row="2" data-ddm-field-page="0">
+              <div class="col-empty ddm-target"></div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12 col-ddm" data-ddm-field-row="2" data-ddm-field-page="0" data-ddm-field-column="0">
+              <div class="ddm-field-container">
+                <div class="ddm-resize-handle-left"></div>
+                <div class="ddm-drag">
+                  <div class="ddm-field-not-found">Field doesn't exist.</div>
+                </div>
+                <div class="ddm-field-actions-container">
+                  <button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button">
+                    <svg aria-hidden="true" class="lexicon-icon lexicon-icon-paste" focusable="false">
+                      <title>paste</title>
+                      <use xlink:href="icons.svg#paste"></use>
+                    </svg>
+                  </button>
+                  <button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button">
+                    <svg aria-hidden="true" class="lexicon-icon lexicon-icon-trash" focusable="false">
+                      <title>trash</title>
+                      <use xlink:href="icons.svg#trash"></use>
+                    </svg>
+                  </button>
+                </div>
+                <div class="ddm-resize-handle-right"></div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12" data-ddm-field-row="3" data-ddm-field-page="0">
+              <div class="col-empty ddm-target"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
   <div class="ddm-page-container-layout"></div>
 </div>
 <div class="dropdown-menu" ref="menu">
@@ -102,7 +209,7 @@ exports[`FormRenderer PagesSettings should delete the current page on layout ren
 exports[`FormRenderer PagesSettings should reset the current page on layout render 1`] = `
 <div class="position-relative">
   <div class="ddm-form-header">
-    <div class="dmm-page-settings" role="group">
+    <div class="ddm-page-settings" role="group">
       <div class="dropdown dropdown-action">
         <button aria-expanded="false" aria-haspopup="true" aria-label="toggle" class="dropdown-toggle btn component-action btn-unstyled" title="actions" type="button">
           <svg aria-hidden="true" class="lexicon-icon lexicon-icon-ellipsis-v" focusable="false">
@@ -114,8 +221,8 @@ exports[`FormRenderer PagesSettings should reset the current page on layout rend
     </div>
   </div>
   <div class="ddm-page-container-layout">
-    <div class="dmm-form-page pl-3 pr-3">
-      <textarea class="form-builder-page-header-title form-control" data-page-id="0" maxlength="120" value="Untitled name" placeholder="untitled-page-1-of-1"></textarea>
+    <div class="ddm-form-page pl-3 pr-3">
+      <textarea class="form-builder-page-header-title form-control" data-page-id="0" maxlength="120" value="Untitled name" placeholder="untitled-page-x-of-x"></textarea>
       <textarea class="form-builder-page-header-description form-control" data-page-id="0" maxlength="120" placeholder="add-a-short-description-for-this-page"></textarea>
       <div class="form-builder-layout">
         <div class="layout-page">
@@ -262,7 +369,7 @@ exports[`FormRenderer PagesSettings should reset the current page on layout rend
 
 exports[`FormRenderer should change the active page 1`] = `
 <div class="position-relative">
-  <div class="ddm-form-header pt-2 pb-3 mb-4 multiple">
+  <div class="ddm-form-header pt-2 mb-4 multiple">
     <ol class="multi-step-indicator-label-top multi-step-nav multi-step-nav-collapse-sm">
       <li class="multi-step-item multi-step-item-expand active" data-page-id="0">
         <div class="multi-step-divider"></div>
@@ -279,9 +386,9 @@ exports[`FormRenderer should change the active page 1`] = `
         </div>
       </li>
     </ol>
-    <div class="btn-group ddm-page-settings" role="group">
+    <div class="ddm-page-settings" role="group">
       <div class="dropdown dropdown-action">
-        <button aria-expanded="false" aria-haspopup="true" aria-label="toggle" class="dropdown-toggle btn btn-unstyled" title="actions" type="button">
+        <button aria-expanded="false" aria-haspopup="true" aria-label="toggle" class="dropdown-toggle btn component-action btn-unstyled" title="actions" type="button">
           <svg aria-hidden="true" class="lexicon-icon lexicon-icon-ellipsis-v" focusable="false">
             <title>ellipsis-v</title>
             <use xlink:href="icons.svg#ellipsis-v"></use>
@@ -429,7 +536,10 @@ exports[`FormRenderer should change the active page 1`] = `
 <div class="dropdown-menu" ref="menu">
   <ul class="list-unstyled">
     <li>
-      <button class="btn dropdown-item btn-sm btn-link" aria-label="add-page" type="button">add-page</button>
+      <button class="btn dropdown-item btn-sm btn-link" aria-label="add-new-page" type="button">add-new-page</button>
+    </li>
+    <li>
+      <button class="btn dropdown-item btn-sm btn-link" aria-label="reset-page" type="button">reset-page</button>
     </li>
   </ul>
 </div>
@@ -437,7 +547,7 @@ exports[`FormRenderer should change the active page 1`] = `
 
 exports[`FormRenderer should change the active page for a empty page 1`] = `
 <div class="position-relative">
-  <div class="ddm-form-header pt-2 pb-3 mb-4 multiple">
+  <div class="ddm-form-header pt-2 mb-4 multiple">
     <ol class="multi-step-indicator-label-top multi-step-nav multi-step-nav-collapse-sm">
       <li class="multi-step-item multi-step-item-expand active" data-page-id="0">
         <div class="multi-step-divider"></div>
@@ -454,7 +564,7 @@ exports[`FormRenderer should change the active page for a empty page 1`] = `
         </div>
       </li>
     </ol>
-    <div class="dmm-page-settings" role="group">
+    <div class="ddm-page-settings" role="group">
       <div class="dropdown dropdown-action">
         <button aria-expanded="false" aria-haspopup="true" aria-label="toggle" class="dropdown-toggle btn component-action btn-unstyled" title="actions" type="button">
           <svg aria-hidden="true" class="lexicon-icon lexicon-icon-ellipsis-v" focusable="false">
@@ -466,25 +576,13 @@ exports[`FormRenderer should change the active page for a empty page 1`] = `
     </div>
   </div>
   <div class="ddm-page-container-layout">
-    <div class="dmm-form-page pl-3 pr-3">
-      <textarea class="form-builder-page-header-title form-control" data-page-id="0" maxlength="120" value="Untitled name" placeholder="untitled-page-1-of-1"></textarea>
+    <div class="ddm-form-page pl-3 pr-3">
+      <textarea class="form-builder-page-header-title form-control" data-page-id="0" maxlength="120" value="Untitled name" placeholder="untitled-page-x-of-x"></textarea>
       <textarea class="form-builder-page-header-description form-control" data-page-id="0" maxlength="120" placeholder="add-a-short-description-for-this-page"></textarea>
       <div class="form-builder-layout">
         <div class="layout-page">
-          <div class="row">
-            <div class="col-md-12" data-ddm-field-row="0" data-ddm-field-page="0">
-              <div class="col-empty ddm-target"></div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-12" data-ddm-field-row="0" data-ddm-field-page="0" data-ddm-field-column="0">
-              <div class="col-empty ddm-target"></div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-12" data-ddm-field-row="1" data-ddm-field-page="0">
-              <div class="col-empty ddm-target"></div>
-            </div>
+          <div class="col col-empty col-md-12 last-col lfr-initial-col">
+            <div id="lfr-initial-col-message">drag-from-sidebar-and-drop-here</div>
           </div>
         </div>
       </div>
@@ -507,9 +605,9 @@ exports[`FormRenderer should change the active page for a empty page 1`] = `
 exports[`FormRenderer should change the form page description 1`] = `
 <div class="position-relative">
   <div class="ddm-form-header">
-    <div class="btn-group ddm-page-settings" role="group">
+    <div class="ddm-page-settings" role="group">
       <div class="dropdown dropdown-action">
-        <button aria-expanded="false" aria-haspopup="true" aria-label="toggle" class="dropdown-toggle btn btn-unstyled" title="actions" type="button">
+        <button aria-expanded="false" aria-haspopup="true" aria-label="toggle" class="dropdown-toggle btn component-action btn-unstyled" title="actions" type="button">
           <svg aria-hidden="true" class="lexicon-icon lexicon-icon-ellipsis-v" focusable="false">
             <title>ellipsis-v</title>
             <use xlink:href="icons.svg#ellipsis-v"></use>
@@ -656,7 +754,10 @@ exports[`FormRenderer should change the form page description 1`] = `
 <div class="dropdown-menu" ref="menu">
   <ul class="list-unstyled">
     <li>
-      <button class="btn dropdown-item btn-sm btn-link" aria-label="add-page" type="button">add-page</button>
+      <button class="btn dropdown-item btn-sm btn-link" aria-label="add-new-page" type="button">add-new-page</button>
+    </li>
+    <li>
+      <button class="btn dropdown-item btn-sm btn-link" aria-label="reset-page" type="button">reset-page</button>
     </li>
   </ul>
 </div>
@@ -665,9 +766,9 @@ exports[`FormRenderer should change the form page description 1`] = `
 exports[`FormRenderer should change the form page title 1`] = `
 <div class="position-relative">
   <div class="ddm-form-header">
-    <div class="btn-group ddm-page-settings" role="group">
+    <div class="ddm-page-settings" role="group">
       <div class="dropdown dropdown-action">
-        <button aria-expanded="false" aria-haspopup="true" aria-label="toggle" class="dropdown-toggle btn btn-unstyled" title="actions" type="button">
+        <button aria-expanded="false" aria-haspopup="true" aria-label="toggle" class="dropdown-toggle btn component-action btn-unstyled" title="actions" type="button">
           <svg aria-hidden="true" class="lexicon-icon lexicon-icon-ellipsis-v" focusable="false">
             <title>ellipsis-v</title>
             <use xlink:href="icons.svg#ellipsis-v"></use>
@@ -814,7 +915,10 @@ exports[`FormRenderer should change the form page title 1`] = `
 <div class="dropdown-menu" ref="menu">
   <ul class="list-unstyled">
     <li>
-      <button class="btn dropdown-item btn-sm btn-link" aria-label="add-page" type="button">add-page</button>
+      <button class="btn dropdown-item btn-sm btn-link" aria-label="add-new-page" type="button">add-new-page</button>
+    </li>
+    <li>
+      <button class="btn dropdown-item btn-sm btn-link" aria-label="reset-page" type="button">reset-page</button>
     </li>
   </ul>
 </div>
@@ -823,9 +927,9 @@ exports[`FormRenderer should change the form page title 1`] = `
 exports[`FormRenderer should not render the layout with the field empty in non-editable mode 1`] = `
 <div class="position-relative">
   <div class="ddm-form-header">
-    <div class="btn-group ddm-page-settings" role="group">
+    <div class="ddm-page-settings" role="group">
       <div class="dropdown dropdown-action">
-        <button aria-expanded="false" aria-haspopup="true" aria-label="toggle" class="dropdown-toggle btn btn-unstyled" title="actions" type="button">
+        <button aria-expanded="false" aria-haspopup="true" aria-label="toggle" class="dropdown-toggle btn component-action btn-unstyled" title="actions" type="button">
           <svg aria-hidden="true" class="lexicon-icon lexicon-icon-ellipsis-v" focusable="false">
             <title>ellipsis-v</title>
             <use xlink:href="icons.svg#ellipsis-v"></use>
@@ -859,7 +963,10 @@ exports[`FormRenderer should not render the layout with the field empty in non-e
 <div class="dropdown-menu" ref="menu">
   <ul class="list-unstyled">
     <li>
-      <button class="btn dropdown-item btn-sm btn-link" aria-label="add-page" type="button">add-page</button>
+      <button class="btn dropdown-item btn-sm btn-link" aria-label="add-new-page" type="button">add-new-page</button>
+    </li>
+    <li>
+      <button class="btn dropdown-item btn-sm btn-link" aria-label="reset-page" type="button">reset-page</button>
     </li>
   </ul>
 </div>
@@ -868,9 +975,9 @@ exports[`FormRenderer should not render the layout with the field empty in non-e
 exports[`FormRenderer should receive a delete button event and propage it 1`] = `
 <div class="position-relative">
   <div class="ddm-form-header">
-    <div class="btn-group ddm-page-settings" role="group">
+    <div class="ddm-page-settings" role="group">
       <div class="dropdown dropdown-action">
-        <button aria-expanded="false" aria-haspopup="true" aria-label="toggle" class="dropdown-toggle btn btn-unstyled" title="actions" type="button">
+        <button aria-expanded="false" aria-haspopup="true" aria-label="toggle" class="dropdown-toggle btn component-action btn-unstyled" title="actions" type="button">
           <svg aria-hidden="true" class="lexicon-icon lexicon-icon-ellipsis-v" focusable="false">
             <title>ellipsis-v</title>
             <use xlink:href="icons.svg#ellipsis-v"></use>
@@ -1017,7 +1124,10 @@ exports[`FormRenderer should receive a delete button event and propage it 1`] = 
 <div class="dropdown-menu" ref="menu">
   <ul class="list-unstyled">
     <li>
-      <button class="btn dropdown-item btn-sm btn-link" aria-label="add-page" type="button">add-page</button>
+      <button class="btn dropdown-item btn-sm btn-link" aria-label="add-new-page" type="button">add-new-page</button>
+    </li>
+    <li>
+      <button class="btn dropdown-item btn-sm btn-link" aria-label="reset-page" type="button">reset-page</button>
     </li>
   </ul>
 </div>
@@ -1026,9 +1136,9 @@ exports[`FormRenderer should receive a delete button event and propage it 1`] = 
 exports[`FormRenderer should receive a duplicate button event and propage it 1`] = `
 <div class="position-relative">
   <div class="ddm-form-header">
-    <div class="btn-group ddm-page-settings" role="group">
+    <div class="ddm-page-settings" role="group">
       <div class="dropdown dropdown-action">
-        <button aria-expanded="false" aria-haspopup="true" aria-label="toggle" class="dropdown-toggle btn btn-unstyled" title="actions" type="button">
+        <button aria-expanded="false" aria-haspopup="true" aria-label="toggle" class="dropdown-toggle btn component-action btn-unstyled" title="actions" type="button">
           <svg aria-hidden="true" class="lexicon-icon lexicon-icon-ellipsis-v" focusable="false">
             <title>ellipsis-v</title>
             <use xlink:href="icons.svg#ellipsis-v"></use>
@@ -1175,7 +1285,10 @@ exports[`FormRenderer should receive a duplicate button event and propage it 1`]
 <div class="dropdown-menu" ref="menu">
   <ul class="list-unstyled">
     <li>
-      <button class="btn dropdown-item btn-sm btn-link" aria-label="add-page" type="button">add-page</button>
+      <button class="btn dropdown-item btn-sm btn-link" aria-label="add-new-page" type="button">add-new-page</button>
+    </li>
+    <li>
+      <button class="btn dropdown-item btn-sm btn-link" aria-label="reset-page" type="button">reset-page</button>
     </li>
   </ul>
 </div>
@@ -1184,9 +1297,9 @@ exports[`FormRenderer should receive a duplicate button event and propage it 1`]
 exports[`FormRenderer should receive an update page event and propage it 1`] = `
 <div class="position-relative">
   <div class="ddm-form-header">
-    <div class="btn-group ddm-page-settings" role="group">
+    <div class="ddm-page-settings" role="group">
       <div class="dropdown dropdown-action">
-        <button aria-expanded="false" aria-haspopup="true" aria-label="toggle" class="dropdown-toggle btn btn-unstyled" title="actions" type="button">
+        <button aria-expanded="false" aria-haspopup="true" aria-label="toggle" class="dropdown-toggle btn component-action btn-unstyled" title="actions" type="button">
           <svg aria-hidden="true" class="lexicon-icon lexicon-icon-ellipsis-v" focusable="false">
             <title>ellipsis-v</title>
             <use xlink:href="icons.svg#ellipsis-v"></use>
@@ -1333,7 +1446,10 @@ exports[`FormRenderer should receive an update page event and propage it 1`] = `
 <div class="dropdown-menu" ref="menu">
   <ul class="list-unstyled">
     <li>
-      <button class="btn dropdown-item btn-sm btn-link" aria-label="add-page" type="button">add-page</button>
+      <button class="btn dropdown-item btn-sm btn-link" aria-label="add-new-page" type="button">add-new-page</button>
+    </li>
+    <li>
+      <button class="btn dropdown-item btn-sm btn-link" aria-label="reset-page" type="button">reset-page</button>
     </li>
   </ul>
 </div>
@@ -1342,9 +1458,9 @@ exports[`FormRenderer should receive an update page event and propage it 1`] = `
 exports[`FormRenderer should render a layout in editable mode 1`] = `
 <div class="position-relative">
   <div class="ddm-form-header">
-    <div class="btn-group ddm-page-settings" role="group">
+    <div class="ddm-page-settings" role="group">
       <div class="dropdown dropdown-action">
-        <button aria-expanded="false" aria-haspopup="true" aria-label="toggle" class="dropdown-toggle btn btn-unstyled" title="actions" type="button">
+        <button aria-expanded="false" aria-haspopup="true" aria-label="toggle" class="dropdown-toggle btn component-action btn-unstyled" title="actions" type="button">
           <svg aria-hidden="true" class="lexicon-icon lexicon-icon-ellipsis-v" focusable="false">
             <title>ellipsis-v</title>
             <use xlink:href="icons.svg#ellipsis-v"></use>
@@ -1491,7 +1607,10 @@ exports[`FormRenderer should render a layout in editable mode 1`] = `
 <div class="dropdown-menu" ref="menu">
   <ul class="list-unstyled">
     <li>
-      <button class="btn dropdown-item btn-sm btn-link" aria-label="add-page" type="button">add-page</button>
+      <button class="btn dropdown-item btn-sm btn-link" aria-label="add-new-page" type="button">add-new-page</button>
+    </li>
+    <li>
+      <button class="btn dropdown-item btn-sm btn-link" aria-label="reset-page" type="button">reset-page</button>
     </li>
   </ul>
 </div>
@@ -1500,9 +1619,9 @@ exports[`FormRenderer should render a layout in editable mode 1`] = `
 exports[`FormRenderer should render a layout with an empty field only in editable mode 1`] = `
 <div class="position-relative">
   <div class="ddm-form-header">
-    <div class="btn-group ddm-page-settings" role="group">
+    <div class="ddm-page-settings" role="group">
       <div class="dropdown dropdown-action">
-        <button aria-expanded="false" aria-haspopup="true" aria-label="toggle" class="dropdown-toggle btn btn-unstyled" title="actions" type="button">
+        <button aria-expanded="false" aria-haspopup="true" aria-label="toggle" class="dropdown-toggle btn component-action btn-unstyled" title="actions" type="button">
           <svg aria-hidden="true" class="lexicon-icon lexicon-icon-ellipsis-v" focusable="false">
             <title>ellipsis-v</title>
             <use xlink:href="icons.svg#ellipsis-v"></use>
@@ -1669,7 +1788,10 @@ exports[`FormRenderer should render a layout with an empty field only in editabl
 <div class="dropdown-menu" ref="menu">
   <ul class="list-unstyled">
     <li>
-      <button class="btn dropdown-item btn-sm btn-link" aria-label="add-page" type="button">add-page</button>
+      <button class="btn dropdown-item btn-sm btn-link" aria-label="add-new-page" type="button">add-new-page</button>
+    </li>
+    <li>
+      <button class="btn dropdown-item btn-sm btn-link" aria-label="reset-page" type="button">reset-page</button>
     </li>
   </ul>
 </div>
@@ -1678,9 +1800,9 @@ exports[`FormRenderer should render a layout with an empty field only in editabl
 exports[`FormRenderer should render a layout with pages 1`] = `
 <div class="position-relative">
   <div class="ddm-form-header">
-    <div class="btn-group ddm-page-settings" role="group">
+    <div class="ddm-page-settings" role="group">
       <div class="dropdown dropdown-action">
-        <button aria-expanded="false" aria-haspopup="true" aria-label="toggle" class="dropdown-toggle btn btn-unstyled" title="actions" type="button">
+        <button aria-expanded="false" aria-haspopup="true" aria-label="toggle" class="dropdown-toggle btn component-action btn-unstyled" title="actions" type="button">
           <svg aria-hidden="true" class="lexicon-icon lexicon-icon-ellipsis-v" focusable="false">
             <title>ellipsis-v</title>
             <use xlink:href="icons.svg#ellipsis-v"></use>
@@ -1713,7 +1835,10 @@ exports[`FormRenderer should render a layout with pages 1`] = `
 <div class="dropdown-menu" ref="menu">
   <ul class="list-unstyled">
     <li>
-      <button class="btn dropdown-item btn-sm btn-link" aria-label="add-page" type="button">add-page</button>
+      <button class="btn dropdown-item btn-sm btn-link" aria-label="add-new-page" type="button">add-new-page</button>
+    </li>
+    <li>
+      <button class="btn dropdown-item btn-sm btn-link" aria-label="reset-page" type="button">reset-page</button>
     </li>
   </ul>
 </div>
@@ -1737,9 +1862,9 @@ exports[`FormRenderer should render a layout with pages in mode of list 1`] = `
 exports[`FormRenderer should render default markup 1`] = `
 <div class="position-relative">
   <div class="ddm-form-header">
-    <div class="btn-group ddm-page-settings" role="group">
+    <div class="ddm-page-settings" role="group">
       <div class="dropdown dropdown-action">
-        <button aria-expanded="false" aria-haspopup="true" aria-label="toggle" class="dropdown-toggle btn btn-unstyled" title="actions" type="button">
+        <button aria-expanded="false" aria-haspopup="true" aria-label="toggle" class="dropdown-toggle btn component-action btn-unstyled" title="actions" type="button">
           <svg aria-hidden="true" class="lexicon-icon lexicon-icon-ellipsis-v" focusable="false">
             <title>ellipsis-v</title>
             <use xlink:href="icons.svg#ellipsis-v"></use>
@@ -1752,7 +1877,10 @@ exports[`FormRenderer should render default markup 1`] = `
 <div class="dropdown-menu" ref="menu">
   <ul class="list-unstyled">
     <li>
-      <button class="btn dropdown-item btn-sm btn-link" aria-label="add-page" type="button">add-page</button>
+      <button class="btn dropdown-item btn-sm btn-link" aria-label="add-new-page" type="button">add-new-page</button>
+    </li>
+    <li>
+      <button class="btn dropdown-item btn-sm btn-link" aria-label="reset-page" type="button">reset-page</button>
     </li>
   </ul>
 </div>

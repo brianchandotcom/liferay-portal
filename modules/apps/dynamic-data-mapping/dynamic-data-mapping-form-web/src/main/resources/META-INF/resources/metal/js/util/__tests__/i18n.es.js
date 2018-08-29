@@ -6,41 +6,45 @@ describe(
 		it(
 			'should create a localized property for a specific object string value',
 			() => {
-				const value = 'the title will be localized';
 				const obj = {
 					title: ''
 				};
+				const value = 'the title will be localized';
 
 				setLocalizedValue(obj, 'en_US', 'title', value);
 
-				expect(obj).toMatchObject({
-					title: value,
-					localizedTitle: {
-						en_US: value
+				expect(obj).toMatchObject(
+					{
+						localizedTitle: {
+							en_US: value
+						},
+						title: value
 					}
-				});
+				);
 			}
 		);
 
 		it(
 			'should replace a localized value for a specific object string',
 			() => {
-				const value = 'the title will be localized';
 				const obj = {
-					title: '',
 					localizedTitle: {
-						en_US: '',
+						en_US: ''
 					},
+					title: ''
 				};
+				const value = 'the title will be localized';
 
 				setLocalizedValue(obj, 'en_US', 'title', value);
 
-				expect(obj).toMatchObject({
-					title: value,
-					localizedTitle: {
-						en_US: value,
-					},
-				});
+				expect(obj).toMatchObject(
+					{
+						localizedTitle: {
+							en_US: value
+						},
+						title: value
+					}
+				);
 			}
 		);
 	}

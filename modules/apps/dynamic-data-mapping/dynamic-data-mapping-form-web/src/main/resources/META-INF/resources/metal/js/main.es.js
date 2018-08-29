@@ -95,7 +95,7 @@ class Form extends Component {
 
 	_setContext(context) {
 		if (!context.pages.length) {
-			return {
+			context = {
 				...context,
 				pages: [
 					{

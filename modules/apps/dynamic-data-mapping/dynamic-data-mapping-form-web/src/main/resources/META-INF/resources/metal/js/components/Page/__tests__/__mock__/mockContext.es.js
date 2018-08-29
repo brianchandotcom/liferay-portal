@@ -69,4 +69,4 @@ export default {
 		}
 	],
 	title: 'Untitled name'
-}
+};

@@ -193,7 +193,37 @@ describe(
 					}
 				);
 
-				const spy = jest.spyOn(component, 'emit');
+				jest.runAllTimers();
+
+				const pageWizard = component.element.querySelector('.multi-step-item[data-page-id="1"]');
+
+				MetalTestUtil.triggerEvent(pageWizard, 'click', {});
+
+				expect(component).toMatchSnapshot();
+			}
+		);
+
+		it(
+			'should change the active page for a empty page',
+			() => {
+				const pages = [...context];
+
+				pages.push(pages[0]);
+				pages[1].rows = [{
+					columns: [{
+						fields: [],
+						size: 12
+					}]
+				}];
+
+				component = new FormRenderer(
+					{
+						dragAndDropDisabled: true,
+						editable: true,
+						pages,
+						spritemap
+					}
+				);
 
 				jest.runAllTimers();
 
@@ -443,9 +473,13 @@ describe(
 
 				delegateTarget.value = 'My Page Title';
 
-				MetalTestUtil.triggerEvent(delegateTarget, 'change', {
-					delegateTarget
-				});
+				MetalTestUtil.triggerEvent(
+					delegateTarget,
+					'change',
+					{
+						delegateTarget
+					}
+				);
 
 				jest.runAllTimers();
 
@@ -469,8 +503,8 @@ describe(
 				delegateTarget.value = 'My Page Description';
 
 				MetalTestUtil.triggerEvent(
-					delegateTarget, 
-					'change', 
+					delegateTarget,
+					'change',
 					{
 						delegateTarget
 					}
@@ -496,13 +530,73 @@ describe(
 							}
 						);
 
-						component._handleSettingsPageClicked({
-							data: {
-								item: {
-									settingsItem: 'add-page'
+						component._handleSettingsPageClicked(
+							{
+								data: {
+									item: {
+										settingsItem: 'add-page'
+									}
 								}
 							}
-						});
+						);
+
+						jest.runAllTimers();
+
+						expect(component).toMatchSnapshot();
+					}
+				);
+
+				it(
+					'should reset the current page on layout render',
+					() => {
+						component = new FormRenderer(
+							{
+								editable: true,
+								pages: context,
+								spritemap
+							}
+						);
+
+						component._handleSettingsPageClicked(
+							{
+								data: {
+									item: {
+										settingsItem: 'reset-page'
+									}
+								}
+							}
+						);
+
+						jest.runAllTimers();
+
+						expect(component).toMatchSnapshot();
+					}
+				);
+
+				it(
+					'should delete the current page on layout render',
+					() => {
+						const pages = [...context];
+
+						pages.push(pages[0]);
+
+						component = new FormRenderer(
+							{
+								editable: true,
+								pages,
+								spritemap
+							}
+						);
+
+						component._handleSettingsPageClicked(
+							{
+								data: {
+									item: {
+										settingsItem: 'reset-page'
+									}
+								}
+							}
+						);
 
 						jest.runAllTimers();
 
@@ -510,6 +604,6 @@ describe(
 					}
 				);
 			}
-		)
+		);
 	}
 );

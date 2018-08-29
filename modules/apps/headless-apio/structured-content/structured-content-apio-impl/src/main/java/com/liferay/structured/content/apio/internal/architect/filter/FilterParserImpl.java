@@ -33,8 +33,8 @@ import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 
 /**
- * <code>FilterParser</code> transforms a sequence of characters in an manageable
- * OData {@link Expression}.
+ * <code>FilterParser</code> transforms a sequence of characters in an
+ * manageable OData {@link Expression}.
  *
  * @author David Arques
  * @review

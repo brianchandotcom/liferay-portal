@@ -26,7 +26,6 @@ import java.util.Map;
 import java.util.Properties;
 
 import org.gradle.api.Project;
-import org.gradle.util.GUtil;
 
 /**
  * @author Andrea Di Giorgi
@@ -95,13 +94,10 @@ public class PortalTools {
 		File dir = project.getProjectDir();
 
 		while ((dir != null) && Validator.isNull(version)) {
-			File gradlePropertiesFile = new File(dir, "gradle.properties");
+			Properties properties = GradleUtil.getGradleProperties(dir);
 
-			if (gradlePropertiesFile.exists()) {
-				Properties gradleProperties = GUtil.loadProperties(
-					gradlePropertiesFile);
-
-				version = gradleProperties.getProperty(key);
+			if (properties != null) {
+				version = properties.getProperty(key);
 			}
 
 			dir = dir.getParentFile();

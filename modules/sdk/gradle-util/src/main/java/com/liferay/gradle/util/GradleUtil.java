@@ -27,6 +27,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 import java.util.Set;
 import java.util.concurrent.Callable;
 
@@ -52,6 +53,7 @@ import org.gradle.api.tasks.SourceSetContainer;
 import org.gradle.api.tasks.TaskContainer;
 import org.gradle.api.tasks.util.PatternFilterable;
 import org.gradle.api.tasks.util.PatternSet;
+import org.gradle.util.GUtil;
 
 /**
  * @author Andrea Di Giorgi
@@ -238,6 +240,26 @@ public class GradleUtil {
 		}
 
 		return fileTree.matching(patternFilterable);
+	}
+
+	public static Properties getGradleProperties(File gradlePropertiesDir) {
+		File gradlePropertiesFile = new File(
+			gradlePropertiesDir, "gradle.properties");
+
+		if (!gradlePropertiesFile.exists()) {
+			return null;
+		}
+
+		Properties properties = GUtil.loadProperties(gradlePropertiesFile);
+
+		File gradleExtPropertiesFile = new File(
+			gradlePropertiesFile.getParentFile(), "gradle-ext.properties");
+
+		if (gradleExtPropertiesFile.exists()) {
+			properties.putAll(GUtil.loadProperties(gradleExtPropertiesFile));
+		}
+
+		return properties;
 	}
 
 	public static Project getProject(Project rootProject, File projectDir) {

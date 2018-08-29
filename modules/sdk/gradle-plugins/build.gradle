@@ -56,7 +56,7 @@ dependencies {
 	compile group: "com.liferay", name: "com.liferay.gradle.plugins.wsdl.builder", version: "2.0.1"
 	compile group: "com.liferay", name: "com.liferay.gradle.plugins.xml.formatter", version: "1.0.9"
 	compile group: "com.liferay", name: "com.liferay.gradle.plugins.xsd.builder", version: "1.0.5"
-	compile group: "com.liferay", name: "com.liferay.gradle.util", version: "1.0.29"
+	compile group: "com.liferay", name: "com.liferay.gradle.util", version: "1.0.30"
 
 	compile(group: "org.dm.gradle", name: "gradle-bundle-plugin", version: "0.9.0") {
 		exclude group: "biz.aQute.bnd", module: "biz.aQute.bndlib"

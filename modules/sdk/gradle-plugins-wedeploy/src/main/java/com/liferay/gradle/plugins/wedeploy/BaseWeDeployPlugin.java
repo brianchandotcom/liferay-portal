@@ -28,7 +28,6 @@ import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.gradle.api.plugins.BasePlugin;
 import org.gradle.api.tasks.Exec;
-import org.gradle.util.GUtil;
 
 /**
  * @author Andrea Di Giorgi
@@ -117,27 +116,15 @@ public abstract class BaseWeDeployPlugin implements Plugin<Project> {
 	private String _getProperty(Project project, String suffix) {
 		File rootDir = project.getRootDir();
 
-		File propertiesFile = new File(rootDir, "gradle.properties");
+		Properties properties = GradleUtil.getGradleProperties(rootDir);
 
-		if (!propertiesFile.exists()) {
-			return null;
-		}
+		if (properties != null) {
+			for (Object key : properties.keySet()) {
+				String s = (String)key;
 
-		Properties properties = GUtil.loadProperties(propertiesFile);
-
-		propertiesFile = new File(rootDir, "gradle-ext.properties");
-
-		if (propertiesFile.exists()) {
-			Properties extProperties = GUtil.loadProperties(propertiesFile);
-
-			properties.putAll(extProperties);
-		}
-
-		for (Object key : properties.keySet()) {
-			String s = (String)key;
-
-			if (s.endsWith(suffix)) {
-				return GradleUtil.toString(properties.get(key));
+				if (s.endsWith(suffix)) {
+					return GradleUtil.toString(properties.get(key));
+				}
 			}
 		}
 

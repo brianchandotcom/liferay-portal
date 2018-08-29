@@ -52,7 +52,6 @@ import org.gradle.api.invocation.Gradle;
 import org.gradle.api.plugins.BasePluginConvention;
 import org.gradle.api.plugins.PluginContainer;
 import org.gradle.api.tasks.TaskOutputs;
-import org.gradle.util.GUtil;
 
 /**
  * @author Andrea Di Giorgi
@@ -121,8 +120,7 @@ public class GradleUtil extends com.liferay.gradle.util.GradleUtil {
 			return defaultValue;
 		}
 
-		Properties properties = GUtil.loadProperties(
-			new File(dir, "gradle.properties"));
+		Properties properties = getGradleProperties(dir);
 
 		return properties.getProperty(key, defaultValue);
 	}

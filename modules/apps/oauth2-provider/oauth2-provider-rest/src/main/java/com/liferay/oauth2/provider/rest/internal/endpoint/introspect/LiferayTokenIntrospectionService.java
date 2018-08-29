@@ -229,7 +229,9 @@ public class LiferayTokenIntrospectionService extends AbstractTokenService {
 		}
 
 		if (!verifyServerAccessToken(refreshToken)) {
-			return Response.ok(new TokenIntrospection(false)).build();
+			return Response.ok(
+				new TokenIntrospection(false)
+			).build();
 		}
 
 		BearerTokenProvider.RefreshToken bearerRefreshToken =

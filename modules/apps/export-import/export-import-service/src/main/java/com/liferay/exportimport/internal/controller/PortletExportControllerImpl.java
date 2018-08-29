@@ -1404,7 +1404,10 @@ public class PortletExportControllerImpl implements PortletExportController {
 			portletDataContext, portlet);
 
 		return portletOptional.map(
-			Portlet::getPortletDataHandlerInstance).orElse(null);
+			Portlet::getPortletDataHandlerInstance
+		).orElse(
+			null
+		);
 	}
 
 	private Optional<Portlet> _replacePortlet(

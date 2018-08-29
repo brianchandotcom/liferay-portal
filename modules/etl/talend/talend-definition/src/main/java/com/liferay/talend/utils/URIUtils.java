@@ -84,7 +84,8 @@ public class URIUtils {
 			UriBuilder uriBuilder = UriBuilder.fromUri(url);
 
 			uri = uriBuilder.replaceQueryParam(
-				parameter.getKey(), parameter.getValue()).build();
+				parameter.getKey(), parameter.getValue()
+			).build();
 		}
 
 		return uri;
@@ -101,7 +102,8 @@ public class URIUtils {
 			UriBuilder uriBuilder = UriBuilder.fromUri(uri);
 
 			uri = uriBuilder.replaceQueryParam(
-				parameter.getKey(), parameter.getValue()).build();
+				parameter.getKey(), parameter.getValue()
+			).build();
 		}
 
 		return uri;

@@ -69,16 +69,18 @@ class FormRenderer extends Component {
 		 * @type {?array<object>}
 		 */
 
-		pageSettingsItem: Config.array().value([
-			{
-				'label': Liferay.Language.get('add-new-page'),
-				'settingsItem': 'add-page'
-			},
-			{
-				'label': Liferay.Language.get('reset-page'),
-				'settingsItem': 'reset-page'
-			}
-		]).internal(),
+		pageSettingsItem: Config.array().value(
+			[
+				{
+					'label': Liferay.Language.get('add-new-page'),
+					'settingsItem': 'add-page'
+				},
+				{
+					'label': Liferay.Language.get('reset-page'),
+					'settingsItem': 'reset-page'
+				}
+			]
+		).internal(),
 
 		/**
 		 * @default []
@@ -131,9 +133,9 @@ class FormRenderer extends Component {
 	 */
 
 	_addPage() {
-		const {pages, activePage} = this;
-		const newPageIndex = pages.length;
+		const {activePage, pages} = this;
 		const newPage = this.createNewPage();
+		const newPageIndex = pages.length;
 
 		pages[activePage].enabled = false;
 
@@ -160,14 +162,20 @@ class FormRenderer extends Component {
 			label = Liferay.Language.get('reset-page');
 		}
 
-		return this.pageSettingsItem.map(item => {
-			if (item.settingsItem != 'reset-page') {return item;}
+		return this.pageSettingsItem.map(
+			item => {
+				let mappedItem = item;
 
-			return {
-				...item,
-				label
-			};
-		});
+				if (item.settingsItem == 'reset-page') {
+					mappedItem = {
+						...item,
+						label
+					};
+				}
+
+				return mappedItem;
+			}
+		);
 	}
 
 	/**
@@ -183,7 +191,7 @@ class FormRenderer extends Component {
 		}
 
 		if (settingsItem == 'reset-page') {
-			return this._resetPage();
+			this._resetPage();
 		}
 	}
 
@@ -197,13 +205,18 @@ class FormRenderer extends Component {
 				rows: []
 			}];
 		}
- else {
+		else {
 			newPages = pages
-				.filter((page, index) => index != activePage)
-				.map((page, index) => ({
-					...page,
-					enabled: index === activePage - 1
-				})
+				.filter(
+					(page, index) => index != activePage
+				)
+				.map(
+					(page, index) => (
+						{
+							...page,
+							enabled: index === activePage - 1
+						}
+					)
 				);
 
 			this.activePage = activePage ? activePage - 1 : activePage;
@@ -224,15 +237,18 @@ class FormRenderer extends Component {
 			)
 		);
 
-		this.activePage = parseInt(pageId);
+		this.activePage = parseInt(pageId, 10);
 
 		if (openSidebar) {
 			mode = 'add';
 		}
 
-		this.emit('updateActivePage', {
-			mode
-		});
+		this.emit(
+			'updateActivePage',
+			{
+				mode
+			}
+		);
 	}
 
 	/**

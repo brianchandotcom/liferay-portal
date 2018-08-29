@@ -147,7 +147,13 @@ class PageRenderer extends Component {
 	 */
 
 	_getTitlePlaceholder() {
-		return Liferay.Language.get(`untitled-page-${this.pageId + 1}-of-${this.total}`);
+		return sub(
+			Liferay.Language.get('untitled-page-x-of-x'),
+			[
+				this.pageId + 1,
+				this.total
+			]
+		);
 	}
 
 	/**

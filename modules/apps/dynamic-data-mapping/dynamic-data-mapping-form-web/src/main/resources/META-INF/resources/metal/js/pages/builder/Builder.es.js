@@ -16,16 +16,20 @@ class Builder extends Component {
 	 */
 
 	_handleFieldClicked(indexAllocateField) {
-		this._handleOpenSidebar({
-			mode: 'edit'
-		})
+		this._handleOpenSidebar(
+			{
+				mode: 'edit'
+			}
+		);
 		this.emit('fieldClicked', indexAllocateField);
 	}
 
-	_handleAddPage(pages){
-		this._handleOpenSidebar({
-			mode: 'add'
-		});
+	_handleAddPage(pages) {
+		this._handleOpenSidebar(
+			{
+				mode: 'add'
+			}
+		);
 		this.emit('pagesUpdated', pages);
 	}
 
@@ -76,15 +80,18 @@ class Builder extends Component {
 	 */
 
 	_handleDuplicateButtonClicked(indexes) {
-		this.emit('duplicateField', indexes);
+		this.emit(
+			'duplicateField',
+			indexes
+		);
 	}
-
 
 	/**
 	 * Continues the propagation of event.
 	 * @param {String} mode
 	 * @private
 	 */
+
 	_handleOpenSidebar({mode}) {
 		const Sidebar = this.refs.sidebar;
 
@@ -98,7 +105,7 @@ class Builder extends Component {
 		Sidebar._dragAndDrop.disposeInternal();
 		Sidebar._startDrag();
 
-		if(mode) {
+		if (mode) {
 			this._handleOpenSidebar({mode});
 		}
 	}

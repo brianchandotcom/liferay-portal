@@ -32,6 +32,7 @@ class LayoutProvider extends Component {
 	};
 
 	static STATE = {
+
 		/**
 		 * @instance
 		 * @memberof FormPage

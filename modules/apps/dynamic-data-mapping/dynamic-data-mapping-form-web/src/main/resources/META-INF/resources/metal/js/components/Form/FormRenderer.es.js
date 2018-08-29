@@ -46,6 +46,15 @@ class FormRenderer extends Component {
 		editable: Config.bool().value(false),
 
 		/**
+		 * @default 'Untitled Page'
+		 * @instance
+		 * @memberof FormRenderer
+		 * @type {?string}
+		 */
+
+		defaultPageTitle: Config.string().value(Liferay.Language.get('untitled-page')),
+
+		/**
 		 * @default grid
 		 * @instance
 		 * @memberof FormRenderer
@@ -63,11 +72,15 @@ class FormRenderer extends Component {
 		pageSettingsItem: Config.array().value(
 			[
 				{
-					'label': Liferay.Language.get('add-page'),
+					'label': Liferay.Language.get('add-new-page'),
 					'settingsItem': 'add-page'
+				},
+				{
+					'label': Liferay.Language.get('reset-page'),
+					'settingsItem': 'reset-page'
 				}
 			]
-		),
+		).internal(),
 
 		/**
 		 * @default []
@@ -120,15 +133,49 @@ class FormRenderer extends Component {
 	 */
 
 	_addPage() {
-		const activePage = this.activePage;
-		const newPageIndex = this.pages.length;
+		const {activePage, pages} = this;
+		const newPage = this.createNewPage();
+		const newPageIndex = pages.length;
 
-		this.pages[newPageIndex] = this.createNewPage();
-		this.pages[activePage].enabled = false;
+		pages[activePage].enabled = false;
 
+		const newPages = [
+			...pages,
+			newPage
+		];
+
+		this.pageSettingsItem = this._changeRemoveLabel(newPages);
 		this.activePage = newPageIndex;
 
-		this.emit('addPage', this.pages);
+		this.emit('pageAdded', newPages);
+	}
+
+	/**
+	 * Update the page settings depending on the number of pages
+	 * @private
+	 */
+
+	_changeRemoveLabel(pages) {
+		let label = Liferay.Language.get('delete-current-page');
+
+		if (pages.length == 1) {
+			label = Liferay.Language.get('reset-page');
+		}
+
+		return this.pageSettingsItem.map(
+			item => {
+				let mappedItem = item;
+
+				if (item.settingsItem == 'reset-page') {
+					mappedItem = {
+						...item,
+						label
+					};
+				}
+
+				return mappedItem;
+			}
+		);
 	}
 
 	/**
@@ -142,12 +189,66 @@ class FormRenderer extends Component {
 		if (settingsItem == 'add-page') {
 			this._addPage();
 		}
+
+		if (settingsItem == 'reset-page') {
+			this._resetPage();
+		}
+	}
+
+	_resetPage() {
+		const {activePage, pages} = this;
+		let newPages;
+
+		if (pages.length == 1) {
+			newPages = [{
+				...pages[0],
+				rows: []
+			}];
+		}
+		else {
+			newPages = pages
+				.filter(
+					(page, index) => index != activePage
+				)
+				.map(
+					(page, index) => (
+						{
+							...page,
+							enabled: index === activePage - 1
+						}
+					)
+				);
+
+			this.activePage = activePage ? activePage - 1 : activePage;
+			this.pageSettingsItem = this._changeRemoveLabel(newPages);
+		}
+
+		this.emit('pagesUpdated', newPages);
 	}
 
 	_handleChangePage({delegateTarget: {dataset}}) {
+		const {pages} = this;
 		const {pageId} = dataset;
+		let mode;
+
+		const openSidebar = !pages[pageId].rows.some(
+			({columns}) => columns.some(
+				({fields}) => fields.length
+			)
+		);
 
 		this.activePage = parseInt(pageId, 10);
+
+		if (openSidebar) {
+			mode = 'add';
+		}
+
+		this.emit(
+			'activePageUpdated',
+			{
+				mode
+			}
+		);
 	}
 
 	/**

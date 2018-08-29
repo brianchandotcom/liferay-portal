@@ -8,6 +8,7 @@
 	{@param? _handleDuplicateButtonClicked: any}
 	{@param? _handleUpdatePage: any}
 	{@param? activePage: number}
+	{@param? defaultPageTitle: string}
 	{@param? editable: bool}
 	{@param? modeRenderer: string}
 	{@param? pages: ?}
@@ -24,10 +25,12 @@
 		{param _handleUpdatePage: $_handleUpdatePage /}
 		{param activePage: $activePage /}
 		{param contentRenderer: $contentRenderer /}
+		{param defaultPageTitle: $defaultPageTitle /}
 		{param editable: $editable /}
 		{param pages: $pages /}
 		{param pageSettingsItem: $pageSettingsItem /}
 		{param spritemap: $spritemap /}
+		{param total: $total /}
 	{/delcall}
 {/template}
 
@@ -40,6 +43,7 @@
 	{@param? _handleUpdatePage: any}
 	{@param? activePage: number}
 	{@param? contentRenderer: string}
+	{@param? defaultPageTitle: string}
 	{@param? editable: bool}
 	{@param? pages: ?}
 	{@param? pageSettingsItem: ?}
@@ -51,6 +55,7 @@
 			{param _handleSettingsPageClicked: $_handleSettingsPageClicked /}
 			{param activePage: $activePage /}
 			{param contentRenderer: $contentRenderer /}
+			{param defaultPageTitle: $defaultPageTitle /}
 			{param editable: $editable /}
 			{param pages: $pages /}
 			{param pageSettingsItem: $pageSettingsItem /}
@@ -82,6 +87,7 @@
 	{@param? _handleSettingsPageClicked: any}
 	{@param? activePage: number}
 	{@param? contentRenderer: string}
+	{@param? defaultPageTitle: string}
 	{@param? editable: bool}
 	{@param? pages: ?}
 	{@param? pageSettingsItem: ?}
@@ -91,7 +97,7 @@
 	{let $classes kind="text"}
 		ddm-form-header
 		{if $multiple}
-			{sp}pt-2 pb-3 mb-4 multiple
+			{sp}pt-2 mb-4 multiple
 		{/if}
 	{/let}
 
@@ -101,6 +107,7 @@
 				{param _handleChangePage: $_handleChangePage /}
 				{param activePage: $activePage /}
 				{param contentRenderer: $contentRenderer /}
+				{param defaultPageTitle: $defaultPageTitle /}
 				{param editable: $editable /}
 				{param pages: $pages /}
 				{param pageSettingsItem: $pageSettingsItem /}
@@ -108,9 +115,10 @@
 			{/delcall}
 		{/if}
 
-		<div class="btn-group ddm-page-settings" role="group">
+		<div class="ddm-page-settings" role="group">
 			{call ClayActionsDropdown.render}
 				{param items: $pageSettingsItem /}
+				{param triggerClasses: 'component-action' /}
 				{param events: [
 					'itemClicked': $_handleSettingsPageClicked
 				] /}
@@ -123,11 +131,12 @@
 {deltemplate FormRenderer.wizard}
 	{@param? _handleChangePage: any}
 	{@param? activePage: number}
+	{@param? defaultPageTitle: string}
 	{@param? pages: ?}
 
 	<ol class="multi-step-indicator-label-top multi-step-nav multi-step-nav-collapse-sm">
 		{for $page in $pages}
-			{let $title: $page.title ? $page.title : 'Untitled Page' /}
+			{let $title: $page.title ? $page.title : $defaultPageTitle /}
 			{let $pageId: index($page) /}
 			{let $step: $pageId + 1 /}
 			{let $classes kind="text"}

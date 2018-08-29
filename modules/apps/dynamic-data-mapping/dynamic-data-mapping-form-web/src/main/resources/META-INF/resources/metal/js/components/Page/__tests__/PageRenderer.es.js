@@ -4,10 +4,10 @@ import './__fixtures__/Fields.es';
 import Context from './__mock__/mockContext.es';
 import PageRenderer from '../PageRenderer.es';
 
-let component;
-let context = null;
-let componentProps = null;
 const spritemap = 'icons.svg';
+let component;
+let componentProps = null;
+let context = null;
 
 describe(
 	'PageRenderer',
@@ -20,8 +20,8 @@ describe(
 					contentRenderer: 'grid',
 					editable: true,
 					page: context,
-					spritemap,
 					pageId: 0,
+					spritemap,
 					total: 1
 				};
 
@@ -67,8 +67,8 @@ describe(
 					}
 				);
 
-				const spy = jest.spyOn(component, 'emit');
 				const pageTitle = component.element.querySelector('.form-builder-page-header-title');
+				const spy = jest.spyOn(component, 'emit');
 
 				pageTitle.value = 'Page Title';
 
@@ -91,10 +91,10 @@ describe(
 					}
 				);
 
-				const spy = jest.spyOn(component, 'emit');
 				const pageDescription = component.element.querySelector('.form-builder-page-header-description');
+				const spy = jest.spyOn(component, 'emit');
 
-				pageDescription.value = "Page Description";
+				pageDescription.value = 'Page Description';
 
 				jest.runAllTimers();
 				MetalTestUtil.triggerEvent(pageDescription, 'keyup', {});
@@ -149,7 +149,7 @@ describe(
 				component = new PageRenderer(
 					{
 						...componentProps,
-						contentRenderer: 'list',
+						contentRenderer: 'list'
 					}
 				);
 
@@ -167,7 +167,7 @@ describe(
 			() => {
 				component = new PageRenderer(
 					{
-						...componentProps,
+						...componentProps
 					}
 				);
 
@@ -186,7 +186,7 @@ describe(
 				component = new PageRenderer(
 					{
 						...componentProps,
-						dragAndDropDisabled: true,
+						dragAndDropDisabled: true
 					}
 				);
 

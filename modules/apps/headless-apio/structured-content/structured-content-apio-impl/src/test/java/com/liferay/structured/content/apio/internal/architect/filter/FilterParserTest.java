@@ -39,10 +39,10 @@ public class FilterParserTest {
 
 	@Test
 	public void testParseNonexistingField() {
-		String filter = "(nonExistingField eq 'value')";
+		String filterString = "(nonExistingField eq 'value')";
 
 		AbstractThrowableAssert exception = Assertions.assertThatThrownBy(
-			() -> _filterParser.parse(filter)
+			() -> _filterParser.parse(filterString)
 		).isInstanceOf(
 			InvalidFilterException.class
 		);
@@ -50,7 +50,7 @@ public class FilterParserTest {
 		exception.hasMessageStartingWith(
 			String.format(
 				"Invalid query computed from filter '%s': 'Unknown property.'",
-				filter));
+				filterString));
 	}
 
 	@Test

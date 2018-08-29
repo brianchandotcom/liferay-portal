@@ -65,7 +65,6 @@ public class StructuredContentEdmProvider
 	}
 
 	private CsdlEntityType _createCsdlEntityType() {
-
 		List<CsdlProperty> csdlProperties = new ArrayList<>();
 
 		CsdlProperty csdlProperty = _createCsdlProperty(

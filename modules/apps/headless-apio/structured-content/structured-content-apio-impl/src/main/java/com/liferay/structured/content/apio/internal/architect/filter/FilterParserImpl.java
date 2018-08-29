@@ -43,16 +43,16 @@ import org.osgi.service.component.annotations.Component;
 public class FilterParserImpl implements FilterParser {
 
 	@Override
-	public Expression parse(String rawFilter) {
+	public Expression parse(String filterString) {
 		if (_log.isDebugEnabled()) {
-			_log.debug(String.format("Parsing the filter '%s'", rawFilter));
+			_log.debug(String.format("Parsing the filter '%s'", filterString));
 		}
 
-		if (Validator.isNull(rawFilter)) {
+		if (Validator.isNull(filterString)) {
 			throw new InvalidFilterException("Filter is empty");
 		}
 
-		UriInfo uriInfo = _getUriInfo(rawFilter);
+		UriInfo uriInfo = _getUriInfo(filterString);
 
 		FilterOption filterOption = uriInfo.getFilterOption();
 

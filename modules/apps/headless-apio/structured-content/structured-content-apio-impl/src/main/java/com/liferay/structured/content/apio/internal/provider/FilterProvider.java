@@ -32,13 +32,13 @@ public class FilterProvider implements Provider<Filter> {
 
 	@Override
 	public Filter createContext(HttpServletRequest httpServletRequest) {
-		String filter = httpServletRequest.getParameter("filter");
+		String filterString = httpServletRequest.getParameter("filter");
 
-		if (Validator.isNull(filter)) {
+		if (Validator.isNull(filterString)) {
 			return null;
 		}
 
-		return new Filter(_filterParser.parse(filter));
+		return new Filter(_filterParser.parse(filterString));
 	}
 
 	@Reference

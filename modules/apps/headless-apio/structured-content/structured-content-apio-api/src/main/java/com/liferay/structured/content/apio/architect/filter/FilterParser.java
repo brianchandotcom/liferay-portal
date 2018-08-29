@@ -28,10 +28,10 @@ public interface FilterParser {
 	/**
 	 * Returns a {@link Expression} obtained from a String.
 	 *
-	 * @param  filter - the filter
+	 * @param  filterString - the filterString
 	 * @return The OData Expression
 	 * @review
 	 */
-	public Expression parse(String filter);
+	public Expression parse(String filterString);
 
 }

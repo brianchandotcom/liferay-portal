@@ -16,7 +16,9 @@ package com.liferay.journal.trash.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.asset.kernel.model.AssetEntry;
-import com.liferay.dynamic.data.mapping.io.DDMFormXSDDeserializer;
+import com.liferay.dynamic.data.mapping.io.DDMFormDeserializer;
+import com.liferay.dynamic.data.mapping.io.DDMFormDeserializerDeserializeRequest;
+import com.liferay.dynamic.data.mapping.io.DDMFormDeserializerDeserializeResponse;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
@@ -56,6 +58,7 @@ import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.service.test.ServiceTestUtil;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
@@ -254,8 +257,6 @@ public class JournalArticleTrashHandlerTest
 	@Before
 	@Override
 	public void setUp() throws Exception {
-		setUpDDMFormXSDDeserializer();
-
 		ServiceTestUtil.setUser(TestPropsValues.getUser());
 
 		_trashHelper = _serviceTracker.getService();
@@ -277,7 +278,15 @@ public class JournalArticleTrashHandlerTest
 			"com/liferay/journal/dependencies" +
 				"/test-ddm-structure-image-field.xml");
 
-		DDMForm ddmForm = _ddmFormXSDDeserializer.deserialize(definition);
+		DDMFormDeserializerDeserializeRequest.Builder builder =
+			DDMFormDeserializerDeserializeRequest.Builder.newBuilder(
+				definition);
+
+		DDMFormDeserializerDeserializeResponse
+			ddmFormDeserializerDeserializeResponse =
+				_ddmFormDeserializer.deserialize(builder.build());
+
+		DDMForm ddmForm = ddmFormDeserializerDeserializeResponse.getDDMForm();
 
 		DDMStructure ddmStructure = DDMStructureTestUtil.addStructure(
 			serviceContext.getScopeGroupId(), JournalArticle.class.getName(),
@@ -486,18 +495,13 @@ public class JournalArticleTrashHandlerTest
 			TestPropsValues.getUserId(), article);
 	}
 
-	protected void setUpDDMFormXSDDeserializer() {
-		Registry registry = RegistryUtil.getRegistry();
-
-		_ddmFormXSDDeserializer = registry.getService(
-			DDMFormXSDDeserializer.class);
-	}
-
 	private static final int _FOLDER_NAME_MAX_LENGTH = 100;
 
 	private static ServiceTracker<TrashHelper, TrashHelper> _serviceTracker;
 
-	private DDMFormXSDDeserializer _ddmFormXSDDeserializer;
+	@Inject(filter = "ddm.form.deserializer.type=xsd")
+	private DDMFormDeserializer _ddmFormDeserializer;
+
 	private TrashHelper _trashHelper;
 	private final WhenIsAssetable _whenIsAssetable =
 		new DefaultWhenIsAssetable();

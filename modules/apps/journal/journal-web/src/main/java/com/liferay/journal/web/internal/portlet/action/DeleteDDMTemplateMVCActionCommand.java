@@ -14,12 +14,11 @@
 
 package com.liferay.journal.web.internal.portlet.action;
 
-import com.liferay.dynamic.data.mapping.constants.DDMPortletKeys;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateService;
+import com.liferay.journal.constants.JournalPortletKeys;
+import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.PortletKeys;
-import com.liferay.portal.kernel.util.StringUtil;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -28,50 +27,41 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Leonardo Barros
+ * @author Eudaldo Alonso
  */
 @Component(
 	immediate = true,
 	property = {
-		"javax.portlet.name=" + DDMPortletKeys.DYNAMIC_DATA_MAPPING,
-		"javax.portlet.name=" + PortletKeys.PORTLET_DISPLAY_TEMPLATE,
-		"mvc.command.name=deleteTemplate"
+		"javax.portlet.name=" + JournalPortletKeys.JOURNAL,
+		"mvc.command.name=/journal/delete_ddm_template"
 	},
 	service = MVCActionCommand.class
 )
-public class DeleteDDMTemplateMVCActionCommand extends DDMBaseMVCActionCommand {
+public class DeleteDDMTemplateMVCActionCommand extends BaseMVCActionCommand {
 
 	@Override
 	protected void doProcessAction(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		long[] deleteTemplateIds = null;
+		long[] deleteDDMTemplateIds = null;
 
-		long templateId = ParamUtil.getLong(actionRequest, "templateId");
+		long ddmTemplateId = ParamUtil.getLong(actionRequest, "ddmTemplateId");
 
-		if (templateId > 0) {
-			deleteTemplateIds = new long[] {templateId};
+		if (ddmTemplateId > 0) {
+			deleteDDMTemplateIds = new long[] {ddmTemplateId};
 		}
 		else {
-			deleteTemplateIds = StringUtil.split(
-				ParamUtil.getString(actionRequest, "deleteTemplateIds"), 0L);
+			deleteDDMTemplateIds = ParamUtil.getLongValues(
+				actionRequest, "rowIds");
 		}
 
-		for (long deleteTemplateId : deleteTemplateIds) {
-			_ddmTemplateService.deleteTemplate(deleteTemplateId);
+		for (long deleteDDMTemplateId : deleteDDMTemplateIds) {
+			_ddmTemplateService.deleteTemplate(deleteDDMTemplateId);
 		}
-
-		setRedirectAttribute(actionRequest);
 	}
 
-	@Reference(unbind = "-")
-	protected void setDDMTemplateService(
-		DDMTemplateService ddmTemplateService) {
-
-		_ddmTemplateService = ddmTemplateService;
-	}
-
+	@Reference
 	private DDMTemplateService _ddmTemplateService;
 
 }

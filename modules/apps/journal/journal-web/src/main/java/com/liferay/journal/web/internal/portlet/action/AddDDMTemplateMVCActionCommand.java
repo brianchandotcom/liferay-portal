@@ -14,9 +14,14 @@
 
 package com.liferay.journal.web.internal.portlet.action;
 
-import com.liferay.dynamic.data.mapping.constants.DDMPortletKeys;
+import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
+import com.liferay.dynamic.data.mapping.model.DDMTemplateConstants;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateService;
+import com.liferay.journal.constants.JournalPortletKeys;
+import com.liferay.journal.model.JournalArticle;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
@@ -25,7 +30,6 @@ import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.PortletKeys;
 
 import java.io.File;
 
@@ -39,40 +43,35 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Leonardo Barros
+ * @author Eudaldo Alonso
  */
 @Component(
 	immediate = true,
 	property = {
-		"javax.portlet.name=" + DDMPortletKeys.DYNAMIC_DATA_MAPPING,
-		"javax.portlet.name=" + PortletKeys.PORTLET_DISPLAY_TEMPLATE,
-		"mvc.command.name=addTemplate"
+		"javax.portlet.name=" + JournalPortletKeys.JOURNAL,
+		"mvc.command.name=/journal/add_ddm_template"
 	},
 	service = MVCActionCommand.class
 )
-public class AddDDMTemplateMVCActionCommand extends DDMBaseMVCActionCommand {
+public class AddDDMTemplateMVCActionCommand extends BaseMVCActionCommand {
 
-	protected DDMTemplate addTemplate(ActionRequest actionRequest)
+	@Override
+	protected void doProcessAction(
+			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
 		UploadPortletRequest uploadPortletRequest =
-			portal.getUploadPortletRequest(actionRequest);
+			_portal.getUploadPortletRequest(actionRequest);
 
 		long groupId = ParamUtil.getLong(uploadPortletRequest, "groupId");
-		long classNameId = ParamUtil.getLong(
-			uploadPortletRequest, "classNameId");
 		long classPK = ParamUtil.getLong(uploadPortletRequest, "classPK");
-		long resourceClassNameId = ParamUtil.getLong(
-			uploadPortletRequest, "resourceClassNameId");
 		String templateKey = ParamUtil.getString(
-			uploadPortletRequest, "templateKey");
+			uploadPortletRequest, "ddmTemplateKey");
 		Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(
 			uploadPortletRequest, "name");
 		Map<Locale, String> descriptionMap =
 			LocalizationUtil.getLocalizationMap(
 				uploadPortletRequest, "description");
-		String type = ParamUtil.getString(uploadPortletRequest, "type");
-		String mode = ParamUtil.getString(uploadPortletRequest, "mode");
 		String language = ParamUtil.getString(
 			uploadPortletRequest, "language", TemplateConstants.LANG_TYPE_VM);
 
@@ -89,36 +88,18 @@ public class AddDDMTemplateMVCActionCommand extends DDMBaseMVCActionCommand {
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			DDMTemplate.class.getName(), uploadPortletRequest);
 
-		return ddmTemplateService.addTemplate(
-			groupId, classNameId, classPK, resourceClassNameId, templateKey,
-			nameMap, descriptionMap, type, mode, language, script, cacheable,
-			smallImage, smallImageURL, smallImageFile, serviceContext);
+		_ddmTemplateService.addTemplate(
+			groupId, _portal.getClassNameId(DDMStructure.class), classPK,
+			_portal.getClassNameId(JournalArticle.class), templateKey, nameMap,
+			descriptionMap, DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY,
+			StringPool.BLANK, language, script, cacheable, smallImage,
+			smallImageURL, smallImageFile, serviceContext);
 	}
-
-	@Override
-	protected void doProcessAction(
-			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws Exception {
-
-		DDMTemplate template = addTemplate(actionRequest);
-
-		updatePortletPreferences(actionRequest, template);
-
-		addSuccessMessage(actionRequest, actionResponse);
-
-		setRedirectAttribute(actionRequest, template);
-	}
-
-	@Reference(unbind = "-")
-	protected void setDDMTemplateService(
-		DDMTemplateService ddmTemplateService) {
-
-		this.ddmTemplateService = ddmTemplateService;
-	}
-
-	protected DDMTemplateService ddmTemplateService;
 
 	@Reference
-	protected Portal portal;
+	private DDMTemplateService _ddmTemplateService;
+
+	@Reference
+	private Portal _portal;
 
 }

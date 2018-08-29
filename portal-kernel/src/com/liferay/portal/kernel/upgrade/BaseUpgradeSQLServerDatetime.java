@@ -102,9 +102,9 @@ public class BaseUpgradeSQLServerDatetime extends UpgradeProcess {
 					}
 
 					if (newTypeName.equals(columnRS.getString("TYPE_NAME")) &&
-						(_newSize == columnRS.getInt("COLUMN_SIZE"))) {
+						(_newSize == columnRS.getInt("DECIMAL_DIGITS"))) {
 
-						_log.error(
+						_log.warn(
 							StringBundler.concat(
 								"Column ", columnName, " in Table ", tableName,
 								" already is ", newTypeDefinition));

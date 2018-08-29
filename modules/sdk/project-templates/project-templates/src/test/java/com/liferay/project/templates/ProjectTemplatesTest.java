@@ -2308,12 +2308,11 @@ public class ProjectTemplatesTest {
 
 		_buildProjects(gradleProjectDir, mavenProjectDir);
 
-		File gradleJarFile = new File(
-			gradleProjectDir, "build/libs/com.liferay.test-1.0.0.jar");
-		File mavenJarFile = new File(mavenProjectDir, "target/foo-1.0.0.jar");
+		if (Validator.isNotNull(_BUILD_PROJECTS) &&
+			_BUILD_PROJECTS.equals("true")) {
 
-		_testContainsJarEntry(gradleJarFile, "package.json");
-		_testContainsJarEntry(mavenJarFile, "package.json");
+			_testSoyOutputFiles(gradleProjectDir, mavenProjectDir);
+		}
 	}
 
 	@Test
@@ -2365,12 +2364,11 @@ public class ProjectTemplatesTest {
 
 		_buildProjects(gradleProjectDir, mavenProjectDir);
 
-		File gradleJarFile = new File(
-			gradleProjectDir, "build/libs/com.liferay.test-1.0.0.jar");
-		File mavenJarFile = new File(mavenProjectDir, "target/foo-1.0.0.jar");
+		if (Validator.isNotNull(_BUILD_PROJECTS) &&
+			_BUILD_PROJECTS.equals("true")) {
 
-		_testContainsJarEntry(gradleJarFile, "package.json");
-		_testContainsJarEntry(mavenJarFile, "package.json");
+			_testSoyOutputFiles(gradleProjectDir, mavenProjectDir);
+		}
 	}
 
 	@Test
@@ -2434,28 +2432,10 @@ public class ProjectTemplatesTest {
 
 		_buildProjects(gradleProjectDir, mavenProjectDir);
 
-		ZipFile zipFile = null;
+		if (Validator.isNotNull(_BUILD_PROJECTS) &&
+			_BUILD_PROJECTS.equals("true")) {
 
-		File gradleWarFile = new File(gradleProjectDir, "build/libs/foo.war");
-
-		try {
-			zipFile = new ZipFile(gradleWarFile);
-
-			_testExists(zipFile, "css/main.css");
-			_testExists(zipFile, "css/main_rtl.css");
-
-			_testExists(zipFile, "WEB-INF/lib/aopalliance-1.0.jar");
-			_testExists(zipFile, "WEB-INF/lib/commons-logging-1.2.jar");
-
-			for (String jarName : _SPRING_MVC_PORTLET_JAR_NAMES) {
-				_testExists(
-					zipFile,
-					"WEB-INF/lib/spring-" + jarName + "-" +
-						_SPRING_MVC_PORTLET_VERSION + ".jar");
-			}
-		}
-		finally {
-			ZipFile.closeQuietly(zipFile);
+			_testSpringMVCOutputs(gradleProjectDir);
 		}
 	}
 
@@ -2473,6 +2453,12 @@ public class ProjectTemplatesTest {
 			"-Dpackage=foo", "-DliferayVersion=7.1");
 
 		_buildProjects(gradleProjectDir, mavenProjectDir);
+
+		if (Validator.isNotNull(_BUILD_PROJECTS) &&
+			_BUILD_PROJECTS.equals("true")) {
+
+			_testSpringMVCOutputs(gradleProjectDir);
+		}
 	}
 
 	@Test
@@ -3436,53 +3422,57 @@ public class ProjectTemplatesTest {
 			File mavenOutputDir, String... gradleTaskPath)
 		throws Exception {
 
-		_executeGradle(gradleProjectDir, gradleTaskPath);
+		if (Validator.isNotNull(_BUILD_PROJECTS) &&
+			_BUILD_PROJECTS.equals("true")) {
 
-		Path gradleOutputPath = FileTestUtil.getFile(
-			gradleOutputDir.toPath(), _OUTPUT_FILENAME_GLOB_REGEX, 1);
+			_executeGradle(gradleProjectDir, gradleTaskPath);
 
-		Assert.assertNotNull(gradleOutputPath);
+			Path gradleOutputPath = FileTestUtil.getFile(
+				gradleOutputDir.toPath(), _OUTPUT_FILENAME_GLOB_REGEX, 1);
 
-		Assert.assertTrue(Files.exists(gradleOutputPath));
+			Assert.assertNotNull(gradleOutputPath);
 
-		File gradleOutputFile = gradleOutputPath.toFile();
+			Assert.assertTrue(Files.exists(gradleOutputPath));
 
-		String gradleOutputFileName = gradleOutputFile.getName();
+			File gradleOutputFile = gradleOutputPath.toFile();
 
-		_executeMaven(mavenProjectDir, _MAVEN_GOAL_PACKAGE);
+			String gradleOutputFileName = gradleOutputFile.getName();
 
-		Path mavenOutputPath = FileTestUtil.getFile(
-			mavenOutputDir.toPath(), _OUTPUT_FILENAME_GLOB_REGEX, 1);
+			_executeMaven(mavenProjectDir, _MAVEN_GOAL_PACKAGE);
 
-		Assert.assertNotNull(mavenOutputPath);
+			Path mavenOutputPath = FileTestUtil.getFile(
+				mavenOutputDir.toPath(), _OUTPUT_FILENAME_GLOB_REGEX, 1);
 
-		Assert.assertTrue(Files.exists(mavenOutputPath));
+			Assert.assertNotNull(mavenOutputPath);
 
-		File mavenOutputFile = mavenOutputPath.toFile();
+			Assert.assertTrue(Files.exists(mavenOutputPath));
 
-		String mavenOutputFileName = mavenOutputFile.getName();
+			File mavenOutputFile = mavenOutputPath.toFile();
 
-		try {
-			if (gradleOutputFileName.endsWith(".jar")) {
-				_testBundlesDiff(gradleOutputFile, mavenOutputFile);
+			String mavenOutputFileName = mavenOutputFile.getName();
+
+			try {
+				if (gradleOutputFileName.endsWith(".jar")) {
+					_testBundlesDiff(gradleOutputFile, mavenOutputFile);
+				}
+				else if (gradleOutputFileName.endsWith(".war")) {
+					_testWarsDiff(gradleOutputFile, mavenOutputFile);
+				}
 			}
-			else if (gradleOutputFileName.endsWith(".war")) {
-				_testWarsDiff(gradleOutputFile, mavenOutputFile);
-			}
-		}
-		catch (Throwable t) {
-			if (_TEST_DEBUG_BUNDLE_DIFFS) {
-				Path dirPath = Paths.get("build");
+			catch (Throwable t) {
+				if (_TEST_DEBUG_BUNDLE_DIFFS) {
+					Path dirPath = Paths.get("build");
 
-				Files.copy(
-					gradleOutputFile.toPath(),
-					dirPath.resolve(gradleOutputFileName));
-				Files.copy(
-					mavenOutputFile.toPath(),
-					dirPath.resolve(mavenOutputFileName));
-			}
+					Files.copy(
+						gradleOutputFile.toPath(),
+						dirPath.resolve(gradleOutputFileName));
+					Files.copy(
+						mavenOutputFile.toPath(),
+						dirPath.resolve(mavenOutputFileName));
+				}
 
-			throw t;
+				throw t;
+			}
 		}
 	}
 
@@ -4236,6 +4226,46 @@ public class ProjectTemplatesTest {
 			"Expected key " + key + " to exist in properties " +
 				file.getAbsolutePath(),
 			property);
+	}
+
+	private static void _testSoyOutputFiles(
+			File gradleProjectDir, File mavenProjectDir)
+		throws Exception {
+
+		File gradleJarFile = new File(
+			gradleProjectDir, "build/libs/com.liferay.test-1.0.0.jar");
+		File mavenJarFile = new File(mavenProjectDir, "target/foo-1.0.0.jar");
+
+		_testContainsJarEntry(gradleJarFile, "package.json");
+		_testContainsJarEntry(mavenJarFile, "package.json");
+	}
+
+	private static void _testSpringMVCOutputs(File gradleProjectDir)
+		throws Exception {
+
+		ZipFile zipFile = null;
+
+		File gradleWarFile = new File(gradleProjectDir, "build/libs/foo.war");
+
+		try {
+			zipFile = new ZipFile(gradleWarFile);
+
+			_testExists(zipFile, "css/main.css");
+			_testExists(zipFile, "css/main_rtl.css");
+
+			_testExists(zipFile, "WEB-INF/lib/aopalliance-1.0.jar");
+			_testExists(zipFile, "WEB-INF/lib/commons-logging-1.2.jar");
+
+			for (String jarName : _SPRING_MVC_PORTLET_JAR_NAMES) {
+				_testExists(
+					zipFile,
+					"WEB-INF/lib/spring-" + jarName + "-" +
+						_SPRING_MVC_PORTLET_VERSION + ".jar");
+			}
+		}
+		finally {
+			ZipFile.closeQuietly(zipFile);
+		}
 	}
 
 	private static File _testStartsWith(
@@ -5016,13 +5046,17 @@ public class ProjectTemplatesTest {
 		_testNotContains(
 			workspaceProjectDir, "build.gradle", true, "^repositories \\{.*");
 
-		_executeGradle(gradleProjectDir, _GRADLE_TASK_PATH_BUILD);
+		if (Validator.isNotNull(_BUILD_PROJECTS) &&
+			_BUILD_PROJECTS.equals("true")) {
 
-		_testExists(gradleProjectDir, jarFilePath);
+			_executeGradle(gradleProjectDir, _GRADLE_TASK_PATH_BUILD);
 
-		_executeGradle(workspaceDir, ":modules:" + name + ":build");
+			_testExists(gradleProjectDir, jarFilePath);
 
-		_testExists(workspaceProjectDir, jarFilePath);
+			_executeGradle(workspaceDir, ":modules:" + name + ":build");
+
+			_testExists(workspaceProjectDir, jarFilePath);
+		}
 	}
 
 	private void _testPomXmlContainsDependency(
@@ -5083,6 +5117,9 @@ public class ProjectTemplatesTest {
 
 		Assert.assertTrue(missingDependencyString, foundDependency);
 	}
+
+	private static final String _BUILD_PROJECTS = System.getProperty(
+		"project.templates.test.builds");
 
 	private static final String _BUNDLES_DIFF_IGNORES = StringTestUtil.merge(
 		Arrays.asList(

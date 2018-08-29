@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+
+<archetype-descriptor name="liferay-module-code" partial="true">
+	<fileSets>
+		<fileSet filtered="true" packaged="true">
+			<directory>src/main/java</directory>
+			<includes>
+				<include>${template}/**/*.java</include>
+			</includes>
+		</fileSet>
+		<fileSet filtered="true" packaged="true">
+			<directory>src/main/resources</directory>
+			<includes>
+				<include>${template}/**/*</include>
+			</includes>
+			<excludes>
+				<exclude>${template}/bnd.bnd</exclude>
+				<exclude>${template}/build.gradle</exclude>
+				<exclude>${template}/pom.xml</exclude>
+			</excludes>
+		</fileSet>
+	</fileSets>
+</archetype-descriptor>

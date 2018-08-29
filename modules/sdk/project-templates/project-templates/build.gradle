@@ -68,6 +68,7 @@ dependencies {
 
 	projectTemplates group: "com.liferay", name: "com.liferay.project.templates.activator", version: "1.0.18"
 	projectTemplates group: "com.liferay", name: "com.liferay.project.templates.api", version: "1.0.19"
+	projectTemplates group: "com.liferay", name: "com.liferay.project.templates.code", version: "1.0.0"
 	projectTemplates group: "com.liferay", name: "com.liferay.project.templates.content.targeting.report", version: "1.0.18"
 	projectTemplates group: "com.liferay", name: "com.liferay.project.templates.content.targeting.rule", version: "1.0.18"
 	projectTemplates group: "com.liferay", name: "com.liferay.project.templates.content.targeting.tracking.action", version: "1.0.18"

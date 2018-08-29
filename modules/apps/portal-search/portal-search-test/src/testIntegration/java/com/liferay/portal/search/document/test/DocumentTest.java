@@ -29,6 +29,8 @@ import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.Query;
 import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.search.SearchEngine;
+import com.liferay.portal.kernel.search.SearchEngineHelper;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.SortFactoryUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -40,6 +42,7 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerTestRule;
 
@@ -51,6 +54,7 @@ import java.util.Map;
 
 import org.junit.After;
 import org.junit.Assert;
+import org.junit.Assume;
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -110,6 +114,8 @@ public class DocumentTest {
 
 			User user = UserTestUtil.addUser(
 				screenName, LocaleUtil.getDefault(), firstName, "Smith", null);
+
+			_users.add(user);
 
 			_indexer.reindex(user);
 		}
@@ -183,6 +189,8 @@ public class DocumentTest {
 
 	@Test
 	public void testFirstNameSearchSortedBySingleLong() throws Exception {
+		Assume.assumeFalse(isSearchEngineSolr());
+
 		for (String keywords : _KEYWORDS) {
 			checkSearchContext(
 				keywords, _SCREEN_NAMES_ASCENDING, _FIELD_LONG, Sort.LONG_TYPE);
@@ -232,6 +240,8 @@ public class DocumentTest {
 
 	@Test
 	public void testLastNameSearchSortedBySingleLong() throws Exception {
+		Assume.assumeFalse(isSearchEngineSolr());
+
 		checkSearchContext(
 			"Smith", _SCREEN_NAMES_ASCENDING, _FIELD_LONG, Sort.LONG_TYPE);
 	}
@@ -265,8 +275,8 @@ public class DocumentTest {
 		SearchContext searchContext = SearchContextTestUtil.getSearchContext();
 
 		searchContext.setAttribute(Field.STATUS, WorkflowConstants.STATUS_ANY);
-		searchContext.setKeywords(keywords);
 		searchContext.setGroupIds(new long[0]);
+		searchContext.setKeywords(keywords);
 
 		QueryConfig queryConfig = searchContext.getQueryConfig();
 
@@ -407,6 +417,15 @@ public class DocumentTest {
 		};
 	}
 
+	protected boolean isSearchEngineSolr() {
+		SearchEngine searchEngine = searchEngineHelper.getSearchEngine(
+			searchEngineHelper.getDefaultSearchEngineId());
+
+		String vendor = searchEngine.getVendor();
+
+		return vendor.equals("Solr");
+	}
+
 	protected void populateNumberArrays(
 		String screenName, Double[] doubleArray, Float[] floatArray,
 		Integer[] integerArray, Long[] longArray) {
@@ -476,6 +495,9 @@ public class DocumentTest {
 		_longs.put(screenName, longNumber);
 	}
 
+	@Inject
+	protected SearchEngineHelper searchEngineHelper;
+
 	private static final String _FIELD_DOUBLE = "sd";
 
 	private static final String _FIELD_DOUBLE_ARRAY = "md";
@@ -544,5 +566,8 @@ public class DocumentTest {
 	private final Map<String, Integer> _integers = new HashMap<>();
 	private final Map<String, Long[]> _longArrays = new HashMap<>();
 	private final Map<String, Long> _longs = new HashMap<>();
+
+	@DeleteAfterTestRun
+	private final List<User> _users = new ArrayList<>();
 
 }

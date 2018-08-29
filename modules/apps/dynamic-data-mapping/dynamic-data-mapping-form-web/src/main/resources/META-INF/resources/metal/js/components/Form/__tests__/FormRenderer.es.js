@@ -212,8 +212,8 @@ describe(
 				pages[1].rows = [{
 					columns: [{
 						fields: [],
-						size: 12,
-					}],
+						size: 12
+					}]
 				}];
 
 				component = new FormRenderer(
@@ -224,8 +224,6 @@ describe(
 						spritemap
 					}
 				);
-
-				const spy = jest.spyOn(component, 'emit');
 
 				jest.runAllTimers();
 
@@ -559,13 +557,15 @@ describe(
 							}
 						);
 
-						component._handleClickSettingsPage({
-							data: {
-								item: {
-									settingsItem: 'reset-page'
+						component._handleSettingsPageClicked(
+							{
+								data: {
+									item: {
+										settingsItem: 'reset-page'
+									}
 								}
 							}
-						});
+						);
 
 						jest.runAllTimers();
 
@@ -588,13 +588,15 @@ describe(
 							}
 						);
 
-						component._handleClickSettingsPage({
-							data: {
-								item: {
-									settingsItem: 'reset-page'
+						component._handleSettingsPageClicked(
+							{
+								data: {
+									item: {
+										settingsItem: 'reset-page'
+									}
 								}
 							}
-						});
+						);
 
 						jest.runAllTimers();
 

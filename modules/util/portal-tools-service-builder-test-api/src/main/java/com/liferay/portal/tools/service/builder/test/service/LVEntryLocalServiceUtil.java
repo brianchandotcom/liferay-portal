@@ -89,7 +89,8 @@ public class LVEntryLocalServiceUtil {
 	* @throws PortalException if a lv entry with the primary key could not be found
 	*/
 	public static com.liferay.portal.tools.service.builder.test.model.LVEntry deleteLVEntry(
-		long lvEntryId) {
+		long lvEntryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().deleteLVEntry(lvEntryId);
 	}
 

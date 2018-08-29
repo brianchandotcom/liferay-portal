@@ -108,7 +108,7 @@ public interface LVEntryLocalService extends BaseLocalService,
 	* @throws PortalException if a lv entry with the primary key could not be found
 	*/
 	@Indexable(type = IndexableType.DELETE)
-	public LVEntry deleteLVEntry(long lvEntryId);
+	public LVEntry deleteLVEntry(long lvEntryId) throws PortalException;
 
 	/**
 	* Deletes the lv entry from the database. Also notifies the appropriate model listeners.

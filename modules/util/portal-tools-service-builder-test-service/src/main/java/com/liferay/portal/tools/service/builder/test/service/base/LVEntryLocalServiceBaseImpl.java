@@ -125,19 +125,14 @@ public abstract class LVEntryLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
-	public LVEntry deleteLVEntry(long lvEntryId) {
+	public LVEntry deleteLVEntry(long lvEntryId) throws PortalException {
 		LVEntry lvEntry = lvEntryPersistence.fetchByPrimaryKey(lvEntryId);
 
-		try {
-			if (lvEntry != null) {
-				delete(lvEntry);
-			}
+		if (lvEntry != null) {
+			delete(lvEntry);
+		}
 
-			return lvEntry;
-		}
-		catch (PortalException pe) {
-			throw new SystemException(pe);
-		}
+		return lvEntry;
 	}
 
 	/**

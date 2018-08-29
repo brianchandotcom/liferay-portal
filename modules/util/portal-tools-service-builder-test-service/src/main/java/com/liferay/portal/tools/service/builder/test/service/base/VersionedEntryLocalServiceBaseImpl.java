@@ -119,19 +119,15 @@ public abstract class VersionedEntryLocalServiceBaseImpl
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
-	public VersionedEntry deleteVersionedEntry(long versionedEntryId) {
+	public VersionedEntry deleteVersionedEntry(long versionedEntryId)
+		throws PortalException {
 		VersionedEntry versionedEntry = versionedEntryPersistence.fetchByPrimaryKey(versionedEntryId);
 
-		try {
-			if (versionedEntry != null) {
-				delete(versionedEntry);
-			}
+		if (versionedEntry != null) {
+			delete(versionedEntry);
+		}
 
-			return versionedEntry;
-		}
-		catch (PortalException pe) {
-			throw new SystemException(pe);
-		}
+		return versionedEntry;
 	}
 
 	/**

@@ -55,7 +55,8 @@ public class TLiferayInputProperties
 	public void afterGuessSchema() {
 		if (_log.isDebugEnabled()) {
 			_log.debug(
-				"Selected resource URL: " + resource.resourceURL.getValue());
+				"Selected resource URL: " +
+					resource.resourceProperty.getResourceURL());
 		}
 
 		refreshLayout(getForm(Form.MAIN));

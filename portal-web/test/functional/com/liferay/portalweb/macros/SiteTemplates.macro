@@ -269,7 +269,7 @@
 			<condition function="IsElementPresent" locator1="SiteTemplates#SITE_TEMPLATE_TABLE_ACTIONS" />
 			<then>
 				<execute macro="LexiconEntry#openEntryMenu">
-					<var name="rowEntry" value="${siteTemplateName}" />
+					<var name="rowEntry" value="${key_siteTemplateName}" />
 				</execute>
 
 				<execute macro="MenuItem#clickNoError">

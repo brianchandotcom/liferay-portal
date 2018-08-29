@@ -14,12 +14,11 @@
 
 package com.liferay.journal.web.internal.portlet.action;
 
-import com.liferay.dynamic.data.mapping.constants.DDMPortletKeys;
+import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.PortletKeys;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -28,14 +27,13 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Leonardo Barros
+ * @author Eudaldo Alonso
  */
 @Component(
 	immediate = true,
 	property = {
-		"javax.portlet.name=" + DDMPortletKeys.DYNAMIC_DATA_MAPPING,
-		"javax.portlet.name=" + PortletKeys.PORTLET_DISPLAY_TEMPLATE,
-		"mvc.command.name=refreshTemplate"
+		"javax.portlet.name=" + JournalPortletKeys.JOURNAL,
+		"mvc.command.name=/journal/refresh_ddm_template"
 	},
 	service = MVCActionCommand.class
 )

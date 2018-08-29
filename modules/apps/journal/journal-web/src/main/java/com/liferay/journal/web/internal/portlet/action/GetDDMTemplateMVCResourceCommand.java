@@ -14,10 +14,10 @@
 
 package com.liferay.journal.web.internal.portlet.action;
 
-import com.liferay.dynamic.data.mapping.constants.DDMPortletKeys;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.model.DDMTemplateConstants;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateService;
+import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.portal.kernel.portlet.PortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
@@ -33,13 +33,13 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Leonardo Barros
+ * @author Eudaldo Alonso
  */
 @Component(
 	immediate = true,
 	property = {
-		"javax.portlet.name=" + DDMPortletKeys.DYNAMIC_DATA_MAPPING,
-		"mvc.command.name=getTemplate"
+		"javax.portlet.name=" + JournalPortletKeys.JOURNAL,
+		"mvc.command.name=/journal/get_ddm_template"
 	},
 	service = MVCResourceCommand.class
 )
@@ -50,18 +50,20 @@ public class GetDDMTemplateMVCResourceCommand extends BaseMVCResourceCommand {
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws Exception {
 
-		long templateId = ParamUtil.getLong(resourceRequest, "templateId");
+		long ddmTemplateId = ParamUtil.getLong(
+			resourceRequest, "ddmTemplateId");
 
-		DDMTemplate template = _ddmTemplateService.getTemplate(templateId);
+		DDMTemplate ddmTemplate = _ddmTemplateService.getTemplate(
+			ddmTemplateId);
 
-		String script = template.getScript();
+		String script = ddmTemplate.getScript();
 
 		String contentType = null;
 
-		String type = template.getType();
+		String type = ddmTemplate.getType();
 
 		String language = GetterUtil.getString(
-			template.getLanguage(), TemplateConstants.LANG_TYPE_VM);
+			ddmTemplate.getLanguage(), TemplateConstants.LANG_TYPE_VM);
 
 		if (type.equals(DDMTemplateConstants.TEMPLATE_TYPE_FORM)) {
 			contentType = ContentTypes.APPLICATION_JSON;
@@ -78,13 +80,7 @@ public class GetDDMTemplateMVCResourceCommand extends BaseMVCResourceCommand {
 			contentType);
 	}
 
-	@Reference(unbind = "-")
-	protected void setDDMTemplateService(
-		DDMTemplateService ddmTemplateService) {
-
-		_ddmTemplateService = ddmTemplateService;
-	}
-
+	@Reference
 	private DDMTemplateService _ddmTemplateService;
 
 }

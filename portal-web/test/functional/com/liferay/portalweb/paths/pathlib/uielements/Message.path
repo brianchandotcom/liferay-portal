@@ -9,6 +9,11 @@
 </thead>
 <tbody>
 <tr>
+	<td>ALERT_DISMISSIBLE</td>
+	<td>//div[contains(@class,'alert-dismissible')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CATEGORY_ALERT</td>
 	<td>//div[contains(@id,'categorization')]/div[contains(@class,'alert-danger')]</td>
 	<td></td>
@@ -76,6 +81,11 @@
 <tr>
 	<td>ERROR_3_ALT</td>
 	<td>//div[@class='alert alert-warning']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ERROR_DISMISSIBLE</td>
+	<td>//div[contains(@class,'alert-danger')][contains(@class,'alert-dismissible')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -276,6 +286,11 @@
 <tr>
 	<td>SUCCESS_CONTENT</td>
 	<td>//div[@class='portlet-body']/div[contains(.,'${key_assetType}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUCCESS_DISMISSIBLE</td>
+	<td>//div[contains(@class,'alert-success')][contains(@class,'alert-dismissible')]</td>
 	<td></td>
 </tr>
 <tr>

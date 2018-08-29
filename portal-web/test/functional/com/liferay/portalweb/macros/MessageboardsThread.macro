@@ -1129,7 +1129,7 @@
 
 		<execute macro="Alert#viewRequestFailedToComplete" />
 
-		<execute function="AssertTextEquals#assertPartialText" locator1="Message#ERROR_2" value1="You do not have the required permissions." />
+		<execute function="AssertTextEquals#assertPartialText" locator1="Message#ERROR" value1="You do not have the required permissions." />
 		<execute function="AssertTextNotPresent" value1="${threadSubject}" />
 		<execute function="AssertElementNotPresent" locator1="MessageBoards#THREAD_LIST_THREAD" />
 		<execute function="AssertElementNotPresent" locator1="MessageBoards#THREAD_TABLE_STARTED_BY" />

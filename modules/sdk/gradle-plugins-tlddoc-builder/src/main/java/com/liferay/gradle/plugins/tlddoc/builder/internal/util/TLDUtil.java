@@ -16,11 +16,11 @@ package com.liferay.gradle.plugins.tlddoc.builder.internal.util;
 
 import java.io.File;
 
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
 import java.util.Queue;
+import java.util.function.BiConsumer;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -36,105 +36,25 @@ import org.w3c.dom.NodeList;
  */
 public class TLDUtil {
 
-	public static Map<String, File> getDTDProperties(File file)
+	public static void scanDTDAndXSD(
+			File tldFile, BiConsumer<String, File> dtdConsumer,
+			BiConsumer<String, File> xsdConsumer)
 		throws Exception {
 
-		String fileName = file.getName();
+		String fileName = tldFile.getName();
 
 		if (!fileName.endsWith(".tld")) {
-			return Collections.emptyMap();
+			return;
 		}
 
-		Document document = _getDocument(file);
+		Document document = _getDocument(tldFile);
 
 		if (document == null) {
-			return Collections.emptyMap();
+			return;
 		}
 
-		DocumentType documentType = document.getDoctype();
-
-		if (documentType == null) {
-			return Collections.emptyMap();
-		}
-
-		String publicId = documentType.getPublicId();
-
-		if (publicId == null) {
-			return Collections.emptyMap();
-		}
-
-		String definitionFileName = _getFileName(documentType.getSystemId());
-
-		if (definitionFileName == null) {
-			return Collections.emptyMap();
-		}
-
-		File definitionFile = _portalDefinitions.get(definitionFileName);
-
-		if (definitionFile == null) {
-			return Collections.emptyMap();
-		}
-
-		return Collections.singletonMap(publicId, definitionFile);
-	}
-
-	public static Map<String, File> getSchemaProperties(File file)
-		throws Exception {
-
-		String fileName = file.getName();
-
-		if (!fileName.endsWith(".tld")) {
-			return Collections.emptyMap();
-		}
-
-		Document document = _getDocument(file);
-
-		if (document == null) {
-			return Collections.emptyMap();
-		}
-
-		Node taglibNode = document.getDocumentElement();
-
-		NamedNodeMap namedNodeMap = taglibNode.getAttributes();
-
-		Node schemLocationNode = namedNodeMap.getNamedItem(
-			"xsi:schemaLocation");
-
-		if (schemLocationNode == null) {
-			return Collections.emptyMap();
-		}
-
-		String schemLocation = schemLocationNode.getNodeValue();
-
-		if (schemLocation == null) {
-			return Collections.emptyMap();
-		}
-
-		String[] values = schemLocation.split("\\s+");
-
-		if (values.length != 2) {
-			return Collections.emptyMap();
-		}
-
-		String definitionFileName = _getFileName(values[1]);
-
-		if (definitionFileName == null) {
-			return Collections.emptyMap();
-		}
-
-		File definitionFile = _portalDefinitions.get(definitionFileName);
-
-		if (definitionFile == null) {
-			return Collections.emptyMap();
-		}
-
-		Map<String, File> schemaProperties = new HashMap<>();
-
-		schemaProperties.put(values[0].trim(), definitionFile);
-
-		_populateSchemaProperties(schemaProperties, definitionFile);
-
-		return schemaProperties;
+		_scanDTD(document, dtdConsumer);
+		_scanXSD(document, xsdConsumer);
 	}
 
 	private static Document _getDocument(File file) throws Exception {
@@ -166,7 +86,7 @@ public class TLDUtil {
 	}
 
 	private static void _populateSchemaProperties(
-			Map<String, File> schemaProperties, File definitionFile)
+			BiConsumer<String, File> xsdConsumer, File definitionFile)
 		throws Exception {
 
 		Queue<File> definitionFiles = new LinkedList<>();
@@ -220,7 +140,7 @@ public class TLDUtil {
 					continue;
 				}
 
-				schemaProperties.put(namespace, curDefinitionFile);
+				xsdConsumer.accept(namespace, curDefinitionFile);
 
 				definitionFiles.add(curDefinitionFile);
 			}
@@ -255,6 +175,80 @@ public class TLDUtil {
 				definitionFiles.add(curDefinitionFile);
 			}
 		}
+	}
+
+	private static void _scanDTD(
+		Document document, BiConsumer<String, File> dtdConsumer) {
+
+		DocumentType documentType = document.getDoctype();
+
+		if (documentType == null) {
+			return;
+		}
+
+		String publicId = documentType.getPublicId();
+
+		if (publicId == null) {
+			return;
+		}
+
+		String definitionFileName = _getFileName(documentType.getSystemId());
+
+		if (definitionFileName == null) {
+			return;
+		}
+
+		File definitionFile = _portalDefinitions.get(definitionFileName);
+
+		if (definitionFile == null) {
+			return;
+		}
+
+		dtdConsumer.accept(publicId, definitionFile);
+	}
+
+	private static void _scanXSD(
+			Document document, BiConsumer<String, File> xsdConsumer)
+		throws Exception {
+
+		Node taglibNode = document.getDocumentElement();
+
+		NamedNodeMap namedNodeMap = taglibNode.getAttributes();
+
+		Node schemLocationNode = namedNodeMap.getNamedItem(
+			"xsi:schemaLocation");
+
+		if (schemLocationNode == null) {
+			return;
+		}
+
+		String schemLocation = schemLocationNode.getNodeValue();
+
+		if (schemLocation == null) {
+			return;
+		}
+
+		String[] values = schemLocation.split("\\s+");
+
+		if (values.length != 2) {
+			return;
+		}
+
+		String definitionFileName = _getFileName(values[1]);
+
+		if (definitionFileName == null) {
+			return;
+		}
+
+		File definitionFile = _portalDefinitions.get(definitionFileName);
+
+		if (definitionFile == null) {
+			return;
+		}
+
+		xsdConsumer.accept(values[0].trim(), definitionFile);
+
+		_populateSchemaProperties(xsdConsumer, definitionFile);
 	}
 
 	private static final String _LOAD_EXTERNAL_DTD =

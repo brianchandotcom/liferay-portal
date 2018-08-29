@@ -124,48 +124,33 @@ public class ValidateSchemaTask extends SourceTask {
 
 				for (File file : fileTree.getFiles()) {
 					try {
-						Map<String, File> dtdProperties =
-							TLDUtil.getDTDProperties(file);
+						TLDUtil.scanDTDAndXSD(
+							file,
+							(publicId, dtdFile) -> {
+								Map<String, Object> args = new HashMap<>();
 
-						for (Map.Entry<String, File> entry :
-								dtdProperties.entrySet()) {
+								args.put("location", dtdFile);
+								args.put("publicId", publicId);
 
-							File dtdFile = entry.getValue();
-							String publicId = entry.getKey();
+								antBuilder.invokeMethod("dtd", args);
 
-							Map<String, Object> args = new HashMap<>();
+								if (logger.isInfoEnabled()) {
+									logger.info("DTD {}:{}", publicId, dtdFile);
+								}
+							},
+							(namespace, schemaFile) -> {
+								Map<String, Object> args = new HashMap<>();
 
-							args.put("location", dtdFile);
-							args.put("publicId", publicId);
+								args.put("file", schemaFile);
+								args.put("namespace", namespace);
 
-							antBuilder.invokeMethod("dtd", args);
+								antBuilder.invokeMethod("schema", args);
 
-							if (logger.isInfoEnabled()) {
-								logger.info("DTD {}:{}", publicId, dtdFile);
-							}
-						}
-
-						Map<String, File> schemaProperties =
-							TLDUtil.getSchemaProperties(file);
-
-						for (Map.Entry<String, File> entry :
-								schemaProperties.entrySet()) {
-
-							String namespace = entry.getKey();
-							File schemaFile = entry.getValue();
-
-							Map<String, Object> args = new HashMap<>();
-
-							args.put("file", schemaFile);
-							args.put("namespace", namespace);
-
-							antBuilder.invokeMethod("schema", args);
-
-							if (logger.isInfoEnabled()) {
-								logger.info(
-									"Schema {}:{}", namespace, schemaFile);
-							}
-						}
+								if (logger.isInfoEnabled()) {
+									logger.info(
+										"Schema {}:{}", namespace, schemaFile);
+								}
+							});
 					}
 					catch (Exception e) {
 						if (logger.isErrorEnabled()) {

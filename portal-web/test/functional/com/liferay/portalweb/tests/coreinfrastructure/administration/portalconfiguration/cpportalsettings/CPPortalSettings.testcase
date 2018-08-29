@@ -4,42 +4,28 @@
 	<property name="testray.main.component.name" value="Portal Settings" />
 
 	<set-up>
-		<execute macro="TestCase#setUpPortalInstance" />
-
 		<execute macro="User#firstLoginPG" />
 	</set-up>
 
 	<tear-down>
-		<var method="PropsUtil#get('test.portal.instance')" name="testPortalInstance" />
+		<execute macro="PortalSettings#tearDownCP" />
 
-		<if>
-			<equals arg1="${testPortalInstance}" arg2="true" />
-			<then>
-				<execute macro="PortalInstances#tearDownCP" />
-			</then>
-			<else>
-				<execute macro="PortalSettings#tearDownCP" />
+		<execute macro="User#tearDownCP" />
 
-				<execute macro="User#tearDownCP" />
+		<execute macro="Role#tearDownCP" />
 
-				<execute macro="Role#tearDownCP" />
+		<execute macro="Organization#tearDownCP" />
 
-				<execute macro="Organization#tearDownCP" />
+		<execute macro="UserGroup#tearDownCP" />
 
-				<execute macro="UserGroup#tearDownCP" />
+		<execute macro="Site#tearDownCP" />
 
-				<execute macro="Site#tearDownCP" />
+		<execute macro="WebContent#tearDownCP" />
 
-				<execute macro="WebContent#tearDownCP" />
-
-				<execute macro="Page#tearDownCP" />
-			</else>
-		</if>
+		<execute macro="Page#tearDownCP" />
 	</tear-down>
 
 	<command name="EditDefaultUserAssociationsOrganizationSites" priority="5">
-		<property name="test.name.skip.portal.instance" value="CPPortalSettings#EditDefaultUserAssociationsOrganizationSites" />
-
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Users" />
 			<var name="panel" value="Control Panel" />
@@ -113,8 +99,6 @@
 	</command>
 
 	<command name="EditDefaultUserAssociationsRoles" priority="4">
-		<property name="test.name.skip.portal.instance" value="CPPortalSettings#EditDefaultUserAssociationsRoles" />
-
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Users" />
 			<var name="panel" value="Control Panel" />
@@ -174,8 +158,6 @@
 	</command>
 
 	<command name="EditDefaultUserAssociationsSites" priority="4">
-		<property name="test.name.skip.portal.instance" value="CPPortalSettings#EditDefaultUserAssociationsSites" />
-
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Sites" />
 			<var name="panel" value="Control Panel" />
@@ -235,8 +217,6 @@
 	</command>
 
 	<command name="EditDefaultUserAssociationsUserGroups" priority="4">
-		<property name="test.name.skip.portal.instance" value="CPPortalSettings#EditDefaultUserAssociationsUserGroups" />
-
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Users" />
 			<var name="panel" value="Control Panel" />
@@ -297,7 +277,6 @@
 
 	<command name="EnterReservedEmailAddress" priority="5">
 		<property name="portal.acceptance" value="true" />
-		<property name="test.name.skip.portal.instance" value="CPPortalSettings#EnterReservedEmailAddress" />
 
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Configuration" />
@@ -325,7 +304,6 @@
 
 	<command name="EnterReservedScreenName" priority="5">
 		<property name="portal.acceptance" value="true" />
-		<property name="test.name.skip.portal.instance" value="CPPortalSettings#EnterReservedScreenName" />
 
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Configuration" />
@@ -352,8 +330,6 @@
 	</command>
 
 	<command name="ViewContentSharingDisabledAcrossSitesViaAP" priority="4">
-		<property name="test.name.skip.portal.instance" value="CPPortalSettings#ViewContentSharingDisabledAcrossSitesViaAP" />
-
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Configuration" />
 			<var name="panel" value="Control Panel" />
@@ -516,8 +492,6 @@
 	</command>
 
 	<command name="ViewContentSharingEnabledAcrossSitesViaAP" priority="4">
-		<property name="test.name.skip.portal.instance" value="CPPortalSettings#ViewContentSharingEnabledAcrossSitesViaAP" />
-
 		<execute macro="TestCase#getSiteName">
 			<return name="siteName" />
 			<var name="siteName" value="${siteName}" />
@@ -640,8 +614,6 @@
 	</command>
 
 	<command name="ViewDefaultUserAssociations" priority="3">
-		<property name="test.name.skip.portal.instance" value="CPPortalSettings#ViewDefaultUserAssociations" />
-
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Configuration" />
 			<var name="panel" value="Control Panel" />
@@ -652,8 +624,6 @@
 	</command>
 
 	<command name="ViewEmailNotificationsAccountCreatedNotification" priority="3">
-		<property name="test.name.skip.portal.instance" value="CPPortalSettings#ViewEmailNotificationsAccountCreatedNotification" />
-
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Configuration" />
 			<var name="panel" value="Control Panel" />
@@ -664,8 +634,6 @@
 	</command>
 
 	<command name="ViewEmailNotificationsPasswordChangedNotification" priority="3">
-		<property name="test.name.skip.portal.instance" value="CPPortalSettings#ViewEmailNotificationsPasswordChangedNotification" />
-
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Configuration" />
 			<var name="panel" value="Control Panel" />
@@ -676,7 +644,6 @@
 	</command>
 
 	<command name="ViewEmailNotificationsSender" priority="3">
-		<property name="test.name.skip.portal.instance" value="CPPortalSettings#ViewEmailNotificationsSender" />
 
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Configuration" />
@@ -688,8 +655,6 @@
 	</command>
 
 	<command name="ViewReservedCredentialsScreenNames" priority="3">
-		<property name="test.name.skip.portal.instance" value="CPPortalSettings#ViewReservedCredentialsScreenNames" />
-
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Configuration" />
 			<var name="panel" value="Control Panel" />

@@ -4,25 +4,11 @@
 	<property name="testray.main.component.name" value="App Manager" />
 
 	<set-up>
-		<execute macro="TestCase#setUpPortalInstance" />
-
 		<execute macro="User#firstLoginPG" />
 	</set-up>
 
 	<tear-down>
-		<var method="PropsUtil#get('test.portal.instance')" name="testPortalInstance" />
-
-		<if>
-			<equals arg1="${testPortalInstance}" arg2="true" />
-			<then>
-				<execute macro="PortalInstances#tearDownCP" />
-			</then>
-			<else>
-				<execute macro="PortalInstances#tearDownCP" />
-
-				<execute macro="Page#tearDownCP" />
-			</else>
-		</if>
+		<execute macro="Page#tearDownCP" />
 	</tear-down>
 
 	<command name="InstallUninstallApp" priority="5">
@@ -56,8 +42,6 @@
 	</command>
 
 	<command name="ViewIndependentModulesIsNotNestedWithinItself" priority="4">
-		<property name="test.name.skip.portal.instance" value="AppManagerUsecase#ViewIndependentModulesIsNotNestedWithinItself" />
-
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Apps" />
 			<var name="panel" value="Control Panel" />

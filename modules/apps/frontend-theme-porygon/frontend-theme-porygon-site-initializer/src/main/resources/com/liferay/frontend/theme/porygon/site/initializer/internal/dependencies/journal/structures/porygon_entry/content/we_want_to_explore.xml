@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+
+<root available-locales="en_US" default-locale="en_US">
+	<dynamic-element index-type="keyword" instance-id="jvpj" name="coverImage" type="image">
+		<dynamic-content language-id="en_US" alt="" name="content_03.jpg" title="content_03.jpg" type="document">$content_03.jpg$</dynamic-content>
+	</dynamic-element>
+	<dynamic-element index-type="keyword" instance-id="rooa" name="title" type="text">
+		<dynamic-content language-id="en_US"><![CDATA[We want to explore]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element index-type="keyword" instance-id="uddr" name="subTitle" type="text_box">
+		<dynamic-content language-id="en_US"><![CDATA[We're curious people]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element index-type="keyword" instance-id="rkxj" name="content" type="text_area">
+		<dynamic-content language-id="en_US"><![CDATA[<p>We want to explore. We&rsquo;re curious people. Look back over history, people have put their lives at stake to go out and explore &hellip; We believe in what we&rsquo;re doing. Now it&rsquo;s time to go.</p>
+<p>Buy why, some say, the moon? Why choose this as our goal? And they may as well ask why climb the highest mountain?</p>
+<p>What was most significant about the lunar voyage was not that man set foot on the Moon but that they set eye on the earth.</p>
+<p>Science has not yet mastered prophecy. We predict too much for the next year and yet far too little for the next 10.</p>
+<p>NASA is not about the &lsquo;Adventure of Human Space Exploration&rsquo;&hellip;We won&rsquo;t be doing it just to get out there in space &ndash; we&rsquo;ll be doing it because the things we learn out there will be making life better for a lot of people who won&rsquo;t be able to go.</p>
+<p>A Chinese tale tells of some men sent to harm a young girl who, upon seeing her beauty, become her protectors rather than her violators. That's how I felt seeing the Earth for the first time. I could not help but love and cherish her.</p>
+<p>Across the sea of space, the stars are other suns.</p>
+<p>It suddenly struck me that that tiny pea, pretty and blue, was the Earth. I put up my thumb and shut one eye, and my thumb blotted out the planet Earth. I didn't feel like a giant. I felt very, very small.</p>]]></dynamic-content>
+	</dynamic-element>
+</root>

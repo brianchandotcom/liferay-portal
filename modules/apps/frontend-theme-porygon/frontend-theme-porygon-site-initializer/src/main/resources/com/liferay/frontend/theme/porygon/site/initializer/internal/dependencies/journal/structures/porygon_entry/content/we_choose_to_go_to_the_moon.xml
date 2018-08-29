@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+
+<root available-locales="en_US" default-locale="en_US">
+	<dynamic-element index-type="keyword" instance-id="qfbt" name="coverImage" type="image">
+		<dynamic-content language-id="en_US" alt="" name="content_07.jpg" title="content_07.jpg" type="document">$content_07.jpg$</dynamic-content>
+	</dynamic-element>
+	<dynamic-element index-type="keyword" instance-id="gkzd" name="title" type="text">
+		<dynamic-content language-id="en_US"><![CDATA[We choose to go to the moon]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element index-type="keyword" instance-id="tggp" name="subTitle" type="text_box">
+		<dynamic-content language-id="en_US"><![CDATA[We have an infinite amount to learn both from nature and from each other]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element index-type="keyword" instance-id="mgqv" name="content" type="text_area">
+		<dynamic-content language-id="en_US"><![CDATA[<p>You know, being a test pilot isn't always the healthiest business in the world.</p>
+<p>We have an infinite amount to learn both from nature and from each other</p>
+<p>We choose to go to the moon in this decade and do the other things, not because they are easy, but because they are hard, because that goal will serve to organize and measure the best of our energies and skills, because that challenge is one that we are willing to accept, one we are unwilling to postpone, and one which we intend to win.</p>
+<p>That's one small step for [a] man, one giant leap for mankind.</p>
+<p>As we got further and further away, it [the Earth] diminished in size. Finally it shrank to the size of a marble, the most beautiful you can imagine. That beautiful, warm, living object looked so fragile, so delicate, that if you touched it with a finger it would crumble and fall apart. Seeing this has to change a man.</p>
+<p>The dreams of yesterday are the hopes of today and the reality of tomorrow.</p>
+<p>NASA is not about the &lsquo;Adventure of Human Space Exploration&rsquo;&hellip;We won&rsquo;t be doing it just to get out there in space &ndash; we&rsquo;ll be doing it because the things we learn out there will be making life better for a lot of people who won&rsquo;t be able to go.</p>
+<p>Where ignorance lurks, so too do the frontiers of discovery and imagination.</p>]]></dynamic-content>
+	</dynamic-element>
+</root>

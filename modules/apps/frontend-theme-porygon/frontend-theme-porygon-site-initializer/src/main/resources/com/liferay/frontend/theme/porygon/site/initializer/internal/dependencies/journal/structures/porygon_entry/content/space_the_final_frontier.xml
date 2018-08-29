@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+
+<root available-locales="en_US" default-locale="en_US">
+	<dynamic-element index-type="keyword" instance-id="phvj" name="coverImage" type="image">
+		<dynamic-content language-id="en_US" alt="" name="content_12.jpg" title="content_12.jpg" type="document">$content_12.jpg$</dynamic-content>
+	</dynamic-element>
+	<dynamic-element index-type="keyword" instance-id="nblf" name="title" type="text">
+		<dynamic-content language-id="en_US"><![CDATA[Space, the final frontier]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element index-type="keyword" instance-id="qcad" name="subTitle" type="text_box">
+		<dynamic-content language-id="en_US"><![CDATA[These are the voyages of the Starship Enterprise]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element index-type="keyword" instance-id="buny" name="content" type="text_area">
+		<dynamic-content language-id="en_US"><![CDATA[<p>Its five-year mission: to explore strange new worlds, to seek out new life and new civilizations, to boldly go where no man has gone before.</p>
+<p>A Chinese tale tells of some men sent to harm a young girl who, upon seeing her beauty, become her protectors rather than her violators. That's how I felt seeing the Earth for the first time. I could not help but love and cherish her.</p>
+<p>Science cuts two ways, of course; its products can be used for both good and evil. But there's no turning back from science. The early warnings about technological dangers also come from science.</p>
+<p>We choose to go to the moon in this decade and do the other things, not because they are easy, but because they are hard, because that goal will serve to organize and measure the best of our energies and skills, because that challenge is one that we are willing to accept, one we are unwilling to postpone, and one which we intend to win.</p>
+<p>The regret on our side is, they used to say years ago, we are reading about you in science class. Now they say, we are reading about you in history class.</p>
+<p>Spaceflights cannot be stopped. This is not the work of any one man or even a group of men. It is a historical process which mankind is carrying out in accordance with the natural laws of human development.</p>
+<p>To go places and do things that have never been done before &ndash; that&rsquo;s what living is all about.</p>
+<p>Problems look mighty small from 150 miles up.</p>
+<p>Never in all their history have men been able truly to conceive of the world as one: a single sphere, a globe, having the qualities of a globe, a round earth in which all the directions eventually meet, in which there is no center because every point, or none, is center &mdash; an equal earth which all men occupy as equals. The airman's earth, if free men make it, will be truly round: a globe in practice, not in theory.</p>
+<p>We have an infinite amount to learn both from nature and from each other</p>]]></dynamic-content>
+	</dynamic-element>
+</root>

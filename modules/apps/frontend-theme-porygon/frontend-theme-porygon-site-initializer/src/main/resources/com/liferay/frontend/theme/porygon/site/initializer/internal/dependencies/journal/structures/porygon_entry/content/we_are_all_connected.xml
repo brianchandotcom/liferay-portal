@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+
+<root available-locales="en_US" default-locale="en_US">
+	<dynamic-element index-type="keyword" instance-id="xbnw" name="coverImage" type="image">
+		<dynamic-content language-id="en_US" alt="" name="content_01.jpg" title="content_01.jpg" type="document">$content_01.jpg$</dynamic-content>
+	</dynamic-element>
+	<dynamic-element index-type="keyword" instance-id="ytvj" name="title" type="text">
+		<dynamic-content language-id="en_US"><![CDATA[We are all connected]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element index-type="keyword" instance-id="gnzu" name="subTitle" type="text_box">
+		<dynamic-content language-id="en_US"><![CDATA[To each other, biologically. To the earth, chemically]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element index-type="keyword" instance-id="xkse" name="content" type="text_area">
+		<dynamic-content language-id="en_US"><![CDATA[<p>Never in all their history have men been able truly to conceive of the world as one: a single sphere, a globe, having the qualities of a globe, a round earth in which all the directions eventually meet, in which there is no center because every point, or none, is center &mdash; an equal earth which all men occupy as equals. The airman's earth, if free men make it, will be truly round: a globe in practice, not in theory.</p>
+<p>We are all connected; To each other, biologically. To the earth, chemically. To the rest of the universe atomically.</p>
+<p>If you could see the earth illuminated when you were in a place as dark as night, it would look to you more splendid than the moon.</p>
+<p>We choose to go to the moon in this decade and do the other things, not because they are easy, but because they are hard, because that goal will serve to organize and measure the best of our energies and skills, because that challenge is one that we are willing to accept, one we are unwilling to postpone, and one which we intend to win.</p>
+<p>NASA is not about the &lsquo;Adventure of Human Space Exploration&rsquo;&hellip;We won&rsquo;t be doing it just to get out there in space &ndash; we&rsquo;ll be doing it because the things we learn out there will be making life better for a lot of people who won&rsquo;t be able to go.</p>
+<p>The sky is the limit only for those who aren't afraid to fly!</p>
+<p>The path of a cosmonaut is not an easy, triumphant march to glory. You have to get to know the meaning not just of joy but also of grief, before being allowed in the spacecraft cabin.</p>
+<p>What was most significant about the lunar voyage was not that man set foot on the Moon but that they set eye on the earth.</p>
+<p>As I stand out here in the wonders of the unknown at Hadley, I sort of realize there&rsquo;s a fundamental truth to our nature, Man must explore . . . and this is exploration at its greatest.</p>
+<p>We want to explore. We&rsquo;re curious people. Look back over history, people have put their lives at stake to go out and explore &hellip; We believe in what we&rsquo;re doing. Now it&rsquo;s time to go.</p>]]></dynamic-content>
+	</dynamic-element>
+</root>

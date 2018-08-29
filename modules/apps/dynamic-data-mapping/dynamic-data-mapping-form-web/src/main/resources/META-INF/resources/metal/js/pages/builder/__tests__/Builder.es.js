@@ -104,13 +104,13 @@ describe(
 		);
 
 		it(
-			'should continue to propagate addPage event',
+			'should continue to propagate pageAdded event',
 			() => {
 				const spy = jest.spyOn(component, 'emit');
 				const {FormRenderer} = component.refs;
 				const mockEvent = jest.fn();
 
-				FormRenderer.emit('addPage', mockEvent);
+				FormRenderer.emit('pageAdded', mockEvent);
 
 				jest.runAllTimers();
 
@@ -153,12 +153,12 @@ describe(
 		);
 
 		it(
-			'should open sidebar when the active page is changed',
+			'should open sidebar when active page is changed and mode is "add"',
 			() => {
 				const {FormRenderer} = component.refs;
 				const mode = 'add';
 
-				FormRenderer.emit('updateActivePage', {mode});
+				FormRenderer.emit('activePageUpdated', {mode});
 
 				jest.runAllTimers();
 
@@ -167,12 +167,12 @@ describe(
 		);
 
 		it(
-			'should not open sidebar when the active page is changed',
+			'should not open sidebar when the active page is changed and mode is not "add"',
 			() => {
 				const {FormRenderer} = component.refs;
 				const mockEvent = jest.fn();
 
-				FormRenderer.emit('updateActivePage', mockEvent);
+				FormRenderer.emit('activePageUpdated', mockEvent);
 
 				jest.runAllTimers();
 

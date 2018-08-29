@@ -147,7 +147,7 @@ class FormRenderer extends Component {
 		this.pageSettingsItem = this._changeRemoveLabel(newPages);
 		this.activePage = newPageIndex;
 
-		this.emit('addPage', newPages);
+		this.emit('pageAdded', newPages);
 	}
 
 	/**
@@ -244,7 +244,7 @@ class FormRenderer extends Component {
 		}
 
 		this.emit(
-			'updateActivePage',
+			'activePageUpdated',
 			{
 				mode
 			}

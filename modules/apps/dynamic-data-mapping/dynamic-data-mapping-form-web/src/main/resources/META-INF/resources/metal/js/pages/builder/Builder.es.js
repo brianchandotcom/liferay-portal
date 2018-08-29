@@ -16,7 +16,7 @@ class Builder extends Component {
 	 */
 
 	_handleFieldClicked(indexAllocateField) {
-		this._handleOpenSidebar(
+		this._handleSidebarOpened(
 			{
 				mode: 'edit'
 			}
@@ -24,8 +24,8 @@ class Builder extends Component {
 		this.emit('fieldClicked', indexAllocateField);
 	}
 
-	_handleAddPage(pages) {
-		this._handleOpenSidebar(
+	_handlePageAdded(pages) {
+		this._handleSidebarOpened(
 			{
 				mode: 'add'
 			}
@@ -92,21 +92,21 @@ class Builder extends Component {
 	 * @private
 	 */
 
-	_handleOpenSidebar({mode}) {
+	_handleSidebarOpened({mode}) {
 		const Sidebar = this.refs.sidebar;
 
 		Sidebar._setMode(mode);
 		Sidebar.show();
 	}
 
-	_handleUpdateActivePage({mode}) {
+	_handleActivePageUpdated({mode}) {
 		const Sidebar = this.refs.sidebar;
 
 		Sidebar._dragAndDrop.disposeInternal();
 		Sidebar._startDrag();
 
 		if (mode) {
-			this._handleOpenSidebar({mode});
+			this._handleSidebarOpened({mode});
 		}
 	}
 
@@ -135,14 +135,14 @@ class Builder extends Component {
 		} = this.props;
 
 		const FormRendererEvents = {
-			addPage: this._handleAddPage.bind(this),
+			activePageUpdated: this._handleActivePageUpdated.bind(this),
 			deleteButtonClicked: this._handleDeleteButtonClicked.bind(this),
 			duplicateButtonClicked: this._handleDuplicateButtonClicked.bind(this),
 			fieldClicked: this._handleFieldClicked.bind(this),
 			fieldMoved: this._handleFieldMoved.bind(this),
-			openSidebar: this._handleOpenSidebar.bind(this),
+			pageAdded: this._handlePageAdded.bind(this),
 			pagesUpdated: this._handlePagesUpdated.bind(this),
-			updateActivePage: this._handleUpdateActivePage.bind(this)
+			sidebarOpened: this._handleSidebarOpened.bind(this)
 		};
 
 		const sidebarEvents = {

@@ -63,12 +63,15 @@ class PageRenderer extends Component {
 		 * @memberof FormRenderer
 		 * @type {?array<object>}
 		 */
-		strings: Config.object().value({
-			dismiss: Liferay.Language.get('dismiss'),
-			delete: Liferay.Language.get('delete'),
-			deleteFieldDialogQuestion: Liferay.Language.get('are-you-sure-you-want-to-delete-this-field'),
-			deleteFieldDialogTitle: Liferay.Language.get('delete-field-dialog-title')
-		}),
+
+		strings: Config.object().value(
+			{
+				delete: Liferay.Language.get('delete'),
+				deleteFieldDialogQuestion: Liferay.Language.get('are-you-sure-you-want-to-delete-this-field'),
+				deleteFieldDialogTitle: Liferay.Language.get('delete-field-dialog-title'),
+				dismiss: Liferay.Language.get('dismiss')
+			}
+		),
 
 		/**
 		 * @default 1
@@ -210,27 +213,30 @@ class PageRenderer extends Component {
 	 */
 
 	_handleDeleteButtonClicked(event) {
-		event.stopPropagation();
 		const {modal} = this.refs;
 		const index = FormSupport.getIndexes(
 			dom.closest(event.target, '.col-ddm')
 		);
 
+		event.stopPropagation();
+
 		modal.show();
 
-		modal.on('clickButton', event => {
-			event.stopPropagation();
-			modal.emit('hide');
+		modal.on(
+			'clickButton',
+			event => {
+				event.stopPropagation();
+				modal.emit('hide');
 
-			if (!event.target.classList.contains('close-modal')) {
-				this.emit(
-					'deleteButtonClicked',
-					{...index}
-				);
+				if (!event.target.classList.contains('close-modal')) {
+					this.emit(
+						'deleteButtonClicked',
+						{...index}
+					);
+				}
 			}
-		});
+		);
 	}
-
 
 	/**
      * @param {!Event} event

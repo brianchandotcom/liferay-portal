@@ -20,8 +20,11 @@ import com.liferay.talend.connection.LiferayConnectionResourceBaseProperties;
 import com.liferay.talend.exception.ExceptionUtils;
 import com.liferay.talend.runtime.LiferaySourceOrSinkRuntime;
 import com.liferay.talend.utils.PropertiesUtils;
+import com.liferay.talend.utils.URIUtils;
 
 import java.io.IOException;
+
+import java.net.URI;
 
 import java.util.Collections;
 import java.util.Set;
@@ -117,9 +120,16 @@ public class TLiferayInputProperties
 
 			if (validationResult.getStatus() == ValidationResult.Result.OK) {
 				try {
+					URI resourceURI = URIUtils.setPaginationLimitOnURL(
+						resource.resourceProperty.getResourceURL(), 1);
+
+					String resourceCollectionType =
+						liferaySourceOrSinkRuntime.getResourceCollectionType(
+							resourceURI.toString());
+
 					Schema runtimeSchema =
 						liferaySourceOrSinkRuntime.getResourceSchemaByType(
-							resource.resourceName.getValue());
+							resourceCollectionType);
 
 					resource.main.schema.setValue(runtimeSchema);
 				}

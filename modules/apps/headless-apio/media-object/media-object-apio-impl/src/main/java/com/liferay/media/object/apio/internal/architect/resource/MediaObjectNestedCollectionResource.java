@@ -170,19 +170,15 @@ public class MediaObjectNestedCollectionResource
 	private Integer _getAdaptiveMediaHeight(
 		AdaptiveMedia<AMImageProcessor> adaptiveMedia) {
 
-		Optional<Integer> height = adaptiveMedia.getValueOptional(
-			AMImageAttribute.AM_IMAGE_ATTRIBUTE_HEIGHT);
-
-		return height.orElse(0);
+		return (Integer)_getAdaptiveMediaValue(
+			adaptiveMedia, AMImageAttribute.AM_IMAGE_ATTRIBUTE_HEIGHT);
 	}
 
 	private String _getAdaptiveMediaName(
 		AdaptiveMedia<AMImageProcessor> adaptiveMedia) {
 
-		Optional<String> name = adaptiveMedia.getValueOptional(
-			AMAttribute.getConfigurationUuidAMAttribute());
-
-		return name.orElse(null);
+		return (String)_getAdaptiveMediaValue(
+			adaptiveMedia, AMAttribute.getConfigurationUuidAMAttribute());
 	}
 
 	private NestedRepresentor<AdaptiveMedia<AMImageProcessor>>
@@ -207,19 +203,24 @@ public class MediaObjectNestedCollectionResource
 	private Number _getAdaptiveMediaSize(
 		AdaptiveMedia<AMImageProcessor> adaptiveMedia) {
 
-		Optional<Long> size = adaptiveMedia.getValueOptional(
-			AMAttribute.getContentLengthAMAttribute());
+		return (Number)_getAdaptiveMediaValue(
+			adaptiveMedia, AMAttribute.getContentLengthAMAttribute());
+	}
 
-		return size.orElse(null);
+	private Object _getAdaptiveMediaValue(
+		AdaptiveMedia<AMImageProcessor> adaptiveMedia,
+		AMAttribute amAttribute) {
+
+		Optional valueOptional = adaptiveMedia.getValueOptional(amAttribute);
+
+		return valueOptional.orElse(null);
 	}
 
 	private Integer _getAdaptiveMediaWidth(
 		AdaptiveMedia<AMImageProcessor> adaptiveMedia) {
 
-		Optional<Integer> width = adaptiveMedia.getValueOptional(
-			AMImageAttribute.AM_IMAGE_ATTRIBUTE_WIDTH);
-
-		return width.orElse(0);
+		return (Integer)_getAdaptiveMediaValue(
+			adaptiveMedia, AMImageAttribute.AM_IMAGE_ATTRIBUTE_WIDTH);
 	}
 
 	private FileEntry _getFileEntry(

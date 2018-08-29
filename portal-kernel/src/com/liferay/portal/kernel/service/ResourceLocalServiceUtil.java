@@ -227,6 +227,12 @@ public class ResourceLocalServiceUtil {
 		getService().addResources(companyId, groupId, name, portletActions);
 	}
 
+	public static void copyModelResources(long companyId, String name,
+		long oldPrimKey, long newPrimKey)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().copyModelResources(companyId, name, oldPrimKey, newPrimKey);
+	}
+
 	/**
 	* Deletes the resource associated with the model at the scope.
 	*

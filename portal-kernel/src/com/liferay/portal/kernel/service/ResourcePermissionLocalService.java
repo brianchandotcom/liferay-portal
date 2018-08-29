@@ -188,6 +188,9 @@ public interface ResourcePermissionLocalService extends BaseLocalService,
 	public void addResourcePermissions(String resourceName, String roleName,
 		int scope, long resourceActionBitwiseValue);
 
+	public void copyModelResourcePermissions(long companyId, String name,
+		long oldPrimKey, long newPrimKey) throws PortalException;
+
 	/**
 	* Creates a new resource permission with the primary key. Does not add the resource permission to the database.
 	*

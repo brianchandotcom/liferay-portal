@@ -54,6 +54,8 @@
 			<var name="authenticationMethod" value="By Screen Name" />
 		</execute>
 
+		<execute macro="PortalSettingsNavigator#gotoCAS" />
+
 		<execute macro="PortalSettings#editConfigurationAuthenticationCAS">
 			<var name="casLoginURL" value="${portalURL}/cas-web/login" />
 			<var name="casLogoutURL" value="${portalURL}/cas-web/logout" />
@@ -98,11 +100,7 @@
 			<var name="portlet" value="Instance Settings" />
 		</execute>
 
-		<execute macro="Panel#expandPanel">
-			<var name="panel" value="Authentication" />
-		</execute>
-
-		<execute macro="PortalSettingsNavigator#gotoAuthenticationFacebook" />
+		<execute macro="PortalSettingsNavigator#gotoFacebook" />
 
 		<execute macro="PortalSettings#editConfigurationAuthenticationFacebook">
 			<var name="facebookApplicationID" value="${facebookApplicationID}" />
@@ -145,11 +143,7 @@
 			<var name="portlet" value="Instance Settings" />
 		</execute>
 
-		<execute macro="Panel#expandPanel">
-			<var name="panel" value="Authentication" />
-		</execute>
-
-		<execute macro="PortalSettingsNavigator#gotoAuthenticationGoogle" />
+		<execute macro="PortalSettingsNavigator#gotoGoogle" />
 
 		<execute macro="PortalSettings#enableGoogleSSOCP">
 			<var name="googleClientID" value="${googleClientID}" />
@@ -231,11 +225,7 @@
 			<var name="portlet" value="Instance Settings" />
 		</execute>
 
-		<execute macro="Panel#expandPanel">
-			<var name="panel" value="Authentication" />
-		</execute>
-
-		<execute macro="PortalSettingsNavigator#gotoAuthenticationOpenIDConnect" />
+		<execute macro="PortalSettingsNavigator#gotoOpenIDConnect" />
 
 		<execute macro="PortalSettings#enableOpenIDConnectCP" />
 
@@ -272,11 +262,7 @@
 			<var name="portlet" value="Instance Settings" />
 		</execute>
 
-		<execute macro="Panel#expandPanel">
-			<var name="panel" value="Authentication" />
-		</execute>
-
-		<execute macro="PortalSettingsNavigator#gotoAuthenticationOpenID" />
+		<execute macro="PortalSettingsNavigator#gotoOpenID" />
 
 		<execute macro="PortalSettings#enableOpenIDCP" />
 
@@ -346,11 +332,7 @@
 
 		<execute function="Pause" locator1="30000" />
 
-		<execute macro="Panel#expandPanel">
-			<var name="panel" value="Authentication" />
-		</execute>
-
-		<execute macro="PortalSettingsNavigator#gotoAuthenticationOpenSSO" />
+		<execute macro="PortalSettingsNavigator#gotoOpenSSO" />
 
 		<execute macro="PortalSettings#configureOpenSSO">
 			<var name="OpenSSOLoginURL" value="http://test.able.com:8080/openam/UI/Login?goto=http://www.able.com:8080/c/portal/login" />
@@ -358,7 +340,7 @@
 			<var name="OpenSSOServiceURL" value="http://test.able.com:8080/openam" />
 		</execute>
 
-		<execute macro="PortalSettingsNavigator#gotoAuthenticationOpenSSO" />
+		<execute macro="PortalSettingsNavigator#gotoOpenSSO" />
 
 		<execute macro="PortalSettings#testOpenSSOConnection" />
 

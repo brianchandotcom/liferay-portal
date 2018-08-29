@@ -137,6 +137,7 @@
 		<check name="JavaIllegalImportsCheck" />
 		<check name="JavaImportsCheck" />
 		<check name="JavaIndexableCheck" />
+		<check name="JavaInnerClassImportsCheck" />
 		<check name="JavaInterfaceCheck" />
 		<check name="JavaIOExceptionCheck" />
 		<check name="JavaJSPDynamicIncludeCheck">

@@ -23,7 +23,9 @@ import java.io.IOException;
 import java.io.StringWriter;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
+import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -40,6 +42,7 @@ import org.codehaus.plexus.velocity.VelocityComponent;
 
 /**
  * @author Gregory Amerson
+ * @author Simon Jiang
  */
 public class CodeGenerator {
 
@@ -72,9 +75,16 @@ public class CodeGenerator {
 
 		_setProperty(properties, "author", codeTemplatesArgs.getAuthor());
 		_setProperty(properties, "className", codeTemplatesArgs.getClassName());
-		_setProperty(
-			properties, "modelClassName",
-			codeTemplatesArgs.getModelClassName());
+		
+		Map<String, String> addtionalParameters = codeTemplatesArgs.getAddtionalParameters();
+		
+		Set<String> addtionalParametersKeyset = addtionalParameters.keySet();
+		
+		addtionalParametersKeyset.stream(
+		).forEach(
+			key -> _setProperty(properties, key, addtionalParameters.get(key))
+		);
+
 		_setProperty(properties, "package", packageName);
 
 		archetypeGenerationRequest.setProperties(properties);

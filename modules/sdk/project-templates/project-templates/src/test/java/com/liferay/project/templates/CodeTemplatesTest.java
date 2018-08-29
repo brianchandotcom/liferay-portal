@@ -18,10 +18,11 @@ import com.liferay.project.templates.internal.util.FileUtil;
 
 import java.io.File;
 import java.io.IOException;
-
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -73,8 +74,7 @@ public class CodeTemplatesTest {
 		completeArgs.add("--destination");
 		completeArgs.add(projectDir.getPath());
 
-		completeArgs.add("--model-class-name");
-		completeArgs.add("Layout");
+		completeArgs.add("-DmodelClassName=Layout");
 
 		completeArgs.add("--package-name");
 		completeArgs.add("com.liferay");

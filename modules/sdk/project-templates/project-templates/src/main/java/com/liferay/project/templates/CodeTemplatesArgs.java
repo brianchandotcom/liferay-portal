@@ -14,15 +14,18 @@
 
 package com.liferay.project.templates;
 
+import com.beust.jcommander.DynamicParameter;
 import com.beust.jcommander.Parameter;
 
 import java.io.File;
-
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Gregory Amerson
+ * @author Simon Jiang
  */
 public class CodeTemplatesArgs {
 
@@ -42,8 +45,8 @@ public class CodeTemplatesArgs {
 		return _destinationDir;
 	}
 
-	public String getModelClassName() {
-		return _modelClassName;
+	public Map<String, String> getAddtionalParameters() {
+		return _additionalParameters;
 	}
 
 	public String getPackageName() {
@@ -70,8 +73,8 @@ public class CodeTemplatesArgs {
 		_destinationDir = destinationDir;
 	}
 
-	public void setModelClassName(String modelClassName) {
-		_modelClassName = modelClassName;
+	public void setAddtionalParameters(Map<String, String> additionalParameters) {
+		_additionalParameters = additionalParameters;
 	}
 
 	public void setPackageName(String packageName) {
@@ -103,12 +106,12 @@ public class CodeTemplatesArgs {
 	)
 	private File _destinationDir;
 
-	@Parameter(
-		description = "Provide the name of the model class to be generated.",
-		names = "--model-class-name"
+	@DynamicParameter( 
+		description = "Addtional parameters to generate the code.",
+		names = "-D"
 	)
-	private String _modelClassName;
-
+	private Map<String, String> _additionalParameters = new HashMap<>();
+	
 	@Parameter(
 		description = "The destination package for the code generator.",
 		names = "--package-name"

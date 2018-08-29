@@ -20,6 +20,7 @@ import com.liferay.asset.list.exception.NoSuchEntryException;
 import com.liferay.asset.list.model.AssetListEntry;
 import com.liferay.asset.list.service.base.AssetListEntryLocalServiceBaseImpl;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -43,6 +44,8 @@ public class AssetListEntryLocalServiceImpl
 
 		_validateTitle(groupId, title);
 
+		// Asset List entry
+
 		User user = userLocalService.getUser(userId);
 
 		long assetListEntryId = counterLocalService.increment();
@@ -60,7 +63,13 @@ public class AssetListEntryLocalServiceImpl
 		assetListEntry.setTitle(title);
 		assetListEntry.setType(type);
 
-		return assetListEntryPersistence.update(assetListEntry);
+		assetListEntryPersistence.update(assetListEntry);
+
+		// Resources
+
+		resourceLocalService.addModelResources(assetListEntry, serviceContext);
+
+		return assetListEntry;
 	}
 
 	@Override
@@ -84,6 +93,11 @@ public class AssetListEntryLocalServiceImpl
 		if (assetListEntry == null) {
 			throw new NoSuchEntryException();
 		}
+
+		// Resources
+
+		resourceLocalService.deleteResource(
+			assetListEntry, ResourceConstants.SCOPE_INDIVIDUAL);
 
 		return assetListEntryPersistence.remove(assetListEntryId);
 	}

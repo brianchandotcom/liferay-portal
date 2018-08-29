@@ -2,6 +2,7 @@ sourceCompatibility = "1.8"
 targetCompatibility = "1.8"
 
 dependencies {
+	compileInclude group: "org.apache.olingo", name: "odata-commons-api", version: "4.4.0"
 	compileInclude group: "org.apache.olingo", name: "odata-server-api", version: "4.4.0"
 
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"

@@ -25,12 +25,12 @@ import javax.ws.rs.BadRequestException;
  */
 public class InvalidFilterException extends BadRequestException {
 
-	public InvalidFilterException(String s) {
-		super(s);
+	public InvalidFilterException(String msg) {
+		super(msg);
 	}
 
-	public InvalidFilterException(String message, Throwable cause) {
-		super(message, cause);
+	public InvalidFilterException(String msg, Throwable cause) {
+		super(msg, cause);
 	}
 
 }

@@ -34,19 +34,20 @@ public class StructuredContentEdmProviderTest {
 
 	@Test
 	public void testGetSingleEntityTypeName() {
-		StructuredContentEdmProvider provider =
+		StructuredContentEdmProvider structuredContentEdmProvider =
 			new StructuredContentEdmProvider();
 
 		Assert.assertEquals(
-			"StructuredContent", provider.getSingleEntityTypeName());
+			"StructuredContent",
+			structuredContentEdmProvider.getSingleEntityTypeName());
 	}
 
 	@Test
 	public void testModelCreation() throws ODataException {
-		StructuredContentEdmProvider modelProvider =
+		StructuredContentEdmProvider structuredContentEdmProvider =
 			new StructuredContentEdmProvider();
 
-		List<CsdlSchema> schemas = modelProvider.getSchemas();
+		List<CsdlSchema> schemas = structuredContentEdmProvider.getSchemas();
 
 		Assert.assertEquals(schemas.toString(), 1, schemas.size());
 

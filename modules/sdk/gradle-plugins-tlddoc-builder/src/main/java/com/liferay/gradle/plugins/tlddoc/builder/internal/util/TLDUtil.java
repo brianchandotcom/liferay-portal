@@ -66,10 +66,6 @@ public class TLDUtil {
 	}
 
 	private static String _getFileName(String s) {
-		if (s == null) {
-			return null;
-		}
-
 		String trimmedString = s.trim();
 
 		int index = trimmedString.lastIndexOf('/');
@@ -184,7 +180,13 @@ public class TLDUtil {
 			return;
 		}
 
-		String definitionFileName = _getFileName(documentType.getSystemId());
+		String systemId = documentType.getSystemId();
+
+		if (systemId == null) {
+			return;
+		}
+
+		String definitionFileName = _getFileName(systemId);
 
 		if (definitionFileName == null) {
 			return;

@@ -17,6 +17,7 @@ package com.liferay.asset.list.web.internal.resource;
 import com.liferay.asset.list.constants.AssetListConstants;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
+
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 

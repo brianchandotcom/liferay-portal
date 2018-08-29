@@ -20,7 +20,7 @@
 	<clay:management-toolbar
 		actionDropdownItems="<%= assetListDisplayContext.getAssetListEntryActionItemsDropdownItems() %>"
 		componentId="assetListEntriesEntriesManagementToolbar"
-		creationMenu="<%= assetListDisplayContext.getCreationMenu() %>"
+		creationMenu="<%= assetListDisplayContext.isShowAddAssetListEntryAction() ? assetListDisplayContext.getCreationMenu() : null %>"
 		searchContainerId="assetListEntries"
 		showSearch="<%= false %>"
 	/>
@@ -79,8 +79,8 @@
 		</c:when>
 		<c:otherwise>
 			<liferay-frontend:empty-result-message
-				actionDropdownItems="<%= assetListDisplayContext.getAddAssetListEntryDropdownItems() %>"
-				description='<%= LanguageUtil.get(request, "fortunately-it-is-very-easy-to-add-new-ones") %>'
+				actionDropdownItems="<%= assetListDisplayContext.isShowAddAssetListEntryAction() ? assetListDisplayContext.getAddAssetListEntryDropdownItems() : null %>"
+				description="<%= assetListDisplayContext.getEmptyResultMessageDescription() %>"
 				elementType='<%= LanguageUtil.get(request, "asset-lists") %>'
 			/>
 		</c:otherwise>

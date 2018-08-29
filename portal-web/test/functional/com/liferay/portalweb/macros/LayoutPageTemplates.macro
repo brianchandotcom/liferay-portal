@@ -228,4 +228,10 @@
 			<var name="key_fragmentName" value="${fragmentName}" />
 		</execute>
 	</command>
+
+	<command name="viewPageTemplateNotAccessible">
+		<execute function="AssertElementNotPresent" locator1="NavBar#NAV_ITEM_LINK">
+			<var name="key_navItem" value="Page Templates" />
+		</execute>
+	</command>
 </definition>

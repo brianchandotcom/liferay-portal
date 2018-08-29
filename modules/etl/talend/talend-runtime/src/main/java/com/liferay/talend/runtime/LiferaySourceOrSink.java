@@ -279,7 +279,7 @@ public class LiferaySourceOrSink
 			return _getJsonHomeRootEndpointMap(jsonNode);
 		}
 
-		return apioEntryPoint.getRootEndpointMap();
+		return _getRootEndpointMap(apioEntryPoint);
 	}
 
 	@Override
@@ -800,6 +800,27 @@ public class LiferaySourceOrSink
 		}
 
 		return resourcesMap;
+	}
+
+	/**
+	 * Returns the exposed entry points in a Map. The key is the ID of a given
+	 * resource collection and the resource URL last path segment to be able to
+	 * construct URLs from it
+	 *
+	 * @return Map<String, String> Resource ID / URL last path segment, empty
+	 *         otherwise
+	 */
+	private Map<String, String> _getRootEndpointMap(
+		ApioEntryPoint apioEntryPoint) {
+
+		Set<String> rootEndpointURLs = apioEntryPoint.getRootEndpointURLs();
+		Map<String, String> rootEndpointURLMap = new TreeMap<>();
+
+		rootEndpointURLs.forEach(
+			endpointURL -> rootEndpointURLMap.put(
+				endpointURL, URIUtils.getLastPathSegment(endpointURL)));
+
+		return rootEndpointURLMap;
 	}
 
 	private Map<String, String> _getWebSiteResourceCollectionsDescriptor(

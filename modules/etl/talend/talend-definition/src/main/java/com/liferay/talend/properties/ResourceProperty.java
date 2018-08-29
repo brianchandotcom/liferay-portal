@@ -79,10 +79,10 @@ public class ResourceProperty extends StringProperty {
 	/**
 	 * Expects a List of {@link NamedThing} for the possible values where the
 	 * {@link NamedThing#getName()} and {@link NamedThing#getDisplayName()}
-	 * returns with the name of the resource and the
-	 * {@link NamedThing#getTitle()} returns with the actual resource's URL.
+	 * returns with the name of the resource and the {@link
+	 * NamedThing#getTitle()} returns with the actual resource's URL.
 	 *
-	 * @param possibleNamedThingValues
+	 * @param  possibleNamedThingValues
 	 * @return the actual instance of the ResourceProperty
 	 */
 	@Override

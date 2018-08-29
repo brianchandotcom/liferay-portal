@@ -198,7 +198,7 @@ public class MediaObjectNestedCollectionResource
 		).addNumber(
 			"height", this::_getAdaptiveMediaHeight
 		).addString(
-			"name", this::_getAdaptiveMediaName
+			"resolutionName", this::_getAdaptiveMediaName
 		).addNumber(
 			"sizeInBytes", this::_getAdaptiveMediaSize
 		).addRelativeURL(

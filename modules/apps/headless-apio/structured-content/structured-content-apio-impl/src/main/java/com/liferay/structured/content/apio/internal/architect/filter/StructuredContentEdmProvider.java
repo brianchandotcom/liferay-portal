@@ -107,7 +107,7 @@ public class StructuredContentEdmProvider
 
 	private static final String _ENTITY_NAME = "StructuredContent";
 
-	private static final String _NAMESPACE = "HeadlessApio";
+	private static final String _NAMESPACE = "HypermediaRestApis";
 
 	private static final String _TITLE_FIELD = "title";
 

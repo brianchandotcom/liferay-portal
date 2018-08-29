@@ -53,7 +53,7 @@ public class StructuredContentEdmProviderTest {
 
 		CsdlSchema schema = schemas.get(0);
 
-		Assert.assertEquals("HeadlessApio", schema.getNamespace());
+		Assert.assertEquals("HypermediaRestApis", schema.getNamespace());
 
 		List<CsdlEntityType> entityTypes = schema.getEntityTypes();
 

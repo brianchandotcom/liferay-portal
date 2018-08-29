@@ -49,8 +49,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.util.ListUtil;
 
-import java.net.URI;
-
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -161,26 +159,6 @@ public class MediaObjectNestedCollectionResource
 		);
 	}
 
-	private String _getAdaptiveMediaContentUrl(AdaptiveMedia adaptiveMedia) {
-		URI uri = adaptiveMedia.getURI();
-
-		return String.valueOf(uri);
-	}
-
-	private Integer _getAdaptiveMediaHeight(
-		AdaptiveMedia<AMImageProcessor> adaptiveMedia) {
-
-		return (Integer)_getAdaptiveMediaValue(
-			adaptiveMedia, AMImageAttribute.AM_IMAGE_ATTRIBUTE_HEIGHT);
-	}
-
-	private String _getAdaptiveMediaName(
-		AdaptiveMedia<AMImageProcessor> adaptiveMedia) {
-
-		return (String)_getAdaptiveMediaValue(
-			adaptiveMedia, AMAttribute.getConfigurationUuidAMAttribute());
-	}
-
 	private NestedRepresentor<AdaptiveMedia<AMImageProcessor>>
 		_getAdaptiveMediaNestedRepresentor(
 			Builder<AdaptiveMedia<AMImageProcessor>> builder) {
@@ -188,23 +166,25 @@ public class MediaObjectNestedCollectionResource
 		return builder.types(
 			"ImageObject", "MediaObject"
 		).addNumber(
-			"height", this::_getAdaptiveMediaHeight
+			"height",
+			adaptiveMedia -> _getAdaptiveMediaValue(
+				adaptiveMedia, AMImageAttribute.AM_IMAGE_ATTRIBUTE_HEIGHT)
 		).addNumber(
-			"sizeInBytes", this::_getAdaptiveMediaSize
+			"sizeInBytes",
+			adaptiveMedia -> _getAdaptiveMediaValue(
+				adaptiveMedia, AMAttribute.getContentLengthAMAttribute())
 		).addNumber(
-			"width", this::_getAdaptiveMediaWidth
+			"width",
+			adaptiveMedia -> _getAdaptiveMediaValue(
+				adaptiveMedia, AMImageAttribute.AM_IMAGE_ATTRIBUTE_WIDTH)
 		).addRelativeURL(
-			"contentUrl", this::_getAdaptiveMediaContentUrl
+			"contentUrl",
+			adaptiveMedia -> String.valueOf(adaptiveMedia.getURI())
 		).addString(
-			"resolutionName", this::_getAdaptiveMediaName
+			"resolutionName",
+			adaptiveMedia -> _getAdaptiveMediaValue(
+				adaptiveMedia, AMAttribute.getConfigurationUuidAMAttribute())
 		).build();
-	}
-
-	private Number _getAdaptiveMediaSize(
-		AdaptiveMedia<AMImageProcessor> adaptiveMedia) {
-
-		return (Number)_getAdaptiveMediaValue(
-			adaptiveMedia, AMAttribute.getContentLengthAMAttribute());
 	}
 
 	private <V> V _getAdaptiveMediaValue(
@@ -214,13 +194,6 @@ public class MediaObjectNestedCollectionResource
 		Optional<V> valueOptional = adaptiveMedia.getValueOptional(amAttribute);
 
 		return valueOptional.orElse(null);
-	}
-
-	private Integer _getAdaptiveMediaWidth(
-		AdaptiveMedia<AMImageProcessor> adaptiveMedia) {
-
-		return (Integer)_getAdaptiveMediaValue(
-			adaptiveMedia, AMImageAttribute.AM_IMAGE_ATTRIBUTE_WIDTH);
 	}
 
 	private FileEntry _getFileEntry(

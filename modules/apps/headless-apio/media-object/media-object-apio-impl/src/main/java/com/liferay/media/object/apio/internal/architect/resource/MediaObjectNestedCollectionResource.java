@@ -142,23 +142,25 @@ public class MediaObjectNestedCollectionResource
 	private List<AdaptiveMedia<AMImageProcessor>> _getAdaptiveMedia(
 		FileEntry fileEntry) {
 
-		return Try.fromFallible(
-			fileEntry::getMimeType
-		).filter(
-			mimeType -> _amImageMimeTypeProvider.isMimeTypeSupported(mimeType)
-		).map(
-			mimeType -> _amImageFinder.getAdaptiveMediaStream(
-				amImageQueryBuilder -> amImageQueryBuilder.forFileEntry(
-					fileEntry
-				).withConfigurationStatus(
-					AMImageQueryBuilder.ConfigurationStatus.ANY
-				).done()
-			).collect(
-				Collectors.toList()
-			)
-		).orElse(
-			null
-		);
+		String mimeType = fileEntry.getMimeType();
+
+		if (_amImageMimeTypeProvider.isMimeTypeSupported(mimeType)) {
+			return Try.fromFallible(
+				() -> _amImageFinder.getAdaptiveMediaStream(
+					amImageQueryBuilder -> amImageQueryBuilder.forFileEntry(
+						fileEntry
+					).withConfigurationStatus(
+						AMImageQueryBuilder.ConfigurationStatus.ANY
+					).done()
+				).collect(
+					Collectors.toList()
+				)
+			).orElse(
+				null
+			);
+		}
+
+		return null;
 	}
 
 	private String _getAdaptiveMediaContentUrl(AdaptiveMedia adaptiveMedia) {

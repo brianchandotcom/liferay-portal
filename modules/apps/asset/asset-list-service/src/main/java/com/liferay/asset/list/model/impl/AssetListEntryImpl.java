@@ -16,13 +16,19 @@ package com.liferay.asset.list.model.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.asset.list.constants.AssetListEntryTypeConstants;
+
 /**
- * @author Brian Wing Shun Chan
+ * @author Pavel Savinov
  */
 @ProviderType
 public class AssetListEntryImpl extends AssetListEntryBaseImpl {
 
 	public AssetListEntryImpl() {
+	}
+
+	public String getTypeLabel() {
+		return AssetListEntryTypeConstants.getTypeLabel(getType());
 	}
 
 }

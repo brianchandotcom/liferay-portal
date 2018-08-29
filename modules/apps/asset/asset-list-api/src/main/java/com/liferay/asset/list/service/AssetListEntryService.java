@@ -28,6 +28,9 @@ import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
+import com.liferay.portal.kernel.util.OrderByComparator;
+
+import java.util.List;
 
 /**
  * Provides the remote service interface for AssetListEntry. Methods of this
@@ -53,8 +56,10 @@ public interface AssetListEntryService extends BaseService {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link AssetListEntryServiceUtil} to access the asset list entry remote service. Add custom service methods to {@link com.liferay.asset.list.service.impl.AssetListEntryServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public AssetListEntry addAssetListEntry(long userId, long groupId,
-		String title, int type, ServiceContext serviceContext)
+	public AssetListEntry addAssetListEntry(long groupId, String title,
+		int type, ServiceContext serviceContext) throws PortalException;
+
+	public void deleteAssetListEntries(long[] assetListEntriesIds)
 		throws PortalException;
 
 	public AssetListEntry deleteAssetListEntry(long assetListEntryId)
@@ -62,6 +67,13 @@ public interface AssetListEntryService extends BaseService {
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public AssetListEntry fetchAssetListEntry(long assetListEntryId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<AssetListEntry> getAssetListEntries(long groupId, int start,
+		int end, OrderByComparator<AssetListEntry> orderByComparator);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getAssetListEntriesCount(long groupId);
 
 	/**
 	* Returns the OSGi service identifier.

@@ -36,6 +36,7 @@ import com.liferay.talend.runtime.apio.jsonld.ApioSingleModel;
 import com.liferay.talend.runtime.apio.jsonld.ApioUtils;
 import com.liferay.talend.runtime.apio.operation.Operation;
 import com.liferay.talend.runtime.client.RESTClient;
+import com.liferay.talend.utils.URIUtils;
 
 import java.io.IOException;
 
@@ -315,9 +316,7 @@ public class LiferaySourceOrSink
 
 				String webSiteURL = webSiteURLJsonNode.asText();
 
-				int pos = webSiteURL.lastIndexOf("/");
-
-				String webSiteId = webSiteURL.substring(pos + 1);
+				String webSiteId = URIUtils.getLastPathSegment(webSiteURL);
 
 				webSitesList.add(
 					new SimpleNamedThing(
@@ -824,9 +823,10 @@ public class LiferaySourceOrSink
 
 			String id = idJsonNode.asText();
 
+			String resourcePathName = URIUtils.getLastPathSegment(resourceHref);
+
 			if (resourceHref.startsWith(id)) {
-				resourcesMap.put(
-					resourceHrefJsonNode.asText(), typeCoercionTermKey);
+				resourcesMap.put(resourceHref, resourcePathName);
 			}
 		}
 

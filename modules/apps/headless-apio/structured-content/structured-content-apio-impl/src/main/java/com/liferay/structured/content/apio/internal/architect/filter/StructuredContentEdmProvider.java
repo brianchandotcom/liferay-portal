@@ -65,18 +65,18 @@ public class StructuredContentEdmProvider
 	}
 
 	private CsdlEntityType _createCsdlEntityType() {
-		CsdlProperty titleCsdlProperty = _createCsdlProperty(
+
+		List<CsdlProperty> csdlProperties = new ArrayList<>();
+
+		CsdlProperty csdlProperty = _createCsdlProperty(
 			_TITLE_FIELD, EdmPrimitiveTypeKind.String.getFullQualifiedName());
+
+		csdlProperties.add(csdlProperty);
 
 		CsdlEntityType csdlEntityType = new CsdlEntityType();
 
 		csdlEntityType.setName(_ENTITY_NAME);
-
-		List<CsdlProperty> csdlPropertyList = new ArrayList<>();
-
-		csdlPropertyList.add(titleCsdlProperty);
-
-		csdlEntityType.setProperties(csdlPropertyList);
+		csdlEntityType.setProperties(csdlProperties);
 
 		return csdlEntityType;
 	}

@@ -45,8 +45,8 @@ public class VersionedModelInvocationHandler implements InvocationHandler {
 				return -_versionModel.getVersionedModelId();
 			}
 
-			if (methodName.equals("isDraft")) {
-				return false;
+			if (methodName.equals("isHead")) {
+				return true;
 			}
 
 			throw new UnsupportedOperationException(methodName);

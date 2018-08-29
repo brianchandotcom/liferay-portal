@@ -30,9 +30,9 @@ Closure pomConfigureClosure = {
 		}
 
 		scm {
-			connection = project.properties["pom.scm.connection"] ?: "scm:git:git@github.com:liferay/liferay-plugins.git"
-			developerConnection = project.properties["pom.scm.developerConnection"] ?: "scm:git:git@github.com:liferay/liferay-plugins.git"
-			url = project.properties["pom.scm.url"] ?: "http://github.com/liferay/liferay-plugins"
+			connection = project.properties["pom.scm.connection"] ?: "scm:git:git@github.com:liferay/liferay-portal.git"
+			developerConnection = project.properties["pom.scm.developerConnection"] ?: "scm:git:git@github.com:liferay/liferay-portal.git"
+			url = project.properties["pom.scm.url"] ?: "http://github.com/liferay/liferay-portal"
 		}
 	}
 }

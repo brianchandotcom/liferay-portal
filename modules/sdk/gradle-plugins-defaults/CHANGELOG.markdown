@@ -4417,6 +4417,16 @@ version 1.3.2.
 - [LPS-84119]: Update the [Liferay Gradle Plugins] dependency to version
 3.12.116.
 
+## 5.5.25 - 2018-08-29
+
+### Changed
+- [LPS-84887]: Update the `scm.connection` property's default value to
+`scm:git:git@github.com:liferay/liferay-portal.git`.
+- [LPS-84887]: Update the `scm.developerConnection` property's default value to
+`scm:git:git@github.com:liferay/liferay-portal.git`.
+- [LPS-84887]: Update the `scm.url` property's default value to
+`http://github.com/liferay/liferay-portal`.
+
 [Find Security Bugs]: https://github.com/liferay/liferay-portal/tree/master/modules/third-party/com-h3xstream-findsecbugs
 [Gradle Dependency Management]: https://github.com/spring-gradle-plugins/dependency-management-plugin
 [Gradle License Report]: https://github.com/jk1/Gradle-License-Report
@@ -4881,6 +4891,7 @@ version 1.3.2.
 [LPS-84615]: https://issues.liferay.com/browse/LPS-84615
 [LPS-84621]: https://issues.liferay.com/browse/LPS-84621
 [LPS-84624]: https://issues.liferay.com/browse/LPS-84624
+[LPS-84887]: https://issues.liferay.com/browse/LPS-84887
 [LRDOCS-2594]: https://issues.liferay.com/browse/LRDOCS-2594
 [LRDOCS-2841]: https://issues.liferay.com/browse/LRDOCS-2841
 [LRDOCS-2981]: https://issues.liferay.com/browse/LRDOCS-2981

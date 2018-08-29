@@ -97,6 +97,9 @@ public class JournalArticleFinderImpl
 	public static final String FIND_BY_G_ST =
 		JournalArticleFinder.class.getName() + ".findByG_ST";
 
+	public static final String FIND_BY_G_ST_L =
+		JournalArticleFinder.class.getName() + ".findByG_ST_L";
+
 	public static final String FIND_BY_G_F_L =
 		JournalArticleFinder.class.getName() + ".findByG_F_L";
 
@@ -424,6 +427,14 @@ public class JournalArticleFinderImpl
 	}
 
 	@Override
+	public List<JournalArticle> filterFindByG_ST_L(
+		long groupId, int status, Locale locale,
+		QueryDefinition<JournalArticle> queryDefinition) {
+
+		return doFindByG_ST_L(groupId, status, locale, queryDefinition, true);
+	}
+
+	@Override
 	public List<JournalArticle> filterFindByG_F_L(
 		long groupId, List<Long> folderIds, Locale locale,
 		QueryDefinition<JournalArticle> queryDefinition) {
@@ -743,6 +754,14 @@ public class JournalArticleFinderImpl
 		QueryDefinition<JournalArticle> queryDefinition) {
 
 		return doFindByG_ST(groupId, status, queryDefinition, false);
+	}
+
+	@Override
+	public List<JournalArticle> findByG_ST_L(
+		long groupId, int status, Locale locale,
+		QueryDefinition<JournalArticle> queryDefinition) {
+
+		return doFindByG_ST_L(groupId, status, locale, queryDefinition, false);
 	}
 
 	@Override
@@ -1323,6 +1342,51 @@ public class JournalArticleFinderImpl
 
 			QueryPos qPos = QueryPos.getInstance(q);
 
+			qPos.add(groupId);
+			qPos.add(status);
+
+			return (List<JournalArticle>)QueryUtil.list(
+				q, getDialect(), queryDefinition.getStart(),
+				queryDefinition.getEnd());
+		}
+		catch (Exception e) {
+			throw new SystemException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected List<JournalArticle> doFindByG_ST_L(
+		long groupId, int status, Locale locale,
+		QueryDefinition<JournalArticle> queryDefinition,
+		boolean inlineSQLHelper) {
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			String sql = _customSQL.get(
+				getClass(), FIND_BY_G_ST_L, queryDefinition, "JournalArticle");
+
+			sql = _customSQL.replaceOrderBy(
+				sql, queryDefinition.getOrderByComparator());
+
+			if (inlineSQLHelper) {
+				sql = InlineSQLHelperUtil.replacePermissionCheck(
+					sql, JournalArticle.class.getName(),
+					"JournalArticle.resourcePrimKey", groupId);
+			}
+
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+			q.addEntity(
+				JournalArticleImpl.TABLE_NAME, JournalArticleImpl.class);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(LocaleUtil.toLanguageId(locale));
 			qPos.add(groupId);
 			qPos.add(status);
 

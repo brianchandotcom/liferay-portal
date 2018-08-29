@@ -1471,14 +1471,16 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 		QueryDefinition<JournalArticle> queryDefinition = new QueryDefinition<>(
 			status, start, end, obc);
 
-		return journalArticleFinder.filterFindByG_ST(
-			groupId, status, queryDefinition);
+		Locale locale = LocaleUtil.getMostRelevantLocale();
+
+		return journalArticleFinder.filterFindByG_ST_L(
+			groupId, status, locale, queryDefinition);
 	}
 
 	@Override
 	public int getLatestArticlesCount(long groupId, int status) {
 		return journalArticleFinder.countByG_ST(
-			groupId, status, new QueryDefinition<JournalArticle>(status));
+			groupId, status, new QueryDefinition<>(status));
 	}
 
 	@Override

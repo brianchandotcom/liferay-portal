@@ -40,7 +40,7 @@ boolean anonymousAccount = ParamUtil.getBoolean(request, "anonymousUser");
 
 				<aui:button onClick='<%= renderResponse.getNamespace() + "activateAccount();" %>' value="activate-account" />
 
-				<aui:button onClick='<%= renderResponse.getNamespace() + "closeDialog();" %>' value="cancel" />
+				<aui:button onClick='<%= renderResponse.getNamespace() + "closeDialog(window.parent.namespace);" %>' value="cancel" />
 			</aui:form>
 		</div>
 	</div>
@@ -130,69 +130,40 @@ boolean anonymousAccount = ParamUtil.getBoolean(request, "anonymousUser");
 			}
 		);
 
-		window.<portlet:namespace />closeDialog = function() {
-			var namespace = window.parent.namespace;
-
-			Liferay.fire(
-				'closeWindow',
-				{
-					id: namespace + 'signInDialog'
-				}
-			);
-		};
-
-		<c:if test="<%= !company.isStrangers() && (user == null) %>">
-			<portlet:namespace />closeDialog();
-		</c:if>
-	</aui:script>
-
-	<aui:script sandbox="<%= true %>">
-		var afterLogin;
-		var namespace;
-		var randomNamespace;
-
-		if (window.opener) {
-			namespace = window.opener.parent.namespace;
-			randomNamespace = window.opener.parent.randomNamespace;
-
-			afterLogin = window.opener.parent[randomNamespace + 'afterLogin'];
-
-			if (typeof afterLogin == 'function') {
-				afterLogin('<%= HtmlUtil.escape(emailAddress) %>', <%= anonymousAccount %>);
-
-				if (<%= !anonymousAccount %>) {
-					window.opener.parent.Liferay.fire(
-						'closeWindow',
-						{
-							id: namespace + 'signInDialog'
-						}
-					);
-
-					window.close();
-				}
-			}
-			else {
-				window.opener.parent.location.href = '<%= HtmlUtil.escapeJS(themeDisplay.getURLSignIn()) %>';
-
-				window.close();
-			}
-		}
-		else {
-			namespace = window.parent.namespace;
-			randomNamespace = window.parent.randomNamespace;
-
-			afterLogin = window.parent[randomNamespace + 'afterLogin'];
-
-			afterLogin('<%= HtmlUtil.escape(emailAddress) %>', <%= anonymousAccount %>);
-
-			if (<%= !anonymousAccount %>) {
-				Liferay.fire(
-					'closeWindow',
-					{
-						id: namespace + 'signInDialog'
-					}
-				);
-			}
-		}
 	</aui:script>
 </c:if>
+
+<aui:script sandbox="<%= true %>">
+	window.<portlet:namespace />closeDialog = function(namespace) {
+		Liferay.fire(
+			'closeWindow',
+			{
+				id: namespace + 'signInDialog'
+			}
+		);
+	};
+
+	var parentWindow = window.opener ? window.opener.parent : window.parent;
+
+	var namespace = parentWindow.namespace;
+	var randomNamespace = parentWindow.randomNamespace;
+
+	var afterLogin = parentWindow[randomNamespace + 'afterLogin'];
+
+	if (typeof afterLogin === 'function') {
+		parentWindow.document.getElementsByName('p_auth')[0].value = '<%= AuthTokenUtil.getToken(request) %>';
+
+		afterLogin('<%= HtmlUtil.escapeJS(emailAddress) %>', <%= anonymousAccount %>);
+
+		if (<%= !anonymousAccount || !company.isStrangers() %>) {
+			window.<portlet:namespace />closeDialog(namespace);
+
+			window.close();
+		}
+	}
+	else {
+		window.opener.parent.location.href = '<%= HtmlUtil.escapeJS(themeDisplay.getURLSignIn()) %>';
+
+		window.close();
+	}
+</aui:script>

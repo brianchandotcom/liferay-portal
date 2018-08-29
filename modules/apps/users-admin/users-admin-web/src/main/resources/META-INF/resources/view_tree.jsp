@@ -96,33 +96,15 @@ if (organization != null) {
 			<aui:input name="<%= Constants.CMD %>" type="hidden" />
 			<aui:input name="toolbarItem" type="hidden" value="<%= toolbarItem %>" />
 			<aui:input name="redirect" type="hidden" value="<%= viewTreeManagementToolbarDisplayContext.getPortletURL().toString() %>" />
+			<aui:input name="currentURL" type="hidden" value="<%= currentURL %>" />
 			<aui:input name="deleteOrganizationIds" type="hidden" />
 			<aui:input name="deleteUserIds" type="hidden" />
 
 			<c:if test="<%= organization != null %>">
 
 				<%
-				long parentOrganizationId = OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID;
-
-				if (!organization.isRoot()) {
-					Organization parentOrganization = organization.getParentOrganization();
-
-					if (OrganizationPermissionUtil.contains(permissionChecker, parentOrganization, ActionKeys.VIEW)) {
-						parentOrganizationId = parentOrganization.getOrganizationId();
-					}
-				}
-				%>
-
-				<portlet:renderURL var="headerBackURL">
-					<portlet:param name="mvcRenderCommandName" value="/users_admin/view" />
-					<portlet:param name="toolbarItem" value="view-all-organizations" />
-					<portlet:param name="organizationId" value="<%= String.valueOf(parentOrganizationId) %>" />
-					<portlet:param name="usersListView" value="<%= (parentOrganizationId == OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID) ? UserConstants.LIST_VIEW_FLAT_ORGANIZATIONS : UserConstants.LIST_VIEW_TREE %>" />
-				</portlet:renderURL>
-
-				<%
 				portletDisplay.setShowBackIcon(true);
-				portletDisplay.setURLBack(Validator.isNotNull(backURL) ? backURL : headerBackURL.toString());
+				portletDisplay.setURLBack(Validator.isNotNull(backURL) ? backURL : UsersAdminPortletURLUtil.createParentOrganizationViewTreeURL(organizationId, PortalUtil.getLiferayPortletRequest(renderRequest), PortalUtil.getLiferayPortletResponse(renderResponse)));
 
 				renderResponse.setTitle(organization.getName());
 				%>
@@ -182,16 +164,20 @@ if (organization != null) {
 </c:choose>
 
 <aui:script>
-	function <portlet:namespace />delete() {
-		<portlet:namespace />deleteOrganizations();
+	function <portlet:namespace />delete(organizationsRedirect) {
+		<portlet:namespace />deleteOrganizations(organizationsRedirect);
 	}
 
-	<portlet:namespace />doDeleteOrganizations = function(organizationIds) {
+	<portlet:namespace />doDeleteOrganizations = function(organizationIds, organizationsRedirect) {
 		var form = AUI.$(document.<portlet:namespace />fm);
 
 		form.attr('method', 'post');
 		form.fm('deleteOrganizationIds').val(organizationIds);
 		form.fm('deleteUserIds').val(Liferay.Util.listCheckedExcept(form, '<portlet:namespace />allRowIds', '<portlet:namespace />rowIdsUser'));
+
+		if (organizationsRedirect) {
+			form.fm('redirect').val(organizationsRedirect);
+		}
 
 		submitForm(form, '<portlet:actionURL name="/users_admin/delete_organizations_and_users" />');
 	};

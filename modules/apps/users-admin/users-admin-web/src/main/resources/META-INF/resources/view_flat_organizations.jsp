@@ -91,7 +91,6 @@ if (filterManageableOrganizations) {
 				searchContainer="<%= searchContainer %>"
 				var="organizationSearchContainer"
 			>
-				<aui:input disabled="<%= true %>" name="organizationsRedirect" type="hidden" value="<%= portletURL.toString() %>" />
 				<aui:input name="deleteOrganizationIds" type="hidden" />
 
 				<c:if test="<%= usersListView.equals(UserConstants.LIST_VIEW_FLAT_ORGANIZATIONS) %>">

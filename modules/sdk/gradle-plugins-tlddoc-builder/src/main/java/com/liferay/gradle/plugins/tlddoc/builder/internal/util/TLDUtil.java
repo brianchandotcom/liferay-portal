@@ -53,31 +53,7 @@ public class TLDUtil {
 		_scanXSD(document, xsdConsumer);
 	}
 
-	private static Document _getDocument(File file) throws Exception {
-		DocumentBuilderFactory documentBuilderFactory =
-			DocumentBuilderFactory.newInstance();
-
-		documentBuilderFactory.setFeature(_LOAD_EXTERNAL_DTD, false);
-
-		DocumentBuilder documentBuilder =
-			documentBuilderFactory.newDocumentBuilder();
-
-		return documentBuilder.parse(file);
-	}
-
-	private static String _getFileName(String s) {
-		int index = s.lastIndexOf('/');
-
-		if (index == -1) {
-			return null;
-		}
-
-		String fileName = s.substring(index + 1);
-
-		return fileName.trim();
-	}
-
-	private static void _populateSchemaProperties(
+	private static void _deepScanXSD(
 			BiConsumer<String, File> xsdConsumer, File definitionFile)
 		throws Exception {
 
@@ -165,6 +141,30 @@ public class TLDUtil {
 		}
 	}
 
+	private static Document _getDocument(File file) throws Exception {
+		DocumentBuilderFactory documentBuilderFactory =
+			DocumentBuilderFactory.newInstance();
+
+		documentBuilderFactory.setFeature(_LOAD_EXTERNAL_DTD, false);
+
+		DocumentBuilder documentBuilder =
+			documentBuilderFactory.newDocumentBuilder();
+
+		return documentBuilder.parse(file);
+	}
+
+	private static String _getFileName(String s) {
+		int index = s.lastIndexOf('/');
+
+		if (index == -1) {
+			return null;
+		}
+
+		String fileName = s.substring(index + 1);
+
+		return fileName.trim();
+	}
+
 	private static void _scanDTD(
 		Document document, BiConsumer<String, File> dtdConsumer) {
 
@@ -192,13 +192,13 @@ public class TLDUtil {
 			return;
 		}
 
-		File definitionFile = _portalDefinitions.get(definitionFileName);
+		File dtdFile = _portalDefinitions.get(definitionFileName);
 
-		if (definitionFile == null) {
+		if (dtdFile == null) {
 			return;
 		}
 
-		dtdConsumer.accept(publicId, definitionFile);
+		dtdConsumer.accept(publicId, dtdFile);
 	}
 
 	private static void _scanXSD(
@@ -234,15 +234,15 @@ public class TLDUtil {
 			return;
 		}
 
-		File definitionFile = _portalDefinitions.get(definitionFileName);
+		File xsdFile = _portalDefinitions.get(definitionFileName);
 
-		if (definitionFile == null) {
+		if (xsdFile == null) {
 			return;
 		}
 
-		xsdConsumer.accept(values[0], definitionFile);
+		xsdConsumer.accept(values[0], xsdFile);
 
-		_populateSchemaProperties(xsdConsumer, definitionFile);
+		_deepScanXSD(xsdConsumer, xsdFile);
 	}
 
 	private static final String _LOAD_EXTERNAL_DTD =

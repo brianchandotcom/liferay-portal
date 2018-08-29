@@ -460,12 +460,13 @@ public class LiferaySourceOrSink
 		for (Map.Entry<String, String> entry : resourceCollections.entrySet()) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(
-					"resource name: {}, href: {} ", entry.getKey(),
-					entry.getValue());
+					"resource: {}, href: {} ", entry.getValue(),
+					entry.getKey());
 			}
 
 			resourceNames.add(
-				new SimpleNamedThing(entry.getKey(), entry.getValue()));
+				new SimpleNamedThing(
+					entry.getValue(), entry.getValue(), entry.getKey()));
 		}
 
 		return resourceNames;
@@ -607,12 +608,13 @@ public class LiferaySourceOrSink
 		for (Map.Entry<String, String> entry : resourceCollections.entrySet()) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(
-					"resource name: {}, href: {} ", entry.getKey(),
-					entry.getValue());
+					"resource: {}, href: {} ", entry.getValue(),
+					entry.getKey());
 			}
 
 			schemaNames.add(
-				new SimpleNamedThing(entry.getKey(), entry.getValue()));
+				new SimpleNamedThing(
+					entry.getValue(), entry.getValue(), entry.getKey()));
 		}
 
 		return schemaNames;

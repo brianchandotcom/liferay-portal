@@ -66,15 +66,15 @@ public class TLDUtil {
 	}
 
 	private static String _getFileName(String s) {
-		String trimmedString = s.trim();
-
-		int index = trimmedString.lastIndexOf('/');
+		int index = s.lastIndexOf('/');
 
 		if (index == -1) {
 			return null;
 		}
 
-		return trimmedString.substring(index + 1);
+		String fileName = s.substring(index + 1);
+
+		return fileName.trim();
 	}
 
 	private static void _populateSchemaProperties(

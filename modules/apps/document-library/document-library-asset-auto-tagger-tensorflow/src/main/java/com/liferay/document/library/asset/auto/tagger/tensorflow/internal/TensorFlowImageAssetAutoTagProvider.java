@@ -108,11 +108,14 @@ public class TensorFlowImageAssetAutoTagProvider
 
 		Bundle bundle = bundleContext.getBundle();
 
+		URL url = bundle.getResource(
+			"META-INF/tensorflow/imagenet_comp_graph_label_strings.txt");
+
+		_labels = StringUtil.splitLines(StringUtil.read(url.openStream()));
+
 		TensorflowProcessUtil.activate(bundle);
 
 		modified(properties);
-
-		_initializeLabels(bundle);
 	}
 
 	@Deactivate
@@ -142,13 +145,6 @@ public class TensorFlowImageAssetAutoTagProvider
 		}
 
 		return bestIndexes.stream();
-	}
-
-	private void _initializeLabels(Bundle bundle) throws IOException {
-		URL url = bundle.getResource(
-			"META-INF/tensorflow/imagenet_comp_graph_label_strings.txt");
-
-		_labels = StringUtil.splitLines(StringUtil.read(url.openStream()));
 	}
 
 	private boolean _isSupportedMimeType(String mimeType) {

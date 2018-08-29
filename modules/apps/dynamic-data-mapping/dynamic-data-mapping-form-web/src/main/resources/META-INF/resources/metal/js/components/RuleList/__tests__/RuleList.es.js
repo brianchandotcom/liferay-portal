@@ -5,32 +5,38 @@ let component;
 
 const spritemap = 'icons.svg';
 
+const pages = [
+	{
+		rows: [
+			{
+				columns: [
+					{
+						fields: [
+							{
+								fieldName: 'text1',
+								label: 'label text 1'
+							},
+							{
+								fieldName: 'text2',
+								label: 'label text 2'
+							}
+						]
+					}
+				]
+			}
+		]
+	}
+];
+
 const configDefault = {
-	formContext: [
-		{
-			rows: [
-				{
-					columns: [
-						{
-							fields: [
-								{
-									fieldName: 'text1',
-									label: 'label text 1'
-								}
-							]
-						}
-					]
-				}
-			]
-		}
-	],
+	pages,
 	rules: [
 		{
 			actions: [
 				{
 					action: 'require',
-					target: 'text1',
-					expression: '[x+2]'
+					expression: '[x+2]',
+					target: 'text1'
 				}
 			],
 			conditions: [
@@ -38,10 +44,10 @@ const configDefault = {
 					operands: [
 						{
 							type: 'field',
-							value: 'value 1'
+							value: 'text1'
 						},
 						{
-							type: 'field',
+							type: 'value',
 							value: 'value 2'
 						}
 					],
@@ -53,25 +59,6 @@ const configDefault = {
 	],
 	spritemap
 };
-
-const formContext = [
-	{
-		rows: [
-			{
-				columns: [
-					{
-						fields: [
-							{
-								fieldName: 'text1',
-								label: 'label text 1'
-							}
-						]
-					}
-				]
-			}
-		]
-	}
-];
 
 const rules = [
 	{
@@ -106,7 +93,7 @@ const rules = [
 				operands: [
 					{
 						type: 'field',
-						value: 'value 1'
+						value: 'text1'
 					},
 					{
 						type: 'string',
@@ -119,11 +106,11 @@ const rules = [
 				operands: [
 					{
 						type: 'field',
-						value: 'value 3'
+						value: 'text1'
 					},
 					{
 						type: 'field',
-						value: 'value 4'
+						value: 'text1'
 					}
 				],
 				operator: 'not-equals-to'
@@ -156,11 +143,12 @@ describe(
 			}
 		);
 
-		it('should remove one rule item when delete button gets clicked',
+		it(
+			'should remove one rule item when delete button gets clicked',
 			() => {
 				component = new RuleList(
 					{
-						formContext,
+						pages,
 						rules,
 						spritemap,
 						strings
@@ -181,11 +169,12 @@ describe(
 			}
 		);
 
-		it('should return the field label for each action',
+		it(
+			'should return the field label for each action',
 			() => {
 				component = new RuleList(configDefault);
 
-				const contextLabel = component.formContext[0].rows[0].columns[0].fields[0].label;
+				const contextLabel = component.pages[0].rows[0].columns[0].fields[0].label;
 
 				const actionLabel = component.rules[0].actions[0].label;
 
@@ -195,14 +184,15 @@ describe(
 			}
 		);
 
-		it('should show add button when listing the rules',
+		it(
+			'should show add button when listing the rules',
 			() => {
 				MetalTestUtil.enterDocument('<button id="addFieldButton" class="hide"></button>');
 				const addButton = document.querySelector('#addFieldButton');
 
 				component = new RuleList(
 					{
-						formContext,
+						pages,
 						rules,
 						spritemap,
 						strings
@@ -217,11 +207,12 @@ describe(
 			}
 		);
 
-		it('should show message when rule list is empty',
+		it(
+			'should show message when rule list is empty',
 			() => {
 				component = new RuleList(
 					{
-						formContext,
+						pages,
 						rules: [],
 						spritemap,
 						strings: {
@@ -234,7 +225,5 @@ describe(
 
 			}
 		);
-
-
 	}
 );

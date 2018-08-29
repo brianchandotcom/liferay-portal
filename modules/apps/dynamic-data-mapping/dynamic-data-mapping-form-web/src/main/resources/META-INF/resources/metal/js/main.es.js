@@ -1,13 +1,12 @@
 import {Config} from 'metal-state';
-import {dom} from 'metal-dom';
+import {pageStructure} from './util/config.es';
 import Builder from './pages/builder/index.es';
-import RuleBuilder from './pages/RuleBuilder/index.es';
 import Component from 'metal-jsx';
 import dom from 'metal-dom';
 import LayoutProvider from './components/LayoutProvider/index.es';
 import loader from './components/FieldsLoader/index.es';
+import RuleBuilder from './pages/RuleBuilder/index.es';
 import withAppComposer from './hocs/withAppComposer/index.es';
-import {pageStructure} from './util/config.es';
 
 const STR_UNTITLED_FORM = Liferay.Language.get('untitled-form');
 
@@ -98,6 +97,7 @@ class Form extends Component {
 	};
 
 	static STATE = {
+
 		/**
 		 * The represent the current active screen mode where 0 => FormBuilder and 1 => RuleBuilder
 		 * @default undefined
@@ -105,6 +105,7 @@ class Form extends Component {
 		 * @memberof Form
 		 * @type {!array}
 		 */
+
 		activeFormMode: Config.number().value(0),
 
 		saveButtonLabel: Config.string().value(Liferay.Language.get('save-form'))
@@ -192,7 +193,6 @@ class Form extends Component {
 	attached() {
 		dom.on('#addFieldButton', 'click', this._handleAddFieldButtonClicked.bind(this));
 		dom.on('.forms-management-bar li', 'click', this._handleFormNavClicked.bind(this));
-
 	}
 
 	_handleFormNavClicked(event) {
@@ -201,14 +201,14 @@ class Form extends Component {
 		const addButton = document.querySelector('#addFieldButton');
 		const formBuilderButtons = document.querySelector('.ddm-form-builder-buttons');
 		const publishIcon = document.querySelector('.publish-icon');
- 		if (navItemIndex !== this.state.activeFormMode) {
+		if (navItemIndex !== this.state.activeFormMode) {
 			this.setState(
 				{
 					activeFormMode: parseInt(navItemIndex, 10)
 				}
 			);
- 			document.querySelector('.forms-management-bar li>a.active').classList.remove('active');
- 			if (parseInt(this.state.activeFormMode, 10)) {
+			document.querySelector('.forms-management-bar li>a.active').classList.remove('active');
+			if (parseInt(this.state.activeFormMode, 10)) {
 				formBuilderButtons.classList.add('hide');
 				publishIcon.classList.add('hide');
 			}
@@ -217,7 +217,7 @@ class Form extends Component {
 				addButton.classList.remove('hide');
 				publishIcon.classList.remove('hide');
 			}
- 			target.classList.add('active');
+			target.classList.add('active');
 		}
 	}
 
@@ -266,7 +266,8 @@ class Form extends Component {
 	render() {
 		const {
 			context,
-			namespace
+			namespace,
+			spritemap
 		} = this.props;
 
 		const {
@@ -283,8 +284,8 @@ class Form extends Component {
 		};
 
 		let mode = <Builder events={events} namespace={this.props.namespace} ref="builder" />;
- 		if (parseInt(this.state.activeFormMode, 10)) {
-			mode = <RuleBuilder context={this.props.context} rules={this.props.rules} />;
+		if (parseInt(this.state.activeFormMode, 10)) {
+			mode = <RuleBuilder pages={context.pages} rules={this.props.rules} spritemap={spritemap} />;
 		}
 
 		return (

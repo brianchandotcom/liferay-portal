@@ -12,7 +12,7 @@ import RuleEditor from '../../components/RuleEditor/index.es';
 
 class RuleBuilder extends Component {
 	static PROPS = {
-		context: Config.array().required(),
+		pages: Config.array().required(),
 
 		rules: Config.arrayOf(
 			Config.shapeOf(
@@ -46,7 +46,17 @@ class RuleBuilder extends Component {
 					logicalOperator: Config.string()
 				}
 			)
-		)
+		),
+
+		/**
+		 * The path to the SVG spritemap file containing the icons.
+		 * @default undefined
+		 * @instance
+		 * @memberof Form
+		 * @type {!string}
+		 */
+
+		spritemap: Config.string().required()
 	}
 
 	static STATE = {
@@ -55,7 +65,7 @@ class RuleBuilder extends Component {
 		 * @default
 		 * @instance
 		 * @memberof RuleBuilder
-		 * 
+		 *
 		 */
 
 		mode: Config.oneOf(['view', 'edit']).value('view')
@@ -66,6 +76,7 @@ class RuleBuilder extends Component {
 	 * @param {!Event} event
 	 * @private
 	 */
+
 	created() {
 		this._eventHandler = new EventHandler();
 	}
@@ -75,6 +86,7 @@ class RuleBuilder extends Component {
 	 * @param {!Event} event
 	 * @private
 	 */
+
 	_showRuleEdition() {
 		this.setState(
 			{
@@ -98,6 +110,7 @@ class RuleBuilder extends Component {
 	 * @param {!Event} event
 	 * @private
 	 */
+
 	_handleAddRuleClick(event) {
 		this._showRuleEdition();
 
@@ -109,6 +122,7 @@ class RuleBuilder extends Component {
 	 * @param {!Event} event
 	 * @private
 	 */
+
 	_hideAddRuleButton(element) {
 		dom.addClasses(element, 'hide');
 	}
@@ -118,6 +132,7 @@ class RuleBuilder extends Component {
 	 * @param {!Event} event
 	 * @private
 	 */
+
 	attached() {
 		this._eventHandler.add(
 			dom.on('#addFieldButton', 'click', this._handleAddRuleClick.bind(this)),
@@ -130,6 +145,7 @@ class RuleBuilder extends Component {
 	 * @param {!Event} event
 	 * @private
 	 */
+
 	dispose() {
 		this._eventHandler.removeAllListeners();
 	}
@@ -139,14 +155,17 @@ class RuleBuilder extends Component {
 	 * @param {!Event} event
 	 * @private
 	 */
+
 	render() {
+		const {spritemap} = this.props;
+
 		let ruleScreen;
 
 		if (this.state.mode === 'edit') {
 			ruleScreen = <RuleEditor />;
 		}
 		else {
-			ruleScreen = <RuleList formContext={this.props.context} rules={this.props.rules} />;
+			ruleScreen = <RuleList pages={this.props.pages} rules={this.props.rules} spritemap={spritemap} />;
 		}
 
 		return (

@@ -14,8 +14,7 @@ import templates from './RuleList.soy.js';
 class RuleList extends Component {
 
 	static STATE = {
-
-		formContext: Config.array().required(),
+		pages: Config.array().required(),
 
 		/**
 		 * @default 0
@@ -74,6 +73,7 @@ class RuleList extends Component {
 		 * @memberof RuleList
 		 * @type {!string}
 		 */
+
 		strings: Config.object().value(
 			{
 				and: 'and',
@@ -107,20 +107,20 @@ class RuleList extends Component {
 	}
 
 	_getFieldLabel(fieldName) {
-		const formContext = this.formContext;
+		const pages = this.pages;
 
 		let fieldLabel;
 
-		if (formContext) {
-			for (let page = 0; page < formContext.length; page++) {
-				const rows = formContext[page].rows;
+		if (pages) {
+			for (let page = 0; page < pages.length; page++) {
+				const rows = pages[page].rows;
 				for (let row = 0; row < rows.length; row++) {
 					const cols = rows[row].columns;
 					for (let col = 0; col < cols.length; col++) {
 						const fields = cols[col].fields;
 						for (let field = 0; field < fields.length; field++) {
-							if (formContext[page].rows[row].columns[col].fields[field].fieldName === fieldName) {
-								fieldLabel = formContext[page].rows[row].columns[col].fields[field].label;
+							if (pages[page].rows[row].columns[col].fields[field].fieldName === fieldName) {
+								fieldLabel = pages[page].rows[row].columns[col].fields[field].label;
 								break;
 							}
 						}
@@ -152,18 +152,44 @@ class RuleList extends Component {
 		for (let rule = 0; rule < newRules.length; rule++) {
 			let actions = newRules[rule].actions;
 
-			let logicalOperator;
-
 			actions = this._formatActions(actions);
 
 			newRules[rule].actions = actions;
 
-			logicalOperator = newRules[rule]['logical-operator'].toLowerCase();
+			const logicalOperator = newRules[rule]['logical-operator'].toLowerCase();
 
 			newRules[rule].logicalOperator = logicalOperator;
 		}
 
 		return newRules;
+	}
+
+	prepareStateForRender(states) {
+		return {
+			...states,
+			rules: states.rules.map(
+				rule => {
+					return {
+						...rule,
+						conditions: rule.conditions.map(
+							condition => {
+								return {
+									...condition,
+									operands: condition.operands.map(
+										operand => {
+											return {
+												...operand,
+												value: operand.type === 'field' ? this._getFieldLabel(operand.value) : operand.value
+											};
+										}
+									)
+								};
+							}
+						)
+					};
+				}
+			)
+		};
 	}
 
 	created() {

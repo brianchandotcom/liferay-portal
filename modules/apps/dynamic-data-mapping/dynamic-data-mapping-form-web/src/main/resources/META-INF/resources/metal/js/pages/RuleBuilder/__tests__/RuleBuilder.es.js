@@ -1,10 +1,12 @@
 import RuleBuilder from '../RuleBuilder.es';
 import {dom as MetalTestUtil} from 'metal-dom';
 
+const spritemap = 'icons.svg';
 let component;
 
 const configView = {
-	context: [
+	mode: 'view',
+	pages: [
 		{
 			rows: [
 				{
@@ -14,6 +16,10 @@ const configView = {
 								{
 									fieldName: 'text1',
 									label: 'label text 1'
+								},
+								{
+									fieldName: 'text2',
+									label: 'label text 2'
 								}
 							]
 						}
@@ -27,55 +33,7 @@ const configView = {
 			actions: [
 				{
 					action: 'require',
-					target: 'text1',
-					expression: '[x+2]'
-				}
-			],
-			conditions: [
-				{
-					operands: [
-						{
-							type: 'field',
-							value: 'value 1'
-						},
-						{
-							type: 'field',
-							value: 'value 2'
-						}
-					],
-					operator: 'equals-to'
-				}
-			],
-			['logical-operator']: 'OR',
-		}
-	],
-	mode: 'view'
-};
-
-const configEdit = {
-	formContext: [
-		{
-			rows: [
-				{
-					columns: [
-						{
-							fields: [
-								{
-									fieldName: 'text1',
-									label: 'label text 1'
-								}
-							]
-						}
-					]
-				}
-			]
-		}
-	],
-	rules: [
-		{
-			actions: [
-				{
-					action: 'require',
+					expression: '[x+2]',
 					target: 'text1'
 				}
 			],
@@ -84,20 +42,20 @@ const configEdit = {
 					operands: [
 						{
 							type: 'field',
-							value: 'value 1'
+							value: 'text1'
 						},
 						{
 							type: 'field',
-							value: 'value 2'
+							value: 'text2'
 						}
 					],
 					operator: 'equals-to'
 				}
 			],
-			['logical-operator']: 'OR',
-			expression: '[x+2]'
+			['logical-operator']: 'OR'
 		}
-	]
+	],
+	spritemap
 };
 
 describe(
@@ -115,7 +73,8 @@ describe(
 				}
 			}
 		);
-		it('should render the list of rules when mode is set to view',
+		it(
+			'should render the list of rules when mode is set to view',
 			() => {
 				component = new RuleBuilder(configView);
 				component.setState({mode: 'view'});
@@ -123,7 +82,8 @@ describe(
 			}
 		);
 
-		it('should render rule screen editor when click edit button',
+		it(
+			'should render rule screen editor when click edit button',
 			() => {
 				MetalTestUtil.enterDocument('<button id="addFieldButton" class="hide"></button>');
 
@@ -139,7 +99,8 @@ describe(
 			}
 		);
 
-		it('should render rule screen editor when click add rule button',
+		it(
+			'should render rule screen editor when click add rule button',
 			() => {
 				MetalTestUtil.enterDocument('<button id="addFieldButton" class="hide"></button>');
 

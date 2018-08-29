@@ -2,13 +2,13 @@
 
 exports[`RuleBuilder should render rule screen editor when click add rule button 1`] = `
 <div class="container">
-  <div></div>
+  <div class="container"></div>
 </div>
 `;
 
 exports[`RuleBuilder should render rule screen editor when click edit button 1`] = `
 <div class="container">
-  <div></div>
+  <div class="container"></div>
 </div>
 `;
 
@@ -24,18 +24,18 @@ exports[`RuleBuilder should render the list of rules when mode is set to view 1`
               <p class="form-builder-rule-builder-rule-description text-default">
                 <b>if </b>
                 <span>field </span>
-                <span class="label label-lg label-secondary" data-original-title="value 1" title="value 1">
+                <span class="label label-lg label-secondary" data-original-title="label text 1" title="label text 1">
                   <span class="text-truncate-inline">
-                    <span class="text-truncate">value 1</span>
+                    <span class="text-truncate">label text 1</span>
                   </span>
                 </span>
                 <b class="text-lowercase">
                   <em> is-equal-to </em>
                 </b>
                 <span>field </span>
-                <span class="label label-lg label-secondary" data-original-title="value 2" title="value 2">
+                <span class="label label-lg label-secondary" data-original-title="label text 2" title="label text 2">
                   <span class="text-truncate-inline">
-                    <span class="text-truncate">value 2</span>
+                    <span class="text-truncate">label text 2</span>
                   </span>
                 </span>
                 <br>

@@ -15,6 +15,7 @@
 package com.liferay.asset.list.service.impl;
 
 import com.liferay.asset.list.exception.AssetListEntryTitleException;
+import com.liferay.asset.list.exception.DuplicateAssetListEntryTitleException;
 import com.liferay.asset.list.exception.NoSuchEntryException;
 import com.liferay.asset.list.model.AssetListEntry;
 import com.liferay.asset.list.service.base.AssetListEntryLocalServiceBaseImpl;
@@ -26,6 +27,7 @@ import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Date;
+import java.util.Objects;
 
 /**
  * @author Jürgen Kappler
@@ -39,7 +41,7 @@ public class AssetListEntryLocalServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		_validate(title);
+		_validateTitle(groupId, title);
 
 		User user = userLocalService.getUser(userId);
 
@@ -91,10 +93,14 @@ public class AssetListEntryLocalServiceImpl
 			long assetListEntryId, String title)
 		throws PortalException {
 
-		_validate(title);
-
 		AssetListEntry assetListEntry =
 			assetListEntryPersistence.findByPrimaryKey(assetListEntryId);
+
+		if (Objects.equals(assetListEntry.getTitle(), title)) {
+			return assetListEntry;
+		}
+
+		_validateTitle(assetListEntry.getGroupId(), title);
 
 		assetListEntry.setModifiedDate(new Date());
 		assetListEntry.setTitle(title);
@@ -102,9 +108,18 @@ public class AssetListEntryLocalServiceImpl
 		return assetListEntryPersistence.update(assetListEntry);
 	}
 
-	private void _validate(String title) throws PortalException {
+	private void _validateTitle(long groupId, String title)
+		throws PortalException {
+
 		if (Validator.isNull(title)) {
-			throw new AssetListEntryTitleException();
+			throw new AssetListEntryTitleException("Title must not be null");
+		}
+
+		AssetListEntry assetListEntry = assetListEntryPersistence.fetchByG_T(
+			groupId, title);
+
+		if (assetListEntry != null) {
+			throw new DuplicateAssetListEntryTitleException();
 		}
 	}
 

@@ -46,5 +46,6 @@
 	</entity>
 	<exceptions>
 		<exception>AssetListEntryTitle</exception>
+		<exception>DuplicateAssetListEntryTitle</exception>
 	</exceptions>
 </service-builder>

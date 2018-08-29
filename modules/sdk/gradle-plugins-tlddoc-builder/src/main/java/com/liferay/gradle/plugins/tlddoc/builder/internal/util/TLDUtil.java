@@ -49,10 +49,6 @@ public class TLDUtil {
 
 		Document document = _getDocument(tldFile);
 
-		if (document == null) {
-			return;
-		}
-
 		_scanDTD(document, dtdConsumer);
 		_scanXSD(document, xsdConsumer);
 	}
@@ -95,10 +91,6 @@ public class TLDUtil {
 
 		while ((definitionFile = definitionFiles.poll()) != null) {
 			Document document = _getDocument(definitionFile);
-
-			if (document == null) {
-				continue;
-			}
 
 			NodeList importNodeList = document.getElementsByTagName(
 				"xsd:import");

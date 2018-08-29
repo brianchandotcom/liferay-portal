@@ -186,16 +186,5 @@ describe(
 				expect(component).toMatchSnapshot();
 			}
 		);
-
-		it(
-			'should open sidebar when addField button is gets clicked',
-			() => {
-				MetalTestUtil.triggerEvent(addButton, 'click', {});
-
-				const sidebar = document.querySelector('.sidebar-container.show');
-
-				expect(sidebar).not.toBe(null);
-			}
-		);
 	}
 );

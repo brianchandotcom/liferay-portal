@@ -20,6 +20,7 @@ import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderParameterSe
 import com.liferay.dynamic.data.mapping.io.DDMFormValuesDeserializer;
 import com.liferay.dynamic.data.mapping.io.DDMFormValuesDeserializerDeserializeRequest;
 import com.liferay.dynamic.data.mapping.io.DDMFormValuesDeserializerDeserializeResponse;
+import com.liferay.dynamic.data.mapping.io.DDMFormValuesDeserializerTracker;
 import com.liferay.dynamic.data.mapping.io.internal.DDMFormValuesJSONDeserializer;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.util.DDMFormFactory;
@@ -44,6 +45,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import org.mockito.Matchers;
+import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
 
@@ -170,6 +173,13 @@ public class DDMDataProviderInstanceParameterSettingsServletTest {
 		_ddmDataProviderInstanceParameterSettingsServlet =
 			new DDMDataProviderInstanceParameterSettingsServlet();
 
+		Mockito.when(
+			_ddmFormValuesDeserializerTracker.getDDMFormValuesDeserializer(
+				Mockito.anyString())
+		).thenReturn(
+			_ddmFormValuesJSONDeserializer
+		);
+
 		PowerMockito.field(
 			_ddmDataProviderInstanceParameterSettingsServlet.getClass(),
 			"_jsonFactory"
@@ -179,10 +189,10 @@ public class DDMDataProviderInstanceParameterSettingsServletTest {
 
 		PowerMockito.field(
 			_ddmDataProviderInstanceParameterSettingsServlet.getClass(),
-			"_ddmFormValuesJSONDeserializer"
+			"_ddmFormValuesDeserializerTracker"
 		).set(
 			_ddmDataProviderInstanceParameterSettingsServlet,
-			_ddmFormValuesJSONDeserializer
+			_ddmFormValuesDeserializerTracker
 		);
 	}
 
@@ -219,6 +229,10 @@ public class DDMDataProviderInstanceParameterSettingsServletTest {
 	private DDMDataProvider _ddmDataProvider;
 	private DDMDataProviderInstanceParameterSettingsServlet
 		_ddmDataProviderInstanceParameterSettingsServlet;
+
+	@Mock
+	private DDMFormValuesDeserializerTracker _ddmFormValuesDeserializerTracker;
+
 	private final DDMFormValuesDeserializer _ddmFormValuesJSONDeserializer =
 		new DDMFormValuesJSONDeserializer();
 	private final JSONFactory _jsonFactory = new JSONFactoryImpl();

@@ -210,7 +210,7 @@ public class TensorflowProcessHolder {
 					_relanuchCounter = 0;
 				}
 
-				if (_relanuchCounter > maxRelaunch) {
+				if (_relanuchCounter >= maxRelaunch) {
 					throw new SystemException(
 						StringBundler.concat(
 							"The tensorflow process has crashed more than ",

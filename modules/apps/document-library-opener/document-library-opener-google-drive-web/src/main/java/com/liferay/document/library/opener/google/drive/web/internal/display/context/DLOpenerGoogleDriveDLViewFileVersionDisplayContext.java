@@ -18,9 +18,12 @@ import com.liferay.document.library.constants.DLPortletKeys;
 import com.liferay.document.library.display.context.BaseDLViewFileVersionDisplayContext;
 import com.liferay.document.library.display.context.DLUIItemKeys;
 import com.liferay.document.library.display.context.DLViewFileVersionDisplayContext;
+import com.liferay.document.library.opener.constants.DLOpenerFileEntryReferenceConstants;
 import com.liferay.document.library.opener.google.drive.DLOpenerGoogleDriveManager;
 import com.liferay.document.library.opener.google.drive.constants.DLOpenerGoogleDriveMimeTypes;
 import com.liferay.document.library.opener.google.drive.web.internal.constants.DLOpenerGoogleDriveWebConstants;
+import com.liferay.document.library.opener.model.DLOpenerFileEntryReference;
+import com.liferay.document.library.opener.service.DLOpenerFileEntryReferenceLocalService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -60,12 +63,16 @@ public class DLOpenerGoogleDriveDLViewFileVersionDisplayContext
 		DLViewFileVersionDisplayContext parentDLDisplayContext,
 		HttpServletRequest request, HttpServletResponse response,
 		FileVersion fileVersion, ResourceBundle resourceBundle,
-		DLOpenerGoogleDriveManager dlOpenerGoogleDriveManager) {
+		DLOpenerGoogleDriveManager dlOpenerGoogleDriveManager,
+		DLOpenerFileEntryReferenceLocalService
+			dlOpenerFileEntryReferenceLocalService) {
 
 		super(_UUID, parentDLDisplayContext, request, response, fileVersion);
 
 		_resourceBundle = resourceBundle;
 		_dlOpenerGoogleDriveManager = dlOpenerGoogleDriveManager;
+		_dlOpenerFileEntryReferenceLocalService =
+			dlOpenerFileEntryReferenceLocalService;
 	}
 
 	@Override
@@ -160,8 +167,23 @@ public class DLOpenerGoogleDriveDLViewFileVersionDisplayContext
 		return false;
 	}
 
+	private boolean _isCheckingInNewFile() throws PortalException {
+		DLOpenerFileEntryReference dlOpenerFileEntryReference =
+			_dlOpenerFileEntryReferenceLocalService.
+				getDLOpenerFileEntryReference(fileVersion.getFileEntry());
+
+		if (dlOpenerFileEntryReference.getType() ==
+				DLOpenerFileEntryReferenceConstants.TYPE_NEW) {
+
+			return true;
+		}
+
+		return false;
+	}
+
 	private void _updateCancelCheckoutAndCheckinMenuItems(
-		Collection<MenuItem> menuItems) {
+			Collection<MenuItem> menuItems)
+		throws PortalException {
 
 		for (MenuItem menuItem : menuItems) {
 			if (DLUIItemKeys.CHECKIN.equals(menuItem.getKey())) {
@@ -169,13 +191,24 @@ public class DLOpenerGoogleDriveDLViewFileVersionDisplayContext
 					JavaScriptUIItem javaScriptUIItem =
 						(JavaScriptUIItem)menuItem;
 
-					javaScriptUIItem.setOnClick(
-						StringBundler.concat(
-							_getNamespace(), "showVersionDetailsDialog('",
-							_getActionURL(
-								DLOpenerGoogleDriveWebConstants.
-									GOOGLE_DRIVE_CHECKIN),
-							"');"));
+					if (_isCheckingInNewFile()) {
+						javaScriptUIItem.setOnClick(
+							StringBundler.concat(
+								"window.location.href = '",
+								_getActionURL(
+									DLOpenerGoogleDriveWebConstants.
+										GOOGLE_DRIVE_CHECKIN),
+								"'"));
+					}
+					else {
+						javaScriptUIItem.setOnClick(
+							StringBundler.concat(
+								_getNamespace(), "showVersionDetailsDialog('",
+								_getActionURL(
+									DLOpenerGoogleDriveWebConstants.
+										GOOGLE_DRIVE_CHECKIN),
+								"');"));
+					}
 				}
 			}
 			else if (DLUIItemKeys.CANCEL_CHECKOUT.equals(menuItem.getKey())) {
@@ -195,6 +228,8 @@ public class DLOpenerGoogleDriveDLViewFileVersionDisplayContext
 	private static final UUID _UUID = UUID.fromString(
 		"c3a385d0-7551-11e8-9798-186590d14d8f");
 
+	private final DLOpenerFileEntryReferenceLocalService
+		_dlOpenerFileEntryReferenceLocalService;
 	private final DLOpenerGoogleDriveManager _dlOpenerGoogleDriveManager;
 	private final ResourceBundle _resourceBundle;
 

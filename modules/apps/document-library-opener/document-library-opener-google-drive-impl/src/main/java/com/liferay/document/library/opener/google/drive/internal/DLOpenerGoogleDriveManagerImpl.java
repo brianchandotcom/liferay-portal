@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.io.File;
@@ -41,6 +42,7 @@ import java.io.InputStream;
 
 import java.security.GeneralSecurityException;
 
+import java.util.Map;
 import java.util.function.Supplier;
 
 import org.osgi.service.component.annotations.Activate;
@@ -63,9 +65,12 @@ public class DLOpenerGoogleDriveManagerImpl
 			com.google.api.services.drive.model.File file =
 				new com.google.api.services.drive.model.File();
 
-			file.setMimeType(
-				DLOpenerGoogleDriveMimeTypes.
-					APPLICATION_VND_GOOGLE_APPS_DOCUMENT);
+			String googleDocsMimeType =
+				DLOpenerGoogleDriveMimeTypes.getGoogleDocsMimeType(
+					fileEntry.getMimeType());
+
+			file.setMimeType(googleDocsMimeType);
+
 			file.setName(fileEntry.getTitle());
 
 			FileContent fileContent = new FileContent(
@@ -90,6 +95,7 @@ public class DLOpenerGoogleDriveManagerImpl
 
 			return new DLOpenerGoogleDriveFileReference(
 				uploadedFile.getId(), fileEntry.getFileEntryId(),
+				_getGoogleDocsEditURL(uploadedFile.getId(), googleDocsMimeType),
 				new CachingSupplier<>(
 					() -> _getGoogleDriveFileTitle(userId, fileEntry)),
 				() -> _getContentFile(userId, fileEntry));
@@ -108,9 +114,12 @@ public class DLOpenerGoogleDriveManagerImpl
 			com.google.api.services.drive.model.File file =
 				new com.google.api.services.drive.model.File();
 
-			file.setMimeType(
-				DLOpenerGoogleDriveMimeTypes.
-					APPLICATION_VND_GOOGLE_APPS_DOCUMENT);
+			String googleDocsMimeType =
+				DLOpenerGoogleDriveMimeTypes.getGoogleDocsMimeType(
+					fileEntry.getMimeType());
+
+			file.setMimeType(googleDocsMimeType);
+
 			file.setName(fileEntry.getTitle());
 
 			Drive drive = new Drive.Builder(
@@ -131,6 +140,7 @@ public class DLOpenerGoogleDriveManagerImpl
 
 			return new DLOpenerGoogleDriveFileReference(
 				uploadedFile.getId(), fileEntry.getFileEntryId(),
+				_getGoogleDocsEditURL(uploadedFile.getId(), googleDocsMimeType),
 				new CachingSupplier<>(
 					() -> _getGoogleDriveFileTitle(userId, fileEntry)),
 				() -> _getContentFile(userId, fileEntry));
@@ -226,6 +236,10 @@ public class DLOpenerGoogleDriveManagerImpl
 
 			return new DLOpenerGoogleDriveFileReference(
 				googleDriveFileId, fileEntry.getFileEntryId(),
+				_getGoogleDocsEditURL(
+					googleDriveFileId,
+					DLOpenerGoogleDriveMimeTypes.getGoogleDocsMimeType(
+						fileEntry.getMimeType())),
 				new CachingSupplier<>(
 					() -> _getGoogleDriveFileTitle(userId, fileEntry)),
 				() -> _getContentFile(userId, fileEntry));
@@ -292,6 +306,15 @@ public class DLOpenerGoogleDriveManagerImpl
 		}
 	}
 
+	private String _getGoogleDocsEditURL(
+		String googleDriveFileId, String mimeType) {
+
+		return StringBundler.concat(
+			"https://docs.google.com/",
+			_mimeTypePathFragmentMapping.get(mimeType), "/d/",
+			googleDriveFileId, "/edit");
+	}
+
 	private String _getGoogleDriveFileId(FileEntry fileEntry)
 		throws PortalException {
 
@@ -322,6 +345,17 @@ public class DLOpenerGoogleDriveManagerImpl
 			throw new RuntimeException(e);
 		}
 	}
+
+	private static final Map<String, String> _mimeTypePathFragmentMapping =
+		MapUtil.fromArray(
+			DLOpenerGoogleDriveMimeTypes.APPLICATION_VND_GOOGLE_APPS_DOCUMENT,
+			"document",
+			DLOpenerGoogleDriveMimeTypes.
+				APPLICATION_VND_GOOGLE_APPS_PRESENTATION,
+			"presentation",
+			DLOpenerGoogleDriveMimeTypes.
+				APPLICATION_VND_GOOGLE_APPS_SPREADSHEET,
+			"spreadsheets");
 
 	@Reference
 	private DLOpenerFileEntryReferenceLocalService

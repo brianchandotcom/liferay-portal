@@ -14,10 +14,11 @@
 
 package com.liferay.document.library.opener.google.drive.constants;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portal.kernel.util.MapUtil;
 
-import java.util.Arrays;
-import java.util.Collection;
+import java.util.Map;
 
 /**
  * @author Adolfo Pérez
@@ -31,12 +32,41 @@ public class DLOpenerGoogleDriveMimeTypes {
 	public static final String APPLICATION_VND_GOOGLE_APPS_DOCUMENT =
 		"application/vnd.google-apps.document";
 
-	public static boolean isMimeTypeSupported(String mimeType) {
-		return _mimeTypes.contains(mimeType);
+	public static final String APPLICATION_VND_GOOGLE_APPS_PRESENTATION =
+		"application/vnd.google-apps.presentation";
+
+	public static final String APPLICATION_VND_GOOGLE_APPS_SPREADSHEET =
+		"application/vnd.google-apps.spreadsheet";
+
+	public static final String APPLICATION_VND_PPTX =
+		"application/vnd.openxmlformats-officedocument.presentationml." +
+			"presentation";
+
+	public static final String APPLICATION_VND_XSLX =
+		"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+
+	public static String getGoogleDocsMimeType(String mimeType) {
+		if (!isMimeTypeSupported(mimeType)) {
+			throw new UnsupportedOperationException(
+				StringBundler.concat(
+					"Google Docs does not support edition of documents of ",
+					"type ", mimeType));
+		}
+
+		return _mimeTypeMapping.get(mimeType);
 	}
 
-	private static final Collection<String> _mimeTypes = Arrays.asList(
-		APPLICATION_VND_DOCX, ContentTypes.APPLICATION_TEXT, ContentTypes.TEXT,
-		ContentTypes.TEXT_PLAIN);
+	public static boolean isMimeTypeSupported(String mimeType) {
+		return _mimeTypeMapping.containsKey(mimeType);
+	}
+
+	private static final Map<String, String> _mimeTypeMapping =
+		MapUtil.fromArray(
+			APPLICATION_VND_DOCX, APPLICATION_VND_GOOGLE_APPS_DOCUMENT,
+			APPLICATION_VND_PPTX, APPLICATION_VND_GOOGLE_APPS_PRESENTATION,
+			ContentTypes.APPLICATION_TEXT, APPLICATION_VND_GOOGLE_APPS_DOCUMENT,
+			ContentTypes.TEXT, APPLICATION_VND_GOOGLE_APPS_DOCUMENT,
+			ContentTypes.TEXT_PLAIN, APPLICATION_VND_GOOGLE_APPS_DOCUMENT,
+			APPLICATION_VND_XSLX, APPLICATION_VND_GOOGLE_APPS_SPREADSHEET);
 
 }

@@ -18,6 +18,7 @@ import com.liferay.document.library.display.context.BaseDLDisplayContextFactory;
 import com.liferay.document.library.display.context.DLDisplayContextFactory;
 import com.liferay.document.library.display.context.DLViewFileVersionDisplayContext;
 import com.liferay.document.library.opener.google.drive.DLOpenerGoogleDriveManager;
+import com.liferay.document.library.opener.service.DLOpenerFileEntryReferenceLocalService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -80,8 +81,13 @@ public class DLOpenerGoogleDriveDLDisplayContextFactory
 			parentDLViewFileVersionDisplayContext, request, response,
 			fileVersion,
 			_resourceBundleLoader.loadResourceBundle(themeDisplay.getLocale()),
-			_dlOpenerGoogleDriveManager);
+			_dlOpenerGoogleDriveManager,
+			_dlOpenerFileEntryReferenceLocalService);
 	}
+
+	@Reference
+	private DLOpenerFileEntryReferenceLocalService
+		_dlOpenerFileEntryReferenceLocalService;
 
 	@Reference
 	private DLOpenerGoogleDriveManager _dlOpenerGoogleDriveManager;

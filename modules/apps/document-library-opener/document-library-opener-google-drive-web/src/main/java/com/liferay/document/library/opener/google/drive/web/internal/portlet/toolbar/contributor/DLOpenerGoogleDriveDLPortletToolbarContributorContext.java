@@ -60,17 +60,31 @@ public class DLOpenerGoogleDriveDLPortletToolbarContributorContext
 		List<MenuItem> menuItems, Folder folder, ThemeDisplay themeDisplay,
 		PortletRequest portletRequest, PortletResponse portletResponse) {
 
+		menuItems.add(
+			_createURLMenuItem(
+				portletRequest, folder, "google-docs-document",
+				DLOpenerGoogleDriveMimeTypes.APPLICATION_VND_DOCX));
+		menuItems.add(
+			_createURLMenuItem(
+				portletRequest, folder, "google-docs-presentation",
+				DLOpenerGoogleDriveMimeTypes.APPLICATION_VND_PPTX));
+		menuItems.add(
+			_createURLMenuItem(
+				portletRequest, folder, "google-docs-spreadsheet",
+				DLOpenerGoogleDriveMimeTypes.APPLICATION_VND_XSLX));
+	}
+
+	private URLMenuItem _createURLMenuItem(
+		PortletRequest portletRequest, Folder folder, String key,
+		String contentType) {
+
 		URLMenuItem urlMenuItem = new URLMenuItem();
 
-		urlMenuItem.setLabel(
-			_translateKey(portletRequest, "google-docs-document"));
+		urlMenuItem.setLabel(_translateKey(portletRequest, key));
 		urlMenuItem.setMethod(HttpMethods.POST);
-		urlMenuItem.setURL(
-			_getActionURL(
-				portletRequest, folder,
-				DLOpenerGoogleDriveMimeTypes.APPLICATION_VND_DOCX));
+		urlMenuItem.setURL(_getActionURL(portletRequest, folder, contentType));
 
-		menuItems.add(urlMenuItem);
+		return urlMenuItem;
 	}
 
 	private String _getActionURL(

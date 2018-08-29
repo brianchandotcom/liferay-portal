@@ -66,7 +66,8 @@ public interface AssetListEntryService extends BaseService {
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public AssetListEntry fetchAssetListEntry(long assetListEntryId);
+	public AssetListEntry fetchAssetListEntry(long assetListEntryId)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<AssetListEntry> getAssetListEntries(long groupId, int start,

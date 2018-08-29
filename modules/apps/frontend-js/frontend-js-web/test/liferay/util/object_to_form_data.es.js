@@ -3,74 +3,121 @@
 import objectToFormData from '../../../src/main/resources/META-INF/resources/liferay/util/object_to_form_data.es';
 
 describe(
-	'objectToFormData: should transform a object in FormData element',
+	'Liferay.Util.objectToFormData',
 	() => {
-		it(
-			'Object with string values',
+		describe(
+			'for plain objects',
 			() => {
+				it(
+					'should convert the object string entries into string FormData entries',
+					() => {
+						const body = {
+							value1: 'value1',
+							value2: 'value2'
+						};
 
-				const sampleBody = {
-					fieldA: 'valueA',
-					fieldB: 'valueB'
-				};
+						const formData = objectToFormData(body);
 
-				const resultFormData = objectToFormData(sampleBody);
+						expect(formData.get('value1')).toEqual('value1');
+						expect(formData.get('value2')).toEqual('value2');
+					}
+				);
 
-				expect(resultFormData.get('fieldA'))
-					.toBe(sampleBody.fieldA);
-				expect(resultFormData.get('fieldB'))
-					.toBe(sampleBody.fieldB);
+				it(
+					'should convert the object boolean entries into string FormData entries',
+					() => {
+						const body = {
+							value1: true,
+							value2: false
+						};
+
+						const formData = objectToFormData(body);
+
+						expect(formData.get('value1')).toEqual('true');
+						expect(formData.get('value2')).toEqual('false');
+					}
+				);
+
+				it(
+					'should convert the object number entries into string FormData entries',
+					() => {
+						const body = {
+							value1: 1,
+							value2: -1
+						};
+
+						const formData = objectToFormData(body);
+
+						expect(formData.get('value1')).toEqual('1');
+						expect(formData.get('value2')).toEqual('-1');
+					}
+				);
+
+				it(
+					'should convert the object File entries into File FormData entries',
+					() => {
+						const body = {
+							value1: new File([''], '')
+						};
+
+						const formData = objectToFormData(body);
+
+						expect(formData.get('value1')).toEqual(body.value1);
+					}
+				);
 			}
 		);
 
-		it(
-			'Object with complex values',
+		describe(
+			'for objects with array values',
 			() => {
+				it(
+					'should generate a grouped field matching the key of the array',
+					() => {
+						const body = {
+							array: [
+								'value1',
+								'value2'
+							]
+						};
 
-				const sampleFile = new File([''], '');
+						const formData = objectToFormData(body);
 
-				const sampleBody = {
-					obj: {
-						prop: 'property value'
-					},
-					arr: [
-						'one',
-						'two',
-						'three',
-					],
-					file: sampleFile,
-					arrFiles: [
-						sampleFile,
-						sampleFile,
-					]
-				};
+						const arrayField = formData.getAll('array');
 
-				const resultFormData = objectToFormData(sampleBody);
+						expect(arrayField).toEqual(body.array);
+					}
+				);
+			}
+		);
 
-				expect(resultFormData.getAll('arr'))
-					.toEqual(sampleBody.arr);
+		describe(
+			'for objects with object values',
+			() => {
+				it(
+					'should transform an object with complex values into a FormData element',
+					() => {
+						const body = {
+							objectValue: {
+								arrayValue: [
+									'arrayValue1',
+									'arrayValue2'
+								],
+								objectValue: {
+									stringValue: 'objectValue.stringValue'
+								},
+								stringValue: 'stringValue'
+							}
+						};
 
-				const iteratorFormData = resultFormData
-					.entries();
+						const formData = objectToFormData(body);
 
-				expect(iteratorFormData.next().value)
-					.toEqual(['obj[prop]', sampleBody.obj.prop]);
-
-				expect(iteratorFormData.next().value)
-					.toEqual(['arr', sampleBody.arr[0]]);
-				expect(iteratorFormData.next().value)
-					.toEqual(['arr', sampleBody.arr[1]]);
-				expect(iteratorFormData.next().value)
-					.toEqual(['arr', sampleBody.arr[2]]);
-
-				expect(iteratorFormData.next().value)
-					.toEqual(['file', sampleFile]);
-
-				expect(iteratorFormData.next().value)
-					.toEqual(['arrFiles', sampleFile]);
-				expect(iteratorFormData.next().value)
-					.toEqual(['arrFiles', sampleFile]);
+						expect(formData.getAll('objectValue[arrayValue]')).toEqual(body.objectValue.arrayValue);
+						expect(formData.get('objectValue[objectValue][stringValue]')).toEqual(body.objectValue.objectValue.stringValue);
+						expect(formData.get('objectValue[stringValue]')).toEqual(body.objectValue.stringValue);
+					}
+				);
 			}
 		);
 	}
-)
+);

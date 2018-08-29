@@ -1,34 +1,39 @@
-import { isObject as metalIsObject } from 'metal';
+import {isObject} from 'metal';
 
 /**
- * Returns a FormData containing serilized object.
- * @param {!Object} obj to serilize
- * @param {FormData=} formData to add the object (it is usually used in recursive)
- * @param {string=} namespace to add nested objects/arrays (it is usually used in recursive)
- * @return {FormData} FormData with the serilized obj
+ * Returns a FormData containing serialized object.
+ * @param {!Object} obj Object to convert to a FormData
+ * @param {FormData=} formData FormData object to recursively append the serialized data
+ * @param {string=} namespace Property namespace for nested objects or arrays
+ * @return {FormData} FormData with the serialized object
  * @review
  */
 
 export default function objectToFormData(obj = {}, formData = new FormData(), namespace) {
-	Object.entries(obj).forEach(([key, value]) => {
-		const formKey = namespace
-			? `${namespace}[${key}]`
-			: key;
+	Object.entries(obj).forEach(
+		([key, value]) => {
+			const formKey = namespace ? `${namespace}[${key}]` : key;
 
-		const isObject = metalIsObject(value);
-		const isArray = Array.isArray(value);
-		const isFile = value instanceof File;
-
-		if (isObject && !isArray && !isFile) {
-			objectToFormData(value, formData, key);
-		} else if (isArray) {
-			value.forEach(item => {
-				objectToFormData({ [formKey]: item }, formData);
-			});
-		} else {
-			formData.append(formKey, value);
+			if (Array.isArray(value)) {
+				value.forEach(
+					item => {
+						objectToFormData(
+							{
+								[formKey]: item
+							},
+							formData
+						);
+					}
+				);
+			}
+			else if (isObject(value) && !(value instanceof File)) {
+				objectToFormData(value, formData, formKey);
+			}
+			else {
+				formData.append(formKey, value);
+			}
 		}
-	});
+	);
 
 	return formData;
-};
+}

@@ -19,7 +19,9 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Queue;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.BiConsumer;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -51,94 +53,6 @@ public class TLDUtil {
 
 		_scanDTD(document, dtdConsumer);
 		_scanXSD(document, xsdConsumer);
-	}
-
-	private static void _deepScanXSD(
-			BiConsumer<String, File> xsdConsumer, File definitionFile)
-		throws Exception {
-
-		Queue<File> definitionFiles = new LinkedList<>();
-
-		definitionFiles.add(definitionFile);
-
-		while ((definitionFile = definitionFiles.poll()) != null) {
-			Document document = _getDocument(definitionFile);
-
-			NodeList importNodeList = document.getElementsByTagName(
-				"xsd:import");
-
-			for (int i = 0; i < importNodeList.getLength(); i++) {
-				Node importNode = importNodeList.item(i);
-
-				NamedNodeMap namedNodeMap = importNode.getAttributes();
-
-				Node namespaceNode = namedNodeMap.getNamedItem("namespace");
-
-				if (namespaceNode == null) {
-					continue;
-				}
-
-				Node schemLocationNode = namedNodeMap.getNamedItem(
-					"schemaLocation");
-
-				if (schemLocationNode == null) {
-					continue;
-				}
-
-				String namespace = namespaceNode.getNodeValue();
-				String schemaLocation = schemLocationNode.getNodeValue();
-
-				if ((namespace == null) || (schemaLocation == null)) {
-					continue;
-				}
-
-				String fileName = _getFileName(schemaLocation);
-
-				if (fileName == null) {
-					continue;
-				}
-
-				File curDefinitionFile = _portalDefinitions.get(fileName);
-
-				if (curDefinitionFile == null) {
-					continue;
-				}
-
-				xsdConsumer.accept(namespace, curDefinitionFile);
-
-				definitionFiles.add(curDefinitionFile);
-			}
-
-			NodeList includeNodeList = document.getElementsByTagName(
-				"xsd:include");
-
-			for (int i = 0; i < includeNodeList.getLength(); i++) {
-				Node taglibNode = includeNodeList.item(i);
-
-				NamedNodeMap namedNodeMap = taglibNode.getAttributes();
-
-				Node schemLocationNode = namedNodeMap.getNamedItem(
-					"schemaLocation");
-
-				if (schemLocationNode == null) {
-					continue;
-				}
-
-				String schemaLocation = schemLocationNode.getNodeValue();
-
-				if (schemaLocation == null) {
-					continue;
-				}
-
-				File curDefinitionFile = _portalDefinitions.get(schemaLocation);
-
-				if (curDefinitionFile == null) {
-					continue;
-				}
-
-				definitionFiles.add(curDefinitionFile);
-			}
-		}
 	}
 
 	private static Document _getDocument(File file) throws Exception {
@@ -201,6 +115,99 @@ public class TLDUtil {
 		dtdConsumer.accept(publicId, dtdFile);
 	}
 
+	private static Map<String, File> _scanNestedXSD(File xsdFile)
+		throws Exception {
+
+		Map<String, File> nestedXSDs = new HashMap<>();
+
+		Queue<File> xsdFiles = new LinkedList<>();
+
+		xsdFiles.add(xsdFile);
+
+		File currentXSDFile = null;
+
+		while ((currentXSDFile = xsdFiles.poll()) != null) {
+			Document document = _getDocument(currentXSDFile);
+
+			NodeList importNodeList = document.getElementsByTagName(
+				"xsd:import");
+
+			for (int i = 0; i < importNodeList.getLength(); i++) {
+				Node importNode = importNodeList.item(i);
+
+				NamedNodeMap namedNodeMap = importNode.getAttributes();
+
+				Node namespaceNode = namedNodeMap.getNamedItem("namespace");
+
+				if (namespaceNode == null) {
+					continue;
+				}
+
+				Node schemLocationNode = namedNodeMap.getNamedItem(
+					"schemaLocation");
+
+				if (schemLocationNode == null) {
+					continue;
+				}
+
+				String namespace = namespaceNode.getNodeValue();
+				String schemaLocation = schemLocationNode.getNodeValue();
+
+				if ((namespace == null) || (schemaLocation == null)) {
+					continue;
+				}
+
+				String fileName = _getFileName(schemaLocation);
+
+				if (fileName == null) {
+					continue;
+				}
+
+				File curDefinitionFile = _portalDefinitions.get(fileName);
+
+				if (curDefinitionFile == null) {
+					continue;
+				}
+
+				nestedXSDs.put(namespace, curDefinitionFile);
+
+				xsdFiles.add(curDefinitionFile);
+			}
+
+			NodeList includeNodeList = document.getElementsByTagName(
+				"xsd:include");
+
+			for (int i = 0; i < includeNodeList.getLength(); i++) {
+				Node taglibNode = includeNodeList.item(i);
+
+				NamedNodeMap namedNodeMap = taglibNode.getAttributes();
+
+				Node schemLocationNode = namedNodeMap.getNamedItem(
+					"schemaLocation");
+
+				if (schemLocationNode == null) {
+					continue;
+				}
+
+				String schemaLocation = schemLocationNode.getNodeValue();
+
+				if (schemaLocation == null) {
+					continue;
+				}
+
+				File curDefinitionFile = _portalDefinitions.get(schemaLocation);
+
+				if (curDefinitionFile == null) {
+					continue;
+				}
+
+				xsdFiles.add(curDefinitionFile);
+			}
+		}
+
+		return nestedXSDs;
+	}
+
 	private static void _scanXSD(
 			Document document, BiConsumer<String, File> xsdConsumer)
 		throws Exception {
@@ -242,12 +249,27 @@ public class TLDUtil {
 
 		xsdConsumer.accept(values[0], xsdFile);
 
-		_deepScanXSD(xsdConsumer, xsdFile);
+		Map<String, File> nestedXSDFiles = _nestedXSDCache.computeIfAbsent(
+			xsdFile,
+			keyXSDFile -> {
+				try {
+					return _scanNestedXSD(keyXSDFile);
+				}
+				catch (Exception e) {
+					throw new RuntimeException(e);
+				}
+			});
+
+		for (Entry<String, File> entry : nestedXSDFiles.entrySet()) {
+			xsdConsumer.accept(entry.getKey(), entry.getValue());
+		}
 	}
 
 	private static final String _LOAD_EXTERNAL_DTD =
 		"http://apache.org/xml/features/nonvalidating/load-external-dtd";
 
+	private static final Map<File, Map<String, File>> _nestedXSDCache =
+		new ConcurrentHashMap<>();
 	private static final Map<String, File> _portalDefinitions = new HashMap<>();
 
 	static {

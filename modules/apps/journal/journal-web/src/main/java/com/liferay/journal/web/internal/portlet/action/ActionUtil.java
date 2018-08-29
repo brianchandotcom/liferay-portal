@@ -14,6 +14,7 @@
 
 package com.liferay.journal.web.internal.portlet.action;
 
+import com.liferay.dynamic.data.mapping.exception.TemplateScriptException;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMStructureServiceUtil;
 import com.liferay.journal.exception.NoSuchArticleException;
@@ -39,9 +40,13 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.upload.UploadPortletRequest;
+import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -53,6 +58,8 @@ import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.Node;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.kernel.xml.XPath;
+
+import java.io.File;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -440,6 +447,18 @@ public class ActionUtil {
 		return article;
 	}
 
+	public static String getScript(UploadPortletRequest uploadPortletRequest)
+		throws Exception {
+
+		String fileScriptContent = _getFileScriptContent(uploadPortletRequest);
+
+		if (Validator.isNotNull(fileScriptContent)) {
+			return fileScriptContent;
+		}
+
+		return ParamUtil.getString(uploadPortletRequest, "scriptContent");
+	}
+
 	public static boolean hasArticle(ActionRequest actionRequest)
 		throws Exception {
 
@@ -534,6 +553,40 @@ public class ActionUtil {
 		renderRequest.setAttribute(WebKeys.LANGUAGE_ID, languageId);
 
 		return languageId;
+	}
+
+	private static String _getFileScriptContent(
+			UploadPortletRequest uploadPortletRequest)
+		throws Exception {
+
+		File file = uploadPortletRequest.getFile("script");
+
+		if (file == null) {
+			return null;
+		}
+
+		String fileScriptContent = FileUtil.read(file);
+
+		String contentType = MimeTypesUtil.getContentType(file);
+
+		if (Validator.isNotNull(fileScriptContent) &&
+			!_isValidContentType(contentType)) {
+
+			throw new TemplateScriptException(
+				"Invalid contentType " + contentType);
+		}
+
+		return fileScriptContent;
+	}
+
+	private static boolean _isValidContentType(String contentType) {
+		if (contentType.equals(ContentTypes.APPLICATION_XSLT_XML) ||
+			contentType.startsWith(ContentTypes.TEXT)) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 }

@@ -15,7 +15,6 @@
 package com.liferay.journal.web.internal.portlet.action;
 
 import com.liferay.dynamic.data.mapping.constants.DDMPortletKeys;
-import com.liferay.dynamic.data.mapping.exception.TemplateScriptException;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateService;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
@@ -23,14 +22,10 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
-import com.liferay.portal.kernel.util.ContentTypes;
-import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
-import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortletKeys;
-import com.liferay.portal.kernel.util.Validator;
 
 import java.io.File;
 
@@ -81,7 +76,7 @@ public class AddDDMTemplateMVCActionCommand extends DDMBaseMVCActionCommand {
 		String language = ParamUtil.getString(
 			uploadPortletRequest, "language", TemplateConstants.LANG_TYPE_VM);
 
-		String script = getScript(uploadPortletRequest);
+		String script = ActionUtil.getScript(uploadPortletRequest);
 
 		boolean cacheable = ParamUtil.getBoolean(
 			uploadPortletRequest, "cacheable");
@@ -112,52 +107,6 @@ public class AddDDMTemplateMVCActionCommand extends DDMBaseMVCActionCommand {
 		addSuccessMessage(actionRequest, actionResponse);
 
 		setRedirectAttribute(actionRequest, template);
-	}
-
-	protected String getFileScriptContent(
-			UploadPortletRequest uploadPortletRequest)
-		throws Exception {
-
-		File file = uploadPortletRequest.getFile("script");
-
-		if (file == null) {
-			return null;
-		}
-
-		String fileScriptContent = FileUtil.read(file);
-
-		String contentType = MimeTypesUtil.getContentType(file);
-
-		if (Validator.isNotNull(fileScriptContent) &&
-			!isValidContentType(contentType)) {
-
-			throw new TemplateScriptException(
-				"Invalid contentType " + contentType);
-		}
-
-		return fileScriptContent;
-	}
-
-	protected String getScript(UploadPortletRequest uploadPortletRequest)
-		throws Exception {
-
-		String fileScriptContent = getFileScriptContent(uploadPortletRequest);
-
-		if (Validator.isNotNull(fileScriptContent)) {
-			return fileScriptContent;
-		}
-
-		return ParamUtil.getString(uploadPortletRequest, "scriptContent");
-	}
-
-	protected boolean isValidContentType(String contentType) {
-		if (contentType.equals(ContentTypes.APPLICATION_XSLT_XML) ||
-			contentType.startsWith(ContentTypes.TEXT)) {
-
-			return true;
-		}
-
-		return false;
 	}
 
 	@Reference(unbind = "-")

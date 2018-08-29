@@ -134,30 +134,39 @@ class FormRenderer extends Component {
 		const {pages, activePage} = this;
 		const newPageIndex = pages.length;
 		const newPage = this.createNewPage();
-		
-		pages[activePage].enabled = false;
-		
-		this.pageSettingsItem = this._changeRemoveLabel();
-		this.activePage = newPageIndex;
 
-		this.emit('addPage', [
+		pages[activePage].enabled = false;
+
+		const newPages = [
 			...pages,
 			newPage
-		]);
+		];
+
+		this.pageSettingsItem = this._changeRemoveLabel(newPages);
+		this.activePage = newPageIndex;
+
+		this.emit('addPage', newPages);
 	}
 
 	/**
 	 * Update the page settings depending on the number of pages
 	 * @private
 	 */
-	_changeRemoveLabel() {
+
+	_changeRemoveLabel(pages) {
+		let label = Liferay.Language.get('delete-current-page');
+
+		if (pages.length == 1) {
+			label = Liferay.Language.get('reset-page');
+		}
+
 		return this.pageSettingsItem.map(item => {
-			if(item.settingsItem != 'reset-page') return item;
+			if (item.settingsItem != 'reset-page') {return item;}
 
 			return {
 				...item,
-				label: Liferay.Language.get('delete-current-page')
-			}
+				label
+			};
 		});
 	}
 
@@ -187,35 +196,37 @@ class FormRenderer extends Component {
 				...pages[0],
 				rows: []
 			}];
-		} else {
+		}
+ else {
 			newPages = pages
 				.filter((page, index) => index != activePage)
 				.map((page, index) => ({
 					...page,
 					enabled: index === activePage - 1
 				})
-			);
+				);
 
-			this.activePage =  activePage - 1;
+			this.activePage = activePage ? activePage - 1 : activePage;
+			this.pageSettingsItem = this._changeRemoveLabel(newPages);
 		}
 
-		this.emit('pagesUpdated', newPages)
+		this.emit('pagesUpdated', newPages);
 	}
 
 	_handleChangePage({delegateTarget: {dataset}}) {
 		const {pages} = this;
 		const {pageId} = dataset;
 		let mode;
-		
+
 		const openSidebar = !pages[pageId].rows.some(
 			({columns}) => columns.some(
 				({fields}) => fields.length
 			)
-		)
+		);
 
 		this.activePage = parseInt(pageId);
 
-		if(openSidebar) {
+		if (openSidebar) {
 			mode = 'add';
 		}
 

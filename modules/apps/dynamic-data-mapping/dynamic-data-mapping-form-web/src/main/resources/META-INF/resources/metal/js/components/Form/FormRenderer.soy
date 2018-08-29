@@ -30,6 +30,7 @@
 		{param pages: $pages /}
 		{param pageSettingsItem: $pageSettingsItem /}
 		{param spritemap: $spritemap /}
+		{param total: $total /}
 	{/delcall}
 {/template}
 
@@ -96,7 +97,7 @@
 	{let $classes kind="text"}
 		ddm-form-header
 		{if $multiple}
-			{sp}pt-2 pb-3 mb-4 multiple
+			{sp}pt-2 mb-4 multiple
 		{/if}
 	{/let}
 
@@ -114,7 +115,7 @@
 			{/delcall}
 		{/if}
 
-		<div class="dmm-page-settings" role="group">
+		<div class="ddm-page-settings" role="group">
 			{call ClayActionsDropdown.render}
 				{param items: $pageSettingsItem /}
 				{param triggerClasses: 'component-action' /}

@@ -19,7 +19,7 @@ import com.liferay.document.library.asset.auto.tagger.tensorflow.internal.config
 import com.liferay.document.library.asset.auto.tagger.tensorflow.internal.configuration.TensorFlowImageAssetAutoTagProviderProcessConfiguration;
 import com.liferay.document.library.asset.auto.tagger.tensorflow.internal.constants.TensorflowAssetAutoTagProviderConstants;
 import com.liferay.document.library.asset.auto.tagger.tensorflow.internal.petra.process.GetLabelProbabilitiesProcessCallable;
-import com.liferay.document.library.asset.auto.tagger.tensorflow.internal.util.TensorflowProcessUtil;
+import com.liferay.document.library.asset.auto.tagger.tensorflow.internal.util.TensorflowProcessHolder;
 import com.liferay.petra.process.ProcessExecutor;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -113,14 +113,15 @@ public class TensorFlowImageAssetAutoTagProvider
 
 		_labels = StringUtil.splitLines(StringUtil.read(url.openStream()));
 
-		TensorflowProcessUtil.activate(bundle);
-
 		modified(properties);
+
+		_tensorflowProcessHolder = new TensorflowProcessHolder(
+			_processExecutor, bundle);
 	}
 
 	@Deactivate
 	protected void deactivate() {
-		TensorflowProcessUtil.deactivate();
+		_tensorflowProcessHolder.destroy();
 	}
 
 	@Modified
@@ -159,10 +160,12 @@ public class TensorFlowImageAssetAutoTagProvider
 	private List<String> _label(
 		byte[] imageBytes, String mimeType, float confidenceThreshold) {
 
-		float[] labelProbabilities = TensorflowProcessUtil.run(
-			_processExecutor,
-			_tensorFlowImageAssetAutoTagProviderProcessConfiguration,
-			new GetLabelProbabilitiesProcessCallable(imageBytes, mimeType));
+		float[] labelProbabilities = _tensorflowProcessHolder.execute(
+			new GetLabelProbabilitiesProcessCallable(imageBytes, mimeType),
+			_tensorFlowImageAssetAutoTagProviderProcessConfiguration.
+				maximumNumberOfRelaunches(),
+			_tensorFlowImageAssetAutoTagProviderProcessConfiguration.
+				maximumNumberOfRelaunchesTimeout() * 1000);
 
 		Stream<Integer> stream = _getBestIndexesStream(
 			labelProbabilities, confidenceThreshold);
@@ -192,5 +195,6 @@ public class TensorFlowImageAssetAutoTagProvider
 
 	private volatile TensorFlowImageAssetAutoTagProviderProcessConfiguration
 		_tensorFlowImageAssetAutoTagProviderProcessConfiguration;
+	private TensorflowProcessHolder _tensorflowProcessHolder;
 
 }

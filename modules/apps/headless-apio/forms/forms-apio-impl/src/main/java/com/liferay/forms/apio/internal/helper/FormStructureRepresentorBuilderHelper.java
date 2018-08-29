@@ -30,7 +30,6 @@ import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.person.apio.architect.identifier.PersonIdentifier;
 import com.liferay.structure.apio.architect.model.FormLayoutPage;
 import com.liferay.structure.apio.architect.util.StructureRepresentorBuilderHelper;
-import com.liferay.structure.apio.architect.util.StructureRepresentorUtil;
 
 import java.util.List;
 import java.util.Map;
@@ -72,7 +71,7 @@ public class FormStructureRepresentorBuilderHelper {
 			"successPage", this::_getDDMFormSuccessPageSettings,
 			this::_buildDDMFormSuccessPageSettings
 		).addNestedList(
-			"fields", _structureRepresentorUtil::getFormLayoutPages,
+			"fields", _structureRepresentorBuilderHelper::getFormLayoutPages,
 			nestedBuilder -> _buildFormLayoutPage(nestedBuilder).build()
 		);
 
@@ -101,10 +100,14 @@ public class FormStructureRepresentorBuilderHelper {
 		return builder.types(
 			"FormFieldProperties"
 		).addNestedList(
-			"columns", _structureRepresentorUtil.getFieldOptions("columns"),
+			"columns",
+			_structureRepresentorBuilderHelper.getLocalizedValueEntriesFunction(
+				"columns"),
 			this::_buildFieldOptions
 		).addNestedList(
-			"rows", _structureRepresentorUtil.getFieldOptions("rows"),
+			"rows",
+			_structureRepresentorBuilderHelper.getLocalizedValueEntriesFunction(
+				"rows"),
 			this::_buildFieldOptions
 		).build();
 	}
@@ -206,8 +209,5 @@ public class FormStructureRepresentorBuilderHelper {
 	@Reference
 	private StructureRepresentorBuilderHelper
 		_structureRepresentorBuilderHelper;
-
-	@Reference
-	private StructureRepresentorUtil _structureRepresentorUtil;
 
 }

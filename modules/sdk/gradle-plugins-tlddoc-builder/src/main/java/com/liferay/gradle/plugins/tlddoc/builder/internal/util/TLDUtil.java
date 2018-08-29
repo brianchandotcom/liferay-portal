@@ -240,7 +240,7 @@ public class TLDUtil {
 			return;
 		}
 
-		xsdConsumer.accept(values[0].trim(), definitionFile);
+		xsdConsumer.accept(values[0], definitionFile);
 
 		_populateSchemaProperties(xsdConsumer, definitionFile);
 	}

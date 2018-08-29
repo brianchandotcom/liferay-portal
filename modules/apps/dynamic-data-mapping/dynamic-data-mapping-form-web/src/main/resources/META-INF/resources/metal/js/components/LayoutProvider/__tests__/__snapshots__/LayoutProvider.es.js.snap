@@ -97,7 +97,7 @@ Array [
           Object {
             "fields": Array [
               Object {
-                "label": "Radio",
+                "label": "copy-of-x",
                 "name": NaN,
                 "type": "radio",
               },

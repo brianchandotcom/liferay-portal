@@ -1,7 +1,8 @@
 import {Config} from 'metal-state';
 import {FormSupport} from '../Form/index.es';
-import Component from 'metal-jsx';
 import {pageStructure} from '../../util/config.es';
+import {sub} from '../../util/strings.es';
+import Component from 'metal-jsx';
 
 /**
  * LayoutProvider listens to your children's events to
@@ -195,6 +196,10 @@ class LayoutProvider extends Component {
 
 		const duplicatedField = {
 			...field,
+			label: sub(
+				Liferay.Language.get('copy-of-x'),
+				[field.label]
+			),
 			name: FormSupport.generateFieldName(field)
 		};
 

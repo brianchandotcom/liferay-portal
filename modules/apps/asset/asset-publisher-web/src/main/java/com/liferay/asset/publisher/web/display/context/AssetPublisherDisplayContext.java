@@ -260,13 +260,20 @@ public class AssetPublisherDisplayContext {
 			return _assetEntryQuery;
 		}
 
+		AssetListEntry assetListEntry = fetchAssetListEntry();
+
 		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		_assetEntryQuery = AssetPublisherUtil.getAssetEntryQuery(
-			_portletPreferences, themeDisplay.getScopeGroupId(),
-			themeDisplay.getLayout(), getAllAssetCategoryIds(),
-			getAllAssetTagNames());
+		if (isSelectionStyleAssetList() && (assetListEntry != null)) {
+			_assetEntryQuery = assetListEntry.getAssetEntryQuery();
+		}
+		else {
+			_assetEntryQuery = AssetPublisherUtil.getAssetEntryQuery(
+				_portletPreferences, themeDisplay.getScopeGroupId(),
+				themeDisplay.getLayout(), getAllAssetCategoryIds(),
+				getAllAssetTagNames());
+		}
 
 		_assetEntryQuery.setEnablePermissions(isEnablePermissions());
 

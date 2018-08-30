@@ -27,6 +27,7 @@
 		<column name="classPK" type="long" />
 		<column name="shareable" type="boolean" />
 		<column name="actionIds" type="long" />
+		<column name="expirationDate" type="Date" />
 
 		<!-- Finder methods -->
 
@@ -66,6 +67,7 @@
 	</entity>
 	<exceptions>
 		<exception>InvalidSharingEntryActionKey</exception>
+		<exception>InvalidSharingEntryExpirationDate</exception>
 		<exception>InvalidSharingEntryUser</exception>
 	</exceptions>
 </service-builder>

@@ -46,7 +46,7 @@ import com.liferay.journal.internal.upgrade.v1_1_1.UpgradeFileUploadsConfigurati
 import com.liferay.journal.internal.upgrade.v1_1_2.UpgradeCheckIntervalConfiguration;
 import com.liferay.journal.internal.upgrade.v1_1_3.UpgradeResourcePermissions;
 import com.liferay.journal.internal.upgrade.v1_1_4.UpgradeUrlTitle;
-import com.liferay.journal.internal.upgrade.v_1_1_5.UpgradeContentImages;
+import com.liferay.journal.internal.upgrade.v1_1_5.UpgradeContentImages;
 import com.liferay.portal.configuration.upgrade.PrefsPropsToConfigurationUpgradeHelper;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;

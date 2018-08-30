@@ -31,6 +31,7 @@ import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
 import com.liferay.asset.kernel.service.AssetEntryServiceUtil;
 import com.liferay.asset.kernel.service.AssetVocabularyServiceUtil;
 import com.liferay.asset.kernel.service.persistence.AssetEntryQuery;
+import com.liferay.asset.list.constants.AssetListEntryTypeConstants;
 import com.liferay.asset.list.item.selector.criterion.AssetListItemSelectorCriterion;
 import com.liferay.asset.list.model.AssetListEntry;
 import com.liferay.asset.list.service.AssetListEntryServiceUtil;
@@ -1319,8 +1320,17 @@ public class AssetPublisherDisplayContext {
 		return selectionStyle.equals("asset-list");
 	}
 
-	public boolean isSelectionStyleDynamic() {
+	public boolean isSelectionStyleDynamic() throws PortalException {
 		String selectionStyle = getSelectionStyle();
+
+		AssetListEntry assetListEntry = fetchAssetListEntry();
+
+		if (isSelectionStyleAssetList() && (assetListEntry != null) &&
+			(assetListEntry.getType() ==
+				AssetListEntryTypeConstants.TYPE_DYNAMIC)) {
+
+			return true;
+		}
 
 		return selectionStyle.equals("dynamic");
 	}
@@ -1329,8 +1339,17 @@ public class AssetPublisherDisplayContext {
 		return _assetPublisherCustomizer.isSelectionStyleEnabled(_request);
 	}
 
-	public boolean isSelectionStyleManual() {
+	public boolean isSelectionStyleManual() throws PortalException {
 		String selectionStyle = getSelectionStyle();
+
+		AssetListEntry assetListEntry = fetchAssetListEntry();
+
+		if (isSelectionStyleAssetList() && (assetListEntry != null) &&
+			(assetListEntry.getType() ==
+				AssetListEntryTypeConstants.TYPE_MANUAL)) {
+
+			return true;
+		}
 
 		return selectionStyle.equals("manual");
 	}

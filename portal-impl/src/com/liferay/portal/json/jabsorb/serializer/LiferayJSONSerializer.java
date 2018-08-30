@@ -43,9 +43,8 @@ public class LiferayJSONSerializer extends JSONSerializer {
 	@Override
 	public void registerSerializer(Serializer serializer) {
 		if (serializer != null) {
-			for (Class clazz : serializer.getSerializableClasses()) {
-				_liferayJSONDeserializationWhitelist.register(clazz.getName());
-			}
+			_liferayJSONDeserializationWhitelist.register(
+				serializer.getSerializableClasses());
 		}
 
 		super.registerSerializer(serializer);

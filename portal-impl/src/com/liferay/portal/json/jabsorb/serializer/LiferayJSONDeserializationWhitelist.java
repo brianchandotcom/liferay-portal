@@ -24,8 +24,9 @@ import com.liferay.registry.collections.ServiceTrackerMap;
 import com.liferay.registry.collections.ServiceTrackerMapFactory;
 import com.liferay.registry.collections.ServiceTrackerMapFactoryUtil;
 
-import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.Collections;
+import java.util.Set;
+import java.util.concurrent.CopyOnWriteArraySet;
 
 /**
  * @author Tomas Polesovsky
@@ -69,8 +70,8 @@ public class LiferayJSONDeserializationWhitelist {
 		return whitelisted;
 	}
 
-	public void register(String className) {
-		_registeredClassNames.add(className);
+	public void register(String... classeNames) {
+		Collections.addAll(_registeredClassNames, classeNames);
 	}
 
 	private static final String[] _JSON_DESERIALIZATION_WHITELIST_CLASS_NAMES =
@@ -81,7 +82,7 @@ public class LiferayJSONDeserializationWhitelist {
 		LiferayJSONDeserializationWhitelist.class);
 
 	private final ServiceTrackerMap<String, ?> _osgiAllowedClassNames;
-	private final List<String> _registeredClassNames =
-		new CopyOnWriteArrayList<>();
+	private final Set<String> _registeredClassNames =
+		new CopyOnWriteArraySet<>();
 
 }

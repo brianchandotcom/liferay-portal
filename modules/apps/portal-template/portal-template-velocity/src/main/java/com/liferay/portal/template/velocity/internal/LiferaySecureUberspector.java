@@ -94,7 +94,7 @@ public class LiferaySecureUberspector extends SecureUberspector {
 
 	private final Map<String, ClassRestrictionInformation>
 		_classRestrictionInformations = new ConcurrentHashMap<>();
-	private List<Class> _restrictedClasses;
+	private List<Class<?>> _restrictedClasses;
 	private List<String> _restrictedPackageNames;
 	private RuntimeServices _runtimeServices;
 
@@ -129,6 +129,7 @@ public class LiferaySecureUberspector extends SecureUberspector {
 		}
 
 		@Override
+		@SuppressWarnings("rawtypes")
 		public boolean checkObjectExecutePermission(
 			Class clazz, String methodName) {
 

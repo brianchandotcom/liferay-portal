@@ -100,7 +100,7 @@ public class LiferayObjectWrapper extends DefaultObjectWrapper {
 		String[] allowedClassNames = GetterUtil.getStringValues(
 			freeMarkerEngineConfiguration.allowedClasses());
 
-		_allowedClassNames = new ArrayList(allowedClassNames.length);
+		_allowedClassNames = new ArrayList<>(allowedClassNames.length);
 
 		for (String allowedClassName : allowedClassNames) {
 			allowedClassName = StringUtil.trim(allowedClassName);

@@ -159,7 +159,9 @@ public class LPKGBundleTrackerCustomizer
 
 		List<Bundle> bundles = new ArrayList<>();
 
-		try (ZipFile zipFile = new ZipFile(bundle.getLocation())) {
+		File file = new File(bundle.getLocation());
+
+		try (ZipFile zipFile = new ZipFile(file)) {
 			List<Bundle> installedBundles = new ArrayList<>();
 
 			Enumeration<? extends ZipEntry> zipEntries = zipFile.entries();
@@ -177,14 +179,14 @@ public class LPKGBundleTrackerCustomizer
 					LPKGInnerBundleLocationUtil.generateInnerBundleLocation(
 						bundle, name);
 
-				File file = new File(bundle.getLocation());
-
-				URI uri = file.toURI();
-
 				StringBundler sb = new StringBundler(4);
 
 				sb.append("jar:");
+
+				URI uri = file.toURI();
+
 				sb.append(URLCodec.decodeURL(uri.toString()));
+
 				sb.append("!/");
 				sb.append(name);
 

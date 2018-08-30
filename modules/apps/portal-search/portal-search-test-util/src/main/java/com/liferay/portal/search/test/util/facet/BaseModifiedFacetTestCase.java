@@ -92,18 +92,6 @@ public abstract class BaseModifiedFacetTestCase extends BaseFacetTestCase {
 			});
 	}
 
-	@Test
-	public void testSearchEngineDateMath() throws Exception {
-		addDocument("17760704000000");
-		addDocument("27760704000000");
-
-		String dateMathExpressionWithAlphabeticalOrderSwitched =
-			"[now-500y TO now]";
-
-		doTestSearchEngineDateMath(
-			dateMathExpressionWithAlphabeticalOrderSwitched, 1);
-	}
-
 	protected Facet createFacet(SearchContext searchContext) {
 		ModifiedFacetFactory modifiedFacetFactory =
 			new ModifiedFacetFactoryImpl() {

@@ -22,16 +22,21 @@ import com.liferay.portal.kernel.json.JSONSerializer;
 import com.liferay.portal.kernel.test.AssertUtils;
 import com.liferay.portal.kernel.test.CaptureHandler;
 import com.liferay.portal.kernel.test.JDKLoggerTestUtil;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.registry.collections.ServiceTrackerMap;
 import com.liferay.registry.collections.ServiceTrackerMapFactory;
 import com.liferay.registry.collections.ServiceTrackerMapFactoryUtil;
 
-import java.util.Arrays;
+import java.lang.reflect.Method;
+
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.LogRecord;
 
@@ -39,77 +44,60 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-
-import org.mockito.ArgumentMatcher;
-import org.mockito.Mockito;
-
-import org.powermock.api.mockito.PowerMockito;
-import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.modules.junit4.PowerMockRunner;
 
 /**
  * @author Igor Spasic
  */
-@PrepareForTest(
-	{
-		ServiceTrackerMap.class, ServiceTrackerMapFactory.class,
-		ServiceTrackerMapFactoryUtil.class
-	}
-)
-@RunWith(PowerMockRunner.class)
-public class JSONFactoryTest extends PowerMockito {
+public class JSONFactoryTest {
 
 	@BeforeClass
-	public static void setUpClass() {
-		ServiceTrackerMap<String, ?> serviceTrackerMap = mock(
-			ServiceTrackerMap.class);
+	public static void setUpClass() throws NoSuchMethodException {
+		Method openSingleValueMapMethod =
+			ServiceTrackerMapFactory.class.getMethod(
+				"openSingleValueMap", Class.class, String.class);
 
-		List<String> allowedClassNames = Arrays.asList(
-			FooBean.class.getName(), FooBean1.class.getName(),
-			FooBean2.class.getName(), FooBean3.class.getName(),
-			FooBean4.class.getName(), FooBean5.class.getName(),
-			FooBean6.class.getName());
+		ServiceTrackerMapFactoryUtil.setServiceTrackerMapFactory(
+			(ServiceTrackerMapFactory)ProxyUtil.newProxyInstance(
+				ServiceTrackerMapFactory.class.getClassLoader(),
+				new Class<?>[] {ServiceTrackerMapFactory.class},
+				(proxy, method, args) -> {
+					if (method.equals(openSingleValueMapMethod)) {
+						return new ServiceTrackerMap<String, Object>() {
 
-		when(
-			serviceTrackerMap.containsKey(
-				Mockito.argThat(
-					new ArgumentMatcher<String>() {
+							@Override
+							public void close() {
+							}
 
-						@Override
-						public boolean matches(Object o) {
-							return allowedClassNames.contains(o);
-						}
+							@Override
+							public boolean containsKey(String key) {
+								return false;
+							}
 
+							@Override
+							public Object getService(String key) {
+								return null;
+							}
+
+							@Override
+							public Set<String> keySet() {
+								return Collections.emptySet();
+							}
+
+						};
 					}
-				)
-			)
-		).thenReturn(
-			true
-		);
 
-		ServiceTrackerMapFactory serviceTrackerMapFactory = mock(
-			ServiceTrackerMapFactory.class);
+					throw new UnsupportedOperationException();
+				}));
 
-		when(
-			serviceTrackerMapFactory.openSingleValueMap(
-				(Class<?>)Mockito.any(Class.class), Mockito.anyString())
-		).thenReturn(
-			(ServiceTrackerMap)serviceTrackerMap
-		);
-
-		mockStatic(ServiceTrackerMapFactoryUtil.class);
-
-		when(
-			ServiceTrackerMapFactoryUtil.getServiceTrackerMapFactory()
-		).thenReturn(
-			serviceTrackerMapFactory
-		);
-
-		LiferayJSONDeserializationWhitelist lfrJSONDeserializationWhitelist =
-			new LiferayJSONDeserializationWhitelist();
-
-		lfrJSONDeserializationWhitelist.afterPropertiesSet();
+		ReflectionTestUtil.setFieldValue(
+			LiferayJSONDeserializationWhitelist.class,
+			"_JSON_DESERIALIZATION_WHITELIST_CLASS_NAMES",
+			new String[] {
+				FooBean.class.getName(), FooBean1.class.getName(),
+				FooBean2.class.getName(), FooBean3.class.getName(),
+				FooBean4.class.getName(), FooBean5.class.getName(),
+				FooBean6.class.getName()
+			});
 	}
 
 	@Before

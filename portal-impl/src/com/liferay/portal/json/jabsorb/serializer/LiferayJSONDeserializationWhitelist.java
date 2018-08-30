@@ -32,15 +32,12 @@ import java.util.concurrent.CopyOnWriteArrayList;
  */
 public class LiferayJSONDeserializationWhitelist {
 
-	public void afterPropertiesSet() {
+	public LiferayJSONDeserializationWhitelist() {
 		ServiceTrackerMapFactory serviceTrackerMapFactory =
 			ServiceTrackerMapFactoryUtil.getServiceTrackerMapFactory();
 
-		if (serviceTrackerMapFactory != null) {
-			_osgiAllowedClassNames =
-				serviceTrackerMapFactory.openSingleValueMap(
-					null, PropsKeys.JSON_DESERIALIZATION_WHITELIST_CLASS_NAMES);
-		}
+		_osgiAllowedClassNames = serviceTrackerMapFactory.openSingleValueMap(
+			null, PropsKeys.JSON_DESERIALIZATION_WHITELIST_CLASS_NAMES);
 	}
 
 	public boolean isWhitelisted(String className) {
@@ -49,9 +46,7 @@ public class LiferayJSONDeserializationWhitelist {
 		if (_registeredClassNames.contains(className)) {
 			whitelisted = true;
 		}
-		else if ((_osgiAllowedClassNames != null) &&
-				 _osgiAllowedClassNames.containsKey(className)) {
-
+		else if (_osgiAllowedClassNames.containsKey(className)) {
 			whitelisted = true;
 		}
 		else if (ArrayUtil.contains(
@@ -85,8 +80,7 @@ public class LiferayJSONDeserializationWhitelist {
 	private static final Log _log = LogFactoryUtil.getLog(
 		LiferayJSONDeserializationWhitelist.class);
 
-	private static ServiceTrackerMap<String, ?> _osgiAllowedClassNames;
-
+	private final ServiceTrackerMap<String, ?> _osgiAllowedClassNames;
 	private final List<String> _registeredClassNames =
 		new CopyOnWriteArrayList<>();
 

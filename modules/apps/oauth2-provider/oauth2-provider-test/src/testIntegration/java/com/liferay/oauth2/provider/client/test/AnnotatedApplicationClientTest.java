@@ -57,7 +57,7 @@ public class AnnotatedApplicationClientTest extends BaseClientTestCase {
 			webTarget.request(),
 			getToken(
 				"oauthTestApplicationAfter", null,
-				getResourceOwnerPassword("test@liferay.com", "test"),
+				getResourceOwnerPasswordBiFunction("test@liferay.com", "test"),
 				this::parseTokenString));
 
 		Assert.assertEquals(

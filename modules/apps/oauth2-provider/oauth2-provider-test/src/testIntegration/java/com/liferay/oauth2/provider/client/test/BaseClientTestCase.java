@@ -203,7 +203,7 @@ public abstract class BaseClientTestCase {
 	}
 
 	protected Function<WebTarget, Invocation.Builder>
-		getAuthenticatedInvocationBuilder(
+		getAuthenticatedInvocationBuilderFunction(
 			String login, String password, String hostname) {
 
 		Cookie authenticatedCookie = getAuthenticatedCookie(
@@ -224,19 +224,21 @@ public abstract class BaseClientTestCase {
 	}
 
 	protected BiFunction<String, Invocation.Builder, Response>
-		getAuthorizationCode(String user, String password, String hostname) {
+		getAuthorizationCodeBiFunction(
+			String user, String password, String hostname) {
 
-		return getAuthorizationCode(user, password, hostname, (String)null);
+		return getAuthorizationCodeBiFunction(
+			user, password, hostname, (String)null);
 	}
 
 	protected BiFunction<String, Invocation.Builder, Response>
-		getAuthorizationCode(
+		getAuthorizationCodeBiFunction(
 			String user, String password, String hostname, String scope) {
 
 		return (clientId, invocationBuilder) -> {
 			String authorizationCode = getCodeResponse(
 				user, password, hostname,
-				getCode(
+				getCodeFunction(
 					webTarget -> webTarget.queryParam(
 						"client_id", clientId
 					).queryParam(
@@ -247,16 +249,17 @@ public abstract class BaseClientTestCase {
 				this::parseAuthorizationCodeString);
 
 			BiFunction<String, Invocation.Builder, Response>
-				authorizationCodePKCEFunction = getExchangeAuthorizationCode(
-					authorizationCode, null);
+				authorizationCodePKCEBiFunction =
+					getExchangeAuthorizationCodeBiFunction(
+						authorizationCode, null);
 
-			return authorizationCodePKCEFunction.apply(
+			return authorizationCodePKCEBiFunction.apply(
 				clientId, invocationBuilder);
 		};
 	}
 
 	protected BiFunction<String, Invocation.Builder, Response>
-		getAuthorizationCodePKCE(
+		getAuthorizationCodePKCEBiFunction(
 			String userName, String password, String hostname) {
 
 		return (clientId, invocationBuilder) -> {
@@ -276,7 +279,7 @@ public abstract class BaseClientTestCase {
 
 			String authorizationCode = getCodeResponse(
 				userName, password, hostname,
-				getCode(
+				getCodeFunction(
 					webTarget -> webTarget.queryParam(
 						"client_id", clientId
 					).queryParam(
@@ -287,11 +290,11 @@ public abstract class BaseClientTestCase {
 				this::parseAuthorizationCodeString);
 
 			BiFunction<String, Invocation.Builder, Response>
-				authorizationCodePKCEFunction =
-					getExchangeAuthorizationCodePKCE(
+				authorizationCodePKCEBiFunction =
+					getExchangeAuthorizationCodePKCEBiFunction(
 						authorizationCode, null, codeVerifier);
 
-			return authorizationCodePKCEFunction.apply(
+			return authorizationCodePKCEBiFunction.apply(
 				clientId, invocationBuilder);
 		};
 	}
@@ -308,8 +311,20 @@ public abstract class BaseClientTestCase {
 		return webTarget.path("authorize");
 	}
 
+	protected Response getClientCredentials(
+		String clientId, Invocation.Builder invocationBuilder) {
+
+		MultivaluedMap<String, String> formData = new MultivaluedHashMap<>();
+
+		formData.add("client_id", clientId);
+		formData.add("client_secret", "oauthTestApplicationSecret");
+		formData.add("grant_type", "client_credentials");
+
+		return invocationBuilder.post(Entity.form(formData));
+	}
+
 	protected BiFunction<String, Invocation.Builder, Response>
-		getClientCredentials(String scope) {
+		getClientCredentialsBiFunction(String scope) {
 
 		return (clientId, invocationBuilder) -> {
 			MultivaluedMap<String, String> formData =
@@ -324,20 +339,9 @@ public abstract class BaseClientTestCase {
 		};
 	}
 
-	protected Response getClientCredentials(
-		String clientId, Invocation.Builder invocationBuilder) {
-
-		MultivaluedMap<String, String> formData = new MultivaluedHashMap<>();
-
-		formData.add("client_id", clientId);
-		formData.add("client_secret", "oauthTestApplicationSecret");
-		formData.add("grant_type", "client_credentials");
-
-		return invocationBuilder.post(Entity.form(formData));
-	}
-
 	protected Function<Function<WebTarget, Invocation.Builder>, Response>
-		getCode(Function<WebTarget, WebTarget> authorizeRequestFunction) {
+		getCodeFunction(Function<WebTarget, WebTarget>
+		authorizeRequestFunction) {
 
 		return invocationBuilderFunction -> {
 			Invocation.Builder invocationBuilder =
@@ -392,11 +396,12 @@ public abstract class BaseClientTestCase {
 
 		return codeParser.apply(
 			authorizationResponseFunction.apply(
-				getAuthenticatedInvocationBuilder(login, password, hostname)));
+				getAuthenticatedInvocationBuilderFunction(
+					login, password, hostname)));
 	}
 
 	protected BiFunction<String, Invocation.Builder, Response>
-		getExchangeAuthorizationCode(
+		getExchangeAuthorizationCodeBiFunction(
 			String authorizationCode, String redirectUri) {
 
 		return (clientId, invocationBuilder) -> {
@@ -417,7 +422,7 @@ public abstract class BaseClientTestCase {
 	}
 
 	protected BiFunction<String, Invocation.Builder, Response>
-		getExchangeAuthorizationCodePKCE(
+		getExchangeAuthorizationCodePKCEBiFunction(
 			String authorizationCode, String redirectUri, String codeVerifier) {
 
 		return (clientId, invocationBuilder) -> {
@@ -488,7 +493,7 @@ public abstract class BaseClientTestCase {
 	}
 
 	protected BiFunction<String, Invocation.Builder, Response>
-		getResourceOwnerPassword(String userName, String password) {
+		getResourceOwnerPasswordBiFunction(String userName, String password) {
 
 		return (clientId, invocationBuilder) -> {
 			MultivaluedMap<String, String> formData =
@@ -505,7 +510,7 @@ public abstract class BaseClientTestCase {
 	}
 
 	protected BiFunction<String, Invocation.Builder, Response>
-		getResourceOwnerPassword(
+		getResourceOwnerPasswordBiFunction(
 			String userName, String password, String scope) {
 
 		return (clientId, invocationBuilder) -> {

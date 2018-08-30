@@ -55,7 +55,7 @@ public class GrantAuthorizationCodePKCEKillSwitchTest
 			"unauthorized_client",
 			getCodeResponse(
 				"test@liferay.com", "test", null,
-				getCode(
+				getCodeFunction(
 					webTarget -> webTarget.queryParam(
 						"client_id", "oauthTestApplicationCodePKCE"
 					).queryParam(

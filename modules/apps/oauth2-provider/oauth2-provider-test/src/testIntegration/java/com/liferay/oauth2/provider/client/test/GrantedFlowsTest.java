@@ -54,14 +54,14 @@ public class GrantedFlowsTest extends BaseClientTestCase {
 
 		String tokenString = getToken(
 			"oauthTestApplicationPassword", null,
-			getResourceOwnerPassword("test@liferay.com", "test"),
+			getResourceOwnerPasswordBiFunction("test@liferay.com", "test"),
 			this::parseTokenString);
 
 		Assert.assertNotNull(tokenString);
 
 		errorString = getToken(
 			"oauthTestApplicationClient", null,
-			getResourceOwnerPassword("test@liferay.com", "test"),
+			getResourceOwnerPasswordBiFunction("test@liferay.com", "test"),
 			this::parseError);
 
 		Assert.assertEquals("unauthorized_client", errorString);
@@ -74,28 +74,30 @@ public class GrantedFlowsTest extends BaseClientTestCase {
 
 		errorString = getToken(
 			"oauthTestApplicationCode", null,
-			getAuthorizationCodePKCE("test@liferay.com", "test", null),
+			getAuthorizationCodePKCEBiFunction(
+				"test@liferay.com", "test", null),
 			this::parseError);
 
 		Assert.assertEquals("invalid_client", errorString);
 
 		tokenString = getToken(
 			"oauthTestApplicationCode", null,
-			getAuthorizationCode("test@liferay.com", "test", null),
+			getAuthorizationCodeBiFunction("test@liferay.com", "test", null),
 			this::parseTokenString);
 
 		Assert.assertNotNull(tokenString);
 
 		errorString = getToken(
 			"oauthTestApplicationCodePKCE", null,
-			getAuthorizationCode("test@liferay.com", "test", null),
+			getAuthorizationCodeBiFunction("test@liferay.com", "test", null),
 			this::parseError);
 
 		Assert.assertEquals("invalid_client", errorString);
 
 		tokenString = getToken(
 			"oauthTestApplicationCodePKCE", null,
-			getAuthorizationCodePKCE("test@liferay.com", "test", null),
+			getAuthorizationCodePKCEBiFunction(
+				"test@liferay.com", "test", null),
 			this::parseTokenString);
 
 		Assert.assertNotNull(tokenString);

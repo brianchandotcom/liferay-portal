@@ -28,6 +28,8 @@ import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.asset.kernel.service.AssetEntryService;
 import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.asset.kernel.service.persistence.AssetEntryQuery;
+import com.liferay.asset.list.model.AssetListEntry;
+import com.liferay.asset.list.service.AssetListEntryService;
 import com.liferay.asset.publisher.constants.AssetPublisherPortletKeys;
 import com.liferay.asset.publisher.web.configuration.AssetPublisherPortletInstanceConfiguration;
 import com.liferay.asset.publisher.web.configuration.AssetPublisherWebConfiguration;
@@ -549,6 +551,19 @@ public class AssetPublisherUtil {
 			long[] allCategoryIds, String[] allTagNames,
 			boolean deleteMissingAssetEntries, boolean checkPermission)
 		throws Exception {
+
+		String selectionStyle = GetterUtil.getString(
+			portletPreferences.getValue("selectionStyle", null), "manual");
+
+		long assetListEntryId = GetterUtil.getLong(
+			portletPreferences.getValue("assetListEntryId", null));
+
+		AssetListEntry assetListEntry =
+			_assetListEntryService.fetchAssetListEntry(assetListEntryId);
+
+		if (selectionStyle.equals("asset-list") && (assetListEntry != null)) {
+			return assetListEntry.getAssetEntries();
+		}
 
 		List<AssetEntry> assetEntries = getAssetEntries(
 			portletRequest, portletPreferences, permissionChecker, groupIds,
@@ -1654,6 +1669,13 @@ public class AssetPublisherUtil {
 	}
 
 	@Reference(unbind = "-")
+	protected void setAssetListEntryService(
+		AssetListEntryService assetListEntryService) {
+
+		_assetListEntryService = assetListEntryService;
+	}
+
+	@Reference(unbind = "-")
 	protected void setAssetTagLocalService(
 		AssetTagLocalService assetTagLocalService) {
 
@@ -1928,6 +1950,7 @@ public class AssetPublisherUtil {
 	private static AssetEntryLocalService _assetEntryLocalService;
 	private static AssetEntryService _assetEntryService;
 	private static AssetHelper _assetHelper;
+	private static AssetListEntryService _assetListEntryService;
 	private static AssetPublisherPortletInstanceConfiguration
 		_assetPublisherPortletInstanceConfiguration;
 	private static AssetPublisherWebConfiguration

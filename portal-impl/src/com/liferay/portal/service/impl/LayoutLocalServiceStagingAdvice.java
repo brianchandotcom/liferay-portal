@@ -582,6 +582,16 @@ public class LayoutLocalServiceStagingAdvice implements BeanFactoryAware {
 				}
 			}
 		}
+		else if (returnValue instanceof Map<?, ?>) {
+			Map<Object, Object> map = (Map<Object, Object>)returnValue;
+
+			if (map.isEmpty()) {
+				return returnValue;
+			}
+
+			map.replaceAll(
+				(key, value) -> wrapReturnValue(value, showIncomplete));
+		}
 
 		return returnValue;
 	}
@@ -603,8 +613,9 @@ public class LayoutLocalServiceStagingAdvice implements BeanFactoryAware {
 	private static final Set<String>
 		_layoutLocalServiceStagingAdviceMethodNames = new HashSet<>(
 			Arrays.asList(
-				"createLayout", "deleteLayout", "getLayouts", "updateLayout",
-				"updateLookAndFeel", "updateName"));
+				"createLayout", "deleteLayout", "getLayouts",
+				"getLayoutChildLayouts", "updateLayout", "updateLookAndFeel",
+				"updateName"));
 
 	private BeanFactory _beanFactory;
 

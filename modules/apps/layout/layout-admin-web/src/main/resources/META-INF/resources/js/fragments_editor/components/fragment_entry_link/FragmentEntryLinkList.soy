@@ -6,6 +6,7 @@
 {template .render}
 	{@param defaultEditorConfigurations: ?}
 	{@param defaultLanguageId: string}
+	{@param fragmentEntryLinks: ?}
 	{@param imageSelectorURL: string}
 	{@param languageId: string}
 	{@param portletNamespace: string}
@@ -13,16 +14,11 @@
 	{@param? dropTargetClass: string}
 	{@param? hoveredFragmentEntryLinkBorder: string}
 	{@param? hoveredFragmentEntryLinkId: string}
+	{@param? structure: list<string>}
 	{@param? _handleEditableChanged: any}
 	{@param? _handleFragmentMove: any}
 	{@param? _handleFragmentRemove: any}
 	{@param? _handleMappeableFieldClicked: any}
-	{@param? fragmentEntryLinks: list<[
-		content: html|null,
-		editableValues: ?,
-		fragmentEntryLinkId: string,
-		name: string
-	]>}
 	{@param? mapping: bool}
 	{@param? mappingFieldsURL: string}
 	{@param? selectedMappingTypes: [
@@ -52,39 +48,44 @@
 	{/let}
 
 	<div class="{$entryLinksClasses}" ref="fragmentEntryLinks">
-		{if $fragmentEntryLinks and (length($fragmentEntryLinks) > 0)}
-			{foreach $fragmentEntryLink in $fragmentEntryLinks}
-				{let $styleModifier kind="text"}
-					{if $hoveredFragmentEntryLinkId == $fragmentEntryLink.fragmentEntryLinkId}
-						{$hoveredFragmentEntryLinkBorder}
-					{/if}
-				{/let}
-				<div key="{$fragmentEntryLink.fragmentEntryLinkId}">
-					{call com.liferay.layout.admin.web.FragmentEntryLink.render}
-						{param content: $fragmentEntryLink.content /}
-						{param defaultEditorConfigurations: $defaultEditorConfigurations /}
-						{param defaultLanguageId: $defaultLanguageId /}
-						{param dropTargetClass: $dropTargetClass /}
-						{param editableValues: $fragmentEntryLink.editableValues /}
-						{param events: [
-							'editableChanged': $_handleEditableChanged,
-							'mappeableFieldClicked': $_handleMappeableFieldClicked,
-							'move': $_handleFragmentMove,
-							'remove': $_handleFragmentRemove
-						] /}
-						{param fragmentEntryLinkId: $fragmentEntryLink.fragmentEntryLinkId /}
-						{param styleModifier: $styleModifier /}
-						{param imageSelectorURL: $imageSelectorURL /}
-						{param languageId: $languageId /}
-						{param name: $fragmentEntryLink.name /}
-						{param portletNamespace: $portletNamespace /}
-						{param ref: 'fragmentEntryLink_' + $fragmentEntryLink.fragmentEntryLinkId /}
-						{param selectedMappingTypes: $selectedMappingTypes /}
-						{param showMapping: $selectedMappingTypes and $mappingFieldsURL ? true : false /}
-						{param spritemap: $spritemap /}
-						{param store: $store /}
-					{/call}
-				</div>
+		{if $structure and (length($structure) > 0)}
+			{foreach $fragmentEntryLinkId in $structure}
+				{let $fragmentEntryLink: $fragmentEntryLinks[$fragmentEntryLinkId] /}
+
+				{if $fragmentEntryLink}
+					{let $styleModifier kind="text"}
+						{if $hoveredFragmentEntryLinkId == $fragmentEntryLink.fragmentEntryLinkId}
+							{$hoveredFragmentEntryLinkBorder}
+						{/if}
+					{/let}
+
+					<div key="{$fragmentEntryLink.fragmentEntryLinkId}">
+						{call com.liferay.layout.admin.web.FragmentEntryLink.render}
+							{param content: $fragmentEntryLink.content /}
+							{param defaultEditorConfigurations: $defaultEditorConfigurations /}
+							{param defaultLanguageId: $defaultLanguageId /}
+							{param dropTargetClass: $dropTargetClass /}
+							{param editableValues: $fragmentEntryLink.editableValues /}
+							{param events: [
+								'editableChanged': $_handleEditableChanged,
+								'mappeableFieldClicked': $_handleMappeableFieldClicked,
+								'move': $_handleFragmentMove,
+								'remove': $_handleFragmentRemove
+							] /}
+							{param fragmentEntryLinkId: $fragmentEntryLink.fragmentEntryLinkId /}
+							{param styleModifier: $styleModifier /}
+							{param imageSelectorURL: $imageSelectorURL /}
+							{param languageId: $languageId /}
+							{param name: $fragmentEntryLink.name /}
+							{param portletNamespace: $portletNamespace /}
+							{param ref: 'fragmentEntryLink_' + $fragmentEntryLink.fragmentEntryLinkId /}
+							{param selectedMappingTypes: $selectedMappingTypes /}
+							{param showMapping: $selectedMappingTypes and $mappingFieldsURL ? true : false /}
+							{param spritemap: $spritemap /}
+							{param store: $store /}
+						{/call}
+					</div>
+				{/if}
 			{/foreach}
 		{else}
 			{call .noFragmentsMessage /}

@@ -21,17 +21,7 @@ class FragmentEntryLinkList extends Component {
 	focusFragmentEntryLink(fragmentEntryLinkId) {
 		requestAnimationFrame(
 			() => {
-				const index = this.fragmentEntryLinks.indexOf(
-					this.fragmentEntryLinks.find(
-						fragmentEntryLink => (
-							fragmentEntryLink.fragmentEntryLinkId === fragmentEntryLinkId
-						)
-					)
-				);
-
-				const fragmentEntryLinkElement = this.refs.fragmentEntryLinks.querySelectorAll(
-					'.fragment-entry-link-wrapper'
-				)[index];
+				const fragmentEntryLinkElement = this.refs[fragmentEntryLinkId];
 
 				if (fragmentEntryLinkElement) {
 					fragmentEntryLinkElement.focus();
@@ -101,35 +91,6 @@ FragmentEntryLinkList.STATE = {
 	 */
 
 	dropTargetClass: Config.string(),
-
-	/**
-	 * List of fragment instances being used.
-	 * @default []
-	 * @instance
-	 * @memberOf FragmentEntryLinkList
-	 * @review
-	 * @type {Array<{
-	 *   config: Object,
-	 *   content: string,
-	 *   editableValues: Object,
-	 *   fragmentEntryId: !string,
-	 *   fragmentEntryLinkId: !string,
-	 *   name: !string
-	 * }>}
-	 */
-
-	fragmentEntryLinks: Config.arrayOf(
-		Config.shapeOf(
-			{
-				config: Config.object().value({}),
-				content: Config.any().value(''),
-				editableValues: Config.object().value({}),
-				fragmentEntryId: Config.string().required(),
-				fragmentEntryLinkId: Config.string().required(),
-				name: Config.string().required()
-			}
-		)
-	).value([]),
 
 	/**
 	 * Nearest border of the hovered fragment entry link when dragging.

@@ -39,20 +39,29 @@ function addFragmentEntryLinkReducer(state, actionType, payload) {
 					)
 					.then(
 						fragmentEntryLink => {
-							nextState.fragmentEntryLinks = [
-								...nextState.fragmentEntryLinks
-							];
+							const fragmentEntryLinkId = fragmentEntryLink.fragmentEntryLinkId;
 
 							const position = _getDropFragmentPosition(
-								state.fragmentEntryLinks,
+								state.layoutData.structure || [],
 								state.hoveredFragmentEntryLinkId,
 								state.hoveredFragmentEntryLinkBorder
 							);
 
-							nextState.fragmentEntryLinks.splice(
+							nextState.layoutData.structure = (
+								nextState.layoutData.structure ||
+								[]
+							);
+
+							nextState.layoutData.structure.splice(
 								position,
 								0,
-								fragmentEntryLink
+								fragmentEntryLinkId
+							);
+
+							nextState.fragmentEntryLinks = Object.assign(
+								{},
+								nextState.fragmentEntryLinks,
+								{[fragmentEntryLinkId]: fragmentEntryLink}
 							);
 
 							resolve(nextState);
@@ -94,15 +103,20 @@ function removeFragmentEntryLinkReducer(state, actionType, payload) {
 					fragmentEntryLinkId
 				).then(
 					(response) => {
-						const index = state.fragmentEntryLinks.findIndex(
-							fragmentEntryLink => (
-								fragmentEntryLink.fragmentEntryLinkId === fragmentEntryLinkId
-							)
+						nextState.layoutData.structure = (
+							nextState.layoutData.structure ||
+							[]
 						);
 
-						nextState.fragmentEntryLinks = [
-							...nextState.fragmentEntryLinks.slice(0, index),
-							...nextState.fragmentEntryLinks.slice(index + 1)
+						const index = state.layoutData.structure.indexOf(
+							fragmentEntryLinkId
+						);
+
+						delete nextState.fragmentEntryLinks[payload.fragmentEntryLinkId];
+
+						nextState.layoutData.structure = [
+							...nextState.layoutData.structure.slice(0, index),
+							...nextState.layoutData.structure.slice(index + 1)
 						];
 
 						resolve(nextState);
@@ -164,17 +178,12 @@ function _addFragmentEntryLink(
 }
 
 function _getDropFragmentPosition(
-	fragmentEntryLinks,
+	structure,
 	targetFragmentEntryLinkId,
 	targetBorder
 ) {
-	let position = fragmentEntryLinks.length;
-
-	const targetPosition = fragmentEntryLinks.findIndex(
-		fragmentEntryLink => (
-			fragmentEntryLink.fragmentEntryLinkId === targetFragmentEntryLinkId
-		)
-	);
+	let position = structure.length;
+	const targetPosition = structure.indexOf(targetFragmentEntryLinkId);
 
 	if (targetPosition > -1 && targetBorder) {
 		if (targetBorder === DRAG_POSITIONS.top) {

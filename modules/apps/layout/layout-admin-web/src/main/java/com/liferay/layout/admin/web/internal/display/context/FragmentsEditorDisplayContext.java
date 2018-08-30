@@ -477,10 +477,10 @@ public class FragmentsEditorDisplayContext {
 		return soyContexts;
 	}
 
-	private List<SoyContext> _getSoyContextFragmentEntryLinks()
+	private SoyContext _getSoyContextFragmentEntryLinks()
 		throws PortalException {
 
-		List<SoyContext> soyContexts = new ArrayList<>();
+		SoyContext soyContexts = SoyContextFactoryUtil.createSoyContext();
 
 		List<FragmentEntryLink> fragmentEntryLinks =
 			FragmentEntryLinkLocalServiceUtil.getFragmentEntryLinks(
@@ -515,7 +515,9 @@ public class FragmentsEditorDisplayContext {
 					String.valueOf(fragmentEntryLink.getFragmentEntryLinkId()));
 				soyContext.put("name", fragmentEntry.getName());
 
-				soyContexts.add(soyContext);
+				soyContexts.put(
+					String.valueOf(fragmentEntryLink.getFragmentEntryLinkId()),
+					soyContext);
 			}
 		}
 		finally {

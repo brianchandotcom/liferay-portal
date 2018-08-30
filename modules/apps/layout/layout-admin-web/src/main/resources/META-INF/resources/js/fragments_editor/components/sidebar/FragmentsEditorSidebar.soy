@@ -13,20 +13,16 @@
 		fragmentCollectionId: string,
 		name: string
 	]>}
+	{@param fragmentEntryLinks: ?}
+	{@param highlightMapping: bool}
 	{@param sidebarTabs: list<[enabled:bool, id:string, label:string]>}
 	{@param spritemap: string}
 	{@param? dropTargetClass: string}
+	{@param? structure: list<string>}
 	{@param? _handleHide: any}
 	{@param? _handleHideSidebarButtonClick: any}
 	{@param? _handleTabClick: any}
 	{@param? _selectedTab: string}
-	{@param? highlightMapping: bool}
-	{@param? fragmentEntryLinks: list<[
-		content: html|null,
-		editableValues: ?,
-		fragmentEntryLinkId: string,
-		name: string
-	]>}
 	{@param? selectedMappingTypes: [
 		subtype: [
 			id: string,
@@ -76,6 +72,7 @@
 					{param ref: 'sidebarTab' /}
 					{param spritemap: $spritemap /}
 					{param store: $store /}
+					{param structure: $structure /}
 				{/call}
 			{elseif $_selectedTab == 'mapping'}
 				{call com.liferay.layout.admin.web.SidebarMapping.render}

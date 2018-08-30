@@ -89,14 +89,9 @@ class FragmentsEditor extends Component {
 	 */
 
 	_getFragmentEntryLinkIndex(fragmentEntryLinkId) {
-		return this.fragmentEntryLinks.indexOf(
-			this.fragmentEntryLinks.find(
-				fragmentEntryLink => (
-					fragmentEntryLink.fragmentEntryLinkId ===
-					fragmentEntryLinkId
-				)
-			)
-		);
+		const structure = this.layoutData.structure || [];
+
+		return structure.indexOf(fragmentEntryLinkId);
 	}
 
 	/**
@@ -133,21 +128,22 @@ class FragmentsEditor extends Component {
 		const index = this._getFragmentEntryLinkIndex(
 			data.fragmentEntryLinkId
 		);
+		const structure = this.layoutData.structure || [];
 
 		if (
-			(direction === FragmentEntryLink.MOVE_DIRECTIONS.DOWN && index < this.fragmentEntryLinks.length - 1) ||
+			(direction === FragmentEntryLink.MOVE_DIRECTIONS.DOWN && index < structure.length - 1) ||
 			(direction === FragmentEntryLink.MOVE_DIRECTIONS.UP && index > 0)
 		) {
 			const formData = new FormData();
 
 			formData.append(
 				`${this.portletNamespace}fragmentEntryLinkId1`,
-				this.fragmentEntryLinks[index].fragmentEntryLinkId
+				structure[index]
 			);
 
 			formData.append(
 				`${this.portletNamespace}fragmentEntryLinkId2`,
-				this.fragmentEntryLinks[index + direction].fragmentEntryLinkId
+				structure[index + direction]
 			);
 
 			formData.append(
@@ -367,11 +363,7 @@ class FragmentsEditor extends Component {
 			fragmentEntryLinkId
 		);
 
-		const index = this._getFragmentEntryLinkIndex(
-			fragmentEntryLinkId
-		);
-
-		if (component && index !== -1) {
+		if (component && this.fragmentEntryLinks[fragmentEntryLinkId]) {
 			const newEditableValues = component.setEditableValue(
 				editableValueId,
 				editableValueContent
@@ -379,12 +371,16 @@ class FragmentsEditor extends Component {
 
 			const newFragmentEntryLink = Object.assign(
 				{},
-				this.fragmentEntryLinks[index],
+				this.fragmentEntryLinks[fragmentEntryLinkId],
 				{editableValues: newEditableValues}
 			);
 
-			const newFragmentEntryLinks = [...this.fragmentEntryLinks];
-			newFragmentEntryLinks[index] = newFragmentEntryLink;
+			const newFragmentEntryLinks = Object.assign(
+				{},
+				this.fragmentEntryLinks
+			);
+
+			newFragmentEntryLinks[fragmentEntryLinkId] = newFragmentEntryLink;
 
 			this.fragmentEntryLinks = newFragmentEntryLinks;
 

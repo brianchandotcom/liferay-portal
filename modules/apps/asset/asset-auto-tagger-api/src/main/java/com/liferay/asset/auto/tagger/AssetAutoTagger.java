@@ -29,10 +29,12 @@ public interface AssetAutoTagger {
 	 * AssetAutoTagProvider} implementation that can handle the asset entry's
 	 * associated model and merging all the resulting tags.
 	 *
+	 * <p>
 	 * Only assets with an associated {@link
 	 * com.liferay.asset.kernel.model.AssetRenderer} are supported.
+	 * </p>
 	 *
-	 * @param assetEntry the asset entry to tag
+	 * @param  assetEntry the asset entry to tag
 	 * @throws PortalException if a portal exception occurred
 	 */
 	public void tag(AssetEntry assetEntry) throws PortalException;
@@ -42,9 +44,11 @@ public interface AssetAutoTagger {
 	 * Any tags added externally (e.g., via a human or the asset APIs) are not
 	 * removed.
 	 *
+	 * <p>
 	 * This method provides a way to rollback {@link #tag(AssetEntry)}.
+	 * </p>
 	 *
-	 * @param assetEntry the asset entry to untag
+	 * @param  assetEntry the asset entry to untag
 	 * @throws PortalException if a portal exception occurred
 	 */
 	public void untag(AssetEntry assetEntry) throws PortalException;

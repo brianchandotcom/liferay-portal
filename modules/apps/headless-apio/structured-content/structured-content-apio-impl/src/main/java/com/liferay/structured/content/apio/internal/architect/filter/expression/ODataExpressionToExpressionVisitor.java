@@ -104,7 +104,7 @@ public class ODataExpressionToExpressionVisitor
 		Stream<UriResource> stream = uriResourceParts.stream();
 
 		List<String> list = stream.map(
-			uriResource -> uriResource.getSegmentValue()
+			UriResource::getSegmentValue
 		).collect(
 			Collectors.toList()
 		);

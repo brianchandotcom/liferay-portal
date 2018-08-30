@@ -3993,6 +3993,8 @@ public class ProjectTemplatesTest {
 			archetyperDestinationDir = archetyperDestinationPath.toFile();
 		}
 
+		ProjectGenerator projectGenerator = new ProjectGenerator();
+
 		ProjectTemplatesArgs projectTemplatesArgs = new ProjectTemplatesArgs();
 
 		List<File> archetypesDirs = Arrays.asList(archetypesDir);
@@ -4013,8 +4015,6 @@ public class ProjectTemplatesTest {
 		projectTemplatesArgs.setPackageName(packageName);
 		projectTemplatesArgs.setService(service);
 		projectTemplatesArgs.setTemplate(template);
-
-		ProjectGenerator projectGenerator = new ProjectGenerator();
 
 		projectGenerator.generateProject(
 			projectTemplatesArgs, archetyperDestinationDir);

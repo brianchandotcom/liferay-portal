@@ -292,6 +292,20 @@ public interface SharingEntryModel extends AttachedModel, BaseModel<SharingEntry
 	 */
 	public void setActionIds(long actionIds);
 
+	/**
+	 * Returns the expiration date of this sharing entry.
+	 *
+	 * @return the expiration date of this sharing entry
+	 */
+	public Date getExpirationDate();
+
+	/**
+	 * Sets the expiration date of this sharing entry.
+	 *
+	 * @param expirationDate the expiration date of this sharing entry
+	 */
+	public void setExpirationDate(Date expirationDate);
+
 	@Override
 	public boolean isNew();
 

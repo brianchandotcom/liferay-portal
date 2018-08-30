@@ -146,6 +146,8 @@ public class SharingEntryPersistenceTest {
 
 		newSharingEntry.setActionIds(RandomTestUtil.nextLong());
 
+		newSharingEntry.setExpirationDate(RandomTestUtil.nextDate());
+
 		_sharingEntries.add(_persistence.update(newSharingEntry));
 
 		SharingEntry existingSharingEntry = _persistence.findByPrimaryKey(newSharingEntry.getPrimaryKey());
@@ -176,6 +178,9 @@ public class SharingEntryPersistenceTest {
 			newSharingEntry.isShareable());
 		Assert.assertEquals(existingSharingEntry.getActionIds(),
 			newSharingEntry.getActionIds());
+		Assert.assertEquals(Time.getShortTimestamp(
+				existingSharingEntry.getExpirationDate()),
+			Time.getShortTimestamp(newSharingEntry.getExpirationDate()));
 	}
 
 	@Test
@@ -294,7 +299,7 @@ public class SharingEntryPersistenceTest {
 			true, "sharingEntryId", true, "groupId", true, "companyId", true,
 			"createDate", true, "modifiedDate", true, "fromUserId", true,
 			"toUserId", true, "classNameId", true, "classPK", true,
-			"shareable", true, "actionIds", true);
+			"shareable", true, "actionIds", true, "expirationDate", true);
 	}
 
 	@Test
@@ -546,6 +551,8 @@ public class SharingEntryPersistenceTest {
 		sharingEntry.setShareable(RandomTestUtil.randomBoolean());
 
 		sharingEntry.setActionIds(RandomTestUtil.nextLong());
+
+		sharingEntry.setExpirationDate(RandomTestUtil.nextDate());
 
 		_sharingEntries.add(_persistence.update(sharingEntry));
 

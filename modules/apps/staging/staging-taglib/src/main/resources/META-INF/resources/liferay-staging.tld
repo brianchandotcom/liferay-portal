@@ -32,6 +32,7 @@
 			<description>The alert's type. Available alert types include <![CDATA[<code>ERROR</code>]]>, <![CDATA[<code>INFO</code>]]>, <![CDATA[<code>SUCCESS</code>]]>, and <![CDATA[<code>WARNING</code>]]>. The default value is <![CDATA[<code>INFO</code>]]>.</description>
 			<name>type</name>
 			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
 			<type>com.liferay.staging.taglib.servlet.taglib.AlertType</type>
 		</attribute>
 	</tag>

@@ -1,8 +1,8 @@
 window.Liferay = {
 	Language: {
-		get: key => key,
+		get: key => key
 	},
 	ThemeDisplay: {
-		getLanguageId: () => 'en_US',
-	},
-}
+		getLanguageId: () => 'en_US'
+	}
+};

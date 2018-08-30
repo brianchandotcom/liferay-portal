@@ -5,64 +5,42 @@ import Sidebar from '../Sidebar.es';
 let component;
 const spritemap = 'icons.svg';
 
-const fieldLists = [
+const fieldTypes = [
 	{
 		description: 'Select date from a Datepicker.',
 		icon: 'calendar',
-		name: 'Date',
-		type: 'date'
+		label: 'Date',
+		name: 'date'
 	},
 	{
 		description: 'Single line or multiline text area.',
 		icon: 'text',
-		name: 'Text Field',
-		type: 'text'
+		label: 'Text Field',
+		name: 'text'
 	},
 	{
 		description: 'Select only one item with a radio button.',
 		icon: 'radio-button',
-		name: 'Single Selection',
-		type: 'radio'
+		label: 'Single Selection',
+		name: 'radio'
 	},
 	{
 		description: 'Choose an or more options from a list.',
 		icon: 'list',
-		name: 'Select from list',
-		type: 'select'
+		label: 'Select from list',
+		name: 'select'
 	},
 	{
 		description: 'Select options from a matrix.',
 		icon: 'grid',
-		name: 'Grid',
-		type: 'grid'
+		label: 'Grid',
+		name: 'grid'
 	},
 	{
 		description: 'Select multiple options using a checkbox.',
 		icon: 'select-from-list',
-		name: 'Multiple Selection',
-		type: 'checkbox'
-	}
-];
-
-const fieldContext = [
-	{
-		rows: [
-			{
-				columns: [
-					{
-						fields: [
-							{
-								key: 'label',
-								label: 'Label',
-								spritemap,
-								type: 'text'
-							}
-						],
-						size: 12
-					}
-				]
-			}
-		]
+		label: 'Multiple Selection',
+		name: 'checkbox'
 	}
 ];
 
@@ -125,11 +103,11 @@ describe(
 		);
 
 		it(
-			'should render a Sidebar with fieldLists',
+			'should render a Sidebar with fieldTypes',
 			() => {
 				component = new Sidebar(
 					{
-						fieldLists,
+						fieldTypes,
 						spritemap
 					}
 				);
@@ -164,8 +142,7 @@ describe(
 			() => {
 				component = new Sidebar(
 					{
-						fieldContext,
-						fieldLists,
+						fieldTypes,
 						focusedField: {
 							columnIndex: 0,
 							pageIndex: 0,
@@ -212,8 +189,7 @@ describe(
 			() => {
 				component = new Sidebar(
 					{
-						fieldContext,
-						fieldLists,
+						fieldTypes,
 						focusedField: {
 							columnIndex: 0,
 							pageIndex: 0,
@@ -265,8 +241,7 @@ describe(
 			() => {
 				component = new Sidebar(
 					{
-						fieldContext,
-						fieldLists,
+						fieldTypes,
 						focusedField: {
 							columnIndex: 0,
 							pageIndex: 0,
@@ -293,7 +268,7 @@ describe(
 			() => {
 				component = new Sidebar(
 					{
-						fieldLists,
+						fieldTypes,
 						spritemap
 					}
 				);
@@ -315,7 +290,7 @@ describe(
 			() => {
 				component = new Sidebar(
 					{
-						fieldLists,
+						fieldTypes,
 						spritemap
 					}
 				);
@@ -378,7 +353,7 @@ describe(
 			() => {
 				component = new Sidebar(
 					{
-						fieldLists,
+						fieldTypes,
 						spritemap
 					}
 				);
@@ -408,7 +383,6 @@ describe(
 					() => {
 						component = new Sidebar(
 							{
-								fieldContext,
 								spritemap
 							}
 						);
@@ -439,12 +413,11 @@ describe(
 				);
 
 				it(
-					'should go into edit mode with just fieldContext, fieldLists and focusedField',
+					'should render fieldTypes and focusedField',
 					() => {
 						component = new Sidebar(
 							{
-								fieldContext,
-								fieldLists,
+								fieldTypes,
 								focusedField: {
 									columnIndex: 0,
 									pageIndex: 0,
@@ -464,12 +437,11 @@ describe(
 				);
 
 				it(
-					'should return true when there is focusedField, edit mode, fieldLists, and fieldContext',
+					'should return true when there is focusedField, edit mode, fieldTypes, and fieldContext',
 					() => {
 						component = new Sidebar(
 							{
-								fieldContext,
-								fieldLists,
+								fieldTypes,
 								focusedField: {
 									columnIndex: 0,
 									pageIndex: 0,
@@ -583,8 +555,7 @@ describe(
 					() => {
 						component = new Sidebar(
 							{
-								fieldContext,
-								fieldLists,
+								fieldTypes,
 								focusedField: {
 									columnIndex: 0,
 									pageIndex: 0,
@@ -611,8 +582,7 @@ describe(
 					() => {
 						component = new Sidebar(
 							{
-								fieldContext,
-								fieldLists,
+								fieldTypes,
 								focusedField: {
 									columnIndex: 0,
 									pageIndex: 0,

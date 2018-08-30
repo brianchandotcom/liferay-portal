@@ -96,7 +96,8 @@ to complete to ensure Javadoc is properly formatted and ready for submission:
     1. Navigate to `liferay-portal/portal-impl` using a command line tool.
     2. Run `ant format-source-local-changes`.
 - Ensure all commit descriptions start with a ticket number (e.g., *LPS-12345
-  Javadoc*).
+  Javadoc*). If the Javadoc is also associated with an LRDOCS ticket, include
+  that in the commit description too (e.g., *LPS-12345 LRDOCS-9876 Javadoc*).
 - If you're reviewing Javadoc describing a Service Builder service, you must run
   Service Builder to propagate the Javadoc changes/updates. To do this,
   execute `gradlew buildService` from the appropriate module's root folder.
@@ -107,3 +108,13 @@ to complete to ensure Javadoc is properly formatted and ready for submission:
 When finished reviewing, send your edits in a pull request to the repository
 gate keeper. If you're editing Javadoc for `liferay-portal`, send your edits to
 [`codyhoag`](https://github.com/codyhoag).
+
+**Note:** Sending reference documentation updates in a project managed in a
+Github subrepo should be sent to the subrepo, not `liferay-portal`. For example,
+although the APIO architect project is available in `liferay-portal`
+[here](https://github.com/liferay/liferay-portal/blob/master/modules/apps/apio-architect),
+any changes should be sent to its subrepo
+[here](https://github.com/liferay/com-liferay-apio-architect). You can check
+whether a module project is managed in an external subrepo by checking if it
+contains a `.gitrepo` file. If the file exists and contains the `mode = pull`
+declaration, changes should be submitted to its subrepo.

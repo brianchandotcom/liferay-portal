@@ -247,26 +247,30 @@ import ${apiPackagePath}.service.${entity.name}${sessionTypeName}Service;
 		 */
 		@Indexable(type = IndexableType.DELETE)
 		@Override
-		<#if entity.versionEntity??>
-			public ${entity.name} delete${entity.name}(${entity.PKClassName} ${entity.PKVarName}) {
+		public ${entity.name} delete${entity.name}(${entity.PKClassName} ${entity.PKVarName}) <#if (serviceBaseExceptions?size gt 0)>throws ${stringUtil.merge(serviceBaseExceptions)} </#if>{
+			<#if entity.versionEntity??>
+				<#if !serviceBaseExceptions?seq_contains("PortalException")>
+					try {
+				</#if>
+
 				${entity.name} ${entity.varName} = ${entity.varName}Persistence.fetchByPrimaryKey(${entity.PKVarName});
 
-				try {
-					if (${entity.varName} != null) {
-						delete(${entity.varName});
-					}
+				if (${entity.varName} != null) {
+					delete(${entity.varName});
+				}
 
-					return ${entity.varName};
-				}
-				catch (PortalException pe) {
-					throw new SystemException(pe);
-				}
-			}
-		<#else>
-			public ${entity.name} delete${entity.name}(${entity.PKClassName} ${entity.PKVarName}) <#if (serviceBaseExceptions?size gt 0)>throws ${stringUtil.merge(serviceBaseExceptions)} </#if>{
+				return ${entity.varName};
+
+				<#if !serviceBaseExceptions?seq_contains("PortalException")>
+					}
+					catch (PortalException pe) {
+						throw new SystemException(pe);
+					}
+				</#if>
+			<#else>
 				return ${entity.varName}Persistence.remove(${entity.PKVarName});
-			}
-		</#if>
+			</#if>
+		}
 
 		<#assign serviceBaseExceptions = serviceBuilder.getServiceBaseExceptions(methods, "delete" + entity.name, [apiPackagePath + ".model." + entity.name], []) />
 
@@ -281,22 +285,26 @@ import ${apiPackagePath}.service.${entity.name}${sessionTypeName}Service;
 		 */
 		@Indexable(type = IndexableType.DELETE)
 		@Override
-		<#if entity.versionEntity??>
-			public ${entity.name} delete${entity.name}(${entity.name} ${entity.varName}) {
-				try {
-					delete(${entity.varName});
+		public ${entity.name} delete${entity.name}(${entity.name} ${entity.varName}) <#if (serviceBaseExceptions?size gt 0)>throws ${stringUtil.merge(serviceBaseExceptions)} </#if>{
+			<#if entity.versionEntity??>
+				<#if !serviceBaseExceptions?seq_contains("PortalException")>
+					try {
+				</#if>
 
-					return ${entity.varName};
-				}
-				catch (PortalException pe) {
-					throw new SystemException(pe);
-				}
-			}
-		<#else>
-			public ${entity.name} delete${entity.name}(${entity.name} ${entity.varName}) <#if (serviceBaseExceptions?size gt 0)>throws ${stringUtil.merge(serviceBaseExceptions)} </#if>{
+				delete(${entity.varName});
+
+				return ${entity.varName};
+
+				<#if !serviceBaseExceptions?seq_contains("PortalException")>
+					}
+					catch (PortalException pe) {
+						throw new SystemException(pe);
+					}
+				</#if>
+			<#else>
 				return ${entity.varName}Persistence.remove(${entity.varName});
-			}
-		</#if>
+			</#if>
+		}
 
 		@Override
 		public DynamicQuery dynamicQuery() {

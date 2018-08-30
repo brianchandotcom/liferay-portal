@@ -104,7 +104,8 @@ public class VersionedEntryLocalServiceWrapper
 	*/
 	@Override
 	public com.liferay.portal.tools.service.builder.test.model.VersionedEntry deleteVersionedEntry(
-		long versionedEntryId) {
+		long versionedEntryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _versionedEntryLocalService.deleteVersionedEntry(versionedEntryId);
 	}
 

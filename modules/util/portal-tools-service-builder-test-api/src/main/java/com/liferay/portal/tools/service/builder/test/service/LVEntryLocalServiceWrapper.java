@@ -84,7 +84,8 @@ public class LVEntryLocalServiceWrapper implements LVEntryLocalService,
 	*/
 	@Override
 	public com.liferay.portal.tools.service.builder.test.model.LVEntry deleteLVEntry(
-		long lvEntryId) {
+		long lvEntryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _lvEntryLocalService.deleteLVEntry(lvEntryId);
 	}
 

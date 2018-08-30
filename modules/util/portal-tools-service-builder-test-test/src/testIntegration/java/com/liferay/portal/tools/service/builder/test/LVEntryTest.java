@@ -429,8 +429,8 @@ public class LVEntryTest {
 
 				Assert.fail();
 			}
-			catch (SystemException se) {
-				Assert.assertSame(portalException, se.getCause());
+			catch (PortalException pe) {
+				Assert.assertSame(portalException, pe);
 			}
 
 			try {

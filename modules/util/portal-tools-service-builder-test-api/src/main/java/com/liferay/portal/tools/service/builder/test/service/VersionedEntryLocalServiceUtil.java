@@ -104,7 +104,8 @@ public class VersionedEntryLocalServiceUtil {
 	* @throws PortalException if a versioned entry with the primary key could not be found
 	*/
 	public static com.liferay.portal.tools.service.builder.test.model.VersionedEntry deleteVersionedEntry(
-		long versionedEntryId) {
+		long versionedEntryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().deleteVersionedEntry(versionedEntryId);
 	}
 

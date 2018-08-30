@@ -119,7 +119,8 @@ public interface VersionedEntryLocalService extends BaseLocalService,
 	* @throws PortalException if a versioned entry with the primary key could not be found
 	*/
 	@Indexable(type = IndexableType.DELETE)
-	public VersionedEntry deleteVersionedEntry(long versionedEntryId);
+	public VersionedEntry deleteVersionedEntry(long versionedEntryId)
+		throws PortalException;
 
 	/**
 	* Deletes the versioned entry from the database. Also notifies the appropriate model listeners.

@@ -16,8 +16,6 @@ package com.liferay.jenkins.results.parser;
 
 import java.util.Map;
 
-import org.json.JSONObject;
-
 /**
  * @author Michael Hashimoto
  */
@@ -26,89 +24,83 @@ public class PortalBatchBuildData
 
 	@Override
 	public String getPortalGitHubURL() {
-		return _portalGitHubURL;
+		return getString("portal_github_url");
+	}
+
+	public PortalTopLevelBuildData getPortalTopLevelBuildData() {
+		if (_portalTopLevelBuildData != null) {
+			return _portalTopLevelBuildData;
+		}
+
+		TopLevelBuildData topLevelBuildData = getTopLevelBuildData();
+
+		if (!(topLevelBuildData instanceof PortalTopLevelBuildData)) {
+			return null;
+		}
+
+		_portalTopLevelBuildData = (PortalTopLevelBuildData)topLevelBuildData;
+
+		return _portalTopLevelBuildData;
 	}
 
 	@Override
 	public String getPortalUpstreamBranchName() {
-		return _portalUpstreamBranchName;
-	}
-
-	@Override
-	public JSONObject toJSONObject() {
-		JSONObject jsonObject = super.toJSONObject();
-
-		jsonObject.put("portal_github_url", getPortalGitHubURL());
-		jsonObject.put(
-			"portal_upstream_branch_name", getPortalUpstreamBranchName());
-
-		return jsonObject;
+		return getString("portal_upstream_branch_name");
 	}
 
 	protected PortalBatchBuildData(
-		Map<String, String> buildParameters, String runID) {
+		Map<String, String> buildParameters,
+		JenkinsJSONObject jenkinsJSONObject, String runID) {
 
-		super(buildParameters, runID);
+		super(buildParameters, jenkinsJSONObject, runID);
 
-		_init(buildParameters, runID);
-	}
+		_portalTopLevelBuildData =
+			(PortalTopLevelBuildData)getTopLevelBuildData();
 
-	protected PortalBatchBuildData(
-		String jsonString, Map<String, String> buildParameters, String runID) {
-
-		super(jsonString, buildParameters, runID);
-
-		_init(buildParameters, runID);
-	}
-
-	private void _init(Map<String, String> buildParameters, String runID) {
-		if (has(runID)) {
-			JSONObject jsonObject = getJSONObject(runID);
-
-			if (jsonObject.has("portal_github_url")) {
-				_portalGitHubURL = jsonObject.getString("portal_github_url");
-				_portalUpstreamBranchName = jsonObject.getString(
-					"portal_upstream_branch_name");
-
-				return;
-			}
+		if (!has("portal_github_url")) {
+			put("portal_github_url", _getPortalGitHubURL(buildParameters));
 		}
 
-		if (has(TOP_LEVEL_RUN_ID)) {
-			TopLevelBuildData topLevelBuildData =
-				BuildDataFactory.newTopLevelBuildData(
-					toString(), buildParameters);
+		if (!has("portal_upstream_branch_name")) {
+			put(
+				"portal_upstream_branch_name",
+				_getPortalUpstreamBranchName(buildParameters));
+		}
+	}
 
-			PortalTopLevelBuildData portalTopLevelBuildData =
-				(PortalTopLevelBuildData)topLevelBuildData;
+	private String _getPortalGitHubURL(Map<String, String> buildParameters) {
+		PortalTopLevelBuildData portalTopLevelBuildData =
+			getPortalTopLevelBuildData();
 
-			_portalGitHubURL = portalTopLevelBuildData.getPortalGitHubURL();
-			_portalUpstreamBranchName =
-				portalTopLevelBuildData.getPortalUpstreamBranchName();
-
-			updateBuildData();
-
-			return;
+		if (portalTopLevelBuildData != null) {
+			return portalTopLevelBuildData.getPortalGitHubURL();
 		}
 
 		if (!buildParameters.containsKey("PORTAL_GITHUB_URL")) {
 			throw new RuntimeException("Please set PORTAL_GITHUB_URL");
 		}
 
-		_portalGitHubURL = buildParameters.get("PORTAL_GITHUB_URL");
+		return buildParameters.get("PORTAL_GITHUB_URL");
+	}
+
+	private String _getPortalUpstreamBranchName(
+		Map<String, String> buildParameters) {
+
+		PortalTopLevelBuildData portalTopLevelBuildData =
+			getPortalTopLevelBuildData();
+
+		if (portalTopLevelBuildData != null) {
+			return portalTopLevelBuildData.getPortalUpstreamBranchName();
+		}
 
 		if (!buildParameters.containsKey("PORTAL_UPSTREAM_BRANCH_NAME")) {
 			throw new RuntimeException(
 				"Please set PORTAL_UPSTREAM_BRANCH_NAME");
 		}
 
-		_portalUpstreamBranchName = buildParameters.get(
-			"PORTAL_UPSTREAM_BRANCH_NAME");
-
-		updateBuildData();
+		return buildParameters.get("PORTAL_UPSTREAM_BRANCH_NAME");
 	}
 
-	private String _portalGitHubURL;
-	private String _portalUpstreamBranchName;
+	private PortalTopLevelBuildData _portalTopLevelBuildData;
 
 }

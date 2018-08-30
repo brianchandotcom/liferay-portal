@@ -22,49 +22,19 @@ import java.util.Map;
 public class BuildDataFactory {
 
 	public static BatchBuildData newBatchBuildData(
-		String jsonString, Map<String, String> buildParameters, String runID) {
+		Map<String, String> buildParameters,
+		JenkinsJSONObject jenkinsJSONObject, String runID) {
 
-		if (jsonString == null) {
-			return new PortalBatchBuildData(buildParameters, runID);
-		}
-
-		return new PortalBatchBuildData(jsonString, buildParameters, runID);
-	}
-
-	public static BuildData newBuildData(Map<String, String> buildParameters) {
-		return newBuildData(null, buildParameters, null);
-	}
-
-	public static BuildData newBuildData(
-		String jsonString, Map<String, String> buildParameters, String runID) {
-
-		String buildURL = buildParameters.get("BUILD_URL");
-
-		String jobName = BaseBuildData.getJobName(buildURL);
-
-		if (jobName == null) {
-			throw new RuntimeException("Invalid BUILD_URL " + buildURL);
-		}
-
-		if (jobName.endsWith("-batch")) {
-			if (jsonString == null) {
-				return new PortalBatchBuildData(buildParameters, runID);
-			}
-
-			return new PortalBatchBuildData(jsonString, buildParameters, runID);
-		}
-
-		return newTopLevelBuildData(jsonString, buildParameters);
+		return new PortalBatchBuildData(
+			buildParameters, jenkinsJSONObject, runID);
 	}
 
 	public static TopLevelBuildData newTopLevelBuildData(
-		String jsonString, Map<String, String> buildParameters) {
+		Map<String, String> buildParameters,
+		JenkinsJSONObject jenkinsJSONObject, String runID) {
 
-		if (jsonString == null) {
-			return new PortalTopLevelBuildData(buildParameters);
-		}
-
-		return new PortalTopLevelBuildData(jsonString, buildParameters);
+		return new PortalTopLevelBuildData(
+			buildParameters, jenkinsJSONObject, runID);
 	}
 
 }

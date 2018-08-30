@@ -17,6 +17,8 @@ package com.liferay.jenkins.results.parser;
 import java.io.File;
 import java.io.IOException;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -26,10 +28,7 @@ import org.json.JSONObject;
 /**
  * @author Michael Hashimoto
  */
-public abstract class BaseBuildData
-	extends JenkinsJSONObject implements BuildData {
-
-	public static final String TOP_LEVEL_RUN_ID = "top_level";
+public abstract class BaseBuildData extends JSONObject implements BuildData {
 
 	public static String getJobName(String buildURL) {
 		if (buildURL == null) {
@@ -47,37 +46,49 @@ public abstract class BaseBuildData
 
 	@Override
 	public Integer getBuildNumber() {
-		return _buildNumber;
+		return getInt("build_number");
 	}
 
 	@Override
 	public String getBuildURL() {
-		return _buildURL;
+		return getString("build_url");
 	}
 
 	@Override
 	public String getCohortName() {
-		return _cohortName;
+		return getString("cohort_name");
+	}
+
+	@Override
+	public List<String> getDistNodes() {
+		String distNodes = getString("dist_nodes");
+
+		return Arrays.asList(distNodes.split(","));
+	}
+
+	@Override
+	public String getDistPath() {
+		return getString("dist_path");
 	}
 
 	@Override
 	public String getHostname() {
-		return _hostname;
+		return getString("hostname");
 	}
 
 	@Override
 	public String getJenkinsGitHubURL() {
-		return _jenkinsGitHubURL;
+		return getString("jenkins_github_url");
 	}
 
 	@Override
 	public String getJobName() {
-		return _jobName;
+		return getString("job_name");
 	}
 
 	@Override
 	public String getMasterHostname() {
-		return _masterHostname;
+		return getString("master_hostname");
 	}
 
 	@Override
@@ -87,7 +98,7 @@ public abstract class BaseBuildData
 
 	@Override
 	public File getWorkspaceDir() {
-		return _workspaceDir;
+		return new File(getString("workspace_dir"));
 	}
 
 	@Override
@@ -95,104 +106,93 @@ public abstract class BaseBuildData
 		return this;
 	}
 
-	protected BaseBuildData(Map<String, String> buildParameters, String runID) {
-		_init(buildParameters, runID);
+	protected BaseBuildData(
+		Map<String, String> buildParameters,
+		JenkinsJSONObject jenkinsJSONObject) {
+
+		this(buildParameters, jenkinsJSONObject, _DEFAULT_RUN_ID);
 	}
 
 	protected BaseBuildData(
-		String jsonString, Map<String, String> buildParameters, String runID) {
+		Map<String, String> buildParameters,
+		JenkinsJSONObject jenkinsJSONObject, String runID) {
 
-		super(jsonString);
-
-		_init(buildParameters, runID);
-	}
-
-	protected void updateBuildData() {
-		JSONObject jsonObject = optJSONObject(_runID);
-
-		if (jsonObject == null) {
-			jsonObject = new JSONObject();
-
-			put(_runID, jsonObject);
+		if (runID == null) {
+			runID = _DEFAULT_RUN_ID;
 		}
 
-		jsonObject.put("build_number", getBuildNumber());
-		jsonObject.put("build_url", getBuildURL());
-		jsonObject.put("cohort_name", getCohortName());
-		jsonObject.put("hostname", getHostname());
-		jsonObject.put("jenkins_github_url", getJenkinsGitHubURL());
-		jsonObject.put("job_name", getJobName());
-		jsonObject.put("master_hostname", getMasterHostname());
-		jsonObject.put("run_id", getRunID());
-		jsonObject.put("workspace_dir", String.valueOf(getWorkspaceDir()));
-	}
-
-	private void _init(Map<String, String> buildParameters, String runID) {
-		_buildParameters = buildParameters;
 		_runID = runID;
 
-		if (has(runID)) {
-			JSONObject jsonObject = getJSONObject(runID);
-
-			_buildNumber = jsonObject.getInt("build_number");
-			_buildURL = jsonObject.getString("build_url");
-			_cohortName = jsonObject.getString("cohort_name");
-			_hostname = jsonObject.getString("hostname");
-			_jobName = jsonObject.getString("job_name");
-			_masterHostname = jsonObject.getString("master_hostname");
-			_jenkinsGitHubURL = jsonObject.getString("jenkins_github_url");
-			_workspaceDir = new File(jsonObject.getString("workspace_dir"));
-
-			return;
+		if (!jenkinsJSONObject.has(runID)) {
+			jenkinsJSONObject.put(runID, this);
 		}
 
-		_hostname = JenkinsResultsParserUtil.getHostName("");
+		if (!has("build_url")) {
+			if (!buildParameters.containsKey("BUILD_URL")) {
+				throw new RuntimeException("Please set BUILD_URL");
+			}
 
-		if (!_buildParameters.containsKey("BUILD_URL")) {
-			throw new RuntimeException("Please set BUILD_URL");
+			put("build_url", buildParameters.get("BUILD_URL"));
 		}
 
-		_buildURL = _buildParameters.get("BUILD_URL");
+		String buildURL = getBuildURL();
 
-		Matcher matcher = _buildURLPattern.matcher(_buildURL);
+		Matcher matcher = _buildURLPattern.matcher(buildURL);
 
 		if (!matcher.find()) {
-			throw new RuntimeException("Invalid Build URL " + _buildURL);
+			throw new RuntimeException("Invalid Build URL " + buildURL);
 		}
 
-		_buildNumber = Integer.valueOf(matcher.group("buildNumber"));
-		_cohortName = matcher.group("cohortName");
-		_jobName = matcher.group("jobName");
-		_masterHostname = matcher.group("masterHostname");
-
-		if (_buildParameters.containsKey("JENKINS_GITHUB_URL")) {
-			_jenkinsGitHubURL = _buildParameters.get("JENKINS_GITHUB_URL");
-		}
-		else {
-			_jenkinsGitHubURL = _DEFAULT_JENKINS_GITHUB_URL;
+		if (!has("build_number")) {
+			put("build_number", Integer.valueOf(matcher.group("buildNumber")));
 		}
 
-		File workspaceDir;
+		if (!has("build_url")) {
+			put("build_url", buildURL);
+		}
 
-		if (_buildParameters.containsKey("WORKSPACE")) {
-			workspaceDir = new File(_buildParameters.get("WORKSPACE"));
+		if (!has("cohort_name")) {
+			put("cohort_name", matcher.group("cohortName"));
 		}
-		else {
-			workspaceDir = new File(".");
+
+		if (!has("job_name")) {
+			put("job_name", matcher.group("jobName"));
 		}
+
+		if (!has("master_hostname")) {
+			put("master_hostname", matcher.group("masterHostname"));
+		}
+
+		if (!has("jenkins_github_url")) {
+			String jenkinsGithubURL = buildParameters.getOrDefault(
+				"JENKINS_GITHUB_URL", _DEFAULT_JENKINS_GITHUB_URL);
+
+			put("jenkins_github_url", jenkinsGithubURL);
+		}
+
+		if (!has("workspace_dir")) {
+			put("workspace_dir", _getWorkspaceDir(buildParameters));
+		}
+	}
+
+	private String _getWorkspaceDir(Map<String, String> buildParameters) {
+		File workspaceDir = new File(
+			buildParameters.getOrDefault("WORKSPACE", _DEFAULT_WORKSPACE));
 
 		try {
-			_workspaceDir = new File(workspaceDir.getCanonicalPath());
+			return workspaceDir.getCanonicalPath();
 		}
 		catch (IOException ioe) {
 			throw new RuntimeException(ioe);
 		}
-
-		updateBuildData();
 	}
 
 	private static final String _DEFAULT_JENKINS_GITHUB_URL =
 		"https://github.com/liferay/liferay-jenkins-ee/master";
+
+	private static final String _DEFAULT_RUN_ID = "default";
+
+	private static final String _DEFAULT_WORKSPACE = ".";
 
 	private static final Pattern _buildURLPattern = Pattern.compile(
 		JenkinsResultsParserUtil.combine(
@@ -200,15 +200,6 @@ public abstract class BaseBuildData
 			"(\\.liferay\\.com)?/job/(?<jobName>[^/]+)/(.*/)?",
 			"(?<buildNumber>\\d+)/?"));
 
-	private Integer _buildNumber;
-	private Map<String, String> _buildParameters;
-	private String _buildURL;
-	private String _cohortName;
-	private String _hostname;
-	private String _jenkinsGitHubURL;
-	private String _jobName;
-	private String _masterHostname;
-	private String _runID;
-	private File _workspaceDir;
+	private final String _runID;
 
 }

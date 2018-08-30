@@ -16,56 +16,37 @@ package com.liferay.jenkins.results.parser;
 
 import java.io.IOException;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
 import org.apache.commons.lang.StringUtils;
 
-import org.json.JSONObject;
-
 /**
  * @author Michael Hashimoto
  */
-public class TopLevelBuildData extends BaseBuildData {
-
-	@Override
-	public List<String> getDistNodes() {
-		return _distNodes;
-	}
-
-	@Override
-	public String getDistPath() {
-		return _distPath;
-	}
-
-	@Override
-	public void updateBuildData() {
-		super.updateBuildData();
-
-		put("dist_nodes", StringUtils.join(getDistNodes(), ","));
-		put("dist_path", getDistPath());
-	}
-
-	protected TopLevelBuildData(Map<String, String> buildParameters) {
-		super(buildParameters, TOP_LEVEL_RUN_ID);
-
-		_init();
-	}
+public abstract class TopLevelBuildData extends BaseBuildData {
 
 	protected TopLevelBuildData(
-		String jsonString, Map<String, String> buildParameters) {
+		Map<String, String> buildParameters,
+		JenkinsJSONObject jenkinsJSONObject, String runID) {
 
-		super(jsonString, buildParameters, TOP_LEVEL_RUN_ID);
+		super(buildParameters, jenkinsJSONObject, runID);
 
-		_init();
+		if (!has("dist_nodes")) {
+			put("dist_nodes", _getDistNodes());
+		}
+
+		if (!has("dist_path")) {
+			put("dist_path", _getDistPath());
+		}
+
+		put("top_level_run_id", getRunID());
 	}
 
-	private List<String> _getDistNodes() {
+	private String _getDistNodes() {
 		if (!JenkinsResultsParserUtil.isCINode()) {
-			return Collections.emptyList();
+			return "";
 		}
 
 		Properties buildProperties;
@@ -86,8 +67,10 @@ public class TopLevelBuildData extends BaseBuildData {
 		List<String> slaves = JenkinsResultsParserUtil.getSlaves(
 			buildProperties, cohortName + "-[1-9]{1}[0-9]?");
 
-		return JenkinsResultsParserUtil.getRandomList(
+		List<String> distNodes = JenkinsResultsParserUtil.getRandomList(
 			slaves, jenkinsMasters.size());
+
+		return StringUtils.join(distNodes, ",");
 	}
 
 	private String _getDistPath() {
@@ -95,29 +78,5 @@ public class TopLevelBuildData extends BaseBuildData {
 			BaseBuildRunner.DIST_ROOT_PATH, "/", getMasterHostname(), "/",
 			getJobName(), "/", String.valueOf(getBuildNumber()), "/dist");
 	}
-
-	private void _init() {
-		String runID = getRunID();
-
-		if (has(runID)) {
-			JSONObject jsonObject = getJSONObject(runID);
-
-			String distNodes = jsonObject.getString("dist_nodes");
-
-			Collections.addAll(_distNodes, distNodes.split(","));
-
-			_distPath = jsonObject.getString("dist_path");
-
-			return;
-		}
-
-		_distNodes.addAll(_getDistNodes());
-		_distPath = _getDistPath();
-
-		updateBuildData();
-	}
-
-	private List<String> _distNodes = new ArrayList<>();
-	private String _distPath;
 
 }

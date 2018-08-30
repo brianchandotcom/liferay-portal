@@ -14,14 +14,7 @@
 
 package com.liferay.jenkins.results.parser;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 import java.util.Map;
-
-import org.apache.commons.lang.StringUtils;
-
-import org.json.JSONObject;
 
 /**
  * @author Michael Hashimoto
@@ -29,89 +22,71 @@ import org.json.JSONObject;
 public class BatchBuildData extends BaseBuildData {
 
 	public String getBatchName() {
-		return _batchName;
+		return getString("batch_name");
 	}
 
-	@Override
-	public List<String> getDistNodes() {
-		return _distNodes;
+	public TopLevelBuildData getTopLevelBuildData() {
+		return _topLevelBuildData;
 	}
 
-	@Override
-	public String getDistPath() {
-		return _distPath;
-	}
-
-	@Override
-	public JSONObject toJSONObject() {
-		JSONObject jsonObject = super.toJSONObject();
-
-		jsonObject.put("batch_name", getBatchName());
-		jsonObject.put("dist_nodes", StringUtils.join(getDistNodes(), ","));
-		jsonObject.put("dist_path", getDistPath());
-		jsonObject.put("run_id", getRunID());
-
-		return jsonObject;
+	public String getTopLevelRunID() {
+		return optString("top_level_run_id", null);
 	}
 
 	protected BatchBuildData(
-		Map<String, String> buildParameters, String runID) {
+		Map<String, String> buildParameters,
+		JenkinsJSONObject jenkinsJSONObject, String runID) {
 
-		super(buildParameters, runID);
+		super(buildParameters, jenkinsJSONObject, runID);
 
-		_init(buildParameters, runID);
-	}
-
-	protected BatchBuildData(
-		String jsonString, Map<String, String> buildParameters, String runID) {
-
-		super(jsonString, buildParameters, runID);
-
-		_init(buildParameters, runID);
-	}
-
-	private void _init(Map<String, String> buildParameters, String runID) {
-		if (has(runID)) {
-			JSONObject jsonObject = getJSONObject(runID);
-
-			if (jsonObject.has("batch_name")) {
-				_batchName = jsonObject.getString("batch_name");
-
-				String distNodes = jsonObject.getString("dist_nodes");
-
-				Collections.addAll(_distNodes, distNodes.split(","));
-
-				_distPath = jsonObject.getString("dist_path");
-
-				return;
+		if (!has("batch_name")) {
+			if (!buildParameters.containsKey("BATCH_NAME")) {
+				throw new RuntimeException("Please set BATCH_NAME");
 			}
+
+			put("batch_name", buildParameters.get("BATCH_NAME"));
 		}
 
-		if (!buildParameters.containsKey("BATCH_NAME")) {
-			throw new RuntimeException("Please set BATCH_NAME");
+		if (!has("dist_nodes")) {
+			if (!buildParameters.containsKey("DIST_NODES")) {
+				throw new RuntimeException("Please set DIST_NODES");
+			}
+
+			put("dist_nodes", buildParameters.get("DIST_NODES"));
 		}
 
-		_batchName = buildParameters.get("BATCH_NAME");
+		if (!has("dist_path")) {
+			if (!buildParameters.containsKey("DIST_PATH")) {
+				throw new RuntimeException("Please set DIST_PATH");
+			}
 
-		if (!buildParameters.containsKey("DIST_NODES")) {
-			throw new RuntimeException("Please set DIST_NODES");
+			put("dist_nodes", buildParameters.get("DIST_PATH"));
 		}
 
-		String distNodes = buildParameters.get("DIST_NODES");
+		if (!has("top_level_run_id") &&
+			buildParameters.containsKey("TOP_LEVEL_RUN_ID")) {
 
-		Collections.addAll(_distNodes, distNodes.split(","));
-
-		if (!buildParameters.containsKey("DIST_PATH")) {
-			throw new RuntimeException("Please set DIST_PATH");
+			put("top_level_run_id", buildParameters.get("TOP_LEVEL_RUN_ID"));
 		}
 
-		_distPath = buildParameters.get("DIST_PATH");
-
-		updateBuildData();
+		_topLevelBuildData = _getTopLevelBuildData(
+			buildParameters, jenkinsJSONObject);
 	}
 
-	private String _batchName;
-	private List<String> _distNodes = new ArrayList<>();
-	private String _distPath;
+	private TopLevelBuildData _getTopLevelBuildData(
+		Map<String, String> buildParameters,
+		JenkinsJSONObject jenkinsJSONObject) {
+
+		String topLevelRunID = getTopLevelRunID();
+
+		if (topLevelRunID == null) {
+			return null;
+		}
+
+		return BuildDataFactory.newTopLevelBuildData(
+			buildParameters, jenkinsJSONObject, topLevelRunID);
+	}
+
+	private final TopLevelBuildData _topLevelBuildData;
 
 }

@@ -34,10 +34,11 @@ import com.liferay.portal.kernel.search.IndexerRegistry;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchPermissionChecker;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
+import com.liferay.portal.kernel.search.filter.TermFilter;
 import com.liferay.portal.kernel.search.filter.TermsFilter;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
+import com.liferay.portal.kernel.security.permission.PermissionCheckerFactory;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.security.permission.UserBag;
 import com.liferay.portal.kernel.service.GroupLocalService;
@@ -50,6 +51,8 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.configuration.SearchPermissionCheckerConfiguration;
+import com.liferay.portal.search.spi.model.permission.SearchPermissionFieldContributor;
+import com.liferay.portal.search.spi.model.permission.SearchPermissionFilterContributor;
 
 import java.io.Serializable;
 
@@ -60,11 +63,15 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferenceCardinality;
+import org.osgi.service.component.annotations.ReferencePolicy;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Allen Chiang
@@ -99,7 +106,7 @@ public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 				long classNameId = GetterUtil.getLong(
 					document.get(Field.CLASS_NAME_ID));
 
-				className = _portal.getClassName(classNameId);
+				className = portal.getClassName(classNameId);
 
 				classPK = document.get(Field.CLASS_PK);
 			}
@@ -108,7 +115,7 @@ public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 				return;
 			}
 
-			Indexer<?> indexer = _indexerRegistry.nullSafeGetIndexer(className);
+			Indexer<?> indexer = indexerRegistry.nullSafeGetIndexer(className);
 
 			if (!indexer.isPermissionAware()) {
 				return;
@@ -121,7 +128,8 @@ public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 			}
 
 			_addPermissionFields(
-				companyId, groupId, className, classPK, viewActionId, document);
+				companyId, groupId, className, GetterUtil.getLong(classPK),
+				viewActionId, document);
 		}
 		catch (NoSuchResourceException nsre) {
 			if (_log.isDebugEnabled()) {
@@ -139,15 +147,15 @@ public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 		BooleanFilter booleanFilter, SearchContext searchContext) {
 
 		try {
-			booleanFilter = _getPermissionBooleanFilter(
+			return _getPermissionBooleanFilter(
 				companyId, groupIds, userId, className, booleanFilter,
 				searchContext);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
-		}
 
-		return booleanFilter;
+			return booleanFilter;
+		}
 	}
 
 	@Override
@@ -155,7 +163,7 @@ public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 		String resourceName, String resourceClassPK) {
 
 		try {
-			Indexer<?> indexer = _indexerRegistry.nullSafeGetIndexer(
+			Indexer<?> indexer = indexerRegistry.nullSafeGetIndexer(
 				resourceName);
 
 			indexer.reindex(resourceName, GetterUtil.getLong(resourceClassPK));
@@ -168,9 +176,87 @@ public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 	@Activate
 	@Modified
 	protected void activate(Map<String, Object> properties) {
-		_searchPermissionCheckerConfiguration =
+		searchPermissionCheckerConfiguration =
 			ConfigurableUtil.createConfigurable(
 				SearchPermissionCheckerConfiguration.class, properties);
+	}
+
+	@Reference(
+		cardinality = ReferenceCardinality.MULTIPLE,
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY
+	)
+	protected void addSearchPermissionFieldContributor(
+		SearchPermissionFieldContributor searchPermissionFieldContributor) {
+
+		_searchPermissionFieldContributors.add(
+			searchPermissionFieldContributor);
+	}
+
+	@Reference(
+		cardinality = ReferenceCardinality.MULTIPLE,
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY
+	)
+	protected void addSearchPermissionFilterContributor(
+		SearchPermissionFilterContributor searchPermissionFilterContributor) {
+
+		_searchPermissionFilterContributors.add(
+			searchPermissionFilterContributor);
+	}
+
+	protected PermissionChecker getPermissionChecker() {
+		if (permissionChecker != null) {
+			return permissionChecker;
+		}
+
+		return PermissionThreadLocal.getPermissionChecker();
+	}
+
+	protected void removeSearchPermissionFieldContributor(
+		SearchPermissionFieldContributor searchPermissionFieldContributor) {
+
+		_searchPermissionFieldContributors.remove(
+			searchPermissionFieldContributor);
+	}
+
+	protected void removeSearchPermissionFilterContributor(
+		SearchPermissionFilterContributor searchPermissionFilterContributor) {
+
+		_searchPermissionFilterContributors.remove(
+			searchPermissionFilterContributor);
+	}
+
+	@Reference
+	protected GroupLocalService groupLocalService;
+
+	@Reference
+	protected IndexerRegistry indexerRegistry;
+
+	protected PermissionChecker permissionChecker;
+
+	@Reference
+	protected PermissionCheckerFactory permissionCheckerFactory;
+
+	@Reference
+	protected Portal portal;
+
+	@Reference
+	protected ResourcePermissionLocalService resourcePermissionLocalService;
+
+	@Reference
+	protected RoleLocalService roleLocalService;
+
+	protected volatile SearchPermissionCheckerConfiguration
+		searchPermissionCheckerConfiguration;
+
+	@Reference
+	protected UserLocalService userLocalService;
+
+	private void _add(BooleanFilter booleanFilter, TermsFilter termsFilter) {
+		if (!termsFilter.isEmpty()) {
+			booleanFilter.add(termsFilter, BooleanClauseOccur.SHOULD);
+		}
 	}
 
 	private void _addGroup(
@@ -184,13 +270,20 @@ public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 	}
 
 	private void _addPermissionFields(
-			long companyId, long groupId, String className, String classPK,
-			String viewActionId, Document doc)
+			long companyId, long groupId, String className, long classPK,
+			String viewActionId, Document document)
 		throws Exception {
 
-		List<Role> roles = _resourcePermissionLocalService.getRoles(
-			companyId, className, ResourceConstants.SCOPE_INDIVIDUAL, classPK,
-			viewActionId);
+		for (SearchPermissionFieldContributor searchPermissionFieldContributor :
+				_searchPermissionFieldContributors) {
+
+			searchPermissionFieldContributor.contribute(
+				document, className, classPK);
+		}
+
+		List<Role> roles = resourcePermissionLocalService.getRoles(
+			companyId, className, ResourceConstants.SCOPE_INDIVIDUAL,
+			String.valueOf(classPK), viewActionId);
 
 		if (roles.isEmpty()) {
 			return;
@@ -210,9 +303,9 @@ public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 			}
 		}
 
-		doc.addKeyword(
+		document.addKeyword(
 			Field.ROLE_ID, roleIds.toArray(new Long[roleIds.size()]));
-		doc.addKeyword(
+		document.addKeyword(
 			Field.GROUP_ROLE_ID,
 			groupRoleIds.toArray(new String[groupRoleIds.size()]));
 	}
@@ -232,19 +325,18 @@ public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 		if (permissionChecker.isSignedIn()) {
 			roles.addAll(userBag.getRoles());
 
-			roles.add(
-				_roleLocalService.getRole(companyId, RoleConstants.GUEST));
+			roles.add(roleLocalService.getRole(companyId, RoleConstants.GUEST));
 		}
 		else {
 			roles.addAll(
-				_roleLocalService.getRoles(
+				roleLocalService.getRoles(
 					permissionChecker.getGuestUserRoleIds()));
 		}
 
 		int termsCount = roles.size();
 
 		int permissionTermsLimit =
-			_searchPermissionCheckerConfiguration.permissionTermsLimit();
+			searchPermissionCheckerConfiguration.permissionTermsLimit();
 
 		if (termsCount > permissionTermsLimit) {
 			if (_log.isDebugEnabled()) {
@@ -258,9 +350,9 @@ public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 			return null;
 		}
 
-		Role organizationUserRole = _roleLocalService.getRole(
+		Role organizationUserRole = roleLocalService.getRole(
 			companyId, RoleConstants.ORGANIZATION_USER);
-		Role siteMemberRole = _roleLocalService.getRole(
+		Role siteMemberRole = roleLocalService.getRole(
 			companyId, RoleConstants.SITE_MEMBER);
 
 		Collection<Group> groups = userBag.getGroups();
@@ -286,7 +378,7 @@ public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 			long[] roleIds = permissionChecker.getRoleIds(
 				userId, group.getGroupId());
 
-			List<Role> groupRoles = _roleLocalService.getRoles(roleIds);
+			List<Role> groupRoles = roleLocalService.getRoles(roleIds);
 
 			roles.addAll(groupRoles);
 
@@ -335,30 +427,47 @@ public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 	}
 
 	private BooleanFilter _getPermissionBooleanFilter(
-			long companyId, long[] searchGroupIds, long userId,
-			String className, BooleanFilter booleanFilter,
-			SearchContext searchContext)
+			long companyId, long[] groupIds, long userId, String className,
+			BooleanFilter booleanFilter, SearchContext searchContext)
 		throws Exception {
 
-		Indexer<?> indexer = _indexerRegistry.getIndexer(className);
+		BooleanFilter permissionBooleanFilter = _getPermissionBooleanFilter(
+			companyId, groupIds, userId, className, searchContext);
 
-		if (!indexer.isPermissionAware()) {
-			return booleanFilter;
+		if (booleanFilter == null) {
+			return permissionBooleanFilter;
 		}
 
-		PermissionChecker permissionChecker =
-			PermissionThreadLocal.getPermissionChecker();
+		if (permissionBooleanFilter != null) {
+			booleanFilter.add(permissionBooleanFilter, BooleanClauseOccur.MUST);
+		}
+
+		return booleanFilter;
+	}
+
+	private BooleanFilter _getPermissionBooleanFilter(
+			long companyId, long[] searchGroupIds, long userId,
+			String className, SearchContext searchContext)
+		throws Exception {
+
+		Indexer<?> indexer = indexerRegistry.getIndexer(className);
+
+		if (!indexer.isPermissionAware()) {
+			return null;
+		}
+
+		PermissionChecker permissionChecker = getPermissionChecker();
 
 		User user = permissionChecker.getUser();
 
 		if ((user == null) || (user.getUserId() != userId)) {
-			user = _userLocalService.fetchUser(userId);
+			user = userLocalService.fetchUser(userId);
 
 			if (user == null) {
-				return booleanFilter;
+				return null;
 			}
 
-			permissionChecker = PermissionCheckerFactoryUtil.create(user);
+			permissionChecker = permissionCheckerFactory.create(user);
 		}
 
 		Object searchPermissionContextObject = searchContext.getAttribute(
@@ -370,7 +479,7 @@ public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 			if (searchPermissionContextObject ==
 					_NULL_SEARCH_PERMISSION_CONTEXT) {
 
-				return booleanFilter;
+				return null;
 			}
 
 			searchPermissionContext =
@@ -385,7 +494,7 @@ public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 			searchContext.setAttribute(
 				"searchPermissionContext", _NULL_SEARCH_PERMISSION_CONTEXT);
 
-			return booleanFilter;
+			return null;
 		}
 
 		searchContext.setAttribute(
@@ -393,23 +502,24 @@ public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 
 		return _getPermissionFilter(
 			companyId, searchGroupIds, userId, permissionChecker, className,
-			booleanFilter, searchPermissionContext);
+			searchPermissionContext);
 	}
 
 	private BooleanFilter _getPermissionFilter(
-			long companyId, long[] searchGroupIds, long userId,
+			long companyId, long[] groupIds, long userId,
 			PermissionChecker permissionChecker, String className,
-			BooleanFilter booleanFilter,
 			SearchPermissionContext searchPermissionContext)
 		throws Exception {
 
 		List<UsersGroupIdRoles> usersGroupIdsRoles =
 			searchPermissionContext._usersGroupIdsRoles;
 
-		BooleanFilter permissionBooleanFilter = new BooleanFilter();
+		BooleanFilter booleanFilter = new BooleanFilter();
 
 		if (userId > 0) {
-			permissionBooleanFilter.addTerm(Field.USER_ID, userId);
+			booleanFilter.add(
+				new TermFilter(Field.USER_ID, String.valueOf(userId)),
+				BooleanClauseOccur.SHOULD);
 		}
 
 		TermsFilter groupsTermsFilter = new TermsFilter(Field.GROUP_ID);
@@ -421,19 +531,19 @@ public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 		long[] roleIds = searchPermissionContext._roleIds;
 		long[] regularRoleIds = searchPermissionContext._regularRoleIds;
 
-		if (_resourcePermissionLocalService.hasResourcePermission(
+		if (resourcePermissionLocalService.hasResourcePermission(
 				companyId, className, ResourceConstants.SCOPE_COMPANY,
 				String.valueOf(companyId), roleIds, ActionKeys.VIEW)) {
 
-			return booleanFilter;
+			return null;
 		}
 
-		if (_resourcePermissionLocalService.hasResourcePermission(
+		if (resourcePermissionLocalService.hasResourcePermission(
 				companyId, className, ResourceConstants.SCOPE_GROUP_TEMPLATE,
 				String.valueOf(GroupConstants.DEFAULT_PARENT_GROUP_ID),
 				regularRoleIds, ActionKeys.VIEW)) {
 
-			return booleanFilter;
+			return null;
 		}
 
 		for (UsersGroupIdRoles usersGroupIdRoles : usersGroupIdsRoles) {
@@ -441,10 +551,10 @@ public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 			List<Role> groupRoles = usersGroupIdRoles._groupRoles;
 
 			if (permissionChecker.isGroupAdmin(groupId) ||
-				_resourcePermissionLocalService.hasResourcePermission(
+				resourcePermissionLocalService.hasResourcePermission(
 					companyId, className, ResourceConstants.SCOPE_GROUP,
 					String.valueOf(groupId), roleIds, ActionKeys.VIEW) ||
-				_resourcePermissionLocalService.hasResourcePermission(
+				resourcePermissionLocalService.hasResourcePermission(
 					companyId, className,
 					ResourceConstants.SCOPE_GROUP_TEMPLATE,
 					String.valueOf(GroupConstants.DEFAULT_PARENT_GROUP_ID),
@@ -455,10 +565,10 @@ public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 			}
 		}
 
-		if (ArrayUtil.isNotEmpty(searchGroupIds)) {
-			for (long searchGroupId : searchGroupIds) {
+		if (ArrayUtil.isNotEmpty(groupIds)) {
+			for (long searchGroupId : groupIds) {
 				if (!searchPermissionContext.containsGroupId(searchGroupId) &&
-					_resourcePermissionLocalService.hasResourcePermission(
+					resourcePermissionLocalService.hasResourcePermission(
 						companyId, className, ResourceConstants.SCOPE_GROUP,
 						String.valueOf(searchGroupId), roleIds,
 						ActionKeys.VIEW)) {
@@ -468,29 +578,24 @@ public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 			}
 		}
 
-		if (!groupsTermsFilter.isEmpty()) {
-			permissionBooleanFilter.add(groupsTermsFilter);
+		_add(booleanFilter, groupRolesTermsFilter);
+		_add(booleanFilter, groupsTermsFilter);
+		_add(booleanFilter, rolesTermsFilter);
+
+		for (SearchPermissionFilterContributor
+				searchPermissionFilterContributor :
+					_searchPermissionFilterContributors) {
+
+			searchPermissionFilterContributor.contribute(
+				booleanFilter, companyId, groupIds, userId, permissionChecker,
+				className);
 		}
 
-		if (!groupRolesTermsFilter.isEmpty()) {
-			permissionBooleanFilter.add(groupRolesTermsFilter);
+		if (!booleanFilter.hasClauses()) {
+			return null;
 		}
 
-		if (!rolesTermsFilter.isEmpty()) {
-			permissionBooleanFilter.add(rolesTermsFilter);
-		}
-
-		if (!permissionBooleanFilter.hasClauses()) {
-			return booleanFilter;
-		}
-
-		if (booleanFilter != null) {
-			booleanFilter.add(permissionBooleanFilter, BooleanClauseOccur.MUST);
-
-			return booleanFilter;
-		}
-
-		return permissionBooleanFilter;
+		return booleanFilter;
 	}
 
 	private static final String _NULL_SEARCH_PERMISSION_CONTEXT =
@@ -499,26 +604,10 @@ public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 	private static final Log _log = LogFactoryUtil.getLog(
 		SearchPermissionCheckerImpl.class);
 
-	@Reference
-	private GroupLocalService _groupLocalService;
-
-	@Reference
-	private IndexerRegistry _indexerRegistry;
-
-	@Reference
-	private Portal _portal;
-
-	@Reference
-	private ResourcePermissionLocalService _resourcePermissionLocalService;
-
-	@Reference
-	private RoleLocalService _roleLocalService;
-
-	private volatile SearchPermissionCheckerConfiguration
-		_searchPermissionCheckerConfiguration;
-
-	@Reference
-	private UserLocalService _userLocalService;
+	private final Collection<SearchPermissionFieldContributor>
+		_searchPermissionFieldContributors = new CopyOnWriteArrayList<>();
+	private final Collection<SearchPermissionFilterContributor>
+		_searchPermissionFilterContributors = new CopyOnWriteArrayList<>();
 
 	private static class SearchPermissionContext implements Serializable {
 

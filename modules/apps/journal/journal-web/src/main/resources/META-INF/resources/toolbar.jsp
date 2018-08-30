@@ -142,4 +142,22 @@ String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 			managementToolbar.on('creationMenuMoreButtonClicked', openViewMoreDDMStructuresSelector);
 		}
 	);
+
+	<portlet:renderURL var="addArticleURL">
+		<portlet:param name="mvcPath" value="/edit_article.jsp" />
+		<portlet:param name="redirect" value="<%= currentURL %>" />
+		<portlet:param name="groupId" value="<%= String.valueOf(scopeGroupId) %>" />
+		<portlet:param name="folderId" value="<%= String.valueOf(journalDisplayContext.getFolderId()) %>" />
+	</portlet:renderURL>
+
+	Liferay.on(
+		'<portlet:namespace />selectAddMenuItem',
+		function(event) {
+			var uri = '<%= addArticleURL %>';
+
+			uri = Liferay.Util.addParams('<portlet:namespace />ddmStructureKey=' + event.ddmStructureKey, uri);
+
+			location.href = uri;
+		}
+	);
 </aui:script>

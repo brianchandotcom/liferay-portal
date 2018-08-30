@@ -25,7 +25,6 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Properties;
 import java.util.Set;
 
 import org.gradle.StartParameter;
@@ -109,20 +108,6 @@ public class GradleUtil extends com.liferay.gradle.util.GradleUtil {
 			project, BasePluginConvention.class);
 
 		return basePluginConvention.getArchivesBaseName();
-	}
-
-	public static String getGradlePropertiesValue(
-		Project project, String key, String defaultValue) {
-
-		File dir = getRootDir(project, "gradle.properties");
-
-		if (dir == null) {
-			return defaultValue;
-		}
-
-		Properties properties = getGradleProperties(dir);
-
-		return properties.getProperty(key, defaultValue);
 	}
 
 	public static File getMavenLocalDir(Project project) {
@@ -248,26 +233,6 @@ public class GradleUtil extends com.liferay.gradle.util.GradleUtil {
 		}
 
 		return toString(value);
-	}
-
-	public static File getRootDir(File dir, String markerFileName) {
-		while (true) {
-			File markerFile = new File(dir, markerFileName);
-
-			if (markerFile.exists()) {
-				return dir;
-			}
-
-			dir = dir.getParentFile();
-
-			if (dir == null) {
-				return null;
-			}
-		}
-	}
-
-	public static File getRootDir(Project project, String markerFileName) {
-		return getRootDir(project.getProjectDir(), markerFileName);
 	}
 
 	public static File getSrcDir(SourceDirectorySet sourceDirectorySet) {

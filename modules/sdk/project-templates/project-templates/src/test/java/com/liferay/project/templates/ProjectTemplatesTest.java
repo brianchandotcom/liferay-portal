@@ -17,7 +17,7 @@ package com.liferay.project.templates;
 import aQute.bnd.main.bnd;
 
 import com.liferay.maven.executor.MavenExecutor;
-import com.liferay.project.templates.internal.Archetyper;
+import com.liferay.project.templates.internal.ProjectGenerator;
 import com.liferay.project.templates.internal.util.FileUtil;
 import com.liferay.project.templates.internal.util.Validator;
 import com.liferay.project.templates.util.DirectoryComparator;
@@ -4014,9 +4014,9 @@ public class ProjectTemplatesTest {
 		projectTemplatesArgs.setService(service);
 		projectTemplatesArgs.setTemplate(template);
 
-		Archetyper archetyper = new Archetyper();
+		ProjectGenerator projectGenerator = new ProjectGenerator();
 
-		archetyper.generateProject(
+		projectGenerator.generateProject(
 			projectTemplatesArgs, archetyperDestinationDir);
 
 		File archetyperProjectDir = new File(archetyperDestinationDir, name);

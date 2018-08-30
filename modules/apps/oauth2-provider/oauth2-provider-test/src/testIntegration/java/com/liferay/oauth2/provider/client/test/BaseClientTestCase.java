@@ -602,7 +602,7 @@ public abstract class BaseClientTestCase {
 		if (uri == null) {
 			throw new IllegalArgumentException(
 				"Authorization service response missing \"Location\" header " +
-					"from which code is extracted");
+					"from which error is extracted");
 		}
 
 		Map<String, String[]> parameterMap = HttpUtil.getParameterMap(

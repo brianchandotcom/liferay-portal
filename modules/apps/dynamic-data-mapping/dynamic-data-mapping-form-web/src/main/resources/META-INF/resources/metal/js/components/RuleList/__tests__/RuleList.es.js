@@ -229,8 +229,10 @@ describe(
 
 				component.rules['logical-operator'] = 'OR';
 
-				expect(translationManager.classList.contains('hide')
-					&& formBasicInfo.classList.contains('hide')).toEqual(true);
+				expect(
+					translationManager.classList.contains('hide') &&
+					formBasicInfo.classList.contains('hide')
+				).toEqual(true);
 
 				MetalTestUtil.exitDocument(translationManager);
 				MetalTestUtil.exitDocument(formBasicInfo);

@@ -7,6 +7,7 @@ import LayoutProvider from './components/LayoutProvider/index.es';
 import loader from './components/FieldsLoader/index.es';
 import RuleBuilder from './pages/RuleBuilder/index.es';
 import withAppComposer from './hocs/withAppComposer/index.es';
+import {EventHandler} from 'metal-events';
 
 const STR_UNTITLED_FORM = Liferay.Language.get('untitled-form');
 
@@ -184,15 +185,24 @@ class Form extends Component {
 
 	_handleAddFieldButtonClicked() {
 		const {builder} = this.refs;
-		const {sidebar} = builder.refs;
 
-		sidebar.props.mode = 'add';
-		sidebar.show();
+		if (builder) {
+			const {sidebar} = builder.refs;
+
+			sidebar.props.mode = 'add';
+			sidebar.show();
+		}
+	}
+
+	created() {
+		this._eventHandler = new EventHandler();
 	}
 
 	attached() {
-		dom.on('#addFieldButton', 'click', this._handleAddFieldButtonClicked.bind(this));
-		dom.on('.forms-management-bar li', 'click', this._handleFormNavClicked.bind(this));
+		this._eventHandler.add(
+			dom.on('#addFieldButton', 'click', this._handleAddFieldButtonClicked.bind(this)),
+			dom.on('.forms-management-bar li', 'click', this._handleFormNavClicked.bind(this))
+		);
 	}
 
 	_handleFormNavClicked(event) {

@@ -59,7 +59,7 @@
 						{$hoveredFragmentEntryLinkBorder}
 					{/if}
 				{/let}
-				<div data-position="{index($fragmentEntryLink)}" key="{$fragmentEntryLink.fragmentEntryLinkId}">
+				<div key="{$fragmentEntryLink.fragmentEntryLinkId}">
 					{call com.liferay.layout.admin.web.FragmentEntryLink.render}
 						{param content: $fragmentEntryLink.content /}
 						{param defaultEditorConfigurations: $defaultEditorConfigurations /}

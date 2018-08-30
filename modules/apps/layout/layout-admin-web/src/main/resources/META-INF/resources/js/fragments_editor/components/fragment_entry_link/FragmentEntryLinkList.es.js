@@ -103,8 +103,7 @@ FragmentEntryLinkList.STATE = {
 	dropTargetClass: Config.string(),
 
 	/**
-	 * List of fragment instances being used, the order
-	 * of the elements in this array defines their position.
+	 * List of fragment instances being used.
 	 * @default []
 	 * @instance
 	 * @memberOf FragmentEntryLinkList
@@ -115,8 +114,7 @@ FragmentEntryLinkList.STATE = {
 	 *   editableValues: Object,
 	 *   fragmentEntryId: !string,
 	 *   fragmentEntryLinkId: !string,
-	 *   name: !string,
-	 *   position: !number
+	 *   name: !string
 	 * }>}
 	 */
 
@@ -128,8 +126,7 @@ FragmentEntryLinkList.STATE = {
 				editableValues: Config.object().value({}),
 				fragmentEntryId: Config.string().required(),
 				fragmentEntryLinkId: Config.string().required(),
-				name: Config.string().required(),
-				position: Config.number().required()
+				name: Config.string().required()
 			}
 		)
 	).value([]),

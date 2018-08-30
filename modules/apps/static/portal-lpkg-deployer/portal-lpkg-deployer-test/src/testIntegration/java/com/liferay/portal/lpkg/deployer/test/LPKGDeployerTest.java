@@ -180,7 +180,7 @@ public class LPKGDeployerTest {
 					}
 					else {
 						String location = (String)method.invoke(
-							null, lpkgBundle, StringPool.SLASH.concat(name));
+							null, lpkgBundle, name);
 
 						Bundle bundle = bundleContext.getBundle(location);
 
@@ -193,7 +193,7 @@ public class LPKGDeployerTest {
 
 				if (name.endsWith(".war")) {
 					String location = (String)method.invoke(
-						null, lpkgBundle, StringPool.SLASH.concat(name));
+						null, lpkgBundle, name);
 
 					Bundle bundle = bundleContext.getBundle(location);
 

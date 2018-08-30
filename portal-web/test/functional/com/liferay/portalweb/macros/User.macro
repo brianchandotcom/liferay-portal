@@ -1561,22 +1561,51 @@
 	<command name="loginUserInvalidPG">
 		<execute macro="Navigator#openURL" />
 
-		<execute function="AssertClick" locator1="UserBar#USER_SIGN_IN" value1="Sign In" />
-
-		<execute function="Type" locator1="TextInput#EMAIL_ADDRESS" value1="${userEmailAddress}" />
-		<execute function="Type" locator1="TextInput#PASSWORD" value1="${password}" />
-
-		<execute function="Click" locator1="Button#SIGN_IN" />
+		<var name="count" value="0" />
 
 		<if>
-			<equals arg1="${loginAttempts}" arg2="${maximumFailure}" />
+			<not>
+				<isset var="loginAttempts" />
+			</not>
 			<then>
-				<execute function="AssertTextEquals#assertPartialText" locator1="Message#ERROR_1" value1="This account is locked. Please contact an administrator to have this account unlocked." />
+				<var name="loginAttempts" value="1" />
 			</then>
-			<else>
-				<execute function="AssertTextEquals#assertPartialText" locator1="Message#ERROR_1" value1="Authentication failed. Please try again." />
-			</else>
 		</if>
+
+		<if>
+			<not>
+				<isset var="maxLoginAttempts" />
+			</not>
+			<then>
+				<var name="maxLoginAttempts" value="0" />
+			</then>
+		</if>
+
+		<while>
+			<not>
+				<equals arg1="${count}" arg2="${loginAttempts}" />
+			</not>
+			<then>
+				<var method="MathUtil#sum('${count}', '1')" name="count" />
+
+				<execute function="AssertClick" locator1="UserBar#USER_SIGN_IN" value1="Sign In" />
+
+				<execute function="Type" locator1="TextInput#EMAIL_ADDRESS" value1="${userEmailAddress}" />
+				<execute function="Type" locator1="TextInput#PASSWORD" value1="${password}" />
+
+				<execute function="Click" locator1="Button#SIGN_IN" />
+
+				<if>
+					<equals arg1="${count}" arg2="${maximumFailure}" />
+					<then>
+						<execute function="AssertTextEquals#assertPartialText" locator1="Message#ERROR_1" value1="This account is locked. Please contact an administrator to have this account unlocked." />
+					</then>
+					<else>
+						<execute function="AssertTextEquals#assertPartialText" locator1="Message#ERROR_1" value1="Authentication failed. Please try again." />
+					</else>
+				</if>
+			</then>
+		</while>
 	</command>
 
 	<command name="loginUserPG">

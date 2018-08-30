@@ -262,6 +262,40 @@ public class GradleUtil {
 		return properties;
 	}
 
+	public static Properties getGradleProperties(Project project) {
+		return getGradleProperties(getRootDir(project, "gradle.properties"));
+	}
+
+	public static String getGradlePropertiesValue(
+		File gradlePropertiesDir, String key) {
+
+		return getGradlePropertiesValue(gradlePropertiesDir, key, "");
+	}
+
+	public static String getGradlePropertiesValue(
+		File gradlePropertiesDir, String key, String defaultValue) {
+
+		if (gradlePropertiesDir == null) {
+			return defaultValue;
+		}
+
+		Properties properties = getGradleProperties(gradlePropertiesDir);
+
+		return properties.getProperty(key, defaultValue);
+	}
+
+	public static String getGradlePropertiesValue(Project project, String key) {
+		return getGradlePropertiesValue(project, key, "");
+	}
+
+	public static String getGradlePropertiesValue(
+		Project project, String key, String defaultValue) {
+
+		File rootDir = getRootDir(project, "gradle.properties");
+
+		return getGradlePropertiesValue(rootDir, key, defaultValue);
+	}
+
 	public static Project getProject(Project rootProject, File projectDir) {
 		for (Project project : rootProject.getAllprojects()) {
 			if (projectDir.equals(project.getProjectDir())) {
@@ -331,6 +365,26 @@ public class GradleUtil {
 		}
 
 		return toFile(project, value);
+	}
+
+	public static File getRootDir(File dir, String markerFileName) {
+		while (true) {
+			File markerFile = new File(dir, markerFileName);
+
+			if (markerFile.exists()) {
+				return dir;
+			}
+
+			dir = dir.getParentFile();
+
+			if (dir == null) {
+				return null;
+			}
+		}
+	}
+
+	public static File getRootDir(Project project, String markerFileName) {
+		return getRootDir(project.getProjectDir(), markerFileName);
 	}
 
 	public static SourceSet getSourceSet(Project project, String name) {

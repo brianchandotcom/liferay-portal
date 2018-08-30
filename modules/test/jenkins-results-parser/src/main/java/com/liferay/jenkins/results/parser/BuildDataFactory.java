@@ -41,7 +41,7 @@ public class BuildDataFactory {
 			throw new RuntimeException("Invalid BUILD_URL " + buildURL);
 		}
 
-		if (buildURL.contains("-batch")) {
+		if (jobName.endsWith("-batch")) {
 			return new PortalBatchBuildData(
 				buildDataJSONObject, buildParameters, runID);
 		}

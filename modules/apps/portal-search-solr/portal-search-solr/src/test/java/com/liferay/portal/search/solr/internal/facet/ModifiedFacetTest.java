@@ -19,10 +19,26 @@ import com.liferay.portal.search.solr.internal.SolrIndexingFixture;
 import com.liferay.portal.search.test.util.facet.BaseModifiedFacetTestCase;
 import com.liferay.portal.search.test.util.indexing.IndexingFixture;
 
+import org.junit.Ignore;
+import org.junit.Test;
+
 /**
  * @author Bryan Engler
  */
 public class ModifiedFacetTest extends BaseModifiedFacetTestCase {
+
+	@Ignore
+	@Test
+	public void testSearchEngineDateMath() throws Exception {
+		addDocument("17760704000000");
+		addDocument("27760704000000");
+
+		String dateMathExpressionWithAlphabeticalOrderSwitched =
+			"[now-500y TO now]";
+
+		doTestSearchEngineDateMath(
+			dateMathExpressionWithAlphabeticalOrderSwitched, 1);
+	}
 
 	@Override
 	protected IndexingFixture createIndexingFixture() {

@@ -92,13 +92,16 @@ public class LiferaySecureUberspector extends SecureUberspector {
 		_runtimeServices = runtimeServices;
 	}
 
+	private static final ClassRestrictionInformation _nullInstance =
+		new ClassRestrictionInformation(null);
+
 	private final Map<String, ClassRestrictionInformation>
 		_classRestrictionInformations = new ConcurrentHashMap<>();
 	private List<Class<?>> _restrictedClasses;
 	private List<String> _restrictedPackageNames;
 	private RuntimeServices _runtimeServices;
 
-	private class ClassRestrictionInformation {
+	private static class ClassRestrictionInformation {
 
 		public String getDescription() {
 			return _description;
@@ -185,7 +188,7 @@ public class LiferaySecureUberspector extends SecureUberspector {
 							}
 						}
 
-						return new ClassRestrictionInformation(null);
+						return _nullInstance;
 					});
 
 			if (classRestrictionInformation.isRestricted()) {

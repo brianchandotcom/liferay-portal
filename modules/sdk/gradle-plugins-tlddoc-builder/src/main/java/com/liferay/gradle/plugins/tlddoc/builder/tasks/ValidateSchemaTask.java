@@ -14,10 +14,13 @@
 
 package com.liferay.gradle.plugins.tlddoc.builder.tasks;
 
+import com.liferay.gradle.plugins.tlddoc.builder.internal.util.TLDUtil;
 import com.liferay.gradle.util.GradleUtil;
 import com.liferay.gradle.util.Validator;
 
 import groovy.lang.Closure;
+
+import java.io.File;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -26,6 +29,7 @@ import org.gradle.api.AntBuilder;
 import org.gradle.api.Project;
 import org.gradle.api.file.FileCollection;
 import org.gradle.api.file.FileTree;
+import org.gradle.api.logging.Logger;
 import org.gradle.api.tasks.Input;
 import org.gradle.api.tasks.InputFiles;
 import org.gradle.api.tasks.Optional;
@@ -113,9 +117,49 @@ public class ValidateSchemaTask extends SourceTask {
 			@SuppressWarnings("unused")
 			public void doCall() {
 				FileTree fileTree = getSource();
+				Logger logger = getLogger();
 
 				fileTree.addToAntBuilder(
 					antBuilder, "fileset", FileCollection.AntType.FileSet);
+
+				for (File file : fileTree.getFiles()) {
+					try {
+						TLDUtil.scanDTDAndXSD(
+							file,
+							(publicId, dtdFile) -> {
+								Map<String, Object> args = new HashMap<>();
+
+								args.put("location", dtdFile);
+								args.put("publicId", publicId);
+
+								antBuilder.invokeMethod("dtd", args);
+
+								if (logger.isInfoEnabled()) {
+									logger.info("DTD {}:{}", publicId, dtdFile);
+								}
+							},
+							(namespace, schemaFile) -> {
+								Map<String, Object> args = new HashMap<>();
+
+								args.put("file", schemaFile);
+								args.put("namespace", namespace);
+
+								antBuilder.invokeMethod("schema", args);
+
+								if (logger.isInfoEnabled()) {
+									logger.info(
+										"Schema {}:{}", namespace, schemaFile);
+								}
+							});
+					}
+					catch (Exception e) {
+						if (logger.isErrorEnabled()) {
+							String fileName = file.getName();
+
+							logger.error("Unable to process {}", fileName);
+						}
+					}
+				}
 			}
 
 		};

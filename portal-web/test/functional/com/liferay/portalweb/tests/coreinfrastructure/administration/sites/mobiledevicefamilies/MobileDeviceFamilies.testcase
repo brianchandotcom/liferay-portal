@@ -1,8 +1,10 @@
 <definition component-name="portal-mobile-device-rules">
+	<property name="osgi.app.includes" value="portal-mobile-device-detection-fiftyonedegrees-enterprise" />
 	<property name="osgi.module.configuration.file.names" value="com.liferay.portal.bundle.blacklist.internal.BundleBlacklistConfiguration.config" />
 	<property name="osgi.module.configurations" value="blacklistBundleSymbolicNames=" />
 	<property name="portal.release" value="true" />
 	<property name="portal.upstream" value="true" />
+	<property name="test.run.environment" value="EE" />
 	<property name="testray.main.component.name" value="Mobile Device Rules" />
 
 	<set-up>

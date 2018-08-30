@@ -26,6 +26,7 @@ public interface Binary extends Expression {
 	 * Returns a Expression sub tree of the left operand.
 	 *
 	 * @return Expression sub tree of the left operand
+	 * @review
 	 */
 	public Expression getLeftOperand();
 
@@ -33,6 +34,7 @@ public interface Binary extends Expression {
 	 * Returns the operation of the binary Expression.
 	 *
 	 * @return the operation of the binary Expression
+	 * @review
 	 */
 	public Operation getOperation();
 
@@ -40,6 +42,7 @@ public interface Binary extends Expression {
 	 * Returns a Expression sub tree of the right operand.
 	 *
 	 * @return Expression sub tree of the right operand
+	 * @review
 	 */
 	public Expression getRightOperand();
 

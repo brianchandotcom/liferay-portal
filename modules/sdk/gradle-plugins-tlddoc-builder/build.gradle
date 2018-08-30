@@ -25,5 +25,15 @@ gradleTest {
 }
 
 pluginBundle {
+	plugins {
+		appTLDDocBuilderPlugin {
+			displayName = "Liferay Gradle Plugins App TLDDoc Builder"
+		}
+
+		tLDDocBuilderPlugin {
+			displayName = "Liferay Gradle Plugins TLDDoc Builder"
+		}
+	}
+
 	tags = ["java", "tld"]
 }

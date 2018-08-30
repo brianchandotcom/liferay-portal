@@ -16,6 +16,8 @@ package com.liferay.asset.list.item.selector.web.internal.display.context;
 
 import com.liferay.asset.list.model.AssetListEntry;
 import com.liferay.asset.list.service.AssetListEntryServiceUtil;
+import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
+import com.liferay.portal.kernel.dao.search.RowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -60,8 +62,18 @@ public class AssetListItemSelectorViewDisplayContext {
 		PortletRequest portletRequest = (PortletRequest)_request.getAttribute(
 			JavaConstants.JAVAX_PORTLET_REQUEST);
 
+		PortletResponse portletResponse =
+			(PortletResponse)_request.getAttribute(
+				JavaConstants.JAVAX_PORTLET_RESPONSE);
+
 		SearchContainer<AssetListEntry> searchContainer = new SearchContainer<>(
 			portletRequest, _getPortletURL(), null, "there-are-no-asset-lists");
+
+		RowChecker rowChecker = new EmptyOnClickRowChecker(portletResponse);
+
+		rowChecker.setCssClass("asset-list-entry-checkbox");
+
+		searchContainer.setRowChecker(rowChecker);
 
 		List<AssetListEntry> assetListEntries =
 			AssetListEntryServiceUtil.getAssetListEntries(

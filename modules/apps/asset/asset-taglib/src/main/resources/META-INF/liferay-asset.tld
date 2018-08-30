@@ -397,7 +397,7 @@
 		<tag-class>com.liferay.asset.taglib.servlet.taglib.AssetTagsSelectorTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
-			<description>A function to be called when a tag is added.</description>
+			<description>A function to call when a tag is added.</description>
 			<name>addCallback</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -417,7 +417,7 @@
 			<type>boolean</type>
 		</attribute>
 		<attribute>
-			<description>The Java class of the asset.</description>
+			<description>The asset's Java class.</description>
 			<name>className</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -429,7 +429,7 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>The group IDs of the asset tags.</description>
+			<description>The asset tags' group IDs.</description>
 			<name>groupIds</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -441,7 +441,7 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>An ID for the component instance.</description>
+			<description>The component instance's ID.</description>
 			<name>id</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -454,13 +454,13 @@
 			<type>boolean</type>
 		</attribute>
 		<attribute>
-			<description>A function to be called when a tag is removed.</description>
+			<description>A function to call when a tag is removed.</description>
 			<name>removeCallback</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>The current selected tags.</description>
+			<description>The currently selected tags.</description>
 			<name>tagNames</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -478,7 +478,7 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>The Java class of the asset.</description>
+			<description>The asset's Java class.</description>
 			<name>className</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -490,7 +490,7 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>A message to display before the tag labels. A standard example is <![CDATA[<code>tags</code>]]>, which renders as <![CDATA[<code>Tags:</code>]]>.</description>
+			<description>A message to display before the tag labels. For example, <![CDATA[<code>tags</code>]]>, renders as <![CDATA[<code>Tags:</code>]]>.</description>
 			<name>message</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>

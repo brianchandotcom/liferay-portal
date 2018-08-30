@@ -431,6 +431,8 @@
 			</else>
 		</if>
 
+		<property name="output.dir" value="${osgi.dir}/marketplace" />
+
 		<subant genericantfile="${modules.dir}/build-app-module.xml" target="dist-module-artifact-lpkg">
 			<dirset
 				dir="${modules.dir}"

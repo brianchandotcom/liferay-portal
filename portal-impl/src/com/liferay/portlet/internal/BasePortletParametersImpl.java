@@ -18,7 +18,6 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Set;
 import java.util.function.Function;
 
@@ -104,7 +103,7 @@ public abstract class BasePortletParametersImpl
 	protected Map<String, String[]> deepCopyMap(Map<String, String[]> map) {
 		Map<String, String[]> copiedMap = new HashMap<>();
 
-		for (Entry<String, String[]> entry : map.entrySet()) {
+		for (Map.Entry<String, String[]> entry : map.entrySet()) {
 			String key = entry.getKey();
 			String[] values = entry.getValue();
 

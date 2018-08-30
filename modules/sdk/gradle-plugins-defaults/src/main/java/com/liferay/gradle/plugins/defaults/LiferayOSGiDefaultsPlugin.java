@@ -139,7 +139,6 @@ import org.gradle.api.artifacts.Dependency;
 import org.gradle.api.artifacts.DependencyResolveDetails;
 import org.gradle.api.artifacts.DependencySet;
 import org.gradle.api.artifacts.DependencySubstitutions;
-import org.gradle.api.artifacts.DependencySubstitutions.Substitution;
 import org.gradle.api.artifacts.ExcludeRule;
 import org.gradle.api.artifacts.ExternalDependency;
 import org.gradle.api.artifacts.ExternalModuleDependency;
@@ -1657,7 +1656,7 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 					ComponentSelector componentSelector =
 						dependencySubstitutions.module(dependencyNotation);
 
-					Substitution substitution =
+					DependencySubstitutions.Substitution substitution =
 						dependencySubstitutions.substitute(componentSelector);
 
 					ComponentSelector newComponentSelector;

@@ -48,7 +48,6 @@ import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.client.Client;
 import org.elasticsearch.common.text.Text;
 import org.elasticsearch.search.suggest.Suggest;
-import org.elasticsearch.search.suggest.Suggest.Suggestion;
 import org.elasticsearch.search.suggest.Suggest.Suggestion.Entry;
 import org.elasticsearch.search.suggest.Suggest.Suggestion.Entry.Option;
 import org.elasticsearch.search.suggest.SuggestBuilder;
@@ -176,7 +175,7 @@ public class ElasticsearchQuerySuggester implements QuerySuggester {
 			return StringPool.EMPTY_ARRAY;
 		}
 
-		Suggestion<? extends Entry<? extends Option>> suggestion =
+		Suggest.Suggestion<? extends Entry<? extends Option>> suggestion =
 			suggest.getSuggestion(suggester.getName());
 
 		if (suggestion == null) {

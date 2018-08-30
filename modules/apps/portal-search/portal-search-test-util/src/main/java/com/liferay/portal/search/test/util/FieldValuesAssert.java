@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.search.Field;
 
 import java.util.Arrays;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Set;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
@@ -51,9 +50,9 @@ public class FieldValuesAssert {
 
 		Map<String, Field> fieldsMap = document.getFields();
 
-		Set<Entry<String, Field>> entrySet = fieldsMap.entrySet();
+		Set<Map.Entry<String, Field>> entrySet = fieldsMap.entrySet();
 
-		Stream<Entry<String, Field>> stream = entrySet.stream();
+		Stream<Map.Entry<String, Field>> stream = entrySet.stream();
 
 		if (predicate != null) {
 			stream = stream.filter(entry -> predicate.test(entry.getKey()));

@@ -20,7 +20,6 @@ import aQute.bnd.osgi.repository.XMLResourceParser;
 import aQute.bnd.osgi.resource.ResourceBuilder;
 
 import biz.aQute.resolve.ResolverValidator;
-import biz.aQute.resolve.ResolverValidator.Resolution;
 
 import com.liferay.portal.target.platform.indexer.IndexValidator;
 
@@ -81,9 +80,10 @@ public class DefaultIndexValidator implements IndexValidator {
 
 			List<String> messages = new ArrayList<>();
 
-			List<Resolution> resolutions = resolverValidator.validate();
+			List<ResolverValidator.Resolution> resolutions =
+				resolverValidator.validate();
 
-			for (Resolution resolution : resolutions) {
+			for (ResolverValidator.Resolution resolution : resolutions) {
 				if (resolution.succeeded) {
 					continue;
 				}

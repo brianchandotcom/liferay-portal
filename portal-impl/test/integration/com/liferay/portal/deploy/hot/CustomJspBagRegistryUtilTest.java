@@ -21,7 +21,6 @@ import com.liferay.portal.test.rule.SyntheticBundleRule;
 import com.liferay.registry.ServiceReference;
 
 import java.util.Map;
-import java.util.Map.Entry;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -45,7 +44,7 @@ public class CustomJspBagRegistryUtilTest {
 		Map<ServiceReference<CustomJspBag>, CustomJspBag> customJspBags =
 			CustomJspBagRegistryUtil.getCustomJspBags();
 
-		for (Entry<ServiceReference<CustomJspBag>, CustomJspBag> entry :
+		for (Map.Entry<ServiceReference<CustomJspBag>, CustomJspBag> entry :
 				customJspBags.entrySet()) {
 
 			ServiceReference<CustomJspBag> serviceReference = entry.getKey();
@@ -68,7 +67,7 @@ public class CustomJspBagRegistryUtilTest {
 		Map<ServiceReference<CustomJspBag>, CustomJspBag> customJspBags =
 			CustomJspBagRegistryUtil.getCustomJspBags();
 
-		for (Entry<ServiceReference<CustomJspBag>, CustomJspBag> entry :
+		for (Map.Entry<ServiceReference<CustomJspBag>, CustomJspBag> entry :
 				customJspBags.entrySet()) {
 
 			ServiceReference<CustomJspBag> serviceReference = entry.getKey();

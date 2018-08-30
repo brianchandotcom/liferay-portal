@@ -16,7 +16,7 @@ package com.liferay.talend.runtime.apio.jsonld;
 
 import com.fasterxml.jackson.databind.JsonNode;
 
-import com.liferay.talend.runtime.apio.constants.HydraConstants.FieldNames;
+import com.liferay.talend.runtime.apio.constants.HydraConstants;
 import com.liferay.talend.runtime.apio.constants.JSONLDConstants;
 import com.liferay.talend.runtime.apio.operation.Operation;
 
@@ -56,7 +56,7 @@ public class ApioSingleModel extends ApioBaseResponse {
 	 *         MissingNode if it's not present
 	 */
 	public JsonNode getOperationJsonNode() {
-		return findJsonNode(FieldNames.OPERATION);
+		return findJsonNode(HydraConstants.FieldNames.OPERATION);
 	}
 
 	/**
@@ -79,9 +79,11 @@ public class ApioSingleModel extends ApioBaseResponse {
 		List<Operation> operations = new ArrayList<>();
 
 		for (final JsonNode jsonNode : operationJsonNode) {
-			JsonNode expectsJsonNode = jsonNode.path(FieldNames.EXPECTS);
+			JsonNode expectsJsonNode = jsonNode.path(
+				HydraConstants.FieldNames.EXPECTS);
 			JsonNode methodIdJsonNode = jsonNode.path(JSONLDConstants.ID);
-			JsonNode methodJsonNode = jsonNode.path(FieldNames.METHOD);
+			JsonNode methodJsonNode = jsonNode.path(
+				HydraConstants.FieldNames.METHOD);
 
 			try {
 				Operation operation = new Operation(

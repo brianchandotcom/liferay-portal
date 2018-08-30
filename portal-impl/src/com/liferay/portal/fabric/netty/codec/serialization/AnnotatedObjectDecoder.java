@@ -26,7 +26,7 @@ import io.netty.handler.codec.LengthFieldBasedFrameDecoder;
 
 import java.io.ObjectInputStream;
 
-import java.util.Map.Entry;
+import java.util.Map;
 
 /**
  * @author Shuyang Zhou
@@ -115,7 +115,7 @@ public class AnnotatedObjectDecoder extends LengthFieldBasedFrameDecoder {
 
 		Object object = objectInputStream.readObject();
 
-		for (Entry<String, ChannelHandler> entry : _channelPipeline) {
+		for (Map.Entry<String, ChannelHandler> entry : _channelPipeline) {
 			ObjectDecodeChannelInboundHandler<?>
 				objectDecodeChannelInboundHandler =
 					(ObjectDecodeChannelInboundHandler<?>)entry.getValue();

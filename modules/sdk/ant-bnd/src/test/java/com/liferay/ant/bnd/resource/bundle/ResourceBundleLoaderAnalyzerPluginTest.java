@@ -25,7 +25,7 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.Map.Entry;
+import java.util.Map;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -66,12 +66,12 @@ public class ResourceBundleLoaderAnalyzerPluginTest {
 			Parameters provideCapabilityHeaders = new Parameters(
 				analyzer.getProperty(Constants.PROVIDE_CAPABILITY));
 
-			List<Entry<String, Attrs>> provides = new ArrayList<>(
+			List<Map.Entry<String, Attrs>> provides = new ArrayList<>(
 				provideCapabilityHeaders.entrySet());
 
 			Assert.assertEquals(provides.toString(), 1, provides.size());
 
-			Entry<String, Attrs> entry = provides.get(0);
+			Map.Entry<String, Attrs> entry = provides.get(0);
 
 			Assert.assertEquals(
 				ResourceBundleLoaderAnalyzerPlugin.LIFERAY_RESOURCE_BUNDLE,
@@ -121,12 +121,12 @@ public class ResourceBundleLoaderAnalyzerPluginTest {
 			Parameters provideCapabilityHeaders = new Parameters(
 				analyzer.getProperty(Constants.PROVIDE_CAPABILITY));
 
-			List<Entry<String, Attrs>> provides = new ArrayList<>(
+			List<Map.Entry<String, Attrs>> provides = new ArrayList<>(
 				provideCapabilityHeaders.entrySet());
 
 			Assert.assertEquals(provides.toString(), 2, provides.size());
 
-			Entry<String, Attrs> aggregateEntry = provides.get(0);
+			Map.Entry<String, Attrs> aggregateEntry = provides.get(0);
 
 			Assert.assertEquals(
 				ResourceBundleLoaderAnalyzerPlugin.LIFERAY_RESOURCE_BUNDLE,
@@ -162,7 +162,8 @@ public class ResourceBundleLoaderAnalyzerPluginTest {
 			Assert.assertEquals(
 				"1", aggregateEntryAttrs.get("service.ranking"));
 
-			Entry<String, Attrs> liferayResourceBundleEntry = provides.get(1);
+			Map.Entry<String, Attrs> liferayResourceBundleEntry = provides.get(
+				1);
 
 			Assert.assertEquals(
 				ResourceBundleLoaderAnalyzerPlugin.LIFERAY_RESOURCE_BUNDLE +
@@ -209,10 +210,10 @@ public class ResourceBundleLoaderAnalyzerPluginTest {
 			Parameters provideCapabilityHeaders = new Parameters(
 				analyzer.getProperty(Constants.PROVIDE_CAPABILITY));
 
-			List<Entry<String, Attrs>> provides = new ArrayList<>(
+			List<Map.Entry<String, Attrs>> provides = new ArrayList<>(
 				provideCapabilityHeaders.entrySet());
 
-			Entry<String, Attrs> entry = provides.get(0);
+			Map.Entry<String, Attrs> entry = provides.get(0);
 
 			Attrs attrs = entry.getValue();
 

@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.search.facet.collector.TermCollector;
 import java.util.List;
 
 import org.elasticsearch.search.aggregations.bucket.MultiBucketsAggregation;
-import org.elasticsearch.search.aggregations.bucket.MultiBucketsAggregation.Bucket;
 
 /**
  * @author André de Oliveira
@@ -52,12 +51,13 @@ public class MultiBucketsAggregationFacetCollector implements FacetCollector {
 	protected TermCollectorHolder getTermCollectorHolder(
 		MultiBucketsAggregation multiBucketsAggregation) {
 
-		List<? extends Bucket> buckets = multiBucketsAggregation.getBuckets();
+		List<? extends MultiBucketsAggregation.Bucket> buckets =
+			multiBucketsAggregation.getBuckets();
 
 		TermCollectorHolder termCollectorHolder = new TermCollectorHolder(
 			buckets.size());
 
-		for (Bucket bucket : buckets) {
+		for (MultiBucketsAggregation.Bucket bucket : buckets) {
 			termCollectorHolder.add(
 				bucket.getKeyAsString(), (int)bucket.getDocCount());
 		}

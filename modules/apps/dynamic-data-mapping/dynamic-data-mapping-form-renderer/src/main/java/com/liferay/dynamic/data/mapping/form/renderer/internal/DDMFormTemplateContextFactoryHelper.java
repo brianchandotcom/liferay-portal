@@ -35,7 +35,6 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -181,9 +180,10 @@ public class DDMFormTemplateContextFactoryHelper {
 			Map<String, String> outputParameters = extractAutoFillParameters(
 				matcher.group(3));
 
-			Set<Entry<String, String>> entrySet = outputParameters.entrySet();
+			Set<Map.Entry<String, String>> entrySet =
+				outputParameters.entrySet();
 
-			Stream<Entry<String, String>> outputParametersStream =
+			Stream<Map.Entry<String, String>> outputParametersStream =
 				entrySet.stream();
 
 			outputParametersStream = outputParametersStream.filter(

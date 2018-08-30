@@ -14,7 +14,6 @@
 
 package com.liferay.portal.fabric.status;
 
-import com.liferay.portal.fabric.status.JMXProxyUtil.ProcessCallableExecutor;
 import com.liferay.portal.kernel.concurrent.DefaultNoticeableFuture;
 import com.liferay.portal.kernel.concurrent.NoticeableFuture;
 import com.liferay.portal.kernel.process.ProcessCallable;
@@ -105,8 +104,8 @@ public class LocalFabricStatus implements FabricStatus {
 		return ManagementFactory.getThreadMXBean();
 	}
 
-	protected static final ProcessCallableExecutor processCallableExecutor =
-		new ProcessCallableExecutor() {
+	protected static final JMXProxyUtil.ProcessCallableExecutor
+		processCallableExecutor = new JMXProxyUtil.ProcessCallableExecutor() {
 
 			@Override
 			public <V extends Serializable> NoticeableFuture<V> execute(

@@ -15,10 +15,7 @@
 package com.liferay.osgi.service.tracker.collections.map.test;
 
 import com.liferay.arquillian.deploymentscenario.annotations.BndFile;
-import com.liferay.osgi.service.tracker.collections.ServiceTrackerMapBuilder.Collector;
-import com.liferay.osgi.service.tracker.collections.ServiceTrackerMapBuilder.Mapper;
-import com.liferay.osgi.service.tracker.collections.ServiceTrackerMapBuilder.Selector;
-import com.liferay.osgi.service.tracker.collections.ServiceTrackerMapBuilder.SelectorFactory;
+import com.liferay.osgi.service.tracker.collections.ServiceTrackerMapBuilder;
 import com.liferay.osgi.service.tracker.collections.internal.map.BundleContextWrapper;
 import com.liferay.osgi.service.tracker.collections.internal.map.TrackedOne;
 import com.liferay.osgi.service.tracker.collections.internal.map.TrackedTwo;
@@ -292,14 +289,17 @@ public class ObjectServiceTrackerMapTest {
 
 	@Test
 	public void testGetServiceWithCustomComparatorWithBuilder() {
-		Selector<TrackedOne, TrackedOne> selector = SelectorFactory.newSelector(
-			_bundleContext, TrackedOne.class);
+		ServiceTrackerMapBuilder.Selector<TrackedOne, TrackedOne> selector =
+			ServiceTrackerMapBuilder.SelectorFactory.newSelector(
+				_bundleContext, TrackedOne.class);
 
-		Mapper<String, TrackedOne, TrackedOne, TrackedOne> mapper =
-			selector.map("target");
+		ServiceTrackerMapBuilder.Mapper
+			<String, TrackedOne, TrackedOne, TrackedOne> mapper = selector.map(
+				"target");
 
-		Collector<String, TrackedOne, TrackedOne, TrackedOne> collector =
-			mapper.collectSingleValue((sr1, sr2) -> sr1.compareTo(sr2));
+		ServiceTrackerMapBuilder.Collector
+			<String, TrackedOne, TrackedOne, TrackedOne> collector =
+				mapper.collectSingleValue((sr1, sr2) -> sr1.compareTo(sr2));
 
 		_serviceTrackerMap = collector.build();
 
@@ -350,18 +350,22 @@ public class ObjectServiceTrackerMapTest {
 
 	@Test
 	public void testGetServiceWithCustomServiceReferenceMapperAndBuilder() {
-		Selector<TrackedOne, TrackedOne> selector = SelectorFactory.newSelector(
-			_bundleContext, TrackedOne.class
-		).newSelector(
-			"(&(other=*)(target=*))"
-		);
+		ServiceTrackerMapBuilder.Selector<TrackedOne, TrackedOne> selector =
+			ServiceTrackerMapBuilder.SelectorFactory.newSelector(
+				_bundleContext, TrackedOne.class
+			).newSelector(
+				"(&(other=*)(target=*))"
+			);
 
-		Mapper<String, TrackedOne, TrackedOne, ?> mapper = selector.map(
-			(sr, keys) -> keys.emit(
-				sr.getProperty("other") + " - " + sr.getProperty("target")));
+		ServiceTrackerMapBuilder.Mapper<String, TrackedOne, TrackedOne, ?>
+			mapper = selector.map(
+				(sr, keys) -> keys.emit(
+					sr.getProperty("other") + " - " +
+						sr.getProperty("target")));
 
-		Collector<String, TrackedOne, TrackedOne, TrackedOne> collector =
-			mapper.collectSingleValue();
+		ServiceTrackerMapBuilder.Collector
+			<String, TrackedOne, TrackedOne, TrackedOne> collector =
+				mapper.collectSingleValue();
 
 		_serviceTrackerMap = collector.build();
 
@@ -732,18 +736,20 @@ public class ObjectServiceTrackerMapTest {
 
 	@Test
 	public void testServiceWrapperServiceTrackerCustomizerWithBuilder() {
-		Selector<TrackedOne, ServiceWrapper<TrackedOne>> selector =
-			SelectorFactory.newSelector(
-				_bundleContext, TrackedOne.class
-			).newSelector(
-				ServiceTrackerCustomizerFactory.serviceWrapper(_bundleContext)
-			);
+		ServiceTrackerMapBuilder.Selector
+			<TrackedOne, ServiceWrapper<TrackedOne>> selector =
+				ServiceTrackerMapBuilder.SelectorFactory.newSelector(
+					_bundleContext, TrackedOne.class
+				).newSelector(
+					ServiceTrackerCustomizerFactory.serviceWrapper(
+						_bundleContext)
+				);
 
-		Mapper
+		ServiceTrackerMapBuilder.Mapper
 			<String, TrackedOne, ServiceWrapper<TrackedOne>,
 				ServiceWrapper<TrackedOne>> mapper = selector.map("target");
 
-		Collector
+		ServiceTrackerMapBuilder.Collector
 			<String, TrackedOne, ServiceWrapper<TrackedOne>,
 				ServiceWrapper<TrackedOne>> collector =
 					mapper.collectSingleValue();

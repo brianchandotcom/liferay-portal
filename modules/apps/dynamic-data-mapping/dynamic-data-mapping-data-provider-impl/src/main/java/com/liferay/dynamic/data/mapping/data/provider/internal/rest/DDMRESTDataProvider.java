@@ -51,7 +51,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
@@ -116,7 +115,9 @@ public class DDMRESTDataProvider implements DDMDataProvider {
 
 		String url = ddmRESTDataProviderSettings.url();
 
-		for (Entry<String, String> pathParameter : pathParameters.entrySet()) {
+		for (Map.Entry<String, String> pathParameter :
+				pathParameters.entrySet()) {
+
 			url = StringUtil.replaceFirst(
 				url, String.format("{%s}", pathParameter.getKey()),
 				pathParameter.getValue());
@@ -347,9 +348,9 @@ public class DDMRESTDataProvider implements DDMDataProvider {
 		Map<String, Object> parametersMap =
 			ddmDataProviderRequest.getParameters();
 
-		Set<Entry<String, Object>> entrySet = parametersMap.entrySet();
+		Set<Map.Entry<String, Object>> entrySet = parametersMap.entrySet();
 
-		Stream<Entry<String, Object>> entryStream = entrySet.stream();
+		Stream<Map.Entry<String, Object>> entryStream = entrySet.stream();
 
 		Map<String, String> parameters = new HashMap<>();
 

@@ -33,7 +33,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import java.util.Map.Entry;
+import java.util.Map;
 import java.util.concurrent.Callable;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutionException;
@@ -72,7 +72,7 @@ public class ProcessUtilTest {
 
 			List<LogRecord> logRecords = captureHandler.getLogRecords();
 
-			Future<Entry<Void, Void>> loggingFuture = ProcessUtil.execute(
+			Future<Map.Entry<Void, Void>> loggingFuture = ProcessUtil.execute(
 				new LoggingOutputProcessor(
 					(stdErr, line) -> {
 						if (stdErr) {
@@ -110,11 +110,11 @@ public class ProcessUtilTest {
 
 		// Collector
 
-		Future<Entry<byte[], byte[]>> collectorFuture = ProcessUtil.execute(
+		Future<Map.Entry<byte[], byte[]>> collectorFuture = ProcessUtil.execute(
 			CollectorOutputProcessor.INSTANCE,
 			_buildArguments(Echo.class, "2"));
 
-		Entry<byte[], byte[]> objectValuePair = collectorFuture.get();
+		Map.Entry<byte[], byte[]> objectValuePair = collectorFuture.get();
 
 		collectorFuture.cancel(true);
 

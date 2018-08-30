@@ -26,7 +26,7 @@ import javax.websocket.ClientEndpoint;
 import javax.websocket.EncodeException;
 import javax.websocket.OnMessage;
 import javax.websocket.OnOpen;
-import javax.websocket.RemoteEndpoint.Basic;
+import javax.websocket.RemoteEndpoint;
 import javax.websocket.Session;
 
 /**
@@ -56,7 +56,7 @@ public class EncodeWebSocketClient {
 	public void sendMessage(Example example)
 		throws EncodeException, IOException {
 
-		Basic basic = _session.getBasicRemote();
+		RemoteEndpoint.Basic basic = _session.getBasicRemote();
 
 		basic.sendObject(example);
 	}

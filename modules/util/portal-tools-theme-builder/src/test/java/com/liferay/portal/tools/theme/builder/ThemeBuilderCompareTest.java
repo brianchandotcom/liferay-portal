@@ -53,7 +53,6 @@ import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
-import org.junit.runners.Parameterized.Parameters;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
@@ -65,7 +64,7 @@ import org.w3c.dom.NodeList;
 @RunWith(Parameterized.class)
 public class ThemeBuilderCompareTest {
 
-	@Parameters(name = "{1}")
+	@Parameterized.Parameters(name = "{1}")
 	public static Iterable<Object[]> getTestThemes() throws Exception {
 		Properties properties = new Properties();
 

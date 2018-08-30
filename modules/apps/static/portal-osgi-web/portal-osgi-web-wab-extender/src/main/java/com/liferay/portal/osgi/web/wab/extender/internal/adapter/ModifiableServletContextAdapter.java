@@ -35,7 +35,6 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Set;
 
 import javax.servlet.DispatcherType;
@@ -369,7 +368,7 @@ public class ModifiableServletContextAdapter
 	public List<ListenerDefinition> getListenerDefinitions() {
 		List<ListenerDefinition> listenerDefinitions = new ArrayList<>();
 
-		for (Entry<Class<? extends EventListener>, EventListener> entry :
+		for (Map.Entry<Class<? extends EventListener>, EventListener> entry :
 				_eventListeners.entrySet()) {
 
 			Class<? extends EventListener> eventListenerClass = entry.getKey();

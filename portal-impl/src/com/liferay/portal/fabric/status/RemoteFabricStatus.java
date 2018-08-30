@@ -15,7 +15,6 @@
 package com.liferay.portal.fabric.status;
 
 import com.liferay.petra.reflect.ReflectionUtil;
-import com.liferay.portal.fabric.status.JMXProxyUtil.ProcessCallableExecutor;
 import com.liferay.portal.kernel.process.ProcessCallable;
 
 import java.lang.management.BufferPoolMXBean;
@@ -43,7 +42,9 @@ import javax.management.ObjectName;
  */
 public class RemoteFabricStatus implements FabricStatus {
 
-	public RemoteFabricStatus(ProcessCallableExecutor processCallableExecutor) {
+	public RemoteFabricStatus(
+		JMXProxyUtil.ProcessCallableExecutor processCallableExecutor) {
+
 		this.processCallableExecutor = processCallableExecutor;
 	}
 
@@ -141,7 +142,7 @@ public class RemoteFabricStatus implements FabricStatus {
 	protected static <T extends PlatformManagedObject> List<T>
 		getPlatformMXBeans(
 			Class<T> mxBeanInterface,
-			ProcessCallableExecutor processCallableExecutor) {
+			JMXProxyUtil.ProcessCallableExecutor processCallableExecutor) {
 
 		List<T> list = new ArrayList<>();
 
@@ -164,7 +165,8 @@ public class RemoteFabricStatus implements FabricStatus {
 		return list;
 	}
 
-	protected final ProcessCallableExecutor processCallableExecutor;
+	protected final JMXProxyUtil.ProcessCallableExecutor
+		processCallableExecutor;
 
 	protected static class GetPlatformMXBeanObjectNamesProcessCallable
 		implements ProcessCallable<ArrayList<ObjectName>> {

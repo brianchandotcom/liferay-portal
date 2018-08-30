@@ -40,7 +40,6 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Optional;
 import java.util.function.BiFunction;
 import java.util.function.Function;
@@ -210,7 +209,7 @@ public class StructureRepresentorBuilderHelperImpl
 	}
 
 	@Override
-	public Function<DDMFormField, List<Entry<String, LocalizedValue>>>
+	public Function<DDMFormField, List<Map.Entry<String, LocalizedValue>>>
 		getLocalizedValueEntriesFunction(
 			Function<DDMFormField, DDMFormFieldOptions> function) {
 
@@ -330,15 +329,15 @@ public class StructureRepresentorBuilderHelperImpl
 		);
 	}
 
-	private NestedRepresentor<Entry<String, LocalizedValue>>
-		_buildFieldOptions(Builder<Entry<String, LocalizedValue>> builder) {
+	private NestedRepresentor<Map.Entry<String, LocalizedValue>>
+		_buildFieldOptions(Builder<Map.Entry<String, LocalizedValue>> builder) {
 
 		return builder.types(
 			"FormFieldOptions"
 		).addLocalizedStringByLocale(
-			"label", getLocalizedString(Entry::getValue)
+			"label", getLocalizedString(Map.Entry::getValue)
 		).addString(
-			"value", Entry::getKey
+			"value", Map.Entry::getKey
 		).build();
 	}
 

@@ -18,7 +18,7 @@ import com.liferay.portal.kernel.io.AnnotatedObjectOutputStream;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.ByteBufOutputStream;
-import io.netty.channel.ChannelHandler.Sharable;
+import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.MessageToByteEncoder;
 
@@ -29,7 +29,7 @@ import java.io.Serializable;
 /**
  * @author Shuyang Zhou
  */
-@Sharable
+@ChannelHandler.Sharable
 public class AnnotatedObjectEncoder extends MessageToByteEncoder<Serializable> {
 
 	public static final AnnotatedObjectEncoder INSTANCE =

@@ -21,7 +21,6 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
-import org.junit.runners.Parameterized.Parameters;
 
 /**
  * @author Yi-Chen Tsai
@@ -29,7 +28,7 @@ import org.junit.runners.Parameterized.Parameters;
 @RunWith(Parameterized.class)
 public class CustomScriptTest {
 
-	@Parameters(name = "{0}")
+	@Parameterized.Parameters(name = "{0}")
 	public static Collection<Object[]> getTestNames() {
 		return Arrays.asList(new Object[][] {{System.getProperty("testName")}});
 	}

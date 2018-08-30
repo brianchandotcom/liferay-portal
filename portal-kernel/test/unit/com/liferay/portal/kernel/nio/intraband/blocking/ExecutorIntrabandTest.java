@@ -21,8 +21,6 @@ import com.liferay.portal.kernel.nio.intraband.Datagram;
 import com.liferay.portal.kernel.nio.intraband.DatagramHelper;
 import com.liferay.portal.kernel.nio.intraband.IntrabandTestUtil;
 import com.liferay.portal.kernel.nio.intraband.RecordCompletionHandler;
-import com.liferay.portal.kernel.nio.intraband.blocking.ExecutorIntraband.ReadingCallable;
-import com.liferay.portal.kernel.nio.intraband.blocking.ExecutorIntraband.WritingCallable;
 import com.liferay.portal.kernel.nio.intraband.test.MockRegistrationReference;
 import com.liferay.portal.kernel.test.CaptureHandler;
 import com.liferay.portal.kernel.test.JDKLoggerTestUtil;
@@ -40,8 +38,6 @@ import java.nio.channels.Channel;
 import java.nio.channels.FileChannel;
 import java.nio.channels.GatheringByteChannel;
 import java.nio.channels.Pipe;
-import java.nio.channels.Pipe.SinkChannel;
-import java.nio.channels.Pipe.SourceChannel;
 import java.nio.channels.ScatteringByteChannel;
 import java.nio.channels.SocketChannel;
 import java.nio.charset.Charset;
@@ -132,8 +128,8 @@ public class ExecutorIntrabandTest {
 
 		Pipe pipe = Pipe.open();
 
-		final SourceChannel sourceChannel = pipe.source();
-		SinkChannel sinkChannel = pipe.sink();
+		final Pipe.SourceChannel sourceChannel = pipe.source();
+		Pipe.SinkChannel sinkChannel = pipe.sink();
 
 		try {
 			MockRegistrationReference mockRegistrationReference =
@@ -144,8 +140,8 @@ public class ExecutorIntrabandTest {
 
 			channelContext.setRegistrationReference(mockRegistrationReference);
 
-			ReadingCallable readingCallable =
-				_executorIntraband.new ReadingCallable(
+			ExecutorIntraband.ReadingCallable readingCallable =
+				_executorIntraband.new ExecutorIntraband.ReadingCallable(
 					sourceChannel, channelContext);
 
 			SyncThrowableThread<Void> syncThrowableThread =
@@ -346,8 +342,8 @@ public class ExecutorIntrabandTest {
 
 		Pipe pipe = Pipe.open();
 
-		SourceChannel sourceChannel = pipe.source();
-		SinkChannel sinkChannel = pipe.sink();
+		Pipe.SourceChannel sourceChannel = pipe.source();
+		Pipe.SinkChannel sinkChannel = pipe.sink();
 
 		sourceChannel.configureBlocking(false);
 
@@ -432,8 +428,8 @@ public class ExecutorIntrabandTest {
 
 		Pipe pipe = Pipe.open();
 
-		SourceChannel sourceChannel = pipe.source();
-		SinkChannel sinkChannel = pipe.sink();
+		Pipe.SourceChannel sourceChannel = pipe.source();
+		Pipe.SinkChannel sinkChannel = pipe.sink();
 
 		sourceChannel.configureBlocking(true);
 		sinkChannel.configureBlocking(true);
@@ -541,8 +537,8 @@ public class ExecutorIntrabandTest {
 
 		Pipe pipe = Pipe.open();
 
-		SourceChannel sourceChannel = pipe.source();
-		SinkChannel sinkChannel = pipe.sink();
+		Pipe.SourceChannel sourceChannel = pipe.source();
+		Pipe.SinkChannel sinkChannel = pipe.sink();
 
 		BlockingQueue<Datagram> sendingQueue = new SynchronousQueue<>();
 
@@ -551,8 +547,9 @@ public class ExecutorIntrabandTest {
 		channelContext.setRegistrationReference(
 			new MockRegistrationReference(_executorIntraband));
 
-		WritingCallable writingCallable =
-			_executorIntraband.new WritingCallable(sinkChannel, channelContext);
+		ExecutorIntraband.WritingCallable writingCallable =
+			_executorIntraband.new ExecutorIntraband.WritingCallable(
+				sinkChannel, channelContext);
 
 		writingCallable.openLatch();
 
@@ -600,8 +597,9 @@ public class ExecutorIntrabandTest {
 		sourceChannel = pipe.source();
 		sinkChannel = pipe.sink();
 
-		writingCallable = _executorIntraband.new WritingCallable(
-			sinkChannel, channelContext);
+		writingCallable =
+			_executorIntraband.new ExecutorIntraband.WritingCallable(
+				sinkChannel, channelContext);
 
 		writingCallable.openLatch();
 
@@ -640,8 +638,9 @@ public class ExecutorIntrabandTest {
 		sourceChannel = pipe.source();
 		sinkChannel = pipe.sink();
 
-		writingCallable = _executorIntraband.new WritingCallable(
-			sinkChannel, channelContext);
+		writingCallable =
+			_executorIntraband.new ExecutorIntraband.WritingCallable(
+				sinkChannel, channelContext);
 
 		writingCallable.openLatch();
 
@@ -682,8 +681,9 @@ public class ExecutorIntrabandTest {
 
 		sinkChannel.configureBlocking(false);
 
-		writingCallable = _executorIntraband.new WritingCallable(
-			sinkChannel, channelContext);
+		writingCallable =
+			_executorIntraband.new ExecutorIntraband.WritingCallable(
+				sinkChannel, channelContext);
 
 		writingCallable.openLatch();
 

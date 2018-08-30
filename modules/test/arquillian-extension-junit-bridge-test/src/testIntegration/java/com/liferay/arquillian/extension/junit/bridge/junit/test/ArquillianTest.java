@@ -17,7 +17,6 @@ package com.liferay.arquillian.extension.junit.bridge.junit.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.test.dependencies.BeforeAfterClassTestItem;
 import com.liferay.arquillian.extension.junit.bridge.junit.test.dependencies.ClassRuleTestItem;
 import com.liferay.portal.kernel.test.junit.BridgeJUnitTestRunner;
-import com.liferay.portal.kernel.test.junit.BridgeJUnitTestRunner.BridgeRunListener;
 
 import java.io.IOException;
 
@@ -39,7 +38,8 @@ public class ArquillianTest {
 	public void testBeforeAfterClass() throws IOException {
 		try {
 			Result result = BridgeJUnitTestRunner.runBridgeTests(
-				new BridgeRunListener(ArquillianTest.class),
+				new BridgeJUnitTestRunner.BridgeRunListener(
+					ArquillianTest.class),
 				BeforeAfterClassTestItem.class);
 
 			assertResult(result, BeforeAfterClassTestItem.class);
@@ -53,7 +53,8 @@ public class ArquillianTest {
 	public void testClassRule() throws IOException {
 		try {
 			Result result = BridgeJUnitTestRunner.runBridgeTests(
-				new BridgeRunListener(ArquillianTest.class),
+				new BridgeJUnitTestRunner.BridgeRunListener(
+					ArquillianTest.class),
 				ClassRuleTestItem.class);
 
 			assertResult(result, ClassRuleTestItem.class);

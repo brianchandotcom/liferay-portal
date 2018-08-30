@@ -17,17 +17,14 @@ package com.liferay.dynamic.data.mapping.expression.internal;
 import com.liferay.dynamic.data.mapping.expression.internal.parser.DDMExpressionBaseVisitor;
 import com.liferay.dynamic.data.mapping.expression.internal.parser.DDMExpressionParser;
 import com.liferay.dynamic.data.mapping.expression.internal.parser.DDMExpressionParser.AdditionExpressionContext;
-import com.liferay.dynamic.data.mapping.expression.internal.parser.DDMExpressionParser.AndExpressionContext;
 import com.liferay.dynamic.data.mapping.expression.internal.parser.DDMExpressionParser.BooleanParenthesisContext;
 import com.liferay.dynamic.data.mapping.expression.internal.parser.DDMExpressionParser.DivisionExpressionContext;
 import com.liferay.dynamic.data.mapping.expression.internal.parser.DDMExpressionParser.EqualsExpressionContext;
-import com.liferay.dynamic.data.mapping.expression.internal.parser.DDMExpressionParser.ExpressionContext;
 import com.liferay.dynamic.data.mapping.expression.internal.parser.DDMExpressionParser.FloatingPointLiteralContext;
 import com.liferay.dynamic.data.mapping.expression.internal.parser.DDMExpressionParser.FunctionCallExpressionContext;
 import com.liferay.dynamic.data.mapping.expression.internal.parser.DDMExpressionParser.FunctionParametersContext;
 import com.liferay.dynamic.data.mapping.expression.internal.parser.DDMExpressionParser.GreaterThanExpressionContext;
 import com.liferay.dynamic.data.mapping.expression.internal.parser.DDMExpressionParser.GreaterThanOrEqualsExpressionContext;
-import com.liferay.dynamic.data.mapping.expression.internal.parser.DDMExpressionParser.IntegerLiteralContext;
 import com.liferay.dynamic.data.mapping.expression.internal.parser.DDMExpressionParser.LessThanExpressionContext;
 import com.liferay.dynamic.data.mapping.expression.internal.parser.DDMExpressionParser.LessThanOrEqualsExpressionContext;
 import com.liferay.dynamic.data.mapping.expression.internal.parser.DDMExpressionParser.LogicalConstantContext;
@@ -35,11 +32,8 @@ import com.liferay.dynamic.data.mapping.expression.internal.parser.DDMExpression
 import com.liferay.dynamic.data.mapping.expression.internal.parser.DDMExpressionParser.MinusExpressionContext;
 import com.liferay.dynamic.data.mapping.expression.internal.parser.DDMExpressionParser.MultiplicationExpressionContext;
 import com.liferay.dynamic.data.mapping.expression.internal.parser.DDMExpressionParser.NotEqualsExpressionContext;
-import com.liferay.dynamic.data.mapping.expression.internal.parser.DDMExpressionParser.NotExpressionContext;
 import com.liferay.dynamic.data.mapping.expression.internal.parser.DDMExpressionParser.NumericParenthesisContext;
 import com.liferay.dynamic.data.mapping.expression.internal.parser.DDMExpressionParser.NumericVariableContext;
-import com.liferay.dynamic.data.mapping.expression.internal.parser.DDMExpressionParser.OrExpressionContext;
-import com.liferay.dynamic.data.mapping.expression.internal.parser.DDMExpressionParser.StringLiteralContext;
 import com.liferay.dynamic.data.mapping.expression.internal.parser.DDMExpressionParser.SubtractionExpressionContext;
 import com.liferay.dynamic.data.mapping.expression.model.AndExpression;
 import com.liferay.dynamic.data.mapping.expression.model.ArithmeticExpression;
@@ -83,7 +77,7 @@ public class DDMExpressionModelVisitor
 
 	@Override
 	public Expression visitAndExpression(
-		@NotNull AndExpressionContext context) {
+		@NotNull DDMExpressionParser.AndExpressionContext context) {
 
 		Expression l = visitChild(context, 0);
 		Expression r = visitChild(context, 2);
@@ -119,7 +113,9 @@ public class DDMExpressionModelVisitor
 	}
 
 	@Override
-	public Expression visitExpression(@NotNull ExpressionContext context) {
+	public Expression visitExpression(
+		@NotNull DDMExpressionParser.ExpressionContext context) {
+
 		DDMExpressionParser.LogicalOrExpressionContext
 			logicalOrExpressionContext = context.logicalOrExpression();
 
@@ -167,7 +163,7 @@ public class DDMExpressionModelVisitor
 
 	@Override
 	public Expression visitIntegerLiteral(
-		@NotNull IntegerLiteralContext context) {
+		@NotNull DDMExpressionParser.IntegerLiteralContext context) {
 
 		return new IntegerLiteral(context.getText());
 	}
@@ -237,7 +233,7 @@ public class DDMExpressionModelVisitor
 
 	@Override
 	public Expression visitNotExpression(
-		@NotNull NotExpressionContext context) {
+		@NotNull DDMExpressionParser.NotExpressionContext context) {
 
 		Expression expression = visitChild(context, 1);
 
@@ -265,7 +261,9 @@ public class DDMExpressionModelVisitor
 	}
 
 	@Override
-	public Expression visitOrExpression(@NotNull OrExpressionContext context) {
+	public Expression visitOrExpression(
+		@NotNull DDMExpressionParser.OrExpressionContext context) {
+
 		Expression l = visitChild(context, 0);
 		Expression r = visitChild(context, 2);
 
@@ -274,7 +272,7 @@ public class DDMExpressionModelVisitor
 
 	@Override
 	public Expression visitStringLiteral(
-		@NotNull StringLiteralContext context) {
+		@NotNull DDMExpressionParser.StringLiteralContext context) {
 
 		return new StringLiteral(StringUtil.unquote(context.getText()));
 	}

@@ -14,8 +14,6 @@
 
 package com.liferay.portal.kernel.nio.intraband;
 
-import com.liferay.portal.kernel.nio.intraband.CompletionHandler.CompletionType;
-
 import java.io.IOException;
 
 import java.nio.channels.Channel;
@@ -53,12 +51,12 @@ public interface Intraband {
 
 	public <A> void sendDatagram(
 		RegistrationReference registrationReference, Datagram datagram,
-		A attachment, EnumSet<CompletionType> completionTypes,
+		A attachment, EnumSet<CompletionHandler.CompletionType> completionTypes,
 		CompletionHandler<A> completionHandler);
 
 	public <A> void sendDatagram(
 		RegistrationReference registrationReference, Datagram datagram,
-		A attachment, EnumSet<CompletionType> completionTypes,
+		A attachment, EnumSet<CompletionHandler.CompletionType> completionTypes,
 		CompletionHandler<A> completionHandler, long timeout,
 		TimeUnit timeUnit);
 

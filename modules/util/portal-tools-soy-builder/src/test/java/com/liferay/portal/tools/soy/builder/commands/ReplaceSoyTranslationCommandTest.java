@@ -18,7 +18,6 @@ import java.io.File;
 
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
-import org.junit.runners.Parameterized.Parameters;
 
 /**
  * @author Andrea Di Giorgi
@@ -26,7 +25,7 @@ import org.junit.runners.Parameterized.Parameters;
 @RunWith(Parameterized.class)
 public class ReplaceSoyTranslationCommandTest extends BaseSoyCommandTestCase {
 
-	@Parameters(name = "{0}")
+	@Parameterized.Parameters(name = "{0}")
 	public static String[] getTestDirNames() {
 		return new String[] {"metal_cli", "metal_cli_2"};
 	}

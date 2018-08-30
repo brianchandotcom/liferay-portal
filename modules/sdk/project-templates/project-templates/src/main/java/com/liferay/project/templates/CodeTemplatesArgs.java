@@ -18,6 +18,7 @@ import com.beust.jcommander.DynamicParameter;
 import com.beust.jcommander.Parameter;
 
 import java.io.File;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -28,6 +29,10 @@ import java.util.Map;
  * @author Simon Jiang
  */
 public class CodeTemplatesArgs {
+
+	public Map<String, String> getAddtionalParameters() {
+		return _additionalParameters;
+	}
 
 	public List<File> getArchetypesDirs() {
 		return _archetypesDirs;
@@ -45,16 +50,18 @@ public class CodeTemplatesArgs {
 		return _destinationDir;
 	}
 
-	public Map<String, String> getAddtionalParameters() {
-		return _additionalParameters;
-	}
-
 	public String getPackageName() {
 		return _packageName;
 	}
 
 	public String getTemplate() {
 		return _template;
+	}
+
+	public void setAddtionalParameters(
+		Map<String, String> additionalParameters) {
+
+		_additionalParameters = additionalParameters;
 	}
 
 	public void setArchetypesDirs(List<File> archetypesDirs) {
@@ -73,10 +80,6 @@ public class CodeTemplatesArgs {
 		_destinationDir = destinationDir;
 	}
 
-	public void setAddtionalParameters(Map<String, String> additionalParameters) {
-		_additionalParameters = additionalParameters;
-	}
-
 	public void setPackageName(String packageName) {
 		_packageName = packageName;
 	}
@@ -84,6 +87,11 @@ public class CodeTemplatesArgs {
 	public void setTemplate(String template) {
 		_template = template;
 	}
+
+	@DynamicParameter(
+		description = "Addtional parameters to generate the code.", names = "-D"
+	)
+	private Map<String, String> _additionalParameters = new HashMap<>();
 
 	@Parameter(hidden = true, names = {"--archetypes-dir", "--archetypes-dirs"})
 	private List<File> _archetypesDirs = new ArrayList<>();
@@ -106,12 +114,6 @@ public class CodeTemplatesArgs {
 	)
 	private File _destinationDir;
 
-	@DynamicParameter( 
-		description = "Addtional parameters to generate the code.",
-		names = "-D"
-	)
-	private Map<String, String> _additionalParameters = new HashMap<>();
-	
 	@Parameter(
 		description = "The destination package for the code generator.",
 		names = "--package-name"

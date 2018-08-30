@@ -19,7 +19,6 @@ import com.liferay.project.templates.ProjectTemplates;
 import com.liferay.project.templates.internal.util.Validator;
 
 import java.io.File;
-import java.io.IOException;
 import java.io.StringWriter;
 
 import java.util.List;
@@ -37,6 +36,7 @@ import org.apache.maven.archetype.metadata.ArchetypeDescriptor;
 import org.apache.maven.archetype.metadata.FileSet;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.VelocityEngine;
+import org.apache.velocity.util.StringUtils;
 
 import org.codehaus.plexus.velocity.VelocityComponent;
 
@@ -74,29 +74,34 @@ public class CodeGenerator {
 		Properties properties = new Properties();
 
 		_setProperty(properties, "author", codeTemplatesArgs.getAuthor());
-		_setProperty(properties, "className", codeTemplatesArgs.getClassName());
-		
-		Map<String, String> addtionalParameters = codeTemplatesArgs.getAddtionalParameters();
-		
+		_setProperty(
+			properties, "className",
+			StringUtils.capitalizeFirstLetter(
+				codeTemplatesArgs.getClassName()));
+
+		Map<String, String> addtionalParameters =
+			codeTemplatesArgs.getAddtionalParameters();
+
 		Set<String> addtionalParametersKeyset = addtionalParameters.keySet();
-		
-		addtionalParametersKeyset.stream(
-		).forEach(
+
+		Stream<String> parametersStream = addtionalParametersKeyset.stream();
+
+		parametersStream.forEach(
 			key -> _setProperty(properties, key, addtionalParameters.get(key))
 		);
 
 		_setProperty(properties, "package", packageName);
+		_setProperty(
+			properties, "packagePath", packageName.replaceAll("\\.", "_"));
+		_setProperty(properties, "template", codeTemplatesArgs.getTemplate());
 
 		archetypeGenerationRequest.setProperties(properties);
-
-		VelocityComponent velocityComponent =
-			Archetyper.createVelocityComponent();
 
 		Archetyper archetyper = new Archetyper(archetypesDirs) {
 
 			@Override
-			protected ArchetypeArtifactManager newArchetypeArtifactManager()
-				throws Exception {
+			protected ArchetypeArtifactManager newArchetypeArtifactManager() {
+				VelocityComponent velocityComponent = createVelocityComponent();
 
 				return new ArchetyperArchetypeArtifactManager(archetypesDirs) {
 
@@ -140,26 +145,33 @@ public class CodeGenerator {
 					}
 
 					private String _filterElement(String element) {
-						VelocityEngine velocityEngine =
-							velocityComponent.getEngine();
-
-						VelocityContext velocityContext = new VelocityContext();
-
-						velocityContext.put(
-							"template", codeTemplatesArgs.getTemplate());
-
-						StringWriter stringWriter = new StringWriter();
-
 						try {
-							boolean success = velocityEngine.evaluate(
-								velocityContext, stringWriter, "CodeGenerator",
-								element);
+							VelocityEngine velocityEngine =
+								velocityComponent.getEngine();
 
-							if (success) {
-								return stringWriter.toString();
+							if (velocityEngine != null) {
+								VelocityContext velocityContext =
+									new VelocityContext();
+
+								velocityContext.put(
+									"StringUtils", new StringUtils());
+
+								velocityContext.put(
+									"template",
+									codeTemplatesArgs.getTemplate());
+
+								StringWriter stringWriter = new StringWriter();
+
+								boolean success = velocityEngine.evaluate(
+									velocityContext, stringWriter,
+									"CodeGenerator", element);
+
+								if (success) {
+									return stringWriter.toString();
+								}
 							}
 						}
-						catch (IOException ioe) {
+						catch (Exception ioe) {
 						}
 
 						return element;

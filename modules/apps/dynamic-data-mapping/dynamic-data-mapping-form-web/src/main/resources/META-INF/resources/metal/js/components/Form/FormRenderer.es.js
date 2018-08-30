@@ -122,7 +122,9 @@ class FormRenderer extends Component {
 			this.editable &&
 			!this.dragAndDropDisabled
 		) {
-			this._dragAndDrop.disposeInternal();
+			if (this._dragAndDrop) {
+				this._dragAndDrop.disposeInternal();
+			}
 			this._startDrag();
 		}
 	}
@@ -282,15 +284,17 @@ class FormRenderer extends Component {
 	 * @private
 	 */
 
-	_handleFieldMoved({data, target, source}) {
-		this.emit(
-			'fieldMoved',
-			{
-				data,
-				source,
-				target
-			}
-		);
+	_handleFieldEdited(event) {
+		this.emit('fieldEdited', event);
+	}
+
+	/**
+	 * @param {!Object} payload
+	 * @private
+	 */
+
+	_handleFieldMoved(event) {
+		this.emit('fieldMoved', event);
 	}
 
 	/**
@@ -351,7 +355,7 @@ class FormRenderer extends Component {
 		const page = {
 			description: '',
 			enabled: true,
-			rows: [],
+			rows: [FormSupport.implAddRow(12, [])],
 			showRequiredFieldsWarning: true,
 			title: ''
 		};

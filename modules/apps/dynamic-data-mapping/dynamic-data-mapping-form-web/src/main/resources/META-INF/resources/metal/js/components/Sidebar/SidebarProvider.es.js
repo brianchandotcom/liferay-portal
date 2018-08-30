@@ -4,7 +4,7 @@ import {FormSupport} from '../Form/index.es.js';
 
 class SidebarProvider extends Component {
 	static PROPS = {
-		fieldContext: Config.array(),
+		fieldTypes: Config.array(),
 
 		pages: Config.array(),
 
@@ -79,8 +79,14 @@ class SidebarProvider extends Component {
 		};
 	}
 
+	_handleFocusedFieldChanged(event) {
+		console.log('focusedFieldChanged', event);
+	}
+
 	_handleShowChanged(event) {
 		this.emit('showChanged', event);
+
+		console.log('showChanged', event);
 	}
 
 	render() {
@@ -89,6 +95,7 @@ class SidebarProvider extends Component {
 		const Child = children[0];
 
 		const events = {
+			focusedFieldChanged: this._handleFocusedFieldChanged.bind(this),
 			showChanged: this._handleShowChanged.bind(this),
 			...Child.props.events
 		};

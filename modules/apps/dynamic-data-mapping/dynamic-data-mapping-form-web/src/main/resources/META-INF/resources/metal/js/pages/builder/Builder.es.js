@@ -1,5 +1,5 @@
 import Component from 'metal-jsx';
-import FormRenderer from '../../components/Form/index.es';
+import FormRenderer, {FormSupport} from '../../components/Form/index.es';
 import Sidebar from '../../components/Sidebar/index.es';
 
 /**
@@ -39,28 +39,96 @@ class Builder extends Component {
 	 * @private
 	 */
 
-	_handleFieldAdd(event) {
+	_handleFieldAdded(event) {
 		this.emit('fieldAdded', event);
 	}
 
 	/**
-	 * Continues the propagation of data.
-	 * @param {!Object} data
+	 * Continues the propagation of event.
+	 * @param {!Object} event
 	 * @private
 	 */
 
-	_handleFieldEdited(data) {
-		this.emit('fieldEdited', data);
+	_handleFieldEdited({fieldInstance, property, value}) {
+		const {focusedField, pages} = this.props;
+		const {columnIndex, pageIndex, rowIndex} = focusedField;
+		const column = FormSupport.getColumn(
+			pages,
+			pageIndex,
+			rowIndex,
+			columnIndex
+		);
+
+		const settingsContext = column.fields[0].settingsContext;
+
+		const properties = {};
+
+		properties.settingsContext = {
+			...settingsContext,
+			pages: settingsContext.pages.map(
+				page => (
+					{
+						...page,
+						rows: page.rows.map(
+							row => (
+								{
+									...row,
+									columns: row.columns.map(
+										column => (
+											{
+												...column,
+												fields: column.fields.map(
+													field => {
+														if (field.fieldName === fieldInstance.fieldName) {
+															field = {
+																...field,
+																value
+															};
+														}
+														if (field.fieldName === 'name' && fieldInstance.fieldName === 'label') {
+															properties.fieldName = value;
+															field = {
+																...field,
+																value
+															};
+														}
+														if (field.fieldName === 'type') {
+															field = {
+																...field,
+																value: focusedField.type
+															};
+														}
+														delete field.settingsContext;
+
+														properties[field.fieldName] = field.value;
+
+														return field;
+													}
+												)
+											}
+										)
+									)
+								}
+							)
+						)
+					}
+				)
+			)
+		};
+
+		properties[fieldInstance.fieldName] = value;
+
+		this.emit('fieldEdited', properties);
 	}
 
 	/**
 	 * Continues the propagation of event.
-	 * @param {!Object} data
+	 * @param {!Object} event
 	 * @private
 	 */
 
-	_handleFieldMoved(data) {
-		this.emit('fieldMoved', data);
+	_handleFieldMoved(event) {
+		this.emit('fieldMoved', event);
 	}
 
 	/**
@@ -93,10 +161,12 @@ class Builder extends Component {
 	 */
 
 	_handleSidebarOpened({mode}) {
-		const Sidebar = this.refs.sidebar;
+		const sidebar = this.refs.sidebar;
 
-		Sidebar._setMode(mode);
-		Sidebar.show();
+		sidebar.props.focusedField = {};
+
+		sidebar._setMode(mode);
+		sidebar.show();
 	}
 
 	_handleActivePageUpdated({mode}) {
@@ -137,8 +207,7 @@ class Builder extends Component {
 
 	render() {
 		const {
-			fieldContext,
-			fieldsList,
+			fieldTypes,
 			focusedField,
 			mode,
 			pages,
@@ -157,7 +226,7 @@ class Builder extends Component {
 		};
 
 		const sidebarEvents = {
-			fieldAdded: this._handleFieldAdd.bind(this),
+			fieldAdded: this._handleFieldAdded.bind(this),
 			fieldEdited: this._handleFieldEdited.bind(this)
 		};
 
@@ -176,8 +245,7 @@ class Builder extends Component {
 				</div>
 				<Sidebar
 					events={sidebarEvents}
-					fieldContext={fieldContext}
-					fieldLists={fieldsList}
+					fieldTypes={fieldTypes}
 					focusedField={focusedField}
 					mode={mode}
 					pages={pages}

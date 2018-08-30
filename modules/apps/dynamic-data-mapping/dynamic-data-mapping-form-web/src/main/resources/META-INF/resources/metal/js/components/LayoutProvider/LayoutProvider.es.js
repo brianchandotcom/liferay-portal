@@ -111,17 +111,33 @@ class LayoutProvider extends Component {
 	 * @private
 	 */
 
-	_handleFieldAdd({target, fieldProperties}) {
+	_handleFieldAdded({target, fieldProperties}) {
 		const {spritemap} = this.props;
 		const {pages} = this.state;
 		const {columnIndex, pageIndex, rowIndex} = target;
 
-		fieldProperties = Object.assign({}, fieldProperties, {spritemap});
+		fieldProperties = Object.assign(
+			{},
+			fieldProperties,
+			{
+				fieldName: fieldProperties.name,
+				name: fieldProperties.name,
+				spritemap,
+				type: fieldProperties.name
+			}
+		);
+
+		console.log('adding field', fieldProperties);
 
 		let newContext = null;
 
 		if (target.columnIndex === false) {
-			const newRow = FormSupport.implAddRow(12, [fieldProperties]);
+			const newRow = FormSupport.implAddRow(
+				12,
+				[
+					fieldProperties
+				]
+			);
 
 			newContext = FormSupport.addRow(
 				pages,
@@ -146,7 +162,7 @@ class LayoutProvider extends Component {
 					columnIndex,
 					pageIndex,
 					rowIndex,
-					type: fieldProperties.type
+					type: fieldProperties.name
 				},
 				mode: 'edit',
 				pages: newContext
@@ -221,7 +237,7 @@ class LayoutProvider extends Component {
 	 * @private
 	 */
 
-	_handleFieldEdited({value, key}) {
+	_handleFieldEdited(newFieldProperties) {
 		const {focusedField, pages} = this.state;
 		const {columnIndex, pageIndex, rowIndex} = focusedField;
 		const column = FormSupport.getColumn(
@@ -231,14 +247,10 @@ class LayoutProvider extends Component {
 			columnIndex
 		);
 
-		const implPropertiesField = {
-			[key]: value
-		};
-
 		const newField = Object.assign(
 			{},
 			column.fields[0],
-			implPropertiesField
+			newFieldProperties
 		);
 
 		FormSupport.changeFieldsFromColumn(
@@ -377,7 +389,7 @@ class LayoutProvider extends Component {
 			const events = {
 				deleteField: this._handleDeleteField.bind(this),
 				duplicateField: this._handleDuplicatedField.bind(this),
-				fieldAdded: this._handleFieldAdd.bind(this),
+				fieldAdded: this._handleFieldAdded.bind(this),
 				fieldClicked: this._handleClickedField.bind(this),
 				fieldEdited: this._handleFieldEdited.bind(this),
 				fieldMoved: this._handleFieldMoved.bind(this),

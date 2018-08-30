@@ -203,8 +203,8 @@ class PageRenderer extends Component {
 	 * @private
 	 */
 
-	_handleFieldChanged(data) {
-		this.emit('fieldEdited', data);
+	_handleFieldEdited(event) {
+		this.emit('fieldEdited', event);
 	}
 
 	/**

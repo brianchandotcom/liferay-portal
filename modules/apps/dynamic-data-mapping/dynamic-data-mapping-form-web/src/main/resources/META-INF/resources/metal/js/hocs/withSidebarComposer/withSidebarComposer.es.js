@@ -16,9 +16,9 @@ const withSidebarComposer = WrappedComponent => {
 
 	class WithSidebarComposer extends Component {
 		static PROPS = {
-			fieldContext: Config.array().value([]),
-
 			context: Config.array(),
+
+			fieldTypes: Config.array().value([]),
 
 			focusedField: Config.object()
 		};

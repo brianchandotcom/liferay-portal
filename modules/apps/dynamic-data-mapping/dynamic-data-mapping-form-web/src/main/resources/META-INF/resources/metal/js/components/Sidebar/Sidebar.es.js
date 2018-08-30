@@ -54,22 +54,13 @@ class Sidebar extends Component {
 		pages: Config.array().value([]),
 
 		/**
-		 * @default undefined
-		 * @instance
-		 * @memberof Sidebar
-		 * @type {?(array<object>|undefined)}
-		 */
-
-		fieldContext: Config.array().value([]),
-
-		/**
 		 * @default []
 		 * @instance
 		 * @memberof Sidebar
 		 * @type {?(array|undefined)}
 		 */
 
-		fieldLists: Config.array().value([]),
+		fieldTypes: Config.array().value([]),
 
 		/**
 		 * @default {}
@@ -86,9 +77,9 @@ class Sidebar extends Component {
 						Config.number()
 					]
 				),
+				name: Config.string().required(),
 				pageIndex: Config.number(),
-				rowIndex: Config.number(),
-				type: Config.string().required()
+				rowIndex: Config.number()
 			}
 		).value({}),
 
@@ -176,18 +167,21 @@ class Sidebar extends Component {
 			return;
 		}
 
-		const {fieldLists} = this.props;
+		const {fieldTypes} = this.props;
 		const fieldIndex = data.source.getAttribute(
 			'data-ddm-field-type-index'
 		);
-		const fieldProperties = fieldLists[Number(fieldIndex)];
-		const indexTarget = FormSupport.getIndexes(data.target.parentElement);
+		const fieldProperties = fieldTypes[Number(fieldIndex)];
+		const indexTarget = FormSupport.getIndexes(data.target);
 
 		this.emit(
 			'fieldAdded',
 			{
 				data,
-				fieldProperties,
+				fieldProperties: {
+					...fieldProperties,
+					editable: true
+				},
 				target: indexTarget
 			}
 		);
@@ -242,15 +236,11 @@ class Sidebar extends Component {
 	 */
 
 	_isEditMode() {
-		const {fieldContext, fieldLists, focusedField} = this.props;
+		const {focusedField} = this.props;
 
-		return !!(
-			!(
-				Object.keys(focusedField).length === 0 &&
-				focusedField.constructor === Object
-			) &&
-			fieldContext.length &&
-			fieldLists.length
+		return !(
+			Object.keys(focusedField).length === 0 &&
+			focusedField.constructor === Object
 		);
 	}
 
@@ -307,7 +297,8 @@ class Sidebar extends Component {
 	close() {
 		this.setState(
 			{
-				'show': false
+				focusedField: {},
+				show: false
 			}
 		);
 		this._eventHandler.removeAllListeners();
@@ -340,7 +331,7 @@ class Sidebar extends Component {
 	show() {
 		this.setState(
 			{
-				'show': true
+				show: true
 			}
 		);
 
@@ -380,21 +371,25 @@ class Sidebar extends Component {
 	 */
 
 	render() {
-		const {activeTab, mode, show} = this.state;
+		const {activeTab, show} = this.state;
 		const {
-			fieldContext,
-			fieldLists,
+			fieldTypes,
 			focusedField,
 			spritemap
 		} = this.props;
-		let currentField = null;
+
+		let currentFieldType;
+		let settingsContext;
 
 		const layoutRenderEvents = {
 			fieldEdited: this._handleFieldEdited.bind(this)
 		};
 
-		if (mode === 'edit') {
-			currentField = fieldLists.find(item => item.type == focusedField.type);
+		const editMode = this._isEditMode();
+
+		if (editMode) {
+			currentFieldType = fieldTypes.find(item => item.name == focusedField.type);
+			settingsContext = currentFieldType.settingsContext;
 		}
 
 		const styles = classnames('sidebar-container', {show});
@@ -409,7 +404,7 @@ class Sidebar extends Component {
 					<nav class="component-tbar tbar">
 						<div class="container-fluid">
 							<ul class="tbar-nav">
-								{mode === 'add' && show && (
+								{!editMode && show && (
 									<li class="tbar-item tbar-item-expand text-left">
 										<div class="tbar-section">
 											<span class="text-truncate-inline">
@@ -418,7 +413,7 @@ class Sidebar extends Component {
 										</div>
 									</li>
 								)}
-								{mode === 'edit' && show && (
+								{editMode && show && (
 									<Fragment>
 										<li class="tbar-item">
 											<ClayButton
@@ -435,8 +430,8 @@ class Sidebar extends Component {
 											<div>
 												<ClayButton
 													disabled={true}
-													icon={currentField.icon}
-													label={currentField.name}
+													icon={currentFieldType.icon}
+													label={currentFieldType.label}
 													size="sm"
 													spritemap={spritemap}
 													style="secondary"
@@ -494,8 +489,8 @@ class Sidebar extends Component {
 						</div>
 					</nav>
 					<div class="ddm-sidebar-body">
-						{mode === 'add' &&
-							!!fieldLists.length && (
+						{!editMode &&
+							!!fieldTypes.length && (
 							<ul class="list-group">
 								<li class="list-group-header">
 									<h3 class="list-group-header-title">{'Basic Elements'}</h3>
@@ -503,14 +498,15 @@ class Sidebar extends Component {
 								{this._renderListElements()}
 							</ul>
 						)}
-						{mode === 'edit' && (
+						{editMode && !!settingsContext && (
 							<div class="sidebar-body">
 								<div class="tab-content">
 									<FormRenderer
 										activePage={activeTab}
+										editable={true}
 										events={layoutRenderEvents}
 										modeRenderer="list"
-										pages={fieldContext}
+										pages={settingsContext.pages}
 										ref="FormRenderer"
 										spritemap={spritemap}
 									/>
@@ -560,10 +556,10 @@ class Sidebar extends Component {
 	}
 
 	_renderListElements() {
-		const {fieldLists, spritemap} = this.props;
+		const {fieldTypes, spritemap} = this.props;
 
-		return fieldLists.map(
-			(field, index) => {
+		return fieldTypes.filter(fieldType => !fieldType.system).map(
+			(fieldType, index) => {
 				return (
 					<div
 						class="ddm-drag-item list-group-item list-group-item-flex"
@@ -576,22 +572,22 @@ class Sidebar extends Component {
 								<svg
 									aria-hidden="true"
 									class={`lexicon-icon lexicon-icon-${
-										field.icon
+										fieldType.icon
 									}`}
 								>
 									<use
-										xlinkHref={`${spritemap}#${field.icon}`}
+										xlinkHref={`${spritemap}#${fieldType.icon}`}
 									/>
 								</svg>
 							</div>
 						</div>
 						<div class="autofit-col autofit-col-expand">
 							<h4 class="list-group-title text-truncate">
-								<span>{field.name}</span>
+								<span>{fieldType.label}</span>
 							</h4>
-							{field.description && (
+							{fieldType.description && (
 								<p class="list-group-subtitle text-truncate">
-									{field.description}
+									{fieldType.description}
 								</p>
 							)}
 						</div>

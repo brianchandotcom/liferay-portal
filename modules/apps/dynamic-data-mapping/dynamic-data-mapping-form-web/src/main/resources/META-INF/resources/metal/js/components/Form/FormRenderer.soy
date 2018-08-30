@@ -3,9 +3,10 @@
 {template .render}
 	{@param spritemap: string}
 	{@param? _handleChangePage: any}
-	{@param? _handleSettingsPageClicked: any}
 	{@param? _handleDeleteButtonClicked: any}
 	{@param? _handleDuplicateButtonClicked: any}
+	{@param? _handleFieldEdited: any}
+	{@param? _handleSettingsPageClicked: any}
 	{@param? _handleUpdatePage: any}
 	{@param? activePage: number}
 	{@param? defaultPageTitle: string}
@@ -19,9 +20,10 @@
 
 	{delcall FormRenderer.pages variant="$contentRenderer"}
 		{param _handleChangePage: $_handleChangePage /}
-		{param _handleSettingsPageClicked: $_handleSettingsPageClicked /}
 		{param _handleDeleteButtonClicked: $_handleDeleteButtonClicked /}
 		{param _handleDuplicateButtonClicked: $_handleDuplicateButtonClicked /}
+		{param _handleFieldEdited: $_handleFieldEdited /}
+		{param _handleSettingsPageClicked: $_handleSettingsPageClicked /}
 		{param _handleUpdatePage: $_handleUpdatePage /}
 		{param activePage: $activePage /}
 		{param contentRenderer: $contentRenderer /}
@@ -37,9 +39,10 @@
 {deltemplate FormRenderer.pages variant="'grid'"}
 	{@param spritemap: string}
 	{@param? _handleChangePage: any}
-	{@param? _handleSettingsPageClicked: any}
 	{@param? _handleDeleteButtonClicked: any}
 	{@param? _handleDuplicateButtonClicked: any}
+	{@param? _handleFieldEdited: any}
+	{@param? _handleSettingsPageClicked: any}
 	{@param? _handleUpdatePage: any}
 	{@param? activePage: number}
 	{@param? contentRenderer: string}
@@ -70,6 +73,7 @@
 				{param events: [
 					'deleteButtonClicked': $_handleDeleteButtonClicked,
 					'duplicateButtonClicked': $_handleDuplicateButtonClicked,
+					'fieldEdited': $_handleFieldEdited,
 					'updatePage': $_handleUpdatePage
 				] /}
 				{param page: $page /}
@@ -163,9 +167,10 @@
 
 {deltemplate FormRenderer.pages variant="'list'"}
 	{@param spritemap: string}
-	{@param? _handleUpdatePage: any}
 	{@param? _handleDeleteButtonClicked: any}
 	{@param? _handleDuplicateButtonClicked: any}
+	{@param? _handleFieldEdited: any}
+	{@param? _handleUpdatePage: any}
 	{@param? activePage: number}
 	{@param? contentRenderer: string}
 	{@param? editable: bool}
@@ -180,6 +185,7 @@
 			{param events: [
 				'deleteButtonClicked': $_handleDeleteButtonClicked,
 				'duplicateButtonClicked': $_handleDuplicateButtonClicked,
+				'fieldEdited': $_handleFieldEdited,
 				'updatePage': $_handleUpdatePage
 			] /}
 			{param page: $page /}

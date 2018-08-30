@@ -75,6 +75,8 @@ String groupId = String.valueOf(group.getGroupId());
 
 <aui:script>
 	function <portlet:namespace />editDefaultFilePermissions(groupId) {
+		var A = AUI();
+
 		Liferay.Util.openWindow(
 			{
 				dialog: {

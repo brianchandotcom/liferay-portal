@@ -222,6 +222,8 @@ portletURL.setParameter("delta", String.valueOf(delta));
 	}
 
 	function <portlet:namespace />editSitesDefaultFilePermissions() {
+		var A = AUI();
+
 		var form = document.querySelector('#<portlet:namespace />fm');
 
 		if (form) {

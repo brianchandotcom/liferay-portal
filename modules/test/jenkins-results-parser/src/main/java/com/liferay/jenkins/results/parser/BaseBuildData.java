@@ -27,7 +27,7 @@ import org.json.JSONObject;
  * @author Michael Hashimoto
  */
 public abstract class BaseBuildData
-	extends BuildDataJSONObject implements BuildData {
+	extends JenkinsJSONObject implements BuildData {
 
 	public static final String TOP_LEVEL_RUN_ID = "top_level";
 

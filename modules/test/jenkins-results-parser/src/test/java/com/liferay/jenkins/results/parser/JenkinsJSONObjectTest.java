@@ -27,17 +27,17 @@ import org.junit.Test;
 /**
  * @author Leslie Wong
  */
-public class BuildDataJSONObjectTest
+public class JenkinsJSONObjectTest
 	extends com.liferay.jenkins.results.parser.Test {
 
 	@Test
-	public void testGetBuildDataMap() throws IOException {
+	public void testGetMap() throws IOException {
 		File file = new File(dependenciesDirs.get(0), "test.json");
 
-		BuildDataJSONObject buildDataJSONObject = new BuildDataJSONObject(
+		JenkinsJSONObject jenkinsJSONObject = new JenkinsJSONObject(
 			JenkinsResultsParserUtil.read(file));
 
-		Map<String, String> actualMap = buildDataJSONObject.getBuildDataMap(
+		Map<String, String> actualMap = jenkinsJSONObject.getMap(
 			"git.portal.properties");
 
 		Map<String, String> expectedMap = new HashMap<>();
@@ -53,13 +53,13 @@ public class BuildDataJSONObjectTest
 	}
 
 	@Test
-	public void testGetBuildDataMapWithPattern() throws IOException {
+	public void testGetMapWithPattern() throws IOException {
 		File file = new File(dependenciesDirs.get(0), "test.json");
 
-		BuildDataJSONObject buildDataJSONObject = new BuildDataJSONObject(
+		JenkinsJSONObject jenkinsJSONObject = new JenkinsJSONObject(
 			JenkinsResultsParserUtil.read(file));
 
-		Map<String, String> actualMap = buildDataJSONObject.getBuildDataMap(
+		Map<String, String> actualMap = jenkinsJSONObject.getMap(
 			"git.portal.properties", _localPropertyNamePattern);
 
 		Map<String, String> expectedMap = new HashMap<>();

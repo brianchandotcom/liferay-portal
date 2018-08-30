@@ -23,7 +23,9 @@ import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalServiceUtil;
 import com.liferay.document.library.kernel.service.DLFileEntryMetadataLocalServiceUtil;
 import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalServiceUtil;
-import com.liferay.dynamic.data.mapping.io.DDMFormXSDDeserializer;
+import com.liferay.dynamic.data.mapping.io.DDMFormDeserializer;
+import com.liferay.dynamic.data.mapping.io.DDMFormDeserializerDeserializeRequest;
+import com.liferay.dynamic.data.mapping.io.DDMFormDeserializerDeserializeResponse;
 import com.liferay.dynamic.data.mapping.kernel.DDMForm;
 import com.liferay.dynamic.data.mapping.kernel.DDMFormField;
 import com.liferay.dynamic.data.mapping.kernel.DDMFormFieldValue;
@@ -86,8 +88,16 @@ public class DLFileEntryMetadataLocalServiceTest {
 		byte[] testFileBytes = FileUtil.getBytes(
 			getClass(), "dependencies/ddmstructure.xml");
 
+		DDMFormDeserializerDeserializeRequest.Builder builder =
+			DDMFormDeserializerDeserializeRequest.Builder.newBuilder(
+				new String(testFileBytes));
+
+		DDMFormDeserializerDeserializeResponse
+			ddmFormDeserializerDeserializeResponse =
+				_ddmFormDeserializer.deserialize(builder.build());
+
 		com.liferay.dynamic.data.mapping.model.DDMForm ddmForm =
-			_ddmFormXSDDeserializer.deserialize(new String(testFileBytes));
+			ddmFormDeserializerDeserializeResponse.getDDMForm();
 
 		serviceContext.setAttribute(
 			"ddmForm", DDMBeanTranslatorUtil.translate(ddmForm));
@@ -222,8 +232,8 @@ public class DLFileEntryMetadataLocalServiceTest {
 		return ddmFormValuesMap;
 	}
 
-	@Inject
-	private static DDMFormXSDDeserializer _ddmFormXSDDeserializer;
+	@Inject(filter = "ddm.form.deserializer.type=xsd")
+	private DDMFormDeserializer _ddmFormDeserializer;
 
 	private DDMStructure _ddmStructure;
 	private DLFileEntry _dlFileEntry;

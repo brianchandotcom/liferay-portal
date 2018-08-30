@@ -6,9 +6,11 @@ import templates from './document-library.soy';
 /**
  * DocumentLibrary Component
  */
+
 class DocumentLibrary extends Component {}
 
 // Register component
+
 Soy.register(DocumentLibrary, templates, 'render');
 
 if (!window.DDMDocumentLibrary) {

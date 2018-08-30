@@ -6,9 +6,11 @@ import templates from './radio.soy';
 /**
  * Radio Component
  */
+
 class Radio extends Component {}
 
 // Register component
+
 Soy.register(Radio, templates, 'render');
 
 if (!window.DDMRadio) {

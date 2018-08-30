@@ -9,9 +9,11 @@ import templates from './numeric.soy';
 /**
  * Numeric Component
  */
+
 class Numeric extends Component {}
 
 // Register component
+
 Soy.register(Numeric, templates, 'render');
 
 if (!window.DDMNumeric) {

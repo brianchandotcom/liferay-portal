@@ -4,7 +4,7 @@ import {Align} from 'metal-position';
 
 import templates from './select.soy';
 
-let SelectTemplates = [];
+const SelectTemplates = [];
 
 if (!window.DDMSelect) {
 	window.DDMSelect = {
@@ -12,7 +12,7 @@ if (!window.DDMSelect) {
 	};
 }
 
-for (let template in templates) {
+for (const template in templates) {
 	if (template !== 'templates') {
 		class C extends Component {};
 		Soy.register(C, templates, template);

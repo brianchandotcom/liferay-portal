@@ -6,9 +6,11 @@ import templates from './text.soy';
 /**
  * Text Component
  */
+
 class Text extends Component {}
 
 // Register component
+
 Soy.register(Text, templates, 'render');
 
 if (!window.DDMText) {

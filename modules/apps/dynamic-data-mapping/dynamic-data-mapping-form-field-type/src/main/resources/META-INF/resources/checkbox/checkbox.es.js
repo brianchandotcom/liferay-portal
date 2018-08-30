@@ -6,9 +6,11 @@ import templates from './checkbox.soy';
 /**
  * Checkbox Component
  */
+
 class Checkbox extends Component {}
 
 // Register component
+
 Soy.register(Checkbox, templates, 'render');
 
 if (!window.DDMCheckbox) {

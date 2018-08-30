@@ -6,9 +6,11 @@ import templates from './editor.soy';
 /**
  * Editor Component
  */
+
 class Editor extends Component {}
 
 // Register component
+
 Soy.register(Editor, templates, 'render');
 
 if (!window.DDMEditor) {

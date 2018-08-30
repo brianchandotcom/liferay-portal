@@ -3,7 +3,7 @@ import Soy from 'metal-soy';
 
 import templates from './grid.soy';
 
-let GridTemplates = [];
+const GridTemplates = [];
 
 if (!window.DDMGrid) {
 	window.DDMGrid = {
@@ -11,7 +11,7 @@ if (!window.DDMGrid) {
 	};
 }
 
-for (let template in templates) {
+for (const template in templates) {
 	if (template !== 'templates') {
 		class C extends Component {};
 		Soy.register(C, templates, template);

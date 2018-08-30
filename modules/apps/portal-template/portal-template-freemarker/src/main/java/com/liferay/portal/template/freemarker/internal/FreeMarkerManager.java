@@ -280,7 +280,8 @@ public class FreeMarkerManager extends BaseSingleTemplateManager {
 		LiferayObjectWrapper liferayObjectWrapper = new LiferayObjectWrapper();
 
 		liferayObjectWrapper.setFreeMarkerEngineConfiguration(
-			_freeMarkerEngineConfiguration);
+			_freeMarkerEngineConfiguration.allowedClasses(),
+			_freeMarkerEngineConfiguration.restrictedClasses());
 
 		_configuration.setObjectWrapper(liferayObjectWrapper);
 

@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.templateparser.TemplateNode;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.template.freemarker.configuration.FreeMarkerEngineConfiguration;
 
 import freemarker.ext.beans.BeansWrapper;
 import freemarker.ext.beans.EnumerationModel;
@@ -95,10 +94,7 @@ public class LiferayObjectWrapper extends DefaultObjectWrapper {
 	}
 
 	public void setFreeMarkerEngineConfiguration(
-		FreeMarkerEngineConfiguration freeMarkerEngineConfiguration) {
-
-		String[] allowedClassNames =
-			freeMarkerEngineConfiguration.allowedClasses();
+		String[] allowedClassNames, String[] restrictedClassNames) {
 
 		if (allowedClassNames == null) {
 			_allowedClassNames = Collections.emptyList();
@@ -118,9 +114,6 @@ public class LiferayObjectWrapper extends DefaultObjectWrapper {
 		}
 
 		_allowAllClasses = _allowedClassNames.contains(StringPool.STAR);
-
-		String[] restrictedClassNames =
-			freeMarkerEngineConfiguration.restrictedClasses();
 
 		if (restrictedClassNames == null) {
 			_restrictedClasses = Collections.emptyList();

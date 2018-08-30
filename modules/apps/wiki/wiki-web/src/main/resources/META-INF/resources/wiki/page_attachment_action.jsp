@@ -65,18 +65,12 @@ WikiPage wikiPage = WikiPageAttachmentsUtil.getPage(attachmentsFileEntry.getFile
 		</c:when>
 		<c:otherwise>
 			<c:if test="<%= WikiPagePermission.contains(permissionChecker, wikiPage, ActionKeys.DELETE) %>">
-				<portlet:actionURL name="/wiki/edit_page_attachment" var="deleteURL">
-					<portlet:param name="<%= Constants.CMD %>" value="<%= trashHelper.isTrashEnabled(scopeGroupId) ? Constants.MOVE_TO_TRASH : Constants.DELETE %>" />
-					<portlet:param name="redirect" value="<%= currentURL %>" />
-					<portlet:param name="nodeId" value="<%= String.valueOf(wikiPage.getNodeId()) %>" />
-					<portlet:param name="title" value="<%= wikiPage.getTitle() %>" />
-					<portlet:param name="fileName" value="<%= HtmlUtil.unescape(attachmentsFileEntry.getTitle()) %>" />
-				</portlet:actionURL>
-
-				<liferay-ui:icon-delete
-					trash="<%= trashHelper.isTrashEnabled(scopeGroupId) %>"
-					url="<%= deleteURL %>"
-				/>
+				<div class="delete-attachment" data-cmd="<%= trashHelper.isTrashEnabled(scopeGroupId) ? Constants.MOVE_TO_TRASH : Constants.DELETE %>" data-fileName="<%= attachmentsFileEntry.getTitle() %>" data-nodeId="<%= String.valueOf(wikiPage.getNodeId()) %>" data-rowId="<%= attachmentsFileEntry.getFileEntryId() %>" data-title="<%= wikiPage.getTitle() %>">
+					<liferay-ui:icon-delete
+						trash="<%= trashHelper.isTrashEnabled(scopeGroupId) %>"
+						url="javascript:;"
+					/>
+				</div>
 			</c:if>
 		</c:otherwise>
 	</c:choose>

@@ -67,13 +67,6 @@ Ticket ticket = TicketLocalServiceUtil.addTicket(user.getCompanyId(), User.class
 	/>
 </liferay-util:buffer>
 
-<liferay-portlet:actionURL name="/wiki/edit_page_attachment" var="deleteURL">
-	<portlet:param name="<%= Constants.CMD %>" value="<%= trashHelper.isTrashEnabled(wikiRequestHelper.getScopeGroupId()) ? Constants.MOVE_TO_TRASH : Constants.DELETE %>" />
-	<portlet:param name="redirect" value="<%= wikiRequestHelper.getCurrentURL() %>" />
-	<portlet:param name="nodeId" value="<%= String.valueOf(node.getNodeId()) %>" />
-	<portlet:param name="title" value="<%= wikiPage.getTitle() %>" />
-</liferay-portlet:actionURL>
-
 <aui:script use="liferay-portlet-url,liferay-upload">
 	var uploader = new Liferay.Upload(
 		{
@@ -104,13 +97,9 @@ Ticket ticket = TicketLocalServiceUtil.addTicket(user.getCompanyId(), User.class
 			if (searchContainer) {
 				var rowColumns = [];
 
-				var deleteURL = Liferay.PortletURL.createURL('<%= deleteURL.toString() %>');
-
-				deleteURL.setParameter('fileName', event.name);
-
 				rowColumns.push(event.name);
 				rowColumns.push(uploader.formatStorage(event.size));
-				rowColumns.push('<a href="' + deleteURL + '"><%= trashHelper.isTrashEnabled(scopeGroupId) ? UnicodeLanguageUtil.get(resourceBundle, "move-to-recycle-bin") : UnicodeFormatter.toString(removeAttachmentIcon) %></a>');
+				rowColumns.push('<a class="delete-attachment" data-cmd="<%= trashHelper.isTrashEnabled(scopeGroupId) ? Constants.MOVE_TO_TRASH : Constants.DELETE %>" data-fileName="' + event.name + '" data-nodeId="<%= wikiPage.getNodeId() %>" data-rowId="' + event.id + '" data-ticketKey="<%= ticket.getKey() %>" data-title="<%= wikiPage.getTitle() %>" href="javascript:;"><%= trashHelper.isTrashEnabled(scopeGroupId) ? UnicodeLanguageUtil.get(resourceBundle, "move-to-recycle-bin") : UnicodeFormatter.toString(removeAttachmentIcon) %></a>');
 
 				searchContainer.addRow(rowColumns, event.id);
 

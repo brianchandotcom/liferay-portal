@@ -120,10 +120,10 @@ public class TLDUtil {
 
 		xsdFiles.add(xsdFile);
 
-		File currentXSDFile = null;
+		File curXSDFile = null;
 
-		while ((currentXSDFile = xsdFiles.poll()) != null) {
-			Document document = _getDocument(currentXSDFile);
+		while ((curXSDFile = xsdFiles.poll()) != null) {
+			Document document = _getDocument(curXSDFile);
 
 			NodeList importNodeList = document.getElementsByTagName(
 				"xsd:import");

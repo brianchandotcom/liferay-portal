@@ -71,7 +71,7 @@ public class TLDUtil {
 		int index = s.lastIndexOf('/');
 
 		if (index == -1) {
-			return null;
+			return s;
 		}
 
 		String fileName = s.substring(index + 1);
@@ -195,7 +195,13 @@ public class TLDUtil {
 					continue;
 				}
 
-				File curDefinitionFile = _portalDefinitions.get(schemaLocation);
+				String fileName = _getFileName(schemaLocation);
+
+				if (fileName == null) {
+					continue;
+				}
+
+				File curDefinitionFile = _portalDefinitions.get(fileName);
 
 				if (curDefinitionFile == null) {
 					continue;

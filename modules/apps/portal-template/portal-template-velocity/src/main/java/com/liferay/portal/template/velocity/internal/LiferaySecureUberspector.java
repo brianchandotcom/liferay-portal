@@ -100,13 +100,6 @@ public class LiferaySecureUberspector extends SecureUberspector {
 
 	private class ClassRestrictionInformation {
 
-		public ClassRestrictionInformation(
-			boolean restricted, String description) {
-
-			_restricted = restricted;
-			_description = description;
-		}
-
 		public String getDescription() {
 			return _description;
 		}
@@ -115,18 +108,19 @@ public class LiferaySecureUberspector extends SecureUberspector {
 			return _restricted;
 		}
 
+		private ClassRestrictionInformation(
+			boolean restricted, String description) {
+
+			_restricted = restricted;
+			_description = description;
+		}
+
 		private final String _description;
 		private final boolean _restricted;
 
 	}
 
 	private class LiferaySecureIntrospectorImpl extends SecureIntrospectorImpl {
-
-		public LiferaySecureIntrospectorImpl() {
-			super(
-				new String[0], new String[0],
-				LiferaySecureUberspector.this.log);
-		}
 
 		@Override
 		@SuppressWarnings("rawtypes")
@@ -145,6 +139,12 @@ public class LiferaySecureUberspector extends SecureUberspector {
 			_checkClassIsRestricted(clazz);
 
 			return true;
+		}
+
+		private LiferaySecureIntrospectorImpl() {
+			super(
+				new String[0], new String[0],
+				LiferaySecureUberspector.this.log);
 		}
 
 		private void _checkClassIsRestricted(Class<?> clazz) {

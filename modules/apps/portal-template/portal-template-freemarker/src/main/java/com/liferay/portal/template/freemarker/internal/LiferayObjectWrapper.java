@@ -349,19 +349,19 @@ public class LiferayObjectWrapper extends DefaultObjectWrapper {
 
 	private class ClassRestrictionInformation {
 
-		public ClassRestrictionInformation(
-			boolean restricted, String description) {
-
-			_restricted = restricted;
-			_description = description;
-		}
-
 		public String getDescription() {
 			return _description;
 		}
 
 		public boolean isRestricted() {
 			return _restricted;
+		}
+
+		private ClassRestrictionInformation(
+			boolean restricted, String description) {
+
+			_restricted = restricted;
+			_description = description;
 		}
 
 		private final String _description;

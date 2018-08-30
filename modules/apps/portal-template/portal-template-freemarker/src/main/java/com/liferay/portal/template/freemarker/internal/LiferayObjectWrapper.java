@@ -222,13 +222,12 @@ public class LiferayObjectWrapper extends DefaultObjectWrapper {
 				className,
 				a -> {
 					if (_allowedClassNames.contains(className)) {
-						return new ClassRestrictionInformation(false, null);
+						return new ClassRestrictionInformation(null);
 					}
 
 					for (Class<?> restrictedClass : _restrictedClasses) {
 						if (restrictedClass.isAssignableFrom(clazz)) {
 							return new ClassRestrictionInformation(
-								true,
 								StringBundler.concat(
 									"Denied to resolve class ", className,
 									" due to security reasons, restricted by ",
@@ -247,7 +246,6 @@ public class LiferayObjectWrapper extends DefaultObjectWrapper {
 
 							if (packageName.startsWith(restrictedPackageName)) {
 								return new ClassRestrictionInformation(
-									true,
 									StringBundler.concat(
 										"Denied to resolve class ", className,
 										" due to security reasons, restricted ",
@@ -256,7 +254,7 @@ public class LiferayObjectWrapper extends DefaultObjectWrapper {
 						}
 					}
 
-					return new ClassRestrictionInformation(false, null);
+					return new ClassRestrictionInformation(null);
 				});
 
 		if (classRestrictionInformation.isRestricted()) {
@@ -354,18 +352,18 @@ public class LiferayObjectWrapper extends DefaultObjectWrapper {
 		}
 
 		public boolean isRestricted() {
-			return _restricted;
+			if (_description == null) {
+				return false;
+			}
+
+			return true;
 		}
 
-		private ClassRestrictionInformation(
-			boolean restricted, String description) {
-
-			_restricted = restricted;
+		private ClassRestrictionInformation(String description) {
 			_description = description;
 		}
 
 		private final String _description;
-		private final boolean _restricted;
 
 	}
 

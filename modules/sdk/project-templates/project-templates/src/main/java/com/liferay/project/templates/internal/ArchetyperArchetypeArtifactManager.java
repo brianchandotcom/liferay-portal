@@ -38,9 +38,7 @@ import org.apache.maven.artifact.repository.ArtifactRepository;
 public class ArchetyperArchetypeArtifactManager
 	extends DefaultArchetypeArtifactManager {
 
-	public ArchetyperArchetypeArtifactManager(List<File> archetypesFiles)
-		throws Exception {
-
+	public ArchetyperArchetypeArtifactManager(List<File> archetypesFiles) {
 		_archetypesFiles = archetypesFiles;
 
 		if (_archetypesFiles.isEmpty()) {

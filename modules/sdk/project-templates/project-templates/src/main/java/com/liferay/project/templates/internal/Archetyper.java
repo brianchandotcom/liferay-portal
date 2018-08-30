@@ -97,9 +97,7 @@ public class Archetyper {
 		return defaultVelocityComponent;
 	}
 
-	protected ArchetypeArtifactManager newArchetypeArtifactManager()
-		throws Exception {
-
+	protected ArchetypeArtifactManager newArchetypeArtifactManager() {
 		return new ArchetyperArchetypeArtifactManager(_archetypesDirs);
 	}
 

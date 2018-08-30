@@ -72,7 +72,7 @@ renderResponse.setTitle((formInstance == null) ? LanguageUtil.get(request, "new-
 		</div>
 	</nav>
 
-	<div class="container-fluid-1280">
+	<div class="container-fluid-1280 ddm-translation-manager">
 		<aui:translation-manager availableLocales="<%= availableLocales %>" changeableDefaultLanguage="<%= false %>" defaultLanguageId="<%= defaultLanguageId %>" id="translationManager" />
 	</div>
 

@@ -205,8 +205,17 @@ class RuleList extends Component {
 	attached() {
 		const addButton = document.querySelector('#addFieldButton');
 
+		const translationManager = document.querySelector('.ddm-translation-manager');
+
+		const formBasicInfo = document.querySelector('.ddm-form-basic-info');
+
 		if (addButton) {
 			addButton.classList.remove('hide');
+		}
+
+		if (translationManager && formBasicInfo) {
+			formBasicInfo.classList.add('hide');
+			translationManager.classList.add('hide');
 		}
 
 		this._eventHandler.add(

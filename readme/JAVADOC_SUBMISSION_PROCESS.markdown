@@ -117,4 +117,4 @@ any changes should be sent to its subrepo
 [here](https://github.com/liferay/com-liferay-apio-architect). You can check
 whether a module project is managed in an external subrepo by checking if it
 contains a `.gitrepo` file. If the file exists and contains the `mode = pull`
-declaration, changes should be submitted to its subrepo.
+declaration, changes should be submitted to the subrepo.

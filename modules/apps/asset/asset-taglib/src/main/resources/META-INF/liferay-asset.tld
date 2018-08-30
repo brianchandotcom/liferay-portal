@@ -392,63 +392,75 @@
 		</attribute>
 	</tag>
 	<tag>
+		<description>Creates a component to create and select tags to add to an asset, such as a blog entry, bookmark, or wiki page.</description>
 		<name>asset-tags-selector</name>
 		<tag-class>com.liferay.asset.taglib.servlet.taglib.AssetTagsSelectorTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
+			<description>A function to call when a tag is added.</description>
 			<name>addCallback</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>Whether to allow adding new tags to the list of tags. The default value is <![CDATA[<code>true</code>]]>.</description>
 			<name>allowAddEntry</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 			<type>boolean</type>
 		</attribute>
 		<attribute>
+			<description>Whether to automatically focus the tag input field. The default value is <![CDATA[<code>false</code>]]>.</description>
 			<name>autoFocus</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 			<type>boolean</type>
 		</attribute>
 		<attribute>
+			<description>The asset's Java class.</description>
 			<name>className</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>The asset's Java class primary key to associate with the tags. This is a Java <![CDATA[<code>long</code>]]>.</description>
 			<name>classPK</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>The asset tags' group IDs.</description>
 			<name>groupIds</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>The name of the hidden input for passing in the asset's current tags.</description>
 			<name>hiddenInput</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>The component instance's ID.</description>
 			<name>id</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>Whether to ignore the hidden input's request value. The default value is <![CDATA[<code>false</code>]]>.</description>
 			<name>ignoreRequestValue</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 			<type>boolean</type>
 		</attribute>
 		<attribute>
+			<description>A function to call when a tag is removed.</description>
 			<name>removeCallback</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>The currently selected tags.</description>
 			<name>tagNames</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -466,19 +478,19 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>The Java class of the asset.</description>
+			<description>The asset's Java class.</description>
 			<name>className</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>The Java class primary key of an asset. This is a Java <![CDATA[<code>long</code>]]>.</description>
+			<description>The asset's Java class primary key. This is a Java <![CDATA[<code>long</code>]]>.</description>
 			<name>classPK</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>A message to display before the tag labels. A standard example is <![CDATA[<code>tags</code>]]>, which renders as <![CDATA[<code>Tags:</code>]]>.</description>
+			<description>A message to display before the tag labels. For example, <![CDATA[<code>tags</code>]]> renders as <![CDATA[<code>Tags:</code>]]>.</description>
 			<name>message</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>

@@ -395,7 +395,7 @@ public class PorygonSiteInitializer implements SiteInitializer {
 		_addAssetPublisherPortlet(
 			ddmStructure,
 			_getDDMTemplateKey(
-				"EntryCardFirstItemBiggerLeftADT", adtDDMTemplates),
+				"adt_entry_card_first_item_bigger_left", adtDDMTemplates),
 			"3", _PORTLET_DECORATOR_BAREBONE, layout, _COLUMN_1,
 			serviceContext);
 
@@ -404,7 +404,7 @@ public class PorygonSiteInitializer implements SiteInitializer {
 
 		_addAssetPublisherPortlet(
 			ddmStructure,
-			_getDDMTemplateKey("EntryList3itemsADT", adtDDMTemplates), "6",
+			_getDDMTemplateKey("adt_entry_list_3_items", adtDDMTemplates), "6",
 			_PORTLET_DECORATOR_BAREBONE, layout,
 			_getNestedColumn(portletId, _COLUMN_1), serviceContext);
 
@@ -414,18 +414,18 @@ public class PorygonSiteInitializer implements SiteInitializer {
 
 		_addAssetPublisherPortlet(
 			ddmStructure,
-			_getDDMTemplateKey("EntryCarouselADT", adtDDMTemplates), "3",
+			_getDDMTemplateKey("adt_entry_carousel", adtDDMTemplates), "3",
 			_PORTLET_DECORATOR_BAREBONE, layout, _COLUMN_1, serviceContext);
 
 		_addAssetPublisherPortlet(
 			ddmStructure,
-			_getDDMTemplateKey("EntryList4itemsADT", adtDDMTemplates), "4",
+			_getDDMTemplateKey("adt_entry_list_4_items", adtDDMTemplates), "4",
 			_PORTLET_DECORATOR_BAREBONE, layout, _COLUMN_1, serviceContext);
 
 		_addAssetPublisherPortlet(
 			ddmStructure,
 			_getDDMTemplateKey(
-				"EntryCardFirstItemBiggerRightADT", adtDDMTemplates),
+				"adt_entry_card_first_item_bigger_right", adtDDMTemplates),
 			"5", _PORTLET_DECORATOR_BAREBONE, layout, _COLUMN_1,
 			serviceContext);
 
@@ -442,7 +442,7 @@ public class PorygonSiteInitializer implements SiteInitializer {
 
 		_addAssetPublisherPortlet(
 			ddmStructure,
-			_getDDMTemplateKey("EntryList4itemsADT", adtDDMTemplates), "16",
+			_getDDMTemplateKey("adt_entry_list_4_items", adtDDMTemplates), "16",
 			_PORTLET_DECORATOR_BAREBONE, layout, _COLUMN_1, serviceContext);
 
 		_updateLayout(layout);
@@ -648,7 +648,7 @@ public class PorygonSiteInitializer implements SiteInitializer {
 		_addAssetPublisherPortlet(
 			ddmStructure,
 			_getDDMTemplateKey(
-				"EntryCardFirstItemBiggerRightADT", adtDDMTemplates),
+				"adt_entry_card_first_item_bigger_right", adtDDMTemplates),
 			"3", _PORTLET_DECORATOR_BAREBONE, layout, _COLUMN_1,
 			serviceContext);
 
@@ -657,7 +657,7 @@ public class PorygonSiteInitializer implements SiteInitializer {
 
 		_addAssetPublisherPortlet(
 			ddmStructure,
-			_getDDMTemplateKey("EntryList3itemsADT", adtDDMTemplates), "12",
+			_getDDMTemplateKey("adt_entry_list_3_items", adtDDMTemplates), "12",
 			_PORTLET_DECORATOR_BAREBONE, layout,
 			_getNestedColumn(portletId, _COLUMN_1), serviceContext);
 
@@ -679,12 +679,12 @@ public class PorygonSiteInitializer implements SiteInitializer {
 
 		_addAssetPublisherPortlet(
 			ddmStructure,
-			_getDDMTemplateKey("EntryList3itemsADT", adtDDMTemplates), "6",
+			_getDDMTemplateKey("adt_entry_list_3_items", adtDDMTemplates), "6",
 			_PORTLET_DECORATOR_BAREBONE, layout, _COLUMN_1, serviceContext);
 
 		_addAssetPublisherPortlet(
 			ddmStructure,
-			_getDDMTemplateKey("EntryList4itemsADT", adtDDMTemplates), "12",
+			_getDDMTemplateKey("adt_entry_list_4_items", adtDDMTemplates), "12",
 			_PORTLET_DECORATOR_TRENDING, layout, _COLUMN_1, serviceContext);
 
 		_updateLayout(layout);
@@ -702,13 +702,13 @@ public class PorygonSiteInitializer implements SiteInitializer {
 		_addAssetPublisherPortlet(
 			ddmStructure,
 			_getDDMTemplateKey(
-				"EntryCardFirstItemBiggerRightADT", adtDDMTemplates),
+				"adt_entry_card_first_item_bigger_right", adtDDMTemplates),
 			"5", _PORTLET_DECORATOR_BAREBONE, layout, _COLUMN_1,
 			serviceContext);
 
 		_addAssetPublisherPortlet(
 			ddmStructure,
-			_getDDMTemplateKey("EntryList3itemsADT", adtDDMTemplates), "9",
+			_getDDMTemplateKey("adt_entry_list_3_items", adtDDMTemplates), "9",
 			_PORTLET_DECORATOR_BAREBONE, layout, _COLUMN_1, serviceContext);
 
 		_updateLayout(layout);

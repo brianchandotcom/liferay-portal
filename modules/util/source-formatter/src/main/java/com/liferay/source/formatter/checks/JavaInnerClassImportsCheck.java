@@ -47,6 +47,16 @@ public class JavaInnerClassImportsCheck extends BaseFileCheck {
 		Matcher matcher = _innerClassImportPattern.matcher(content);
 
 		while (matcher.find()) {
+			String innerClassName = matcher.group(4);
+			String outerClassName = matcher.group(3);
+
+			// Skip inner classes with long names, because it causes a lot of
+			// cases where we get long lines that are hard to resolve
+
+			if ((innerClassName.length() + outerClassName.length()) > 40) {
+				continue;
+			}
+
 			String innerClassFullyQualifiedName = matcher.group(1);
 			String outerClassFullyQualifiedName = matcher.group(2);
 
@@ -62,9 +72,6 @@ public class JavaInnerClassImportsCheck extends BaseFileCheck {
 					content, innerClassFullyQualifiedName,
 					outerClassFullyQualifiedName);
 			}
-
-			String innerClassName = matcher.group(4);
-			String outerClassName = matcher.group(3);
 
 			if (imports == null) {
 				imports = _getImports(content);

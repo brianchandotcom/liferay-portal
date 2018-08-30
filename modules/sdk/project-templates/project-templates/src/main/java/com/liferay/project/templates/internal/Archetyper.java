@@ -46,29 +46,6 @@ import org.codehaus.plexus.velocity.VelocityComponent;
  */
 public class Archetyper {
 
-	public static VelocityComponent createVelocityComponent() throws Exception {
-		DefaultVelocityComponent defaultVelocityComponent =
-			new DefaultVelocityComponent();
-
-		ReflectionUtil.setFieldValue(
-			_loggerField, defaultVelocityComponent, _logger);
-
-		Properties properties = new Properties();
-
-		properties.setProperty(RuntimeConstants.RESOURCE_LOADER, "classpath");
-		properties.setProperty(
-			"classpath.resource.loader.class",
-			ClasspathResourceLoader.class.getName());
-
-		ReflectionUtil.setFieldValue(
-			DefaultVelocityComponent.class, "properties",
-			defaultVelocityComponent, properties);
-
-		defaultVelocityComponent.initialize();
-
-		return defaultVelocityComponent;
-	}
-
 	public Archetyper(List<File> archetypesDirs) {
 		_archetypesDirs = archetypesDirs;
 	}
@@ -95,6 +72,29 @@ public class Archetyper {
 			_createArchetypeGenerator());
 
 		return archetypeManager;
+	}
+
+	public VelocityComponent createVelocityComponent() throws Exception {
+		DefaultVelocityComponent defaultVelocityComponent =
+			new DefaultVelocityComponent();
+
+		ReflectionUtil.setFieldValue(
+			_loggerField, defaultVelocityComponent, _logger);
+
+		Properties properties = new Properties();
+
+		properties.setProperty(RuntimeConstants.RESOURCE_LOADER, "classpath");
+		properties.setProperty(
+			"classpath.resource.loader.class",
+			ClasspathResourceLoader.class.getName());
+
+		ReflectionUtil.setFieldValue(
+			DefaultVelocityComponent.class, "properties",
+			defaultVelocityComponent, properties);
+
+		defaultVelocityComponent.initialize();
+
+		return defaultVelocityComponent;
 	}
 
 	protected ArchetypeArtifactManager newArchetypeArtifactManager()

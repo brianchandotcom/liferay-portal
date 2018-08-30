@@ -14,10 +14,58 @@
 
 package com.liferay.project.templates.internal.util;
 
+import java.io.File;
+import java.io.IOException;
+
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
+
+import java.util.Enumeration;
+import java.util.jar.JarEntry;
+import java.util.jar.JarFile;
+
 /**
  * @author Gregory Amerson
  */
 public class ProjectTemplatesUtil {
+
+	public static File getArchetypeFile(String artifactId, File file)
+		throws IOException {
+
+		try (JarFile jarFile = new JarFile(file)) {
+			Enumeration<JarEntry> enumeration = jarFile.entries();
+
+			while (enumeration.hasMoreElements()) {
+				JarEntry jarEntry = enumeration.nextElement();
+
+				if (jarEntry.isDirectory()) {
+					continue;
+				}
+
+				String name = jarEntry.getName();
+
+				if (!name.startsWith(artifactId + "-")) {
+					continue;
+				}
+
+				Path archetypePath = Files.createTempFile(
+					"temp-archetype", null);
+
+				Files.copy(
+					jarFile.getInputStream(jarEntry), archetypePath,
+					StandardCopyOption.REPLACE_EXISTING);
+
+				File archetypeFile = archetypePath.toFile();
+
+				archetypeFile.deleteOnExit();
+
+				return archetypeFile;
+			}
+		}
+
+		return null;
+	}
 
 	public static String getTemplateName(String name) {
 		String projectTemplatesString = "project.templates.";

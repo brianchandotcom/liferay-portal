@@ -15,23 +15,18 @@
 package com.liferay.project.templates.internal;
 
 import com.liferay.project.templates.internal.util.FileUtil;
+import com.liferay.project.templates.internal.util.ProjectTemplatesUtil;
 
 import java.io.File;
-import java.io.IOException;
 
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URL;
 import java.net.URLClassLoader;
 
-import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.StandardCopyOption;
 
-import java.util.Enumeration;
 import java.util.List;
-import java.util.jar.JarEntry;
-import java.util.jar.JarFile;
 
 import org.apache.maven.archetype.common.DefaultArchetypeArtifactManager;
 import org.apache.maven.archetype.exception.UnknownArchetype;
@@ -43,14 +38,14 @@ import org.apache.maven.artifact.repository.ArtifactRepository;
 public class ArchetyperArchetypeArtifactManager
 	extends DefaultArchetypeArtifactManager {
 
-	public ArchetyperArchetypeArtifactManager(List<File> archetypesDirs)
+	public ArchetyperArchetypeArtifactManager(List<File> archetypesFiles)
 		throws Exception {
 
-		_archetypesDirs = archetypesDirs;
+		_archetypesFiles = archetypesFiles;
 
-		if (_archetypesDirs.isEmpty()) {
+		if (_archetypesFiles.isEmpty()) {
 			try {
-				_archetypesDirs.add(
+				_archetypesFiles.add(
 					FileUtil.getJarFile(ProjectGenerator.class));
 			}
 			catch (Exception e) {
@@ -78,7 +73,7 @@ public class ArchetyperArchetypeArtifactManager
 
 		File archetypeFile = null;
 
-		for (File archetypesFile : _archetypesDirs) {
+		for (File archetypesFile : _archetypesFiles) {
 			try {
 				if (archetypesFile.isDirectory()) {
 					Path archetypePath = FileUtil.getFile(
@@ -89,7 +84,7 @@ public class ArchetyperArchetypeArtifactManager
 					}
 				}
 				else {
-					archetypeFile = _getArchetypeFile(
+					archetypeFile = ProjectTemplatesUtil.getArchetypeFile(
 						artifactId, archetypesFile);
 
 					if (archetypeFile != null) {
@@ -123,43 +118,6 @@ public class ArchetyperArchetypeArtifactManager
 		}
 	}
 
-	private static File _getArchetypeFile(String artifactId, File file)
-		throws IOException {
-
-		try (JarFile jarFile = new JarFile(file)) {
-			Enumeration<JarEntry> enumeration = jarFile.entries();
-
-			while (enumeration.hasMoreElements()) {
-				JarEntry jarEntry = enumeration.nextElement();
-
-				if (jarEntry.isDirectory()) {
-					continue;
-				}
-
-				String name = jarEntry.getName();
-
-				if (!name.startsWith(artifactId + "-")) {
-					continue;
-				}
-
-				Path archetypePath = Files.createTempFile(
-					"temp-archetype", null);
-
-				Files.copy(
-					jarFile.getInputStream(jarEntry), archetypePath,
-					StandardCopyOption.REPLACE_EXISTING);
-
-				File archetypeFile = archetypePath.toFile();
-
-				archetypeFile.deleteOnExit();
-
-				return archetypeFile;
-			}
-		}
-
-		return null;
-	}
-
-	private final List<File> _archetypesDirs;
+	private final List<File> _archetypesFiles;
 
 }

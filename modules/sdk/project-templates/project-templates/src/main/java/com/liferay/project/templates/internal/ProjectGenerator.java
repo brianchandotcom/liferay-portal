@@ -100,11 +100,7 @@ public class ProjectGenerator {
 			ProjectTemplates.TEMPLATE_BUNDLE_PREFIX +
 				template.replace('-', '.'));
 		archetypeGenerationRequest.setArchetypeGroupId("com.liferay");
-
-		// archetypeVersion is ignored
-
 		archetypeGenerationRequest.setArchetypeVersion("0");
-
 		archetypeGenerationRequest.setArtifactId(artifactId);
 		archetypeGenerationRequest.setGroupId(groupId);
 		archetypeGenerationRequest.setInteractiveMode(false);
@@ -200,7 +196,8 @@ public class ProjectGenerator {
 			ProjectTemplates.TEMPLATE_BUNDLE_PREFIX +
 				template.replace('-', '.');
 
-		return _getArchetypeFile(artifactId, archetypesFile);
+		return ProjectTemplatesUtil.getArchetypeFile(
+			artifactId, archetypesFile);
 	}
 
 	private static boolean _isInVersionRange(

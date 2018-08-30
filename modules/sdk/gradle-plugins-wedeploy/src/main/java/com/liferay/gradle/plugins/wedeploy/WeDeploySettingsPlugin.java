@@ -22,15 +22,14 @@ import groovy.lang.Closure;
 import java.io.File;
 import java.io.IOException;
 
-import java.nio.charset.StandardCharsets;
 import java.nio.file.FileVisitResult;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
@@ -57,9 +56,9 @@ public class WeDeploySettingsPlugin implements Plugin<Settings> {
 		}
 	}
 
+	@SuppressWarnings("serial")
 	private void _apply(Settings settings) throws IOException {
-		final Map<String, Class<? extends Plugin<Project>>>
-			projectPathPluginClasses = _includeProjects(settings);
+		final Set<String> projectPaths = _includeProjects(settings);
 
 		Gradle gradle = settings.getGradle();
 
@@ -68,11 +67,8 @@ public class WeDeploySettingsPlugin implements Plugin<Settings> {
 
 				@SuppressWarnings("unused")
 				public void doCall(Project project) {
-					Class<? extends Plugin<Project>> pluginClass =
-						projectPathPluginClasses.get(project.getPath());
-
-					if (pluginClass != null) {
-						GradleUtil.applyPlugin(project, pluginClass);
+					if (projectPaths.contains(project.getPath())) {
+						GradleUtil.applyPlugin(project, WeDeployPlugin.class);
 					}
 				}
 
@@ -118,14 +114,11 @@ public class WeDeploySettingsPlugin implements Plugin<Settings> {
 		return projectPath;
 	}
 
-	private Map<String, Class<? extends Plugin<Project>>> _includeProjects(
-			final Settings settings)
+	private Set<String> _includeProjects(final Settings settings)
 		throws IOException {
 
-		final Map<String, Class<? extends Plugin<Project>>>
-			projectPathPluginClasses = new HashMap<>();
-
 		final String projectPathPrefix = _getProjectPathPrefix(settings);
+		final Set<String> projectPaths = new HashSet<>();
 
 		File rootDir = settings.getRootDir();
 
@@ -146,31 +139,23 @@ public class WeDeploySettingsPlugin implements Plugin<Settings> {
 						return FileVisitResult.CONTINUE;
 					}
 
-					String wedeployJSON = new String(
-						Files.readAllBytes(wedeployJSONPath),
-						StandardCharsets.UTF_8);
+					Path dockerfilePath = dirPath.resolve("Dockerfile");
 
-					if (wedeployJSON.contains("wedeploy/data")) {
-						String projectPath = _includeProject(
-							settings, dirPath, rootDirPath, projectPathPrefix);
-
-						projectPathPluginClasses.put(
-							projectPath, DataWeDeployPlugin.class);
+					if (Files.exists(dockerfilePath)) {
+						return FileVisitResult.CONTINUE;
 					}
-					else if (wedeployJSON.contains("wedeploy/message-queue")) {
-						String projectPath = _includeProject(
-							settings, dirPath, rootDirPath, projectPathPrefix);
 
-						projectPathPluginClasses.put(
-							projectPath, MessageQueueWeDeployPlugin.class);
-					}
+					String projectPath = _includeProject(
+						settings, dirPath, rootDirPath, projectPathPrefix);
+
+					projectPaths.add(projectPath);
 
 					return FileVisitResult.SKIP_SUBTREE;
 				}
 
 			});
 
-		return projectPathPluginClasses;
+		return projectPaths;
 	}
 
 }

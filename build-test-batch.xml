@@ -595,6 +595,21 @@ mariadb.executable=${mariadb.executable}]]></echo>
 		</sequential>
 	</macrodef>
 
+	<macrodef name="prepare-suite-search-engine">
+		<attribute name="suite.name" />
+
+		<sequential>
+			<propertycopy from="search.engine[@{suite.name}]" name="suite.search.engine" silent="true" />
+
+			<if>
+				<equals arg1="${suite.search.engine}" arg2="solr" />
+				<then>
+					<ant antfile="build-test-solr.xml" target="prepare-solr-suite" />
+				</then>
+			</if>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="prepare-test-build">
 		<sequential>
 			<trycatch property="exception.message">
@@ -1264,19 +1279,14 @@ app.server.type=@{app.server.type}]]></echo>
 					<if>
 						<isset property="env.CI_TEST_SUITE" />
 						<then>
-							<propertycopy from="search.engine[${env.CI_TEST_SUITE}]" name="suite.search.engine" silent="true" />
-
 							<get-testcase-property property.name="osgi.app.includes" />
 
 							<if>
-								<and>
-									<equals arg1="${suite.search.engine}" arg2="solr" />
-									<not>
-										<contains string="${osgi.app.includes}" substring="portal-search-solr" />
-									</not>
-								</and>
+								<not>
+									<contains string="${osgi.app.includes}" substring="portal-search-solr" />
+								</not>
 								<then>
-									<ant antfile="build-test-solr.xml" target="prepare-solr-suite" />
+									<prepare-suite-search-engine suite.name="${env.CI_TEST_SUITE}" />
 								</then>
 							</if>
 						</then>
@@ -1338,14 +1348,7 @@ app.server.type=@{app.server.type}]]></echo>
 					<if>
 						<isset property="env.CI_TEST_SUITE" />
 						<then>
-							<propertycopy from="search.engine[${env.CI_TEST_SUITE}]" name="suite.search.engine" silent="true" />
-
-							<if>
-								<equals arg1="${suite.search.engine}" arg2="solr" />
-								<then>
-									<ant antfile="build-test-solr.xml" target="prepare-solr-suite" />
-								</then>
-							</if>
+							<prepare-suite-search-engine suite.name="${env.CI_TEST_SUITE}" />
 						</then>
 					</if>
 				</test-set-up>
@@ -2319,14 +2322,7 @@ app.server.type=@{app.server.type}]]></echo>
 					<if>
 						<isset property="env.CI_TEST_SUITE" />
 						<then>
-							<propertycopy from="search.engine[${env.CI_TEST_SUITE}]" name="suite.search.engine" silent="true" />
-
-							<if>
-								<equals arg1="${suite.search.engine}" arg2="solr" />
-								<then>
-									<ant antfile="build-test-solr.xml" target="prepare-solr-suite" />
-								</then>
-							</if>
+							<prepare-suite-search-engine suite.name="${env.CI_TEST_SUITE}" />
 						</then>
 					</if>
 
@@ -4128,6 +4124,13 @@ log.sanitizer.enabled=false</echo>
 					<else>
 						<prepare-test-build />
 					</else>
+				</if>
+
+				<if>
+					<isset property="env.CI_TEST_SUITE" />
+					<then>
+						<prepare-suite-search-engine suite.name="${env.CI_TEST_SUITE}" />
+					</then>
 				</if>
 			</test-set-up>
 		</run-batch-test>

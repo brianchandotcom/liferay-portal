@@ -64,7 +64,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Set;
 
 import org.springframework.beans.BeansException;
@@ -590,12 +589,8 @@ public class LayoutLocalServiceStagingAdvice implements BeanFactoryAware {
 				return returnValue;
 			}
 
-			for (Entry<Object, Object> entry : map.entrySet()) {
-				Object value = wrapReturnValue(
-					entry.getValue(), showIncomplete);
-
-				map.put(entry.getKey(), value);
-			}
+			map.replaceAll(
+				(key, value) -> wrapReturnValue(value, showIncomplete));
 		}
 
 		return returnValue;

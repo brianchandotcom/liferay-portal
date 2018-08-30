@@ -208,6 +208,36 @@ describe(
 		);
 
 		it(
+			'should  hide translation manager and form basic info when listing the rules',
+			() => {
+				MetalTestUtil.enterDocument('<div class="ddm-translation-manager"></div>');
+
+				MetalTestUtil.enterDocument('<div class="ddm-form-basic-info"></div>');
+
+				const translationManager = document.querySelector('.ddm-translation-manager');
+
+				const formBasicInfo = document.querySelector('.ddm-form-basic-info');
+
+				component = new RuleList(
+					{
+						pages,
+						rules,
+						spritemap,
+						strings
+					}
+				);
+
+				component.rules['logical-operator'] = 'OR';
+
+				expect(translationManager.classList.contains('hide')
+					&& formBasicInfo.classList.contains('hide')).toEqual(true);
+
+				MetalTestUtil.exitDocument(translationManager);
+				MetalTestUtil.exitDocument(formBasicInfo);
+			}
+		);
+
+		it(
 			'should show message when rule list is empty',
 			() => {
 				component = new RuleList(

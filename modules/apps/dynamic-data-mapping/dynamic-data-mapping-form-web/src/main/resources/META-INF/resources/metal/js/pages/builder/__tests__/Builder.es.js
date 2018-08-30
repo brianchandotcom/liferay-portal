@@ -14,6 +14,10 @@ describe(
 
 				MetalTestUtil.enterDocument('<button id="addFieldButton"></button>');
 
+				MetalTestUtil.enterDocument('<div class="ddm-translation-manager"></div>');
+
+				MetalTestUtil.enterDocument('<div class="ddm-form-basic-info"></div>');
+
 				addButton = document.querySelector('#addFieldButton');
 
 				component = new Builder(

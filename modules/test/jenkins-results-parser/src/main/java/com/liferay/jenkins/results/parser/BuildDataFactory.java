@@ -21,6 +21,14 @@ import java.util.Map;
  */
 public class BuildDataFactory {
 
+	public static BatchBuildData newBatchBuildData(
+		BuildDataJSONObject buildDataJSONObject,
+		Map<String, String> buildParameters, String runID) {
+
+		return new PortalBatchBuildData(
+			buildDataJSONObject, buildParameters, runID);
+	}
+
 	public static BuildData newBuildData(
 		BuildDataJSONObject buildDataJSONObject,
 		Map<String, String> buildParameters, String runID) {

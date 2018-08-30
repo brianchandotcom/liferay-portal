@@ -25,17 +25,17 @@
 </tr>
 <tr>
 	<td>CATEGORY</td>
-	<td>//div[@class='panel'][div[contains(@id,'ProductMenu')]/div/a[@aria-expanded='true']]//a[@data-qa-id='appGroup'][normalize-space(.//text())='${key_category}']</td>
+	<td>(//div[@class='panel'] | //div[contains(@class,'panel-secondary')])[div[contains(@id,'ProductMenu')]/div/a[@aria-expanded='true']]//a[@data-qa-id='appGroup'][normalize-space(.//text())='${key_category}']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>CATEGORY_COLLAPSED</td>
-	<td>//div[@class='panel'][div[contains(@id,'ProductMenu')]/div/a[@aria-expanded='true']]//a[@data-qa-id='appGroup'][normalize-space(.//text())='${key_category}'][@aria-expanded='false']</td>
+	<td>(//div[@class='panel'] | //div[contains(@class,'panel-secondary')])[div[contains(@id,'ProductMenu')]/div/a[@aria-expanded='true']]//a[@data-qa-id='appGroup'][normalize-space(.//text())='${key_category}'][@aria-expanded='false']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>CATEGORY_EXPANDED</td>
-	<td>//div[@class='panel'][div[contains(@id,'ProductMenu')]/div/a[@aria-expanded='true']]//a[@data-qa-id='appGroup'][normalize-space(.//text())='${key_category}'][@aria-expanded='true']</td>
+	<td>(//div[@class='panel'] | //div[contains(@class,'panel-secondary')])[div[contains(@id,'ProductMenu')]/div/a[@aria-expanded='true']]//a[@data-qa-id='appGroup'][normalize-space(.//text())='${key_category}'][@aria-expanded='true']</td>
 	<td></td>
 </tr>
 <tr>

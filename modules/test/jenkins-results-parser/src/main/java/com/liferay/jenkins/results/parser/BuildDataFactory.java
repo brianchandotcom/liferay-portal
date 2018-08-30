@@ -22,16 +22,21 @@ import java.util.Map;
 public class BuildDataFactory {
 
 	public static BatchBuildData newBatchBuildData(
-		BuildDataJSONObject buildDataJSONObject,
-		Map<String, String> buildParameters, String runID) {
+		String jsonString, Map<String, String> buildParameters, String runID) {
 
-		return new PortalBatchBuildData(
-			buildDataJSONObject, buildParameters, runID);
+		if (jsonString == null) {
+			return new PortalBatchBuildData(buildParameters, runID);
+		}
+
+		return new PortalBatchBuildData(jsonString, buildParameters, runID);
+	}
+
+	public static BuildData newBuildData(Map<String, String> buildParameters) {
+		return newBuildData(null, buildParameters, null);
 	}
 
 	public static BuildData newBuildData(
-		BuildDataJSONObject buildDataJSONObject,
-		Map<String, String> buildParameters, String runID) {
+		String jsonString, Map<String, String> buildParameters, String runID) {
 
 		String buildURL = buildParameters.get("BUILD_URL");
 
@@ -42,23 +47,24 @@ public class BuildDataFactory {
 		}
 
 		if (jobName.endsWith("-batch")) {
-			return new PortalBatchBuildData(
-				buildDataJSONObject, buildParameters, runID);
+			if (jsonString == null) {
+				return new PortalBatchBuildData(buildParameters, runID);
+			}
+
+			return new PortalBatchBuildData(jsonString, buildParameters, runID);
 		}
 
-		return newTopLevelBuildData(buildDataJSONObject, buildParameters);
-	}
-
-	public static BuildData newBuildData(Map<String, String> buildParameters) {
-		return newBuildData(null, buildParameters, null);
+		return newTopLevelBuildData(jsonString, buildParameters);
 	}
 
 	public static TopLevelBuildData newTopLevelBuildData(
-		BuildDataJSONObject buildDataJSONObject,
-		Map<String, String> buildParameters) {
+		String jsonString, Map<String, String> buildParameters) {
 
-		return new PortalTopLevelBuildData(
-			buildDataJSONObject, buildParameters);
+		if (jsonString == null) {
+			return new PortalTopLevelBuildData(buildParameters);
+		}
+
+		return new PortalTopLevelBuildData(jsonString, buildParameters);
 	}
 
 }

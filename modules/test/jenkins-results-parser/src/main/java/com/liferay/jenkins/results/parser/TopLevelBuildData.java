@@ -42,39 +42,25 @@ public class TopLevelBuildData extends BaseBuildData {
 	}
 
 	@Override
-	public JSONObject toJSONObject() {
-		JSONObject jsonObject = super.toJSONObject();
+	public void updateBuildData() {
+		super.updateBuildData();
 
-		jsonObject.put("dist_nodes", StringUtils.join(getDistNodes(), ","));
-		jsonObject.put("dist_path", getDistPath());
+		put("dist_nodes", StringUtils.join(getDistNodes(), ","));
+		put("dist_path", getDistPath());
+	}
 
-		return jsonObject;
+	protected TopLevelBuildData(Map<String, String> buildParameters) {
+		super(buildParameters, TOP_LEVEL_RUN_ID);
+
+		_init();
 	}
 
 	protected TopLevelBuildData(
-		BuildDataJSONObject buildDataJSONObject,
-		Map<String, String> buildParameters) {
+		String jsonString, Map<String, String> buildParameters) {
 
-		super(buildDataJSONObject, buildParameters, TOP_LEVEL_RUN_ID);
+		super(jsonString, buildParameters, TOP_LEVEL_RUN_ID);
 
-		String runID = getRunID();
-
-		if ((buildDataJSONObject != null) && buildDataJSONObject.has(runID)) {
-			JSONObject jsonObject = buildDataJSONObject.getJSONObject(runID);
-
-			String distNodes = jsonObject.getString("dist_nodes");
-
-			Collections.addAll(_distNodes, distNodes.split(","));
-
-			_distPath = jsonObject.getString("dist_path");
-
-			return;
-		}
-
-		_distNodes.addAll(_getDistNodes());
-		_distPath = _getDistPath();
-
-		addBuildData();
+		_init();
 	}
 
 	private List<String> _getDistNodes() {
@@ -110,7 +96,28 @@ public class TopLevelBuildData extends BaseBuildData {
 			getJobName(), "/", String.valueOf(getBuildNumber()), "/dist");
 	}
 
-	private final List<String> _distNodes = new ArrayList<>();
-	private final String _distPath;
+	private void _init() {
+		String runID = getRunID();
+
+		if (has(runID)) {
+			JSONObject jsonObject = getJSONObject(runID);
+
+			String distNodes = jsonObject.getString("dist_nodes");
+
+			Collections.addAll(_distNodes, distNodes.split(","));
+
+			_distPath = jsonObject.getString("dist_path");
+
+			return;
+		}
+
+		_distNodes.addAll(_getDistNodes());
+		_distPath = _getDistPath();
+
+		updateBuildData();
+	}
+
+	private List<String> _distNodes = new ArrayList<>();
+	private String _distPath;
 
 }

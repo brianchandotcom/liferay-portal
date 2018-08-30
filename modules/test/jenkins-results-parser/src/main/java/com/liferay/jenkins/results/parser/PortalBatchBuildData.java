@@ -46,42 +46,49 @@ public class PortalBatchBuildData
 	}
 
 	protected PortalBatchBuildData(
-		BuildDataJSONObject buildDataJSONObject,
 		Map<String, String> buildParameters, String runID) {
 
-		super(buildDataJSONObject, buildParameters, runID);
+		super(buildParameters, runID);
 
-		if (buildDataJSONObject != null) {
-			if (buildDataJSONObject.has(runID)) {
-				JSONObject jsonObject = buildDataJSONObject.getJSONObject(
-					runID);
+		_init(buildParameters, runID);
+	}
 
-				if (jsonObject.has("portal_github_url")) {
-					_portalGitHubURL = jsonObject.getString(
-						"portal_github_url");
-					_portalUpstreamBranchName = jsonObject.getString(
-						"portal_upstream_branch_name");
+	protected PortalBatchBuildData(
+		String jsonString, Map<String, String> buildParameters, String runID) {
 
-					return;
-				}
-			}
+		super(jsonString, buildParameters, runID);
 
-			if (buildDataJSONObject.has(TOP_LEVEL_RUN_ID)) {
-				TopLevelBuildData topLevelBuildData =
-					BuildDataFactory.newTopLevelBuildData(
-						buildDataJSONObject, buildParameters);
+		_init(buildParameters, runID);
+	}
 
-				PortalTopLevelBuildData portalTopLevelBuildData =
-					(PortalTopLevelBuildData)topLevelBuildData;
+	private void _init(Map<String, String> buildParameters, String runID) {
+		if (has(runID)) {
+			JSONObject jsonObject = getJSONObject(runID);
 
-				_portalGitHubURL = portalTopLevelBuildData.getPortalGitHubURL();
-				_portalUpstreamBranchName =
-					portalTopLevelBuildData.getPortalUpstreamBranchName();
-
-				addBuildData();
+			if (jsonObject.has("portal_github_url")) {
+				_portalGitHubURL = jsonObject.getString("portal_github_url");
+				_portalUpstreamBranchName = jsonObject.getString(
+					"portal_upstream_branch_name");
 
 				return;
 			}
+		}
+
+		if (has(TOP_LEVEL_RUN_ID)) {
+			TopLevelBuildData topLevelBuildData =
+				BuildDataFactory.newTopLevelBuildData(
+					toString(), buildParameters);
+
+			PortalTopLevelBuildData portalTopLevelBuildData =
+				(PortalTopLevelBuildData)topLevelBuildData;
+
+			_portalGitHubURL = portalTopLevelBuildData.getPortalGitHubURL();
+			_portalUpstreamBranchName =
+				portalTopLevelBuildData.getPortalUpstreamBranchName();
+
+			updateBuildData();
+
+			return;
 		}
 
 		if (!buildParameters.containsKey("PORTAL_GITHUB_URL")) {
@@ -98,10 +105,10 @@ public class PortalBatchBuildData
 		_portalUpstreamBranchName = buildParameters.get(
 			"PORTAL_UPSTREAM_BRANCH_NAME");
 
-		addBuildData();
+		updateBuildData();
 	}
 
-	private final String _portalGitHubURL;
-	private final String _portalUpstreamBranchName;
+	private String _portalGitHubURL;
+	private String _portalUpstreamBranchName;
 
 }

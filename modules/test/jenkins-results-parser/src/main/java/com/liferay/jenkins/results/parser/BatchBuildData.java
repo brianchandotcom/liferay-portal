@@ -55,13 +55,24 @@ public class BatchBuildData extends BaseBuildData {
 	}
 
 	protected BatchBuildData(
-		BuildDataJSONObject buildDataJSONObject,
 		Map<String, String> buildParameters, String runID) {
 
-		super(buildDataJSONObject, buildParameters, runID);
+		super(buildParameters, runID);
 
-		if ((buildDataJSONObject != null) && buildDataJSONObject.has(runID)) {
-			JSONObject jsonObject = buildDataJSONObject.getJSONObject(runID);
+		_init(buildParameters, runID);
+	}
+
+	protected BatchBuildData(
+		String jsonString, Map<String, String> buildParameters, String runID) {
+
+		super(jsonString, buildParameters, runID);
+
+		_init(buildParameters, runID);
+	}
+
+	private void _init(Map<String, String> buildParameters, String runID) {
+		if (has(runID)) {
+			JSONObject jsonObject = getJSONObject(runID);
 
 			if (jsonObject.has("batch_name")) {
 				_batchName = jsonObject.getString("batch_name");
@@ -96,11 +107,11 @@ public class BatchBuildData extends BaseBuildData {
 
 		_distPath = buildParameters.get("DIST_PATH");
 
-		addBuildData();
+		updateBuildData();
 	}
 
-	private final String _batchName;
-	private final List<String> _distNodes = new ArrayList<>();
-	private final String _distPath;
+	private String _batchName;
+	private List<String> _distNodes = new ArrayList<>();
+	private String _distPath;
 
 }

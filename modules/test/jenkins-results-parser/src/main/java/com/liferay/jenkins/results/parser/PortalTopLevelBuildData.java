@@ -45,16 +45,25 @@ public class PortalTopLevelBuildData
 		return jsonObject;
 	}
 
+	protected PortalTopLevelBuildData(Map<String, String> buildParameters) {
+		super(buildParameters);
+
+		_init(buildParameters);
+	}
+
 	protected PortalTopLevelBuildData(
-		BuildDataJSONObject buildDataJSONObject,
-		Map<String, String> buildParameters) {
+		String jsonString, Map<String, String> buildParameters) {
 
-		super(buildDataJSONObject, buildParameters);
+		super(jsonString, buildParameters);
 
+		_init(buildParameters);
+	}
+
+	private void _init(Map<String, String> buildParameters) {
 		String runID = getRunID();
 
-		if ((buildDataJSONObject != null) && buildDataJSONObject.has(runID)) {
-			JSONObject jsonObject = buildDataJSONObject.getJSONObject(runID);
+		if (has(runID)) {
+			JSONObject jsonObject = getJSONObject(runID);
 
 			_portalGitHubURL = jsonObject.getString("portal_github_url");
 			_portalUpstreamBranchName = jsonObject.getString(
@@ -77,10 +86,10 @@ public class PortalTopLevelBuildData
 		_portalUpstreamBranchName = buildParameters.get(
 			"PORTAL_UPSTREAM_BRANCH_NAME");
 
-		addBuildData();
+		updateBuildData();
 	}
 
-	private final String _portalGitHubURL;
-	private final String _portalUpstreamBranchName;
+	private String _portalGitHubURL;
+	private String _portalUpstreamBranchName;
 
 }

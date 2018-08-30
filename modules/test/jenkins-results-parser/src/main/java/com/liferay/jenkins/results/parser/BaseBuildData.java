@@ -26,7 +26,8 @@ import org.json.JSONObject;
 /**
  * @author Michael Hashimoto
  */
-public abstract class BaseBuildData implements BuildData {
+public abstract class BaseBuildData
+	extends BuildDataJSONObject implements BuildData {
 
 	public static final String TOP_LEVEL_RUN_ID = "top_level";
 
@@ -91,7 +92,29 @@ public abstract class BaseBuildData implements BuildData {
 
 	@Override
 	public JSONObject toJSONObject() {
-		JSONObject jsonObject = new JSONObject();
+		return this;
+	}
+
+	protected BaseBuildData(Map<String, String> buildParameters, String runID) {
+		_init(buildParameters, runID);
+	}
+
+	protected BaseBuildData(
+		String jsonString, Map<String, String> buildParameters, String runID) {
+
+		super(jsonString);
+
+		_init(buildParameters, runID);
+	}
+
+	protected void updateBuildData() {
+		JSONObject jsonObject = optJSONObject(_runID);
+
+		if (jsonObject == null) {
+			jsonObject = new JSONObject();
+
+			put(_runID, jsonObject);
+		}
 
 		jsonObject.put("build_number", getBuildNumber());
 		jsonObject.put("build_url", getBuildURL());
@@ -102,24 +125,14 @@ public abstract class BaseBuildData implements BuildData {
 		jsonObject.put("master_hostname", getMasterHostname());
 		jsonObject.put("run_id", getRunID());
 		jsonObject.put("workspace_dir", String.valueOf(getWorkspaceDir()));
-
-		return jsonObject;
 	}
 
-	protected BaseBuildData(
-		BuildDataJSONObject buildDataJSONObject,
-		Map<String, String> buildParameters, String runID) {
-
-		if (buildDataJSONObject == null) {
-			buildDataJSONObject = new BuildDataJSONObject();
-		}
-
-		_buildDataJSONObject = buildDataJSONObject;
+	private void _init(Map<String, String> buildParameters, String runID) {
 		_buildParameters = buildParameters;
 		_runID = runID;
 
-		if ((buildDataJSONObject != null) && buildDataJSONObject.has(runID)) {
-			JSONObject jsonObject = buildDataJSONObject.getJSONObject(runID);
+		if (has(runID)) {
+			JSONObject jsonObject = getJSONObject(runID);
 
 			_buildNumber = jsonObject.getInt("build_number");
 			_buildURL = jsonObject.getString("build_url");
@@ -175,11 +188,7 @@ public abstract class BaseBuildData implements BuildData {
 			throw new RuntimeException(ioe);
 		}
 
-		addBuildData();
-	}
-
-	protected void addBuildData() {
-		_buildDataJSONObject.put(_runID, toJSONObject());
+		updateBuildData();
 	}
 
 	private static final String _DEFAULT_JENKINS_GITHUB_URL =
@@ -191,16 +200,15 @@ public abstract class BaseBuildData implements BuildData {
 			"(\\.liferay\\.com)?/job/(?<jobName>[^/]+)/(.*/)?",
 			"(?<buildNumber>\\d+)/?"));
 
-	private final BuildDataJSONObject _buildDataJSONObject;
-	private final Integer _buildNumber;
-	private final Map<String, String> _buildParameters;
-	private final String _buildURL;
-	private final String _cohortName;
-	private final String _hostname;
-	private final String _jenkinsGitHubURL;
-	private final String _jobName;
-	private final String _masterHostname;
-	private final String _runID;
-	private final File _workspaceDir;
+	private Integer _buildNumber;
+	private Map<String, String> _buildParameters;
+	private String _buildURL;
+	private String _cohortName;
+	private String _hostname;
+	private String _jenkinsGitHubURL;
+	private String _jobName;
+	private String _masterHostname;
+	private String _runID;
+	private File _workspaceDir;
 
 }

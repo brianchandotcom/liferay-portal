@@ -31,6 +31,12 @@ public class RemoteGitRef
 		return _remoteGitRepository;
 	}
 
+	public String getRemoteURL() {
+		RemoteGitRepository remoteRepository = getRemoteGitRepository();
+
+		return remoteRepository.getRemoteURL();
+	}
+
 	public String getUsername() {
 		RemoteGitRepository remoteGitRepository = getRemoteGitRepository();
 
@@ -39,11 +45,9 @@ public class RemoteGitRef
 
 	@Override
 	public String toString() {
-		RemoteGitRepository remoteGitRepository = getRemoteGitRepository();
-
 		StringBuilder sb = new StringBuilder();
 
-		sb.append(remoteGitRepository.getRemoteURL());
+		sb.append(getRemoteURL());
 		sb.append(" (");
 		sb.append(getName());
 		sb.append(" - ");

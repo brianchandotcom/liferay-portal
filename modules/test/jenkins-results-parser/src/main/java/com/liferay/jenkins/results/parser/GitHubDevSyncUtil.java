@@ -339,7 +339,7 @@ public class GitHubDevSyncUtil {
 		System.out.println(
 			JenkinsResultsParserUtil.combine(
 				"Deleting ", String.valueOf(expiredRemoteGitBranches.size()),
-				" branches from ", gitRemote.getName()));
+				" branches from ", gitRemote.getRemoteURL()));
 
 		gitWorkingDirectory.deleteRemoteGitBranches(expiredRemoteGitBranches);
 

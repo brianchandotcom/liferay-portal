@@ -392,7 +392,7 @@
 		</attribute>
 	</tag>
 	<tag>
-		<description>Creates a <![CDATA[<code>Liferay.AssetTagsSelector</code>]]> component to create and select tags to add to an asset, such as a blog entry, bookmark, or wiki page.</description>
+		<description>Creates a component to create and select tags to add to an asset, such as a blog entry, bookmark, or wiki page.</description>
 		<name>asset-tags-selector</name>
 		<tag-class>com.liferay.asset.taglib.servlet.taglib.AssetTagsSelectorTag</tag-class>
 		<body-content>JSP</body-content>
@@ -423,7 +423,7 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>The Java class primary key of an asset to associate with the tags. This is a Java <![CDATA[<code>long</code>]]>.</description>
+			<description>The asset's Java class primary key to associate with the tags. This is a Java <![CDATA[<code>long</code>]]>.</description>
 			<name>classPK</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -447,7 +447,7 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>Whether to ignore the request value of the hidden input. The default value is <![CDATA[<code>false</code>]]>.</description>
+			<description>Whether to ignore the hidden input's request value. The default value is <![CDATA[<code>false</code>]]>.</description>
 			<name>ignoreRequestValue</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -484,13 +484,13 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>The Java class primary key of an asset. This is a Java <![CDATA[<code>long</code>]]>.</description>
+			<description>The asset's Java class primary key. This is a Java <![CDATA[<code>long</code>]]>.</description>
 			<name>classPK</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>A message to display before the tag labels. For example, <![CDATA[<code>tags</code>]]>, renders as <![CDATA[<code>Tags:</code>]]>.</description>
+			<description>A message to display before the tag labels. For example, <![CDATA[<code>tags</code>]]> renders as <![CDATA[<code>Tags:</code>]]>.</description>
 			<name>message</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>

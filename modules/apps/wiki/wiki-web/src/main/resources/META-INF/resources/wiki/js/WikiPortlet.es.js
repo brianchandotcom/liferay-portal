@@ -46,6 +46,15 @@ class WikiPortlet extends PortletBase {
 				this.saveDraft_(e);
 			}));
 		}
+
+		let searchContainerId = '_com_liferay_wiki_web_portlet_WikiAdminPortlet_pageAttachments';
+
+		Liferay.componentReady(searchContainerId).then(
+			(searchContainer) => {
+				this.eventHandler_.add(searchContainer.get('contentBox').delegate(
+					'click', this.removeAttachment_, '.delete-attachment'));
+			}
+		);
 	}
 
 	/**
@@ -90,6 +99,55 @@ class WikiPortlet extends PortletBase {
 	publishPage_() {
 		this.one('#workflowAction').value = this.constants.ACTION_PUBLISH;
 		this.save_();
+	}
+
+	removeAttachment_(event) {
+		let link = event.currentTarget;
+
+		let cmd = link.getAttribute('data-cmd');
+		let fileName = link.getAttribute('data-fileName');
+		let nodeId = link.getAttribute('data-nodeId');
+		let ticketKey = link.getAttribute('data-ticketKey');
+		let title = link.getAttribute('data-title');
+
+		let tr = link.ancestor('tr');
+
+		let deleteURL = Liferay.PortletURL.createActionURL();
+
+		let actionName = '/wiki/edit_page_attachment';
+
+		let params = {
+			cmd: cmd,
+			fileName: fileName,
+			nodeId: nodeId,
+			ticketKey: ticketKey,
+			title: title
+		};
+
+		deleteURL.setName(actionName);
+		deleteURL.setParameters(params);
+		deleteURL.setPortletId('com_liferay_wiki_web_portlet_WikiAdminPortlet');
+
+		const A = new AUI();
+
+		A.use(
+			'liferay-search-container',
+			A => {
+				let searchContainer = Liferay.SearchContainer.get('_com_liferay_wiki_web_portlet_WikiAdminPortlet_pageAttachments');
+
+				A.io.request(
+					deleteURL.toString(),
+					{
+						on: {
+							success: function() {
+								searchContainer.deleteRow(tr, link.getAttribute('data-rowid'));
+								searchContainer.updateDataStore();
+							}
+						}
+					}
+				);	
+			}
+		);
 	}
 
 	/**

@@ -58,7 +58,7 @@ class Checkbox extends Component {
 		 * @type {?string}
 		 */
 
-		predefinedValue: Config.string().value('Option 1'),
+		predefinedValue: Config.bool(),
 
 		/**
 		 * @default false
@@ -116,12 +116,10 @@ class Checkbox extends Component {
 	};
 
 	_handleToggleChanged(event) {
-		const {key} = this;
-
 		this.emit(
 			'fieldEdited',
 			{
-				key,
+				fieldInstance: this,
 				originalEvent: event,
 				value: event.delegateTarget.checked
 			}

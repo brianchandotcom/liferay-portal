@@ -3,7 +3,7 @@
 {template .render}
 	{@param columns: list<[label: string, value: ?]>}
 	{@param? editable: bool}
-	{@param? helpText: string}
+	{@param? tip: string}
 	{@param? id: string}
 	{@param? label: string}
 	{@param? placeholder: string}
@@ -23,7 +23,7 @@
 			{/call}
 		{/param}
 
-		{param helpText: $helpText /}
+		{param tip: $tip /}
 		{param id: $id /}
 		{param label: $label /}
 		{param required: $required /}

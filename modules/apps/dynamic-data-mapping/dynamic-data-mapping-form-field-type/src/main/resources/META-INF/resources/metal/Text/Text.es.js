@@ -24,6 +24,15 @@ class Text extends Component {
 		 * @type {?(string|undefined)}
 		 */
 
+		fieldName: Config.string(),
+
+		/**
+		 * @default undefined
+		 * @instance
+		 * @memberof Text
+		 * @type {?(string|undefined)}
+		 */
+
 		helpText: Config.string(),
 
 		/**
@@ -87,18 +96,14 @@ class Text extends Component {
 		 * @type {?(string|undefined)}
 		 */
 
-		value: Config.string(),
-
-		key: Config.string()
+		value: Config.string()
 	};
 
 	_handleFieldChanged(event) {
-		const {key} = this;
-
 		this.emit(
 			'fieldEdited',
 			{
-				key,
+				fieldInstance: this,
 				originalEvent: event,
 				value: event.target.value
 			}

@@ -1,9 +1,10 @@
 {namespace Text}
 
 {template .render}
+	{@param name: string}
 	{@param? _handleFieldChanged: any}
 	{@param? editable: bool}
-	{@param? helpText: string}
+	{@param? tip: string}
 	{@param? id: string}
 	{@param? label: string}
 	{@param? placeholder: string}
@@ -15,15 +16,16 @@
 	{call FieldBase.render}
 		{param contentRenderer kind="html"}
 			{call .content}
-				{param editable: $editable /}
 				{param _handleFieldChanged: $_handleFieldChanged /}
+				{param editable: $editable /}
 				{param id: $id /}
+				{param name: $name /}
 				{param placeholder: $placeholder /}
 				{param value: $value /}
 			{/call}
 		{/param}
 
-		{param helpText: $helpText /}
+		{param tip: $tip /}
 		{param id: $id /}
 		{param label: $label /}
 		{param required: $required /}
@@ -33,11 +35,12 @@
 {/template}
 
 {template .content}
+	{@param name: string}
+	{@param? _handleFieldChanged: any}
 	{@param? editable: bool}
 	{@param? id: string}
 	{@param? placeholder: string}
 	{@param? value: string}
-	{@param? _handleFieldChanged: any}
 
 	{let $attributes kind="attributes"}
 		class="form-control"
@@ -45,6 +48,8 @@
 		{if $id}
 			id="{$id}"
 		{/if}
+
+		name="{$name}"
 
 		{if $placeholder}
 			placeholder="{$placeholder}"

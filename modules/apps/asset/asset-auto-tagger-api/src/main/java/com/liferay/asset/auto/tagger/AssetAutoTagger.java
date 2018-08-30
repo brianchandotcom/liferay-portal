@@ -18,21 +18,19 @@ import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.portal.kernel.exception.PortalException;
 
 /**
- * Facade to the auto tagging framework.
+ * Facade to the auto-tagging framework.
  *
  * @author Alejandro Tardín
- * @review
  */
 public interface AssetAutoTagger {
 
 	/**
-	 * Automatically applies tags to an asset entry.
+	 * Automatically applies tags to an asset entry by running every {@link
+	 * AssetAutoTagProvider} implementation that can handle the asset entry's
+	 * associated model and merging all the resulting tags.
 	 *
-	 * Runs every implementation of {@link AssetAutoTagProvider} that can handle
-	 * the asset entry's associated model and merges all the resulting tags.
-	 *
-	 * Only assets with an associated {@link com.liferay.asset.kernel.model.AssetRenderer}
-	 * are supported.
+	 * Only assets with an associated {@link
+	 * com.liferay.asset.kernel.model.AssetRenderer} are supported.
 	 *
 	 * @param assetEntry the asset entry to tag
 	 * @throws PortalException if a portal exception occurred
@@ -41,11 +39,10 @@ public interface AssetAutoTagger {
 
 	/**
 	 * Removes the tags that have been automatically applied to the asset entry.
+	 * Any tags added externally (e.g., via a human or the asset APIs) are not
+	 * removed.
 	 *
-	 * The tags that have been added externally (via a human or the asset APIs)
-	 * will not be removed.
-	 *
-	 * This method allows an easy way to rollback {@link #tag(AssetEntry)}.
+	 * This method provides a way to rollback {@link #tag(AssetEntry)}.
 	 *
 	 * @param assetEntry the asset entry to untag
 	 * @throws PortalException if a portal exception occurred

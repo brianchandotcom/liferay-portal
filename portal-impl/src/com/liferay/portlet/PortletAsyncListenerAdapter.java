@@ -14,13 +14,21 @@
 
 package com.liferay.portlet;
 
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+
 import java.io.IOException;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.portlet.PortletAsyncContext;
+import javax.portlet.PortletAsyncEvent;
 import javax.portlet.PortletAsyncListener;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 
+import javax.servlet.AsyncContext;
 import javax.servlet.AsyncEvent;
 import javax.servlet.AsyncListener;
 
@@ -32,17 +40,13 @@ public class PortletAsyncListenerAdapter implements AsyncListener {
 	public PortletAsyncListenerAdapter(
 		PortletAsyncContext portletAsyncContext) {
 
-		// TODO
-
-		throw new UnsupportedOperationException();
+		_portletAsyncContext = portletAsyncContext;
 	}
 
 	public void addListener(PortletAsyncListener portletAsyncListener)
 		throws IllegalStateException {
 
-		// TODO
-
-		throw new UnsupportedOperationException();
+		addListener(portletAsyncListener, null, null);
 	}
 
 	public void addListener(
@@ -50,41 +54,168 @@ public class PortletAsyncListenerAdapter implements AsyncListener {
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws IllegalStateException {
 
-		// TODO
+		try {
+			if (_firedOnError) {
+				portletAsyncListener.onError(
+					new PortletAsyncEvent(
+						_portletAsyncContext, resourceRequest,
+						resourceResponse));
+			}
 
-		throw new UnsupportedOperationException();
+			if (_firedOnTimeout) {
+				portletAsyncListener.onTimeout(
+					new PortletAsyncEvent(
+						_portletAsyncContext, resourceRequest,
+						resourceResponse));
+			}
+
+			if (_firedOnComplete) {
+				portletAsyncListener.onComplete(
+					new PortletAsyncEvent(
+						_portletAsyncContext, resourceRequest,
+						resourceResponse));
+			}
+		}
+		catch (IOException ioe) {
+			_log.error(ioe, ioe);
+		}
+
+		_portletAsyncListenerAdapterEntries.add(
+			new PortletAsyncListenerAdapterEntry(
+				portletAsyncListener, resourceRequest, resourceResponse));
 	}
 
 	@Override
 	public void onComplete(AsyncEvent asyncEvent) throws IOException {
+		_firedOnComplete = true;
 
-		// TODO
+		for (PortletAsyncListenerAdapterEntry entry :
+				_portletAsyncListenerAdapterEntries) {
 
-		throw new UnsupportedOperationException();
+			PortletAsyncListener portletAsyncListener =
+				entry._portletAsyncListener;
+
+			portletAsyncListener.onComplete(
+				new PortletAsyncEvent(
+					_portletAsyncContext, entry._resourceRequest,
+					entry._resourceResponse));
+		}
 	}
 
 	@Override
 	public void onError(AsyncEvent asyncEvent) throws IOException {
+		_firedOnError = true;
 
-		// TODO
+		try {
+			for (PortletAsyncListenerAdapterEntry entry :
+					_portletAsyncListenerAdapterEntries) {
 
-		throw new UnsupportedOperationException();
+				PortletAsyncListener portletAsyncListener =
+					entry._portletAsyncListener;
+
+				portletAsyncListener.onError(
+					new PortletAsyncEvent(
+						_portletAsyncContext, entry._resourceRequest,
+						entry._resourceResponse, asyncEvent.getThrowable()));
+			}
+		}
+		finally {
+			try {
+				_portletAsyncContext.complete();
+			}
+			catch (IllegalStateException ise) {
+			}
+		}
 	}
 
 	@Override
 	public void onStartAsync(AsyncEvent asyncEvent) throws IOException {
+		_firedOnComplete = false;
+		_firedOnError = false;
+		_firedOnTimeout = false;
 
-		// TODO
+		List<PortletAsyncListenerAdapterEntry>
+			portletAsyncListenerAdapterEntries = new ArrayList<>(
+				_portletAsyncListenerAdapterEntries);
 
-		throw new UnsupportedOperationException();
+		_portletAsyncListenerAdapterEntries.clear();
+
+		try {
+			for (PortletAsyncListenerAdapterEntry entry :
+					portletAsyncListenerAdapterEntries) {
+
+				PortletAsyncListener portletAsyncListener =
+					entry._portletAsyncListener;
+
+				portletAsyncListener.onStartAsync(
+					new PortletAsyncEvent(
+						_portletAsyncContext, entry._resourceRequest,
+						entry._resourceResponse));
+			}
+		}
+		finally {
+
+			// Ensure the adapter is kept registered when the AsyncContext is
+			// reinitialized
+
+			AsyncContext asyncContext = asyncEvent.getAsyncContext();
+
+			asyncContext.addListener(this);
+		}
 	}
 
 	@Override
 	public void onTimeout(AsyncEvent asyncEvent) throws IOException {
+		_firedOnTimeout = true;
 
-		// TODO
+		try {
+			for (PortletAsyncListenerAdapterEntry entry :
+					_portletAsyncListenerAdapterEntries) {
 
-		throw new UnsupportedOperationException();
+				PortletAsyncListener portletAsyncListener =
+					entry._portletAsyncListener;
+
+				portletAsyncListener.onTimeout(
+					new PortletAsyncEvent(
+						_portletAsyncContext, entry._resourceRequest,
+						entry._resourceResponse));
+			}
+		}
+		finally {
+			try {
+				_portletAsyncContext.complete();
+			}
+			catch (IllegalStateException ise) {
+			}
+		}
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		PortletAsyncListenerAdapter.class);
+
+	private boolean _firedOnComplete;
+	private boolean _firedOnError;
+	private boolean _firedOnTimeout;
+	private final PortletAsyncContext _portletAsyncContext;
+	private final List<PortletAsyncListenerAdapterEntry>
+		_portletAsyncListenerAdapterEntries = new ArrayList<>();
+
+	private class PortletAsyncListenerAdapterEntry {
+
+		public PortletAsyncListenerAdapterEntry(
+			PortletAsyncListener portletAsyncListener,
+			ResourceRequest resourceRequest,
+			ResourceResponse resourceResponse) {
+
+			_portletAsyncListener = portletAsyncListener;
+			_resourceRequest = resourceRequest;
+			_resourceResponse = resourceResponse;
+		}
+
+		private final PortletAsyncListener _portletAsyncListener;
+		private final ResourceRequest _resourceRequest;
+		private final ResourceResponse _resourceResponse;
+
 	}
 
 }

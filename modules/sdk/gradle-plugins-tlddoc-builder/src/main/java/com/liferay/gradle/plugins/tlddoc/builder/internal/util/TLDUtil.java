@@ -102,10 +102,6 @@ public class TLDUtil {
 
 		String definitionFileName = _getFileName(systemId);
 
-		if (definitionFileName == null) {
-			return;
-		}
-
 		File dtdFile = _portalDefinitions.get(definitionFileName);
 
 		if (dtdFile == null) {
@@ -159,10 +155,6 @@ public class TLDUtil {
 
 				String fileName = _getFileName(schemaLocation);
 
-				if (fileName == null) {
-					continue;
-				}
-
 				File curDefinitionFile = _portalDefinitions.get(fileName);
 
 				if (curDefinitionFile == null) {
@@ -196,10 +188,6 @@ public class TLDUtil {
 				}
 
 				String fileName = _getFileName(schemaLocation);
-
-				if (fileName == null) {
-					continue;
-				}
 
 				File curDefinitionFile = _portalDefinitions.get(fileName);
 
@@ -242,10 +230,6 @@ public class TLDUtil {
 		}
 
 		String definitionFileName = _getFileName(values[1]);
-
-		if (definitionFileName == null) {
-			return;
-		}
 
 		File xsdFile = _portalDefinitions.get(definitionFileName);
 

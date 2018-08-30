@@ -5463,6 +5463,13 @@ to version 2.3.241.
 - [LPS-84119]: Update the [Liferay Source Formatter] dependency to version
 1.0.715.
 
+## 3.12.117 - 2018-08-28
+
+### Changed
+- [LPS-84094]: Allow properties defined in `gradle-ext.properties` to be
+overridden by values defined in a `gradle-ext.properties` file
+- [LPS-84094]: Update the [Liferay Gradle Util] dependency to version 1.0.30.
+
 [Gradle Bundle Plugin]: https://github.com/TomDmitriev/gradle-bundle-plugin
 [Liferay Alloy Taglib]: https://github.com/liferay/alloy-taglibs
 [Liferay Ant BND]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/ant-bnd
@@ -5891,6 +5898,7 @@ to version 2.3.241.
 [LPS-83761]: https://issues.liferay.com/browse/LPS-83761
 [LPS-83790]: https://issues.liferay.com/browse/LPS-83790
 [LPS-84039]: https://issues.liferay.com/browse/LPS-84039
+[LPS-84094]: https://issues.liferay.com/browse/LPS-84094
 [LPS-84119]: https://issues.liferay.com/browse/LPS-84119
 [LPS-84213]: https://issues.liferay.com/browse/LPS-84213
 [LPS-84218]: https://issues.liferay.com/browse/LPS-84218

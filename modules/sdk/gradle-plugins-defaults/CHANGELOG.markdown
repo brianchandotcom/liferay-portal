@@ -4417,6 +4417,14 @@ version 1.3.2.
 - [LPS-84119]: Update the [Liferay Gradle Plugins] dependency to version
 3.12.116.
 
+## 5.5.25 - 2018-08-28
+
+### Changed
+- [LPS-84094]: Allow properties defined in `gradle-ext.properties` to be
+overridden by values defined in a `gradle-ext.properties` file
+- [LPS-84094]: Update the [Liferay Gradle Plugins] dependency to version
+3.12.117.
+
 ## 5.5.26 - 2018-08-29
 
 ### Fixed
@@ -4881,6 +4889,7 @@ version 1.3.2.
 [LPS-84027]: https://issues.liferay.com/browse/LPS-84027
 [LPS-84039]: https://issues.liferay.com/browse/LPS-84039
 [LPS-84055]: https://issues.liferay.com/browse/LPS-84055
+[LPS-84094]: https://issues.liferay.com/browse/LPS-84094
 [LPS-84119]: https://issues.liferay.com/browse/LPS-84119
 [LPS-84213]: https://issues.liferay.com/browse/LPS-84213
 [LPS-84218]: https://issues.liferay.com/browse/LPS-84218

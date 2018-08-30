@@ -206,9 +206,9 @@ public class TLDUtil {
 			Document document, BiConsumer<String, File> xsdConsumer)
 		throws Exception {
 
-		Node taglibNode = document.getDocumentElement();
+		Node rootNode = document.getDocumentElement();
 
-		NamedNodeMap namedNodeMap = taglibNode.getAttributes();
+		NamedNodeMap namedNodeMap = rootNode.getAttributes();
 
 		Node schemLocationNode = namedNodeMap.getNamedItem(
 			"xsi:schemaLocation");

@@ -3671,6 +3671,8 @@ log.sanitizer.enabled=false</echo>
 			</test-action>
 
 			<test-set-up>
+				<set-tomcat-version-number liferay.portal.bundle="${test.portal.bundle.version}" />
+
 				<if>
 					<and>
 						<or>

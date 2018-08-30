@@ -430,7 +430,7 @@ public class JournalDisplayContext {
 							addFavoriteDropdownItem(consumer);
 						}
 						else {
-							addPrimaryDropdownItem(consumer);
+							addRestDropdownItem(consumer);
 						}
 					}
 				}

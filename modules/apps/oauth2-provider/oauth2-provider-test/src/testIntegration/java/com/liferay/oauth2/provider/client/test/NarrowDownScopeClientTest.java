@@ -54,25 +54,28 @@ public class NarrowDownScopeClientTest extends BaseClientTestCase {
 			"HEAD",
 			getToken(
 				"oauthTestApplication", null,
-				getAuthorizationCode("test@liferay.com", "test", null, "HEAD"),
-				this::parseScopeString));
-
-		Assert.assertEquals(
-			"HEAD",
-			getToken(
-				"oauthTestApplication", null, getClientCredentials("HEAD"),
+				getAuthorizationCodeBiFunction(
+					"test@liferay.com", "test", null, "HEAD"),
 				this::parseScopeString));
 
 		Assert.assertEquals(
 			"HEAD",
 			getToken(
 				"oauthTestApplication", null,
-				getResourceOwnerPassword("test@liferay.com", "test", "HEAD"),
+				getClientCredentialsBiFunction("HEAD"),
+				this::parseScopeString));
+
+		Assert.assertEquals(
+			"HEAD",
+			getToken(
+				"oauthTestApplication", null,
+				getResourceOwnerPasswordBiFunction(
+					"test@liferay.com", "test", "HEAD"),
 				this::parseScopeString));
 
 		String scopeString = getToken(
 			"oauthTestApplication", null,
-			getResourceOwnerPassword("test@liferay.com", "test"),
+			getResourceOwnerPasswordBiFunction("test@liferay.com", "test"),
 			this::parseScopeString);
 
 		Assert.assertEquals(
@@ -83,7 +86,7 @@ public class NarrowDownScopeClientTest extends BaseClientTestCase {
 			"invalid_grant",
 			getToken(
 				"oauthTestApplication", null,
-				getResourceOwnerPassword(
+				getResourceOwnerPasswordBiFunction(
 					"test@liferay.com", "test", "HEAD GET OPTIONS POST PUT"),
 				this::parseError));
 	}

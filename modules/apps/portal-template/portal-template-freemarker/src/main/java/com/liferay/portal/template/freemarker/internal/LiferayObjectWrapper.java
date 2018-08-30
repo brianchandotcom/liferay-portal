@@ -215,12 +215,10 @@ public class LiferayObjectWrapper extends DefaultObjectWrapper {
 	private void _checkClassIsRestricted(Class<?> clazz)
 		throws TemplateModelException {
 
-		String className = clazz.getName();
-
 		ClassRestrictionInformation classRestrictionInformation =
 			_classRestrictionInformations.computeIfAbsent(
-				className,
-				a -> {
+				clazz.getName(),
+				className -> {
 					if (_allowedClassNames.contains(className)) {
 						return new ClassRestrictionInformation(null);
 					}

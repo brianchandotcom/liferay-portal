@@ -148,18 +148,15 @@ public class LiferaySecureUberspector extends SecureUberspector {
 		}
 
 		private void _checkClassIsRestricted(Class<?> clazz) {
-			String className = clazz.getName();
-
 			ClassRestrictionInformation classRestrictionInformation =
 				_classRestrictionInformations.computeIfAbsent(
-					className,
-					a -> {
+					clazz.getName(),
+					className -> {
 						for (Class<?> restrictedClass : _restrictedClasses) {
 							if (restrictedClass.isAssignableFrom(clazz)) {
 								return new ClassRestrictionInformation(
 									StringBundler.concat(
-										"Denied to resolve class ",
-										clazz.getName(),
+										"Denied to resolve class ", className,
 										" due to security reasons, restricted ",
 										"by ", restrictedClass.getName()));
 							}
@@ -180,7 +177,7 @@ public class LiferaySecureUberspector extends SecureUberspector {
 									return new ClassRestrictionInformation(
 										StringBundler.concat(
 											"Denied to resolve class ",
-											clazz.getName(),
+											className,
 											" due to security reasons, ",
 											"restricted by ",
 											restrictedPackageName));

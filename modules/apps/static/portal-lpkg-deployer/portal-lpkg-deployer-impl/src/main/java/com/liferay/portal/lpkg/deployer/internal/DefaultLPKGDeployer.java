@@ -49,7 +49,6 @@ import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Dictionary;
-import java.util.Enumeration;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -247,20 +246,15 @@ public class DefaultLPKGDeployer implements LPKGDeployer {
 					zipFile, jarOutputStream,
 					name.substring(0, name.length() - 5));
 
-				Enumeration<? extends ZipEntry> zipEntries = zipFile.entries();
+				ZipEntry zipEntry = zipFile.getEntry(
+					"liferay-marketplace.properties");
 
-				while (zipEntries.hasMoreElements()) {
-					ZipEntry zipEntry = zipEntries.nextElement();
+				jarOutputStream.putNextEntry(zipEntry);
 
-					jarOutputStream.putNextEntry(
-						new ZipEntry(zipEntry.getName()));
+				StreamUtil.transfer(
+					zipFile.getInputStream(zipEntry), jarOutputStream, false);
 
-					StreamUtil.transfer(
-						zipFile.getInputStream(zipEntry), jarOutputStream,
-						false);
-
-					jarOutputStream.closeEntry();
-				}
+				jarOutputStream.closeEntry();
 			}
 
 			return new UnsyncByteArrayInputStream(

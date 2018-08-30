@@ -32,9 +32,11 @@ import com.liferay.portal.lpkg.deployer.internal.wrapper.bundle.URLStreamHandler
 import com.liferay.portal.lpkg.deployer.internal.wrapper.bundle.WARBundleWrapperBundleActivator;
 import com.liferay.portal.util.PropsValues;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 
+import java.net.URI;
 import java.net.URL;
 
 import java.nio.file.FileSystem;
@@ -157,89 +159,81 @@ public class LPKGBundleTrackerCustomizer
 
 		List<Bundle> bundles = new ArrayList<>();
 
-		try {
+		try (ZipFile zipFile = new ZipFile(bundle.getLocation())) {
 			List<Bundle> installedBundles = new ArrayList<>();
 
-			Enumeration<URL> enumeration = bundle.findEntries(
-				"/", "*.jar", false);
+			Enumeration<? extends ZipEntry> zipEntries = zipFile.entries();
 
-			if (enumeration != null) {
-				while (enumeration.hasMoreElements()) {
-					URL url = enumeration.nextElement();
+			while (zipEntries.hasMoreElements()) {
+				ZipEntry zipEntry = zipEntries.nextElement();
 
-					String location =
-						LPKGInnerBundleLocationUtil.generateInnerBundleLocation(
-							bundle, url.getPath());
+				String name = zipEntry.getName();
 
-					if (_isOverridden(symbolicName, url, location)) {
-						continue;
-					}
-
-					Bundle newBundle = _bundleContext.getBundle(location);
-
-					if (newBundle != null) {
-						bundles.add(newBundle);
-
-						continue;
-					}
-
-					if (_isBundleInstalled(bundle, url, location)) {
-						continue;
-					}
-
-					newBundle = _bundleContext.installBundle(
-						location, url.openStream());
-
-					if (newBundle.getState() == Bundle.UNINSTALLED) {
-						continue;
-					}
-
-					installedBundles.add(newBundle);
-
-					bundles.add(newBundle);
+				if (!(name.endsWith(".jar") || name.endsWith(".war"))) {
+					continue;
 				}
-			}
 
-			enumeration = bundle.findEntries("/", "*.war", false);
+				String location =
+					LPKGInnerBundleLocationUtil.generateInnerBundleLocation(
+						bundle, name);
 
-			if (enumeration != null) {
-				while (enumeration.hasMoreElements()) {
-					URL url = enumeration.nextElement();
+				File file = new File(bundle.getLocation());
 
-					String location =
-						LPKGInnerBundleLocationUtil.generateInnerBundleLocation(
-							bundle, url.getPath());
+				URI uri = file.toURI();
 
-					if (_isOverridden(symbolicName, url, location)) {
-						continue;
-					}
+				StringBundler sb = new StringBundler(4);
 
-					Bundle newBundle = _bundleContext.getBundle(location);
+				sb.append("jar:");
+				sb.append(URLCodec.decodeURL(uri.toString()));
+				sb.append("!/");
+				sb.append(name);
 
-					if (newBundle != null) {
-						bundles.add(newBundle);
+				URL url = new URL(sb.toString());
 
-						continue;
-					}
+				if (_isOverridden(symbolicName, url, location)) {
+					continue;
+				}
 
-					// Install a wrapper bundle for this WAR bundle. The wrapper
-					// bundle defers the WAR bundle installation until the WAB
-					// protocol handler is ready. The installed WAR bundle is
-					// always tied its wrapper bundle. When the wrapper bundle
-					// is uninstalled, its wrapped WAR bundle will also be
-					// unintalled.
+				Bundle newBundle = _bundleContext.getBundle(location);
 
-					newBundle = _bundleContext.installBundle(
-						location, _toWARWrapperBundle(bundle, url));
-
-					if (newBundle.getState() == Bundle.UNINSTALLED) {
-						continue;
-					}
-
+				if (newBundle != null) {
 					bundles.add(newBundle);
 
-					installedBundles.add(newBundle);
+					continue;
 				}
+
+				try (InputStream inputStream =
+						zipFile.getInputStream(zipEntry)) {
+
+					if (name.endsWith("jar")) {
+						if (_isBundleInstalled(bundle, url, location)) {
+							continue;
+						}
+
+						newBundle = _bundleContext.installBundle(
+							location, inputStream);
+					}
+					else if (name.endsWith("war")) {
+
+						// Install a wrapper bundle for this WAR bundle. The
+						// wrapper bundle defers the WAR bundle installation
+						// until the WAB protocol handler is ready. The
+						// installed WAR bundle is always tied its wrapper
+						// bundle. When the wrapper bundle is uninstalled, its
+						// wrapped WAR bundle will also be unintalled.
+
+						newBundle = _bundleContext.installBundle(
+							location, _toWARWrapperBundle(bundle, url));
+					}
+				}
+
+				if (newBundle.getState() == Bundle.UNINSTALLED) {
+					continue;
+				}
+
+				bundles.add(newBundle);
+
+				installedBundles.add(newBundle);
 			}
 
 			for (Bundle installedBundle : installedBundles) {
@@ -439,7 +433,7 @@ public class LPKGBundleTrackerCustomizer
 
 		Matcher matcher = _pattern.matcher(path);
 
-		if (matcher.matches()) {
+		if (matcher.find()) {
 			path = matcher.group(1) + matcher.group(3);
 		}
 
@@ -736,7 +730,7 @@ public class LPKGBundleTrackerCustomizer
 		LPKGBundleTrackerCustomizer.class);
 
 	private static final Pattern _pattern = Pattern.compile(
-		"/(.*?)-\\d+\\.\\d+\\.\\d+(\\..+)?(\\.[jw]ar)");
+		"!/(.*?)-\\d+\\.\\d+\\.\\d+(\\..+)?(\\.[jw]ar)");
 	private static final List<String> _staticLPKGBundleSymbolicNames =
 		StaticLPKGResolver.getStaticLPKGBundleSymbolicNames();
 

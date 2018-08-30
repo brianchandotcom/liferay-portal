@@ -58,7 +58,9 @@ public class GradleDependenciesCheck extends BaseFileCheck {
 			return false;
 		}
 
-		if (!dependencies.contains(_OSGI_CORE_6_0_0_DEPENDENCY)) {
+		if (!dependencies.contains(_OSGI_CORE_6_0_0_DEPENDENCY) &&
+			!dependencies.contains(_ORG_OSGI_CORE_6_0_0_DEPENDENCY)) {
+
 			return false;
 		}
 
@@ -133,6 +135,7 @@ public class GradleDependenciesCheck extends BaseFileCheck {
 
 			// See https://github.com/brianchandotcom/liferay-portal/pull/62537
 
+			uniqueDependencies.remove(_ORG_OSGI_CORE_6_0_0_DEPENDENCY);
 			uniqueDependencies.remove(_OSGI_CORE_6_0_0_DEPENDENCY);
 		}
 
@@ -171,6 +174,10 @@ public class GradleDependenciesCheck extends BaseFileCheck {
 	private static final String _ORG_ECLIPSE_OSGI_3_13_0_LIFERAY_PATCHED_1 =
 		"compileOnly group: \"com.liferay\", name: \"org.eclipse.osgi\", " +
 			"version: \"3.13.0.LIFERAY-PATCHED-1\"";
+
+	private static final String _ORG_OSGI_CORE_6_0_0_DEPENDENCY =
+		"compileOnly group: \"org.osgi\", name: \"org.osgi.core\", version: " +
+			"\"6.0.0\"";
 
 	private static final String _OSGI_CORE_6_0_0_DEPENDENCY =
 		"compileOnly group: \"org.osgi\", name: \"osgi.core\", version: " +

@@ -2,6 +2,15 @@
 	<var name="password" value="test" />
 	<var name="userEmailAddress" value="test@liferay.com" />
 
+	<command name="_login">
+		<execute function="AssertClick" locator1="UserBar#USER_SIGN_IN" value1="Sign In" />
+
+		<execute function="Type" locator1="TextInput#EMAIL_ADDRESS" value1="${userEmailAddress}" />
+		<execute function="Type" locator1="TextInput#PASSWORD" value1="${password}" />
+
+		<execute function="Click" locator1="Button#SIGN_IN" />
+	</command>
+
 	<command name="acceptEndUserLicenseAgreement">
 		<if>
 			<condition function="IsElementPresent" locator1="Button#I_AGREE" value1="I Agree" />
@@ -1588,12 +1597,10 @@
 			<then>
 				<var method="MathUtil#sum('${count}', '1')" name="count" />
 
-				<execute function="AssertClick" locator1="UserBar#USER_SIGN_IN" value1="Sign In" />
-
-				<execute function="Type" locator1="TextInput#EMAIL_ADDRESS" value1="${userEmailAddress}" />
-				<execute function="Type" locator1="TextInput#PASSWORD" value1="${password}" />
-
-				<execute function="Click" locator1="Button#SIGN_IN" />
+				<execute macro="User#_login">
+					<var name="password" value="${password}" />
+					<var name="userEmailAddress" value="${userEmailAddress}" />
+				</execute>
 
 				<if>
 					<equals arg1="${count}" arg2="${maximumFailure}" />
@@ -1613,12 +1620,10 @@
 
 		<execute macro="Navigator#openURL" />
 
-		<execute function="AssertClick" locator1="UserBar#USER_SIGN_IN" value1="Sign In" />
-
-		<execute function="Type" locator1="TextInput#EMAIL_ADDRESS" value1="${userEmailAddress}" />
-		<execute function="Type" locator1="TextInput#PASSWORD" value1="${password}" />
-
-		<execute function="Click" locator1="Button#SIGN_IN" />
+		<execute macro="User#_login">
+			<var name="emailAddress" value="${emailAddress}" />
+			<var name="password" value="${password}" />
+		</execute>
 
 		<execute function="AssertElementPresent" locator1="UserBar#USER_AVATAR_IMAGE" />
 	</command>

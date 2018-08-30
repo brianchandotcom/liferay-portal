@@ -347,7 +347,7 @@ exports[`PageRenderer should display empty drag message when there are rows with
     <textarea class="form-builder-page-header-description form-control" data-page-id="0" maxlength="120" placeholder="add-a-short-description-for-this-page"></textarea>
     <div class="form-builder-layout">
       <div class="layout-page">
-        <div class="col col-empty col-md-12 last-col lfr-initial-col">
+        <div class="col col-ddm col-empty col-md-12 ddm-target last-col lfr-initial-col" data-ddm-field-column="0" data-ddm-field-page="0" data-ddm-field-row="0">
           <div id="lfr-initial-col-message">drag-from-sidebar-and-drop-here</div>
         </div>
       </div>

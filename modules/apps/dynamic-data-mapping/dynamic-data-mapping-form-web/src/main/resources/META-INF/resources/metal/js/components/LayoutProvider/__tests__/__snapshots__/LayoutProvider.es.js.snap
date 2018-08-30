@@ -253,8 +253,10 @@ Array [
           Object {
             "fields": Array [
               Object {
+                "fieldName": undefined,
+                "name": undefined,
                 "spritemap": "icons.svg",
-                "type": "text",
+                "type": undefined,
               },
             ],
             "size": 12,

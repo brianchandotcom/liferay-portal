@@ -277,13 +277,10 @@ public class FreeMarkerManager extends BaseSingleTemplateManager {
 			_freeMarkerEngineConfiguration.localizedLookup());
 		_configuration.setNewBuiltinClassResolver(_templateClassResolver);
 
-		LiferayObjectWrapper liferayObjectWrapper = new LiferayObjectWrapper();
-
-		liferayObjectWrapper.setFreeMarkerEngineConfiguration(
-			_freeMarkerEngineConfiguration.allowedClasses(),
-			_freeMarkerEngineConfiguration.restrictedClasses());
-
-		_configuration.setObjectWrapper(liferayObjectWrapper);
+		_configuration.setObjectWrapper(
+			new LiferayObjectWrapper(
+				_freeMarkerEngineConfiguration.allowedClasses(),
+				_freeMarkerEngineConfiguration.restrictedClasses()));
 
 		try {
 			_configuration.setSetting(

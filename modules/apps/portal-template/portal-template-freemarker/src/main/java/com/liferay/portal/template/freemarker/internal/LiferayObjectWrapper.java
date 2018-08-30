@@ -59,7 +59,9 @@ import org.w3c.dom.Node;
  */
 public class LiferayObjectWrapper extends DefaultObjectWrapper {
 
-	public LiferayObjectWrapper() {
+	public LiferayObjectWrapper(
+		String[] allowedClassNames, String[] restrictedClassNames) {
+
 		super(Configuration.getVersion());
 
 		try {
@@ -91,10 +93,6 @@ public class LiferayObjectWrapper extends DefaultObjectWrapper {
 		catch (Exception e) {
 			ReflectionUtil.throwException(e);
 		}
-	}
-
-	public void setFreeMarkerEngineConfiguration(
-		String[] allowedClassNames, String[] restrictedClassNames) {
 
 		if (allowedClassNames == null) {
 			_allowedClassNames = Collections.emptyList();
@@ -342,12 +340,12 @@ public class LiferayObjectWrapper extends DefaultObjectWrapper {
 		}
 	}
 
-	private boolean _allowAllClasses;
-	private List<String> _allowedClassNames;
-	private Map<String, ClassRestrictionInformation>
+	private final boolean _allowAllClasses;
+	private final List<String> _allowedClassNames;
+	private final Map<String, ClassRestrictionInformation>
 		_classRestrictionInformations = new ConcurrentHashMap<>();
-	private List<Class<?>> _restrictedClasses;
-	private List<String> _restrictedPackageNames;
+	private final List<Class<?>> _restrictedClasses;
+	private final List<String> _restrictedPackageNames;
 
 	private class ClassRestrictionInformation {
 

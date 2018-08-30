@@ -73,6 +73,10 @@
 		</copy>
 	</target>
 
+	<target depends="get-artifact-properties" name="delete-app-artifacts">
+		<delete file="${artifact.location.src}" />
+	</target>
+
 	<target
 		depends="
 			copy-hotfix-artifact,

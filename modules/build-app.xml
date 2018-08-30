@@ -58,6 +58,40 @@
 		<delete file="${dist.dir}/ticket.list.tmp" />
 	</target>
 
+	<target name="build-app-jar-release">
+		<for param="app.dir">
+			<path>
+				<dirset
+					dir="${modules.dir}"
+				>
+					<include name="apps/*" />
+					<exclude name="${build.exclude.dirs}" />
+				</dirset>
+			</path>
+
+			<sequential>
+				<local name="app.name" />
+				<local name="Liferay-Releng-Bundle" />
+
+				<basename file="@{app.dir}" property="app.name" />
+
+				<property file="@{app.dir}/app.bnd" />
+
+				<if>
+					<not>
+						<equals arg1="${Liferay-Releng-Bundle}" arg2="true" />
+					</not>
+					<then>
+						<ant inheritAll="false" target="delete-app">
+							<property name="app.name" value="${app.name}" />
+							<property name="output.dir" value="${osgi.dir}/marketplace" />
+						</ant>
+					</then>
+				</if>
+			</sequential>
+		</for>
+	</target>
+
 	<target depends="dist-module-artifacts-lpkg" name="build-app-lpkg" unless="module.dirs.null">
 		<if>
 			<resourcecount count="0" when="greater">
@@ -333,6 +367,23 @@
 			<arg line="checkout" />
 			<arg line="app.changelog" />
 		</exec>
+	</target>
+
+	<target depends="get-osgi-static-modules,init-build-app" name="delete-app" unless="module.dirs.null">
+		<subant genericantfile="${modules.dir}/build-app-module.xml" target="delete-app-artifacts">
+			<dirset
+				dir="${modules.dir}"
+				excludes="${build.modules.excludes}"
+				includes="${app.module.dirs}"
+			/>
+			<property name="liferay.releng.app.title" value="${Liferay-Releng-App-Title}" />
+			<property name="lp.version.major" value="${lp.version.major}" />
+			<property name="lpkg.title.prefix" value="${lpkg.title.prefix}" />
+			<property name="osgi.dir" value="${osgi.dir}" />
+			<property name="osgi.static.modules" value="${osgi.static.modules}" />
+			<property name="output.dir" value="${output.dir}" />
+			<property name="project.dir" value="${project.dir}" />
+		</subant>
 	</target>
 
 	<target depends="check-stale-artifacts,get-artifact-versions-previous-release" name="dist-module-artifacts">

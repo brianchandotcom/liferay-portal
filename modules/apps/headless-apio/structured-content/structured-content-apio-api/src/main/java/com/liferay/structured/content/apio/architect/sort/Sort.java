@@ -14,6 +14,7 @@
 
 package com.liferay.structured.content.apio.architect.sort;
 
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -32,7 +33,7 @@ public class Sort {
 	 * @review
 	 */
 	public Sort(List<SortField> sortFields) {
-		_sortFields = sortFields;
+		_sortFields = Collections.unmodifiableList(sortFields);
 	}
 
 	/**

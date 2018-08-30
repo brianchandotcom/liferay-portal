@@ -19,6 +19,8 @@ package com.liferay.jenkins.results.parser;
  */
 public abstract class BaseBuildRunner implements BuildRunner {
 
+	public static final String DIST_ROOT_PATH = "/tmp/dist";
+
 	@Override
 	public void setup() {
 		setUpWorkspace();

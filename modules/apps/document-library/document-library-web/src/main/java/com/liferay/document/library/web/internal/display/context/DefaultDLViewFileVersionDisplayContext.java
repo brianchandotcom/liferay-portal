@@ -20,10 +20,8 @@ import com.liferay.document.library.kernel.model.DLFileEntryConstants;
 import com.liferay.document.library.kernel.model.DLFileEntryMetadata;
 import com.liferay.document.library.kernel.model.DLFileVersion;
 import com.liferay.document.library.kernel.service.DLFileEntryMetadataLocalServiceUtil;
-import com.liferay.document.library.kernel.util.AudioProcessorUtil;
-import com.liferay.document.library.kernel.util.ImageProcessorUtil;
-import com.liferay.document.library.kernel.util.PDFProcessorUtil;
-import com.liferay.document.library.kernel.util.VideoProcessorUtil;
+import com.liferay.document.library.preview.DLPreviewRenderer;
+import com.liferay.document.library.preview.DLPreviewRendererProvider;
 import com.liferay.document.library.web.internal.display.context.logic.DLPortletInstanceSettingsHelper;
 import com.liferay.document.library.web.internal.display.context.logic.FileEntryDisplayContextHelper;
 import com.liferay.document.library.web.internal.display.context.logic.FileVersionDisplayContextHelper;
@@ -52,6 +50,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.UUID;
 
@@ -70,13 +69,14 @@ public class DefaultDLViewFileVersionDisplayContext
 			FileShortcut fileShortcut,
 			DLMimeTypeDisplayContext dlMimeTypeDisplayContext,
 			ResourceBundle resourceBundle, StorageEngine storageEngine,
-			DLTrashUtil dlTrashUtil)
+			DLTrashUtil dlTrashUtil,
+			DLPreviewRendererProvider dlPreviewRendererProvider)
 		throws PortalException {
 
 		this(
 			request, fileShortcut.getFileVersion(), fileShortcut,
 			dlMimeTypeDisplayContext, resourceBundle, storageEngine,
-			dlTrashUtil);
+			dlTrashUtil, dlPreviewRendererProvider);
 	}
 
 	public DefaultDLViewFileVersionDisplayContext(
@@ -84,11 +84,13 @@ public class DefaultDLViewFileVersionDisplayContext
 		FileVersion fileVersion,
 		DLMimeTypeDisplayContext dlMimeTypeDisplayContext,
 		ResourceBundle resourceBundle, StorageEngine storageEngine,
-		DLTrashUtil dlTrashUtil) {
+		DLTrashUtil dlTrashUtil,
+		DLPreviewRendererProvider dlPreviewRendererProvider) {
 
 		this(
 			request, fileVersion, null, dlMimeTypeDisplayContext,
-			resourceBundle, storageEngine, dlTrashUtil);
+			resourceBundle, storageEngine, dlTrashUtil,
+			dlPreviewRendererProvider);
 	}
 
 	@Override
@@ -207,16 +209,29 @@ public class DefaultDLViewFileVersionDisplayContext
 	}
 
 	@Override
-	public boolean hasPreview() {
-		if (AudioProcessorUtil.hasAudio(_fileVersion) ||
-			ImageProcessorUtil.hasImages(_fileVersion) ||
-			PDFProcessorUtil.hasImages(_fileVersion) ||
-			VideoProcessorUtil.hasVideo(_fileVersion)) {
+	public boolean hasCustomThumbnail() {
+		if (_dlPreviewRendererProvider != null) {
+			Optional<DLPreviewRenderer> dlPreviewRendererOptional =
+				_dlPreviewRendererProvider.getThumbnailRenderer(_fileVersion);
 
-			return true;
+			return dlPreviewRendererOptional.isPresent();
 		}
+		else {
+			return false;
+		}
+	}
 
-		return false;
+	@Override
+	public boolean hasPreview() {
+		if (_dlPreviewRendererProvider != null) {
+			Optional<DLPreviewRenderer> dlPreviewRendererOptional =
+				_dlPreviewRendererProvider.getPreviewRenderer(_fileVersion);
+
+			return dlPreviewRendererOptional.isPresent();
+		}
+		else {
+			return false;
+		}
 	}
 
 	@Override
@@ -230,9 +245,41 @@ public class DefaultDLViewFileVersionDisplayContext
 	}
 
 	@Override
+	public void renderCustomThumbnail(
+			HttpServletRequest request, HttpServletResponse response)
+		throws IOException, ServletException {
+
+		if (_dlPreviewRendererProvider != null) {
+			Optional<DLPreviewRenderer> dlPreviewRendererOptional =
+				_dlPreviewRendererProvider.getThumbnailRenderer(_fileVersion);
+
+			if (dlPreviewRendererOptional.isPresent()) {
+				DLPreviewRenderer dlPreviewRenderer =
+					dlPreviewRendererOptional.get();
+
+				dlPreviewRenderer.render(request, response);
+			}
+		}
+	}
+
+	@Override
 	public void renderPreview(
 			HttpServletRequest request, HttpServletResponse response)
 		throws IOException, ServletException {
+
+		if (_dlPreviewRendererProvider != null) {
+			Optional<DLPreviewRenderer> dlPreviewRendererOptional =
+				_dlPreviewRendererProvider.getPreviewRenderer(_fileVersion);
+
+			if (dlPreviewRendererOptional.isPresent()) {
+				DLPreviewRenderer dlPreviewRenderer =
+					dlPreviewRendererOptional.get();
+
+				dlPreviewRenderer.render(request, response);
+
+				return;
+			}
+		}
 
 		JSPRenderer jspRenderer = new JSPRenderer(
 			"/document_library/view_file_entry_preview.jsp");
@@ -248,13 +295,15 @@ public class DefaultDLViewFileVersionDisplayContext
 		FileShortcut fileShortcut,
 		DLMimeTypeDisplayContext dlMimeTypeDisplayContext,
 		ResourceBundle resourceBundle, StorageEngine storageEngine,
-		DLTrashUtil dlTrashUtil) {
+		DLTrashUtil dlTrashUtil,
+		DLPreviewRendererProvider dlPreviewRendererProvider) {
 
 		try {
 			_fileVersion = fileVersion;
 			_dlMimeTypeDisplayContext = dlMimeTypeDisplayContext;
 			_resourceBundle = resourceBundle;
 			_storageEngine = storageEngine;
+			_dlPreviewRendererProvider = dlPreviewRendererProvider;
 
 			DLRequestHelper dlRequestHelper = new DLRequestHelper(request);
 
@@ -332,6 +381,7 @@ public class DefaultDLViewFileVersionDisplayContext
 	private final DLMimeTypeDisplayContext _dlMimeTypeDisplayContext;
 	private final DLPortletInstanceSettingsHelper
 		_dlPortletInstanceSettingsHelper;
+	private DLPreviewRendererProvider _dlPreviewRendererProvider;
 	private final FileEntryDisplayContextHelper _fileEntryDisplayContextHelper;
 	private final FileVersion _fileVersion;
 	private final FileVersionDisplayContextHelper

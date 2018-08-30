@@ -233,6 +233,7 @@ page import="com.liferay.portlet.documentlibrary.constants.DLConstants" %><%@
 page import="com.liferay.portlet.usersadmin.search.GroupSearch" %><%@
 page import="com.liferay.portlet.usersadmin.search.GroupSearchTerms" %><%@
 page import="com.liferay.taglib.search.ResultRow" %><%@
+page import="com.liferay.taglib.servlet.PipingServletResponse" %><%@
 page import="com.liferay.taglib.util.PortalIncludeUtil" %><%@
 page import="com.liferay.trash.model.TrashEntry" %>
 

@@ -21,8 +21,11 @@
 		actionDropdownItems="<%= assetListDisplayContext.getAssetListEntryActionItemsDropdownItems() %>"
 		componentId="assetListEntriesEntriesManagementToolbar"
 		creationMenu="<%= assetListDisplayContext.isShowAddAssetListEntryAction() ? assetListDisplayContext.getCreationMenu() : null %>"
+		filterDropdownItems="<%= assetListDisplayContext.getAssetListEntryFilterItemsDropdownItems() %>"
 		searchContainerId="assetListEntries"
 		showSearch="<%= false %>"
+		sortingOrder="<%= assetListDisplayContext.getOrderByType() %>"
+		sortingURL="<%= assetListDisplayContext.getSortingURL() %>"
 	/>
 </c:if>
 

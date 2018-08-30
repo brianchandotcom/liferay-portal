@@ -804,9 +804,10 @@ public class LiferaySourceOrSink
 
 	/**
 	 * Returns the exposed entry points in a Map. The key is the ID of a given
-	 * resource collection and the resource URL last path segment to be able to
-	 * construct URLs from it
+	 * resource collection and the value is the resource URL's last path segment
+	 * to be able to construct URLs from it
 	 *
+	 * @param  apioEntryPoint
 	 * @return Map<String, String> Resource ID / URL last path segment, empty
 	 *         otherwise
 	 */

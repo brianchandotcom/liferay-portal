@@ -11,6 +11,14 @@ $c: '.ddm-form-page';
 		line-height: 56px;
 		margin: 44px 0 24px;
 		min-height: 56px;
+		opacity: 1;
 		text-align: center;
+		visibility: visible;
+
+		&.targetOver {
+			background-color: $light-100;
+			border: 2px dashed $light-blue-200;
+			color: $light-blue-500;
+		}
 	}
 }

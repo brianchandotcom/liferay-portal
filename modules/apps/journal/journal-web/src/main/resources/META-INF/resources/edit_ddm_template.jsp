@@ -37,12 +37,11 @@ renderResponse.setTitle(journalEditDDMTemplateDisplayContext.getTitle());
 	<portlet:param name="mvcPath" value="/edit_ddm_template.jsp" />
 </portlet:actionURL>
 
-<aui:form action="<%= (ddmTemplate == null) ? addDDMTemplateURL : updateDDMTemplateURL %>" cssClass="container-fluid-1280" enctype="multipart/form-data" method="post" name="fm">
+<aui:form action="<%= (ddmTemplate == null) ? addDDMTemplateURL : updateDDMTemplateURL %>" cssClass="container-fluid-1280" enctype="multipart/form-data" method="post" name="fm" onSubmit='<%= "event.preventDefault();" %>'>
 	<aui:input name="redirect" type="hidden" value="<%= journalEditDDMTemplateDisplayContext.getRedirect() %>" />
 	<aui:input name="ddmTemplateId" type="hidden" value="<%= journalEditDDMTemplateDisplayContext.getDDMTemplateId() %>" />
 	<aui:input name="groupId" type="hidden" value="<%= journalEditDDMTemplateDisplayContext.getGroupId() %>" />
 	<aui:input name="classPK" type="hidden" value="<%= journalEditDDMTemplateDisplayContext.getClassPK() %>" />
-	<aui:input name="saveAndContinue" type="hidden" value="<%= false %>" />
 
 	<div class="lfr-form-content">
 		<liferay-ui:error exception="<%= TemplateNameException.class %>" message="please-enter-a-valid-name" />
@@ -188,9 +187,12 @@ renderResponse.setTitle(journalEditDDMTemplateDisplayContext.getTitle());
 	</div>
 
 	<aui:button-row>
-		<aui:button type="submit" value="save" />
 
-		<aui:button onClick='<%= renderResponse.getNamespace() + "saveAndContinueTemplate();" %>' value="save-and-continue" />
+		<%
+		String taglibOnClick = "Liferay.fire('" + liferayPortletResponse.getNamespace() + "saveTemplate');";
+		%>
+
+		<aui:button onClick="<%= taglibOnClick %>" type="submit" value="save" />
 
 		<aui:button href="<%= journalEditDDMTemplateDisplayContext.getRedirect() %>" type="cancel" />
 	</aui:button-row>
@@ -282,9 +284,10 @@ renderResponse.setTitle(journalEditDDMTemplateDisplayContext.getTitle());
 </c:if>
 
 <aui:script>
-	function <portlet:namespace />saveAndContinueTemplate() {
-		document.<portlet:namespace />fm.<portlet:namespace />saveAndContinue.value = '1';
-
-		submitForm(document.<portlet:namespace />fm);
-	}
+	Liferay.after(
+		'<portlet:namespace />saveTemplate',
+		function() {
+			submitForm(document.<portlet:namespace />fm);
+		}
+	);
 </aui:script>

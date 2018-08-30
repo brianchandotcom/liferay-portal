@@ -190,10 +190,18 @@ public class LiferayConnectionProperties
 			return liferayConnectionProperties;
 		}
 
-		_log.error(
-			"Connection has a reference to '{}' but the referenced Object is " +
-				"null",
-			getReferencedComponentId());
+		if (getReferencedComponentId() != null) {
+			_log.error(
+				"Connection has a reference to '{}' but the referenced " +
+					"Object is null",
+				getReferencedComponentId());
+		}
+
+		if (_log.isDebugEnabled()) {
+			_log.debug(
+				"Fall back to the actual instance " +
+					"LiferayConnectionProperties for the runtime environment");
+		}
 
 		return getLiferayConnectionProperties();
 	}

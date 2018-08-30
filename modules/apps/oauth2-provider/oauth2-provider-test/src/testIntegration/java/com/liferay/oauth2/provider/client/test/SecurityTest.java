@@ -60,7 +60,7 @@ public class SecurityTest extends BaseClientTestCase {
 			"SAMEORIGIN",
 			getCodeResponse(
 				"test@liferay.com", "test", null,
-				getCode(
+				getCodeFunction(
 					webTarget -> webTarget.queryParam(
 						"client_id", "oauthTestApplicationCode"
 					).queryParam(
@@ -79,7 +79,7 @@ public class SecurityTest extends BaseClientTestCase {
 			"invalid_request",
 			getCodeResponse(
 				"test@liferay.com", "test", null,
-				getCode(
+				getCodeFunction(
 					webTarget -> webTarget.queryParam(
 						"client_id", "oauthTestApplicationCode"
 					).queryParam(
@@ -95,7 +95,7 @@ public class SecurityTest extends BaseClientTestCase {
 	public void testPreventCSRFUsingPKCE() {
 		String authorizationCode = getCodeResponse(
 			"test@liferay.com", "test", null,
-			getCode(
+			getCodeFunction(
 				webTarget -> webTarget.queryParam(
 					"client_id", "oauthTestApplicationCodePKCE"
 				).queryParam(
@@ -111,7 +111,7 @@ public class SecurityTest extends BaseClientTestCase {
 			"invalid_grant",
 			getToken(
 				"oauthTestApplicationCodePKCE", null,
-				getExchangeAuthorizationCodePKCE(
+				getExchangeAuthorizationCodePKCEBiFunction(
 					authorizationCode, null, "wrongCodeVerifier"),
 				this::parseError));
 	}
@@ -125,7 +125,7 @@ public class SecurityTest extends BaseClientTestCase {
 
 		String responseState = getCodeResponse(
 			"test@liferay.com", "test", null,
-			getCode(
+			getCodeFunction(
 				webTarget -> webTarget.queryParam(
 					"client_id", "oauthTestApplicationCode"
 				).queryParam(
@@ -147,7 +147,7 @@ public class SecurityTest extends BaseClientTestCase {
 			"invalid_request",
 			getCodeResponse(
 				"test@liferay.com", "test", null,
-				getCode(
+				getCodeFunction(
 					webTarget -> webTarget.queryParam(
 						"client_id", "oauthTestApplicationCode"
 					).queryParam(
@@ -162,7 +162,7 @@ public class SecurityTest extends BaseClientTestCase {
 	public void testRedirectUriMustMatch() {
 		String authorizationCode = getCodeResponse(
 			"test@liferay.com", "test", null,
-			getCode(
+			getCodeFunction(
 				webTarget -> webTarget.queryParam(
 					"client_id", "oauthTestApplicationCode"
 				).queryParam(
@@ -178,7 +178,7 @@ public class SecurityTest extends BaseClientTestCase {
 			"invalid_grant",
 			getToken(
 				"oauthTestApplicationCode", null,
-				getExchangeAuthorizationCode(
+				getExchangeAuthorizationCodeBiFunction(
 					authorizationCode, "http://invalid:8080"),
 				this::parseError));
 	}

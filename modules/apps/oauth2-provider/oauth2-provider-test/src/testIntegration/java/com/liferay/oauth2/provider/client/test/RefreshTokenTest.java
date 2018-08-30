@@ -61,7 +61,7 @@ public class RefreshTokenTest extends BaseClientTestCase {
 	public void test() throws Exception {
 		JSONObject jsonObject = getToken(
 			"oauthTestApplication", null,
-			getResourceOwnerPassword("test@liferay.com", "test"),
+			getResourceOwnerPasswordBiFunction("test@liferay.com", "test"),
 			this::parseJSONObject);
 
 		WebTarget webTarget = getWebTarget("/annotated");

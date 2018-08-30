@@ -52,7 +52,7 @@ public class GrantResourceOwnerKillSwitchTest extends BaseClientTestCase {
 			"unauthorized_client",
 			getToken(
 				"oauthTestApplication", null,
-				getResourceOwnerPassword("test@liferay.com", "test"),
+				getResourceOwnerPasswordBiFunction("test@liferay.com", "test"),
 				this::parseError));
 	}
 

@@ -20,7 +20,6 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.tools.JavaImportsFormatter;
-import com.liferay.portal.tools.ToolsUtil;
 import com.liferay.source.formatter.checks.util.JavaSourceUtil;
 
 import java.io.IOException;
@@ -78,8 +77,8 @@ public class JavaInnerClassImportsCheck extends BaseFileCheck {
 			}
 
 			if (_isRedundantImport(
-					content, innerClassName, innerClassFullyQualifiedName,
-					imports)) {
+					content, innerClassName, outerClassName,
+					outerClassFullyQualifiedName, imports)) {
 
 				return _formatInnerClassImport(
 					content, innerClassName, innerClassFullyQualifiedName,
@@ -152,35 +151,22 @@ public class JavaInnerClassImportsCheck extends BaseFileCheck {
 	}
 
 	private boolean _isRedundantImport(
-		String content, String innerClassName,
-		String innerClassFullyQualifiedName, List<String> imports) {
+		String content, String innerClassName, String outerClassName,
+		String outerClassFullyQualifiedName, List<String> imports) {
 
-		Pattern pattern = Pattern.compile(
-			"(\\w+)\\.\\s*(\\w+\\.\\s*)*" + innerClassName + "\\W");
+		if (content.matches(
+				"(?s).*\\.\\s*new\\s+" + innerClassName + "\\(.*")) {
 
-		Matcher matcher = pattern.matcher(content);
+			return false;
+		}
 
-		while (matcher.find()) {
-			if (ToolsUtil.isInsideQuotes(content, matcher.start())) {
-				continue;
-			}
+		String fullyQualifiedName = _getFullyQualifiedName(
+			outerClassName, null, imports);
 
-			String match = matcher.group();
+		if ((fullyQualifiedName != null) &&
+			!fullyQualifiedName.equals(outerClassFullyQualifiedName)) {
 
-			if (match.startsWith(innerClassFullyQualifiedName)) {
-				continue;
-			}
-
-			String fullyQualifiedName = _getFullyQualifiedName(
-				matcher.group(1), matcher.group(2), imports);
-
-			if (fullyQualifiedName == null) {
-				continue;
-			}
-
-			if (!innerClassFullyQualifiedName.startsWith(fullyQualifiedName)) {
-				return false;
-			}
+			return false;
 		}
 
 		return true;

@@ -21,7 +21,6 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.templateparser.TemplateNode;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -46,6 +45,7 @@ import java.lang.reflect.Field;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Enumeration;
 import java.util.HashSet;
 import java.util.List;
@@ -97,51 +97,61 @@ public class LiferayObjectWrapper extends DefaultObjectWrapper {
 	public void setFreeMarkerEngineConfiguration(
 		FreeMarkerEngineConfiguration freeMarkerEngineConfiguration) {
 
-		String[] allowedClassNames = GetterUtil.getStringValues(
-			freeMarkerEngineConfiguration.allowedClasses());
+		String[] allowedClassNames =
+			freeMarkerEngineConfiguration.allowedClasses();
 
-		_allowedClassNames = new ArrayList<>(allowedClassNames.length);
+		if (allowedClassNames == null) {
+			_allowedClassNames = Collections.emptyList();
+		}
+		else {
+			_allowedClassNames = new ArrayList<>(allowedClassNames.length);
 
-		for (String allowedClassName : allowedClassNames) {
-			allowedClassName = StringUtil.trim(allowedClassName);
+			for (String allowedClassName : allowedClassNames) {
+				allowedClassName = StringUtil.trim(allowedClassName);
 
-			if (Validator.isBlank(allowedClassName)) {
-				continue;
+				if (Validator.isBlank(allowedClassName)) {
+					continue;
+				}
+
+				_allowedClassNames.add(allowedClassName);
 			}
-
-			_allowedClassNames.add(allowedClassName);
 		}
 
 		_allowAllClasses = _allowedClassNames.contains(StringPool.STAR);
 
-		_restrictedPackageNames = new ArrayList<>();
+		String[] restrictedClassNames =
+			freeMarkerEngineConfiguration.restrictedClasses();
 
-		String[] restrictedClassNames = GetterUtil.getStringValues(
-			freeMarkerEngineConfiguration.restrictedClasses());
+		if (restrictedClassNames == null) {
+			_restrictedClasses = Collections.emptyList();
+			_restrictedPackageNames = Collections.emptyList();
+		}
+		else {
+			_restrictedClasses = new ArrayList<>(restrictedClassNames.length);
+			_restrictedPackageNames = new ArrayList<>();
 
-		_restrictedClasses = new ArrayList<>(restrictedClassNames.length);
+			for (String restrictedClassName : restrictedClassNames) {
+				restrictedClassName = StringUtil.trim(restrictedClassName);
 
-		for (String restrictedClassName : restrictedClassNames) {
-			restrictedClassName = StringUtil.trim(restrictedClassName);
-
-			if (Validator.isBlank(restrictedClassName)) {
-				continue;
-			}
-
-			try {
-				_restrictedClasses.add(Class.forName(restrictedClassName));
-			}
-			catch (ClassNotFoundException cnfe) {
-				if (_log.isInfoEnabled()) {
-					_log.info(
-						StringBundler.concat(
-							"Unable to find restricted class ",
-							restrictedClassName,
-							". Registering as package name"),
-						cnfe);
+				if (Validator.isBlank(restrictedClassName)) {
+					continue;
 				}
 
-				_restrictedPackageNames.add(restrictedClassName);
+				try {
+					_restrictedClasses.add(Class.forName(restrictedClassName));
+				}
+				catch (ClassNotFoundException cnfe) {
+					if (_log.isInfoEnabled()) {
+						_log.info(
+							StringBundler.concat(
+								"Unable to find restricted class ",
+								restrictedClassName,
+								". Registering as package name"),
+							cnfe);
+					}
+
+					_restrictedPackageNames.add(restrictedClassName);
+				}
 			}
 		}
 	}

@@ -54,30 +54,40 @@ public class PortletAsyncListenerAdapter implements AsyncListener {
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws IllegalStateException {
 
-		try {
-			if (_firedOnError) {
+		if (_firedOnError) {
+			try {
 				portletAsyncListener.onError(
 					new PortletAsyncEvent(
 						_portletAsyncContext, resourceRequest,
 						resourceResponse));
 			}
+			catch (IOException ioe) {
+				_log.error("Failed to notify listener for onError", ioe);
+			}
+		}
 
-			if (_firedOnTimeout) {
+		if (_firedOnTimeout) {
+			try {
 				portletAsyncListener.onTimeout(
 					new PortletAsyncEvent(
 						_portletAsyncContext, resourceRequest,
 						resourceResponse));
 			}
+			catch (IOException ioe) {
+				_log.error("Failed to notify listener for onTimeout", ioe);
+			}
+		}
 
-			if (_firedOnComplete) {
+		if (_firedOnComplete) {
+			try {
 				portletAsyncListener.onComplete(
 					new PortletAsyncEvent(
 						_portletAsyncContext, resourceRequest,
 						resourceResponse));
 			}
-		}
-		catch (IOException ioe) {
-			_log.error(ioe, ioe);
+			catch (IOException ioe) {
+				_log.error("Failed to notify listener for onComplete", ioe);
+			}
 		}
 
 		_portletAsyncListenerAdapterEntries.add(

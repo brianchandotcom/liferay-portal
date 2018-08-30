@@ -1,19 +1,3 @@
-/**
- * Copyright 2000-present Liferay, Inc.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *   http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package ${package}.${template};
 
 import com.liferay.petra.string.StringPool;
@@ -35,7 +19,7 @@ import org.osgi.service.log.LogService;
 @Component(
 	immediate = true,
 	property = {
-		"javax.portlet.name=${packagePath}_${template}_${className}Portlet",
+		"javax.portlet.name=${portletName} Portlet",
 		"mvc.command.name=$className.toLowerCase()"
 	},
 	service = MVCActionCommand.class
@@ -57,7 +41,7 @@ public class ${className}ActionCommand implements MVCActionCommand {
 
 		_log.log(LogService.LOG_INFO, "Hello " + name);
 
-		String $className.toLowerCase()Message = "Hello " + name + "! Welcome to OSGi";
+		String $className.toUpperCase()Message = "Hello " + name";
 
 		actionRequest.setAttribute("$className.toUpperCase()_MESSAGE", $className.toLowerCase()Message);
 

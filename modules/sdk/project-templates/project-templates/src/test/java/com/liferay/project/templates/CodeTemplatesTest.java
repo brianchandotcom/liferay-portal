@@ -80,6 +80,8 @@ public class CodeTemplatesTest {
 		completeArgs.add("--template");
 		completeArgs.add("actioncommand");
 
+		completeArgs.add("-DportletName=ActionCommand");
+
 		CodeTemplates.main(completeArgs.toArray(new String[0]));
 
 		File actionCommandFile = new File(
@@ -91,7 +93,7 @@ public class CodeTemplatesTest {
 		_testContainsOrNot(
 			projectDir,
 			"src/main/java/com/liferay/actioncommand/FooActionCommand.java",
-			false, true, "com_liferay_actioncommand_FooPortlet");
+			false, true, "ActionCommand Portlet");
 
 		_testContainsOrNot(
 			projectDir,
@@ -146,6 +148,8 @@ public class CodeTemplatesTest {
 
 		completeArgs.add("--template");
 		completeArgs.add("configurationaction");
+		
+		completeArgs.add("-DportletName=Configurationaction");
 
 		CodeTemplates.main(completeArgs.toArray(new String[0]));
 
@@ -159,7 +163,7 @@ public class CodeTemplatesTest {
 		_testContainsOrNot(
 			projectDir,
 			"src/main/java/com/liferay/configurationaction/FooPortlet.java",
-			false, true, "javax.portlet.display-name=Foo Portlet");
+			false, true, "javax.portlet.display-name=Configurationaction Portlet");
 
 		File restDir = new File(projectDir, "src/main/java/com/liferay/rest");
 
@@ -337,6 +341,8 @@ public class CodeTemplatesTest {
 		completeArgs.add("--template");
 		completeArgs.add("mvcportlet");
 
+		completeArgs.add("-DportletName=MVC");
+
 		CodeTemplates.main(completeArgs.toArray(new String[0]));
 
 		File mvcportletFile = new File(
@@ -346,7 +352,7 @@ public class CodeTemplatesTest {
 
 		_testContainsOrNot(
 			projectDir, "src/main/java/com/liferay/mvcportlet/FooPortlet.java",
-			false, true, "Foo JSP Portlet");
+			false, true, "MVC Portlet");
 
 		File restDir = new File(projectDir, "src/main/java/com/liferay/rest");
 
@@ -396,6 +402,8 @@ public class CodeTemplatesTest {
 
 		completeArgs.add("--template");
 		completeArgs.add("rendercommand");
+		
+		completeArgs.add("-DportletName=RenderCommand");
 
 		CodeTemplates.main(completeArgs.toArray(new String[0]));
 
@@ -419,7 +427,7 @@ public class CodeTemplatesTest {
 		_testContainsOrNot(
 			projectDir,
 			"src/main/java/com/liferay/rendercommand/FooRenderPortlet.java",
-			false, true, "Foo Render Portlet");
+			false, true, "RenderCommand Render Portlet");
 
 		File restDir = new File(projectDir, "src/main/java/com/liferay/rest");
 
@@ -469,6 +477,8 @@ public class CodeTemplatesTest {
 
 		completeArgs.add("--template");
 		completeArgs.add("resourcecommand");
+		
+		completeArgs.add("-DportletName=ResourceCommand");
 
 		CodeTemplates.main(completeArgs.toArray(new String[0]));
 
@@ -493,7 +503,7 @@ public class CodeTemplatesTest {
 		_testContainsOrNot(
 			projectDir,
 			"src/main/java/com/liferay/resourcecommand/FooPortlet.java", false,
-			true, "Foo Portlet");
+			true, "ResourceCommand Portlet");
 
 		File restDir = new File(projectDir, "src/main/java/com/liferay/rest");
 
@@ -548,13 +558,13 @@ public class CodeTemplatesTest {
 
 		File restFile = new File(
 			projectDir,
-			"src/main/java/com/liferay/rest/application/FooApplication.java");
+			"src/main/java/com/liferay/rest/FooApplication.java");
 
 		Assert.assertTrue(restFile.exists());
 
 		_testContainsOrNot(
 			projectDir,
-			"src/main/java/com/liferay/rest/application/FooApplication.java",
+			"src/main/java/com/liferay/rest/FooApplication.java",
 			false, true, "fred");
 
 		File modellistenerDir = new File(

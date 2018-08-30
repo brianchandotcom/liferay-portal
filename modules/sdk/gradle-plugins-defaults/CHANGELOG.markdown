@@ -4427,6 +4427,10 @@ overridden by values defined in a `gradle-ext.properties` file
 
 ## 5.5.26 - 2018-08-29
 
+### Changed
+- [LPS-84119]: Update the [Liferay Gradle Plugins] dependency to version
+3.12.118.
+
 ### Fixed
 - [LPS-84887]: Update Maven SCM property default values in
 `config-maven.gradle`:

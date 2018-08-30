@@ -5470,6 +5470,14 @@ to version 2.3.241.
 overridden by values defined in a `gradle-ext.properties` file
 - [LPS-84094]: Update the [Liferay Gradle Util] dependency to version 1.0.30.
 
+## 3.12.118 - 2018-08-29
+
+### Changed
+- [LPS-84119]: Update the [Liferay Gradle Plugins Source Formatter] dependency
+to version 2.3.242.
+- [LPS-84119]: Update the [Liferay Source Formatter] dependency to version
+1.0.716.
+
 [Gradle Bundle Plugin]: https://github.com/TomDmitriev/gradle-bundle-plugin
 [Liferay Alloy Taglib]: https://github.com/liferay/alloy-taglibs
 [Liferay Ant BND]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/ant-bnd

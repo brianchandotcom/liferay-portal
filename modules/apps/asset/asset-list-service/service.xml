@@ -36,6 +36,10 @@
 			<finder-column name="groupId" />
 			<finder-column name="title" />
 		</finder>
+		<finder name="G_LikeT" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column case-sensitive="false" comparator="LIKE" name="title" />
+		</finder>
 		<finder name="G_TY" return-type="Collection">
 			<finder-column name="groupId" />
 			<finder-column name="type" />

@@ -210,16 +210,16 @@ public class ResourceRequestImpl
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws IllegalStateException {
 
+		if (!isAsyncSupported()) {
+			throw new IllegalStateException();
+		}
+
 		boolean hasOriginalRequestAndResponse = false;
 
 		if ((resourceRequest == this) &&
 			(resourceResponse == _resourceResponse)) {
 
 			hasOriginalRequestAndResponse = true;
-		}
-
-		if (!isAsyncSupported()) {
-			throw new IllegalStateException();
 		}
 
 		HttpServletRequest httpServletRequest = _getHttpServletRequest(

@@ -89,8 +89,7 @@ public class FieldWrapperTag extends BaseFieldWrapperTag {
 
 		jspWriter.write(
 			AUIUtil.buildCss(
-				"field-wrapper", getDisabled(), getFirst(), getLast(),
-				getCssClass()));
+				"field-wrapper", getDisabled(), getFirst(), getLast(), getCssClass()));
 
 		jspWriter.write("\" ");
 

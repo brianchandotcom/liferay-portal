@@ -35,31 +35,6 @@ public abstract class PortalWorkspace extends BaseWorkspace {
 		return false;
 	}
 
-	@Override
-	public void checkoutLocalGitBranches() {
-		checkoutJenkinsLocalGitBranch();
-
-		_checkoutPrimaryPortalLocalGitBranch();
-
-		_checkoutBasePortalLocalGitBranch();
-
-		_checkoutCompanionPortalLocalGitBranch();
-
-		_checkoutOtherPortalLocalGitBranch();
-
-		_checkoutPluginsLocalGitBranch();
-	}
-
-	@Override
-	public void setGitRepositoryJobProperties(Job job) {
-		_primaryPortalLocalGitRepository.setJobProperties(job);
-	}
-
-	@Override
-	public void writeGitRepositoryPropertiesFiles() {
-		_primaryPortalLocalGitRepository.writeGitRepositoryPropertiesFiles();
-	}
-
 	protected PortalWorkspace(
 		String portalGitHubURL, String portalUpstreamBranchName) {
 
@@ -71,6 +46,21 @@ public abstract class PortalWorkspace extends BaseWorkspace {
 
 		_primaryPortalLocalGitBranch = _getPortalLocalGitBranch(
 			_primaryPortalLocalGitRepository, portalGitHubURL);
+	}
+
+	@Override
+	protected void checkoutLocalGitBranches() {
+		checkoutJenkinsLocalGitBranch();
+
+		_checkoutPrimaryPortalLocalGitBranch();
+
+		_checkoutBasePortalLocalGitBranch();
+
+		_checkoutCompanionPortalLocalGitBranch();
+
+		_checkoutOtherPortalLocalGitBranch();
+
+		_checkoutPluginsLocalGitBranch();
 	}
 
 	protected PortalLocalGitBranch getBasePortalLocalGitBranch() {
@@ -222,6 +212,16 @@ public abstract class PortalWorkspace extends BaseWorkspace {
 
 	protected PortalLocalGitRepository getPrimaryPortalLocalGitRepository() {
 		return _primaryPortalLocalGitRepository;
+	}
+
+	@Override
+	protected void setGitRepositoryJobProperties(Job job) {
+		_primaryPortalLocalGitRepository.setJobProperties(job);
+	}
+
+	@Override
+	protected void writeGitRepositoryPropertiesFiles() {
+		_primaryPortalLocalGitRepository.writeGitRepositoryPropertiesFiles();
 	}
 
 	private void _checkoutBasePortalLocalGitBranch() {

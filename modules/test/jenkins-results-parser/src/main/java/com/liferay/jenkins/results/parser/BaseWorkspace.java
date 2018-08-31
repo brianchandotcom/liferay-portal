@@ -68,10 +68,23 @@ public abstract class BaseWorkspace implements Workspace {
 	}
 
 	@Override
-	public void setUpWorkspace() {
+	public void setUp() {
+		setUp(null);
+	}
+
+	@Override
+	public void setUp(Job job) {
 		checkoutLocalGitBranches();
 
+		if (job != null) {
+			setGitRepositoryJobProperties(job);
+		}
+
 		writeGitRepositoryPropertiesFiles();
+	}
+
+	@Override
+	public void tearDown() {
 	}
 
 	protected void checkoutJenkinsLocalGitBranch() {
@@ -101,7 +114,13 @@ public abstract class BaseWorkspace implements Workspace {
 		gitWorkingDirectory.displayLog();
 	}
 
+	protected abstract void checkoutLocalGitBranches();
+
+	protected abstract void setGitRepositoryJobProperties(Job job);
+
 	protected abstract boolean synchronizeGitBranches();
+
+	protected abstract void writeGitRepositoryPropertiesFiles();
 
 	private String _jenkinsBranchName;
 	private LocalGitBranch _jenkinsLocalGitBranch;

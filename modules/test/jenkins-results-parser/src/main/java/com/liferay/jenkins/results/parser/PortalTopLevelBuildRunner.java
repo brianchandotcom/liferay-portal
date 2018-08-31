@@ -22,6 +22,8 @@ public class PortalTopLevelBuildRunner extends TopLevelBuildRunner {
 	protected PortalTopLevelBuildRunner(Job job, String portalGitHubURL) {
 		super(job);
 
+		_portalGitHubURL = portalGitHubURL;
+
 		if (!(job instanceof PortalTestClassJob)) {
 			Class<? extends Job> clazz = job.getClass();
 
@@ -34,16 +36,21 @@ public class PortalTopLevelBuildRunner extends TopLevelBuildRunner {
 		PortalGitWorkingDirectory portalGitWorkingDirectory =
 			portalTestClassJob.getPortalGitWorkingDirectory();
 
-		Workspace topLevelWorkspace = WorkspaceFactory.newTopLevelWorkspace(
-			portalGitHubURL, portalGitWorkingDirectory.getUpstreamBranchName());
+		_portalUpstreamBranchName =
+			portalGitWorkingDirectory.getUpstreamBranchName();
+	}
 
-		if (!(topLevelWorkspace instanceof TopLevelPortalWorkspace)) {
+	@Override
+	protected void initWorkspace() {
+		workspace = WorkspaceFactory.newTopLevelWorkspace(
+			_portalGitHubURL, _portalUpstreamBranchName);
+
+		if (!(workspace instanceof TopLevelPortalWorkspace)) {
 			throw new RuntimeException("Invalid workspace");
 		}
-
-		topLevelWorkspace.setGitRepositoryJobProperties(getJob());
-
-		workspace = topLevelWorkspace;
 	}
+
+	private final String _portalGitHubURL;
+	private final String _portalUpstreamBranchName;
 
 }

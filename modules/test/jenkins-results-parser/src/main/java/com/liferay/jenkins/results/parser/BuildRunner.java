@@ -19,8 +19,10 @@ package com.liferay.jenkins.results.parser;
  */
 public interface BuildRunner {
 
-	public void setup();
+	public void run();
 
-	public void setUpWorkspace();
+	public void setUp();
+
+	public void tearDown();
 
 }

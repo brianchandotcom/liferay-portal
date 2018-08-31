@@ -41,7 +41,7 @@ public abstract class TopLevelBuildRunner<T extends TopLevelBuildData>
 	}
 
 	protected String[] getDistFileNames() {
-		return new String[] {BuildData.JENKINS_DATA_FILE_NAME};
+		return new String[] {BuildData.JENKINS_BUILD_DATA_FILE_NAME};
 	}
 
 	protected void propagateDistFilesToDistNodes() {

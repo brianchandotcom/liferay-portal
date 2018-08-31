@@ -17,5 +17,12 @@
 <%@ include file="/html/common/forward_common.jsp" %>
 
 <script type="text/javascript">
-	location.href = '<%= HtmlUtil.escapeJS(forwardURL) %>';
+
+	<%
+	forwardURL = HtmlUtil.escapeJSLink(forwardURL);
+
+	forwardURL = HtmlUtil.escapeJS(forwardURL);
+	%>
+
+	location.href = '<%= forwardURL %>';
 </script>

@@ -43,6 +43,7 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
@@ -1208,6 +1209,996 @@ public class AssetListEntryPersistenceImpl extends BasePersistenceImpl<AssetList
 	private static final String _FINDER_COLUMN_G_T_TITLE_1 = "assetListEntry.title IS NULL";
 	private static final String _FINDER_COLUMN_G_T_TITLE_2 = "assetListEntry.title = ?";
 	private static final String _FINDER_COLUMN_G_T_TITLE_3 = "(assetListEntry.title IS NULL OR assetListEntry.title = '')";
+	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_G_LIKET = new FinderPath(AssetListEntryModelImpl.ENTITY_CACHE_ENABLED,
+			AssetListEntryModelImpl.FINDER_CACHE_ENABLED,
+			AssetListEntryImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+			"findByG_LikeT",
+			new String[] {
+				Long.class.getName(), String.class.getName(),
+				
+			Integer.class.getName(), Integer.class.getName(),
+				OrderByComparator.class.getName()
+			});
+	public static final FinderPath FINDER_PATH_WITH_PAGINATION_COUNT_BY_G_LIKET = new FinderPath(AssetListEntryModelImpl.ENTITY_CACHE_ENABLED,
+			AssetListEntryModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_LikeT",
+			new String[] { Long.class.getName(), String.class.getName() });
+
+	/**
+	 * Returns all the asset list entries where groupId = &#63; and title LIKE &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param title the title
+	 * @return the matching asset list entries
+	 */
+	@Override
+	public List<AssetListEntry> findByG_LikeT(long groupId, String title) {
+		return findByG_LikeT(groupId, title, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the asset list entries where groupId = &#63; and title LIKE &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AssetListEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param title the title
+	 * @param start the lower bound of the range of asset list entries
+	 * @param end the upper bound of the range of asset list entries (not inclusive)
+	 * @return the range of matching asset list entries
+	 */
+	@Override
+	public List<AssetListEntry> findByG_LikeT(long groupId, String title,
+		int start, int end) {
+		return findByG_LikeT(groupId, title, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the asset list entries where groupId = &#63; and title LIKE &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AssetListEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param title the title
+	 * @param start the lower bound of the range of asset list entries
+	 * @param end the upper bound of the range of asset list entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching asset list entries
+	 */
+	@Override
+	public List<AssetListEntry> findByG_LikeT(long groupId, String title,
+		int start, int end, OrderByComparator<AssetListEntry> orderByComparator) {
+		return findByG_LikeT(groupId, title, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the asset list entries where groupId = &#63; and title LIKE &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AssetListEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param title the title
+	 * @param start the lower bound of the range of asset list entries
+	 * @param end the upper bound of the range of asset list entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching asset list entries
+	 */
+	@Override
+	public List<AssetListEntry> findByG_LikeT(long groupId, String title,
+		int start, int end,
+		OrderByComparator<AssetListEntry> orderByComparator,
+		boolean retrieveFromCache) {
+		boolean pagination = true;
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_G_LIKET;
+		finderArgs = new Object[] { groupId, title, start, end, orderByComparator };
+
+		List<AssetListEntry> list = null;
+
+		if (retrieveFromCache) {
+			list = (List<AssetListEntry>)finderCache.getResult(finderPath,
+					finderArgs, this);
+
+			if ((list != null) && !list.isEmpty()) {
+				for (AssetListEntry assetListEntry : list) {
+					if ((groupId != assetListEntry.getGroupId()) ||
+							!StringUtil.wildcardMatches(
+								assetListEntry.getTitle(), title, '_', '%',
+								'\\', false)) {
+						list = null;
+
+						break;
+					}
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler query = null;
+
+			if (orderByComparator != null) {
+				query = new StringBundler(4 +
+						(orderByComparator.getOrderByFields().length * 2));
+			}
+			else {
+				query = new StringBundler(4);
+			}
+
+			query.append(_SQL_SELECT_ASSETLISTENTRY_WHERE);
+
+			query.append(_FINDER_COLUMN_G_LIKET_GROUPID_2);
+
+			boolean bindTitle = false;
+
+			if (title == null) {
+				query.append(_FINDER_COLUMN_G_LIKET_TITLE_1);
+			}
+			else if (title.equals("")) {
+				query.append(_FINDER_COLUMN_G_LIKET_TITLE_3);
+			}
+			else {
+				bindTitle = true;
+
+				query.append(_FINDER_COLUMN_G_LIKET_TITLE_2);
+			}
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator);
+			}
+			else
+			 if (pagination) {
+				query.append(AssetListEntryModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(groupId);
+
+				if (bindTitle) {
+					qPos.add(StringUtil.toLowerCase(title));
+				}
+
+				if (!pagination) {
+					list = (List<AssetListEntry>)QueryUtil.list(q,
+							getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<AssetListEntry>)QueryUtil.list(q,
+							getDialect(), start, end);
+				}
+
+				cacheResult(list);
+
+				finderCache.putResult(finderPath, finderArgs, list);
+			}
+			catch (Exception e) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first asset list entry in the ordered set where groupId = &#63; and title LIKE &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param title the title
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching asset list entry
+	 * @throws NoSuchEntryException if a matching asset list entry could not be found
+	 */
+	@Override
+	public AssetListEntry findByG_LikeT_First(long groupId, String title,
+		OrderByComparator<AssetListEntry> orderByComparator)
+		throws NoSuchEntryException {
+		AssetListEntry assetListEntry = fetchByG_LikeT_First(groupId, title,
+				orderByComparator);
+
+		if (assetListEntry != null) {
+			return assetListEntry;
+		}
+
+		StringBundler msg = new StringBundler(6);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("groupId=");
+		msg.append(groupId);
+
+		msg.append(", title=");
+		msg.append(title);
+
+		msg.append("}");
+
+		throw new NoSuchEntryException(msg.toString());
+	}
+
+	/**
+	 * Returns the first asset list entry in the ordered set where groupId = &#63; and title LIKE &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param title the title
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching asset list entry, or <code>null</code> if a matching asset list entry could not be found
+	 */
+	@Override
+	public AssetListEntry fetchByG_LikeT_First(long groupId, String title,
+		OrderByComparator<AssetListEntry> orderByComparator) {
+		List<AssetListEntry> list = findByG_LikeT(groupId, title, 0, 1,
+				orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last asset list entry in the ordered set where groupId = &#63; and title LIKE &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param title the title
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching asset list entry
+	 * @throws NoSuchEntryException if a matching asset list entry could not be found
+	 */
+	@Override
+	public AssetListEntry findByG_LikeT_Last(long groupId, String title,
+		OrderByComparator<AssetListEntry> orderByComparator)
+		throws NoSuchEntryException {
+		AssetListEntry assetListEntry = fetchByG_LikeT_Last(groupId, title,
+				orderByComparator);
+
+		if (assetListEntry != null) {
+			return assetListEntry;
+		}
+
+		StringBundler msg = new StringBundler(6);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("groupId=");
+		msg.append(groupId);
+
+		msg.append(", title=");
+		msg.append(title);
+
+		msg.append("}");
+
+		throw new NoSuchEntryException(msg.toString());
+	}
+
+	/**
+	 * Returns the last asset list entry in the ordered set where groupId = &#63; and title LIKE &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param title the title
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching asset list entry, or <code>null</code> if a matching asset list entry could not be found
+	 */
+	@Override
+	public AssetListEntry fetchByG_LikeT_Last(long groupId, String title,
+		OrderByComparator<AssetListEntry> orderByComparator) {
+		int count = countByG_LikeT(groupId, title);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<AssetListEntry> list = findByG_LikeT(groupId, title, count - 1,
+				count, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the asset list entries before and after the current asset list entry in the ordered set where groupId = &#63; and title LIKE &#63;.
+	 *
+	 * @param assetListEntryId the primary key of the current asset list entry
+	 * @param groupId the group ID
+	 * @param title the title
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next asset list entry
+	 * @throws NoSuchEntryException if a asset list entry with the primary key could not be found
+	 */
+	@Override
+	public AssetListEntry[] findByG_LikeT_PrevAndNext(long assetListEntryId,
+		long groupId, String title,
+		OrderByComparator<AssetListEntry> orderByComparator)
+		throws NoSuchEntryException {
+		AssetListEntry assetListEntry = findByPrimaryKey(assetListEntryId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			AssetListEntry[] array = new AssetListEntryImpl[3];
+
+			array[0] = getByG_LikeT_PrevAndNext(session, assetListEntry,
+					groupId, title, orderByComparator, true);
+
+			array[1] = assetListEntry;
+
+			array[2] = getByG_LikeT_PrevAndNext(session, assetListEntry,
+					groupId, title, orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected AssetListEntry getByG_LikeT_PrevAndNext(Session session,
+		AssetListEntry assetListEntry, long groupId, String title,
+		OrderByComparator<AssetListEntry> orderByComparator, boolean previous) {
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(5 +
+					(orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			query = new StringBundler(4);
+		}
+
+		query.append(_SQL_SELECT_ASSETLISTENTRY_WHERE);
+
+		query.append(_FINDER_COLUMN_G_LIKET_GROUPID_2);
+
+		boolean bindTitle = false;
+
+		if (title == null) {
+			query.append(_FINDER_COLUMN_G_LIKET_TITLE_1);
+		}
+		else if (title.equals("")) {
+			query.append(_FINDER_COLUMN_G_LIKET_TITLE_3);
+		}
+		else {
+			bindTitle = true;
+
+			query.append(_FINDER_COLUMN_G_LIKET_TITLE_2);
+		}
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			query.append(AssetListEntryModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = query.toString();
+
+		Query q = session.createQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		qPos.add(groupId);
+
+		if (bindTitle) {
+			qPos.add(StringUtil.toLowerCase(title));
+		}
+
+		if (orderByComparator != null) {
+			Object[] values = orderByComparator.getOrderByConditionValues(assetListEntry);
+
+			for (Object value : values) {
+				qPos.add(value);
+			}
+		}
+
+		List<AssetListEntry> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Returns all the asset list entries that the user has permission to view where groupId = &#63; and title LIKE &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param title the title
+	 * @return the matching asset list entries that the user has permission to view
+	 */
+	@Override
+	public List<AssetListEntry> filterFindByG_LikeT(long groupId, String title) {
+		return filterFindByG_LikeT(groupId, title, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the asset list entries that the user has permission to view where groupId = &#63; and title LIKE &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AssetListEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param title the title
+	 * @param start the lower bound of the range of asset list entries
+	 * @param end the upper bound of the range of asset list entries (not inclusive)
+	 * @return the range of matching asset list entries that the user has permission to view
+	 */
+	@Override
+	public List<AssetListEntry> filterFindByG_LikeT(long groupId, String title,
+		int start, int end) {
+		return filterFindByG_LikeT(groupId, title, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the asset list entries that the user has permissions to view where groupId = &#63; and title LIKE &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AssetListEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param title the title
+	 * @param start the lower bound of the range of asset list entries
+	 * @param end the upper bound of the range of asset list entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching asset list entries that the user has permission to view
+	 */
+	@Override
+	public List<AssetListEntry> filterFindByG_LikeT(long groupId, String title,
+		int start, int end, OrderByComparator<AssetListEntry> orderByComparator) {
+		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+			return findByG_LikeT(groupId, title, start, end, orderByComparator);
+		}
+
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(4 +
+					(orderByComparator.getOrderByFields().length * 2));
+		}
+		else {
+			query = new StringBundler(5);
+		}
+
+		if (getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_ASSETLISTENTRY_WHERE);
+		}
+		else {
+			query.append(_FILTER_SQL_SELECT_ASSETLISTENTRY_NO_INLINE_DISTINCT_WHERE_1);
+		}
+
+		query.append(_FINDER_COLUMN_G_LIKET_GROUPID_2);
+
+		boolean bindTitle = false;
+
+		if (title == null) {
+			query.append(_FINDER_COLUMN_G_LIKET_TITLE_1);
+		}
+		else if (title.equals("")) {
+			query.append(_FINDER_COLUMN_G_LIKET_TITLE_3);
+		}
+		else {
+			bindTitle = true;
+
+			query.append(_FINDER_COLUMN_G_LIKET_TITLE_2);
+		}
+
+		if (!getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_ASSETLISTENTRY_NO_INLINE_DISTINCT_WHERE_2);
+		}
+
+		if (orderByComparator != null) {
+			if (getDB().isSupportsInlineDistinct()) {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator, true);
+			}
+			else {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_TABLE,
+					orderByComparator, true);
+			}
+		}
+		else {
+			if (getDB().isSupportsInlineDistinct()) {
+				query.append(AssetListEntryModelImpl.ORDER_BY_JPQL);
+			}
+			else {
+				query.append(AssetListEntryModelImpl.ORDER_BY_SQL);
+			}
+		}
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+				AssetListEntry.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+			if (getDB().isSupportsInlineDistinct()) {
+				q.addEntity(_FILTER_ENTITY_ALIAS, AssetListEntryImpl.class);
+			}
+			else {
+				q.addEntity(_FILTER_ENTITY_TABLE, AssetListEntryImpl.class);
+			}
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(groupId);
+
+			if (bindTitle) {
+				qPos.add(StringUtil.toLowerCase(title));
+			}
+
+			return (List<AssetListEntry>)QueryUtil.list(q, getDialect(), start,
+				end);
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	/**
+	 * Returns the asset list entries before and after the current asset list entry in the ordered set of asset list entries that the user has permission to view where groupId = &#63; and title LIKE &#63;.
+	 *
+	 * @param assetListEntryId the primary key of the current asset list entry
+	 * @param groupId the group ID
+	 * @param title the title
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next asset list entry
+	 * @throws NoSuchEntryException if a asset list entry with the primary key could not be found
+	 */
+	@Override
+	public AssetListEntry[] filterFindByG_LikeT_PrevAndNext(
+		long assetListEntryId, long groupId, String title,
+		OrderByComparator<AssetListEntry> orderByComparator)
+		throws NoSuchEntryException {
+		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+			return findByG_LikeT_PrevAndNext(assetListEntryId, groupId, title,
+				orderByComparator);
+		}
+
+		AssetListEntry assetListEntry = findByPrimaryKey(assetListEntryId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			AssetListEntry[] array = new AssetListEntryImpl[3];
+
+			array[0] = filterGetByG_LikeT_PrevAndNext(session, assetListEntry,
+					groupId, title, orderByComparator, true);
+
+			array[1] = assetListEntry;
+
+			array[2] = filterGetByG_LikeT_PrevAndNext(session, assetListEntry,
+					groupId, title, orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected AssetListEntry filterGetByG_LikeT_PrevAndNext(Session session,
+		AssetListEntry assetListEntry, long groupId, String title,
+		OrderByComparator<AssetListEntry> orderByComparator, boolean previous) {
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(6 +
+					(orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			query = new StringBundler(5);
+		}
+
+		if (getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_ASSETLISTENTRY_WHERE);
+		}
+		else {
+			query.append(_FILTER_SQL_SELECT_ASSETLISTENTRY_NO_INLINE_DISTINCT_WHERE_1);
+		}
+
+		query.append(_FINDER_COLUMN_G_LIKET_GROUPID_2);
+
+		boolean bindTitle = false;
+
+		if (title == null) {
+			query.append(_FINDER_COLUMN_G_LIKET_TITLE_1);
+		}
+		else if (title.equals("")) {
+			query.append(_FINDER_COLUMN_G_LIKET_TITLE_3);
+		}
+		else {
+			bindTitle = true;
+
+			query.append(_FINDER_COLUMN_G_LIKET_TITLE_2);
+		}
+
+		if (!getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_ASSETLISTENTRY_NO_INLINE_DISTINCT_WHERE_2);
+		}
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				if (getDB().isSupportsInlineDistinct()) {
+					query.append(_ORDER_BY_ENTITY_ALIAS);
+				}
+				else {
+					query.append(_ORDER_BY_ENTITY_TABLE);
+				}
+
+				query.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				if (getDB().isSupportsInlineDistinct()) {
+					query.append(_ORDER_BY_ENTITY_ALIAS);
+				}
+				else {
+					query.append(_ORDER_BY_ENTITY_TABLE);
+				}
+
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			if (getDB().isSupportsInlineDistinct()) {
+				query.append(AssetListEntryModelImpl.ORDER_BY_JPQL);
+			}
+			else {
+				query.append(AssetListEntryModelImpl.ORDER_BY_SQL);
+			}
+		}
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+				AssetListEntry.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
+
+		SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		if (getDB().isSupportsInlineDistinct()) {
+			q.addEntity(_FILTER_ENTITY_ALIAS, AssetListEntryImpl.class);
+		}
+		else {
+			q.addEntity(_FILTER_ENTITY_TABLE, AssetListEntryImpl.class);
+		}
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		qPos.add(groupId);
+
+		if (bindTitle) {
+			qPos.add(StringUtil.toLowerCase(title));
+		}
+
+		if (orderByComparator != null) {
+			Object[] values = orderByComparator.getOrderByConditionValues(assetListEntry);
+
+			for (Object value : values) {
+				qPos.add(value);
+			}
+		}
+
+		List<AssetListEntry> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Removes all the asset list entries where groupId = &#63; and title LIKE &#63; from the database.
+	 *
+	 * @param groupId the group ID
+	 * @param title the title
+	 */
+	@Override
+	public void removeByG_LikeT(long groupId, String title) {
+		for (AssetListEntry assetListEntry : findByG_LikeT(groupId, title,
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
+			remove(assetListEntry);
+		}
+	}
+
+	/**
+	 * Returns the number of asset list entries where groupId = &#63; and title LIKE &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param title the title
+	 * @return the number of matching asset list entries
+	 */
+	@Override
+	public int countByG_LikeT(long groupId, String title) {
+		FinderPath finderPath = FINDER_PATH_WITH_PAGINATION_COUNT_BY_G_LIKET;
+
+		Object[] finderArgs = new Object[] { groupId, title };
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(3);
+
+			query.append(_SQL_COUNT_ASSETLISTENTRY_WHERE);
+
+			query.append(_FINDER_COLUMN_G_LIKET_GROUPID_2);
+
+			boolean bindTitle = false;
+
+			if (title == null) {
+				query.append(_FINDER_COLUMN_G_LIKET_TITLE_1);
+			}
+			else if (title.equals("")) {
+				query.append(_FINDER_COLUMN_G_LIKET_TITLE_3);
+			}
+			else {
+				bindTitle = true;
+
+				query.append(_FINDER_COLUMN_G_LIKET_TITLE_2);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(groupId);
+
+				if (bindTitle) {
+					qPos.add(StringUtil.toLowerCase(title));
+				}
+
+				count = (Long)q.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	/**
+	 * Returns the number of asset list entries that the user has permission to view where groupId = &#63; and title LIKE &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param title the title
+	 * @return the number of matching asset list entries that the user has permission to view
+	 */
+	@Override
+	public int filterCountByG_LikeT(long groupId, String title) {
+		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+			return countByG_LikeT(groupId, title);
+		}
+
+		StringBundler query = new StringBundler(3);
+
+		query.append(_FILTER_SQL_COUNT_ASSETLISTENTRY_WHERE);
+
+		query.append(_FINDER_COLUMN_G_LIKET_GROUPID_2);
+
+		boolean bindTitle = false;
+
+		if (title == null) {
+			query.append(_FINDER_COLUMN_G_LIKET_TITLE_1);
+		}
+		else if (title.equals("")) {
+			query.append(_FINDER_COLUMN_G_LIKET_TITLE_3);
+		}
+		else {
+			bindTitle = true;
+
+			query.append(_FINDER_COLUMN_G_LIKET_TITLE_2);
+		}
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+				AssetListEntry.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+			q.addScalar(COUNT_COLUMN_NAME,
+				com.liferay.portal.kernel.dao.orm.Type.LONG);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(groupId);
+
+			if (bindTitle) {
+				qPos.add(StringUtil.toLowerCase(title));
+			}
+
+			Long count = (Long)q.uniqueResult();
+
+			return count.intValue();
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	private static final String _FINDER_COLUMN_G_LIKET_GROUPID_2 = "assetListEntry.groupId = ? AND ";
+	private static final String _FINDER_COLUMN_G_LIKET_TITLE_1 = "assetListEntry.title IS NULL";
+	private static final String _FINDER_COLUMN_G_LIKET_TITLE_2 = "lower(assetListEntry.title) LIKE ?";
+	private static final String _FINDER_COLUMN_G_LIKET_TITLE_3 = "(assetListEntry.title IS NULL OR assetListEntry.title LIKE '')";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_G_TY = new FinderPath(AssetListEntryModelImpl.ENTITY_CACHE_ENABLED,
 			AssetListEntryModelImpl.FINDER_CACHE_ENABLED,
 			AssetListEntryImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,

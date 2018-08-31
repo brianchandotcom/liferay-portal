@@ -187,6 +187,15 @@ public class AssetListEntryPersistenceTest {
 	}
 
 	@Test
+	public void testCountByG_LikeT() throws Exception {
+		_persistence.countByG_LikeT(RandomTestUtil.nextLong(), "");
+
+		_persistence.countByG_LikeT(0L, "null");
+
+		_persistence.countByG_LikeT(0L, (String)null);
+	}
+
+	@Test
 	public void testCountByG_TY() throws Exception {
 		_persistence.countByG_TY(RandomTestUtil.nextLong(),
 			RandomTestUtil.nextInt());

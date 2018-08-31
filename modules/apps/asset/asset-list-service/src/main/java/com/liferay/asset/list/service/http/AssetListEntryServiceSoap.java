@@ -140,10 +140,43 @@ public class AssetListEntryServiceSoap {
 		}
 	}
 
+	public static com.liferay.asset.list.model.AssetListEntrySoap[] getAssetListEntries(
+		long groupId, String title, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.asset.list.model.AssetListEntry> orderByComparator)
+		throws RemoteException {
+		try {
+			java.util.List<com.liferay.asset.list.model.AssetListEntry> returnValue =
+				AssetListEntryServiceUtil.getAssetListEntries(groupId, title,
+					start, end, orderByComparator);
+
+			return com.liferay.asset.list.model.AssetListEntrySoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static int getAssetListEntriesCount(long groupId)
 		throws RemoteException {
 		try {
 			int returnValue = AssetListEntryServiceUtil.getAssetListEntriesCount(groupId);
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static int getAssetListEntriesCount(long groupId, String title)
+		throws RemoteException {
+		try {
+			int returnValue = AssetListEntryServiceUtil.getAssetListEntriesCount(groupId,
+					title);
 
 			return returnValue;
 		}

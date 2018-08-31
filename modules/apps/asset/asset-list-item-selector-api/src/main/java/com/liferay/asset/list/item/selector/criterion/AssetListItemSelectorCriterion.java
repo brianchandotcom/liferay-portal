@@ -21,14 +21,14 @@ import com.liferay.item.selector.BaseItemSelectorCriterion;
  */
 public class AssetListItemSelectorCriterion extends BaseItemSelectorCriterion {
 
-	public long getSelectedAssetEntryListId() {
-		return _selectedAssetEntryListId;
+	public long getSelectedAssetListEntryId() {
+		return _selectedAssetListEntryId;
 	}
 
-	public void setSelectedAssetEntryListId(long selectedAssetEntryListId) {
-		_selectedAssetEntryListId = selectedAssetEntryListId;
+	public void setSelectedAssetListEntryId(long selectedAssetEntryListId) {
+		_selectedAssetListEntryId = selectedAssetEntryListId;
 	}
 
-	private long _selectedAssetEntryListId;
+	private long _selectedAssetListEntryId;
 
 }

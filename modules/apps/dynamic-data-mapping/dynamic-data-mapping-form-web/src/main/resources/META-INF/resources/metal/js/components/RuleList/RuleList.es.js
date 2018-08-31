@@ -99,7 +99,7 @@ class RuleList extends Component {
 				'not-is-empty': 'is-not-empty',
 				or: 'or',
 				'require-field': 'require-x',
-				ruleBuilder: 'rule-builder',
+				rules: 'rules',
 				'show-field': 'show-x',
 				value: 'value'
 			}

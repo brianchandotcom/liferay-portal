@@ -48,7 +48,6 @@ import org.apache.catalina.core.StandardContext;
 import org.apache.catalina.startup.Constants;
 import org.apache.catalina.startup.ContextConfig;
 import org.apache.catalina.startup.Tomcat;
-import org.apache.catalina.startup.Tomcat.DefaultWebXmlListener;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -128,7 +127,7 @@ public class TomcatRemoteSPI extends RemoteSPI {
 			context.setName(contextPath);
 			context.setPath(contextPath);
 
-			context.addLifecycleListener(new DefaultWebXmlListener());
+			context.addLifecycleListener(new Tomcat.DefaultWebXmlListener());
 
 			ContextConfig contextConfig = new ContextConfig();
 

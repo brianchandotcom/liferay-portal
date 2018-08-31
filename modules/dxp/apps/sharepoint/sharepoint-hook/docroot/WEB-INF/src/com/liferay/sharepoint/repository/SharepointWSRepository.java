@@ -45,8 +45,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.sharepoint.connector.SharepointConnection;
-import com.liferay.sharepoint.connector.SharepointConnection.CheckInType;
-import com.liferay.sharepoint.connector.SharepointConnection.ObjectTypeFilter;
 import com.liferay.sharepoint.connector.SharepointConnectionFactory;
 import com.liferay.sharepoint.connector.SharepointException;
 import com.liferay.sharepoint.connector.SharepointObject;
@@ -210,13 +208,13 @@ public class SharepointWSRepository
 
 			String filePath = fileSharepointObject.getPath();
 
-			CheckInType checkInType = null;
+			SharepointConnection.CheckInType checkInType = null;
 
 			if (createMajorVersion) {
-				checkInType = CheckInType.MAJOR;
+				checkInType = SharepointConnection.CheckInType.MAJOR;
 			}
 			else {
-				checkInType = CheckInType.MINOR;
+				checkInType = SharepointConnection.CheckInType.MINOR;
 			}
 
 			sharepointConnection.checkInFile(filePath, changeLog, checkInType);
@@ -513,8 +511,8 @@ public class SharepointWSRepository
 
 			String folderPath = folderSharepointObject.getPath();
 
-			ObjectTypeFilter objectTypeFilter = toObjectTypeFilter(
-				extRepositoryObjectType);
+			SharepointConnection.ObjectTypeFilter objectTypeFilter =
+				toObjectTypeFilter(extRepositoryObjectType);
 
 			List<SharepointObject> sharepointObjects =
 				sharepointConnection.getSharepointObjects(
@@ -556,8 +554,8 @@ public class SharepointWSRepository
 
 			String folderPath = folderSharepointObject.getPath();
 
-			ObjectTypeFilter objectTypeFilter = toObjectTypeFilter(
-				extRepositoryObjectType);
+			SharepointConnection.ObjectTypeFilter objectTypeFilter =
+				toObjectTypeFilter(extRepositoryObjectType);
 
 			List<SharepointObject> sharepointObjects =
 				sharepointConnection.getSharepointObjects(
@@ -598,8 +596,8 @@ public class SharepointWSRepository
 
 			String folderPath = folderSharepointObject.getPath();
 
-			ObjectTypeFilter objectTypeFilter = toObjectTypeFilter(
-				extRepositoryObjectType);
+			SharepointConnection.ObjectTypeFilter objectTypeFilter =
+				toObjectTypeFilter(extRepositoryObjectType);
 
 			return sharepointConnection.getSharepointObjectsCount(
 				folderPath, objectTypeFilter);
@@ -925,7 +923,7 @@ public class SharepointWSRepository
 
 			List<SharepointObject> folderSharepointObjects =
 				sharepointConnection.getSharepointObjects(
-					path, ObjectTypeFilter.FOLDERS);
+					path, SharepointConnection.ObjectTypeFilter.FOLDERS);
 
 			for (SharepointObject folderSharepointObject :
 					folderSharepointObjects) {
@@ -949,7 +947,7 @@ public class SharepointWSRepository
 		throws SharepointException {
 
 		sharepointConnection.getSharepointObjectsCount(
-			StringPool.SLASH, ObjectTypeFilter.FILES);
+			StringPool.SLASH, SharepointConnection.ObjectTypeFilter.FILES);
 	}
 
 	protected void processSharepointObjectException(
@@ -1011,12 +1009,12 @@ public class SharepointWSRepository
 		}
 	}
 
-	protected ObjectTypeFilter toObjectTypeFilter(
+	protected SharepointConnection.ObjectTypeFilter toObjectTypeFilter(
 		ExtRepositoryObjectType<? extends ExtRepositoryObject>
 			extRepositoryObjectType) {
 
-		ObjectTypeFilter objectTypeFilter = _objectTypeFilters.get(
-			extRepositoryObjectType);
+		SharepointConnection.ObjectTypeFilter objectTypeFilter =
+			_objectTypeFilters.get(extRepositoryObjectType);
 
 		if (objectTypeFilter == null) {
 			throw new IllegalArgumentException(
@@ -1067,17 +1065,26 @@ public class SharepointWSRepository
 	private static final String[][] _SUPPORTED_PARAMETERS =
 		{{_LIBRARY_NAME, _LIBRARY_PATH, _SERVER_VERSION, _SITE_URL}};
 
-	private static final Map<ExtRepositoryObjectType<?>, ObjectTypeFilter>
-		_objectTypeFilters =
-			new HashMap<ExtRepositoryObjectType<?>, ObjectTypeFilter>() {
-				{
-					put(ExtRepositoryObjectType.FILE, ObjectTypeFilter.FILES);
-					put(
-						ExtRepositoryObjectType.FOLDER,
-						ObjectTypeFilter.FOLDERS);
-					put(ExtRepositoryObjectType.OBJECT, ObjectTypeFilter.ALL);
-				}
-			};
+	private static final Map
+		<ExtRepositoryObjectType<?>, SharepointConnection.ObjectTypeFilter>
+			_objectTypeFilters =
+				new HashMap
+					<ExtRepositoryObjectType<?>,
+						SharepointConnection.ObjectTypeFilter>() {
+
+					{
+						put(
+							ExtRepositoryObjectType.FILE,
+							SharepointConnection.ObjectTypeFilter.FILES);
+						put(
+							ExtRepositoryObjectType.FOLDER,
+							SharepointConnection.ObjectTypeFilter.FOLDERS);
+						put(
+							ExtRepositoryObjectType.OBJECT,
+							SharepointConnection.ObjectTypeFilter.ALL);
+					}
+
+				};
 
 	private ConnectionCache<SharepointConnection> _connectionCache;
 	private CredentialsProvider _credentialsProvider;

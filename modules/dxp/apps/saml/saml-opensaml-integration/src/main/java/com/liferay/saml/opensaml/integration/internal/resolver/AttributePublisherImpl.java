@@ -15,7 +15,7 @@
 package com.liferay.saml.opensaml.integration.internal.resolver;
 
 import com.liferay.saml.opensaml.integration.internal.util.OpenSamlUtil;
-import com.liferay.saml.opensaml.integration.resolver.AttributeResolver.AttributePublisher;
+import com.liferay.saml.opensaml.integration.resolver.AttributeResolver;
 
 import java.net.URI;
 
@@ -34,7 +34,8 @@ import org.opensaml.xml.XMLObject;
 /**
  * @author Carlos Sierra Andrés
  */
-public class AttributePublisherImpl implements AttributePublisher {
+public class AttributePublisherImpl
+	implements AttributeResolver.AttributePublisher {
 
 	@Override
 	public AttributeValue buildBase64(String value) {

@@ -47,7 +47,6 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Set;
 import java.util.stream.Stream;
 
@@ -255,7 +254,7 @@ public class DefaultAttributeResolver implements AttributeResolver {
 				roles.add(userGroupRole.getRole());
 			}
 
-			for (Entry<String, Set<Role>> entry : groupRoles.entrySet()) {
+			for (Map.Entry<String, Set<Role>> entry : groupRoles.entrySet()) {
 				String groupName = entry.getKey();
 
 				String name = null;
@@ -492,7 +491,7 @@ public class DefaultAttributeResolver implements AttributeResolver {
 				roles.add(role);
 			}
 
-			for (Entry<String, Set<Role>> entry : groupRoles.entrySet()) {
+			for (Map.Entry<String, Set<Role>> entry : groupRoles.entrySet()) {
 				String groupName = entry.getKey();
 
 				String name = null;

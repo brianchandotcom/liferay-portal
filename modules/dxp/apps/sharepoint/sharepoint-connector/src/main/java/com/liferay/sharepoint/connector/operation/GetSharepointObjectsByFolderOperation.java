@@ -14,7 +14,7 @@
 
 package com.liferay.sharepoint.connector.operation;
 
-import com.liferay.sharepoint.connector.SharepointConnection.ObjectTypeFilter;
+import com.liferay.sharepoint.connector.SharepointConnection;
 import com.liferay.sharepoint.connector.SharepointException;
 import com.liferay.sharepoint.connector.SharepointObject;
 import com.liferay.sharepoint.connector.schema.query.Query;
@@ -38,15 +38,20 @@ public class GetSharepointObjectsByFolderOperation extends BaseOperation {
 	}
 
 	public List<SharepointObject> execute(
-			String folderPath, ObjectTypeFilter objectTypeFilter)
+			String folderPath,
+			SharepointConnection.ObjectTypeFilter objectTypeFilter)
 		throws SharepointException {
 
 		Query query = null;
 
-		if (objectTypeFilter.equals(ObjectTypeFilter.ALL)) {
+		if (objectTypeFilter.equals(
+				SharepointConnection.ObjectTypeFilter.ALL)) {
+
 			query = new Query(null);
 		}
-		else if (objectTypeFilter.equals(ObjectTypeFilter.FILES)) {
+		else if (objectTypeFilter.equals(
+					 SharepointConnection.ObjectTypeFilter.FILES)) {
+
 			query = new Query(
 				new EqOperator(
 					new QueryField("FSObjType"),
@@ -54,7 +59,9 @@ public class GetSharepointObjectsByFolderOperation extends BaseOperation {
 						QueryValue.Type.LOOKUP,
 						SharepointConstants.FS_OBJ_TYPE_FILE)));
 		}
-		else if (objectTypeFilter.equals(ObjectTypeFilter.FOLDERS)) {
+		else if (objectTypeFilter.equals(
+					 SharepointConnection.ObjectTypeFilter.FOLDERS)) {
+
 			query = new Query(
 				new EqOperator(
 					new QueryField("FSObjType"),

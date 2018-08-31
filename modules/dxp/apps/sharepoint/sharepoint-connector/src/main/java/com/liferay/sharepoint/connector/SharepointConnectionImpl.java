@@ -16,7 +16,6 @@ package com.liferay.sharepoint.connector;
 
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.sharepoint.connector.SharepointObject.Permission;
 import com.liferay.sharepoint.connector.operation.AddFolderOperation;
 import com.liferay.sharepoint.connector.operation.AddOrUpdateFileOperation;
 import com.liferay.sharepoint.connector.operation.BatchOperation;
@@ -257,7 +256,7 @@ public class SharepointConnectionImpl implements SharepointConnection {
 
 		_sharepointRootFolder = new SharepointObject(
 			StringPool.BLANK, null, new Date(0), true, new Date(0),
-			StringPool.SLASH, EnumSet.allOf(Permission.class),
+			StringPool.SLASH, EnumSet.allOf(SharepointObject.Permission.class),
 			SHAREPOINT_ROOT_FOLDER_SHAREPOINT_OBJECT_ID, 0, libraryURL);
 	}
 

@@ -14,7 +14,7 @@
 
 package com.liferay.sharepoint.connector.operation;
 
-import com.liferay.sharepoint.connector.SharepointConnection.CheckInType;
+import com.liferay.sharepoint.connector.SharepointConnection;
 import com.liferay.sharepoint.connector.SharepointException;
 import com.liferay.sharepoint.connector.internal.util.RemoteExceptionUtil;
 
@@ -28,7 +28,8 @@ import java.rmi.RemoteException;
 public class CheckInFileOperation extends BaseOperation {
 
 	public boolean execute(
-			String filePath, String comment, CheckInType checkInType)
+			String filePath, String comment,
+			SharepointConnection.CheckInType checkInType)
 		throws SharepointException {
 
 		try {

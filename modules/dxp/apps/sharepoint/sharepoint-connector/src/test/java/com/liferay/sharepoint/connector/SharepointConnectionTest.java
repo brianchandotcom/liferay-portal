@@ -19,8 +19,6 @@ import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.util.FileImpl;
 import com.liferay.portal.util.HtmlImpl;
-import com.liferay.sharepoint.connector.SharepointConnection.CheckInType;
-import com.liferay.sharepoint.connector.SharepointConnection.ObjectTypeFilter;
 import com.liferay.sharepoint.connector.schema.query.Query;
 import com.liferay.sharepoint.connector.schema.query.QueryField;
 import com.liferay.sharepoint.connector.schema.query.QueryOptionsList;
@@ -126,7 +124,8 @@ public class SharepointConnectionTest {
 			_filePath1, getInputStream(_CONTENT_BYE_WORLD));
 
 		_sharepointConnection.checkInFile(
-			_filePath1, String.valueOf(new Date()), CheckInType.MAJOR);
+			_filePath1, String.valueOf(new Date()),
+			SharepointConnection.CheckInType.MAJOR);
 
 		sharepointObject = _sharepointConnection.getSharepointObject(
 			_filePath1);
@@ -172,7 +171,8 @@ public class SharepointConnectionTest {
 		Assert.assertNotNull(sharepointObject.getCheckedOutBy());
 
 		_sharepointConnection.checkInFile(
-			_filePath1, String.valueOf(new Date()), CheckInType.MAJOR);
+			_filePath1, String.valueOf(new Date()),
+			SharepointConnection.CheckInType.MAJOR);
 
 		sharepointObject = _sharepointConnection.getSharepointObject(
 			_filePath1);
@@ -364,13 +364,13 @@ public class SharepointConnectionTest {
 
 		List<SharepointObject> sharepointObjects =
 			_sharepointConnection.getSharepointObjects(
-				_folderPath1, ObjectTypeFilter.ALL);
+				_folderPath1, SharepointConnection.ObjectTypeFilter.ALL);
 
 		Assert.assertEquals(
 			sharepointObjects.toString(), 4, sharepointObjects.size());
 
 		sharepointObjects = _sharepointConnection.getSharepointObjects(
-			_folderPath1, ObjectTypeFilter.FILES);
+			_folderPath1, SharepointConnection.ObjectTypeFilter.FILES);
 
 		Assert.assertEquals(
 			sharepointObjects.toString(), 2, sharepointObjects.size());
@@ -378,7 +378,7 @@ public class SharepointConnectionTest {
 		assertIsFile(sharepointObjects);
 
 		sharepointObjects = _sharepointConnection.getSharepointObjects(
-			_folderPath1, ObjectTypeFilter.FOLDERS);
+			_folderPath1, SharepointConnection.ObjectTypeFilter.FOLDERS);
 
 		Assert.assertEquals(
 			sharepointObjects.toString(), 2, sharepointObjects.size());
@@ -424,22 +424,22 @@ public class SharepointConnectionTest {
 		Assert.assertEquals(
 			4,
 			_sharepointConnection.getSharepointObjectsCount(
-				StringPool.SLASH, ObjectTypeFilter.ALL));
+				StringPool.SLASH, SharepointConnection.ObjectTypeFilter.ALL));
 
 		String folderPath = "/Folder1 " + _TIMESTAMP;
 
 		Assert.assertEquals(
 			4,
 			_sharepointConnection.getSharepointObjectsCount(
-				folderPath, ObjectTypeFilter.ALL));
+				folderPath, SharepointConnection.ObjectTypeFilter.ALL));
 		Assert.assertEquals(
 			2,
 			_sharepointConnection.getSharepointObjectsCount(
-				folderPath, ObjectTypeFilter.FILES));
+				folderPath, SharepointConnection.ObjectTypeFilter.FILES));
 		Assert.assertEquals(
 			2,
 			_sharepointConnection.getSharepointObjectsCount(
-				folderPath, ObjectTypeFilter.FOLDERS));
+				folderPath, SharepointConnection.ObjectTypeFilter.FOLDERS));
 	}
 
 	@Test
@@ -457,7 +457,8 @@ public class SharepointConnectionTest {
 			_filePath1, getInputStream(_CONTENT_BYE_WORLD));
 
 		_sharepointConnection.checkInFile(
-			_filePath1, String.valueOf(new Date()), CheckInType.MAJOR);
+			_filePath1, String.valueOf(new Date()),
+			SharepointConnection.CheckInType.MAJOR);
 
 		sharepointObject = _sharepointConnection.getSharepointObject(
 			_filePath1);
@@ -482,21 +483,37 @@ public class SharepointConnectionTest {
 	public void testGetSharepointVersions() throws Exception {
 		addSharepointObjects(true, false, false, false);
 
-		addFileVersion(_filePath1, _CONTENT_BYE_WORLD, CheckInType.MAJOR);
+		addFileVersion(
+			_filePath1, _CONTENT_BYE_WORLD,
+			SharepointConnection.CheckInType.MAJOR);
 
-		addFileVersion(_filePath1, _CONTENT_HELLO_WORLD, CheckInType.MAJOR);
+		addFileVersion(
+			_filePath1, _CONTENT_HELLO_WORLD,
+			SharepointConnection.CheckInType.MAJOR);
 
-		addFileVersion(_filePath1, _CONTENT_BYE_WORLD, CheckInType.MAJOR);
+		addFileVersion(
+			_filePath1, _CONTENT_BYE_WORLD,
+			SharepointConnection.CheckInType.MAJOR);
 
-		addFileVersion(_filePath1, _CONTENT_HELLO_WORLD, CheckInType.MAJOR);
+		addFileVersion(
+			_filePath1, _CONTENT_HELLO_WORLD,
+			SharepointConnection.CheckInType.MAJOR);
 
-		addFileVersion(_filePath1, _CONTENT_BYE_WORLD, CheckInType.MAJOR);
+		addFileVersion(
+			_filePath1, _CONTENT_BYE_WORLD,
+			SharepointConnection.CheckInType.MAJOR);
 
-		addFileVersion(_filePath1, _CONTENT_HELLO_WORLD, CheckInType.MAJOR);
+		addFileVersion(
+			_filePath1, _CONTENT_HELLO_WORLD,
+			SharepointConnection.CheckInType.MAJOR);
 
-		addFileVersion(_filePath1, _CONTENT_BYE_WORLD, CheckInType.MAJOR);
+		addFileVersion(
+			_filePath1, _CONTENT_BYE_WORLD,
+			SharepointConnection.CheckInType.MAJOR);
 
-		addFileVersion(_filePath1, _CONTENT_HELLO_WORLD, CheckInType.MINOR);
+		addFileVersion(
+			_filePath1, _CONTENT_HELLO_WORLD,
+			SharepointConnection.CheckInType.MINOR);
 
 		List<SharepointVersion> sharepointVersions =
 			_sharepointConnection.getSharepointVersions(_filePath1);
@@ -568,9 +585,15 @@ public class SharepointConnectionTest {
 
 		long sharepointObjectId = sharepointObject.getSharepointObjectId();
 
-		addFileVersion(_filePath1, _CONTENT_HELLO_WORLD, CheckInType.MAJOR);
-		addFileVersion(_filePath1, _CONTENT_HELLO_WORLD, CheckInType.MAJOR);
-		addFileVersion(_filePath1, _CONTENT_HELLO_WORLD, CheckInType.MAJOR);
+		addFileVersion(
+			_filePath1, _CONTENT_HELLO_WORLD,
+			SharepointConnection.CheckInType.MAJOR);
+		addFileVersion(
+			_filePath1, _CONTENT_HELLO_WORLD,
+			SharepointConnection.CheckInType.MAJOR);
+		addFileVersion(
+			_filePath1, _CONTENT_HELLO_WORLD,
+			SharepointConnection.CheckInType.MAJOR);
 
 		String renamedFilePath = "/RenamedFile " + _TIMESTAMP + ".txt";
 
@@ -582,7 +605,8 @@ public class SharepointConnectionTest {
 		_sharepointConnection.moveSharepointObject(_filePath1, renamedFilePath);
 
 		_sharepointConnection.checkInFile(
-			renamedFilePath, StringPool.BLANK, CheckInType.MAJOR);
+			renamedFilePath, StringPool.BLANK,
+			SharepointConnection.CheckInType.MAJOR);
 
 		Assert.assertNull(
 			_sharepointConnection.getSharepointObject(_filePath1));
@@ -624,7 +648,8 @@ public class SharepointConnectionTest {
 	}
 
 	protected void addFileVersion(
-			String filePath, String content, CheckInType checkInType)
+			String filePath, String content,
+			SharepointConnection.CheckInType checkInType)
 		throws IOException, SharepointException {
 
 		_sharepointConnection.checkOutFile(filePath);
@@ -720,7 +745,7 @@ public class SharepointConnectionTest {
 	protected void deleteSharepointObjects() throws SharepointException {
 		List<SharepointObject> sharepointObjects =
 			_sharepointConnection.getSharepointObjects(
-				StringPool.SLASH, ObjectTypeFilter.ALL);
+				StringPool.SLASH, SharepointConnection.ObjectTypeFilter.ALL);
 
 		for (SharepointObject sharepointObject : sharepointObjects) {
 			_sharepointConnection.deleteSharepointObject(

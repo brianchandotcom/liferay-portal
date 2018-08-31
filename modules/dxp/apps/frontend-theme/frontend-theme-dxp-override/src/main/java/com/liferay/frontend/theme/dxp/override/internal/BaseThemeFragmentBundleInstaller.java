@@ -26,7 +26,6 @@ import java.io.InputStream;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.jar.Attributes;
 import java.util.jar.JarFile;
 import java.util.jar.JarOutputStream;
@@ -145,7 +144,7 @@ public abstract class BaseThemeFragmentBundleInstaller {
 						return;
 					}
 
-					for (Entry<Bundle, Bundle> entry :
+					for (Map.Entry<Bundle, Bundle> entry :
 							_trackedBundles.entrySet()) {
 
 						Bundle hostBundle = entry.getKey();

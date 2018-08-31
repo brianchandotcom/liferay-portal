@@ -35,7 +35,6 @@ import com.liferay.portal.kernel.util.MethodKey;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.SocketUtil;
-import com.liferay.portal.kernel.util.SocketUtil.ServerSocketConfigurator;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -318,8 +317,8 @@ public class ClusterLinkBootstrapLoaderHelperUtil {
 			"createServerSocketFromCluster", String.class, List.class);
 	private static final Map<String, List<String>> _deferredPortalCaches =
 		new HashMap<>();
-	private static final ServerSocketConfigurator _serverSocketConfigurator =
-		new SocketCacheServerSocketConfiguration();
+	private static final SocketUtil.ServerSocketConfigurator
+		_serverSocketConfigurator = new SocketCacheServerSocketConfiguration();
 	private static final ThreadLocal<Boolean> _skipBootstrapLoaderThreadLocal =
 		new CentralizedThreadLocal<>(
 			ClusterLinkBootstrapLoaderHelperUtil.class +
@@ -457,7 +456,7 @@ public class ClusterLinkBootstrapLoaderHelperUtil {
 	}
 
 	private static class SocketCacheServerSocketConfiguration
-		implements ServerSocketConfigurator {
+		implements SocketUtil.ServerSocketConfigurator {
 
 		@Override
 		public void configure(ServerSocket serverSocket)

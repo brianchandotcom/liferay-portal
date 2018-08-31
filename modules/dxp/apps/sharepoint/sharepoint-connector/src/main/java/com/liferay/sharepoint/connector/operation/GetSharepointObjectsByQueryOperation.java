@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.sharepoint.connector.SharepointException;
 import com.liferay.sharepoint.connector.SharepointObject;
-import com.liferay.sharepoint.connector.SharepointObject.Permission;
 import com.liferay.sharepoint.connector.internal.util.RemoteExceptionUtil;
 import com.liferay.sharepoint.connector.schema.query.Query;
 import com.liferay.sharepoint.connector.schema.query.QueryField;
@@ -163,13 +162,18 @@ public class GetSharepointObjectsByQueryOperation extends BaseOperation {
 		return null;
 	}
 
-	protected Set<Permission> getPermissions(String permissionsHexMask) {
-		Set<Permission> permissions = EnumSet.noneOf(Permission.class);
+	protected Set<SharepointObject.Permission> getPermissions(
+		String permissionsHexMask) {
+
+		Set<SharepointObject.Permission> permissions = EnumSet.noneOf(
+			SharepointObject.Permission.class);
 
 		long permisssionsMask = Long.valueOf(
 			permissionsHexMask.substring(2), 16);
 
-		for (Permission permission : Permission.values()) {
+		for (SharepointObject.Permission permission :
+				SharepointObject.Permission.values()) {
+
 			long permissionBit = permisssionsMask & permission.getMask();
 
 			if (permissionBit != 0) {

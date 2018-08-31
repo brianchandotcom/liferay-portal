@@ -16,7 +16,7 @@ package com.liferay.sharepoint.connector.operation;
 
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.sharepoint.connector.SharepointConnection.CheckInType;
+import com.liferay.sharepoint.connector.SharepointConnection;
 import com.liferay.sharepoint.connector.SharepointException;
 import com.liferay.sharepoint.connector.SharepointObject;
 import com.liferay.sharepoint.connector.schema.batch.Batch;
@@ -78,7 +78,8 @@ public class MoveSharepointObjectOperation extends BaseOperation {
 			_deleteSharepointObjectOperation.execute(path);
 
 			_checkInFileOperation.execute(
-				newPath, StringPool.BLANK, CheckInType.MAJOR);
+				newPath, StringPool.BLANK,
+				SharepointConnection.CheckInType.MAJOR);
 
 			if (Validator.isNotNull(sharepointObject.getCheckedOutBy())) {
 				_checkOutFileOperation.execute(newPath);

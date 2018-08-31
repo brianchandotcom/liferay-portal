@@ -19,10 +19,6 @@ import com.liferay.saml.runtime.configuration.SamlProviderConfigurationHelper;
 import com.liferay.saml.runtime.credential.KeyStoreManager;
 
 import java.security.KeyStore;
-import java.security.KeyStore.Entry;
-import java.security.KeyStore.PrivateKeyEntry;
-import java.security.KeyStore.SecretKeyEntry;
-import java.security.KeyStore.TrustedCertificateEntry;
 import java.security.cert.X509Certificate;
 
 import java.util.ArrayList;
@@ -69,19 +65,19 @@ public class KeyStoreCredentialResolver
 	}
 
 	protected Credential buildCredential(
-		Entry entry, String entityId, UsageType usage) {
+		KeyStore.Entry entry, String entityId, UsageType usage) {
 
-		if (entry instanceof PrivateKeyEntry) {
+		if (entry instanceof KeyStore.PrivateKeyEntry) {
 			return processPrivateKeyEntry(
-				(PrivateKeyEntry)entry, entityId, usage);
+				(KeyStore.PrivateKeyEntry)entry, entityId, usage);
 		}
-		else if (entry instanceof SecretKeyEntry) {
+		else if (entry instanceof KeyStore.SecretKeyEntry) {
 			return processSecretKeyEntry(
-				(SecretKeyEntry)entry, entityId, usage);
+				(KeyStore.SecretKeyEntry)entry, entityId, usage);
 		}
-		else if (entry instanceof TrustedCertificateEntry) {
+		else if (entry instanceof KeyStore.TrustedCertificateEntry) {
 			return processTrustedCertificateEntry(
-				(TrustedCertificateEntry)entry, entityId, usage);
+				(KeyStore.TrustedCertificateEntry)entry, entityId, usage);
 		}
 
 		return null;
@@ -98,7 +94,8 @@ public class KeyStoreCredentialResolver
 	}
 
 	protected Credential processPrivateKeyEntry(
-		PrivateKeyEntry privateKeyEntry, String entityId, UsageType usageType) {
+		KeyStore.PrivateKeyEntry privateKeyEntry, String entityId,
+		UsageType usageType) {
 
 		BasicX509Credential basicX509Credential = new BasicX509Credential();
 
@@ -115,7 +112,8 @@ public class KeyStoreCredentialResolver
 	}
 
 	protected Credential processSecretKeyEntry(
-		SecretKeyEntry secretKeyEntry, String entityId, UsageType usageType) {
+		KeyStore.SecretKeyEntry secretKeyEntry, String entityId,
+		UsageType usageType) {
 
 		BasicCredential basicCredential = new BasicCredential();
 
@@ -127,8 +125,8 @@ public class KeyStoreCredentialResolver
 	}
 
 	protected Credential processTrustedCertificateEntry(
-		TrustedCertificateEntry trustedCertificateEntry, String entityId,
-		UsageType usageType) {
+		KeyStore.TrustedCertificateEntry trustedCertificateEntry,
+		String entityId, UsageType usageType) {
 
 		BasicX509Credential basicX509Credential = new BasicX509Credential();
 
@@ -179,7 +177,7 @@ public class KeyStoreCredentialResolver
 
 			KeyStore keyStore = _keyStoreManager.getKeyStore();
 
-			Entry entry = keyStore.getEntry(
+			KeyStore.Entry entry = keyStore.getEntry(
 				entityId, keyStorePasswordProtection);
 
 			if (entry == null) {

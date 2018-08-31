@@ -75,7 +75,7 @@ public abstract class TopLevelBuildData extends BaseBuildData {
 
 	private String _getDistPath() {
 		return JenkinsResultsParserUtil.combine(
-			BaseBuildRunner.DIST_ROOT_PATH, "/", getMasterHostname(), "/",
+			BuildData.DIST_ROOT_PATH, "/", getMasterHostname(), "/",
 			getJobName(), "/", String.valueOf(getBuildNumber()), "/dist");
 	}
 

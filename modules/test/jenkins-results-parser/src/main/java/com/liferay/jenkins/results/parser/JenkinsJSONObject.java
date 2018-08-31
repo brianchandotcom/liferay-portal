@@ -38,6 +38,10 @@ public class JenkinsJSONObject extends JSONObject {
 		super(json);
 	}
 
+	public void addBuildData(BuildData buildData) {
+		put(buildData.getRunID(), buildData.toJSONObject());
+	}
+
 	public void addProperties(String key, Properties properties) {
 		JSONArray jsonArray = _toJSONArray(properties);
 

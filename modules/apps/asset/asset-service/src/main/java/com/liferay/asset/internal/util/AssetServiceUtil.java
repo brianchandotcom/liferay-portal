@@ -17,18 +17,13 @@ package com.liferay.asset.internal.util;
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.service.AssetCategoryLocalServiceUtil;
-import com.liferay.asset.util.AssetHelper;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PredicateFilter;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portlet.asset.service.permission.AssetCategoryPermission;
 
 import java.util.ArrayList;
@@ -81,33 +76,5 @@ public class AssetServiceUtil {
 
 		return ListUtil.filter(vocabularies, predicateFilter);
 	}
-
-	public static boolean isValidWord(String word) {
-		if (Validator.isBlank(word)) {
-			return false;
-		}
-
-		char[] wordCharArray = word.toCharArray();
-
-		for (char c : wordCharArray) {
-			for (char invalidChar : AssetHelper.INVALID_CHARACTERS) {
-				if (c == invalidChar) {
-					if (_log.isDebugEnabled()) {
-						_log.debug(
-							StringBundler.concat(
-								"Word ", word, " is not valid because ", c,
-								" is not allowed"));
-					}
-
-					return false;
-				}
-			}
-		}
-
-		return true;
-	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		AssetServiceUtil.class);
 
 }

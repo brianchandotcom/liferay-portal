@@ -89,7 +89,7 @@ import com.liferay.portal.kernel.model.TrashedModel;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortalPreferences;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
-import com.liferay.portal.kernel.portlet.PortletProvider.Action;
+import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.portlet.PortletRequestModel;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
@@ -942,7 +942,7 @@ public class JournalPortlet extends MVCPortlet {
 
 		if (article.getClassNameId() == ddmStructureClassNameId) {
 			String ddmPortletId = PortletProviderUtil.getPortletId(
-				DDMStructure.class.getName(), Action.EDIT);
+				DDMStructure.class.getName(), PortletProvider.Action.EDIT);
 
 			MultiSessionMessages.add(
 				actionRequest, ddmPortletId + "requestProcessed");

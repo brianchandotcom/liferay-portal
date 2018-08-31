@@ -30,7 +30,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.NavigableMap;
 import java.util.Optional;
 import java.util.Set;
@@ -60,7 +59,9 @@ public class BasicRegistryImpl implements Registry {
 	public <S, R> R callService(String className, Function<S, R> function) {
 		Filter filter = getFilter("(objectClass=" + className + ")");
 
-		for (Entry<ServiceReference<?>, Object> entry : _services.entrySet()) {
+		for (Map.Entry<ServiceReference<?>, Object> entry :
+				_services.entrySet()) {
+
 			if (filter.matches(entry.getKey())) {
 				return function.apply((S)entry.getValue());
 			}
@@ -93,7 +94,9 @@ public class BasicRegistryImpl implements Registry {
 		BasicServiceReference<?> basicServiceReference =
 			(BasicServiceReference<?>)serviceReference;
 
-		for (Entry<ServiceReference<?>, Object> entry : _services.entrySet()) {
+		for (Map.Entry<ServiceReference<?>, Object> entry :
+				_services.entrySet()) {
+
 			if (basicServiceReference.matches(entry.getKey())) {
 				return (T)entry.getValue();
 			}
@@ -110,7 +113,9 @@ public class BasicRegistryImpl implements Registry {
 	public <T> T getService(String className) {
 		Filter filter = getFilter("(objectClass=" + className + ")");
 
-		for (Entry<ServiceReference<?>, Object> entry : _services.entrySet()) {
+		for (Map.Entry<ServiceReference<?>, Object> entry :
+				_services.entrySet()) {
+
 			if (filter.matches(entry.getKey())) {
 				return (T)entry.getValue();
 			}
@@ -133,7 +138,9 @@ public class BasicRegistryImpl implements Registry {
 	public <T> ServiceReference<T> getServiceReference(String className) {
 		Filter filter = getFilter("(objectClass=" + className + ")");
 
-		for (Entry<ServiceReference<?>, Object> entry : _services.entrySet()) {
+		for (Map.Entry<ServiceReference<?>, Object> entry :
+				_services.entrySet()) {
+
 			if (filter.matches(entry.getKey())) {
 				return (ServiceReference<T>)entry.getKey();
 			}
@@ -166,7 +173,9 @@ public class BasicRegistryImpl implements Registry {
 
 		Filter filter = new BasicFilter(filterString);
 
-		for (Entry<ServiceReference<?>, Object> entry : _services.entrySet()) {
+		for (Map.Entry<ServiceReference<?>, Object> entry :
+				_services.entrySet()) {
+
 			if (filter.matches(entry.getKey())) {
 				serviceReferences.add((ServiceReference<T>)entry.getKey());
 			}
@@ -209,7 +218,9 @@ public class BasicRegistryImpl implements Registry {
 
 		Filter filter = new BasicFilter(filterString);
 
-		for (Entry<ServiceReference<?>, Object> entry : _services.entrySet()) {
+		for (Map.Entry<ServiceReference<?>, Object> entry :
+				_services.entrySet()) {
+
 			if (filter.matches(entry.getKey())) {
 				services.add((T)entry.getValue());
 			}
@@ -640,14 +651,14 @@ public class BasicRegistryImpl implements Registry {
 		public String toString() {
 			StringBuilder stringBuilder = new StringBuilder();
 
-			Set<Entry<String, Object>> entrySet = _properties.entrySet();
+			Set<Map.Entry<String, Object>> entrySet = _properties.entrySet();
 
 			if (entrySet.size() > 1) {
 				stringBuilder.append('(');
 				stringBuilder.append('&');
 			}
 
-			for (Entry<String, Object> entry : entrySet) {
+			for (Map.Entry<String, Object> entry : entrySet) {
 				String key = entry.getKey();
 				Object value = entry.getValue();
 
@@ -770,13 +781,14 @@ public class BasicRegistryImpl implements Registry {
 		public void close() {
 			_serviceTrackers.remove(this);
 
-			Set<Entry<ServiceReference<S>, T>> set =
+			Set<Map.Entry<ServiceReference<S>, T>> set =
 				_trackedServices.entrySet();
 
-			Iterator<Entry<ServiceReference<S>, T>> iterator = set.iterator();
+			Iterator<Map.Entry<ServiceReference<S>, T>> iterator =
+				set.iterator();
 
 			while (iterator.hasNext()) {
-				Entry<ServiceReference<S>, T> entry = iterator.next();
+				Map.Entry<ServiceReference<S>, T> entry = iterator.next();
 
 				iterator.remove();
 
@@ -788,11 +800,11 @@ public class BasicRegistryImpl implements Registry {
 
 		@Override
 		public T getService() {
-			Optional<Entry<ServiceReference<S>, T>> optionalEntry =
+			Optional<Map.Entry<ServiceReference<S>, T>> optionalEntry =
 				ServiceRankingUtil.getHighestRankingEntry(_trackedServices);
 
 			Optional<T> optionalTrackedService = optionalEntry.map(
-				Entry::getValue);
+				Map.Entry::getValue);
 
 			return optionalTrackedService.orElse(null);
 		}
@@ -815,11 +827,11 @@ public class BasicRegistryImpl implements Registry {
 
 		@Override
 		public ServiceReference<S> getServiceReference() {
-			Optional<Entry<ServiceReference<S>, T>> optionalEntry =
+			Optional<Map.Entry<ServiceReference<S>, T>> optionalEntry =
 				ServiceRankingUtil.getHighestRankingEntry(_trackedServices);
 
 			Optional<ServiceReference<S>> optionalServiceReference =
-				optionalEntry.map(Entry::getKey);
+				optionalEntry.map(Map.Entry::getKey);
 
 			return optionalServiceReference.orElse(null);
 		}
@@ -879,13 +891,14 @@ public class BasicRegistryImpl implements Registry {
 		public void open() {
 			_serviceTrackers.put(this, _filter);
 
-			Set<Entry<ServiceReference<?>, Object>> set = _services.entrySet();
+			Set<Map.Entry<ServiceReference<?>, Object>> set =
+				_services.entrySet();
 
-			Iterator<Entry<ServiceReference<?>, Object>> iterator =
+			Iterator<Map.Entry<ServiceReference<?>, Object>> iterator =
 				set.iterator();
 
 			while (iterator.hasNext()) {
-				Entry<ServiceReference<?>, Object> entry = iterator.next();
+				Map.Entry<ServiceReference<?>, Object> entry = iterator.next();
 
 				BasicServiceReference<?> basicServiceReference =
 					(BasicServiceReference<?>)entry.getKey();

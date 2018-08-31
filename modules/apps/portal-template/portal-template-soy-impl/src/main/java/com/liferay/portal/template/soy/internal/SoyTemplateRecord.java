@@ -42,7 +42,6 @@ import java.lang.reflect.Method;
 
 import java.util.Iterator;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
@@ -156,7 +155,7 @@ public class SoyTemplateRecord extends SoyAbstractValue implements SoyRecord {
 
 		boolean first = true;
 
-		for (Entry<String, SoyValueProvider> entry :
+		for (Map.Entry<String, SoyValueProvider> entry :
 				_computedValues.entrySet()) {
 
 			SoyValueProvider soyValueProvider = entry.getValue();
@@ -222,7 +221,7 @@ public class SoyTemplateRecord extends SoyAbstractValue implements SoyRecord {
 
 			SoyMapData soyMapData = new SoyMapData();
 
-			Set<? extends Entry<String, ?>> entries = map.entrySet();
+			Set<? extends Map.Entry<String, ?>> entries = map.entrySet();
 
 			entries.forEach(
 				entry -> soyMapData.put(

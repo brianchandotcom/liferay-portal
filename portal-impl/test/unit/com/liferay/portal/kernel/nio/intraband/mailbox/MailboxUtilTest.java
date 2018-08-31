@@ -30,7 +30,6 @@ import com.liferay.portal.test.rule.AspectJNewEnvTestRule;
 
 import java.io.IOException;
 
-import java.lang.Thread.UncaughtExceptionHandler;
 import java.lang.reflect.Constructor;
 
 import java.nio.ByteBuffer;
@@ -295,7 +294,7 @@ public class MailboxUtilTest {
 	}
 
 	private static class RecorderUncaughtExceptionHandler
-		implements UncaughtExceptionHandler {
+		implements Thread.UncaughtExceptionHandler {
 
 		@Override
 		public void uncaughtException(Thread thread, Throwable throwable) {

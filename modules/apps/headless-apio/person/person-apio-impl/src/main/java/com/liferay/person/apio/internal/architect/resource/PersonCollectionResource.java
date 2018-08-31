@@ -40,7 +40,7 @@ import com.liferay.portal.kernel.model.ListTypeConstants;
 import com.liferay.portal.kernel.model.ListTypeModel;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserConstants;
-import com.liferay.portal.kernel.security.auth.PrincipalException.MustBeCompanyAdmin;
+import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.ListTypeService;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -210,7 +210,7 @@ public class PersonCollectionResource
 			(PermissionChecker)credentials.get();
 
 		if (!permissionChecker.isCompanyAdmin(themeDisplay.getCompanyId())) {
-			throw new MustBeCompanyAdmin(permissionChecker);
+			throw new PrincipalException.MustBeCompanyAdmin(permissionChecker);
 		}
 
 		Optional<String> optional = fullNameQuery.getFullNameOptional();

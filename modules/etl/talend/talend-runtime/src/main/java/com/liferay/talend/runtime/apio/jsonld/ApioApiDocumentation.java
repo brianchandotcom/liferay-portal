@@ -16,8 +16,7 @@ package com.liferay.talend.runtime.apio.jsonld;
 
 import com.fasterxml.jackson.databind.JsonNode;
 
-import com.liferay.talend.runtime.apio.constants.HydraConstants.FieldNames;
-import com.liferay.talend.runtime.apio.constants.HydraConstants.FieldTypes;
+import com.liferay.talend.runtime.apio.constants.HydraConstants;
 import com.liferay.talend.runtime.apio.constants.JSONLDConstants;
 import com.liferay.talend.runtime.apio.form.Property;
 
@@ -65,7 +64,7 @@ public class ApioApiDocumentation extends ApioBaseResponse {
 		for (final JsonNode jsonNode : supportedClassesJsonNode) {
 			JsonNode typeJsonNode = jsonNode.path(JSONLDConstants.TYPE);
 
-			if (!hasValueOf(FieldTypes.CLASS, typeJsonNode)) {
+			if (!hasValueOf(HydraConstants.FieldTypes.CLASS, typeJsonNode)) {
 				if (_log.isDebugEnabled()) {
 					_log.debug(
 						"Skipping unexpected type: " + typeJsonNode.toString());
@@ -74,9 +73,10 @@ public class ApioApiDocumentation extends ApioBaseResponse {
 				continue;
 			}
 
-			JsonNode titleJsonNode = jsonNode.path(FieldNames.TITLE);
+			JsonNode titleJsonNode = jsonNode.path(
+				HydraConstants.FieldNames.TITLE);
 			JsonNode supportedPropertyJsonNode = jsonNode.path(
-				FieldNames.SUPPORTED_PROPERTY);
+				HydraConstants.FieldNames.SUPPORTED_PROPERTY);
 
 			try {
 				List<Property> supportedProperties =
@@ -98,7 +98,7 @@ public class ApioApiDocumentation extends ApioBaseResponse {
 	}
 
 	public JsonNode getSupportedClassJsonNode() {
-		return findJsonNode(FieldNames.SUPPORTED_CLASS);
+		return findJsonNode(HydraConstants.FieldNames.SUPPORTED_CLASS);
 	}
 
 	public class SupportedClass {
@@ -132,7 +132,10 @@ public class ApioApiDocumentation extends ApioBaseResponse {
 	}
 
 	private void _validateApiDocumentation() throws IOException {
-		if (!hasValueOf(FieldTypes.API_DOCUMENTATION, getTypeJsonNode())) {
+		if (!hasValueOf(
+				HydraConstants.FieldTypes.API_DOCUMENTATION,
+				getTypeJsonNode())) {
+
 			throw new IOException(
 				"The type of the given resource is not an instance of " +
 					"ApiDocumentation");

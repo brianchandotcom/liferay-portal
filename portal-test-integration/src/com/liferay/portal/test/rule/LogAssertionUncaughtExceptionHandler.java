@@ -18,16 +18,14 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.test.rule.callback.LogAssertionTestCallback;
 
-import java.lang.Thread.UncaughtExceptionHandler;
-
 /**
  * @author Shuyang Zhou
  */
 public class LogAssertionUncaughtExceptionHandler
-	implements UncaughtExceptionHandler {
+	implements Thread.UncaughtExceptionHandler {
 
 	public LogAssertionUncaughtExceptionHandler(
-		UncaughtExceptionHandler uncaughtExceptionHandler) {
+		Thread.UncaughtExceptionHandler uncaughtExceptionHandler) {
 
 		_uncaughtExceptionHandler = uncaughtExceptionHandler;
 	}
@@ -49,6 +47,6 @@ public class LogAssertionUncaughtExceptionHandler
 			new AssertionError(sb.toString(), throwable));
 	}
 
-	private final UncaughtExceptionHandler _uncaughtExceptionHandler;
+	private final Thread.UncaughtExceptionHandler _uncaughtExceptionHandler;
 
 }

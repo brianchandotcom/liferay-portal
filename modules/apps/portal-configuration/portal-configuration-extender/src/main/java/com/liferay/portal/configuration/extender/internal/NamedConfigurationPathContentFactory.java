@@ -16,7 +16,6 @@ package com.liferay.portal.configuration.extender.internal;
 
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MappingEnumeration;
-import com.liferay.portal.kernel.util.MappingEnumeration.Mapper;
 
 import java.net.URL;
 
@@ -49,7 +48,8 @@ public class NamedConfigurationPathContentFactory
 		return ListUtil.fromEnumeration(
 			new MappingEnumeration<>(
 				entries,
-				new Mapper<URL, NamedConfigurationContent>() {
+				new MappingEnumeration.Mapper
+					<URL, NamedConfigurationContent>() {
 
 					@Override
 					public NamedConfigurationContent map(URL url) {

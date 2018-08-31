@@ -34,7 +34,6 @@ import org.slf4j.LoggerFactory;
 import org.talend.components.api.component.PropertyPathConnector;
 import org.talend.daikon.properties.PresentationItem;
 import org.talend.daikon.properties.ValidationResult;
-import org.talend.daikon.properties.ValidationResult.Result;
 import org.talend.daikon.properties.presentation.Form;
 import org.talend.daikon.properties.presentation.Widget;
 import org.talend.daikon.sandbox.SandboxedInstance;
@@ -108,7 +107,7 @@ public class TLiferayInputProperties
 				liferaySourceOrSinkRuntime.initialize(
 					null, getEffectiveLiferayConnectionProperties());
 
-			if (validationResult.getStatus() == Result.ERROR) {
+			if (validationResult.getStatus() == ValidationResult.Result.ERROR) {
 				return validationResult;
 			}
 

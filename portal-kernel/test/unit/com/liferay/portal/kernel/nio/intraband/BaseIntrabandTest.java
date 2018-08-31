@@ -16,7 +16,6 @@ package com.liferay.portal.kernel.nio.intraband;
 
 import com.liferay.portal.kernel.io.BigEndianCodec;
 import com.liferay.portal.kernel.nio.intraband.BaseIntraband.SendSyncDatagramCompletionHandler;
-import com.liferay.portal.kernel.nio.intraband.CompletionHandler.CompletionType;
 import com.liferay.portal.kernel.nio.intraband.test.MockIntraband;
 import com.liferay.portal.kernel.nio.intraband.test.MockRegistrationReference;
 import com.liferay.portal.kernel.test.CaptureHandler;
@@ -32,8 +31,6 @@ import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.channels.GatheringByteChannel;
 import java.nio.channels.Pipe;
-import java.nio.channels.Pipe.SinkChannel;
-import java.nio.channels.Pipe.SourceChannel;
 import java.nio.channels.ScatteringByteChannel;
 import java.nio.charset.Charset;
 
@@ -350,8 +347,8 @@ public class BaseIntrabandTest {
 
 			Pipe pipe = Pipe.open();
 
-			try (SourceChannel sourceChannel = pipe.source();
-				final SinkChannel sinkChannel = pipe.sink()) {
+			try (Pipe.SourceChannel sourceChannel = pipe.source();
+				final Pipe.SinkChannel sinkChannel = pipe.sink()) {
 
 				Datagram requestDatagram = Datagram.createRequestDatagram(
 					_TYPE, _DATA);
@@ -613,7 +610,7 @@ public class BaseIntrabandTest {
 				requestDatagram.completionHandler = recordCompletionHandler;
 
 				requestDatagram.completionTypes = EnumSet.noneOf(
-					CompletionType.class);
+					CompletionHandler.CompletionType.class);
 				requestDatagram.timeout = 10000;
 
 				_mockIntraband.addResponseWaitingDatagram(requestDatagram);
@@ -657,7 +654,7 @@ public class BaseIntrabandTest {
 				requestDatagram.completionHandler = recordCompletionHandler;
 
 				requestDatagram.completionTypes = EnumSet.noneOf(
-					CompletionType.class);
+					CompletionHandler.CompletionType.class);
 				requestDatagram.timeout = 10000;
 
 				_mockIntraband.addResponseWaitingDatagram(requestDatagram);
@@ -943,8 +940,8 @@ public class BaseIntrabandTest {
 
 		Queue<Datagram> sendingQueue = new LinkedList<>();
 
-		try (SourceChannel sourceChannel = pipe.source();
-			SinkChannel sinkChannel = pipe.sink()) {
+		try (Pipe.SourceChannel sourceChannel = pipe.source();
+			Pipe.SinkChannel sinkChannel = pipe.sink()) {
 
 			sourceChannel.configureBlocking(false);
 			sinkChannel.configureBlocking(false);
@@ -993,7 +990,7 @@ public class BaseIntrabandTest {
 			requestDatagram.completionHandler = recordCompletionHandler;
 
 			requestDatagram.completionTypes = EnumSet.of(
-				CompletionType.SUBMITTED);
+				CompletionHandler.CompletionType.SUBMITTED);
 
 			channelContext.setWritingDatagram(requestDatagram);
 
@@ -1012,7 +1009,7 @@ public class BaseIntrabandTest {
 			requestDatagram = Datagram.createRequestDatagram(_TYPE, _DATA);
 
 			requestDatagram.completionTypes = EnumSet.of(
-				CompletionType.REPLIED);
+				CompletionHandler.CompletionType.REPLIED);
 
 			channelContext.setWritingDatagram(requestDatagram);
 

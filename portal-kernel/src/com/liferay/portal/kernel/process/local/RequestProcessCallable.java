@@ -16,7 +16,6 @@ package com.liferay.portal.kernel.process.local;
 
 import com.liferay.portal.kernel.process.ProcessCallable;
 import com.liferay.portal.kernel.process.ProcessException;
-import com.liferay.portal.kernel.process.local.LocalProcessLauncher.ProcessContext;
 
 import java.io.IOException;
 import java.io.Serializable;
@@ -49,7 +48,7 @@ public class RequestProcessCallable<T extends Serializable>
 		}
 		finally {
 			try {
-				ProcessContext.writeProcessCallable(
+				LocalProcessLauncher.ProcessContext.writeProcessCallable(
 					new ResponseProcessCallable<>(_id, result, throwable));
 			}
 			catch (IOException ioe) {

@@ -51,7 +51,6 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -328,7 +327,7 @@ public class AggregationFilteringTest extends BaseFacetedSearcherTestCase {
 
 		search(searchContext);
 
-		Set<Entry<Group, Integer>> groupFrequenciesEntrySet =
+		Set<Map.Entry<Group, Integer>> groupFrequenciesEntrySet =
 			expectations.groupFrequencies.entrySet();
 
 		Map<String, Integer> groupFrequencies =
@@ -339,7 +338,7 @@ public class AggregationFilteringTest extends BaseFacetedSearcherTestCase {
 
 		assertFrequencies(Field.GROUP_ID, searchContext, groupFrequencies);
 
-		Set<Entry<Class<?>, Integer>> typeFrequenciesEntrySet =
+		Set<Map.Entry<Class<?>, Integer>> typeFrequenciesEntrySet =
 			expectations.typeFrequencies.entrySet();
 
 		Map<String, Integer> typeFrequencies =
@@ -350,7 +349,7 @@ public class AggregationFilteringTest extends BaseFacetedSearcherTestCase {
 		assertFrequencies(
 			Field.ENTRY_CLASS_NAME, searchContext, typeFrequencies);
 
-		Set<Entry<User, Integer>> userFrequenciesEntrySet =
+		Set<Map.Entry<User, Integer>> userFrequenciesEntrySet =
 			expectations.userFrequencies.entrySet();
 
 		Map<String, Integer> userFrequencies =

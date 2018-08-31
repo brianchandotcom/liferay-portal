@@ -15,7 +15,7 @@
 package com.liferay.portal.configuration.metatype.util;
 
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition.Scope;
+import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 
 import org.junit.Assert;
@@ -38,31 +38,43 @@ public class ConfigurationScopedPidUtilTest {
 		Assert.assertEquals(
 			_basePid,
 			ConfigurationScopedPidUtil.buildConfigurationScopedPid(
-				_basePid, Scope.SYSTEM, _scopePrimKey));
+				_basePid, ExtendedObjectClassDefinition.Scope.SYSTEM,
+				_scopePrimKey));
 		Assert.assertEquals(
 			_basePid,
 			ConfigurationScopedPidUtil.buildConfigurationScopedPid(
 				_basePid, null, _scopePrimKey));
 		Assert.assertEquals(
 			StringBundler.concat(
-				_basePid, Scope.COMPANY.getDelimiterString(), _scopePrimKey),
-			ConfigurationScopedPidUtil.buildConfigurationScopedPid(
-				_basePid, Scope.COMPANY, _scopePrimKey));
-		Assert.assertEquals(
-			StringBundler.concat(
-				_basePid, Scope.GROUP.getDelimiterString(), _scopePrimKey),
-			ConfigurationScopedPidUtil.buildConfigurationScopedPid(
-				_basePid, Scope.GROUP, _scopePrimKey));
-		Assert.assertEquals(
-			StringBundler.concat(
-				_basePid, Scope.PORTLET_INSTANCE.getDelimiterString(),
+				_basePid,
+				ExtendedObjectClassDefinition.Scope.COMPANY.
+					getDelimiterString(),
 				_scopePrimKey),
 			ConfigurationScopedPidUtil.buildConfigurationScopedPid(
-				_basePid, Scope.PORTLET_INSTANCE, _scopePrimKey));
+				_basePid, ExtendedObjectClassDefinition.Scope.COMPANY,
+				_scopePrimKey));
+		Assert.assertEquals(
+			StringBundler.concat(
+				_basePid,
+				ExtendedObjectClassDefinition.Scope.GROUP.getDelimiterString(),
+				_scopePrimKey),
+			ConfigurationScopedPidUtil.buildConfigurationScopedPid(
+				_basePid, ExtendedObjectClassDefinition.Scope.GROUP,
+				_scopePrimKey));
+		Assert.assertEquals(
+			StringBundler.concat(
+				_basePid,
+				ExtendedObjectClassDefinition.Scope.PORTLET_INSTANCE.
+					getDelimiterString(),
+				_scopePrimKey),
+			ConfigurationScopedPidUtil.buildConfigurationScopedPid(
+				_basePid, ExtendedObjectClassDefinition.Scope.PORTLET_INSTANCE,
+				_scopePrimKey));
 
 		try {
 			ConfigurationScopedPidUtil.buildConfigurationScopedPid(
-				null, Scope.COMPANY, _scopePrimKey);
+				null, ExtendedObjectClassDefinition.Scope.COMPANY,
+				_scopePrimKey);
 
 			Assert.fail(
 				"Build configuration scoped PID must not allow a null base " +
@@ -73,7 +85,7 @@ public class ConfigurationScopedPidUtilTest {
 
 		try {
 			ConfigurationScopedPidUtil.buildConfigurationScopedPid(
-				_basePid, Scope.COMPANY, null);
+				_basePid, ExtendedObjectClassDefinition.Scope.COMPANY, null);
 
 			Assert.fail(
 				"Build configuration scoped PID must not allow a null scope " +
@@ -92,19 +104,21 @@ public class ConfigurationScopedPidUtilTest {
 
 		String encodedPid =
 			ConfigurationScopedPidUtil.buildConfigurationScopedPid(
-				_basePid, Scope.COMPANY, _scopePrimKey);
+				_basePid, ExtendedObjectClassDefinition.Scope.COMPANY,
+				_scopePrimKey);
 
 		Assert.assertEquals(
 			_basePid, ConfigurationScopedPidUtil.getBasePid(encodedPid));
 
 		encodedPid = ConfigurationScopedPidUtil.buildConfigurationScopedPid(
-			_basePid, Scope.GROUP, _scopePrimKey);
+			_basePid, ExtendedObjectClassDefinition.Scope.GROUP, _scopePrimKey);
 
 		Assert.assertEquals(
 			_basePid, ConfigurationScopedPidUtil.getBasePid(encodedPid));
 
 		encodedPid = ConfigurationScopedPidUtil.buildConfigurationScopedPid(
-			_basePid, Scope.PORTLET_INSTANCE, _scopePrimKey);
+			_basePid, ExtendedObjectClassDefinition.Scope.PORTLET_INSTANCE,
+			_scopePrimKey);
 
 		Assert.assertEquals(
 			_basePid, ConfigurationScopedPidUtil.getBasePid(encodedPid));
@@ -115,26 +129,31 @@ public class ConfigurationScopedPidUtilTest {
 		Assert.assertEquals(null, ConfigurationScopedPidUtil.getScope(null));
 
 		Assert.assertEquals(
-			Scope.SYSTEM, ConfigurationScopedPidUtil.getScope(_basePid));
+			ExtendedObjectClassDefinition.Scope.SYSTEM,
+			ConfigurationScopedPidUtil.getScope(_basePid));
 
 		String encodedPid =
 			ConfigurationScopedPidUtil.buildConfigurationScopedPid(
-				_basePid, Scope.COMPANY, _scopePrimKey);
+				_basePid, ExtendedObjectClassDefinition.Scope.COMPANY,
+				_scopePrimKey);
 
 		Assert.assertEquals(
-			Scope.COMPANY, ConfigurationScopedPidUtil.getScope(encodedPid));
+			ExtendedObjectClassDefinition.Scope.COMPANY,
+			ConfigurationScopedPidUtil.getScope(encodedPid));
 
 		encodedPid = ConfigurationScopedPidUtil.buildConfigurationScopedPid(
-			_basePid, Scope.GROUP, _scopePrimKey);
+			_basePid, ExtendedObjectClassDefinition.Scope.GROUP, _scopePrimKey);
 
 		Assert.assertEquals(
-			Scope.GROUP, ConfigurationScopedPidUtil.getScope(encodedPid));
+			ExtendedObjectClassDefinition.Scope.GROUP,
+			ConfigurationScopedPidUtil.getScope(encodedPid));
 
 		encodedPid = ConfigurationScopedPidUtil.buildConfigurationScopedPid(
-			_basePid, Scope.PORTLET_INSTANCE, _scopePrimKey);
+			_basePid, ExtendedObjectClassDefinition.Scope.PORTLET_INSTANCE,
+			_scopePrimKey);
 
 		Assert.assertEquals(
-			Scope.PORTLET_INSTANCE,
+			ExtendedObjectClassDefinition.Scope.PORTLET_INSTANCE,
 			ConfigurationScopedPidUtil.getScope(encodedPid));
 	}
 
@@ -148,21 +167,23 @@ public class ConfigurationScopedPidUtilTest {
 
 		String encodedPid =
 			ConfigurationScopedPidUtil.buildConfigurationScopedPid(
-				_basePid, Scope.COMPANY, _scopePrimKey);
+				_basePid, ExtendedObjectClassDefinition.Scope.COMPANY,
+				_scopePrimKey);
 
 		Assert.assertEquals(
 			_scopePrimKey,
 			ConfigurationScopedPidUtil.getScopePrimKey(encodedPid));
 
 		encodedPid = ConfigurationScopedPidUtil.buildConfigurationScopedPid(
-			_basePid, Scope.GROUP, _scopePrimKey);
+			_basePid, ExtendedObjectClassDefinition.Scope.GROUP, _scopePrimKey);
 
 		Assert.assertEquals(
 			_scopePrimKey,
 			ConfigurationScopedPidUtil.getScopePrimKey(encodedPid));
 
 		encodedPid = ConfigurationScopedPidUtil.buildConfigurationScopedPid(
-			_basePid, Scope.PORTLET_INSTANCE, _scopePrimKey);
+			_basePid, ExtendedObjectClassDefinition.Scope.PORTLET_INSTANCE,
+			_scopePrimKey);
 
 		Assert.assertEquals(
 			_scopePrimKey,
@@ -171,12 +192,19 @@ public class ConfigurationScopedPidUtilTest {
 
 	@Test
 	public void testGetScopeSeparatorString() {
-		Assert.assertEquals("__COMPANY__", Scope.COMPANY.getDelimiterString());
-		Assert.assertEquals("__GROUP__", Scope.GROUP.getDelimiterString());
+		Assert.assertEquals(
+			"__COMPANY__",
+			ExtendedObjectClassDefinition.Scope.COMPANY.getDelimiterString());
+		Assert.assertEquals(
+			"__GROUP__",
+			ExtendedObjectClassDefinition.Scope.GROUP.getDelimiterString());
 		Assert.assertEquals(
 			"__PORTLET_INSTANCE__",
-			Scope.PORTLET_INSTANCE.getDelimiterString());
-		Assert.assertEquals("__SYSTEM__", Scope.SYSTEM.getDelimiterString());
+			ExtendedObjectClassDefinition.Scope.PORTLET_INSTANCE.
+				getDelimiterString());
+		Assert.assertEquals(
+			"__SYSTEM__",
+			ExtendedObjectClassDefinition.Scope.SYSTEM.getDelimiterString());
 	}
 
 	private String _basePid;

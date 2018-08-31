@@ -32,7 +32,6 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.jar.Attributes;
-import java.util.jar.Attributes.Name;
 import java.util.jar.JarFile;
 import java.util.jar.Manifest;
 
@@ -288,7 +287,7 @@ public class OSGiAllInProcessor implements ApplicationArchiveProcessor {
 	}
 
 	private void _setManifestValues(
-		Manifest manifest, Name attributeName,
+		Manifest manifest, Attributes.Name attributeName,
 		Collection<String> attributeValues) {
 
 		Attributes mainAttributes = manifest.getMainAttributes();
@@ -314,11 +313,12 @@ public class OSGiAllInProcessor implements ApplicationArchiveProcessor {
 		"org.osgi.service.startlevel", "org.osgi.util.tracker"
 	};
 
-	private static final Name _bundleActivatorName = new Name(
-		"Bundle-Activator");
-	private static final Name _bundleClassPathName = new Name(
-		"Bundle-ClassPath");
-	private static final Name _importPackageName = new Name("Import-Package");
+	private static final Attributes.Name _bundleActivatorName =
+		new Attributes.Name("Bundle-Activator");
+	private static final Attributes.Name _bundleClassPathName =
+		new Attributes.Name("Bundle-ClassPath");
+	private static final Attributes.Name _importPackageName =
+		new Attributes.Name("Import-Package");
 
 	@Inject
 	private Instance<BundleActivatorsManager> _bundleActivatorsManagerInstance;

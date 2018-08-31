@@ -43,7 +43,6 @@ import javax.mail.Address;
 import javax.mail.Flags;
 import javax.mail.Folder;
 import javax.mail.Message;
-import javax.mail.Message.RecipientType;
 import javax.mail.MessagingException;
 import javax.mail.Session;
 import javax.mail.Store;
@@ -219,7 +218,7 @@ public class POPNotificationsMessageListener extends BaseMessageListener {
 
 			String from = getEmailAddress(message.getFrom());
 			String recipient = getEmailAddress(
-				message.getRecipients(RecipientType.TO));
+				message.getRecipients(Message.RecipientType.TO));
 
 			if (_log.isDebugEnabled()) {
 				_log.debug("From " + from);

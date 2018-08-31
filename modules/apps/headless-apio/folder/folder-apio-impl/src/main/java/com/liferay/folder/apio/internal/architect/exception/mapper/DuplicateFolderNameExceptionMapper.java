@@ -18,7 +18,7 @@ import com.liferay.apio.architect.error.APIError;
 import com.liferay.apio.architect.exception.mapper.ExceptionMapper;
 import com.liferay.document.library.kernel.exception.DuplicateFolderNameException;
 
-import javax.ws.rs.core.Response.Status;
+import javax.ws.rs.core.Response;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -36,7 +36,7 @@ public class DuplicateFolderNameExceptionMapper
 	public APIError map(DuplicateFolderNameException dfne) {
 		return new APIError(
 			dfne, "Duplicate folder", "bad-request",
-			Status.BAD_REQUEST.getStatusCode());
+			Response.Status.BAD_REQUEST.getStatusCode());
 	}
 
 }

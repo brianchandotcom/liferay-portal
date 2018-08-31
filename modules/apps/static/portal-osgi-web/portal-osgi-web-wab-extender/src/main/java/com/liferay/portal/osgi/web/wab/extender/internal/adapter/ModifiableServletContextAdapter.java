@@ -35,13 +35,12 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Set;
 
 import javax.servlet.DispatcherType;
 import javax.servlet.Filter;
 import javax.servlet.FilterRegistration;
-import javax.servlet.Registration.Dynamic;
+import javax.servlet.Registration;
 import javax.servlet.Servlet;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -218,13 +217,15 @@ public class ModifiableServletContextAdapter
 		_eventListeners.put(t.getClass(), t);
 	}
 
-	public Dynamic addServlet(
+	public Registration.Dynamic addServlet(
 		String servletName, Class<? extends Servlet> servletClass) {
 
 		return addServlet(servletName, servletClass.getName());
 	}
 
-	public Dynamic addServlet(String servletName, Servlet servlet) {
+	public Registration.Dynamic addServlet(
+		String servletName, Servlet servlet) {
+
 		ServletRegistrationImpl servletRegistrationImpl =
 			getServletRegistrationImpl(servletName);
 
@@ -244,7 +245,9 @@ public class ModifiableServletContextAdapter
 		return servletRegistrationImpl;
 	}
 
-	public Dynamic addServlet(String servletName, String className) {
+	public Registration.Dynamic addServlet(
+		String servletName, String className) {
+
 		ServletRegistrationImpl servletRegistrationImpl =
 			getServletRegistrationImpl(servletName);
 
@@ -369,7 +372,7 @@ public class ModifiableServletContextAdapter
 	public List<ListenerDefinition> getListenerDefinitions() {
 		List<ListenerDefinition> listenerDefinitions = new ArrayList<>();
 
-		for (Entry<Class<? extends EventListener>, EventListener> entry :
+		for (Map.Entry<Class<? extends EventListener>, EventListener> entry :
 				_eventListeners.entrySet()) {
 
 			Class<? extends EventListener> eventListenerClass = entry.getKey();

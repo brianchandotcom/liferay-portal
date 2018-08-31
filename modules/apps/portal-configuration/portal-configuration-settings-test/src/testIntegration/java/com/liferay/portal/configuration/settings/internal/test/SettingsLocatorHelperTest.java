@@ -14,7 +14,7 @@
 
 package com.liferay.portal.configuration.settings.internal.test;
 
-import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition.Scope;
+import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 import com.liferay.portal.configuration.settings.internal.constants.SettingsLocatorTestConstants;
 import com.liferay.portal.kernel.settings.Settings;
 import com.liferay.portal.kernel.settings.SettingsLocatorHelper;
@@ -55,7 +55,8 @@ public class SettingsLocatorHelperTest extends BaseSettingsLocatorTestCase {
 				SettingsLocatorTestConstants.TEST_KEY,
 				SettingsLocatorTestConstants.TEST_DEFAULT_VALUE));
 
-		String companyValue = saveScopedConfiguration(Scope.COMPANY, companyId);
+		String companyValue = saveScopedConfiguration(
+			ExtendedObjectClassDefinition.Scope.COMPANY, companyId);
 
 		companySettings =
 			_settingsLocatorHelper.getCompanyConfigurationBeanSettings(
@@ -97,7 +98,8 @@ public class SettingsLocatorHelperTest extends BaseSettingsLocatorTestCase {
 				SettingsLocatorTestConstants.TEST_KEY,
 				SettingsLocatorTestConstants.TEST_DEFAULT_VALUE));
 
-		String groupValue = saveScopedConfiguration(Scope.GROUP, groupId);
+		String groupValue = saveScopedConfiguration(
+			ExtendedObjectClassDefinition.Scope.GROUP, groupId);
 
 		groupSettings =
 			_settingsLocatorHelper.getGroupConfigurationBeanSettings(
@@ -146,7 +148,8 @@ public class SettingsLocatorHelperTest extends BaseSettingsLocatorTestCase {
 				SettingsLocatorTestConstants.TEST_DEFAULT_VALUE));
 
 		String portletInstanceValue = saveScopedConfiguration(
-			Scope.PORTLET_INSTANCE, portletInstanceKey);
+			ExtendedObjectClassDefinition.Scope.PORTLET_INSTANCE,
+			portletInstanceKey);
 
 		portletInstanceSettings =
 			_settingsLocatorHelper.getPortletInstanceConfigurationBeanSettings(

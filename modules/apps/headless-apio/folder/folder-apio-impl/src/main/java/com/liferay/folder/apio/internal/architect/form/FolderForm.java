@@ -15,7 +15,6 @@
 package com.liferay.folder.apio.internal.architect.form;
 
 import com.liferay.apio.architect.form.Form;
-import com.liferay.apio.architect.form.Form.Builder;
 
 /**
  * Instances of this class represent the values extracted from a folder form.
@@ -33,7 +32,9 @@ public class FolderForm {
 	 * @return a folder form
 	 * @review
 	 */
-	public static Form<FolderForm> buildForm(Builder<FolderForm> formBuilder) {
+	public static Form<FolderForm> buildForm(
+		Form.Builder<FolderForm> formBuilder) {
+
 		return formBuilder.title(
 			__ -> "The folder form"
 		).description(

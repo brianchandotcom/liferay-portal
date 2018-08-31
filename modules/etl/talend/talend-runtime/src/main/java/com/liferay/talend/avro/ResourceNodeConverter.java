@@ -24,7 +24,6 @@ import java.util.Map;
 import java.util.Set;
 
 import org.apache.avro.Schema;
-import org.apache.avro.Schema.Field;
 import org.apache.avro.generic.GenericData;
 import org.apache.avro.generic.IndexedRecord;
 
@@ -69,7 +68,7 @@ public class ResourceNodeConverter
 
 			i++;
 
-			for (Field schemaField : schemaFields) {
+			for (Schema.Field schemaField : schemaFields) {
 				if (fieldName.equals(schemaField.name())) {
 					pos = schemaField.pos();
 

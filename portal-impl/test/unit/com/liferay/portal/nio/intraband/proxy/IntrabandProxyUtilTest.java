@@ -49,10 +49,6 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.portal.kernel.util.TextFormatter;
-import com.liferay.portal.nio.intraband.proxy.IntrabandProxyUtil.MethodComparator;
-import com.liferay.portal.nio.intraband.proxy.IntrabandProxyUtil.MethodsBag;
-import com.liferay.portal.nio.intraband.proxy.IntrabandProxyUtil.TemplateSkeleton;
-import com.liferay.portal.nio.intraband.proxy.IntrabandProxyUtil.TemplateStub;
 import com.liferay.portal.test.aspects.ReflectionUtilAdvice;
 import com.liferay.portal.test.rule.AdviseWith;
 import com.liferay.portal.test.rule.AspectJNewEnvTestRule;
@@ -312,8 +308,8 @@ public class IntrabandProxyUtilTest {
 				iae.getMessage());
 		}
 
-		MethodsBag methodsBag = IntrabandProxyUtil.extractMethods(
-			TestExtractMethodsClass5.class);
+		IntrabandProxyUtil.MethodsBag methodsBag =
+			IntrabandProxyUtil.extractMethods(TestExtractMethodsClass5.class);
 
 		List<Method> idMethods = methodsBag.idMethods;
 
@@ -745,7 +741,7 @@ public class IntrabandProxyUtilTest {
 
 	@Test
 	public void testTemplateSkeleton() throws ClassNotFoundException {
-		class TestTemplateSkeleton extends TemplateSkeleton {
+		class TestTemplateSkeleton extends IntrabandProxyUtil.TemplateSkeleton {
 
 			TestTemplateSkeleton(TargetLocator targetLocator) {
 				super(targetLocator);
@@ -827,7 +823,8 @@ public class IntrabandProxyUtilTest {
 
 		try (CaptureHandler captureHandler =
 				JDKLoggerTestUtil.configureJDKLogger(
-					TemplateSkeleton.class.getName(), Level.SEVERE)) {
+					IntrabandProxyUtil.TemplateSkeleton.class.getName(),
+					Level.SEVERE)) {
 
 			testTemplateSkeleton.dispatch(
 				mockRegistrationReference,
@@ -863,7 +860,7 @@ public class IntrabandProxyUtilTest {
 	@Test
 	public void testTemplateStub() {
 		try {
-			new TemplateStub(null, null, null);
+			new IntrabandProxyUtil.TemplateStub(null, null, null);
 
 			Assert.fail();
 		}
@@ -872,7 +869,7 @@ public class IntrabandProxyUtilTest {
 		}
 
 		try {
-			new TemplateStub("id", null, null);
+			new IntrabandProxyUtil.TemplateStub("id", null, null);
 
 			Assert.fail();
 		}
@@ -901,8 +898,9 @@ public class IntrabandProxyUtilTest {
 		MockRegistrationReference mockRegistrationReference =
 			new MockRegistrationReference(mockIntraband);
 
-		TemplateStub templateStub = new TemplateStub(
-			"id", mockRegistrationReference, null);
+		IntrabandProxyUtil.TemplateStub templateStub =
+			new IntrabandProxyUtil.TemplateStub(
+				"id", mockRegistrationReference, null);
 
 		Assert.assertEquals(
 			"id", ReflectionTestUtil.getFieldValue(templateStub, "_id"));
@@ -917,7 +915,7 @@ public class IntrabandProxyUtilTest {
 			mockIntraband,
 			ReflectionTestUtil.getFieldValue(templateStub, "_intraband"));
 
-		templateStub = new TemplateStub(
+		templateStub = new IntrabandProxyUtil.TemplateStub(
 			"id", mockRegistrationReference, WarnLogExceptionHandler.INSTANCE);
 
 		Assert.assertEquals(
@@ -1272,7 +1270,8 @@ public class IntrabandProxyUtilTest {
 			}
 		}
 
-		Collections.sort(proxyMethods, new MethodComparator());
+		Collections.sort(
+			proxyMethods, new IntrabandProxyUtil.MethodComparator());
 
 		String[] proxyMethodSignatures = new String[proxyMethods.size()];
 
@@ -2435,7 +2434,8 @@ public class IntrabandProxyUtilTest {
 			}
 		}
 
-		Collections.sort(proxyMethods, new MethodComparator());
+		Collections.sort(
+			proxyMethods, new IntrabandProxyUtil.MethodComparator());
 
 		return proxyMethods;
 	}

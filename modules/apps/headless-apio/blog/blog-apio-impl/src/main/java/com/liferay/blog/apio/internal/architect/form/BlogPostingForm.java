@@ -15,7 +15,6 @@
 package com.liferay.blog.apio.internal.architect.form;
 
 import com.liferay.apio.architect.form.Form;
-import com.liferay.apio.architect.form.Form.Builder;
 import com.liferay.apio.architect.function.throwable.ThrowableFunction;
 import com.liferay.apio.architect.functional.Try;
 import com.liferay.category.apio.architect.identifier.CategoryIdentifier;
@@ -52,7 +51,7 @@ public class BlogPostingForm {
 	 * @review
 	 */
 	public static Form<BlogPostingForm> buildForm(
-		Builder<BlogPostingForm> formBuilder) {
+		Form.Builder<BlogPostingForm> formBuilder) {
 
 		return formBuilder.title(
 			__ -> "The blog posting form"

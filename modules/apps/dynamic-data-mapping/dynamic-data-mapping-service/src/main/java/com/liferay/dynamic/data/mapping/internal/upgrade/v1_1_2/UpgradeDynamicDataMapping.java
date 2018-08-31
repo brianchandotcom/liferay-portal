@@ -54,7 +54,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Map.Entry;
 
 /**
  * @author Rafael Praxedes
@@ -258,7 +257,9 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 		Map<String, DDMFormField> ddmFormFieldsMap =
 			ddmForm.getDDMFormFieldsMap(true);
 
-		for (Entry<String, DDMFormField> entry : ddmFormFieldsMap.entrySet()) {
+		for (Map.Entry<String, DDMFormField> entry :
+				ddmFormFieldsMap.entrySet()) {
+
 			updateDDMFormField(entry.getValue());
 		}
 	}

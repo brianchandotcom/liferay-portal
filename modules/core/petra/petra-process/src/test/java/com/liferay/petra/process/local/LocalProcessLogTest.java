@@ -15,7 +15,7 @@
 package com.liferay.petra.process.local;
 
 import com.liferay.petra.lang.HashUtil;
-import com.liferay.petra.process.ProcessLog.Level;
+import com.liferay.petra.process.ProcessLog;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
 
@@ -42,22 +42,26 @@ public class LocalProcessLogTest {
 		Throwable throwable = new Throwable();
 
 		LocalProcessLog localProcessLog = new LocalProcessLog(
-			Level.DEBUG, "message", throwable);
+			ProcessLog.Level.DEBUG, "message", throwable);
 
 		Assert.assertTrue(localProcessLog.equals(localProcessLog));
 		Assert.assertFalse(localProcessLog.equals(message));
 		Assert.assertFalse(
 			localProcessLog.equals(
-				new LocalProcessLog(Level.ERROR, message, throwable)));
+				new LocalProcessLog(
+					ProcessLog.Level.ERROR, message, throwable)));
 		Assert.assertFalse(
 			localProcessLog.equals(
-				new LocalProcessLog(Level.DEBUG, "message2", throwable)));
+				new LocalProcessLog(
+					ProcessLog.Level.DEBUG, "message2", throwable)));
 		Assert.assertFalse(
 			localProcessLog.equals(
-				new LocalProcessLog(Level.DEBUG, message, new Throwable())));
+				new LocalProcessLog(
+					ProcessLog.Level.DEBUG, message, new Throwable())));
 		Assert.assertTrue(
 			localProcessLog.equals(
-				new LocalProcessLog(Level.DEBUG, message, throwable)));
+				new LocalProcessLog(
+					ProcessLog.Level.DEBUG, message, throwable)));
 	}
 
 	@Test
@@ -66,9 +70,9 @@ public class LocalProcessLogTest {
 		Throwable throwable = new Throwable();
 
 		LocalProcessLog localProcessLog = new LocalProcessLog(
-			Level.DEBUG, message, throwable);
+			ProcessLog.Level.DEBUG, message, throwable);
 
-		Assert.assertSame(Level.DEBUG, localProcessLog.getLevel());
+		Assert.assertSame(ProcessLog.Level.DEBUG, localProcessLog.getLevel());
 		Assert.assertSame(message, localProcessLog.getMessage());
 		Assert.assertSame(throwable, localProcessLog.getThrowable());
 	}
@@ -79,9 +83,9 @@ public class LocalProcessLogTest {
 		Throwable throwable = new Throwable();
 
 		LocalProcessLog localProcessLog = new LocalProcessLog(
-			Level.DEBUG, message, throwable);
+			ProcessLog.Level.DEBUG, message, throwable);
 
-		int hash = HashUtil.hash(0, Level.DEBUG);
+		int hash = HashUtil.hash(0, ProcessLog.Level.DEBUG);
 
 		hash = HashUtil.hash(hash, message);
 
@@ -110,12 +114,12 @@ public class LocalProcessLogTest {
 		Throwable throwable = new Throwable();
 
 		LocalProcessLog localProcessLog = new LocalProcessLog(
-			Level.DEBUG, message, throwable);
+			ProcessLog.Level.DEBUG, message, throwable);
 
 		StringBundler sb = new StringBundler(7);
 
 		sb.append("{level=");
-		sb.append(Level.DEBUG);
+		sb.append(ProcessLog.Level.DEBUG);
 		sb.append(", message=");
 		sb.append(message);
 		sb.append(", throwable=");

@@ -76,7 +76,6 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
@@ -86,9 +85,7 @@ import java.util.stream.Stream;
 import org.apache.commons.lang.time.StopWatch;
 import org.apache.solr.client.solrj.SolrClient;
 import org.apache.solr.client.solrj.SolrQuery;
-import org.apache.solr.client.solrj.SolrQuery.ORDER;
-import org.apache.solr.client.solrj.SolrQuery.SortClause;
-import org.apache.solr.client.solrj.SolrRequest.METHOD;
+import org.apache.solr.client.solrj.SolrRequest;
 import org.apache.solr.client.solrj.response.FieldStatsInfo;
 import org.apache.solr.client.solrj.response.Group;
 import org.apache.solr.client.solrj.response.GroupCommand;
@@ -447,13 +444,13 @@ public class SolrIndexSearcher extends BaseIndexSearcher {
 
 			sortFieldNames.add(sortFieldName);
 
-			ORDER order = ORDER.asc;
+			SolrQuery.ORDER order = SolrQuery.ORDER.asc;
 
 			if (sort.isReverse() || sortFieldName.equals("score")) {
-				order = ORDER.desc;
+				order = SolrQuery.ORDER.desc;
 			}
 
-			solrQuery.addSort(new SortClause(sortFieldName, order));
+			solrQuery.addSort(new SolrQuery.SortClause(sortFieldName, order));
 		}
 	}
 
@@ -568,7 +565,7 @@ public class SolrIndexSearcher extends BaseIndexSearcher {
 
 		SolrClient solrClient = _solrClientManager.getSolrClient();
 
-		return solrClient.query(solrQuery, METHOD.POST);
+		return solrClient.query(solrQuery, SolrRequest.METHOD.POST);
 	}
 
 	protected String getExcludeTagsString(
@@ -606,9 +603,9 @@ public class SolrIndexSearcher extends BaseIndexSearcher {
 	}
 
 	protected String getFacetString(Map<String, JSONObject> jsonObjects) {
-		Set<Entry<String, JSONObject>> entrySet = jsonObjects.entrySet();
+		Set<Map.Entry<String, JSONObject>> entrySet = jsonObjects.entrySet();
 
-		Stream<Entry<String, JSONObject>> stream = entrySet.stream();
+		Stream<Map.Entry<String, JSONObject>> stream = entrySet.stream();
 
 		String jsonString = stream.map(
 			entry -> StringBundler.concat(

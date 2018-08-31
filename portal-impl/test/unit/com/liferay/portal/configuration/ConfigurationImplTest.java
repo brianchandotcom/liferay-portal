@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.configuration.Filter;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.test.rule.NewEnv;
-import com.liferay.portal.kernel.test.rule.NewEnv.Environment;
 import com.liferay.portal.kernel.test.rule.NewEnvTestRule;
 
 import java.io.IOException;
@@ -50,7 +49,8 @@ public class ConfigurationImplTest {
 		Class.forName(Initializer.class.getName());
 	}
 
-	@Environment(
+	@NewEnv(type = NewEnv.Type.JVM)
+	@NewEnv.Environment(
 		variables = {
 			"LIFERAY_LIFERAY_PERIOD_HOME=/liferay",
 			"LIFERAY_SETUP_PERIOD_WIZARD_PERIOD_ENABLED=false",
@@ -66,7 +66,6 @@ public class ConfigurationImplTest {
 					"_OPENBRACKET__SLASH_HOME_CLOSEBRACKET_=6"
 		}
 	)
-	@NewEnv(type = NewEnv.Type.JVM)
 	@Test
 	public void testEnvironmentVariableOverrideMisc() throws IOException {
 
@@ -100,8 +99,8 @@ public class ConfigurationImplTest {
 				new Filter("user", "/home")));
 	}
 
-	@Environment(variables = "LIFERAY_NAMESPACE_PERIOD_KEY2=valuex")
 	@NewEnv(type = NewEnv.Type.JVM)
+	@NewEnv.Environment(variables = "LIFERAY_NAMESPACE_PERIOD_KEY2=valuex")
 	@Test
 	public void testEnvironmentVariableOverrideProperties() throws IOException {
 		TestResourceClassLoader testResourceClassLoader =

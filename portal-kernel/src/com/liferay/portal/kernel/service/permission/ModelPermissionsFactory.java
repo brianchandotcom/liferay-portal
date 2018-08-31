@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
 
 import java.util.Map;
-import java.util.Map.Entry;
 
 import javax.portlet.PortletRequest;
 
@@ -45,7 +44,7 @@ public class ModelPermissionsFactory {
 	public static ModelPermissions create(Map<String, String[]> parameterMap) {
 		ModelPermissions modelPermissions = new ModelPermissions();
 
-		for (Entry<String, String[]> entry : parameterMap.entrySet()) {
+		for (Map.Entry<String, String[]> entry : parameterMap.entrySet()) {
 			String parameterName = entry.getKey();
 
 			if (!parameterName.startsWith(MODEL_PERMISSIONS_PREFIX)) {

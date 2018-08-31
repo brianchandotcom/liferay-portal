@@ -26,7 +26,6 @@ import com.liferay.dynamic.data.mapping.expression.model.NotExpression;
 import com.liferay.dynamic.data.mapping.expression.model.OrExpression;
 import com.liferay.dynamic.data.mapping.expression.model.StringLiteral;
 import com.liferay.dynamic.data.mapping.form.builder.internal.converter.model.DDMFormRuleCondition;
-import com.liferay.dynamic.data.mapping.form.builder.internal.converter.model.DDMFormRuleCondition.Operand;
 import com.liferay.petra.string.StringPool;
 
 import java.util.ArrayList;
@@ -145,17 +144,19 @@ public class ConditionExpressionVisitor extends ExpressionVisitor<Object> {
 	}
 
 	protected DDMFormRuleCondition createBelongsToCondition(
-		String belongsToFunctionName, List<Operand> operands) {
+		String belongsToFunctionName,
+		List<DDMFormRuleCondition.Operand> operands) {
 
-		List<Operand> belongsToOperands = new ArrayList<>();
+		List<DDMFormRuleCondition.Operand> belongsToOperands =
+			new ArrayList<>();
 
-		Stream<Operand> operandsStream = operands.stream();
+		Stream<DDMFormRuleCondition.Operand> operandsStream = operands.stream();
 
 		Stream<String> valuesStream = operandsStream.map(
 			operand -> operand.getValue());
 
 		belongsToOperands.add(
-			new Operand(
+			new DDMFormRuleCondition.Operand(
 				"list",
 				valuesStream.collect(Collectors.joining(StringPool.COMMA))));
 

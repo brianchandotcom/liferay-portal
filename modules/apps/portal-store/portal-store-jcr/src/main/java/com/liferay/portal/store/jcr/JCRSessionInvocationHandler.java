@@ -26,7 +26,6 @@ import java.lang.reflect.Method;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Map.Entry;
 
 import javax.jcr.Binary;
 import javax.jcr.Session;
@@ -48,7 +47,7 @@ public class JCRSessionInvocationHandler
 
 	@Override
 	public void doFinalize(Reference<?> reference) {
-		for (Entry<String, Binary> entry : _binaries.entrySet()) {
+		for (Map.Entry<String, Binary> entry : _binaries.entrySet()) {
 			Binary binary = entry.getValue();
 
 			binary.dispose();

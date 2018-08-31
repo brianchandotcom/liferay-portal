@@ -28,7 +28,6 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Properties;
 
 import org.junit.Assert;
@@ -67,7 +66,7 @@ public class LPKGRevertOverrideVerifyTest {
 
 		List<String> wars = new ArrayList<>();
 
-		for (Entry<Object, Object> entry : properties.entrySet()) {
+		for (Map.Entry<Object, Object> entry : properties.entrySet()) {
 			String symbolicName = (String)entry.getKey();
 
 			if (symbolicName.startsWith("static.")) {
@@ -112,11 +111,11 @@ public class LPKGRevertOverrideVerifyTest {
 			}
 		}
 
-		List<Entry> leftoverEntries = new ArrayList<>();
+		List<Map.Entry> leftoverEntries = new ArrayList<>();
 
 		leftoverEntries.addAll(jars.entrySet());
 
-		for (Entry entry : leftoverEntries) {
+		for (Map.Entry entry : leftoverEntries) {
 			if (entry.getValue() == null) {
 				leftoverEntries.remove(entry);
 			}
@@ -124,10 +123,10 @@ public class LPKGRevertOverrideVerifyTest {
 
 		Collections.sort(
 			leftoverEntries,
-			new Comparator<Entry>() {
+			new Comparator<Map.Entry>() {
 
 				@Override
-				public int compare(Entry entry1, Entry entry2) {
+				public int compare(Map.Entry entry1, Map.Entry entry2) {
 					String entrySymbolicname = (String)entry1.getKey();
 
 					return entrySymbolicname.compareTo((String)entry2.getKey());

@@ -19,9 +19,10 @@ import com.liferay.asset.category.property.exception.CategoryPropertyValueExcept
 import com.liferay.asset.category.property.exception.DuplicateCategoryPropertyException;
 import com.liferay.asset.category.property.model.AssetCategoryProperty;
 import com.liferay.asset.category.property.service.base.AssetCategoryPropertyLocalServiceBaseImpl;
+import com.liferay.asset.util.AssetHelper;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portlet.asset.util.AssetUtil;
+import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.util.List;
 
@@ -184,13 +185,16 @@ public class AssetCategoryPropertyLocalServiceImpl
 	}
 
 	protected void validate(String key, String value) throws PortalException {
-		if (!AssetUtil.isValidWord(key)) {
+		if (!assetHelper.isValidWord(key)) {
 			throw new CategoryPropertyKeyException("Invalid key " + key);
 		}
 
-		if (!AssetUtil.isValidWord(value)) {
+		if (!assetHelper.isValidWord(value)) {
 			throw new CategoryPropertyValueException("Invalid value " + value);
 		}
 	}
+
+	@ServiceReference(type = AssetHelper.class)
+	protected AssetHelper assetHelper;
 
 }

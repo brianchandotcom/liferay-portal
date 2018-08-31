@@ -99,16 +99,17 @@ public class PortletAsyncListenerAdapter implements AsyncListener {
 	public void onComplete(AsyncEvent asyncEvent) throws IOException {
 		_firedOnComplete = true;
 
-		for (PortletAsyncListenerAdapterEntry entry :
+		for (PortletAsyncListenerAdapterEntry asyncListenerAdapterEntry :
 				_portletAsyncListenerAdapterEntries) {
 
 			PortletAsyncListener portletAsyncListener =
-				entry._portletAsyncListener;
+				asyncListenerAdapterEntry.getPortletAsyncListener();
 
 			portletAsyncListener.onComplete(
 				new PortletAsyncEvent(
-					_portletAsyncContext, entry._resourceRequest,
-					entry._resourceResponse));
+					_portletAsyncContext,
+					asyncListenerAdapterEntry.getResourceRequest(),
+					asyncListenerAdapterEntry.getResourceResponse()));
 		}
 	}
 
@@ -117,16 +118,18 @@ public class PortletAsyncListenerAdapter implements AsyncListener {
 		_firedOnError = true;
 
 		try {
-			for (PortletAsyncListenerAdapterEntry entry :
+			for (PortletAsyncListenerAdapterEntry asyncListenerAdapterEntry :
 					_portletAsyncListenerAdapterEntries) {
 
 				PortletAsyncListener portletAsyncListener =
-					entry._portletAsyncListener;
+					asyncListenerAdapterEntry.getPortletAsyncListener();
 
 				portletAsyncListener.onError(
 					new PortletAsyncEvent(
-						_portletAsyncContext, entry._resourceRequest,
-						entry._resourceResponse, asyncEvent.getThrowable()));
+						_portletAsyncContext,
+						asyncListenerAdapterEntry.getResourceRequest(),
+						asyncListenerAdapterEntry.getResourceResponse(),
+						asyncEvent.getThrowable()));
 			}
 		}
 		finally {
@@ -151,16 +154,17 @@ public class PortletAsyncListenerAdapter implements AsyncListener {
 		_portletAsyncListenerAdapterEntries.clear();
 
 		try {
-			for (PortletAsyncListenerAdapterEntry entry :
+			for (PortletAsyncListenerAdapterEntry asyncListenerAdapterEntry :
 					portletAsyncListenerAdapterEntries) {
 
 				PortletAsyncListener portletAsyncListener =
-					entry._portletAsyncListener;
+					asyncListenerAdapterEntry.getPortletAsyncListener();
 
 				portletAsyncListener.onStartAsync(
 					new PortletAsyncEvent(
-						_portletAsyncContext, entry._resourceRequest,
-						entry._resourceResponse));
+						_portletAsyncContext,
+						asyncListenerAdapterEntry.getResourceRequest(),
+						asyncListenerAdapterEntry.getResourceResponse()));
 			}
 		}
 		finally {
@@ -179,16 +183,17 @@ public class PortletAsyncListenerAdapter implements AsyncListener {
 		_firedOnTimeout = true;
 
 		try {
-			for (PortletAsyncListenerAdapterEntry entry :
+			for (PortletAsyncListenerAdapterEntry asyncListenerAdapterEntry :
 					_portletAsyncListenerAdapterEntries) {
 
 				PortletAsyncListener portletAsyncListener =
-					entry._portletAsyncListener;
+					asyncListenerAdapterEntry.getPortletAsyncListener();
 
 				portletAsyncListener.onTimeout(
 					new PortletAsyncEvent(
-						_portletAsyncContext, entry._resourceRequest,
-						entry._resourceResponse));
+						_portletAsyncContext,
+						asyncListenerAdapterEntry.getResourceRequest(),
+						asyncListenerAdapterEntry.getResourceResponse()));
 			}
 		}
 		finally {
@@ -210,9 +215,21 @@ public class PortletAsyncListenerAdapter implements AsyncListener {
 	private final List<PortletAsyncListenerAdapterEntry>
 		_portletAsyncListenerAdapterEntries = new ArrayList<>();
 
-	private class PortletAsyncListenerAdapterEntry {
+	private static class PortletAsyncListenerAdapterEntry {
 
-		public PortletAsyncListenerAdapterEntry(
+		public PortletAsyncListener getPortletAsyncListener() {
+			return _portletAsyncListener;
+		}
+
+		public ResourceRequest getResourceRequest() {
+			return _resourceRequest;
+		}
+
+		public ResourceResponse getResourceResponse() {
+			return _resourceResponse;
+		}
+
+		private PortletAsyncListenerAdapterEntry(
 			PortletAsyncListener portletAsyncListener,
 			ResourceRequest resourceRequest,
 			ResourceResponse resourceResponse) {

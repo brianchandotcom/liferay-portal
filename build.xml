@@ -420,7 +420,7 @@ message.
 				</gradle-execute>
 
 				<if>
-					<isset property="env.JENKINS_HOME" />
+					<equals arg1="${deploy.ci.profile.modules}" arg2="true" />
 					<then>
 						<if>
 							<resourcecount count="0" when="gt">

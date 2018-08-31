@@ -125,26 +125,36 @@ class FragmentsEditor extends Component {
 
 	_handleFragmentMove(data) {
 		const direction = data.direction;
-		const index = this._getFragmentEntryLinkIndex(
-			data.fragmentEntryLinkId
+		const index = this._getFragmentEntryLinkIndex(data.fragmentEntryLinkId);
+
+		const nextData = Object.assign(
+			{},
+			this.layoutData,
+			{
+				structure: [
+					...(this.layoutData.structure || [])
+				]
+			}
 		);
-		const structure = this.layoutData.structure || [];
 
 		if (
-			(direction === FragmentEntryLink.MOVE_DIRECTIONS.DOWN && index < structure.length - 1) ||
-			(direction === FragmentEntryLink.MOVE_DIRECTIONS.UP && index > 0)
+			(
+				(direction === FragmentEntryLink.MOVE_DIRECTIONS.DOWN) &&
+				(index < nextData.structure.length - 1)
+			) ||
+			(
+				(direction === FragmentEntryLink.MOVE_DIRECTIONS.UP) &&
+				(index > 0)
+			)
 		) {
+
+			nextData.structure = this._swapListElements(
+				Array.prototype.slice.call(nextData.structure),
+				index,
+				index + direction
+			);
+
 			const formData = new FormData();
-
-			formData.append(
-				`${this.portletNamespace}fragmentEntryLinkId1`,
-				structure[index]
-			);
-
-			formData.append(
-				`${this.portletNamespace}fragmentEntryLinkId2`,
-				structure[index + direction]
-			);
 
 			formData.append(
 				`${this.portletNamespace}classNameId`,
@@ -154,6 +164,11 @@ class FragmentsEditor extends Component {
 			formData.append(
 				`${this.portletNamespace}classPK`,
 				this.classPK
+			);
+
+			formData.append(
+				`${this.portletNamespace}data`,
+				JSON.stringify(nextData)
 			);
 
 			fetch(
@@ -178,13 +193,13 @@ class FragmentsEditor extends Component {
 								savingChanges: false
 							}
 						);
-				}
-			);
 
-			this.fragmentEntryLinks = this._swapListElements(
-				Array.prototype.slice.call(this.fragmentEntryLinks),
-				index,
-				index + direction
+					requestAnimationFrame(
+						() => {
+							this.layoutData = nextData;
+						}
+					);
+				}
 			);
 		}
 	}

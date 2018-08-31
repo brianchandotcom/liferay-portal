@@ -27,6 +27,7 @@ gradleTest {
 pluginBundle {
 	plugins {
 		appTLDDocBuilderPlugin {
+			description = "The App TLDDoc Builder lets you generate the tag library documentation as a single, combined HTML document for an application that spans different subprojects, each one representing a different component of the same application."
 			displayName = "Liferay Gradle Plugins App TLDDoc Builder"
 		}
 

@@ -331,7 +331,7 @@ public abstract class AbstractSearchEngineConfigurator
 		searchEngineRegistration.setSearchReaderDestinationName(
 			searchReaderDestination.getName());
 
-		registerSearchEngineDestination(searchReaderDestination);
+		_registerSearchEngineDestination(searchReaderDestination);
 
 		Destination searchWriterDestination = getSearchWriterDestination(
 			_messageBus, searchEngineId);
@@ -339,7 +339,7 @@ public abstract class AbstractSearchEngineConfigurator
 		searchEngineRegistration.setSearchWriterDestinationName(
 			searchWriterDestination.getName());
 
-		registerSearchEngineDestination(searchWriterDestination);
+		_registerSearchEngineDestination(searchWriterDestination);
 
 		SearchEngineHelper searchEngineHelper = getSearchEngineHelper();
 
@@ -391,15 +391,6 @@ public abstract class AbstractSearchEngineConfigurator
 				invokerMessageListener.getMessageListener(),
 				invokerMessageListener.getClassLoader());
 		}
-	}
-
-	protected void registerSearchEngineDestination(Destination destination) {
-		Map<String, Object> properties = new HashMap<>();
-
-		properties.put("destination.name", destination.getName());
-
-		_destinationServiceRegistrar.registerService(
-			Destination.class, destination, properties);
 	}
 
 	protected void registerSearchEngineMessageListener(
@@ -457,6 +448,15 @@ public abstract class AbstractSearchEngineConfigurator
 		searchEngineHelper.setSearchEngine(searchEngineId, searchEngine);
 
 		searchEngine.initialize(CompanyConstants.SYSTEM);
+	}
+
+	private void _registerSearchEngineDestination(Destination destination) {
+		Map<String, Object> properties = new HashMap<>();
+
+		properties.put("destination.name", destination.getName());
+
+		_destinationServiceRegistrar.registerService(
+			Destination.class, destination, properties);
 	}
 
 	private static final int _INDEX_SEARCH_WRITER_MAX_QUEUE_SIZE =

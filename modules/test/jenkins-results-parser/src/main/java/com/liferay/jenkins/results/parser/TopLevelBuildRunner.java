@@ -26,8 +26,13 @@ public abstract class TopLevelBuildRunner extends BaseBuildRunner {
 		return _batchNames;
 	}
 
-	protected TopLevelBuildRunner(Job job) {
-		super(job);
+	protected TopLevelBuildRunner(BuildData buildData) {
+		super(buildData);
+
+		if (!(buildData instanceof TopLevelBuildData)) {
+			throw new RuntimeException(
+				"Invalid build data " + buildData.toJSONObject());
+		}
 	}
 
 	private final List<String> _batchNames = new ArrayList<>();

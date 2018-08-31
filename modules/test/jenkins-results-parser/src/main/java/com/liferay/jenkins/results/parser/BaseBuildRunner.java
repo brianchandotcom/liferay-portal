@@ -37,11 +37,23 @@ public abstract class BaseBuildRunner implements BuildRunner {
 		tearDownWorkspace();
 	}
 
-	protected BaseBuildRunner(Job job) {
-		_job = job;
+	protected BaseBuildRunner(BuildData buildData) {
+		_buildData = buildData;
+	}
+
+	protected BuildData getBuildData() {
+		return _buildData;
 	}
 
 	protected Job getJob() {
+		if (_job != null) {
+			_job.readJobProperties();
+
+			return _job;
+		}
+
+		_job = JobFactory.newJob(getBuildData());
+
 		return _job;
 	}
 
@@ -65,6 +77,7 @@ public abstract class BaseBuildRunner implements BuildRunner {
 
 	protected Workspace workspace;
 
-	private final Job _job;
+	private final BuildData _buildData;
+	private Job _job;
 
 }

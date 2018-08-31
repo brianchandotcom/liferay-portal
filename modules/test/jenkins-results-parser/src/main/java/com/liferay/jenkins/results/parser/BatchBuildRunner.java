@@ -19,16 +19,21 @@ package com.liferay.jenkins.results.parser;
  */
 public abstract class BatchBuildRunner extends BaseBuildRunner {
 
-	public String getBatchName() {
-		return _batchName;
+	protected BatchBuildRunner(BuildData buildData) {
+		super(buildData);
+
+		if (!(buildData instanceof BatchBuildData)) {
+			throw new RuntimeException(
+				"Invalid build data " + buildData.toJSONObject());
+		}
+
+		_batchBuildData = (BatchBuildData)buildData;
 	}
 
-	protected BatchBuildRunner(Job job, String batchName) {
-		super(job);
-
-		_batchName = batchName;
+	protected String getBatchName() {
+		return _batchBuildData.getBatchName();
 	}
 
-	private final String _batchName;
+	private final BatchBuildData _batchBuildData;
 
 }

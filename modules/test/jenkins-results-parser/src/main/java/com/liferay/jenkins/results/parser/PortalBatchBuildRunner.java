@@ -19,40 +19,29 @@ package com.liferay.jenkins.results.parser;
  */
 public class PortalBatchBuildRunner extends BatchBuildRunner {
 
-	protected PortalBatchBuildRunner(
-		Job job, String portalGitHubURL, String batchName) {
+	protected PortalBatchBuildRunner(BuildData buildData) {
+		super(buildData);
 
-		super(job, batchName);
-
-		_portalGitHubURL = portalGitHubURL;
-
-		if (!(job instanceof PortalTestClassJob)) {
-			Class<? extends Job> clazz = job.getClass();
-
+		if (!(buildData instanceof PortalBatchBuildData)) {
 			throw new RuntimeException(
-				"Invalid job type " + clazz.getSimpleName());
+				"Invalid build data " + buildData.toJSONObject());
 		}
 
-		PortalTestClassJob portalTestClassJob = (PortalTestClassJob)job;
-
-		PortalGitWorkingDirectory portalGitWorkingDirectory =
-			portalTestClassJob.getPortalGitWorkingDirectory();
-
-		_portalUpstreamBranchName =
-			portalGitWorkingDirectory.getUpstreamBranchName();
+		_portalBatchBuildData = (PortalBatchBuildData)buildData;
 	}
 
 	@Override
 	protected void initWorkspace() {
 		workspace = WorkspaceFactory.newBatchWorkspace(
-			_portalGitHubURL, _portalUpstreamBranchName, getBatchName());
+			_portalBatchBuildData.getPortalGitHubURL(),
+			_portalBatchBuildData.getPortalUpstreamBranchName(),
+			getBatchName());
 
 		if (!(workspace instanceof BatchPortalWorkspace)) {
 			throw new RuntimeException("Invalid workspace");
 		}
 	}
 
-	private final String _portalGitHubURL;
-	private final String _portalUpstreamBranchName;
+	private final PortalBatchBuildData _portalBatchBuildData;
 
 }

@@ -25,40 +25,14 @@ if (Validator.isNull(redirect)) {
 	redirect = portletURL.toString();
 }
 
-AssetListEntry assetListEntry = assetListDisplayContext.getAssetListEntry();
-
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(redirect);
 
 renderResponse.setTitle(assetListDisplayContext.getAssetListEntryTitle());
 %>
 
-<portlet:actionURL name="/asset_list/edit_asset_list_entry" var="editAssetListEntryURL" />
-
-<liferay-frontend:edit-form
-	action="<%= editAssetListEntryURL %>"
-	method="post"
-	name="fm"
->
-	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
-	<aui:input name="assetListEntryId" type="hidden" value="<%= assetListDisplayContext.getAssetListEntryId() %>" />
-	<aui:input name="type" type="hidden" value="<%= assetListDisplayContext.getAssetListEntryType() %>" />
-
-	<aui:model-context bean="<%= assetListEntry %>" model="<%= AssetListEntry.class %>" />
-
-	<liferay-frontend:edit-form-body>
-		<liferay-frontend:fieldset-group>
-			<liferay-frontend:fieldset>
-				<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" name="title" placeholder="title">
-					<aui:validator name="required" />
-				</aui:input>
-			</liferay-frontend:fieldset>
-		</liferay-frontend:fieldset-group>
-	</liferay-frontend:edit-form-body>
-
-	<liferay-frontend:edit-form-footer>
-		<aui:button type="submit" />
-
-		<aui:button href="<%= redirect %>" type="cancel" />
-	</liferay-frontend:edit-form-footer>
-</liferay-frontend:edit-form>
+<liferay-frontend:screen-navigation
+	context="<%= assetListDisplayContext.getAssetListEntry() %>"
+	key="<%= AssetListFormConstants.SCREEN_NAVIGATION_KEY_ASSET_LIST %>"
+	portletURL="<%= currentURLObj %>"
+/>

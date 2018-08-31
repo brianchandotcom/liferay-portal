@@ -59,14 +59,11 @@ DDMStructure ddmStructure = (DDMStructure)row.getObject();
 	</c:if>
 
 	<c:if test="<%= DDMStructurePermission.contains(permissionChecker, ddmStructure, ActionKeys.VIEW) %>">
-		<liferay-portlet:renderURL portletName="<%= DDMPortletKeys.DYNAMIC_DATA_MAPPING %>" var="manageViewURL">
-			<portlet:param name="mvcPath" value="/view_template.jsp" />
-			<portlet:param name="classNameId" value="<%= String.valueOf(PortalUtil.getClassNameId(DDMStructure.class)) %>" />
+		<portlet:renderURL var="manageViewURL">
+			<portlet:param name="mvcPath" value="/view_ddm_templates.jsp" />
+			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="classPK" value="<%= String.valueOf(ddmStructure.getStructureId()) %>" />
-			<portlet:param name="resourceClassNameId" value="<%= String.valueOf(ddmStructure.getClassNameId()) %>" />
-			<portlet:param name="refererPortletName" value="<%= JournalPortletKeys.JOURNAL %>" />
-			<portlet:param name="showHeader" value="<%= Boolean.TRUE.toString() %>" />
-		</liferay-portlet:renderURL>
+		</portlet:renderURL>
 
 		<liferay-ui:icon
 			message="manage-templates"

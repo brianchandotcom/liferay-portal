@@ -14,11 +14,18 @@
 
 package com.liferay.journal.web.internal.portlet.action;
 
-import com.liferay.dynamic.data.mapping.service.DDMStructureService;
+import com.liferay.dynamic.data.mapping.model.DDMTemplate;
+import com.liferay.dynamic.data.mapping.service.DDMTemplateService;
 import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextFactory;
+import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+
+import java.util.Locale;
+import java.util.Map;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -33,42 +40,32 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + JournalPortletKeys.JOURNAL,
-		"mvc.command.name=/journal/delete_ddm_structure"
+		"mvc.command.name=/journal/copy_ddm_template"
 	},
 	service = MVCActionCommand.class
 )
-public class DeleteDDMStructureMVCActionCommand extends BaseMVCActionCommand {
+public class CopyDDMTemplateMVCActionCommand extends BaseMVCActionCommand {
 
 	@Override
 	protected void doProcessAction(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		long[] deleteDDMStructureIds = null;
+		long ddmTemplateId = ParamUtil.getLong(actionRequest, "ddmTemplateId");
 
-		long ddmStructureId = ParamUtil.getLong(
-			actionRequest, "ddmStructureId");
+		Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(
+			actionRequest, "name");
+		Map<Locale, String> descriptionMap =
+			LocalizationUtil.getLocalizationMap(actionRequest, "description");
 
-		if (ddmStructureId > 0) {
-			deleteDDMStructureIds = new long[] {ddmStructureId};
-		}
-		else {
-			deleteDDMStructureIds = ParamUtil.getLongValues(
-				actionRequest, "rowIds");
-		}
+		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+			DDMTemplate.class.getName(), actionRequest);
 
-		for (long deleteDDMStructureId : deleteDDMStructureIds) {
-			_ddmStructureService.deleteStructure(deleteDDMStructureId);
-		}
+		_ddmTemplateService.copyTemplate(
+			ddmTemplateId, nameMap, descriptionMap, serviceContext);
 	}
 
-	@Reference(unbind = "-")
-	protected void setDDMStructureService(
-		DDMStructureService ddmStructureService) {
-
-		_ddmStructureService = ddmStructureService;
-	}
-
-	private DDMStructureService _ddmStructureService;
+	@Reference
+	private DDMTemplateService _ddmTemplateService;
 
 }

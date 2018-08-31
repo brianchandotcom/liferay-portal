@@ -14,7 +14,7 @@
 
 package com.liferay.journal.web.internal.portlet.action;
 
-import com.liferay.dynamic.data.mapping.service.DDMStructureService;
+import com.liferay.dynamic.data.mapping.service.DDMTemplateService;
 import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
@@ -33,42 +33,35 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + JournalPortletKeys.JOURNAL,
-		"mvc.command.name=/journal/delete_ddm_structure"
+		"mvc.command.name=/journal/delete_ddm_template"
 	},
 	service = MVCActionCommand.class
 )
-public class DeleteDDMStructureMVCActionCommand extends BaseMVCActionCommand {
+public class DeleteDDMTemplateMVCActionCommand extends BaseMVCActionCommand {
 
 	@Override
 	protected void doProcessAction(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		long[] deleteDDMStructureIds = null;
+		long[] deleteDDMTemplateIds = null;
 
-		long ddmStructureId = ParamUtil.getLong(
-			actionRequest, "ddmStructureId");
+		long ddmTemplateId = ParamUtil.getLong(actionRequest, "ddmTemplateId");
 
-		if (ddmStructureId > 0) {
-			deleteDDMStructureIds = new long[] {ddmStructureId};
+		if (ddmTemplateId > 0) {
+			deleteDDMTemplateIds = new long[] {ddmTemplateId};
 		}
 		else {
-			deleteDDMStructureIds = ParamUtil.getLongValues(
+			deleteDDMTemplateIds = ParamUtil.getLongValues(
 				actionRequest, "rowIds");
 		}
 
-		for (long deleteDDMStructureId : deleteDDMStructureIds) {
-			_ddmStructureService.deleteStructure(deleteDDMStructureId);
+		for (long deleteDDMTemplateId : deleteDDMTemplateIds) {
+			_ddmTemplateService.deleteTemplate(deleteDDMTemplateId);
 		}
 	}
 
-	@Reference(unbind = "-")
-	protected void setDDMStructureService(
-		DDMStructureService ddmStructureService) {
-
-		_ddmStructureService = ddmStructureService;
-	}
-
-	private DDMStructureService _ddmStructureService;
+	@Reference
+	private DDMTemplateService _ddmTemplateService;
 
 }

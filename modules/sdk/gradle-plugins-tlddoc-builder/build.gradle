@@ -3,6 +3,9 @@ apply plugin: "org.ysb33r.gradletest"
 
 task copyGradleTestDependencies(type: Copy)
 
+sourceCompatibility = "1.8"
+targetCompatibility = "1.8"
+
 copyGradleTestDependencies {
 	from configurations.compile
 	into jar.destinationDir
@@ -22,5 +25,16 @@ gradleTest {
 }
 
 pluginBundle {
+	plugins {
+		appTLDDocBuilderPlugin {
+			description = "The App TLDDoc Builder lets you generate the tag library documentation as a single, combined HTML document for an application that spans different subprojects, each one representing a different component of the same application."
+			displayName = "Liferay Gradle Plugins App TLDDoc Builder"
+		}
+
+		tLDDocBuilderPlugin {
+			displayName = "Liferay Gradle Plugins TLDDoc Builder"
+		}
+	}
+
 	tags = ["java", "tld"]
 }

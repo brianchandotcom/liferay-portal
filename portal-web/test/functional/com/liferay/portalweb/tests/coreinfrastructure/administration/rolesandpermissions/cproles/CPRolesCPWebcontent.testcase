@@ -632,7 +632,7 @@
 			<var name="portlet" value="Web Content" />
 		</execute>
 
-		<execute macro="LexiconEntry#gotoAdd" />
+		<execute macro="WebContentNavigator#gotoAddCP" />
 
 		<execute macro="WebContent#addCP">
 			<var name="webContentContent" value="WC WebContent Content" />

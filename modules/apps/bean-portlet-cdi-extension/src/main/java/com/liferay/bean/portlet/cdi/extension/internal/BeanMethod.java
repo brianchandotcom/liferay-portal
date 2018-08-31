@@ -144,8 +144,8 @@ public class BeanMethod {
 		return _type;
 	}
 
-	public Object invoke(Object... args) throws IllegalAccessException,
-		InvocationTargetException {
+	public Object invoke(Object... args)
+		throws IllegalAccessException, InvocationTargetException {
 
 		Object beanInstance = _beanManager.getReference(
 			_bean, _bean.getBeanClass(),
@@ -169,14 +169,14 @@ public class BeanMethod {
 		PortletQName[] portletQNames = eventMethod.processingEvents();
 
 		for (PortletQName portletQName : portletQNames) {
-			String namespaceURI = portletQName.namespaceURI();
-
 			String localPart = portletQName.localPart();
 
-			if (localPart.equals(qName.getLocalPart()) &&
-				namespaceURI.equals(qName.getNamespaceURI())) {
+			if (localPart.equals(qName.getLocalPart())) {
+				String namespaceURI = portletQName.namespaceURI();
 
-				return true;
+				if (namespaceURI.equals(qName.getNamespaceURI())) {
+					return true;
+				}
 			}
 		}
 

@@ -32,7 +32,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Neil Griffin
  */
 @Component(
-	property = Constants.SERVICE_RANKING + "=" + Integer.MIN_VALUE,
+	property = Constants.SERVICE_RANKING + ":Integer=" + Integer.MIN_VALUE,
 	service = PortletDependencyFactory.class
 )
 public class DefaultPortletDependencyFactory

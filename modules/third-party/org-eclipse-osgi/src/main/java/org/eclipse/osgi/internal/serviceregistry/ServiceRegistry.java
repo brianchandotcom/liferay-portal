@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2004, 2014 IBM Corporation and others.
+ * Copyright (c) 2004, 2017 IBM Corporation and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -94,10 +94,10 @@ public class ServiceRegistry {
 		this.container = container;
 		this.debug = container.getConfiguration().getDebug();
 		serviceid = 1;
-		publishedServicesByClass = new HashMap<String, List<ServiceRegistrationImpl<?>>>(initialCapacity);
-		publishedServicesByContext = new HashMap<BundleContextImpl, List<ServiceRegistrationImpl<?>>>(initialCapacity);
-		allPublishedServices = new ArrayList<ServiceRegistrationImpl<?>>(initialCapacity);
-		serviceEventListeners = new HashMap<BundleContextImpl, CopyOnWriteIdentityMap<ServiceListener, FilteredServiceListener>>(initialCapacity);
+		publishedServicesByClass = new HashMap<>(initialCapacity);
+		publishedServicesByContext = new HashMap<>(initialCapacity);
+		allPublishedServices = new ArrayList<>(initialCapacity);
+		serviceEventListeners = new HashMap<>(initialCapacity);
 		Module systemModule = container.getStorage().getModuleContainer().getModule(0);
 		systemBundleContext = (BundleContextImpl) systemModule.getBundle().getBundleContext();
 		systemBundleContext.provisionServicesInUseMap();
@@ -200,7 +200,7 @@ public class ServiceRegistry {
 		}
 
 		/* copy the array so that changes to the original will not affect us. */
-		List<String> copy = new ArrayList<String>(size);
+		List<String> copy = new ArrayList<>(size);
 		// intern the strings and remove duplicates
 		for (int i = 0; i < size; i++) {
 			String clazz = clazzes[i].intern();
@@ -224,7 +224,7 @@ public class ServiceRegistry {
 			}
 		}
 
-		ServiceRegistrationImpl<?> registration = new ServiceRegistrationImpl<Object>(this, context, clazzes, service);
+		ServiceRegistrationImpl<?> registration = new ServiceRegistrationImpl<>(this, context, clazzes, service);
 		registration.register(properties);
 		if (copy.contains(listenerHookName)) {
 			notifyNewListenerHook(registration);
@@ -310,7 +310,7 @@ public class ServiceRegistry {
 		}
 		Filter filter = (filterstring == null) ? null : context.createFilter(filterstring);
 		List<ServiceRegistrationImpl<?>> registrations = lookupServiceRegistrations(clazz, filter);
-		List<ServiceReferenceImpl<?>> references = new ArrayList<ServiceReferenceImpl<?>>(registrations.size());
+		List<ServiceReferenceImpl<?>> references = new ArrayList<>(registrations.size());
 		for (ServiceRegistrationImpl<?> registration : registrations) {
 			ServiceReferenceImpl<?> reference;
 			try {
@@ -334,7 +334,7 @@ public class ServiceRegistry {
 		if (context.getBundleImpl().getBundleId() == 0) {
 			// Make a copy for the purposes of calling the hooks;
 			// The the removals from the hooks are ignored for the system bundle
-			copyReferences = new ArrayList<ServiceReferenceImpl<?>>(references);
+			copyReferences = new ArrayList<>(references);
 		}
 		Collection<ServiceReference<?>> shrinkable = new ShrinkableCollection<ServiceReference<?>>(copyReferences);
 		notifyFindHooks(context, clazz, filterstring, allservices, shrinkable);
@@ -570,7 +570,7 @@ public class ServiceRegistry {
 	 */
 	public ServiceReferenceImpl<?>[] getRegisteredServices(BundleContextImpl context) {
 		List<ServiceRegistrationImpl<?>> registrations = lookupServiceRegistrations(context);
-		List<ServiceReferenceImpl<?>> references = new ArrayList<ServiceReferenceImpl<?>>(registrations.size());
+		List<ServiceReferenceImpl<?>> references = new ArrayList<>(registrations.size());
 		for (ServiceRegistrationImpl<?> registration : registrations) {
 			ServiceReferenceImpl<?> reference;
 			try {
@@ -630,9 +630,9 @@ public class ServiceRegistry {
 			if (servicesInUse.isEmpty()) {
 				return null;
 			}
-			registrations = new ArrayList<ServiceRegistrationImpl<?>>(servicesInUse.keySet());
+			registrations = new ArrayList<>(servicesInUse.keySet());
 		}
-		List<ServiceReferenceImpl<?>> references = new ArrayList<ServiceReferenceImpl<?>>(registrations.size());
+		List<ServiceReferenceImpl<?>> references = new ArrayList<>(registrations.size());
 		for (ServiceRegistrationImpl<?> registration : registrations) {
 			ServiceReferenceImpl<?> reference;
 			try {
@@ -689,7 +689,7 @@ public class ServiceRegistry {
 			if (servicesInUse.isEmpty()) {
 				return;
 			}
-			registrations = new ArrayList<ServiceRegistrationImpl<?>>(servicesInUse.keySet());
+			registrations = new ArrayList<>(servicesInUse.keySet());
 		}
 		if (debug.DEBUG_SERVICES) {
 			Debug.println("Releasing services"); //$NON-NLS-1$
@@ -718,7 +718,7 @@ public class ServiceRegistry {
 		synchronized (serviceEventListeners) {
 			CopyOnWriteIdentityMap<ServiceListener, FilteredServiceListener> listeners = serviceEventListeners.get(context);
 			if (listeners == null) {
-				listeners = new CopyOnWriteIdentityMap<ServiceListener, FilteredServiceListener>();
+				listeners = new CopyOnWriteIdentityMap<>();
 				serviceEventListeners.put(context, listeners);
 			}
 			oldFilteredListener = listeners.put(listener, filteredListener);
@@ -818,7 +818,7 @@ public class ServiceRegistry {
 		Set<Map.Entry<ServiceListener, FilteredServiceListener>> systemServiceListenersOrig = null;
 		BundleContextImpl systemContext = null;
 		synchronized (serviceEventListeners) {
-			listenerSnapshot = new HashMap<BundleContextImpl, Set<Map.Entry<ServiceListener, FilteredServiceListener>>>(serviceEventListeners.size());
+			listenerSnapshot = new HashMap<>(serviceEventListeners.size());
 			for (Map.Entry<BundleContextImpl, CopyOnWriteIdentityMap<ServiceListener, FilteredServiceListener>> entry : serviceEventListeners.entrySet()) {
 				Map<ServiceListener, FilteredServiceListener> listeners = entry.getValue();
 				if (!listeners.isEmpty()) {
@@ -953,7 +953,7 @@ public class ServiceRegistry {
 		// Add the ServiceRegistrationImpl to the list of Services published by BundleContextImpl.
 		List<ServiceRegistrationImpl<?>> contextServices = publishedServicesByContext.get(context);
 		if (contextServices == null) {
-			contextServices = new ArrayList<ServiceRegistrationImpl<?>>(initialSubCapacity);
+			contextServices = new ArrayList<>(initialSubCapacity);
 			publishedServicesByContext.put(context, contextServices);
 		}
 		// The list is NOT sorted, so we just add
@@ -965,7 +965,7 @@ public class ServiceRegistry {
 			List<ServiceRegistrationImpl<?>> services = publishedServicesByClass.get(clazz);
 
 			if (services == null) {
-				services = new ArrayList<ServiceRegistrationImpl<?>>(initialSubCapacity);
+				services = new ArrayList<>(initialSubCapacity);
 				publishedServicesByClass.put(clazz, services);
 			}
 
@@ -1068,7 +1068,7 @@ public class ServiceRegistry {
 				return empty;
 			}
 
-			result = new LinkedList<ServiceRegistrationImpl<?>>(result); /* make a new list since we don't want to change the real list */
+			result = new LinkedList<>(result); /* make a new list since we don't want to change the real list */
 		}
 
 		if (filter == null) {
@@ -1105,7 +1105,7 @@ public class ServiceRegistry {
 			return empty;
 		}
 
-		return new ArrayList<ServiceRegistrationImpl<?>>(result); /* make a new list since we don't want to change the real list */
+		return new ArrayList<>(result); /* make a new list since we don't want to change the real list */
 	}
 
 	/**
@@ -1250,6 +1250,11 @@ public class ServiceRegistry {
 			public String getHookMethodName() {
 				return "find"; //$NON-NLS-1$
 			}
+
+			@Override
+			public boolean skipRegistration(ServiceRegistration<?> hookRegistration) {
+				return false;
+			}
 		});
 	}
 
@@ -1280,6 +1285,11 @@ public class ServiceRegistry {
 			public String getHookMethodName() {
 				return "event"; //$NON-NLS-1$
 			}
+
+			@Override
+			public boolean skipRegistration(ServiceRegistration<?> hookRegistration) {
+				return false;
+			}
 		});
 	}
 
@@ -1309,6 +1319,11 @@ public class ServiceRegistry {
 			public String getHookMethodName() {
 				return "event"; //$NON-NLS-1$
 			}
+
+			@Override
+			public boolean skipRegistration(ServiceRegistration<?> hookRegistration) {
+				return false;
+			}
 		});
 	}
 
@@ -1335,6 +1350,9 @@ public class ServiceRegistry {
 	 * @param hookContext Context to use when calling the hook service.
 	 */
 	private void notifyHookPrivileged(BundleContextImpl context, ServiceRegistrationImpl<?> registration, HookContext hookContext) {
+		if (hookContext.skipRegistration(registration)) {
+			return;
+		}
 		Object hook = registration.getSafeService(context, ServiceConsumer.singletonConsumer);
 		if (hook == null) { // if the hook is null
 			return;
@@ -1381,7 +1399,7 @@ public class ServiceRegistry {
 		}
 
 		// snapshot the listeners
-		Collection<ListenerInfo> addedListeners = new ArrayList<ListenerInfo>(initialCapacity);
+		Collection<ListenerInfo> addedListeners = new ArrayList<>(initialCapacity);
 		synchronized (serviceEventListeners) {
 			for (CopyOnWriteIdentityMap<ServiceListener, FilteredServiceListener> listeners : serviceEventListeners.values()) {
 				if (!listeners.isEmpty()) {
@@ -1404,6 +1422,11 @@ public class ServiceRegistry {
 
 			public String getHookMethodName() {
 				return "added"; //$NON-NLS-1$
+			}
+
+			@Override
+			public boolean skipRegistration(ServiceRegistration<?> hookRegistration) {
+				return false;
 			}
 		});
 	}
@@ -1455,6 +1478,11 @@ public class ServiceRegistry {
 
 			public String getHookMethodName() {
 				return added ? "added" : "removed"; //$NON-NLS-1$ //$NON-NLS-2$
+			}
+
+			@Override
+			public boolean skipRegistration(ServiceRegistration<?> hookRegistration) {
+				return false;
 			}
 		});
 	}

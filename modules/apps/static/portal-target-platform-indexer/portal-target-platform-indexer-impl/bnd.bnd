@@ -6,7 +6,35 @@ Import-Package:\
 	\
 	!org.apache.tools.ant.*,\
 	\
-	org.osgi.framework,\
-	org.osgi.resource,\
+	!org.osgi.service.component.annotations,\
+	!org.osgi.service.metatype.annotations,\
 	\
 	*
+-conditionalpackage:\
+	aQute.bnd.*,\
+	\
+	aQute.lib.*,\
+	\
+	aQute.libg.*,\
+	\
+	aQute.service.reporter,\
+	\
+	biz.aQute.resolve,\
+	\
+	org.apache.*,\
+	\
+	org.kxml2.io.*,\
+	\
+	org.osgi.impl.bundle.*,\
+	org.osgi.service.bindex.*,\
+	org.osgi.service.coordinator.*,\
+	org.osgi.service.indexer.*,\
+	org.osgi.service.obr.*,\
+	org.osgi.service.repository.*,\
+	org.osgi.service.resolver.*,\
+	org.osgi.util.*,\
+	\
+	org.slf4j.*,\
+	\
+	org.xmlpull.v1.*
+-includeresource: @biz.aQute.bnd-*.jar!/aQute/bnd/build/model/osgi-core/*

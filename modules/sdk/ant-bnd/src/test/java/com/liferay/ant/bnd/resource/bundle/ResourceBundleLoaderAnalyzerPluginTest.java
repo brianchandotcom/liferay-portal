@@ -159,8 +159,6 @@ public class ResourceBundleLoaderAnalyzerPluginTest {
 			Assert.assertEquals(
 				"resources.test",
 				aggregateEntryAttrs.get("servlet.context.name"));
-			Assert.assertEquals(
-				"1", aggregateEntryAttrs.get("service.ranking"));
 
 			Entry<String, Attrs> liferayResourceBundleEntry = provides.get(1);
 

@@ -1,0 +1,114 @@
+diff --git a/org/eclipse/osgi/internal/loader/classpath/ClasspathManager.java b/org/eclipse/osgi/internal/loader/classpath/ClasspathManager.java
+index ee0377c55a2a..f7eedad982ff 100644
+--- a/org/eclipse/osgi/internal/loader/classpath/ClasspathManager.java
++++ b/org/eclipse/osgi/internal/loader/classpath/ClasspathManager.java
+@@ -583,12 +583,14 @@ public class ClasspathManager {
+ 	private Class<?> defineClass(String name, byte[] classbytes, ClasspathEntry classpathEntry, BundleEntry entry, List<ClassLoaderHook> hooks) {
+ 		DefineClassResult result = null;
+ 		boolean recursionDetected = false;
++		boolean threadLocalSet = false;
+ 		try {
+ 			definePackage(name, classpathEntry);
+ 			DefineContext context = currentDefineContext.get();
+ 			if (context == null) {
+ 				context = new DefineContext();
+ 				currentDefineContext.set(context);
++				threadLocalSet = true;
+ 			}
+ 
+ 			// First call the hooks that do not handle recursion themselves
+@@ -642,6 +644,11 @@ public class ClasspathManager {
+ 					hook.recordClassDefine(name, defined, classbytes, classpathEntry, entry, this);
+ 				}
+ 			}
++
++			// clear the thread local if we set it
++			if (threadLocalSet) {
++				currentDefineContext.remove();
++			}
+ 		}
+ 		// return either the pre-loaded class or the newly defined class
+ 		return result == null ? null : result.clazz;
+@@ -827,3 +834,4 @@ public class ClasspathManager {
+ 		return classloader;
+ 	}
+ }
++/* @generated */
+diff --git a/org/eclipse/osgi/internal/weaving/WeavingHookConfigurator.java b/org/eclipse/osgi/internal/weaving/WeavingHookConfigurator.java
+index e1f830469698..f98e5d5bdd3b 100644
+--- a/org/eclipse/osgi/internal/weaving/WeavingHookConfigurator.java
++++ b/org/eclipse/osgi/internal/weaving/WeavingHookConfigurator.java
+@@ -48,33 +48,41 @@ public class WeavingHookConfigurator extends ClassLoaderHook {
+ 			return null; // no registry somehow we are loading classes before the registry has been created
+ 		ModuleClassLoader classLoader = manager.getClassLoader();
+ 		BundleLoader loader = classLoader.getBundleLoader();
+-		// create a woven class object and add it to the thread local stack
+-		WovenClassImpl wovenClass = new WovenClassImpl(name, classbytes, entry, classpathEntry, loader, container, blackList);
+-		WovenClassContext context = wovenClassContext.get();
+-		if (context == null) {
+-			context = new WovenClassContext();
+-			wovenClassContext.set(context);
+-		}
+-		context.wovenClassStack.add(wovenClass);
+-		// If we detect recursion for the same class name then we will not call the
+-		// weaving hooks for the second request to load.
+-		// Note that this means the actual bytes that get used to define the class
+-		// will not have been woven at all.
+-		if (!context.processClassNameStack.contains(name)) {
+-			context.processClassNameStack.add(name);
+-			// call the weaving hooks
+-			try {
+-				return wovenClass.callHooks();
+-			} catch (Throwable t) {
+-				ServiceRegistration<?> errorHook = wovenClass.getErrorHook();
+-				Bundle errorBundle = errorHook != null ? errorHook.getReference().getBundle() : manager.getGeneration().getRevision().getBundle();
+-				container.getEventPublisher().publishFrameworkEvent(FrameworkEvent.ERROR, errorBundle, t);
+-				// fail hard with a class loading error
+-				ClassFormatError error = new ClassFormatError("Unexpected error from weaving hook."); //$NON-NLS-1$
+-				error.initCause(t);
+-				throw error;
+-			} finally {
+-				context.processClassNameStack.remove(name);
++		boolean threadLocalSet = false;
++		try {
++			// create a woven class object and add it to the thread local stack
++			WovenClassImpl wovenClass = new WovenClassImpl(name, classbytes, entry, classpathEntry, loader, container, blackList);
++			WovenClassContext context = wovenClassContext.get();
++			if (context == null) {
++				context = new WovenClassContext();
++				wovenClassContext.set(context);
++				threadLocalSet = true;
++			}
++			context.wovenClassStack.add(wovenClass);
++			// If we detect recursion for the same class name then we will not call the
++			// weaving hooks for the second request to load.
++			// Note that this means the actual bytes that get used to define the class
++			// will not have been woven at all.
++			if (!context.processClassNameStack.contains(name)) {
++				context.processClassNameStack.add(name);
++				// call the weaving hooks
++				try {
++					return wovenClass.callHooks();
++				} catch (Throwable t) {
++					ServiceRegistration<?> errorHook = wovenClass.getErrorHook();
++					Bundle errorBundle = errorHook != null ? errorHook.getReference().getBundle() : manager.getGeneration().getRevision().getBundle();
++					container.getEventPublisher().publishFrameworkEvent(FrameworkEvent.ERROR, errorBundle, t);
++					// fail hard with a class loading error
++					ClassFormatError error = new ClassFormatError("Unexpected error from weaving hook."); //$NON-NLS-1$
++					error.initCause(t);
++					throw error;
++				} finally {
++					context.processClassNameStack.remove(name);
++				}
++			}
++		} finally {
++			if (threadLocalSet) {
++				wovenClassContext.remove();
+ 			}
+ 		}
+ 		return null;
+@@ -95,3 +103,4 @@ public class WeavingHookConfigurator extends ClassLoaderHook {
+ 		return true;
+ 	}
+ }
++/* @generated */

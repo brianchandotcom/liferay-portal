@@ -12,10 +12,8 @@
 			<var name="groupName" value="Site Name" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Publishing" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Staging" />
+		<execute macro="Navigator#openWithAppendToBaseURL">
+			<var name="urlAppend" value="group/site-name/~/control_panel/manage?p_p_id=com_liferay_staging_processes_web_portlet_StagingProcessesPortlet&amp;p_p_lifecycle=0&amp;p_p_state=maximized&amp;p_v_l_s_g_id=36653&amp;p_p_auth=FB4rLFyh" />
 		</execute>
 
 		<execute macro="Staging#activateStagingCP">

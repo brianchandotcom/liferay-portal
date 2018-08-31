@@ -17,7 +17,6 @@ package com.liferay.portal.service.test;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
 import com.liferay.portal.workflow.UserWorkflowHandler;
-import com.liferay.portlet.asset.util.AssetEntryIndexer;
 import com.liferay.portlet.usersadmin.util.ContactIndexer;
 import com.liferay.portlet.usersadmin.util.OrganizationIndexer;
 
@@ -31,7 +30,6 @@ public class PortalRegisterTestUtil {
 			return;
 		}
 
-		IndexerRegistryUtil.register(new AssetEntryIndexer());
 		IndexerRegistryUtil.register(new ContactIndexer());
 		IndexerRegistryUtil.register(new OrganizationIndexer());
 

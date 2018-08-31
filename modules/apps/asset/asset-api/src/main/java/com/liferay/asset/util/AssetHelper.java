@@ -81,6 +81,8 @@ public interface AssetHelper {
 			String redirect)
 		throws Exception;
 
+	public boolean isValidWord(String word);
+
 	public Hits search(
 			HttpServletRequest request, AssetEntryQuery assetEntryQuery,
 			int start, int end)

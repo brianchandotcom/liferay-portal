@@ -1,4 +1,3 @@
-<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -12,27 +11,15 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
---%>
 
-<%@ include file="/init.jsp" %>
+package com.liferay.asset.list.constants;
 
-<%
-String redirect = ParamUtil.getString(request, "redirect");
+/**
+ * @author Pavel Savinov
+ */
+public class AssetListWebKeys {
 
-if (Validator.isNull(redirect)) {
-	PortletURL portletURL = renderResponse.createRenderURL();
+	public static final String SCREEN_NAVIGATION_REGISTRY =
+		"SCREEN_NAVIGATION_REGISTRY";
 
-	redirect = portletURL.toString();
 }
-
-portletDisplay.setShowBackIcon(true);
-portletDisplay.setURLBack(redirect);
-
-renderResponse.setTitle(assetListDisplayContext.getAssetListEntryTitle());
-%>
-
-<liferay-frontend:screen-navigation
-	context="<%= assetListDisplayContext.getAssetListEntry() %>"
-	key="<%= AssetListFormConstants.SCREEN_NAVIGATION_KEY_ASSET_LIST %>"
-	portletURL="<%= currentURLObj %>"
-/>

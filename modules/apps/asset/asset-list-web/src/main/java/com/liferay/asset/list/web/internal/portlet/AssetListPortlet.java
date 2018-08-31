@@ -15,11 +15,19 @@
 package com.liferay.asset.list.web.internal.portlet;
 
 import com.liferay.asset.list.constants.AssetListPortletKeys;
+import com.liferay.asset.list.constants.AssetListWebKeys;
+import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationRegistry;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 
+import java.io.IOException;
+
 import javax.portlet.Portlet;
+import javax.portlet.PortletException;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Jürgen Kappler
@@ -45,4 +53,20 @@ import org.osgi.service.component.annotations.Component;
 	service = Portlet.class
 )
 public class AssetListPortlet extends MVCPortlet {
+
+	@Override
+	protected void doDispatch(
+			RenderRequest renderRequest, RenderResponse renderResponse)
+		throws IOException, PortletException {
+
+		renderRequest.setAttribute(
+			AssetListWebKeys.SCREEN_NAVIGATION_REGISTRY,
+			_screenNavigationRegistry);
+
+		super.doDispatch(renderRequest, renderResponse);
+	}
+
+	@Reference
+	private ScreenNavigationRegistry _screenNavigationRegistry;
+
 }

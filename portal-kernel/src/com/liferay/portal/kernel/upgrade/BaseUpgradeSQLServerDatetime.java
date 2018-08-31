@@ -36,8 +36,6 @@ public class BaseUpgradeSQLServerDatetime extends UpgradeProcess {
 
 	public BaseUpgradeSQLServerDatetime(Class<?>[] tableClasses) {
 		_tableClasses = tableClasses;
-		_newType = "datetime2";
-		_newSize = 6;
 	}
 
 	@Override
@@ -74,20 +72,20 @@ public class BaseUpgradeSQLServerDatetime extends UpgradeProcess {
 				return;
 			}
 
-			String newTypeName = dbInspector.normalizeName(_newType);
+			String newTypeName = dbInspector.normalizeName(_NEW_TYPE);
 
 			String newTypeDefinition = StringBundler.concat(
-				newTypeName, "(", _newSize, ")");
+				newTypeName, "(", _NEW_SIZE, ")");
 
 			for (Map.Entry<String, Integer> tableColumnEntry :
 					getTableColumnsMap(tableClass).entrySet()) {
 
-				String columnName = dbInspector.normalizeName(
-					tableColumnEntry.getKey(), databaseMetaData);
-
 				if (tableColumnEntry.getValue() != Types.TIMESTAMP) {
 					continue;
 				}
+
+				String columnName = dbInspector.normalizeName(
+					tableColumnEntry.getKey(), databaseMetaData);
 
 				try (ResultSet columnRS = databaseMetaData.getColumns(
 						null, null, tableName, columnName)) {
@@ -102,12 +100,15 @@ public class BaseUpgradeSQLServerDatetime extends UpgradeProcess {
 					}
 
 					if (newTypeName.equals(columnRS.getString("TYPE_NAME")) &&
-						(_newSize == columnRS.getInt("DECIMAL_DIGITS"))) {
+						(_NEW_SIZE == columnRS.getInt("DECIMAL_DIGITS"))) {
 
-						_log.warn(
-							StringBundler.concat(
-								"Column ", columnName, " in Table ", tableName,
-								" already is ", newTypeDefinition));
+						if (_log.isWarnEnabled()) {
+							_log.warn(
+								StringBundler.concat(
+									"Column ", columnName, " in Table ",
+									tableName, " already is ",
+									newTypeDefinition));
+						}
 
 						continue;
 					}
@@ -120,11 +121,13 @@ public class BaseUpgradeSQLServerDatetime extends UpgradeProcess {
 		}
 	}
 
+	private static final int _NEW_SIZE = 6;
+
+	private static final String _NEW_TYPE = "datetime2";
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		BaseUpgradeSQLServerDatetime.class);
 
-	private final int _newSize;
-	private final String _newType;
 	private final Class<?>[] _tableClasses;
 
 }

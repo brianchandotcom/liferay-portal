@@ -16,7 +16,7 @@
 
 <%@ include file="/html/taglib/aui/field_wrapper/init.jsp" %>
 
-	<<%= showForLabel ? "label" : "span" %> <%= AUIUtil.buildLabel("wrapper", inlineField, showForLabel, name, disabled) %>>
+	<<%= showForLabel ? "label" : "span" %> <%= AUIUtil.buildLabel("wrapper", inlineField, showForLabel, name) %>>
 		<liferay-ui:message key="<%= label %>" />
 
 		<c:if test="<%= required %>">

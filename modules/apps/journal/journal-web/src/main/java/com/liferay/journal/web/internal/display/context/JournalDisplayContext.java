@@ -15,11 +15,9 @@
 package com.liferay.journal.web.internal.display.context;
 
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
-import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.storage.Fields;
-import com.liferay.dynamic.data.mapping.util.DDMNavigationHelper;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandler;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerRegistryUtil;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
@@ -68,16 +66,12 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortalPreferences;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
-import com.liferay.portal.kernel.portlet.PortletProvider;
-import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.portlet.PortletRequestModel;
-import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
@@ -89,10 +83,8 @@ import com.liferay.portal.kernel.search.SearchContextFactory;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portal.kernel.service.PortletLocalServiceUtil;
 import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalServiceUtil;
 import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
-import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -105,7 +97,6 @@ import com.liferay.portal.kernel.util.PrefsParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.kernel.webdav.WebDAVUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.staging.StagingGroupHelper;
 import com.liferay.staging.StagingGroupHelperUtil;
@@ -124,7 +115,6 @@ import java.util.Objects;
 import java.util.function.Consumer;
 
 import javax.portlet.PortletPreferences;
-import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
@@ -818,7 +808,11 @@ public class JournalDisplayContext {
 
 					add(
 						navigationItem -> {
-							navigationItem.setHref(_getTemplatesURL());
+							navigationItem.setActive(
+								currentItem.equals("templates"));
+							navigationItem.setHref(
+								_liferayPortletResponse.createRenderURL(),
+								"mvcPath", "/view_ddm_templates.jsp");
 							navigationItem.setLabel(
 								LanguageUtil.get(_request, "templates"));
 						});
@@ -1798,49 +1792,6 @@ public class JournalDisplayContext {
 		statuses.add(WorkflowConstants.STATUS_EXPIRED);
 
 		return statuses;
-	}
-
-	private String _getTemplatesURL() {
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
-
-		Portlet portlet = PortletLocalServiceUtil.getPortletById(
-			portletDisplay.getId());
-
-		PortletURL portletURL = PortletURLFactoryUtil.create(
-			_liferayPortletRequest,
-			PortletProviderUtil.getPortletId(
-				DDMTemplate.class.getName(), PortletProvider.Action.VIEW),
-			PortletRequest.RENDER_PHASE);
-
-		portletURL.setParameter("mvcPath", "/view_template.jsp");
-		portletURL.setParameter(
-			"navigationStartsOn", DDMNavigationHelper.VIEW_TEMPLATES);
-		portletURL.setParameter("backURL", themeDisplay.getURLCurrent());
-		portletURL.setParameter(
-			"groupId", String.valueOf(themeDisplay.getScopeGroupId()));
-		portletURL.setParameter(
-			"classNameId",
-			String.valueOf(PortalUtil.getClassNameId(DDMStructure.class)));
-		portletURL.setParameter(
-			"resourceClassNameId",
-			String.valueOf(PortalUtil.getClassNameId(JournalArticle.class)));
-		portletURL.setParameter(
-			"refererPortletName", JournalPortletKeys.JOURNAL);
-		portletURL.setParameter(
-			"refererWebDAVToken", WebDAVUtil.getStorageToken(portlet));
-		portletURL.setParameter(
-			"scopeTitle", LanguageUtil.get(_request, "templates"));
-		portletURL.setParameter(
-			"showAncestorScopes",
-			String.valueOf(
-				_journalWebConfiguration.showAncestorScopesByDefault()));
-		portletURL.setParameter("showCacheableInput", Boolean.TRUE.toString());
-		portletURL.setParameter("showHeader", Boolean.FALSE.toString());
-
-		return portletURL.toString();
 	}
 
 	private boolean _isShowPublishAction() {

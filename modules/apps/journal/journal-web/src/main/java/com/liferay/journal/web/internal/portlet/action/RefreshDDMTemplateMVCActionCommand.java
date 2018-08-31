@@ -14,11 +14,11 @@
 
 package com.liferay.journal.web.internal.portlet.action;
 
-import com.liferay.dynamic.data.mapping.service.DDMStructureService;
 import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
-import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.servlet.SessionMessages;
+import com.liferay.portal.kernel.util.Portal;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -33,42 +33,24 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + JournalPortletKeys.JOURNAL,
-		"mvc.command.name=/journal/delete_ddm_structure"
+		"mvc.command.name=/journal/refresh_ddm_template"
 	},
 	service = MVCActionCommand.class
 )
-public class DeleteDDMStructureMVCActionCommand extends BaseMVCActionCommand {
+public class RefreshDDMTemplateMVCActionCommand extends BaseMVCActionCommand {
 
 	@Override
 	protected void doProcessAction(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		long[] deleteDDMStructureIds = null;
-
-		long ddmStructureId = ParamUtil.getLong(
-			actionRequest, "ddmStructureId");
-
-		if (ddmStructureId > 0) {
-			deleteDDMStructureIds = new long[] {ddmStructureId};
-		}
-		else {
-			deleteDDMStructureIds = ParamUtil.getLongValues(
-				actionRequest, "rowIds");
-		}
-
-		for (long deleteDDMStructureId : deleteDDMStructureIds) {
-			_ddmStructureService.deleteStructure(deleteDDMStructureId);
-		}
+		SessionMessages.add(
+			actionRequest,
+			_portal.getPortletId(actionRequest) +
+				SessionMessages.KEY_SUFFIX_HIDE_DEFAULT_SUCCESS_MESSAGE);
 	}
 
-	@Reference(unbind = "-")
-	protected void setDDMStructureService(
-		DDMStructureService ddmStructureService) {
-
-		_ddmStructureService = ddmStructureService;
-	}
-
-	private DDMStructureService _ddmStructureService;
+	@Reference
+	private Portal _portal;
 
 }

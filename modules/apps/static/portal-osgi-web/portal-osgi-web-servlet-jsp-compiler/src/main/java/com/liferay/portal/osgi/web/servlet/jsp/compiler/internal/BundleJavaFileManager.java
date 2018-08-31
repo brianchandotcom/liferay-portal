@@ -37,7 +37,6 @@ import java.util.Set;
 import javax.tools.ForwardingJavaFileManager;
 import javax.tools.JavaFileManager;
 import javax.tools.JavaFileObject;
-import javax.tools.JavaFileObject.Kind;
 import javax.tools.StandardLocation;
 import javax.tools.ToolProvider;
 
@@ -102,11 +101,11 @@ public class BundleJavaFileManager
 
 	@Override
 	public Iterable<JavaFileObject> list(
-			Location location, String packageName, Set<Kind> kinds,
-			boolean recurse)
+			Location location, String packageName,
+			Set<JavaFileObject.Kind> kinds, boolean recurse)
 		throws IOException {
 
-		if (!kinds.contains(Kind.CLASS)) {
+		if (!kinds.contains(JavaFileObject.Kind.CLASS)) {
 			return Collections.emptyList();
 		}
 
@@ -198,7 +197,8 @@ public class BundleJavaFileManager
 	private static final Log _log = LogFactoryUtil.getLog(
 		BundleJavaFileManager.class);
 
-	private static final Set<Kind> _kinds = EnumSet.of(Kind.CLASS);
+	private static final Set<JavaFileObject.Kind> _kinds = EnumSet.of(
+		JavaFileObject.Kind.CLASS);
 	private static SoftReference<Field> _nameFieldReference;
 
 	static {

@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.util.InetAddressUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.SocketUtil;
-import com.liferay.portal.kernel.util.SocketUtil.ServerSocketConfigurator;
 
 import java.io.IOException;
 
@@ -127,7 +126,7 @@ public class SocketWelder extends BaseWelder {
 	}
 
 	protected class SocketWelderServerSocketConfigurator
-		implements ServerSocketConfigurator {
+		implements SocketUtil.ServerSocketConfigurator {
 
 		@Override
 		public void configure(ServerSocket serverSocket)

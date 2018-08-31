@@ -29,7 +29,6 @@ import java.net.URL;
 import java.util.Dictionary;
 import java.util.Hashtable;
 import java.util.Map;
-import java.util.Map.Entry;
 
 import javax.servlet.Servlet;
 import javax.servlet.ServletContext;
@@ -162,7 +161,7 @@ public class ServletContextHelperRegistrationImpl
 			properties.put(key, serviceReference.getProperty(key));
 		}
 
-		for (Entry<String, String> entry : contextParameters.entrySet()) {
+		for (Map.Entry<String, String> entry : contextParameters.entrySet()) {
 			String key = entry.getKey();
 			String value = entry.getValue();
 

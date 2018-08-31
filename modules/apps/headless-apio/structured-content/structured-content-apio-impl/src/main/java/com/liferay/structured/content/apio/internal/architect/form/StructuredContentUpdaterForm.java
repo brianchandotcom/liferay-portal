@@ -15,7 +15,6 @@
 package com.liferay.structured.content.apio.internal.architect.form;
 
 import com.liferay.apio.architect.form.Form;
-import com.liferay.apio.architect.form.Form.Builder;
 
 import java.util.Collections;
 import java.util.Locale;
@@ -39,7 +38,7 @@ public class StructuredContentUpdaterForm {
 	 * @review
 	 */
 	public static Form<StructuredContentUpdaterForm> buildForm(
-		Builder<StructuredContentUpdaterForm> formBuilder) {
+		Form.Builder<StructuredContentUpdaterForm> formBuilder) {
 
 		return formBuilder.title(
 			__ -> "The structured content updater form"

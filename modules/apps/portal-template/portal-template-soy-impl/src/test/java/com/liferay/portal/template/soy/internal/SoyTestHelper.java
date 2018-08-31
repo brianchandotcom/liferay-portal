@@ -16,7 +16,6 @@ package com.liferay.portal.template.soy.internal;
 
 import com.google.common.io.CharStreams;
 import com.google.template.soy.SoyFileSet;
-import com.google.template.soy.SoyFileSet.Builder;
 
 import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.cache.PortalCache;
@@ -89,7 +88,7 @@ public class SoyTestHelper {
 	protected SoyFileSet getSoyFileSet(List<TemplateResource> templateResources)
 		throws Exception {
 
-		Builder builder = SoyFileSet.builder();
+		SoyFileSet.Builder builder = SoyFileSet.builder();
 
 		for (TemplateResource templateResource : templateResources) {
 			Reader reader = templateResource.getReader();

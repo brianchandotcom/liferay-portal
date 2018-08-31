@@ -27,7 +27,7 @@ import org.osgi.service.component.annotations.Component;
 
 import org.quartz.CalendarIntervalScheduleBuilder;
 import org.quartz.CronScheduleBuilder;
-import org.quartz.DateBuilder.IntervalUnit;
+import org.quartz.DateBuilder;
 import org.quartz.ScheduleBuilder;
 import org.quartz.SimpleScheduleBuilder;
 import org.quartz.SimpleTrigger;
@@ -79,7 +79,7 @@ public class QuartzTriggerFactory implements TriggerFactory {
 			CalendarIntervalScheduleBuilder.calendarIntervalSchedule();
 
 		calendarIntervalScheduleBuilder.withInterval(
-			interval, IntervalUnit.valueOf(timeUnit.name()));
+			interval, DateBuilder.IntervalUnit.valueOf(timeUnit.name()));
 
 		return createTrigger(
 			jobName, groupName, startDate, endDate,

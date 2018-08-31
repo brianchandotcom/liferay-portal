@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.resiliency.PortalResiliencyException;
 import com.liferay.portal.kernel.resiliency.spi.agent.annotation.Direction;
 import com.liferay.portal.kernel.servlet.BufferCacheServletResponse;
 import com.liferay.portal.kernel.servlet.MetaInfoCacheServletResponse;
-import com.liferay.portal.kernel.servlet.MetaInfoCacheServletResponse.MetaData;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -216,7 +215,7 @@ public class SPIAgentResponse extends SPIAgentSerializable {
 	protected Map<String, Serializable> deltaSessionAttributes;
 	protected Map<String, Serializable> distributedRequestAttributes;
 	protected Exception exception;
-	protected MetaData metaData;
+	protected MetaInfoCacheServletResponse.MetaData metaData;
 	protected boolean portalResiliencyResponse;
 	protected String stringData;
 

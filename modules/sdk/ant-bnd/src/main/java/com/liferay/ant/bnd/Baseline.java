@@ -14,8 +14,6 @@
 
 package com.liferay.ant.bnd;
 
-import aQute.bnd.differ.Baseline.BundleInfo;
-import aQute.bnd.differ.Baseline.Info;
 import aQute.bnd.differ.DiffPluginImpl;
 import aQute.bnd.osgi.Constants;
 import aQute.bnd.osgi.Instructions;
@@ -99,7 +97,7 @@ public abstract class Baseline {
 				return match;
 			}
 
-			aQute.bnd.differ.Baseline baseline = new aQute.bnd.differ.Baseline(
+			Baseline baseline = new Baseline(
 				baselineProcessor, new DiffPluginImpl());
 
 			List<String> packageFilter = new ArrayList<>();
@@ -110,14 +108,14 @@ public abstract class Baseline {
 
 			packageFilter.add("*");
 
-			Set<Info> infos = baseline.baseline(
+			Set<Baseline.Info> infos = baseline.baseline(
 				newJar, oldJar, new Instructions(packageFilter));
 
 			if (infos.isEmpty()) {
 				return match;
 			}
 
-			BundleInfo bundleInfo = baseline.getBundleInfo();
+			Baseline.BundleInfo bundleInfo = baseline.getBundleInfo();
 
 			if (_forceCalculatedVersion) {
 				bundleInfo.suggestedVersion = calculateVersion(
@@ -142,14 +140,17 @@ public abstract class Baseline {
 					bundleInfo.newerVersion, bundleInfo.suggestedVersion);
 			}
 
-			Info[] infosArray = infos.toArray(new Info[infos.size()]);
+			Baseline.Info[] infosArray = infos.toArray(
+				new Baseline.Info[infos.size()]);
 
 			Arrays.sort(
 				infosArray,
-				new Comparator<Info>() {
+				new Comparator<Baseline.Info>() {
 
 					@Override
-					public int compare(Info info1, Info info2) {
+					public int compare(
+						Baseline.Info info1, Baseline.Info info2) {
+
 						return info1.packageName.compareTo(info2.packageName);
 					}
 
@@ -157,7 +158,7 @@ public abstract class Baseline {
 
 			doHeader(bundleInfo);
 
-			for (Info info : infosArray) {
+			for (Baseline.Info info : infosArray) {
 				if (info.mismatch) {
 					match = false;
 				}
@@ -319,14 +320,15 @@ public abstract class Baseline {
 		_sourceDir = sourceDir;
 	}
 
-	protected Version calculateVersion(Version version, Set<Info> infos)
+	protected Version calculateVersion(
+			Version version, Set<Baseline.Info> infos)
 		throws IOException {
 
 		Delta highestDelta = Delta.UNCHANGED;
 
 		Set<String> movedPackages = getMovedPackages();
 
-		for (Info info : infos) {
+		for (Baseline.Info info : infos) {
 			Delta delta = info.packageDiff.getDelta();
 
 			if ((delta == Delta.ADDED) || (delta == Delta.CHANGED)) {
@@ -387,7 +389,7 @@ public abstract class Baseline {
 		sb.deleteCharAt(sb.length() - 1);
 	}
 
-	protected void doHeader(BundleInfo bundleInfo) throws IOException {
+	protected void doHeader(Baseline.BundleInfo bundleInfo) throws IOException {
 		if (!bundleInfo.mismatch) {
 			return;
 		}
@@ -416,7 +418,8 @@ public abstract class Baseline {
 		persistLog(output);
 	}
 
-	protected void doInfo(BundleInfo bundleInfo, Info info, String warnings)
+	protected void doInfo(
+			Baseline.BundleInfo bundleInfo, Baseline.Info info, String warnings)
 		throws IOException {
 
 		doPackagesHeader(bundleInfo);
@@ -445,7 +448,9 @@ public abstract class Baseline {
 		}
 	}
 
-	protected void doPackagesHeader(BundleInfo bundleInfo) throws IOException {
+	protected void doPackagesHeader(Baseline.BundleInfo bundleInfo)
+		throws IOException {
+
 		if (_headerPrinted) {
 			return;
 		}
@@ -462,7 +467,8 @@ public abstract class Baseline {
 			"==========", "==========");
 	}
 
-	protected boolean generatePackageInfo(Jar jar, Info info, Delta delta)
+	protected boolean generatePackageInfo(
+			Jar jar, Baseline.Info info, Delta delta)
 		throws Exception {
 
 		boolean correct = true;
@@ -580,12 +586,12 @@ public abstract class Baseline {
 		return String.valueOf(deltaString.charAt(0));
 	}
 
-	protected boolean hasPackageRemoved(Iterable<Info> infos)
+	protected boolean hasPackageRemoved(Iterable<Baseline.Info> infos)
 		throws IOException {
 
 		Set<String> movedPackages = getMovedPackages();
 
-		for (Info info : infos) {
+		for (Baseline.Info info : infos) {
 			if ((info.packageDiff.getDelta() == Delta.REMOVED) &&
 				!movedPackages.contains(info.packageName)) {
 

@@ -18,7 +18,7 @@ import com.liferay.portal.fabric.netty.rpc.RPCSerializable;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
 
 import io.netty.channel.Channel;
-import io.netty.channel.ChannelHandler.Sharable;
+import io.netty.channel.ChannelHandler;
 import io.netty.channel.embedded.EmbeddedChannel;
 
 import java.lang.reflect.Constructor;
@@ -68,7 +68,8 @@ public class NettyRPCChannelHandlerTest {
 	@Test
 	public void testStructure() throws ReflectiveOperationException {
 		Assert.assertNotNull(
-			NettyRPCChannelHandler.class.getAnnotation(Sharable.class));
+			NettyRPCChannelHandler.class.getAnnotation(
+				ChannelHandler.Sharable.class));
 
 		Field instanceField = NettyRPCChannelHandler.class.getField("INSTANCE");
 

@@ -15,7 +15,6 @@
 package com.liferay.person.apio.internal.architect.form;
 
 import com.liferay.apio.architect.form.Form;
-import com.liferay.apio.architect.form.Form.Builder;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -38,7 +37,7 @@ public class PersonUpdaterForm {
 	 * @return a person updater form
 	 */
 	public static Form<PersonUpdaterForm> buildForm(
-		Builder<PersonUpdaterForm> formBuilder) {
+		Form.Builder<PersonUpdaterForm> formBuilder) {
 
 		return formBuilder.title(
 			__ -> "The person updater form"

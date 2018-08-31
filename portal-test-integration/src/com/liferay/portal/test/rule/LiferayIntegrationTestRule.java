@@ -18,7 +18,6 @@ import com.liferay.petra.log4j.Log4JUtil;
 import com.liferay.portal.kernel.process.ClassPathUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.BaseTestRule;
-import com.liferay.portal.kernel.test.rule.BaseTestRule.StatementWrapper;
 import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
 import com.liferay.portal.kernel.test.rule.TimeoutTestRule;
 import com.liferay.portal.kernel.test.rule.callback.CompanyProviderTestCallback;
@@ -102,7 +101,7 @@ public class LiferayIntegrationTestRule extends AggregateTestRule {
 			public Statement apply(
 				Statement statement, Description description) {
 
-				return new StatementWrapper(statement) {
+				return new BaseTestRule.StatementWrapper(statement) {
 
 					@Override
 					public void evaluate() throws Throwable {

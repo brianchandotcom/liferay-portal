@@ -17,7 +17,7 @@ package com.liferay.portal.fabric.netty.agent;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.fabric.netty.NettyTestUtil;
 import com.liferay.portal.fabric.netty.rpc.handlers.NettyRPCChannelHandler;
-import com.liferay.portal.fabric.status.JMXProxyUtil.ProcessCallableExecutor;
+import com.liferay.portal.fabric.status.JMXProxyUtil;
 import com.liferay.portal.kernel.concurrent.NoticeableFuture;
 import com.liferay.portal.kernel.process.ProcessCallable;
 import com.liferay.portal.kernel.process.ProcessException;
@@ -53,7 +53,7 @@ public class NettyFabricAgentProcessCallableExecutorTest {
 		channelPipeline.addFirst(
 			NettyRPCChannelHandler.NAME, NettyRPCChannelHandler.INSTANCE);
 
-		ProcessCallableExecutor processCallableExecutor =
+		JMXProxyUtil.ProcessCallableExecutor processCallableExecutor =
 			new NettyFabricAgentProcessCallableExecutor(embeddedChannel);
 
 		NoticeableFuture<Serializable> noticeableFuture =

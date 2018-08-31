@@ -23,7 +23,6 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
@@ -175,7 +174,7 @@ public class ConcurrentLFUCache<K, V> {
 	}
 
 	private void _cleanUp() {
-		List<Entry<K, ValueWrapper>> valueWrappers = new ArrayList<>(
+		List<Map.Entry<K, ValueWrapper>> valueWrappers = new ArrayList<>(
 			_cache.entrySet());
 
 		Collections.sort(valueWrappers, _entryComparator);
@@ -184,10 +183,10 @@ public class ConcurrentLFUCache<K, V> {
 
 		_evictCount.getAndAdd(cleanUpSize);
 
-		Iterator<Entry<K, ValueWrapper>> itr = valueWrappers.iterator();
+		Iterator<Map.Entry<K, ValueWrapper>> itr = valueWrappers.iterator();
 
 		while ((cleanUpSize-- > 0) && itr.hasNext()) {
-			Entry<K, ValueWrapper> entry = itr.next();
+			Map.Entry<K, ValueWrapper> entry = itr.next();
 
 			K key = entry.getKey();
 
@@ -217,11 +216,12 @@ public class ConcurrentLFUCache<K, V> {
 	private final Lock _writeLock;
 
 	private class EntryComparator
-		implements Comparator<Entry<K, ValueWrapper>> {
+		implements Comparator<Map.Entry<K, ValueWrapper>> {
 
 		@Override
 		public int compare(
-			Entry<K, ValueWrapper> entry1, Entry<K, ValueWrapper> entry2) {
+			Map.Entry<K, ValueWrapper> entry1,
+			Map.Entry<K, ValueWrapper> entry2) {
 
 			ValueWrapper valueWrapper1 = entry1.getValue();
 			ValueWrapper valueWrapper2 = entry2.getValue();

@@ -20,7 +20,7 @@ import aQute.bnd.header.Parameters;
 import aQute.bnd.osgi.Analyzer;
 import aQute.bnd.osgi.Builder;
 import aQute.bnd.osgi.Constants;
-import aQute.bnd.osgi.Descriptors.PackageRef;
+import aQute.bnd.osgi.Descriptors;
 import aQute.bnd.osgi.FileResource;
 import aQute.bnd.osgi.Jar;
 import aQute.bnd.osgi.Packages;
@@ -80,7 +80,6 @@ import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Properties;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
@@ -439,7 +438,7 @@ public class WabProcessor {
 
 		String packageName = value.substring(0, index);
 
-		PackageRef packageRef = analyzer.getPackageRef(packageName);
+		Descriptors.PackageRef packageRef = analyzer.getPackageRef(packageName);
 
 		packages.put(packageRef, new Attrs());
 	}
@@ -553,12 +552,12 @@ public class WabProcessor {
 
 		Map<String, Resource> resources = jar.getResources();
 
-		Set<Entry<String, Resource>> entrySet = resources.entrySet();
+		Set<Map.Entry<String, Resource>> entrySet = resources.entrySet();
 
-		Iterator<Entry<String, Resource>> iterator = entrySet.iterator();
+		Iterator<Map.Entry<String, Resource>> iterator = entrySet.iterator();
 
 		while (iterator.hasNext()) {
-			Entry<String, Resource> entry = iterator.next();
+			Map.Entry<String, Resource> entry = iterator.next();
 
 			String path = entry.getKey();
 			Resource resource = entry.getValue();
@@ -606,7 +605,7 @@ public class WabProcessor {
 			StringBundler sb = new StringBundler(
 				(_importPackageParameters.size() * 4) + 1);
 
-			for (Entry<String, Attrs> entry :
+			for (Map.Entry<String, Attrs> entry :
 					_importPackageParameters.entrySet()) {
 
 				String importPackageName = entry.getKey();

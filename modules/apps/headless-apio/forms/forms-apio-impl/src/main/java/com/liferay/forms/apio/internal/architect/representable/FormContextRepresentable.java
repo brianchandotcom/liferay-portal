@@ -17,7 +17,6 @@ package com.liferay.forms.apio.internal.architect.representable;
 import static com.liferay.forms.apio.internal.util.LocalizedValueUtil.getLocalizedString;
 
 import com.liferay.apio.architect.representor.NestedRepresentor;
-import com.liferay.apio.architect.representor.NestedRepresentor.Builder;
 import com.liferay.apio.architect.representor.Representable;
 import com.liferay.apio.architect.representor.Representor;
 import com.liferay.forms.apio.architect.identifier.FormContextIdentifier;
@@ -63,7 +62,7 @@ public class FormContextRepresentable
 	}
 
 	private NestedRepresentor<FormFieldContextWrapper> _buildFormContextFields(
-		Builder<FormFieldContextWrapper> builder) {
+		NestedRepresentor.Builder<FormFieldContextWrapper> builder) {
 
 		return builder.types(
 			"FormFieldContext"
@@ -98,7 +97,7 @@ public class FormContextRepresentable
 	}
 
 	private NestedRepresentor<FormPageContextWrapper> _buildFormContextPages(
-		Builder<FormPageContextWrapper> builder) {
+		NestedRepresentor.Builder<FormPageContextWrapper> builder) {
 
 		return builder.types(
 			"FormPageContext"

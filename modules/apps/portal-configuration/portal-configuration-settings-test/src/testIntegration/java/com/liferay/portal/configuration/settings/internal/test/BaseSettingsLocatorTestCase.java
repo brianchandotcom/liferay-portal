@@ -15,7 +15,7 @@
 package com.liferay.portal.configuration.settings.internal.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition.Scope;
+import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 import com.liferay.portal.configuration.metatype.util.ConfigurationScopedPidUtil;
 import com.liferay.portal.configuration.settings.internal.constants.SettingsLocatorTestConstants;
 import com.liferay.portal.configuration.test.util.ConfigurationTestUtil;
@@ -124,13 +124,15 @@ public abstract class BaseSettingsLocatorTestCase {
 		return value;
 	}
 
-	protected String saveScopedConfiguration(Scope scope, long scopePrimKey)
+	protected String saveScopedConfiguration(
+			ExtendedObjectClassDefinition.Scope scope, long scopePrimKey)
 		throws Exception {
 
 		return saveScopedConfiguration(scope, String.valueOf(scopePrimKey));
 	}
 
-	protected String saveScopedConfiguration(Scope scope, String scopePrimKey)
+	protected String saveScopedConfiguration(
+			ExtendedObjectClassDefinition.Scope scope, String scopePrimKey)
 		throws Exception {
 
 		return saveConfiguration(

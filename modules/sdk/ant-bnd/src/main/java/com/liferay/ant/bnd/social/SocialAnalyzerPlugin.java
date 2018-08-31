@@ -15,7 +15,7 @@
 package com.liferay.ant.bnd.social;
 
 import aQute.bnd.osgi.Analyzer;
-import aQute.bnd.osgi.Descriptors.PackageRef;
+import aQute.bnd.osgi.Descriptors;
 import aQute.bnd.osgi.Jar;
 import aQute.bnd.osgi.Packages;
 import aQute.bnd.osgi.Resource;
@@ -69,7 +69,8 @@ public class SocialAnalyzerPlugin implements AnalyzerPlugin {
 
 			String packageName = getPackageName(className);
 
-			PackageRef packageRef = analyzer.getPackageRef(packageName);
+			Descriptors.PackageRef packageRef = analyzer.getPackageRef(
+				packageName);
 
 			packages.put(packageRef);
 		}

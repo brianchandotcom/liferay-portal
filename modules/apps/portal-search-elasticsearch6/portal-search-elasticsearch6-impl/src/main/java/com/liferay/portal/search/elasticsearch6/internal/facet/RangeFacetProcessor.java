@@ -30,7 +30,7 @@ import org.elasticsearch.action.search.SearchRequestBuilder;
 import org.elasticsearch.search.aggregations.AggregationBuilder;
 import org.elasticsearch.search.aggregations.AggregationBuilders;
 import org.elasticsearch.search.aggregations.bucket.range.RangeAggregationBuilder;
-import org.elasticsearch.search.aggregations.bucket.range.RangeAggregator.Range;
+import org.elasticsearch.search.aggregations.bucket.range.RangeAggregator;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -107,8 +107,8 @@ public class RangeFacetProcessor
 		rangeAggregationBuilder.addRange(createRange(rangeString, range));
 	}
 
-	protected Range createRange(String key, String[] range) {
-		return new Range(key, range[0], range[1]);
+	protected RangeAggregator.Range createRange(String key, String[] range) {
+		return new RangeAggregator.Range(key, range[0], range[1]);
 	}
 
 }

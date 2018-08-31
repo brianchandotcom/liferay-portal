@@ -15,12 +15,6 @@
 package com.liferay.portal.fabric.status;
 
 import com.liferay.petra.reflect.ReflectionUtil;
-import com.liferay.portal.fabric.status.JMXProxyUtil.GetAttributeProcessCallable;
-import com.liferay.portal.fabric.status.JMXProxyUtil.JMXProxyInvocationHandler;
-import com.liferay.portal.fabric.status.JMXProxyUtil.OperationProcessCallable;
-import com.liferay.portal.fabric.status.JMXProxyUtil.Optional;
-import com.liferay.portal.fabric.status.JMXProxyUtil.ProcessCallableExecutor;
-import com.liferay.portal.fabric.status.JMXProxyUtil.SetAttributeProcessCallable;
 import com.liferay.portal.kernel.concurrent.DefaultNoticeableFuture;
 import com.liferay.portal.kernel.concurrent.NoticeableFuture;
 import com.liferay.portal.kernel.process.ProcessCallable;
@@ -231,7 +225,8 @@ public class JMXProxyUtilTest {
 				ProxyUtil.newProxyInstance(
 					JMXProxyUtil.class.getClassLoader(),
 					new Class<?>[] {Runnable.class},
-					new JMXProxyInvocationHandler(objectName, null))));
+					new JMXProxyUtil.JMXProxyInvocationHandler(
+						objectName, null))));
 		Assert.assertFalse(
 			JMXProxyUtil.equals(
 				objectName,
@@ -253,8 +248,9 @@ public class JMXProxyUtilTest {
 
 	@Test
 	public void testGetAttributeProcessCallableFailureInstanceNotFound() {
-		GetAttributeProcessCallable getAttributeProcessCallable =
-			new GetAttributeProcessCallable(_unknowObjectName, "Name", true);
+		JMXProxyUtil.GetAttributeProcessCallable getAttributeProcessCallable =
+			new JMXProxyUtil.GetAttributeProcessCallable(
+				_unknowObjectName, "Name", true);
 
 		try {
 			getAttributeProcessCallable.call();
@@ -273,8 +269,8 @@ public class JMXProxyUtilTest {
 	public void testGetAttributeProcessCallableFailureInstanceOptional()
 		throws ProcessException {
 
-		GetAttributeProcessCallable getAttributeProcessCallable =
-			new GetAttributeProcessCallable(
+		JMXProxyUtil.GetAttributeProcessCallable getAttributeProcessCallable =
+			new JMXProxyUtil.GetAttributeProcessCallable(
 				_testClassObjectName, "NameX", true);
 
 		Assert.assertNull(getAttributeProcessCallable.call());
@@ -282,8 +278,8 @@ public class JMXProxyUtilTest {
 
 	@Test
 	public void testGetAttributeProcessCallableFailureInstanceRequired() {
-		GetAttributeProcessCallable getAttributeProcessCallable =
-			new GetAttributeProcessCallable(
+		JMXProxyUtil.GetAttributeProcessCallable getAttributeProcessCallable =
+			new JMXProxyUtil.GetAttributeProcessCallable(
 				_testClassObjectName, "NameX", false);
 
 		try {
@@ -391,7 +387,7 @@ public class JMXProxyUtilTest {
 	public void testIsOptional() throws NoSuchMethodException {
 		class TestOptional {
 
-			@Optional
+			@JMXProxyUtil.Optional
 			public void method1() {
 			}
 
@@ -416,8 +412,8 @@ public class JMXProxyUtilTest {
 
 	@Test
 	public void testJMXProxyInvocationHandlerEquals() throws Throwable {
-		JMXProxyInvocationHandler jmxProxyInvocationHandler =
-			new JMXProxyInvocationHandler(
+		JMXProxyUtil.JMXProxyInvocationHandler jmxProxyInvocationHandler =
+			new JMXProxyUtil.JMXProxyInvocationHandler(
 				_testClassObjectName, _processCallableExecutor);
 
 		Assert.assertTrue(
@@ -437,8 +433,8 @@ public class JMXProxyUtilTest {
 
 	@Test
 	public void testJMXProxyInvocationHandlerHashCode() throws Throwable {
-		JMXProxyInvocationHandler jmxProxyInvocationHandler =
-			new JMXProxyInvocationHandler(
+		JMXProxyUtil.JMXProxyInvocationHandler jmxProxyInvocationHandler =
+			new JMXProxyUtil.JMXProxyInvocationHandler(
 				_testClassObjectName, _processCallableExecutor);
 
 		Assert.assertEquals(
@@ -449,8 +445,8 @@ public class JMXProxyUtilTest {
 
 	@Test
 	public void testJMXProxyInvocationHandlerToString() throws Throwable {
-		JMXProxyInvocationHandler jmxProxyInvocationHandler =
-			new JMXProxyInvocationHandler(
+		JMXProxyUtil.JMXProxyInvocationHandler jmxProxyInvocationHandler =
+			new JMXProxyUtil.JMXProxyInvocationHandler(
 				_testClassObjectName, _processCallableExecutor);
 
 		Assert.assertEquals(
@@ -498,8 +494,8 @@ public class JMXProxyUtilTest {
 
 	@Test
 	public void testOperationProcessCallableFail() {
-		OperationProcessCallable operationProcessCallable =
-			new OperationProcessCallable(
+		JMXProxyUtil.OperationProcessCallable operationProcessCallable =
+			new JMXProxyUtil.OperationProcessCallable(
 				_unknowObjectName, "doSomething", new Object[] {"doSomething"},
 				new String[] {String.class.getName()});
 
@@ -518,8 +514,8 @@ public class JMXProxyUtilTest {
 
 	@Test
 	public void testOperationProcessCallableSuccess() throws ProcessException {
-		OperationProcessCallable operationProcessCallable =
-			new OperationProcessCallable(
+		JMXProxyUtil.OperationProcessCallable operationProcessCallable =
+			new JMXProxyUtil.OperationProcessCallable(
 				_testClassObjectName, "doSomething",
 				new Object[] {"doSomething"},
 				new String[] {String.class.getName()});
@@ -529,8 +525,8 @@ public class JMXProxyUtilTest {
 
 	@Test
 	public void testSetAttributeProcessCallableFailureInstanceNotFound() {
-		SetAttributeProcessCallable setAttributeProcessCallable =
-			new SetAttributeProcessCallable(
+		JMXProxyUtil.SetAttributeProcessCallable setAttributeProcessCallable =
+			new JMXProxyUtil.SetAttributeProcessCallable(
 				_unknowObjectName, "Name", "newName", true);
 
 		try {
@@ -552,8 +548,8 @@ public class JMXProxyUtilTest {
 
 		String oldName = _testClass.getName();
 
-		SetAttributeProcessCallable setAttributeProcessCallable =
-			new SetAttributeProcessCallable(
+		JMXProxyUtil.SetAttributeProcessCallable setAttributeProcessCallable =
+			new JMXProxyUtil.SetAttributeProcessCallable(
 				_testClassObjectName, "NameX", "newName", true);
 
 		Assert.assertNull(setAttributeProcessCallable.call());
@@ -563,8 +559,8 @@ public class JMXProxyUtilTest {
 
 	@Test
 	public void testSetAttributeProcessCallableFailureRequired() {
-		SetAttributeProcessCallable setAttributeProcessCallable =
-			new SetAttributeProcessCallable(
+		JMXProxyUtil.SetAttributeProcessCallable setAttributeProcessCallable =
+			new JMXProxyUtil.SetAttributeProcessCallable(
 				_testClassObjectName, "NameX", "newName", false);
 
 		try {
@@ -586,8 +582,8 @@ public class JMXProxyUtilTest {
 
 		String newName = "newName";
 
-		SetAttributeProcessCallable setAttributeProcessCallable =
-			new SetAttributeProcessCallable(
+		JMXProxyUtil.SetAttributeProcessCallable setAttributeProcessCallable =
+			new JMXProxyUtil.SetAttributeProcessCallable(
 				_testClassObjectName, "Name", newName, true);
 
 		Assert.assertNull(setAttributeProcessCallable.call());
@@ -736,8 +732,8 @@ public class JMXProxyUtilTest {
 		return threadInfos;
 	}
 
-	private final ProcessCallableExecutor _processCallableExecutor =
-		new ProcessCallableExecutor() {
+	private final JMXProxyUtil.ProcessCallableExecutor
+		_processCallableExecutor = new JMXProxyUtil.ProcessCallableExecutor() {
 
 			@Override
 			public <V extends Serializable> NoticeableFuture<V> execute(

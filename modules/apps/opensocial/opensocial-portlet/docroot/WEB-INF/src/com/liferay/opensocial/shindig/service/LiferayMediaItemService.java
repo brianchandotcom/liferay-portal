@@ -52,7 +52,6 @@ import org.apache.shindig.protocol.ProtocolException;
 import org.apache.shindig.protocol.RestfulCollection;
 import org.apache.shindig.social.core.model.MediaItemImpl;
 import org.apache.shindig.social.opensocial.model.MediaItem;
-import org.apache.shindig.social.opensocial.model.MediaItem.Type;
 import org.apache.shindig.social.opensocial.spi.CollectionOptions;
 import org.apache.shindig.social.opensocial.spi.GroupId;
 import org.apache.shindig.social.opensocial.spi.MediaItemService;
@@ -535,13 +534,13 @@ public class LiferayMediaItemService implements MediaItemService {
 		String contentType = MimeTypesUtil.getContentType(fileName);
 
 		if (contentType.startsWith("audio")) {
-			return Type.AUDIO;
+			return MediaItem.Type.AUDIO;
 		}
 		else if (contentType.startsWith("image")) {
-			return Type.IMAGE;
+			return MediaItem.Type.IMAGE;
 		}
 		else if (contentType.startsWith("video")) {
-			return Type.VIDEO;
+			return MediaItem.Type.VIDEO;
 		}
 		else {
 			return null;

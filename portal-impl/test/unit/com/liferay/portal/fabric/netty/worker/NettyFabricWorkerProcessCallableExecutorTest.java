@@ -21,7 +21,7 @@ import com.liferay.portal.fabric.netty.NettyTestUtil;
 import com.liferay.portal.fabric.netty.handlers.NettyChannelAttributes;
 import com.liferay.portal.fabric.netty.rpc.handlers.NettyRPCChannelHandler;
 import com.liferay.portal.fabric.netty.util.NettyUtilAdvice;
-import com.liferay.portal.fabric.status.JMXProxyUtil.ProcessCallableExecutor;
+import com.liferay.portal.fabric.status.JMXProxyUtil;
 import com.liferay.portal.kernel.concurrent.DefaultNoticeableFuture;
 import com.liferay.portal.kernel.concurrent.NoticeableFuture;
 import com.liferay.portal.kernel.process.ProcessCallable;
@@ -73,7 +73,7 @@ public class NettyFabricWorkerProcessCallableExecutorTest {
 				new EmbeddedProcessChannel<Serializable>(
 					new DefaultNoticeableFuture<Serializable>())));
 
-		ProcessCallableExecutor processCallableExecutor =
+		JMXProxyUtil.ProcessCallableExecutor processCallableExecutor =
 			new NettyFabricWorkerProcessCallableExecutor(
 				embeddedChannel, 0, Long.MAX_VALUE);
 

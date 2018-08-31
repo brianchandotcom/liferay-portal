@@ -20,7 +20,6 @@ import java.io.Serializable;
 
 import java.text.DateFormat;
 import java.text.Normalizer;
-import java.text.Normalizer.Form;
 
 import java.util.Date;
 import java.util.Enumeration;
@@ -2503,7 +2502,7 @@ public class ParamUtil {
 		return input;
 	}
 
-	private static final Form _FORM;
+	private static final Normalizer.Form _FORM;
 
 	static {
 		String formString = PropsUtil.get(
@@ -2513,7 +2512,7 @@ public class ParamUtil {
 			_FORM = null;
 		}
 		else {
-			Form form = null;
+			Normalizer.Form form = null;
 
 			try {
 				form = Normalizer.Form.valueOf(formString);

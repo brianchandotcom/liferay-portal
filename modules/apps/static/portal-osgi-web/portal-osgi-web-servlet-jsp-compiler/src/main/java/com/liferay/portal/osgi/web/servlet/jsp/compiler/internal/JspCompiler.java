@@ -50,7 +50,6 @@ import javax.servlet.ServletContext;
 import javax.tools.Diagnostic;
 import javax.tools.DiagnosticCollector;
 import javax.tools.JavaCompiler;
-import javax.tools.JavaCompiler.CompilationTask;
 import javax.tools.JavaFileManager;
 import javax.tools.JavaFileObject;
 import javax.tools.StandardJavaFileManager;
@@ -64,7 +63,7 @@ import org.apache.jasper.Options;
 import org.apache.jasper.compiler.ErrorDispatcher;
 import org.apache.jasper.compiler.JavacErrorDetail;
 import org.apache.jasper.compiler.Jsr199JavaCompiler;
-import org.apache.jasper.compiler.Node.Nodes;
+import org.apache.jasper.compiler.Node;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
@@ -82,7 +81,7 @@ import org.osgi.util.tracker.ServiceTracker;
 public class JspCompiler extends Jsr199JavaCompiler {
 
 	@Override
-	public JavacErrorDetail[] compile(String className, Nodes pageNodes)
+	public JavacErrorDetail[] compile(String className, Node.Nodes pageNodes)
 		throws JasperException {
 
 		classFiles = new ArrayList<>();
@@ -113,7 +112,7 @@ public class JspCompiler extends Jsr199JavaCompiler {
 		try (JavaFileManager javaFileManager = getJavaFileManager(
 				standardJavaFileManager)) {
 
-			CompilationTask compilationTask = javaCompiler.getTask(
+			JavaCompiler.CompilationTask compilationTask = javaCompiler.getTask(
 				null, javaFileManager, diagnosticCollector, options, null,
 				Arrays.asList(
 					new StringJavaFileObject(

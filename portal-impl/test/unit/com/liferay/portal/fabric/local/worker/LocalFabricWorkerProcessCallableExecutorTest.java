@@ -15,7 +15,7 @@
 package com.liferay.portal.fabric.local.worker;
 
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.fabric.status.JMXProxyUtil.ProcessCallableExecutor;
+import com.liferay.portal.fabric.status.JMXProxyUtil;
 import com.liferay.portal.kernel.concurrent.DefaultNoticeableFuture;
 import com.liferay.portal.kernel.concurrent.NoticeableFuture;
 import com.liferay.portal.kernel.process.ProcessCallable;
@@ -41,7 +41,7 @@ public class LocalFabricWorkerProcessCallableExecutorTest {
 
 	@Test
 	public void testExecute() throws Exception {
-		ProcessCallableExecutor processCallableExecutor =
+		JMXProxyUtil.ProcessCallableExecutor processCallableExecutor =
 			new LocalFabricWorkerProcessCallableExecutor(
 				new EmbeddedProcessChannel<Serializable>(
 					new DefaultNoticeableFuture<Serializable>()));

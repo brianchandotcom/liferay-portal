@@ -28,7 +28,6 @@ import java.util.Set;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterRegistration;
-import javax.servlet.FilterRegistration.Dynamic;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.Servlet;
 import javax.servlet.ServletContext;
@@ -48,17 +47,23 @@ public class LiferayServletContext implements ServletContext {
 	}
 
 	@Override
-	public Dynamic addFilter(String filterName, Class<? extends Filter> clazz) {
+	public FilterRegistration.Dynamic addFilter(
+		String filterName, Class<? extends Filter> clazz) {
+
 		return _servletContext.addFilter(filterName, clazz);
 	}
 
 	@Override
-	public Dynamic addFilter(String filterName, Filter filter) {
+	public FilterRegistration.Dynamic addFilter(
+		String filterName, Filter filter) {
+
 		return _servletContext.addFilter(filterName, filter);
 	}
 
 	@Override
-	public Dynamic addFilter(String filterName, String className) {
+	public FilterRegistration.Dynamic addFilter(
+		String filterName, String className) {
+
 		return _servletContext.addFilter(filterName, className);
 	}
 

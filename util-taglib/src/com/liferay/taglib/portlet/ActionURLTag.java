@@ -33,7 +33,6 @@ import com.liferay.taglib.util.ParamAndPropertyAncestorTagImpl;
 import com.liferay.taglib.util.TypedParamAccessorTag;
 
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.Set;
 
@@ -171,7 +170,7 @@ public class ActionURLTag
 		}
 
 		if (parameterMap != null) {
-			for (Entry<String, String[]> entry : parameterMap.entrySet()) {
+			for (Map.Entry<String, String[]> entry : parameterMap.entrySet()) {
 				liferayPortletURL.setParameter(
 					entry.getKey(), entry.getValue(), false);
 			}

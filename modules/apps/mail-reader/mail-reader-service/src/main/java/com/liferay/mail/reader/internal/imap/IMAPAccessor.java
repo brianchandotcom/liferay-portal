@@ -58,7 +58,6 @@ import javax.mail.FetchProfile;
 import javax.mail.Flags;
 import javax.mail.Folder;
 import javax.mail.Message;
-import javax.mail.Message.RecipientType;
 import javax.mail.MessagingException;
 import javax.mail.Multipart;
 import javax.mail.Part;
@@ -637,11 +636,11 @@ public class IMAPAccessor {
 				String sender = InternetAddressUtil.toString(
 					jxMessage.getFrom());
 				String to = InternetAddressUtil.toString(
-					jxMessage.getRecipients(RecipientType.TO));
+					jxMessage.getRecipients(Message.RecipientType.TO));
 				String cc = InternetAddressUtil.toString(
-					jxMessage.getRecipients(RecipientType.CC));
+					jxMessage.getRecipients(Message.RecipientType.CC));
 				String bcc = InternetAddressUtil.toString(
-					jxMessage.getRecipients(RecipientType.BCC));
+					jxMessage.getRecipients(Message.RecipientType.BCC));
 				Date sentDate = jxMessage.getSentDate();
 				String subject = jxMessage.getSubject();
 				String flags = getFlags(jxMessage);
@@ -1052,20 +1051,20 @@ public class IMAPAccessor {
 	}
 
 	protected InternetAddress[] getRecipients(
-			long messageId, RecipientType recipientType)
+			long messageId, Message.RecipientType recipientType)
 		throws PortalException {
 
 		try {
 			com.liferay.mail.reader.model.Message message =
 				MessageLocalServiceUtil.getMessage(messageId);
 
-			if (recipientType.equals(RecipientType.TO)) {
+			if (recipientType.equals(Message.RecipientType.TO)) {
 				return InternetAddress.parse(message.getTo());
 			}
-			else if (recipientType.equals(RecipientType.CC)) {
+			else if (recipientType.equals(Message.RecipientType.CC)) {
 				return InternetAddress.parse(message.getCc());
 			}
-			else if (recipientType.equals(RecipientType.BCC)) {
+			else if (recipientType.equals(Message.RecipientType.BCC)) {
 				return InternetAddress.parse(message.getBcc());
 			}
 			else {

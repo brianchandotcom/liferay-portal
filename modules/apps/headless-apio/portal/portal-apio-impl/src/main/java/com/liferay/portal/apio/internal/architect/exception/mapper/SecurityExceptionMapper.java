@@ -17,7 +17,7 @@ package com.liferay.portal.apio.internal.architect.exception.mapper;
 import com.liferay.apio.architect.error.APIError;
 import com.liferay.apio.architect.exception.mapper.ExceptionMapper;
 
-import javax.ws.rs.core.Response.Status;
+import javax.ws.rs.core.Response;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -34,7 +34,7 @@ public class SecurityExceptionMapper
 	public APIError map(SecurityException se) {
 		return new APIError(
 			se, "Not permitted to access", "forbidden",
-			Status.FORBIDDEN.getStatusCode());
+			Response.Status.FORBIDDEN.getStatusCode());
 	}
 
 }

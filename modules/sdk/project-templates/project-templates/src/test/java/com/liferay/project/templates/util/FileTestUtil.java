@@ -22,7 +22,6 @@ import java.io.InputStreamReader;
 import java.io.Writer;
 
 import java.nio.file.DirectoryStream;
-import java.nio.file.DirectoryStream.Filter;
 import java.nio.file.FileSystem;
 import java.nio.file.FileVisitOption;
 import java.nio.file.FileVisitResult;
@@ -111,7 +110,7 @@ public class FileTestUtil {
 
 		return Files.newDirectoryStream(
 			Paths.get("../"),
-			new Filter<Path>() {
+			new DirectoryStream.Filter<Path>() {
 
 				@Override
 				public boolean accept(Path path) throws IOException {

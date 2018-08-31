@@ -18,7 +18,7 @@ import java.io.File;
 
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.Project;
-import org.apache.tools.ant.types.Environment.Variable;
+import org.apache.tools.ant.types.Environment;
 
 /**
  * @author Andrea Di Giorgi
@@ -84,7 +84,7 @@ public class LiferayGradleExecTask extends GradleExecTask {
 		String webSphereHomeDir = _getWebSphereHomeDir();
 
 		if ((webSphereHomeDir != null) && !webSphereHomeDir.isEmpty()) {
-			Variable variable = new Variable();
+			Environment.Variable variable = new Environment.Variable();
 
 			variable.setKey("WAS_HOME");
 			variable.setValue(webSphereHomeDir);

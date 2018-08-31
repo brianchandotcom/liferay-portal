@@ -26,7 +26,6 @@ import com.liferay.portal.fabric.worker.FabricWorker;
 import com.liferay.portal.kernel.concurrent.NoticeableFuture;
 import com.liferay.portal.kernel.process.ProcessCallable;
 import com.liferay.portal.kernel.process.ProcessConfig;
-import com.liferay.portal.kernel.process.ProcessConfig.Builder;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
 
@@ -136,7 +135,7 @@ public class NettyFabricAgentStubTest {
 
 		long id = idGenerator.get();
 
-		Builder builder = new Builder();
+		ProcessConfig.Builder builder = new ProcessConfig.Builder();
 
 		ProcessConfig processConfig = builder.build();
 
@@ -266,7 +265,7 @@ public class NettyFabricAgentStubTest {
 					_embeddedChannel, new MockRepository<Channel>(),
 					Paths.get("RepositoryPath"), 0, Long.MAX_VALUE);
 
-			Builder builder = new Builder();
+			ProcessConfig.Builder builder = new ProcessConfig.Builder();
 
 			FabricWorker<String> fabricWorker = nettyFabricAgentStub.execute(
 				builder.build(),
@@ -311,7 +310,7 @@ public class NettyFabricAgentStubTest {
 					_embeddedChannel, new MockRepository<Channel>(),
 					Paths.get("RepositoryPath"), 0, Long.MAX_VALUE);
 
-			Builder builder = new Builder();
+			ProcessConfig.Builder builder = new ProcessConfig.Builder();
 
 			FabricWorker<String> fabricWorker = nettyFabricAgentStub.execute(
 				builder.build(),
@@ -358,7 +357,7 @@ public class NettyFabricAgentStubTest {
 					_embeddedChannel, new MockRepository<Channel>(),
 					Paths.get("RepositoryPath"), 0, Long.MAX_VALUE);
 
-			Builder builder = new Builder();
+			ProcessConfig.Builder builder = new ProcessConfig.Builder();
 
 			FabricWorker<String> fabricWorker = nettyFabricAgentStub.execute(
 				builder.build(),
@@ -397,7 +396,7 @@ public class NettyFabricAgentStubTest {
 
 		currentThread.interrupt();
 
-		Builder builder = new Builder();
+		ProcessConfig.Builder builder = new ProcessConfig.Builder();
 
 		FabricWorker<String> fabricWorker = nettyFabricAgentStub.execute(
 			builder.build(), new ReturnProcessCallable<String>("Test result"));
@@ -428,7 +427,7 @@ public class NettyFabricAgentStubTest {
 			_embeddedChannel, new MockRepository<Channel>(),
 			Paths.get("RepositoryPath"), 0, 0);
 
-		Builder builder = new Builder();
+		ProcessConfig.Builder builder = new ProcessConfig.Builder();
 
 		FabricWorker<String> fabricWorker = nettyFabricAgentStub.execute(
 			builder.build(), new ReturnProcessCallable<String>("Test result"));

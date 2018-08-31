@@ -29,13 +29,12 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.PropertyResourceBundle;
 import java.util.ResourceBundle;
-import java.util.ResourceBundle.Control;
 
 /**
  * @author Raymond Augé
  * @author Shuyang Zhou
  */
-public class UTF8Control extends Control {
+public class UTF8Control extends ResourceBundle.Control {
 
 	public static final UTF8Control INSTANCE = new UTF8Control();
 

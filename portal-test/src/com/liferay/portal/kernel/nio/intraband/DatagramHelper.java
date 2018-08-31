@@ -14,8 +14,6 @@
 
 package com.liferay.portal.kernel.nio.intraband;
 
-import com.liferay.portal.kernel.nio.intraband.CompletionHandler.CompletionType;
-
 import java.io.IOException;
 
 import java.nio.channels.GatheringByteChannel;
@@ -46,7 +44,7 @@ public class DatagramHelper {
 		return datagram.completionHandler;
 	}
 
-	public static EnumSet<CompletionType> getCompletionTypes(
+	public static EnumSet<CompletionHandler.CompletionType> getCompletionTypes(
 		Datagram datagram) {
 
 		return datagram.completionTypes;
@@ -82,7 +80,8 @@ public class DatagramHelper {
 	}
 
 	public static void setCompletionTypes(
-		Datagram datagram, EnumSet<CompletionType> completionTypes) {
+		Datagram datagram,
+		EnumSet<CompletionHandler.CompletionType> completionTypes) {
 
 		datagram.completionTypes = completionTypes;
 	}

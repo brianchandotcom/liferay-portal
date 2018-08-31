@@ -21,12 +21,10 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import org.powermock.api.mockito.PowerMockito;
-
 /**
  * @author Iván Zaera
  */
-public class ParameterMapSettingsTest extends PowerMockito {
+public class ParameterMapSettingsTest {
 
 	@Before
 	public void setUp() {

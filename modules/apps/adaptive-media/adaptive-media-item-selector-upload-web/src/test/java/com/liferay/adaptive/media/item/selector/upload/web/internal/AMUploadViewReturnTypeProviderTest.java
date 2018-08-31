@@ -27,12 +27,10 @@ import java.util.List;
 import org.junit.Assert;
 import org.junit.Test;
 
-import org.powermock.api.mockito.PowerMockito;
-
 /**
  * @author Alejandro Tardín
  */
-public class AMUploadViewReturnTypeProviderTest extends PowerMockito {
+public class AMUploadViewReturnTypeProviderTest {
 
 	@Test
 	public void testAddAMImageURLItemSelectorReturnTypeWithEmptyList()

@@ -41,12 +41,10 @@ import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Test;
 
-import org.powermock.api.mockito.PowerMockito;
-
 /**
  * @author Miguel Pastor
  */
-public class HttpImplTest extends PowerMockito {
+public class HttpImplTest {
 
 	@ClassRule
 	public static final CodeCoverageAssertor codeCoverageAssertor =

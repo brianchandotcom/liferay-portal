@@ -19,12 +19,10 @@ import java.util.Collection;
 import org.junit.Assert;
 import org.junit.Test;
 
-import org.powermock.api.mockito.PowerMockito;
-
 /**
  * @author Iván Zaera
  */
-public class BaseModifiableSettingsTest extends PowerMockito {
+public class BaseModifiableSettingsTest {
 
 	@Test
 	public void testReset() {

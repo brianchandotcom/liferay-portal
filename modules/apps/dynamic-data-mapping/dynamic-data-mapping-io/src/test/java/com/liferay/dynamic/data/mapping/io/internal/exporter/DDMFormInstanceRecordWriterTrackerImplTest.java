@@ -22,12 +22,10 @@ import java.util.Map;
 import org.junit.Assert;
 import org.junit.Test;
 
-import org.powermock.api.mockito.PowerMockito;
-
 /**
  * @author Leonardo Barros
  */
-public class DDMFormInstanceRecordWriterTrackerImplTest extends PowerMockito {
+public class DDMFormInstanceRecordWriterTrackerImplTest {
 
 	@Test
 	public void testDeactivate() {

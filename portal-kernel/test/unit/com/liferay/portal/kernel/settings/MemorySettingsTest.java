@@ -20,12 +20,10 @@ import java.util.Collection;
 import org.junit.Assert;
 import org.junit.Test;
 
-import org.powermock.api.mockito.PowerMockito;
-
 /**
  * @author Iván Zaera
  */
-public class MemorySettingsTest extends PowerMockito {
+public class MemorySettingsTest {
 
 	@Test
 	public void testSetAndGetValue() {

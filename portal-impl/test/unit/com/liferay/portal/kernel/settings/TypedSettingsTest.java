@@ -25,12 +25,10 @@ import java.util.Locale;
 import org.junit.Assert;
 import org.junit.Test;
 
-import org.powermock.api.mockito.PowerMockito;
-
 /**
  * @author Iván Zaera
  */
-public class TypedSettingsTest extends PowerMockito {
+public class TypedSettingsTest {
 
 	public TypedSettingsTest() {
 		LocalizationUtil localizationUtil = new LocalizationUtil();

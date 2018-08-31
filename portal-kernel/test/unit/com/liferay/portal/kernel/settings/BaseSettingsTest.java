@@ -19,12 +19,10 @@ import java.util.Collections;
 import org.junit.Assert;
 import org.junit.Test;
 
-import org.powermock.api.mockito.PowerMockito;
-
 /**
  * @author Iván Zaera
  */
-public class BaseSettingsTest extends PowerMockito {
+public class BaseSettingsTest {
 
 	public BaseSettingsTest() {
 		_parentSettings = new MemorySettings();

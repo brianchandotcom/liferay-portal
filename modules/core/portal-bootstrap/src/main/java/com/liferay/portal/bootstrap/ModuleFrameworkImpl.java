@@ -42,6 +42,7 @@ import com.liferay.portal.kernel.util.ServiceLoader;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.SystemProperties;
+import com.liferay.portal.kernel.util.URLCodec;
 import com.liferay.portal.module.framework.ModuleFramework;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.registry.Registry;
@@ -806,6 +807,14 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 
 		Map<String, Bundle> bundles = new HashMap<>();
 
+		URI uri = file.toURI();
+
+		URL url = uri.toURL();
+
+		String path = url.getPath();
+
+		path = URLCodec.decodeURL(path);
+
 		try (ZipFile zipFile = new ZipFile(file)) {
 			Enumeration<? extends ZipEntry> enumeration = zipFile.entries();
 
@@ -865,7 +874,8 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 				String zipEntryName = zipEntry.getName();
 
 				String location =
-					"file:/" + zipEntryName + "?protocol=lpkg&static=true";
+					zipEntryName + "?protocol=lpkg&static=true&lpkgPath=" +
+						path;
 
 				try (InputStream inputStream = zipFile.getInputStream(
 						zipEntry)) {

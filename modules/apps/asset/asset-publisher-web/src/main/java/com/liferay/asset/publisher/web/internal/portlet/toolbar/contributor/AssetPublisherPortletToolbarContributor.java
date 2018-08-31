@@ -21,6 +21,7 @@ import com.liferay.asset.publisher.web.internal.util.AssetPublisherWebUtil;
 import com.liferay.asset.publisher.web.util.AssetPublisherCustomizer;
 import com.liferay.asset.util.AssetHelper;
 import com.liferay.asset.util.AssetPublisherAddItemHolder;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -245,8 +246,9 @@ public class AssetPublisherPortletToolbarContributor
 	}
 
 	private boolean _isVisible(
-		AssetPublisherDisplayContext assetPublisherDisplayContext,
-		PortletRequest portletRequest) {
+			AssetPublisherDisplayContext assetPublisherDisplayContext,
+			PortletRequest portletRequest)
+		throws PortalException {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);

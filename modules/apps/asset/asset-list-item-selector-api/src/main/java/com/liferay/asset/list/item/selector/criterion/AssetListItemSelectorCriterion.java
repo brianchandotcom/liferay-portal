@@ -20,4 +20,15 @@ import com.liferay.item.selector.BaseItemSelectorCriterion;
  * @author Pavel Savinov
  */
 public class AssetListItemSelectorCriterion extends BaseItemSelectorCriterion {
+
+	public long getSelectedAssetListEntryId() {
+		return _selectedAssetListEntryId;
+	}
+
+	public void setSelectedAssetListEntryId(long selectedAssetEntryListId) {
+		_selectedAssetListEntryId = selectedAssetEntryListId;
+	}
+
+	private long _selectedAssetListEntryId;
+
 }

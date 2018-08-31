@@ -45,7 +45,7 @@ public class AssetEntriesFormNavigatorEntry
 
 	@Override
 	public boolean isVisible(User user, Object object) {
-		if (isDynamicAssetSelection()) {
+		if (isAssetListSelection() || isDynamicAssetSelection()) {
 			return false;
 		}
 

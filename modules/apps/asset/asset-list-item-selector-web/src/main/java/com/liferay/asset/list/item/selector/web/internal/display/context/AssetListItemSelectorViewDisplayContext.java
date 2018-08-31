@@ -14,9 +14,13 @@
 
 package com.liferay.asset.list.item.selector.web.internal.display.context;
 
+import com.liferay.asset.list.item.selector.criterion.AssetListItemSelectorCriterion;
 import com.liferay.asset.list.model.AssetListEntry;
 import com.liferay.asset.list.service.AssetListEntryServiceUtil;
+import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
+import com.liferay.portal.kernel.dao.search.RowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.JavaConstants;
@@ -38,8 +42,10 @@ import javax.servlet.http.HttpServletRequest;
 public class AssetListItemSelectorViewDisplayContext {
 
 	public AssetListItemSelectorViewDisplayContext(
+		AssetListItemSelectorCriterion assetListItemSelectorCriterion,
 		HttpServletRequest request, String eventName, PortletURL portletURL) {
 
+		_assetListItemSelectorCriterion = assetListItemSelectorCriterion;
 		_request = request;
 		_eventName = eventName;
 		_portletURL = portletURL;
@@ -60,8 +66,18 @@ public class AssetListItemSelectorViewDisplayContext {
 		PortletRequest portletRequest = (PortletRequest)_request.getAttribute(
 			JavaConstants.JAVAX_PORTLET_REQUEST);
 
+		PortletResponse portletResponse =
+			(PortletResponse)_request.getAttribute(
+				JavaConstants.JAVAX_PORTLET_RESPONSE);
+
 		SearchContainer<AssetListEntry> searchContainer = new SearchContainer<>(
 			portletRequest, _getPortletURL(), null, "there-are-no-asset-lists");
+
+		RowChecker rowChecker = new EmptyOnClickRowChecker(portletResponse);
+
+		rowChecker.setCssClass("asset-list-entry-checkbox");
+
+		searchContainer.setRowChecker(rowChecker);
 
 		List<AssetListEntry> assetListEntries =
 			AssetListEntryServiceUtil.getAssetListEntries(
@@ -82,6 +98,11 @@ public class AssetListItemSelectorViewDisplayContext {
 		return _searchContainer;
 	}
 
+	public AssetListEntry getSelectedAssetListEntry() throws PortalException {
+		return AssetListEntryServiceUtil.fetchAssetListEntry(
+			_assetListItemSelectorCriterion.getSelectedAssetListEntryId());
+	}
+
 	private PortletURL _getPortletURL() throws PortletException {
 		PortletResponse portletResponse =
 			(PortletResponse)_request.getAttribute(
@@ -93,6 +114,8 @@ public class AssetListItemSelectorViewDisplayContext {
 		return portletURL;
 	}
 
+	private final AssetListItemSelectorCriterion
+		_assetListItemSelectorCriterion;
 	private final String _eventName;
 	private final PortletURL _portletURL;
 	private final HttpServletRequest _request;

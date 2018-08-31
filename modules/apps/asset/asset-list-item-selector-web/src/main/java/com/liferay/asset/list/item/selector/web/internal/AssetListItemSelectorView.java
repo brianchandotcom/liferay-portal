@@ -88,7 +88,8 @@ public class AssetListItemSelectorView
 		AssetListItemSelectorViewDisplayContext
 			assetListItemSelectorViewDisplayContext =
 				new AssetListItemSelectorViewDisplayContext(
-					httpServletRequest, itemSelectedEventName, portletURL);
+					assetListItemSelectorCriterion, httpServletRequest,
+					itemSelectedEventName, portletURL);
 
 		request.setAttribute(
 			AssetListItemSelectorWebKeys.

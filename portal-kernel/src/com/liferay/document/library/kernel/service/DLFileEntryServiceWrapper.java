@@ -53,6 +53,10 @@ public class DLFileEntryServiceWrapper implements DLFileEntryService,
 		return _dlFileEntryService.cancelCheckOut(fileEntryId);
 	}
 
+	/**
+	* @deprecated As of Judson (7.1.x), replaced by {@link #checkInFileEntry(long, DLVersionNumberIncrease, String, ServiceContext)}
+	*/
+	@Deprecated
 	@Override
 	public void checkInFileEntry(long fileEntryId, boolean major,
 		String changeLog,
@@ -60,6 +64,16 @@ public class DLFileEntryServiceWrapper implements DLFileEntryService,
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_dlFileEntryService.checkInFileEntry(fileEntryId, major, changeLog,
 			serviceContext);
+	}
+
+	@Override
+	public void checkInFileEntry(long fileEntryId,
+		com.liferay.document.library.kernel.model.DLVersionNumberIncrease dlVersionNumberIncrease,
+		String changeLog,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_dlFileEntryService.checkInFileEntry(fileEntryId,
+			dlVersionNumberIncrease, changeLog, serviceContext);
 	}
 
 	@Override
@@ -388,6 +402,10 @@ public class DLFileEntryServiceWrapper implements DLFileEntryService,
 			mimeTypes, status, start, end);
 	}
 
+	/**
+	* @deprecated As of Judson (7.1.x), replaced by {@link #updateFileEntry(long, String, String, String, String, String, DLVersionNumberIncrease, long, Map, File, InputStream, long, ServiceContext)}
+	*/
+	@Deprecated
 	@Override
 	public com.liferay.document.library.kernel.model.DLFileEntry updateFileEntry(
 		long fileEntryId, String sourceFileName, String mimeType, String title,
@@ -399,6 +417,21 @@ public class DLFileEntryServiceWrapper implements DLFileEntryService,
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _dlFileEntryService.updateFileEntry(fileEntryId, sourceFileName,
 			mimeType, title, description, changeLog, majorVersion,
+			fileEntryTypeId, ddmFormValuesMap, file, is, size, serviceContext);
+	}
+
+	@Override
+	public com.liferay.document.library.kernel.model.DLFileEntry updateFileEntry(
+		long fileEntryId, String sourceFileName, String mimeType, String title,
+		String description, String changeLog,
+		com.liferay.document.library.kernel.model.DLVersionNumberIncrease dlVersionNumberIncrease,
+		long fileEntryTypeId,
+		java.util.Map<String, com.liferay.dynamic.data.mapping.kernel.DDMFormValues> ddmFormValuesMap,
+		java.io.File file, java.io.InputStream is, long size,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _dlFileEntryService.updateFileEntry(fileEntryId, sourceFileName,
+			mimeType, title, description, changeLog, dlVersionNumberIncrease,
 			fileEntryTypeId, ddmFormValuesMap, file, is, size, serviceContext);
 	}
 

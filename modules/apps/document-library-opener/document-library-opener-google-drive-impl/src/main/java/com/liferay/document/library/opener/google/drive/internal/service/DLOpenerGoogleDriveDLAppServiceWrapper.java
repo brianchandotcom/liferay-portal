@@ -15,6 +15,7 @@
 package com.liferay.document.library.opener.google.drive.internal.service;
 
 import com.liferay.document.library.kernel.model.DLFileEntryConstants;
+import com.liferay.document.library.kernel.model.DLVersionNumberIncrease;
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.document.library.kernel.service.DLAppServiceWrapper;
 import com.liferay.document.library.opener.constants.DLOpenerFileEntryReferenceConstants;
@@ -77,23 +78,34 @@ public class DLOpenerGoogleDriveDLAppServiceWrapper
 
 	@Override
 	public void checkInFileEntry(
-			long fileEntryId, boolean majorVersion, String changeLog,
-			ServiceContext serviceContext)
+			long fileEntryId, DLVersionNumberIncrease dlVersionNumberIncrease,
+			String changeLog, ServiceContext serviceContext)
 		throws PortalException {
 
 		FileEntry fileEntry = getFileEntry(fileEntryId);
 
 		if (!_dlOpenerGoogleDriveManager.isGoogleDriveFile(fileEntry)) {
 			super.checkInFileEntry(
-				fileEntryId, majorVersion, changeLog, serviceContext);
+				fileEntryId, dlVersionNumberIncrease, changeLog,
+				serviceContext);
 
 			return;
 		}
 
 		_updateFileEntryFromGoogleDrive(fileEntry, serviceContext);
 
+		DLOpenerFileEntryReference dlOpenerFileEntryReference =
+			_dlOpenerFileEntryReferenceLocalService.
+				fetchDLOpenerFileEntryReference(fileEntry);
+
+		if (dlOpenerFileEntryReference.getType() ==
+				DLOpenerFileEntryReferenceConstants.TYPE_NEW) {
+
+			dlVersionNumberIncrease = DLVersionNumberIncrease.NONE;
+		}
+
 		super.checkInFileEntry(
-			fileEntryId, majorVersion, changeLog, serviceContext);
+			fileEntryId, dlVersionNumberIncrease, changeLog, serviceContext);
 
 		_dlOpenerGoogleDriveManager.delete(
 			serviceContext.getUserId(), fileEntry);
@@ -139,8 +151,8 @@ public class DLOpenerGoogleDriveDLAppServiceWrapper
 				fileEntry.getFileEntryId(), fileEntry.getFileName(),
 				fileEntry.getMimeType(),
 				dlOpenerGoogleDriveFileReference.getTitle(),
-				fileEntry.getDescription(), StringPool.BLANK, false, file,
-				serviceContext);
+				fileEntry.getDescription(), StringPool.BLANK,
+				DLVersionNumberIncrease.NONE, file, serviceContext);
 		}
 		finally {
 			if (file != null) {

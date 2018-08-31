@@ -20,6 +20,7 @@ import com.liferay.document.library.kernel.model.DLFileEntryMetadata;
 import com.liferay.document.library.kernel.model.DLFileEntryType;
 import com.liferay.document.library.kernel.model.DLFolder;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
+import com.liferay.document.library.kernel.model.DLVersionNumberIncrease;
 import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
 import com.liferay.document.library.kernel.service.DLAppServiceUtil;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalServiceUtil;
@@ -449,8 +450,8 @@ public class DLFileEntrySearchTest extends BaseSearchTestCase {
 
 		FileEntry fileEntry = DLAppServiceUtil.updateFileEntry(
 			dlFileEntry.getFileEntryId(), null, dlFileEntry.getMimeType(),
-			keywords, StringPool.BLANK, StringPool.BLANK, true, (byte[])null,
-			serviceContext);
+			keywords, StringPool.BLANK, StringPool.BLANK,
+			DLVersionNumberIncrease.MAJOR, (byte[])null, serviceContext);
 
 		return (DLFileEntry)fileEntry.getModel();
 	}

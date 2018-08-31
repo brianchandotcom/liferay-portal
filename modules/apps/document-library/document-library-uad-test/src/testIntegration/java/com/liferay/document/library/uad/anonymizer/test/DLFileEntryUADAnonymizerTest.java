@@ -21,6 +21,7 @@ import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.asset.kernel.service.AssetLinkLocalService;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileVersion;
+import com.liferay.document.library.kernel.model.DLVersionNumberIncrease;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
 import com.liferay.document.library.uad.test.DLFileEntryUADTestHelper;
@@ -258,7 +259,9 @@ public class DLFileEntryUADAnonymizerTest
 
 		_dlAppLocalService.updateFileEntry(
 			userId, fileEntryId, sourceFileName, contentType, title,
-			description, changeLog, majorVersion, is, size, serviceContext);
+			description, changeLog,
+			DLVersionNumberIncrease.fromBoolean(majorVersion), is, size,
+			serviceContext);
 	}
 
 	@Inject

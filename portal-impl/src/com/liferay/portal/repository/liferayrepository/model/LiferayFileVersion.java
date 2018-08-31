@@ -304,9 +304,8 @@ public class LiferayFileVersion extends LiferayModel implements FileVersion {
 		if (_dlFileVersion.getGroupId() == _dlFileVersion.getRepositoryId()) {
 			return true;
 		}
-		else {
-			return false;
-		}
+
+		return false;
 	}
 
 	@Override
@@ -359,7 +358,7 @@ public class LiferayFileVersion extends LiferayModel implements FileVersion {
 
 	@Override
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		setPrimaryKey(((Long)primaryKeyObj).longValue());
+		setPrimaryKey((Long)primaryKeyObj);
 	}
 
 	@Override
@@ -387,10 +386,8 @@ public class LiferayFileVersion extends LiferayModel implements FileVersion {
 		if (isEscapedModel()) {
 			return this;
 		}
-		else {
-			return new LiferayFileVersion(
-				_dlFileVersion.toEscapedModel(), true);
-		}
+
+		return new LiferayFileVersion(_dlFileVersion.toEscapedModel(), true);
 	}
 
 	@Override
@@ -404,9 +401,8 @@ public class LiferayFileVersion extends LiferayModel implements FileVersion {
 			return new LiferayFileVersion(
 				_dlFileVersion.toUnescapedModel(), true);
 		}
-		else {
-			return this;
-		}
+
+		return this;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

@@ -24,6 +24,7 @@ import com.liferay.document.library.kernel.exception.NoSuchFileEntryException;
 import com.liferay.document.library.kernel.exception.NoSuchFolderException;
 import com.liferay.document.library.kernel.exception.SourceFileNameException;
 import com.liferay.document.library.kernel.model.DLFileEntry;
+import com.liferay.document.library.kernel.model.DLVersionNumberIncrease;
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.document.library.kernel.service.DLTrashService;
 import com.liferay.petra.string.StringPool;
@@ -103,7 +104,8 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 
 		for (long fileEntryId : fileEntryIds) {
 			_dlAppService.checkInFileEntry(
-				fileEntryId, false, StringPool.BLANK, serviceContext);
+				fileEntryId, DLVersionNumberIncrease.MINOR, StringPool.BLANK,
+				serviceContext);
 		}
 
 		long[] fileShortcutIds = ParamUtil.getLongValues(
@@ -117,7 +119,8 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 
 			if (!ArrayUtil.contains(fileEntryIds, toFileEntryId)) {
 				_dlAppService.checkInFileEntry(
-					toFileEntryId, false, StringPool.BLANK, serviceContext);
+					toFileEntryId, DLVersionNumberIncrease.MINOR,
+					StringPool.BLANK, serviceContext);
 			}
 		}
 	}

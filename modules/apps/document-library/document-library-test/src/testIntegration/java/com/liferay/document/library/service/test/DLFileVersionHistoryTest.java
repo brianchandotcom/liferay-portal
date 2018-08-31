@@ -17,6 +17,7 @@ package com.liferay.document.library.service.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.document.library.kernel.exception.InvalidFileVersionException;
 import com.liferay.document.library.kernel.model.DLFileVersion;
+import com.liferay.document.library.kernel.model.DLVersionNumberIncrease;
 import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
 import com.liferay.document.library.kernel.service.DLAppServiceUtil;
 import com.liferay.document.library.kernel.service.DLFileVersionLocalServiceUtil;
@@ -156,8 +157,8 @@ public class DLFileVersionHistoryTest extends BaseDLAppTestCase {
 
 			DLAppServiceUtil.updateFileEntry(
 				fileEntryId, null, ContentTypes.TEXT_PLAIN, _VERSION_1_1,
-				StringPool.BLANK, StringPool.BLANK, false, (byte[])null,
-				serviceContext);
+				StringPool.BLANK, StringPool.BLANK,
+				DLVersionNumberIncrease.MINOR, (byte[])null, serviceContext);
 		}
 
 		if (leaveCheckedOut) {
@@ -170,8 +171,8 @@ public class DLFileVersionHistoryTest extends BaseDLAppTestCase {
 
 			DLAppServiceUtil.updateFileEntry(
 				fileEntryId, null, ContentTypes.TEXT_PLAIN, _VERSION_PWC,
-				StringPool.BLANK, StringPool.BLANK, false, (byte[])null,
-				serviceContext);
+				StringPool.BLANK, StringPool.BLANK,
+				DLVersionNumberIncrease.MINOR, (byte[])null, serviceContext);
 		}
 
 		if (versioned && leaveCheckedOut) {
@@ -264,8 +265,8 @@ public class DLFileVersionHistoryTest extends BaseDLAppTestCase {
 
 			DLAppServiceUtil.updateFileEntry(
 				fileEntryId, null, ContentTypes.TEXT_PLAIN, _VERSION_1_1,
-				StringPool.BLANK, StringPool.BLANK, false, (byte[])null,
-				serviceContext);
+				StringPool.BLANK, StringPool.BLANK,
+				DLVersionNumberIncrease.MINOR, (byte[])null, serviceContext);
 		}
 
 		if (leaveCheckedOut) {
@@ -278,8 +279,8 @@ public class DLFileVersionHistoryTest extends BaseDLAppTestCase {
 
 			DLAppServiceUtil.updateFileEntry(
 				fileEntryId, null, ContentTypes.TEXT_PLAIN, _VERSION_PWC,
-				StringPool.BLANK, StringPool.BLANK, false, (byte[])null,
-				serviceContext);
+				StringPool.BLANK, StringPool.BLANK,
+				DLVersionNumberIncrease.MINOR, (byte[])null, serviceContext);
 		}
 
 		if (versioned && leaveCheckedOut) {

@@ -35,14 +35,8 @@
 	</tear-down>
 
 	<command name="AssertPageTemplateNotEditableinStagingLiveSite" priority="5">
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
+		<execute macro="Navigator#openWithAppendToBaseURL">
+			<var name="urlAppend" value="group/site-name/~/control_panel/manage?p_p_id=com_liferay_layout_admin_web_portlet_GroupPagesPortlet&amp;p_p_lifecycle=0&amp;p_p_state=maximized&amp;p_p_auth=gxCiOUg3" />
 		</execute>
 
 		<execute macro="LayoutPageTemplates#viewPageTemplateNotAccessible" />

@@ -39,6 +39,8 @@
 			<var name="urlAppend" value="group/site-name/~/control_panel/manage?p_p_id=com_liferay_layout_admin_web_portlet_GroupPagesPortlet&amp;p_p_lifecycle=0&amp;p_p_state=maximized&amp;p_p_auth=gxCiOUg3" />
 		</execute>
 
-		<execute macro="LayoutPageTemplates#viewPageTemplateNotAccessible" />
+		<execute function="AssertElementNotPresent" locator1="NavBar#NAV_ITEM_LINK">
+			<var name="key_navItem" value="Page Templates" />
+		</execute>
 	</command>
 </definition>

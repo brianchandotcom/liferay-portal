@@ -20,7 +20,7 @@
 OpenIdConnectConfiguration openIdConnectConfiguration = ConfigurationProviderUtil.getConfiguration(OpenIdConnectConfiguration.class, new ParameterMapSettingsLocator(request.getParameterMap(), PortalSettingsOpenIdConnectConstants.FORM_PARAMETER_NAMESPACE, new CompanyServiceSettingsLocator(company.getCompanyId(), OpenIdConnectConstants.SERVICE_NAME)));
 %>
 
-<aui:input name="<%= ActionRequest.ACTION_NAME %>" type="hidden" value="/portal_settings/openid_connect" />
+<aui:input id='<%= PortalUtil.generateRandomKey(request, "openid_connect") %>' name="<%= ActionRequest.ACTION_NAME %>" type="hidden" value="/portal_settings/openid_connect" />
 
 <aui:fieldset>
 	<aui:input label="enabled" name='<%= PortalSettingsOpenIdConnectConstants.FORM_PARAMETER_NAMESPACE + "enabled" %>' type="checkbox" value="<%= openIdConnectConfiguration.enabled() %>" />

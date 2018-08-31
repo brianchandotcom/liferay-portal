@@ -53,8 +53,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import javax.portlet.RenderResponse;
 
@@ -197,14 +195,9 @@ public class UserDisplayContext {
 	}
 
 	public List<Group> getRoleGroups() throws PortalException {
-		List<Group> allGroups = getAllGroups();
-
-		Stream<Group> stream = allGroups.stream();
-
-		stream = stream.filter(
+		return ListUtil.filter(
+			getAllGroups(),
 			group -> RoleLocalServiceUtil.hasGroupRoles(group.getGroupId()));
-
-		return stream.collect(Collectors.toList());
 	}
 
 	public List<Role> getRoles() throws PortalException {
@@ -226,13 +219,7 @@ public class UserDisplayContext {
 	}
 
 	public List<UserGroupRole> getSiteRoles() throws PortalException {
-		List<UserGroupRole> userGroupRoles = getUserGroupRoles();
-
-		Stream<UserGroupRole> stream = userGroupRoles.stream();
-
-		stream = stream.filter(this::_isSiteRole);
-
-		return stream.collect(Collectors.toList());
+		return ListUtil.filter(getUserGroupRoles(), this::_isSiteRole);
 	}
 
 	public List<UserGroupRole> getUserGroupRoles() throws PortalException {

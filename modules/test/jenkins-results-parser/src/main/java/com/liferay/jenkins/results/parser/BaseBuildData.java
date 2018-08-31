@@ -117,6 +117,8 @@ public abstract class BaseBuildData extends JSONObject implements BuildData {
 		Map<String, String> buildParameters,
 		JenkinsJSONObject jenkinsJSONObject, String runID) {
 
+		super(_getBuildDataSource(jenkinsJSONObject, runID));
+
 		if (runID == null) {
 			runID = _DEFAULT_RUN_ID;
 		}
@@ -127,15 +129,18 @@ public abstract class BaseBuildData extends JSONObject implements BuildData {
 			jenkinsJSONObject.put(runID, this);
 		}
 
-		if (!has("build_url")) {
+		String buildURL;
+
+		if (has("build_url")) {
+			buildURL = getString("build_url");
+		}
+		else {
 			if (!buildParameters.containsKey("BUILD_URL")) {
 				throw new RuntimeException("Please set BUILD_URL");
 			}
 
-			put("build_url", buildParameters.get("BUILD_URL"));
+			buildURL = buildParameters.get("BUILD_URL");
 		}
-
-		String buildURL = getBuildURL();
 
 		Matcher matcher = _buildURLPattern.matcher(buildURL);
 
@@ -155,12 +160,8 @@ public abstract class BaseBuildData extends JSONObject implements BuildData {
 			put("cohort_name", matcher.group("cohortName"));
 		}
 
-		if (!has("job_name")) {
-			put("job_name", matcher.group("jobName"));
-		}
-
-		if (!has("master_hostname")) {
-			put("master_hostname", matcher.group("masterHostname"));
+		if (!has("hostname")) {
+			put("hostname", JenkinsResultsParserUtil.getHostName("default"));
 		}
 
 		if (!has("jenkins_github_url")) {
@@ -170,9 +171,33 @@ public abstract class BaseBuildData extends JSONObject implements BuildData {
 			put("jenkins_github_url", jenkinsGithubURL);
 		}
 
+		if (!has("job_name")) {
+			put("job_name", matcher.group("jobName"));
+		}
+
+		if (!has("master_hostname")) {
+			put("master_hostname", matcher.group("masterHostname"));
+		}
+
 		if (!has("workspace_dir")) {
 			put("workspace_dir", _getWorkspaceDir(buildParameters));
 		}
+	}
+
+	private static String _getBuildDataSource(
+		JenkinsJSONObject jenkinsJSONObject, String runID) {
+
+		if (runID == null) {
+			return "{}";
+		}
+
+		JSONObject jsonObject = jenkinsJSONObject.optJSONObject(runID);
+
+		if (jsonObject != null) {
+			return jsonObject.toString();
+		}
+
+		return "{}";
 	}
 
 	private String _getWorkspaceDir(Map<String, String> buildParameters) {

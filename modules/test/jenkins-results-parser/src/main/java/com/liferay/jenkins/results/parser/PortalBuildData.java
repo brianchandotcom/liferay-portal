@@ -17,34 +17,10 @@ package com.liferay.jenkins.results.parser;
 /**
  * @author Michael Hashimoto
  */
-public abstract class BaseBuildRunner implements BuildRunner {
+public interface PortalBuildData extends BuildData {
 
-	public static final String DIST_ROOT_PATH = "/tmp/dist";
+	public String getPortalGitHubURL();
 
-	@Override
-	public void setup() {
-		setUpWorkspace();
-	}
-
-	@Override
-	public void setUpWorkspace() {
-		if (workspace == null) {
-			throw new RuntimeException("Workspace is null");
-		}
-
-		workspace.setUpWorkspace();
-	}
-
-	protected BaseBuildRunner(Job job) {
-		_job = job;
-	}
-
-	protected Job getJob() {
-		return _job;
-	}
-
-	protected Workspace workspace;
-
-	private final Job _job;
+	public String getPortalUpstreamBranchName();
 
 }

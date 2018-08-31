@@ -14,37 +14,27 @@
 
 package com.liferay.jenkins.results.parser;
 
+import java.util.Map;
+
 /**
  * @author Michael Hashimoto
  */
-public abstract class BaseBuildRunner implements BuildRunner {
+public class BuildDataFactory {
 
-	public static final String DIST_ROOT_PATH = "/tmp/dist";
+	public static BatchBuildData newBatchBuildData(
+		Map<String, String> buildParameters,
+		JenkinsJSONObject jenkinsJSONObject, String runID) {
 
-	@Override
-	public void setup() {
-		setUpWorkspace();
+		return new PortalBatchBuildData(
+			buildParameters, jenkinsJSONObject, runID);
 	}
 
-	@Override
-	public void setUpWorkspace() {
-		if (workspace == null) {
-			throw new RuntimeException("Workspace is null");
-		}
+	public static TopLevelBuildData newTopLevelBuildData(
+		Map<String, String> buildParameters,
+		JenkinsJSONObject jenkinsJSONObject, String runID) {
 
-		workspace.setUpWorkspace();
+		return new PortalTopLevelBuildData(
+			buildParameters, jenkinsJSONObject, runID);
 	}
-
-	protected BaseBuildRunner(Job job) {
-		_job = job;
-	}
-
-	protected Job getJob() {
-		return _job;
-	}
-
-	protected Workspace workspace;
-
-	private final Job _job;
 
 }

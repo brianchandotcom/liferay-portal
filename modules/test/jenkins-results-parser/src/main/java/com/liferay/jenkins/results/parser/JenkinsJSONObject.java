@@ -29,41 +29,38 @@ import org.json.JSONObject;
 /**
  * @author Leslie Wong
  */
-public class BuildDataJSONObject extends JSONObject {
+public class JenkinsJSONObject extends JSONObject {
 
-	public BuildDataJSONObject() {
+	public JenkinsJSONObject() {
 	}
 
-	public BuildDataJSONObject(String json) {
+	public JenkinsJSONObject(String json) {
 		super(json);
 	}
 
-	public void addPropertiesToBuildData(String key, Properties properties) {
+	public void addProperties(String key, Properties properties) {
 		JSONArray jsonArray = _toJSONArray(properties);
 
 		put(key, jsonArray);
 	}
 
-	public void addPropertiesToBuildData(
-		String key, String propertiesFilePath) {
-
-		addPropertiesToBuildData(
+	public void addProperties(String key, String propertiesFilePath) {
+		addProperties(
 			key,
 			JenkinsResultsParserUtil.getProperties(
 				new File(propertiesFilePath)));
 	}
 
-	public Map<String, String> getBuildDataMap(String key) {
-		return getBuildDataMap(key, null);
+	public Map<String, String> getMap(String key) {
+		return getMap(key, null);
 	}
 
-	public Map<String, String> getBuildDataMap(String key, Pattern pattern) {
+	public Map<String, String> getMap(String key, Pattern pattern) {
 		if (!has(key)) {
-			throw new RuntimeException(
-				"Unable to find build data for '" + key + "'");
+			throw new RuntimeException("Unable to find map for '" + key + "'");
 		}
 
-		Map<String, String> buildDataMap = new HashMap<>();
+		Map<String, String> map = new HashMap<>();
 
 		JSONArray jsonArray = getJSONArray(key);
 
@@ -73,7 +70,7 @@ public class BuildDataJSONObject extends JSONObject {
 			String propertyName = jsonObject.getString("name");
 
 			if (pattern == null) {
-				buildDataMap.put(propertyName, jsonObject.getString("value"));
+				map.put(propertyName, jsonObject.getString("value"));
 
 				continue;
 			}
@@ -81,22 +78,22 @@ public class BuildDataJSONObject extends JSONObject {
 			Matcher matcher = pattern.matcher(propertyName);
 
 			if (matcher.matches()) {
-				buildDataMap.put(propertyName, jsonObject.getString("value"));
+				map.put(propertyName, jsonObject.getString("value"));
 			}
 		}
 
-		return buildDataMap;
+		return map;
 	}
 
 	public void writeFilteredPropertiesToFile(
 			String destFilePath, Pattern pattern, String key)
 		throws IOException {
 
-		Map<String, String> buildDataMap = getBuildDataMap(key, pattern);
+		Map<String, String> map = getMap(key, pattern);
 
 		StringBuilder sb = new StringBuilder();
 
-		for (Map.Entry<String, String> entry : buildDataMap.entrySet()) {
+		for (Map.Entry<String, String> entry : map.entrySet()) {
 			sb.append(entry.getKey());
 			sb.append("=");
 			sb.append(entry.getValue());

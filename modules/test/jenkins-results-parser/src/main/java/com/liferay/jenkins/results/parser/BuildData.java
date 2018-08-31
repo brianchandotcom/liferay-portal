@@ -14,37 +14,39 @@
 
 package com.liferay.jenkins.results.parser;
 
+import java.io.File;
+
+import java.util.List;
+
+import org.json.JSONObject;
+
 /**
  * @author Michael Hashimoto
  */
-public abstract class BaseBuildRunner implements BuildRunner {
+public interface BuildData {
 
-	public static final String DIST_ROOT_PATH = "/tmp/dist";
+	public Integer getBuildNumber();
 
-	@Override
-	public void setup() {
-		setUpWorkspace();
-	}
+	public String getBuildURL();
 
-	@Override
-	public void setUpWorkspace() {
-		if (workspace == null) {
-			throw new RuntimeException("Workspace is null");
-		}
+	public String getCohortName();
 
-		workspace.setUpWorkspace();
-	}
+	public List<String> getDistNodes();
 
-	protected BaseBuildRunner(Job job) {
-		_job = job;
-	}
+	public String getDistPath();
 
-	protected Job getJob() {
-		return _job;
-	}
+	public String getHostname();
 
-	protected Workspace workspace;
+	public String getJenkinsGitHubURL();
 
-	private final Job _job;
+	public String getJobName();
+
+	public String getMasterHostname();
+
+	public String getRunID();
+
+	public File getWorkspaceDir();
+
+	public JSONObject toJSONObject();
 
 }

@@ -39,6 +39,10 @@ public abstract class BaseBuildRunner implements BuildRunner {
 
 	protected BaseBuildRunner(BuildData buildData) {
 		_buildData = buildData;
+
+		_job = JobFactory.newJob(_buildData);
+
+		_job.readJobProperties();
 	}
 
 	protected BuildData getBuildData() {
@@ -46,14 +50,6 @@ public abstract class BaseBuildRunner implements BuildRunner {
 	}
 
 	protected Job getJob() {
-		if (_job != null) {
-			_job.readJobProperties();
-
-			return _job;
-		}
-
-		_job = JobFactory.newJob(getBuildData());
-
 		return _job;
 	}
 
@@ -78,6 +74,6 @@ public abstract class BaseBuildRunner implements BuildRunner {
 	protected Workspace workspace;
 
 	private final BuildData _buildData;
-	private Job _job;
+	private final Job _job;
 
 }

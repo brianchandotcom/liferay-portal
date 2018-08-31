@@ -171,14 +171,12 @@ public class FormInstanceRecordNestedCollectionResource
 
 		DDMForm ddmForm = ddmStructure.getDDMForm();
 
-		List<DDMFormField> ddmFormFields = ddmForm.getDDMFormFields();
-
 		DDMFormValues ddmFormValues = getDDMFormValues(
-			formInstanceRecordForm.getFieldValues(), ddmStructure.getDDMForm(),
+			formInstanceRecordForm.getFieldValues(), ddmForm,
 			acceptLocale.get());
 
 		_uploadFileHelper.linkFiles(
-			ddmFormFields, ddmFormValues.getDDMFormFieldValues());
+			ddmForm.getDDMFormFields(), ddmFormValues.getDDMFormFieldValues());
 
 		ServiceContext serviceContext = calculateServiceContextAttributes(
 			serviceContextWrapper, formInstanceRecordForm.isDraft());
@@ -209,6 +207,7 @@ public class FormInstanceRecordNestedCollectionResource
 				formInstanceId, WorkflowConstants.STATUS_ANY,
 				pagination.getStartPosition(), pagination.getEndPosition(),
 				null);
+
 		int count = _ddmFormInstanceRecordService.getFormInstanceRecordsCount(
 			formInstanceId);
 
@@ -231,9 +230,14 @@ public class FormInstanceRecordNestedCollectionResource
 
 		DDMStructure ddmStructure = ddmFormInstance.getStructure();
 
+		DDMForm ddmForm = ddmStructure.getDDMForm();
+
 		DDMFormValues ddmFormValues = getDDMFormValues(
-			formInstanceRecordForm.getFieldValues(), ddmStructure.getDDMForm(),
+			formInstanceRecordForm.getFieldValues(), ddmForm,
 			acceptLocale.get());
+
+		_uploadFileHelper.linkFiles(
+			ddmForm.getDDMFormFields(), ddmFormValues.getDDMFormFieldValues());
 
 		ServiceContext serviceContext = calculateServiceContextAttributes(
 			serviceContextWrapper, formInstanceRecordForm.isDraft());

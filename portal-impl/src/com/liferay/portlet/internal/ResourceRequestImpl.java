@@ -180,7 +180,7 @@ public class ResourceRequestImpl
 
 	@Override
 	public boolean isAsyncStarted() {
-		HttpServletRequest httpServletRequest = getHttpServletRequest();
+		HttpServletRequest httpServletRequest = _getHttpServletRequest(this);
 
 		return httpServletRequest.isAsyncStarted();
 	}
@@ -216,6 +216,27 @@ public class ResourceRequestImpl
 			resourceRequest, resourceResponse, hasOriginalRequestAndResponse);
 	}
 
+	private HttpServletRequest _getHttpServletRequest(
+		ResourceRequest resourceRequest) {
+
+		HttpServletRequest httpServletRequest =
+			(HttpServletRequest)getAttribute(
+				PortletServlet.PORTLET_SERVLET_REQUEST);
+
+		if (httpServletRequest != null) {
+			return httpServletRequest;
+		}
+
+		if (resourceRequest == this) {
+			return getHttpServletRequest();
+		}
+
+		LiferayPortletRequest liferayPortletRequest =
+			PortalUtil.getLiferayPortletRequest(resourceRequest);
+
+		return liferayPortletRequest.getHttpServletRequest();
+	}
+
 	private PortletAsyncContext _startPortletAsync(
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse,
 			boolean hasOriginalRequestAndResponse)
@@ -225,27 +246,19 @@ public class ResourceRequestImpl
 			throw new IllegalStateException();
 		}
 
-		HttpServletRequest httpServletRequest =
-			(HttpServletRequest)getAttribute(
-				PortletServlet.PORTLET_SERVLET_REQUEST);
+		HttpServletRequest httpServletRequest = _getHttpServletRequest(
+			resourceRequest);
 
-		HttpServletResponse httpServletResponse = null;
+		HttpServletResponse httpServletResponse =
+			(HttpServletResponse)getAttribute(
+				PortletServlet.PORTLET_SERVLET_RESPONSE);
 
-		if (httpServletRequest == null) {
-			LiferayPortletRequest liferayPortletRequest =
-				PortalUtil.getLiferayPortletRequest(resourceRequest);
-
-			httpServletRequest = liferayPortletRequest.getHttpServletRequest();
-
+		if (httpServletResponse == null) {
 			LiferayPortletResponse liferayPortletResponse =
 				PortalUtil.getLiferayPortletResponse(resourceResponse);
 
 			httpServletResponse =
 				liferayPortletResponse.getHttpServletResponse();
-		}
-		else {
-			httpServletResponse = (HttpServletResponse)getAttribute(
-				PortletServlet.PORTLET_SERVLET_RESPONSE);
 		}
 
 		AsyncContext asyncContext = httpServletRequest.startAsync(

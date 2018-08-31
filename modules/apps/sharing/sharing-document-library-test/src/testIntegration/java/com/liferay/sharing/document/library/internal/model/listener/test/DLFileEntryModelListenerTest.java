@@ -16,6 +16,7 @@ package com.liferay.sharing.document.library.internal.model.listener.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.document.library.kernel.model.DLFileEntry;
+import com.liferay.document.library.kernel.model.DLFolder;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.document.library.kernel.service.DLTrashService;
@@ -144,7 +145,8 @@ public class DLFileEntryModelListenerTest {
 				SharingEntryActionKey.UPDATE, SharingEntryActionKey.VIEW),
 			serviceContext);
 
-		long classNameId = RandomTestUtil.randomLong();
+		long classNameId = _classNameLocalService.getClassNameId(
+			DLFolder.class.getName());
 		long classPK = RandomTestUtil.randomLong();
 
 		SharingEntry sharingEntry = _sharingEntryLocalService.addSharingEntry(

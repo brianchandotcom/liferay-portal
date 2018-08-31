@@ -113,7 +113,7 @@ PortletURL portletURL = viewRolesManagementToolbarDisplayContext.getPortletURL()
 			p_p_lifecycle.value = '1';
 		}
 
-		if (confirm('<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-this") %>')) {
+		if (confirm('<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-this-role") %>')) {
 			submitForm(form, '<portlet:actionURL name="deleteRoles"><portlet:param name="redirect" value="<%= portletURL.toString() %>" /></portlet:actionURL>');
 		}
 	};

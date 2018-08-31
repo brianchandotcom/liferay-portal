@@ -36,6 +36,14 @@
 
 	<command name="AssertPageTemplateNotEditableinStagingLiveSite" priority="5">
 		<execute macro="Navigator#openWithAppendToBaseURL">
+			<var name="urlAppend" value="group/site-name-staging/~/control_panel/manage?p_p_id=com_liferay_layout_admin_web_portlet_GroupPagesPortlet&amp;p_p_lifecycle=0&amp;p_p_state=maximized&amp;p_p_auth=gxCiOUg3" />
+		</execute>
+
+		<execute function="AssertVisible" locator1="NavBar#NAV_ITEM_LINK">
+			<var name="key_navItem" value="Page Templates" />
+		</execute>
+
+		<execute macro="Navigator#openWithAppendToBaseURL">
 			<var name="urlAppend" value="group/site-name/~/control_panel/manage?p_p_id=com_liferay_layout_admin_web_portlet_GroupPagesPortlet&amp;p_p_lifecycle=0&amp;p_p_state=maximized&amp;p_p_auth=gxCiOUg3" />
 		</execute>
 

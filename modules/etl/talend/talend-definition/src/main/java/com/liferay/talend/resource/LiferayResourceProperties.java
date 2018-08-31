@@ -18,6 +18,7 @@ import com.liferay.talend.LiferayBaseComponentDefinition;
 import com.liferay.talend.connection.LiferayConnectionProperties;
 import com.liferay.talend.connection.LiferayConnectionPropertiesProvider;
 import com.liferay.talend.exception.ExceptionUtils;
+import com.liferay.talend.properties.ResourceProperty;
 import com.liferay.talend.runtime.LiferaySourceOrSinkRuntime;
 import com.liferay.talend.utils.URIUtils;
 
@@ -48,7 +49,6 @@ import org.talend.daikon.properties.presentation.Form;
 import org.talend.daikon.properties.presentation.Widget;
 import org.talend.daikon.properties.property.Property;
 import org.talend.daikon.properties.property.PropertyFactory;
-import org.talend.daikon.properties.property.StringProperty;
 import org.talend.daikon.sandbox.SandboxedInstance;
 
 /**
@@ -61,9 +61,9 @@ public class LiferayResourceProperties
 		super(name);
 	}
 
-	public ValidationResult afterResourceURL() throws Exception {
+	public ValidationResult afterResourceProperty() throws Exception {
 		if (_log.isDebugEnabled()) {
-			_log.debug("Resource URL: " + resourceURL.getValue());
+			_log.debug("Resource URL: " + resourceProperty.getResourceURL());
 		}
 
 		ValidationResultMutable validationResultMutable =
@@ -93,13 +93,11 @@ public class LiferayResourceProperties
 
 				try {
 					URI resourceURI = URIUtils.setPaginationLimitOnURL(
-						resourceURL.getValue(), 1);
+						resourceProperty.getResourceURL(), 1);
 
 					String resourceCollectionType =
 						liferaySourceOrSinkRuntime.getResourceCollectionType(
 							resourceURI.toString());
-
-					resourceName.setValue(resourceCollectionType);
 
 					Schema schema =
 						liferaySourceOrSinkRuntime.getResourceSchemaByType(
@@ -128,8 +126,7 @@ public class LiferayResourceProperties
 		if (validationResultMutable.getStatus() ==
 				ValidationResult.Result.ERROR) {
 
-			resourceName.setValue("");
-			resourceURL.setValue("");
+			resourceProperty.setValue(null);
 		}
 
 		refreshLayout(getForm(Form.MAIN));
@@ -138,7 +135,9 @@ public class LiferayResourceProperties
 		return validationResultMutable;
 	}
 
-	public ValidationResult beforeResourceURL() throws Exception {
+	public ValidationResult beforeResourceProperty() throws Exception {
+		setupResourceURLPrefix();
+
 		try (SandboxedInstance sandboxedInstance =
 				LiferayBaseComponentDefinition.getSandboxedInstance(
 					LiferayBaseComponentDefinition.
@@ -183,7 +182,7 @@ public class LiferayResourceProperties
 						validationResultMutable.setStatus(Result.ERROR);
 					}
 
-					resourceURL.setPossibleNamedThingValues(resourceNames);
+					resourceProperty.setPossibleNamedThingValues(resourceNames);
 				}
 				catch (Exception e) {
 					return ExceptionUtils.exceptionToValidationResult(e);
@@ -202,6 +201,8 @@ public class LiferayResourceProperties
 	@Override
 	public void refreshLayout(Form form) {
 		super.refreshLayout(form);
+
+		setupResourceURLPrefix();
 	}
 
 	public void setSchemaListener(ISchemaListener schemaListener) {
@@ -214,7 +215,7 @@ public class LiferayResourceProperties
 
 		// Special property settings
 
-		resourceURL.setRequired();
+		resourceProperty.setRequired();
 
 		// Forms
 
@@ -227,8 +228,22 @@ public class LiferayResourceProperties
 		super.setupProperties();
 
 		condition.setValue("");
-		resourceName.setValue("");
-		resourceURL.setValue("");
+		resourceProperty.setValue(null);
+	}
+
+	public void setupResourceURLPrefix() {
+		LiferayConnectionProperties liferayConnectionProperties =
+			getEffectiveLiferayConnectionProperties();
+
+		if (liferayConnectionProperties.siteFilter.getValue()) {
+			resourceProperty.setUriPrefix(
+				liferayConnectionProperties.webSiteProperty.getWebSiteURL());
+
+			return;
+		}
+
+		resourceProperty.setUriPrefix(
+			liferayConnectionProperties.endpoint.getValue());
 	}
 
 	public ValidationResult validateValidateCondition() {
@@ -266,10 +281,8 @@ public class LiferayResourceProperties
 
 	};
 
-	public Property<String> resourceName = PropertyFactory.newString(
-		"resourceName").setRequired();
-	public StringProperty resourceURL = PropertyFactory.newString(
-		"resourceURL");
+	public ResourceProperty resourceProperty = new ResourceProperty(
+		"resourceProperty");
 	public ISchemaListener schemaListener;
 	public transient PresentationItem validateCondition = new PresentationItem(
 		"validateCondition");
@@ -326,18 +339,13 @@ public class LiferayResourceProperties
 	private void _setupMainForm() {
 		Form resourceSelectionForm = Form.create(this, Form.MAIN);
 
-		Widget resourceURLWidget = Widget.widget(resourceURL);
+		Widget resourcePropertyWidget = Widget.widget(resourceProperty);
 
-		resourceURLWidget.setCallAfter(true);
-		resourceURLWidget.setWidgetType(Widget.NAME_SELECTION_AREA_WIDGET_TYPE);
+		resourcePropertyWidget.setCallAfter(true);
+		resourcePropertyWidget.setWidgetType(
+			Widget.NAME_SELECTION_AREA_WIDGET_TYPE);
 
-		resourceSelectionForm.addRow(resourceURLWidget);
-
-		Widget resourceNameWidget = Widget.widget(resourceName);
-
-		resourceNameWidget.setReadonly(true);
-
-		resourceSelectionForm.addColumn(resourceNameWidget);
+		resourceSelectionForm.addRow(resourcePropertyWidget);
 
 		resourceSelectionForm.addRow(condition);
 
@@ -354,20 +362,15 @@ public class LiferayResourceProperties
 	private void _setupReferenceForm() {
 		Form referenceForm = Form.create(this, Form.REFERENCE);
 
-		Widget resourceURLReferenceWidget = Widget.widget(resourceURL);
+		Widget resourcePropertyReferenceWidget = Widget.widget(
+			resourceProperty);
 
-		resourceURLReferenceWidget.setCallAfter(true);
-		resourceURLReferenceWidget.setLongRunning(true);
-		resourceURLReferenceWidget.setWidgetType(
+		resourcePropertyReferenceWidget.setCallAfter(true);
+		resourcePropertyReferenceWidget.setLongRunning(true);
+		resourcePropertyReferenceWidget.setWidgetType(
 			Widget.NAME_SELECTION_REFERENCE_WIDGET_TYPE);
 
-		referenceForm.addRow(resourceURLReferenceWidget);
-
-		Widget resourceNameReferenceWidget = Widget.widget(resourceName);
-
-		resourceNameReferenceWidget.setReadonly(true);
-
-		referenceForm.addColumn(resourceNameReferenceWidget);
+		referenceForm.addRow(resourcePropertyReferenceWidget);
 
 		referenceForm.addRow(condition);
 

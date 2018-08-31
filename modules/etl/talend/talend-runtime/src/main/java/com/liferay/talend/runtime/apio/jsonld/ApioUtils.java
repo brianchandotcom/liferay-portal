@@ -48,7 +48,7 @@ public class ApioUtils {
 	/**
 	 * Determines the type of the given <code>collection</code> JsonNode
 	 *
-	 * @param collectionJsonNode
+	 * @param  collectionJsonNode
 	 * @return String the managed type of the collection, empty string otherwise
 	 */
 	public static String getManagedType(JsonNode collectionJsonNode) {

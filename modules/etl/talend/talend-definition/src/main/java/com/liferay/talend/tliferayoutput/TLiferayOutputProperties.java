@@ -100,7 +100,8 @@ public class TLiferayOutputProperties
 
 	public ValidationResult afterCalculateSchema() throws Exception {
 		if (_log.isDebugEnabled()) {
-			_log.debug("Resource URL: " + resource.resourceURL.getValue());
+			_log.debug(
+				"Resource URL: " + resource.resourceProperty.getResourceURL());
 		}
 
 		ValidationResultMutable validationResultMutable =
@@ -267,7 +268,8 @@ public class TLiferayOutputProperties
 
 	public ValidationResult validateOperations() throws Exception {
 		if (_log.isDebugEnabled()) {
-			_log.debug("Resource URL: " + resource.resourceURL.getValue());
+			_log.debug(
+				"Resource URL: " + resource.resourceProperty.getResourceURL());
 		}
 
 		ValidationResultMutable validationResultMutable =
@@ -338,9 +340,10 @@ public class TLiferayOutputProperties
 		}
 
 		@Override
-		public ValidationResult afterResourceURL() throws Exception {
+		public ValidationResult afterResourceProperty() throws Exception {
 			if (_log.isDebugEnabled()) {
-				_log.debug("Resource URL: " + resourceURL.getValue());
+				_log.debug(
+					"Resource URL: " + resourceProperty.getResourceURL());
 			}
 
 			List<Operation> supportedOperations = new ArrayList<>();
@@ -373,14 +376,7 @@ public class TLiferayOutputProperties
 
 					try {
 						URI resourceURI = URIUtils.setPaginationLimitOnURL(
-							resourceURL.getValue(), 1);
-
-						String resourceCollectionType =
-							liferaySourceOrSinkRuntime.
-								getResourceCollectionType(
-									resourceURI.toString());
-
-						resourceName.setValue(resourceCollectionType);
+							resourceProperty.getResourceURL(), 1);
 
 						supportedOperations.addAll(
 							liferaySourceOrSinkRuntime.
@@ -408,8 +404,7 @@ public class TLiferayOutputProperties
 			if (validationResultMutable.getStatus() ==
 					ValidationResult.Result.ERROR) {
 
-				resourceName.setValue("");
-				resourceURL.setValue("");
+				resourceProperty.setValue(null);
 				operations.setValue(null);
 
 				operations.setPossibleValues((List<?>)null);
@@ -530,7 +525,7 @@ public class TLiferayOutputProperties
 
 		supportedOperations.addAll(
 			liferaySourceOrSinkRuntime.getResourceSupportedOperations(
-				resource.resourceURL.getStringValue()));
+				resource.resourceProperty.getResourceURL()));
 
 		Supplier<Stream<Operation>> operationStreamSupplier =
 			() -> supportedOperations.stream();

@@ -14,6 +14,7 @@
 
 package com.liferay.talend.utils;
 
+import com.liferay.talend.exception.URIPathException;
 import com.liferay.talend.runtime.apio.constants.ApioConstants;
 
 import java.net.URI;
@@ -51,6 +52,29 @@ public class URIUtils {
 				ApioConstants.QUERY_PARAM_FILTER, queryCondition));
 
 		return decoratedURI;
+	}
+
+	public static String getLastPathSegment(String url) {
+		URI uri = getURI(url);
+
+		String path = uri.getPath();
+
+		if (path == null) {
+			throw new URIPathException("Missing URI path from the URL: " + url);
+		}
+
+		while (path.endsWith("/")) {
+			path = path.substring(0, path.length() - 1);
+		}
+
+		int pos = path.lastIndexOf("/");
+
+		if (pos == -1) {
+			throw new URIPathException(
+				"Unable to find path segments in the URL: " + url);
+		}
+
+		return path.substring(pos + 1);
 	}
 
 	public static URI getURI(String url) {

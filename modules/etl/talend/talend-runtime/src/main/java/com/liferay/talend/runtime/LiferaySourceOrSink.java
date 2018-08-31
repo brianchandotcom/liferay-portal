@@ -36,6 +36,7 @@ import com.liferay.talend.runtime.apio.jsonld.ApioSingleModel;
 import com.liferay.talend.runtime.apio.jsonld.ApioUtils;
 import com.liferay.talend.runtime.apio.operation.Operation;
 import com.liferay.talend.runtime.client.RESTClient;
+import com.liferay.talend.utils.URIUtils;
 
 import java.io.IOException;
 
@@ -278,7 +279,7 @@ public class LiferaySourceOrSink
 			return _getJsonHomeRootEndpointMap(jsonNode);
 		}
 
-		return apioEntryPoint.getRootEndpointMap();
+		return _getRootEndpointMap(apioEntryPoint);
 	}
 
 	@Override
@@ -315,9 +316,7 @@ public class LiferaySourceOrSink
 
 				String webSiteURL = webSiteURLJsonNode.asText();
 
-				int pos = webSiteURL.lastIndexOf("/");
-
-				String webSiteId = webSiteURL.substring(pos + 1);
+				String webSiteId = URIUtils.getLastPathSegment(webSiteURL);
 
 				webSitesList.add(
 					new SimpleNamedThing(
@@ -460,12 +459,13 @@ public class LiferaySourceOrSink
 		for (Map.Entry<String, String> entry : resourceCollections.entrySet()) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(
-					"resource name: {}, href: {} ", entry.getKey(),
-					entry.getValue());
+					"resource: {}, href: {} ", entry.getValue(),
+					entry.getKey());
 			}
 
 			resourceNames.add(
-				new SimpleNamedThing(entry.getKey(), entry.getValue()));
+				new SimpleNamedThing(
+					entry.getValue(), entry.getValue(), entry.getKey()));
 		}
 
 		return resourceNames;
@@ -607,12 +607,13 @@ public class LiferaySourceOrSink
 		for (Map.Entry<String, String> entry : resourceCollections.entrySet()) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(
-					"resource name: {}, href: {} ", entry.getKey(),
-					entry.getValue());
+					"resource: {}, href: {} ", entry.getValue(),
+					entry.getKey());
 			}
 
 			schemaNames.add(
-				new SimpleNamedThing(entry.getKey(), entry.getValue()));
+				new SimpleNamedThing(
+					entry.getValue(), entry.getValue(), entry.getKey()));
 		}
 
 		return schemaNames;
@@ -801,6 +802,28 @@ public class LiferaySourceOrSink
 		return resourcesMap;
 	}
 
+	/**
+	 * Returns the exposed entry points in a Map. The key is the ID of a given
+	 * resource collection and the value is the resource URL's last path segment
+	 * to be able to construct URLs from it
+	 *
+	 * @param  apioEntryPoint
+	 * @return Map<String, String> Resource ID / URL last path segment, empty
+	 *         otherwise
+	 */
+	private Map<String, String> _getRootEndpointMap(
+		ApioEntryPoint apioEntryPoint) {
+
+		Set<String> rootEndpointURLs = apioEntryPoint.getRootEndpointURLs();
+		Map<String, String> rootEndpointURLMap = new TreeMap<>();
+
+		rootEndpointURLs.forEach(
+			endpointURL -> rootEndpointURLMap.put(
+				endpointURL, URIUtils.getLastPathSegment(endpointURL)));
+
+		return rootEndpointURLMap;
+	}
+
 	private Map<String, String> _getWebSiteResourceCollectionsDescriptor(
 			JsonNode jsonNode)
 		throws IOException {
@@ -822,9 +845,10 @@ public class LiferaySourceOrSink
 
 			String id = idJsonNode.asText();
 
+			String resourcePathName = URIUtils.getLastPathSegment(resourceHref);
+
 			if (resourceHref.startsWith(id)) {
-				resourcesMap.put(
-					resourceHrefJsonNode.asText(), typeCoercionTermKey);
+				resourcesMap.put(resourceHref, resourcePathName);
 			}
 		}
 

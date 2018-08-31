@@ -24,6 +24,7 @@ import java.io.IOException;
 
 import java.util.Collections;
 import java.util.Map;
+import java.util.Set;
 import java.util.TreeMap;
 
 import org.slf4j.Logger;
@@ -77,6 +78,10 @@ public class ApioEntryPoint extends ApioBaseResponse {
 		}
 
 		return Collections.unmodifiableMap(rootEndpointMap);
+	}
+
+	public Set<String> getRootEndpointURLs() {
+		return getRootEndpointMap().keySet();
 	}
 
 	private void _validateEntryPoint() throws IOException {

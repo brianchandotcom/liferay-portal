@@ -190,10 +190,18 @@ public class LiferayConnectionProperties
 			return liferayConnectionProperties;
 		}
 
-		_log.error(
-			"Connection has a reference to '{}' but the referenced Object is " +
-				"null",
-			getReferencedComponentId());
+		if (getReferencedComponentId() != null) {
+			_log.error(
+				"Connection has a reference to '{}' but the referenced " +
+					"Object is null",
+				getReferencedComponentId());
+		}
+
+		if (_log.isDebugEnabled()) {
+			_log.debug(
+				"Fall back to the actual instance " +
+					"LiferayConnectionProperties for the runtime environment");
+		}
 
 		return getLiferayConnectionProperties();
 	}
@@ -252,11 +260,11 @@ public class LiferayConnectionProperties
 
 		wizardForm.addRow(endpoint);
 
+		wizardForm.addRow(anonymousLogin);
+
 		wizardForm.addRow(userId);
 
 		wizardForm.addRow(password);
-
-		wizardForm.addRow(anonymousLogin);
 
 		Widget testConnectionWidget = Widget.widget(testConnection);
 
@@ -283,11 +291,11 @@ public class LiferayConnectionProperties
 
 		mainForm.addRow(endpoint);
 
+		mainForm.addRow(anonymousLogin);
+
 		mainForm.addRow(userId);
 
 		mainForm.addRow(password);
-
-		mainForm.addRow(anonymousLogin);
 
 		mainForm.addRow(siteFilter);
 
@@ -326,11 +334,11 @@ public class LiferayConnectionProperties
 
 		referenceForm.addRow(endpoint);
 
+		referenceForm.addRow(anonymousLogin);
+
 		referenceForm.addRow(userId);
 
 		referenceForm.addRow(password);
-
-		referenceForm.addRow(anonymousLogin);
 
 		referenceForm.addRow(siteFilter);
 

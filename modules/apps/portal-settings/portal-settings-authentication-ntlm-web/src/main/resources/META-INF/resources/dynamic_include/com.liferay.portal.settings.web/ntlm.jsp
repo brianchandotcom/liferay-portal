@@ -34,7 +34,7 @@ if (Validator.isNotNull(servicePassword)) {
 %>
 
 <aui:fieldset>
-	<aui:input name="<%= ActionRequest.ACTION_NAME %>" type="hidden" value="/portal_settings/ntlm" />
+	<aui:input id='<%= PortalUtil.generateRandomKey(request, "ntlm") %>' name="<%= ActionRequest.ACTION_NAME %>" type="hidden" value="/portal_settings/ntlm" />
 
 	<aui:input label="enabled" name='<%= PortalSettingsNtlmConstants.FORM_PARAMETER_NAMESPACE + "enabled" %>' type="checkbox" value="<%= enabled %>" />
 

@@ -28,7 +28,7 @@ String googleClientSecret = googleAuthorizationConfiguration.clientSecret();
 <liferay-ui:error key="googleClientSecretInvalid" message="the-google-client-secret-is-invalid" />
 
 <aui:fieldset>
-	<aui:input name="<%= ActionRequest.ACTION_NAME %>" type="hidden" value="/portal_settings/google" />
+	<aui:input id='<%= PortalUtil.generateRandomKey(request, "google") %>' name="<%= ActionRequest.ACTION_NAME %>" type="hidden" value="/portal_settings/google" />
 
 	<aui:input label="enabled" name='<%= PortalSettingsGoogleConstants.FORM_PARAMETER_NAMESPACE + "enabled" %>' type="checkbox" value="<%= googleAuthEnabled %>" />
 

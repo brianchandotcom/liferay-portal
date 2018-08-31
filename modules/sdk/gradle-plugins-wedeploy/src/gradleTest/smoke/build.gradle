@@ -4,9 +4,9 @@ runGradleTest {
 	doLast {
 		Project dataProject = project(":sample:foo:bar:data")
 
-		assert dataProject.plugins.hasPlugin("com.liferay.wedeploy.data")
+		assert dataProject.plugins.hasPlugin("com.liferay.wedeploy")
 
-		assert dataProject.tasks.deleteWeDeployData.commandLine == ["we", "delete", "--force", "--project", "foobar", "--remote", "sample", "--service", "data"]
-		assert dataProject.tasks.deployWeDeployData.commandLine == ["we", "deploy", "--project", "foobar", "--remote", "sample"]
+		assert dataProject.tasks.deleteWeDeploy.commandLine == ["we", "delete", "--force", "--project", "foobar", "--remote", "sample", "--service", "data"]
+		assert dataProject.tasks.deployWeDeploy.commandLine == ["we", "deploy", "--project", "foobar", "--remote", "sample"]
 	}
 }

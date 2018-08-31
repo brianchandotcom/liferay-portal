@@ -31,43 +31,29 @@ import org.gradle.api.tasks.Exec;
 
 /**
  * @author Andrea Di Giorgi
+ * @author Eddie Olson
  */
-public abstract class BaseWeDeployPlugin implements Plugin<Project> {
+public class WeDeployPlugin implements Plugin<Project> {
+
+	public static final String DELETE_WEDEPLOY_TASK_NAME = "deleteWeDeploy";
+
+	public static final String DEPLOY_WEDEPLOY_TASK_NAME = "deployWeDeploy";
 
 	@Override
 	public void apply(Project project) {
 		String wedeployProject = _getProperty(project, ".wedeploy.project");
 		String wedeployRemote = _getProperty(project, ".wedeploy.remote");
 
-		File wedeployJsonFile = project.file("wedeploy.json");
-
-		JsonSlurper jsonSlurper = new JsonSlurper();
-
-		Map<String, ?> wedeployJsonMap = (Map<String, ?>)jsonSlurper.parse(
-			wedeployJsonFile);
-
-		String wedeployService = (String)wedeployJsonMap.get("id");
-
-		_addTaskDeleteWeDeploy(
-			project, wedeployProject, wedeployRemote, wedeployService);
-
+		_addTaskDeleteWeDeploy(project, wedeployProject, wedeployRemote);
 		_addTaskDeployWeDeploy(project, wedeployProject, wedeployRemote);
 	}
 
-	protected abstract String getDeleteWeDeployTaskDescription(Project project);
-
-	protected abstract String getDeleteWeDeployTaskName();
-
-	protected abstract String getDeployWeDeployTaskDescription(Project project);
-
-	protected abstract String getDeployWeDeployTaskName();
-
+	@SuppressWarnings("unchecked")
 	private Exec _addTaskDeleteWeDeploy(
-		Project project, String wedeployProject, String wedeployRemote,
-		Object wedeployService) {
+		Project project, String wedeployProject, String wedeployRemote) {
 
 		Exec exec = GradleUtil.addTask(
-			project, getDeleteWeDeployTaskName(), Exec.class);
+			project, DELETE_WEDEPLOY_TASK_NAME, Exec.class);
 
 		exec.args("delete", "--force");
 
@@ -79,11 +65,20 @@ public abstract class BaseWeDeployPlugin implements Plugin<Project> {
 			exec.args("--remote", wedeployRemote);
 		}
 
-		exec.args("--service", wedeployService);
+		File wedeployJsonFile = project.file("wedeploy.json");
+
+		JsonSlurper jsonSlurper = new JsonSlurper();
+
+		Map<String, ?> wedeployJsonMap = (Map<String, ?>)jsonSlurper.parse(
+			wedeployJsonFile);
+
+		String wedeployId = (String)wedeployJsonMap.get("id");
+
+		exec.args("--service", wedeployId);
 
 		exec.setExecutable("we");
 
-		exec.setDescription(getDeleteWeDeployTaskDescription(project));
+		exec.setDescription("Deletes the project from WeDeploy.");
 		exec.setGroup(BasePlugin.UPLOAD_GROUP);
 
 		return exec;
@@ -93,7 +88,7 @@ public abstract class BaseWeDeployPlugin implements Plugin<Project> {
 		Project project, String wedeployProject, String wedeployRemote) {
 
 		Exec exec = GradleUtil.addTask(
-			project, getDeployWeDeployTaskName(), Exec.class);
+			project, DEPLOY_WEDEPLOY_TASK_NAME, Exec.class);
 
 		exec.args("deploy");
 
@@ -107,7 +102,7 @@ public abstract class BaseWeDeployPlugin implements Plugin<Project> {
 
 		exec.setExecutable("we");
 
-		exec.setDescription(getDeployWeDeployTaskDescription(project));
+		exec.setDescription("Deploys the project to WeDeploy.");
 		exec.setGroup(BasePlugin.UPLOAD_GROUP);
 
 		return exec;

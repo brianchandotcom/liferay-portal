@@ -57,7 +57,6 @@ import org.apache.commons.collections.ExtendedProperties;
 import org.apache.velocity.app.VelocityEngine;
 import org.apache.velocity.exception.ParseErrorException;
 import org.apache.velocity.runtime.RuntimeConstants;
-import org.apache.velocity.util.introspection.SecureUberspector;
 
 import org.junit.AfterClass;
 import org.junit.Assert;
@@ -175,7 +174,7 @@ public class VelocityTemplateTest {
 			velocityEngineConfiguration.loggerCategory());
 		extendedProperties.setProperty(
 			RuntimeConstants.UBERSPECT_CLASSNAME,
-			SecureUberspector.class.getName());
+			LiferaySecureUberspector.class.getName());
 		extendedProperties.setProperty(
 			VelocityEngine.VM_LIBRARY,
 			StringUtil.merge(velocityEngineConfiguration.velocimacroLibrary()));

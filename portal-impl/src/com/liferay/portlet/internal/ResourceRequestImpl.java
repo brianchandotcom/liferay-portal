@@ -202,7 +202,7 @@ public class ResourceRequestImpl
 	public PortletAsyncContext startPortletAsync()
 		throws IllegalStateException {
 
-		return _startPortletAsync(this, _resourceResponse, true);
+		return startPortletAsync(this, _resourceResponse);
 	}
 
 	@Override
@@ -217,36 +217,6 @@ public class ResourceRequestImpl
 
 			hasOriginalRequestAndResponse = true;
 		}
-
-		return _startPortletAsync(
-			resourceRequest, resourceResponse, hasOriginalRequestAndResponse);
-	}
-
-	private HttpServletRequest _getHttpServletRequest(
-		ResourceRequest resourceRequest) {
-
-		HttpServletRequest httpServletRequest =
-			(HttpServletRequest)getAttribute(
-				PortletServlet.PORTLET_SERVLET_REQUEST);
-
-		if (httpServletRequest != null) {
-			return httpServletRequest;
-		}
-
-		if (resourceRequest == this) {
-			return getHttpServletRequest();
-		}
-
-		LiferayPortletRequest liferayPortletRequest =
-			PortalUtil.getLiferayPortletRequest(resourceRequest);
-
-		return liferayPortletRequest.getHttpServletRequest();
-	}
-
-	private PortletAsyncContext _startPortletAsync(
-			ResourceRequest resourceRequest, ResourceResponse resourceResponse,
-			boolean hasOriginalRequestAndResponse)
-		throws IllegalStateException {
 
 		if (!isAsyncSupported()) {
 			throw new IllegalStateException();
@@ -287,6 +257,27 @@ public class ResourceRequestImpl
 		}
 
 		return _portletAsyncContextImpl;
+	}
+
+	private HttpServletRequest _getHttpServletRequest(
+		ResourceRequest resourceRequest) {
+
+		HttpServletRequest httpServletRequest =
+			(HttpServletRequest)getAttribute(
+				PortletServlet.PORTLET_SERVLET_REQUEST);
+
+		if (httpServletRequest != null) {
+			return httpServletRequest;
+		}
+
+		if (resourceRequest == this) {
+			return getHttpServletRequest();
+		}
+
+		LiferayPortletRequest liferayPortletRequest =
+			PortalUtil.getLiferayPortletRequest(resourceRequest);
+
+		return liferayPortletRequest.getHttpServletRequest();
 	}
 
 	private String _cacheablity;

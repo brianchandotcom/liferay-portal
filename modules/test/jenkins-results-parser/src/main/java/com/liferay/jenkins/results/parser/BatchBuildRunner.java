@@ -17,18 +17,17 @@ package com.liferay.jenkins.results.parser;
 /**
  * @author Michael Hashimoto
  */
-public abstract class BatchBuildRunner extends BaseBuildRunner {
+public abstract class BatchBuildRunner<T extends BatchBuildData>
+	extends BaseBuildRunner<T> {
 
-	public String getBatchName() {
-		return _batchName;
+	protected BatchBuildRunner(T batchBuildData) {
+		super(batchBuildData);
 	}
 
-	protected BatchBuildRunner(Job job, String batchName) {
-		super(job);
+	protected String getBatchName() {
+		BatchBuildData batchBuildData = getBuildData();
 
-		_batchName = batchName;
+		return batchBuildData.getBatchName();
 	}
-
-	private final String _batchName;
 
 }

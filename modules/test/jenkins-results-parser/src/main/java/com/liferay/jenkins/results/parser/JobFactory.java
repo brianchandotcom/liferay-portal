@@ -25,6 +25,19 @@ import java.util.Map;
  */
 public class JobFactory {
 
+	public static Job newJob(BuildData buildData) {
+		String portalUpstreamBranchName = null;
+
+		if (buildData instanceof PortalBuildData) {
+			PortalBuildData portalBuildData = (PortalBuildData)buildData;
+
+			portalUpstreamBranchName =
+				portalBuildData.getPortalUpstreamBranchName();
+		}
+
+		return newJob(buildData.getJobName(), null, portalUpstreamBranchName);
+	}
+
 	public static Job newJob(String jobName) {
 		return newJob(jobName, null, null);
 	}

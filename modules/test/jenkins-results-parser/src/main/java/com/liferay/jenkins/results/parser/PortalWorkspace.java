@@ -35,8 +35,21 @@ public abstract class PortalWorkspace extends BaseWorkspace {
 		return false;
 	}
 
+	protected PortalWorkspace(
+		String portalGitHubURL, String portalUpstreamBranchName) {
+
+		String portalGitRepositoryName = _getPortalGitRepositoryName(
+			portalGitHubURL);
+
+		_primaryPortalLocalGitRepository = _getPortalLocalGitRepository(
+			portalGitRepositoryName, portalUpstreamBranchName);
+
+		_primaryPortalLocalGitBranch = _getPortalLocalGitBranch(
+			_primaryPortalLocalGitRepository, portalGitHubURL);
+	}
+
 	@Override
-	public void checkoutLocalGitBranches() {
+	protected void checkoutLocalGitBranches() {
 		checkoutJenkinsLocalGitBranch();
 
 		_checkoutPrimaryPortalLocalGitBranch();
@@ -51,26 +64,12 @@ public abstract class PortalWorkspace extends BaseWorkspace {
 	}
 
 	@Override
-	public void setGitRepositoryJobProperties(Job job) {
-		_primaryPortalLocalGitRepository.setJobProperties(job);
-	}
-
-	@Override
-	public void writeGitRepositoryPropertiesFiles() {
-		_primaryPortalLocalGitRepository.writeGitRepositoryPropertiesFiles();
-	}
-
-	protected PortalWorkspace(
-		String portalGitHubURL, String portalUpstreamBranchName) {
-
-		String portalGitRepositoryName = _getPortalGitRepositoryName(
-			portalGitHubURL);
-
-		_primaryPortalLocalGitRepository = _getPortalLocalGitRepository(
-			portalGitRepositoryName, portalUpstreamBranchName);
-
-		_primaryPortalLocalGitBranch = _getPortalLocalGitBranch(
-			_primaryPortalLocalGitRepository, portalGitHubURL);
+	protected void cleanupLocalGitBranches() {
+		cleanupLocalGitBranch(_basePortalLocalGitBranch);
+		cleanupLocalGitBranch(_companionPortalLocalGitBranch);
+		cleanupLocalGitBranch(_otherPortalLocalGitBranch);
+		cleanupLocalGitBranch(_pluginsLocalGitBranch);
+		cleanupLocalGitBranch(_primaryPortalLocalGitBranch);
 	}
 
 	protected PortalLocalGitBranch getBasePortalLocalGitBranch() {
@@ -222,6 +221,16 @@ public abstract class PortalWorkspace extends BaseWorkspace {
 
 	protected PortalLocalGitRepository getPrimaryPortalLocalGitRepository() {
 		return _primaryPortalLocalGitRepository;
+	}
+
+	@Override
+	protected void setGitRepositoryJobProperties(Job job) {
+		_primaryPortalLocalGitRepository.setJobProperties(job);
+	}
+
+	@Override
+	protected void writeGitRepositoryPropertiesFiles() {
+		_primaryPortalLocalGitRepository.writeGitRepositoryPropertiesFiles();
 	}
 
 	private void _checkoutBasePortalLocalGitBranch() {

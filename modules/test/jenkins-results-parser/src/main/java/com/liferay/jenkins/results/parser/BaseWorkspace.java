@@ -68,10 +68,24 @@ public abstract class BaseWorkspace implements Workspace {
 	}
 
 	@Override
-	public void setUpWorkspace() {
+	public void setUp() {
+		setUp(null);
+	}
+
+	@Override
+	public void setUp(Job job) {
 		checkoutLocalGitBranches();
 
+		if (job != null) {
+			setGitRepositoryJobProperties(job);
+		}
+
 		writeGitRepositoryPropertiesFiles();
+	}
+
+	@Override
+	public void tearDown() {
+		cleanupLocalGitBranches();
 	}
 
 	protected void checkoutJenkinsLocalGitBranch() {
@@ -101,7 +115,42 @@ public abstract class BaseWorkspace implements Workspace {
 		gitWorkingDirectory.displayLog();
 	}
 
+	protected abstract void checkoutLocalGitBranches();
+
+	protected void cleanupLocalGitBranch(LocalGitBranch localGitBranch) {
+		if (localGitBranch == null) {
+			return;
+		}
+
+		System.out.println();
+		System.out.println("##");
+		System.out.println("## " + localGitBranch.toString());
+		System.out.println("##");
+		System.out.println();
+
+		GitWorkingDirectory gitWorkingDirectory =
+			localGitBranch.getGitWorkingDirectory();
+
+		LocalGitBranch upstreamLocalGitBranch =
+			gitWorkingDirectory.getLocalGitBranch(
+				gitWorkingDirectory.getUpstreamBranchName());
+
+		gitWorkingDirectory.checkoutLocalGitBranch(upstreamLocalGitBranch);
+
+		gitWorkingDirectory.reset("--hard " + localGitBranch.getSHA());
+
+		gitWorkingDirectory.clean();
+
+		gitWorkingDirectory.displayLog();
+	}
+
+	protected abstract void cleanupLocalGitBranches();
+
+	protected abstract void setGitRepositoryJobProperties(Job job);
+
 	protected abstract boolean synchronizeGitBranches();
+
+	protected abstract void writeGitRepositoryPropertiesFiles();
 
 	private String _jenkinsBranchName;
 	private LocalGitBranch _jenkinsLocalGitBranch;

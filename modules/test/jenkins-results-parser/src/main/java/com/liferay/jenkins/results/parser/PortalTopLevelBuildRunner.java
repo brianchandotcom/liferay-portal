@@ -17,33 +17,31 @@ package com.liferay.jenkins.results.parser;
 /**
  * @author Michael Hashimoto
  */
-public class PortalTopLevelBuildRunner extends TopLevelBuildRunner {
+public class PortalTopLevelBuildRunner
+	extends TopLevelBuildRunner<PortalTopLevelBuildData> {
 
-	protected PortalTopLevelBuildRunner(Job job, String portalGitHubURL) {
-		super(job);
+	protected PortalTopLevelBuildRunner(
+		PortalTopLevelBuildData portalTopLevelBuildData) {
 
-		if (!(job instanceof PortalTestClassJob)) {
-			Class<? extends Job> clazz = job.getClass();
+		super(portalTopLevelBuildData);
+	}
 
-			throw new RuntimeException(
-				"Invalid job type " + clazz.getSimpleName());
-		}
+	@Override
+	protected void initWorkspace() {
+		PortalTopLevelBuildData portalTopLevelBuildData = getBuildData();
 
-		PortalTestClassJob portalTestClassJob = (PortalTestClassJob)job;
+		workspace = WorkspaceFactory.newTopLevelWorkspace(
+			portalTopLevelBuildData.getPortalGitHubURL(),
+			portalTopLevelBuildData.getPortalUpstreamBranchName());
 
-		PortalGitWorkingDirectory portalGitWorkingDirectory =
-			portalTestClassJob.getPortalGitWorkingDirectory();
-
-		Workspace topLevelWorkspace = WorkspaceFactory.newTopLevelWorkspace(
-			portalGitHubURL, portalGitWorkingDirectory.getUpstreamBranchName());
-
-		if (!(topLevelWorkspace instanceof TopLevelPortalWorkspace)) {
+		if (!(workspace instanceof TopLevelPortalWorkspace)) {
 			throw new RuntimeException("Invalid workspace");
 		}
 
-		topLevelWorkspace.setGitRepositoryJobProperties(getJob());
-
-		workspace = topLevelWorkspace;
+		if (JenkinsResultsParserUtil.isCINode()) {
+			workspace.addJenkinsLocalGitBranch(
+				portalTopLevelBuildData.getJenkinsGitHubURL());
+		}
 	}
 
 }

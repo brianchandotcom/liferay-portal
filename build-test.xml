@@ -3026,6 +3026,7 @@ go</echo>
 
 			<var name="app.server.tomcat.dir" value="${app.server.parent.dir}/tomcat-${app.server.tomcat.version}" />
 			<var name="app.server.tomcat.bin.dir" value="${app.server.parent.dir}/tomcat-${app.server.tomcat.version}/bin" />
+			<var name="app.server.tomcat.classes.portal.dir" value="${app.server.parent.dir}/tomcat-${app.server.tomcat.version}/webapps/ROOT/WEB-INF/classes" />
 			<var name="app.server.tomcat.lib.global.dir" value="${app.server.parent.dir}/tomcat-${app.server.tomcat.version}/lib/ext" />
 			<var name="app.server.tomcat.lib.portal.dir" value="${app.server.parent.dir}/tomcat-${app.server.tomcat.version}/webapps/ROOT/WEB-INF/lib" />
 			<var name="app.server.tomcat.zip.name" value="apache-tomcat-${app.server.tomcat.version}.zip" />
@@ -3034,6 +3035,7 @@ go</echo>
 			<echo append="true" file="app.server.${user.name}.properties">
 				app.server.tomcat.dir=${app.server.tomcat.dir}
 				app.server.tomcat.bin.dir=${app.server.tomcat.bin.dir}
+				app.server.tomcat.classes.portal.dir=${app.server.tomcat.classes.portal.dir}
 				app.server.tomcat.lib.global.dir=${app.server.tomcat.lib.global.dir}
 				app.server.tomcat.lib.portal.dir=${app.server.tomcat.lib.portal.dir}
 				app.server.tomcat.version=${app.server.tomcat.version}

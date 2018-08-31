@@ -23,7 +23,6 @@ import com.liferay.document.library.kernel.util.RawMetadataProcessor;
 import com.liferay.dynamic.data.mapping.io.DDMFormDeserializer;
 import com.liferay.dynamic.data.mapping.io.DDMFormDeserializerDeserializeRequest;
 import com.liferay.dynamic.data.mapping.io.DDMFormDeserializerDeserializeResponse;
-import com.liferay.dynamic.data.mapping.io.DDMFormDeserializerTracker;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayout;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
@@ -156,16 +155,13 @@ public class AddDefaultDocumentLibraryStructuresPortalInstanceLifecycleListener
 					"/document-library-structures.xml",
 				languageKey, locale);
 
-		DDMFormDeserializer ddmFormDeserializer =
-			_ddmFormDeserializerTracker.getDDMFormDeserializer("xsd");
-
 		DDMFormDeserializerDeserializeRequest.Builder builder =
 			DDMFormDeserializerDeserializeRequest.Builder.newBuilder(
 				definition);
 
 		DDMFormDeserializerDeserializeResponse
 			ddmFormDeserializerDeserializeResponse =
-				ddmFormDeserializer.deserialize(builder.build());
+				_ddmFormDeserializer.deserialize(builder.build());
 
 		DDMForm ddmForm = ddmFormDeserializerDeserializeResponse.getDDMForm();
 
@@ -271,16 +267,13 @@ public class AddDefaultDocumentLibraryStructuresPortalInstanceLifecycleListener
 					groupId, _portal.getClassNameId(RawMetadataProcessor.class),
 					name);
 
-			DDMFormDeserializer ddmFormDeserializer =
-				_ddmFormDeserializerTracker.getDDMFormDeserializer("xsd");
-
 			DDMFormDeserializerDeserializeRequest.Builder builder =
 				DDMFormDeserializerDeserializeRequest.Builder.newBuilder(
 					structureElementRootXML);
 
 			DDMFormDeserializerDeserializeResponse
 				ddmFormDeserializerDeserializeResponse =
-					ddmFormDeserializer.deserialize(builder.build());
+					_ddmFormDeserializer.deserialize(builder.build());
 
 			DDMForm ddmForm =
 				ddmFormDeserializerDeserializeResponse.getDDMForm();
@@ -390,11 +383,14 @@ public class AddDefaultDocumentLibraryStructuresPortalInstanceLifecycleListener
 		_ddmBeanTranslator = ddmBeanTranslator;
 	}
 
-	@Reference(unbind = "-")
-	protected void setDDMFormDeserializerTracker(
-		DDMFormDeserializerTracker ddmFormDeserializerTracker) {
+	@Reference(
+		target = "(component.name=com.liferay.dynamic.data.mapping.io.internal.DDMFormXSDDeserializer)",
+		unbind = "-"
+	)
+	protected void setDDMFormDeserializer(
+		DDMFormDeserializer ddmFormDeserializer) {
 
-		_ddmFormDeserializerTracker = ddmFormDeserializerTracker;
+		_ddmFormDeserializer = ddmFormDeserializer;
 	}
 
 	@Reference(unbind = "-")
@@ -458,7 +454,7 @@ public class AddDefaultDocumentLibraryStructuresPortalInstanceLifecycleListener
 
 	private DDM _ddm;
 	private DDMBeanTranslator _ddmBeanTranslator;
-	private DDMFormDeserializerTracker _ddmFormDeserializerTracker;
+	private DDMFormDeserializer _ddmFormDeserializer;
 	private DDMStructureLocalService _ddmStructureLocalService;
 	private DefaultDDMStructureHelper _defaultDDMStructureHelper;
 	private volatile DLConfiguration _dlConfiguration;

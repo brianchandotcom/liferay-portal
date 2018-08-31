@@ -9,7 +9,9 @@
 		<field name="userName" type="String" />
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
-		<field name="title" type="String" />
+		<field name="title" type="String">
+			<validator name="required" />
+		</field>
 		<field name="type" type="int" />
 	</model>
 </model-hints>

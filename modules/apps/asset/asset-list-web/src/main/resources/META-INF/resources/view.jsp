@@ -16,22 +16,21 @@
 
 <%@ include file="/init.jsp" %>
 
-<c:if test="<%= assetListDisplayContext.getAssetListEntriesCount() > 0 %>">
-	<clay:management-toolbar
-		actionDropdownItems="<%= assetListDisplayContext.getAssetListEntryActionItemsDropdownItems() %>"
-		clearResultsURL="<%= assetListDisplayContext.getAssetListEntryClearResultsURL() %>"
-		componentId="assetListEntriesEntriesManagementToolbar"
-		creationMenu="<%= assetListDisplayContext.isShowAddAssetListEntryAction() ? assetListDisplayContext.getCreationMenu() : null %>"
-		filterDropdownItems="<%= assetListDisplayContext.getAssetListEntryFilterItemsDropdownItems() %>"
-		itemsTotal="<%= assetListDisplayContext.getAssetListEntryTotalItems() %>"
-		searchActionURL="<%= assetListDisplayContext.getAssetListEntrySearchActionURL() %>"
-		searchContainerId="assetListEntries"
-		searchFormName="searchFm"
-		showSearch="<%= true %>"
-		sortingOrder="<%= assetListDisplayContext.getOrderByType() %>"
-		sortingURL="<%= assetListDisplayContext.getSortingURL() %>"
-	/>
-</c:if>
+<clay:management-toolbar
+	actionDropdownItems="<%= assetListDisplayContext.getAssetListEntryActionItemsDropdownItems() %>"
+	clearResultsURL="<%= assetListDisplayContext.getAssetListEntryClearResultsURL() %>"
+	componentId="assetListEntriesEntriesManagementToolbar"
+	creationMenu="<%= assetListDisplayContext.isShowAddAssetListEntryAction() ? assetListDisplayContext.getCreationMenu() : null %>"
+	disabled="<%= (assetListDisplayContext.getAssetListEntriesCount() > 0) ? false : true %>"
+	filterDropdownItems="<%= assetListDisplayContext.getAssetListEntryFilterItemsDropdownItems() %>"
+	itemsTotal="<%= assetListDisplayContext.getAssetListEntryTotalItems() %>"
+	searchActionURL="<%= assetListDisplayContext.getAssetListEntrySearchActionURL() %>"
+	searchContainerId="assetListEntries"
+	searchFormName="searchFm"
+	showSearch="<%= true %>"
+	sortingOrder="<%= assetListDisplayContext.getOrderByType() %>"
+	sortingURL="<%= assetListDisplayContext.getSortingURL() %>"
+/>
 
 <aui:form cssClass="container-fluid-1280" name="fm">
 	<c:choose>

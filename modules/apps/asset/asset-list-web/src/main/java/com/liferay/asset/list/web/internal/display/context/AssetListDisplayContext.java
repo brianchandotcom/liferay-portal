@@ -155,15 +155,32 @@ public class AssetListDisplayContext {
 		assetListEntriesSearchContainer.setOrderByComparator(orderByComparator);
 		assetListEntriesSearchContainer.setOrderByType(getOrderByType());
 
-		List<AssetListEntry> assetListEntries =
-			AssetListEntryServiceUtil.getAssetListEntries(
+		List<AssetListEntry> assetListEntries = null;
+
+		int assetListEntriesCount = 0;
+
+		if (_isSearch()) {
+			assetListEntries = AssetListEntryServiceUtil.getAssetListEntries(
+				_themeDisplay.getScopeGroupId(), _getKeywords(),
+				assetListEntriesSearchContainer.getStart(),
+				assetListEntriesSearchContainer.getEnd(), orderByComparator);
+
+			assetListEntriesCount =
+				AssetListEntryServiceUtil.getAssetListEntriesCount(
+					_themeDisplay.getScopeGroupId(), _getKeywords());
+		}
+		else {
+			assetListEntries = AssetListEntryServiceUtil.getAssetListEntries(
 				_themeDisplay.getScopeGroupId(),
 				assetListEntriesSearchContainer.getStart(),
 				assetListEntriesSearchContainer.getEnd(), orderByComparator);
 
+			assetListEntriesCount = getAssetListEntriesCount();
+		}
+
 		assetListEntriesSearchContainer.setResults(assetListEntries);
 
-		assetListEntriesSearchContainer.setTotal(getAssetListEntriesCount());
+		assetListEntriesSearchContainer.setTotal(assetListEntriesCount);
 
 		_assetListEntriesSearchContainer = assetListEntriesSearchContainer;
 
@@ -199,6 +216,14 @@ public class AssetListDisplayContext {
 		};
 	}
 
+	public String getAssetListEntryClearResultsURL() {
+		PortletURL clearResultsURL = getPortletURL();
+
+		clearResultsURL.setParameter("keywords", StringPool.BLANK);
+
+		return clearResultsURL.toString();
+	}
+
 	public List<DropdownItem> getAssetListEntryFilterItemsDropdownItems() {
 		return new DropdownItemList() {
 			{
@@ -223,6 +248,15 @@ public class AssetListDisplayContext {
 		return _assetListEntryId;
 	}
 
+	public String getAssetListEntrySearchActionURL() {
+		PortletURL searchActionURL = _renderResponse.createRenderURL();
+
+		searchActionURL.setParameter("mvcPath", "/view.jsp");
+		searchActionURL.setParameter("redirect", _themeDisplay.getURLCurrent());
+
+		return searchActionURL.toString();
+	}
+
 	public String getAssetListEntryTitle() throws PortalException {
 		String title = StringPool.BLANK;
 
@@ -245,6 +279,13 @@ public class AssetListDisplayContext {
 		}
 
 		return LanguageUtil.get(_request, title);
+	}
+
+	public int getAssetListEntryTotalItems() {
+		SearchContainer assetListEntriesSearchContainer =
+			getAssetListEntriesSearchContainer();
+
+		return assetListEntriesSearchContainer.getTotal();
 	}
 
 	public int getAssetListEntryType() throws PortalException {
@@ -350,6 +391,12 @@ public class AssetListDisplayContext {
 	public PortletURL getPortletURL() {
 		PortletURL portletURL = _renderResponse.createRenderURL();
 
+		String keywords = _getKeywords();
+
+		if (Validator.isNotNull(keywords)) {
+			portletURL.setParameter("keywords", keywords);
+		}
+
 		String orderByCol = getOrderByCol();
 
 		if (Validator.isNotNull(orderByCol)) {
@@ -451,6 +498,16 @@ public class AssetListDisplayContext {
 		};
 	}
 
+	private String _getKeywords() {
+		if (_keywords != null) {
+			return _keywords;
+		}
+
+		_keywords = ParamUtil.getString(_request, "keywords");
+
+		return _keywords;
+	}
+
 	private String _getOrderByCol() {
 		if (Validator.isNotNull(_orderByCol)) {
 			return _orderByCol;
@@ -462,11 +519,20 @@ public class AssetListDisplayContext {
 		return _orderByCol;
 	}
 
+	private boolean _isSearch() {
+		if (Validator.isNotNull(_getKeywords())) {
+			return true;
+		}
+
+		return false;
+	}
+
 	private Integer _assetListEntriesCount;
 	private SearchContainer _assetListEntriesSearchContainer;
 	private AssetListEntry _assetListEntry;
 	private Long _assetListEntryId;
 	private Integer _assetListEntryType;
+	private String _keywords;
 	private String _orderByCol;
 	private String _orderByType;
 	private final PortalPreferences _portalPreferences;

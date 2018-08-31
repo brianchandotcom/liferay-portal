@@ -19,11 +19,15 @@
 <c:if test="<%= assetListDisplayContext.getAssetListEntriesCount() > 0 %>">
 	<clay:management-toolbar
 		actionDropdownItems="<%= assetListDisplayContext.getAssetListEntryActionItemsDropdownItems() %>"
+		clearResultsURL="<%= assetListDisplayContext.getAssetListEntryClearResultsURL() %>"
 		componentId="assetListEntriesEntriesManagementToolbar"
 		creationMenu="<%= assetListDisplayContext.isShowAddAssetListEntryAction() ? assetListDisplayContext.getCreationMenu() : null %>"
 		filterDropdownItems="<%= assetListDisplayContext.getAssetListEntryFilterItemsDropdownItems() %>"
+		itemsTotal="<%= assetListDisplayContext.getAssetListEntryTotalItems() %>"
+		searchActionURL="<%= assetListDisplayContext.getAssetListEntrySearchActionURL() %>"
 		searchContainerId="assetListEntries"
-		showSearch="<%= false %>"
+		searchFormName="searchFm"
+		showSearch="<%= true %>"
 		sortingOrder="<%= assetListDisplayContext.getOrderByType() %>"
 		sortingURL="<%= assetListDisplayContext.getSortingURL() %>"
 	/>

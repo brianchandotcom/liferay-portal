@@ -16,12 +16,17 @@ package com.liferay.asset.list.web.internal.display.context;
 
 import com.liferay.asset.list.constants.AssetListActionKeys;
 import com.liferay.asset.list.constants.AssetListEntryTypeConstants;
+import com.liferay.asset.list.constants.AssetListFormConstants;
+import com.liferay.asset.list.constants.AssetListWebKeys;
 import com.liferay.asset.list.model.AssetListEntry;
 import com.liferay.asset.list.service.AssetListEntryServiceUtil;
 import com.liferay.asset.list.web.internal.security.permission.resource.AssetListPermission;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
+import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationCategory;
+import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
+import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationRegistry;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
@@ -29,11 +34,14 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
@@ -56,6 +64,28 @@ public class AssetListDisplayContext {
 
 		_themeDisplay = (ThemeDisplay)_request.getAttribute(
 			WebKeys.THEME_DISPLAY);
+	}
+
+	public ScreenNavigationEntry getActiveScreenNavigationEntry()
+		throws Exception {
+
+		String screenNavigationEntryKey = ParamUtil.getString(
+			_request, "screenNavigationEntryKey",
+			AssetListFormConstants.ENTRY_KEY_DETAILS);
+
+		List<ScreenNavigationEntry> screenNavigationEntries =
+			getScreenNavigationEntries();
+
+		screenNavigationEntries = ListUtil.filter(
+			screenNavigationEntries,
+			screenNavigationEntry -> Objects.equals(
+				screenNavigationEntryKey, screenNavigationEntry.getEntryKey()));
+
+		if (screenNavigationEntries.isEmpty()) {
+			return null;
+		}
+
+		return screenNavigationEntries.get(0);
 	}
 
 	public List<DropdownItem> getAddAssetListEntryDropdownItems() {
@@ -236,6 +266,34 @@ public class AssetListDisplayContext {
 		}
 
 		return StringPool.BLANK;
+	}
+
+	public List<ScreenNavigationEntry> getScreenNavigationEntries()
+		throws Exception {
+
+		AssetListEntry assetListEntry = getAssetListEntry();
+
+		ScreenNavigationRegistry screenNavigationRegistry =
+			(ScreenNavigationRegistry)_renderRequest.getAttribute(
+				AssetListWebKeys.SCREEN_NAVIGATION_REGISTRY);
+
+		List<ScreenNavigationCategory> screenNavigationCategories =
+			screenNavigationRegistry.getScreenNavigationCategories(
+				AssetListFormConstants.SCREEN_NAVIGATION_KEY_ASSET_LIST,
+				_themeDisplay.getUser(), assetListEntry);
+
+		List<ScreenNavigationEntry> screenNavigationEntries = new ArrayList<>();
+
+		for (ScreenNavigationCategory screenNavigationCategory :
+				screenNavigationCategories) {
+
+			screenNavigationEntries.addAll(
+				screenNavigationRegistry.getScreenNavigationEntries(
+					screenNavigationCategory, _themeDisplay.getUser(),
+					assetListEntry));
+		}
+
+		return screenNavigationEntries;
 	}
 
 	public boolean isShowAddAssetListEntryAction() {

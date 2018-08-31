@@ -21,10 +21,6 @@ import com.liferay.portal.kernel.repository.model.FileVersion;
  */
 public class AMStoreUtil {
 
-	public static String getConfigurationEntryPath(String configurationUuid) {
-		return String.format("adaptive/%s", configurationUuid);
-	}
-
 	public static String getFileVersionPath(
 		FileVersion fileVersion, String configurationUuid) {
 

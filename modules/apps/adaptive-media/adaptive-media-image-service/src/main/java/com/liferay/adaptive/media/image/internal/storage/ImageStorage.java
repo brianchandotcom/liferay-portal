@@ -40,7 +40,7 @@ public class ImageStorage {
 	public void delete(long companyId, String configurationUuid) {
 		DLStoreUtil.deleteDirectory(
 			companyId, CompanyConstants.SYSTEM,
-			AMStoreUtil.getConfigurationEntryPath(configurationUuid));
+			getConfigurationEntryPath(configurationUuid));
 	}
 
 	public InputStream getContentStream(
@@ -74,6 +74,10 @@ public class ImageStorage {
 		catch (PortalException pe) {
 			throw new AMRuntimeException.IOException(pe);
 		}
+	}
+
+	protected String getConfigurationEntryPath(String configurationUuid) {
+		return String.format("adaptive/%s", configurationUuid);
 	}
 
 }

@@ -157,13 +157,7 @@ public class UserDisplayContext {
 	}
 
 	public List<UserGroupRole> getOrganizationRoles() throws PortalException {
-		List<UserGroupRole> userGroupRoles = getUserGroupRoles();
-
-		Stream<UserGroupRole> stream = userGroupRoles.stream();
-
-		stream = stream.filter(this::_isOrganizationRole);
-
-		return stream.collect(Collectors.toList());
+		return ListUtil.filter(getUserGroupRoles(), this::_isOrganizationRole);
 	}
 
 	public List<Organization> getOrganizations() throws PortalException {

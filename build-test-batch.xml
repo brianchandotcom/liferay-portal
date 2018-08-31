@@ -604,6 +604,8 @@ mariadb.executable=${mariadb.executable}]]></echo>
 			<if>
 				<equals arg1="${suite.search.engine}" arg2="solr" />
 				<then>
+					<property name="com.liferay.portal.search.solr.test.unit.started" value="true" />
+
 					<ant antfile="build-test-solr.xml" target="prepare-solr-suite" />
 				</then>
 			</if>
@@ -4107,6 +4109,7 @@ log.sanitizer.enabled=false</echo>
 			<test-action>
 				<gradle-execute dir="modules" task="test">
 					<arg value="-Dbuild.exclude.ant.plugin=true" />
+					<arg if:set="com.liferay.portal.search.solr.test.unit.started" value="-Dcom.liferay.portal.search.solr.test.unit.started=${com.liferay.portal.search.solr.test.unit.started}" />
 					<arg value="-Djunit.code.coverage=${test.batch.code.coverage}" />
 					<arg value="-Dtest.class.group.index=${axis.variable}" />
 				</gradle-execute>

@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.util.StringBundler;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Map.Entry;
 
 /**
  * @author Hugo Huijser
@@ -33,7 +32,7 @@ public class FormatImports {
 
 		Map<String, String> map = new HashMap<>();
 
-		for (Entry<String, String> entry : map.entrySet()) {
+		for (Map.Entry<String, String> entry : map.entrySet()) {
 			sb.append(entry.getValue());
 		}
 

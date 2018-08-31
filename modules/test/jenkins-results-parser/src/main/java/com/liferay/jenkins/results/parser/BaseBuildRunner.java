@@ -30,12 +30,11 @@ public abstract class BaseBuildRunner implements BuildRunner {
 
 	@Override
 	public void setUp() {
-		setUpWorkspace();
 	}
 
 	@Override
 	public void tearDown() {
-		setUpWorkspace();
+		tearDownWorkspace();
 	}
 
 	protected BaseBuildRunner(Job job) {
@@ -54,6 +53,14 @@ public abstract class BaseBuildRunner implements BuildRunner {
 		}
 
 		workspace.setUp(getJob());
+	}
+
+	protected void tearDownWorkspace() {
+		if (workspace == null) {
+			throw new RuntimeException("Workspace is null");
+		}
+
+		workspace.tearDown();
 	}
 
 	protected Workspace workspace;

@@ -63,6 +63,15 @@ public abstract class PortalWorkspace extends BaseWorkspace {
 		_checkoutPluginsLocalGitBranch();
 	}
 
+	@Override
+	protected void cleanupLocalGitBranches() {
+		cleanupLocalGitBranch(_basePortalLocalGitBranch);
+		cleanupLocalGitBranch(_companionPortalLocalGitBranch);
+		cleanupLocalGitBranch(_otherPortalLocalGitBranch);
+		cleanupLocalGitBranch(_pluginsLocalGitBranch);
+		cleanupLocalGitBranch(_primaryPortalLocalGitBranch);
+	}
+
 	protected PortalLocalGitBranch getBasePortalLocalGitBranch() {
 		if (_basePortalLocalGitBranch != null) {
 			return _basePortalLocalGitBranch;

@@ -19,7 +19,7 @@ import aQute.bnd.annotation.metatype.Meta;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition.Scope;
+import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 import com.liferay.portal.configuration.metatype.util.ConfigurationScopedPidUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -80,7 +80,8 @@ public class ConfigurationProviderTest {
 
 		String scopedPid =
 			ConfigurationScopedPidUtil.buildConfigurationScopedPid(
-				_PID, Scope.COMPANY, String.valueOf(companyId));
+				_PID, ExtendedObjectClassDefinition.Scope.COMPANY,
+				String.valueOf(companyId));
 
 		_createConfiguration(scopedPid);
 
@@ -98,7 +99,8 @@ public class ConfigurationProviderTest {
 
 		String scopedPid =
 			ConfigurationScopedPidUtil.buildConfigurationScopedPid(
-				_PID, Scope.GROUP, String.valueOf(groupId));
+				_PID, ExtendedObjectClassDefinition.Scope.GROUP,
+				String.valueOf(groupId));
 
 		_createConfiguration(scopedPid);
 
@@ -116,7 +118,8 @@ public class ConfigurationProviderTest {
 
 		String scopedPid =
 			ConfigurationScopedPidUtil.buildConfigurationScopedPid(
-				_PID, Scope.PORTLET_INSTANCE, portletInstanceId);
+				_PID, ExtendedObjectClassDefinition.Scope.PORTLET_INSTANCE,
+				portletInstanceId);
 
 		_createConfiguration(scopedPid);
 
@@ -152,7 +155,8 @@ public class ConfigurationProviderTest {
 
 		String scopedPid =
 			ConfigurationScopedPidUtil.buildConfigurationScopedPid(
-				_PID, Scope.COMPANY, String.valueOf(companyId));
+				_PID, ExtendedObjectClassDefinition.Scope.COMPANY,
+				String.valueOf(companyId));
 
 		_configuration = _getConfiguration(scopedPid, StringPool.QUESTION);
 
@@ -171,7 +175,8 @@ public class ConfigurationProviderTest {
 
 		String scopedPid =
 			ConfigurationScopedPidUtil.buildConfigurationScopedPid(
-				_PID, Scope.GROUP, String.valueOf(groupId));
+				_PID, ExtendedObjectClassDefinition.Scope.GROUP,
+				String.valueOf(groupId));
 
 		_configuration = _getConfiguration(scopedPid, StringPool.QUESTION);
 
@@ -190,7 +195,8 @@ public class ConfigurationProviderTest {
 
 		String scopedPid =
 			ConfigurationScopedPidUtil.buildConfigurationScopedPid(
-				_PID, Scope.PORTLET_INSTANCE, portletInstanceId);
+				_PID, ExtendedObjectClassDefinition.Scope.PORTLET_INSTANCE,
+				portletInstanceId);
 
 		_configuration = _getConfiguration(scopedPid, StringPool.QUESTION);
 

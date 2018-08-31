@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -41,11 +40,11 @@ public class FieldValuesAssert {
 
 		Map<String, Field> fieldsMap = document.getFields();
 
-		Set<Entry<String, Field>> entrySet = fieldsMap.entrySet();
+		Set<Map.Entry<String, Field>> entrySet = fieldsMap.entrySet();
 
-		Stream<Entry<String, Field>> entries = entrySet.stream();
+		Stream<Map.Entry<String, Field>> entries = entrySet.stream();
 
-		Stream<Entry<String, Field>> prefixedEntries = entries.filter(
+		Stream<Map.Entry<String, Field>> prefixedEntries = entries.filter(
 			entry -> {
 				String name = entry.getKey();
 

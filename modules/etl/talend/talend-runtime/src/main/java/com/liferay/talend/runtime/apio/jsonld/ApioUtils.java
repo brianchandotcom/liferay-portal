@@ -16,8 +16,7 @@ package com.liferay.talend.runtime.apio.jsonld;
 
 import com.fasterxml.jackson.databind.JsonNode;
 
-import com.liferay.talend.runtime.apio.constants.HydraConstants.FieldNames;
-import com.liferay.talend.runtime.apio.constants.HydraConstants.FieldTypes;
+import com.liferay.talend.runtime.apio.constants.HydraConstants;
 import com.liferay.talend.runtime.apio.constants.JSONLDConstants;
 import com.liferay.talend.runtime.apio.form.Property;
 
@@ -54,7 +53,7 @@ public class ApioUtils {
 	public static String getManagedType(JsonNode collectionJsonNode) {
 		JsonNode typeJsonNode = collectionJsonNode.path(JSONLDConstants.TYPE);
 
-		if (!hasValueOf(FieldTypes.COLLECTION, typeJsonNode)) {
+		if (!hasValueOf(HydraConstants.FieldTypes.COLLECTION, typeJsonNode)) {
 			_log.error(
 				"Unexpected type for the collection: \"{}\"",
 				typeJsonNode.toString());
@@ -63,9 +62,11 @@ public class ApioUtils {
 				"Unable to determine the managed type of the collection");
 		}
 
-		JsonNode managesJsonNode = collectionJsonNode.path(FieldNames.MANAGES);
+		JsonNode managesJsonNode = collectionJsonNode.path(
+			HydraConstants.FieldNames.MANAGES);
 
-		JsonNode typeObjectJsonNode = managesJsonNode.path(FieldNames.OBJECT);
+		JsonNode typeObjectJsonNode = managesJsonNode.path(
+			HydraConstants.FieldNames.OBJECT);
 
 		String managedType = typeObjectJsonNode.asText();
 
@@ -99,7 +100,7 @@ public class ApioUtils {
 
 			String type = typeJsonNode.asText();
 
-			if (!type.equals(FieldTypes.SUPPORTED_PROPERTY)) {
+			if (!type.equals(HydraConstants.FieldTypes.SUPPORTED_PROPERTY)) {
 				if (_log.isDebugEnabled()) {
 					_log.debug(
 						String.format("Skipping unexpected field: %s", type),
@@ -109,10 +110,14 @@ public class ApioUtils {
 				continue;
 			}
 
-			JsonNode propertyNameJsonNode = jsonNode.path(FieldNames.PROPERTY);
-			JsonNode readableJsonNode = jsonNode.path(FieldNames.READABLE);
-			JsonNode requiredJsonNode = jsonNode.path(FieldNames.REQUIRED);
-			JsonNode writableJsonNode = jsonNode.path(FieldNames.WRITEABLE);
+			JsonNode propertyNameJsonNode = jsonNode.path(
+				HydraConstants.FieldNames.PROPERTY);
+			JsonNode readableJsonNode = jsonNode.path(
+				HydraConstants.FieldNames.READABLE);
+			JsonNode requiredJsonNode = jsonNode.path(
+				HydraConstants.FieldNames.REQUIRED);
+			JsonNode writableJsonNode = jsonNode.path(
+				HydraConstants.FieldNames.WRITEABLE);
 
 			try {
 				Property property = new Property(

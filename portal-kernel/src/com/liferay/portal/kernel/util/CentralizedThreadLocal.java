@@ -16,7 +16,6 @@ package com.liferay.portal.kernel.util;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.function.Function;
 
 /**
@@ -138,7 +137,7 @@ public class CentralizedThreadLocal<T> extends ThreadLocal<T> {
 
 		Map<CentralizedThreadLocal<?>, Object> kernelMap = new HashMap<>();
 
-		for (Entry<com.liferay.petra.lang.CentralizedThreadLocal<?>, Object>
+		for (Map.Entry<com.liferay.petra.lang.CentralizedThreadLocal<?>, Object>
 				entry : petraMap.entrySet()) {
 
 			kernelMap.put(
@@ -154,7 +153,7 @@ public class CentralizedThreadLocal<T> extends ThreadLocal<T> {
 		Map<com.liferay.petra.lang.CentralizedThreadLocal<?>, Object> petraMap =
 			new HashMap<>();
 
-		for (Entry<CentralizedThreadLocal<?>, Object> entry :
+		for (Map.Entry<CentralizedThreadLocal<?>, Object> entry :
 				kernelMap.entrySet()) {
 
 			CentralizedThreadLocal<?> centralizedThreadLocal = entry.getKey();

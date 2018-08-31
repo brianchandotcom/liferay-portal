@@ -15,7 +15,6 @@
 package com.liferay.portal.workflow.kaleo.runtime.internal.notification.recipient;
 
 import com.liferay.osgi.service.tracker.collections.map.ServiceReferenceMapper;
-import com.liferay.osgi.service.tracker.collections.map.ServiceReferenceMapper.Emitter;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.portal.kernel.util.Validator;
@@ -65,7 +64,7 @@ public class DefaultNotificationRecipientBuilderRegistry
 					public void map(
 						ServiceReference<NotificationRecipientBuilder>
 							serviceReference,
-						Emitter<RecipientType> emitter) {
+						ServiceReferenceMapper.Emitter<RecipientType> emitter) {
 
 						Object value = serviceReference.getProperty(
 							"recipient.type");

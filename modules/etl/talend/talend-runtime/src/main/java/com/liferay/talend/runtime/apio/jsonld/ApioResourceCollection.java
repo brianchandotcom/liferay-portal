@@ -17,8 +17,7 @@ package com.liferay.talend.runtime.apio.jsonld;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.MissingNode;
 
-import com.liferay.talend.runtime.apio.constants.HydraConstants.FieldNames;
-import com.liferay.talend.runtime.apio.constants.HydraConstants.FieldTypes;
+import com.liferay.talend.runtime.apio.constants.HydraConstants;
 import com.liferay.talend.runtime.apio.constants.JSONLDConstants;
 
 import java.io.IOException;
@@ -73,14 +72,15 @@ public class ApioResourceCollection extends ApioSingleModel {
 	 */
 	public JsonNode getMemberJsonNode() {
 		if (_memberJsonNode == null) {
-			_memberJsonNode = findJsonNode(FieldNames.MEMBER);
+			_memberJsonNode = findJsonNode(HydraConstants.FieldNames.MEMBER);
 		}
 
 		return _memberJsonNode;
 	}
 
 	public int getNumberOfItems() {
-		JsonNode jsonNode = responseJsonNode.path(FieldNames.NUMBER_OF_ITEMS);
+		JsonNode jsonNode = responseJsonNode.path(
+			HydraConstants.FieldNames.NUMBER_OF_ITEMS);
 
 		return jsonNode.asInt();
 	}
@@ -107,9 +107,11 @@ public class ApioResourceCollection extends ApioSingleModel {
 	 *         determined
 	 */
 	public String getResourceCollectionType() {
-		JsonNode managesJsonNode = findJsonNode(FieldNames.MANAGES);
+		JsonNode managesJsonNode = findJsonNode(
+			HydraConstants.FieldNames.MANAGES);
 
-		JsonNode typeObjectJsonNode = managesJsonNode.path(FieldNames.OBJECT);
+		JsonNode typeObjectJsonNode = managesJsonNode.path(
+			HydraConstants.FieldNames.OBJECT);
 
 		String managedType = typeObjectJsonNode.asText();
 
@@ -174,7 +176,7 @@ public class ApioResourceCollection extends ApioSingleModel {
 	public String getResourceFirstPage() {
 		JsonNode viewJsonNode = getViewJsonNode();
 
-		JsonNode jsonNode = viewJsonNode.path(FieldNames.FIRST);
+		JsonNode jsonNode = viewJsonNode.path(HydraConstants.FieldNames.FIRST);
 
 		return jsonNode.asText();
 	}
@@ -188,7 +190,7 @@ public class ApioResourceCollection extends ApioSingleModel {
 	public String getResourceLastPage() {
 		JsonNode viewJsonNode = getViewJsonNode();
 
-		JsonNode jsonNode = viewJsonNode.path(FieldNames.LAST);
+		JsonNode jsonNode = viewJsonNode.path(HydraConstants.FieldNames.LAST);
 
 		return jsonNode.asText();
 	}
@@ -202,7 +204,7 @@ public class ApioResourceCollection extends ApioSingleModel {
 	public String getResourceNextPage() {
 		JsonNode viewJsonNode = getViewJsonNode();
 
-		JsonNode jsonNode = viewJsonNode.path(FieldNames.NEXT);
+		JsonNode jsonNode = viewJsonNode.path(HydraConstants.FieldNames.NEXT);
 
 		return jsonNode.asText();
 	}
@@ -216,13 +218,15 @@ public class ApioResourceCollection extends ApioSingleModel {
 	public String getResourcePreviousPage() {
 		JsonNode viewJsonNode = getViewJsonNode();
 
-		JsonNode jsonNode = viewJsonNode.path(FieldNames.PREVIOUS);
+		JsonNode jsonNode = viewJsonNode.path(
+			HydraConstants.FieldNames.PREVIOUS);
 
 		return jsonNode.asText();
 	}
 
 	public int getTotalItems() {
-		JsonNode jsonNode = responseJsonNode.path(FieldNames.TOTAL_ITEMS);
+		JsonNode jsonNode = responseJsonNode.path(
+			HydraConstants.FieldNames.TOTAL_ITEMS);
 
 		return jsonNode.asInt();
 	}
@@ -235,7 +239,7 @@ public class ApioResourceCollection extends ApioSingleModel {
 	 *         MissingNode if it's not present
 	 */
 	public JsonNode getViewJsonNode() {
-		return findJsonNode(FieldNames.VIEW);
+		return findJsonNode(HydraConstants.FieldNames.VIEW);
 	}
 
 	/**
@@ -264,7 +268,9 @@ public class ApioResourceCollection extends ApioSingleModel {
 	}
 
 	private void _validateResourceCollection() throws IOException {
-		if (!hasValueOf(FieldTypes.COLLECTION, getTypeJsonNode())) {
+		if (!hasValueOf(
+				HydraConstants.FieldTypes.COLLECTION, getTypeJsonNode())) {
+
 			throw new IOException(
 				"The type of the given resource is not a Collection");
 		}

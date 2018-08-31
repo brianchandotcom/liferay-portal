@@ -15,7 +15,6 @@
 package com.liferay.category.apio.internal.architect.form;
 
 import com.liferay.apio.architect.form.Form;
-import com.liferay.apio.architect.form.Form.Builder;
 
 import java.util.Collections;
 import java.util.Locale;
@@ -38,7 +37,9 @@ public class CategoryForm {
 	 * @return a category form
 	 * @review
 	 */
-	public static Form<CategoryForm> buildForm(Builder<CategoryForm> builder) {
+	public static Form<CategoryForm> buildForm(
+		Form.Builder<CategoryForm> builder) {
+
 		return builder.title(
 			__ -> "Category form"
 		).description(

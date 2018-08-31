@@ -14,13 +14,11 @@
 
 package com.liferay.registry.collections;
 
-import com.liferay.registry.collections.ServiceReferenceMapper.Emitter;
-
 /**
  * @author Carlos Sierra Andrés
  */
 public interface ServiceMapper<K, S> {
 
-	public void map(S service, Emitter<K> emitter);
+	public void map(S service, ServiceReferenceMapper.Emitter<K> emitter);
 
 }

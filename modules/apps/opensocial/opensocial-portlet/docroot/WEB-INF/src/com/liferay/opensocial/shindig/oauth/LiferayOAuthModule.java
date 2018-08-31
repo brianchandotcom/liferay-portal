@@ -19,8 +19,7 @@ import com.google.inject.name.Names;
 
 import org.apache.shindig.common.crypto.BlobCrypter;
 import org.apache.shindig.gadgets.oauth.OAuthFetcherConfig;
-import org.apache.shindig.gadgets.oauth.OAuthModule.OAuthCrypterProvider;
-import org.apache.shindig.gadgets.oauth.OAuthModule.OAuthRequestProvider;
+import org.apache.shindig.gadgets.oauth.OAuthModule;
 import org.apache.shindig.gadgets.oauth.OAuthRequest;
 import org.apache.shindig.gadgets.oauth.OAuthStore;
 
@@ -36,12 +35,12 @@ public class LiferayOAuthModule extends AbstractModule {
 		).annotatedWith(
 			Names.named(OAuthFetcherConfig.OAUTH_STATE_CRYPTER)
 		).toProvider(
-			OAuthCrypterProvider.class
+			OAuthModule.OAuthCrypterProvider.class
 		);
 		bind(
 			OAuthRequest.class
 		).toProvider(
-			OAuthRequestProvider.class
+			OAuthModule.OAuthRequestProvider.class
 		);
 		bind(
 			OAuthStore.class

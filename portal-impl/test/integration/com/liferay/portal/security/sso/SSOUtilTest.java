@@ -22,7 +22,6 @@ import com.liferay.portal.util.PrefsPropsUtil;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Map.Entry;
 
 import javax.portlet.PortletPreferences;
 
@@ -53,7 +52,9 @@ public class SSOUtilTest {
 
 	@After
 	public void tearDown() throws Exception {
-		for (Entry<Long, String> entry : _oldLoginDialogDisableds.entrySet()) {
+		for (Map.Entry<Long, String> entry :
+				_oldLoginDialogDisableds.entrySet()) {
+
 			PortletPreferences portletPreferences =
 				PrefsPropsUtil.getPreferences(entry.getKey());
 

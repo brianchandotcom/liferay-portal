@@ -31,7 +31,7 @@ import java.io.Reader;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map.Entry;
+import java.util.Map;
 
 import org.aspectj.lang.annotation.AfterThrowing;
 import org.aspectj.lang.annotation.Aspect;
@@ -50,10 +50,11 @@ public class ArquillianFailureAspect {
 	)
 	public void logTomcatJStack(Exception e1) {
 		try {
-			NoticeableFuture<Entry<List<String>, String>> jpsNoticeableFuture =
-				ProcessUtil.execute(new StringOutputProcessor(), "jps", "-ml");
+			NoticeableFuture<Map.Entry<List<String>, String>>
+				jpsNoticeableFuture = ProcessUtil.execute(
+					new StringOutputProcessor(), "jps", "-ml");
 
-			Entry<List<String>, String> entry = jpsNoticeableFuture.get();
+			Map.Entry<List<String>, String> entry = jpsNoticeableFuture.get();
 
 			String pid = null;
 
@@ -88,7 +89,7 @@ public class ArquillianFailureAspect {
 
 			System.out.println("jstack for pid: " + pid);
 
-			NoticeableFuture<Entry<Void, Void>> jstackNoticeableFuture =
+			NoticeableFuture<Map.Entry<Void, Void>> jstackNoticeableFuture =
 				ProcessUtil.execute(
 					EchoOutputProcessor.INSTANCE, "jstack", "-l", pid);
 

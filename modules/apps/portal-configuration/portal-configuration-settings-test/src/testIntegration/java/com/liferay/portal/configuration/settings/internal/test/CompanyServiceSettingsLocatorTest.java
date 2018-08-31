@@ -14,7 +14,7 @@
 
 package com.liferay.portal.configuration.settings.internal.test;
 
-import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition.Scope;
+import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 import com.liferay.portal.configuration.settings.internal.constants.SettingsLocatorTestConstants;
 import com.liferay.portal.kernel.settings.CompanyServiceSettingsLocator;
 import com.liferay.portal.kernel.util.PortletKeys;
@@ -43,7 +43,7 @@ public class CompanyServiceSettingsLocatorTest
 			getSettingsValue());
 
 		String companyConfigurationValue = saveScopedConfiguration(
-			Scope.COMPANY, companyId);
+			ExtendedObjectClassDefinition.Scope.COMPANY, companyId);
 
 		Assert.assertEquals(companyConfigurationValue, getSettingsValue());
 

@@ -19,7 +19,6 @@ import com.liferay.dynamic.data.mapping.form.values.query.DDMFormValuesQueryFact
 import com.liferay.dynamic.data.mapping.form.values.query.DDMFormValuesQuerySyntaxException;
 import com.liferay.dynamic.data.mapping.form.values.query.internal.parser.DDMFormValuesQueryLexer;
 import com.liferay.dynamic.data.mapping.form.values.query.internal.parser.DDMFormValuesQueryParser;
-import com.liferay.dynamic.data.mapping.form.values.query.internal.parser.DDMFormValuesQueryParser.PathContext;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 
 import org.antlr.v4.runtime.ANTLRInputStream;
@@ -42,7 +41,8 @@ public class DDMFormValuesQueryFactoryImpl
 		throws DDMFormValuesQuerySyntaxException {
 
 		try {
-			PathContext pathContext = createPathContext(query);
+			DDMFormValuesQueryParser.PathContext pathContext =
+				createPathContext(query);
 
 			DDMFormValuesQueryListener ddmFormValuesQueryListener =
 				new DDMFormValuesQueryListener();
@@ -60,7 +60,9 @@ public class DDMFormValuesQueryFactoryImpl
 		}
 	}
 
-	protected PathContext createPathContext(String query) {
+	protected DDMFormValuesQueryParser.PathContext createPathContext(
+		String query) {
+
 		CharStream charStream = new ANTLRInputStream(query);
 
 		DDMFormValuesQueryLexer ddmFormValuesQueryLexer =

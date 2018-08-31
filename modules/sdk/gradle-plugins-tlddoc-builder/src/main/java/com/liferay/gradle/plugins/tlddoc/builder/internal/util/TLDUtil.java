@@ -19,7 +19,6 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Queue;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.BiConsumer;
@@ -250,7 +249,7 @@ public class TLDUtil {
 				}
 			});
 
-		for (Entry<String, File> entry : nestedXSDFiles.entrySet()) {
+		for (Map.Entry<String, File> entry : nestedXSDFiles.entrySet()) {
 			xsdConsumer.accept(entry.getKey(), entry.getValue());
 		}
 	}

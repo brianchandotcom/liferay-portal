@@ -27,7 +27,6 @@ import com.liferay.apio.architect.functional.Try;
 import com.liferay.apio.architect.pagination.PageItems;
 import com.liferay.apio.architect.pagination.Pagination;
 import com.liferay.apio.architect.representor.NestedRepresentor;
-import com.liferay.apio.architect.representor.NestedRepresentor.Builder;
 import com.liferay.apio.architect.representor.Representor;
 import com.liferay.apio.architect.resource.NestedCollectionResource;
 import com.liferay.apio.architect.routes.ItemRoutes;
@@ -139,7 +138,8 @@ public class MediaObjectNestedCollectionResource
 
 	private NestedRepresentor<AdaptiveMedia<AMImageProcessor>>
 		_getAdaptiveMediaNestedRepresentor(
-			Builder<AdaptiveMedia<AMImageProcessor>> builder) {
+			NestedRepresentor.Builder<AdaptiveMedia<AMImageProcessor>>
+				builder) {
 
 		return builder.types(
 			"ImageObject", "MediaObject"

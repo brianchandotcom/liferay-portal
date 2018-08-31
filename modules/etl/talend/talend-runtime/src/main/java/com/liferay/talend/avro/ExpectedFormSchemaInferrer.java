@@ -30,7 +30,6 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import org.apache.avro.Schema;
-import org.apache.avro.Schema.Field;
 
 import org.talend.components.common.SchemaProperties;
 import org.talend.daikon.avro.AvroUtils;
@@ -59,9 +58,9 @@ public class ExpectedFormSchemaInferrer {
 	}
 
 	private static Schema _getDeleteSchema() {
-		List<Field> schemaFields = new ArrayList<>(1);
+		List<Schema.Field> schemaFields = new ArrayList<>(1);
 
-		Field designField = new Field(
+		Schema.Field designField = new Schema.Field(
 			AvroConstants.ID, AvroUtils._string(), null, (Object)null);
 
 		designField.addProp(SchemaConstants.TALEND_IS_LOCKED, "true");
@@ -94,7 +93,7 @@ public class ExpectedFormSchemaInferrer {
 		Schema requiredSchema = _getSchemaFromProperties(
 			properties, requiredPredicate, false);
 
-		List<Field> optionalSchemaFields = optionalSchema.getFields();
+		List<Schema.Field> optionalSchemaFields = optionalSchema.getFields();
 
 		return SchemaUtils.appendFields(requiredSchema, optionalSchemaFields);
 	}
@@ -123,7 +122,7 @@ public class ExpectedFormSchemaInferrer {
 
 		int size = fieldNames.size();
 
-		List<Field> schemaFields = new ArrayList<>(size);
+		List<Schema.Field> schemaFields = new ArrayList<>(size);
 
 		Set<String> filedNames = new HashSet<>();
 
@@ -133,7 +132,7 @@ public class ExpectedFormSchemaInferrer {
 
 			filedNames.add(fieldName);
 
-			Field designField = new Field(
+			Schema.Field designField = new Schema.Field(
 				fieldName, AvroUtils.wrapAsNullable(AvroUtils._string()), null,
 				(Object)null);
 

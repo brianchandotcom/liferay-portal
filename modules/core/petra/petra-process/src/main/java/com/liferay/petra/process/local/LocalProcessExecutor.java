@@ -26,7 +26,6 @@ import com.liferay.petra.process.ProcessConfig;
 import com.liferay.petra.process.ProcessException;
 import com.liferay.petra.process.ProcessExecutor;
 import com.liferay.petra.process.ProcessLog;
-import com.liferay.petra.process.ProcessLog.Level;
 import com.liferay.petra.process.TerminationProcessException;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -193,7 +192,7 @@ public class LocalProcessExecutor implements ProcessExecutor {
 						if (unsyncByteArrayOutputStream.size() > 0) {
 							_processLogConsumer.accept(
 								new LocalProcessLog(
-									Level.WARN,
+									ProcessLog.Level.WARN,
 									"Found corrupt leading log " +
 										unsyncByteArrayOutputStream.toString(),
 									null));
@@ -223,8 +222,8 @@ public class LocalProcessExecutor implements ProcessExecutor {
 					catch (WriteAbortedException wae) {
 						_processLogConsumer.accept(
 							new LocalProcessLog(
-								Level.WARN, "Caught a write aborted exception",
-								wae));
+								ProcessLog.Level.WARN,
+								"Caught a write aborted exception", wae));
 
 						continue;
 					}
@@ -232,7 +231,7 @@ public class LocalProcessExecutor implements ProcessExecutor {
 					if (!(obj instanceof ProcessCallable)) {
 						_processLogConsumer.accept(
 							new LocalProcessLog(
-								Level.INFO,
+								ProcessLog.Level.INFO,
 								"Received a nonprocess callable piping back " +
 									obj,
 								null));
@@ -255,7 +254,7 @@ public class LocalProcessExecutor implements ProcessExecutor {
 
 						_processLogConsumer.accept(
 							new LocalProcessLog(
-								Level.DEBUG,
+								ProcessLog.Level.DEBUG,
 								StringBundler.concat(
 									"Invoked generic process callable ",
 									processCallable, " with return value ",
@@ -265,7 +264,7 @@ public class LocalProcessExecutor implements ProcessExecutor {
 					catch (Throwable t) {
 						_processLogConsumer.accept(
 							new LocalProcessLog(
-								Level.ERROR,
+								ProcessLog.Level.ERROR,
 								"Unable to invoke generic process callable",
 								t));
 					}
@@ -277,7 +276,7 @@ public class LocalProcessExecutor implements ProcessExecutor {
 
 				_processLogConsumer.accept(
 					new LocalProcessLog(
-						Level.ERROR,
+						ProcessLog.Level.ERROR,
 						"Dumping content of corrupted object input stream to " +
 							path.toAbsolutePath(),
 						sce));
@@ -296,7 +295,7 @@ public class LocalProcessExecutor implements ProcessExecutor {
 			catch (Throwable t) {
 				_processLogConsumer.accept(
 					new LocalProcessLog(
-						Level.ERROR, "Abort subprocess piping", t));
+						ProcessLog.Level.ERROR, "Abort subprocess piping", t));
 
 				throw t;
 			}

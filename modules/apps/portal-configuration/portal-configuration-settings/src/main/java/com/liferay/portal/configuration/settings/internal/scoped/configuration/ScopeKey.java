@@ -15,7 +15,7 @@
 package com.liferay.portal.configuration.settings.internal.scoped.configuration;
 
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition.Scope;
+import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Arrays;
@@ -28,7 +28,10 @@ import java.util.stream.Stream;
  */
 public class ScopeKey {
 
-	public ScopeKey(Class<?> objectClass, Scope scope, String scopePrimKey) {
+	public ScopeKey(
+		Class<?> objectClass, ExtendedObjectClassDefinition.Scope scope,
+		String scopePrimKey) {
+
 		Objects.requireNonNull(
 			objectClass,
 			"The object class parameter must not be null. A scope key must " +
@@ -38,14 +41,16 @@ public class ScopeKey {
 			scope,
 			StringBundler.concat(
 				"The scope parameter must not be null. A scope key must ",
-				"correspond to an existing scope from ", Scope.class.getName(),
-				"."));
+				"correspond to an existing scope from ",
+				ExtendedObjectClassDefinition.Scope.class.getName(), "."));
 
-		if (scope.equals(Scope.SYSTEM)) {
-			Stream<Scope> scopeStream = Arrays.stream(Scope.values());
+		if (scope.equals(ExtendedObjectClassDefinition.Scope.SYSTEM)) {
+			Stream<ExtendedObjectClassDefinition.Scope> scopeStream =
+				Arrays.stream(ExtendedObjectClassDefinition.Scope.values());
 
 			String scopeNames = scopeStream.filter(
-				scope1 -> !scope1.equals(Scope.SYSTEM)
+				scope1 -> !scope1.equals(
+					ExtendedObjectClassDefinition.Scope.SYSTEM)
 			).map(
 				scope1 -> scope1.name()
 			).collect(
@@ -55,7 +60,9 @@ public class ScopeKey {
 			throw new IllegalArgumentException(
 				StringBundler.concat(
 					"A scope key can only be used for the following scopes ",
-					"from ", Scope.class.getName(), ": ", scopeNames, "."));
+					"from ",
+					ExtendedObjectClassDefinition.Scope.class.getName(), ": ",
+					scopeNames, "."));
 		}
 
 		if (Validator.isNull(scopePrimKey)) {
@@ -97,7 +104,7 @@ public class ScopeKey {
 		return _objectClass;
 	}
 
-	public Scope getScope() {
+	public ExtendedObjectClassDefinition.Scope getScope() {
 		return _scope;
 	}
 
@@ -114,7 +121,7 @@ public class ScopeKey {
 	}
 
 	private final Class<?> _objectClass;
-	private final Scope _scope;
+	private final ExtendedObjectClassDefinition.Scope _scope;
 	private final String _scopePrimKey;
 
 }

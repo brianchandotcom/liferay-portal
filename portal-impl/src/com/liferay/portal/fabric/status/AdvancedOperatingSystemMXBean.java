@@ -14,8 +14,6 @@
 
 package com.liferay.portal.fabric.status;
 
-import com.liferay.portal.fabric.status.JMXProxyUtil.Optional;
-
 import java.lang.management.OperatingSystemMXBean;
 
 /**
@@ -23,34 +21,34 @@ import java.lang.management.OperatingSystemMXBean;
  */
 public interface AdvancedOperatingSystemMXBean extends OperatingSystemMXBean {
 
-	@Optional
+	@JMXProxyUtil.Optional
 	public Long getCommittedVirtualMemorySize();
 
-	@Optional
+	@JMXProxyUtil.Optional
 	public Long getFreePhysicalMemorySize();
 
-	@Optional
+	@JMXProxyUtil.Optional
 	public Long getFreeSwapSpaceSize();
 
-	@Optional
+	@JMXProxyUtil.Optional
 	public Long getMaxFileDescriptorCount();
 
-	@Optional
+	@JMXProxyUtil.Optional
 	public Long getOpenFileDescriptorCount();
 
-	@Optional
+	@JMXProxyUtil.Optional
 	public Double getProcessCpuLoad();
 
-	@Optional
+	@JMXProxyUtil.Optional
 	public Long getProcessCpuTime();
 
-	@Optional
+	@JMXProxyUtil.Optional
 	public Double getSystemCpuLoad();
 
-	@Optional
+	@JMXProxyUtil.Optional
 	public Long getTotalPhysicalMemorySize();
 
-	@Optional
+	@JMXProxyUtil.Optional
 	public Long getTotalSwapSpaceSize();
 
 }

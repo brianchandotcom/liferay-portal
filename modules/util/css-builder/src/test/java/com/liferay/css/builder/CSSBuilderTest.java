@@ -23,7 +23,6 @@ import java.util.List;
 
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
-import org.junit.runners.Parameterized.Parameters;
 
 /**
  * @author Andrea Di Giorgi
@@ -31,7 +30,7 @@ import org.junit.runners.Parameterized.Parameters;
 @RunWith(Parameterized.class)
 public class CSSBuilderTest extends BaseCSSBuilderTestCase {
 
-	@Parameters(name = "{0}")
+	@Parameterized.Parameters(name = "{0}")
 	public static String[] getSeparators() {
 		return new String[] {"=", " "};
 	}

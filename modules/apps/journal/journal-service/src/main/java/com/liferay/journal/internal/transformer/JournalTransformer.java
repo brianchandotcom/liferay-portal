@@ -70,7 +70,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Map.Entry;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -563,7 +562,9 @@ public class JournalTransformer {
 				Map<String, LocalizedValue> options =
 					ddmFormFieldOptions.getOptions();
 
-				for (Entry<String, LocalizedValue> entry : options.entrySet()) {
+				for (Map.Entry<String, LocalizedValue> entry :
+						options.entrySet()) {
+
 					String optionValue = StringUtil.stripCDATA(entry.getKey());
 
 					LocalizedValue localizedLabel = entry.getValue();

@@ -16,7 +16,6 @@ package com.liferay.category.apio.internal.architect.router;
 
 import com.liferay.apio.architect.router.NestedCollectionRouter;
 import com.liferay.apio.architect.routes.NestedCollectionRoutes;
-import com.liferay.apio.architect.routes.NestedCollectionRoutes.Builder;
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.category.apio.architect.identifier.CategoryIdentifier;
 import com.liferay.category.apio.internal.architect.form.NestedCategoryForm;
@@ -45,7 +44,7 @@ public class MediaObjectCategoryNestedCollectionRouter
 
 	@Override
 	public NestedCollectionRoutes<AssetCategory, Long, Long> collectionRoutes(
-		Builder<AssetCategory, Long, Long> builder) {
+		NestedCollectionRoutes.Builder<AssetCategory, Long, Long> builder) {
 
 		return builder.addGetter(
 			this::getPageItems

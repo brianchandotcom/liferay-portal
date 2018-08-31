@@ -18,7 +18,7 @@ import com.liferay.portal.kernel.nio.intraband.BaseIntraband;
 import com.liferay.portal.kernel.nio.intraband.BaseIntrabandHelper;
 import com.liferay.portal.kernel.nio.intraband.ChannelContext;
 import com.liferay.portal.kernel.nio.intraband.ClosedIntrabandException;
-import com.liferay.portal.kernel.nio.intraband.CompletionHandler.CompletionType;
+import com.liferay.portal.kernel.nio.intraband.CompletionHandler;
 import com.liferay.portal.kernel.nio.intraband.Datagram;
 import com.liferay.portal.kernel.nio.intraband.DatagramHelper;
 import com.liferay.portal.kernel.nio.intraband.IntrabandTestUtil;
@@ -42,8 +42,6 @@ import java.nio.ByteBuffer;
 import java.nio.channels.Channel;
 import java.nio.channels.GatheringByteChannel;
 import java.nio.channels.Pipe;
-import java.nio.channels.Pipe.SinkChannel;
-import java.nio.channels.Pipe.SourceChannel;
 import java.nio.channels.ScatteringByteChannel;
 import java.nio.channels.SelectableChannel;
 import java.nio.channels.SelectionKey;
@@ -312,7 +310,8 @@ public class SelectorIntrabandTest {
 				requestDatagram, recordCompletionHandler);
 
 			DatagramHelper.setCompletionTypes(
-				requestDatagram, EnumSet.of(CompletionType.REPLIED));
+				requestDatagram,
+				EnumSet.of(CompletionHandler.CompletionType.REPLIED));
 			DatagramHelper.setSequenceId(requestDatagram, sequenceId);
 			DatagramHelper.setTimeout(requestDatagram, 10000);
 
@@ -337,7 +336,8 @@ public class SelectorIntrabandTest {
 			requestDatagram = Datagram.createRequestDatagram(_TYPE, _DATA);
 
 			DatagramHelper.setCompletionTypes(
-				requestDatagram, EnumSet.noneOf(CompletionType.class));
+				requestDatagram,
+				EnumSet.noneOf(CompletionHandler.CompletionType.class));
 
 			recordCompletionHandler = new RecordCompletionHandler<>();
 
@@ -374,7 +374,8 @@ public class SelectorIntrabandTest {
 			requestDatagram = Datagram.createRequestDatagram(_TYPE, _DATA);
 
 			DatagramHelper.setCompletionTypes(
-				requestDatagram, EnumSet.noneOf(CompletionType.class));
+				requestDatagram,
+				EnumSet.noneOf(CompletionHandler.CompletionType.class));
 
 			recordCompletionHandler = new RecordCompletionHandler<>();
 
@@ -804,8 +805,8 @@ public class SelectorIntrabandTest {
 
 		Pipe pipe = Pipe.open();
 
-		try (SourceChannel sourceChannel = pipe.source();
-			SinkChannel sinkChannel = pipe.sink()) {
+		try (Pipe.SourceChannel sourceChannel = pipe.source();
+			Pipe.SinkChannel sinkChannel = pipe.sink()) {
 
 			final Thread mainThread = Thread.currentThread();
 
@@ -928,7 +929,7 @@ public class SelectorIntrabandTest {
 
 		_selectorIntraband.sendDatagram(
 			registrationReference, Datagram.createRequestDatagram(_TYPE, _DATA),
-			attachment, EnumSet.of(CompletionType.SUBMITTED),
+			attachment, EnumSet.of(CompletionHandler.CompletionType.SUBMITTED),
 			recordCompletionHandler);
 
 		Datagram receiveDatagram = IntrabandTestUtil.readDatagramFully(
@@ -956,8 +957,8 @@ public class SelectorIntrabandTest {
 			_selectorIntraband.sendDatagram(
 				registrationReference,
 				Datagram.createRequestDatagram(_TYPE, _DATA), attachment,
-				EnumSet.of(CompletionType.DELIVERED), recordCompletionHandler,
-				10, TimeUnit.MILLISECONDS);
+				EnumSet.of(CompletionHandler.CompletionType.DELIVERED),
+				recordCompletionHandler, 10, TimeUnit.MILLISECONDS);
 
 			Selector selector = _selectorIntraband.selector;
 
@@ -979,8 +980,8 @@ public class SelectorIntrabandTest {
 			_selectorIntraband.sendDatagram(
 				registrationReference,
 				Datagram.createRequestDatagram(_TYPE, _DATA), attachment,
-				EnumSet.of(CompletionType.DELIVERED), recordCompletionHandler,
-				10, TimeUnit.MILLISECONDS);
+				EnumSet.of(CompletionHandler.CompletionType.DELIVERED),
+				recordCompletionHandler, 10, TimeUnit.MILLISECONDS);
 
 			recordCompletionHandler.waitUntilTimeouted(selector);
 
@@ -1018,7 +1019,7 @@ public class SelectorIntrabandTest {
 			try {
 				_selectorIntraband.sendDatagram(
 					registrationReference, datagram, attachment,
-					EnumSet.of(CompletionType.DELIVERED),
+					EnumSet.of(CompletionHandler.CompletionType.DELIVERED),
 					recordCompletionHandler, 10, TimeUnit.MILLISECONDS);
 			}
 			finally {

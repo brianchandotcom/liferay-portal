@@ -33,7 +33,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.TransactionConfig;
-import com.liferay.portal.kernel.transaction.TransactionConfig.Factory;
 import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 
@@ -406,12 +405,12 @@ public class DBStore extends BaseStore {
 			(db.getDBType() == DBType.MARIADB) ||
 			(db.getDBType() == DBType.SYBASE)) {
 
-			_transactionConfig = Factory.create(
+			_transactionConfig = TransactionConfig.Factory.create(
 				Propagation.SUPPORTS,
 				new Class<?>[] {PortalException.class, SystemException.class});
 		}
 		else {
-			_transactionConfig = Factory.create(
+			_transactionConfig = TransactionConfig.Factory.create(
 				Propagation.REQUIRED,
 				new Class<?>[] {PortalException.class, SystemException.class});
 		}

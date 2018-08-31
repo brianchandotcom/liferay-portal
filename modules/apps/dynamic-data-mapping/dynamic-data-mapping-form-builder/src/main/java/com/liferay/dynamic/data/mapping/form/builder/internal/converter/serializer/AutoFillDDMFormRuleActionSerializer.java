@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.Map;
-import java.util.Map.Entry;
 
 /**
  * @author Leonardo Barros
@@ -60,7 +59,7 @@ public class AutoFillDDMFormRuleActionSerializer
 		StringBundler sb = new StringBundler(
 			inputParametersMapper.size() * 4 - 1);
 
-		for (Entry<String, String> inputParameterMapper :
+		for (Map.Entry<String, String> inputParameterMapper :
 				inputParametersMapper.entrySet()) {
 
 			sb.append(inputParameterMapper.getKey());
@@ -84,7 +83,7 @@ public class AutoFillDDMFormRuleActionSerializer
 		StringBundler sb = new StringBundler(
 			outputParametersMapper.size() * 4 - 1);
 
-		for (Entry<String, String> outputParameterMapper :
+		for (Map.Entry<String, String> outputParameterMapper :
 				outputParametersMapper.entrySet()) {
 
 			sb.append(outputParameterMapper.getValue());

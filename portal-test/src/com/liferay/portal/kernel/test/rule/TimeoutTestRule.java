@@ -14,7 +14,6 @@
 
 package com.liferay.portal.kernel.test.rule;
 
-import com.liferay.portal.kernel.test.rule.BaseTestRule.StatementWrapper;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.OSDetector;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -51,7 +50,7 @@ public class TimeoutTestRule implements TestRule {
 			return statement;
 		}
 
-		return new StatementWrapper(statement) {
+		return new BaseTestRule.StatementWrapper(statement) {
 
 			@Override
 			public void evaluate() throws Throwable {

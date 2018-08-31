@@ -20,7 +20,6 @@ import com.liferay.dynamic.data.mapping.expression.DDMExpressionFunction;
 import com.liferay.dynamic.data.mapping.expression.VariableDependencies;
 import com.liferay.dynamic.data.mapping.expression.internal.parser.DDMExpressionLexer;
 import com.liferay.dynamic.data.mapping.expression.internal.parser.DDMExpressionParser;
-import com.liferay.dynamic.data.mapping.expression.internal.parser.DDMExpressionParser.ExpressionContext;
 import com.liferay.dynamic.data.mapping.expression.model.Expression;
 import com.liferay.portal.kernel.util.ListUtil;
 
@@ -261,7 +260,7 @@ public class DDMExpressionImpl<T> implements DDMExpression<T> {
 		return ddmExpression;
 	}
 
-	protected ExpressionContext createExpressionContext()
+	protected DDMExpressionParser.ExpressionContext createExpressionContext()
 		throws DDMExpressionException {
 
 		try {
@@ -465,7 +464,7 @@ public class DDMExpressionImpl<T> implements DDMExpression<T> {
 	private final Map<String, DDMExpressionFunction> _ddmExpressionFunctions =
 		new HashMap<>();
 	private final Class<?> _expressionClass;
-	private final ExpressionContext _expressionContext;
+	private final DDMExpressionParser.ExpressionContext _expressionContext;
 	private final Set<String> _expressionFunctionNames = new HashSet<>();
 	private Expression _expressionModel;
 	private final String _expressionString;

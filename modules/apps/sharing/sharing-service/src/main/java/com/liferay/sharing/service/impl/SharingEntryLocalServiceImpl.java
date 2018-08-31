@@ -209,8 +209,7 @@ public class SharingEntryLocalServiceImpl
 
 	@Override
 	public List<SharingEntry> getSharingEntries(
-			long toUserId, long classNameId, long classPK)
-		throws PortalException {
+		long toUserId, long classNameId, long classPK) {
 
 		return sharingEntryPersistence.findByTU_C_C(
 			toUserId, classNameId, classPK);

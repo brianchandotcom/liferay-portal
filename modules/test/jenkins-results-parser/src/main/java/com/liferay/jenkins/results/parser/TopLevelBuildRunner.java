@@ -20,19 +20,15 @@ import java.util.List;
 /**
  * @author Michael Hashimoto
  */
-public abstract class TopLevelBuildRunner extends BaseBuildRunner {
+public abstract class TopLevelBuildRunner<T extends TopLevelBuildData>
+	extends BaseBuildRunner<T> {
 
 	public List<String> getBatchNames() {
 		return _batchNames;
 	}
 
-	protected TopLevelBuildRunner(BuildData buildData) {
-		super(buildData);
-
-		if (!(buildData instanceof TopLevelBuildData)) {
-			throw new RuntimeException(
-				"Invalid build data " + buildData.toJSONObject());
-		}
+	protected TopLevelBuildRunner(T topLevelBuildData) {
+		super(topLevelBuildData);
 	}
 
 	private final List<String> _batchNames = new ArrayList<>();

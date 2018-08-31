@@ -17,23 +17,17 @@ package com.liferay.jenkins.results.parser;
 /**
  * @author Michael Hashimoto
  */
-public abstract class BatchBuildRunner extends BaseBuildRunner {
+public abstract class BatchBuildRunner<T extends BatchBuildData>
+	extends BaseBuildRunner<T> {
 
-	protected BatchBuildRunner(BuildData buildData) {
-		super(buildData);
-
-		if (!(buildData instanceof BatchBuildData)) {
-			throw new RuntimeException(
-				"Invalid build data " + buildData.toJSONObject());
-		}
-
-		_batchBuildData = (BatchBuildData)buildData;
+	protected BatchBuildRunner(T batchBuildData) {
+		super(batchBuildData);
 	}
 
 	protected String getBatchName() {
-		return _batchBuildData.getBatchName();
-	}
+		BatchBuildData batchBuildData = getBuildData();
 
-	private final BatchBuildData _batchBuildData;
+		return batchBuildData.getBatchName();
+	}
 
 }

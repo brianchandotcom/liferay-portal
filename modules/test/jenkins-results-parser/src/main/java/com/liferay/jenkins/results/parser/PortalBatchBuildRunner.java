@@ -17,31 +17,26 @@ package com.liferay.jenkins.results.parser;
 /**
  * @author Michael Hashimoto
  */
-public class PortalBatchBuildRunner extends BatchBuildRunner {
+public class PortalBatchBuildRunner
+	extends BatchBuildRunner<PortalBatchBuildData> {
 
-	protected PortalBatchBuildRunner(BuildData buildData) {
-		super(buildData);
+	protected PortalBatchBuildRunner(
+		PortalBatchBuildData portalBatchBuildData) {
 
-		if (!(buildData instanceof PortalBatchBuildData)) {
-			throw new RuntimeException(
-				"Invalid build data " + buildData.toJSONObject());
-		}
-
-		_portalBatchBuildData = (PortalBatchBuildData)buildData;
+		super(portalBatchBuildData);
 	}
 
 	@Override
 	protected void initWorkspace() {
+		PortalBatchBuildData portalBatchBuildData = getBuildData();
+
 		workspace = WorkspaceFactory.newBatchWorkspace(
-			_portalBatchBuildData.getPortalGitHubURL(),
-			_portalBatchBuildData.getPortalUpstreamBranchName(),
-			getBatchName());
+			portalBatchBuildData.getPortalGitHubURL(),
+			portalBatchBuildData.getPortalUpstreamBranchName(), getBatchName());
 
 		if (!(workspace instanceof BatchPortalWorkspace)) {
 			throw new RuntimeException("Invalid workspace");
 		}
 	}
-
-	private final PortalBatchBuildData _portalBatchBuildData;
 
 }

@@ -17,9 +17,14 @@ package com.liferay.jenkins.results.parser;
 /**
  * @author Michael Hashimoto
  */
-public abstract class BaseBuildRunner implements BuildRunner {
+public abstract class BaseBuildRunner<T extends BuildData>
+	implements BuildRunner<T> {
 
 	public static final String DIST_ROOT_PATH = "/tmp/dist";
+
+	public T getBuildData() {
+		return _buildData;
+	}
 
 	@Override
 	public void run() {
@@ -37,16 +42,12 @@ public abstract class BaseBuildRunner implements BuildRunner {
 		tearDownWorkspace();
 	}
 
-	protected BaseBuildRunner(BuildData buildData) {
+	protected BaseBuildRunner(T buildData) {
 		_buildData = buildData;
 
 		_job = JobFactory.newJob(_buildData);
 
 		_job.readJobProperties();
-	}
-
-	protected BuildData getBuildData() {
-		return _buildData;
 	}
 
 	protected Job getJob() {
@@ -73,7 +74,7 @@ public abstract class BaseBuildRunner implements BuildRunner {
 
 	protected Workspace workspace;
 
-	private final BuildData _buildData;
+	private final T _buildData;
 	private final Job _job;
 
 }

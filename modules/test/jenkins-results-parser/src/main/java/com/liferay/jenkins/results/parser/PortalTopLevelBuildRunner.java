@@ -17,24 +17,22 @@ package com.liferay.jenkins.results.parser;
 /**
  * @author Michael Hashimoto
  */
-public class PortalTopLevelBuildRunner extends TopLevelBuildRunner {
+public class PortalTopLevelBuildRunner
+	extends TopLevelBuildRunner<PortalTopLevelBuildData> {
 
-	protected PortalTopLevelBuildRunner(BuildData buildData) {
-		super(buildData);
+	protected PortalTopLevelBuildRunner(
+		PortalTopLevelBuildData portalTopLevelBuildData) {
 
-		if (!(buildData instanceof PortalTopLevelBuildData)) {
-			throw new RuntimeException(
-				"Invalid build data " + buildData.toJSONObject());
-		}
-
-		_portalTopLevelBuildData = (PortalTopLevelBuildData)buildData;
+		super(portalTopLevelBuildData);
 	}
 
 	@Override
 	protected void initWorkspace() {
+		PortalTopLevelBuildData portalTopLevelBuildData = getBuildData();
+
 		workspace = WorkspaceFactory.newTopLevelWorkspace(
-			_portalTopLevelBuildData.getPortalGitHubURL(),
-			_portalTopLevelBuildData.getPortalUpstreamBranchName());
+			portalTopLevelBuildData.getPortalGitHubURL(),
+			portalTopLevelBuildData.getPortalUpstreamBranchName());
 
 		if (!(workspace instanceof TopLevelPortalWorkspace)) {
 			throw new RuntimeException("Invalid workspace");
@@ -42,10 +40,8 @@ public class PortalTopLevelBuildRunner extends TopLevelBuildRunner {
 
 		if (JenkinsResultsParserUtil.isCINode()) {
 			workspace.addJenkinsLocalGitBranch(
-				_portalTopLevelBuildData.getJenkinsGitHubURL());
+				portalTopLevelBuildData.getJenkinsGitHubURL());
 		}
 	}
-
-	private final PortalTopLevelBuildData _portalTopLevelBuildData;
 
 }

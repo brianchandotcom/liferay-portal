@@ -21,10 +21,11 @@ public class BuildRunnerFactory {
 
 	public static BuildRunner newBuildRunner(BuildData buildData) {
 		if (buildData instanceof PortalBatchBuildData) {
-			return new PortalBatchBuildRunner(buildData);
+			return new PortalBatchBuildRunner((PortalBatchBuildData)buildData);
 		}
 		else if (buildData instanceof PortalTopLevelBuildData) {
-			return new PortalTopLevelBuildRunner(buildData);
+			return new PortalTopLevelBuildRunner(
+				(PortalTopLevelBuildData)buildData);
 		}
 
 		throw new RuntimeException("Invalid build data " + buildData);

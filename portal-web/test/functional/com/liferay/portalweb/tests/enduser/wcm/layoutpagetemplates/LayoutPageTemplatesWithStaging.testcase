@@ -13,7 +13,7 @@
 		</execute>
 
 		<execute macro="Navigator#openWithAppendToBaseURL">
-			<var name="urlAppend" value="group/site-name/~/control_panel/manage?p_p_id=com_liferay_staging_processes_web_portlet_StagingProcessesPortlet&amp;p_p_lifecycle=0&amp;p_p_state=maximized&amp;p_v_l_s_g_id=36653&amp;p_p_auth=FB4rLFyh" />
+			<var name="urlAppend" value="group/site-name/~/control_panel/manage?p_p_id=com_liferay_staging_processes_web_portlet_StagingProcessesPortlet" />
 		</execute>
 
 		<execute macro="Staging#activateStagingCP">
@@ -36,7 +36,7 @@
 
 	<command name="AssertPageTemplateNotEditableinStagingLiveSite" priority="5">
 		<execute macro="Navigator#openWithAppendToBaseURL">
-			<var name="urlAppend" value="group/site-name-staging/~/control_panel/manage?p_p_id=com_liferay_layout_admin_web_portlet_GroupPagesPortlet&amp;p_p_lifecycle=0&amp;p_p_state=maximized&amp;p_p_auth=gxCiOUg3" />
+			<var name="urlAppend" value="group/site-name-staging/~/control_panel/manage?p_p_id=com_liferay_layout_admin_web_portlet_GroupPagesPortlet" />
 		</execute>
 
 		<execute function="AssertVisible" locator1="NavBar#NAV_ITEM_LINK">
@@ -44,7 +44,7 @@
 		</execute>
 
 		<execute macro="Navigator#openWithAppendToBaseURL">
-			<var name="urlAppend" value="group/site-name/~/control_panel/manage?p_p_id=com_liferay_layout_admin_web_portlet_GroupPagesPortlet&amp;p_p_lifecycle=0&amp;p_p_state=maximized&amp;p_p_auth=gxCiOUg3" />
+			<var name="urlAppend" value="group/site-name/~/control_panel/manage?p_p_id=com_liferay_layout_admin_web_portlet_GroupPagesPortlet" />
 		</execute>
 
 		<execute function="AssertElementNotPresent" locator1="NavBar#NAV_ITEM_LINK">

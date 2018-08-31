@@ -43,79 +43,80 @@ public class BaseUpgradeSQLServerDatetime extends UpgradeProcess {
 		DB db = DBManagerUtil.getDB();
 
 		if (db.getDBType() == DBType.SQLSERVER) {
-			try (LoggingTimer loggingTimer = new LoggingTimer();) {
-				for (Class<?> tableClass : _tableClasses) {
-					_upgradeTable(tableClass);
-				}
+			for (Class<?> tableClass : _tableClasses) {
+				_upgradeTable(tableClass);
 			}
 		}
 	}
 
 	private void _upgradeTable(Class<?> tableClass) throws Exception {
-		DatabaseMetaData databaseMetaData = connection.getMetaData();
-		DBInspector dbInspector = new DBInspector(connection);
+		try (LoggingTimer loggingTimer = new LoggingTimer();) {
+			DatabaseMetaData databaseMetaData = connection.getMetaData();
+			DBInspector dbInspector = new DBInspector(connection);
 
-		String catalog = dbInspector.getCatalog();
-		String schema = dbInspector.getSchema();
+			String catalog = dbInspector.getCatalog();
+			String schema = dbInspector.getSchema();
 
-		String tableName = dbInspector.normalizeName(
-			getTableName(tableClass), databaseMetaData);
+			String tableName = dbInspector.normalizeName(
+				getTableName(tableClass), databaseMetaData);
 
-		try (ResultSet tableRS = databaseMetaData.getTables(
-				catalog, schema, tableName, null)) {
+			try (ResultSet tableRS = databaseMetaData.getTables(
+					catalog, schema, tableName, null)) {
 
-			if (!tableRS.next()) {
-				_log.error(
-					StringBundler.concat(
-						"Table ", tableName, " does not exist"));
+				if (!tableRS.next()) {
+					_log.error(
+						StringBundler.concat(
+							"Table ", tableName, " does not exist"));
 
-				return;
-			}
-
-			String newTypeName = dbInspector.normalizeName(_NEW_TYPE);
-
-			String newTypeDefinition = StringBundler.concat(
-				newTypeName, "(", _NEW_SIZE, ")");
-
-			for (Map.Entry<String, Integer> tableColumnEntry :
-					getTableColumnsMap(tableClass).entrySet()) {
-
-				if (tableColumnEntry.getValue() != Types.TIMESTAMP) {
-					continue;
+					return;
 				}
 
-				String columnName = dbInspector.normalizeName(
-					tableColumnEntry.getKey(), databaseMetaData);
+				String newTypeName = dbInspector.normalizeName(_NEW_TYPE);
 
-				try (ResultSet columnRS = databaseMetaData.getColumns(
-						null, null, tableName, columnName)) {
+				String newTypeDefinition = StringBundler.concat(
+					newTypeName, "(", _NEW_SIZE, ")");
 
-					if (!columnRS.next()) {
-						_log.error(
-							StringBundler.concat(
-								"Column ", columnName,
-								" does not exist in Table ", tableName));
+				for (Map.Entry<String, Integer> tableColumnEntry :
+						getTableColumnsMap(tableClass).entrySet()) {
 
+					if (tableColumnEntry.getValue() != Types.TIMESTAMP) {
 						continue;
 					}
 
-					if (newTypeName.equals(columnRS.getString("TYPE_NAME")) &&
-						(_NEW_SIZE == columnRS.getInt("DECIMAL_DIGITS"))) {
+					String columnName = dbInspector.normalizeName(
+						tableColumnEntry.getKey(), databaseMetaData);
 
-						if (_log.isWarnEnabled()) {
-							_log.warn(
+					try (ResultSet columnRS = databaseMetaData.getColumns(
+							null, null, tableName, columnName)) {
+
+						if (!columnRS.next()) {
+							_log.error(
 								StringBundler.concat(
-									"Column ", columnName, " in Table ",
-									tableName, " already is ",
-									newTypeDefinition));
+									"Column ", columnName,
+									" does not exist in Table ", tableName));
+
+							continue;
 						}
 
-						continue;
-					}
+						if (newTypeName.equals(
+								columnRS.getString("TYPE_NAME")) &&
+							(_NEW_SIZE == columnRS.getInt("DECIMAL_DIGITS"))) {
 
-					alter(
-						tableClass,
-						new AlterColumnType(columnName, newTypeDefinition));
+							if (_log.isWarnEnabled()) {
+								_log.warn(
+									StringBundler.concat(
+										"Column ", columnName, " in Table ",
+										tableName, " already is ",
+										newTypeDefinition));
+							}
+
+							continue;
+						}
+
+						alter(
+							tableClass,
+							new AlterColumnType(columnName, newTypeDefinition));
+					}
 				}
 			}
 		}

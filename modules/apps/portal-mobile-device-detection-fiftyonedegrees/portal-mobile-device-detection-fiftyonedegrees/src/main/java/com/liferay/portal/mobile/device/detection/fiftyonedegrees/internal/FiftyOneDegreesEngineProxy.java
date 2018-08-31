@@ -48,7 +48,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	configurationPid = "com.liferay.portal.mobile.device.detection.fiftyonedegrees.configuration.FiftyOneDegreesConfiguration",
-	immediate = true, service = FiftyOneDegreesEngineProxy.class
+	service = FiftyOneDegreesEngineProxy.class
 )
 public class FiftyOneDegreesEngineProxy {
 

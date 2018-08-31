@@ -41,6 +41,10 @@ public abstract class BaseFieldWrapperTag extends com.liferay.taglib.util.Includ
 		return _data;
 	}
 
+	public boolean getDisabled() {
+		return _disabled;
+	}
+
 	public boolean getFirst() {
 		return _first;
 	}
@@ -85,6 +89,10 @@ public abstract class BaseFieldWrapperTag extends com.liferay.taglib.util.Includ
 		_data = data;
 	}
 
+	public void setDisabled(boolean disabled) {
+		_disabled = disabled;
+	}
+
 	public void setFirst(boolean first) {
 		_first = first;
 	}
@@ -127,6 +135,7 @@ public abstract class BaseFieldWrapperTag extends com.liferay.taglib.util.Includ
 
 		_cssClass = null;
 		_data = null;
+		_disabled = false;
 		_first = false;
 		_helpMessage = null;
 		_inlineField = false;
@@ -152,6 +161,7 @@ public abstract class BaseFieldWrapperTag extends com.liferay.taglib.util.Includ
 	protected void setAttributes(HttpServletRequest request) {
 		request.setAttribute("aui:field-wrapper:cssClass", _cssClass);
 		request.setAttribute("aui:field-wrapper:data", _data);
+		request.setAttribute("aui:field-wrapper:disabled", String.valueOf(_disabled));
 		request.setAttribute("aui:field-wrapper:first", String.valueOf(_first));
 		request.setAttribute("aui:field-wrapper:helpMessage", _helpMessage);
 		request.setAttribute("aui:field-wrapper:inlineField", String.valueOf(_inlineField));
@@ -173,6 +183,7 @@ public abstract class BaseFieldWrapperTag extends com.liferay.taglib.util.Includ
 
 	private java.lang.String _cssClass = null;
 	private java.lang.Object _data = null;
+	private boolean _disabled = false;
 	private boolean _first = false;
 	private java.lang.String _helpMessage = null;
 	private boolean _inlineField = false;

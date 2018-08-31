@@ -21,6 +21,7 @@
 <%
 java.lang.String cssClass = GetterUtil.getString((java.lang.String)request.getAttribute("aui:field-wrapper:cssClass"));
 java.util.Map data = (java.util.Map)request.getAttribute("aui:field-wrapper:data");
+boolean disabled = GetterUtil.getBoolean(String.valueOf(request.getAttribute("aui:field-wrapper:disabled")));
 boolean first = GetterUtil.getBoolean(String.valueOf(request.getAttribute("aui:field-wrapper:first")));
 java.lang.String helpMessage = GetterUtil.getString((java.lang.String)request.getAttribute("aui:field-wrapper:helpMessage"));
 boolean inlineField = GetterUtil.getBoolean(String.valueOf(request.getAttribute("aui:field-wrapper:inlineField")));

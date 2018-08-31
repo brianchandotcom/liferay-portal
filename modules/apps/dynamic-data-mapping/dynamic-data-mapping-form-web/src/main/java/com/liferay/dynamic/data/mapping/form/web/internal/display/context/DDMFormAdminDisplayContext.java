@@ -18,6 +18,9 @@ import com.liferay.dynamic.data.mapping.constants.DDMPortletKeys;
 import com.liferay.dynamic.data.mapping.form.builder.context.DDMFormBuilderContextFactory;
 import com.liferay.dynamic.data.mapping.form.builder.context.DDMFormBuilderContextRequest;
 import com.liferay.dynamic.data.mapping.form.builder.context.DDMFormBuilderContextResponse;
+import com.liferay.dynamic.data.mapping.form.builder.settings.DDMFormBuilderSettingsRequest;
+import com.liferay.dynamic.data.mapping.form.builder.settings.DDMFormBuilderSettingsResponse;
+import com.liferay.dynamic.data.mapping.form.builder.settings.DDMFormBuilderSettingsRetriever;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldType;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesTracker;
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderer;
@@ -108,6 +111,7 @@ public class DDMFormAdminDisplayContext {
 		AddDefaultSharedFormLayoutPortalInstanceLifecycleListener
 			addDefaultSharedFormLayoutPortalInstanceLifecycleListener,
 		DDMFormBuilderContextFactory ddmFormBuilderContextFactory,
+		DDMFormBuilderSettingsRetriever ddmFormBuilderSettingsRetriever,
 		DDMFormWebConfiguration formWebConfiguration,
 		DDMFormInstanceRecordLocalService formInstanceRecordLocalService,
 		DDMFormInstanceRecordWriterTracker ddmFormInstanceRecordWriterTracker,
@@ -126,6 +130,7 @@ public class DDMFormAdminDisplayContext {
 		_addDefaultSharedFormLayoutPortalInstanceLifecycleListener =
 			addDefaultSharedFormLayoutPortalInstanceLifecycleListener;
 		_ddmFormBuilderContextFactory = ddmFormBuilderContextFactory;
+		_ddmFormBuilderSettingsRetriever = ddmFormBuilderSettingsRetriever;
 		_ddmFormWebConfiguration = formWebConfiguration;
 		_ddmFormInstanceRecordLocalService = formInstanceRecordLocalService;
 		_ddmFormInstanceRecordWriterTracker =
@@ -718,6 +723,21 @@ public class DDMFormAdminDisplayContext {
 		return "formInstance";
 	}
 
+	public String getSerializedDDMFormRules() throws PortalException {
+		ThemeDisplay themeDisplay = formAdminRequestHelper.getThemeDisplay();
+
+		DDMFormBuilderSettingsRequest ddmFormBuilderSettingsRequest =
+			DDMFormBuilderSettingsRequest.with(
+				themeDisplay.getCompanyId(), themeDisplay.getScopeGroupId(), 0,
+				getDDMForm(), themeDisplay.getLocale());
+
+		DDMFormBuilderSettingsResponse ddmFormBuilderSettingsResponse =
+			_ddmFormBuilderSettingsRetriever.getSettings(
+				ddmFormBuilderSettingsRequest);
+
+		return ddmFormBuilderSettingsResponse.getSerializedDDMFormRules();
+	}
+
 	public String getSerializedFormBuilderContext() throws PortalException {
 		ThemeDisplay themeDisplay = formAdminRequestHelper.getThemeDisplay();
 
@@ -1148,6 +1168,8 @@ public class DDMFormAdminDisplayContext {
 	private final AddDefaultSharedFormLayoutPortalInstanceLifecycleListener
 		_addDefaultSharedFormLayoutPortalInstanceLifecycleListener;
 	private final DDMFormBuilderContextFactory _ddmFormBuilderContextFactory;
+	private final DDMFormBuilderSettingsRetriever
+		_ddmFormBuilderSettingsRetriever;
 	private final DDMFormFieldTypeServicesTracker
 		_ddmFormFieldTypeServicesTracker;
 	private final DDMFormFieldTypesSerializerTracker

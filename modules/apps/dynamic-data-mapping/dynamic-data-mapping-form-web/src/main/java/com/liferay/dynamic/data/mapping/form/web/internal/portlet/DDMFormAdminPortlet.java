@@ -17,6 +17,7 @@ package com.liferay.dynamic.data.mapping.form.web.internal.portlet;
 import com.liferay.dynamic.data.mapping.constants.DDMPortletKeys;
 import com.liferay.dynamic.data.mapping.constants.DDMWebKeys;
 import com.liferay.dynamic.data.mapping.form.builder.context.DDMFormBuilderContextFactory;
+import com.liferay.dynamic.data.mapping.form.builder.settings.DDMFormBuilderSettingsRetriever;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesTracker;
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderer;
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderingContext;
@@ -203,6 +204,7 @@ public class DDMFormAdminPortlet extends MVCPortlet {
 					renderRequest, renderResponse,
 					_addDefaultSharedFormLayoutPortalInstanceLifecycleListener,
 					_ddmFormBuilderContextFactory,
+					_ddmFormBuilderSettingsRetriever,
 					_ddmFormWebConfigurationActivator.
 						getDDMFormWebConfiguration(),
 					_ddmFormInstanceRecordLocalService,
@@ -248,6 +250,7 @@ public class DDMFormAdminPortlet extends MVCPortlet {
 					renderRequest, renderResponse,
 					_addDefaultSharedFormLayoutPortalInstanceLifecycleListener,
 					_ddmFormBuilderContextFactory,
+					_ddmFormBuilderSettingsRetriever,
 					_ddmFormWebConfigurationActivator.
 						getDDMFormWebConfiguration(),
 					_ddmFormInstanceRecordLocalService,
@@ -277,6 +280,9 @@ public class DDMFormAdminPortlet extends MVCPortlet {
 
 	@Reference
 	private DDMFormBuilderContextFactory _ddmFormBuilderContextFactory;
+
+	@Reference
+	private DDMFormBuilderSettingsRetriever _ddmFormBuilderSettingsRetriever;
 
 	@Reference
 	private DDMFormFieldTypeServicesTracker _ddmFormFieldTypeServicesTracker;

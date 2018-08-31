@@ -1,11 +1,13 @@
 import {Config} from 'metal-state';
+import {pageStructure} from './util/config.es';
 import Builder from './pages/builder/index.es';
 import Component from 'metal-jsx';
 import dom from 'metal-dom';
 import LayoutProvider from './components/LayoutProvider/index.es';
 import loader from './components/FieldsLoader/index.es';
+import RuleBuilder from './pages/RuleBuilder/index.es';
 import withAppComposer from './hocs/withAppComposer/index.es';
-import {pageStructure} from './util/config.es';
+import {EventHandler} from 'metal-events';
 
 const STR_UNTITLED_FORM = Liferay.Language.get('untitled-form');
 
@@ -75,6 +77,16 @@ class Form extends Component {
 		namespace: Config.string().required(),
 
 		/**
+		 * The rules of a form.
+		 * @default undefined
+		 * @instance
+		 * @memberof Form
+		 * @type {!array}
+		 */
+
+		rules: Config.array(),
+
+		/**
 		 * The path to the SVG spritemap file containing the icons.
 		 * @default undefined
 		 * @instance
@@ -86,6 +98,17 @@ class Form extends Component {
 	};
 
 	static STATE = {
+
+		/**
+		 * The represent the current active screen mode where 0 => FormBuilder and 1 => RuleBuilder
+		 * @default undefined
+		 * @instance
+		 * @memberof Form
+		 * @type {!array}
+		 */
+
+		activeFormMode: Config.number().value(0),
+
 		saveButtonLabel: Config.string().value(Liferay.Language.get('save-form'))
 	}
 
@@ -162,14 +185,50 @@ class Form extends Component {
 
 	_handleAddFieldButtonClicked() {
 		const {builder} = this.refs;
-		const {sidebar} = builder.refs;
 
-		sidebar.props.mode = 'add';
-		sidebar.show();
+		if (builder) {
+			const {sidebar} = builder.refs;
+
+			sidebar.props.mode = 'add';
+			sidebar.show();
+		}
+	}
+
+	created() {
+		this._eventHandler = new EventHandler();
 	}
 
 	attached() {
-		dom.on('#addFieldButton', 'click', this._handleAddFieldButtonClicked.bind(this));
+		this._eventHandler.add(
+			dom.on('#addFieldButton', 'click', this._handleAddFieldButtonClicked.bind(this)),
+			dom.on('.forms-management-bar li', 'click', this._handleFormNavClicked.bind(this))
+		);
+	}
+
+	_handleFormNavClicked(event) {
+		const {delegateTarget, target} = event;
+		const {navItemIndex} = delegateTarget.dataset;
+		const addButton = document.querySelector('#addFieldButton');
+		const formBuilderButtons = document.querySelector('.ddm-form-builder-buttons');
+		const publishIcon = document.querySelector('.publish-icon');
+		if (navItemIndex !== this.state.activeFormMode) {
+			this.setState(
+				{
+					activeFormMode: parseInt(navItemIndex, 10)
+				}
+			);
+			document.querySelector('.forms-management-bar li>a.active').classList.remove('active');
+			if (parseInt(this.state.activeFormMode, 10)) {
+				formBuilderButtons.classList.add('hide');
+				publishIcon.classList.add('hide');
+			}
+			else {
+				formBuilderButtons.classList.remove('hide');
+				addButton.classList.remove('hide');
+				publishIcon.classList.remove('hide');
+			}
+			target.classList.add('active');
+		}
 	}
 
 	getState() {
@@ -217,7 +276,8 @@ class Form extends Component {
 	render() {
 		const {
 			context,
-			namespace
+			namespace,
+			spritemap
 		} = this.props;
 
 		const {
@@ -233,6 +293,11 @@ class Form extends Component {
 			pages: context.pages
 		};
 
+		let mode = <Builder events={events} namespace={this.props.namespace} ref="builder" />;
+		if (parseInt(this.state.activeFormMode, 10)) {
+			mode = <RuleBuilder pages={context.pages} rules={this.props.rules} spritemap={spritemap} />;
+		}
+
 		return (
 			<div>
 				<input name={`${namespace}description`} ref="descriptionInput" type="hidden" />
@@ -241,7 +306,7 @@ class Form extends Component {
 				<input name={`${namespace}serializedSettingsContext`} ref="serializedSettingsContextInput" type="hidden" />
 
 				<LayoutProviderWithAppComposer {...layoutProviderProps}>
-					<Builder events={events} namespace={this.props.namespace} ref="builder" />
+					{mode}
 				</LayoutProviderWithAppComposer>
 
 				<div class="container-fluid-1280">

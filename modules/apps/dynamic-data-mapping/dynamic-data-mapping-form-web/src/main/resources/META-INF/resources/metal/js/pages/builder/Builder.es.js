@@ -120,6 +120,17 @@ class Builder extends Component {
 		this.emit('pagesUpdated', pages);
 	}
 
+	attached() {
+		const translationManager = document.querySelector('.ddm-translation-manager');
+
+		const formBasicInfo = document.querySelector('.ddm-form-basic-info');
+
+		if (translationManager && formBasicInfo) {
+			formBasicInfo.classList.remove('hide');
+			translationManager.classList.remove('hide');
+		}
+	}
+
 	/**
 	 * @inheritDoc
 	 */

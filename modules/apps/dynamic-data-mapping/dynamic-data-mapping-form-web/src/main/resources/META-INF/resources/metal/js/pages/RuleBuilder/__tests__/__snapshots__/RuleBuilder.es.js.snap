@@ -15,7 +15,7 @@ exports[`RuleBuilder should render rule screen editor when click edit button 1`]
 exports[`RuleBuilder should render the list of rules when mode is set to view 1`] = `
 <div class="container">
   <div class="form-builder-rule-builder-container">
-    <h1 class="form-builder-section-title text-default">Rule Builder</h1>
+    <h1 class="form-builder-section-title text-default">rules</h1>
     <div class="liferay-ddm-form-rule-rules-list-container">
       <div class="form-builder-rule-list">
         <ul class="ddm-form-body-content form-builder-rule-builder-rules-list tabular-list-group">
@@ -42,6 +42,7 @@ exports[`RuleBuilder should render the list of rules when mode is set to view 1`
                 <span>
                   <b>require </b>
                 </span>
+                <span>field </span>
                 <span class="label label-lg label-secondary" data-original-title="label text 1" title="label text 1">
                   <span class="text-truncate-inline">
                     <span class="text-truncate">label text 1</span>

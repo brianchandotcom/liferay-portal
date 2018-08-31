@@ -87,29 +87,31 @@ String refererPortletName = ParamUtil.getString(request, "refererPortletName");
 			'.change-template'
 		);
 
+		<%
+		String className = DDMTemplate.class.getName() + "_" + JournalArticle.class.getName();
+
+		PortletURL selectDDMTemplateURL = PortletProviderUtil.getPortletURL(renderRequest, className, PortletProvider.Action.BROWSE);
+
+		selectDDMTemplateURL.setParameter("ddmStructureId", String.valueOf(ddmStructure.getStructureId()));
+
+		String portletId = PortletProviderUtil.getPortletId(className, PortletProvider.Action.BROWSE);
+		%>
+
 		templatePreview.delegate(
 			'click',
 			function(event) {
 				event.preventDefault();
 
-				Liferay.Util.openDDMPortlet(
+				Liferay.Util.selectEntity(
 					{
-						basePortletURL: '<%= PortalUtil.getControlPanelPortletURL(request, PortletProviderUtil.getPortletId(DDMStructure.class.getName(), PortletProvider.Action.VIEW), PortletRequest.RENDER_PHASE) %>',
-						classNameId: '<%= PortalUtil.getClassNameId(DDMStructure.class) %>',
-						classPK: <%= ddmStructure.getPrimaryKey() %>,
 						dialog: {
-							destroyOnHide: true
+							constrain: true,
+							modal: true
 						},
-						eventName: 'selectTemplate',
-						groupId: <%= article.getGroupId() %>,
-						mvcPath: '/select_template.jsp',
-						navigationStartsOn: '<%= DDMNavigationHelper.SELECT_TEMPLATE %>',
-						refererPortletName: '<%= JournalContentPortletKeys.JOURNAL_CONTENT %>',
-						resourceClassNameId: <%= ddmStructure.getClassNameId() %>,
-						showAncestorScopes: true,
-						showCacheableInput: true,
-						templateId: templateId,
-						title: '<liferay-ui:message key="templates" />'
+						eventName: '<%= PortalUtil.getPortletNamespace(portletId) + "selectTemplate" %>',
+						id: '<%= PortalUtil.getPortletNamespace(portletId) + "selectTemplate" %>',
+						title: '<liferay-ui:message key="templates" />',
+						uri: '<%= selectDDMTemplateURL %>'
 					},
 					function(event) {
 						updateTemplate(event.ddmtemplatekey, event.ddmtemplateid);

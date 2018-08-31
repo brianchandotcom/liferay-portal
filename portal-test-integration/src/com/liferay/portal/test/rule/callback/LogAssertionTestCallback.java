@@ -32,8 +32,6 @@ import com.liferay.portal.test.rule.LogAssertionAppender;
 import com.liferay.portal.test.rule.LogAssertionHandler;
 import com.liferay.portal.test.rule.LogAssertionUncaughtExceptionHandler;
 
-import java.lang.Thread.UncaughtExceptionHandler;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -293,6 +291,7 @@ public class LogAssertionTestCallback
 	private static final Map<Thread, Error> _concurrentFailures =
 		new ConcurrentHashMap<>();
 	private static volatile Thread _thread;
-	private static volatile UncaughtExceptionHandler _uncaughtExceptionHandler;
+	private static volatile Thread.UncaughtExceptionHandler
+		_uncaughtExceptionHandler;
 
 }

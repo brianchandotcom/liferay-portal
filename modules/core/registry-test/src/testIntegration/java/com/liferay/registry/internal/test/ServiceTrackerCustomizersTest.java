@@ -19,7 +19,6 @@ import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.ServiceRegistration;
 import com.liferay.registry.collections.ServiceTrackerCollections;
 import com.liferay.registry.collections.ServiceTrackerCustomizers;
-import com.liferay.registry.collections.ServiceTrackerCustomizers.ServiceWrapper;
 import com.liferay.registry.collections.ServiceTrackerMap;
 
 import java.util.Hashtable;
@@ -39,10 +38,12 @@ public class ServiceTrackerCustomizersTest {
 
 	@Test
 	public void testServiceWrapper() {
-		ServiceTrackerMap<String, ServiceWrapper<TrackedOne>>
-			serviceTrackerMap = ServiceTrackerCollections.openSingleValueMap(
-				TrackedOne.class, "target",
-				ServiceTrackerCustomizers.<TrackedOne>serviceWrapper());
+		ServiceTrackerMap
+			<String, ServiceTrackerCustomizers.ServiceWrapper<TrackedOne>>
+				serviceTrackerMap =
+					ServiceTrackerCollections.openSingleValueMap(
+						TrackedOne.class, "target",
+						ServiceTrackerCustomizers.<TrackedOne>serviceWrapper());
 
 		try {
 			Map<String, Object> properties = new Hashtable<>();
@@ -58,8 +59,8 @@ public class ServiceTrackerCustomizersTest {
 				registry.registerService(
 					TrackedOne.class, trackedOne, properties);
 
-			ServiceWrapper<TrackedOne> serviceWrapper =
-				serviceTrackerMap.getService("aTarget");
+			ServiceTrackerCustomizers.ServiceWrapper<TrackedOne>
+				serviceWrapper = serviceTrackerMap.getService("aTarget");
 
 			Assert.assertEquals(trackedOne, serviceWrapper.getService());
 

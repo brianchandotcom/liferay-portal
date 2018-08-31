@@ -15,7 +15,7 @@
 package com.liferay.portal.fabric.netty.worker;
 
 import com.liferay.portal.fabric.netty.rpc.RPCUtil;
-import com.liferay.portal.fabric.status.JMXProxyUtil.ProcessCallableExecutor;
+import com.liferay.portal.fabric.status.JMXProxyUtil;
 import com.liferay.portal.kernel.concurrent.NoticeableFuture;
 import com.liferay.portal.kernel.process.ProcessCallable;
 
@@ -27,7 +27,7 @@ import java.io.Serializable;
  * @author Shuyang Zhou
  */
 public class NettyFabricWorkerProcessCallableExecutor
-	implements ProcessCallableExecutor {
+	implements JMXProxyUtil.ProcessCallableExecutor {
 
 	public NettyFabricWorkerProcessCallableExecutor(
 		Channel channel, long fabricWorkerId, long rpcRelayTime) {

@@ -39,7 +39,6 @@ import java.util.Map;
 
 import org.elasticsearch.action.ActionResponse;
 import org.elasticsearch.action.bulk.BulkItemResponse;
-import org.elasticsearch.action.bulk.BulkItemResponse.Failure;
 import org.elasticsearch.action.bulk.BulkRequestBuilder;
 import org.elasticsearch.action.bulk.BulkResponse;
 import org.elasticsearch.action.delete.DeleteRequestBuilder;
@@ -75,7 +74,8 @@ public class ElasticsearchUpdateDocumentCommandImpl
 
 			for (BulkItemResponse bulkItemResponse : bulkResponse) {
 				if (bulkItemResponse.isFailed()) {
-					Failure failure = bulkItemResponse.getFailure();
+					BulkItemResponse.Failure failure =
+						bulkItemResponse.getFailure();
 
 					if (throwable == null) {
 						throwable = failure.getCause();

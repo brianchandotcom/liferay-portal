@@ -24,7 +24,6 @@ import com.liferay.source.formatter.util.DebugUtil;
 import com.liferay.source.formatter.util.SourceFormatterUtil;
 
 import com.puppycrawl.tools.checkstyle.ConfigurationLoader;
-import com.puppycrawl.tools.checkstyle.ConfigurationLoader.IgnoredModulesOptions;
 import com.puppycrawl.tools.checkstyle.DefaultConfiguration;
 import com.puppycrawl.tools.checkstyle.PropertiesExpander;
 import com.puppycrawl.tools.checkstyle.api.CheckstyleException;
@@ -133,7 +132,7 @@ public class CheckstyleUtil {
 			new InputSource(
 				classLoader.getResourceAsStream(configurationFileName)),
 			new PropertiesExpander(System.getProperties()),
-			IgnoredModulesOptions.EXECUTE);
+			ConfigurationLoader.IgnoredModulesOptions.EXECUTE);
 
 		String checkName = sourceFormatterArgs.getCheckName();
 

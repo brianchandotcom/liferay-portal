@@ -24,7 +24,7 @@ import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.Project;
 import org.apache.tools.ant.taskdefs.ExecTask;
 import org.apache.tools.ant.taskdefs.condition.Os;
-import org.apache.tools.ant.types.Commandline.Argument;
+import org.apache.tools.ant.types.Commandline;
 import org.apache.tools.ant.types.Environment;
 
 /**
@@ -109,8 +109,8 @@ public class GradleExecTask extends ExecTask {
 		}
 	}
 
-	protected Argument addArgument(String value) {
-		Argument argument = createArg();
+	protected Commandline.Argument addArgument(String value) {
+		Commandline.Argument argument = createArg();
 
 		argument.setValue(value);
 

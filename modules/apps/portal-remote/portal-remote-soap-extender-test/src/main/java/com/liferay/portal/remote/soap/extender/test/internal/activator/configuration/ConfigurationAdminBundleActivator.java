@@ -16,7 +16,6 @@ package com.liferay.portal.remote.soap.extender.test.internal.activator.configur
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.remote.soap.extender.test.internal.util.WaiterUtil;
-import com.liferay.portal.remote.soap.extender.test.internal.util.WaiterUtil.Waiter;
 
 import java.util.Dictionary;
 import java.util.Hashtable;
@@ -111,7 +110,7 @@ public class ConfigurationAdminBundleActivator implements BundleActivator {
 
 	@Override
 	public void stop(BundleContext bundleContext) throws Exception {
-		Waiter waiter = WaiterUtil.waitForFilterToDisappear(
+		WaiterUtil.Waiter waiter = WaiterUtil.waitForFilterToDisappear(
 			bundleContext, _filterString);
 
 		_cleanUp();

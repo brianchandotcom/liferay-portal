@@ -35,7 +35,6 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.Properties;
 import java.util.Set;
@@ -215,7 +214,7 @@ public class JspServlet extends HttpServlet {
 		defaults.put(
 			TagHandlerPool.OPTION_TAGPOOL, JspTagHandlerPool.class.getName());
 
-		for (Entry<Object, Object> entry : _initParams.entrySet()) {
+		for (Map.Entry<Object, Object> entry : _initParams.entrySet()) {
 			defaults.put(
 				String.valueOf(entry.getKey()),
 				String.valueOf(entry.getValue()));

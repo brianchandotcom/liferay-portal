@@ -18,7 +18,7 @@ import com.liferay.apio.architect.error.APIError;
 import com.liferay.apio.architect.exception.mapper.ExceptionMapper;
 import com.liferay.portal.kernel.exception.NoSuchModelException;
 
-import javax.ws.rs.core.Response.Status;
+import javax.ws.rs.core.Response;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -36,7 +36,7 @@ public class NoSuchModelExceptionMapper
 	public APIError map(NoSuchModelException nsme) {
 		return new APIError(
 			nsme, "Resource not found", "not-found",
-			Status.NOT_FOUND.getStatusCode());
+			Response.Status.NOT_FOUND.getStatusCode());
 	}
 
 }

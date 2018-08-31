@@ -16,7 +16,6 @@ package com.liferay.media.object.apio.internal.architect.form;
 
 import com.liferay.apio.architect.file.BinaryFile;
 import com.liferay.apio.architect.form.Form;
-import com.liferay.apio.architect.form.Form.Builder;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -41,7 +40,7 @@ public class MediaObjectCreatorForm {
 	 * @review
 	 */
 	public static Form<MediaObjectCreatorForm> buildForm(
-		Builder<MediaObjectCreatorForm> formBuilder) {
+		Form.Builder<MediaObjectCreatorForm> formBuilder) {
 
 		return formBuilder.title(
 			__ -> "The media object creator form"

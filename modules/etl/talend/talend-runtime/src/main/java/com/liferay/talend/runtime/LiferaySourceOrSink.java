@@ -27,7 +27,6 @@ import com.liferay.talend.runtime.apio.ApioException;
 import com.liferay.talend.runtime.apio.ApioResult;
 import com.liferay.talend.runtime.apio.constants.JSONLDConstants;
 import com.liferay.talend.runtime.apio.constants.SchemaOrgConstants;
-import com.liferay.talend.runtime.apio.constants.SchemaOrgConstants.Vocabulary;
 import com.liferay.talend.runtime.apio.jsonld.ApioApiDocumentation;
 import com.liferay.talend.runtime.apio.jsonld.ApioEntryPoint;
 import com.liferay.talend.runtime.apio.jsonld.ApioForm;
@@ -69,7 +68,6 @@ import org.talend.daikon.i18n.I18nMessageProvider;
 import org.talend.daikon.i18n.I18nMessages;
 import org.talend.daikon.i18n.TranslatableImpl;
 import org.talend.daikon.properties.ValidationResult;
-import org.talend.daikon.properties.ValidationResult.Result;
 import org.talend.daikon.properties.ValidationResultMutable;
 
 /**
@@ -710,7 +708,7 @@ public class LiferaySourceOrSink
 		ValidationResultMutable validationResultMutable =
 			new ValidationResultMutable();
 
-		validationResultMutable.setStatus(Result.OK);
+		validationResultMutable.setStatus(ValidationResult.Result.OK);
 
 		try {
 			LiferaySourceOrSink liferaySourceOrSink = new LiferaySourceOrSink();
@@ -730,20 +728,20 @@ public class LiferaySourceOrSink
 				i18nMessages.getMessage(
 					"error.validation.connection.testconnection",
 					ae.getLocalizedMessage(), ae.getCode()));
-			validationResultMutable.setStatus(Result.ERROR);
+			validationResultMutable.setStatus(ValidationResult.Result.ERROR);
 		}
 		catch (IOException ioe) {
 			validationResultMutable.setMessage(
 				i18nMessages.getMessage(
 					"error.validation.connection.testconnection.json"));
-			validationResultMutable.setStatus(Result.ERROR);
+			validationResultMutable.setStatus(ValidationResult.Result.ERROR);
 		}
 		catch (ProcessingException pe) {
 			validationResultMutable.setMessage(
 				i18nMessages.getMessage(
 					"error.validation.connection.testconnection.jersey",
 					pe.getLocalizedMessage()));
-			validationResultMutable.setStatus(Result.ERROR);
+			validationResultMutable.setStatus(ValidationResult.Result.ERROR);
 		}
 
 		return validationResultMutable;
@@ -769,7 +767,7 @@ public class LiferaySourceOrSink
 	private static boolean _hasWebSiteResourcePredicate(
 		Map.Entry<String, String> entry) {
 
-		if (Vocabulary.WEB_SITE.equals(entry.getValue()) ||
+		if (SchemaOrgConstants.Vocabulary.WEB_SITE.equals(entry.getValue()) ||
 			SchemaOrgConstants.Type.WEB_SITE.equals(entry.getValue())) {
 
 			return true;

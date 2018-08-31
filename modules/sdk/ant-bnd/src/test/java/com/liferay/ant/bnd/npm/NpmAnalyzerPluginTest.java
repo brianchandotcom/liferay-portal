@@ -21,8 +21,6 @@ import aQute.bnd.osgi.URLResource;
 
 import aQute.lib.filter.Filter;
 
-import com.liferay.ant.bnd.npm.NpmAnalyzerPlugin.NpmModule;
-
 import java.net.URL;
 
 import org.junit.Assert;
@@ -39,7 +37,8 @@ public class NpmAnalyzerPluginTest {
 
 		URL url = getResource("dependencies/package.json");
 
-		NpmModule npmModule = npmAnalyzerPlugin.getNpmModule(url.openStream());
+		NpmAnalyzerPlugin.NpmModule npmModule = npmAnalyzerPlugin.getNpmModule(
+			url.openStream());
 
 		Assert.assertNotNull(npmModule);
 		Assert.assertEquals("liferay", npmModule.name);

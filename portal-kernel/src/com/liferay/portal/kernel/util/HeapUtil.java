@@ -30,7 +30,7 @@ import java.lang.management.RuntimeMXBean;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map.Entry;
+import java.util.Map;
 import java.util.concurrent.Future;
 
 /**
@@ -60,7 +60,7 @@ public class HeapUtil {
 		return heapDump(_PROCESS_ID, live, binary, file, outputProcessor);
 	}
 
-	public static <O, E> Future<Entry<O, E>> heapDump(
+	public static <O, E> Future<Map.Entry<O, E>> heapDump(
 		boolean live, boolean binary, String file,
 		OutputProcessor<O, E> outputProcessor) {
 
@@ -110,18 +110,18 @@ public class HeapUtil {
 
 			};
 
-		return new FutureConverter<ObjectValuePair<O, E>, Entry<O, E>>(
+		return new FutureConverter<ObjectValuePair<O, E>, Map.Entry<O, E>>(
 			heapDump(processId, live, binary, file, petraOutputProcessor)) {
 
 			@Override
-			protected ObjectValuePair<O, E> convert(Entry<O, E> entry) {
+			protected ObjectValuePair<O, E> convert(Map.Entry<O, E> entry) {
 				return new ObjectValuePair<>(entry.getKey(), entry.getValue());
 			}
 
 		};
 	}
 
-	public static <O, E> Future<Entry<O, E>> heapDump(
+	public static <O, E> Future<Map.Entry<O, E>> heapDump(
 		int processId, boolean live, boolean binary, String file,
 		OutputProcessor<O, E> outputProcessor) {
 
@@ -164,11 +164,11 @@ public class HeapUtil {
 	}
 
 	private static void _checkJMap(int processId) throws Exception {
-		Future<Entry<byte[], byte[]>> future = ProcessUtil.execute(
+		Future<Map.Entry<byte[], byte[]>> future = ProcessUtil.execute(
 			CollectorOutputProcessor.INSTANCE, "jmap", "-histo:live",
 			String.valueOf(processId));
 
-		Entry<byte[], byte[]> entry = future.get();
+		Map.Entry<byte[], byte[]> entry = future.get();
 
 		String stdOutString = new String(entry.getKey());
 
@@ -186,10 +186,10 @@ public class HeapUtil {
 	}
 
 	private static void _checkJPS(int processId) throws Exception {
-		Future<Entry<byte[], byte[]>> future = ProcessUtil.execute(
+		Future<Map.Entry<byte[], byte[]>> future = ProcessUtil.execute(
 			CollectorOutputProcessor.INSTANCE, "jps");
 
-		Entry<byte[], byte[]> entry = future.get();
+		Map.Entry<byte[], byte[]> entry = future.get();
 
 		String stdOutString = new String(entry.getKey());
 

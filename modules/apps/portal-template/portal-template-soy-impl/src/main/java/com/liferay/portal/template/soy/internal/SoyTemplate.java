@@ -16,11 +16,9 @@ package com.liferay.portal.template.soy.internal;
 
 import com.google.common.io.CharStreams;
 import com.google.template.soy.SoyFileSet;
-import com.google.template.soy.SoyFileSet.Builder;
 import com.google.template.soy.data.SanitizedContent;
 import com.google.template.soy.msgs.SoyMsgBundle;
 import com.google.template.soy.tofu.SoyTofu;
-import com.google.template.soy.tofu.SoyTofu.Renderer;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -174,7 +172,7 @@ public class SoyTemplate extends AbstractMultiResourceTemplate {
 	protected SoyFileSet getSoyFileSet(List<TemplateResource> templateResources)
 		throws Exception {
 
-		Builder builder = SoyFileSet.builder();
+		SoyFileSet.Builder builder = SoyFileSet.builder();
 
 		Set<String> templateIds = new HashSet<>();
 
@@ -295,7 +293,7 @@ public class SoyTemplate extends AbstractMultiResourceTemplate {
 
 		SoyTofu soyTofu = soyTofuCacheBag.getSoyTofu();
 
-		Renderer renderer = soyTofu.newRenderer(namespace);
+		SoyTofu.Renderer renderer = soyTofu.newRenderer(namespace);
 
 		renderer.setData(getSoyTemplateRecord());
 		renderer.setIjData(getInjectedSoyTemplateRecord());

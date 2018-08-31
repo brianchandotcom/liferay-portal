@@ -25,7 +25,6 @@ import com.xuggle.ferry.RefCounted;
 import com.xuggle.xuggler.Global;
 import com.xuggle.xuggler.IAudioResampler;
 import com.xuggle.xuggler.IAudioSamples;
-import com.xuggle.xuggler.IAudioSamples.Format;
 import com.xuggle.xuggler.ICodec;
 import com.xuggle.xuggler.IContainer;
 import com.xuggle.xuggler.IContainerFormat;
@@ -129,8 +128,10 @@ public abstract class LiferayConverter {
 
 		IAudioResampler iAudioResampler = null;
 
-		Format inputSampleFormat = inputIStreamCoder.getSampleFormat();
-		Format outputSampleFormat = outputIStreamCoder.getSampleFormat();
+		IAudioSamples.Format inputSampleFormat =
+			inputIStreamCoder.getSampleFormat();
+		IAudioSamples.Format outputSampleFormat =
+			outputIStreamCoder.getSampleFormat();
 
 		if ((inputIStreamCoder.getChannels() ==
 				outputIStreamCoder.getChannels()) &&
@@ -456,15 +457,17 @@ public abstract class LiferayConverter {
 		return null;
 	}
 
-	protected Format getAudioSampleFormat(
-		ICodec outputICodec, Format originalSampleFormat) {
+	protected IAudioSamples.Format getAudioSampleFormat(
+		ICodec outputICodec, IAudioSamples.Format originalSampleFormat) {
 
-		Format sampleFormat = null;
+		IAudioSamples.Format sampleFormat = null;
 
-		List<Format> supportedSampleFormats =
+		List<IAudioSamples.Format> supportedSampleFormats =
 			outputICodec.getSupportedAudioSampleFormats();
 
-		for (Format supportedSampleFormat : supportedSampleFormats) {
+		for (IAudioSamples.Format supportedSampleFormat :
+				supportedSampleFormats) {
+
 			sampleFormat = supportedSampleFormat;
 
 			if (supportedSampleFormat == originalSampleFormat) {
@@ -713,7 +716,7 @@ public abstract class LiferayConverter {
 
 		outputIStreamCoder.setGlobalQuality(0);
 
-		Format sampleFormat = inputIStreamCoder.getSampleFormat();
+		IAudioSamples.Format sampleFormat = inputIStreamCoder.getSampleFormat();
 
 		if (_log.isInfoEnabled()) {
 			_log.info(

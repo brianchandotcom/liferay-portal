@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.nio.intraband.proxy.TargetLocator;
 import com.liferay.portal.kernel.poller.PollerProcessor;
 import com.liferay.portal.nio.intraband.proxy.IntrabandProxyInstallationUtil;
 import com.liferay.portal.nio.intraband.proxy.IntrabandProxyUtil;
-import com.liferay.portal.nio.intraband.proxy.StubHolder.StubCreator;
+import com.liferay.portal.nio.intraband.proxy.StubHolder;
 import com.liferay.portal.nio.intraband.proxy.StubMap;
 import com.liferay.portal.nio.intraband.proxy.StubMapImpl;
 import com.liferay.portal.nio.intraband.proxy.WarnLogExceptionHandler;
@@ -103,7 +103,7 @@ public class PollerProcessorUtil {
 
 	private final StubMap<PollerProcessor> _pollerPorcessors =
 		new StubMapImpl<>(
-			new StubCreator<PollerProcessor>() {
+			new StubHolder.StubCreator<PollerProcessor>() {
 
 				@Override
 				public PollerProcessor createStub(

@@ -29,7 +29,6 @@ import aQute.lib.json.JSONCodec;
 import java.io.InputStream;
 
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -325,7 +324,7 @@ public class NpmAnalyzerPlugin implements AnalyzerPlugin {
 
 		Parameters parameters = new Parameters();
 
-		for (Entry<String, String> entry : npmModule.runtime.entrySet()) {
+		for (Map.Entry<String, String> entry : npmModule.runtime.entrySet()) {
 			Attrs attrs = new Attrs();
 
 			StringBuilder sb = new StringBuilder();

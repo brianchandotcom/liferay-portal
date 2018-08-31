@@ -20,7 +20,7 @@ import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.ByteBufInputStream;
 import io.netty.buffer.Unpooled;
-import io.netty.channel.ChannelHandler.Sharable;
+import io.netty.channel.ChannelHandler;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
@@ -66,7 +66,8 @@ public class AnnotatedObjectEncoderTest {
 	@Test
 	public void testStructure() throws ReflectiveOperationException {
 		Assert.assertNotNull(
-			AnnotatedObjectEncoder.class.getAnnotation(Sharable.class));
+			AnnotatedObjectEncoder.class.getAnnotation(
+				ChannelHandler.Sharable.class));
 
 		Field instanceField = AnnotatedObjectEncoder.class.getField("INSTANCE");
 

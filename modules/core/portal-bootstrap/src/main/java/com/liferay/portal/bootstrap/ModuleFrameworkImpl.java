@@ -84,7 +84,6 @@ import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Properties;
 import java.util.Set;
 import java.util.concurrent.Callable;
@@ -777,7 +776,7 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 			Constants.FRAMEWORK_SYSTEMPACKAGES_EXTRA, systemPackagesExtra);
 
 		if (_log.isDebugEnabled()) {
-			for (Entry<String, String> entry : properties.entrySet()) {
+			for (Map.Entry<String, String> entry : properties.entrySet()) {
 				_log.debug(
 					StringBundler.concat(
 						"OSGi framework property key \"", entry.getKey(),

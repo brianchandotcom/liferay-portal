@@ -37,7 +37,6 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.theme.ThemeDisplayFactory;
 import com.liferay.portal.upload.LiferayServletRequest;
 import com.liferay.portal.util.test.PortletContainerTestUtil;
-import com.liferay.portal.util.test.PortletContainerTestUtil.Response;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -120,7 +119,8 @@ public class UploadPortletTest extends BasePortletContainerTestCase {
 	public void testUploadFile() throws Exception {
 		String content = "Enterprise. Open Source. For Life.";
 
-		Response response = testUpload(content.getBytes());
+		PortletContainerTestUtil.Response response = testUpload(
+			content.getBytes());
 
 		Assert.assertEquals(200, response.getCode());
 
@@ -141,7 +141,7 @@ public class UploadPortletTest extends BasePortletContainerTestCase {
 
 	@Test
 	public void testUploadZeroBytesFile() throws Exception {
-		Response response = testUpload(new byte[0]);
+		PortletContainerTestUtil.Response response = testUpload(new byte[0]);
 
 		Assert.assertEquals(200, response.getCode());
 
@@ -259,7 +259,9 @@ public class UploadPortletTest extends BasePortletContainerTestCase {
 		httpServletRequest.setAttribute(WebKeys.THEME_DISPLAY, themeDisplay);
 	}
 
-	protected Response testUpload(byte[] bytes) throws Exception {
+	protected PortletContainerTestUtil.Response testUpload(byte[] bytes)
+		throws Exception {
+
 		LiferayServletRequest liferayServletRequest =
 			PortletContainerTestUtil.getMultipartRequest(
 				TestUploadPortlet.PARAMETER_NAME, bytes);

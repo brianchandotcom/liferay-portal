@@ -14,8 +14,6 @@
 
 package com.liferay.portal.kernel.concurrent;
 
-import java.lang.Thread.UncaughtExceptionHandler;
-
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -23,7 +21,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * @author Shuyang Zhou
  */
 public class RecordUncaughtExceptionHandler
-	implements UncaughtExceptionHandler {
+	implements Thread.UncaughtExceptionHandler {
 
 	public Map<Thread, Throwable> getUncaughtMap() {
 		return _uncaughtMap;

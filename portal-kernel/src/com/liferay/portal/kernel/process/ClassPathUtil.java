@@ -22,7 +22,6 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.process.ProcessConfig.Builder;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ClassLoaderUtil;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
@@ -170,7 +169,7 @@ public class ClassPathUtil {
 
 		_portalClassPath = sb.toString();
 
-		Builder builder = new Builder();
+		ProcessConfig.Builder builder = new ProcessConfig.Builder();
 
 		builder.setArguments(Arrays.asList("-Djava.awt.headless=true"));
 		builder.setBootstrapClassPath(_globalClassPath);

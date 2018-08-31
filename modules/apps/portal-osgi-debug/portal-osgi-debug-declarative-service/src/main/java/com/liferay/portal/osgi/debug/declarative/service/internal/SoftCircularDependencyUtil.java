@@ -31,7 +31,6 @@ import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.Set;
 import java.util.TreeMap;
@@ -214,7 +213,7 @@ public class SoftCircularDependencyUtil {
 
 		Set<Dependency> excludedDependencies = new HashSet<>();
 
-		for (Entry<ComponentDescriptionDTO, List<Dependency>> entry :
+		for (Map.Entry<ComponentDescriptionDTO, List<Dependency>> entry :
 				closureNavigationMap.entrySet()) {
 
 			Dependency startDependency = new Dependency(

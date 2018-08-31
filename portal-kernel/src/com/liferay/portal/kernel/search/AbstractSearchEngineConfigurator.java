@@ -45,7 +45,6 @@ import com.liferay.registry.dependency.ServiceDependencyManager;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Set;
 
 /**
@@ -290,9 +289,10 @@ public abstract class AbstractSearchEngineConfigurator
 	}
 
 	protected void initialize() {
-		Set<Entry<String, SearchEngine>> entrySet = _searchEngines.entrySet();
+		Set<Map.Entry<String, SearchEngine>> entrySet =
+			_searchEngines.entrySet();
 
-		for (Entry<String, SearchEngine> entry : entrySet) {
+		for (Map.Entry<String, SearchEngine> entry : entrySet) {
 			initSearchEngine(entry.getKey(), entry.getValue());
 		}
 

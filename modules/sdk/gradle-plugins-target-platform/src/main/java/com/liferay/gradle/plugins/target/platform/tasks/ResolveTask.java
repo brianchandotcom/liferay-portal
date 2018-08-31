@@ -20,7 +20,6 @@ import aQute.bnd.repository.fileset.FileSetRepository;
 import aQute.bnd.service.RepositoryPlugin;
 
 import aQute.service.reporter.Report;
-import aQute.service.reporter.Report.Location;
 
 import biz.aQute.resolve.Bndrun;
 import biz.aQute.resolve.ResolveProcess;
@@ -247,7 +246,7 @@ public class ResolveTask extends DefaultTask {
 
 		if (logger.isWarnEnabled()) {
 			for (String warning : report.getWarnings()) {
-				Location location = report.getLocation(warning);
+				Report.Location location = report.getLocation(warning);
 
 				if ((location != null) && (location.file != null)) {
 					logger.warn(
@@ -262,7 +261,7 @@ public class ResolveTask extends DefaultTask {
 
 		if (logger.isErrorEnabled()) {
 			for (String error : report.getErrors()) {
-				Location location = report.getLocation(error);
+				Report.Location location = report.getLocation(error);
 
 				if ((location != null) && (location.file != null)) {
 					logger.error(

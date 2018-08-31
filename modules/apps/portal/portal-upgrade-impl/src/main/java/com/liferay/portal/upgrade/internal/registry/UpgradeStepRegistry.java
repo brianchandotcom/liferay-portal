@@ -16,7 +16,7 @@ package com.liferay.portal.upgrade.internal.registry;
 
 import com.liferay.portal.kernel.upgrade.UpgradeStep;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator.Registry;
+import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,7 +24,7 @@ import java.util.List;
 /**
  * @author Preston Crary
  */
-public class UpgradeStepRegistry implements Registry {
+public class UpgradeStepRegistry implements UpgradeStepRegistrator.Registry {
 
 	public UpgradeStepRegistry(int buildNumber) {
 		_buildNumber = buildNumber;

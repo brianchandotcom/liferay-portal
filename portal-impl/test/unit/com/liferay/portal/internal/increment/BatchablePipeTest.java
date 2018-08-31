@@ -14,7 +14,6 @@
 
 package com.liferay.portal.internal.increment;
 
-import com.liferay.portal.internal.increment.BatchablePipe.IncreasableEntryWrapper;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
 
@@ -254,19 +253,22 @@ public class BatchablePipeTest {
 		ReflectionTestUtil.setFieldValue(
 			batchablePipe, "concurrentMap",
 			new ConcurrentHashMap
-				<String, IncreasableEntryWrapper<String, Integer>>() {
+				<String,
+					BatchablePipe.IncreasableEntryWrapper<String, Integer>>() {
 
 				@Override
 				public boolean replace(
 					String key,
-					IncreasableEntryWrapper<String, Integer> oldValue,
-					IncreasableEntryWrapper<String, Integer> newValue) {
+					BatchablePipe.IncreasableEntryWrapper<String, Integer>
+						oldValue,
+					BatchablePipe.IncreasableEntryWrapper<String, Integer>
+						newValue) {
 
 					if (oldValue.increasableEntry == increasableEntry1) {
 						put(
 							key,
-							new IncreasableEntryWrapper<String, Integer>(
-								increasableEntry2));
+							new BatchablePipe.IncreasableEntryWrapper
+								<String, Integer>(increasableEntry2));
 					}
 
 					return super.replace(key, oldValue, newValue);
@@ -302,14 +304,19 @@ public class BatchablePipeTest {
 			new IntegerIncreasableEntry("test", 1);
 
 		Assert.assertEquals(
-			new IncreasableEntryWrapper<String, Integer>(increasableEntry1),
-			new IncreasableEntryWrapper<String, Integer>(increasableEntry1));
+			new BatchablePipe.IncreasableEntryWrapper<String, Integer>(
+				increasableEntry1),
+			new BatchablePipe.IncreasableEntryWrapper<String, Integer>(
+				increasableEntry1));
 		Assert.assertNotEquals(
-			new IncreasableEntryWrapper<String, Integer>(increasableEntry1),
-			new IncreasableEntryWrapper<String, Integer>(increasableEntry2));
+			new BatchablePipe.IncreasableEntryWrapper<String, Integer>(
+				increasableEntry1),
+			new BatchablePipe.IncreasableEntryWrapper<String, Integer>(
+				increasableEntry2));
 
-		IncreasableEntryWrapper<String, Integer> increasableEntryWrapper =
-			new IncreasableEntryWrapper<>(increasableEntry1);
+		BatchablePipe.IncreasableEntryWrapper<String, Integer>
+			increasableEntryWrapper =
+				new BatchablePipe.IncreasableEntryWrapper<>(increasableEntry1);
 
 		Assert.assertEquals(
 			increasableEntry1.hashCode(), increasableEntryWrapper.hashCode());

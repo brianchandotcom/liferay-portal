@@ -20,10 +20,6 @@ import com.liferay.adaptive.media.AdaptiveMedia;
 import com.liferay.adaptive.media.finder.AMQuery;
 import com.liferay.adaptive.media.image.configuration.AMImageConfigurationEntry;
 import com.liferay.adaptive.media.image.finder.AMImageQueryBuilder;
-import com.liferay.adaptive.media.image.finder.AMImageQueryBuilder.ConfigurationStep;
-import com.liferay.adaptive.media.image.finder.AMImageQueryBuilder.FuzzySortStep;
-import com.liferay.adaptive.media.image.finder.AMImageQueryBuilder.InitialStep;
-import com.liferay.adaptive.media.image.finder.AMImageQueryBuilder.StrictSortStep;
 import com.liferay.adaptive.media.image.internal.util.comparator.AMAttributeDistanceComparator;
 import com.liferay.adaptive.media.image.internal.util.comparator.AMPropertyDistanceComparator;
 import com.liferay.adaptive.media.image.processor.AMImageProcessor;
@@ -41,8 +37,10 @@ import java.util.function.Predicate;
  * @author Adolfo Pérez
  */
 public class AMImageQueryBuilderImpl
-	implements AMImageQueryBuilder, ConfigurationStep, FuzzySortStep,
-			   InitialStep, StrictSortStep {
+	implements AMImageQueryBuilder, AMImageQueryBuilder.ConfigurationStep,
+			   AMImageQueryBuilder.FuzzySortStep,
+			   AMImageQueryBuilder.InitialStep,
+			   AMImageQueryBuilder.StrictSortStep {
 
 	public static final AMQuery<FileVersion, AMImageProcessor> AM_QUERY =
 		new AMQuery<FileVersion, AMImageProcessor>() {
@@ -65,7 +63,7 @@ public class AMImageQueryBuilderImpl
 	}
 
 	@Override
-	public InitialStep forFileEntry(FileEntry fileEntry) {
+	public AMImageQueryBuilder.InitialStep forFileEntry(FileEntry fileEntry) {
 		if (fileEntry == null) {
 			throw new IllegalArgumentException("File entry is null");
 		}
@@ -76,7 +74,9 @@ public class AMImageQueryBuilderImpl
 	}
 
 	@Override
-	public InitialStep forFileVersion(FileVersion fileVersion) {
+	public AMImageQueryBuilder.InitialStep forFileVersion(
+		FileVersion fileVersion) {
+
 		if (fileVersion == null) {
 			throw new IllegalArgumentException("File version is null");
 		}
@@ -148,7 +148,7 @@ public class AMImageQueryBuilderImpl
 	}
 
 	@Override
-	public <V> StrictSortStep orderBy(
+	public <V> AMImageQueryBuilder.StrictSortStep orderBy(
 		AMAttribute<AMImageProcessor, V> amAttribute,
 		AMImageQueryBuilder.SortOrder sortOrder) {
 
@@ -163,7 +163,7 @@ public class AMImageQueryBuilderImpl
 	}
 
 	@Override
-	public <V> FuzzySortStep with(
+	public <V> AMImageQueryBuilder.FuzzySortStep with(
 		AMAttribute<AMImageProcessor, V> amAttribute,
 		Optional<V> valueOptional) {
 
@@ -178,7 +178,7 @@ public class AMImageQueryBuilderImpl
 	}
 
 	@Override
-	public <V> FuzzySortStep with(
+	public <V> AMImageQueryBuilder.FuzzySortStep with(
 		AMAttribute<AMImageProcessor, V> amAttribute, V value) {
 
 		if (value == null) {
@@ -192,7 +192,7 @@ public class AMImageQueryBuilderImpl
 	}
 
 	@Override
-	public InitialStep withConfigurationStatus(
+	public AMImageQueryBuilder.InitialStep withConfigurationStatus(
 		ConfigurationStatus configurationStatus) {
 
 		if (configurationStatus == null) {

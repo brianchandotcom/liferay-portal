@@ -23,7 +23,6 @@ import com.liferay.oauth2.provider.model.OAuth2Authorization;
 import com.liferay.oauth2.provider.rest.internal.endpoint.authorize.configuration.OAuth2AuthorizationFlowConfiguration;
 import com.liferay.oauth2.provider.rest.internal.endpoint.constants.OAuth2ProviderRestEndpointConstants;
 import com.liferay.oauth2.provider.rest.spi.bearer.token.provider.BearerTokenProvider;
-import com.liferay.oauth2.provider.rest.spi.bearer.token.provider.BearerTokenProvider.AccessToken;
 import com.liferay.oauth2.provider.rest.spi.bearer.token.provider.BearerTokenProviderAccessor;
 import com.liferay.oauth2.provider.scope.liferay.LiferayOAuth2Scope;
 import com.liferay.oauth2.provider.scope.liferay.ScopeLocator;
@@ -213,7 +212,7 @@ public class LiferayOAuthDataProvider
 			serverAccessToken.getClient());
 		UserSubject userSubject = serverAccessToken.getSubject();
 
-		return new AccessToken(
+		return new BearerTokenProvider.AccessToken(
 			oAuth2Application, serverAccessToken.getAudiences(),
 			serverAccessToken.getClientCodeVerifier(),
 			serverAccessToken.getExpiresIn(),

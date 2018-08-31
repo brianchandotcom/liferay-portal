@@ -50,6 +50,28 @@ public abstract class BaseConfigurationFormNavigatorEntry
 		return LanguageUtil.get(locale, getKey());
 	}
 
+	protected boolean isAssetListSelection() {
+		ServiceContext serviceContext =
+			ServiceContextThreadLocal.getServiceContext();
+
+		ThemeDisplay themeDisplay = serviceContext.getThemeDisplay();
+
+		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
+
+		PortletPreferences portletSetup =
+			themeDisplay.getStrictLayoutPortletSetup(
+				themeDisplay.getLayout(), portletDisplay.getPortletResource());
+
+		String selectionStyle = GetterUtil.getString(
+			portletSetup.getValue("selectionStyle", null), "dynamic");
+
+		if (Objects.equals(selectionStyle, "asset-list")) {
+			return true;
+		}
+
+		return false;
+	}
+
 	protected boolean isDynamicAssetSelection() {
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();

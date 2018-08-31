@@ -16,7 +16,12 @@ package com.liferay.asset.list.model.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.asset.kernel.model.AssetEntry;
+import com.liferay.asset.kernel.service.persistence.AssetEntryQuery;
 import com.liferay.asset.list.constants.AssetListEntryTypeConstants;
+
+import java.util.Collections;
+import java.util.List;
 
 /**
  * @author Pavel Savinov
@@ -25,6 +30,14 @@ import com.liferay.asset.list.constants.AssetListEntryTypeConstants;
 public class AssetListEntryImpl extends AssetListEntryBaseImpl {
 
 	public AssetListEntryImpl() {
+	}
+
+	public List<AssetEntry> getAssetEntries() {
+		return Collections.emptyList();
+	}
+
+	public AssetEntryQuery getAssetEntryQuery() {
+		return new AssetEntryQuery();
 	}
 
 	public String getTypeLabel() {

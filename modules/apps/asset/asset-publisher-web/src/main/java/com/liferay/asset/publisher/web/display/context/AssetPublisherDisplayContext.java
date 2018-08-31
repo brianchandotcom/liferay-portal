@@ -31,6 +31,10 @@ import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
 import com.liferay.asset.kernel.service.AssetEntryServiceUtil;
 import com.liferay.asset.kernel.service.AssetVocabularyServiceUtil;
 import com.liferay.asset.kernel.service.persistence.AssetEntryQuery;
+import com.liferay.asset.list.constants.AssetListEntryTypeConstants;
+import com.liferay.asset.list.item.selector.criterion.AssetListItemSelectorCriterion;
+import com.liferay.asset.list.model.AssetListEntry;
+import com.liferay.asset.list.service.AssetListEntryServiceUtil;
 import com.liferay.asset.publisher.constants.AssetPublisherPortletKeys;
 import com.liferay.asset.publisher.constants.AssetPublisherWebKeys;
 import com.liferay.asset.publisher.web.configuration.AssetPublisherPortletInstanceConfiguration;
@@ -42,6 +46,9 @@ import com.liferay.asset.publisher.web.util.AssetPublisherUtil;
 import com.liferay.asset.util.AssetHelper;
 import com.liferay.asset.util.AssetPublisherAddItemHolder;
 import com.liferay.document.library.kernel.document.conversion.DocumentConversionUtil;
+import com.liferay.item.selector.ItemSelector;
+import com.liferay.item.selector.ItemSelectorReturnType;
+import com.liferay.item.selector.criteria.UUIDItemSelectorReturnType;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -57,6 +64,7 @@ import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
+import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
 import com.liferay.portal.kernel.theme.PortletDisplay;
@@ -157,6 +165,20 @@ public class AssetPublisherDisplayContext {
 					"PortletResponse, PortletPreferences)");
 	}
 
+	public AssetListEntry fetchAssetListEntry() throws PortalException {
+		if (_assetListEntry != null) {
+			return _assetListEntry;
+		}
+
+		long assetListEntryId = GetterUtil.getLong(
+			_portletPreferences.getValue("assetListEntryId", null));
+
+		_assetListEntry = AssetListEntryServiceUtil.fetchAssetListEntry(
+			assetListEntryId);
+
+		return _assetListEntry;
+	}
+
 	public int getAbstractLength() {
 		if (_abstractLength != null) {
 			return _abstractLength;
@@ -238,13 +260,20 @@ public class AssetPublisherDisplayContext {
 			return _assetEntryQuery;
 		}
 
+		AssetListEntry assetListEntry = fetchAssetListEntry();
+
 		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		_assetEntryQuery = AssetPublisherUtil.getAssetEntryQuery(
-			_portletPreferences, themeDisplay.getScopeGroupId(),
-			themeDisplay.getLayout(), getAllAssetCategoryIds(),
-			getAllAssetTagNames());
+		if (isSelectionStyleAssetList() && (assetListEntry != null)) {
+			_assetEntryQuery = assetListEntry.getAssetEntryQuery();
+		}
+		else {
+			_assetEntryQuery = AssetPublisherUtil.getAssetEntryQuery(
+				_portletPreferences, themeDisplay.getScopeGroupId(),
+				themeDisplay.getLayout(), getAllAssetCategoryIds(),
+				getAllAssetTagNames());
+		}
 
 		_assetEntryQuery.setEnablePermissions(isEnablePermissions());
 
@@ -271,6 +300,40 @@ public class AssetPublisherDisplayContext {
 				"assetLinkBehavior", "showFullContent"));
 
 		return _assetLinkBehavior;
+	}
+
+	public String getAssetListItemSelectorEventName() {
+		return _portletResponse.getNamespace() + "selectAssetList";
+	}
+
+	public String getAssetListItemSelectorURL() throws PortalException {
+		ItemSelector itemSelector = (ItemSelector)_request.getAttribute(
+			AssetPublisherWebKeys.ITEM_SELECTOR);
+
+		AssetListItemSelectorCriterion assetListItemSelectorCriterion =
+			new AssetListItemSelectorCriterion();
+
+		AssetListEntry assetListEntry = fetchAssetListEntry();
+
+		if (assetListEntry != null) {
+			assetListItemSelectorCriterion.setSelectedAssetListEntryId(
+				assetListEntry.getAssetListEntryId());
+		}
+
+		List<ItemSelectorReturnType> desiredItemSelectorReturnTypes =
+			new ArrayList<>();
+
+		desiredItemSelectorReturnTypes.add(new UUIDItemSelectorReturnType());
+
+		assetListItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
+			desiredItemSelectorReturnTypes);
+
+		PortletURL itemSelectorURL = itemSelector.getItemSelectorURL(
+			RequestBackedPortletURLFactoryUtil.create(_portletRequest),
+			getAssetListItemSelectorEventName(),
+			assetListItemSelectorCriterion);
+
+		return itemSelectorURL.toString();
 	}
 
 	public AssetPublisherPortletInstanceConfiguration
@@ -1258,8 +1321,23 @@ public class AssetPublisherDisplayContext {
 		return curPaginationType.equals(paginationType);
 	}
 
-	public boolean isSelectionStyleDynamic() {
+	public boolean isSelectionStyleAssetList() {
 		String selectionStyle = getSelectionStyle();
+
+		return selectionStyle.equals("asset-list");
+	}
+
+	public boolean isSelectionStyleDynamic() throws PortalException {
+		String selectionStyle = getSelectionStyle();
+
+		AssetListEntry assetListEntry = fetchAssetListEntry();
+
+		if (isSelectionStyleAssetList() && (assetListEntry != null) &&
+			(assetListEntry.getType() ==
+				AssetListEntryTypeConstants.TYPE_DYNAMIC)) {
+
+			return true;
+		}
 
 		return selectionStyle.equals("dynamic");
 	}
@@ -1268,8 +1346,17 @@ public class AssetPublisherDisplayContext {
 		return _assetPublisherCustomizer.isSelectionStyleEnabled(_request);
 	}
 
-	public boolean isSelectionStyleManual() {
+	public boolean isSelectionStyleManual() throws PortalException {
 		String selectionStyle = getSelectionStyle();
+
+		AssetListEntry assetListEntry = fetchAssetListEntry();
+
+		if (isSelectionStyleAssetList() && (assetListEntry != null) &&
+			(assetListEntry.getType() ==
+				AssetListEntryTypeConstants.TYPE_MANUAL)) {
+
+			return true;
+		}
 
 		return selectionStyle.equals("manual");
 	}
@@ -1579,6 +1666,7 @@ public class AssetPublisherDisplayContext {
 	private AssetEntryQuery _assetEntryQuery;
 	private AssetHelper _assetHelper;
 	private String _assetLinkBehavior;
+	private AssetListEntry _assetListEntry;
 	private final AssetPublisherCustomizer _assetPublisherCustomizer;
 	private final AssetPublisherPortletInstanceConfiguration
 		_assetPublisherPortletInstanceConfiguration;

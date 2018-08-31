@@ -145,6 +145,16 @@ public class AssetListEntryWrapper implements AssetListEntry,
 		return _assetListEntry.compareTo(assetListEntry);
 	}
 
+	@Override
+	public java.util.List<com.liferay.asset.kernel.model.AssetEntry> getAssetEntries() {
+		return _assetListEntry.getAssetEntries();
+	}
+
+	@Override
+	public com.liferay.asset.kernel.service.persistence.AssetEntryQuery getAssetEntryQuery() {
+		return _assetListEntry.getAssetEntryQuery();
+	}
+
 	/**
 	* Returns the asset list entry ID of this asset list entry.
 	*

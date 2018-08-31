@@ -15,14 +15,8 @@
 package com.liferay.asset.publisher.web.servlet.taglib.ui;
 
 import com.liferay.asset.publisher.constants.AssetPublisherConstants;
-import com.liferay.asset.publisher.constants.AssetPublisherPortletKeys;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.portlet.PortletIdCodec;
-import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorEntry;
-import com.liferay.portal.kernel.theme.PortletDisplay;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 
 import javax.servlet.ServletContext;
 
@@ -33,10 +27,10 @@ import org.osgi.service.component.annotations.Reference;
  * @author Eudaldo Alonso
  */
 @Component(
-	property = "form.navigator.entry.order:Integer=400",
+	property = "form.navigator.entry.order:Integer=300",
 	service = FormNavigatorEntry.class
 )
-public class ScopeFormNavigatorEntry
+public class AssetListFormNavigatorEntry
 	extends BaseConfigurationFormNavigatorEntry {
 
 	@Override
@@ -46,34 +40,16 @@ public class ScopeFormNavigatorEntry
 
 	@Override
 	public String getKey() {
-		return "scope";
+		return "select-asset-list";
 	}
 
 	@Override
 	public boolean isVisible(User user, Object object) {
 		if (isAssetListSelection()) {
-			return false;
-		}
-
-		if (!isDynamicAssetSelection()) {
 			return true;
 		}
 
-		ServiceContext serviceContext =
-			ServiceContextThreadLocal.getServiceContext();
-
-		ThemeDisplay themeDisplay = serviceContext.getThemeDisplay();
-
-		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
-
-		String rootPortletId = PortletIdCodec.decodePortletName(
-			portletDisplay.getPortletName());
-
-		if (rootPortletId.equals(AssetPublisherPortletKeys.RELATED_ASSETS)) {
-			return false;
-		}
-
-		return true;
+		return false;
 	}
 
 	@Override
@@ -87,7 +63,7 @@ public class ScopeFormNavigatorEntry
 
 	@Override
 	protected String getJspPath() {
-		return "/configuration/scope.jsp";
+		return "/configuration/asset_list.jsp";
 	}
 
 }

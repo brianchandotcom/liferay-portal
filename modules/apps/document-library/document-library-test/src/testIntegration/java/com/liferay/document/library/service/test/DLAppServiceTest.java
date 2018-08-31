@@ -779,14 +779,13 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 		}
 
 		private static final String _SERIALIZED_DDM_FORM_VALUES =
-			"{\"availableLanguageIds\":[\"en_US\"],\"defaultLanguageId\":" +
-				"\"en_US\",\"fieldValues\":[{\"instanceId\":\"pvik\"," +
-					"\"name\":\"select2305\",\"value\":{\"en_US\":" +
-						"[\"strong\"]}},{\"instanceId\":\"wwtk\",\"name\":" +
-							"\"select3229\",\"value\":{\"en_US\":" +
-								"[\"advisor\"]}},{\"instanceId\":\"cclm\"," +
-									"\"name\":\"select4282\",\"value\":" +
-										"{\"en_US\":[\"awareness\"]}}]}";
+			StringBundler.concat(
+				"{\"availableLanguageIds\":[\"en_US\"],\"defaultLanguageId\":",
+				"\"en_US\",\"fieldValues\":[{\"instanceId\":\"pvik\",\"name\":",
+				"\"select2305\",\"value\":{\"en_US\":[\"strong\"]}},",
+				"{\"instanceId\":\"wwtk\",\"name\":\"select3229\",\"value\":",
+				"{\"en_US\":[\"advisor\"]}},{\"instanceId\":\"cclm\",\"name\":",
+				"\"select4282\",\"value\":{\"en_US\":[\"awareness\"]}}]}");
 
 	}
 

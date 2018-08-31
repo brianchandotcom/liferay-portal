@@ -22,7 +22,7 @@ OpenIdConfiguration openIdConfiguration = ConfigurationProviderUtil.getConfigura
 boolean enabled = openIdConfiguration.enabled();
 %>
 
-<aui:input name="<%= ActionRequest.ACTION_NAME %>" type="hidden" value="/portal_settings/openid" />
+<aui:input id='<%= PortalUtil.generateRandomKey(request, "openid") %>' name="<%= ActionRequest.ACTION_NAME %>" type="hidden" value="/portal_settings/openid" />
 
 <aui:fieldset>
 	<aui:input label="enabled" name='<%= PortalSettingsOpenIdConstants.FORM_PARAMETER_NAMESPACE + "enabled" %>' type="checkbox" value="<%= enabled %>" />

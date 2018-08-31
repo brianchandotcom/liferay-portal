@@ -1147,9 +1147,19 @@ public class ModuleDatabase {
 
 			String oldOsgiHome = in.readUTF();
 
+			ServiceLoader<ModuleReadHook> serviceLoader = ServiceLoader.load(
+				ModuleReadHook.class);
+
+			List<ModuleReadHook> moduleReadHooks = new ArrayList<>();
+
+			for (ModuleReadHook moduleReadHook : serviceLoader) {
+				moduleReadHooks.add(moduleReadHook);
+			}
+
 			for (int i = 0; i < numModules; i++) {
 				readModule(
-					moduleDatabase, in, objectTable, version, oldOsgiHome);
+					moduleDatabase, in, objectTable, version, oldOsgiHome,
+					moduleReadHooks);
 			}
 
 			moduleDatabase.revisionsTimeStamp.set(revisionsTimeStamp);
@@ -1228,7 +1238,13 @@ public class ModuleDatabase {
 			out.writeLong(module.getLastModified());
 		}
 
-		private static void readModule(ModuleDatabase moduleDatabase, DataInputStream in, Map<Integer, Object> objectTable, int version, String oldOsgiHome) throws IOException {
+		private static void readModule(
+				ModuleDatabase moduleDatabase, DataInputStream in,
+				Map<Integer, Object> objectTable, int version,
+				String oldOsgiHome,
+				List<ModuleReadHook> moduleReadHooks)
+			throws IOException {
+
 			ModuleRevisionBuilder builder = new ModuleRevisionBuilder();
 			int moduleIndex = in.readInt();
 			String location = readString(in, objectTable);
@@ -1244,6 +1260,11 @@ public class ModuleDatabase {
 			}
 
 			long id = in.readLong();
+
+			for (ModuleReadHook moduleReadHook : moduleReadHooks) {
+				moduleReadHook.process(id, location);
+			}
+
 			builder.setSymbolicName(readString(in, objectTable));
 			builder.setVersion(readVersion(in, objectTable));
 			builder.setTypes(in.readInt());

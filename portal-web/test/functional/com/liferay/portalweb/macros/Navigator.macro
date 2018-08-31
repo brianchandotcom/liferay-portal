@@ -390,6 +390,19 @@
 		<execute function="Open" locator1="${baseURL}/web/guest/home" />
 	</command>
 
+	<command name="openWithAppendToBaseURL">
+		<var name="baseURL" value="${baseURL}" />
+
+		<if>
+			<contains string="${baseURL}" substring="{baseURL}" />
+			<then>
+				<var method="PropsUtil#get('portal.url')" name="baseURL" />
+			</then>
+		</if>
+
+		<execute function="Open" locator1="${baseURL}/${urlAppend}" />
+	</command>
+
 	<command name="selectSpecificWindow">
 		<execute function="SelectWindow" locator1="title=${windowTitle}" />
 	</command>

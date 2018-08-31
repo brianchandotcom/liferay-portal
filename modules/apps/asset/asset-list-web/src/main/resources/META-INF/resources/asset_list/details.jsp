@@ -49,9 +49,7 @@ renderResponse.setTitle(assetListDisplayContext.getAssetListEntryTitle());
 	<liferay-frontend:edit-form-body>
 		<liferay-frontend:fieldset-group>
 			<liferay-frontend:fieldset>
-				<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" name="title" placeholder="title">
-					<aui:validator name="required" />
-				</aui:input>
+				<aui:input name="title" placeholder="title" />
 			</liferay-frontend:fieldset>
 		</liferay-frontend:fieldset-group>
 	</liferay-frontend:edit-form-body>

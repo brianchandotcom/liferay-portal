@@ -39,6 +39,7 @@ import com.liferay.portal.kernel.service.UserGroupGroupRoleLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserGroupRoleLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.JavaConstants;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -50,6 +51,8 @@ import com.liferay.users.admin.kernel.util.UsersAdminUtil;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.SortedSet;
+import java.util.TreeSet;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -131,24 +134,13 @@ public class UserDisplayContext {
 	}
 
 	public List<Group> getInheritedSites() throws PortalException {
-		List<Group> inheritedSites = new ArrayList<>();
+		SortedSet<Group> inheritedSitesSet = new TreeSet<>();
 
-		for (Group group :
-				GroupLocalServiceUtil.getUserGroupsRelatedGroups(
-					getUserGroups())) {
+		inheritedSitesSet.addAll(
+			GroupLocalServiceUtil.getUserGroupsRelatedGroups(getUserGroups()));
+		inheritedSitesSet.addAll(_getOrganizationRelatedGroups());
 
-			if (!inheritedSites.contains(group)) {
-				inheritedSites.add(group);
-			}
-		}
-
-		for (Group group : _getOrganizationRelatedGroups()) {
-			if (!inheritedSites.contains(group)) {
-				inheritedSites.add(group);
-			}
-		}
-
-		return inheritedSites;
+		return ListUtil.fromCollection(inheritedSitesSet);
 	}
 
 	public List<NavigationItem> getNavigationItems(final String label) {

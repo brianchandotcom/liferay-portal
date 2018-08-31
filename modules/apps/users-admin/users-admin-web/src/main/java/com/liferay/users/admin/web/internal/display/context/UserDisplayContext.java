@@ -131,8 +131,16 @@ public class UserDisplayContext {
 	}
 
 	public List<Group> getInheritedSites() throws PortalException {
-		List<Group> inheritedSites =
-			GroupLocalServiceUtil.getUserGroupsRelatedGroups(getUserGroups());
+		List<Group> inheritedSites = new ArrayList<>();
+
+		for (Group group :
+				GroupLocalServiceUtil.getUserGroupsRelatedGroups(
+					getUserGroups())) {
+
+			if (!inheritedSites.contains(group)) {
+				inheritedSites.add(group);
+			}
+		}
 
 		for (Group group : _getOrganizationRelatedGroups()) {
 			if (!inheritedSites.contains(group)) {

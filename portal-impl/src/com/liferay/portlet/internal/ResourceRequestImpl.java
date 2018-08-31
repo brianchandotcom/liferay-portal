@@ -187,6 +187,12 @@ public class ResourceRequestImpl
 
 	@Override
 	public boolean isAsyncSupported() {
+		HttpServletRequest httpServletRequest = _getHttpServletRequest(this);
+
+		if (!httpServletRequest.isAsyncSupported()) {
+			return false;
+		}
+
 		Portlet portlet = getPortlet();
 
 		return portlet.isAsyncSupported();

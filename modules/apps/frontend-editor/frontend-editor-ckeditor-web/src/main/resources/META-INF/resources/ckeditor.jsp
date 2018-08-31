@@ -113,6 +113,9 @@ if (inlineEdit && Validator.isNotNull(inlineEditSaveURL)) {
 
 <script type="text/javascript">
 	CKEDITOR.disableAutoInline = true;
+
+	CKEDITOR.dtd.$removeEmpty.i = 0;
+	CKEDITOR.dtd.$removeEmpty.span = 0;
 </script>
 
 <%

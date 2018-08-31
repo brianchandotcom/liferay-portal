@@ -102,8 +102,8 @@ public class PortletAsyncContextImpl implements LiferayPortletAsyncContext {
 
 	@Override
 	public ResourceRequest getResourceRequest() throws IllegalStateException {
-		if ((_calledDispatch && !_resourceRequest.isAsyncStarted()) ||
-			_calledComplete) {
+		if (_calledComplete ||
+			(_calledDispatch && !_resourceRequest.isAsyncStarted())) {
 
 			throw new IllegalStateException();
 		}
@@ -113,8 +113,8 @@ public class PortletAsyncContextImpl implements LiferayPortletAsyncContext {
 
 	@Override
 	public ResourceResponse getResourceResponse() throws IllegalStateException {
-		if ((_calledDispatch && !_resourceRequest.isAsyncStarted()) ||
-			_calledComplete) {
+		if (_calledComplete ||
+			(_calledDispatch && !_resourceRequest.isAsyncStarted())) {
 
 			throw new IllegalStateException();
 		}

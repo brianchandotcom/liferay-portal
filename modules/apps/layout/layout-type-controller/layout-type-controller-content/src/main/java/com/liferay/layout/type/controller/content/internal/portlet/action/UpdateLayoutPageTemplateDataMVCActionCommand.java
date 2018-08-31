@@ -14,8 +14,6 @@
 
 package com.liferay.layout.type.controller.content.internal.portlet.action;
 
-import com.liferay.fragment.model.FragmentEntryLink;
-import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
 import com.liferay.layout.type.controller.content.internal.constants.ContentLayoutPortletKeys;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -51,11 +49,11 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + ContentLayoutPortletKeys.CONTENT_PAGE_EDITOR_PORTLET,
-		"mvc.command.name=/content_layout/update_fragment_entry_links"
+		"mvc.command.name=/content_layout/update_layout_page_template_data"
 	},
 	service = MVCActionCommand.class
 )
-public class UpdateFragmentEntryLinksMVCActionCommand
+public class UpdateLayoutPageTemplateDataMVCActionCommand
 	extends BaseMVCActionCommand {
 
 	@Override
@@ -89,14 +87,8 @@ public class UpdateFragmentEntryLinksMVCActionCommand
 			actionRequest, actionResponse, jsonObject);
 	}
 
-	protected void updateFragmentEntryLinks(ActionRequest actionRequest)
+	protected void updateLayoutPageTemplateData(ActionRequest actionRequest)
 		throws PortalException {
-
-		long fragmentEntryLinkId1 = ParamUtil.getLong(
-			actionRequest, "fragmentEntryLinkId1");
-
-		long fragmentEntryLinkId2 = ParamUtil.getLong(
-			actionRequest, "fragmentEntryLinkId2");
 
 		long classNameId = ParamUtil.getLong(actionRequest, "classNameId");
 		long classPK = ParamUtil.getLong(actionRequest, "classPK");
@@ -105,37 +97,17 @@ public class UpdateFragmentEntryLinksMVCActionCommand
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			actionRequest);
 
-		FragmentEntryLink fragmentEntryLink1 =
-			_fragmentEntryLinkLocalService.fetchFragmentEntryLink(
-				fragmentEntryLinkId1);
-
-		FragmentEntryLink fragmentEntryLink2 =
-			_fragmentEntryLinkLocalService.fetchFragmentEntryLink(
-				fragmentEntryLinkId2);
-
-		if ((fragmentEntryLink1 != null) && (fragmentEntryLink2 != null)) {
-			_fragmentEntryLinkLocalService.updateFragmentEntryLink(
-				fragmentEntryLinkId1, fragmentEntryLink2.getPosition());
-
-			_fragmentEntryLinkLocalService.updateFragmentEntryLink(
-				fragmentEntryLinkId2, fragmentEntryLink1.getPosition());
-
-			_layoutPageTemplateStructureLocalService.
-				updateLayoutPageTemplateStructure(
-					serviceContext.getScopeGroupId(), classNameId, classPK,
-					data);
-		}
+		_layoutPageTemplateStructureLocalService.
+			updateLayoutPageTemplateStructure(
+				serviceContext.getScopeGroupId(), classNameId, classPK, data);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		UpdateFragmentEntryLinksMVCActionCommand.class);
+		UpdateLayoutPageTemplateDataMVCActionCommand.class);
 
 	private static final TransactionConfig _transactionConfig =
 		TransactionConfig.Factory.create(
 			Propagation.REQUIRED, new Class<?>[] {Exception.class});
-
-	@Reference
-	private FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;
 
 	@Reference
 	private LayoutPageTemplateStructureLocalService
@@ -146,7 +118,7 @@ public class UpdateFragmentEntryLinksMVCActionCommand
 
 		@Override
 		public Void call() throws Exception {
-			updateFragmentEntryLinks(_actionRequest);
+			updateLayoutPageTemplateData(_actionRequest);
 
 			return null;
 		}

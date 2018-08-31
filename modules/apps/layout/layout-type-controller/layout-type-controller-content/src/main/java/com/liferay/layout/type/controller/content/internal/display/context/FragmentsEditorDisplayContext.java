@@ -158,9 +158,9 @@ public class FragmentsEditorDisplayContext {
 			"spritemap",
 			_themeDisplay.getPathThemeImages() + "/lexicon/icons.svg");
 		soyContext.put(
-			"updateFragmentEntryLinksURL",
+			"updateLayoutPageTemplateDataURL",
 			_getFragmentEntryActionURL(
-				"/content_layout/update_fragment_entry_links"));
+				"/content_layout/update_layout_page_template_data"));
 
 		return soyContext;
 	}
@@ -317,10 +317,10 @@ public class FragmentsEditorDisplayContext {
 		return soyContexts;
 	}
 
-	private List<SoyContext> _getSoyContextFragmentEntryLinks()
+	private SoyContext _getSoyContextFragmentEntryLinks()
 		throws PortalException {
 
-		List<SoyContext> soyContexts = new ArrayList<>();
+		SoyContext soyContexts = SoyContextFactoryUtil.createSoyContext();
 
 		List<FragmentEntryLink> fragmentEntryLinks =
 			FragmentEntryLinkLocalServiceUtil.getFragmentEntryLinks(
@@ -357,7 +357,9 @@ public class FragmentsEditorDisplayContext {
 					String.valueOf(fragmentEntryLink.getFragmentEntryLinkId()));
 				soyContext.put("name", fragmentEntry.getName());
 
-				soyContexts.add(soyContext);
+				soyContexts.put(
+					String.valueOf(fragmentEntryLink.getFragmentEntryLinkId()),
+					soyContext);
 			}
 		}
 		finally {

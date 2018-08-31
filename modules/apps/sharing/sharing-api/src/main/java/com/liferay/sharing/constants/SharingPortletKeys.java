@@ -19,6 +19,9 @@ package com.liferay.sharing.constants;
  */
 public class SharingPortletKeys {
 
+	public static final String SHARED_WITH_ME =
+		"com_liferay_sharing_web_portlet_SharedWithMePortlet";
+
 	public static final String SHARING =
 		"com_liferay_sharing_web_portlet_SharingPortlet";
 

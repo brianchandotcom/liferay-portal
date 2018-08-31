@@ -89,7 +89,7 @@ public final class FormValuesUtil {
 
 	private static String _getJsonString(JsonElement value) {
 		if (value instanceof JsonPrimitive) {
-			JsonPrimitive jsonPrimitive = (JsonPrimitive) value;
+			JsonPrimitive jsonPrimitive = (JsonPrimitive)value;
 
 			if (!jsonPrimitive.isJsonNull()) {
 				return jsonPrimitive.getAsString();

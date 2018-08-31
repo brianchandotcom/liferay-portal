@@ -21,7 +21,6 @@ import aQute.bnd.osgi.Analyzer;
 import aQute.bnd.osgi.Clazz;
 import aQute.bnd.osgi.Constants;
 import aQute.bnd.osgi.Descriptors;
-import aQute.bnd.osgi.Descriptors.PackageRef;
 import aQute.bnd.osgi.Domain;
 import aQute.bnd.osgi.Instruction;
 import aQute.bnd.osgi.Instructions;
@@ -42,7 +41,6 @@ import java.io.InputStream;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Set;
 import java.util.TreeSet;
 import java.util.jar.Manifest;
@@ -164,8 +162,8 @@ public class JspAnalyzerPlugin implements AnalyzerPlugin {
 						String packageName = packageFragment.substring(
 							0, index);
 
-						PackageRef packageRef = analyzer.getPackageRef(
-							packageName);
+						Descriptors.PackageRef packageRef =
+							analyzer.getPackageRef(packageName);
 
 						packages.put(packageRef, new Attrs());
 
@@ -179,7 +177,7 @@ public class JspAnalyzerPlugin implements AnalyzerPlugin {
 	}
 
 	protected void addApiUses(
-		Analyzer analyzer, String content, PackageRef packageRef) {
+		Analyzer analyzer, String content, Descriptors.PackageRef packageRef) {
 
 		for (Jar jar : analyzer.getClasspath()) {
 			addJarApiUses(analyzer, content, packageRef, jar);
@@ -187,7 +185,8 @@ public class JspAnalyzerPlugin implements AnalyzerPlugin {
 	}
 
 	protected void addJarApiUses(
-		Analyzer analyzer, String content, PackageRef packageRef, Jar jar) {
+		Analyzer analyzer, String content, Descriptors.PackageRef packageRef,
+		Jar jar) {
 
 		Map<String, Map<String, Resource>> resourceMaps = jar.getDirectories();
 
@@ -199,7 +198,7 @@ public class JspAnalyzerPlugin implements AnalyzerPlugin {
 		}
 
 		if (content.endsWith("*")) {
-			for (Entry<String, Resource> entry : resourceMap.entrySet()) {
+			for (Map.Entry<String, Resource> entry : resourceMap.entrySet()) {
 				String key = entry.getKey();
 
 				if (!key.endsWith(".class")) {
@@ -235,8 +234,8 @@ public class JspAnalyzerPlugin implements AnalyzerPlugin {
 
 				Parameters parameters = domain.getExportPackage();
 
-				for (Entry<String, Attrs> entry : parameters.entrySet()) {
-					PackageRef packageRef = analyzer.getPackageRef(
+				for (Map.Entry<String, Attrs> entry : parameters.entrySet()) {
+					Descriptors.PackageRef packageRef = analyzer.getPackageRef(
 						entry.getKey());
 
 					Attrs attrs = packages.get(packageRef);
@@ -257,7 +256,8 @@ public class JspAnalyzerPlugin implements AnalyzerPlugin {
 		Packages packages = analyzer.getReferred();
 
 		for (String packageName : packageNames) {
-			PackageRef packageRef = analyzer.getPackageRef(packageName);
+			Descriptors.PackageRef packageRef = analyzer.getPackageRef(
+				packageName);
 
 			Matcher matcher = _packagePattern.matcher(packageRef.getFQN());
 
@@ -288,9 +288,9 @@ public class JspAnalyzerPlugin implements AnalyzerPlugin {
 			return;
 		}
 
-		Set<PackageRef> packageRefs = clazz.getAPIUses();
+		Set<Descriptors.PackageRef> packageRefs = clazz.getAPIUses();
 
-		for (PackageRef packageRef : packageRefs) {
+		for (Descriptors.PackageRef packageRef : packageRefs) {
 			Packages packages = analyzer.getReferred();
 
 			packages.put(packageRef, new Attrs());
@@ -349,7 +349,7 @@ public class JspAnalyzerPlugin implements AnalyzerPlugin {
 		if (value != null) {
 			Parameters parameters = OSGiHeader.parseHeader(value);
 
-			for (Entry<String, Attrs> entry : parameters.entrySet()) {
+			for (Map.Entry<String, Attrs> entry : parameters.entrySet()) {
 				String key = Header.removeDuplicateMarker(entry.getKey());
 
 				StringBuilder sb = new StringBuilder(key);
@@ -389,7 +389,7 @@ public class JspAnalyzerPlugin implements AnalyzerPlugin {
 			return false;
 		}
 
-		for (Entry<String, Resource> entry : resourceMap.entrySet()) {
+		for (Map.Entry<String, Resource> entry : resourceMap.entrySet()) {
 			String path = entry.getKey();
 			Resource resource = entry.getValue();
 

@@ -28,7 +28,6 @@ import java.lang.reflect.Method;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.SynchronousQueue;
 import java.util.concurrent.ThreadPoolExecutor;
-import java.util.concurrent.ThreadPoolExecutor.DiscardPolicy;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -48,7 +47,8 @@ public class BufferedIncrementProcessor {
 			_bufferedIncrementConfiguration.getThreadpoolKeepAliveTime(),
 			TimeUnit.SECONDS, new SynchronousQueue<Runnable>());
 
-		threadPoolExecutor.setRejectedExecutionHandler(new DiscardPolicy());
+		threadPoolExecutor.setRejectedExecutionHandler(
+			new ThreadPoolExecutor.DiscardPolicy());
 
 		Class<?>[] parameterTypes = method.getParameterTypes();
 

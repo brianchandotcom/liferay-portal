@@ -32,7 +32,6 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.logging.Level;
 import java.util.logging.LogRecord;
 
@@ -307,7 +306,9 @@ public class HttpImplTest extends PowerMockito {
 
 		StringBundler sb = new StringBundler(12);
 
-		for (Entry<String, String[]> entry : expectedParameterMap.entrySet()) {
+		for (Map.Entry<String, String[]> entry :
+				expectedParameterMap.entrySet()) {
+
 			String key = entry.getKey();
 
 			for (String value : entry.getValue()) {

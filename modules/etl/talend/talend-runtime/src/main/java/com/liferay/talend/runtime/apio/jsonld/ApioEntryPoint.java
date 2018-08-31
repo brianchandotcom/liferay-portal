@@ -16,8 +16,7 @@ package com.liferay.talend.runtime.apio.jsonld;
 
 import com.fasterxml.jackson.databind.JsonNode;
 
-import com.liferay.talend.runtime.apio.constants.HydraConstants.FieldNames;
-import com.liferay.talend.runtime.apio.constants.HydraConstants.FieldTypes;
+import com.liferay.talend.runtime.apio.constants.HydraConstants;
 import com.liferay.talend.runtime.apio.constants.JSONLDConstants;
 
 import java.io.IOException;
@@ -44,7 +43,7 @@ public class ApioEntryPoint extends ApioBaseResponse {
 	}
 
 	public JsonNode getCollectionJsonNode() {
-		return findJsonNode(FieldNames.COLLECTION);
+		return findJsonNode(HydraConstants.FieldNames.COLLECTION);
 	}
 
 	/**
@@ -80,7 +79,9 @@ public class ApioEntryPoint extends ApioBaseResponse {
 	}
 
 	private void _validateEntryPoint() throws IOException {
-		if (!hasValueOf(FieldTypes.ENTRY_POINT, getTypeJsonNode())) {
+		if (!hasValueOf(
+				HydraConstants.FieldTypes.ENTRY_POINT, getTypeJsonNode())) {
+
 			throw new IOException("The given resource is not an entry point");
 		}
 	}

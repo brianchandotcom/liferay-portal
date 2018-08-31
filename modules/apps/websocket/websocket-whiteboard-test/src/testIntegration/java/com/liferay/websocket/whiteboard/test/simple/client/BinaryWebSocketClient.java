@@ -23,7 +23,7 @@ import java.util.concurrent.BlockingQueue;
 import javax.websocket.ClientEndpoint;
 import javax.websocket.OnMessage;
 import javax.websocket.OnOpen;
-import javax.websocket.RemoteEndpoint.Basic;
+import javax.websocket.RemoteEndpoint;
 import javax.websocket.Session;
 
 /**
@@ -49,7 +49,7 @@ public class BinaryWebSocketClient {
 	}
 
 	public void sendMessage(ByteBuffer byteBuffer) throws IOException {
-		Basic basic = _session.getBasicRemote();
+		RemoteEndpoint.Basic basic = _session.getBasicRemote();
 
 		basic.sendBinary(byteBuffer);
 	}

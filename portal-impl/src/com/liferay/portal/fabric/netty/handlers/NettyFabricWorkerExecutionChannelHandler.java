@@ -35,7 +35,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.process.ProcessCallable;
 import com.liferay.portal.kernel.process.ProcessConfig;
-import com.liferay.portal.kernel.process.ProcessConfig.Builder;
 import com.liferay.portal.kernel.process.ProcessException;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -388,7 +387,7 @@ public class NettyFabricWorkerExecutionChannelHandler
 		public ProcessConfig toProcessConfig(ProcessConfig processConfig)
 			throws ProcessException {
 
-			Builder builder = new Builder();
+			ProcessConfig.Builder builder = new ProcessConfig.Builder();
 
 			builder.setArguments(processConfig.getArguments());
 			builder.setBootstrapClassPath(_bootstrapClassPath);

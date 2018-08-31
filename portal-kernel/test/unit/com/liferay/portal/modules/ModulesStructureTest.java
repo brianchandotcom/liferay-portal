@@ -46,7 +46,6 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Properties;
 import java.util.Set;
 import java.util.SortedSet;
@@ -431,7 +430,7 @@ public class ModulesStructureTest {
 					Path dirPath, BasicFileAttributes basicFileAttributes) {
 
 					if (Files.exists(dirPath.resolve("bnd.bnd"))) {
-						for (Entry<String, String> entry :
+						for (Map.Entry<String, String> entry :
 								renameMap.entrySet()) {
 
 							Path path = dirPath.resolve(entry.getKey());

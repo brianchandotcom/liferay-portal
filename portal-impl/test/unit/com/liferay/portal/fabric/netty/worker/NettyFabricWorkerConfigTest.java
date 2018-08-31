@@ -18,7 +18,6 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.fabric.ReturnProcessCallable;
 import com.liferay.portal.kernel.process.ProcessCallable;
 import com.liferay.portal.kernel.process.ProcessConfig;
-import com.liferay.portal.kernel.process.ProcessConfig.Builder;
 import com.liferay.portal.kernel.process.ProcessException;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
 import com.liferay.util.SerializableUtil;
@@ -58,7 +57,7 @@ public class NettyFabricWorkerConfigTest {
 			Assert.assertEquals("Process config is null", npe.getMessage());
 		}
 
-		Builder builder = new Builder();
+		ProcessConfig.Builder builder = new ProcessConfig.Builder();
 
 		ProcessConfig processConfig = builder.build();
 
@@ -108,7 +107,7 @@ public class NettyFabricWorkerConfigTest {
 
 	@Test
 	public void testSerialization() throws ProcessException {
-		Builder builder = new Builder();
+		ProcessConfig.Builder builder = new ProcessConfig.Builder();
 
 		List<String> arguments = Arrays.asList("x", "y", "z");
 

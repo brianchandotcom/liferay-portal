@@ -28,7 +28,7 @@ import com.xuggle.xuggler.ICodec;
 import com.xuggle.xuggler.IContainer;
 import com.xuggle.xuggler.IContainerFormat;
 import com.xuggle.xuggler.IPacket;
-import com.xuggle.xuggler.IPixelFormat.Type;
+import com.xuggle.xuggler.IPixelFormat;
 import com.xuggle.xuggler.IRational;
 import com.xuggle.xuggler.IStream;
 import com.xuggle.xuggler.IStreamCoder;
@@ -412,7 +412,7 @@ public class LiferayVideoConverter extends LiferayConverter {
 
 		outputIStreamCoder.setHeight(_height);
 
-		outputIStreamCoder.setPixelType(Type.YUV420P);
+		outputIStreamCoder.setPixelType(IPixelFormat.Type.YUV420P);
 		outputIStreamCoder.setTimeBase(
 			IRational.make(
 				iRational.getDenominator(), iRational.getNumerator()));

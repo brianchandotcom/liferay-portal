@@ -37,7 +37,6 @@ import org.talend.daikon.i18n.I18nMessageProvider;
 import org.talend.daikon.i18n.I18nMessages;
 import org.talend.daikon.properties.PresentationItem;
 import org.talend.daikon.properties.ValidationResult;
-import org.talend.daikon.properties.ValidationResult.Result;
 import org.talend.daikon.properties.ValidationResultMutable;
 import org.talend.daikon.properties.presentation.Form;
 import org.talend.daikon.properties.presentation.Widget;
@@ -85,7 +84,7 @@ public class LiferayConnectionProperties
 		ValidationResultMutable validationResultMutable =
 			new ValidationResultMutable();
 
-		validationResultMutable.setStatus(Result.OK);
+		validationResultMutable.setStatus(ValidationResult.Result.OK);
 
 		try (SandboxedInstance sandboxedInstance =
 				LiferayBaseComponentDefinition.getSandboxedInstance(
@@ -150,7 +149,9 @@ public class LiferayConnectionProperties
 
 			validationResultMutable.setStatus(validationResult.getStatus());
 
-			if (validationResultMutable.getStatus() == Result.OK) {
+			if (validationResultMutable.getStatus() ==
+					ValidationResult.Result.OK) {
+
 				try {
 					List<NamedThing> webSites =
 						liferaySourceOrSinkRuntime.getAvailableWebSites();
@@ -159,7 +160,8 @@ public class LiferayConnectionProperties
 						validationResultMutable.setMessage(
 							i18nMessages.getMessage(
 								"error.validation.websites"));
-						validationResultMutable.setStatus(Result.ERROR);
+						validationResultMutable.setStatus(
+							ValidationResult.Result.ERROR);
 					}
 
 					webSiteProperty.setPossibleNamedThingValues(webSites);
@@ -409,7 +411,8 @@ public class LiferayConnectionProperties
 			return validationResult;
 		}
 		catch (Exception e) {
-			return new ValidationResult(Result.ERROR, e.getMessage());
+			return new ValidationResult(
+				ValidationResult.Result.ERROR, e.getMessage());
 		}
 	}
 

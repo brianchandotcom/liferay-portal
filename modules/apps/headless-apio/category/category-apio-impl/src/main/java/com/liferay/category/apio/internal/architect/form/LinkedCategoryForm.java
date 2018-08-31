@@ -15,7 +15,6 @@
 package com.liferay.category.apio.internal.architect.form;
 
 import com.liferay.apio.architect.form.Form;
-import com.liferay.apio.architect.form.Form.Builder;
 import com.liferay.category.apio.architect.identifier.CategoryIdentifier;
 
 /**
@@ -36,7 +35,7 @@ public class LinkedCategoryForm {
 	 * @review
 	 */
 	public static Form<LinkedCategoryForm> buildForm(
-		Builder<LinkedCategoryForm> builder) {
+		Form.Builder<LinkedCategoryForm> builder) {
 
 		return builder.title(
 			__ -> "Linked category form"

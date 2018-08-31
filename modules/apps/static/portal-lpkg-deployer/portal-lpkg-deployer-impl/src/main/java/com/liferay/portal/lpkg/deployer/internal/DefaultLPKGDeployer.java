@@ -54,7 +54,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Properties;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
@@ -638,14 +637,14 @@ public class DefaultLPKGDeployer implements LPKGDeployer {
 
 		Properties properties = _loadOverrideWarsProperties(bundleContext);
 
-		Set<Entry<Object, Object>> entrySet = properties.entrySet();
+		Set<Map.Entry<Object, Object>> entrySet = properties.entrySet();
 
-		Iterator<Entry<Object, Object>> iterator = entrySet.iterator();
+		Iterator<Map.Entry<Object, Object>> iterator = entrySet.iterator();
 
 		boolean modified = false;
 
 		while (iterator.hasNext()) {
-			Entry<Object, Object> entry = iterator.next();
+			Map.Entry<Object, Object> entry = iterator.next();
 
 			if (warFiles.contains(new File((String)entry.getKey()))) {
 				continue;

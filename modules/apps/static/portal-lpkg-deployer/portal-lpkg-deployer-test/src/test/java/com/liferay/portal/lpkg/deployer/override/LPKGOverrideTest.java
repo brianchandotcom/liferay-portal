@@ -41,7 +41,6 @@ import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.jar.Attributes;
 import java.util.jar.Manifest;
 import java.util.regex.Matcher;
@@ -151,7 +150,7 @@ public class LPKGOverrideTest {
 
 		StringBundler sb = new StringBundler(overrides.size() * 4);
 
-		for (Entry<String, String> entry : overrides.entrySet()) {
+		for (Map.Entry<String, String> entry : overrides.entrySet()) {
 			sb.append(entry.getKey());
 			sb.append(StringPool.COLON);
 			sb.append(entry.getValue());

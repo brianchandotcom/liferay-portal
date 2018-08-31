@@ -16,8 +16,7 @@ package com.liferay.talend.runtime.apio.jsonld;
 
 import com.fasterxml.jackson.databind.JsonNode;
 
-import com.liferay.talend.runtime.apio.constants.HydraConstants.FieldNames;
-import com.liferay.talend.runtime.apio.constants.HydraConstants.FieldTypes;
+import com.liferay.talend.runtime.apio.constants.HydraConstants;
 import com.liferay.talend.runtime.apio.form.Property;
 
 import java.io.IOException;
@@ -43,11 +42,11 @@ public class ApioForm extends ApioBaseResponse {
 	}
 
 	public JsonNode getSupportedPropertiesJsonNode() {
-		return findJsonNode(FieldNames.SUPPORTED_PROPERTY);
+		return findJsonNode(HydraConstants.FieldNames.SUPPORTED_PROPERTY);
 	}
 
 	private void _validateForm() throws IOException {
-		if (!hasValueOf(FieldTypes.CLASS, getTypeJsonNode())) {
+		if (!hasValueOf(HydraConstants.FieldTypes.CLASS, getTypeJsonNode())) {
 			throw new IOException("The given resource is not a from");
 		}
 	}

@@ -37,7 +37,6 @@ import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Scanner;
 import java.util.Set;
 import java.util.jar.Attributes;
@@ -279,7 +278,7 @@ public class WatchTask extends DefaultTask {
 		differences.putAll(leftMap);
 		differences.putAll(rightMap);
 
-		Set<Entry<K, V>> entrySet = differences.entrySet();
+		Set<Map.Entry<K, V>> entrySet = differences.entrySet();
 
 		if (leftMap.size() <= rightMap.size()) {
 			entrySet.removeAll(leftMap.entrySet());

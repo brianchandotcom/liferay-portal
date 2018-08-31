@@ -23,7 +23,6 @@ import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Properties;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -132,7 +131,7 @@ public class SystemProperties {
 			boolean systemPropertiesSetOverride = GetterUtil.getBoolean(
 				System.getProperty(SYSTEM_PROPERTIES_SET_OVERRIDE), true);
 
-			for (Entry<Object, Object> entry : properties.entrySet()) {
+			for (Map.Entry<Object, Object> entry : properties.entrySet()) {
 				String key = String.valueOf(entry.getKey());
 
 				if (systemPropertiesSetOverride ||

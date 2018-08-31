@@ -38,7 +38,6 @@ import org.gradle.api.artifacts.ArtifactRepositoryContainer;
 import org.gradle.api.artifacts.Configuration;
 import org.gradle.api.artifacts.DependencySet;
 import org.gradle.api.artifacts.DependencySubstitutions;
-import org.gradle.api.artifacts.DependencySubstitutions.Substitution;
 import org.gradle.api.artifacts.ModuleDependency;
 import org.gradle.api.artifacts.ModuleVersionSelector;
 import org.gradle.api.artifacts.ResolutionStrategy;
@@ -344,8 +343,8 @@ public class GradleUtil extends com.liferay.gradle.util.GradleUtil {
 			dependencySubstitutions.module(
 				_getDependencyNotation(moduleVersionSelector));
 
-		Substitution substitution = dependencySubstitutions.substitute(
-			moduleComponentSelector);
+		DependencySubstitutions.Substitution substitution =
+			dependencySubstitutions.substitute(moduleComponentSelector);
 
 		ComponentSelector projectComponentSelector =
 			dependencySubstitutions.project(project.getPath());

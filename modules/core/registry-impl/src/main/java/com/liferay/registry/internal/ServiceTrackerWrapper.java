@@ -18,7 +18,7 @@ import com.liferay.registry.ServiceReference;
 import com.liferay.registry.ServiceTracker;
 
 import java.util.Collections;
-import java.util.Map.Entry;
+import java.util.Map;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
@@ -140,7 +140,7 @@ public class ServiceTrackerWrapper<S, T> implements ServiceTracker<S, T> {
 		SortedMap<org.osgi.framework.ServiceReference<S>, T>
 			trackedOSGiServiceReferences = _serviceTracker.getTracked();
 
-		for (Entry<org.osgi.framework.ServiceReference<S>, T> entry :
+		for (Map.Entry<org.osgi.framework.ServiceReference<S>, T> entry :
 				trackedOSGiServiceReferences.entrySet()) {
 
 			org.osgi.framework.ServiceReference<S> osgiServiceReference =

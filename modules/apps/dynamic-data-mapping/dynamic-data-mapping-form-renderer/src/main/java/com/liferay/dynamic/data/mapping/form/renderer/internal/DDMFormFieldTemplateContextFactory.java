@@ -46,7 +46,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Map.Entry;
 
 /**
  * @author Marcellus Tavares
@@ -258,7 +257,7 @@ public class DDMFormFieldTemplateContextFactory {
 
 		Map<String, LocalizedValue> options = ddmFormFieldOptions.getOptions();
 
-		for (Entry<String, LocalizedValue> entry : options.entrySet()) {
+		for (Map.Entry<String, LocalizedValue> entry : options.entrySet()) {
 			Map<String, String> option = new HashMap<>();
 
 			LocalizedValue localizedValue = entry.getValue();

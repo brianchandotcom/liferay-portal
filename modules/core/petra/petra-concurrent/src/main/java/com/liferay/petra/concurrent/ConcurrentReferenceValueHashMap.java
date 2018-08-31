@@ -16,7 +16,6 @@ package com.liferay.petra.concurrent;
 
 import com.liferay.petra.memory.FinalizeAction;
 import com.liferay.petra.memory.FinalizeManager;
-import com.liferay.petra.memory.FinalizeManager.ReferenceFactory;
 
 import java.lang.ref.Reference;
 
@@ -32,7 +31,7 @@ public class ConcurrentReferenceValueHashMap<K, V>
 
 	public ConcurrentReferenceValueHashMap(
 		ConcurrentMap<K, Reference<V>> innerConcurrentMap,
-		ReferenceFactory referenceFactory) {
+		FinalizeManager.ReferenceFactory referenceFactory) {
 
 		super(innerConcurrentMap);
 
@@ -40,8 +39,23 @@ public class ConcurrentReferenceValueHashMap<K, V>
 	}
 
 	public ConcurrentReferenceValueHashMap(
+		FinalizeManager.ReferenceFactory referenceFactory) {
+
+		this(new ConcurrentHashMap<K, Reference<V>>(), referenceFactory);
+	}
+
+	public ConcurrentReferenceValueHashMap(
+		int initialCapacity,
+		FinalizeManager.ReferenceFactory referenceFactory) {
+
+		this(
+			new ConcurrentHashMap<K, Reference<V>>(initialCapacity),
+			referenceFactory);
+	}
+
+	public ConcurrentReferenceValueHashMap(
 		int initialCapacity, float loadFactor, int concurrencyLevel,
-		ReferenceFactory referenceFactory) {
+		FinalizeManager.ReferenceFactory referenceFactory) {
 
 		this(
 			new ConcurrentHashMap<K, Reference<V>>(
@@ -50,23 +64,12 @@ public class ConcurrentReferenceValueHashMap<K, V>
 	}
 
 	public ConcurrentReferenceValueHashMap(
-		int initialCapacity, ReferenceFactory referenceFactory) {
-
-		this(
-			new ConcurrentHashMap<K, Reference<V>>(initialCapacity),
-			referenceFactory);
-	}
-
-	public ConcurrentReferenceValueHashMap(
-		Map<? extends K, ? extends V> map, ReferenceFactory referenceFactory) {
+		Map<? extends K, ? extends V> map,
+		FinalizeManager.ReferenceFactory referenceFactory) {
 
 		this(new ConcurrentHashMap<K, Reference<V>>(), referenceFactory);
 
 		putAll(map);
-	}
-
-	public ConcurrentReferenceValueHashMap(ReferenceFactory referenceFactory) {
-		this(new ConcurrentHashMap<K, Reference<V>>(), referenceFactory);
 	}
 
 	@Override
@@ -114,7 +117,7 @@ public class ConcurrentReferenceValueHashMap<K, V>
 		return reference.get();
 	}
 
-	private final ReferenceFactory _referenceFactory;
+	private final FinalizeManager.ReferenceFactory _referenceFactory;
 
 	private class RemoveEntryFinalizeAction implements FinalizeAction {
 

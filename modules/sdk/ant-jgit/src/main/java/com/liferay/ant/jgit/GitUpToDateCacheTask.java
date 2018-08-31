@@ -36,7 +36,7 @@ import org.apache.tools.ant.Task;
 
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.lib.Repository;
-import org.eclipse.jgit.lib.RepositoryCache.FileKey;
+import org.eclipse.jgit.lib.RepositoryCache;
 import org.eclipse.jgit.util.FS;
 
 /**
@@ -63,7 +63,8 @@ public class GitUpToDateCacheTask extends Task {
 
 		File gitDir = PathUtil.getGitDir(_gitDir, getProject(), getLocation());
 
-		FileKey fileKey = FileKey.exact(gitDir, FS.DETECTED);
+		RepositoryCache.FileKey fileKey = RepositoryCache.FileKey.exact(
+			gitDir, FS.DETECTED);
 
 		try (Repository repository = fileKey.open(true)) {
 			Git git = new Git(repository);

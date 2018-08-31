@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.util.Validator;
 
 import com.netflix.hystrix.exception.HystrixRuntimeException;
-import com.netflix.hystrix.exception.HystrixRuntimeException.FailureType;
 
 import java.util.Optional;
 
@@ -69,17 +68,24 @@ public class DDMDataProviderInvokerImpl implements DDMDataProviderInvoker {
 			DDMDataProviderResponse.Builder.newBuilder();
 
 		if (e instanceof HystrixRuntimeException) {
-			FailureType failureType = getHystrixFailureType(e);
+			HystrixRuntimeException.FailureType failureType =
+				getHystrixFailureType(e);
 
-			if (failureType == FailureType.COMMAND_EXCEPTION) {
+			if (failureType ==
+					HystrixRuntimeException.FailureType.COMMAND_EXCEPTION) {
+
 				builder = builder.withStatus(
 					DDMDataProviderResponseStatus.COMMAND_EXCEPTION);
 			}
-			else if (failureType == FailureType.SHORTCIRCUIT) {
+			else if (failureType ==
+						 HystrixRuntimeException.FailureType.SHORTCIRCUIT) {
+
 				builder = builder.withStatus(
 					DDMDataProviderResponseStatus.SHORT_CIRCUIT);
 			}
-			else if (failureType == FailureType.TIMEOUT) {
+			else if (failureType ==
+						 HystrixRuntimeException.FailureType.TIMEOUT) {
+
 				builder = builder.withStatus(
 					DDMDataProviderResponseStatus.TIMEOUT);
 			}
@@ -168,7 +174,9 @@ public class DDMDataProviderInvokerImpl implements DDMDataProviderInvoker {
 				ddmDataProviderInstanceId));
 	}
 
-	protected FailureType getHystrixFailureType(Exception e) {
+	protected HystrixRuntimeException.FailureType getHystrixFailureType(
+		Exception e) {
+
 		HystrixRuntimeException hystrixRuntimeException =
 			(HystrixRuntimeException)e;
 

@@ -17,7 +17,6 @@ package com.liferay.portal.nio.intraband.proxy;
 import com.liferay.portal.kernel.nio.intraband.RegistrationReference;
 import com.liferay.portal.kernel.resiliency.spi.SPI;
 import com.liferay.portal.kernel.resiliency.spi.SPIRegistryUtil;
-import com.liferay.portal.nio.intraband.proxy.StubHolder.StubCreator;
 
 import java.rmi.RemoteException;
 
@@ -30,7 +29,7 @@ import java.util.concurrent.ConcurrentMap;
 public class StubMapImpl<T>
 	extends ConcurrentHashMap<String, T> implements StubMap<T> {
 
-	public StubMapImpl(StubCreator<T> stubCreator) {
+	public StubMapImpl(StubHolder.StubCreator<T> stubCreator) {
 		_stubCreator = stubCreator;
 	}
 
@@ -90,7 +89,7 @@ public class StubMapImpl<T>
 		}
 	}
 
-	private final StubCreator<T> _stubCreator;
+	private final StubHolder.StubCreator<T> _stubCreator;
 	private final ConcurrentMap<String, StubHolder<T>> _stubHolders =
 		new ConcurrentHashMap<>();
 

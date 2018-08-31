@@ -56,8 +56,6 @@ import io.netty.util.concurrent.FutureListener;
 import java.io.IOException;
 import java.io.Serializable;
 
-import java.lang.Thread.State;
-
 import java.nio.file.Files;
 import java.nio.file.Path;
 
@@ -428,7 +426,7 @@ public class NettyFabricClient implements FabricClient {
 
 			_nettyFabricClientShutdownCallback.shutdown();
 
-			if (_shutdownThread.getState() == State.NEW) {
+			if (_shutdownThread.getState() == Thread.State.NEW) {
 				Runtime runtime = Runtime.getRuntime();
 
 				runtime.removeShutdownHook(_shutdownThread);

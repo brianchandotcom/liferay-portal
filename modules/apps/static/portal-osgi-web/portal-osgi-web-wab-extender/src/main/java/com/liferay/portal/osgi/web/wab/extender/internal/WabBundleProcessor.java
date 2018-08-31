@@ -54,7 +54,6 @@ import java.util.HashSet;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Set;
 import java.util.concurrent.ConcurrentSkipListSet;
 
@@ -493,7 +492,7 @@ public class WabBundleProcessor {
 			Map<String, String> initParameters =
 				filterDefinition.getInitParameters();
 
-			for (Entry<String, String> initParametersEntry :
+			for (Map.Entry<String, String> initParametersEntry :
 					initParameters.entrySet()) {
 
 				String key = initParametersEntry.getKey();
@@ -633,7 +632,7 @@ public class WabBundleProcessor {
 			ModifiableServletContext modifiableServletContext)
 		throws Exception {
 
-		for (Entry<String, ServletDefinition> entry :
+		for (Map.Entry<String, ServletDefinition> entry :
 				servletDefinitions.entrySet()) {
 
 			ServletDefinition servletDefinition = entry.getValue();
@@ -667,7 +666,7 @@ public class WabBundleProcessor {
 			Map<String, String> initParameters =
 				servletDefinition.getInitParameters();
 
-			for (Entry<String, String> initParametersEntry :
+			for (Map.Entry<String, String> initParametersEntry :
 					initParameters.entrySet()) {
 
 				String key = initParametersEntry.getKey();

@@ -73,16 +73,6 @@ renderResponse.setTitle((role == null) ? LanguageUtil.get(request, "new-role") :
 	<liferay-ui:error exception="<%= DuplicateRoleException.class %>" message="please-enter-a-unique-name" />
 	<liferay-ui:error exception="<%= RequiredRoleException.class %>" message="old-role-name-is-a-required-system-role" />
 
-	<liferay-ui:error exception="<%= RoleNameException.class %>">
-		<p>
-			<liferay-ui:message arguments="<%= new String[] {RoleConstants.NAME_LABEL, RoleConstants.getNameGeneralRestrictions(locale, PropsValues.ROLES_NAME_ALLOW_NUMERIC), RoleConstants.NAME_RESERVED_WORDS} %>" key="the-x-cannot-be-x-or-a-reserved-word-such-as-x" />
-		</p>
-
-		<p>
-			<liferay-ui:message arguments="<%= new String[] {RoleConstants.NAME_LABEL, RoleConstants.NAME_INVALID_CHARACTERS} %>" key="the-x-cannot-contain-the-following-invalid-characters-x" />
-		</p>
-	</liferay-ui:error>
-
 	<aui:model-context bean="<%= role %>" model="<%= Role.class %>" />
 
 	<aui:fieldset-group markupView="lexicon">
@@ -149,6 +139,16 @@ renderResponse.setTitle((role == null) ? LanguageUtil.get(request, "new-role") :
 					</aui:select>
 				</c:if>
 			</c:if>
+
+			<liferay-ui:error exception="<%= RoleNameException.class %>">
+				<p>
+					<liferay-ui:message arguments="<%= new String[] {RoleConstants.NAME_LABEL, RoleConstants.getNameGeneralRestrictions(locale, PropsValues.ROLES_NAME_ALLOW_NUMERIC), RoleConstants.NAME_RESERVED_WORDS} %>" key="the-x-cannot-be-x-or-a-reserved-word-such-as-x" />
+				</p>
+
+				<p>
+					<liferay-ui:message arguments="<%= new String[] {RoleConstants.NAME_LABEL, RoleConstants.NAME_INVALID_CHARACTERS} %>" key="the-x-cannot-contain-the-following-invalid-characters-x" />
+				</p>
+			</liferay-ui:error>
 
 			<c:choose>
 				<c:when test="<%= (role != null) && role.isSystem() %>">

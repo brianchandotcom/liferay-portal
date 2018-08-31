@@ -16,6 +16,7 @@ package com.liferay.forms.apio.internal.util;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
+import com.google.gson.JsonPrimitive;
 import com.google.gson.reflect.TypeToken;
 
 import com.liferay.dynamic.data.mapping.model.DDMForm;
@@ -72,7 +73,7 @@ public final class FormValuesUtil {
 				value = Optional.ofNullable(
 					formFieldValue.value
 				).map(
-					JsonElement::toString
+					FormValuesUtil::_getJsonString
 				).map(
 					stringValue -> _getValue(stringValue, ddmFormField, locale)
 				).orElse(
@@ -84,6 +85,18 @@ public final class FormValuesUtil {
 		}
 
 		return ddmFormValues;
+	}
+
+	private static String _getJsonString(JsonElement value) {
+		if (value instanceof JsonPrimitive) {
+			JsonPrimitive jsonPrimitive = (JsonPrimitive) value;
+
+			if (!jsonPrimitive.isJsonNull()) {
+				return jsonPrimitive.getAsString();
+			}
+		}
+
+		return value.toString();
 	}
 
 	private static Value _getValue(

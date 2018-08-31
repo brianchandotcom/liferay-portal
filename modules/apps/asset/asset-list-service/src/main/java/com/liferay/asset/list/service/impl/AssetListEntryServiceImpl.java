@@ -18,6 +18,8 @@ import com.liferay.asset.list.constants.AssetListActionKeys;
 import com.liferay.asset.list.constants.AssetListConstants;
 import com.liferay.asset.list.model.AssetListEntry;
 import com.liferay.asset.list.service.base.AssetListEntryServiceBaseImpl;
+import com.liferay.portal.dao.orm.custom.sql.CustomSQL;
+import com.liferay.portal.kernel.dao.orm.WildcardMode;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
@@ -26,6 +28,7 @@ import com.liferay.portal.kernel.security.permission.resource.PortletResourcePer
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermissionFactory;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.util.List;
 
@@ -100,8 +103,24 @@ public class AssetListEntryServiceImpl extends AssetListEntryServiceBaseImpl {
 	}
 
 	@Override
+	public List<AssetListEntry> getAssetListEntries(
+		long groupId, String title, int start, int end,
+		OrderByComparator<AssetListEntry> orderByComparator) {
+
+		return assetListEntryPersistence.findByG_LikeT(
+			groupId, _customSQL.keywords(title, WildcardMode.SURROUND)[0],
+			start, end, orderByComparator);
+	}
+
+	@Override
 	public int getAssetListEntriesCount(long groupId) {
 		return assetListEntryPersistence.countByGroupId(groupId);
+	}
+
+	@Override
+	public int getAssetListEntriesCount(long groupId, String title) {
+		return assetListEntryPersistence.countByG_LikeT(
+			groupId, _customSQL.keywords(title, WildcardMode.SURROUND)[0]);
 	}
 
 	@Override
@@ -129,5 +148,8 @@ public class AssetListEntryServiceImpl extends AssetListEntryServiceBaseImpl {
 			PortletResourcePermissionFactory.getInstance(
 				AssetListEntryServiceImpl.class, "_portletResourcePermission",
 				AssetListConstants.RESOURCE_NAME);
+
+	@ServiceReference(type = CustomSQL.class)
+	private CustomSQL _customSQL;
 
 }

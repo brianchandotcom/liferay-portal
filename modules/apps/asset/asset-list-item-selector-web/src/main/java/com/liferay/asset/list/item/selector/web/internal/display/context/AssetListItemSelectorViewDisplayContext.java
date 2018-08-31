@@ -100,7 +100,7 @@ public class AssetListItemSelectorViewDisplayContext {
 
 	public AssetListEntry getSelectedAssetListEntry() throws PortalException {
 		return AssetListEntryServiceUtil.fetchAssetListEntry(
-			_assetListItemSelectorCriterion.getSelectedAssetEntryListId());
+			_assetListItemSelectorCriterion.getSelectedAssetListEntryId());
 	}
 
 	private PortletURL _getPortletURL() throws PortletException {

@@ -15,12 +15,24 @@
 package com.liferay.sharing.web.internal.portlet.action;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
+import com.liferay.portal.kernel.template.Template;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.sharing.web.internal.constants.SharingPortletKeys;
+import com.liferay.sharing.web.internal.display.SharingEntryPermissionDisplay;
+import com.liferay.sharing.web.internal.display.SharingEntryPermissionDisplayActionKey;
+import com.liferay.sharing.web.internal.util.SharingUtil;
 
+import java.util.List;
+
+import javax.portlet.ActionRequest;
+import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Sergio González
@@ -39,7 +51,53 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 	public String render(
 		RenderRequest renderRequest, RenderResponse renderResponse) {
 
+		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		Template template = getTemplate(renderRequest);
+
+		PortletURL shareActionURL = renderResponse.createActionURL();
+
+		shareActionURL.setParameter(
+			ActionRequest.ACTION_NAME, "/sharing/share");
+
+		long classNameId = ParamUtil.getLong(renderRequest, "classNameId");
+		long classPK = ParamUtil.getLong(renderRequest, "classPK");
+
+		template.put("classNameId", classNameId);
+		template.put("classPK", classPK);
+
+		template.put("portletNamespace", renderResponse.getNamespace());
+
+		String refererPortletNamespace = ParamUtil.getString(
+			renderRequest, "refererPortletNamespace");
+
+		template.put("refererPortletNamespace", refererPortletNamespace);
+
+		template.put("shareActionURL", shareActionURL.toString());
+		template.put(
+			"sharingDialogId", refererPortletNamespace + "sharingDialogId");
+
+		List<SharingEntryPermissionDisplay> sharingEntryPermissionDisplays =
+			_sharingUtil.getSharingEntryPermissionDisplays(
+				themeDisplay.getPermissionChecker(), classNameId, classPK,
+				themeDisplay.getScopeGroupId(), themeDisplay.getLocale());
+
+		template.put(
+			"sharingEntryPermissionDisplays", sharingEntryPermissionDisplays);
+
+		template.put(
+			"sharingEntryPermissionDisplayActionKeyActionId",
+			SharingEntryPermissionDisplayActionKey.VIEW.getActionId());
+
 		return "Sharing";
 	}
+
+	protected Template getTemplate(RenderRequest renderRequest) {
+		return (Template)renderRequest.getAttribute(WebKeys.TEMPLATE);
+	}
+
+	@Reference
+	private SharingUtil _sharingUtil;
 
 }

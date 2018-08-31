@@ -214,14 +214,6 @@ public class ResourceRequestImpl
 			throw new IllegalStateException();
 		}
 
-		boolean hasOriginalRequestAndResponse = false;
-
-		if ((resourceRequest == this) &&
-			(resourceResponse == _resourceResponse)) {
-
-			hasOriginalRequestAndResponse = true;
-		}
-
 		HttpServletRequest httpServletRequest = _getHttpServletRequest(
 			resourceRequest);
 
@@ -242,6 +234,14 @@ public class ResourceRequestImpl
 
 		if (_portletAsyncContextImpl == null) {
 			_portletAsyncContextImpl = new PortletAsyncContextImpl();
+		}
+
+		boolean hasOriginalRequestAndResponse = false;
+
+		if ((resourceRequest == this) &&
+			(resourceResponse == _resourceResponse)) {
+
+			hasOriginalRequestAndResponse = true;
 		}
 
 		_portletAsyncContextImpl.initialize(

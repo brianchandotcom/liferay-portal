@@ -6,6 +6,7 @@ create table AssetListEntry (
 	userName VARCHAR(75) null,
 	createDate DATE null,
 	modifiedDate DATE null,
+	typeSettings TEXT null,
 	title VARCHAR(75) null,
 	type_ INTEGER
 );

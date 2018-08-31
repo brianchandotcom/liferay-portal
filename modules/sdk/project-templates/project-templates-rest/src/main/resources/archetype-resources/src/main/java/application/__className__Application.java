@@ -18,11 +18,11 @@ import org.osgi.service.jaxrs.whiteboard.JaxrsWhiteboardConstants;
  * @author ${author}
  */
 @Component(
-    property = {
-        JaxrsWhiteboardConstants.JAX_RS_APPLICATION_BASE + "=/greetings",
-        JaxrsWhiteboardConstants.JAX_RS_NAME + "=Greetings.Rest"
-    },
-    service = Application.class)
+	property = {
+		JaxrsWhiteboardConstants.JAX_RS_APPLICATION_BASE + "=/greetings",
+		JaxrsWhiteboardConstants.JAX_RS_NAME + "=Greetings.Rest"
+	},
+	service = Application.class)
 
 public class ${className}Application extends Application {
 

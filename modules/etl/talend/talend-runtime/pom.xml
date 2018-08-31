@@ -153,6 +153,66 @@
 					<skip>true</skip>
 				</configuration>
 			</plugin>
+			<plugin>
+				<artifactId>maven-resources-plugin</artifactId>
+				<version>2.6</version>
+				<executions>
+					<execution>
+						<id>copy-resources-definition</id>
+						<phase>install</phase>
+						<goals>
+							<goal>copy-resources</goal>
+						</goals>
+						<configuration>
+							<outputDirectory>${basedir}/../tos-dependencies/component-definition/</outputDirectory>
+							<resources>
+								<resource>
+									<directory>${user.home}/.m2/repository/com/liferay/com.liferay.talend.definition/${version}/</directory>
+									<includes>
+										<include>**/*.jar</include>
+									</includes>
+									<excludes>
+										<exclude>**/*sources*.*</exclude>
+									</excludes>
+									<filtering>true</filtering>
+								</resource>
+							</resources>
+						</configuration>
+					</execution>
+					<execution>
+						<id>copy-resources-definition-module</id>
+						<phase>install</phase>
+						<goals>
+							<goal>copy-resources</goal>
+						</goals>
+						<configuration>
+							<outputDirectory>${basedir}/../tos-dependencies/component-artifacts/.m2/repository/com/liferay/com.liferay.talend.definition</outputDirectory>
+							<resources>
+								<resource>
+									<directory>${user.home}/.m2/repository/com/liferay/com.liferay.talend.definition</directory>
+									<filtering>true</filtering>
+								</resource>
+							</resources>
+						</configuration>
+					</execution>
+					<execution>
+						<id>copy-resources-runtime-module</id>
+						<phase>install</phase>
+						<goals>
+							<goal>copy-resources</goal>
+						</goals>
+						<configuration>
+							<outputDirectory>${basedir}/../tos-dependencies/component-artifacts/.m2/repository/com/liferay/com.liferay.talend.runtime</outputDirectory>
+							<resources>
+								<resource>
+									<directory>${user.home}/.m2/repository/com/liferay/com.liferay.talend.runtime</directory>
+									<filtering>true</filtering>
+								</resource>
+							</resources>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
 		</plugins>
 	</build>
 </project>

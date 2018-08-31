@@ -34,6 +34,8 @@ import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.Portlet;
@@ -395,6 +397,32 @@ public class AssetHelperImpl implements AssetHelper {
 	}
 
 	@Override
+	public boolean isValidWord(String word) {
+		if (Validator.isBlank(word)) {
+			return false;
+		}
+
+		char[] wordCharArray = word.toCharArray();
+
+		for (char c : wordCharArray) {
+			for (char invalidChar : AssetHelper.INVALID_CHARACTERS) {
+				if (c == invalidChar) {
+					if (_log.isDebugEnabled()) {
+						_log.debug(
+							StringBundler.concat(
+								"Word ", word, " is not valid because ", c,
+								" is not allowed"));
+					}
+
+					return false;
+				}
+			}
+		}
+
+		return true;
+	}
+
+	@Override
 	public Hits search(
 			HttpServletRequest request, AssetEntryQuery assetEntryQuery,
 			int start, int end)
@@ -630,6 +658,9 @@ public class AssetHelperImpl implements AssetHelper {
 
 		return sortType;
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		AssetHelperImpl.class);
 
 	@Reference
 	private AssetCategoryLocalService _assetCategoryLocalService;

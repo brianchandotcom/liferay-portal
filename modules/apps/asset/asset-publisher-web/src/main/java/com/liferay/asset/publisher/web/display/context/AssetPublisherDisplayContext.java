@@ -316,7 +316,7 @@ public class AssetPublisherDisplayContext {
 		AssetListEntry assetListEntry = fetchAssetListEntry();
 
 		if (assetListEntry != null) {
-			assetListItemSelectorCriterion.setSelectedAssetEntryListId(
+			assetListItemSelectorCriterion.setSelectedAssetListEntryId(
 				assetListEntry.getAssetListEntryId());
 		}
 

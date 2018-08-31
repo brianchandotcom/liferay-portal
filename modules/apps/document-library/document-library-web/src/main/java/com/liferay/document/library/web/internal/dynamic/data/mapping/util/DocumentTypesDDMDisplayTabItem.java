@@ -20,7 +20,7 @@ import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortletKeys;
-import com.liferay.portal.kernel.util.ResourceBundleLoader;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
 import java.util.ResourceBundle;
 
@@ -44,9 +44,8 @@ public class DocumentTypesDDMDisplayTabItem implements DDMDisplayTabItem {
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse) {
 
-		ResourceBundle resourceBundle =
-			_resourceBundleLoader.loadResourceBundle(
-				liferayPortletRequest.getLocale());
+		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+			"content.Language", liferayPortletRequest.getLocale(), getClass());
 
 		return LanguageUtil.get(resourceBundle, "document-types");
 	}
@@ -69,10 +68,5 @@ public class DocumentTypesDDMDisplayTabItem implements DDMDisplayTabItem {
 
 	@Reference
 	private Portal _portal;
-
-	@Reference(
-		target = "(bundle.symbolic.name=com.liferay.document.library.web)"
-	)
-	private ResourceBundleLoader _resourceBundleLoader;
 
 }

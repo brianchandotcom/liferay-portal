@@ -22,7 +22,7 @@ import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
-import com.liferay.portal.kernel.util.ResourceBundleLoader;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowDefinitionManager;
@@ -77,8 +77,8 @@ public abstract class BaseWorkflowDefinitionMVCActionCommand
 		Locale defaultLocale = LocaleUtil.getDefault();
 
 		if (Validator.isNull(titleMap.get(defaultLocale))) {
-			ResourceBundle resourceBundle =
-				resourceBundleLoader.loadResourceBundle(defaultLocale);
+			ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+				defaultLocale, "com.liferay.portal.workflow.web");
 
 			String defaultTitle = LanguageUtil.get(
 				resourceBundle, "untitled-workflow");
@@ -107,7 +107,8 @@ public abstract class BaseWorkflowDefinitionMVCActionCommand
 
 		Locale locale = themeDisplay.getLocale();
 
-		return resourceBundleLoader.loadResourceBundle(locale);
+		return ResourceBundleUtil.getBundle(
+			locale, "com.liferay.portal.workflow.web");
 	}
 
 	protected String getSuccessMessage(ActionRequest actionRequest) {
@@ -144,18 +145,6 @@ public abstract class BaseWorkflowDefinitionMVCActionCommand
 
 		return value;
 	}
-
-	@Reference(
-		target = "(bundle.symbolic.name=com.liferay.portal.workflow.web)",
-		unbind = "-"
-	)
-	protected void setResourceBundleLoader(
-		ResourceBundleLoader resourceBundleLoader) {
-
-		this.resourceBundleLoader = resourceBundleLoader;
-	}
-
-	protected ResourceBundleLoader resourceBundleLoader;
 
 	@Reference
 	protected WorkflowDefinitionManager workflowDefinitionManager;

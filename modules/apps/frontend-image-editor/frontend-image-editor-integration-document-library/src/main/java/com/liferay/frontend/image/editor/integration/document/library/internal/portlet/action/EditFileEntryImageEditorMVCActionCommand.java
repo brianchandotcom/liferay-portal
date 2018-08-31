@@ -41,7 +41,7 @@ import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.upload.UploadRequestSizeException;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.ResourceBundleLoader;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.IOException;
@@ -170,8 +170,8 @@ public class EditFileEntryImageEditorMVCActionCommand
 
 		jsonObject.put("success", Boolean.TRUE);
 
-		ResourceBundle resourceBundle =
-			_resourceBundleLoader.loadResourceBundle(themeDisplay.getLocale());
+		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+			"content.Language", themeDisplay.getLocale(), getClass());
 
 		SessionMessages.add(
 			actionRequest, "requestProcessed",
@@ -195,11 +195,5 @@ public class EditFileEntryImageEditorMVCActionCommand
 
 	@Reference
 	private Portal _portal;
-
-	@Reference(
-		target = "(bundle.symbolic.name=com.liferay.frontend.image.editor.integration.document.library)",
-		unbind = "-"
-	)
-	private ResourceBundleLoader _resourceBundleLoader;
 
 }

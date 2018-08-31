@@ -25,7 +25,7 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.repository.model.FileShortcut;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.ResourceBundleLoader;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.servlet.http.HttpServletRequest;
@@ -80,7 +80,8 @@ public class DLOpenerGoogleDriveDLDisplayContextFactory
 		return new DLOpenerGoogleDriveDLViewFileVersionDisplayContext(
 			parentDLViewFileVersionDisplayContext, request, response,
 			fileVersion,
-			_resourceBundleLoader.loadResourceBundle(themeDisplay.getLocale()),
+			ResourceBundleUtil.getBundle(
+				"content.Language", themeDisplay.getLocale(), getClass()),
 			_dlOpenerFileEntryReferenceLocalService,
 			_dlOpenerGoogleDriveManager);
 	}
@@ -91,10 +92,5 @@ public class DLOpenerGoogleDriveDLDisplayContextFactory
 
 	@Reference
 	private DLOpenerGoogleDriveManager _dlOpenerGoogleDriveManager;
-
-	@Reference(
-		target = "(bundle.symbolic.name=com.liferay.document.library.opener.google.drive.web)"
-	)
-	private ResourceBundleLoader _resourceBundleLoader;
 
 }

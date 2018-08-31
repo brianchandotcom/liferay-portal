@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigura
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
+import com.liferay.portal.kernel.util.ResourceBundleLoaderUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.ResourceBundle;
@@ -37,7 +38,6 @@ import javax.portlet.PortletURL;
 import javax.portlet.WindowStateException;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Rafael Praxedes
@@ -55,8 +55,13 @@ public class DDMDataProviderPortletConfigurationIcon
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		ResourceBundle resourceBundle =
-			_resourceBundleLoader.loadResourceBundle(themeDisplay.getLocale());
+		ResourceBundleLoader resourceBundleLoader =
+			ResourceBundleLoaderUtil.
+				getResourceBundleLoaderByBundleSymbolicName(
+					"com.liferay.dynamic.data.mapping.data.provider.web");
+
+		ResourceBundle resourceBundle = resourceBundleLoader.loadResourceBundle(
+			themeDisplay.getLocale());
 
 		return LanguageUtil.get(resourceBundle, getMessageKey());
 	}
@@ -115,19 +120,7 @@ public class DDMDataProviderPortletConfigurationIcon
 		return "data-providers";
 	}
 
-	@Reference(
-		target = "(bundle.symbolic.name=com.liferay.dynamic.data.mapping.data.provider.web)",
-		unbind = "-"
-	)
-	protected void setResourceBundleLoader(
-		ResourceBundleLoader resourceBundleLoader) {
-
-		_resourceBundleLoader = resourceBundleLoader;
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		DDMDataProviderPortletConfigurationIcon.class);
-
-	private ResourceBundleLoader _resourceBundleLoader;
 
 }

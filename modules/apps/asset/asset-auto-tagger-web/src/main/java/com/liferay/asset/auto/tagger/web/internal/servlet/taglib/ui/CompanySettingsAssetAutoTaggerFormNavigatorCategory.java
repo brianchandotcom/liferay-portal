@@ -18,7 +18,7 @@ import com.liferay.asset.auto.tagger.constants.FormNavigatorAssetAutoTaggerConst
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorCategory;
 import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorConstants;
-import com.liferay.portal.kernel.util.ResourceBundleLoader;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -46,18 +46,13 @@ public class CompanySettingsAssetAutoTaggerFormNavigatorCategory
 
 	@Override
 	public String getLabel(Locale locale) {
-		ResourceBundle resourceBundle =
-			_resourceBundleLoader.loadResourceBundle(locale);
+		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+			"content.Language", locale, getClass());
 
 		return _language.get(resourceBundle, getKey());
 	}
 
 	@Reference
 	private Language _language;
-
-	@Reference(
-		target = "(bundle.symbolic.name=com.liferay.asset.auto.tagger.web)"
-	)
-	private ResourceBundleLoader _resourceBundleLoader;
 
 }

@@ -38,7 +38,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.ResourceBundleLoader;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
@@ -119,8 +119,8 @@ public class NotificationTemplateContextFactory {
 
 		attributes.put("portalURL", portalURL);
 
-		ResourceBundle resourceBundle =
-			_resourceBundleLoader.loadResourceBundle(user.getLocale());
+		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+			user.getLocale(), "com.liferay.calendar.web");
 
 		attributes.put(
 			"portletName",
@@ -200,15 +200,6 @@ public class NotificationTemplateContextFactory {
 		_layoutLocalService = layoutLocalService;
 	}
 
-	@Reference(
-		target = "(bundle.symbolic.name=com.liferay.calendar.web)", unbind = "-"
-	)
-	protected void setResourceBundleLoader(
-		ResourceBundleLoader resourceBundleLoader) {
-
-		_resourceBundleLoader = resourceBundleLoader;
-	}
-
 	private static String _getCalendarBookingURL(
 			User user, long calendarBookingId)
 		throws PortalException {
@@ -276,6 +267,5 @@ public class NotificationTemplateContextFactory {
 	private static CompanyLocalService _companyLocalService;
 	private static GroupLocalService _groupLocalService;
 	private static LayoutLocalService _layoutLocalService;
-	private static ResourceBundleLoader _resourceBundleLoader;
 
 }

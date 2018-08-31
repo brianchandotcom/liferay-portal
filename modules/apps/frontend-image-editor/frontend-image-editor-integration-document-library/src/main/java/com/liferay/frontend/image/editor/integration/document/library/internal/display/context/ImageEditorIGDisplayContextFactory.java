@@ -20,7 +20,9 @@ import com.liferay.image.gallery.display.kernel.display.context.IGDisplayContext
 import com.liferay.image.gallery.display.kernel.display.context.IGViewFileVersionDisplayContext;
 import com.liferay.portal.kernel.repository.model.FileShortcut;
 import com.liferay.portal.kernel.repository.model.FileVersion;
-import com.liferay.portal.kernel.util.ResourceBundleLoader;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -52,10 +54,15 @@ public class ImageEditorIGDisplayContextFactory
 
 		Object model = fileVersion.getModel();
 
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
 		if (model instanceof DLFileVersion) {
 			return new ImageEditorIGViewFileVersionDisplayContext(
 				parentIGViewFileVersionDisplayContext, request, response,
-				fileVersion, _resourceBundleLoader);
+				fileVersion,
+				ResourceBundleUtil.getBundle(
+					"content.Language", themeDisplay.getLocale(), getClass()));
 		}
 
 		return parentIGViewFileVersionDisplayContext;
@@ -66,17 +73,6 @@ public class ImageEditorIGDisplayContextFactory
 		_dlAppService = dlAppService;
 	}
 
-	@Reference(
-		target = "(bundle.symbolic.name=com.liferay.frontend.image.editor.integration.document.library)",
-		unbind = "-"
-	)
-	protected void setResourceBundleLoader(
-		ResourceBundleLoader resourceBundleLoader) {
-
-		_resourceBundleLoader = resourceBundleLoader;
-	}
-
 	private DLAppService _dlAppService;
-	private ResourceBundleLoader _resourceBundleLoader;
 
 }

@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
+import com.liferay.portal.kernel.util.ResourceBundleLoaderUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.HashMap;
@@ -119,10 +120,13 @@ public class JournalArticleAssetDisplayContributor
 		return StringPool.BLANK;
 	}
 
+	protected ResourceBundleLoader getResourceBundleLoader() {
+		return ResourceBundleLoaderUtil.
+			getResourceBundleLoaderByBundleSymbolicName(
+				"com.liferay.journal.web");
+	}
+
 	@Override
-	@Reference(
-		target = "(bundle.symbolic.name=com.liferay.journal.web)", unbind = "-"
-	)
 	protected void setResourceBundleLoader(
 		ResourceBundleLoader resourceBundleLoader) {
 

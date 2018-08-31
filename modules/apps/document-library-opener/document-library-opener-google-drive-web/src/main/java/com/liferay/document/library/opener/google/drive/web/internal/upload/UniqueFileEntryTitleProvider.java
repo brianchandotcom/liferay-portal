@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.ResourceBundleLoader;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.upload.UniqueFileNameProvider;
 
 import java.util.Locale;
@@ -39,8 +39,8 @@ public class UniqueFileEntryTitleProvider {
 	public String provide(long groupId, long folderId, Locale locale)
 		throws PortalException {
 
-		ResourceBundle resourceBundle =
-			_resourceBundleLoader.loadResourceBundle(locale);
+		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+			"content.Language", locale, getClass());
 
 		return _uniqueFileNameProvider.provide(
 			_language.get(resourceBundle, "untitled"),
@@ -73,11 +73,6 @@ public class UniqueFileEntryTitleProvider {
 
 	@Reference
 	private Language _language;
-
-	@Reference(
-		target = "(bundle.symbolic.name=com.liferay.document.library.opener.google.drive.web)"
-	)
-	private ResourceBundleLoader _resourceBundleLoader;
 
 	@Reference
 	private UniqueFileNameProvider _uniqueFileNameProvider;

@@ -39,6 +39,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
+import com.liferay.portal.kernel.util.ResourceBundleLoaderUtil;
 
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -73,8 +74,13 @@ public class ExportImportUserNotificationHandler
 
 		Locale locale = _portal.getLocale(serviceContext.getRequest());
 
-		ResourceBundle resourceBundle =
-			_resourceBundleLoader.loadResourceBundle(locale);
+		ResourceBundleLoader resourceBundleLoader =
+			ResourceBundleLoaderUtil.
+				getResourceBundleLoaderByBundleSymbolicName(
+					"com.liferay.staging.lang");
+
+		ResourceBundle resourceBundle = resourceBundleLoader.loadResourceBundle(
+			locale);
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
 			userNotificationEvent.getPayload());
@@ -177,8 +183,5 @@ public class ExportImportUserNotificationHandler
 
 	@Reference
 	private PortletLocalService _portletLocalService;
-
-	@Reference(target = "(bundle.symbolic.name=com.liferay.staging.lang)")
-	private ResourceBundleLoader _resourceBundleLoader;
 
 }

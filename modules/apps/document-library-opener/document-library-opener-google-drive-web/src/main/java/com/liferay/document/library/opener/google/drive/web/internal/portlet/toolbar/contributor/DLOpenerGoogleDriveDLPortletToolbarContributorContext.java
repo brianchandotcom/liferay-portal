@@ -31,7 +31,7 @@ import com.liferay.portal.kernel.servlet.taglib.ui.URLMenuItem;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.ResourceBundleLoader;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
 import java.util.List;
 import java.util.ResourceBundle;
@@ -125,9 +125,8 @@ public class DLOpenerGoogleDriveDLPortletToolbarContributorContext
 	}
 
 	private String _translateKey(PortletRequest portletRequest, String key) {
-		ResourceBundle resourceBundle =
-			_resourceBundleLoader.loadResourceBundle(
-				_portal.getLocale(portletRequest));
+		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+			"content.Language", _portal.getLocale(portletRequest), getClass());
 
 		return _language.get(resourceBundle, key);
 	}
@@ -137,10 +136,5 @@ public class DLOpenerGoogleDriveDLPortletToolbarContributorContext
 
 	@Reference
 	private Portal _portal;
-
-	@Reference(
-		target = "(bundle.symbolic.name=com.liferay.document.library.opener.google.drive.web)"
-	)
-	private ResourceBundleLoader _resourceBundleLoader;
 
 }

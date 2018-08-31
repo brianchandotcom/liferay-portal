@@ -32,13 +32,10 @@ import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.UserNotificationEventLocalService;
-import com.liferay.portal.kernel.util.AggregateResourceBundleLoader;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.language.LanguageResources;
 
 import java.util.ResourceBundle;
 
@@ -98,9 +95,8 @@ public class InviteMembersUserNotificationHandler
 			return null;
 		}
 
-		ResourceBundle resourceBundle =
-			_resourceBundleLoader.loadResourceBundle(
-				serviceContext.getLocale());
+		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+			"content.Language", serviceContext.getLocale(), getClass());
 
 		String title = ResourceBundleUtil.getString(
 			resourceBundle, "x-invited-you-to-join-x",
@@ -228,17 +224,6 @@ public class InviteMembersUserNotificationHandler
 		_memberRequestLocalService = memberRequestLocalService;
 	}
 
-	@Reference(
-		target = "(bundle.symbolic.name=com.liferay.invitation.invite.members.web)",
-		unbind = "-"
-	)
-	protected void setResourceBundleLoader(
-		ResourceBundleLoader resourceBundleLoader) {
-
-		_resourceBundleLoader = new AggregateResourceBundleLoader(
-			resourceBundleLoader, LanguageResources.RESOURCE_BUNDLE_LOADER);
-	}
-
 	@Reference(unbind = "-")
 	protected void setUserLocalService(UserLocalService userLocalService) {
 		_userLocalService = userLocalService;
@@ -257,7 +242,6 @@ public class InviteMembersUserNotificationHandler
 	@Reference
 	private Portal _portal;
 
-	private ResourceBundleLoader _resourceBundleLoader;
 	private UserLocalService _userLocalService;
 	private UserNotificationEventLocalService
 		_userNotificationEventLocalService;

@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.servlet.taglib.ui.Menu;
 import com.liferay.portal.kernel.servlet.taglib.ui.MenuItem;
 import com.liferay.portal.kernel.servlet.taglib.ui.ToolbarItem;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.sharing.document.library.internal.display.context.logic.SharingDLDisplayContextHelper;
 
@@ -44,11 +43,11 @@ public class SharingDLViewFileVersionDisplayContext
 	public SharingDLViewFileVersionDisplayContext(
 		DLViewFileVersionDisplayContext parentDLDisplayContext,
 		HttpServletRequest request, HttpServletResponse response,
-		FileVersion fileVersion, ResourceBundleLoader resourceBundleLoader) {
+		FileVersion fileVersion, ResourceBundle resourceBundle) {
 
 		super(_UUID, parentDLDisplayContext, request, response, fileVersion);
 
-		_resourceBundleLoader = resourceBundleLoader;
+		_resourceBundle = resourceBundle;
 
 		_themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -83,15 +82,12 @@ public class SharingDLViewFileVersionDisplayContext
 
 		List<MenuItem> menuItems = menu.getMenuItems();
 
-		ResourceBundle resourceBundle =
-			_resourceBundleLoader.loadResourceBundle(_themeDisplay.getLocale());
-
 		SharingDLDisplayContextHelper sharingDLDisplayContextHelper =
 			new SharingDLDisplayContextHelper(_fileEntry, request);
 
 		menuItems.add(
 			sharingDLDisplayContextHelper.
-				getJavacriptEditWithImageEditorMenuItem(resourceBundle));
+				getJavacriptEditWithImageEditorMenuItem(_resourceBundle));
 
 		return menu;
 	}
@@ -104,15 +100,12 @@ public class SharingDLViewFileVersionDisplayContext
 			return toolbarItems;
 		}
 
-		ResourceBundle resourceBundle =
-			_resourceBundleLoader.loadResourceBundle(_themeDisplay.getLocale());
-
 		SharingDLDisplayContextHelper imageEditorDLDisplayContextHelper =
 			new SharingDLDisplayContextHelper(_fileEntry, request);
 
 		toolbarItems.add(
 			imageEditorDLDisplayContextHelper.
-				getJavacriptEditWithImageEditorToolbarItem(resourceBundle));
+				getJavacriptEditWithImageEditorToolbarItem(_resourceBundle));
 
 		return toolbarItems;
 	}
@@ -121,7 +114,7 @@ public class SharingDLViewFileVersionDisplayContext
 		"6d7d30de-01fa-49db-a422-d78748aa03a7");
 
 	private final FileEntry _fileEntry;
-	private final ResourceBundleLoader _resourceBundleLoader;
+	private final ResourceBundle _resourceBundle;
 	private final SharingDLDisplayContextHelper _sharingDLDisplayContextHelper;
 	private final ThemeDisplay _themeDisplay;
 

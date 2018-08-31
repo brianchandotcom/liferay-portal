@@ -16,10 +16,9 @@ package com.liferay.jenkins.results.parser;
 
 import java.io.File;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.apache.commons.lang.StringUtils;
 
@@ -29,19 +28,23 @@ import org.apache.commons.lang.StringUtils;
 public abstract class TopLevelBuildRunner<T extends TopLevelBuildData>
 	extends BaseBuildRunner<T> {
 
-	public List<String> getBatchNames() {
-		return _batchNames;
-	}
-
 	@Override
 	public void run() {
 		super.run();
 
 		propagateDistFilesToDistNodes();
+
+		invokeBatchJobs();
 	}
 
 	protected TopLevelBuildRunner(T topLevelBuildData) {
 		super(topLevelBuildData);
+	}
+
+	protected Set<String> getBatchNames() {
+		Job job = getJob();
+
+		return job.getBatchNames();
 	}
 
 	protected String[] getDistFileNames() {
@@ -66,6 +69,12 @@ public abstract class TopLevelBuildRunner<T extends TopLevelBuildData>
 		JenkinsResultsParserUtil.invokeJob(
 			buildData.getCohortName(), buildData.getJobName() + "-batch",
 			invocationParameters);
+	}
+
+	protected void invokeBatchJobs() {
+		for (String batchName : getBatchNames()) {
+			invokeBatchJob(batchName);
+		}
 	}
 
 	protected void propagateDistFilesToDistNodes() {
@@ -113,7 +122,5 @@ public abstract class TopLevelBuildRunner<T extends TopLevelBuildData>
 	private static final int _FILE_PROPAGATOR_EXPIRATION = 180;
 
 	private static final int _FILE_PROPAGATOR_THREAD_COUNT = 1;
-
-	private final List<String> _batchNames = new ArrayList<>();
 
 }

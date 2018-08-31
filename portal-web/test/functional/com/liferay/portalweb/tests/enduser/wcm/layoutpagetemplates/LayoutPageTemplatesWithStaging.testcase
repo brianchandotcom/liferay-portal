@@ -34,7 +34,7 @@
 		</if>
 	</tear-down>
 
-	<command name="AssertPageTemplateNotEditableinStagingLiveSite" priority="5">
+	<command name="AssertPageTemplatesAreOnlyEditableInStagingView" priority="5">
 		<execute macro="Navigator#openWithAppendToBaseURL">
 			<var name="urlAppend" value="group/site-name-staging/~/control_panel/manage?p_p_id=com_liferay_layout_admin_web_portlet_GroupPagesPortlet" />
 		</execute>

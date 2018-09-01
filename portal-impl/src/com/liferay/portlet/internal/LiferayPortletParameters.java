@@ -14,21 +14,20 @@
 
 package com.liferay.portlet.internal;
 
-import java.util.Set;
+import java.util.Map;
 
-import javax.portlet.RenderParameters;
+import javax.portlet.PortletParameters;
 
 /**
  * @author Neil Griffin
  */
-public interface LiferayRenderParameters
-	extends LiferayPortletParameters, RenderParameters {
+public interface LiferayPortletParameters extends PortletParameters {
 
 	/**
-	 * Returns the public render parameter names.
+	 * Returns the underlying {@link Map} of parameter values.
 	 *
-	 * @return the public render parameter names
+	 * @return The underlying {@link Map} of parameter values
 	 */
-	public Set<String> getPublicRenderParameterNames();
+	public Map<String, String[]> getParameterMap();
 
 }

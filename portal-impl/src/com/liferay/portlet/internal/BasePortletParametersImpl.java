@@ -22,13 +22,12 @@ import java.util.Set;
 import java.util.function.Function;
 
 import javax.portlet.MutablePortletParameters;
-import javax.portlet.PortletParameters;
 
 /**
  * @author Neil Griffin
  */
 public abstract class BasePortletParametersImpl
-	<T extends MutablePortletParameters> implements PortletParameters {
+	<T extends MutablePortletParameters> implements LiferayPortletParameters {
 
 	public BasePortletParametersImpl(
 		Map<String, String[]> parameterMap, String namespace,
@@ -58,6 +57,11 @@ public abstract class BasePortletParametersImpl
 		}
 
 		return new NameHashSet(keySet, _namespace);
+	}
+
+	@Override
+	public Map<String, String[]> getParameterMap() {
+		return _parameterMap;
 	}
 
 	@Override
@@ -118,10 +122,6 @@ public abstract class BasePortletParametersImpl
 		}
 
 		return copiedMap;
-	}
-
-	protected Map<String, String[]> getParameterMap() {
-		return _parameterMap;
 	}
 
 	private final Function<Map<String, String[]>, T>

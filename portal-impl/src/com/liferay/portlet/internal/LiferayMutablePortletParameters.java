@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.internal;
 
+import java.util.Map;
+
 import javax.portlet.MutablePortletParameters;
 
 /**
@@ -21,6 +23,13 @@ import javax.portlet.MutablePortletParameters;
  */
 public interface LiferayMutablePortletParameters
 	extends MutablePortletParameters {
+
+	/**
+	 * Returns the underlying {@link Map} of parameter values.
+	 *
+	 * @return The underlying {@link Map} of parameter values
+	 */
+	public Map<String, String[]> getParameterMap();
 
 	/**
 	 * Returns <code>true</code> if the state of the portlet parameters has

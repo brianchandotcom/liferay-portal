@@ -95,15 +95,16 @@ public abstract class StateAwareResponseImpl
 	public Map<String, String[]> getRenderParameterMap() {
 		Map<String, String[]> renderParameterMap = new LinkedHashMap<>();
 
-		Set<String> parameterNames = _mutableRenderParameters.getNames();
+		Map<String, String[]> mutableRenderParametersMap =
+			_mutableRenderParameters.getParameterMap();
 
-		for (String parameterName : parameterNames) {
-			if (!_mutableRenderParameters.isPublic(parameterName) ||
-				_mutableRenderParameters.isMutated(parameterName)) {
+		for (Map.Entry<String, String[]> entry :
+				mutableRenderParametersMap.entrySet()) {
 
-				renderParameterMap.put(
-					parameterName,
-					_mutableRenderParameters.getValues(parameterName));
+			if (!_mutableRenderParameters.isPublic(entry.getKey()) ||
+				_mutableRenderParameters.isMutated(entry.getKey())) {
+
+				renderParameterMap.put(entry.getKey(), entry.getValue());
 			}
 		}
 
@@ -165,16 +166,20 @@ public abstract class StateAwareResponseImpl
 			RenderParameters renderParameters =
 				portletRequestImpl.getRenderParameters();
 
-			Set<String> renderParametersNames = renderParameters.getNames();
+			LiferayRenderParameters liferayRenderParameters =
+				(LiferayRenderParameters)renderParameters;
 
-			for (String renderParameterName : renderParametersNames) {
-				if (renderParameters.isPublic(renderParameterName)) {
-					publicRenderParameterNames.add(renderParameterName);
+			Map<String, String[]> liferayRenderParametersMap =
+				liferayRenderParameters.getParameterMap();
+
+			for (Map.Entry<String, String[]> entry :
+					liferayRenderParametersMap.entrySet()) {
+
+				if (liferayRenderParameters.isPublic(entry.getKey())) {
+					publicRenderParameterNames.add(entry.getKey());
 				}
 
-				_params.put(
-					renderParameterName,
-					renderParameters.getValues(renderParameterName));
+				_params.put(entry.getKey(), entry.getValue());
 			}
 
 			_mutableRenderParameters = new MutableRenderParametersImpl(

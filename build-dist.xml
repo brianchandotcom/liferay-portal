@@ -4010,6 +4010,61 @@ plugins.includes=</echo>
 			<param name="zip.executable.file" value="liferay-portal-tomcat" />
 			<param name="zip.executable.dir" value="${app.server.tomcat.dir}" />
 		</antcall>
+
+		<unzip
+			dest="dist"
+			src="dist/liferay-portal-tomcat-${lp.version}.zip"
+		>
+			<patternset
+				excludes="**/osgi/state/**"
+			/>
+			<patternset
+				excludes="**/logs/**"
+			/>
+		</unzip>
+
+		<chmod
+			perm="744"
+		>
+			<fileset
+				dir="dist/liferay-portal-${lp.version}/tomcat-${app.server.tomcat.version}/bin"
+				includes="*.sh"
+			/>
+		</chmod>
+
+		<parallel>
+			<exec dir="dist/liferay-portal-${lp.version}/tomcat-${app.server.tomcat.version}/bin" executable="sh">
+				<arg value="catalina.sh" />
+				<arg value="run" />
+			</exec>
+
+			<sequential>
+				<waitfor>
+					<http url="http://localhost:8080" />
+				</waitfor>
+
+				<sleep seconds="5" />
+
+				<exec dir="dist/liferay-portal-${lp.version}/tomcat-${app.server.tomcat.version}/bin" executable="sh">
+					<arg value="shutdown.sh" />
+				</exec>
+			</sequential>
+		</parallel>
+
+		<tar
+			compression="gzip"
+			destfile="dist/liferay-portal-tomcat-${lp.version}.tar.gz"
+		>
+			<tarfileset dir="dist" filemode="744">
+				<include name="liferay-portal-${lp.version}/tomcat-${app.server.tomcat.version}/bin/*.sh" />
+			</tarfileset>
+			<tarfileset dir="dist">
+				<exclude name="liferay-portal-${lp.version}/tomcat-${app.server.tomcat.version}/bin/*.sh" />
+				<include name="liferay-portal-${lp.version}/**" />
+			</tarfileset>
+		</tar>
+
+		<delete dir="dist/liferay-portal-${lp.version}" />
 	</target>
 
 	<target name="zip-weblogic-custom">

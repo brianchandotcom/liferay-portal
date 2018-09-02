@@ -61,7 +61,7 @@ public class AddressCollectionResource
 		Representor.Builder<Address, Long> builder) {
 
 		return builder.types(
-			"Address"
+			"PostalAddress"
 		).identifier(
 			Address::getAddressId
 		).addLocalizedStringByLocale(

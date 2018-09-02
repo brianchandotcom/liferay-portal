@@ -35,6 +35,4 @@ public class ExpressionVisitException extends Exception {
 		super(msg, cause);
 	}
 
-	private static final long serialVersionUID = 1L;
-
 }

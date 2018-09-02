@@ -14,7 +14,7 @@
 
 package com.liferay.structured.content.apio.internal.architect.filter;
 
-import com.liferay.structured.content.apio.architect.filter.expression.Binary;
+import com.liferay.structured.content.apio.architect.filter.expression.BinaryExpression;
 import com.liferay.structured.content.apio.architect.filter.expression.Expression;
 import com.liferay.structured.content.apio.architect.filter.expression.ExpressionVisitException;
 
@@ -97,11 +97,16 @@ public class FilterParserTest {
 
 		Assert.assertNotNull(expression);
 
-		Binary binary = (Binary)expression;
+		BinaryExpression binaryExpression = (BinaryExpression)expression;
 
-		Assert.assertEquals(Binary.Operation.EQ, binary.getOperation());
-		Assert.assertEquals("[title]", binary.getLeftOperand().toString());
-		Assert.assertEquals("'title1'", binary.getRightOperand().toString());
+		Assert.assertEquals(
+			BinaryExpression.Operation.EQ, binaryExpression.getOperation());
+		Assert.assertEquals(
+			"[title]",
+			binaryExpression.getLeftOperationExpression().toString());
+		Assert.assertEquals(
+			"'title1'",
+			binaryExpression.getRightOperationExpression().toString());
 	}
 
 	@Test
@@ -112,11 +117,16 @@ public class FilterParserTest {
 
 		Assert.assertNotNull(expression);
 
-		Binary binary = (Binary)expression;
+		BinaryExpression binaryExpression = (BinaryExpression)expression;
 
-		Assert.assertEquals(Binary.Operation.EQ, binary.getOperation());
-		Assert.assertEquals("[title]", binary.getLeftOperand().toString());
-		Assert.assertEquals("'title1'", binary.getRightOperand().toString());
+		Assert.assertEquals(
+			BinaryExpression.Operation.EQ, binaryExpression.getOperation());
+		Assert.assertEquals(
+			"[title]",
+			binaryExpression.getLeftOperationExpression().toString());
+		Assert.assertEquals(
+			"'title1'",
+			binaryExpression.getRightOperationExpression().toString());
 	}
 
 	private FilterParserImpl _filterParser;

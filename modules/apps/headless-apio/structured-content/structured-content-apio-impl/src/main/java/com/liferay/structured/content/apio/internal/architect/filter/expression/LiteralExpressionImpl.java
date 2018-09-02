@@ -14,43 +14,48 @@
 
 package com.liferay.structured.content.apio.internal.architect.filter.expression;
 
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.structured.content.apio.architect.filter.expression.ExpressionVisitException;
 import com.liferay.structured.content.apio.architect.filter.expression.ExpressionVisitor;
-import com.liferay.structured.content.apio.architect.filter.expression.Member;
-
-import java.util.Collections;
-import java.util.List;
+import com.liferay.structured.content.apio.architect.filter.expression.LiteralExpression;
 
 /**
  * @author Cristina González
  */
-public class MemberImpl implements Member {
+public class LiteralExpressionImpl implements LiteralExpression {
 
-	public MemberImpl(List<String> resourcePath) {
-		if (resourcePath == null) {
-			_resourcePath = Collections.emptyList();
-		}
-		else {
-			_resourcePath = Collections.unmodifiableList(resourcePath);
-		}
+	public LiteralExpressionImpl(String text, Type type) {
+		_text = text;
+		_type = type;
 	}
 
 	@Override
-	public <T> T accept(ExpressionVisitor<T> expressionVisitor)
+	public <T> T accept(ExpressionVisitor<T> visitor)
 		throws ExpressionVisitException {
 
-		return expressionVisitor.visitMember(this);
+		return visitor.visitLiteralExpression(this);
 	}
 
 	@Override
-	public List<String> getResourcePath() {
-		return _resourcePath;
+	public String getText() {
+		return _text;
 	}
 
+	@Override
+	public Type getType() {
+		return _type;
+	}
+
+	@Override
 	public String toString() {
-		return _resourcePath.toString();
+		if (Validator.isNull(_text)) {
+			return "";
+		}
+
+		return _text;
 	}
 
-	private final List<String > _resourcePath;
+	private final String _text;
+	private final Type _type;
 
 }

@@ -15,40 +15,33 @@
 package com.liferay.structured.content.apio.architect.filter.expression;
 
 /**
- * Represents a binary expression node in the expression tree
+ * Represents a literal expression node in the expression tree. <code
+ * LiteralExpression></code> is not validated by default
  *
  * @author Cristina González
  * @review
  */
-public interface Binary extends Expression {
+public interface LiteralExpression extends Expression {
 
 	/**
-	 * Returns a Expression sub tree of the left operand.
+	 * Returns the text value of the literal expression.
 	 *
-	 * @return Expression sub tree of the left operand
+	 * @return the text value of the literal expression
 	 * @review
 	 */
-	public Expression getLeftOperand();
+	public String getText();
 
 	/**
-	 * Returns the operation of the binary Expression.
+	 * Returns the <code>Type</code> of the LiteralExpression.
 	 *
-	 * @return the operation of the binary Expression
+	 * @return the text value of the literal expression
 	 * @review
 	 */
-	public Operation getOperation();
+	public Type getType();
 
-	/**
-	 * Returns a Expression sub tree of the right operand.
-	 *
-	 * @return Expression sub tree of the right operand
-	 * @review
-	 */
-	public Expression getRightOperand();
+	public static enum Type {
 
-	public static enum Operation {
-
-		EQ
+		STRING
 
 	}
 

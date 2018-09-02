@@ -14,35 +14,23 @@
 
 package com.liferay.structured.content.apio.architect.filter.expression;
 
+import java.util.List;
+
 /**
- * Represents a literal expression node in the expression tree Literal is not
- * validated by default
+ * Represents a member expression node in the expression tree. This expression
+ * is used to describe access paths to properties.
  *
  * @author Cristina González
  * @review
  */
-public interface Literal extends Expression {
+public interface MemberExpression extends Expression {
 
 	/**
-	 * Returns the text value of the literal.
+	 * Returns the resource path of the Member Expression
 	 *
-	 * @return the text value of the literal
+	 * @return the resource path of the Member Expression
 	 * @review
 	 */
-	public String getText();
-
-	/**
-	 * Returns the <code>Type</code> of the Literal.
-	 *
-	 * @return the text value of the literal
-	 * @review
-	 */
-	public Type getType();
-
-	public static enum Type {
-
-		STRING
-
-	}
+	public List<String> getResourcePath();
 
 }

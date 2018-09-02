@@ -15,7 +15,7 @@
 package com.liferay.structured.content.apio.internal.architect.filter.expression;
 
 import com.liferay.petra.string.StringBundler;
-import com.liferay.structured.content.apio.architect.filter.expression.Binary;
+import com.liferay.structured.content.apio.architect.filter.expression.BinaryExpression;
 import com.liferay.structured.content.apio.architect.filter.expression.Expression;
 import com.liferay.structured.content.apio.architect.filter.expression.ExpressionVisitException;
 import com.liferay.structured.content.apio.architect.filter.expression.ExpressionVisitor;
@@ -23,9 +23,11 @@ import com.liferay.structured.content.apio.architect.filter.expression.Expressio
 /**
  * @author Cristina González
  */
-public class BinaryImpl implements Binary {
+public class BinaryExpressionImpl implements BinaryExpression {
 
-	public BinaryImpl(Expression left, Operation operation, Expression right) {
+	public BinaryExpressionImpl(
+		Expression left, Operation operation, Expression right) {
+
 		_left = left;
 		_operation = operation;
 		_right = right;
@@ -35,12 +37,12 @@ public class BinaryImpl implements Binary {
 	public <T> T accept(ExpressionVisitor<T> visitor)
 		throws ExpressionVisitException {
 
-		return visitor.visitBinaryOperator(
+		return visitor.visitBinaryExpressionOperation(
 			_operation, _left.accept(visitor), _right.accept(visitor));
 	}
 
 	@Override
-	public Expression getLeftOperand() {
+	public Expression getLeftOperationExpression() {
 		return _left;
 	}
 
@@ -50,7 +52,7 @@ public class BinaryImpl implements Binary {
 	}
 
 	@Override
-	public Expression getRightOperand() {
+	public Expression getRightOperationExpression() {
 		return _right;
 	}
 

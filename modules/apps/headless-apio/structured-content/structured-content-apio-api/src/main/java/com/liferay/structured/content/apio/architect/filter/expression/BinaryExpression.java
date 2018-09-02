@@ -14,23 +14,42 @@
 
 package com.liferay.structured.content.apio.architect.filter.expression;
 
-import java.util.List;
-
 /**
- * Represents a member expression node in the expression tree. This expression
- * is used to describe access paths to properties.
+ * Represents a binary expression node in the expression tree
  *
  * @author Cristina González
  * @review
  */
-public interface Member extends Expression {
+public interface BinaryExpression extends Expression {
 
 	/**
-	 * Returns the resource path of the Member
+	 * Returns a Expression sub tree of the left operation.
 	 *
-	 * @return the resource path of the Member
+	 * @return Expression sub tree of the left operation
 	 * @review
 	 */
-	public List<String> getResourcePath();
+	public Expression getLeftOperationExpression();
+
+	/**
+	 * Returns the operation of the binary Expression.
+	 *
+	 * @return the operation of the binary Expression
+	 * @review
+	 */
+	public Operation getOperation();
+
+	/**
+	 * Returns a Expression sub tree of the right operation.
+	 *
+	 * @return Expression sub tree of the right operation
+	 * @review
+	 */
+	public Expression getRightOperationExpression();
+
+	public static enum Operation {
+
+		EQ
+
+	}
 
 }

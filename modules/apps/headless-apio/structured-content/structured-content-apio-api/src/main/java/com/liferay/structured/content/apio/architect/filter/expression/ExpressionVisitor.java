@@ -23,7 +23,7 @@ package com.liferay.structured.content.apio.architect.filter.expression;
 public interface ExpressionVisitor<T> {
 
 	/**
-	 * Called for each traversed <code>Binary<</code> expression
+	 * Called for each traversed <code>BinaryExpression</code>
 	 *
 	 * @param  operation - operation
 	 * @param  left - return value of left sub tree
@@ -32,27 +32,30 @@ public interface ExpressionVisitor<T> {
 	 * @throws ExpressionVisitException
 	 * @review
 	 */
-	public T visitBinaryOperator(Binary.Operation operation, T left, T right)
+	public T visitBinaryExpressionOperation(
+			BinaryExpression.Operation operation, T left, T right)
 		throws ExpressionVisitException;
 
 	/**
-	 * Called for each traversed <code>Literal<</code> expression
+	 * Called for each traversed <code>LiteralExpression</code>
 	 *
-	 * @param  literal - Literal
+	 * @param  literalExpression - LiteralExpression
 	 * @return T
 	 * @throws ExpressionVisitException
 	 * @review
 	 */
-	public T visitLiteral(Literal literal) throws ExpressionVisitException;
+	public T visitLiteralExpression(LiteralExpression literalExpression)
+		throws ExpressionVisitException;
 
 	/**
-	 * Called for each traversed <code>Member<</code> expression
+	 * Called for each traversed <code>MemberExpression</code>
 	 *
-	 * @param  member - Member
+	 * @param  memberExpression - MemberExpression
 	 * @return T
 	 * @throws ExpressionVisitException
 	 * @review
 	 */
-	public T visitMember(Member member) throws ExpressionVisitException;
+	public T visitMemberExpression(MemberExpression memberExpression)
+		throws ExpressionVisitException;
 
 }

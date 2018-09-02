@@ -14,8 +14,9 @@
 
 package com.liferay.structured.content.apio.internal.architect.filter.expression;
 
-import com.liferay.structured.content.apio.architect.filter.expression.Binary.Operation;
+import com.liferay.structured.content.apio.architect.filter.expression.BinaryExpression.Operation;
 import com.liferay.structured.content.apio.architect.filter.expression.Expression;
+import com.liferay.structured.content.apio.architect.filter.expression.LiteralExpression;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -50,11 +51,11 @@ public class ODataExpressionToExpressionVisitor
 		Expression right) {
 
 		if (binaryOperatorKind == BinaryOperatorKind.EQ) {
-			return new BinaryImpl(left, Operation.EQ, right);
+			return new BinaryExpressionImpl(left, Operation.EQ, right);
 		}
 
 		throw new UnsupportedOperationException(
-			"Unsupported visitBinaryOperator with operator " +
+			"Unsupported visitBinaryExpressionOperation with operator " +
 				binaryOperatorKind);
 	}
 
@@ -84,10 +85,8 @@ public class ODataExpressionToExpressionVisitor
 		EdmType type = literal.getType();
 
 		if (type instanceof EdmString) {
-			return new LiteralImpl(
-				literal.getText(),
-				com.liferay.structured.content.apio.architect.filter.expression.
-					Literal.Type.STRING);
+			return new LiteralExpressionImpl(
+				literal.getText(), LiteralExpression.Type.STRING);
 		}
 
 		throw new UnsupportedOperationException(
@@ -109,7 +108,7 @@ public class ODataExpressionToExpressionVisitor
 			Collectors.toList()
 		);
 
-		return new MemberImpl(list);
+		return new MemberExpressionImpl(list);
 	}
 
 	@Override

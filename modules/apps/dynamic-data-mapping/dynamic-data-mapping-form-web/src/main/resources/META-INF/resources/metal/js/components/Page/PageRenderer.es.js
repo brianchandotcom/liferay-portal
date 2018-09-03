@@ -21,6 +21,18 @@ class PageRenderer extends Component {
 
 		activePage: Config.number().value(0),
 
+		localizedTitle: Config.object().value(
+			{
+				en_US: ''
+			}
+		),
+
+		localizedDescription: Config.object().value(
+			{
+				en_US: ''
+			}
+		),
+
 		/**
 		 * @instance
 		 * @memberof FormPage

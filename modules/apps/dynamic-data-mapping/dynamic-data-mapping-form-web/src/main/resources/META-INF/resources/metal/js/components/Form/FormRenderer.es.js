@@ -25,7 +25,7 @@ class FormRenderer extends Component {
 		 * @type {?number}
 		 */
 
-		activePage: Config.number().internal().value(0),
+		activePage: Config.number().value(0),
 
 		/**
 		 * @default false
@@ -236,7 +236,7 @@ class FormRenderer extends Component {
 		this.activePage = parseInt(pageId, 10);
 
 		this.emit('activePageUpdated', this.activePage);
-			}
+	}
 
 	/**
 	 * @param {!Object} data

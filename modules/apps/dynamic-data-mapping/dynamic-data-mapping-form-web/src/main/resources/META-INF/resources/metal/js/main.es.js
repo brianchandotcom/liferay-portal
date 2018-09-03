@@ -1,15 +1,13 @@
 import {Config} from 'metal-state';
+import {EventHandler} from 'metal-events';
 import {pageStructure} from './util/config.es';
+import {PagesVisitor} from './util/visitors.es';
 import Builder from './pages/builder/index.es';
 import Component from 'metal-jsx';
 import dom from 'metal-dom';
 import LayoutProvider from './components/LayoutProvider/index.es';
 import loader from './components/FieldsLoader/index.es';
 import RuleBuilder from './pages/RuleBuilder/index.es';
-import withAppComposer from './hocs/withAppComposer/index.es';
-import {EventHandler} from 'metal-events';
-
-const LayoutProviderWithAppComposer = withAppComposer(LayoutProvider);
 
 /**
  * Form.
@@ -151,6 +149,12 @@ class Form extends Component {
 				pages: [
 					{
 						description: '',
+						localizedDescription: {
+							[themeDisplay.getLanguageId()]: ''
+						},
+						localizedTitle: {
+							[themeDisplay.getLanguageId()]: ''
+						},
 						rows: [
 							{
 								columns: [
@@ -268,12 +272,7 @@ class Form extends Component {
 		this.submitForm();
 	}
 
-	/**
-	 * Handles click on plus button. Button shows Sidebar when clicked.
-	 * @private
-	 */
-
-	_handleAddFieldButtonClicked() {
+	_openSidebar() {
 		const {builder} = this.refs;
 
 		if (builder) {
@@ -283,10 +282,19 @@ class Form extends Component {
 		}
 	}
 
+	/**
+	 * Handles click on plus button. Button shows Sidebar when clicked.
+	 * @private
+	 */
+
+	_handleAddFieldButtonClicked() {
+		this._openSidebar();
+	}
+
 	created() {
 		this._eventHandler = new EventHandler();
 
-		sidebar.open();
+		this._openSidebar();
 	}
 
 	_pagesValueFn() {
@@ -367,11 +375,11 @@ class Form extends Component {
 
 	getState() {
 		const {
-			context,
 			defaultLanguageId,
 			localizedDescription,
 			namespace
 		} = this.props;
+		const {pages} = this.state;
 
 		const translationManager = Liferay.component(`${namespace}translationManager`);
 
@@ -380,7 +388,7 @@ class Form extends Component {
 			defaultLanguageId,
 			description: localizedDescription,
 			name: this._getLocalizedName(),
-			pages: context.pages,
+			pages,
 			rules: [],
 			successPageSettings: {
 				body: {},
@@ -394,6 +402,8 @@ class Form extends Component {
 		const {namespace} = this.props;
 
 		this.refs.nameInput.value = JSON.stringify(this._getLocalizedName());
+
+		this.syncInputValues();
 
 		submitForm(document.querySelector(`#${namespace}editForm`));
 	}
@@ -411,8 +421,6 @@ class Form extends Component {
 		this.refs.nameInput.value = JSON.stringify(name);
 		this.refs.serializedFormBuilderContextInput.value = this._getSerializedFormBuilderContext();
 		this.refs.serializedSettingsContextInput.value = JSON.stringify(settingsDDMForm.toJSON());
-
-		console.log(this.refs.serializedFormBuilderContextInput.value);
 	}
 
 	/**
@@ -435,7 +443,7 @@ class Form extends Component {
 			events: {
 				pagesChanged: this._handlePagesChanged.bind(this)
 			},
-			pages: context.pages
+			initialPages: context.pages
 		};
 
 		let currentBuilder = <Builder namespace={this.props.namespace} ref="builder" />;
@@ -453,9 +461,9 @@ class Form extends Component {
 				<input name={`${namespace}serializedFormBuilderContext`} ref="serializedFormBuilderContextInput" type="hidden" value={this._getSerializedFormBuilderContext()} />
 				<input name={`${namespace}serializedSettingsContext`} ref="serializedSettingsContextInput" type="hidden" value={settingsDDMForm && JSON.stringify(settingsDDMForm.get('context'))} />
 
-				<LayoutProviderWithAppComposer {...layoutProviderProps}>
+				<LayoutProvider {...layoutProviderProps}>
 					{currentBuilder}
-				</LayoutProviderWithAppComposer>
+				</LayoutProvider>
 
 				<div class="container-fluid-1280">
 					<div class="button-holder ddm-form-builder-buttons">

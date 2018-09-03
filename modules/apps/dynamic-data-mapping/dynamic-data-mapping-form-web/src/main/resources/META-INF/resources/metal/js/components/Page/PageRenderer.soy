@@ -15,7 +15,7 @@
 	{@param? editable: bool}
 	{@param? empty: bool}
 	{@param? page: ?}
-	{@param? pageId: int}
+	{@param? pageId: number}
 	{@param? strings: [
 		dismiss: string,
 		delete: string,
@@ -61,7 +61,7 @@
 	{@param? editable: bool}
 	{@param? empty: bool}
 	{@param? page: ?}
-	{@param? pageId: int}
+	{@param? pageId: number}
 	{@param? strings: [
 		dismiss: string,
 		delete: string,
@@ -137,7 +137,7 @@
 	{@param? contentRenderer: string}
 	{@param? editable: bool}
 	{@param? page: ?}
-	{@param? pageId: int}
+	{@param? pageId: number}
 
 	{let $classes kind="text"}
 		fade tab-pane
@@ -163,7 +163,7 @@
 	{@param? _handlePageTitleChanged: any}
 	{@param? descriptionPlaceholder: string}
 	{@param? page: ?}
-	{@param? pageId: int}
+	{@param? pageId: number}
 	{@param? titlePlaceholder: string}
 
 	{let $pageTitleAttributes kind="attributes"}
@@ -233,7 +233,7 @@
 	<div class="layout-page">
 		{if $empty}
 			{let $attributes kind="attributes"}
-				class="col col-ddm col-empty col-md-12 ddm-target last-col lfr-initial-col"
+				class="col col-ddm col-empty col-md-12 last-col lfr-initial-col"
 				data-ddm-field-column="0"
 				data-ddm-field-page="{$pageId}"
 				data-ddm-field-row="0"
@@ -241,7 +241,7 @@
 
 			<div class="row">
 				<div {$attributes}>
-					<div id="lfr-initial-col-message">{msg desc=""}drag-from-sidebar-and-drop-here{/msg}</div>
+					<div class="ddm-target" id="lfr-initial-col-message">{msg desc=""}drag-from-sidebar-and-drop-here{/msg}</div>
 				</div>
 			</div>
 		{else}
@@ -249,8 +249,8 @@
 				{if isFirst($row) and $editable}
 					{call .fieldEmpty}
 						{param isRow: true /}
-						{param pageId: $pageId /}
-						{param row: 0 /}
+						{param pageIndex: $pageId /}
+						{param rowIndex: 0 /}
 						{param size: 12 /}
 					{/call}
 				{/if}
@@ -272,8 +272,8 @@
 				{if $editable}
 					{call .fieldEmpty}
 						{param isRow: true /}
-						{param pageId: $pageId /}
-						{param row: index($row) + 1 /}
+						{param pageIndex: $pageId /}
+						{param rowIndex: index($row) + 1 /}
 						{param size: 12 /}
 					{/call}
 				{/if}
@@ -419,9 +419,9 @@
 		</div>
 	{elseif $editable}
 		{call .fieldEmpty}
-			{param column: $columnIndex /}
-			{param pageId: $pageId /}
-			{param row: $rowIndex /}
+			{param columnIndex: $columnIndex /}
+			{param pageIndex: $pageId /}
+			{param rowIndex: $rowIndex /}
 			{param size: $column.size /}
 		{/call}
 	{/if}
@@ -459,24 +459,24 @@
 
 {template .fieldEmpty}
 	{@param size: number}
-	{@param? column: number}
+	{@param? columnIndex: number}
 	{@param? isRow: bool}
-	{@param? pageId: number}
-	{@param? row: number}
+	{@param? pageIndex: number}
+	{@param? rowIndex: number}
 
 	{let $attributes kind="attributes"}
 		class="col-md-{$size}"
 
-		{if $row != 'undefined'}
-			data-ddm-field-row="{$row}"
+		{if $rowIndex != 'undefined'}
+			data-ddm-field-row="{$rowIndex}"
 		{/if}
 
-		{if $pageId != 'undefined'}
-			data-ddm-field-page="{$pageId}"
+		{if $pageIndex != 'undefined'}
+			data-ddm-field-page="{$pageIndex}"
 		{/if}
 
-		{if $column != 'undefined'}
-			data-ddm-field-column="{$column}"
+		{if $columnIndex != 'undefined'}
+			data-ddm-field-column="{$columnIndex}"
 		{/if}
 	{/let}
 

@@ -81,7 +81,7 @@ public class FormInstanceRecordNestedCollectionResource
 		).addCreator(
 			this::_addFormInstanceRecord, AcceptLocale.class,
 			ServiceContextWrapper.class,
-			_hasPermission.forAddingIn(FormInstanceIdentifier.class),
+			_hasPermission.forAddingIn(FormInstanceRecordIdentifier.class),
 			FormInstanceRecordForm::buildForm
 		).build();
 	}

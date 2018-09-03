@@ -72,7 +72,7 @@ public class JournalDDMStructuresDisplayContext {
 				add(
 					dropdownItem -> {
 						dropdownItem.putData("action", "deleteDDMStructures");
-						dropdownItem.setIcon("times");
+						dropdownItem.setIcon("times-circle");
 						dropdownItem.setLabel(
 							LanguageUtil.get(_request, "delete"));
 						dropdownItem.setQuickAction(true);

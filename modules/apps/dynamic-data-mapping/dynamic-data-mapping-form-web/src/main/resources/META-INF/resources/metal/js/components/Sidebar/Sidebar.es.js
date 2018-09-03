@@ -1,12 +1,13 @@
 import {Config} from 'metal-state';
 import {Drag, DragDrop} from 'metal-drag-drop';
 import {EventHandler} from 'metal-events';
+import {focusedFieldStructure} from '../../util/config.es';
+import {selectText} from '../../util/dom.es';
 import classnames from 'classnames';
 import ClayButton from 'clay-button';
 import Component, {Fragment} from 'metal-jsx';
 import dom from 'metal-dom';
 import FormRenderer, {FormSupport} from '../Form/index.es.js';
-import {focusedFieldStructure} from '../../util/config.es';
 
 /**
  * Sidebar is a tooling to mount forms.
@@ -299,18 +300,20 @@ class Sidebar extends Component {
 				open: true
 			}
 		);
+		this.once(
+			'rendered',
+			() => {
+				if (this._isEditMode()) {
+					const firstInput = this.element.querySelector('input');
 
-		this.refreshDragAndDrop();
-	}
-
-	rendered() {
-		if (this._isEditMode()) {
-			const firstInput = this.element.querySelector('input');
-
-			if (firstInput) {
-				firstInput.focus();
+					if (firstInput && document.activeElement !== firstInput) {
+						firstInput.focus();
+						selectText(firstInput);
+					}
+				}
 			}
-		}
+		);
+		this.refreshDragAndDrop();
 	}
 
 	/**

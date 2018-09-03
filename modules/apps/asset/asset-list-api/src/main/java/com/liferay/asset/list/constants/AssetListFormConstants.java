@@ -23,6 +23,8 @@ public class AssetListFormConstants {
 
 	public static final String ENTRY_KEY_DETAILS = "details";
 
+	public static final String ENTRY_KEY_FILTER = "filter";
+
 	public static final String ENTRY_KEY_SOURCE = "source";
 
 	public static final String SCREEN_NAVIGATION_KEY_ASSET_LIST =

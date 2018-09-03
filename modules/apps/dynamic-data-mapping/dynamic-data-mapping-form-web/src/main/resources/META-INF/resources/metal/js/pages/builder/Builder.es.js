@@ -93,7 +93,8 @@ class Builder extends Component {
 								else if (fieldName === 'label') {
 									field = {
 										...field,
-										type: 'text'
+										type: 'text',
+										value: event.fieldType.label
 									};
 								}
 								else if (fieldName === 'type') {

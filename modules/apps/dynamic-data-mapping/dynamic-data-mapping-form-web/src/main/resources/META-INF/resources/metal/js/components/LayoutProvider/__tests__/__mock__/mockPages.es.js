@@ -7,6 +7,9 @@ export default [
 						fields: [
 							{
 								label: 'Radio',
+								settingsContext: {
+									pages: []
+								},
 								type: 'radio'
 							}
 						],
@@ -25,6 +28,9 @@ export default [
 							{
 								label: 'Text',
 								required: true,
+								settingsContext: {
+									pages: []
+								},
 								type: 'text'
 							}
 						],
@@ -43,6 +49,9 @@ export default [
 								],
 								label: 'Select',
 								required: true,
+								settingsContext: {
+									pages: []
+								},
 								type: 'select'
 							}
 						],
@@ -61,6 +70,9 @@ export default [
 							{
 								label: 'Second row',
 								required: true,
+								settingsContext: {
+									pages: []
+								},
 								type: 'text'
 							}
 						],

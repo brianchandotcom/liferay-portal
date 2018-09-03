@@ -1,6 +1,7 @@
 import {Config} from 'metal-state';
 import {FormSupport} from '../Form/index.es';
 import {pageStructure} from '../../util/config.es';
+import {PagesVisitor} from '../../util/visitors.es';
 import {sub} from '../../util/strings.es';
 import Component from 'metal-jsx';
 
@@ -187,25 +188,43 @@ class LayoutProvider extends Component {
 	_handleDuplicatedField({rowIndex, pageIndex, columnIndex}) {
 		const {pages} = this.state;
 		const field = FormSupport.getField(pages, pageIndex, rowIndex, columnIndex);
+		const newFieldName = FormSupport.generateFieldName(field.type);
+		const visitor = new PagesVisitor(field.settingsContext.pages);
 
 		const duplicatedField = {
 			...field,
+			fieldName: newFieldName,
 			label: sub(
 				Liferay.Language.get('copy-of-x'),
 				[field.label]
 			),
-			name: FormSupport.generateFieldName(field.type)
+			name: newFieldName,
+			settingsContext: {
+				...field.settingsContext,
+				pages: visitor.mapFields(
+					field => {
+						if (field.fieldName === 'name') {
+							field = {
+								...field,
+								value: newFieldName
+							};
+
+						}
+						return field;
+					}
+				)
+			}
 		};
 
 		const newRowIndex = rowIndex + 1;
 
-		const newContext = FormSupport.addRow(pages, newRowIndex, pageIndex);
+		const newPages = FormSupport.addRow(pages, newRowIndex, pageIndex);
 
-		FormSupport.addFieldToColumn(newContext, pageIndex, newRowIndex, columnIndex, duplicatedField);
+		FormSupport.addFieldToColumn(newPages, pageIndex, newRowIndex, columnIndex, duplicatedField);
 
 		this.setState(
 			{
-				pages: newContext
+				pages: newPages
 			}
 		);
 	}

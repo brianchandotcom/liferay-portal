@@ -403,12 +403,13 @@ describe.only(
 
 								expect(
 									visitor.mapFields(
-										(field, fieldIndex, columnIndex, rowIndex, pageIndex) => (
-											{
+										(field, fieldIndex, columnIndex, rowIndex, pageIndex) => {
+											return {
 												...field,
+												fieldName: `name${fieldIndex}${columnIndex}${rowIndex}${pageIndex}`,
 												name: `name${fieldIndex}${columnIndex}${rowIndex}${pageIndex}`
-											}
-										)
+											};
+										}
 									)
 								).toMatchSnapshot();
 							}

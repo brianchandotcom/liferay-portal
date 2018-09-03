@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
@@ -37,6 +36,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.sites.kernel.util.SitesUtil;
@@ -46,7 +46,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 
-import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 
@@ -56,15 +55,6 @@ import javax.servlet.http.HttpServletRequest;
  * @author Pavel Savinov
  */
 public class EditAssetListDisplayContext {
-
-	public static final String PAGINATION_TYPE_NONE = "none";
-
-	public static final String PAGINATION_TYPE_REGULAR = "regular";
-
-	public static final String PAGINATION_TYPE_SIMPLE = "simple";
-
-	public static final String[] PAGINATION_TYPES =
-		{PAGINATION_TYPE_NONE, PAGINATION_TYPE_REGULAR, PAGINATION_TYPE_SIMPLE};
 
 	public static final String SCOPE_ID_CHILD_GROUP_PREFIX = "ChildGroup_";
 
@@ -77,12 +67,11 @@ public class EditAssetListDisplayContext {
 	public static final String SCOPE_ID_PARENT_GROUP_PREFIX = "ParentGroup_";
 
 	public static long[] getClassNameIds(
-		PortletPreferences portletPreferences, long[] availableClassNameIds) {
+		UnicodeProperties properties, long[] availableClassNameIds) {
 
 		boolean anyAssetType = GetterUtil.getBoolean(
-			portletPreferences.getValue(
-				"anyAssetType", Boolean.TRUE.toString()));
-		String selectionStyle = portletPreferences.getValue(
+			properties.getProperty("anyAssetType", Boolean.TRUE.toString()));
+		String selectionStyle = properties.getProperty(
 			"selectionStyle", "dynamic");
 
 		if (anyAssetType || selectionStyle.equals("manual")) {
@@ -90,14 +79,15 @@ public class EditAssetListDisplayContext {
 		}
 
 		long defaultClassNameId = GetterUtil.getLong(
-			portletPreferences.getValue("anyAssetType", null));
+			properties.getProperty("anyAssetType", null));
 
 		if (defaultClassNameId > 0) {
 			return new long[] {defaultClassNameId};
 		}
 
 		long[] classNameIds = GetterUtil.getLongValues(
-			portletPreferences.getValues("classNameIds", null));
+			StringUtil.split(
+				properties.getProperty("classNameIds", StringPool.BLANK)));
 
 		if (ArrayUtil.isNotEmpty(classNameIds)) {
 			return classNameIds;
@@ -194,11 +184,11 @@ public class EditAssetListDisplayContext {
 	}
 
 	public static long[] getGroupIds(
-		PortletPreferences portletPreferences, long scopeGroupId,
-		Layout layout) {
+		UnicodeProperties properties, long scopeGroupId, Layout layout) {
 
-		String[] scopeIds = portletPreferences.getValues(
-			"scopeIds", new String[] {SCOPE_ID_GROUP_PREFIX + scopeGroupId});
+		String[] scopeIds = StringUtil.split(
+			properties.getProperty(
+				"scopeIds", SCOPE_ID_GROUP_PREFIX + scopeGroupId));
 
 		Set<Long> groupIds = new LinkedHashSet<>();
 
@@ -218,16 +208,15 @@ public class EditAssetListDisplayContext {
 	}
 
 	public EditAssetListDisplayContext(
-			PortletRequest portletRequest, PortletResponse portletResponse,
-			PortletPreferences portletPreferences)
-		throws ConfigurationException {
+		PortletRequest portletRequest, PortletResponse portletResponse,
+		UnicodeProperties properties) {
 
 		_ddmIndexer = (DDMIndexer)portletRequest.getAttribute(
 			AssetListWebKeys.DDM_INDEXER);
 
 		_portletRequest = portletRequest;
 		_portletResponse = portletResponse;
-		_portletPreferences = portletPreferences;
+		_properties = properties;
 		_request = PortalUtil.getHttpServletRequest(portletRequest);
 	}
 
@@ -268,7 +257,7 @@ public class EditAssetListDisplayContext {
 		}
 
 		_classNameIds = getClassNameIds(
-			_portletPreferences, getAvailableClassNameIds());
+			_properties, getAvailableClassNameIds());
 
 		return _classNameIds;
 	}
@@ -279,13 +268,14 @@ public class EditAssetListDisplayContext {
 		}
 
 		_classTypeIds = GetterUtil.getLongValues(
-			_portletPreferences.getValues("classTypeIds", null));
+			StringUtil.split(
+				_properties.getProperty("classTypeIds", StringPool.BLANK)));
 
 		return _classTypeIds;
 	}
 
 	public Long[] getClassTypeIds(
-		PortletPreferences portletPreferences, String className,
+		UnicodeProperties properties, String className,
 		List<ClassType> availableClassTypes) {
 
 		Long[] availableClassTypeIds = new Long[availableClassTypes.size()];
@@ -296,8 +286,7 @@ public class EditAssetListDisplayContext {
 			availableClassTypeIds[i] = classType.getClassTypeId();
 		}
 
-		return _getClassTypeIds(
-			portletPreferences, className, availableClassTypeIds);
+		return _getClassTypeIds(properties, className, availableClassTypeIds);
 	}
 
 	public String getDDMStructureDisplayFieldValue() throws Exception {
@@ -349,7 +338,7 @@ public class EditAssetListDisplayContext {
 			WebKeys.THEME_DISPLAY);
 
 		_groupIds = getGroupIds(
-			_portletPreferences, themeDisplay.getScopeGroupId(),
+			_properties, themeDisplay.getScopeGroupId(),
 			themeDisplay.getLayout());
 
 		return _groupIds;
@@ -361,7 +350,7 @@ public class EditAssetListDisplayContext {
 		}
 
 		_orderByColumn1 = GetterUtil.getString(
-			_portletPreferences.getValue("orderByColumn1", "modifiedDate"));
+			_properties.getProperty("orderByColumn1", "modifiedDate"));
 
 		return _orderByColumn1;
 	}
@@ -372,7 +361,7 @@ public class EditAssetListDisplayContext {
 		}
 
 		_orderByColumn2 = GetterUtil.getString(
-			_portletPreferences.getValue("orderByColumn2", "title"));
+			_properties.getProperty("orderByColumn2", "title"));
 
 		return _orderByColumn2;
 	}
@@ -409,7 +398,7 @@ public class EditAssetListDisplayContext {
 		}
 
 		_anyAssetType = GetterUtil.getBoolean(
-			_portletPreferences.getValue("anyAssetType", null), true);
+			_properties.getProperty("anyAssetType", null), true);
 
 		return _anyAssetType;
 	}
@@ -424,7 +413,7 @@ public class EditAssetListDisplayContext {
 		}
 
 		_subtypeFieldsFilterEnabled = GetterUtil.getBoolean(
-			_portletPreferences.getValue(
+			_properties.getProperty(
 				"subtypeFieldsFilterEnabled", Boolean.FALSE.toString()));
 
 		return _subtypeFieldsFilterEnabled;
@@ -450,15 +439,14 @@ public class EditAssetListDisplayContext {
 
 		_ddmStructureDisplayFieldValue = ParamUtil.getString(
 			_request, "ddmStructureDisplayFieldValue",
-			_portletPreferences.getValue(
+			_properties.getProperty(
 				"ddmStructureDisplayFieldValue", StringPool.BLANK));
 		_ddmStructureFieldName = ParamUtil.getString(
 			_request, "ddmStructureFieldName",
-			_portletPreferences.getValue(
-				"ddmStructureFieldName", StringPool.BLANK));
+			_properties.getProperty("ddmStructureFieldName", StringPool.BLANK));
 		_ddmStructureFieldValue = ParamUtil.getString(
 			_request, "ddmStructureFieldValue",
-			_portletPreferences.getValue(
+			_properties.getProperty(
 				"ddmStructureFieldValue", StringPool.BLANK));
 
 		if (Validator.isNotNull(_ddmStructureFieldName) &&
@@ -482,11 +470,11 @@ public class EditAssetListDisplayContext {
 	}
 
 	private Long[] _getClassTypeIds(
-		PortletPreferences portletPreferences, String className,
+		UnicodeProperties properties, String className,
 		Long[] availableClassTypeIds) {
 
 		boolean anyAssetType = GetterUtil.getBoolean(
-			portletPreferences.getValue(
+			properties.getProperty(
 				"anyClassType" + className, Boolean.TRUE.toString()));
 
 		if (anyAssetType) {
@@ -494,7 +482,7 @@ public class EditAssetListDisplayContext {
 		}
 
 		long defaultClassTypeId = GetterUtil.getLong(
-			portletPreferences.getValue("anyClassType" + className, null), -1);
+			properties.getProperty("anyClassType" + className, null), -1);
 
 		if (defaultClassTypeId > -1) {
 			return new Long[] {defaultClassTypeId};
@@ -502,8 +490,7 @@ public class EditAssetListDisplayContext {
 
 		Long[] classTypeIds = ArrayUtil.toArray(
 			StringUtil.split(
-				portletPreferences.getValue("classTypeIds" + className, null),
-				0L));
+				properties.getProperty("classTypeIds" + className, null), 0L));
 
 		if (classTypeIds != null) {
 			return classTypeIds;
@@ -525,10 +512,10 @@ public class EditAssetListDisplayContext {
 	private long[] _groupIds;
 	private String _orderByColumn1;
 	private String _orderByColumn2;
-	private final PortletPreferences _portletPreferences;
 	private final PortletRequest _portletRequest;
 	private String _portletResource;
 	private final PortletResponse _portletResponse;
+	private final UnicodeProperties _properties;
 	private long[] _referencedModelsGroupIds;
 	private final HttpServletRequest _request;
 	private Boolean _subtypeFieldsFilterEnabled;

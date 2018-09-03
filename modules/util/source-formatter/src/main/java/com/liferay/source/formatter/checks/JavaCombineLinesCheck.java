@@ -646,6 +646,12 @@ public class JavaCombineLinesCheck extends BaseFileCheck {
 					content, line, trimmedLine, lineLength, lineNumber,
 					previousLine, null, false, false, 0);
 			}
+
+			if (previousLine.endsWith("::")) {
+				return _getCombinedLinesContent(
+					content, line, trimmedLine, lineLength, lineNumber,
+					previousLine, null, false, false, 0);
+			}
 		}
 
 		if ((previousLine.endsWith(StringPool.EQUAL) ||

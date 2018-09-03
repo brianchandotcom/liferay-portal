@@ -60,8 +60,8 @@ describe(
 			() => {
 				component = new FieldBase(
 					{
-						helpText: 'Type something!',
-						spritemap
+						spritemap,
+						tip: 'Type something!'
 					}
 				);
 

@@ -20,7 +20,7 @@ describe(
 			() => {
 				component = new Select(
 					{
-						editable: false,
+						readOnly: false,
 						spritemap
 					}
 				);
@@ -34,8 +34,8 @@ describe(
 			() => {
 				component = new Select(
 					{
-						helpText: 'Type something',
-						spritemap
+						spritemap,
+						tip: 'Type something'
 					}
 				);
 
@@ -58,11 +58,11 @@ describe(
 		);
 
 		it(
-			'should render items',
+			'should render options',
 			() => {
 				component = new Select(
 					{
-						items: [
+						options: [
 							{
 								checked: false,
 								disabled: false,
@@ -73,7 +73,8 @@ describe(
 								showLabel: true,
 								value: 'item'
 							}
-						]
+						],
+						spritemap
 					}
 				);
 
@@ -82,11 +83,12 @@ describe(
 		);
 
 		it(
-			'should render no items when items come empty',
+			'should render no options when options come empty',
 			() => {
 				component = new Select(
 					{
-						items: []
+						options: [],
+						spritemap
 					}
 				);
 
@@ -155,7 +157,7 @@ describe(
 			() => {
 				component = new Select(
 					{
-						predefinedValue: 'Select',
+						predefinedValue: ['Select'],
 						spritemap
 					}
 				);
@@ -212,7 +214,7 @@ describe(
 				component = new Select(
 					{
 						spritemap,
-						value: 'value'
+						value: ['value']
 					}
 				);
 
@@ -244,7 +246,7 @@ describe(
 				component = new Select(
 					{
 						events,
-						items: [
+						options: [
 							{
 								checked: false,
 								disabled: false,
@@ -275,7 +277,7 @@ describe(
 			() => {
 				component = new Select(
 					{
-						items: [
+						options: [
 							{
 								checked: false,
 								disabled: false,
@@ -305,7 +307,7 @@ describe(
 			() => {
 				component = new Select(
 					{
-						items: [
+						options: [
 							{
 								checked: false,
 								disabled: false,

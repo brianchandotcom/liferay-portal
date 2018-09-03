@@ -3,6 +3,11 @@ import Radio from '../Radio.es';
 let component;
 const spritemap = 'icons.svg';
 
+const defaultRadioConfig = {
+	name: 'radioField',
+	spritemap
+};
+
 describe(
 	'Field Radio',
 	() => {
@@ -19,8 +24,8 @@ describe(
 			() => {
 				component = new Radio(
 					{
-						editable: false,
-						spritemap
+						...defaultRadioConfig,
+						readOnly: false
 					}
 				);
 
@@ -33,8 +38,8 @@ describe(
 			() => {
 				component = new Radio(
 					{
-						helpText: 'Type something',
-						spritemap
+						...defaultRadioConfig,
+						tip: 'Type something'
 					}
 				);
 
@@ -43,11 +48,12 @@ describe(
 		);
 
 		it(
-			'should render items',
+			'should render options',
 			() => {
 				component = new Radio(
 					{
-						items: [
+						...defaultRadioConfig,
+						options: [
 							{
 								checked: false,
 								disabled: false,
@@ -67,11 +73,12 @@ describe(
 		);
 
 		it(
-			'should render no items when items is empty',
+			'should render no options when options is empty',
 			() => {
 				component = new Radio(
 					{
-						items: []
+						...defaultRadioConfig,
+						options: []
 					}
 				);
 
@@ -84,8 +91,8 @@ describe(
 			() => {
 				component = new Radio(
 					{
-						id: 'ID',
-						spritemap
+						...defaultRadioConfig,
+						id: 'ID'
 					}
 				);
 
@@ -98,8 +105,8 @@ describe(
 			() => {
 				component = new Radio(
 					{
-						label: 'label',
-						spritemap
+						...defaultRadioConfig,
+						label: 'label'
 					}
 				);
 
@@ -112,8 +119,8 @@ describe(
 			() => {
 				component = new Radio(
 					{
-						placeholder: 'Option 1',
-						spritemap
+						...defaultRadioConfig,
+						placeholder: 'Option 1'
 					}
 				);
 
@@ -126,8 +133,8 @@ describe(
 			() => {
 				component = new Radio(
 					{
-						required: false,
-						spritemap
+						...defaultRadioConfig,
+						required: false
 					}
 				);
 
@@ -140,9 +147,9 @@ describe(
 			() => {
 				component = new Radio(
 					{
+						...defaultRadioConfig,
 						label: 'text',
-						showLabel: true,
-						spritemap
+						showLabel: true
 					}
 				);
 
@@ -153,11 +160,7 @@ describe(
 		it(
 			'should have a spritemap',
 			() => {
-				component = new Radio(
-					{
-						spritemap
-					}
-				);
+				component = new Radio(defaultRadioConfig);
 
 				expect(component).toMatchSnapshot();
 			}
@@ -168,7 +171,7 @@ describe(
 			() => {
 				component = new Radio(
 					{
-						spritemap,
+						...defaultRadioConfig,
 						value: 'value'
 					}
 				);

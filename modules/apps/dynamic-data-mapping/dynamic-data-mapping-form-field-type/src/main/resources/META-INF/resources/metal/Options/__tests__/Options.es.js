@@ -20,7 +20,7 @@ describe(
 			() => {
 				component = new Options(
 					{
-						editable: false,
+						readOnly: false,
 						spritemap
 					}
 				);
@@ -34,8 +34,8 @@ describe(
 			() => {
 				component = new Options(
 					{
-						helpText: 'Type something',
-						spritemap
+						spritemap,
+						tip: 'Type something'
 					}
 				);
 
@@ -59,7 +59,8 @@ describe(
 								showLabel: true,
 								value: 'item'
 							}
-						]
+						],
+						spritemap
 					}
 				);
 
@@ -72,7 +73,8 @@ describe(
 			() => {
 				component = new Options(
 					{
-						items: []
+						items: [],
+						spritemap
 					}
 				);
 

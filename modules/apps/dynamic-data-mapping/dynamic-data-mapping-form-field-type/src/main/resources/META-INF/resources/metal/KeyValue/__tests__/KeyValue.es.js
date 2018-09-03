@@ -20,7 +20,7 @@ describe(
 			() => {
 				component = new KeyValue(
 					{
-						editable: false,
+						readOnly: false,
 						spritemap
 					}
 				);
@@ -34,8 +34,8 @@ describe(
 			() => {
 				component = new KeyValue(
 					{
-						helpText: 'Type something',
-						spritemap
+						spritemap,
+						tip: 'Type something'
 					}
 				);
 

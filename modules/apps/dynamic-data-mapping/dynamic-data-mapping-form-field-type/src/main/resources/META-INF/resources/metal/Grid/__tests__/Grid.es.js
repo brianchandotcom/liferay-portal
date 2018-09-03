@@ -56,7 +56,7 @@ describe(
 			() => {
 				component = new Grid(
 					{
-						editable: false,
+						readOnly: false,
 						spritemap
 					}
 				);
@@ -66,12 +66,12 @@ describe(
 		);
 
 		it(
-			'should have a helpText',
+			'should have a tip',
 			() => {
 				component = new Grid(
 					{
-						helpText: 'Type something',
-						spritemap
+						spritemap,
+						tip: 'Type something'
 					}
 				);
 

@@ -4,6 +4,11 @@ import {dom as MetalTestUtil} from 'metal-dom';
 let component;
 const spritemap = 'icons.svg';
 
+const defaultTextConfig = {
+	name: 'textField',
+	spritemap
+};
+
 describe(
 	'Field Text',
 	() => {
@@ -16,12 +21,12 @@ describe(
 		);
 
 		it(
-			'should not be editable',
+			'should not be readOnly',
 			() => {
 				component = new Text(
 					{
-						editable: false,
-						spritemap
+						...defaultTextConfig,
+						readOnly: false
 					}
 				);
 
@@ -34,8 +39,8 @@ describe(
 			() => {
 				component = new Text(
 					{
-						helpText: 'Type something',
-						spritemap
+						...defaultTextConfig,
+						tip: 'Type something'
 					}
 				);
 
@@ -48,8 +53,8 @@ describe(
 			() => {
 				component = new Text(
 					{
-						id: 'ID',
-						spritemap
+						...defaultTextConfig,
+						id: 'ID'
 					}
 				);
 
@@ -62,8 +67,8 @@ describe(
 			() => {
 				component = new Text(
 					{
-						label: 'label',
-						spritemap
+						...defaultTextConfig,
+						label: 'label'
 					}
 				);
 
@@ -76,8 +81,8 @@ describe(
 			() => {
 				component = new Text(
 					{
-						placeholder: 'Placeholder',
-						spritemap
+						...defaultTextConfig,
+						placeholder: 'Placeholder'
 					}
 				);
 
@@ -90,8 +95,8 @@ describe(
 			() => {
 				component = new Text(
 					{
-						required: false,
-						spritemap
+						...defaultTextConfig,
+						required: false
 					}
 				);
 
@@ -104,9 +109,9 @@ describe(
 			() => {
 				component = new Text(
 					{
+						...defaultTextConfig,
 						label: 'text',
-						showLabel: true,
-						spritemap
+						showLabel: true
 					}
 				);
 
@@ -117,11 +122,7 @@ describe(
 		it(
 			'should have a spritemap',
 			() => {
-				component = new Text(
-					{
-						spritemap
-					}
-				);
+				component = new Text(defaultTextConfig);
 
 				expect(component).toMatchSnapshot();
 			}
@@ -132,7 +133,7 @@ describe(
 			() => {
 				component = new Text(
 					{
-						spritemap,
+						...defaultTextConfig,
 						value: 'value'
 					}
 				);
@@ -146,8 +147,8 @@ describe(
 			() => {
 				component = new Text(
 					{
-						key: 'key',
-						spritemap
+						...defaultTextConfig,
+						key: 'key'
 					}
 				);
 
@@ -164,8 +165,8 @@ describe(
 
 				component = new Text(
 					{
-						events,
-						spritemap
+						...defaultTextConfig,
+						events
 					}
 				);
 
@@ -186,7 +187,7 @@ describe(
 					expect(data).toEqual(
 						expect.objectContaining(
 							{
-								key: 'input',
+								fieldInstance: component,
 								originalEvent: expect.any(Object),
 								value: expect.any(String)
 							}
@@ -199,9 +200,9 @@ describe(
 
 				component = new Text(
 					{
+						...defaultTextConfig,
 						events,
-						key: 'input',
-						spritemap
+						key: 'input'
 					}
 				);
 
@@ -218,8 +219,8 @@ describe(
 			() => {
 				component = new Text(
 					{
-						key: 'input',
-						spritemap
+						...defaultTextConfig,
+						key: 'input'
 					}
 				);
 

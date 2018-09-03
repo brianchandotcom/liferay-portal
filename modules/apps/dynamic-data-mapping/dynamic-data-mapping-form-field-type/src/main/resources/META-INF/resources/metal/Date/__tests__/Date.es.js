@@ -19,7 +19,7 @@ describe(
 			() => {
 				component = new Date(
 					{
-						editable: false,
+						readOnly: false,
 						spritemap
 					}
 				);
@@ -29,12 +29,12 @@ describe(
 		);
 
 		it(
-			'should have a helpText',
+			'should have a tip',
 			() => {
 				component = new Date(
 					{
-						helpText: 'Type something',
-						spritemap
+						spritemap,
+						tip: 'Type something'
 					}
 				);
 

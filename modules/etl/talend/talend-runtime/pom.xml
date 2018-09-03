@@ -174,7 +174,7 @@
 									<excludes>
 										<exclude>**/*sources*.*</exclude>
 									</excludes>
-									<filtering>true</filtering>
+									<filtering>false</filtering>
 								</resource>
 							</resources>
 						</configuration>
@@ -190,7 +190,7 @@
 							<resources>
 								<resource>
 									<directory>${user.home}/.m2/repository/com/liferay/com.liferay.talend.definition</directory>
-									<filtering>true</filtering>
+									<filtering>false</filtering>
 								</resource>
 							</resources>
 						</configuration>
@@ -206,7 +206,7 @@
 							<resources>
 								<resource>
 									<directory>${user.home}/.m2/repository/com/liferay/com.liferay.talend.runtime</directory>
-									<filtering>true</filtering>
+									<filtering>false</filtering>
 								</resource>
 							</resources>
 						</configuration>

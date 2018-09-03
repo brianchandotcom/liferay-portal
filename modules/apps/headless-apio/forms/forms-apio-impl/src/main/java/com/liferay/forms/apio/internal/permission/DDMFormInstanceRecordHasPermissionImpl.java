@@ -17,7 +17,7 @@ package com.liferay.forms.apio.internal.permission;
 import com.liferay.apio.architect.alias.routes.permission.HasNestedAddingPermissionFunction;
 import com.liferay.apio.architect.credentials.Credentials;
 import com.liferay.apio.architect.identifier.Identifier;
-import com.liferay.dynamic.data.lists.constants.DDLActionKeys;
+import com.liferay.dynamic.data.mapping.constants.DDMActionKeys;
 import com.liferay.forms.apio.architect.identifier.FormInstanceRecordIdentifier;
 import com.liferay.portal.apio.permission.HasPermission;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -43,36 +43,45 @@ public class DDMFormInstanceRecordHasPermissionImpl
 		Class<? extends Identifier<S>> identifierClass) {
 
 		if (identifierClass.equals(FormInstanceRecordIdentifier.class)) {
-			return (credentials, recordSetId) ->
-				_ddlRecordSetModelResourcePermission.contains(
-					(PermissionChecker)credentials.get(), (Long)recordSetId,
-					DDLActionKeys.ADD_RECORD);
+			return (credentials, ddmFormInstanceId) ->
+				_ddmFormInstanceModelResourcePermission.contains(
+					(PermissionChecker)credentials.get(),
+					(Long)ddmFormInstanceId,
+					DDMActionKeys.ADD_FORM_INSTANCE_RECORD);
 		}
 
 		return (credentials, s) -> false;
 	}
 
 	@Override
-	public Boolean forDeleting(Credentials credentials, Long recordSetId)
+	public Boolean forDeleting(
+			Credentials credentials, Long ddmFormInstanceRecordId)
 		throws PortalException {
 
-		return _ddlRecordSetModelResourcePermission.contains(
-			(PermissionChecker)credentials.get(), recordSetId,
+		return _ddmFormInstanceRecordModelResourcePermission.contains(
+			(PermissionChecker)credentials.get(), ddmFormInstanceRecordId,
 			ActionKeys.DELETE);
 	}
 
 	@Override
-	public Boolean forUpdating(Credentials credentials, Long recordSetId)
+	public Boolean forUpdating(
+			Credentials credentials, Long ddmFormInstanceRecordId)
 		throws PortalException {
 
-		return _ddlRecordSetModelResourcePermission.contains(
-			(PermissionChecker)credentials.get(), recordSetId,
+		return _ddmFormInstanceRecordModelResourcePermission.contains(
+			(PermissionChecker)credentials.get(), ddmFormInstanceRecordId,
 			ActionKeys.UPDATE);
 	}
 
 	@Reference(
-		target = "(model.class.name=com.liferay.dynamic.data.lists.model.DDLRecordSet)"
+		target = "(model.class.name=com.liferay.dynamic.data.mapping.model.DDMFormInstance)"
 	)
-	private ModelResourcePermission _ddlRecordSetModelResourcePermission;
+	private ModelResourcePermission _ddmFormInstanceModelResourcePermission;
+
+	@Reference(
+		target = "(model.class.name=com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecord)"
+	)
+	private ModelResourcePermission
+		_ddmFormInstanceRecordModelResourcePermission;
 
 }

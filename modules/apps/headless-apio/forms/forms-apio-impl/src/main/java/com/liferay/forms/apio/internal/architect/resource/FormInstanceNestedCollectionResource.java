@@ -18,6 +18,7 @@ import static java.util.function.Function.identity;
 
 import com.liferay.apio.architect.credentials.Credentials;
 import com.liferay.apio.architect.functional.Try;
+import com.liferay.apio.architect.language.AcceptLanguage;
 import com.liferay.apio.architect.pagination.PageItems;
 import com.liferay.apio.architect.pagination.Pagination;
 import com.liferay.apio.architect.representor.NestedRepresentor;
@@ -26,20 +27,26 @@ import com.liferay.apio.architect.resource.NestedCollectionResource;
 import com.liferay.apio.architect.routes.ItemRoutes;
 import com.liferay.apio.architect.routes.NestedCollectionRoutes;
 import com.liferay.content.space.apio.architect.identifier.ContentSpaceIdentifier;
+import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderingContext;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecord;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstanceSettings;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstanceVersion;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceService;
+import com.liferay.forms.apio.architect.identifier.FormContextIdentifier;
 import com.liferay.forms.apio.architect.identifier.FormInstanceIdentifier;
 import com.liferay.forms.apio.architect.identifier.FormInstanceRecordIdentifier;
 import com.liferay.forms.apio.architect.identifier.StructureIdentifier;
 import com.liferay.forms.apio.internal.architect.form.FetchLatestDraftForm;
+import com.liferay.forms.apio.internal.architect.form.FormContextForm;
 import com.liferay.forms.apio.internal.architect.form.MediaObjectCreatorForm;
+import com.liferay.forms.apio.internal.architect.route.EvaluateContextRoute;
 import com.liferay.forms.apio.internal.architect.route.FetchLatestDraftRoute;
 import com.liferay.forms.apio.internal.architect.route.UploadFileRoute;
+import com.liferay.forms.apio.internal.helper.EvaluateContextHelper;
 import com.liferay.forms.apio.internal.helper.FetchLatestRecordHelper;
 import com.liferay.forms.apio.internal.helper.UploadFileHelper;
+import com.liferay.forms.apio.internal.model.FormContextWrapper;
 import com.liferay.forms.apio.internal.util.FormInstanceRepresentorUtil;
 import com.liferay.media.object.apio.architect.identifier.MediaObjectIdentifier;
 import com.liferay.person.apio.architect.identifier.PersonIdentifier;
@@ -49,6 +56,7 @@ import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 
 import java.util.List;
+import java.util.Locale;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -94,6 +102,11 @@ public class FormInstanceNestedCollectionResource
 			new UploadFileRoute(), this::_uploadFile,
 			MediaObjectIdentifier.class, this::_hasPermission,
 			MediaObjectCreatorForm::buildForm
+		).addCustomRoute(
+			new EvaluateContextRoute(), this::_evaluateContext,
+			DDMFormRenderingContext.class, AcceptLanguage.class,
+			FormContextIdentifier.class, this::_hasPermission,
+			FormContextForm::buildForm
 		).build();
 	}
 
@@ -190,6 +203,26 @@ public class FormInstanceNestedCollectionResource
 		).build();
 	}
 
+	private FormContextWrapper _evaluateContext(
+		Long ddmFormInstanceId, FormContextForm formContextForm,
+		DDMFormRenderingContext ddmFormRenderingContext,
+		AcceptLanguage language) {
+
+		String fieldValues = formContextForm.getFieldValues();
+		Locale locale = language.getPreferredLocale();
+
+		return Try.fromFallible(
+			() -> _ddmFormInstanceService.getFormInstance(ddmFormInstanceId)
+		).map(
+			DDMFormInstance::getStructure
+		).map(
+			ddmStructure -> _evaluateContextHelper.evaluateContext(
+				fieldValues, ddmStructure, ddmFormRenderingContext, locale)
+		).orElse(
+			null
+		);
+	}
+
 	private DDMFormInstanceRecord _fetchDDMFormInstanceRecord(
 		Long ddmFormInstanceId, FetchLatestDraftForm fetchLatestDraftForm,
 		CurrentUser currentUser) {
@@ -247,6 +280,9 @@ public class FormInstanceNestedCollectionResource
 
 	@Reference
 	private DDMFormInstanceService _ddmFormInstanceService;
+
+	@Reference
+	private EvaluateContextHelper _evaluateContextHelper;
 
 	@Reference
 	private FetchLatestRecordHelper _fetchLatestRecordVersionHelper;

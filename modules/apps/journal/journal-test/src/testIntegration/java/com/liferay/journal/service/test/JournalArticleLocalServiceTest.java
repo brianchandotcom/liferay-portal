@@ -76,6 +76,40 @@ public class JournalArticleLocalServiceTest {
 		_group = GroupTestUtil.addGroup();
 	}
 
+	@Test
+	public void testcopyArticle() throws Exception {
+		JournalArticle oldArticle = JournalTestUtil.addArticle(
+			_group.getGroupId(),
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+
+		JournalArticle newArticle = JournalTestUtil.copyArticle(oldArticle);
+
+		List<ResourcePermission> oldResourcePermissions =
+			ResourcePermissionLocalServiceUtil.getResourcePermissions(
+				oldArticle.getCompanyId(), JournalArticle.class.getName(),
+				ResourceConstants.SCOPE_INDIVIDUAL,
+				String.valueOf(oldArticle.getResourcePrimKey()));
+
+		List<ResourcePermission> newResourcePermissions =
+			ResourcePermissionLocalServiceUtil.getResourcePermissions(
+				newArticle.getCompanyId(), JournalArticle.class.getName(),
+				ResourceConstants.SCOPE_INDIVIDUAL,
+				String.valueOf(newArticle.getResourcePrimKey()));
+
+		Assert.assertEquals(
+			newResourcePermissions.toString(), oldResourcePermissions.size(),
+			newResourcePermissions.size());
+
+		for (int i = 0; i < oldResourcePermissions.size(); ++i) {
+			Assert.assertEquals(
+				oldResourcePermissions.get(i).getActionIds(),
+				newResourcePermissions.get(i).getActionIds());
+			Assert.assertEquals(
+				oldResourcePermissions.get(i).getViewActionId(),
+				newResourcePermissions.get(i).getViewActionId());
+		}
+	}
+
 	@Test(expected = DuplicateArticleIdException.class)
 	public void testDuplicatedArticleId() throws Exception {
 		JournalArticle article = JournalTestUtil.addArticle(

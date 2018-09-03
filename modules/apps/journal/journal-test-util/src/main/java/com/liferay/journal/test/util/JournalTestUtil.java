@@ -699,6 +699,14 @@ public class JournalTestUtil {
 		return entryElement;
 	}
 
+	public static JournalArticle copyArticle(JournalArticle oldArticle)
+		throws Exception {
+
+		return JournalArticleLocalServiceUtil.copyArticle(
+			oldArticle.getUserId(), oldArticle.getGroupId(),
+			oldArticle.getArticleId(), null, true, oldArticle.getVersion());
+	}
+
 	public static void expireArticle(long groupId, JournalArticle article)
 		throws PortalException {
 

@@ -138,6 +138,21 @@ public class AssetListEntryServiceImpl extends AssetListEntryServiceBaseImpl {
 			assetListEntryId, title);
 	}
 
+	@Override
+	public AssetListEntry updateAssetListEntrySettings(
+			long assetListEntryId, String typeSettings)
+		throws PortalException {
+
+		AssetListEntry assetListEntry =
+			assetListEntryLocalService.getAssetListEntry(assetListEntryId);
+
+		_assetListEntryModelResourcePermission.check(
+			getPermissionChecker(), assetListEntry, ActionKeys.UPDATE);
+
+		return assetListEntryLocalService.updateAssetListEntrySettings(
+			assetListEntryId, typeSettings);
+	}
+
 	private static volatile ModelResourcePermission<AssetListEntry>
 		_assetListEntryModelResourcePermission =
 			ModelResourcePermissionFactory.getInstance(

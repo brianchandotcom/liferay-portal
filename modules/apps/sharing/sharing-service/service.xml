@@ -40,6 +40,9 @@
 		<finder name="ToUserId" return-type="Collection">
 			<finder-column name="toUserId" />
 		</finder>
+		<finder name="ExpirationDate" return-type="Collection">
+			<finder-column comparator="&lt;" name="expirationDate" />
+		</finder>
 		<finder name="TU_C" return-type="Collection">
 			<finder-column name="toUserId" />
 			<finder-column name="classNameId" />

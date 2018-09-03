@@ -22,10 +22,10 @@ String redirect = ParamUtil.getString(request, "redirect");
 List<AssetRendererFactory<?>> classTypesAssetRendererFactories = new ArrayList();
 %>
 
-<portlet:actionURL name="/asset_list/edit_asset_list_entry" var="editAssetListEntryURL" />
+<portlet:actionURL name="/asset_list/edit_asset_list_entry_settings" var="editAssetListEntrySettingsURL" />
 
 <liferay-frontend:edit-form
-	action="<%= editAssetListEntryURL %>"
+	action="<%= editAssetListEntrySettingsURL %>"
 	method="post"
 	name="fm"
 >

@@ -101,7 +101,8 @@ public class JournalDDMTemplateDisplayContext {
 					dropdownItem -> {
 						dropdownItem.setHref(
 							_renderResponse.createRenderURL(), "mvcPath",
-							"/edit_ddm_template.jsp", "groupId",
+							"/edit_ddm_template.jsp", "redirect",
+							themeDisplay.getURLCurrent(), "groupId",
 							String.valueOf(themeDisplay.getScopeGroupId()),
 							"classNameId",
 							String.valueOf(

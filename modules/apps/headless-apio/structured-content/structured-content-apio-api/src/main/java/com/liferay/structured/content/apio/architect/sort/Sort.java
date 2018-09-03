@@ -26,6 +26,18 @@ import java.util.List;
  */
 public class Sort {
 
+	public static final Sort EMPTY_SORT = new Sort(Collections.emptyList());
+
+	/**
+	 * Returns a empty Sort.
+	 *
+	 * @return - a empty Sort
+	 * @review
+	 */
+	public static Sort emptySort() {
+		return EMPTY_SORT;
+	}
+
 	/**
 	 * Creates a new Sort from a list of sort fields.
 	 *
@@ -33,7 +45,12 @@ public class Sort {
 	 * @review
 	 */
 	public Sort(List<SortField> sortFields) {
-		_sortFields = Collections.unmodifiableList(sortFields);
+		if (sortFields == null) {
+			_sortFields = Collections.emptyList();
+		}
+		else {
+			_sortFields = Collections.unmodifiableList(sortFields);
+		}
 	}
 
 	/**

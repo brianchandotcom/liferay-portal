@@ -6,6 +6,7 @@ import ClayButton from 'clay-button';
 import Component, {Fragment} from 'metal-jsx';
 import dom from 'metal-dom';
 import FormRenderer, {FormSupport} from '../Form/index.es.js';
+import {focusedFieldStructure} from '../../util/config.es';
 
 /**
  * Sidebar is a tooling to mount forms.
@@ -15,13 +16,13 @@ class Sidebar extends Component {
 	static STATE = {
 
 		/**
-		 * @default add
+		 * @default 0
 		 * @instance
 		 * @memberof Sidebar
-		 * @type {?string}
+		 * @type {?number}
 		 */
 
-		mode: Config.oneOf(['add', 'edit']).value('add'),
+		activeTab: Config.number().value(0).internal(),
 
 		/**
 		 * @default false
@@ -30,76 +31,7 @@ class Sidebar extends Component {
 		 * @type {?bool}
 		 */
 
-		show: Config.bool().value(false),
-
-		/**
-		 * @default 0
-		 * @instance
-		 * @memberof Sidebar
-		 * @type {?number}
-		 */
-
-		activeTab: Config.number().value(0)
-	};
-
-	static PROPS = {
-
-		/**
-		 * @default undefined
-		 * @instance
-		 * @memberof Sidebar
-		 * @type {?(array<object>|undefined)}
-		 */
-
-		pages: Config.array().value([]),
-
-		/**
-		 * @default []
-		 * @instance
-		 * @memberof Sidebar
-		 * @type {?(array|undefined)}
-		 */
-
-		fieldTypes: Config.array().value([]),
-
-		/**
-		 * @default {}
-		 * @instance
-		 * @memberof Sidebar
-		 * @type {?object}
-		 */
-
-		focusedField: Config.shapeOf(
-			{
-				columnIndex: Config.oneOfType(
-					[
-						Config.bool().value(false),
-						Config.number()
-					]
-				),
-				name: Config.string().required(),
-				pageIndex: Config.number(),
-				rowIndex: Config.number()
-			}
-		).value({}),
-
-		/**
-		 * @default add
-		 * @instance
-		 * @memberof Sidebar
-		 * @type {?string}
-		 */
-
-		mode: Config.oneOf(['add', 'edit']).value('add'),
-
-		/**
-		 * @default undefined
-		 * @instance
-		 * @memberof Sidebar
-		 * @type {?(string|undefined)}
-		 */
-
-		spritemap: Config.string().required(),
+		open: Config.bool().value(false),
 
 		/**
 		 * @default object
@@ -111,13 +43,48 @@ class Sidebar extends Component {
 		tabs: Config.object().value(
 			{
 				add: {
-					items: ['Elements']
+					items: [
+						Liferay.Language.get('elements')
+					]
 				},
 				edit: {
-					items: ['Basic', 'Properties']
+					items: [
+						Liferay.Language.get('basic'),
+						Liferay.Language.get('properties')
+					]
 				}
 			}
-		)
+		).internal()
+	};
+
+	static PROPS = {
+
+		/**
+		 * @default {}
+		 * @instance
+		 * @memberof Sidebar
+		 * @type {?object}
+		 */
+
+		focusedField: focusedFieldStructure.value({}),
+
+		/**
+		 * @default []
+		 * @instance
+		 * @memberof Sidebar
+		 * @type {?(array|undefined)}
+		 */
+
+		fieldTypes: Config.array().value([]).required(),
+
+		/**
+		 * @default undefined
+		 * @instance
+		 * @memberof Sidebar
+		 * @type {?(string|undefined)}
+		 */
+
+		spritemap: Config.string().required()
 	};
 
 	/**
@@ -127,11 +94,13 @@ class Sidebar extends Component {
 	 * @protected
 	 */
 
-	_handleDocClick(event) {
-		if (this.element.contains(event.target)) {
+	_handleDocumentMouseDown(event) {
+		const {open} = this.state;
+		if (!open || this.element.contains(event.target)) {
 			return;
 		}
 		this.close();
+		setTimeout(() => this.emit('fieldBlurred'), 500);
 	}
 
 	/**
@@ -139,7 +108,7 @@ class Sidebar extends Component {
 	 * @protected
 	 */
 
-	_handleDrag() {
+	_handleDragStarted() {
 		this.close();
 	}
 
@@ -160,7 +129,7 @@ class Sidebar extends Component {
 	 * @protected
 	 */
 
-	_handleFieldMoved(data, event) {
+	_handleDragEnded(data, event) {
 		event.preventDefault();
 
 		if (!data.target) {
@@ -168,21 +137,19 @@ class Sidebar extends Component {
 		}
 
 		const {fieldTypes} = this.props;
-		const fieldIndex = data.source.getAttribute(
-			'data-ddm-field-type-index'
-		);
-		const fieldProperties = fieldTypes[Number(fieldIndex)];
-		const indexTarget = FormSupport.getIndexes(data.target);
+		const fieldIndex = data.source.dataset.ddmFieldTypeIndex;
+		const fieldType = fieldTypes[Number(fieldIndex)];
+		const indexes = FormSupport.getIndexes(data.target.parentElement);
 
 		this.emit(
 			'fieldAdded',
 			{
 				data,
-				fieldProperties: {
-					...fieldProperties,
+				fieldType: {
+					...fieldType,
 					editable: true
 				},
-				target: indexTarget
+				target: indexes
 			}
 		);
 	}
@@ -192,11 +159,15 @@ class Sidebar extends Component {
 	 * @protected
 	 */
 
-	_handleOnClickPrevious() {
-		this.setState(
-			{
-				'mode': 'add'
-			}
+	_handlePreviousButtonClicked() {
+		this.close();
+
+		setTimeout(
+			() => {
+				this.emit('fieldBlurred');
+				this.open();
+			},
+			500
 		);
 	}
 
@@ -207,15 +178,15 @@ class Sidebar extends Component {
 	 * @protected
 	 */
 
-	_handleOnClickTab(event) {
+	_handleTabItemClicked(event) {
 		const {target} = event;
-		const {index} = target.dataset;
+		const {index} = target.parentElement.dataset;
 
 		event.preventDefault();
 
 		this.setState(
 			{
-				'activeTab': parseInt(index, 10)
+				activeTab: parseInt(index, 10)
 			}
 		);
 	}
@@ -224,7 +195,7 @@ class Sidebar extends Component {
 	 * @protected
 	 */
 
-	_handleOnClose() {
+	_handleCloseButtonClicked() {
 		this.close();
 	}
 
@@ -245,27 +216,11 @@ class Sidebar extends Component {
 	}
 
 	/**
-	 * Set the internal mode state.
-	 * @param {String} mode
-	 * @protected
-	 */
-
-	_setMode(mode) {
-		if (this._isEditMode()) {
-			this.setState(
-				{
-					mode
-				}
-			);
-		}
-	}
-
-	/**
 	 * Start drag and drop and attach events to manipulate.
 	 * @protected
 	 */
 
-	_startDrag() {
+	_bindDragAndDrop() {
 		this._dragAndDrop = new DragDrop(
 			{
 				dragPlaceholder: Drag.Placeholder.CLONE,
@@ -276,9 +231,17 @@ class Sidebar extends Component {
 
 		this._dragAndDrop.on(
 			DragDrop.Events.END,
-			this._handleFieldMoved.bind(this)
+			this._handleDragEnded.bind(this)
 		);
-		this._dragAndDrop.on(DragDrop.Events.DRAG, this._handleDrag.bind(this));
+		this._dragAndDrop.on(DragDrop.Events.DRAG, this._handleDragStarted.bind(this));
+	}
+
+	refreshDragAndDrop() {
+		this._dragAndDrop.setState(
+			{
+				targets: '.ddm-target'
+			}
+		);
 	}
 
 	/**
@@ -286,7 +249,11 @@ class Sidebar extends Component {
 	 */
 
 	attached() {
-		this._startDrag();
+		this._bindDragAndDrop();
+
+		this._eventHandler.add(
+			dom.on(document, 'mousedown', this._handleDocumentMouseDown.bind(this), true)
+		);
 	}
 
 	/**
@@ -297,11 +264,9 @@ class Sidebar extends Component {
 	close() {
 		this.setState(
 			{
-				focusedField: {},
-				show: false
+				open: false
 			}
 		);
-		this._eventHandler.removeAllListeners();
 	}
 
 	/**
@@ -310,9 +275,8 @@ class Sidebar extends Component {
 
 	created() {
 		this._eventHandler = new EventHandler();
-		this._handleOnClickTab = this._handleOnClickTab.bind(this);
-		this._handleOnClose = this._handleOnClose.bind(this);
-		this._setMode(this.props.mode);
+		this._handleCloseButtonClicked = this._handleCloseButtonClicked.bind(this);
+		this._handleTabItemClicked = this._handleTabItemClicked.bind(this);
 	}
 
 	/**
@@ -328,41 +292,24 @@ class Sidebar extends Component {
 	 * @public
 	 */
 
-	show() {
+	open() {
 		this.setState(
 			{
-				show: true
+				activeTab: 0,
+				open: true
 			}
 		);
 
-		this._eventHandler.add(
-			dom.on(document, 'click', this._handleDocClick.bind(this), true)
-		);
+		this.refreshDragAndDrop();
 	}
 
-	/**
-	 * @inheritDoc
-	 */
+	rendered() {
+		if (this._isEditMode()) {
+			const firstInput = this.element.querySelector('input');
 
-	willReceiveProps(nextProps) {
-		if (
-			typeof nextProps.pages !== 'undefined' &&
-			nextProps.pages.newVal.length
-		) {
-			this._dragAndDrop.disposeInternal();
-			this._startDrag();
-		}
-
-		if (
-			typeof nextProps.mode !== 'undefined' &&
-			nextProps.mode.newVal &&
-			this._isEditMode()
-		) {
-			this.show();
-		}
-
-		if (typeof nextProps.mode !== 'undefined' && nextProps.mode.newVal) {
-			this._setMode(nextProps.mode.newVal);
+			if (firstInput) {
+				firstInput.focus();
+			}
 		}
 	}
 
@@ -371,14 +318,12 @@ class Sidebar extends Component {
 	 */
 
 	render() {
-		const {activeTab, show} = this.state;
+		const {activeTab, open} = this.state;
 		const {
-			fieldTypes,
 			focusedField,
 			spritemap
 		} = this.props;
 
-		let currentFieldType;
 		let settingsContext;
 
 		const layoutRenderEvents = {
@@ -388,77 +333,17 @@ class Sidebar extends Component {
 		const editMode = this._isEditMode();
 
 		if (editMode) {
-			currentFieldType = fieldTypes.find(item => item.name == focusedField.type);
-			settingsContext = currentFieldType.settingsContext;
+			settingsContext = focusedField.settingsContext;
 		}
 
-		const styles = classnames('sidebar-container', {show});
-
-		const angleLeftEvents = {
-			click: this._handleOnClickPrevious.bind(this)
-		};
+		const styles = classnames('sidebar-container', {open});
 
 		return (
 			<div class={styles} ref="sidebar">
 				<div class="sidebar sidebar-light">
 					<nav class="component-tbar tbar">
 						<div class="container-fluid">
-							<ul class="tbar-nav">
-								{!editMode && show && (
-									<li class="tbar-item tbar-item-expand text-left">
-										<div class="tbar-section">
-											<span class="text-truncate-inline">
-												<span class="text-truncate">{'Add Elements'}</span>
-											</span>
-										</div>
-									</li>
-								)}
-								{editMode && show && (
-									<Fragment>
-										<li class="tbar-item">
-											<ClayButton
-												editable={true}
-												events={angleLeftEvents}
-												icon="angle-left"
-												ref="previousButton"
-												size="sm"
-												spritemap={spritemap}
-												style="secondary"
-											/>
-										</li>
-										<li class="tbar-item tbar-item-expand text-left">
-											<div>
-												<ClayButton
-													disabled={true}
-													icon={currentFieldType.icon}
-													label={currentFieldType.label}
-													size="sm"
-													spritemap={spritemap}
-													style="secondary"
-												/>
-											</div>
-										</li>
-									</Fragment>
-								)}
-								<li class="tbar-item">
-									<a
-										class="component-action"
-										data-onclick={this._handleOnClose}
-										href="#1"
-										ref="close"
-										role="button"
-									>
-										<svg
-											aria-hidden="true"
-											class="lexicon-icon lexicon-icon-times"
-										>
-											<use
-												xlinkHref={`${spritemap}#times`}
-											/>
-										</svg>
-									</a>
-								</li>
-							</ul>
+							{this._renderTopBar()}
 						</div>
 					</nav>
 					<nav class="component-navigation-bar navbar navigation-bar navbar-collapse-absolute navbar-expand-md navbar-underline">
@@ -484,21 +369,20 @@ class Sidebar extends Component {
 							id="sidebarLightCollapse00"
 						>
 							<ul class="nav navbar-nav" role="tablist">
-								{this._renderNavItem()}
+								{this._renderNavItems()}
 							</ul>
 						</div>
 					</nav>
 					<div class="ddm-sidebar-body">
-						{!editMode &&
-							!!fieldTypes.length && (
+						{!editMode && (
 							<ul class="list-group">
 								<li class="list-group-header">
-									<h3 class="list-group-header-title">{'Basic Elements'}</h3>
+									<h3 class="list-group-header-title">{Liferay.Language.get('basic-elements')}</h3>
 								</li>
 								{this._renderListElements()}
 							</ul>
 						)}
-						{editMode && !!settingsContext && (
+						{editMode && (
 							<div class="sidebar-body">
 								<div class="tab-content">
 									<FormRenderer
@@ -519,11 +403,78 @@ class Sidebar extends Component {
 		);
 	}
 
-	_renderNavItem() {
-		const {activeTab, mode} = this.state;
-		const {tabs} = this.props;
+	_renderTopBar() {
+		const {fieldTypes, focusedField, spritemap} = this.props;
+		const editMode = this._isEditMode();
+		const focusedFieldType = fieldTypes.find(({name}) => name === focusedField.type);
+		const previousButtonEvents = {
+			click: this._handlePreviousButtonClicked.bind(this)
+		};
 
-		return tabs[mode].items.map(
+		return (
+			<ul class="tbar-nav">
+				{!editMode && (
+					<li class="tbar-item tbar-item-expand text-left">
+						<div class="tbar-section">
+							<span class="text-truncate-inline">
+								<span class="text-truncate">{'Add Elements'}</span>
+							</span>
+						</div>
+					</li>
+				)}
+				{editMode && (
+					<Fragment>
+						<li class="tbar-item">
+							<ClayButton
+								editable={true}
+								events={previousButtonEvents}
+								icon="angle-left"
+								ref="previousButton"
+								size="sm"
+								spritemap={spritemap}
+								style="secondary"
+							/>
+						</li>
+						<li class="tbar-item tbar-item-expand text-left">
+							<div>
+								<ClayButton
+									disabled={true}
+									icon={focusedFieldType.icon}
+									label={focusedFieldType.label}
+									size="sm"
+									spritemap={spritemap}
+									style="secondary"
+								/>
+							</div>
+						</li>
+					</Fragment>
+				)}
+				<li class="tbar-item">
+					<a
+						class="component-action"
+						data-onclick={this._handleCloseButtonClicked}
+						href="#1"
+						ref="close"
+						role="button"
+					>
+						<svg
+							aria-hidden="true"
+							class="lexicon-icon lexicon-icon-times"
+						>
+							<use
+								xlinkHref={`${spritemap}#times`}
+							/>
+						</svg>
+					</a>
+				</li>
+			</ul>
+		);
+	}
+
+	_renderNavItems() {
+		const {activeTab, tabs} = this.state;
+
+		return tabs[this._isEditMode() ? 'edit' : 'add'].items.map(
 			(name, index) => {
 				const style = classnames(
 					'nav-link',
@@ -536,7 +487,7 @@ class Sidebar extends Component {
 					<li
 						class="nav-item"
 						data-index={index}
-						data-onclick={this._handleOnClickTab}
+						data-onclick={this._handleTabItemClicked}
 						key={`tab${index}`}
 						ref={`tab${index}`}
 					>
@@ -544,7 +495,7 @@ class Sidebar extends Component {
 							aria-controls="sidebarLightDetails"
 							class={style}
 							data-toggle="tab"
-							href="#"
+							href="javascript:;"
 							role="tab"
 						>
 							<span class="navbar-text-truncate">{name}</span>

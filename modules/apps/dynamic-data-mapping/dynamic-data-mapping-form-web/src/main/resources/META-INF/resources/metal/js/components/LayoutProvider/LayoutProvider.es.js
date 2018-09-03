@@ -86,10 +86,12 @@ class LayoutProvider extends Component {
 	 * @inheritDoc
 	 */
 
-	constructor(props, pages) {
-		super(props, pages);
-
-		this.state.pages = props.pages;
+	_handleActivePageUpdated(activePage) {
+		this.setState(
+			{
+				activePage
+	}
+		);
 	}
 
 	/**
@@ -100,8 +102,7 @@ class LayoutProvider extends Component {
 	_handleClickedField(data) {
 		this.setState(
 			{
-				focusedField: data,
-				mode: 'edit'
+				focusedField: data
 			}
 		);
 	}
@@ -156,16 +157,10 @@ class LayoutProvider extends Component {
 			);
 		}
 
+	_handleFieldBlurred() {
 		this.setState(
 			{
-				focusedField: {
-					columnIndex,
-					pageIndex,
-					rowIndex,
-					type: fieldProperties.name
-				},
-				mode: 'edit',
-				pages: newContext
+				focusedField: {}
 			}
 		);
 	}

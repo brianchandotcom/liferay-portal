@@ -29,7 +29,7 @@
 	transition: transform 0.5s ease-in-out;
 }
 
-.sidebar-container.show {
+.sidebar-container.open {
 	transform: translateX(0%);
 }
 

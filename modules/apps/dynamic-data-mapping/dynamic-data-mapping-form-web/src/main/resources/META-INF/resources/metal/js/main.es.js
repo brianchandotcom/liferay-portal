@@ -277,13 +277,14 @@ class Form extends Component {
 		if (builder) {
 			const {sidebar} = builder.refs;
 
-			sidebar.props.mode = 'add';
-			sidebar.show();
+			sidebar.open();
 		}
 	}
 
 	created() {
 		this._eventHandler = new EventHandler();
+
+		sidebar.open();
 	}
 
 	_pagesValueFn() {

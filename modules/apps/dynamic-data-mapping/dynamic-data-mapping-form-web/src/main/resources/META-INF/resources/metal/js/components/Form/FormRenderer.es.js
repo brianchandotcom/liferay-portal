@@ -137,7 +137,6 @@ class FormRenderer extends Component {
 	_addPage() {
 		const {activePage, pages} = this;
 		const newPage = this.createNewPage();
-		const newPageIndex = pages.length;
 
 		pages[activePage].enabled = false;
 
@@ -146,8 +145,11 @@ class FormRenderer extends Component {
 			newPage
 		];
 
-		this.pageSettingsItem = this._changeRemoveLabel(newPages);
-		this.activePage = newPageIndex;
+		this.setState(
+			{
+				pageSettingsItem: this._changeRemoveLabel(newPages)
+			}
+		);
 
 		this.emit('pageAdded', newPages);
 	}
@@ -229,29 +231,12 @@ class FormRenderer extends Component {
 	}
 
 	_handleChangePage({delegateTarget: {dataset}}) {
-		const {pages} = this;
 		const {pageId} = dataset;
-		let mode;
-
-		const openSidebar = !pages[pageId].rows.some(
-			({columns}) => columns.some(
-				({fields}) => fields.length
-			)
-		);
 
 		this.activePage = parseInt(pageId, 10);
 
-		if (openSidebar) {
-			mode = 'add';
-		}
-
-		this.emit(
-			'activePageUpdated',
-			{
-				mode
+		this.emit('activePageUpdated', this.activePage);
 			}
-		);
-	}
 
 	/**
 	 * @param {!Object} data

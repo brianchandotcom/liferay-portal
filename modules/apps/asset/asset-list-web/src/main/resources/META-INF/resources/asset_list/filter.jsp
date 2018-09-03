@@ -16,52 +16,74 @@
 
 <%@ include file="/init.jsp" %>
 
-<aui:fieldset label="displayed-assets-must-match-these-rules" markupView="lexicon">
-	<liferay-asset:asset-tags-error />
-
-	<%
-	DuplicateQueryRuleException dqre = null;
-	%>
-
-	<liferay-ui:error exception="<%= DuplicateQueryRuleException.class %>">
-
-		<%
-		dqre = (DuplicateQueryRuleException)errorException;
-
-		String name = dqre.getName();
-		%>
-
-		<liferay-util:buffer
-			var="messageArgument"
-		>
-			<em>(<liferay-ui:message key='<%= dqre.isContains() ? "contains" : "does-not-contain" %>' /> - <liferay-ui:message key='<%= dqre.isAndOperator() ? "all" : "any" %>' /> - <liferay-ui:message key='<%= name.equals("assetTags") ? "tags" : "categories" %>' />)</em>
-		</liferay-util:buffer>
-
-		<liferay-ui:message arguments="<%= messageArgument %>" key="only-one-rule-with-the-combination-x-is-supported" translateArguments="<%= false %>" />
-	</liferay-ui:error>
-
-	<aui:input label='<%= LanguageUtil.format(request, "show-only-assets-with-x-as-its-display-page", HtmlUtil.escape(layout.getName(locale)), false) %>' name="preferences--showOnlyLayoutAssets--" type="checkbox" value="<%= assetPublisherDisplayContext.isShowOnlyLayoutAssets() %>" />
-
-	<aui:input label="include-tags-specified-in-the-url" name="preferences--mergeUrlTags--" type="checkbox" value="<%= assetPublisherDisplayContext.isMergeURLTags() %>" />
-</aui:fieldset>
-
-<div id="<portlet:namespace />ConditionForm"></div>
-
 <%
-Map<String, Object> context = new HashMap<>();
-
-context.put("categorySelectorURL", assetPublisherDisplayContext.getCategorySelectorURL());
-context.put("id", "autofield");
-context.put("groupIds", StringUtil.merge(assetPublisherDisplayContext.getReferencedModelsGroupIds()));
-context.put("namespace", liferayPortletResponse.getNamespace());
-context.put("pathThemeImages", themeDisplay.getPathThemeImages());
-context.put("rules", assetPublisherDisplayContext.getAutoFieldRulesJSONArray());
-context.put("tagSelectorURL", assetPublisherDisplayContext.getTagSelectorURL());
-context.put("vocabularyIds", assetPublisherDisplayContext.getVocabularyIds());
+String redirect = ParamUtil.getString(request, "redirect");
 %>
 
-<soy:component-renderer
-	context="<%= context %>"
-	module="asset-publisher-web/js/AutoField.es"
-	templateNamespace="com.liferay.asset.publisher.web.AutoField.render"
-/>
+<portlet:actionURL name="/asset_list/edit_asset_list_entry_settings" var="editAssetListEntrySettingsURL" />
+
+<liferay-frontend:edit-form
+	action="<%= editAssetListEntrySettingsURL %>"
+	method="post"
+	name="fm"
+>
+	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
+	<aui:input name="assetListEntryId" type="hidden" value="<%= assetListDisplayContext.getAssetListEntryId() %>" />
+	<aui:input name="type" type="hidden" value="<%= assetListDisplayContext.getAssetListEntryType() %>" />
+
+	<liferay-frontend:edit-form-body>
+		<liferay-frontend:fieldset-group>
+			<aui:fieldset label="displayed-assets-must-match-these-rules" markupView="lexicon">
+				<liferay-asset:asset-tags-error />
+
+				<%
+				DuplicateQueryRuleException dqre = null;
+				%>
+
+				<liferay-ui:error exception="<%= DuplicateQueryRuleException.class %>">
+
+					<%
+					dqre = (DuplicateQueryRuleException)errorException;
+
+					String name = dqre.getName();
+					%>
+
+					<liferay-util:buffer
+						var="messageArgument"
+					>
+						<em>(<liferay-ui:message key='<%= dqre.isContains() ? "contains" : "does-not-contain" %>' /> - <liferay-ui:message key='<%= dqre.isAndOperator() ? "all" : "any" %>' /> - <liferay-ui:message key='<%= name.equals("assetTags") ? "tags" : "categories" %>' />)</em>
+					</liferay-util:buffer>
+
+					<liferay-ui:message arguments="<%= messageArgument %>" key="only-one-rule-with-the-combination-x-is-supported" translateArguments="<%= false %>" />
+				</liferay-ui:error>
+
+				<div id="<portlet:namespace />ConditionForm"></div>
+
+				<%
+				Map<String, Object> context = new HashMap<>();
+
+				context.put("categorySelectorURL", editAssetListDisplayContext.getCategorySelectorURL());
+				context.put("groupIds", StringUtil.merge(editAssetListDisplayContext.getReferencedModelsGroupIds()));
+				context.put("id", "autofield");
+				context.put("namespace", liferayPortletResponse.getNamespace());
+				context.put("pathThemeImages", themeDisplay.getPathThemeImages());
+				context.put("rules", editAssetListDisplayContext.getAutoFieldRulesJSONArray());
+				context.put("tagSelectorURL", editAssetListDisplayContext.getTagSelectorURL());
+				context.put("vocabularyIds", editAssetListDisplayContext.getVocabularyIds());
+				%>
+
+				<soy:component-renderer
+					context="<%= context %>"
+					module="asset-list-web/js/AutoField.es"
+					templateNamespace="com.liferay.asset.list.web.AutoField.render"
+				/>
+			</aui:fieldset>
+		</liferay-frontend:fieldset-group>
+	</liferay-frontend:edit-form-body>
+
+	<liferay-frontend:edit-form-footer>
+		<aui:button type="submit" />
+
+		<aui:button href="<%= redirect %>" type="cancel" />
+	</liferay-frontend:edit-form-footer>
+</liferay-frontend:edit-form>

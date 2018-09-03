@@ -293,8 +293,6 @@ class Form extends Component {
 
 	created() {
 		this._eventHandler = new EventHandler();
-
-		this._openSidebar();
 	}
 
 	_pagesValueFn() {
@@ -345,6 +343,8 @@ class Form extends Component {
 
 		this._createEditor('nameEditor').then(editor => editor.on('change', this._handleNameEditorChanged.bind(this)));
 		this._createEditor('descriptionEditor').then(editor => editor.on('change', this._handleDescriptionEditorChanged.bind(this)));
+
+		this._openSidebar();
 	}
 
 	_handleFormNavClicked(event) {

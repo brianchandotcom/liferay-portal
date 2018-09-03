@@ -19,6 +19,8 @@ package com.liferay.asset.list.constants;
  */
 public class AssetListWebKeys {
 
+	public static final String DDM_INDEXER = "DDM_INDEXER";
+
 	public static final String SCREEN_NAVIGATION_REGISTRY =
 		"SCREEN_NAVIGATION_REGISTRY";
 

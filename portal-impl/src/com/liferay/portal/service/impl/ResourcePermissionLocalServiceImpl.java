@@ -567,18 +567,24 @@ public class ResourcePermissionLocalServiceImpl
 		throws PortalException {
 
 		List<ResourcePermission> oldResourcePermissions =
-			getResourcePermissions(
+			resourcePermissionPersistence.findByC_N_S_P(
 				companyId, name, ResourceConstants.SCOPE_INDIVIDUAL,
 				String.valueOf(oldPrimKey));
+
+		if (oldResourcePermissions.isEmpty()) {
+			return;
+		}
+
+		long batchCounter = counterLocalService.increment(
+			ResourcePermission.class.getName(), oldResourcePermissions.size());
+
+		batchCounter -= oldResourcePermissions.size();
 
 		for (ResourcePermission oldResourcePermission :
 				oldResourcePermissions) {
 
-			long resourcePermissionId = counterLocalService.increment(
-				ResourcePermission.class.getName());
-
 			ResourcePermission resourcePermission =
-				resourcePermissionPersistence.create(resourcePermissionId);
+				resourcePermissionPersistence.create(++batchCounter);
 
 			resourcePermission.setCompanyId(companyId);
 			resourcePermission.setName(name);

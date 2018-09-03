@@ -16,6 +16,7 @@ package com.liferay.bean.portlet.cdi.extension.internal.annotated.type;
 
 import java.lang.reflect.Type;
 
+import java.util.LinkedHashSet;
 import java.util.Set;
 
 import javax.enterprise.inject.spi.AnnotatedType;
@@ -34,7 +35,7 @@ public class PortletConfigAnnotatedTypeImpl<X> extends AnnotatedTypeWrapper<X> {
 	public PortletConfigAnnotatedTypeImpl(AnnotatedType<X> annotatedType) {
 		super(annotatedType);
 
-		_types = annotatedType.getTypeClosure();
+		_types = new LinkedHashSet<>(annotatedType.getTypeClosure());
 
 		_types.remove(PortletConfig.class);
 	}

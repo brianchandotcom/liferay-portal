@@ -92,4 +92,7 @@ public interface AssetListEntryService extends BaseService {
 
 	public AssetListEntry updateAssetListEntry(long assetListEntryId,
 		String title) throws PortalException;
+
+	public AssetListEntry updateAssetListEntrySettings(long assetListEntryId,
+		String typeSettings) throws PortalException;
 }

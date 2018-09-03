@@ -1,0 +1,4 @@
+Bundle-Name: Liferay Frontend Theme Porygon Site Initializer
+Bundle-SymbolicName: com.liferay.frontend.theme.porygon.site.initializer
+Bundle-Version: 1.0.0
+Web-ContextPath: /frontend-theme-porygon-site-initializer

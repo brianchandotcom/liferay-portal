@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+
+<root available-locales="en_US" default-locale="en_US">
+	<dynamic-element index-type="keyword" instance-id="syhp" name="coverImage" type="image">
+		<dynamic-content language-id="en_US" alt="" name="content_10.jpg" title="content_10.jpg" type="document">$content_10.jpg$</dynamic-content>
+	</dynamic-element>
+	<dynamic-element index-type="keyword" instance-id="hzth" name="title" type="text">
+		<dynamic-content language-id="en_US"><![CDATA[Astronomy compels the soul to look upward]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element index-type="keyword" instance-id="imew" name="subTitle" type="text_box">
+		<dynamic-content language-id="en_US"><![CDATA[and leads us from this world to another]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element index-type="keyword" instance-id="iosz" name="content" type="text_area">
+		<dynamic-content language-id="en_US"><![CDATA[<p>As we got further and further away, it [the Earth] diminished in size. Finally it shrank to the size of a marble, the most beautiful you can imagine. That beautiful, warm, living object looked so fragile, so delicate, that if you touched it with a finger it would crumble and fall apart. Seeing this has to change a man.</p>
+<p>The regret on our side is, they used to say years ago, we are reading about you in science class. Now they say, we are reading about you in history class.</p>
+<p>Dinosaurs are extinct today because they lacked opposable thumbs and the brainpower to build a space program.</p>
+<p>NASA is not about the &lsquo;Adventure of Human Space Exploration&rsquo;&hellip;We won&rsquo;t be doing it just to get out there in space &ndash; we&rsquo;ll be doing it because the things we learn out there will be making life better for a lot of people who won&rsquo;t be able to go.</p>
+<p>Never in all their history have men been able truly to conceive of the world as one: a single sphere, a globe, having the qualities of a globe, a round earth in which all the directions eventually meet, in which there is no center because every point, or none, is center &mdash; an equal earth which all men occupy as equals. The airman's earth, if free men make it, will be truly round: a globe in practice, not in theory.</p>
+<p>A Chinese tale tells of some men sent to harm a young girl who, upon seeing her beauty, become her protectors rather than her violators. That's how I felt seeing the Earth for the first time. I could not help but love and cherish her.</p>
+<p>To be the first to enter the cosmos, to engage, single-handed, in an unprecedented duel with nature&mdash;could one dream of anything more?</p>]]></dynamic-content>
+	</dynamic-element>
+</root>

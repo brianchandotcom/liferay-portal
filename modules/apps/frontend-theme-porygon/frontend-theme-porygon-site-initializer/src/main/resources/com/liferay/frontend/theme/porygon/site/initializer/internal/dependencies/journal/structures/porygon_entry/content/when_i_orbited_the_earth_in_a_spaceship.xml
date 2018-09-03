@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+
+<root available-locales="en_US" default-locale="en_US">
+	<dynamic-element index-type="keyword" instance-id="srmt" name="coverImage" type="image">
+		<dynamic-content language-id="en_US" alt="" name="content_05.jpg" title="content_05.jpg" type="document">$content_05.jpg$</dynamic-content>
+	</dynamic-element>
+	<dynamic-element index-type="keyword" instance-id="hokz" name="title" type="text">
+		<dynamic-content language-id="en_US"><![CDATA[When I orbited the Earth in a spaceship]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element index-type="keyword" instance-id="vmbz" name="subTitle" type="text_box">
+		<dynamic-content language-id="en_US"><![CDATA[I saw for the first time how beautiful our planet is]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element index-type="keyword" instance-id="zhqm" name="content" type="text_area">
+		<dynamic-content language-id="en_US"><![CDATA[<p>Mankind, let us preserve and increase this beauty, and not destroy it!</p>
+<p>As I stand out here in the wonders of the unknown at Hadley, I sort of realize there&rsquo;s a fundamental truth to our nature, Man must explore . . . and this is exploration at its greatest.</p>
+<p>I believe every human has a finite number of heartbeats. I don't intend to waste any of mine</p>
+<p>When I orbited the Earth in a spaceship, I saw for the first time how beautiful our planet is. Mankind, let us preserve and increase this beauty, and not destroy it!</p>
+<p>We choose to go to the moon in this decade and do the other things, not because they are easy, but because they are hard, because that goal will serve to organize and measure the best of our energies and skills, because that challenge is one that we are willing to accept, one we are unwilling to postpone, and one which we intend to win.</p>
+<p>If you could see the earth illuminated when you were in a place as dark as night, it would look to you more splendid than the moon.</p>
+<p>The Earth was small, light blue, and so touchingly alone, our home that must be defended like a holy relic. The Earth was absolutely round. I believe I never knew what the word round meant until I saw Earth from space.</p>
+<p>We are all connected; To each other, biologically. To the earth, chemically. To the rest of the universe atomically.</p>
+<p>Failure is not an option.</p>
+<p>Problems look mighty small from 150 miles up.</p>]]></dynamic-content>
+	</dynamic-element>
+</root>

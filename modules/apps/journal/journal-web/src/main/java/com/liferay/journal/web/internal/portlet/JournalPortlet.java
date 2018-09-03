@@ -29,8 +29,10 @@ import com.liferay.dynamic.data.mapping.exception.StorageFieldRequiredException;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.storage.Fields;
+import com.liferay.dynamic.data.mapping.util.DDMTemplateHelper;
 import com.liferay.dynamic.data.mapping.util.DDMUtil;
 import com.liferay.item.selector.ItemSelector;
+import com.liferay.journal.configuration.JournalFileUploadsConfiguration;
 import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.journal.constants.JournalWebKeys;
 import com.liferay.journal.exception.ArticleContentException;
@@ -483,6 +485,15 @@ public class JournalPortlet extends MVCPortlet {
 				JournalWebKeys.ITEM_SELECTOR, _itemSelector);
 		}
 
+		if (Objects.equals(path, "/edit_ddm_template.jsp")) {
+			renderRequest.setAttribute(
+				DDMTemplateHelper.class.getName(), _ddmTemplateHelper);
+		}
+
+		renderRequest.setAttribute(
+			JournalFileUploadsConfiguration.class.getName(),
+			_journalFileUploadsConfiguration);
+
 		renderRequest.setAttribute(
 			JournalWebConfiguration.class.getName(), _journalWebConfiguration);
 
@@ -511,6 +522,9 @@ public class JournalPortlet extends MVCPortlet {
 	public void serveResource(
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws IOException, PortletException {
+
+		resourceRequest.setAttribute(
+			DDMTemplateHelper.class.getName(), _ddmTemplateHelper);
 
 		resourceRequest.setAttribute(TrashWebKeys.TRASH_HELPER, _trashHelper);
 
@@ -1083,6 +1097,9 @@ public class JournalPortlet extends MVCPortlet {
 	@Activate
 	@Modified
 	protected void activate(Map<String, Object> properties) {
+		_journalFileUploadsConfiguration = ConfigurableUtil.createConfigurable(
+			JournalFileUploadsConfiguration.class, properties);
+
 		_journalWebConfiguration = ConfigurableUtil.createConfigurable(
 			JournalWebConfiguration.class, properties);
 	}
@@ -1536,6 +1553,9 @@ public class JournalPortlet extends MVCPortlet {
 	private DDMStructureLocalService _ddmStructureLocalService;
 
 	@Reference
+	private DDMTemplateHelper _ddmTemplateHelper;
+
+	@Reference
 	private Http _http;
 
 	@Reference
@@ -1555,6 +1575,9 @@ public class JournalPortlet extends MVCPortlet {
 
 	@Reference
 	private JournalFeedService _journalFeedService;
+
+	private volatile JournalFileUploadsConfiguration
+		_journalFileUploadsConfiguration;
 
 	@Reference
 	private JournalFolderService _journalFolderService;

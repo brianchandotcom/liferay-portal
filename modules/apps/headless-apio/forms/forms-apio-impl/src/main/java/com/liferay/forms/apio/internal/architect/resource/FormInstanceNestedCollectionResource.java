@@ -18,6 +18,7 @@ import static java.util.function.Function.identity;
 
 import com.liferay.apio.architect.credentials.Credentials;
 import com.liferay.apio.architect.custom.actions.GetRoute;
+import com.liferay.apio.architect.custom.actions.PostRoute;
 import com.liferay.apio.architect.functional.Try;
 import com.liferay.apio.architect.pagination.PageItems;
 import com.liferay.apio.architect.pagination.Pagination;
@@ -36,13 +37,18 @@ import com.liferay.forms.apio.architect.identifier.FormInstanceIdentifier;
 import com.liferay.forms.apio.architect.identifier.FormInstanceRecordIdentifier;
 import com.liferay.forms.apio.architect.identifier.StructureIdentifier;
 import com.liferay.forms.apio.internal.architect.form.FetchLatestDraftForm;
+import com.liferay.forms.apio.internal.architect.form.MediaObjectCreatorForm;
 import com.liferay.forms.apio.internal.architect.route.FetchLatestDraftRoute;
+import com.liferay.forms.apio.internal.architect.route.UploadFileRoute;
 import com.liferay.forms.apio.internal.helper.FetchLatestRecordHelper;
+import com.liferay.forms.apio.internal.helper.UploadFileHelper;
 import com.liferay.forms.apio.internal.util.FormInstanceRepresentorUtil;
+import com.liferay.media.object.apio.architect.identifier.MediaObjectIdentifier;
 import com.liferay.person.apio.architect.identifier.PersonIdentifier;
 import com.liferay.portal.apio.permission.HasPermission;
 import com.liferay.portal.apio.user.CurrentUser;
 import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 
 import java.util.List;
 
@@ -82,12 +88,17 @@ public class FormInstanceNestedCollectionResource
 
 		GetRoute getRoute = new FetchLatestDraftRoute();
 
+		PostRoute postRoute = new UploadFileRoute();
+
 		return builder.addGetter(
 			_ddmFormInstanceService::getFormInstance
 		).addCustomRoute(
 			getRoute, this::_fetchDDMFormInstanceRecord, CurrentUser.class,
 			FormInstanceRecordIdentifier.class, this::_hasPermission,
 			FetchLatestDraftForm::buildForm
+		).addCustomRoute(
+			postRoute, this::_uploadFile, MediaObjectIdentifier.class,
+			(credentials, aLong) -> true, MediaObjectCreatorForm::buildForm
 		).build();
 	}
 
@@ -226,6 +237,19 @@ public class FormInstanceNestedCollectionResource
 		);
 	}
 
+	private FileEntry _uploadFile(
+		Long ddmFormInstanceId, MediaObjectCreatorForm mediaObjectCreatorForm) {
+
+		return Try.fromFallible(
+			() -> _ddmFormInstanceService.getFormInstance(ddmFormInstanceId)
+		).map(
+			ddmFormInstance -> _uploadFileHelper.uploadFile(
+				ddmFormInstance, mediaObjectCreatorForm)
+		).orElse(
+			null
+		);
+	}
+
 	@Reference
 	private DDMFormInstanceService _ddmFormInstanceService;
 
@@ -236,5 +260,8 @@ public class FormInstanceNestedCollectionResource
 		target = "(model.class.name=com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecord)"
 	)
 	private HasPermission<Long> _hasPermission;
+
+	@Reference
+	private UploadFileHelper _uploadFileHelper;
 
 }

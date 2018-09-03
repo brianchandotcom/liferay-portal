@@ -5,7 +5,11 @@
 				{
 					"columns": [
 						{
-							"fieldNames": ["c", "b", "a"],
+							"fieldNames": [
+								"c",
+								"b",
+								"a"
+							],
 							"size": 12
 						}
 					]
@@ -20,11 +24,15 @@
 				{
 					"columns": [
 						{
-							"fieldNames": ["e"],
+							"fieldNames": [
+								"e"
+							],
 							"size": 6
 						},
 						{
-							"fieldNames": ["d"],
+							"fieldNames": [
+								"d"
+							],
 							"size": 6
 						}
 					]

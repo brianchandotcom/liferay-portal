@@ -1,5 +1,9 @@
 {
-	"array": [1, 2, 3],
+	"array": [
+		1,
+		2,
+		3
+	],
 	"boolean": true,
 	"email": "test@liferay.com",
 	"integer": 1,

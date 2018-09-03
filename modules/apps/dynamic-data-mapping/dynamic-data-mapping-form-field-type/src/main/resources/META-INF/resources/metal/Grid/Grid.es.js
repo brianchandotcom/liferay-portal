@@ -38,7 +38,7 @@ class Grid extends Component {
 		 * @type {?bool}
 		 */
 
-		editable: Config.bool().value(false),
+		readOnly: Config.bool().value(false),
 
 		/**
 		 * @default undefined
@@ -47,7 +47,7 @@ class Grid extends Component {
 		 * @type {?(string|undefined)}
 		 */
 
-		helpText: Config.string(),
+		tip: Config.string(),
 
 		/**
 		 * @default undefined

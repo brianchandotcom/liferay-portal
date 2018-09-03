@@ -21,7 +21,7 @@ class Date extends Component {
 		 * @type {?bool}
 		 */
 
-		editable: Config.bool().value(false),
+		readOnly: Config.bool().value(false),
 
 		/**
 		 * @default undefined
@@ -30,7 +30,7 @@ class Date extends Component {
 		 * @type {?(string|undefined)}
 		 */
 
-		helpText: Config.string(),
+		tip: Config.string(),
 
 		/**
 		 * @default undefined

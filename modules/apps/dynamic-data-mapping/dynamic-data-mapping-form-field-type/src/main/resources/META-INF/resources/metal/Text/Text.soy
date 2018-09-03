@@ -3,24 +3,26 @@
 {template .render}
 	{@param name: string}
 	{@param? _handleFieldChanged: any}
-	{@param? editable: bool}
-	{@param? tip: string}
+	{@param? displayStyle: string}
 	{@param? id: string}
 	{@param? label: string}
 	{@param? placeholder: string}
+	{@param? readOnly: bool}
 	{@param? required: bool}
 	{@param? showLabel: bool}
 	{@param? spritemap: string}
+	{@param? tip: string}
 	{@param? value: string}
 
 	{call FieldBase.render}
 		{param contentRenderer kind="html"}
 			{call .content}
 				{param _handleFieldChanged: $_handleFieldChanged /}
-				{param editable: $editable /}
+				{param displayStyle: $displayStyle /}
 				{param id: $id /}
 				{param name: $name /}
 				{param placeholder: $placeholder /}
+				{param readOnly: $readOnly /}
 				{param value: $value /}
 			{/call}
 		{/param}
@@ -37,9 +39,10 @@
 {template .content}
 	{@param name: string}
 	{@param? _handleFieldChanged: any}
-	{@param? editable: bool}
+	{@param? displayStyle: string}
 	{@param? id: string}
 	{@param? placeholder: string}
+	{@param? readOnly: bool}
 	{@param? value: string}
 
 	{let $attributes kind="attributes"}
@@ -59,14 +62,18 @@
 
 		data-oninput="{$_handleFieldChanged}"
 
-		{if not($editable)}
+		{if $readOnly}
 			disabled="disabled"
 		{/if}
 
 		{if $value}
-			value = "{$value}"
+			value="{$value}"
 		{/if}
 	{/let}
 
-	<input {$attributes}>
+	{if $displayStyle == 'singleline'}
+		<input {$attributes}>
+	{else}
+		<textarea {$attributes}></textarea>
+	{/if}
 {/template}

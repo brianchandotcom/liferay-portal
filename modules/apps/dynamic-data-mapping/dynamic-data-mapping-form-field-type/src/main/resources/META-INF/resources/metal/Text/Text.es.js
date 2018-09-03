@@ -9,13 +9,22 @@ class Text extends Component {
 	static STATE = {
 
 		/**
+		 * @default undefined
+		 * @instance
+		 * @memberof Text
+		 * @type {?(string|undefined)}
+		 */
+
+		displayStyle: Config.string().value('singleline'),
+
+		/**
 		 * @default false
 		 * @instance
 		 * @memberof Text
 		 * @type {?bool}
 		 */
 
-		editable: Config.bool().value(true),
+		readOnly: Config.bool().value(true),
 
 		/**
 		 * @default undefined
@@ -33,7 +42,7 @@ class Text extends Component {
 		 * @type {?(string|undefined)}
 		 */
 
-		helpText: Config.string(),
+		tip: Config.string(),
 
 		/**
 		 * @default undefined
@@ -52,6 +61,15 @@ class Text extends Component {
 		 */
 
 		label: Config.string(),
+
+		/**
+		 * @default undefined
+		 * @instance
+		 * @memberof Text
+		 * @type {?(string|undefined)}
+		 */
+
+		name: Config.string().required(),
 
 		/**
 		 * @default undefined

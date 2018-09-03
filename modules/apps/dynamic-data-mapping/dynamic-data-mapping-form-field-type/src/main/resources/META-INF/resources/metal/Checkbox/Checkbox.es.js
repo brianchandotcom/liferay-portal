@@ -16,13 +16,22 @@ class Checkbox extends Component {
 	static STATE = {
 
 		/**
+		 * @default undefined
+		 * @instance
+		 * @memberof FieldBase
+		 * @type {?(string|undefined)}
+		 */
+
+		fieldName: Config.string(),
+
+		/**
 		 * @default false
 		 * @instance
 		 * @memberof Checkbox
 		 * @type {?bool}
 		 */
 
-		editable: Config.bool().value(false),
+		readOnly: Config.bool().value(false),
 
 		/**
 		 * @default undefined
@@ -31,7 +40,7 @@ class Checkbox extends Component {
 		 * @type {?(string|undefined)}
 		 */
 
-		helpText: Config.string(),
+		tip: Config.string(),
 
 		/**
 		 * @default undefined

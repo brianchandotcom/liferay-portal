@@ -2,7 +2,7 @@
 
 {template .render}
 	{@param columns: list<[label: string, value: ?]>}
-	{@param? editable: bool}
+	{@param? readOnly: bool}
 	{@param? tip: string}
 	{@param? id: string}
 	{@param? label: string}
@@ -16,7 +16,7 @@
 		{param contentRenderer kind="html"}
 			{call .content}
 				{param columns: $columns/}
-				{param editable: $editable /}
+				{param readOnly: $readOnly /}
 				{param id: $id /}
 				{param placeholder: $placeholder /}
 				{param rows: $rows/}

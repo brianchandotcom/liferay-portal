@@ -2,7 +2,7 @@
 
 {template .render}
 	{@param? _handleTextChanged: any}
-	{@param? editable: bool}
+	{@param? readOnly: bool}
 	{@param? tip: string}
 	{@param? items: list<[
 		checked: bool,
@@ -31,7 +31,7 @@
 								{param events: [
 									'fieldEdited': $_handleTextChanged
 								] /}
-								{param editable: $editable ? $editable : $option.disabled /}
+								{param readOnly: $readOnly ? $readOnly : $option.disabled /}
 								{param name: $option.name /}
 								{param ref: 'text' /}
 								{param showLabel: false /}
@@ -48,7 +48,7 @@
 									'fieldEdited': $_handleTextChanged
 								] /}
 
-								{param editable: $editable ? $editable : $option.disabled /}
+								{param readOnly: $readOnly ? $readOnly : $option.disabled /}
 								{param name: $option.name /}
 								{param placeholder: $placeholder /}
 								{param ref: 'textVoid' /}

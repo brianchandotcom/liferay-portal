@@ -1,20 +1,17 @@
 {namespace Radio}
 
 {template .render}
-	{@param? editable: bool}
-	{@param? helpText: string}
-	{@param? items: list<[
-		checked: bool,
-		disabled: bool,
-		id: string,
-		inline: bool,
+	{@param? readOnly: bool}
+	{@param? tip: string}
+	{@param? options: list<[
 		label: string,
 		name: string,
-		showLabel: bool,
 		value: string
 	]>}
 	{@param? id: string}
+	{@param? inline: bool}
 	{@param? label: string}
+	{@param name: string}
 	{@param? required: bool}
 	{@param? showLabel: bool}
 	{@param? spritemap: string}
@@ -23,13 +20,15 @@
 	{call FieldBase.render}
 		{param contentRenderer kind="html"}
 			{call .content}
-				{param disabled: $editable /}
-				{param items: $items /}
+				{param disabled: $readOnly /}
+				{param inline: $inline /}
+				{param name: $name /}
+				{param options: $options /}
 				{param value: $value /}
 			{/call}
 		{/param}
 
-		{param helpText: $helpText /}
+		{param tip: $tip /}
 		{param id: $id /}
 		{param label: $label /}
 		{param required: $required /}
@@ -39,25 +38,26 @@
 {/template}
 
 {template .content}
-	{@param? items: list<[
-		checked: bool,
-		disabled: bool,
-		id: string,
-		inline: bool,
+	{@param name: string}
+	{@param? inline: bool}
+	{@param? options: list<[
 		label: string,
 		name: string,
-		showLabel: bool,
 		value: string
 	]>}
 	{@param? disabled: bool}
 	{@param? value: string}
 
-	{if $items}
-		{for $radio in $items}
+	{if $options}
+		<div class="ddm-radio">
+			{for $radio in $options}
 				{call ClayRadio.render data="$radio"}
-					{param disabled: $disabled ? $disabled : $radio.disabled /}
-					{param checked: $value == $radio.label ? true : false  /}
+					{param checked: $value == $radio.value ? true : false  /}
+					{param disabled: $disabled /}
+					{param inline: $inline /}
+					{param name: $name /}
 				{/call}
-		{/for}
+			{/for}
+		</div>
 	{/if}
 {/template}

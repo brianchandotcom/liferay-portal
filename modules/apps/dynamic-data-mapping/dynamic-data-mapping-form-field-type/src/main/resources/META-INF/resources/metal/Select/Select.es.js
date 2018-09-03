@@ -16,7 +16,7 @@ class Select extends Component {
 		 * @type {?bool}
 		 */
 
-		editable: Config.bool().value(false),
+		readOnly: Config.bool().value(false),
 
 		/**
 		 * @default undefined
@@ -25,7 +25,7 @@ class Select extends Component {
 		 * @type {?(string|undefined)}
 		 */
 
-		helpText: Config.string(),
+		tip: Config.string(),
 
 		/**
 		 * @default undefined
@@ -43,7 +43,7 @@ class Select extends Component {
 		 * @type {?array<object>}
 		 */
 
-		items: Config.arrayOf(
+		options: Config.arrayOf(
 			Config.shapeOf(
 				{
 					active: Config.bool().value(false),

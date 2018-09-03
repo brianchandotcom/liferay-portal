@@ -3,6 +3,7 @@ import 'clay-radio';
 import 'dynamic-data-mapping-form-field-type/metal/FieldBase/index.es';
 import {Config} from 'metal-state';
 import Component from 'metal-component';
+import dom from 'metal-dom';
 import Soy from 'metal-soy';
 import templates from './Radio.soy.js';
 
@@ -15,13 +16,22 @@ class Radio extends Component {
 	static STATE = {
 
 		/**
+		 * @default undefined
+		 * @instance
+		 * @memberof Radio
+		 * @type {?(string|undefined)}
+		 */
+
+		fieldName: Config.string(),
+
+		/**
 		 * @default false
 		 * @instance
 		 * @memberof Radio
 		 * @type {?bool}
 		 */
 
-		editable: Config.bool().value(false),
+		readOnly: Config.bool().value(false),
 
 		/**
 		 * @default undefined
@@ -30,7 +40,7 @@ class Radio extends Component {
 		 * @type {?(string|undefined)}
 		 */
 
-		helpText: Config.string(),
+		tip: Config.string(),
 
 		/**
 		 * @default undefined
@@ -39,16 +49,11 @@ class Radio extends Component {
 		 * @type {?(string|undefined)}
 		 */
 
-		items: Config.arrayOf(
+		options: Config.arrayOf(
 			Config.shapeOf(
 				{
-					checked: Config.bool().value(false),
-					disabled: Config.bool().value(false),
-					id: Config.string(),
-					inline: Config.bool().value(false),
 					label: Config.string(),
 					name: Config.string(),
-					showLabel: Config.bool().value(true),
 					value: Config.string()
 				}
 			)
@@ -71,6 +76,15 @@ class Radio extends Component {
 		 */
 
 		id: Config.string(),
+
+		/**
+		 * @default undefined
+		 * @instance
+		 * @memberof Radio
+		 * @type {?(string|undefined)}
+		 */
+
+		inline: Config.bool().value(false),
 
 		/**
 		 * @default undefined
@@ -126,6 +140,26 @@ class Radio extends Component {
 
 		value: Config.string()
 	};
+
+	attached() {
+		dom.delegate(
+			this.element,
+			'change',
+			'input',
+			this._handleValueChanged.bind(this)
+		);
+	}
+
+	_handleValueChanged(event) {
+		this.emit(
+			'fieldEdited',
+			{
+				fieldInstance: this,
+				originalEvent: event,
+				value: event.delegateTarget.value
+			}
+		);
+	}
 }
 
 Soy.register(Radio, templates);

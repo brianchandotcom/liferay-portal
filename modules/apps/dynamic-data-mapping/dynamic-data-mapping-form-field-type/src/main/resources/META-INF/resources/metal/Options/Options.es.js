@@ -21,7 +21,7 @@ class Options extends Component {
 		 * @type {?bool}
 		 */
 
-		editable: Config.bool().value(true),
+		readOnly: Config.bool().value(true),
 
 		/**
 		 * @default undefined
@@ -30,7 +30,7 @@ class Options extends Component {
 		 * @type {?(string|undefined)}
 		 */
 
-		helpText: Config.string(),
+		tip: Config.string(),
 
 		/**
 		 * @default undefined

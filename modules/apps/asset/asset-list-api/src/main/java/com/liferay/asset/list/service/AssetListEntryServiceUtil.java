@@ -74,8 +74,20 @@ public class AssetListEntryServiceUtil {
 				   .getAssetListEntries(groupId, start, end, orderByComparator);
 	}
 
+	public static java.util.List<com.liferay.asset.list.model.AssetListEntry> getAssetListEntries(
+		long groupId, String title, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.asset.list.model.AssetListEntry> orderByComparator) {
+		return getService()
+				   .getAssetListEntries(groupId, title, start, end,
+			orderByComparator);
+	}
+
 	public static int getAssetListEntriesCount(long groupId) {
 		return getService().getAssetListEntriesCount(groupId);
+	}
+
+	public static int getAssetListEntriesCount(long groupId, String title) {
+		return getService().getAssetListEntriesCount(groupId, title);
 	}
 
 	/**

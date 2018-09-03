@@ -71,8 +71,21 @@ public class AssetListEntryServiceWrapper implements AssetListEntryService,
 	}
 
 	@Override
+	public java.util.List<com.liferay.asset.list.model.AssetListEntry> getAssetListEntries(
+		long groupId, String title, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.asset.list.model.AssetListEntry> orderByComparator) {
+		return _assetListEntryService.getAssetListEntries(groupId, title,
+			start, end, orderByComparator);
+	}
+
+	@Override
 	public int getAssetListEntriesCount(long groupId) {
 		return _assetListEntryService.getAssetListEntriesCount(groupId);
+	}
+
+	@Override
+	public int getAssetListEntriesCount(long groupId, String title) {
+		return _assetListEntryService.getAssetListEntriesCount(groupId, title);
 	}
 
 	/**

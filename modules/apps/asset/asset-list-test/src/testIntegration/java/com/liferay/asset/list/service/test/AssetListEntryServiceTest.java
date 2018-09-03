@@ -19,6 +19,8 @@ import com.liferay.asset.list.exception.AssetListEntryTitleException;
 import com.liferay.asset.list.exception.DuplicateAssetListEntryTitleException;
 import com.liferay.asset.list.model.AssetListEntry;
 import com.liferay.asset.list.service.AssetListEntryServiceUtil;
+import com.liferay.asset.list.util.comparator.AssetListEntryCreateDateComparator;
+import com.liferay.asset.list.util.comparator.AssetListEntryTitleComparator;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -29,6 +31,7 @@ import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerTestRule;
 
@@ -147,6 +150,90 @@ public class AssetListEntryServiceTest {
 		Assert.assertTrue(actualAssetListEntries.contains(assetListEntry1));
 
 		Assert.assertTrue(actualAssetListEntries.contains(assetListEntry2));
+	}
+
+	@Test
+	public void testGetAssetListEntriesByOrderByDateComparator()
+		throws PortalException {
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId());
+
+		AssetListEntry assetListEntry =
+			AssetListEntryServiceUtil.addAssetListEntry(
+				_group.getGroupId(), "Test Name", 0, serviceContext);
+
+		AssetListEntryServiceUtil.addAssetListEntry(
+			_group.getGroupId(), "A Test Name", 0, serviceContext);
+
+		AssetListEntryServiceUtil.addAssetListEntry(
+			_group.getGroupId(), "B Test name", 0, serviceContext);
+
+		OrderByComparator orderByComparator =
+			new AssetListEntryCreateDateComparator(true);
+
+		List<AssetListEntry> assetListEntries =
+			AssetListEntryServiceUtil.getAssetListEntries(
+				_group.getGroupId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+				orderByComparator);
+
+		AssetListEntry firstAssetListEntry = assetListEntries.get(0);
+
+		Assert.assertEquals(assetListEntry, firstAssetListEntry);
+
+		orderByComparator = new AssetListEntryCreateDateComparator(false);
+
+		assetListEntries = AssetListEntryServiceUtil.getAssetListEntries(
+			_group.getGroupId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			orderByComparator);
+
+		AssetListEntry lastAssetListEntry = assetListEntries.get(
+			assetListEntries.size() - 1);
+
+		Assert.assertEquals(lastAssetListEntry, assetListEntry);
+	}
+
+	@Test
+	public void testGetAssetListEntriesByOrderByTitleComparator()
+		throws PortalException {
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId());
+
+		AssetListEntry assetListEntry =
+			AssetListEntryServiceUtil.addAssetListEntry(
+				_group.getGroupId(), "AA Asset List Entry", 0, serviceContext);
+
+		AssetListEntryServiceUtil.addAssetListEntry(
+			_group.getGroupId(), "AB Asset List Entry", 0, serviceContext);
+
+		AssetListEntryServiceUtil.addAssetListEntry(
+			_group.getGroupId(), "AC Asset List Entry", 0, serviceContext);
+
+		OrderByComparator orderByComparator = new AssetListEntryTitleComparator(
+			true);
+
+		List<AssetListEntry> assetListEntries =
+			AssetListEntryServiceUtil.getAssetListEntries(
+				_group.getGroupId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+				orderByComparator);
+
+		AssetListEntry firstAssetListEntry = assetListEntries.get(0);
+
+		Assert.assertEquals(assetListEntry, firstAssetListEntry);
+
+		orderByComparator = new AssetListEntryTitleComparator(false);
+
+		assetListEntries = AssetListEntryServiceUtil.getAssetListEntries(
+			_group.getGroupId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			orderByComparator);
+
+		AssetListEntry lastAssetListEntry = assetListEntries.get(
+			assetListEntries.size() - 1);
+
+		Assert.assertEquals(lastAssetListEntry, assetListEntry);
 	}
 
 	@Test

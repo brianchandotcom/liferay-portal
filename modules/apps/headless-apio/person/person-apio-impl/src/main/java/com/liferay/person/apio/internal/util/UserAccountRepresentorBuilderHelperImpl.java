@@ -75,13 +75,13 @@ public class UserAccountRepresentorBuilderHelperImpl
 		).addRelatedCollection(
 			"roles", RoleIdentifier.class
 		).addRelatedCollection(
-			"addresses", AddressIdentifier.class
+			"address", AddressIdentifier.class
 		).addRelatedCollection(
 			"emails", EmailIdentifier.class
 		).addRelatedCollection(
-			"phones", PhoneIdentifier.class
+			"telephone", PhoneIdentifier.class
 		).addRelatedCollection(
-			"webUrls", WebUrlIdentifier.class
+			"webUrl", WebUrlIdentifier.class
 		).addRelativeURL(
 			"image", UserWrapper::getPortraitURL
 		).addString(

@@ -119,8 +119,6 @@ public class OrganizationCollectionResource
 		).addRelatedCollection(
 			"email", EmailIdentifier.class
 		).addRelatedCollection(
-			"phones", PhoneIdentifier.class
-		).addRelatedCollection(
 			"members", PersonIdentifier.class
 		).addRelatedCollection(
 			"telephone", PhoneIdentifier.class

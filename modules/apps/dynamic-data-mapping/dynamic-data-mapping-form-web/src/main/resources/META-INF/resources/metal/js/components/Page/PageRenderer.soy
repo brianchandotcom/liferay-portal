@@ -233,7 +233,7 @@
 	<div class="layout-page">
 		{if $empty}
 			{let $attributes kind="attributes"}
-				class="col col-ddm col-empty col-md-12 last-col lfr-initial-col"
+				class="col col-empty col-md-12 last-col lfr-initial-col"
 				data-ddm-field-column="0"
 				data-ddm-field-page="{$pageId}"
 				data-ddm-field-row="0"
@@ -465,7 +465,7 @@
 	{@param? rowIndex: number}
 
 	{let $attributes kind="attributes"}
-		class="col-md-{$size}"
+		class="col col-empty col-md-{$size}"
 
 		{if $rowIndex != 'undefined'}
 			data-ddm-field-row="{$rowIndex}"
@@ -482,7 +482,7 @@
 
 	{let $content kind="html"}
 		<div {$attributes}>
-			<div class="col-empty ddm-target"></div>
+			<div class="ddm-target"></div>
 		</div>
 	{/let}
 

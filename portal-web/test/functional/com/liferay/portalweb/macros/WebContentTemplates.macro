@@ -127,8 +127,6 @@
 
 		<execute function="AssertClickNoError" locator1="DDMSelectStructure#DDM_STRUCTURE_TABLE_NAME_LINK" value1="${structureName}" />
 
-		<execute function="Confirm" value1="Selecting a new structure deletes all unsaved content. Do you want to proceed?" />
-
 		<execute function="SelectFrameTop" />
 
 		<if>

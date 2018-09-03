@@ -110,6 +110,30 @@ request.setAttribute("view.jsp-viewInContext", assetPublisherDisplayContext.isAs
 	<c:when test="<%= assetPublisherDisplayContext.isSelectionStyleManual() %>">
 		<%@ include file="/view_manual.jspf" %>
 	</c:when>
+	<c:otherwise>
+
+		<%
+		Map<Long, List<AssetPublisherAddItemHolder>> scopeAssetPublisherAddItemHolders = assetPublisherDisplayContext.getScopeAssetPublisherAddItemHolders(1);
+		%>
+
+		<c:if test="<%= MapUtil.isEmpty(scopeAssetPublisherAddItemHolders) && !((assetCategoryId > 0) || Validator.isNotNull(assetTagName)) %>">
+
+			<%
+			renderRequest.setAttribute(WebKeys.PORTLET_CONFIGURATOR_VISIBILITY, Boolean.TRUE);
+			%>
+
+		</c:if>
+
+		<div class="alert alert-info text-center">
+			<div>
+				<liferay-ui:message key="this-application-is-not-visible-to-users-yet" />
+			</div>
+
+			<div>
+				<aui:a href="javascript:;" onClick="<%= portletDisplay.getURLConfigurationJS() %>"><liferay-ui:message key="select-an-asset-list-to-make-it-visible" /></aui:a>
+			</div>
+		</div>
+	</c:otherwise>
 </c:choose>
 
 <c:if test="<%= !assetPublisherDisplayContext.isPaginationTypeNone() && (searchContainer.getTotal() > searchContainer.getResults().size()) %>">

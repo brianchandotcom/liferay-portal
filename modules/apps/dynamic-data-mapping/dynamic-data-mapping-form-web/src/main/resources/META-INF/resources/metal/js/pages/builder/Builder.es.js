@@ -89,7 +89,7 @@ class Builder extends Component {
 										value: newFieldName,
 										visible: true
 									};
-			}
+								}
 								else if (fieldName === 'label') {
 									field = {
 										...field,
@@ -131,73 +131,37 @@ class Builder extends Component {
 	 */
 
 	_handleFieldEdited({fieldInstance, property, value}) {
-		const {focusedField, pages} = this.props;
+		const {focusedField, namespace} = this.props;
+		const {settingsContext} = focusedField;
 		const {columnIndex, pageIndex, rowIndex} = focusedField;
-		const column = FormSupport.getColumn(
-			pages,
-			pageIndex,
-			rowIndex,
-			columnIndex
-		);
+		const properties = {columnIndex, pageIndex, rowIndex};
 
-		const settingsContext = column.fields[0].settingsContext;
+		properties[property || fieldInstance.fieldName] = value;
 
-		const properties = {};
+		const visitor = new PagesVisitor(settingsContext.pages);
+
+		const translationManager = Liferay.component(`${namespace}translationManager`);
 
 		properties.settingsContext = {
 			...settingsContext,
-			pages: settingsContext.pages.map(
-				page => (
-					{
-						...page,
-						rows: page.rows.map(
-							row => (
-								{
-									...row,
-									columns: row.columns.map(
-										column => (
-											{
-												...column,
-												fields: column.fields.map(
-													field => {
-														if (field.fieldName === fieldInstance.fieldName) {
-															field = {
-																...field,
-																value
-															};
-														}
-														if (field.fieldName === 'name' && fieldInstance.fieldName === 'label') {
-															properties.fieldName = value;
-															field = {
-																...field,
-																value
-															};
-														}
-														if (field.fieldName === 'type') {
-															field = {
-																...field,
-																value: focusedField.type
-															};
-														}
-														delete field.settingsContext;
-
-														properties[field.fieldName] = field.value;
-
-														return field;
-													}
-												)
-											}
-										)
-									)
-								}
-							)
-						)
+			pages: visitor.mapFields(
+				field => {
+					if (field.fieldName === fieldInstance.fieldName) {
+						field = {
+							...field,
+							value
+						};
+						if (field.localizable) {
+							field.localizedValue = {
+								...field.localizedValue,
+								[translationManager.get('editingLocale')]: value
+							};
+						}
 					}
-				)
+					return field;
+				}
 			)
 		};
-
-		properties[fieldInstance.fieldName] = value;
 
 		this.emit('fieldEdited', properties);
 	}

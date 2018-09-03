@@ -125,7 +125,7 @@ class Form extends Component {
 		 * @type {!array}
 		 */
 
-		pages: Config.array().valueFn('_pagesValueFn'),
+		pages: Config.arrayOf(pageStructure).valueFn('_pagesValueFn'),
 
 		/**
 		 * The represent the current active screen mode where 0 => FormBuilder and 1 => RuleBuilder
@@ -204,10 +204,12 @@ class Form extends Component {
 	_getSerializedFormBuilderContext() {
 		const state = this.getState();
 
+		const visitor = new PagesVisitor(state.pages);
+
 		return JSON.stringify(
 			{
 				...state,
-				pages: state.pages.map(
+				pages: visitor.mapPages(
 					page => {
 						return {
 							...page,

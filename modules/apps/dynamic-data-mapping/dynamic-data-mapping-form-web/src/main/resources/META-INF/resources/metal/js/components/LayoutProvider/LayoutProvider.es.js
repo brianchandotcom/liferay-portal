@@ -20,7 +20,7 @@ class LayoutProvider extends Component {
 		 * @type {?(array|undefined)}
 		 */
 
-		pages: Config.arrayOf(pageStructure).value([]),
+		initialPages: Config.arrayOf(pageStructure).value([]),
 
 		/**
 		 * @default undefined
@@ -49,7 +49,7 @@ class LayoutProvider extends Component {
 		 * @type {?array}
 		 */
 
-		pages: Config.array(),
+		pages: Config.arrayOf(pageStructure).valueFn('_pagesValueFn'),
 
 		/**
 		 * @default undefined
@@ -70,27 +70,18 @@ class LayoutProvider extends Component {
 				rowIndex: Config.number().required(),
 				type: Config.string().required()
 			}
-		).value({}),
-
-		/**
-		 * @default add
-		 * @instance
-		 * @memberof LayoutProvider
-		 * @type {?string}
-		 */
-
-		mode: Config.oneOf(['add', 'edit']).value('add')
+		).value({})
 	};
 
-	/**
-	 * @inheritDoc
-	 */
+	_pagesValueFn() {
+		return this.props.initialPages;
+	}
 
 	_handleActivePageUpdated(activePage) {
 		this.setState(
 			{
 				activePage
-	}
+			}
 		);
 	}
 
@@ -112,50 +103,42 @@ class LayoutProvider extends Component {
 	 * @private
 	 */
 
-	_handleFieldAdded({target, fieldProperties}) {
+	_handleFieldAdded({fieldType, target}) {
+		const {pageIndex, rowIndex} = target;
 		const {spritemap} = this.props;
-		const {pages} = this.state;
-		const {columnIndex, pageIndex, rowIndex} = target;
+		let {columnIndex} = target;
+		let {pages} = this.state;
 
-		fieldProperties = Object.assign(
-			{},
-			fieldProperties,
+		const fieldProperties = {
+			...fieldType,
+			name: fieldType.name,
+			spritemap,
+			type: fieldType.name
+		};
+
+		if (FormSupport.rowHasFields(pages, pageIndex, rowIndex)) {
+			pages = FormSupport.addRow(pages, rowIndex, pageIndex);
+			columnIndex = 0;
+		}
+
+		this.setState(
 			{
-				fieldName: fieldProperties.name,
-				name: fieldProperties.name,
-				spritemap,
-				type: fieldProperties.name
+				focusedField: {
+					...fieldProperties,
+					columnIndex,
+					pageIndex,
+					rowIndex
+				},
+				pages: FormSupport.addFieldToColumn(
+					pages,
+					pageIndex,
+					rowIndex,
+					columnIndex,
+					fieldProperties
+				)
 			}
 		);
-
-		console.log('adding field', fieldProperties);
-
-		let newContext = null;
-
-		if (target.columnIndex === false) {
-			const newRow = FormSupport.implAddRow(
-				12,
-				[
-					fieldProperties
-				]
-			);
-
-			newContext = FormSupport.addRow(
-				pages,
-				rowIndex,
-				pageIndex,
-				newRow
-			);
-		}
-		else {
-			newContext = FormSupport.addFieldToColumn(
-				pages,
-				pageIndex,
-				rowIndex,
-				columnIndex,
-				fieldProperties
-			);
-		}
+	}
 
 	_handleFieldBlurred() {
 		this.setState(
@@ -211,7 +194,7 @@ class LayoutProvider extends Component {
 				Liferay.Language.get('copy-of-x'),
 				[field.label]
 			),
-			name: FormSupport.generateFieldName(field)
+			name: FormSupport.generateFieldName(field.type)
 		};
 
 		const newRowIndex = rowIndex + 1;
@@ -232,33 +215,21 @@ class LayoutProvider extends Component {
 	 * @private
 	 */
 
-	_handleFieldEdited(newFieldProperties) {
+	_handleFieldEdited(properties) {
 		const {focusedField, pages} = this.state;
-		const {columnIndex, pageIndex, rowIndex} = focusedField;
-		const column = FormSupport.getColumn(
-			pages,
-			pageIndex,
-			rowIndex,
-			columnIndex
-		);
-
-		const newField = Object.assign(
-			{},
-			column.fields[0],
-			newFieldProperties
-		);
-
-		FormSupport.changeFieldsFromColumn(
-			pages,
-			pageIndex,
-			rowIndex,
-			columnIndex,
-			[newField]
-		);
+		const {fieldName} = focusedField;
 
 		this.setState(
 			{
-				pages: this.state.pages
+				focusedField: {
+					...focusedField,
+					...properties
+				},
+				pages: FormSupport.updateField(
+					pages,
+					fieldName,
+					properties
+				)
 			}
 		);
 	}
@@ -269,7 +240,7 @@ class LayoutProvider extends Component {
 	 */
 
 	_handleFieldMoved({target, source}) {
-		const {pages} = this.state;
+		let {pages} = this.state;
 		const {columnIndex, pageIndex, rowIndex} = source;
 		const column = FormSupport.getColumn(
 			pages,
@@ -278,35 +249,41 @@ class LayoutProvider extends Component {
 			columnIndex
 		);
 		const {fields} = column;
-
-		let newContext = FormSupport.removeFields(
+		pages = FormSupport.removeFields(
 			pages,
 			pageIndex,
 			rowIndex,
 			columnIndex
 		);
-
-		if (target.columnIndex === false) {
-			newContext = this._removeEmptyRow(newContext, source);
-			newContext = this._addRow(
-				newContext,
-				target,
-				fields
-			);
+		if (FormSupport.rowHasFields(pages, target.pageIndex, target.rowIndex)) {
+			pages = FormSupport.addRow(pages, target.rowIndex, target.pageIndex);
+			target.columnIndex = 0;
 		}
-		else {
-			newContext = this._setColumnFields(
-				newContext,
-				target,
-				fields
-			);
-			newContext = this._removeEmptyRow(newContext, source);
-		}
+		pages = this._setColumnFields(
+			pages,
+			target,
+			fields
+		);
+		pages = this._removeEmptyRow(pages, source);
 
 		this.setState(
 			{
 				focusedField: fields[0],
-				pages: newContext
+				pages
+			}
+		);
+	}
+
+	/**
+	 * @param {!Array} pages
+	 * @private
+	 */
+
+	_handlePageAdded(pages) {
+		this.setState(
+			{
+				activePage: pages.length - 1,
+				pages
 			}
 		);
 	}
@@ -334,7 +311,7 @@ class LayoutProvider extends Component {
 	_removeEmptyRow(pages, source) {
 		const {pageIndex, rowIndex} = source;
 
-		if (!FormSupport.hasFieldsRow(pages, pageIndex, rowIndex)) {
+		if (!FormSupport.rowHasFields(pages, pageIndex, rowIndex)) {
 			pages = FormSupport.removeRow(pages, pageIndex, rowIndex);
 		}
 
@@ -378,16 +355,19 @@ class LayoutProvider extends Component {
 
 	render() {
 		const {children, spritemap} = this.props;
-		const {focusedField, mode, pages} = this.state;
+		const {activePage, focusedField, pages} = this.state;
 
 		if (children.length) {
 			const events = {
+				activePageUpdated: this._handleActivePageUpdated.bind(this),
 				deleteField: this._handleDeleteField.bind(this),
 				duplicateField: this._handleDuplicatedField.bind(this),
 				fieldAdded: this._handleFieldAdded.bind(this),
+				fieldBlurred: this._handleFieldBlurred.bind(this),
 				fieldClicked: this._handleClickedField.bind(this),
 				fieldEdited: this._handleFieldEdited.bind(this),
 				fieldMoved: this._handleFieldMoved.bind(this),
+				pageAdded: this._handlePageAdded.bind(this),
 				pagesUpdated: this._handlePagesUpdated.bind(this)
 			};
 
@@ -398,9 +378,9 @@ class LayoutProvider extends Component {
 					child.props,
 					{
 						...this.otherProps(),
+						activePage,
 						events,
 						focusedField,
-						mode,
 						pages,
 						spritemap
 					}

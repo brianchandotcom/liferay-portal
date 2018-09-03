@@ -1,3 +1,5 @@
+import {PagesVisitor} from '../../util/visitors.es';
+
 const implAddRow = (size, fields) => {
 	return {
 		columns: [
@@ -22,6 +24,10 @@ const addFieldToColumn = (pages, pageIndex, rowIndex, columnIndex, field) => {
 		);
 	}
 	else {
+		const numberOfRows = pages[Number(pageIndex)].rows.length;
+		if (rowIndex >= numberOfRows) {
+			pages = addRow(pages, numberOfRows, pageIndex);
+		}
 		pages[Number(pageIndex)].rows[Number(rowIndex)].columns[
 			Number(columnIndex)
 		].fields.push(field);
@@ -52,28 +58,20 @@ const removeColumn = (pages, pageIndex, rowIndex, columnIndex) => {
 };
 
 const removeFields = (pages, pageIndex, rowIndex, columnIndex) => {
-	return pages.map(
-		(page, currentPageIndex) => (
-			{
-				...page,
-				rows: page.rows.map(
-					(row, currentRowIndex) => (
-						{
-							...row,
-							columns: row.columns.map(
-								(column, currentColumnIndex) => {
-									const newColumn = {...column};
-									if (currentPageIndex === pageIndex && currentRowIndex === rowIndex && currentColumnIndex === columnIndex) {
-										newColumn.fields = [];
-									}
-									return newColumn;
-								}
-							)
-						}
-					)
-				)
+	const visitor = new PagesVisitor(pages);
+
+	return visitor.mapColumns(
+		(column, currentColumnIndex, currentRowIndex, currentPageIndex) => {
+			const newColumn = {...column};
+			if (
+				currentPageIndex === pageIndex &&
+				currentRowIndex === rowIndex &&
+				currentColumnIndex === columnIndex
+			) {
+				newColumn.fields = [];
 			}
-		)
+			return newColumn;
+		}
 	);
 };
 
@@ -83,9 +81,7 @@ const removeRow = (pages, pageIndex, rowIndex) => {
 	return pages;
 };
 
-const generateFieldName = field => {
-	return field.name + Date.now();
-};
+const generateFieldName = type => `${type}${Date.now()}`;
 
 const getColumn = (pages, pageIndex, rowIndex, columnIndex) => {
 	const row = getRow(pages, pageIndex, rowIndex);
@@ -101,10 +97,16 @@ const getRow = (pages, pageIndex, rowIndex) => {
 	return pages[Number(pageIndex)].rows[Number(rowIndex)];
 };
 
-const hasFieldsRow = (pages, pageIndex, rowIndex) => {
-	const row = pages[Number(pageIndex)].rows[Number(rowIndex)].columns;
-
-	return !!row.filter(elem => elem.fields.length).length;
+const rowHasFields = (pages, pageIndex, rowIndex) => {
+	let hasFields = false;
+	const page = pages[Number(pageIndex)];
+	if (page) {
+		const row = page.rows[Number(rowIndex)];
+		if (row) {
+			hasFields = row.columns.some(column => column.fields.length);
+		}
+	}
+	return hasFields;
 };
 
 const getIndexes = node => {
@@ -113,38 +115,47 @@ const getIndexes = node => {
 	const rowIndex = node.getAttribute('data-ddm-field-row');
 
 	return {
-		columnIndex:
-			typeof columnIndex === 'string' ? Number(columnIndex) : false,
+		columnIndex: Number(columnIndex),
 		pageIndex: Number(pageIndex),
 		rowIndex: Number(rowIndex)
 	};
 };
 
-const changeFieldsFromColumn = (
+const updateField = (
 	pages,
-	pageIndex,
-	rowIndex,
-	columnIndex,
-	newFields
+	fieldName,
+	properties
 ) => {
-	pages[Number(pageIndex)].rows[Number(rowIndex)].columns[Number(columnIndex)].fields = newFields;
+	const visitor = new PagesVisitor(pages);
 
-	return pages;
+	const newPages = visitor.mapFields(
+		field => {
+			if (fieldName === field.fieldName) {
+				field = {
+					...field,
+					...properties
+				};
+			}
+			return field;
+		}
+	);
+
+	return newPages;
 };
 
 export default {
 	addFieldToColumn,
 	addRow,
-	changeFieldsFromColumn,
 	generateFieldName,
 	getColumn,
 	getField,
 	getIndexes,
 	getRow,
-	hasFieldsRow,
 	implAddRow,
 	removeColumn,
 	removeFields,
 	removeRow,
-	setColumnFields
+	rowHasFields,
+	setColumnFields,
+	updateField
 };

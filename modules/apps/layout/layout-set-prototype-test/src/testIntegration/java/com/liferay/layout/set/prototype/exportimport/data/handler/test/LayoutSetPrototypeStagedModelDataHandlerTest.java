@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.service.LayoutPrototypeLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutSetPrototypeLocalServiceUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Document;
@@ -357,8 +358,8 @@ public class LayoutSetPrototypeStagedModelDataHandlerTest
 		Assert.assertEquals(
 			layoutSetPrototype.getName(), importedLayoutSetPrototype.getName());
 		Assert.assertEquals(
-			layoutSetPrototype.getDescription(),
-			importedLayoutSetPrototype.getDescription());
+			StringUtil.trim(layoutSetPrototype.getDescription()),
+			StringUtil.trim(importedLayoutSetPrototype.getDescription()));
 		Assert.assertEquals(
 			layoutSetPrototype.isActive(),
 			importedLayoutSetPrototype.isActive());

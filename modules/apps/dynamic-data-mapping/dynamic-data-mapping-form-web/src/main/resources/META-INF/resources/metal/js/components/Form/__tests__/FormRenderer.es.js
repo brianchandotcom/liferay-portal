@@ -573,6 +573,68 @@ describe(
 				);
 
 				it(
+					'should show delete-field option, when the form builder has more than one page',
+					() => {
+						const pages = [...context];
+
+						pages.push(pages[0]);
+
+						component = new FormRenderer(
+							{
+								editable: true,
+								pages,
+								spritemap
+							}
+						);
+
+						jest.runAllTimers();
+
+						expect(component.pageSettingsItem).toEqual(
+							[
+								{
+									'label': Liferay.Language.get('add-new-page'),
+									'settingsItem': 'add-page',
+								},
+								{
+									'label': Liferay.Language.get('delete-current-page'),
+									'settingsItem': 'reset-page',
+								}
+							]
+						);
+						expect(component).toMatchSnapshot();
+					}
+				);
+
+				it(
+					'should show reset-field option, when the form builder has only one page',
+					() => {
+						component = new FormRenderer(
+							{
+								editable: true,
+								pages: context,
+								spritemap
+							}
+						);
+
+						jest.runAllTimers();
+
+						expect(component.pageSettingsItem).toEqual(
+							[
+								{
+									'label': Liferay.Language.get('add-new-page'),
+									'settingsItem': 'add-page',
+								},
+								{
+									'label': Liferay.Language.get('reset-page'),
+									'settingsItem': 'reset-page',
+								}
+							]
+						);
+						expect(component).toMatchSnapshot();
+					}
+				);
+
+				it(
 					'should delete the current page on layout render',
 					() => {
 						const newPages = [...pages];

@@ -16,6 +16,8 @@ package com.liferay.bean.portlet.cdi.extension.internal;
 
 import com.liferay.bean.portlet.LiferayPortletConfiguration;
 import com.liferay.bean.portlet.LiferayPortletConfigurations;
+import com.liferay.bean.portlet.cdi.extension.internal.annotated.BeanFilterAnnotationImpl;
+import com.liferay.bean.portlet.cdi.extension.internal.annotated.BeanPortletAnnotationImpl;
 import com.liferay.bean.portlet.cdi.extension.internal.annotated.type.ApplicationScopedAnnotatedTypeImpl;
 import com.liferay.bean.portlet.cdi.extension.internal.annotated.type.PortletConfigAnnotatedTypeImpl;
 import com.liferay.bean.portlet.cdi.extension.internal.annotated.type.RequestScopedAnnotatedTypeImpl;
@@ -160,7 +162,7 @@ public class BeanPortletExtension implements Extension {
 
 			for (Class<?> annotatedClass : _portletLifecycleFilterClasses) {
 				_beanFilters.add(
-					BeanFilterFactory.create(
+					new BeanFilterAnnotationImpl(
 						annotatedClass,
 						annotatedClass.getAnnotation(
 							PortletLifecycleFilter.class)));
@@ -551,7 +553,8 @@ public class BeanPortletExtension implements Extension {
 		if (_portletApplicationClass == null) {
 			_beanPortlets.putIfAbsent(
 				configuredPortletName,
-				BeanPortletFactory.create(
+				new BeanPortletAnnotationImpl(
+					PortletApplicationFactory.getDefaultPortletApplication(),
 					portletConfiguration,
 					getLiferayPortletConfiguration(configuredPortletName),
 					beanPortletClass.getName()));
@@ -559,7 +562,7 @@ public class BeanPortletExtension implements Extension {
 		else {
 			_beanPortlets.putIfAbsent(
 				configuredPortletName,
-				BeanPortletFactory.create(
+				new BeanPortletAnnotationImpl(
 					_portletApplicationClass.getAnnotation(
 						PortletApplication.class),
 					portletConfiguration,

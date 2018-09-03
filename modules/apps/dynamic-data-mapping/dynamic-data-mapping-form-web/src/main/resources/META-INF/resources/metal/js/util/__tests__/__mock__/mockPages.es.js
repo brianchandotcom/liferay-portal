@@ -8,6 +8,10 @@ export default [
 							{
 								label: 'Radio',
 								type: 'radio'
+							},
+							{
+								label: 'Text field',
+								type: 'text'
 							}
 						],
 						size: 3

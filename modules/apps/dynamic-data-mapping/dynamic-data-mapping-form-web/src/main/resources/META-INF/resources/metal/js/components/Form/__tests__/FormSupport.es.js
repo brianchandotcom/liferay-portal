@@ -1,26 +1,26 @@
-import Context from './__mock__/mockContext.es';
 import createElement from './__mock__/createElement.es';
 import FormSupport from '../FormSupport.es';
+import mockPages from './__mock__/mockPages.es';
 
-let context = null;
+let pages = null;
 
 describe(
 	'FormSupport',
 	() => {
 		beforeEach(
 			() => {
-				context = JSON.parse(JSON.stringify(Context));
+				pages = JSON.parse(JSON.stringify(mockPages));
 			}
 		);
 
 		afterEach(
 			() => {
-				context = null;
+				pages = null;
 			}
 		);
 
 		it(
-			'add a new row to the context and reorder',
+			'add a new row to the pages and reorder',
 			() => {
 				const indexToAddRow = 0;
 				const newRow = FormSupport.implAddRow(
@@ -34,13 +34,13 @@ describe(
 				const pageIndex = 0;
 
 				expect(
-					FormSupport.addRow(context, indexToAddRow, pageIndex, newRow)
+					FormSupport.addRow(pages, indexToAddRow, pageIndex, newRow)
 				).toMatchSnapshot();
 			}
 		);
 
 		it(
-			'should return an implementation of a row for the context',
+			'should return an implementation of a row for the pages',
 			() => {
 				const row = [
 					{
@@ -71,7 +71,7 @@ describe(
 		);
 
 		it(
-			'should get a specific field through the context',
+			'should get a specific field through the pages',
 			() => {
 				const indexColumn = 0;
 				const indexPage = 0;
@@ -79,7 +79,7 @@ describe(
 
 				expect(
 					FormSupport.getField(
-						context,
+						pages,
 						indexPage,
 						indexRow,
 						indexColumn
@@ -89,7 +89,7 @@ describe(
 		);
 
 		it(
-			'add a new field to column to the context',
+			'add a new field to column to the pages',
 			() => {
 				const columnIndex = 1;
 				const field = {
@@ -101,7 +101,7 @@ describe(
 
 				expect(
 					FormSupport.addFieldToColumn(
-						context,
+						pages,
 						pageIndex,
 						rowIndex,
 						columnIndex,
@@ -120,7 +120,7 @@ describe(
 
 				expect(
 					() => FormSupport.addFieldToColumn(
-						context,
+						pages,
 						pageIndex,
 						rowIndex,
 						columnIndex
@@ -144,7 +144,7 @@ describe(
 
 				expect(
 					FormSupport.setColumnFields(
-						context,
+						pages,
 						pageIndex,
 						rowIndex,
 						columnIndex,
@@ -162,13 +162,13 @@ describe(
 				const rowIndex = 1;
 
 				expect(
-					() => FormSupport.setColumnFields(context, pageIndex, rowIndex, columnIndex)
+					() => FormSupport.setColumnFields(pages, pageIndex, rowIndex, columnIndex)
 				).toThrowError();
 			}
 		);
 
 		it(
-			'should remove a column from context and reorder',
+			'should remove a column from pages and reorder',
 			() => {
 				const columnIndex = 1;
 				const pageIndex = 0;
@@ -176,7 +176,7 @@ describe(
 
 				expect(
 					FormSupport.removeColumn(
-						context,
+						pages,
 						pageIndex,
 						rowIndex,
 						columnIndex
@@ -186,7 +186,7 @@ describe(
 		);
 
 		it(
-			'should remove a fields to column from context',
+			'should remove a fields to column from pages',
 			() => {
 				const columnIndex = 1;
 				const pageIndex = 0;
@@ -194,7 +194,7 @@ describe(
 
 				expect(
 					FormSupport.removeFields(
-						context,
+						pages,
 						pageIndex,
 						rowIndex,
 						columnIndex
@@ -204,63 +204,63 @@ describe(
 		);
 
 		it(
-			'should remove a row from context and reorder',
+			'should remove a row from pages and reorder',
 			() => {
 				const pageIndex = 0;
 				const rowIndex = 1;
 
 				expect(
-					FormSupport.removeRow(context, pageIndex, rowIndex)
+					FormSupport.removeRow(pages, pageIndex, rowIndex)
 				).toMatchSnapshot();
 			}
 		);
 
 		it(
-			'should get a column from context',
+			'should get a column from pages',
 			() => {
 				const columnIndex = 1;
 				const pageIndex = 0;
 				const rowIndex = 1;
 
 				expect(
-					FormSupport.getColumn(context, pageIndex, rowIndex, columnIndex)
+					FormSupport.getColumn(pages, pageIndex, rowIndex, columnIndex)
 				).toMatchSnapshot();
 			}
 		);
 
 		it(
-			'should get a row from context',
+			'should get a row from pages',
 			() => {
 				const pageIndex = 0;
 				const rowIndex = 1;
 
 				expect(
-					FormSupport.getRow(context, pageIndex, rowIndex)
+					FormSupport.getRow(pages, pageIndex, rowIndex)
 				).toMatchSnapshot();
 			}
 		);
 
 		it(
-			'should return true if there are fields in the context line',
+			'should return true if there are fields in the pages line',
 			() => {
 				const pageIndex = 0;
 				const rowIndex = 0;
 
 				expect(
-					FormSupport.hasFieldsRow(context, pageIndex, rowIndex)
+					FormSupport.rowHasFields(pages, pageIndex, rowIndex)
 				).toBeTruthy();
 			}
 		);
 
 		it(
-			'should return false if there are fields in the context line',
+			'should return false if there are fields in the pages line',
 			() => {
 				const pageIndex = 0;
 				const rowIndex = 0;
 
 				expect(
-					FormSupport.hasFieldsRow(
-						FormSupport.removeFields(context, pageIndex, rowIndex, 0),
+					FormSupport.rowHasFields(
+						FormSupport.removeFields(pages, pageIndex, rowIndex, 0),
 						pageIndex,
 						rowIndex
 					)
@@ -326,7 +326,7 @@ describe(
 					FormSupport.getIndexes(element)
 				).toEqual(
 					{
-						columnIndex: false,
+						columnIndex: 0,
 						pageIndex: 2,
 						rowIndex: 1
 					}
@@ -335,25 +335,18 @@ describe(
 		);
 
 		it(
-			'should replace column fields',
+			'should update a field',
 			() => {
-				const columnIndex = 0;
-				const newField = [
-					{
-						label: 'Foo',
-						type: 'radio'
-					}
-				];
-				const pageIndex = 0;
-				const rowIndex = 0;
+				const properties = {
+					label: 'Foo',
+					type: 'radio'
+				};
 
 				expect(
-					FormSupport.changeFieldsFromColumn(
-						context,
-						pageIndex,
-						rowIndex,
-						columnIndex,
-						newField
+					FormSupport.updateField(
+						pages,
+						'radioField',
+						properties
 					)
 				).toMatchSnapshot();
 			}

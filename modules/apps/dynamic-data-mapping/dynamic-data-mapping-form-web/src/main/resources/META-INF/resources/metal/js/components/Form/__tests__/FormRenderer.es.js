@@ -1,11 +1,10 @@
 import {dom as MetalTestUtil} from 'metal-dom';
-
-import Context from './__mock__/mockContext.es';
 import FormRenderer from '../FormRenderer.es';
 import FormSupport from '../FormSupport.es';
+import mockPages from './__mock__/mockPages.es';
 
 let component;
-let context = null;
+let pages = null;
 const spritemap = 'icons.svg';
 
 describe(
@@ -13,7 +12,7 @@ describe(
 	() => {
 		beforeEach(
 			() => {
-				context = JSON.parse(JSON.stringify(Context));
+				pages = JSON.parse(JSON.stringify(mockPages));
 
 				jest.useFakeTimers();
 			}
@@ -25,7 +24,7 @@ describe(
 					component.dispose();
 				}
 
-				context = null;
+				pages = null;
 			}
 		);
 
@@ -47,7 +46,7 @@ describe(
 			() => {
 				component = new FormRenderer(
 					{
-						pages: context,
+						pages,
 						spritemap
 					}
 				);
@@ -62,7 +61,7 @@ describe(
 				component = new FormRenderer(
 					{
 						modeRenderer: 'list',
-						pages: context,
+						pages,
 						spritemap
 					}
 				);
@@ -77,7 +76,7 @@ describe(
 				component = new FormRenderer(
 					{
 						editable: true,
-						pages: context,
+						pages,
 						spritemap
 					}
 				);
@@ -93,7 +92,7 @@ describe(
 					{
 						dragAndDropDisabled: true,
 						editable: true,
-						pages: context,
+						pages,
 						spritemap
 					}
 				);
@@ -109,7 +108,7 @@ describe(
 					{
 						dragAndDropDisabled: true,
 						editable: true,
-						pages: context,
+						pages,
 						spritemap
 					}
 				);
@@ -118,7 +117,7 @@ describe(
 
 				jest.runAllTimers();
 
-				component._handleUpdatePage(context[0], 0);
+				component._handleUpdatePage(pages[0], 0);
 
 				expect(spy).toHaveBeenCalled();
 				expect(spy).toHaveBeenCalledWith('pagesUpdated', expect.any(Object));
@@ -134,7 +133,7 @@ describe(
 					{
 						dragAndDropDisabled: true,
 						editable: true,
-						pages: context,
+						pages,
 						spritemap
 					}
 				);
@@ -143,7 +142,7 @@ describe(
 
 				jest.runAllTimers();
 
-				component._handleDeleteButtonClicked(context);
+				component._handleDeleteButtonClicked(pages);
 
 				expect(spy).toHaveBeenCalled();
 				expect(spy).toHaveBeenCalledWith('deleteButtonClicked', expect.any(Object));
@@ -159,7 +158,7 @@ describe(
 					{
 						dragAndDropDisabled: true,
 						editable: true,
-						pages: context,
+						pages,
 						spritemap
 					}
 				);
@@ -168,7 +167,7 @@ describe(
 
 				jest.runAllTimers();
 
-				component._handleDuplicateButtonClicked(context);
+				component._handleDuplicateButtonClicked(pages);
 
 				expect(spy).toHaveBeenCalled();
 				expect(spy).toHaveBeenCalledWith('duplicateButtonClicked', expect.any(Object));
@@ -180,15 +179,15 @@ describe(
 		it(
 			'should change the active page',
 			() => {
-				const pages = [...context];
+				const newPages = [...pages];
 
-				pages.push(pages[0]);
+				newPages.push(pages[0]);
 
 				component = new FormRenderer(
 					{
 						dragAndDropDisabled: true,
 						editable: true,
-						pages,
+						pages: newPages,
 						spritemap
 					}
 				);
@@ -206,10 +205,10 @@ describe(
 		it(
 			'should change the active page for a empty page',
 			() => {
-				const pages = [...context];
+				const newPages = [...pages];
 
-				pages.push(pages[0]);
-				pages[1].rows = [{
+				newPages.push(pages[0]);
+				newPages[1].rows = [{
 					columns: [{
 						fields: [],
 						size: 12
@@ -220,7 +219,7 @@ describe(
 					{
 						dragAndDropDisabled: true,
 						editable: true,
-						pages,
+						pages: newPages,
 						spritemap
 					}
 				);
@@ -241,7 +240,7 @@ describe(
 				component = new FormRenderer(
 					{
 						editable: true,
-						pages: context,
+						pages,
 						spritemap
 					}
 				);
@@ -269,7 +268,7 @@ describe(
 							rowIndex: 1
 						},
 						target: {
-							columnIndex: false,
+							columnIndex: 0,
 							pageIndex: 0,
 							rowIndex: 0
 						}
@@ -284,7 +283,7 @@ describe(
 				component = new FormRenderer(
 					{
 						editable: true,
-						pages: context,
+						pages,
 						spritemap
 					}
 				);
@@ -311,7 +310,7 @@ describe(
 				component = new FormRenderer(
 					{
 						editable: true,
-						pages: context,
+						pages,
 						spritemap
 					}
 				);
@@ -322,11 +321,11 @@ describe(
 					'disposeInternal'
 				);
 
-				const newContext = FormSupport.removeFields(context, 0, 1, 0);
+				const newmockPages = FormSupport.removeFields(pages, 0, 1, 0);
 
 				component.setState(
 					{
-						pages: newContext
+						pages: newmockPages
 					}
 				);
 
@@ -343,18 +342,18 @@ describe(
 				component = new FormRenderer(
 					{
 						editable: false,
-						pages: context,
+						pages,
 						spritemap
 					}
 				);
 
 				const spy = jest.spyOn(component, '_startDrag');
 
-				const newContext = FormSupport.removeFields(context, 0, 1, 0);
+				const newmockPages = FormSupport.removeFields(pages, 0, 1, 0);
 
 				component.setState(
 					{
-						pages: newContext
+						pages: newmockPages
 					}
 				);
 
@@ -371,18 +370,18 @@ describe(
 					{
 						dragAndDropDisabled: true,
 						editable: true,
-						pages: context,
+						pages,
 						spritemap
 					}
 				);
 
 				const spy = jest.spyOn(component, '_startDrag');
 
-				const newContext = FormSupport.removeFields(context, 0, 1, 0);
+				const newmockPages = FormSupport.removeFields(pages, 0, 1, 0);
 
 				component.setState(
 					{
-						pages: newContext
+						pages: newmockPages
 					}
 				);
 
@@ -405,8 +404,8 @@ describe(
 				const pageIndex = 0;
 				const rowIndex = 1;
 
-				const newContext = FormSupport.setColumnFields(
-					context,
+				const newmockPages = FormSupport.setColumnFields(
+					pages,
 					pageIndex,
 					rowIndex,
 					columnIndex,
@@ -416,7 +415,7 @@ describe(
 				component = new FormRenderer(
 					{
 						editable: true,
-						pages: newContext,
+						pages: newmockPages,
 						spritemap
 					}
 				);
@@ -438,8 +437,8 @@ describe(
 				const pageIndex = 0;
 				const rowIndex = 1;
 
-				const newContext = FormSupport.setColumnFields(
-					context,
+				const newmockPages = FormSupport.setColumnFields(
+					pages,
 					pageIndex,
 					rowIndex,
 					columnIndex,
@@ -449,7 +448,7 @@ describe(
 				component = new FormRenderer(
 					{
 						editable: false,
-						pages: newContext,
+						pages: newmockPages,
 						spritemap
 					}
 				);
@@ -464,7 +463,7 @@ describe(
 				component = new FormRenderer(
 					{
 						editable: true,
-						pages: context,
+						pages,
 						spritemap
 					}
 				);
@@ -493,7 +492,7 @@ describe(
 				component = new FormRenderer(
 					{
 						editable: true,
-						pages: context,
+						pages,
 						spritemap
 					}
 				);
@@ -525,7 +524,7 @@ describe(
 						component = new FormRenderer(
 							{
 								editable: true,
-								pages: context,
+								pages,
 								spritemap
 							}
 						);
@@ -552,7 +551,7 @@ describe(
 						component = new FormRenderer(
 							{
 								editable: true,
-								pages: context,
+								pages,
 								spritemap
 							}
 						);
@@ -576,14 +575,14 @@ describe(
 				it(
 					'should delete the current page on layout render',
 					() => {
-						const pages = [...context];
+						const newPages = [...pages];
 
-						pages.push(pages[0]);
+						newPages.push(pages[0]);
 
 						component = new FormRenderer(
 							{
 								editable: true,
-								pages,
+								pages: newPages,
 								spritemap
 							}
 						);

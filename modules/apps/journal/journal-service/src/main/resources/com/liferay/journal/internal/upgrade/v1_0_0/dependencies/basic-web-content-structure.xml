@@ -15,7 +15,7 @@
 							"fieldNamespace": "ddm",
 							"indexType": "text",
 							"label": {
-								"[$LOCALE_DEFAULT$]": "Content"
+								"[$LOCALE_DEFAULT$]": "content"
 							},
 							"localizable": true,
 							"name": "content",

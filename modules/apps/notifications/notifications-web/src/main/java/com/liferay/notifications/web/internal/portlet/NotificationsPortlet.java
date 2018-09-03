@@ -75,8 +75,14 @@ public class NotificationsPortlet extends MVCPortlet {
 
 		for (long userNotificationEventId : userNotificationEventIds) {
 			try {
-				_userNotificationEventLocalService.deleteUserNotificationEvent(
-					userNotificationEventId);
+				UserNotificationEvent userNotificationEvent =
+					_userNotificationEventLocalService.
+						fetchUserNotificationEvent(userNotificationEventId);
+
+				if (userNotificationEvent != null) {
+					_userNotificationEventLocalService.
+						deleteUserNotificationEvent(userNotificationEvent);
+				}
 			}
 			catch (Exception e) {
 				throw new PortletException(e);

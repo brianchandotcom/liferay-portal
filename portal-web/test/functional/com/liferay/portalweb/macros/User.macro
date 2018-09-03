@@ -1183,19 +1183,11 @@
 				</then>
 			</elseif>
 			<elseif>
-				<equals arg1="${trivialPassword}" arg2="true" />
+				<isset var="minimumNumbers" />
 				<then>
 					<execute macro="Alert#viewRequestFailedToComplete" />
 
-					<if>
-						<isset var="minimumNumbers" />
-						<then>
-							<execute function="AssertTextEquals#assertPartialText" locator1="Message#ERROR_1" value1="That password must contain at least ${minimumNumbers} numbers." />
-						</then>
-						<else>
-							<execute function="AssertTextEquals#assertPartialText" locator1="Message#ERROR_1" value1="That password must contain at least 1 numbers." />
-						</else>
-					</if>
+					<execute function="AssertTextEquals#assertPartialText" locator1="Message#ERROR_1" value1="That password must contain at least ${minimumNumbers} numbers." />
 				</then>
 			</elseif>
 			<elseif>

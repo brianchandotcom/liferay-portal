@@ -1026,7 +1026,9 @@ public class JournalArticleLocalServiceImpl
 
 		// Resources
 
-		copyArticleResources(oldArticle, resourcePrimKey);
+		resourceLocalService.copyModelResources(
+			oldArticle.getCompanyId(), JournalArticle.class.getName(),
+			oldArticle.getResourcePrimKey(), resourcePrimKey);
 
 		// Small image
 
@@ -1069,16 +1071,6 @@ public class JournalArticleLocalServiceImpl
 			oldArticle.getDDMTemplateKey(), true);
 
 		return newArticle;
-	}
-
-	@Override
-	public void copyArticleResources(
-			JournalArticle oldArticle, long newResourcePrimKey)
-		throws PortalException {
-
-		resourceLocalService.copyModelResources(
-			oldArticle.getCompanyId(), JournalArticle.class.getName(),
-			oldArticle.getResourcePrimKey(), newResourcePrimKey);
 	}
 
 	/**

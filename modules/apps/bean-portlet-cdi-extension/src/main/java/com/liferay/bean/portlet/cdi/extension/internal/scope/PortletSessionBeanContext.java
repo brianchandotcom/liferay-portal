@@ -12,13 +12,15 @@
  * details.
  */
 
-package com.liferay.bean.portlet.cdi.extension.internal;
+package com.liferay.bean.portlet.cdi.extension.internal.scope;
 
 import java.lang.annotation.Annotation;
 
 import javax.enterprise.context.spi.Contextual;
 import javax.enterprise.context.spi.CreationalContext;
+import javax.enterprise.inject.spi.Bean;
 
+import javax.portlet.PortletSession;
 import javax.portlet.annotations.PortletSessionScoped;
 
 /**
@@ -30,9 +32,31 @@ public class PortletSessionBeanContext extends BaseContextImpl {
 	public <T> T get(
 		Contextual<T> contextual, CreationalContext<T> creationalContext) {
 
-		// TODO
+		ScopedBeanHolder scopedBeanHolder =
+			ScopedBeanHolder.getCurrentInstance();
 
-		return null;
+		Bean<T> bean = (Bean<T>)contextual;
+
+		Class<?> beanClass = bean.getBeanClass();
+
+		int scope = PortletSession.PORTLET_SCOPE;
+
+		PortletSessionScoped portletSessionScoped = beanClass.getAnnotation(
+			PortletSessionScoped.class);
+
+		if (portletSessionScoped != null) {
+			scope = portletSessionScoped.value();
+		}
+
+		String beanName = getAttributeName(bean);
+
+		if (creationalContext == null) {
+			return scopedBeanHolder.getPortletSessionScopedBean(
+				beanName, scope);
+		}
+
+		return scopedBeanHolder.getPortletSessionScopedBean(
+			beanName, scope, bean, creationalContext);
 	}
 
 	@Override

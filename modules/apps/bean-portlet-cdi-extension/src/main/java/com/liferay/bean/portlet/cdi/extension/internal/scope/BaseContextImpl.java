@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.bean.portlet.cdi.extension.internal;
+package com.liferay.bean.portlet.cdi.extension.internal.scope;
 
 import javax.enterprise.context.spi.Context;
 import javax.enterprise.context.spi.Contextual;
@@ -30,17 +30,30 @@ public abstract class BaseContextImpl implements Context {
 
 	@Override
 	public boolean isActive() {
+		ScopedBeanHolder scopedBeanHolder =
+			ScopedBeanHolder.getCurrentInstance();
 
-		// TODO
+		if ((scopedBeanHolder != null) &&
+			(scopedBeanHolder.getPortletRequest() != null)) {
+
+			return true;
+		}
 
 		return false;
 	}
 
 	protected String getAttributeName(Bean<?> bean) {
+		String attributeName = bean.getName();
 
-		// TODO
+		if ((attributeName == null) || (attributeName.length() == 0)) {
+			Class<?> beanClass = bean.getBeanClass();
 
-		return null;
+			attributeName = beanClass.getName();
+		}
+
+		return ATTRIBUTE_NAME_PREFIX + attributeName;
 	}
+
+	protected static final String ATTRIBUTE_NAME_PREFIX = "com.liferay.cdi.";
 
 }

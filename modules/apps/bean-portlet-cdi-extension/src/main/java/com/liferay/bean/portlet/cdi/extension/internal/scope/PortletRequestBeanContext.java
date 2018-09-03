@@ -12,12 +12,13 @@
  * details.
  */
 
-package com.liferay.bean.portlet.cdi.extension.internal;
+package com.liferay.bean.portlet.cdi.extension.internal.scope;
 
 import java.lang.annotation.Annotation;
 
 import javax.enterprise.context.spi.Contextual;
 import javax.enterprise.context.spi.CreationalContext;
+import javax.enterprise.inject.spi.Bean;
 
 import javax.portlet.annotations.PortletRequestScoped;
 
@@ -30,9 +31,19 @@ public class PortletRequestBeanContext extends BaseContextImpl {
 	public <T> T get(
 		Contextual<T> contextual, CreationalContext<T> creationalContext) {
 
-		// TODO
+		ScopedBeanHolder scopedBeanHolder =
+			ScopedBeanHolder.getCurrentInstance();
 
-		return null;
+		Bean<T> bean = (Bean<T>)contextual;
+
+		String beanName = getAttributeName(bean);
+
+		if (creationalContext == null) {
+			return scopedBeanHolder.getPortletRequestScopedBean(beanName);
+		}
+
+		return scopedBeanHolder.getPortletRequestScopedBean(
+			beanName, bean, creationalContext);
 	}
 
 	@Override

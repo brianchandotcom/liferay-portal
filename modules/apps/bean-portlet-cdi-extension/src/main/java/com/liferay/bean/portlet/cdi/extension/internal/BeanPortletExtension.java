@@ -22,6 +22,7 @@ import com.liferay.bean.portlet.cdi.extension.internal.annotated.type.Applicatio
 import com.liferay.bean.portlet.cdi.extension.internal.annotated.type.PortletConfigAnnotatedTypeImpl;
 import com.liferay.bean.portlet.cdi.extension.internal.annotated.type.RequestScopedAnnotatedTypeImpl;
 import com.liferay.bean.portlet.cdi.extension.internal.annotated.type.SessionScopedAnnotatedTypeImpl;
+import com.liferay.bean.portlet.cdi.extension.internal.scope.JSR362BeanProducer;
 import com.liferay.bean.portlet.cdi.extension.internal.scope.PortletRequestBeanContext;
 import com.liferay.bean.portlet.cdi.extension.internal.scope.PortletSessionBeanContext;
 import com.liferay.bean.portlet.cdi.extension.internal.scope.RenderStateBeanContext;

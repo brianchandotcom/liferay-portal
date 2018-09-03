@@ -134,6 +134,11 @@ public abstract class BaseClayTag extends TemplateRendererTag {
 		return null;
 	}
 
+	@Override
+	protected boolean isRenderWrapper() {
+		return false;
+	}
+
 	private String _componentBaseName;
 	private String _moduleBaseName;
 	private String _namespace;

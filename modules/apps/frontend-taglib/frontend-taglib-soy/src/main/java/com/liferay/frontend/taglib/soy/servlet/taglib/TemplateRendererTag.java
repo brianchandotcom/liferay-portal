@@ -69,6 +69,8 @@ public class TemplateRendererTag extends ParamAndPropertyAncestorTagImpl {
 					"portletId", request.getAttribute(WebKeys.PORTLET_ID));
 			}
 
+			_renderWrapper = isRenderWrapper();
+
 			if (isRenderTemplate()) {
 				renderTemplate(jspWriter, context);
 			}
@@ -184,6 +186,7 @@ public class TemplateRendererTag extends ParamAndPropertyAncestorTagImpl {
 			_dependencies = null;
 			_hydrate = null;
 			_module = null;
+			_renderWrapper = null;
 			_templateNamespace = null;
 		}
 	}
@@ -197,8 +200,13 @@ public class TemplateRendererTag extends ParamAndPropertyAncestorTagImpl {
 	}
 
 	protected String getElementSelector() {
-		return StringPool.POUND.concat(
-			getComponentId()).concat(" > *:first-child");
+		String selector = StringPool.POUND.concat(getComponentId());
+
+		if (isRenderWrapper()) {
+			selector = selector.concat(" > *:first-child");
+		}
+
+		return selector;
 	}
 
 	protected boolean isRenderJavaScript() {
@@ -211,6 +219,10 @@ public class TemplateRendererTag extends ParamAndPropertyAncestorTagImpl {
 
 	protected boolean isRenderTemplate() {
 		return true;
+	}
+
+	protected boolean isRenderWrapper() {
+		return isRenderJavaScript();
 	}
 
 	protected void prepareContext(Map<String, Object> context) {
@@ -233,7 +245,7 @@ public class TemplateRendererTag extends ParamAndPropertyAncestorTagImpl {
 		}
 
 		String componentJavaScript = SoyJavaScriptRendererUtil.getJavaScript(
-			context, getComponentId(), requiredModules);
+			context, getComponentId(), requiredModules, _renderWrapper);
 
 		ScriptTag.doTag(
 			null, null, null, componentJavaScript, getBodyContent(),
@@ -244,15 +256,17 @@ public class TemplateRendererTag extends ParamAndPropertyAncestorTagImpl {
 			JspWriter jspWriter, Map<String, Object> context)
 		throws IOException, TemplateException {
 
+		if (!_renderWrapper && !context.containsKey("id")) {
+			context.put("id", getComponentId());
+		}
+
 		_template.putAll(context);
 
 		_template.put(TemplateConstants.NAMESPACE, getTemplateNamespace());
 
 		_template.prepare(request);
 
-		boolean renderJavaScript = isRenderJavaScript();
-
-		if (renderJavaScript) {
+		if (_renderWrapper) {
 			jspWriter.append("<div id=\"");
 			jspWriter.append(HtmlUtil.escapeAttribute(getComponentId()));
 			jspWriter.append("\">");
@@ -260,7 +274,7 @@ public class TemplateRendererTag extends ParamAndPropertyAncestorTagImpl {
 
 		_template.processTemplate(jspWriter);
 
-		if (renderJavaScript) {
+		if (_renderWrapper) {
 			jspWriter.append("</div>");
 		}
 	}
@@ -276,6 +290,7 @@ public class TemplateRendererTag extends ParamAndPropertyAncestorTagImpl {
 	private Set<String> _dependencies;
 	private Boolean _hydrate;
 	private String _module;
+	private Boolean _renderWrapper;
 	private Template _template;
 	private String _templateNamespace;
 

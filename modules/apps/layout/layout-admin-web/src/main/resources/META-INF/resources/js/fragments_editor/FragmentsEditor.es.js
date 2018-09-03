@@ -654,17 +654,6 @@ FragmentsEditor.STATE = Object.assign(
 		spritemap: Config.string().required(),
 
 		/**
-		 * URL for swapping to fragmentEntryLinks.
-		 * @default undefined
-		 * @instance
-		 * @memberOf FragmentsEditor
-		 * @review
-		 * @type {!string}
-		 */
-
-		updateFragmentEntryLinksURL: Config.string().required(),
-
-		/**
 		 * URL for updating the asset type associated to a template.
 		 * @default undefined
 		 * @instance

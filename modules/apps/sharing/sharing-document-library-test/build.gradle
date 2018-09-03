@@ -2,6 +2,7 @@ sourceCompatibility = "1.8"
 targetCompatibility = "1.8"
 
 dependencies {
+	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	testIntegrationCompile project(":apps:portal-security:portal-security-permission-api")
 	testIntegrationCompile project(":apps:sharing:sharing-api")
 	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")

@@ -15,9 +15,16 @@
 package com.liferay.sharing.service.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.search.Indexer;
+import com.liferay.portal.kernel.search.IndexerRegistry;
+import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.sharing.constants.SharingEntryActionKey;
 import com.liferay.sharing.exception.InvalidSharingEntryActionKeyException;
@@ -76,7 +83,18 @@ public class SharingEntryLocalServiceImpl
 			actionIds -> sharingEntry.setActionIds(actionIds)
 		);
 
-		return sharingEntryPersistence.update(sharingEntry);
+		SharingEntry newSharingEntry = sharingEntryPersistence.update(
+			sharingEntry);
+
+		String className = _portal.getClassName(classNameId);
+
+		Indexer<Object> indexer = _indexerRegistry.getIndexer(className);
+
+		if (indexer != null) {
+			indexer.reindex(className, classPK);
+		}
+
+		return newSharingEntry;
 	}
 
 	@Override
@@ -103,7 +121,7 @@ public class SharingEntryLocalServiceImpl
 			sharingEntryPersistence.findByGroupId(groupId);
 
 		for (SharingEntry sharingEntry : sharingEntries) {
-			sharingEntryPersistence.remove(sharingEntry);
+			_deleteSharingEntry(sharingEntry);
 		}
 	}
 
@@ -113,7 +131,7 @@ public class SharingEntryLocalServiceImpl
 			classNameId, classPK);
 
 		for (SharingEntry sharingEntry : sharingEntries) {
-			sharingEntryPersistence.remove(sharingEntry);
+			_deleteSharingEntry(sharingEntry);
 		}
 	}
 
@@ -125,7 +143,7 @@ public class SharingEntryLocalServiceImpl
 		SharingEntry sharingEntry = sharingEntryPersistence.findByFU_TU_C_C(
 			fromUserId, toUserId, classNameId, classPK);
 
-		return sharingEntryPersistence.remove(sharingEntry);
+		return _deleteSharingEntry(sharingEntry);
 	}
 
 	@Override
@@ -134,7 +152,7 @@ public class SharingEntryLocalServiceImpl
 			sharingEntryPersistence.findByToUserId(toUserId);
 
 		for (SharingEntry sharingEntry : sharingEntries) {
-			sharingEntryPersistence.remove(sharingEntry);
+			_deleteSharingEntry(sharingEntry);
 		}
 	}
 
@@ -261,6 +279,34 @@ public class SharingEntryLocalServiceImpl
 		return sharingEntryPersistence.update(sharingEntry);
 	}
 
+	private SharingEntry _deleteSharingEntry(SharingEntry sharingEntry) {
+		String className = sharingEntry.getClassName();
+		long classPK = sharingEntry.getClassPK();
+
+		SharingEntry deletedSharingEntry = sharingEntryPersistence.remove(
+			sharingEntry);
+
+		Indexer<Object> indexer = _indexerRegistry.getIndexer(className);
+
+		if (indexer != null) {
+			try {
+				indexer.reindex(className, classPK);
+			}
+			catch (SearchException se) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(
+						StringBundler.concat(
+							"Unable to index sharing entry for class name ",
+							className, " and primary key ",
+							String.valueOf(classPK)),
+						se);
+				}
+			}
+		}
+
+		return deletedSharingEntry;
+	}
+
 	private void _validateSharingEntryActionKeys(
 			Collection<SharingEntryActionKey> sharedEntryActionKeys)
 		throws InvalidSharingEntryActionKeyException {
@@ -295,7 +341,16 @@ public class SharingEntryLocalServiceImpl
 		}
 	}
 
+	private static final Log _log = LogFactoryUtil.getLog(
+		SharingEntryLocalServiceImpl.class);
+
 	@ServiceReference(type = GroupLocalService.class)
 	private GroupLocalService _groupLocalService;
+
+	@ServiceReference(type = IndexerRegistry.class)
+	private IndexerRegistry _indexerRegistry;
+
+	@ServiceReference(type = Portal.class)
+	private Portal _portal;
 
 }

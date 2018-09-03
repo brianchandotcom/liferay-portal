@@ -17,7 +17,6 @@ package com.liferay.portal.kernel.process.local;
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.process.ProcessLog;
-import com.liferay.portal.kernel.process.ProcessLog.Level;
 
 import java.util.Objects;
 
@@ -26,7 +25,9 @@ import java.util.Objects;
  */
 class LocalProcessLog implements ProcessLog {
 
-	LocalProcessLog(Level level, String message, Throwable throwable) {
+	LocalProcessLog(
+	ProcessLog.Level level, String message, Throwable throwable) {
+
 		_level = level;
 		_message = message;
 		_throwable = throwable;
@@ -55,7 +56,7 @@ class LocalProcessLog implements ProcessLog {
 	}
 
 	@Override
-	public Level getLevel() {
+	public ProcessLog.Level getLevel() {
 		return _level;
 	}
 
@@ -94,7 +95,7 @@ class LocalProcessLog implements ProcessLog {
 		return sb.toString();
 	}
 
-	private final Level _level;
+	private final ProcessLog.Level _level;
 	private final String _message;
 	private final Throwable _throwable;
 

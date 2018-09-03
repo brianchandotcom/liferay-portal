@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.util.NaturalOrderStringComparator;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.source.formatter.checks.TagAttributesCheck.Tag;
 import com.liferay.source.formatter.checks.util.SourceUtil;
 
 import java.util.Collections;

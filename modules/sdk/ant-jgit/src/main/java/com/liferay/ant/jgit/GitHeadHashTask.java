@@ -25,7 +25,7 @@ import org.apache.tools.ant.Task;
 
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.Repository;
-import org.eclipse.jgit.lib.RepositoryCache.FileKey;
+import org.eclipse.jgit.lib.RepositoryCache;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.revwalk.RevWalk;
 import org.eclipse.jgit.revwalk.filter.MaxCountRevFilter;
@@ -68,7 +68,8 @@ public class GitHeadHashTask extends Task {
 			}
 		}
 
-		FileKey fileKey = FileKey.exact(gitDir, FS.DETECTED);
+		RepositoryCache.FileKey fileKey = RepositoryCache.FileKey.exact(
+			gitDir, FS.DETECTED);
 
 		try (Repository repository = fileKey.open(true)) {
 			RevWalk revWalk = new RevWalk(repository);

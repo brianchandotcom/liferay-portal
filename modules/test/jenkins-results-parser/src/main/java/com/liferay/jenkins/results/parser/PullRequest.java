@@ -14,7 +14,6 @@
 
 package com.liferay.jenkins.results.parser;
 
-import com.liferay.jenkins.results.parser.GitHubRemoteGitRepository.Label;
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil.HttpRequestMethod;
 
 import java.io.File;
@@ -100,7 +99,7 @@ public class PullRequest {
 		}
 	}
 
-	public boolean addLabel(Label label) {
+	public boolean addLabel(GitHubRemoteGitRepository.Label label) {
 		if ((label == null) || hasLabel(label.getName())) {
 			return true;
 		}
@@ -108,14 +107,14 @@ public class PullRequest {
 		GitHubRemoteGitRepository gitHubRemoteGitRepository =
 			getGitHubRemoteGitRepository();
 
-		Label gitRepositoryLabel = gitHubRemoteGitRepository.getLabel(
-			label.getName());
+		GitHubRemoteGitRepository.Label gitRepositoryLabel =
+			gitHubRemoteGitRepository.getLabel(label.getName());
 
 		if (gitRepositoryLabel == null) {
 			System.out.println(
 				JenkinsResultsParserUtil.combine(
-					"Label ", label.getName(), " does not exist in ",
-					getGitHubRemoteGitRepositoryName()));
+					"GitHubRemoteGitRepository.Label ", label.getName(),
+					" does not exist in ", getGitHubRemoteGitRepositoryName()));
 
 			return false;
 		}
@@ -227,7 +226,7 @@ public class PullRequest {
 		return _jsonObject;
 	}
 
-	public List<Label> getLabels() {
+	public List<GitHubRemoteGitRepository.Label> getLabels() {
 		return _labels;
 	}
 
@@ -320,7 +319,7 @@ public class PullRequest {
 	}
 
 	public boolean hasLabel(String labelName) {
-		for (Label label : _labels) {
+		for (GitHubRemoteGitRepository.Label label : _labels) {
 			if (labelName.equals(label.getName())) {
 				return true;
 			}
@@ -356,7 +355,8 @@ public class PullRequest {
 				JSONObject labelJSONObject = labelJSONArray.getJSONObject(i);
 
 				_labels.add(
-					new Label(labelJSONObject, getGitHubRemoteGitRepository()));
+					new GitHubRemoteGitRepository.Label(
+						labelJSONObject, getGitHubRemoteGitRepository()));
 			}
 		}
 		catch (IOException ioe) {
@@ -410,7 +410,7 @@ public class PullRequest {
 
 		List<String> oldLabelNames = new ArrayList<>();
 
-		for (Label label : getLabels()) {
+		for (GitHubRemoteGitRepository.Label label : getLabels()) {
 			String name = label.getName();
 
 			if (name.startsWith(testSuiteLabelPrefix)) {
@@ -428,8 +428,8 @@ public class PullRequest {
 		GitHubRemoteGitRepository gitHubRemoteGitRepository =
 			getGitHubRemoteGitRepository();
 
-		Label testSuiteLabel = gitHubRemoteGitRepository.getLabel(
-			sb.toString());
+		GitHubRemoteGitRepository.Label testSuiteLabel =
+			gitHubRemoteGitRepository.getLabel(sb.toString());
 
 		if (testSuiteLabel == null) {
 			if (gitHubRemoteGitRepository.addLabel(
@@ -568,7 +568,7 @@ public class PullRequest {
 
 		List<String> labelNames = new ArrayList<>();
 
-		for (Label label : _labels) {
+		for (GitHubRemoteGitRepository.Label label : _labels) {
 			labelNames.add(label.getName());
 		}
 
@@ -593,7 +593,8 @@ public class PullRequest {
 	private GitHubRemoteGitRepository _gitHubRemoteGitRepository;
 	private String _gitHubRemoteGitRepositoryName;
 	private JSONObject _jsonObject;
-	private final List<Label> _labels = new ArrayList<>();
+	private final List<GitHubRemoteGitRepository.Label> _labels =
+		new ArrayList<>();
 	private RemoteGitBranch _liferayRemoteGitBranch;
 	private Integer _number;
 	private String _ownerUsername;

@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.util.test.LayoutTestUtil;
 import com.liferay.portal.util.test.PortletContainerTestUtil;
-import com.liferay.portal.util.test.PortletContainerTestUtil.Response;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -120,8 +119,8 @@ public class PortletTrackerTest extends BasePortletContainerTestCase {
 			httpServletRequest, expectedPortletId, layout.getPlid(),
 			PortletRequest.RENDER_PHASE);
 
-		Response response = PortletContainerTestUtil.request(
-			portletURL.toString());
+		PortletContainerTestUtil.Response response =
+			PortletContainerTestUtil.request(portletURL.toString());
 
 		Assert.assertEquals(200, response.getCode());
 

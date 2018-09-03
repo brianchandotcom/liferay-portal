@@ -18,7 +18,6 @@ import java.io.IOException;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.concurrent.ConcurrentNavigableMap;
 import java.util.concurrent.ConcurrentSkipListMap;
 
@@ -51,8 +50,8 @@ public class ServerEndpointConfigWrapper implements ServerEndpointConfig {
 
 	@Override
 	public Configurator getConfigurator() {
-		Entry<ServiceReference<Endpoint>, ServiceObjectsConfigurator> entry =
-			_endpoints.firstEntry();
+		Map.Entry<ServiceReference<Endpoint>, ServiceObjectsConfigurator>
+			entry = _endpoints.firstEntry();
 
 		if (entry == null) {
 			return _configurator;

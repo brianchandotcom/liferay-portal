@@ -16,14 +16,14 @@ package com.liferay.portal.fabric.netty.rpc.handlers;
 
 import com.liferay.portal.fabric.netty.rpc.RPCSerializable;
 
-import io.netty.channel.ChannelHandler.Sharable;
+import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 
 /**
  * @author Shuyang Zhou
  */
-@Sharable
+@ChannelHandler.Sharable
 public class NettyRPCChannelHandler
 	extends SimpleChannelInboundHandler<RPCSerializable> {
 

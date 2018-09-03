@@ -30,7 +30,6 @@ import com.liferay.portal.search.spi.model.registrar.ModelSearchSettings;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -55,7 +54,7 @@ public class PreFilterContributorHelperImpl
 
 		BooleanFilter preFilterBooleanFilter = new BooleanFilter();
 
-		for (Entry<String, Indexer<?>> entry :
+		for (Map.Entry<String, Indexer<?>> entry :
 				entryClassNameIndexerMap.entrySet()) {
 
 			String entryClassName = entry.getKey();

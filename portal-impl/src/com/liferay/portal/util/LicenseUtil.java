@@ -69,7 +69,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Set;
 import java.util.TreeMap;
 import java.util.concurrent.Future;
@@ -475,10 +474,10 @@ public class LicenseUtil {
 	private static int _getProcessorCores() {
 		if (OSDetector.isLinux()) {
 			try {
-				Future<Entry<byte[], byte[]>> future = ProcessUtil.execute(
+				Future<Map.Entry<byte[], byte[]>> future = ProcessUtil.execute(
 					CollectorOutputProcessor.INSTANCE, "nproc");
 
-				Entry<byte[], byte[]> entry = future.get();
+				Map.Entry<byte[], byte[]> entry = future.get();
 
 				return GetterUtil.getInteger(
 					new String(entry.getKey(), StringPool.UTF8));

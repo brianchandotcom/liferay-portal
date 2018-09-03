@@ -14,7 +14,7 @@
 
 package com.liferay.portal.configuration.settings.internal.scoped.configuration;
 
-import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition.Scope;
+import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 import com.liferay.portal.configuration.metatype.util.ConfigurationScopedPidUtil;
 import com.liferay.portal.configuration.settings.internal.util.ConfigurationPidUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -59,9 +59,10 @@ public class ScopedConfigurationBeanConfigurationListener
 			pid = event.getPid();
 		}
 
-		Scope scope = ConfigurationScopedPidUtil.getScope(pid);
+		ExtendedObjectClassDefinition.Scope scope =
+			ConfigurationScopedPidUtil.getScope(pid);
 
-		if (Scope.SYSTEM == scope) {
+		if (ExtendedObjectClassDefinition.Scope.SYSTEM == scope) {
 			return;
 		}
 

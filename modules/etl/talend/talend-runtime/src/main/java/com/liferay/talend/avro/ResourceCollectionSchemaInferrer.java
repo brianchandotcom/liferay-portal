@@ -26,7 +26,6 @@ import java.util.List;
 import java.util.Set;
 
 import org.apache.avro.Schema;
-import org.apache.avro.Schema.Field;
 
 import org.talend.daikon.avro.AvroUtils;
 import org.talend.daikon.avro.NameUtil;
@@ -51,10 +50,10 @@ public class ResourceCollectionSchemaInferrer {
 	 * The same number of fields are created for Runtime schema.
 	 * </li>
 	 * <li>
-	 * Field names are coming from the resource collection.
+	 * Schema.Field names are coming from the resource collection.
 	 * </li>
 	 * <li>
-	 * Field types are String.
+	 * Schema.Field types are String.
 	 * </li>
 	 * </ol>
 	 *
@@ -75,7 +74,7 @@ public class ResourceCollectionSchemaInferrer {
 					"because there were no entries for the given resource");
 		}
 
-		List<Field> schemaFields = new ArrayList<>(size);
+		List<Schema.Field> schemaFields = new ArrayList<>(size);
 
 		Set<String> filedNames = new HashSet<>();
 
@@ -85,7 +84,7 @@ public class ResourceCollectionSchemaInferrer {
 
 			filedNames.add(fieldName);
 
-			Field designField = new Field(
+			Schema.Field designField = new Schema.Field(
 				fieldName, AvroUtils.wrapAsNullable(AvroUtils._string()), null,
 				(Object)null);
 
@@ -104,7 +103,7 @@ public class ResourceCollectionSchemaInferrer {
 		List<Property> supportedProperties =
 			resourceSupportedClass.getSupportedProperties();
 
-		List<Field> schemaFields = new ArrayList<>(
+		List<Schema.Field> schemaFields = new ArrayList<>(
 			supportedProperties.size() + 1);
 
 		// Already used names for the fields
@@ -121,7 +120,7 @@ public class ResourceCollectionSchemaInferrer {
 
 			fieldNames.add(fieldName);
 
-			Field designField = new Field(
+			Schema.Field designField = new Schema.Field(
 				fieldName, AvroUtils.wrapAsNullable(AvroUtils._string()), null,
 				(Object)null);
 
@@ -137,13 +136,13 @@ public class ResourceCollectionSchemaInferrer {
 	}
 
 	private static void _addIdSchemaField(
-		List<Field> fields, Set<String> names) {
+		List<Schema.Field> fields, Set<String> names) {
 
 		String safeIdFieldName = "_id";
 
 		names.add(safeIdFieldName);
 
-		Field designField = new Field(
+		Schema.Field designField = new Schema.Field(
 			safeIdFieldName, AvroUtils.wrapAsNullable(AvroUtils._string()),
 			null, (Object)null);
 

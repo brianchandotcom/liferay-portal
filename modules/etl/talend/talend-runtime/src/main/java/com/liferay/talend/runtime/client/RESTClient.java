@@ -41,7 +41,6 @@ import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import javax.ws.rs.core.Response.StatusType;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -188,7 +187,7 @@ public class RESTClient {
 	}
 
 	private Response _follow3Redirects(Response currentResponse) {
-		StatusType statusType = currentResponse.getStatusInfo();
+		Response.StatusType statusType = currentResponse.getStatusInfo();
 
 		if (statusType.getFamily() != Response.Status.Family.REDIRECTION) {
 			return currentResponse;
@@ -296,7 +295,7 @@ public class RESTClient {
 
 		String messageEntity = response.readEntity(String.class);
 		int statusCode = response.getStatus();
-		StatusType statusType = response.getStatusInfo();
+		Response.StatusType statusType = response.getStatusInfo();
 
 		if (statusType.getFamily() == Response.Status.Family.SUCCESSFUL) {
 			return new ApioResult(statusCode, messageEntity);

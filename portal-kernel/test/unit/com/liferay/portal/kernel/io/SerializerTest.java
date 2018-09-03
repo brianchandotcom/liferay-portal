@@ -16,8 +16,6 @@ package com.liferay.portal.kernel.io;
 
 import com.liferay.petra.lang.ClassLoaderPool;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.io.Serializer.BufferNode;
-import com.liferay.portal.kernel.io.Serializer.BufferQueue;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
@@ -112,7 +110,7 @@ public class SerializerTest {
 
 	@Test
 	public void testBufferQueue() {
-		BufferQueue bufferQueue = new BufferQueue();
+		Serializer.BufferQueue bufferQueue = new Serializer.BufferQueue();
 
 		// Insert into empty queue
 
@@ -120,7 +118,7 @@ public class SerializerTest {
 
 		bufferQueue.enqueue(buffer2);
 
-		BufferNode bufferNode1 = bufferQueue.headBufferNode;
+		Serializer.BufferNode bufferNode1 = bufferQueue.headBufferNode;
 
 		Assert.assertSame(buffer2, bufferNode1.buffer);
 		Assert.assertNull(bufferNode1.next);
@@ -133,7 +131,7 @@ public class SerializerTest {
 
 		bufferNode1 = bufferQueue.headBufferNode;
 
-		BufferNode bufferNode2 = bufferNode1.next;
+		Serializer.BufferNode bufferNode2 = bufferNode1.next;
 
 		Assert.assertSame(buffer4, bufferNode1.buffer);
 		Assert.assertNotNull(bufferNode1.next);
@@ -151,7 +149,7 @@ public class SerializerTest {
 
 		bufferNode2 = bufferNode1.next;
 
-		BufferNode bufferNode3 = bufferNode2.next;
+		Serializer.BufferNode bufferNode3 = bufferNode2.next;
 
 		Assert.assertSame(buffer4, bufferNode1.buffer);
 		Assert.assertNotNull(bufferNode1.next);
@@ -172,7 +170,7 @@ public class SerializerTest {
 
 		bufferNode3 = bufferNode2.next;
 
-		BufferNode bufferNode4 = bufferNode3.next;
+		Serializer.BufferNode bufferNode4 = bufferNode3.next;
 
 		Assert.assertSame(buffer4, bufferNode1.buffer);
 		Assert.assertNotNull(bufferNode1.next);
@@ -209,13 +207,13 @@ public class SerializerTest {
 
 		bufferNode4 = bufferNode3.next;
 
-		BufferNode bufferNode5 = bufferNode4.next;
+		Serializer.BufferNode bufferNode5 = bufferNode4.next;
 
-		BufferNode bufferNode6 = bufferNode5.next;
+		Serializer.BufferNode bufferNode6 = bufferNode5.next;
 
-		BufferNode bufferNode7 = bufferNode6.next;
+		Serializer.BufferNode bufferNode7 = bufferNode6.next;
 
-		BufferNode bufferNode8 = bufferNode7.next;
+		Serializer.BufferNode bufferNode8 = bufferNode7.next;
 
 		Assert.assertSame(buffer10, bufferNode1.buffer);
 		Assert.assertNotNull(bufferNode1.next);
@@ -389,7 +387,7 @@ public class SerializerTest {
 
 		serializer.toByteBuffer();
 
-		BufferQueue bufferQueue = ReflectionTestUtil.invoke(
+		Serializer.BufferQueue bufferQueue = ReflectionTestUtil.invoke(
 			serializer, "_getBufferQueue", new Class<?>[0]);
 
 		Assert.assertEquals(0, bufferQueue.count);

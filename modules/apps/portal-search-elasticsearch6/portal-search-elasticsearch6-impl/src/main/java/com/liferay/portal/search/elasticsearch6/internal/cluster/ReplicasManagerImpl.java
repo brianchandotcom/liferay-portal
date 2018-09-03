@@ -22,7 +22,6 @@ import org.elasticsearch.action.admin.indices.settings.put.UpdateSettingsRequest
 import org.elasticsearch.action.admin.indices.settings.put.UpdateSettingsResponse;
 import org.elasticsearch.client.IndicesAdminClient;
 import org.elasticsearch.common.settings.Settings;
-import org.elasticsearch.common.settings.Settings.Builder;
 
 /**
  * @author André de Oliveira
@@ -40,7 +39,7 @@ public class ReplicasManagerImpl implements ReplicasManager {
 		UpdateSettingsRequestBuilder updateSettingsRequestBuilder =
 			_indicesAdminClient.prepareUpdateSettings(indices);
 
-		Builder builder = Settings.builder();
+		Settings.Builder builder = Settings.builder();
 
 		builder.put("number_of_replicas", numberOfReplicas);
 

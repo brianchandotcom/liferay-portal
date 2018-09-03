@@ -16,7 +16,7 @@ package com.liferay.document.library.asset.auto.tagger.tensorflow.internal.petra
 
 import com.liferay.petra.process.ProcessCallable;
 import com.liferay.petra.process.ProcessException;
-import com.liferay.petra.process.local.LocalProcessLauncher.ProcessContext;
+import com.liferay.petra.process.local.LocalProcessLauncher;
 
 /**
  * @author Shuyang Zhou
@@ -26,7 +26,7 @@ public class TensorFlowDaemonProcessCallable
 
 	@Override
 	public String call() throws ProcessException {
-		ProcessContext.attach(
+		LocalProcessLauncher.ProcessContext.attach(
 			"TensorFlow-Daemon", 10000,
 			(shutdownCode, shutdownThrowable) -> {
 				System.exit(shutdownCode);

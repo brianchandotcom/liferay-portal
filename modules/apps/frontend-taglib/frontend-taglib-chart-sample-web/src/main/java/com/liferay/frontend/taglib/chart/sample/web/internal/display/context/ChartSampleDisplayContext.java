@@ -18,7 +18,6 @@ import com.liferay.frontend.taglib.chart.model.MixedDataColumn;
 import com.liferay.frontend.taglib.chart.model.MultiValueColumn;
 import com.liferay.frontend.taglib.chart.model.SingleValueColumn;
 import com.liferay.frontend.taglib.chart.model.TypedMultiValueColumn;
-import com.liferay.frontend.taglib.chart.model.TypedMultiValueColumn.Type;
 import com.liferay.frontend.taglib.chart.model.area.spline.AreaSplineChartConfig;
 import com.liferay.frontend.taglib.chart.model.area.step.AreaStepChartConfig;
 import com.liferay.frontend.taglib.chart.model.combination.CombinationChartConfig;
@@ -147,17 +146,23 @@ public class ChartSampleDisplayContext {
 	private void _initCombinationChartConfig() {
 		_combinationChartConfig.addColumns(
 			new TypedMultiValueColumn(
-				"data1", Type.BAR, 30, 20, 50, 40, 60, 50),
+				"data1", TypedMultiValueColumn.Type.BAR, 30, 20, 50, 40, 60,
+				50),
 			new TypedMultiValueColumn(
-				"data2", Type.BAR, 200, 130, 90, 240, 130, 220),
+				"data2", TypedMultiValueColumn.Type.BAR, 200, 130, 90, 240, 130,
+				220),
 			new TypedMultiValueColumn(
-				"data3", Type.SPLINE, 300, 200, 160, 400, 250, 250),
+				"data3", TypedMultiValueColumn.Type.SPLINE, 300, 200, 160, 400,
+				250, 250),
 			new TypedMultiValueColumn(
-				"data4", Type.LINE, 200, 130, 90, 240, 130, 220),
+				"data4", TypedMultiValueColumn.Type.LINE, 200, 130, 90, 240,
+				130, 220),
 			new TypedMultiValueColumn(
-				"data5", Type.BAR, 130, 120, 150, 140, 160, 150),
+				"data5", TypedMultiValueColumn.Type.BAR, 130, 120, 150, 140,
+				160, 150),
 			new TypedMultiValueColumn(
-				"data6", Type.AREA, 90, 70, 20, 50, 60, 120));
+				"data6", TypedMultiValueColumn.Type.AREA, 90, 70, 20, 50, 60,
+				120));
 
 		_combinationChartConfig.addGroup("data1", "data2");
 	}

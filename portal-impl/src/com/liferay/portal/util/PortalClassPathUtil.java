@@ -16,8 +16,7 @@ package com.liferay.portal.util;
 
 import com.liferay.petra.lang.CentralizedThreadLocal;
 import com.liferay.petra.process.ProcessConfig;
-import com.liferay.petra.process.ProcessConfig.Builder;
-import com.liferay.petra.process.ProcessLog.Level;
+import com.liferay.petra.process.ProcessLog;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -53,7 +52,7 @@ import javax.servlet.ServletException;
 public class PortalClassPathUtil {
 
 	public static ProcessConfig createProcessConfig(Class<?>... classes) {
-		Builder builder = new Builder();
+		ProcessConfig.Builder builder = new ProcessConfig.Builder();
 
 		builder.setArguments(Arrays.asList("-Djava.awt.headless=true"));
 
@@ -66,19 +65,19 @@ public class PortalClassPathUtil {
 
 		builder.setProcessLogConsumer(
 			processLog -> {
-				if (Level.DEBUG == processLog.getLevel()) {
+				if (ProcessLog.Level.DEBUG == processLog.getLevel()) {
 					if (_log.isDebugEnabled()) {
 						_log.debug(
 							processLog.getMessage(), processLog.getThrowable());
 					}
 				}
-				else if (Level.INFO == processLog.getLevel()) {
+				else if (ProcessLog.Level.INFO == processLog.getLevel()) {
 					if (_log.isInfoEnabled()) {
 						_log.info(
 							processLog.getMessage(), processLog.getThrowable());
 					}
 				}
-				else if (Level.WARN == processLog.getLevel()) {
+				else if (ProcessLog.Level.WARN == processLog.getLevel()) {
 					if (_log.isWarnEnabled()) {
 						_log.warn(
 							processLog.getMessage(), processLog.getThrowable());
@@ -136,7 +135,7 @@ public class PortalClassPathUtil {
 
 		String portalClassPath = sb.toString();
 
-		Builder builder = new Builder();
+		ProcessConfig.Builder builder = new ProcessConfig.Builder();
 
 		builder.setArguments(Arrays.asList("-Djava.awt.headless=true"));
 		builder.setBootstrapClassPath(globalClassPath);

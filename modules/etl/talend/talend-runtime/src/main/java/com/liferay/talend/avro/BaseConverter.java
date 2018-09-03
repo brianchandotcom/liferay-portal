@@ -19,7 +19,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.avro.Schema;
-import org.apache.avro.Schema.Field;
 
 import org.talend.daikon.avro.AvroUtils;
 import org.talend.daikon.avro.LogicalTypeUtils;
@@ -75,7 +74,7 @@ public abstract class BaseConverter<DatumT, AvroT>
 		avroConverters = new AvroConverter[schemaFields.size()];
 
 		for (int i = 0; i < schemaFields.size(); i++) {
-			Field field = schemaFields.get(i);
+			Schema.Field field = schemaFields.get(i);
 
 			Schema fieldSchema = AvroUtils.unwrapIfNullable(field.schema());
 
@@ -98,7 +97,7 @@ public abstract class BaseConverter<DatumT, AvroT>
 	 */
 	protected AvroConverter[] avroConverters;
 
-	protected List<Field> schemaFields;
+	protected List<Schema.Field> schemaFields;
 
 	private static final Map<Schema.Type, AvroConverter> _converterRegistry;
 

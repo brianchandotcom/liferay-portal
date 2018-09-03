@@ -14,7 +14,6 @@
 
 package com.liferay.frontend.js.bundle.config.extender.internal;
 
-import com.liferay.frontend.js.bundle.config.extender.internal.JSBundleConfigTracker.JSConfig;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.Portal;
@@ -95,12 +94,13 @@ public class JSBundleConfigServlet extends HttpServlet {
 
 		PrintWriter printWriter = new PrintWriter(stringWriter);
 
-		Collection<JSConfig> jsConfigs = _jsBundleConfigTracker.getJSConfigs();
+		Collection<JSBundleConfigTracker.JSConfig> jsConfigs =
+			_jsBundleConfigTracker.getJSConfigs();
 
 		if (!jsConfigs.isEmpty()) {
 			printWriter.println("(function() {");
 
-			for (JSConfig jsConfig : jsConfigs) {
+			for (JSBundleConfigTracker.JSConfig jsConfig : jsConfigs) {
 				URL url = jsConfig.getURL();
 
 				try (InputStream inputStream = url.openStream()) {

@@ -48,7 +48,6 @@ import java.util.concurrent.ThreadFactory;
 import org.jruby.Ruby;
 import org.jruby.RubyException;
 import org.jruby.RubyInstanceConfig;
-import org.jruby.RubyInstanceConfig.CompileMode;
 import org.jruby.embed.LocalContextScope;
 import org.jruby.embed.internal.LocalContextProvider;
 import org.jruby.exceptions.RaiseException;
@@ -253,10 +252,12 @@ public class RubyExecutor extends BaseScriptingExecutor {
 		String compileMode = _rubyScriptingConfiguration.compileMode();
 
 		if (compileMode.equals(_COMPILE_MODE_FORCE)) {
-			rubyInstanceConfig.setCompileMode(CompileMode.FORCE);
+			rubyInstanceConfig.setCompileMode(
+				RubyInstanceConfig.CompileMode.FORCE);
 		}
 		else if (compileMode.equals(_COMPILE_MODE_JIT)) {
-			rubyInstanceConfig.setCompileMode(CompileMode.JIT);
+			rubyInstanceConfig.setCompileMode(
+				RubyInstanceConfig.CompileMode.JIT);
 		}
 
 		rubyInstanceConfig.setJitThreshold(

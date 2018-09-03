@@ -23,7 +23,6 @@ import java.security.AccessControlContext;
 import java.security.PrivilegedAction;
 
 import java.util.Map;
-import java.util.Map.Entry;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -39,7 +38,7 @@ public abstract class BaseTemplateManager implements TemplateManager {
 		Map<String, Object> contextObjects,
 		Map<String, Object> newContextObjects) {
 
-		for (Entry<String, Object> entry : newContextObjects.entrySet()) {
+		for (Map.Entry<String, Object> entry : newContextObjects.entrySet()) {
 			String variableName = entry.getKey();
 
 			if (contextObjects.containsKey(variableName)) {

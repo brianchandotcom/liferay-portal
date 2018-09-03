@@ -15,7 +15,6 @@
 package com.liferay.structured.content.apio.internal.architect.form;
 
 import com.liferay.apio.architect.form.Form;
-import com.liferay.apio.architect.form.Form.Builder;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -45,7 +44,7 @@ public class StructuredContentCreatorForm {
 	 * @review
 	 */
 	public static Form<StructuredContentCreatorForm> buildForm(
-		Builder<StructuredContentCreatorForm> formBuilder) {
+		Form.Builder<StructuredContentCreatorForm> formBuilder) {
 
 		return formBuilder.title(
 			__ -> "The structured content creator form"

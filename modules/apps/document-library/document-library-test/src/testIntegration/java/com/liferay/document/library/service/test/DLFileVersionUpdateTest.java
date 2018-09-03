@@ -15,6 +15,7 @@
 package com.liferay.document.library.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.document.library.kernel.model.DLVersionNumberIncrease;
 import com.liferay.document.library.kernel.service.DLAppServiceUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -91,8 +92,8 @@ public class DLFileVersionUpdateTest extends BaseDLAppTestCase {
 
 		fileEntry = DLAppServiceUtil.updateFileEntry(
 			fileEntry.getFileEntryId(), updateFileName, updateMimeType,
-			updateFileName, description, changeLog, false, updateBytes,
-			serviceContext);
+			updateFileName, description, changeLog,
+			DLVersionNumberIncrease.MINOR, updateBytes, serviceContext);
 
 		FileVersion fileVersion = fileEntry.getFileVersion();
 

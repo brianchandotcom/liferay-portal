@@ -14,6 +14,7 @@
 
 package com.liferay.portal.repository.liferayrepository;
 
+import com.liferay.document.library.kernel.model.DLVersionNumberIncrease;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.Repository;
 import com.liferay.portal.kernel.repository.model.FileContentReference;
@@ -82,7 +83,8 @@ public class ModelValidatorRepositoryWrapper extends RepositoryWrapper {
 	public FileEntry updateFileEntry(
 			long userId, long fileEntryId, String sourceFileName,
 			String mimeType, String title, String description, String changeLog,
-			boolean majorVersion, File file, ServiceContext serviceContext)
+			DLVersionNumberIncrease dlVersionNumberIncrease, File file,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		FileContentReference fileContentReference =
@@ -94,15 +96,15 @@ public class ModelValidatorRepositoryWrapper extends RepositoryWrapper {
 
 		return super.updateFileEntry(
 			userId, fileEntryId, sourceFileName, mimeType, title, description,
-			changeLog, majorVersion, file, serviceContext);
+			changeLog, dlVersionNumberIncrease, file, serviceContext);
 	}
 
 	@Override
 	public FileEntry updateFileEntry(
 			long userId, long fileEntryId, String sourceFileName,
 			String mimeType, String title, String description, String changeLog,
-			boolean majorVersion, InputStream is, long size,
-			ServiceContext serviceContext)
+			DLVersionNumberIncrease dlVersionNumberIncrease, InputStream is,
+			long size, ServiceContext serviceContext)
 		throws PortalException {
 
 		FileContentReference fileContentReference =
@@ -115,7 +117,7 @@ public class ModelValidatorRepositoryWrapper extends RepositoryWrapper {
 
 		return super.updateFileEntry(
 			userId, fileEntryId, sourceFileName, mimeType, title, description,
-			changeLog, majorVersion, is, size, serviceContext);
+			changeLog, dlVersionNumberIncrease, is, size, serviceContext);
 	}
 
 	private final ModelValidator<FileContentReference> _modelValidator;

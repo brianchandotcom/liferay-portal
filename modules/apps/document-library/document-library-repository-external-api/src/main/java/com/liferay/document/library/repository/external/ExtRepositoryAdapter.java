@@ -19,6 +19,7 @@ import com.liferay.document.library.kernel.exception.NoSuchFileVersionException;
 import com.liferay.document.library.kernel.exception.NoSuchFolderException;
 import com.liferay.document.library.kernel.model.DLFileEntryTypeConstants;
 import com.liferay.document.library.kernel.model.DLFolder;
+import com.liferay.document.library.kernel.model.DLVersionNumberIncrease;
 import com.liferay.document.library.kernel.service.DLFolderLocalServiceUtil;
 import com.liferay.document.library.repository.external.model.ExtRepositoryFileEntryAdapter;
 import com.liferay.document.library.repository.external.model.ExtRepositoryFileVersionAdapter;
@@ -153,9 +154,16 @@ public class ExtRepositoryAdapter extends BaseRepositoryImpl {
 
 	@Override
 	public void checkInFileEntry(
-			long userId, long fileEntryId, boolean major, String changeLog,
+			long userId, long fileEntryId,
+			DLVersionNumberIncrease dlVersionNumberIncrease, String changeLog,
 			ServiceContext serviceContext)
 		throws PortalException {
+
+		boolean major = false;
+
+		if (dlVersionNumberIncrease == DLVersionNumberIncrease.MAJOR) {
+			major = true;
+		}
 
 		String extRepositoryFileEntryKey = getExtRepositoryObjectKey(
 			fileEntryId);
@@ -171,7 +179,8 @@ public class ExtRepositoryAdapter extends BaseRepositoryImpl {
 		throws PortalException {
 
 		checkInFileEntry(
-			userId, fileEntryId, false, StringPool.BLANK, serviceContext);
+			userId, fileEntryId, DLVersionNumberIncrease.MINOR,
+			StringPool.BLANK, serviceContext);
 	}
 
 	@Override
@@ -1003,8 +1012,8 @@ public class ExtRepositoryAdapter extends BaseRepositoryImpl {
 	public FileEntry updateFileEntry(
 			long userId, long fileEntryId, String sourceFileName,
 			String mimeType, String title, String description, String changeLog,
-			boolean majorVersion, InputStream inputStream, long size,
-			ServiceContext serviceContext)
+			DLVersionNumberIncrease dlVersionNumberIncrease,
+			InputStream inputStream, long size, ServiceContext serviceContext)
 		throws PortalException {
 
 		boolean needsCheckIn = false;
@@ -1050,6 +1059,12 @@ public class ExtRepositoryAdapter extends BaseRepositoryImpl {
 			}
 
 			if (needsCheckIn) {
+				boolean majorVersion = false;
+
+				if (dlVersionNumberIncrease == DLVersionNumberIncrease.MAJOR) {
+					majorVersion = true;
+				}
+
 				_extRepository.checkInExtRepositoryFileEntry(
 					extRepositoryFileEntry.getExtRepositoryModelKey(),
 					majorVersion, changeLog);

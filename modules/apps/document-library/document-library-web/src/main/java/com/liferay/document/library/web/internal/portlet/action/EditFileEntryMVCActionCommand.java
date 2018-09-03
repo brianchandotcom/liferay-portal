@@ -34,6 +34,7 @@ import com.liferay.document.library.kernel.exception.NoSuchFolderException;
 import com.liferay.document.library.kernel.exception.RequiredFileException;
 import com.liferay.document.library.kernel.exception.SourceFileNameException;
 import com.liferay.document.library.kernel.model.DLFileEntry;
+import com.liferay.document.library.kernel.model.DLVersionNumberIncrease;
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.document.library.kernel.service.DLTrashService;
 import com.liferay.document.library.kernel.util.DLUtil;
@@ -315,7 +316,8 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 
 		if (fileEntryId > 0) {
 			_dlAppService.checkInFileEntry(
-				fileEntryId, majorVersion, changeLog, serviceContext);
+				fileEntryId, DLVersionNumberIncrease.fromBoolean(majorVersion),
+				changeLog, serviceContext);
 		}
 		else {
 			long[] fileEntryIds = ParamUtil.getLongValues(
@@ -323,7 +325,9 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 
 			for (long curFileEntryId : fileEntryIds) {
 				_dlAppService.checkInFileEntry(
-					curFileEntryId, majorVersion, changeLog, serviceContext);
+					curFileEntryId,
+					DLVersionNumberIncrease.fromBoolean(majorVersion),
+					changeLog, serviceContext);
 			}
 		}
 	}
@@ -955,8 +959,9 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 
 				fileEntry = _dlAppService.updateFileEntryAndCheckIn(
 					fileEntryId, sourceFileName, contentType, title,
-					description, changeLog, majorVersion, inputStream, size,
-					serviceContext);
+					description, changeLog,
+					DLVersionNumberIncrease.fromBoolean(majorVersion),
+					inputStream, size, serviceContext);
 			}
 			else {
 
@@ -964,8 +969,9 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 
 				fileEntry = _dlAppService.updateFileEntry(
 					fileEntryId, sourceFileName, contentType, title,
-					description, changeLog, majorVersion, inputStream, size,
-					serviceContext);
+					description, changeLog,
+					DLVersionNumberIncrease.fromBoolean(majorVersion),
+					inputStream, size, serviceContext);
 			}
 
 			return fileEntry;

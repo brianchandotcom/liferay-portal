@@ -18,6 +18,7 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.document.library.constants.DLPortletKeys;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
+import com.liferay.document.library.kernel.model.DLVersionNumberIncrease;
 import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
 import com.liferay.document.library.kernel.service.DLAppServiceUtil;
 import com.liferay.document.library.kernel.service.DLTrashServiceUtil;
@@ -104,7 +105,7 @@ public class DLFileEntryActivityInterpreterTest
 		DLAppServiceUtil.updateFileEntry(
 			_fileEntry.getFileEntryId(), RandomTestUtil.randomString(),
 			ContentTypes.TEXT_PLAIN, RandomTestUtil.randomString(),
-			StringPool.BLANK, StringPool.BLANK, false,
+			StringPool.BLANK, StringPool.BLANK, DLVersionNumberIncrease.MINOR,
 			TestDataConstants.TEST_BYTE_ARRAY, serviceContext);
 	}
 

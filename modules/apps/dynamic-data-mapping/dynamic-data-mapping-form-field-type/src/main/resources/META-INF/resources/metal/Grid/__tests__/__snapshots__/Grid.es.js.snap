@@ -25,31 +25,6 @@ exports[`Grid should be not edidable 1`] = `
 </div>
 `;
 
-exports[`Grid should have a helpText 1`] = `
-<div class="form-group">
-  <label></label>
-  <div class="liferay-ddm-form-field-grid table-responsive">
-    <table class="table table-autofit table-list table-striped">
-      <thead>
-        <tr>
-          <th></th>
-          <th>col1</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr name="jehf">
-          <td>row</td>
-          <td>
-            <input class="form-builder-grid-field" data-row-index="0" name="jehf" type="radio" value="fieldId">
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-  <span class="form-text">Type something</span>
-</div>
-`;
-
 exports[`Grid should have a label 1`] = `
 <div class="form-group">
   <label>label </label>
@@ -97,6 +72,31 @@ exports[`Grid should have a spritemap 1`] = `
     </table>
   </div>
   <span class="form-text"></span>
+</div>
+`;
+
+exports[`Grid should have a tip 1`] = `
+<div class="form-group">
+  <label></label>
+  <div class="liferay-ddm-form-field-grid table-responsive">
+    <table class="table table-autofit table-list table-striped">
+      <thead>
+        <tr>
+          <th></th>
+          <th>col1</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr name="jehf">
+          <td>row</td>
+          <td>
+            <input class="form-builder-grid-field" data-row-index="0" name="jehf" type="radio" value="fieldId">
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <span class="form-text">Type something</span>
 </div>
 `;
 

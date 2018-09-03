@@ -312,35 +312,45 @@ exports[`Select should render Label if showLabel is true 1`] = `
 </div>
 `;
 
-exports[`Select should render items 1`] = `
+exports[`Select should render no options when options come empty 1`] = `
 <div class="form-group">
   <label></label>
   <div class="form-builder-select-field input-group-container">
     <div class="form-control select-field-trigger" disabled="">
       <div class="option-selected option-selected-placeholder">Choose an Option</div>
-      <a class="select-arrow-down-container" href="javascript:;"></a>
+      <a class="select-arrow-down-container" href="javascript:;">
+        <svg aria-hidden="true" class="lexicon-icon lexicon-icon-caret-double" focusable="false">
+          <title>caret-double</title>
+          <use xlink:href="icons.svg#caret-double"></use>
+        </svg>
+      </a>
+    </div>
+  </div>
+  <div class="dropdown-menu">
+    <ul class="list-unstyled"></ul>
+  </div>
+  <span class="form-text"></span>
+</div>
+`;
+
+exports[`Select should render options 1`] = `
+<div class="form-group">
+  <label></label>
+  <div class="form-builder-select-field input-group-container">
+    <div class="form-control select-field-trigger" disabled="">
+      <div class="option-selected option-selected-placeholder">Choose an Option</div>
+      <a class="select-arrow-down-container" href="javascript:;">
+        <svg aria-hidden="true" class="lexicon-icon lexicon-icon-caret-double" focusable="false">
+          <title>caret-double</title>
+          <use xlink:href="icons.svg#caret-double"></use>
+        </svg>
+      </a>
     </div>
   </div>
   <div class="dropdown-menu">
     <ul class="list-unstyled">
       <li class="dropdown-item">item</li>
     </ul>
-  </div>
-  <span class="form-text"></span>
-</div>
-`;
-
-exports[`Select should render no items when items come empty 1`] = `
-<div class="form-group">
-  <label></label>
-  <div class="form-builder-select-field input-group-container">
-    <div class="form-control select-field-trigger" disabled="">
-      <div class="option-selected option-selected-placeholder">Choose an Option</div>
-      <a class="select-arrow-down-container" href="javascript:;"></a>
-    </div>
-  </div>
-  <div class="dropdown-menu">
-    <ul class="list-unstyled"></ul>
   </div>
   <span class="form-text"></span>
 </div>

@@ -1,12 +1,11 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Layout Render should render fields 1`] = `
-<div>
+<div class="container">
   <div class="form-group">
     <label></label>
     <label class="toggle-switch">
-      <input class="toggle-switch-check" type="checkbox">
-      <span class="toggle-switch-label"></span>
+      <input checked="" class="toggle-switch-check" type="checkbox">
       <span aria-hidden="true" class="toggle-switch-bar">
         <span class="toggle-switch-handle"></span>
       </span>
@@ -18,6 +17,14 @@ exports[`Layout Render should render fields 1`] = `
     <div class="input-group">
       <div class="input-group-item input-group-prepend">
         <input class="form-control" placeholder="__/__/____" type="text" disabled="">
+      </div>
+      <div class="input-group-append input-group-item input-group-item-shrink">
+        <span class="input-group-text">
+          <svg aria-hidden="true" class="lexicon-icon lexicon-icon-calendar" focusable="false">
+            <title>calendar</title>
+            <use xlink:href="icons.svg#calendar"></use>
+          </svg>
+        </span>
       </div>
     </div>
     <span class="form-text"></span>
@@ -49,7 +56,12 @@ exports[`Layout Render should render fields 1`] = `
     <div class="form-builder-select-field input-group-container">
       <div class="form-control select-field-trigger" disabled="">
         <div class="option-selected option-selected-placeholder">Choose an Option</div>
-        <a class="select-arrow-down-container" href="javascript:;"></a>
+        <a class="select-arrow-down-container" href="javascript:;">
+          <svg aria-hidden="true" class="lexicon-icon lexicon-icon-caret-double" focusable="false">
+            <title>caret-double</title>
+            <use xlink:href="icons.svg#caret-double"></use>
+          </svg>
+        </a>
       </div>
     </div>
     <div class="dropdown-menu">
@@ -62,7 +74,7 @@ exports[`Layout Render should render fields 1`] = `
   </div>
   <div class="form-group">
     <label></label>
-    <input class="form-control" type="text">
+    <input class="form-control" name="textField" type="text" disabled="disabled">
     <span class="form-text"></span>
   </div>
   <div class="form-group">

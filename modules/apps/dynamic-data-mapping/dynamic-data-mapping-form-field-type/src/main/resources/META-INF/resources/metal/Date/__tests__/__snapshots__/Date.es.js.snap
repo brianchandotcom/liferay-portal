@@ -20,7 +20,7 @@ exports[`Field Date should be not edidable 1`] = `
 </div>
 `;
 
-exports[`Field Date should have a helpText 1`] = `
+exports[`Field Date should have a tip 1`] = `
 <div class="form-group">
   <label></label>
   <div class="input-group">

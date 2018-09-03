@@ -202,5 +202,20 @@ public class AssetListEntryServiceSoap {
 		}
 	}
 
+	public static com.liferay.asset.list.model.AssetListEntrySoap updateAssetListEntrySettings(
+		long assetListEntryId, String typeSettings) throws RemoteException {
+		try {
+			com.liferay.asset.list.model.AssetListEntry returnValue = AssetListEntryServiceUtil.updateAssetListEntrySettings(assetListEntryId,
+					typeSettings);
+
+			return com.liferay.asset.list.model.AssetListEntrySoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	private static Log _log = LogFactoryUtil.getLog(AssetListEntryServiceSoap.class);
 }

@@ -73,7 +73,7 @@ public final class FormValuesUtil {
 				value = Optional.ofNullable(
 					formFieldValue.value
 				).map(
-					FormValuesUtil::_getJsonString
+					FormValuesUtil::_getJSONString
 				).map(
 					stringValue -> _getValue(stringValue, ddmFormField, locale)
 				).orElse(
@@ -87,7 +87,7 @@ public final class FormValuesUtil {
 		return ddmFormValues;
 	}
 
-	private static String _getJsonString(JsonElement value) {
+	private static String _getJSONString(JsonElement value) {
 		if (value instanceof JsonPrimitive) {
 			JsonPrimitive jsonPrimitive = (JsonPrimitive)value;
 

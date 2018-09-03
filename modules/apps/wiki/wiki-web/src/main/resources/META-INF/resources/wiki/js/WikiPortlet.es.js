@@ -47,12 +47,12 @@ class WikiPortlet extends PortletBase {
 			}));
 		}
 
-		let searchContainerId = '_com_liferay_wiki_web_portlet_WikiAdminPortlet_pageAttachments';
+		let searchContainerId = this.ns('pageAttachments');
 
 		Liferay.componentReady(searchContainerId).then(
 			(searchContainer) => {
 				this.eventHandler_.add(searchContainer.get('contentBox').delegate(
-					'click', this.removeAttachment_, '.delete-attachment'));
+					'click', this.removeAttachment_.bind(this), '.delete-attachment'));
 			}
 		);
 	}
@@ -104,36 +104,29 @@ class WikiPortlet extends PortletBase {
 	removeAttachment_(event) {
 		let link = event.currentTarget;
 
-		let cmd = link.getAttribute('data-cmd');
-		let fileName = link.getAttribute('data-fileName');
-		let nodeId = link.getAttribute('data-nodeId');
-		let ticketKey = link.getAttribute('data-ticketKey');
-		let title = link.getAttribute('data-title');
-
 		let tr = link.ancestor('tr');
 
 		let deleteURL = Liferay.PortletURL.createActionURL();
 
-		let actionName = '/wiki/edit_page_attachment';
+		deleteURL.setName('/wiki/edit_page_attachment');
 
 		let params = {
-			cmd: cmd,
-			fileName: fileName,
-			nodeId: nodeId,
-			ticketKey: ticketKey,
-			title: title
+			cmd: link.getAttribute('data-cmd'),
+			fileName: link.getAttribute('data-fileName'),
+			nodeId: link.getAttribute('data-nodeId'),
+			ticketKey: link.getAttribute('data-ticketKey'),
+			title: link.getAttribute('data-title')
 		};
 
-		deleteURL.setName(actionName);
 		deleteURL.setParameters(params);
-		deleteURL.setPortletId('com_liferay_wiki_web_portlet_WikiAdminPortlet');
+		deleteURL.setPortletId('com_liferay_wiki_web_portlet_WikiPortlet');
 
 		const A = new AUI();
 
 		A.use(
 			'liferay-search-container',
 			A => {
-				let searchContainer = Liferay.SearchContainer.get('_com_liferay_wiki_web_portlet_WikiAdminPortlet_pageAttachments');
+				let searchContainer = Liferay.SearchContainer.get(this.ns('pageAttachments'));
 
 				A.io.request(
 					deleteURL.toString(),

@@ -31,7 +31,7 @@ import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorConstants;
 import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorEntry;
 import com.liferay.portal.kernel.settings.CompanyServiceSettingsLocator;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.ResourceBundleLoader;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.IOException;
@@ -73,8 +73,7 @@ public class
 
 	@Override
 	public String getLabel(Locale locale) {
-		ResourceBundle resourceBundle =
-			_resourceBundleLoader.loadResourceBundle(locale);
+		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle("content.Language", locale, getClass());
 
 		return _language.get(
 			resourceBundle,
@@ -156,10 +155,5 @@ public class
 
 	@Reference
 	private Language _language;
-
-	@Reference(
-		target = "(bundle.symbolic.name=com.liferay.document.library.asset.auto.tagger.microsoft.cognitive.services)"
-	)
-	private ResourceBundleLoader _resourceBundleLoader;
 
 }

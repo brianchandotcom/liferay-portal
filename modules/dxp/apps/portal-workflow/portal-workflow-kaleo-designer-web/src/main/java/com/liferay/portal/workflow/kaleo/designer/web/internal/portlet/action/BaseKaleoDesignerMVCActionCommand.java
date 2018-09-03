@@ -26,7 +26,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.ResourceBundleLoader;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.uuid.PortalUUID;
@@ -100,7 +100,8 @@ public abstract class BaseKaleoDesignerMVCActionCommand
 
 		Locale locale = themeDisplay.getLocale();
 
-		return resourceBundleLoader.loadResourceBundle(locale);
+		return ResourceBundleUtil.getBundle(
+			"content.Language", locale, getClass());
 	}
 
 	protected abstract String getSuccessMessage(ActionRequest actionRequest);
@@ -174,16 +175,6 @@ public abstract class BaseKaleoDesignerMVCActionCommand
 		actionRequest.setAttribute(WebKeys.REDIRECT, portletURL.toString());
 	}
 
-	@Reference(
-		target = "(bundle.symbolic.name=com.liferay.portal.workflow.kaleo.designer.web)",
-		unbind = "-"
-	)
-	protected void setResourceBundleLoader(
-		ResourceBundleLoader resourceBundleLoader) {
-
-		this.resourceBundleLoader = resourceBundleLoader;
-	}
-
 	@Reference
 	protected KaleoDefinitionLocalService kaleoDefinitionLocalService;
 
@@ -196,8 +187,6 @@ public abstract class BaseKaleoDesignerMVCActionCommand
 
 	@Reference
 	protected PortalUUID portalUUID;
-
-	protected ResourceBundleLoader resourceBundleLoader;
 
 	@Reference
 	protected WorkflowDefinitionManager workflowDefinitionManager;

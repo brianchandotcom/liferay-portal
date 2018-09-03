@@ -23,7 +23,7 @@ import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfiguration
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.ResourceBundleLoader;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.workflow.kaleo.designer.web.constants.KaleoDesignerPortletKeys;
 import com.liferay.portal.workflow.kaleo.designer.web.internal.constants.KaleoDesignerWebKeys;
@@ -57,8 +57,8 @@ public class UnpublishDefinitionPortletConfigurationIcon
 
 	@Override
 	public String getMessage(PortletRequest portletRequest) {
-		ResourceBundle resourceBundle =
-			_resourceBundleLoader.loadResourceBundle(getLocale(portletRequest));
+		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+			"content.Language", getLocale(portletRequest), getClass());
 
 		return LanguageUtil.get(resourceBundle, "unpublish");
 	}
@@ -146,22 +146,10 @@ public class UnpublishDefinitionPortletConfigurationIcon
 			KaleoDesignerWebKeys.KALEO_DRAFT_DEFINITION);
 	}
 
-	@Reference(
-		target = "(bundle.symbolic.name=com.liferay.portal.workflow.kaleo.designer.web)",
-		unbind = "-"
-	)
-	protected void setResourceBundleLoader(
-		ResourceBundleLoader resourceBundleLoader) {
-
-		_resourceBundleLoader = resourceBundleLoader;
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		UnpublishDefinitionPortletConfigurationIcon.class);
 
 	@Reference
 	private Portal _portal;
-
-	private ResourceBundleLoader _resourceBundleLoader;
 
 }

@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigura
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.ResourceBundleLoader;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.workflow.kaleo.designer.web.constants.KaleoDesignerPortletKeys;
 import com.liferay.portal.workflow.kaleo.designer.web.internal.constants.KaleoDesignerWebKeys;
@@ -52,8 +52,8 @@ public class DuplicateDefinitionPortletConfigurationIcon
 
 	@Override
 	public String getMessage(PortletRequest portletRequest) {
-		ResourceBundle resourceBundle =
-			_resourceBundleLoader.loadResourceBundle(getLocale(portletRequest));
+		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+			getLocale(portletRequest), "com.liferay.portal.workflow.web");
 
 		return LanguageUtil.get(resourceBundle, "duplicate");
 	}
@@ -102,10 +102,5 @@ public class DuplicateDefinitionPortletConfigurationIcon
 
 	@Reference
 	private Portal _portal;
-
-	@Reference(
-		target = "(bundle.symbolic.name=com.liferay.portal.workflow.web)"
-	)
-	private ResourceBundleLoader _resourceBundleLoader;
 
 }

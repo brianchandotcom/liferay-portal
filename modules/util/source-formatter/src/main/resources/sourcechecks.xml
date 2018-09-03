@@ -134,7 +134,9 @@
 		<check name="JavaForLoopCheck" />
 		<check name="JavaHibernateSQLCheck" />
 		<check name="JavaIfStatementCheck" />
-		<check name="JavaIllegalImportsCheck" />
+		<check name="JavaIllegalImportsCheck">
+			<property name="enabled" value="false" />
+		</check>
 		<check name="JavaImportsCheck" />
 		<check name="JavaIndexableCheck" />
 		<check name="JavaInterfaceCheck" />

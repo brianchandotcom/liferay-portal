@@ -14,7 +14,9 @@
 					"type": "string"
 				}
 			},
-			"required": ["requiredString"],
+			"required": [
+				"requiredString"
+			],
 			"type": "object"
 		}
 	},

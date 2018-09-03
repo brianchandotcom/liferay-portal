@@ -6,11 +6,15 @@
 				{
 					columns: [
 						{
-							fieldNames: ["text1"],
+							fieldNames: [
+								"text1"
+							],
 							size: 6
 						},
 						{
-							fieldNames: ["text2"],
+							fieldNames: [
+								"text2"
+							],
 							size: 6
 						}
 					]
@@ -18,15 +22,21 @@
 				{
 					columns: [
 						{
-							fieldNames: ["text3"],
+							fieldNames: [
+								"text3"
+							],
 							size: 4
 						},
 						{
-							fieldNames: ["text4"],
+							fieldNames: [
+								"text4"
+							],
 							size: 4
 						},
 						{
-							fieldNames: ["text5"],
+							fieldNames: [
+								"text5"
+							],
 							size: 4
 						}
 					]
@@ -34,7 +44,11 @@
 				{
 					columns: [
 						{
-							fieldNames: ["text6", "text7", "text8"],
+							fieldNames: [
+								"text6",
+								"text7",
+								"text8"
+							],
 							size: 12
 						}
 					]

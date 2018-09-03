@@ -1,5 +1,8 @@
 {
-	"availableLanguageIds": ["en_US", "pt_BR"],
+	"availableLanguageIds": [
+		"en_US",
+		"pt_BR"
+	],
 	"defaultLanguageId": "en_US",
 	"fields": [
 		{

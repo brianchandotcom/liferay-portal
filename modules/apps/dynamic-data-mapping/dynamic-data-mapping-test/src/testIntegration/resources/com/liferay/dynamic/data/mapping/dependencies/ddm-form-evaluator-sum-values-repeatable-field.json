@@ -1,5 +1,7 @@
 {
-	"availableLanguageIds": ["en_US"],
+	"availableLanguageIds": [
+		"en_US"
+	],
 	"defaultLanguageId": "en_US",
 	"fields": [
 		{
@@ -49,7 +51,9 @@
 	],
 	"rules": [
 		{
-			"actions": ["setValue('Text1', sum(getValue('Text0')))"],
+			"actions": [
+				"setValue('Text1', sum(getValue('Text0')))"
+			],
 			"condition": "TRUE",
 			"enabled": true
 		}

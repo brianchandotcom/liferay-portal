@@ -1,6 +1,10 @@
 {
 	"additionalProperty": "invalid",
-	"array": [1, 2, 3],
+	"array": [
+		1,
+		2,
+		3
+	],
 	"boolean": true,
 	"integer": 1,
 	"null": null,

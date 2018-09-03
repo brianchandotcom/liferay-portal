@@ -16,13 +16,20 @@ package com.liferay.forms.apio.internal.helper;
 
 import com.google.gson.Gson;
 
+import com.liferay.apio.architect.file.BinaryFile;
 import com.liferay.apio.architect.functional.Try;
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
+import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
 import com.liferay.dynamic.data.mapping.model.UnlocalizedValue;
 import com.liferay.dynamic.data.mapping.model.Value;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
+import com.liferay.forms.apio.internal.architect.form.MediaObjectCreatorForm;
 import com.liferay.forms.apio.internal.model.FileEntryValue;
+import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.service.ServiceContext;
+
+import java.io.InputStream;
 
 import java.util.Collection;
 import java.util.List;
@@ -55,6 +62,36 @@ public class UploadFileHelper {
 			field -> _findField(field, ddmFormFieldValues)
 		).forEach(
 			optional -> optional.ifPresent(this::_setFileEntryAsFormFieldValue)
+		);
+	}
+
+	public FileEntry uploadFile(
+		DDMFormInstance ddmFormInstance,
+		MediaObjectCreatorForm mediaObjectCreatorForm) {
+
+		BinaryFile binaryFile = mediaObjectCreatorForm.getBinaryFile();
+
+		InputStream inputStream = binaryFile.getInputStream();
+
+		long folderId = 0;
+		long size = binaryFile.getSize();
+
+		ServiceContext serviceContext = new ServiceContext();
+
+		String sourceFileName = mediaObjectCreatorForm.getName();
+		String title = mediaObjectCreatorForm.getTitle();
+		String mimeType = binaryFile.getMimeType();
+		String description = mediaObjectCreatorForm.getDescription();
+		String changelog = mediaObjectCreatorForm.getChangelog();
+
+		return Try.fromFallible(
+			ddmFormInstance::getGroupId
+		).map(
+			repositoryId -> _dlAppService.addFileEntry(
+				repositoryId, folderId, sourceFileName, mimeType, title,
+				description, changelog, inputStream, size, serviceContext)
+		).orElse(
+			null
 		);
 	}
 

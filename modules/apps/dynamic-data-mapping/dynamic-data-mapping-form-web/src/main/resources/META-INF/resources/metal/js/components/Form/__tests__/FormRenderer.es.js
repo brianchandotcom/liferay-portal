@@ -179,9 +179,7 @@ describe(
 		it(
 			'should change the active page',
 			() => {
-				const newPages = [...pages];
-
-				newPages.push(pages[0]);
+				const newPages = [...pages, ...pages];
 
 				component = new FormRenderer(
 					{
@@ -205,9 +203,8 @@ describe(
 		it(
 			'should change the active page for a empty page',
 			() => {
-				const newPages = [...pages];
+				const newPages = [...pages, ...pages];
 
-				newPages.push(pages[0]);
 				newPages[1].rows = [{
 					columns: [{
 						fields: [],
@@ -575,14 +572,12 @@ describe(
 				it(
 					'should show delete-field option, when the form builder has more than one page',
 					() => {
-						const pages = [...context];
-
-						pages.push(pages[0]);
+						const pagesTemp = [...pages, ...pages];
 
 						component = new FormRenderer(
 							{
 								editable: true,
-								pages,
+								pages: pagesTemp,
 								spritemap
 							}
 						);
@@ -611,7 +606,7 @@ describe(
 						component = new FormRenderer(
 							{
 								editable: true,
-								pages: context,
+								pages,
 								spritemap
 							}
 						);
@@ -637,9 +632,7 @@ describe(
 				it(
 					'should delete the current page on layout render',
 					() => {
-						const newPages = [...pages];
-
-						newPages.push(pages[0]);
+						const newPages = [...pages, ...pages];
 
 						component = new FormRenderer(
 							{

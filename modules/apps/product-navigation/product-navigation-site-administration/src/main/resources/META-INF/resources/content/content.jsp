@@ -98,18 +98,20 @@ PanelCategoryHelper panelCategoryHelper = (PanelCategoryHelper)request.getAttrib
 											portletId = panelCategoryHelper.getFirstPortletId(PanelCategoryKeys.SITE_ADMINISTRATION_CONTENT, permissionChecker, scopeGroup);
 										}
 
-										if (Validator.isNotNull(portletId)) {
-											portletURL = PortalUtil.getControlPanelPortletURL(request, scopeGroup, portletId, 0, 0, PortletRequest.RENDER_PHASE);
+										if (Validator.isNull(portletId)) {
+											continue;
+										}
+
+										portletURL = PortalUtil.getControlPanelPortletURL(request, scopeGroup, portletId, 0, 0, PortletRequest.RENDER_PHASE);
 									%>
 
-											<li class="<%= (curScopeGroup.getGroupId() == scopeGroup.getGroupId()) ? "active" : StringPool.BLANK %>">
-												<a class="truncate-text" href="<%= portletURL.toString() %>">
-													<liferay-ui:message key="<%= HtmlUtil.escape(curScopeLayout.getName(locale)) %>" />
-												</a>
-											</li>
+										<li class="<%= (curScopeGroup.getGroupId() == scopeGroup.getGroupId()) ? "active" : StringPool.BLANK %>">
+											<a class="truncate-text" href="<%= portletURL.toString() %>">
+												<liferay-ui:message key="<%= HtmlUtil.escape(curScopeLayout.getName(locale)) %>" />
+											</a>
+										</li>
 
 									<%
-										}
 									}
 									%>
 

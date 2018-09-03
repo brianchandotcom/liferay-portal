@@ -72,6 +72,10 @@ public class JavaInnerClassImportsCheck extends BaseFileCheck {
 					outerClassFullyQualifiedName);
 			}
 
+			if (outerClassName.equals(className)) {
+				continue;
+			}
+
 			if (imports == null) {
 				imports = _getImports(content);
 			}

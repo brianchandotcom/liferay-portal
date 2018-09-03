@@ -19,7 +19,7 @@ import javax.xml.namespace.QName;
 /**
  * @author Neil Griffin
  */
-public abstract class BaseEventDefinitionImpl implements EventDefinition {
+public abstract class BaseEventImpl implements Event {
 
 	@Override
 	public QName getQName() {

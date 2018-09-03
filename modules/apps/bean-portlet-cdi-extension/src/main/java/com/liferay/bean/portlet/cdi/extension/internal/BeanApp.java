@@ -29,7 +29,7 @@ public interface BeanApp {
 
 	public String getDefaultNamespace();
 
-	public List<EventDefinition> getEventDefinitions();
+	public List<Event> getEvents();
 
 	public Map<String, PublicRenderParameter> getPublicRenderParameterMap();
 

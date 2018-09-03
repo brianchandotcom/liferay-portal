@@ -21,7 +21,7 @@ import javax.xml.namespace.QName;
 /**
  * @author Neil Griffin
  */
-public interface EventDefinition {
+public interface Event {
 
 	public List<QName> getAliasQNames();
 

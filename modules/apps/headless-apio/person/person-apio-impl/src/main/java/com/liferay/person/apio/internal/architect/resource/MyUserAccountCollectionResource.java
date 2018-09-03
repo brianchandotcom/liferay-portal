@@ -61,7 +61,7 @@ public class MyUserAccountCollectionResource
 
 	@Override
 	public String getName() {
-		return "myUserAccount";
+		return "my-user-account";
 	}
 
 	@Override

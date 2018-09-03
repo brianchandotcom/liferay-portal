@@ -109,6 +109,8 @@ class FormRenderer extends Component {
 		if (this.editable && !this.dragAndDropDisabled) {
 			this._startDrag();
 		}
+
+		this.pageSettingsItem = this._changeRemoveLabel(this.pages);
 	}
 
 	/**

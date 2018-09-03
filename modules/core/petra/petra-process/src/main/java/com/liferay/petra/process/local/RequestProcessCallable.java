@@ -16,7 +16,6 @@ package com.liferay.petra.process.local;
 
 import com.liferay.petra.process.ProcessCallable;
 import com.liferay.petra.process.ProcessException;
-import com.liferay.petra.process.local.LocalProcessLauncher.ProcessContext;
 
 import java.io.IOException;
 import java.io.Serializable;
@@ -49,7 +48,7 @@ class RequestProcessCallable<T extends Serializable>
 		}
 		finally {
 			try {
-				ProcessContext.writeProcessCallable(
+				LocalProcessLauncher.ProcessContext.writeProcessCallable(
 					new ResponseProcessCallable<>(_id, result, throwable));
 			}
 			catch (IOException ioe) {

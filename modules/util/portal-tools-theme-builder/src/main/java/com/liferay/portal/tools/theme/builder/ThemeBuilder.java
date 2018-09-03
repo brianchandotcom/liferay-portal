@@ -39,7 +39,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import net.coobird.thumbnailator.Thumbnails;
-import net.coobird.thumbnailator.Thumbnails.Builder;
 
 /**
  * @author David Truong
@@ -286,7 +285,7 @@ public class ThemeBuilder {
 			return;
 		}
 
-		Builder<File> thumbnailBuilder = Thumbnails.of(file);
+		Thumbnails.Builder<File> thumbnailBuilder = Thumbnails.of(file);
 
 		thumbnailBuilder.outputFormat("png");
 		thumbnailBuilder.size(160, 120);

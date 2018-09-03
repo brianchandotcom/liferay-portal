@@ -23,7 +23,6 @@ import java.nio.file.Path;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Properties;
 
 import org.apache.tools.ant.BuildException;
@@ -33,7 +32,7 @@ import org.apache.tools.ant.taskdefs.condition.Condition;
 
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.lib.Repository;
-import org.eclipse.jgit.lib.RepositoryCache.FileKey;
+import org.eclipse.jgit.lib.RepositoryCache;
 import org.eclipse.jgit.util.FS;
 
 /**
@@ -81,7 +80,8 @@ public class GitUpToDateTask extends Task implements Condition {
 				}
 			}
 
-			FileKey fileKey = FileKey.exact(gitDir, FS.DETECTED);
+			RepositoryCache.FileKey fileKey = RepositoryCache.FileKey.exact(
+				gitDir, FS.DETECTED);
 
 			try (Repository repository = fileKey.open(true)) {
 				if (UpToDateUtil.isClean(new Git(repository), relativePath) &&
@@ -212,7 +212,7 @@ public class GitUpToDateTask extends Task implements Condition {
 
 		upToDateMap = new HashMap<>();
 
-		for (Entry<Object, Object> entry : properties.entrySet()) {
+		for (Map.Entry<Object, Object> entry : properties.entrySet()) {
 			upToDateMap.put(
 				String.valueOf(entry.getKey()),
 				Boolean.parseBoolean(String.valueOf(entry.getValue())));

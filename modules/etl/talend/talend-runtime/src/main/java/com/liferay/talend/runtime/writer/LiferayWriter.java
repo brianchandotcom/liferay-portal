@@ -34,8 +34,6 @@ import java.util.stream.Stream;
 import javax.ws.rs.core.UriBuilder;
 
 import org.apache.avro.Schema;
-import org.apache.avro.Schema.Field;
-import org.apache.avro.Schema.Type;
 import org.apache.avro.generic.GenericData;
 import org.apache.avro.generic.IndexedRecord;
 
@@ -244,7 +242,7 @@ public class LiferayWriter
 
 		List<Schema.Field> indexRecordFields = indexRecordSchema.getFields();
 
-		Stream<Field> stream = indexRecordFields.stream();
+		Stream<Schema.Field> stream = indexRecordFields.stream();
 
 		Schema.Field idField = stream.filter(
 			field -> AvroConstants.ID.equals(field.name())
@@ -260,7 +258,7 @@ public class LiferayWriter
 
 		Schema unwrappedSchema = AvroUtils.unwrapIfNullable(fieldSchema);
 
-		Type fieldType = unwrappedSchema.getType();
+		Schema.Type fieldType = unwrappedSchema.getType();
 
 		if (fieldType == Schema.Type.STRING) {
 			return (String)indexedRecord.get(idField.pos());
@@ -303,7 +301,7 @@ public class LiferayWriter
 
 			Schema unwrappedSchema = AvroUtils.unwrapIfNullable(fieldSchema);
 
-			Type fieldType = unwrappedSchema.getType();
+			Schema.Type fieldType = unwrappedSchema.getType();
 
 			if (fieldType == Schema.Type.STRING) {
 				objectNode.put(

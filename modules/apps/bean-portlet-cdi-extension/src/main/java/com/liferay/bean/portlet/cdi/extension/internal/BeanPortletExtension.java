@@ -38,7 +38,6 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Set;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -225,7 +224,7 @@ public class BeanPortletExtension implements Extension {
 					Map<String, String> map = DisplayDescriptorParser.parse(
 						displayDescriptorURL);
 
-					for (Entry<String, String> entry : map.entrySet()) {
+					for (Map.Entry<String, String> entry : map.entrySet()) {
 						BeanPortlet beanPortlet = _beanPortlets.get(
 							entry.getKey());
 

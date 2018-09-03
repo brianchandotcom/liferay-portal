@@ -16,10 +16,6 @@ package com.liferay.sass.compiler.jni.internal;
 
 import com.liferay.sass.compiler.SassCompiler;
 import com.liferay.sass.compiler.jni.internal.libsass.LiferaysassLibrary;
-import com.liferay.sass.compiler.jni.internal.libsass.LiferaysassLibrary.Sass_Context;
-import com.liferay.sass.compiler.jni.internal.libsass.LiferaysassLibrary.Sass_File_Context;
-import com.liferay.sass.compiler.jni.internal.libsass.LiferaysassLibrary.Sass_Options;
-import com.liferay.sass.compiler.jni.internal.libsass.LiferaysassLibrary.Sass_Output_Style;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -132,7 +128,8 @@ public class JniSassCompiler implements SassCompiler {
 			boolean generateSourceMap, String sourceMapFileName)
 		throws JniSassCompilerException {
 
-		Pointer<Sass_File_Context> sassFileContextPointer = null;
+		Pointer<LiferaysassLibrary.Sass_File_Context> sassFileContextPointer =
+			null;
 
 		try {
 			File inputFile = new File(inputFileName);
@@ -148,7 +145,7 @@ public class JniSassCompiler implements SassCompiler {
 				inputFileName, includeDirNames, generateSourceMap,
 				sourceMapFileName);
 
-			Pointer<Sass_Context> sassContextPointer =
+			Pointer<LiferaysassLibrary.Sass_Context> sassContextPointer =
 				LiferaysassLibrary.sassFileContextGetContext(
 					sassFileContextPointer);
 
@@ -284,14 +281,15 @@ public class JniSassCompiler implements SassCompiler {
 		}
 	}
 
-	protected Pointer<Sass_File_Context> createSassFileContext(
-		String inputFileName, String includeDirNames, boolean generateSourceMap,
-		String sourceMapFileName) {
+	protected Pointer<LiferaysassLibrary.Sass_File_Context>
+		createSassFileContext(
+			String inputFileName, String includeDirNames,
+			boolean generateSourceMap, String sourceMapFileName) {
 
-		Pointer<Sass_File_Context> sassFileContextPointer =
+		Pointer<LiferaysassLibrary.Sass_File_Context> sassFileContextPointer =
 			LiferaysassLibrary.sassMakeFileContext(toPointer(inputFileName));
 
-		Pointer<Sass_Options> sassOptionsPointer =
+		Pointer<LiferaysassLibrary.Sass_Options> sassOptionsPointer =
 			LiferaysassLibrary.sassMakeOptions();
 
 		LiferaysassLibrary.sassOptionSetIncludePath(
@@ -301,7 +299,8 @@ public class JniSassCompiler implements SassCompiler {
 		LiferaysassLibrary.sassOptionSetOutputPath(
 			sassOptionsPointer, toPointer(""));
 		LiferaysassLibrary.sassOptionSetOutputStyle(
-			sassOptionsPointer, Sass_Output_Style.SASS_STYLE_NESTED);
+			sassOptionsPointer,
+			LiferaysassLibrary.Sass_Output_Style.SASS_STYLE_NESTED);
 		LiferaysassLibrary.sassOptionSetPrecision(
 			sassOptionsPointer, _precision);
 		LiferaysassLibrary.sassOptionSetSourceComments(

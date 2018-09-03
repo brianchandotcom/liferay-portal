@@ -43,7 +43,6 @@ import org.talend.daikon.i18n.I18nMessages;
 import org.talend.daikon.properties.PresentationItem;
 import org.talend.daikon.properties.PropertiesImpl;
 import org.talend.daikon.properties.ValidationResult;
-import org.talend.daikon.properties.ValidationResult.Result;
 import org.talend.daikon.properties.ValidationResultMutable;
 import org.talend.daikon.properties.presentation.Form;
 import org.talend.daikon.properties.presentation.Widget;
@@ -69,7 +68,7 @@ public class LiferayResourceProperties
 		ValidationResultMutable validationResultMutable =
 			new ValidationResultMutable();
 
-		validationResultMutable.setStatus(Result.OK);
+		validationResultMutable.setStatus(ValidationResult.Result.OK);
 
 		try (SandboxedInstance sandboxedInstance =
 				LiferayBaseComponentDefinition.getSandboxedInstance(
@@ -118,7 +117,8 @@ public class LiferayResourceProperties
 					validationResultMutable.setMessage(
 						i18nMessages.getMessage(
 							"error.validation.resourceType"));
-					validationResultMutable.setStatus(Result.ERROR);
+					validationResultMutable.setStatus(
+						ValidationResult.Result.ERROR);
 				}
 			}
 		}
@@ -160,7 +160,9 @@ public class LiferayResourceProperties
 			LiferayConnectionProperties liferayConnectionProperties =
 				getEffectiveLiferayConnectionProperties();
 
-			if (validationResultMutable.getStatus() == Result.OK) {
+			if (validationResultMutable.getStatus() ==
+					ValidationResult.Result.OK) {
+
 				try {
 					List<NamedThing> resourceNames = null;
 
@@ -179,7 +181,8 @@ public class LiferayResourceProperties
 						validationResultMutable.setMessage(
 							i18nMessages.getMessage(
 								"error.validation.resources"));
-						validationResultMutable.setStatus(Result.ERROR);
+						validationResultMutable.setStatus(
+							ValidationResult.Result.ERROR);
 					}
 
 					resourceProperty.setPossibleNamedThingValues(resourceNames);
@@ -250,7 +253,7 @@ public class LiferayResourceProperties
 		ValidationResultMutable validationResultMutable =
 			new ValidationResultMutable();
 
-		validationResultMutable.setStatus(Result.OK);
+		validationResultMutable.setStatus(ValidationResult.Result.OK);
 
 		LiferayConnectionProperties liferayConnectionProperties =
 			getEffectiveLiferayConnectionProperties();

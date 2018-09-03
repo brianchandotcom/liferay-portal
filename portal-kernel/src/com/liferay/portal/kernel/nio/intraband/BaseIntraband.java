@@ -16,7 +16,6 @@ package com.liferay.portal.kernel.nio.intraband;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.nio.intraband.CompletionHandler.CompletionType;
 
 import java.io.IOException;
 
@@ -130,7 +129,7 @@ public abstract class BaseIntraband implements Intraband {
 	@Override
 	public <A> void sendDatagram(
 		RegistrationReference registrationReference, Datagram datagram,
-		A attachment, EnumSet<CompletionType> completionTypes,
+		A attachment, EnumSet<CompletionHandler.CompletionType> completionTypes,
 		CompletionHandler<A> completionHandler, long timeout,
 		TimeUnit timeUnit) {
 
@@ -179,14 +178,17 @@ public abstract class BaseIntraband implements Intraband {
 		datagram.timeout = timeout;
 
 		datagram.setAckRequest(
-			completionTypes.contains(CompletionType.DELIVERED));
+			completionTypes.contains(
+				CompletionHandler.CompletionType.DELIVERED));
 
 		if (datagram.getSequenceId() == 0) {
 			datagram.setSequenceId(generateSequenceId());
 		}
 
-		if (completionTypes.contains(CompletionType.DELIVERED) ||
-			completionTypes.contains(CompletionType.REPLIED)) {
+		if (completionTypes.contains(
+				CompletionHandler.CompletionType.DELIVERED) ||
+			completionTypes.contains(
+				CompletionHandler.CompletionType.REPLIED)) {
 
 			addResponseWaitingDatagram(datagram);
 		}
@@ -386,10 +388,12 @@ public abstract class BaseIntraband implements Intraband {
 						}
 					}
 					else {
-						EnumSet<CompletionType> completionTypes =
-							requestDatagram.completionTypes;
+						EnumSet<CompletionHandler.CompletionType>
+							completionTypes = requestDatagram.completionTypes;
 
-						if (completionTypes.contains(CompletionType.REPLIED)) {
+						if (completionTypes.contains(
+								CompletionHandler.CompletionType.REPLIED)) {
+
 							CompletionHandler<Object> completionHandler =
 								requestDatagram.completionHandler;
 
@@ -464,11 +468,13 @@ public abstract class BaseIntraband implements Intraband {
 			if (datagram.writeTo(gatheringByteChannel)) {
 				channelContext.setWritingDatagram(null);
 
-				EnumSet<CompletionType> completionTypes =
+				EnumSet<CompletionHandler.CompletionType> completionTypes =
 					datagram.completionTypes;
 
 				if (completionTypes != null) {
-					if (completionTypes.contains(CompletionType.SUBMITTED)) {
+					if (completionTypes.contains(
+							CompletionHandler.CompletionType.SUBMITTED)) {
+
 						CompletionHandler<Object> completeHandler =
 							datagram.completionHandler;
 
@@ -524,8 +530,8 @@ public abstract class BaseIntraband implements Intraband {
 		return requestDatagram;
 	}
 
-	protected static final EnumSet<CompletionType> REPLIED_ENUM_SET =
-		EnumSet.of(CompletionType.REPLIED);
+	protected static final EnumSet<CompletionHandler.CompletionType>
+		REPLIED_ENUM_SET = EnumSet.of(CompletionHandler.CompletionType.REPLIED);
 
 	protected final AtomicReference<DatagramReceiveHandler[]>
 		datagramReceiveHandlersReference = new AtomicReference<>(

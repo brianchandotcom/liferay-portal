@@ -23,6 +23,7 @@ import com.liferay.dynamic.data.mapping.form.values.query.internal.model.DDMForm
 import com.liferay.dynamic.data.mapping.form.values.query.internal.model.DDMFormValuesFilter;
 import com.liferay.dynamic.data.mapping.form.values.query.internal.model.DDMFormValuesFilterImpl;
 import com.liferay.dynamic.data.mapping.form.values.query.internal.parser.DDMFormValuesQueryBaseListener;
+import com.liferay.dynamic.data.mapping.form.values.query.internal.parser.DDMFormValuesQueryParser;
 import com.liferay.dynamic.data.mapping.form.values.query.internal.parser.DDMFormValuesQueryParser.AttributeTypeContext;
 import com.liferay.dynamic.data.mapping.form.values.query.internal.parser.DDMFormValuesQueryParser.AttributeValueContext;
 import com.liferay.dynamic.data.mapping.form.values.query.internal.parser.DDMFormValuesQueryParser.FieldSelectorContext;
@@ -32,7 +33,6 @@ import com.liferay.dynamic.data.mapping.form.values.query.internal.parser.DDMFor
 import com.liferay.dynamic.data.mapping.form.values.query.internal.parser.DDMFormValuesQueryParser.PredicateEqualityExpressionContext;
 import com.liferay.dynamic.data.mapping.form.values.query.internal.parser.DDMFormValuesQueryParser.PredicateOrExpressionContext;
 import com.liferay.dynamic.data.mapping.form.values.query.internal.parser.DDMFormValuesQueryParser.SelectorExpressionContext;
-import com.liferay.dynamic.data.mapping.form.values.query.internal.parser.DDMFormValuesQueryParser.StepTypeContext;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -212,7 +212,9 @@ public class DDMFormValuesQueryListener extends DDMFormValuesQueryBaseListener {
 	}
 
 	@Override
-	public void exitStepType(StepTypeContext stepTypeContext) {
+	public void exitStepType(
+		DDMFormValuesQueryParser.StepTypeContext stepTypeContext) {
+
 		String text = stepTypeContext.getText();
 
 		DDMFormValuesFilter lastDDMFormValuesFilter = ddmFormValuesFilters.get(

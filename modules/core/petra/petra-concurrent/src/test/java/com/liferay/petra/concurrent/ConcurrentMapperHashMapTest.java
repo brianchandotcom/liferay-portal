@@ -23,7 +23,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
-import java.util.AbstractMap.SimpleEntry;
+import java.util.AbstractMap;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -133,25 +133,28 @@ public class ConcurrentMapperHashMapTest {
 		Assert.assertTrue(
 			entrySet.toString(),
 			entrySet.contains(
-				new SimpleEntry<Key, Value>(_testKey, _testValue)));
+				new AbstractMap.SimpleEntry<Key, Value>(_testKey, _testValue)));
 
 		_assertEventQueue(Event.MAP_KEY_FOR_QUERY, Event.UNMAP_VALUE_FOR_QUERY);
 
 		Assert.assertFalse(
 			entrySet.toString(),
 			entrySet.contains(
-				new SimpleEntry<Key, Value>(_testKey, new Value(""))));
+				new AbstractMap.SimpleEntry<Key, Value>(
+					_testKey, new Value(""))));
 
 		_assertEventQueue(Event.MAP_KEY_FOR_QUERY, Event.UNMAP_VALUE_FOR_QUERY);
 
 		Assert.assertFalse(
 			entrySet.remove(
-				new SimpleEntry<Key, Value>(_testKey, new Value(""))));
+				new AbstractMap.SimpleEntry<Key, Value>(
+					_testKey, new Value(""))));
 
 		_assertEventQueue(Event.MAP_KEY_FOR_QUERY, Event.MAP_VALUE_FOR_QUERY);
 
 		Assert.assertTrue(
-			entrySet.remove(new SimpleEntry<Key, Value>(_testKey, _testValue)));
+			entrySet.remove(
+				new AbstractMap.SimpleEntry<Key, Value>(_testKey, _testValue)));
 
 		_assertEventQueue(
 			Event.MAP_KEY_FOR_QUERY, Event.MAP_VALUE_FOR_QUERY,
@@ -170,18 +173,22 @@ public class ConcurrentMapperHashMapTest {
 		Assert.assertEquals(entry, entry);
 		Assert.assertNotEquals(entry, new Object());
 		Assert.assertNotEquals(
-			entry, new SimpleEntry<Key, Value>(new Key("someKey"), _testValue));
+			entry,
+			new AbstractMap.SimpleEntry<Key, Value>(
+				new Key("someKey"), _testValue));
 
 		_assertEventQueue(Event.UNMAP_KEY_FOR_QUERY);
 
 		Assert.assertNotEquals(
-			entry, new SimpleEntry<Key, Value>(_testKey, new Value("")));
+			entry,
+			new AbstractMap.SimpleEntry<Key, Value>(_testKey, new Value("")));
 
 		_assertEventQueue(
 			Event.UNMAP_KEY_FOR_QUERY, Event.UNMAP_VALUE_FOR_QUERY);
 
 		Assert.assertEquals(
-			entry, new SimpleEntry<Key, Value>(_testKey, _testValue));
+			entry,
+			new AbstractMap.SimpleEntry<Key, Value>(_testKey, _testValue));
 
 		_assertEventQueue(
 			Event.UNMAP_KEY_FOR_QUERY, Event.UNMAP_VALUE_FOR_QUERY);

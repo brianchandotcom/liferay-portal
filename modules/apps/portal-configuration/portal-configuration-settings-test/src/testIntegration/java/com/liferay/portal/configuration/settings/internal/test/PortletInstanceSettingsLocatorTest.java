@@ -14,7 +14,7 @@
 
 package com.liferay.portal.configuration.settings.internal.test;
 
-import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition.Scope;
+import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 import com.liferay.portal.configuration.settings.internal.constants.SettingsLocatorTestConstants;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.settings.PortletInstanceSettingsLocator;
@@ -52,7 +52,8 @@ public class PortletInstanceSettingsLocatorTest
 			getSettingsValue());
 
 		Assert.assertEquals(
-			saveScopedConfiguration(Scope.COMPANY, companyId),
+			saveScopedConfiguration(
+				ExtendedObjectClassDefinition.Scope.COMPANY, companyId),
 			getSettingsValue());
 
 		Assert.assertEquals(
@@ -61,7 +62,9 @@ public class PortletInstanceSettingsLocatorTest
 			getSettingsValue());
 
 		Assert.assertEquals(
-			saveScopedConfiguration(Scope.GROUP, groupId), getSettingsValue());
+			saveScopedConfiguration(
+				ExtendedObjectClassDefinition.Scope.GROUP, groupId),
+			getSettingsValue());
 
 		Assert.assertEquals(
 			savePortletPreferences(groupId, PortletKeys.PREFS_OWNER_TYPE_GROUP),
@@ -69,7 +72,8 @@ public class PortletInstanceSettingsLocatorTest
 
 		Assert.assertEquals(
 			saveScopedConfiguration(
-				Scope.PORTLET_INSTANCE, _portletInstanceKey),
+				ExtendedObjectClassDefinition.Scope.PORTLET_INSTANCE,
+				_portletInstanceKey),
 			getSettingsValue());
 
 		Assert.assertEquals(

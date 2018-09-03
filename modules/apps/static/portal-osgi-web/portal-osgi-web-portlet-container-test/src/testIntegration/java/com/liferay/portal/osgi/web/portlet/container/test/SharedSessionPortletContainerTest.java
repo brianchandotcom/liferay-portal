@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.util.test.PortletContainerTestUtil;
-import com.liferay.portal.util.test.PortletContainerTestUtil.Response;
 
 import java.io.IOException;
 
@@ -119,8 +118,8 @@ public class SharedSessionPortletContainerTest
 			httpServletRequest, TEST_PORTLET_ID, layout.getPlid(),
 			PortletRequest.RENDER_PHASE);
 
-		Response response = PortletContainerTestUtil.request(
-			portletURL.toString());
+		PortletContainerTestUtil.Response response =
+			PortletContainerTestUtil.request(portletURL.toString());
 
 		Assert.assertEquals(200, response.getCode());
 
@@ -190,8 +189,8 @@ public class SharedSessionPortletContainerTest
 			httpServletRequest, TEST_PORTLET_ID, layout.getPlid(),
 			PortletRequest.RENDER_PHASE);
 
-		Response response = PortletContainerTestUtil.request(
-			portletURL.toString());
+		PortletContainerTestUtil.Response response =
+			PortletContainerTestUtil.request(portletURL.toString());
 
 		Assert.assertEquals(200, response.getCode());
 
@@ -257,8 +256,8 @@ public class SharedSessionPortletContainerTest
 			httpServletRequest, TEST_PORTLET_ID, layout.getPlid(),
 			PortletRequest.RENDER_PHASE);
 
-		Response response = PortletContainerTestUtil.request(
-			portletURL.toString());
+		PortletContainerTestUtil.Response response =
+			PortletContainerTestUtil.request(portletURL.toString());
 
 		Assert.assertEquals(200, response.getCode());
 
@@ -326,8 +325,8 @@ public class SharedSessionPortletContainerTest
 			httpServletRequest, TEST_PORTLET_ID, layout.getPlid(),
 			PortletRequest.RENDER_PHASE);
 
-		Response response = PortletContainerTestUtil.request(
-			portletURL.toString());
+		PortletContainerTestUtil.Response response =
+			PortletContainerTestUtil.request(portletURL.toString());
 
 		Assert.assertEquals(200, response.getCode());
 
@@ -394,8 +393,8 @@ public class SharedSessionPortletContainerTest
 			httpServletRequest, TEST_PORTLET_ID, layout.getPlid(),
 			PortletRequest.RENDER_PHASE);
 
-		Response response = PortletContainerTestUtil.request(
-			portletURL.toString());
+		PortletContainerTestUtil.Response response =
+			PortletContainerTestUtil.request(portletURL.toString());
 
 		Assert.assertEquals(200, response.getCode());
 

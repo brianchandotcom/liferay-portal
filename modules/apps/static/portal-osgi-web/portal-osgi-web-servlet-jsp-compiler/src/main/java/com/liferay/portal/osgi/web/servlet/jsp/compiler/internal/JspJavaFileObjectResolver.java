@@ -29,7 +29,6 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 import java.nio.file.DirectoryStream;
-import java.nio.file.DirectoryStream.Filter;
 import java.nio.file.FileSystem;
 import java.nio.file.FileSystems;
 import java.nio.file.Path;
@@ -41,7 +40,6 @@ import java.util.Collections;
 import java.util.Enumeration;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Set;
 
 import javax.tools.JavaFileObject;
@@ -89,7 +87,7 @@ public class JspJavaFileObjectResolver implements JavaFileObjectResolver {
 		String packageName = packagePath.replace(
 			CharPool.SLASH, CharPool.PERIOD);
 
-		for (Entry<BundleWiring, Set<String>> entry :
+		for (Map.Entry<BundleWiring, Set<String>> entry :
 				_bundleWiringPackageNames.entrySet()) {
 
 			Set<String> packageNames = entry.getValue();
@@ -233,7 +231,7 @@ public class JspJavaFileObjectResolver implements JavaFileObjectResolver {
 					try (DirectoryStream<Path> directoryStream =
 							fileSystemProvider.newDirectoryStream(
 								fileSystem.getPath(path),
-								new Filter<Path>() {
+								new DirectoryStream.Filter<Path>() {
 
 									@Override
 									public boolean accept(Path entryPath) {

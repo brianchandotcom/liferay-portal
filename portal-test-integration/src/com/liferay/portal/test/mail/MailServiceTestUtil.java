@@ -22,7 +22,6 @@ import com.liferay.mail.kernel.service.MailServiceUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.SocketUtil;
-import com.liferay.portal.kernel.util.SocketUtil.ServerSocketConfigurator;
 import com.liferay.portal.test.mail.impl.MailMessageImpl;
 import com.liferay.portal.util.test.PrefsPropsTemporarySwapper;
 
@@ -162,7 +161,7 @@ public class MailServiceTestUtil {
 		try (ServerSocketChannel serverSocketChannel =
 				SocketUtil.createServerSocketChannel(
 					InetAddress.getLocalHost(), _START_PORT,
-					new ServerSocketConfigurator() {
+					new SocketUtil.ServerSocketConfigurator() {
 
 						@Override
 						public void configure(ServerSocket serverSocket)

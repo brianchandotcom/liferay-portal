@@ -177,7 +177,7 @@
 			</div>
 		</#if>
 
-		<#assign assetURL = assetPublisherHelper.getAssetViewURL(renderRequest, renderResponse, assetRenderer, asset, false) />
+		<#assign assetURL = assetPublisherHelper.getAssetViewURL(renderRequest, renderResponse, assetRenderer, asset, !stringUtil.equals(assetLinkBehavior, "showFullContent")) />
 
 		<div class="asset-entry-abstract-content">
 			<h3><a href="${assetURL}">${assetRenderer.getTitle(locale)}</a></h3>

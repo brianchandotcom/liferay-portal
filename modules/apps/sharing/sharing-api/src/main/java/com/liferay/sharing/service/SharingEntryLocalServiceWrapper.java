@@ -88,6 +88,11 @@ public class SharingEntryLocalServiceWrapper implements SharingEntryLocalService
 	}
 
 	@Override
+	public void deleteExpiredEntries() {
+		_sharingEntryLocalService.deleteExpiredEntries();
+	}
+
+	@Override
 	public void deleteGroupSharingEntries(long groupId) {
 		_sharingEntryLocalService.deleteGroupSharingEntries(groupId);
 	}
@@ -335,8 +340,7 @@ public class SharingEntryLocalServiceWrapper implements SharingEntryLocalService
 
 	@Override
 	public java.util.List<com.liferay.sharing.model.SharingEntry> getSharingEntries(
-		long toUserId, long classNameId, long classPK)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		long toUserId, long classNameId, long classPK) {
 		return _sharingEntryLocalService.getSharingEntries(toUserId,
 			classNameId, classPK);
 	}

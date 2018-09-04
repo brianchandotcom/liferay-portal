@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
+import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Date;
@@ -118,6 +119,30 @@ public class AssetListEntryLocalServiceImpl
 
 		assetListEntry.setModifiedDate(new Date());
 		assetListEntry.setTitle(title);
+
+		return assetListEntryPersistence.update(assetListEntry);
+	}
+
+	@Override
+	public AssetListEntry updateAssetListEntrySettings(
+			long assetListEntryId, String typeSettings)
+		throws PortalException {
+
+		AssetListEntry assetListEntry =
+			assetListEntryPersistence.findByPrimaryKey(assetListEntryId);
+
+		UnicodeProperties existingProperties = new UnicodeProperties();
+
+		existingProperties.fastLoad(assetListEntry.getTypeSettings());
+
+		UnicodeProperties newProperties = new UnicodeProperties();
+
+		newProperties.fastLoad(typeSettings);
+
+		existingProperties.putAll(newProperties);
+
+		assetListEntry.setModifiedDate(new Date());
+		assetListEntry.setTypeSettings(existingProperties.toString());
 
 		return assetListEntryPersistence.update(assetListEntry);
 	}

@@ -77,7 +77,7 @@ public class JournalArticleLocalServiceTest {
 	}
 
 	@Test
-	public void testcopyArticle() throws Exception {
+	public void testCopyArticle() throws Exception {
 		JournalArticle oldArticle = JournalTestUtil.addArticle(
 			_group.getGroupId(),
 			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
@@ -85,6 +85,8 @@ public class JournalArticleLocalServiceTest {
 		JournalArticle newArticle = JournalArticleLocalServiceUtil.copyArticle(
 			oldArticle.getUserId(), oldArticle.getGroupId(),
 			oldArticle.getArticleId(), null, true, oldArticle.getVersion());
+
+		Assert.assertNotEquals(oldArticle, newArticle);
 
 		List<ResourcePermission> oldResourcePermissions =
 			ResourcePermissionLocalServiceUtil.getResourcePermissions(
@@ -102,13 +104,27 @@ public class JournalArticleLocalServiceTest {
 			newResourcePermissions.toString(), oldResourcePermissions.size(),
 			newResourcePermissions.size());
 
-		for (int i = 0; i < oldResourcePermissions.size(); ++i) {
+		for (int i = 0; i < oldResourcePermissions.size(); i++) {
+			ResourcePermission oldResourcePermission =
+				oldResourcePermissions.get(i);
+			ResourcePermission newResourcePermission =
+				newResourcePermissions.get(i);
+
+			Assert.assertNotEquals(
+				oldResourcePermission, newResourcePermission);
+
 			Assert.assertEquals(
-				oldResourcePermissions.get(i).getActionIds(),
-				newResourcePermissions.get(i).getActionIds());
+				oldResourcePermission.getRoleId(),
+				newResourcePermission.getRoleId());
 			Assert.assertEquals(
-				oldResourcePermissions.get(i).getViewActionId(),
-				newResourcePermissions.get(i).getViewActionId());
+				oldResourcePermission.getOwnerId(),
+				newResourcePermission.getOwnerId());
+			Assert.assertEquals(
+				oldResourcePermission.getActionIds(),
+				newResourcePermission.getActionIds());
+			Assert.assertEquals(
+				oldResourcePermission.isViewActionId(),
+				newResourcePermission.isViewActionId());
 		}
 	}
 

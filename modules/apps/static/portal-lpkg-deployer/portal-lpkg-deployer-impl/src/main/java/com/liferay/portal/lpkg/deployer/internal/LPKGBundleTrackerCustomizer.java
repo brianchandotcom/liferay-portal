@@ -302,7 +302,14 @@ public class LPKGBundleTrackerCustomizer
 
 			for (Bundle installedBundle : bundles) {
 				if (installedBundle.getState() == Bundle.RESOLVED) {
-					installedBundle.start();
+					Dictionary<String, String> headers =
+						installedBundle.getHeaders(StringPool.BLANK);
+
+					String fragmentHost = headers.get(Constants.FRAGMENT_HOST);
+
+					if (fragmentHost == null) {
+						installedBundle.start();
+					}
 				}
 			}
 		}

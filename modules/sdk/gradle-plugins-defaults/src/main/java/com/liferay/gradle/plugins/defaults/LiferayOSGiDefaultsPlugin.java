@@ -2943,7 +2943,10 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 			}
 		}
 
-		if (Validator.isNull(dirName)) {
+		boolean jspPrecompileFromSource = GradleUtil.getProperty(
+			project, "jsp.precompile.from.source", true);
+
+		if (Validator.isNull(dirName) || jspPrecompileFromSource) {
 			dirName =
 				GradleUtil.getArchivesBaseName(project) + "-" +
 					project.getVersion();
@@ -2953,9 +2956,6 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 			liferayExtension.getLiferayHome(), "work/" + dirName);
 
 		javaCompile.setDestinationDir(dir);
-
-		boolean jspPrecompileFromSource = GradleUtil.getProperty(
-			project, "jsp.precompile.from.source", true);
 
 		if (!jspPrecompileFromSource && (artifactProperties != null)) {
 			Copy copy = _addTaskDownloadCompiledJSP(

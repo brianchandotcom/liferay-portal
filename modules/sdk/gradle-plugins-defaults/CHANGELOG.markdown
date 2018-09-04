@@ -4438,6 +4438,12 @@ overridden by values defined in a `gradle-ext.properties` file
 	- `scm.developerConnection` = `scm:git:git@github.com:liferay/liferay-portal.git`
 	- `scm.url` = `http://github.com/liferay/liferay-portal`
 
+## 5.5.27 - 2018-09-04
+
+### Fixed
+- [LPS-70819]: Fix the `compileJSP.destinationDir` property when the
+`jsp.precompile.from.source` project property is set to `true`.
+
 [Find Security Bugs]: https://github.com/liferay/liferay-portal/tree/master/modules/third-party/com-h3xstream-findsecbugs
 [Gradle Dependency Management]: https://github.com/spring-gradle-plugins/dependency-management-plugin
 [Gradle License Report]: https://github.com/jk1/Gradle-License-Report

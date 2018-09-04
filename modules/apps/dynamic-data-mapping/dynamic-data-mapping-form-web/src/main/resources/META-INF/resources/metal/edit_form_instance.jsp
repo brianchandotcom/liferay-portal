@@ -132,6 +132,7 @@ renderResponse.setTitle((formInstance == null) ? LanguageUtil.get(request, "new-
 			defaultLanguageId: '<%= ddmFormAdminDisplayContext.getDefaultLanguageId() %>',
 			dependencies: ['dynamic-data-mapping-form-field-type/metal'],
 			fieldTypes: <%= ddmFormAdminDisplayContext.getDDMFormFieldTypesJSONArray() %>,
+			formInstanceId: <%= formInstanceId %>,
 			localizedDescription: <%= ddmFormAdminDisplayContext.getFormLocalizedDescription() %>,
 			localizedName: <%= ddmFormAdminDisplayContext.getFormLocalizedName() %>,
 			modules: Liferay.MODULES,

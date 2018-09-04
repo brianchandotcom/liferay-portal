@@ -54,6 +54,16 @@ class Form extends Component {
 
 		/**
 		 * A map with all translated values available as the form description.
+		 * @default 0
+		 * @instance
+		 * @memberof Form
+		 * @type {!array}
+		 */
+
+		formInstanceId: Config.number().value(0),
+
+		/**
+		 * A map with all translated values available as the form description.
 		 * @default undefined
 		 * @instance
 		 * @memberof Form
@@ -136,204 +146,17 @@ class Form extends Component {
 		saveButtonLabel: Config.string().value(Liferay.Language.get('save-form'))
 	}
 
-	/*
-	 * Returns the map with all translated names or a map with just "Intitled Form" in case
-	 * there are no translations available.
-	 * @private
-	 */
-
-	_setContext(context) {
-		if (!context.pages.length) {
-			context = {
-				...context,
-				pages: [
-					{
-						description: '',
-						localizedDescription: {
-							[themeDisplay.getLanguageId()]: ''
-						},
-						localizedTitle: {
-							[themeDisplay.getLanguageId()]: ''
-						},
-						rows: [
-							{
-								columns: [
-									{
-										fields: [],
-										size: 12
-									}
-								]
-							}
-						],
-						title: ''
-					}
-				]
-			};
-		}
-
-		return context;
-	}
-
-	_getLocalizedName() {
-		const {
-			defaultLanguageId,
-			localizedName
-		} = this.props;
-
-		if (!localizedName[defaultLanguageId].trim()) {
-			localizedName[defaultLanguageId] = Liferay.Language.get('untitled-form');
-		}
-
-		return localizedName;
-	}
-
-	_getLocalizedDescription() {
-		const {localizedDescription} = this.props;
-
-		return localizedDescription;
-	}
-
-	_getDescriptionEditor() {
-		const {namespace} = this.props;
-
-		return window[`${namespace}descriptionEditor`];
-	}
-
-	_getNameEditor() {
-		const {namespace} = this.props;
-
-		return window[`${namespace}nameEditor`];
-	}
-
-	_getSerializedFormBuilderContext() {
-		const state = this.getState();
-
-		const visitor = new PagesVisitor(state.pages);
-
-		return JSON.stringify(
-			{
-				...state,
-				pages: visitor.mapPages(
-					page => {
-						return {
-							...page,
-							description: page.localizedDescription,
-							title: page.localizedTitle
-						};
-					}
-				)
-			}
-		);
-	}
-
-	/*
-	 * Handles "pagesChanged" event. Updates hidden input with serialized From Builder context.
-	 * @param {!Event} event
-	 * @private
-	 */
-
-	_handlePagesChanged(event) {
-		this.setState(
-			{
-				pages: event.newVal
-			}
-		);
-	}
-
-	_handleNameEditorChanged(event) {
-		const {editingLanguageId, localizedName} = this.props;
-		const nameEditor = this._getNameEditor();
-
-		localizedName[editingLanguageId] = nameEditor.getHTML();
-	}
-
-	_handleDescriptionEditorChanged(event) {
-		const {editingLanguageId, localizedDescription} = this.props;
-		const descriptionEditor = this._getDescriptionEditor();
-
-		localizedDescription[editingLanguageId] = descriptionEditor.getHTML();
-	}
-
 	/**
-	 * Handles click on save button. Saves Form when clicked.
-	 * @param {!Event} event
-	 * @private
+	 * @inheritDoc
 	 */
-
-	_handleSaveButtonClicked(event) {
-		event.preventDefault();
-
-		this.setState(
-			{
-				saveButtonLabel: Liferay.Language.get('saving')
-			}
-		);
-
-		this.submitForm();
-	}
-
-	_openSidebar() {
-		const {builder} = this.refs;
-
-		if (builder) {
-			const {sidebar} = builder.refs;
-
-			sidebar.open();
-		}
-	}
-
-	/**
-	 * Handles click on plus button. Button shows Sidebar when clicked.
-	 * @private
-	 */
-
-	_handleAddFieldButtonClicked() {
-		this._openSidebar();
-	}
 
 	created() {
 		this._eventHandler = new EventHandler();
 	}
 
-	_pagesValueFn() {
-		const {context} = this.props;
-
-		return context.pages;
-	}
-
-	_createEditor(name) {
-		const {namespace} = this.props;
-
-		const editorName = `${namespace}${name}`;
-
-		const editor = window[editorName];
-
-		let promise;
-
-		if (editor) {
-			editor.create();
-
-			promise = Promise.resolve(CKEDITOR.instances[editorName]);
-		}
-		else {
-			promise = new Promise(
-				resolve => {
-					Liferay.on(
-						'editorAPIReady',
-						event => {
-							if (event.editorName === editorName) {
-								event.editor.create();
-
-								resolve(CKEDITOR.instances[editorName]);
-							}
-						}
-					);
-				}
-			);
-		}
-
-		return promise;
-	}
+	/**
+	 * @inheritDoc
+	 */
 
 	attached() {
 		this._eventHandler.add(
@@ -344,32 +167,8 @@ class Form extends Component {
 		this._createEditor('nameEditor').then(editor => editor.on('change', this._handleNameEditorChanged.bind(this)));
 		this._createEditor('descriptionEditor').then(editor => editor.on('change', this._handleDescriptionEditorChanged.bind(this)));
 
-		this._openSidebar();
-	}
-
-	_handleFormNavClicked(event) {
-		const {delegateTarget, target} = event;
-		const {navItemIndex} = delegateTarget.dataset;
-		const addButton = document.querySelector('#addFieldButton');
-		const formBuilderButtons = document.querySelector('.ddm-form-builder-buttons');
-		const publishIcon = document.querySelector('.publish-icon');
-		if (navItemIndex !== this.state.activeFormMode) {
-			this.setState(
-				{
-					activeFormMode: parseInt(navItemIndex, 10)
-				}
-			);
-			document.querySelector('.forms-management-bar li>a.active').classList.remove('active');
-			if (parseInt(this.state.activeFormMode, 10)) {
-				formBuilderButtons.classList.add('hide');
-				publishIcon.classList.add('hide');
-			}
-			else {
-				formBuilderButtons.classList.remove('hide');
-				addButton.classList.remove('hide');
-				publishIcon.classList.remove('hide');
-			}
-			target.classList.add('active');
+		if (this.props.formInstanceId === 0) {
+			this._openSidebar();
 		}
 	}
 
@@ -396,31 +195,6 @@ class Form extends Component {
 				title: {}
 			}
 		};
-	}
-
-	submitForm() {
-		const {namespace} = this.props;
-
-		this.refs.nameInput.value = JSON.stringify(this._getLocalizedName());
-
-		this.syncInputValues();
-
-		submitForm(document.querySelector(`#${namespace}editForm`));
-	}
-
-	syncInputValues() {
-		const state = this.getState();
-		const {
-			description,
-			name
-		} = state;
-
-		const settingsDDMForm = Liferay.component('settingsDDMForm');
-
-		this.refs.descriptionInput.value = JSON.stringify(description);
-		this.refs.nameInput.value = JSON.stringify(name);
-		this.refs.serializedFormBuilderContextInput.value = this._getSerializedFormBuilderContext();
-		this.refs.serializedSettingsContextInput.value = JSON.stringify(settingsDDMForm.toJSON());
 	}
 
 	/**
@@ -480,6 +254,252 @@ class Form extends Component {
 				</div>
 			</div>
 		);
+	}
+
+	submitForm() {
+		const {namespace} = this.props;
+
+		this.refs.nameInput.value = JSON.stringify(this._getLocalizedName());
+
+		this.syncInputValues();
+
+		submitForm(document.querySelector(`#${namespace}editForm`));
+	}
+
+	syncInputValues() {
+		const state = this.getState();
+		const {
+			description,
+			name
+		} = state;
+
+		const settingsDDMForm = Liferay.component('settingsDDMForm');
+
+		this.refs.descriptionInput.value = JSON.stringify(description);
+		this.refs.nameInput.value = JSON.stringify(name);
+		this.refs.serializedFormBuilderContextInput.value = this._getSerializedFormBuilderContext();
+		this.refs.serializedSettingsContextInput.value = JSON.stringify(settingsDDMForm.toJSON());
+	}
+
+	_createEditor(name) {
+		const {namespace} = this.props;
+
+		const editorName = `${namespace}${name}`;
+
+		const editor = window[editorName];
+
+		let promise;
+
+		if (editor) {
+			editor.create();
+
+			promise = Promise.resolve(CKEDITOR.instances[editorName]);
+		}
+		else {
+			promise = new Promise(
+				resolve => {
+					Liferay.on(
+						'editorAPIReady',
+						event => {
+							if (event.editorName === editorName) {
+								event.editor.create();
+
+								resolve(CKEDITOR.instances[editorName]);
+							}
+						}
+					);
+				}
+			);
+		}
+
+		return promise;
+	}
+
+	_getDescriptionEditor() {
+		const {namespace} = this.props;
+
+		return window[`${namespace}descriptionEditor`];
+	}
+
+	_getLocalizedDescription() {
+		const {localizedDescription} = this.props;
+
+		return localizedDescription;
+	}
+
+	_getLocalizedName() {
+		const {
+			defaultLanguageId,
+			localizedName
+		} = this.props;
+
+		if (!localizedName[defaultLanguageId].trim()) {
+			localizedName[defaultLanguageId] = Liferay.Language.get('untitled-form');
+		}
+
+		return localizedName;
+	}
+
+	_getNameEditor() {
+		const {namespace} = this.props;
+
+		return window[`${namespace}nameEditor`];
+	}
+
+	_getSerializedFormBuilderContext() {
+		const state = this.getState();
+
+		const visitor = new PagesVisitor(state.pages);
+
+		return JSON.stringify(
+			{
+				...state,
+				pages: visitor.mapPages(
+					page => {
+						return {
+							...page,
+							description: page.localizedDescription,
+							title: page.localizedTitle
+						};
+					}
+				)
+			}
+		);
+	}
+
+	/**
+	 * Handles click on plus button. Button shows Sidebar when clicked.
+	 * @private
+	 */
+
+	_handleAddFieldButtonClicked() {
+		this._openSidebar();
+	}
+
+	_handleDescriptionEditorChanged(event) {
+		const {editingLanguageId, localizedDescription} = this.props;
+		const descriptionEditor = this._getDescriptionEditor();
+
+		localizedDescription[editingLanguageId] = descriptionEditor.getHTML();
+	}
+
+	_handleFormNavClicked(event) {
+		const {delegateTarget, target} = event;
+		const {navItemIndex} = delegateTarget.dataset;
+		const addButton = document.querySelector('#addFieldButton');
+		const formBuilderButtons = document.querySelector('.ddm-form-builder-buttons');
+		const publishIcon = document.querySelector('.publish-icon');
+		if (navItemIndex !== this.state.activeFormMode) {
+			this.setState(
+				{
+					activeFormMode: parseInt(navItemIndex, 10)
+				}
+			);
+			document.querySelector('.forms-management-bar li>a.active').classList.remove('active');
+			if (parseInt(this.state.activeFormMode, 10)) {
+				formBuilderButtons.classList.add('hide');
+				publishIcon.classList.add('hide');
+			}
+			else {
+				formBuilderButtons.classList.remove('hide');
+				addButton.classList.remove('hide');
+				publishIcon.classList.remove('hide');
+			}
+			target.classList.add('active');
+		}
+	}
+
+	_handleNameEditorChanged(event) {
+		const {editingLanguageId, localizedName} = this.props;
+		const nameEditor = this._getNameEditor();
+
+		localizedName[editingLanguageId] = nameEditor.getHTML();
+	}
+
+	/*
+	 * Handles "pagesChanged" event. Updates hidden input with serialized From Builder context.
+	 * @param {!Event} event
+	 * @private
+	 */
+
+	_handlePagesChanged(event) {
+		this.setState(
+			{
+				pages: event.newVal
+			}
+		);
+	}
+
+	/**
+	 * Handles click on save button. Saves Form when clicked.
+	 * @param {!Event} event
+	 * @private
+	 */
+
+	_handleSaveButtonClicked(event) {
+		event.preventDefault();
+
+		this.setState(
+			{
+				saveButtonLabel: Liferay.Language.get('saving')
+			}
+		);
+
+		this.submitForm();
+	}
+
+	_openSidebar() {
+		const {builder} = this.refs;
+
+		if (builder) {
+			const {sidebar} = builder.refs;
+
+			sidebar.open();
+		}
+	}
+
+	_pagesValueFn() {
+		const {context} = this.props;
+
+		return context.pages;
+	}
+
+	/*
+	 * Returns the map with all translated names or a map with just "Intitled Form" in case
+	 * there are no translations available.
+	 * @private
+	 */
+
+	_setContext(context) {
+		if (!context.pages.length) {
+			context = {
+				...context,
+				pages: [
+					{
+						description: '',
+						localizedDescription: {
+							[themeDisplay.getLanguageId()]: ''
+						},
+						localizedTitle: {
+							[themeDisplay.getLanguageId()]: ''
+						},
+						rows: [
+							{
+								columns: [
+									{
+										fields: [],
+										size: 12
+									}
+								]
+							}
+						],
+						title: ''
+					}
+				]
+			};
+		}
+
+		return context;
 	}
 }
 

@@ -16,7 +16,7 @@ package com.liferay.sharing.web.internal.notifications;
 
 import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.json.JSONException;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.User;
@@ -60,12 +60,12 @@ public class SharingUserNotificationHandler
 			ServiceContext serviceContext)
 		throws Exception {
 
-		SharingEntry sharingEntry = _getSharingEntry(userNotificationEvent);
-
 		Locale locale = serviceContext.getLocale();
 
 		ResourceBundle resourceBundle =
 			_resourceBundleLoader.loadResourceBundle(locale);
+
+		SharingEntry sharingEntry = _getSharingEntry(userNotificationEvent);
 
 		return ResourceBundleUtil.getString(
 			resourceBundle, "x-has-shared-x-with-you-for-x",
@@ -132,14 +132,14 @@ public class SharingUserNotificationHandler
 
 	private SharingEntry _getSharingEntry(
 			UserNotificationEvent userNotificationEvent)
-		throws JSONException {
+		throws PortalException {
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
 			userNotificationEvent.getPayload());
 
 		long sharingEntryId = jsonObject.getLong("classPK");
 
-		return _sharingEntryLocalService.fetchSharingEntry(sharingEntryId);
+		return _sharingEntryLocalService.getSharingEntry(sharingEntryId);
 	}
 
 	private String _getUserName(long userId, ResourceBundle resourceBundle) {

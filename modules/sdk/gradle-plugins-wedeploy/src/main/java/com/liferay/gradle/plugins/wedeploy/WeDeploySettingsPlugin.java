@@ -139,12 +139,6 @@ public class WeDeploySettingsPlugin implements Plugin<Settings> {
 						return FileVisitResult.CONTINUE;
 					}
 
-					Path dockerfilePath = dirPath.resolve("Dockerfile");
-
-					if (Files.exists(dockerfilePath)) {
-						return FileVisitResult.CONTINUE;
-					}
-
 					String projectPath = _includeProject(
 						settings, dirPath, rootDirPath, projectPathPrefix);
 

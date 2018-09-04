@@ -70,7 +70,7 @@ public class UpgradeBlogsImages extends UpgradeProcess {
 				long smallImageId = rs.getLong("smallImageId");
 				long userId = rs.getLong("userId");
 
-				Image smallImage = _imageLocalService.getImage(smallImageId);
+				Image smallImage = _imageLocalService.fetchImage(smallImageId);
 
 				if (smallImage == null) {
 					continue;

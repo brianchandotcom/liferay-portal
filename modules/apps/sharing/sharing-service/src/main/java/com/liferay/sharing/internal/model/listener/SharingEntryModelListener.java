@@ -56,13 +56,7 @@ public class SharingEntryModelListener extends BaseModelListener<SharingEntry> {
 					JSONFactoryUtil.createJSONObject();
 
 				notificationEventJSONObject.put(
-					"className", sharingEntry.getClassName());
-
-				notificationEventJSONObject.put(
 					"classPK", sharingEntry.getSharingEntryId());
-
-				notificationEventJSONObject.put(
-					"userId", sharingEntry.getFromUserId());
 
 				NotificationEvent notificationEvent =
 					NotificationEventFactoryUtil.createNotificationEvent(

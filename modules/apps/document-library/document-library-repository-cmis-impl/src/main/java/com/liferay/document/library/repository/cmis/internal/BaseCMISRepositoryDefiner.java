@@ -38,8 +38,10 @@ public abstract class BaseCMISRepositoryDefiner extends BaseRepositoryDefiner {
 
 	@Override
 	public String getRepositoryTypeLabel(Locale locale) {
-		ResourceBundle resourceBundle =
-			_resourceBundleLoader.loadResourceBundle(locale);
+		ResourceBundleLoader resourceBundleLoader = getResourceBundleLoader();
+
+		ResourceBundle resourceBundle = resourceBundleLoader.loadResourceBundle(
+			locale);
 
 		return ResourceBundleUtil.getString(
 			resourceBundle, _MODEL_RESOURCE_NAME_PREFIX + getClassName());
@@ -65,14 +67,12 @@ public abstract class BaseCMISRepositoryDefiner extends BaseRepositoryDefiner {
 	protected abstract PortalCapabilityLocator getPortalCapabilityLocator();
 
 	protected ResourceBundleLoader getResourceBundleLoader() {
-		return _resourceBundleLoader;
+		return ResourceBundleLoaderUtil.
+			getResourceBundleLoaderByBundleSymbolicName(
+				"com.liferay.document.library.repository.cmis.impl");
 	}
 
 	private static final String _MODEL_RESOURCE_NAME_PREFIX = "model.resource.";
-
-	private final ResourceBundleLoader _resourceBundleLoader =
-		ResourceBundleLoaderUtil.getResourceBundleLoaderByBundleSymbolicName(
-			"com.liferay.document.library.repository.cmis.impl");
 
 	private static class RefreshingProcessorCapability
 		implements ProcessorCapability {

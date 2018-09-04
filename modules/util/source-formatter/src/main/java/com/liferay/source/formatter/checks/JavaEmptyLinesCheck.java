@@ -117,15 +117,17 @@ public class JavaEmptyLinesCheck extends EmptyLinesCheck {
 	private String _fixRedundantEmptyLineInLambdaExpression(String content) {
 		Matcher matcher = _redundantEmptyLinePattern.matcher(content);
 
-		if (matcher.find()) {
-			return StringUtil.replaceFirst(
-				content, "\n\n", "\n", matcher.start());
+		while (matcher.find()) {
+			if (getLevel(matcher.group(1)) == 0) {
+				return StringUtil.replaceFirst(
+					content, "\n\n", "\n", matcher.start());
+			}
 		}
 
 		return content;
 	}
 
 	private final Pattern _redundantEmptyLinePattern = Pattern.compile(
-		"-> \\{\n\n[\t ]*(?!// )\\S");
+		"\n(.*)-> \\{\n\n[\t ]*(?!// )\\S");
 
 }

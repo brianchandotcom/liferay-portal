@@ -44,7 +44,8 @@ public abstract class LineBreakCheck extends BaseFileCheck {
 			addMessage(fileName, "Incorrect line break", lineNumber);
 		}
 
-		if ((trimmedLine.endsWith(StringPool.COMMA) ||
+		if (!trimmedLine.matches("(return )?\\(.*") &&
+			(trimmedLine.endsWith(StringPool.COMMA) ||
 			 trimmedLine.endsWith("->")) &&
 			(getLevel(trimmedLine) > 0)) {
 

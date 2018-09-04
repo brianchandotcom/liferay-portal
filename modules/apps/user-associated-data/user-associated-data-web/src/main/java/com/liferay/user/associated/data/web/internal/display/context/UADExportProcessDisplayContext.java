@@ -76,20 +76,21 @@ public class UADExportProcessDisplayContext {
 
 		if (orderByCol.equals("name")) {
 			comparator =
-				(BackgroundTask backgroundTask1, BackgroundTask backgroundTask2)
-					-> {
-					Map<String, Serializable> taskContextMap1 =
-						backgroundTask1.getTaskContextMap();
-					Map<String, Serializable> taskContextMap2 =
-						backgroundTask2.getTaskContextMap();
+				(BackgroundTask backgroundTask1,
+				 BackgroundTask backgroundTask2) -> {
 
-					String applicationKey1 = (String)taskContextMap1.get(
-						"applicationKey");
-					String applicationKey2 = (String)taskContextMap2.get(
-						"applicationKey");
+				Map<String, Serializable> taskContextMap1 =
+					backgroundTask1.getTaskContextMap();
+				Map<String, Serializable> taskContextMap2 =
+					backgroundTask2.getTaskContextMap();
 
-					return applicationKey1.compareTo(applicationKey2);
-				};
+				String applicationKey1 = (String)taskContextMap1.get(
+					"applicationKey");
+				String applicationKey2 = (String)taskContextMap2.get(
+					"applicationKey");
+
+				return applicationKey1.compareTo(applicationKey2);
+			};
 		}
 
 		if (orderByType.equals("desc")) {

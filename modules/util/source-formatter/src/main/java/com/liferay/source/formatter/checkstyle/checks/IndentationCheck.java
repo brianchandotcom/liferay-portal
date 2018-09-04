@@ -262,11 +262,27 @@ public class IndentationCheck extends BaseCheck {
 				return expectedTabCount;
 			}
 
+			if (parentAST.getType() == TokenTypes.PARAMETERS) {
+				parentAST = parentAST.getParent();
+
+				if (parentAST.getType() == TokenTypes.LAMBDA) {
+					DetailAST grandParentAST = parentAST.getParent();
+
+					if (grandParentAST.getType() == TokenTypes.LITERAL_RETURN) {
+						return expectedTabCount + 1;
+					}
+				}
+			}
+
 			if (parentAST.getType() == TokenTypes.SLIST) {
 				parentAST = parentAST.getParent();
 
 				if (parentAST.getType() == TokenTypes.LAMBDA) {
-					expectedTabCount += _getLineBreakTabs(parentAST);
+					DetailAST firstChildAST = parentAST.getFirstChild();
+
+					if (firstChildAST.getLineNo() == parentAST.getLineNo()) {
+						expectedTabCount += _getLineBreakTabs(parentAST);
+					}
 				}
 
 				continue;
@@ -739,7 +755,10 @@ public class IndentationCheck extends BaseCheck {
 
 				DetailAST lParenAST = parentAST.getPreviousSibling();
 
-				if (lParenAST != null) {
+				if ((lParenAST != null) &&
+					(lParenAST.getType() == TokenTypes.LPAREN) &&
+					!_isAtLineStart(lParenAST)) {
+
 					int lineNo = lParenAST.getLineNo();
 
 					if (lineNo < detailAST.getLineNo()) {

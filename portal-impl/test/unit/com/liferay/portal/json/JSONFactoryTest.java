@@ -109,7 +109,8 @@ public class JSONFactoryTest {
 
 			Object object = JSONFactoryUtil.deserialize(json);
 
-			Assert.assertTrue(object instanceof Map);
+			Assert.assertTrue(
+				object.getClass() + " is not a Map", object instanceof Map);
 
 			List<LogRecord> logRecords = captureHandler.getLogRecords();
 
@@ -118,6 +119,7 @@ public class JSONFactoryTest {
 			LogRecord logRecord = logRecords.get(0);
 
 			Assert.assertTrue(
+				logRecord.getMessage(),
 				StringUtil.startsWith(
 					logRecord.getMessage(),
 					"Unable to deserialize " +

@@ -5341,6 +5341,31 @@ go]]></replacevalue>
 											select="\1"
 										/>
 
+										<gradle-execute dir="@{app.dir}" task="deploy">
+											<arg value="clean" />
+										</gradle-execute>
+
+										<for param="module.dir.path">
+											<path>
+												<dirset
+													dir="@{app.dir}"
+												>
+													<include name="**/*-test*" />
+												</dirset>
+											</path>
+											<sequential>
+												<basename file="@{module.dir.path}" property="module.war.name" />
+
+												<delete failonerror="false" verbose="true">
+													<fileset
+														dir="${liferay.home}/deploy"
+													>
+														<include name="${module.war.name}*" />
+													</fileset>
+												</delete>
+											</sequential>
+										</for>
+
 										<for param="module.dir.path">
 											<path>
 												<dirset
@@ -5358,26 +5383,12 @@ go]]></replacevalue>
 												</dirset>
 											</path>
 											<sequential>
-												<basename file="@{module.dir.path}" property="module.war.name" />
-
-												<delete failonerror="false" verbose="true">
-													<fileset
-														dir="${liferay.home}/deploy"
-													>
-														<include name="${module.war.name}*" />
-													</fileset>
-												</delete>
-
 												<if>
 													<contains string="${test.modules.force.deploy}" substring="${app.name}" />
 													<then>
 														<echo file="@{module.dir.path}/.lfrbuild-portal" />
 													</then>
 												</if>
-
-												<gradle-execute dir="@{app.dir}" task="deploy">
-													<arg value="clean" />
-												</gradle-execute>
 											</sequential>
 										</for>
 

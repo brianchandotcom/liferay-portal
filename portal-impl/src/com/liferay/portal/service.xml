@@ -482,6 +482,12 @@
 			<finder-column name="classNameId" />
 			<finder-column name="parentGroupId" />
 		</finder>
+		<finder db-index="false" name="G_C_P_S" return-type="Collection">
+			<finder-column comparator="&gt;" name="groupId" />
+			<finder-column name="companyId" />
+			<finder-column name="parentGroupId" />
+			<finder-column name="site" />
+		</finder>
 		<finder name="C_C_L_GK" return-type="Group" unique="true">
 			<finder-column name="companyId" />
 			<finder-column name="classNameId" />

@@ -282,6 +282,14 @@ public class GroupServiceUtil {
 		return getService().getGroupsCount(companyId, className, parentGroupId);
 	}
 
+	public static java.util.List<com.liferay.portal.kernel.model.Group> getGtCompanyGroups(
+		long gtGroupId, long companyId, long parentGroupId, boolean site,
+		int size) throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .getGtCompanyGroups(gtGroupId, companyId, parentGroupId,
+			site, size);
+	}
+
 	/**
 	* Returns a range of all the site groups for which the user has control
 	* panel access.

@@ -1,5 +1,5 @@
 import {Config} from 'metal-state';
-import {focusedFieldStructure} from '../../util/config.es';
+import {focusedFieldStructure, pageStructure} from '../../util/config.es';
 import FormSupport from '../../components/Form/FormSupport.es';
 import {PagesVisitor} from '../../util/visitors.es';
 import Component from 'metal-jsx';
@@ -31,7 +31,16 @@ class Builder extends Component {
 		 * @type {?object}
 		 */
 
-		focusedField: focusedFieldStructure.value({})
+		focusedField: focusedFieldStructure.value({}),
+
+		/**
+		 * @default []
+		 * @instance
+		 * @memberof FormRenderer
+		 * @type {?array<object>}
+		 */
+
+		pages: Config.arrayOf(pageStructure).value([])
 	};
 
 	/**
@@ -65,11 +74,12 @@ class Builder extends Component {
 	 */
 
 	_handleFieldAdded(event) {
+		const {namespace} = this.props;
 		const {sidebar} = this.refs;
-		const settingsContext = event.fieldType.settingsContext;
-		const visitor = new PagesVisitor(settingsContext.pages);
-
 		const newFieldName = FormSupport.generateFieldName(event.fieldType.name);
+		const settingsContext = event.fieldType.settingsContext;
+		const translationManager = Liferay.component(`${namespace}translationManager`);
+		const visitor = new PagesVisitor(settingsContext.pages);
 
 		this.emit(
 			'fieldAdded',
@@ -93,6 +103,10 @@ class Builder extends Component {
 								else if (fieldName === 'label') {
 									field = {
 										...field,
+										localizedValue: {
+											...field.localizedValue,
+											[translationManager.get('editingLocale')]: event.fieldType.label
+										},
 										type: 'text',
 										value: event.fieldType.label
 									};
@@ -168,6 +182,26 @@ class Builder extends Component {
 	}
 
 	_handleActivePageUpdated(activePage) {
+		const {pages} = this.props;
+		const {sidebar} = this.refs;
+		const visitor = new PagesVisitor(pages);
+
+		let fieldsCount = 0;
+		visitor.mapFields(
+			(field, fieldIndex, columnIndex, rowIndex, pageIndex) => {
+				if (pageIndex === activePage) {
+					fieldsCount++;
+				}
+			}
+		);
+
+		if (fieldsCount === 0) {
+			sidebar.open();
+		}
+		else {
+			sidebar.close();
+		}
+
 		this.emit('activePageUpdated', activePage);
 	}
 

@@ -15,3 +15,5 @@ window.Liferay = {
 		getLanguageId: () => 'en_US'
 	}
 };
+
+window.themeDisplay = window.Liferay.ThemeDisplay;

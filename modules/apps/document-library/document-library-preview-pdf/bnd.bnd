@@ -1,0 +1,4 @@
+Bundle-Name: Liferay Document Library Preview PDF
+Bundle-SymbolicName: com.liferay.document.library.preview.pdf
+Bundle-Version: 1.0.0
+Web-ContextPath: /document-library-preview-pdf

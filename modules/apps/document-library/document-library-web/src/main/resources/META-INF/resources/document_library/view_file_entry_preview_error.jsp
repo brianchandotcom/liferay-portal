@@ -17,18 +17,20 @@
 <%@ include file="/document_library/init.jsp" %>
 
 <%
+Exception exception = (Exception)request.getAttribute(DLWebKeys.DOCUMENT_LIBRARY_PREVIEW_EXCEPTION);
 FileVersion fileVersion = (FileVersion)request.getAttribute(WebKeys.DOCUMENT_LIBRARY_FILE_VERSION);
-
-int status = ParamUtil.getInteger(request, "status", WorkflowConstants.STATUS_ANY);
-
-FileEntry fileEntry = fileVersion.getFileEntry();
-
-boolean hasAudio = AudioProcessorUtil.hasAudio(fileVersion);
-boolean hasImages = ImageProcessorUtil.hasImages(fileVersion);
-boolean hasPDFImages = PDFProcessorUtil.hasImages(fileVersion);
-boolean hasVideo = VideoProcessorUtil.hasVideo(fileVersion);
-
-boolean showImageContainer = true;
 %>
 
-<%@ include file="/document_library/view_file_entry_preview.jspf" %>
+<div class="alert alert-info">
+	<c:choose>
+		<c:when test="<%= exception instanceof DLPreviewSizeException %>">
+			<liferay-ui:message key="file-is-too-large-for-preview-or-thumbnail-generation" />
+		</c:when>
+		<c:when test="<%= exception instanceof DLPreviewGenerationInProcessException %>">
+			<liferay-ui:message key="generating-preview-will-take-a-few-minutes" />
+		</c:when>
+		<c:otherwise>
+			<liferay-ui:message arguments="<%= fileVersion.getTitle() %>" key="cannot-generate-preview-for-x" />
+		</c:otherwise>
+	</c:choose>
+</div>

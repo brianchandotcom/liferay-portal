@@ -7,4 +7,5 @@ Export-Package:\
 	com.liferay.document.library.display.context,\
 	com.liferay.document.library.exportimport.data.handler,\
 	com.liferay.document.library.portlet.toolbar.contributor,\
-	com.liferay.document.library.preview
+	com.liferay.document.library.preview,\
+	com.liferay.document.library.preview.exception

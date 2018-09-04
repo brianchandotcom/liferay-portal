@@ -28,6 +28,9 @@ import java.io.InputStream;
 
 import java.lang.reflect.Method;
 
+import java.net.URI;
+import java.net.URL;
+
 import java.nio.file.FileVisitResult;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -169,8 +172,21 @@ public class LPKGDeployerTest {
 
 				if (name.endsWith(".jar")) {
 					if (_staticLPKGBundleSymbolicNames.contains(symbolicName)) {
+						File file = new File(
+							lpkgDeployerDirString + StringPool.SLASH +
+								lpkgFile.getName());
+
+						URI uri = file.toURI();
+
+						URL url = uri.toURL();
+
+						String path = url.getPath();
+
+						path = URLCodec.decodeURL(path);
+
 						String location =
-							"file:/" + name + "?protocol=lpkg&static=true";
+							name + "?protocol=lpkg&static=true&lpkgPath=" +
+								path;
 
 						Bundle bundle = bundleContext.getBundle(location);
 

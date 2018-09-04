@@ -70,6 +70,12 @@
 						<h6 class="text-default">
 							<strong><liferay-ui:message key="<%= HtmlUtil.escape(assetListEntry.getTypeLabel()) %>" /></strong>
 						</h6>
+
+						<%
+						Date statusDate = assetListEntry.getCreateDate();
+						%>
+
+						<liferay-ui:message arguments="<%= LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - statusDate.getTime(), true) %>" key="x-ago" translateArguments="<%= false %>" />
 					</liferay-ui:search-container-column-text>
 
 					<liferay-ui:search-container-column-jsp

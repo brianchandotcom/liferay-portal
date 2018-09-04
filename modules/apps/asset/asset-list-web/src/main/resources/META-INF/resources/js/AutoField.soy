@@ -1,0 +1,158 @@
+{namespace com.liferay.asset.list.web.AutoField}
+
+/**
+ * Renders the main element
+ */
+{template .render}
+	{@param categorySelectorURL: string}
+	{@param groupIds: string}
+	{@param id: string}
+	{@param? namespace: string}
+	{@param pathThemeImages: string}
+	{@param rules: list<[type: string, queryAndOperator: bool, queryContains: bool]>}
+	{@param tagSelectorURL: string}
+	{@param vocabularyIds: string}
+
+	{@param? queryLogicIndexes: string}
+
+	<div id="{$id}">
+		<input name="{$namespace}queryLogicIndexes" value="{$queryLogicIndexes}" type="hidden">
+		<ul class="timeline">
+			<li class="timeline-item">
+				<div class="flex-container panel-body">
+					<div class="timeline-increment">
+						<span class="timeline-icon"></span>
+					</div>
+				</div>
+			</li>
+
+			{if $rules and length($rules) > 0}
+				{foreach $rule in $rules}
+					{let $ruleIndex: index($rule) /}
+					{call .rule}
+						{param categorySelectorURL: $categorySelectorURL /}
+						{param groupIds: $groupIds /}
+						{param index: $ruleIndex /}
+						{param namespace: $namespace /}
+						{param pathThemeImages: $pathThemeImages /}
+						{param rule: $rule /}
+						{param tagSelectorURL: $tagSelectorURL /}
+						{param vocabularyIds: $vocabularyIds /}
+					{/call}
+				{/foreach}
+			{/if}
+		</ul>
+
+		{call .addRuleButton}
+			{param pathThemeImages: $pathThemeImages /}
+		{/call}
+	</div>
+{/template}
+
+/**
+ * Renders the Add Button at the bottom of the timeline
+ */
+{template .addRuleButton}
+	{@param pathThemeImages: string}
+
+	<div class="addbutton-timeline-item">
+		<div class="add-condition timeline-increment-icon">
+			<button data-onclick="addRule_" class="btn btn-monospaced btn-primary btn-xs form-builder-timeline-add-item form-builder-rule-add-condition" type="button">
+				<svg class="icon-monospaced lexicon-icon">
+					<use xlink:href="{$pathThemeImages}/lexicon/icons.svg#plus"></use>
+				</svg>
+			</button>
+		</div>
+	</div>
+{/template}
+
+/**
+ * Renders a Rule item
+ */
+{template .rule}
+	{@param categorySelectorURL: string}
+	{@param groupIds: string}
+	{@param index: int}
+	{@param? namespace: string}
+	{@param pathThemeImages: string}
+	{@param rule: [type: string, queryAndOperator: bool, queryContains: bool]}
+	{@param tagSelectorURL: string}
+	{@param vocabularyIds: string}
+
+	<li class="timeline-item">
+		<div class="panel panel-default">
+			<div class="panel-body">
+				<div class="form-group">
+					<select class="form-control" id="{$namespace}queryContains{$index}" name="{$namespace}queryContains{$index}" title="Query Contains">
+						<option class="" {if $rule.queryContains}selected="selected"{/if} value="true">{msg desc=""}contains{/msg}</option>
+						<option class="" {if not $rule.queryContains}selected="selected"{/if} value="false">{msg desc=""}does-not-contain{/msg}</option>
+					</select>
+				</div>
+
+				<div class="form-group">
+					<select class="form-control" id="{$namespace}queryAndOperator{$index}" name="{$namespace}queryAndOperator{$index}" title="And Operator">
+						<option class="" {if $rule.queryAndOperator}selected="selected"{/if} value="true">{msg desc=""}all{/msg}</option>
+						<option class="" {if not $rule.queryAndOperator}selected="selected"{/if}>{msg desc=""}any{/msg}</option>
+					</select>
+				</div>
+
+				<div class="form-group">
+					<label class="control-label" for="{$namespace + 'queryName' + $index}">{msg desc=""}of-the-following{/msg}</label>
+				</div>
+
+				<div class="form-group">
+					<select class="form-control asset-query-name" data-item-index="{$index}" data-onchange="changeSelector_" id="{$namespace + 'queryName' + $index}" name="{$namespace + 'queryName' + $index}">
+						<option class="" {if $rule.type == 'assetCategories'}selected="selected"{/if} value="assetCategories">{msg desc=""}categories{/msg}</option>
+						<option class="" {if $rule.type == 'assetTags'}selected="selected"{/if} value="assetTags">{msg desc=""}tags{/msg}</option>
+					</select>
+				</div>
+
+				{if $rule.type == 'assetCategories'}
+					{call com.liferay.asset.list.web.CategorySelector.render}
+						{param eventName: $namespace + 'selectCategory' /}
+						{param groupIds: $groupIds /}
+						{param index: $index /}
+						{param namespace: $namespace /}
+						{param categorySelectorURL: $categorySelectorURL /}
+						{param rule: $rule /}
+						{param vocabularyIds: $vocabularyIds /}
+					{/call}
+				{else}
+					{call com.liferay.asset.list.web.TagSelector.render}
+						{param eventName: $namespace + 'selectTag' /}
+						{param groupIds: $groupIds /}
+						{param index: $index /}
+						{param namespace: $namespace /}
+						{param tagSelectorURL: $tagSelectorURL /}
+						{param rule: $rule /}
+					{/call}
+				{/if}
+
+				<div class="timeline-increment">
+					<span class="timeline-icon"></span>
+				</div>
+			</div>
+		</div>
+
+		{call .trashButton}
+			{param pathThemeImages: $pathThemeImages /}
+			{param ruleId: $index /}
+		{/call}
+	</li>
+{/template}
+
+/**
+ * Renders a trash button that allows deleting the current rule row
+ */
+{template .trashButton}
+	{@param pathThemeImages: string}
+	{@param ruleId: int}
+
+	<div class="container-trash">
+		<button class="btn btn-monospaced btn-link btn-xs condition-card-delete" data-rule-id="{$ruleId}" data-onclick="deleteRule_" type="button">
+			<svg class="lexicon-icon icon-monospaced">
+				<use xlink:href="{$pathThemeImages}/lexicon/icons.svg#trash"></use>
+			</svg>
+		</button>
+	</div>
+{/template}

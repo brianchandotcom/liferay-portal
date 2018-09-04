@@ -16,168 +16,120 @@
 
 <%@ include file="/init.jsp" %>
 
-<aui:row id="orderingAndGrouping">
-	<aui:col width="<%= 30 %>">
+<%
+String redirect = ParamUtil.getString(request, "redirect");
+%>
 
-		<%
-		String orderByColumn1 = assetPublisherDisplayContext.getOrderByColumn1();
-		%>
+<portlet:actionURL name="/asset_list/edit_asset_list_entry_settings" var="editAssetListEntrySettingsURL" />
 
-		<aui:select label="order-by" name="preferences--orderByColumn1--" value="<%= orderByColumn1 %>" wrapperCssClass="field-inline w90">
-			<c:if test="<%= assetPublisherDisplayContext.isOrderingByTitleEnabled() %>">
-				<aui:option label="title" />
-			</c:if>
+<liferay-frontend:edit-form
+	action="<%= editAssetListEntrySettingsURL %>"
+	method="post"
+	name="fm"
+>
+	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
+	<aui:input name="assetListEntryId" type="hidden" value="<%= assetListDisplayContext.getAssetListEntryId() %>" />
+	<aui:input name="type" type="hidden" value="<%= assetListDisplayContext.getAssetListEntryType() %>" />
 
-			<aui:option label="create-date" value="createDate" />
-			<aui:option label="modified-date" value="modifiedDate" />
-			<aui:option label="publish-date" value="publishDate" />
-			<aui:option label="expiration-date" value="expirationDate" />
-			<aui:option label="priority" value="priority" />
-
-			<c:if test="<%= !assetPublisherWebConfiguration.searchWithIndex() %>">
-				<aui:option label="view-count" value="viewCount" />
-				<aui:option label="ratings" value="ratings" />
-			</c:if>
-		</aui:select>
-
-		<%
-		String orderByType1 = assetPublisherDisplayContext.getOrderByType1();
-		%>
-
-		<aui:field-wrapper cssClass="field-label-inline order-by-type-container">
-			<liferay-ui:icon
-				cssClass='<%= StringUtil.equalsIgnoreCase(orderByType1, "DESC") ? "hide icon" : "icon" %>'
-				icon="angle-up"
-				markupView="lexicon"
-				message="ascending"
-				url="javascript:;"
-			/>
-
-			<liferay-ui:icon
-				cssClass='<%= StringUtil.equalsIgnoreCase(orderByType1, "ASC") ? "hide icon" : "icon" %>'
-				icon="angle-down"
-				markupView="lexicon"
-				message="descending"
-				url="javascript:;"
-			/>
-
-			<aui:input cssClass="order-by-type-field" name="preferences--orderByType1--" type="hidden" value="<%= orderByType1 %>" />
-		</aui:field-wrapper>
-	</aui:col>
-
-	<aui:col width="<%= 30 %>">
-
-		<%
-		String orderByColumn2 = assetPublisherDisplayContext.getOrderByColumn2();
-		%>
-
-		<aui:select label="and-then-by" name="preferences--orderByColumn2--" wrapperCssClass="field-inline w90">
-			<aui:option label="title" selected='<%= orderByColumn2.equals("title") %>' />
-			<aui:option label="create-date" selected='<%= orderByColumn2.equals("createDate") %>' value="createDate" />
-			<aui:option label="modified-date" selected='<%= orderByColumn2.equals("modifiedDate") %>' value="modifiedDate" />
-			<aui:option label="publish-date" selected='<%= orderByColumn2.equals("publishDate") %>' value="publishDate" />
-			<aui:option label="expiration-date" selected='<%= orderByColumn2.equals("expirationDate") %>' value="expirationDate" />
-			<aui:option label="priority" selected='<%= orderByColumn2.equals("priority") %>' value="priority" />
-
-			<c:if test="<%= !assetPublisherWebConfiguration.searchWithIndex() %>">
-				<aui:option label="view-count" selected='<%= orderByColumn2.equals("viewCount") %>' value="viewCount" />
-				<aui:option label="ratings" selected='<%= orderByColumn2.equals("ratings") %>' value="ratings" />
-			</c:if>
-		</aui:select>
-
-		<%
-		String orderByType2 = assetPublisherDisplayContext.getOrderByType2();
-		%>
-
-		<aui:field-wrapper cssClass="field-label-inline order-by-type-container">
-			<liferay-ui:icon
-				cssClass='<%= StringUtil.equalsIgnoreCase(orderByType2, "DESC") ? "hide icon" : "icon" %>'
-				icon="angle-up"
-				markupView="lexicon"
-				message="ascending"
-				url="javascript:;"
-			/>
-
-			<liferay-ui:icon
-				cssClass='<%= StringUtil.equalsIgnoreCase(orderByType2, "ASC") ? "hide icon" : "icon" %>'
-				icon="angle-down"
-				markupView="lexicon"
-				message="descending"
-				url="javascript:;"
-			/>
-
-			<aui:input cssClass="order-by-type-field" name="preferences--orderByType2--" type="hidden" value="<%= orderByType2 %>" />
-		</aui:field-wrapper>
-	</aui:col>
-
-	<aui:col width="<%= 30 %>">
-
-		<%
-		long assetVocabularyId = GetterUtil.getLong(portletPreferences.getValue("assetVocabularyId", null));
-		%>
-
-		<aui:select label="group-by" name="preferences--assetVocabularyId--">
-			<aui:option value="" />
-			<aui:option label="asset-types" selected="<%= assetVocabularyId == -1 %>" value="-1" />
-
-			<%
-			Group companyGroup = company.getGroup();
-
-			if (scopeGroupId != companyGroup.getGroupId()) {
-				List<AssetVocabulary> assetVocabularies = AssetVocabularyLocalServiceUtil.getGroupVocabularies(scopeGroupId, false);
-
-				if (!assetVocabularies.isEmpty()) {
-			%>
-
-					<optgroup label="<liferay-ui:message key="vocabularies" />">
-
-						<%
-						for (AssetVocabulary assetVocabulary : assetVocabularies) {
-						%>
-
-							<aui:option label="<%= HtmlUtil.escape(assetVocabulary.getTitle(locale)) %>" selected="<%= assetVocabularyId == assetVocabulary.getVocabularyId() %>" value="<%= assetVocabulary.getVocabularyId() %>" />
-
-						<%
-						}
-						%>
-
-					</optgroup>
-
-			<%
-				}
-			}
-			%>
-
-			<%
-			List<AssetVocabulary> assetVocabularies = AssetVocabularyLocalServiceUtil.getGroupVocabularies(companyGroup.getGroupId(), false);
-
-			if (!assetVocabularies.isEmpty()) {
-			%>
-
-				<optgroup label="<liferay-ui:message key="vocabularies" /> (<liferay-ui:message key="global" />)">
+	<liferay-frontend:edit-form-body>
+		<liferay-frontend:fieldset-group>
+			<aui:row id="ordering">
+				<aui:col width="<%= 30 %>">
 
 					<%
-					for (AssetVocabulary assetVocabulary : assetVocabularies) {
+					String orderByColumn1 = editAssetListDisplayContext.getOrderByColumn1();
 					%>
 
-						<aui:option label="<%= HtmlUtil.escape(assetVocabulary.getTitle(locale)) %>" selected="<%= assetVocabularyId == assetVocabulary.getVocabularyId() %>" value="<%= assetVocabulary.getVocabularyId() %>" />
+					<aui:select label="order-by" name="TypeSettingsProperties--orderByColumn1--" value="<%= orderByColumn1 %>" wrapperCssClass="field-inline w80">
+						<aui:option label="title" />
+						<aui:option label="create-date" value="createDate" />
+						<aui:option label="modified-date" value="modifiedDate" />
+						<aui:option label="publish-date" value="publishDate" />
+						<aui:option label="expiration-date" value="expirationDate" />
+						<aui:option label="priority" value="priority" />
+						<aui:option label="view-count" value="viewCount" />
+						<aui:option label="ratings" value="ratings" />
+					</aui:select>
 
 					<%
-					}
+					String orderByType1 = editAssetListDisplayContext.getOrderByType1();
 					%>
 
-				</optgroup>
+					<aui:field-wrapper cssClass="field-label-inline order-by-type-container">
+						<liferay-ui:icon
+							cssClass='<%= StringUtil.equalsIgnoreCase(orderByType1, "DESC") ? "hide icon" : "icon" %>'
+							icon="angle-up"
+							markupView="lexicon"
+							message="ascending"
+							url="javascript:;"
+						/>
 
-			<%
-			}
-			%>
+						<liferay-ui:icon
+							cssClass='<%= StringUtil.equalsIgnoreCase(orderByType1, "ASC") ? "hide icon" : "icon" %>'
+							icon="angle-down"
+							markupView="lexicon"
+							message="descending"
+							url="javascript:;"
+						/>
 
-		</aui:select>
-	</aui:col>
-</aui:row>
+						<aui:input cssClass="order-by-type-field" name="TypeSettingsProperties--orderByType1--" type="hidden" value="<%= orderByType1 %>" />
+					</aui:field-wrapper>
+				</aui:col>
+
+				<aui:col width="<%= 30 %>">
+
+					<%
+					String orderByColumn2 = editAssetListDisplayContext.getOrderByColumn2();
+					%>
+
+					<aui:select label="and-then-by" name="TypeSettingsProperties--orderByColumn2--" wrapperCssClass="field-inline w80">
+						<aui:option label="title" selected='<%= orderByColumn2.equals("title") %>' />
+						<aui:option label="create-date" selected='<%= orderByColumn2.equals("createDate") %>' value="createDate" />
+						<aui:option label="modified-date" selected='<%= orderByColumn2.equals("modifiedDate") %>' value="modifiedDate" />
+						<aui:option label="publish-date" selected='<%= orderByColumn2.equals("publishDate") %>' value="publishDate" />
+						<aui:option label="expiration-date" selected='<%= orderByColumn2.equals("expirationDate") %>' value="expirationDate" />
+						<aui:option label="priority" selected='<%= orderByColumn2.equals("priority") %>' value="priority" />
+						<aui:option label="view-count" selected='<%= orderByColumn2.equals("viewCount") %>' value="viewCount" />
+						<aui:option label="ratings" selected='<%= orderByColumn2.equals("ratings") %>' value="ratings" />
+					</aui:select>
+
+					<%
+					String orderByType2 = editAssetListDisplayContext.getOrderByType2();
+					%>
+
+					<aui:field-wrapper cssClass="field-label-inline order-by-type-container">
+						<liferay-ui:icon
+							cssClass='<%= StringUtil.equalsIgnoreCase(orderByType2, "DESC") ? "hide icon" : "icon" %>'
+							icon="angle-up"
+							markupView="lexicon"
+							message="ascending"
+							url="javascript:;"
+						/>
+
+						<liferay-ui:icon
+							cssClass='<%= StringUtil.equalsIgnoreCase(orderByType2, "ASC") ? "hide icon" : "icon" %>'
+							icon="angle-down"
+							markupView="lexicon"
+							message="descending"
+							url="javascript:;"
+						/>
+
+						<aui:input cssClass="order-by-type-field" name="TypeSettingsProperties--orderByType2--" type="hidden" value="<%= orderByType2 %>" />
+					</aui:field-wrapper>
+				</aui:col>
+			</aui:row>
+		</liferay-frontend:fieldset-group>
+	</liferay-frontend:edit-form-body>
+
+	<liferay-frontend:edit-form-footer>
+		<aui:button type="submit" />
+
+		<aui:button href="<%= redirect %>" type="cancel" />
+	</liferay-frontend:edit-form-footer>
+</liferay-frontend:edit-form>
 
 <aui:script use="aui-base">
-	A.one('#<portlet:namespace />orderingAndGrouping').delegate(
+	A.one('#<portlet:namespace />ordering').delegate(
 		'click',
 		function(event) {
 			var currentTarget = event.currentTarget;

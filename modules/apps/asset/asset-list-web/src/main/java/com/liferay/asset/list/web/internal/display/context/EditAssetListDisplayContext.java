@@ -506,6 +506,28 @@ public class EditAssetListDisplayContext {
 		return _orderByColumn2;
 	}
 
+	public String getOrderByType1() {
+		if (_orderByType1 != null) {
+			return _orderByType1;
+		}
+
+		_orderByType1 = GetterUtil.getString(
+			_properties.getProperty("orderByType1", "DESC"));
+
+		return _orderByType1;
+	}
+
+	public String getOrderByType2() {
+		if (_orderByType2 != null) {
+			return _orderByType2;
+		}
+
+		_orderByType2 = GetterUtil.getString(
+			_properties.getProperty("orderByType2", "ASC"));
+
+		return _orderByType2;
+	}
+
 	public String getPortletResource() {
 		if (_portletResource != null) {
 			return _portletResource;
@@ -744,6 +766,8 @@ public class EditAssetListDisplayContext {
 	private Boolean _mergeURLTags;
 	private String _orderByColumn1;
 	private String _orderByColumn2;
+	private String _orderByType1;
+	private String _orderByType2;
 	private final PortletRequest _portletRequest;
 	private String _portletResource;
 	private final PortletResponse _portletResponse;

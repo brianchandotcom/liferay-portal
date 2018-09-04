@@ -14,26 +14,36 @@
 
 package com.liferay.sharing.web.internal.portlet;
 
+import com.liferay.portal.kernel.portlet.AddPortletProvider;
 import com.liferay.portal.kernel.portlet.BasePortletProvider;
-import com.liferay.portal.kernel.portlet.EditPortletProvider;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.sharing.web.internal.constants.SharingPortletKeys;
+
+import javax.portlet.PortletPreferences;
 
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Sergio González
+ * @author Alejandro Tardín
  */
 @Component(
 	immediate = true,
 	property = "model.class.name=com.liferay.sharing.model.SharingEntry",
-	service = EditPortletProvider.class
+	service = AddPortletProvider.class
 )
-public class SharingPortletProvider
-	extends BasePortletProvider implements EditPortletProvider {
+public class SharingAddPortletProvider
+	extends BasePortletProvider implements AddPortletProvider {
 
 	@Override
 	public String getPortletName() {
 		return SharingPortletKeys.SHARING;
+	}
+
+	@Override
+	public void updatePortletPreferences(
+			PortletPreferences portletPreferences, String portletId,
+			String className, long classPK, ThemeDisplay themeDisplay)
+		throws Exception {
 	}
 
 }

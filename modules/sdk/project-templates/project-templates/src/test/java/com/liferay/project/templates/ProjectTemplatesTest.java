@@ -2196,6 +2196,24 @@ public class ProjectTemplatesTest {
 	}
 
 	@Test
+	public void testBuildTemplateSocialBookmark() throws Exception {
+		File gradleProjectDir = _buildTemplateWithGradle(
+			"social-bookmark", "foo", "--package-name", "com.liferay.test");
+
+		_testNotContains(
+			gradleProjectDir,
+			"src/main/java/com/liferay/test/social/bookmark" +
+				"/FooSocialBookmark.java",
+			"private ResourceBundleLoader");
+
+		_testNotContains(
+			gradleProjectDir,
+			"src/main/java/com/liferay/test/social/bookmark" +
+				"/FooSocialBookmark.java",
+			"protected ResourceBundleLoader");
+	}
+
+	@Test
 	public void testBuildTemplateSocialBookmark71() throws Exception {
 		File gradleProjectDir = _buildTemplateWithGradle(
 			"social-bookmark", "foo", "--package-name", "com.liferay.test",

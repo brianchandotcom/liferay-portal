@@ -44,8 +44,10 @@ public abstract class BaseAssetDisplayContributor<T>
 
 		Set<AssetDisplayField> assetDisplayFields = new LinkedHashSet<>();
 
-		ResourceBundle resourceBundle =
-			getResourceBundleLoader().loadResourceBundle(locale);
+		ResourceBundleLoader resourceBundleLoader = getResourceBundleLoader();
+
+		ResourceBundle resourceBundle = resourceBundleLoader.loadResourceBundle(
+			locale);
 
 		// Default fields for asset entry
 

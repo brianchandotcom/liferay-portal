@@ -206,7 +206,7 @@ if (recurrence != null) {
 						<aui:input checked="<%= onChecked %>" label="<%= StringPool.BLANK %>" name="ends" type="radio" value="on" />
 
 						<div class="calendar-portlet-field-datepicker clearfix">
-							<label><liferay-ui:message key="on" /></label>
+							<label><liferay-ui:message key="stop-repeating-on" /></label>
 
 							<liferay-ui:input-date
 								dayParam="untilDateDay"

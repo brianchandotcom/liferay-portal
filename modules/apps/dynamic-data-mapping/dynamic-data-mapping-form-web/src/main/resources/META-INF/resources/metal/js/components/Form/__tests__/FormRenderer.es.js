@@ -588,11 +588,11 @@ describe(
 							[
 								{
 									'label': Liferay.Language.get('add-new-page'),
-									'settingsItem': 'add-page',
+									'settingsItem': 'add-page'
 								},
 								{
 									'label': Liferay.Language.get('delete-current-page'),
-									'settingsItem': 'reset-page',
+									'settingsItem': 'reset-page'
 								}
 							]
 						);
@@ -617,11 +617,11 @@ describe(
 							[
 								{
 									'label': Liferay.Language.get('add-new-page'),
-									'settingsItem': 'add-page',
+									'settingsItem': 'add-page'
 								},
 								{
 									'label': Liferay.Language.get('reset-page'),
-									'settingsItem': 'reset-page',
+									'settingsItem': 'reset-page'
 								}
 							]
 						);

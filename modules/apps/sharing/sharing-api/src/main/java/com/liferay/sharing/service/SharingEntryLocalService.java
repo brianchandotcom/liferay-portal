@@ -98,6 +98,8 @@ public interface SharingEntryLocalService extends BaseLocalService,
 	@Transactional(enabled = false)
 	public SharingEntry createSharingEntry(long sharingEntryId);
 
+	public void deleteExpiredEntries();
+
 	public void deleteGroupSharingEntries(long groupId);
 
 	/**
@@ -262,7 +264,7 @@ public interface SharingEntryLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<SharingEntry> getSharingEntries(long toUserId,
-		long classNameId, long classPK) throws PortalException;
+		long classNameId, long classPK);
 
 	/**
 	* Returns all the sharing entries matching the UUID and company.

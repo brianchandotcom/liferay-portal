@@ -126,11 +126,12 @@ public class SharingEntryModelImpl extends BaseModelImpl<SharingEntry>
 	public static final long CLASSNAMEID_COLUMN_BITMASK = 1L;
 	public static final long CLASSPK_COLUMN_BITMASK = 2L;
 	public static final long COMPANYID_COLUMN_BITMASK = 4L;
-	public static final long FROMUSERID_COLUMN_BITMASK = 8L;
-	public static final long GROUPID_COLUMN_BITMASK = 16L;
-	public static final long TOUSERID_COLUMN_BITMASK = 32L;
-	public static final long UUID_COLUMN_BITMASK = 64L;
-	public static final long SHARINGENTRYID_COLUMN_BITMASK = 128L;
+	public static final long EXPIRATIONDATE_COLUMN_BITMASK = 8L;
+	public static final long FROMUSERID_COLUMN_BITMASK = 16L;
+	public static final long GROUPID_COLUMN_BITMASK = 32L;
+	public static final long TOUSERID_COLUMN_BITMASK = 64L;
+	public static final long UUID_COLUMN_BITMASK = 128L;
+	public static final long SHARINGENTRYID_COLUMN_BITMASK = 256L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -612,7 +613,17 @@ public class SharingEntryModelImpl extends BaseModelImpl<SharingEntry>
 
 	@Override
 	public void setExpirationDate(Date expirationDate) {
+		_columnBitmask |= EXPIRATIONDATE_COLUMN_BITMASK;
+
+		if (_originalExpirationDate == null) {
+			_originalExpirationDate = _expirationDate;
+		}
+
 		_expirationDate = expirationDate;
+	}
+
+	public Date getOriginalExpirationDate() {
+		return _originalExpirationDate;
 	}
 
 	@Override
@@ -754,6 +765,8 @@ public class SharingEntryModelImpl extends BaseModelImpl<SharingEntry>
 		sharingEntryModelImpl._originalClassPK = sharingEntryModelImpl._classPK;
 
 		sharingEntryModelImpl._setOriginalClassPK = false;
+
+		sharingEntryModelImpl._originalExpirationDate = sharingEntryModelImpl._expirationDate;
 
 		sharingEntryModelImpl._columnBitmask = 0;
 	}
@@ -950,6 +963,7 @@ public class SharingEntryModelImpl extends BaseModelImpl<SharingEntry>
 	private boolean _shareable;
 	private long _actionIds;
 	private Date _expirationDate;
+	private Date _originalExpirationDate;
 	private long _columnBitmask;
 	private SharingEntry _escapedModel;
 }

@@ -126,7 +126,8 @@ public class DLOpenerGoogleDriveDLPortletToolbarContributorContext
 
 	private String _translateKey(PortletRequest portletRequest, String key) {
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-			"content.Language", _portal.getLocale(portletRequest), getClass());
+			_portal.getLocale(portletRequest),
+			DLOpenerGoogleDriveDLPortletToolbarContributorContext.class);
 
 		return _language.get(resourceBundle, key);
 	}

@@ -46,7 +46,7 @@ public class FacebookSocialBookmark implements SocialBookmark {
 	@Override
 	public String getName(Locale locale) {
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-			"content.Language", locale, getClass());
+			locale, FacebookSocialBookmark.class);
 
 		return LanguageUtil.get(resourceBundle, "facebook");
 	}

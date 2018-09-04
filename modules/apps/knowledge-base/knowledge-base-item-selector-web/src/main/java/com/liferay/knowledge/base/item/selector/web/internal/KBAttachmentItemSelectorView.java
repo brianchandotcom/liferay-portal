@@ -74,7 +74,7 @@ public class KBAttachmentItemSelectorView
 	@Override
 	public String getTitle(Locale locale) {
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-			"content.Language", locale, getClass());
+			locale, KBAttachmentItemSelectorView.class);
 
 		return ResourceBundleUtil.getString(
 			resourceBundle, "article-attachments");

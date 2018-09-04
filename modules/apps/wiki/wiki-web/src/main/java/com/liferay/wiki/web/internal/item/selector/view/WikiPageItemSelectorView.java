@@ -74,7 +74,7 @@ public class WikiPageItemSelectorView
 	@Override
 	public String getTitle(Locale locale) {
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-			"content.Language", locale, getClass());
+			locale, WikiPageItemSelectorView.class);
 
 		return ResourceBundleUtil.getString(resourceBundle, "wiki-pages");
 	}

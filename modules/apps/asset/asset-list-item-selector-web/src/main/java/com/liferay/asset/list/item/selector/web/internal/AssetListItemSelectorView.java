@@ -65,7 +65,7 @@ public class AssetListItemSelectorView
 	@Override
 	public String getTitle(Locale locale) {
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-			"content.Language", locale, getClass());
+			locale, AssetListItemSelectorView.class);
 
 		return ResourceBundleUtil.getString(resourceBundle, "asset-lists");
 	}

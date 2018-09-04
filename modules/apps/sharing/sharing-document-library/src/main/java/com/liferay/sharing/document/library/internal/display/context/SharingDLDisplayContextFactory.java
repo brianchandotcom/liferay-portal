@@ -78,7 +78,8 @@ public class SharingDLDisplayContextFactory implements DLDisplayContextFactory {
 			parentDLViewFileVersionDisplayContext, request, response,
 			fileVersion,
 			ResourceBundleUtil.getBundle(
-				"content.Language", themeDisplay.getLocale(), getClass()));
+				themeDisplay.getLocale(),
+				SharingDLDisplayContextFactory.class));
 	}
 
 	@Reference(unbind = "-")

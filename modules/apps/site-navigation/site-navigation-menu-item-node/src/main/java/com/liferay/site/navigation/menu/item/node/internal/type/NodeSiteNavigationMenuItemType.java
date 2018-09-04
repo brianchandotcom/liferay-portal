@@ -53,7 +53,7 @@ public class NodeSiteNavigationMenuItemType
 	@Override
 	public String getLabel(Locale locale) {
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-			"content.Language", locale, getClass());
+			locale, NodeSiteNavigationMenuItemType.class);
 
 		return LanguageUtil.get(resourceBundle, "submenu");
 	}

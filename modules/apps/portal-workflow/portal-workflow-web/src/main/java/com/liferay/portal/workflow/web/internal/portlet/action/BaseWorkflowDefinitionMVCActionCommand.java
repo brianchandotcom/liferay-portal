@@ -78,7 +78,7 @@ public abstract class BaseWorkflowDefinitionMVCActionCommand
 
 		if (Validator.isNull(titleMap.get(defaultLocale))) {
 			ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-				defaultLocale, "com.liferay.portal.workflow.web");
+				defaultLocale, BaseWorkflowDefinitionMVCActionCommand.class);
 
 			String defaultTitle = LanguageUtil.get(
 				resourceBundle, "untitled-workflow");
@@ -105,10 +105,9 @@ public abstract class BaseWorkflowDefinitionMVCActionCommand
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		Locale locale = themeDisplay.getLocale();
-
 		return ResourceBundleUtil.getBundle(
-			locale, "com.liferay.portal.workflow.web");
+			themeDisplay.getLocale(),
+			BaseWorkflowDefinitionMVCActionCommand.class);
 	}
 
 	protected String getSuccessMessage(ActionRequest actionRequest) {

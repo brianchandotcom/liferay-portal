@@ -36,7 +36,7 @@ public class SimpleReadingTimeMessageProviderImpl
 	@Override
 	public String provide(Duration readingTimeDuration, Locale locale) {
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-			"content.Language", locale, getClass());
+			locale, SimpleReadingTimeMessageProviderImpl.class);
 
 		long readingTimeInMinutes = readingTimeDuration.toMinutes();
 

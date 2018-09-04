@@ -47,7 +47,7 @@ public class CompanySettingsAssetAutoTaggerFormNavigatorCategory
 	@Override
 	public String getLabel(Locale locale) {
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-			"content.Language", locale, getClass());
+			locale, CompanySettingsAssetAutoTaggerFormNavigatorCategory.class);
 
 		return _language.get(resourceBundle, getKey());
 	}

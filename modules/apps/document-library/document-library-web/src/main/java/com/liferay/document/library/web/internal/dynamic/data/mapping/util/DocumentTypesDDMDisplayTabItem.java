@@ -45,7 +45,8 @@ public class DocumentTypesDDMDisplayTabItem implements DDMDisplayTabItem {
 		LiferayPortletResponse liferayPortletResponse) {
 
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-			"content.Language", liferayPortletRequest.getLocale(), getClass());
+			liferayPortletRequest.getLocale(),
+			DocumentTypesDDMDisplayTabItem.class);
 
 		return LanguageUtil.get(resourceBundle, "document-types");
 	}

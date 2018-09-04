@@ -79,7 +79,8 @@ public class ImageEditorDLDisplayContextFactory
 			parentDLViewFileVersionDisplayContext, request, response,
 			fileVersion,
 			ResourceBundleUtil.getBundle(
-				"content.Language", themeDisplay.getLocale(), getClass()));
+				themeDisplay.getLocale(),
+				ImageEditorDLDisplayContextFactory.class));
 	}
 
 	@Reference(unbind = "-")

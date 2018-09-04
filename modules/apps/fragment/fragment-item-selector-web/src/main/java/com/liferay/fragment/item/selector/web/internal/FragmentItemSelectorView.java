@@ -77,7 +77,7 @@ public class FragmentItemSelectorView
 	@Override
 	public String getTitle(Locale locale) {
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-			"content.Language", locale, getClass());
+			locale, FragmentItemSelectorView.class);
 
 		return LanguageUtil.get(resourceBundle, "fragments");
 	}

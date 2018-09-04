@@ -45,7 +45,7 @@ public class PlusoneSocialBookmark implements SocialBookmark {
 	@Override
 	public String getName(Locale locale) {
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-			"content.Language", locale, getClass());
+			locale, PlusoneSocialBookmark.class);
 
 		return LanguageUtil.get(resourceBundle, "plusone");
 	}

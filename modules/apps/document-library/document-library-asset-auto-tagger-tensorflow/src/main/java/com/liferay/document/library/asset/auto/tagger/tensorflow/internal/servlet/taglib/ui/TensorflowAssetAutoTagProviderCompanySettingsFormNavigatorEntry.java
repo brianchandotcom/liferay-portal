@@ -73,7 +73,9 @@ public class TensorflowAssetAutoTagProviderCompanySettingsFormNavigatorEntry
 	@Override
 	public String getLabel(Locale locale) {
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-			"content.Language", locale, getClass());
+			locale,
+			TensorflowAssetAutoTagProviderCompanySettingsFormNavigatorEntry.
+				class);
 
 		return _language.get(
 			resourceBundle, "tensorflow-auto-tag-provider-configuration-name");

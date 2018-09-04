@@ -46,7 +46,7 @@ public class TwitterSocialBookmark implements SocialBookmark {
 	@Override
 	public String getName(Locale locale) {
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-			"content.Language", locale, getClass());
+			locale, TwitterSocialBookmark.class);
 
 		return LanguageUtil.get(resourceBundle, "twitter");
 	}

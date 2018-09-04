@@ -40,7 +40,7 @@ public class OAuth2JSONWSApplicationDescriptor
 	public String describeApplication(Locale locale) {
 		String applicationDescription = ResourceBundleUtil.getString(
 			ResourceBundleUtil.getBundle(
-				"content.Language", locale, getClass()),
+				locale, OAuth2JSONWSApplicationDescriptor.class),
 			_applicationDescription);
 
 		if (applicationDescription == null) {

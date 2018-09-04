@@ -62,7 +62,8 @@ public class OpenInMSOfficeFileEntryPortletConfigurationIcon
 			WebKeys.THEME_DISPLAY);
 
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-			"content.Language", themeDisplay.getLocale(), getClass());
+			themeDisplay.getLocale(),
+			OpenInMSOfficeFileEntryPortletConfigurationIcon.class);
 
 		return LanguageUtil.get(resourceBundle, "open-in-ms-office");
 	}
@@ -126,7 +127,8 @@ public class OpenInMSOfficeFileEntryPortletConfigurationIcon
 					WebKeys.THEME_DISPLAY);
 
 			ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-				"content.Language", themeDisplay.getLocale(), getClass());
+				themeDisplay.getLocale(),
+				OpenInMSOfficeFileEntryPortletConfigurationIcon.class);
 
 			UIItemsBuilder uiItemsBuilder = new UIItemsBuilder(
 				request, fileVersion, resourceBundle, _dlTrashUtil);

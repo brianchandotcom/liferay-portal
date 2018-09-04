@@ -85,7 +85,8 @@ public class ContactsCenterUserNotificationHandler
 			socialRequest.getUserId(), serviceContext);
 
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-			"content.Language", serviceContext.getLocale(), getClass());
+			serviceContext.getLocale(),
+			ContactsCenterUserNotificationHandler.class);
 
 		String title = StringPool.BLANK;
 

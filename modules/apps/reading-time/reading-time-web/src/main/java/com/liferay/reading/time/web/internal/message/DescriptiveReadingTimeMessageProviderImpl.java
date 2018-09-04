@@ -36,7 +36,7 @@ public class DescriptiveReadingTimeMessageProviderImpl
 	@Override
 	public String provide(Duration readingTimeDuration, Locale locale) {
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-			"content.Language", locale, getClass());
+			locale, DescriptiveReadingTimeMessageProviderImpl.class);
 
 		long readingTimeInMinutes = readingTimeDuration.toMinutes();
 

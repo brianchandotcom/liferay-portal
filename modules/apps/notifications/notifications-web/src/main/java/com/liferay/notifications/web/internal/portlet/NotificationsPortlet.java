@@ -125,7 +125,7 @@ public class NotificationsPortlet extends MVCPortlet {
 			UserNotificationDeliveryConstants.TYPE_WEBSITE, actionRequired);
 
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-			"content.Language", themeDisplay.getLocale(), getClass());
+			themeDisplay.getLocale(), NotificationsPortlet.class);
 
 		SessionMessages.add(
 			actionRequest, "requestProcessed",
@@ -279,7 +279,7 @@ public class NotificationsPortlet extends MVCPortlet {
 		}
 
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-			"content.Language", themeDisplay.getLocale(), getClass());
+			themeDisplay.getLocale(), NotificationsPortlet.class);
 
 		SessionMessages.add(
 			actionRequest, "requestProcessed",

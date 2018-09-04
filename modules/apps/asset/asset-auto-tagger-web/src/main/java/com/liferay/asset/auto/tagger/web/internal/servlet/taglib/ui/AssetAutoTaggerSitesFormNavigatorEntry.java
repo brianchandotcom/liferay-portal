@@ -62,7 +62,7 @@ public class AssetAutoTaggerSitesFormNavigatorEntry
 	@Override
 	public String getLabel(Locale locale) {
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-			"content.Language", locale, getClass());
+			locale, AssetAutoTaggerSitesFormNavigatorEntry.class);
 
 		return _language.get(resourceBundle, getKey());
 	}

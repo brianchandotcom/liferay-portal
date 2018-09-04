@@ -48,7 +48,7 @@ public class ExportAllConfigurationIcon extends BasePortletConfigurationIcon {
 			WebKeys.THEME_DISPLAY);
 
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-			"content.Language", themeDisplay.getLocale(), getClass());
+			themeDisplay.getLocale(), ExportAllConfigurationIcon.class);
 
 		return LanguageUtil.get(resourceBundle, "export-all-settings");
 	}

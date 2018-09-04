@@ -62,7 +62,8 @@ public class ImageEditorIGDisplayContextFactory
 				parentIGViewFileVersionDisplayContext, request, response,
 				fileVersion,
 				ResourceBundleUtil.getBundle(
-					"content.Language", themeDisplay.getLocale(), getClass()));
+					themeDisplay.getLocale(),
+					ImageEditorIGDisplayContextFactory.class));
 		}
 
 		return parentIGViewFileVersionDisplayContext;

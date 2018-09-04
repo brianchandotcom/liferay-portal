@@ -73,7 +73,7 @@ public class SiteNavigationMenuItemItemSelectorView
 	@Override
 	public String getTitle(Locale locale) {
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-			"content.Language", locale, getClass());
+			locale, SiteNavigationMenuItemItemSelectorView.class);
 
 		return ResourceBundleUtil.getString(
 			resourceBundle, "navigation-menu-items");

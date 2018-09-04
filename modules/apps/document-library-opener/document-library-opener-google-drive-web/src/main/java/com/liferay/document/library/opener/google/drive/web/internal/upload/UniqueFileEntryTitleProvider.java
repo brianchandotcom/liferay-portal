@@ -40,7 +40,7 @@ public class UniqueFileEntryTitleProvider {
 		throws PortalException {
 
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-			"content.Language", locale, getClass());
+			locale, UniqueFileEntryTitleProvider.class);
 
 		return _uniqueFileNameProvider.provide(
 			_language.get(resourceBundle, "untitled"),

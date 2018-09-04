@@ -66,7 +66,8 @@ public class LayoutPageTemplateEntryExceptionRequestHandler {
 			}
 
 			ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-				"content.Language", themeDisplay.getLocale(), getClass());
+				themeDisplay.getLocale(),
+				LayoutPageTemplateEntryExceptionRequestHandler.class);
 
 			jsonObject.put(
 				"error", LanguageUtil.get(resourceBundle, errorMessage));

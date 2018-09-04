@@ -47,7 +47,7 @@ public class LinkedInSocialBookmark implements SocialBookmark {
 	@Override
 	public String getName(Locale locale) {
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-			"content.Language", locale, getClass());
+			locale, LinkedInSocialBookmark.class);
 
 		return LanguageUtil.get(resourceBundle, "linkedin");
 	}

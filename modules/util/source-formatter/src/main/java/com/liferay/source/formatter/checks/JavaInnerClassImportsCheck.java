@@ -20,6 +20,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.tools.JavaImportsFormatter;
+import com.liferay.portal.tools.ToolsUtil;
 import com.liferay.source.formatter.checks.util.JavaSourceUtil;
 
 import java.io.IOException;
@@ -47,16 +48,24 @@ public class JavaInnerClassImportsCheck extends BaseFileCheck {
 
 		while (matcher.find()) {
 			String innerClassName = matcher.group(4);
+			String innerClassFullyQualifiedName = matcher.group(1);
 			String outerClassName = matcher.group(3);
 
 			// Skip inner classes with long names, because it causes a lot of
 			// cases where we get long lines that are hard to resolve
 
+			if (imports == null) {
+				imports = _getImports(content);
+			}
+
 			if ((innerClassName.length() + outerClassName.length()) > 40) {
+				content = _stripRedundantOuterClass(
+					content, innerClassName, innerClassFullyQualifiedName,
+					imports);
+
 				continue;
 			}
 
-			String innerClassFullyQualifiedName = matcher.group(1);
 			String outerClassFullyQualifiedName = matcher.group(2);
 
 			if (className == null) {
@@ -76,10 +85,6 @@ public class JavaInnerClassImportsCheck extends BaseFileCheck {
 				continue;
 			}
 
-			if (imports == null) {
-				imports = _getImports(content);
-			}
-
 			if (_isRedundantImport(
 					content, innerClassName, outerClassName,
 					outerClassFullyQualifiedName, imports)) {
@@ -87,6 +92,11 @@ public class JavaInnerClassImportsCheck extends BaseFileCheck {
 				return _formatInnerClassImport(
 					content, innerClassName, innerClassFullyQualifiedName,
 					outerClassName, outerClassFullyQualifiedName);
+			}
+			else {
+				content = _stripRedundantOuterClass(
+					content, innerClassName, innerClassFullyQualifiedName,
+					imports);
 			}
 		}
 
@@ -191,7 +201,62 @@ public class JavaInnerClassImportsCheck extends BaseFileCheck {
 			replacement);
 	}
 
+	private String _stripRedundantOuterClass(
+		String content, String innerClassName, String outerAndInnerClassName) {
+
+		Pattern pattern = Pattern.compile(
+			StringBundler.concat(
+				"\n(.*[^\\w\n.])", outerAndInnerClassName, "\\W"));
+
+		Matcher matcher = pattern.matcher(content);
+
+		while (matcher.find()) {
+			String lineStart = StringUtil.trimLeading(matcher.group(1));
+
+			if (lineStart.contains("//") ||
+				ToolsUtil.isInsideQuotes(content, matcher.end(1))) {
+
+				continue;
+			}
+
+			return StringUtil.replaceFirst(
+				content, outerAndInnerClassName, innerClassName,
+				matcher.end(1));
+		}
+
+		return content;
+	}
+
+	private String _stripRedundantOuterClass(
+		String content, String innerClassName,
+		String innerClassFullyQualifiedName, List<String> imports) {
+
+		Matcher matcher = _outerClassPattern.matcher(
+			innerClassFullyQualifiedName);
+
+		while (matcher.find()) {
+			int x = matcher.end();
+
+			if (x == innerClassFullyQualifiedName.length()) {
+				return content;
+			}
+
+			String outerClassFullyQualifiedName =
+				innerClassFullyQualifiedName.substring(0, x);
+
+			if (imports.contains(outerClassFullyQualifiedName)) {
+				content = _stripRedundantOuterClass(
+					content, innerClassName,
+					innerClassFullyQualifiedName.substring(
+						matcher.start() + 1));
+			}
+		}
+
+		return content;
+	}
+
 	private final Pattern _innerClassImportPattern = Pattern.compile(
 		"\nimport (([\\w.]+\\.([A-Z]\\w+))\\.([A-Z]\\w+));");
+	private final Pattern _outerClassPattern = Pattern.compile("\\.[A-Z]\\w+");
 
 }

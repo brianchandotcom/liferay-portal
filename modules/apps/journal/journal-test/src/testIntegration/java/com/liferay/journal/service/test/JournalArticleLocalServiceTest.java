@@ -82,7 +82,9 @@ public class JournalArticleLocalServiceTest {
 			_group.getGroupId(),
 			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 
-		JournalArticle newArticle = JournalTestUtil.copyArticle(oldArticle);
+		JournalArticle newArticle = JournalArticleLocalServiceUtil.copyArticle(
+			oldArticle.getUserId(), oldArticle.getGroupId(),
+			oldArticle.getArticleId(), null, true, oldArticle.getVersion());
 
 		List<ResourcePermission> oldResourcePermissions =
 			ResourcePermissionLocalServiceUtil.getResourcePermissions(

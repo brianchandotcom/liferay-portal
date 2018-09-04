@@ -58,6 +58,7 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Hashtable;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 import java.util.Random;
 import java.util.Set;
@@ -664,6 +665,20 @@ public class JenkinsResultsParserUtil {
 		}
 	}
 
+	public static String getDistinctTimeStamp() {
+		while (true) {
+			String timeStamp = String.valueOf(System.currentTimeMillis());
+
+			if (_timeStamps.contains(timeStamp)) {
+				continue;
+			}
+
+			_timeStamps.add(timeStamp);
+
+			return timeStamp;
+		}
+	}
+
 	public static String getGitHubApiUrl(
 		String gitRepositoryName, String username, String path) {
 
@@ -1118,6 +1133,50 @@ public class JenkinsResultsParserUtil {
 		throws Exception {
 
 		return getSlaves(getBuildProperties(), jenkinsMasterPatternString);
+	}
+
+	public static void invokeJob(
+		String cohortName, String jobName,
+		Map<String, String> invocationParameters) {
+
+		Properties buildProperties;
+
+		try {
+			buildProperties = getBuildProperties();
+		}
+		catch (IOException ioe) {
+			throw new RuntimeException(ioe);
+		}
+
+		List<JenkinsMaster> jenkinsMasters = getJenkinsMasters(
+			buildProperties, cohortName);
+
+		String randomJenkinsURL = getMostAvailableMasterURL(
+			"http://" + cohortName + ".liferay.com", jenkinsMasters.size());
+
+		StringBuilder sb = new StringBuilder();
+
+		sb.append(randomJenkinsURL);
+		sb.append("/job/");
+		sb.append(jobName);
+		sb.append("/buildWithParameters?token=");
+		sb.append(buildProperties.getProperty("jenkins.authentication.token"));
+
+		for (Map.Entry<String, String> invocationParameter :
+				invocationParameters.entrySet()) {
+
+			sb.append("&");
+			sb.append(fixURL(invocationParameter.getKey()));
+			sb.append("=");
+			sb.append(fixURL(invocationParameter.getValue()));
+		}
+
+		try {
+			toString(sb.toString());
+		}
+		catch (IOException ioe) {
+			throw new RuntimeException(ioe);
+		}
 	}
 
 	public static boolean isCINode() {
@@ -2038,6 +2097,7 @@ public class JenkinsResultsParserUtil {
 		"https://test.liferay.com/([0-9]+)/");
 	private static final Pattern _remoteURLAuthorityPattern2 = Pattern.compile(
 		"https://(test-[0-9]+-[0-9]+).liferay.com/");
+	private static final Set<String> _timeStamps = new HashSet<>();
 
 	static {
 		System.out.println("Securing standard error and out");

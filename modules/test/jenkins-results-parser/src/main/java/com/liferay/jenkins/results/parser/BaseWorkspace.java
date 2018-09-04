@@ -41,7 +41,7 @@ public abstract class BaseWorkspace implements Workspace {
 			localGitBranch = GitHubDevSyncUtil.createCachedLocalGitBranch(
 				jenkinsLocalGitRepository, pullRequest, true);
 
-			_jenkinsBranchName = GitHubDevSyncUtil.getCacheBranchName(
+			_jenkinsCachedBranchName = GitHubDevSyncUtil.getCachedBranchName(
 				pullRequest);
 		}
 		else if (GitUtil.isValidGitHubRefURL(jenkinsGitHubURL)) {
@@ -51,7 +51,7 @@ public abstract class BaseWorkspace implements Workspace {
 			localGitBranch = GitHubDevSyncUtil.createCachedLocalGitBranch(
 				jenkinsLocalGitRepository, remoteGitRef, true);
 
-			_jenkinsBranchName = GitHubDevSyncUtil.getCacheBranchName(
+			_jenkinsCachedBranchName = GitHubDevSyncUtil.getCachedBranchName(
 				remoteGitRef);
 		}
 		else {
@@ -63,8 +63,8 @@ public abstract class BaseWorkspace implements Workspace {
 	}
 
 	@Override
-	public String getJenkinsBranchName() {
-		return _jenkinsBranchName;
+	public String getJenkinsCachedBranchName() {
+		return _jenkinsCachedBranchName;
 	}
 
 	@Override
@@ -152,7 +152,7 @@ public abstract class BaseWorkspace implements Workspace {
 
 	protected abstract void writeGitRepositoryPropertiesFiles();
 
-	private String _jenkinsBranchName;
+	private String _jenkinsCachedBranchName;
 	private LocalGitBranch _jenkinsLocalGitBranch;
 
 }

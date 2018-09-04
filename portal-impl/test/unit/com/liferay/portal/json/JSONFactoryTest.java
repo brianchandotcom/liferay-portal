@@ -22,27 +22,17 @@ import com.liferay.portal.kernel.json.JSONSerializer;
 import com.liferay.portal.kernel.test.AssertUtils;
 import com.liferay.portal.kernel.test.CaptureHandler;
 import com.liferay.portal.kernel.test.JDKLoggerTestUtil;
-import com.liferay.portal.kernel.test.ReflectionTestUtil;
-import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.registry.collections.ServiceTrackerMap;
-import com.liferay.registry.collections.ServiceTrackerMapFactory;
-import com.liferay.registry.collections.ServiceTrackerMapFactoryUtil;
 
-import java.lang.reflect.Method;
-
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.LogRecord;
 
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
 /**
@@ -50,63 +40,25 @@ import org.junit.Test;
  */
 public class JSONFactoryTest {
 
-	@BeforeClass
-	public static void setUpClass() throws NoSuchMethodException {
-		Method openSingleValueMapMethod =
-			ServiceTrackerMapFactory.class.getMethod(
-				"openSingleValueMap", Class.class, String.class);
-
-		ServiceTrackerMapFactoryUtil.setServiceTrackerMapFactory(
-			(ServiceTrackerMapFactory)ProxyUtil.newProxyInstance(
-				ServiceTrackerMapFactory.class.getClassLoader(),
-				new Class<?>[] {ServiceTrackerMapFactory.class},
-				(proxy, method, args) -> {
-					if (method.equals(openSingleValueMapMethod)) {
-						return new ServiceTrackerMap<String, Object>() {
-
-							@Override
-							public void close() {
-							}
-
-							@Override
-							public boolean containsKey(String key) {
-								return false;
-							}
-
-							@Override
-							public Object getService(String key) {
-								return null;
-							}
-
-							@Override
-							public Set<String> keySet() {
-								return Collections.emptySet();
-							}
-
-						};
-					}
-
-					throw new UnsupportedOperationException();
-				}));
-
-		ReflectionTestUtil.setFieldValue(
-			LiferayJSONDeserializationWhitelist.class,
-			"_JSON_DESERIALIZATION_WHITELIST_CLASS_NAMES",
-			new String[] {
-				FooBean.class.getName(), FooBean1.class.getName(),
-				FooBean2.class.getName(), FooBean3.class.getName(),
-				FooBean4.class.getName(), FooBean5.class.getName(),
-				FooBean6.class.getName()
-			});
-	}
-
 	@Before
 	public void setUp() throws Exception {
 		JSONInit.init();
 
+		JSONFactoryImpl jsonFactoryImpl = new JSONFactoryImpl();
+
+		LiferayJSONDeserializationWhitelist
+			liferayJSONDeserializationWhitelist =
+				jsonFactoryImpl.getLiferayJSONDeserializationWhitelist();
+
+		liferayJSONDeserializationWhitelist.register(
+			FooBean.class.getName(), FooBean1.class.getName(),
+			FooBean2.class.getName(), FooBean3.class.getName(),
+			FooBean4.class.getName(), FooBean5.class.getName(),
+			FooBean6.class.getName());
+
 		JSONFactoryUtil jsonFactoryUtil = new JSONFactoryUtil();
 
-		jsonFactoryUtil.setJSONFactory(new JSONFactoryImpl());
+		jsonFactoryUtil.setJSONFactory(jsonFactoryImpl);
 	}
 
 	@Test

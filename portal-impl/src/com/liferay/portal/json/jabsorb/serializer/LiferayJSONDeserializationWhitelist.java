@@ -16,7 +16,6 @@ package com.liferay.portal.json.jabsorb.serializer;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.util.PropsUtil;
@@ -30,35 +29,31 @@ import java.util.concurrent.CopyOnWriteArraySet;
  */
 public class LiferayJSONDeserializationWhitelist {
 
+	public LiferayJSONDeserializationWhitelist() {
+		Collections.addAll(
+			_registeredClassNames,
+			PropsUtil.getArray(
+				PropsKeys.JSON_DESERIALIZATION_WHITELIST_CLASS_NAMES));
+	}
+
 	public boolean isWhitelisted(String className) {
-		boolean whitelisted = false;
-
 		if (_registeredClassNames.contains(className)) {
-			whitelisted = true;
-		}
-		else if (ArrayUtil.contains(
-					 _JSON_DESERIALIZATION_WHITELIST_CLASS_NAMES, className)) {
-
-			whitelisted = true;
+			return true;
 		}
 
-		if (!whitelisted && _log.isWarnEnabled()) {
+		if (_log.isWarnEnabled()) {
 			_log.warn(
 				StringBundler.concat(
 					"Unable to deserialize ", className,
 					" due to security restrictions."));
 		}
 
-		return whitelisted;
+		return false;
 	}
 
 	public void register(String... classeNames) {
 		Collections.addAll(_registeredClassNames, classeNames);
 	}
-
-	private static final String[] _JSON_DESERIALIZATION_WHITELIST_CLASS_NAMES =
-		PropsUtil.getArray(
-			PropsKeys.JSON_DESERIALIZATION_WHITELIST_CLASS_NAMES);
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		LiferayJSONDeserializationWhitelist.class);

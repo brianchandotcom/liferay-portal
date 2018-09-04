@@ -165,6 +165,10 @@ public class ProductMenuProductNavigationControlMenuEntry
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
+		if (themeDisplay.isIsolated()) {
+			return false;
+		}
+
 		if (themeDisplay.isImpersonated()) {
 			return true;
 		}

@@ -228,14 +228,23 @@ public class SiteMembershipsPortlet extends MVCPortlet {
 			removeUserIds = ParamUtil.getLongValues(actionRequest, "rowIds");
 		}
 
-		removeUserIds = filterRemoveUserIds(groupId, removeUserIds);
+		long[] filteredRemoveUserIds = filterRemoveUserIds(
+			groupId, removeUserIds);
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			actionRequest);
 
-		_userService.unsetGroupUsers(groupId, removeUserIds, serviceContext);
+		_userService.unsetGroupUsers(
+			groupId, filteredRemoveUserIds, serviceContext);
 
-		LiveUsers.leaveGroup(group.getCompanyId(), groupId, removeUserIds);
+		LiveUsers.leaveGroup(
+			group.getCompanyId(), groupId, filteredRemoveUserIds);
+
+		if (removeUserIds.length != filteredRemoveUserIds.length) {
+			SessionErrors.add(actionRequest, "removeUsersFail");
+
+			hideDefaultErrorMessage(actionRequest);
+		}
 	}
 
 	public void editUserGroupGroupRole(

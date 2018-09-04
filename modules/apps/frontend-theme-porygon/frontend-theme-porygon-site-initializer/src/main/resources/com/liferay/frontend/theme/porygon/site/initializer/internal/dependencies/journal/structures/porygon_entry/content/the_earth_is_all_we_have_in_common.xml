@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+
+<root available-locales="en_US" default-locale="en_US">
+	<dynamic-element index-type="keyword" instance-id="jhlz" name="coverImage" type="image">
+		<dynamic-content language-id="en_US" alt="" name="content_04.jpg" title="content_04.jpg" type="document">$content_04.jpg$</dynamic-content>
+	</dynamic-element>
+	<dynamic-element index-type="keyword" instance-id="uqqd" name="title" type="text">
+		<dynamic-content language-id="en_US"><![CDATA[The Earth is all we have in common]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element index-type="keyword" instance-id="iytc" name="subTitle" type="text_box">
+		<dynamic-content language-id="en_US"><![CDATA[our home that must be defended like a holy relic]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element index-type="keyword" instance-id="zdbj" name="content" type="text_area">
+		<dynamic-content language-id="en_US"><![CDATA[<p>The Earth was small, light blue, and so touchingly alone, our home that must be defended like a holy relic. The Earth was absolutely round. I believe I never knew what the word round meant until I saw Earth from space.</p>
+<p>There can be no thought of finishing for &lsquo;aiming for the stars.&rsquo; Both figuratively and literally, it is a task to occupy the generations. And no matter how much progress one makes, there is always the thrill of just beginning.</p>
+<p>Dinosaurs are extinct today because they lacked opposable thumbs and the brainpower to build a space program.</p>
+<p>We choose to go to the moon in this decade and do the other things, not because they are easy, but because they are hard, because that goal will serve to organize and measure the best of our energies and skills, because that challenge is one that we are willing to accept, one we are unwilling to postpone, and one which we intend to win.</p>
+<p>You know, being a test pilot isn't always the healthiest business in the world.</p>
+<p>Never in all their history have men been able truly to conceive of the world as one: a single sphere, a globe, having the qualities of a globe, a round earth in which all the directions eventually meet, in which there is no center because every point, or none, is center &mdash; an equal earth which all men occupy as equals. The airman's earth, if free men make it, will be truly round: a globe in practice, not in theory.</p>
+<p>As I stand out here in the wonders of the unknown at Hadley, I sort of realize there&rsquo;s a fundamental truth to our nature, Man must explore . . . and this is exploration at its greatest.</p>
+<p>The dreams of yesterday are the hopes of today and the reality of tomorrow.</p>
+<p>A Chinese tale tells of some men sent to harm a young girl who, upon seeing her beauty, become her protectors rather than her violators. That's how I felt seeing the Earth for the first time. I could not help but love and cherish her.</p>
+<p>We are all connected; To each other, biologically. To the earth, chemically. To the rest of the universe atomically.</p>]]></dynamic-content>
+	</dynamic-element>
+</root>

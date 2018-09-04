@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+
+<root available-locales="en_US" default-locale="en_US">
+	<dynamic-element index-type="keyword" instance-id="vrbt" name="coverImage" type="image">
+		<dynamic-content language-id="en_US" alt="" name="content_13.jpg" title="content_13.jpg" type="document">$content_13.jpg$</dynamic-content>
+	</dynamic-element>
+	<dynamic-element index-type="keyword" instance-id="fuym" name="title" type="text">
+		<dynamic-content language-id="en_US"><![CDATA[I don&apos;t know what you could say]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element index-type="keyword" instance-id="fkrh" name="subTitle" type="text_box">
+		<dynamic-content language-id="en_US"><![CDATA[About a day in which you have seen four beautiful sunsets]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element index-type="keyword" instance-id="essy" name="content" type="text_area">
+		<dynamic-content language-id="en_US"><![CDATA[<p>It suddenly struck me that that tiny pea, pretty and blue, was the Earth. I put up my thumb and shut one eye, and my thumb blotted out the planet Earth. I didn't feel like a giant. I felt very, very small.</p>
+<p>A Chinese tale tells of some men sent to harm a young girl who, upon seeing her beauty, become her protectors rather than her violators. That's how I felt seeing the Earth for the first time. I could not help but love and cherish her.</p>
+<p>To be the first to enter the cosmos, to engage, single-handed, in an unprecedented duel with nature&mdash;could one dream of anything more?</p>
+<p>Never in all their history have men been able truly to conceive of the world as one: a single sphere, a globe, having the qualities of a globe, a round earth in which all the directions eventually meet, in which there is no center because every point, or none, is center &mdash; an equal earth which all men occupy as equals. The airman's earth, if free men make it, will be truly round: a globe in practice, not in theory.</p>
+<p>The dreams of yesterday are the hopes of today and the reality of tomorrow.</p>
+<p>If you could see the earth illuminated when you were in a place as dark as night, it would look to you more splendid than the moon.</p>]]></dynamic-content>
+	</dynamic-element>
+</root>

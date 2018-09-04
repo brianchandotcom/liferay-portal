@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+
+<root available-locales="en_US" default-locale="en_US">
+	<dynamic-element index-type="keyword" instance-id="gukq" name="coverImage" type="image">
+		<dynamic-content language-id="en_US" alt="" name="content_11.jpg" title="content_11.jpg" type="document">$content_11.jpg$</dynamic-content>
+	</dynamic-element>
+	<dynamic-element index-type="keyword" instance-id="pzib" name="title" type="text">
+		<dynamic-content language-id="en_US"><![CDATA[Spaceflights cannot be stopped]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element index-type="keyword" instance-id="htma" name="subTitle" type="text_box">
+		<dynamic-content language-id="en_US"><![CDATA[This is not the work of any one man or even a group of men]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element index-type="keyword" instance-id="trsb" name="content" type="text_area">
+		<dynamic-content language-id="en_US"><![CDATA[<p>It is a historical process which mankind is carrying out in accordance with the natural laws of human development.</p>
+<p>Astronomy compels the soul to look upward, and leads us from this world to another.</p>
+<p>As we got further and further away, it [the Earth] diminished in size. Finally it shrank to the size of a marble, the most beautiful you can imagine. That beautiful, warm, living object looked so fragile, so delicate, that if you touched it with a finger it would crumble and fall apart. Seeing this has to change a man.</p>
+<p>The dreams of yesterday are the hopes of today and the reality of tomorrow.</p>
+<p>Science has not yet mastered prophecy. We predict too much for the next year and yet far too little for the next 10.</p>
+<p>The regret on our side is, they used to say years ago, we are reading about you in science class. Now they say, we are reading about you in history class.</p>
+<p>As I stand out here in the wonders of the unknown at Hadley, I sort of realize there&rsquo;s a fundamental truth to our nature, Man must explore . . . and this is exploration at its greatest.</p>
+<p>I don't know what you could say about a day in which you have seen four beautiful sunsets.</p>]]></dynamic-content>
+	</dynamic-element>
+</root>

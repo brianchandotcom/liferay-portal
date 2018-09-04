@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+
+<root available-locales="en_US" default-locale="en_US">
+	<dynamic-element index-type="keyword" instance-id="uvek" name="coverImage" type="image">
+		<dynamic-content language-id="en_US" alt="" name="content_09.jpg" title="content_09.jpg" type="document">$content_09.jpg$</dynamic-content>
+	</dynamic-element>
+	<dynamic-element index-type="keyword" instance-id="djyz" name="title" type="text">
+		<dynamic-content language-id="en_US"><![CDATA[The sky is the limit]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element index-type="keyword" instance-id="ilxp" name="subTitle" type="text_box">
+		<dynamic-content language-id="en_US"><![CDATA[Only for those who aren&apos;t afraid to fly!]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element index-type="keyword" instance-id="njsy" name="content" type="text_area">
+		<dynamic-content language-id="en_US"><![CDATA[<p>Space, the final frontier. These are the voyages of the Starship Enterprise. Its five-year mission: to explore strange new worlds, to seek out new life and new civilizations, to boldly go where no man has gone before.</p>
+<p>What was most significant about the lunar voyage was not that man set foot on the Moon but that they set eye on the earth.</p>
+<p>As I stand out here in the wonders of the unknown at Hadley, I sort of realize there&rsquo;s a fundamental truth to our nature, Man must explore . . . and this is exploration at its greatest.</p>
+<p>Buy why, some say, the moon? Why choose this as our goal? And they may as well ask why climb the highest mountain?</p>
+<p>Failure is not an option.</p>
+<p>What was most significant about the lunar voyage was not that man set foot on the Moon but that they set eye on the earth.</p>
+<p>Astronomy compels the soul to look upward, and leads us from this world to another.</p>
+<p>The path of a cosmonaut is not an easy, triumphant march to glory. You have to get to know the meaning not just of joy but also of grief, before being allowed in the spacecraft cabin.</p>
+<p>Across the sea of space, the stars are other suns.</p>]]></dynamic-content>
+	</dynamic-element>
+</root>

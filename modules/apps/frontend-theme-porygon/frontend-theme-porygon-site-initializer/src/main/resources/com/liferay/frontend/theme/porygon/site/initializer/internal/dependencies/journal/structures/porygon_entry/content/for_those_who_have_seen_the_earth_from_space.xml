@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+
+<root available-locales="en_US" default-locale="en_US">
+	<dynamic-element index-type="keyword" instance-id="ohdz" name="coverImage" type="image">
+		<dynamic-content language-id="en_US" alt="" name="content_15.jpg" title="content_15.jpg" type="document">$content_15.jpg$</dynamic-content>
+	</dynamic-element>
+	<dynamic-element index-type="keyword" instance-id="onld" name="title" type="text">
+		<dynamic-content language-id="en_US"><![CDATA[For those who have seen the Earth from space]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element index-type="keyword" instance-id="orha" name="subTitle" type="text_box">
+		<dynamic-content language-id="en_US"><![CDATA[And for the hundreds and perhaps thousands more who will]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element index-type="keyword" instance-id="qqba" name="content" type="text_area">
+		<dynamic-content language-id="en_US"><![CDATA[<p>The experience most certainly changes your perspective. The things that we share in our world are far more valuable than those which divide us.</p>
+<p>The regret on our side is, they used to say years ago, we are reading about you in science class. Now they say, we are reading about you in history class.</p>
+<p>Dinosaurs are extinct today because they lacked opposable thumbs and the brainpower to build a space program.</p>
+<p>A Chinese tale tells of some men sent to harm a young girl who, upon seeing her beauty, become her protectors rather than her violators. That's how I felt seeing the Earth for the first time. I could not help but love and cherish her.</p>
+<p>Spaceflights cannot be stopped. This is not the work of any one man or even a group of men. It is a historical process which mankind is carrying out in accordance with the natural laws of human development.</p>
+<p>As I stand out here in the wonders of the unknown at Hadley, I sort of realize there's a fundamental truth to our nature, Man must explore . . . and this is exploration at its greatest.</p>
+<p>We are all connected; To each other, biologically. To the earth, chemically. To the rest of the universe atomically.</p>
+<p>Space, the final frontier. These are the voyages of the Starship Enterprise. Its five-year mission: to explore strange new worlds, to seek out new life and new civilizations, to boldly go where no man has gone before.</p>
+<p>The Earth was small, light blue, and so touchingly alone, our home that must be defended like a holy relic. The Earth was absolutely round. I believe I never knew what the word round meant until I saw Earth from space.</p>]]></dynamic-content>
+	</dynamic-element>
+</root>

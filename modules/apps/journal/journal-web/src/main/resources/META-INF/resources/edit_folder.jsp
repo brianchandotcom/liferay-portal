@@ -307,7 +307,7 @@ renderResponse.setTitle(title);
 								/>
 							</liferay-ui:search-container>
 
-							<aui:button id="selectDMMStructure" value="choose-structure" />
+							<aui:button id="selectDDMStructure" value="choose-structure" />
 						</div>
 					</c:if>
 

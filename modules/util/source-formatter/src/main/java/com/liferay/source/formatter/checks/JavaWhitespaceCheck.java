@@ -72,7 +72,7 @@ public class JavaWhitespaceCheck extends WhitespaceCheck {
 				}
 
 				if (line.contains("\t ") && !previousLine.matches(".*[&|^]") &&
-					!previousLine.contains("\t((") &&
+					!previousLine.contains("\t(") &&
 					!previousLine.contains("\t<") &&
 					!previousLine.contains("\t ") &&
 					!previousLine.contains("\telse if (") &&

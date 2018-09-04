@@ -1,9 +1,11 @@
 import Builder from '../Builder.es';
 import {dom as MetalTestUtil} from 'metal-dom';
+import Pages from './__mock__/mockPages.es';
 
-let component;
 const spritemap = 'icons.svg';
 let addButton;
+let component;
+let pages;
 
 const fieldTypes = [
 	{
@@ -49,6 +51,8 @@ describe(
 	() => {
 		beforeEach(
 			() => {
+				pages = JSON.parse(JSON.stringify(Pages));
+
 				jest.useFakeTimers();
 
 				MetalTestUtil.enterDocument('<button id="addFieldButton"></button>');
@@ -141,5 +145,90 @@ describe(
 				expect(spy).toHaveBeenCalledWith('fieldMoved', expect.anything());
 			}
 		);
+
+		it(
+			'should reset the page title and description when it is reseted',
+			() => {
+				const data = {
+					item: {
+						settingsItem: 'reset-page'
+					}
+				};
+
+				const builderComponent = new Builder(
+					{
+						fieldTypes,
+						pages,
+						spritemap
+					}
+				);
+				const {FormRenderer} = builderComponent.refs;
+
+				FormRenderer._handleSettingsPageClicked(
+					{
+						data
+					}
+				);
+
+				expect(component).toMatchSnapshot();
+			}
+		);
+
+		it(
+			'should open sidebar when the reset page option item is clicked',
+			() => {
+				const data = {
+					item: {
+						settingsItem: 'reset-page'
+					}
+				};
+
+				const builderComponent = new Builder(
+					{
+						fieldTypes,
+						pages,
+						spritemap
+					}
+				);
+				const {FormRenderer, sidebar} = builderComponent.refs;
+
+				FormRenderer._handleSettingsPageClicked(
+					{
+						data
+					}
+				);
+
+				expect(sidebar.state.open).toBeTruthy();
+			}
+		);
+
+		it(
+			'should not open sidebar when the delete current page option item is clicked',
+			() => {
+				let componentPages = [...pages, ...pages];
+				const data = {
+					item: {
+						settingsItem: 'reset-page',
+					},
+				};
+				const builderComponent = new Builder(
+					{
+						fieldTypes,
+						pages: componentPages,
+						spritemap
+					}
+				);
+				const {FormRenderer, sidebar} = builderComponent.refs;
+
+				FormRenderer._handleSettingsPageClicked(
+					{
+						data,
+					}
+				);
+
+				expect(sidebar.state.show).toBeFalsy();
+			}
+		);
+
 	}
 );

@@ -206,10 +206,7 @@ class FormRenderer extends Component {
 		let newPages;
 
 		if (pages.length == 1) {
-			newPages = [{
-				...pages[0],
-				rows: []
-			}];
+			newPages = [this.createNewPage()];
 		}
 		else {
 			newPages = pages

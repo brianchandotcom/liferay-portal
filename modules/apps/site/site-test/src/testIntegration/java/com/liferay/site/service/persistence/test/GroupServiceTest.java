@@ -38,6 +38,7 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserGroupRole;
 import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
+import com.liferay.portal.kernel.service.GroupService;
 import com.liferay.portal.kernel.service.GroupServiceUtil;
 import com.liferay.portal.kernel.service.OrganizationLocalServiceUtil;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
@@ -597,6 +598,43 @@ public class GroupServiceTest {
 			defaultUser.setLanguageId(languageId);
 
 			UserLocalServiceUtil.updateUser(defaultUser);
+		}
+	}
+
+	@Test
+	public void testGetGtCompanyGroups() throws Exception {
+		long parentGroupId = TestPropsValues.getGroupId();
+
+		for (int i = 0; i < 10; i++) {
+			_groups.add(GroupTestUtil.addGroup(parentGroupId));
+		}
+
+		int size = 5;
+
+		List<Group> groups = _groupService.getGtCompanyGroups(
+			0L, TestPropsValues.getCompanyId(), parentGroupId, true, size);
+
+		Assert.assertFalse(groups.isEmpty());
+		Assert.assertEquals(groups.toString(), size, groups.size());
+
+		Group lastGroup = groups.get(groups.size() - 1);
+
+		groups = _groupService.getGtCompanyGroups(
+			lastGroup.getGroupId(), TestPropsValues.getCompanyId(),
+			parentGroupId, true, size);
+
+		Assert.assertFalse(groups.isEmpty());
+		Assert.assertEquals(groups.toString(), size, groups.size());
+
+		long previousGroupId = 0;
+
+		for (Group user : groups) {
+			long userId = user.getGroupId();
+
+			Assert.assertTrue(userId > lastGroup.getGroupId());
+			Assert.assertTrue(userId > previousGroupId);
+
+			previousGroupId = userId;
 		}
 	}
 
@@ -1286,8 +1324,14 @@ public class GroupServiceTest {
 		GroupLocalServiceUtil.deleteGroup(group);
 	}
 
+	@Inject
+	private static GroupService _groupService;
+
 	@DeleteAfterTestRun
 	private Group _group;
+
+	@DeleteAfterTestRun
+	private final List<Group> _groups = new ArrayList<>();
 
 	@Inject
 	private PortletPreferencesLocalService _portletPreferencesLocalService;

@@ -265,9 +265,6 @@ if (WebFormUtil.getTableRowsCount(company.getCompanyId(), databaseTableName) > 0
 			labelName.toggle(!paragraph);
 			optionalControl.toggle(!paragraph);
 			paragraphDiv.toggle(paragraph);
-
-			optionalControl.all('input[type="checkbox"]').attr('checked', paragraph);
-			optionalControl.all('input[type="hidden"]').attr('value', paragraph);
 		};
 
 		var webFields = A.one('.webFields');

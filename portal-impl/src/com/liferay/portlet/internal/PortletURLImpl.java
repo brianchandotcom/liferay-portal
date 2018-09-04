@@ -1113,16 +1113,20 @@ public class PortletURLImpl
 				continue;
 			}
 
-			for (String value : entry.getValue()) {
-				_appendNamespaceAndEncode(sb, name);
+			String[] values = entry.getValue();
 
-				sb.append(StringPool.EQUAL);
+			if (values != null) {
+				for (String value : values) {
+					_appendNamespaceAndEncode(sb, name);
 
-				if (value != null) {
-					sb.append(processValue(key, value));
+					sb.append(StringPool.EQUAL);
+
+					if (value != null) {
+						sb.append(processValue(key, value));
+					}
+
+					sb.append(StringPool.AMPERSAND);
 				}
-
-				sb.append(StringPool.AMPERSAND);
 			}
 		}
 

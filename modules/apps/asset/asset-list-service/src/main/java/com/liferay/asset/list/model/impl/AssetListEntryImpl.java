@@ -19,6 +19,7 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.persistence.AssetEntryQuery;
 import com.liferay.asset.list.constants.AssetListEntryTypeConstants;
+import com.liferay.portal.kernel.model.Layout;
 
 import java.util.Collections;
 import java.util.List;
@@ -36,7 +37,7 @@ public class AssetListEntryImpl extends AssetListEntryBaseImpl {
 		return Collections.emptyList();
 	}
 
-	public AssetEntryQuery getAssetEntryQuery() {
+	public AssetEntryQuery getAssetEntryQuery(long[] groupIds, Layout layout) {
 		return new AssetEntryQuery();
 	}
 

@@ -50,23 +50,6 @@ public class UpgradeBlogsImages extends UpgradeProcess {
 		_portletFileRepository = portletFileRepository;
 	}
 
-	protected Folder addFolder(long userId, long groupId, String folderName)
-		throws PortalException {
-
-		ServiceContext serviceContext = new ServiceContext();
-
-		serviceContext.setAddGroupPermissions(true);
-		serviceContext.setAddGuestPermissions(true);
-
-		Repository repository = _portletFileRepository.addPortletRepository(
-			groupId, BlogsConstants.SERVICE_NAME, serviceContext);
-
-		return _portletFileRepository.addPortletFolder(
-			userId, repository.getRepositoryId(),
-			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, folderName,
-			serviceContext);
-	}
-
 	@Override
 	protected void doUpgrade() throws Exception {
 		try (PreparedStatement ps1 = connection.prepareStatement(
@@ -100,7 +83,7 @@ public class UpgradeBlogsImages extends UpgradeProcess {
 
 				String mimeType = MimeTypesUtil.getContentType(tempFile);
 
-				Folder smallImagefolder = addFolder(
+				Folder smallImagefolder = _addFolder(
 					userId, groupId, "Small Image");
 
 				FileEntry processedImageFileEntry =
@@ -110,7 +93,7 @@ public class UpgradeBlogsImages extends UpgradeProcess {
 						smallImagefolder.getFolderId(), bytes, fileName,
 						mimeType, true);
 
-				Folder blogsImagefolder = addFolder(
+				Folder blogsImagefolder = _addFolder(
 					userId, groupId, BlogsConstants.SERVICE_NAME);
 
 				_portletFileRepository.addPortletFileEntry(
@@ -126,6 +109,23 @@ public class UpgradeBlogsImages extends UpgradeProcess {
 
 			ps2.executeBatch();
 		}
+	}
+
+	private Folder _addFolder(long userId, long groupId, String folderName)
+		throws PortalException {
+
+		ServiceContext serviceContext = new ServiceContext();
+
+		serviceContext.setAddGroupPermissions(true);
+		serviceContext.setAddGuestPermissions(true);
+
+		Repository repository = _portletFileRepository.addPortletRepository(
+			groupId, BlogsConstants.SERVICE_NAME, serviceContext);
+
+		return _portletFileRepository.addPortletFolder(
+			userId, repository.getRepositoryId(),
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, folderName,
+			serviceContext);
 	}
 
 	private final ImageLocalService _imageLocalService;

@@ -266,7 +266,12 @@ public class AssetPublisherDisplayContext {
 			WebKeys.THEME_DISPLAY);
 
 		if (isSelectionStyleAssetList() && (assetListEntry != null)) {
-			_assetEntryQuery = assetListEntry.getAssetEntryQuery();
+			long[] groupIds = AssetPublisherUtil.getGroupIds(
+				_portletPreferences, themeDisplay.getScopeGroupId(),
+				themeDisplay.getLayout());
+
+			_assetEntryQuery = assetListEntry.getAssetEntryQuery(
+				groupIds, themeDisplay.getLayout());
 		}
 		else {
 			_assetEntryQuery = AssetPublisherUtil.getAssetEntryQuery(

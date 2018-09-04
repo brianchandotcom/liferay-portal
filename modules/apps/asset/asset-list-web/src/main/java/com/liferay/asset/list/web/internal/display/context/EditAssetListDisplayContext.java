@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
@@ -538,6 +539,27 @@ public class EditAssetListDisplayContext {
 		return _portletResource;
 	}
 
+	public String getRedirectURL() {
+		if (Validator.isNotNull(_redirect)) {
+			return _redirect;
+		}
+
+		String redirect = ParamUtil.getString(_request, "redirect");
+
+		if (Validator.isNull(redirect)) {
+			LiferayPortletResponse liferayPortletResponse =
+				PortalUtil.getLiferayPortletResponse(_portletResponse);
+
+			PortletURL portletURL = liferayPortletResponse.createRenderURL();
+
+			redirect = portletURL.toString();
+		}
+
+		_redirect = redirect;
+
+		return _redirect;
+	}
+
 	public long[] getReferencedModelsGroupIds() throws PortalException {
 
 		// Referenced models are asset subtypes, tags or categories that
@@ -772,6 +794,7 @@ public class EditAssetListDisplayContext {
 	private String _portletResource;
 	private final PortletResponse _portletResponse;
 	private final UnicodeProperties _properties;
+	private String _redirect;
 	private long[] _referencedModelsGroupIds;
 	private final HttpServletRequest _request;
 	private Boolean _showOnlyLayoutAssets;

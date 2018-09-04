@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String redirect = ParamUtil.getString(request, "redirect");
+String redirect = editAssetListDisplayContext.getRedirectURL();
 %>
 
 <portlet:actionURL name="/asset_list/edit_asset_list_entry_settings" var="editAssetListEntrySettingsURL" />

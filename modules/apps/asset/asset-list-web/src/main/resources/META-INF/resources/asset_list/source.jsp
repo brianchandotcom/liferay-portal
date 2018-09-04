@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String redirect = ParamUtil.getString(request, "redirect");
+String redirect = editAssetListDisplayContext.getRedirectURL();
 
 List<AssetRendererFactory<?>> classTypesAssetRendererFactories = new ArrayList();
 %>

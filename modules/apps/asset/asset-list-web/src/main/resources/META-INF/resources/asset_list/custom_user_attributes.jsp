@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String redirect = ParamUtil.getString(request, "redirect");
+String redirect = editAssetListDisplayContext.getRedirectURL();
 
 String customUserAttributes = GetterUtil.getString(properties.getProperty("customUserAttributes", StringPool.BLANK));
 %>
@@ -34,6 +34,16 @@ String customUserAttributes = GetterUtil.getString(properties.getProperty("custo
 	<aui:input name="type" type="hidden" value="<%= assetListDisplayContext.getAssetListEntryType() %>" />
 
 	<liferay-frontend:edit-form-body>
+		<h3 class="sheet-subtitle">
+			<span class="autofit-padded-no-gutters autofit-row">
+				<span class="autofit-col autofit-col-expand">
+					<span class="heading-text">
+						<liferay-ui:message key="custom-attributes" />
+					</span>
+				</span>
+			</span>
+		</h3>
+
 		<liferay-frontend:fieldset-group>
 			<aui:input helpMessage='<%= LanguageUtil.get(resourceBundle, "custom-user-attributes-help") %>' label='<%= LanguageUtil.get(resourceBundle, "displayed-assets-must-match-these-custom-user-profile-attributes") %>' name="TypeSettingsProperties--customUserAttributes--" value="<%= customUserAttributes %>" />
 		</liferay-frontend:fieldset-group>

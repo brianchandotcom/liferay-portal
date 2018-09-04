@@ -35,20 +35,20 @@ import org.osgi.service.component.annotations.Reference;
  * @author Eudaldo Alonso
  */
 @Component(
-	property = "form.navigator.entry.order:Integer=200",
+	property = "form.navigator.entry.order:Integer=50",
 	service = FormNavigatorEntry.class
 )
-public class OrderingAndGroupingFormNavigatorEntry
+public class GroupingFormNavigatorEntry
 	extends BaseConfigurationFormNavigatorEntry {
 
 	@Override
 	public String getCategoryKey() {
-		return AssetPublisherConstants.CATEGORY_KEY_ASSET_SELECTION;
+		return AssetPublisherConstants.CATEGORY_KEY_DISPLAY_SETTINGS;
 	}
 
 	@Override
 	public String getKey() {
-		return "ordering-and-grouping";
+		return "grouping";
 	}
 
 	@Override
@@ -90,7 +90,7 @@ public class OrderingAndGroupingFormNavigatorEntry
 
 	@Override
 	protected String getJspPath() {
-		return "/configuration/ordering_and_grouping.jsp";
+		return "/configuration/grouping.jsp";
 	}
 
 	@Reference

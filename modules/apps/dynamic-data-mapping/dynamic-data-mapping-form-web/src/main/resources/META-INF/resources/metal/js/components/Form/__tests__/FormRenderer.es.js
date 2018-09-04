@@ -584,7 +584,9 @@ describe(
 
 						jest.runAllTimers();
 
-						expect(component.pageSettingsItem).toEqual(
+						expect(
+							component.prepareStateForRender(component).pageSettingsItems
+						).toEqual(
 							[
 								{
 									'label': Liferay.Language.get('add-new-page'),
@@ -613,7 +615,7 @@ describe(
 
 						jest.runAllTimers();
 
-						expect(component.pageSettingsItem).toEqual(
+						expect(component.pageSettingsItems).toEqual(
 							[
 								{
 									'label': Liferay.Language.get('add-new-page'),

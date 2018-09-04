@@ -13,7 +13,7 @@
 	{@param? editable: bool}
 	{@param? modeRenderer: string}
 	{@param? pages: ?}
-	{@param? pageSettingsItem: ?}
+	{@param? pageSettingsItems: ?}
 
 	{let $contentRenderer: $modeRenderer ?: 'grid' /}
 	{let $total: length($pages) /}
@@ -30,7 +30,7 @@
 		{param defaultPageTitle: $defaultPageTitle /}
 		{param editable: $editable /}
 		{param pages: $pages /}
-		{param pageSettingsItem: $pageSettingsItem /}
+		{param pageSettingsItems: $pageSettingsItems /}
 		{param spritemap: $spritemap /}
 		{param total: $total /}
 	{/delcall}
@@ -49,7 +49,7 @@
 	{@param? defaultPageTitle: string}
 	{@param? editable: bool}
 	{@param? pages: ?}
-	{@param? pageSettingsItem: ?}
+	{@param? pageSettingsItems: ?}
 	{@param? total: int}
 
 	<div class="position-relative">
@@ -61,7 +61,7 @@
 			{param defaultPageTitle: $defaultPageTitle /}
 			{param editable: $editable /}
 			{param pages: $pages /}
-			{param pageSettingsItem: $pageSettingsItem /}
+			{param pageSettingsItems: $pageSettingsItems /}
 			{param spritemap: $spritemap /}
 		{/delcall}
 
@@ -94,7 +94,7 @@
 	{@param? defaultPageTitle: string}
 	{@param? editable: bool}
 	{@param? pages: ?}
-	{@param? pageSettingsItem: ?}
+	{@param? pageSettingsItems: ?}
 	{@param? total: int}
 
 	{let $multiple: length($pages) > 1 /}
@@ -114,14 +114,14 @@
 				{param defaultPageTitle: $defaultPageTitle /}
 				{param editable: $editable /}
 				{param pages: $pages /}
-				{param pageSettingsItem: $pageSettingsItem /}
+				{param pageSettingsItems: $pageSettingsItems /}
 				{param spritemap: $spritemap /}
 			{/delcall}
 		{/if}
 
 		<div class="ddm-page-settings" role="group">
 			{call ClayActionsDropdown.render}
-				{param items: $pageSettingsItem /}
+				{param items: $pageSettingsItems /}
 				{param triggerClasses: 'component-action' /}
 				{param events: [
 					'itemClicked': $_handleSettingsPageClicked

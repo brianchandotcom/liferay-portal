@@ -69,7 +69,7 @@ class FormRenderer extends Component {
 		 * @type {?array<object>}
 		 */
 
-		pageSettingsItem: Config.array().value(
+		pageSettingsItems: Config.array().value(
 			[
 				{
 					'label': Liferay.Language.get('add-new-page'),
@@ -109,8 +109,6 @@ class FormRenderer extends Component {
 		if (this.editable && !this.dragAndDropDisabled) {
 			this._startDrag();
 		}
-
-		this.pageSettingsItem = this._changeRemoveLabel(this.pages);
 	}
 
 	/**
@@ -118,17 +116,38 @@ class FormRenderer extends Component {
 	 */
 
 	willReceiveState(nextState) {
-		if (
-			typeof nextState.pages !== 'undefined' &&
-			nextState.pages.newVal.length &&
-			this.editable &&
-			!this.dragAndDropDisabled
-		) {
-			if (this._dragAndDrop) {
-				this._dragAndDrop.disposeInternal();
+		if (nextState.pages) {
+			if (this.editable && !this.dragAndDropDisabled) {
+				if (this._dragAndDrop) {
+					this._dragAndDrop.disposeInternal();
+				}
+				this._startDrag();
 			}
-			this._startDrag();
 		}
+		return nextState;
+	}
+
+	prepareStateForRender(state) {
+		let label = Liferay.Language.get('delete-current-page');
+
+		if (state.pages.length === 1) {
+			label = Liferay.Language.get('reset-page');
+		}
+
+		return {
+			...state,
+			pageSettingsItems: this.pageSettingsItems.map(
+				item => {
+					if (item.settingsItem == 'reset-page') {
+						item = {
+							...item,
+							label
+						};
+					}
+					return item;
+				}
+			)
+		};
 	}
 
 	/**
@@ -142,49 +161,16 @@ class FormRenderer extends Component {
 
 		pages[activePage].enabled = false;
 
-		const newPages = [
-			...pages,
-			newPage
-		];
-
-		this.setState(
-			{
-				pageSettingsItem: this._changeRemoveLabel(newPages)
-			}
-		);
-
-		this.emit('pageAdded', newPages);
-	}
-
-	/**
-	 * Update the page settings depending on the number of pages
-	 * @private
-	 */
-
-	_changeRemoveLabel(pages) {
-		let label = Liferay.Language.get('delete-current-page');
-
-		if (pages.length == 1) {
-			label = Liferay.Language.get('reset-page');
-		}
-
-		return this.pageSettingsItem.map(
-			item => {
-				let mappedItem = item;
-
-				if (item.settingsItem == 'reset-page') {
-					mappedItem = {
-						...item,
-						label
-					};
-				}
-
-				return mappedItem;
-			}
+		this.emit(
+			'pageAdded',
+			[
+				...pages,
+				newPage
+			]
 		);
 	}
 
-	/**
+	/*
 	 * @param {Object} data
 	 * @private
 	 */
@@ -223,7 +209,6 @@ class FormRenderer extends Component {
 				);
 
 			this.activePage = activePage ? activePage - 1 : activePage;
-			this.pageSettingsItem = this._changeRemoveLabel(newPages);
 		}
 
 		const pageId = this.activePage;

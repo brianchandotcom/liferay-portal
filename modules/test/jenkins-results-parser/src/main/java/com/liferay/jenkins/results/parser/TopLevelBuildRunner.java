@@ -100,7 +100,7 @@ public abstract class TopLevelBuildRunner<T extends TopLevelBuildData>
 	}
 
 	private String _getJenkinsGitHubURL() {
-		String jenkinsCachedBranchName = workspace.getJenkinsBranchName();
+		String jenkinsCachedBranchName = workspace.getJenkinsCachedBranchName();
 
 		if (jenkinsCachedBranchName != null) {
 			return "https://github-dev.liferay.com/liferay/liferay-jenkins-ee" +

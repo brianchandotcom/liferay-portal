@@ -21,7 +21,7 @@ public interface Workspace {
 
 	public void addJenkinsLocalGitBranch(String jenkinsGitHubURL);
 
-	public String getJenkinsBranchName();
+	public String getJenkinsCachedBranchName();
 
 	public void setUp();
 

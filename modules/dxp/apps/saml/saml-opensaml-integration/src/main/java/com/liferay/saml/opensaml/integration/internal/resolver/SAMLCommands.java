@@ -51,8 +51,7 @@ public interface SAMLCommands {
 				Properties userAttributeMappingsProperties) {
 
 		return new UserResolverSAMLCommand<>(
-			samlMessageContext
-				-> {
+			samlMessageContext -> {
 				Response response = samlMessageContext.getInboundSAMLMessage();
 
 				if (response == null) {

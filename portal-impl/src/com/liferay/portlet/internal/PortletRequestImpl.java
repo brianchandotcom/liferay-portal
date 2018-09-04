@@ -882,11 +882,18 @@ public abstract class PortletRequestImpl implements LiferayPortletRequest {
 			for (PublicRenderParameter publicRenderParameter :
 					publicRenderParameters) {
 
-				allRenderParameters.put(
-					publicRenderParameter.getIdentifier(),
-					publicRenderParametersMap.get(
-						PortletQNameUtil.getPublicRenderParameterName(
-							publicRenderParameter.getQName())));
+				String publicRenderParameterName =
+					PortletQNameUtil.getPublicRenderParameterName(
+						publicRenderParameter.getQName());
+
+				if (publicRenderParametersMap.containsKey(
+						publicRenderParameterName)) {
+
+					allRenderParameters.put(
+						publicRenderParameter.getIdentifier(),
+						publicRenderParametersMap.get(
+							publicRenderParameterName));
+				}
 			}
 
 			Map<String, String[]> privateRenderParameters =

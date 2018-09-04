@@ -154,6 +154,7 @@
 		<suppress checks="JavaConfigurationCategoryCheck" files="modules/private/.*" />
 		<suppress checks="JavaDeprecatedKernelClassesCheck" files="modules/private/.*" />
 		<suppress checks="JavaInnerClassImportsCheck" files="modules/apps/apio-architect/.*" />
+		<suppress checks="JavaInnerClassImportsCheck" files="modules/apps/commerce/.*" />
 		<suppress checks="JavaInnerClassImportsCheck" files="modules/private/.*" />
 		<suppress checks="JavaInnerClassImportsCheck" files="modules/test/poshi-runner/.*" />
 		<suppress checks="PropertiesLiferayPluginPackageLiferayVersionsCheck" files="modules/private/apio-architect/.*" />

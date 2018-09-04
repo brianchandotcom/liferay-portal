@@ -16,6 +16,9 @@ package com.liferay.forms.apio.internal.architect.resource;
 
 import static java.util.function.Function.identity;
 
+import com.liferay.apio.architect.credentials.Credentials;
+import com.liferay.apio.architect.custom.actions.GetRoute;
+import com.liferay.apio.architect.functional.Try;
 import com.liferay.apio.architect.pagination.PageItems;
 import com.liferay.apio.architect.pagination.Pagination;
 import com.liferay.apio.architect.representor.NestedRepresentor;
@@ -25,16 +28,24 @@ import com.liferay.apio.architect.routes.ItemRoutes;
 import com.liferay.apio.architect.routes.NestedCollectionRoutes;
 import com.liferay.content.space.apio.architect.identifier.ContentSpaceIdentifier;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
+import com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecord;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstanceSettings;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstanceVersion;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceService;
 import com.liferay.forms.apio.architect.identifier.FormInstanceIdentifier;
+import com.liferay.forms.apio.architect.identifier.FormInstanceRecordIdentifier;
 import com.liferay.forms.apio.architect.identifier.StructureIdentifier;
+import com.liferay.forms.apio.internal.architect.form.FetchLatestDraftForm;
+import com.liferay.forms.apio.internal.architect.route.FetchLatestDraftRoute;
+import com.liferay.forms.apio.internal.helper.FetchLatestRecordHelper;
 import com.liferay.forms.apio.internal.util.FormInstanceRepresentorUtil;
 import com.liferay.person.apio.architect.identifier.PersonIdentifier;
+import com.liferay.portal.apio.permission.HasPermission;
+import com.liferay.portal.apio.user.CurrentUser;
 import com.liferay.portal.kernel.model.Company;
 
 import java.util.List;
+import java.util.function.BiFunction;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -70,8 +81,25 @@ public class FormInstanceNestedCollectionResource
 	public ItemRoutes<DDMFormInstance, Long> itemRoutes(
 		ItemRoutes.Builder<DDMFormInstance, Long> builder) {
 
+		GetRoute fetchLatestDraftRoute = new FetchLatestDraftRoute();
+
+		BiFunction<Credentials, Long, Boolean> hasPermissionFunction =
+			(credentials, identifier) -> Try.fromFallible(
+				() -> _hasPermission.forAddingIn(
+					FormInstanceRecordIdentifier.class
+				).apply(
+					credentials, identifier
+				)
+			).orElse(
+				false
+			);
+
 		return builder.addGetter(
 			_ddmFormInstanceService::getFormInstance
+		).addCustomRoute(
+			fetchLatestDraftRoute, this::_fetchLatestDraft, CurrentUser.class,
+			FormInstanceRecordIdentifier.class, hasPermissionFunction,
+			FetchLatestDraftForm::buildForm
 		).build();
 	}
 
@@ -168,6 +196,21 @@ public class FormInstanceNestedCollectionResource
 		).build();
 	}
 
+	private DDMFormInstanceRecord _fetchLatestDraft(
+		Long ddmFormInstanceId, FetchLatestDraftForm fetchLatestDraftForm,
+		CurrentUser currentUser) {
+
+		return Try.fromFallible(
+			() -> _ddmFormInstanceService.getFormInstance(ddmFormInstanceId)
+		).map(
+			ddmFormInstance ->
+				_fetchLatestRecordVersionHelper.fetchLatestDraftRecord(
+					ddmFormInstance, currentUser)
+		).orElse(
+			null
+		);
+	}
+
 	private PageItems<DDMFormInstance> _getPageItems(
 		Pagination pagination, long groupId, Company company) {
 
@@ -183,5 +226,13 @@ public class FormInstanceNestedCollectionResource
 
 	@Reference
 	private DDMFormInstanceService _ddmFormInstanceService;
+
+	@Reference
+	private FetchLatestRecordHelper _fetchLatestRecordVersionHelper;
+
+	@Reference(
+		target = "(model.class.name=com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecord)"
+	)
+	private HasPermission<Long> _hasPermission;
 
 }

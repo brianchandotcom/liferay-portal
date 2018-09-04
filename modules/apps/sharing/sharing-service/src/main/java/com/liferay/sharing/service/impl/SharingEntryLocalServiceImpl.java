@@ -69,7 +69,7 @@ public class SharingEntryLocalServiceImpl
 			sharingEntryActionKeys.stream();
 
 		sharingEntryActionKeyStream.map(
-			SharingEntryActionKey::getBitwiseVaue
+			SharingEntryActionKey::getBitwiseValue
 		).reduce(
 			(bitwiseValue1, bitwiseValue2) -> bitwiseValue1 | bitwiseValue2
 		).ifPresent(
@@ -208,7 +208,7 @@ public class SharingEntryLocalServiceImpl
 
 			long actionIds = sharingEntry.getActionIds();
 
-			if ((actionIds & sharingEntryActionKey.getBitwiseVaue()) != 0) {
+			if ((actionIds & sharingEntryActionKey.getBitwiseValue()) != 0) {
 				return true;
 			}
 		}
@@ -228,7 +228,7 @@ public class SharingEntryLocalServiceImpl
 		for (SharingEntry sharingEntry : sharingEntries) {
 			long actionIds = sharingEntry.getActionIds();
 
-			if ((actionIds & sharingEntryActionKey.getBitwiseVaue()) != 0) {
+			if ((actionIds & sharingEntryActionKey.getBitwiseValue()) != 0) {
 				return true;
 			}
 		}
@@ -251,7 +251,7 @@ public class SharingEntryLocalServiceImpl
 			sharingEntryActionKeys.stream();
 
 		sharingEntryActionKeyStream.map(
-			SharingEntryActionKey::getBitwiseVaue
+			SharingEntryActionKey::getBitwiseValue
 		).reduce(
 			(bitwiseValue1, bitwiseValue2) -> bitwiseValue1 | bitwiseValue2
 		).ifPresent(

@@ -14,7 +14,8 @@
 
 package com.liferay.blogs.internal.upgrade.v1_1_2;
 
-import com.liferay.blogs.kernel.model.BlogsEntry;
+import com.liferay.blogs.constants.BlogsConstants;
+import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -30,7 +31,6 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
-import com.liferay.portlet.blogs.constants.BlogsConstants;
 
 import java.io.File;
 

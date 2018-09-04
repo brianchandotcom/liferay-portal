@@ -131,10 +131,10 @@ public class MethodKey implements Externalizable {
 			method = _declaringClass.getDeclaredMethod(
 				_methodName, _parameterTypes);
 
-			method.setAccessible(true);
-
 			_methods.put(this, method);
 		}
+
+		method.setAccessible(true);
 
 		return method;
 	}

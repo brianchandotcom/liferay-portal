@@ -16,7 +16,7 @@ package com.liferay.exportimport.internal.configuration;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.exportimport.internal.json.jabsorb.serializer.ExportImportLiferayJSONDeserializationWhitelist;
+import com.liferay.exportimport.internal.background.task.BackgroundTaskExecutorConfigurator;
 import com.liferay.exportimport.kernel.configuration.ExportImportConfigurationConstants;
 import com.liferay.exportimport.kernel.configuration.ExportImportConfigurationParameterMapFactoryUtil;
 import com.liferay.exportimport.kernel.configuration.ExportImportConfigurationSettingsMapFactory;
@@ -395,11 +395,11 @@ public class ExportImportConfigurationSettingsMapFactoryImpl
 	}
 
 	@Reference
-	private ExportImportHelper _exportImportHelper;
+	private BackgroundTaskExecutorConfigurator
+		_backgroundTaskExecutorConfigurator;
 
 	@Reference
-	private ExportImportLiferayJSONDeserializationWhitelist
-		_exportImportLiferayJSONDeserializationWhitelist;
+	private ExportImportHelper _exportImportHelper;
 
 	@Reference
 	private GroupLocalService _groupLocalService;

@@ -42,6 +42,16 @@ renderResponse.setTitle(assetListDisplayContext.getAssetListEntryTitle());
 	<liferay-frontend:edit-form-body>
 		<liferay-frontend:fieldset-group>
 			<liferay-frontend:fieldset>
+				<h3 class="sheet-subtitle">
+					<span class="autofit-padded-no-gutters autofit-row">
+						<span class="autofit-col autofit-col-expand">
+							<span class="heading-text">
+								<liferay-ui:message key="details" />
+							</span>
+						</span>
+					</span>
+				</h3>
+
 				<aui:input name="title" placeholder="title" />
 			</liferay-frontend:fieldset>
 		</liferay-frontend:fieldset-group>

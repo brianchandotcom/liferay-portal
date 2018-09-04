@@ -23,7 +23,7 @@ import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Image;
 import com.liferay.portal.kernel.model.Repository;
-import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
+import com.liferay.portal.kernel.portletfilerepository.PortletFileRepository;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.service.ImageLocalService;
@@ -42,8 +42,12 @@ import java.sql.ResultSet;
  */
 public class UpgradeBlogsImages extends UpgradeProcess {
 
-	public UpgradeBlogsImages(ImageLocalService imageLocalService) {
+	public UpgradeBlogsImages(
+		ImageLocalService imageLocalService,
+		PortletFileRepository portletFileRepository) {
+
 		_imageLocalService = imageLocalService;
+		_portletFileRepository = portletFileRepository;
 	}
 
 	protected Folder addFolder(long userId, long groupId, String folderName)
@@ -54,10 +58,10 @@ public class UpgradeBlogsImages extends UpgradeProcess {
 		serviceContext.setAddGroupPermissions(true);
 		serviceContext.setAddGuestPermissions(true);
 
-		Repository repository = PortletFileRepositoryUtil.addPortletRepository(
+		Repository repository = _portletFileRepository.addPortletRepository(
 			groupId, BlogsConstants.SERVICE_NAME, serviceContext);
 
-		return PortletFileRepositoryUtil.addPortletFolder(
+		return _portletFileRepository.addPortletFolder(
 			userId, repository.getRepositoryId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, folderName,
 			serviceContext);
@@ -108,7 +112,7 @@ public class UpgradeBlogsImages extends UpgradeProcess {
 					userId, groupId, "Small Image");
 
 				FileEntry processedImageFileEntry =
-					PortletFileRepositoryUtil.addPortletFileEntry(
+					_portletFileRepository.addPortletFileEntry(
 						groupId, userId, BlogsEntry.class.getName(), entryId,
 						BlogsConstants.SERVICE_NAME,
 						smallImagefolder.getFolderId(), bytes, fileName,
@@ -117,7 +121,7 @@ public class UpgradeBlogsImages extends UpgradeProcess {
 				Folder blogsImagefolder = addFolder(
 					userId, groupId, BlogsConstants.SERVICE_NAME);
 
-				PortletFileRepositoryUtil.addPortletFileEntry(
+				_portletFileRepository.addPortletFileEntry(
 					groupId, userId, null, 0, BlogsConstants.SERVICE_NAME,
 					blogsImagefolder.getFolderId(), bytes, fileName, mimeType,
 					true);
@@ -137,5 +141,6 @@ public class UpgradeBlogsImages extends UpgradeProcess {
 	}
 
 	private final ImageLocalService _imageLocalService;
+	private final PortletFileRepository _portletFileRepository;
 
 }

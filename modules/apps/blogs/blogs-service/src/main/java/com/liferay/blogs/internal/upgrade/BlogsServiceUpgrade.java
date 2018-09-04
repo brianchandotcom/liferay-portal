@@ -45,19 +45,10 @@ public class BlogsServiceUpgrade implements UpgradeStepRegistrator {
 			"1.1.1", "1.1.2", new UpgradeBlogsImages(_imageLocalService));
 	}
 
-	@Reference(unbind = "-")
-	protected void setFriendlyURLEntryLocalService(
-		FriendlyURLEntryLocalService friendlyURLEntryLocalService) {
-
-		_friendlyURLEntryLocalService = friendlyURLEntryLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setImageLocalService(ImageLocalService imageLocalService) {
-		_imageLocalService = imageLocalService;
-	}
-
+	@Reference
 	private FriendlyURLEntryLocalService _friendlyURLEntryLocalService;
+
+	@Reference
 	private ImageLocalService _imageLocalService;
 
 }

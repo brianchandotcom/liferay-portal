@@ -15,8 +15,8 @@
 package com.liferay.sharing.web.internal.notifications;
 
 import com.liferay.asset.kernel.model.AssetRenderer;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.User;
@@ -60,31 +60,42 @@ public class SharingUserNotificationHandler
 			ServiceContext serviceContext)
 		throws Exception {
 
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
-			userNotificationEvent.getPayload());
+		SharingEntry sharingEntry = _getSharingEntry(userNotificationEvent);
 
-		long sharingEntryId = jsonObject.getLong("classPK");
-
-		SharingEntry sharingEntry = _sharingEntryLocalService.fetchSharingEntry(
-			sharingEntryId);
-
-		ResourceBundle resourceBundle =
-			_resourceBundleLoader.loadResourceBundle(
-				serviceContext.getLocale());
-
-		return ResourceBundleUtil.getString(
-			resourceBundle, "x-has-shared-x-with-you-for-x",
-			_getUserNameLink(sharingEntry.getFromUserId(), serviceContext),
-			_getSharedObjectLink(sharingEntry, serviceContext),
-			_getActionDescriptiveName(
-				sharingEntry, serviceContext.getLocale()));
-	}
-
-	private String _getActionDescriptiveName(
-		SharingEntry sharingEntry, Locale locale) {
+		Locale locale = serviceContext.getLocale();
 
 		ResourceBundle resourceBundle =
 			_resourceBundleLoader.loadResourceBundle(locale);
+
+		return ResourceBundleUtil.getString(
+			resourceBundle, "x-has-shared-x-with-you-for-x",
+			_getUserName(sharingEntry.getFromUserId(), resourceBundle),
+			_getSharedObjectName(sharingEntry, locale),
+			_getActionName(sharingEntry, resourceBundle));
+	}
+
+	@Override
+	protected String getLink(
+			UserNotificationEvent userNotificationEvent,
+			ServiceContext serviceContext)
+		throws Exception {
+
+		SharingEntry sharingEntry = _getSharingEntry(userNotificationEvent);
+
+		AssetRenderer assetRenderer = getAssetRenderer(
+			sharingEntry.getClassName(), sharingEntry.getClassPK());
+
+		if (assetRenderer != null) {
+			return assetRenderer.getURLViewInContext(
+				serviceContext.getLiferayPortletRequest(),
+				serviceContext.getLiferayPortletResponse(), null);
+		}
+
+		return super.getLink(userNotificationEvent, serviceContext);
+	}
+
+	private String _getActionName(
+		SharingEntry sharingEntry, ResourceBundle resourceBundle) {
 
 		if (_hasAction(sharingEntry, SharingEntryActionKey.UPDATE)) {
 			return ResourceBundleUtil.getString(resourceBundle, "editing");
@@ -102,49 +113,44 @@ public class SharingUserNotificationHandler
 		}
 	}
 
-	private String _getSharedObjectLink(
-			SharingEntry sharingEntry, ServiceContext serviceContext)
-		throws Exception {
+	private String _getSharedObjectName(
+		SharingEntry sharingEntry, Locale locale) {
 
 		AssetRenderer assetRenderer = getAssetRenderer(
 			sharingEntry.getClassName(), sharingEntry.getClassPK());
 
 		if (assetRenderer != null) {
-			return StringBundler.concat(
-				"<a href=\"",
-				assetRenderer.getURLViewInContext(
-					serviceContext.getLiferayPortletRequest(),
-					serviceContext.getLiferayPortletResponse(), null),
-				"\">", assetRenderer.getTitle(serviceContext.getLocale()),
-				"</a>");
+			return assetRenderer.getTitle(locale);
 		}
 		else {
 			ResourceBundle resourceBundle =
-				_resourceBundleLoader.loadResourceBundle(
-					serviceContext.getLocale());
+				_resourceBundleLoader.loadResourceBundle(locale);
 
 			return ResourceBundleUtil.getString(resourceBundle, "something");
 		}
 	}
 
-	private String _getUserNameLink(
-		long userId, ServiceContext serviceContext) {
+	private SharingEntry _getSharingEntry(
+			UserNotificationEvent userNotificationEvent)
+		throws JSONException {
 
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+			userNotificationEvent.getPayload());
+
+		long sharingEntryId = jsonObject.getLong("classPK");
+
+		return _sharingEntryLocalService.fetchSharingEntry(sharingEntryId);
+	}
+
+	private String _getUserName(long userId, ResourceBundle resourceBundle) {
 		try {
 			if (userId <= 0) {
-				return StringPool.BLANK;
+				return ResourceBundleUtil.getString(resourceBundle, "someone");
 			}
 
 			User user = _userLocalService.getUserById(userId);
 
-			String userName = user.getFullName();
-
-			String userDisplayURL = user.getDisplayURL(
-				serviceContext.getThemeDisplay());
-
-			return StringBundler.concat(
-				"<a href=\"", userDisplayURL, "\">", HtmlUtil.escape(userName),
-				"</a>");
+			return HtmlUtil.escape(user.getFullName());
 		}
 		catch (Exception e) {
 			return StringPool.BLANK;

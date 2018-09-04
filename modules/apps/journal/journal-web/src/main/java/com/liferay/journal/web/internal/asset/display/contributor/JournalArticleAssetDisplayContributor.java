@@ -120,6 +120,7 @@ public class JournalArticleAssetDisplayContributor
 		return StringPool.BLANK;
 	}
 
+	@Override
 	protected ResourceBundleLoader getResourceBundleLoader() {
 		return ResourceBundleLoaderUtil.
 			getResourceBundleLoaderByBundleSymbolicName(

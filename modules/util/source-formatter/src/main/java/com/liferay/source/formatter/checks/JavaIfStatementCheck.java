@@ -294,6 +294,11 @@ public class JavaIfStatementCheck extends IfStatementCheck {
 						insideMethodCallExpectedWhitespace =
 							expectedLeadingWhitespace;
 					}
+
+					if (trimmedLine.startsWith(")")) {
+						expectedLeadingWhitespace =
+							previousLineLeadingWhitespace - 4;
+					}
 				}
 
 				if (leadingWhitespace != expectedLeadingWhitespace) {

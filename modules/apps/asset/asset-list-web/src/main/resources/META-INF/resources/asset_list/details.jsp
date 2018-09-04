@@ -19,12 +19,6 @@
 <%
 String redirect = ParamUtil.getString(request, "redirect");
 
-if (Validator.isNull(redirect)) {
-	PortletURL portletURL = renderResponse.createRenderURL();
-
-	redirect = portletURL.toString();
-}
-
 AssetListEntry assetListEntry = assetListDisplayContext.getAssetListEntry();
 
 portletDisplay.setShowBackIcon(true);
@@ -40,7 +34,6 @@ renderResponse.setTitle(assetListDisplayContext.getAssetListEntryTitle());
 	method="post"
 	name="fm"
 >
-	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 	<aui:input name="assetListEntryId" type="hidden" value="<%= assetListDisplayContext.getAssetListEntryId() %>" />
 	<aui:input name="type" type="hidden" value="<%= assetListDisplayContext.getAssetListEntryType() %>" />
 

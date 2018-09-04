@@ -235,6 +235,16 @@ class Builder extends Component {
 		this.emit('duplicateField', indexes);
 	}
 
+	_handlePageDeleted({pages, emptyPage}) {
+		const {sidebar} = this.refs;
+
+		if (emptyPage) {
+			sidebar.open();
+		}
+
+		this.emit('pagesUpdated', pages);
+	}
+
 	/**
 	 * Continues the propagation of event.
 	 * @param {Array} pages
@@ -276,6 +286,7 @@ class Builder extends Component {
 			fieldClicked: this._handleFieldClicked.bind(this),
 			fieldMoved: this._handleFieldMoved.bind(this),
 			pageAdded: this._handlePageAdded.bind(this),
+			pageDeleted: this._handlePageDeleted.bind(this),
 			pagesUpdated: this._handlePagesUpdated.bind(this)
 		};
 

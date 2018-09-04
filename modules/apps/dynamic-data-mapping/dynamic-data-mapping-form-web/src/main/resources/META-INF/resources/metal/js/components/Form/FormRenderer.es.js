@@ -229,7 +229,22 @@ class FormRenderer extends Component {
 			this.pageSettingsItem = this._changeRemoveLabel(newPages);
 		}
 
-		this.emit('pagesUpdated', newPages);
+		const pageId = this.activePage;
+
+		const emptyPage = FormSupport.checkEmptyPage([newPages[pageId]]);
+
+		this.emit(
+			'activePageUpdated',
+			this.activePage
+		);
+
+		this.emit(
+			'pageDeleted',
+			{
+				emptyPage,
+				pages: newPages
+			}
+		);
 	}
 
 	_handleChangePage({delegateTarget: {dataset}}) {

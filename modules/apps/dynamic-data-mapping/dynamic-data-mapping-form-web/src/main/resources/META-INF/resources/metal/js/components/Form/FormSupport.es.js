@@ -36,6 +36,19 @@ const addFieldToColumn = (pages, pageIndex, rowIndex, columnIndex, field) => {
 	return pages;
 };
 
+const checkEmptyPage = pages => {
+	let empty = true;
+	const visitor = new PagesVisitor(pages);
+
+	visitor.mapFields(
+		field => {
+			empty = false;
+		}
+	);
+
+	return empty;
+};
+
 const setColumnFields = (pages, pageIndex, rowIndex, columnIndex, fields = []) => {
 	if (!fields.length) {
 		throw new Error(
@@ -146,6 +159,7 @@ const updateField = (
 export default {
 	addFieldToColumn,
 	addRow,
+	checkEmptyPage,
 	generateFieldName,
 	getColumn,
 	getField,

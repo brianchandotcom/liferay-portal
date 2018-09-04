@@ -441,7 +441,9 @@ AUI.add(
 													var cancelButton = instance.one('#cancelButton');
 
 													if (cancelButton) {
-														cancelButton.attr('href', message.redirect);
+														if (message.redirect != '') {
+															cancelButton.attr('href', message.redirect);
+														}
 													}
 
 													if (saveStatus) {

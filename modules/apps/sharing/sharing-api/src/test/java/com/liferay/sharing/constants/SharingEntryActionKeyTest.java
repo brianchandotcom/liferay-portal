@@ -101,7 +101,7 @@ public class SharingEntryActionKeyTest {
 		Assert.assertEquals(
 			addDiscussionSharingEntryActionKey,
 			SharingEntryActionKey.parseFromBitwiseValue(
-				addDiscussionSharingEntryActionKey.getBitwiseVaue()));
+				addDiscussionSharingEntryActionKey.getBitwiseValue()));
 	}
 
 	@Test
@@ -114,7 +114,7 @@ public class SharingEntryActionKeyTest {
 		Assert.assertEquals(
 			updateSharingEntryActionKey,
 			SharingEntryActionKey.parseFromBitwiseValue(
-				updateSharingEntryActionKey.getBitwiseVaue()));
+				updateSharingEntryActionKey.getBitwiseValue()));
 	}
 
 	@Test
@@ -127,7 +127,7 @@ public class SharingEntryActionKeyTest {
 		Assert.assertEquals(
 			viewSharingEntryActionKey,
 			SharingEntryActionKey.parseFromBitwiseValue(
-				viewSharingEntryActionKey.getBitwiseVaue()));
+				viewSharingEntryActionKey.getBitwiseValue()));
 	}
 
 	@Test(expected = IllegalArgumentException.class)

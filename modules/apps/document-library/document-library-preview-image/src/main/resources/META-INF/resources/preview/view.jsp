@@ -46,6 +46,6 @@ String randomNamespace = PortalUtil.generateRandomKey(request, "portlet_document
 	var currentImage = A.one('.lfr-preview-file-image-current');
 
 	if (currentImage && (currentImage.get('complete') || currentImage.get('naturalWidth'))) {
-	currentImage.setStyle('background-image', 'none');
+		currentImage.setStyle('background-image', 'none');
 	}
 </aui:script>

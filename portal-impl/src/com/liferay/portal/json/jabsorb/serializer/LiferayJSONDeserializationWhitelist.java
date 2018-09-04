@@ -20,9 +20,12 @@ import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.util.PropsUtil;
 
-import java.util.Collections;
-import java.util.Set;
-import java.util.concurrent.CopyOnWriteArraySet;
+import java.io.Closeable;
+
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * @author Tomas Polesovsky
@@ -30,14 +33,16 @@ import java.util.concurrent.CopyOnWriteArraySet;
 public class LiferayJSONDeserializationWhitelist {
 
 	public LiferayJSONDeserializationWhitelist() {
-		Collections.addAll(
-			_registeredClassNames,
-			PropsUtil.getArray(
-				PropsKeys.JSON_DESERIALIZATION_WHITELIST_CLASS_NAMES));
+		for (String className :
+				PropsUtil.getArray(
+					PropsKeys.JSON_DESERIALIZATION_WHITELIST_CLASS_NAMES)) {
+
+			_registeredClassNames.put(className, new AtomicInteger(1));
+		}
 	}
 
 	public boolean isWhitelisted(String className) {
-		if (_registeredClassNames.contains(className)) {
+		if (_registeredClassNames.containsKey(className)) {
 			return true;
 		}
 
@@ -51,14 +56,51 @@ public class LiferayJSONDeserializationWhitelist {
 		return false;
 	}
 
-	public void register(String... classeNames) {
-		Collections.addAll(_registeredClassNames, classeNames);
+	public Closeable register(String... classeNames) {
+		for (String className : classeNames) {
+			_registeredClassNames.compute(
+				className,
+				(keyClassName, counter) -> {
+					if (counter == null) {
+						return new AtomicInteger(1);
+					}
+
+					counter.incrementAndGet();
+
+					return counter;
+				});
+		};
+
+		return new Closeable() {
+
+			@Override
+			public void close() {
+				if (!_closed.compareAndSet(false, true)) {
+					return;
+				}
+
+				for (String className : classeNames) {
+					_registeredClassNames.compute(
+						className,
+						(keyClassName, counter) -> {
+							if (counter.decrementAndGet() == 0) {
+								return null;
+							}
+
+							return counter;
+						});
+				}
+			}
+
+			private final AtomicBoolean _closed = new AtomicBoolean();
+
+		};
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		LiferayJSONDeserializationWhitelist.class);
 
-	private final Set<String> _registeredClassNames =
-		new CopyOnWriteArraySet<>();
+	private final Map<String, AtomicInteger> _registeredClassNames =
+		new ConcurrentHashMap<>();
 
 }

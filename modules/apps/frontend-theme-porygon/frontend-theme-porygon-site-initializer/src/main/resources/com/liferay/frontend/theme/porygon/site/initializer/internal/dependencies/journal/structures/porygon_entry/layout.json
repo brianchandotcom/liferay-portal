@@ -6,7 +6,9 @@
 				{
 					"columns": [
 						{
-							"fieldNames": ["content"],
+							"fieldNames": [
+								"content"
+							],
 							"size": 12
 						}
 					]

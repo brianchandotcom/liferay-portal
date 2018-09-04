@@ -45,7 +45,7 @@ List<AssetRendererFactory<?>> classTypesAssetRendererFactories = new ArrayList()
 		</h3>
 
 		<liferay-frontend:fieldset-group>
-			<aui:fieldset cssClass="source-container" label="asset-entry-type">
+			<aui:fieldset cssClass="source-container" label="asset-entry-type" markupView="lexicon">
 
 				<%
 				Set<Long> availableClassNameIdsSet = SetUtil.fromArray(editAssetListDisplayContext.getAvailableClassNameIds());

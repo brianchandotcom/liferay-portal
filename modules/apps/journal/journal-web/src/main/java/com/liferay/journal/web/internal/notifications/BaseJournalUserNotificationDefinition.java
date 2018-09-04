@@ -38,7 +38,7 @@ public abstract class BaseJournalUserNotificationDefinition
 	@Override
 	public String getDescription(Locale locale) {
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-			locale, "com.liferay.journal.web");
+			locale, "com.liferay.journal.lang");
 
 		String description = ResourceBundleUtil.getString(
 			resourceBundle, _description);

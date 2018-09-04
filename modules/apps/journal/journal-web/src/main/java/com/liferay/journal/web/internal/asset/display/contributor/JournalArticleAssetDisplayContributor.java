@@ -123,7 +123,7 @@ public class JournalArticleAssetDisplayContributor
 	protected ResourceBundleLoader getResourceBundleLoader() {
 		return ResourceBundleLoaderUtil.
 			getResourceBundleLoaderByBundleSymbolicName(
-				"com.liferay.journal.web");
+				"com.liferay.journal.lang");
 	}
 
 	@Override

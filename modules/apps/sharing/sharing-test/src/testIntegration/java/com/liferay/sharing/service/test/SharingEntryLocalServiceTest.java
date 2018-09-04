@@ -17,6 +17,10 @@ package com.liferay.sharing.service.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.messaging.Destination;
+import com.liferay.portal.kernel.messaging.DestinationNames;
+import com.liferay.portal.kernel.messaging.MessageBus;
+import com.liferay.portal.kernel.messaging.MessageBusUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserNotificationDeliveryConstants;
@@ -378,6 +382,45 @@ public class SharingEntryLocalServiceTest {
 			_fromUser.getUserId(), _toUser.getUserId(), classNameId,
 			RandomTestUtil.randomLong(), _group.getGroupId(), true,
 			sharingEntryActionKeys, null, serviceContext);
+	}
+
+	@Test
+	public void testDeleteExpiredEntries() throws Exception {
+		try (DisableSchedulerDestination disableSchedulerDestination =
+				new DisableSchedulerDestination()) {
+
+			ServiceContext serviceContext =
+				ServiceContextTestUtil.getServiceContext(_group.getGroupId());
+
+			_sharingEntryLocalService.addSharingEntry(
+				_fromUser.getUserId(), _toUser.getUserId(),
+				RandomTestUtil.randomLong(), RandomTestUtil.randomLong(),
+				_group.getGroupId(), true,
+				Arrays.asList(SharingEntryActionKey.VIEW), null,
+				serviceContext);
+
+			SharingEntry sharingEntry =
+				_sharingEntryLocalService.addSharingEntry(
+					_fromUser.getUserId(), _toUser.getUserId(),
+					RandomTestUtil.randomLong(), RandomTestUtil.randomLong(),
+					_group.getGroupId(), true,
+					Arrays.asList(SharingEntryActionKey.VIEW), null,
+					serviceContext);
+
+			_expireSharingEntry(sharingEntry);
+
+			Assert.assertEquals(
+				2,
+				_sharingEntryLocalService.countFromUserSharingEntries(
+					_fromUser.getUserId()));
+
+			_sharingEntryLocalService.deleteExpiredEntries();
+
+			Assert.assertEquals(
+				1,
+				_sharingEntryLocalService.countFromUserSharingEntries(
+					_fromUser.getUserId()));
+		}
 	}
 
 	@Test
@@ -1195,6 +1238,16 @@ public class SharingEntryLocalServiceTest {
 			sharingEntry.getSharingEntryId(), sharingEntryActionKeys);
 	}
 
+	private void _expireSharingEntry(SharingEntry sharingEntry) {
+		Instant now = Instant.now();
+
+		Date expirationDate = Date.from(now.minus(1, ChronoUnit.DAYS));
+
+		sharingEntry.setExpirationDate(expirationDate);
+
+		_sharingEntryLocalService.updateSharingEntry(sharingEntry);
+	}
+
 	@Inject
 	private ClassNameLocalService _classNameLocalService;
 
@@ -1219,5 +1272,24 @@ public class SharingEntryLocalServiceTest {
 	@Inject
 	private UserNotificationEventLocalService
 		_userNotificationEventLocalService;
+
+	private static final class DisableSchedulerDestination
+		implements AutoCloseable {
+
+		public DisableSchedulerDestination() {
+			MessageBus messageBus = MessageBusUtil.getMessageBus();
+
+			_destination = messageBus.removeDestination(
+				DestinationNames.SCHEDULER_DISPATCH, false);
+		}
+
+		@Override
+		public void close() {
+			MessageBusUtil.addDestination(_destination);
+		}
+
+		private final Destination _destination;
+
+	}
 
 }

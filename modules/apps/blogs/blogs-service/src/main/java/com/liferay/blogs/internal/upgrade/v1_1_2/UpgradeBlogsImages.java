@@ -69,10 +69,6 @@ public class UpgradeBlogsImages extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		updateEntries();
-	}
-
-	protected void updateEntries() throws Exception {
 		try (PreparedStatement ps1 = connection.prepareStatement(
 				"select entryId, groupId, smallImageId, userId from " +
 					"BlogsEntry where smallImage = TRUE");

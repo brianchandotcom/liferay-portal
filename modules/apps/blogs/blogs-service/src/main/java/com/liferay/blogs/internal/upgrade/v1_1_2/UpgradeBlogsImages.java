@@ -96,13 +96,9 @@ public class UpgradeBlogsImages extends UpgradeProcess {
 
 				byte[] bytes = smallImage.getTextObj();
 
-				StringBundler sb = new StringBundler(3);
-
-				sb.append(smallImage.getImageId());
-				sb.append(StringPool.PERIOD);
-				sb.append(smallImage.getType());
-
-				String fileName = sb.toString();
+				String fileName = StringBundler.concat(
+					smallImage.getImageId(), StringPool.PERIOD,
+					smallImage.getType());
 
 				File tempFile = FileUtil.createTempFile(bytes);
 
@@ -126,11 +122,7 @@ public class UpgradeBlogsImages extends UpgradeProcess {
 					blogsImagefolder.getFolderId(), bytes, fileName, mimeType,
 					true);
 
-				long smallImageFileEntryId =
-					processedImageFileEntry.getFileEntryId();
-
-				ps2.setLong(1, smallImageFileEntryId);
-
+				ps2.setLong(1, processedImageFileEntry.getFileEntryId());
 				ps2.setLong(2, entryId);
 
 				ps2.addBatch();

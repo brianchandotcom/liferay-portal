@@ -47,6 +47,7 @@ public class MemberExpressionImpl implements MemberExpression {
 		return _resourcePath;
 	}
 
+	@Override
 	public String toString() {
 		return _resourcePath.toString();
 	}

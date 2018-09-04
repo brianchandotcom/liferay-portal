@@ -58,6 +58,7 @@ public class BinaryExpressionImpl implements BinaryExpression {
 		return _rightOperationExpression;
 	}
 
+	@Override
 	public String toString() {
 		return StringBundler.concat(
 			"{", _leftOperationExpression, " ", _operation.name(), " ",

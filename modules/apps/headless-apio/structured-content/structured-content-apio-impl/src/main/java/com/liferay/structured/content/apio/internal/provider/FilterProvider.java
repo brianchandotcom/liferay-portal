@@ -16,8 +16,8 @@ package com.liferay.structured.content.apio.internal.provider;
 
 import com.liferay.apio.architect.provider.Provider;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.structured.content.apio.architect.filter.ExpressionParser;
 import com.liferay.structured.content.apio.architect.filter.Filter;
-import com.liferay.structured.content.apio.architect.filter.FilterParser;
 import com.liferay.structured.content.apio.architect.filter.expression.ExpressionVisitException;
 import com.liferay.structured.content.apio.internal.architect.filter.InvalidFilterException;
 
@@ -41,7 +41,7 @@ public class FilterProvider implements Provider<Filter> {
 		}
 
 		try {
-			return new Filter(_filterParser.parse(filterString));
+			return new Filter(_expressionParser.parse(filterString));
 		}
 		catch (ExpressionVisitException eve) {
 			throw new InvalidFilterException(eve.getMessage(), eve);
@@ -49,6 +49,6 @@ public class FilterProvider implements Provider<Filter> {
 	}
 
 	@Reference
-	private FilterParser _filterParser;
+	private ExpressionParser _expressionParser;
 
 }

@@ -28,72 +28,74 @@ import org.junit.Test;
 /**
  * @author David Arques
  */
-public class FilterParserTest {
+public class ExpressionParserTest {
 
 	@Before
 	public void setUp() {
-		_filterParser = new FilterParserImpl();
+		_expressionParser = new ExpressionParserImpl();
 
-		_filterParser.activate();
+		_expressionParser.activate();
 	}
 
 	@Test
 	public void testParseNonexistingField() {
-		String filterString = "(nonExistingField eq 'value')";
+		String expressionString = "(nonExistingField eq 'value')";
 
 		AbstractThrowableAssert exception = Assertions.assertThatThrownBy(
-			() -> _filterParser.parse(filterString)
+			() -> _expressionParser.parse(expressionString)
 		).isInstanceOf(
 			InvalidFilterException.class
 		);
 
 		exception.hasMessageStartingWith(
 			String.format(
-				"Invalid query computed from filter '%s': 'Unknown property.'",
-				filterString));
+				"Invalid query computed from expression '%s': 'Unknown " +
+					"property.'",
+				expressionString));
 	}
 
 	@Test
 	public void testParseWithEmptyFilter() {
 		AbstractThrowableAssert exception = Assertions.assertThatThrownBy(
-			() -> _filterParser.parse("")
+			() -> _expressionParser.parse("")
 		).isInstanceOf(
 			InvalidFilterException.class
 		);
 
-		exception.hasMessage("Filter is empty");
+		exception.hasMessage("Expression is empty");
 	}
 
 	@Test
 	public void testParseWithNoSingleQuotes() {
-		String filter = "(title eq title1)";
+		String expressionString = "(title eq title1)";
 
 		AbstractThrowableAssert exception = Assertions.assertThatThrownBy(
-			() -> _filterParser.parse(filter)
+			() -> _expressionParser.parse(expressionString)
 		).isInstanceOf(
 			InvalidFilterException.class
 		);
 
 		exception.hasMessageStartingWith(
 			String.format(
-				"Invalid query computed from filter '%s': 'Unknown property.'",
-				filter));
+				"Invalid query computed from expression '%s': 'Unknown " +
+					"property.'",
+				expressionString));
 	}
 
 	@Test
-	public void testParseWithNullFilter() {
+	public void testParseWithNullExpression() {
 		AbstractThrowableAssert exception = Assertions.assertThatThrownBy(
-			() -> _filterParser.parse(null)
+			() -> _expressionParser.parse(null)
 		).isInstanceOf(
 			InvalidFilterException.class
 		);
 
-		exception.hasMessage("Filter is empty");
+		exception.hasMessage("Expression is empty");
 	}
 
 	@Test
 	public void testParseWithSingleQuotes() throws ExpressionVisitException {
-		Expression expression = _filterParser.parse("title eq 'title1'");
+		Expression expression = _expressionParser.parse("title eq 'title1'");
 
 		Assert.assertNotNull(expression);
 
@@ -113,7 +115,7 @@ public class FilterParserTest {
 	public void testParseWithSingleQuotesAndParentheses()
 		throws ExpressionVisitException {
 
-		Expression expression = _filterParser.parse("(title eq 'title1')");
+		Expression expression = _expressionParser.parse("(title eq 'title1')");
 
 		Assert.assertNotNull(expression);
 
@@ -129,6 +131,6 @@ public class FilterParserTest {
 			binaryExpression.getRightOperationExpression().toString());
 	}
 
-	private FilterParserImpl _filterParser;
+	private ExpressionParserImpl _expressionParser;
 
 }

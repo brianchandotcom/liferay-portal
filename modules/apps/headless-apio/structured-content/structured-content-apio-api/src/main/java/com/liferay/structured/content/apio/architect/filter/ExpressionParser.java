@@ -18,22 +18,22 @@ import com.liferay.structured.content.apio.architect.filter.expression.Expressio
 import com.liferay.structured.content.apio.architect.filter.expression.ExpressionVisitException;
 
 /**
- * <code>FilterParser</code> transforms a String containing an oData filter in a
- * manageable expression {@link Expression}.
+ * <code>ExpressionParser</code> transforms a String containing an oData filter
+ * in a manageable expression {@link Expression}.
  *
  * @author David Arques
  * @review
  */
-public interface FilterParser {
+public interface ExpressionParser {
 
 	/**
 	 * Returns a {@link Expression} obtained from a String.
 	 *
-	 * @param  filterString - the filterString
+	 * @param  expressionString - the expressionString
 	 * @return The OData Expression
 	 * @review
 	 */
-	public Expression parse(String filterString)
+	public Expression parse(String expressionString)
 		throws ExpressionVisitException;
 
 }

@@ -14,7 +14,7 @@
 
 package com.liferay.structured.content.apio.internal.architect.filter.expression;
 
-import com.liferay.structured.content.apio.architect.filter.expression.BinaryExpression.Operation;
+import com.liferay.structured.content.apio.architect.filter.expression.BinaryExpression;
 import com.liferay.structured.content.apio.architect.filter.expression.Expression;
 import com.liferay.structured.content.apio.architect.filter.expression.LiteralExpression;
 
@@ -51,7 +51,8 @@ public class ODataExpressionToExpressionVisitor
 		Expression right) {
 
 		if (binaryOperatorKind == BinaryOperatorKind.EQ) {
-			return new BinaryExpressionImpl(left, Operation.EQ, right);
+			return new BinaryExpressionImpl(
+				left, BinaryExpression.Operation.EQ, right);
 		}
 
 		throw new UnsupportedOperationException(

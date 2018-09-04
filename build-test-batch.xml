@@ -2437,40 +2437,23 @@ log.sanitizer.enabled=false</echo>
 	<macrodef name="setup-testable-tomcat-gc">
 		<sequential>
 			<if>
-				<resourcecontains
-					resource="${app.server.tomcat.dir}/bin/setenv.bat"
-					substring="${test.batch.app.server.tomcat.setenv.gc.old}"
-				/>
+				<os family="windows" />
 				<then>
-					<replace
-						file="${app.server.tomcat.dir}/bin/setenv.bat"
-						token="${test.batch.app.server.tomcat.setenv.gc.old}"
-						value="${test.batch.app.server.tomcat.setenv.gc.new}"
-					/>
+					<var name="set.env.file.name" value="${app.server.tomcat.dir}/bin/setenv.bat" />
 				</then>
 				<else>
-					<if>
-						<not>
-							<resourcecontains
-								resource="${app.server.tomcat.dir}/bin/setenv.bat"
-								substring="${test.batch.app.server.tomcat.setenv.gc.new}"
-							/>
-						</not>
-						<then>
-							<fail message="Unable to setup Tomcat GC properties for ${app.server.tomcat.dir}/bin/setenv.bat." />
-						</then>
-					</if>
+					<var name="set.env.file.name" value="${app.server.tomcat.dir}/bin/setenv.sh" />
 				</else>
 			</if>
 
 			<if>
 				<resourcecontains
-					resource="${app.server.tomcat.dir}/bin/setenv.sh"
+					resource="${set.env.file.name}"
 					substring="${test.batch.app.server.tomcat.setenv.gc.old}"
 				/>
 				<then>
 					<replace
-						file="${app.server.tomcat.dir}/bin/setenv.sh"
+						file="${set.env.file.name}"
 						token="${test.batch.app.server.tomcat.setenv.gc.old}"
 						value="${test.batch.app.server.tomcat.setenv.gc.new}"
 					/>
@@ -2479,12 +2462,12 @@ log.sanitizer.enabled=false</echo>
 					<if>
 						<not>
 							<resourcecontains
-								resource="${app.server.tomcat.dir}/bin/setenv.sh"
+								resource="${set.env.file.name}"
 								substring="${test.batch.app.server.tomcat.setenv.gc.new}"
 							/>
 						</not>
 						<then>
-							<fail message="Unable to setup Tomcat GC properties for ${app.server.tomcat.dir}/bin/setenv.sh." />
+							<fail message="Unable to setup Tomcat GC properties for ${set.env.file.name}" />
 						</then>
 					</if>
 				</else>

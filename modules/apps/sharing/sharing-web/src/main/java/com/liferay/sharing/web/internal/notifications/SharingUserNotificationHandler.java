@@ -161,9 +161,9 @@ public class SharingUserNotificationHandler
 		SharingEntry sharingEntry,
 		SharingEntryActionKey sharingEntryActionKey) {
 
-		long bitwiseVaue = sharingEntryActionKey.getBitwiseVaue();
+		long bitwiseValue = sharingEntryActionKey.getBitwiseValue();
 
-		if ((bitwiseVaue & sharingEntry.getActionIds()) != 0) {
+		if ((bitwiseValue & sharingEntry.getActionIds()) != 0) {
 			return true;
 		}
 

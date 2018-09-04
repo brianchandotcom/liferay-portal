@@ -188,7 +188,7 @@ exports[`FormRenderer PagesSettings should add a new page on the layout render 1
       <button class="btn dropdown-item btn-sm btn-link" aria-label="add-new-page" type="button">add-new-page</button>
     </li>
     <li>
-      <button class="btn dropdown-item btn-sm btn-link" aria-label="delete-current-page" type="button">delete-current-page</button>
+      <button class="btn dropdown-item btn-sm btn-link" aria-label="reset-page" type="button">reset-page</button>
     </li>
   </ul>
 </div>
@@ -399,7 +399,7 @@ exports[`FormRenderer PagesSettings should delete the current page on layout ren
       <button class="btn dropdown-item btn-sm btn-link" aria-label="add-new-page" type="button">add-new-page</button>
     </li>
     <li>
-      <button class="btn dropdown-item btn-sm btn-link" aria-label="reset-page" type="button">reset-page</button>
+      <button class="btn dropdown-item btn-sm btn-link" aria-label="delete-current-page" type="button">delete-current-page</button>
     </li>
   </ul>
 </div>
@@ -2882,7 +2882,7 @@ exports[`FormRenderer should render default markup 1`] = `
       <button class="btn dropdown-item btn-sm btn-link" aria-label="add-new-page" type="button">add-new-page</button>
     </li>
     <li>
-      <button class="btn dropdown-item btn-sm btn-link" aria-label="reset-page" type="button">reset-page</button>
+      <button class="btn dropdown-item btn-sm btn-link" aria-label="delete-current-page" type="button">delete-current-page</button>
     </li>
   </ul>
 </div>

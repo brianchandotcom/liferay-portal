@@ -72,7 +72,13 @@ public class ResourceRequestImpl
 
 	@Override
 	public DispatcherType getDispatcherType() {
-		throw new UnsupportedOperationException();
+		if ((_portletAsyncContextImpl != null) &&
+			_portletAsyncContextImpl.isCalledDispatch()) {
+
+			return DispatcherType.ASYNC;
+		}
+
+		return DispatcherType.REQUEST;
 	}
 
 	@Override

@@ -34,6 +34,16 @@ List<AssetRendererFactory<?>> classTypesAssetRendererFactories = new ArrayList()
 	<aui:input name="type" type="hidden" value="<%= assetListDisplayContext.getAssetListEntryType() %>" />
 
 	<liferay-frontend:edit-form-body>
+		<h3 class="sheet-subtitle">
+			<span class="autofit-padded-no-gutters autofit-row">
+				<span class="autofit-col autofit-col-expand">
+					<span class="heading-text">
+						<liferay-ui:message key="source" />
+					</span>
+				</span>
+			</span>
+		</h3>
+
 		<liferay-frontend:fieldset-group>
 			<aui:fieldset cssClass="source-container" label="asset-entry-type">
 

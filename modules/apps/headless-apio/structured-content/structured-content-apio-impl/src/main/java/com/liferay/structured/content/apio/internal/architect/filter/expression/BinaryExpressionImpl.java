@@ -26,24 +26,26 @@ import com.liferay.structured.content.apio.architect.filter.expression.Expressio
 public class BinaryExpressionImpl implements BinaryExpression {
 
 	public BinaryExpressionImpl(
-		Expression left, Operation operation, Expression right) {
+		Expression leftOperationExpression, Operation operation,
+		Expression rightOperationExpression) {
 
-		_left = left;
+		_leftOperationExpression = leftOperationExpression;
 		_operation = operation;
-		_right = right;
+		_rightOperationExpression = rightOperationExpression;
 	}
 
 	@Override
-	public <T> T accept(ExpressionVisitor<T> visitor)
+	public <T> T accept(ExpressionVisitor<T> expressionVisitor)
 		throws ExpressionVisitException {
 
-		return visitor.visitBinaryExpressionOperation(
-			_operation, _left.accept(visitor), _right.accept(visitor));
+		return expressionVisitor.visitBinaryExpressionOperation(
+			_operation, _leftOperationExpression.accept(expressionVisitor),
+			_rightOperationExpression.accept(expressionVisitor));
 	}
 
 	@Override
 	public Expression getLeftOperationExpression() {
-		return _left;
+		return _leftOperationExpression;
 	}
 
 	@Override
@@ -53,16 +55,17 @@ public class BinaryExpressionImpl implements BinaryExpression {
 
 	@Override
 	public Expression getRightOperationExpression() {
-		return _right;
+		return _rightOperationExpression;
 	}
 
 	public String toString() {
 		return StringBundler.concat(
-			"{", _left, " ", _operation.name(), " ", _right, '}');
+			"{", _leftOperationExpression, " ", _operation.name(), " ",
+			_rightOperationExpression, '}');
 	}
 
-	private final Expression _left;
+	private final Expression _leftOperationExpression;
 	private final Operation _operation;
-	private final Expression _right;
+	private final Expression _rightOperationExpression;
 
 }

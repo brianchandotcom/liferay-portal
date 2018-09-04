@@ -41,18 +41,20 @@ public class ODataExpressionToExpressionVisitor
 	implements ExpressionVisitor<Expression> {
 
 	@Override
-	public Expression visitAlias(String s) {
+	public Expression visitAlias(String alias) {
 		throw new UnsupportedOperationException("Unsupported visitAlias");
 	}
 
 	@Override
 	public Expression visitBinaryOperator(
-		BinaryOperatorKind binaryOperatorKind, Expression left,
-		Expression right) {
+		BinaryOperatorKind binaryOperatorKind,
+		Expression leftBinaryOperationExpression,
+		Expression rightBinaryOperationExpression) {
 
 		if (binaryOperatorKind == BinaryOperatorKind.EQ) {
 			return new BinaryExpressionImpl(
-				left, BinaryExpression.Operation.EQ, right);
+				leftBinaryOperationExpression, BinaryExpression.Operation.EQ,
+				rightBinaryOperationExpression);
 		}
 
 		throw new UnsupportedOperationException(
@@ -76,7 +78,7 @@ public class ODataExpressionToExpressionVisitor
 	}
 
 	@Override
-	public Expression visitLambdaReference(String s) {
+	public Expression visitLambdaReference(String lambdaReference) {
 		throw new UnsupportedOperationException(
 			"Unsupported visitLambdaReference");
 	}

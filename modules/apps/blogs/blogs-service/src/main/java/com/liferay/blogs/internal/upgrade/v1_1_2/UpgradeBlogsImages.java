@@ -19,6 +19,7 @@ import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.dao.orm.common.SQLTransformer;
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Image;
@@ -53,12 +54,14 @@ public class UpgradeBlogsImages extends UpgradeProcess {
 	@Override
 	protected void doUpgrade() throws Exception {
 		try (PreparedStatement ps1 = connection.prepareStatement(
-				"select entryId, groupId, smallImageId, userId from " +
-					"BlogsEntry where smallImage = TRUE");
+				SQLTransformer.transform(
+					"select entryId, groupId, smallImageId, userId from " +
+						"BlogsEntry where smallImage = [$TRUE$] and " +
+							"smallImageId != 0"));
 			PreparedStatement ps2 = AutoBatchPreparedStatementUtil.autoBatch(
 				connection.prepareStatement(
-					"update BlogsEntry set smallImageFileEntryId = ? where " +
-						"entryId = ?"));
+					"update BlogsEntry set smallImageFileEntryId = ?, " +
+						"smallImageId = 0 where entryId = ?"));
 			ResultSet rs = ps1.executeQuery()) {
 
 			while (rs.next()) {

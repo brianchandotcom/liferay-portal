@@ -64,11 +64,11 @@ public class PDFDLPreviewRendererProvider implements DLPreviewRendererProvider {
 					throw new DLPreviewGenerationInProcessException();
 				}
 
-				request.setAttribute(
-					WebKeys.DOCUMENT_LIBRARY_FILE_VERSION, fileVersion);
-
 				RequestDispatcher requestDispatcher =
 					_servletContext.getRequestDispatcher("/preview/view.jsp");
+
+				request.setAttribute(
+					WebKeys.DOCUMENT_LIBRARY_FILE_VERSION, fileVersion);
 
 				requestDispatcher.include(request, response);
 			});

@@ -372,10 +372,9 @@ public class DefaultDLViewFileVersionDisplayContext
 					"/document_library/view_file_entry_preview_error.jsp");
 
 				jspRenderer.setAttribute(
-					DLWebKeys.DOCUMENT_LIBRARY_PREVIEW_EXCEPTION, e);
-
-				jspRenderer.setAttribute(
 					WebKeys.DOCUMENT_LIBRARY_FILE_VERSION, _fileVersion);
+				jspRenderer.setAttribute(
+					DLWebKeys.DOCUMENT_LIBRARY_PREVIEW_EXCEPTION, e);
 
 				jspRenderer.render(request, response);
 			}

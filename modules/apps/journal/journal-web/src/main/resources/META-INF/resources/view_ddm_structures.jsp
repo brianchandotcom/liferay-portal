@@ -72,8 +72,7 @@ JournalDDMStructuresDisplayContext journalDDMStructuresDisplayContext = new Jour
 
 				rowURL.setParameter("mvcPath", "/edit_ddm_structure.jsp");
 				rowURL.setParameter("redirect", currentURL);
-				rowURL.setParameter("classNameId", String.valueOf(PortalUtil.getClassNameId(DDMStructure.class)));
-				rowURL.setParameter("classPK", String.valueOf(ddmStructure.getStructureId()));
+				rowURL.setParameter("ddmStructureId", String.valueOf(ddmStructure.getStructureId()));
 
 				rowHREF = rowURL.toString();
 			}

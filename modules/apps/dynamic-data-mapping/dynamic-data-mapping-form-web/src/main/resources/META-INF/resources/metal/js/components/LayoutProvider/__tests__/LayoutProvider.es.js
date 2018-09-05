@@ -1,6 +1,7 @@
 import {JSXComponent} from 'metal-jsx';
-import Context from './__mock__/mockContext.es';
+import mockPages from './__mock__/mockPages.es';
 import LayoutProvider from '../LayoutProvider.es';
+import {PagesVisitor} from '../../../util/visitors.es';
 
 let component;
 let pages = null;
@@ -16,7 +17,7 @@ class Parent extends JSXComponent {
 	render() {
 		return (
 			<LayoutProvider
-				pages={pages}
+				initialPages={[...pages]}
 				ref="provider"
 				spritemap={spritemap}
 			>
@@ -26,12 +27,12 @@ class Parent extends JSXComponent {
 	}
 }
 
-describe(
+describe.only(
 	'LayoutProvider',
 	() => {
 		beforeEach(
 			() => {
-				pages = JSON.parse(JSON.stringify(Context));
+				pages = JSON.parse(JSON.stringify(mockPages));
 
 				jest.useFakeTimers();
 			}
@@ -52,7 +53,7 @@ describe(
 			() => {
 				component = new LayoutProvider(
 					{
-						pages
+						initialPages: pages
 					}
 				);
 
@@ -69,9 +70,9 @@ describe(
 
 				expect(provider.props.children[0].props.events).toMatchObject(
 					{
-						deleteField: expect.any(Function),
 						fieldAdded: expect.any(Function),
 						fieldClicked: expect.any(Function),
+						fieldDeleted: expect.any(Function),
 						fieldEdited: expect.any(Function),
 						fieldMoved: expect.any(Function)
 					}
@@ -154,7 +155,7 @@ describe(
 										rowIndex: 1
 									},
 									target: {
-										columnIndex: false,
+										columnIndex: 0,
 										pageIndex: 0,
 										rowIndex: 0
 									}
@@ -254,7 +255,7 @@ describe(
 										rowIndex: 0
 									},
 									target: {
-										columnIndex: false,
+										columnIndex: 0,
 										pageIndex: 0,
 										rowIndex: 0
 									}
@@ -281,8 +282,8 @@ describe(
 
 								const {child, provider} = component.refs;
 								const mockEvent = {
-									fieldProperties: {
-										type: 'text'
+									fieldType: {
+										name: 'text'
 									},
 									target: {
 										columnIndex: 1,
@@ -307,11 +308,11 @@ describe(
 
 								const {child, provider} = component.refs;
 								const mockEvent = {
-									fieldProperties: {
-										type: 'text'
+									fieldType: {
+										name: 'text'
 									},
 									target: {
-										columnIndex: false,
+										columnIndex: 0,
 										pageIndex: 0,
 										rowIndex: 0
 									}
@@ -333,8 +334,8 @@ describe(
 
 								const {child, provider} = component.refs;
 								const mockEvent = {
-									fieldProperties: {
-										type: 'text'
+									fieldType: {
+										name: 'text'
 									},
 									target: {
 										columnIndex: 2,
@@ -345,23 +346,16 @@ describe(
 
 								child.emit('fieldAdded', mockEvent);
 
-								const focusedField = {
-									...mockEvent.target,
-									type: mockEvent.fieldProperties.type
-								};
-
 								jest.runAllTimers();
 
-								expect(provider.state.focusedField).toEqual(focusedField);
-								expect(child.props.focusedField).toEqual(focusedField);
-								expect(provider.state.mode).toBe('edit');
+								expect(child.props.focusedField).toEqual(provider.state.focusedField);
 							}
 						);
 					}
 				);
 
 				describe(
-					'deleteField',
+					'fieldDeleted',
 					() => {
 						it(
 							'should listen the fieldDeleted event and delete the field in the column to the pages',
@@ -375,7 +369,7 @@ describe(
 									rowIndex: 1
 								};
 
-								child.emit('deleteField', mockEvent);
+								child.emit('fieldDeleted', mockEvent);
 
 								jest.runAllTimers();
 
@@ -387,7 +381,7 @@ describe(
 				);
 
 				describe(
-					'duplicateField',
+					'fieldDuplicated',
 					() => {
 						it(
 							'should listen the duplicate field event and add this field in the pages',
@@ -401,50 +395,23 @@ describe(
 									rowIndex: 0
 								};
 
-								child.emit('duplicateField', mockEvent);
+								child.emit('fieldDuplicated', mockEvent);
 
 								jest.runAllTimers();
 
-								expect(provider.state.pages).toMatchSnapshot();
-								expect(child.props.pages).toEqual(provider.state.pages);
-							}
-						);
-					}
-				);
-
-				describe(
-					'fieldEdited',
-					() => {
-						it(
-							'should listen the fieldEdited event and edit the field to the pages',
-							() => {
-								component = new Parent();
-
-								const {child, provider} = component.refs;
-								const mockEvent = {
-									key: 'label',
-									value: 'Foo'
-								};
-								const mockFieldFocus = {
-									columnIndex: 0,
-									pageIndex: 0,
-									rowIndex: 1
-								};
-
-								child.emit('fieldClicked', mockFieldFocus);
-								child.emit('fieldEdited', mockEvent);
-
-								jest.runAllTimers();
+								const visitor = new PagesVisitor(provider.state.pages);
 
 								expect(
-									provider.state.pages[mockFieldFocus.pageIndex].rows[
-										mockFieldFocus.rowIndex
-									].columns[mockFieldFocus.columnIndex].fields[0][
-										mockEvent.key
-									]
-								).toBe(mockEvent.value);
-								expect(provider.state.pages).toMatchSnapshot();
-								expect(child.props.pages).toEqual(provider.state.pages);
+									visitor.mapFields(
+										(field, fieldIndex, columnIndex, rowIndex, pageIndex) => {
+											return {
+												...field,
+												fieldName: `name${fieldIndex}${columnIndex}${rowIndex}${pageIndex}`,
+												name: `name${fieldIndex}${columnIndex}${rowIndex}${pageIndex}`
+											};
+										}
+									)
+								).toMatchSnapshot();
 							}
 						);
 					}

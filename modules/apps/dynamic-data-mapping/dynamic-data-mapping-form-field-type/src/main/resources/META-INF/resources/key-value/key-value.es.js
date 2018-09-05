@@ -6,9 +6,11 @@ import templates from './key-value.soy';
 /**
  * KeyValue Component
  */
+
 class KeyValue extends Component {}
 
 // Register component
+
 Soy.register(KeyValue, templates, 'render');
 
 if (!window.DDMKeyValue) {

@@ -21,6 +21,7 @@ import com.liferay.dynamic.data.mapping.form.builder.settings.DDMFormBuilderSett
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesTracker;
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderer;
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderingContext;
+import com.liferay.dynamic.data.mapping.form.renderer.DDMFormTemplateContextFactory;
 import com.liferay.dynamic.data.mapping.form.values.factory.DDMFormValuesFactory;
 import com.liferay.dynamic.data.mapping.form.web.internal.configuration.activator.DDMFormWebConfigurationActivator;
 import com.liferay.dynamic.data.mapping.form.web.internal.display.context.DDMFormAdminDisplayContext;
@@ -213,9 +214,9 @@ public class DDMFormAdminPortlet extends MVCPortlet {
 					_ddmFormInstanceVersionLocalService,
 					_ddmFormFieldTypeServicesTracker,
 					_ddmFormFieldTypesSerializerTracker, _ddmFormRenderer,
-					_ddmFormValuesFactory, _ddmFormValuesMerger,
-					_ddmStructureLocalService, _ddmStructureService,
-					_jsonFactory, _npmResolver));
+					_ddmFormTemplateContextFactory, _ddmFormValuesFactory,
+					_ddmFormValuesMerger, _ddmStructureLocalService,
+					_ddmStructureService, _jsonFactory, _npmResolver));
 		}
 		else {
 			ThemeDisplay themeDisplay =
@@ -259,9 +260,9 @@ public class DDMFormAdminPortlet extends MVCPortlet {
 					_ddmFormInstanceVersionLocalService,
 					_ddmFormFieldTypeServicesTracker,
 					_ddmFormFieldTypesSerializerTracker, _ddmFormRenderer,
-					_ddmFormValuesFactory, _ddmFormValuesMerger,
-					_ddmStructureLocalService, _ddmStructureService,
-					_jsonFactory, _npmResolver));
+					_ddmFormTemplateContextFactory, _ddmFormValuesFactory,
+					_ddmFormValuesMerger, _ddmStructureLocalService,
+					_ddmStructureService, _jsonFactory, _npmResolver));
 		}
 	}
 
@@ -311,6 +312,9 @@ public class DDMFormAdminPortlet extends MVCPortlet {
 
 	@Reference
 	private DDMFormRenderer _ddmFormRenderer;
+
+	@Reference
+	private DDMFormTemplateContextFactory _ddmFormTemplateContextFactory;
 
 	@Reference
 	private DDMFormValuesFactory _ddmFormValuesFactory;

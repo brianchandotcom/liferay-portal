@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`FormSupport add a new field to column to the context 1`] = `
+exports[`FormSupport add a new field to column to the pages 1`] = `
 Array [
   Object {
     "rows": Array [
@@ -9,6 +9,7 @@ Array [
           Object {
             "fields": Array [
               Object {
+                "fieldName": "radioField",
                 "label": "Radio",
                 "type": "radio",
               },
@@ -82,7 +83,7 @@ Array [
 ]
 `;
 
-exports[`FormSupport add a new row to the context and reorder 1`] = `
+exports[`FormSupport add a new row to the pages and reorder 1`] = `
 Array [
   Object {
     "rows": Array [
@@ -103,6 +104,7 @@ Array [
           Object {
             "fields": Array [
               Object {
+                "fieldName": "radioField",
                 "label": "Radio",
                 "type": "radio",
               },
@@ -180,6 +182,7 @@ Array [
           Object {
             "fields": Array [
               Object {
+                "fieldName": "radioField",
                 "label": "Radio",
                 "type": "radio",
               },
@@ -253,7 +256,7 @@ Array [
 ]
 `;
 
-exports[`FormSupport should get a column from context 1`] = `
+exports[`FormSupport should get a column from pages 1`] = `
 Object {
   "fields": Array [
     Object {
@@ -274,7 +277,7 @@ Object {
 }
 `;
 
-exports[`FormSupport should get a row from context 1`] = `
+exports[`FormSupport should get a row from pages 1`] = `
 Object {
   "columns": Array [
     Object {
@@ -313,14 +316,15 @@ Object {
 }
 `;
 
-exports[`FormSupport should get a specific field through the context 1`] = `
+exports[`FormSupport should get a specific field through the pages 1`] = `
 Object {
+  "fieldName": "radioField",
   "label": "Radio",
   "type": "radio",
 }
 `;
 
-exports[`FormSupport should remove a column from context and reorder 1`] = `
+exports[`FormSupport should remove a column from pages and reorder 1`] = `
 Array [
   Object {
     "rows": Array [
@@ -329,6 +333,7 @@ Array [
           Object {
             "fields": Array [
               Object {
+                "fieldName": "radioField",
                 "label": "Radio",
                 "type": "radio",
               },
@@ -375,7 +380,7 @@ Array [
 ]
 `;
 
-exports[`FormSupport should remove a fields to column from context 1`] = `
+exports[`FormSupport should remove a fields to column from pages 1`] = `
 Array [
   Object {
     "rows": Array [
@@ -384,6 +389,7 @@ Array [
           Object {
             "fields": Array [
               Object {
+                "fieldName": "radioField",
                 "label": "Radio",
                 "type": "radio",
               },
@@ -438,7 +444,7 @@ Array [
 ]
 `;
 
-exports[`FormSupport should remove a row from context and reorder 1`] = `
+exports[`FormSupport should remove a row from pages and reorder 1`] = `
 Array [
   Object {
     "rows": Array [
@@ -447,6 +453,7 @@ Array [
           Object {
             "fields": Array [
               Object {
+                "fieldName": "radioField",
                 "label": "Radio",
                 "type": "radio",
               },
@@ -479,7 +486,7 @@ Array [
 ]
 `;
 
-exports[`FormSupport should replace column fields 1`] = `
+exports[`FormSupport should update a field 1`] = `
 Array [
   Object {
     "rows": Array [
@@ -488,6 +495,7 @@ Array [
           Object {
             "fields": Array [
               Object {
+                "fieldName": "radioField",
                 "label": "Foo",
                 "type": "radio",
               },

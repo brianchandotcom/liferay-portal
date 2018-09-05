@@ -9,6 +9,8 @@ import '../Options/index.es';
 
 let component;
 
+const spritemap = 'icons.svg';
+
 describe(
 	'Layout Render',
 	() => {
@@ -18,12 +20,36 @@ describe(
 				component = new PageRenderer(
 					{
 						items: [
-							{type: 'checkbox'},
-							{type: 'date'},
-							{type: 'grid'},
-							{type: 'select'},
-							{type: 'text'},
-							{type: 'options'}
+							{
+								name: 'checkboxField',
+								spritemap,
+								type: 'checkbox'
+							},
+							{
+								name: 'dateField',
+								spritemap,
+								type: 'date'
+							},
+							{
+								name: 'gridField',
+								spritemap,
+								type: 'grid'
+							},
+							{
+								name: 'selectField',
+								spritemap,
+								type: 'select'
+							},
+							{
+								name: 'textField',
+								spritemap,
+								type: 'text'
+							},
+							{
+								name: 'optionsField',
+								spritemap,
+								type: 'options'
+							}
 						]
 					}
 				);

@@ -3,10 +3,10 @@
 {template .render}
 	{@param? _handleItemClicked: any}
 	{@param? _handleClick: any}
-	{@param? editable: bool}
-	{@param? helpText: string}
+	{@param? readOnly: bool}
+	{@param? tip: string}
 	{@param? id: string}
-	{@param? items: list<[
+	{@param? options: list<[
 		checked: bool,
 		disabled: bool,
 		id: string,
@@ -30,9 +30,9 @@
 			{call .content}
 				{param _handleItemClicked: $_handleItemClicked /}
 				{param _handleClick: $_handleClick /}
-				{param editable: $editable /}
+				{param readOnly: $readOnly /}
 				{param id: $id /}
-				{param items: $items /}
+				{param options: $options /}
 				{param open: $open /}
 				{param placeholder: $placeholder /}
 				{param predefinedValue: $predefinedValue /}
@@ -41,7 +41,7 @@
 			{/call}
 		{/param}
 
-		{param helpText: $helpText /}
+		{param tip: $tip /}
 		{param id: $id /}
 		{param label: $label /}
 		{param required: $required /}
@@ -53,9 +53,9 @@
 {template .content}
 	{@param? _handleItemClicked: any}
 	{@param? _handleClick: any}
-	{@param? editable: bool}
+	{@param? readOnly: bool}
 	{@param? id: string}
-	{@param? items: list<[
+	{@param? options: list<[
 		checked: bool,
 		disabled: bool,
 		id: string,
@@ -79,7 +79,7 @@
 				id="{$id}"
 			{/if}
 
-			{if not $editable}
+			{if not $readOnly}
 				disabled
 			{/if}
 
@@ -101,14 +101,14 @@
 
 	{call .listItems}
 		{param _handleItemClicked: $_handleItemClicked /}
-		{param items: $items /}
+		{param options: $options /}
 		{param open: $open /}
 	{/call}
 {/template}
 
 {template .listItems}
 	{@param? _handleItemClicked: any}
-	{@param? items: list<[
+	{@param? options: list<[
 		checked: bool,
 		disabled: bool,
 		id: string,
@@ -132,10 +132,10 @@
 
 	{/let}
 
-	{if $items}
+	{if $options}
 		<div {$attributes}>
 			<ul class="list-unstyled">
-				{foreach $item in $items}
+				{foreach $item in $options}
 					<li class="dropdown-item">{$item.value}</li>
 				{/foreach}
 			</ul>

@@ -1,29 +1,33 @@
 {namespace Text}
 
 {template .render}
+	{@param name: string}
 	{@param? _handleFieldChanged: any}
-	{@param? editable: bool}
-	{@param? helpText: string}
+	{@param? displayStyle: string}
 	{@param? id: string}
 	{@param? label: string}
 	{@param? placeholder: string}
+	{@param? readOnly: bool}
 	{@param? required: bool}
 	{@param? showLabel: bool}
 	{@param? spritemap: string}
+	{@param? tip: string}
 	{@param? value: string}
 
 	{call FieldBase.render}
 		{param contentRenderer kind="html"}
 			{call .content}
-				{param editable: $editable /}
 				{param _handleFieldChanged: $_handleFieldChanged /}
+				{param displayStyle: $displayStyle /}
 				{param id: $id /}
+				{param name: $name /}
 				{param placeholder: $placeholder /}
+				{param readOnly: $readOnly /}
 				{param value: $value /}
 			{/call}
 		{/param}
 
-		{param helpText: $helpText /}
+		{param tip: $tip /}
 		{param id: $id /}
 		{param label: $label /}
 		{param required: $required /}
@@ -33,11 +37,13 @@
 {/template}
 
 {template .content}
-	{@param? editable: bool}
+	{@param name: string}
+	{@param? _handleFieldChanged: any}
+	{@param? displayStyle: string}
 	{@param? id: string}
 	{@param? placeholder: string}
+	{@param? readOnly: bool}
 	{@param? value: string}
-	{@param? _handleFieldChanged: any}
 
 	{let $attributes kind="attributes"}
 		class="form-control"
@@ -45,6 +51,8 @@
 		{if $id}
 			id="{$id}"
 		{/if}
+
+		name="{$name}"
 
 		{if $placeholder}
 			placeholder="{$placeholder}"
@@ -54,14 +62,18 @@
 
 		data-oninput="{$_handleFieldChanged}"
 
-		{if not($editable)}
+		{if $readOnly}
 			disabled="disabled"
 		{/if}
 
 		{if $value}
-			value = "{$value}"
+			value="{$value}"
 		{/if}
 	{/let}
 
-	<input {$attributes}>
+	{if $displayStyle == 'singleline'}
+		<input {$attributes}>
+	{else}
+		<textarea {$attributes}></textarea>
+	{/if}
 {/template}

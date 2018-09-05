@@ -8,8 +8,8 @@ exports[`PageRenderer should change the page title 1`] = `
     <div class="form-builder-layout">
       <div class="layout-page">
         <div class="row">
-          <div class="col-md-12" data-ddm-field-row="0" data-ddm-field-page="0">
-            <div class="col-empty ddm-target"></div>
+          <div class="col col-empty col-md-12" data-ddm-field-row="0" data-ddm-field-page="0">
+            <div class="ddm-target"></div>
           </div>
         </div>
         <div class="row">
@@ -36,13 +36,13 @@ exports[`PageRenderer should change the page title 1`] = `
               <div class="ddm-resize-handle-right"></div>
             </div>
           </div>
-          <div class="col-md-9" data-ddm-field-row="0" data-ddm-field-page="0" data-ddm-field-column="1">
-            <div class="col-empty ddm-target"></div>
+          <div class="col col-empty col-md-9" data-ddm-field-row="0" data-ddm-field-page="0" data-ddm-field-column="1">
+            <div class="ddm-target"></div>
           </div>
         </div>
         <div class="row">
-          <div class="col-md-12" data-ddm-field-row="1" data-ddm-field-page="0">
-            <div class="col-empty ddm-target"></div>
+          <div class="col col-empty col-md-12" data-ddm-field-row="1" data-ddm-field-page="0">
+            <div class="ddm-target"></div>
           </div>
         </div>
         <div class="row">
@@ -92,13 +92,13 @@ exports[`PageRenderer should change the page title 1`] = `
               <div class="ddm-resize-handle-right"></div>
             </div>
           </div>
-          <div class="col-md-2" data-ddm-field-row="1" data-ddm-field-page="0" data-ddm-field-column="2">
-            <div class="col-empty ddm-target"></div>
+          <div class="col col-empty col-md-2" data-ddm-field-row="1" data-ddm-field-page="0" data-ddm-field-column="2">
+            <div class="ddm-target"></div>
           </div>
         </div>
         <div class="row">
-          <div class="col-md-12" data-ddm-field-row="2" data-ddm-field-page="0">
-            <div class="col-empty ddm-target"></div>
+          <div class="col col-empty col-md-12" data-ddm-field-row="2" data-ddm-field-page="0">
+            <div class="ddm-target"></div>
           </div>
         </div>
         <div class="row">
@@ -127,8 +127,8 @@ exports[`PageRenderer should change the page title 1`] = `
           </div>
         </div>
         <div class="row">
-          <div class="col-md-12" data-ddm-field-row="3" data-ddm-field-page="0">
-            <div class="col-empty ddm-target"></div>
+          <div class="col col-empty col-md-12" data-ddm-field-row="3" data-ddm-field-page="0">
+            <div class="ddm-target"></div>
           </div>
         </div>
       </div>
@@ -178,8 +178,8 @@ exports[`PageRenderer should change the page title 2`] = `
     <div class="form-builder-layout">
       <div class="layout-page">
         <div class="row">
-          <div class="col-md-12" data-ddm-field-row="0" data-ddm-field-page="0">
-            <div class="col-empty ddm-target"></div>
+          <div class="col col-empty col-md-12" data-ddm-field-row="0" data-ddm-field-page="0">
+            <div class="ddm-target"></div>
           </div>
         </div>
         <div class="row">
@@ -206,13 +206,13 @@ exports[`PageRenderer should change the page title 2`] = `
               <div class="ddm-resize-handle-right"></div>
             </div>
           </div>
-          <div class="col-md-9" data-ddm-field-row="0" data-ddm-field-page="0" data-ddm-field-column="1">
-            <div class="col-empty ddm-target"></div>
+          <div class="col col-empty col-md-9" data-ddm-field-row="0" data-ddm-field-page="0" data-ddm-field-column="1">
+            <div class="ddm-target"></div>
           </div>
         </div>
         <div class="row">
-          <div class="col-md-12" data-ddm-field-row="1" data-ddm-field-page="0">
-            <div class="col-empty ddm-target"></div>
+          <div class="col col-empty col-md-12" data-ddm-field-row="1" data-ddm-field-page="0">
+            <div class="ddm-target"></div>
           </div>
         </div>
         <div class="row">
@@ -262,13 +262,13 @@ exports[`PageRenderer should change the page title 2`] = `
               <div class="ddm-resize-handle-right"></div>
             </div>
           </div>
-          <div class="col-md-2" data-ddm-field-row="1" data-ddm-field-page="0" data-ddm-field-column="2">
-            <div class="col-empty ddm-target"></div>
+          <div class="col col-empty col-md-2" data-ddm-field-row="1" data-ddm-field-page="0" data-ddm-field-column="2">
+            <div class="ddm-target"></div>
           </div>
         </div>
         <div class="row">
-          <div class="col-md-12" data-ddm-field-row="2" data-ddm-field-page="0">
-            <div class="col-empty ddm-target"></div>
+          <div class="col col-empty col-md-12" data-ddm-field-row="2" data-ddm-field-page="0">
+            <div class="ddm-target"></div>
           </div>
         </div>
         <div class="row">
@@ -297,8 +297,8 @@ exports[`PageRenderer should change the page title 2`] = `
           </div>
         </div>
         <div class="row">
-          <div class="col-md-12" data-ddm-field-row="3" data-ddm-field-page="0">
-            <div class="col-empty ddm-target"></div>
+          <div class="col col-empty col-md-12" data-ddm-field-row="3" data-ddm-field-page="0">
+            <div class="ddm-target"></div>
           </div>
         </div>
       </div>
@@ -347,8 +347,10 @@ exports[`PageRenderer should display empty drag message when there are rows with
     <textarea class="form-builder-page-header-description form-control" data-page-id="0" maxlength="120" placeholder="add-a-short-description-for-this-page"></textarea>
     <div class="form-builder-layout">
       <div class="layout-page">
-        <div class="col col-empty col-md-12 last-col lfr-initial-col">
-          <div id="lfr-initial-col-message">drag-from-sidebar-and-drop-here</div>
+        <div class="row">
+          <div class="col col-empty col-md-12 last-col lfr-initial-col" data-ddm-field-column="0" data-ddm-field-page="0" data-ddm-field-row="0">
+            <div class="ddm-target" id="lfr-initial-col-message">drag-from-sidebar-and-drop-here</div>
+          </div>
         </div>
       </div>
     </div>
@@ -397,8 +399,8 @@ exports[`PageRenderer should resize a specific column on the drag and drop layou
     <div class="form-builder-layout">
       <div class="layout-page">
         <div class="row">
-          <div class="col-md-12" data-ddm-field-row="0" data-ddm-field-page="0">
-            <div class="col-empty ddm-target"></div>
+          <div class="col col-empty col-md-12" data-ddm-field-row="0" data-ddm-field-page="0">
+            <div class="ddm-target"></div>
           </div>
         </div>
         <div class="row">
@@ -425,13 +427,13 @@ exports[`PageRenderer should resize a specific column on the drag and drop layou
               <div class="ddm-resize-handle-right"></div>
             </div>
           </div>
-          <div class="col-md-9" data-ddm-field-row="0" data-ddm-field-page="0" data-ddm-field-column="1">
-            <div class="col-empty ddm-target"></div>
+          <div class="col col-empty col-md-9" data-ddm-field-row="0" data-ddm-field-page="0" data-ddm-field-column="1">
+            <div class="ddm-target"></div>
           </div>
         </div>
         <div class="row">
-          <div class="col-md-12" data-ddm-field-row="1" data-ddm-field-page="0">
-            <div class="col-empty ddm-target"></div>
+          <div class="col col-empty col-md-12" data-ddm-field-row="1" data-ddm-field-page="0">
+            <div class="ddm-target"></div>
           </div>
         </div>
         <div class="row">
@@ -481,13 +483,13 @@ exports[`PageRenderer should resize a specific column on the drag and drop layou
               <div class="ddm-resize-handle-right"></div>
             </div>
           </div>
-          <div class="col-md-2" data-ddm-field-row="1" data-ddm-field-page="0" data-ddm-field-column="2">
-            <div class="col-empty ddm-target"></div>
+          <div class="col col-empty col-md-2" data-ddm-field-row="1" data-ddm-field-page="0" data-ddm-field-column="2">
+            <div class="ddm-target"></div>
           </div>
         </div>
         <div class="row">
-          <div class="col-md-12" data-ddm-field-row="2" data-ddm-field-page="0">
-            <div class="col-empty ddm-target"></div>
+          <div class="col col-empty col-md-12" data-ddm-field-row="2" data-ddm-field-page="0">
+            <div class="ddm-target"></div>
           </div>
         </div>
         <div class="row">
@@ -516,8 +518,8 @@ exports[`PageRenderer should resize a specific column on the drag and drop layou
           </div>
         </div>
         <div class="row">
-          <div class="col-md-12" data-ddm-field-row="3" data-ddm-field-page="0">
-            <div class="col-empty ddm-target"></div>
+          <div class="col col-empty col-md-12" data-ddm-field-row="3" data-ddm-field-page="0">
+            <div class="ddm-target"></div>
           </div>
         </div>
       </div>

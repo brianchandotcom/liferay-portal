@@ -9,13 +9,22 @@ class Text extends Component {
 	static STATE = {
 
 		/**
+		 * @default undefined
+		 * @instance
+		 * @memberof Text
+		 * @type {?(string|undefined)}
+		 */
+
+		displayStyle: Config.string().value('singleline'),
+
+		/**
 		 * @default false
 		 * @instance
 		 * @memberof Text
 		 * @type {?bool}
 		 */
 
-		editable: Config.bool().value(true),
+		readOnly: Config.bool().value(true),
 
 		/**
 		 * @default undefined
@@ -24,7 +33,16 @@ class Text extends Component {
 		 * @type {?(string|undefined)}
 		 */
 
-		helpText: Config.string(),
+		fieldName: Config.string(),
+
+		/**
+		 * @default undefined
+		 * @instance
+		 * @memberof Text
+		 * @type {?(string|undefined)}
+		 */
+
+		tip: Config.string(),
 
 		/**
 		 * @default undefined
@@ -43,6 +61,15 @@ class Text extends Component {
 		 */
 
 		label: Config.string(),
+
+		/**
+		 * @default undefined
+		 * @instance
+		 * @memberof Text
+		 * @type {?(string|undefined)}
+		 */
+
+		name: Config.string().required(),
 
 		/**
 		 * @default undefined
@@ -87,18 +114,14 @@ class Text extends Component {
 		 * @type {?(string|undefined)}
 		 */
 
-		value: Config.string(),
-
-		key: Config.string()
+		value: Config.string()
 	};
 
 	_handleFieldChanged(event) {
-		const {key} = this;
-
 		this.emit(
 			'fieldEdited',
 			{
-				key,
+				fieldInstance: this,
 				originalEvent: event,
 				value: event.target.value
 			}

@@ -3,7 +3,7 @@
 {template .render}
 	{@param? contentRenderer: any}
 	{@param? id: string}
-	{@param? helpText: string}
+	{@param? tip: string}
 	{@param? label: string}
 	{@param? required: bool}
 	{@param? showLabel: bool}
@@ -32,6 +32,6 @@
 
 		{$contentRenderer}
 
-		<span class="form-text">{$helpText}</span>
+		<span class="form-text">{$tip}</span>
 	</div>
 {/template}

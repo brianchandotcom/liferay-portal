@@ -1,0 +1,263 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`PagesVisitor should be able to change columns 1`] = `
+Array [
+  Object {
+    "rows": Array [
+      Object {
+        "columns": Array [
+          Object {
+            "fields": Array [
+              Object {
+                "label": "Radio",
+                "type": "radio",
+              },
+              Object {
+                "label": "Text field",
+                "type": "text",
+              },
+            ],
+            "size": 6,
+          },
+          Object {
+            "fields": Array [],
+            "size": 6,
+          },
+        ],
+      },
+      Object {
+        "columns": Array [
+          Object {
+            "fields": Array [
+              Object {
+                "label": "Text",
+                "required": true,
+                "type": "text",
+              },
+            ],
+            "size": 6,
+          },
+          Object {
+            "fields": Array [
+              Object {
+                "items": Array [
+                  Object {
+                    "name": "Foo",
+                  },
+                  Object {
+                    "name": "Bar",
+                  },
+                ],
+                "label": "Select",
+                "required": true,
+                "type": "select",
+              },
+            ],
+            "size": 6,
+          },
+          Object {
+            "fields": Array [],
+            "size": 6,
+          },
+        ],
+      },
+      Object {
+        "columns": Array [
+          Object {
+            "fields": Array [
+              Object {
+                "label": "Second row",
+                "required": true,
+                "type": "text",
+              },
+            ],
+            "size": 6,
+          },
+        ],
+      },
+    ],
+    "title": "Untitled name",
+  },
+]
+`;
+
+exports[`PagesVisitor should be able to change fields 1`] = `
+Array [
+  Object {
+    "rows": Array [
+      Object {
+        "columns": Array [
+          Object {
+            "fields": Array [
+              Object {
+                "label": "New label 0",
+                "type": "radio",
+              },
+              Object {
+                "label": "New label 1",
+                "type": "text",
+              },
+            ],
+            "size": 3,
+          },
+          Object {
+            "fields": Array [],
+            "size": 9,
+          },
+        ],
+      },
+      Object {
+        "columns": Array [
+          Object {
+            "fields": Array [
+              Object {
+                "label": "New label 0",
+                "required": true,
+                "type": "text",
+              },
+            ],
+            "size": 4,
+          },
+          Object {
+            "fields": Array [
+              Object {
+                "items": Array [
+                  Object {
+                    "name": "Foo",
+                  },
+                  Object {
+                    "name": "Bar",
+                  },
+                ],
+                "label": "New label 0",
+                "required": true,
+                "type": "select",
+              },
+            ],
+            "size": 6,
+          },
+          Object {
+            "fields": Array [],
+            "size": 2,
+          },
+        ],
+      },
+      Object {
+        "columns": Array [
+          Object {
+            "fields": Array [
+              Object {
+                "label": "New label 0",
+                "required": true,
+                "type": "text",
+              },
+            ],
+            "size": 12,
+          },
+        ],
+      },
+    ],
+    "title": "Untitled name",
+  },
+]
+`;
+
+exports[`PagesVisitor should be able to change pages 1`] = `
+Array [
+  Object {
+    "rows": Array [
+      Object {
+        "columns": Array [
+          Object {
+            "fields": Array [
+              Object {
+                "label": "Radio",
+                "type": "radio",
+              },
+              Object {
+                "label": "Text field",
+                "type": "text",
+              },
+            ],
+            "size": 3,
+          },
+          Object {
+            "fields": Array [],
+            "size": 9,
+          },
+        ],
+      },
+      Object {
+        "columns": Array [
+          Object {
+            "fields": Array [
+              Object {
+                "label": "Text",
+                "required": true,
+                "type": "text",
+              },
+            ],
+            "size": 4,
+          },
+          Object {
+            "fields": Array [
+              Object {
+                "items": Array [
+                  Object {
+                    "name": "Foo",
+                  },
+                  Object {
+                    "name": "Bar",
+                  },
+                ],
+                "label": "Select",
+                "required": true,
+                "type": "select",
+              },
+            ],
+            "size": 6,
+          },
+          Object {
+            "fields": Array [],
+            "size": 2,
+          },
+        ],
+      },
+      Object {
+        "columns": Array [
+          Object {
+            "fields": Array [
+              Object {
+                "label": "Second row",
+                "required": true,
+                "type": "text",
+              },
+            ],
+            "size": 12,
+          },
+        ],
+      },
+    ],
+    "title": "New title 0",
+  },
+]
+`;
+
+exports[`PagesVisitor should be able to change rows 1`] = `
+Array [
+  Object {
+    "rows": Array [
+      Object {
+        "columns": Array [],
+      },
+      Object {
+        "columns": Array [],
+      },
+      Object {
+        "columns": Array [],
+      },
+    ],
+    "title": "Untitled name",
+  },
+]
+`;

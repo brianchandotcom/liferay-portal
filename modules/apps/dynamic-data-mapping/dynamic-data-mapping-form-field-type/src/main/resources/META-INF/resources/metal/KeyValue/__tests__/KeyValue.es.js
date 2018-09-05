@@ -2,164 +2,249 @@ import KeyValue from '../KeyValue.es';
 import {dom as MetalTestUtil} from 'metal-dom';
 
 let component;
-let spritemap = 'icons.svg';
+const spritemap = 'icons.svg';
 
-describe('KeyValue', () => {
-	afterEach(() => {
-		if (component) {
-			component.dispose();
-		}
-	});
+describe(
+	'KeyValue',
+	() => {
+		afterEach(
+			() => {
+				if (component) {
+					component.dispose();
+				}
+			}
+		);
 
-	it('should be not edidable', () => {
-		component = new KeyValue({
-			editable: false,
-			spritemap
-		});
+		it(
+			'should be not edidable',
+			() => {
+				component = new KeyValue(
+					{
+						readOnly: false,
+						spritemap
+					}
+				);
 
-		expect(component).toMatchSnapshot();
-	});
+				expect(component).toMatchSnapshot();
+			}
+		);
 
-	it('should have a helptext', () => {
-		component = new KeyValue({
-			helpText: 'Type something',
-			spritemap
-		});
+		it(
+			'should have a helptext',
+			() => {
+				component = new KeyValue(
+					{
+						spritemap,
+						tip: 'Type something'
+					}
+				);
 
-		expect(component).toMatchSnapshot();
-	});
+				expect(component).toMatchSnapshot();
+			}
+		);
 
-	it('should have an id', () => {
-		component = new KeyValue({
-			id: 'ID',
-			spritemap
-		});
+		it(
+			'should have an id',
+			() => {
+				component = new KeyValue(
+					{
+						id: 'ID',
+						spritemap
+					}
+				);
 
-		expect(component).toMatchSnapshot();
-	});
+				expect(component).toMatchSnapshot();
+			}
+		);
 
-	it('should have a label', () => {
-		component = new KeyValue({
-			label: 'label',
-			spritemap
-		});
+		it(
+			'should have a label',
+			() => {
+				component = new KeyValue(
+					{
+						label: 'label',
+						spritemap
+					}
+				);
 
-		expect(component).toMatchSnapshot();
-	});
+				expect(component).toMatchSnapshot();
+			}
+		);
 
-	it('should have a predefined Value', () => {
-		component = new KeyValue({
-			placeholder: 'Option 1',
-			spritemap
-		});
+		it(
+			'should have a predefined Value',
+			() => {
+				component = new KeyValue(
+					{
+						placeholder: 'Option 1',
+						spritemap
+					}
+				);
 
-		expect(component).toMatchSnapshot();
-	});
+				expect(component).toMatchSnapshot();
+			}
+		);
 
-	it('should not be required', () => {
-		component = new KeyValue({
-			required: false,
-			spritemap
-		});
+		it(
+			'should not be required',
+			() => {
+				component = new KeyValue(
+					{
+						required: false,
+						spritemap
+					}
+				);
 
-		expect(component).toMatchSnapshot();
-	});
+				expect(component).toMatchSnapshot();
+			}
+		);
 
-	it('should render Label if showLabel is true', () => {
-		component = new KeyValue({
-			label: 'text',
-			showLabel: true,
-			spritemap
-		});
+		it(
+			'should render Label if showLabel is true',
+			() => {
+				component = new KeyValue(
+					{
+						label: 'text',
+						showLabel: true,
+						spritemap
+					}
+				);
 
-		expect(component).toMatchSnapshot();
-	});
+				expect(component).toMatchSnapshot();
+			}
+		);
 
-	it('should have a spritemap', () => {
-		component = new KeyValue({
-			spritemap
-		});
+		it(
+			'should have a spritemap',
+			() => {
+				component = new KeyValue(
+					{
+						spritemap
+					}
+				);
 
-		expect(component).toMatchSnapshot();
-	});
+				expect(component).toMatchSnapshot();
+			}
+		);
 
-	it('should have a value', () => {
-		component = new KeyValue({
-			value: 'value',
-			spritemap
-		});
+		it(
+			'should have a value',
+			() => {
+				component = new KeyValue(
+					{
+						spritemap,
+						value: 'value'
+					}
+				);
 
-		expect(component).toMatchSnapshot();
-	});
+				expect(component).toMatchSnapshot();
+			}
+		);
 
-	it('should render component with a key', () => {
-		component = new KeyValue({
-			key: 'key',
-			spritemap
-		});
+		it(
+			'should render component with a key',
+			() => {
+				component = new KeyValue(
+					{
+						key: 'key',
+						spritemap
+					}
+				);
 
-		expect(component).toMatchSnapshot();
-	});
+				expect(component).toMatchSnapshot();
+			}
+		);
 
-	it('should remove spaces and convert first letter after space to upper case on change label value', () => {
-		component = new KeyValue({
-			spritemap,
-			key: 'keyValue'
-		});
+		it(
+			'should remove spaces and convert first letter after space to upper case on change label value',
+			() => {
+				component = new KeyValue(
+					{
+						key: 'keyValue',
+						spritemap
+					}
+				);
 
-		const generatedName = component.getGeneratedKey('tes te_A_a')
+				const generatedName = component.getGeneratedKey('tes te_A_a');
 
-		expect(generatedName).toEqual('tesTeAa');
-	});
+				expect(generatedName).toEqual('tesTeAa');
+			}
+		);
 
-	it('should not allow generating field name after editing field name input', () => {
-		component = new KeyValue({
-			spritemap,
-			generateKey: true
-		});
+		it(
+			'should not allow generating field name after editing field name input',
+			() => {
+				component = new KeyValue(
+					{
+						generateKey: true,
+						spritemap
+					}
+				);
 
-		MetalTestUtil.triggerEvent(component.element.querySelector('input.key-value-input'), 'input', {value: 'foo'});
+				MetalTestUtil.triggerEvent(
+					component.element.querySelector('input.key-value-input'),
+					'input',
+					{value: 'foo'}
+				);
 
-		expect(component.generateKey).toEqual(false);
-	});
+				expect(component.generateKey).toEqual(false);
+			}
+		);
 
-	it('should emit a "fieldEdit" event when changing the value input', (done) => {
-		jest.useFakeTimers();
+		it(
+			'should emit a "fieldEdited" event when changing the value input',
+			done => {
+				jest.useFakeTimers();
 
-		component = new KeyValue({
-			spritemap
-		});
+				component = new KeyValue(
+					{
+						spritemap
+					}
+				);
 
-		component.on('fieldEdit', (event) => {
-			expect(event.value).toEqual('foo');
-			done();
-		});
+				component.on(
+					'fieldEdited',
+					event => {
+						expect(event.value).toEqual('foo');
+						done();
+					}
+				);
 
-		jest.runAllTimers();
+				jest.runAllTimers();
 
-		const valueInput = component.element.querySelector('input.form-control');
-		valueInput.value = 'foo';
-		MetalTestUtil.triggerEvent(valueInput, 'input', {});
-	});
+				const valueInput = component.element.querySelector('input.form-control');
+				valueInput.value = 'foo';
+				MetalTestUtil.triggerEvent(valueInput, 'input', {});
+			}
+		);
 
-	it('should generate name when editing the value input if "generateKey" is true', (done) => {
-		jest.useFakeTimers();
+		it(
+			'should generate name when editing the value input if "generateKey" is true',
+			done => {
+				jest.useFakeTimers();
 
-		component = new KeyValue({
-			generateKey: true,
-			spritemap
-		});
+				component = new KeyValue(
+					{
+						generateKey: true,
+						spritemap
+					}
+				);
 
-		component.on('fieldEdit', (event) => {
-			expect(component.key).toEqual(component.getGeneratedKey('My Name'));
+				component.on(
+					'fieldEdited',
+					event => {
+						expect(component.key).toEqual(component.getGeneratedKey('My Name'));
 
-			done();
-		});
+						done();
+					}
+				);
 
-		const valueInput = component.element.querySelector('input.form-control');
-		valueInput.value = 'My Name';
-		MetalTestUtil.triggerEvent(valueInput, 'input', {});
+				const valueInput = component.element.querySelector('input.form-control');
+				valueInput.value = 'My Name';
+				MetalTestUtil.triggerEvent(valueInput, 'input', {});
 
-		jest.runAllTimers();
-	});
-});
+				jest.runAllTimers();
+			}
+		);
+	}
+);

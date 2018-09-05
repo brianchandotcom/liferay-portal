@@ -19,8 +19,13 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.servlet.filters.BasePortalFilter;
 import com.liferay.portal.util.PropsValues;
 
+import java.io.IOException;
+
 import java.nio.ByteBuffer;
 
+import javax.servlet.AsyncContext;
+import javax.servlet.AsyncEvent;
+import javax.servlet.AsyncListener;
 import javax.servlet.FilterChain;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -83,6 +88,52 @@ public class ETagFilter extends BasePortalFilter {
 		processFilter(
 			ETagFilter.class.getName(), request,
 			restrictedByteBufferCacheServletResponse, filterChain);
+
+		if (!request.isAsyncSupported() || !request.isAsyncStarted()) {
+			_postProcessETag(
+				request, response, restrictedByteBufferCacheServletResponse);
+		}
+		else {
+			AsyncContext asyncContext = request.getAsyncContext();
+
+			AsyncListener postProcessETagAsyncListener = new AsyncListener() {
+
+				@Override
+				public void onComplete(AsyncEvent asyncEvent)
+					throws IOException {
+
+					_postProcessETag(
+						request, response,
+						restrictedByteBufferCacheServletResponse);
+				}
+
+				@Override
+				public void onError(AsyncEvent asyncEvent) throws IOException {
+				}
+
+				@Override
+				public void onStartAsync(AsyncEvent asyncEvent)
+					throws IOException {
+
+					asyncContext.addListener(this);
+				}
+
+				@Override
+				public void onTimeout(AsyncEvent asyncEvent)
+					throws IOException {
+				}
+
+			};
+
+			asyncContext.addListener(postProcessETagAsyncListener);
+		}
+	}
+
+	private void _postProcessETag(
+			HttpServletRequest request, HttpServletResponse response,
+			RestrictedByteBufferCacheServletResponse
+				restrictedByteBufferCacheServletResponse)
+		throws IOException {
 
 		if (!restrictedByteBufferCacheServletResponse.isOverflowed()) {
 			ByteBuffer byteBuffer =

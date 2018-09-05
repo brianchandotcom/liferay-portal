@@ -53,8 +53,8 @@ class Builder extends Component {
 		this.emit('fieldClicked', indexAllocateField);
 	}
 
-	_handlePageAdded(pages) {
-		this.emit('pageAdded', pages);
+	_handlePageAdded() {
+		this.emit('pageAdded');
 	}
 
 	rendered() {

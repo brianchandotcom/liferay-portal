@@ -338,7 +338,7 @@ public class SharingEntryLocalServiceImpl
 		throws PortalException {
 
 		String portletId = PortletProviderUtil.getPortletId(
-			SharingEntry.class.getName(), PortletProvider.Action.ADD);
+			SharingEntry.class.getName(), PortletProvider.Action.EDIT);
 
 		if (UserNotificationManagerUtil.isDeliver(
 				sharingEntry.getToUserId(), portletId, 0,

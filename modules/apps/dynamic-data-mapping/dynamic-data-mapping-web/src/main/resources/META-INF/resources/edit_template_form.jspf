@@ -56,7 +56,6 @@ String fieldsJSONArrayString = fieldsJSONArray.toString();
 
 	function <portlet:namespace />setFieldsHiddenAttributes(formBuilder, mode, item, index) {
 		var hiddenAttributesMap = formBuilder.MAP_HIDDEN_FIELD_ATTRS;
-
 		var hiddenAttributes = hiddenAttributesMap[item.get('type')] || hiddenAttributesMap.DEFAULT;
 
 		if (mode === '<%= DDMTemplateConstants.TEMPLATE_MODE_EDIT %>') {
@@ -67,16 +66,12 @@ String fieldsJSONArrayString = fieldsJSONArray.toString();
 	}
 
 	function <portlet:namespace />toggleMode(formBuilder, mode) {
-		var _ = AUI._;
-
 		var modeEdit = (mode === '<%= DDMTemplateConstants.TEMPLATE_MODE_EDIT %>');
 
 		formBuilder.set('allowRemoveRequiredFields', modeEdit);
 
-		var setFieldsHiddenAttributes = _.bindKey(window, '<portlet:namespace />setFieldsHiddenAttributes', formBuilder, mode);
-
+		var setFieldsHiddenAttributes = <portlet:namespace />setFieldsHiddenAttributes.bind(this, formBuilder, mode)
 		_.forEach(formBuilder.get('fields')._items, setFieldsHiddenAttributes);
-
 		_.forEach(formBuilder.get('availableFields'), setFieldsHiddenAttributes);
 
 		var editingField = formBuilder.editingField;

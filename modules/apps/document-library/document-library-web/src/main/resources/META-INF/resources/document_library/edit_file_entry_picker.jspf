@@ -73,7 +73,7 @@ DLFilePicker dlFilePicker = dlEditFileEntryDisplayContext.getDLFilePicker("onFil
 				}
 			);
 
-			$('.customized-file-button').on('click', _.bind(filePicker['<%= dlFilePicker.getOnClickCallback() %>'], filePicker));
+			$('.customized-file-button').on('click', filePicker['<%= dlFilePicker.getOnClickCallback() %>'].bind(filePicker));
 		</aui:script>
 	</c:otherwise>
 </c:choose>

@@ -259,8 +259,8 @@ public class PingbackMethodImplTest extends PowerMockito {
 			Matchers.eq(_USER_ID), Matchers.eq(_GROUP_ID),
 			Matchers.eq(BlogsEntry.class.getName()), Matchers.eq(_ENTRY_ID),
 			Matchers.eq(
-				"[...] " + _EXCERPT_BODY + " [...] [url=" + _SOURCE_URI + "]" +
-					_READ_MORE + "[/url]"),
+				"[...] " + _EXCERPT_BODY + " [...] <a href=" + _SOURCE_URI +
+					">" + _READ_MORE + "</a>"),
 			Mockito.<ServiceContextFunction>any()
 		);
 	}
@@ -643,8 +643,8 @@ public class PingbackMethodImplTest extends PowerMockito {
 			Matchers.anyLong(), Matchers.anyLong(), Matchers.anyString(),
 			Matchers.anyLong(),
 			Matchers.eq(
-				"[...] " + excerpt + " [...] [url=" + _SOURCE_URI + "]" +
-					_READ_MORE + "[/url]"),
+				"[...] " + excerpt + " [...] <a href=" + _SOURCE_URI + ">" +
+					_READ_MORE + "</a>"),
 			Matchers.<ServiceContextFunction>any()
 		);
 	}

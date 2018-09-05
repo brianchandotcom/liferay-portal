@@ -103,6 +103,12 @@ class WikiPortlet extends PortletBase {
 		this.save_();
 	}
 
+	/**
+	 * Sends a request to remove the selected attachment.
+	 *
+	 * @protected
+	 * @param {Event} event The click event that triggered the remove action
+	 */
 	removeAttachment_(event) {
 		let link = event.currentTarget;
 
@@ -121,19 +127,14 @@ class WikiPortlet extends PortletBase {
 		deleteUrl.setParameters(params);
 		deleteUrl.setPortletId('com_liferay_wiki_web_portlet_WikiPortlet');
 
-		let searchContainer = this.searchContainer_;
+		fetch(
+			deleteUrl.toString()
+		).then(
+			() => {
+				let searchContainer = this.searchContainer_;
 
-		const A = new AUI();
-
-		A.io.request(
-			deleteUrl.toString(),
-			{
-				on: {
-					success: function() {
-						searchContainer.deleteRow(link.ancestor('tr'),link.getAttribute('data-rowid'));
-						searchContainer.updateDataStore();
-					}
-				}
+				searchContainer.deleteRow(link.ancestor('tr'),link.getAttribute('data-rowid'));
+				searchContainer.updateDataStore();
 			}
 		);
 	}

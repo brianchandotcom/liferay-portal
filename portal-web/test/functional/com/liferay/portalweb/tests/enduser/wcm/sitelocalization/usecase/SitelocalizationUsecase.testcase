@@ -999,6 +999,10 @@
 			<var name="defaultSiteLanguage" value="English (United States)" />
 		</execute>
 
+		<execute macro="Navigator#gotoNavTab">
+			<var name="navTab" value="General" />
+		</execute>
+
 		<execute macro="User#logoutPG" />
 
 		<execute macro="Navigator#openSpecificURL">

@@ -12,22 +12,28 @@
  * details.
  */
 
-package com.liferay.document.library.preview;
+package com.liferay.document.library.preview.exception;
 
 import com.liferay.portal.kernel.exception.PortalException;
-
-import java.io.IOException;
-
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 /**
  * @author Alejandro Tardín
  */
-public interface DLPreviewRenderer {
+public class DLPreviewGenerationInProcessException extends PortalException {
 
-	public void render(HttpServletRequest request, HttpServletResponse response)
-		throws IOException, PortalException, ServletException;
+	public DLPreviewGenerationInProcessException() {
+	}
+
+	public DLPreviewGenerationInProcessException(String msg) {
+		super(msg);
+	}
+
+	public DLPreviewGenerationInProcessException(String msg, Throwable cause) {
+		super(msg, cause);
+	}
+
+	public DLPreviewGenerationInProcessException(Throwable cause) {
+		super(cause);
+	}
 
 }

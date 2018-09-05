@@ -70,6 +70,11 @@
 		<!-- Temporary suppressions for private repos and subrepos -->
 
 		<suppress checks="ReferenceAnnotationCheck" files="modules/private/.*" />
+		<suppress checks="UnprocessedExceptionCheck" files="modules/apps/apio-architect/.*" />
+		<suppress checks="UnprocessedExceptionCheck" files="modules/apps/commerce/.*" />
+		<suppress checks="UnprocessedExceptionCheck" files="modules/private/apps/commerce/.*" />
+		<suppress checks="UnprocessedExceptionCheck" files="modules/private/apps/lcs/.*" />
+		<suppress checks="UnprocessedExceptionCheck" files="modules/test/poshi-runner/.*" />
 		<suppress checks="VariableNameCheck" files="modules/private/.*" />
 	</checkstyle>
 	<source-check>

@@ -5,6 +5,12 @@ import {addClasses, removeClasses} from 'metal-dom';
 import {isFunction, isObject, object} from 'metal';
 
 import FragmentEditableField from './FragmentEditableField.es';
+import MetalStore from '../../store/store.es';
+import {
+	REMOVE_FRAGMENT_ENTRY_LINK,
+	UPDATE_LAST_SAVE_DATE,
+	UPDATE_SAVING_CHANGES_STATUS
+} from '../../actions/actions.es';
 import templates from './FragmentEntryLink.soy';
 
 const ARROW_DOWN_KEYCODE = 40;
@@ -41,6 +47,24 @@ class FragmentEntryLink extends Component {
 	}
 
 	/**
+	 * Returns the given editable value
+	 */
+
+	getEditableValue(editableId) {
+		return this.getEditableValues()[editableId];
+	}
+
+	/**
+	 * Returns the editable values property content
+	 * @return {object}
+	 * @review
+	 */
+
+	getEditableValues() {
+		return this.editableValues[EDITABLE_FRAGMENT_ENTRY_PROCESSOR];
+	}
+
+	/**
 	 * @inheritDoc
 	 * @review
 	 */
@@ -53,6 +77,30 @@ class FragmentEntryLink extends Component {
 				content: this.content ? Soy.toIncDom(this.content) : null
 			}
 		);
+	}
+
+	/**
+	 * Returns a new object with the updated editableId
+	 * @param {string} editableId
+	 * @param {object} content
+	 */
+
+	setEditableValue(editableId, content) {
+		const editableValues = this.getEditableValues();
+
+		const editableValue = this.getEditableValue(editableId);
+
+		editableValues[editableId] = object.mixin({}, editableValue, content);
+
+		this._update(
+			this.languageId,
+			this.defaultLanguageId,
+			[this._updateEditableStatus]
+		);
+
+		return {
+			[EDITABLE_FRAGMENT_ENTRY_PROCESSOR]: editableValues
+		};
 	}
 
 	/**
@@ -104,45 +152,15 @@ class FragmentEntryLink extends Component {
 	}
 
 	/**
-	 * Returns the given editable value
-	 */
-
-	getEditableValue(editableId) {
-		return this.getEditableValues()[editableId];
-	}
-
-	/**
-	 * Returns the editable values property content
-	 * @return {object}
+	 * Callback executed when styleModifier property has changed
+	 * @inheritDoc
 	 * @review
 	 */
 
-	getEditableValues() {
-		return this.editableValues[EDITABLE_FRAGMENT_ENTRY_PROCESSOR];
-	}
-
-	/**
-	 * Returns a new object with the updated editableId
-	 * @param {string} editableId
-	 * @param {object} content
-	 */
-
-	setEditableValue(editableId, content) {
-		const editableValues = this.getEditableValues();
-
-		const editableValue = this.getEditableValue(editableId);
-
-		editableValues[editableId] = object.mixin({}, editableValue, content);
-
-		this._update(
-			this.languageId,
-			this.defaultLanguageId,
-			[this._updateEditableStatus]
-		);
-
-		return {
-			[EDITABLE_FRAGMENT_ENTRY_PROCESSOR]: editableValues
-		};
+	syncStyleModifier() {
+		if (this.content) {
+			this._renderContent(this.content);
+		}
 	}
 
 	/**
@@ -291,18 +309,27 @@ class FragmentEntryLink extends Component {
 
 	/**
 	 * Callback executed when the fragment remove button is clicked.
-	 * It emits a 'remove' event with
-	 * the FragmentEntryLink id.
 	 * @private
 	 */
 
 	_handleFragmentRemoveButtonClick() {
-		this.emit(
-			'remove',
-			{
-				fragmentEntryLinkId: this.fragmentEntryLinkId
-			}
-		);
+		this.store
+			.dispatchAction(
+				UPDATE_SAVING_CHANGES_STATUS,
+				{savingChanges: true}
+			)
+			.dispatchAction(
+				REMOVE_FRAGMENT_ENTRY_LINK,
+				{fragmentEntryLinkId: this.fragmentEntryLinkId}
+			)
+			.dispatchAction(
+				UPDATE_LAST_SAVE_DATE,
+				{lastSaveDate: new Date()}
+			)
+			.dispatchAction(
+				UPDATE_SAVING_CHANGES_STATUS,
+				{savingChanges: false}
+			);
 	}
 
 	/**
@@ -475,6 +502,17 @@ FragmentEntryLink.STATE = {
 	defaultLanguageId: Config.string().required(),
 
 	/**
+	 * CSS class for the fragments drop target.
+	 * @default undefined
+	 * @instance
+	 * @memberOf FragmentEntryLink
+	 * @review
+	 * @type {!string}
+	 */
+
+	dropTargetClass: Config.string(),
+
+	/**
 	 * Editable values that should be used instead of the default ones
 	 * inside editable fields.
 	 * @default undefined
@@ -588,6 +626,28 @@ FragmentEntryLink.STATE = {
 	 */
 
 	showMapping: Config.bool().value(false),
+
+	/**
+	 * Store instance
+	 * @default undefined
+	 * @instance
+	 * @memberOf FragmentEntryLink
+	 * @review
+	 * @type {MetalStore}
+	 */
+
+	store: Config.instanceOf(MetalStore),
+
+	/**
+	 * CSS class to modify style
+	 * @default undefined
+	 * @instance
+	 * @memberOf FragmentEntryLink
+	 * @review
+	 * @type {!string}
+	 */
+
+	styleModifier: Config.string(),
 
 	/**
 	 * Portlet namespace needed for prefixing Alloy Editor instances

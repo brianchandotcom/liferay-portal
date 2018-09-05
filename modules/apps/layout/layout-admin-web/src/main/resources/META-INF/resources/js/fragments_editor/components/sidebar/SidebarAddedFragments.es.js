@@ -3,6 +3,12 @@ import {Config} from 'metal-state';
 import Soy from 'metal-soy';
 
 import './FragmentsEditorSidebarCard.es';
+import {
+	REMOVE_FRAGMENT_ENTRY_LINK,
+	UPDATE_LAST_SAVE_DATE,
+	UPDATE_SAVING_CHANGES_STATUS
+} from '../../actions/actions.es';
+import {Store} from '../store/store.es';
 import templates from './SidebarAddedFragments.soy';
 
 /**
@@ -20,12 +26,23 @@ class SidebarAddedFragments extends Component {
 	 */
 
 	_handleFragmentRemoveButtonClick(event) {
-		this.emit(
-			'fragmentRemoveButtonClick',
-			{
-				fragmentEntryLinkId: event.itemId
-			}
-		);
+		this.store
+			.dispatchAction(
+				UPDATE_SAVING_CHANGES_STATUS,
+				{savingChanges: true}
+			)
+			.dispatchAction(
+				REMOVE_FRAGMENT_ENTRY_LINK,
+				{fragmentEntryLinkId: event.itemId}
+			)
+			.dispatchAction(
+				UPDATE_LAST_SAVE_DATE,
+				{lastSaveDate: new Date()}
+			)
+			.dispatchAction(
+				UPDATE_SAVING_CHANGES_STATUS,
+				{savingChanges: false}
+			);
 	}
 }
 
@@ -67,7 +84,18 @@ SidebarAddedFragments.STATE = {
 	 * @type {!string}
 	 */
 
-	spritemap: Config.string().required()
+	spritemap: Config.string().required(),
+
+	/**
+	 * Store instance
+	 * @default undefined
+	 * @instance
+	 * @memberOf SidebarAddedFragments
+	 * @review
+	 * @type {Store}
+	 */
+
+	store: Config.instanceOf(Store)
 };
 
 Soy.register(SidebarAddedFragments, templates);

@@ -23,13 +23,10 @@
 	{@param redirectURL: string}
 	{@param sidebarTabs: list<[enabled:bool, id:string, label:string]>}
 	{@param spritemap: string}
-	{@param? dropTargetClass: string}
 	{@param? _contextualSidebarVisible: bool}
-	{@param? _dirty: bool}
+	{@param? _dropTargetClass: string}
 	{@param? _handleEditableChanged: any}
-	{@param? _handleFragmentEntryClick: any}
 	{@param? _handleFragmentMove: any}
-	{@param? _handleFragmentRemove: any}
 	{@param? _handleHideContextualSidebar: any}
 	{@param? _handleMappeableFieldClicked: any}
 	{@param? _handleMappeableFieldSelected: any}
@@ -41,17 +38,12 @@
 	{@param? _handleToggleHighlightMapping: any}
 	{@param? _handleTranslationLanguageChange: any}
 	{@param? _highlightMapping: bool}
-	{@param? _lastSaveDate: string}
 	{@param? _selectMappingDialogEditableId: string}
 	{@param? _selectMappingDialogEditableType: string}
 	{@param? _selectMappingDialogFragmentEntryLinkId: string}
 	{@param? _selectMappingDialogMappedFieldId: string}
 	{@param? _selectMappingDialogVisible: bool}
 	{@param? _selectMappingTypeDialogVisible: bool}
-	{@param? _translationStatus: [
-		languageValues: list<[languageId: string, values: list<string>]>,
-		translationKeys: list<string>
-	]}
 	{@param? fragmentEntryLinks: list<[
 		content: html|null,
 		editableValues: ?,
@@ -60,9 +52,13 @@
 	]>}
 	{@param? getAssetClassTypesURL: any}
 	{@param? getAssetDisplayContributorsURL: any}
+	{@param? hoveredFragmentEntryLinkBorder: string}
+	{@param? hoveredFragmentEntryLinkId: string}
 	{@param? id: string}
+	{@param? lastSaveDate: string}
 	{@param? mappingFieldsURL: string}
 	{@param? publishLayoutPageTemplateEntryURL: string}
+	{@param? savingChanges: bool}
 	{@param? selectedMappingTypes: [
 		subtype: [
 			id: string,
@@ -74,7 +70,12 @@
 		]
 	]}
 	{@param? status: string}
+	{@param? translationStatus: [
+		languageValues: list<[languageId: string, values: list<string>]>,
+		translationKeys: list<string>
+	]}
 	{@param? updateLayoutPageTemplateEntryAssetTypeURL: any}
+	{@param? _store: ?}
 
 	<div class="fragments-editor" id="{$id}">
 		{call com.liferay.layout.admin.web.FragmentsEditorToolbar.render}
@@ -83,24 +84,23 @@
 				'toggleContextualSidebarButtonClick': $_handleToggleContextualSidebarButtonClick,
 				'translationLanguageChange': $_handleTranslationLanguageChange
 			] /}
-			{param lastSaveDate: $_lastSaveDate ?: '' /}
+			{param lastSaveDate: $lastSaveDate ?: '' /}
 			{param publishLayoutPageTemplateEntryURL: $publishLayoutPageTemplateEntryURL /}
 			{param publishRedirectURL: $redirectURL /}
 			{param publishStatus: $status /}
 			{param portletNamespace: $portletNamespace /}
-			{param savingChanges: $_dirty ?: false /}
+			{param savingChanges: $savingChanges ?: false /}
 			{param spritemap: $spritemap /}
+			{param store: $_store /}
 			{param translationAvailableLanguages: $availableLanguages /}
 			{param translationDefaultLanguageId: $defaultLanguageId /}
 			{param translationLanguageId: $languageId /}
-			{param translationStatus: $_translationStatus /}
+			{param translationStatus: $translationStatus /}
 		{/call}
 
 		{call com.liferay.layout.admin.web.FragmentsEditorSidebar.render}
-			{param dropTargetClass: $dropTargetClass /}
+			{param dropTargetClass: $_dropTargetClass /}
 			{param events: [
-				'fragmentEntryClick': $_handleFragmentEntryClick,
-				'fragmentRemoveButtonClick': $_handleFragmentRemove,
 				'hide': $_handleHideContextualSidebar,
 				'selectAssetTypeButtonClick': $_handleSelectAssetTypeButtonClick,
 				'toggleHighlightMapping': $_handleToggleHighlightMapping
@@ -112,6 +112,7 @@
 			{param selectedMappingTypes: $selectedMappingTypes /}
 			{param sidebarTabs: $sidebarTabs /}
 			{param spritemap: $spritemap /}
+			{param store: $_store /}
 			{param visible: $_contextualSidebarVisible ?: true /}
 		{/call}
 
@@ -119,14 +120,15 @@
 			{call com.liferay.layout.admin.web.FragmentEntryLinkList.render}
 				{param defaultEditorConfigurations: $defaultEditorConfigurations /}
 				{param defaultLanguageId: $defaultLanguageId /}
-				{param dropTargetClass: $dropTargetClass ?: '' /}
+				{param dropTargetClass: $_dropTargetClass ?: '' /}
 				{param events: [
 					'editableChanged': $_handleEditableChanged,
 					'mappeableFieldClicked': $_handleMappeableFieldClicked,
-					'move': $_handleFragmentMove,
-					'remove': $_handleFragmentRemove
+					'move': $_handleFragmentMove
 				] /}
 				{param fragmentEntryLinks: $fragmentEntryLinks /}
+				{param hoveredFragmentEntryLinkBorder: $hoveredFragmentEntryLinkBorder /}
+				{param hoveredFragmentEntryLinkId: $hoveredFragmentEntryLinkId /}
 				{param imageSelectorURL: $imageSelectorURL /}
 				{param languageId: $languageId /}
 				{param mapping: $_highlightMapping ?: false /}
@@ -135,6 +137,7 @@
 				{param ref: 'fragmentsEditorRender' /}
 				{param selectedMappingTypes: $selectedMappingTypes /}
 				{param spritemap: $spritemap /}
+				{param store: $_store /}
 				{param translating: $languageId != $defaultLanguageId /}
 			{/call}
 		</div>
@@ -153,6 +156,7 @@
 				{param portletNamespace: $portletNamespace /}
 				{param selectedMappingTypes: $selectedMappingTypes /}
 				{param spritemap: $spritemap /}
+				{param store: $_store /}
 				{param visible: $_selectMappingDialogVisible ?: false /}
 			{/call}
 		{/if}
@@ -168,6 +172,7 @@
 				{param getAssetDisplayContributorsURL: $getAssetDisplayContributorsURL /}
 				{param portletNamespace: $portletNamespace /}
 				{param spritemap: $spritemap /}
+				{param store: $_store /}
 				{param updateLayoutPageTemplateEntryAssetTypeURL: $updateLayoutPageTemplateEntryAssetTypeURL /}
 				{param visible: $_selectMappingTypeDialogVisible ?: false /}
 			{/call}

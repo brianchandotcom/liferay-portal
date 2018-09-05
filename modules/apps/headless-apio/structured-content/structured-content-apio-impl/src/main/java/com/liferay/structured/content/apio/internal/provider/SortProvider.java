@@ -15,6 +15,7 @@
 package com.liferay.structured.content.apio.internal.provider;
 
 import com.liferay.apio.architect.provider.Provider;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.structured.content.apio.architect.sort.Sort;
 import com.liferay.structured.content.apio.architect.sort.SortParser;
 
@@ -32,6 +33,10 @@ public class SortProvider implements Provider<Sort> {
 	@Override
 	public Sort createContext(HttpServletRequest httpServletRequest) {
 		String sortString = httpServletRequest.getParameter("sort");
+
+		if (Validator.isNull(sortString)) {
+			return Sort.emptySort();
+		}
 
 		return new Sort(_sortParser.parse(sortString));
 	}

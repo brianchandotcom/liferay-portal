@@ -337,15 +337,6 @@ public class ResourcePermissionLocalServiceImpl
 			return;
 		}
 
-		// Individual
-
-		Resource resource = new ResourceImpl();
-
-		resource.setCompanyId(companyId);
-		resource.setName(name);
-		resource.setScope(ResourceConstants.SCOPE_INDIVIDUAL);
-		resource.setPrimKey(primKey);
-
 		// Permissions
 
 		boolean flushResourcePermissionEnabled =
@@ -366,23 +357,20 @@ public class ResourcePermissionLocalServiceImpl
 			List<String> actionIds = null;
 
 			if (portletActions) {
-				actionIds = ResourceActionsUtil.getPortletResourceActions(
-					resource.getName());
+				actionIds = ResourceActionsUtil.getPortletResourceActions(name);
 			}
 			else {
-				actionIds = ResourceActionsUtil.getModelResourceActions(
-					resource.getName());
+				actionIds = ResourceActionsUtil.getModelResourceActions(name);
 
-				filterOwnerActions(resource.getName(), actionIds);
+				filterOwnerActions(name, actionIds);
 			}
 
 			Role role = roleLocalService.getRole(
 				companyId, RoleConstants.OWNER);
 
 			_updateResourcePermission(
-				resource.getCompanyId(), resource.getName(),
-				resource.getScope(), resource.getPrimKey(), userId,
-				role.getRoleId(),
+				companyId, name, ResourceConstants.SCOPE_INDIVIDUAL, primKey,
+				userId, role.getRoleId(),
 				actionIds.toArray(new String[actionIds.size()]),
 				ResourcePermissionConstants.OPERATOR_SET, true);
 
@@ -405,9 +393,8 @@ public class ResourcePermissionLocalServiceImpl
 				Role groupRole = roleLocalService.getDefaultGroupRole(groupId);
 
 				_updateResourcePermission(
-					resource.getCompanyId(), resource.getName(),
-					resource.getScope(), resource.getPrimKey(), 0,
-					groupRole.getRoleId(),
+					companyId, name, ResourceConstants.SCOPE_INDIVIDUAL,
+					primKey, 0, groupRole.getRoleId(),
 					actions.toArray(new String[actions.size()]),
 					ResourcePermissionConstants.OPERATOR_SET, true);
 			}
@@ -424,22 +411,20 @@ public class ResourcePermissionLocalServiceImpl
 				if (portletActions) {
 					actions =
 						ResourceActionsUtil.
-							getPortletResourceGuestDefaultActions(
-								resource.getName());
+							getPortletResourceGuestDefaultActions(name);
 				}
 				else {
 					actions =
 						ResourceActionsUtil.getModelResourceGuestDefaultActions(
-							resource.getName());
+							name);
 				}
 
 				Role guestRole = roleLocalService.getRole(
-					resource.getCompanyId(), RoleConstants.GUEST);
+					companyId, RoleConstants.GUEST);
 
 				_updateResourcePermission(
-					resource.getCompanyId(), resource.getName(),
-					resource.getScope(), resource.getPrimKey(), 0,
-					guestRole.getRoleId(),
+					companyId, name, ResourceConstants.SCOPE_INDIVIDUAL,
+					primKey, 0, guestRole.getRoleId(),
 					actions.toArray(new String[actions.size()]),
 					ResourcePermissionConstants.OPERATOR_SET, true);
 			}

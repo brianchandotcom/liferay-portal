@@ -948,6 +948,7 @@
 	</command>
 
 	<command name="ViewEditURLLocale" priority="4">
+		<property name="custom.properties" value="locale.use.default.if.not.available=true" />
 		<property name="testray.component.names" value="Site Localization" />
 
 		<var method="PropsUtil#get('portal.url')" name="portalURL" />
@@ -1006,7 +1007,7 @@
 
 		<execute macro="Alert#closePortalLocalizationWarning" />
 
-		<execute function="AssertLocation" value1="${portalURL}/en/web/site-name/language-page" />
+		<execute function="AssertLocation" value1="${portalURL}/fr/web/site-name/language-page" />
 
 		<execute macro="Navigator#openSpecificURL">
 			<var name="url" value="${portalURL}/fr" />
@@ -1014,7 +1015,7 @@
 
 		<execute macro="Alert#closePortalLocalizationWarning" />
 
-		<execute function="AssertLocation" value1="${portalURL}/en/web/guest/home" />
+		<execute function="AssertLocation" value1="${portalURL}/fr/web/guest/home" />
 
 		<execute macro="User#loginPG">
 			<var name="specificURL" value="${portalURL}/fr" />
@@ -1044,7 +1045,7 @@
 		<execute macro="Site#viewVirtualHostsURLPG">
 			<var name="pageName" value="Language Page" />
 			<var name="siteName" value="Site Name" />
-			<var name="sitePageURL" value="http://www.able.com:8080/en/" />
+			<var name="sitePageURL" value="http://www.able.com:8080/fr/" />
 		</execute>
 	</command>
 

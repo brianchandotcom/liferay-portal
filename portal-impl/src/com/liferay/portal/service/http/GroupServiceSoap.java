@@ -96,6 +96,22 @@ public class GroupServiceSoap {
 		}
 	}
 
+	public static com.liferay.portal.kernel.model.GroupSoap[] getGtCompanyGroups(
+		long gtGroupId, long companyId, long parentGroupId, boolean site,
+		int size) throws RemoteException {
+		try {
+			java.util.List<com.liferay.portal.kernel.model.Group> returnValue = GroupServiceUtil.getGtCompanyGroups(gtGroupId,
+					companyId, parentGroupId, site, size);
+
+			return com.liferay.portal.kernel.model.GroupSoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static com.liferay.portal.kernel.model.GroupSoap addGroup(
 		long parentGroupId, long liveGroupId, String[] nameMapLanguageIds,
 		String[] nameMapValues, String[] descriptionMapLanguageIds,

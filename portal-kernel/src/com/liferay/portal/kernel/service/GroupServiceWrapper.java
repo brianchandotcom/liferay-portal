@@ -282,6 +282,14 @@ public class GroupServiceWrapper implements GroupService,
 		return _groupService.getGroupsCount(companyId, className, parentGroupId);
 	}
 
+	@Override
+	public java.util.List<com.liferay.portal.kernel.model.Group> getGtCompanyGroups(
+		long gtGroupId, long companyId, long parentGroupId, boolean site,
+		int size) throws com.liferay.portal.kernel.exception.PortalException {
+		return _groupService.getGtCompanyGroups(gtGroupId, companyId,
+			parentGroupId, site, size);
+	}
+
 	/**
 	* Returns a range of all the site groups for which the user has control
 	* panel access.

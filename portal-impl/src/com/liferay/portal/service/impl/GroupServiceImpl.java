@@ -53,6 +53,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.kernel.util.comparator.GroupIdComparator;
 import com.liferay.portal.service.base.GroupServiceBaseImpl;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.ratings.kernel.transformer.RatingsDataTransformerUtil;
@@ -435,6 +436,22 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 
 		return groupLocalService.getGroupsCount(
 			companyId, className, parentGroupId);
+	}
+
+	public List<Group> getGtCompanyGroups(
+			long gtGroupId, long companyId, long parentGroupId, boolean site,
+			int size)
+		throws PortalException {
+
+		PermissionChecker permissionChecker = getPermissionChecker();
+
+		if (!permissionChecker.isCompanyAdmin(companyId)) {
+			throw new PrincipalException.MustBeCompanyAdmin(permissionChecker);
+		}
+
+		return groupPersistence.findByG_C_P_S(
+			gtGroupId, companyId, parentGroupId, site, 0, size,
+			new GroupIdComparator(true));
 	}
 
 	/**

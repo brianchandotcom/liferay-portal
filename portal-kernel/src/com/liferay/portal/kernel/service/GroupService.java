@@ -246,6 +246,10 @@ public interface GroupService extends BaseService {
 	public int getGroupsCount(long companyId, String className,
 		long parentGroupId) throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<Group> getGtCompanyGroups(long gtGroupId, long companyId,
+		long parentGroupId, boolean site, int size) throws PortalException;
+
 	/**
 	* Returns a range of all the site groups for which the user has control
 	* panel access.

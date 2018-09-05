@@ -14,6 +14,8 @@
 
 package com.liferay.structured.content.apio.architect.sort;
 
+import com.liferay.portal.kernel.util.ListUtil;
+
 import java.util.Collections;
 import java.util.List;
 
@@ -45,12 +47,11 @@ public class Sort {
 	 * @review
 	 */
 	public Sort(List<SortField> sortFields) {
-		if (sortFields == null) {
-			_sortFields = Collections.emptyList();
+		if (ListUtil.isEmpty(sortFields)) {
+			throw new InvalidSortException("Sort fields is Empty.");
 		}
-		else {
-			_sortFields = Collections.unmodifiableList(sortFields);
-		}
+
+		_sortFields = Collections.unmodifiableList(sortFields);
 	}
 
 	/**

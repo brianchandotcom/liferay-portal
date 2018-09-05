@@ -4444,6 +4444,8 @@ overridden by values defined in a `gradle-ext.properties` file.
 - [LPS-84094]: Move `GradleUtil` methods to [Liferay Gradle Util] so it can be
 used inside `build.gradle` files.
 - [LPS-84621]: Enable the `validateSchema` task for CI.
+- [LPS-84891]: Update the [Liferay Gradle Plugins] dependency to version
+3.12.119.
 
 ## 5.5.33 - 2018-09-04
 
@@ -4917,6 +4919,7 @@ used inside `build.gradle` files.
 [LPS-84621]: https://issues.liferay.com/browse/LPS-84621
 [LPS-84624]: https://issues.liferay.com/browse/LPS-84624
 [LPS-84887]: https://issues.liferay.com/browse/LPS-84887
+[LPS-84891]: https://issues.liferay.com/browse/LPS-84891
 [LRDOCS-2594]: https://issues.liferay.com/browse/LRDOCS-2594
 [LRDOCS-2841]: https://issues.liferay.com/browse/LRDOCS-2841
 [LRDOCS-2981]: https://issues.liferay.com/browse/LRDOCS-2981

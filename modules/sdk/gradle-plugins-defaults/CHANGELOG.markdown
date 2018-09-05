@@ -4471,6 +4471,12 @@ used inside `build.gradle` files.
 - [LPS-84119]: Update the [Liferay Gradle Plugins] dependency to version
 3.12.123.
 
+## 5.5.32 - 2018-09-04
+
+### Changed
+- [LPS-84119]: Update the [Liferay Gradle Plugins] dependency to version
+3.12.124.
+
 ## 5.5.33 - 2018-09-04
 
 ### Fixed

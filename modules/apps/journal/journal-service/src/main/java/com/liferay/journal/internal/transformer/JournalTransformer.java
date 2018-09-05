@@ -554,7 +554,8 @@ public class JournalTransformer {
 			if (dynamicElementElement.element("dynamic-element") != null) {
 				templateNode.appendChildren(
 					getTemplateNodes(
-						themeDisplay, dynamicElementElement, ddmStructureId));
+						themeDisplay, dynamicElementElement, ddmStructureId,
+						locale));
 			}
 			else if ((dynamicContentElement != null) &&
 					 (dynamicContentElement.element("option") != null)) {

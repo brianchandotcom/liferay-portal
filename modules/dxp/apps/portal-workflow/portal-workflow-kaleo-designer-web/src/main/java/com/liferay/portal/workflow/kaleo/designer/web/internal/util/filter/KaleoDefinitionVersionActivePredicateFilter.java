@@ -45,9 +45,8 @@ public class KaleoDefinitionVersionActivePredicateFilter
 			if (_status == KaleoDefinitionVersionConstants.STATUS_PUBLISHED) {
 				return kaleoDefinition.isActive();
 			}
-			else {
-				return !kaleoDefinition.isActive();
-			}
+
+			return !kaleoDefinition.isActive();
 		}
 		catch (PortalException pe) {
 			if (_log.isDebugEnabled()) {
@@ -57,9 +56,8 @@ public class KaleoDefinitionVersionActivePredicateFilter
 			if (_status == KaleoDefinitionVersionConstants.STATUS_PUBLISHED) {
 				return false;
 			}
-			else {
-				return true;
-			}
+
+			return true;
 		}
 	}
 

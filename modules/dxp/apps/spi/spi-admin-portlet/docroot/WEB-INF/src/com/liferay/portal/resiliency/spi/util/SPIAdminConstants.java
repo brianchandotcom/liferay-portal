@@ -64,9 +64,8 @@ public class SPIAdminConstants {
 		else if (status == STATUS_STOPPING) {
 			return LABEL_STOPPING;
 		}
-		else {
-			return StringPool.BLANK;
-		}
+
+		return StringPool.BLANK;
 	}
 
 }

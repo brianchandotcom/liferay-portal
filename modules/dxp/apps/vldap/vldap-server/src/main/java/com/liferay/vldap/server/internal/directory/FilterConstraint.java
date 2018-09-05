@@ -66,9 +66,8 @@ public class FilterConstraint {
 		if (collision) {
 			return null;
 		}
-		else {
-			return filterConstraint;
-		}
+
+		return filterConstraint;
 	}
 
 	public FilterConstraint() {

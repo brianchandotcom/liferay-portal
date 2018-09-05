@@ -356,10 +356,9 @@ public class OpenSamlUtil {
 			return buildAttribute(
 				name, friendlyName, nameFormat, (String[])value);
 		}
-		else {
-			return buildAttribute(
-				name, friendlyName, nameFormat, String.valueOf(value));
-		}
+
+		return buildAttribute(
+			name, friendlyName, nameFormat, String.valueOf(value));
 	}
 
 	public static Attribute buildAttribute(

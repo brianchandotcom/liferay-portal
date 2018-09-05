@@ -121,9 +121,8 @@ public class LdapSslContextFactory {
 		if (server) {
 			return _serverSSLContext;
 		}
-		else {
-			return _clientSSLContext;
-		}
+
+		return _clientSSLContext;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

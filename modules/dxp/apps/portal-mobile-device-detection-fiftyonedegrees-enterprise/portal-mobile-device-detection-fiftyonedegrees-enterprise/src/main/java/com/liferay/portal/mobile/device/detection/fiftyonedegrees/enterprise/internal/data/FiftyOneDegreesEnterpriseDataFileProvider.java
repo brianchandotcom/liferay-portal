@@ -63,9 +63,8 @@ public class FiftyOneDegreesEnterpriseDataFileProvider
 		else if (fileName.endsWith(".jar") || fileName.endsWith(".zip")) {
 			return new ZipInputStream(inputStream);
 		}
-		else {
-			return inputStream;
-		}
+
+		return inputStream;
 	}
 
 	@Activate

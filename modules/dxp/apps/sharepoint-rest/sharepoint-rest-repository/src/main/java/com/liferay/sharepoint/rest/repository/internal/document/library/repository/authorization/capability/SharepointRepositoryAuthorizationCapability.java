@@ -97,9 +97,8 @@ public class SharepointRepositoryAuthorizationCapability
 			if (Validator.isNotNull(token.getRefreshToken())) {
 				return false;
 			}
-			else {
-				return true;
-			}
+
+			return true;
 		}
 
 		return false;

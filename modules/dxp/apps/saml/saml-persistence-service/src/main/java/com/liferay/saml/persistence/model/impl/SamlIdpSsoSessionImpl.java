@@ -70,9 +70,8 @@ public class SamlIdpSsoSessionImpl extends SamlIdpSsoSessionBaseImpl {
 		if (System.currentTimeMillis() > expirationTime) {
 			return true;
 		}
-		else {
-			return false;
-		}
+
+		return false;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

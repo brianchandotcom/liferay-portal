@@ -65,9 +65,8 @@ public class SamlSpSsoFilter extends BaseSamlPortalFilter {
 
 			return true;
 		}
-		else {
-			return false;
-		}
+
+		return false;
 	}
 
 	@Override

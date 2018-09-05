@@ -253,9 +253,8 @@ public class SharepointQueryBuilder {
 				if (folderPath.equals(StringPool.SLASH)) {
 					return prefixPath;
 				}
-				else {
-					return prefixPath + folderPath;
-				}
+
+				return prefixPath + folderPath;
 			}
 			catch (PortalException pe) {
 				throw new SearchException(

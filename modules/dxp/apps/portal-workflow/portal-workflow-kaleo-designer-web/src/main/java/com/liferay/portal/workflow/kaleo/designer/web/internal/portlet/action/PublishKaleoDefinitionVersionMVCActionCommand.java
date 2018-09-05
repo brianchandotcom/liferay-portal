@@ -132,10 +132,9 @@ public class PublishKaleoDefinitionVersionMVCActionCommand
 			return LanguageUtil.get(
 				resourceBundle, "workflow-published-successfully");
 		}
-		else {
-			return LanguageUtil.get(
-				resourceBundle, "workflow-updated-successfully");
-		}
+
+		return LanguageUtil.get(
+			resourceBundle, "workflow-updated-successfully");
 	}
 
 	@Override

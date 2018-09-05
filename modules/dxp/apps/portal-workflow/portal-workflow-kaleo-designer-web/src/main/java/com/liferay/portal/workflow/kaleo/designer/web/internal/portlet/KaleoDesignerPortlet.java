@@ -200,9 +200,8 @@ public class KaleoDesignerPortlet extends MVCPortlet {
 
 			return new Integer[] {type};
 		}
-		else {
-			return new Integer[0];
-		}
+
+		return new Integer[0];
 	}
 
 	@Override

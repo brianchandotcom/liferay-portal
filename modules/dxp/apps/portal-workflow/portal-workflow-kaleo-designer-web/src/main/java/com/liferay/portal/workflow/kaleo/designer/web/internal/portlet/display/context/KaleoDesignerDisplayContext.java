@@ -343,9 +343,8 @@ public class KaleoDesignerDisplayContext {
 		else if (workflowDefinitionLinks.size() == 2) {
 			return "workflow-in-use-remove-assignements-to-x-and-x-x";
 		}
-		else {
-			return "workflow-in-use-remove-assignements-to-x-x-and-x-more-x";
-		}
+
+		return "workflow-in-use-remove-assignements-to-x-x-and-x-more-x";
 	}
 
 	public Date getModifiedDate(KaleoDefinitionVersion kaleoDefinitionVersion) {
@@ -548,11 +547,10 @@ public class KaleoDesignerDisplayContext {
 			return KaleoDefinitionVersionPermission.contains(
 				permissionChecker, kaleoDefinitionVersion, ActionKeys.UPDATE);
 		}
-		else {
-			return KaleoDesignerPermission.contains(
-				permissionChecker, _themeDisplay.getCompanyGroupId(),
-				KaleoDesignerActionKeys.ADD_NEW_WORKFLOW);
-		}
+
+		return KaleoDesignerPermission.contains(
+			permissionChecker, _themeDisplay.getCompanyGroupId(),
+			KaleoDesignerActionKeys.ADD_NEW_WORKFLOW);
 	}
 
 	public boolean isSaveKaleoDefinitionVersionButtonVisible(
@@ -570,15 +568,13 @@ public class KaleoDesignerDisplayContext {
 					permissionChecker, kaleoDefinitionVersion,
 					ActionKeys.UPDATE);
 			}
-			else {
-				return false;
-			}
+
+			return false;
 		}
-		else {
-			return KaleoDesignerPermission.contains(
-				permissionChecker, _themeDisplay.getCompanyGroupId(),
-				KaleoDesignerActionKeys.ADD_NEW_WORKFLOW);
-		}
+
+		return KaleoDesignerPermission.contains(
+			permissionChecker, _themeDisplay.getCompanyGroupId(),
+			KaleoDesignerActionKeys.ADD_NEW_WORKFLOW);
 	}
 
 	public void setKaleoDesignerRequestHelper(RenderRequest renderRequest) {

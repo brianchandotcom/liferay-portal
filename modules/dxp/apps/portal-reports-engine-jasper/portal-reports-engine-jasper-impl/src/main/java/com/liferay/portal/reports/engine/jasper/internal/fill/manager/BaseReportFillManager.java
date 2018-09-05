@@ -144,9 +144,8 @@ public abstract class BaseReportFillManager implements ReportFillManager {
 		if (Validator.isNotNull(dataSourceColumnNames)) {
 			return StringUtil.split(dataSourceColumnNames, StringPool.COMMA);
 		}
-		else {
-			return null;
-		}
+
+		return null;
 	}
 
 	protected JRDataSource getJRDataSource(ReportRequest reportRequest)

@@ -176,10 +176,9 @@ public class BindLdapHandler extends BaseLdapHandler {
 
 			return getResultResponse(bindRequest, ResultCodeEnum.SUCCESS);
 		}
-		else {
-			return getResultResponse(
-				bindRequest, ResultCodeEnum.SASL_BIND_IN_PROGRESS);
-		}
+
+		return getResultResponse(
+			bindRequest, ResultCodeEnum.SASL_BIND_IN_PROGRESS);
 	}
 
 	protected Response getSimpleResponse(

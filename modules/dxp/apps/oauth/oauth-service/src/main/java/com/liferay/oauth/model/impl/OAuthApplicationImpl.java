@@ -29,9 +29,8 @@ public class OAuthApplicationImpl extends OAuthApplicationBaseImpl {
 		if (getAccessLevel() == OAuthApplicationConstants.ACCESS_READ) {
 			return OAuthApplicationConstants.LABEL_ACCESS_READ;
 		}
-		else {
-			return OAuthApplicationConstants.LABEL_ACCESS_WRITE;
-		}
+
+		return OAuthApplicationConstants.LABEL_ACCESS_WRITE;
 	}
 
 }

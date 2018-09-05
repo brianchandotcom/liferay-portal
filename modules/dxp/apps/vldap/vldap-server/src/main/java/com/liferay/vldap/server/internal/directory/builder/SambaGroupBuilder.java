@@ -59,10 +59,8 @@ public class SambaGroupBuilder extends OrganizationBuilder {
 			return buildAllOrganizationDirectories(
 				searchBase, filterConstraints);
 		}
-		else {
-			return buildSingleOrganizationDirectory(
-				searchBase, filterConstraints);
-		}
+
+		return buildSingleOrganizationDirectory(searchBase, filterConstraints);
 	}
 
 	protected void addSambaGroup(

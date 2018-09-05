@@ -222,9 +222,8 @@ public class SearchLdapHandler extends BaseLdapHandler {
 				if (!isMatch(directory, exprNode)) {
 					return true;
 				}
-				else {
-					return false;
-				}
+
+				return false;
 			}
 
 			return false;
@@ -256,9 +255,8 @@ public class SearchLdapHandler extends BaseLdapHandler {
 			if (directory.hasAttribute(attributeId, value.getString())) {
 				return true;
 			}
-			else {
-				return false;
-			}
+
+			return false;
 		}
 		else if (leafNode instanceof GreaterEqNode<?>) {
 		}
@@ -272,9 +270,8 @@ public class SearchLdapHandler extends BaseLdapHandler {
 			if (directory.hasAttribute(attributeId)) {
 				return true;
 			}
-			else {
-				return false;
-			}
+
+			return false;
 		}
 		else if (leafNode instanceof SubstringNode) {
 		}

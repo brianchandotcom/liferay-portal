@@ -407,6 +407,13 @@ public class SharingEntryLocalServiceUtil {
 			sharingEntryActionKey);
 	}
 
+	public static boolean hasSharingPermission(
+		com.liferay.sharing.model.SharingEntry sharingEntry,
+		com.liferay.sharing.constants.SharingEntryActionKey sharingEntryActionKey) {
+		return getService()
+				   .hasSharingPermission(sharingEntry, sharingEntryActionKey);
+	}
+
 	public static com.liferay.sharing.model.SharingEntry updateSharingEntry(
 		long sharingEntryId,
 		java.util.Collection<com.liferay.sharing.constants.SharingEntryActionKey> sharingEntryActionKeys)

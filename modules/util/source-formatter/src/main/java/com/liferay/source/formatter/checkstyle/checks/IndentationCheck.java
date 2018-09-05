@@ -67,7 +67,7 @@ public class IndentationCheck extends BaseCheck {
 			TokenTypes.SINGLE_LINE_COMMENT, TokenTypes.STATIC_IMPORT,
 			TokenTypes.STATIC_INIT, TokenTypes.STRING_LITERAL,
 			TokenTypes.SUPER_CTOR_CALL, TokenTypes.TYPECAST,
-			TokenTypes.UNARY_MINUS
+			TokenTypes.UNARY_MINUS, TokenTypes.WILDCARD_TYPE
 		};
 	}
 
@@ -373,12 +373,37 @@ public class IndentationCheck extends BaseCheck {
 			return lineNumbers;
 		}
 
-		List<DetailAST> genericASTList = DetailASTUtil.getAllChildTokens(
-			detailAST, true, TokenTypes.GENERIC_END, TokenTypes.GENERIC_START);
+		List<DetailAST> genericStartASTList = DetailASTUtil.getAllChildTokens(
+			detailAST, true, TokenTypes.GENERIC_START);
 
-		for (DetailAST genericAST : genericASTList) {
+		for (DetailAST genericStartAST : genericStartASTList) {
+			if (!_isAtLineStart(genericStartAST)) {
+				continue;
+			}
+
+			int lineNo = genericStartAST.getLineNo() - 1;
+
+			if (lineNo < lineNumber) {
+				lineNumbers.add(lineNo);
+			}
+
+			DetailAST parentAST = genericStartAST.getParent();
+
+			DetailAST commaAST = parentAST.findFirstToken(TokenTypes.COMMA);
+
+			if ((commaAST != null) &&
+				(commaAST.getLineNo() == genericStartAST.getLineNo())) {
+
+				DetailAST genericEndAST = parentAST.findFirstToken(
+					TokenTypes.GENERIC_END);
+
+				if (genericEndAST.getLineNo() != genericStartAST.getLineNo()) {
+					continue;
+				}
+			}
+
 			DetailAST exprAST = DetailASTUtil.getParentWithTokenType(
-				genericAST, TokenTypes.EXPR);
+				genericStartAST, TokenTypes.EXPR);
 
 			if ((exprAST != null) &&
 				!lineNumbers.contains(DetailASTUtil.getStartLine(exprAST))) {
@@ -386,7 +411,33 @@ public class IndentationCheck extends BaseCheck {
 				continue;
 			}
 
-			int lineNo = genericAST.getLineNo();
+			lineNo = genericStartAST.getLineNo();
+
+			if (lineNo < lineNumber) {
+				lineNumbers.add(lineNo);
+			}
+		}
+
+		List<DetailAST> genericEndtASTList = DetailASTUtil.getAllChildTokens(
+			detailAST, true, TokenTypes.GENERIC_END);
+
+		for (DetailAST genericEndAST : genericEndtASTList) {
+			String line = getLine(genericEndAST.getLineNo() - 1);
+
+			if (!DetailASTUtil.isAtLineEnd(genericEndAST, line)) {
+				continue;
+			}
+
+			DetailAST exprAST = DetailASTUtil.getParentWithTokenType(
+				genericEndAST, TokenTypes.EXPR);
+
+			if ((exprAST != null) &&
+				!lineNumbers.contains(DetailASTUtil.getStartLine(exprAST))) {
+
+				continue;
+			}
+
+			int lineNo = genericEndAST.getLineNo();
 
 			if (lineNo < lineNumber) {
 				lineNumbers.add(lineNo);
@@ -418,8 +469,10 @@ public class IndentationCheck extends BaseCheck {
 
 	private int _adjustTabCount(int tabCount, DetailAST detailAST) {
 		tabCount = _adjustTabCountForChains(tabCount, detailAST);
+		tabCount = _adjustTabCountForEndOfLineLogicalOperator(
+			tabCount, detailAST);
 
-		return _adjustTabCountForEndOfLineLogicalOperator(tabCount, detailAST);
+		return tabCount;
 	}
 
 	private int _adjustTabCountForChains(int tabCount, DetailAST detailAST) {
@@ -766,6 +819,21 @@ public class IndentationCheck extends BaseCheck {
 					}
 				}
 			}
+			else if ((parentAST.getType() == TokenTypes.TYPE_ARGUMENTS) ||
+					 (parentAST.getType() == TokenTypes.TYPE_PARAMETERS)) {
+
+				DetailAST commaAST = parentAST.findFirstToken(TokenTypes.COMMA);
+
+				if ((commaAST == null) ||
+					(commaAST.getLineNo() != parentAST.getLineNo())) {
+
+					int lineNo = parentAST.getLineNo();
+
+					if (lineNo < detailAST.getLineNo()) {
+						lineNumbers.add(lineNo);
+					}
+				}
+			}
 			else if (parentAST.getType() != TokenTypes.CASE_GROUP) {
 				int lineNo = parentAST.getLineNo();
 
@@ -839,6 +907,19 @@ public class IndentationCheck extends BaseCheck {
 			}
 
 			if (parentAST.getType() == TokenTypes.TYPECAST) {
+				DetailAST rparenAST = parentAST.findFirstToken(
+					TokenTypes.RPAREN);
+
+				String line = getLine(rparenAST.getLineNo() - 1);
+
+				if (DetailASTUtil.isAtLineEnd(rparenAST, line)) {
+					int lineNo = rparenAST.getLineNo();
+
+					if (lineNo < detailAST.getLineNo()) {
+						lineNumbers.add(lineNo);
+					}
+				}
+
 				DetailAST typeAST = parentAST.findFirstToken(TokenTypes.TYPE);
 
 				lineNumbers = _addTabsForGenerics(

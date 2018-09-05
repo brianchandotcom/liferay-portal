@@ -55,7 +55,7 @@ import org.osgi.service.component.annotations.Reference;
 public class VocabularyNestedCollectionResource
 	implements NestedCollectionResource
 		<AssetVocabulary, Long, VocabularyIdentifier, Long,
-			ContentSpaceIdentifier> {
+		 ContentSpaceIdentifier> {
 
 	@Override
 	public NestedCollectionRoutes<AssetVocabulary, Long, Long> collectionRoutes(

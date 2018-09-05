@@ -129,9 +129,9 @@ public class IndexOnStartupIndexerServiceCustomizer
 
 		synchronized (_serviceRegistrations) {
 			for (Map.Entry
-					<String, ServiceRegistration
-						<PortalInstanceLifecycleListener>> entry :
-							_serviceRegistrations.entrySet()) {
+					<String,
+					 ServiceRegistration<PortalInstanceLifecycleListener>>
+						entry : _serviceRegistrations.entrySet()) {
 
 				ServiceRegistration<?> serviceRegistration = entry.getValue();
 

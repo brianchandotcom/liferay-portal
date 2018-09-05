@@ -79,12 +79,12 @@ public class PortalCacheManagerProvider {
 	private final
 		ServiceTracker
 			<PortalCacheManager<? extends Serializable, ?>,
-				PortalCacheManager<? extends Serializable, ?>> _serviceTracker;
+			 PortalCacheManager<? extends Serializable, ?>> _serviceTracker;
 
 	private class PortalCacheProviderServiceTrackerCustomizer
 		implements ServiceTrackerCustomizer
 			<PortalCacheManager<? extends Serializable, ?>,
-				PortalCacheManager<? extends Serializable, ?>> {
+			 PortalCacheManager<? extends Serializable, ?>> {
 
 		@Override
 		public PortalCacheManager<? extends Serializable, ?> addingService(

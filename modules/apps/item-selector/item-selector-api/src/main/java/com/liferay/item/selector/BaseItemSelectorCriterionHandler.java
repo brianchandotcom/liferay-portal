@@ -129,7 +129,7 @@ public abstract class BaseItemSelectorCriterionHandler
 
 	private ServiceTracker
 		<ItemSelectorViewReturnTypeProviderHandler,
-			ItemSelectorViewReturnTypeProviderHandler> _serviceTracker;
+		 ItemSelectorViewReturnTypeProviderHandler> _serviceTracker;
 	private ServiceTrackerMap<Class, List<ItemSelectorView>> _serviceTrackerMap;
 
 	private class ItemSelectorViewServiceReferenceMapper

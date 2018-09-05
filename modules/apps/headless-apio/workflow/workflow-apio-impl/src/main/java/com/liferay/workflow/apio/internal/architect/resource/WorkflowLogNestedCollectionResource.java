@@ -49,7 +49,7 @@ import org.osgi.service.component.annotations.Reference;
 public class WorkflowLogNestedCollectionResource
 	implements NestedCollectionResource
 		<WorkflowLog, Long, WorkflowLogIdentifier, Long,
-			WorkflowTaskIdentifier> {
+		 WorkflowTaskIdentifier> {
 
 	@Override
 	public NestedCollectionRoutes<WorkflowLog, Long, Long> collectionRoutes(

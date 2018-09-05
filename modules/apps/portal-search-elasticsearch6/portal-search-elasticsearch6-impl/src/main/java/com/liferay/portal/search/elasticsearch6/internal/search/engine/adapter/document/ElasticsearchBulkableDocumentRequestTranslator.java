@@ -51,7 +51,7 @@ import org.osgi.service.component.annotations.Reference;
 public class ElasticsearchBulkableDocumentRequestTranslator
 	implements BulkableDocumentRequestTranslator
 		<DeleteRequestBuilder, IndexRequestBuilder, UpdateRequestBuilder,
-			   BulkRequestBuilder> {
+		 BulkRequestBuilder> {
 
 	@Override
 	public DeleteRequestBuilder translate(

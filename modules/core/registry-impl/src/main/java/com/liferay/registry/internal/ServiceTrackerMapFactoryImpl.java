@@ -390,9 +390,11 @@ public class ServiceTrackerMapFactoryImpl implements ServiceTrackerMapFactory {
 		ReferenceQueue<com.liferay.osgi.service.tracker.collections.map.
 			ServiceTrackerMap<?, ?>> _referenceQueue = new ReferenceQueue<>();
 	private final
-		Set<Reference<com.liferay.osgi.service.tracker.collections.map.
-			ServiceTrackerMap<?, ?>>> _serviceTrackerMaps =
-				Collections.newSetFromMap(new ConcurrentHashMap<>());
+		Set
+			<Reference
+				<com.liferay.osgi.service.tracker.collections.map.
+					ServiceTrackerMap<?, ?>>> _serviceTrackerMaps =
+						Collections.newSetFromMap(new ConcurrentHashMap<>());
 
 	private static class EmitterWrapper<K>
 		implements ServiceReferenceMapper.Emitter<K> {

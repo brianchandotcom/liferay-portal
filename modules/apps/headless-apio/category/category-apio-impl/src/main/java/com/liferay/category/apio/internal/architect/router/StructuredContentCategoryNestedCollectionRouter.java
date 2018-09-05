@@ -43,7 +43,7 @@ public class StructuredContentCategoryNestedCollectionRouter
 	extends BaseCategoryNestedCollectionRouter<StructuredContentIdentifier>
 	implements NestedCollectionRouter
 		<AssetCategory, Long, CategoryIdentifier, Long,
-			StructuredContentIdentifier> {
+		 StructuredContentIdentifier> {
 
 	@Override
 	public NestedCollectionRoutes<AssetCategory, Long, Long> collectionRoutes(

@@ -86,12 +86,12 @@ public class ExportImportPortletPreferencesProcessorRegistryUtil {
 	private final
 		ServiceTracker
 			<ExportImportPortletPreferencesProcessor,
-				ExportImportPortletPreferencesProcessor> _serviceTracker;
+			 ExportImportPortletPreferencesProcessor> _serviceTracker;
 
 	private class ExportImportPortletPreferencesProcessorServiceTrackerCustomizer
 		implements ServiceTrackerCustomizer
 			<ExportImportPortletPreferencesProcessor,
-				ExportImportPortletPreferencesProcessor> {
+			 ExportImportPortletPreferencesProcessor> {
 
 		@Override
 		public ExportImportPortletPreferencesProcessor addingService(

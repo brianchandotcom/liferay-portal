@@ -42,7 +42,7 @@ import org.osgi.service.component.annotations.Reference;
 public class OrganizationNestedCollectionRouter
 	implements NestedCollectionRouter
 		<Organization, Long, OrganizationIdentifier, Long,
-			OrganizationIdentifier> {
+		 OrganizationIdentifier> {
 
 	@Override
 	public NestedCollectionRoutes<Organization, Long, Long> collectionRoutes(

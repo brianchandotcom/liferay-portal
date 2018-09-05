@@ -56,6 +56,6 @@ public class UpdateDocumentRequestExecutorImpl
 	@Reference(target = "(search.engine.impl=Elasticsearch)")
 	protected BulkableDocumentRequestTranslator
 		<DeleteRequestBuilder, IndexRequestBuilder, UpdateRequestBuilder,
-			BulkRequestBuilder> bulkableDocumentRequestTranslator;
+		 BulkRequestBuilder> bulkableDocumentRequestTranslator;
 
 }

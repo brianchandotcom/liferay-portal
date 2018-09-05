@@ -65,14 +65,14 @@ public class WorkflowDefinitionLinkUpdateHandlerRegistryUtil {
 	private final BundleContext _bundleContext;
 	private final ServiceTracker
 		<WorkflowDefinitionLinkUpdateHandler,
-			WorkflowDefinitionLinkUpdateHandler> _serviceTracker;
+		 WorkflowDefinitionLinkUpdateHandler> _serviceTracker;
 	private final Map<String, WorkflowDefinitionLinkUpdateHandler>
 		_workflowDefinitionLinkUpdateHandlers = new ConcurrentHashMap<>();
 
 	private class ExportImportContentProcessorServiceTrackerCustomizer
 		implements ServiceTrackerCustomizer
 			<WorkflowDefinitionLinkUpdateHandler,
-				WorkflowDefinitionLinkUpdateHandler> {
+			 WorkflowDefinitionLinkUpdateHandler> {
 
 		@Override
 		public WorkflowDefinitionLinkUpdateHandler addingService(

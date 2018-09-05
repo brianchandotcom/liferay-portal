@@ -286,8 +286,8 @@ public class ToolDependencies {
 
 		private final ConcurrentMap
 			<String,
-				PortalCache<? extends Serializable, ? extends Serializable>>
-					_portalCaches = new ConcurrentHashMap<>();
+			 PortalCache<? extends Serializable, ? extends Serializable>>
+				_portalCaches = new ConcurrentHashMap<>();
 
 	}
 

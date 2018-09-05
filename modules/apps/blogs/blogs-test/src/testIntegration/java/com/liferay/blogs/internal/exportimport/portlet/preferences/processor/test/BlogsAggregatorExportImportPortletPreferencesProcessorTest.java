@@ -173,7 +173,7 @@ public class BlogsAggregatorExportImportPortletPreferencesProcessorTest {
 
 	private static ServiceTracker
 		<ExportImportPortletPreferencesProcessor,
-			ExportImportPortletPreferencesProcessor> _serviceTracker;
+		 ExportImportPortletPreferencesProcessor> _serviceTracker;
 
 	@DeleteAfterTestRun
 	private Group _group;

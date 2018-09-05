@@ -546,11 +546,11 @@ public class PortalImpl implements Portal {
 
 			ServiceTracker
 				<PortalInetSocketAddressEventListener,
-					PortalInetSocketAddressEventListener>
-						portalInetSocketAddressEventListenerServiceTracker =
-							registry.trackServices(
-								PortalInetSocketAddressEventListener.class,
-								new PortalInetSocketAddressEventListenerServiceTrackerCustomizer());
+				 PortalInetSocketAddressEventListener>
+					portalInetSocketAddressEventListenerServiceTracker =
+						registry.trackServices(
+							PortalInetSocketAddressEventListener.class,
+							new PortalInetSocketAddressEventListenerServiceTrackerCustomizer());
 
 			portalInetSocketAddressEventListenerServiceTracker.open();
 
@@ -9170,7 +9170,7 @@ public class PortalImpl implements Portal {
 	private class PortalInetSocketAddressEventListenerServiceTrackerCustomizer
 		implements ServiceTrackerCustomizer
 			<PortalInetSocketAddressEventListener,
-				PortalInetSocketAddressEventListener> {
+			 PortalInetSocketAddressEventListener> {
 
 		@Override
 		public PortalInetSocketAddressEventListener addingService(

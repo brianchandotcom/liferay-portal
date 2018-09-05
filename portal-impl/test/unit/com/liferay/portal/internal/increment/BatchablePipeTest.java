@@ -254,7 +254,7 @@ public class BatchablePipeTest {
 			batchablePipe, "concurrentMap",
 			new ConcurrentHashMap
 				<String,
-					BatchablePipe.IncreasableEntryWrapper<String, Integer>>() {
+				 BatchablePipe.IncreasableEntryWrapper<String, Integer>>() {
 
 				@Override
 				public boolean replace(

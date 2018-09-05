@@ -16,14 +16,14 @@
 
 <%@ include file="/init.jsp" %>
 
-<aui:row id="orderingAndGrouping">
-	<aui:col width="<%= 30 %>">
+<aui:row id="ordering">
+	<aui:col width="<%= 50 %>">
 
 		<%
 		String orderByColumn1 = assetPublisherDisplayContext.getOrderByColumn1();
 		%>
 
-		<aui:select label="order-by" name="preferences--orderByColumn1--" value="<%= orderByColumn1 %>" wrapperCssClass="field-inline w90">
+		<aui:select label="order-by" name="preferences--orderByColumn1--" value="<%= orderByColumn1 %>" wrapperCssClass="field-inline w80">
 			<c:if test="<%= assetPublisherDisplayContext.isOrderingByTitleEnabled() %>">
 				<aui:option label="title" />
 			</c:if>
@@ -65,13 +65,13 @@
 		</aui:field-wrapper>
 	</aui:col>
 
-	<aui:col width="<%= 30 %>">
+	<aui:col width="<%= 50 %>">
 
 		<%
 		String orderByColumn2 = assetPublisherDisplayContext.getOrderByColumn2();
 		%>
 
-		<aui:select label="and-then-by" name="preferences--orderByColumn2--" wrapperCssClass="field-inline w90">
+		<aui:select label="and-then-by" name="preferences--orderByColumn2--" wrapperCssClass="field-inline w80">
 			<aui:option label="title" selected='<%= orderByColumn2.equals("title") %>' />
 			<aui:option label="create-date" selected='<%= orderByColumn2.equals("createDate") %>' value="createDate" />
 			<aui:option label="modified-date" selected='<%= orderByColumn2.equals("modifiedDate") %>' value="modifiedDate" />
@@ -109,75 +109,10 @@
 			<aui:input cssClass="order-by-type-field" name="preferences--orderByType2--" type="hidden" value="<%= orderByType2 %>" />
 		</aui:field-wrapper>
 	</aui:col>
-
-	<aui:col width="<%= 30 %>">
-
-		<%
-		long assetVocabularyId = GetterUtil.getLong(portletPreferences.getValue("assetVocabularyId", null));
-		%>
-
-		<aui:select label="group-by" name="preferences--assetVocabularyId--">
-			<aui:option value="" />
-			<aui:option label="asset-types" selected="<%= assetVocabularyId == -1 %>" value="-1" />
-
-			<%
-			Group companyGroup = company.getGroup();
-
-			if (scopeGroupId != companyGroup.getGroupId()) {
-				List<AssetVocabulary> assetVocabularies = AssetVocabularyLocalServiceUtil.getGroupVocabularies(scopeGroupId, false);
-
-				if (!assetVocabularies.isEmpty()) {
-			%>
-
-					<optgroup label="<liferay-ui:message key="vocabularies" />">
-
-						<%
-						for (AssetVocabulary assetVocabulary : assetVocabularies) {
-						%>
-
-							<aui:option label="<%= HtmlUtil.escape(assetVocabulary.getTitle(locale)) %>" selected="<%= assetVocabularyId == assetVocabulary.getVocabularyId() %>" value="<%= assetVocabulary.getVocabularyId() %>" />
-
-						<%
-						}
-						%>
-
-					</optgroup>
-
-			<%
-				}
-			}
-			%>
-
-			<%
-			List<AssetVocabulary> assetVocabularies = AssetVocabularyLocalServiceUtil.getGroupVocabularies(companyGroup.getGroupId(), false);
-
-			if (!assetVocabularies.isEmpty()) {
-			%>
-
-				<optgroup label="<liferay-ui:message key="vocabularies" /> (<liferay-ui:message key="global" />)">
-
-					<%
-					for (AssetVocabulary assetVocabulary : assetVocabularies) {
-					%>
-
-						<aui:option label="<%= HtmlUtil.escape(assetVocabulary.getTitle(locale)) %>" selected="<%= assetVocabularyId == assetVocabulary.getVocabularyId() %>" value="<%= assetVocabulary.getVocabularyId() %>" />
-
-					<%
-					}
-					%>
-
-				</optgroup>
-
-			<%
-			}
-			%>
-
-		</aui:select>
-	</aui:col>
 </aui:row>
 
 <aui:script use="aui-base">
-	A.one('#<portlet:namespace />orderingAndGrouping').delegate(
+	A.one('#<portlet:namespace />ordering').delegate(
 		'click',
 		function(event) {
 			var currentTarget = event.currentTarget;

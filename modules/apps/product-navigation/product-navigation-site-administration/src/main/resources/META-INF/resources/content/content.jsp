@@ -18,7 +18,8 @@
 
 <%
 PanelCategory panelCategory = (PanelCategory)request.getAttribute(ApplicationListWebKeys.PANEL_CATEGORY);
-PanelCategoryHelper panelCategoryHelper = (PanelCategoryHelper)request.getAttribute(ApplicationListWebKeys.PANEL_CATEGORY_HELPER);
+
+ContentPanelCategoryDisplayContext contentPanelCategoryDisplayContext = new ContentPanelCategoryDisplayContext(renderRequest);
 %>
 
 <liferay-application-list:panel-category
@@ -68,55 +69,11 @@ PanelCategoryHelper panelCategoryHelper = (PanelCategoryHelper)request.getAttrib
 						</div>
 
 						<div class="autofit-col autofit-col-end">
-							<div class="dropdown">
-								<a aria-expanded="false" class="dropdown-toggle icon-monospaced" data-toggle="dropdown" href="javascript:;">
-									<aui:icon image="cog" markupView="lexicon" />
-								</a>
-
-								<%
-								String portletId = themeDisplay.getPpid();
-
-								if (Validator.isNull(portletId) || !panelCategoryHelper.containsPortlet(portletId, PanelCategoryKeys.SITE_ADMINISTRATION_CONTENT, permissionChecker, curSite)) {
-									portletId = panelCategoryHelper.getFirstPortletId(PanelCategoryKeys.SITE_ADMINISTRATION_CONTENT, permissionChecker, curSite);
-								}
-
-								PortletURL portletURL = PortalUtil.getControlPanelPortletURL(request, curSite, portletId, 0, 0, PortletRequest.RENDER_PHASE);
-								%>
-
-								<ul class="dropdown-menu dropdown-menu-left">
-									<li class="<%= (curScopeGroup.getGroupId() == curSite.getGroupId()) ? "active" : StringPool.BLANK %>">
-										<a class="truncate-text" href="<%= portletURL.toString() %>">
-											<liferay-ui:message key="default-scope" />
-										</a>
-									</li>
-
-									<%
-									for (Layout curScopeLayout : scopeLayouts) {
-										Group scopeGroup = curScopeLayout.getScopeGroup();
-
-										if (Validator.isNull(portletId) || !panelCategoryHelper.containsPortlet(portletId, PanelCategoryKeys.SITE_ADMINISTRATION_CONTENT, permissionChecker, scopeGroup)) {
-											portletId = panelCategoryHelper.getFirstPortletId(PanelCategoryKeys.SITE_ADMINISTRATION_CONTENT, permissionChecker, scopeGroup);
-										}
-
-										if (Validator.isNull(portletId)) {
-											continue;
-										}
-
-										portletURL = PortalUtil.getControlPanelPortletURL(request, scopeGroup, portletId, 0, 0, PortletRequest.RENDER_PHASE);
-									%>
-
-										<li class="<%= (curScopeGroup.getGroupId() == scopeGroup.getGroupId()) ? "active" : StringPool.BLANK %>">
-											<a class="truncate-text" href="<%= portletURL.toString() %>">
-												<liferay-ui:message key="<%= HtmlUtil.escape(curScopeLayout.getName(locale)) %>" />
-											</a>
-										</li>
-
-									<%
-									}
-									%>
-
-								</ul>
-							</div>
+							<clay:dropdown-menu
+								dropdownItems="<%= contentPanelCategoryDisplayContext.getScopesDropdownItemList() %>"
+								icon="cog"
+								triggerCssClasses="dropdown-toggle icon-monospaced text-light"
+							/>
 						</div>
 					</div>
 

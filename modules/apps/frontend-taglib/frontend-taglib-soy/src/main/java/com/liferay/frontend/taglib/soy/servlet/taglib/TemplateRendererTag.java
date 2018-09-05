@@ -69,8 +69,6 @@ public class TemplateRendererTag extends ParamAndPropertyAncestorTagImpl {
 					"portletId", request.getAttribute(WebKeys.PORTLET_ID));
 			}
 
-			_renderWrapper = isRenderWrapper();
-
 			if (isRenderTemplate()) {
 				renderTemplate(jspWriter, context);
 			}
@@ -179,6 +177,10 @@ public class TemplateRendererTag extends ParamAndPropertyAncestorTagImpl {
 		_templateNamespace = namespace;
 	}
 
+	public void setWrapper(boolean wrapper) {
+		_wrapper = wrapper;
+	}
+
 	protected void cleanUp() {
 		if (!ServerDetector.isResin()) {
 			_componentId = null;
@@ -186,8 +188,8 @@ public class TemplateRendererTag extends ParamAndPropertyAncestorTagImpl {
 			_dependencies = null;
 			_hydrate = null;
 			_module = null;
-			_renderWrapper = null;
 			_templateNamespace = null;
+			_wrapper = null;
 		}
 	}
 
@@ -202,7 +204,7 @@ public class TemplateRendererTag extends ParamAndPropertyAncestorTagImpl {
 	protected String getElementSelector() {
 		String selector = StringPool.POUND.concat(getComponentId());
 
-		if (isRenderWrapper()) {
+		if (isWrapper()) {
 			selector = selector.concat(" > *:first-child");
 		}
 
@@ -221,7 +223,11 @@ public class TemplateRendererTag extends ParamAndPropertyAncestorTagImpl {
 		return true;
 	}
 
-	protected boolean isRenderWrapper() {
+	protected boolean isWrapper() {
+		if (_wrapper != null) {
+			return _wrapper;
+		}
+
 		return isRenderJavaScript();
 	}
 
@@ -245,7 +251,7 @@ public class TemplateRendererTag extends ParamAndPropertyAncestorTagImpl {
 		}
 
 		String componentJavaScript = SoyJavaScriptRendererUtil.getJavaScript(
-			context, getComponentId(), requiredModules, _renderWrapper);
+			context, getComponentId(), requiredModules, isWrapper());
 
 		ScriptTag.doTag(
 			null, null, null, componentJavaScript, getBodyContent(),
@@ -256,7 +262,9 @@ public class TemplateRendererTag extends ParamAndPropertyAncestorTagImpl {
 			JspWriter jspWriter, Map<String, Object> context)
 		throws IOException, TemplateException {
 
-		if (!_renderWrapper && !context.containsKey("id")) {
+		boolean wrapper = isWrapper();
+
+		if (!wrapper && !context.containsKey("id")) {
 			context.put("id", getComponentId());
 		}
 
@@ -266,7 +274,7 @@ public class TemplateRendererTag extends ParamAndPropertyAncestorTagImpl {
 
 		_template.prepare(request);
 
-		if (_renderWrapper) {
+		if (wrapper) {
 			jspWriter.append("<div id=\"");
 			jspWriter.append(HtmlUtil.escapeAttribute(getComponentId()));
 			jspWriter.append("\">");
@@ -274,7 +282,7 @@ public class TemplateRendererTag extends ParamAndPropertyAncestorTagImpl {
 
 		_template.processTemplate(jspWriter);
 
-		if (_renderWrapper) {
+		if (wrapper) {
 			jspWriter.append("</div>");
 		}
 	}
@@ -290,8 +298,8 @@ public class TemplateRendererTag extends ParamAndPropertyAncestorTagImpl {
 	private Set<String> _dependencies;
 	private Boolean _hydrate;
 	private String _module;
-	private Boolean _renderWrapper;
 	private Template _template;
 	private String _templateNamespace;
+	private Boolean _wrapper;
 
 }

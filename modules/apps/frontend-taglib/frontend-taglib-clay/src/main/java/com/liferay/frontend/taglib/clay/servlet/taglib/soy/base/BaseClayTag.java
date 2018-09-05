@@ -36,6 +36,8 @@ public abstract class BaseClayTag extends TemplateRendererTag {
 
 	@Override
 	public int doStartTag() {
+		super.setWrapper(false);
+
 		Map<String, Object> context = getContext();
 
 		if (Validator.isNull(context.get("spritemap"))) {
@@ -132,11 +134,6 @@ public abstract class BaseClayTag extends TemplateRendererTag {
 
 	protected String[] getNamespacedParams() {
 		return null;
-	}
-
-	@Override
-	protected boolean isRenderWrapper() {
-		return false;
 	}
 
 	private String _componentBaseName;

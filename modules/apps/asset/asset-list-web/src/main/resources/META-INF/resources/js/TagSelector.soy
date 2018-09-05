@@ -1,0 +1,15 @@
+{namespace com.liferay.asset.list.web.TagSelector}
+
+/**
+ * Renders the component's skeleton.
+ * Currently the rest of the interface is generated using AUI.
+ */
+{template .render}
+	{@param index: int}
+	{@param? namespace: string}
+
+	<div id="{$namespace}assetTagsSelector{$index}">
+		<input name="{$namespace}queryTagNames{$index}" id="{$namespace}queryTagNames{$index}" ref="hiddenInput" type="hidden" />
+		<input class="form-control lfr-tag-selector-input" id="{$index}assetTagName" ref="tagInput" size="15" title="{msg desc=""}add-tags{/msg}" type="text" />
+	</div>
+{/template}

@@ -70,6 +70,7 @@
 			"**/test/**/*.js"
 		],
 		"testResultsProcessor": "./node_modules/liferay-jest-junit-reporter",
+		"testURL": "http://localhost",
 		"transformIgnorePatterns": [
 			"<rootDir>.*(node_modules)(?!.*metal.*).*$"
 		]

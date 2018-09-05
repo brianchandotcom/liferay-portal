@@ -32,7 +32,7 @@ class Sidebar extends Component {
 		 * @type {?bool}
 		 */
 
-		open: Config.bool().value(false),
+		open: Config.bool().valueFn('_openValueFn'),
 
 		/**
 		 * @default object
@@ -79,6 +79,15 @@ class Sidebar extends Component {
 		fieldTypes: Config.array().value([]).required(),
 
 		/**
+		 * @default false
+		 * @instance
+		 * @memberof Sidebar
+		 * @type {?bool}
+		 */
+
+		open: Config.bool().value(false),
+
+		/**
 		 * @default undefined
 		 * @instance
 		 * @memberof Sidebar
@@ -87,6 +96,12 @@ class Sidebar extends Component {
 
 		spritemap: Config.string().required()
 	};
+
+	_openValueFn() {
+		const {open} = this.props;
+
+		return open;
+	}
 
 	/**
 	 * Handle the click of the document and close the sidebar when

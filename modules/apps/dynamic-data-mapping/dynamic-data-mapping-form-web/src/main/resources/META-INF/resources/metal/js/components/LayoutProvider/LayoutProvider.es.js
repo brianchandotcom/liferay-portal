@@ -2,6 +2,7 @@ import {Config} from 'metal-state';
 import {FormSupport} from '../Form/index.es';
 import {pageStructure} from '../../util/config.es';
 import {PagesVisitor} from '../../util/visitors.es';
+import {setLocalizedValue} from '../../util/i18n.es';
 import {sub} from '../../util/strings.es';
 import Component from 'metal-jsx';
 
@@ -294,17 +295,76 @@ class LayoutProvider extends Component {
 	}
 
 	/**
+	 * @param {!Number} pageIndex
+	 * @private
+	 */
+
+	_handlePageDeleted(pageIndex) {
+		const {pages} = this.state;
+
+		console.log(pageIndex, pages);
+
+		this.setState(
+			{
+				activePage: Math.max(0, pageIndex - 1),
+				pages: pages.filter(
+					(page, index) => index != pageIndex
+				)
+			}
+		);
+	}
+
+	/**
 	 * @param {!Array} pages
 	 * @private
 	 */
 
-	_handlePageAdded(pages) {
+	_handlePageAdded() {
+		const {pages} = this.state;
+
 		this.setState(
 			{
-				activePage: pages.length - 1,
-				pages
+				activePage: pages.length,
+				pages: [
+					...pages,
+					this.createNewPage()
+				]
 			}
 		);
+	}
+
+	/**
+	 * @private
+	 */
+
+	_handlePageReset() {
+		this.setState(
+			{
+				pages: [this.createNewPage()]
+			}
+		);
+	}
+
+	/**
+	 * Return a new page object
+	 * @private
+	 * @returns {object}
+	 */
+
+	createNewPage() {
+		const languageId = themeDisplay.getLanguageId();
+		const page = {
+			description: '',
+			enabled: true,
+			rows: [FormSupport.implAddRow(12, [])],
+			showRequiredFieldsWarning: true,
+			title: ''
+		};
+
+		setLocalizedValue(page, languageId, 'title', '');
+		setLocalizedValue(page, languageId, 'description', '');
+
+		return page;
 	}
 
 	/**
@@ -387,6 +447,8 @@ class LayoutProvider extends Component {
 				fieldEdited: this._handleFieldEdited.bind(this),
 				fieldMoved: this._handleFieldMoved.bind(this),
 				pageAdded: this._handlePageAdded.bind(this),
+				pageDeleted: this._handlePageDeleted.bind(this),
+				pageReset: this._handlePageReset.bind(this),
 				pagesUpdated: this._handlePagesUpdated.bind(this)
 			};
 

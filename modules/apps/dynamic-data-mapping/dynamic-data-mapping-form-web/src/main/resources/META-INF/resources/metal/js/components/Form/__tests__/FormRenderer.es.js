@@ -594,7 +594,7 @@ describe(
 								},
 								{
 									'label': Liferay.Language.get('delete-current-page'),
-									'settingsItem': 'reset-page'
+									'settingsItem': 'delete-page'
 								}
 							]
 						);
@@ -615,7 +615,9 @@ describe(
 
 						jest.runAllTimers();
 
-						expect(component.pageSettingsItems).toEqual(
+						expect(
+							component.prepareStateForRender(component).pageSettingsItems
+						).toEqual(
 							[
 								{
 									'label': Liferay.Language.get('add-new-page'),
@@ -648,7 +650,7 @@ describe(
 							{
 								data: {
 									item: {
-										settingsItem: 'reset-page'
+										settingsItem: 'delete-page'
 									}
 								}
 							}

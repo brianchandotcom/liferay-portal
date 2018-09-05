@@ -54,11 +54,7 @@ class Builder extends Component {
 	}
 
 	_handlePageAdded(pages) {
-		const {sidebar} = this.refs;
-
 		this.emit('pageAdded', pages);
-
-		sidebar.open();
 	}
 
 	rendered() {
@@ -75,7 +71,6 @@ class Builder extends Component {
 
 	_handleFieldAdded(event) {
 		const {namespace} = this.props;
-		const {sidebar} = this.refs;
 		const newFieldName = FormSupport.generateFieldName(event.fieldType.name);
 		const settingsContext = event.fieldType.settingsContext;
 		const translationManager = Liferay.component(`${namespace}translationManager`);
@@ -126,7 +121,7 @@ class Builder extends Component {
 			}
 		);
 
-		sidebar.open();
+		this.openSidebar();
 	}
 
 	/**
@@ -182,26 +177,6 @@ class Builder extends Component {
 	}
 
 	_handleActivePageUpdated(activePage) {
-		const {pages} = this.props;
-		const {sidebar} = this.refs;
-		const visitor = new PagesVisitor(pages);
-
-		let fieldsCount = 0;
-		visitor.mapFields(
-			(field, fieldIndex, columnIndex, rowIndex, pageIndex) => {
-				if (pageIndex === activePage) {
-					fieldsCount++;
-				}
-			}
-		);
-
-		if (fieldsCount === 0) {
-			sidebar.open();
-		}
-		else {
-			sidebar.close();
-		}
-
 		this.emit('activePageUpdated', activePage);
 	}
 
@@ -235,14 +210,48 @@ class Builder extends Component {
 		this.emit('fieldDuplicated', indexes);
 	}
 
-	_handlePageDeleted({pages, emptyPage}) {
-		const {sidebar} = this.refs;
+	willReceiveProps(changes) {
+		let {activePage, pages} = this.props;
+		let openSidebar = false;
 
-		if (emptyPage) {
-			sidebar.open();
+		if (changes.activePage) {
+			activePage = changes.activePage.newVal;
+
+			if (!this._pageHasFields(pages, activePage)) {
+				openSidebar = true;
+			}
+		}
+		if (
+			changes.pages &&
+			changes.pages.prevVal &&
+			changes.pages.newVal.length !== changes.pages.prevVal.length
+		) {
+			pages = changes.pages.newVal;
+
+			if (!this._pageHasFields(pages, activePage)) {
+				openSidebar = true;
+			}
 		}
 
-		this.emit('pagesUpdated', pages);
+		if (openSidebar) {
+			this.openSidebar();
+		}
+	}
+
+	openSidebar() {
+		const {sidebar} = this.refs;
+
+		sidebar.open();
+	}
+
+	_handlePageDeleted(pageIndex) {
+		this.emit('pageDeleted', pageIndex);
+	}
+
+	_handlePageReset() {
+		this.openSidebar();
+
+		this.emit('pageReset');
 	}
 
 	/**
@@ -253,6 +262,20 @@ class Builder extends Component {
 
 	_handlePagesUpdated(pages) {
 		this.emit('pagesUpdated', pages);
+	}
+
+	_pageHasFields(pages, pageIndex) {
+		const visitor = new PagesVisitor([pages[pageIndex]]);
+
+		let hasFields = false;
+
+		visitor.mapFields(
+			() => {
+				hasFields = true;
+			}
+		);
+
+		return hasFields;
 	}
 
 	attached() {
@@ -287,6 +310,7 @@ class Builder extends Component {
 			fieldMoved: this._handleFieldMoved.bind(this),
 			pageAdded: this._handlePageAdded.bind(this),
 			pageDeleted: this._handlePageDeleted.bind(this),
+			pageReset: this._handlePageReset.bind(this),
 			pagesUpdated: this._handlePagesUpdated.bind(this)
 		};
 

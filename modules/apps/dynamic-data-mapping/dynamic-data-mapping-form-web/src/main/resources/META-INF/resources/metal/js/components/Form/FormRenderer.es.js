@@ -4,7 +4,6 @@ import 'clay-dropdown';
 import {Config} from 'metal-state';
 import {DragDrop} from 'metal-drag-drop';
 import {pageStructure} from '../../util/config.es';
-import {setLocalizedValue} from '../../util/i18n.es';
 import Component from 'metal-component';
 import FormSupport from './FormSupport.es';
 import Soy from 'metal-soy';
@@ -64,25 +63,6 @@ class FormRenderer extends Component {
 		modeRenderer: Config.oneOf(['grid', 'list']).value('grid'),
 
 		/**
-		 * @default array
-		 * @memberof FormRenderer
-		 * @type {?array<object>}
-		 */
-
-		pageSettingsItems: Config.array().value(
-			[
-				{
-					'label': Liferay.Language.get('add-new-page'),
-					'settingsItem': 'add-page'
-				},
-				{
-					'label': Liferay.Language.get('reset-page'),
-					'settingsItem': 'reset-page'
-				}
-			]
-		).internal(),
-
-		/**
 		 * @default []
 		 * @instance
 		 * @memberof FormRenderer
@@ -127,26 +107,38 @@ class FormRenderer extends Component {
 		return nextState;
 	}
 
-	prepareStateForRender(state) {
-		let label = Liferay.Language.get('delete-current-page');
+	_getPageSettingsItems() {
+		const pageSettingsItems = [
+			{
+				'label': Liferay.Language.get('add-new-page'),
+				'settingsItem': 'add-page'
+			}
+		];
 
-		if (state.pages.length === 1) {
-			label = Liferay.Language.get('reset-page');
+		if (this.pages.length === 1) {
+			pageSettingsItems.push(
+				{
+					'label': Liferay.Language.get('reset-page'),
+					'settingsItem': 'reset-page'
+				}
+			);
+		}
+		else {
+			pageSettingsItems.push(
+				{
+					'label': Liferay.Language.get('delete-current-page'),
+					'settingsItem': 'delete-page'
+				}
+			);
 		}
 
+		return pageSettingsItems;
+	}
+
+	prepareStateForRender(state) {
 		return {
 			...state,
-			pageSettingsItems: this.pageSettingsItems.map(
-				item => {
-					if (item.settingsItem == 'reset-page') {
-						item = {
-							...item,
-							label
-						};
-					}
-					return item;
-				}
-			)
+			pageSettingsItems: this._getPageSettingsItems()
 		};
 	}
 
@@ -156,18 +148,7 @@ class FormRenderer extends Component {
 	 */
 
 	_addPage() {
-		const {activePage, pages} = this;
-		const newPage = this.createNewPage();
-
-		pages[activePage].enabled = false;
-
-		this.emit(
-			'pageAdded',
-			[
-				...pages,
-				newPage
-			]
-		);
+		this.emit('pageAdded');
 	}
 
 	/*
@@ -175,58 +156,26 @@ class FormRenderer extends Component {
 	 * @private
 	 */
 
-	_handleSettingsPageClicked({data}) {
+	_handlePageSettingsClicked({data}) {
 		const {settingsItem} = data.item;
 
-		if (settingsItem == 'add-page') {
+		if (settingsItem === 'add-page') {
 			this._addPage();
 		}
-
-		if (settingsItem == 'reset-page') {
+		else if (settingsItem === 'reset-page') {
 			this._resetPage();
+		}
+		else if (settingsItem === 'delete-page') {
+			this._deletePage();
 		}
 	}
 
+	_deletePage() {
+		this.emit('pageDeleted', this.activePage);
+	}
+
 	_resetPage() {
-		const {activePage, pages} = this;
-		let newPages;
-
-		if (pages.length == 1) {
-			newPages = [this.createNewPage()];
-		}
-		else {
-			newPages = pages
-				.filter(
-					(page, index) => index != activePage
-				)
-				.map(
-					(page, index) => (
-						{
-							...page,
-							enabled: index === activePage - 1
-						}
-					)
-				);
-
-			this.activePage = activePage ? activePage - 1 : activePage;
-		}
-
-		const pageId = this.activePage;
-
-		const emptyPage = FormSupport.checkEmptyPage([newPages[pageId]]);
-
-		this.emit(
-			'activePageUpdated',
-			this.activePage
-		);
-
-		this.emit(
-			'pageDeleted',
-			{
-				emptyPage,
-				pages: newPages
-			}
-		);
+		this.emit('pageReset');
 	}
 
 	_handleChangePage({delegateTarget: {dataset}}) {
@@ -243,24 +192,22 @@ class FormRenderer extends Component {
 	 */
 
 	_handleDragAndDropEnd(data) {
-		if (!data.target) {
-			return;
+		if (data.target) {
+			const sourceIndex = FormSupport.getIndexes(
+				data.source.parentElement.parentElement
+			);
+			const targetIndex = FormSupport.getIndexes(data.target.parentElement);
+
+			data.source.innerHTML = '';
+
+			this._handleFieldMoved(
+				{
+					data,
+					source: sourceIndex,
+					target: targetIndex
+				}
+			);
 		}
-
-		const sourceIndex = FormSupport.getIndexes(
-			data.source.parentElement.parentElement
-		);
-		const targetIndex = FormSupport.getIndexes(data.target.parentElement);
-
-		data.source.innerHTML = '';
-
-		this._handleFieldMoved(
-			{
-				data,
-				source: sourceIndex,
-				target: targetIndex
-			}
-		);
 	}
 
 	/**
@@ -326,28 +273,6 @@ class FormRenderer extends Component {
 			DragDrop.Events.END,
 			this._handleDragAndDropEnd.bind(this)
 		);
-	}
-
-	/**
-	 * Return a new page object
-	 * @private
-	 * @returns {object}
-	 */
-
-	createNewPage() {
-		const languageId = Liferay.ThemeDisplay.getLanguageId();
-		const page = {
-			description: '',
-			enabled: true,
-			rows: [FormSupport.implAddRow(12, [])],
-			showRequiredFieldsWarning: true,
-			title: ''
-		};
-
-		setLocalizedValue(page, languageId, 'title', '');
-		setLocalizedValue(page, languageId, 'description', '');
-
-		return page;
 	}
 }
 

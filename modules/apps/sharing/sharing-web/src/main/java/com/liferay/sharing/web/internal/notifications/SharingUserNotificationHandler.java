@@ -15,7 +15,6 @@
 package com.liferay.sharing.web.internal.notifications;
 
 import com.liferay.asset.kernel.model.AssetRenderer;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -28,6 +27,7 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.sharing.constants.SharingEntryActionKey;
 import com.liferay.sharing.model.SharingEntry;
 import com.liferay.sharing.service.SharingEntryLocalService;
@@ -65,11 +65,18 @@ public class SharingUserNotificationHandler
 		ResourceBundle resourceBundle =
 			_resourceBundleLoader.loadResourceBundle(locale);
 
-		SharingEntry sharingEntry = _getSharingEntry(userNotificationEvent);
+		JSONObject userNotificationEventPayloadJSONObject =
+			JSONFactoryUtil.createJSONObject(
+				userNotificationEvent.getPayload());
+
+		SharingEntry sharingEntry = _getSharingEntry(
+			userNotificationEventPayloadJSONObject);
 
 		return ResourceBundleUtil.getString(
 			resourceBundle, "x-has-shared-x-with-you-for-x",
-			_getUserName(sharingEntry.getFromUserId(), resourceBundle),
+			_getUserName(
+				sharingEntry.getFromUserId(),
+				userNotificationEventPayloadJSONObject, resourceBundle),
 			_getSharedObjectName(sharingEntry, locale),
 			_getActionName(sharingEntry, resourceBundle));
 	}
@@ -80,7 +87,12 @@ public class SharingUserNotificationHandler
 			ServiceContext serviceContext)
 		throws Exception {
 
-		SharingEntry sharingEntry = _getSharingEntry(userNotificationEvent);
+		JSONObject userNotificationEventPayloadJSONObject =
+			JSONFactoryUtil.createJSONObject(
+				userNotificationEvent.getPayload());
+
+		SharingEntry sharingEntry = _getSharingEntry(
+			userNotificationEventPayloadJSONObject);
 
 		AssetRenderer assetRenderer = getAssetRenderer(
 			sharingEntry.getClassName(), sharingEntry.getClassPK());
@@ -131,30 +143,34 @@ public class SharingUserNotificationHandler
 	}
 
 	private SharingEntry _getSharingEntry(
-			UserNotificationEvent userNotificationEvent)
+			JSONObject userNotificationEventPayloadJSONObject)
 		throws PortalException {
 
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
-			userNotificationEvent.getPayload());
-
-		long sharingEntryId = jsonObject.getLong("classPK");
+		long sharingEntryId = userNotificationEventPayloadJSONObject.getLong(
+			"classPK");
 
 		return _sharingEntryLocalService.getSharingEntry(sharingEntryId);
 	}
 
-	private String _getUserName(long userId, ResourceBundle resourceBundle) {
-		try {
-			if (userId <= 0) {
-				return ResourceBundleUtil.getString(resourceBundle, "someone");
-			}
+	private String _getUserName(
+		long userId, JSONObject userNotificationEventPayloadJSONObject,
+		ResourceBundle resourceBundle) {
 
-			User user = _userLocalService.getUserById(userId);
+		User user = _userLocalService.fetchUserById(userId);
 
+		if (user != null) {
 			return HtmlUtil.escape(user.getFullName());
 		}
-		catch (Exception e) {
-			return StringPool.BLANK;
+
+		String fromUserFullName =
+			userNotificationEventPayloadJSONObject.getString(
+				"fromUserFullName");
+
+		if (Validator.isNotNull(fromUserFullName)) {
+			return fromUserFullName;
 		}
+
+		return ResourceBundleUtil.getString(resourceBundle, "someone");
 	}
 
 	private boolean _hasAction(

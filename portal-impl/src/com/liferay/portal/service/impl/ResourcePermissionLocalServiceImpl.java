@@ -379,10 +379,12 @@ public class ResourcePermissionLocalServiceImpl
 			Role role = roleLocalService.getRole(
 				companyId, RoleConstants.OWNER);
 
-			setOwnerResourcePermissions(
+			_updateResourcePermission(
 				resource.getCompanyId(), resource.getName(),
-				resource.getScope(), resource.getPrimKey(), role.getRoleId(),
-				userId, actionIds.toArray(new String[actionIds.size()]));
+				resource.getScope(), resource.getPrimKey(), userId,
+				role.getRoleId(),
+				actionIds.toArray(new String[actionIds.size()]),
+				ResourcePermissionConstants.OPERATOR_SET, true);
 
 			// Group permissions
 
@@ -400,9 +402,14 @@ public class ResourcePermissionLocalServiceImpl
 							name);
 				}
 
-				addGroupPermissions(
-					groupId, resource,
-					actions.toArray(new String[actions.size()]));
+				Role groupRole = roleLocalService.getDefaultGroupRole(groupId);
+
+				_updateResourcePermission(
+					resource.getCompanyId(), resource.getName(),
+					resource.getScope(), resource.getPrimKey(), 0,
+					groupRole.getRoleId(),
+					actions.toArray(new String[actions.size()]),
+					ResourcePermissionConstants.OPERATOR_SET, true);
 			}
 
 			// Guest permissions
@@ -426,8 +433,15 @@ public class ResourcePermissionLocalServiceImpl
 							resource.getName());
 				}
 
-				addGuestPermissions(
-					resource, actions.toArray(new String[actions.size()]));
+				Role guestRole = roleLocalService.getRole(
+					resource.getCompanyId(), RoleConstants.GUEST);
+
+				_updateResourcePermission(
+					resource.getCompanyId(), resource.getName(),
+					resource.getScope(), resource.getPrimKey(), 0,
+					guestRole.getRoleId(),
+					actions.toArray(new String[actions.size()]),
+					ResourcePermissionConstants.OPERATOR_SET, true);
 			}
 		}
 		finally {

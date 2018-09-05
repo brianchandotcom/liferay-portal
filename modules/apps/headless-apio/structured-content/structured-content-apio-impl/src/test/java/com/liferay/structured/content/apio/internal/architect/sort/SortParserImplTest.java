@@ -28,12 +28,12 @@ import org.junit.Test;
 /**
  * @author Cristina González
  */
-public class SortParserTest {
+public class SortParserImplTest {
 
 	@Test
 	public void testGetSortFieldOptionalAsc() {
 		Optional<SortField> sortFieldOptional =
-			_sortParser.getSortFieldOptional("field:asc");
+			_sortParserImpl.getSortFieldOptional("field:asc");
 
 		Assert.assertTrue(sortFieldOptional.isPresent());
 
@@ -47,7 +47,7 @@ public class SortParserTest {
 	@Test
 	public void testGetSortFieldOptionalDefault() {
 		Optional<SortField> sortFieldOptional =
-			_sortParser.getSortFieldOptional("field");
+			_sortParserImpl.getSortFieldOptional("field");
 
 		Assert.assertTrue(sortFieldOptional.isPresent());
 
@@ -61,7 +61,7 @@ public class SortParserTest {
 	@Test
 	public void testGetSortFieldOptionalDesc() {
 		Optional<SortField> sortFieldOptional =
-			_sortParser.getSortFieldOptional("field:desc");
+			_sortParserImpl.getSortFieldOptional("field:desc");
 
 		Assert.assertTrue(sortFieldOptional.isPresent());
 
@@ -75,7 +75,7 @@ public class SortParserTest {
 	@Test
 	public void testGetSortFieldOptionalInvalidSyntax() {
 		AbstractThrowableAssert exception = Assertions.assertThatThrownBy(
-			() -> _sortParser.getSortFieldOptional("field:desc:another")
+			() -> _sortParserImpl.getSortFieldOptional("field:desc:another")
 		).isInstanceOf(
 			RuntimeException.class
 		);
@@ -86,59 +86,59 @@ public class SortParserTest {
 	@Test
 	public void testGetSortFieldOptionalNull() {
 		Optional<SortField> sortFieldOptional =
-			_sortParser.getSortFieldOptional(null);
+			_sortParserImpl.getSortFieldOptional(null);
 
 		Assert.assertTrue(!sortFieldOptional.isPresent());
 	}
 
 	@Test
 	public void testIsAscendingAnotherValue() {
-		Assert.assertTrue(_sortParser.isAscending("reverse"));
+		Assert.assertTrue(_sortParserImpl.isAscending("reverse"));
 	}
 
 	@Test
 	public void testIsAscendingAscLower() {
-		Assert.assertTrue(_sortParser.isAscending("asc"));
+		Assert.assertTrue(_sortParserImpl.isAscending("asc"));
 	}
 
 	@Test
 	public void testIsAscendingAscLowerAndUpper() {
-		Assert.assertTrue(_sortParser.isAscending("aSC"));
+		Assert.assertTrue(_sortParserImpl.isAscending("aSC"));
 	}
 
 	@Test
 	public void testIsAscendingAscUpper() {
-		Assert.assertTrue(_sortParser.isAscending("ASC"));
+		Assert.assertTrue(_sortParserImpl.isAscending("ASC"));
 	}
 
 	@Test
 	public void testIsAscendingDescLower() {
-		Assert.assertTrue(!_sortParser.isAscending("desc"));
+		Assert.assertTrue(!_sortParserImpl.isAscending("desc"));
 	}
 
 	@Test
 	public void testIsAscendingDescLowerAndUpper() {
-		Assert.assertTrue(!_sortParser.isAscending("dESC"));
+		Assert.assertTrue(!_sortParserImpl.isAscending("dESC"));
 	}
 
 	@Test
 	public void testIsAscendingDescUpper() {
-		Assert.assertTrue(!_sortParser.isAscending("DESC"));
+		Assert.assertTrue(!_sortParserImpl.isAscending("DESC"));
 	}
 
 	@Test
 	public void testIsAscendingEmpty() {
-		Assert.assertTrue(_sortParser.isAscending(""));
+		Assert.assertTrue(_sortParserImpl.isAscending(""));
 	}
 
 	@Test
 	public void testIsAscendingNull() {
-		Assert.assertTrue(_sortParser.isAscending(null));
+		Assert.assertTrue(_sortParserImpl.isAscending(null));
 	}
 
 	@Test
 	public void testParseEmpty() {
-		List<SortField> sortFields = _sortParser.parse("");
+		List<SortField> sortFields = _sortParserImpl.parse("");
 
 		Assert.assertEquals(
 			"No sort keys should be obtained: " + sortFields, 0,
@@ -147,7 +147,7 @@ public class SortParserTest {
 
 	@Test
 	public void testParseOneField() {
-		List<SortField> sortFields = _sortParser.parse("field1");
+		List<SortField> sortFields = _sortParserImpl.parse("field1");
 
 		Assert.assertEquals(
 			"One sort field should be obtained: " + sortFields, 1,
@@ -160,7 +160,7 @@ public class SortParserTest {
 
 	@Test
 	public void testParseOnlyComma() {
-		List<SortField> sortFields = _sortParser.parse(",");
+		List<SortField> sortFields = _sortParserImpl.parse(",");
 
 		Assert.assertEquals(
 			"No sort fields should be obtained: " + sortFields, 0,
@@ -169,7 +169,7 @@ public class SortParserTest {
 
 	@Test
 	public void testParseTwoFields() {
-		List<SortField> sortFields = _sortParser.parse("field1,field2");
+		List<SortField> sortFields = _sortParserImpl.parse("field1,field2");
 
 		Assert.assertEquals(
 			"Two sort fields should be obtained: " + sortFields, 2,
@@ -190,7 +190,7 @@ public class SortParserTest {
 
 	@Test
 	public void testParseTwoFieldsAscAndDesc() {
-		List<SortField> sortFields = _sortParser.parse(
+		List<SortField> sortFields = _sortParserImpl.parse(
 			"field1:asc,field2:desc");
 
 		Assert.assertEquals(
@@ -212,7 +212,8 @@ public class SortParserTest {
 
 	@Test
 	public void testParseTwoFieldsDefaultAndDesc() {
-		List<SortField> sortFields = _sortParser.parse("field1,field2:desc");
+		List<SortField> sortFields = _sortParserImpl.parse(
+			"field1,field2:desc");
 
 		Assert.assertEquals(
 			"Two sort fields should be obtained: " + sortFields, 2,
@@ -231,6 +232,6 @@ public class SortParserTest {
 		Assert.assertTrue(!sortField2.isAscending());
 	}
 
-	private static final SortParserImpl _sortParser = new SortParserImpl();
+	private static final SortParserImpl _sortParserImpl = new SortParserImpl();
 
 }

@@ -168,7 +168,7 @@ public class JournalEditDDMStructuresDisplayContext {
 		}
 
 		_parentDDMStructureId = BeanParamUtil.getLong(
-			getDDMStructure(), _request, "parentDDMStructureId",
+			getDDMStructure(), _request, "parentStructureId",
 			DDMStructureConstants.DEFAULT_PARENT_STRUCTURE_ID);
 
 		return _parentDDMStructureId;

@@ -21,7 +21,7 @@ const TOOLTIP_BUTTONS = {
 
 	map: {
 		id: 'map',
-		label: Liferay.Language.get('map')
+		label: Liferay.Language.get('map[relational]')
 	},
 
 	selectImage: {

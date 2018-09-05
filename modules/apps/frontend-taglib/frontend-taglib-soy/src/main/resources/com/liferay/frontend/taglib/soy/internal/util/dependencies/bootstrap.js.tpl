@@ -10,7 +10,7 @@ Liferay.Loader.require.apply(
 					portletId: context.portletId
 				};
 
-				if ($RENDER_WRAPPER) {
+				if ($WRAPPER) {
 					Liferay.component(
 						'$ID',
 						new Component.default(context, '#$ID'),

@@ -39,7 +39,7 @@ public class SoyJavaScriptRendererUtil {
 
 	public static String getJavaScript(
 		Map<String, Object> context, String id, Set<String> modules,
-		boolean renderWrapper) {
+		boolean wrapper) {
 
 		JSONSerializer jsonSerializer = JSONFactoryUtil.createJSONSerializer();
 
@@ -47,14 +47,12 @@ public class SoyJavaScriptRendererUtil {
 
 		String modulesString = jsonSerializer.serialize(modules);
 
-		String renderWrapperString = jsonSerializer.serialize(renderWrapper);
+		String wrapperString = jsonSerializer.serialize(wrapper);
 
 		return StringUtil.replace(
 			_JAVA_SCRIPT_TPL,
-			new String[] {"$CONTEXT", "$ID", "$MODULES", "$RENDER_WRAPPER"},
-			new String[] {
-				contextString, id, modulesString, renderWrapperString
-			});
+			new String[] {"$CONTEXT", "$ID", "$MODULES", "$WRAPPER"},
+			new String[] {contextString, id, modulesString, wrapperString});
 	}
 
 	private static final String _JAVA_SCRIPT_TPL;

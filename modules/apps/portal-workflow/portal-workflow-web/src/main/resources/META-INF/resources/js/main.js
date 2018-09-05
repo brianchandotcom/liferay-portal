@@ -280,15 +280,119 @@ AUI.add(
 			toggleDefinitionLinkEditionMode: function(event, namespace) {
 				var instance = this;
 
-				var saveCancelGroup = document.getElementById(namespace + 'saveCancelGroup');
+				var buttonName = instance._getClickedButtonName(event, namespace);
 
-				var editbutton = document.getElementById(namespace + 'editButton');
+				var openDefinitionLinkNode = instance._getOpenDefinitionLinkNode();
 
+				var openDefinitionLinkNamespace;
+
+				if (buttonName === 'cancelButton') {
+					instance._doToggleDefinitionLinkEditionMode(namespace);
+
+					instance._resetLastValue(namespace);
+				}
+				else if (!openDefinitionLinkNode) {
+					instance._doToggleDefinitionLinkEditionMode(namespace);
+				}
+				else if (!instance._hasDefinitionLinkChanged(openDefinitionLinkNode)) {
+					openDefinitionLinkNamespace = instance._getDefinitionLinkNodeNamespace(openDefinitionLinkNode);
+
+					instance._doToggleDefinitionLinkEditionMode(openDefinitionLinkNamespace);
+
+					instance._doToggleDefinitionLinkEditionMode(namespace);
+				}
+				else {
+					openDefinitionLinkNamespace = instance._getDefinitionLinkNodeNamespace(openDefinitionLinkNode);
+
+					if (confirm(Liferay.Language.get('you-have-unsaved-changes-do-you-want-to-proceed-without-saving'))) {
+						instance._doToggleDefinitionLinkEditionMode(openDefinitionLinkNamespace);
+
+						instance._resetLastValue(openDefinitionLinkNamespace);
+
+						instance._doToggleDefinitionLinkEditionMode(namespace);
+					}
+				}
+			},
+
+			_doToggleDefinitionLinkEditionMode: function(namespace) {
+				var instance = this;
+
+				instance._toggleElementVisibility(namespace);
+
+				instance._switchEditMode(namespace);
+
+				instance._removeFormGroupClass(namespace);
+			},
+
+			_getClickedButtonName: function(event, namespace) {
+				var button = event.target;
+
+				var buttonId = button.get('id');
+
+				var buttonType = buttonId.replace(namespace, '');
+
+				return buttonType;
+			},
+
+			_getDefinitionLinkNodeNamespace: function(definitionLinkNode) {
+				var definitionLinkNodeInput = definitionLinkNode.one('input[name$=namespace]');
+
+				var definitionLinkNamespace = definitionLinkNodeInput.val();
+
+				return definitionLinkNamespace;
+			},
+
+			_getElementsByIds: function() {
+				var elements = [];
+
+				var element;
+
+				for (var index in arguments) {
+
+					element = document.getElementById(arguments[index]);
+
+					if (element) {
+						elements.push(element);
+					}
+				}
+
+				return elements;
+			},
+
+			_getOpenDefinitionLinkNode: function() {
+				var listEditMode = A.all('input[name$=editMode][value=true]');
+
+				var definitionLink;
+
+				if (listEditMode.size() === 1) {
+					var node = listEditMode.item(0);
+
+					definitionLink = node.ancestor('.workflow-definition-form');
+				}
+
+				return definitionLink;
+			},
+
+			_hasDefinitionLinkChanged: function(definitionLinkNode) {
+				var select = definitionLinkNode.one('select');
+
+				var currentValue = select.val();
+
+				var workflowAssignedValue = definitionLinkNode.one('input[name$=workflowAssignedValue]');
+
+				var savedValue = workflowAssignedValue.val();
+
+				var changed = false;
+
+				if (currentValue !== savedValue) {
+					changed = true;
+				}
+
+				return changed;
+			},
+
+			_removeFormGroupClass: function(namespace) {
 				var formContainer = document.getElementById(namespace + 'formContainer');
-
-				var definitionLabel = document.getElementById(namespace + 'definitionLabel');
-
-				instance._toggleElementVisibility(saveCancelGroup, editbutton, formContainer, definitionLabel);
 
 				var formGroup = formContainer.querySelector('.form-group');
 
@@ -297,12 +401,44 @@ AUI.add(
 				}
 			},
 
-			_toggleElementVisibility: function() {
+			_resetLastValue: function(namespace) {
+				var formContainerNode = A.one('#' + namespace + 'formContainer');
+
+				var workflowAssignedValueNode = formContainerNode.one('input[name$=workflowAssignedValue]');
+
+				var selectNode = formContainerNode.one('select');
+
+				selectNode.val(workflowAssignedValueNode.val());
+			},
+
+			_switchEditMode: function(namespace) {
+				var formContainerNode = A.one('#' + namespace + 'formContainer');
+
+				var inputEditModeNode = formContainerNode.one('input[name$=editMode]');
+
+				var editMode = inputEditModeNode.val();
+
+				var boolEditMode = (editMode == 'true');
+
+				inputEditModeNode.val(!boolEditMode);
+			},
+
+			_toggleElementVisibility: function(namespace) {
 				var instance = this;
 
-				for (var index in arguments) {
+				var saveCancelGroupId = namespace + 'saveCancelGroup';
 
-					var element = arguments[parseInt(index, 10)];
+				var editButtonId = namespace + 'editButton';
+
+				var formContainerId = namespace + 'formContainer';
+
+				var definitionLabelId = namespace + 'definitionLabel';
+
+				var elementsList = instance._getElementsByIds(saveCancelGroupId, editButtonId, formContainerId, definitionLabelId);
+
+				for (var index in elementsList) {
+
+					var element = elementsList[parseInt(index, 10)];
 
 					var hidden = element.getAttribute('hidden');
 

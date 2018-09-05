@@ -19,7 +19,17 @@ import java.util.HashMap;
 /**
  * @author Carlos Lancha
  */
-public class LabelItem extends HashMap<String, String> {
+public class LabelItem extends HashMap<String, Object> {
+
+	public LabelItem() {
+		super();
+
+		put("closeable", false);
+	}
+
+	public void setCloseable(boolean closeable) {
+		put("closeable", closeable);
+	}
 
 	public void setLabel(String label) {
 		put("label", label);

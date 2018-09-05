@@ -17,6 +17,7 @@ package com.liferay.frontend.taglib.clay.servlet.taglib.display.context;
 import com.liferay.frontend.taglib.clay.internal.servlet.taglib.display.context.ManagementToolbarDefaults;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItem;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -58,6 +59,10 @@ public interface ManagementToolbarDisplayContext {
 	}
 
 	public default List<DropdownItem> getFilterDropdownItems() {
+		return null;
+	}
+
+	public default List<LabelItem> getFilterLabelItems() {
 		return null;
 	}
 

@@ -23,10 +23,7 @@ AUI.add(
 					},
 
 					name: {
-						validator: isString,
-						valueFn: function() {
-							return KaleoDesignerStrings.definition + uniformRandomInt(0, 100);
-						}
+						validator: isString
 					},
 
 					value: {

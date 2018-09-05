@@ -35,7 +35,7 @@ AUI.add(
 
 		var toXML = function(xmlNamespace, metadata, json) {
 			var description = metadata.description;
-			var name = A.Escape.html(metadata.name);
+			var name = metadata.name;
 			var version = metadata.version;
 
 			var buffer = [];
@@ -44,11 +44,17 @@ AUI.add(
 
 			buffer.push('<?xml version="1.0"?>', xmlWorkflowDefinition.open);
 
-			buffer.push(
-				XMLUtil.create('name', name),
-				XMLUtil.create('description', description),
-				XMLUtil.create('version', version)
-			);
+			if (name) {
+				buffer.push(XMLUtil.create('name', A.Escape.html(name)));
+			}
+
+			if (description) {
+				buffer.push(XMLUtil.create('description', description));
+			}
+
+			if (version) {
+				buffer.push(XMLUtil.create('version', version));
+			}
 
 			json.nodes.forEach(
 				function(item, index, collection) {

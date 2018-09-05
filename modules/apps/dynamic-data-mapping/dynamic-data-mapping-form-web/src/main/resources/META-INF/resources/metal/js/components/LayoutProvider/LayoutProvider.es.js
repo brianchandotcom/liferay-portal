@@ -154,7 +154,7 @@ class LayoutProvider extends Component {
 	 * @private
 	 */
 
-	_handleDeleteField({rowIndex, pageIndex, columnIndex}) {
+	_handleFieldDeleted({rowIndex, pageIndex, columnIndex}) {
 		const {pages} = this.state;
 		let newContext = FormSupport.removeFields(
 			pages,
@@ -185,7 +185,7 @@ class LayoutProvider extends Component {
 	 * @private
 	 */
 
-	_handleDuplicatedField({rowIndex, pageIndex, columnIndex}) {
+	_handleFieldDuplicated({rowIndex, pageIndex, columnIndex}) {
 		const {pages} = this.state;
 		const field = FormSupport.getField(pages, pageIndex, rowIndex, columnIndex);
 		const newFieldName = FormSupport.generateFieldName(field.type);
@@ -379,11 +379,11 @@ class LayoutProvider extends Component {
 		if (children.length) {
 			const events = {
 				activePageUpdated: this._handleActivePageUpdated.bind(this),
-				deleteField: this._handleDeleteField.bind(this),
-				duplicateField: this._handleDuplicatedField.bind(this),
 				fieldAdded: this._handleFieldAdded.bind(this),
 				fieldBlurred: this._handleFieldBlurred.bind(this),
 				fieldClicked: this._handleClickedField.bind(this),
+				fieldDeleted: this._handleFieldDeleted.bind(this),
+				fieldDuplicated: this._handleFieldDuplicated.bind(this),
 				fieldEdited: this._handleFieldEdited.bind(this),
 				fieldMoved: this._handleFieldMoved.bind(this),
 				pageAdded: this._handlePageAdded.bind(this),

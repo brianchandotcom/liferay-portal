@@ -164,7 +164,7 @@ describe(
 				);
 				const {FormRenderer} = builderComponent.refs;
 
-				FormRenderer._handleSettingsPageClicked(
+				FormRenderer._handlePageSettingsClicked(
 					{
 						data
 					}
@@ -192,7 +192,7 @@ describe(
 				);
 				const {FormRenderer, sidebar} = builderComponent.refs;
 
-				FormRenderer._handleSettingsPageClicked(
+				FormRenderer._handlePageSettingsClicked(
 					{
 						data
 					}
@@ -220,7 +220,7 @@ describe(
 				);
 				const {FormRenderer, sidebar} = formBuilder.refs;
 
-				FormRenderer._handleSettingsPageClicked(
+				FormRenderer._handlePageSettingsClicked(
 					{
 						data
 					}

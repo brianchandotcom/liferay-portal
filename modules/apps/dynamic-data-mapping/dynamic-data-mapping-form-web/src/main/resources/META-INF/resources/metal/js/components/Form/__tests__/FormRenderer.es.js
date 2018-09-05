@@ -145,7 +145,7 @@ describe(
 				component._handleDeleteButtonClicked(pages);
 
 				expect(spy).toHaveBeenCalled();
-				expect(spy).toHaveBeenCalledWith('deleteButtonClicked', expect.any(Object));
+				expect(spy).toHaveBeenCalledWith('fieldDeleted', expect.any(Object));
 
 				expect(component).toMatchSnapshot();
 			}
@@ -170,7 +170,7 @@ describe(
 				component._handleDuplicateButtonClicked(pages);
 
 				expect(spy).toHaveBeenCalled();
-				expect(spy).toHaveBeenCalledWith('duplicateButtonClicked', expect.any(Object));
+				expect(spy).toHaveBeenCalledWith('fieldDuplicated', expect.any(Object));
 
 				expect(component).toMatchSnapshot();
 			}
@@ -526,7 +526,7 @@ describe(
 							}
 						);
 
-						component._handleSettingsPageClicked(
+						component._handlePageSettingsClicked(
 							{
 								data: {
 									item: {
@@ -553,7 +553,7 @@ describe(
 							}
 						);
 
-						component._handleSettingsPageClicked(
+						component._handlePageSettingsClicked(
 							{
 								data: {
 									item: {
@@ -644,7 +644,7 @@ describe(
 							}
 						);
 
-						component._handleSettingsPageClicked(
+						component._handlePageSettingsClicked(
 							{
 								data: {
 									item: {

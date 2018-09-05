@@ -287,7 +287,7 @@ class FormRenderer extends Component {
 	 */
 
 	_handleDeleteButtonClicked(data) {
-		this.emit('deleteButtonClicked', data);
+		this.emit('fieldDeleted', data);
 	}
 
 	/**
@@ -296,7 +296,7 @@ class FormRenderer extends Component {
      */
 
 	_handleDuplicateButtonClicked(data) {
-		this.emit('duplicateButtonClicked', data);
+		this.emit('fieldDuplicated', data);
 	}
 
 	/**

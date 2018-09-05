@@ -70,9 +70,9 @@ describe.only(
 
 				expect(provider.props.children[0].props.events).toMatchObject(
 					{
-						deleteField: expect.any(Function),
 						fieldAdded: expect.any(Function),
 						fieldClicked: expect.any(Function),
+						fieldDeleted: expect.any(Function),
 						fieldEdited: expect.any(Function),
 						fieldMoved: expect.any(Function)
 					}
@@ -355,7 +355,7 @@ describe.only(
 				);
 
 				describe(
-					'deleteField',
+					'fieldDeleted',
 					() => {
 						it(
 							'should listen the fieldDeleted event and delete the field in the column to the pages',
@@ -369,7 +369,7 @@ describe.only(
 									rowIndex: 1
 								};
 
-								child.emit('deleteField', mockEvent);
+								child.emit('fieldDeleted', mockEvent);
 
 								jest.runAllTimers();
 
@@ -381,7 +381,7 @@ describe.only(
 				);
 
 				describe(
-					'duplicateField',
+					'fieldDuplicated',
 					() => {
 						it(
 							'should listen the duplicate field event and add this field in the pages',
@@ -395,7 +395,7 @@ describe.only(
 									rowIndex: 0
 								};
 
-								child.emit('duplicateField', mockEvent);
+								child.emit('fieldDuplicated', mockEvent);
 
 								jest.runAllTimers();
 

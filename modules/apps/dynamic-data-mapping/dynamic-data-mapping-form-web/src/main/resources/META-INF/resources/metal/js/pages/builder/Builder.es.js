@@ -221,8 +221,8 @@ class Builder extends Component {
 	 * @private
 	 */
 
-	_handleDeleteButtonClicked(indexes) {
-		this.emit('deleteField', indexes);
+	_handleFieldDeleted(indexes) {
+		this.emit('fieldDeleted', indexes);
 	}
 
 	/**
@@ -231,8 +231,8 @@ class Builder extends Component {
 	 * @private
 	 */
 
-	_handleDuplicateButtonClicked(indexes) {
-		this.emit('duplicateField', indexes);
+	_handleFieldDuplicated(indexes) {
+		this.emit('fieldDuplicated', indexes);
 	}
 
 	_handlePageDeleted({pages, emptyPage}) {
@@ -281,9 +281,9 @@ class Builder extends Component {
 
 		const FormRendererEvents = {
 			activePageUpdated: this._handleActivePageUpdated.bind(this),
-			deleteButtonClicked: this._handleDeleteButtonClicked.bind(this),
-			duplicateButtonClicked: this._handleDuplicateButtonClicked.bind(this),
 			fieldClicked: this._handleFieldClicked.bind(this),
+			fieldDeleted: this._handleFieldDeleted.bind(this),
+			fieldDuplicated: this._handleFieldDuplicated.bind(this),
 			fieldMoved: this._handleFieldMoved.bind(this),
 			pageAdded: this._handlePageAdded.bind(this),
 			pageDeleted: this._handlePageDeleted.bind(this),

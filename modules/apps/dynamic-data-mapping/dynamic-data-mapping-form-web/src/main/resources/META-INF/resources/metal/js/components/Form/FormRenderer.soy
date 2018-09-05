@@ -6,7 +6,7 @@
 	{@param? _handleDeleteButtonClicked: any}
 	{@param? _handleDuplicateButtonClicked: any}
 	{@param? _handleFieldEdited: any}
-	{@param? _handleSettingsPageClicked: any}
+	{@param? _handlePageSettingsClicked: any}
 	{@param? _handleUpdatePage: any}
 	{@param? activePage: number}
 	{@param? defaultPageTitle: string}
@@ -23,7 +23,7 @@
 		{param _handleDeleteButtonClicked: $_handleDeleteButtonClicked /}
 		{param _handleDuplicateButtonClicked: $_handleDuplicateButtonClicked /}
 		{param _handleFieldEdited: $_handleFieldEdited /}
-		{param _handleSettingsPageClicked: $_handleSettingsPageClicked /}
+		{param _handlePageSettingsClicked: $_handlePageSettingsClicked /}
 		{param _handleUpdatePage: $_handleUpdatePage /}
 		{param activePage: $activePage /}
 		{param contentRenderer: $contentRenderer /}
@@ -42,7 +42,7 @@
 	{@param? _handleDeleteButtonClicked: any}
 	{@param? _handleDuplicateButtonClicked: any}
 	{@param? _handleFieldEdited: any}
-	{@param? _handleSettingsPageClicked: any}
+	{@param? _handlePageSettingsClicked: any}
 	{@param? _handleUpdatePage: any}
 	{@param? activePage: number}
 	{@param? contentRenderer: string}
@@ -55,7 +55,7 @@
 	<div class="position-relative">
 		{delcall FormRenderer.formHeader}
 			{param _handleChangePage: $_handleChangePage /}
-			{param _handleSettingsPageClicked: $_handleSettingsPageClicked /}
+			{param _handlePageSettingsClicked: $_handlePageSettingsClicked /}
 			{param activePage: $activePage /}
 			{param contentRenderer: $contentRenderer /}
 			{param defaultPageTitle: $defaultPageTitle /}
@@ -88,7 +88,7 @@
 {deltemplate FormRenderer.formHeader}
 	{@param spritemap: string}
 	{@param? _handleChangePage: any}
-	{@param? _handleSettingsPageClicked: any}
+	{@param? _handlePageSettingsClicked: any}
 	{@param? activePage: number}
 	{@param? contentRenderer: string}
 	{@param? defaultPageTitle: string}
@@ -124,7 +124,7 @@
 				{param items: $pageSettingsItems /}
 				{param triggerClasses: 'component-action' /}
 				{param events: [
-					'itemClicked': $_handleSettingsPageClicked
+					'itemClicked': $_handlePageSettingsClicked
 				] /}
 				{param spritemap: $spritemap /}
 			{/call}

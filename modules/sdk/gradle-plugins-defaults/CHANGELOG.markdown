@@ -4421,7 +4421,7 @@ version 1.3.2.
 
 ### Changed
 - [LPS-84094]: Allow properties defined in `gradle-ext.properties` to be
-overridden by values defined in a `gradle-ext.properties` file
+overridden by values defined in a `gradle-ext.properties` file.
 - [LPS-84094]: Update the [Liferay Gradle Plugins] dependency to version
 3.12.117.
 
@@ -4438,11 +4438,62 @@ overridden by values defined in a `gradle-ext.properties` file
 	- `scm.developerConnection` = `scm:git:git@github.com:liferay/liferay-portal.git`
 	- `scm.url` = `http://github.com/liferay/liferay-portal`
 
-## 5.5.27 - 2018-09-04
+## 5.5.27 - 2018-08-30
+
+### Changed
+- [LPS-84094]: Move `GradleUtil` methods to [Liferay Gradle Util] so it can be
+used inside `build.gradle` files.
+- [LPS-84621]: Enable the `validateSchema` task for CI.
+- [LPS-84891]: Update the [Liferay Gradle Plugins] dependency to version
+3.12.119.
+
+## 5.5.28 - 2018-08-30
+
+### Changed
+- [LPS-80388]: Update the [Liferay Gradle Plugins] dependency to version
+3.12.120.
+
+## 5.5.29 - 2018-09-03
+
+### Changed
+- [LPS-84119]: Update the [Liferay Gradle Plugins] dependency to version
+3.12.121.
+
+## 5.5.30 - 2018-09-03
+
+### Changed
+- [LPS-84119]: Update the [Liferay Gradle Plugins] dependency to version
+3.12.122.
+
+## 5.5.31 - 2018-09-04
+
+### Changed
+- [LPS-84119]: Update the [Liferay Gradle Plugins] dependency to version
+3.12.123.
+
+## 5.5.32 - 2018-09-04
+
+### Changed
+- [LPS-84119]: Update the [Liferay Gradle Plugins] dependency to version
+3.12.124.
+
+## 5.5.33 - 2018-09-04
 
 ### Fixed
 - [LPS-70819]: Fix the `compileJSP.destinationDir` property when the
 `jsp.precompile.from.source` project property is set to `true`.
+
+## 5.5.34 - 2018-09-04
+
+### Changed
+- [LPS-84119]: Update the [Liferay Gradle Plugins] dependency to version
+3.12.125.
+
+## 5.5.35 - 2018-09-04
+
+### Changed
+- [LPS-85092]: Update the [Liferay Gradle Plugins] dependency to version
+3.12.126.
 
 [Find Security Bugs]: https://github.com/liferay/liferay-portal/tree/master/modules/third-party/com-h3xstream-findsecbugs
 [Gradle Dependency Management]: https://github.com/spring-gradle-plugins/dependency-management-plugin
@@ -4847,6 +4898,7 @@ overridden by values defined in a `gradle-ext.properties` file
 [LPS-80184]: https://issues.liferay.com/browse/LPS-80184
 [LPS-80332]: https://issues.liferay.com/browse/LPS-80332
 [LPS-80386]: https://issues.liferay.com/browse/LPS-80386
+[LPS-80388]: https://issues.liferay.com/browse/LPS-80388
 [LPS-80394]: https://issues.liferay.com/browse/LPS-80394
 [LPS-80466]: https://issues.liferay.com/browse/LPS-80466
 [LPS-80513]: https://issues.liferay.com/browse/LPS-80513
@@ -4910,6 +4962,8 @@ overridden by values defined in a `gradle-ext.properties` file
 [LPS-84621]: https://issues.liferay.com/browse/LPS-84621
 [LPS-84624]: https://issues.liferay.com/browse/LPS-84624
 [LPS-84887]: https://issues.liferay.com/browse/LPS-84887
+[LPS-84891]: https://issues.liferay.com/browse/LPS-84891
+[LPS-85092]: https://issues.liferay.com/browse/LPS-85092
 [LRDOCS-2594]: https://issues.liferay.com/browse/LRDOCS-2594
 [LRDOCS-2841]: https://issues.liferay.com/browse/LRDOCS-2841
 [LRDOCS-2981]: https://issues.liferay.com/browse/LRDOCS-2981

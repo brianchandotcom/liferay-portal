@@ -26,7 +26,7 @@ property.
 - [LPS-71591]: Automatically configure the `validateTLD` task to use the version
 0.12.5 of the [XML Resolver].
 
-## 1.3.0 - 2018-08-23
+## 1.3.1 - 2018-08-30
 
 ### Changed
 - [LPS-84621]: Update the `validateTLD` task to automatically search the parent

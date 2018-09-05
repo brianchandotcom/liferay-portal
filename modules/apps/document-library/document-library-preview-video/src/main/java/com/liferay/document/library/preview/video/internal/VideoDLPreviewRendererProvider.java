@@ -69,6 +69,9 @@ public class VideoDLPreviewRendererProvider
 					throw new DLPreviewGenerationInProcessException();
 				}
 
+				RequestDispatcher requestDispatcher =
+					_servletContext.getRequestDispatcher("/preview/view.jsp");
+
 				ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 					WebKeys.THEME_DISPLAY);
 
@@ -76,16 +79,13 @@ public class VideoDLPreviewRendererProvider
 					fileVersion, themeDisplay);
 
 				request.setAttribute(
-					DLPreviewVideoWebKeys.VIDEO_THUMBNAIL_URL,
-					videoThumbnailURL);
-
-				request.setAttribute(
 					DLPreviewVideoWebKeys.PREVIEW_FILE_URLS,
 					_getPreviewFileURLs(
 						fileVersion, videoThumbnailURL, request));
 
-				RequestDispatcher requestDispatcher =
-					_servletContext.getRequestDispatcher("/preview/view.jsp");
+				request.setAttribute(
+					DLPreviewVideoWebKeys.VIDEO_THUMBNAIL_URL,
+					videoThumbnailURL);
 
 				requestDispatcher.include(request, response);
 			});

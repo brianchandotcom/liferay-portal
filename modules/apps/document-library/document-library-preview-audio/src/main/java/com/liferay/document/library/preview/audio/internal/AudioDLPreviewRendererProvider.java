@@ -60,15 +60,15 @@ public class AudioDLPreviewRendererProvider
 					throw new DLPreviewGenerationInProcessException();
 				}
 
+				RequestDispatcher requestDispatcher =
+					_servletContext.getRequestDispatcher("/preview/view.jsp");
+
 				request.setAttribute(
 					WebKeys.DOCUMENT_LIBRARY_FILE_VERSION, fileVersion);
 
 				request.setAttribute(
 					DLPreviewAudioWebKeys.PREVIEW_FILE_URLS,
 					_getPreviewFileURLs(fileVersion, request));
-
-				RequestDispatcher requestDispatcher =
-					_servletContext.getRequestDispatcher("/preview/view.jsp");
 
 				requestDispatcher.include(request, response);
 			});

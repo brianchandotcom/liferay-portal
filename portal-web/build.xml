@@ -360,13 +360,12 @@ ${oversize.files.jsp}</fail>
 
 							<copy
 								preservelastmodified="true"
-								todir="${app.server.dir}/work/Catalina/localhost/_"
+								todir="${app.server.dir}/work/Catalina/localhost/ROOT"
 							>
 								<fileset
 									dir="classes/${app.server.type}"
 								>
 									<exclude name="**/*.jspc_error" />
-									<exclude name="**/*.java" />
 								</fileset>
 							</copy>
 						</then>

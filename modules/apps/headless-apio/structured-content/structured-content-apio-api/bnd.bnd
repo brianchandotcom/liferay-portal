@@ -2,6 +2,8 @@ Bundle-Name: Liferay Structured Content Apio API
 Bundle-SymbolicName: com.liferay.structured.content.apio.api
 Bundle-Version: 2.0.0
 Export-Package:\
+	com.liferay.structured.content.apio.architect.filter,\
+	com.liferay.structured.content.apio.architect.filter.expression,\
 	com.liferay.structured.content.apio.architect.identifier,\
 	com.liferay.structured.content.apio.architect.sort,\
 	com.liferay.structured.content.apio.architect.util

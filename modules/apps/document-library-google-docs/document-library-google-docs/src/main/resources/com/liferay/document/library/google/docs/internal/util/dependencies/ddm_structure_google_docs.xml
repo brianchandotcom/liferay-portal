@@ -1,43 +1,43 @@
 <?xml version="1.0"?>
 
-<root available-locales="en_US" default-locale="en_US">
+<root available-locales="[$LOCALE_DEFAULT$]" default-locale="[$LOCALE_DEFAULT$]">
 	<dynamic-element dataType="string" fieldNamespace="" indexType="keyword" localizable="true" multiple="false" name="DESCRIPTION" readOnly="false" repeatable="false" required="false" showLabel="true" type="text">
-		<meta-data locale="en_US">
+		<meta-data locale="[$LOCALE_DEFAULT$]">
 			<entry name="label">DESCRIPTION</entry>
 			<entry name="predefinedValue" />
 			<entry name="tip" />
 		</meta-data>
 	</dynamic-element>
 	<dynamic-element dataType="string" fieldNamespace="" indexType="keyword" localizable="true" multiple="false" name="EMBEDDABLE_URL" readOnly="false" repeatable="false" required="false" showLabel="true" type="text">
-		<meta-data locale="en_US">
+		<meta-data locale="[$LOCALE_DEFAULT$]">
 			<entry name="label">EMBEDDABLE_URL</entry>
 			<entry name="predefinedValue" />
 			<entry name="tip" />
 		</meta-data>
 	</dynamic-element>
 	<dynamic-element dataType="string" fieldNamespace="" indexType="keyword" localizable="true" multiple="false" name="ICON_URL" readOnly="false" repeatable="false" required="false" showLabel="true" type="text">
-		<meta-data locale="en_US">
+		<meta-data locale="[$LOCALE_DEFAULT$]">
 			<entry name="label">ICON_URL</entry>
 			<entry name="predefinedValue" />
 			<entry name="tip" />
 		</meta-data>
 	</dynamic-element>
 	<dynamic-element dataType="string" fieldNamespace="" indexType="keyword" localizable="true" multiple="false" name="ID" readOnly="false" repeatable="false" required="false" showLabel="true" type="text">
-		<meta-data locale="en_US">
+		<meta-data locale="[$LOCALE_DEFAULT$]">
 			<entry name="label">ID</entry>
 			<entry name="predefinedValue" />
 			<entry name="tip" />
 		</meta-data>
 	</dynamic-element>
 	<dynamic-element dataType="string" fieldNamespace="" indexType="keyword" localizable="true" multiple="false" name="NAME" readOnly="false" repeatable="false" required="false" showLabel="true" type="text">
-		<meta-data locale="en_US">
+		<meta-data locale="[$LOCALE_DEFAULT$]">
 			<entry name="label">NAME</entry>
 			<entry name="predefinedValue" />
 			<entry name="tip" />
 		</meta-data>
 	</dynamic-element>
 	<dynamic-element dataType="string" fieldNamespace="" indexType="keyword" localizable="true" multiple="false" name="URL" readOnly="false" repeatable="false" required="false" showLabel="true" type="text">
-		<meta-data locale="en_US">
+		<meta-data locale="[$LOCALE_DEFAULT$]">
 			<entry name="label">URL</entry>
 			<entry name="predefinedValue" />
 			<entry name="tip" />

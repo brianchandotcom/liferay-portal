@@ -819,7 +819,9 @@ public class IndentationCheck extends BaseCheck {
 					}
 				}
 			}
-			else if (parentAST.getType() == TokenTypes.TYPE_ARGUMENTS) {
+			else if ((parentAST.getType() == TokenTypes.TYPE_ARGUMENTS) ||
+					 (parentAST.getType() == TokenTypes.TYPE_PARAMETERS)) {
+
 				DetailAST commaAST = parentAST.findFirstToken(TokenTypes.COMMA);
 
 				if ((commaAST == null) ||

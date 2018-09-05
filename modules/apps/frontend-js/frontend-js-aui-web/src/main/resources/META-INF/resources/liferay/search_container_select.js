@@ -183,6 +183,35 @@ AUI.add(
 						);
 					},
 
+					_getActions: function(elements) {
+						var instance = this;
+
+						var actions = [];
+
+						if (elements.length) {
+							var allActions = elements.map(
+								node => {
+									var row = A.one(node).ancestor(instance.get(STR_ROW_SELECTOR));
+
+									var rowActions = row.getData('actions') || '';
+
+									return rowActions.split(',');
+								}
+							);
+
+							actions = allActions.reduce(
+								(commonActions, elementActions) => {
+									return commonActions.filter(
+										action => elementActions.includes(action)
+									);
+								},
+								allActions[0]
+							);
+						}
+
+						return actions;
+					},
+
 					_getAllElements: function(onlySelected) {
 						var instance = this;
 
@@ -214,12 +243,17 @@ AUI.add(
 					_notifyRowToggle: function() {
 						var instance = this;
 
+						var allSelectedElements = instance.getAllSelectedElements();
+
 						instance.get(STR_HOST).fire(
 							'rowToggled',
 							{
+								actions: instance._getActions(
+									allSelectedElements.getDOMNodes()
+								),
 								elements: {
 									allElements: instance._getAllElements(),
-									allSelectedElements: instance.getAllSelectedElements(),
+									allSelectedElements: allSelectedElements,
 									currentPageElements: instance._getCurrentPageElements(),
 									currentPageSelectedElements: instance.getCurrentPageSelectedElements()
 								}

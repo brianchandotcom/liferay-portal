@@ -23,35 +23,28 @@ import com.liferay.document.library.preview.exception.DLPreviewGenerationInProce
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.util.PropsValues;
 
 import java.util.ArrayList;
-import java.util.Dictionary;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 
-import org.osgi.framework.BundleContext;
-import org.osgi.framework.ServiceRegistration;
-import org.osgi.service.component.annotations.Activate;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Deactivate;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Alejandro Tardín
  */
-@Component(immediate = true, service = AudioDLPreviewRendererFactory.class)
-public class AudioDLPreviewRendererFactory
+public class AudioDLPreviewRendererProvider
 	implements DLPreviewRendererProvider {
+
+	public AudioDLPreviewRendererProvider(ServletContext servletContext) {
+		_servletContext = servletContext;
+	}
 
 	@Override
 	public Optional<DLPreviewRenderer> getPreviewDLPreviewRendererOptional(
@@ -86,24 +79,6 @@ public class AudioDLPreviewRendererFactory
 		FileVersion fileVersion) {
 
 		return Optional.empty();
-	}
-
-	@Activate
-	protected void activate(BundleContext bundleContext) {
-		Dictionary<String, Object[]> properties = new HashMapDictionary<>();
-
-		Set<String> audioMimeTypes = AudioProcessorUtil.getAudioMimeTypes();
-
-		properties.put("content.type", audioMimeTypes.toArray());
-
-		_dlPreviewRendererProviderServiceRegistration =
-			bundleContext.registerService(
-				DLPreviewRendererProvider.class, this, properties);
-	}
-
-	@Deactivate
-	protected void deactivate() {
-		_dlPreviewRendererProviderServiceRegistration.unregister();
 	}
 
 	private List<String> _getPreviewFileURLs(
@@ -152,12 +127,6 @@ public class AudioDLPreviewRendererFactory
 		return previewFileURLs;
 	}
 
-	private ServiceRegistration<DLPreviewRendererProvider>
-		_dlPreviewRendererProviderServiceRegistration;
-
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.document.library.preview.audio)"
-	)
-	private ServletContext _servletContext;
+	private final ServletContext _servletContext;
 
 }

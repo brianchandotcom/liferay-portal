@@ -1360,47 +1360,6 @@
 		</execute>
 	</command>
 
-	<command name="PublishWorkflowDefinitionWithNoNameLineAndViewErrorMessage" priority="3">
-		<description message="This is a use case for LPS-76517." />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Workflow" />
-		</execute>
-
-		<execute macro="Workflow#addNewDefinition">
-			<var name="workflowDefinitionTitle" value="Test Definition" />
-		</execute>
-
-		<execute macro="PortletEntry#publish" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Workflow" />
-		</execute>
-
-		<execute macro="Workflow#viewDefinitionPublished">
-			<var name="workflowDefinitionTitle" value="Test Definition" />
-		</execute>
-
-		<execute macro="Workflow#gotoEditWorkflowDefinition">
-			<var name="workflowDefinitionName" value="Test Definition" />
-			<var name="workflowDefinitionTitle" value="Test Definition" />
-		</execute>
-
-		<execute macro="KaleoDesigner#editSourceXML">
-			<var name="kdSourceXML" value=" " />
-			<var name="line" value="5" />
-		</execute>
-
-		<execute macro="Workflow#publishInvalidWorkflowDefinition">
-			<var name="errorMessage" value="Please enter valid content." />
-			<var name="update" value="true" />
-		</execute>
-	</command>
-
 	<command name="PublishWorkflowDefinitionWithNoStartNodeAndViewErrorMessage" priority="4">
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Configuration" />

@@ -27,8 +27,8 @@ import org.opensaml.saml2.core.NameID;
  */
 public class SAMLContextImpl
 	<InboundMessageType extends SAMLObject,
-		OutboundMessageType extends SAMLObject, R extends Resolver>
-			implements Resolver.SAMLContext<R> {
+	 OutboundMessageType extends SAMLObject, R extends Resolver>
+		implements Resolver.SAMLContext<R> {
 
 	public SAMLContextImpl(
 		SAMLMessageContext<InboundMessageType, OutboundMessageType, NameID>

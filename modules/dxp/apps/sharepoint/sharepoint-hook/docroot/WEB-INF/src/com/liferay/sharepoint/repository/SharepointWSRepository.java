@@ -1070,7 +1070,7 @@ public class SharepointWSRepository
 			_objectTypeFilters =
 				new HashMap
 					<ExtRepositoryObjectType<?>,
-						SharepointConnection.ObjectTypeFilter>() {
+					 SharepointConnection.ObjectTypeFilter>() {
 
 					{
 						put(

@@ -4489,6 +4489,12 @@ used inside `build.gradle` files.
 - [LPS-84119]: Update the [Liferay Gradle Plugins] dependency to version
 3.12.125.
 
+## 5.5.35 - 2018-09-04
+
+### Changed
+- [LPS-85092]: Update the [Liferay Gradle Plugins] dependency to version
+3.12.126.
+
 [Find Security Bugs]: https://github.com/liferay/liferay-portal/tree/master/modules/third-party/com-h3xstream-findsecbugs
 [Gradle Dependency Management]: https://github.com/spring-gradle-plugins/dependency-management-plugin
 [Gradle License Report]: https://github.com/jk1/Gradle-License-Report
@@ -4957,6 +4963,7 @@ used inside `build.gradle` files.
 [LPS-84624]: https://issues.liferay.com/browse/LPS-84624
 [LPS-84887]: https://issues.liferay.com/browse/LPS-84887
 [LPS-84891]: https://issues.liferay.com/browse/LPS-84891
+[LPS-85092]: https://issues.liferay.com/browse/LPS-85092
 [LRDOCS-2594]: https://issues.liferay.com/browse/LRDOCS-2594
 [LRDOCS-2841]: https://issues.liferay.com/browse/LRDOCS-2841
 [LRDOCS-2981]: https://issues.liferay.com/browse/LRDOCS-2981

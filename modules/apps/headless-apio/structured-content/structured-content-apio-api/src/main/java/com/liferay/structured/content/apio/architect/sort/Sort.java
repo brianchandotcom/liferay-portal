@@ -48,7 +48,7 @@ public class Sort {
 	 */
 	public Sort(List<SortField> sortFields) {
 		if (ListUtil.isEmpty(sortFields)) {
-			throw new InvalidSortException("Sort fields is Empty.");
+			throw new InvalidSortException("Sort fields is Empty");
 		}
 
 		_sortFields = Collections.unmodifiableList(sortFields);

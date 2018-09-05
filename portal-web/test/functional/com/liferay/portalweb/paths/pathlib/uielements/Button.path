@@ -575,7 +575,7 @@
 </tr>
 <tr>
 	<td>REMOVE_IMAGE</td>
-	<td>//button[contains(@id,'removeImage')]</td>
+	<td>//button[@id='sdjj___removeImage']</td>
 	<td></td>
 </tr>
 <tr>
@@ -691,6 +691,11 @@
 <tr>
 	<td>SELECT_FILE</td>
 	<td>//button[contains(.,'Select File')] | //label[contains(.,'Select File')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SELECT_FILE_SMALL_IMAGE</td>
+	<td>//div[contains(@class,'blogs-small-image-selector')]//a[contains(.,'Select File')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -1143,6 +1143,69 @@
 		</execute>
 	</command>
 
+	<command name="RemoveSmallImage" priority="5">
+		<description message="This is a usecase for LPS-83229. This is the only small image test for blogs." />
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Blogs Page" />
+		</execute>
+
+		<execute macro="BlogsNavigator#gotoAddEntry" />
+
+		<execute macro="BlogsEntry#addEntryContent">
+			<var name="entryContent" value="Blogs Entry Content" />
+			<var name="entryTitle" value="Blogs Entry with Small Image" />
+		</execute>
+
+		<execute macro="Panel#expandPanel">
+			<var name="panel" value="Configuration" />
+		</execute>
+
+		<execute macro="BlogsEntry#addSmallImage">
+			<var name="navTab" value="Documents and Media" />
+			<var name="uploadFileName" value="Document_1.jpg" />
+		</execute>
+
+		<execute macro="PortletEntry#publish" />
+
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Blogs Page" />
+		</execute>
+
+		<execute macro="BlogsEntry#viewEntry">
+			<var name="entryContent" value="Blogs Entry Content" />
+			<var name="entryTitle" value="Blogs Entry with Small Image" />
+		</execute>
+
+		<execute macro="BlogsNavigator#gotoEditPG">
+			<var name="entryTitle" value="Blogs Entry with Small Image" />
+		</execute>
+
+		<execute macro="BlogsEntry#removeSmallImage">
+			<var name="uploadFileName" value="Document_1.jpg" />
+		</execute>
+
+		<execute macro="PortletEntry#publish" />
+
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Blogs Page" />
+		</execute>
+
+		<execute macro="BlogsNavigator#gotoEditPG">
+			<var name="entryTitle" value="Blogs Entry with Small Image" />
+		</execute>
+
+		<execute function="AssertElementNotPresent" locator1="BlogsEntry#SMALL_IMAGE">
+			<var name="key_smallImage" value="Document_1.jpg" />
+		</execute>
+
+		<execute function="AssertTextEquals" locator1="Button#SELECT_FILE_SMALL_IMAGE" value1="Select File" />
+	</command>
+
 	<command name="SaveBlogsEntryDraft" priority="5">
 		<property name="portal.acceptance" value="true" />
 

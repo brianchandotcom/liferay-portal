@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.users.admin.web.internal.servlet.taglib.ui.navigation.user.entry;
+package com.liferay.users.admin.web.internal.frontend.taglib.servlet.taglib;
 
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
 import com.liferay.portal.kernel.model.User;
@@ -24,30 +24,30 @@ import org.osgi.service.component.annotations.Component;
  * @author Pei-Jung Lan
  */
 @Component(
-	property = "screen.navigation.entry.order:Integer=20",
+	property = "screen.navigation.entry.order:Integer=10",
 	service = ScreenNavigationEntry.class
 )
-public class UserAlertsAndAnnouncementsDeliveryScreenNavigationEntry
+public class UserAddressesScreenNavigationEntry
 	extends BaseUserScreenNavigationEntry {
 
 	@Override
 	public String getActionCommandName() {
-		return "/users_admin/update_announcements_deliveries";
+		return "/users_admin/update_addresses";
 	}
 
 	@Override
 	public String getCategoryKey() {
-		return UserFormConstants.CATEGORY_KEY_PREFERENCES;
+		return UserFormConstants.CATEGORY_KEY_CONTACT;
 	}
 
 	@Override
 	public String getEntryKey() {
-		return UserFormConstants.ENTRY_KEY_ALERTS_AND_ANNOUNCEMENTS_DELIVERY;
+		return UserFormConstants.ENTRY_KEY_ADDRESSES;
 	}
 
 	@Override
 	public String getJspPath() {
-		return "/user/announcements.jsp";
+		return "/user/addresses.jsp";
 	}
 
 	@Override

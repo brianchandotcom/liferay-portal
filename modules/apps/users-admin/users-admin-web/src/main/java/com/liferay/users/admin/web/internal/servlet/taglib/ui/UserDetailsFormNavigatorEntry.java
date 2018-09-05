@@ -31,7 +31,7 @@ import org.osgi.service.component.annotations.Modified;
 /**
  * @author     Pei-Jung Lan
  * @deprecated As of Judson (7.1.x), replaced by {@link
- *             com.liferay.users.admin.web.internal.servlet.taglib.ui.navigation.user.entry.UserInformationScreenNavigationEntry}
+ *             com.liferay.users.admin.web.internal.frontend.taglib.servlet.taglib.UserInformationScreenNavigationEntry}
  */
 @Deprecated
 public class UserDetailsFormNavigatorEntry extends BaseUserFormNavigatorEntry {

@@ -12,10 +12,9 @@
  * details.
  */
 
-package com.liferay.users.admin.web.internal.servlet.taglib.ui.navigation.user.entry;
+package com.liferay.users.admin.web.internal.frontend.taglib.servlet.taglib;
 
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
-import com.liferay.portal.kernel.model.User;
 import com.liferay.users.admin.constants.UserFormConstants;
 
 import org.osgi.service.component.annotations.Component;
@@ -24,15 +23,15 @@ import org.osgi.service.component.annotations.Component;
  * @author Pei-Jung Lan
  */
 @Component(
-	property = "screen.navigation.entry.order:Integer=30",
+	property = "screen.navigation.entry.order:Integer=10",
 	service = ScreenNavigationEntry.class
 )
-public class UserMembershipsScreenNavigationEntry
+public class UserInformationScreenNavigationEntry
 	extends BaseUserScreenNavigationEntry {
 
 	@Override
 	public String getActionCommandName() {
-		return "/users_admin/update_memberships";
+		return "/users_admin/edit_user";
 	}
 
 	@Override
@@ -42,21 +41,12 @@ public class UserMembershipsScreenNavigationEntry
 
 	@Override
 	public String getEntryKey() {
-		return UserFormConstants.ENTRY_KEY_MEMBERSHIPS;
+		return UserFormConstants.ENTRY_KEY_INFORMATION;
 	}
 
 	@Override
 	public String getJspPath() {
-		return "/user/memberships.jsp";
-	}
-
-	@Override
-	public boolean isVisible(User user, User selUser) {
-		if (selUser == null) {
-			return false;
-		}
-
-		return true;
+		return "/user/information.jsp";
 	}
 
 }

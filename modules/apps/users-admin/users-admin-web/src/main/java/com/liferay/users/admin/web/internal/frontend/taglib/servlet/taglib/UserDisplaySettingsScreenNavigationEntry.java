@@ -12,13 +12,11 @@
  * details.
  */
 
-package com.liferay.users.admin.web.internal.servlet.taglib.ui.navigation.user;
+package com.liferay.users.admin.web.internal.frontend.taglib.servlet.taglib;
 
-import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationCategory;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.users.admin.constants.UserFormConstants;
-
-import java.util.Locale;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -26,11 +24,16 @@ import org.osgi.service.component.annotations.Component;
  * @author Pei-Jung Lan
  */
 @Component(
-	property = "screen.navigation.category.order:Integer=30",
-	service = ScreenNavigationCategory.class
+	property = "screen.navigation.entry.order:Integer=30",
+	service = ScreenNavigationEntry.class
 )
-public class UserPreferencesScreenNavigationCategory
-	implements ScreenNavigationCategory {
+public class UserDisplaySettingsScreenNavigationEntry
+	extends BaseUserScreenNavigationEntry {
+
+	@Override
+	public String getActionCommandName() {
+		return "/users_admin/edit_display_settings";
+	}
 
 	@Override
 	public String getCategoryKey() {
@@ -38,13 +41,22 @@ public class UserPreferencesScreenNavigationCategory
 	}
 
 	@Override
-	public String getLabel(Locale locale) {
-		return LanguageUtil.get(locale, "preferences");
+	public String getEntryKey() {
+		return UserFormConstants.ENTRY_KEY_DISPLAY_SETTINGS;
 	}
 
 	@Override
-	public String getScreenNavigationKey() {
-		return UserFormConstants.SCREEN_NAVIGATION_KEY_USERS;
+	public String getJspPath() {
+		return "/user/display_settings.jsp";
+	}
+
+	@Override
+	public boolean isVisible(User user, User selUser) {
+		if (selUser == null) {
+			return false;
+		}
+
+		return true;
 	}
 
 }

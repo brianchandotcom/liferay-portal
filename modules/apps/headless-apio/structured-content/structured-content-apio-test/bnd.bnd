@@ -1,4 +1,15 @@
 Bundle-Name: Liferay Structured Content Apio Test
 Bundle-SymbolicName: com.liferay.structured.content.apio.test
 Bundle-Version: 1.0.0
--includeresource: test-classes/integration
+Import-Package:\
+	!javax.validation.*,\
+	\
+	!org.apache.aries.blueprint,\
+	!org.apache.aries.blueprint.*,\
+	\
+	!org.osgi.service.blueprint.*,\
+	\
+	*
+-includeresource:\
+	test-classes/integration,\
+	@lib/cxf-*.jar

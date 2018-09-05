@@ -43,7 +43,6 @@ import com.liferay.structured.content.apio.architect.util.test.PaginationTestUti
 
 import java.lang.reflect.Method;
 
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -95,7 +94,7 @@ public class StructuredContentNestedCollectionResourceTest {
 
 		PageItems<JournalArticle> pageItems = _getPageItems(
 			PaginationTestUtil.of(10, 1), _group.getGroupId(),
-			_getThemeDisplay(_group), new Sort(Collections.emptyList()));
+			_getThemeDisplay(_group), Sort.emptySort());
 
 		Assert.assertEquals(1, pageItems.getTotalCount());
 

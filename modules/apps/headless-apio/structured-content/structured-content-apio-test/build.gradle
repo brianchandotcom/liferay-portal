@@ -1,7 +1,13 @@
 sourceCompatibility = "1.8"
 targetCompatibility = "1.8"
 
+copyLibs {
+	enabled = true
+}
+
 dependencies {
+	compileOnly group: "org.apache.cxf", name: "cxf-rt-frontend-jaxrs", version: "3.2.4"
+
 	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	testIntegrationCompile project(":apps:apio-architect:apio-architect-api")
 	testIntegrationCompile project(":apps:dynamic-data-mapping:dynamic-data-mapping-api")

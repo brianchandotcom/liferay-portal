@@ -14,6 +14,8 @@
 
 package com.liferay.structured.content.apio.architect.sort;
 
+import com.liferay.portal.kernel.util.ListUtil;
+
 import java.util.Collections;
 import java.util.List;
 
@@ -26,6 +28,18 @@ import java.util.List;
  */
 public class Sort {
 
+	public static final Sort EMPTY_SORT = new Sort();
+
+	/**
+	 * Returns a empty Sort.
+	 *
+	 * @return - a empty Sort
+	 * @review
+	 */
+	public static Sort emptySort() {
+		return EMPTY_SORT;
+	}
+
 	/**
 	 * Creates a new Sort from a list of sort fields.
 	 *
@@ -33,6 +47,10 @@ public class Sort {
 	 * @review
 	 */
 	public Sort(List<SortField> sortFields) {
+		if (ListUtil.isEmpty(sortFields)) {
+			throw new InvalidSortException("Sort fields is Empty");
+		}
+
 		_sortFields = Collections.unmodifiableList(sortFields);
 	}
 
@@ -44,6 +62,10 @@ public class Sort {
 	 */
 	public List<SortField> getSortFields() {
 		return _sortFields;
+	}
+
+	private Sort() {
+		_sortFields = Collections.emptyList();
 	}
 
 	private final List<SortField> _sortFields;

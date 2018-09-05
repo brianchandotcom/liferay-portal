@@ -15,6 +15,8 @@
 package com.liferay.structured.content.apio.internal.architect.sort;
 
 import com.liferay.petra.string.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
+import com.liferay.structured.content.apio.architect.sort.InvalidSortException;
 import com.liferay.structured.content.apio.architect.sort.SortField;
 import com.liferay.structured.content.apio.architect.sort.SortParser;
 
@@ -55,7 +57,7 @@ public class SortParserImpl implements SortParser {
 	 * @review
 	 */
 	public List<SortField> parse(String sortString) {
-		if (sortString == null) {
+		if (Validator.isNull(sortString)) {
 			return Collections.emptyList();
 		}
 
@@ -84,7 +86,8 @@ public class SortParserImpl implements SortParser {
 		}
 
 		if (list.size() > 2) {
-			throw new RuntimeException("Unable to parse sort string");
+			throw new InvalidSortException(
+				"Unable to parse sort string: " + sortString);
 		}
 
 		String fieldName = list.get(0);

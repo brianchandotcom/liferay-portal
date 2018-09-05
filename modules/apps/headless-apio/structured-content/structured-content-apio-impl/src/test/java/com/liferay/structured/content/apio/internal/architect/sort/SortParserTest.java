@@ -14,6 +14,7 @@
 
 package com.liferay.structured.content.apio.internal.architect.sort;
 
+import com.liferay.structured.content.apio.architect.sort.InvalidSortException;
 import com.liferay.structured.content.apio.architect.sort.SortField;
 
 import java.util.List;
@@ -77,7 +78,7 @@ public class SortParserTest {
 		AbstractThrowableAssert exception = Assertions.assertThatThrownBy(
 			() -> _sortParser.getSortFieldOptional("field:desc:another")
 		).isInstanceOf(
-			RuntimeException.class
+			InvalidSortException.class
 		);
 
 		exception.hasMessageStartingWith("Unable to parse sort string");

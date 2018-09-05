@@ -15,7 +15,6 @@
 package com.liferay.sharing.web.internal.notifications;
 
 import com.liferay.asset.kernel.model.AssetRenderer;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.User;
@@ -24,6 +23,7 @@ import com.liferay.portal.kernel.notifications.BaseModelUserNotificationHandler;
 import com.liferay.portal.kernel.notifications.UserNotificationHandler;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.service.UserNotificationEventLocalService;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
@@ -71,6 +71,13 @@ public class SharingUserNotificationHandler
 
 		SharingEntry sharingEntry = _getSharingEntry(
 			userNotificationEventPayloadJSONObject);
+
+		if (sharingEntry == null) {
+			_userNotificationEventLocalService.deleteUserNotificationEvent(
+				userNotificationEvent);
+
+			return null;
+		}
 
 		return ResourceBundleUtil.getString(
 			resourceBundle, "x-has-shared-x-with-you-for-x",
@@ -130,13 +137,12 @@ public class SharingUserNotificationHandler
 	}
 
 	private SharingEntry _getSharingEntry(
-			JSONObject userNotificationEventPayloadJSONObject)
-		throws PortalException {
+		JSONObject userNotificationEventPayloadJSONObject) {
 
 		long sharingEntryId = userNotificationEventPayloadJSONObject.getLong(
 			"classPK");
 
-		return _sharingEntryLocalService.getSharingEntry(sharingEntryId);
+		return _sharingEntryLocalService.fetchSharingEntry(sharingEntryId);
 	}
 
 	private String _getSharingEntryAssetTitle(
@@ -185,5 +191,9 @@ public class SharingUserNotificationHandler
 
 	@Reference
 	private UserLocalService _userLocalService;
+
+	@Reference
+	private UserNotificationEventLocalService
+		_userNotificationEventLocalService;
 
 }

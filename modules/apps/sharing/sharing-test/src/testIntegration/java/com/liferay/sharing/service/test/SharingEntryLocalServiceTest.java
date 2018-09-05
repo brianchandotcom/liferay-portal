@@ -1005,6 +1005,52 @@ public class SharingEntryLocalServiceTest {
 		Assert.assertEquals(7, sharingEntry.getActionIds());
 	}
 
+	@Test
+	public void testUpdateSharingEntrySendsNotification() throws Exception {
+		long classNameId = _classNameLocalService.getClassNameId(
+			Group.class.getName());
+		long classPK = RandomTestUtil.randomLong();
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
+
+		SharingEntry sharingEntry = _sharingEntryLocalService.addSharingEntry(
+			_fromUser.getUserId(), _toUser.getUserId(), classNameId, classPK,
+			_group.getGroupId(), true,
+			Arrays.asList(SharingEntryActionKey.VIEW), serviceContext);
+
+		sharingEntry = _sharingEntryLocalService.updateSharingEntry(
+			sharingEntry.getSharingEntryId(),
+			Arrays.asList(SharingEntryActionKey.VIEW));
+
+		List<UserNotificationEvent> userNotificationEvents =
+			UserNotificationEventLocalServiceUtil.getUserNotificationEvents(
+				_toUser.getUserId());
+
+		Assert.assertEquals(
+			userNotificationEvents.toString(), 2,
+			userNotificationEvents.size());
+
+		UserNotificationEvent userNotificationEvent =
+			userNotificationEvents.get(1);
+
+		Assert.assertFalse(userNotificationEvent.isActionRequired());
+
+		Assert.assertEquals(
+			UserNotificationDeliveryConstants.TYPE_WEBSITE,
+			userNotificationEvent.getDeliveryType());
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+			userNotificationEvent.getPayload());
+
+		Assert.assertEquals(
+			String.valueOf(sharingEntry.getSharingEntryId()),
+			jsonObject.getString("classPK"));
+
+		Assert.assertEquals(
+			_fromUser.getFullName(), jsonObject.getString("fromUserFullName"));
+	}
+
 	@Test(expected = InvalidSharingEntryActionKeyException.class)
 	public void testUpdateSharingEntryWithEmptySharingEntryActionKeys()
 		throws Exception {

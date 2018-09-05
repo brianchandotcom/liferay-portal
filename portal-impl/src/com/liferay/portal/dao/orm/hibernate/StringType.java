@@ -61,9 +61,8 @@ public class StringType implements CompositeUserType, Serializable {
 
 			return true;
 		}
-		else {
-			return false;
-		}
+
+		return false;
 	}
 
 	@Override

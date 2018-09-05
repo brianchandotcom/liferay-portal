@@ -63,9 +63,8 @@ public class Message implements Cloneable, Serializable {
 		if (_values == null) {
 			return false;
 		}
-		else {
-			return _values.containsKey(key);
-		}
+
+		return _values.containsKey(key);
 	}
 
 	public void copyFrom(Message message) {

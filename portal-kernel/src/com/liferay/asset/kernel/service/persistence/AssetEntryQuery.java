@@ -72,9 +72,8 @@ public class AssetEntryQuery {
 
 			return "DESC";
 		}
-		else {
-			return "ASC";
-		}
+
+		return "ASC";
 	}
 
 	public AssetEntryQuery() {

@@ -36,9 +36,8 @@ public class SPIUtil {
 		if (_spi == null) {
 			return false;
 		}
-		else {
-			return true;
-		}
+
+		return true;
 	}
 
 	private static final SPI _spi;

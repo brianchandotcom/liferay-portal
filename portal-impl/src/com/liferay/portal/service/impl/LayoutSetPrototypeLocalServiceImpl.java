@@ -235,10 +235,9 @@ public class LayoutSetPrototypeLocalServiceImpl
 			return layoutSetPrototypePersistence.findByC_A(
 				companyId, active, start, end, obc);
 		}
-		else {
-			return layoutSetPrototypePersistence.findByCompanyId(
-				companyId, start, end, obc);
-		}
+
+		return layoutSetPrototypePersistence.findByCompanyId(
+			companyId, start, end, obc);
 	}
 
 	@Override
@@ -246,9 +245,8 @@ public class LayoutSetPrototypeLocalServiceImpl
 		if (active != null) {
 			return layoutSetPrototypePersistence.countByC_A(companyId, active);
 		}
-		else {
-			return layoutSetPrototypePersistence.countByCompanyId(companyId);
-		}
+
+		return layoutSetPrototypePersistence.countByCompanyId(companyId);
 	}
 
 	@Override

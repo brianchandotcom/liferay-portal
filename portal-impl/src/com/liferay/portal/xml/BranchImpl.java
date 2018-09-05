@@ -166,9 +166,8 @@ public class BranchImpl extends NodeImpl implements Branch {
 		else if (node instanceof Text) {
 			return new TextImpl((Text)node);
 		}
-		else {
-			return new NodeImpl(node);
-		}
+
+		return new NodeImpl(node);
 	}
 
 	@Override
@@ -194,9 +193,8 @@ public class BranchImpl extends NodeImpl implements Branch {
 		if (processingInstruction == null) {
 			return null;
 		}
-		else {
-			return new ProcessingInstructionImpl(processingInstruction);
-		}
+
+		return new ProcessingInstructionImpl(processingInstruction);
 	}
 
 	@Override

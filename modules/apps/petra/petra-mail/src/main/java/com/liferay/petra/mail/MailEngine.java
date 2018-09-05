@@ -545,9 +545,8 @@ public class MailEngine {
 		if (protocol.equals(Account.PROTOCOL_SMTPS)) {
 			return session.getProperty("mail.smtps." + suffix);
 		}
-		else {
-			return session.getProperty("mail.smtp." + suffix);
-		}
+
+		return session.getProperty("mail.smtp." + suffix);
 	}
 
 	private static boolean _isThrowsExceptionOnFailure() {

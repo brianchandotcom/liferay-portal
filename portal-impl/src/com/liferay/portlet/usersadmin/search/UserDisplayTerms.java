@@ -104,9 +104,8 @@ public class UserDisplayTerms extends DisplayTerms {
 		if (status == WorkflowConstants.STATUS_APPROVED) {
 			return true;
 		}
-		else {
-			return false;
-		}
+
+		return false;
 	}
 
 	public void setStatus(int status) {

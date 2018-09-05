@@ -542,9 +542,8 @@ public abstract class BasePortletDataHandlerTestCase {
 					false, portletDataHandlerControls, null, null)
 			};
 		}
-		else {
-			return new PortletDataHandlerControl[0];
-		}
+
+		return new PortletDataHandlerControl[0];
 	}
 
 	protected PortletDataHandlerControl[] getExportControls() {

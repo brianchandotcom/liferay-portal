@@ -40,9 +40,8 @@ public class RoleSearchTerms extends RoleDisplayTerms {
 
 			return new Integer[] {type};
 		}
-		else {
-			return new Integer[0];
-		}
+
+		return new Integer[0];
 	}
 
 }

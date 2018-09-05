@@ -77,9 +77,8 @@ public class ByteArrayReportResultContainer
 		if (_reportGenerationException != null) {
 			return true;
 		}
-		else {
-			return false;
-		}
+
+		return false;
 	}
 
 	@Override

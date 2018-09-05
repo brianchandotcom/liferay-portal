@@ -127,10 +127,9 @@ public class BookmarksFolderServiceImpl extends BookmarksFolderServiceBaseImpl {
 			return bookmarksFolderPersistence.filterFindByG_P(
 				groupId, parentFolderId, start, end);
 		}
-		else {
-			return bookmarksFolderPersistence.filterFindByG_P_S(
-				groupId, parentFolderId, status, start, end);
-		}
+
+		return bookmarksFolderPersistence.filterFindByG_P_S(
+			groupId, parentFolderId, status, start, end);
 	}
 
 	@Override
@@ -188,10 +187,9 @@ public class BookmarksFolderServiceImpl extends BookmarksFolderServiceBaseImpl {
 			return bookmarksFolderPersistence.filterCountByG_P_NotS(
 				groupId, parentFolderId, WorkflowConstants.STATUS_IN_TRASH);
 		}
-		else {
-			return bookmarksFolderPersistence.filterCountByG_P_S(
-				groupId, parentFolderId, status);
-		}
+
+		return bookmarksFolderPersistence.filterCountByG_P_S(
+			groupId, parentFolderId, status);
 	}
 
 	/**

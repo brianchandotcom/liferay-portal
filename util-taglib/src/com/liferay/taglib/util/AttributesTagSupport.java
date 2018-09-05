@@ -93,9 +93,8 @@ public class AttributesTagSupport
 		if (_attributeNamespace.length() == 0) {
 			return key;
 		}
-		else {
-			return _attributeNamespace.concat(key);
-		}
+
+		return _attributeNamespace.concat(key);
 	}
 
 	private String _attributeNamespace = StringPool.BLANK;

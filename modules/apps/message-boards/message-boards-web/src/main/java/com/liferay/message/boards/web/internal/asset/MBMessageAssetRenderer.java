@@ -97,9 +97,8 @@ public class MBMessageAssetRenderer
 
 			return "/message_boards/asset/" + template + ".jsp";
 		}
-		else {
-			return null;
-		}
+
+		return null;
 	}
 
 	@Override
@@ -226,10 +225,9 @@ public class MBMessageAssetRenderer
 			return MBDiscussionPermission.contains(
 				permissionChecker, _message, ActionKeys.UPDATE);
 		}
-		else {
-			return _messageModelResourcePermission.contains(
-				permissionChecker, _message, ActionKeys.UPDATE);
-		}
+
+		return _messageModelResourcePermission.contains(
+			permissionChecker, _message, ActionKeys.UPDATE);
 	}
 
 	@Override
@@ -240,10 +238,9 @@ public class MBMessageAssetRenderer
 			return MBDiscussionPermission.contains(
 				permissionChecker, _message, ActionKeys.VIEW);
 		}
-		else {
-			return _messageModelResourcePermission.contains(
-				permissionChecker, _message, ActionKeys.VIEW);
-		}
+
+		return _messageModelResourcePermission.contains(
+			permissionChecker, _message, ActionKeys.VIEW);
 	}
 
 	@Override

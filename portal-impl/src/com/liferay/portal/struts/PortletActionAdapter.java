@@ -116,9 +116,8 @@ public class PortletActionAdapter extends PortletAction {
 		if (_originalPortletAction != null) {
 			return _originalPortletAction.isCheckMethodOnProcessAction();
 		}
-		else {
-			return _strutsPortletAction.isCheckMethodOnProcessAction();
-		}
+
+		return _strutsPortletAction.isCheckMethodOnProcessAction();
 	}
 
 	private PortletAction _originalPortletAction;

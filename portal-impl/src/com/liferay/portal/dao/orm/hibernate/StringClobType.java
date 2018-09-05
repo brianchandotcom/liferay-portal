@@ -34,9 +34,8 @@ public class StringClobType extends org.hibernate.type.StringClobType {
 
 			return true;
 		}
-		else {
-			return false;
-		}
+
+		return false;
 	}
 
 }

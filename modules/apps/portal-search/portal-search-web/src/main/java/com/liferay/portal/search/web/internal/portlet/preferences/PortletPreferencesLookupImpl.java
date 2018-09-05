@@ -43,14 +43,12 @@ public class PortletPreferencesLookupImpl implements PortletPreferencesLookup {
 					PortletKeys.PREFS_OWNER_TYPE_LAYOUT,
 					PortletKeys.PREFS_PLID_SHARED, portlet.getPortletId()));
 		}
-		else {
-			return Optional.ofNullable(
-				portletPreferencesLocalService.fetchPreferences(
-					themeDisplay.getCompanyId(),
-					PortletKeys.PREFS_OWNER_ID_DEFAULT,
-					PortletKeys.PREFS_OWNER_TYPE_LAYOUT, themeDisplay.getPlid(),
-					portlet.getPortletId()));
-		}
+
+		return Optional.ofNullable(
+			portletPreferencesLocalService.fetchPreferences(
+				themeDisplay.getCompanyId(), PortletKeys.PREFS_OWNER_ID_DEFAULT,
+				PortletKeys.PREFS_OWNER_TYPE_LAYOUT, themeDisplay.getPlid(),
+				portlet.getPortletId()));
 	}
 
 	@Reference

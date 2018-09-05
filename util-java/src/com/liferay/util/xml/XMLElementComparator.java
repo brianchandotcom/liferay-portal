@@ -36,9 +36,8 @@ public class XMLElementComparator extends ElementComparator {
 		if (_descriptor.areEqual(el1, el2)) {
 			return 0;
 		}
-		else {
-			return -1;
-		}
+
+		return -1;
 	}
 
 	private final XMLDescriptor _descriptor;

@@ -125,9 +125,8 @@ public class DDMFormAssetRenderer
 
 			return "/asset/full_content.jsp";
 		}
-		else {
-			return null;
-		}
+
+		return null;
 	}
 
 	@Override

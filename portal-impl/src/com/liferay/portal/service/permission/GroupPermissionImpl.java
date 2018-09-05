@@ -118,9 +118,8 @@ public class GroupPermissionImpl
 
 			return contains(permissionChecker, group, actionId);
 		}
-		else {
-			return false;
-		}
+
+		return false;
 	}
 
 	@Override

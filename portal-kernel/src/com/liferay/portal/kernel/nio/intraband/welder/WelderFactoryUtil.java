@@ -55,9 +55,8 @@ public class WelderFactoryUtil {
 			if (!OSDetector.isWindows() && FIFOUtil.isFIFOSupported()) {
 				return FIFOWelder.class;
 			}
-			else {
-				return SocketWelder.class;
-			}
+
+			return SocketWelder.class;
 		}
 	}
 

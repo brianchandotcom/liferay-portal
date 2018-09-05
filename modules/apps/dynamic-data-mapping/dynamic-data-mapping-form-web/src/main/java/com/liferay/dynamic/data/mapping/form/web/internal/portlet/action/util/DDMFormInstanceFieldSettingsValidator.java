@@ -153,10 +153,8 @@ public class DDMFormInstanceFieldSettingsValidator {
 							jsonObject.getString("localizedValue"),
 							availableLocales, defaultLocale);
 					}
-					else {
-						return new UnlocalizedValue(
-							jsonObject.getString("value"));
-					}
+
+					return new UnlocalizedValue(jsonObject.getString("value"));
 				}
 
 			});

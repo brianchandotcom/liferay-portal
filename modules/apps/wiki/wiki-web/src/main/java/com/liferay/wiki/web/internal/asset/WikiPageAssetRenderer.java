@@ -70,9 +70,8 @@ public class WikiPageAssetRenderer
 
 			return page.getPageId();
 		}
-		else {
-			return page.getResourcePrimKey();
-		}
+
+		return page.getResourcePrimKey();
 	}
 
 	/**
@@ -131,9 +130,8 @@ public class WikiPageAssetRenderer
 		if (_wikiGroupServiceOverriddenConfiguration.pageCommentsEnabled()) {
 			return "edit_page_discussion";
 		}
-		else {
-			return null;
-		}
+
+		return null;
 	}
 
 	/**
@@ -157,9 +155,8 @@ public class WikiPageAssetRenderer
 
 			return "/wiki/asset/" + template + ".jsp";
 		}
-		else {
-			return null;
-		}
+
+		return null;
 	}
 
 	@Override

@@ -53,9 +53,8 @@ public class IconListTag extends BaseBodyTagSupport implements BodyTag {
 
 			return EVAL_BODY_AGAIN;
 		}
-		else {
-			return SKIP_BODY;
-		}
+
+		return SKIP_BODY;
 	}
 
 	@Override
@@ -151,18 +150,16 @@ public class IconListTag extends BaseBodyTagSupport implements BodyTag {
 		if (Validator.isNull(_endPage)) {
 			return _END_PAGE;
 		}
-		else {
-			return _endPage;
-		}
+
+		return _endPage;
 	}
 
 	protected String getStartPage() {
 		if (Validator.isNull(_startPage)) {
 			return _START_PAGE;
 		}
-		else {
-			return _startPage;
-		}
+
+		return _startPage;
 	}
 
 	private static final String _END_PAGE = "/html/taglib/ui/icon_list/end.jsp";

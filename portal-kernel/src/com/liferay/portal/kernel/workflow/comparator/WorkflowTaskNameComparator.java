@@ -50,9 +50,8 @@ public class WorkflowTaskNameComparator
 		if (_ascending) {
 			return value;
 		}
-		else {
-			return -value;
-		}
+
+		return -value;
 	}
 
 	@Override
@@ -60,9 +59,8 @@ public class WorkflowTaskNameComparator
 		if (isAscending()) {
 			return _orderByAsc;
 		}
-		else {
-			return _orderByDesc;
-		}
+
+		return _orderByDesc;
 	}
 
 	@Override

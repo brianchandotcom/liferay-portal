@@ -67,9 +67,8 @@ public class ActionExecutorManagerImpl implements ActionExecutorManager {
 		if (scriptLanguage.equals(ScriptLanguage.JAVA)) {
 			return language + StringPool.COLON + actionExecutorClassName;
 		}
-		else {
-			return language;
-		}
+
+		return language;
 	}
 
 	@Reference(

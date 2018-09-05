@@ -403,9 +403,8 @@ public class WebServerServlet extends HttpServlet {
 		else if (path.startsWith("/user_portrait")) {
 			return ImageToolUtil.getDefaultUserMalePortrait();
 		}
-		else {
-			return null;
-		}
+
+		return null;
 	}
 
 	protected FileEntry getFileEntry(String[] pathArray) throws Exception {

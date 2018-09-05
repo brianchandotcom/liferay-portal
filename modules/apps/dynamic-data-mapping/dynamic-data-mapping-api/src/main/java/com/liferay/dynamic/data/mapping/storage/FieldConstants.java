@@ -116,9 +116,8 @@ public class FieldConstants {
 		else if (type.equals(FieldConstants.SHORT)) {
 			return values.toArray(new Short[values.size()]);
 		}
-		else {
-			return values.toArray(new String[values.size()]);
-		}
+
+		return values.toArray(new String[values.size()]);
 	}
 
 	public static final Serializable getSerializable(
@@ -160,9 +159,8 @@ public class FieldConstants {
 		else if (type.equals(SHORT)) {
 			return GetterUtil.getShort(value);
 		}
-		else {
-			return value;
-		}
+
+		return value;
 	}
 
 	public static final boolean isNumericType(String type) {

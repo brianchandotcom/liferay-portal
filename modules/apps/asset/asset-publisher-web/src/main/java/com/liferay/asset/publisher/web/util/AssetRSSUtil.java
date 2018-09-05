@@ -262,10 +262,9 @@ public class AssetRSSUtil {
 			return getEntryURLViewInContext(
 				portletRequest, portletResponse, assetEntry);
 		}
-		else {
-			return getEntryURLAssetPublisher(
-				portletRequest, portletResponse, assetEntry);
-		}
+
+		return getEntryURLAssetPublisher(
+			portletRequest, portletResponse, assetEntry);
 	}
 
 	protected static String getEntryURLAssetPublisher(

@@ -91,9 +91,8 @@ public class TaskQueue<E> {
 		if (_count.get() == 0) {
 			return true;
 		}
-		else {
-			return false;
-		}
+
+		return false;
 	}
 
 	public boolean offer(E element, boolean[] hasWaiterMarker) {

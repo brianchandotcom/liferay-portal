@@ -172,9 +172,8 @@ public class IndexMetadata extends Index implements Comparable<IndexMetadata> {
 			if (isUnique()) {
 				return Boolean.FALSE;
 			}
-			else {
-				return Boolean.TRUE;
-			}
+
+			return Boolean.TRUE;
 		}
 
 		Boolean redundant = indexMetadata.redundantTo(this);

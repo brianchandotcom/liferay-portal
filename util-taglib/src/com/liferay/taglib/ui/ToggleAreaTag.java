@@ -136,9 +136,8 @@ public class ToggleAreaTag extends IncludeTag {
 		if (Validator.isNull(_endPage)) {
 			return _END_PAGE;
 		}
-		else {
-			return _endPage;
-		}
+
+		return _endPage;
 	}
 
 	@Override
@@ -146,9 +145,8 @@ public class ToggleAreaTag extends IncludeTag {
 		if (Validator.isNull(_startPage)) {
 			return _START_PAGE;
 		}
-		else {
-			return _startPage;
-		}
+
+		return _startPage;
 	}
 
 	private static final String _END_PAGE =

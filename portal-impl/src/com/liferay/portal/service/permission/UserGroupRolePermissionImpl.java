@@ -94,9 +94,8 @@ public class UserGroupRolePermissionImpl implements UserGroupRolePermission {
 
 			return true;
 		}
-		else {
-			return false;
-		}
+
+		return false;
 	}
 
 	@Override

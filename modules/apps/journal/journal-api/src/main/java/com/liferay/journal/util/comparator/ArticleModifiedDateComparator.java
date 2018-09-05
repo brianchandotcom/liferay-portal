@@ -41,9 +41,8 @@ public class ArticleModifiedDateComparator
 		if (isAscending()) {
 			return ORDER_BY_ASC;
 		}
-		else {
-			return ORDER_BY_DESC;
-		}
+
+		return ORDER_BY_DESC;
 	}
 
 }

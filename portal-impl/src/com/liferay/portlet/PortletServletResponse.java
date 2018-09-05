@@ -142,9 +142,8 @@ public class PortletServletResponse extends HttpServletResponseWrapper {
 
 			return mimeResponse.getBufferSize();
 		}
-		else {
-			return 0;
-		}
+
+		return 0;
 	}
 
 	@Override
@@ -157,9 +156,8 @@ public class PortletServletResponse extends HttpServletResponseWrapper {
 
 			return mimeResponse.getCharacterEncoding();
 		}
-		else {
-			return null;
-		}
+
+		return null;
 	}
 
 	@Override
@@ -172,9 +170,8 @@ public class PortletServletResponse extends HttpServletResponseWrapper {
 
 			return mimeResponse.getContentType();
 		}
-		else {
-			return null;
-		}
+
+		return null;
 	}
 
 	@Override
@@ -187,9 +184,8 @@ public class PortletServletResponse extends HttpServletResponseWrapper {
 
 			return mimeResponse.getLocale();
 		}
-		else {
-			return null;
-		}
+
+		return null;
 	}
 
 	@Override
@@ -208,9 +204,8 @@ public class PortletServletResponse extends HttpServletResponseWrapper {
 
 			return servletOutputStream;
 		}
-		else {
-			return new NullServletOutputStream();
-		}
+
+		return new NullServletOutputStream();
 	}
 
 	@Override
@@ -223,10 +218,9 @@ public class PortletServletResponse extends HttpServletResponseWrapper {
 
 			return mimeResponse.getWriter();
 		}
-		else {
-			return UnsyncPrintWriterPool.borrow(
-				new NullServletOutputStream(), getCharacterEncoding());
-		}
+
+		return UnsyncPrintWriterPool.borrow(
+			new NullServletOutputStream(), getCharacterEncoding());
 	}
 
 	@Override
@@ -242,9 +236,8 @@ public class PortletServletResponse extends HttpServletResponseWrapper {
 		else if (!_include) {
 			return false;
 		}
-		else {
-			return true;
-		}
+
+		return true;
 	}
 
 	@Override

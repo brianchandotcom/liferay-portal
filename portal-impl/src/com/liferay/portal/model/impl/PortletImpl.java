@@ -848,9 +848,8 @@ public class PortletImpl extends PortletBaseImpl {
 		if (Validator.isNull(_defaultPreferences)) {
 			return PortletConstants.DEFAULT_PREFERENCES;
 		}
-		else {
-			return _defaultPreferences;
-		}
+
+		return _defaultPreferences;
 	}
 
 	/**
@@ -2411,9 +2410,8 @@ public class PortletImpl extends PortletBaseImpl {
 		if (_portletModes.size() > 1) {
 			return true;
 		}
-		else {
-			return false;
-		}
+
+		return false;
 	}
 
 	/**
@@ -2462,9 +2460,8 @@ public class PortletImpl extends PortletBaseImpl {
 		if (mimeTypePortletModes.contains(portletMode.toString())) {
 			return true;
 		}
-		else {
-			return false;
-		}
+
+		return false;
 	}
 
 	/**
@@ -2514,9 +2511,8 @@ public class PortletImpl extends PortletBaseImpl {
 		if (mimeTypeWindowStates.contains(windowState.toString())) {
 			return true;
 		}
-		else {
-			return false;
-		}
+
+		return false;
 	}
 
 	/**
@@ -2758,9 +2754,8 @@ public class PortletImpl extends PortletBaseImpl {
 		if (readiness == null) {
 			return true;
 		}
-		else {
-			return readiness._ready;
-		}
+
+		return readiness._ready;
 	}
 
 	/**

@@ -91,9 +91,8 @@ public class NonceUtil {
 			else if (result > 0) {
 				return 1;
 			}
-			else {
-				return -1;
-			}
+
+			return -1;
 		}
 
 		@Override

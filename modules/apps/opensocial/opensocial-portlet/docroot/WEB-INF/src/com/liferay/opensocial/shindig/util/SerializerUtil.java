@@ -159,9 +159,8 @@ public class SerializerUtil {
 
 			return jsonObject.toString();
 		}
-		else {
-			return (String)value;
-		}
+
+		return (String)value;
 	}
 
 	protected static void setBeanProperty(

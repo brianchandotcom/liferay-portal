@@ -109,9 +109,8 @@ public class LayoutSetBranchImpl extends LayoutSetBranchBaseImpl {
 		if (_settingsProperties == null) {
 			return super.getSettings();
 		}
-		else {
-			return _settingsProperties.toString();
-		}
+
+		return _settingsProperties.toString();
 	}
 
 	@Override

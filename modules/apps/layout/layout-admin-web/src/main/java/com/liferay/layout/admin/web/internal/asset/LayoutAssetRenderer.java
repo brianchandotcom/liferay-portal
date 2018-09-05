@@ -68,9 +68,8 @@ public class LayoutAssetRenderer extends BaseJSPAssetRenderer<Layout> {
 		if (template.equals(TEMPLATE_FULL_CONTENT)) {
 			return "/asset/" + template + ".jsp";
 		}
-		else {
-			return null;
-		}
+
+		return null;
 	}
 
 	@Override

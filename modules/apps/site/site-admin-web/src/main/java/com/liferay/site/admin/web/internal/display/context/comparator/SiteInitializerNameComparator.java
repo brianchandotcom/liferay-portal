@@ -44,9 +44,8 @@ public class SiteInitializerNameComparator
 		if (_ascending) {
 			return value;
 		}
-		else {
-			return -value;
-		}
+
+		return -value;
 	}
 
 	@Override

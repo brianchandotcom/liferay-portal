@@ -280,11 +280,9 @@ public class EditPublishConfigurationMVCActionCommand
 					updatePublishLayoutRemoteExportImportConfiguration(
 						actionRequest);
 			}
-			else {
-				return ExportImportConfigurationHelper.
-					addPublishLayoutRemoteExportImportConfiguration(
-						actionRequest);
-			}
+
+			return ExportImportConfigurationHelper.
+				addPublishLayoutRemoteExportImportConfiguration(actionRequest);
 		}
 		else {
 			if (exportImportConfigurationId > 0) {
@@ -292,11 +290,9 @@ public class EditPublishConfigurationMVCActionCommand
 					updatePublishLayoutLocalExportImportConfiguration(
 						actionRequest);
 			}
-			else {
-				return ExportImportConfigurationHelper.
-					addPublishLayoutLocalExportImportConfiguration(
-						actionRequest);
-			}
+
+			return ExportImportConfigurationHelper.
+				addPublishLayoutLocalExportImportConfiguration(actionRequest);
 		}
 	}
 

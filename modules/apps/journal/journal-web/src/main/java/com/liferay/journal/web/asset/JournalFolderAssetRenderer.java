@@ -102,9 +102,8 @@ public class JournalFolderAssetRenderer
 
 			return "/asset/folder_" + template + ".jsp";
 		}
-		else {
-			return null;
-		}
+
+		return null;
 	}
 
 	@Override

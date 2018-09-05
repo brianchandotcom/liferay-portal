@@ -162,9 +162,8 @@ public class TemplateNode extends LinkedHashMap<String, Object> {
 
 			return data;
 		}
-		else {
-			return (String)get("data");
-		}
+
+		return (String)get("data");
 	}
 
 	public String getFriendlyUrl() {

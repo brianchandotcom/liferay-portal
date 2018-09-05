@@ -26,9 +26,8 @@ public class ExpandoTableImpl extends ExpandoTableBaseImpl {
 		if (getName().equals(ExpandoTableConstants.DEFAULT_TABLE_NAME)) {
 			return true;
 		}
-		else {
-			return false;
-		}
+
+		return false;
 	}
 
 }

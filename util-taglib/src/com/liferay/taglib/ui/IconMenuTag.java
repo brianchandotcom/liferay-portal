@@ -76,9 +76,8 @@ public class IconMenuTag extends BaseBodyTagSupport implements BodyTag {
 
 			return EVAL_BODY_AGAIN;
 		}
-		else {
-			return SKIP_BODY;
-		}
+
+		return SKIP_BODY;
 	}
 
 	@Override

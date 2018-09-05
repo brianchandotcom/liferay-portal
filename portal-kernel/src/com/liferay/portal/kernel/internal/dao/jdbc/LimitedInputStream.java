@@ -67,9 +67,8 @@ public class LimitedInputStream extends InputStream {
 		if (available > allowed) {
 			return allowed;
 		}
-		else {
-			return available;
-		}
+
+		return available;
 	}
 
 	@Override

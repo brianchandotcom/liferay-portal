@@ -97,9 +97,8 @@ public class NotificationRecipient {
 		if (Validator.isNull(_fullName)) {
 			return new InternetAddress(_emailAddress);
 		}
-		else {
-			return new InternetAddress(_emailAddress, _fullName);
-		}
+
+		return new InternetAddress(_emailAddress, _fullName);
 	}
 
 	public NotificationReceptionType getNotificationReceptionType() {

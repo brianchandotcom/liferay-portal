@@ -118,9 +118,8 @@ public class UnsyncStringWriter extends Writer {
 		if (stringBundler != null) {
 			return stringBundler.toString();
 		}
-		else {
-			return stringBuilder.toString();
-		}
+
+		return stringBuilder.toString();
 	}
 
 	@Override

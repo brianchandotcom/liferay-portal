@@ -97,9 +97,8 @@ public class FacebookUtil {
 		if (path.startsWith(FACEBOOK_SERVLET_PATH)) {
 			return true;
 		}
-		else {
-			return false;
-		}
+
+		return false;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(FacebookUtil.class);

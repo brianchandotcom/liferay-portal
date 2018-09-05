@@ -70,9 +70,8 @@ public class UserJobTitleComparator extends OrderByComparator<User> {
 		if (_ascending) {
 			return value;
 		}
-		else {
-			return -value;
-		}
+
+		return -value;
 	}
 
 	@Override
@@ -80,9 +79,8 @@ public class UserJobTitleComparator extends OrderByComparator<User> {
 		if (_ascending) {
 			return ORDER_BY_ASC;
 		}
-		else {
-			return ORDER_BY_DESC;
-		}
+
+		return ORDER_BY_DESC;
 	}
 
 	@Override

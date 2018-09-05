@@ -52,9 +52,8 @@ public class UnicodeFormatter {
 		if (upperCase) {
 			return _byteToHex(b, hexes, _HEX_DIGITS_UPPER_CASE);
 		}
-		else {
-			return _byteToHex(b, hexes, _HEX_DIGITS);
-		}
+
+		return _byteToHex(b, hexes, _HEX_DIGITS);
 	}
 
 	public static String charToHex(char c) {

@@ -54,10 +54,9 @@ public class FileEntryURLItemSelectorReturnTypeResolver
 				fileEntry, fileEntry.getFileVersion(), themeDisplay,
 				StringPool.BLANK, false, false);
 		}
-		else {
-			return PortletFileRepositoryUtil.getPortletFileEntryURL(
-				themeDisplay, fileEntry, StringPool.BLANK, false);
-		}
+
+		return PortletFileRepositoryUtil.getPortletFileEntryURL(
+			themeDisplay, fileEntry, StringPool.BLANK, false);
 	}
 
 }

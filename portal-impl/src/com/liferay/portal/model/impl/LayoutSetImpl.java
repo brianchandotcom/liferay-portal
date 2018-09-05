@@ -180,9 +180,8 @@ public class LayoutSetImpl extends LayoutSetBaseImpl {
 		if (_settingsProperties == null) {
 			return super.getSettings();
 		}
-		else {
-			return _settingsProperties.toString();
-		}
+
+		return _settingsProperties.toString();
 	}
 
 	@Override
@@ -334,9 +333,8 @@ public class LayoutSetImpl extends LayoutSetBaseImpl {
 
 			return ThemeLocalServiceUtil.getTheme(getCompanyId(), themeId);
 		}
-		else {
-			return getTheme();
-		}
+
+		return getTheme();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(LayoutSetImpl.class);

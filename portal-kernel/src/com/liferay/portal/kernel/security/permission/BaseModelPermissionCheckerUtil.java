@@ -44,11 +44,10 @@ public class BaseModelPermissionCheckerUtil {
 					return modelResourcePermission.contains(
 						permissionChecker, classPK, actionId);
 				}
-				else {
-					return ModelResourcePermissionHelper.contains(
-						modelResourcePermission, permissionChecker, groupId,
-						classPK, actionId);
-				}
+
+				return ModelResourcePermissionHelper.contains(
+					modelResourcePermission, permissionChecker, groupId,
+					classPK, actionId);
 			}
 			catch (PortalException pe) {
 				if (_log.isWarnEnabled()) {

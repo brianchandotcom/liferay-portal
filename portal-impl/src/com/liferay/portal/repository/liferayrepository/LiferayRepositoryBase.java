@@ -176,18 +176,16 @@ public abstract class LiferayRepositoryBase implements CapabilityProvider {
 		if (_groupId == _repositoryId) {
 			return true;
 		}
-		else {
-			return false;
-		}
+
+		return false;
 	}
 
 	protected long toFolderId(long folderId) {
 		if (folderId == DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 			return _dlFolderId;
 		}
-		else {
-			return folderId;
-		}
+
+		return folderId;
 	}
 
 	protected List<Long> toFolderIds(List<Long> folderIds) {

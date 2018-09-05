@@ -198,9 +198,8 @@ public class UserGroupGroupRoleLocalServiceImpl
 		if (userGroupGroupRole != null) {
 			return true;
 		}
-		else {
-			return false;
-		}
+
+		return false;
 	}
 
 	@Override

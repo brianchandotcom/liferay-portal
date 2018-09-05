@@ -172,9 +172,8 @@ public abstract class BaseUserNotificationHandler
 
 			return sb.toString();
 		}
-		else {
-			return _BODY_TEMPLATE_DEFAULT;
-		}
+
+		return _BODY_TEMPLATE_DEFAULT;
 	}
 
 	protected String getLink(

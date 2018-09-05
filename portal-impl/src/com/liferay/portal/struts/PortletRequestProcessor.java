@@ -452,10 +452,9 @@ public class PortletRequestProcessor extends TilesRequestProcessor {
 			return processException(
 				request, response, e, actionForm, actionMapping);
 		}
-		else {
-			return super.processActionPerform(
-				request, response, action, actionForm, actionMapping);
-		}
+
+		return super.processActionPerform(
+			request, response, action, actionForm, actionMapping);
 	}
 
 	@Override

@@ -465,9 +465,8 @@ public class StringUtil {
 		if (equalsIgnoreCase(temp, end)) {
 			return true;
 		}
-		else {
-			return false;
-		}
+
+		return false;
 	}
 
 	/**
@@ -691,9 +690,8 @@ public class StringUtil {
 		if (index < 0) {
 			return null;
 		}
-		else {
-			return s.substring(0, index);
-		}
+
+		return s.substring(0, index);
 	}
 
 	/**
@@ -717,9 +715,8 @@ public class StringUtil {
 		if (index < 0) {
 			return null;
 		}
-		else {
-			return s.substring(0, index);
-		}
+
+		return s.substring(0, index);
 	}
 
 	/**
@@ -743,9 +740,8 @@ public class StringUtil {
 		if (index < 0) {
 			return null;
 		}
-		else {
-			return s.substring(index + 1);
-		}
+
+		return s.substring(index + 1);
 	}
 
 	/**
@@ -769,9 +765,8 @@ public class StringUtil {
 		if (index < 0) {
 			return null;
 		}
-		else {
-			return s.substring(index + delimiter.length());
-		}
+
+		return s.substring(index + delimiter.length());
 	}
 
 	/**
@@ -2347,9 +2342,8 @@ public class StringUtil {
 
 			return sb.toString();
 		}
-		else {
-			return s;
-		}
+
+		return s;
 	}
 
 	public static String removeChars(String s, char... oldSubs) {
@@ -2514,9 +2508,8 @@ public class StringUtil {
 
 			return sb.toString();
 		}
-		else {
-			return s;
-		}
+
+		return s;
 	}
 
 	public static String removeSubstrings(String s, String... oldSubs) {
@@ -2757,9 +2750,8 @@ public class StringUtil {
 
 			return sb.toString();
 		}
-		else {
-			return s;
-		}
+
+		return s;
 	}
 
 	/**
@@ -2988,9 +2980,8 @@ public class StringUtil {
 			return s.substring(0, y).concat(newSub).concat(
 				s.substring(y + oldSub.length()));
 		}
-		else {
-			return s;
-		}
+
+		return s;
 	}
 
 	/**
@@ -3094,9 +3085,8 @@ public class StringUtil {
 			return s.substring(0, y).concat(newSub).concat(
 				s.substring(y + oldSub.length()));
 		}
-		else {
-			return s;
-		}
+
+		return s;
 	}
 
 	/**
@@ -4327,9 +4317,8 @@ public class StringUtil {
 		else if (obj instanceof Long) {
 			return toHexString(((Long)obj).longValue());
 		}
-		else {
-			return String.valueOf(obj);
-		}
+
+		return String.valueOf(obj);
 	}
 
 	/**
@@ -4590,9 +4579,8 @@ public class StringUtil {
 		if ((x == 0) && (y == len)) {
 			return s;
 		}
-		else {
-			return s.substring(x, y);
-		}
+
+		return s.substring(x, y);
 	}
 
 	/**
@@ -4631,9 +4619,8 @@ public class StringUtil {
 		else if (x == 0) {
 			return s;
 		}
-		else {
-			return s.substring(x);
-		}
+
+		return s.substring(x);
 	}
 
 	/**
@@ -4693,9 +4680,8 @@ public class StringUtil {
 		else if (x == 0) {
 			return s;
 		}
-		else {
-			return s.substring(x);
-		}
+
+		return s.substring(x);
 	}
 
 	/**
@@ -4733,9 +4719,8 @@ public class StringUtil {
 		else if (x == len) {
 			return s;
 		}
-		else {
-			return s.substring(0, x);
-		}
+
+		return s.substring(0, x);
 	}
 
 	/**
@@ -4794,9 +4779,8 @@ public class StringUtil {
 		else if (x == len) {
 			return s;
 		}
-		else {
-			return s.substring(0, x);
-		}
+
+		return s.substring(0, x);
 	}
 
 	/**
@@ -5033,9 +5017,8 @@ public class StringUtil {
 		if (wildcardIndex == wildcard.length()) {
 			return true;
 		}
-		else {
-			return false;
-		}
+
+		return false;
 	}
 
 	/**

@@ -306,9 +306,8 @@ public class LanguageExtension implements Extension {
 			if (_predicate.test(serviceReference)) {
 				return _bundleContext.getService(serviceReference);
 			}
-			else {
-				return null;
-			}
+
+			return null;
 		}
 
 		@Override

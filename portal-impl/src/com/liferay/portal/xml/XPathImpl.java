@@ -134,9 +134,8 @@ public class XPathImpl implements XPath {
 		else if (node instanceof Element) {
 			return new ElementImpl((Element)node);
 		}
-		else {
-			return new NodeImpl(node);
-		}
+
+		return new NodeImpl(node);
 	}
 
 	@Override
@@ -181,9 +180,8 @@ public class XPathImpl implements XPath {
 		else if (context instanceof List<?>) {
 			return SAXReaderImpl.toNewNodes((List<org.dom4j.Node>)context);
 		}
-		else {
-			return context;
-		}
+
+		return context;
 	}
 
 	protected Object toOldContext(Object context) {
@@ -203,9 +201,8 @@ public class XPathImpl implements XPath {
 		else if (context instanceof List<?>) {
 			return SAXReaderImpl.toOldNodes((List<Node>)context);
 		}
-		else {
-			return context;
-		}
+
+		return context;
 	}
 
 	private static final FunctionContext _functionContext =

@@ -40,9 +40,8 @@ public class WindowStateFactory {
 			if (portletMajorVersion < 3) {
 				return WindowState.NORMAL;
 			}
-			else {
-				return WindowState.UNDEFINED;
-			}
+
+			return WindowState.UNDEFINED;
 		}
 
 		WindowState windowState = _windowStates.get(name);

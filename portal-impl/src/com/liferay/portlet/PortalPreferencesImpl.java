@@ -139,9 +139,8 @@ public class PortalPreferencesImpl
 
 			return true;
 		}
-		else {
-			return false;
-		}
+
+		return false;
 	}
 
 	public long getMvccVersion() {
@@ -475,9 +474,8 @@ public class PortalPreferencesImpl
 		if (Validator.isNull(namespace)) {
 			return key;
 		}
-		else {
-			return namespace.concat(StringPool.POUND).concat(key);
-		}
+
+		return namespace.concat(StringPool.POUND).concat(key);
 	}
 
 	private com.liferay.portal.kernel.model.PortalPreferences _reload(

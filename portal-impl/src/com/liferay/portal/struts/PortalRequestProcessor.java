@@ -363,10 +363,9 @@ public class PortalRequestProcessor extends TilesRequestProcessor {
 		if (portletFriendlyURL != null) {
 			return layoutFriendlyURL.concat(portletFriendlyURL);
 		}
-		else {
-			return layoutFriendlyURL.concat(StringPool.QUESTION).concat(
-				request.getQueryString());
-		}
+
+		return layoutFriendlyURL.concat(StringPool.QUESTION).concat(
+			request.getQueryString());
 	}
 
 	protected String getLastPath(HttpServletRequest request) {
@@ -453,9 +452,8 @@ public class PortalRequestProcessor extends TilesRequestProcessor {
 
 			return true;
 		}
-		else {
-			return false;
-		}
+
+		return false;
 	}
 
 	protected boolean isPublicPath(String path) {
@@ -465,9 +463,8 @@ public class PortalRequestProcessor extends TilesRequestProcessor {
 
 			return true;
 		}
-		else {
-			return false;
-		}
+
+		return false;
 	}
 
 	@Override
@@ -987,9 +984,8 @@ public class PortalRequestProcessor extends TilesRequestProcessor {
 
 			return false;
 		}
-		else {
-			return true;
-		}
+
+		return true;
 	}
 
 	private static final String _PATH_C = "/c";

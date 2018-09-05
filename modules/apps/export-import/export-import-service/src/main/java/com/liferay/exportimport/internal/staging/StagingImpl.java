@@ -3697,9 +3697,8 @@ public class StagingImpl implements Staging {
 			if (tabs1.equals("public-pages")) {
 				return false;
 			}
-			else {
-				return true;
-			}
+
+			return true;
 		}
 
 		return ParamUtil.getBoolean(portletRequest, "privateLayout", true);
@@ -3750,9 +3749,8 @@ public class StagingImpl implements Staging {
 
 				return layoutRevision.getLayoutRevisionId();
 			}
-			else {
-				return 0;
-			}
+
+			return 0;
 		}
 
 		RecentLayoutRevision recentLayoutRevision =

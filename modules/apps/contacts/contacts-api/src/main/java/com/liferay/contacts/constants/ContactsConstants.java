@@ -62,9 +62,8 @@ public class ContactsConstants {
 		else if (displayStyle == DISPLAY_STYLE_FULL) {
 			return DISPLAY_STYLE_FULL_LABEL;
 		}
-		else {
-			return null;
-		}
+
+		return null;
 	}
 
 }

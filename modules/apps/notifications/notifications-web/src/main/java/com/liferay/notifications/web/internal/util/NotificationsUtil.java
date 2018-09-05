@@ -36,11 +36,10 @@ public class NotificationsUtil {
 				getArchivedUserNotificationEventsCount(
 					userId, _DELIVERY_TYPE, true, false);
 		}
-		else {
-			return UserNotificationEventLocalServiceUtil.
-				getDeliveredUserNotificationEventsCount(
-					userId, _DELIVERY_TYPE, true, false);
-		}
+
+		return UserNotificationEventLocalServiceUtil.
+			getDeliveredUserNotificationEventsCount(
+				userId, _DELIVERY_TYPE, true, false);
 	}
 
 	public static void populateResults(

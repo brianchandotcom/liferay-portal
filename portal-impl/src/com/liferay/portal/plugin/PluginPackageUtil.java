@@ -528,9 +528,8 @@ public class PluginPackageUtil {
 
 			return true;
 		}
-		else {
-			return false;
-		}
+
+		return false;
 	}
 
 	private boolean _isInstalled(String context) {
@@ -540,9 +539,8 @@ public class PluginPackageUtil {
 		if (pluginPackage != null) {
 			return true;
 		}
-		else {
-			return false;
-		}
+
+		return false;
 	}
 
 	private boolean _isTrusted(String repositoryURL)
@@ -554,9 +552,8 @@ public class PluginPackageUtil {
 			if (ArrayUtil.contains(trusted, repositoryURL)) {
 				return true;
 			}
-			else {
-				return false;
-			}
+
+			return false;
 		}
 		catch (Exception e) {
 			throw new PluginPackageException(

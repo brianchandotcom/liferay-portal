@@ -53,9 +53,8 @@ public class ReadWriteLockRegistry {
 		if (readWriteLockKey.isWriteLock()) {
 			return readWriteLock.writeLock();
 		}
-		else {
-			return readWriteLock.readLock();
-		}
+
+		return readWriteLock.readLock();
 	}
 
 	public void releaseLock(ReadWriteLockKey<?> readWriteLockKey) {

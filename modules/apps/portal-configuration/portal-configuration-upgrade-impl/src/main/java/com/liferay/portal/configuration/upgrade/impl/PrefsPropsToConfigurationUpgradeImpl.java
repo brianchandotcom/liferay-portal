@@ -119,9 +119,8 @@ public class PrefsPropsToConfigurationUpgradeImpl
 		else if (prefsPropsValueType == PrefsPropsValueType.STRING_ARRAY) {
 			return StringUtil.split((String)value);
 		}
-		else {
-			return value;
-		}
+
+		return value;
 	}
 
 }

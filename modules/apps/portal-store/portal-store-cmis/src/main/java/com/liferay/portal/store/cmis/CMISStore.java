@@ -327,9 +327,8 @@ public class CMISStore extends BaseStore {
 		if (document == null) {
 			return false;
 		}
-		else {
-			return true;
-		}
+
+		return true;
 	}
 
 	@Override

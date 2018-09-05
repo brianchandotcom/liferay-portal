@@ -43,9 +43,8 @@ public class PanelContainerTag extends BaseBodyTagSupport implements BodyTag {
 
 			return EVAL_BODY_AGAIN;
 		}
-		else {
-			return SKIP_BODY;
-		}
+
+		return SKIP_BODY;
 	}
 
 	@Override
@@ -172,9 +171,8 @@ public class PanelContainerTag extends BaseBodyTagSupport implements BodyTag {
 
 			return "/html/taglib/ui/panel_container/end.jsp";
 		}
-		else {
-			return _endPage;
-		}
+
+		return _endPage;
 	}
 
 	protected String getStartPage() {
@@ -186,9 +184,8 @@ public class PanelContainerTag extends BaseBodyTagSupport implements BodyTag {
 
 			return "/html/taglib/ui/panel_container/start.jsp";
 		}
-		else {
-			return _startPage;
-		}
+
+		return _startPage;
 	}
 
 	private boolean _accordion;

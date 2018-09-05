@@ -70,9 +70,8 @@ public class DateSearchEntry extends TextSearchEntry {
 
 			return sb.toString();
 		}
-		else {
-			return StringPool.BLANK;
-		}
+
+		return StringPool.BLANK;
 	}
 
 	public void setDate(Date date) {
@@ -102,17 +101,15 @@ public class DateSearchEntry extends TextSearchEntry {
 			if (_userName == null) {
 				return "x-ago";
 			}
-			else {
-				return "x-ago-by-x";
-			}
+
+			return "x-ago-by-x";
 		}
 		else {
 			if (_userName == null) {
 				return "within-x";
 			}
-			else {
-				return "within-x-by-x";
-			}
+
+			return "within-x-by-x";
 		}
 	}
 
@@ -120,9 +117,8 @@ public class DateSearchEntry extends TextSearchEntry {
 		if (_date.before(new Date())) {
 			return System.currentTimeMillis() - _date.getTime();
 		}
-		else {
-			return _date.getTime() - System.currentTimeMillis();
-		}
+
+		return _date.getTime() - System.currentTimeMillis();
 	}
 
 	private Date _date;

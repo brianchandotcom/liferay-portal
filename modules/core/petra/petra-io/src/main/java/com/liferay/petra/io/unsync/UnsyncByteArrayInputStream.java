@@ -60,9 +60,8 @@ public class UnsyncByteArrayInputStream extends InputStream {
 		if (_index < _capacity) {
 			return _buffer[_index++] & 0xff;
 		}
-		else {
-			return -1;
-		}
+
+		return -1;
 	}
 
 	@Override

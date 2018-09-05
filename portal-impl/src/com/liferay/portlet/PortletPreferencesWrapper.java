@@ -52,9 +52,8 @@ public class PortletPreferencesWrapper
 
 			return true;
 		}
-		else {
-			return false;
-		}
+
+		return false;
 	}
 
 	@Override

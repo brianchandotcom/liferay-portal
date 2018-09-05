@@ -378,9 +378,8 @@ public class LayoutImpl extends LayoutBaseImpl {
 
 			return layoutSet.getCss();
 		}
-		else {
-			return getCss();
-		}
+
+		return getCss();
 	}
 
 	@Override
@@ -779,9 +778,8 @@ public class LayoutImpl extends LayoutBaseImpl {
 
 			return layoutSet.getTheme();
 		}
-		else {
-			return ThemeLocalServiceUtil.getTheme(getCompanyId(), getThemeId());
-		}
+
+		return ThemeLocalServiceUtil.getTheme(getCompanyId(), getThemeId());
 	}
 
 	@Override
@@ -810,9 +808,8 @@ public class LayoutImpl extends LayoutBaseImpl {
 		if (_typeSettingsProperties == null) {
 			return super.getTypeSettings();
 		}
-		else {
-			return _typeSettingsProperties.toString();
-		}
+
+		return _typeSettingsProperties.toString();
 	}
 
 	@Override
@@ -887,9 +884,8 @@ public class LayoutImpl extends LayoutBaseImpl {
 		if (group != null) {
 			return true;
 		}
-		else {
-			return false;
-		}
+
+		return false;
 	}
 
 	@Override

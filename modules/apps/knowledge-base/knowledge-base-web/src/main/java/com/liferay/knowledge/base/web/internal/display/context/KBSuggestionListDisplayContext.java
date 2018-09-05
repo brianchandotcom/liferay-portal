@@ -94,11 +94,10 @@ public class KBSuggestionListDisplayContext {
 		if (_kbArticle == null) {
 			return KBCommentServiceUtil.getKBCommentsCount(_groupId, status);
 		}
-		else {
-			return KBCommentServiceUtil.getKBCommentsCount(
-				_groupId, KBArticleConstants.getClassName(),
-				_kbArticle.getResourcePrimKey(), status);
-		}
+
+		return KBCommentServiceUtil.getKBCommentsCount(
+			_groupId, KBArticleConstants.getClassName(),
+			_kbArticle.getResourcePrimKey(), status);
 	}
 
 	public int getNewKBCommentsCount() throws PortalException {

@@ -105,9 +105,8 @@ public class PollerRequest implements Serializable {
 		if (_portletId != null) {
 			return _portletId.hashCode();
 		}
-		else {
-			return 0;
-		}
+
+		return 0;
 	}
 
 	public boolean isInitialRequest() {

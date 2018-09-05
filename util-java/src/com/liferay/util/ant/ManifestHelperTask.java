@@ -160,9 +160,8 @@ public class ManifestHelperTask extends Task {
 			if (OSDetector.isWindows()) {
 				return execute("cmd /c git rev-parse HEAD");
 			}
-			else {
-				return execute("git rev-parse HEAD");
-			}
+
+			return execute("git rev-parse HEAD");
 		}
 
 		File svnDir = new File(projectDir, ".svn");
@@ -171,9 +170,8 @@ public class ManifestHelperTask extends Task {
 			if (OSDetector.isWindows()) {
 				return execute("cmd /c svnversion .");
 			}
-			else {
-				return execute("svnversion .");
-			}
+
+			return execute("svnversion .");
 		}
 
 		return StringPool.BLANK;

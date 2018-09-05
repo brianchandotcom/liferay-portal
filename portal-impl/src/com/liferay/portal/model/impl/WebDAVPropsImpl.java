@@ -69,9 +69,8 @@ public class WebDAVPropsImpl extends WebDAVPropsBaseImpl {
 		if (Validator.isNull(props)) {
 			return _PROPS;
 		}
-		else {
-			return props;
-		}
+
+		return props;
 	}
 
 	@Override

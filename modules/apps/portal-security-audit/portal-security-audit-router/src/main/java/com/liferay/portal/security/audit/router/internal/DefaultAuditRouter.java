@@ -73,9 +73,8 @@ public class DefaultAuditRouter implements AuditRouter {
 
 			return true;
 		}
-		else {
-			return false;
-		}
+
+		return false;
 	}
 
 	@Override

@@ -300,9 +300,8 @@ public class DDMBeanTranslatorImpl implements DDMBeanTranslator {
 		if (value.isLocalized()) {
 			return translateLocalizedValue(value);
 		}
-		else {
-			return translateUnlocalizedValue(value);
-		}
+
+		return translateUnlocalizedValue(value);
 	}
 
 	protected com.liferay.dynamic.data.mapping.kernel.DDMFormFieldOptions
@@ -371,9 +370,8 @@ public class DDMBeanTranslatorImpl implements DDMBeanTranslator {
 		if (value.isLocalized()) {
 			return translateLocalizedValue(value);
 		}
-		else {
-			return translateUnlocalizedValue(value);
-		}
+
+		return translateUnlocalizedValue(value);
 	}
 
 	protected LocalizedValue translateLocalizedValue(

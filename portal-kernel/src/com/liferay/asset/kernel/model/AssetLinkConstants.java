@@ -32,9 +32,8 @@ public class AssetLinkConstants {
 		if (type == TYPE_CHILD) {
 			return true;
 		}
-		else {
-			return false;
-		}
+
+		return false;
 	}
 
 }

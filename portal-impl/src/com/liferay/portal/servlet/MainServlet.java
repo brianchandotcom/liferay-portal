@@ -784,18 +784,16 @@ public class MainServlet extends ActionServlet {
 
 			return false;
 		}
-		else {
-			return true;
-		}
+
+		return true;
 	}
 
 	protected boolean hasThemeDisplay(HttpServletRequest request) {
 		if (request.getAttribute(WebKeys.THEME_DISPLAY) == null) {
 			return false;
 		}
-		else {
-			return true;
-		}
+
+		return true;
 	}
 
 	protected void initCompanies() throws Exception {

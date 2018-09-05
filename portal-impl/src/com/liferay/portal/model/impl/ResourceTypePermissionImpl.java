@@ -98,9 +98,8 @@ public class ResourceTypePermissionImpl extends ResourceTypePermissionBaseImpl {
 		if (getGroupId() == 0) {
 			return true;
 		}
-		else {
-			return false;
-		}
+
+		return false;
 	}
 
 	@Override

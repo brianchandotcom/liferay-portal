@@ -37,9 +37,8 @@ public class ProxyResponse implements Serializable {
 		if (_exception != null) {
 			return true;
 		}
-		else {
-			return false;
-		}
+
+		return false;
 	}
 
 	public void setException(Exception exception) {

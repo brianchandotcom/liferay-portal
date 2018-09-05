@@ -114,9 +114,8 @@ public class LiferayInputStream extends ServletInputStreamAdapter {
 			return new ServletInputStreamAdapter(
 				new FileInputStream(_tempFile));
 		}
-		else {
-			return this;
-		}
+
+		return this;
 	}
 
 	@Override

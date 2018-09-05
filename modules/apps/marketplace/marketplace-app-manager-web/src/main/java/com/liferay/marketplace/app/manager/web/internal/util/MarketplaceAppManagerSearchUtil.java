@@ -74,9 +74,8 @@ public class MarketplaceAppManagerSearchUtil {
 		if (matcher.find()) {
 			return true;
 		}
-		else {
-			return false;
-		}
+
+		return false;
 	}
 
 	protected static String getKeywordsRegex(String keywords) {
@@ -94,9 +93,8 @@ public class MarketplaceAppManagerSearchUtil {
 
 			return true;
 		}
-		else {
-			return false;
-		}
+
+		return false;
 	}
 
 	protected static boolean hasBundleKeywordsMatch(

@@ -97,9 +97,8 @@ public class ExpandoConverterUtil {
 		else if (type == ExpandoColumnConstants.STRING_LOCALIZED) {
 			return (Serializable)LocalizationUtil.getLocalizationMap(attribute);
 		}
-		else {
-			return attribute;
-		}
+
+		return attribute;
 	}
 
 	public static Serializable getAttributeFromStringArray(
@@ -160,9 +159,8 @@ public class ExpandoConverterUtil {
 		else if (type == ExpandoColumnConstants.STRING) {
 			return attribute[0];
 		}
-		else {
-			return attribute;
-		}
+
+		return attribute;
 	}
 
 	public static String getStringFromAttribute(
@@ -203,9 +201,8 @@ public class ExpandoConverterUtil {
 			return StringUtil.merge(
 				ArrayUtil.toStringArray((Date[])attribute, _getDateFormat()));
 		}
-		else {
-			return attribute.toString();
-		}
+
+		return attribute.toString();
 	}
 
 	private static Date _getDate(String dateString) {

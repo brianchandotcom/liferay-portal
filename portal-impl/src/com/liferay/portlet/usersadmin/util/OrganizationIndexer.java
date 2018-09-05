@@ -235,9 +235,8 @@ public class OrganizationIndexer extends BaseIndexer<Organization> {
 		else if (orderByCol.equals("type")) {
 			return "type";
 		}
-		else {
-			return orderByCol;
-		}
+
+		return orderByCol;
 	}
 
 	@Override

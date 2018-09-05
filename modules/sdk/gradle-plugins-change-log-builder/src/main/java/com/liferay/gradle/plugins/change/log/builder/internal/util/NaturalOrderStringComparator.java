@@ -119,9 +119,8 @@ public class NaturalOrderStringComparator implements Comparator<String> {
 		if (_ascending) {
 			return value;
 		}
-		else {
-			return -value;
-		}
+
+		return -value;
 	}
 
 	private String _extractLeadingDigits(String s) {

@@ -42,11 +42,10 @@ public class ResourceBundleLoaderProvider {
 		if (resourceBundleLoader == null) {
 			return ResourceBundleLoaderUtil.getPortalResourceBundleLoader();
 		}
-		else {
-			return new AggregateResourceBundleLoader(
-				resourceBundleLoader,
-				ResourceBundleLoaderUtil.getPortalResourceBundleLoader());
-		}
+
+		return new AggregateResourceBundleLoader(
+			resourceBundleLoader,
+			ResourceBundleLoaderUtil.getPortalResourceBundleLoader());
 	}
 
 	@Activate

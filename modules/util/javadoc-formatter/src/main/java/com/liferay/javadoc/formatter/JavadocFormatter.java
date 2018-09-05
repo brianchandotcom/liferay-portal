@@ -1940,9 +1940,8 @@ public class JavadocFormatter {
 
 			return true;
 		}
-		else {
-			return false;
-		}
+
+		return false;
 	}
 
 	private boolean _hasPublicModifier(JavaClass javaClass) {

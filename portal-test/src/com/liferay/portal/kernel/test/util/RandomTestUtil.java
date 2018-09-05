@@ -62,9 +62,8 @@ public class RandomTestUtil {
 		else if (value == 0) {
 			return randomDouble();
 		}
-		else {
-			return -value;
-		}
+
+		return -value;
 	}
 
 	public static int randomInt() {
@@ -109,9 +108,8 @@ public class RandomTestUtil {
 		else if (value == 0) {
 			return randomLong();
 		}
-		else {
-			return -value;
-		}
+
+		return -value;
 	}
 
 	@SafeVarargs

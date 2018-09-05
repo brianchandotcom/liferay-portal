@@ -58,10 +58,9 @@ public class LayoutRevisionImpl extends LayoutRevisionBaseImpl {
 		if (isInheritLookAndFeel()) {
 			return getLayoutSet().getColorScheme();
 		}
-		else {
-			return ThemeLocalServiceUtil.getColorScheme(
-				getCompanyId(), getTheme().getThemeId(), getColorSchemeId());
-		}
+
+		return ThemeLocalServiceUtil.getColorScheme(
+			getCompanyId(), getTheme().getThemeId(), getColorSchemeId());
 	}
 
 	@Override
@@ -69,9 +68,8 @@ public class LayoutRevisionImpl extends LayoutRevisionBaseImpl {
 		if (isInheritLookAndFeel()) {
 			return getLayoutSet().getCss();
 		}
-		else {
-			return getCss();
-		}
+
+		return getCss();
 	}
 
 	@Override
@@ -142,9 +140,8 @@ public class LayoutRevisionImpl extends LayoutRevisionBaseImpl {
 		if (isInheritLookAndFeel()) {
 			return getLayoutSet().getTheme();
 		}
-		else {
-			return ThemeLocalServiceUtil.getTheme(getCompanyId(), getThemeId());
-		}
+
+		return ThemeLocalServiceUtil.getTheme(getCompanyId(), getThemeId());
 	}
 
 	@Override
@@ -184,9 +181,8 @@ public class LayoutRevisionImpl extends LayoutRevisionBaseImpl {
 		if (_typeSettingsProperties == null) {
 			return super.getTypeSettings();
 		}
-		else {
-			return _typeSettingsProperties.toString();
-		}
+
+		return _typeSettingsProperties.toString();
 	}
 
 	@Override
@@ -234,9 +230,8 @@ public class LayoutRevisionImpl extends LayoutRevisionBaseImpl {
 		if (Validator.isNotNull(defaultAssetPublisherPortletId)) {
 			return true;
 		}
-		else {
-			return false;
-		}
+
+		return false;
 	}
 
 	@Override
@@ -251,9 +246,8 @@ public class LayoutRevisionImpl extends LayoutRevisionBaseImpl {
 
 			return true;
 		}
-		else {
-			return false;
-		}
+
+		return false;
 	}
 
 	@Override

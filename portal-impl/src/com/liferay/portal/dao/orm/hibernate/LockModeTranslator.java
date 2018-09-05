@@ -55,9 +55,8 @@ public class LockModeTranslator {
 		else if (lockMode == LockMode.WRITE) {
 			return org.hibernate.LockMode.WRITE;
 		}
-		else {
-			return org.hibernate.LockMode.parse(lockMode.toString());
-		}
+
+		return org.hibernate.LockMode.parse(lockMode.toString());
 	}
 
 }

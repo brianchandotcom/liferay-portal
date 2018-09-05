@@ -64,9 +64,8 @@ public class BundleStateConstants {
 		else if (state == UNINSTALLED) {
 			return UNINSTALLED_LABEL;
 		}
-		else {
-			return ANY_LABEL;
-		}
+
+		return ANY_LABEL;
 	}
 
 	public static int getState(String label) {
@@ -82,9 +81,8 @@ public class BundleStateConstants {
 		else if (label.equals(UNINSTALLED_LABEL)) {
 			return UNINSTALLED;
 		}
-		else {
-			return ANY;
-		}
+
+		return ANY;
 	}
 
 }

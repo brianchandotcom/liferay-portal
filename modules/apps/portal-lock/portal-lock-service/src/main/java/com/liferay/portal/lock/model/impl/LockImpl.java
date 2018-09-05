@@ -24,9 +24,8 @@ public class LockImpl extends LockBaseImpl {
 		if (isNeverExpires()) {
 			return 0;
 		}
-		else {
-			return getExpirationDate().getTime() - getCreateDate().getTime();
-		}
+
+		return getExpirationDate().getTime() - getCreateDate().getTime();
 	}
 
 	@Override
@@ -37,9 +36,8 @@ public class LockImpl extends LockBaseImpl {
 		else if (System.currentTimeMillis() > getExpirationDate().getTime()) {
 			return true;
 		}
-		else {
-			return false;
-		}
+
+		return false;
 	}
 
 	@Override
@@ -47,9 +45,8 @@ public class LockImpl extends LockBaseImpl {
 		if (getExpirationDate() == null) {
 			return true;
 		}
-		else {
-			return false;
-		}
+
+		return false;
 	}
 
 }

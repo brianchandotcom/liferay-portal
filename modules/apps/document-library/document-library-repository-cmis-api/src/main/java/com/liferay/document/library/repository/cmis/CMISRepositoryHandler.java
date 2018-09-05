@@ -435,9 +435,8 @@ public abstract class CMISRepositoryHandler
 		if (productName.contains("filenet") && productName.contains("p8")) {
 			return false;
 		}
-		else {
-			return true;
-		}
+
+		return true;
 	}
 
 	@Override

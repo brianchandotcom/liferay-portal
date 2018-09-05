@@ -227,9 +227,8 @@ public class DownloadEntriesMVCResourceCommand implements MVCResourceCommand {
 
 			return folder.getName() + ".zip";
 		}
-		else {
-			return themeDisplay.getScopeGroupName() + ".zip";
-		}
+
+		return themeDisplay.getScopeGroupName() + ".zip";
 	}
 
 	@Reference(unbind = "-")

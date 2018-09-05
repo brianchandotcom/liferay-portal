@@ -134,11 +134,10 @@ public class TagResourceBundleUtil {
 		if (resourceBundleLoader == null) {
 			return null;
 		}
-		else {
-			return new AggregateResourceBundleLoader(
-				resourceBundleLoader,
-				ResourceBundleLoaderUtil.getPortalResourceBundleLoader());
-		}
+
+		return new AggregateResourceBundleLoader(
+			resourceBundleLoader,
+			ResourceBundleLoaderUtil.getPortalResourceBundleLoader());
 	}
 
 	private static final ResourceBundle _emptyResourceBundle =

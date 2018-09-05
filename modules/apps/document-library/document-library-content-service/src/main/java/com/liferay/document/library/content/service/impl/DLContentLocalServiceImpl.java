@@ -190,9 +190,8 @@ public class DLContentLocalServiceImpl extends DLContentLocalServiceBaseImpl {
 		if (count > 0) {
 			return true;
 		}
-		else {
-			return false;
-		}
+
+		return false;
 	}
 
 	@Override

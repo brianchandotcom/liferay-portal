@@ -102,9 +102,8 @@ public class DynamicEventRequest extends EventRequestWrapper {
 		if (ArrayUtil.isNotEmpty(values)) {
 			return values[0];
 		}
-		else {
-			return null;
-		}
+
+		return null;
 	}
 
 	@Override

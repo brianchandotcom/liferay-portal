@@ -607,9 +607,8 @@ public class AssetPublisherHelperImpl implements AssetPublisherHelper {
 		if (ArrayUtil.isNotEmpty(classNameIds)) {
 			return classNameIds;
 		}
-		else {
-			return availableClassNameIds;
-		}
+
+		return availableClassNameIds;
 	}
 
 	@Override

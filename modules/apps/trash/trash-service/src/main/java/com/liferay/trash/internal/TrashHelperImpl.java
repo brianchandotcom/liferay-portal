@@ -107,9 +107,8 @@ public class TrashHelperImpl implements TrashHelper {
 		if (trashRenderer != null) {
 			return trashRenderer.getNewName(oldName, sb.toString());
 		}
-		else {
-			return _getNewName(oldName, sb.toString());
-		}
+
+		return _getNewName(oldName, sb.toString());
 	}
 
 	@Override

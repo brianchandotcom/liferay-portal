@@ -104,9 +104,8 @@ public class DynamicResourceRequest extends ResourceRequestWrapper {
 		if (ArrayUtil.isNotEmpty(values)) {
 			return values[0];
 		}
-		else {
-			return null;
-		}
+
+		return null;
 	}
 
 	@Override

@@ -71,9 +71,8 @@ public class CalendarResourceUtil
 		if (group.isUser()) {
 			return getUserCalendarResource(group.getClassPK(), serviceContext);
 		}
-		else {
-			return getGroupCalendarResource(groupId, serviceContext);
-		}
+
+		return getGroupCalendarResource(groupId, serviceContext);
 	}
 
 	public static CalendarResource getScopeGroupCalendarResource(

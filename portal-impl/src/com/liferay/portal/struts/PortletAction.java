@@ -224,9 +224,8 @@ public class PortletAction extends Action {
 		if (forward == null) {
 			return defaultValue;
 		}
-		else {
-			return forward;
-		}
+
+		return forward;
 	}
 
 	protected ModuleConfig getModuleConfig(PortletRequest portletRequest) {
@@ -334,9 +333,8 @@ public class PortletAction extends Action {
 
 			return true;
 		}
-		else {
-			return false;
-		}
+
+		return false;
 	}
 
 	protected void sendRedirect(

@@ -76,9 +76,8 @@ public abstract class BaseWebDAVStorageImpl implements WebDAVStorage {
 		if (getResource(webDAVRequest) == null) {
 			return false;
 		}
-		else {
-			return true;
-		}
+
+		return true;
 	}
 
 	@Override
@@ -159,9 +158,8 @@ public abstract class BaseWebDAVStorageImpl implements WebDAVStorage {
 		if (!group.isUser()) {
 			return true;
 		}
-		else {
-			return false;
-		}
+
+		return false;
 	}
 
 	private String _rootPath;

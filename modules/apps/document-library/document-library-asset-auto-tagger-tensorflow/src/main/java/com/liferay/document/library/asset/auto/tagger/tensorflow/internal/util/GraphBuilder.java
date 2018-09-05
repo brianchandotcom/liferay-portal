@@ -177,9 +177,8 @@ public class GraphBuilder {
 		else if (ContentTypes.IMAGE_PNG.equals(mimeType)) {
 			return "DecodePng";
 		}
-		else {
-			return "DecodeJpeg";
-		}
+
+		return "DecodeJpeg";
 	}
 
 	private final Graph _graph;

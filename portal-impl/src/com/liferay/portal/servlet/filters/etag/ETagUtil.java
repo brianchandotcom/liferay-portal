@@ -53,9 +53,8 @@ public class ETagUtil {
 
 			return true;
 		}
-		else {
-			return false;
-		}
+
+		return false;
 	}
 
 	private static int _hashCode(byte[] data, int offset, int length) {

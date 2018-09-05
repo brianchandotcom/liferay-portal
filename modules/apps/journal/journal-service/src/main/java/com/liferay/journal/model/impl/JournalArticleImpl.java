@@ -259,9 +259,8 @@ public class JournalArticleImpl extends JournalArticleBaseImpl {
 		if (description == null) {
 			return StringPool.BLANK;
 		}
-		else {
-			return description;
-		}
+
+		return description;
 	}
 
 	@Override
@@ -273,9 +272,8 @@ public class JournalArticleImpl extends JournalArticleBaseImpl {
 		if (description == null) {
 			return getDescription();
 		}
-		else {
-			return description;
-		}
+
+		return description;
 	}
 
 	@Override
@@ -576,9 +574,8 @@ public class JournalArticleImpl extends JournalArticleBaseImpl {
 		if (title == null) {
 			return StringPool.BLANK;
 		}
-		else {
-			return title;
-		}
+
+		return title;
 	}
 
 	@Override
@@ -589,9 +586,8 @@ public class JournalArticleImpl extends JournalArticleBaseImpl {
 		if (title == null) {
 			return getTitle();
 		}
-		else {
-			return title;
-		}
+
+		return title;
 	}
 
 	@Override

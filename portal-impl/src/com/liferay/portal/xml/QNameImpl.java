@@ -58,9 +58,8 @@ public class QNameImpl implements QName {
 		if (namespace == null) {
 			return null;
 		}
-		else {
-			return new NamespaceImpl(namespace);
-		}
+
+		return new NamespaceImpl(namespace);
 	}
 
 	@Override

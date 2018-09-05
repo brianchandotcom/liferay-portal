@@ -234,9 +234,8 @@ public class WikiPagesManagementToolbarDisplayContext {
 		if (navigation.equals("all-pages") && !_searchContainer.hasResults()) {
 			return true;
 		}
-		else {
-			return false;
-		}
+
+		return false;
 	}
 
 	public boolean isSelectable() {

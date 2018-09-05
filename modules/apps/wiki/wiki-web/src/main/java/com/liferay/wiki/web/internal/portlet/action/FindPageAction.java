@@ -60,9 +60,8 @@ public class FindPageAction extends FindStrutsAction {
 
 			return "/wiki/view";
 		}
-		else {
-			return "/wiki_display/view";
-		}
+
+		return "/wiki_display/view";
 	}
 
 	@Override

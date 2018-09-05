@@ -55,9 +55,8 @@ public class ReadWriteSolrClient extends SolrClient {
 
 			return _readSolrClient.request(solrRequest, collection);
 		}
-		else {
-			return _writeSolrClient.request(solrRequest, collection);
-		}
+
+		return _writeSolrClient.request(solrRequest, collection);
 	}
 
 	/**

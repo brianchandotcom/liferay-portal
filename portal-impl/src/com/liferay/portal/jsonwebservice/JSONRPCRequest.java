@@ -102,9 +102,8 @@ public class JSONRPCRequest {
 		if (value != null) {
 			return String.valueOf(value);
 		}
-		else {
-			return null;
-		}
+
+		return null;
 	}
 
 	public Set<String> getParameterNames() {

@@ -220,12 +220,11 @@ public class ExportUsersMVCResourceCommand extends BaseMVCResourceCommand {
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS,
 				(OrderByComparator<User>)null);
 		}
-		else {
-			return _userLocalService.search(
-				themeDisplay.getCompanyId(), searchTerms.getKeywords(),
-				searchTerms.getStatus(), params, QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS, (OrderByComparator<User>)null);
-		}
+
+		return _userLocalService.search(
+			themeDisplay.getCompanyId(), searchTerms.getKeywords(),
+			searchTerms.getStatus(), params, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, (OrderByComparator<User>)null);
 	}
 
 	protected String getUsersCSV(

@@ -190,9 +190,8 @@ public class MBCategoryFinderImpl
 					return MBCategoryUtil.countByG_P_S(
 						groupId, parentCategoryId, queryDefinition.getStatus());
 				}
-				else {
-					return MBCategoryUtil.countByG_P(groupId, parentCategoryId);
-				}
+
+				return MBCategoryUtil.countByG_P(groupId, parentCategoryId);
 			}
 		}
 
@@ -440,12 +439,11 @@ public class MBCategoryFinderImpl
 						queryDefinition.getStart(), queryDefinition.getEnd(),
 						queryDefinition.getOrderByComparator());
 				}
-				else {
-					return MBCategoryUtil.findByG_P(
-						groupId, parentCategoryId, queryDefinition.getStart(),
-						queryDefinition.getEnd(),
-						queryDefinition.getOrderByComparator());
-				}
+
+				return MBCategoryUtil.findByG_P(
+					groupId, parentCategoryId, queryDefinition.getStart(),
+					queryDefinition.getEnd(),
+					queryDefinition.getOrderByComparator());
 			}
 		}
 

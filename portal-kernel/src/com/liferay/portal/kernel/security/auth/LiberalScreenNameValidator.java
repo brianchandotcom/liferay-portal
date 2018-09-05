@@ -26,9 +26,8 @@ public class LiberalScreenNameValidator extends DefaultScreenNameValidator {
 		if (Validator.isNull(screenName)) {
 			return false;
 		}
-		else {
-			return true;
-		}
+
+		return true;
 	}
 
 }

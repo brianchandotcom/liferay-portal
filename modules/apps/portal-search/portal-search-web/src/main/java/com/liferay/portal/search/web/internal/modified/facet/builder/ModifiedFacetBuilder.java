@@ -157,10 +157,9 @@ public class ModifiedFacetBuilder {
 			if (rangesMap.containsKey(selectedRange)) {
 				return rangesMap.get(selectedRange);
 			}
-			else {
-				return _dateRangeFactory.getRangeString(
-					selectedRange, _calendarFactory.getCalendar());
-			}
+
+			return _dateRangeFactory.getRangeString(
+				selectedRange, _calendarFactory.getCalendar());
 		}
 
 		return null;

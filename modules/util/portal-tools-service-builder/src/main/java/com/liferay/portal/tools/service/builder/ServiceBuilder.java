@@ -1317,9 +1317,8 @@ public class ServiceBuilder {
 		else if (type.equals("short")) {
 			return "Short";
 		}
-		else {
-			return type;
-		}
+
+		return type;
 	}
 
 	public String getPrimitiveObjValue(String colType) {
@@ -1364,9 +1363,8 @@ public class ServiceBuilder {
 		else if (type.equals("Short")) {
 			return "short";
 		}
-		else {
-			return type;
-		}
+
+		return type;
 	}
 
 	public String getReturnType(JavaMethod method) {
@@ -1437,9 +1435,8 @@ public class ServiceBuilder {
 		if (!exceptions.isEmpty()) {
 			return exceptions;
 		}
-		else {
-			return Collections.emptyList();
-		}
+
+		return Collections.emptyList();
 	}
 
 	public String getSqlType(String type) {
@@ -1470,9 +1467,8 @@ public class ServiceBuilder {
 		else if (type.equals("String")) {
 			return "VARCHAR";
 		}
-		else {
-			return null;
-		}
+
+		return null;
 	}
 
 	public String getSqlType(String model, String field, String type) {
@@ -1515,9 +1511,8 @@ public class ServiceBuilder {
 
 			return "VARCHAR";
 		}
-		else {
-			return null;
-		}
+
+		return null;
 	}
 
 	public String getTypeGenericsName(JavaType javaType) {
@@ -1578,9 +1573,8 @@ public class ServiceBuilder {
 		if (getEntityByGenericsName(genericsName) == null) {
 			return false;
 		}
-		else {
-			return true;
-		}
+
+		return true;
 	}
 
 	public boolean hasEntityByParameterTypeValue(String parameterTypeValue) {
@@ -1595,9 +1589,8 @@ public class ServiceBuilder {
 		if (getEntityByParameterTypeValue(parameterTypeValue) == null) {
 			return false;
 		}
-		else {
-			return true;
-		}
+
+		return true;
 	}
 
 	public boolean isBasePersistenceMethod(JavaMethod method) {
@@ -5079,9 +5072,8 @@ public class ServiceBuilder {
 		if (sessionType == _SESSION_TYPE_LOCAL) {
 			return "Local";
 		}
-		else {
-			return "";
-		}
+
+		return "";
 	}
 
 	private String _getSpringNamespacesDeclarations() {

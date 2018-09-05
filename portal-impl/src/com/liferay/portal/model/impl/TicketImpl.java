@@ -28,9 +28,8 @@ public class TicketImpl extends TicketBaseImpl {
 		if ((expirationDate != null) && expirationDate.before(new Date())) {
 			return true;
 		}
-		else {
-			return false;
-		}
+
+		return false;
 	}
 
 }

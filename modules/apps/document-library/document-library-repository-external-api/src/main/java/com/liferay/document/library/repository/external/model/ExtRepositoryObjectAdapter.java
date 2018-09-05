@@ -115,9 +115,8 @@ public abstract class ExtRepositoryObjectAdapter<T>
 		if (parentFolder.isRoot()) {
 			return DLAppLocalServiceUtil.getMountFolder(getRepositoryId());
 		}
-		else {
-			return parentFolder;
-		}
+
+		return parentFolder;
 	}
 
 	public boolean isInTrash() {

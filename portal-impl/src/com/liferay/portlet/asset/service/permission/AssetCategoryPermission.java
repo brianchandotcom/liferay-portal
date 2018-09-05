@@ -113,9 +113,8 @@ public class AssetCategoryPermission {
 			return AssetCategoriesPermission.contains(
 				permissionChecker, groupId, actionId);
 		}
-		else {
-			return contains(permissionChecker, categoryId, actionId);
-		}
+
+		return contains(permissionChecker, categoryId, actionId);
 	}
 
 	public static boolean contains(

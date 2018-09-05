@@ -55,9 +55,8 @@ public class RepositoryModelUtil {
 		if (ListUtil.isUnmodifiableList(dlFileEntries)) {
 			return Collections.unmodifiableList(fileEntries);
 		}
-		else {
-			return fileEntries;
-		}
+
+		return fileEntries;
 	}
 
 	public static List<FileShortcut> toFileShortcuts(
@@ -75,9 +74,8 @@ public class RepositoryModelUtil {
 		if (ListUtil.isUnmodifiableList(dlFileShortcuts)) {
 			return Collections.unmodifiableList(fileShortcuts);
 		}
-		else {
-			return fileShortcuts;
-		}
+
+		return fileShortcuts;
 	}
 
 	public static List<FileVersion> toFileVersions(
@@ -94,9 +92,8 @@ public class RepositoryModelUtil {
 		if (ListUtil.isUnmodifiableList(dlFileVersions)) {
 			return Collections.unmodifiableList(fileVersions);
 		}
-		else {
-			return fileVersions;
-		}
+
+		return fileVersions;
 	}
 
 	public static List<Folder> toFolders(List<DLFolder> dlFolders) {
@@ -111,9 +108,8 @@ public class RepositoryModelUtil {
 		if (ListUtil.isUnmodifiableList(dlFolders)) {
 			return Collections.unmodifiableList(folders);
 		}
-		else {
-			return folders;
-		}
+
+		return folders;
 	}
 
 	public static List<RepositoryEntry> toRepositoryEntries(
@@ -162,9 +158,8 @@ public class RepositoryModelUtil {
 
 			return Collections.unmodifiableList(repositoryEntries);
 		}
-		else {
-			return repositoryEntries;
-		}
+
+		return repositoryEntries;
 	}
 
 }

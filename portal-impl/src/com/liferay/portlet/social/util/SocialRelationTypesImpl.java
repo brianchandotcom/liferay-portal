@@ -89,9 +89,8 @@ public class SocialRelationTypesImpl implements SocialRelationTypes {
 
 			return true;
 		}
-		else {
-			return false;
-		}
+
+		return false;
 	}
 
 	private static final List<Integer> _allSocialRelationTypes = Arrays.asList(

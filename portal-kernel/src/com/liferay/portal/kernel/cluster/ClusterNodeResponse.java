@@ -60,9 +60,8 @@ public class ClusterNodeResponse implements Serializable {
 		if (_exception != null) {
 			return true;
 		}
-		else {
-			return false;
-		}
+
+		return false;
 	}
 
 	@Override

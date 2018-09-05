@@ -41,9 +41,8 @@ public class BrowserSnifferImpl implements BrowserSniffer {
 		if ((acceptEncoding != null) && acceptEncoding.contains("gzip")) {
 			return true;
 		}
-		else {
-			return false;
-		}
+
+		return false;
 	}
 
 	@Override
@@ -59,9 +58,8 @@ public class BrowserSnifferImpl implements BrowserSniffer {
 		else if (browserMetadata.isFirefox()) {
 			return BROWSER_ID_FIREFOX;
 		}
-		else {
-			return BROWSER_ID_OTHER;
-		}
+
+		return BROWSER_ID_OTHER;
 	}
 
 	@Override

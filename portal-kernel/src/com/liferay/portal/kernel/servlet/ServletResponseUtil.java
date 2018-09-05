@@ -133,9 +133,8 @@ public class ServletResponseUtil {
 		if (className.equals(_CLIENT_ABORT_EXCEPTION)) {
 			return true;
 		}
-		else {
-			return false;
-		}
+
+		return false;
 	}
 
 	public static void sendFile(

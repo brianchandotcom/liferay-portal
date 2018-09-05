@@ -142,9 +142,8 @@ public class DynamicQueryImpl implements DynamicQuery {
 		if (unmodifiable) {
 			return Collections.unmodifiableList(list);
 		}
-		else {
-			return ListUtil.copy(list);
-		}
+
+		return ListUtil.copy(list);
 	}
 
 	@Override

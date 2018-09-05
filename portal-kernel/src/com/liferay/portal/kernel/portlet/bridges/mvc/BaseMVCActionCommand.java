@@ -179,9 +179,8 @@ public abstract class BaseMVCActionCommand implements MVCActionCommand {
 
 			return true;
 		}
-		else {
-			return false;
-		}
+
+		return false;
 	}
 
 	protected void sendRedirect(

@@ -73,9 +73,8 @@ public class DLFolderActivityInterpreter extends BaseSocialActivityInterpreter {
 			if (Validator.isNull(groupName)) {
 				return "activity-document-library-folder-move-to-trash";
 			}
-			else {
-				return "activity-document-library-folder-move-to-trash-in";
-			}
+
+			return "activity-document-library-folder-move-to-trash-in";
 		}
 		else if (activityType ==
 					 SocialActivityConstants.TYPE_RESTORE_FROM_TRASH) {
@@ -83,9 +82,8 @@ public class DLFolderActivityInterpreter extends BaseSocialActivityInterpreter {
 			if (Validator.isNull(groupName)) {
 				return "activity-document-library-folder-restore-from-trash";
 			}
-			else {
-				return "activity-document-library-folder-restore-from-trash-in";
-			}
+
+			return "activity-document-library-folder-restore-from-trash-in";
 		}
 
 		return null;

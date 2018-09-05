@@ -526,9 +526,8 @@ public class DDLViewRecordsDisplayContext {
 		if (isAdminPortlet()) {
 			return "/view_record_set.jsp";
 		}
-		else {
-			return "/view_selected_record_set.jsp";
-		}
+
+		return "/view_selected_record_set.jsp";
 	}
 
 	protected Consumer<DropdownItem> getOrderByDropdownItem(String orderByCol) {

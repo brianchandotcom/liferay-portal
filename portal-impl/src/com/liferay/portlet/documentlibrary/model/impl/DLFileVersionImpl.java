@@ -91,9 +91,8 @@ public class DLFileVersionImpl extends DLFileVersionBaseImpl {
 		if (_extraSettingsProperties == null) {
 			return super.getExtraSettings();
 		}
-		else {
-			return _extraSettingsProperties.toString();
-		}
+
+		return _extraSettingsProperties.toString();
 	}
 
 	@Override

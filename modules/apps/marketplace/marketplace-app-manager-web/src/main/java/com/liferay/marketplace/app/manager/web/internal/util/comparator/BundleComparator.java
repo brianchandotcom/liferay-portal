@@ -47,9 +47,8 @@ public class BundleComparator implements Comparator<Bundle> {
 		if (_ascending) {
 			return value;
 		}
-		else {
-			return -value;
-		}
+
+		return -value;
 	}
 
 	protected String getBundleName(Bundle bundle) {

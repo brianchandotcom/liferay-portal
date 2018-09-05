@@ -40,9 +40,8 @@ public class KaleoTimerImpl extends KaleoTimerBaseImpl {
 		if (Validator.isNotNull(getRecurrenceScale())) {
 			return true;
 		}
-		else {
-			return false;
-		}
+
+		return false;
 	}
 
 }

@@ -71,9 +71,8 @@ public class JavaDetector {
 		if (javaVersion.startsWith(_JAVA_VERSION_JDK_7)) {
 			return true;
 		}
-		else {
-			return false;
-		}
+
+		return false;
 	}
 
 	public static boolean isJDK8() {
@@ -82,9 +81,8 @@ public class JavaDetector {
 		if (javaVersion.startsWith(_JAVA_VERSION_JDK_8)) {
 			return true;
 		}
-		else {
-			return false;
-		}
+
+		return false;
 	}
 
 	public static boolean isOpenJDK() {

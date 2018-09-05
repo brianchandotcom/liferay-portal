@@ -70,9 +70,8 @@ public class OrganizationPermissionImpl implements OrganizationPermission {
 
 			return contains(permissionChecker, organization, actionId);
 		}
-		else {
-			return false;
-		}
+
+		return false;
 	}
 
 	@Override

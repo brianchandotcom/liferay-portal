@@ -147,10 +147,9 @@ public class DLFileEntryActivityInterpreter
 				wrapLink(link, title)
 			};
 		}
-		else {
-			return super.getTitleArguments(
-				groupName, activity, link, title, serviceContext);
-		}
+
+		return super.getTitleArguments(
+			groupName, activity, link, title, serviceContext);
 	}
 
 	@Override
@@ -163,33 +162,29 @@ public class DLFileEntryActivityInterpreter
 			if (Validator.isNull(groupName)) {
 				return "activity-document-library-file-add-file";
 			}
-			else {
-				return "activity-document-library-file-add-file-in";
-			}
+
+			return "activity-document-library-file-add-file-in";
 		}
 		else if (activityType == DLActivityKeys.UPDATE_FILE_ENTRY) {
 			if (Validator.isNull(groupName)) {
 				return "activity-document-library-file-update-file";
 			}
-			else {
-				return "activity-document-library-file-update-file-in";
-			}
+
+			return "activity-document-library-file-update-file-in";
 		}
 		else if (activityType == SocialActivityConstants.TYPE_ADD_COMMENT) {
 			if (Validator.isNull(groupName)) {
 				return "activity-document-library-file-add-comment";
 			}
-			else {
-				return "activity-document-library-file-add-comment-in";
-			}
+
+			return "activity-document-library-file-add-comment-in";
 		}
 		else if (activityType == SocialActivityConstants.TYPE_MOVE_TO_TRASH) {
 			if (Validator.isNull(groupName)) {
 				return "activity-document-library-file-move-to-trash";
 			}
-			else {
-				return "activity-document-library-file-move-to-trash-in";
-			}
+
+			return "activity-document-library-file-move-to-trash-in";
 		}
 		else if (activityType ==
 					 SocialActivityConstants.TYPE_RESTORE_FROM_TRASH) {
@@ -197,9 +192,8 @@ public class DLFileEntryActivityInterpreter
 			if (Validator.isNull(groupName)) {
 				return "activity-document-library-file-restore-from-trash";
 			}
-			else {
-				return "activity-document-library-file-restore-from-trash-in";
-			}
+
+			return "activity-document-library-file-restore-from-trash-in";
 		}
 
 		return null;

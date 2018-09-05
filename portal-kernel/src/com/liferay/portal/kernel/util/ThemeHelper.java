@@ -101,9 +101,8 @@ public class ThemeHelper {
 
 			return sb.toString();
 		}
-		else {
-			return path;
-		}
+
+		return path;
 	}
 
 	public static boolean resourceExists(
@@ -170,9 +169,8 @@ public class ThemeHelper {
 			if (url == null) {
 				return false;
 			}
-			else {
-				return true;
-			}
+
+			return true;
 		}
 	}
 

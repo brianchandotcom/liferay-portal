@@ -46,9 +46,8 @@ public class ProtectedRenderRequest extends RenderRequestWrapper {
 		if (_remoteUser != null) {
 			return _remoteUser;
 		}
-		else {
-			return super.getRemoteUser();
-		}
+
+		return super.getRemoteUser();
 	}
 
 	@Override
@@ -56,9 +55,8 @@ public class ProtectedRenderRequest extends RenderRequestWrapper {
 		if (_userPrincipal != null) {
 			return _userPrincipal;
 		}
-		else {
-			return super.getUserPrincipal();
-		}
+
+		return super.getUserPrincipal();
 	}
 
 	private final String _remoteUser;

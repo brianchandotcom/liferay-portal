@@ -269,9 +269,8 @@ public class DDMFormBuilderContextFactoryHelper {
 			return doCreateDDMFormFieldValue(
 				(DDMFormFieldValidation)propertyValue);
 		}
-		else {
-			return new UnlocalizedValue(String.valueOf(propertyValue));
-		}
+
+		return new UnlocalizedValue(String.valueOf(propertyValue));
 	}
 
 	protected Value doCreateDDMFormFieldValue(

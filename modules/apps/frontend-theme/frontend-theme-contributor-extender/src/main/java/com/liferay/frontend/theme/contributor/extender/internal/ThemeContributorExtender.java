@@ -176,10 +176,8 @@ public class ThemeContributorExtender extends AbstractExtender {
 		if (cssResourcePaths.isEmpty() && jsResourcePaths.isEmpty()) {
 			return null;
 		}
-		else {
-			return new BundleWebResourcesImpl(
-				cssResourcePaths, jsResourcePaths);
-		}
+
+		return new BundleWebResourcesImpl(cssResourcePaths, jsResourcePaths);
 	}
 
 	private Logger _logger;

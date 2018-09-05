@@ -140,9 +140,8 @@ public class ContactIndexer extends BaseIndexer<Contact> {
 		else if (orderByCol.equals("last-name")) {
 			return "lastName";
 		}
-		else {
-			return orderByCol;
-		}
+
+		return orderByCol;
 	}
 
 	@Override

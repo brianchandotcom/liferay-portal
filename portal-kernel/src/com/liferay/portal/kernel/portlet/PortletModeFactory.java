@@ -41,9 +41,8 @@ public class PortletModeFactory {
 			if (portletMajorVersion < 3) {
 				return PortletMode.VIEW;
 			}
-			else {
-				return PortletMode.UNDEFINED;
-			}
+
+			return PortletMode.UNDEFINED;
 		}
 
 		PortletMode portletMode = _portletModes.get(name);

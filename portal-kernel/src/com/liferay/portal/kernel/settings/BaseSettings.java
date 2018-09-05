@@ -38,9 +38,8 @@ public abstract class BaseSettings implements Settings {
 		else if (parentSettings == null) {
 			return null;
 		}
-		else {
-			return parentSettings.getModifiableSettings();
-		}
+
+		return parentSettings.getModifiableSettings();
 	}
 
 	@Override

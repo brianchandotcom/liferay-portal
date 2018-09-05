@@ -170,9 +170,8 @@ public abstract class BaseGadgetPortlet extends MVCPortlet {
 		if (gadget != null) {
 			return gadget.getName();
 		}
-		else {
-			return super.getTitle(renderRequest);
-		}
+
+		return super.getTitle(renderRequest);
 	}
 
 	protected String getView(

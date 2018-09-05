@@ -538,9 +538,8 @@ public class ImageToolImpl implements ImageTool {
 
 			return true;
 		}
-		else {
-			return false;
-		}
+
+		return false;
 	}
 
 	@Override

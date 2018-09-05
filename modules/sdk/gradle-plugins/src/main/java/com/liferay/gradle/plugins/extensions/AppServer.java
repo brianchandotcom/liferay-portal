@@ -63,9 +63,8 @@ public class AppServer {
 		if (OSDetector.isWindows()) {
 			return ".bat";
 		}
-		else {
-			return ".sh";
-		}
+
+		return ".sh";
 	}
 
 	public File getLibGlobalDir() {

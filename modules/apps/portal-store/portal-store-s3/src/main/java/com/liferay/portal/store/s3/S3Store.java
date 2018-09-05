@@ -793,10 +793,9 @@ public class S3Store extends BaseStore {
 
 			return new SystemException(sb.toString());
 		}
-		else {
-			return new SystemException(
-				amazonClientException.getMessage(), amazonClientException);
-		}
+
+		return new SystemException(
+			amazonClientException.getMessage(), amazonClientException);
 	}
 
 	private static final int _DELETE_MAX = 1000;

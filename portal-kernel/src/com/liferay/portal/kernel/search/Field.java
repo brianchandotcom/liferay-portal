@@ -361,9 +361,8 @@ public class Field implements Serializable {
 		if (ArrayUtil.isNotEmpty(_values)) {
 			return _values[0];
 		}
-		else {
-			return null;
-		}
+
+		return null;
 	}
 
 	public String[] getValues() {
@@ -382,18 +381,16 @@ public class Field implements Serializable {
 		if (_dates != null) {
 			return true;
 		}
-		else {
-			return false;
-		}
+
+		return false;
 	}
 
 	public boolean isLocalized() {
 		if (_localizedValues != null) {
 			return true;
 		}
-		else {
-			return false;
-		}
+
+		return false;
 	}
 
 	public boolean isNested() {

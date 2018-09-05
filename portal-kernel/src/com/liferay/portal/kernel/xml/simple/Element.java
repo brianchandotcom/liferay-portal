@@ -134,9 +134,8 @@ public class Element {
 		if (_parentElement == null) {
 			return true;
 		}
-		else {
-			return false;
-		}
+
+		return false;
 	}
 
 	public String toXMLString() {

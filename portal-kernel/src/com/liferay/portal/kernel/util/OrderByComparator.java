@@ -82,9 +82,8 @@ public abstract class OrderByComparator<T>
 		if ((orderBy == null) || orderBy.endsWith(_ORDER_BY_DESC)) {
 			return false;
 		}
-		else {
-			return true;
-		}
+
+		return true;
 	}
 
 	public boolean isAscending(String field) {
@@ -98,9 +97,8 @@ public abstract class OrderByComparator<T>
 		if (orderBy == null) {
 			return super.toString();
 		}
-		else {
-			return orderBy;
-		}
+
+		return orderBy;
 	}
 
 	private static final String _ORDER_BY_DESC = " DESC";

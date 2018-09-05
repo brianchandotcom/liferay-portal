@@ -44,9 +44,8 @@ public class MessageStatus implements Serializable {
 		if (_exceptionStackTrace != null) {
 			return true;
 		}
-		else {
-			return false;
-		}
+
+		return false;
 	}
 
 	public void setException(Exception e) {

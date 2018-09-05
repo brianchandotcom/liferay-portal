@@ -63,9 +63,8 @@ public class ResourceTypePermissionLocalServiceImpl
 		if (resourceTypePermission == null) {
 			return 0;
 		}
-		else {
-			return resourceTypePermission.getActionIds();
-		}
+
+		return resourceTypePermission.getActionIds();
 	}
 
 	@Override
@@ -160,9 +159,8 @@ public class ResourceTypePermissionLocalServiceImpl
 		if ((actionIdsLong & bitwiseValue) == bitwiseValue) {
 			return true;
 		}
-		else {
-			return false;
-		}
+
+		return false;
 	}
 
 	@Override

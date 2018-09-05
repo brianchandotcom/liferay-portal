@@ -70,9 +70,8 @@ public class DLFileEntryWorkflowHandler
 				dlFileVersion.getFileEntryId(),
 				AssetRendererFactory.TYPE_LATEST);
 		}
-		else {
-			return null;
-		}
+
+		return null;
 	}
 
 	@Override

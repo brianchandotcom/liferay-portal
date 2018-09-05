@@ -124,9 +124,8 @@ public class ExpandoValueServiceImpl extends ExpandoValueServiceBaseImpl {
 			return expandoValueLocalService.getData(
 				companyId, className, tableName, columnName, classPK);
 		}
-		else {
-			return null;
-		}
+
+		return null;
 	}
 
 	@Override

@@ -36,9 +36,8 @@ public class DefaultEmailAddressGenerator implements EmailAddressGenerator {
 
 			return true;
 		}
-		else {
-			return false;
-		}
+
+		return false;
 	}
 
 	@Override

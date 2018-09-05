@@ -127,9 +127,8 @@ public abstract class Account implements Serializable {
 		if (Validator.isNotNull(_user) && Validator.isNotNull(_password)) {
 			return true;
 		}
-		else {
-			return false;
-		}
+
+		return false;
 	}
 
 	public boolean isSecure() {

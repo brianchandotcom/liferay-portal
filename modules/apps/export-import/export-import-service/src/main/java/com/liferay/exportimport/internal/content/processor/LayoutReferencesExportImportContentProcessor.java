@@ -934,9 +934,8 @@ public class LayoutReferencesExportImportContentProcessor
 
 			return true;
 		}
-		else {
-			return false;
-		}
+
+		return false;
 	}
 
 	private static final String _DATA_HANDLER_COMPANY_SECURE_URL =

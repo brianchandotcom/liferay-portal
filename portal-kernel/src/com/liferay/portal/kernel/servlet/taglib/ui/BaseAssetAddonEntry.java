@@ -43,9 +43,8 @@ public abstract class BaseAssetAddonEntry implements AssetAddonEntry {
 		if (key.equals(getKey())) {
 			return true;
 		}
-		else {
-			return false;
-		}
+
+		return false;
 	}
 
 	@Override

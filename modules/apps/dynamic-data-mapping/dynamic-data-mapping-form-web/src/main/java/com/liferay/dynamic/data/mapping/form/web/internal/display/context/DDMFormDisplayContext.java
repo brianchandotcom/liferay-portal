@@ -590,9 +590,8 @@ public class DDMFormDisplayContext {
 		if (workflowEnabled) {
 			return LanguageUtil.get(locale, "submit-for-publication");
 		}
-		else {
-			return LanguageUtil.get(locale, "submit");
-		}
+
+		return LanguageUtil.get(locale, "submit");
 	}
 
 	protected ThemeDisplay getThemeDisplay() {

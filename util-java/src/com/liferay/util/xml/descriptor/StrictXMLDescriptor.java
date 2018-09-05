@@ -34,9 +34,8 @@ public class StrictXMLDescriptor implements XMLDescriptor {
 		if (_compare(el1, el2) == 0) {
 			return true;
 		}
-		else {
-			return false;
-		}
+
+		return false;
 	}
 
 	@Override

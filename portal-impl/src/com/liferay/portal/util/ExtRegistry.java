@@ -101,9 +101,8 @@ public class ExtRegistry {
 		if (_extMap.containsKey(servletContextName)) {
 			return true;
 		}
-		else {
-			return false;
-		}
+
+		return false;
 	}
 
 	public static void registerExt(ServletContext servletContext)

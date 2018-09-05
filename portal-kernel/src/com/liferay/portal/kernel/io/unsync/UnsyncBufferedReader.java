@@ -175,9 +175,8 @@ public class UnsyncBufferedReader extends Reader {
 				if ((sb != null) && (sb.index() > 0)) {
 					return sb.toString();
 				}
-				else {
-					return null;
-				}
+
+				return null;
 			}
 
 			boolean hasLineBreak = false;

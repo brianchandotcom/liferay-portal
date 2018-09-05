@@ -57,9 +57,8 @@ public class BooleanType implements CompositeUserType, Serializable {
 		else if ((x == null) || (y == null)) {
 			return false;
 		}
-		else {
-			return x.equals(y);
-		}
+
+		return x.equals(y);
 	}
 
 	@Override
@@ -99,9 +98,8 @@ public class BooleanType implements CompositeUserType, Serializable {
 		if (value == null) {
 			return DEFAULT_VALUE;
 		}
-		else {
-			return value;
-		}
+
+		return value;
 	}
 
 	@Override

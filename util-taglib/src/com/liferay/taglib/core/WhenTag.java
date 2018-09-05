@@ -42,9 +42,8 @@ public class WhenTag extends ConditionalTagSupport {
 
 			return EVAL_BODY_INCLUDE;
 		}
-		else {
-			return SKIP_BODY;
-		}
+
+		return SKIP_BODY;
 	}
 
 	@Override

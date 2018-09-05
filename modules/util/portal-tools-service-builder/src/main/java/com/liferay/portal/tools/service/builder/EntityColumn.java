@@ -132,9 +132,8 @@ public class EntityColumn implements Cloneable, Comparable<EntityColumn> {
 		if (_name.equals(name)) {
 			return true;
 		}
-		else {
-			return false;
-		}
+
+		return false;
 	}
 
 	public String getAccessorName(String className) {
@@ -268,9 +267,8 @@ public class EntityColumn implements Cloneable, Comparable<EntityColumn> {
 		if (Validator.isNotNull(_arrayableOperator)) {
 			return true;
 		}
-		else {
-			return false;
-		}
+
+		return false;
 	}
 
 	public boolean hasArrayablePagination() {
@@ -290,9 +288,8 @@ public class EntityColumn implements Cloneable, Comparable<EntityColumn> {
 		if (_arrayableOperator.equals("AND")) {
 			return true;
 		}
-		else {
-			return false;
-		}
+
+		return false;
 	}
 
 	public boolean isCaseSensitive() {
@@ -303,9 +300,8 @@ public class EntityColumn implements Cloneable, Comparable<EntityColumn> {
 		if (_type.equals("Collection")) {
 			return true;
 		}
-		else {
-			return false;
-		}
+
+		return false;
 	}
 
 	public boolean isContainerModel() {
@@ -393,9 +389,8 @@ public class EntityColumn implements Cloneable, Comparable<EntityColumn> {
 		else if (_type.equals("Short")) {
 			return true;
 		}
-		else {
-			return false;
-		}
+
+		return false;
 	}
 
 	public boolean isUADEnabled() {
@@ -428,9 +423,8 @@ public class EntityColumn implements Cloneable, Comparable<EntityColumn> {
 		if (_type.equals("long") && _methodName.endsWith("UserId")) {
 			return true;
 		}
-		else {
-			return false;
-		}
+
+		return false;
 	}
 
 	public void setArrayableOperator(String arrayableOperator) {

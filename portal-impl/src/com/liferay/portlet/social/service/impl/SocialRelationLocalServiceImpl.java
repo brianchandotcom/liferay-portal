@@ -364,9 +364,8 @@ public class SocialRelationLocalServiceImpl
 		if (relation == null) {
 			return false;
 		}
-		else {
-			return true;
-		}
+
+		return true;
 	}
 
 	/**

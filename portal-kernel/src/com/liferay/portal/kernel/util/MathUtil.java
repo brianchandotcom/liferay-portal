@@ -35,9 +35,8 @@ public class MathUtil {
 		if (x == 0) {
 			return 1;
 		}
-		else {
-			return 2L << (x - 1);
-		}
+
+		return 2L << (x - 1);
 	}
 
 	public static int difference(Integer value1, Integer value2) {

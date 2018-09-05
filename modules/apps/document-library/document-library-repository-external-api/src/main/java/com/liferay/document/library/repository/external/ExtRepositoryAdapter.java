@@ -335,9 +335,8 @@ public class ExtRepositoryAdapter extends BaseRepositoryImpl {
 
 			return getFileEntries(folderId, start, end, obc);
 		}
-		else {
-			return Collections.emptyList();
-		}
+
+		return Collections.emptyList();
 	}
 
 	@Override

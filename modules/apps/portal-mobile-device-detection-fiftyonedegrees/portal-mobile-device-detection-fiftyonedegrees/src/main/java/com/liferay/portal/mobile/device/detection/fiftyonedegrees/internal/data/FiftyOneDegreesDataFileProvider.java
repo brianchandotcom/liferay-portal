@@ -63,9 +63,8 @@ public class FiftyOneDegreesDataFileProvider implements DataFileProvider {
 
 			return new ZipInputStream(inputStream);
 		}
-		else {
-			return inputStream;
-		}
+
+		return inputStream;
 	}
 
 	@Activate

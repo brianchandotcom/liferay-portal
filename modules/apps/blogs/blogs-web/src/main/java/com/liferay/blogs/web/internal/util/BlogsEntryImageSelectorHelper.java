@@ -57,9 +57,8 @@ public class BlogsEntryImageSelectorHelper {
 					fileEntry.getFileName(), fileEntry.getMimeType(),
 					_imageCropRegion);
 			}
-			else {
-				return new ImageSelector();
-			}
+
+			return new ImageSelector();
 		}
 		else if (!_imageURL.equals(_oldImageURL)) {
 			return new ImageSelector(_imageURL);

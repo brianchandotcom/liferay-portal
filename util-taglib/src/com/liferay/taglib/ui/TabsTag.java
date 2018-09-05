@@ -228,9 +228,8 @@ public class TabsTag extends IncludeTag {
 		if (_names.length > _namesPos) {
 			return _names[_namesPos];
 		}
-		else {
-			return StringPool.BLANK;
-		}
+
+		return StringPool.BLANK;
 	}
 
 	public boolean getSectionSelected() {
@@ -239,9 +238,8 @@ public class TabsTag extends IncludeTag {
 
 			return true;
 		}
-		else {
-			return false;
-		}
+
+		return false;
 	}
 
 	public void incrementSection() {
@@ -411,9 +409,8 @@ public class TabsTag extends IncludeTag {
 		if (Validator.isNull(_endPage)) {
 			return _END_PAGE;
 		}
-		else {
-			return _endPage;
-		}
+
+		return _endPage;
 	}
 
 	@Override
@@ -421,9 +418,8 @@ public class TabsTag extends IncludeTag {
 		if (Validator.isNull(_startPage)) {
 			return _START_PAGE;
 		}
-		else {
-			return _startPage;
-		}
+
+		return _startPage;
 	}
 
 	private static final String _END_PAGE = "/html/taglib/ui/tabs/end.jsp";

@@ -97,9 +97,8 @@ public class UpgradeKaleoTaskInstanceToken extends UpgradeProcess {
 
 					return getKaleoInstanceTokenId(parentKaleoInstanceTokenId);
 				}
-				else {
-					return kaleoInstanceTokenId;
-				}
+
+				return kaleoInstanceTokenId;
 			}
 		}
 	}

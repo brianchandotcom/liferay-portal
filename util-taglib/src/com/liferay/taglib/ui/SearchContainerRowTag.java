@@ -90,9 +90,8 @@ public class SearchContainerRowTag<R>
 
 			return EVAL_BODY_AGAIN;
 		}
-		else {
-			return SKIP_BODY;
-		}
+
+		return SKIP_BODY;
 	}
 
 	@Override
@@ -143,9 +142,8 @@ public class SearchContainerRowTag<R>
 
 			return EVAL_BODY_INCLUDE;
 		}
-		else {
-			return SKIP_BODY;
-		}
+
+		return SKIP_BODY;
 	}
 
 	public String getClassName() {

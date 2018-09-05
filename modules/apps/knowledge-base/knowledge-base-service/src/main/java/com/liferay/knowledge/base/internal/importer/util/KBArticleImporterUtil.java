@@ -196,9 +196,8 @@ public class KBArticleImporterUtil {
 		if (dirName.endsWith(StringPool.SLASH)) {
 			return dirName + fileName;
 		}
-		else {
-			return dirName + StringPool.SLASH + fileName;
-		}
+
+		return dirName + StringPool.SLASH + fileName;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

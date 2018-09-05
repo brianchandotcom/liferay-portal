@@ -46,9 +46,8 @@ public class TextEngine extends BaseWikiEngine {
 		if (page.getContent() == null) {
 			return StringPool.BLANK;
 		}
-		else {
-			return "<pre>" + page.getContent() + "</pre>";
-		}
+
+		return "<pre>" + page.getContent() + "</pre>";
 	}
 
 	@Override

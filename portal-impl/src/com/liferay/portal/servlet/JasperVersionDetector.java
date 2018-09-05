@@ -139,9 +139,8 @@ public class JasperVersionDetector {
 
 			return false;
 		}
-		else {
-			return true;
-		}
+
+		return true;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

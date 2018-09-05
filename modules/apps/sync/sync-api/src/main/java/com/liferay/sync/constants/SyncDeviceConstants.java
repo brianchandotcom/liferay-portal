@@ -55,9 +55,8 @@ public class SyncDeviceConstants {
 		else if (status == STATUS_WIPED) {
 			return STATUS_LABEL_WIPED;
 		}
-		else {
-			return null;
-		}
+
+		return null;
 	}
 
 }

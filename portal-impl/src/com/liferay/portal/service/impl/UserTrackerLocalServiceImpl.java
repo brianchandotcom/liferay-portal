@@ -65,9 +65,8 @@ public class UserTrackerLocalServiceImpl
 
 			return userTracker;
 		}
-		else {
-			return null;
-		}
+
+		return null;
 	}
 
 	@Override

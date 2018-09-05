@@ -268,10 +268,9 @@ public class JournalFolderServiceImpl extends JournalFolderServiceBaseImpl {
 			return journalFolderPersistence.filterCountByG_P_NotS(
 				groupId, parentFolderId, WorkflowConstants.STATUS_IN_TRASH);
 		}
-		else {
-			return journalFolderPersistence.filterCountByG_P_S(
-				groupId, parentFolderId, status);
-		}
+
+		return journalFolderPersistence.filterCountByG_P_S(
+			groupId, parentFolderId, status);
 	}
 
 	/**

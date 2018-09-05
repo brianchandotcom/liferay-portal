@@ -76,9 +76,8 @@ public class PKParser {
 		if (value == null) {
 			return StringPool.BLANK;
 		}
-		else {
-			return value;
-		}
+
+		return value;
 	}
 
 	private final Map<String, String> _fields = new HashMap<>();

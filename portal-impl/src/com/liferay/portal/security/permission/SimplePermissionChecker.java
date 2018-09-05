@@ -96,9 +96,8 @@ public class SimplePermissionChecker extends BasePermissionChecker {
 		if (actionId.equals(ActionKeys.VIEW)) {
 			return true;
 		}
-		else {
-			return false;
-		}
+
+		return false;
 	}
 
 }

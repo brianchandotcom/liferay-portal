@@ -45,9 +45,8 @@ public class FileFilter implements java.io.FileFilter {
 
 			return matcher.matches();
 		}
-		else {
-			return false;
-		}
+
+		return false;
 	}
 
 	private Pattern _pattern;

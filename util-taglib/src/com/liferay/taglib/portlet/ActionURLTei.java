@@ -44,9 +44,8 @@ public class ActionURLTei extends TagExtraInfo {
 					VariableInfo.AT_END)
 			};
 		}
-		else {
-			return null;
-		}
+
+		return null;
 	}
 
 }

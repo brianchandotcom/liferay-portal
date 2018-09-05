@@ -101,9 +101,8 @@ public class SyncDeviceImpl extends SyncDeviceBaseImpl {
 		if (getFeatureSet() >= featureSet) {
 			return true;
 		}
-		else {
-			return false;
-		}
+
+		return false;
 	}
 
 }

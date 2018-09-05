@@ -141,9 +141,8 @@ public class SpriteProcessorImpl implements SpriteProcessor {
 			if (Validator.isNull(spritePropertiesString)) {
 				return null;
 			}
-			else {
-				return PropertiesUtil.load(spritePropertiesString);
-			}
+
+			return PropertiesUtil.load(spritePropertiesString);
 		}
 
 		List<RenderedImage> renderedImages = new ArrayList<>();

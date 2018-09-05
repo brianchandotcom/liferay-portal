@@ -246,9 +246,8 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 		else if (state == Bundle.UNINSTALLED) {
 			return "uninstalled";
 		}
-		else {
-			return StringPool.BLANK;
-		}
+
+		return StringPool.BLANK;
 	}
 
 	@Override

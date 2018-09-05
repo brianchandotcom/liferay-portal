@@ -41,9 +41,8 @@ public class DefaultWorkflowDefinition
 		if (_description == null) {
 			return StringPool.BLANK;
 		}
-		else {
-			return _description;
-		}
+
+		return _description;
 	}
 
 	@Override
@@ -71,9 +70,8 @@ public class DefaultWorkflowDefinition
 		if (_title == null) {
 			return StringPool.BLANK;
 		}
-		else {
-			return _title;
-		}
+
+		return _title;
 	}
 
 	@Override

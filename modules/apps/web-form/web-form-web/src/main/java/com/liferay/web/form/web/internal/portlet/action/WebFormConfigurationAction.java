@@ -66,9 +66,8 @@ public class WebFormConfigurationAction extends DefaultConfigurationAction {
 		if (cmd.equals(Constants.ADD)) {
 			return "/edit_field.jsp";
 		}
-		else {
-			return "/configuration.jsp";
-		}
+
+		return "/configuration.jsp";
 	}
 
 	@Override

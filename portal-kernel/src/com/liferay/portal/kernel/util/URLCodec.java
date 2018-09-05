@@ -106,9 +106,8 @@ public class URLCodec {
 		if (sb == null) {
 			return encodedURLString;
 		}
-		else {
-			return sb.toString();
-		}
+
+		return sb.toString();
 	}
 
 	public static String encodeURL(String rawURLString) {

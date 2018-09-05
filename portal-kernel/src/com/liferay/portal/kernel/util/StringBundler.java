@@ -83,9 +83,8 @@ public class StringBundler implements Serializable {
 		if (b) {
 			return append(StringPool.TRUE);
 		}
-		else {
-			return append(StringPool.FALSE);
-		}
+
+		return append(StringPool.FALSE);
 	}
 
 	public StringBundler append(char c) {
@@ -96,9 +95,8 @@ public class StringBundler implements Serializable {
 		if (chars == null) {
 			return append("null");
 		}
-		else {
-			return append(new String(chars));
-		}
+
+		return append(new String(chars));
 	}
 
 	public StringBundler append(double d) {

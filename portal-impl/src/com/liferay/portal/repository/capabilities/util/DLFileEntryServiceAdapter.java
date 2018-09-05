@@ -137,10 +137,9 @@ public class DLFileEntryServiceAdapter {
 			return _dlFileEntryService.isKeepFileVersionLabel(
 				fileEntryId, majorVersion, serviceContext);
 		}
-		else {
-			return _dlFileEntryLocalService.isKeepFileVersionLabel(
-				fileEntryId, majorVersion, serviceContext);
-		}
+
+		return _dlFileEntryLocalService.isKeepFileVersionLabel(
+			fileEntryId, majorVersion, serviceContext);
 	}
 
 	public DLFileEntry updateStatus(

@@ -103,9 +103,8 @@ public class MicrosoftTranslatorAuthenticator {
 		if ((_initTime + _EXPIRE_TIME) > System.currentTimeMillis()) {
 			return false;
 		}
-		else {
-			return true;
-		}
+
+		return true;
 	}
 
 	private static final long _EXPIRE_TIME = 10 * Time.MINUTE;

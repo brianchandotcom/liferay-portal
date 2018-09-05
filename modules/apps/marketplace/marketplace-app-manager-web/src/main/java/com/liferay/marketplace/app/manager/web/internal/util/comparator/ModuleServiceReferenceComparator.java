@@ -47,9 +47,8 @@ public class ModuleServiceReferenceComparator<T>
 		if (_ascending) {
 			return -value;
 		}
-		else {
-			return value;
-		}
+
+		return value;
 	}
 
 	private final boolean _ascending;

@@ -290,10 +290,9 @@ public class LiferayVideoConverter extends LiferayConverter {
 		if (outputFormat.equals("mp4")) {
 			return ICodec.findEncodingCodec(ICodec.ID.CODEC_ID_H264);
 		}
-		else {
-			return ICodec.guessEncodingCodec(
-				null, null, outputURL, null, inputICodecType);
-		}
+
+		return ICodec.guessEncodingCodec(
+			null, null, outputURL, null, inputICodecType);
 	}
 
 	protected IRational getVideoFrameRate(IRational originalFrameRate) {

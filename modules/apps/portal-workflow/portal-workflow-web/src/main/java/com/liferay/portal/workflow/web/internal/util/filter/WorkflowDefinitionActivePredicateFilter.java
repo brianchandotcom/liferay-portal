@@ -36,9 +36,8 @@ public class WorkflowDefinitionActivePredicateFilter
 		else if (_status == WorkflowDefinitionConstants.STATUS_PUBLISHED) {
 			return workflowDefinition.isActive();
 		}
-		else {
-			return !workflowDefinition.isActive();
-		}
+
+		return !workflowDefinition.isActive();
 	}
 
 	private final int _status;

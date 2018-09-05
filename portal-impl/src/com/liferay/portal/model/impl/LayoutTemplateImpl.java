@@ -76,9 +76,8 @@ public class LayoutTemplateImpl
 		if (getLayoutTemplateId().equals(layoutTemplateId)) {
 			return true;
 		}
-		else {
-			return false;
-		}
+
+		return false;
 	}
 
 	@Override

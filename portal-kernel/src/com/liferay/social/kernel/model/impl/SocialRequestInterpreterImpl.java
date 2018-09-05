@@ -53,9 +53,8 @@ public class SocialRequestInterpreterImpl implements SocialRequestInterpreter {
 		if (_classNames.contains(className)) {
 			return true;
 		}
-		else {
-			return false;
-		}
+
+		return false;
 	}
 
 	@Override

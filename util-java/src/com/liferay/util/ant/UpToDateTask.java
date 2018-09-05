@@ -43,9 +43,8 @@ public class UpToDateTask {
 		if (project.getProperty("uptodate") != null) {
 			return true;
 		}
-		else {
-			return false;
-		}
+
+		return false;
 	}
 
 	public static boolean isUpToDate(String source, String target) {

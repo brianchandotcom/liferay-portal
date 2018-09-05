@@ -121,9 +121,8 @@ public class LockLocalServiceImpl extends LockLocalServiceBaseImpl {
 		if ((lock != null) && (lock.getUserId() == userId)) {
 			return true;
 		}
-		else {
-			return false;
-		}
+
+		return false;
 	}
 
 	@Override
@@ -138,9 +137,8 @@ public class LockLocalServiceImpl extends LockLocalServiceBaseImpl {
 		if (lock == null) {
 			return false;
 		}
-		else {
-			return true;
-		}
+
+		return true;
 	}
 
 	@Override

@@ -219,9 +219,8 @@ public class PortletURLImpl
 		if (ArrayUtil.isNotEmpty(values)) {
 			return values[0];
 		}
-		else {
-			return null;
-		}
+
+		return null;
 	}
 
 	/**
@@ -349,9 +348,8 @@ public class PortletURLImpl
 		if (_parametersIncludedInPath.contains(name)) {
 			return true;
 		}
-		else {
-			return false;
-		}
+
+		return false;
 	}
 
 	@Override
@@ -1547,9 +1545,8 @@ public class PortletURLImpl
 
 			return true;
 		}
-		else {
-			return false;
-		}
+
+		return false;
 	}
 
 	private Map<String, String[]> _mergeWithRenderParametersV2(

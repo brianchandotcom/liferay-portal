@@ -206,9 +206,8 @@ public class PortalServiceImpl extends PortalServiceBaseImpl {
 		if (count > 0) {
 			return true;
 		}
-		else {
-			return false;
-		}
+
+		return false;
 	}
 
 	protected void addClassName(String classNameValue) {

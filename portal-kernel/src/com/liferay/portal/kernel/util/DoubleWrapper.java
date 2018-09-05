@@ -42,9 +42,8 @@ public class DoubleWrapper
 		else if (getValue() < doubleWrapper.getValue()) {
 			return -1;
 		}
-		else {
-			return 0;
-		}
+
+		return 0;
 	}
 
 	public double decrement() {

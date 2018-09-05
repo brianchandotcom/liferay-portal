@@ -272,9 +272,8 @@ public class PropsUtil {
 
 			return configuration;
 		}
-		else {
-			return _configuration;
-		}
+
+		return _configuration;
 	}
 
 	private static Configuration _getConfiguration(Company company) {

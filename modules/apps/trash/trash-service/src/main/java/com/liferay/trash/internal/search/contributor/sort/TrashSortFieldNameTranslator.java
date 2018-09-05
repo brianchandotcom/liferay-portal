@@ -38,9 +38,8 @@ public class TrashSortFieldNameTranslator implements SortFieldNameTranslator {
 		else if (orderByCol.equals("removed-by")) {
 			return Field.REMOVED_BY_USER_NAME;
 		}
-		else {
-			return orderByCol;
-		}
+
+		return orderByCol;
 	}
 
 }

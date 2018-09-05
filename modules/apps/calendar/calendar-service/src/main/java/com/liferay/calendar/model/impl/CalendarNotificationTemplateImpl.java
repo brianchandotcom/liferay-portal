@@ -31,9 +31,8 @@ public class CalendarNotificationTemplateImpl
 		if (_notificationTypeSettingsProperties == null) {
 			return super.getNotificationTypeSettings();
 		}
-		else {
-			return _notificationTypeSettingsProperties.toString();
-		}
+
+		return _notificationTypeSettingsProperties.toString();
 	}
 
 	@Override

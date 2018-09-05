@@ -53,9 +53,8 @@ public class WorkflowDefinitionNameComparator
 		if (_ascending) {
 			return value;
 		}
-		else {
-			return -value;
-		}
+
+		return -value;
 	}
 
 	@Override
@@ -63,9 +62,8 @@ public class WorkflowDefinitionNameComparator
 		if (isAscending()) {
 			return _orderByAsc;
 		}
-		else {
-			return _orderByDesc;
-		}
+
+		return _orderByDesc;
 	}
 
 	@Override

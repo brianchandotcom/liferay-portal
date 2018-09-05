@@ -39,9 +39,8 @@ public class PositionTagSupport extends BaseBodyTagSupport implements BodyTag {
 		if (position.equals(_POSITION_AUTO)) {
 			return true;
 		}
-		else {
-			return false;
-		}
+
+		return false;
 	}
 
 	public boolean isPositionInLine() {
@@ -50,9 +49,8 @@ public class PositionTagSupport extends BaseBodyTagSupport implements BodyTag {
 		if (position.equals(_POSITION_INLINE)) {
 			return true;
 		}
-		else {
-			return false;
-		}
+
+		return false;
 	}
 
 	public void setPosition(String position) {

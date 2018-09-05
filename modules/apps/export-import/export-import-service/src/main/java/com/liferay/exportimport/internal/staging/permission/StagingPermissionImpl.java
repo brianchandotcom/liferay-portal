@@ -92,9 +92,8 @@ public class StagingPermissionImpl implements StagingPermission {
 
 			return false;
 		}
-		else {
-			return null;
-		}
+
+		return null;
 	}
 
 	@Reference(unbind = "-")

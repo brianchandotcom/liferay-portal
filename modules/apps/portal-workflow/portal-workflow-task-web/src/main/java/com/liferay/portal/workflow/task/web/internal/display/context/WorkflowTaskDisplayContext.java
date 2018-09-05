@@ -209,9 +209,8 @@ public class WorkflowTaskDisplayContext {
 		if (user.isMale()) {
 			return "x-assigned-the-task-to-himself";
 		}
-		else {
-			return "x-assigned-the-task-to-herself";
-		}
+
+		return "x-assigned-the-task-to-herself";
 	}
 
 	public Object getAssignedTheTaskToMessageArguments(WorkflowLog workflowLog)
@@ -276,9 +275,8 @@ public class WorkflowTaskDisplayContext {
 			return LanguageUtil.get(
 				_workflowTaskRequestHelper.getRequest(), "never");
 		}
-		else {
-			return _dateFormatDateTime.format(workflowTask.getDueDate());
-		}
+
+		return _dateFormatDateTime.format(workflowTask.getDueDate());
 	}
 
 	public PortletURL getEditPortletURL(WorkflowTask workflowTask)
@@ -878,10 +876,9 @@ public class WorkflowTaskDisplayContext {
 		if (resultRow != null) {
 			return (WorkflowTask)resultRow.getParameter("workflowTask");
 		}
-		else {
-			return (WorkflowTask)_liferayPortletRequest.getAttribute(
-				WebKeys.WORKFLOW_TASK);
-		}
+
+		return (WorkflowTask)_liferayPortletRequest.getAttribute(
+			WebKeys.WORKFLOW_TASK);
 	}
 
 	public Map<String, Object> getWorkflowTaskActionLinkData() {
@@ -1086,9 +1083,8 @@ public class WorkflowTaskDisplayContext {
 		if (isNavigationCompleted()) {
 			return Boolean.TRUE;
 		}
-		else {
-			return Boolean.FALSE;
-		}
+
+		return Boolean.FALSE;
 	}
 
 	protected String getCurParam(boolean searchByUserRoles) {

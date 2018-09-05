@@ -91,9 +91,8 @@ public class TasksEntryConstants {
 		else if (priority == PRIORITY_NORMAL) {
 			return PRIORITY_NORMAL_LABEL;
 		}
-		else {
-			return null;
-		}
+
+		return null;
 	}
 
 	public static String getStatusLabel(int status) {
@@ -118,9 +117,8 @@ public class TasksEntryConstants {
 		else if (status == STATUS_REOPENED) {
 			return STATUS_REOPENED_LABEL;
 		}
-		else {
-			return null;
-		}
+
+		return null;
 	}
 
 }

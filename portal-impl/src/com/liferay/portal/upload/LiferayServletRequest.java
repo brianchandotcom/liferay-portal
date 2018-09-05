@@ -56,9 +56,8 @@ public class LiferayServletRequest extends HttpServletRequestWrapper {
 
 			return _cachedInputStream;
 		}
-		else {
-			return _lis;
-		}
+
+		return _lis;
 	}
 
 	public void setFinishedReadingOriginalStream(

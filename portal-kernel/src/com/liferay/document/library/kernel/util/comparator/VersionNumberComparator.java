@@ -77,9 +77,8 @@ public class VersionNumberComparator implements Comparator<String> {
 		if (_ascending) {
 			return value;
 		}
-		else {
-			return -value;
-		}
+
+		return -value;
 	}
 
 	public boolean isAscending() {

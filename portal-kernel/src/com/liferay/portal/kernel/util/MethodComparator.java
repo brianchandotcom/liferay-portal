@@ -63,9 +63,8 @@ public class MethodComparator implements Comparator<Method> {
 		if (index < (parameterTypes1.length - 1)) {
 			return -1;
 		}
-		else {
-			return 1;
-		}
+
+		return 1;
 	}
 
 }

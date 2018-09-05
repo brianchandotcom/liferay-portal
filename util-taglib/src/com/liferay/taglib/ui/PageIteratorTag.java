@@ -143,9 +143,8 @@ public class PageIteratorTag extends IncludeTag {
 
 			return "/html/taglib/ui/page_iterator/end.jsp";
 		}
-		else {
-			return null;
-		}
+
+		return null;
 	}
 
 	@Override

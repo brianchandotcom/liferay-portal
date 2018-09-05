@@ -51,9 +51,8 @@ public class CookieUtil {
 		if (cookie == null) {
 			return null;
 		}
-		else {
-			return cookie.getValue();
-		}
+
+		return cookie.getValue();
 	}
 
 	private static Map<String, Cookie> _getCookieMap(

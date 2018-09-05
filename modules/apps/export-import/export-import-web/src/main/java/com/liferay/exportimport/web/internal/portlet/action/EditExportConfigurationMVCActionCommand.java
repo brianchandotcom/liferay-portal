@@ -287,10 +287,9 @@ public class EditExportConfigurationMVCActionCommand
 			return ExportImportConfigurationHelper.
 				updateExportLayoutExportImportConfiguration(actionRequest);
 		}
-		else {
-			return ExportImportConfigurationHelper.
-				addExportLayoutExportImportConfiguration(actionRequest);
-		}
+
+		return ExportImportConfigurationHelper.
+			addExportLayoutExportImportConfiguration(actionRequest);
 	}
 
 	@Reference

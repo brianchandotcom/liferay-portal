@@ -46,9 +46,8 @@ public class PortletDataHandlerChoice extends PortletDataHandlerControl {
 		if ((_choices == null) || (_choices.length < 1)) {
 			return _DEFAULT_CHOICES;
 		}
-		else {
-			return _choices;
-		}
+
+		return _choices;
 	}
 
 	public String getDefaultChoice() {
@@ -59,9 +58,8 @@ public class PortletDataHandlerChoice extends PortletDataHandlerControl {
 		if ((_defaultChoice < 0) || (_defaultChoice >= _choices.length)) {
 			return 0;
 		}
-		else {
-			return _defaultChoice;
-		}
+
+		return _defaultChoice;
 	}
 
 	private static final String[] _DEFAULT_CHOICES = {"false", "true"};

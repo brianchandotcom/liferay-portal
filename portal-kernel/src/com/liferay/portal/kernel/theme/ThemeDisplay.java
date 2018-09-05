@@ -844,9 +844,8 @@ public class ThemeDisplay
 		else if (_scopeGroup.isLayout()) {
 			return LayoutLocalServiceUtil.getLayout(_scopeGroup.getClassPK());
 		}
-		else {
-			return null;
-		}
+
+		return null;
 	}
 
 	/**

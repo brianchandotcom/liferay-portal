@@ -85,9 +85,8 @@ public class GroupConstants {
 		else if (type == TYPE_SITE_RESTRICTED) {
 			return TYPE_SITE_RESTRICTED_LABEL;
 		}
-		else {
-			return TYPE_SITE_SYSTEM_LABEL;
-		}
+
+		return TYPE_SITE_SYSTEM_LABEL;
 	}
 
 }

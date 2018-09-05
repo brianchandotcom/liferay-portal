@@ -63,9 +63,8 @@ public class RollingChecksum {
 		if (_byteChannelReader.remaining() >= 1) {
 			return true;
 		}
-		else {
-			return false;
-		}
+
+		return false;
 	}
 
 	public void nextBlock() throws IOException {

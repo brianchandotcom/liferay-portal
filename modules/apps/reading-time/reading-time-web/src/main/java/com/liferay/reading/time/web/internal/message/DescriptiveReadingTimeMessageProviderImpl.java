@@ -47,10 +47,9 @@ public class DescriptiveReadingTimeMessageProviderImpl
 		else if (readingTimeInMinutes == 1) {
 			return LanguageUtil.get(resourceBundle, "a-minute-read");
 		}
-		else {
-			return LanguageUtil.format(
-				resourceBundle, "x-minutes-read", readingTimeInMinutes);
-		}
+
+		return LanguageUtil.format(
+			resourceBundle, "x-minutes-read", readingTimeInMinutes);
 	}
 
 	@Override

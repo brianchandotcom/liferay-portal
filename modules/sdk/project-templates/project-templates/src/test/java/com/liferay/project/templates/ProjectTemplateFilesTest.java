@@ -272,9 +272,8 @@ public class ProjectTemplateFilesTest {
 
 						return true;
 					}
-					else {
-						return false;
-					}
+
+					return false;
 				});
 
 			String message =

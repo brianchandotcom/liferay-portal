@@ -419,9 +419,8 @@ public class BeanPropertiesImpl implements BeanProperties {
 		if (beanValue == null) {
 			return defaultValue;
 		}
-		else {
-			return beanValue;
-		}
+
+		return beanValue;
 	}
 
 	@Override
@@ -446,9 +445,8 @@ public class BeanPropertiesImpl implements BeanProperties {
 		if (beanValue == null) {
 			return defaultValue;
 		}
-		else {
-			return beanValue;
-		}
+
+		return beanValue;
 	}
 
 	@Override
@@ -474,9 +472,8 @@ public class BeanPropertiesImpl implements BeanProperties {
 		if (beanType == null) {
 			return defaultValue;
 		}
-		else {
-			return beanType;
-		}
+
+		return beanType;
 	}
 
 	@Override
@@ -501,9 +498,8 @@ public class BeanPropertiesImpl implements BeanProperties {
 		if (beanType == null) {
 			return defaultValue;
 		}
-		else {
-			return beanType;
-		}
+
+		return beanType;
 	}
 
 	@Override

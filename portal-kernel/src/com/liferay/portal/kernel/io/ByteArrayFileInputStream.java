@@ -52,9 +52,8 @@ public class ByteArrayFileInputStream extends InputStream {
 		else if (fileInputStream != null) {
 			return fileInputStream.available();
 		}
-		else {
-			return 0;
-		}
+
+		return 0;
 	}
 
 	@Override
@@ -102,9 +101,8 @@ public class ByteArrayFileInputStream extends InputStream {
 			if (index < data.length) {
 				return data[index++] & 0xff;
 			}
-			else {
-				return -1;
-			}
+
+			return -1;
 		}
 		else {
 			initFileInputStream();

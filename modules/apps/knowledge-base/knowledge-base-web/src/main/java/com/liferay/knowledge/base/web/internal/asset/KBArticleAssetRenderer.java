@@ -78,9 +78,8 @@ public class KBArticleAssetRenderer extends BaseJSPAssetRenderer<KBArticle> {
 		if (template.equals(TEMPLATE_FULL_CONTENT)) {
 			return "/admin/asset/" + template + ".jsp";
 		}
-		else {
-			return null;
-		}
+
+		return null;
 	}
 
 	@Override
@@ -202,9 +201,8 @@ public class KBArticleAssetRenderer extends BaseJSPAssetRenderer<KBArticle> {
 
 			return kbArticle.getPrimaryKey();
 		}
-		else {
-			return kbArticle.getResourcePrimKey();
-		}
+
+		return kbArticle.getResourcePrimKey();
 	}
 
 	private final KBArticle _kbArticle;

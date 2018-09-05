@@ -109,9 +109,8 @@ public class JaxRsServiceRuntimeOSGiCommands {
 
 				return null;
 			}
-			else {
-				return serviceReferences[0];
-			}
+
+			return serviceReferences[0];
 		}
 		catch (InvalidSyntaxException ise) {
 			throw new IllegalArgumentException(ise);

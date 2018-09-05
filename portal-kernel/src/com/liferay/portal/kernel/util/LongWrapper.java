@@ -42,9 +42,8 @@ public class LongWrapper
 		else if (getValue() < longWrapper.getValue()) {
 			return -1;
 		}
-		else {
-			return 0;
-		}
+
+		return 0;
 	}
 
 	public long decrement() {

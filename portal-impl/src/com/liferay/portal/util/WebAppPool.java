@@ -49,9 +49,8 @@ public class WebAppPool {
 		if (map == null) {
 			return null;
 		}
-		else {
-			return map.get(key);
-		}
+
+		return map.get(key);
 	}
 
 	private void _put(Long webAppId, String key, Object obj) {
@@ -77,9 +76,8 @@ public class WebAppPool {
 		if (map == null) {
 			return null;
 		}
-		else {
-			return map.remove(key);
-		}
+
+		return map.remove(key);
 	}
 
 	private static final WebAppPool _instance = new WebAppPool();

@@ -238,9 +238,8 @@ public class TypeTranslator {
 		else if (type == Type.YES_NO) {
 			return YES_NO;
 		}
-		else {
-			return null;
-		}
+
+		return null;
 	}
 
 }

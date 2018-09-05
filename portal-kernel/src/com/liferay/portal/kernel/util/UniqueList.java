@@ -43,9 +43,8 @@ public class UniqueList<E> extends ArrayList<E> {
 		if (!contains(e)) {
 			return super.add(e);
 		}
-		else {
-			return false;
-		}
+
+		return false;
 	}
 
 	@Override
@@ -104,9 +103,8 @@ public class UniqueList<E> extends ArrayList<E> {
 		if (!contains(e)) {
 			return super.set(index, e);
 		}
-		else {
-			return e;
-		}
+
+		return e;
 	}
 
 	private static final String _STACK_TRACE_COLLECTIONS =

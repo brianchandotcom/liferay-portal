@@ -507,9 +507,8 @@ public class CMISFileEntry extends CMISModel implements FileEntry {
 		if (user == null) {
 			return 0;
 		}
-		else {
-			return user.getUserId();
-		}
+
+		return user.getUserId();
 	}
 
 	@Override
@@ -519,9 +518,8 @@ public class CMISFileEntry extends CMISModel implements FileEntry {
 		if (user == null) {
 			return StringPool.BLANK;
 		}
-		else {
-			return user.getFullName();
-		}
+
+		return user.getFullName();
 	}
 
 	@Override

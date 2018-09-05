@@ -101,12 +101,11 @@ public class DDMFormInstanceFactory {
 					ddmFormFieldFactoryHelper.getDDMFormFieldType(),
 					predefinedValue.getString(_locale));
 			}
-			else {
-				return convert(
-					method.getReturnType(),
-					ddmFormFieldFactoryHelper.getDDMFormFieldType(),
-					ddmFormFieldValues);
-			}
+
+			return convert(
+				method.getReturnType(),
+				ddmFormFieldFactoryHelper.getDDMFormFieldType(),
+				ddmFormFieldValues);
 		}
 
 		protected Object convert(

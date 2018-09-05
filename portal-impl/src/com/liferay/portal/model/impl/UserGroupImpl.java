@@ -56,9 +56,8 @@ public class UserGroupImpl extends UserGroupBaseImpl {
 		if (getPrivateLayoutsPageCount() > 0) {
 			return true;
 		}
-		else {
-			return false;
-		}
+
+		return false;
 	}
 
 	@Override
@@ -66,9 +65,8 @@ public class UserGroupImpl extends UserGroupBaseImpl {
 		if (getPublicLayoutsPageCount() > 0) {
 			return true;
 		}
-		else {
-			return false;
-		}
+
+		return false;
 	}
 
 }

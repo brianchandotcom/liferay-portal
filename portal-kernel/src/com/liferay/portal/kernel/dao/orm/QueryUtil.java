@@ -71,9 +71,8 @@ public class QueryUtil {
 			if (unmodifiable) {
 				return Collections.emptyList();
 			}
-			else {
-				return new ArrayList<>();
-			}
+
+			return new ArrayList<>();
 		}
 
 		if (dialect.supportsLimit()) {
@@ -117,9 +116,8 @@ public class QueryUtil {
 		if (unmodifiable) {
 			return Collections.unmodifiableList(list);
 		}
-		else {
-			return list;
-		}
+
+		return list;
 	}
 
 	public static List<?> randomList(
@@ -174,9 +172,8 @@ public class QueryUtil {
 		if (unmodifiable) {
 			return Collections.unmodifiableList(list);
 		}
-		else {
-			return list;
-		}
+
+		return list;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(QueryUtil.class);

@@ -59,9 +59,8 @@ public class DefaultWorkflowInstance implements Serializable, WorkflowInstance {
 		if (_parentWorkflowInstance != null) {
 			return _parentWorkflowInstance.getWorkflowInstanceId();
 		}
-		else {
-			return 0;
-		}
+
+		return 0;
 	}
 
 	@Override
@@ -99,9 +98,8 @@ public class DefaultWorkflowInstance implements Serializable, WorkflowInstance {
 		if (getEndDate() != null) {
 			return true;
 		}
-		else {
-			return false;
-		}
+
+		return false;
 	}
 
 	public void setChildrenWorkflowInstances(

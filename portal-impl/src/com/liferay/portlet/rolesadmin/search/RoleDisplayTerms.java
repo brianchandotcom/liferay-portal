@@ -55,9 +55,8 @@ public class RoleDisplayTerms extends DisplayTerms {
 
 			return type;
 		}
-		else {
-			return 0;
-		}
+
+		return 0;
 	}
 
 	public String getTypeString() {
@@ -67,9 +66,8 @@ public class RoleDisplayTerms extends DisplayTerms {
 
 			return String.valueOf(type);
 		}
-		else {
-			return StringPool.BLANK;
-		}
+
+		return StringPool.BLANK;
 	}
 
 	public void setType(int type) {

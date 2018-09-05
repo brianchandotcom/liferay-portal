@@ -46,9 +46,8 @@ public class UserSortFieldNameTranslator implements SortFieldNameTranslator {
 		else if (orderByCol.equals("screen-name")) {
 			return "screenName";
 		}
-		else {
-			return orderByCol;
-		}
+
+		return orderByCol;
 	}
 
 }

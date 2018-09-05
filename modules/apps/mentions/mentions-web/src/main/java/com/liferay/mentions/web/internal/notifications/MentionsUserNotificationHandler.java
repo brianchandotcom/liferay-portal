@@ -61,11 +61,9 @@ public class MentionsUserNotificationHandler
 			return getAssetRenderer(
 				mbMessage.getClassName(), mbMessage.getClassPK());
 		}
-		else {
-			return getAssetRenderer(
-				jsonObject.getString("className"),
-				jsonObject.getLong("classPK"));
-		}
+
+		return getAssetRenderer(
+			jsonObject.getString("className"), jsonObject.getLong("classPK"));
 	}
 
 	@Override

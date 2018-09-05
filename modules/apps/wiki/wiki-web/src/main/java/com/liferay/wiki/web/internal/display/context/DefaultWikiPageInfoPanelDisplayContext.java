@@ -94,9 +94,8 @@ public class DefaultWikiPageInfoPanelDisplayContext
 		if (items.size() > 1) {
 			return true;
 		}
-		else {
-			return false;
-		}
+
+		return false;
 	}
 
 	@Override

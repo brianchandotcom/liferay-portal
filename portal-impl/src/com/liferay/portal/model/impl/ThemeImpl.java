@@ -101,9 +101,8 @@ public class ThemeImpl extends PluginBaseImpl implements Theme {
 		if (getThemeId().equals(themeId)) {
 			return true;
 		}
-		else {
-			return false;
-		}
+
+		return false;
 	}
 
 	@Override
@@ -197,9 +196,8 @@ public class ThemeImpl extends PluginBaseImpl implements Theme {
 		if (_loadFromServletContext) {
 			return TemplateConstants.SERVLET_SEPARATOR;
 		}
-		else {
-			return TemplateConstants.THEME_LOADER_SEPARATOR;
-		}
+
+		return TemplateConstants.THEME_LOADER_SEPARATOR;
 	}
 
 	@Override
@@ -404,9 +402,8 @@ public class ThemeImpl extends PluginBaseImpl implements Theme {
 		if (_loadFromServletContext) {
 			return TemplateConstants.SERVLET_SEPARATOR;
 		}
-		else {
-			return TemplateConstants.THEME_LOADER_SEPARATOR;
-		}
+
+		return TemplateConstants.THEME_LOADER_SEPARATOR;
 	}
 
 	@Override
@@ -424,9 +421,8 @@ public class ThemeImpl extends PluginBaseImpl implements Theme {
 		if (!_colorSchemesMap.isEmpty()) {
 			return true;
 		}
-		else {
-			return false;
-		}
+
+		return false;
 	}
 
 	@Override

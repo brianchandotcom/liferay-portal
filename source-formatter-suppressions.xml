@@ -157,6 +157,11 @@
 		<suppress checks="JavaInnerClassImportsCheck" files="modules/apps/commerce/.*" />
 		<suppress checks="JavaInnerClassImportsCheck" files="modules/private/.*" />
 		<suppress checks="JavaInnerClassImportsCheck" files="modules/test/poshi-runner/.*" />
+		<suppress checks="JSONLineBreakCheck" files="modules/apps/apio-architect/.*" />
+		<suppress checks="JSONLineBreakCheck" files="modules/apps/commerce/.*" />
+		<suppress checks="JSONLineBreakCheck" files="modules/private/apps/commerce/.*" />
+		<suppress checks="JSONLineBreakCheck" files="modules/private/apps/lcs/.*" />
+		<suppress checks="JSONLineBreakCheck" files="modules/test/poshi-runner/.*" />
 		<suppress checks="PropertiesLiferayPluginPackageLiferayVersionsCheck" files="modules/private/apio-architect/.*" />
 		<suppress checks="PropertiesLiferayPluginPackageLiferayVersionsCheck" files="modules/private/commerce/.*" />
 		<suppress checks="XMLLookAndFeelCompatibilityVersionCheck" files="modules/private/apio-architect/.*" />

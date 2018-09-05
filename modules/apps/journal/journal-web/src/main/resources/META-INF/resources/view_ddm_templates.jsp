@@ -66,6 +66,7 @@ JournalDDMTemplateDisplayContext journalDDMTemplateDisplayContext = new JournalD
 				PortletURL rowURL = renderResponse.createRenderURL();
 
 				rowURL.setParameter("mvcPath", "/edit_ddm_template.jsp");
+				rowURL.setParameter("redirect", currentURL);
 				rowURL.setParameter("ddmTemplateId", String.valueOf(ddmTemplate.getTemplateId()));
 
 				rowHREF = rowURL.toString();

@@ -14,15 +14,14 @@
 
 package com.liferay.users.admin.web.internal.util;
 
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.OrganizationConstants;
 import com.liferay.portal.kernel.model.UserConstants;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portal.kernel.service.OrganizationServiceUtil;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.service.OrganizationLocalServiceUtil;
 import com.liferay.portal.kernel.service.permission.OrganizationPermissionUtil;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
@@ -35,41 +34,35 @@ import javax.portlet.RenderURL;
 public class UsersAdminPortletURLUtil {
 
 	public static String createParentOrganizationViewTreeURL(
-		long organizationId, PortletRequest portletRequest,
-		PortletResponse portletResponse) {
+			long organizationId, PortletRequest portletRequest,
+			PortletResponse portletResponse)
+		throws PortalException {
 
-		long parentOrganizationId =
-			OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID;
+		return createParentOrganizationViewTreeURL(
+			OrganizationLocalServiceUtil.fetchOrganization(organizationId),
+			portletRequest, portletResponse);
+	}
 
-		try {
-			Organization organization =
-				OrganizationServiceUtil.fetchOrganization(organizationId);
+	public static String createParentOrganizationViewTreeURL(
+			Organization organization, PortletRequest portletRequest,
+			PortletResponse portletResponse)
+		throws PortalException {
 
-			if (!organization.isRoot()) {
-				Organization parentOrganization =
-					organization.getParentOrganization();
+		if ((organization != null) && !organization.isRoot()) {
+			long parentOrganizationId = organization.getParentOrganizationId();
 
-				ThemeDisplay themeDisplay =
-					(ThemeDisplay)portletRequest.getAttribute(
-						WebKeys.THEME_DISPLAY);
+			if (OrganizationPermissionUtil.contains(
+					PermissionThreadLocal.getPermissionChecker(),
+					parentOrganizationId, ActionKeys.VIEW)) {
 
-				PermissionChecker permissionChecker =
-					themeDisplay.getPermissionChecker();
-
-				if (OrganizationPermissionUtil.contains(
-						permissionChecker, parentOrganization,
-						ActionKeys.VIEW)) {
-
-					parentOrganizationId =
-						parentOrganization.getOrganizationId();
-				}
+				return _createOrganizationViewTreeURL(
+					parentOrganizationId, portletResponse);
 			}
-		}
-		catch (Exception e) {
 		}
 
 		return _createOrganizationViewTreeURL(
-			parentOrganizationId, portletResponse);
+			OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID,
+			portletResponse);
 	}
 
 	private static String _createOrganizationViewTreeURL(

@@ -105,9 +105,8 @@ public class LiferayResourceLoader extends ResourceLoader {
 		if (is != null) {
 			return true;
 		}
-		else {
-			return false;
-		}
+
+		return false;
 	}
 
 	protected InputStream doGetResourceStream(String source)

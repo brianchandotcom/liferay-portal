@@ -118,25 +118,22 @@ public class JournalArticleActivityInterpreter
 			if (Validator.isNull(groupName)) {
 				return "activity-journal-article-add-web-content";
 			}
-			else {
-				return "activity-journal-article-add-web-content-in";
-			}
+
+			return "activity-journal-article-add-web-content-in";
 		}
 		else if (activityType == JournalActivityKeys.UPDATE_ARTICLE) {
 			if (Validator.isNull(groupName)) {
 				return "activity-journal-article-update-web-content";
 			}
-			else {
-				return "activity-journal-article-update-web-content-in";
-			}
+
+			return "activity-journal-article-update-web-content-in";
 		}
 		else if (activityType == SocialActivityConstants.TYPE_MOVE_TO_TRASH) {
 			if (Validator.isNull(groupName)) {
 				return "activity-journal-article-move-to-trash";
 			}
-			else {
-				return "activity-journal-article-move-to-trash-in";
-			}
+
+			return "activity-journal-article-move-to-trash-in";
 		}
 		else if (activityType ==
 					 SocialActivityConstants.TYPE_RESTORE_FROM_TRASH) {
@@ -144,9 +141,8 @@ public class JournalArticleActivityInterpreter
 			if (Validator.isNull(groupName)) {
 				return "activity-journal-article-restore-from-trash";
 			}
-			else {
-				return "activity-journal-article-restore-from-trash-in";
-			}
+
+			return "activity-journal-article-restore-from-trash-in";
 		}
 
 		return null;

@@ -165,9 +165,8 @@ public class TrashIndexer extends BaseIndexer<TrashEntry> {
 		else if (orderByCol.equals("removed-by")) {
 			return Field.REMOVED_BY_USER_NAME;
 		}
-		else {
-			return orderByCol;
-		}
+
+		return orderByCol;
 	}
 
 	@Override

@@ -63,9 +63,8 @@ public class InstanceFactory {
 
 			return constructor.newInstance(arguments);
 		}
-		else {
-			return clazz.newInstance();
-		}
+
+		return clazz.newInstance();
 	}
 
 	public static Object newInstance(String className) throws Exception {

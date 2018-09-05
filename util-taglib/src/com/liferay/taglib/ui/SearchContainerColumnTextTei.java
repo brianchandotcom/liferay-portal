@@ -37,9 +37,8 @@ public class SearchContainerColumnTextTei extends TagExtraInfo {
 					VariableInfo.NESTED)
 			};
 		}
-		else {
-			return null;
-		}
+
+		return null;
 	}
 
 }

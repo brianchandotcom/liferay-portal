@@ -159,9 +159,8 @@ public class PanelTag extends IncludeTag {
 
 			return "/html/taglib/ui/panel/end.jsp";
 		}
-		else {
-			return _endPage;
-		}
+
+		return _endPage;
 	}
 
 	@Override
@@ -173,9 +172,8 @@ public class PanelTag extends IncludeTag {
 
 			return "/html/taglib/ui/panel/start.jsp";
 		}
-		else {
-			return _startPage;
-		}
+
+		return _startPage;
 	}
 
 	private boolean _accordion;

@@ -82,9 +82,8 @@ public class DummyReference implements Serializable, StagedGroupedModel {
 		if (getPrimaryKey() == primaryKey) {
 			return true;
 		}
-		else {
-			return false;
-		}
+
+		return false;
 	}
 
 	@Override

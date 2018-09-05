@@ -86,10 +86,9 @@ public class VerifyEmailAddressAction extends Action {
 
 				return null;
 			}
-			else {
-				return actionMapping.findForward(
-					ActionConstants.COMMON_REFERER_JSP);
-			}
+
+			return actionMapping.findForward(
+				ActionConstants.COMMON_REFERER_JSP);
 		}
 		catch (Exception e) {
 			if (e instanceof PortalException || e instanceof SystemException) {

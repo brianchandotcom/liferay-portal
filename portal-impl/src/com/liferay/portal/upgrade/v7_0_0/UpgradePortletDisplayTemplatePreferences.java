@@ -113,9 +113,8 @@ public class UpgradePortletDisplayTemplatePreferences
 		if (objectValuePair == null) {
 			return null;
 		}
-		else {
-			return objectValuePair.getValue();
-		}
+
+		return objectValuePair.getValue();
 	}
 
 	@Override

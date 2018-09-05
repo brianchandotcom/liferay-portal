@@ -98,9 +98,8 @@ public class PluginSettingLocalServiceImpl
 			if (!pluginSetting.hasPermission(userId)) {
 				return false;
 			}
-			else {
-				return true;
-			}
+
+			return true;
 		}
 		catch (Exception e) {
 			if (_log.isWarnEnabled()) {

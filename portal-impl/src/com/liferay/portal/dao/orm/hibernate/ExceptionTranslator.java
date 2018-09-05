@@ -30,9 +30,8 @@ public class ExceptionTranslator {
 		if (e instanceof org.hibernate.ObjectNotFoundException) {
 			return new ObjectNotFoundException(e);
 		}
-		else {
-			return new ORMException(e);
-		}
+
+		return new ORMException(e);
 	}
 
 	public static ORMException translate(
@@ -47,9 +46,8 @@ public class ExceptionTranslator {
 			return new ORMException(
 				object + " is stale in comparison to " + currentObject, e);
 		}
-		else {
-			return new ORMException(e);
-		}
+
+		return new ORMException(e);
 	}
 
 }

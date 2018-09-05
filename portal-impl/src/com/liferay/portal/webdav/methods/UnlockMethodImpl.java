@@ -45,9 +45,8 @@ public class UnlockMethodImpl implements Method {
 		if (storage.unlockResource(webDAVRequest, token)) {
 			return HttpServletResponse.SC_NO_CONTENT;
 		}
-		else {
-			return HttpServletResponse.SC_PRECONDITION_FAILED;
-		}
+
+		return HttpServletResponse.SC_PRECONDITION_FAILED;
 	}
 
 	protected String getToken(HttpServletRequest request) {

@@ -156,9 +156,8 @@ public class JournalContentImpl
 		if (articleDisplay != null) {
 			return articleDisplay.getContent();
 		}
-		else {
-			return null;
-		}
+
+		return null;
 	}
 
 	@Override

@@ -109,9 +109,8 @@ public class ReaderInputStream extends InputStream {
 		if (result == 1) {
 			return bytes[0];
 		}
-		else {
-			return -1;
-		}
+
+		return -1;
 	}
 
 	@Override

@@ -429,9 +429,8 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 
 			return true;
 		}
-		else {
-			return false;
-		}
+
+		return false;
 	}
 
 	protected void postFormat() throws Exception {

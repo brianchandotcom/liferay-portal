@@ -58,9 +58,8 @@ public class PollsQuestionImpl extends PollsQuestionBaseImpl {
 		if ((expirationDate != null) && expirationDate.before(new Date())) {
 			return true;
 		}
-		else {
-			return false;
-		}
+
+		return false;
 	}
 
 	@Override
@@ -78,9 +77,8 @@ public class PollsQuestionImpl extends PollsQuestionBaseImpl {
 		if (createDate.after(expirationDate)) {
 			return true;
 		}
-		else {
-			return false;
-		}
+
+		return false;
 	}
 
 }

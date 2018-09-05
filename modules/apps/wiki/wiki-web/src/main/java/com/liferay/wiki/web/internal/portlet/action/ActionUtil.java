@@ -419,9 +419,8 @@ public class ActionUtil {
 		if ((categoryId > 0) || Validator.isNotNull(tag)) {
 			return "/wiki/view_categorized_pages.jsp";
 		}
-		else {
-			return defaultForward;
-		}
+
+		return defaultForward;
 	}
 
 }

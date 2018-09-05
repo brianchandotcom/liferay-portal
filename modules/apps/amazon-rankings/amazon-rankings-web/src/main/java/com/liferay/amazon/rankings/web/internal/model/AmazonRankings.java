@@ -64,9 +64,8 @@ public class AmazonRankings
 		else if (getSalesRank() < amazonRankings.getSalesRank()) {
 			return -1;
 		}
-		else {
-			return getReleaseDate().compareTo(amazonRankings.getReleaseDate());
-		}
+
+		return getReleaseDate().compareTo(amazonRankings.getReleaseDate());
 	}
 
 	public String[] getAuthors() {

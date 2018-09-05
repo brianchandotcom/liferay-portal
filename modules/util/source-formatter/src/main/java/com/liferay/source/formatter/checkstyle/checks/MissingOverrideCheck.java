@@ -321,9 +321,8 @@ public class MissingOverrideCheck extends BaseCheck {
 
 				return true;
 			}
-			else {
-				return false;
-			}
+
+			return false;
 		}
 
 		return false;

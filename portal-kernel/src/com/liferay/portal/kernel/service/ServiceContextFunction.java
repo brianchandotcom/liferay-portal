@@ -46,9 +46,8 @@ public class ServiceContextFunction
 				return ServiceContextFactory.getInstance(
 					className, _portletRequest);
 			}
-			else {
-				return ServiceContextFactory.getInstance(className, _request);
-			}
+
+			return ServiceContextFactory.getInstance(className, _request);
 		}
 		catch (PortalException pe) {
 			throw new RuntimeException(pe);

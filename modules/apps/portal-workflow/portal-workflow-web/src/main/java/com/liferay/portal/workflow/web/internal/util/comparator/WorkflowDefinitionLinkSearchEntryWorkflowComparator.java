@@ -46,9 +46,8 @@ public class WorkflowDefinitionLinkSearchEntryWorkflowComparator
 		if (_ascending) {
 			return value;
 		}
-		else {
-			return -value;
-		}
+
+		return -value;
 	}
 
 	private final boolean _ascending;

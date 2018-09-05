@@ -249,9 +249,8 @@ public class BookmarksManagementToolbarDisplayContext {
 		if ((foldersAndEntriesCount == 0) && navigation.equals("all")) {
 			return true;
 		}
-		else {
-			return false;
-		}
+
+		return false;
 	}
 
 	public boolean isSelectable() {

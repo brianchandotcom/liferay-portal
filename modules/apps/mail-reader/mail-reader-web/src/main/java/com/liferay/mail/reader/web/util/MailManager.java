@@ -452,9 +452,8 @@ public class MailManager {
 		else if (includeNonRequiredFolders) {
 			return nonRequiredFolders;
 		}
-		else {
-			return requiredFolders;
-		}
+
+		return requiredFolders;
 	}
 
 	public long getFolderUnreadMessagesCount(long folderId) {
@@ -468,9 +467,8 @@ public class MailManager {
 		if (accounts.isEmpty()) {
 			return null;
 		}
-		else {
-			return accounts.get(0);
-		}
+
+		return accounts.get(0);
 	}
 
 	public MessageDisplay getMessageDisplay(long messageId)

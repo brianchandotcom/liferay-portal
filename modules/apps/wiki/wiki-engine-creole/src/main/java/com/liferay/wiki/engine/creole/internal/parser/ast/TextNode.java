@@ -39,9 +39,8 @@ public abstract class TextNode extends BaseParentableNode {
 		if (_content != null) {
 			return true;
 		}
-		else {
-			return false;
-		}
+
+		return false;
 	}
 
 	protected TextNode(ASTNode astNode, int tokenType, String content) {

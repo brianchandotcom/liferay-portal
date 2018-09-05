@@ -42,9 +42,8 @@ public class ImportPackage implements Comparable<ImportPackage> {
 			if (_isStatic) {
 				return -1;
 			}
-			else {
-				return 1;
-			}
+
+			return 1;
 		}
 
 		String importPackageImportString = importPackage.getImportString();

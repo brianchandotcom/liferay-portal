@@ -135,9 +135,8 @@ public class WorkflowInstanceLinkLocalServiceImpl
 		if (!workflowInstanceLinks.isEmpty()) {
 			return workflowInstanceLinks.get(0);
 		}
-		else {
-			return null;
-		}
+
+		return null;
 	}
 
 	@Override

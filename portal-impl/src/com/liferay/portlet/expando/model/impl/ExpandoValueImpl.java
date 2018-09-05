@@ -266,9 +266,8 @@ public class ExpandoValueImpl extends ExpandoValueBaseImpl {
 		else if (type == ExpandoColumnConstants.STRING_LOCALIZED) {
 			return (Serializable)getStringMap();
 		}
-		else {
-			return getData();
-		}
+
+		return getData();
 	}
 
 	@Override

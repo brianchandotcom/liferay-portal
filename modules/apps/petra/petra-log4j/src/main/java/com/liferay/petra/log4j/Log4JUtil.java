@@ -250,9 +250,8 @@ public class Log4JUtil {
 		else if (StringUtil.equalsIgnoreCase(priority, Level.WARN.toString())) {
 			return java.util.logging.Level.WARNING;
 		}
-		else {
-			return java.util.logging.Level.INFO;
-		}
+
+		return java.util.logging.Level.INFO;
 	}
 
 	private static String _getLiferayHome() {

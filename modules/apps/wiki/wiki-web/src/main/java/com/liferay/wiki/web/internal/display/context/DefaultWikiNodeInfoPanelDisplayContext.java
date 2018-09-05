@@ -74,9 +74,8 @@ public class DefaultWikiNodeInfoPanelDisplayContext
 		if (items.size() > 1) {
 			return true;
 		}
-		else {
-			return false;
-		}
+
+		return false;
 	}
 
 	@Override
@@ -86,9 +85,8 @@ public class DefaultWikiNodeInfoPanelDisplayContext
 		if (nodes.size() == 1) {
 			return true;
 		}
-		else {
-			return false;
-		}
+
+		return false;
 	}
 
 	protected List<?> getSelectedNodes() {

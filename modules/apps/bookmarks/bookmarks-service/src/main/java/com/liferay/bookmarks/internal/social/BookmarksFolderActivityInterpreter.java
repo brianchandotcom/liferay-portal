@@ -72,9 +72,8 @@ public class BookmarksFolderActivityInterpreter
 			if (Validator.isNull(groupName)) {
 				return "activity-bookmarks-folder-move-to-trash";
 			}
-			else {
-				return "activity-bookmarks-folder-move-to-trash-in";
-			}
+
+			return "activity-bookmarks-folder-move-to-trash-in";
 		}
 		else if (activityType ==
 					 SocialActivityConstants.TYPE_RESTORE_FROM_TRASH) {
@@ -82,9 +81,8 @@ public class BookmarksFolderActivityInterpreter
 			if (Validator.isNull(groupName)) {
 				return "activity-bookmarks-folder-restore-from-trash";
 			}
-			else {
-				return "activity-bookmarks-folder-restore-from-trash-in";
-			}
+
+			return "activity-bookmarks-folder-restore-from-trash-in";
 		}
 
 		return null;

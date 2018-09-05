@@ -81,9 +81,8 @@ public class PortletClassInvoker {
 		if (pos == -1) {
 			return portletId;
 		}
-		else {
-			return portletId.substring(0, pos);
-		}
+
+		return portletId.substring(0, pos);
 	}
 
 	private static final String _INSTANCE_SEPARATOR = "_INSTANCE_";

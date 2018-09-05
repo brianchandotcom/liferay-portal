@@ -74,10 +74,9 @@ public class MoveMethodImpl implements Method {
 				return storage.moveCollectionResource(
 					webDAVRequest, resource, destination, overwrite);
 			}
-			else {
-				return storage.moveSimpleResource(
-					webDAVRequest, resource, destination, overwrite);
-			}
+
+			return storage.moveSimpleResource(
+				webDAVRequest, resource, destination, overwrite);
 		}
 
 		return HttpServletResponse.SC_FORBIDDEN;

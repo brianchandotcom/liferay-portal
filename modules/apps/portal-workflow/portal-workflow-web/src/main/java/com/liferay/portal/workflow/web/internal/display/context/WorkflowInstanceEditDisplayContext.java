@@ -111,9 +111,8 @@ public class WorkflowInstanceEditDisplayContext
 		if (user.isMale()) {
 			return "x-assigned-the-task-to-himself";
 		}
-		else {
-			return "x-assigned-the-task-to-herself";
-		}
+
+		return "x-assigned-the-task-to-herself";
 	}
 
 	public Object getAssignedTheTaskToMessageArguments(WorkflowLog workflowLog)
@@ -191,9 +190,8 @@ public class WorkflowInstanceEditDisplayContext
 			return LanguageUtil.get(
 				workflowInstanceRequestHelper.getRequest(), "never");
 		}
-		else {
-			return dateFormatDateTime.format(workflowTask.getDueDate());
-		}
+
+		return dateFormatDateTime.format(workflowTask.getDueDate());
 	}
 
 	public Object getTaskInitiallyAssignedMessageArguments(
@@ -240,9 +238,8 @@ public class WorkflowInstanceEditDisplayContext
 			return LanguageUtil.get(
 				workflowInstanceRequestHelper.getRequest(), "never");
 		}
-		else {
-			return dateFormatDateTime.format(workflowInstance.getEndDate());
-		}
+
+		return dateFormatDateTime.format(workflowInstance.getEndDate());
 	}
 
 	public String getWorkflowInstanceState() {

@@ -700,9 +700,8 @@ public class PortletRequestModel implements Serializable {
 
 			return false;
 		}
-		else {
-			return true;
-		}
+
+		return true;
 	}
 
 	private static boolean _isValidAttributeValue(Object obj) {

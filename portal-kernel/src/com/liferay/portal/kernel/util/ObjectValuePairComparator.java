@@ -44,9 +44,8 @@ public class ObjectValuePairComparator<K, V>
 			if (_ascending) {
 				return key1.compareTo((K)key2);
 			}
-			else {
-				return -(key1.compareTo((K)key2));
-			}
+
+			return -(key1.compareTo((K)key2));
 		}
 		else {
 			Comparable<V> value1 = (Comparable<V>)ovp1.getValue();
@@ -55,9 +54,8 @@ public class ObjectValuePairComparator<K, V>
 			if (_ascending) {
 				return value1.compareTo((V)value2);
 			}
-			else {
-				return -(value1.compareTo((V)value2));
-			}
+
+			return -(value1.compareTo((V)value2));
 		}
 	}
 

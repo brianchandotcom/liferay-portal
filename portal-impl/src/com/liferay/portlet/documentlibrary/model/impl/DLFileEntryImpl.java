@@ -157,9 +157,8 @@ public class DLFileEntryImpl extends DLFileEntryBaseImpl {
 		if (_extraSettingsProperties == null) {
 			return super.getExtraSettings();
 		}
-		else {
-			return _extraSettingsProperties.toString();
-		}
+
+		return _extraSettingsProperties.toString();
 	}
 
 	@Override
@@ -234,10 +233,8 @@ public class DLFileEntryImpl extends DLFileEntryBaseImpl {
 			return DLFileVersionLocalServiceUtil.getLatestFileVersion(
 				getFileEntryId(), false);
 		}
-		else {
-			return DLFileVersionServiceUtil.getLatestFileVersion(
-				getFileEntryId());
-		}
+
+		return DLFileVersionServiceUtil.getLatestFileVersion(getFileEntryId());
 	}
 
 	@Override
@@ -358,9 +355,8 @@ public class DLFileEntryImpl extends DLFileEntryBaseImpl {
 		if (getStatus() == WorkflowConstants.STATUS_IN_TRASH) {
 			return true;
 		}
-		else {
-			return false;
-		}
+
+		return false;
 	}
 
 	@Override

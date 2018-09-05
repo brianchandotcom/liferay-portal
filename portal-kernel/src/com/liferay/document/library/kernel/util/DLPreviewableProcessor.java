@@ -828,9 +828,8 @@ public abstract class DLPreviewableProcessor implements DLProcessor {
 		if ((previewTypes != null) && (previewTypes.length > index)) {
 			return previewTypes[index];
 		}
-		else {
-			return getPreviewType();
-		}
+
+		return getPreviewType();
 	}
 
 	protected String[] getPreviewTypes() {
@@ -914,9 +913,8 @@ public abstract class DLPreviewableProcessor implements DLProcessor {
 
 			return true;
 		}
-		else {
-			return false;
-		}
+
+		return false;
 	}
 
 	protected boolean hasPreviews(FileVersion fileVersion) throws Exception {
@@ -933,9 +931,8 @@ public abstract class DLPreviewableProcessor implements DLProcessor {
 		if (count == previewTypes.length) {
 			return true;
 		}
-		else {
-			return false;
-		}
+
+		return false;
 	}
 
 	protected boolean hasThumbnail(FileVersion fileVersion, int index) {

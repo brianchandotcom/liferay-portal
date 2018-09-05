@@ -55,9 +55,8 @@ public class IntrabandFactoryUtil {
 			if (welderClass.equals(SocketWelder.class)) {
 				return new SelectorIntraband(_INTRABAND_TIMEOUT_DEFAULT);
 			}
-			else {
-				return new ExecutorIntraband(_INTRABAND_TIMEOUT_DEFAULT);
-			}
+
+			return new ExecutorIntraband(_INTRABAND_TIMEOUT_DEFAULT);
 		}
 	}
 

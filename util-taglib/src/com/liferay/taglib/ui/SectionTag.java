@@ -83,9 +83,8 @@ public class SectionTag extends IncludeTag {
 			if (!_tabsTag.isRefresh() || _sectionSelected.booleanValue()) {
 				return EVAL_BODY_INCLUDE;
 			}
-			else {
-				return EVAL_PAGE;
-			}
+
+			return EVAL_PAGE;
 		}
 		catch (Exception e) {
 			throw new JspException(e);

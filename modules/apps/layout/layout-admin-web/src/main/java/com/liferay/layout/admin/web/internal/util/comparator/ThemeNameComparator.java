@@ -39,9 +39,8 @@ public class ThemeNameComparator implements Comparator<Theme>, Serializable {
 		if (_ascending) {
 			return value;
 		}
-		else {
-			return -value;
-		}
+
+		return -value;
 	}
 
 	private final boolean _ascending;

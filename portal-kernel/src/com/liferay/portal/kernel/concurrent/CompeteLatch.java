@@ -121,9 +121,8 @@ public class CompeteLatch {
 			if (getState() == 0) {
 				return 1;
 			}
-			else {
-				return -1;
-			}
+
+			return -1;
 		}
 
 		@Override
@@ -131,27 +130,24 @@ public class CompeteLatch {
 			if (compareAndSetState(1, 0)) {
 				return true;
 			}
-			else {
-				return false;
-			}
+
+			return false;
 		}
 
 		private boolean _isLocked() {
 			if (getState() == 1) {
 				return true;
 			}
-			else {
-				return false;
-			}
+
+			return false;
 		}
 
 		private boolean _tryInitAcquireShared() {
 			if (compareAndSetState(0, 1)) {
 				return true;
 			}
-			else {
-				return false;
-			}
+
+			return false;
 		}
 
 	}

@@ -41,9 +41,8 @@ public class ThemePreviewFilter extends BasePortalFilter {
 		if (isThemePreview(request)) {
 			return true;
 		}
-		else {
-			return false;
-		}
+
+		return false;
 	}
 
 	protected String getContent(HttpServletRequest request, String content) {
@@ -70,9 +69,8 @@ public class ThemePreviewFilter extends BasePortalFilter {
 		if (ParamUtil.getBoolean(request, _THEME_PREVIEW)) {
 			return true;
 		}
-		else {
-			return false;
-		}
+
+		return false;
 	}
 
 	@Override

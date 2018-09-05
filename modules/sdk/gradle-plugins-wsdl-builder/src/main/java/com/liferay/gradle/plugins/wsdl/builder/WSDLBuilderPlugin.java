@@ -137,9 +137,8 @@ public class WSDLBuilderPlugin implements Plugin<Project> {
 					if (buildWSDLTask.isBuildLibs()) {
 						return "lib";
 					}
-					else {
-						return _getJavaDir(buildWSDLTask.getProject());
-					}
+
+					return _getJavaDir(buildWSDLTask.getProject());
 				}
 
 			});
@@ -362,9 +361,8 @@ public class WSDLBuilderPlugin implements Plugin<Project> {
 							_getWebAppDir(buildWSDLTask.getProject()),
 							"WEB-INF/lib");
 					}
-					else {
-						return _getJavaDir(buildWSDLTask.getProject());
-					}
+
+					return _getJavaDir(buildWSDLTask.getProject());
 				}
 
 			});

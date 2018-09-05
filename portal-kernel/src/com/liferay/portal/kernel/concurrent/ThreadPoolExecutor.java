@@ -297,9 +297,8 @@ public class ThreadPoolExecutor extends AbstractExecutorService {
 		if (_runState != _RUNNING) {
 			return true;
 		}
-		else {
-			return false;
-		}
+
+		return false;
 	}
 
 	@Override
@@ -307,18 +306,16 @@ public class ThreadPoolExecutor extends AbstractExecutorService {
 		if (_runState == _TERMINATED) {
 			return true;
 		}
-		else {
-			return false;
-		}
+
+		return false;
 	}
 
 	public boolean isTerminating() {
 		if (_runState == _STOP) {
 			return true;
 		}
-		else {
-			return false;
-		}
+
+		return false;
 	}
 
 	public void setAllowCoreThreadTimeout(boolean allowCoreThreadTimeout) {
@@ -698,9 +695,8 @@ public class ThreadPoolExecutor extends AbstractExecutorService {
 			if (getState() == 1) {
 				return true;
 			}
-			else {
-				return false;
-			}
+
+			return false;
 		}
 
 		@Override

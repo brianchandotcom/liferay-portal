@@ -284,9 +284,8 @@ public class DLFileEntryTypeLocalServiceImpl
 
 			return dlFolder.getDefaultFileEntryTypeId();
 		}
-		else {
-			return 0;
-		}
+
+		return 0;
 	}
 
 	@Override

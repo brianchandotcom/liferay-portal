@@ -434,9 +434,8 @@ public class KBCommentLocalServiceImpl extends KBCommentLocalServiceBaseImpl {
 			return kbGroupServiceConfiguration.
 				emailKBArticleSuggestionReceivedEnabled();
 		}
-		else {
-			return false;
-		}
+
+		return false;
 	}
 
 	protected void notifySubscribers(

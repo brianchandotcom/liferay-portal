@@ -629,9 +629,8 @@ public class JournalArticleIndexer
 		else if (orderByCol.equals("title")) {
 			return Field.TITLE;
 		}
-		else {
-			return orderByCol;
-		}
+
+		return orderByCol;
 	}
 
 	@Override

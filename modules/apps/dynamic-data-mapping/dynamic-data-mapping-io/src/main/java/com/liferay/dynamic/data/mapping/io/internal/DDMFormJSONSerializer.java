@@ -253,9 +253,8 @@ public class DDMFormJSONSerializer implements DDMFormSerializer {
 
 			return toJSONObject((DDMFormFieldValidation)property);
 		}
-		else {
-			return String.valueOf(property);
-		}
+
+		return String.valueOf(property);
 	}
 
 	@Reference(unbind = "-")

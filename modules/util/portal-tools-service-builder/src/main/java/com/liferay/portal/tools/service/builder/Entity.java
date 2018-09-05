@@ -231,9 +231,8 @@ public class Entity implements Comparable<Entity> {
 		if (_name.equals(name)) {
 			return true;
 		}
-		else {
-			return false;
-		}
+
+		return false;
 	}
 
 	public String getAlias() {
@@ -584,9 +583,8 @@ public class Entity implements Comparable<Entity> {
 		if (_name.startsWith(_portletShortName)) {
 			return _name.substring(_portletShortName.length());
 		}
-		else {
-			return _name;
-		}
+
+		return _name;
 	}
 
 	public String getSpringPropertyName() {
@@ -754,9 +752,8 @@ public class Entity implements Comparable<Entity> {
 
 				return entityColumn.isPrimitiveType();
 			}
-			else {
-				return hasPrimitivePK();
-			}
+
+			return hasPrimitivePK();
 		}
 
 		return false;
@@ -859,9 +856,8 @@ public class Entity implements Comparable<Entity> {
 		if (entityColumn.isPrimitiveType(includeWrappers)) {
 			return true;
 		}
-		else {
-			return false;
-		}
+
+		return false;
 	}
 
 	public boolean hasRemoteService() {
@@ -918,27 +914,24 @@ public class Entity implements Comparable<Entity> {
 		if (_dataSource.equals(_DATA_SOURCE_DEFAULT)) {
 			return true;
 		}
-		else {
-			return false;
-		}
+
+		return false;
 	}
 
 	public boolean isDefaultSessionFactory() {
 		if (_sessionFactory.equals(_SESSION_FACTORY_DEFAULT)) {
 			return true;
 		}
-		else {
-			return false;
-		}
+
+		return false;
 	}
 
 	public boolean isDefaultTXManager() {
 		if (_txManager.equals(_TX_MANAGER_DEFAULT)) {
 			return true;
 		}
-		else {
-			return false;
-		}
+
+		return false;
 	}
 
 	public boolean isDeprecated() {
@@ -957,9 +950,8 @@ public class Entity implements Comparable<Entity> {
 
 			return true;
 		}
-		else {
-			return false;
-		}
+
+		return false;
 	}
 
 	public boolean isHierarchicalTree() {
@@ -980,9 +972,8 @@ public class Entity implements Comparable<Entity> {
 
 			return true;
 		}
-		else {
-			return false;
-		}
+
+		return false;
 	}
 
 	public boolean isJsonEnabled() {
@@ -1007,9 +998,8 @@ public class Entity implements Comparable<Entity> {
 		if (_entityOrder != null) {
 			return true;
 		}
-		else {
-			return false;
-		}
+
+		return false;
 	}
 
 	public boolean isPermissionCheckEnabled() {
@@ -1062,9 +1052,8 @@ public class Entity implements Comparable<Entity> {
 		if (hasEntityColumn("resourceBlockId")) {
 			return true;
 		}
-		else {
-			return false;
-		}
+
+		return false;
 	}
 
 	public boolean isPortalReference() {
@@ -1089,9 +1078,8 @@ public class Entity implements Comparable<Entity> {
 
 			return true;
 		}
-		else {
-			return false;
-		}
+
+		return false;
 	}
 
 	public boolean isShardedModel() {
@@ -1177,9 +1165,8 @@ public class Entity implements Comparable<Entity> {
 
 			return true;
 		}
-		else {
-			return false;
-		}
+
+		return false;
 	}
 
 	public void setApiPackagePath(String apiPackagePath) {

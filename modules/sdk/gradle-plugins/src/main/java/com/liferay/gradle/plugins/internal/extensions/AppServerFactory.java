@@ -38,9 +38,8 @@ public class AppServerFactory implements NamedDomainObjectFactory<AppServer> {
 		else if (name.equals("tomcat")) {
 			return new TomcatAppServer(_project);
 		}
-		else {
-			return new AppServer(name, _project);
-		}
+
+		return new AppServer(name, _project);
 	}
 
 	private final Project _project;

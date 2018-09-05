@@ -306,9 +306,8 @@ public class Table {
 
 			return StringUtil.trim(createSQL.substring(x, y));
 		}
-		else {
-			return _tableName;
-		}
+
+		return _tableName;
 	}
 
 	public int[] getOrder() {
@@ -340,9 +339,8 @@ public class Table {
 
 			return "select * from " + _tableName;
 		}
-		else {
-			return _selectSQL;
-		}
+
+		return _selectSQL;
 	}
 
 	public String getTableName() {

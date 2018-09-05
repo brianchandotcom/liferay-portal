@@ -292,12 +292,11 @@ public class ExportImportPathUtil {
 				stagedModelType.getClassName(), stagedModel.getPrimaryKeyObj(),
 				dependentFileName);
 		}
-		else {
-			return getModelPath(
-				PATH_PREFIX_COMPANY, stagedModel.getCompanyId(),
-				stagedModelType.getClassName(), stagedModel.getPrimaryKeyObj(),
-				dependentFileName);
-		}
+
+		return getModelPath(
+			PATH_PREFIX_COMPANY, stagedModel.getCompanyId(),
+			stagedModelType.getClassName(), stagedModel.getPrimaryKeyObj(),
+			dependentFileName);
 	}
 
 	public static String getPortletDataPath(
@@ -555,9 +554,8 @@ public class ExportImportPathUtil {
 		else if (ownerType == PortletKeys.PREFS_OWNER_TYPE_USER) {
 			return "user/";
 		}
-		else {
-			return StringPool.BLANK;
-		}
+
+		return StringPool.BLANK;
 	}
 
 	protected static String getRootPath(

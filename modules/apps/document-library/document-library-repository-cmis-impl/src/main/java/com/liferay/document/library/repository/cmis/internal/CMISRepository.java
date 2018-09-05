@@ -2149,9 +2149,8 @@ public class CMISRepository extends BaseCmisRepository {
 		if (allowableActionsSet.contains(action)) {
 			return true;
 		}
-		else {
-			return false;
-		}
+
+		return false;
 	}
 
 	protected boolean isAllVersionsSearchableSupported(Session session) {
@@ -2312,9 +2311,8 @@ public class CMISRepository extends BaseCmisRepository {
 
 			return toFolder(cmisFolder);
 		}
-		else {
-			return null;
-		}
+
+		return null;
 	}
 
 	protected void updateMappedId(long repositoryEntryId, String mappedId)

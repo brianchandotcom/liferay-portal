@@ -192,9 +192,8 @@ public class DDMFormContextToDDMForm
 		else if (Objects.equals(type, "select")) {
 			return getDDMFormFieldSelectValue(serializedValue);
 		}
-		else {
-			return serializedValue;
-		}
+
+		return serializedValue;
 	}
 
 	protected JSONArray getDDMFormFieldSelectValue(String serializedValue)
@@ -350,9 +349,8 @@ public class DDMFormContextToDDMForm
 					if (localizable) {
 						return "localizedValue";
 					}
-					else {
-						return "value";
-					}
+
+					return "value";
 				}
 
 			});

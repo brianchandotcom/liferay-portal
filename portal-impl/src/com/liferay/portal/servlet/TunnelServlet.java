@@ -157,9 +157,8 @@ public class TunnelServlet extends HttpServlet {
 
 			return true;
 		}
-		else {
-			return false;
-		}
+
+		return false;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(TunnelServlet.class);

@@ -839,9 +839,8 @@ public class UserImpl extends UserBaseImpl {
 
 			return true;
 		}
-		else {
-			return false;
-		}
+
+		return false;
 	}
 
 	@Override
@@ -849,9 +848,8 @@ public class UserImpl extends UserBaseImpl {
 		if (getStatus() == WorkflowConstants.STATUS_APPROVED) {
 			return true;
 		}
-		else {
-			return false;
-		}
+
+		return false;
 	}
 
 	@Override

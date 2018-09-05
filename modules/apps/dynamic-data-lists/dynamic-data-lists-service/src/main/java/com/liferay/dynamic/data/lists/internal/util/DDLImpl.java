@@ -166,9 +166,8 @@ public class DDLImpl implements DDL {
 
 							return String.valueOf(fieldValueDate.getTime());
 						}
-						else {
-							return String.valueOf(fieldValue);
-						}
+
+						return String.valueOf(fieldValue);
 					});
 
 				jsonObject.put(

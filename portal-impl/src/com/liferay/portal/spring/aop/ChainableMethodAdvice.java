@@ -47,9 +47,8 @@ public abstract class ChainableMethodAdvice implements MethodInterceptor {
 			if (returnValue == nullResult) {
 				return null;
 			}
-			else {
-				return returnValue;
-			}
+
+			return returnValue;
 		}
 
 		try {

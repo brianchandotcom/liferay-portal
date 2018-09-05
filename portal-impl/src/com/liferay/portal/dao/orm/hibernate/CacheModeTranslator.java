@@ -37,9 +37,8 @@ public class CacheModeTranslator {
 		else if (cacheMode == CacheMode.REFRESH) {
 			return org.hibernate.CacheMode.REFRESH;
 		}
-		else {
-			return org.hibernate.CacheMode.parse(cacheMode.getName());
-		}
+
+		return org.hibernate.CacheMode.parse(cacheMode.getName());
 	}
 
 }

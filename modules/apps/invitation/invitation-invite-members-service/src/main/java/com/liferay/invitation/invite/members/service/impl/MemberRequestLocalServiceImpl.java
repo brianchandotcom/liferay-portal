@@ -212,9 +212,8 @@ public class MemberRequestLocalServiceImpl
 		if (memberRequest != null) {
 			return true;
 		}
-		else {
-			return false;
-		}
+
+		return false;
 	}
 
 	@Override

@@ -104,9 +104,8 @@ public abstract class RepositoryModelProxyBean {
 		else if (bean instanceof Folder) {
 			return newFolderProxyBean((Folder)bean);
 		}
-		else {
-			return bean;
-		}
+
+		return bean;
 	}
 
 	protected Object newProxyInstance(Object bean, Class<?> clazz) {

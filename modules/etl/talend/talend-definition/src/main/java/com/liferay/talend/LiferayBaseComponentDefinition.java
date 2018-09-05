@@ -163,9 +163,8 @@ public abstract class LiferayBaseComponentDefinition
 				return RuntimeUtil.createRuntimeClassWithCurrentJVMProperties(
 					runtimeInfo, classLoader);
 			}
-			else {
-				return RuntimeUtil.createRuntimeClass(runtimeInfo, classLoader);
-			}
+
+			return RuntimeUtil.createRuntimeClass(runtimeInfo, classLoader);
 		}
 
 	}

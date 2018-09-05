@@ -218,9 +218,8 @@ public class SharedSessionWrapper implements HttpSession {
 		if (_portletSession != null) {
 			return _portletSession;
 		}
-		else {
-			return _portalSession;
-		}
+
+		return _portalSession;
 	}
 
 	protected HttpSession getSessionDelegate(String name) {
@@ -234,9 +233,8 @@ public class SharedSessionWrapper implements HttpSession {
 		else if (containsSharedAttribute(name)) {
 			return _portalSession;
 		}
-		else {
-			return _portletSession;
-		}
+
+		return _portletSession;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

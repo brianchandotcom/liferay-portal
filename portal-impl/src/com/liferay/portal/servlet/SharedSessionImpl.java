@@ -38,9 +38,8 @@ public class SharedSessionImpl implements SharedSession {
 		if (ServerDetector.isJetty()) {
 			return new JettySharedSessionWrapper(portalSession, portletSession);
 		}
-		else {
-			return new SharedSessionWrapper(portalSession, portletSession);
-		}
+
+		return new SharedSessionWrapper(portalSession, portletSession);
 	}
 
 }

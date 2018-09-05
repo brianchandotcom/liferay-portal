@@ -243,9 +243,8 @@ public class MDRRuleGroupFinderImpl
 		if ((includeGlobalScope != null) && includeGlobalScope) {
 			return "((groupId = ?) OR (groupId = ?))";
 		}
-		else {
-			return "(groupId = ?)";
-		}
+
+		return "(groupId = ?)";
 	}
 
 	protected void setGroupIds(

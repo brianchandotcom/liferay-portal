@@ -756,9 +756,8 @@ public class UserAttributes {
 		else if (name.equals(USER_BUSINESS_INFO_ONLINE_URI)) {
 			return StringPool.BLANK;
 		}
-		else {
-			return null;
-		}
+
+		return null;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(UserAttributes.class);

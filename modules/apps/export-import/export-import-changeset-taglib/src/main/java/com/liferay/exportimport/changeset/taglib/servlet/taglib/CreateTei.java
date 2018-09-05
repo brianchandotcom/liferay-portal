@@ -36,9 +36,8 @@ public class CreateTei extends TagExtraInfo {
 					var, Changeset.class.getName(), true, VariableInfo.AT_END)
 			};
 		}
-		else {
-			return null;
-		}
+
+		return null;
 	}
 
 }

@@ -85,9 +85,8 @@ public class AssignScopesDisplayContext
 
 						return existingValue;
 					}
-					else {
-						return new Relations(Collections.singleton(scopeAlias));
-					}
+
+					return new Relations(Collections.singleton(scopeAlias));
 				});
 
 			Set<String> applicationNames =
@@ -170,9 +169,8 @@ public class AssignScopesDisplayContext
 		if (ListUtil.isEmpty(scopesList)) {
 			return StringPool.BLANK;
 		}
-		else {
-			return StringUtil.merge(scopesList, delimiter);
-		}
+
+		return StringUtil.merge(scopesList, delimiter);
 	}
 
 	public Map<AssignableScopes, Relations>
@@ -409,9 +407,8 @@ public class AssignScopesDisplayContext
 					if (existingValue != null) {
 						return existingValue.add(entry.getKey());
 					}
-					else {
-						return entry.getKey();
-					}
+
+					return entry.getKey();
 				});
 		}
 

@@ -57,9 +57,8 @@ public class WorkflowInstanceStartDateComparator
 		if (_ascending) {
 			return value;
 		}
-		else {
-			return -value;
-		}
+
+		return -value;
 	}
 
 	@Override
@@ -67,9 +66,8 @@ public class WorkflowInstanceStartDateComparator
 		if (isAscending()) {
 			return _orderByAsc;
 		}
-		else {
-			return _orderByDesc;
-		}
+
+		return _orderByDesc;
 	}
 
 	@Override

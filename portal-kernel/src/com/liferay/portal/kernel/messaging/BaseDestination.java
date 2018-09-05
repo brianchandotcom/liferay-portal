@@ -104,9 +104,8 @@ public abstract class BaseDestination implements Destination {
 		if (getMessageListenerCount() > 0) {
 			return true;
 		}
-		else {
-			return false;
-		}
+
+		return false;
 	}
 
 	@Override

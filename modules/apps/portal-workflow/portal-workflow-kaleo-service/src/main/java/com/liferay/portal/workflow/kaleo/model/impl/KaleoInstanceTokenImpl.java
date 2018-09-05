@@ -85,9 +85,8 @@ public class KaleoInstanceTokenImpl extends KaleoInstanceTokenBaseImpl {
 		if (count > 0) {
 			return true;
 		}
-		else {
-			return false;
-		}
+
+		return false;
 	}
 
 	@Override

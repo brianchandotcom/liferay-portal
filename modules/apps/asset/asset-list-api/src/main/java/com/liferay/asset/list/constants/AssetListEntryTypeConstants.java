@@ -34,9 +34,8 @@ public class AssetListEntryTypeConstants {
 		else if (type == TYPE_MANUAL) {
 			return TYPE_MANUAL_LABEL;
 		}
-		else {
-			return null;
-		}
+
+		return null;
 	}
 
 }

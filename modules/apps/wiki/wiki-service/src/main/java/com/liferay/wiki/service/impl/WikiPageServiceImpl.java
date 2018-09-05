@@ -493,10 +493,9 @@ public class WikiPageServiceImpl extends WikiPageServiceBaseImpl {
 			return wikiPagePersistence.filterFindByG_N_H(
 				groupId, nodeId, head, start, end, obc);
 		}
-		else {
-			return wikiPagePersistence.filterFindByG_N_H_S(
-				groupId, nodeId, head, status, start, end, obc);
-		}
+
+		return wikiPagePersistence.filterFindByG_N_H_S(
+			groupId, nodeId, head, status, start, end, obc);
 	}
 
 	@Override
@@ -534,11 +533,10 @@ public class WikiPageServiceImpl extends WikiPageServiceBaseImpl {
 				groupId, userId, nodeId, status, start, end,
 				new PageCreateDateComparator(false));
 		}
-		else {
-			return wikiPagePersistence.filterFindByG_N_S(
-				groupId, nodeId, status, start, end,
-				new PageCreateDateComparator(false));
-		}
+
+		return wikiPagePersistence.filterFindByG_N_S(
+			groupId, nodeId, status, start, end,
+			new PageCreateDateComparator(false));
 	}
 
 	@Override
@@ -579,10 +577,8 @@ public class WikiPageServiceImpl extends WikiPageServiceBaseImpl {
 			return wikiPagePersistence.filterCountByG_U_N_S(
 				groupId, userId, nodeId, status);
 		}
-		else {
-			return wikiPagePersistence.filterCountByG_N_S(
-				groupId, nodeId, status);
-		}
+
+		return wikiPagePersistence.filterCountByG_N_S(groupId, nodeId, status);
 	}
 
 	@Override

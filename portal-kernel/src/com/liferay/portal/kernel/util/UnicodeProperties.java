@@ -82,9 +82,8 @@ public class UnicodeProperties extends HashMap<String, String> {
 		if (value == null) {
 			return defaultValue;
 		}
-		else {
-			return value;
-		}
+
+		return value;
 	}
 
 	public boolean isSafe() {

@@ -29,9 +29,8 @@ public class DDMFormFieldValueValueMatcher implements DDMFormFieldValueMatcher {
 		if (_locale != null) {
 			return performLocalizedMatch(ddmFormFieldValue.getValue());
 		}
-		else {
-			return performUnlocalizedMatch(ddmFormFieldValue.getValue());
-		}
+
+		return performUnlocalizedMatch(ddmFormFieldValue.getValue());
 	}
 
 	public void setLocale(Locale locale) {

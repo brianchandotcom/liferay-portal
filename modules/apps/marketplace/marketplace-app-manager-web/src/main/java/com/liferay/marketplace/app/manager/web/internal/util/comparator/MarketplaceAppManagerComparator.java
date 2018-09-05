@@ -51,9 +51,8 @@ public class MarketplaceAppManagerComparator implements Comparator {
 		if (_ascending) {
 			return value;
 		}
-		else {
-			return -value;
-		}
+
+		return -value;
 	}
 
 	protected int compareClass(Object object1, Object object2) {
@@ -67,9 +66,8 @@ public class MarketplaceAppManagerComparator implements Comparator {
 		if (value1 > value2) {
 			return 1;
 		}
-		else {
-			return 0;
-		}
+
+		return 0;
 	}
 
 	protected int compareTitle(Object object1, Object object2) {

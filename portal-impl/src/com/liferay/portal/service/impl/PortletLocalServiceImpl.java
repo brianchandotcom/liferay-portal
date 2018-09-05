@@ -721,9 +721,8 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 		if (portlet == null) {
 			return false;
 		}
-		else {
-			return true;
-		}
+
+		return true;
 	}
 
 	@Override

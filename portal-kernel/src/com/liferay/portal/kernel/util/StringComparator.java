@@ -54,9 +54,8 @@ public class StringComparator implements Comparator<String>, Serializable {
 		if (_caseSensitive) {
 			return s1.compareTo(s2);
 		}
-		else {
-			return s1.compareToIgnoreCase(s2);
-		}
+
+		return s1.compareToIgnoreCase(s2);
 	}
 
 	private final boolean _ascending;

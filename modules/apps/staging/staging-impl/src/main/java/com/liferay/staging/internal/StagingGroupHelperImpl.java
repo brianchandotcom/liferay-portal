@@ -191,9 +191,8 @@ public class StagingGroupHelperImpl implements StagingGroupHelper {
 		if (group.getLiveGroupId() == GroupConstants.DEFAULT_LIVE_GROUP_ID) {
 			return false;
 		}
-		else {
-			return true;
-		}
+
+		return true;
 	}
 
 	@Override

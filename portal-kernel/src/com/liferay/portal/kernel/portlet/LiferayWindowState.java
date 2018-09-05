@@ -36,9 +36,8 @@ public class LiferayWindowState extends WindowState {
 		if ((state != null) && state.equals(EXCLUSIVE.toString())) {
 			return true;
 		}
-		else {
-			return false;
-		}
+
+		return false;
 	}
 
 	public static boolean isMaximized(HttpServletRequest request) {
@@ -47,9 +46,8 @@ public class LiferayWindowState extends WindowState {
 		if ((state != null) && state.equals(WindowState.MAXIMIZED.toString())) {
 			return true;
 		}
-		else {
-			return false;
-		}
+
+		return false;
 	}
 
 	public static boolean isPopUp(HttpServletRequest request) {
@@ -58,9 +56,8 @@ public class LiferayWindowState extends WindowState {
 		if ((state != null) && state.equals(POP_UP.toString())) {
 			return true;
 		}
-		else {
-			return false;
-		}
+
+		return false;
 	}
 
 	public static boolean isWindowStatePreserved(
@@ -81,9 +78,8 @@ public class LiferayWindowState extends WindowState {
 
 			return false;
 		}
-		else {
-			return true;
-		}
+
+		return true;
 	}
 
 	public LiferayWindowState(String name) {

@@ -77,10 +77,9 @@ public class SaveFormInstanceMVCCommandHelper {
 			return addFormInstance(
 				portletRequest, validateDDMFormFieldSettings);
 		}
-		else {
-			return updateFormInstance(
-				portletRequest, formInstanceId, validateDDMFormFieldSettings);
-		}
+
+		return updateFormInstance(
+			portletRequest, formInstanceId, validateDDMFormFieldSettings);
 	}
 
 	protected DDMFormInstance addFormInstance(

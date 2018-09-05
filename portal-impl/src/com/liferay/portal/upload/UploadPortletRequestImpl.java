@@ -338,9 +338,8 @@ public class UploadPortletRequestImpl
 		if (formField == null) {
 			return true;
 		}
-		else {
-			return formField.booleanValue();
-		}
+
+		return formField.booleanValue();
 	}
 
 	private final String _namespace;

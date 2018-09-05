@@ -918,10 +918,9 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			return mbMessagePersistence.findByG_C(
 				groupId, categoryId, start, end);
 		}
-		else {
-			return mbMessagePersistence.findByG_C_S(
-				groupId, categoryId, status, start, end);
-		}
+
+		return mbMessagePersistence.findByG_C_S(
+			groupId, categoryId, status, start, end);
 	}
 
 	@Override
@@ -933,10 +932,9 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			return mbMessagePersistence.findByG_C(
 				groupId, categoryId, start, end, obc);
 		}
-		else {
-			return mbMessagePersistence.findByG_C_S(
-				groupId, categoryId, status, start, end, obc);
-		}
+
+		return mbMessagePersistence.findByG_C_S(
+			groupId, categoryId, status, start, end, obc);
 	}
 
 	@Override
@@ -953,10 +951,8 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		if (status == WorkflowConstants.STATUS_ANY) {
 			return mbMessagePersistence.countByG_C(groupId, categoryId);
 		}
-		else {
-			return mbMessagePersistence.countByG_C_S(
-				groupId, categoryId, status);
-		}
+
+		return mbMessagePersistence.countByG_C_S(groupId, categoryId, status);
 	}
 
 	@Override
@@ -984,10 +980,8 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		if (status == WorkflowConstants.STATUS_ANY) {
 			return mbMessagePersistence.findByCompanyId(companyId, start, end);
 		}
-		else {
-			return mbMessagePersistence.findByC_S(
-				companyId, status, start, end);
-		}
+
+		return mbMessagePersistence.findByC_S(companyId, status, start, end);
 	}
 
 	@Override
@@ -999,10 +993,9 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			return mbMessagePersistence.findByCompanyId(
 				companyId, start, end, obc);
 		}
-		else {
-			return mbMessagePersistence.findByC_S(
-				companyId, status, start, end, obc);
-		}
+
+		return mbMessagePersistence.findByC_S(
+			companyId, status, start, end, obc);
 	}
 
 	@Override
@@ -1010,9 +1003,8 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		if (status == WorkflowConstants.STATUS_ANY) {
 			return mbMessagePersistence.countByCompanyId(companyId);
 		}
-		else {
-			return mbMessagePersistence.countByC_S(companyId, status);
-		}
+
+		return mbMessagePersistence.countByC_S(companyId, status);
 	}
 
 	@Override
@@ -1106,9 +1098,8 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		if (count >= 1) {
 			return count - 1;
 		}
-		else {
-			return 0;
-		}
+
+		return 0;
 	}
 
 	@Override
@@ -1148,9 +1139,8 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		if (status == WorkflowConstants.STATUS_ANY) {
 			return mbMessagePersistence.findByGroupId(groupId, start, end);
 		}
-		else {
-			return mbMessagePersistence.findByG_S(groupId, status, start, end);
-		}
+
+		return mbMessagePersistence.findByG_S(groupId, status, start, end);
 	}
 
 	@Override
@@ -1161,10 +1151,8 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		if (status == WorkflowConstants.STATUS_ANY) {
 			return mbMessagePersistence.findByGroupId(groupId, start, end, obc);
 		}
-		else {
-			return mbMessagePersistence.findByG_S(
-				groupId, status, start, end, obc);
-		}
+
+		return mbMessagePersistence.findByG_S(groupId, status, start, end, obc);
 	}
 
 	@Override
@@ -1174,10 +1162,9 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		if (status == WorkflowConstants.STATUS_ANY) {
 			return mbMessagePersistence.findByG_U(groupId, userId, start, end);
 		}
-		else {
-			return mbMessagePersistence.findByG_U_S(
-				groupId, userId, status, start, end);
-		}
+
+		return mbMessagePersistence.findByG_U_S(
+			groupId, userId, status, start, end);
 	}
 
 	@Override
@@ -1189,10 +1176,9 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			return mbMessagePersistence.findByG_U(
 				groupId, userId, start, end, obc);
 		}
-		else {
-			return mbMessagePersistence.findByG_U_S(
-				groupId, userId, status, start, end, obc);
-		}
+
+		return mbMessagePersistence.findByG_U_S(
+			groupId, userId, status, start, end, obc);
 	}
 
 	@Override
@@ -1200,9 +1186,8 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		if (status == WorkflowConstants.STATUS_ANY) {
 			return mbMessagePersistence.countByGroupId(groupId);
 		}
-		else {
-			return mbMessagePersistence.countByG_S(groupId, status);
-		}
+
+		return mbMessagePersistence.countByG_S(groupId, status);
 	}
 
 	@Override
@@ -1210,9 +1195,8 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		if (status == WorkflowConstants.STATUS_ANY) {
 			return mbMessagePersistence.countByG_U(groupId, userId);
 		}
-		else {
-			return mbMessagePersistence.countByG_U_S(groupId, userId, status);
-		}
+
+		return mbMessagePersistence.countByG_U_S(groupId, userId, status);
 	}
 
 	@Override
@@ -1293,10 +1277,8 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		if (status == WorkflowConstants.STATUS_ANY) {
 			return mbMessagePersistence.findByC_C(classNameId, classPK);
 		}
-		else {
-			return mbMessagePersistence.findByC_C_S(
-				classNameId, classPK, status);
-		}
+
+		return mbMessagePersistence.findByC_C_S(classNameId, classPK, status);
 	}
 
 	/**
@@ -1437,9 +1419,8 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		if (status == WorkflowConstants.STATUS_ANY) {
 			return mbMessagePersistence.findByThreadId(threadId, start, end);
 		}
-		else {
-			return mbMessagePersistence.findByT_S(threadId, status, start, end);
-		}
+
+		return mbMessagePersistence.findByT_S(threadId, status, start, end);
 	}
 
 	@Override
@@ -1500,9 +1481,8 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		if (status == WorkflowConstants.STATUS_ANY) {
 			return mbMessagePersistence.countByThreadId(threadId);
 		}
-		else {
-			return mbMessagePersistence.countByT_S(threadId, status);
-		}
+
+		return mbMessagePersistence.countByT_S(threadId, status);
 	}
 
 	@Override
@@ -1513,10 +1493,8 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			return mbMessagePersistence.findByThreadReplies(
 				threadId, start, end);
 		}
-		else {
-			return mbMessagePersistence.findByTR_S(
-				threadId, status, start, end);
-		}
+
+		return mbMessagePersistence.findByTR_S(threadId, status, start, end);
 	}
 
 	@Override
@@ -1528,10 +1506,9 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			return mbMessagePersistence.findByU_C_C(
 				userId, classNameId, classPK, start, end, obc);
 		}
-		else {
-			return mbMessagePersistence.findByU_C_C_S(
-				userId, classNameId, classPK, status, start, end, obc);
-		}
+
+		return mbMessagePersistence.findByU_C_C_S(
+			userId, classNameId, classPK, status, start, end, obc);
 	}
 
 	@Override
@@ -1543,10 +1520,9 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			return mbMessagePersistence.findByU_C(
 				userId, classNameIds, start, end, obc);
 		}
-		else {
-			return mbMessagePersistence.findByU_C_S(
-				userId, classNameIds, status, start, end, obc);
-		}
+
+		return mbMessagePersistence.findByU_C_S(
+			userId, classNameIds, status, start, end, obc);
 	}
 
 	@Override
@@ -1568,10 +1544,9 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			return mbMessagePersistence.countByU_C_C(
 				userId, classNameId, classPK);
 		}
-		else {
-			return mbMessagePersistence.countByU_C_C_S(
-				userId, classNameId, classPK, status);
-		}
+
+		return mbMessagePersistence.countByU_C_C_S(
+			userId, classNameId, classPK, status);
 	}
 
 	@Override
@@ -1581,10 +1556,8 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		if (status == WorkflowConstants.STATUS_ANY) {
 			return mbMessagePersistence.countByU_C(userId, classNameIds);
 		}
-		else {
-			return mbMessagePersistence.countByU_C_S(
-				userId, classNameIds, status);
-		}
+
+		return mbMessagePersistence.countByU_C_S(userId, classNameIds, status);
 	}
 
 	@Override

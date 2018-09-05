@@ -79,9 +79,8 @@ public class I18nFilter extends BasePortalFilter {
 
 			return true;
 		}
-		else {
-			return false;
-		}
+
+		return false;
 	}
 
 	protected String getDefaultLanguageId(HttpServletRequest request) {
@@ -269,9 +268,8 @@ public class I18nFilter extends BasePortalFilter {
 		if (request.getAttribute(SKIP_FILTER) != null) {
 			return true;
 		}
-		else {
-			return false;
-		}
+
+		return false;
 	}
 
 	protected boolean isForwardedByI18nServlet(HttpServletRequest request) {
@@ -280,18 +278,16 @@ public class I18nFilter extends BasePortalFilter {
 
 			return true;
 		}
-		else {
-			return false;
-		}
+
+		return false;
 	}
 
 	protected boolean isWidget(HttpServletRequest request) {
 		if (request.getAttribute(WebKeys.WIDGET) != null) {
 			return true;
 		}
-		else {
-			return false;
-		}
+
+		return false;
 	}
 
 	protected String prependI18nLanguageId(
@@ -329,10 +325,9 @@ public class I18nFilter extends BasePortalFilter {
 
 				return requestedLanguageId;
 			}
-			else {
-				return prependIfRequestedLocaleDiffersFromDefaultLocale(
-					defaultLanguageId, requestedLanguageId);
-			}
+
+			return prependIfRequestedLocaleDiffersFromDefaultLocale(
+				defaultLanguageId, requestedLanguageId);
 		}
 
 		return null;

@@ -63,9 +63,8 @@ public class NodeImpl implements Node {
 		if (node instanceof org.dom4j.Element) {
 			return new ElementImpl((org.dom4j.Element)node);
 		}
-		else {
-			return new NodeImpl(node);
-		}
+
+		return new NodeImpl(node);
 	}
 
 	@Override
@@ -94,9 +93,8 @@ public class NodeImpl implements Node {
 		if (node instanceof org.dom4j.Element) {
 			return new ElementImpl((org.dom4j.Element)node);
 		}
-		else {
-			return new NodeImpl(node);
-		}
+
+		return new NodeImpl(node);
 	}
 
 	@Override
@@ -146,9 +144,8 @@ public class NodeImpl implements Node {
 		if (document == null) {
 			return null;
 		}
-		else {
-			return new DocumentImpl(document);
-		}
+
+		return new DocumentImpl(document);
 	}
 
 	@Override
@@ -163,9 +160,8 @@ public class NodeImpl implements Node {
 		if (element == null) {
 			return null;
 		}
-		else {
-			return new ElementImpl(element);
-		}
+
+		return new ElementImpl(element);
 	}
 
 	@Override
@@ -264,9 +260,8 @@ public class NodeImpl implements Node {
 		else if (obj instanceof List<?>) {
 			return SAXReaderImpl.toNewNodes((List<org.dom4j.Node>)obj);
 		}
-		else {
-			return obj;
-		}
+
+		return obj;
 	}
 
 	@Override
@@ -280,9 +275,8 @@ public class NodeImpl implements Node {
 		if (node instanceof org.dom4j.Element) {
 			return new ElementImpl((org.dom4j.Element)node);
 		}
-		else {
-			return new NodeImpl(node);
-		}
+
+		return new NodeImpl(node);
 	}
 
 	@Override

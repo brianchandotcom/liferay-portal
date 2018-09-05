@@ -411,10 +411,9 @@ public class AssetPublisherConfigurationAction
 		if (defaultAssetClassTypeId > -1) {
 			return new String[] {String.valueOf(defaultAssetClassTypeId)};
 		}
-		else {
-			return StringUtil.split(
-				getParameter(actionRequest, "classTypeIds" + assetClassName));
-		}
+
+		return StringUtil.split(
+			getParameter(actionRequest, "classTypeIds" + assetClassName));
 	}
 
 	protected AssetQueryRule getQueryRule(

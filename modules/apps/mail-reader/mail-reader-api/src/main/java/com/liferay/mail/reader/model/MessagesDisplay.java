@@ -37,9 +37,8 @@ public class MessagesDisplay {
 		if (messageNumber > _messageCount) {
 			return _messageCount;
 		}
-		else {
-			return messageNumber;
-		}
+
+		return messageNumber;
 	}
 
 	public int getMessageCount() {

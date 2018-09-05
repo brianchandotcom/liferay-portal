@@ -63,9 +63,8 @@ public class BasicLoginModule implements LoginModule {
 
 			return true;
 		}
-		else {
-			return false;
-		}
+
+		return false;
 	}
 
 	@Override

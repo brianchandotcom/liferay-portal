@@ -42,9 +42,8 @@ public class FragmentFilter extends BasePortalFilter {
 		if (isFragment(request, response) && !isAlreadyFiltered(request)) {
 			return true;
 		}
-		else {
-			return false;
-		}
+
+		return false;
 	}
 
 	protected String getContent(HttpServletRequest request, String content) {
@@ -66,9 +65,8 @@ public class FragmentFilter extends BasePortalFilter {
 		if (request.getAttribute(SKIP_FILTER) != null) {
 			return true;
 		}
-		else {
-			return false;
-		}
+
+		return false;
 	}
 
 	protected boolean isFragment(
@@ -79,9 +77,8 @@ public class FragmentFilter extends BasePortalFilter {
 		if (Validator.isNotNull(fragmentId)) {
 			return true;
 		}
-		else {
-			return false;
-		}
+
+		return false;
 	}
 
 	@Override

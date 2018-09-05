@@ -135,9 +135,8 @@ public class KMPSearch {
 		if (j >= patternLength) {
 			return i - patternLength + offset;
 		}
-		else {
-			return -1;
-		}
+
+		return -1;
 	}
 
 	public static int search(char[] text, char[] pattern) {
@@ -177,9 +176,8 @@ public class KMPSearch {
 		if (j >= patternLength) {
 			return i - patternLength + offset;
 		}
-		else {
-			return -1;
-		}
+
+		return -1;
 	}
 
 	public static int search(CharSequence text, CharSequence pattern) {
@@ -231,9 +229,8 @@ public class KMPSearch {
 		if (j >= patternLength) {
 			return i - patternLength + offset;
 		}
-		else {
-			return -1;
-		}
+
+		return -1;
 	}
 
 }

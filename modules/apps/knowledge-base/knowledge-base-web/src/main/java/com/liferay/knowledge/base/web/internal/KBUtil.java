@@ -287,9 +287,8 @@ public class KBUtil {
 		else if (status == KBCommentConstants.STATUS_NEW) {
 			return KBCommentConstants.STATUS_IN_PROGRESS;
 		}
-		else {
-			return KBCommentConstants.STATUS_NONE;
-		}
+
+		return KBCommentConstants.STATUS_NONE;
 	}
 
 	public static String getPreferredKBFolderURLTitle(
@@ -313,9 +312,8 @@ public class KBUtil {
 		else if (status == KBCommentConstants.STATUS_IN_PROGRESS) {
 			return KBCommentConstants.STATUS_NEW;
 		}
-		else {
-			return KBCommentConstants.STATUS_NONE;
-		}
+
+		return KBCommentConstants.STATUS_NONE;
 	}
 
 	public static long getRootResourcePrimKey(

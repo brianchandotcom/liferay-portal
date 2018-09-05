@@ -866,9 +866,8 @@ public class IMAPAccessor {
 
 			return getMessage(folderId, jxFolder, oldest);
 		}
-		else {
-			return jxMessage;
-		}
+
+		return jxMessage;
 	}
 
 	protected int[] getMessageIndexes(

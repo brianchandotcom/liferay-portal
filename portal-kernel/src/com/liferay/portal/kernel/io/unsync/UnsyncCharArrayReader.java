@@ -67,9 +67,8 @@ public class UnsyncCharArrayReader extends Reader {
 		if (index >= capacity) {
 			return -1;
 		}
-		else {
-			return buffer[index++];
-		}
+
+		return buffer[index++];
 	}
 
 	@Override
@@ -140,9 +139,8 @@ public class UnsyncCharArrayReader extends Reader {
 		if (capacity > index) {
 			return true;
 		}
-		else {
-			return false;
-		}
+
+		return false;
 	}
 
 	@Override

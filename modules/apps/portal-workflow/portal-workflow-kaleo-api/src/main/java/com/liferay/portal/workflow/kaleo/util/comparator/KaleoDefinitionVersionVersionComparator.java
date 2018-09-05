@@ -71,9 +71,8 @@ public class KaleoDefinitionVersionVersionComparator
 		if (_ascending) {
 			return value;
 		}
-		else {
-			return -value;
-		}
+
+		return -value;
 	}
 
 	@Override
@@ -81,9 +80,8 @@ public class KaleoDefinitionVersionVersionComparator
 		if (_ascending) {
 			return _ORDER_BY_ASC;
 		}
-		else {
-			return _ORDER_BY_DESC;
-		}
+
+		return _ORDER_BY_DESC;
 	}
 
 	@Override

@@ -142,9 +142,8 @@ public class UpdateLicenseAction extends Action {
 		if ((user != null) && OmniadminUtil.isOmniadmin(user)) {
 			return true;
 		}
-		else {
-			return false;
-		}
+
+		return false;
 	}
 
 	private boolean _isValidRequest(HttpServletRequest request) {
@@ -169,9 +168,8 @@ public class UpdateLicenseAction extends Action {
 
 			return true;
 		}
-		else {
-			return false;
-		}
+
+		return false;
 	}
 
 }

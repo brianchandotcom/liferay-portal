@@ -101,9 +101,8 @@ public class BackgroundTaskConstants {
 		else if (status == STATUS_SUCCESSFUL) {
 			return LABEL_SUCCESSFUL;
 		}
-		else {
-			return StringPool.BLANK;
-		}
+
+		return StringPool.BLANK;
 	}
 
 }

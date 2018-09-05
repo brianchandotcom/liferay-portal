@@ -74,9 +74,8 @@ public class PermissionDisplay
 
 			return true;
 		}
-		else {
-			return false;
-		}
+
+		return false;
 	}
 
 	public String getActionId() {

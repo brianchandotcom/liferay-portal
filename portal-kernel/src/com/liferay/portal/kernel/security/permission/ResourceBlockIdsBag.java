@@ -65,9 +65,8 @@ public class ResourceBlockIdsBag implements Serializable {
 		if ((getActionIds(resourceBlockId) & actionIdsLong) == actionIdsLong) {
 			return true;
 		}
-		else {
-			return false;
-		}
+
+		return false;
 	}
 
 	private final Map<Long, Long> _permissions = new HashMap<>();

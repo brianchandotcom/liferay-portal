@@ -313,11 +313,10 @@ public class BookmarksEntryLocalServiceImpl
 				groupId, WorkflowConstants.STATUS_APPROVED, start, end,
 				orderByComparator);
 		}
-		else {
-			return bookmarksEntryPersistence.findByG_U_S(
-				groupId, userId, WorkflowConstants.STATUS_APPROVED, start, end,
-				orderByComparator);
-		}
+
+		return bookmarksEntryPersistence.findByG_U_S(
+			groupId, userId, WorkflowConstants.STATUS_APPROVED, start, end,
+			orderByComparator);
 	}
 
 	@Override
@@ -331,10 +330,9 @@ public class BookmarksEntryLocalServiceImpl
 		if (userId <= 0) {
 			return getGroupEntriesCount(groupId);
 		}
-		else {
-			return bookmarksEntryPersistence.countByG_U_S(
-				groupId, userId, WorkflowConstants.STATUS_APPROVED);
-		}
+
+		return bookmarksEntryPersistence.countByG_U_S(
+			groupId, userId, WorkflowConstants.STATUS_APPROVED);
 	}
 
 	/**

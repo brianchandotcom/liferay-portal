@@ -44,9 +44,8 @@ public class ThreadLocalCache<T> {
 		if (_cache == null) {
 			return null;
 		}
-		else {
-			return _cache.get(key);
-		}
+
+		return _cache.get(key);
 	}
 
 	public Object getId() {

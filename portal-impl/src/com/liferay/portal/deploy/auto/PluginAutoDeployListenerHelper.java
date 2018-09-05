@@ -107,9 +107,8 @@ public class PluginAutoDeployListenerHelper {
 
 					return false;
 				}
-				else {
-					return true;
-				}
+
+				return true;
 			}
 			catch (IOException ioe) {
 				throw new AutoDeployException(ioe);

@@ -200,9 +200,8 @@ public class LocalProcessLauncher {
 			if (heartbeatThread != null) {
 				return true;
 			}
-			else {
-				return false;
-			}
+
+			return false;
 		}
 
 		public static void writeProcessCallable(

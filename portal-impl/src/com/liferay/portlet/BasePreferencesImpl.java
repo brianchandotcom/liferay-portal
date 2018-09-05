@@ -137,9 +137,8 @@ public abstract class BasePreferencesImpl implements Serializable {
 		if ((preference != null) && preference.isReadOnly()) {
 			return true;
 		}
-		else {
-			return false;
-		}
+
+		return false;
 	}
 
 	public void reset() {
@@ -224,9 +223,8 @@ public abstract class BasePreferencesImpl implements Serializable {
 		if ((value == null) || value.equals(_NULL_VALUE)) {
 			return null;
 		}
-		else {
-			return XMLUtil.fromCompactSafe(value);
-		}
+
+		return XMLUtil.fromCompactSafe(value);
 	}
 
 	protected String[] getActualValues(String[] values) {
@@ -286,9 +284,8 @@ public abstract class BasePreferencesImpl implements Serializable {
 		if (value == null) {
 			return _NULL_VALUE;
 		}
-		else {
-			return XMLUtil.toCompactSafe(value);
-		}
+
+		return XMLUtil.toCompactSafe(value);
 	}
 
 	protected String[] getXMLSafeValues(String[] values) {

@@ -300,9 +300,8 @@ public class DocumentConversionImpl implements DocumentConversion {
 
 			return true;
 		}
-		else {
-			return false;
-		}
+
+		return false;
 	}
 
 	private void _populateConversionsMap(String documentFamily) {

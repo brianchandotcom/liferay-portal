@@ -325,12 +325,11 @@ public abstract class BaseOpenSearchImpl implements OpenSearch {
 				start, totalPages, previousPage, nextPage, title, searchPath,
 				themeDisplay);
 		}
-		else {
-			return addSearchResultsAtom(
-				doc, queryTerms, keywords, startPage, itemsPerPage, total,
-				start, totalPages, previousPage, nextPage, title, searchPath,
-				themeDisplay);
-		}
+
+		return addSearchResultsAtom(
+			doc, queryTerms, keywords, startPage, itemsPerPage, total, start,
+			totalPages, previousPage, nextPage, title, searchPath,
+			themeDisplay);
 	}
 
 	protected Object[] addSearchResultsAtom(

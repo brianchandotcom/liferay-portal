@@ -61,9 +61,8 @@ public class LiferayResourceManager extends ResourceManagerImpl {
 
 			return LiferayResourceLoader.class.getName();
 		}
-		else {
-			return super.getLoaderNameForResource(source);
-		}
+
+		return super.getLoaderNameForResource(source);
 	}
 
 	@Override

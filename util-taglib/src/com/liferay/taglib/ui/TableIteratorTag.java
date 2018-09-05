@@ -53,9 +53,8 @@ public class TableIteratorTag extends TagSupport {
 
 				return EVAL_BODY_AGAIN;
 			}
-			else {
-				return SKIP_BODY;
-			}
+
+			return SKIP_BODY;
 		}
 		catch (Exception e) {
 			throw new JspException(e);
@@ -117,9 +116,8 @@ public class TableIteratorTag extends TagSupport {
 
 				return EVAL_BODY_INCLUDE;
 			}
-			else {
-				return SKIP_BODY;
-			}
+
+			return SKIP_BODY;
 		}
 		catch (Exception e) {
 			throw new JspException(e);
@@ -130,9 +128,8 @@ public class TableIteratorTag extends TagSupport {
 		if (Validator.isNull(_bodyPage)) {
 			return _BODY_PAGE;
 		}
-		else {
-			return _bodyPage;
-		}
+
+		return _bodyPage;
 	}
 
 	public void setBodyPage(String bodyPage) {
@@ -178,18 +175,16 @@ public class TableIteratorTag extends TagSupport {
 		if (Validator.isNull(_endPage)) {
 			return _END_PAGE;
 		}
-		else {
-			return _endPage;
-		}
+
+		return _endPage;
 	}
 
 	protected String getStartPage() {
 		if (Validator.isNull(_startPage)) {
 			return _START_PAGE;
 		}
-		else {
-			return _startPage;
-		}
+
+		return _startPage;
 	}
 
 	private static final String _BODY_PAGE =

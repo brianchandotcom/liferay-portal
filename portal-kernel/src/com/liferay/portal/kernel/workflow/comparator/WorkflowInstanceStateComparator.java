@@ -55,9 +55,8 @@ public class WorkflowInstanceStateComparator
 		if (_ascending) {
 			return value;
 		}
-		else {
-			return -value;
-		}
+
+		return -value;
 	}
 
 	@Override
@@ -65,9 +64,8 @@ public class WorkflowInstanceStateComparator
 		if (isAscending()) {
 			return _orderByAsc;
 		}
-		else {
-			return _orderByDesc;
-		}
+
+		return _orderByDesc;
 	}
 
 	@Override

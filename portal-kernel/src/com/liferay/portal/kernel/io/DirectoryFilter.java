@@ -46,9 +46,8 @@ public class DirectoryFilter implements FileFilter {
 
 			return matcher.matches();
 		}
-		else {
-			return false;
-		}
+
+		return false;
 	}
 
 	private Pattern _pattern;

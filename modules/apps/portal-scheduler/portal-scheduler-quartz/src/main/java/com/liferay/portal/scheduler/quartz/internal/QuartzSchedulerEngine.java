@@ -717,9 +717,8 @@ public class QuartzSchedulerEngine implements SchedulerEngine {
 		if (storageType == StorageType.PERSISTED) {
 			return _persistedScheduler;
 		}
-		else {
-			return _memoryScheduler;
-		}
+
+		return _memoryScheduler;
 	}
 
 	protected StorageType getStorageType(String groupName) {

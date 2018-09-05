@@ -55,9 +55,8 @@ public class OrganizationSearchTerms extends OrganizationDisplayTerms {
 		if (countryId == 0) {
 			return null;
 		}
-		else {
-			return Long.valueOf(countryId);
-		}
+
+		return Long.valueOf(countryId);
 	}
 
 	public String getCountryName() throws PortalException {
@@ -85,9 +84,8 @@ public class OrganizationSearchTerms extends OrganizationDisplayTerms {
 		if (regionId == 0) {
 			return null;
 		}
-		else {
-			return Long.valueOf(regionId);
-		}
+
+		return Long.valueOf(regionId);
 	}
 
 	public String getRegionName() throws PortalException {

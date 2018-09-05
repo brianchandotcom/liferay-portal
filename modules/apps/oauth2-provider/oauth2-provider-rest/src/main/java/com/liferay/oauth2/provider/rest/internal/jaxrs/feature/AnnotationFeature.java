@@ -202,9 +202,8 @@ public class AnnotationFeature implements Feature {
 				if (requiresScope.allNeeded()) {
 					return _scopeChecker.checkAllScopes(requiresScope.value());
 				}
-				else {
-					return _scopeChecker.checkAnyScope(requiresScope.value());
-				}
+
+				return _scopeChecker.checkAnyScope(requiresScope.value());
 			}
 
 			return false;

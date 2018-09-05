@@ -65,9 +65,8 @@ public class RandomAccessInputStream extends InputStream {
 
 			return _randomAccessFileCache.read();
 		}
-		else {
-			return -1;
-		}
+
+		return -1;
 	}
 
 	@Override
@@ -99,9 +98,8 @@ public class RandomAccessInputStream extends InputStream {
 
 			return length;
 		}
-		else {
-			return -1;
-		}
+
+		return -1;
 	}
 
 	@Override

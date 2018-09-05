@@ -83,9 +83,8 @@ public class OrderByComparatorFactoryUtil {
 					if (columnAscending) {
 						return value;
 					}
-					else {
-						return -value;
-					}
+
+					return -value;
 				}
 				else if (columnInstance instanceof Comparable<?>) {
 					Comparable<Object> columnValueComparable1 =
@@ -103,9 +102,8 @@ public class OrderByComparatorFactoryUtil {
 					if (columnAscending) {
 						return value;
 					}
-					else {
-						return -value;
-					}
+
+					return -value;
 				}
 			}
 
@@ -167,9 +165,8 @@ public class OrderByComparatorFactoryUtil {
 			if ((z >= 0) && (z < y)) {
 				return false;
 			}
-			else {
-				return true;
-			}
+
+			return true;
 		}
 
 		private DefaultOrderByComparator(String tableName, Object... columns) {

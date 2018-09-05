@@ -1030,12 +1030,11 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 
 			return group;
 		}
-		else {
-			return groupLocalService.updateGroup(
-				groupId, parentGroupId, nameMap, descriptionMap, type,
-				manualMembership, membershipRestriction, friendlyURL,
-				inheritContent, active, serviceContext);
-		}
+
+		return groupLocalService.updateGroup(
+			groupId, parentGroupId, nameMap, descriptionMap, type,
+			manualMembership, membershipRestriction, friendlyURL,
+			inheritContent, active, serviceContext);
 	}
 
 	/**
@@ -1117,9 +1116,8 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 
 			return group;
 		}
-		else {
-			return groupLocalService.updateGroup(groupId, typeSettings);
-		}
+
+		return groupLocalService.updateGroup(groupId, typeSettings);
 	}
 
 	@Override

@@ -300,9 +300,8 @@ public class CharPipe {
 			if ((count == 0) && finished) {
 				return true;
 			}
-			else {
-				return false;
-			}
+
+			return false;
 		}
 
 		private void _increaseReadIndex(int consumed) {

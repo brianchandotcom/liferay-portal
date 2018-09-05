@@ -474,9 +474,8 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 		if (status == WorkflowConstants.STATUS_ANY) {
 			return mbMessagePersistence.filterCountByGroupId(groupId);
 		}
-		else {
-			return mbMessagePersistence.filterCountByG_S(groupId, status);
-		}
+
+		return mbMessagePersistence.filterCountByG_S(groupId, status);
 	}
 
 	@Override
@@ -617,10 +616,9 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 			return mbMessagePersistence.filterFindByG_C_T(
 				groupId, categoryId, threadId, start, end);
 		}
-		else {
-			return mbMessagePersistence.filterFindByG_C_T_S(
-				groupId, categoryId, threadId, status, start, end);
-		}
+
+		return mbMessagePersistence.filterFindByG_C_T_S(
+			groupId, categoryId, threadId, status, start, end);
 	}
 
 	@Override
@@ -631,10 +629,9 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 			return mbMessagePersistence.filterCountByG_C_T(
 				groupId, categoryId, threadId);
 		}
-		else {
-			return mbMessagePersistence.filterCountByG_C_T_S(
-				groupId, categoryId, threadId, status);
-		}
+
+		return mbMessagePersistence.filterCountByG_C_T_S(
+			groupId, categoryId, threadId, status);
 	}
 
 	@Override

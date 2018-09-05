@@ -58,9 +58,8 @@ public class DLFolderConstants {
 		if (folderId != DEFAULT_PARENT_FOLDER_ID) {
 			return folderId;
 		}
-		else {
-			return repositoryId;
-		}
+
+		return repositoryId;
 	}
 
 	/**
@@ -70,9 +69,8 @@ public class DLFolderConstants {
 		if (groupId != dataRepositoryId) {
 			return dataRepositoryId;
 		}
-		else {
-			return DEFAULT_PARENT_FOLDER_ID;
-		}
+
+		return DEFAULT_PARENT_FOLDER_ID;
 	}
 
 	public static String getNameInvalidCharacters(String[] charBlacklist) {

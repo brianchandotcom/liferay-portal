@@ -125,9 +125,8 @@ public class BundleManagerImpl implements BundleManager {
 		if (ArrayUtil.contains(_INSTALLED_BUNDLE_STATES, bundle.getState())) {
 			return true;
 		}
-		else {
-			return false;
-		}
+
+		return false;
 	}
 
 	public boolean isInstalled(String symbolicName, String version) {

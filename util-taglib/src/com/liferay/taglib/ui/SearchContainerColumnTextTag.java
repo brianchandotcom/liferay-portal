@@ -183,9 +183,8 @@ public class SearchContainerColumnTextTag<R>
 		else if (Validator.isNull(_value)) {
 			return EVAL_BODY_BUFFERED;
 		}
-		else {
-			return SKIP_BODY;
-		}
+
+		return SKIP_BODY;
 	}
 
 	public String getBuffer() {

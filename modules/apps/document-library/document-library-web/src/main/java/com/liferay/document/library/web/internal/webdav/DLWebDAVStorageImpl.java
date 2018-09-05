@@ -298,9 +298,8 @@ public class DLWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 				if (webDAVRequest.isAppleDoubleRequest()) {
 					return HttpServletResponse.SC_NO_CONTENT;
 				}
-				else {
-					return HttpServletResponse.SC_NOT_FOUND;
-				}
+
+				return HttpServletResponse.SC_NOT_FOUND;
 			}
 
 			Object model = resource.getModel();

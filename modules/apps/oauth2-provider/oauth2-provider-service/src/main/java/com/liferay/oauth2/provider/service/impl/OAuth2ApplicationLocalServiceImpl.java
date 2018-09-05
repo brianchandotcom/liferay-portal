@@ -395,9 +395,8 @@ public class OAuth2ApplicationLocalServiceImpl
 
 			return oAuth2ApplicationPersistence.update(oAuth2Application);
 		}
-		else {
-			return oAuth2Application;
-		}
+
+		return oAuth2Application;
 	}
 
 	protected void validate(

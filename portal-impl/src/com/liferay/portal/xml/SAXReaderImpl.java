@@ -246,9 +246,8 @@ public class SAXReaderImpl implements SAXReader {
 		if (processingInstruction == null) {
 			return null;
 		}
-		else {
-			return new ProcessingInstructionImpl(processingInstruction);
-		}
+
+		return new ProcessingInstructionImpl(processingInstruction);
 	}
 
 	@Override
@@ -261,9 +260,8 @@ public class SAXReaderImpl implements SAXReader {
 		if (processingInstruction == null) {
 			return null;
 		}
-		else {
-			return new ProcessingInstructionImpl(processingInstruction);
-		}
+
+		return new ProcessingInstructionImpl(processingInstruction);
 	}
 
 	@Override

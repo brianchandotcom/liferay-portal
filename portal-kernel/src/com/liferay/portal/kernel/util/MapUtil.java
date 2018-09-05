@@ -240,9 +240,8 @@ public class MapUtil {
 		if (value == null) {
 			return defaultValue;
 		}
-		else {
-			return value;
-		}
+
+		return value;
 	}
 
 	public static long getLong(Map<String, ?> map, String key) {

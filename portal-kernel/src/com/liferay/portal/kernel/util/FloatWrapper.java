@@ -42,9 +42,8 @@ public class FloatWrapper
 		else if (getValue() < floatWrapper.getValue()) {
 			return -1;
 		}
-		else {
-			return 0;
-		}
+
+		return 0;
 	}
 
 	public float decrement() {

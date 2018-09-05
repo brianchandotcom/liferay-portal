@@ -406,9 +406,8 @@ public abstract class ConcurrentMapperHashMap<K, IK, V, IV>
 			if ((value != null) && value.equals(entry.getValue())) {
 				return true;
 			}
-			else {
-				return false;
-			}
+
+			return false;
 		}
 
 		@Override

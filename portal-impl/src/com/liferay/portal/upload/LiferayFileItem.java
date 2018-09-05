@@ -95,9 +95,8 @@ public class LiferayFileItem extends DiskFileItem implements FileItem {
 		if (pos == -1) {
 			return _fileName;
 		}
-		else {
-			return _fileName.substring(pos + 1);
-		}
+
+		return _fileName.substring(pos + 1);
 	}
 
 	@Override
@@ -215,9 +214,8 @@ public class LiferayFileItem extends DiskFileItem implements FileItem {
 		if (_encodedString == null) {
 			return super.getString();
 		}
-		else {
-			return _encodedString;
-		}
+
+		return _encodedString;
 	}
 
 	@Override

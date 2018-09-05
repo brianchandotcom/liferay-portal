@@ -102,9 +102,8 @@ public class UnitConverterUtil {
 
 			return .8 * (fromValue - 273.15);
 		}
-		else {
-			return 0;
-		}
+
+		return 0;
 	}
 
 	private static final double _toTemperature(int fromId, double fromValue) {
@@ -138,9 +137,8 @@ public class UnitConverterUtil {
 
 			return (1.25 * fromValue) + 273.15;
 		}
-		else {
-			return 0;
-		}
+
+		return 0;
 	}
 
 	private static final double[] _AREA = {

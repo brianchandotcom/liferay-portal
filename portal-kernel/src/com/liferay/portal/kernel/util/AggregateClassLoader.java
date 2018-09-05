@@ -221,9 +221,8 @@ public class AggregateClassLoader extends ClassLoader {
 		if (_classLoaderReferences != null) {
 			return _classLoaderReferences.hashCode();
 		}
-		else {
-			return 0;
-		}
+
+		return 0;
 	}
 
 	@Override

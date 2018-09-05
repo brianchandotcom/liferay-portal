@@ -96,9 +96,8 @@ public class RequiresScopeAnnotationFinder {
 
 			return true;
 		}
-		else {
-			return false;
-		}
+
+		return false;
 	}
 
 	private static boolean _isHttpMethod(Method method) {

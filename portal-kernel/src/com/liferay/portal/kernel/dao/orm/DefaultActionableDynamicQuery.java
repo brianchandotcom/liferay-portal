@@ -335,10 +335,8 @@ public class DefaultActionableDynamicQuery implements ActionableDynamicQuery {
 			if (transactionConfig == null) {
 				return callable.call();
 			}
-			else {
-				return TransactionInvokerUtil.invoke(
-					transactionConfig, callable);
-			}
+
+			return TransactionInvokerUtil.invoke(transactionConfig, callable);
 		}
 		catch (Throwable t) {
 			if (t instanceof PortalException) {

@@ -78,12 +78,11 @@ public class DDMWebRequestHelper extends BaseRequestHelper {
 					new GroupServiceSettingsLocator(
 						getSiteGroupId(), DDMConstants.SERVICE_NAME)));
 		}
-		else {
-			return (T)ConfigurationProviderUtil.getConfiguration(
-				clazz,
-				new GroupServiceSettingsLocator(
-					getSiteGroupId(), DDMConstants.SERVICE_NAME));
-		}
+
+		return (T)ConfigurationProviderUtil.getConfiguration(
+			clazz,
+			new GroupServiceSettingsLocator(
+				getSiteGroupId(), DDMConstants.SERVICE_NAME));
 	}
 
 	private DDMGroupServiceConfiguration _ddmGroupServiceConfiguration;

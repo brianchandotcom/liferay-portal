@@ -115,9 +115,8 @@ public class SimpleCaptchaImpl implements Captcha {
 		if (_captchaConfiguration.maxChallenges() >= 0) {
 			return true;
 		}
-		else {
-			return false;
-		}
+
+		return false;
 	}
 
 	@Override
@@ -129,9 +128,8 @@ public class SimpleCaptchaImpl implements Captcha {
 		if (_captchaConfiguration.maxChallenges() >= 0) {
 			return true;
 		}
-		else {
-			return false;
-		}
+
+		return false;
 	}
 
 	@Override

@@ -103,9 +103,8 @@ public class CommentAssetRenderer
 
 			return "/asset/discussion_" + template + ".jsp";
 		}
-		else {
-			return null;
-		}
+
+		return null;
 	}
 
 	@Override

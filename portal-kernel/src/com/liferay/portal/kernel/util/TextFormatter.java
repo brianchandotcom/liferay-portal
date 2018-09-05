@@ -153,9 +153,8 @@ public class TextFormatter {
 		else if (style == Q) {
 			return _formatQ(s);
 		}
-		else {
-			return s;
-		}
+
+		return s;
 	}
 
 	public static String formatName(String name) {
@@ -367,10 +366,9 @@ public class TextFormatter {
 
 			return s;
 		}
-		else {
-			return s = StringUtil.toLowerCase(s.substring(0, 1)).concat(
-				s.substring(1));
-		}
+
+		return s = StringUtil.toLowerCase(s.substring(0, 1)).concat(
+			s.substring(1));
 	}
 
 	private static String _formatM(String s) {

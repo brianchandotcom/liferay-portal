@@ -129,9 +129,8 @@ public class OpenSearchUtil {
 		if (NO_NAMESPACE == namespaceType) {
 			return SAXReaderUtil.createQName(name);
 		}
-		else {
-			return SAXReaderUtil.createQName(name, getNamespace(namespaceType));
-		}
+
+		return SAXReaderUtil.createQName(name, getNamespace(namespaceType));
 	}
 
 	private static final Format _dateFormat =

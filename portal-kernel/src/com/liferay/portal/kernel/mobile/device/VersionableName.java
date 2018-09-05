@@ -114,9 +114,8 @@ public class VersionableName
 		if (_name != null) {
 			return _name.hashCode();
 		}
-		else {
-			return 0;
-		}
+
+		return 0;
 	}
 
 	@Override

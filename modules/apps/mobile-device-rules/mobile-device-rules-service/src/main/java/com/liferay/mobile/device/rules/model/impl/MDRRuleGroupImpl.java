@@ -30,9 +30,8 @@ public class MDRRuleGroupImpl extends MDRRuleGroupBaseImpl {
 		if (getRuleGroupId() > 0) {
 			return MDRRuleLocalServiceUtil.getRules(getRuleGroupId());
 		}
-		else {
-			return Collections.emptyList();
-		}
+
+		return Collections.emptyList();
 	}
 
 }

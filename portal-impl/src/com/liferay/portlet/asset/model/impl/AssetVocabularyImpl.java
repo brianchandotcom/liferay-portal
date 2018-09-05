@@ -79,9 +79,8 @@ public class AssetVocabularyImpl extends AssetVocabularyBaseImpl {
 		if (_vocabularySettingsHelper == null) {
 			return super.getSettings();
 		}
-		else {
-			return _vocabularySettingsHelper.toString();
-		}
+
+		return _vocabularySettingsHelper.toString();
 	}
 
 	/**

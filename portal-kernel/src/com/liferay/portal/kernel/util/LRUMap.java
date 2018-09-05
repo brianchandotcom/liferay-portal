@@ -33,9 +33,8 @@ public class LRUMap<K, V> extends LinkedHashMap<K, V> {
 		if (size() > _capacity) {
 			return true;
 		}
-		else {
-			return false;
-		}
+
+		return false;
 	}
 
 	private final int _capacity;

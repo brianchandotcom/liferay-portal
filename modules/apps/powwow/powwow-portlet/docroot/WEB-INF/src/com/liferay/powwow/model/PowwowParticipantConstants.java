@@ -40,9 +40,8 @@ public class PowwowParticipantConstants {
 		else if (type == TYPE_HOST) {
 			return LABEL_HOST;
 		}
-		else {
-			return StringPool.BLANK;
-		}
+
+		return StringPool.BLANK;
 	}
 
 }

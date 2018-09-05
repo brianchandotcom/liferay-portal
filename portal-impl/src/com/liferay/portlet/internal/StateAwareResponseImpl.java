@@ -64,9 +64,8 @@ public abstract class StateAwareResponseImpl
 
 			return portletApp.getDefaultNamespace();
 		}
-		else {
-			return XMLConstants.NULL_NS_URI;
-		}
+
+		return XMLConstants.NULL_NS_URI;
 	}
 
 	@Override

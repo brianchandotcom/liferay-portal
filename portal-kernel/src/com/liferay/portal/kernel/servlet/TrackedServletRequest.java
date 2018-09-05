@@ -36,9 +36,8 @@ public class TrackedServletRequest extends HttpServletRequestWrapper {
 		if (_setAttributes == null) {
 			return Collections.emptySet();
 		}
-		else {
-			return _setAttributes;
-		}
+
+		return _setAttributes;
 	}
 
 	@Override

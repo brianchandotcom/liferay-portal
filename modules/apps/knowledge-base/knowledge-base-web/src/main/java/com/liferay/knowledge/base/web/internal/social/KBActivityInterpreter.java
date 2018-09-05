@@ -149,25 +149,22 @@ public class KBActivityInterpreter extends BaseSocialActivityInterpreter {
 				if (Validator.isNull(groupName)) {
 					return "activity-knowledge-base-admin-add-kb-article";
 				}
-				else {
-					return "activity-knowledge-base-admin-add-kb-article-in";
-				}
+
+				return "activity-knowledge-base-admin-add-kb-article-in";
 			}
 			else if (activity.getType() == KBActivityKeys.MOVE_KB_ARTICLE) {
 				if (Validator.isNull(groupName)) {
 					return "activity-knowledge-base-admin-move-kb-article";
 				}
-				else {
-					return "activity-knowledge-base-admin-move-kb-article-in";
-				}
+
+				return "activity-knowledge-base-admin-move-kb-article-in";
 			}
 			else if (activity.getType() == KBActivityKeys.UPDATE_KB_ARTICLE) {
 				if (Validator.isNull(groupName)) {
 					return "activity-knowledge-base-admin-update-kb-article";
 				}
-				else {
-					return "activity-knowledge-base-admin-update-kb-article-in";
-				}
+
+				return "activity-knowledge-base-admin-update-kb-article-in";
 			}
 		}
 		else if (className.equals(KBComment.class.getName())) {
@@ -175,17 +172,15 @@ public class KBActivityInterpreter extends BaseSocialActivityInterpreter {
 				if (Validator.isNull(groupName)) {
 					return "activity-knowledge-base-admin-add-kb-comment";
 				}
-				else {
-					return "activity-knowledge-base-admin-add-kb-comment-in";
-				}
+
+				return "activity-knowledge-base-admin-add-kb-comment-in";
 			}
 			else if (activity.getType() == KBActivityKeys.UPDATE_KB_COMMENT) {
 				if (Validator.isNull(groupName)) {
 					return "activity-knowledge-base-admin-update-kb-comment";
 				}
-				else {
-					return "activity-knowledge-base-admin-update-kb-comment-in";
-				}
+
+				return "activity-knowledge-base-admin-update-kb-comment-in";
 			}
 		}
 		else if (className.equals(KBTemplate.class.getName())) {
@@ -193,18 +188,15 @@ public class KBActivityInterpreter extends BaseSocialActivityInterpreter {
 				if (Validator.isNull(groupName)) {
 					return "activity-knowledge-base-admin-add-kb-template";
 				}
-				else {
-					return "activity-knowledge-base-admin-add-kb-template-in";
-				}
+
+				return "activity-knowledge-base-admin-add-kb-template-in";
 			}
 			else if (activity.getType() == KBActivityKeys.UPDATE_KB_TEMPLATE) {
 				if (Validator.isNull(groupName)) {
 					return "activity-knowledge-base-admin-update-kb-template";
 				}
-				else {
-					return
-						"activity-knowledge-base-admin-update-kb-template-in";
-				}
+
+				return "activity-knowledge-base-admin-update-kb-template-in";
 			}
 		}
 

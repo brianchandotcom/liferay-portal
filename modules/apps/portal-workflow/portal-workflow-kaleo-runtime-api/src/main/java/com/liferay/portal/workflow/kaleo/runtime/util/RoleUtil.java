@@ -91,9 +91,8 @@ public class RoleUtil {
 
 			return RoleConstants.TYPE_SITE;
 		}
-		else {
-			return RoleConstants.TYPE_REGULAR;
-		}
+
+		return RoleConstants.TYPE_REGULAR;
 	}
 
 	private static final String _LEGACY_TYPE_COMMUNITY_LABEL = "community";

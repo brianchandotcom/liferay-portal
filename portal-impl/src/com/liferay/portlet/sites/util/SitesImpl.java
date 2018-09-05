@@ -1239,9 +1239,8 @@ public class SitesImpl implements Sites {
 
 			return true;
 		}
-		else {
-			return false;
-		}
+
+		return false;
 	}
 
 	@Override

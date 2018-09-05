@@ -92,9 +92,8 @@ public class PortletPreferencesImpl
 
 			return true;
 		}
-		else {
-			return false;
-		}
+
+		return false;
 	}
 
 	public long getPlid() {

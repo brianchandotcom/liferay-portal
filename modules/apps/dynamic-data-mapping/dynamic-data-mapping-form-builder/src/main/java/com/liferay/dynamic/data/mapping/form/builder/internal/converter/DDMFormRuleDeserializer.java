@@ -133,9 +133,8 @@ public class DDMFormRuleDeserializer {
 		else if (action.equals("jump-to-page")) {
 			return JumpToPageDDMFormRuleAction.class;
 		}
-		else {
-			return DefaultDDMFormRuleAction.class;
-		}
+
+		return DefaultDDMFormRuleAction.class;
 	}
 
 	@Reference

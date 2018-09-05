@@ -499,9 +499,8 @@ public class TableMapperImpl<L extends BaseModel<L>, R extends BaseModel<R>>
 		if (Arrays.binarySearch(rightPrimaryKeys, rightPrimaryKey) < 0) {
 			return false;
 		}
-		else {
-			return true;
-		}
+
+		return true;
 	}
 
 	protected SqlUpdate addTableMappingSqlUpdate;

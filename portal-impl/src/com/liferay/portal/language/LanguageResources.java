@@ -119,9 +119,8 @@ public class LanguageResources {
 		if (value == null) {
 			return getMessage(getSuperLocale(locale), key);
 		}
-		else {
-			return value;
-		}
+
+		return value;
 	}
 
 	public static ResourceBundle getResourceBundle(Locale locale) {

@@ -116,10 +116,9 @@ public class DDMTemplateResourceParser implements TemplateResourceParser {
 			if (ddmTemplate == null) {
 				return null;
 			}
-			else {
-				return new DDMTemplateResource(
-					ddmTemplate.getTemplateKey(), ddmTemplate);
-			}
+
+			return new DDMTemplateResource(
+				ddmTemplate.getTemplateKey(), ddmTemplate);
 		}
 		catch (Exception e) {
 			throw new TemplateException(

@@ -40,9 +40,8 @@ public class BooleanClauseOccurImpl implements BooleanClauseOccur {
 		if (_name.equals(name)) {
 			return true;
 		}
-		else {
-			return false;
-		}
+
+		return false;
 	}
 
 	@Override

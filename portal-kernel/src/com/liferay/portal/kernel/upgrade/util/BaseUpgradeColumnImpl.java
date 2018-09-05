@@ -51,9 +51,8 @@ public abstract class BaseUpgradeColumnImpl implements UpgradeColumn {
 		if (_oldColumnType == null) {
 			return defaultType;
 		}
-		else {
-			return _oldColumnType;
-		}
+
+		return _oldColumnType;
 	}
 
 	@Override
@@ -73,9 +72,8 @@ public abstract class BaseUpgradeColumnImpl implements UpgradeColumn {
 		if (_name.equals(name)) {
 			return true;
 		}
-		else {
-			return false;
-		}
+
+		return false;
 	}
 
 	@Override

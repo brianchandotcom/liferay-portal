@@ -882,9 +882,8 @@ public class DLFileEntryFinderImpl
 
 			return StringUtil.replace(sql, "[$FOLDER_ID$]", sb.toString());
 		}
-		else {
-			return StringUtil.replace(sql, "[$FOLDER_ID$]", StringPool.BLANK);
-		}
+
+		return StringUtil.replace(sql, "[$FOLDER_ID$]", StringPool.BLANK);
 	}
 
 	protected String getFolderIds(List<Long> folderIds, String tableName) {

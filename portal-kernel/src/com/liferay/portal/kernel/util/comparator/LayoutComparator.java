@@ -49,9 +49,8 @@ public class LayoutComparator extends OrderByComparator<Layout> {
 			if (_ascending) {
 				return value;
 			}
-			else {
-				return -value;
-			}
+
+			return -value;
 		}
 
 		Long layoutId1 = Long.valueOf(layout1.getLayoutId());
@@ -62,9 +61,8 @@ public class LayoutComparator extends OrderByComparator<Layout> {
 		if (_ascending) {
 			return value;
 		}
-		else {
-			return -value;
-		}
+
+		return -value;
 	}
 
 	@Override
@@ -72,9 +70,8 @@ public class LayoutComparator extends OrderByComparator<Layout> {
 		if (_ascending) {
 			return ORDER_BY_ASC;
 		}
-		else {
-			return ORDER_BY_DESC;
-		}
+
+		return ORDER_BY_DESC;
 	}
 
 	@Override

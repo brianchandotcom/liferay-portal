@@ -1657,9 +1657,8 @@ public class BaseIntrabandTest {
 
 				return 14;
 			}
-			else {
-				return -1;
-			}
+
+			return -1;
 		}
 
 		@Override

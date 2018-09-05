@@ -198,9 +198,8 @@ public class AssetVocabularySettingsHelper {
 		if (parts.length == 1) {
 			return AssetCategoryConstants.ALL_CLASS_TYPE_PK;
 		}
-		else {
-			return GetterUtil.getLong(parts[1]);
-		}
+
+		return GetterUtil.getLong(parts[1]);
 	}
 
 	protected long[] getClassTypePKs(String[] classNameIdsAndClassTypePKs) {

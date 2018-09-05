@@ -154,9 +154,8 @@ public class EntityFinder {
 		if ((_returnType != null) && _returnType.equals("Collection")) {
 			return true;
 		}
-		else {
-			return false;
-		}
+
+		return false;
 	}
 
 	public boolean isDBIndex() {

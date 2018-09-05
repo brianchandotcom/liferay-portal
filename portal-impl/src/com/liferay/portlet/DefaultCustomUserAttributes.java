@@ -58,9 +58,8 @@ public class DefaultCustomUserAttributes implements CustomUserAttributes {
 
 			return names[RandomUtil.nextInt(3)];
 		}
-		else {
-			return null;
-		}
+
+		return null;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

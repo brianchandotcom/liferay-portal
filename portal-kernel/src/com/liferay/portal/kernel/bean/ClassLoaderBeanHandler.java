@@ -58,9 +58,8 @@ public class ClassLoaderBeanHandler implements InvocationHandler {
 					if (proxy == arguments[0]) {
 						return true;
 					}
-					else {
-						return false;
-					}
+
+					return false;
 				}
 			}
 

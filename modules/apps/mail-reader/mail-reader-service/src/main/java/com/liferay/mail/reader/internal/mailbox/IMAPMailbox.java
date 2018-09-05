@@ -134,11 +134,10 @@ public class IMAPMailbox extends BaseMailbox {
 			return new DefaultAttachmentHandler(
 				AttachmentLocalServiceUtil.getInputStream(attachmentId), null);
 		}
-		else {
-			return _imapAccessor.getAttachment(
-				attachment.getFolderId(), message.getRemoteMessageId(),
-				attachment.getContentPath());
-		}
+
+		return _imapAccessor.getAttachment(
+			attachment.getFolderId(), message.getRemoteMessageId(),
+			attachment.getContentPath());
 	}
 
 	@Override

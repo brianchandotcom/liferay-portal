@@ -388,9 +388,8 @@ public class ResourceActionsImpl implements ResourceActions {
 		if (resources == null) {
 			return new ArrayList<>();
 		}
-		else {
-			return new ArrayList<>(resources);
-		}
+
+		return new ArrayList<>(resources);
 	}
 
 	@Override
@@ -512,9 +511,8 @@ public class ResourceActionsImpl implements ResourceActions {
 		if (name.indexOf(CharPool.PERIOD) != -1) {
 			return getModelResourceActions(name);
 		}
-		else {
-			return getPortletResourceActions(name);
-		}
+
+		return getPortletResourceActions(name);
 	}
 
 	@Override
@@ -538,9 +536,8 @@ public class ResourceActionsImpl implements ResourceActions {
 		if (name.contains(StringPool.PERIOD)) {
 			return getModelResourceGroupDefaultActions(name);
 		}
-		else {
-			return getPortletResourceGroupDefaultActions(name);
-		}
+
+		return getPortletResourceGroupDefaultActions(name);
 	}
 
 	@Override
@@ -590,9 +587,8 @@ public class ResourceActionsImpl implements ResourceActions {
 		if ((modelActions != null) && !modelActions.isEmpty()) {
 			return true;
 		}
-		else {
-			return false;
-		}
+
+		return false;
 	}
 
 	@Override
@@ -600,9 +596,8 @@ public class ResourceActionsImpl implements ResourceActions {
 		if (_organizationModelResources.contains(modelResource)) {
 			return true;
 		}
-		else {
-			return false;
-		}
+
+		return false;
 	}
 
 	@Override
@@ -610,9 +605,8 @@ public class ResourceActionsImpl implements ResourceActions {
 		if (_portalModelResources.contains(modelResource)) {
 			return true;
 		}
-		else {
-			return false;
-		}
+
+		return false;
 	}
 
 	@Override
@@ -620,9 +614,8 @@ public class ResourceActionsImpl implements ResourceActions {
 		if (_rootModelResources.contains(modelResource)) {
 			return true;
 		}
-		else {
-			return false;
-		}
+
+		return false;
 	}
 
 	@Override
@@ -865,9 +858,8 @@ public class ResourceActionsImpl implements ResourceActions {
 		if (permissionsElement != null) {
 			return permissionsElement.element(childElementName);
 		}
-		else {
-			return parentElement.element(childElementName);
-		}
+
+		return parentElement.element(childElementName);
 	}
 
 	private Set<String> _getPortletMimeTypeActions(

@@ -513,9 +513,8 @@ public class LayoutTypePortletImpl
 		if (stateMax.length > 0) {
 			return stateMax[0];
 		}
-		else {
-			return StringPool.BLANK;
-		}
+
+		return StringPool.BLANK;
 	}
 
 	@Override
@@ -597,9 +596,8 @@ public class LayoutTypePortletImpl
 
 			return false;
 		}
-		else {
-			return true;
-		}
+
+		return true;
 	}
 
 	@Override
@@ -657,9 +655,8 @@ public class LayoutTypePortletImpl
 		if (stateMax.length > 0) {
 			return true;
 		}
-		else {
-			return false;
-		}
+
+		return false;
 	}
 
 	@Override
@@ -667,9 +664,8 @@ public class LayoutTypePortletImpl
 		if (StringUtil.contains(getStateMax(), portletId)) {
 			return true;
 		}
-		else {
-			return false;
-		}
+
+		return false;
 	}
 
 	@Override
@@ -679,9 +675,8 @@ public class LayoutTypePortletImpl
 		if (stateMin.length > 0) {
 			return true;
 		}
-		else {
-			return false;
-		}
+
+		return false;
 	}
 
 	@Override
@@ -689,9 +684,8 @@ public class LayoutTypePortletImpl
 		if (StringUtil.contains(getStateMin(), portletId)) {
 			return true;
 		}
-		else {
-			return false;
-		}
+
+		return false;
 	}
 
 	@Override
@@ -701,9 +695,8 @@ public class LayoutTypePortletImpl
 
 			return false;
 		}
-		else {
-			return true;
-		}
+
+		return true;
 	}
 
 	@Override

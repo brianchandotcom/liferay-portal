@@ -110,9 +110,8 @@ public class SoftReferencePool<V, P> {
 		if (_useWeakCounter) {
 			return _weakCounter.get();
 		}
-		else {
-			return _softReferences.size();
-		}
+
+		return _softReferences.size();
 	}
 
 	private final int _maxIdleSize;

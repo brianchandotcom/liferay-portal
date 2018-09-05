@@ -27,9 +27,8 @@ public class NumberFormatUtil {
 		if (Double.isNaN(number) || Double.isInfinite(number)) {
 			return numberFormat.format(defaultValue);
 		}
-		else {
-			return numberFormat.format(number);
-		}
+
+		return numberFormat.format(number);
 	}
 
 	public static String format(
@@ -38,9 +37,8 @@ public class NumberFormatUtil {
 		if (Float.isNaN(number) || Float.isInfinite(number)) {
 			return numberFormat.format(defaultValue);
 		}
-		else {
-			return numberFormat.format(number);
-		}
+
+		return numberFormat.format(number);
 	}
 
 }

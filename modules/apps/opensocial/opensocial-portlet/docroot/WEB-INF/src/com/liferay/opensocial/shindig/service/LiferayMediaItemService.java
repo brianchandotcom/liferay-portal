@@ -491,9 +491,8 @@ public class LiferayMediaItemService implements MediaItemService {
 		if (fileNameMatcher.find()) {
 			return fileNameMatcher.group(1);
 		}
-		else {
-			return mediaItem.getTitle();
-		}
+
+		return mediaItem.getTitle();
 	}
 
 	protected MediaItem toMediaItem(
@@ -542,9 +541,8 @@ public class LiferayMediaItemService implements MediaItemService {
 		else if (contentType.startsWith("video")) {
 			return MediaItem.Type.VIDEO;
 		}
-		else {
-			return null;
-		}
+
+		return null;
 	}
 
 	private static final MediaItem.Field[] _MEDIA_ITEM_FIELDS = {

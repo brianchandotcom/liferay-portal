@@ -1330,9 +1330,8 @@ public class BaseDeployer implements AutoDeployer, Deployer {
 
 			return ignoreFiltersContent;
 		}
-		else {
-			return StringPool.BLANK;
-		}
+
+		return StringPool.BLANK;
 	}
 
 	public String getInvokerFilterContent() {
@@ -1610,9 +1609,8 @@ public class BaseDeployer implements AutoDeployer, Deployer {
 
 			return speedFiltersContent;
 		}
-		else {
-			return StringPool.BLANK;
-		}
+
+		return StringPool.BLANK;
 	}
 
 	public boolean isJEEDeploymentEnabled() {

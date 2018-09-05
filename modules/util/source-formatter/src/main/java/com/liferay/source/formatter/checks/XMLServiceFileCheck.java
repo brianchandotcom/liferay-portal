@@ -299,9 +299,8 @@ public class XMLServiceFileCheck extends BaseFileCheck {
 
 					return 1;
 				}
-				else {
-					return strippedFinderName1.compareTo(strippedFinderName2);
-				}
+
+				return strippedFinderName1.compareTo(strippedFinderName2);
 			}
 
 			return 0;

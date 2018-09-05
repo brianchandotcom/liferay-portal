@@ -1270,9 +1270,8 @@ public class GetterUtil {
 		if (negative) {
 			return result;
 		}
-		else {
-			return -result;
-		}
+
+		return -result;
 	}
 
 	/**
@@ -1458,9 +1457,8 @@ public class GetterUtil {
 		if (negative) {
 			return result;
 		}
-		else {
-			return -result;
-		}
+
+		return -result;
 	}
 
 	/**
@@ -2039,9 +2037,8 @@ public class GetterUtil {
 		if (negative) {
 			return result;
 		}
-		else {
-			return -result;
-		}
+
+		return -result;
 	}
 
 	private static long _parseLong(String value, long defaultValue) {
@@ -2102,9 +2099,8 @@ public class GetterUtil {
 		if (negative) {
 			return result;
 		}
-		else {
-			return -result;
-		}
+
+		return -result;
 	}
 
 	private static short _parseShort(String value, short defaultValue) {

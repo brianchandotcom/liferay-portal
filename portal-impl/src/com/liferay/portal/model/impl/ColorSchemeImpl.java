@@ -68,9 +68,8 @@ public class ColorSchemeImpl implements ColorScheme {
 		if (getColorSchemeId().equals(colorSchemeId)) {
 			return true;
 		}
-		else {
-			return false;
-		}
+
+		return false;
 	}
 
 	@Override
@@ -123,9 +122,8 @@ public class ColorSchemeImpl implements ColorScheme {
 		if (Validator.isNull(_name)) {
 			return _colorSchemeId;
 		}
-		else {
-			return _name;
-		}
+
+		return _name;
 	}
 
 	@Override
@@ -137,9 +135,8 @@ public class ColorSchemeImpl implements ColorScheme {
 		if (key.endsWith("-bg")) {
 			return "#FFFFFF";
 		}
-		else {
-			return "#000000";
-		}
+
+		return "#000000";
 	}
 
 	@Override

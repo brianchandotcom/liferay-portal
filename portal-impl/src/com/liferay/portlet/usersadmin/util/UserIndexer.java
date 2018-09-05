@@ -302,9 +302,8 @@ public class UserIndexer extends BaseIndexer<User> {
 		else if (orderByCol.equals("screen-name")) {
 			return "screenName";
 		}
-		else {
-			return orderByCol;
-		}
+
+		return orderByCol;
 	}
 
 	@Override

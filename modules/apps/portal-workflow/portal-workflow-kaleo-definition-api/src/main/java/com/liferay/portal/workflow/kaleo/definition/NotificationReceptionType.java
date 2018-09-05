@@ -28,9 +28,8 @@ public enum NotificationReceptionType {
 		else if (CC.getValue().equals(value)) {
 			return CC;
 		}
-		else {
-			return TO;
-		}
+
+		return TO;
 	}
 
 	public String getValue() {

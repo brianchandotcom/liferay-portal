@@ -51,9 +51,8 @@ public class LinkNode extends URLNode {
 		if (_altCollectionNode != null) {
 			return true;
 		}
-		else {
-			return false;
-		}
+
+		return false;
 	}
 
 	public void setAltCollectionNode(CollectionNode altCollectionNode) {

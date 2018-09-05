@@ -68,9 +68,8 @@ public class EncryptedServletRequest extends HttpServletRequestWrapper {
 		if (ArrayUtil.isNotEmpty(values)) {
 			return values[0];
 		}
-		else {
-			return null;
-		}
+
+		return null;
 	}
 
 	@Override

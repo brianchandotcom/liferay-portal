@@ -60,9 +60,8 @@ public class TLiferayConnectionDefinition
 		if (connectorTopology == ConnectorTopology.NONE) {
 			return getCommonRuntimeInfo(RUNTIME_SOURCE_OR_SINK_CLASS_NAME);
 		}
-		else {
-			return null;
-		}
+
+		return null;
 	}
 
 	@Override

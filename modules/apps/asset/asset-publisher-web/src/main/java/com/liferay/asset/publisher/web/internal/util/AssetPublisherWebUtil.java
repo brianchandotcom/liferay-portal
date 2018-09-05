@@ -279,10 +279,9 @@ public class AssetPublisherWebUtil {
 		if (Validator.isNotNull(emailAssetEntryAddedEnabled)) {
 			return GetterUtil.getBoolean(emailAssetEntryAddedEnabled);
 		}
-		else {
-			return _assetPublisherPortletInstanceConfiguration.
-				emailAssetEntryAddedEnabled();
-		}
+
+		return _assetPublisherPortletInstanceConfiguration.
+			emailAssetEntryAddedEnabled();
 	}
 
 	public Map<Locale, String> getEmailAssetEntryAddedSubjectMap(
@@ -630,9 +629,8 @@ public class AssetPublisherWebUtil {
 		if (classTypeIds != null) {
 			return classTypeIds;
 		}
-		else {
-			return availableClassTypeIds;
-		}
+
+		return availableClassTypeIds;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

@@ -64,9 +64,8 @@ public abstract class BaseWorkflowHandler<T> implements WorkflowHandler<T> {
 			return assetRendererFactory.getAssetRenderer(
 				classPK, AssetRendererFactory.TYPE_LATEST);
 		}
-		else {
-			return null;
-		}
+
+		return null;
 	}
 
 	@Override

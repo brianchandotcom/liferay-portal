@@ -69,9 +69,8 @@ public class KeyValuePair implements Comparable<KeyValuePair>, Serializable {
 		if (_key != null) {
 			return _key.hashCode();
 		}
-		else {
-			return 0;
-		}
+
+		return 0;
 	}
 
 	public void setKey(String key) {

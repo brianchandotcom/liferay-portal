@@ -3059,9 +3059,8 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			if (elapsedTime > (passwordPolicy.getMaxAge() * 1000)) {
 				return true;
 			}
-			else {
-				return false;
-			}
+
+			return false;
 		}
 
 		return false;
@@ -3106,9 +3105,8 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			if (now.getTime() > timeStartWarning) {
 				return true;
 			}
-			else {
-				return false;
-			}
+
+			return false;
 		}
 
 		return false;

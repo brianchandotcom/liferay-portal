@@ -443,9 +443,8 @@ public class WorkflowInstanceViewDisplayContext
 		if (isNavigationCompleted()) {
 			return Boolean.TRUE;
 		}
-		else {
-			return Boolean.FALSE;
-		}
+
+		return Boolean.FALSE;
 	}
 
 	protected WorkflowLog getLatestWorkflowLog(

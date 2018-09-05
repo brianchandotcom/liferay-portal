@@ -55,10 +55,8 @@ public class GroupSubscriptionCheckSubscriptionSender
 				permissionChecker, _resourceName, subscription.getClassPK(),
 				ActionKeys.SUBSCRIBE);
 		}
-		else {
-			return super.hasSubscribePermission(
-				permissionChecker, subscription);
-		}
+
+		return super.hasSubscribePermission(permissionChecker, subscription);
 	}
 
 	private final String _resourceName;

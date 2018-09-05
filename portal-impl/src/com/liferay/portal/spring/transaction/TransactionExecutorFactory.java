@@ -32,9 +32,8 @@ public class TransactionExecutorFactory {
 
 				return new CounterCallbackPreferringTransactionExecutor();
 			}
-			else {
-				return new CounterTransactionExecutor();
-			}
+
+			return new CounterTransactionExecutor();
 		}
 		else {
 			if (platformTransactionManager instanceof
@@ -42,9 +41,8 @@ public class TransactionExecutorFactory {
 
 				return new CallbackPreferringTransactionExecutor();
 			}
-			else {
-				return new DefaultTransactionExecutor();
-			}
+
+			return new DefaultTransactionExecutor();
 		}
 	}
 

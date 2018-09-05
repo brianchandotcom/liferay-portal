@@ -59,9 +59,8 @@ public class AnnotationTransactionAttributeSource
 			if (transactionAttribute == _nullTransactionAttribute) {
 				return null;
 			}
-			else {
-				return transactionAttribute;
-			}
+
+			return transactionAttribute;
 		}
 
 		Transactional transactional = AnnotationLocator.locate(

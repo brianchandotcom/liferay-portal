@@ -132,9 +132,8 @@ public class WebDAVRequestImpl implements WebDAVRequest {
 		if (isMac() && name.startsWith(_APPLE_DOUBLE_PREFIX)) {
 			return true;
 		}
-		else {
-			return false;
-		}
+
+		return false;
 	}
 
 	@Override

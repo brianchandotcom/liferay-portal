@@ -45,9 +45,8 @@ public class StAXReaderUtil {
 
 			return characters.getData();
 		}
-		else {
-			return StringPool.BLANK;
-		}
+
+		return StringPool.BLANK;
 	}
 
 	private static XMLInputFactory _createXMLInputFactory() {

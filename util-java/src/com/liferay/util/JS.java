@@ -111,9 +111,8 @@ public class JS {
 		if (sb == null) {
 			return name;
 		}
-		else {
-			return sb.toString();
-		}
+
+		return sb.toString();
 	}
 
 	public static String toScript(String[] array) {

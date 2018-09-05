@@ -166,9 +166,8 @@ public class MBBanLocalServiceImpl extends MBBanLocalServiceBaseImpl {
 		if (mbBanPersistence.fetchByG_B(groupId, banUserId) == null) {
 			return false;
 		}
-		else {
-			return true;
-		}
+
+		return true;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

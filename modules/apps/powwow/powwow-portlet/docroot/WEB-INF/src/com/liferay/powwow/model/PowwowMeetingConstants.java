@@ -56,9 +56,8 @@ public class PowwowMeetingConstants {
 		else if (status == STATUS_SCHEDULED) {
 			return LABEL_SCHEDULED;
 		}
-		else {
-			return StringPool.BLANK;
-		}
+
+		return StringPool.BLANK;
 	}
 
 }

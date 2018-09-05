@@ -50,9 +50,8 @@ public class ShutdownUtil {
 		if (_date.after(new Date())) {
 			return true;
 		}
-		else {
-			return false;
-		}
+
+		return false;
 	}
 
 	public static boolean isShutdown() {
@@ -63,9 +62,8 @@ public class ShutdownUtil {
 		if (_date.before(new Date())) {
 			return true;
 		}
-		else {
-			return false;
-		}
+
+		return false;
 	}
 
 	public static void shutdown(long milliseconds) {

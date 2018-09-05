@@ -189,9 +189,8 @@ public class Base64OutputStream extends OutputStream {
 		if (sixbit != 63) {
 			return CharPool.QUESTION;
 		}
-		else {
-			return CharPool.SLASH;
-		}
+
+		return CharPool.SLASH;
 	}
 
 	private final byte[] _outputBuffer;

@@ -106,9 +106,8 @@ public class ExportImportConfigurationConstants {
 		else if (type == TYPE_SCHEDULED_PUBLISH_LAYOUT_REMOTE) {
 			return TYPE_SCHEDULED_PUBLISH_LAYOUT_REMOTE_LABEL;
 		}
-		else {
-			return StringPool.BLANK;
-		}
+
+		return StringPool.BLANK;
 	}
 
 }

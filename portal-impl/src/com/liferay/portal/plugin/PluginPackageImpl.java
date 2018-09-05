@@ -208,9 +208,8 @@ public class PluginPackageImpl
 		if (_repository != null) {
 			return _repository.getRepositoryURL();
 		}
-		else {
-			return RemotePluginPackageRepository.LOCAL_URL;
-		}
+
+		return RemotePluginPackageRepository.LOCAL_URL;
 	}
 
 	@Override

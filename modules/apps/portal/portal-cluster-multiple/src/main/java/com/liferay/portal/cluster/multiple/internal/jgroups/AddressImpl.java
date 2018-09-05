@@ -40,9 +40,8 @@ public class AddressImpl implements com.liferay.portal.kernel.cluster.Address {
 		if (_address.equals(addressImpl._address)) {
 			return true;
 		}
-		else {
-			return false;
-		}
+
+		return false;
 	}
 
 	@Override

@@ -79,9 +79,8 @@ public class ByteChannelReader {
 		if (_readableByteChannel instanceof SeekableByteChannel) {
 			return true;
 		}
-		else {
-			return false;
-		}
+
+		return false;
 	}
 
 	public void maybeRead(int length) throws IOException {

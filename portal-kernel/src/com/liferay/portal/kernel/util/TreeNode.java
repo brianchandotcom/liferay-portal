@@ -74,9 +74,8 @@ public class TreeNode<T extends Comparable<T>> {
 		if (_parentNode == null) {
 			return true;
 		}
-		else {
-			return false;
-		}
+
+		return false;
 	}
 
 	private final List<TreeNode<T>> _childNodes;

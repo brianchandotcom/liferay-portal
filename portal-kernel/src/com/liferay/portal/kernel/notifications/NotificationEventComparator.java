@@ -57,9 +57,8 @@ public class NotificationEventComparator
 		if (_ascending) {
 			return (int)value;
 		}
-		else {
-			return (int)-value;
-		}
+
+		return (int)-value;
 	}
 
 	private final boolean _ascending;

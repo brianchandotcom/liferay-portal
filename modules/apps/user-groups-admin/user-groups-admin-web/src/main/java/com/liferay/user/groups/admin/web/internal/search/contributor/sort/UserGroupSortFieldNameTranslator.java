@@ -38,9 +38,8 @@ public class UserGroupSortFieldNameTranslator
 		else if (orderByCol.equals("name")) {
 			return "name";
 		}
-		else {
-			return orderByCol;
-		}
+
+		return orderByCol;
 	}
 
 }

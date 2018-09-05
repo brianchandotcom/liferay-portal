@@ -847,9 +847,8 @@ public class HtmlImpl implements Html {
 
 			return !Character.isLetter(item);
 		}
-		else {
-			return false;
-		}
+
+		return false;
 	}
 
 	protected int stripTag(char[] tag, String text, int pos) {

@@ -390,9 +390,8 @@ public class ImageProcessorImpl
 		if (mimeType.contains("tiff") || mimeType.contains("tif")) {
 			return true;
 		}
-		else {
-			return false;
-		}
+
+		return false;
 	}
 
 	private void _queueGeneration(

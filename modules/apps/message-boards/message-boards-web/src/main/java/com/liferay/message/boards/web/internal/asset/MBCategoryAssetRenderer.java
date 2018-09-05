@@ -83,9 +83,8 @@ public class MBCategoryAssetRenderer extends BaseJSPAssetRenderer<MBCategory> {
 
 			return "/message_boards/asset/" + template + ".jsp";
 		}
-		else {
-			return null;
-		}
+
+		return null;
 	}
 
 	@Override

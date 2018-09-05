@@ -61,9 +61,8 @@ public class SafeProperties extends Properties {
 		if (key == null) {
 			return null;
 		}
-		else {
-			return super.remove(key);
-		}
+
+		return super.remove(key);
 	}
 
 	private static String _decode(String value) {

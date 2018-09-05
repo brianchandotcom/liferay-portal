@@ -89,9 +89,8 @@ public class Dummy implements Serializable, StagedGroupedModel {
 		if (getPrimaryKey() == primaryKey) {
 			return true;
 		}
-		else {
-			return false;
-		}
+
+		return false;
 	}
 
 	@Override

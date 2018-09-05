@@ -62,9 +62,8 @@ public class PortletDecoratorImpl implements PortletDecorator {
 		if (getPortletDecoratorId().equals(portletDecoratorId)) {
 			return true;
 		}
-		else {
-			return false;
-		}
+
+		return false;
 	}
 
 	@Override
@@ -77,9 +76,8 @@ public class PortletDecoratorImpl implements PortletDecorator {
 		if (Validator.isNull(_name)) {
 			return _portletDecoratorId;
 		}
-		else {
-			return _name;
-		}
+
+		return _name;
 	}
 
 	@Override

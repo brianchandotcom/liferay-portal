@@ -89,9 +89,8 @@ public class MicroblogsEntryAssetRenderer
 
 			return "/microblogs/asset/" + template + ".jsp";
 		}
-		else {
-			return null;
-		}
+
+		return null;
 	}
 
 	@Override

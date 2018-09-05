@@ -134,9 +134,8 @@ public class ParamAndPropertyAncestorTagImpl
 		if (_dynamicServletRequest != null) {
 			return _dynamicServletRequest.getDynamicParameterMap();
 		}
-		else {
-			return null;
-		}
+
+		return null;
 	}
 
 	public Map<String, String[]> getProperties() {

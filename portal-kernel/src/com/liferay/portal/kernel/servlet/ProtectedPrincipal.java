@@ -50,9 +50,8 @@ public class ProtectedPrincipal implements Principal, Serializable {
 		if (name.equals(_name)) {
 			return true;
 		}
-		else {
-			return false;
-		}
+
+		return false;
 	}
 
 	@Override

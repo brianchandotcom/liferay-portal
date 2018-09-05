@@ -931,9 +931,8 @@ public abstract class BaseDB implements DB {
 		if (type == BARE) {
 			return "-bare";
 		}
-		else {
-			return StringPool.BLANK;
-		}
+
+		return StringPool.BLANK;
 	}
 
 	protected abstract String[] getTemplate();
@@ -965,9 +964,8 @@ public abstract class BaseDB implements DB {
 		if (FileUtil.exists(fileName)) {
 			return FileUtil.read(fileName);
 		}
-		else {
-			return StringPool.BLANK;
-		}
+
+		return StringPool.BLANK;
 	}
 
 	protected String readSQL(String fileName, String comments, String eol)

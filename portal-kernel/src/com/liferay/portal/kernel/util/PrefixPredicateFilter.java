@@ -33,9 +33,8 @@ public class PrefixPredicateFilter implements PredicateFilter<String> {
 		if (_include) {
 			return string.startsWith(_prefix);
 		}
-		else {
-			return !string.startsWith(_prefix);
-		}
+
+		return !string.startsWith(_prefix);
 	}
 
 	private final boolean _include;

@@ -69,10 +69,9 @@ public class DDMFormFieldOptionsFactoryImpl
 			return createDDMFormFieldOptionsFromDataProvider(
 				ddmFormField, ddmFormFieldRenderingContext);
 		}
-		else {
-			return createDDMFormFieldOptions(
-				ddmFormField, ddmFormFieldRenderingContext);
-		}
+
+		return createDDMFormFieldOptions(
+			ddmFormField, ddmFormFieldRenderingContext);
 	}
 
 	protected DDMFormFieldOptions createDDMFormFieldOptions(

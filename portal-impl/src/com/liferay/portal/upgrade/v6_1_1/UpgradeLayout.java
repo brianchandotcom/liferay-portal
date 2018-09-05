@@ -72,9 +72,8 @@ public class UpgradeLayout extends UpgradeProcess {
 					if (count > 0) {
 						return true;
 					}
-					else {
-						return false;
-					}
+
+					return false;
 				}
 			}
 		}

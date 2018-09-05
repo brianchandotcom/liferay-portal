@@ -62,9 +62,8 @@ public class DDLDDMDisplay extends BaseDDMDisplay {
 
 					return viewStructuresTitle;
 				}
-				else {
-					return getViewTemplatesTitle(null, locale);
-				}
+
+				return getViewTemplatesTitle(null, locale);
 			}
 
 		};

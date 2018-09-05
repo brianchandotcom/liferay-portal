@@ -80,9 +80,8 @@ public class BuddyComparator implements Comparator<Object[]> {
 		if (_asc) {
 			return value;
 		}
-		else {
-			return -value;
-		}
+
+		return -value;
 	}
 
 	private final boolean _asc;

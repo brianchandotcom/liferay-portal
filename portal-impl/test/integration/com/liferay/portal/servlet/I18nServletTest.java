@@ -311,9 +311,8 @@ public class I18nServletTest {
 		if (group != null) {
 			return PortalUtil.getSiteDefaultLocale(group);
 		}
-		else {
-			return LocaleUtil.getDefault();
-		}
+
+		return LocaleUtil.getDefault();
 	}
 
 	private Locale _getFirstLocale(Group group, String language)
@@ -322,9 +321,8 @@ public class I18nServletTest {
 		if (group != null) {
 			return LanguageUtil.getLocale(group.getGroupId(), language);
 		}
-		else {
-			return LanguageUtil.getLocale(language);
-		}
+
+		return LanguageUtil.getLocale(language);
 	}
 
 	private I18nServlet.I18nData _getI18nData(Group group, String path)

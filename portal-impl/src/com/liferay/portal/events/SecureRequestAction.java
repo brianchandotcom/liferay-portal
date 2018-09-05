@@ -85,9 +85,8 @@ public class SecureRequestAction extends Action {
 		if (unsecureCompleteURL.equals(secureCompleteURL)) {
 			return null;
 		}
-		else {
-			return secureCompleteURL;
-		}
+
+		return secureCompleteURL;
 	}
 
 	protected boolean isRequiresSecure(HttpServletRequest request) {

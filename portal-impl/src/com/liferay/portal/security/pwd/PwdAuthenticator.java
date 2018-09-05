@@ -74,9 +74,8 @@ public class PwdAuthenticator {
 				if (clearTextPassword.equals(encryptedPassword)) {
 					return true;
 				}
-				else {
-					return false;
-				}
+
+				return false;
 			}
 			catch (NoSuchAlgorithmException nsae) {
 				throw new SystemException(nsae);

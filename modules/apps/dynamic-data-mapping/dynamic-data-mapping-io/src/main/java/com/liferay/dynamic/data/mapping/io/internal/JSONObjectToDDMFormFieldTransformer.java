@@ -110,9 +110,8 @@ public class JSONObjectToDDMFormFieldTransformer {
 			return deserializeDDMFormFieldValidation(
 				serializedDDMFormFieldProperty);
 		}
-		else {
-			return serializedDDMFormFieldProperty;
-		}
+
+		return serializedDDMFormFieldProperty;
 	}
 
 	protected DDMFormFieldValidation deserializeDDMFormFieldValidation(

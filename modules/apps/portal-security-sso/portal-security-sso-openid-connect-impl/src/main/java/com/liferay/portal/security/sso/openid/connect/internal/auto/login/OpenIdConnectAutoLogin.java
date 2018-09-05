@@ -83,9 +83,8 @@ public class OpenIdConnectAutoLogin extends BaseAutoLogin {
 
 			return credentials;
 		}
-		else {
-			return null;
-		}
+
+		return null;
 	}
 
 	@Reference

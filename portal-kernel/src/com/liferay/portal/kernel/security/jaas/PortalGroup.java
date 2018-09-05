@@ -41,9 +41,8 @@ public class PortalGroup
 
 			return true;
 		}
-		else {
-			return false;
-		}
+
+		return false;
 	}
 
 	@Override
@@ -77,9 +76,8 @@ public class PortalGroup
 		if (principal != null) {
 			return true;
 		}
-		else {
-			return false;
-		}
+
+		return false;
 	}
 
 	private final Map<Principal, Principal> _members = new HashMap<>();

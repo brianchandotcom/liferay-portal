@@ -48,9 +48,8 @@ public abstract class SimpleXMLDescriptor implements XMLDescriptor {
 
 					return true;
 				}
-				else {
-					return false;
-				}
+
+				return false;
 			}
 		}
 
@@ -63,9 +62,8 @@ public abstract class SimpleXMLDescriptor implements XMLDescriptor {
 
 					return true;
 				}
-				else {
-					return false;
-				}
+
+				return false;
 			}
 		}
 
@@ -74,9 +72,8 @@ public abstract class SimpleXMLDescriptor implements XMLDescriptor {
 		if (comparator.compare(el1, el2) == 0) {
 			return true;
 		}
-		else {
-			return false;
-		}
+
+		return false;
 	}
 
 	@Override

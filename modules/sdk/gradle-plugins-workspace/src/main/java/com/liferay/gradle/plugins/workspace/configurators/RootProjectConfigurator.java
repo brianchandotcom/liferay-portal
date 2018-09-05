@@ -562,9 +562,8 @@ public class RootProjectConfigurator implements Plugin<Project> {
 					if (fileName.endsWith(".tar.gz")) {
 						return project.tarTree(file);
 					}
-					else {
-						return project.zipTree(file);
-					}
+
+					return project.zipTree(file);
 				}
 
 			},

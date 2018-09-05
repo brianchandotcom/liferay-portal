@@ -283,9 +283,8 @@ public class ThemeUtil {
 		if (write) {
 			return null;
 		}
-		else {
-			return writer.toString();
-		}
+
+		return writer.toString();
 	}
 
 	protected static void doIncludeJSP(
@@ -463,9 +462,8 @@ public class ThemeUtil {
 		if (write) {
 			return null;
 		}
-		else {
-			return writer.toString();
-		}
+
+		return writer.toString();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(ThemeUtil.class);

@@ -854,9 +854,8 @@ public class MBThreadFinderImpl
 					return MBThreadUtil.countByG_C_S(
 						groupId, categoryId, queryDefinition.getStatus());
 				}
-				else {
-					return MBThreadUtil.countByG_C(groupId, categoryId);
-				}
+
+				return MBThreadUtil.countByG_C(groupId, categoryId);
 			}
 		}
 
@@ -1042,12 +1041,11 @@ public class MBThreadFinderImpl
 						queryDefinition.getStart(), queryDefinition.getEnd(),
 						queryDefinition.getOrderByComparator());
 				}
-				else {
-					return MBThreadUtil.findByG_C(
-						groupId, categoryId, queryDefinition.getStart(),
-						queryDefinition.getEnd(),
-						queryDefinition.getOrderByComparator());
-				}
+
+				return MBThreadUtil.findByG_C(
+					groupId, categoryId, queryDefinition.getStart(),
+					queryDefinition.getEnd(),
+					queryDefinition.getOrderByComparator());
 			}
 		}
 

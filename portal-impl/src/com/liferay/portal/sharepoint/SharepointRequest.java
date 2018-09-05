@@ -75,9 +75,8 @@ public class SharepointRequest {
 		if (ArrayUtil.isNotEmpty(values)) {
 			return GetterUtil.getString(_params.get(name)[0]);
 		}
-		else {
-			return StringPool.BLANK;
-		}
+
+		return StringPool.BLANK;
 	}
 
 	public String getRootPath() {

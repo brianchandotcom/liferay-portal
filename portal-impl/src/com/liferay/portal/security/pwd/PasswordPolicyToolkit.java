@@ -104,9 +104,8 @@ public class PasswordPolicyToolkit extends BasicToolkit {
 
 			return generateStatic(passwordPolicy);
 		}
-		else {
-			return generateDynamic(passwordPolicy);
-		}
+
+		return generateDynamic(passwordPolicy);
 	}
 
 	@Override

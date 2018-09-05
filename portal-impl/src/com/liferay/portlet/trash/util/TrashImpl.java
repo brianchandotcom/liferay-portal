@@ -348,9 +348,8 @@ public class TrashImpl implements Trash {
 		if (trashRenderer != null) {
 			return trashRenderer.getNewName(oldName, sb.toString());
 		}
-		else {
-			return getNewName(oldName, sb.toString());
-		}
+
+		return getNewName(oldName, sb.toString());
 	}
 
 	@Override

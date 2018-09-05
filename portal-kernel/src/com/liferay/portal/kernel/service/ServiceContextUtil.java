@@ -87,14 +87,13 @@ public class ServiceContextUtil {
 		if (portletPreferencesIds == null) {
 			return null;
 		}
-		else {
-			return PortletPreferencesLocalServiceUtil.getPreferences(
-				portletPreferencesIds.getCompanyId(),
-				portletPreferencesIds.getOwnerId(),
-				portletPreferencesIds.getOwnerType(),
-				portletPreferencesIds.getPlid(),
-				portletPreferencesIds.getPortletId());
-		}
+
+		return PortletPreferencesLocalServiceUtil.getPreferences(
+			portletPreferencesIds.getCompanyId(),
+			portletPreferencesIds.getOwnerId(),
+			portletPreferencesIds.getOwnerType(),
+			portletPreferencesIds.getPlid(),
+			portletPreferencesIds.getPortletId());
 	}
 
 }

@@ -139,9 +139,8 @@ public class ScreensAssetEntryServiceImpl
 
 				return toJSONArray(assetEntries, locale);
 			}
-			else {
-				return JSONFactoryUtil.createJSONArray();
-			}
+
+			return JSONFactoryUtil.createJSONArray();
 		}
 		else {
 			try {

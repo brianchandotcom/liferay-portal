@@ -472,9 +472,8 @@ public class GroupImpl extends GroupBaseImpl {
 
 				return liveGroup.getClassPK();
 			}
-			else {
-				return getClassPK();
-			}
+
+			return getClassPK();
 		}
 
 		return 0;
@@ -521,13 +520,11 @@ public class GroupImpl extends GroupBaseImpl {
 			if (isUser()) {
 				return themeDisplay.getPathFriendlyURLPrivateUser();
 			}
-			else {
-				return themeDisplay.getPathFriendlyURLPrivateGroup();
-			}
+
+			return themeDisplay.getPathFriendlyURLPrivateGroup();
 		}
-		else {
-			return themeDisplay.getPathFriendlyURLPublic();
-		}
+
+		return themeDisplay.getPathFriendlyURLPublic();
 	}
 
 	@Override
@@ -610,10 +607,8 @@ public class GroupImpl extends GroupBaseImpl {
 		else if (isLayoutPrototype()) {
 			return themeDisplay.translate("default");
 		}
-		else {
-			return HtmlUtil.escape(
-				getDescriptiveName(themeDisplay.getLocale()));
-		}
+
+		return HtmlUtil.escape(getDescriptiveName(themeDisplay.getLocale()));
 	}
 
 	@Override
@@ -695,9 +690,8 @@ public class GroupImpl extends GroupBaseImpl {
 		if (_typeSettingsProperties == null) {
 			return super.getTypeSettings();
 		}
-		else {
-			return _typeSettingsProperties.toString();
-		}
+
+		return _typeSettingsProperties.toString();
 	}
 
 	@Override
@@ -770,9 +764,8 @@ public class GroupImpl extends GroupBaseImpl {
 		if (getPrivateLayoutsPageCount() > 0) {
 			return true;
 		}
-		else {
-			return false;
-		}
+
+		return false;
 	}
 
 	@Override
@@ -780,9 +773,8 @@ public class GroupImpl extends GroupBaseImpl {
 		if (getPublicLayoutsPageCount() > 0) {
 			return true;
 		}
-		else {
-			return false;
-		}
+
+		return false;
 	}
 
 	@Override
@@ -856,9 +848,8 @@ public class GroupImpl extends GroupBaseImpl {
 		if (groupKey.equals(GroupConstants.CONTROL_PANEL)) {
 			return true;
 		}
-		else {
-			return false;
-		}
+
+		return false;
 	}
 
 	@Override
@@ -868,9 +859,8 @@ public class GroupImpl extends GroupBaseImpl {
 		if (groupKey.equals(GroupConstants.GUEST)) {
 			return true;
 		}
-		else {
-			return false;
-		}
+
+		return false;
 	}
 
 	@Override
@@ -1111,9 +1101,8 @@ public class GroupImpl extends GroupBaseImpl {
 		if (getLiveGroupId() == GroupConstants.DEFAULT_LIVE_GROUP_ID) {
 			return false;
 		}
-		else {
-			return true;
-		}
+
+		return true;
 	}
 
 	@Override

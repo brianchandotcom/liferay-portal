@@ -236,9 +236,8 @@ public class PatchTask extends DefaultTask {
 		if (!_patchFiles.isEmpty()) {
 			return project.files(_patchFiles);
 		}
-		else {
-			return project.fileTree(_patchesDir);
-		}
+
+		return project.fileTree(_patchesDir);
 	}
 
 	public boolean isCopyOriginalLibClasses() {

@@ -381,9 +381,8 @@ public abstract class PortletResponseImpl implements LiferayPortletResponse {
 		if (_urlEncoder != null) {
 			return _urlEncoder.encodeURL(response, path);
 		}
-		else {
-			return path;
-		}
+
+		return path;
 	}
 
 	public long getCompanyId() {
@@ -647,10 +646,8 @@ public abstract class PortletResponseImpl implements LiferayPortletResponse {
 			return PortletPreferencesFactoryUtil.getStrictLayoutPortletSetup(
 				layout, portletName);
 		}
-		else {
-			return themeDisplay.getStrictLayoutPortletSetup(
-				layout, portletName);
-		}
+
+		return themeDisplay.getStrictLayoutPortletSetup(layout, portletName);
 	}
 
 	protected String portletName;

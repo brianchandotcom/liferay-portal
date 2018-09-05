@@ -135,10 +135,9 @@ public class DeployWorkflowDefinitionMVCActionCommand
 			return LanguageUtil.get(
 				resourceBundle, "workflow-published-successfully");
 		}
-		else {
-			return LanguageUtil.get(
-				resourceBundle, "workflow-updated-successfully");
-		}
+
+		return LanguageUtil.get(
+			resourceBundle, "workflow-updated-successfully");
 	}
 
 	protected void setRedirectAttribute(

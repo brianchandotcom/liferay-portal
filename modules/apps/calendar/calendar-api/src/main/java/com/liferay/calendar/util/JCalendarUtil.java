@@ -126,9 +126,8 @@ public class JCalendarUtil {
 		if (adjustedJCalendar1.after(adjustedJCalendar2)) {
 			return true;
 		}
-		else {
-			return false;
-		}
+
+		return false;
 	}
 
 	public static boolean isSameDayOfWeek(
@@ -140,9 +139,8 @@ public class JCalendarUtil {
 		if (dayOfWeek1 == dayOfWeek2) {
 			return true;
 		}
-		else {
-			return false;
-		}
+
+		return false;
 	}
 
 	public static Calendar mergeJCalendar(

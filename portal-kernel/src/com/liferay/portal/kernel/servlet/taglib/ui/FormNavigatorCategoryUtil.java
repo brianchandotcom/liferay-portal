@@ -145,9 +145,8 @@ public class FormNavigatorCategoryUtil {
 				if (serviceReference2 == null) {
 					return 0;
 				}
-				else {
-					return 1;
-				}
+
+				return 1;
 			}
 			else if (serviceReference2 == null) {
 				return -1;
@@ -160,9 +159,8 @@ public class FormNavigatorCategoryUtil {
 				if (propertyValue2 == null) {
 					return 0;
 				}
-				else {
-					return 1;
-				}
+
+				return 1;
 			}
 			else if (propertyValue2 == null) {
 				return -1;

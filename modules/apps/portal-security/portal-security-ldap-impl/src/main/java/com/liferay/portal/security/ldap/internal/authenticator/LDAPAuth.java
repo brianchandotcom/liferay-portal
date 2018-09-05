@@ -609,9 +609,8 @@ public class LDAPAuth implements Authenticator {
 		if (ldapAuthConfiguration.required()) {
 			return failureCode;
 		}
-		else {
-			return SUCCESS;
-		}
+
+		return SUCCESS;
 	}
 
 	protected LDAPAuthResult getFailedLDAPAuthResult(Map<String, Object> env) {

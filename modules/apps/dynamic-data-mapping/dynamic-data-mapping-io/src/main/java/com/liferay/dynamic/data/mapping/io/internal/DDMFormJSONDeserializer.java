@@ -144,9 +144,8 @@ public class DDMFormJSONDeserializer implements DDMFormDeserializer {
 			return deserializeDDMFormFieldValidation(
 				serializedDDMFormFieldProperty);
 		}
-		else {
-			return serializedDDMFormFieldProperty;
-		}
+
+		return serializedDDMFormFieldProperty;
 	}
 
 	protected DDMFormFieldValidation deserializeDDMFormFieldValidation(

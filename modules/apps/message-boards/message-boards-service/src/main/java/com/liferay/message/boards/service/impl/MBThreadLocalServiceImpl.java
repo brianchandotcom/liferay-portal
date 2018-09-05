@@ -305,10 +305,8 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 		if (status == WorkflowConstants.STATUS_ANY) {
 			return mbThreadPersistence.countByG_C(groupId, categoryId);
 		}
-		else {
-			return mbThreadPersistence.countByG_C_S(
-				groupId, categoryId, status);
-		}
+
+		return mbThreadPersistence.countByG_C_S(groupId, categoryId, status);
 	}
 
 	@Override
@@ -329,10 +327,9 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 				return mbThreadFinder.findByG_U_C(
 					groupId, userId, null, queryDefinition);
 			}
-			else {
-				return mbThreadFinder.findByG_U_C_A(
-					groupId, userId, null, false, queryDefinition);
-			}
+
+			return mbThreadFinder.findByG_U_C_A(
+				groupId, userId, null, false, queryDefinition);
 		}
 	}
 
@@ -362,12 +359,11 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 				queryDefinition.getStatus(), queryDefinition.getStart(),
 				queryDefinition.getEnd());
 		}
-		else {
-			return mbThreadPersistence.findByG_NotC_S(
-				groupId, MBCategoryConstants.DISCUSSION_CATEGORY_ID,
-				queryDefinition.getStatus(), queryDefinition.getStart(),
-				queryDefinition.getEnd());
-		}
+
+		return mbThreadPersistence.findByG_NotC_S(
+			groupId, MBCategoryConstants.DISCUSSION_CATEGORY_ID,
+			queryDefinition.getStatus(), queryDefinition.getStart(),
+			queryDefinition.getEnd());
 	}
 
 	@Override
@@ -388,10 +384,9 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 				return mbThreadFinder.countByG_U_C(
 					groupId, userId, null, queryDefinition);
 			}
-			else {
-				return mbThreadFinder.countByG_U_C_A(
-					groupId, userId, null, false, queryDefinition);
-			}
+
+			return mbThreadFinder.countByG_U_C_A(
+				groupId, userId, null, false, queryDefinition);
 		}
 	}
 
@@ -420,11 +415,10 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 				groupId, MBCategoryConstants.DISCUSSION_CATEGORY_ID,
 				queryDefinition.getStatus());
 		}
-		else {
-			return mbThreadPersistence.countByG_NotC_S(
-				groupId, MBCategoryConstants.DISCUSSION_CATEGORY_ID,
-				queryDefinition.getStatus());
-		}
+
+		return mbThreadPersistence.countByG_NotC_S(
+			groupId, MBCategoryConstants.DISCUSSION_CATEGORY_ID,
+			queryDefinition.getStatus());
 	}
 
 	/**
@@ -482,10 +476,9 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 			return mbThreadPersistence.findByG_C(
 				groupId, categoryId, start, end);
 		}
-		else {
-			return mbThreadPersistence.findByG_C_S(
-				groupId, categoryId, status, start, end);
-		}
+
+		return mbThreadPersistence.findByG_C_S(
+			groupId, categoryId, status, start, end);
 	}
 
 	@Override
@@ -493,10 +486,8 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 		if (status == WorkflowConstants.STATUS_ANY) {
 			return mbThreadPersistence.countByG_C(groupId, categoryId);
 		}
-		else {
-			return mbThreadPersistence.countByG_C_S(
-				groupId, categoryId, status);
-		}
+
+		return mbThreadPersistence.countByG_C_S(groupId, categoryId, status);
 	}
 
 	@Override
@@ -507,9 +498,8 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 		if (count > 0) {
 			return true;
 		}
-		else {
-			return false;
-		}
+
+		return false;
 	}
 
 	@BufferedIncrement(

@@ -38,9 +38,8 @@ public class CheckboxDDMFormFieldValueRenderer
 		if (valueBoolean == Boolean.TRUE) {
 			return LanguageUtil.get(locale, "yes");
 		}
-		else {
-			return LanguageUtil.get(locale, "no");
-		}
+
+		return LanguageUtil.get(locale, "no");
 	}
 
 	@Reference

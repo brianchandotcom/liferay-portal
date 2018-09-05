@@ -4447,6 +4447,12 @@ used inside `build.gradle` files.
 - [LPS-84891]: Update the [Liferay Gradle Plugins] dependency to version
 3.12.119.
 
+## 5.5.28 - 2018-08-30
+
+### Changed
+- [LPS-80388]: Update the [Liferay Gradle Plugins] dependency to version
+3.12.120.
+
 ## 5.5.33 - 2018-09-04
 
 ### Fixed
@@ -4856,6 +4862,7 @@ used inside `build.gradle` files.
 [LPS-80184]: https://issues.liferay.com/browse/LPS-80184
 [LPS-80332]: https://issues.liferay.com/browse/LPS-80332
 [LPS-80386]: https://issues.liferay.com/browse/LPS-80386
+[LPS-80388]: https://issues.liferay.com/browse/LPS-80388
 [LPS-80394]: https://issues.liferay.com/browse/LPS-80394
 [LPS-80466]: https://issues.liferay.com/browse/LPS-80466
 [LPS-80513]: https://issues.liferay.com/browse/LPS-80513

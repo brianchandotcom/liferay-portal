@@ -31,15 +31,16 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 public interface SharingConfiguration {
 
 	/**
-	 * Set the interval in hours on how often
+	 * Set the interval in minutes on how often
 	 * DeleteExpiredSharingEntriesMessageListener will run to check for expired
 	 * sharing entries.
 	 *
 	 * @review
 	 */
 	@Meta.AD(
-		deflt = "1", name = "expired-sharing-entries-check-interval",
-		required = false
+		deflt = "60",
+		description = "expired-sharing-entries-check-interval-key-description",
+		name = "expired-sharing-entries-check-interval", required = false
 	)
 	public int expiredSharingEntriesCheckInterval();
 

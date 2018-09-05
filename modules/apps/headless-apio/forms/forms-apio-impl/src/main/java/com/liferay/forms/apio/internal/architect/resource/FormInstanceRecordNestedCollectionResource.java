@@ -111,6 +111,8 @@ public class FormInstanceRecordNestedCollectionResource
 			"FormInstanceRecord"
 		).identifier(
 			DDMFormInstanceRecord::getFormInstanceRecordId
+		).addBoolean(
+			"draft", this::_getDraft
 		).addBidirectionalModel(
 			"formInstance", "formInstanceRecords", FormInstanceIdentifier.class,
 			DDMFormInstanceRecord::getFormInstanceId
@@ -183,6 +185,16 @@ public class FormInstanceRecordNestedCollectionResource
 		return _ddmFormInstanceRecordService.addFormInstanceRecord(
 			ddmFormInstance.getGroupId(), ddmFormInstance.getFormInstanceId(),
 			ddmFormValues, serviceContext);
+	}
+
+	private Boolean _getDraft(DDMFormInstanceRecord ddmFormInstanceRecord) {
+		return Try.fromFallible(
+			ddmFormInstanceRecord::getStatus
+		).map(
+			status -> status == WorkflowConstants.STATUS_DRAFT
+		).orElse(
+			false
+		);
 	}
 
 	private List<DDMFormFieldValue> _getFieldValues(

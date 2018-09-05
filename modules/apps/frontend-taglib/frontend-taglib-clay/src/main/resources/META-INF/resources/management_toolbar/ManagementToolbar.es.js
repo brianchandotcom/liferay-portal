@@ -1,7 +1,8 @@
 import {
 	actionItemsValidator,
 	creationMenuItemsValidator,
-	filterItemsValidator
+	filterItemsValidator,
+	filterLabelsValidator
 } from 'clay-management-toolbar';
 import ClayComponent from 'clay-component';
 import Soy from 'metal-soy';
@@ -248,6 +249,15 @@ ManagementToolbar.STATE = {
 	 */
 
 	filterItems: filterItemsValidator,
+
+	/**
+	 * List of filter label items.
+	 * @default undefined
+	 * @instance
+	 * @memberof ClayManagementToolbar
+	 * @type {?(array|undefined)}
+	 */
+	filterLabels: filterLabelsValidator,
 
 	/**
 	 * Id to be applied to the element.

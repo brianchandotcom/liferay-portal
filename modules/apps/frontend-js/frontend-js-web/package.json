@@ -16,8 +16,8 @@
 		}
 	},
 	"dependencies": {
-		"clay": "2.2.0",
-		"clay-alert": "2.2.0",
+		"clay": "2.3.2",
+		"clay-alert": "2.3.2",
 		"jquery": "^3.3.1",
 		"liferay-amd-loader": "3.1.2",
 		"lodash": "4.17.4",
@@ -65,6 +65,7 @@
 			"<rootDir>/test/liferay/portlet/mock/setup.es.js"
 		],
 		"testResultsProcessor": "./node_modules/liferay-jest-junit-reporter",
+		"testURL": "http://localhost",
 		"transformIgnorePatterns": [
 			"<rootDir>.*(node_modules)(?!.*metal.*).*$"
 		]

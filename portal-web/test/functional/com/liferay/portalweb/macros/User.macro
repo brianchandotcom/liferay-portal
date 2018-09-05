@@ -1621,8 +1621,8 @@
 		<execute macro="Navigator#openURL" />
 
 		<execute macro="User#_login">
-			<var name="emailAddress" value="${emailAddress}" />
 			<var name="password" value="${password}" />
+			<var name="userEmailAddress" value="${userEmailAddress}" />
 		</execute>
 
 		<execute function="AssertElementPresent" locator1="UserBar#USER_AVATAR_IMAGE" />

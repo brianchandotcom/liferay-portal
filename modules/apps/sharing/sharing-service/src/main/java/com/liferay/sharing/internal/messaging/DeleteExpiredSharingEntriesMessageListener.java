@@ -57,7 +57,7 @@ public class DeleteExpiredSharingEntriesMessageListener
 		Trigger trigger = _triggerFactory.createTrigger(
 			className, className, null, null,
 			_sharingConfiguration.expiredSharingEntriesCheckInterval(),
-			TimeUnit.HOUR);
+			TimeUnit.MINUTE);
 
 		SchedulerEntry schedulerEntry = new SchedulerEntryImpl(
 			className, trigger);

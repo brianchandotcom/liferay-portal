@@ -240,6 +240,7 @@ public class SharingEntryLocalServiceTest {
 		Assert.assertEquals(classNameId, sharingEntry.getClassNameId());
 		Assert.assertEquals(classPK, sharingEntry.getClassPK());
 		Assert.assertTrue(sharingEntry.isShareable());
+		Assert.assertEquals(expirationDate, sharingEntry.getExpirationDate());
 	}
 
 	@Test(expected = InvalidSharingEntryExpirationDateException.class)

@@ -37,5 +37,5 @@ public class MyUserAccountOrganizationNestedCollectionRouter
 		<MyUserAccountIdentifier>
 	implements NestedCollectionRouter
 		<Organization, Long, OrganizationIdentifier, Long,
-			MyUserAccountIdentifier> {
+		 MyUserAccountIdentifier> {
 }

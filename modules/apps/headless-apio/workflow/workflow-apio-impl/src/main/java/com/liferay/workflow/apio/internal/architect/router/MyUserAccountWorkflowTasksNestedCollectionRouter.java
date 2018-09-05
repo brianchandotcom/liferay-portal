@@ -42,7 +42,7 @@ import org.osgi.service.component.annotations.Reference;
 public class MyUserAccountWorkflowTasksNestedCollectionRouter
 	implements NestedCollectionRouter
 		<WorkflowTask, Long, WorkflowTaskIdentifier, Long,
-			MyUserAccountIdentifier> {
+		 MyUserAccountIdentifier> {
 
 	@Override
 	public NestedCollectionRoutes<WorkflowTask, Long, Long> collectionRoutes(

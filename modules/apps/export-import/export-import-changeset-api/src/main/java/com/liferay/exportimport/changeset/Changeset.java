@@ -86,8 +86,8 @@ public class Changeset implements Serializable {
 
 		for (Map.Entry
 				<Supplier<? extends StagedModel>,
-					Function<StagedModel, Collection<?>>> entry :
-						_hierarchySuppliers.entrySet()) {
+				 Function<StagedModel, Collection<?>>> entry :
+					_hierarchySuppliers.entrySet()) {
 
 			Supplier<? extends StagedModel> supplier = entry.getKey();
 

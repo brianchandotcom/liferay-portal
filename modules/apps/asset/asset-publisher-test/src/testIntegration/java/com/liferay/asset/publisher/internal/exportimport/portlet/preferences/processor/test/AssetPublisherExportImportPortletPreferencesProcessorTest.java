@@ -239,7 +239,7 @@ public class AssetPublisherExportImportPortletPreferencesProcessorTest {
 
 	private static ServiceTracker
 		<ExportImportPortletPreferencesProcessor,
-			ExportImportPortletPreferencesProcessor> _serviceTracker;
+		 ExportImportPortletPreferencesProcessor> _serviceTracker;
 
 	private ExportImportPortletPreferencesProcessor
 		_exportImportPortletPreferencesProcessor;

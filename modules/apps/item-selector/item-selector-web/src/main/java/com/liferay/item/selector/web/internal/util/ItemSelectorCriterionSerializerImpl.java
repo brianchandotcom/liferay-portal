@@ -322,7 +322,7 @@ public class ItemSelectorCriterionSerializerImpl
 	private class ItemSelectorViewReturnTypeProviderServiceTrackerCustomizer
 		implements ServiceTrackerCustomizer
 			<ItemSelectorViewReturnTypeProvider,
-				ItemSelectorViewReturnTypeProvider> {
+			 ItemSelectorViewReturnTypeProvider> {
 
 		@Override
 		public ItemSelectorViewReturnTypeProvider addingService(

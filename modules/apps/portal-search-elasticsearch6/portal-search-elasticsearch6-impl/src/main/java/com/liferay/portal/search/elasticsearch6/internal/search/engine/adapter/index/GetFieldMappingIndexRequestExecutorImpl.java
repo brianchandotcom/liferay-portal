@@ -48,9 +48,11 @@ public class GetFieldMappingIndexRequestExecutorImpl
 		GetFieldMappingsResponse getFieldMappingsResponse =
 			getFieldMappingsRequestBuilder.get();
 
-		Map<String,
-			Map<String,
-				Map<String, GetFieldMappingsResponse.FieldMappingMetaData>>>
+		Map
+			<String,
+			 Map
+				<String,
+				 Map<String, GetFieldMappingsResponse.FieldMappingMetaData>>>
 					mappings = getFieldMappingsResponse.mappings();
 
 		Map<String, String> fieldMappings = new HashMap<>();

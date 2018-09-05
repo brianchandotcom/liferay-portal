@@ -87,8 +87,8 @@ public class UnavailableComponentUtil {
 
 				for (Map.Entry
 						<ComponentDeclaration,
-							List<ComponentDependencyDeclaration>> entry :
-								unavailableComponentDeclarations.entrySet()) {
+						 List<ComponentDependencyDeclaration>> entry :
+							unavailableComponentDeclarations.entrySet()) {
 
 					sb.append("\tComponent with ID ");
 

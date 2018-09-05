@@ -581,6 +581,6 @@ public class RegistryImpl implements Registry {
 		_serviceTrackerReferences = Collections.newSetFromMap(
 			new ConcurrentHashMap
 				<Reference<org.osgi.util.tracker.ServiceTracker<?, ?>>,
-					Boolean>());
+				 Boolean>());
 
 }

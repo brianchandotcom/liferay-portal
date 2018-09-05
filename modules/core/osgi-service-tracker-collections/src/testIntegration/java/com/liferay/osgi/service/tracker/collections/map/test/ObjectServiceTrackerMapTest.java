@@ -747,12 +747,12 @@ public class ObjectServiceTrackerMapTest {
 
 		ServiceTrackerMapBuilder.Mapper
 			<String, TrackedOne, ServiceWrapper<TrackedOne>,
-				ServiceWrapper<TrackedOne>> mapper = selector.map("target");
+			 ServiceWrapper<TrackedOne>> mapper = selector.map("target");
 
 		ServiceTrackerMapBuilder.Collector
 			<String, TrackedOne, ServiceWrapper<TrackedOne>,
-				ServiceWrapper<TrackedOne>> collector =
-					mapper.collectSingleValue();
+			 ServiceWrapper<TrackedOne>> collector =
+				mapper.collectSingleValue();
 
 		try (ServiceTrackerMap<String, ServiceWrapper<TrackedOne>>
 				serviceTrackerMap = collector.build()) {

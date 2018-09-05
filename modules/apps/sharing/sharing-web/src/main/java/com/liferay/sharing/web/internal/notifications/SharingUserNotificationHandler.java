@@ -77,7 +77,7 @@ public class SharingUserNotificationHandler
 			_getUserName(
 				sharingEntry.getFromUserId(),
 				userNotificationEventPayloadJSONObject, resourceBundle),
-			_getSharedObjectName(sharingEntry, locale),
+			_getSharingEntryAssetTitle(sharingEntry, locale),
 			_getActionName(sharingEntry, resourceBundle));
 	}
 
@@ -129,7 +129,17 @@ public class SharingUserNotificationHandler
 		}
 	}
 
-	private String _getSharedObjectName(
+	private SharingEntry _getSharingEntry(
+			JSONObject userNotificationEventPayloadJSONObject)
+		throws PortalException {
+
+		long sharingEntryId = userNotificationEventPayloadJSONObject.getLong(
+			"classPK");
+
+		return _sharingEntryLocalService.getSharingEntry(sharingEntryId);
+	}
+
+	private String _getSharingEntryAssetTitle(
 		SharingEntry sharingEntry, Locale locale) {
 
 		AssetRenderer assetRenderer = getAssetRenderer(
@@ -144,16 +154,6 @@ public class SharingUserNotificationHandler
 
 			return ResourceBundleUtil.getString(resourceBundle, "something");
 		}
-	}
-
-	private SharingEntry _getSharingEntry(
-			JSONObject userNotificationEventPayloadJSONObject)
-		throws PortalException {
-
-		long sharingEntryId = userNotificationEventPayloadJSONObject.getLong(
-			"classPK");
-
-		return _sharingEntryLocalService.getSharingEntry(sharingEntryId);
 	}
 
 	private String _getUserName(

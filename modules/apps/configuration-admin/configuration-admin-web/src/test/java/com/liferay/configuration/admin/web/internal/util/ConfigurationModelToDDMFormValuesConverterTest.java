@@ -182,6 +182,57 @@ public class ConfigurationModelToDDMFormValuesConverterTest extends Mockito {
 	}
 
 	@Test
+	public void testGetValuesByConfigurationWithPresentKey() {
+		ExtendedObjectClassDefinition extendedObjectClassDefinition = mock(
+			ExtendedObjectClassDefinition.class);
+
+		ExtendedAttributeDefinition extendedAttributeDefinition = mock(
+			ExtendedAttributeDefinition.class);
+
+		whenGetAttributeDefinitions(
+			extendedObjectClassDefinition,
+			new ExtendedAttributeDefinition[] {extendedAttributeDefinition});
+
+		whenGetCardinality(extendedAttributeDefinition, 0);
+		whenGetDefaultValue(extendedAttributeDefinition, new String[] {"9999"});
+		whenGetID(extendedAttributeDefinition, "Long");
+
+		Configuration configuration = mock(Configuration.class);
+
+		Dictionary<String, Object> properties = new Hashtable<>();
+
+		whenGetProperties(configuration, properties);
+
+		ConfigurationModel configurationModel = new ConfigurationModel(
+			extendedObjectClassDefinition, configuration, null, null, false);
+
+		DDMFormValues ddmFormValues = getDDMFormValues(
+			configurationModel, getDDMForm(configurationModel));
+
+		List<DDMFormFieldValue> ddmFormFieldValues =
+			ddmFormValues.getDDMFormFieldValues();
+
+		Assert.assertEquals(
+			ddmFormFieldValues.toString(), 1, ddmFormFieldValues.size());
+		Assert.assertEquals(
+			"It should return the default value when no key is set", "9999",
+			getValueString(ddmFormFieldValues.get(0)));
+
+		properties.put("Long", 0L);
+
+		ddmFormValues = getDDMFormValues(
+			configurationModel, getDDMForm(configurationModel));
+
+		ddmFormFieldValues = ddmFormValues.getDDMFormFieldValues();
+
+		Assert.assertEquals(
+			ddmFormFieldValues.toString(), 1, ddmFormFieldValues.size());
+		Assert.assertEquals(
+			"It should return the configuration value if they key is set", "0",
+			getValueString(ddmFormFieldValues.get(0)));
+	}
+
+	@Test
 	public void testGetValuesByDefaultValueWithCheckboxField() {
 		ExtendedObjectClassDefinition extendedObjectClassDefinition = mock(
 			ExtendedObjectClassDefinition.class);

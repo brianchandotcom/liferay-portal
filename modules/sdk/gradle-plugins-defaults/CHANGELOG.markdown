@@ -4438,6 +4438,12 @@ overridden by values defined in a `gradle-ext.properties` file.
 	- `scm.developerConnection` = `scm:git:git@github.com:liferay/liferay-portal.git`
 	- `scm.url` = `http://github.com/liferay/liferay-portal`
 
+## 5.5.27 - 2018-08-30
+
+### Changed
+- [LPS-84094]: Move `GradleUtil` methods to [Liferay Gradle Util] so it can be
+used inside `build.gradle` files.
+
 ## 5.5.33 - 2018-09-04
 
 ### Fixed

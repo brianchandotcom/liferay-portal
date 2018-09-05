@@ -45,8 +45,12 @@ public abstract class BaseHTMLTag extends com.liferay.taglib.util.IncludeTag {
 		return _classPK;
 	}
 
-	public com.liferay.dynamic.data.mapping.storage.DDMFormValues getDdmFormValues() {
+	public java.lang.Object getDdmFormValues() {
 		return _ddmFormValues;
+	}
+
+	public java.lang.String getDocumentLibrarySelectorURL() {
+		return _documentLibrarySelectorURL;
 	}
 
 	public java.lang.String getFieldsNamespace() {
@@ -55,6 +59,10 @@ public abstract class BaseHTMLTag extends com.liferay.taglib.util.IncludeTag {
 
 	public boolean getIgnoreRequestValue() {
 		return _ignoreRequestValue;
+	}
+
+	public java.lang.String getImageSelectorURL() {
+		return _imageSelectorURL;
 	}
 
 	public boolean getLocalizable() {
@@ -89,8 +97,12 @@ public abstract class BaseHTMLTag extends com.liferay.taglib.util.IncludeTag {
 		_classPK = classPK;
 	}
 
-	public void setDdmFormValues(com.liferay.dynamic.data.mapping.storage.DDMFormValues ddmFormValues) {
+	public void setDdmFormValues(java.lang.Object ddmFormValues) {
 		_ddmFormValues = ddmFormValues;
+	}
+
+	public void setDocumentLibrarySelectorURL(java.lang.String documentLibrarySelectorURL) {
+		_documentLibrarySelectorURL = documentLibrarySelectorURL;
 	}
 
 	public void setFieldsNamespace(java.lang.String fieldsNamespace) {
@@ -99,6 +111,10 @@ public abstract class BaseHTMLTag extends com.liferay.taglib.util.IncludeTag {
 
 	public void setIgnoreRequestValue(boolean ignoreRequestValue) {
 		_ignoreRequestValue = ignoreRequestValue;
+	}
+
+	public void setImageSelectorURL(java.lang.String imageSelectorURL) {
+		_imageSelectorURL = imageSelectorURL;
 	}
 
 	public void setLocalizable(boolean localizable) {
@@ -136,8 +152,10 @@ public abstract class BaseHTMLTag extends com.liferay.taglib.util.IncludeTag {
 		_classNameId = 0;
 		_classPK = 0;
 		_ddmFormValues = null;
+		_documentLibrarySelectorURL = null;
 		_fieldsNamespace = null;
 		_ignoreRequestValue = false;
+		_imageSelectorURL = null;
 		_localizable = true;
 		_readOnly = false;
 		_repeatable = true;
@@ -161,8 +179,10 @@ public abstract class BaseHTMLTag extends com.liferay.taglib.util.IncludeTag {
 		request.setAttribute("liferay-ddm:html:classNameId", String.valueOf(_classNameId));
 		request.setAttribute("liferay-ddm:html:classPK", String.valueOf(_classPK));
 		request.setAttribute("liferay-ddm:html:ddmFormValues", _ddmFormValues);
+		request.setAttribute("liferay-ddm:html:documentLibrarySelectorURL", _documentLibrarySelectorURL);
 		request.setAttribute("liferay-ddm:html:fieldsNamespace", _fieldsNamespace);
 		request.setAttribute("liferay-ddm:html:ignoreRequestValue", String.valueOf(_ignoreRequestValue));
+		request.setAttribute("liferay-ddm:html:imageSelectorURL", _imageSelectorURL);
 		request.setAttribute("liferay-ddm:html:localizable", String.valueOf(_localizable));
 		request.setAttribute("liferay-ddm:html:readOnly", String.valueOf(_readOnly));
 		request.setAttribute("liferay-ddm:html:repeatable", String.valueOf(_repeatable));
@@ -181,9 +201,11 @@ public abstract class BaseHTMLTag extends com.liferay.taglib.util.IncludeTag {
 	private boolean _checkRequired = true;
 	private long _classNameId = 0;
 	private long _classPK = 0;
-	private com.liferay.dynamic.data.mapping.storage.DDMFormValues _ddmFormValues = null;
+	private java.lang.Object _ddmFormValues = null;
+	private java.lang.String _documentLibrarySelectorURL = null;
 	private java.lang.String _fieldsNamespace = null;
 	private boolean _ignoreRequestValue = false;
+	private java.lang.String _imageSelectorURL = null;
 	private boolean _localizable = true;
 	private boolean _readOnly = false;
 	private boolean _repeatable = true;

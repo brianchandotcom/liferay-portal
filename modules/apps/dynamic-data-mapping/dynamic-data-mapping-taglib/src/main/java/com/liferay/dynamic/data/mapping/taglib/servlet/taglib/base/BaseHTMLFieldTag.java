@@ -41,7 +41,7 @@ public abstract class BaseHTMLFieldTag extends com.liferay.taglib.util.IncludeTa
 		return _classPK;
 	}
 
-	public com.liferay.dynamic.data.mapping.storage.Field getField() {
+	public java.lang.Object getField() {
 		return _field;
 	}
 
@@ -73,7 +73,7 @@ public abstract class BaseHTMLFieldTag extends com.liferay.taglib.util.IncludeTa
 		_classPK = classPK;
 	}
 
-	public void setField(com.liferay.dynamic.data.mapping.storage.Field field) {
+	public void setField(java.lang.Object field) {
 		_field = field;
 	}
 
@@ -130,14 +130,14 @@ public abstract class BaseHTMLFieldTag extends com.liferay.taglib.util.IncludeTa
 
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
-		setNamespacedAttribute(request, "classNameId", _classNameId);
-		setNamespacedAttribute(request, "classPK", _classPK);
-		setNamespacedAttribute(request, "field", _field);
-		setNamespacedAttribute(request, "fieldsNamespace", _fieldsNamespace);
-		setNamespacedAttribute(request, "readOnly", _readOnly);
-		setNamespacedAttribute(request, "repeatable", _repeatable);
-		setNamespacedAttribute(request, "requestedLocale", _requestedLocale);
-		setNamespacedAttribute(request, "showEmptyFieldLabel", _showEmptyFieldLabel);
+		request.setAttribute("liferay-ddm:html-field:classNameId", String.valueOf(_classNameId));
+		request.setAttribute("liferay-ddm:html-field:classPK", String.valueOf(_classPK));
+		request.setAttribute("liferay-ddm:html-field:field", _field);
+		request.setAttribute("liferay-ddm:html-field:fieldsNamespace", _fieldsNamespace);
+		request.setAttribute("liferay-ddm:html-field:readOnly", String.valueOf(_readOnly));
+		request.setAttribute("liferay-ddm:html-field:repeatable", String.valueOf(_repeatable));
+		request.setAttribute("liferay-ddm:html-field:requestedLocale", _requestedLocale);
+		request.setAttribute("liferay-ddm:html-field:showEmptyFieldLabel", String.valueOf(_showEmptyFieldLabel));
 	}
 
 	protected static final String _ATTRIBUTE_NAMESPACE = "liferay-ddm:html-field:";
@@ -150,7 +150,7 @@ public abstract class BaseHTMLFieldTag extends com.liferay.taglib.util.IncludeTa
 
 	private long _classNameId = 0;
 	private long _classPK = 0;
-	private com.liferay.dynamic.data.mapping.storage.Field _field = null;
+	private java.lang.Object _field = null;
 	private java.lang.String _fieldsNamespace = null;
 	private boolean _readOnly = false;
 	private boolean _repeatable = true;

@@ -497,6 +497,13 @@ public class LangBuilder {
 				" ", "<strong>", "</strong>", "<em>", "</em>", " URL ", "\'",
 				"\'", "\"", "\"", "reCAPTCHA", "CAPTCHA"
 			});
+		value = StringUtil.replace(
+			value.trim(),
+			new char[] {
+				'\u2018', '\u2019', '\u201a', '\u201b', '\u201c', '\u201d',
+				'\u201e', '\u201f'
+			},
+			new char[] {'\'', '\'', '\'', '\'', '\"', '\"', '\"', '\"'});
 
 		return value;
 	}

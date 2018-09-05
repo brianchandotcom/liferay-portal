@@ -166,10 +166,6 @@ class Form extends Component {
 
 		this._createEditor('nameEditor').then(editor => editor.on('change', this._handleNameEditorChanged.bind(this)));
 		this._createEditor('descriptionEditor').then(editor => editor.on('change', this._handleDescriptionEditorChanged.bind(this)));
-
-		if (this.props.formInstanceId === 0) {
-			this._openSidebar();
-		}
 	}
 
 	getState() {

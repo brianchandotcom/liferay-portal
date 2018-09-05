@@ -4438,7 +4438,7 @@ overridden by values defined in a `gradle-ext.properties` file.
 	- `scm.developerConnection` = `scm:git:git@github.com:liferay/liferay-portal.git`
 	- `scm.url` = `http://github.com/liferay/liferay-portal`
 
-## 5.5.27 - 2018-09-04
+## 5.5.33 - 2018-09-04
 
 ### Fixed
 - [LPS-70819]: Fix the `compileJSP.destinationDir` property when the

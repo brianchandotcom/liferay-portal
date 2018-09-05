@@ -3,32 +3,34 @@
 {template .render}
 	{@param spritemap: string}
 	{@param? _handleChangePage: any}
-	{@param? _handleSettingsPageClicked: any}
 	{@param? _handleDeleteButtonClicked: any}
 	{@param? _handleDuplicateButtonClicked: any}
+	{@param? _handleFieldEdited: any}
+	{@param? _handlePageSettingsClicked: any}
 	{@param? _handleUpdatePage: any}
 	{@param? activePage: number}
 	{@param? defaultPageTitle: string}
 	{@param? editable: bool}
 	{@param? modeRenderer: string}
 	{@param? pages: ?}
-	{@param? pageSettingsItem: ?}
+	{@param? pageSettingsItems: ?}
 
 	{let $contentRenderer: $modeRenderer ?: 'grid' /}
 	{let $total: length($pages) /}
 
 	{delcall FormRenderer.pages variant="$contentRenderer"}
 		{param _handleChangePage: $_handleChangePage /}
-		{param _handleSettingsPageClicked: $_handleSettingsPageClicked /}
 		{param _handleDeleteButtonClicked: $_handleDeleteButtonClicked /}
 		{param _handleDuplicateButtonClicked: $_handleDuplicateButtonClicked /}
+		{param _handleFieldEdited: $_handleFieldEdited /}
+		{param _handlePageSettingsClicked: $_handlePageSettingsClicked /}
 		{param _handleUpdatePage: $_handleUpdatePage /}
 		{param activePage: $activePage /}
 		{param contentRenderer: $contentRenderer /}
 		{param defaultPageTitle: $defaultPageTitle /}
 		{param editable: $editable /}
 		{param pages: $pages /}
-		{param pageSettingsItem: $pageSettingsItem /}
+		{param pageSettingsItems: $pageSettingsItems /}
 		{param spritemap: $spritemap /}
 		{param total: $total /}
 	{/delcall}
@@ -37,28 +39,29 @@
 {deltemplate FormRenderer.pages variant="'grid'"}
 	{@param spritemap: string}
 	{@param? _handleChangePage: any}
-	{@param? _handleSettingsPageClicked: any}
 	{@param? _handleDeleteButtonClicked: any}
 	{@param? _handleDuplicateButtonClicked: any}
+	{@param? _handleFieldEdited: any}
+	{@param? _handlePageSettingsClicked: any}
 	{@param? _handleUpdatePage: any}
 	{@param? activePage: number}
 	{@param? contentRenderer: string}
 	{@param? defaultPageTitle: string}
 	{@param? editable: bool}
 	{@param? pages: ?}
-	{@param? pageSettingsItem: ?}
+	{@param? pageSettingsItems: ?}
 	{@param? total: int}
 
 	<div class="position-relative">
 		{delcall FormRenderer.formHeader}
 			{param _handleChangePage: $_handleChangePage /}
-			{param _handleSettingsPageClicked: $_handleSettingsPageClicked /}
+			{param _handlePageSettingsClicked: $_handlePageSettingsClicked /}
 			{param activePage: $activePage /}
 			{param contentRenderer: $contentRenderer /}
 			{param defaultPageTitle: $defaultPageTitle /}
 			{param editable: $editable /}
 			{param pages: $pages /}
-			{param pageSettingsItem: $pageSettingsItem /}
+			{param pageSettingsItems: $pageSettingsItems /}
 			{param spritemap: $spritemap /}
 		{/delcall}
 
@@ -70,6 +73,7 @@
 				{param events: [
 					'deleteButtonClicked': $_handleDeleteButtonClicked,
 					'duplicateButtonClicked': $_handleDuplicateButtonClicked,
+					'fieldEdited': $_handleFieldEdited,
 					'updatePage': $_handleUpdatePage
 				] /}
 				{param page: $page /}
@@ -84,13 +88,13 @@
 {deltemplate FormRenderer.formHeader}
 	{@param spritemap: string}
 	{@param? _handleChangePage: any}
-	{@param? _handleSettingsPageClicked: any}
+	{@param? _handlePageSettingsClicked: any}
 	{@param? activePage: number}
 	{@param? contentRenderer: string}
 	{@param? defaultPageTitle: string}
 	{@param? editable: bool}
 	{@param? pages: ?}
-	{@param? pageSettingsItem: ?}
+	{@param? pageSettingsItems: ?}
 	{@param? total: int}
 
 	{let $multiple: length($pages) > 1 /}
@@ -110,17 +114,17 @@
 				{param defaultPageTitle: $defaultPageTitle /}
 				{param editable: $editable /}
 				{param pages: $pages /}
-				{param pageSettingsItem: $pageSettingsItem /}
+				{param pageSettingsItems: $pageSettingsItems /}
 				{param spritemap: $spritemap /}
 			{/delcall}
 		{/if}
 
 		<div class="ddm-page-settings" role="group">
 			{call ClayActionsDropdown.render}
-				{param items: $pageSettingsItem /}
+				{param items: $pageSettingsItems /}
 				{param triggerClasses: 'component-action' /}
 				{param events: [
-					'itemClicked': $_handleSettingsPageClicked
+					'itemClicked': $_handlePageSettingsClicked
 				] /}
 				{param spritemap: $spritemap /}
 			{/call}
@@ -163,9 +167,10 @@
 
 {deltemplate FormRenderer.pages variant="'list'"}
 	{@param spritemap: string}
-	{@param? _handleUpdatePage: any}
 	{@param? _handleDeleteButtonClicked: any}
 	{@param? _handleDuplicateButtonClicked: any}
+	{@param? _handleFieldEdited: any}
+	{@param? _handleUpdatePage: any}
 	{@param? activePage: number}
 	{@param? contentRenderer: string}
 	{@param? editable: bool}
@@ -180,6 +185,7 @@
 			{param events: [
 				'deleteButtonClicked': $_handleDeleteButtonClicked,
 				'duplicateButtonClicked': $_handleDuplicateButtonClicked,
+				'fieldEdited': $_handleFieldEdited,
 				'updatePage': $_handleUpdatePage
 			] /}
 			{param page: $page /}

@@ -1,211 +1,11 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Sidebar Edit mode should go into edit mode with just fieldContext, fieldLists and focusedField 1`] = `
-<div class="sidebar-container show" ref="sidebar">
-  <div class="sidebar sidebar-light">
-    <nav class="component-tbar tbar">
-      <div class="container-fluid">
-        <ul class="tbar-nav">
-          <li class="tbar-item">
-            <button class="btn btn-sm btn-secondary" aria-label="angle-left" type="button">
-              <svg aria-hidden="true" class="lexicon-icon lexicon-icon-angle-left" focusable="false">
-                <title>angle-left</title>
-                <use xlink:href="icons.svg#angle-left"></use>
-              </svg>
-            </button>
-          </li>
-          <li class="tbar-item tbar-item-expand text-left">
-            <div>
-              <button class="btn btn-sm btn-secondary" disabled="disabled" type="button">
-                <span class="inline-item inline-item-before">
-                  <svg aria-hidden="true" class="lexicon-icon lexicon-icon-text" focusable="false">
-                    <title>text</title>
-                    <use xlink:href="icons.svg#text"></use>
-                  </svg>
-                </span>Text Field</button>
-            </div>
-          </li>
-          <li class="tbar-item">
-            <a class="component-action" href="#1" ref="close" role="button">
-              <svg aria-hidden="true" class="lexicon-icon lexicon-icon-times">
-                <use xlinkHref="icons.svg#times"></use>
-              </svg>
-            </a>
-          </li>
-        </ul>
-      </div>
-    </nav>
-    <nav class="component-navigation-bar navbar navigation-bar navbar-collapse-absolute navbar-expand-md navbar-underline">
-      <a aria-controls="sidebarLightCollapse00" aria-expanded="false" aria-label="Toggle Navigation" class="collapsed navbar-toggler navbar-toggler-link" data-toggle="collapse" href="#sidebarLightCollapse00" role="button">
-        <span class="navbar-text-truncate">Details</span>
-        <svg aria-hidden="true" class="lexicon-icon lexicon-icon-caret-bottom">
-          <use xlinkHref="icons.svg#caret-bottom"></use>
-        </svg>
-      </a>
-      <div class="collapse navbar-collapse" id="sidebarLightCollapse00">
-        <ul class="nav navbar-nav" role="tablist">
-          <li class="nav-item" data-index="0" ref="tab0">
-            <a class="nav-link active" aria-controls="sidebarLightDetails" data-toggle="tab" href="#" role="tab">
-              <span class="navbar-text-truncate">Basic</span>
-            </a>
-          </li>
-          <li class="nav-item" data-index="1" ref="tab1">
-            <a class="nav-link" aria-controls="sidebarLightDetails" data-toggle="tab" href="#" role="tab">
-              <span class="navbar-text-truncate">Properties</span>
-            </a>
-          </li>
-        </ul>
-      </div>
-    </nav>
-    <div class="ddm-sidebar-body">
-      <div class="sidebar-body">
-        <div class="tab-content">
-          <div aria-labelledby="sidebarLightFormsFieldTab" class="fade tab-pane active show" id="sidebarLightDetails" role="tabpanel">
-            <div class="row">
-              <div class="col-md-12"></div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-`;
-
-exports[`Sidebar Edit mode should not enter editing mode with only \`edit\` in mode 1`] = `
-<div class="sidebar-container show" ref="sidebar">
-  <div class="sidebar sidebar-light">
-    <nav class="component-tbar tbar">
-      <div class="container-fluid">
-        <ul class="tbar-nav">
-          <li class="tbar-item tbar-item-expand text-left">
-            <div class="tbar-section">
-              <span class="text-truncate-inline">
-                <span class="text-truncate">Add Elements</span>
-              </span>
-            </div>
-          </li>
-          <li class="tbar-item">
-            <a class="component-action" href="#1" ref="close" role="button">
-              <svg aria-hidden="true" class="lexicon-icon lexicon-icon-times">
-                <use xlinkHref="icons.svg#times"></use>
-              </svg>
-            </a>
-          </li>
-        </ul>
-      </div>
-    </nav>
-    <nav class="component-navigation-bar navbar navigation-bar navbar-collapse-absolute navbar-expand-md navbar-underline">
-      <a aria-controls="sidebarLightCollapse00" aria-expanded="false" aria-label="Toggle Navigation" class="collapsed navbar-toggler navbar-toggler-link" data-toggle="collapse" href="#sidebarLightCollapse00" role="button">
-        <span class="navbar-text-truncate">Details</span>
-        <svg aria-hidden="true" class="lexicon-icon lexicon-icon-caret-bottom">
-          <use xlinkHref="icons.svg#caret-bottom"></use>
-        </svg>
-      </a>
-      <div class="collapse navbar-collapse" id="sidebarLightCollapse00">
-        <ul class="nav navbar-nav" role="tablist">
-          <li class="nav-item" data-index="0" ref="tab0">
-            <a class="nav-link active" aria-controls="sidebarLightDetails" data-toggle="tab" href="#" role="tab">
-              <span class="navbar-text-truncate">Elements</span>
-            </a>
-          </li>
-        </ul>
-      </div>
-    </nav>
-    <div class="ddm-sidebar-body"></div>
-  </div>
-</div>
-`;
-
-exports[`Sidebar Edit mode should not go into edit mode with just fieldContext 1`] = `
-<div class="sidebar-container show" ref="sidebar">
-  <div class="sidebar sidebar-light">
-    <nav class="component-tbar tbar">
-      <div class="container-fluid">
-        <ul class="tbar-nav">
-          <li class="tbar-item tbar-item-expand text-left">
-            <div class="tbar-section">
-              <span class="text-truncate-inline">
-                <span class="text-truncate">Add Elements</span>
-              </span>
-            </div>
-          </li>
-          <li class="tbar-item">
-            <a class="component-action" href="#1" ref="close" role="button">
-              <svg aria-hidden="true" class="lexicon-icon lexicon-icon-times">
-                <use xlinkHref="icons.svg#times"></use>
-              </svg>
-            </a>
-          </li>
-        </ul>
-      </div>
-    </nav>
-    <nav class="component-navigation-bar navbar navigation-bar navbar-collapse-absolute navbar-expand-md navbar-underline">
-      <a aria-controls="sidebarLightCollapse00" aria-expanded="false" aria-label="Toggle Navigation" class="collapsed navbar-toggler navbar-toggler-link" data-toggle="collapse" href="#sidebarLightCollapse00" role="button">
-        <span class="navbar-text-truncate">Details</span>
-        <svg aria-hidden="true" class="lexicon-icon lexicon-icon-caret-bottom">
-          <use xlinkHref="icons.svg#caret-bottom"></use>
-        </svg>
-      </a>
-      <div class="collapse navbar-collapse" id="sidebarLightCollapse00">
-        <ul class="nav navbar-nav" role="tablist">
-          <li class="nav-item" data-index="0" ref="tab0">
-            <a class="nav-link active" aria-controls="sidebarLightDetails" data-toggle="tab" href="#" role="tab">
-              <span class="navbar-text-truncate">Elements</span>
-            </a>
-          </li>
-        </ul>
-      </div>
-    </nav>
-    <div class="ddm-sidebar-body"></div>
-  </div>
-</div>
-`;
-
 exports[`Sidebar should render a Sidebar closed 1`] = `
 <div class="sidebar-container" ref="sidebar">
   <div class="sidebar sidebar-light">
     <nav class="component-tbar tbar">
       <div class="container-fluid">
         <ul class="tbar-nav">
-          <li class="tbar-item">
-            <a class="component-action" href="#1" ref="close" role="button">
-              <svg aria-hidden="true" class="lexicon-icon lexicon-icon-times">
-                <use xlinkHref="icons.svg#times"></use>
-              </svg>
-            </a>
-          </li>
-        </ul>
-      </div>
-    </nav>
-    <nav class="component-navigation-bar navbar navigation-bar navbar-collapse-absolute navbar-expand-md navbar-underline">
-      <a aria-controls="sidebarLightCollapse00" aria-expanded="false" aria-label="Toggle Navigation" class="collapsed navbar-toggler navbar-toggler-link" data-toggle="collapse" href="#sidebarLightCollapse00" role="button">
-        <span class="navbar-text-truncate">Details</span>
-        <svg aria-hidden="true" class="lexicon-icon lexicon-icon-caret-bottom">
-          <use xlinkHref="icons.svg#caret-bottom"></use>
-        </svg>
-      </a>
-      <div class="collapse navbar-collapse" id="sidebarLightCollapse00">
-        <ul class="nav navbar-nav" role="tablist">
-          <li class="nav-item" data-index="0" ref="tab0">
-            <a class="nav-link active" aria-controls="sidebarLightDetails" data-toggle="tab" href="#" role="tab">
-              <span class="navbar-text-truncate">Elements</span>
-            </a>
-          </li>
-        </ul>
-      </div>
-    </nav>
-    <div class="ddm-sidebar-body"></div>
-  </div>
-</div>
-`;
-
-exports[`Sidebar should render a Sidebar open 1`] = `
-<div class="sidebar-container show" ref="sidebar">
-  <div class="sidebar sidebar-light">
-    <nav class="component-tbar tbar">
-      <div class="container-fluid">
-        <ul class="tbar-nav">
           <li class="tbar-item tbar-item-expand text-left">
             <div class="tbar-section">
               <span class="text-truncate-inline">
@@ -233,53 +33,8 @@ exports[`Sidebar should render a Sidebar open 1`] = `
       <div class="collapse navbar-collapse" id="sidebarLightCollapse00">
         <ul class="nav navbar-nav" role="tablist">
           <li class="nav-item" data-index="0" ref="tab0">
-            <a class="nav-link active" aria-controls="sidebarLightDetails" data-toggle="tab" href="#" role="tab">
-              <span class="navbar-text-truncate">Elements</span>
-            </a>
-          </li>
-        </ul>
-      </div>
-    </nav>
-    <div class="ddm-sidebar-body"></div>
-  </div>
-</div>
-`;
-
-exports[`Sidebar should render a Sidebar with fieldLists 1`] = `
-<div class="sidebar-container show" ref="sidebar">
-  <div class="sidebar sidebar-light">
-    <nav class="component-tbar tbar">
-      <div class="container-fluid">
-        <ul class="tbar-nav">
-          <li class="tbar-item tbar-item-expand text-left">
-            <div class="tbar-section">
-              <span class="text-truncate-inline">
-                <span class="text-truncate">Add Elements</span>
-              </span>
-            </div>
-          </li>
-          <li class="tbar-item">
-            <a class="component-action" href="#1" ref="close" role="button">
-              <svg aria-hidden="true" class="lexicon-icon lexicon-icon-times">
-                <use xlinkHref="icons.svg#times"></use>
-              </svg>
-            </a>
-          </li>
-        </ul>
-      </div>
-    </nav>
-    <nav class="component-navigation-bar navbar navigation-bar navbar-collapse-absolute navbar-expand-md navbar-underline">
-      <a aria-controls="sidebarLightCollapse00" aria-expanded="false" aria-label="Toggle Navigation" class="collapsed navbar-toggler navbar-toggler-link" data-toggle="collapse" href="#sidebarLightCollapse00" role="button">
-        <span class="navbar-text-truncate">Details</span>
-        <svg aria-hidden="true" class="lexicon-icon lexicon-icon-caret-bottom">
-          <use xlinkHref="icons.svg#caret-bottom"></use>
-        </svg>
-      </a>
-      <div class="collapse navbar-collapse" id="sidebarLightCollapse00">
-        <ul class="nav navbar-nav" role="tablist">
-          <li class="nav-item" data-index="0" ref="tab0">
-            <a class="nav-link active" aria-controls="sidebarLightDetails" data-toggle="tab" href="#" role="tab">
-              <span class="navbar-text-truncate">Elements</span>
+            <a class="nav-link active" aria-controls="sidebarLightDetails" data-toggle="tab" href="javascript:;" role="tab">
+              <span class="navbar-text-truncate">elements</span>
             </a>
           </li>
         </ul>
@@ -288,7 +43,289 @@ exports[`Sidebar should render a Sidebar with fieldLists 1`] = `
     <div class="ddm-sidebar-body">
       <ul class="list-group">
         <li class="list-group-header">
-          <h3 class="list-group-header-title">Basic Elements</h3>
+          <h3 class="list-group-header-title">basic-elements</h3>
+        </li>
+        <div class="ddm-drag-item list-group-item list-group-item-flex" data-ddm-field-type-index="0" ref="field0">
+          <div class="autofit-col">
+            <div class="sticker sticker-secondary">
+              <svg class="lexicon-icon lexicon-icon-calendar" aria-hidden="true">
+                <use xlinkHref="icons.svg#calendar"></use>
+              </svg>
+            </div>
+          </div>
+          <div class="autofit-col autofit-col-expand">
+            <h4 class="list-group-title text-truncate">
+              <span>Date</span>
+            </h4>
+            <p class="list-group-subtitle text-truncate">Select date from a Datepicker.</p>
+          </div>
+        </div>
+        <div class="ddm-drag-item list-group-item list-group-item-flex" data-ddm-field-type-index="1" ref="field1">
+          <div class="autofit-col">
+            <div class="sticker sticker-secondary">
+              <svg class="lexicon-icon lexicon-icon-text" aria-hidden="true">
+                <use xlinkHref="icons.svg#text"></use>
+              </svg>
+            </div>
+          </div>
+          <div class="autofit-col autofit-col-expand">
+            <h4 class="list-group-title text-truncate">
+              <span>Text Field</span>
+            </h4>
+            <p class="list-group-subtitle text-truncate">Single line or multiline text area.</p>
+          </div>
+        </div>
+        <div class="ddm-drag-item list-group-item list-group-item-flex" data-ddm-field-type-index="2" ref="field2">
+          <div class="autofit-col">
+            <div class="sticker sticker-secondary">
+              <svg class="lexicon-icon lexicon-icon-radio-button" aria-hidden="true">
+                <use xlinkHref="icons.svg#radio-button"></use>
+              </svg>
+            </div>
+          </div>
+          <div class="autofit-col autofit-col-expand">
+            <h4 class="list-group-title text-truncate">
+              <span>Single Selection</span>
+            </h4>
+            <p class="list-group-subtitle text-truncate">Select only one item with a radio button.</p>
+          </div>
+        </div>
+        <div class="ddm-drag-item list-group-item list-group-item-flex" data-ddm-field-type-index="3" ref="field3">
+          <div class="autofit-col">
+            <div class="sticker sticker-secondary">
+              <svg class="lexicon-icon lexicon-icon-list" aria-hidden="true">
+                <use xlinkHref="icons.svg#list"></use>
+              </svg>
+            </div>
+          </div>
+          <div class="autofit-col autofit-col-expand">
+            <h4 class="list-group-title text-truncate">
+              <span>Select from list</span>
+            </h4>
+            <p class="list-group-subtitle text-truncate">Choose an or more options from a list.</p>
+          </div>
+        </div>
+        <div class="ddm-drag-item list-group-item list-group-item-flex" data-ddm-field-type-index="4" ref="field4">
+          <div class="autofit-col">
+            <div class="sticker sticker-secondary">
+              <svg class="lexicon-icon lexicon-icon-grid" aria-hidden="true">
+                <use xlinkHref="icons.svg#grid"></use>
+              </svg>
+            </div>
+          </div>
+          <div class="autofit-col autofit-col-expand">
+            <h4 class="list-group-title text-truncate">
+              <span>Grid</span>
+            </h4>
+            <p class="list-group-subtitle text-truncate">Select options from a matrix.</p>
+          </div>
+        </div>
+        <div class="ddm-drag-item list-group-item list-group-item-flex" data-ddm-field-type-index="5" ref="field5">
+          <div class="autofit-col">
+            <div class="sticker sticker-secondary">
+              <svg class="lexicon-icon lexicon-icon-select-from-list" aria-hidden="true">
+                <use xlinkHref="icons.svg#select-from-list"></use>
+              </svg>
+            </div>
+          </div>
+          <div class="autofit-col autofit-col-expand">
+            <h4 class="list-group-title text-truncate">
+              <span>Multiple Selection</span>
+            </h4>
+            <p class="list-group-subtitle text-truncate">Select multiple options using a checkbox.</p>
+          </div>
+        </div>
+      </ul>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Sidebar should render a Sidebar open 1`] = `
+<div class="sidebar-container open" ref="sidebar">
+  <div class="sidebar sidebar-light">
+    <nav class="component-tbar tbar">
+      <div class="container-fluid">
+        <ul class="tbar-nav">
+          <li class="tbar-item tbar-item-expand text-left">
+            <div class="tbar-section">
+              <span class="text-truncate-inline">
+                <span class="text-truncate">Add Elements</span>
+              </span>
+            </div>
+          </li>
+          <li class="tbar-item">
+            <a class="component-action" href="#1" ref="close" role="button">
+              <svg aria-hidden="true" class="lexicon-icon lexicon-icon-times">
+                <use xlinkHref="icons.svg#times"></use>
+              </svg>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+    <nav class="component-navigation-bar navbar navigation-bar navbar-collapse-absolute navbar-expand-md navbar-underline">
+      <a aria-controls="sidebarLightCollapse00" aria-expanded="false" aria-label="Toggle Navigation" class="collapsed navbar-toggler navbar-toggler-link" data-toggle="collapse" href="#sidebarLightCollapse00" role="button">
+        <span class="navbar-text-truncate">Details</span>
+        <svg aria-hidden="true" class="lexicon-icon lexicon-icon-caret-bottom">
+          <use xlinkHref="icons.svg#caret-bottom"></use>
+        </svg>
+      </a>
+      <div class="collapse navbar-collapse" id="sidebarLightCollapse00">
+        <ul class="nav navbar-nav" role="tablist">
+          <li class="nav-item" data-index="0" ref="tab0">
+            <a class="nav-link active" aria-controls="sidebarLightDetails" data-toggle="tab" href="javascript:;" role="tab">
+              <span class="navbar-text-truncate">elements</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+    <div class="ddm-sidebar-body">
+      <ul class="list-group">
+        <li class="list-group-header">
+          <h3 class="list-group-header-title">basic-elements</h3>
+        </li>
+        <div class="ddm-drag-item list-group-item list-group-item-flex" data-ddm-field-type-index="0" ref="field0">
+          <div class="autofit-col">
+            <div class="sticker sticker-secondary">
+              <svg class="lexicon-icon lexicon-icon-calendar" aria-hidden="true">
+                <use xlinkHref="icons.svg#calendar"></use>
+              </svg>
+            </div>
+          </div>
+          <div class="autofit-col autofit-col-expand">
+            <h4 class="list-group-title text-truncate">
+              <span>Date</span>
+            </h4>
+            <p class="list-group-subtitle text-truncate">Select date from a Datepicker.</p>
+          </div>
+        </div>
+        <div class="ddm-drag-item list-group-item list-group-item-flex" data-ddm-field-type-index="1" ref="field1">
+          <div class="autofit-col">
+            <div class="sticker sticker-secondary">
+              <svg class="lexicon-icon lexicon-icon-text" aria-hidden="true">
+                <use xlinkHref="icons.svg#text"></use>
+              </svg>
+            </div>
+          </div>
+          <div class="autofit-col autofit-col-expand">
+            <h4 class="list-group-title text-truncate">
+              <span>Text Field</span>
+            </h4>
+            <p class="list-group-subtitle text-truncate">Single line or multiline text area.</p>
+          </div>
+        </div>
+        <div class="ddm-drag-item list-group-item list-group-item-flex" data-ddm-field-type-index="2" ref="field2">
+          <div class="autofit-col">
+            <div class="sticker sticker-secondary">
+              <svg class="lexicon-icon lexicon-icon-radio-button" aria-hidden="true">
+                <use xlinkHref="icons.svg#radio-button"></use>
+              </svg>
+            </div>
+          </div>
+          <div class="autofit-col autofit-col-expand">
+            <h4 class="list-group-title text-truncate">
+              <span>Single Selection</span>
+            </h4>
+            <p class="list-group-subtitle text-truncate">Select only one item with a radio button.</p>
+          </div>
+        </div>
+        <div class="ddm-drag-item list-group-item list-group-item-flex" data-ddm-field-type-index="3" ref="field3">
+          <div class="autofit-col">
+            <div class="sticker sticker-secondary">
+              <svg class="lexicon-icon lexicon-icon-list" aria-hidden="true">
+                <use xlinkHref="icons.svg#list"></use>
+              </svg>
+            </div>
+          </div>
+          <div class="autofit-col autofit-col-expand">
+            <h4 class="list-group-title text-truncate">
+              <span>Select from list</span>
+            </h4>
+            <p class="list-group-subtitle text-truncate">Choose an or more options from a list.</p>
+          </div>
+        </div>
+        <div class="ddm-drag-item list-group-item list-group-item-flex" data-ddm-field-type-index="4" ref="field4">
+          <div class="autofit-col">
+            <div class="sticker sticker-secondary">
+              <svg class="lexicon-icon lexicon-icon-grid" aria-hidden="true">
+                <use xlinkHref="icons.svg#grid"></use>
+              </svg>
+            </div>
+          </div>
+          <div class="autofit-col autofit-col-expand">
+            <h4 class="list-group-title text-truncate">
+              <span>Grid</span>
+            </h4>
+            <p class="list-group-subtitle text-truncate">Select options from a matrix.</p>
+          </div>
+        </div>
+        <div class="ddm-drag-item list-group-item list-group-item-flex" data-ddm-field-type-index="5" ref="field5">
+          <div class="autofit-col">
+            <div class="sticker sticker-secondary">
+              <svg class="lexicon-icon lexicon-icon-select-from-list" aria-hidden="true">
+                <use xlinkHref="icons.svg#select-from-list"></use>
+              </svg>
+            </div>
+          </div>
+          <div class="autofit-col autofit-col-expand">
+            <h4 class="list-group-title text-truncate">
+              <span>Multiple Selection</span>
+            </h4>
+            <p class="list-group-subtitle text-truncate">Select multiple options using a checkbox.</p>
+          </div>
+        </div>
+      </ul>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Sidebar should render a Sidebar with fieldTypes 1`] = `
+<div class="sidebar-container open" ref="sidebar">
+  <div class="sidebar sidebar-light">
+    <nav class="component-tbar tbar">
+      <div class="container-fluid">
+        <ul class="tbar-nav">
+          <li class="tbar-item tbar-item-expand text-left">
+            <div class="tbar-section">
+              <span class="text-truncate-inline">
+                <span class="text-truncate">Add Elements</span>
+              </span>
+            </div>
+          </li>
+          <li class="tbar-item">
+            <a class="component-action" href="#1" ref="close" role="button">
+              <svg aria-hidden="true" class="lexicon-icon lexicon-icon-times">
+                <use xlinkHref="icons.svg#times"></use>
+              </svg>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+    <nav class="component-navigation-bar navbar navigation-bar navbar-collapse-absolute navbar-expand-md navbar-underline">
+      <a aria-controls="sidebarLightCollapse00" aria-expanded="false" aria-label="Toggle Navigation" class="collapsed navbar-toggler navbar-toggler-link" data-toggle="collapse" href="#sidebarLightCollapse00" role="button">
+        <span class="navbar-text-truncate">Details</span>
+        <svg aria-hidden="true" class="lexicon-icon lexicon-icon-caret-bottom">
+          <use xlinkHref="icons.svg#caret-bottom"></use>
+        </svg>
+      </a>
+      <div class="collapse navbar-collapse" id="sidebarLightCollapse00">
+        <ul class="nav navbar-nav" role="tablist">
+          <li class="nav-item" data-index="0" ref="tab0">
+            <a class="nav-link active" aria-controls="sidebarLightDetails" data-toggle="tab" href="javascript:;" role="tab">
+              <span class="navbar-text-truncate">elements</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+    <div class="ddm-sidebar-body">
+      <ul class="list-group">
+        <li class="list-group-header">
+          <h3 class="list-group-header-title">basic-elements</h3>
         </li>
         <div class="ddm-drag-item list-group-item list-group-item-flex" data-ddm-field-type-index="0" ref="field0">
           <div class="autofit-col">
@@ -387,7 +424,7 @@ exports[`Sidebar should render a Sidebar with fieldLists 1`] = `
 `;
 
 exports[`Sidebar should render a Sidebar with spritemap 1`] = `
-<div class="sidebar-container show" ref="sidebar">
+<div class="sidebar-container open" ref="sidebar">
   <div class="sidebar sidebar-light">
     <nav class="component-tbar tbar">
       <div class="container-fluid">
@@ -419,14 +456,110 @@ exports[`Sidebar should render a Sidebar with spritemap 1`] = `
       <div class="collapse navbar-collapse" id="sidebarLightCollapse00">
         <ul class="nav navbar-nav" role="tablist">
           <li class="nav-item" data-index="0" ref="tab0">
-            <a class="nav-link active" aria-controls="sidebarLightDetails" data-toggle="tab" href="#" role="tab">
-              <span class="navbar-text-truncate">Elements</span>
+            <a class="nav-link active" aria-controls="sidebarLightDetails" data-toggle="tab" href="javascript:;" role="tab">
+              <span class="navbar-text-truncate">elements</span>
             </a>
           </li>
         </ul>
       </div>
     </nav>
-    <div class="ddm-sidebar-body"></div>
+    <div class="ddm-sidebar-body">
+      <ul class="list-group">
+        <li class="list-group-header">
+          <h3 class="list-group-header-title">basic-elements</h3>
+        </li>
+        <div class="ddm-drag-item list-group-item list-group-item-flex" data-ddm-field-type-index="0" ref="field0">
+          <div class="autofit-col">
+            <div class="sticker sticker-secondary">
+              <svg class="lexicon-icon lexicon-icon-calendar" aria-hidden="true">
+                <use xlinkHref="icons.svg#calendar"></use>
+              </svg>
+            </div>
+          </div>
+          <div class="autofit-col autofit-col-expand">
+            <h4 class="list-group-title text-truncate">
+              <span>Date</span>
+            </h4>
+            <p class="list-group-subtitle text-truncate">Select date from a Datepicker.</p>
+          </div>
+        </div>
+        <div class="ddm-drag-item list-group-item list-group-item-flex" data-ddm-field-type-index="1" ref="field1">
+          <div class="autofit-col">
+            <div class="sticker sticker-secondary">
+              <svg class="lexicon-icon lexicon-icon-text" aria-hidden="true">
+                <use xlinkHref="icons.svg#text"></use>
+              </svg>
+            </div>
+          </div>
+          <div class="autofit-col autofit-col-expand">
+            <h4 class="list-group-title text-truncate">
+              <span>Text Field</span>
+            </h4>
+            <p class="list-group-subtitle text-truncate">Single line or multiline text area.</p>
+          </div>
+        </div>
+        <div class="ddm-drag-item list-group-item list-group-item-flex" data-ddm-field-type-index="2" ref="field2">
+          <div class="autofit-col">
+            <div class="sticker sticker-secondary">
+              <svg class="lexicon-icon lexicon-icon-radio-button" aria-hidden="true">
+                <use xlinkHref="icons.svg#radio-button"></use>
+              </svg>
+            </div>
+          </div>
+          <div class="autofit-col autofit-col-expand">
+            <h4 class="list-group-title text-truncate">
+              <span>Single Selection</span>
+            </h4>
+            <p class="list-group-subtitle text-truncate">Select only one item with a radio button.</p>
+          </div>
+        </div>
+        <div class="ddm-drag-item list-group-item list-group-item-flex" data-ddm-field-type-index="3" ref="field3">
+          <div class="autofit-col">
+            <div class="sticker sticker-secondary">
+              <svg class="lexicon-icon lexicon-icon-list" aria-hidden="true">
+                <use xlinkHref="icons.svg#list"></use>
+              </svg>
+            </div>
+          </div>
+          <div class="autofit-col autofit-col-expand">
+            <h4 class="list-group-title text-truncate">
+              <span>Select from list</span>
+            </h4>
+            <p class="list-group-subtitle text-truncate">Choose an or more options from a list.</p>
+          </div>
+        </div>
+        <div class="ddm-drag-item list-group-item list-group-item-flex" data-ddm-field-type-index="4" ref="field4">
+          <div class="autofit-col">
+            <div class="sticker sticker-secondary">
+              <svg class="lexicon-icon lexicon-icon-grid" aria-hidden="true">
+                <use xlinkHref="icons.svg#grid"></use>
+              </svg>
+            </div>
+          </div>
+          <div class="autofit-col autofit-col-expand">
+            <h4 class="list-group-title text-truncate">
+              <span>Grid</span>
+            </h4>
+            <p class="list-group-subtitle text-truncate">Select options from a matrix.</p>
+          </div>
+        </div>
+        <div class="ddm-drag-item list-group-item list-group-item-flex" data-ddm-field-type-index="5" ref="field5">
+          <div class="autofit-col">
+            <div class="sticker sticker-secondary">
+              <svg class="lexicon-icon lexicon-icon-select-from-list" aria-hidden="true">
+                <use xlinkHref="icons.svg#select-from-list"></use>
+              </svg>
+            </div>
+          </div>
+          <div class="autofit-col autofit-col-expand">
+            <h4 class="list-group-title text-truncate">
+              <span>Multiple Selection</span>
+            </h4>
+            <p class="list-group-subtitle text-truncate">Select multiple options using a checkbox.</p>
+          </div>
+        </div>
+      </ul>
+    </div>
   </div>
 </div>
 `;
@@ -437,6 +570,13 @@ exports[`Sidebar should render the default markup 1`] = `
     <nav class="component-tbar tbar">
       <div class="container-fluid">
         <ul class="tbar-nav">
+          <li class="tbar-item tbar-item-expand text-left">
+            <div class="tbar-section">
+              <span class="text-truncate-inline">
+                <span class="text-truncate">Add Elements</span>
+              </span>
+            </div>
+          </li>
           <li class="tbar-item">
             <a class="component-action" href="#1" ref="close" role="button">
               <svg aria-hidden="true" class="lexicon-icon lexicon-icon-times">
@@ -457,14 +597,110 @@ exports[`Sidebar should render the default markup 1`] = `
       <div class="collapse navbar-collapse" id="sidebarLightCollapse00">
         <ul class="nav navbar-nav" role="tablist">
           <li class="nav-item" data-index="0" ref="tab0">
-            <a class="nav-link active" aria-controls="sidebarLightDetails" data-toggle="tab" href="#" role="tab">
-              <span class="navbar-text-truncate">Elements</span>
+            <a class="nav-link active" aria-controls="sidebarLightDetails" data-toggle="tab" href="javascript:;" role="tab">
+              <span class="navbar-text-truncate">elements</span>
             </a>
           </li>
         </ul>
       </div>
     </nav>
-    <div class="ddm-sidebar-body"></div>
+    <div class="ddm-sidebar-body">
+      <ul class="list-group">
+        <li class="list-group-header">
+          <h3 class="list-group-header-title">basic-elements</h3>
+        </li>
+        <div class="ddm-drag-item list-group-item list-group-item-flex" data-ddm-field-type-index="0" ref="field0">
+          <div class="autofit-col">
+            <div class="sticker sticker-secondary">
+              <svg class="lexicon-icon lexicon-icon-calendar" aria-hidden="true">
+                <use xlinkHref="icons.svg#calendar"></use>
+              </svg>
+            </div>
+          </div>
+          <div class="autofit-col autofit-col-expand">
+            <h4 class="list-group-title text-truncate">
+              <span>Date</span>
+            </h4>
+            <p class="list-group-subtitle text-truncate">Select date from a Datepicker.</p>
+          </div>
+        </div>
+        <div class="ddm-drag-item list-group-item list-group-item-flex" data-ddm-field-type-index="1" ref="field1">
+          <div class="autofit-col">
+            <div class="sticker sticker-secondary">
+              <svg class="lexicon-icon lexicon-icon-text" aria-hidden="true">
+                <use xlinkHref="icons.svg#text"></use>
+              </svg>
+            </div>
+          </div>
+          <div class="autofit-col autofit-col-expand">
+            <h4 class="list-group-title text-truncate">
+              <span>Text Field</span>
+            </h4>
+            <p class="list-group-subtitle text-truncate">Single line or multiline text area.</p>
+          </div>
+        </div>
+        <div class="ddm-drag-item list-group-item list-group-item-flex" data-ddm-field-type-index="2" ref="field2">
+          <div class="autofit-col">
+            <div class="sticker sticker-secondary">
+              <svg class="lexicon-icon lexicon-icon-radio-button" aria-hidden="true">
+                <use xlinkHref="icons.svg#radio-button"></use>
+              </svg>
+            </div>
+          </div>
+          <div class="autofit-col autofit-col-expand">
+            <h4 class="list-group-title text-truncate">
+              <span>Single Selection</span>
+            </h4>
+            <p class="list-group-subtitle text-truncate">Select only one item with a radio button.</p>
+          </div>
+        </div>
+        <div class="ddm-drag-item list-group-item list-group-item-flex" data-ddm-field-type-index="3" ref="field3">
+          <div class="autofit-col">
+            <div class="sticker sticker-secondary">
+              <svg class="lexicon-icon lexicon-icon-list" aria-hidden="true">
+                <use xlinkHref="icons.svg#list"></use>
+              </svg>
+            </div>
+          </div>
+          <div class="autofit-col autofit-col-expand">
+            <h4 class="list-group-title text-truncate">
+              <span>Select from list</span>
+            </h4>
+            <p class="list-group-subtitle text-truncate">Choose an or more options from a list.</p>
+          </div>
+        </div>
+        <div class="ddm-drag-item list-group-item list-group-item-flex" data-ddm-field-type-index="4" ref="field4">
+          <div class="autofit-col">
+            <div class="sticker sticker-secondary">
+              <svg class="lexicon-icon lexicon-icon-grid" aria-hidden="true">
+                <use xlinkHref="icons.svg#grid"></use>
+              </svg>
+            </div>
+          </div>
+          <div class="autofit-col autofit-col-expand">
+            <h4 class="list-group-title text-truncate">
+              <span>Grid</span>
+            </h4>
+            <p class="list-group-subtitle text-truncate">Select options from a matrix.</p>
+          </div>
+        </div>
+        <div class="ddm-drag-item list-group-item list-group-item-flex" data-ddm-field-type-index="5" ref="field5">
+          <div class="autofit-col">
+            <div class="sticker sticker-secondary">
+              <svg class="lexicon-icon lexicon-icon-select-from-list" aria-hidden="true">
+                <use xlinkHref="icons.svg#select-from-list"></use>
+              </svg>
+            </div>
+          </div>
+          <div class="autofit-col autofit-col-expand">
+            <h4 class="list-group-title text-truncate">
+              <span>Multiple Selection</span>
+            </h4>
+            <p class="list-group-subtitle text-truncate">Select multiple options using a checkbox.</p>
+          </div>
+        </div>
+      </ul>
+    </div>
   </div>
 </div>
 `;

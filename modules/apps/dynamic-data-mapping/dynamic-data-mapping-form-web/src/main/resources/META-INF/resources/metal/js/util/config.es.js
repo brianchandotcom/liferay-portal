@@ -20,3 +20,12 @@ export const pageStructure = Config.shapeOf(
 		title: Config.string()
 	}
 );
+
+export const focusedFieldStructure = Config.shapeOf(
+	{
+		columnIndex: Config.number(),
+		name: Config.string().required(),
+		pageIndex: Config.number(),
+		rowIndex: Config.number()
+	}
+);

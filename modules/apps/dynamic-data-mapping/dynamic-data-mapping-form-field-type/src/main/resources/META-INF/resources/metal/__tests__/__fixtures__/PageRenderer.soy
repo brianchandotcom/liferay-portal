@@ -5,11 +5,11 @@
 		type: string
 	]>}
 
-	<div>
+	<div class="container">
 		{foreach $item in $items}
 			{let $type: $item.type /}
 
-			{delcall PageRenderer.RegisterFieldType variant="$type" /}
+			{delcall PageRenderer.RegisterFieldType data="$item" variant="$type" /}
 		{/foreach}
 	</div>
 {/template}

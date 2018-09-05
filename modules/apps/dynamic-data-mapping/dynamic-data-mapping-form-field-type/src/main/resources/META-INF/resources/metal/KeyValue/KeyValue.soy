@@ -3,8 +3,8 @@
 {template .render}
 	{@param? _handleValueInputChanged: any}
 	{@param? _handleKeyInputChanged: any}
-	{@param? editable: bool}
-	{@param? helpText: string}
+	{@param? readOnly: bool}
+	{@param? tip: string}
 	{@param? id: string}
 	{@param? key: string}
 	{@param? label: string}
@@ -19,7 +19,7 @@
 			{call .content}
 				{param _handleValueInputChanged: $_handleValueInputChanged /}
 				{param _handleKeyInputChanged: $_handleKeyInputChanged /}
-				{param editable: $editable /}
+				{param readOnly: $readOnly /}
 				{param id: $id /}
 				{param key: $key /}
 				{param placeholder: $placeholder /}
@@ -27,7 +27,7 @@
 			{/call}
 		{/param}
 
-		{param helpText: $helpText /}
+		{param tip: $tip /}
 		{param id: $id /}
 		{param label: $label /}
 		{param required: $required /}
@@ -39,7 +39,7 @@
 {template .content}
 	{@param? _handleValueInputChanged: any}
 	{@param? _handleKeyInputChanged: any}
-	{@param? editable: bool}
+	{@param? readOnly: bool}
 	{@param? key: string}
 	{@param? placeholder: string}
 	{@param? value: string}
@@ -55,11 +55,11 @@
 
 		data-oninput="{$_handleValueInputChanged}"
 
-		{if not $editable}
+		{if not $readOnly}
 			disabled="disabled"
 		{/if}
 
-		value = "{$value}"
+		value="{$value}"
 	{/let}
 
 	<input {$inputAttributes}>

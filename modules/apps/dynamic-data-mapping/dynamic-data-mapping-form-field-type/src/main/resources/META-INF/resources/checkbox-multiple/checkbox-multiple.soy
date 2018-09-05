@@ -39,7 +39,7 @@
 
 					{if $required and length($options) > 1}
 						<svg aria-hidden="true"
-							 class="lexicon-icon lexicon-icon-asterisk reference-mark">
+							class="lexicon-icon lexicon-icon-asterisk reference-mark">
 							<use
 								xlink:href="{$pathThemeImages}/lexicon/icons.svg#asterisk"/>
 						</svg>
@@ -87,7 +87,7 @@
 					</label>
 				</div>
 			{else}
-				<div class="form-check custom-checkbox {$inline ? 'form-check-inline' : 'custom-control'}">
+				<div class="custom-checkbox form-check {$inline ? 'form-check-inline' : 'custom-control'}">
 					<label class="form-check-label-option-{$option.value}"
 						for="{$name}_{$option.value}">
 
@@ -100,7 +100,7 @@
 							type="checkbox"
 							value="{$option.value}" />
 
-						<span class="form-check-description custom-control-label">
+						<span class="custom-control-label form-check-description">
 							<span class="custom-control-label-text">
 								{$option.label}{sp}
 

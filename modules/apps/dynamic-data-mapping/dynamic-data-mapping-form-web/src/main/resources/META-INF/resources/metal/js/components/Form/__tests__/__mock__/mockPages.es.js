@@ -6,6 +6,7 @@ export default [
 					{
 						fields: [
 							{
+								fieldName: 'radioField',
 								label: 'Radio',
 								type: 'radio'
 							}

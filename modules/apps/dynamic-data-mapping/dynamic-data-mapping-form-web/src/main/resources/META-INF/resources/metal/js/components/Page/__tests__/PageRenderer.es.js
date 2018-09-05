@@ -1,25 +1,24 @@
-import {dom as MetalTestUtil} from 'metal-dom';
-
 import './__fixtures__/Fields.es';
-import Context from './__mock__/mockContext.es';
+import {dom as MetalTestUtil} from 'metal-dom';
+import mockPages from './__mock__/mockPages.es';
 import PageRenderer from '../PageRenderer.es';
 
 const spritemap = 'icons.svg';
 let component;
 let componentProps = null;
-let context = null;
+let pages = null;
 
 describe(
 	'PageRenderer',
 	() => {
 		beforeEach(
 			() => {
-				context = JSON.parse(JSON.stringify(Context));
+				pages = JSON.parse(JSON.stringify(mockPages));
 				componentProps = {
 					activePage: 0,
 					contentRenderer: 'grid',
 					editable: true,
-					page: context,
+					page: pages,
 					pageId: 0,
 					spritemap,
 					total: 1
@@ -140,25 +139,6 @@ describe(
 
 				expect(spy).toHaveBeenCalled();
 				expect(spy).toHaveBeenCalledWith('duplicateButtonClicked', expect.any(Object));
-			}
-		);
-
-		it(
-			'should render a layout and continue to propagate the field edit event',
-			() => {
-				component = new PageRenderer(
-					{
-						...componentProps,
-						contentRenderer: 'list'
-					}
-				);
-
-				const spy = jest.spyOn(component, 'emit');
-
-				jest.runAllTimers();
-				component._handleFieldChanged();
-
-				expect(spy).toHaveBeenCalled();
 			}
 		);
 

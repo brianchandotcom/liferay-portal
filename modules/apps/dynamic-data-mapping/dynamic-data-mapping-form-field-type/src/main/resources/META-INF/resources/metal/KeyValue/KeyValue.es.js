@@ -21,7 +21,16 @@ class KeyValue extends Component {
 		 * @type {?bool}
 		 */
 
-		editable: Config.bool().value(false),
+		readOnly: Config.bool().value(false),
+
+		/**
+		 * @default undefined
+		 * @instance
+		 * @memberof Text
+		 * @type {?(string|undefined)}
+		 */
+
+		fieldName: Config.string(),
 
 		/**
 		 * @default false
@@ -39,7 +48,7 @@ class KeyValue extends Component {
 		 * @type {?(string|undefined)}
 		 */
 
-		helpText: Config.string(),
+		tip: Config.string(),
 
 		/**
 		 * @default undefined
@@ -123,10 +132,11 @@ class KeyValue extends Component {
 		this.generateKey = false;
 
 		this.emit(
-			'fieldEdit',
+			'fieldEdited',
 			{
-				key: 'key',
+				fieldInstance: this,
 				originalEvent,
+				property: 'key',
 				value: this.key
 			}
 		);
@@ -142,9 +152,9 @@ class KeyValue extends Component {
 		}
 
 		this.emit(
-			'fieldEdit',
+			'fieldEdited',
 			{
-				key: 'value',
+				fieldInstance: this,
 				originalEvent,
 				value
 			}

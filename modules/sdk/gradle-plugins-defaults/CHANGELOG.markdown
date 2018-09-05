@@ -4483,6 +4483,12 @@ used inside `build.gradle` files.
 - [LPS-70819]: Fix the `compileJSP.destinationDir` property when the
 `jsp.precompile.from.source` project property is set to `true`.
 
+## 5.5.34 - 2018-09-04
+
+### Changed
+- [LPS-84119]: Update the [Liferay Gradle Plugins] dependency to version
+3.12.125.
+
 [Find Security Bugs]: https://github.com/liferay/liferay-portal/tree/master/modules/third-party/com-h3xstream-findsecbugs
 [Gradle Dependency Management]: https://github.com/spring-gradle-plugins/dependency-management-plugin
 [Gradle License Report]: https://github.com/jk1/Gradle-License-Report

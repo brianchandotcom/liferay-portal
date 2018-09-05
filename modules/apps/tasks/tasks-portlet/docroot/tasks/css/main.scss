@@ -82,7 +82,7 @@
 	/* ---------- Priority ---------- */
 
 	.tasks-title {
-		padding: 1px 0 1px 0;
+		padding: 1px 0;
 	}
 
 	/* ---------- Progress ---------- */
@@ -125,7 +125,7 @@
 	}
 
 	.past-due {
-		color: red;
+		color: #F00;
 	}
 
 	.progress-wrapper .due-date {
@@ -220,18 +220,7 @@
 
 	.task-data-table .task-data {
 		display: block;
-		padding: 1px 0 1px 0;
-	}
-
-	.fieldset {
-		.due-date-label {
-			margin-top: 10px;
-		}
-
-		.due-date-toggle {
-			margin: 0 0 10px;
-			padding-left: 2px;
-		}
+		padding: 1px 0;
 	}
 
 	/* ---------- Comments ---------- */
@@ -270,7 +259,7 @@
 
 	.tasks-title a {
 		display: block;
-		padding: 1px 0 1px 0;
+		padding: 1px 0;
 	}
 }
 

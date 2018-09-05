@@ -18,7 +18,8 @@
 
 <%
 PanelCategory panelCategory = (PanelCategory)request.getAttribute(ApplicationListWebKeys.PANEL_CATEGORY);
-PanelCategoryHelper panelCategoryHelper = (PanelCategoryHelper)request.getAttribute(ApplicationListWebKeys.PANEL_CATEGORY_HELPER);
+
+ContentPanelCategoryDisplayContext contentPanelCategoryDisplayContext = new ContentPanelCategoryDisplayContext(renderRequest);
 %>
 
 <liferay-application-list:panel-category
@@ -67,58 +68,9 @@ PanelCategoryHelper panelCategoryHelper = (PanelCategoryHelper)request.getAttrib
 							</span>
 						</div>
 
-						<%
-						String portletId = themeDisplay.getPpid();
-
-						if (Validator.isNull(portletId) || !panelCategoryHelper.containsPortlet(portletId, PanelCategoryKeys.SITE_ADMINISTRATION_CONTENT, permissionChecker, curSite)) {
-							portletId = panelCategoryHelper.getFirstPortletId(PanelCategoryKeys.SITE_ADMINISTRATION_CONTENT, permissionChecker, curSite);
-						}
-
-						final PortletURL portletURL = PortalUtil.getControlPanelPortletURL(request, curSite, portletId, 0, 0, PortletRequest.RENDER_PHASE);
-
-						final String itemLabel = LanguageUtil.get(locale, "default-scope");
-						
-						JSPDropdownItemList dropdownItems = new JSPDropdownItemList(pageContext){
-							{
-								add(
-									dropdownItem -> {
-										dropdownItem.setHref(portletURL.toString());
-										dropdownItem.setLabel(itemLabel);
-									}
-								);
-
-
-								for (Layout curScopeLayout : scopeLayouts) {
-									Group scopeGroup = curScopeLayout.getScopeGroup();
-
-									if (Validator.isNull(portletId) || !panelCategoryHelper.containsPortlet(portletId, PanelCategoryKeys.SITE_ADMINISTRATION_CONTENT, permissionChecker, scopeGroup)) {
-										portletId = panelCategoryHelper.getFirstPortletId(PanelCategoryKeys.SITE_ADMINISTRATION_CONTENT, permissionChecker, scopeGroup);
-									}
-
-									if (Validator.isNull(portletId)) {
-										continue;
-									}
-
-									final PortletURL portletURLa = PortalUtil.getControlPanelPortletURL(request, scopeGroup, portletId, 0, 0, PortletRequest.RENDER_PHASE);
-								
-									final String itemLabela = LanguageUtil.get(locale, HtmlUtil.escape(curScopeLayout.getName(locale)));
-
-									add(
-										dropdownItem -> {
-											dropdownItem.setHref(portletURLa.toString());
-											dropdownItem.setLabel(itemLabela);
-										}
-									);
-								}
-
-								
-							}
-						};
-						%>
-						
 						<div class="autofit-col autofit-col-end">
 							<clay:dropdown-menu
-								dropdownItems="<%= dropdownItems %>"
+								dropdownItems="<%= contentPanelCategoryDisplayContext.getScopesDropdownItemList() %>"
 								icon="cog"
 								triggerCssClasses="dropdown-toggle icon-monospaced text-light"
 							/>

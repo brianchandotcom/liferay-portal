@@ -106,6 +106,13 @@ gradle.beforeProject {
 				enabled = false
 			}
 
+			task generateSampleProject(type:JavaExec) {
+				args '--archetypes-dirs', jar.archivePath.parent, '--destination', "${buildDir}", '--template', project.name.replaceFirst("project-templates-", "")
+				classpath = sourceSets.main.runtimeClasspath
+				dependsOn jar
+				main = 'com.liferay.project.templates.ProjectTemplates'
+			}
+
 			processResources {
 				exclude "**/.sass-cache/"
 

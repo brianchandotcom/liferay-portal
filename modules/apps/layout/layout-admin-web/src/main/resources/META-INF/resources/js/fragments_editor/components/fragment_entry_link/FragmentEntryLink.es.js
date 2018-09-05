@@ -316,19 +316,27 @@ class FragmentEntryLink extends Component {
 		this.store
 			.dispatchAction(
 				UPDATE_SAVING_CHANGES_STATUS,
-				{savingChanges: true}
+				{
+					savingChanges: true
+				}
 			)
 			.dispatchAction(
 				REMOVE_FRAGMENT_ENTRY_LINK,
-				{fragmentEntryLinkId: this.fragmentEntryLinkId}
+				{
+					fragmentEntryLinkId: this.fragmentEntryLinkId
+				}
 			)
 			.dispatchAction(
 				UPDATE_LAST_SAVE_DATE,
-				{lastSaveDate: new Date()}
+				{
+					lastSaveDate: new Date()
+				}
 			)
 			.dispatchAction(
 				UPDATE_SAVING_CHANGES_STATUS,
-				{savingChanges: false}
+				{
+					savingChanges: false
+				}
 			);
 	}
 

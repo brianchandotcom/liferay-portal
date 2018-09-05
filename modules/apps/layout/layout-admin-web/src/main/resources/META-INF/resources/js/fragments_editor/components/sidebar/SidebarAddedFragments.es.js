@@ -8,7 +8,7 @@ import {
 	UPDATE_LAST_SAVE_DATE,
 	UPDATE_SAVING_CHANGES_STATUS
 } from '../../actions/actions.es';
-import {Store} from '../store/store.es';
+import {Store} from '../../store/store.es';
 import templates from './SidebarAddedFragments.soy';
 
 /**
@@ -29,19 +29,27 @@ class SidebarAddedFragments extends Component {
 		this.store
 			.dispatchAction(
 				UPDATE_SAVING_CHANGES_STATUS,
-				{savingChanges: true}
+				{
+					savingChanges: true
+				}
 			)
 			.dispatchAction(
 				REMOVE_FRAGMENT_ENTRY_LINK,
-				{fragmentEntryLinkId: event.itemId}
+				{
+					fragmentEntryLinkId: event.itemId
+				}
 			)
 			.dispatchAction(
 				UPDATE_LAST_SAVE_DATE,
-				{lastSaveDate: new Date()}
+				{
+					lastSaveDate: new Date()
+				}
 			)
 			.dispatchAction(
 				UPDATE_SAVING_CHANGES_STATUS,
-				{savingChanges: false}
+				{
+					savingChanges: false
+				}
 			);
 	}
 }

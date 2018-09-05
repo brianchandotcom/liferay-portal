@@ -12,12 +12,12 @@ const DRAG_POSITIONS = {
 };
 
 /**
- * @param {!MetalStore} state
+ * @param {!object} state
  * @param {!string} actionType
  * @param {!object} payload
  * @param {!string} payload.hoveredFragmentEntryLinkBorder
  * @param {!string} payload.hoveredFragmentEntryLinkId
- * @return {MetalStore}
+ * @return {object}
  * @review
  */
 
@@ -36,4 +36,7 @@ function updateDragTargetReducer(state, actionType, payload) {
 	return nextState;
 }
 
-export {DRAG_POSITIONS, updateDragTargetReducer};
+export {
+	DRAG_POSITIONS,
+	updateDragTargetReducer
+};

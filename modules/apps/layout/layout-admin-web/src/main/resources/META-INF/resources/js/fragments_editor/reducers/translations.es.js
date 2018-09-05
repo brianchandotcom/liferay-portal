@@ -6,6 +6,13 @@ import {
 
 const EDITABLE_VALUES_KEY = 'com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor';
 
+/**
+ * @param {!object} state
+ * @param {!string} actionType
+ * @return {object}
+ * @review
+ */
+
 function translationStatusReducer(state, actionType) {
 	const nextState = Object.assign({}, state);
 

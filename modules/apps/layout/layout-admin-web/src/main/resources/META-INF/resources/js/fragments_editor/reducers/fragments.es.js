@@ -1,17 +1,16 @@
+import {DRAG_POSITIONS} from './placeholders.es';
 import {
 	ADD_FRAGMENT_ENTRY_LINK,
 	REMOVE_FRAGMENT_ENTRY_LINK
 } from '../actions/actions.es';
-import {DRAG_POSITIONS} from './placeholders.es';
 
 /**
- * @param {!MetalStore} state
+ * @param {!object} state
  * @param {!string} actionType
  * @param {!object} payload
  * @param {!string} payload.fragmentEntryLinkId
  * @param {!string} payload.fragmentEntryLinkName
- * @return {MetalStore}
-
+ * @return {object}
  * @review
  */
 
@@ -68,11 +67,11 @@ function addFragmentEntryLinkReducer(state, actionType, payload) {
 }
 
 /**
- * @param {!MetalStore} state
+ * @param {!object} state
  * @param {!string} actionType
  * @param {!object} payload
  * @param {!string} payload.fragmentEntryLinkId
- * @return {MetalStore}
+ * @return {object}
  * @review
  */
 

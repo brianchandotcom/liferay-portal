@@ -1,16 +1,15 @@
-import {Store} from '../store/store.es';
 import {
 	UPDATE_LAST_SAVE_DATE,
 	UPDATE_SAVING_CHANGES_STATUS
 } from '../actions/actions.es';
 
 /**
- * @param {!Store} state
+ * @param {!object} state
  * @param {!string} actionType
  * @param {!object} payload
  * @param {boolean} payload.savingChanges
  * @param {Date} payload.lastSaveDate
- * @return {Store}
+ * @return {object}
  * @review
  */
 
@@ -30,4 +29,3 @@ function saveChangesReducer(state, actionType, payload) {
 }
 
 export {saveChangesReducer};
-export default saveChangesReducer;

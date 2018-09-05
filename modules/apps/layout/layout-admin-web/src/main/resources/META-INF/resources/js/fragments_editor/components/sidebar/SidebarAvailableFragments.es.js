@@ -108,7 +108,9 @@ class SidebarAvailableFragments extends Component {
 			this.store
 				.dispatchAction(
 					UPDATE_SAVING_CHANGES_STATUS,
-					{savingChanges: true}
+					{
+						savingChanges: true
+					}
 				)
 				.dispatchAction(
 					ADD_FRAGMENT_ENTRY_LINK,
@@ -119,11 +121,15 @@ class SidebarAvailableFragments extends Component {
 				)
 				.dispatchAction(
 					UPDATE_LAST_SAVE_DATE,
-					{lastSaveDate: new Date()}
+					{
+						lastSaveDate: new Date()
+					}
 				)
 				.dispatchAction(
 					UPDATE_SAVING_CHANGES_STATUS,
-					{savingChanges: false}
+					{
+						savingChanges: false
+					}
 				)
 				.dispatchAction(
 					CLEAR_DRAG_TARGET
@@ -144,7 +150,9 @@ class SidebarAvailableFragments extends Component {
 		this.store
 			.dispatchAction(
 				UPDATE_SAVING_CHANGES_STATUS,
-				{savingChanges: true}
+				{
+					savingChanges: true
+				}
 			)
 			.dispatchAction(
 				ADD_FRAGMENT_ENTRY_LINK,
@@ -155,11 +163,15 @@ class SidebarAvailableFragments extends Component {
 			)
 			.dispatchAction(
 				UPDATE_LAST_SAVE_DATE,
-				{lastSaveDate: new Date()}
+				{
+					lastSaveDate: new Date()
+				}
 			)
 			.dispatchAction(
 				UPDATE_SAVING_CHANGES_STATUS,
-				{savingChanges: false}
+				{
+					savingChanges: false
+				}
 			);
 	}
 

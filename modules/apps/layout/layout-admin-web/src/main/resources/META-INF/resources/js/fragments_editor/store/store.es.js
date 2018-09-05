@@ -1,10 +1,10 @@
 import State, {Config} from 'metal-state';
 
 /**
- * Connects a given component to a given store, syncing
- * it's properties with it.
+ * Connects a given component to a given store, syncing it's properties with it.
  * @param {Component} component
  * @param {Store} store
+ * @review
  */
 
 const connect = function(component, store) {
@@ -36,11 +36,13 @@ const connect = function(component, store) {
 };
 
 /**
- * Redux-like store that can be used for maintaining
- * an State that can only be modified with pure reducers.
+ * Redux-like store that can be used for maintaining a State that can only be
+ * modified with pure reducers.
  *
- * Store emits a "change" event with the nextState everytime
- * the state has been changed.
+ * Store emits a "change" event with the nextState every time the state has
+ * been changed.
+ *
+ * @review
  */
 
 class Store extends State {
@@ -59,9 +61,9 @@ class Store extends State {
 	}
 
 	/**
-	 * Dispatch an action to the store. Each action is identified
-	 * by a given actionType, and can contain an optional payload with
-	 * any kind of information.
+	 * Dispatch an action to the store. Each action is identified by a given
+	 * actionType, and can contain an optional payload with any kind of
+	 * information.
 	 * @param {!string} actionType
 	 * @param {string|number|array|object|undefined} [payload=undefined]
 	 * @return {Store}
@@ -85,6 +87,7 @@ class Store extends State {
 				).then(
 					nextState => {
 						this._state = this._getFrozenState(nextState);
+
 						this.emit('change', this._state);
 
 						return this;
@@ -99,6 +102,7 @@ class Store extends State {
 	/**
 	 * Returns current state.
 	 * Warning: that state cannot be modified anyway.
+	 * @return {object} Current state
 	 * @review
 	 */
 
@@ -141,15 +145,21 @@ class Store extends State {
 	 */
 
 	_getFrozenState(state) {
-		const frozenState = Object.assign({}, state);
+		const frozenState = Object.assign(
+			{},
+			state
+		);
+
 		Object.freeze(frozenState);
+
 		return frozenState;
 	}
 
 	/**
-	 * Sets the store state to the given state.
-	 * This function should not be called after setting the initialState.
+	 * Sets the store state to the given state. This function should not be
+	 * called after setting the initialState.
 	 * @param {!object} initialState
+	 * @private
 	 * @review
 	 */
 

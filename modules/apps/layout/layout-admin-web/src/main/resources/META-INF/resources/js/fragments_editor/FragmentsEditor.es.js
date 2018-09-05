@@ -162,11 +162,15 @@ class FragmentsEditor extends Component {
 					this._store
 						.dispatchAction(
 							UPDATE_LAST_SAVE_DATE,
-							{lastSaveDate: new Date()}
+							{
+								lastSaveDate: new Date()
+							}
 						)
 						.dispatchAction(
 							UPDATE_SAVING_CHANGES_STATUS,
-							{savingChanges: false}
+							{
+								savingChanges: false
+							}
 						);
 				}
 			);
@@ -388,7 +392,9 @@ class FragmentsEditor extends Component {
 		if (!this.savingChanges) {
 			this._store.dispatchAction(
 				UPDATE_SAVING_CHANGES_STATUS,
-				{savingChanges: true}
+				{
+					savingChanges: true
+				}
 			);
 
 			const formData = new FormData();
@@ -415,11 +421,15 @@ class FragmentsEditor extends Component {
 					this._store
 						.dispatchAction(
 							UPDATE_LAST_SAVE_DATE,
-							{lastSaveDate: new Date()}
+							{
+								lastSaveDate: new Date()
+							}
 						)
 						.dispatchAction(
 							UPDATE_SAVING_CHANGES_STATUS,
-							{savingChanges: false}
+							{
+								savingChanges: false
+							}
 						)
 						.dispatchAction(
 							UPDATE_TRANSLATION_STATUS

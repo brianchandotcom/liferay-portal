@@ -53,6 +53,8 @@ class WikiPortlet extends PortletBase {
 			(searchContainer) => {
 				this.eventHandler_.add(searchContainer.get('contentBox').delegate(
 					'click', this.removeAttachment_.bind(this), '.delete-attachment'));
+
+				this.searchContainer_ = searchContainer;
 			}
 		);
 	}
@@ -104,11 +106,9 @@ class WikiPortlet extends PortletBase {
 	removeAttachment_(event) {
 		let link = event.currentTarget;
 
-		let tr = link.ancestor('tr');
+		let deleteUrl = Liferay.PortletURL.createActionURL();
 
-		let deleteURL = Liferay.PortletURL.createActionURL();
-
-		deleteURL.setName('/wiki/edit_page_attachment');
+		deleteUrl.setName('/wiki/edit_page_attachment');
 
 		let params = {
 			cmd: link.getAttribute('data-cmd'),
@@ -118,27 +118,22 @@ class WikiPortlet extends PortletBase {
 			title: link.getAttribute('data-title')
 		};
 
-		deleteURL.setParameters(params);
-		deleteURL.setPortletId('com_liferay_wiki_web_portlet_WikiPortlet');
+		deleteUrl.setParameters(params);
+		deleteUrl.setPortletId('com_liferay_wiki_web_portlet_WikiPortlet');
+
+		let searchContainer = this.searchContainer_;
 
 		const A = new AUI();
 
-		A.use(
-			'liferay-search-container',
-			A => {
-				let searchContainer = Liferay.SearchContainer.get(this.ns('pageAttachments'));
-
-				A.io.request(
-					deleteURL.toString(),
-					{
-						on: {
-							success: function() {
-								searchContainer.deleteRow(tr, link.getAttribute('data-rowid'));
-								searchContainer.updateDataStore();
-							}
-						}
+		A.io.request(
+			deleteUrl.toString(),
+			{
+				on: {
+					success: function() {
+						searchContainer.deleteRow(link.ancestor('tr'),link.getAttribute('data-rowid'));
+						searchContainer.updateDataStore();
 					}
-				);	
+				}
 			}
 		);
 	}

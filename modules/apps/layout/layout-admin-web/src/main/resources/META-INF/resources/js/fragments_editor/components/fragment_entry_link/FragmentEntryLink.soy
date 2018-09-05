@@ -4,18 +4,26 @@
  * FragmentEntryLink
  */
 {template .render}
+	{@param fragmentEntryLinkId: string}
 	{@param spritemap: string}
 	{@param? _handleFragmentKeyUp: any}
 	{@param? _handleFragmentMoveDownButtonClick: any}
 	{@param? _handleFragmentMoveUpButtonClick: any}
 	{@param? _handleFragmentRemoveButtonClick: any}
+	{@param? defaultLanguageId: string}
+	{@param? dropTargetClass: string}
+	{@param? styleModifier: string}
+	{@param? languageId: string}
 	{@param? name: string}
 	{@param? showControlBar: bool}
-	{@param? languageId: string}
-	{@param? defaultLanguageId: string}
 
 	{let $wrapperClasses kind="text"}
 		fragment-entry-link-wrapper
+		{sp}{$dropTargetClass}
+
+		{if $styleModifier}
+			{sp}{$styleModifier}
+		{/if}
 
 		{if $languageId != $defaultLanguageId}
 			{sp}translating
@@ -24,6 +32,7 @@
 
 	<div
 		class="{$wrapperClasses}"
+		data-fragment-entry-link-id="{$fragmentEntryLinkId}"
 		data-onkeyup="{$_handleFragmentKeyUp}"
 		ref="fragmentEntryLinkWrapper"
 		tabindex="0"

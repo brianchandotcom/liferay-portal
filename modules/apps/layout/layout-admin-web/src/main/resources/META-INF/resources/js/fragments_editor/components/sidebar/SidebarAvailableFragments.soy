@@ -15,6 +15,7 @@
 	]>}
 	{@param spritemap: string}
 	{@param? _handleEntryClick: any}
+	{@param? store: ?}
 
 	<div class="sidebar-fragment-collections">
 		{foreach $fragmentCollection in $fragmentCollections}
@@ -57,6 +58,7 @@
 								{param itemName: $fragmentEntry.name /}
 								{param key: $fragmentEntry.fragmentEntryId /}
 								{param spritemap: $spritemap /}
+								{param store: $store /}
 							{/call}
 						{/foreach}
 					</div>

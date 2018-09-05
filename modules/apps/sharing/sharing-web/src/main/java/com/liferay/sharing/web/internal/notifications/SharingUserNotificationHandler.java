@@ -109,15 +109,19 @@ public class SharingUserNotificationHandler
 	private String _getActionName(
 		SharingEntry sharingEntry, ResourceBundle resourceBundle) {
 
-		if (_hasAction(sharingEntry, SharingEntryActionKey.UPDATE)) {
+		if (_sharingEntryLocalService.hasSharingPermission(
+				sharingEntry, SharingEntryActionKey.UPDATE)) {
+
 			return ResourceBundleUtil.getString(resourceBundle, "editing");
 		}
-		else if (_hasAction(
+		else if (_sharingEntryLocalService.hasSharingPermission(
 					 sharingEntry, SharingEntryActionKey.ADD_DISCUSSION)) {
 
 			return ResourceBundleUtil.getString(resourceBundle, "commenting");
 		}
-		else if (_hasAction(sharingEntry, SharingEntryActionKey.VIEW)) {
+		else if (_sharingEntryLocalService.hasSharingPermission(
+					 sharingEntry, SharingEntryActionKey.VIEW)) {
+
 			return ResourceBundleUtil.getString(resourceBundle, "viewing");
 		}
 		else {
@@ -171,19 +175,6 @@ public class SharingUserNotificationHandler
 		}
 
 		return ResourceBundleUtil.getString(resourceBundle, "someone");
-	}
-
-	private boolean _hasAction(
-		SharingEntry sharingEntry,
-		SharingEntryActionKey sharingEntryActionKey) {
-
-		long bitwiseValue = sharingEntryActionKey.getBitwiseValue();
-
-		if ((bitwiseValue & sharingEntry.getActionIds()) != 0) {
-			return true;
-		}
-
-		return false;
 	}
 
 	@Reference(target = "(bundle.symbolic.name=com.liferay.sharing.web)")

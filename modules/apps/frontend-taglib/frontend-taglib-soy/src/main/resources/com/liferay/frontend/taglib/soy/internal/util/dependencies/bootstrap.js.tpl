@@ -10,11 +10,20 @@ Liferay.Loader.require.apply(
 					portletId: context.portletId
 				};
 
-				Liferay.component(
-					'$ID',
-					new Component.default(context, '#$ID'),
-					destroyConfig
-				);
+				if ($WRAPPER) {
+					Liferay.component(
+						'$ID',
+						new Component.default(context, '#$ID'),
+						destroyConfig
+					);
+				}
+				else {
+					Liferay.component(
+						'$ID',
+						new Component.default(context),
+						destroyConfig
+					);
+				}
 			},
 			function(error) {
 				console.error('Unable to load ' + $MODULES);

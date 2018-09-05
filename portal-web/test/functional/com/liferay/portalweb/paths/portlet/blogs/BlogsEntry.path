@@ -209,6 +209,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SMALL_IMAGE</td>
+	<td>//div[@class='current-image' and contains(@src,'${key_smallImage}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

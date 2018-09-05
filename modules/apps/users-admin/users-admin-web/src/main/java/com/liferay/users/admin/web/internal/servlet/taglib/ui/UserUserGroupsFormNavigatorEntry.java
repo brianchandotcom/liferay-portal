@@ -20,7 +20,7 @@ import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorConstants;
 /**
  * @author     Pei-Jung Lan
  * @deprecated As of Judson (7.1.x), replaced by {@link
- *             com.liferay.users.admin.web.internal.servlet.taglib.ui.navigation.user.entry.UserMembershipsScreenNavigationEntry}
+ *             com.liferay.users.admin.web.internal.frontend.taglib.servlet.taglib.UserMembershipsScreenNavigationEntry}
  */
 @Deprecated
 public class UserUserGroupsFormNavigatorEntry

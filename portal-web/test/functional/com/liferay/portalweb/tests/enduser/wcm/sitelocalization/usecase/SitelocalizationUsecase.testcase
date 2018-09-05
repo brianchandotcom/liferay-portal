@@ -1005,15 +1005,11 @@
 			<var name="url" value="${portalURL}/fr/web/site-name/language-page" />
 		</execute>
 
-		<execute macro="Alert#closePortalLocalizationWarning" />
-
 		<execute function="AssertLocation" value1="${portalURL}/fr/web/site-name/language-page" />
 
 		<execute macro="Navigator#openSpecificURL">
 			<var name="url" value="${portalURL}/fr" />
 		</execute>
-
-		<execute macro="Alert#closePortalLocalizationWarning" />
 
 		<execute function="AssertLocation" value1="${portalURL}/fr/web/guest/home" />
 

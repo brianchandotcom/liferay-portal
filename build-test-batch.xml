@@ -3601,7 +3601,7 @@ log.sanitizer.enabled=false</echo>
 
 						<propertycopy from="app.server.${app.server.type}.bin.dir" name="app.server.bin.dir" override="true" />
 
-						<antcall target="start-app-server">
+						<antcall inheritall="false" target="start-app-server">
 							<param name="app.server.bin.dir" value="${app.server.bin.dir}" />
 						</antcall>
 

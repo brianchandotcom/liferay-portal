@@ -52,13 +52,28 @@
 	{@param? disabled: bool}
 	{@param? elementClasses: string}
 	{@param? filterItems: list<[
+		active: bool,
 		checked: bool,
 		disabled: bool,
 		inputName: string,
 		inputValue: string,
+		items: list<[
+			active: bool,
+			checked: bool,
+			disabled: bool,
+			inputName: string,
+			inputValue: string,
+			label: string,
+			separator: bool,
+			type: string
+		]>,
 		label: string,
 		separator: bool,
 		type: string
+	]>}
+	{@param? filterLabels: list<[
+		closeable: bool,
+		label: html|string
 	]>}
 	{@param? id: string}
 	{@param? searchActionURL: string}
@@ -102,6 +117,7 @@
 			'selectAllClicked': $_handleSelectAllClicked
 		 ] /}
 		{param filterItems: $filterItems /}
+		{param filterLabels: $filterLabels /}
 		{param id: $id /}
 		{param ref: 'managementToolbar' /}
 		{param searchActionURL: $searchActionURL /}

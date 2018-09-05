@@ -335,6 +335,10 @@ public interface SharingEntryLocalService extends BaseLocalService,
 	public boolean hasSharingPermission(long toUserId, long classNameId,
 		long classPK, SharingEntryActionKey sharingEntryActionKey);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public boolean hasSharingPermission(SharingEntry sharingEntry,
+		SharingEntryActionKey sharingEntryActionKey);
+
 	public SharingEntry updateSharingEntry(long sharingEntryId,
 		Collection<SharingEntryActionKey> sharingEntryActionKeys)
 		throws PortalException;

@@ -628,9 +628,9 @@ public class ClusterSchedulerEngine
 			memoryClusteredJobs = _memoryClusteredJobs.entrySet();
 
 		Iterator
-			<Map.Entry<String,
-				ObjectValuePair<SchedulerResponse, TriggerState>>> itr =
-					memoryClusteredJobs.iterator();
+			<Map.Entry
+				<String, ObjectValuePair<SchedulerResponse, TriggerState>>>
+					itr = memoryClusteredJobs.iterator();
 
 		while (itr.hasNext()) {
 			Map.Entry<String, ObjectValuePair<SchedulerResponse, TriggerState>>

@@ -22,9 +22,9 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserNotificationDeliveryConstants;
 import com.liferay.portal.kernel.model.UserNotificationEvent;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
-import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.UserNotificationEventLocalServiceUtil;
+import com.liferay.portal.kernel.service.UserNotificationEventLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
@@ -206,7 +206,7 @@ public class SharingEntryLocalServiceTest {
 			Arrays.asList(SharingEntryActionKey.VIEW), serviceContext);
 
 		List<UserNotificationEvent> userNotificationEvents =
-			UserNotificationEventLocalServiceUtil.getUserNotificationEvents(
+			_userNotificationEventLocalService.getUserNotificationEvents(
 				_toUser.getUserId());
 
 		Assert.assertEquals(
@@ -420,7 +420,7 @@ public class SharingEntryLocalServiceTest {
 				group2SharingEntries.size());
 		}
 		finally {
-			GroupLocalServiceUtil.deleteGroup(group2);
+			_groupLocalService.deleteGroup(group2);
 		}
 	}
 
@@ -1022,7 +1022,7 @@ public class SharingEntryLocalServiceTest {
 			Arrays.asList(SharingEntryActionKey.VIEW));
 
 		List<UserNotificationEvent> userNotificationEvents =
-			UserNotificationEventLocalServiceUtil.getUserNotificationEvents(
+			_userNotificationEventLocalService.getUserNotificationEvents(
 				_toUser.getUserId());
 
 		Assert.assertEquals(
@@ -1145,6 +1145,9 @@ public class SharingEntryLocalServiceTest {
 	private Group _group;
 
 	@Inject
+	private GroupLocalService _groupLocalService;
+
+	@Inject
 	private SharingEntryLocalService _sharingEntryLocalService;
 
 	@DeleteAfterTestRun
@@ -1152,5 +1155,9 @@ public class SharingEntryLocalServiceTest {
 
 	@DeleteAfterTestRun
 	private User _user;
+
+	@Inject
+	private UserNotificationEventLocalService
+		_userNotificationEventLocalService;
 
 }

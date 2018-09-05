@@ -1608,112 +1608,6 @@ public class ResourcePermissionLocalServiceImpl
 			resource.getPrimKey(), guestRole.getRoleId(), actionIds);
 	}
 
-	private void _updateResourcePermission(
-			long companyId, String name, int scope, String primKey,
-			long ownerId, long roleId, String[] actionIds, int operator,
-			boolean fetch)
-		throws PortalException {
-
-		ResourcePermission resourcePermission = null;
-
-		Map<Long, ResourcePermission> resourcePermissionsMap =
-			ResourcePermissionsThreadLocal.getResourcePermissions();
-
-		if (resourcePermissionsMap != null) {
-			resourcePermission = resourcePermissionsMap.get(roleId);
-		}
-		else if (fetch) {
-			resourcePermission = resourcePermissionPersistence.fetchByC_N_S_P_R(
-				companyId, name, scope, primKey, roleId);
-		}
-
-		if (resourcePermission == null) {
-			if ((operator == ResourcePermissionConstants.OPERATOR_ADD) &&
-				(actionIds.length == 0)) {
-
-				return;
-			}
-
-			if (operator == ResourcePermissionConstants.OPERATOR_REMOVE) {
-				return;
-			}
-
-			long resourcePermissionId = counterLocalService.increment(
-				ResourcePermission.class.getName());
-
-			resourcePermission = resourcePermissionPersistence.create(
-				resourcePermissionId);
-
-			resourcePermission.setCompanyId(companyId);
-			resourcePermission.setName(name);
-			resourcePermission.setScope(scope);
-			resourcePermission.setPrimKey(primKey);
-			resourcePermission.setPrimKeyId(GetterUtil.getLong(primKey));
-			resourcePermission.setRoleId(roleId);
-			resourcePermission.setOwnerId(ownerId);
-
-			if (resourcePermissionsMap != null) {
-				resourcePermissionsMap.put(roleId, resourcePermission);
-			}
-		}
-
-		List<String> unsupportedActionIds = Collections.emptyList();
-
-		if (((operator == ResourcePermissionConstants.OPERATOR_ADD) ||
-			 (operator == ResourcePermissionConstants.OPERATOR_SET)) &&
-			isGuestRoleId(companyId, roleId)) {
-
-			unsupportedActionIds =
-				ResourceActionsUtil.getResourceGuestUnsupportedActions(
-					name, name);
-		}
-
-		long actionIdsLong = resourcePermission.getActionIds();
-
-		if (operator == ResourcePermissionConstants.OPERATOR_SET) {
-			actionIdsLong = 0;
-		}
-
-		for (String actionId : actionIds) {
-			if (actionId == null) {
-				break;
-			}
-
-			if (unsupportedActionIds.contains(actionId)) {
-				throw new PrincipalException(
-					actionId + "is not supported by role " + roleId);
-			}
-
-			ResourceAction resourceAction =
-				resourceActionLocalService.getResourceAction(name, actionId);
-
-			if ((operator == ResourcePermissionConstants.OPERATOR_ADD) ||
-				(operator == ResourcePermissionConstants.OPERATOR_SET)) {
-
-				actionIdsLong |= resourceAction.getBitwiseValue();
-			}
-			else {
-				actionIdsLong =
-					actionIdsLong & (~resourceAction.getBitwiseValue());
-			}
-		}
-
-		if ((actionIdsLong != resourcePermission.getActionIds()) ||
-			resourcePermission.isNew()) {
-
-			resourcePermission.setActionIds(actionIdsLong);
-			resourcePermission.setViewActionId(actionIdsLong % 2 == 1);
-
-			resourcePermissionPersistence.update(resourcePermission);
-
-			if (ArrayUtil.contains(actionIds, ActionKeys.MANAGE_SUBGROUPS)) {
-				PermissionCacheUtil.clearPrimaryKeyRoleCache();
-			}
-
-			IndexWriterHelperUtil.updatePermissionFields(name, primKey);
-		}
-	}
-
 	protected void filterOwnerActions(String name, List<String> actionIds) {
 		List<String> defaultOwnerActions =
 			ResourceActionsUtil.getModelResourceOwnerDefaultActions(name);
@@ -1931,6 +1825,112 @@ public class ResourcePermissionLocalServiceImpl
 					"There are no actions associated with the resource " +
 						name);
 			}
+		}
+	}
+
+	private void _updateResourcePermission(
+			long companyId, String name, int scope, String primKey,
+			long ownerId, long roleId, String[] actionIds, int operator,
+			boolean fetch)
+		throws PortalException {
+
+		ResourcePermission resourcePermission = null;
+
+		Map<Long, ResourcePermission> resourcePermissionsMap =
+			ResourcePermissionsThreadLocal.getResourcePermissions();
+
+		if (resourcePermissionsMap != null) {
+			resourcePermission = resourcePermissionsMap.get(roleId);
+		}
+		else if (fetch) {
+			resourcePermission = resourcePermissionPersistence.fetchByC_N_S_P_R(
+				companyId, name, scope, primKey, roleId);
+		}
+
+		if (resourcePermission == null) {
+			if ((operator == ResourcePermissionConstants.OPERATOR_ADD) &&
+				(actionIds.length == 0)) {
+
+				return;
+			}
+
+			if (operator == ResourcePermissionConstants.OPERATOR_REMOVE) {
+				return;
+			}
+
+			long resourcePermissionId = counterLocalService.increment(
+				ResourcePermission.class.getName());
+
+			resourcePermission = resourcePermissionPersistence.create(
+				resourcePermissionId);
+
+			resourcePermission.setCompanyId(companyId);
+			resourcePermission.setName(name);
+			resourcePermission.setScope(scope);
+			resourcePermission.setPrimKey(primKey);
+			resourcePermission.setPrimKeyId(GetterUtil.getLong(primKey));
+			resourcePermission.setRoleId(roleId);
+			resourcePermission.setOwnerId(ownerId);
+
+			if (resourcePermissionsMap != null) {
+				resourcePermissionsMap.put(roleId, resourcePermission);
+			}
+		}
+
+		List<String> unsupportedActionIds = Collections.emptyList();
+
+		if (((operator == ResourcePermissionConstants.OPERATOR_ADD) ||
+			 (operator == ResourcePermissionConstants.OPERATOR_SET)) &&
+			isGuestRoleId(companyId, roleId)) {
+
+			unsupportedActionIds =
+				ResourceActionsUtil.getResourceGuestUnsupportedActions(
+					name, name);
+		}
+
+		long actionIdsLong = resourcePermission.getActionIds();
+
+		if (operator == ResourcePermissionConstants.OPERATOR_SET) {
+			actionIdsLong = 0;
+		}
+
+		for (String actionId : actionIds) {
+			if (actionId == null) {
+				break;
+			}
+
+			if (unsupportedActionIds.contains(actionId)) {
+				throw new PrincipalException(
+					actionId + "is not supported by role " + roleId);
+			}
+
+			ResourceAction resourceAction =
+				resourceActionLocalService.getResourceAction(name, actionId);
+
+			if ((operator == ResourcePermissionConstants.OPERATOR_ADD) ||
+				(operator == ResourcePermissionConstants.OPERATOR_SET)) {
+
+				actionIdsLong |= resourceAction.getBitwiseValue();
+			}
+			else {
+				actionIdsLong =
+					actionIdsLong & (~resourceAction.getBitwiseValue());
+			}
+		}
+
+		if ((actionIdsLong != resourcePermission.getActionIds()) ||
+			resourcePermission.isNew()) {
+
+			resourcePermission.setActionIds(actionIdsLong);
+			resourcePermission.setViewActionId(actionIdsLong % 2 == 1);
+
+			resourcePermissionPersistence.update(resourcePermission);
+
+			if (ArrayUtil.contains(actionIds, ActionKeys.MANAGE_SUBGROUPS)) {
+				PermissionCacheUtil.clearPrimaryKeyRoleCache();
+			}
+
+			IndexWriterHelperUtil.updatePermissionFields(name, primKey);
 		}
 	}
 

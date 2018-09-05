@@ -325,6 +325,39 @@ public class AssetListEntryServiceHttp {
 		}
 	}
 
+	public static com.liferay.asset.list.model.AssetListEntry updateAssetListEntrySettings(
+		HttpPrincipal httpPrincipal, long assetListEntryId, String typeSettings)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		try {
+			MethodKey methodKey = new MethodKey(AssetListEntryServiceUtil.class,
+					"updateAssetListEntrySettings",
+					_updateAssetListEntrySettingsParameterTypes9);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey,
+					assetListEntryId, typeSettings);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return (com.liferay.asset.list.model.AssetListEntry)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
 	private static Log _log = LogFactoryUtil.getLog(AssetListEntryServiceHttp.class);
 	private static final Class<?>[] _addAssetListEntryParameterTypes0 = new Class[] {
 			long.class, String.class, int.class,
@@ -356,4 +389,6 @@ public class AssetListEntryServiceHttp {
 	private static final Class<?>[] _updateAssetListEntryParameterTypes8 = new Class[] {
 			long.class, String.class
 		};
+	private static final Class<?>[] _updateAssetListEntrySettingsParameterTypes9 =
+		new Class[] { long.class, String.class };
 }

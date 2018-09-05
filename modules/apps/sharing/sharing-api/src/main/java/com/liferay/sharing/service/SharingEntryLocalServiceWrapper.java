@@ -38,11 +38,12 @@ public class SharingEntryLocalServiceWrapper implements SharingEntryLocalService
 		long fromUserId, long toUserId, long classNameId, long classPK,
 		long groupId, boolean shareable,
 		java.util.Collection<com.liferay.sharing.constants.SharingEntryActionKey> sharingEntryActionKeys,
+		java.util.Date expirationDate,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _sharingEntryLocalService.addSharingEntry(fromUserId, toUserId,
 			classNameId, classPK, groupId, shareable, sharingEntryActionKeys,
-			serviceContext);
+			expirationDate, serviceContext);
 	}
 
 	/**
@@ -84,6 +85,11 @@ public class SharingEntryLocalServiceWrapper implements SharingEntryLocalService
 	public com.liferay.sharing.model.SharingEntry createSharingEntry(
 		long sharingEntryId) {
 		return _sharingEntryLocalService.createSharingEntry(sharingEntryId);
+	}
+
+	@Override
+	public void deleteExpiredEntries() {
+		_sharingEntryLocalService.deleteExpiredEntries();
 	}
 
 	@Override
@@ -334,8 +340,7 @@ public class SharingEntryLocalServiceWrapper implements SharingEntryLocalService
 
 	@Override
 	public java.util.List<com.liferay.sharing.model.SharingEntry> getSharingEntries(
-		long toUserId, long classNameId, long classPK)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		long toUserId, long classNameId, long classPK) {
 		return _sharingEntryLocalService.getSharingEntries(toUserId,
 			classNameId, classPK);
 	}

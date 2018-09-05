@@ -30,6 +30,7 @@ import com.liferay.sharing.constants.SharingEntryActionKey;
 import com.liferay.sharing.model.SharingEntry;
 
 import java.util.Collection;
+import java.util.Date;
 
 /**
  * Provides the remote service interface for SharingEntry. Methods of this
@@ -58,7 +59,8 @@ public interface SharingEntryService extends BaseService {
 	public SharingEntry addSharingEntry(long toUserId, long classNameId,
 		long classPK, long groupId, boolean shareable,
 		Collection<SharingEntryActionKey> sharingEntryActionKeys,
-		ServiceContext serviceContext) throws PortalException;
+		Date expirationDate, ServiceContext serviceContext)
+		throws PortalException;
 
 	/**
 	* Returns the OSGi service identifier.

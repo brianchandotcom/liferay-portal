@@ -112,7 +112,7 @@ public class SharingEntryDLFileEntryModelResourcePermissionRegistrarTest {
 			Arrays.asList(
 				SharingEntryActionKey.ADD_DISCUSSION,
 				SharingEntryActionKey.VIEW),
-			serviceContext);
+			null, serviceContext);
 
 		PermissionChecker permissionChecker =
 			PermissionCheckerFactoryUtil.create(_groupUser);
@@ -140,7 +140,7 @@ public class SharingEntryDLFileEntryModelResourcePermissionRegistrarTest {
 			Arrays.asList(
 				SharingEntryActionKey.ADD_DISCUSSION,
 				SharingEntryActionKey.VIEW),
-			serviceContext);
+			null, serviceContext);
 
 		PermissionChecker permissionChecker =
 			PermissionCheckerFactoryUtil.create(_groupUser);
@@ -231,7 +231,7 @@ public class SharingEntryDLFileEntryModelResourcePermissionRegistrarTest {
 			_fileEntry.getFileEntryId(), _fileEntry.getGroupId(), true,
 			Arrays.asList(
 				SharingEntryActionKey.UPDATE, SharingEntryActionKey.VIEW),
-			serviceContext);
+			null, serviceContext);
 
 		PermissionChecker permissionChecker =
 			PermissionCheckerFactoryUtil.create(_groupUser);
@@ -258,7 +258,7 @@ public class SharingEntryDLFileEntryModelResourcePermissionRegistrarTest {
 			_fileEntry.getFileEntryId(), _fileEntry.getGroupId(), true,
 			Arrays.asList(
 				SharingEntryActionKey.UPDATE, SharingEntryActionKey.VIEW),
-			serviceContext);
+			null, serviceContext);
 
 		PermissionChecker permissionChecker =
 			PermissionCheckerFactoryUtil.create(_groupUser);
@@ -283,7 +283,7 @@ public class SharingEntryDLFileEntryModelResourcePermissionRegistrarTest {
 		_sharingEntryLocalService.addSharingEntry(
 			_user.getUserId(), _groupUser.getUserId(), _classNameId,
 			_fileEntry.getFileEntryId(), _fileEntry.getGroupId(), true,
-			Arrays.asList(SharingEntryActionKey.VIEW), serviceContext);
+			Arrays.asList(SharingEntryActionKey.VIEW), null, serviceContext);
 
 		PermissionChecker permissionChecker =
 			PermissionCheckerFactoryUtil.create(_groupUser);

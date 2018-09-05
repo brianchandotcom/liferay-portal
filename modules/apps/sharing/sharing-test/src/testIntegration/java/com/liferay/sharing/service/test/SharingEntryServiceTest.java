@@ -115,7 +115,7 @@ public class SharingEntryServiceTest {
 			true,
 			Arrays.asList(
 				SharingEntryActionKey.UPDATE, SharingEntryActionKey.VIEW),
-			serviceContext);
+			null, serviceContext);
 	}
 
 	@Test
@@ -139,7 +139,7 @@ public class SharingEntryServiceTest {
 			true,
 			Arrays.asList(
 				SharingEntryActionKey.UPDATE, SharingEntryActionKey.VIEW),
-			serviceContext);
+			null, serviceContext);
 
 		Assert.assertEquals(_group.getCompanyId(), sharingEntry.getCompanyId());
 		Assert.assertEquals(_group.getGroupId(), sharingEntry.getGroupId());
@@ -172,14 +172,14 @@ public class SharingEntryServiceTest {
 			Arrays.asList(
 				SharingEntryActionKey.ADD_DISCUSSION,
 				SharingEntryActionKey.VIEW),
-			serviceContext);
+			null, serviceContext);
 
 		_sharingEntryService.addSharingEntry(
 			_toUser.getUserId(), classNameId, classPK, _group.getGroupId(),
 			true,
 			Arrays.asList(
 				SharingEntryActionKey.UPDATE, SharingEntryActionKey.VIEW),
-			serviceContext);
+			null, serviceContext);
 	}
 
 	@Test
@@ -202,14 +202,14 @@ public class SharingEntryServiceTest {
 			_group.getGroupId(), true,
 			Arrays.asList(
 				SharingEntryActionKey.UPDATE, SharingEntryActionKey.VIEW),
-			serviceContext);
+			null, serviceContext);
 
 		_sharingEntryService.addSharingEntry(
 			_toUser.getUserId(), classNameId, classPK, _group.getGroupId(),
 			true,
 			Arrays.asList(
 				SharingEntryActionKey.UPDATE, SharingEntryActionKey.VIEW),
-			serviceContext);
+			null, serviceContext);
 	}
 
 	@Test(expected = PrincipalException.MustHavePermission.class)
@@ -232,14 +232,14 @@ public class SharingEntryServiceTest {
 			_group.getGroupId(), false,
 			Arrays.asList(
 				SharingEntryActionKey.UPDATE, SharingEntryActionKey.VIEW),
-			serviceContext);
+			null, serviceContext);
 
 		_sharingEntryService.addSharingEntry(
 			_toUser.getUserId(), classNameId, classPK, _group.getGroupId(),
 			true,
 			Arrays.asList(
 				SharingEntryActionKey.UPDATE, SharingEntryActionKey.VIEW),
-			serviceContext);
+			null, serviceContext);
 	}
 
 	@Test(expected = PrincipalException.MustHavePermission.class)
@@ -260,14 +260,14 @@ public class SharingEntryServiceTest {
 		_sharingEntryLocalService.addSharingEntry(
 			_user.getUserId(), _fromUser.getUserId(), classNameId, classPK,
 			_group.getGroupId(), true,
-			Arrays.asList(SharingEntryActionKey.VIEW), serviceContext);
+			Arrays.asList(SharingEntryActionKey.VIEW), null, serviceContext);
 
 		_sharingEntryService.addSharingEntry(
 			_toUser.getUserId(), classNameId, classPK, _group.getGroupId(),
 			true,
 			Arrays.asList(
 				SharingEntryActionKey.UPDATE, SharingEntryActionKey.VIEW),
-			serviceContext);
+			null, serviceContext);
 	}
 
 	@Test(expected = PrincipalException.MustHavePermission.class)
@@ -290,7 +290,7 @@ public class SharingEntryServiceTest {
 			true,
 			Arrays.asList(
 				SharingEntryActionKey.UPDATE, SharingEntryActionKey.VIEW),
-			serviceContext);
+			null, serviceContext);
 	}
 
 	@Test(expected = PrincipalException.MustHavePermission.class)
@@ -310,7 +310,8 @@ public class SharingEntryServiceTest {
 
 		_sharingEntryService.addSharingEntry(
 			_toUser.getUserId(), classNameId, classPK, _group.getGroupId(),
-			true, Arrays.asList(SharingEntryActionKey.UPDATE), serviceContext);
+			true, Arrays.asList(SharingEntryActionKey.UPDATE), null,
+			serviceContext);
 	}
 
 	@Test
@@ -328,7 +329,8 @@ public class SharingEntryServiceTest {
 
 		SharingEntry sharingEntry = _sharingEntryService.addSharingEntry(
 			_toUser.getUserId(), classNameId, classPK, _group.getGroupId(),
-			true, Arrays.asList(SharingEntryActionKey.VIEW), serviceContext);
+			true, Arrays.asList(SharingEntryActionKey.VIEW), null,
+			serviceContext);
 
 		Assert.assertEquals(_group.getCompanyId(), sharingEntry.getCompanyId());
 		Assert.assertEquals(_group.getGroupId(), sharingEntry.getGroupId());
@@ -360,11 +362,12 @@ public class SharingEntryServiceTest {
 			_group.getGroupId(), true,
 			Arrays.asList(
 				SharingEntryActionKey.UPDATE, SharingEntryActionKey.VIEW),
-			serviceContext);
+			null, serviceContext);
 
 		_sharingEntryService.addSharingEntry(
 			_toUser.getUserId(), classNameId, classPK, _group.getGroupId(),
-			true, Arrays.asList(SharingEntryActionKey.VIEW), serviceContext);
+			true, Arrays.asList(SharingEntryActionKey.VIEW), null,
+			serviceContext);
 	}
 
 	@Test
@@ -385,11 +388,12 @@ public class SharingEntryServiceTest {
 		_sharingEntryLocalService.addSharingEntry(
 			_user.getUserId(), _fromUser.getUserId(), classNameId, classPK,
 			_group.getGroupId(), true,
-			Arrays.asList(SharingEntryActionKey.VIEW), serviceContext);
+			Arrays.asList(SharingEntryActionKey.VIEW), null, serviceContext);
 
 		_sharingEntryService.addSharingEntry(
 			_toUser.getUserId(), classNameId, classPK, _group.getGroupId(),
-			true, Arrays.asList(SharingEntryActionKey.VIEW), serviceContext);
+			true, Arrays.asList(SharingEntryActionKey.VIEW), null,
+			serviceContext);
 	}
 
 	@Test
@@ -410,11 +414,12 @@ public class SharingEntryServiceTest {
 		_sharingEntryLocalService.addSharingEntry(
 			_user.getUserId(), _fromUser.getUserId(), classNameId, classPK,
 			_group.getGroupId(), false,
-			Arrays.asList(SharingEntryActionKey.VIEW), serviceContext);
+			Arrays.asList(SharingEntryActionKey.VIEW), null, serviceContext);
 
 		_sharingEntryService.addSharingEntry(
 			_toUser.getUserId(), classNameId, classPK, _group.getGroupId(),
-			true, Arrays.asList(SharingEntryActionKey.VIEW), serviceContext);
+			true, Arrays.asList(SharingEntryActionKey.VIEW), null,
+			serviceContext);
 	}
 
 	@Test(expected = NoSuchEntryException.class)
@@ -444,7 +449,8 @@ public class SharingEntryServiceTest {
 
 		SharingEntry sharingEntry = _sharingEntryService.addSharingEntry(
 			_toUser.getUserId(), classNameId, classPK, _group.getGroupId(),
-			true, Arrays.asList(SharingEntryActionKey.VIEW), serviceContext);
+			true, Arrays.asList(SharingEntryActionKey.VIEW), null,
+			serviceContext);
 
 		sharingEntry = _sharingEntryService.updateSharingEntry(
 			sharingEntry.getSharingEntryId(),
@@ -479,7 +485,8 @@ public class SharingEntryServiceTest {
 
 		SharingEntry sharingEntry = _sharingEntryService.addSharingEntry(
 			_toUser.getUserId(), classNameId, classPK, _group.getGroupId(),
-			true, Arrays.asList(SharingEntryActionKey.VIEW), serviceContext);
+			true, Arrays.asList(SharingEntryActionKey.VIEW), null,
+			serviceContext);
 
 		_sharingEntryService.updateSharingEntry(
 			sharingEntry.getSharingEntryId(),
@@ -504,7 +511,8 @@ public class SharingEntryServiceTest {
 
 		SharingEntry sharingEntry = _sharingEntryService.addSharingEntry(
 			_toUser.getUserId(), classNameId, classPK, _group.getGroupId(),
-			true, Arrays.asList(SharingEntryActionKey.VIEW), serviceContext);
+			true, Arrays.asList(SharingEntryActionKey.VIEW), null,
+			serviceContext);
 
 		_sharingEntryService.updateSharingEntry(
 			sharingEntry.getSharingEntryId(),

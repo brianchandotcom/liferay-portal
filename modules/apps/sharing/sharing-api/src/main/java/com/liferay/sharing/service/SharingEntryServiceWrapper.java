@@ -37,10 +37,12 @@ public class SharingEntryServiceWrapper implements SharingEntryService,
 		long toUserId, long classNameId, long classPK, long groupId,
 		boolean shareable,
 		java.util.Collection<com.liferay.sharing.constants.SharingEntryActionKey> sharingEntryActionKeys,
+		java.util.Date expirationDate,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _sharingEntryService.addSharingEntry(toUserId, classNameId,
-			classPK, groupId, shareable, sharingEntryActionKeys, serviceContext);
+			classPK, groupId, shareable, sharingEntryActionKeys,
+			expirationDate, serviceContext);
 	}
 
 	/**

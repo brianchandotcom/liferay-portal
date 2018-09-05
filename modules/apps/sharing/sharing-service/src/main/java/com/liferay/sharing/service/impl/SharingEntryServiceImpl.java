@@ -31,6 +31,7 @@ import com.liferay.sharing.security.permission.SharingPermissionChecker;
 import com.liferay.sharing.service.base.SharingEntryServiceBaseImpl;
 
 import java.util.Collection;
+import java.util.Date;
 import java.util.stream.Stream;
 
 import org.osgi.framework.Bundle;
@@ -47,7 +48,7 @@ public class SharingEntryServiceImpl extends SharingEntryServiceBaseImpl {
 			long toUserId, long classNameId, long classPK, long groupId,
 			boolean shareable,
 			Collection<SharingEntryActionKey> sharingEntryActionKeys,
-			ServiceContext serviceContext)
+			Date expirationDate, ServiceContext serviceContext)
 		throws PortalException {
 
 		_checkSharingPermission(
@@ -55,7 +56,7 @@ public class SharingEntryServiceImpl extends SharingEntryServiceBaseImpl {
 
 		return sharingEntryLocalService.addSharingEntry(
 			getUserId(), toUserId, classNameId, classPK, groupId, shareable,
-			sharingEntryActionKeys, serviceContext);
+			sharingEntryActionKeys, expirationDate, serviceContext);
 	}
 
 	@JSONWebService(mode = JSONWebServiceMode.IGNORE)

@@ -85,7 +85,7 @@ public class GroupModelListenerTest {
 		_sharingEntryLocalService.addSharingEntry(
 			_user.getUserId(), _groupUser.getUserId(), classNameId, classPK,
 			_group.getGroupId(), true,
-			Arrays.asList(SharingEntryActionKey.VIEW), serviceContext);
+			Arrays.asList(SharingEntryActionKey.VIEW), null, serviceContext);
 
 		List<SharingEntry> groupSharingEntries =
 			_sharingEntryLocalService.getGroupSharingEntries(
@@ -119,12 +119,14 @@ public class GroupModelListenerTest {
 			_sharingEntryLocalService.addSharingEntry(
 				_user.getUserId(), _groupUser.getUserId(), classNameId,
 				RandomTestUtil.randomLong(), _group.getGroupId(), true,
-				Arrays.asList(SharingEntryActionKey.VIEW), serviceContext);
+				Arrays.asList(SharingEntryActionKey.VIEW), null,
+				serviceContext);
 
 			_sharingEntryLocalService.addSharingEntry(
 				_user.getUserId(), _groupUser.getUserId(), classNameId,
 				RandomTestUtil.randomLong(), group2.getGroupId(), true,
-				Arrays.asList(SharingEntryActionKey.VIEW), serviceContext);
+				Arrays.asList(SharingEntryActionKey.VIEW), null,
+				serviceContext);
 
 			List<SharingEntry> groupSharingEntries =
 				_sharingEntryLocalService.getGroupSharingEntries(

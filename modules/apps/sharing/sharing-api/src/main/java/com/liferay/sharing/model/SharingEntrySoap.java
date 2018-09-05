@@ -46,6 +46,7 @@ public class SharingEntrySoap implements Serializable {
 		soapModel.setClassPK(model.getClassPK());
 		soapModel.setShareable(model.isShareable());
 		soapModel.setActionIds(model.getActionIds());
+		soapModel.setExpirationDate(model.getExpirationDate());
 
 		return soapModel;
 	}
@@ -198,6 +199,14 @@ public class SharingEntrySoap implements Serializable {
 		_actionIds = actionIds;
 	}
 
+	public Date getExpirationDate() {
+		return _expirationDate;
+	}
+
+	public void setExpirationDate(Date expirationDate) {
+		_expirationDate = expirationDate;
+	}
+
 	private String _uuid;
 	private long _sharingEntryId;
 	private long _groupId;
@@ -210,4 +219,5 @@ public class SharingEntrySoap implements Serializable {
 	private long _classPK;
 	private boolean _shareable;
 	private long _actionIds;
+	private Date _expirationDate;
 }

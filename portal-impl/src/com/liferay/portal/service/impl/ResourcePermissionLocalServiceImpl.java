@@ -59,7 +59,6 @@ import com.liferay.portal.model.impl.ResourceImpl;
 import com.liferay.portal.security.permission.PermissionCacheUtil;
 import com.liferay.portal.service.base.ResourcePermissionLocalServiceBaseImpl;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.portal.util.ResourcePermissionsThreadLocal;
 import com.liferay.util.dao.orm.CustomSQLUtil;
 
 import java.util.ArrayList;
@@ -350,8 +349,12 @@ public class ResourcePermissionLocalServiceImpl
 			resourcePermissionPersistence.findByC_N_S_P(
 				companyId, name, ResourceConstants.SCOPE_INDIVIDUAL, primKey);
 
-		ResourcePermissionsThreadLocal.setResourcePermissions(
-			resourcePermissions);
+		Map<Long, ResourcePermission> resourcePermissionsMap = new HashMap<>();
+
+		for (ResourcePermission resourcePermission : resourcePermissions) {
+			resourcePermissionsMap.put(
+				resourcePermission.getRoleId(), resourcePermission);
+		}
 
 		try {
 			List<String> actionIds = null;
@@ -372,7 +375,8 @@ public class ResourcePermissionLocalServiceImpl
 				companyId, name, ResourceConstants.SCOPE_INDIVIDUAL, primKey,
 				userId, role.getRoleId(),
 				actionIds.toArray(new String[actionIds.size()]),
-				ResourcePermissionConstants.OPERATOR_SET, true);
+				ResourcePermissionConstants.OPERATOR_SET, true,
+				resourcePermissionsMap);
 
 			// Group permissions
 
@@ -396,7 +400,8 @@ public class ResourcePermissionLocalServiceImpl
 					companyId, name, ResourceConstants.SCOPE_INDIVIDUAL,
 					primKey, 0, groupRole.getRoleId(),
 					actions.toArray(new String[actions.size()]),
-					ResourcePermissionConstants.OPERATOR_SET, true);
+					ResourcePermissionConstants.OPERATOR_SET, true,
+					resourcePermissionsMap);
 			}
 
 			// Guest permissions
@@ -426,12 +431,11 @@ public class ResourcePermissionLocalServiceImpl
 					companyId, name, ResourceConstants.SCOPE_INDIVIDUAL,
 					primKey, 0, guestRole.getRoleId(),
 					actions.toArray(new String[actions.size()]),
-					ResourcePermissionConstants.OPERATOR_SET, true);
+					ResourcePermissionConstants.OPERATOR_SET, true,
+					resourcePermissionsMap);
 			}
 		}
 		finally {
-			ResourcePermissionsThreadLocal.setResourcePermissions(null);
-
 			PermissionThreadLocal.setFlushResourcePermissionEnabled(
 				name, primKey, flushResourcePermissionEnabled);
 
@@ -1690,7 +1694,7 @@ public class ResourcePermissionLocalServiceImpl
 
 		_updateResourcePermission(
 			companyId, name, scope, primKey, ownerId, roleId, actionIds,
-			operator, true);
+			operator, true, null);
 	}
 
 	/**
@@ -1757,7 +1761,7 @@ public class ResourcePermissionLocalServiceImpl
 
 				_updateResourcePermission(
 					companyId, name, scope, primKey, ownerId, roleId, actionIds,
-					ResourcePermissionConstants.OPERATOR_SET, true);
+					ResourcePermissionConstants.OPERATOR_SET, true, null);
 			}
 
 			if (roleIdsToActionIds.isEmpty()) {
@@ -1772,7 +1776,7 @@ public class ResourcePermissionLocalServiceImpl
 
 				_updateResourcePermission(
 					companyId, name, scope, primKey, ownerId, roleId, actionIds,
-					ResourcePermissionConstants.OPERATOR_SET, false);
+					ResourcePermissionConstants.OPERATOR_SET, false, null);
 			}
 
 			if (!MergeLayoutPrototypesThreadLocal.isInProgress() &&
@@ -1830,13 +1834,10 @@ public class ResourcePermissionLocalServiceImpl
 	private void _updateResourcePermission(
 			long companyId, String name, int scope, String primKey,
 			long ownerId, long roleId, String[] actionIds, int operator,
-			boolean fetch)
+			boolean fetch, Map<Long, ResourcePermission> resourcePermissionsMap)
 		throws PortalException {
 
 		ResourcePermission resourcePermission = null;
-
-		Map<Long, ResourcePermission> resourcePermissionsMap =
-			ResourcePermissionsThreadLocal.getResourcePermissions();
 
 		if (resourcePermissionsMap != null) {
 			resourcePermission = resourcePermissionsMap.get(roleId);

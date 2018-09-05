@@ -229,6 +229,9 @@ public class SharingEntryLocalServiceTest {
 		Assert.assertEquals(
 			String.valueOf(sharingEntry.getSharingEntryId()),
 			jsonObject.getString("classPK"));
+
+		Assert.assertEquals(
+			_fromUser.getFullName(), jsonObject.getString("fromUserFullName"));
 	}
 
 	@Test(expected = InvalidSharingEntryActionKeyException.class)

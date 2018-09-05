@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.ModelListener;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserNotificationDeliveryConstants;
 import com.liferay.portal.kernel.notifications.NotificationEvent;
 import com.liferay.portal.kernel.notifications.NotificationEventFactoryUtil;
@@ -27,6 +28,7 @@ import com.liferay.portal.kernel.notifications.UserNotificationDefinition;
 import com.liferay.portal.kernel.notifications.UserNotificationManagerUtil;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.UserNotificationEventLocalService;
 import com.liferay.sharing.model.SharingEntry;
 
@@ -58,6 +60,14 @@ public class SharingEntryModelListener extends BaseModelListener<SharingEntry> {
 				notificationEventJSONObject.put(
 					"classPK", sharingEntry.getSharingEntryId());
 
+				User fromUser = _userLocalService.fetchUser(
+					sharingEntry.getFromUserId());
+
+				if (fromUser != null) {
+					notificationEventJSONObject.put(
+						"fromUserFullName", fromUser.getFullName());
+				}
+
 				NotificationEvent notificationEvent =
 					NotificationEventFactoryUtil.createNotificationEvent(
 						System.currentTimeMillis(), portletId,
@@ -75,6 +85,9 @@ public class SharingEntryModelListener extends BaseModelListener<SharingEntry> {
 			throw new ModelListenerException(pe);
 		}
 	}
+
+	@Reference
+	private UserLocalService _userLocalService;
 
 	@Reference
 	private UserNotificationEventLocalService

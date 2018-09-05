@@ -61,7 +61,7 @@ public class MyUserAccountCollectionResource
 
 	@Override
 	public String getName() {
-		return "myUserAccount";
+		return "my-user-account";
 	}
 
 	@Override
@@ -84,7 +84,7 @@ public class MyUserAccountCollectionResource
 		userWrapperFirstStep.addRelatedCollection(
 			"myOrganizations", OrganizationIdentifier.class);
 		userWrapperFirstStep.addRelatedCollection(
-			"myWebsites", WebSiteIdentifier.class);
+			"myWebSites", WebSiteIdentifier.class);
 
 		return userWrapperFirstStep.build();
 	}

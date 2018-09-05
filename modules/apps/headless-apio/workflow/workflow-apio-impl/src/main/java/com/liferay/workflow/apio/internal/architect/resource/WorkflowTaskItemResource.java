@@ -21,7 +21,7 @@ import com.liferay.apio.architect.routes.ItemRoutes;
 import com.liferay.blog.apio.architect.identifier.BlogPostingIdentifier;
 import com.liferay.comment.apio.architect.identifier.CommentIdentifier;
 import com.liferay.media.object.apio.architect.identifier.MediaObjectIdentifier;
-import com.liferay.person.apio.architect.identifier.PersonIdentifier;
+import com.liferay.person.apio.architect.identifier.MyUserAccountIdentifier;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.UserLocalService;
@@ -75,7 +75,7 @@ public class WorkflowTaskItemResource
 		).identifier(
 			WorkflowTask::getWorkflowTaskId
 		).addBidirectionalModel(
-			"assignee", "tasks", PersonIdentifier.class,
+			"assignee", "tasks", MyUserAccountIdentifier.class,
 			WorkflowTask::getAssigneeUserId
 		).addBoolean(
 			"completed", WorkflowTask::isCompleted

@@ -126,7 +126,7 @@ public class PersonCollectionResource
 		userWrapperFirstStep.addRelatedCollection(
 			"organizations", OrganizationIdentifier.class);
 		userWrapperFirstStep.addRelatedCollection(
-			"websites", WebSiteIdentifier.class);
+			"webSites", WebSiteIdentifier.class);
 
 		return userWrapperFirstStep.build();
 	}

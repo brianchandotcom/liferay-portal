@@ -14,6 +14,7 @@
 
 package com.liferay.portal.json;
 
+import com.liferay.portal.json.jabsorb.serializer.LiferayJSONDeserializationWhitelist;
 import com.liferay.portal.json.jabsorb.serializer.LiferayJSONSerializer;
 import com.liferay.portal.json.jabsorb.serializer.LiferaySerializer;
 import com.liferay.portal.json.jabsorb.serializer.LocaleSerializer;
@@ -46,7 +47,8 @@ public class JSONFactoryImpl implements JSONFactory {
 	public JSONFactoryImpl() {
 		JSONInit.init();
 
-		_jsonSerializer = new LiferayJSONSerializer();
+		_jsonSerializer = new LiferayJSONSerializer(
+			_liferayJSONDeserializationWhitelist);
 
 		try {
 			_jsonSerializer.registerDefaultSerializers();
@@ -185,6 +187,12 @@ public class JSONFactoryImpl implements JSONFactory {
 
 			throw new IllegalStateException("Unable to deserialize object", e);
 		}
+	}
+
+	public LiferayJSONDeserializationWhitelist
+		getLiferayJSONDeserializationWhitelist() {
+
+		return _liferayJSONDeserializationWhitelist;
 	}
 
 	@Override
@@ -339,6 +347,9 @@ public class JSONFactoryImpl implements JSONFactory {
 		JSONFactoryImpl.class);
 
 	private final org.jabsorb.JSONSerializer _jsonSerializer;
+	private final LiferayJSONDeserializationWhitelist
+		_liferayJSONDeserializationWhitelist =
+			new LiferayJSONDeserializationWhitelist();
 	private final JSONObject _unmodifiableJSONObject =
 		new UnmodifiableJSONObjectImpl();
 

@@ -205,24 +205,24 @@ describe(
 		it(
 			'should not open sidebar when the delete current page option item is clicked',
 			() => {
-				let componentPages = [...pages, ...pages];
+				const componentPages = [...pages, ...pages];
 				const data = {
 					item: {
-						settingsItem: 'reset-page',
-					},
+						settingsItem: 'reset-page'
+					}
 				};
-				const builderComponent = new Builder(
+				const formBuilder = new Builder(
 					{
 						fieldTypes,
 						pages: componentPages,
 						spritemap
 					}
 				);
-				const {FormRenderer, sidebar} = builderComponent.refs;
+				const {FormRenderer, sidebar} = formBuilder.refs;
 
 				FormRenderer._handleSettingsPageClicked(
 					{
-						data,
+						data
 					}
 				);
 

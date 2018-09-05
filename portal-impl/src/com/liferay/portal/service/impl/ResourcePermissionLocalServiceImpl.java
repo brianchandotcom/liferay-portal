@@ -1608,7 +1608,7 @@ public class ResourcePermissionLocalServiceImpl
 			resource.getPrimKey(), guestRole.getRoleId(), actionIds);
 	}
 
-	protected void doUpdateResourcePermission(
+	private void _updateResourcePermission(
 			long companyId, String name, int scope, String primKey,
 			long ownerId, long roleId, String[] actionIds, int operator,
 			boolean fetch)
@@ -1795,7 +1795,7 @@ public class ResourcePermissionLocalServiceImpl
 			long ownerId, String[] actionIds, int operator)
 		throws PortalException {
 
-		doUpdateResourcePermission(
+		_updateResourcePermission(
 			companyId, name, scope, primKey, ownerId, roleId, actionIds,
 			operator, true);
 	}
@@ -1862,7 +1862,7 @@ public class ResourcePermissionLocalServiceImpl
 
 				String[] actionIds = roleIdsToActionIds.remove(roleId);
 
-				doUpdateResourcePermission(
+				_updateResourcePermission(
 					companyId, name, scope, primKey, ownerId, roleId, actionIds,
 					ResourcePermissionConstants.OPERATOR_SET, true);
 			}
@@ -1877,7 +1877,7 @@ public class ResourcePermissionLocalServiceImpl
 				long roleId = entry.getKey();
 				String[] actionIds = entry.getValue();
 
-				doUpdateResourcePermission(
+				_updateResourcePermission(
 					companyId, name, scope, primKey, ownerId, roleId, actionIds,
 					ResourcePermissionConstants.OPERATOR_SET, false);
 			}

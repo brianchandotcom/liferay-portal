@@ -127,9 +127,11 @@
 				{
 					container: '#<%= randomNamespace %>',
 					ddmFormValuesInput: '#<portlet:namespace /><%= HtmlUtil.getAUICompatibleId(ddmFormValuesInputName) %>',
+					documentLibrarySelectorURL: '<%= documentLibrarySelectorURL %>',
 					definition: <%= DDMUtil.getDDMFormJSONString(ddmForm) %>,
 					doAsGroupId: <%= scopeGroupId %>,
 					fieldsNamespace: '<%= HtmlUtil.escapeJS(fieldsNamespace) %>',
+					imageSelectorURL: '<%= imageSelectorURL %>',
 					mode: '<%= HtmlUtil.escapeJS(mode) %>',
 					p_l_id: <%= themeDisplay.getPlid() %>,
 					portletNamespace: '<portlet:namespace />',

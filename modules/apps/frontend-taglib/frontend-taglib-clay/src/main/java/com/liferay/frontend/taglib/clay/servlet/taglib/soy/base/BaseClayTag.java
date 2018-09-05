@@ -36,6 +36,8 @@ public abstract class BaseClayTag extends TemplateRendererTag {
 
 	@Override
 	public int doStartTag() {
+		super.setWrapper(false);
+
 		Map<String, Object> context = getContext();
 
 		if (Validator.isNull(context.get("spritemap"))) {

@@ -177,6 +177,10 @@ public class TemplateRendererTag extends ParamAndPropertyAncestorTagImpl {
 		_templateNamespace = namespace;
 	}
 
+	public void setWrapper(boolean wrapper) {
+		_wrapper = wrapper;
+	}
+
 	protected void cleanUp() {
 		if (!ServerDetector.isResin()) {
 			_componentId = null;
@@ -185,6 +189,7 @@ public class TemplateRendererTag extends ParamAndPropertyAncestorTagImpl {
 			_hydrate = null;
 			_module = null;
 			_templateNamespace = null;
+			_wrapper = null;
 		}
 	}
 
@@ -197,8 +202,13 @@ public class TemplateRendererTag extends ParamAndPropertyAncestorTagImpl {
 	}
 
 	protected String getElementSelector() {
-		return StringPool.POUND.concat(
-			getComponentId()).concat(" > *:first-child");
+		String selector = StringPool.POUND.concat(getComponentId());
+
+		if (isWrapper()) {
+			selector = selector.concat(" > *:first-child");
+		}
+
+		return selector;
 	}
 
 	protected boolean isRenderJavaScript() {
@@ -211,6 +221,14 @@ public class TemplateRendererTag extends ParamAndPropertyAncestorTagImpl {
 
 	protected boolean isRenderTemplate() {
 		return true;
+	}
+
+	protected boolean isWrapper() {
+		if (_wrapper != null) {
+			return _wrapper;
+		}
+
+		return isRenderJavaScript();
 	}
 
 	protected void prepareContext(Map<String, Object> context) {
@@ -233,7 +251,7 @@ public class TemplateRendererTag extends ParamAndPropertyAncestorTagImpl {
 		}
 
 		String componentJavaScript = SoyJavaScriptRendererUtil.getJavaScript(
-			context, getComponentId(), requiredModules);
+			context, getComponentId(), requiredModules, isWrapper());
 
 		ScriptTag.doTag(
 			null, null, null, componentJavaScript, getBodyContent(),
@@ -244,15 +262,19 @@ public class TemplateRendererTag extends ParamAndPropertyAncestorTagImpl {
 			JspWriter jspWriter, Map<String, Object> context)
 		throws IOException, TemplateException {
 
+		boolean wrapper = isWrapper();
+
+		if (!wrapper && !context.containsKey("id")) {
+			context.put("id", getComponentId());
+		}
+
 		_template.putAll(context);
 
 		_template.put(TemplateConstants.NAMESPACE, getTemplateNamespace());
 
 		_template.prepare(request);
 
-		boolean renderJavaScript = isRenderJavaScript();
-
-		if (renderJavaScript) {
+		if (wrapper) {
 			jspWriter.append("<div id=\"");
 			jspWriter.append(HtmlUtil.escapeAttribute(getComponentId()));
 			jspWriter.append("\">");
@@ -260,7 +282,7 @@ public class TemplateRendererTag extends ParamAndPropertyAncestorTagImpl {
 
 		_template.processTemplate(jspWriter);
 
-		if (renderJavaScript) {
+		if (wrapper) {
 			jspWriter.append("</div>");
 		}
 	}
@@ -278,5 +300,6 @@ public class TemplateRendererTag extends ParamAndPropertyAncestorTagImpl {
 	private String _module;
 	private Template _template;
 	private String _templateNamespace;
+	private Boolean _wrapper;
 
 }

@@ -1,7 +1,8 @@
 import {
 	actionItemsValidator,
 	creationMenuItemsValidator,
-	filterItemsValidator
+	filterItemsValidator,
+	filterLabelsValidator
 } from 'clay-management-toolbar';
 import ClayComponent from 'clay-component';
 import Soy from 'metal-soy';
@@ -143,8 +144,18 @@ class ManagementToolbar extends ClayComponent {
 		var elements = event.elements;
 
 		this.selectedItems = elements.allSelectedElements.filter(':enabled').size();
-	}
 
+		this.actionItems = this.actionItems.map(
+			actionItem => {
+				return Object.assign(
+					actionItem,
+					{
+						disabled: !event.actions.includes(actionItem.data.action)
+					}
+				);
+			}
+		);
+	}
 }
 
 /**
@@ -238,6 +249,15 @@ ManagementToolbar.STATE = {
 	 */
 
 	filterItems: filterItemsValidator,
+
+	/**
+	 * List of filter label items.
+	 * @default undefined
+	 * @instance
+	 * @memberof ClayManagementToolbar
+	 * @type {?(array|undefined)}
+	 */
+	filterLabels: filterLabelsValidator,
 
 	/**
 	 * Id to be applied to the element.

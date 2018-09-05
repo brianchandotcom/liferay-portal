@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.users.admin.web.internal.servlet.taglib.ui.navigation.user.entry;
+package com.liferay.users.admin.web.internal.frontend.taglib.servlet.taglib;
 
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
 import com.liferay.portal.kernel.model.User;
@@ -24,30 +24,30 @@ import org.osgi.service.component.annotations.Component;
  * @author Pei-Jung Lan
  */
 @Component(
-	property = "screen.navigation.entry.order:Integer=30",
+	property = "screen.navigation.entry.order:Integer=60",
 	service = ScreenNavigationEntry.class
 )
-public class UserDisplaySettingsScreenNavigationEntry
+public class UserPasswordScreenNavigationEntry
 	extends BaseUserScreenNavigationEntry {
 
 	@Override
 	public String getActionCommandName() {
-		return "/users_admin/edit_display_settings";
+		return "/users_admin/update_password";
 	}
 
 	@Override
 	public String getCategoryKey() {
-		return UserFormConstants.CATEGORY_KEY_PREFERENCES;
+		return UserFormConstants.CATEGORY_KEY_GENERAL;
 	}
 
 	@Override
 	public String getEntryKey() {
-		return UserFormConstants.ENTRY_KEY_DISPLAY_SETTINGS;
+		return UserFormConstants.ENTRY_KEY_PASSWORD;
 	}
 
 	@Override
 	public String getJspPath() {
-		return "/user/display_settings.jsp";
+		return "/user/password.jsp";
 	}
 
 	@Override

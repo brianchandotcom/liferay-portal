@@ -32,6 +32,7 @@
 	{@param fieldTypes: string}
 	{@param portletNamespace: string}
 	{@param readOnly: bool}
+	{@param viewMode: bool}
 
 	<script type="text/javascript">
 		AUI().use(
@@ -77,6 +78,7 @@
 	{@param evaluatorURL: string}
 	{@param portletNamespace: string}
 	{@param readOnly: bool}
+	{@param viewMode: bool}
 
 	var form = Liferay.component(
 		'{$containerId}DDMForm',
@@ -87,7 +89,8 @@
 				defaultLanguageId: {$defaultLanguageId},
 				evaluatorURL: '{$evaluatorURL}',
 				portletNamespace: '{$portletNamespace}',
-				readOnly: {if $readOnly}true{else}false{/if}
+				readOnly: {if $readOnly}true{else}false{/if},
+				viewMode: {if $viewMode}true{else}false{/if}
 			{rb}
 		).render()
 	);

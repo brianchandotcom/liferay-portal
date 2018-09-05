@@ -1,0 +1,148 @@
+{
+	"containerId": "efbLk8Ep",
+	"currentPage": "1",
+	"dataProviderSettings": {
+
+	},
+	"evaluatorURL": "/o/dynamic-data-mapping-form-context-provider/",
+	"groupId": "20126",
+	"pages": [
+		{
+			"description": "",
+			"enabled": true,
+			"localizedDescription": {
+				"en_US": "",
+				"pt_BR": ""
+			},
+			"localizedTitle": {
+				"en_US": "",
+				"pt_BR": ""
+			},
+			"rows": [
+				{
+					"columns": [
+						{
+							"fields": [
+								{
+									"autocompleteEnabled": false,
+									"dataType": "string",
+									"dir": "ltr",
+									"displayStyle": "singleline",
+									"errorMessage": "",
+									"fieldName": "TextField1",
+									"instanceId": "eBvF8zup",
+									"label": "Campo de Texto 1",
+									"locale": "pt_BR",
+									"localizable": false,
+									"localizedValue": {
+										"pt_BR": "Texto 1"
+									},
+									"name": "_com_liferay_dynamic_data_mapping_form_web_portlet_DDMFormPortlet_ddm$$TextField1$eBvF8zup$0$$pt_BR",
+									"options": [
+										{
+											"label": "Option",
+											"value": "Option"
+										}
+									],
+									"pathThemeImages": "http://localhost:8080/o/classic-theme/images",
+									"placeholder": "",
+									"predefinedValue": "",
+									"readOnly": false,
+									"repeatable": false,
+									"required": false,
+									"showLabel": true,
+									"tip": "",
+									"tooltip": "",
+									"type": "text",
+									"valid": true,
+									"validation": {
+										"dataType": "string",
+										"errorMessage": "",
+										"expression": ""
+									},
+									"value": "Texto 1",
+									"valueChanged": false,
+									"visibilityExpression": "",
+									"visible": true
+								}
+							],
+							"size": 12
+						}
+					]
+				},
+				{
+					"columns": [
+						{
+							"fields": [
+								{
+									"autocompleteEnabled": false,
+									"dataType": "string",
+									"dir": "ltr",
+									"displayStyle": "singleline",
+									"errorMessage": "",
+									"fieldName": "TextField2",
+									"instanceId": "6VYYLvfJ",
+									"label": "Campo de Texto 2",
+									"locale": "pt_BR",
+									"localizable": false,
+									"localizedValue": {
+										"pt_BR": "Texto 2"
+									},
+									"name": "_com_liferay_dynamic_data_mapping_form_web_portlet_DDMFormPortlet_ddm$$TextField2$6VYYLvfJ$0$$pt_BR",
+									"options": [
+										{
+											"label": "Option",
+											"value": "Option"
+										}
+									],
+									"pathThemeImages": "http://localhost:8080/o/classic-theme/images",
+									"placeholder": "",
+									"predefinedValue": "",
+									"readOnly": false,
+									"repeatable": false,
+									"required": false,
+									"showLabel": true,
+									"tip": "",
+									"tooltip": "",
+									"type": "text",
+									"valid": true,
+									"validation": {
+										"dataType": "string",
+										"errorMessage": "",
+										"expression": ""
+									},
+									"value": "Texto 2",
+									"valueChanged": false,
+									"visibilityExpression": "",
+									"visible": true
+								}
+							],
+							"size": 12
+						}
+					]
+				}
+			],
+			"showRequiredFieldsWarning": false,
+			"title": ""
+		}
+	],
+	"portletNamespace": "_com_liferay_dynamic_data_mapping_form_web_portlet_DDMFormPortlet_",
+	"readOnly": false,
+	"requiredFieldsWarningMessageHTML": {
+		"content": "<label class=\"required-warning\">Todos os campos marcados com <svg aria-hidden=\"true\" class=\"lexicon-icon lexicon-icon-asterisk reference-mark\"><use xlink:href=\"http://localhost:8080/o/classic-theme/images/lexicon/icons.svg#asterisk\" /></svg> são obrigatórios.</label>",
+		"contentDirection": null,
+		"contentKind": "HTML"
+	},
+	"rules": [
+
+	],
+	"showRequiredFieldsWarning": true,
+	"showSubmitButton": true,
+	"strings": {
+		"next": "Próximo",
+		"previous": "Anterior"
+	},
+	"submitLabel": "Submeter",
+	"templateNamespace": "ddm.wizard_form",
+	"viewMode": true
+}

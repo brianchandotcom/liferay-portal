@@ -151,6 +151,8 @@ public class DDMFormTemplateContextFactoryImpl
 
 		templateContext.put("groupId", ddmFormRenderingContext.getGroupId());
 
+		templateContext.put("viewMode", ddmFormRenderingContext.isViewMode());
+
 		List<Object> pages = getPages(
 			ddmForm, ddmFormLayout, ddmFormRenderingContext);
 

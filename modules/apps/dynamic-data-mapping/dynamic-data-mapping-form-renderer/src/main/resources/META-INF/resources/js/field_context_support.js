@@ -100,7 +100,19 @@ AUI.add(
 				var context = instance.get('context');
 
 				if (!Util.compare(value, context[name])) {
+					var localizable = context.localizable;
+
 					instance.set('context.' + name, value);
+
+					if (name === 'value' && localizable === false) {
+						var localizedValue = {};
+
+						var locale = context.locale;
+
+						localizedValue[locale] = value;
+
+						instance.set('context.localizedValue', localizedValue);
+					}
 				}
 			},
 

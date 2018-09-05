@@ -1,4 +1,0 @@
-Bundle-Name: Liferay Dynamic Data Mapping Form Renderer Test
-Bundle-SymbolicName: com.liferay.dynamic.data.mapping.form.renderer.test
-Bundle-Version: 1.0.0
--includeresource: test-classes/integration

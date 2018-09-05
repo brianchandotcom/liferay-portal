@@ -1,0 +1,36 @@
+[
+	{
+		"rows": [
+			{
+				"columns": [
+					{
+						"fields": [
+							{
+								"fieldName": "TextField1",
+								"instanceId": "eBvF8zup",
+								"localizedValue": {
+									"pt_BR": "Texto 1"
+								}
+							}
+						]
+					}
+				]
+			},
+			{
+				"columns": [
+					{
+						"fields": [
+							{
+								"fieldName": "TextField2",
+								"instanceId": "6VYYLvfJ",
+								"localizedValue": {
+									"pt_BR": "Texto 2"
+								}
+							}
+						]
+					}
+				]
+			}
+		]
+	}
+]

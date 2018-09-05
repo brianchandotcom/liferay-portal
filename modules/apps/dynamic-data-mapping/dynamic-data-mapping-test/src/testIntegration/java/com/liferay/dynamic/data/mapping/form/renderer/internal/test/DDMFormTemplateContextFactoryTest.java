@@ -372,6 +372,24 @@ public class DDMFormTemplateContextFactoryTest {
 			"ddm.wizard_form", templateContext.get("templateNamespace"));
 	}
 
+	@Test
+	public void testViewMode() throws Exception {
+		DDMForm ddmForm = DDMFormTestUtil.createDDMForm();
+
+		DDMFormRenderingContext ddmFormRenderingContext =
+			new DDMFormRenderingContext();
+
+		ddmFormRenderingContext.setLocale(LocaleUtil.US);
+		ddmFormRenderingContext.setHttpServletRequest(_request);
+		ddmFormRenderingContext.setViewMode(true);
+
+		Map<String, Object> templateContext =
+			_ddmFormTemplateContextFactory.create(
+				ddmForm, ddmFormRenderingContext);
+
+		Assert.assertEquals(true, templateContext.get("viewMode"));
+	}
+
 	@Inject
 	private static DDMFormTemplateContextFactory _ddmFormTemplateContextFactory;
 

@@ -42,6 +42,7 @@ dependencies {
 	testCompile group: "org.jodd", name: "jodd-json", version: "3.6.4"
 	testCompile group: "org.skyscreamer", name: "jsonassert", version: "1.2.3"
 	testCompile group: "org.slf4j", name: "slf4j-api", version: "1.7.22"
+	testCompile project(":apps:dynamic-data-mapping:dynamic-data-mapping-form-builder")
 	testCompile project(":apps:dynamic-data-mapping:dynamic-data-mapping-test-util")
 }
 

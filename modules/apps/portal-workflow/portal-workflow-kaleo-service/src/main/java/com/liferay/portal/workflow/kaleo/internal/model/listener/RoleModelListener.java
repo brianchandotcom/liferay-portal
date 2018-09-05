@@ -14,16 +14,17 @@
 
 package com.liferay.portal.workflow.kaleo.internal.model.listener;
 
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.Property;
+import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.exception.ModelListenerException;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.model.Role;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.workflow.kaleo.model.KaleoTaskAssignment;
 import com.liferay.portal.workflow.kaleo.service.KaleoTaskAssignmentLocalService;
-
-import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -37,23 +38,7 @@ public class RoleModelListener extends BaseModelListener<Role> {
 	@Override
 	public void onBeforeRemove(Role role) throws ModelListenerException {
 		try {
-			List<KaleoTaskAssignment> kaleoTaskAssignments =
-				_kaleoTaskAssignmentLocalService.getKaleoTaskAssignments(
-					QueryUtil.ALL_POS, QueryUtil.ALL_POS);
-
-			for (KaleoTaskAssignment kaleoTaskAssignment :
-					kaleoTaskAssignments) {
-
-				if (StringUtil.equals(
-						kaleoTaskAssignment.getAssigneeClassName(),
-						Role.class.getName()) &&
-					(kaleoTaskAssignment.getAssigneeClassPK() ==
-						role.getRoleId())) {
-
-					_kaleoTaskAssignmentLocalService.deleteKaleoTaskAssignment(
-						kaleoTaskAssignment);
-				}
-			}
+			_deleteKaleoTaskAssignmentByRole(role.getRoleId());
 		}
 		catch (Exception e) {
 			throw new ModelListenerException(e);
@@ -65,6 +50,48 @@ public class RoleModelListener extends BaseModelListener<Role> {
 		KaleoTaskAssignmentLocalService kaleoTaskAssignmentLocalService) {
 
 		_kaleoTaskAssignmentLocalService = kaleoTaskAssignmentLocalService;
+	}
+
+	private void _deleteKaleoTaskAssignmentByRole(final long roleId)
+		throws PortalException {
+
+		ActionableDynamicQuery actionableDynamicQuery =
+			_kaleoTaskAssignmentLocalService.getActionableDynamicQuery();
+
+		actionableDynamicQuery.setAddCriteriaMethod(
+			new ActionableDynamicQuery.AddCriteriaMethod() {
+
+				@Override
+				public void addCriteria(DynamicQuery dynamicQuery) {
+					Property assigneeClassNameProperty =
+						PropertyFactoryUtil.forName("assigneeClassName");
+
+					dynamicQuery.add(
+						assigneeClassNameProperty.like(Role.class.getName()));
+
+					Property assigneeClassPKProperty =
+						PropertyFactoryUtil.forName("assigneeClassPK");
+
+					dynamicQuery.add(assigneeClassPKProperty.eq(roleId));
+				}
+
+			});
+
+		actionableDynamicQuery.setPerformActionMethod(
+			new ActionableDynamicQuery.
+				PerformActionMethod<KaleoTaskAssignment>() {
+
+				@Override
+				public void performAction(
+					KaleoTaskAssignment kaleoTaskAssignment) {
+
+					_kaleoTaskAssignmentLocalService.deleteKaleoTaskAssignment(
+						kaleoTaskAssignment);
+				}
+
+			});
+
+		actionableDynamicQuery.performActions();
 	}
 
 	private KaleoTaskAssignmentLocalService _kaleoTaskAssignmentLocalService;

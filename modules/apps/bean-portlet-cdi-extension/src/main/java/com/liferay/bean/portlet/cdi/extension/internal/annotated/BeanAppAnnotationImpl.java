@@ -16,10 +16,9 @@ package com.liferay.bean.portlet.cdi.extension.internal.annotated;
 
 import com.liferay.bean.portlet.cdi.extension.internal.BeanApp;
 import com.liferay.bean.portlet.cdi.extension.internal.Event;
-import com.liferay.bean.portlet.cdi.extension.internal.PortletApplicationFactory;
 import com.liferay.bean.portlet.cdi.extension.internal.PublicRenderParameter;
 import com.liferay.bean.portlet.cdi.extension.internal.URLGenerationListener;
-import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.GetterUtil;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -82,15 +81,8 @@ public class BeanAppAnnotationImpl implements BeanApp {
 				publicRenderParameter.getIdentifier(), publicRenderParameter);
 		}
 
-		if (Validator.isNull(portletApplication.version())) {
-			PortletApplication defaultPortletApplication =
-				PortletApplicationFactory.getDefaultPortletApplication();
-
-			_specVersion = defaultPortletApplication.version();
-		}
-		else {
-			_specVersion = portletApplication.version();
-		}
+		_specVersion = GetterUtil.getString(
+			portletApplication.version(), "3.0");
 
 		_urlGenerationListeners = new ArrayList<>();
 	}

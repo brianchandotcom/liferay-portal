@@ -78,7 +78,10 @@ import javax.portlet.ResourceResponse;
 import javax.portlet.ResourceServingPortlet;
 import javax.portlet.annotations.ActionMethod;
 import javax.portlet.annotations.ContextPath;
+import javax.portlet.annotations.CustomPortletMode;
+import javax.portlet.annotations.CustomWindowState;
 import javax.portlet.annotations.DestroyMethod;
+import javax.portlet.annotations.EventDefinition;
 import javax.portlet.annotations.EventMethod;
 import javax.portlet.annotations.HeaderMethod;
 import javax.portlet.annotations.InitMethod;
@@ -92,9 +95,12 @@ import javax.portlet.annotations.PortletName;
 import javax.portlet.annotations.PortletRequestScoped;
 import javax.portlet.annotations.PortletSerializable;
 import javax.portlet.annotations.PortletSessionScoped;
+import javax.portlet.annotations.PublicRenderParameterDefinition;
 import javax.portlet.annotations.RenderMethod;
 import javax.portlet.annotations.RenderStateScoped;
+import javax.portlet.annotations.RuntimeOption;
 import javax.portlet.annotations.ServeResourceMethod;
+import javax.portlet.annotations.UserAttribute;
 import javax.portlet.annotations.WindowId;
 import javax.portlet.filter.PortletFilter;
 
@@ -563,8 +569,7 @@ public class BeanPortletExtension implements Extension {
 		}
 
 		if (portletApplication == null) {
-			portletApplication =
-				PortletApplicationFactory.getDefaultPortletApplication();
+			portletApplication = _portletApplication;
 		}
 
 		_beanPortlets.putIfAbsent(
@@ -840,6 +845,69 @@ public class BeanPortletExtension implements Extension {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		BeanPortletExtension.class);
+
+	private static final PortletApplication _portletApplication =
+		new PortletApplication() {
+
+			@Override
+			public Class<? extends Annotation> annotationType() {
+				return PortletApplication.class;
+			}
+
+			@Override
+			public CustomPortletMode[] customPortletModes() {
+				return _customPortletModes;
+			}
+
+			@Override
+			public CustomWindowState[] customWindowStates() {
+				return _customWindowStates;
+			}
+
+			@Override
+			public String defaultNamespaceURI() {
+				return "";
+			}
+
+			@Override
+			public EventDefinition[] events() {
+				return _eventDefinitions;
+			}
+
+			@Override
+			public PublicRenderParameterDefinition[] publicParams() {
+				return _publicRenderParameterDefinitions;
+			}
+
+			@Override
+			public String resourceBundle() {
+				return "";
+			}
+
+			@Override
+			public RuntimeOption[] runtimeOptions() {
+				return _runtimeOptions;
+			}
+
+			@Override
+			public UserAttribute[] userAttributes() {
+				return _userAttributes;
+			}
+
+			@Override
+			public String version() {
+				return "3.0";
+			}
+
+			private final CustomPortletMode[] _customPortletModes = {};
+			private final CustomWindowState[] _customWindowStates = {};
+			private final EventDefinition[] _eventDefinitions = {};
+			private final PublicRenderParameterDefinition[]
+				_publicRenderParameterDefinitions = {};
+			private final RuntimeOption[] _runtimeOptions = {};
+			private final UserAttribute[] _userAttributes = {};
+
+		};
 
 	private final List<ScannedMethod> _actionMethods = new ArrayList<>();
 	private final List<BeanFilter> _beanFilters = new ArrayList<>();

@@ -19,8 +19,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import javax.portlet.annotations.PortletApplication;
-
 /**
  * @author Neil Griffin
  */
@@ -53,10 +51,7 @@ public class BeanAppDefaultImpl implements BeanApp {
 
 	@Override
 	public String getSpecVersion() {
-		PortletApplication defaultPortletApplication =
-			PortletApplicationFactory.getDefaultPortletApplication();
-
-		return defaultPortletApplication.version();
+		return "3.0";
 	}
 
 	@Override

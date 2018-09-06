@@ -47,6 +47,7 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Dictionary;
 import java.util.HashSet;
@@ -194,8 +195,8 @@ public class DefaultLPKGDeployer implements LPKGDeployer {
 							"bundle " + lpkgBundle);
 				}
 
-				FrameworkEvent frameworkEvent = _refreshRemovalPendingBundles(
-					bundleContext);
+				FrameworkEvent frameworkEvent = _refreshBundles(
+					null, bundleContext);
 
 				if (frameworkEvent.getType() ==
 						FrameworkEvent.PACKAGES_REFRESHED) {
@@ -289,9 +290,12 @@ public class DefaultLPKGDeployer implements LPKGDeployer {
 
 		Path overrideDirPath = _deploymentDirPath.resolve("override");
 
+		Set<Bundle> removalPending = new HashSet<>();
+
 		List<File> jarFiles = _scanFiles(overrideDirPath, ".jar", true);
 
-		_uninstallOrphanOverridingJars(bundleContext, jarFiles);
+		removalPending.addAll(
+			_uninstallOrphanOverridingJars(bundleContext, jarFiles));
 
 		List<File> warFiles = _scanFiles(overrideDirPath, ".war", true);
 
@@ -301,19 +305,21 @@ public class DefaultLPKGDeployer implements LPKGDeployer {
 			_log.info("Start refreshing uninstalled orphan bundles");
 		}
 
-		FrameworkEvent frameworkEvent = _refreshRemovalPendingBundles(
-			bundleContext);
+		if (!removalPending.isEmpty()) {
+			FrameworkEvent frameworkEvent = _refreshBundles(
+				removalPending, bundleContext);
 
-		if (frameworkEvent.getType() == FrameworkEvent.PACKAGES_REFRESHED) {
-			if (_log.isInfoEnabled()) {
-				_log.info("Finished refreshing uninstalled orphan bundles");
+			if (frameworkEvent.getType() == FrameworkEvent.PACKAGES_REFRESHED) {
+				if (_log.isInfoEnabled()) {
+					_log.info("Finished refreshing uninstalled orphan bundles");
+				}
 			}
-		}
-		else {
-			throw new Exception(
-				"Unable to refresh uninstalled orphan bundles because of " +
-					"framework event " + frameworkEvent,
-				frameworkEvent.getThrowable());
+			else {
+				throw new Exception(
+					"Unable to refresh uninstalled orphan bundles because of " +
+						"framework event " + frameworkEvent,
+					frameworkEvent.getThrowable());
+			}
 		}
 
 		_lpkgBundleTracker = new BundleTracker<>(
@@ -498,8 +504,8 @@ public class DefaultLPKGDeployer implements LPKGDeployer {
 	/**
 	 * @see FrameworkWiring#getRemovalPendingBundles
 	 */
-	private FrameworkEvent _refreshRemovalPendingBundles(
-			BundleContext bundleContext)
+	private FrameworkEvent _refreshBundles(
+			Collection<Bundle> bundles, BundleContext bundleContext)
 		throws Exception {
 
 		Bundle systemBundle = bundleContext.getBundle(0);
@@ -511,7 +517,7 @@ public class DefaultLPKGDeployer implements LPKGDeployer {
 			new DefaultNoticeableFuture<>();
 
 		frameworkWiring.refreshBundles(
-			null,
+			bundles,
 			new FrameworkListener() {
 
 				@Override
@@ -598,9 +604,11 @@ public class DefaultLPKGDeployer implements LPKGDeployer {
 		return fileNames;
 	}
 
-	private void _uninstallOrphanOverridingJars(
+	private Set<Bundle> _uninstallOrphanOverridingJars(
 			BundleContext bundleContext, List<File> jarFiles)
 		throws BundleException {
+
+		Set<Bundle> removed = new HashSet<>();
 
 		for (Bundle bundle : bundleContext.getBundles()) {
 			String location = bundle.getLocation();
@@ -618,11 +626,15 @@ public class DefaultLPKGDeployer implements LPKGDeployer {
 
 			bundle.uninstall();
 
+			removed.add(bundle);
+
 			if (_log.isInfoEnabled()) {
 				_log.info(
 					"Uninstalled orphan overriding JAR bundle " + location);
 			}
 		}
+
+		return removed;
 	}
 
 	private void _uninstallOrphanOverridingWars(

@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowDefinition;
 import com.liferay.portal.kernel.workflow.WorkflowDefinitionFileException;
+import com.liferay.portal.kernel.workflow.WorkflowDefinitionManager;
 import com.liferay.portal.kernel.workflow.WorkflowDefinitionTitleException;
 import com.liferay.portal.kernel.workflow.WorkflowException;
 import com.liferay.portal.workflow.kaleo.designer.web.constants.KaleoDesignerPortletKeys;
@@ -42,6 +43,7 @@ import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Inácio Nery
@@ -89,7 +91,7 @@ public class PublishKaleoDefinitionVersionMVCActionCommand
 		}
 
 		WorkflowDefinition workflowDefinition =
-			workflowDefinitionManager.deployWorkflowDefinition(
+			unproxiedWorkflowDefinitionManager.deployWorkflowDefinition(
 				themeDisplay.getCompanyId(), themeDisplay.getUserId(),
 				getTitle(titleMap), name, content.getBytes());
 
@@ -108,8 +110,8 @@ public class PublishKaleoDefinitionVersionMVCActionCommand
 		long companyId, String name) {
 
 		try {
-			return workflowDefinitionManager.getLatestWorkflowDefinition(
-				companyId, name);
+			return unproxiedWorkflowDefinitionManager.
+				getLatestWorkflowDefinition(companyId, name);
 		}
 		catch (WorkflowException we) {
 			if (_log.isDebugEnabled()) {
@@ -167,6 +169,9 @@ public class PublishKaleoDefinitionVersionMVCActionCommand
 			throw new WorkflowDefinitionTitleException();
 		}
 	}
+
+	@Reference(target = "(proxy.bean=false)")
+	protected WorkflowDefinitionManager unproxiedWorkflowDefinitionManager;
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		PublishKaleoDefinitionVersionMVCActionCommand.class);

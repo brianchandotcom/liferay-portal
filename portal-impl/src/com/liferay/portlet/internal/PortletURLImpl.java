@@ -1091,6 +1091,12 @@ public class PortletURLImpl
 		}
 
 		for (Map.Entry<String, String[]> entry : portletURLParams.entrySet()) {
+			String[] values = entry.getValue();
+
+			if (values == null) {
+				continue;
+			}
+
 			String name = entry.getKey();
 
 			if (!_lifecycle.equals(PortletRequest.RESOURCE_PHASE)) {
@@ -1113,7 +1119,7 @@ public class PortletURLImpl
 				continue;
 			}
 
-			for (String value : entry.getValue()) {
+			for (String value : values) {
 				_appendNamespaceAndEncode(sb, name);
 
 				sb.append(StringPool.EQUAL);

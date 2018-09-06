@@ -381,22 +381,34 @@ public class IndentationCheck extends BaseCheck {
 				continue;
 			}
 
+			DetailAST parentAST = genericStartAST.getParent();
+
+			DetailAST genericEndAST = parentAST.findFirstToken(
+				TokenTypes.GENERIC_END);
+
+			if ((genericEndAST.getLineNo() < lineNumber) &&
+				(genericStartAST.getLineNo() < lineNumber)) {
+
+				DetailAST grandParentAST = parentAST.getParent();
+
+				DetailAST nextSiblingAST = grandParentAST.getNextSibling();
+
+				if ((nextSiblingAST != null) &&
+					(nextSiblingAST.getType() == TokenTypes.COMMA)) {
+
+					continue;
+				}
+			}
+
 			int lineNo = genericStartAST.getLineNo() - 1;
 
 			if (lineNo < lineNumber) {
 				lineNumbers.add(lineNo);
 			}
 
-			DetailAST parentAST = genericStartAST.getParent();
-
 			DetailAST commaAST = parentAST.findFirstToken(TokenTypes.COMMA);
 
-			if ((commaAST != null) &&
-				(commaAST.getLineNo() == genericStartAST.getLineNo())) {
-
-				DetailAST genericEndAST = parentAST.findFirstToken(
-					TokenTypes.GENERIC_END);
-
+			if (commaAST != null) {
 				if (genericEndAST.getLineNo() != genericStartAST.getLineNo()) {
 					continue;
 				}
@@ -825,7 +837,8 @@ public class IndentationCheck extends BaseCheck {
 				DetailAST commaAST = parentAST.findFirstToken(TokenTypes.COMMA);
 
 				if ((commaAST == null) ||
-					(commaAST.getLineNo() != parentAST.getLineNo())) {
+					((commaAST.getLineNo() != parentAST.getLineNo()) &&
+					 (commaAST.getLineNo() >= detailAST.getLineNo()))) {
 
 					int lineNo = parentAST.getLineNo();
 

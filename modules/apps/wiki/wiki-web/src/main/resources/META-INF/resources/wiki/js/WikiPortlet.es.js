@@ -112,28 +112,15 @@ class WikiPortlet extends PortletBase {
 	removeAttachment_(event) {
 		let link = event.currentTarget;
 
-		let deleteUrl = Liferay.PortletURL.createActionURL();
-
-		deleteUrl.setName('/wiki/edit_page_attachment');
-
-		let params = {
-			cmd: link.getAttribute('data-cmd'),
-			fileName: link.getAttribute('data-fileName'),
-			nodeId: link.getAttribute('data-nodeId'),
-			ticketKey: link.getAttribute('data-ticketKey'),
-			title: link.getAttribute('data-title')
-		};
-
-		deleteUrl.setParameters(params);
-		deleteUrl.setPortletId('com_liferay_wiki_web_portlet_WikiPortlet');
+		let deleteURL = link.getAttribute('data-url');
 
 		fetch(
-			deleteUrl.toString()
+			deleteURL
 		).then(
 			() => {
 				let searchContainer = this.searchContainer_;
 
-				searchContainer.deleteRow(link.ancestor('tr'),link.getAttribute('data-rowid'));
+				searchContainer.deleteRow(link.ancestor('tr'), link.getAttribute('data-rowid'));
 				searchContainer.updateDataStore();
 			}
 		);

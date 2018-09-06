@@ -24,7 +24,7 @@ import javax.portlet.annotations.PortletApplication;
 /**
  * @author Neil Griffin
  */
-public class BeanAppDefaultImpl extends BaseBeanAppImpl {
+public class BeanAppDefaultImpl implements BeanApp {
 
 	@Override
 	public Map<String, List<String>> getContainerRuntimeOptions() {
@@ -34,6 +34,11 @@ public class BeanAppDefaultImpl extends BaseBeanAppImpl {
 	@Override
 	public Set<String> getCustomPortletModes() {
 		return Collections.emptySet();
+	}
+
+	@Override
+	public String getDefaultNamespace() {
+		return null;
 	}
 
 	@Override

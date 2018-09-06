@@ -14,7 +14,7 @@
 
 package com.liferay.bean.portlet.cdi.extension.internal.annotated;
 
-import com.liferay.bean.portlet.cdi.extension.internal.BaseBeanAppImpl;
+import com.liferay.bean.portlet.cdi.extension.internal.BeanApp;
 import com.liferay.bean.portlet.cdi.extension.internal.Event;
 import com.liferay.bean.portlet.cdi.extension.internal.PortletApplicationFactory;
 import com.liferay.bean.portlet.cdi.extension.internal.PublicRenderParameter;
@@ -41,11 +41,11 @@ import javax.xml.XMLConstants;
 /**
  * @author Neil Griffin
  */
-public class BeanAppAnnotationImpl extends BaseBeanAppImpl {
+public class BeanAppAnnotationImpl implements BeanApp {
 
 	public BeanAppAnnotationImpl(PortletApplication portletApplication) {
 		if (portletApplication == null) {
-			setDefaultNamespace(XMLConstants.NULL_NS_URI);
+			_defaultNamespace = XMLConstants.NULL_NS_URI;
 			_containerRuntimeOptions = Collections.emptyMap();
 			_customPortletModes = Collections.emptySet();
 			_eventDefinitions = Collections.emptyList();
@@ -77,7 +77,7 @@ public class BeanAppAnnotationImpl extends BaseBeanAppImpl {
 				}
 			}
 
-			setDefaultNamespace(portletApplication.defaultNamespaceURI());
+			_defaultNamespace = portletApplication.defaultNamespaceURI();
 
 			_eventDefinitions = new ArrayList<>();
 
@@ -127,6 +127,11 @@ public class BeanAppAnnotationImpl extends BaseBeanAppImpl {
 	}
 
 	@Override
+	public String getDefaultNamespace() {
+		return _defaultNamespace;
+	}
+
+	@Override
 	public List<Event> getEvents() {
 		return _eventDefinitions;
 	}
@@ -148,6 +153,7 @@ public class BeanAppAnnotationImpl extends BaseBeanAppImpl {
 
 	private final Map<String, List<String>> _containerRuntimeOptions;
 	private final Set<String> _customPortletModes;
+	private final String _defaultNamespace;
 	private final List<Event> _eventDefinitions;
 	private final Map<String, PublicRenderParameter> _publicRenderParameterMap;
 	private final String _specVersion;

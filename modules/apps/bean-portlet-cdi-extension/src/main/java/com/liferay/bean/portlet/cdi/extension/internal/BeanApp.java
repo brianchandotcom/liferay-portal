@@ -37,6 +37,4 @@ public interface BeanApp {
 
 	public List<URLGenerationListener> getURLGenerationListeners();
 
-	public void setDefaultNamespace(String defaultNamespace);
-
 }

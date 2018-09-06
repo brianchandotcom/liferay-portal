@@ -27,10 +27,12 @@ if (Objects.equals(mode, Constants.EDIT)) {
 else {
 	redirect = HttpUtil.setParameter(redirect, "p_l_mode", Constants.EDIT);
 }
+
+String portletNamespace = PortalUtil.getPortletNamespace(ContentLayoutPortletKeys.CONTENT_PAGE_EDITOR_PORTLET);
 %>
 
 <label class="align-text-top toggle-switch">
-	<input <%= Objects.equals(mode, Constants.EDIT) ? "checked=\"checked\"" : StringPool.BLANK %> class="toggle-switch-check" id="<portlet:namespace />mode" type="checkbox" />
+	<input <%= Objects.equals(mode, Constants.EDIT) ? "checked=\"checked\"" : StringPool.BLANK %> class="toggle-switch-check" id="<%= portletNamespace %>mode" type="checkbox" />
 
 	<span aria-hidden="true" class="toggle-switch-bar">
 		<span class="toggle-switch-handle" data-label-off="" data-label-on="">
@@ -49,7 +51,7 @@ else {
 </label>
 
 <aui:script>
-	$('#<portlet:namespace />mode').on(
+	$('#<%= portletNamespace %>mode').on(
 		'change',
 		function(event) {
 			Liferay.Util.navigate('<%= redirect %>');

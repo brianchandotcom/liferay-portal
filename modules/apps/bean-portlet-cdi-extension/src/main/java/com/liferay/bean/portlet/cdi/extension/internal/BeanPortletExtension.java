@@ -555,25 +555,24 @@ public class BeanPortletExtension implements Extension {
 			return;
 		}
 
-		if (_portletApplicationClass == null) {
-			_beanPortlets.putIfAbsent(
-				configuredPortletName,
-				new BeanPortletAnnotationImpl(
-					PortletApplicationFactory.getDefaultPortletApplication(),
-					portletConfiguration,
-					getLiferayPortletConfiguration(configuredPortletName),
-					beanPortletClass.getName()));
+		PortletApplication portletApplication = null;
+
+		if (_portletApplicationClass != null) {
+			portletApplication = _portletApplicationClass.getAnnotation(
+				PortletApplication.class);
 		}
-		else {
-			_beanPortlets.putIfAbsent(
-				configuredPortletName,
-				new BeanPortletAnnotationImpl(
-					_portletApplicationClass.getAnnotation(
-						PortletApplication.class),
-					portletConfiguration,
-					getLiferayPortletConfiguration(configuredPortletName),
-					beanPortletClass.getName()));
+
+		if (portletApplication == null) {
+			portletApplication =
+				PortletApplicationFactory.getDefaultPortletApplication();
 		}
+
+		_beanPortlets.putIfAbsent(
+			configuredPortletName,
+			new BeanPortletAnnotationImpl(
+				portletApplication, portletConfiguration,
+				getLiferayPortletConfiguration(configuredPortletName),
+				beanPortletClass.getName()));
 	}
 
 	protected void applicationScopedBeforeDestroyed(

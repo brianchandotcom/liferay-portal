@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+
+<suppressions>
+	<checkstyle>
+		<suppress checks="LineBreakAfterCommaCheck" files="modules/apps/unit-converter/unit-converter-web/src/main/java/com/liferay/unit/converter/web/internal/util/UnitConverterUtil\.java" />
+	</checkstyle>
+</suppressions>

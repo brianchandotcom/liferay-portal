@@ -181,6 +181,7 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 				"There should be a line break after '('",
 				"There should be a line break after '('",
 				"'null) {' should be added to previous line",
+				"There should be a line break after 'stringArray,'",
 				"There should be a line break before 'new " +
 					"Comparator<String>() {'",
 				"There should be a line break after '},'",
@@ -191,7 +192,7 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 			},
 			new Integer[] {
 				32, 36, 44, 48, 48, 53, 56, 59, 62, 66, 69, 74, 78, 83, 87, 94,
-				105, 118, 123, 130, 140, 158
+				105, 105, 118, 123, 130, 140, 158
 			});
 		test("IncorrectLineBreaks2.testjava");
 	}

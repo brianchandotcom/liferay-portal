@@ -126,7 +126,7 @@ public class DDMFormAdminDisplayContext {
 		DDMFormFieldTypeServicesTracker formFieldTypeServicesTracker,
 		DDMFormFieldTypesSerializerTracker formFieldTypesSerializerTracker,
 		DDMFormRenderer formRenderer,
-		DDMFormTemplateContextFactory ddmFormTemplateContextFactory,
+		DDMFormTemplateContextFactory formTemplateContextFactory,
 		DDMFormValuesFactory formValuesFactory,
 		DDMFormValuesMerger formValuesMerger,
 		DDMStructureLocalService structureLocalService,
@@ -148,7 +148,7 @@ public class DDMFormAdminDisplayContext {
 		_ddmFormFieldTypeServicesTracker = formFieldTypeServicesTracker;
 		_ddmFormFieldTypesSerializerTracker = formFieldTypesSerializerTracker;
 		_ddmFormRenderer = formRenderer;
-		_ddmFormTemplateContextFactory = ddmFormTemplateContextFactory;
+		_ddmFormTemplateContextFactory = formTemplateContextFactory;
 		_ddmFormValuesFactory = formValuesFactory;
 		_ddmFormValuesMerger = formValuesMerger;
 		_ddmStructureLocalService = structureLocalService;
@@ -258,10 +258,11 @@ public class DDMFormAdminDisplayContext {
 		JSONArray jsonArray = _jsonFactory.createJSONArray(
 			serializedFormFieldTypes);
 
-		HttpServletRequest request = formAdminRequestHelper.getRequest();
+		HttpServletRequest httpServletRequest =
+			formAdminRequestHelper.getRequest();
 
-		HttpServletResponse response = PortalUtil.getHttpServletResponse(
-			_renderResponse);
+		HttpServletResponse httpServletResponse =
+			PortalUtil.getHttpServletResponse(_renderResponse);
 
 		ThemeDisplay themeDisplay = formAdminRequestHelper.getThemeDisplay();
 
@@ -273,17 +274,16 @@ public class DDMFormAdminDisplayContext {
 			Class<?> ddmFormFieldTypeSettings =
 				ddmFormFieldType.getDDMFormFieldTypeSettings();
 
-			DDMForm ddmFormFieldTypeSettingsDDMForm = DDMFormFactory.create(
-				ddmFormFieldTypeSettings);
+			DDMForm ddmForm = DDMFormFactory.create(ddmFormFieldTypeSettings);
 
-			DDMFormLayout ddmFormFieldTypeSettingsDDMFormLayout =
-				DDMFormLayoutFactory.create(ddmFormFieldTypeSettings);
+			DDMFormLayout ddmFormLayout = DDMFormLayoutFactory.create(
+				ddmFormFieldTypeSettings);
 
 			DDMFormRenderingContext ddmFormRenderingContext =
 				new DDMFormRenderingContext();
 
-			ddmFormRenderingContext.setHttpServletRequest(request);
-			ddmFormRenderingContext.setHttpServletResponse(response);
+			ddmFormRenderingContext.setHttpServletRequest(httpServletRequest);
+			ddmFormRenderingContext.setHttpServletResponse(httpServletResponse);
 			ddmFormRenderingContext.setContainerId("settings");
 			ddmFormRenderingContext.setLocale(themeDisplay.getLocale());
 			ddmFormRenderingContext.setPortletNamespace(
@@ -292,9 +292,7 @@ public class DDMFormAdminDisplayContext {
 			try {
 				Map<String, Object> settingsContext =
 					_ddmFormTemplateContextFactory.create(
-						ddmFormFieldTypeSettingsDDMForm,
-						ddmFormFieldTypeSettingsDDMFormLayout,
-						ddmFormRenderingContext);
+						ddmForm, ddmFormLayout, ddmFormRenderingContext);
 
 				jsonObject.put("settingsContext", settingsContext);
 			}

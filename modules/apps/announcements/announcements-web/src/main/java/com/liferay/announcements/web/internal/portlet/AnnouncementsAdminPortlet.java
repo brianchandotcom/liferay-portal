@@ -33,7 +33,6 @@ import org.osgi.service.component.annotations.Reference;
 		"com.liferay.portlet.display-category=category.hidden",
 		"com.liferay.portlet.header-portlet-css=/announcements/css/main.css",
 		"com.liferay.portlet.icon=/announcements/icons/announcements.png",
-		"com.liferay.portlet.preferences-company-wide=true",
 		"com.liferay.portlet.preferences-owned-by-group=true",
 		"com.liferay.portlet.private-request-attributes=false",
 		"com.liferay.portlet.private-session-attributes=false",

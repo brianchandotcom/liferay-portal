@@ -114,6 +114,7 @@ public class JavaSignatureStylingCheck extends BaseJavaTermCheck {
 
 		int expectedTabCount = -1;
 
+		outerLoop:
 		for (int i = 0; i < signatureLines.length; i++) {
 			String line = signatureLines[i];
 
@@ -139,9 +140,26 @@ public class JavaSignatureStylingCheck extends BaseJavaTermCheck {
 			else {
 				String previousLine = signatureLines[i - 1];
 
-				if ((previousLine.endsWith(StringPool.COMMA) &&
-					 (getLevel(previousLine, "<", ">") <= 0)) ||
-					previousLine.endsWith(StringPool.OPEN_PARENTHESIS)) {
+				if (previousLine.endsWith(StringPool.OPEN_PARENTHESIS)) {
+					newSignature = _fixLeadingTabs(
+						newSignature, line, expectedTabCount);
+				}
+				else if (previousLine.endsWith(StringPool.COMMA)) {
+					int level = 0;
+
+					for (int j = i - 1; j >= 0; j--) {
+						String curLine = signatureLines[j];
+
+						level += getLevel(curLine, "<", ">");
+
+						if (level > 0) {
+							newSignature = _fixLeadingTabs(
+								newSignature, line,
+								getLeadingTabCount(curLine));
+
+							continue outerLoop;
+						}
+					}
 
 					newSignature = _fixLeadingTabs(
 						newSignature, line, expectedTabCount);

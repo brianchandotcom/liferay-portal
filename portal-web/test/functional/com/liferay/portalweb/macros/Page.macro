@@ -829,8 +829,6 @@
 				<execute function="AssertTextEquals#assertPartialText" locator1="Message#ERROR_4" value1="This page cannot be deleted and cannot have child pages because it is associated to a site template." />
 			</then>
 		</if>
-
-		<execute function="Refresh" />
 	</command>
 
 	<command name="viewNoPage">

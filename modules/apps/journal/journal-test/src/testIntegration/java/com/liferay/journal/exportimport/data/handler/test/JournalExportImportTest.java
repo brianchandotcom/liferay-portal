@@ -240,12 +240,14 @@ public class JournalExportImportTest extends BasePortletExportImportTestCase {
 
 		String content = journalArticle.getContent();
 
-		String dlFileEntryUrl = String.join(StringPool.SLASH, new String[] {
-			StringPool.BLANK, "documents",
-			String.valueOf(dlFileEntry.getGroupId()),
-			String.valueOf(dlFileEntry.getFolderId()),
-			URLCodec.encodeURL(dlFileEntry.getTitle(), true)
-		});
+		String dlFileEntryUrl = String.join(
+			StringPool.SLASH,
+			new String[] {
+				StringPool.BLANK, "documents",
+				String.valueOf(dlFileEntry.getGroupId()),
+				String.valueOf(dlFileEntry.getFolderId()),
+				URLCodec.encodeURL(dlFileEntry.getTitle(), true)
+			});
 
 		String newContent =
 			"<![CDATA[<img data-fileentryid=\"" + dlFileEntry.getFileEntryId() +

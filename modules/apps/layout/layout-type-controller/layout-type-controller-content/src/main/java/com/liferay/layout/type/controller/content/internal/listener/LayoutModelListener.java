@@ -17,9 +17,14 @@ package com.liferay.layout.type.controller.content.internal.listener;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
+import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
+import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
 import com.liferay.layout.type.controller.content.internal.constants.ContentLayoutTypeControllerConstants;
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.ModelListener;
@@ -28,8 +33,9 @@ import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.kernel.util.Validator;
 
-import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
@@ -56,31 +62,96 @@ public class LayoutModelListener extends BaseModelListener<Layout> {
 		long layoutPageTemplateEntryId = GetterUtil.getLong(
 			typeSettingsProperties.get("layoutPageTemplateEntryId"));
 
-		List<FragmentEntryLink> fragmentEntryLinks =
-			_fragmentEntryLinkLocalService.getFragmentEntryLinks(
-				layout.getGroupId(),
-				_portal.getClassNameId(LayoutPageTemplateEntry.class.getName()),
-				layoutPageTemplateEntryId);
+		LayoutPageTemplateStructure existingLayoutPageTemplateStructure =
+			_layoutPageTemplateStructureLocalService.
+				fetchLayoutPageTemplateStructure(
+					layout.getGroupId(),
+					_portal.getClassNameId(
+						LayoutPageTemplateEntry.class.getName()),
+					layoutPageTemplateEntryId);
 
-		ServiceContext serviceContext =
-			ServiceContextThreadLocal.getServiceContext();
+		if ((existingLayoutPageTemplateStructure == null) ||
+			Validator.isNull(existingLayoutPageTemplateStructure.getData())) {
+
+			return;
+		}
 
 		try {
-			for (FragmentEntryLink fragmentEntryLink : fragmentEntryLinks) {
-				_fragmentEntryLinkLocalService.addFragmentEntryLink(
-					fragmentEntryLink.getUserId(),
-					fragmentEntryLink.getGroupId(),
-					fragmentEntryLink.getFragmentEntryLinkId(),
-					fragmentEntryLink.getFragmentEntryId(),
-					_portal.getClassNameId(Layout.class.getName()),
-					layout.getPlid(), fragmentEntryLink.getCss(),
-					fragmentEntryLink.getHtml(), fragmentEntryLink.getJs(),
-					fragmentEntryLink.getEditableValues(),
-					fragmentEntryLink.getPosition(), serviceContext);
+			JSONObject existingData = JSONFactoryUtil.createJSONObject(
+				existingLayoutPageTemplateStructure.getData());
+
+			JSONArray existingJsonStructureArray = existingData.getJSONArray(
+				"structure");
+
+			if (existingJsonStructureArray == null) {
+				return;
+			}
+
+			Map<Long, FragmentEntryLink> fragmentEntryLinksMap =
+				_fragmentEntryLinkLocalService.getFragmentEntryLinksMap(
+					layout.getGroupId(),
+					_portal.getClassNameId(
+						LayoutPageTemplateEntry.class.getName()),
+					layoutPageTemplateEntryId);
+
+			ServiceContext serviceContext =
+				ServiceContextThreadLocal.getServiceContext();
+
+			JSONArray newJsonStructureArray = JSONFactoryUtil.createJSONArray();
+
+			for (int i = 0; i < existingJsonStructureArray.length(); i++) {
+				FragmentEntryLink existingFragmentEntryLink =
+					fragmentEntryLinksMap.get(
+						existingJsonStructureArray.getLong(i));
+
+				if (existingFragmentEntryLink != null) {
+					FragmentEntryLink fragmentEntryLink =
+						_fragmentEntryLinkLocalService.addFragmentEntryLink(
+							existingFragmentEntryLink.getUserId(),
+							existingFragmentEntryLink.getGroupId(),
+							existingFragmentEntryLink.getFragmentEntryLinkId(),
+							existingFragmentEntryLink.getFragmentEntryId(),
+							_portal.getClassNameId(Layout.class.getName()),
+							layout.getPlid(),
+							existingFragmentEntryLink.getCss(),
+							existingFragmentEntryLink.getHtml(),
+							existingFragmentEntryLink.getJs(),
+							existingFragmentEntryLink.getEditableValues(),
+							existingFragmentEntryLink.getPosition(),
+							serviceContext);
+
+					newJsonStructureArray.put(
+						fragmentEntryLink.getFragmentEntryLinkId());
+				}
+			}
+
+			JSONObject newData = JSONFactoryUtil.createJSONObject();
+
+			newData.put("structure", newJsonStructureArray);
+
+			LayoutPageTemplateStructure newLayoutPageTemplateSetting =
+				_layoutPageTemplateStructureLocalService.
+					fetchLayoutPageTemplateStructure(
+						layout.getGroupId(),
+						_portal.getClassNameId(Layout.class), layout.getPlid());
+
+			if (newLayoutPageTemplateSetting != null) {
+				_layoutPageTemplateStructureLocalService.
+					updateLayoutPageTemplateStructure(
+						layout.getGroupId(),
+						_portal.getClassNameId(Layout.class), layout.getPlid(),
+						newData.toString());
+			}
+			else {
+				_layoutPageTemplateStructureLocalService.
+					addLayoutPageTemplateStructure(
+						layout.getUserId(), layout.getGroupId(),
+						_portal.getClassNameId(Layout.class), layout.getPlid(),
+						newData.toString(), serviceContext);
 			}
 		}
 		catch (PortalException pe) {
-			throw new ModelListenerException(pe);
+			pe.printStackTrace();
 		}
 	}
 
@@ -95,6 +166,10 @@ public class LayoutModelListener extends BaseModelListener<Layout> {
 
 	@Reference
 	private FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;
+
+	@Reference
+	private LayoutPageTemplateStructureLocalService
+		_layoutPageTemplateStructureLocalService;
 
 	@Reference
 	private Portal _portal;

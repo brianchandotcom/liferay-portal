@@ -82,8 +82,8 @@ public class ResourceRequestImpl
 	public Map<String, String[]> getPrivateRenderParameterMap() {
 		Map<String, String[]> privateRenderParameters = new HashMap<>();
 
-		LiferayRenderParameters liferayRenderParameters =
-			(LiferayRenderParameters)getRenderParameters();
+		RenderParametersImpl liferayRenderParameters =
+			(RenderParametersImpl)getRenderParameters();
 
 		Map<String, String[]> liferayRenderParametersMap =
 			liferayRenderParameters.getParameterMap();

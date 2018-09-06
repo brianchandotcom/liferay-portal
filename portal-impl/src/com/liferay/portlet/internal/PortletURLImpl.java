@@ -1555,8 +1555,8 @@ public class PortletURLImpl
 		else {
 			mutableRenderParameterMap = new LinkedHashMap<>();
 
-			LiferayRenderParameters liferayRenderParameters =
-				(LiferayRenderParameters)_portletRequest.getRenderParameters();
+			RenderParametersImpl liferayRenderParameters =
+				(RenderParametersImpl)_portletRequest.getRenderParameters();
 
 			publicRenderParameterNames =
 				liferayRenderParameters.getPublicRenderParameterNames();
@@ -1670,9 +1670,9 @@ public class PortletURLImpl
 	private Layout _layout;
 	private String _layoutFriendlyURL;
 	private String _lifecycle;
-	private LiferayMutablePortletParameters _mutableActionParameters;
-	private LiferayMutableRenderParameters _mutableRenderParameters;
-	private LiferayMutablePortletParameters _mutableResourceParameters;
+	private BaseMutablePortletParameters<?> _mutableActionParameters;
+	private MutableRenderParametersImpl _mutableRenderParameters;
+	private BaseMutablePortletParameters<?> _mutableResourceParameters;
 	private String _namespace;
 	private Set<String> _parametersIncludedInPath;
 	private long _plid;

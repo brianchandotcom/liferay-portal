@@ -96,13 +96,13 @@ public abstract class StateAwareResponseImpl
 		Map<String, String[]> renderParameterMap = new LinkedHashMap<>();
 
 		Map<String, String[]> mutableRenderParametersMap =
-			_mutableRenderParameters.getParameterMap();
+			_mutableRenderParametersImpl.getParameterMap();
 
 		for (Map.Entry<String, String[]> entry :
 				mutableRenderParametersMap.entrySet()) {
 
-			if (!_mutableRenderParameters.isPublic(entry.getKey()) ||
-				_mutableRenderParameters.isMutated(entry.getKey())) {
+			if (!_mutableRenderParametersImpl.isPublic(entry.getKey()) ||
+				_mutableRenderParametersImpl.isMutated(entry.getKey())) {
 
 				renderParameterMap.put(entry.getKey(), entry.getValue());
 			}
@@ -113,7 +113,7 @@ public abstract class StateAwareResponseImpl
 
 	@Override
 	public MutableRenderParameters getRenderParameters() {
-		return _mutableRenderParameters;
+		return _mutableRenderParametersImpl;
 	}
 
 	public User getUser() {
@@ -157,7 +157,7 @@ public abstract class StateAwareResponseImpl
 		PortletApp portletApp = portlet.getPortletApp();
 
 		if (portletApp.getSpecMajorVersion() < 3) {
-			_mutableRenderParameters = new MutableRenderParametersImpl(
+			_mutableRenderParametersImpl = new MutableRenderParametersImpl(
 				_params, Collections.emptySet());
 		}
 		else {
@@ -166,30 +166,32 @@ public abstract class StateAwareResponseImpl
 			RenderParameters renderParameters =
 				portletRequestImpl.getRenderParameters();
 
-			LiferayRenderParameters liferayRenderParameters =
-				(LiferayRenderParameters)renderParameters;
+			RenderParametersImpl renderParametersImpl =
+				(RenderParametersImpl)renderParameters;
 
 			Map<String, String[]> liferayRenderParametersMap =
-				liferayRenderParameters.getParameterMap();
+				renderParametersImpl.getParameterMap();
 
 			for (Map.Entry<String, String[]> entry :
 					liferayRenderParametersMap.entrySet()) {
 
-				if (liferayRenderParameters.isPublic(entry.getKey())) {
+				if (renderParametersImpl.isPublic(entry.getKey())) {
 					publicRenderParameterNames.add(entry.getKey());
 				}
 
 				_params.put(entry.getKey(), entry.getValue());
 			}
 
-			_mutableRenderParameters = new MutableRenderParametersImpl(
+			_mutableRenderParametersImpl = new MutableRenderParametersImpl(
 				_params, publicRenderParameterNames);
 		}
 	}
 
 	@Override
 	public boolean isCalledSetRenderParameter() {
-		if (_calledSetRenderParameter || _mutableRenderParameters.isMutated()) {
+		if (_calledSetRenderParameter ||
+			_mutableRenderParametersImpl.isMutated()) {
+
 			return true;
 		}
 
@@ -315,7 +317,7 @@ public abstract class StateAwareResponseImpl
 		}
 
 		if (!setPublicRenderParameter(name, values)) {
-			_mutableRenderParameters.setValues(name, values);
+			_mutableRenderParametersImpl.setValues(name, values);
 		}
 
 		_calledSetRenderParameter = true;
@@ -335,7 +337,7 @@ public abstract class StateAwareResponseImpl
 			throw new IllegalArgumentException();
 		}
 		else {
-			_mutableRenderParameters.clear();
+			_mutableRenderParametersImpl.clear();
 
 			for (Map.Entry<String, String[]> entry : params.entrySet()) {
 				String key = entry.getKey();
@@ -354,7 +356,7 @@ public abstract class StateAwareResponseImpl
 					continue;
 				}
 
-				_mutableRenderParameters.setValues(key, value);
+				_mutableRenderParametersImpl.setValues(key, value);
 			}
 		}
 
@@ -393,7 +395,7 @@ public abstract class StateAwareResponseImpl
 
 	protected void reset() {
 		_events.clear();
-		_mutableRenderParameters.clear();
+		_mutableRenderParametersImpl.clear();
 
 		try {
 			setPortletMode(PortletMode.VIEW);
@@ -453,7 +455,7 @@ public abstract class StateAwareResponseImpl
 	private boolean _calledSetRenderParameter;
 	private final List<Event> _events = new ArrayList<>();
 	private Layout _layout;
-	private LiferayMutableRenderParameters _mutableRenderParameters;
+	private MutableRenderParametersImpl _mutableRenderParametersImpl;
 	private final Map<String, String[]> _params = new LinkedHashMap<>();
 	private PortletMode _portletMode = PortletMode.UNDEFINED;
 	private Map<String, String[]> _publicRenderParameters;

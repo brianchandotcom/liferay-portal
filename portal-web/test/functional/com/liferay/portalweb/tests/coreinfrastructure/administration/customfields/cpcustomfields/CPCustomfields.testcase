@@ -252,7 +252,7 @@
 	</command>
 
 	<command name="EditCustomFieldUserBoolean" priority="5">
-		<property name="portal.acceptance" value="quarantine" />
+		<property name="portal.acceptance" value="true" />
 
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Configuration" />

@@ -251,8 +251,7 @@ public class GogoShellPortlet extends MVCPortlet {
 	}
 
 	private static final Pattern _closeDisconnectExitShutdownPattern =
-		Pattern.compile(
-			"(\\bclose\\b|\\bdisconnect\\b|\\bexit\\b|\\bshutdown\\b)");
+		Pattern.compile("\\b(close|disconnect|exit|shutdown)\\b");
 
 	@Reference
 	private CommandProcessor _commandProcessor;

@@ -3515,6 +3515,7 @@ public class DataFactory {
 		PortletPreferencesModel portletPreferencesModel =
 			new PortletPreferencesModelImpl();
 
+		portletPreferencesModel.setCompanyId(_companyId);
 		portletPreferencesModel.setPortletPreferencesId(_counter.get());
 		portletPreferencesModel.setOwnerId(PortletKeys.PREFS_OWNER_ID_DEFAULT);
 		portletPreferencesModel.setOwnerType(

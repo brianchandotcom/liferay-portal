@@ -27,6 +27,8 @@ WorkflowDefinitionLinkSearchEntry workflowDefinitionLinkSearchEntry = (WorkflowD
 
 String className = workflowDefinitionLinkSearchEntry.getClassName();
 String resource = workflowDefinitionLinkSearchEntry.getResource();
+
+String workflowAssignedValue = "";
 %>
 
 <portlet:actionURL name="updateWorkflowDefinitionLink" var="updateWorkflowDefinitionLinkURL">
@@ -35,8 +37,10 @@ String resource = workflowDefinitionLinkSearchEntry.getResource();
 
 <div hidden="true" id="<%= randomNamespace %>formContainer">
 	<aui:form action="<%= updateWorkflowDefinitionLinkURL %>" cssClass="workflow-definition-form" method="post">
-		<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
+		<aui:input name="editMode" type="hidden" value="false" />
 		<aui:input name="groupId" type="hidden" value="<%= workflowDefinitionLinkDisplayContext.getGroupId() %>" />
+		<aui:input name="namespace" type="hidden" value="<%= randomNamespace %>" />
+		<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 		<aui:input name="resource" type="hidden" value="<%= resource %>" />
 
 		<aui:select cssClass="workflow-definition-form" label="<%= StringPool.BLANK %>" name='<%= "workflowDefinitionName@" + className %>' title="workflow-definition">
@@ -49,15 +53,24 @@ String resource = workflowDefinitionLinkSearchEntry.getResource();
 
 			<%
 			for (WorkflowDefinition workflowDefinition : workflowDefinitionLinkDisplayContext.getWorkflowDefinitions()) {
+				boolean selected = workflowDefinitionLinkDisplayContext.isWorkflowDefinitionSelected(workflowDefinition, className);
+
+				String value = workflowDefinitionLinkDisplayContext.getWorkflowDefinitionValue(workflowDefinition);
+
+				if (selected) {
+					workflowAssignedValue = value;
+				}
 			%>
 
-				<aui:option label="<%= HtmlUtil.escape(workflowDefinitionLinkDisplayContext.getWorkflowDefinitionLabel(workflowDefinition)) %>" selected="<%= workflowDefinitionLinkDisplayContext.isWorkflowDefinitionSelected(workflowDefinition, className) %>" value="<%= workflowDefinitionLinkDisplayContext.getWorkflowDefinitionValue(workflowDefinition) %>" />
+				<aui:option label="<%= HtmlUtil.escape(workflowDefinitionLinkDisplayContext.getWorkflowDefinitionLabel(workflowDefinition)) %>" selected="<%= selected %>" value="<%= value %>" />
 
 			<%
 			}
 			%>
 
 		</aui:select>
+
+		<aui:input name="workflowAssignedValue" type="hidden" value="<%= workflowAssignedValue %>" />
 	</aui:form>
 </div>
 

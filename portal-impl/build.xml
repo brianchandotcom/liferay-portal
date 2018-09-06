@@ -44,34 +44,6 @@ svn://svn.liferay.com/repos/public/alloy/trunk/sandbox/taglibs.
 		<ant dir="../sql" target="build-db" />
 	</target>
 
-	<target name="build-ehcache-xsd">
-		<mirrors-get
-			dest="ehcache.xsd"
-			src="http://ehcache.org/ehcache.xsd"
-		/>
-
-		<xmltask dest="src/ehcache/ehcache.xsd" source="ehcache.xsd">
-			<replace
-				path="/xs:schema/xs:element[@name='ehcache']/xs:complexType/xs:attribute[@name='name']/@use"
-				withText="required"
-			/>
-		</xmltask>
-
-		<replace
-			file="src/ehcache/ehcache.xsd"
-		>
-			<replacefilter>
-				<replacetoken><![CDATA[<?xml encoding="UTF-8" standalone="no" version="1.0"?>]]></replacetoken>
-				<replacevalue><![CDATA[<?xml encoding="UTF-8" standalone="no" version="1.0"?>
-
-<!-- @generated -->
-]]></replacevalue>
-			</replacefilter>
-		</replace>
-
-		<delete file="ehcache.xsd" />
-	</target>
-
 	<target name="build-iw">
 		<java
 			classname="com.liferay.portal.tools.InstanceWrapperBuilder"

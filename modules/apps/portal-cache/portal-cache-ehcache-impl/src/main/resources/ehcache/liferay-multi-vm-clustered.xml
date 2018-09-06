@@ -4,7 +4,7 @@
 	name="liferay-multi-vm-clustered"
 	updateCheck="false"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:noNamespaceSchemaLocation="ehcache.xsd"
+	xsi:noNamespaceSchemaLocation="http://www.ehcache.org/ehcache.xsd"
 >
 
 	<!--

@@ -2,7 +2,6 @@
 
 <suppressions>
 	<checkstyle>
-		<suppress checks="LineBreakBeforeGenericStartCheck" files="modules/core/registry-impl/src/main/java/com/liferay/registry/internal/ServiceTrackerMapFactoryImpl\.java" />
 		<suppress checks="SubnameCheck" files="modules/core/registry-api/src/main/java/com/liferay/registry/collections/internal/ServiceTrackerCollectionImpl\.java" />
 	</checkstyle>
 	<source-check>

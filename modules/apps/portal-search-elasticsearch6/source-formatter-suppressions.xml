@@ -1,7 +1,0 @@
-<?xml version="1.0"?>
-
-<suppressions>
-	<checkstyle>
-		<suppress checks="LineBreakBeforeGenericStartCheck" files="modules/apps/portal-search-elasticsearch6/portal-search-elasticsearch6-impl/src/main/java/com/liferay/portal/search/elasticsearch6/internal/search/engine/adapter/index/GetFieldMappingIndexRequestExecutorImpl\.java" />
-	</checkstyle>
-</suppressions>

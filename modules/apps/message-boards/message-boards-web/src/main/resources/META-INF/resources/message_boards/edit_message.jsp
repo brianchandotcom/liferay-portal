@@ -234,6 +234,7 @@ if (portletTitleBasedNavigation) {
 						<liferay-ui:search-container
 							emptyResultsMessage="this-message-does-not-have-file-attachments"
 							headerNames="file-name,size,action"
+							id="messageAttachments"
 							total="<%= existingAttachmentsFileEntries.size() %>"
 						>
 							<liferay-ui:search-container-results
@@ -279,10 +280,12 @@ if (portletTitleBasedNavigation) {
 										markupView="lexicon"
 										message="<%= StringPool.BLANK %>"
 									>
-										<liferay-ui:icon-delete
-											trash="<%= trashHelper.isTrashEnabled(scopeGroupId) %>"
-											url="<%= deleteURL %>"
-										/>
+										<div class="delete-attachment" data-rowid="<%= fileEntry.getFileEntryId() %>" data-url="<%= deleteURL.toString() %>">
+											<liferay-ui:icon-delete
+												trash="<%= trashHelper.isTrashEnabled(scopeGroupId) %>"
+												url="javascript:;"
+											/>
+										</div>
 									</liferay-ui:icon-menu>
 								</liferay-ui:search-container-column-text>
 							</liferay-ui:search-container-row>

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.asset.list.web.internal.servlet.taglib.ui.navigation.entry;
+package com.liferay.asset.list.web.internal.frontend.taglib.servlet.taglib;
 
 import com.liferay.asset.list.constants.AssetListEntryTypeConstants;
 import com.liferay.asset.list.constants.AssetListFormConstants;

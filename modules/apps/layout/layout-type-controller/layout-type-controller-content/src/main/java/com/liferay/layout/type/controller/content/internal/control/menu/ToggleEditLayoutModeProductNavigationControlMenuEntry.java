@@ -14,11 +14,17 @@
 
 package com.liferay.layout.type.controller.content.internal.control.menu;
 
+import com.liferay.layout.type.controller.content.internal.controller.ContentLayoutTypeController;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.LayoutTypeController;
+import com.liferay.portal.kernel.model.LayoutTypePortlet;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.product.navigation.control.menu.BaseJSPProductNavigationControlMenuEntry;
 import com.liferay.product.navigation.control.menu.ProductNavigationControlMenuEntry;
 import com.liferay.product.navigation.control.menu.constants.ProductNavigationControlMenuCategoryKeys;
-import com.liferay.product.navigation.control.menu.web.internal.util.ProductNavigationControlMenuUtil;
 
 import java.util.Locale;
 
@@ -60,16 +66,31 @@ public class ToggleEditLayoutModeProductNavigationControlMenuEntry
 
 	@Override
 	public boolean isShow(HttpServletRequest request) throws PortalException {
-		if (!ProductNavigationControlMenuUtil.isEditEnabled(request)) {
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		LayoutTypePortlet layoutTypePortlet =
+			themeDisplay.getLayoutTypePortlet();
+
+		LayoutTypeController layoutTypeController =
+			layoutTypePortlet.getLayoutTypeController();
+
+		if (layoutTypeController.isFullPageDisplayable()) {
 			return false;
 		}
 
-		return false;
+		if (!(layoutTypeController instanceof ContentLayoutTypeController)) {
+			return false;
+		}
+
+		return LayoutPermissionUtil.contains(
+			themeDisplay.getPermissionChecker(), themeDisplay.getLayout(),
+			ActionKeys.UPDATE);
 	}
 
 	@Override
 	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.product.navigation.control.menu.web)",
+		target = "(osgi.web.symbolicname=com.liferay.layout.type.controller.content)",
 		unbind = "-"
 	)
 	public void setServletContext(ServletContext servletContext) {

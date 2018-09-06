@@ -311,7 +311,7 @@ ExpandoBridge expandoBridge = ExpandoBridgeFactoryUtil.getExpandoBridge(company.
 							</div>
 
 							<aui:script use="liferay-map-base">
-								var inputName = "<%= portletDisplay.getNamespace()+"ExpandoAttribute--" + name + "--" %>";
+								var inputName = "<%= portletDisplay.getNamespace()+"ExpandoAttribute--" + HtmlUtil.escapeJS(name) + "--" %>";
 
 								var geolocationField = {
 									init: function() {

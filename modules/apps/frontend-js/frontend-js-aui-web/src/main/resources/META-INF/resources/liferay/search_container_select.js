@@ -8,6 +8,8 @@ AUI.add(
 
 		var REGEX_MATCH_NOTHING = /^[]/;
 
+		var STR_ACTIONS_WILDCARD = '*';
+
 		var STR_CHECKBOX_SELECTOR = 'input[type=checkbox]:enabled';
 
 		var STR_CHECKED = 'checked';
@@ -186,30 +188,35 @@ AUI.add(
 					_getActions: function(elements) {
 						var instance = this;
 
-						var actions = [];
+						var actions = elements.getDOMNodes().map(
+							node => {
+								var row = A.one(node).ancestor(instance.get(STR_ROW_SELECTOR));
 
-						if (elements.length) {
-							var allActions = elements.map(
-								node => {
-									var row = A.one(node).ancestor(instance.get(STR_ROW_SELECTOR));
+								var rowActions = row.getData('actions');
 
-									var rowActions = row.getData('actions') || '';
+								return rowActions ? rowActions.split(',') : STR_ACTIONS_WILDCARD;
+							}
+						);
 
-									return rowActions.split(',');
+						return actions.reduce(
+							function(commonActions, elementActions) {
+								if (elementActions !== STR_ACTIONS_WILDCARD) {
+									if (commonActions === STR_ACTIONS_WILDCARD) {
+										commonActions = elementActions;
+									}
+									else {
+										commonActions = commonActions.filter(
+											function(action) {
+												return elementActions.includes(action);
+											}
+										);
+									}
 								}
-							);
 
-							actions = allActions.reduce(
-								(commonActions, elementActions) => {
-									return commonActions.filter(
-										action => elementActions.includes(action)
-									);
-								},
-								allActions[0]
-							);
-						}
-
-						return actions;
+								return commonActions;
+							},
+							actions[0]
+						);
 					},
 
 					_getAllElements: function(onlySelected) {
@@ -243,22 +250,22 @@ AUI.add(
 					_notifyRowToggle: function() {
 						var instance = this;
 
-						var allSelectedElements = instance.getAllSelectedElements();
-
-						instance.get(STR_HOST).fire(
-							'rowToggled',
-							{
-								actions: instance._getActions(
-									allSelectedElements.getDOMNodes()
-								),
-								elements: {
-									allElements: instance._getAllElements(),
-									allSelectedElements: allSelectedElements,
-									currentPageElements: instance._getCurrentPageElements(),
-									currentPageSelectedElements: instance.getCurrentPageSelectedElements()
-								}
+						var payload =  {
+							elements: {
+								allElements: instance._getAllElements(),
+								allSelectedElements: instance.getAllSelectedElements(),
+								currentPageElements: instance._getCurrentPageElements(),
+								currentPageSelectedElements: instance.getCurrentPageSelectedElements()
 							}
-						);
+						};
+
+						var actions = instance._getActions(payload.elements.allSelectedElements);
+
+						if (actions !== STR_ACTIONS_WILDCARD) {
+							payload.actions = actions;
+						}
+
+						instance.get(STR_HOST).fire('rowToggled', payload);
 					},
 
 					_onClickRowSelector: function(config, event) {

@@ -131,9 +131,8 @@ public class SharingUserNotificationHandler
 
 			return ResourceBundleUtil.getString(resourceBundle, "viewing");
 		}
-		else {
-			return ResourceBundleUtil.getString(resourceBundle, "nothing");
-		}
+
+		return ResourceBundleUtil.getString(resourceBundle, "nothing");
 	}
 
 	private SharingEntry _getSharingEntry(

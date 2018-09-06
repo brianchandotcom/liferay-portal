@@ -150,7 +150,7 @@ class ManagementToolbar extends ClayComponent {
 				return Object.assign(
 					actionItem,
 					{
-						disabled: !event.actions.includes(actionItem.data.action)
+						disabled: event.actions && !event.actions.includes(actionItem.data.action)
 					}
 				);
 			}

@@ -714,15 +714,17 @@ app.server.type=@{app.server.type}]]></echo>
 				</then>
 			</if>
 
-			<zip
+			<tar
 				basedir="."
-				destfile="liferay-portal-bundle-@{app.server.type}.zip"
+				compression="gzip"
+				destfile="liferay-portal-bundle-@{app.server.type}.tar.gz"
 				includes="bundles/**"
+				longfile="posix"
 			/>
 
 			<execute>
 				<![CDATA[
-					jar -ftv liferay-portal-bundle-@{app.server.type}.zip
+					tar --gzip --list --verbose --file=liferay-portal-bundle-@{app.server.type}.tar.gz
 				]]>
 			</execute>
 		</sequential>
@@ -758,13 +760,13 @@ app.server.type=@{app.server.type}]]></echo>
 				src="liferay-portal-source.zip"
 			/>
 
-			<execute>
-				<![CDATA[
-					unzip -oq liferay-portal-bundle-@{app.server.type}.zip
+			<untar
+				compression="gzip"
+				dest="."
+				src="liferay-portal-bundle-@{app.server.type}.tar.gz"
+			/>
 
-					chmod -R a+x bundles
-				]]>
-			</execute>
+			<chmod dir="bundles" includes="**/*.sh" perm="u+x" />
 
 			<setup-libs />
 
@@ -1223,7 +1225,7 @@ app.server.type=@{app.server.type}]]></echo>
 						</then>
 						<elseif>
 							<and>
-								<available file="liferay-portal-bundle-${app.server.type}.zip" />
+								<available file="liferay-portal-bundle-${app.server.type}.tar.gz" />
 								<available file="liferay-portal-source.zip" />
 							</and>
 							<then>
@@ -3838,7 +3840,7 @@ log.sanitizer.enabled=false</echo>
 					</then>
 					<elseif>
 						<and>
-							<available file="liferay-portal-bundle-${app.server.type}.zip" />
+							<available file="liferay-portal-bundle-${app.server.type}.tar.gz" />
 							<available file="liferay-portal-source.zip" />
 						</and>
 						<then>

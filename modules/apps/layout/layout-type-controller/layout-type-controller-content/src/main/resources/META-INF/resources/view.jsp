@@ -25,7 +25,7 @@ FragmentsEditorDisplayContext fragmentsEditorDisplayContext = new FragmentsEdito
 />
 
 <soy:component-renderer
-	context="<%= fragmentsEditorDisplayContext.getEditorContext() %>"
-	module="layout-admin-web/js/fragments_editor/FragmentsEditor.es"
-	templateNamespace="com.liferay.layout.admin.web.FragmentsEditor.render"
+	context="<%= fragmentsEditorDisplayContext.getFragmentEntryLinkListContext() %>"
+	module="layout-admin-web/js/fragments_editor/components/fragment_entry_link/FragmentEntryLinkList.es"
+	templateNamespace="com.liferay.layout.admin.web.FragmentEntryLinkList.render"
 />

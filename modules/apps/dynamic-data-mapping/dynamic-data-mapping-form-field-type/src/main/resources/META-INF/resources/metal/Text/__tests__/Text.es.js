@@ -2,164 +2,239 @@ import Text from '../Text.es';
 import {dom as MetalTestUtil} from 'metal-dom';
 
 let component;
-let spritemap = 'icons.svg';
+const spritemap = 'icons.svg';
 
-describe('Field Text', () => {
-	afterEach(() => {
-		if (component) {
-			component.dispose();
-		}
-	});
+const defaultTextConfig = {
+	name: 'textField',
+	spritemap
+};
 
-	it('should not be editable', () => {
-		component = new Text({
-			editable: false,
-			spritemap: spritemap,
-		});
-
-		expect(component).toMatchSnapshot();
-	});
-
-	it('should have a helptext', () => {
-		component = new Text({
-			helpText: 'Type something',
-			spritemap: spritemap,
-		});
-
-		expect(component).toMatchSnapshot();
-	});
-
-	it('should have an id', () => {
-		component = new Text({
-			id: 'ID',
-			spritemap: spritemap,
-		});
-
-		expect(component).toMatchSnapshot();
-	});
-
-	it('should have a label', () => {
-		component = new Text({
-			label: 'label',
-			spritemap: spritemap,
-		});
-
-		expect(component).toMatchSnapshot();
-	});
-
-	it('should have a placeholder', () => {
-		component = new Text({
-			placeholder: 'Placeholder',
-			spritemap: spritemap,
-		});
-
-		expect(component).toMatchSnapshot();
-	});
-
-	it('should not be required', () => {
-		component = new Text({
-			required: false,
-			spritemap: spritemap,
-		});
-
-		expect(component).toMatchSnapshot();
-	});
-
-	it('should render Label if showLabel is true', () => {
-		component = new Text({
-			label: 'text',
-			showLabel: true,
-			spritemap: spritemap,
-		});
-
-		expect(component).toMatchSnapshot();
-	});
-
-	it('should have a spritemap', () => {
-		component = new Text({
-			spritemap: spritemap,
-		});
-
-		expect(component).toMatchSnapshot();
-	});
-
-	it('should have a value', () => {
-		component = new Text({
-			value: 'value',
-			spritemap: spritemap,
-		});
-
-		expect(component).toMatchSnapshot();
-	});
-
-	it('should have a key', () => {
-		component = new Text({
-			key: 'key',
-			spritemap: spritemap,
-		});
-
-		expect(component).toMatchSnapshot();
-	});
-
-	it('should emit a field edit event on field value change', () => {
-		const handleFieldEdited = jest.fn();
-		const events = {fieldEdited: handleFieldEdited};
-
-		component = new Text({
-			spritemap: spritemap,
-			events,
-		});
-
-		MetalTestUtil.triggerEvent(
-			component.element.querySelector('input'),
-			'input',
-			{}
+describe(
+	'Field Text',
+	() => {
+		afterEach(
+			() => {
+				if (component) {
+					component.dispose();
+				}
+			}
 		);
 
-		expect(handleFieldEdited).toHaveBeenCalled();
-	});
+		it(
+			'should not be readOnly',
+			() => {
+				component = new Text(
+					{
+						...defaultTextConfig,
+						readOnly: false
+					}
+				);
 
-	it('should emit a field edit with correct parameters', done => {
-		const handleFieldEdited = data => {
-			expect(data).toEqual(
-				expect.objectContaining({
-					value: expect.any(String),
-					key: 'input',
-					originalEvent: expect.any(Object),
-				})
-			);
-			done();
-		};
-		const events = {fieldEdited: handleFieldEdited};
-
-		component = new Text({
-			spritemap: spritemap,
-			key: 'input',
-			events,
-		});
-
-		MetalTestUtil.triggerEvent(
-			component.element.querySelector('input'),
-			'input',
-			{}
-		);
-	});
-
-	it('should propagate the field edit event', () => {
-		component = new Text({
-			spritemap: spritemap,
-			key: 'input',
-		});
-
-		const spy = jest.spyOn(component, 'emit');
-
-		MetalTestUtil.triggerEvent(
-			component.element.querySelector('input'),
-			'input',
-			{}
+				expect(component).toMatchSnapshot();
+			}
 		);
 
-		expect(spy).toHaveBeenCalled();
-		expect(spy).toHaveBeenCalledWith('fieldEdited', expect.any(Object));
-	});
-});
+		it(
+			'should have a helptext',
+			() => {
+				component = new Text(
+					{
+						...defaultTextConfig,
+						tip: 'Type something'
+					}
+				);
+
+				expect(component).toMatchSnapshot();
+			}
+		);
+
+		it(
+			'should have an id',
+			() => {
+				component = new Text(
+					{
+						...defaultTextConfig,
+						id: 'ID'
+					}
+				);
+
+				expect(component).toMatchSnapshot();
+			}
+		);
+
+		it(
+			'should have a label',
+			() => {
+				component = new Text(
+					{
+						...defaultTextConfig,
+						label: 'label'
+					}
+				);
+
+				expect(component).toMatchSnapshot();
+			}
+		);
+
+		it(
+			'should have a placeholder',
+			() => {
+				component = new Text(
+					{
+						...defaultTextConfig,
+						placeholder: 'Placeholder'
+					}
+				);
+
+				expect(component).toMatchSnapshot();
+			}
+		);
+
+		it(
+			'should not be required',
+			() => {
+				component = new Text(
+					{
+						...defaultTextConfig,
+						required: false
+					}
+				);
+
+				expect(component).toMatchSnapshot();
+			}
+		);
+
+		it(
+			'should render Label if showLabel is true',
+			() => {
+				component = new Text(
+					{
+						...defaultTextConfig,
+						label: 'text',
+						showLabel: true
+					}
+				);
+
+				expect(component).toMatchSnapshot();
+			}
+		);
+
+		it(
+			'should have a spritemap',
+			() => {
+				component = new Text(defaultTextConfig);
+
+				expect(component).toMatchSnapshot();
+			}
+		);
+
+		it(
+			'should have a value',
+			() => {
+				component = new Text(
+					{
+						...defaultTextConfig,
+						value: 'value'
+					}
+				);
+
+				expect(component).toMatchSnapshot();
+			}
+		);
+
+		it(
+			'should have a key',
+			() => {
+				component = new Text(
+					{
+						...defaultTextConfig,
+						key: 'key'
+					}
+				);
+
+				expect(component).toMatchSnapshot();
+			}
+		);
+
+		it(
+			'should emit a field edit event on field value change',
+			() => {
+				const handleFieldEdited = jest.fn();
+
+				const events = {fieldEdited: handleFieldEdited};
+
+				component = new Text(
+					{
+						...defaultTextConfig,
+						events
+					}
+				);
+
+				MetalTestUtil.triggerEvent(
+					component.element.querySelector('input'),
+					'input',
+					{}
+				);
+
+				expect(handleFieldEdited).toHaveBeenCalled();
+			}
+		);
+
+		it(
+			'should emit a field edit with correct parameters',
+			done => {
+				const handleFieldEdited = data => {
+					expect(data).toEqual(
+						expect.objectContaining(
+							{
+								fieldInstance: component,
+								originalEvent: expect.any(Object),
+								value: expect.any(String)
+							}
+						)
+					);
+					done();
+				};
+
+				const events = {fieldEdited: handleFieldEdited};
+
+				component = new Text(
+					{
+						...defaultTextConfig,
+						events,
+						key: 'input'
+					}
+				);
+
+				MetalTestUtil.triggerEvent(
+					component.element.querySelector('input'),
+					'input',
+					{}
+				);
+			}
+		);
+
+		it(
+			'should propagate the field edit event',
+			() => {
+				component = new Text(
+					{
+						...defaultTextConfig,
+						key: 'input'
+					}
+				);
+
+				const spy = jest.spyOn(component, 'emit');
+
+				MetalTestUtil.triggerEvent(
+					component.element.querySelector('input'),
+					'input',
+					{}
+				);
+
+				expect(spy).toHaveBeenCalled();
+				expect(spy).toHaveBeenCalledWith('fieldEdited', expect.any(Object));
+			}
+		);
+	}
+);

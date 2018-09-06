@@ -2,8 +2,8 @@
 
 {template .render}
 	{@param columns: list<[label: string, value: ?]>}
-	{@param? editable: bool}
-	{@param? helpText: string}
+	{@param? readOnly: bool}
+	{@param? tip: string}
 	{@param? id: string}
 	{@param? label: string}
 	{@param? placeholder: string}
@@ -16,14 +16,14 @@
 		{param contentRenderer kind="html"}
 			{call .content}
 				{param columns: $columns/}
-				{param editable: $editable /}
+				{param readOnly: $readOnly /}
 				{param id: $id /}
 				{param placeholder: $placeholder /}
 				{param rows: $rows/}
 			{/call}
 		{/param}
 
-		{param helpText: $helpText /}
+		{param tip: $tip /}
 		{param id: $id /}
 		{param label: $label /}
 		{param required: $required /}

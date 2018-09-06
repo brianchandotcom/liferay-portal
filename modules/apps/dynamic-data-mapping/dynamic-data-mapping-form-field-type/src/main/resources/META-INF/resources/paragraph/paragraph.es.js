@@ -6,6 +6,7 @@ import templates from './paragraph.soy';
 /**
  * Paragraph Component
  */
+
 class Paragraph extends Component {}
 
 Paragraph.STATE = {
@@ -16,6 +17,7 @@ Paragraph.STATE = {
 };
 
 // Register component
+
 Soy.register(Paragraph, templates, 'render');
 
 Paragraph.Soy = Soy;

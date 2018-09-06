@@ -6,6 +6,7 @@ import templates from './captcha.soy';
 /**
  * Captcha Component
  */
+
 class Captcha extends Component {}
 
 Captcha.STATE = {
@@ -16,6 +17,7 @@ Captcha.STATE = {
 };
 
 // Register component
+
 Soy.register(Captcha, templates, 'render');
 
 Captcha.Soy = Soy;

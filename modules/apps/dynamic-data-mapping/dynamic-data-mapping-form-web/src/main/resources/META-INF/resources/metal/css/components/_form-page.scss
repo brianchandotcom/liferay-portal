@@ -3,14 +3,63 @@ $c: '.ddm-form-page';
 #{$c} {
 	padding: 0 1.5rem;
 
-	.col.col-empty.lfr-initial-col {
-		background-color: #F7F8F9;
-		border: 2px dashed #A7A9BC;
-		border-radius: 4px;
-		color: #A7A9BC;
-		line-height: 56px;
-		margin: 44px 0 24px;
-		min-height: 56px;
-		text-align: center;
+	.ddm-drag {
+		background-color: #FFF;
+		height: 100%;
+		min-height: 95px;
+		padding: 0 15px;
+		width: 100%;
+	}
+
+	.ddm-drag .form-control {
+		cursor: -webkit-grab;
+	}
+
+	.ddm-drag.dragging .form-control {
+		cursor: -webkit-grabbing;
+	}
+
+	.ddm-drag.dragging {
+		cursor: -webkit-grabbing;
+		opacity: 0.5;
+		position: absolute;
+		z-index: 10;
+	}
+
+	.ddm-drag-item {
+		cursor: -webkit-grab;
+		position: inherit;
+	}
+
+	.ddm-drag-item.dragging {
+		box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+		cursor: -webkit-grabbing;
+		z-index: 20;
+	}
+
+	.col.col-empty {
+		&.lfr-initial-col .ddm-target {
+			background-color: #F7F8F9;
+			border: 2px dashed #A7A9BC;
+			border-radius: 4px;
+			color: #A7A9BC;
+			line-height: 57px;
+			text-align: center;
+
+			&.targetOver {
+				color: $light-blue-500;
+			}
+		}
+
+		.ddm-target {
+			border: 2px dashed transparent;
+			border-radius: 4px;
+			min-height: 16px;
+
+			&.targetOver {
+				background-color: $light-100;
+				border-color: $light-blue-200;
+			}
+		}
 	}
 }

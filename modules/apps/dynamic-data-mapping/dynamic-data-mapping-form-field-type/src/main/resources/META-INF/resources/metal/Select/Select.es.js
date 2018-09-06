@@ -16,7 +16,7 @@ class Select extends Component {
 		 * @type {?bool}
 		 */
 
-		editable: Config.bool().value(false),
+		readOnly: Config.bool().value(false),
 
 		/**
 		 * @default undefined
@@ -25,7 +25,7 @@ class Select extends Component {
 		 * @type {?(string|undefined)}
 		 */
 
-		helpText: Config.string(),
+		tip: Config.string(),
 
 		/**
 		 * @default undefined
@@ -43,7 +43,7 @@ class Select extends Component {
 		 * @type {?array<object>}
 		 */
 
-		items: Config.arrayOf(
+		options: Config.arrayOf(
 			Config.shapeOf(
 				{
 					active: Config.bool().value(false),
@@ -101,7 +101,7 @@ class Select extends Component {
 		 * @type {?string}
 		 */
 
-		predefinedValue: Config.string(),
+		predefinedValue: Config.array(),
 
 		/**
 		 * @default false
@@ -137,14 +137,21 @@ class Select extends Component {
 		 * @type {?(string|undefined)}
 		 */
 
-		value: Config.string(),
+		value: Config.array(),
 
 		key: Config.string()
 	};
 
-	_handleItemClicked(event) {
-		const {key} = this;
+	prepareStateForRender(states) {
+		const {predefinedValue, value} = states;
+		return {
+			...states,
+			predefinedValue: predefinedValue && predefinedValue.length ? predefinedValue[0] : '',
+			value: value && value.length ? value[0] : ''
+		};
+	}
 
+	_handleItemClicked(event) {
 		this.setState(
 			{
 				predefinedValue: event.target.innerText,
@@ -155,7 +162,7 @@ class Select extends Component {
 		this.emit(
 			'fieldEdited',
 			{
-				key,
+				fieldInstance: this,
 				originalEvent: event,
 				value: event.target.innerText
 			}

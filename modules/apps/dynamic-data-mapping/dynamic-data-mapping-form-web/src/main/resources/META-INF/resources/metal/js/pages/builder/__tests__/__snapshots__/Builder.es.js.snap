@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Builder should not open sidebar when the active page is changed and mode is not "add" 1`] = `
+exports[`Builder should render the default markup 1`] = `
 <div>
   <div class="container">
     <div class="sheet">
@@ -14,6 +14,173 @@ exports[`Builder should not open sidebar when the active page is changed and mod
                   <use xlink:href="icons.svg#ellipsis-v"></use>
                 </svg>
               </button>
+            </div>
+          </div>
+        </div>
+        <div class="ddm-page-container-layout">
+          <div class="ddm-form-page pl-3 pr-3">
+            <textarea class="form-builder-page-header-title form-control" data-page-id="0" maxlength="120" value="Untitled name"></textarea>
+            <textarea class="form-builder-page-header-description form-control" data-page-id="0" maxlength="120" placeholder="add-a-short-description-for-this-page"></textarea>
+            <div class="form-builder-layout">
+              <div class="layout-page">
+                <div class="row">
+                  <div class="col col-empty col-md-12" data-ddm-field-row="0" data-ddm-field-page="0">
+                    <div class="ddm-target"></div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-3 col-ddm" data-ddm-field-row="0" data-ddm-field-page="0" data-ddm-field-column="0">
+                    <div class="ddm-field-container">
+                      <div class="ddm-resize-handle-left"></div>
+                      <div class="ddm-drag">
+                        <div class="ddm-field-not-found">Field doesn't exist.</div>
+                      </div>
+                      <div class="ddm-field-actions-container">
+                        <button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button">
+                          <svg aria-hidden="true" class="lexicon-icon lexicon-icon-paste" focusable="false">
+                            <title>paste</title>
+                            <use xlink:href="icons.svg#paste"></use>
+                          </svg>
+                        </button>
+                        <button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button">
+                          <svg aria-hidden="true" class="lexicon-icon lexicon-icon-trash" focusable="false">
+                            <title>trash</title>
+                            <use xlink:href="icons.svg#trash"></use>
+                          </svg>
+                        </button>
+                      </div>
+                      <div class="ddm-resize-handle-right"></div>
+                    </div>
+                  </div>
+                  <div class="col col-empty col-md-9" data-ddm-field-row="0" data-ddm-field-page="0" data-ddm-field-column="1">
+                    <div class="ddm-target"></div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col col-empty col-md-12" data-ddm-field-row="1" data-ddm-field-page="0">
+                    <div class="ddm-target"></div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-4 col-ddm" data-ddm-field-row="1" data-ddm-field-page="0" data-ddm-field-column="0">
+                    <div class="ddm-field-container">
+                      <div class="ddm-resize-handle-left"></div>
+                      <div class="ddm-drag">
+                        <div class="ddm-field-not-found">Field doesn't exist.</div>
+                      </div>
+                      <div class="ddm-field-actions-container">
+                        <button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button">
+                          <svg aria-hidden="true" class="lexicon-icon lexicon-icon-paste" focusable="false">
+                            <title>paste</title>
+                            <use xlink:href="icons.svg#paste"></use>
+                          </svg>
+                        </button>
+                        <button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button">
+                          <svg aria-hidden="true" class="lexicon-icon lexicon-icon-trash" focusable="false">
+                            <title>trash</title>
+                            <use xlink:href="icons.svg#trash"></use>
+                          </svg>
+                        </button>
+                      </div>
+                      <div class="ddm-resize-handle-right"></div>
+                    </div>
+                  </div>
+                  <div class="col-md-6 col-ddm" data-ddm-field-row="1" data-ddm-field-page="0" data-ddm-field-column="1">
+                    <div class="ddm-field-container">
+                      <div class="ddm-resize-handle-left"></div>
+                      <div class="ddm-drag">
+                        <div class="ddm-field-not-found">Field doesn't exist.</div>
+                      </div>
+                      <div class="ddm-field-actions-container">
+                        <button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button">
+                          <svg aria-hidden="true" class="lexicon-icon lexicon-icon-paste" focusable="false">
+                            <title>paste</title>
+                            <use xlink:href="icons.svg#paste"></use>
+                          </svg>
+                        </button>
+                        <button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button">
+                          <svg aria-hidden="true" class="lexicon-icon lexicon-icon-trash" focusable="false">
+                            <title>trash</title>
+                            <use xlink:href="icons.svg#trash"></use>
+                          </svg>
+                        </button>
+                      </div>
+                      <div class="ddm-resize-handle-right"></div>
+                    </div>
+                  </div>
+                  <div class="col col-empty col-md-2" data-ddm-field-row="1" data-ddm-field-page="0" data-ddm-field-column="2">
+                    <div class="ddm-target"></div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col col-empty col-md-12" data-ddm-field-row="2" data-ddm-field-page="0">
+                    <div class="ddm-target"></div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-12 col-ddm" data-ddm-field-row="2" data-ddm-field-page="0" data-ddm-field-column="0">
+                    <div class="ddm-field-container">
+                      <div class="ddm-resize-handle-left"></div>
+                      <div class="ddm-drag">
+                        <div class="ddm-field-not-found">Field doesn't exist.</div>
+                      </div>
+                      <div class="ddm-field-actions-container">
+                        <button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button">
+                          <svg aria-hidden="true" class="lexicon-icon lexicon-icon-paste" focusable="false">
+                            <title>paste</title>
+                            <use xlink:href="icons.svg#paste"></use>
+                          </svg>
+                        </button>
+                        <button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button">
+                          <svg aria-hidden="true" class="lexicon-icon lexicon-icon-trash" focusable="false">
+                            <title>trash</title>
+                            <use xlink:href="icons.svg#trash"></use>
+                          </svg>
+                        </button>
+                      </div>
+                      <div class="ddm-resize-handle-right"></div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col col-empty col-md-12" data-ddm-field-row="3" data-ddm-field-page="0">
+                    <div class="ddm-target"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="fade modal" role="dialog" tabindex="-1">
+            <div class="modal-dialog modal-sm">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <div class="modal-title">delete-field-dialog-title</div>
+                  <button class="btn close btn-unstyled" aria-label="close" type="button">
+                    <svg aria-hidden="true" class="lexicon-icon lexicon-icon-times" focusable="false">
+                      <title>times</title>
+                      <use xlink:href="icons.svg#times"></use>
+                    </svg>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <h4>are-you-sure-you-want-to-delete-this-field</h4>
+                </div>
+                <div class="modal-footer">
+                  <div class="modal-item-first">
+                    <div class="btn-group"></div>
+                  </div>
+                  <div class="modal-item-last">
+                    <div class="btn-group">
+                      <div class="btn-group-item">
+                        <button class="btn close-modal btn-secondary" type="button">dismiss</button>
+                      </div>
+                      <div class="btn-group-item">
+                        <button class="btn btn-primary" type="button">delete</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -21,74 +188,6 @@ exports[`Builder should not open sidebar when the active page is changed and mod
     </div>
   </div>
   <div class="sidebar-container" ref="sidebar">
-    <div class="sidebar sidebar-light">
-      <nav class="component-tbar tbar">
-        <div class="container-fluid">
-          <ul class="tbar-nav">
-            <li class="tbar-item">
-              <a class="component-action" href="#1" ref="close" role="button">
-                <svg aria-hidden="true" class="lexicon-icon lexicon-icon-times">
-                  <use xlinkHref="icons.svg#times"></use>
-                </svg>
-              </a>
-            </li>
-          </ul>
-        </div>
-      </nav>
-      <nav class="component-navigation-bar navbar navigation-bar navbar-collapse-absolute navbar-expand-md navbar-underline">
-        <a aria-controls="sidebarLightCollapse00" aria-expanded="false" aria-label="Toggle Navigation" class="collapsed navbar-toggler navbar-toggler-link" data-toggle="collapse" href="#sidebarLightCollapse00" role="button">
-          <span class="navbar-text-truncate">Details</span>
-          <svg aria-hidden="true" class="lexicon-icon lexicon-icon-caret-bottom">
-            <use xlinkHref="icons.svg#caret-bottom"></use>
-          </svg>
-        </a>
-        <div class="collapse navbar-collapse" id="sidebarLightCollapse00">
-          <ul class="nav navbar-nav" role="tablist">
-            <li class="nav-item" data-index="0" ref="tab0">
-              <a class="nav-link active" aria-controls="sidebarLightDetails" data-toggle="tab" href="#" role="tab">
-                <span class="navbar-text-truncate">Elements</span>
-              </a>
-            </li>
-          </ul>
-        </div>
-      </nav>
-      <div class="ddm-sidebar-body"></div>
-    </div>
-  </div>
-</div>
-<div class="dropdown-menu" ref="menu">
-  <ul class="list-unstyled">
-    <li>
-      <button class="btn dropdown-item btn-sm btn-link" aria-label="add-new-page" type="button">add-new-page</button>
-    </li>
-    <li>
-      <button class="btn dropdown-item btn-sm btn-link" aria-label="reset-page" type="button">reset-page</button>
-    </li>
-  </ul>
-</div>
-`;
-
-exports[`Builder should open sidebar when active page is changed and mode is "add" 1`] = `
-<div>
-  <div class="container">
-    <div class="sheet">
-      <div class="position-relative">
-        <div class="ddm-form-header">
-          <div class="ddm-page-settings" role="group">
-            <div class="dropdown dropdown-action">
-              <button aria-expanded="false" aria-haspopup="true" aria-label="toggle" class="dropdown-toggle btn component-action btn-unstyled" title="actions" type="button">
-                <svg aria-hidden="true" class="lexicon-icon lexicon-icon-ellipsis-v" focusable="false">
-                  <title>ellipsis-v</title>
-                  <use xlink:href="icons.svg#ellipsis-v"></use>
-                </svg>
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="sidebar-container show" ref="sidebar">
     <div class="sidebar sidebar-light">
       <nav class="component-tbar tbar">
         <div class="container-fluid">
@@ -120,82 +219,110 @@ exports[`Builder should open sidebar when active page is changed and mode is "ad
         <div class="collapse navbar-collapse" id="sidebarLightCollapse00">
           <ul class="nav navbar-nav" role="tablist">
             <li class="nav-item" data-index="0" ref="tab0">
-              <a class="nav-link active" aria-controls="sidebarLightDetails" data-toggle="tab" href="#" role="tab">
-                <span class="navbar-text-truncate">Elements</span>
+              <a class="nav-link active" aria-controls="sidebarLightDetails" data-toggle="tab" href="javascript:;" role="tab">
+                <span class="navbar-text-truncate">elements</span>
               </a>
             </li>
           </ul>
         </div>
       </nav>
-      <div class="ddm-sidebar-body"></div>
-    </div>
-  </div>
-</div>
-<div class="dropdown-menu" ref="menu">
-  <ul class="list-unstyled">
-    <li>
-      <button class="btn dropdown-item btn-sm btn-link" aria-label="add-new-page" type="button">add-new-page</button>
-    </li>
-    <li>
-      <button class="btn dropdown-item btn-sm btn-link" aria-label="reset-page" type="button">reset-page</button>
-    </li>
-  </ul>
-</div>
-`;
-
-exports[`Builder should render the default markup 1`] = `
-<div>
-  <div class="container">
-    <div class="sheet">
-      <div class="position-relative">
-        <div class="ddm-form-header">
-          <div class="ddm-page-settings" role="group">
-            <div class="dropdown dropdown-action">
-              <button aria-expanded="false" aria-haspopup="true" aria-label="toggle" class="dropdown-toggle btn component-action btn-unstyled" title="actions" type="button">
-                <svg aria-hidden="true" class="lexicon-icon lexicon-icon-ellipsis-v" focusable="false">
-                  <title>ellipsis-v</title>
-                  <use xlink:href="icons.svg#ellipsis-v"></use>
+      <div class="ddm-sidebar-body">
+        <ul class="list-group">
+          <li class="list-group-header">
+            <h3 class="list-group-header-title">basic-elements</h3>
+          </li>
+          <div class="ddm-drag-item list-group-item list-group-item-flex" data-ddm-field-type-index="0" ref="field0">
+            <div class="autofit-col">
+              <div class="sticker sticker-secondary">
+                <svg class="lexicon-icon lexicon-icon-calendar" aria-hidden="true">
+                  <use xlinkHref="icons.svg#calendar"></use>
                 </svg>
-              </button>
+              </div>
+            </div>
+            <div class="autofit-col autofit-col-expand">
+              <h4 class="list-group-title text-truncate">
+                <span>Date</span>
+              </h4>
+              <p class="list-group-subtitle text-truncate">Select date from a Datepicker.</p>
             </div>
           </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="sidebar-container" ref="sidebar">
-    <div class="sidebar sidebar-light">
-      <nav class="component-tbar tbar">
-        <div class="container-fluid">
-          <ul class="tbar-nav">
-            <li class="tbar-item">
-              <a class="component-action" href="#1" ref="close" role="button">
-                <svg aria-hidden="true" class="lexicon-icon lexicon-icon-times">
-                  <use xlinkHref="icons.svg#times"></use>
+          <div class="ddm-drag-item list-group-item list-group-item-flex" data-ddm-field-type-index="1" ref="field1">
+            <div class="autofit-col">
+              <div class="sticker sticker-secondary">
+                <svg class="lexicon-icon lexicon-icon-text" aria-hidden="true">
+                  <use xlinkHref="icons.svg#text"></use>
                 </svg>
-              </a>
-            </li>
-          </ul>
-        </div>
-      </nav>
-      <nav class="component-navigation-bar navbar navigation-bar navbar-collapse-absolute navbar-expand-md navbar-underline">
-        <a aria-controls="sidebarLightCollapse00" aria-expanded="false" aria-label="Toggle Navigation" class="collapsed navbar-toggler navbar-toggler-link" data-toggle="collapse" href="#sidebarLightCollapse00" role="button">
-          <span class="navbar-text-truncate">Details</span>
-          <svg aria-hidden="true" class="lexicon-icon lexicon-icon-caret-bottom">
-            <use xlinkHref="icons.svg#caret-bottom"></use>
-          </svg>
-        </a>
-        <div class="collapse navbar-collapse" id="sidebarLightCollapse00">
-          <ul class="nav navbar-nav" role="tablist">
-            <li class="nav-item" data-index="0" ref="tab0">
-              <a class="nav-link active" aria-controls="sidebarLightDetails" data-toggle="tab" href="#" role="tab">
-                <span class="navbar-text-truncate">Elements</span>
-              </a>
-            </li>
-          </ul>
-        </div>
-      </nav>
-      <div class="ddm-sidebar-body"></div>
+              </div>
+            </div>
+            <div class="autofit-col autofit-col-expand">
+              <h4 class="list-group-title text-truncate">
+                <span>Text Field</span>
+              </h4>
+              <p class="list-group-subtitle text-truncate">Single line or multiline text area.</p>
+            </div>
+          </div>
+          <div class="ddm-drag-item list-group-item list-group-item-flex" data-ddm-field-type-index="2" ref="field2">
+            <div class="autofit-col">
+              <div class="sticker sticker-secondary">
+                <svg class="lexicon-icon lexicon-icon-radio-button" aria-hidden="true">
+                  <use xlinkHref="icons.svg#radio-button"></use>
+                </svg>
+              </div>
+            </div>
+            <div class="autofit-col autofit-col-expand">
+              <h4 class="list-group-title text-truncate">
+                <span>Single Selection</span>
+              </h4>
+              <p class="list-group-subtitle text-truncate">Select only one item with a radio button.</p>
+            </div>
+          </div>
+          <div class="ddm-drag-item list-group-item list-group-item-flex" data-ddm-field-type-index="3" ref="field3">
+            <div class="autofit-col">
+              <div class="sticker sticker-secondary">
+                <svg class="lexicon-icon lexicon-icon-list" aria-hidden="true">
+                  <use xlinkHref="icons.svg#list"></use>
+                </svg>
+              </div>
+            </div>
+            <div class="autofit-col autofit-col-expand">
+              <h4 class="list-group-title text-truncate">
+                <span>Select from list</span>
+              </h4>
+              <p class="list-group-subtitle text-truncate">Choose an or more options from a list.</p>
+            </div>
+          </div>
+          <div class="ddm-drag-item list-group-item list-group-item-flex" data-ddm-field-type-index="4" ref="field4">
+            <div class="autofit-col">
+              <div class="sticker sticker-secondary">
+                <svg class="lexicon-icon lexicon-icon-grid" aria-hidden="true">
+                  <use xlinkHref="icons.svg#grid"></use>
+                </svg>
+              </div>
+            </div>
+            <div class="autofit-col autofit-col-expand">
+              <h4 class="list-group-title text-truncate">
+                <span>Grid</span>
+              </h4>
+              <p class="list-group-subtitle text-truncate">Select options from a matrix.</p>
+            </div>
+          </div>
+          <div class="ddm-drag-item list-group-item list-group-item-flex" data-ddm-field-type-index="5" ref="field5">
+            <div class="autofit-col">
+              <div class="sticker sticker-secondary">
+                <svg class="lexicon-icon lexicon-icon-select-from-list" aria-hidden="true">
+                  <use xlinkHref="icons.svg#select-from-list"></use>
+                </svg>
+              </div>
+            </div>
+            <div class="autofit-col autofit-col-expand">
+              <h4 class="list-group-title text-truncate">
+                <span>Multiple Selection</span>
+              </h4>
+              <p class="list-group-subtitle text-truncate">Select multiple options using a checkbox.</p>
+            </div>
+          </div>
+        </ul>
+      </div>
     </div>
   </div>
 </div>

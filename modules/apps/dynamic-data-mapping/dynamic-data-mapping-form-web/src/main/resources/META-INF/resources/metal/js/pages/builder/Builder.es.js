@@ -1,3 +1,7 @@
+import {Config} from 'metal-state';
+import {focusedFieldStructure, pageStructure} from '../../util/config.es';
+import FormSupport from '../../components/Form/FormSupport.es';
+import {PagesVisitor} from '../../util/visitors.es';
 import Component from 'metal-jsx';
 import FormRenderer from '../../components/Form/index.es';
 import Sidebar from '../../components/Sidebar/index.es';
@@ -9,6 +13,36 @@ import Sidebar from '../../components/Sidebar/index.es';
 
 class Builder extends Component {
 
+	static PROPS = {
+
+		/**
+		 * @default
+		 * @instance
+		 * @memberof FormRenderer
+		 * @type {?number}
+		 */
+
+		activePage: Config.number().value(0),
+
+		/**
+		 * @default {}
+		 * @instance
+		 * @memberof Sidebar
+		 * @type {?object}
+		 */
+
+		focusedField: focusedFieldStructure.value({}),
+
+		/**
+		 * @default []
+		 * @instance
+		 * @memberof FormRenderer
+		 * @type {?array<object>}
+		 */
+
+		pages: Config.arrayOf(pageStructure).value([])
+	};
+
 	/**
 	 * Continues the propagation of event.
 	 * @param {!Object} indexAllocateField
@@ -16,21 +50,17 @@ class Builder extends Component {
 	 */
 
 	_handleFieldClicked(indexAllocateField) {
-		this._handleSidebarOpened(
-			{
-				mode: 'edit'
-			}
-		);
 		this.emit('fieldClicked', indexAllocateField);
 	}
 
-	_handlePageAdded(pages) {
-		this._handleSidebarOpened(
-			{
-				mode: 'add'
-			}
-		);
-		this.emit('pagesUpdated', pages);
+	_handlePageAdded() {
+		this.emit('pageAdded');
+	}
+
+	rendered() {
+		const {sidebar} = this.refs;
+
+		sidebar.refreshDragAndDrop();
 	}
 
 	/**
@@ -39,28 +69,125 @@ class Builder extends Component {
 	 * @private
 	 */
 
-	_handleFieldAdd(event) {
-		this.emit('fieldAdded', event);
-	}
+	_handleFieldAdded(event) {
+		const {namespace} = this.props;
+		const newFieldName = FormSupport.generateFieldName(event.fieldType.name);
+		const settingsContext = event.fieldType.settingsContext;
+		const translationManager = Liferay.component(`${namespace}translationManager`);
+		const visitor = new PagesVisitor(settingsContext.pages);
 
-	/**
-	 * Continues the propagation of data.
-	 * @param {!Object} data
-	 * @private
-	 */
+		this.emit(
+			'fieldAdded',
+			{
+				...event,
+				fieldType: {
+					...event.fieldType,
+					fieldName: newFieldName,
+					settingsContext: {
+						...settingsContext,
+						pages: visitor.mapFields(
+							field => {
+								const {fieldName} = field;
+								if (fieldName === 'name') {
+									field = {
+										...field,
+										value: newFieldName,
+										visible: true
+									};
+								}
+								else if (fieldName === 'label') {
+									field = {
+										...field,
+										localizedValue: {
+											...field.localizedValue,
+											[translationManager.get('editingLocale')]: event.fieldType.label
+										},
+										type: 'text',
+										value: event.fieldType.label
+									};
+								}
+								else if (fieldName === 'type') {
+									field = {
+										...field,
+										value: event.fieldType.name
+									};
+								}
+								return field;
+							}
+						)
+					},
+					type: event.fieldType.name
+				}
+			}
+		);
 
-	_handleFieldEdited(data) {
-		this.emit('fieldEdited', data);
+		this.openSidebar();
 	}
 
 	/**
 	 * Continues the propagation of event.
-	 * @param {!Object} data
+	 * @param {!Event} event
 	 * @private
 	 */
 
-	_handleFieldMoved(data) {
-		this.emit('fieldMoved', data);
+	_handleFieldBlurred() {
+		this.emit('fieldBlurred');
+	}
+
+	/**
+	 * Continues the propagation of event.
+	 * @param {!Object} event
+	 * @private
+	 */
+
+	_handleFieldEdited({fieldInstance, property, value}) {
+		const {focusedField, namespace} = this.props;
+		const {settingsContext} = focusedField;
+		const {columnIndex, pageIndex, rowIndex} = focusedField;
+		const properties = {columnIndex, pageIndex, rowIndex};
+
+		properties[property || fieldInstance.fieldName] = value;
+
+		const visitor = new PagesVisitor(settingsContext.pages);
+
+		const translationManager = Liferay.component(`${namespace}translationManager`);
+
+		properties.settingsContext = {
+			...settingsContext,
+			pages: visitor.mapFields(
+				field => {
+					if (field.fieldName === fieldInstance.fieldName) {
+						field = {
+							...field,
+							value
+						};
+						if (field.localizable) {
+							field.localizedValue = {
+								...field.localizedValue,
+								[translationManager.get('editingLocale')]: value
+							};
+						}
+					}
+					return field;
+				}
+			)
+		};
+
+		this.emit('fieldEdited', properties);
+	}
+
+	_handleActivePageUpdated(activePage) {
+		this.emit('activePageUpdated', activePage);
+	}
+
+	/**
+	 * Continues the propagation of event.
+	 * @param {!Object} event
+	 * @private
+	 */
+
+	_handleFieldMoved(event) {
+		this.emit('fieldMoved', event);
 	}
 
 	/**
@@ -69,8 +196,8 @@ class Builder extends Component {
 	 * @private
 	 */
 
-	_handleDeleteButtonClicked(indexes) {
-		this.emit('deleteField', indexes);
+	_handleFieldDeleted(indexes) {
+		this.emit('fieldDeleted', indexes);
 	}
 
 	/**
@@ -79,35 +206,52 @@ class Builder extends Component {
 	 * @private
 	 */
 
-	_handleDuplicateButtonClicked(indexes) {
-		this.emit(
-			'duplicateField',
-			indexes
-		);
+	_handleFieldDuplicated(indexes) {
+		this.emit('fieldDuplicated', indexes);
 	}
 
-	/**
-	 * Continues the propagation of event.
-	 * @param {String} mode
-	 * @private
-	 */
+	willReceiveProps(changes) {
+		let {activePage, pages} = this.props;
+		let openSidebar = false;
 
-	_handleSidebarOpened({mode}) {
-		const Sidebar = this.refs.sidebar;
+		if (changes.activePage) {
+			activePage = changes.activePage.newVal;
 
-		Sidebar._setMode(mode);
-		Sidebar.show();
-	}
-
-	_handleActivePageUpdated({mode}) {
-		const Sidebar = this.refs.sidebar;
-
-		Sidebar._dragAndDrop.disposeInternal();
-		Sidebar._startDrag();
-
-		if (mode) {
-			this._handleSidebarOpened({mode});
+			if (!this._pageHasFields(pages, activePage)) {
+				openSidebar = true;
+			}
 		}
+		if (
+			changes.pages &&
+			changes.pages.prevVal &&
+			changes.pages.newVal.length !== changes.pages.prevVal.length
+		) {
+			pages = changes.pages.newVal;
+
+			if (!this._pageHasFields(pages, activePage)) {
+				openSidebar = true;
+			}
+		}
+
+		if (openSidebar) {
+			this.openSidebar();
+		}
+	}
+
+	openSidebar() {
+		const {sidebar} = this.refs;
+
+		sidebar.open();
+	}
+
+	_handlePageDeleted(pageIndex) {
+		this.emit('pageDeleted', pageIndex);
+	}
+
+	_handlePageReset() {
+		this.openSidebar();
+
+		this.emit('pageReset');
 	}
 
 	/**
@@ -118,6 +262,20 @@ class Builder extends Component {
 
 	_handlePagesUpdated(pages) {
 		this.emit('pagesUpdated', pages);
+	}
+
+	_pageHasFields(pages, pageIndex) {
+		const visitor = new PagesVisitor([pages[pageIndex]]);
+
+		let hasFields = false;
+
+		visitor.mapFields(
+			() => {
+				hasFields = true;
+			}
+		);
+
+		return hasFields;
 	}
 
 	attached() {
@@ -137,27 +295,28 @@ class Builder extends Component {
 
 	render() {
 		const {
-			fieldContext,
-			fieldsList,
+			activePage,
+			fieldTypes,
 			focusedField,
-			mode,
 			pages,
 			spritemap
 		} = this.props;
 
 		const FormRendererEvents = {
 			activePageUpdated: this._handleActivePageUpdated.bind(this),
-			deleteButtonClicked: this._handleDeleteButtonClicked.bind(this),
-			duplicateButtonClicked: this._handleDuplicateButtonClicked.bind(this),
 			fieldClicked: this._handleFieldClicked.bind(this),
+			fieldDeleted: this._handleFieldDeleted.bind(this),
+			fieldDuplicated: this._handleFieldDuplicated.bind(this),
 			fieldMoved: this._handleFieldMoved.bind(this),
 			pageAdded: this._handlePageAdded.bind(this),
-			pagesUpdated: this._handlePagesUpdated.bind(this),
-			sidebarOpened: this._handleSidebarOpened.bind(this)
+			pageDeleted: this._handlePageDeleted.bind(this),
+			pageReset: this._handlePageReset.bind(this),
+			pagesUpdated: this._handlePagesUpdated.bind(this)
 		};
 
 		const sidebarEvents = {
-			fieldAdded: this._handleFieldAdd.bind(this),
+			fieldAdded: this._handleFieldAdded.bind(this),
+			fieldBlurred: this._handleFieldBlurred.bind(this),
 			fieldEdited: this._handleFieldEdited.bind(this)
 		};
 
@@ -166,6 +325,7 @@ class Builder extends Component {
 				<div class="container">
 					<div class="sheet">
 						<FormRenderer
+							activePage={activePage}
 							editable={true}
 							events={FormRendererEvents}
 							pages={pages}
@@ -176,11 +336,8 @@ class Builder extends Component {
 				</div>
 				<Sidebar
 					events={sidebarEvents}
-					fieldContext={fieldContext}
-					fieldLists={fieldsList}
+					fieldTypes={fieldTypes}
 					focusedField={focusedField}
-					mode={mode}
-					pages={pages}
 					ref="sidebar"
 					spritemap={spritemap}
 				/>

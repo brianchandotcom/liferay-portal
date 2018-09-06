@@ -1,7 +1,7 @@
 {namespace Date}
 
 {template .render}
-	{@param? editable: bool}
+	{@param? readOnly: bool}
 	{@param? id: string}
 	{@param? label: string}
 	{@param? placeholder: string}
@@ -13,7 +13,7 @@
 	{call FieldBase.render}
 		{param contentRenderer kind="html"}
 			{call .content}
-				{param editable: $editable /}
+				{param readOnly: $readOnly /}
 				{param placeholder: $placeholder /}
 				{param spritemap: $spritemap /}
 				{param value: $value /}
@@ -29,7 +29,7 @@
 {/template}
 
 {template .content}
-	{@param? editable: bool}
+	{@param? readOnly: bool}
 	{@param? placeholder: string}
 	{@param? spritemap: string}
 	{@param? value: string}
@@ -47,7 +47,7 @@
 
 		type="text"
 
-		{if not $editable}
+		{if not $readOnly}
 			disabled
 		{/if}
 	{/let}

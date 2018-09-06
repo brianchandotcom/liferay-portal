@@ -16,13 +16,22 @@ class Checkbox extends Component {
 	static STATE = {
 
 		/**
+		 * @default undefined
+		 * @instance
+		 * @memberof FieldBase
+		 * @type {?(string|undefined)}
+		 */
+
+		fieldName: Config.string(),
+
+		/**
 		 * @default false
 		 * @instance
 		 * @memberof Checkbox
 		 * @type {?bool}
 		 */
 
-		editable: Config.bool().value(false),
+		readOnly: Config.bool().value(false),
 
 		/**
 		 * @default undefined
@@ -31,7 +40,7 @@ class Checkbox extends Component {
 		 * @type {?(string|undefined)}
 		 */
 
-		helpText: Config.string(),
+		tip: Config.string(),
 
 		/**
 		 * @default undefined
@@ -58,7 +67,7 @@ class Checkbox extends Component {
 		 * @type {?string}
 		 */
 
-		predefinedValue: Config.string().value('Option 1'),
+		predefinedValue: Config.bool(),
 
 		/**
 		 * @default false
@@ -116,12 +125,10 @@ class Checkbox extends Component {
 	};
 
 	_handleToggleChanged(event) {
-		const {key} = this;
-
 		this.emit(
 			'fieldEdited',
 			{
-				key,
+				fieldInstance: this,
 				originalEvent: event,
 				value: event.delegateTarget.checked
 			}

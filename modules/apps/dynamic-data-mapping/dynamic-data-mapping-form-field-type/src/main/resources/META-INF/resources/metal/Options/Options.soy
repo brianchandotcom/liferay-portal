@@ -2,8 +2,8 @@
 
 {template .render}
 	{@param? _handleTextChanged: any}
-	{@param? editable: bool}
-	{@param? helpText: string}
+	{@param? readOnly: bool}
+	{@param? tip: string}
 	{@param? items: list<[
 		checked: bool,
 		disabled: bool,
@@ -31,10 +31,12 @@
 								{param events: [
 									'fieldEdited': $_handleTextChanged
 								] /}
-								{param editable: $editable ? $editable : $option.disabled /}
-								{param value: $option.label and $option.value ? $option.label : $placeholder /}
-								{param showLabel: false /}
+								{param readOnly: $readOnly ? $readOnly : $option.disabled /}
+								{param name: $option.name /}
 								{param ref: 'text' /}
+								{param showLabel: false /}
+								{param spritemap: $spritemap /}
+								{param value: $option.label and $option.value ? $option.label : $placeholder /}
 							{/call}
 						{/let}
 
@@ -46,10 +48,12 @@
 									'fieldEdited': $_handleTextChanged
 								] /}
 
-								{param editable: $editable ? $editable : $option.disabled /}
+								{param readOnly: $readOnly ? $readOnly : $option.disabled /}
+								{param name: $option.name /}
 								{param placeholder: $placeholder /}
-								{param showLabel: false /}
 								{param ref: 'textVoid' /}
+								{param showLabel: false /}
+								{param spritemap: $spritemap /}
 							{/call}
 						{/if}
 					{/for}
@@ -57,7 +61,7 @@
 			{/if}
 		{/param}
 
-		{param helpText: $helpText /}
+		{param tip: $tip /}
 		{param id: $id /}
 		{param label: $label /}
 		{param required: $required /}

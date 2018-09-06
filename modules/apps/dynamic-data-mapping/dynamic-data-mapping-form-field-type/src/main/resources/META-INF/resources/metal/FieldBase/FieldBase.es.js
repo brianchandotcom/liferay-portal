@@ -24,7 +24,7 @@ class FieldBase extends Component {
 		 * @type {?(string|undefined)}
 		 */
 
-		helpText: Config.string(),
+		tip: Config.string(),
 
 		/**
 		 * @default undefined

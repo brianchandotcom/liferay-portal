@@ -18,6 +18,7 @@ import com.liferay.dynamic.data.mapping.form.builder.context.DDMFormBuilderConte
 import com.liferay.dynamic.data.mapping.form.builder.settings.DDMFormBuilderSettingsRetriever;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesTracker;
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderer;
+import com.liferay.dynamic.data.mapping.form.renderer.DDMFormTemplateContextFactory;
 import com.liferay.dynamic.data.mapping.form.values.factory.DDMFormValuesFactory;
 import com.liferay.dynamic.data.mapping.form.web.internal.configuration.DDMFormWebConfiguration;
 import com.liferay.dynamic.data.mapping.form.web.internal.display.context.util.FieldSetPermissionCheckerHelper;
@@ -89,7 +90,9 @@ public class DDMFormAdminFieldSetDisplayContext
 		DDMFormInstanceVersionLocalService formInstanceVersionLocalService,
 		DDMFormFieldTypeServicesTracker formFieldTypeServicesTracker,
 		DDMFormFieldTypesSerializerTracker formFieldTypesSerializerTracker,
-		DDMFormRenderer formRenderer, DDMFormValuesFactory formValuesFactory,
+		DDMFormRenderer formRenderer,
+		DDMFormTemplateContextFactory formTemplateContextFactory,
+		DDMFormValuesFactory formValuesFactory,
 		DDMFormValuesMerger formValuesMerger,
 		DDMStructureLocalService structureLocalService,
 		DDMStructureService structureService, JSONFactory jsonFactory,
@@ -102,9 +105,9 @@ public class DDMFormAdminFieldSetDisplayContext
 			ddmFormWebConfiguration, formInstanceRecordLocalService,
 			ddmFormInstanceRecordWriterTracker, formInstanceService,
 			formInstanceVersionLocalService, formFieldTypeServicesTracker,
-			formFieldTypesSerializerTracker, formRenderer, formValuesFactory,
-			formValuesMerger, structureLocalService, structureService,
-			jsonFactory, npmResolver);
+			formFieldTypesSerializerTracker, formRenderer,
+			formTemplateContextFactory, formValuesFactory, formValuesMerger,
+			structureLocalService, structureService, jsonFactory, npmResolver);
 
 		_fieldSetPermissionCheckerHelper = new FieldSetPermissionCheckerHelper(
 			formAdminRequestHelper);

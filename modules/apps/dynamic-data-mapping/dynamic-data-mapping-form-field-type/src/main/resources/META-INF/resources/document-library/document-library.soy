@@ -36,7 +36,7 @@
 
 				{if $required}
 					<svg aria-hidden="true"
-						 class="lexicon-icon lexicon-icon-asterisk reference-mark">
+						class="lexicon-icon lexicon-icon-asterisk reference-mark">
 						<use xlink:href="{$pathThemeImages}/lexicon/icons.svg#asterisk"/>
 					</svg>
 				{/if}
@@ -55,11 +55,11 @@
 				<div class="input-group">
 					<div class="input-group-item input-group-prepend">
 						<input class="field form-control"
-							   {if $dir}dir="{$dir}"{/if}
-							   disabled
-							   id="inputFile"
-							   type="text"
-							   value="{$fileEntryTitle ? $fileEntryTitle : ''}"
+								{if $dir}dir="{$dir}"{/if}
+								disabled
+								id="inputFile"
+								type="text"
+								value="{$fileEntryTitle ? $fileEntryTitle : ''}"
 						>
 					</div>
 
@@ -122,7 +122,7 @@
 			</div>
 
 			<div class="card-col-field">
-				<a href="{$fileEntryURL}" download="{$fileEntryTitle}">
+				<a download="{$fileEntryTitle}" href="{$fileEntryURL}">
 					<svg class="lexicon-icon">
 						<use xlink:href="{$lexiconIconsPath}download" />
 					</svg>

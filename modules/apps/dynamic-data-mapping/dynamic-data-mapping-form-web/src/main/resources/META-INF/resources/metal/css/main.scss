@@ -29,60 +29,8 @@
 	transition: transform 0.5s ease-in-out;
 }
 
-.sidebar-container.show {
+.sidebar-container.open {
 	transform: translateX(0%);
-}
-
-.ddm-drag {
-	background-color: #FFF;
-	height: 100%;
-	min-height: 95px;
-	padding: 0 15px;
-	width: 100%;
-}
-
-.ddm-drag .form-control {
-	cursor: -webkit-grab;
-}
-
-.ddm-target.col-empty {
-	align-items: center;
-	background-color: #F0F5FF;
-	border: 2px dashed #80ACFF;
-	border-radius: 4px;
-	color: #80ACFF;
-	display: flex;
-	justify-content: center;
-	opacity: 0;
-	visibility: hidden;
-}
-
-.ddm-target.col-empty.targetOver {
-	min-height: 20px;
-	opacity: 1;
-	visibility: visible;
-}
-
-.ddm-drag.dragging .form-control {
-	cursor: -webkit-grabbing;
-}
-
-.ddm-drag.dragging {
-	cursor: -webkit-grabbing;
-	opacity: 0.5;
-	position: absolute;
-	z-index: 10;
-}
-
-.ddm-drag-item {
-	cursor: -webkit-grab;
-	position: inherit;
-}
-
-.ddm-drag-item.dragging {
-	box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
-	cursor: -webkit-grabbing;
-	z-index: 20;
 }
 
 .list-group-item:hover {
@@ -92,10 +40,6 @@
 .ddm-sidebar-body {
 	height: calc(100vh - 160px);
 	overflow: auto;
-}
-
-.col-ddm {
-	min-height: 97px;
 }
 
 .ddm-field-actions-container {

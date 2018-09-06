@@ -6,9 +6,11 @@ import templates from './validation.soy';
 /**
  * Validation Component
  */
+
 class Validation extends Component {}
 
 // Register component
+
 Soy.register(Validation, templates, 'render');
 
 if (!window.DDMValidation) {

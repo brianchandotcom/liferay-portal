@@ -13,7 +13,7 @@
 {template .fieldset_column}
 	{@param columnSize: int}
 	{@param field: ?}
-	<div class="form-group-item col-md-{$columnSize}">
+	<div class="col-md-{$columnSize} form-group-item">
 		<div class="clearfix {if not $field.visible}hide{/if} lfr-ddm-form-field-container">
 			{let $variant: $field.type /}
 

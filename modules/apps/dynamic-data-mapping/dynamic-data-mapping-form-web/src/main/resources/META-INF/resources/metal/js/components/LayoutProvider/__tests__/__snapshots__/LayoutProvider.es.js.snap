@@ -1,167 +1,5 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`LayoutProvider Field events deleteField should listen the fieldDeleted event and delete the field in the column to the pages 1`] = `
-Array [
-  Object {
-    "rows": Array [
-      Object {
-        "columns": Array [
-          Object {
-            "fields": Array [
-              Object {
-                "label": "Radio",
-                "type": "radio",
-              },
-            ],
-            "size": 3,
-          },
-          Object {
-            "fields": Array [],
-            "size": 9,
-          },
-        ],
-      },
-      Object {
-        "columns": Array [
-          Object {
-            "fields": Array [],
-            "size": 4,
-          },
-          Object {
-            "fields": Array [
-              Object {
-                "items": Array [
-                  Object {
-                    "name": "Foo",
-                  },
-                  Object {
-                    "name": "Bar",
-                  },
-                ],
-                "label": "Select",
-                "required": true,
-                "type": "select",
-              },
-            ],
-            "size": 6,
-          },
-          Object {
-            "fields": Array [],
-            "size": 2,
-          },
-        ],
-      },
-      Object {
-        "columns": Array [
-          Object {
-            "fields": Array [
-              Object {
-                "label": "Second row",
-                "required": true,
-                "type": "text",
-              },
-            ],
-            "size": 12,
-          },
-        ],
-      },
-    ],
-    "title": "Untitled name",
-  },
-]
-`;
-
-exports[`LayoutProvider Field events duplicateField should listen the duplicate field event and add this field in the pages 1`] = `
-Array [
-  Object {
-    "rows": Array [
-      Object {
-        "columns": Array [
-          Object {
-            "fields": Array [
-              Object {
-                "label": "Radio",
-                "type": "radio",
-              },
-            ],
-            "size": 3,
-          },
-          Object {
-            "fields": Array [],
-            "size": 9,
-          },
-        ],
-      },
-      Object {
-        "columns": Array [
-          Object {
-            "fields": Array [
-              Object {
-                "label": "copy-of-x",
-                "name": NaN,
-                "type": "radio",
-              },
-            ],
-            "size": 12,
-          },
-        ],
-      },
-      Object {
-        "columns": Array [
-          Object {
-            "fields": Array [
-              Object {
-                "label": "Text",
-                "required": true,
-                "type": "text",
-              },
-            ],
-            "size": 4,
-          },
-          Object {
-            "fields": Array [
-              Object {
-                "items": Array [
-                  Object {
-                    "name": "Foo",
-                  },
-                  Object {
-                    "name": "Bar",
-                  },
-                ],
-                "label": "Select",
-                "required": true,
-                "type": "select",
-              },
-            ],
-            "size": 6,
-          },
-          Object {
-            "fields": Array [],
-            "size": 2,
-          },
-        ],
-      },
-      Object {
-        "columns": Array [
-          Object {
-            "fields": Array [
-              Object {
-                "label": "Second row",
-                "required": true,
-                "type": "text",
-              },
-            ],
-            "size": 12,
-          },
-        ],
-      },
-    ],
-    "title": "Untitled name",
-  },
-]
-`;
-
 exports[`LayoutProvider Field events fieldAdded should listen the fieldAdded event and add the field in the column to the pages 1`] = `
 Array [
   Object {
@@ -171,19 +9,31 @@ Array [
           Object {
             "fields": Array [
               Object {
+                "name": "text",
+                "spritemap": "icons.svg",
+                "type": "text",
+              },
+            ],
+            "size": 12,
+          },
+        ],
+      },
+      Object {
+        "columns": Array [
+          Object {
+            "fields": Array [
+              Object {
                 "label": "Radio",
+                "settingsContext": Object {
+                  "pages": Array [],
+                },
                 "type": "radio",
               },
             ],
             "size": 3,
           },
           Object {
-            "fields": Array [
-              Object {
-                "spritemap": "icons.svg",
-                "type": "text",
-              },
-            ],
+            "fields": Array [],
             "size": 9,
           },
         ],
@@ -195,6 +45,9 @@ Array [
               Object {
                 "label": "Text",
                 "required": true,
+                "settingsContext": Object {
+                  "pages": Array [],
+                },
                 "type": "text",
               },
             ],
@@ -213,6 +66,9 @@ Array [
                 ],
                 "label": "Select",
                 "required": true,
+                "settingsContext": Object {
+                  "pages": Array [],
+                },
                 "type": "select",
               },
             ],
@@ -231,6 +87,9 @@ Array [
               Object {
                 "label": "Second row",
                 "required": true,
+                "settingsContext": Object {
+                  "pages": Array [],
+                },
                 "type": "text",
               },
             ],
@@ -253,6 +112,7 @@ Array [
           Object {
             "fields": Array [
               Object {
+                "name": "text",
                 "spritemap": "icons.svg",
                 "type": "text",
               },
@@ -267,6 +127,9 @@ Array [
             "fields": Array [
               Object {
                 "label": "Radio",
+                "settingsContext": Object {
+                  "pages": Array [],
+                },
                 "type": "radio",
               },
             ],
@@ -285,6 +148,9 @@ Array [
               Object {
                 "label": "Text",
                 "required": true,
+                "settingsContext": Object {
+                  "pages": Array [],
+                },
                 "type": "text",
               },
             ],
@@ -303,6 +169,9 @@ Array [
                 ],
                 "label": "Select",
                 "required": true,
+                "settingsContext": Object {
+                  "pages": Array [],
+                },
                 "type": "select",
               },
             ],
@@ -321,6 +190,9 @@ Array [
               Object {
                 "label": "Second row",
                 "required": true,
+                "settingsContext": Object {
+                  "pages": Array [],
+                },
                 "type": "text",
               },
             ],
@@ -334,7 +206,7 @@ Array [
 ]
 `;
 
-exports[`LayoutProvider Field events fieldEdited should listen the fieldEdited event and edit the field to the pages 1`] = `
+exports[`LayoutProvider Field events fieldDeleted should listen the fieldDeleted event and delete the field in the column to the pages 1`] = `
 Array [
   Object {
     "rows": Array [
@@ -344,6 +216,91 @@ Array [
             "fields": Array [
               Object {
                 "label": "Radio",
+                "settingsContext": Object {
+                  "pages": Array [],
+                },
+                "type": "radio",
+              },
+            ],
+            "size": 3,
+          },
+          Object {
+            "fields": Array [],
+            "size": 9,
+          },
+        ],
+      },
+      Object {
+        "columns": Array [
+          Object {
+            "fields": Array [],
+            "size": 4,
+          },
+          Object {
+            "fields": Array [
+              Object {
+                "items": Array [
+                  Object {
+                    "name": "Foo",
+                  },
+                  Object {
+                    "name": "Bar",
+                  },
+                ],
+                "label": "Select",
+                "required": true,
+                "settingsContext": Object {
+                  "pages": Array [],
+                },
+                "type": "select",
+              },
+            ],
+            "size": 6,
+          },
+          Object {
+            "fields": Array [],
+            "size": 2,
+          },
+        ],
+      },
+      Object {
+        "columns": Array [
+          Object {
+            "fields": Array [
+              Object {
+                "label": "Second row",
+                "required": true,
+                "settingsContext": Object {
+                  "pages": Array [],
+                },
+                "type": "text",
+              },
+            ],
+            "size": 12,
+          },
+        ],
+      },
+    ],
+    "title": "Untitled name",
+  },
+]
+`;
+
+exports[`LayoutProvider Field events fieldDuplicated should listen the duplicate field event and add this field in the pages 1`] = `
+Array [
+  Object {
+    "rows": Array [
+      Object {
+        "columns": Array [
+          Object {
+            "fields": Array [
+              Object {
+                "fieldName": "name0000",
+                "label": "Radio",
+                "name": "name0000",
+                "settingsContext": Object {
+                  "pages": Array [],
+                },
                 "type": "radio",
               },
             ],
@@ -360,8 +317,31 @@ Array [
           Object {
             "fields": Array [
               Object {
-                "label": "Foo",
+                "fieldName": "name0010",
+                "label": "copy-of-x",
+                "name": "name0010",
+                "settingsContext": Object {
+                  "pages": Array [],
+                },
+                "type": "radio",
+              },
+            ],
+            "size": 12,
+          },
+        ],
+      },
+      Object {
+        "columns": Array [
+          Object {
+            "fields": Array [
+              Object {
+                "fieldName": "name0020",
+                "label": "Text",
+                "name": "name0020",
                 "required": true,
+                "settingsContext": Object {
+                  "pages": Array [],
+                },
                 "type": "text",
               },
             ],
@@ -370,6 +350,7 @@ Array [
           Object {
             "fields": Array [
               Object {
+                "fieldName": "name0120",
                 "items": Array [
                   Object {
                     "name": "Foo",
@@ -379,7 +360,11 @@ Array [
                   },
                 ],
                 "label": "Select",
+                "name": "name0120",
                 "required": true,
+                "settingsContext": Object {
+                  "pages": Array [],
+                },
                 "type": "select",
               },
             ],
@@ -396,8 +381,13 @@ Array [
           Object {
             "fields": Array [
               Object {
+                "fieldName": "name0030",
                 "label": "Second row",
+                "name": "name0030",
                 "required": true,
+                "settingsContext": Object {
+                  "pages": Array [],
+                },
                 "type": "text",
               },
             ],
@@ -420,15 +410,6 @@ Array [
           Object {
             "fields": Array [
               Object {
-                "label": "Radio",
-                "type": "radio",
-              },
-            ],
-            "size": 3,
-          },
-          Object {
-            "fields": Array [
-              Object {
                 "items": Array [
                   Object {
                     "name": "Foo",
@@ -439,9 +420,32 @@ Array [
                 ],
                 "label": "Select",
                 "required": true,
+                "settingsContext": Object {
+                  "pages": Array [],
+                },
                 "type": "select",
               },
             ],
+            "size": 12,
+          },
+        ],
+      },
+      Object {
+        "columns": Array [
+          Object {
+            "fields": Array [
+              Object {
+                "label": "Radio",
+                "settingsContext": Object {
+                  "pages": Array [],
+                },
+                "type": "radio",
+              },
+            ],
+            "size": 3,
+          },
+          Object {
+            "fields": Array [],
             "size": 9,
           },
         ],
@@ -453,6 +457,9 @@ Array [
               Object {
                 "label": "Text",
                 "required": true,
+                "settingsContext": Object {
+                  "pages": Array [],
+                },
                 "type": "text",
               },
             ],
@@ -475,6 +482,9 @@ Array [
               Object {
                 "label": "Second row",
                 "required": true,
+                "settingsContext": Object {
+                  "pages": Array [],
+                },
                 "type": "text",
               },
             ],
@@ -499,6 +509,9 @@ Array [
               Object {
                 "label": "Text",
                 "required": true,
+                "settingsContext": Object {
+                  "pages": Array [],
+                },
                 "type": "text",
               },
             ],
@@ -512,6 +525,9 @@ Array [
             "fields": Array [
               Object {
                 "label": "Radio",
+                "settingsContext": Object {
+                  "pages": Array [],
+                },
                 "type": "radio",
               },
             ],
@@ -542,6 +558,9 @@ Array [
                 ],
                 "label": "Select",
                 "required": true,
+                "settingsContext": Object {
+                  "pages": Array [],
+                },
                 "type": "select",
               },
             ],
@@ -560,6 +579,9 @@ Array [
               Object {
                 "label": "Second row",
                 "required": true,
+                "settingsContext": Object {
+                  "pages": Array [],
+                },
                 "type": "text",
               },
             ],
@@ -583,6 +605,9 @@ Array [
             "fields": Array [
               Object {
                 "label": "Radio",
+                "settingsContext": Object {
+                  "pages": Array [],
+                },
                 "type": "radio",
               },
             ],
@@ -601,6 +626,9 @@ Array [
               Object {
                 "label": "Text",
                 "required": true,
+                "settingsContext": Object {
+                  "pages": Array [],
+                },
                 "type": "text",
               },
             ],
@@ -619,6 +647,9 @@ Array [
                 ],
                 "label": "Select",
                 "required": true,
+                "settingsContext": Object {
+                  "pages": Array [],
+                },
                 "type": "select",
               },
             ],
@@ -637,6 +668,9 @@ Array [
               Object {
                 "label": "Second row",
                 "required": true,
+                "settingsContext": Object {
+                  "pages": Array [],
+                },
                 "type": "text",
               },
             ],
@@ -659,20 +693,34 @@ Array [
           Object {
             "fields": Array [
               Object {
+                "label": "Second row",
+                "required": true,
+                "settingsContext": Object {
+                  "pages": Array [],
+                },
+                "type": "text",
+              },
+            ],
+            "size": 12,
+          },
+        ],
+      },
+      Object {
+        "columns": Array [
+          Object {
+            "fields": Array [
+              Object {
                 "label": "Radio",
+                "settingsContext": Object {
+                  "pages": Array [],
+                },
                 "type": "radio",
               },
             ],
             "size": 3,
           },
           Object {
-            "fields": Array [
-              Object {
-                "label": "Second row",
-                "required": true,
-                "type": "text",
-              },
-            ],
+            "fields": Array [],
             "size": 9,
           },
         ],
@@ -684,6 +732,9 @@ Array [
               Object {
                 "label": "Text",
                 "required": true,
+                "settingsContext": Object {
+                  "pages": Array [],
+                },
                 "type": "text",
               },
             ],
@@ -702,6 +753,9 @@ Array [
                 ],
                 "label": "Select",
                 "required": true,
+                "settingsContext": Object {
+                  "pages": Array [],
+                },
                 "type": "select",
               },
             ],
@@ -710,6 +764,14 @@ Array [
           Object {
             "fields": Array [],
             "size": 2,
+          },
+        ],
+      },
+      Object {
+        "columns": Array [
+          Object {
+            "fields": Array [],
+            "size": 12,
           },
         ],
       },
@@ -729,10 +791,17 @@ Array [
             "fields": Array [
               Object {
                 "label": "Radio",
+                "settingsContext": Object {
+                  "pages": Array [],
+                },
                 "type": "radio",
               },
             ],
-            "size": 12,
+            "size": 3,
+          },
+          Object {
+            "fields": Array [],
+            "size": 9,
           },
         ],
       },
@@ -743,6 +812,9 @@ Array [
               Object {
                 "label": "Text",
                 "required": true,
+                "settingsContext": Object {
+                  "pages": Array [],
+                },
                 "type": "text",
               },
             ],
@@ -761,6 +833,9 @@ Array [
                 ],
                 "label": "Select",
                 "required": true,
+                "settingsContext": Object {
+                  "pages": Array [],
+                },
                 "type": "select",
               },
             ],
@@ -779,6 +854,9 @@ Array [
               Object {
                 "label": "Second row",
                 "required": true,
+                "settingsContext": Object {
+                  "pages": Array [],
+                },
                 "type": "text",
               },
             ],

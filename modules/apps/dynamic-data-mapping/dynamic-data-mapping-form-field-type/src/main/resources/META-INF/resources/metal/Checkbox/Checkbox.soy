@@ -2,14 +2,14 @@
 
 {template .render}
 	{@param? _handleToggleChanged: any}
-	{@param? editable: bool}
-	{@param? helpText: string}
+	{@param? readOnly: bool}
 	{@param? id: string}
 	{@param? label: string}
 	{@param? required: bool}
 	{@param? showAsSwitcher: bool}
 	{@param? showLabel: bool}
 	{@param? spritemap: string}
+	{@param? tip: string}
 	{@param? value: bool}
 
 	{call FieldBase.render}
@@ -17,32 +17,32 @@
 			{call .content}
 				{param _handleToggleChanged: $_handleToggleChanged /}
 				{param checked: $value /}
-				{param disabled: $editable /}
+				{param disabled: $readOnly /}
 				{param label: $label /}
 				{param showAsSwitcher: $showAsSwitcher /}
+				{param showLabel: $showLabel /}
 			{/call}
 		{/param}
 
-		{param helpText: $helpText /}
 		{param id: $id /}
 		{param label: $label /}
 		{param required: $required /}
-		{param showLabel: $showLabel /}
+		{param showLabel: not $showAsSwitcher and $showLabel /}
 		{param spritemap: $spritemap /}
+		{param tip: $tip /}
 	{/call}
 {/template}
 
 {template .content}
-	{@param? checked: bool}
 	{@param? _handleToggleChanged: any}
+	{@param? checked: bool}
 	{@param? disabled: bool}
 	{@param? label: string}
 	{@param? showAsSwitcher: bool}
 
 	{if $showAsSwitcher}
 		<label class="toggle-switch">
-			<input class="toggle-switch-check" data-onchange="{$_handleToggleChanged}" type="checkbox">
-			<span class="toggle-switch-label">{$label}</span>
+			<input {if $checked}checked{/if} class="toggle-switch-check" data-onchange="{$_handleToggleChanged}" type="checkbox">
 			<span aria-hidden="true" class="toggle-switch-bar">
 				<span class="toggle-switch-handle" data-label-off="{$label}" data-label-on="{$label}">
 				</span>

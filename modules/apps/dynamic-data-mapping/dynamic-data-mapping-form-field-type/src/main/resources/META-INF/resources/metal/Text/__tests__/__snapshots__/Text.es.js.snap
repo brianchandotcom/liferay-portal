@@ -3,7 +3,7 @@
 exports[`Field Text should have a helptext 1`] = `
 <div class="form-group">
   <label></label>
-  <input class="form-control" type="text">
+  <input class="form-control" name="textField" type="text" disabled="disabled">
   <span class="form-text">Type something</span>
 </div>
 `;
@@ -11,7 +11,7 @@ exports[`Field Text should have a helptext 1`] = `
 exports[`Field Text should have a key 1`] = `
 <div class="form-group">
   <label></label>
-  <input class="form-control" type="text">
+  <input class="form-control" name="textField" type="text" disabled="disabled">
   <span class="form-text"></span>
 </div>
 `;
@@ -19,7 +19,7 @@ exports[`Field Text should have a key 1`] = `
 exports[`Field Text should have a label 1`] = `
 <div class="form-group">
   <label>label </label>
-  <input class="form-control" type="text">
+  <input class="form-control" name="textField" type="text" disabled="disabled">
   <span class="form-text"></span>
 </div>
 `;
@@ -27,7 +27,7 @@ exports[`Field Text should have a label 1`] = `
 exports[`Field Text should have a placeholder 1`] = `
 <div class="form-group">
   <label></label>
-  <input class="form-control" placeholder="Placeholder" type="text">
+  <input class="form-control" name="textField" placeholder="Placeholder" type="text" disabled="disabled">
   <span class="form-text"></span>
 </div>
 `;
@@ -35,7 +35,7 @@ exports[`Field Text should have a placeholder 1`] = `
 exports[`Field Text should have a spritemap 1`] = `
 <div class="form-group">
   <label></label>
-  <input class="form-control" type="text">
+  <input class="form-control" name="textField" type="text" disabled="disabled">
   <span class="form-text"></span>
 </div>
 `;
@@ -43,7 +43,7 @@ exports[`Field Text should have a spritemap 1`] = `
 exports[`Field Text should have a value 1`] = `
 <div class="form-group">
   <label></label>
-  <input class="form-control" type="text" value="value">
+  <input class="form-control" name="textField" type="text" disabled="disabled" value="value">
   <span class="form-text"></span>
 </div>
 `;
@@ -51,15 +51,15 @@ exports[`Field Text should have a value 1`] = `
 exports[`Field Text should have an id 1`] = `
 <div class="form-group">
   <label for="ID"></label>
-  <input class="form-control" id="ID" type="text">
+  <input class="form-control" id="ID" name="textField" type="text" disabled="disabled">
   <span class="form-text"></span>
 </div>
 `;
 
-exports[`Field Text should not be editable 1`] = `
+exports[`Field Text should not be readOnly 1`] = `
 <div class="form-group">
   <label></label>
-  <input class="form-control" type="text" disabled="disabled">
+  <input class="form-control" name="textField" type="text">
   <span class="form-text"></span>
 </div>
 `;
@@ -67,7 +67,7 @@ exports[`Field Text should not be editable 1`] = `
 exports[`Field Text should not be required 1`] = `
 <div class="form-group">
   <label></label>
-  <input class="form-control" type="text">
+  <input class="form-control" name="textField" type="text" disabled="disabled">
   <span class="form-text"></span>
 </div>
 `;
@@ -75,7 +75,7 @@ exports[`Field Text should not be required 1`] = `
 exports[`Field Text should render Label if showLabel is true 1`] = `
 <div class="form-group">
   <label>text </label>
-  <input class="form-control" type="text">
+  <input class="form-control" name="textField" type="text" disabled="disabled">
   <span class="form-text"></span>
 </div>
 `;

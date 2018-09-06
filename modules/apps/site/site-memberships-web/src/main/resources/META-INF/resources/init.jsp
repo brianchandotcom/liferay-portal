@@ -33,6 +33,7 @@ page import="com.liferay.portal.kernel.exception.DuplicateGroupException" %><%@
 page import="com.liferay.portal.kernel.exception.GroupKeyException" %><%@
 page import="com.liferay.portal.kernel.exception.MembershipRequestCommentsException" %><%@
 page import="com.liferay.portal.kernel.exception.RequiredGroupException" %><%@
+page import="com.liferay.portal.kernel.exception.RequiredUserException" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.model.Company" %><%@
 page import="com.liferay.portal.kernel.model.Group" %><%@

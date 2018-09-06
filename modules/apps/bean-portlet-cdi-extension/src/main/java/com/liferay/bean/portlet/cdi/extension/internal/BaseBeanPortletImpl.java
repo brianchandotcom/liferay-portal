@@ -14,7 +14,9 @@
 
 package com.liferay.bean.portlet.cdi.extension.internal;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.portlet.LiferayPortletMode;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -151,9 +153,8 @@ public abstract class BaseBeanPortletImpl implements BeanPortlet {
 		else if (methodType == MethodType.RENDER) {
 			return _renderMethods;
 		}
-		else {
-			return _serveResourceMethods;
-		}
+
+		return _serveResourceMethods;
 	}
 
 	@Override
@@ -212,7 +213,7 @@ public abstract class BaseBeanPortletImpl implements BeanPortlet {
 						actionMethod.publishingEvents()) {
 
 					supportedPublishingEvents.add(
-						PortletDictionaryUtil.formatNameValuePair(
+						toNameValuePair(
 							portletQName.localPart(),
 							portletQName.namespaceURI()));
 				}
@@ -242,7 +243,7 @@ public abstract class BaseBeanPortletImpl implements BeanPortlet {
 						eventMethod.publishingEvents()) {
 
 					supportedPublishingEvents.add(
-						PortletDictionaryUtil.formatNameValuePair(
+						toNameValuePair(
 							portletQName.localPart(),
 							portletQName.namespaceURI()));
 				}
@@ -265,7 +266,7 @@ public abstract class BaseBeanPortletImpl implements BeanPortlet {
 						eventMethod.processingEvents()) {
 
 					supportedProcessingEvents.add(
-						PortletDictionaryUtil.formatNameValuePair(
+						toNameValuePair(
 							portletQName.localPart(),
 							portletQName.namespaceURI()));
 				}
@@ -280,6 +281,14 @@ public abstract class BaseBeanPortletImpl implements BeanPortlet {
 			"javax.portlet.version", _beanApp.getSpecVersion());
 
 		return portletDictionary;
+	}
+
+	protected static String toNameValuePair(String name, String value) {
+		if (Validator.isNull(value)) {
+			return name;
+		}
+
+		return name.concat(StringPool.SEMICOLON).concat(value);
 	}
 
 	protected Map<String, String> getLiferayConfiguration() {

@@ -19,7 +19,6 @@ import com.liferay.bean.portlet.cdi.extension.internal.BaseBeanPortletImpl;
 import com.liferay.bean.portlet.cdi.extension.internal.BeanApp;
 import com.liferay.bean.portlet.cdi.extension.internal.PortletDependency;
 import com.liferay.bean.portlet.cdi.extension.internal.PortletDictionary;
-import com.liferay.bean.portlet.cdi.extension.internal.PortletDictionaryUtil;
 import com.liferay.petra.string.StringBundler;
 
 import java.util.ArrayList;
@@ -200,7 +199,7 @@ public class BeanPortletAnnotationImpl extends BaseBeanPortletImpl {
 			}
 
 			supportedPortletModes.add(
-				PortletDictionaryUtil.formatNameValuePair(
+				toNameValuePair(
 					supports.mimeType(), portletModesSB.toString()));
 		}
 
@@ -268,7 +267,7 @@ public class BeanPortletAnnotationImpl extends BaseBeanPortletImpl {
 
 		for (String identifier : _portletConfiguration.publicParams()) {
 			supportedPublicRenderParameters.add(
-				PortletDictionaryUtil.formatNameValuePair(
+				toNameValuePair(
 					identifier,
 					getPublicRenderParameterNamespaceURI(identifier)));
 		}
@@ -298,7 +297,7 @@ public class BeanPortletAnnotationImpl extends BaseBeanPortletImpl {
 			}
 
 			supportedWindowStates.add(
-				PortletDictionaryUtil.formatNameValuePair(
+				toNameValuePair(
 					supports.mimeType(), windowStatesSB.toString()));
 		}
 

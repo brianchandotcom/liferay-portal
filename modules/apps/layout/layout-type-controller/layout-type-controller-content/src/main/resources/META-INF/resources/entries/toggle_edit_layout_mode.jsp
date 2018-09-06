@@ -22,6 +22,9 @@ String mode = ParamUtil.getString(request, "p_l_mode", Constants.VIEW);
 String redirect = themeDisplay.getURLCurrent();
 
 if (Objects.equals(mode, Constants.EDIT)) {
+	redirect = HttpUtil.setParameter(redirect, "p_l_mode", Constants.VIEW);
+}
+else {
 	redirect = HttpUtil.setParameter(redirect, "p_l_mode", Constants.EDIT);
 }
 %>

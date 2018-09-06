@@ -102,15 +102,17 @@ gradle.beforeProject {
 		}
 
 		if (project.path.startsWith(":sdk:project-templates:project-templates-")) {
+			task generateSampleProject(type:JavaExec)
+
 			buildCSS {
 				enabled = false
 			}
 
-			task generateSampleProject(type:JavaExec) {
-				args '--archetypes-dirs', jar.archivePath.parent, '--destination', "${buildDir}", '--template', project.name.replaceFirst("project-templates-", "")
+			generateSampleProject {
+				args "--archetypes-dirs", jar.archivePath.parent, "--destination", "${buildDir}", "--template", project.name.replaceFirst("project-templates-", "")
 				classpath = sourceSets.main.runtimeClasspath
 				dependsOn jar
-				main = 'com.liferay.project.templates.ProjectTemplates'
+				main = "com.liferay.project.templates.ProjectTemplates"
 			}
 
 			processResources {

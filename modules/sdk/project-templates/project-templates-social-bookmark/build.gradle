@@ -5,11 +5,9 @@ dependencies {
 }
 
 generateSampleProject {
-	String sampleProjectName = "foo"
-
-	args '--class-name', 'Foo', '--liferayVersion', '7.1', '--name', sampleProjectName
+	args "--class-name", "Foo", "--liferayVersion", "7.1", "--name", "foo"
 
 	doFirst {
-		delete "${buildDir}/${sampleProjectName}"
+		delete "${buildDir}/foo"
 	}
 }

@@ -38,7 +38,7 @@ public class StructuredContentUtil {
 		).filter(
 			StructuredContentUtil::isJSONObject
 		).filter(
-			s -> s.contains("fileEntryId")
+			s -> s.contains("uuid")
 		).map(
 			JSONFactoryUtil::createJSONObject
 		).map(

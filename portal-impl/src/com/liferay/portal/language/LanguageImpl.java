@@ -1068,6 +1068,17 @@ public class LanguageImpl implements Language, Serializable {
 
 	@Override
 	public Locale getLocale(long groupId, String languageCode) {
+		try {
+			if (isInheritLocales(groupId)) {
+				return getLocale(languageCode);
+			}
+		}
+		catch (Exception e) {
+			if (_log.isWarnEnabled()) {
+				_log.warn("Unable to check if group inherits locales");
+			}
+		}
+
 		Map<String, Locale> groupLanguageCodeLocalesMap =
 			_getGroupLanguageCodeLocalesMap(groupId);
 

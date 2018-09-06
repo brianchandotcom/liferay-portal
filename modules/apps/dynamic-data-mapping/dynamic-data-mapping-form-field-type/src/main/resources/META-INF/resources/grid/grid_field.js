@@ -101,20 +101,8 @@ AUI.add(
 						return instance._focusTarget;
 					},
 
-					_getGridRowsNode: function() {
-						var instance = this;
-
-						var container = instance.get('container');
-
-						var gridRowsNode = container.all('tbody tr');
-
-						return gridRowsNode;
-					},
-
-					_getLocalizedLabel: function(option) {
-						var defaultLanguageId = themeDisplay.getDefaultLanguageId();
-
-						return option.label[defaultLanguageId] ? option.label[defaultLanguageId] : option.label;
+					_getLabel: function(option) {
+						return option.label ? option.label: option.value;
 					},
 
 					_mapItemsLabels: function(items) {
@@ -122,7 +110,7 @@ AUI.add(
 
 						items.forEach(
 							function(item) {
-								item.label = instance._getLocalizedLabel(item);
+								item.label = instance._getLabel(item);
 							}
 						);
 					},

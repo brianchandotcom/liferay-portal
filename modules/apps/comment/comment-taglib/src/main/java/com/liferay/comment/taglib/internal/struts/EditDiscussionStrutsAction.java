@@ -44,6 +44,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.servlet.NamespaceServletRequest;
+import com.liferay.portal.util.PropsValues;
 
 import java.io.IOException;
 
@@ -255,9 +256,7 @@ public class EditDiscussionStrutsAction extends BaseStrutsAction {
 
 		// Subscription
 
-		boolean subscribe = ParamUtil.getBoolean(request, "subscribe");
-
-		if (subscribe) {
+		if (PropsValues.DISCUSSION_SUBSCRIBE) {
 			_commentManager.subscribeDiscussion(
 				themeDisplay.getUserId(), themeDisplay.getScopeGroupId(),
 				className, classPK);

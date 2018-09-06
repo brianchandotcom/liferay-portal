@@ -59,8 +59,6 @@ if (discussionCommentIterator != null) {
 	index.val('<%= String.valueOf(index) %>');
 
 	<c:if test="<%= (rootDiscussionComment != null) && (discussion.getDiscussionCommentsCount() <= index) %>">
-		var moreCommentsLink = $('#<%= namespace %>moreComments');
-
-		moreCommentsLink.hide();
+		$('#<%= namespace %>moreCommentsContainer').hide();
 	</c:if>
 </aui:script>

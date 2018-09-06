@@ -18,8 +18,8 @@ import com.liferay.apio.architect.provider.Provider;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.structured.content.apio.architect.filter.Filter;
 import com.liferay.structured.content.apio.architect.filter.FilterParser;
+import com.liferay.structured.content.apio.architect.filter.InvalidFilterException;
 import com.liferay.structured.content.apio.architect.filter.expression.ExpressionVisitException;
-import com.liferay.structured.content.apio.internal.architect.filter.InvalidFilterException;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -37,7 +37,7 @@ public class FilterProvider implements Provider<Filter> {
 		String filterString = httpServletRequest.getParameter("filter");
 
 		if (Validator.isNull(filterString)) {
-			return null;
+			return Filter.emptyFilter();
 		}
 
 		try {

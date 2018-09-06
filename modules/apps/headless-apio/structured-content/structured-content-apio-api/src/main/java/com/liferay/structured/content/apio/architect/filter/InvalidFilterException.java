@@ -12,23 +12,36 @@
  * details.
  */
 
-package com.liferay.structured.content.apio.internal.architect.filter;
+package com.liferay.structured.content.apio.architect.filter;
 
 import javax.ws.rs.BadRequestException;
 
 /**
- * This exception is used to model errors when handling search {@link
- * com.liferay.structured.content.apio.architect.filter.Filter}s.
+ * This exception is used to model errors when handling {@link Filter}.
  *
  * @author David Arques
  * @review
  */
 public class InvalidFilterException extends BadRequestException {
 
+	/**
+	 * Creates a new <code>InvalidFilterException</code> with a message
+	 *
+	 * @param  msg - message of the Exception
+	 * @review
+	 */
 	public InvalidFilterException(String msg) {
 		super(msg);
 	}
 
+	/**
+	 * Creates a new <code>InvalidFilterException</code> with a message and a
+	 * cause
+	 *
+	 * @param  msg - message of the Exception
+	 * @param  cause - cause of the Exception
+	 * @review
+	 */
 	public InvalidFilterException(String msg, Throwable cause) {
 		super(msg, cause);
 	}

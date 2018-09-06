@@ -27,6 +27,18 @@ import com.liferay.structured.content.apio.architect.filter.expression.Expressio
  */
 public class Filter {
 
+	public static final Filter EMPTY_FILTER = new Filter();
+
+	/**
+	 * Returns an empty Filter.
+	 *
+	 * @return - an empty Filter
+	 * @review
+	 */
+	public static Filter emptyFilter() {
+		return EMPTY_FILTER;
+	}
+
 	/**
 	 * Creates a new {@link Filter} a given {@link Expression}
 	 *
@@ -35,7 +47,7 @@ public class Filter {
 	 */
 	public Filter(Expression expression) {
 		if (expression == null) {
-			throw new IllegalArgumentException("Expression is null");
+			throw new InvalidFilterException("Expression is null");
 		}
 
 		_expression = expression;
@@ -49,6 +61,10 @@ public class Filter {
 	 */
 	public Expression getExpression() {
 		return _expression;
+	}
+
+	private Filter() {
+		_expression = null;
 	}
 
 	private final Expression _expression;

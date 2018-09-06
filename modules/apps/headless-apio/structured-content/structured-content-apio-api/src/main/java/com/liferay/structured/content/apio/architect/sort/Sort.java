@@ -31,9 +31,9 @@ public class Sort {
 	public static final Sort EMPTY_SORT = new Sort();
 
 	/**
-	 * Returns a empty Sort.
+	 * Returns an empty Sort.
 	 *
-	 * @return - a empty Sort
+	 * @return - an empty Sort
 	 * @review
 	 */
 	public static Sort emptySort() {

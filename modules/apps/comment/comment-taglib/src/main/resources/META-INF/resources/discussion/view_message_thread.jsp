@@ -117,9 +117,22 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 										</div>
 									</liferay-util:buffer>
 
-									<a aria-label="<liferay-ui:message arguments="<%= HtmlUtil.escape(parentDiscussionComment.getUserName()) %>" key="in-reply-to-x" />" class="lfr-discussion-parent-link" data-inreply-content="<%= StringUtil.shorten(HtmlUtil.escape(parentDiscussionComment.getBody()), 200) %>" data-inreply-title="<%= HtmlUtil.escape(parentCommentUserBuffer) %>" href="javascript:void(0);">
-										<span class="inline-item inline-item-before"><clay:icon symbol="redo" /></span><%= HtmlUtil.escape(parentDiscussionComment.getUserName()) %>
-									</a>
+									<%
+									Map<String, String> dataInReply = new HashMap<>();
+									dataInReply.put("inreply-content", parentDiscussionComment.getBody());
+									dataInReply.put("inreply-title", parentCommentUserBuffer);
+									%>
+
+									<clay:link
+										buttonStyle="secondary"
+										data="<%= dataInReply %>"
+										elementClasses="lfr-discussion-parent-link"
+										href="javascript:void(0);"
+										icon="redo"
+										label="<%= HtmlUtil.escape(parentDiscussionComment.getUserName()) %>"
+										ariaLabel="<%= LanguageUtil.format(request, "in-reply-to-x", HtmlUtil.escape(parentDiscussionComment.getUserName()),
+										false) %>"
+									/>
 								</c:if>
 							</div>
 

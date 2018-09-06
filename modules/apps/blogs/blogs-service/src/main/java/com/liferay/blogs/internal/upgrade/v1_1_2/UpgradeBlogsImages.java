@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
 
 import java.io.File;
+import java.io.IOException;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -82,9 +83,7 @@ public class UpgradeBlogsImages extends UpgradeProcess {
 					smallImage.getImageId(), StringPool.PERIOD,
 					smallImage.getType());
 
-				File tempFile = FileUtil.createTempFile(bytes);
-
-				String mimeType = MimeTypesUtil.getContentType(tempFile);
+				String mimeType = _getContentType(bytes);
 
 				Folder smallImagefolder = _addFolder(
 					userId, groupId, "Small Image");
@@ -129,6 +128,17 @@ public class UpgradeBlogsImages extends UpgradeProcess {
 			userId, repository.getRepositoryId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, folderName,
 			serviceContext);
+	}
+
+	private String _getContentType(byte[] bytes) throws IOException {
+		File tempFile = FileUtil.createTempFile(bytes);
+
+		try {
+			return MimeTypesUtil.getContentType(tempFile);
+		}
+		finally {
+			FileUtil.delete(tempFile);
+		}
 	}
 
 	private final ImageLocalService _imageLocalService;

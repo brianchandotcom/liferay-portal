@@ -319,6 +319,54 @@ public class CalendarPortlet extends MVCPortlet {
 		super.render(renderRequest, renderResponse);
 	}
 
+	@Override
+	public void serveResource(
+			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
+		throws PortletException {
+
+		try {
+			String resourceID = resourceRequest.getResourceID();
+
+			if (resourceID.equals("calendar")) {
+				serveCalendar(resourceRequest, resourceResponse);
+			}
+			else if (resourceID.equals("calendarBookingInvitees")) {
+				serveCalendarBookingInvitees(resourceRequest, resourceResponse);
+			}
+			else if (resourceID.equals("calendarBookings")) {
+				serveCalendarBookings(resourceRequest, resourceResponse);
+			}
+			else if (resourceID.equals("calendarBookingsRSS")) {
+				serveCalendarBookingsRSS(resourceRequest, resourceResponse);
+			}
+			else if (resourceID.equals("calendarRenderingRules")) {
+				serveCalendarRenderingRules(resourceRequest, resourceResponse);
+			}
+			else if (resourceID.equals("calendarResources")) {
+				serveCalendarResources(resourceRequest, resourceResponse);
+			}
+			else if (resourceID.equals("currentTime")) {
+				serveCurrentTime(resourceRequest, resourceResponse);
+			}
+			else if (resourceID.equals("exportCalendar")) {
+				serveExportCalendar(resourceRequest, resourceResponse);
+			}
+			else if (resourceID.equals("hasExclusiveCalendarBooking")) {
+				serveHasExclusiveCalendarBooking(
+					resourceRequest, resourceResponse);
+			}
+			else if (resourceID.equals("resourceCalendars")) {
+				serveResourceCalendars(resourceRequest, resourceResponse);
+			}
+			else {
+				serveUnknownResource(resourceRequest, resourceResponse);
+			}
+		}
+		catch (Exception e) {
+			throw new PortletException(e);
+		}
+	}
+
 	public void updateCalendar(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
@@ -637,58 +685,6 @@ public class CalendarPortlet extends MVCPortlet {
 			}
 
 			calendarsSet.add(calendar);
-		}
-	}
-
-	@Override
-	protected boolean callResourceMethod(
-			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
-		throws PortletException {
-
-		try {
-			String resourceID = resourceRequest.getResourceID();
-
-			if (resourceID.equals("calendar")) {
-				serveCalendar(resourceRequest, resourceResponse);
-			}
-			else if (resourceID.equals("calendarBookingInvitees")) {
-				serveCalendarBookingInvitees(resourceRequest, resourceResponse);
-			}
-			else if (resourceID.equals("calendarBookings")) {
-				serveCalendarBookings(resourceRequest, resourceResponse);
-			}
-			else if (resourceID.equals("calendarBookingsRSS")) {
-				serveCalendarBookingsRSS(resourceRequest, resourceResponse);
-			}
-			else if (resourceID.equals("calendarRenderingRules")) {
-				serveCalendarRenderingRules(resourceRequest, resourceResponse);
-			}
-			else if (resourceID.equals("calendarResources")) {
-				serveCalendarResources(resourceRequest, resourceResponse);
-			}
-			else if (resourceID.equals("currentTime")) {
-				serveCurrentTime(resourceRequest, resourceResponse);
-			}
-			else if (resourceID.equals("exportCalendar")) {
-				serveExportCalendar(resourceRequest, resourceResponse);
-			}
-			else if (resourceID.equals("hasExclusiveCalendarBooking")) {
-				serveHasExclusiveCalendarBooking(
-					resourceRequest, resourceResponse);
-			}
-			else if (resourceID.equals("resourceCalendars")) {
-				serveResourceCalendars(resourceRequest, resourceResponse);
-			}
-			else if (!super.callResourceMethod(
-						 resourceRequest, resourceResponse)) {
-
-				serveUnknownResource(resourceRequest, resourceResponse);
-			}
-
-			return true;
-		}
-		catch (Exception e) {
-			throw new PortletException(e);
 		}
 	}
 

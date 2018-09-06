@@ -98,8 +98,17 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributor
 
 		Map<String, String> stringsMap = new HashMap<>();
 
-		ResourceBundle resourceBundle = getResourceBundle(
-			ddmFormFieldRenderingContext.getLocale());
+		Locale displayLocale;
+
+		if (ddmFormFieldRenderingContext.isViewMode()) {
+			displayLocale = ddmFormFieldRenderingContext.getLocale();
+		}
+		else {
+			displayLocale = getDisplayLocale(
+				ddmFormFieldRenderingContext.getHttpServletRequest());
+		}
+
+		ResourceBundle resourceBundle = getResourceBundle(displayLocale);
 
 		stringsMap.put("select", LanguageUtil.get(resourceBundle, "select"));
 
@@ -110,6 +119,14 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributor
 				ddmFormFieldRenderingContext.getValue()));
 
 		return parameters;
+	}
+
+	protected Locale getDisplayLocale(HttpServletRequest httpServletRequest) {
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		return themeDisplay.getLocale();
 	}
 
 	protected FileEntry getFileEntry(JSONObject valueJSONObject) {

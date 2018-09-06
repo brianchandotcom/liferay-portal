@@ -21,11 +21,15 @@ import com.liferay.dynamic.data.mapping.model.Value;
 import com.liferay.dynamic.data.mapping.render.DDMFormFieldRenderingContext;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -62,7 +66,12 @@ public class KeyValueDDMFormFieldTemplateContextContributor
 
 		Map<String, String> stringsMap = new HashMap<>();
 
-		stringsMap.put("keyLabel", LanguageUtil.get(locale, "field-name"));
+		stringsMap.put(
+			"keyLabel",
+			LanguageUtil.get(
+				getDisplayLocale(
+					ddmFormFieldRenderingContext.getHttpServletRequest()),
+				"field-name"));
 
 		parameters.put("strings", stringsMap);
 
@@ -72,6 +81,14 @@ public class KeyValueDDMFormFieldTemplateContextContributor
 		parameters.put("tooltip", getValueString(tooltip, locale));
 
 		return parameters;
+	}
+
+	protected Locale getDisplayLocale(HttpServletRequest httpServletRequest) {
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		return themeDisplay.getLocale();
 	}
 
 	protected String getValueString(Value value, Locale locale) {

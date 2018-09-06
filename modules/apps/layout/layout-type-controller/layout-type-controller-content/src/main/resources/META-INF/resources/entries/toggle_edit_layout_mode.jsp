@@ -14,22 +14,7 @@
  */
 --%>
 
-<%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet" %>
-
-<%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %><%@
-taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
-taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %>
-
-<%@ page import="com.liferay.petra.string.StringPool" %><%@
-page import="com.liferay.portal.kernel.util.Constants" %><%@
-page import="com.liferay.portal.kernel.util.HttpUtil" %><%@
-page import="com.liferay.portal.kernel.util.ParamUtil" %>
-
-<%@ page import="java.util.Objects" %>
-
-<liferay-frontend:defineObjects />
-
-<liferay-theme:defineObjects />
+<%@ include file="/entries/init.jsp" %>
 
 <%
 String mode = ParamUtil.getString(request, "p_l_mode", Constants.VIEW);

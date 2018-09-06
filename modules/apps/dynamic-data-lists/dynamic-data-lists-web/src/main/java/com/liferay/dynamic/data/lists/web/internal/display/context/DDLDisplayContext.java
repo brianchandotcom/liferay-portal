@@ -132,7 +132,9 @@ public class DDLDisplayContext {
 					dropdownItem -> {
 						dropdownItem.putData("action", "deleteRecordSets");
 						dropdownItem.setIcon("trash");
-						dropdownItem.setLabel("delete");
+						dropdownItem.setLabel(
+							LanguageUtil.get(
+								_ddlRequestHelper.getRequest(), "delete"));
 						dropdownItem.setQuickAction(true);
 					});
 			}

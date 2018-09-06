@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.exception.MembershipRequestCommentsException;
 import com.liferay.portal.kernel.exception.NoSuchGroupException;
 import com.liferay.portal.kernel.exception.NoSuchRoleException;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.RequiredUserException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.MembershipRequest;
 import com.liferay.portal.kernel.model.MembershipRequestConstants;
@@ -241,9 +242,9 @@ public class SiteMembershipsPortlet extends MVCPortlet {
 			group.getCompanyId(), groupId, filteredRemoveUserIds);
 
 		if (removeUserIds.length != filteredRemoveUserIds.length) {
-			SessionErrors.add(actionRequest, "removeUsersFail");
-
 			hideDefaultErrorMessage(actionRequest);
+
+			throw new RequiredUserException();
 		}
 	}
 
@@ -459,6 +460,7 @@ public class SiteMembershipsPortlet extends MVCPortlet {
 			cause instanceof NoSuchGroupException ||
 			cause instanceof NoSuchRoleException ||
 			cause instanceof PrincipalException ||
+			cause instanceof RequiredUserException ||
 			super.isSessionErrorException(cause)) {
 
 			return true;

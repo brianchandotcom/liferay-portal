@@ -26,7 +26,7 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.sharing.service.SharingEntryService;
-import com.liferay.sharing.web.internal.constants.SharingPortletKeys;
+import com.liferay.sharing.constants.SharingPortletKeys;
 import com.liferay.sharing.web.internal.display.SharingEntryPermissionDisplayActionKey;
 
 import java.util.Date;

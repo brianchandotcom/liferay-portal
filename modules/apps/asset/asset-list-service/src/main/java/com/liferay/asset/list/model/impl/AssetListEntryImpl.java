@@ -230,9 +230,8 @@ public class AssetListEntryImpl extends AssetListEntryBaseImpl {
 		if (ArrayUtil.isNotEmpty(classNameIds)) {
 			return classNameIds;
 		}
-		else {
-			return availableClassNameIds;
-		}
+
+		return availableClassNameIds;
 	}
 
 	private long[] _getSiteGroupIds(long[] groupIds) {

@@ -14,6 +14,7 @@
 
 package com.liferay.portal.minifier;
 
+import com.liferay.portal.internal.minifier.MinifierThreadLocal;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.kernel.log.Log;
@@ -31,19 +32,19 @@ import com.liferay.registry.ServiceTracker;
 public class MinifierUtil {
 
 	public static String minifyCss(String content) {
-		if (!PropsValues.MINIFIER_ENABLED) {
-			return content;
+		if (PropsValues.MINIFIER_ENABLED && MinifierThreadLocal.isEnabled()) {
+			return _minifyCss(content);
 		}
 
-		return _minifyCss(content);
+		return content;
 	}
 
 	public static String minifyJavaScript(String resourceName, String content) {
-		if (PropsValues.MINIFIER_ENABLED) {
-			return content;
+		if (PropsValues.MINIFIER_ENABLED && MinifierThreadLocal.isEnabled()) {
+			return _minifyJavaScript(resourceName, content);
 		}
 
-		return _minifyJavaScript(resourceName, content);
+		return content;
 	}
 
 	private static String _minifyCss(String content) {

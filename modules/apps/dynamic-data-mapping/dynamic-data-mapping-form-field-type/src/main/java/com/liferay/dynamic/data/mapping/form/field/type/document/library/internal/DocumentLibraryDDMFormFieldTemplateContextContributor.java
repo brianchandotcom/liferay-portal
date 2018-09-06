@@ -186,10 +186,6 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributor
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		if (themeDisplay == null) {
-			return null;
-		}
-
 		StringBundler sb = new StringBundler(3);
 
 		sb.append(themeDisplay.getPathThemeImages());

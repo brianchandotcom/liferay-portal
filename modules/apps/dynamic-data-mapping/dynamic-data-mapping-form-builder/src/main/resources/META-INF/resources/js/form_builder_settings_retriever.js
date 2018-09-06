@@ -42,7 +42,6 @@ AUI.add(
 
 								var payload = {
 									languageId: themeDisplay.getLanguageId(),
-									pathThemeImages: themeDisplay.getPathThemeImages(),
 									portletNamespace: Liferay.DDM.Settings.portletNamespace,
 									scopeGroupId: themeDisplay.getScopeGroupId(),
 									type: type

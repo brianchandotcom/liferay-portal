@@ -54,7 +54,7 @@ String fullName = namespace + HtmlUtil.escapeJS(name);
 								custom: <%= validatorTag.isCustom() %>,
 								errorMessage: '<%= UnicodeLanguageUtil.get(resourceBundle, validatorTag.getErrorMessage()) %>',
 								fieldName: '<%= namespace + HtmlUtil.escapeJS(fieldName) %>',
-								validatorName: '<%= validatorTag.getName() %>'
+								validatorName: '<%= HtmlUtil.escapeJS(validatorTag.getName()) %>'
 							}
 
 					<%

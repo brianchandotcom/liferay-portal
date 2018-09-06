@@ -295,7 +295,7 @@ else {
 						var formInstance = Liferay.Form.get(formId);
 
 						if (formInstance && formInstance.formValidator) {
-							formInstance.formValidator.validateField('<%= namespace + HtmlUtil.escapeAttribute(name) %>');
+							formInstance.formValidator.validateField('<%= namespace + HtmlUtil.escape(name) %>');
 						}
 					}
 				}

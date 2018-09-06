@@ -263,7 +263,8 @@ public class SharingEntryLocalServiceTest {
 	public void testAddSharingEntryWithExpirationDateInTheFuture()
 		throws Exception {
 
-		long classNameId = RandomTestUtil.randomLong();
+		long classNameId = _classNameLocalService.getClassNameId(
+			Group.class.getName());
 		long classPK = RandomTestUtil.randomLong();
 
 		Instant now = Instant.now();
@@ -294,7 +295,8 @@ public class SharingEntryLocalServiceTest {
 	public void testAddSharingEntryWithExpirationDateInThePast()
 		throws Exception {
 
-		long classNameId = RandomTestUtil.randomLong();
+		long classNameId = _classNameLocalService.getClassNameId(
+			Group.class.getName());
 		long classPK = RandomTestUtil.randomLong();
 
 		Instant now = Instant.now();
@@ -390,21 +392,22 @@ public class SharingEntryLocalServiceTest {
 		try (DisableSchedulerDestination disableSchedulerDestination =
 				new DisableSchedulerDestination()) {
 
+			long classNameId = _classNameLocalService.getClassNameId(
+				Group.class.getName());
+
 			ServiceContext serviceContext =
 				ServiceContextTestUtil.getServiceContext(_group.getGroupId());
 
 			_sharingEntryLocalService.addSharingEntry(
-				_fromUser.getUserId(), _toUser.getUserId(),
-				RandomTestUtil.randomLong(), RandomTestUtil.randomLong(),
-				_group.getGroupId(), true,
+				_fromUser.getUserId(), _toUser.getUserId(), classNameId,
+				RandomTestUtil.randomLong(), _group.getGroupId(), true,
 				Arrays.asList(SharingEntryActionKey.VIEW), null,
 				serviceContext);
 
 			SharingEntry sharingEntry =
 				_sharingEntryLocalService.addSharingEntry(
-					_fromUser.getUserId(), _toUser.getUserId(),
-					RandomTestUtil.randomLong(), RandomTestUtil.randomLong(),
-					_group.getGroupId(), true,
+					_fromUser.getUserId(), _toUser.getUserId(), classNameId,
+					RandomTestUtil.randomLong(), _group.getGroupId(), true,
 					Arrays.asList(SharingEntryActionKey.VIEW), null,
 					serviceContext);
 

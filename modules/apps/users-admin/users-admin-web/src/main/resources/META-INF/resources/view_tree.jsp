@@ -100,6 +100,9 @@ if (organization != null) {
 			<aui:input name="deleteUserIds" type="hidden" />
 			<aui:input name="onErrorRedirect" type="hidden" value="<%= currentURL %>" />
 
+			<liferay-ui:error exception="<%= RequiredOrganizationException.class %>" message="you-cannot-delete-organizations-that-have-suborganizations-or-users" />
+			<liferay-ui:error exception="<%= RequiredUserException.class %>" message="you-cannot-delete-or-deactivate-yourself" />
+
 			<c:if test="<%= organization != null %>">
 
 				<%

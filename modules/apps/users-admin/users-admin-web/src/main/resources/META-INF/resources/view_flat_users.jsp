@@ -85,6 +85,8 @@ boolean showRestoreButton = viewUsersManagementToolbarDisplayContext.isShowResto
 	<aui:input name="usersListView" type="hidden" value="<%= usersListView %>" />
 	<aui:input name="redirect" type="hidden" value="<%= portletURL.toString() %>" />
 
+	<liferay-ui:error exception="<%= RequiredUserException.class %>" message="you-cannot-delete-or-deactivate-yourself" />
+
 	<c:if test="<%= Validator.isNotNull(viewUsersRedirect) %>">
 		<aui:input name="viewUsersRedirect" type="hidden" value="<%= viewUsersRedirect %>" />
 	</c:if>

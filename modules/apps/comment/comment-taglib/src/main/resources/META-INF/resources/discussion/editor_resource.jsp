@@ -27,6 +27,7 @@ String placeholder = GetterUtil.getString(request.getAttribute("liferay-comment:
 	autoCreate="<%= true %>"
 	configKey="commentEditor"
 	contents="<%= contents %>"
+	cssClass="form-control"
 	editorName='<%= PropsUtil.get("editor.wysiwyg.portal-web.docroot.html.taglib.ui.discussion.jsp") %>'
 	name="<%= name %>"
 	onChangeMethod="<%= onChangeMethod %>"

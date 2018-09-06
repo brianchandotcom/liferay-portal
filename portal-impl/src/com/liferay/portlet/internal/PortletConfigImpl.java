@@ -172,6 +172,10 @@ public class PortletConfigImpl implements LiferayPortletConfig {
 
 		Set<String> portletModeNames = portletModeMap.get(mimeType);
 
+		if (portletModeNames == null) {
+			return Collections.emptyEnumeration();
+		}
+
 		List<PortletMode> portletModes = new ArrayList<>(
 			portletModeNames.size());
 

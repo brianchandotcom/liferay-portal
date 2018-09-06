@@ -18,24 +18,57 @@
 
 <%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet" %>
 
-<%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %><%@
+<%@ taglib uri="http://liferay.com/tld/asset" prefix="liferay-asset" %><%@
+taglib uri="http://liferay.com/tld/aui" prefix="aui" %><%@
 taglib uri="http://liferay.com/tld/clay" prefix="clay" %><%@
 taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
+taglib uri="http://liferay.com/tld/portlet" prefix="liferay-portlet" %><%@
+taglib uri="http://liferay.com/tld/soy" prefix="soy" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
-taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
+taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %><%@
+taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
-<%@ page import="com.liferay.asset.list.constants.AssetListFormConstants" %><%@
+<%@ page import="com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil" %><%@
+page import="com.liferay.asset.kernel.exception.DuplicateQueryRuleException" %><%@
+page import="com.liferay.asset.kernel.model.AssetRendererFactory" %><%@
+page import="com.liferay.asset.kernel.model.ClassType" %><%@
+page import="com.liferay.asset.kernel.model.ClassTypeField" %><%@
+page import="com.liferay.asset.kernel.model.ClassTypeReader" %><%@
+page import="com.liferay.asset.kernel.util.comparator.AssetRendererFactoryTypeNameComparator" %><%@
+page import="com.liferay.asset.list.constants.AssetListFormConstants" %><%@
 page import="com.liferay.asset.list.model.AssetListEntry" %><%@
 page import="com.liferay.asset.list.web.internal.display.context.AssetListDisplayContext" %><%@
+page import="com.liferay.asset.list.web.internal.display.context.EditAssetListDisplayContext" %><%@
 page import="com.liferay.asset.list.web.internal.security.permission.resource.AssetListEntryPermission" %><%@
 page import="com.liferay.petra.string.StringPool" %><%@
+page import="com.liferay.portal.kernel.exception.NoSuchModelException" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
+page import="com.liferay.portal.kernel.model.ClassName" %><%@
+page import="com.liferay.portal.kernel.portlet.LiferayWindowState" %><%@
 page import="com.liferay.portal.kernel.security.permission.ActionKeys" %><%@
+page import="com.liferay.portal.kernel.security.permission.ResourceActionsUtil" %><%@
+page import="com.liferay.portal.kernel.service.ClassNameLocalServiceUtil" %><%@
+page import="com.liferay.portal.kernel.util.GetterUtil" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
+page import="com.liferay.portal.kernel.util.KeyValuePair" %><%@
+page import="com.liferay.portal.kernel.util.KeyValuePairComparator" %><%@
+page import="com.liferay.portal.kernel.util.ListUtil" %><%@
 page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
+page import="com.liferay.portal.kernel.util.PortalUtil" %><%@
+page import="com.liferay.portal.kernel.util.SetUtil" %><%@
+page import="com.liferay.portal.kernel.util.StringUtil" %><%@
+page import="com.liferay.portal.kernel.util.UnicodeProperties" %><%@
 page import="com.liferay.portal.kernel.util.Validator" %><%@
 page import="com.liferay.portal.kernel.util.WebKeys" %><%@
 page import="com.liferay.taglib.search.ResultRow" %>
+
+<%@ page import="java.util.ArrayList" %><%@
+page import="java.util.Arrays" %><%@
+page import="java.util.Date" %><%@
+page import="java.util.HashMap" %><%@
+page import="java.util.List" %><%@
+page import="java.util.Map" %><%@
+page import="java.util.Set" %>
 
 <%@ page import="javax.portlet.PortletURL" %>
 
@@ -47,4 +80,14 @@ page import="com.liferay.taglib.search.ResultRow" %>
 
 <%
 AssetListDisplayContext assetListDisplayContext = new AssetListDisplayContext(renderRequest, renderResponse);
+
+UnicodeProperties properties = new UnicodeProperties();
+
+AssetListEntry curAssetListEntry = assetListDisplayContext.getAssetListEntry();
+
+if (curAssetListEntry != null) {
+	properties.load(curAssetListEntry.getTypeSettings());
+}
+
+EditAssetListDisplayContext editAssetListDisplayContext = new EditAssetListDisplayContext(renderRequest, renderResponse, properties);
 %>

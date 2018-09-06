@@ -270,6 +270,13 @@ public class AssetListEntryLocalServiceUtil {
 		return getService().updateAssetListEntry(assetListEntryId, title);
 	}
 
+	public static com.liferay.asset.list.model.AssetListEntry updateAssetListEntrySettings(
+		long assetListEntryId, String typeSettings)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .updateAssetListEntrySettings(assetListEntryId, typeSettings);
+	}
+
 	public static AssetListEntryLocalService getService() {
 		return _serviceTracker.getService();
 	}

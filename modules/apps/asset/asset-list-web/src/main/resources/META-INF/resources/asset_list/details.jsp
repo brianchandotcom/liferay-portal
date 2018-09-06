@@ -17,13 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String redirect = ParamUtil.getString(request, "redirect");
-
-if (Validator.isNull(redirect)) {
-	PortletURL portletURL = renderResponse.createRenderURL();
-
-	redirect = portletURL.toString();
-}
+String redirect = editAssetListDisplayContext.getRedirectURL();
 
 AssetListEntry assetListEntry = assetListDisplayContext.getAssetListEntry();
 
@@ -40,15 +34,26 @@ renderResponse.setTitle(assetListDisplayContext.getAssetListEntryTitle());
 	method="post"
 	name="fm"
 >
-	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 	<aui:input name="assetListEntryId" type="hidden" value="<%= assetListDisplayContext.getAssetListEntryId() %>" />
 	<aui:input name="type" type="hidden" value="<%= assetListDisplayContext.getAssetListEntryType() %>" />
 
 	<aui:model-context bean="<%= assetListEntry %>" model="<%= AssetListEntry.class %>" />
 
 	<liferay-frontend:edit-form-body>
+		<h3 class="sheet-subtitle">
+			<span class="autofit-padded-no-gutters autofit-row">
+				<span class="autofit-col autofit-col-expand">
+					<span class="heading-text">
+						<liferay-ui:message key="details" />
+					</span>
+				</span>
+			</span>
+		</h3>
+
 		<liferay-frontend:fieldset-group>
-			<liferay-frontend:fieldset>
+			<liferay-frontend:fieldset
+				markupView="lexicon"
+			>
 				<aui:input name="title" placeholder="title" />
 			</liferay-frontend:fieldset>
 		</liferay-frontend:fieldset-group>

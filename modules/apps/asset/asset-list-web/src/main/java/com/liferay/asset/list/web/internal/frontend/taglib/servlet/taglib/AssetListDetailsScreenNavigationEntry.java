@@ -12,13 +12,10 @@
  * details.
  */
 
-package com.liferay.asset.list.web.internal.servlet.taglib.ui.navigation;
+package com.liferay.asset.list.web.internal.frontend.taglib.servlet.taglib;
 
 import com.liferay.asset.list.constants.AssetListFormConstants;
-import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationCategory;
-import com.liferay.portal.kernel.language.LanguageUtil;
-
-import java.util.Locale;
+import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -26,11 +23,11 @@ import org.osgi.service.component.annotations.Component;
  * @author Pavel Savinov
  */
 @Component(
-	property = "screen.navigation.category.order:Integer=10",
-	service = ScreenNavigationCategory.class
+	property = "screen.navigation.entry.order:Integer=10",
+	service = ScreenNavigationEntry.class
 )
-public class AssetListScreenNavigationCategory
-	implements ScreenNavigationCategory {
+public class AssetListDetailsScreenNavigationEntry
+	extends BaseAssetListScreenNavigationEntry {
 
 	@Override
 	public String getCategoryKey() {
@@ -38,13 +35,13 @@ public class AssetListScreenNavigationCategory
 	}
 
 	@Override
-	public String getLabel(Locale locale) {
-		return LanguageUtil.get(locale, "asset-list");
+	public String getEntryKey() {
+		return AssetListFormConstants.ENTRY_KEY_DETAILS;
 	}
 
 	@Override
-	public String getScreenNavigationKey() {
-		return AssetListFormConstants.SCREEN_NAVIGATION_KEY_ASSET_LIST;
+	public String getJspPath() {
+		return "/asset_list/details.jsp";
 	}
 
 }

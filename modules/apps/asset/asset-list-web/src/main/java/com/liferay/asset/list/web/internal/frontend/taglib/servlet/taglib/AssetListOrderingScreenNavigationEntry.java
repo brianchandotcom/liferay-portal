@@ -12,10 +12,13 @@
  * details.
  */
 
-package com.liferay.asset.list.web.internal.servlet.taglib.ui.navigation.entry;
+package com.liferay.asset.list.web.internal.frontend.taglib.servlet.taglib;
 
+import com.liferay.asset.list.constants.AssetListEntryTypeConstants;
 import com.liferay.asset.list.constants.AssetListFormConstants;
+import com.liferay.asset.list.model.AssetListEntry;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
+import com.liferay.portal.kernel.model.User;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -23,10 +26,10 @@ import org.osgi.service.component.annotations.Component;
  * @author Pavel Savinov
  */
 @Component(
-	property = "screen.navigation.entry.order:Integer=10",
+	property = "screen.navigation.entry.order:Integer=30",
 	service = ScreenNavigationEntry.class
 )
-public class AssetListDetailsScreenNavigationEntry
+public class AssetListOrderingScreenNavigationEntry
 	extends BaseAssetListScreenNavigationEntry {
 
 	@Override
@@ -36,12 +39,27 @@ public class AssetListDetailsScreenNavigationEntry
 
 	@Override
 	public String getEntryKey() {
-		return AssetListFormConstants.ENTRY_KEY_DETAILS;
+		return AssetListFormConstants.ENTRY_KEY_ORDERING;
 	}
 
 	@Override
 	public String getJspPath() {
-		return "/asset_list/details.jsp";
+		return "/asset_list/ordering.jsp";
+	}
+
+	@Override
+	public boolean isVisible(User user, AssetListEntry assetListEntry) {
+		if (assetListEntry == null) {
+			return false;
+		}
+
+		if (assetListEntry.getType() ==
+				AssetListEntryTypeConstants.TYPE_DYNAMIC) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 }

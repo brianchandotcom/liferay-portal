@@ -211,6 +211,30 @@ public class FileUtil {
 		return null;
 	}
 
+	public static Path getFile(Path dirPath, String glob, String regex)
+		throws IOException {
+
+		try (DirectoryStream<Path> directoryStream = Files.newDirectoryStream(
+				dirPath, glob)) {
+
+			Iterator<Path> iterator = directoryStream.iterator();
+
+			while (iterator.hasNext()) {
+				Path path = iterator.next();
+
+				Path fileNamePath = path.getFileName();
+
+				String fileName = fileNamePath.toString();
+
+				if (fileName.matches(regex)) {
+					return path;
+				}
+			}
+		}
+
+		return null;
+	}
+
 	public static File getJarFile(Class<?> clazz) throws Exception {
 		ProtectionDomain protectionDomain = clazz.getProtectionDomain();
 

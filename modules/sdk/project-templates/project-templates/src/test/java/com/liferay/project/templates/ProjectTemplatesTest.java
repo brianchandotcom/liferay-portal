@@ -2216,6 +2216,17 @@ public class ProjectTemplatesTest {
 			gradleProjectDir, "src/main/resources/content/Language.properties",
 			"foo=Foo");
 
+		_testNotContains(
+			gradleProjectDir,
+			"src/main/java/com/liferay/test/social/bookmark" +
+				"/FooSocialBookmark.java",
+			"private ResourceBundleLoader");
+		_testNotContains(
+			gradleProjectDir,
+			"src/main/java/com/liferay/test/social/bookmark" +
+				"/FooSocialBookmark.java",
+			"protected ResourceBundleLoader");
+
 		File mavenProjectDir = _buildTemplateWithMaven(
 			"social-bookmark", "foo", "com.test", "-DclassName=Foo",
 			"-Dpackage=com.liferay.test", "-DliferayVersion=7.1");

@@ -19,6 +19,7 @@ import com.liferay.petra.concurrent.NoticeableFuture;
 import com.liferay.petra.executor.PortalExecutorManager;
 import com.liferay.petra.io.unsync.UnsyncBufferedReader;
 import com.liferay.petra.string.CharPool;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.internal.minifier.MinifierThreadLocal;
 import com.liferay.portal.kernel.configuration.Filter;
@@ -40,7 +41,6 @@ import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.ServiceProxyFactory;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.URLUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -342,10 +342,8 @@ public class AggregateFilter extends IgnoreModuleRequestFilter {
 		}
 
 		content = StringBundler.concat(
-			StringPool.DOUBLE_SLASH,
-			String.valueOf(
-				PortalWebResourcesUtil.getLastModified(
-					PortalWebResourceConstants.RESOURCE_TYPE_JS)),
+			StringPool.DOUBLE_SLASH, PortalWebResourcesUtil.getLastModified(
+					PortalWebResourceConstants.RESOURCE_TYPE_JS),
 			StringPool.NEW_LINE, content);
 
 		response.setContentType(ContentTypes.TEXT_JAVASCRIPT);
@@ -496,8 +494,7 @@ public class AggregateFilter extends IgnoreModuleRequestFilter {
 			}
 
 			content = StringBundler.concat(
-				_CSS_COMMENT_BEGIN,
-				String.valueOf(URLUtil.getLastModifiedTime(resourceURL)),
+				_CSS_COMMENT_BEGIN, URLUtil.getLastModifiedTime(resourceURL),
 				_CSS_COMMENT_END, StringPool.NEW_LINE, content);
 
 			FileUtil.write(cacheDataFile, content);
@@ -530,6 +527,12 @@ public class AggregateFilter extends IgnoreModuleRequestFilter {
 										MinifierUtil.minifyJavaScript(
 											finalResourcePath, finalContent);
 								}
+
+								minifiedContent = StringBundler.concat(
+									_CSS_COMMENT_BEGIN,
+									URLUtil.getLastModifiedTime(resourceURL),
+									_CSS_COMMENT_END, StringPool.NEW_LINE,
+									minifiedContent);
 
 								File tempFile = FileUtil.createTempFile();
 

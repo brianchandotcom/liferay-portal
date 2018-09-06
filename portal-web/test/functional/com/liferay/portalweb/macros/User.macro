@@ -1709,9 +1709,6 @@
 
 		<execute function="SelectWindow#selectWindowNoSPARefresh" locator1="title=Welcome - ${siteName}" />
 
-		<!-- LPS-83431-->
-		<execute function="Refresh" />
-
 		<execute function="AssertElementPresent" locator1="UserBar#USER_AVATAR_IMAGE" />
 	</command>
 
@@ -1731,9 +1728,6 @@
 				<execute macro="GoogleLogin#acceptConditions" />
 			</then>
 		</if>
-
-		<!-- LPS-83431-->
-		<execute function="Refresh" />
 
 		<execute function="AssertElementPresent" locator1="UserBar#USER_AVATAR_IMAGE" />
 	</command>

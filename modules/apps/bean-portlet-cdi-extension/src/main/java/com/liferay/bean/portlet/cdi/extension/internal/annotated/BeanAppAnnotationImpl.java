@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.util.Validator;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -36,81 +35,61 @@ import javax.portlet.annotations.PortletApplication;
 import javax.portlet.annotations.PublicRenderParameterDefinition;
 import javax.portlet.annotations.RuntimeOption;
 
-import javax.xml.XMLConstants;
-
 /**
  * @author Neil Griffin
  */
 public class BeanAppAnnotationImpl implements BeanApp {
 
 	public BeanAppAnnotationImpl(PortletApplication portletApplication) {
-		if (portletApplication == null) {
-			_defaultNamespace = XMLConstants.NULL_NS_URI;
-			_containerRuntimeOptions = Collections.emptyMap();
-			_customPortletModes = Collections.emptySet();
-			_eventDefinitions = Collections.emptyList();
-			_publicRenderParameterMap = Collections.emptyMap();
+		_containerRuntimeOptions = new HashMap<>();
 
+		for (RuntimeOption runtimeOption :
+				portletApplication.runtimeOptions()) {
+
+			_containerRuntimeOptions.put(
+				runtimeOption.name(), Arrays.asList(runtimeOption.values()));
+		}
+
+		_customPortletModes = new LinkedHashSet<>();
+
+		for (CustomPortletMode customPortletMode :
+				portletApplication.customPortletModes()) {
+
+			if (!customPortletMode.portalManaged()) {
+				_customPortletModes.add(customPortletMode.name());
+			}
+		}
+
+		_defaultNamespace = portletApplication.defaultNamespaceURI();
+
+		_eventDefinitions = new ArrayList<>();
+
+		for (EventDefinition eventDefinition : portletApplication.events()) {
+			_eventDefinitions.add(new EventAnnotationImpl(eventDefinition));
+		}
+
+		_publicRenderParameterMap = new HashMap<>();
+
+		for (PublicRenderParameterDefinition
+				publicRenderParameterDefinition:
+					portletApplication.publicParams()) {
+
+			PublicRenderParameter publicRenderParameter =
+				new PublicRenderParameterAnnotationImpl(
+					publicRenderParameterDefinition);
+
+			_publicRenderParameterMap.put(
+				publicRenderParameter.getIdentifier(), publicRenderParameter);
+		}
+
+		if (Validator.isNull(portletApplication.version())) {
 			PortletApplication defaultPortletApplication =
 				PortletApplicationFactory.getDefaultPortletApplication();
 
 			_specVersion = defaultPortletApplication.version();
 		}
 		else {
-			_containerRuntimeOptions = new HashMap<>();
-
-			for (RuntimeOption runtimeOption :
-					portletApplication.runtimeOptions()) {
-
-				_containerRuntimeOptions.put(
-					runtimeOption.name(),
-					Arrays.asList(runtimeOption.values()));
-			}
-
-			_customPortletModes = new LinkedHashSet<>();
-
-			for (CustomPortletMode customPortletMode :
-					portletApplication.customPortletModes()) {
-
-				if (!customPortletMode.portalManaged()) {
-					_customPortletModes.add(customPortletMode.name());
-				}
-			}
-
-			_defaultNamespace = portletApplication.defaultNamespaceURI();
-
-			_eventDefinitions = new ArrayList<>();
-
-			for (EventDefinition eventDefinition :
-					portletApplication.events()) {
-
-				_eventDefinitions.add(new EventAnnotationImpl(eventDefinition));
-			}
-
-			_publicRenderParameterMap = new HashMap<>();
-
-			for (PublicRenderParameterDefinition
-					publicRenderParameterDefinition:
-						portletApplication.publicParams()) {
-
-				PublicRenderParameter publicRenderParameter =
-					new PublicRenderParameterAnnotationImpl(
-						publicRenderParameterDefinition);
-
-				_publicRenderParameterMap.put(
-					publicRenderParameter.getIdentifier(),
-					publicRenderParameter);
-			}
-
-			if (Validator.isNull(portletApplication.version())) {
-				PortletApplication defaultPortletApplication =
-					PortletApplicationFactory.getDefaultPortletApplication();
-
-				_specVersion = defaultPortletApplication.version();
-			}
-			else {
-				_specVersion = portletApplication.version();
-			}
+			_specVersion = portletApplication.version();
 		}
 
 		_urlGenerationListeners = new ArrayList<>();

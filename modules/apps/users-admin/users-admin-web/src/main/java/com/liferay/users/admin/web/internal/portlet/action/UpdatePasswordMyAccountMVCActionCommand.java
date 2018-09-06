@@ -110,6 +110,8 @@ public class UpdatePasswordMyAccountMVCActionCommand
 
 		try {
 			authenticateUser(actionRequest, actionResponse);
+
+			_mvcActionCommand.processAction(actionRequest, actionResponse);
 		}
 		catch (Exception e) {
 			if (e instanceof NoSuchUserException ||
@@ -133,8 +135,6 @@ public class UpdatePasswordMyAccountMVCActionCommand
 				throw e;
 			}
 		}
-
-		_mvcActionCommand.processAction(actionRequest, actionResponse);
 	}
 
 	@Reference(

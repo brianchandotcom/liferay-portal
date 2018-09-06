@@ -14,6 +14,7 @@
 
 package com.liferay.dynamic.data.mapping.form.builder.internal.servlet;
 
+import com.liferay.dynamic.data.mapping.form.builder.internal.servlet.base.BaseDDMFormBuilderServlet;
 import com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance;
 import com.liferay.dynamic.data.mapping.service.DDMDataProviderInstanceLocalService;
 import com.liferay.dynamic.data.mapping.util.comparator.DataProviderInstanceNameComparator;
@@ -37,7 +38,6 @@ import java.util.Locale;
 
 import javax.servlet.Servlet;
 import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -57,7 +57,7 @@ import org.osgi.service.component.annotations.Reference;
 	},
 	service = Servlet.class
 )
-public class DDMDataProviderInstancesServlet extends HttpServlet {
+public class DDMDataProviderInstancesServlet extends BaseDDMFormBuilderServlet {
 
 	@Override
 	protected void doGet(

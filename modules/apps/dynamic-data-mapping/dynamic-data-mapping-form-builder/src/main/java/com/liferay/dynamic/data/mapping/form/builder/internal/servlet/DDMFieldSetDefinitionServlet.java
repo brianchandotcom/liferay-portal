@@ -17,6 +17,7 @@ package com.liferay.dynamic.data.mapping.form.builder.internal.servlet;
 import com.liferay.dynamic.data.mapping.form.builder.context.DDMFormBuilderContextFactory;
 import com.liferay.dynamic.data.mapping.form.builder.context.DDMFormBuilderContextRequest;
 import com.liferay.dynamic.data.mapping.form.builder.context.DDMFormBuilderContextResponse;
+import com.liferay.dynamic.data.mapping.form.builder.internal.servlet.base.BaseDDMFormBuilderServlet;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMStructureService;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -37,7 +38,6 @@ import java.util.Optional;
 
 import javax.servlet.Servlet;
 import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -57,7 +57,7 @@ import org.osgi.service.component.annotations.Reference;
 	},
 	service = Servlet.class
 )
-public class DDMFieldSetDefinitionServlet extends HttpServlet {
+public class DDMFieldSetDefinitionServlet extends BaseDDMFormBuilderServlet {
 
 	@Override
 	protected void doGet(

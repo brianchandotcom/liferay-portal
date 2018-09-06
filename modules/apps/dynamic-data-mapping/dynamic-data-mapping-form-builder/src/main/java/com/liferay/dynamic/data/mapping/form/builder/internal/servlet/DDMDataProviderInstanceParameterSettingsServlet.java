@@ -19,6 +19,7 @@ import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderInputParame
 import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderOutputParametersSettings;
 import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderParameterSettings;
 import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderTracker;
+import com.liferay.dynamic.data.mapping.form.builder.internal.servlet.base.BaseDDMFormBuilderServlet;
 import com.liferay.dynamic.data.mapping.io.DDMFormValuesDeserializer;
 import com.liferay.dynamic.data.mapping.io.DDMFormValuesDeserializerDeserializeRequest;
 import com.liferay.dynamic.data.mapping.io.DDMFormValuesDeserializerDeserializeResponse;
@@ -46,7 +47,6 @@ import java.io.IOException;
 
 import javax.servlet.Servlet;
 import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -66,7 +66,7 @@ import org.osgi.service.component.annotations.Reference;
 	service = Servlet.class
 )
 public class DDMDataProviderInstanceParameterSettingsServlet
-	extends HttpServlet {
+	extends BaseDDMFormBuilderServlet {
 
 	protected JSONObject createParametersJSONObject(
 			DDMDataProvider ddmDataProvider, DDMFormValues ddmFormValues)

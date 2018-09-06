@@ -44,12 +44,31 @@ public abstract class BaseMutablePortletParameters
 
 		Map<String, String[]> parameterMap = getParameterMap();
 
-		for (String newParameterName : portletParameters.getNames()) {
-			String[] values = portletParameters.getValues(newParameterName);
+		if (portletParameters instanceof BasePortletParametersImpl) {
+			BasePortletParametersImpl<?> basePortletParametersImpl =
+				(BasePortletParametersImpl<?>)portletParameters;
 
-			String[] copiedValues = values.clone();
+			Map<String, String[]> liferayPortletParametersMap =
+				basePortletParametersImpl.getParameterMap();
 
-			parameterMap.put(newParameterName, copiedValues);
+			for (Map.Entry<String, String[]>
+					entry: liferayPortletParametersMap.entrySet()) {
+
+				String[] values = entry.getValue();
+
+				String[] copiedValues = values.clone();
+
+				parameterMap.put(entry.getKey(), copiedValues);
+			}
+		}
+		else {
+			for (String newParameterName : portletParameters.getNames()) {
+				String[] values = portletParameters.getValues(newParameterName);
+
+				String[] copiedValues = values.clone();
+
+				parameterMap.put(newParameterName, copiedValues);
+			}
 		}
 
 		_mutated = true;
@@ -96,22 +115,51 @@ public abstract class BaseMutablePortletParameters
 
 		Set<String> oldParameterNames = oldMutablePortletParameters.getNames();
 
-		Set<String> newParameterNames = portletParameters.getNames();
+		if (portletParameters instanceof BasePortletParametersImpl) {
+			BasePortletParametersImpl<?> basePortletParametersImpl =
+				(BasePortletParametersImpl<?>)portletParameters;
 
-		if (oldParameterNames.isEmpty() && newParameterNames.isEmpty()) {
-			return oldMutablePortletParameters;
+			Map<String, String[]> liferayPortletParametersMap =
+				basePortletParametersImpl.getParameterMap();
+
+			if (oldParameterNames.isEmpty() &&
+				liferayPortletParametersMap.isEmpty()) {
+
+				return oldMutablePortletParameters;
+			}
+
+			Map<String, String[]> parameterMap = getParameterMap();
+
+			parameterMap.clear();
+
+			for (Map.Entry<String, String[]>
+					entry: liferayPortletParametersMap.entrySet()) {
+
+				String[] values = entry.getValue();
+
+				String[] copiedValues = values.clone();
+
+				parameterMap.put(entry.getKey(), copiedValues);
+			}
 		}
+		else {
+			Set<String> newParameterNames = portletParameters.getNames();
 
-		Map<String, String[]> parameterMap = getParameterMap();
+			if (oldParameterNames.isEmpty() && newParameterNames.isEmpty()) {
+				return oldMutablePortletParameters;
+			}
 
-		parameterMap.clear();
+			Map<String, String[]> parameterMap = getParameterMap();
 
-		for (String newParameterName : newParameterNames) {
-			String[] values = portletParameters.getValues(newParameterName);
+			parameterMap.clear();
 
-			String[] copiedValues = values.clone();
+			for (String newParameterName : newParameterNames) {
+				String[] values = portletParameters.getValues(newParameterName);
 
-			parameterMap.put(newParameterName, copiedValues);
+				String[] copiedValues = values.clone();
+
+				parameterMap.put(newParameterName, copiedValues);
+			}
 		}
 
 		_mutated = true;

@@ -26,14 +26,12 @@ import com.liferay.portal.kernel.util.Validator;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
 
 import javax.portlet.PortletAsyncContext;
 import javax.portlet.PortletContext;
 import javax.portlet.PortletMode;
 import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
-import javax.portlet.RenderParameters;
 import javax.portlet.ResourceParameters;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
@@ -77,22 +75,27 @@ public class ResourceRequestImpl
 
 	/**
 	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 * 	           RenderState#getRenderParameters()}
+	 * 	           javax.portlet.RenderState#getRenderParameters()}
 	 */
 	@Deprecated
 	@Override
 	public Map<String, String[]> getPrivateRenderParameterMap() {
 		Map<String, String[]> privateRenderParameters = new HashMap<>();
 
-		RenderParameters renderParameters = getRenderParameters();
+		RenderParametersImpl liferayRenderParameters =
+			(RenderParametersImpl)getRenderParameters();
 
-		Set<String> renderParameterNames = renderParameters.getNames();
+		Map<String, String[]> liferayRenderParametersMap =
+			liferayRenderParameters.getParameterMap();
 
-		for (String renderParameterName : renderParameterNames) {
-			if (!renderParameters.isPublic(renderParameterName)) {
+		for (Map.Entry<String, String[]>
+				entry: liferayRenderParametersMap.entrySet()) {
+
+			String renderParameterName = entry.getKey();
+
+			if (!liferayRenderParameters.isPublic(renderParameterName)) {
 				privateRenderParameters.put(
-					renderParameterName,
-					renderParameters.getValues(renderParameterName));
+					renderParameterName, entry.getValue());
 			}
 		}
 

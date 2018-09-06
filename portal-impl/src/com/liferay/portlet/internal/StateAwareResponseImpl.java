@@ -41,7 +41,6 @@ import javax.portlet.Event;
 import javax.portlet.MutableRenderParameters;
 import javax.portlet.PortletMode;
 import javax.portlet.PortletModeException;
-import javax.portlet.RenderParameters;
 import javax.portlet.WindowState;
 import javax.portlet.WindowStateException;
 
@@ -95,15 +94,18 @@ public abstract class StateAwareResponseImpl
 	public Map<String, String[]> getRenderParameterMap() {
 		Map<String, String[]> renderParameterMap = new LinkedHashMap<>();
 
-		Set<String> parameterNames = _mutableRenderParameters.getNames();
+		Map<String, String[]> mutableRenderParametersMap =
+			_mutableRenderParametersImpl.getParameterMap();
 
-		for (String parameterName : parameterNames) {
-			if (!_mutableRenderParameters.isPublic(parameterName) ||
-				_mutableRenderParameters.isMutated(parameterName)) {
+		for (Map.Entry<String, String[]> entry :
+				mutableRenderParametersMap.entrySet()) {
 
-				renderParameterMap.put(
-					parameterName,
-					_mutableRenderParameters.getValues(parameterName));
+			String parameterName = entry.getKey();
+
+			if (!_mutableRenderParametersImpl.isPublic(parameterName) ||
+				_mutableRenderParametersImpl.isMutated(parameterName)) {
+
+				renderParameterMap.put(parameterName, entry.getValue());
 			}
 		}
 
@@ -112,7 +114,7 @@ public abstract class StateAwareResponseImpl
 
 	@Override
 	public MutableRenderParameters getRenderParameters() {
-		return _mutableRenderParameters;
+		return _mutableRenderParametersImpl;
 	}
 
 	public User getUser() {
@@ -156,35 +158,40 @@ public abstract class StateAwareResponseImpl
 		PortletApp portletApp = portlet.getPortletApp();
 
 		if (portletApp.getSpecMajorVersion() < 3) {
-			_mutableRenderParameters = new MutableRenderParametersImpl(
+			_mutableRenderParametersImpl = new MutableRenderParametersImpl(
 				_params, Collections.emptySet());
 		}
 		else {
 			Set<String> publicRenderParameterNames = new LinkedHashSet<>();
 
-			RenderParameters renderParameters =
-				portletRequestImpl.getRenderParameters();
+			RenderParametersImpl renderParametersImpl =
+				(RenderParametersImpl)portletRequestImpl.getRenderParameters();
 
-			Set<String> renderParametersNames = renderParameters.getNames();
+			Map<String, String[]> liferayRenderParametersMap =
+				renderParametersImpl.getParameterMap();
 
-			for (String renderParameterName : renderParametersNames) {
-				if (renderParameters.isPublic(renderParameterName)) {
+			for (Map.Entry<String, String[]> entry :
+					liferayRenderParametersMap.entrySet()) {
+
+				String renderParameterName = entry.getKey();
+
+				if (renderParametersImpl.isPublic(renderParameterName)) {
 					publicRenderParameterNames.add(renderParameterName);
 				}
 
-				_params.put(
-					renderParameterName,
-					renderParameters.getValues(renderParameterName));
+				_params.put(renderParameterName, entry.getValue());
 			}
 
-			_mutableRenderParameters = new MutableRenderParametersImpl(
+			_mutableRenderParametersImpl = new MutableRenderParametersImpl(
 				_params, publicRenderParameterNames);
 		}
 	}
 
 	@Override
 	public boolean isCalledSetRenderParameter() {
-		if (_calledSetRenderParameter || _mutableRenderParameters.isMutated()) {
+		if (_calledSetRenderParameter ||
+			_mutableRenderParametersImpl.isMutated()) {
+
 			return true;
 		}
 
@@ -310,7 +317,7 @@ public abstract class StateAwareResponseImpl
 		}
 
 		if (!setPublicRenderParameter(name, values)) {
-			_mutableRenderParameters.setValues(name, values);
+			_mutableRenderParametersImpl.setValues(name, values);
 		}
 
 		_calledSetRenderParameter = true;
@@ -330,7 +337,7 @@ public abstract class StateAwareResponseImpl
 			throw new IllegalArgumentException();
 		}
 		else {
-			_mutableRenderParameters.clear();
+			_mutableRenderParametersImpl.clear();
 
 			for (Map.Entry<String, String[]> entry : params.entrySet()) {
 				String key = entry.getKey();
@@ -349,7 +356,7 @@ public abstract class StateAwareResponseImpl
 					continue;
 				}
 
-				_mutableRenderParameters.setValues(key, value);
+				_mutableRenderParametersImpl.setValues(key, value);
 			}
 		}
 
@@ -388,7 +395,7 @@ public abstract class StateAwareResponseImpl
 
 	protected void reset() {
 		_events.clear();
-		_mutableRenderParameters.clear();
+		_mutableRenderParametersImpl.clear();
 
 		try {
 			setPortletMode(PortletMode.VIEW);
@@ -448,7 +455,7 @@ public abstract class StateAwareResponseImpl
 	private boolean _calledSetRenderParameter;
 	private final List<Event> _events = new ArrayList<>();
 	private Layout _layout;
-	private LiferayMutableRenderParameters _mutableRenderParameters;
+	private MutableRenderParametersImpl _mutableRenderParametersImpl;
 	private final Map<String, String[]> _params = new LinkedHashMap<>();
 	private PortletMode _portletMode = PortletMode.UNDEFINED;
 	private Map<String, String[]> _publicRenderParameters;

@@ -91,8 +91,11 @@ public class ResourceRequestImpl
 		for (Map.Entry<String, String[]>
 				entry: liferayRenderParametersMap.entrySet()) {
 
-			if (!liferayRenderParameters.isPublic(entry.getKey())) {
-				privateRenderParameters.put(entry.getKey(), entry.getValue());
+			String renderParameterName = entry.getKey();
+
+			if (!liferayRenderParameters.isPublic(renderParameterName)) {
+				privateRenderParameters.put(
+					renderParameterName, entry.getValue());
 			}
 		}
 

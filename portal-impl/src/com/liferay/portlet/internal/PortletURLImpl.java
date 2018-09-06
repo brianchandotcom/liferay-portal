@@ -1570,11 +1570,13 @@ public class PortletURLImpl
 				for (Map.Entry<String, String[]> entry :
 						liferayRenderParametersMap.entrySet()) {
 
+					String renderParameterName = entry.getKey();
+
 					if (MimeResponse.Copy.ALL.equals(_copy) ||
-						liferayRenderParameters.isPublic(entry.getKey())) {
+						liferayRenderParameters.isPublic(renderParameterName)) {
 
 						mutableRenderParameterMap.put(
-							entry.getKey(), entry.getValue());
+							renderParameterName, entry.getValue());
 					}
 				}
 			}

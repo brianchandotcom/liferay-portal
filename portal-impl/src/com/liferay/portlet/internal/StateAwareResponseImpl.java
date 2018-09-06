@@ -101,10 +101,12 @@ public abstract class StateAwareResponseImpl
 		for (Map.Entry<String, String[]> entry :
 				mutableRenderParametersMap.entrySet()) {
 
-			if (!_mutableRenderParametersImpl.isPublic(entry.getKey()) ||
-				_mutableRenderParametersImpl.isMutated(entry.getKey())) {
+			String parameterName = entry.getKey();
 
-				renderParameterMap.put(entry.getKey(), entry.getValue());
+			if (!_mutableRenderParametersImpl.isPublic(parameterName) ||
+				_mutableRenderParametersImpl.isMutated(parameterName)) {
+
+				renderParameterMap.put(parameterName, entry.getValue());
 			}
 		}
 
@@ -175,11 +177,13 @@ public abstract class StateAwareResponseImpl
 			for (Map.Entry<String, String[]> entry :
 					liferayRenderParametersMap.entrySet()) {
 
-				if (renderParametersImpl.isPublic(entry.getKey())) {
-					publicRenderParameterNames.add(entry.getKey());
+				String renderParameterName = entry.getKey();
+
+				if (renderParametersImpl.isPublic(renderParameterName)) {
+					publicRenderParameterNames.add(renderParameterName);
 				}
 
-				_params.put(entry.getKey(), entry.getValue());
+				_params.put(renderParameterName, entry.getValue());
 			}
 
 			_mutableRenderParametersImpl = new MutableRenderParametersImpl(

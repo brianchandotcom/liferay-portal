@@ -426,9 +426,19 @@ public class GetterUtil_IW {
 		return GetterUtil.getStringValues(value, defaultValue);
 	}
 
+	public java.lang.String[] getStringValues(java.lang.Object value,
+		com.liferay.portal.kernel.util.Supplier<java.lang.String[]> defaultValueSupplier) {
+		return GetterUtil.getStringValues(value, defaultValueSupplier);
+	}
+
 	public java.lang.String[] getStringValues(java.lang.Object[] values,
 		java.lang.String[] defaultValue) {
 		return GetterUtil.getStringValues(values, defaultValue);
+	}
+
+	public java.lang.String[] getStringValues(java.lang.Object[] values,
+		com.liferay.portal.kernel.util.Supplier<java.lang.String[]> defaultValueSupplier) {
+		return GetterUtil.getStringValues(values, defaultValueSupplier);
 	}
 
 	public java.lang.String[] getStringValues(java.lang.String[] values) {

@@ -86,12 +86,13 @@ if (filterManageableOrganizations) {
 			<aui:input name="toolbarItem" type="hidden" value="<%= toolbarItem %>" />
 			<aui:input name="redirect" type="hidden" value="<%= portletURL.toString() %>" />
 
+			<liferay-ui:error exception="<%= RequiredOrganizationException.class %>" message="you-cannot-delete-organizations-that-have-suborganizations-or-users" />
+
 			<liferay-ui:search-container
 				id="organizations"
 				searchContainer="<%= searchContainer %>"
 				var="organizationSearchContainer"
 			>
-				<aui:input disabled="<%= true %>" name="organizationsRedirect" type="hidden" value="<%= portletURL.toString() %>" />
 				<aui:input name="deleteOrganizationIds" type="hidden" />
 
 				<c:if test="<%= usersListView.equals(UserConstants.LIST_VIEW_FLAT_ORGANIZATIONS) %>">

@@ -92,7 +92,7 @@ public class DeleteOrganizationsAndUsersMVCActionCommand
 				SessionErrors.add(actionRequest, e.getClass());
 
 				String redirect = _portal.escapeRedirect(
-					ParamUtil.getString(actionRequest, "redirect"));
+					ParamUtil.getString(actionRequest, "onErrorRedirect"));
 
 				if (Validator.isNotNull(redirect)) {
 					sendRedirect(actionRequest, actionResponse, redirect);

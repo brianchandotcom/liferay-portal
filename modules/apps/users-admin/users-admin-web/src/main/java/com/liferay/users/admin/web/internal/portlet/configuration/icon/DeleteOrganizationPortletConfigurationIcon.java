@@ -24,9 +24,11 @@ import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.permission.OrganizationPermissionUtil;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.users.admin.constants.UsersAdminPortletKeys;
 import com.liferay.users.admin.web.internal.portlet.action.ActionUtil;
+import com.liferay.users.admin.web.internal.util.UsersAdminPortletURLUtil;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
@@ -57,7 +59,7 @@ public class DeleteOrganizationPortletConfigurationIcon
 	public String getOnClick(
 		PortletRequest portletRequest, PortletResponse portletResponse) {
 
-		StringBundler sb = new StringBundler(4);
+		StringBundler sb = new StringBundler(6);
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -73,6 +75,21 @@ public class DeleteOrganizationPortletConfigurationIcon
 				portletRequest);
 
 			sb.append(organization.getOrganizationId());
+
+			sb.append("', '");
+
+			String backURL = String.valueOf(
+				portletRequest.getAttribute("view.jsp-backURL"));
+
+			if (Validator.isNull(backURL)) {
+				backURL =
+					UsersAdminPortletURLUtil.
+						createParentOrganizationViewTreeURL(
+							organization.getOrganizationId(), portletRequest,
+							portletResponse);
+			}
+
+			sb.append(backURL);
 
 			sb.append("');");
 		}

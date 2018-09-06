@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.product.navigation.control.menu.web.internal;
+package com.liferay.layout.type.controller.content.internal.control.menu;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.product.navigation.control.menu.BaseJSPProductNavigationControlMenuEntry;

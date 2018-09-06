@@ -58,8 +58,9 @@ public class GetFieldMappingIndexRequestExecutorImpl
 		Map<String, String> fieldMappings = new HashMap<>();
 
 		for (String indexName : getFieldMappingIndexRequest.getIndexNames()) {
-			Map<String,
-				Map<String, GetFieldMappingsResponse.FieldMappingMetaData>>
+			Map
+				<String,
+				 Map<String, GetFieldMappingsResponse.FieldMappingMetaData>>
 					map1 = mappings.get(indexName);
 
 			Map<String, GetFieldMappingsResponse.FieldMappingMetaData> map2 =

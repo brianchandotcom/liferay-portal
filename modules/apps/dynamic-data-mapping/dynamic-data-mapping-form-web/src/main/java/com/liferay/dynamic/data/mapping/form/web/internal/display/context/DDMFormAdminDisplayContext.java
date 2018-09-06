@@ -298,8 +298,8 @@ public class DDMFormAdminDisplayContext {
 
 				jsonObject.put("settingsContext", settingsContext);
 			}
-			catch (Exception e) {
-				e.printStackTrace();
+			catch (PortalException pe) {
+				_log.error(pe, pe);
 			}
 		}
 

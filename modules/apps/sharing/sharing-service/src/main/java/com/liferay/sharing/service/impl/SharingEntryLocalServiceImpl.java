@@ -15,24 +15,14 @@
 package com.liferay.sharing.service.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
-import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.model.UserNotificationDeliveryConstants;
-import com.liferay.portal.kernel.notifications.UserNotificationDefinition;
-import com.liferay.portal.kernel.notifications.UserNotificationManagerUtil;
-import com.liferay.portal.kernel.portlet.PortletProvider;
-import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistry;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.UserLocalService;
-import com.liferay.portal.kernel.service.UserNotificationEventLocalService;
 import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -131,8 +121,6 @@ public class SharingEntryLocalServiceImpl
 		if (indexer != null) {
 			indexer.reindex(className, classPK);
 		}
-
-		_sendNotificationEvent(newSharingEntry);
 
 		return newSharingEntry;
 	}
@@ -336,12 +324,7 @@ public class SharingEntryLocalServiceImpl
 			actionIds -> sharingEntry.setActionIds(actionIds)
 		);
 
-		SharingEntry updatedSharingEntry = sharingEntryPersistence.update(
-			sharingEntry);
-
-		_sendNotificationEvent(updatedSharingEntry);
-
-		return updatedSharingEntry;
+		return sharingEntryPersistence.update(sharingEntry);
 	}
 
 	private SharingEntry _deleteSharingEntry(SharingEntry sharingEntry) {
@@ -370,38 +353,6 @@ public class SharingEntryLocalServiceImpl
 		}
 
 		return deletedSharingEntry;
-	}
-
-	private void _sendNotificationEvent(SharingEntry sharingEntry)
-		throws PortalException {
-
-		String portletId = PortletProviderUtil.getPortletId(
-			SharingEntry.class.getName(), PortletProvider.Action.EDIT);
-
-		if (UserNotificationManagerUtil.isDeliver(
-				sharingEntry.getToUserId(), portletId, 0,
-				UserNotificationDefinition.NOTIFICATION_TYPE_ADD_ENTRY,
-				UserNotificationDeliveryConstants.TYPE_WEBSITE)) {
-
-			JSONObject notificationEventJSONObject =
-				JSONFactoryUtil.createJSONObject();
-
-			notificationEventJSONObject.put(
-				"classPK", sharingEntry.getSharingEntryId());
-
-			User fromUser = _userLocalService.fetchUser(
-				sharingEntry.getFromUserId());
-
-			if (fromUser != null) {
-				notificationEventJSONObject.put(
-					"fromUserFullName", fromUser.getFullName());
-			}
-
-			_userNotificationEventLocalService.sendUserNotificationEvents(
-				sharingEntry.getToUserId(), portletId,
-				UserNotificationDeliveryConstants.TYPE_WEBSITE,
-				notificationEventJSONObject);
-		}
 	}
 
 	private void _validateExpirationDate(Date expirationDate)
@@ -460,12 +411,5 @@ public class SharingEntryLocalServiceImpl
 
 	@ServiceReference(type = Portal.class)
 	private Portal _portal;
-
-	@ServiceReference(type = UserLocalService.class)
-	private UserLocalService _userLocalService;
-
-	@ServiceReference(type = UserNotificationEventLocalService.class)
-	private UserNotificationEventLocalService
-		_userNotificationEventLocalService;
 
 }

@@ -28,11 +28,12 @@ import javax.portlet.annotations.PortletLifecycleFilter;
  */
 public class BeanFilterAnnotationImpl implements BeanFilter {
 
-	public BeanFilterAnnotationImpl(
-		Class<?> filterClass, PortletLifecycleFilter portletLifecycleFilter) {
-
+	public BeanFilterAnnotationImpl(Class<?> filterClass) {
 		_filterClass = filterClass;
-		_portletLifecycleFilter = portletLifecycleFilter;
+		_portletLifecycleFilter = filterClass.getAnnotation(
+			PortletLifecycleFilter.class);
+
+		_portletNames = Arrays.asList(_portletLifecycleFilter.portletNames());
 	}
 
 	@Override
@@ -47,7 +48,7 @@ public class BeanFilterAnnotationImpl implements BeanFilter {
 
 	@Override
 	public List<String> getPortletNames() {
-		return Arrays.asList(_portletLifecycleFilter.portletNames());
+		return _portletNames;
 	}
 
 	@Override
@@ -71,5 +72,6 @@ public class BeanFilterAnnotationImpl implements BeanFilter {
 
 	private final Class<?> _filterClass;
 	private final PortletLifecycleFilter _portletLifecycleFilter;
+	private final List<String> _portletNames;
 
 }

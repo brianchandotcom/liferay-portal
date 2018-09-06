@@ -172,11 +172,7 @@ public class BeanPortletExtension implements Extension {
 			}
 
 			for (Class<?> annotatedClass : _portletLifecycleFilterClasses) {
-				_beanFilters.add(
-					new BeanFilterAnnotationImpl(
-						annotatedClass,
-						annotatedClass.getAnnotation(
-							PortletLifecycleFilter.class)));
+				_beanFilters.add(new BeanFilterAnnotationImpl(annotatedClass));
 			}
 
 			for (Class<?> portletListenerClass : _portletListenerClasses) {

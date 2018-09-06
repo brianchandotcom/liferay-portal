@@ -173,7 +173,7 @@ const INITIAL_STATE = {
 	 * @type {!string}
 	 */
 
-	updateFragmentEntryLinksURL: Config.string().required()
+	updateLayoutPageTemplateDataURL: Config.string().required()
 };
 
 export {INITIAL_STATE};

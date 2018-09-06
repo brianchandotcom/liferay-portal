@@ -57,7 +57,7 @@ function addFragmentEntryLinkReducer(state, actionType, payload) {
 							);
 
 							return _updateData(
-								state.updateFragmentEntryLinksURL,
+								state.updateLayoutPageTemplateDataURL,
 								state.portletNamespace,
 								state.classNameId,
 								state.classPK,
@@ -291,7 +291,7 @@ function _removeFragmentEntryLink(
 
 /**
  * Update layoutData
- * @param {!string} updateFragmentEntryLinksURL
+ * @param {!string} updateLayoutPageTemplateDataURL
  * @param {!string} portletNamespace
  * @param {!string} classNameId
  * @param {!string} classPK
@@ -302,7 +302,7 @@ function _removeFragmentEntryLink(
  */
 
 function _updateData(
-	updateFragmentEntryLinksURL,
+	updateLayoutPageTemplateDataURL,
 	portletNamespace,
 	classNameId,
 	classPK,
@@ -319,7 +319,7 @@ function _updateData(
 	);
 
 	return fetch(
-		updateFragmentEntryLinksURL,
+		updateLayoutPageTemplateDataURL,
 		{
 			body: formData,
 			credentials: 'include',

@@ -172,7 +172,7 @@ class FragmentsEditor extends Component {
 			);
 
 			fetch(
-				this.updateFragmentEntryLinksURL,
+				this.updateLayoutPageTemplateDataURL,
 				{
 					body: formData,
 					credentials: 'include',

@@ -71,7 +71,7 @@ public class FormStructureRepresentorBuilderHelper {
 			"successPage", this::_getDDMFormSuccessPageSettings,
 			this::_buildDDMFormSuccessPageSettings
 		).addNestedList(
-			"fields", _structureRepresentorBuilderHelper::getFormLayoutPages,
+			"formPages", _structureRepresentorBuilderHelper::getFormLayoutPages,
 			nestedBuilder -> _buildFormLayoutPage(nestedBuilder).build()
 		);
 
@@ -139,7 +139,7 @@ public class FormStructureRepresentorBuilderHelper {
 		return builder.types(
 			"FormSuccessPageSettings"
 		).addBoolean(
-			"isEnabled", DDMFormSuccessPageSettings::isEnabled
+			"enabled", DDMFormSuccessPageSettings::isEnabled
 		).addLocalizedStringByLocale(
 			"headline", getLocalizedString(DDMFormSuccessPageSettings::getTitle)
 		).addLocalizedStringByLocale(

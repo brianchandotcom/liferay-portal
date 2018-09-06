@@ -607,52 +607,52 @@
 
 		<execute macro="KaleoDesigner#viewSourceXMLLine">
 			<var name="kdSourceXML"><![CDATA[<name>Timer Name</name>]]></var>
-			<var name="line" value="21" />
+			<var name="line" value="19" />
 		</execute>
 
 		<execute macro="KaleoDesigner#viewSourceXMLLine">
 			<var name="kdSourceXML"><![CDATA[<duration>5</duration>]]></var>
-			<var name="line" value="24" />
+			<var name="line" value="22" />
 		</execute>
 
 		<execute macro="KaleoDesigner#viewSourceXMLLine">
 			<var name="kdSourceXML"><![CDATA[<scale>hour</scale>]]></var>
-			<var name="line" value="25" />
+			<var name="line" value="23" />
 		</execute>
 
 		<execute macro="KaleoDesigner#viewSourceXMLLine">
 			<var name="kdSourceXML"><![CDATA[<duration>6</duration>]]></var>
-			<var name="line" value="28" />
+			<var name="line" value="26" />
 		</execute>
 
 		<execute macro="KaleoDesigner#viewSourceXMLLine">
 			<var name="kdSourceXML"><![CDATA[<scale>hour</scale>]]></var>
-			<var name="line" value="29" />
+			<var name="line" value="27" />
 		</execute>
 
 		<execute macro="KaleoDesigner#viewSourceXMLLine">
 			<var name="kdSourceXML"><![CDATA[<timer-action>]]></var>
-			<var name="line" value="33" />
+			<var name="line" value="31" />
 		</execute>
 
 		<execute macro="KaleoDesigner#viewSourceXMLLine">
 			<var name="kdSourceXML"><![CDATA[<name>Blocker Name</name>]]></var>
-			<var name="line" value="34" />
+			<var name="line" value="32" />
 		</execute>
 
 		<execute macro="KaleoDesigner#viewSourceXMLLine">
 			<var name="kdSourceXML"><![CDATA[<description>Blocker Description</description>]]></var>
-			<var name="line" value="35" />
+			<var name="line" value="33" />
 		</execute>
 
 		<execute macro="KaleoDesigner#viewSourceXMLLine">
 			<var name="kdSourceXML"><![CDATA[Test Script]]></var>
-			<var name="line" value="37" />
+			<var name="line" value="35" />
 		</execute>
 
 		<execute macro="KaleoDesigner#viewSourceXMLLine">
 			<var name="kdSourceXML"><![CDATA[<blocking>true</blocking>]]></var>
-			<var name="line" value="31" />
+			<var name="line" value="29" />
 		</execute>
 	</command>
 
@@ -857,7 +857,7 @@
 
 		<execute macro="KaleoDesigner#viewSourceXMLLine">
 			<var name="kdSourceXML"><![CDATA[<script-language>groovy</script-language>]]></var>
-			<var name="line" value="34" />
+			<var name="line" value="32" />
 		</execute>
 
 		<execute macro="PortletEntry#publish" />
@@ -1360,47 +1360,6 @@
 		</execute>
 	</command>
 
-	<command name="PublishWorkflowDefinitionWithNoNameLineAndViewErrorMessage" priority="3">
-		<description message="This is a use case for LPS-76517." />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Workflow" />
-		</execute>
-
-		<execute macro="Workflow#addNewDefinition">
-			<var name="workflowDefinitionTitle" value="Test Definition" />
-		</execute>
-
-		<execute macro="PortletEntry#publish" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Workflow" />
-		</execute>
-
-		<execute macro="Workflow#viewDefinitionPublished">
-			<var name="workflowDefinitionTitle" value="Test Definition" />
-		</execute>
-
-		<execute macro="Workflow#gotoEditWorkflowDefinition">
-			<var name="workflowDefinitionName" value="Test Definition" />
-			<var name="workflowDefinitionTitle" value="Test Definition" />
-		</execute>
-
-		<execute macro="KaleoDesigner#editSourceXML">
-			<var name="kdSourceXML" value=" " />
-			<var name="line" value="5" />
-		</execute>
-
-		<execute macro="Workflow#publishInvalidWorkflowDefinition">
-			<var name="errorMessage" value="Please enter valid content." />
-			<var name="update" value="true" />
-		</execute>
-	</command>
-
 	<command name="PublishWorkflowDefinitionWithNoStartNodeAndViewErrorMessage" priority="4">
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Configuration" />
@@ -1655,7 +1614,7 @@
 
 		<execute macro="KaleoDesigner#editSourceXML">
 			<var name="kdSourceXML" value=" " />
-			<var name="line" value="20" />
+			<var name="line" value="18" />
 		</execute>
 
 		<execute macro="KaleoDesigner#viewViewTab" />
@@ -1666,7 +1625,7 @@
 
 		<execute macro="KaleoDesigner#editSourceXML">
 			<var name="kdSourceXML"><![CDATA[</transitions></state>]]></var>
-			<var name="line" value="20" />
+			<var name="line" value="18" />
 		</execute>
 
 		<execute macro="KaleoDesigner#viewViewTab" />

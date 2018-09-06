@@ -165,6 +165,33 @@ public class FragmentsEditorDisplayContext {
 		return soyContext;
 	}
 
+	public SoyContext getFragmentEntryLinkListContext() throws PortalException {
+		SoyContext soyContext = SoyContextFactoryUtil.createSoyContext();
+
+		soyContext.put(
+			"defaultEditorConfigurations", _getDefaultConfigurations());
+		soyContext.put("defaultLanguageId", _themeDisplay.getLanguageId());
+		soyContext.put(
+			"fragmentEntryLinks", _getSoyContextFragmentEntryLinks());
+
+		PortletURL itemSelectorURL = _itemSelector.getItemSelectorURL(
+			RequestBackedPortletURLFactoryUtil.create(_request),
+			_renderResponse.getNamespace() + "selectImage",
+			_getImageItemSelectorCriterion(), _getURLItemSelectorCriterion());
+
+		soyContext.put("imageSelectorURL", itemSelectorURL.toString());
+
+		soyContext.put("languageId", _themeDisplay.getLanguageId());
+		soyContext.put(
+			"layoutData", JSONFactoryUtil.createJSONObject(_getLayoutData()));
+		soyContext.put("portletNamespace", _renderResponse.getNamespace());
+		soyContext.put(
+			"spritemap",
+			_themeDisplay.getPathThemeImages() + "/lexicon/icons.svg");
+
+		return soyContext;
+	}
+
 	private Map<String, Object> _getDefaultConfigurations() {
 		Map<String, Object> configurations = new HashMap<>();
 

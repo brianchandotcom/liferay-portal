@@ -21,12 +21,15 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.sharing.service.SharingEntryService;
 import com.liferay.sharing.web.internal.constants.SharingPortletKeys;
 import com.liferay.sharing.web.internal.display.SharingEntryPermissionDisplayActionKey;
+
+import java.util.Date;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -64,6 +67,10 @@ public class ShareEntryMVCActionCommand extends BaseMVCActionCommand {
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
+		Date expirationDate = ParamUtil.getDate(
+			actionRequest, "expirationDate",
+			DateFormatFactoryUtil.getDate(themeDisplay.getLocale()));
+
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			actionRequest);
 
@@ -84,7 +91,7 @@ public class ShareEntryMVCActionCommand extends BaseMVCActionCommand {
 					themeDisplay.getScopeGroupId(), shareable,
 					sharingEntryPermissionDisplayActionKey.
 						getSharingEntryActionKeys(),
-					serviceContext);
+					expirationDate, serviceContext);
 			}
 		}
 	}

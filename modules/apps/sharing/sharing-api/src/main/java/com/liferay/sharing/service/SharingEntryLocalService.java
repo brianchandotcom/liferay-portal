@@ -42,6 +42,7 @@ import com.liferay.sharing.model.SharingEntry;
 import java.io.Serializable;
 
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -69,7 +70,8 @@ public interface SharingEntryLocalService extends BaseLocalService,
 	public SharingEntry addSharingEntry(long fromUserId, long toUserId,
 		long classNameId, long classPK, long groupId, boolean shareable,
 		Collection<SharingEntryActionKey> sharingEntryActionKeys,
-		ServiceContext serviceContext) throws PortalException;
+		Date expirationDate, ServiceContext serviceContext)
+		throws PortalException;
 
 	/**
 	* Adds the sharing entry to the database. Also notifies the appropriate model listeners.
@@ -95,6 +97,8 @@ public interface SharingEntryLocalService extends BaseLocalService,
 	*/
 	@Transactional(enabled = false)
 	public SharingEntry createSharingEntry(long sharingEntryId);
+
+	public void deleteExpiredEntries();
 
 	public void deleteGroupSharingEntries(long groupId);
 
@@ -260,7 +264,7 @@ public interface SharingEntryLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<SharingEntry> getSharingEntries(long toUserId,
-		long classNameId, long classPK) throws PortalException;
+		long classNameId, long classPK);
 
 	/**
 	* Returns all the sharing entries matching the UUID and company.

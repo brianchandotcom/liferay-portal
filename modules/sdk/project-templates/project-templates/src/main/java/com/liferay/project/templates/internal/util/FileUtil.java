@@ -222,11 +222,11 @@ public class FileUtil {
 			while (iterator.hasNext()) {
 				Path path = iterator.next();
 
-				Path fileName = path.getFileName();
+				Path fileNamePath = path.getFileName();
 
-				String fileNameMatch = fileName.toString();
+				String fileName = fileNamePath.toString();
 
-				if (fileNameMatch.matches(regex)) {
+				if (fileName.matches(regex)) {
 					return path;
 				}
 			}

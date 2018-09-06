@@ -41,7 +41,6 @@ import javax.portlet.Event;
 import javax.portlet.MutableRenderParameters;
 import javax.portlet.PortletMode;
 import javax.portlet.PortletModeException;
-import javax.portlet.RenderParameters;
 import javax.portlet.WindowState;
 import javax.portlet.WindowStateException;
 
@@ -165,11 +164,8 @@ public abstract class StateAwareResponseImpl
 		else {
 			Set<String> publicRenderParameterNames = new LinkedHashSet<>();
 
-			RenderParameters renderParameters =
-				portletRequestImpl.getRenderParameters();
-
 			RenderParametersImpl renderParametersImpl =
-				(RenderParametersImpl)renderParameters;
+				(RenderParametersImpl)portletRequestImpl.getRenderParameters();
 
 			Map<String, String[]> liferayRenderParametersMap =
 				renderParametersImpl.getParameterMap();

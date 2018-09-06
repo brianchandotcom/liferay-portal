@@ -22,6 +22,8 @@ import com.liferay.item.selector.criteria.file.criterion.FileItemSelectorCriteri
 import com.liferay.item.selector.criteria.image.criterion.ImageItemSelectorCriterion;
 import com.liferay.journal.constants.JournalWebKeys;
 import com.liferay.journal.item.selector.criterion.JournalItemSelectorCriterion;
+import com.liferay.journal.model.JournalArticle;
+import com.liferay.journal.model.JournalFolder;
 import com.liferay.portal.kernel.portlet.LiferayRenderRequest;
 import com.liferay.portal.kernel.portlet.LiferayRenderResponse;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
@@ -41,8 +43,11 @@ import javax.portlet.RenderResponse;
 public class JournalItemSelectorHelper {
 
 	public JournalItemSelectorHelper(
+		JournalArticle article, JournalFolder folder,
 		RenderRequest renderRequest, RenderResponse renderResponse) {
 
+		_article = article;
+		_folder = folder;
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
 
@@ -82,8 +87,20 @@ public class JournalItemSelectorHelper {
 	}
 
 	public PortletURL getImageSelectorURL() {
-		ItemSelectorCriterion journalItemSelectorCriterion =
+		JournalItemSelectorCriterion journalItemSelectorCriterion =
 			new JournalItemSelectorCriterion();
+
+		if (_article != null) {
+			journalItemSelectorCriterion.setResourcePrimKey(
+				_article.getResourcePrimKey());
+
+			journalItemSelectorCriterion.setJournalFolderId(
+				_article.getFolderId());
+		}
+		else if (_folder != null) {
+			journalItemSelectorCriterion.setJournalFolderId(
+				_folder.getFolderId());
+		}
 
 		ItemSelectorCriterion fileItemSelectorCriterion =
 			new ImageItemSelectorCriterion();
@@ -118,6 +135,8 @@ public class JournalItemSelectorHelper {
 			journalItemSelectorCriterion, fileItemSelectorCriterion);
 	}
 
+	private final JournalArticle _article;
+	private final JournalFolder _folder;
 	private final ItemSelector _itemSelector;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;

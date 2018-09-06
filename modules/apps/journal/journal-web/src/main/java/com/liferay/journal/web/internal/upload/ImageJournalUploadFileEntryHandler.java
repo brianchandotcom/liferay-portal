@@ -17,6 +17,8 @@ package com.liferay.journal.web.internal.upload;
 import com.liferay.document.library.kernel.util.DLValidator;
 import com.liferay.journal.configuration.JournalFileUploadsConfiguration;
 import com.liferay.journal.constants.JournalConstants;
+import com.liferay.journal.model.JournalArticle;
+import com.liferay.journal.model.JournalFolder;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.ImageTypeException;
@@ -25,10 +27,12 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.TempFileEntryUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.upload.UniqueFileNameProvider;
@@ -47,6 +51,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Eduardo Garcia
  * @author Alejandro Tardín
+ * @author Roberto Díaz
  */
 @Component(
 	configurationPid = "com.liferay.journal.configuration.JournalFileUploadsConfiguration",
@@ -63,9 +68,27 @@ public class ImageJournalUploadFileEntryHandler
 			(ThemeDisplay)uploadPortletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		_portletResourcePermission.check(
-			themeDisplay.getPermissionChecker(), themeDisplay.getScopeGroup(),
-			ActionKeys.ADD_ARTICLE);
+		long resourcePrimKey = ParamUtil.getLong(
+			uploadPortletRequest, "resourcePrimKey");
+
+		long journalFolderId = ParamUtil.getLong(
+			uploadPortletRequest, "journalFolderId");
+
+		if (resourcePrimKey != 0) {
+			_journalArticleModelResourcePermission.check(
+				themeDisplay.getPermissionChecker(), resourcePrimKey,
+				ActionKeys.UPDATE);
+		}
+		else if (journalFolderId != 0) {
+			_journalFolderModelResourcePermission.check(
+				themeDisplay.getPermissionChecker(), journalFolderId,
+				ActionKeys.ADD_ARTICLE);
+		}
+		else {
+			_portletResourcePermission.check(
+				themeDisplay.getPermissionChecker(),
+				themeDisplay.getScopeGroup(), ActionKeys.ADD_ARTICLE);
+		}
 
 		String fileName = uploadPortletRequest.getFileName(_PARAMETER_NAME);
 		long size = uploadPortletRequest.getSize(_PARAMETER_NAME);
@@ -92,6 +115,26 @@ public class ImageJournalUploadFileEntryHandler
 	protected void activate(Map<String, Object> properties) {
 		_journalFileUploadsConfiguration = ConfigurableUtil.createConfigurable(
 			JournalFileUploadsConfiguration.class, properties);
+	}
+
+	@Reference(
+		target = "(model.class.name=com.liferay.journal.model.JournalArticle)",
+		unbind = "-"
+	)
+	protected void setJournalArticleModelResourcePermission(
+		ModelResourcePermission<JournalArticle> modelResourcePermission) {
+
+		_journalArticleModelResourcePermission = modelResourcePermission;
+	}
+
+	@Reference(
+		target = "(model.class.name=com.liferay.journal.model.JournalFolder)",
+		unbind = "-"
+	)
+	protected void setJournalFolderModelResourcePermission(
+		ModelResourcePermission<JournalFolder> modelResourcePermission) {
+
+		_journalFolderModelResourcePermission = modelResourcePermission;
 	}
 
 	private boolean _exists(ThemeDisplay themeDisplay, String curFileName) {
@@ -146,7 +189,11 @@ public class ImageJournalUploadFileEntryHandler
 	@Reference
 	private DLValidator _dlValidator;
 
+	private ModelResourcePermission<JournalArticle>
+		_journalArticleModelResourcePermission;
 	private JournalFileUploadsConfiguration _journalFileUploadsConfiguration;
+	private ModelResourcePermission<JournalFolder>
+		_journalFolderModelResourcePermission;
 
 	@Reference(
 		target = "(resource.name=" + JournalConstants.RESOURCE_NAME + ")"

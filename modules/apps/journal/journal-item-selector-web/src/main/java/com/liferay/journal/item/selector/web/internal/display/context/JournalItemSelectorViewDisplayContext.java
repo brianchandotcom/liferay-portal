@@ -109,6 +109,12 @@ public class JournalItemSelectorViewDisplayContext {
 
 		portletURL.setParameter(
 			ActionRequest.ACTION_NAME, "/journal/upload_image");
+		portletURL.setParameter(
+			"journalFolderId",
+			String.valueOf(_journalItemSelectorCriterion.getJournalFolderId()));
+		portletURL.setParameter(
+			"resourcePrimKey",
+			String.valueOf(_journalItemSelectorCriterion.getResourcePrimKey()));
 
 		return portletURL;
 	}

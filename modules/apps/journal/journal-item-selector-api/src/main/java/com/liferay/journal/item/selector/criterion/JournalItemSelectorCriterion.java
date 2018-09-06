@@ -18,6 +18,7 @@ import com.liferay.item.selector.BaseItemSelectorCriterion;
 
 /**
  * @author Eduardo Garcia
+ * @author Roberto Díaz
  */
 public class JournalItemSelectorCriterion extends BaseItemSelectorCriterion {
 
@@ -28,14 +29,30 @@ public class JournalItemSelectorCriterion extends BaseItemSelectorCriterion {
 		_resourcePrimKey = resourcePrimKey;
 	}
 
+	public JournalItemSelectorCriterion(
+		long resourcePrimKey, long journalFolderId) {
+
+		_resourcePrimKey = resourcePrimKey;
+		_journalFolderId = journalFolderId;
+	}
+
+	public long getJournalFolderId() {
+		return _journalFolderId;
+	}
+
 	public long getResourcePrimKey() {
 		return _resourcePrimKey;
+	}
+
+	public void setJournalFolderId(long journalFolderId) {
+		_journalFolderId = journalFolderId;
 	}
 
 	public void setResourcePrimKey(long resourcePrimKey) {
 		_resourcePrimKey = resourcePrimKey;
 	}
 
+	private long _journalFolderId;
 	private long _resourcePrimKey;
 
 }

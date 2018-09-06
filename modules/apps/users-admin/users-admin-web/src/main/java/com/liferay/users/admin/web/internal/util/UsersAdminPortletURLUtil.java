@@ -74,18 +74,19 @@ public class UsersAdminPortletURLUtil {
 
 		renderURL.setParameter("mvcRenderCommandName", "/users_admin/view");
 		renderURL.setParameter("toolbarItem", "view-all-organizations");
-		renderURL.setParameter(
-			"organizationId", String.valueOf(organizationId));
-
-		String usersListView = UserConstants.LIST_VIEW_TREE;
 
 		if (organizationId ==
 				OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID) {
 
-			usersListView = UserConstants.LIST_VIEW_FLAT_ORGANIZATIONS;
+			renderURL.setParameter(
+				"usersListView", UserConstants.LIST_VIEW_FLAT_ORGANIZATIONS);
 		}
-
-		renderURL.setParameter("usersListView", usersListView);
+		else {
+			renderURL.setParameter(
+				"organizationId", String.valueOf(organizationId));
+			renderURL.setParameter(
+				"usersListView", UserConstants.LIST_VIEW_TREE);
+		}
 
 		return String.valueOf(renderURL);
 	}

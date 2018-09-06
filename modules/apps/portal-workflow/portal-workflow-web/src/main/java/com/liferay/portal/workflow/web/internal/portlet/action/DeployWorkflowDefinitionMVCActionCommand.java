@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowDefinition;
 import com.liferay.portal.kernel.workflow.WorkflowDefinitionFileException;
+import com.liferay.portal.kernel.workflow.WorkflowDefinitionManager;
 import com.liferay.portal.kernel.workflow.WorkflowDefinitionTitleException;
 import com.liferay.portal.kernel.workflow.WorkflowException;
 import com.liferay.portal.workflow.constants.WorkflowWebKeys;
@@ -43,6 +44,7 @@ import javax.portlet.ActionResponse;
 import javax.portlet.PortletRequest;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Leonardo Barros
@@ -98,7 +100,7 @@ public class DeployWorkflowDefinitionMVCActionCommand
 		}
 
 		WorkflowDefinition workflowDefinition =
-			workflowDefinitionManager.deployWorkflowDefinition(
+			unproxiedWorkflowDefinitionManager.deployWorkflowDefinition(
 				themeDisplay.getCompanyId(), themeDisplay.getUserId(),
 				getTitle(actionRequest, titleMap), name, content.getBytes());
 
@@ -111,12 +113,12 @@ public class DeployWorkflowDefinitionMVCActionCommand
 		long companyId, String name) {
 
 		try {
-			return workflowDefinitionManager.getLatestWorkflowDefinition(
-				companyId, name);
+			return unproxiedWorkflowDefinitionManager.
+				getLatestWorkflowDefinition(companyId, name);
 		}
 		catch (WorkflowException we) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(we, we);
+			if (_log.isDebugEnabled()) {
+				_log.debug(we, we);
 			}
 
 			return null;
@@ -170,7 +172,8 @@ public class DeployWorkflowDefinitionMVCActionCommand
 		throws WorkflowDefinitionFileException {
 
 		try {
-			workflowDefinitionManager.validateWorkflowDefinition(bytes);
+			unproxiedWorkflowDefinitionManager.validateWorkflowDefinition(
+				bytes);
 		}
 		catch (WorkflowException we) {
 			String message = LanguageUtil.get(
@@ -180,6 +183,9 @@ public class DeployWorkflowDefinitionMVCActionCommand
 			throw new WorkflowDefinitionFileException(message, we);
 		}
 	}
+
+	@Reference(target = "(proxy.bean=false)")
+	protected WorkflowDefinitionManager unproxiedWorkflowDefinitionManager;
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		DeployWorkflowDefinitionMVCActionCommand.class);

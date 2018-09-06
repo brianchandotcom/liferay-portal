@@ -14,6 +14,7 @@
 
 package com.liferay.portal.minifier;
 
+import com.liferay.portal.internal.minifier.MinifierThreadLocal;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.kernel.log.Log;
@@ -31,31 +32,22 @@ import com.liferay.registry.ServiceTracker;
 public class MinifierUtil {
 
 	public static String minifyCss(String content) {
-		if (!PropsValues.MINIFIER_ENABLED) {
-			return content;
+		if (PropsValues.MINIFIER_ENABLED && MinifierThreadLocal.isEnabled()) {
+			return _minifyCss(content);
 		}
 
-		return _instance._minifyCss(content);
+		return content;
 	}
 
 	public static String minifyJavaScript(String resourceName, String content) {
-		if (!PropsValues.MINIFIER_ENABLED) {
-			return content;
+		if (PropsValues.MINIFIER_ENABLED && MinifierThreadLocal.isEnabled()) {
+			return _minifyJavaScript(resourceName, content);
 		}
 
-		return _instance._minifyJavaScript(resourceName, content);
+		return content;
 	}
 
-	private MinifierUtil() {
-		Registry registry = RegistryUtil.getRegistry();
-
-		_javaScriptMinifierServiceTracker = registry.trackServices(
-			JavaScriptMinifier.class);
-
-		_javaScriptMinifierServiceTracker.open();
-	}
-
-	private String _minifyCss(String content) {
+	private static String _minifyCss(String content) {
 		UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
 
 		try {
@@ -76,7 +68,9 @@ public class MinifierUtil {
 		}
 	}
 
-	private String _minifyJavaScript(String resourceName, String content) {
+	private static String _minifyJavaScript(
+		String resourceName, String content) {
+
 		JavaScriptMinifier javaScriptMinifier =
 			_javaScriptMinifierServiceTracker.getService();
 
@@ -87,11 +81,21 @@ public class MinifierUtil {
 		return javaScriptMinifier.compress(resourceName, content);
 	}
 
+	private MinifierUtil() {
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(MinifierUtil.class);
 
-	private static final MinifierUtil _instance = new MinifierUtil();
-
-	private final ServiceTracker<JavaScriptMinifier, JavaScriptMinifier>
+	private static final ServiceTracker<JavaScriptMinifier, JavaScriptMinifier>
 		_javaScriptMinifierServiceTracker;
+
+	static {
+		Registry registry = RegistryUtil.getRegistry();
+
+		_javaScriptMinifierServiceTracker = registry.trackServices(
+			JavaScriptMinifier.class);
+
+		_javaScriptMinifierServiceTracker.open();
+	}
 
 }

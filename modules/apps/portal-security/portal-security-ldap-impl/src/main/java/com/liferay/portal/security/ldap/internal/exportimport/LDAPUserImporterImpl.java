@@ -1531,20 +1531,23 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 				modifiedDate = LDAPUtil.parseDate(modifyTimestamp);
 
 				if (modifiedDate.equals(user.getModifiedDate())) {
-					if (ldapUser.isUpdatePassword() ||
-						!ldapImportConfiguration.importUserPasswordEnabled()) {
+					if ((ldapUser.isUpdatePassword() ||
+						 !ldapImportConfiguration.
+							 importUserPasswordEnabled()) &&
+						!modifiedDate.equals(user.getPasswordModifiedDate())) {
 
 						updateUserPassword(
 							ldapImportConfiguration, user.getUserId(),
-							user.getScreenName(), password, passwordReset);
-					}
+							user.getScreenName(), password, passwordReset,
+							modifiedDate);
 
-					if (_log.isDebugEnabled()) {
-						_log.debug(
-							StringBundler.concat(
-								"User ", user.getEmailAddress(),
-								" is already synchronized, but updated ",
-								"password to avoid a blank value"));
+						if (_log.isDebugEnabled()) {
+							_log.debug(
+								StringBundler.concat(
+									"Synchronizing password for ",
+									user.getEmailAddress(),
+									" because it might be out of date"));
+						}
 					}
 
 					return user;
@@ -1589,7 +1592,8 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 
 			password = updateUserPassword(
 				ldapImportConfiguration, user.getUserId(),
-				ldapUser.getScreenName(), password, passwordReset);
+				ldapUser.getScreenName(), password, passwordReset,
+				modifiedDate);
 		}
 
 		Contact ldapContact = ldapUser.getContact();
@@ -1647,7 +1651,8 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 
 	protected String updateUserPassword(
 			LDAPImportConfiguration ldapImportConfiguration, long userId,
-			String screenName, String password, boolean passwordReset)
+			String screenName, String password, boolean passwordReset,
+			Date passwordModifiedDate)
 		throws PortalException {
 
 		if (!ldapImportConfiguration.importUserPasswordEnabled()) {
@@ -1665,8 +1670,14 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 			}
 		}
 
-		_userLocalService.updatePassword(
+		User user = _userLocalService.updatePassword(
 			userId, password, password, passwordReset, true);
+
+		if (passwordModifiedDate != null) {
+			user.setPasswordModifiedDate(passwordModifiedDate);
+
+			_userLocalService.updateUser(user);
+		}
 
 		return password;
 	}

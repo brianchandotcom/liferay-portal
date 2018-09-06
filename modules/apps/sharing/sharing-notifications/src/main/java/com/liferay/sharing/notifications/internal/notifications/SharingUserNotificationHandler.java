@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.sharing.web.internal.notifications;
+package com.liferay.sharing.notifications.internal.notifications;
 
 import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -29,9 +29,9 @@ import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.sharing.constants.SharingEntryActionKey;
+import com.liferay.sharing.constants.SharingPortletKeys;
 import com.liferay.sharing.model.SharingEntry;
 import com.liferay.sharing.service.SharingEntryLocalService;
-import com.liferay.sharing.web.internal.constants.SharingPortletKeys;
 
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -182,7 +182,9 @@ public class SharingUserNotificationHandler
 		return ResourceBundleUtil.getString(resourceBundle, "someone");
 	}
 
-	@Reference(target = "(bundle.symbolic.name=com.liferay.sharing.web)")
+	@Reference(
+		target = "(bundle.symbolic.name=com.liferay.sharing.notifications)"
+	)
 	private ResourceBundleLoader _resourceBundleLoader;
 
 	@Reference

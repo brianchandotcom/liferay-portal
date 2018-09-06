@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.sharing.web.internal.constants.SharingPortletKeys;
+import com.liferay.sharing.constants.SharingPortletKeys;
 import com.liferay.sharing.web.internal.display.SharingEntryPermissionDisplay;
 import com.liferay.sharing.web.internal.display.SharingEntryPermissionDisplayActionKey;
 import com.liferay.sharing.web.internal.util.SharingUtil;

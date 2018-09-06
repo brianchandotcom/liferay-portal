@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.sharing.web.internal.constants;
+package com.liferay.sharing.constants;
 
 /**
  * @author Sergio González

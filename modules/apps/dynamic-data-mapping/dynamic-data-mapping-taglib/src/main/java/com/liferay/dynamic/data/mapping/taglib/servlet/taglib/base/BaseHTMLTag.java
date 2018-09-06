@@ -45,7 +45,7 @@ public abstract class BaseHTMLTag extends com.liferay.taglib.util.IncludeTag {
 		return _classPK;
 	}
 
-	public java.lang.Object getDdmFormValues() {
+	public com.liferay.dynamic.data.mapping.storage.DDMFormValues getDdmFormValues() {
 		return _ddmFormValues;
 	}
 
@@ -97,7 +97,7 @@ public abstract class BaseHTMLTag extends com.liferay.taglib.util.IncludeTag {
 		_classPK = classPK;
 	}
 
-	public void setDdmFormValues(java.lang.Object ddmFormValues) {
+	public void setDdmFormValues(com.liferay.dynamic.data.mapping.storage.DDMFormValues ddmFormValues) {
 		_ddmFormValues = ddmFormValues;
 	}
 
@@ -201,7 +201,7 @@ public abstract class BaseHTMLTag extends com.liferay.taglib.util.IncludeTag {
 	private boolean _checkRequired = true;
 	private long _classNameId = 0;
 	private long _classPK = 0;
-	private java.lang.Object _ddmFormValues = null;
+	private com.liferay.dynamic.data.mapping.storage.DDMFormValues _ddmFormValues = null;
 	private java.lang.String _documentLibrarySelectorURL = null;
 	private java.lang.String _fieldsNamespace = null;
 	private boolean _ignoreRequestValue = false;

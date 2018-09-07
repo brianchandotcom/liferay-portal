@@ -236,14 +236,20 @@ public class BeanPortletInvoker
 			try {
 				invokeBeanMethod(beanMethod, args);
 			}
-			catch (Exception e) {
-				Throwable cause = e.getCause();
+			catch (InvocationTargetException ite) {
+				Throwable cause = ite.getCause();
 
-				if (cause == null) {
-					cause = e;
+				if (cause instanceof PortletException) {
+					throw (PortletException)cause;
 				}
 
 				throw new PortletException(cause);
+			}
+			catch (PortletException pe) {
+				throw pe;
+			}
+			catch (Exception e) {
+				throw new PortletException(e);
 			}
 		}
 	}

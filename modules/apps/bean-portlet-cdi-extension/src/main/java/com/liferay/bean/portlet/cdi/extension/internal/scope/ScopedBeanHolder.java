@@ -181,43 +181,43 @@ public class ScopedBeanHolder {
 			while (attributeNames.hasMoreElements()) {
 				String attributeName = attributeNames.nextElement();
 
-				if (attributeName.startsWith(_ATTRIBUTE_NAME_PREFIX)) {
-					Object attributeValue = _portletRequest.getAttribute(
-						attributeName);
-
-					if (attributeValue instanceof ScopedBean) {
-						ScopedBean<?> scopedBean =
-							(ScopedBean<?>)attributeValue;
-
-						Object beanInstance = scopedBean.getBeanInstance();
-
-						Class<?> beanInstanceClass = beanInstance.getClass();
-
-						RenderStateScoped renderStateScoped =
-							beanInstanceClass.getAnnotation(
-								RenderStateScoped.class);
-
-						if (renderStateScoped != null) {
-							if (!PortletSerializable.class.isAssignableFrom(
-									beanInstanceClass)) {
-
-								continue;
-							}
-
-							PortletSerializable portletSerializable =
-								(PortletSerializable)beanInstance;
-
-							String[] values = portletSerializable.serialize();
-
-							MutableRenderParameters mutableRenderParameters =
-								stateAwareResponse.getRenderParameters();
-
-							String name = getParameterName(portletSerializable);
-
-							mutableRenderParameters.setValues(name, values);
-						}
-					}
+				if (!attributeName.startsWith(_ATTRIBUTE_NAME_PREFIX)) {
+					continue;
 				}
+
+				Object attributeValue = _portletRequest.getAttribute(
+					attributeName);
+
+				if (!(attributeValue instanceof ScopedBean)) {
+					continue;
+				}
+
+				ScopedBean<?> scopedBean = (ScopedBean<?>)attributeValue;
+
+				Object beanInstance = scopedBean.getBeanInstance();
+
+				if (!(beanInstance instanceof PortletSerializable)) {
+					continue;
+				}
+
+				Class<?> beanInstanceClass = beanInstance.getClass();
+
+				RenderStateScoped renderStateScoped =
+					beanInstanceClass.getAnnotation(RenderStateScoped.class);
+
+				if (renderStateScoped == null) {
+					continue;
+				}
+
+				PortletSerializable portletSerializable =
+					(PortletSerializable)beanInstance;
+
+				MutableRenderParameters mutableRenderParameters =
+					stateAwareResponse.getRenderParameters();
+
+				mutableRenderParameters.setValues(
+					getParameterName(portletSerializable),
+					portletSerializable.serialize());
 			}
 		}
 

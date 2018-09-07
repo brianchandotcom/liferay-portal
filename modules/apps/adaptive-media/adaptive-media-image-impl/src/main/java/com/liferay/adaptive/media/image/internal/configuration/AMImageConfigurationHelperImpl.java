@@ -32,7 +32,6 @@ import com.liferay.portal.kernel.settings.PortletPreferencesSettings;
 import com.liferay.portal.kernel.settings.Settings;
 import com.liferay.portal.kernel.settings.SettingsException;
 import com.liferay.portal.kernel.settings.SettingsFactoryUtil;
-import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.io.IOException;
@@ -76,9 +75,7 @@ public class AMImageConfigurationHelperImpl
 
 		_normalizeProperties(properties);
 
-		String normalizedUuid = FriendlyURLNormalizerUtil.normalize(uuid);
-
-		_checkUuid(normalizedUuid);
+		_checkUuid(uuid);
 
 		Collection<AMImageConfigurationEntry> amImageConfigurationEntries =
 			getAMImageConfigurationEntries(
@@ -86,18 +83,18 @@ public class AMImageConfigurationHelperImpl
 
 		_checkDuplicatesName(amImageConfigurationEntries, name);
 
-		_checkDuplicatesUuid(amImageConfigurationEntries, normalizedUuid);
+		_checkDuplicatesUuid(amImageConfigurationEntries, uuid);
 
 		List<AMImageConfigurationEntry> updatedAMImageConfigurationEntries =
 			new ArrayList<>(amImageConfigurationEntries);
 
 		updatedAMImageConfigurationEntries.removeIf(
-			amImageConfigurationEntry -> normalizedUuid.equals(
+			amImageConfigurationEntry -> uuid.equals(
 				amImageConfigurationEntry.getUUID()));
 
 		AMImageConfigurationEntry amImageConfigurationEntry =
 			new AMImageConfigurationEntryImpl(
-				name, description, normalizedUuid, properties, true);
+				name, description, uuid, properties, true);
 
 		updatedAMImageConfigurationEntries.add(amImageConfigurationEntry);
 
@@ -306,9 +303,7 @@ public class AMImageConfigurationHelperImpl
 
 		_normalizeProperties(properties);
 
-		String normalizedUuid = FriendlyURLNormalizerUtil.normalize(newUuid);
-
-		_checkUuid(normalizedUuid);
+		_checkUuid(newUuid);
 
 		Collection<AMImageConfigurationEntry> amImageConfigurationEntries =
 			getAMImageConfigurationEntries(
@@ -335,8 +330,8 @@ public class AMImageConfigurationHelperImpl
 			_checkDuplicatesName(amImageConfigurationEntries, name);
 		}
 
-		if (!oldUuid.equals(normalizedUuid)) {
-			_checkDuplicatesUuid(amImageConfigurationEntries, normalizedUuid);
+		if (!oldUuid.equals(newUuid)) {
+			_checkDuplicatesUuid(amImageConfigurationEntries, newUuid);
 		}
 
 		List<AMImageConfigurationEntry> updatedAMImageConfigurationEntries =
@@ -348,7 +343,7 @@ public class AMImageConfigurationHelperImpl
 
 		AMImageConfigurationEntry amImageConfigurationEntry =
 			new AMImageConfigurationEntryImpl(
-				name, description, normalizedUuid, properties,
+				name, description, newUuid, properties,
 				oldAMImageConfigurationEntry.isEnabled());
 
 		updatedAMImageConfigurationEntries.add(amImageConfigurationEntry);
@@ -476,6 +471,12 @@ public class AMImageConfigurationHelperImpl
 		if (Validator.isNull(uuid)) {
 			throw new AMImageConfigurationException.InvalidUuidException();
 		}
+
+		Matcher matcher = _pattern.matcher(uuid);
+
+		if (!matcher.matches()) {
+			throw new AMImageConfigurationException.InvalidUuidException();
+		}
 	}
 
 	private Stream<AMImageConfigurationEntry> _getAMImageConfigurationEntries(
@@ -598,6 +599,7 @@ public class AMImageConfigurationHelperImpl
 		}
 	}
 
+	private static final Pattern _pattern = Pattern.compile("^\\w+$");
 	private static final Pattern _positiveNumberPattern = Pattern.compile(
 		"\\d*[1-9]\\d*");
 

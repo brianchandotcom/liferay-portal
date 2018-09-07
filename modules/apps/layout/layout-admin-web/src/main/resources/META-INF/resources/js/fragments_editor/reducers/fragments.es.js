@@ -57,6 +57,10 @@ function addFragmentEntryLinkReducer(state, actionType, payload) {
 
 							resolve(nextState);
 						}
+					).catch(
+						() => {
+							resolve(nextState);
+						}
 					);
 			}
 			else {
@@ -99,6 +103,10 @@ function removeFragmentEntryLinkReducer(state, actionType, payload) {
 							...nextState.fragmentEntryLinks.slice(index + 1)
 						];
 
+						resolve(nextState);
+					}
+				).catch(
+					() => {
 						resolve(nextState);
 					}
 				);

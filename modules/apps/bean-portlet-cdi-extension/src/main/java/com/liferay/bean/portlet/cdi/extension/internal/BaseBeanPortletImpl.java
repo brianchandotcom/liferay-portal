@@ -198,15 +198,14 @@ public abstract class BaseBeanPortletImpl implements BeanPortlet {
 			ActionMethod actionMethod = beanActionMethod.getAnnotation(
 				ActionMethod.class);
 
-			if (actionMethod != null) {
-				for (PortletQName portletQName :
-						actionMethod.publishingEvents()) {
+			if (actionMethod == null) {
+				continue;
+			}
 
-					supportedPublishingEvents.add(
-						toNameValuePair(
-							portletQName.localPart(),
-							portletQName.namespaceURI()));
-				}
+			for (PortletQName portletQName : actionMethod.publishingEvents()) {
+				supportedPublishingEvents.add(
+					toNameValuePair(
+						portletQName.localPart(), portletQName.namespaceURI()));
 			}
 		}
 
@@ -218,26 +217,20 @@ public abstract class BaseBeanPortletImpl implements BeanPortlet {
 			EventMethod eventMethod = beanEventMethod.getAnnotation(
 				EventMethod.class);
 
-			if (eventMethod != null) {
-				for (PortletQName portletQName :
-						eventMethod.publishingEvents()) {
-
-					supportedPublishingEvents.add(
-						toNameValuePair(
-							portletQName.localPart(),
-							portletQName.namespaceURI()));
-				}
+			if (eventMethod == null) {
+				continue;
 			}
 
-			if (eventMethod != null) {
-				for (PortletQName portletQName :
-						eventMethod.processingEvents()) {
+			for (PortletQName portletQName : eventMethod.publishingEvents()) {
+				supportedPublishingEvents.add(
+					toNameValuePair(
+						portletQName.localPart(), portletQName.namespaceURI()));
+			}
 
-					supportedProcessingEvents.add(
-						toNameValuePair(
-							portletQName.localPart(),
-							portletQName.namespaceURI()));
-				}
+			for (PortletQName portletQName : eventMethod.processingEvents()) {
+				supportedProcessingEvents.add(
+					toNameValuePair(
+						portletQName.localPart(), portletQName.namespaceURI()));
 			}
 		}
 

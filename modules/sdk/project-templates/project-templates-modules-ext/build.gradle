@@ -1,4 +1,13 @@
 dependencies {
-	compileOnly group: "com.liferay", name: "com.liferay.project.templates", version: "4.1.7"
+	compile project(":sdk:project-templates:project-templates")
+
 	compileOnly group: "org.apache.maven.archetype", name: "archetype-common", version: "2.4"
+}
+
+generateSampleProject {
+	args "--original-module-name", "com.liferay.login.web", "--original-module-version", "2.0.4", "--name", "foo-ext"
+
+	doFirst {
+		delete "${buildDir}/foo-ext"
+	}
 }

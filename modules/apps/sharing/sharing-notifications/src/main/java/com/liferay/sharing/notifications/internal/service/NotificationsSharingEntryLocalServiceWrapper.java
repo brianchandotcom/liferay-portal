@@ -15,19 +15,23 @@
 package com.liferay.sharing.notifications.internal.service;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
-import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.model.UserNotificationDeliveryConstants;
-import com.liferay.portal.kernel.notifications.UserNotificationDefinition;
-import com.liferay.portal.kernel.notifications.UserNotificationManagerUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceWrapper;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.UserNotificationEventLocalService;
+import com.liferay.portal.kernel.util.PrefsPropsUtil;
+import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.ResourceBundleLoader;
+import com.liferay.portal.kernel.util.SubscriptionSender;
 import com.liferay.sharing.constants.SharingEntryActionKey;
 import com.liferay.sharing.constants.SharingPortletKeys;
 import com.liferay.sharing.model.SharingEntry;
+import com.liferay.sharing.notifications.internal.constants.SharingNotificationsConstants;
+import com.liferay.sharing.notifications.internal.notifications.SharingNotificationMessageProvider;
+import com.liferay.sharing.notifications.internal.util.NotificationsSharingEntryUtil;
 import com.liferay.sharing.service.SharingEntryLocalService;
 import com.liferay.sharing.service.SharingEntryLocalServiceWrapper;
 
@@ -66,7 +70,7 @@ public class NotificationsSharingEntryLocalServiceWrapper
 			fromUserId, toUserId, classNameId, classPK, groupId, shareable,
 			sharingEntryActionKeys, expirationDate, serviceContext);
 
-		_sendNotificationEvent(sharingEntry);
+		_sendNotificationEvent(sharingEntry, serviceContext);
 
 		return sharingEntry;
 	}
@@ -81,39 +85,71 @@ public class NotificationsSharingEntryLocalServiceWrapper
 		SharingEntry sharingEntry = super.updateSharingEntry(
 			sharingEntryId, sharingEntryActionKeys, shareable, expirationDate);
 
-		_sendNotificationEvent(sharingEntry);
+		_sendNotificationEvent(sharingEntry, null);
 
 		return sharingEntry;
 	}
 
-	private void _sendNotificationEvent(SharingEntry sharingEntry)
-		throws PortalException {
+	private void _sendNotificationEvent(
+		SharingEntry sharingEntry, ServiceContext serviceContext) {
 
-		if (UserNotificationManagerUtil.isDeliver(
-				sharingEntry.getToUserId(), SharingPortletKeys.SHARING, 0,
-				UserNotificationDefinition.NOTIFICATION_TYPE_ADD_ENTRY,
-				UserNotificationDeliveryConstants.TYPE_WEBSITE)) {
+		try {
+			User user = _userLocalService.getUser(sharingEntry.getToUserId());
 
-			JSONObject notificationEventJSONObject =
-				JSONFactoryUtil.createJSONObject();
+			SubscriptionSender subscriptionSender = new SubscriptionSender();
 
-			notificationEventJSONObject.put(
-				"classPK", sharingEntry.getSharingEntryId());
+			subscriptionSender.setBody(
+				_sharingNotificationMessageProvider.getBody(
+					sharingEntry, serviceContext.getLocale()));
+			subscriptionSender.setClassName(sharingEntry.getModelClassName());
+			subscriptionSender.setClassPK(sharingEntry.getSharingEntryId());
+			subscriptionSender.setCompanyId(user.getCompanyId());
+			subscriptionSender.setCurrentUserId(serviceContext.getUserId());
+			subscriptionSender.setEntryURL(
+				NotificationsSharingEntryUtil.getEntryURL(
+					sharingEntry, serviceContext.getLiferayPortletRequest(),
+					serviceContext.getLiferayPortletResponse()));
 
-			User fromUser = _userLocalService.fetchUser(
-				sharingEntry.getFromUserId());
+			String fromName = PrefsPropsUtil.getString(
+				user.getCompanyId(), PropsKeys.ADMIN_EMAIL_FROM_NAME);
+			String fromAddress = PrefsPropsUtil.getString(
+				user.getCompanyId(), PropsKeys.ADMIN_EMAIL_FROM_ADDRESS);
 
-			if (fromUser != null) {
-				notificationEventJSONObject.put(
-					"fromUserFullName", fromUser.getFullName());
-			}
+			subscriptionSender.setFrom(fromAddress, fromName);
 
-			_userNotificationEventLocalService.sendUserNotificationEvents(
-				sharingEntry.getToUserId(), SharingPortletKeys.SHARING,
-				UserNotificationDeliveryConstants.TYPE_WEBSITE,
-				notificationEventJSONObject);
+			subscriptionSender.setHtmlFormat(true);
+			subscriptionSender.setMailId(
+				"sharing_entry", sharingEntry.getSharingEntryId());
+			subscriptionSender.setNotificationType(
+				SharingNotificationsConstants.NOTIFICATION_TYPE_SHARE);
+			subscriptionSender.setPortletId(SharingPortletKeys.SHARING);
+			subscriptionSender.setScopeGroupId(sharingEntry.getGroupId());
+			subscriptionSender.setServiceContext(serviceContext);
+
+			subscriptionSender.addRuntimeSubscribers(
+				user.getEmailAddress(), user.getFullName());
+
+			subscriptionSender.flushNotificationsAsync();
+		}
+		catch (Exception e) {
+			_log.error(
+				"Unable to send notification for sharing entry: " +
+					sharingEntry.getSharingEntryId(),
+				e);
 		}
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		NotificationsSharingEntryLocalServiceWrapper.class);
+
+	@Reference(
+		target = "(bundle.symbolic.name=com.liferay.sharing.notifications)"
+	)
+	private ResourceBundleLoader _resourceBundleLoader;
+
+	@Reference
+	private SharingNotificationMessageProvider
+		_sharingNotificationMessageProvider;
 
 	@Reference
 	private UserLocalService _userLocalService;

@@ -25,7 +25,6 @@ import java.lang.reflect.Modifier;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Dictionary;
 import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -42,10 +41,6 @@ import javax.portlet.annotations.PortletQName;
  * @author Neil Griffin
  */
 public abstract class BaseBeanPortletImpl implements BeanPortlet {
-
-	public BaseBeanPortletImpl(BeanApp beanApp) {
-		_beanApp = beanApp;
-	}
 
 	@Override
 	public void addBeanMethod(BeanMethod beanMethod) {
@@ -82,21 +77,25 @@ public abstract class BaseBeanPortletImpl implements BeanPortlet {
 	}
 
 	@Override
-	public BeanApp getBeanApp() {
-		return _beanApp;
-	}
-
-	@Override
 	public List<BeanMethod> getBeanMethods(MethodType methodType) {
 		return _beanMethods.getOrDefault(methodType, Collections.emptyList());
 	}
 
-	@Override
-	public Dictionary<String, Object> toDictionary(String portletId) {
+	protected static String toNameValuePair(String name, String value) {
+		if (Validator.isNull(value)) {
+			return name;
+		}
+
+		return name.concat(StringPool.SEMICOLON).concat(value);
+	}
+
+	protected HashMapDictionary<String, Object> toDictionary(
+		BeanApp beanApp, String portletId) {
+
 		HashMapDictionary<String, Object> dictionary =
 			new HashMapDictionary<>();
 
-		String defaultNamespace = _beanApp.getDefaultNamespace();
+		String defaultNamespace = beanApp.getDefaultNamespace();
 
 		if (defaultNamespace != null) {
 			dictionary.put("javax.portlet.default-namespace", defaultNamespace);
@@ -115,7 +114,7 @@ public abstract class BaseBeanPortletImpl implements BeanPortlet {
 		List<String> urlGenerationListeners = new ArrayList<>();
 
 		for (URLGenerationListener urlGenerationListener :
-				_beanApp.getURLGenerationListeners()) {
+				beanApp.getURLGenerationListeners()) {
 
 			String toString = urlGenerationListener.toString();
 
@@ -188,19 +187,11 @@ public abstract class BaseBeanPortletImpl implements BeanPortlet {
 				supportedProcessingEvents);
 		}
 
-		dictionary.put("javax.portlet.version", _beanApp.getSpecVersion());
+		dictionary.put("javax.portlet.version", beanApp.getSpecVersion());
 
 		dictionary.putAll(_liferayConfiguration);
 
 		return dictionary;
-	}
-
-	protected static String toNameValuePair(String name, String value) {
-		if (Validator.isNull(value)) {
-			return name;
-		}
-
-		return name.concat(StringPool.SEMICOLON).concat(value);
 	}
 
 	private static final Set<String> _liferayPortletModes = new HashSet<>();
@@ -222,7 +213,6 @@ public abstract class BaseBeanPortletImpl implements BeanPortlet {
 		}
 	}
 
-	private final BeanApp _beanApp;
 	private final EnumMap<MethodType, List<BeanMethod>> _beanMethods =
 		new EnumMap<>(MethodType.class);
 	private final Map<String, String> _liferayConfiguration = new HashMap<>();

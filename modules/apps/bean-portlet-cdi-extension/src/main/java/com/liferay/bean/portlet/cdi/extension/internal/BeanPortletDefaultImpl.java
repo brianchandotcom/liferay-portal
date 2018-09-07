@@ -22,9 +22,12 @@ import java.util.Dictionary;
 public class BeanPortletDefaultImpl extends BaseBeanPortletImpl {
 
 	public BeanPortletDefaultImpl(String portletName) {
-		super(new BeanAppDefaultImpl());
-
 		_portletName = portletName;
+	}
+
+	@Override
+	public BeanApp getBeanApp() {
+		return _beanApp;
 	}
 
 	@Override
@@ -44,13 +47,15 @@ public class BeanPortletDefaultImpl extends BaseBeanPortletImpl {
 
 	@Override
 	public Dictionary<String, Object> toDictionary(String portletId) {
-		Dictionary<String, Object> dictionary = super.toDictionary(portletId);
+		Dictionary<String, Object> dictionary = toDictionary(
+			_beanApp, portletId);
 
 		dictionary.put("javax.portlet.info.title", _portletName);
 
 		return dictionary;
 	}
 
+	private final BeanApp _beanApp = new BeanAppDefaultImpl();
 	private final String _portletName;
 
 }

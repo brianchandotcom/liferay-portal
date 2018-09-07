@@ -63,7 +63,7 @@ public class BeanPortletAnnotationImpl extends BaseBeanPortletImpl {
 		LiferayPortletConfiguration liferayPortletConfiguration,
 		String portletClassName) {
 
-		super(new BeanAppAnnotationImpl(portletApplication));
+		_beanApp = new BeanAppAnnotationImpl(portletApplication);
 
 		_portletConfiguration = portletConfiguration;
 		_portletClassName = portletClassName;
@@ -105,9 +105,12 @@ public class BeanPortletAnnotationImpl extends BaseBeanPortletImpl {
 
 		_portletModes = new HashSet<>(_liferayPortletModes);
 
-		BeanApp beanApp = getBeanApp();
+		_portletModes.addAll(_beanApp.getCustomPortletModes());
+	}
 
-		_portletModes.addAll(beanApp.getCustomPortletModes());
+	@Override
+	public BeanApp getBeanApp() {
+		return _beanApp;
 	}
 
 	@Override
@@ -127,17 +130,15 @@ public class BeanPortletAnnotationImpl extends BaseBeanPortletImpl {
 
 	@Override
 	public Dictionary<String, Object> toDictionary(String portletId) {
-		HashMapDictionary<String, Object> dictionary =
-			(HashMapDictionary<String, Object>)super.toDictionary(portletId);
+		HashMapDictionary<String, Object> dictionary = toDictionary(
+			_beanApp, portletId);
 
 		dictionary.put(
 			"javax.portlet.async-supported",
 			_portletConfiguration.asyncSupported());
 
-		BeanApp beanApp = getBeanApp();
-
 		Map<String, List<String>> containerRuntimeOptions = new HashMap<>(
-			beanApp.getContainerRuntimeOptions());
+			_beanApp.getContainerRuntimeOptions());
 
 		for (RuntimeOption runtimeOption :
 				_portletConfiguration.runtimeOptions()) {
@@ -288,7 +289,7 @@ public class BeanPortletAnnotationImpl extends BaseBeanPortletImpl {
 				toNameValuePair(
 					identifier,
 					_getPublicRenderParameterNamespaceURI(
-						beanApp, identifier)));
+						_beanApp, identifier)));
 		}
 
 		dictionary.put(
@@ -402,6 +403,7 @@ public class BeanPortletAnnotationImpl extends BaseBeanPortletImpl {
 		}
 	}
 
+	private final BeanApp _beanApp;
 	private final Map<String, String> _liferayPortletConfigurationProperties;
 	private final String _portletClassName;
 	private final PortletConfiguration _portletConfiguration;

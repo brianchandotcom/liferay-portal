@@ -515,13 +515,20 @@ public class AssetPublisherDisplayContext {
 		return null;
 	}
 
-	public long[] getClassNameIds() {
+	public long[] getClassNameIds() throws Exception {
 		if (_classNameIds != null) {
 			return _classNameIds;
 		}
 
-		_classNameIds = AssetPublisherUtil.getClassNameIds(
-			_portletPreferences, getAvailableClassNameIds());
+		if (isSelectionStyleAssetList()) {
+			AssetEntryQuery assetEntryQuery = getAssetEntryQuery();
+
+			_classNameIds = assetEntryQuery.getClassNameIds();
+		}
+		else {
+			_classNameIds = AssetPublisherUtil.getClassNameIds(
+				_portletPreferences, getAvailableClassNameIds());
+		}
 
 		return _classNameIds;
 	}

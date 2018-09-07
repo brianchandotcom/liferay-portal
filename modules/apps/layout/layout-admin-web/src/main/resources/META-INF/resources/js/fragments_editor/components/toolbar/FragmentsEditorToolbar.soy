@@ -7,16 +7,16 @@
 	{@param classPK: ?}
 	{@param lastSaveDate: string}
 	{@param portletNamespace: string}
-	{@param savingChanges: bool}
 	{@param spritemap: string}
-	{@param translationAvailableLanguages: ?}
-	{@param translationDefaultLanguageId: string}
-	{@param translationLanguageId: string}
+	{@param availableLanguages: ?}
+	{@param defaultLanguageId: string}
 	{@param? _handleToggleContextualSidebarButtonClick: any}
 	{@param? _handleTranslationLanguageChange: any}
+	{@param? languageId: string}
 	{@param? publishLayoutPageTemplateEntryURL: string}
 	{@param? publishRedirectURL: string}
 	{@param? publishStatus: string}
+	{@param? savingChanges: bool}
 	{@param? store: ?}
 	{@param? translationStatus: [
 		languageValues: list<[
@@ -31,10 +31,10 @@
 			<ul class="navbar-nav">
 				<li class="nav-item">
 					{call com.liferay.layout.admin.web.TranslationStatus.render}
-						{param availableLanguages: $translationAvailableLanguages /}
-						{param defaultLanguageId: $translationDefaultLanguageId /}
+						{param availableLanguages: $availableLanguages /}
+						{param defaultLanguageId: $defaultLanguageId /}
 						{param events: ['languageChange': $_handleTranslationLanguageChange] /}
-						{param languageId: $translationLanguageId /}
+						{param languageId: $languageId ?: $defaultLanguageId /}
 						{param spritemap: $spritemap /}
 						{param store: $store /}
 						{param translationStatus: $translationStatus /}

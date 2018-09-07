@@ -264,7 +264,7 @@ public class ScopedBeanHolder {
 			parameterName = renderStateScoped.paramName();
 		}
 
-		if ((parameterName == null) || (parameterName.length() == 0)) {
+		if ((parameterName == null) || parameterName.isEmpty()) {
 			parameterName = beanClass.getSimpleName();
 		}
 

@@ -45,13 +45,13 @@ public abstract class BaseContextImpl implements Context {
 	protected String getAttributeName(Bean<?> bean) {
 		String attributeName = bean.getName();
 
-		if ((attributeName == null) || (attributeName.length() == 0)) {
+		if ((attributeName == null) || attributeName.isEmpty()) {
 			Class<?> beanClass = bean.getBeanClass();
 
 			attributeName = beanClass.getName();
 		}
 
-		return ATTRIBUTE_NAME_PREFIX + attributeName;
+		return ATTRIBUTE_NAME_PREFIX.concat(attributeName);
 	}
 
 	protected static final String ATTRIBUTE_NAME_PREFIX = "com.liferay.cdi.";

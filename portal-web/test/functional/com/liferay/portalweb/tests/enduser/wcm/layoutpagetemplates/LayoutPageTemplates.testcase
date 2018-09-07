@@ -103,7 +103,7 @@
 		<execute macro="LayoutPageTemplates#viewEditorEmpty" />
 	</command>
 
-	<command ignore="true" name="ChangeEditableImage" priority="5">
+	<command name="ChangeEditableImage" priority="5">
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Build" />
 			<var name="panel" value="Site Administration" />

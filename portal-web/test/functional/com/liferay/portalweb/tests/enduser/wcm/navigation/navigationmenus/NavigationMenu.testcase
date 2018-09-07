@@ -95,7 +95,7 @@
 		</execute>
 	</command>
 
-	<command ignore="true" name="AddNavigationMenuEntriesNestItems" priority="5">
+	<command name="AddNavigationMenuEntriesNestItems" priority="5">
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Build" />
 			<var name="panel" value="Site Administration" />
@@ -156,7 +156,7 @@
 		</execute>
 	</command>
 
-	<command ignore="true" name="AddNavigationMenuEntriesSortViewOrder" priority="5">
+	<command name="AddNavigationMenuEntriesSortViewOrder" priority="5">
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Build" />
 			<var name="panel" value="Site Administration" />
@@ -260,7 +260,7 @@
 		</execute>
 	</command>
 
-	<command ignore="true" name="AddSubmenuNavigationMenu" priority="5">
+	<command name="AddSubmenuNavigationMenu" priority="5">
 		<description message="This is a use case for LPS-75061" />
 
 		<execute macro="ProductMenu#gotoPortlet">

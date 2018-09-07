@@ -22,7 +22,8 @@ import org.osgi.service.component.annotations.Component;
  * @author Roberto Díaz
  */
 @Component
-public class AnnouncementsConfigurationCategory implements ConfigurationCategory {
+public class AnnouncementsConfigurationCategory
+	implements ConfigurationCategory {
 
 	@Override
 	public String getCategoryIcon() {
@@ -44,4 +45,5 @@ public class AnnouncementsConfigurationCategory implements ConfigurationCategory
 	private static final String _CATEGORY_KEY = "announcements";
 
 	private static final String _CATEGORY_SECTION = "content";
+
 }

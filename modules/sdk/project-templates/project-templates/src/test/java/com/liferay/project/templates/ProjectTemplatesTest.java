@@ -916,6 +916,41 @@ public class ProjectTemplatesTest {
 	}
 
 	@Test
+	public void testBuildTemplateModulesExtGradle() throws Exception {
+		File gradleProjectDir = _buildTemplateWithGradle(
+			"modules-ext", "foo-ext", "--original-module-name",
+			"com.liferay.login.web", "--original-module-version", "2.0.4");
+
+		_testContains(
+			gradleProjectDir, "build.gradle",
+			"originalModule group: \"com.liferay\", ",
+			"name: \"com.liferay.login.web\", version: \"2.0.4\"");
+
+		if (Validator.isNotNull(_BUILD_PROJECTS) &&
+			_BUILD_PROJECTS.equals("true")) {
+
+			_executeGradle(gradleProjectDir, _GRADLE_TASK_PATH_BUILD);
+
+			File gradleOutputDir = new File(gradleProjectDir, "build/libs");
+
+			Path gradleOutputPath = FileTestUtil.getFile(
+				gradleOutputDir.toPath(), _OUTPUT_FILENAME_GLOB_REGEX, 1);
+
+			Assert.assertNotNull(gradleOutputPath);
+
+			Assert.assertTrue(Files.exists(gradleOutputPath));
+		}
+	}
+
+	@Test(expected = Error.class)
+	public void testBuildTemplateModulesExtMaven() throws Exception {
+		_buildTemplateWithMaven(
+			"modules-ext", "foo-ext", "com.test",
+			"-DoriginalModuleName=com.liferay.login.web",
+			"-DoriginalModuleVersion=2.0.4");
+	}
+
+	@Test
 	public void testBuildTemplateMVCPortlet70() throws Exception {
 		_testBuildTemplatePortlet70(
 			"mvc-portlet", "MVCPortlet", "META-INF/resources/init.jsp",

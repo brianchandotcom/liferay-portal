@@ -17,3 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%@ include file="/announcements/init-ext.jsp" %>
+
+<%
+AnnouncementsPortletInstanceConfiguration announcementsPortletInstanceConfiguration = portletDisplay.getPortletInstanceConfiguration(AnnouncementsPortletInstanceConfiguration.class);
+%>

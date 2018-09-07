@@ -167,11 +167,7 @@ public abstract class BaseBeanPortletImpl implements BeanPortlet {
 		List<String> portletDependencies = new ArrayList<>();
 
 		for (PortletDependency portletDependency : getPortletDependencies()) {
-			String toString = portletDependency.toString();
-
-			if (toString != null) {
-				portletDependencies.add(toString);
-			}
+			portletDependencies.add(portletDependency.toString());
 		}
 
 		portletDictionary.putIfNotEmpty(

@@ -110,11 +110,13 @@ public class SharingEntryServiceSoap {
 	public static com.liferay.sharing.model.SharingEntrySoap updateSharingEntry(
 		long sharingEntryId,
 		java.util.Collection<com.liferay.sharing.constants.SharingEntryActionKey> sharingEntryActionKeys,
-		boolean shareable, java.util.Date expirationDate)
+		boolean shareable, java.util.Date expirationDate,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
 			com.liferay.sharing.model.SharingEntry returnValue = SharingEntryServiceUtil.updateSharingEntry(sharingEntryId,
-					sharingEntryActionKeys, shareable, expirationDate);
+					sharingEntryActionKeys, shareable, expirationDate,
+					serviceContext);
 
 			return com.liferay.sharing.model.SharingEntrySoap.toSoapModel(returnValue);
 		}

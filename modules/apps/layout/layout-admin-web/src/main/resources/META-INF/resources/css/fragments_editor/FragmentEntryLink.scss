@@ -12,6 +12,16 @@
 	padding-bottom: 5px;
 }
 
+.drag-fragment.dragging {
+	opacity: 0.7;
+	width: calc(100vw - #{$sidebarWidth} - (2 * #{$fragmentEntryLinkListPadding}));
+	z-index: $fragmentEntryLinkZIndex;
+}
+
+.drag-handler {
+	cursor: move;
+}
+
 .drag-top {
 	border-top: 5px solid #80ACFF;
 	margin-top: 5px;

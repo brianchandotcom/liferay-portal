@@ -1,5 +1,6 @@
 import Component from 'metal-component';
 import {Config} from 'metal-state';
+import {Drag, DragDrop} from 'metal-drag-drop';
 import Soy from 'metal-soy';
 
 import './FragmentEntryLink.es';
@@ -11,6 +12,26 @@ import templates from './FragmentEntryLinkList.soy';
  */
 
 class FragmentEntryLinkList extends Component {
+
+	/**
+	 * @inheritDoc
+	 * @private
+	 * @review
+	 */
+
+	attached() {
+		this._initializeDragAndDrop();
+	}
+
+	/**
+	 * @inheritDoc
+	 * @private
+	 * @review
+	 */
+
+	dispose() {
+		this._dragDrop.dispose();
+	}
 
 	/**
 	 * Gives focus to the specified fragmentEntryLinkId
@@ -29,6 +50,17 @@ class FragmentEntryLinkList extends Component {
 				}
 			}
 		);
+	}
+
+	/**
+	 * Callback that is executed when an item is dropped.
+	 * @param {!MouseEvent} event
+	 * @private
+	 * @review
+	 */
+
+	_handleDrop(data, event) {
+		event.preventDefault();
 	}
 
 	/**
@@ -59,6 +91,31 @@ class FragmentEntryLinkList extends Component {
 
 	_handleMappeableFieldClicked(event) {
 		this.emit('mappeableFieldClicked', event);
+	}
+
+	/**
+	 * @private
+	 * @review
+	 */
+
+	_initializeDragAndDrop() {
+		if (this._dragDrop) {
+			this._dragDrop.dispose();
+		}
+
+		this._dragDrop = new DragDrop(
+			{
+				dragPlaceholder: Drag.Placeholder.CLONE,
+				handles: '.drag-handler',
+				sources: '.drag-fragment',
+				targets: `.${this.dropTargetClass}`
+			}
+		);
+
+		this._dragDrop.on(
+			DragDrop.Events.END,
+			this._handleDrop.bind(this)
+		);
 	}
 }
 

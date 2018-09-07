@@ -267,7 +267,7 @@ public class GitHubDevSyncUtil {
 		String cachedBranchName, GitWorkingDirectory gitWorkingDirectory,
 		Map<String, RemoteGitBranch> remoteGitBranches) {
 
-		List<RemoteGitBranch> cacheRemoteGitBranches = new ArrayList<>(2);
+		List<RemoteGitBranch> cachedRemoteGitBranches = new ArrayList<>(2);
 
 		for (Map.Entry<String, RemoteGitBranch> entry :
 				remoteGitBranches.entrySet()) {
@@ -278,11 +278,12 @@ public class GitHubDevSyncUtil {
 				continue;
 			}
 
-			cacheRemoteGitBranches.add(entry.getValue());
+			cachedRemoteGitBranches.add(entry.getValue());
 		}
 
-		if (!cacheRemoteGitBranches.isEmpty()) {
-			gitWorkingDirectory.deleteRemoteGitBranches(cacheRemoteGitBranches);
+		if (!cachedRemoteGitBranches.isEmpty()) {
+			gitWorkingDirectory.deleteRemoteGitBranches(
+				cachedRemoteGitBranches);
 		}
 	}
 
@@ -529,114 +530,114 @@ public class GitHubDevSyncUtil {
 	}
 
 	protected static void deleteOrphanedCachedBranches(GitRemote gitRemote) {
-		List<RemoteGitBranch> cacheRemoteGitBranches =
-			getCacheRemoteGitBranches(gitRemote);
+		List<RemoteGitBranch> cachedRemoteGitBranches =
+			getCachedRemoteGitBranches(gitRemote);
 
-		Map<String, RemoteGitBranch> baseCacheRemoteGitBranchesMap =
+		Map<String, RemoteGitBranch> baseCachedRemoteGitBranchesMap =
 			new HashMap<>();
 
-		Map<String, RemoteGitBranch> timestampedCacheRemoteGitBranchMap =
+		Map<String, RemoteGitBranch> timestampedCachedRemoteGitBranchMap =
 			new HashMap<>();
 
-		for (RemoteGitBranch cacheRemoteGitBranch : cacheRemoteGitBranches) {
-			String cacheRemoteGitBranchName = cacheRemoteGitBranch.getName();
+		for (RemoteGitBranch cachedRemoteGitBranch : cachedRemoteGitBranches) {
+			String cachedRemoteGitBranchName = cachedRemoteGitBranch.getName();
 
-			if (cacheRemoteGitBranchName.matches(
+			if (cachedRemoteGitBranchName.matches(
 					_cachedBranchPattern.pattern())) {
 
-				if (cacheRemoteGitBranchName.matches(
+				if (cachedRemoteGitBranchName.matches(
 						_cachedBranchPattern.pattern() + "-\\d+")) {
 
-					timestampedCacheRemoteGitBranchMap.put(
-						cacheRemoteGitBranchName, cacheRemoteGitBranch);
+					timestampedCachedRemoteGitBranchMap.put(
+						cachedRemoteGitBranchName, cachedRemoteGitBranch);
 				}
 				else {
-					baseCacheRemoteGitBranchesMap.put(
-						cacheRemoteGitBranchName, cacheRemoteGitBranch);
+					baseCachedRemoteGitBranchesMap.put(
+						cachedRemoteGitBranchName, cachedRemoteGitBranch);
 				}
 			}
 		}
 
-		Map<String, RemoteGitBranch> orphanedBaseCacheRemoteGitBranchesMap =
-			new HashMap<>(baseCacheRemoteGitBranchesMap);
+		Map<String, RemoteGitBranch> orphanedBaseCachedRemoteGitBranchesMap =
+			new HashMap<>(baseCachedRemoteGitBranchesMap);
 		Map<String, RemoteGitBranch>
-			orphanedTimestampedCacheRemoteGitBranchesMap = new HashMap<>(
-				timestampedCacheRemoteGitBranchMap);
+			orphanedTimestampedCachedRemoteGitBranchesMap = new HashMap<>(
+				timestampedCachedRemoteGitBranchMap);
 
-		for (String baseCacheRemoteGitBranchName :
-				baseCacheRemoteGitBranchesMap.keySet()) {
+		for (String baseCachedRemoteGitBranchName :
+				baseCachedRemoteGitBranchesMap.keySet()) {
 
-			String timestampedCacheRemoteGitBranchNamePattern =
-				Pattern.quote(baseCacheRemoteGitBranchName) + "-\\d+";
+			String timestampedCachedRemoteGitBranchNamePattern =
+				Pattern.quote(baseCachedRemoteGitBranchName) + "-\\d+";
 
-			for (String timestampedCacheRemoteGitBranchName :
-					timestampedCacheRemoteGitBranchMap.keySet()) {
+			for (String timestampedCachedRemoteGitBranchName :
+					timestampedCachedRemoteGitBranchMap.keySet()) {
 
-				if (timestampedCacheRemoteGitBranchName.matches(
-						timestampedCacheRemoteGitBranchNamePattern)) {
+				if (timestampedCachedRemoteGitBranchName.matches(
+						timestampedCachedRemoteGitBranchNamePattern)) {
 
-					orphanedBaseCacheRemoteGitBranchesMap.remove(
-						baseCacheRemoteGitBranchName);
+					orphanedBaseCachedRemoteGitBranchesMap.remove(
+						baseCachedRemoteGitBranchName);
 				}
 			}
 		}
 
-		for (String timestampedCacheRemoteGitBranchName :
-				timestampedCacheRemoteGitBranchMap.keySet()) {
+		for (String timestampedCachedRemoteGitBranchName :
+				timestampedCachedRemoteGitBranchMap.keySet()) {
 
-			String baseCacheRemoteGitBranchName =
-				timestampedCacheRemoteGitBranchName.replaceAll(
+			String baseCachedRemoteGitBranchName =
+				timestampedCachedRemoteGitBranchName.replaceAll(
 					"(.*)-\\d+", "$1");
 
-			if (baseCacheRemoteGitBranchesMap.containsKey(
-					baseCacheRemoteGitBranchName)) {
+			if (baseCachedRemoteGitBranchesMap.containsKey(
+					baseCachedRemoteGitBranchName)) {
 
-				orphanedTimestampedCacheRemoteGitBranchesMap.remove(
-					timestampedCacheRemoteGitBranchName);
+				orphanedTimestampedCachedRemoteGitBranchesMap.remove(
+					timestampedCachedRemoteGitBranchName);
 			}
 		}
 
 		StringBuilder sb = new StringBuilder();
 
-		for (String orphanedBaseCacheRemoteGitBranchName :
-				orphanedBaseCacheRemoteGitBranchesMap.keySet()) {
+		for (String orphanedBaseCachedRemoteGitBranchName :
+				orphanedBaseCachedRemoteGitBranchesMap.keySet()) {
 
-			sb.append(orphanedBaseCacheRemoteGitBranchName);
+			sb.append(orphanedBaseCachedRemoteGitBranchName);
 			sb.append("\n");
 		}
 
-		for (String orphanedTimestampedCacheRemoteGitBranchName :
-				orphanedTimestampedCacheRemoteGitBranchesMap.keySet()) {
+		for (String orphanedTimestampedCachedRemoteGitBranchName :
+				orphanedTimestampedCachedRemoteGitBranchesMap.keySet()) {
 
-			sb.append(orphanedTimestampedCacheRemoteGitBranchName);
+			sb.append(orphanedTimestampedCachedRemoteGitBranchName);
 			sb.append("\n");
 		}
 
 		System.out.println(
 			JenkinsResultsParserUtil.combine(
 				"Found ",
-				String.valueOf(orphanedBaseCacheRemoteGitBranchesMap.size()),
+				String.valueOf(orphanedBaseCachedRemoteGitBranchesMap.size()),
 				" orphaned base cache branches ", "and ",
-				String.valueOf(orphanedTimestampedCacheRemoteGitBranchesMap.
+				String.valueOf(orphanedTimestampedCachedRemoteGitBranchesMap.
 					size()),
 				" orphaned timestamp branches on ", gitRemote.getRemoteURL(),
 				".\n", sb.toString()));
 
-		List<RemoteGitBranch> orphanedCacheRemoteGitBranches =
+		List<RemoteGitBranch> orphanedCachedRemoteGitBranches =
 			new ArrayList<>(
-				orphanedBaseCacheRemoteGitBranchesMap.size() +
-					orphanedTimestampedCacheRemoteGitBranchesMap.size());
+				orphanedBaseCachedRemoteGitBranchesMap.size() +
+					orphanedTimestampedCachedRemoteGitBranchesMap.size());
 
-		orphanedCacheRemoteGitBranches.addAll(
-			orphanedBaseCacheRemoteGitBranchesMap.values());
-		orphanedCacheRemoteGitBranches.addAll(
-			orphanedTimestampedCacheRemoteGitBranchesMap.values());
+		orphanedCachedRemoteGitBranches.addAll(
+			orphanedBaseCachedRemoteGitBranchesMap.values());
+		orphanedCachedRemoteGitBranches.addAll(
+			orphanedTimestampedCachedRemoteGitBranchesMap.values());
 
 		GitWorkingDirectory gitWorkingDirectory =
 			gitRemote.getGitWorkingDirectory();
 
 		gitWorkingDirectory.deleteRemoteGitBranches(
-			orphanedCacheRemoteGitBranches);
+			orphanedCachedRemoteGitBranches);
 	}
 
 	protected static void deleteOrphanedCachedBranches(
@@ -674,10 +675,10 @@ public class GitHubDevSyncUtil {
 			"-", senderSHA);
 	}
 
-	protected static List<RemoteGitBranch> getCacheRemoteGitBranches(
+	protected static List<RemoteGitBranch> getCachedRemoteGitBranches(
 		GitRemote gitRemote) {
 
-		List<RemoteGitBranch> cacheRemoteGitBranches = new ArrayList<>();
+		List<RemoteGitBranch> cachedRemoteGitBranches = new ArrayList<>();
 		Set<String> lockedBaseCachedRemoteGitBranchNames = new HashSet<>();
 		Map<String, RemoteGitBranch> remoteGitBranches = new HashMap<>();
 
@@ -729,7 +730,7 @@ public class GitHubDevSyncUtil {
 				if (hasTimestampBranch(
 						remoteGitBranchName, remoteGitBranches)) {
 
-					cacheRemoteGitBranches.add(entry.getValue());
+					cachedRemoteGitBranches.add(entry.getValue());
 				}
 				else {
 					deleteCachedRemoteGitBranch(
@@ -739,7 +740,7 @@ public class GitHubDevSyncUtil {
 			}
 		}
 
-		return cacheRemoteGitBranches;
+		return cachedRemoteGitBranches;
 	}
 
 	protected static List<String> getGitHubDevRemoteURLs(
@@ -955,16 +956,16 @@ public class GitHubDevSyncUtil {
 					GitRemote gitHubDevGitRemote = getRandomGitRemote(
 						gitHubDevGitRemotes);
 
-					RemoteGitBranch cacheRemoteGitBranch =
+					RemoteGitBranch cachedRemoteGitBranch =
 						gitWorkingDirectory.getRemoteGitBranch(
 							cachedBranchName, gitHubDevGitRemote, true);
 
-					gitWorkingDirectory.fetch(cacheRemoteGitBranch);
+					gitWorkingDirectory.fetch(cachedRemoteGitBranch);
 
 					gitWorkingDirectory.deleteLocalGitBranch(cachedBranchName);
 
 					gitWorkingDirectory.createLocalGitBranch(
-						cachedBranchName, true, cacheRemoteGitBranch.getSHA());
+						cachedBranchName, true, cachedRemoteGitBranch.getSHA());
 
 					if (!gitWorkingDirectory.localGitBranchExists(
 							upstreamBranchName)) {
@@ -973,7 +974,7 @@ public class GitHubDevSyncUtil {
 							gitWorkingDirectory, upstreamBranchSHA);
 					}
 
-					updateCacheRemoteGitBranchTimestamp(
+					updateCachedRemoteGitBranchTimestamp(
 						cachedBranchName, gitWorkingDirectory,
 						gitHubDevGitRemotes);
 
@@ -982,14 +983,14 @@ public class GitHubDevSyncUtil {
 
 				senderBranchName = senderBranchName.trim();
 
-				LocalGitBranch cacheLocalGitBranch =
+				LocalGitBranch cachedLocalGitBranch =
 					gitWorkingDirectory.getRebasedLocalGitBranch(
 						cachedBranchName, senderBranchName,
 						senderGitRemote.getRemoteURL(), senderBranchSHA,
 						upstreamBranchName, upstreamBranchSHA);
 
 				cacheBranches(
-					gitWorkingDirectory, cacheLocalGitBranch,
+					gitWorkingDirectory, cachedLocalGitBranch,
 					gitHubDevGitRemotes, "liferay");
 
 				return cachedBranchName;
@@ -1057,21 +1058,21 @@ public class GitHubDevSyncUtil {
 		}
 	}
 
-	protected static void updateCacheRemoteGitBranchTimestamp(
+	protected static void updateCachedRemoteGitBranchTimestamp(
 		final String cachedBranchName,
 		final GitWorkingDirectory gitWorkingDirectory,
 		List<GitRemote> gitHubDevGitRemotes) {
 
 		long start = System.currentTimeMillis();
 
-		List<RemoteGitBranch> cacheRemoteGitBranches = null;
+		List<RemoteGitBranch> cachedRemoteGitBranches = null;
 		GitRemote gitHubDevGitRemote = null;
 
-		while (cacheRemoteGitBranches == null) {
+		while (cachedRemoteGitBranches == null) {
 			try {
 				gitHubDevGitRemote = getRandomGitRemote(gitHubDevGitRemotes);
 
-				cacheRemoteGitBranches = getCacheRemoteGitBranches(
+				cachedRemoteGitBranches = getCachedRemoteGitBranches(
 					gitHubDevGitRemote);
 			}
 			catch (Exception e) {
@@ -1091,7 +1092,7 @@ public class GitHubDevSyncUtil {
 		Pattern pattern = Pattern.compile(
 			Pattern.quote(cachedBranchName) + "-(\\d+)");
 
-		for (RemoteGitBranch cachedRemoteGitBranch : cacheRemoteGitBranches) {
+		for (RemoteGitBranch cachedRemoteGitBranch : cachedRemoteGitBranches) {
 			Matcher matcher = pattern.matcher(cachedRemoteGitBranch.getName());
 
 			if (!matcher.matches()) {

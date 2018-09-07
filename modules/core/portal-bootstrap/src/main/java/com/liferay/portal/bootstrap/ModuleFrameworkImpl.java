@@ -859,9 +859,7 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 							properties.load(inputStream);
 						}
 
-						if (properties.getProperty("Liferay-WAB-LPKG-URL") !=
-								null) {
-
+						if (properties.containsKey("Liferay-WAB-LPKG-URL")) {
 							return FileVisitResult.CONTINUE;
 						}
 					}

@@ -100,7 +100,7 @@ public class NotificationsSharingEntryLocalServiceWrapper
 
 			subscriptionSender.setBody(
 				_sharingNotificationMessageProvider.getBody(
-					sharingEntry, serviceContext.getLocale()));
+					sharingEntry, user.getLocale()));
 			subscriptionSender.setClassName(sharingEntry.getModelClassName());
 			subscriptionSender.setClassPK(sharingEntry.getSharingEntryId());
 			subscriptionSender.setCompanyId(user.getCompanyId());

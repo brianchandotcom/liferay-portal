@@ -96,6 +96,8 @@ public class FragmentsEditorDisplayContext {
 	public SoyContext getEditorContext() throws PortalException {
 		SoyContext soyContext = SoyContextFactoryUtil.createSoyContext();
 
+		soyContext.put("lastSaveDate", "");
+
 		soyContext.put(
 			"addFragmentEntryLinkURL",
 			_getFragmentEntryActionURL("/layout/add_fragment_entry_link"));

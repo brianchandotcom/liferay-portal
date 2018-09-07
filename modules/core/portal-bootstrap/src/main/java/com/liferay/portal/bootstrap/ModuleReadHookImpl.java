@@ -14,9 +14,9 @@
 
 package com.liferay.portal.bootstrap;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.util.PropsValues;
 
 import java.io.File;
@@ -75,22 +75,16 @@ public class ModuleReadHookImpl implements ModuleReadHook {
 						Files.copy(inputStream, path);
 					}
 				}
-				else {
-					if (_log.isWarnEnabled()) {
-						_log.warn("No bundle found for location " + location);
-					}
+				else if (_log.isWarnEnabled()) {
+					_log.warn("No bundle found for location " + location);
 				}
 			}
 		}
 		catch (IOException ioe) {
-			StringBundler sb = new StringBundler(4);
-
-			sb.append("Unable to copy from ");
-			sb.append(location);
-			sb.append(" to ");
-			sb.append(path.toString());
-
-			_log.error(sb.toString(), ioe);
+			_log.error(
+				StringBundler.concat(
+					"Unable to copy from ", location, " to ", path),
+				ioe);
 		}
 	}
 

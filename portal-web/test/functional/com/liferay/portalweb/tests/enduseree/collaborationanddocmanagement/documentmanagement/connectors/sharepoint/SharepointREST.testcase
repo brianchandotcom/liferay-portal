@@ -214,7 +214,7 @@
 
 		<var name="key_dmDocumentTitle" value="Document_3.txt" />
 
-		<execute function="AssertElementNotPresent" locator1="DocumentsAndMedia#ICON_DOCUMENT_ICON_NOT_LOCKED" />
+		<execute function="AssertElementNotPresent" locator1="DocumentsAndMedia#ICON_DOCUMENT_ICON_LOCKED" />
 
 		<execute macro="DMNavigator#gotoDocumentCP">
 			<var name="dmDocumentTitle" value="Document_3.txt" />
@@ -761,7 +761,7 @@
 
 		<execute macro="Alert#viewRequestFailedToComplete" />
 
-		<execute function="AssertTextEquals#assertPartialText" locator1="Message#ERROR_2" value1="The source file does not have the same extension as the original file." />
+		<execute function="AssertTextEquals#assertPartialText" locator1="Message#ERROR" value1="The source file does not have the same extension as the original file." />
 
 		<execute macro="Navigator#openSpecificURL">
 			<var name="url" value="https://localhost:8443" />
@@ -809,7 +809,7 @@
 
 		<execute macro="Alert#viewRequestFailedToComplete" />
 
-		<execute function="AssertTextEquals#assertPartialText" locator1="Message#ERROR_2" value1="The source file does not have the same extension as the original file." />
+		<execute function="AssertTextEquals#assertPartialText" locator1="Message#ERROR" value1="The source file does not have the same extension as the original file." />
 
 		<execute macro="Navigator#openSpecificURL">
 			<var name="url" value="https://localhost:8443" />

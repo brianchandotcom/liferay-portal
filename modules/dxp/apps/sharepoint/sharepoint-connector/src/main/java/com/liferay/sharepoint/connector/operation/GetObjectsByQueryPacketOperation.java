@@ -21,7 +21,7 @@ import com.liferay.sharepoint.connector.SharepointObject;
 import com.liferay.sharepoint.connector.SharepointResultException;
 import com.liferay.sharepoint.connector.internal.util.RemoteExceptionUtil;
 
-import com.microsoft.webservices.SharePoint;
+import com.microsoft.webservices.SharePoint.QueryService.QueryServiceSoap;
 
 import java.rmi.RemoteException;
 
@@ -104,9 +104,7 @@ public class GetObjectsByQueryPacketOperation extends BaseOperation {
 		}
 	}
 
-	public void setQueryServiceSoap(
-		SharePoint.QueryService.QueryServiceSoap queryServiceSoap) {
-
+	public void setQueryServiceSoap(QueryServiceSoap queryServiceSoap) {
 		_queryServiceSoap = queryServiceSoap;
 	}
 
@@ -115,7 +113,7 @@ public class GetObjectsByQueryPacketOperation extends BaseOperation {
 
 	private GetSharepointObjectByPathOperation
 		_getSharepointObjectByPathOperation;
-	private SharePoint.QueryService.QueryServiceSoap _queryServiceSoap;
+	private QueryServiceSoap _queryServiceSoap;
 	private String _searchPrefix;
 	private int _searchPrefixLength;
 

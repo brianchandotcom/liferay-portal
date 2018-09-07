@@ -114,14 +114,7 @@ public class RegistrationUtil {
 			ServiceRegistration<Portlet> portletServiceRegistration =
 				bundleContext.registerService(
 					Portlet.class,
-					new BeanPortletInvoker(
-						beanPortlet.getBeanMethods(MethodType.ACTION),
-						beanPortlet.getBeanMethods(MethodType.DESTROY),
-						beanPortlet.getBeanMethods(MethodType.EVENT),
-						beanPortlet.getBeanMethods(MethodType.HEADER),
-						beanPortlet.getBeanMethods(MethodType.INIT),
-						beanPortlet.getBeanMethods(MethodType.RENDER),
-						beanPortlet.getBeanMethods(MethodType.SERVE_RESOURCE)),
+					new BeanPortletInvoker(beanPortlet.getBeanMethods()),
 					beanPortlet.toDictionary(portletId));
 
 			if (portletServiceRegistration != null) {

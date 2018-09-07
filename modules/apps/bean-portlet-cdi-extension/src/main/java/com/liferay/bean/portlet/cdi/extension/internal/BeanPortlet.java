@@ -34,7 +34,7 @@ public interface BeanPortlet {
 
 	public BeanApp getBeanApp();
 
-	public List<BeanMethod> getBeanMethods(MethodType methodType);
+	public Map<MethodType, List<BeanMethod>> getBeanMethods();
 
 	public String getPortletClassName();
 

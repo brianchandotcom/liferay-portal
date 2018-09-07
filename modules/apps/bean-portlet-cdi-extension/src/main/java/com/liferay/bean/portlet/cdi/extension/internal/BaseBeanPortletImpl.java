@@ -25,6 +25,7 @@ import java.lang.reflect.Modifier;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -53,7 +54,23 @@ public abstract class BaseBeanPortletImpl implements BeanPortlet {
 					beanMethods = new ArrayList<>();
 				}
 
-				beanMethods.add(beanMethod);
+				if ((methodType == MethodType.HEADER) ||
+					(methodType == MethodType.RENDER) ||
+					(methodType == MethodType.SERVE_RESOURCE)) {
+
+					int index = Collections.binarySearch(
+						beanMethods, beanMethod,
+						Comparator.comparingInt(BeanMethod::getOrdinal));
+
+					if (index < 0) {
+						index = -index - 1;
+					}
+
+					beanMethods.add(index, beanMethod);
+				}
+				else {
+					beanMethods.add(beanMethod);
+				}
 
 				return beanMethods;
 			});
@@ -77,8 +94,8 @@ public abstract class BaseBeanPortletImpl implements BeanPortlet {
 	}
 
 	@Override
-	public List<BeanMethod> getBeanMethods(MethodType methodType) {
-		return _beanMethods.getOrDefault(methodType, Collections.emptyList());
+	public Map<MethodType, List<BeanMethod>> getBeanMethods() {
+		return _beanMethods;
 	}
 
 	protected static String toNameValuePair(String name, String value) {
@@ -133,45 +150,63 @@ public abstract class BaseBeanPortletImpl implements BeanPortlet {
 
 		Set<String> supportedPublishingEvents = new HashSet<>();
 
-		for (BeanMethod beanMethod : getBeanMethods(MethodType.ACTION)) {
-			Method beanActionMethod = beanMethod.getMethod();
+		List<BeanMethod> actionBeanMethods = _beanMethods.get(
+			MethodType.ACTION);
 
-			ActionMethod actionMethod = beanActionMethod.getAnnotation(
-				ActionMethod.class);
+		if (actionBeanMethods != null) {
+			for (BeanMethod beanMethod : actionBeanMethods) {
+				Method beanActionMethod = beanMethod.getMethod();
 
-			if (actionMethod == null) {
-				continue;
-			}
+				ActionMethod actionMethod = beanActionMethod.getAnnotation(
+					ActionMethod.class);
 
-			for (PortletQName portletQName : actionMethod.publishingEvents()) {
-				supportedPublishingEvents.add(
-					toNameValuePair(
-						portletQName.localPart(), portletQName.namespaceURI()));
+				if (actionMethod == null) {
+					continue;
+				}
+
+				for (PortletQName portletQName :
+						actionMethod.publishingEvents()) {
+
+					supportedPublishingEvents.add(
+						toNameValuePair(
+							portletQName.localPart(),
+							portletQName.namespaceURI()));
+				}
 			}
 		}
 
 		Set<String> supportedProcessingEvents = new HashSet<>();
 
-		for (BeanMethod beanMethod : getBeanMethods(MethodType.EVENT)) {
-			Method beanEventMethod = beanMethod.getMethod();
+		List<BeanMethod> eventBeanMethods = _beanMethods.get(MethodType.EVENT);
 
-			EventMethod eventMethod = beanEventMethod.getAnnotation(
-				EventMethod.class);
+		if (eventBeanMethods != null) {
+			for (BeanMethod beanMethod : eventBeanMethods) {
+				Method beanEventMethod = beanMethod.getMethod();
 
-			if (eventMethod == null) {
-				continue;
-			}
+				EventMethod eventMethod = beanEventMethod.getAnnotation(
+					EventMethod.class);
 
-			for (PortletQName portletQName : eventMethod.publishingEvents()) {
-				supportedPublishingEvents.add(
-					toNameValuePair(
-						portletQName.localPart(), portletQName.namespaceURI()));
-			}
+				if (eventMethod == null) {
+					continue;
+				}
 
-			for (PortletQName portletQName : eventMethod.processingEvents()) {
-				supportedProcessingEvents.add(
-					toNameValuePair(
-						portletQName.localPart(), portletQName.namespaceURI()));
+				for (PortletQName portletQName :
+						eventMethod.publishingEvents()) {
+
+					supportedPublishingEvents.add(
+						toNameValuePair(
+							portletQName.localPart(),
+							portletQName.namespaceURI()));
+				}
+
+				for (PortletQName portletQName :
+						eventMethod.processingEvents()) {
+
+					supportedProcessingEvents.add(
+						toNameValuePair(
+							portletQName.localPart(),
+							portletQName.namespaceURI()));
+				}
 			}
 		}
 

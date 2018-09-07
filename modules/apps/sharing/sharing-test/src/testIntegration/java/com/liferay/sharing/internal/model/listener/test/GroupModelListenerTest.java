@@ -27,7 +27,6 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
-import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.test.rule.Inject;
@@ -78,7 +77,7 @@ public class GroupModelListenerTest {
 	public void testDeletingGroupDeletesSharingEntries() throws Exception {
 		long classNameId = _classNameLocalService.getClassNameId(
 			Group.class.getName());
-		long classPK = RandomTestUtil.randomLong();
+		long classPK = _group.getGroupId();
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
@@ -121,13 +120,13 @@ public class GroupModelListenerTest {
 
 			_sharingEntryLocalService.addSharingEntry(
 				_user.getUserId(), _groupUser.getUserId(), classNameId,
-				RandomTestUtil.randomLong(), _group.getGroupId(), true,
+				_group.getGroupId(), _group.getGroupId(), true,
 				Arrays.asList(SharingEntryActionKey.VIEW), null,
 				serviceContext);
 
 			_sharingEntryLocalService.addSharingEntry(
 				_user.getUserId(), _groupUser.getUserId(), classNameId,
-				RandomTestUtil.randomLong(), group2.getGroupId(), true,
+				group2.getGroupId(), group2.getGroupId(), true,
 				Arrays.asList(SharingEntryActionKey.VIEW), null,
 				serviceContext);
 

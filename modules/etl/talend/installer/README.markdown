@@ -9,7 +9,7 @@ installer for Talend Open Studio (TOS) written in Go.
 * [Go 1.11](https://golang.org/)
 * [Gox - Simple Go Cross Compilation](https://github.com/mitchellh/gox)
 * Required resources for the installer
-	* [3rd party dependencies](https://github.com/ZoltanTakacs/golang/tree/master/talend/component/liferay/installer/_resources): (`3rd-party-dependencies`)
+	* [3rd party dependencies](https://github.com/liferay/liferay-portal/tree/master/modules/etl/talend/installer/_resources): (`3rd-party-dependencies`)
 	* [Component artifact files](#building-the-component-artifacts) (`component-artifacts` and `component-definition`)
 
 ### Building the component artifacts
@@ -23,9 +23,9 @@ installer for Talend Open Studio (TOS) written in Go.
 
 ## Build
 
-1. Clone the [installer's repository](https://github.com/ZoltanTakacs/golang) into your [Go workspace](https://golang.org/doc/code.html#Workspaces)
+1. Place the [installer](https://github.com/liferay/liferay-portal/tree/master/modules/etl/talend/installer) into your [Go workspace](https://golang.org/doc/code.html#Workspaces)
 2. Build the installer with Gox to have cross platform binaries
-	* `gox -osarch="darwin/amd64 linux/amd64 windows/amd64" -output $GOPATH"bin/talend-installer/{{.Dir}}-{{.OS}}-{{.Arch}}" github.com/ZoltanTakacs/golang/talend/component/liferay/installer`
+	* `gox -osarch="darwin/amd64 linux/amd64 windows/amd64" -output $GOPATH"bin/talend-installer/{{.Dir}}-{{.OS}}-{{.Arch}}" installer`
 	* The tool above creates a new folder in your workspace `$GOPATH/bin` folder named `talend-installer`
 	* The installer binaries for Windows / Mac / Linux (64 bit) will be located in the `talend-installer` directory: 
 	```

@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.util.PropsValues;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -63,7 +62,7 @@ public class ModuleReadHookImpl implements ModuleReadHook {
 
 				File file = new File(url.getPath());
 
-				Files.copy(new FileInputStream(file), path);
+				Files.copy(file.toPath(), path);
 			}
 			else {
 				Matcher matcher = _pattern.matcher(location);

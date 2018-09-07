@@ -1181,12 +1181,15 @@ public class SharingEntryLocalServiceTest {
 
 	@Test(expected = NoSuchEntryException.class)
 	public void testUpdateNonexistingSharingEntry() throws Exception {
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
+
 		_sharingEntryLocalService.updateSharingEntry(
 			RandomTestUtil.randomLong(),
 			Arrays.asList(
 				SharingEntryActionKey.ADD_DISCUSSION,
 				SharingEntryActionKey.UPDATE, SharingEntryActionKey.VIEW),
-			true, null);
+			true, null, serviceContext);
 	}
 
 	@Test
@@ -1211,7 +1214,7 @@ public class SharingEntryLocalServiceTest {
 			sharingEntry.getSharingEntryId(),
 			Arrays.asList(
 				SharingEntryActionKey.UPDATE, SharingEntryActionKey.VIEW),
-			false, null);
+			false, null, serviceContext);
 
 		Assert.assertEquals(3, sharingEntry.getActionIds());
 		Assert.assertEquals(false, sharingEntry.isShareable());
@@ -1226,7 +1229,7 @@ public class SharingEntryLocalServiceTest {
 			Arrays.asList(
 				SharingEntryActionKey.ADD_DISCUSSION,
 				SharingEntryActionKey.VIEW),
-			true, expirationDate);
+			true, expirationDate, serviceContext);
 
 		Assert.assertEquals(5, sharingEntry.getActionIds());
 		Assert.assertEquals(true, sharingEntry.isShareable());
@@ -1237,7 +1240,7 @@ public class SharingEntryLocalServiceTest {
 			Arrays.asList(
 				SharingEntryActionKey.ADD_DISCUSSION,
 				SharingEntryActionKey.UPDATE, SharingEntryActionKey.VIEW),
-			true, null);
+			true, null, serviceContext);
 
 		Assert.assertEquals(7, sharingEntry.getActionIds());
 		Assert.assertEquals(true, sharingEntry.isShareable());
@@ -1260,7 +1263,8 @@ public class SharingEntryLocalServiceTest {
 
 		sharingEntry = _sharingEntryLocalService.updateSharingEntry(
 			sharingEntry.getSharingEntryId(),
-			Arrays.asList(SharingEntryActionKey.VIEW), true, null);
+			Arrays.asList(SharingEntryActionKey.VIEW), true, null,
+			serviceContext);
 
 		List<UserNotificationEvent> userNotificationEvents =
 			_userNotificationEventLocalService.getUserNotificationEvents(
@@ -1307,7 +1311,7 @@ public class SharingEntryLocalServiceTest {
 
 		_sharingEntryLocalService.updateSharingEntry(
 			sharingEntry.getSharingEntryId(), Collections.emptyList(), true,
-			null);
+			null, serviceContext);
 	}
 
 	@Test(expected = InvalidSharingEntryExpirationDateException.class)
@@ -1332,7 +1336,8 @@ public class SharingEntryLocalServiceTest {
 
 		_sharingEntryLocalService.updateSharingEntry(
 			sharingEntry.getSharingEntryId(),
-			Arrays.asList(SharingEntryActionKey.VIEW), true, expirationDate);
+			Arrays.asList(SharingEntryActionKey.VIEW), true, expirationDate,
+			serviceContext);
 	}
 
 	@Test(expected = InvalidSharingEntryActionKeyException.class)
@@ -1352,7 +1357,8 @@ public class SharingEntryLocalServiceTest {
 
 		_sharingEntryLocalService.updateSharingEntry(
 			sharingEntry.getSharingEntryId(),
-			Arrays.asList(SharingEntryActionKey.UPDATE), true, null);
+			Arrays.asList(SharingEntryActionKey.UPDATE), true, null,
+			serviceContext);
 	}
 
 	@Test(expected = InvalidSharingEntryActionKeyException.class)
@@ -1377,7 +1383,7 @@ public class SharingEntryLocalServiceTest {
 
 		_sharingEntryLocalService.updateSharingEntry(
 			sharingEntry.getSharingEntryId(), sharingEntryActionKeys, true,
-			null);
+			null, serviceContext);
 	}
 
 	@Test(expected = InvalidSharingEntryActionKeyException.class)
@@ -1401,7 +1407,7 @@ public class SharingEntryLocalServiceTest {
 
 		_sharingEntryLocalService.updateSharingEntry(
 			sharingEntry.getSharingEntryId(), sharingEntryActionKeys, true,
-			null);
+			null, serviceContext);
 	}
 
 	private void _expireSharingEntry(SharingEntry sharingEntry) {

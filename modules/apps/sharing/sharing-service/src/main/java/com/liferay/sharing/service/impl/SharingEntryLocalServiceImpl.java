@@ -64,7 +64,7 @@ public class SharingEntryLocalServiceImpl
 
 		return updateSharingEntry(
 			sharingEntry.getSharingEntryId(), sharingEntryActionKeys, shareable,
-			expirationDate);
+			expirationDate, serviceContext);
 	}
 
 	@Override
@@ -300,7 +300,8 @@ public class SharingEntryLocalServiceImpl
 	public SharingEntry updateSharingEntry(
 			long sharingEntryId,
 			Collection<SharingEntryActionKey> sharingEntryActionKeys,
-			boolean shareable, Date expirationDate)
+			boolean shareable, Date expirationDate,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		SharingEntry sharingEntry = sharingEntryPersistence.findByPrimaryKey(

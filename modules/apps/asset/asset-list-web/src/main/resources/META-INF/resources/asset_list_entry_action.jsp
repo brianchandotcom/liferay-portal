@@ -52,4 +52,15 @@ AssetListEntry assetListEntry = (AssetListEntry)row.getObject();
 			url="<%= deleteAssetListEntryURL %>"
 		/>
 	</c:if>
+
+	<portlet:renderURL var="viewAssetListContentURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+		<portlet:param name="mvcPath" value="/view_content.jsp" />
+		<portlet:param name="assetListEntryId" value="<%= String.valueOf(assetListEntry.getAssetListEntryId()) %>" />
+	</portlet:renderURL>
+
+	<liferay-ui:icon
+		message="view-content"
+		url="<%= viewAssetListContentURL %>"
+		useDialog="<%= true %>"
+	/>
 </liferay-ui:icon-menu>

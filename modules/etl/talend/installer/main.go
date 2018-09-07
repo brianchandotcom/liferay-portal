@@ -8,10 +8,9 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/ZoltanTakacs/golang/talend/component/liferay/installer/constants"
-	"github.com/ZoltanTakacs/golang/talend/component/liferay/installer/fileutils"
-	"github.com/ZoltanTakacs/golang/talend/component/liferay/installer/verifier"
-	"github.com/ZoltanTakacs/golang/utils"
+	"liferay-component-installer/constants"
+	"liferay-component-installer/utils/fileutils"
+	"liferay-component-installer/verifier"
 )
 
 func main() {
@@ -22,10 +21,15 @@ func main() {
 	verifier.VerifyTOSVersion()
 
 	// Copy the component artifacts
-	copyTasks := []utils.CopyTask{
-		{filepath.Join(constants.ThirdPartyDependenciesDir, ".m2"), constants.TosM2Dir},
-		{filepath.Join(constants.ComponentArtifactsDir, ".m2"), constants.TosM2Dir},
-		{fileutils.GetSrcComponentDefinitionPath(), filepath.Join(constants.TosHomeDir, "plugins", fileutils.GetSrcComponentDefinitionName())},
+	copyTasks := []fileutils.CopyTask{
+		{filepath.Join(
+			constants.ThirdPartyDependenciesDir, ".m2"), constants.TosM2Dir},
+		{filepath.Join(
+			constants.ComponentArtifactsDir, ".m2"), constants.TosM2Dir},
+		{fileutils.GetSrcComponentDefinitionPath(),
+			filepath.Join(
+				constants.TosHomeDir, "plugins",
+				fileutils.GetSrcComponentDefinitionName())},
 	}
 
 	for _, copyTask := range copyTasks {
@@ -53,12 +57,17 @@ func main() {
 }
 
 func displayInitializationMessages() {
-	const decorLine = "\t\t#######################################################################"
+	const decorLine = "\t\t#################################################" +
+		"######################"
 
 	fmt.Println("\n" + decorLine)
-	fmt.Println("\t\t### Liferay component family installer for Talend Open Studio " + constants.SUPPORTED_TOS_VERSION + " ###")
+	fmt.Println(
+		"\t\t### Liferay component family installer for Talend Open Studio " +
+			constants.SUPPORTED_TOS_VERSION + " ###")
 	fmt.Println(decorLine + "\n")
 
-	fmt.Printf("Installer's location: \t\t\t%s\n", utils.GetBinaryLocation())
-	fmt.Printf("Talend Open Studio's Home directory: \t%s\n", constants.TosHomeDir)
+	fmt.Printf("Installer's location: \t\t\t%s\n",
+		constants.GetBinaryLocation())
+	fmt.Printf("Talend Open Studio's Home directory: \t%s\n",
+		constants.TosHomeDir)
 }

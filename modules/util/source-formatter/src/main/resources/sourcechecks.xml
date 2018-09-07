@@ -144,6 +144,7 @@
 		<check name="JavaIndexableCheck" />
 		<check name="JavaInnerClassImportsCheck">
 			<property name="enabled" value="false" />
+			<property name="upperCasePackageNames" value="com.microsoft.webservices.SharePoint.QueryService" />
 		</check>
 		<check name="JavaInterfaceCheck" />
 		<check name="JavaIOExceptionCheck" />

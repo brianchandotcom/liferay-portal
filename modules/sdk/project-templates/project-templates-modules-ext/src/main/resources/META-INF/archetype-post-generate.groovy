@@ -12,12 +12,4 @@
  * details.
  */
 
-import java.nio.file.Files
-import java.nio.file.Path
-import java.nio.file.Paths
-
-Path projectPath = Paths.get(request.outputDirectory, request.artifactId)
-
-Path buildGradlePath = projectPath.resolve("build.gradle")
-
-Files.deleteIfExists buildGradlePath
+throw new Exception("Modules Ext projects are not supported with Maven build. Please use Gradle build instead.");

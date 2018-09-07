@@ -10,7 +10,6 @@
 		<ul class="${cssClass} level-${navItemLevel}">
 			<#list navItems as navItem>
 				<#assign
-					nav_item_attr_selected = ""
 					nav_item_css_class = "lfr-nav-item"
 				/>
 
@@ -20,12 +19,11 @@
 
 				<#if navItem.isSelected()>
 					<#assign
-						nav_item_attr_selected = "aria-selected='true'"
 						nav_item_css_class = "${nav_item_css_class} selected active"
 					/>
 				</#if>
 
-				<li class="${nav_item_css_class}" ${nav_item_attr_selected}>
+				<li class="${nav_item_css_class}">
 					<#if navItem.isBrowsable()>
 						<a class="${nav_item_css_class}" href="${navItem.getRegularURL()!""}" ${navItem.getTarget()}>${navItem.getName()}</a>
 					<#else>

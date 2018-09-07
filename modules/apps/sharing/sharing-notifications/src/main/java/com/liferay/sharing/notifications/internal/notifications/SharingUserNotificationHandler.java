@@ -66,7 +66,7 @@ public class SharingUserNotificationHandler
 			return null;
 		}
 
-		return _sharingNotificationMessageProvider.getBody(
+		return _sharingNotificationMessageProvider.getMessage(
 			sharingEntry, serviceContext.getLocale());
 	}
 

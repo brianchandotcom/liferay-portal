@@ -17,36 +17,29 @@ package com.liferay.jenkins.results.parser.vm.amazon;
 /**
  * @author Kiyoshi Lee
  */
-public class AmazonVMFactory {
+public class AmazonLinux2AmazonVM extends AmazonVM {
 
-	public static AmazonVM getExistingAmazonVM(
+	protected AmazonLinux2AmazonVM(
 		String awsAccessKeyId, String awsSecretAccessKey, String instanceId) {
 
-		return new CentOS7AmazonVM(
-			awsAccessKeyId, awsSecretAccessKey, instanceId);
+		super(awsAccessKeyId, awsSecretAccessKey, instanceId);
 	}
 
-	public static AmazonVM newAmazonVM(
-		String awsAccessKeyId, String awsSecretAccessKey, String instanceSize,
-		InstanceType instanceType, String keyName) {
+	protected AmazonLinux2AmazonVM(
+		String awsAccessKeyId, String awsSecretAccessKey, String instanceType,
+		String keyName) {
 
-		if (instanceType == InstanceType.AMAZON_LINUX_2) {
-			return new AmazonLinux2AmazonVM(
-				awsAccessKeyId, awsSecretAccessKey, instanceSize, keyName);
-		}
-
-		if (instanceType == InstanceType.CENTOS_7) {
-			return new CentOS7AmazonVM(
-				awsAccessKeyId, awsSecretAccessKey, instanceSize, keyName);
-		}
-
-		throw new IllegalArgumentException("Invalid instance type");
+		super(
+			awsAccessKeyId, awsSecretAccessKey, "ami-0782017a917e973e7",
+			instanceType, keyName);
 	}
 
-	public static enum InstanceType {
+	protected AmazonLinux2AmazonVM(
+		String awsAccessKeyId, String awsSecretAccessKey, String imageId,
+		String instanceType, String keyName) {
 
-		AMAZON_LINUX_2, CENTOS_7
-
+		super(
+			awsAccessKeyId, awsSecretAccessKey, imageId, instanceType, keyName);
 	}
 
 }

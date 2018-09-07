@@ -44,7 +44,7 @@ public class ModuleReadHookImpl implements ModuleReadHook {
 	@Override
 	public void process(long bundleId, String location) {
 		Path path = Paths.get(
-			PropsValues.LIFERAY_HOME, "osgi/state/org.eclipse.osgi",
+			PropsValues.MODULE_FRAMEWORK_STATE_DIR, "org.eclipse.osgi",
 			String.valueOf(bundleId), "0/bundleFile");
 
 		File bundleFile = path.toFile();

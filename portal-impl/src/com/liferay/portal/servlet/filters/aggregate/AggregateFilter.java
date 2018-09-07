@@ -341,12 +341,11 @@ public class AggregateFilter extends IgnoreModuleRequestFilter {
 				new ServletPaths(jsServletContext, bundleDirName), fileNames);
 		}
 
-		long lastModified = PortalWebResourcesUtil.getLastModified(
-			PortalWebResourceConstants.RESOURCE_TYPE_JS);
-
 		content = StringBundler.concat(
-			StringPool.DOUBLE_SLASH, lastModified, StringPool.NEW_LINE,
-			content);
+			StringPool.DOUBLE_SLASH,
+			PortalWebResourcesUtil.getLastModified(
+				PortalWebResourceConstants.RESOURCE_TYPE_JS),
+			StringPool.NEW_LINE, content);
 
 		response.setContentType(ContentTypes.TEXT_JAVASCRIPT);
 

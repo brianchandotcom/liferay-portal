@@ -27,7 +27,6 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
-import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.test.rule.Inject;
@@ -77,8 +76,8 @@ public class UserModelListenerTest {
 	@Test
 	public void testDeletingUserSharedDeletesSharingEntries() throws Exception {
 		long classNameId = _classNameLocalService.getClassNameId(
-			User.class.getName());
-		long classPK = RandomTestUtil.randomLong();
+			Group.class.getName());
+		long classPK = _group.getGroupId();
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
@@ -111,8 +110,8 @@ public class UserModelListenerTest {
 		throws Exception {
 
 		long classNameId = _classNameLocalService.getClassNameId(
-			User.class.getName());
-		long classPK = RandomTestUtil.randomLong();
+			Group.class.getName());
+		long classPK = _group.getGroupId();
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(

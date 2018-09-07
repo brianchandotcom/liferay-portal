@@ -14,6 +14,8 @@
 
 package com.liferay.sharing.notifications.internal.service;
 
+import com.liferay.asset.kernel.model.AssetRenderer;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -25,6 +27,7 @@ import com.liferay.portal.kernel.service.UserNotificationEventLocalService;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.SubscriptionSender;
 import com.liferay.sharing.constants.SharingEntryActionKey;
 import com.liferay.sharing.constants.SharingPortletKeys;
@@ -37,6 +40,7 @@ import com.liferay.sharing.service.SharingEntryLocalServiceWrapper;
 
 import java.util.Collection;
 import java.util.Date;
+import java.util.ResourceBundle;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -90,6 +94,23 @@ public class NotificationsSharingEntryLocalServiceWrapper
 		return sharingEntry;
 	}
 
+	private String _getMessageBody(
+			SharingEntry sharingEntry, User user, String entryURL)
+		throws PortalException {
+
+		ResourceBundle resourceBundle =
+			_resourceBundleLoader.loadResourceBundle(user.getLocale());
+
+		AssetRenderer<?> assetRenderer =
+			NotificationsSharingEntryUtil.getAssetRenderer(sharingEntry);
+
+		String linkText = ResourceBundleUtil.getString(
+			resourceBundle, "view-x", assetRenderer.getTitle(user.getLocale()));
+
+		return StringBundler.concat(
+			"<a href=\"", entryURL, "\">", linkText, "</a>");
+	}
+
 	private void _sendNotificationEvent(
 		SharingEntry sharingEntry, ServiceContext serviceContext) {
 
@@ -98,18 +119,23 @@ public class NotificationsSharingEntryLocalServiceWrapper
 
 			SubscriptionSender subscriptionSender = new SubscriptionSender();
 
+			String message = _sharingNotificationMessageProvider.getMessage(
+				sharingEntry, user.getLocale());
+
+			subscriptionSender.setSubject(message);
+
+			String entryURL = NotificationsSharingEntryUtil.getEntryURL(
+				sharingEntry, serviceContext.getLiferayPortletRequest(),
+				serviceContext.getLiferayPortletResponse());
+
 			subscriptionSender.setBody(
-				_sharingNotificationMessageProvider.getBody(
-					sharingEntry, user.getLocale()));
+				_getMessageBody(sharingEntry, user, entryURL));
+
 			subscriptionSender.setClassName(sharingEntry.getModelClassName());
 			subscriptionSender.setClassPK(sharingEntry.getSharingEntryId());
 			subscriptionSender.setCompanyId(user.getCompanyId());
 			subscriptionSender.setCurrentUserId(serviceContext.getUserId());
-			subscriptionSender.setEntryURL(
-				NotificationsSharingEntryUtil.getEntryURL(
-					sharingEntry, serviceContext.getLiferayPortletRequest(),
-					serviceContext.getLiferayPortletResponse()));
-
+			subscriptionSender.setEntryURL(entryURL);
 			String fromName = PrefsPropsUtil.getString(
 				user.getCompanyId(), PropsKeys.ADMIN_EMAIL_FROM_NAME);
 			String fromAddress = PrefsPropsUtil.getString(

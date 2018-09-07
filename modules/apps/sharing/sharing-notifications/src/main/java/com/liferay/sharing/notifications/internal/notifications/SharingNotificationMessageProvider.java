@@ -39,7 +39,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(service = SharingNotificationMessageProvider.class)
 public class SharingNotificationMessageProvider {
 
-	public String getBody(SharingEntry sharingEntry, Locale locale)
+	public String getMessage(SharingEntry sharingEntry, Locale locale)
 		throws PortalException {
 
 		ResourceBundle resourceBundle =

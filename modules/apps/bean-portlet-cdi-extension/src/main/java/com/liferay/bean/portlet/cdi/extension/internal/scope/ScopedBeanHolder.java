@@ -14,6 +14,8 @@
 
 package com.liferay.bean.portlet.cdi.extension.internal.scope;
 
+import com.liferay.petra.lang.CentralizedThreadLocal;
+
 import java.util.Collections;
 import java.util.Enumeration;
 
@@ -279,7 +281,7 @@ public class ScopedBeanHolder {
 	}
 
 	private static final ThreadLocal<ScopedBeanHolder> _INSTANCE =
-		new ThreadLocal<>();
+		new CentralizedThreadLocal<>(ScopedBeanHolder.class + "._INSTANCE");
 
 	private final PortletConfig _portletConfig;
 	private final PortletRequest _portletRequest;

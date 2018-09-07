@@ -98,6 +98,12 @@ public class BeanPortletAnnotationImpl extends BaseBeanPortletImpl {
 					dependency.name(), dependency.scope(),
 					dependency.version()));
 		}
+
+		_portletModes = new HashSet<>(_liferayPortletModes);
+
+		BeanApp beanApp = getBeanApp();
+
+		_portletModes.addAll(beanApp.getCustomPortletModes());
 	}
 
 	@Override
@@ -181,12 +187,6 @@ public class BeanPortletAnnotationImpl extends BaseBeanPortletImpl {
 
 		List<String> supportedPortletModes = new ArrayList<>();
 
-		Set<String> applicationSupportedPortletModes = new HashSet<>(
-			_liferayPortletModes);
-
-		applicationSupportedPortletModes.addAll(
-			beanApp.getCustomPortletModes());
-
 		for (Supports supports : _portletConfiguration.supports()) {
 			StringBundler portletModesSB = new StringBundler();
 
@@ -195,7 +195,7 @@ public class BeanPortletAnnotationImpl extends BaseBeanPortletImpl {
 			boolean first = true;
 
 			for (String portletMode : portletModes) {
-				if (applicationSupportedPortletModes.contains(portletMode)) {
+				if (_portletModes.contains(portletMode)) {
 					if (first) {
 						first = false;
 					}
@@ -373,5 +373,6 @@ public class BeanPortletAnnotationImpl extends BaseBeanPortletImpl {
 	private final Map<String, String> _liferayPortletConfigurationProperties;
 	private final String _portletClassName;
 	private final PortletConfiguration _portletConfiguration;
+	private final Set<String> _portletModes;
 
 }

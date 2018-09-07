@@ -28,10 +28,10 @@ import com.liferay.sharing.model.SharingEntry;
 import com.liferay.sharing.renderer.SharingEntryEditRenderer;
 import com.liferay.sharing.renderer.SharingEntryViewRenderer;
 
+import java.util.Locale;
+
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
-
-import java.util.Locale;
 
 /**
  * @author Sergio González
@@ -81,7 +81,7 @@ public class DLFileEntrySharingEntryInterpreter
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		SharingEntryInterpreter.class);
+		DLFileEntrySharingEntryInterpreter.class);
 
 	@Reference
 	private DLAppLocalService _dlAppLocalService;

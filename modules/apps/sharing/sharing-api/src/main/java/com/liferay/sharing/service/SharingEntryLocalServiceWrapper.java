@@ -438,6 +438,13 @@ public class SharingEntryLocalServiceWrapper implements SharingEntryLocalService
 
 	@Override
 	public java.util.List<com.liferay.sharing.model.SharingEntry> getToUserSharingEntries(
+		long toUserId, int start, int end) {
+		return _sharingEntryLocalService.getToUserSharingEntries(toUserId,
+			start, end);
+	}
+
+	@Override
+	public java.util.List<com.liferay.sharing.model.SharingEntry> getToUserSharingEntries(
 		long toUserId, long classNameId) {
 		return _sharingEntryLocalService.getToUserSharingEntries(toUserId,
 			classNameId);

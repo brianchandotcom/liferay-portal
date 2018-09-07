@@ -150,7 +150,27 @@ if (amImageConfigurationEntry != null) {
 			<aui:input checked="<%= !automaticUuid %>" disabled="<%= !configurationEntryEditable %>" label="custom" name="automaticUuid" type="radio" value="<%= false %>" />
 		</div>
 
-		<aui:input cssClass="input-medium" disabled="<%= automaticUuid || !configurationEntryEditable %>" label="id" name="newUuid" type="text" value="<%= configurationEntryUuid %>" />
+		<aui:input cssClass="input-medium" disabled="<%= automaticUuid || !configurationEntryEditable %>" label="id" name="newUuid" type="text" value="<%= configurationEntryUuid %>">
+			<c:if test="<%= amImageConfigurationEntry == null %>">
+				<aui:validator errorMessage="please-enter-only-alphanumeric-characters-dashes-or-underscores" name="custom">
+					function(value) {
+						var radioButtons = document.getElementsByName('<portlet:namespace/>automaticUuid');
+
+						for (var i = 0; i < radioButtons.length; i++) {
+							var radioButton = radioButtons[i];
+
+							if (radioButton.checked && (radioButton.value === <%= automaticUuid %>)) {
+								return true;
+							}
+						}
+
+						var pattern = /^[a-zA-Z0-9_-]+$/;
+
+						return pattern.test(value);
+					}
+				</aui:validator>
+			</c:if>
+		</aui:input>
 	</liferay-frontend:edit-form-body>
 
 	<liferay-frontend:edit-form-footer>

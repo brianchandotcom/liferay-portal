@@ -1054,90 +1054,73 @@ public class GitHubDevSyncUtil {
 			}
 		}
 
-		boolean updated = false;
+		RemoteGitBranch oldTimestampCachedRemoteGitBranch = null;
 
-		for (RemoteGitBranch cacheRemoteGitBranch : cacheRemoteGitBranches) {
-			String cacheRemoteGitBranchName = cacheRemoteGitBranch.getName();
+		Pattern pattern = Pattern.compile(
+			Pattern.quote(cachedBranchName) + "-(\\d+)");
 
-			Matcher matcher = _cachedBranchPattern.matcher(
-				cacheRemoteGitBranchName);
+		for (RemoteGitBranch cachedRemoteGitBranch : cacheRemoteGitBranches) {
+			Matcher matcher = pattern.matcher(cachedRemoteGitBranch.getName());
 
-			if (!cacheRemoteGitBranchName.contains(cachedBranchName) ||
-				!matcher.matches()) {
-
+			if (!matcher.matches()) {
 				continue;
 			}
 
-			String lastBlock = matcher.group(2);
+			long existingTimestamp = Long.parseLong(matcher.group(1));
 
-			if (!lastBlock.matches("\\d+")) {
-				continue;
-			}
-
-			if (updated) {
-				deleteFromAllRemotes(
-					cacheRemoteGitBranchName, gitHubDevGitRemotes);
-
-				continue;
-			}
-
-			long currentTimestamp = System.currentTimeMillis();
-			long existingTimestamp = Long.parseLong(lastBlock);
-
-			if ((currentTimestamp - existingTimestamp) <
+			if ((System.currentTimeMillis() - existingTimestamp) >
 					_BRANCH_UPDATE_AGE_MILLIS) {
 
-				return;
+				oldTimestampCachedRemoteGitBranch = cachedRemoteGitBranch;
+
+				break;
 			}
+		}
 
-			String newTimestampBranchName = JenkinsResultsParserUtil.combine(
-				cachedBranchName, "-", String.valueOf(currentTimestamp));
+		if (oldTimestampCachedRemoteGitBranch == null) {
+			return;
+		}
 
-			System.out.println(
-				JenkinsResultsParserUtil.combine(
-					"Updating existing timestamp for branch ",
-					cacheRemoteGitBranchName, " to ", newTimestampBranchName));
+		String newTimestampCachedRemoteBranchName =
+			JenkinsResultsParserUtil.combine(
+				cachedBranchName, "-",
+				String.valueOf(System.currentTimeMillis()));
 
-			LocalGitBranch currentLocalGitBranch =
-				gitWorkingDirectory.getCurrentLocalGitBranch();
+		System.out.println(
+			JenkinsResultsParserUtil.combine(
+				"Updating existing timestamp for branch ",
+				oldTimestampCachedRemoteGitBranch.getName(), " to ",
+				newTimestampCachedRemoteBranchName));
 
-			if (currentLocalGitBranch == null) {
-				currentLocalGitBranch = gitWorkingDirectory.getLocalGitBranch(
-					gitWorkingDirectory.getUpstreamBranchName(), true);
-			}
+		LocalGitBranch originalCheckedOutLocalGitBranch =
+			gitWorkingDirectory.getCurrentLocalGitBranch();
 
-			LocalGitBranch newTimestampLocalGitBranch =
-				gitWorkingDirectory.createLocalGitBranch(
-					newTimestampBranchName);
+		if (originalCheckedOutLocalGitBranch == null) {
+			originalCheckedOutLocalGitBranch = gitWorkingDirectory.getLocalGitBranch(
+				gitWorkingDirectory.getUpstreamBranchName(), true);
+		}
 
-			newTimestampLocalGitBranch = gitWorkingDirectory.fetch(
-				newTimestampLocalGitBranch, cacheRemoteGitBranch);
+		LocalGitBranch newTimestampLocalGitBranch =
+			gitWorkingDirectory.createLocalGitBranch(
+				newTimestampCachedRemoteBranchName);
 
-			try {
-				pushToAllRemotes(
-					true, newTimestampLocalGitBranch, newTimestampBranchName,
-					gitHubDevGitRemotes);
+		newTimestampLocalGitBranch = gitWorkingDirectory.fetch(
+			newTimestampLocalGitBranch, oldTimestampCachedRemoteGitBranch);
 
-				deleteFromAllRemotes(
-					cacheRemoteGitBranchName, gitHubDevGitRemotes);
+		try {
+			pushToAllRemotes(
+				true, newTimestampLocalGitBranch,
+				newTimestampCachedRemoteBranchName, gitHubDevGitRemotes);
 
-				updated = true;
-			}
-			finally {
-				if ((currentLocalGitBranch != null) &&
-					gitWorkingDirectory.localGitBranchExists(
-						currentLocalGitBranch.getName())) {
+			deleteFromAllRemotes(
+				oldTimestampCachedRemoteGitBranch.getName(), gitHubDevGitRemotes);
+		}
+		finally {
+			gitWorkingDirectory.checkoutLocalGitBranch(
+				originalCheckedOutLocalGitBranch);
 
-					gitWorkingDirectory.checkoutLocalGitBranch(
-						currentLocalGitBranch);
-				}
-				else {
-					checkoutUpstreamLocalGitBranch(gitWorkingDirectory, null);
-				}
-
-				gitWorkingDirectory.deleteLocalGitBranch(
-					newTimestampLocalGitBranch);
-			}
+			gitWorkingDirectory.deleteLocalGitBranch(
+				newTimestampLocalGitBranch);
 		}
 
 		System.out.println(

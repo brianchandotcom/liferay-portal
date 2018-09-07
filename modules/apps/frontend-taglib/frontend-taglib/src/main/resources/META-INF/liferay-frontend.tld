@@ -544,7 +544,7 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>Data attributes to add to the checkbox input. This data is to stored via a map.</description>
+			<description>Data attributes to add to the checkbox input. This data is stored via a map.</description>
 			<name>checkboxData</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -636,7 +636,7 @@
 		</attribute>
 	</tag>
 	<tag>
-		<description>Creates a lexicon-based card component with custom html header.</description>
+		<description>Creates a lexicon-based card component with a custom HTML header.</description>
 		<name>html-vertical-card</name>
 		<tag-class>com.liferay.frontend.taglib.servlet.taglib.HtmlVerticalCardTag</tag-class>
 		<body-content>JSP</body-content>
@@ -665,7 +665,7 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>Data attributes to add to the checkbox input. This data is to stored via a map.</description>
+			<description>Data attributes to add to the checkbox input. This data is stored via a map.</description>
 			<name>checkboxData</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -718,13 +718,13 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>If you pass in a row checker value, a result row is mandatory. A result row is of type <![CDATA[<code>com.liferay.portal.kernel.dao.search.ResultRow</code>]]>.</description>
+			<description>If a <![CDATA[<code>rowChecker</code>]]> value is passed, a <![CDATA[<code>resultRow</code>]]> is mandatory. A result row is of type <![CDATA[<code>com.liferay.portal.kernel.dao.search.ResultRow</code>]]>.</description>
 			<name>resultRow</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>You can optionally pass in a row checker object to manage all the options related to the checkbox. All other checkbox options overwrite the row checker options. A row checker is of type <![CDATA[<code>com.liferay.portal.kernel.dao.search.RowChecker</code>]]>.</description>
+			<description>An optional row checker object that manages the checkbox options. Note that the <![CDATA[<code>checkbox*</code>]]> attributes take precedence over row checker options. A row checker is of type <![CDATA[<code>com.liferay.portal.kernel.dao.search.RowChecker</code>]]>.</description>
 			<name>rowChecker</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -783,7 +783,7 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>Data attributes to add to the checkbox input. This data is to stored via a map.</description>
+			<description>Data attributes to add to the checkbox input. This data is stored via a map.</description>
 			<name>checkboxData</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -1482,7 +1482,7 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>Data attributes to add to the checkbox input. This data is to stored via a map.</description>
+			<description>Data attributes to add to the checkbox input. This data is stored via a map.</description>
 			<name>checkboxData</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -1600,7 +1600,7 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>Data attributes to add to the checkbox input. This data is to stored via a map.</description>
+			<description>Data attributes to add to the checkbox input. This data is stored via a map.</description>
 			<name>checkboxData</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>

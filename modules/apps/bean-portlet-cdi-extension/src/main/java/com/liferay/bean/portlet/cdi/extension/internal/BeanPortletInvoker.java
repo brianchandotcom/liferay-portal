@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.Validator;
 
+import java.io.Closeable;
 import java.io.IOException;
 import java.io.PrintWriter;
 
@@ -266,11 +267,12 @@ public class BeanPortletInvoker
 		ScopedBeanHolder scopedBeanHolder = new ScopedBeanHolder(
 			portletRequest, portletResponse, _portletConfig);
 
-		ScopedBeanHolder.setCurrentInstance(scopedBeanHolder);
-
-		_invokeBeanMethods(beanMethods, portletRequest, portletResponse);
-		scopedBeanHolder.release();
-		ScopedBeanHolder.setCurrentInstance(null);
+		try (Closeable closeable = scopedBeanHolder.install()) {
+			_invokeBeanMethods(beanMethods, portletRequest, portletResponse);
+		}
+		catch (IOException ioe) {
+			throw new PortletException(ioe);
+		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

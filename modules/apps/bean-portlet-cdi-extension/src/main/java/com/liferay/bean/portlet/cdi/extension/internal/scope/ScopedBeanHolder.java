@@ -16,6 +16,9 @@ package com.liferay.bean.portlet.cdi.extension.internal.scope;
 
 import com.liferay.petra.lang.CentralizedThreadLocal;
 
+import java.io.Closeable;
+import java.io.IOException;
+
 import java.util.Collections;
 import java.util.Enumeration;
 
@@ -41,15 +44,6 @@ public class ScopedBeanHolder {
 
 	public static ScopedBeanHolder getCurrentInstance() {
 		return _INSTANCE.get();
-	}
-
-	public static void setCurrentInstance(ScopedBeanHolder scopedBeanHolder) {
-		if (scopedBeanHolder == null) {
-			_INSTANCE.remove();
-		}
-		else {
-			_INSTANCE.set(scopedBeanHolder);
-		}
 	}
 
 	public ScopedBeanHolder(
@@ -170,7 +164,53 @@ public class ScopedBeanHolder {
 		return scopedBean.getBeanInstance();
 	}
 
-	public void release() {
+	public Closeable install() {
+		_INSTANCE.set(this);
+
+		return new Closeable() {
+
+			@Override
+			public void close() throws IOException {
+				_release();
+
+				_INSTANCE.remove();
+			}
+
+		};
+	}
+
+	protected String getParameterName(PortletSerializable portletSerializable) {
+		String parameterName = null;
+
+		Class<?> beanClass = portletSerializable.getClass();
+
+		RenderStateScoped renderStateScoped = beanClass.getAnnotation(
+			RenderStateScoped.class);
+
+		if (renderStateScoped != null) {
+			parameterName = renderStateScoped.paramName();
+		}
+
+		if ((parameterName == null) || parameterName.isEmpty()) {
+			parameterName = beanClass.getSimpleName();
+		}
+
+		return parameterName;
+	}
+
+	private static String _getAttributeName(Bean<?> bean) {
+		String attributeName = bean.getName();
+
+		if ((attributeName == null) || attributeName.isEmpty()) {
+			Class<?> beanClass = bean.getBeanClass();
+
+			attributeName = beanClass.getName();
+		}
+
+		return _ATTRIBUTE_NAME_PREFIX.concat(attributeName);
+	}
+
+	private void _release() {
 		if (_portletResponse instanceof StateAwareResponse) {
 			StateAwareResponse stateAwareResponse = (StateAwareResponse)
 				_portletResponse;
@@ -236,37 +276,6 @@ public class ScopedBeanHolder {
 				_portletRequest.removeAttribute(name);
 			}
 		}
-	}
-
-	protected String getParameterName(PortletSerializable portletSerializable) {
-		String parameterName = null;
-
-		Class<?> beanClass = portletSerializable.getClass();
-
-		RenderStateScoped renderStateScoped = beanClass.getAnnotation(
-			RenderStateScoped.class);
-
-		if (renderStateScoped != null) {
-			parameterName = renderStateScoped.paramName();
-		}
-
-		if ((parameterName == null) || parameterName.isEmpty()) {
-			parameterName = beanClass.getSimpleName();
-		}
-
-		return parameterName;
-	}
-
-	private static String _getAttributeName(Bean<?> bean) {
-		String attributeName = bean.getName();
-
-		if ((attributeName == null) || attributeName.isEmpty()) {
-			Class<?> beanClass = bean.getBeanClass();
-
-			attributeName = beanClass.getName();
-		}
-
-		return _ATTRIBUTE_NAME_PREFIX.concat(attributeName);
 	}
 
 	private static final String _ATTRIBUTE_NAME_PREFIX = "com.liferay.cdi.";

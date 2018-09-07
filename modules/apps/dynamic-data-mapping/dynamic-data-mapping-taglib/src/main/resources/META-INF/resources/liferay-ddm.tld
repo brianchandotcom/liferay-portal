@@ -30,7 +30,7 @@
 			<name>ddmFormValues</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
-			<type>java.lang.Object</type>
+			<type>com.liferay.dynamic.data.mapping.storage.DDMFormValues</type>
 		</attribute>
 		<attribute>
 			<name>documentLibrarySelectorURL</name>
@@ -105,7 +105,7 @@
 			<name>field</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
-			<type>java.lang.Object</type>
+			<type>com.liferay.dynamic.data.mapping.storage.Field</type>
 		</attribute>
 		<attribute>
 			<name>fieldsNamespace</name>

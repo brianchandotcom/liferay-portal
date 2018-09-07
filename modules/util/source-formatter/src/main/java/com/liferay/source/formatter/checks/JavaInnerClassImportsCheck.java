@@ -26,6 +26,7 @@ import com.liferay.source.formatter.checks.util.JavaSourceUtil;
 import java.io.IOException;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -34,6 +35,11 @@ import java.util.regex.Pattern;
  * @author Hugo Huijser
  */
 public class JavaInnerClassImportsCheck extends BaseFileCheck {
+
+	public void setUpperCasePackageNames(String upperCasePackageNames) {
+		Collections.addAll(
+			_upperCasePackageNames, StringUtil.split(upperCasePackageNames));
+	}
 
 	@Override
 	protected String doProcess(
@@ -47,6 +53,12 @@ public class JavaInnerClassImportsCheck extends BaseFileCheck {
 		Matcher matcher = _innerClassImportPattern.matcher(content);
 
 		while (matcher.find()) {
+			String outerClassFullyQualifiedName = matcher.group(2);
+
+			if (_upperCasePackageNames.contains(outerClassFullyQualifiedName)) {
+				continue;
+			}
+
 			String innerClassName = matcher.group(4);
 			String innerClassFullyQualifiedName = matcher.group(1);
 			String outerClassName = matcher.group(3);
@@ -65,8 +77,6 @@ public class JavaInnerClassImportsCheck extends BaseFileCheck {
 
 				continue;
 			}
-
-			String outerClassFullyQualifiedName = matcher.group(2);
 
 			if (className == null) {
 				className = JavaSourceUtil.getClassName(fileName);
@@ -258,5 +268,6 @@ public class JavaInnerClassImportsCheck extends BaseFileCheck {
 	private final Pattern _innerClassImportPattern = Pattern.compile(
 		"\nimport (([\\w.]+\\.([A-Z]\\w+))\\.([A-Z]\\w+));");
 	private final Pattern _outerClassPattern = Pattern.compile("\\.[A-Z]\\w+");
+	private final List<String> _upperCasePackageNames = new ArrayList<>();
 
 }

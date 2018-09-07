@@ -73,10 +73,12 @@ WikiPage wikiPage = WikiPageAttachmentsUtil.getPage(attachmentsFileEntry.getFile
 					<portlet:param name="fileName" value="<%= HtmlUtil.unescape(attachmentsFileEntry.getTitle()) %>" />
 				</portlet:actionURL>
 
-				<liferay-ui:icon-delete
-					trash="<%= trashHelper.isTrashEnabled(scopeGroupId) %>"
-					url="<%= deleteURL %>"
-				/>
+				<div class="delete-attachment" data-rowid="<%= attachmentsFileEntry.getFileEntryId() %>" data-url="<%= deleteURL.toString() %>">
+					<liferay-ui:icon-delete
+						trash="<%= trashHelper.isTrashEnabled(scopeGroupId) %>"
+						url="javascript:;"
+					/>
+				</div>
 			</c:if>
 		</c:otherwise>
 	</c:choose>

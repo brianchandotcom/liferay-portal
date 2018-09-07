@@ -46,6 +46,17 @@ class WikiPortlet extends PortletBase {
 				this.saveDraft_(e);
 			}));
 		}
+
+		let searchContainerId = this.ns('pageAttachments');
+
+		Liferay.componentReady(searchContainerId).then(
+			(searchContainer) => {
+				this.eventHandler_.add(searchContainer.get('contentBox').delegate(
+					'click', this.removeAttachment_.bind(this), '.delete-attachment'));
+
+				this.searchContainer_ = searchContainer;
+			}
+		);
 	}
 
 	/**
@@ -90,6 +101,29 @@ class WikiPortlet extends PortletBase {
 	publishPage_() {
 		this.one('#workflowAction').value = this.constants.ACTION_PUBLISH;
 		this.save_();
+	}
+
+	/**
+	 * Sends a request to remove the selected attachment.
+	 *
+	 * @protected
+	 * @param {Event} event The click event that triggered the remove action
+	 */
+	removeAttachment_(event) {
+		let link = event.currentTarget;
+
+		let deleteURL = link.getAttribute('data-url');
+
+		fetch(
+			deleteURL
+		).then(
+			() => {
+				let searchContainer = this.searchContainer_;
+
+				searchContainer.deleteRow(link.ancestor('tr'), link.getAttribute('data-rowid'));
+				searchContainer.updateDataStore();
+			}
+		);
 	}
 
 	/**

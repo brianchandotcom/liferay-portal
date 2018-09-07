@@ -18,6 +18,7 @@ import com.liferay.bean.portlet.LiferayPortletConfiguration;
 import com.liferay.bean.portlet.cdi.extension.internal.BaseBeanPortletImpl;
 import com.liferay.bean.portlet.cdi.extension.internal.BeanApp;
 import com.liferay.bean.portlet.cdi.extension.internal.PortletDependency;
+import com.liferay.bean.portlet.cdi.extension.internal.PublicRenderParameter;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.portlet.LiferayPortletMode;
 import com.liferay.portal.kernel.util.HashMapDictionary;
@@ -46,6 +47,9 @@ import javax.portlet.annotations.Preference;
 import javax.portlet.annotations.RuntimeOption;
 import javax.portlet.annotations.SecurityRoleRef;
 import javax.portlet.annotations.Supports;
+
+import javax.xml.XMLConstants;
+import javax.xml.namespace.QName;
 
 /**
  * @author Neil Griffin
@@ -283,7 +287,8 @@ public class BeanPortletAnnotationImpl extends BaseBeanPortletImpl {
 			supportedPublicRenderParameters.add(
 				toNameValuePair(
 					identifier,
-					getPublicRenderParameterNamespaceURI(identifier)));
+					_getPublicRenderParameterNamespaceURI(
+						beanApp, identifier)));
 		}
 
 		dictionary.put(
@@ -322,6 +327,34 @@ public class BeanPortletAnnotationImpl extends BaseBeanPortletImpl {
 		dictionary.putAll(_liferayPortletConfigurationProperties);
 
 		return dictionary;
+	}
+
+	private static String _getPublicRenderParameterNamespaceURI(
+		BeanApp beanApp, String id) {
+
+		Map<String, PublicRenderParameter> publicRenderParameterMap =
+			beanApp.getPublicRenderParameterMap();
+
+		PublicRenderParameter publicRenderParameter =
+			publicRenderParameterMap.get(id);
+
+		if (publicRenderParameter == null) {
+			return XMLConstants.NULL_NS_URI;
+		}
+
+		QName qName = publicRenderParameter.getQName();
+
+		if (qName == null) {
+			return XMLConstants.NULL_NS_URI;
+		}
+
+		String namespaceURI = qName.getNamespaceURI();
+
+		if (namespaceURI == null) {
+			return XMLConstants.NULL_NS_URI;
+		}
+
+		return namespaceURI;
 	}
 
 	private static void _putEnglishText(

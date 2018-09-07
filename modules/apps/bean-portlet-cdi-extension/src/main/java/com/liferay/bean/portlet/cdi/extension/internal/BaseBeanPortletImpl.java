@@ -190,15 +190,9 @@ public abstract class BaseBeanPortletImpl implements BeanPortlet {
 
 		portletDictionary.putIfNotNull("javax.portlet.name", portletId);
 
+		Set<String> supportedPublishingEvents = new HashSet<>();
+
 		for (BeanMethod beanMethod : getBeanMethods(MethodType.ACTION)) {
-			Set<String> supportedPublishingEvents = (Set<String>)
-				portletDictionary.get(
-					"javax.portlet.supported-publishing-event");
-
-			if (supportedPublishingEvents == null) {
-				supportedPublishingEvents = new HashSet<>();
-			}
-
 			Method beanActionMethod = beanMethod.getMethod();
 
 			ActionMethod actionMethod = beanActionMethod.getAnnotation(
@@ -214,21 +208,11 @@ public abstract class BaseBeanPortletImpl implements BeanPortlet {
 							portletQName.namespaceURI()));
 				}
 			}
-
-			portletDictionary.putIfNotEmpty(
-				"javax.portlet.supported-publishing-event",
-				supportedPublishingEvents);
 		}
 
+		Set<String> supportedProcessingEvents = new HashSet<>();
+
 		for (BeanMethod beanMethod : getBeanMethods(MethodType.EVENT)) {
-			Set<String> supportedPublishingEvents = (Set<String>)
-				portletDictionary.get(
-					"javax.portlet.supported-publishing-event");
-
-			if (supportedPublishingEvents == null) {
-				supportedPublishingEvents = new HashSet<>();
-			}
-
 			Method beanEventMethod = beanMethod.getMethod();
 
 			EventMethod eventMethod = beanEventMethod.getAnnotation(
@@ -245,18 +229,6 @@ public abstract class BaseBeanPortletImpl implements BeanPortlet {
 				}
 			}
 
-			portletDictionary.putIfNotEmpty(
-				"javax.portlet.supported-publishing-event",
-				supportedPublishingEvents);
-
-			Set<String> supportedProcessingEvents = (Set<String>)
-				portletDictionary.get(
-					"javax.portlet.supported-processing-event");
-
-			if (supportedProcessingEvents == null) {
-				supportedProcessingEvents = new HashSet<>();
-			}
-
 			if (eventMethod != null) {
 				for (PortletQName portletQName :
 						eventMethod.processingEvents()) {
@@ -267,8 +239,16 @@ public abstract class BaseBeanPortletImpl implements BeanPortlet {
 							portletQName.namespaceURI()));
 				}
 			}
+		}
 
-			portletDictionary.putIfNotEmpty(
+		if (!supportedPublishingEvents.isEmpty()) {
+			portletDictionary.put(
+				"javax.portlet.supported-publishing-event",
+				supportedPublishingEvents);
+		}
+
+		if (!supportedProcessingEvents.isEmpty()) {
+			portletDictionary.put(
 				"javax.portlet.supported-processing-event",
 				supportedProcessingEvents);
 		}

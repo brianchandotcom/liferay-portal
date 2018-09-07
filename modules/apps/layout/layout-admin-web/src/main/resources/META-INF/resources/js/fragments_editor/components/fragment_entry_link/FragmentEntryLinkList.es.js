@@ -1,9 +1,15 @@
 import Component from 'metal-component';
 import {Config} from 'metal-state';
 import {Drag, DragDrop} from 'metal-drag-drop';
+import position from 'metal-position';
 import Soy from 'metal-soy';
 
 import './FragmentEntryLink.es';
+import {
+	CLEAR_DRAG_TARGET,
+	UPDATE_DRAG_TARGET
+} from '../../actions/actions.es';
+import {DRAG_POSITIONS} from '../../reducers/placeholders.es';
 import templates from './FragmentEntryLinkList.soy';
 
 /**
@@ -53,6 +59,36 @@ class FragmentEntryLinkList extends Component {
 	}
 
 	/**
+	 * Callback that is executed when an item is being dragged.
+	 * @param {!MouseEvent} event
+	 * @private
+	 * @review
+	 */
+
+	_handleDrag(data, event) {
+		const targetItem = data.target;
+
+		if (targetItem && 'fragmentEntryLinkId' in targetItem.dataset) {
+			const mouseY = event.target.mousePos_.y;
+			const targetItemRegion = position.getRegion(targetItem);
+
+			let nearestBorder = DRAG_POSITIONS.bottom;
+
+			if (Math.abs(mouseY - targetItemRegion.top) <= Math.abs(mouseY - targetItemRegion.bottom)) {
+				nearestBorder = DRAG_POSITIONS.top;
+			}
+
+			this.store.dispatchAction(
+				UPDATE_DRAG_TARGET,
+				{
+					hoveredFragmentEntryLinkBorder: nearestBorder,
+					hoveredFragmentEntryLinkId: targetItem.dataset.fragmentEntryLinkId
+				}
+			);
+		}
+	}
+
+	/**
 	 * Callback that is executed when an item is dropped.
 	 * @param {!MouseEvent} event
 	 * @private
@@ -61,6 +97,11 @@ class FragmentEntryLinkList extends Component {
 
 	_handleDrop(data, event) {
 		event.preventDefault();
+
+		this.store
+			.dispatchAction(
+				CLEAR_DRAG_TARGET
+			);
 	}
 
 	/**
@@ -110,6 +151,11 @@ class FragmentEntryLinkList extends Component {
 				sources: '.drag-fragment',
 				targets: `.${this.dropTargetClass}`
 			}
+		);
+
+		this._dragDrop.on(
+			DragDrop.Events.DRAG,
+			this._handleDrag.bind(this)
 		);
 
 		this._dragDrop.on(

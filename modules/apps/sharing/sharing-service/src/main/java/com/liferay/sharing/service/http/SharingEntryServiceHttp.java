@@ -133,7 +133,8 @@ public class SharingEntryServiceHttp {
 	public static com.liferay.sharing.model.SharingEntry updateSharingEntry(
 		HttpPrincipal httpPrincipal, long sharingEntryId,
 		java.util.Collection<com.liferay.sharing.constants.SharingEntryActionKey> sharingEntryActionKeys,
-		boolean shareable, java.util.Date expirationDate)
+		boolean shareable, java.util.Date expirationDate,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(SharingEntryServiceUtil.class,
@@ -141,7 +142,7 @@ public class SharingEntryServiceHttp {
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					sharingEntryId, sharingEntryActionKeys, shareable,
-					expirationDate);
+					expirationDate, serviceContext);
 
 			Object returnObj = null;
 
@@ -178,6 +179,7 @@ public class SharingEntryServiceHttp {
 		};
 	private static final Class<?>[] _updateSharingEntryParameterTypes4 = new Class[] {
 			long.class, java.util.Collection.class, boolean.class,
-			java.util.Date.class
+			java.util.Date.class,
+			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 }

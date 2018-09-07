@@ -1,102 +1,127 @@
-@import "bourbon";
 @import "mixins";
 
+$dark-color: #272833;
+$light-color: #E7E7ED;
+
 .taglib-discussion {
-	.alloy-editor-placeholder {
-		min-height: 90px;
+	$discussion-indent: 1rem;
+	$discussion-indent-sm: 3.5rem;
+	$discussion-margin-button: 1.5rem;
 
-		p {
-			margin-bottom: 0;
-		}
+	font-size: .875rem;
+
+	.lfr-discussion-subscribe-button-container {
+		margin-bottom: 1.5rem;
+		text-align: right;
 	}
 
-	.add-comment {
-		.row {
-			margin-top: 30px;
-		}
+	.button-holder {
+		margin: 1rem 0;
 	}
 
-	.lfr-discussion {
-		.lfr-discussion-form-edit .alloy-editor-placeholder {
-			border-left: 2px solid transparent;
-
-			p {
-				margin-bottom: 10px;
-			}
-		}
-	}
-
-	.lfr-discussion-details {
-		@include sm {
-			float: left;
-		}
-	}
-
-	.lfr-discussion-body {
-		@include media-query(null, $screen-xs-max) {
-			margin-top: 15px;
-		}
-
-		@include sm {
-			margin-left: 65px;
-		}
+	.lfr-discussion-add-container {
+		margin-bottom: 1.5rem;
 
 		.button-holder {
 			margin-bottom: 0;
 		}
+	}
 
-		.lfr-discussion-message {
-			.lfr-discussion-message-author {
-				margin-bottom: 12px;
+	.lfr-discussion-container {
+		border-bottom: 1px solid $light-color;
+		margin-bottom: $discussion-margin-button;
 
-				.author-link {
-					display: block;
-				}
+		&:first-of-type {
+			border-top: 1px solid $light-color;
+			padding-top: 1.5rem;
+		}
+
+		&:last-of-type {
+			border-bottom: 0;
+		}
+
+		.lfr-discussion {
+			padding-left: $discussion-indent;
+
+			// limit the level of nesting
+
+			.lfr-discussion .lfr-discussion .lfr-discussion {
+				padding-left: 0;
+			}
+
+			@include sm {
+				padding-left: $discussion-indent-sm;
 			}
 		}
 	}
 
-	.taglib-ratings {
-		display: inline-block;
-		margin-right: 1em;
-	}
-}
-
-.lfr-discussion-reply.popover {
-	max-width: none;
-
-	.lfr-discussion-reply-user-avatar {
-		float: left;
-		padding-right: 20px;
+	.comment-container {
+		margin-bottom: $discussion-margin-button;
 	}
 
-	.lfr-discussion-reply-content {
-		margin-top: 5px;
-	}
-}
-
-.lfr-discussion-controls {
-	.reply-action {
-		line-height: 32px;
-	}
-}
-
-@include sm {
 	.lfr-discussion-body {
-		.lfr-discussion-controls {
-			position: absolute;
-			right: 0;
-			top: 0;
-			width: 45%;
+		font-size: 1rem;
 
-			& > div {
-				float: right;
-				margin-right: 12px;
-			}
+		@include sm {
+			padding-left: $discussion-indent-sm;
+		}
+	}
+
+	.username {
+		color: $dark-color;
+		font-weight: 600;
+	}
+
+	.taglib-workflow-status {
+		margin-left: .5rem;
+	}
+
+	.workflow-value {
+		text-transform: uppercase;
+	}
+
+	@include sm {
+		.dropdown {
+			display: none;
 		}
 
-		.lfr-discussion-message .lfr-discussion-message-author {
-			width: 40%;
+		.comment-container:hover .dropdown,
+		.dropdown:focus {
+			display: inline-block;
 		}
+	}
+
+	.lfr-discussion-parent-link {
+		color: #67678C;
+		font-weight: 600;
+		margin-left: 1em;
+	}
+
+	.lfr-discussion-reply {
+		font-size: .875rem;
+
+		&.popover {
+			max-width: 100%;
+		}
+
+		.popover-title {
+			font-size: inherit;
+			font-weight: 400;
+		}
+
+		.popover-content {
+			overflow: hidden;
+		}
+	}
+
+	.lfr-discussion-controls .autofit-col:first-of-type > .btn-outline-borderless {
+		margin-left: -0.75rem;
+	}
+
+	.lfr-discussion-more-comments {
+		border-top: 1px solid $light-color;
+		margin-top: 1.5rem;
+		padding-top: 1.5rem;
+		text-align: center;
 	}
 }

@@ -54,17 +54,14 @@ public class DefaultCommentTreeDisplayContext
 	@Override
 	public String getPublishButtonLabel(Locale locale) {
 		String publishButtonLabel = LanguageUtil.get(
-			_discussionRequestHelper.getRequest(), "publish");
+			_discussionRequestHelper.getRequest(), "save");
 
 		if (WorkflowDefinitionLinkLocalServiceUtil.hasWorkflowDefinitionLink(
 				_discussionRequestHelper.getCompanyId(),
 				_discussionRequestHelper.getScopeGroupId(),
 				CommentConstants.getDiscussionClassName())) {
 
-			if (isCommentPending()) {
-				publishButtonLabel = "save";
-			}
-			else {
+			if (!isCommentPending()) {
 				publishButtonLabel = LanguageUtil.get(
 					_discussionRequestHelper.getRequest(),
 					"submit-for-publication");

@@ -41,237 +41,252 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 %>
 
 <c:if test="<%= commentTreeDisplayContext.isDiscussionVisible() %>">
-	<article class="lfr-discussion <%= (rootDiscussionComment.getCommentId() == discussionComment.getParentCommentId()) ? "card-tab-group" : "card-tab" %>">
-		<div class="card list-group-card panel">
-			<div class="panel-body">
-				<div class="card-row">
-					<div class="card-col-content">
-						<div id="<%= randomNamespace %>messageScroll<%= discussionComment.getCommentId() %>">
-							<a id="<%= randomNamespace %>message_<%= discussionComment.getCommentId() %>" name="<%= randomNamespace %>message_<%= discussionComment.getCommentId() %>"></a>
+	<article class="lfr-discussion <%= (rootDiscussionComment.getCommentId() == discussionComment.getParentCommentId()) ? "lfr-discussion-container" : "" %>">
+		<div class="comment-container">
+			<div class="autofit-padded-no-gutters-x autofit-row widget-metadata">
+				<div class="autofit-col">
+					<liferay-ui:user-portrait
+						cssClass="user-icon-lg"
+						userId="<%= discussionComment.getUserId() %>"
+						userName="<%= discussionComment.getUserName() %>"
+					/>
+				</div>
 
-							<aui:input name='<%= "commentId" + index %>' type="hidden" value="<%= discussionComment.getCommentId() %>" />
-							<aui:input name='<%= "parentCommentId" + index %>' type="hidden" value="<%= discussionComment.getCommentId() %>" />
-						</div>
+				<%
+				User messageUser = discussionComment.getUser();
+				%>
 
-						<div class="lfr-discussion-details">
-							<liferay-ui:user-portrait
-								userId="<%= discussionComment.getUserId() %>"
-								userName="<%= discussionComment.getUserName() %>"
-							/>
-						</div>
-
-						<div class="lfr-discussion-body">
-							<c:if test="<%= commentTreeDisplayContext.isWorkflowStatusVisible() %>">
-
-								<%
-								WorkflowableComment workflowableComment = (WorkflowableComment)discussionComment;
-								%>
-
-								<aui:model-context bean="<%= workflowableComment %>" model="<%= workflowableComment.getModelClass() %>" />
-
-								<div>
-									<aui:workflow-status model="<%= CommentConstants.getDiscussionClass() %>" status="<%= workflowableComment.getStatus() %>" />
-								</div>
-							</c:if>
-
-							<div class="lfr-discussion-message">
-								<header class="lfr-discussion-message-author">
-
-									<%
-									User messageUser = discussionComment.getUser();
-									%>
-
-									<aui:a cssClass="author-link" href="<%= ((messageUser != null) && messageUser.isActive()) ? messageUser.getDisplayURL(themeDisplay) : null %>">
-										<%= HtmlUtil.escape(discussionComment.getUserName()) %>
-
-										<c:if test="<%= discussionComment.getUserId() == user.getUserId() %>">
-											(<liferay-ui:message key="you" />)
-										</c:if>
-									</aui:a>
-
-									<%
-									Date createDate = discussionComment.getCreateDate();
-
-									String createDateDescription = LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - createDate.getTime(), true);
-									%>
-
-									<span class="small">
+				<div class="autofit-col autofit-col-expand">
+					<div class="autofit-row">
+						<div class="autofit-col autofit-col-expand">
+							<div class="text-truncate">
+								<liferay-util:whitespace-remover>
+									<aui:a cssClass="username" href="<%= ((messageUser != null) && messageUser.isActive()) ? messageUser.getDisplayURL(themeDisplay) : null %>">
 										<c:choose>
-											<c:when test="<%= discussionComment.getParentCommentId() == rootDiscussionComment.getCommentId() %>">
-												<liferay-ui:message arguments="<%= createDateDescription %>" key="x-ago" translateArguments="<%= false %>" />
+											<c:when test="<%= discussionComment.getUserId() == user.getUserId() %>">
+												<%= HtmlUtil.escape(discussionComment.getUserName()) %> (<liferay-ui:message key="you" />)
 											</c:when>
 											<c:otherwise>
-
-												<%
-												DiscussionComment parentDiscussionComment = discussionComment.getParentComment();
-												%>
-
-												<liferay-util:buffer
-													var="parentCommentUserBuffer"
-												>
-
-													<%
-													User parentMessageUser = parentDiscussionComment.getUser();
-													%>
-
-													<span>
-														<div class="lfr-discussion-reply-user-avatar">
-															<liferay-ui:user-portrait
-																user="<%= parentMessageUser %>"
-															/>
-														</div>
-
-														<div class="lfr-discussion-reply-user-name">
-															<%= HtmlUtil.escape(parentDiscussionComment.getUserName()) %>
-														</div>
-
-														<div class="lfr-discussion-reply-creation-date">
-															<%= dateFormatDateTime.format(parentDiscussionComment.getCreateDate()) %>
-														</div>
-													</span>
-												</liferay-util:buffer>
-
-												<liferay-util:buffer
-													var="parentCommentBodyBuffer"
-												>
-													<a class="lfr-discussion-parent-link" data-metadata="<%= HtmlUtil.escape(parentDiscussionComment.getBody()) %>" data-title="<%= HtmlUtil.escape(parentCommentUserBuffer) %>">
-														<%= HtmlUtil.escape(parentDiscussionComment.getUserName()) %>
-													</a>
-												</liferay-util:buffer>
-
-												<liferay-ui:message arguments="<%= new Object[] {createDateDescription, parentCommentBodyBuffer} %>" key="x-ago-in-reply-to-x" translateArguments="<%= false %>" />
+												<%= HtmlUtil.escape(discussionComment.getUserName()) %>
 											</c:otherwise>
 										</c:choose>
+									</aui:a>
+								</liferay-util:whitespace-remover>
+
+								<%
+								Date createDate = discussionComment.getCreateDate();
+
+								String createDateDescription = LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - createDate.getTime(), true);
+								%>
+
+								<c:if test="<%= discussionComment.getParentCommentId() != rootDiscussionComment.getCommentId() %>">
+
+									<%
+									DiscussionComment parentDiscussionComment = discussionComment.getParentComment();
+									%>
+
+									<liferay-util:buffer
+										var="parentCommentUserBuffer"
+									>
 
 										<%
-										Date modifiedDate = discussionComment.getModifiedDate();
+										User parentMessageUser = parentDiscussionComment.getUser();
 										%>
 
-										<c:if test="<%= createDate.before(modifiedDate) %>">
-											<strong onmouseover="Liferay.Portal.ToolTip.show(this, '<%= HtmlUtil.escapeJS(dateFormatDateTime.format(modifiedDate)) %>');">
-												- <liferay-ui:message key="edited" />
-											</strong>
-										</c:if>
-									</span>
-								</header>
+										<div class="autofit-padded-no-gutters-x autofit-row">
+											<div class="autofit-col">
+												<liferay-ui:user-portrait
+													cssClass="user-icon-lg"
+													user="<%= parentMessageUser %>"
+												/>
+											</div>
 
-								<div class="lfr-discussion-message-body" id="<%= namespace + randomNamespace + "discussionMessage" + index %>">
-									<%= discussionComment.getTranslatedBody(themeDisplay.getPathThemeImages()) %>
-								</div>
+											<div class="autofit-col autofit-col-expand">
+												<div class="username">
+													<%= HtmlUtil.escape(parentDiscussionComment.getUserName()) %>
+												</div>
 
-								<c:if test="<%= commentTreeDisplayContext.isEditControlsVisible() %>">
-									<div class="lfr-discussion-form lfr-discussion-form-edit" id="<%= namespace + randomNamespace %>editForm<%= index %>" style="<%= "display: none; max-width: " + ModelHintsConstants.TEXTAREA_DISPLAY_WIDTH + "px;" %>">
-										<div class="editor-wrapper"></div>
+												<%
+												Date parentDiscussionCreateDate = parentDiscussionComment.getCreateDate();
+												%>
 
-										<aui:input name='<%= "editReplyBody" + index %>' type="hidden" value="<%= discussionComment.getBody() %>" />
+												<div class="text-secondary">
+													<liferay-ui:message arguments="<%= LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - parentDiscussionCreateDate.getTime(), true) %>" key="x-ago" translateArguments="<%= false %>" />
+												</div>
+											</div>
+										</div>
+									</liferay-util:buffer>
 
-										<aui:button-row>
-											<aui:button name='<%= randomNamespace + "editReplyButton" + index %>' onClick='<%= randomNamespace + "updateMessage(" + index + ");" %>' value="<%= commentTreeDisplayContext.getPublishButtonLabel(locale) %>" />
+									<%
+									Map<String, String> dataInReply = new HashMap<>();
+									dataInReply.put("inreply-content", parentDiscussionComment.getBody());
+									dataInReply.put("inreply-title", parentCommentUserBuffer);
+									%>
 
-											<%
-											String taglibCancel = randomNamespace + "showEl('" + namespace + randomNamespace + "discussionMessage" + index + "');" + randomNamespace + "hideEditor('" + randomNamespace + "editReplyBody" + index + "', '" + namespace + randomNamespace + "editForm" + index + "');";
-											%>
-
-											<aui:button onClick="<%= taglibCancel %>" type="cancel" />
-										</aui:button-row>
-
-										<aui:script>
-											window['<%= namespace + randomNamespace + index %>EditOnChange'] = function(html) {
-												Liferay.Util.toggleDisabled('#<%= namespace + randomNamespace %>editReplyButton<%= index %>', html.trim() === '');
-											};
-										</aui:script>
-									</div>
+									<clay:link
+										data="<%= dataInReply %>"
+										elementClasses="lfr-discussion-parent-link"
+										href="javascript:void(0);"
+										icon="redo"
+										label="<%= HtmlUtil.escape(parentDiscussionComment.getUserName()) %>"
+										ariaLabel="<%= LanguageUtil.format(request, "in-reply-to-x", HtmlUtil.escape(parentDiscussionComment.getUserName()),
+										false) %>"
+									/>
 								</c:if>
 							</div>
 
-							<div class="lfr-discussion-controls">
-								<c:if test="<%= commentTreeDisplayContext.isRatingsVisible() %>">
-									<liferay-ui:ratings
-										className="<%= CommentConstants.getDiscussionClassName() %>"
-										classPK="<%= discussionComment.getCommentId() %>"
-										inTrash="<%= false %>"
-										ratingsEntry="<%= discussionComment.getRatingsEntry() %>"
-										ratingsStats="<%= discussionComment.getRatingsStats() %>"
-									/>
+							<div class="text-secondary">
+								<span title="<%= dateFormatDateTime.format(createDate) %>"><liferay-ui:message arguments="<%= createDateDescription %>" key="x-ago" translateArguments="<%= false %>" /></span>
+
+								<%
+								Date modifiedDate = discussionComment.getModifiedDate();
+								%>
+
+								<c:if test="<%= createDate.before(modifiedDate) %>">
+									-
+									<strong title="<%= dateFormatDateTime.format(modifiedDate) %>">
+										<liferay-ui:message key="edited" />
+									</strong>
 								</c:if>
 
-								<c:if test="<%= commentTreeDisplayContext.isActionControlsVisible() && commentTreeDisplayContext.isReplyActionControlVisible() %>">
-									<c:if test="<%= !discussion.isMaxCommentsLimitExceeded() %>">
-										<c:choose>
-											<c:when test="<%= commentTreeDisplayContext.isReplyButtonVisible() %>">
-												<div class="reply-action">
-													<liferay-ui:icon
-														label="<%= true %>"
-														message="reply"
-														url='<%= "javascript:" + randomNamespace + "showPostReplyEditor(" + index + ");" %>'
-													/>
-												</div>
-											</c:when>
-											<c:otherwise>
-												<liferay-ui:icon
-													label="<%= true %>"
-													message="please-sign-in-to-reply"
-													url="<%= themeDisplay.getURLSignIn() %>"
-												/>
-											</c:otherwise>
-										</c:choose>
-									</c:if>
+								<c:if test="<%= commentTreeDisplayContext.isWorkflowStatusVisible() %>">
+
+									<%
+									WorkflowableComment workflowableComment = (WorkflowableComment)discussionComment;
+									%>
+
+									<aui:model-context bean="<%= workflowableComment %>" model="<%= workflowableComment.getModelClass() %>" />
+
+									<aui:workflow-status model="<%= CommentConstants.getDiscussionClass() %>" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= workflowableComment.getStatus() %>" />
 								</c:if>
 							</div>
 						</div>
 					</div>
+				</div>
 
-					<c:if test="<%= commentTreeDisplayContext.isActionControlsVisible() && (index > 0) %>">
-						<div class="card-col-field">
-							<liferay-ui:icon-menu
-								direction="left-side"
-								icon="<%= StringPool.BLANK %>"
-								markupView="lexicon"
-								message="<%= StringPool.BLANK %>"
-								showWhenSingleIcon="<%= true %>"
-							>
-								<c:if test="<%= commentTreeDisplayContext.isEditActionControlVisible() %>">
-									<liferay-ui:icon
-										message="edit"
-										url='<%= "javascript:" + randomNamespace + "showEditReplyEditor(" + index + ");" %>'
-									/>
-								</c:if>
+				<c:if test="<%= commentTreeDisplayContext.isActionControlsVisible() && (index > 0) %>">
+					<div class="autofit-col">
+						<liferay-ui:icon-menu
+							direction="left-side"
+							icon="<%= StringPool.BLANK %>"
+							markupView="lexicon"
+							message="<%= StringPool.BLANK %>"
+							showWhenSingleIcon="<%= true %>"
+						>
+							<c:if test="<%= commentTreeDisplayContext.isEditActionControlVisible() %>">
+								<liferay-ui:icon
+									message="edit"
+									url='<%= "javascript:" + randomNamespace + "showEditReplyEditor(" + index + ");" %>'
+								/>
+							</c:if>
 
-								<c:if test="<%= commentTreeDisplayContext.isDeleteActionControlVisible() %>">
-									<liferay-ui:icon-delete
-										label="<%= true %>"
-										url='<%= "javascript:" + randomNamespace + "deleteMessage(" + index + ");" %>'
-									/>
-								</c:if>
-							</liferay-ui:icon-menu>
+							<c:if test="<%= commentTreeDisplayContext.isDeleteActionControlVisible() %>">
+								<liferay-ui:icon-delete
+									label="<%= true %>"
+									url='<%= "javascript:" + randomNamespace + "deleteMessage(" + index + ");" %>'
+								/>
+							</c:if>
+						</liferay-ui:icon-menu>
+					</div>
+				</c:if>
+			</div>
+
+			<div class="lfr-discussion-body">
+				<div id="<%= randomNamespace %>messageScroll<%= discussionComment.getCommentId() %>">
+					<a id="<%= randomNamespace %>message_<%= discussionComment.getCommentId() %>" name="<%= randomNamespace %>message_<%= discussionComment.getCommentId() %>"></a>
+
+					<aui:input name='<%= "commentId" + index %>' type="hidden" value="<%= discussionComment.getCommentId() %>" />
+					<aui:input name='<%= "parentCommentId" + index %>' type="hidden" value="<%= discussionComment.getCommentId() %>" />
+				</div>
+
+				<div class="lfr-discussion-message">
+					<div class="lfr-discussion-message-body" id="<%= namespace + randomNamespace + "discussionMessage" + index %>">
+						<%= discussionComment.getTranslatedBody(themeDisplay.getPathThemeImages()) %>
+					</div>
+
+					<c:if test="<%= commentTreeDisplayContext.isEditControlsVisible() %>">
+						<div class="lfr-discussion-form lfr-discussion-form-edit" id="<%= namespace + randomNamespace %>editForm<%= index %>" style="display: none;">
+							<div class="editor-wrapper"></div>
+
+							<aui:input name='<%= "editReplyBody" + index %>' type="hidden" value="<%= discussionComment.getBody() %>" />
+
+							<aui:button-row>
+								<aui:button cssClass="btn-comment btn-primary btn-sm" name='<%= randomNamespace + "editReplyButton" + index %>' onClick='<%= randomNamespace + "updateMessage(" + index + ");" %>' value="<%= commentTreeDisplayContext.getPublishButtonLabel(locale) %>" />
+
+								<%
+								String taglibCancel = randomNamespace + "showEl('" + namespace + randomNamespace + "discussionMessage" + index + "');" + randomNamespace + "hideEditor('" + randomNamespace + "editReplyBody" + index + "', '" + namespace + randomNamespace + "editForm" + index + "');";
+								%>
+
+								<aui:button cssClass="btn-comment btn-primary btn-sm" onClick="<%= taglibCancel %>" type="cancel" />
+							</aui:button-row>
+
+							<aui:script>
+								window['<%= namespace + randomNamespace + index %>EditOnChange'] = function(html) {
+									Liferay.Util.toggleDisabled('#<%= namespace + randomNamespace %>editReplyButton<%= index %>', html.trim() === '');
+								};
+							</aui:script>
+						</div>
+					</c:if>
+				</div>
+
+				<div class="autofit-row lfr-discussion-controls">
+					<c:if test="<%= commentTreeDisplayContext.isActionControlsVisible() && commentTreeDisplayContext.isReplyActionControlVisible() %>">
+						<div class="autofit-col">
+							<c:if test="<%= !discussion.isMaxCommentsLimitExceeded() %>">
+								<c:choose>
+									<c:when test="<%= commentTreeDisplayContext.isReplyButtonVisible() %>">
+										<button class="btn btn-outline-borderless btn-outline-secondary btn-sm" onclick="<%= randomNamespace + "showPostReplyEditor(" + index + ");" %>" type="button">
+											<liferay-ui:message key="reply" />
+										</button>
+									</c:when>
+									<c:otherwise>
+										<a class="btn btn-outline-borderless btn-outline-secondary btn-sm" href="<%= themeDisplay.getURLSignIn() %>">
+											<liferay-ui:message key="please-sign-in-to-reply" />
+										</a>
+									</c:otherwise>
+								</c:choose>
+							</c:if>
+						</div>
+					</c:if>
+
+					<c:if test="<%= commentTreeDisplayContext.isRatingsVisible() %>">
+						<div class="autofit-col">
+							<liferay-ui:ratings
+								className="<%= CommentConstants.getDiscussionClassName() %>"
+								classPK="<%= discussionComment.getCommentId() %>"
+								inTrash="<%= false %>"
+								ratingsEntry="<%= discussionComment.getRatingsEntry() %>"
+								ratingsStats="<%= discussionComment.getRatingsStats() %>"
+							/>
 						</div>
 					</c:if>
 				</div>
 			</div>
 		</div>
 
-		<div class="card-tab lfr-discussion lfr-discussion-form-reply" id="<%= namespace + randomNamespace + "postReplyForm" + index %>" style="display: none;">
-			<div class="card list-group-card panel">
-				<div class="panel-body">
-					<div class="lfr-discussion-details">
+		<div class="lfr-discussion lfr-discussion-form-reply" id="<%= namespace + randomNamespace + "postReplyForm" + index %>" style="display: none;">
+			<div class="lfr-discussion-reply-container">
+				<div class="autofit-padded-no-gutters autofit-row">
+					<div class="autofit-col lfr-discussion-details">
 						<liferay-ui:user-portrait
+							cssClass="user-icon-lg"
 							user="<%= user %>"
 						/>
 					</div>
 
-					<div class="lfr-discussion-body">
+					<div class="autofit-col autofit-col-expand">
 						<div class="editor-wrapper"></div>
 
 						<aui:input name='<%= "postReplyBody" + index %>' type="hidden" />
 
 						<aui:button-row>
-							<aui:button cssClass="btn-comment btn-primary" disabled="<%= true %>" id='<%= randomNamespace + "postReplyButton" + index %>' onClick='<%= randomNamespace + "postReply(" + index + ");" %>' value='<%= themeDisplay.isSignedIn() ? "reply" : "reply-as" %>' />
+							<aui:button cssClass="btn-comment btn-primary btn-sm" disabled="<%= true %>" id='<%= randomNamespace + "postReplyButton" + index %>' onClick='<%= randomNamespace + "postReply(" + index + ");" %>' value='<%= themeDisplay.isSignedIn() ? "reply" : "reply-as" %>' />
 
 							<%
 							String taglibCancel = randomNamespace + "hideEditor('" + randomNamespace + "postReplyBody" + index + "', '" + namespace + randomNamespace + "postReplyForm" + index + "')";
 							%>
 
-							<aui:button cssClass="btn-comment" onClick="<%= taglibCancel %>" type="cancel" />
+							<aui:button cssClass="btn-comment btn-sm" onClick="<%= taglibCancel %>" type="cancel" />
 						</aui:button-row>
 
 						<aui:script>

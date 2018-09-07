@@ -14,8 +14,6 @@
 
 package com.liferay.bean.portlet.cdi.extension.internal;
 
-import com.liferay.portal.kernel.util.HashMapDictionary;
-
 import java.util.Dictionary;
 
 /**
@@ -46,12 +44,9 @@ public class BeanPortletDefaultImpl extends BaseBeanPortletImpl {
 
 	@Override
 	public Dictionary<String, Object> toDictionary(String portletId) {
-		HashMapDictionary<String, Object> dictionary =
-			(HashMapDictionary<String, Object>)super.toDictionary(portletId);
+		Dictionary<String, Object> dictionary = super.toDictionary(portletId);
 
 		dictionary.put("javax.portlet.info.title", _portletName);
-
-		dictionary.putAll(getLiferayConfiguration());
 
 		return dictionary;
 	}

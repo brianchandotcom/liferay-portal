@@ -160,7 +160,8 @@ public abstract class BaseBeanPortletImpl implements BeanPortlet {
 
 	@Override
 	public Dictionary<String, Object> toDictionary(String portletId) {
-		Dictionary<String, Object> dictionary = new HashMapDictionary<>();
+		HashMapDictionary<String, Object> dictionary =
+			new HashMapDictionary<>();
 
 		String defaultNamespace = _beanApp.getDefaultNamespace();
 
@@ -256,6 +257,8 @@ public abstract class BaseBeanPortletImpl implements BeanPortlet {
 
 		dictionary.put("javax.portlet.version", _beanApp.getSpecVersion());
 
+		dictionary.putAll(_liferayConfiguration);
+
 		return dictionary;
 	}
 
@@ -265,10 +268,6 @@ public abstract class BaseBeanPortletImpl implements BeanPortlet {
 		}
 
 		return name.concat(StringPool.SEMICOLON).concat(value);
-	}
-
-	protected Map<String, String> getLiferayConfiguration() {
-		return _liferayConfiguration;
 	}
 
 	protected String getPublicRenderParameterNamespaceURI(String id) {

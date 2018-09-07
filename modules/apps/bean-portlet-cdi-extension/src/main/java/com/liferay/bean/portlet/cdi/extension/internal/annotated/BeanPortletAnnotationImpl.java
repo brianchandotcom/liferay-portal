@@ -320,7 +320,6 @@ public class BeanPortletAnnotationImpl extends BaseBeanPortletImpl {
 		}
 
 		dictionary.putAll(_liferayPortletConfigurationProperties);
-		dictionary.putAll(getLiferayConfiguration());
 
 		return dictionary;
 	}

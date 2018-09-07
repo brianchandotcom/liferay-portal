@@ -503,6 +503,10 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 		RegistryUtil.setRegistry(null);
 
 		ServiceTrackerMapFactoryUtil.setServiceTrackerMapFactory(null);
+
+		if (Boolean.parseBoolean(System.getenv("CLEAN_OSGI_STATE"))) {
+			_cleanOSGiStateFolder();
+		}
 	}
 
 	@Override
@@ -799,6 +803,75 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 		if (!permissionChecker.isOmniadmin()) {
 			throw new PrincipalException.MustBeOmniadmin(permissionChecker);
 		}
+	}
+
+	private void _cleanOSGiStateFolder() throws IOException {
+		Files.walkFileTree(
+			Paths.get(PropsValues.MODULE_FRAMEWORK_STATE_DIR),
+			new SimpleFileVisitor<Path>() {
+
+				@Override
+				public FileVisitResult preVisitDirectory(
+						Path path, BasicFileAttributes basicFileAttributes)
+					throws IOException {
+
+					File file = path.toFile();
+
+					String name = file.getName();
+
+					if (name.equals(".cp")) {
+						FileUtil.deltree(file);
+
+						return FileVisitResult.SKIP_SUBTREE;
+					}
+
+					return FileVisitResult.CONTINUE;
+				}
+
+				@Override
+				public FileVisitResult visitFile(
+						Path path, BasicFileAttributes basicFileAttributes)
+					throws IOException {
+
+					File file = path.toFile();
+
+					String name = file.getName();
+
+					if (!name.equals("bundleFile")) {
+						return FileVisitResult.CONTINUE;
+					}
+
+					try (ZipFile zipFile = new ZipFile(file)) {
+						if ((zipFile.getEntry(
+								"liferay-marketplace.properties") != null) ||
+							(zipFile.getEntry(
+								"WEB-INF/liferay-plugin-package.properties") !=
+									null)) {
+
+							return FileVisitResult.CONTINUE;
+						}
+
+						Properties properties = new Properties();
+
+						try (InputStream inputStream = zipFile.getInputStream(
+								zipFile.getEntry("META-INF/MANIFEST.MF"))) {
+
+							properties.load(inputStream);
+						}
+
+						if (properties.getProperty("Liferay-WAB-LPKG-URL") !=
+								null) {
+
+							return FileVisitResult.CONTINUE;
+						}
+					}
+
+					Files.delete(path);
+
+					return FileVisitResult.CONTINUE;
+				}
+
+			});
 	}
 
 	private Map<String, Bundle> _deployStaticBundlesFromFile(

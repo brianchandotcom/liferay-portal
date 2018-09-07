@@ -19,12 +19,14 @@ import com.liferay.sharing.model.SharingEntry;
 import com.liferay.sharing.renderer.SharingEntryEditRenderer;
 import com.liferay.sharing.renderer.SharingEntryViewRenderer;
 
+import java.util.Locale;
+
 /**
  * @author Sergio González
  */
 public interface SharingEntryInterpreter<T> {
 
-	public String getAssetTypeTitle(SharingEntry sharingEntry);
+	public String getAssetTypeTitle(SharingEntry sharingEntry, Locale locale);
 
 	public T getEntry(SharingEntry sharingEntry) throws PortalException;
 

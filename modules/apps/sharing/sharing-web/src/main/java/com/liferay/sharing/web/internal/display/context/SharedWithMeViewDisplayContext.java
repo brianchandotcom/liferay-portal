@@ -53,7 +53,8 @@ public class SharedWithMeViewDisplayContext {
 
 		return sharingEntryInterpreter.map(
 			curSharingEntryInterpreter ->
-				curSharingEntryInterpreter.getAssetTypeTitle(sharingEntry)
+				curSharingEntryInterpreter.getAssetTypeTitle(
+					sharingEntry, _themeDisplay.getLocale())
 		).orElse(
 			StringPool.BLANK
 		);

@@ -69,18 +69,6 @@ public class ScopedBeanHolder {
 		return _portletRequest;
 	}
 
-	public <T> T getPortletRequestScopedBean(String name) {
-		@SuppressWarnings("unchecked")
-		ScopedBean<T> scopedBean = (ScopedBean<T>)_portletRequest.getAttribute(
-			name);
-
-		if (scopedBean == null) {
-			return null;
-		}
-
-		return scopedBean.getBeanInstance();
-	}
-
 	public <T> T getPortletRequestScopedBean(
 		String name, Bean<T> bean, CreationalContext<T> creationalContext) {
 
@@ -89,6 +77,10 @@ public class ScopedBeanHolder {
 			name);
 
 		if (scopedBean == null) {
+			if (creationalContext == null) {
+				return null;
+			}
+
 			T beanInstance = bean.create(creationalContext);
 
 			scopedBean = new ScopedBean<>(
@@ -105,20 +97,6 @@ public class ScopedBeanHolder {
 		return _portletResponse;
 	}
 
-	public <T> T getPortletSessionScopedBean(String name, int subscope) {
-		PortletSession portletSession = _portletRequest.getPortletSession(true);
-
-		@SuppressWarnings("unchecked")
-		ScopedBean<T> scopedBean = (ScopedBean<T>)portletSession.getAttribute(
-			name, subscope);
-
-		if (scopedBean == null) {
-			return null;
-		}
-
-		return scopedBean.getBeanInstance();
-	}
-
 	public <T> T getPortletSessionScopedBean(
 		String name, int subscope, Bean<T> bean,
 		CreationalContext<T> creationalContext) {
@@ -130,6 +108,10 @@ public class ScopedBeanHolder {
 			name, subscope);
 
 		if (scopedBean == null) {
+			if (creationalContext == null) {
+				return null;
+			}
+
 			T beanInstance = bean.create(creationalContext);
 
 			scopedBean = new ScopedBean<>(
@@ -137,18 +119,6 @@ public class ScopedBeanHolder {
 				PortletSessionScoped.class.getSimpleName());
 
 			portletSession.setAttribute(name, scopedBean, subscope);
-		}
-
-		return scopedBean.getBeanInstance();
-	}
-
-	public <T> T getRenderStateScopedBean(String name) {
-		@SuppressWarnings("unchecked")
-		ScopedBean<T> scopedBean = (ScopedBean<T>)_portletRequest.getAttribute(
-			name);
-
-		if (scopedBean == null) {
-			return null;
 		}
 
 		return scopedBean.getBeanInstance();
@@ -162,6 +132,10 @@ public class ScopedBeanHolder {
 			name);
 
 		if (scopedBean == null) {
+			if (creationalContext == null) {
+				return null;
+			}
+
 			T beanInstance = bean.create(creationalContext);
 
 			PortletSerializable portletSerializable = (PortletSerializable)

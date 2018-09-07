@@ -36,14 +36,8 @@ public class RenderStateBeanContext extends BaseContextImpl {
 
 		Bean<T> bean = (Bean<T>)contextual;
 
-		String beanName = getAttributeName(bean);
-
-		if (creationalContext == null) {
-			return scopedBeanHolder.getRenderStateScopedBean(beanName);
-		}
-
 		return scopedBeanHolder.getRenderStateScopedBean(
-			beanName, bean, creationalContext);
+			getAttributeName(bean), bean, creationalContext);
 	}
 
 	@Override

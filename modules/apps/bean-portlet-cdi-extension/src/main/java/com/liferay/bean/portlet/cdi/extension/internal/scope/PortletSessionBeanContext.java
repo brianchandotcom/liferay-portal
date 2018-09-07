@@ -48,15 +48,8 @@ public class PortletSessionBeanContext extends BaseContextImpl {
 			scope = portletSessionScoped.value();
 		}
 
-		String beanName = getAttributeName(bean);
-
-		if (creationalContext == null) {
-			return scopedBeanHolder.getPortletSessionScopedBean(
-				beanName, scope);
-		}
-
 		return scopedBeanHolder.getPortletSessionScopedBean(
-			beanName, scope, bean, creationalContext);
+			getAttributeName(bean), scope, bean, creationalContext);
 	}
 
 	@Override

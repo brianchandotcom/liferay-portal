@@ -36,14 +36,8 @@ public class PortletRequestBeanContext extends BaseContextImpl {
 
 		Bean<T> bean = (Bean<T>)contextual;
 
-		String beanName = getAttributeName(bean);
-
-		if (creationalContext == null) {
-			return scopedBeanHolder.getPortletRequestScopedBean(beanName);
-		}
-
 		return scopedBeanHolder.getPortletRequestScopedBean(
-			beanName, bean, creationalContext);
+			getAttributeName(bean), bean, creationalContext);
 	}
 
 	@Override

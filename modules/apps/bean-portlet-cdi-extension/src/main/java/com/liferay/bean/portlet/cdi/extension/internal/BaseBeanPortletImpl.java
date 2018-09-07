@@ -24,7 +24,6 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Dictionary;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -54,52 +53,24 @@ public abstract class BaseBeanPortletImpl implements BeanPortlet {
 		MethodType methodType = beanMethod.getType();
 
 		if (methodType == MethodType.ACTION) {
-			if (_actionMethods.isEmpty()) {
-				_actionMethods = new ArrayList<>();
-			}
-
 			_actionMethods.add(beanMethod);
 		}
 		else if (methodType == MethodType.DESTROY) {
-			if (_destroyMethods.isEmpty()) {
-				_destroyMethods = new ArrayList<>();
-			}
-
 			_destroyMethods.add(beanMethod);
 		}
 		else if (methodType == MethodType.EVENT) {
-			if (_eventMethods.isEmpty()) {
-				_eventMethods = new ArrayList<>();
-			}
-
 			_eventMethods.add(beanMethod);
 		}
 		else if (methodType == MethodType.HEADER) {
-			if (_headerMethods.isEmpty()) {
-				_headerMethods = new ArrayList<>();
-			}
-
 			_headerMethods.add(beanMethod);
 		}
 		else if (methodType == MethodType.INIT) {
-			if (_initMethods.isEmpty()) {
-				_initMethods = new ArrayList<>();
-			}
-
 			_initMethods.add(beanMethod);
 		}
 		else if (methodType == MethodType.RENDER) {
-			if (_renderMethods.isEmpty()) {
-				_renderMethods = new ArrayList<>();
-			}
-
 			_renderMethods.add(beanMethod);
 		}
 		else {
-			if (_serveResourceMethods.isEmpty()) {
-				_serveResourceMethods = new ArrayList<>();
-			}
-
 			_serveResourceMethods.add(beanMethod);
 		}
 	}
@@ -107,10 +78,6 @@ public abstract class BaseBeanPortletImpl implements BeanPortlet {
 	@Override
 	public void addLiferayConfiguration(
 		Map<String, String> liferayConfiguration) {
-
-		if (_liferayConfiguration.isEmpty()) {
-			_liferayConfiguration = new HashMap<>();
-		}
 
 		_liferayConfiguration.putAll(liferayConfiguration);
 	}
@@ -122,10 +89,6 @@ public abstract class BaseBeanPortletImpl implements BeanPortlet {
 
 	@Override
 	public void addPortletDependency(PortletDependency portletDependency) {
-		if (_resourceDependencies.isEmpty()) {
-			_resourceDependencies = new ArrayList<>();
-		}
-
 		_resourceDependencies.add(portletDependency);
 	}
 
@@ -315,16 +278,16 @@ public abstract class BaseBeanPortletImpl implements BeanPortlet {
 		}
 	}
 
-	private List<BeanMethod> _actionMethods = Collections.emptyList();
+	private final List<BeanMethod> _actionMethods = new ArrayList<>();
 	private final BeanApp _beanApp;
-	private List<BeanMethod> _destroyMethods = Collections.emptyList();
-	private List<BeanMethod> _eventMethods = Collections.emptyList();
-	private List<BeanMethod> _headerMethods = Collections.emptyList();
-	private List<BeanMethod> _initMethods = Collections.emptyList();
-	private Map<String, String> _liferayConfiguration = Collections.emptyMap();
-	private List<BeanMethod> _renderMethods = Collections.emptyList();
-	private List<PortletDependency> _resourceDependencies =
-		Collections.emptyList();
-	private List<BeanMethod> _serveResourceMethods = Collections.emptyList();
+	private final List<BeanMethod> _destroyMethods = new ArrayList<>();
+	private final List<BeanMethod> _eventMethods = new ArrayList<>();
+	private final List<BeanMethod> _headerMethods = new ArrayList<>();
+	private final List<BeanMethod> _initMethods = new ArrayList<>();
+	private final Map<String, String> _liferayConfiguration = new HashMap<>();
+	private final List<BeanMethod> _renderMethods = new ArrayList<>();
+	private final List<PortletDependency> _resourceDependencies =
+		new ArrayList<>();
+	private final List<BeanMethod> _serveResourceMethods = new ArrayList<>();
 
 }

@@ -70,7 +70,9 @@ public class ScopedBeanHolder {
 	}
 
 	public <T> T getPortletRequestScopedBean(
-		String name, Bean<T> bean, CreationalContext<T> creationalContext) {
+		Bean<T> bean, CreationalContext<T> creationalContext) {
+
+		String name = _getAttributeName(bean);
 
 		@SuppressWarnings("unchecked")
 		ScopedBean<T> scopedBean = (ScopedBean<T>)_portletRequest.getAttribute(
@@ -98,10 +100,11 @@ public class ScopedBeanHolder {
 	}
 
 	public <T> T getPortletSessionScopedBean(
-		String name, int subscope, Bean<T> bean,
-		CreationalContext<T> creationalContext) {
+		int subscope, Bean<T> bean, CreationalContext<T> creationalContext) {
 
 		PortletSession portletSession = _portletRequest.getPortletSession(true);
+
+		String name = _getAttributeName(bean);
 
 		@SuppressWarnings("unchecked")
 		ScopedBean<T> scopedBean = (ScopedBean<T>)portletSession.getAttribute(
@@ -125,7 +128,9 @@ public class ScopedBeanHolder {
 	}
 
 	public <T> T getRenderStateScopedBean(
-		String name, Bean<T> bean, CreationalContext<T> creationalContext) {
+		Bean<T> bean, CreationalContext<T> creationalContext) {
+
+		String name = _getAttributeName(bean);
 
 		@SuppressWarnings("unchecked")
 		ScopedBean<T> scopedBean = (ScopedBean<T>)_portletRequest.getAttribute(
@@ -176,9 +181,7 @@ public class ScopedBeanHolder {
 			while (attributeNames.hasMoreElements()) {
 				String attributeName = attributeNames.nextElement();
 
-				if (attributeName.startsWith(
-						BaseContextImpl.ATTRIBUTE_NAME_PREFIX)) {
-
+				if (attributeName.startsWith(_ATTRIBUTE_NAME_PREFIX)) {
 					Object attributeValue = _portletRequest.getAttribute(
 						attributeName);
 
@@ -221,7 +224,7 @@ public class ScopedBeanHolder {
 		for (String name :
 				Collections.list(_portletRequest.getAttributeNames())) {
 
-			if (name.startsWith(BaseContextImpl.ATTRIBUTE_NAME_PREFIX)) {
+			if (name.startsWith(_ATTRIBUTE_NAME_PREFIX)) {
 				Object value = _portletRequest.getAttribute(name);
 
 				if ((value != null) && (value instanceof ScopedBean)) {
@@ -253,6 +256,20 @@ public class ScopedBeanHolder {
 
 		return parameterName;
 	}
+
+	private static String _getAttributeName(Bean<?> bean) {
+		String attributeName = bean.getName();
+
+		if ((attributeName == null) || attributeName.isEmpty()) {
+			Class<?> beanClass = bean.getBeanClass();
+
+			attributeName = beanClass.getName();
+		}
+
+		return _ATTRIBUTE_NAME_PREFIX.concat(attributeName);
+	}
+
+	private static final String _ATTRIBUTE_NAME_PREFIX = "com.liferay.cdi.";
 
 	private static final ThreadLocal<ScopedBeanHolder> _INSTANCE =
 		new CentralizedThreadLocal<>(ScopedBeanHolder.class + "._INSTANCE");

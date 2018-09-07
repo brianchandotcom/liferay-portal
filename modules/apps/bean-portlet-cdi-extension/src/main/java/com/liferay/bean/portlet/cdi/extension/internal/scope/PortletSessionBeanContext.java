@@ -49,7 +49,7 @@ public class PortletSessionBeanContext extends BaseContextImpl {
 		}
 
 		return scopedBeanHolder.getPortletSessionScopedBean(
-			getAttributeName(bean), scope, bean, creationalContext);
+			scope, bean, creationalContext);
 	}
 
 	@Override

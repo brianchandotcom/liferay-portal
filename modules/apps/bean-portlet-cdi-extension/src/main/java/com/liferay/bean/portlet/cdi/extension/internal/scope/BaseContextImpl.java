@@ -16,7 +16,6 @@ package com.liferay.bean.portlet.cdi.extension.internal.scope;
 
 import javax.enterprise.context.spi.Context;
 import javax.enterprise.context.spi.Contextual;
-import javax.enterprise.inject.spi.Bean;
 
 /**
  * @author Neil Griffin
@@ -41,19 +40,5 @@ public abstract class BaseContextImpl implements Context {
 
 		return false;
 	}
-
-	protected String getAttributeName(Bean<?> bean) {
-		String attributeName = bean.getName();
-
-		if ((attributeName == null) || attributeName.isEmpty()) {
-			Class<?> beanClass = bean.getBeanClass();
-
-			attributeName = beanClass.getName();
-		}
-
-		return ATTRIBUTE_NAME_PREFIX.concat(attributeName);
-	}
-
-	protected static final String ATTRIBUTE_NAME_PREFIX = "com.liferay.cdi.";
 
 }

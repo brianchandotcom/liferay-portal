@@ -34,10 +34,8 @@ public class RenderStateBeanContext extends BaseContextImpl {
 		ScopedBeanHolder scopedBeanHolder =
 			ScopedBeanHolder.getCurrentInstance();
 
-		Bean<T> bean = (Bean<T>)contextual;
-
 		return scopedBeanHolder.getRenderStateScopedBean(
-			getAttributeName(bean), bean, creationalContext);
+			(Bean<T>)contextual, creationalContext);
 	}
 
 	@Override

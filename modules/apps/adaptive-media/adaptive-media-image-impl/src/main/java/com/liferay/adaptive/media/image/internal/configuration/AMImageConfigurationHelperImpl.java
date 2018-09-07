@@ -377,13 +377,6 @@ public class AMImageConfigurationHelperImpl
 			AMImageDestinationNames.ADAPTIVE_MEDIA_IMAGE_CONFIGURATION);
 	}
 
-	@Reference(unbind = "-")
-	protected void setAMImageConfigurationEntryParser(
-		AMImageConfigurationEntryParser amImageConfigurationEntryParser) {
-
-		_amImageConfigurationEntryParser = amImageConfigurationEntryParser;
-	}
-
 	private static final boolean _isPositiveNumber(String s) {
 		Matcher matcher = _positiveNumberPattern.matcher(s);
 
@@ -603,6 +596,7 @@ public class AMImageConfigurationHelperImpl
 	private static final Pattern _positiveNumberPattern = Pattern.compile(
 		"\\d*[1-9]\\d*");
 
+	@Reference
 	private AMImageConfigurationEntryParser _amImageConfigurationEntryParser;
 
 	@Reference

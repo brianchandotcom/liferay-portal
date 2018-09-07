@@ -2346,7 +2346,7 @@ app.server.type=@{app.server.type}]]></echo>
 		</sequential>
 	</macrodef>
 
-	<macrodef name="run-slim-osgi-state-exploded-test">
+	<macrodef name="run-release-osgi-state-exploded-test">
 		<sequential>
 			<run-batch-test tomcat.gc.log="true">
 				<test-action>
@@ -2412,7 +2412,7 @@ log.sanitizer.enabled=false</echo>
 		</sequential>
 	</macrodef>
 
-	<macrodef name="run-slim-osgi-state-lpkg-test">
+	<macrodef name="run-release-osgi-state-lpkg-test">
 		<sequential>
 			<run-batch-test tomcat.gc.log="true">
 				<test-action>
@@ -4691,6 +4691,14 @@ ${output.content}</echo>
 		<antcall target="functional-bundle-tomcat-mysql57-jdk8" />
 	</target>
 
+	<target name="release-osgi-state-exploded-test-jdk8">
+		<run-release-osgi-state-exploded-test />
+	</target>
+
+	<target name="release-osgi-state-lpkg-test-jdk8">
+		<run-release-osgi-state-lpkg-test />
+	</target>
+
 	<target name="ruby-sass-compiler-jdk8">
 		<antcall if:set="env.JENKINS_HOME" inheritAll="false" target="clean-up-java-processes" />
 
@@ -4934,14 +4942,6 @@ information. Make sure to commit in all build services results.
 
 	<target name="setup-testable-tomcat-gc">
 		<setup-testable-tomcat-gc />
-	</target>
-
-	<target name="slim-osgi-state-exploded-test-jdk8">
-		<run-slim-osgi-state-exploded-test />
-	</target>
-
-	<target name="slim-osgi-state-lpkg-test-jdk8">
-		<run-slim-osgi-state-lpkg-test />
 	</target>
 
 	<target name="slim-profile-jdk8">

@@ -19,7 +19,11 @@ import com.liferay.bean.portlet.cdi.extension.internal.BaseBeanPortletImpl;
 import com.liferay.bean.portlet.cdi.extension.internal.BeanApp;
 import com.liferay.bean.portlet.cdi.extension.internal.PortletDependency;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.portlet.LiferayPortletMode;
 import com.liferay.portal.kernel.util.HashMapDictionary;
+
+import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -32,6 +36,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
+import javax.portlet.PortletMode;
 import javax.portlet.annotations.Dependency;
 import javax.portlet.annotations.InitParameter;
 import javax.portlet.annotations.LocaleString;
@@ -177,7 +182,7 @@ public class BeanPortletAnnotationImpl extends BaseBeanPortletImpl {
 		List<String> supportedPortletModes = new ArrayList<>();
 
 		Set<String> applicationSupportedPortletModes = new HashSet<>(
-			getLiferayPortletModes());
+			_liferayPortletModes);
 
 		applicationSupportedPortletModes.addAll(
 			beanApp.getCustomPortletModes());
@@ -345,6 +350,25 @@ public class BeanPortletAnnotationImpl extends BaseBeanPortletImpl {
 	}
 
 	private static final String _ENGLISH_EN = Locale.ENGLISH.getLanguage();
+
+	private static final Set<String> _liferayPortletModes = new HashSet<>();
+
+	static {
+		try {
+			for (Field field : LiferayPortletMode.class.getFields()) {
+				if (Modifier.isStatic(field.getModifiers()) &&
+					(field.getType() == PortletMode.class)) {
+
+					PortletMode portletMode = (PortletMode)field.get(null);
+
+					_liferayPortletModes.add(portletMode.toString());
+				}
+			}
+		}
+		catch (IllegalAccessException iae) {
+			throw new ExceptionInInitializerError(iae);
+		}
+	}
 
 	private final Map<String, String> _liferayPortletConfigurationProperties;
 	private final String _portletClassName;

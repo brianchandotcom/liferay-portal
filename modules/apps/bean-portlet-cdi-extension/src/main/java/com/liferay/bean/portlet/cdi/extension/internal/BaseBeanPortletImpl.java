@@ -271,10 +271,6 @@ public abstract class BaseBeanPortletImpl implements BeanPortlet {
 		return _liferayConfiguration;
 	}
 
-	protected Set<String> getLiferayPortletModes() {
-		return _liferayPortletModes;
-	}
-
 	protected String getPublicRenderParameterNamespaceURI(String id) {
 		Map<String, PublicRenderParameter> publicRenderParameterMap =
 			_beanApp.getPublicRenderParameterMap();

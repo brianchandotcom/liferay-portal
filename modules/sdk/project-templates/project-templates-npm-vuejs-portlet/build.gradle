@@ -2,7 +2,7 @@ sourceCompatibility = "1.8"
 targetCompatibility = "1.8"
 
 dependencies {
-	compile project(":sdk:project-templates:project-templates")
+	compile group: "com.liferay", name: "com.liferay.project.templates", version: "4.1.6"
 
 	compileOnly group: "org.apache.maven.archetype", name: "archetype-common", version: "2.4"
 }

@@ -24,7 +24,9 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Dictionary;
+import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -52,27 +54,17 @@ public abstract class BaseBeanPortletImpl implements BeanPortlet {
 	public void addBeanMethod(BeanMethod beanMethod) {
 		MethodType methodType = beanMethod.getType();
 
-		if (methodType == MethodType.ACTION) {
-			_actionMethods.add(beanMethod);
-		}
-		else if (methodType == MethodType.DESTROY) {
-			_destroyMethods.add(beanMethod);
-		}
-		else if (methodType == MethodType.EVENT) {
-			_eventMethods.add(beanMethod);
-		}
-		else if (methodType == MethodType.HEADER) {
-			_headerMethods.add(beanMethod);
-		}
-		else if (methodType == MethodType.INIT) {
-			_initMethods.add(beanMethod);
-		}
-		else if (methodType == MethodType.RENDER) {
-			_renderMethods.add(beanMethod);
-		}
-		else {
-			_serveResourceMethods.add(beanMethod);
-		}
+		_beanMethods.compute(
+			methodType,
+			(keyMethodType, beanMethods) -> {
+				if (beanMethods == null) {
+					beanMethods = new ArrayList<>();
+				}
+
+				beanMethods.add(beanMethod);
+
+				return beanMethods;
+			});
 	}
 
 	@Override
@@ -99,26 +91,7 @@ public abstract class BaseBeanPortletImpl implements BeanPortlet {
 
 	@Override
 	public List<BeanMethod> getBeanMethods(MethodType methodType) {
-		if (methodType == MethodType.ACTION) {
-			return _actionMethods;
-		}
-		else if (methodType == MethodType.DESTROY) {
-			return _destroyMethods;
-		}
-		else if (methodType == MethodType.EVENT) {
-			return _eventMethods;
-		}
-		else if (methodType == MethodType.HEADER) {
-			return _headerMethods;
-		}
-		else if (methodType == MethodType.INIT) {
-			return _initMethods;
-		}
-		else if (methodType == MethodType.RENDER) {
-			return _renderMethods;
-		}
-
-		return _serveResourceMethods;
+		return _beanMethods.getOrDefault(methodType, Collections.emptyList());
 	}
 
 	@Override
@@ -278,16 +251,11 @@ public abstract class BaseBeanPortletImpl implements BeanPortlet {
 		}
 	}
 
-	private final List<BeanMethod> _actionMethods = new ArrayList<>();
 	private final BeanApp _beanApp;
-	private final List<BeanMethod> _destroyMethods = new ArrayList<>();
-	private final List<BeanMethod> _eventMethods = new ArrayList<>();
-	private final List<BeanMethod> _headerMethods = new ArrayList<>();
-	private final List<BeanMethod> _initMethods = new ArrayList<>();
+	private final EnumMap<MethodType, List<BeanMethod>> _beanMethods =
+		new EnumMap<>(MethodType.class);
 	private final Map<String, String> _liferayConfiguration = new HashMap<>();
-	private final List<BeanMethod> _renderMethods = new ArrayList<>();
 	private final List<PortletDependency> _resourceDependencies =
 		new ArrayList<>();
-	private final List<BeanMethod> _serveResourceMethods = new ArrayList<>();
 
 }

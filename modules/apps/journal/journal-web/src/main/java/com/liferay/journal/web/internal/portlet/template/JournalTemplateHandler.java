@@ -183,11 +183,6 @@ public class JournalTemplateHandler extends BaseDDMTemplateHandler {
 	@Reference
 	private Portal _portal;
 
-	@Reference(
-		target = "(&(release.bundle.symbolic.name=com.liferay.journal.service)(release.schema.version>=0.0.2))"
-	)
-	private Release _release;
-
 	private ResourceBundleLoader _resourceBundleLoader;
 	private final TemplateVariableCodeHandler _templateVariableCodeHandler =
 		new DDMTemplateVariableCodeHandler(

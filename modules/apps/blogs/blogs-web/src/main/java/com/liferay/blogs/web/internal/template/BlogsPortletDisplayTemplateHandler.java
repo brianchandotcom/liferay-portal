@@ -151,11 +151,6 @@ public class BlogsPortletDisplayTemplateHandler
 	@Reference
 	private Portal _portal;
 
-	@Reference(
-		target = "(&(release.bundle.symbolic.name=com.liferay.blogs.service)(release.schema.version>=1.0.0))"
-	)
-	private Release _release;
-
 	@Reference
 	private TrashHelper _trashHelper;
 

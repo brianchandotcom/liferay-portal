@@ -65,7 +65,7 @@ public class BeanPortletInvoker
 	@Override
 	public void destroy() {
 		try {
-			invokeBeanMethods(_beanMethods.get(MethodType.DESTROY));
+			_invokeBeanMethods(_beanMethods.get(MethodType.DESTROY));
 		}
 		catch (PortletException pe) {
 			_log.error(pe, pe);
@@ -74,7 +74,7 @@ public class BeanPortletInvoker
 
 	@Override
 	public void init(PortletConfig portletConfig) throws PortletException {
-		invokeBeanMethods(_beanMethods.get(MethodType.INIT), portletConfig);
+		_invokeBeanMethods(_beanMethods.get(MethodType.INIT), portletConfig);
 
 		_portletConfig = portletConfig;
 	}
@@ -84,7 +84,7 @@ public class BeanPortletInvoker
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws IOException, PortletException {
 
-		invokeBeanMethods(
+		_invokeBeanMethods(
 			actionRequest, actionResponse, _beanMethods.get(MethodType.ACTION));
 	}
 
@@ -110,7 +110,7 @@ public class BeanPortletInvoker
 		}
 
 		if (!eventMethods.isEmpty()) {
-			invokeBeanMethods(eventRequest, eventResponse, eventMethods);
+			_invokeBeanMethods(eventRequest, eventResponse, eventMethods);
 		}
 	}
 
@@ -119,7 +119,7 @@ public class BeanPortletInvoker
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws IOException, PortletException {
 
-		invokeBeanMethods(
+		_invokeBeanMethods(
 			renderRequest, renderResponse, _beanMethods.get(MethodType.RENDER));
 	}
 
@@ -128,7 +128,7 @@ public class BeanPortletInvoker
 			HeaderRequest headerRequest, HeaderResponse headerResponse)
 		throws IOException, PortletException {
 
-		invokeBeanMethods(
+		_invokeBeanMethods(
 			headerRequest, headerResponse, _beanMethods.get(MethodType.HEADER));
 	}
 
@@ -137,12 +137,12 @@ public class BeanPortletInvoker
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws IOException, PortletException {
 
-		invokeBeanMethods(
+		_invokeBeanMethods(
 			resourceRequest, resourceResponse,
 			_beanMethods.get(MethodType.SERVE_RESOURCE));
 	}
 
-	protected void invokeBeanMethod(BeanMethod beanMethod, Object... args)
+	private void _invokeBeanMethod(BeanMethod beanMethod, Object... args)
 		throws IllegalAccessException, InvocationTargetException, IOException,
 			   PortletException {
 
@@ -224,7 +224,7 @@ public class BeanPortletInvoker
 		}
 	}
 
-	protected void invokeBeanMethods(
+	private void _invokeBeanMethods(
 			List<BeanMethod> beanMethods, Object... args)
 		throws PortletException {
 
@@ -234,7 +234,7 @@ public class BeanPortletInvoker
 
 		for (BeanMethod beanMethod : beanMethods) {
 			try {
-				invokeBeanMethod(beanMethod, args);
+				_invokeBeanMethod(beanMethod, args);
 			}
 			catch (InvocationTargetException ite) {
 				Throwable cause = ite.getCause();
@@ -254,7 +254,7 @@ public class BeanPortletInvoker
 		}
 	}
 
-	protected void invokeBeanMethods(
+	private void _invokeBeanMethods(
 			PortletRequest portletRequest, PortletResponse portletResponse,
 			List<BeanMethod> beanMethods)
 		throws PortletException {
@@ -268,7 +268,7 @@ public class BeanPortletInvoker
 
 		ScopedBeanHolder.setCurrentInstance(scopedBeanHolder);
 
-		invokeBeanMethods(beanMethods, portletRequest, portletResponse);
+		_invokeBeanMethods(beanMethods, portletRequest, portletResponse);
 		scopedBeanHolder.release();
 		ScopedBeanHolder.setCurrentInstance(null);
 	}

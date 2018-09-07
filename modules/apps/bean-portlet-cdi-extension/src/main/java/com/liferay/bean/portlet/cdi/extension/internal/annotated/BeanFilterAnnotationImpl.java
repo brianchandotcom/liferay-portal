@@ -15,9 +15,10 @@
 package com.liferay.bean.portlet.cdi.extension.internal.annotated;
 
 import com.liferay.bean.portlet.cdi.extension.internal.BeanFilter;
-import com.liferay.bean.portlet.cdi.extension.internal.PortletDictionary;
+import com.liferay.portal.kernel.util.HashMapDictionary;
 
 import java.util.Arrays;
+import java.util.Dictionary;
 import java.util.List;
 
 import javax.portlet.annotations.InitParameter;
@@ -52,22 +53,26 @@ public class BeanFilterAnnotationImpl implements BeanFilter {
 	}
 
 	@Override
-	public PortletDictionary toDictionary(String portletName) {
-		PortletDictionary portletDictionary = new PortletDictionary();
+	public Dictionary<String, Object> toDictionary(String portletName) {
+		Dictionary<String, Object> dictionary = new HashMapDictionary<>();
 
-		portletDictionary.put("javax.portlet.name", portletName);
-		portletDictionary.put(
+		dictionary.put("javax.portlet.name", portletName);
+		dictionary.put(
 			"service.ranking:Integer", _portletLifecycleFilter.ordinal());
 
 		for (InitParameter initParameter :
 				_portletLifecycleFilter.initParams()) {
 
-			portletDictionary.putIfNotNull(
-				"javax.portlet.init-param." + initParameter.name(),
-				initParameter.value());
+			String value = initParameter.value();
+
+			if (value != null) {
+				dictionary.put(
+					"javax.portlet.init-param.".concat(initParameter.name()),
+					value);
+			}
 		}
 
-		return portletDictionary;
+		return dictionary;
 	}
 
 	private final Class<?> _filterClass;

@@ -18,8 +18,8 @@ import com.liferay.bean.portlet.LiferayPortletConfiguration;
 import com.liferay.bean.portlet.cdi.extension.internal.BaseBeanPortletImpl;
 import com.liferay.bean.portlet.cdi.extension.internal.BeanApp;
 import com.liferay.bean.portlet.cdi.extension.internal.PortletDependency;
-import com.liferay.bean.portlet.cdi.extension.internal.PortletDictionary;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.util.HashMapDictionary;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -112,10 +112,10 @@ public class BeanPortletAnnotationImpl extends BaseBeanPortletImpl {
 
 	@Override
 	public Dictionary<String, Object> toDictionary(String portletId) {
-		PortletDictionary portletDictionary =
-			(PortletDictionary)super.toDictionary(portletId);
+		HashMapDictionary<String, Object> dictionary =
+			(HashMapDictionary<String, Object>)super.toDictionary(portletId);
 
-		portletDictionary.put(
+		dictionary.put(
 			"javax.portlet.async-supported",
 			_portletConfiguration.asyncSupported());
 
@@ -134,41 +134,45 @@ public class BeanPortletAnnotationImpl extends BaseBeanPortletImpl {
 		for (Map.Entry<String, List<String>> entry :
 				containerRuntimeOptions.entrySet()) {
 
-			portletDictionary.put(
+			dictionary.put(
 				"javax.portlet.container-runtime-option.".concat(
 					entry.getKey()),
 				entry.getValue());
 		}
 
-		portletDictionary.put(
+		dictionary.put(
 			"javax.portlet.expiration-cache",
 			_portletConfiguration.cacheExpirationTime());
 
 		for (InitParameter initParameter : _portletConfiguration.initParams()) {
-			portletDictionary.putIfNotNull(
-				"javax.portlet.init-param." + initParameter.name(),
-				initParameter.value());
+			String value = initParameter.value();
+
+			if (value != null) {
+				dictionary.put(
+					"javax.portlet.init-param.".concat(initParameter.name()),
+					value);
+			}
 		}
 
-		portletDictionary.putIfNotNull(
-			"javax.portlet.description",
-			getEnglishText(_portletConfiguration.description()));
+		_putEnglishText(
+			dictionary, "javax.portlet.description",
+			_portletConfiguration.description());
 
-		portletDictionary.putIfNotNull(
-			"javax.portlet.display-name",
-			getEnglishText(_portletConfiguration.displayName()));
+		_putEnglishText(
+			dictionary, "javax.portlet.display-name",
+			_portletConfiguration.displayName());
 
-		portletDictionary.putIfNotNull(
-			"javax.portlet.info.keywords",
-			getEnglishText(_portletConfiguration.keywords()));
+		_putEnglishText(
+			dictionary, "javax.portlet.info.keywords",
+			_portletConfiguration.keywords());
 
-		portletDictionary.putIfNotNull(
-			"javax.portlet.info.short-title",
-			getEnglishText(_portletConfiguration.shortTitle()));
+		_putEnglishText(
+			dictionary, "javax.portlet.info.short-title",
+			_portletConfiguration.shortTitle());
 
-		portletDictionary.put(
-			"javax.portlet.info.title",
-			getEnglishText(_portletConfiguration.title()), getPortletName());
+		_putEnglishText(
+			dictionary, "javax.portlet.info.title",
+			_portletConfiguration.title(), getPortletName());
 
 		List<String> supportedPortletModes = new ArrayList<>();
 
@@ -203,8 +207,9 @@ public class BeanPortletAnnotationImpl extends BaseBeanPortletImpl {
 					supports.mimeType(), portletModesSB.toString()));
 		}
 
-		portletDictionary.putIfNotEmpty(
-			"javax.portlet.portlet-mode", supportedPortletModes);
+		if (!supportedPortletModes.isEmpty()) {
+			dictionary.put("javax.portlet.portlet-mode", supportedPortletModes);
+		}
 
 		StringBuilder sb = new StringBuilder();
 
@@ -232,12 +237,13 @@ public class BeanPortletAnnotationImpl extends BaseBeanPortletImpl {
 
 		sb.append("</portlet-preferences>");
 
-		portletDictionary.putIfNotNull(
-			"javax.portlet.preferences", sb.toString());
+		dictionary.put("javax.portlet.preferences", sb.toString());
 
-		portletDictionary.putIfNotEmpty(
-			"javax.portlet.resource-bundle",
-			_portletConfiguration.resourceBundle());
+		String resourceBundle = _portletConfiguration.resourceBundle();
+
+		if ((resourceBundle != null) && !resourceBundle.isEmpty()) {
+			dictionary.put("javax.portlet.resource-bundle", resourceBundle);
+		}
 
 		StringBundler securityRoleRefSB = new StringBundler();
 
@@ -256,10 +262,13 @@ public class BeanPortletAnnotationImpl extends BaseBeanPortletImpl {
 			securityRoleRefSB.append(securityRoleRef.roleName());
 		}
 
-		portletDictionary.putIfNotEmpty(
-			"javax.portlet.security-role-ref", securityRoleRefSB.toString());
+		if (securityRoleRefSB.length() > 0) {
+			dictionary.put(
+				"javax.portlet.security-role-ref",
+				securityRoleRefSB.toString());
+		}
 
-		portletDictionary.put(
+		dictionary.put(
 			"javax.portlet.supported-locale",
 			_portletConfiguration.supportedLocales());
 
@@ -272,7 +281,7 @@ public class BeanPortletAnnotationImpl extends BaseBeanPortletImpl {
 					getPublicRenderParameterNamespaceURI(identifier)));
 		}
 
-		portletDictionary.put(
+		dictionary.put(
 			"javax.portlet.supported-public-render-parameter",
 			supportedPublicRenderParameters);
 
@@ -301,26 +310,41 @@ public class BeanPortletAnnotationImpl extends BaseBeanPortletImpl {
 					supports.mimeType(), windowStatesSB.toString()));
 		}
 
-		portletDictionary.putIfNotEmpty(
-			"javax.portlet.window-state", supportedWindowStates);
+		if (!supportedWindowStates.isEmpty()) {
+			dictionary.put("javax.portlet.window-state", supportedWindowStates);
+		}
 
-		portletDictionary.putAll(_liferayPortletConfigurationProperties);
-		portletDictionary.putAll(getLiferayConfiguration());
+		dictionary.putAll(_liferayPortletConfigurationProperties);
+		dictionary.putAll(getLiferayConfiguration());
 
-		return portletDictionary;
+		return dictionary;
 	}
 
-	protected String getEnglishText(LocaleString[] localeStrings) {
-		String english = Locale.ENGLISH.getLanguage();
+	private static void _putEnglishText(
+		Dictionary<String, Object> dictionary, String key,
+		LocaleString[] localeStrings) {
+
+		_putEnglishText(dictionary, key, localeStrings, null);
+	}
+
+	private static void _putEnglishText(
+		Dictionary<String, Object> dictionary, String key,
+		LocaleString[] localeStrings, String defaultValue) {
 
 		for (LocaleString localeString : localeStrings) {
-			if (english.equals(localeString.locale())) {
-				return localeString.value();
+			if (_ENGLISH_EN.equals(localeString.locale())) {
+				dictionary.put(key, localeString.value());
+
+				return;
 			}
 		}
 
-		return null;
+		if (defaultValue != null) {
+			dictionary.put(key, defaultValue);
+		}
 	}
+
+	private static final String _ENGLISH_EN = Locale.ENGLISH.getLanguage();
 
 	private final Map<String, String> _liferayPortletConfigurationProperties;
 	private final String _portletClassName;

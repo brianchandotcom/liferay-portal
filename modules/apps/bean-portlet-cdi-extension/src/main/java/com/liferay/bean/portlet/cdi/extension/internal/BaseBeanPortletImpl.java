@@ -16,6 +16,7 @@ package com.liferay.bean.portlet.cdi.extension.internal;
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.portlet.LiferayPortletMode;
+import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.lang.reflect.Field;
@@ -159,13 +160,12 @@ public abstract class BaseBeanPortletImpl implements BeanPortlet {
 
 	@Override
 	public Dictionary<String, Object> toDictionary(String portletId) {
-		PortletDictionary portletDictionary = new PortletDictionary();
+		Dictionary<String, Object> dictionary = new HashMapDictionary<>();
 
 		String defaultNamespace = _beanApp.getDefaultNamespace();
 
 		if (defaultNamespace != null) {
-			portletDictionary.put(
-				"javax.portlet.default-namespace", defaultNamespace);
+			dictionary.put("javax.portlet.default-namespace", defaultNamespace);
 		}
 
 		if (!_resourceDependencies.isEmpty()) {
@@ -175,8 +175,7 @@ public abstract class BaseBeanPortletImpl implements BeanPortlet {
 				portletDependencies.add(portletDependency.toString());
 			}
 
-			portletDictionary.put(
-				"javax.portlet.dependency", portletDependencies);
+			dictionary.put("javax.portlet.dependency", portletDependencies);
 		}
 
 		List<String> urlGenerationListeners = new ArrayList<>();
@@ -192,12 +191,11 @@ public abstract class BaseBeanPortletImpl implements BeanPortlet {
 		}
 
 		if (!urlGenerationListeners.isEmpty()) {
-			portletDictionary.put(
-				"javax.portlet.listener", urlGenerationListeners);
+			dictionary.put("javax.portlet.listener", urlGenerationListeners);
 		}
 
 		if (portletId != null) {
-			portletDictionary.put("javax.portlet.name", portletId);
+			dictionary.put("javax.portlet.name", portletId);
 		}
 
 		Set<String> supportedPublishingEvents = new HashSet<>();
@@ -245,21 +243,20 @@ public abstract class BaseBeanPortletImpl implements BeanPortlet {
 		}
 
 		if (!supportedPublishingEvents.isEmpty()) {
-			portletDictionary.put(
+			dictionary.put(
 				"javax.portlet.supported-publishing-event",
 				supportedPublishingEvents);
 		}
 
 		if (!supportedProcessingEvents.isEmpty()) {
-			portletDictionary.put(
+			dictionary.put(
 				"javax.portlet.supported-processing-event",
 				supportedProcessingEvents);
 		}
 
-		portletDictionary.put(
-			"javax.portlet.version", _beanApp.getSpecVersion());
+		dictionary.put("javax.portlet.version", _beanApp.getSpecVersion());
 
-		return portletDictionary;
+		return dictionary;
 	}
 
 	protected static String toNameValuePair(String name, String value) {

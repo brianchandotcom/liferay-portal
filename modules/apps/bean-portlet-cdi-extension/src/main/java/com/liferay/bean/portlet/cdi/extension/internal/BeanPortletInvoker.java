@@ -172,7 +172,7 @@ public class BeanPortletInvoker
 				portletMode.equals(beanMethodPortletMode)) {
 
 				if (beanMethod.getParameterCount() == 0) {
-					String markup = (String)beanMethod.invoke(null);
+					String markup = (String)beanMethod.invoke();
 
 					if (markup != null) {
 						RenderResponse renderResponse = (RenderResponse)
@@ -191,7 +191,7 @@ public class BeanPortletInvoker
 		else if ((beanMethod.getType() == MethodType.SERVE_RESOURCE) &&
 				 (beanMethod.getParameterCount() == 0)) {
 
-			String markup = (String)beanMethod.invoke(null);
+			String markup = (String)beanMethod.invoke();
 
 			if (markup != null) {
 				ResourceResponse resourceResponse = (ResourceResponse)args[1];

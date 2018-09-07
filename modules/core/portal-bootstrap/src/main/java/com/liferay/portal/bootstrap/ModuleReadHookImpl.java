@@ -43,15 +43,17 @@ public class ModuleReadHookImpl implements ModuleReadHook {
 
 	@Override
 	public void process(long bundleId, String location) {
+		if ((bundleId == 0) || location.startsWith("webbundle")) {
+			return;
+		}
+
 		Path path = Paths.get(
 			PropsValues.MODULE_FRAMEWORK_STATE_DIR, "org.eclipse.osgi",
 			String.valueOf(bundleId), "0/bundleFile");
 
 		File bundleFile = path.toFile();
 
-		if ((bundleId == 0) || location.startsWith("webbundle") ||
-			bundleFile.exists()) {
-
+		if (bundleFile.exists()) {
 			return;
 		}
 

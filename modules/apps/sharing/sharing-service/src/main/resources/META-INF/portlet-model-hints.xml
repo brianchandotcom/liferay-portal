@@ -14,5 +14,6 @@
 		<field name="classPK" type="long" />
 		<field name="shareable" type="boolean" />
 		<field name="actionIds" type="long" />
+		<field name="expirationDate" type="Date" />
 	</model>
 </model-hints>

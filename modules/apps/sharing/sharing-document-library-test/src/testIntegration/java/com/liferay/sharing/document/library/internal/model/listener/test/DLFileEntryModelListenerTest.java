@@ -111,7 +111,7 @@ public class DLFileEntryModelListenerTest {
 			_fileEntry.getFileEntryId(), _fileEntry.getGroupId(), true,
 			Arrays.asList(
 				SharingEntryActionKey.UPDATE, SharingEntryActionKey.VIEW),
-			serviceContext);
+			null, serviceContext);
 
 		List<SharingEntry> toUserSharingEntries =
 			_sharingEntryLocalService.getToUserSharingEntries(
@@ -143,7 +143,7 @@ public class DLFileEntryModelListenerTest {
 			_fileEntry.getFileEntryId(), _fileEntry.getGroupId(), true,
 			Arrays.asList(
 				SharingEntryActionKey.UPDATE, SharingEntryActionKey.VIEW),
-			serviceContext);
+			null, serviceContext);
 
 		long classNameId = _classNameLocalService.getClassNameId(
 			DLFolder.class.getName());
@@ -154,7 +154,7 @@ public class DLFileEntryModelListenerTest {
 			_fileEntry.getGroupId(), true,
 			Arrays.asList(
 				SharingEntryActionKey.UPDATE, SharingEntryActionKey.VIEW),
-			serviceContext);
+			null, serviceContext);
 
 		List<SharingEntry> toUserSharingEntries =
 			_sharingEntryLocalService.getToUserSharingEntries(
@@ -187,7 +187,7 @@ public class DLFileEntryModelListenerTest {
 			_fileEntry.getFileEntryId(), _fileEntry.getGroupId(), true,
 			Arrays.asList(
 				SharingEntryActionKey.UPDATE, SharingEntryActionKey.VIEW),
-			serviceContext);
+			null, serviceContext);
 
 		List<SharingEntry> toUserSharingEntries =
 			_sharingEntryLocalService.getToUserSharingEntries(

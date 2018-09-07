@@ -33,16 +33,19 @@ import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.UserNotificationEventLocalService;
+import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.sharing.constants.SharingEntryActionKey;
 import com.liferay.sharing.exception.InvalidSharingEntryActionKeyException;
+import com.liferay.sharing.exception.InvalidSharingEntryExpirationDateException;
 import com.liferay.sharing.exception.InvalidSharingEntryUserException;
 import com.liferay.sharing.model.SharingEntry;
 import com.liferay.sharing.service.base.SharingEntryLocalServiceBaseImpl;
 
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Stream;
 
@@ -57,12 +60,14 @@ public class SharingEntryLocalServiceImpl
 			long fromUserId, long toUserId, long classNameId, long classPK,
 			long groupId, boolean shareable,
 			Collection<SharingEntryActionKey> sharingEntryActionKeys,
-			ServiceContext serviceContext)
+			Date expirationDate, ServiceContext serviceContext)
 		throws PortalException {
 
 		_validateSharingEntryActionKeys(sharingEntryActionKeys);
 
 		_validateUsers(fromUserId, toUserId);
+
+		_validateExpirationDate(expirationDate);
 
 		long sharingEntryId = counterLocalService.increment();
 
@@ -81,6 +86,7 @@ public class SharingEntryLocalServiceImpl
 		sharingEntry.setClassNameId(classNameId);
 		sharingEntry.setClassPK(classPK);
 		sharingEntry.setShareable(shareable);
+		sharingEntry.setExpirationDate(expirationDate);
 
 		Stream<SharingEntryActionKey> sharingEntryActionKeyStream =
 			sharingEntryActionKeys.stream();
@@ -125,6 +131,11 @@ public class SharingEntryLocalServiceImpl
 	@Override
 	public int countToUserSharingEntries(long toUserId) {
 		return sharingEntryPersistence.countByToUserId(toUserId);
+	}
+
+	@Override
+	public void deleteExpiredEntries() {
+		sharingEntryPersistence.removeByExpirationDate(DateUtil.newDate());
 	}
 
 	@Override
@@ -203,8 +214,7 @@ public class SharingEntryLocalServiceImpl
 
 	@Override
 	public List<SharingEntry> getSharingEntries(
-			long toUserId, long classNameId, long classPK)
-		throws PortalException {
+		long toUserId, long classNameId, long classPK) {
 
 		return sharingEntryPersistence.findByTU_C_C(
 			toUserId, classNameId, classPK);
@@ -363,6 +373,17 @@ public class SharingEntryLocalServiceImpl
 				sharingEntry.getToUserId(), portletId,
 				UserNotificationDeliveryConstants.TYPE_WEBSITE,
 				notificationEventJSONObject);
+		}
+	}
+
+	private void _validateExpirationDate(Date expirationDate)
+		throws InvalidSharingEntryExpirationDateException {
+
+		if ((expirationDate != null) &&
+			expirationDate.before(DateUtil.newDate())) {
+
+			throw new InvalidSharingEntryExpirationDateException(
+				"Expiration date cannot be in the past");
 		}
 	}
 

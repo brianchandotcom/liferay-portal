@@ -557,11 +557,10 @@ public class ProjectTemplatesTest {
 	public void testBuildTemplateExtInWorkspace() throws Exception {
 		File workspaceDir = _buildWorkspace();
 
-		File extDir = new File(workspaceDir, "ext");
-
 		File workspaceProjectDir = _buildTemplateWithGradle(
-			extDir, "modules-ext", "loginExt", "--original-module-name",
-			"com.liferay.login.web", "--original-module-version", "1.0.0");
+			new File(workspaceDir, "ext"), "modules-ext", "loginExt",
+			"--original-module-name", "com.liferay.login.web",
+			"--original-module-version", "1.0.0");
 
 		_testContains(
 			workspaceProjectDir, "build.gradle",

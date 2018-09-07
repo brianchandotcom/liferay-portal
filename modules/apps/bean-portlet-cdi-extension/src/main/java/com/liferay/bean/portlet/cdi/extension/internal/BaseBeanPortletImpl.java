@@ -161,17 +161,23 @@ public abstract class BaseBeanPortletImpl implements BeanPortlet {
 	public Dictionary<String, Object> toDictionary(String portletId) {
 		PortletDictionary portletDictionary = new PortletDictionary();
 
-		portletDictionary.putIfNotNull(
-			"javax.portlet.default-namespace", _beanApp.getDefaultNamespace());
+		String defaultNamespace = _beanApp.getDefaultNamespace();
 
-		List<String> portletDependencies = new ArrayList<>();
-
-		for (PortletDependency portletDependency : getPortletDependencies()) {
-			portletDependencies.add(portletDependency.toString());
+		if (defaultNamespace != null) {
+			portletDictionary.put(
+				"javax.portlet.default-namespace", defaultNamespace);
 		}
 
-		portletDictionary.putIfNotEmpty(
-			"javax.portlet.dependency", portletDependencies);
+		if (!_resourceDependencies.isEmpty()) {
+			List<String> portletDependencies = new ArrayList<>();
+
+			for (PortletDependency portletDependency : _resourceDependencies) {
+				portletDependencies.add(portletDependency.toString());
+			}
+
+			portletDictionary.put(
+				"javax.portlet.dependency", portletDependencies);
+		}
 
 		List<String> urlGenerationListeners = new ArrayList<>();
 
@@ -185,10 +191,14 @@ public abstract class BaseBeanPortletImpl implements BeanPortlet {
 			}
 		}
 
-		portletDictionary.putIfNotEmpty(
-			"javax.portlet.listener", urlGenerationListeners);
+		if (!urlGenerationListeners.isEmpty()) {
+			portletDictionary.put(
+				"javax.portlet.listener", urlGenerationListeners);
+		}
 
-		portletDictionary.putIfNotNull("javax.portlet.name", portletId);
+		if (portletId != null) {
+			portletDictionary.put("javax.portlet.name", portletId);
+		}
 
 		Set<String> supportedPublishingEvents = new HashSet<>();
 

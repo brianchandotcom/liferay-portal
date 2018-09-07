@@ -131,14 +131,27 @@ public class GitHubDevSyncUtil {
 		GitWorkingDirectory gitWorkingDirectory, LocalGitBranch localGitBranch,
 		GitRemote gitRemote, long timestamp) {
 
-		gitWorkingDirectory.pushToRemoteGitRepository(
-			true, localGitBranch, localGitBranch.getName(), gitRemote);
+		RemoteGitBranch lockRemoteGitBranch = null;
 
-		gitWorkingDirectory.pushToRemoteGitRepository(
-			true, localGitBranch,
-			JenkinsResultsParserUtil.combine(
-				localGitBranch.getName(), "-", String.valueOf(timestamp)),
-			gitRemote);
+		try {
+			lockRemoteGitBranch = gitWorkingDirectory.pushToRemoteGitRepository(
+				true, localGitBranch, localGitBranch.getName() + "-LOCK",
+				gitRemote);
+
+			gitWorkingDirectory.pushToRemoteGitRepository(
+				true, localGitBranch, localGitBranch.getName(), gitRemote);
+
+			gitWorkingDirectory.pushToRemoteGitRepository(
+				true, localGitBranch,
+				JenkinsResultsParserUtil.combine(
+					localGitBranch.getName(), "-", String.valueOf(timestamp)),
+				gitRemote);
+		}
+		finally {
+			if (lockRemoteGitBranch != null) {
+				gitWorkingDirectory.deleteRemoteGitBranch(lockRemoteGitBranch);
+			}
+		}
 	}
 
 	protected static void cacheBranches(

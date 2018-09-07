@@ -16,7 +16,8 @@ installer for Talend Open Studio (TOS) written in Go.
 
 1. Setup the environment for [Talend Components for Liferay](https://github.com/liferay/liferay-portal/tree/b27557dcf7e63a59f6ad07cf029a002d0b56efba/modules/etl/talend)
 2. [Build the component family](https://github.com/liferay/liferay-portal/tree/b27557dcf7e63a59f6ad07cf029a002d0b56efba/modules/etl/talend#build)
-	* A directory named `tos-dependencies` will be created after the `install` lifecycle in the project root folder
+	* A directory named `tos-dependencies` will be created after the `install`
+	lifecycle in the project root folder
 		* The folder `tos-dependencies` contains two sub folders:
 		* (1) `component-artifacts` and (2) `component-definition`
 
@@ -36,7 +37,8 @@ installer for Talend Open Studio (TOS) written in Go.
 
 ## Packaging for distribution
 
-1. Copy the folders determined in `Required resources for the installer` section into the `talend-installer` directory
+1. Copy the folders determined in `Required resources for the installer` section
+ into the `talend-installer` directory
 	* Directory structure should look like this:
 	```
 	talend-installer\

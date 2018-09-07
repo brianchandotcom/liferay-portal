@@ -68,20 +68,22 @@ public class ScopedBeanHolder {
 	}
 
 	public <T> T getPortletRequestScopedBean(String name) {
-		ScopedBean<?> scopedBean = (ScopedBean)_portletRequest.getAttribute(
+		@SuppressWarnings("unchecked")
+		ScopedBean<T> scopedBean = (ScopedBean<T>)_portletRequest.getAttribute(
 			name);
 
 		if (scopedBean == null) {
 			return null;
 		}
 
-		return (T)scopedBean.getBeanInstance();
+		return scopedBean.getBeanInstance();
 	}
 
 	public <T> T getPortletRequestScopedBean(
 		String name, Bean<T> bean, CreationalContext<T> creationalContext) {
 
-		ScopedBean<?> scopedBean = (ScopedBean)_portletRequest.getAttribute(
+		@SuppressWarnings("unchecked")
+		ScopedBean<T> scopedBean = (ScopedBean<T>)_portletRequest.getAttribute(
 			name);
 
 		if (scopedBean == null) {
@@ -94,7 +96,7 @@ public class ScopedBeanHolder {
 			_portletRequest.setAttribute(name, scopedBean);
 		}
 
-		return (T)scopedBean.getBeanInstance();
+		return scopedBean.getBeanInstance();
 	}
 
 	public PortletResponse getPortletResponse() {
@@ -104,14 +106,15 @@ public class ScopedBeanHolder {
 	public <T> T getPortletSessionScopedBean(String name, int subscope) {
 		PortletSession portletSession = _portletRequest.getPortletSession(true);
 
-		ScopedBean<?> scopedBean = (ScopedBean<?>)portletSession.getAttribute(
+		@SuppressWarnings("unchecked")
+		ScopedBean<T> scopedBean = (ScopedBean<T>)portletSession.getAttribute(
 			name, subscope);
 
 		if (scopedBean == null) {
 			return null;
 		}
 
-		return (T)scopedBean.getBeanInstance();
+		return scopedBean.getBeanInstance();
 	}
 
 	public <T> T getPortletSessionScopedBean(
@@ -120,7 +123,8 @@ public class ScopedBeanHolder {
 
 		PortletSession portletSession = _portletRequest.getPortletSession(true);
 
-		ScopedBean<?> scopedBean = (ScopedBean<?>)portletSession.getAttribute(
+		@SuppressWarnings("unchecked")
+		ScopedBean<T> scopedBean = (ScopedBean<T>)portletSession.getAttribute(
 			name, subscope);
 
 		if (scopedBean == null) {
@@ -133,24 +137,26 @@ public class ScopedBeanHolder {
 			portletSession.setAttribute(name, scopedBean, subscope);
 		}
 
-		return (T)scopedBean.getBeanInstance();
+		return scopedBean.getBeanInstance();
 	}
 
 	public <T> T getRenderStateScopedBean(String name) {
-		ScopedBean<?> scopedBean = (ScopedBean)_portletRequest.getAttribute(
+		@SuppressWarnings("unchecked")
+		ScopedBean<T> scopedBean = (ScopedBean<T>)_portletRequest.getAttribute(
 			name);
 
 		if (scopedBean == null) {
 			return null;
 		}
 
-		return (T)scopedBean.getBeanInstance();
+		return scopedBean.getBeanInstance();
 	}
 
 	public <T> T getRenderStateScopedBean(
 		String name, Bean<T> bean, CreationalContext<T> creationalContext) {
 
-		ScopedBean<?> scopedBean = (ScopedBean)_portletRequest.getAttribute(
+		@SuppressWarnings("unchecked")
+		ScopedBean<T> scopedBean = (ScopedBean<T>)_portletRequest.getAttribute(
 			name);
 
 		if (scopedBean == null) {
@@ -180,7 +186,7 @@ public class ScopedBeanHolder {
 			_portletRequest.setAttribute(name, scopedBean);
 		}
 
-		return (T)scopedBean.getBeanInstance();
+		return scopedBean.getBeanInstance();
 	}
 
 	public void release() {
@@ -201,7 +207,8 @@ public class ScopedBeanHolder {
 						attributeName);
 
 					if (attributeValue instanceof ScopedBean) {
-						ScopedBean scopedBean = (ScopedBean)attributeValue;
+						ScopedBean<?> scopedBean =
+							(ScopedBean<?>)attributeValue;
 
 						Object beanInstance = scopedBean.getBeanInstance();
 

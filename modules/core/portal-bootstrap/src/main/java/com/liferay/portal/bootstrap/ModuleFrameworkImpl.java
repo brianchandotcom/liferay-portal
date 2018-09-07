@@ -811,18 +811,14 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 			new SimpleFileVisitor<Path>() {
 
 				@Override
-				public FileVisitResult preVisitDirectory(
-						Path path, BasicFileAttributes basicFileAttributes)
+				public FileVisitResult postVisitDirectory(
+						Path dirPath, IOException ioe)
 					throws IOException {
 
-					File file = path.toFile();
+					String name = dirPath.toString();
 
-					String name = file.getName();
-
-					if (name.equals(".cp")) {
-						FileUtil.deltree(file);
-
-						return FileVisitResult.SKIP_SUBTREE;
+					if (name.contains(".cp")) {
+						Files.delete(dirPath);
 					}
 
 					return FileVisitResult.CONTINUE;
@@ -830,12 +826,18 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 
 				@Override
 				public FileVisitResult visitFile(
-						Path path, BasicFileAttributes basicFileAttributes)
+						Path filePath, BasicFileAttributes basicFileAttributes)
 					throws IOException {
 
-					File file = path.toFile();
+					File file = filePath.toFile();
 
 					String name = file.getName();
+
+					if (name.endsWith(".jar")) {
+						Files.delete(filePath);
+
+						return FileVisitResult.CONTINUE;
+					}
 
 					if (!name.equals("bundleFile")) {
 						return FileVisitResult.CONTINUE;
@@ -864,7 +866,7 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 						}
 					}
 
-					Files.delete(path);
+					Files.delete(filePath);
 
 					return FileVisitResult.CONTINUE;
 				}

@@ -1,12 +1,15 @@
-package utils
+package fileutils
 
 import (
 	"archive/zip"
 	"fmt"
 	"io"
+	"io/ioutil"
 	"log"
 	"os"
 	"path/filepath"
+
+	"liferay-component-installer/constants"
 
 	"github.com/otiai10/copy"
 )
@@ -19,16 +22,20 @@ type CopyTask struct {
 // Execute executes the copy job
 func (copyTask CopyTask) Execute() error {
 	if copyTask.From == "" || copyTask.To == "" {
-		return fmt.Errorf("From: %q or To: %q are empty", copyTask.From, copyTask.To)
+		return fmt.Errorf(
+			"From: %q or To: %q are empty", copyTask.From, copyTask.To)
 	}
 
 	if !Exists(copyTask.From) {
-		return fmt.Errorf("From: %q path does not exist", copyTask.From, copyTask.To)
+		return fmt.Errorf(
+			"From: %q path does not exist", copyTask.From, copyTask.To)
 	}
 
 	err := copy.Copy(copyTask.From, copyTask.To)
 	if err != nil {
-		return fmt.Errorf("Copy operation failed: %s -> %s: %v", copyTask.From, copyTask.To, err)
+		return fmt.Errorf(
+			"Copy operation failed: %s -> %s: %v",
+			copyTask.From, copyTask.To, err)
 	}
 
 	return nil
@@ -42,13 +49,19 @@ func Exists(path string) bool {
 	return true
 }
 
-func GetBinaryLocation() string {
-	dir, err := filepath.Abs(filepath.Dir(os.Args[0]))
-	if err != nil {
-		log.Fatal(err)
+func GetSrcComponentDefinitionName() string {
+	files, err := ioutil.ReadDir(constants.ComponentDefinitionDir)
+	if err != nil || len(files) == 0 {
+		log.Fatalf("Unable to read the component definition file: %v", err)
 	}
 
-	return dir
+	return files[0].Name()
+}
+
+// Get the definition file path from the installer's dependencies
+func GetSrcComponentDefinitionPath() string {
+	return filepath.Join(constants.ComponentDefinitionDir,
+		GetSrcComponentDefinitionName())
 }
 
 func GetCurrentWorkingDirectory() string {
@@ -90,7 +103,8 @@ func Unzip(src, dest string) error {
 			os.MkdirAll(path, f.Mode())
 		} else {
 			os.MkdirAll(filepath.Dir(path), f.Mode())
-			f, err := os.OpenFile(path, os.O_WRONLY|os.O_CREATE|os.O_TRUNC, f.Mode())
+			f, err := os.OpenFile(
+				path, os.O_WRONLY|os.O_CREATE|os.O_TRUNC, f.Mode())
 			if err != nil {
 				return err
 			}

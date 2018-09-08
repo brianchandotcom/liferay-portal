@@ -42,6 +42,6 @@ public interface BeanPortlet {
 
 	public String getResourceBundle();
 
-	public Dictionary<String, Object> toDictionary(String portletId);
+	public Dictionary<String, Object> toDictionary();
 
 }

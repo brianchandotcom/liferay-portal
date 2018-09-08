@@ -106,9 +106,7 @@ public abstract class BaseBeanPortletImpl implements BeanPortlet {
 		return name.concat(StringPool.SEMICOLON).concat(value);
 	}
 
-	protected HashMapDictionary<String, Object> toDictionary(
-		BeanApp beanApp, String portletId) {
-
+	protected HashMapDictionary<String, Object> toDictionary(BeanApp beanApp) {
 		HashMapDictionary<String, Object> dictionary =
 			new HashMapDictionary<>();
 
@@ -142,10 +140,6 @@ public abstract class BaseBeanPortletImpl implements BeanPortlet {
 
 		if (!urlGenerationListeners.isEmpty()) {
 			dictionary.put("javax.portlet.listener", urlGenerationListeners);
-		}
-
-		if (portletId != null) {
-			dictionary.put("javax.portlet.name", portletId);
 		}
 
 		Set<String> supportedPublishingEvents = new HashSet<>();

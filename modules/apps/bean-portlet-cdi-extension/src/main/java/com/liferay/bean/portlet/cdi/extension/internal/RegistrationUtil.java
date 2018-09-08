@@ -117,11 +117,15 @@ public class RegistrationUtil {
 				_log.debug("Registering bean portletId: " + portletId);
 			}
 
+			Dictionary<String, Object> dictionary = beanPortlet.toDictionary();
+
+			dictionary.put("javax.portlet.name", portletId);
+
 			ServiceRegistration<Portlet> portletServiceRegistration =
 				bundleContext.registerService(
 					Portlet.class,
 					new BeanPortletInvoker(beanPortlet.getBeanMethods()),
-					beanPortlet.toDictionary(portletId));
+					dictionary);
 
 			ServletRegistration.Dynamic servletRegistration =
 				servletContext.addServlet(

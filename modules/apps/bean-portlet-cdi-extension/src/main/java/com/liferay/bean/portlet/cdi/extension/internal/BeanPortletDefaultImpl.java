@@ -46,9 +46,8 @@ public class BeanPortletDefaultImpl extends BaseBeanPortletImpl {
 	}
 
 	@Override
-	public Dictionary<String, Object> toDictionary(String portletId) {
-		Dictionary<String, Object> dictionary = toDictionary(
-			_beanApp, portletId);
+	public Dictionary<String, Object> toDictionary() {
+		Dictionary<String, Object> dictionary = toDictionary(_beanApp);
 
 		dictionary.put("javax.portlet.info.title", _portletName);
 

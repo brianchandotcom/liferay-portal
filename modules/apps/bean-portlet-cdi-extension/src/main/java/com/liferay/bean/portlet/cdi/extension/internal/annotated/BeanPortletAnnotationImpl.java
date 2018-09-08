@@ -129,9 +129,8 @@ public class BeanPortletAnnotationImpl extends BaseBeanPortletImpl {
 	}
 
 	@Override
-	public Dictionary<String, Object> toDictionary(String portletId) {
-		HashMapDictionary<String, Object> dictionary = toDictionary(
-			_beanApp, portletId);
+	public Dictionary<String, Object> toDictionary() {
+		HashMapDictionary<String, Object> dictionary = toDictionary(_beanApp);
 
 		dictionary.put(
 			"javax.portlet.async-supported",

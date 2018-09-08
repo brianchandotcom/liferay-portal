@@ -32,8 +32,6 @@ public class EventAnnotationImpl extends BaseEventImpl {
 	public EventAnnotationImpl(EventDefinition eventDefinition) {
 		this(eventDefinition.qname());
 
-		_aliasQNames = new ArrayList<>();
-
 		for (PortletQName portletQName : eventDefinition.alias()) {
 			_aliasQNames.add(
 				new QName(
@@ -60,6 +58,6 @@ public class EventAnnotationImpl extends BaseEventImpl {
 		throw new UnsupportedOperationException();
 	}
 
-	private List<QName> _aliasQNames;
+	private final List<QName> _aliasQNames = new ArrayList<>();
 
 }

@@ -3993,6 +3993,7 @@ plugins.includes=</echo>
 			<exec dir="${tstamp.value}/liferay-portal-${lp.version}/tomcat-${app.server.tomcat.version}/bin" executable="sh">
 				<arg value="catalina.sh" />
 				<arg value="run" />
+				<env key="CLEAN_OSGI_STATE" value="true" />
 			</exec>
 
 			<sequential>

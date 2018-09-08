@@ -116,7 +116,9 @@ public class RubyExecutor extends BaseScriptingExecutor {
 	}
 
 	@Activate
-	protected void activate(Map<String, Object> properties) {
+	protected void activate(Map<String, Object> properties)
+		throws InterruptedException {
+
 		_rubyScriptingConfiguration = ConfigurableUtil.createConfigurable(
 			RubyScriptingConfiguration.class, properties);
 
@@ -236,8 +238,8 @@ public class RubyExecutor extends BaseScriptingExecutor {
 		}
 	}
 
-	protected void initialize() {
-		org.jruby.embed.ScriptingContainer scriptingContainer =
+	protected void initialize() throws InterruptedException {
+		final org.jruby.embed.ScriptingContainer scriptingContainer =
 			new org.jruby.embed.ScriptingContainer(
 				LocalContextScope.THREADSAFE);
 
@@ -269,7 +271,19 @@ public class RubyExecutor extends BaseScriptingExecutor {
 
 		rubyInstanceConfig.setLoadPaths(_loadPaths);
 
-		scriptingContainer.setCurrentDirectory(_basePath);
+		Thread oneTimeExecutorThread = _threadFactory.newThread(
+			new Runnable() {
+
+				@Override
+				public void run() {
+					scriptingContainer.setCurrentDirectory(_basePath);
+				}
+
+			});
+
+		oneTimeExecutorThread.start();
+
+		oneTimeExecutorThread.join();
 	}
 
 	@Reference(unbind = "-")

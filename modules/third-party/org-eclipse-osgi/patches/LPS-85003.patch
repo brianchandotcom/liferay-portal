@@ -1,0 +1,84 @@
+diff --git a/org/eclipse/osgi/container/ModuleDatabase.java b/org/eclipse/osgi/container/ModuleDatabase.java
+index 2bbeb5e..4bc3289 100644
+--- a/org/eclipse/osgi/container/ModuleDatabase.java
++++ b/org/eclipse/osgi/container/ModuleDatabase.java
+@@ -1147,9 +1147,19 @@ public class ModuleDatabase {
+ 
+ 			String oldOsgiHome = in.readUTF();
+ 
++			ServiceLoader<ModuleReadHook> serviceLoader = ServiceLoader.load(
++				ModuleReadHook.class);
++
++			List<ModuleReadHook> moduleReadHooks = new ArrayList<>();
++
++			for (ModuleReadHook moduleReadHook : serviceLoader) {
++				moduleReadHooks.add(moduleReadHook);
++			}
++
+ 			for (int i = 0; i < numModules; i++) {
+ 				readModule(
+-					moduleDatabase, in, objectTable, version, oldOsgiHome);
++					moduleDatabase, in, objectTable, version, oldOsgiHome,
++					moduleReadHooks);
+ 			}
+ 
+ 			moduleDatabase.revisionsTimeStamp.set(revisionsTimeStamp);
+@@ -1228,7 +1238,13 @@ public class ModuleDatabase {
+ 			out.writeLong(module.getLastModified());
+ 		}
+ 
+-		private static void readModule(ModuleDatabase moduleDatabase, DataInputStream in, Map<Integer, Object> objectTable, int version, String oldOsgiHome) throws IOException {
++		private static void readModule(
++				ModuleDatabase moduleDatabase, DataInputStream in,
++				Map<Integer, Object> objectTable, int version,
++				String oldOsgiHome,
++				List<ModuleReadHook> moduleReadHooks)
++			throws IOException {
++
+ 			ModuleRevisionBuilder builder = new ModuleRevisionBuilder();
+ 			int moduleIndex = in.readInt();
+ 			String location = readString(in, objectTable);
+@@ -1244,6 +1260,11 @@ public class ModuleDatabase {
+ 			}
+ 
+ 			long id = in.readLong();
++
++			for (ModuleReadHook moduleReadHook : moduleReadHooks) {
++				moduleReadHook.process(id, location);
++			}
++
+ 			builder.setSymbolicName(readString(in, objectTable));
+ 			builder.setVersion(readVersion(in, objectTable));
+ 			builder.setTypes(in.readInt());
+diff --git a/org/eclipse/osgi/container/ModuleReadHook.java b/org/eclipse/osgi/container/ModuleReadHook.java
+index e69de29..e41579f 100644
+--- a/org/eclipse/osgi/container/ModuleReadHook.java
++++ b/org/eclipse/osgi/container/ModuleReadHook.java
+@@ -0,0 +1,26 @@
++/**
++ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
++ *
++ * This library is free software; you can redistribute it and/or modify it under
++ * the terms of the GNU Lesser General Public License as published by the Free
++ * Software Foundation; either version 2.1 of the License, or (at your option)
++ * any later version.
++ *
++ * This library is distributed in the hope that it will be useful, but WITHOUT
++ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
++ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
++ * details.
++ */
++
++package org.eclipse.osgi.container;
++
++/**
++ *
++ * @author Matthew Tambara
++ */
++public interface ModuleReadHook {
++
++	public void process(long bundleId, String location);
++	
++}
++/* @generated */
+\ No newline at end of file

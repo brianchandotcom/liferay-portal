@@ -53,10 +53,9 @@ public class BeanFilterAnnotationImpl implements BeanFilter {
 	}
 
 	@Override
-	public Dictionary<String, Object> toDictionary(String portletName) {
+	public Dictionary<String, Object> toDictionary() {
 		Dictionary<String, Object> dictionary = new HashMapDictionary<>();
 
-		dictionary.put("javax.portlet.name", portletName);
 		dictionary.put(
 			"service.ranking:Integer", _portletLifecycleFilter.ordinal());
 

@@ -64,23 +64,29 @@ public class RegistrationUtil {
 					" for portletId: ", portletId));
 		}
 
+		Dictionary<String, Object> dictionary = beanFilter.toDictionary();
+
 		if ("*".equals(portletName)) {
 			for (String curPortletName : allPortletNames) {
+				dictionary.put("javax.portlet.name", curPortletName);
+
 				registrations.add(
 					bundleContext.registerService(
 						PortletFilter.class,
 						new BeanFilterInvoker(
 							beanFilter.getFilterClass(), beanManager),
-						beanFilter.toDictionary(curPortletName)));
+						dictionary));
 			}
 		}
 		else {
+			dictionary.put("javax.portlet.name", portletName);
+
 			registrations.add(
 				bundleContext.registerService(
 					PortletFilter.class,
 					new BeanFilterInvoker(
 						beanFilter.getFilterClass(), beanManager),
-					beanFilter.toDictionary(portletName)));
+					dictionary));
 		}
 
 		List<String> beanFilterNames =

@@ -19,6 +19,7 @@ import com.liferay.bean.portlet.cdi.extension.internal.BaseBeanPortletImpl;
 import com.liferay.bean.portlet.cdi.extension.internal.BeanApp;
 import com.liferay.bean.portlet.cdi.extension.internal.PortletDependency;
 import com.liferay.bean.portlet.cdi.extension.internal.PublicRenderParameter;
+import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.portlet.LiferayPortletMode;
 import com.liferay.portal.kernel.util.HashMapDictionary;
@@ -83,7 +84,7 @@ public class BeanPortletAnnotationImpl extends BaseBeanPortletImpl {
 			for (String propertyName : propertyNames) {
 				String propertyValue = null;
 
-				int equalsPos = propertyName.indexOf("=");
+				int equalsPos = propertyName.indexOf(CharPool.EQUAL);
 
 				if (equalsPos > 0) {
 					propertyName = propertyName.substring(0, equalsPos);

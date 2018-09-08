@@ -59,26 +59,35 @@ public class BeanFilterInvoker
 		_bean = beanManager.resolve(beanManager.getBeans(beanClass));
 
 		if (ActionFilter.class.isAssignableFrom(beanClass)) {
-			_doFilterActionMethod = getMethod(
+			_doFilterActionMethod = _getMethod(
 				"doFilter", beanClass, ActionRequest.class,
 				ActionResponse.class, FilterChain.class);
 		}
+		else {
+			_doFilterActionMethod = null;
+		}
 
 		if (EventFilter.class.isAssignableFrom(beanClass)) {
-			_doFilterEventMethod = getMethod(
+			_doFilterEventMethod = _getMethod(
 				"doFilter", beanClass, EventRequest.class, EventResponse.class,
 				FilterChain.class);
 		}
+		else {
+			_doFilterEventMethod = null;
+		}
 
 		if (HeaderFilter.class.isAssignableFrom(beanClass)) {
-			_doFilterHeaderMethod = getMethod(
+			_doFilterHeaderMethod = _getMethod(
 				"doFilter", beanClass, HeaderRequest.class,
 				HeaderResponse.class, FilterChain.class);
 		}
+		else {
+			_doFilterHeaderMethod = null;
+		}
 
 		if (PortletFilter.class.isAssignableFrom(beanClass)) {
-			_destroyMethod = getMethod("destroy", beanClass);
-			_initMethod = getMethod("init", beanClass, FilterConfig.class);
+			_destroyMethod = _getMethod("destroy", beanClass);
+			_initMethod = _getMethod("init", beanClass, FilterConfig.class);
 		}
 		else {
 			_destroyMethod = null;
@@ -86,15 +95,21 @@ public class BeanFilterInvoker
 		}
 
 		if (RenderFilter.class.isAssignableFrom(beanClass)) {
-			_doFilterRenderMethod = getMethod(
+			_doFilterRenderMethod = _getMethod(
 				"doFilter", beanClass, RenderRequest.class,
 				RenderResponse.class, FilterChain.class);
 		}
+		else {
+			_doFilterRenderMethod = null;
+		}
 
 		if (ResourceFilter.class.isAssignableFrom(beanClass)) {
-			_doFilterResourceMethod = getMethod(
+			_doFilterResourceMethod = _getMethod(
 				"doFilter", beanClass, ResourceRequest.class,
 				ResourceResponse.class, FilterChain.class);
+		}
+		else {
+			_doFilterResourceMethod = null;
 		}
 	}
 
@@ -102,7 +117,7 @@ public class BeanFilterInvoker
 	public void destroy() {
 		try {
 			if (_destroyMethod != null) {
-				invokeMethod(_destroyMethod);
+				_invokeMethod(_destroyMethod);
 			}
 		}
 		catch (PortletException pe) {
@@ -120,7 +135,7 @@ public class BeanFilterInvoker
 			filterChain.doFilter(actionRequest, actionResponse);
 		}
 		else {
-			invokeMethod(
+			_invokeMethod(
 				_doFilterActionMethod, actionRequest, actionResponse,
 				filterChain);
 		}
@@ -136,7 +151,7 @@ public class BeanFilterInvoker
 			filterChain.doFilter(eventRequest, eventResponse);
 		}
 		else {
-			invokeMethod(
+			_invokeMethod(
 				_doFilterEventMethod, eventRequest, eventResponse, filterChain);
 		}
 	}
@@ -151,7 +166,7 @@ public class BeanFilterInvoker
 			filterChain.doFilter(headerRequest, headerResponse);
 		}
 		else {
-			invokeMethod(
+			_invokeMethod(
 				_doFilterHeaderMethod, headerRequest, headerResponse,
 				filterChain);
 		}
@@ -167,7 +182,7 @@ public class BeanFilterInvoker
 			filterChain.doFilter(renderRequest, renderResponse);
 		}
 		else {
-			invokeMethod(
+			_invokeMethod(
 				_doFilterRenderMethod, renderRequest, renderResponse,
 				filterChain);
 		}
@@ -183,7 +198,7 @@ public class BeanFilterInvoker
 			filterChain.doFilter(resourceRequest, resourceResponse);
 		}
 		else {
-			invokeMethod(
+			_invokeMethod(
 				_doFilterResourceMethod, resourceRequest, resourceResponse,
 				filterChain);
 		}
@@ -192,11 +207,11 @@ public class BeanFilterInvoker
 	@Override
 	public void init(FilterConfig filterConfig) throws PortletException {
 		if (_initMethod != null) {
-			invokeMethod(_initMethod, filterConfig);
+			_invokeMethod(_initMethod, filterConfig);
 		}
 	}
 
-	protected Method getMethod(
+	private Method _getMethod(
 		String methodName, Class<?> beanClass, Class<?>... args) {
 
 		try {
@@ -209,7 +224,7 @@ public class BeanFilterInvoker
 		}
 	}
 
-	protected void invokeMethod(Method method, Object... args)
+	private void _invokeMethod(Method method, Object... args)
 		throws PortletException {
 
 		try {
@@ -219,8 +234,11 @@ public class BeanFilterInvoker
 
 			method.invoke(beanInstance, args);
 		}
-		catch (IllegalAccessException | InvocationTargetException e) {
-			throw new PortletException(e);
+		catch (InvocationTargetException ite) {
+			throw new PortletException(ite.getCause());
+		}
+		catch (IllegalAccessException iae) {
+			throw new PortletException(iae);
 		}
 	}
 
@@ -230,11 +248,11 @@ public class BeanFilterInvoker
 	private final Bean<?> _bean;
 	private final BeanManager _beanManager;
 	private final Method _destroyMethod;
-	private Method _doFilterActionMethod;
-	private Method _doFilterEventMethod;
-	private Method _doFilterHeaderMethod;
-	private Method _doFilterRenderMethod;
-	private Method _doFilterResourceMethod;
+	private final Method _doFilterActionMethod;
+	private final Method _doFilterEventMethod;
+	private final Method _doFilterHeaderMethod;
+	private final Method _doFilterRenderMethod;
+	private final Method _doFilterResourceMethod;
 	private final Method _initMethod;
 
 }

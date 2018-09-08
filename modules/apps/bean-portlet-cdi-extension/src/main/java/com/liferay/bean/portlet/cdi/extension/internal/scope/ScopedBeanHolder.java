@@ -140,7 +140,7 @@ public class ScopedBeanHolder {
 			PortletSerializable portletSerializable = (PortletSerializable)
 				beanInstance;
 
-			String parameterName = getParameterName(portletSerializable);
+			String parameterName = _getParameterName(portletSerializable);
 
 			RenderParameters renderParameters =
 				_portletRequest.getRenderParameters();
@@ -179,7 +179,19 @@ public class ScopedBeanHolder {
 		};
 	}
 
-	protected String getParameterName(PortletSerializable portletSerializable) {
+	private static String _getAttributeName(Bean<?> bean) {
+		String attributeName = bean.getName();
+
+		if ((attributeName == null) || attributeName.isEmpty()) {
+			Class<?> beanClass = bean.getBeanClass();
+
+			attributeName = beanClass.getName();
+		}
+
+		return _ATTRIBUTE_NAME_PREFIX.concat(attributeName);
+	}
+
+	private String _getParameterName(PortletSerializable portletSerializable) {
 		String parameterName = null;
 
 		Class<?> beanClass = portletSerializable.getClass();
@@ -196,18 +208,6 @@ public class ScopedBeanHolder {
 		}
 
 		return parameterName;
-	}
-
-	private static String _getAttributeName(Bean<?> bean) {
-		String attributeName = bean.getName();
-
-		if ((attributeName == null) || attributeName.isEmpty()) {
-			Class<?> beanClass = bean.getBeanClass();
-
-			attributeName = beanClass.getName();
-		}
-
-		return _ATTRIBUTE_NAME_PREFIX.concat(attributeName);
 	}
 
 	private void _release() {
@@ -256,7 +256,7 @@ public class ScopedBeanHolder {
 					stateAwareResponse.getRenderParameters();
 
 				mutableRenderParameters.setValues(
-					getParameterName(portletSerializable),
+					_getParameterName(portletSerializable),
 					portletSerializable.serialize());
 			}
 		}

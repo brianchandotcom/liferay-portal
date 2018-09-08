@@ -181,14 +181,12 @@ public class RegistrationUtil {
 	private static String _getPortletId(
 		String portletName, String servletContextName) {
 
-		String portletId = portletName;
-
 		if (Validator.isNotNull(servletContextName)) {
-			portletId = portletId.concat(
+			portletName = portletName.concat(
 				PortletConstants.WAR_SEPARATOR).concat(servletContextName);
 		}
 
-		return PortalUtil.getJsSafePortletId(portletId);
+		return PortalUtil.getJsSafePortletId(portletName);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

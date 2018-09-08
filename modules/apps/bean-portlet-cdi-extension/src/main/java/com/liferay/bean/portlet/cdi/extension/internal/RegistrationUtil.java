@@ -123,27 +123,25 @@ public class RegistrationUtil {
 					new BeanPortletInvoker(beanPortlet.getBeanMethods()),
 					beanPortlet.toDictionary(portletId));
 
-			if (portletServiceRegistration != null) {
-				ServletRegistration.Dynamic servletRegistration =
-					servletContext.addServlet(
-						portletId + " Servlet",
-						"com.liferay.portal.kernel.servlet.PortletServlet");
+			ServletRegistration.Dynamic servletRegistration =
+				servletContext.addServlet(
+					portletId + " Servlet",
+					"com.liferay.portal.kernel.servlet.PortletServlet");
 
-				servletRegistration.addMapping("/portlet-servlet/*");
+			servletRegistration.addMapping("/portlet-servlet/*");
 
-				List<String> beanPortletIds =
-					(List<String>)servletContext.getAttribute(
-						WebKeys.BEAN_PORTLET_IDS);
+			List<String> beanPortletIds =
+				(List<String>)servletContext.getAttribute(
+					WebKeys.BEAN_PORTLET_IDS);
 
-				if (beanPortletIds == null) {
-					beanPortletIds = new ArrayList<>();
-				}
-
-				beanPortletIds.add(portletId);
-
-				servletContext.setAttribute(
-					WebKeys.BEAN_PORTLET_IDS, beanPortletIds);
+			if (beanPortletIds == null) {
+				beanPortletIds = new ArrayList<>();
 			}
+
+			beanPortletIds.add(portletId);
+
+			servletContext.setAttribute(
+				WebKeys.BEAN_PORTLET_IDS, beanPortletIds);
 
 			return portletServiceRegistration;
 		}

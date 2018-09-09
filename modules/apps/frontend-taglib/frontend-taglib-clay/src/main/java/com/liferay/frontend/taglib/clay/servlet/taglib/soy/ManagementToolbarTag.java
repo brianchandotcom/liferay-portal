@@ -140,6 +140,10 @@ public class ManagementToolbarTag extends BaseClayTag {
 		putValue("actionItems", actionDropdownItems);
 	}
 
+	public void setActionHandler(String actionHandler) {
+		putValue("actionHandler", actionHandler);
+	}
+
 	public void setClearResultsURL(String clearResultsURL) {
 		putValue("clearResultsURL", clearResultsURL);
 	}

@@ -27,6 +27,11 @@ import com.liferay.bean.portlet.cdi.extension.internal.scope.PortletRequestBeanC
 import com.liferay.bean.portlet.cdi.extension.internal.scope.PortletSessionBeanContext;
 import com.liferay.bean.portlet.cdi.extension.internal.scope.RenderStateBeanContext;
 import com.liferay.bean.portlet.cdi.extension.internal.scope.ScopedBean;
+import com.liferay.bean.portlet.cdi.extension.internal.xml.DisplayDescriptorParser;
+import com.liferay.bean.portlet.cdi.extension.internal.xml.LiferayDescriptor;
+import com.liferay.bean.portlet.cdi.extension.internal.xml.LiferayDescriptorParser;
+import com.liferay.bean.portlet.cdi.extension.internal.xml.PortletDescriptor;
+import com.liferay.bean.portlet.cdi.extension.internal.xml.PortletDescriptorParser;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;

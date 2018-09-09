@@ -12,27 +12,28 @@
  * details.
  */
 
-package com.liferay.bean.portlet.cdi.extension.internal;
+package com.liferay.bean.portlet.cdi.extension.internal.xml;
 
-import java.io.IOException;
+import com.liferay.bean.portlet.cdi.extension.internal.BeanFilter;
+import com.liferay.bean.portlet.cdi.extension.internal.BeanPortlet;
 
-import java.net.URL;
-
-import javax.xml.stream.XMLStreamException;
-
-import org.xml.sax.SAXException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Neil Griffin
  */
-public class LiferayDescriptorParser {
+public class PortletDescriptor {
 
-	public static LiferayDescriptor parse(URL liferayDescriptorURL)
-		throws IOException, SAXException, XMLStreamException {
-
-		// TODO
-
-		return null;
+	public List<BeanFilter> getBeanFilters() {
+		return _beanFilters;
 	}
+
+	public List<BeanPortlet> getBeanPortlets() {
+		return _beanPortlets;
+	}
+
+	private final List<BeanFilter> _beanFilters = new ArrayList<>();
+	private final List<BeanPortlet> _beanPortlets = new ArrayList<>();
 
 }

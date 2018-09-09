@@ -36,6 +36,7 @@
 							path: 'main.js',
 							requires: [
 								'document-library-upload',
+								'liferay-item-selector-dialog',
 								'liferay-message',
 								'liferay-portlet-base'
 							]

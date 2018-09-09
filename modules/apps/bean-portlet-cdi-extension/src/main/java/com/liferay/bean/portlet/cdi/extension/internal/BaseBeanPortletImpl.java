@@ -15,10 +15,13 @@
 package com.liferay.bean.portlet.cdi.extension.internal;
 
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.portlet.LiferayPortletMode;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.Validator;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -30,6 +33,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import javax.portlet.PortletMode;
 import javax.portlet.annotations.ActionMethod;
 import javax.portlet.annotations.EventMethod;
 import javax.portlet.annotations.PortletQName;
@@ -218,6 +222,27 @@ public abstract class BaseBeanPortletImpl implements BeanPortlet {
 
 		return dictionary;
 	}
+
+	protected static final Set<String> liferayPortletModes =
+		new HashSet<String>() {
+			{
+				try {
+					for (Field field : LiferayPortletMode.class.getFields()) {
+						if (Modifier.isStatic(field.getModifiers()) &&
+							(field.getType() == PortletMode.class)) {
+
+							PortletMode portletMode = (PortletMode)field.get(
+								null);
+
+							add(portletMode.toString());
+						}
+					}
+				}
+				catch (IllegalAccessException iae) {
+					throw new ExceptionInInitializerError(iae);
+				}
+			}
+		};
 
 	private final EnumMap<MethodType, List<BeanMethod>> _beanMethods =
 		new EnumMap<>(MethodType.class);

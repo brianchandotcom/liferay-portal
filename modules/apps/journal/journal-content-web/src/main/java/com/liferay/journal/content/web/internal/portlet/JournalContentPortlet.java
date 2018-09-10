@@ -116,7 +116,15 @@ public class JournalContentPortlet extends MVCPortlet {
 		JournalArticle article = null;
 		JournalArticleDisplay articleDisplay = null;
 
-		if ((articleGroupId > 0) && Validator.isNotNull(articleId)) {
+		JournalContentDisplayContext journalContentDisplayContext =
+			(JournalContentDisplayContext)renderRequest.getAttribute(
+				JournalContentWebKeys.JOURNAL_CONTENT_DISPLAY_CONTEXT);
+
+		if (journalContentDisplayContext != null) {
+			article = journalContentDisplayContext.getArticle();
+			articleDisplay = journalContentDisplayContext.getArticleDisplay();
+		}
+		else if ((articleGroupId > 0) && Validator.isNotNull(articleId)) {
 			String viewMode = ParamUtil.getString(renderRequest, "viewMode");
 			String languageId = LanguageUtil.getLanguageId(renderRequest);
 			int page = ParamUtil.getInteger(renderRequest, "page", 1);

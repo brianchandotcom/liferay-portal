@@ -346,8 +346,8 @@ public class StructuredContentNestedCollectionResource
 		String fieldName, Object fieldValue, Locale locale) {
 
 		if (Objects.equals(fieldName, "title")) {
-			String localizedFieldName = Field.getLocalizedName(
-				locale, fieldName);
+			String localizedFieldName = Field.getSortableFieldName(
+				"localized_title_".concat(LocaleUtil.toLanguageId(locale)));
 
 			BooleanQueryImpl booleanQuery = new BooleanQueryImpl();
 

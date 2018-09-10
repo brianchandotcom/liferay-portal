@@ -6695,6 +6695,7 @@ public class ServiceBuilder {
 		file.delete();
 	}
 
+	@SuppressWarnings("unused")
 	private void _removeBaseUADAnonymizer(Entity entity) {
 		_deleteFile(
 			StringBundler.concat(
@@ -6709,6 +6710,7 @@ public class ServiceBuilder {
 				entity.getName(), "UADDisplay.java"));
 	}
 
+	@SuppressWarnings("unused")
 	private void _removeBaseUADExporter(Entity entity) {
 		_deleteFile(
 			StringBundler.concat(
@@ -6962,6 +6964,7 @@ public class ServiceBuilder {
 		_deleteFile(outputPath + "/service/ServletContextUtil.java");
 	}
 
+	@SuppressWarnings("unused")
 	private void _removeUADAnonymizer(Entity entity) {
 		_deleteFile(
 			StringBundler.concat(
@@ -6969,6 +6972,7 @@ public class ServiceBuilder {
 				"UADAnonymizer.java"));
 	}
 
+	@SuppressWarnings("unused")
 	private void _removeUADAnonymizerTest(Entity entity) {
 		_deleteFile(
 			StringBundler.concat(
@@ -6991,6 +6995,7 @@ public class ServiceBuilder {
 				entity.getName(), "UADDisplayTest.java"));
 	}
 
+	@SuppressWarnings("unused")
 	private void _removeUADExporter(Entity entity) {
 		_deleteFile(
 			StringBundler.concat(
@@ -6998,6 +7003,7 @@ public class ServiceBuilder {
 				"UADExporter.java"));
 	}
 
+	@SuppressWarnings("unused")
 	private void _removeUADExporterTest(Entity entity) {
 		_deleteFile(
 			StringBundler.concat(
@@ -7005,6 +7011,7 @@ public class ServiceBuilder {
 				entity.getName(), "UADExporterTest.java"));
 	}
 
+	@SuppressWarnings("unused")
 	private void _removeUADTestHelper(Entity entity) {
 		_deleteFile(
 			StringBundler.concat(

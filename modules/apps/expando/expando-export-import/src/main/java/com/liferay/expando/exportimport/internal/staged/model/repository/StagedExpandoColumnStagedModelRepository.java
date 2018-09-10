@@ -294,16 +294,6 @@ public class StagedExpandoColumnStagedModelRepository
 		return uuid.substring(uuid.lastIndexOf(StringPool.POUND) + 1);
 	}
 
-	private String _parseExpandoTableClassName(String uuid) {
-		return uuid.substring(0, uuid.indexOf(StringPool.POUND));
-	}
-
-	private String _parseExpandoTableName(String uuid) {
-		return uuid.substring(
-			uuid.indexOf(StringPool.POUND) + 1,
-			uuid.lastIndexOf(StringPool.POUND));
-	}
-
 	private String _parseExpandoTableUuid(String uuid) {
 		return uuid.substring(0, uuid.lastIndexOf(StringPool.POUND));
 	}

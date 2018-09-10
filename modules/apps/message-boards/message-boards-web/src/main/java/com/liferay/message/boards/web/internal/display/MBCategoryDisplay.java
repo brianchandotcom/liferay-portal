@@ -156,13 +156,6 @@ public class MBCategoryDisplay {
 		}
 	}
 
-	private List<MBCategory> _getCategories(MBCategory category) {
-		TreeNode<MBCategory> node = _categoryNodesMap.get(
-			category.getCategoryId());
-
-		return node.getChildValues();
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		MBCategoryDisplay.class);
 

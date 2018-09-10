@@ -258,10 +258,6 @@ public class LangBuilder {
 		}
 	}
 
-	private static boolean _startsWithIgnoreCase(String string, String prefix) {
-		return string.regionMatches(true, 0, prefix, 0, prefix.length());
-	}
-
 	private void _addMessage(
 		Map<LangBuilderCategory, Map<String, String>> messages, String key,
 		String value, boolean useSingleCategory) {

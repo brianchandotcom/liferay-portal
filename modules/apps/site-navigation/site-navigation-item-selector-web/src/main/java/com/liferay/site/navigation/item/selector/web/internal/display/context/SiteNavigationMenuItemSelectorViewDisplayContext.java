@@ -36,7 +36,6 @@ import java.util.List;
 import java.util.Objects;
 
 import javax.portlet.PortletRequest;
-import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
@@ -300,11 +299,6 @@ public class SiteNavigationMenuItemSelectorViewDisplayContext {
 	private PortletRequest _getPortletRequest() {
 		return (PortletRequest)_request.getAttribute(
 			JavaConstants.JAVAX_PORTLET_REQUEST);
-	}
-
-	private PortletResponse _getPortletResponse() {
-		return (PortletResponse)_request.getAttribute(
-			JavaConstants.JAVAX_PORTLET_RESPONSE);
 	}
 
 	private String _displayStyle;

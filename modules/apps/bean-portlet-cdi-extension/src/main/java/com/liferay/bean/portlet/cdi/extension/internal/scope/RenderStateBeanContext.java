@@ -12,32 +12,35 @@
  * details.
  */
 
-package com.liferay.bean.portlet.cdi.extension.internal;
+package com.liferay.bean.portlet.cdi.extension.internal.scope;
 
 import java.lang.annotation.Annotation;
 
 import javax.enterprise.context.spi.Contextual;
 import javax.enterprise.context.spi.CreationalContext;
+import javax.enterprise.inject.spi.Bean;
 
-import javax.portlet.annotations.PortletRequestScoped;
+import javax.portlet.annotations.RenderStateScoped;
 
 /**
  * @author Neil Griffin
  */
-public class PortletRequestBeanContext extends BaseContextImpl {
+public class RenderStateBeanContext extends BaseContextImpl {
 
 	@Override
 	public <T> T get(
 		Contextual<T> contextual, CreationalContext<T> creationalContext) {
 
-		// TODO
+		ScopedBeanHolder scopedBeanHolder =
+			ScopedBeanHolder.getCurrentInstance();
 
-		return null;
+		return scopedBeanHolder.getRenderStateScopedBean(
+			(Bean<T>)contextual, creationalContext);
 	}
 
 	@Override
 	public Class<? extends Annotation> getScope() {
-		return PortletRequestScoped.class;
+		return RenderStateScoped.class;
 	}
 
 }

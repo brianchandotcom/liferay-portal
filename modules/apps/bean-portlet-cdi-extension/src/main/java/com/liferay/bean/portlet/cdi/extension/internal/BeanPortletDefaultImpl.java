@@ -26,10 +26,12 @@ public class BeanPortletDefaultImpl extends BaseBeanPortletImpl {
 	}
 
 	@Override
+	public BeanApp getBeanApp() {
+		return _beanApp;
+	}
+
+	@Override
 	public String getPortletClassName() {
-
-		// TODO
-
 		return null;
 	}
 
@@ -40,20 +42,19 @@ public class BeanPortletDefaultImpl extends BaseBeanPortletImpl {
 
 	@Override
 	public String getResourceBundle() {
-
-		// TODO
-
 		return null;
 	}
 
 	@Override
-	public Dictionary<String, Object> toDictionary(String portletId) {
+	public Dictionary<String, Object> toDictionary() {
+		Dictionary<String, Object> dictionary = toDictionary(_beanApp);
 
-		// TODO
+		dictionary.put("javax.portlet.info.title", _portletName);
 
-		return null;
+		return dictionary;
 	}
 
+	private final BeanApp _beanApp = new BeanAppDefaultImpl();
 	private final String _portletName;
 
 }

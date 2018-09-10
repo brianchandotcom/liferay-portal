@@ -93,7 +93,7 @@ public class MethodSignature {
 
 		Class<?>[] parameterTypes = method.getParameterTypes();
 
-		if (returnType.equals(Void.TYPE) && isAssignableFrom(parameterTypes)) {
+		if (returnType.equals(Void.TYPE) && _isAssignableFrom(parameterTypes)) {
 			return true;
 		}
 		else if (_variant1 && returnType.equals(Void.TYPE) &&
@@ -118,7 +118,7 @@ public class MethodSignature {
 		return false;
 	}
 
-	protected boolean isAssignableFrom(Class<?>[] parameterTypes) {
+	private boolean _isAssignableFrom(Class<?>[] parameterTypes) {
 		if (parameterTypes.length == _parameterTypes.length) {
 			for (int i = 1; i < parameterTypes.length; i++) {
 				if (!parameterTypes[i].isAssignableFrom(_parameterTypes[i])) {

@@ -12,19 +12,33 @@
  * details.
  */
 
-package com.liferay.bean.portlet.cdi.extension.internal;
+package com.liferay.bean.portlet.cdi.extension.internal.scope;
 
-import java.util.Comparator;
+import javax.enterprise.context.spi.Context;
+import javax.enterprise.context.spi.Contextual;
 
 /**
  * @author Neil Griffin
  */
-public class BeanMethodComparator implements Comparator<BeanMethod> {
+public abstract class BaseContextImpl implements Context {
 
 	@Override
-	public int compare(BeanMethod beanMethod1, BeanMethod beanMethod2) {
-		return Integer.compare(
-			beanMethod1.getOrdinal(), beanMethod2.getOrdinal());
+	public <T> T get(Contextual<T> contextual) {
+		return get(contextual, null);
+	}
+
+	@Override
+	public boolean isActive() {
+		ScopedBeanHolder scopedBeanHolder =
+			ScopedBeanHolder.getCurrentInstance();
+
+		if ((scopedBeanHolder != null) &&
+			(scopedBeanHolder.getPortletRequest() != null)) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 }

@@ -14,35 +14,23 @@
 
 package com.liferay.bean.portlet.cdi.extension.internal;
 
-import com.liferay.bean.portlet.LiferayPortletConfiguration;
-
-import javax.portlet.annotations.PortletApplication;
-import javax.portlet.annotations.PortletConfiguration;
+import javax.xml.namespace.QName;
 
 /**
  * @author Neil Griffin
  */
-public class BeanPortletFactory {
+public abstract class BaseEventImpl implements Event {
 
-	public static BeanPortlet create(
-		PortletApplication portletApplication,
-		PortletConfiguration portletConfiguration,
-		LiferayPortletConfiguration liferayPortletConfiguration,
-		String portletClassName) {
-
-		// TODO
-
-		return null;
+	@Override
+	public QName getQName() {
+		return _qName;
 	}
 
-	public static BeanPortlet create(
-		PortletConfiguration portletConfiguration,
-		LiferayPortletConfiguration liferayPortletConfiguration,
-		String portletClassName) {
-
-		// TODO
-
-		return null;
+	@Override
+	public void setQName(QName qName) {
+		_qName = qName;
 	}
+
+	private QName _qName;
 
 }

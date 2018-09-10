@@ -28,6 +28,6 @@ public interface BeanFilter {
 
 	public List<String> getPortletNames();
 
-	public Dictionary<String, Object> toDictionary(String portletName);
+	public Dictionary<String, Object> toDictionary();
 
 }

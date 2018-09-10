@@ -14,21 +14,49 @@
 
 package com.liferay.bean.portlet.cdi.extension.internal;
 
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
 /**
  * @author Neil Griffin
  */
-public abstract class BaseBeanAppImpl implements BeanApp {
+public class BeanAppDefaultImpl implements BeanApp {
+
+	@Override
+	public Map<String, List<String>> getContainerRuntimeOptions() {
+		return Collections.emptyMap();
+	}
+
+	@Override
+	public Set<String> getCustomPortletModes() {
+		return Collections.emptySet();
+	}
 
 	@Override
 	public String getDefaultNamespace() {
-		return _defaultNamespace;
+		return null;
 	}
 
 	@Override
-	public void setDefaultNamespace(String defaultNamespace) {
-		_defaultNamespace = defaultNamespace;
+	public List<Event> getEvents() {
+		return Collections.emptyList();
 	}
 
-	private String _defaultNamespace;
+	@Override
+	public Map<String, PublicRenderParameter> getPublicRenderParameterMap() {
+		return Collections.emptyMap();
+	}
+
+	@Override
+	public String getSpecVersion() {
+		return "3.0";
+	}
+
+	@Override
+	public List<URLGenerationListener> getURLGenerationListeners() {
+		return Collections.emptyList();
+	}
 
 }

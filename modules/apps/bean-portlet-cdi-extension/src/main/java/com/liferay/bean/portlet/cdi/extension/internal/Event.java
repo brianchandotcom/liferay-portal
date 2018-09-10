@@ -14,19 +14,21 @@
 
 package com.liferay.bean.portlet.cdi.extension.internal;
 
-import javax.portlet.annotations.PortletLifecycleFilter;
+import java.util.List;
+
+import javax.xml.namespace.QName;
 
 /**
  * @author Neil Griffin
  */
-public class BeanFilterFactory {
+public interface Event {
 
-	public static BeanFilter create(
-		Class<?> filterClass, PortletLifecycleFilter portletLifecycleFilter) {
+	public List<QName> getAliasQNames();
 
-		// TODO
+	public QName getQName();
 
-		return null;
-	}
+	public void setName(String name);
+
+	public void setQName(QName qName);
 
 }

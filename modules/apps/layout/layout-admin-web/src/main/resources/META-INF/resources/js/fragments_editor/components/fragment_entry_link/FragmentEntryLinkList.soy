@@ -8,10 +8,8 @@
 	{@param defaultLanguageId: string}
 	{@param imageSelectorURL: string}
 	{@param languageId: string}
-	{@param mapping: bool}
 	{@param portletNamespace: string}
 	{@param spritemap: string}
-	{@param translating: bool}
 	{@param? dropTargetClass: string}
 	{@param? hoveredFragmentEntryLinkBorder: string}
 	{@param? hoveredFragmentEntryLinkId: string}
@@ -25,6 +23,7 @@
 		fragmentEntryLinkId: string,
 		name: string
 	]>}
+	{@param? mapping: bool}
 	{@param? mappingFieldsURL: string}
 	{@param? selectedMappingTypes: [
 		subtype: [
@@ -37,6 +36,7 @@
 		]
 	]}
 	{@param? store: ?}
+	{@param? translating: bool}
 
 	{let $entryLinksClasses kind="text"}
 		fragment-entry-link-list

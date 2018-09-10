@@ -156,6 +156,7 @@ public class FragmentsEditorDisplayContext {
 		soyContext.put("imageSelectorURL", itemSelectorURL.toString());
 
 		soyContext.put("languageId", _themeDisplay.getLanguageId());
+		soyContext.put("lastSaveDate", StringPool.BLANK);
 
 		if (_showMapping) {
 			soyContext.put(

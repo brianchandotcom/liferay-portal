@@ -544,7 +544,7 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>Data attributes to add to the checkbox input. This data is stored via a map.</description>
+			<description>The data attributes to add to the checkbox input. This data is stored via a map.</description>
 			<name>checkboxData</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -665,7 +665,7 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>Data attributes to add to the checkbox input. This data is stored via a map.</description>
+			<description>The data attributes to add to the checkbox input. This data is stored via a map.</description>
 			<name>checkboxData</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -701,7 +701,7 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>Miscellaneous data to be stored via a map. This data is not shared with the browser. The map holds key value pairs of type <![CDATA[<code>&lt;String, Object&gt;</code>]]>.</description>
+			<description>The miscellaneous data to be stored via a map. This data is not shared with the browser. The map holds key value pairs of type <![CDATA[<code>&lt;String, Object&gt;</code>]]>.</description>
 			<name>data</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -783,7 +783,7 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>Data attributes to add to the checkbox input. This data is stored via a map.</description>
+			<description>The data attributes to add to the checkbox input. This data is stored via a map.</description>
 			<name>checkboxData</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -1482,7 +1482,7 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>Data attributes to add to the checkbox input. This data is stored via a map.</description>
+			<description>The data attributes to add to the checkbox input. This data is stored via a map.</description>
 			<name>checkboxData</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -1600,7 +1600,7 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>Data attributes to add to the checkbox input. This data is stored via a map.</description>
+			<description>The data attributes to add to the checkbox input. This data is stored via a map.</description>
 			<name>checkboxData</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>

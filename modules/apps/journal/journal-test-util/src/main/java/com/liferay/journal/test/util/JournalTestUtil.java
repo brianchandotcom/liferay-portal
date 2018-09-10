@@ -156,6 +156,21 @@ public class JournalTestUtil {
 			ServiceContext serviceContext)
 		throws Exception {
 
+		return addArticle(
+			groupId, folderId, classNameId, articleId, autoArticleId, titleMap,
+			descriptionMap, contentMap, layoutUuid, defaultLocale, null,
+			expirationDate, workflowEnabled, approved, serviceContext);
+	}
+
+	public static JournalArticle addArticle(
+			long groupId, long folderId, long classNameId, String articleId,
+			boolean autoArticleId, Map<Locale, String> titleMap,
+			Map<Locale, String> descriptionMap, Map<Locale, String> contentMap,
+			String layoutUuid, Locale defaultLocale, Date displayDate,
+			Date expirationDate, boolean workflowEnabled, boolean approved,
+			ServiceContext serviceContext)
+		throws Exception {
+
 		String content = DDMStructureTestUtil.getSampleStructuredContent(
 			contentMap, LocaleUtil.toLanguageId(defaultLocale));
 
@@ -197,6 +212,10 @@ public class JournalTestUtil {
 
 		Calendar displayCal = CalendarFactoryUtil.getCalendar(
 			TestPropsValues.getUser().getTimeZone());
+
+		if (displayDate != null) {
+			displayCal.setTime(displayDate);
+		}
 
 		int displayDateDay = displayCal.get(Calendar.DATE);
 		int displayDateMonth = displayCal.get(Calendar.MONTH);
@@ -836,6 +855,17 @@ public class JournalTestUtil {
 			ServiceContext serviceContext)
 		throws Exception {
 
+		return updateArticle(
+			userId, article, titleMap, content, null, workflowEnabled, approved,
+			serviceContext);
+	}
+
+	public static JournalArticle updateArticle(
+			long userId, JournalArticle article, Map<Locale, String> titleMap,
+			String content, Date displayDate, boolean workflowEnabled,
+			boolean approved, ServiceContext serviceContext)
+		throws Exception {
+
 		if (workflowEnabled) {
 			serviceContext = (ServiceContext)serviceContext.clone();
 
@@ -849,7 +879,9 @@ public class JournalTestUtil {
 			}
 		}
 
-		Date displayDate = article.getDisplayDate();
+		if (displayDate == null) {
+			displayDate = article.getDisplayDate();
+		}
 
 		int displayDateMonth = 0;
 		int displayDateDay = 0;

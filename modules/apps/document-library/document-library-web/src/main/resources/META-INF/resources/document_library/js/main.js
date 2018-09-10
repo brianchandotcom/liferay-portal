@@ -28,6 +28,18 @@ AUI.add(
 
 					searchContainerId: {
 						validator: Lang.isString
+					},
+
+					selectFileEntryTypeURL: {
+						validator: Lang.isString
+					},
+
+					trashEnabled: {
+						validator: Lang.isBoolean
+					},
+
+					viewFileEntryURL: {
+						validator: Lang.isString
 					}
 				},
 
@@ -61,10 +73,7 @@ AUI.add(
 
 						instance._folderId = foldersConfig.defaultParentFolderId;
 
-						var eventHandles = [
-							Liferay.on(instance.ns('editEntry'), instance._editEntry, instance),
-							Liferay.on(instance.ns('openDocument'), instance._openDocument, instance)
-						];
+						var eventHandles = [];
 
 						instance._config = config;
 
@@ -91,10 +100,10 @@ AUI.add(
 						return instance._folderId;
 					},
 
-					_editEntry: function(event) {
+					onActionItemClicked: function(event) {
 						var instance = this;
 
-						var action = event.action;
+						var action = event.data.item.data.action;
 
 						var url = instance.get('editEntryUrl');
 
@@ -106,7 +115,53 @@ AUI.add(
 							url = instance.get('downloadEntryUrl');
 						}
 
-						instance._processAction(action, url);
+						if (action === 'deleteEntries') {
+							if (instance.get('trashEnabled')) {
+								action = 'move_to_trash';
+							}
+							else if (confirm(Liferay.Language.get('are-you-sure-you-want-to-delete-the-selected-entries'))) {
+								action = 'delete';
+							}
+							else {
+								action = null;
+							}
+						}
+
+						if (action) {
+							instance._processAction(action, url);
+						}
+					},
+
+					onFilterItemClicked: function(event) {
+						var instance = this;
+
+						var itemData = event.data.item.data;
+
+						if (itemData.action === 'openDocumentTypesSelector') {
+							var itemSelectorDialog = new A.LiferayItemSelectorDialog(
+								{
+									eventName: instance.ns('selectFileEntryType'),
+									on: {
+										selectedItemChange: function(event) {
+											var selectedItem = event.newVal;
+
+											if (selectedItem) {
+												var uri = instance.get('viewFileEntryTypeURL');
+
+												uri = Liferay.Util.addParams(instance.ns('fileEntryTypeId=') + selectedItem, uri);
+
+												location.href = uri;
+											}
+										}
+									},
+									'strings.add': Liferay.Language.get('select'),
+									title: Liferay.Language.get('select-document-type'),
+									url: instance.get('selectFileEntryTypeURL')
+								}
+							);
+
+							itemSelectorDialog.open();
+						}
 					},
 
 					_moveToFolder: function(obj) {
@@ -214,6 +269,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['document-library-upload', 'liferay-message', 'liferay-portlet-base']
+		requires: ['document-library-upload', 'liferay-item-selector-dialog', 'liferay-message', 'liferay-portlet-base']
 	}
 );

@@ -167,76 +167,82 @@ else {
 	for (int i = 0; i < entryColumns.length; i++) {
 		escapedEntryColumns[i] = HtmlUtil.escapeJS(entryColumns[i]);
 	}
+
+	long fileEntryTypeId = ParamUtil.getLong(request, "fileEntryTypeId", -1);
+
+	PortletURL viewFileEntryTypeURL = PortletURLUtil.clone(currentURLObj, liferayPortletResponse);
+
+	viewFileEntryTypeURL.setParameter("browseBy", "file-entry-type");
+	viewFileEntryTypeURL.setParameter("fileEntryTypeId", (String)null);
 	%>
 
-	var documentLibrary = new Liferay.Portlet.DocumentLibrary(
-		{
-			columnNames: ['<%= StringUtil.merge(escapedEntryColumns, "','") %>'],
-
-			<%
-			DecimalFormatSymbols decimalFormatSymbols = DecimalFormatSymbols.getInstance(locale);
-			%>
-
-			decimalSeparator: '<%= decimalFormatSymbols.getDecimalSeparator() %>',
-			displayStyle: '<%= HtmlUtil.escapeJS(displayStyle) %>',
-			editEntryUrl: '<portlet:actionURL name="/document_library/edit_entry" />',
-			downloadEntryUrl: '<portlet:resourceURL id="/document_library/download_entry"><portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" /></portlet:resourceURL>',
-			folders: {
-				defaultParentFolderId: '<%= folderId %>',
-				dimensions: {
-					height: '<%= PrefsPropsUtil.getLong(PropsKeys.DL_FILE_ENTRY_THUMBNAIL_MAX_HEIGHT) %>',
-					width: '<%= PrefsPropsUtil.getLong(PropsKeys.DL_FILE_ENTRY_THUMBNAIL_MAX_WIDTH) %>'
-				}
-			},
-			form: {
-				method: 'POST',
-				node: A.one(document.<portlet:namespace />fm2)
-			},
-			maxFileSize: <%= dlConfiguration.fileMaxSize() %>,
-			moveEntryUrl: '<portlet:renderURL><portlet:param name="mvcRenderCommandName" value="/document_library/move_entry" /><portlet:param name="redirect" value="<%= currentURL %>" /><portlet:param name="newFolderId" value="<%= String.valueOf(folderId) %>" /></portlet:renderURL>',
-			namespace: '<portlet:namespace />',
-			portletId: '<%= HtmlUtil.escapeJS(portletId) %>',
-			redirect: encodeURIComponent('<%= currentURL %>'),
-			repositories: [
-				{
-					id: '<%= scopeGroupId %>',
-					name: '<liferay-ui:message key="local" />'
-				}
+	Liferay.component(
+		'<portlet:namespace />DocumentLibrary',
+		new Liferay.Portlet.DocumentLibrary(
+			{
+				columnNames: ['<%= StringUtil.merge(escapedEntryColumns, "','") %>'],
 
 				<%
-				List<Folder> mountFolders = DLAppServiceUtil.getMountFolders(repositoryId, DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
-
-				for (Folder mountFolder : mountFolders) {
+				DecimalFormatSymbols decimalFormatSymbols = DecimalFormatSymbols.getInstance(locale);
 				%>
 
-					, {
-						id: '<%= mountFolder.getRepositoryId() %>',
-						name: '<%= HtmlUtil.escapeJS(mountFolder.getName()) %>'
+				decimalSeparator: '<%= decimalFormatSymbols.getDecimalSeparator() %>',
+				displayStyle: '<%= HtmlUtil.escapeJS(displayStyle) %>',
+				editEntryUrl: '<portlet:actionURL name="/document_library/edit_entry" />',
+				downloadEntryUrl: '<portlet:resourceURL id="/document_library/download_entry"><portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" /></portlet:resourceURL>',
+				folders: {
+					defaultParentFolderId: '<%= folderId %>',
+					dimensions: {
+						height: '<%= PrefsPropsUtil.getLong(PropsKeys.DL_FILE_ENTRY_THUMBNAIL_MAX_HEIGHT) %>',
+						width: '<%= PrefsPropsUtil.getLong(PropsKeys.DL_FILE_ENTRY_THUMBNAIL_MAX_WIDTH) %>'
+					}
+				},
+				form: {
+					method: 'POST',
+					node: A.one(document.<portlet:namespace />fm2)
+				},
+				maxFileSize: <%= dlConfiguration.fileMaxSize() %>,
+				moveEntryUrl: '<portlet:renderURL><portlet:param name="mvcRenderCommandName" value="/document_library/move_entry" /><portlet:param name="redirect" value="<%= currentURL %>" /><portlet:param name="newFolderId" value="<%= String.valueOf(folderId) %>" /></portlet:renderURL>',
+				namespace: '<portlet:namespace />',
+				portletId: '<%= HtmlUtil.escapeJS(portletId) %>',
+				redirect: encodeURIComponent('<%= currentURL %>'),
+				repositories: [
+					{
+						id: '<%= scopeGroupId %>',
+						name: '<liferay-ui:message key="local" />'
 					}
 
-				<%
-				}
-				%>
+					<%
+					List<Folder> mountFolders = DLAppServiceUtil.getMountFolders(repositoryId, DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
-			],
-			scopeGroupId: <%= scopeGroupId %>,
-			searchContainerId: 'entries',
-			trashEnabled: <%= (scopeGroupId == repositoryId) && dlTrashUtil.isTrashEnabled(scopeGroupId, repositoryId) %>,
-			uploadable: <%= uploadable %>,
-			uploadURL: '<%= uploadURL %>',
-			viewFileEntryURL: '<portlet:renderURL><portlet:param name="mvcRenderCommandName" value="/document_library/view_file_entry" /><portlet:param name="redirect" value="<%= currentURL %>" /></portlet:renderURL>'
+					for (Folder mountFolder : mountFolders) {
+					%>
+
+						, {
+							id: '<%= mountFolder.getRepositoryId() %>',
+							name: '<%= HtmlUtil.escapeJS(mountFolder.getName()) %>'
+						}
+
+					<%
+					}
+					%>
+
+				],
+				selectFileEntryTypeURL: '<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcPath" value="/document_library/select_file_entry_type.jsp" /><portlet:param name="fileEntryTypeId" value="<%= String.valueOf(fileEntryTypeId) %>" /></portlet:renderURL>',
+				scopeGroupId: <%= scopeGroupId %>,
+				searchContainerId: 'entries',
+				trashEnabled: <%= (scopeGroupId == repositoryId) && dlTrashUtil.isTrashEnabled(scopeGroupId, repositoryId) %>,
+				uploadable: <%= uploadable %>,
+				uploadURL: '<%= uploadURL %>',
+				viewFileEntryURL: '<portlet:renderURL><portlet:param name="mvcRenderCommandName" value="/document_library/view_file_entry" /><portlet:param name="redirect" value="<%= currentURL %>" /></portlet:renderURL>',
+				viewFileEntryTypeURL: '<%= viewFileEntryTypeURL %>'
+			}
+		),
+		{
+			destroyOnNavigate: true,
+			portletId: '<%= HtmlUtil.escapeJS(portletId) %>'
 		}
 	);
-
-	var clearDocumentLibraryHandles = function(event) {
-		if (event.portletId === '<%= portletDisplay.getId() %>') {
-			documentLibrary.destroy();
-
-			Liferay.detach('destroyPortlet', clearDocumentLibraryHandles);
-		}
-	};
-
-	Liferay.on('destroyPortlet', clearDocumentLibraryHandles);
 
 	var changeScopeHandles = function(event) {
 		documentLibrary.destroy();

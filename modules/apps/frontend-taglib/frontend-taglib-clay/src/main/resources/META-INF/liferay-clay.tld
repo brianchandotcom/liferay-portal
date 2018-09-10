@@ -1144,6 +1144,12 @@
 		</attribute>
 		<attribute>
 			<description></description>
+			<name>actionHandler</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description></description>
 			<name>clearResultsURL</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>

@@ -15,6 +15,14 @@ const ADD_FRAGMENT_ENTRY_LINK = 'addFragmentEntryLink';
 const CLEAR_DRAG_TARGET = 'clearDragTarget';
 
 /**
+ * Move fragment entry link action type
+ * @review
+ * @type {string}
+ */
+
+const MOVE_FRAGMENT_ENTRY_LINK = 'moveFragmentEntryLink';
+
+/**
  * Remove fragment entry link action type
  * @review
  * @type {string}
@@ -57,6 +65,7 @@ const UPDATE_TRANSLATION_STATUS = 'updateTranslationStatus';
 export {
 	ADD_FRAGMENT_ENTRY_LINK,
 	CLEAR_DRAG_TARGET,
+	MOVE_FRAGMENT_ENTRY_LINK,
 	REMOVE_FRAGMENT_ENTRY_LINK,
 	UPDATE_DRAG_TARGET,
 	UPDATE_LAST_SAVE_DATE,

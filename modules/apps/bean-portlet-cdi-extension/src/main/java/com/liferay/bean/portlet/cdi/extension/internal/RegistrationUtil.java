@@ -54,39 +54,23 @@ public class RegistrationUtil {
 		List<ServiceRegistration<PortletFilter>> registrations =
 			new ArrayList<>();
 
-		String portletId = _getPortletId(
-			portletName, servletContext.getServletContextName());
-
-		if (_log.isDebugEnabled()) {
-			_log.debug(
-				StringBundler.concat(
-					"Registering bean filter: ", beanFilter.getFilterName(),
-					" for portletId: ", portletId));
-		}
-
-		Dictionary<String, Object> dictionary = beanFilter.toDictionary();
-
 		if ("*".equals(portletName)) {
 			for (String curPortletName : allPortletNames) {
-				dictionary.put("javax.portlet.name", curPortletName);
+				String portletId = _getPortletId(
+					curPortletName, servletContext.getServletContextName());
 
-				registrations.add(
-					bundleContext.registerService(
-						PortletFilter.class,
-						new BeanFilterInvoker(
-							beanFilter.getFilterClass(), beanManager),
-						dictionary));
+				_registerBeanFilter(
+					bundleContext, curPortletName, portletId, allPortletNames,
+					beanFilter, beanManager, registrations);
 			}
 		}
 		else {
-			dictionary.put("javax.portlet.name", portletName);
+			String portletId = _getPortletId(
+				portletName, servletContext.getServletContextName());
 
-			registrations.add(
-				bundleContext.registerService(
-					PortletFilter.class,
-					new BeanFilterInvoker(
-						beanFilter.getFilterClass(), beanManager),
-					dictionary));
+			_registerBeanFilter(
+				bundleContext, portletName, portletId, allPortletNames,
+				beanFilter, beanManager, registrations);
 		}
 
 		List<String> beanFilterNames =
@@ -191,6 +175,39 @@ public class RegistrationUtil {
 		}
 
 		return PortalUtil.getJsSafePortletId(portletName);
+	}
+
+	private static void _registerBeanFilter(
+		BundleContext bundleContext, String portletName, String portletId,
+		Set<String> allPortletNames, BeanFilter beanFilter,
+		BeanManager beanManager,
+		List<ServiceRegistration<PortletFilter>> registrations) {
+
+		if (!allPortletNames.contains(portletName)) {
+			_log.error(
+				StringBundler.concat(
+					"Unable to register filter ", beanFilter.getFilterName(),
+					" for non-existent portlet ", portletName));
+
+			return;
+		}
+
+		if (_log.isDebugEnabled()) {
+			_log.debug(
+				StringBundler.concat(
+					"Registering bean filter: ", beanFilter.getFilterName(),
+					" for portletId: ", portletId));
+		}
+
+		Dictionary<String, Object> dictionary = beanFilter.toDictionary();
+
+		dictionary.put("javax.portlet.name", portletId);
+
+		registrations.add(
+			bundleContext.registerService(
+				PortletFilter.class,
+				new BeanFilterInvoker(beanFilter.getFilterClass(), beanManager),
+				beanFilter.toDictionary()));
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

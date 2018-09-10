@@ -86,7 +86,8 @@ public class SharingEntryModelImpl extends BaseModelImpl<SharingEntry>
 			{ "classNameId", Types.BIGINT },
 			{ "classPK", Types.BIGINT },
 			{ "shareable", Types.BOOLEAN },
-			{ "actionIds", Types.BIGINT }
+			{ "actionIds", Types.BIGINT },
+			{ "expirationDate", Types.TIMESTAMP }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
@@ -103,9 +104,10 @@ public class SharingEntryModelImpl extends BaseModelImpl<SharingEntry>
 		TABLE_COLUMNS_MAP.put("classPK", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("shareable", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("actionIds", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("expirationDate", Types.TIMESTAMP);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table SharingEntry (uuid_ VARCHAR(75) null,sharingEntryId LONG not null primary key,groupId LONG,companyId LONG,createDate DATE null,modifiedDate DATE null,fromUserId LONG,toUserId LONG,classNameId LONG,classPK LONG,shareable BOOLEAN,actionIds LONG)";
+	public static final String TABLE_SQL_CREATE = "create table SharingEntry (uuid_ VARCHAR(75) null,sharingEntryId LONG not null primary key,groupId LONG,companyId LONG,createDate DATE null,modifiedDate DATE null,fromUserId LONG,toUserId LONG,classNameId LONG,classPK LONG,shareable BOOLEAN,actionIds LONG,expirationDate DATE null)";
 	public static final String TABLE_SQL_DROP = "drop table SharingEntry";
 	public static final String ORDER_BY_JPQL = " ORDER BY sharingEntry.sharingEntryId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY SharingEntry.sharingEntryId ASC";
@@ -124,11 +126,12 @@ public class SharingEntryModelImpl extends BaseModelImpl<SharingEntry>
 	public static final long CLASSNAMEID_COLUMN_BITMASK = 1L;
 	public static final long CLASSPK_COLUMN_BITMASK = 2L;
 	public static final long COMPANYID_COLUMN_BITMASK = 4L;
-	public static final long FROMUSERID_COLUMN_BITMASK = 8L;
-	public static final long GROUPID_COLUMN_BITMASK = 16L;
-	public static final long TOUSERID_COLUMN_BITMASK = 32L;
-	public static final long UUID_COLUMN_BITMASK = 64L;
-	public static final long SHARINGENTRYID_COLUMN_BITMASK = 128L;
+	public static final long EXPIRATIONDATE_COLUMN_BITMASK = 8L;
+	public static final long FROMUSERID_COLUMN_BITMASK = 16L;
+	public static final long GROUPID_COLUMN_BITMASK = 32L;
+	public static final long TOUSERID_COLUMN_BITMASK = 64L;
+	public static final long UUID_COLUMN_BITMASK = 128L;
+	public static final long SHARINGENTRYID_COLUMN_BITMASK = 256L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -155,6 +158,7 @@ public class SharingEntryModelImpl extends BaseModelImpl<SharingEntry>
 		model.setClassPK(soapModel.getClassPK());
 		model.setShareable(soapModel.isShareable());
 		model.setActionIds(soapModel.getActionIds());
+		model.setExpirationDate(soapModel.getExpirationDate());
 
 		return model;
 	}
@@ -231,6 +235,7 @@ public class SharingEntryModelImpl extends BaseModelImpl<SharingEntry>
 		attributes.put("classPK", getClassPK());
 		attributes.put("shareable", isShareable());
 		attributes.put("actionIds", getActionIds());
+		attributes.put("expirationDate", getExpirationDate());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -310,6 +315,12 @@ public class SharingEntryModelImpl extends BaseModelImpl<SharingEntry>
 
 		if (actionIds != null) {
 			setActionIds(actionIds);
+		}
+
+		Date expirationDate = (Date)attributes.get("expirationDate");
+
+		if (expirationDate != null) {
+			setExpirationDate(expirationDate);
 		}
 	}
 
@@ -594,6 +605,27 @@ public class SharingEntryModelImpl extends BaseModelImpl<SharingEntry>
 		_actionIds = actionIds;
 	}
 
+	@JSON
+	@Override
+	public Date getExpirationDate() {
+		return _expirationDate;
+	}
+
+	@Override
+	public void setExpirationDate(Date expirationDate) {
+		_columnBitmask |= EXPIRATIONDATE_COLUMN_BITMASK;
+
+		if (_originalExpirationDate == null) {
+			_originalExpirationDate = _expirationDate;
+		}
+
+		_expirationDate = expirationDate;
+	}
+
+	public Date getOriginalExpirationDate() {
+		return _originalExpirationDate;
+	}
+
 	@Override
 	public StagedModelType getStagedModelType() {
 		return new StagedModelType(PortalUtil.getClassNameId(
@@ -643,6 +675,7 @@ public class SharingEntryModelImpl extends BaseModelImpl<SharingEntry>
 		sharingEntryImpl.setClassPK(getClassPK());
 		sharingEntryImpl.setShareable(isShareable());
 		sharingEntryImpl.setActionIds(getActionIds());
+		sharingEntryImpl.setExpirationDate(getExpirationDate());
 
 		sharingEntryImpl.resetOriginalValues();
 
@@ -733,6 +766,8 @@ public class SharingEntryModelImpl extends BaseModelImpl<SharingEntry>
 
 		sharingEntryModelImpl._setOriginalClassPK = false;
 
+		sharingEntryModelImpl._originalExpirationDate = sharingEntryModelImpl._expirationDate;
+
 		sharingEntryModelImpl._columnBitmask = 0;
 	}
 
@@ -784,12 +819,21 @@ public class SharingEntryModelImpl extends BaseModelImpl<SharingEntry>
 
 		sharingEntryCacheModel.actionIds = getActionIds();
 
+		Date expirationDate = getExpirationDate();
+
+		if (expirationDate != null) {
+			sharingEntryCacheModel.expirationDate = expirationDate.getTime();
+		}
+		else {
+			sharingEntryCacheModel.expirationDate = Long.MIN_VALUE;
+		}
+
 		return sharingEntryCacheModel;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(25);
+		StringBundler sb = new StringBundler(27);
 
 		sb.append("{uuid=");
 		sb.append(getUuid());
@@ -815,6 +859,8 @@ public class SharingEntryModelImpl extends BaseModelImpl<SharingEntry>
 		sb.append(isShareable());
 		sb.append(", actionIds=");
 		sb.append(getActionIds());
+		sb.append(", expirationDate=");
+		sb.append(getExpirationDate());
 		sb.append("}");
 
 		return sb.toString();
@@ -822,7 +868,7 @@ public class SharingEntryModelImpl extends BaseModelImpl<SharingEntry>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(40);
+		StringBundler sb = new StringBundler(43);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.sharing.model.SharingEntry");
@@ -876,6 +922,10 @@ public class SharingEntryModelImpl extends BaseModelImpl<SharingEntry>
 			"<column><column-name>actionIds</column-name><column-value><![CDATA[");
 		sb.append(getActionIds());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>expirationDate</column-name><column-value><![CDATA[");
+		sb.append(getExpirationDate());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -912,6 +962,8 @@ public class SharingEntryModelImpl extends BaseModelImpl<SharingEntry>
 	private boolean _setOriginalClassPK;
 	private boolean _shareable;
 	private long _actionIds;
+	private Date _expirationDate;
+	private Date _originalExpirationDate;
 	private long _columnBitmask;
 	private SharingEntry _escapedModel;
 }

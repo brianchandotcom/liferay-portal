@@ -130,7 +130,7 @@ public class SharingEntrySearchDLTest {
 		_sharingEntryLocalService.addSharingEntry(
 			TestPropsValues.getUserId(), _groupUser.getUserId(), _classNameId,
 			_fileEntry.getFileEntryId(), _group.getGroupId(), true,
-			Arrays.asList(SharingEntryActionKey.VIEW), serviceContext);
+			Arrays.asList(SharingEntryActionKey.VIEW), null, serviceContext);
 
 		Indexer<DLFileEntry> indexer = IndexerRegistryUtil.getIndexer(
 			DLFileEntryConstants.getClassName());

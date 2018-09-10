@@ -143,7 +143,7 @@ public class DLFileEntrySharingPermissionSQLContributorTest {
 				TestPropsValues.getUserId(), _groupUser.getUserId(),
 				classNameId, _fileEntry.getFileEntryId(), _group.getGroupId(),
 				true, Collections.singletonList(SharingEntryActionKey.VIEW),
-				serviceContext);
+				null, serviceContext);
 
 			Assert.assertEquals(
 				1,

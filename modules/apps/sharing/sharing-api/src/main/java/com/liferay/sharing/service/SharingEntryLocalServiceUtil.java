@@ -46,11 +46,13 @@ public class SharingEntryLocalServiceUtil {
 		long fromUserId, long toUserId, long classNameId, long classPK,
 		long groupId, boolean shareable,
 		java.util.Collection<com.liferay.sharing.constants.SharingEntryActionKey> sharingEntryActionKeys,
+		java.util.Date expirationDate,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .addSharingEntry(fromUserId, toUserId, classNameId, classPK,
-			groupId, shareable, sharingEntryActionKeys, serviceContext);
+			groupId, shareable, sharingEntryActionKeys, expirationDate,
+			serviceContext);
 	}
 
 	/**
@@ -87,6 +89,10 @@ public class SharingEntryLocalServiceUtil {
 	public static com.liferay.sharing.model.SharingEntry createSharingEntry(
 		long sharingEntryId) {
 		return getService().createSharingEntry(sharingEntryId);
+	}
+
+	public static void deleteExpiredEntries() {
+		getService().deleteExpiredEntries();
 	}
 
 	public static void deleteGroupSharingEntries(long groupId) {
@@ -310,8 +316,7 @@ public class SharingEntryLocalServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.sharing.model.SharingEntry> getSharingEntries(
-		long toUserId, long classNameId, long classPK)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		long toUserId, long classNameId, long classPK) {
 		return getService().getSharingEntries(toUserId, classNameId, classPK);
 	}
 

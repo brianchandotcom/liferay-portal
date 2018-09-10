@@ -151,25 +151,23 @@ if (amImageConfigurationEntry != null) {
 		</div>
 
 		<aui:input cssClass="input-medium" disabled="<%= automaticUuid || !configurationEntryEditable %>" label="id" name="newUuid" type="text" value="<%= configurationEntryUuid %>">
-			<c:if test="<%= amImageConfigurationEntry == null %>">
-				<aui:validator errorMessage="please-enter-only-alphanumeric-characters-dashes-or-underscores" name="custom">
-					function(value) {
-						var radioButtons = document.getElementsByName('<portlet:namespace/>automaticUuid');
+			<aui:validator errorMessage="please-enter-only-alphanumeric-characters-dashes-or-underscores" name="custom">
+				function(value) {
+					var radioButtons = document.getElementsByName('<portlet:namespace/>automaticUuid');
 
-						for (var i = 0; i < radioButtons.length; i++) {
-							var radioButton = radioButtons[i];
+					for (var i = 0; i < radioButtons.length; i++) {
+						var radioButton = radioButtons[i];
 
-							if (radioButton.checked && (radioButton.value === <%= automaticUuid %>)) {
-								return true;
-							}
+						if (radioButton.checked && (radioButton.value === <%= automaticUuid %>)) {
+							return true;
 						}
-
-						var pattern = /^[a-zA-Z0-9_-]+$/;
-
-						return pattern.test(value);
 					}
-				</aui:validator>
-			</c:if>
+
+					var pattern = /^[a-zA-Z0-9_-]+$/;
+
+					return pattern.test(value);
+				}
+			</aui:validator>
 		</aui:input>
 	</liferay-frontend:edit-form-body>
 

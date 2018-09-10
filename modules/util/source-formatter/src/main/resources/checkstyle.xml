@@ -284,6 +284,10 @@
 		<module name="com.liferay.source.formatter.checkstyle.checks.UnprocessedExceptionCheck">
 			<message key="exception.unprocessed" value="Unprocessed exception ''{0}'', see LPS-36174" />
 		</module>
+		<module name="com.liferay.source.formatter.checkstyle.checks.UnusedMethodCheck">
+			<property name="allowedMethodNames" value="readObject,writeObject" />
+			<message key="method.unused" value="Method ''{0}'' is unused" />
+		</module>
 		<module name="com.liferay.source.formatter.checkstyle.checks.UnusedParameterCheck">
 			<message key="parameter.unused" value="Parameter ''{0}'' is unused" />
 		</module>

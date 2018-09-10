@@ -3,7 +3,7 @@
 
 <log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
 	<category name="org.apache.aries.jax.rs.whiteboard">
-		<priority value="INFO" />
+		<priority value="WARN" />
 	</category>
 
 	<category name="org.apache.cxf">

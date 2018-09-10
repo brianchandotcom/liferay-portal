@@ -80,6 +80,7 @@ String name = role.getName();
 		</portlet:actionURL>
 
 		<liferay-ui:icon-delete
+			confirmation="are-you-sure-you-want-to-delete-this-role"
 			url="<%= deleteRoleURL %>"
 		/>
 	</c:if>

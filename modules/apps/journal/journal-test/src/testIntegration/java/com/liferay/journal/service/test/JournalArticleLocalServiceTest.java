@@ -31,6 +31,7 @@ import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalFolderConstants;
 import com.liferay.journal.service.JournalArticleLocalServiceUtil;
 import com.liferay.journal.test.util.JournalTestUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.ResourceConstants;
@@ -74,6 +75,60 @@ public class JournalArticleLocalServiceTest {
 	@Before
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup();
+	}
+
+	@Test
+	public void testCopyArticle() throws Exception {
+		JournalArticle oldArticle = JournalTestUtil.addArticle(
+			_group.getGroupId(),
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+
+		JournalArticle newArticle = JournalArticleLocalServiceUtil.copyArticle(
+			oldArticle.getUserId(), oldArticle.getGroupId(),
+			oldArticle.getArticleId(), null, true, oldArticle.getVersion());
+
+		Assert.assertNotEquals(oldArticle, newArticle);
+
+		List<ResourcePermission> oldResourcePermissions =
+			ResourcePermissionLocalServiceUtil.getResourcePermissions(
+				oldArticle.getCompanyId(), JournalArticle.class.getName(),
+				ResourceConstants.SCOPE_INDIVIDUAL,
+				String.valueOf(oldArticle.getResourcePrimKey()));
+
+		List<ResourcePermission> newResourcePermissions =
+			ResourcePermissionLocalServiceUtil.getResourcePermissions(
+				newArticle.getCompanyId(), JournalArticle.class.getName(),
+				ResourceConstants.SCOPE_INDIVIDUAL,
+				String.valueOf(newArticle.getResourcePrimKey()));
+
+		Assert.assertEquals(
+			StringBundler.concat(
+				"Old resource permissions: ", oldResourcePermissions,
+				", new resource permissions: ", newResourcePermissions),
+			oldResourcePermissions.size(), newResourcePermissions.size());
+
+		for (int i = 0; i < oldResourcePermissions.size(); i++) {
+			ResourcePermission oldResourcePermission =
+				oldResourcePermissions.get(i);
+			ResourcePermission newResourcePermission =
+				newResourcePermissions.get(i);
+
+			Assert.assertNotEquals(
+				oldResourcePermission, newResourcePermission);
+
+			Assert.assertEquals(
+				oldResourcePermission.getRoleId(),
+				newResourcePermission.getRoleId());
+			Assert.assertEquals(
+				oldResourcePermission.getOwnerId(),
+				newResourcePermission.getOwnerId());
+			Assert.assertEquals(
+				oldResourcePermission.getActionIds(),
+				newResourcePermission.getActionIds());
+			Assert.assertEquals(
+				oldResourcePermission.isViewActionId(),
+				newResourcePermission.isViewActionId());
+		}
 	}
 
 	@Test(expected = DuplicateArticleIdException.class)

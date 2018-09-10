@@ -181,6 +181,14 @@ public class ResourcePermissionLocalServiceWrapper
 			roleName, scope, resourceActionBitwiseValue);
 	}
 
+	@Override
+	public void copyModelResourcePermissions(long companyId, String name,
+		long oldPrimKey, long newPrimKey)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_resourcePermissionLocalService.copyModelResourcePermissions(companyId,
+			name, oldPrimKey, newPrimKey);
+	}
+
 	/**
 	* Creates a new resource permission with the primary key. Does not add the resource permission to the database.
 	*

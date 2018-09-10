@@ -561,6 +561,47 @@ public class ResourcePermissionLocalServiceImpl
 		}
 	}
 
+	@Override
+	public void copyModelResourcePermissions(
+			long companyId, String name, long oldPrimKey, long newPrimKey)
+		throws PortalException {
+
+		List<ResourcePermission> oldResourcePermissions =
+			resourcePermissionPersistence.findByC_N_S_P(
+				companyId, name, ResourceConstants.SCOPE_INDIVIDUAL,
+				String.valueOf(oldPrimKey));
+
+		if (oldResourcePermissions.isEmpty()) {
+			return;
+		}
+
+		long batchCounter = counterLocalService.increment(
+			ResourcePermission.class.getName(), oldResourcePermissions.size());
+
+		batchCounter -= oldResourcePermissions.size();
+
+		for (ResourcePermission oldResourcePermission :
+				oldResourcePermissions) {
+
+			ResourcePermission resourcePermission =
+				resourcePermissionPersistence.create(++batchCounter);
+
+			resourcePermission.setCompanyId(companyId);
+			resourcePermission.setName(name);
+			resourcePermission.setScope(oldResourcePermission.getScope());
+			resourcePermission.setPrimKey(String.valueOf(newPrimKey));
+			resourcePermission.setPrimKeyId(newPrimKey);
+			resourcePermission.setRoleId(oldResourcePermission.getRoleId());
+			resourcePermission.setOwnerId(oldResourcePermission.getOwnerId());
+			resourcePermission.setActionIds(
+				oldResourcePermission.getActionIds());
+			resourcePermission.setViewActionId(
+				oldResourcePermission.isViewActionId());
+
+			resourcePermissionPersistence.update(resourcePermission);
+		}
+	}
+
 	/**
 	 * Deletes all resource permissions at the scope to resources of the type.
 	 * This method should not be confused with any of the

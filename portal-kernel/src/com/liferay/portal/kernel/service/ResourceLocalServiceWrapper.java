@@ -220,6 +220,14 @@ public class ResourceLocalServiceWrapper implements ResourceLocalService,
 			portletActions);
 	}
 
+	@Override
+	public void copyModelResources(long companyId, String name,
+		long oldPrimKey, long newPrimKey)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_resourceLocalService.copyModelResources(companyId, name, oldPrimKey,
+			newPrimKey);
+	}
+
 	/**
 	* Deletes the resource associated with the model at the scope.
 	*

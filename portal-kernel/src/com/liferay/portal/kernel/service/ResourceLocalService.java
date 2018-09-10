@@ -200,6 +200,9 @@ public interface ResourceLocalService extends BaseLocalService {
 	public void addResources(long companyId, long groupId, String name,
 		boolean portletActions) throws PortalException;
 
+	public void copyModelResources(long companyId, String name,
+		long oldPrimKey, long newPrimKey) throws PortalException;
+
 	/**
 	* Deletes the resource associated with the model at the scope.
 	*

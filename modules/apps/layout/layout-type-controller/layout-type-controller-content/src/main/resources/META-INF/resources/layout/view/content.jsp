@@ -48,7 +48,9 @@ else {
 		request.setAttribute(WebKeys.PORTLET_DECORATE, Boolean.FALSE);
 %>
 
-		<%= contentLayoutTypeControllerDisplayContext.getRenderedContent() %>
+		<div class="layout-content" id="main-content" role="main">
+			<%= contentLayoutTypeControllerDisplayContext.getRenderedContent() %>
+		</div>
 
 <%
 	}

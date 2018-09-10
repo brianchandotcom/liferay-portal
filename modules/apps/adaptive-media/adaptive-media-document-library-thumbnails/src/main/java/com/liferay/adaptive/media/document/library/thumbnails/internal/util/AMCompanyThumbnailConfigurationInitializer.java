@@ -16,6 +16,7 @@ package com.liferay.adaptive.media.document.library.thumbnails.internal.util;
 
 import com.liferay.adaptive.media.exception.AMImageConfigurationException;
 import com.liferay.adaptive.media.image.configuration.AMImageConfigurationHelper;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.util.PrefsPropsUtil;
@@ -24,6 +25,8 @@ import java.io.IOException;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -105,7 +108,8 @@ public class AMCompanyThumbnailConfigurationInitializer {
 
 		_amImageConfigurationHelper.addAMImageConfigurationEntry(
 			company.getCompanyId(), name,
-			"This image resolution was automatically added.", name, properties);
+			"This image resolution was automatically added.", _normalize(name),
+			properties);
 	}
 
 	private void _createAMDocumentLibraryThumbnailConfiguration(
@@ -122,8 +126,17 @@ public class AMCompanyThumbnailConfigurationInitializer {
 
 		_amImageConfigurationHelper.addAMImageConfigurationEntry(
 			company.getCompanyId(), name,
-			"This image resolution was automatically added.", name, properties);
+			"This image resolution was automatically added.", _normalize(name),
+			properties);
 	}
+
+	private String _normalize(String str) {
+		Matcher matcher = _pattern.matcher(str);
+
+		return matcher.replaceAll(StringPool.DASH);
+	}
+
+	private static final Pattern _pattern = Pattern.compile("[^\\w-]");
 
 	@Reference
 	private AMImageConfigurationHelper _amImageConfigurationHelper;

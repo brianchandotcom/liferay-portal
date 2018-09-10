@@ -100,6 +100,28 @@ public class AMImageUpdateConfigurationTest
 	}
 
 	@Test
+	public void testUpdateConfigurationEntryWithAlphanumericCharactersUuid()
+		throws Exception {
+
+		Map<String, String> properties = new HashMap<>();
+
+		properties.put("max-height", "100");
+		properties.put("max-width", "100");
+
+		_amImageConfigurationHelper.addAMImageConfigurationEntry(
+			TestPropsValues.getCompanyId(), "one", "desc", "1", properties);
+
+		String uuid = "one-2-three_four";
+
+		AMImageConfigurationEntry amImageConfigurationEntry =
+			_amImageConfigurationHelper.updateAMImageConfigurationEntry(
+				TestPropsValues.getCompanyId(), "1", "one", "desc", uuid,
+				properties);
+
+		Assert.assertEquals(uuid, amImageConfigurationEntry.getUUID());
+	}
+
+	@Test
 	public void testUpdateConfigurationEntryWithBlankDescription()
 		throws Exception {
 
@@ -512,6 +534,23 @@ public class AMImageUpdateConfigurationTest
 
 		_amImageConfigurationHelper.updateAMImageConfigurationEntry(
 			TestPropsValues.getCompanyId(), "1", "one", "desc", "1",
+			properties);
+	}
+
+	@Test(expected = AMImageConfigurationException.InvalidUuidException.class)
+	public void testUpdateConfigurationEntryWithNonalphanumericCharactersUuid()
+		throws Exception {
+
+		Map<String, String> properties = new HashMap<>();
+
+		properties.put("max-height", "100");
+		properties.put("max-width", "100");
+
+		_amImageConfigurationHelper.addAMImageConfigurationEntry(
+			TestPropsValues.getCompanyId(), "one", "desc", "1", properties);
+
+		_amImageConfigurationHelper.updateAMImageConfigurationEntry(
+			TestPropsValues.getCompanyId(), "1", "one", "desc", "a3%&!2",
 			properties);
 	}
 

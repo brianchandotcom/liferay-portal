@@ -31,6 +31,7 @@ import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalFolderConstants;
 import com.liferay.journal.service.JournalArticleLocalServiceUtil;
 import com.liferay.journal.test.util.JournalTestUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.ResourceConstants;
@@ -101,8 +102,10 @@ public class JournalArticleLocalServiceTest {
 				String.valueOf(newArticle.getResourcePrimKey()));
 
 		Assert.assertEquals(
-			newResourcePermissions.toString(), oldResourcePermissions.size(),
-			newResourcePermissions.size());
+			StringBundler.concat(
+				"Old resource permissions: ", oldResourcePermissions,
+				", new resource permissions: ", newResourcePermissions),
+			oldResourcePermissions.size(), newResourcePermissions.size());
 
 		for (int i = 0; i < oldResourcePermissions.size(); i++) {
 			ResourcePermission oldResourcePermission =

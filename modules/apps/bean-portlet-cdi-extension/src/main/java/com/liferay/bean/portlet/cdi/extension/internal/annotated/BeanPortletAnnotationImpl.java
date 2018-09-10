@@ -36,6 +36,7 @@ import java.util.Set;
 import javax.portlet.annotations.Dependency;
 import javax.portlet.annotations.InitParameter;
 import javax.portlet.annotations.LocaleString;
+import javax.portlet.annotations.Multipart;
 import javax.portlet.annotations.PortletApplication;
 import javax.portlet.annotations.PortletConfiguration;
 import javax.portlet.annotations.Preference;
@@ -172,6 +173,25 @@ public class BeanPortletAnnotationImpl extends BaseBeanPortletImpl {
 		_putEnglishText(
 			dictionary, "javax.portlet.info.keywords",
 			_portletConfiguration.keywords());
+
+		Multipart multipart = _portletConfiguration.multipart();
+
+		if (multipart.supported()) {
+			dictionary.put(
+				"javax.portlet.multipart.file-size-threshold",
+				multipart.fileSizeThreshold());
+
+			dictionary.put(
+				"javax.portlet.multipart.location", multipart.location());
+
+			dictionary.put(
+				"javax.portlet.multipart.max-file-size",
+				multipart.maxFileSize());
+
+			dictionary.put(
+				"javax.portlet.multipart.max-request-size",
+				multipart.maxRequestSize());
+		}
 
 		_putEnglishText(
 			dictionary, "javax.portlet.info.short-title",

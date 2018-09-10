@@ -26,7 +26,6 @@ import org.apache.tools.ant.RuntimeConfigurable;
 import org.apache.tools.ant.Task;
 
 /**
- * @author Cesar Polanco
  * @author Michael Hashimoto
  */
 public class AntUtil {

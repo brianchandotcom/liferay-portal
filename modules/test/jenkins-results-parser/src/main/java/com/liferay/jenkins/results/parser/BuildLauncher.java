@@ -236,18 +236,24 @@ public class BuildLauncher {
 
 			JSONArray actionsJSONArray = jsonObject.getJSONArray("actions");
 
-			JSONObject actionsJSONObject = actionsJSONArray.getJSONObject(0);
+			for (int i = 0; i < actionsJSONArray.length(); i++) {
+				JSONObject actionJSONObject = actionsJSONArray.getJSONObject(i);
 
-			JSONArray parametersJSONArray = actionsJSONObject.getJSONArray(
-				"parameters");
+				if (!actionJSONObject.has("parameters")) {
+					continue;
+				}
 
-			for (int i = 0; i < parametersJSONArray.length(); i++) {
-				JSONObject parameterJSONObject =
-					parametersJSONArray.getJSONObject(i);
+				JSONArray parametersJSONArray = actionJSONObject.getJSONArray(
+					"parameters");
 
-				jenkinsBuildParameters.put(
-					parameterJSONObject.getString("name"),
-					parameterJSONObject.getString("value"));
+				for (int j = 0; j < parametersJSONArray.length(); j++) {
+					JSONObject parameterJSONObject =
+						parametersJSONArray.getJSONObject(j);
+
+					jenkinsBuildParameters.put(
+						parameterJSONObject.getString("name"),
+						parameterJSONObject.getString("value"));
+				}
 			}
 		}
 		catch (IOException ioe) {

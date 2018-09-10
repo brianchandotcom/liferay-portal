@@ -25,7 +25,6 @@ import com.liferay.petra.process.local.LocalProcessLauncher;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.MethodCache;
 import com.liferay.portal.kernel.util.MethodKey;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -451,7 +450,7 @@ public class NewEnvTestRule implements TestRule {
 
 		@Override
 		public void evaluate() throws Throwable {
-			MethodCache.reset();
+			MethodKey.resetCache();
 
 			Thread currentThread = Thread.currentThread();
 
@@ -496,7 +495,7 @@ public class NewEnvTestRule implements TestRule {
 
 				currentThread.setContextClassLoader(contextClassLoader);
 
-				MethodCache.reset();
+				MethodKey.resetCache();
 			}
 		}
 

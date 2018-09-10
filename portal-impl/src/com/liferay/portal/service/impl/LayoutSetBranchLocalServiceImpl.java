@@ -168,6 +168,11 @@ public class LayoutSetBranchLocalServiceImpl
 						layout.getPlid(), true);
 
 				if (lastLayoutRevision != null) {
+					int workflowAction = serviceContext.getWorkflowAction();
+
+					serviceContext.setWorkflowAction(
+						WorkflowConstants.ACTION_PUBLISH);
+
 					layoutRevisionLocalService.addLayoutRevision(
 						userId, layoutSetBranchId,
 						layoutBranch.getLayoutBranchId(),
@@ -187,6 +192,8 @@ public class LayoutSetBranchLocalServiceImpl
 						lastLayoutRevision.getThemeId(),
 						lastLayoutRevision.getColorSchemeId(),
 						lastLayoutRevision.getCss(), serviceContext);
+
+					serviceContext.setWorkflowAction(workflowAction);
 				}
 				else {
 					layoutRevisionLocalService.addLayoutRevision(

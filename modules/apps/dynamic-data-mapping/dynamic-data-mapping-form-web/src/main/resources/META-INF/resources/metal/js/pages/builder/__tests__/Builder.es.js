@@ -117,6 +117,7 @@ describe(
 					{
 						fieldTypes,
 						pages,
+						paginationMode: 'wizard',
 						spritemap
 					}
 				);
@@ -387,6 +388,40 @@ describe(
 
 				expect(spy).toHaveBeenCalled();
 				expect(spy).toHaveBeenCalledWith('fieldDeleted', expect.anything());
+			}
+		);
+
+		it(
+			'should not open sidebar when the delete current page option item is clicked',
+			() => {
+				const spy = jest.spyOn(component, 'emit');
+
+				const componentPages = [...pages, ...pages];
+
+				const builderComponent = new Builder(
+					{
+						fieldTypes,
+						pages: componentPages,
+						paginationMode: 'wizard',
+						spritemap
+					}
+				);
+				const data = {
+					item: {
+						settingsItem: 'reset-page'
+					}
+				};
+				const {FormRenderer} = builderComponent.refs;
+
+				FormRenderer._handleSettingsPageClicked(
+					{
+						data
+					}
+				);
+
+				jest.runAllTimers();
+
+				expect(spy).not.toHaveBeenCalled();
 			}
 		);
 	}

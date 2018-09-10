@@ -42,11 +42,27 @@ describe(
 		);
 
 		it(
-			'should render a layout with pages',
+			'should render a layout in wizard mode',
 			() => {
 				component = new FormRenderer(
 					{
 						pages,
+						paginationMode: 'wizard',
+						spritemap
+					}
+				);
+
+				expect(component).toMatchSnapshot();
+			}
+		);
+
+		it(
+			'should render a layout in pagination mode',
+			() => {
+				component = new FormRenderer(
+					{
+						pages,
+						paginationMode: 'pagination',
 						spritemap
 					}
 				);
@@ -77,6 +93,7 @@ describe(
 					{
 						editable: true,
 						pages,
+						paginationMode: 'wizard',
 						spritemap
 					}
 				);
@@ -93,6 +110,7 @@ describe(
 						dragAndDropDisabled: true,
 						editable: true,
 						pages,
+						paginationMode: 'wizard',
 						spritemap
 					}
 				);
@@ -109,6 +127,7 @@ describe(
 						dragAndDropDisabled: true,
 						editable: true,
 						pages,
+						paginationMode: 'wizard',
 						spritemap
 					}
 				);
@@ -134,6 +153,7 @@ describe(
 						dragAndDropDisabled: true,
 						editable: true,
 						pages,
+						paginationMode: 'wizard',
 						spritemap
 					}
 				);
@@ -159,6 +179,7 @@ describe(
 						dragAndDropDisabled: true,
 						editable: true,
 						pages,
+						paginationMode: 'wizard',
 						spritemap
 					}
 				);
@@ -186,6 +207,7 @@ describe(
 						dragAndDropDisabled: true,
 						editable: true,
 						pages: newPages,
+						paginationMode: 'wizard',
 						spritemap
 					}
 				);
@@ -196,6 +218,88 @@ describe(
 
 				MetalTestUtil.triggerEvent(pageWizard, 'click', {});
 
+				expect(component).toMatchSnapshot();
+			}
+		);
+
+		it(
+			'should change the pagination mode when switch pagination mode is clicked',
+			() => {
+				const newPages = [...pages, ...pages];
+
+				component = new FormRenderer(
+					{
+						dragAndDropDisabled: true,
+						editable: true,
+						pages: newPages,
+						paginationMode: 'wizard',
+						spritemap
+					}
+				);
+				const spy = jest.spyOn(component, 'emit');
+
+				component._handleSettingsPageClicked(
+					{
+						data: {
+							item: {
+								settingsItem: 'switch-page'
+							}
+						}
+					}
+				);
+
+				jest.runAllTimers();
+
+				expect(spy).toHaveBeenCalledWith('paginationModeUpdated');
+				expect(component).toMatchSnapshot();
+			}
+		);
+
+		it(
+			'should back the pagination mode to wizard mode when user clicks in switch page on the settings menu',
+			() => {
+				const newPages = [...pages, ...pages];
+
+				component = new FormRenderer(
+					{
+						dragAndDropDisabled: true,
+						editable: true,
+						pages: newPages,
+						paginationMode: 'wizard',
+						spritemap
+					}
+				);
+				const spy = jest.spyOn(component, 'emit');
+
+				component._handleSettingsPageClicked(
+					{
+						data: {
+							item: {
+								settingsItem: 'switch-page'
+							}
+						}
+					}
+				);
+
+				jest.runAllTimers();
+
+				expect(spy).toHaveBeenCalled();
+
+				jest.useFakeTimers();
+
+				component._handleSettingsPageClicked(
+					{
+						data: {
+							item: {
+								settingsItem: 'switch-page'
+							}
+						}
+					}
+				);
+
+				jest.runAllTimers();
+
+				expect(spy).toHaveBeenCalledWith('paginationModeUpdated');
 				expect(component).toMatchSnapshot();
 			}
 		);
@@ -217,6 +321,7 @@ describe(
 						dragAndDropDisabled: true,
 						editable: true,
 						pages: newPages,
+						paginationMode: 'wizard',
 						spritemap
 					}
 				);
@@ -232,12 +337,120 @@ describe(
 		);
 
 		it(
+			'should change the active by clicking on the pagination when the page mode is in pagination mode',
+			() => {
+				const newPages = [...pages, ...pages];
+
+				component = new FormRenderer(
+					{
+						dragAndDropDisabled: true,
+						editable: true,
+						pages: newPages,
+						paginationMode: 'pagination',
+						spritemap
+					}
+				);
+
+				jest.runAllTimers();
+
+				jest.useFakeTimers();
+
+				const paginatorItem = component.element.querySelector('.ddm-pagination .page-item[data-page-id="1"]');
+
+				MetalTestUtil.triggerEvent(paginatorItem, 'click', {});
+
+				jest.runAllTimers();
+
+				expect(component).toMatchSnapshot();
+			}
+		);
+
+		it(
+			'should change the active by clicking on the arrow right icon in the pagination button',
+			() => {
+				const newPages = [...pages, ...pages];
+
+				component = new FormRenderer(
+					{
+						activePage: 0,
+						dragAndDropDisabled: true,
+						editable: true,
+						pages: newPages,
+						paginationMode: 'pagination',
+						spritemap
+					}
+				);
+
+				jest.runAllTimers();
+
+				const spy = jest.spyOn(component, 'emit');
+
+				component._handlePaginationRightClicked();
+
+				expect(spy).toHaveBeenCalledWith(
+					'activePageUpdated',
+					1
+				);
+			}
+		);
+
+		it(
+			'should change the active by clicking on the arrow left icon in the pagination button',
+			() => {
+				const newPages = [...pages, ...pages];
+
+				component = new FormRenderer(
+					{
+						activePage: 1,
+						dragAndDropDisabled: true,
+						editable: true,
+						pages: newPages,
+						paginationMode: 'pagination',
+						spritemap
+					}
+				);
+
+				jest.runAllTimers();
+
+				const spy = jest.spyOn(component, 'emit');
+
+				component._handlePaginationLeftClicked();
+
+				expect(spy).toHaveBeenCalledWith(
+					'activePageUpdated',
+					0
+				);
+			}
+		);
+
+		it(
+			'should propagate field edit event',
+			() => {
+				component = new FormRenderer(
+					{
+						editable: true,
+						pages,
+						paginationMode: 'wizard',
+						spritemap
+					}
+				);
+
+				const spy = jest.spyOn(component, 'emit');
+
+				component._handleFieldEdited();
+
+				expect(spy).toHaveBeenCalled();
+			}
+		);
+
+		it(
 			'should render a layout and emit the field move event',
 			() => {
 				component = new FormRenderer(
 					{
 						editable: true,
 						pages,
+						paginationMode: 'wizard',
 						spritemap
 					}
 				);
@@ -281,6 +494,7 @@ describe(
 					{
 						editable: true,
 						pages,
+						paginationMode: 'wizard',
 						spritemap
 					}
 				);
@@ -308,6 +522,7 @@ describe(
 					{
 						editable: true,
 						pages,
+						paginationMode: 'wizard',
 						spritemap
 					}
 				);
@@ -322,7 +537,8 @@ describe(
 
 				component.setState(
 					{
-						pages: newmockPages
+						pages: newmockPages,
+						paginationMode: 'wizard'
 					}
 				);
 
@@ -340,6 +556,7 @@ describe(
 					{
 						editable: false,
 						pages,
+						paginationMode: 'wizard',
 						spritemap
 					}
 				);
@@ -350,7 +567,8 @@ describe(
 
 				component.setState(
 					{
-						pages: newmockPages
+						pages: newmockPages,
+						paginationMode: 'wizard'
 					}
 				);
 
@@ -368,6 +586,7 @@ describe(
 						dragAndDropDisabled: true,
 						editable: true,
 						pages,
+						paginationMode: 'wizard',
 						spritemap
 					}
 				);
@@ -378,7 +597,8 @@ describe(
 
 				component.setState(
 					{
-						pages: newmockPages
+						pages: newmockPages,
+						paginationMode: 'wizard'
 					}
 				);
 
@@ -413,6 +633,7 @@ describe(
 					{
 						editable: true,
 						pages: newmockPages,
+						paginationMode: 'wizard',
 						spritemap
 					}
 				);
@@ -446,6 +667,7 @@ describe(
 					{
 						editable: false,
 						pages: newmockPages,
+						paginationMode: 'wizard',
 						spritemap
 					}
 				);
@@ -461,6 +683,7 @@ describe(
 					{
 						editable: true,
 						pages,
+						paginationMode: 'wizard',
 						spritemap
 					}
 				);
@@ -490,6 +713,7 @@ describe(
 					{
 						editable: true,
 						pages,
+						paginationMode: 'wizard',
 						spritemap
 					}
 				);
@@ -522,6 +746,7 @@ describe(
 							{
 								editable: true,
 								pages,
+								paginationMode: 'wizard',
 								spritemap
 							}
 						);
@@ -549,6 +774,7 @@ describe(
 							{
 								editable: true,
 								pages,
+								paginationMode: 'wizard',
 								spritemap
 							}
 						);
@@ -578,6 +804,7 @@ describe(
 							{
 								editable: true,
 								pages: pagesTemp,
+								paginationMode: 'wizard',
 								spritemap
 							}
 						);
@@ -595,6 +822,10 @@ describe(
 								{
 									'label': Liferay.Language.get('delete-current-page'),
 									'settingsItem': 'delete-page'
+								},
+								{
+									'label': 'switch-pagination-mode',
+									'settingsItem': 'switch-page'
 								}
 							]
 						);
@@ -609,6 +840,7 @@ describe(
 							{
 								editable: true,
 								pages,
+								paginationMode: 'wizard',
 								spritemap
 							}
 						);
@@ -626,6 +858,10 @@ describe(
 								{
 									'label': Liferay.Language.get('reset-page'),
 									'settingsItem': 'reset-page'
+								},
+								{
+									'label': 'switch-pagination-mode',
+									'settingsItem': 'switch-page'
 								}
 							]
 						);
@@ -642,6 +878,7 @@ describe(
 							{
 								editable: true,
 								pages: newPages,
+								paginationMode: 'wizard',
 								spritemap
 							}
 						);

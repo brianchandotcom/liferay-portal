@@ -142,17 +142,17 @@ class FormRenderer extends Component {
 					'settingsItem': 'delete-page'
 				}
 			);
-			
+
 			let label = Liferay.Language.get('switch-pagination-to-top');
 
-			if(this.paginationMode == 'wizard') {
+			if (this.paginationMode == 'wizard') {
 				label = Liferay.Language.get('switch-pagination-to-bottom');
 			}
 
 			pageSettingsItems.push({
 				label,
 				settingsItem: 'switch-page'
-			})
+			});
 		}
 
 		return pageSettingsItems;

@@ -1049,7 +1049,7 @@ public class JenkinsResultsParserUtil {
 			String item = null;
 
 			while (true) {
-				item = list.get(getRandomValue(0, list.size() - 1));
+				item = getRandomString(list);
 
 				if (randomList.contains(item)) {
 					continue;
@@ -1062,6 +1062,10 @@ public class JenkinsResultsParserUtil {
 		}
 
 		return randomList;
+	}
+
+	public static String getRandomString(List<String> list) {
+		return list.get(getRandomValue(0, list.size() - 1));
 	}
 
 	public static int getRandomValue(int start, int end) {

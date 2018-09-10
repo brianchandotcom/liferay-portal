@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite hostname="" id="0" errors="0" failures="0" name="Jest" package="" skipped="0" tests="105" time="0" timestamp="1536606894897">
+  <testcase classname="RuleList" name="RuleList should remove one rule item when delete button gets clicked" time="0.116">
+  </testcase>
+  <testcase classname="RuleList" name="RuleList should return the field label for each action" time="0.023">
+  </testcase>
+  <testcase classname="RuleList" name="RuleList should show add button when listing the rules" time="0.014">
+  </testcase>
+  <testcase classname="RuleList" name="RuleList should  hide translation manager and form basic info when listing the rules" time="0.006">
+  </testcase>
+  <testcase classname="RuleList" name="RuleList should show message when rule list is empty" time="0.014">
+  </testcase>
+  <testcase classname="RuleBuilder" name="RuleBuilder should render the list of rules when mode is set to view" time="0.099">
+  </testcase>
+  <testcase classname="RuleBuilder" name="RuleBuilder should render rule screen editor when click edit button" time="0.036">
+  </testcase>
+  <testcase classname="RuleBuilder" name="RuleBuilder should render rule screen editor when click add rule button" time="0.027">
+  </testcase>
+  <testcase classname="FormSupport" name="FormSupport add a new row to the pages and reorder" time="0.01">
+  </testcase>
+  <testcase classname="FormSupport" name="FormSupport should return an implementation of a row for the pages" time="0.001">
+  </testcase>
+  <testcase classname="FormSupport" name="FormSupport should get a specific field through the pages" time="0.001">
+  </testcase>
+  <testcase classname="FormSupport" name="FormSupport add a new field to column to the pages" time="0.002">
+  </testcase>
+  <testcase classname="FormSupport" name="FormSupport should not add an empty object to the column when the field is not passed" time="0.001">
+  </testcase>
+  <testcase classname="FormSupport" name="FormSupport should add a new fields to column void" time="0.001">
+  </testcase>
+  <testcase classname="FormSupport" name="FormSupport should not add new fields to the column as a way to remove" time="0.001">
+  </testcase>
+  <testcase classname="FormSupport" name="FormSupport should remove a column from pages and reorder" time="0.001">
+  </testcase>
+  <testcase classname="FormSupport" name="FormSupport should remove a fields to column from pages" time="0.002">
+  </testcase>
+  <testcase classname="FormSupport" name="FormSupport should remove a row from pages and reorder" time="0.002">
+  </testcase>
+  <testcase classname="FormSupport" name="FormSupport should get a column from pages" time="0">
+  </testcase>
+  <testcase classname="FormSupport" name="FormSupport should get a row from pages" time="0.001">
+  </testcase>
+  <testcase classname="FormSupport" name="FormSupport should return true if there are fields in the pages line" time="0.001">
+  </testcase>
+  <testcase classname="FormSupport" name="FormSupport should return false if there are fields in the pages line" time="0.001">
+  </testcase>
+  <testcase classname="FormSupport" name="FormSupport should extract the location of the field through the element" time="0.001">
+  </testcase>
+  <testcase classname="FormSupport" name="FormSupport should extract the location of the row through the element" time="0.002">
+  </testcase>
+  <testcase classname="FormSupport" name="FormSupport should update a field" time="0.003">
+  </testcase>
+  <testcase classname="PagesVisitor" name="PagesVisitor should be able to change pages" time="0.008">
+  </testcase>
+  <testcase classname="PagesVisitor" name="PagesVisitor should be able to change rows" time="0.001">
+  </testcase>
+  <testcase classname="PagesVisitor" name="PagesVisitor should be able to change columns" time="0.002">
+  </testcase>
+  <testcase classname="PagesVisitor" name="PagesVisitor should be able to change fields" time="0.001">
+  </testcase>
+  <testcase classname="FieldsLoader" name="FieldsLoader should list the packages that depend on the list of past dependencies" time="0.012">
+  </testcase>
+  <testcase classname="FieldsLoader" name="FieldsLoader should list the packages that depend on the list of past dependencies and ignore themselves" time="0.001">
+  </testcase>
+  <testcase classname="FieldsLoader" name="FieldsLoader should return an empty list when dependencies to compare are not passed" time="0.001">
+  </testcase>
+  <testcase classname="FieldsLoader" name="FieldsLoader should load fields when there are packages with dependencies from the list of past dependencies" time="0.003">
+  </testcase>
+  <testcase classname="FieldsLoader" name="FieldsLoader should not load fields when the dependencies to compare are empty and only call the callback" time="0.001">
+  </testcase>
+  <testcase classname="FieldsLoader" name="FieldsLoader should not load fields when the dependencies to compare is not passed and only call the callback" time="0.007">
+  </testcase>
+  <testcase classname="Internationlization" name="Internationlization should create a localized property for a specific object string value" time="0.004">
+  </testcase>
+  <testcase classname="Internationlization" name="Internationlization should replace a localized value for a specific object string" time="0.001">
+  </testcase>
+  <testcase classname="LayoutProvider" name="LayoutProvider should receive pages through PROPS and move to the internal state" time="0.027">
+  </testcase>
+  <testcase classname="LayoutProvider" name="LayoutProvider should attach the events to the child component" time="0.017">
+  </testcase>
+  <testcase classname="LayoutProvider" name="LayoutProvider should pass to the child component the pages of the internal state" time="0.017">
+  </testcase>
+  <testcase classname="LayoutProvider" name="LayoutProvider should pass to the child component the focusedField" time="0.013">
+  </testcase>
+  <testcase classname="LayoutProvider" name="LayoutProvider should pass to the child component the mode" time="0.005">
+  </testcase>
+  <testcase classname="LayoutProvider" name="LayoutProvider Field events fieldMoved should listen to the fieldMoved event and move the field to the row in pages" time="0.023">
+  </testcase>
+  <testcase classname="LayoutProvider" name="LayoutProvider Field events fieldMoved should listen to the pagesUpdated event" time="0.011">
+  </testcase>
+  <testcase classname="LayoutProvider" name="LayoutProvider Field events fieldMoved should listen to the fieldMoved event and move the field to the column in pages" time="0.019">
+  </testcase>
+  <testcase classname="LayoutProvider" name="LayoutProvider Field events fieldMoved should move the field to the column in pages and remove the row if there are no fields" time="0.007">
+  </testcase>
+  <testcase classname="LayoutProvider" name="LayoutProvider Field events fieldMoved should move the field to the row in pages and remove the row if there are no fields" time="0.006">
+  </testcase>
+  <testcase classname="LayoutProvider" name="LayoutProvider Field events fieldAdded should listen the fieldAdded event and add the field in the column to the pages" time="0.008">
+  </testcase>
+  <testcase classname="LayoutProvider" name="LayoutProvider Field events fieldAdded should listen the fieldAdded event and add the field in the row to the pages" time="0.01">
+  </testcase>
+  <testcase classname="LayoutProvider" name="LayoutProvider Field events fieldAdded should update the focusedField with the location of the new field when adding to the pages" time="0.005">
+  </testcase>
+  <testcase classname="LayoutProvider" name="LayoutProvider Field events deleteField should listen the fieldDeleted event and delete the field in the column to the pages" time="0.006">
+  </testcase>
+  <testcase classname="LayoutProvider" name="LayoutProvider Field events duplicateField should listen the duplicate field event and add this field in the pages" time="0.005">
+  </testcase>
+  <testcase classname="LayoutProvider" name="LayoutProvider Field events fieldClicked should listen the fieldClicked event and change the state of the focusedField to the data receive" time="0.003">
+  </testcase>
+  <testcase classname="Sidebar" name="Sidebar should render the default markup" time="0.136">
+  </testcase>
+  <testcase classname="Sidebar" name="Sidebar should render a Sidebar open" time="0.112">
+  </testcase>
+  <testcase classname="Sidebar" name="Sidebar should render a Sidebar closed" time="0.044">
+  </testcase>
+  <testcase classname="Sidebar" name="Sidebar should render a Sidebar with fieldTypes" time="0.063">
+  </testcase>
+  <testcase classname="Sidebar" name="Sidebar should render a Sidebar with spritemap" time="0.04">
+  </testcase>
+  <testcase classname="Sidebar" name="Sidebar Interaction with markup should close Sidebar when click the button close" time="0.028">
+  </testcase>
+  <testcase classname="PageRenderer" name="PageRenderer should resize a specific column on the drag and drop layout" time="0.283">
+  </testcase>
+  <testcase classname="PageRenderer" name="PageRenderer should display empty drag message when there are rows with no columns specified" time="0.052">
+  </testcase>
+  <testcase classname="PageRenderer" name="PageRenderer should change the page title" time="0.17">
+  </testcase>
+  <testcase classname="PageRenderer" name="PageRenderer should change the page title" time="0.1">
+  </testcase>
+  <testcase classname="PageRenderer" name="PageRenderer should render a layout and emit an event when delete button is clicked" time="0.061">
+  </testcase>
+  <testcase classname="PageRenderer" name="PageRenderer should render a layout and emit an event when duplicate button is clicked" time="0.061">
+  </testcase>
+  <testcase classname="PageRenderer" name="PageRenderer should render a layout with emit an field clicked event" time="0.037">
+  </testcase>
+  <testcase classname="PageRenderer" name="PageRenderer should emit a fieldClicked event with the field location" time="0.027">
+  </testcase>
+  <testcase classname="Builder" name="Builder should render the default markup" time="0.374">
+  </testcase>
+  <testcase classname="Builder" name="Builder should continue to propagate the fieldAdded event" time="0.103">
+  </testcase>
+  <testcase classname="Builder" name="Builder should continue to propagate the fieldEdited event" time="0.076">
+  </testcase>
+  <testcase classname="Builder" name="Builder should continue to propagate the fieldMoved event" time="0.071">
+  </testcase>
+  <testcase classname="Builder" name="Builder should reset the page title and description when it is reseted" time="0.129">
+  </testcase>
+  <testcase classname="Builder" name="Builder should open sidebar when the reset page option item is clicked" time="0.099">
+  </testcase>
+  <testcase classname="Builder" name="Builder should not open sidebar when the delete current page option item is clicked" time="0.096">
+  </testcase>
+  <testcase classname="FormRenderer" name="FormRenderer should render default markup" time="0.032">
+  </testcase>
+  <testcase classname="FormRenderer" name="FormRenderer should render a layout in wizard mode" time="0.071">
+  </testcase>
+  <testcase classname="FormRenderer" name="FormRenderer should render a layout in pagination mode" time="0.03">
+  </testcase>
+  <testcase classname="FormRenderer" name="FormRenderer should render a layout with pages in mode of list" time="0.007">
+  </testcase>
+  <testcase classname="FormRenderer" name="FormRenderer should render a layout in editable mode" time="0.057">
+  </testcase>
+  <testcase classname="FormRenderer" name="FormRenderer should render a layout with disabled drag and drop" time="0.038">
+  </testcase>
+  <testcase classname="FormRenderer" name="FormRenderer should receive an update page event and propage it" time="0.071">
+  </testcase>
+  <testcase classname="FormRenderer" name="FormRenderer should receive a delete button event and propage it" time="0.06">
+  </testcase>
+  <testcase classname="FormRenderer" name="FormRenderer should receive a duplicate button event and propage it" time="0.056">
+  </testcase>
+  <testcase classname="FormRenderer" name="FormRenderer should change the active page" time="0.064">
+  </testcase>
+  <testcase classname="FormRenderer" name="FormRenderer should change the pagination mode when switch pagination mode is clicked" time="0.053">
+  </testcase>
+  <testcase classname="FormRenderer" name="FormRenderer should back the pagination mode to wizard mode when user clicks in switch page on the settings menu" time="0.06">
+  </testcase>
+  <testcase classname="FormRenderer" name="FormRenderer should change the active page for a empty page" time="0.029">
+  </testcase>
+  <testcase classname="FormRenderer" name="FormRenderer should change the active by clicking on the pagination when the page mode is in pagination mode" time="0.089">
+  </testcase>
+  <testcase classname="FormRenderer" name="FormRenderer should change the active by clicking on the arrow right icon in the pagination button" time="0.042">
+  </testcase>
+  <testcase classname="FormRenderer" name="FormRenderer should change the active by clicking on the arrow left icon in the pagination button" time="0.049">
+  </testcase>
+  <testcase classname="FormRenderer" name="FormRenderer should propagate field edit event" time="0.026">
+  </testcase>
+  <testcase classname="FormRenderer" name="FormRenderer should render a layout and emit the field move event" time="0.033">
+  </testcase>
+  <testcase classname="FormRenderer" name="FormRenderer should render a layout and ignore the field move when there is no target" time="0.028">
+  </testcase>
+  <testcase classname="FormRenderer" name="FormRenderer should render a layout and reset drag and drop to every change of API pages when editable is true" time="0.04">
+  </testcase>
+  <testcase classname="FormRenderer" name="FormRenderer should render a layout and if it is not editable should not reset the drag-and-drop feature for all API page changes" time="0.025">
+  </testcase>
+  <testcase classname="FormRenderer" name="FormRenderer should render a layout and if it is disabled should not reset the drag-and-drop feature for all API page changes" time="0.045">
+  </testcase>
+  <testcase classname="FormRenderer" name="FormRenderer should render a layout with an empty field only in editable mode" time="0.029">
+  </testcase>
+  <testcase classname="FormRenderer" name="FormRenderer should not render the layout with the field empty in non-editable mode" time="0.014">
+  </testcase>
+  <testcase classname="FormRenderer" name="FormRenderer should change the form page title" time="0.048">
+  </testcase>
+  <testcase classname="FormRenderer" name="FormRenderer should change the form page description" time="0.056">
+  </testcase>
+  <testcase classname="FormRenderer" name="FormRenderer PagesSettings should add a new page on the layout render" time="0.057">
+  </testcase>
+  <testcase classname="FormRenderer" name="FormRenderer PagesSettings should reset the current page on layout render" time="0.036">
+  </testcase>
+  <testcase classname="FormRenderer" name="FormRenderer PagesSettings should show delete-field option, when the form builder has more than one page" time="0.044">
+  </testcase>
+  <testcase classname="FormRenderer" name="FormRenderer PagesSettings should show reset-field option, when the form builder has only one page" time="0.039">
+  </testcase>
+  <testcase classname="FormRenderer" name="FormRenderer PagesSettings should delete the current page on layout render" time="0.042">
+  </testcase>
+</testsuite>

@@ -647,7 +647,7 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>The service context of the action JSP.</description>
+			<description>The action JSP's service context.</description>
 			<name>actionJspServletContext</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -707,7 +707,7 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>Custom HTML to be placed as the thumbnail.</description>
+			<description>The custom HTML to use as the thumbnail.</description>
 			<name>html</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -718,7 +718,7 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>If a <![CDATA[<code>rowChecker</code>]]> value is passed, a <![CDATA[<code>resultRow</code>]]> is mandatory. A result row is of type <![CDATA[<code>com.liferay.portal.kernel.dao.search.ResultRow</code>]]>.</description>
+			<description>If a row checker value is passed, a result row value is mandatory. A result row is of type <![CDATA[<code>com.liferay.portal.kernel.dao.search.ResultRow</code>]]>.</description>
 			<name>resultRow</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -736,7 +736,7 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>Text to add as a subtitle in the text zone, if the card is vertical.</description>
+			<description>The text to add as a subtitle in the text zone, if the card is vertical.</description>
 			<name>subtitle</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>

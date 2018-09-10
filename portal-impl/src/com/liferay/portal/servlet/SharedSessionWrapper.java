@@ -240,15 +240,16 @@ public class SharedSessionWrapper implements HttpSession {
 	private static final Log _log = LogFactoryUtil.getLog(
 		SharedSessionWrapper.class);
 
-	private static final Map<String, String> _sharedSessionAttributesExcludes;
+	private static final Map<String, String> _sharedSessionAttributesExcludes =
+		new HashMap<String, String>() {
+			{
+				for (String name :
+						PropsValues.SESSION_SHARED_ATTRIBUTES_EXCLUDES) {
 
-	static {
-		_sharedSessionAttributesExcludes = new HashMap<>();
-
-		for (String name : PropsValues.SESSION_SHARED_ATTRIBUTES_EXCLUDES) {
-			_sharedSessionAttributesExcludes.put(name, name);
-		}
-	}
+					put(name, name);
+				}
+			}
+		};
 
 	private final HttpSession _portalSession;
 	private HttpSession _portletSession;

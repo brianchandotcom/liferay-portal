@@ -43,16 +43,19 @@ public class GroupSearch extends SearchContainer<Group> {
 
 	public static final String EMPTY_RESULTS_MESSAGE = "no-sites-were-found";
 
-	public static List<String> headerNames = new ArrayList<>();
-	public static Map<String, String> orderableHeaders = new HashMap<>();
-
-	static {
-		headerNames.add("name");
-		headerNames.add("type");
-
-		orderableHeaders.put("name", "name");
-		orderableHeaders.put("type", "type");
-	}
+	public static List<String> headerNames = new ArrayList<String>() {
+		{
+			add("name");
+			add("type");
+		}
+	};
+	public static Map<String, String> orderableHeaders =
+		new HashMap<String, String>() {
+			{
+				put("name", "name");
+				put("type", "type");
+			}
+		};
 
 	public GroupSearch(PortletRequest portletRequest, PortletURL iteratorURL) {
 		super(

@@ -1253,55 +1253,61 @@ public class DLImpl implements DL {
 	private static final Log _log = LogFactoryUtil.getLog(DLImpl.class);
 
 	private static final Set<String> _allMediaGalleryMimeTypes =
-		new TreeSet<>();
-	private static final Set<String> _fileIcons = new HashSet<>();
+		new TreeSet<String>() {
+			{
+				addAll(
+					SetUtil.fromArray(
+						PropsUtil.getArray(
+							PropsKeys.DL_FILE_ENTRY_PREVIEW_AUDIO_MIME_TYPES)));
+				addAll(
+					SetUtil.fromArray(
+						PropsUtil.getArray(
+							PropsKeys.DL_FILE_ENTRY_PREVIEW_VIDEO_MIME_TYPES)));
+				addAll(
+					SetUtil.fromArray(
+						PropsUtil.getArray(
+							PropsKeys.DL_FILE_ENTRY_PREVIEW_IMAGE_MIME_TYPES)));
+			}
+		};
+
+	private static final Set<String> _fileIcons = new HashSet<String>() {
+		{
+			String[] fileIcons = null;
+
+			try {
+				fileIcons = PropsUtil.getArray(PropsKeys.DL_FILE_ICONS);
+			}
+			catch (Exception e) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(e, e);
+				}
+
+				fileIcons = new String[] {StringPool.BLANK};
+			}
+
+			for (int i = 0; i < fileIcons.length; i++) {
+
+				// Only process non wildcard extensions
+
+				if (!StringPool.STAR.equals(fileIcons[i])) {
+
+					// Strip starting period
+
+					String extension = fileIcons[i];
+
+					if (extension.length() > 0) {
+						extension = extension.substring(1);
+					}
+
+					add(extension);
+				}
+			}
+		}
+	};
+
 	private static final Map<String, String> _genericNames = new HashMap<>();
 
 	static {
-		_allMediaGalleryMimeTypes.addAll(
-			SetUtil.fromArray(
-				PropsUtil.getArray(
-					PropsKeys.DL_FILE_ENTRY_PREVIEW_AUDIO_MIME_TYPES)));
-		_allMediaGalleryMimeTypes.addAll(
-			SetUtil.fromArray(
-				PropsUtil.getArray(
-					PropsKeys.DL_FILE_ENTRY_PREVIEW_VIDEO_MIME_TYPES)));
-		_allMediaGalleryMimeTypes.addAll(
-			SetUtil.fromArray(
-				PropsUtil.getArray(
-					PropsKeys.DL_FILE_ENTRY_PREVIEW_IMAGE_MIME_TYPES)));
-
-		String[] fileIcons = null;
-
-		try {
-			fileIcons = PropsUtil.getArray(PropsKeys.DL_FILE_ICONS);
-		}
-		catch (Exception e) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(e, e);
-			}
-
-			fileIcons = new String[] {StringPool.BLANK};
-		}
-
-		for (int i = 0; i < fileIcons.length; i++) {
-
-			// Only process non wildcard extensions
-
-			if (!StringPool.STAR.equals(fileIcons[i])) {
-
-				// Strip starting period
-
-				String extension = fileIcons[i];
-
-				if (extension.length() > 0) {
-					extension = extension.substring(1);
-				}
-
-				_fileIcons.add(extension);
-			}
-		}
-
 		String[] genericNames = PropsUtil.getArray(
 			PropsKeys.DL_FILE_GENERIC_NAMES);
 

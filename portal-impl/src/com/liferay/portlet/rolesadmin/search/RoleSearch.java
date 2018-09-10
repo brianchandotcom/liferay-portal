@@ -44,26 +44,30 @@ public class RoleSearch extends SearchContainer<Role> {
 
 	public static final String EMPTY_RESULTS_MESSAGE = "no-roles-were-found";
 
-	public static List<String> headerNames = new ArrayList<>();
-	public static Map<String, String> orderableHeaders = new HashMap<>();
+	public static List<String> headerNames = new ArrayList<String>() {
+		{
+			add("title");
+			add("type");
 
-	static {
-		headerNames.add("title");
-		headerNames.add("type");
+			if ((PropsValues.ROLES_ORGANIZATION_SUBTYPES.length > 0) ||
+				(PropsValues.ROLES_REGULAR_SUBTYPES.length > 0) ||
+				(PropsValues.ROLES_SITE_SUBTYPES.length > 0)) {
 
-		if ((PropsValues.ROLES_ORGANIZATION_SUBTYPES.length > 0) ||
-			(PropsValues.ROLES_REGULAR_SUBTYPES.length > 0) ||
-			(PropsValues.ROLES_SITE_SUBTYPES.length > 0)) {
+				add("subtype");
+			}
 
-			headerNames.add("subtype");
+			add("description");
 		}
+	};
 
-		headerNames.add("description");
-
-		orderableHeaders.put("description", "description");
-		orderableHeaders.put("title", "title");
-		orderableHeaders.put("type", "type");
-	}
+	public static Map<String, String> orderableHeaders =
+		new HashMap<String, String>() {
+			{
+				put("description", "description");
+				put("title", "title");
+				put("type", "type");
+			}
+		};
 
 	public RoleSearch(PortletRequest portletRequest, PortletURL iteratorURL) {
 		super(

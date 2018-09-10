@@ -35,9 +35,34 @@ import javax.portlet.WindowState;
  */
 public class PortalContextImpl implements PortalContext {
 
-	public static List<PortletMode> portletModes = new ArrayList<>();
-	public static Properties properties = new Properties();
-	public static List<WindowState> windowStates = new ArrayList<>();
+	public static List<PortletMode> portletModes =
+		new ArrayList<PortletMode>() {
+			{
+				add(PortletMode.EDIT);
+				add(PortletMode.HELP);
+				add(PortletMode.VIEW);
+				add(LiferayPortletMode.ABOUT);
+				add(LiferayPortletMode.CONFIG);
+				add(LiferayPortletMode.EDIT_DEFAULTS);
+				add(LiferayPortletMode.PREVIEW);
+				add(LiferayPortletMode.PRINT);
+			}
+		};
+	public static Properties properties = new Properties() {
+		{
+			setProperty(MARKUP_HEAD_ELEMENT_SUPPORT, Boolean.TRUE.toString());
+		}
+	};
+	public static List<WindowState> windowStates =
+		new ArrayList<WindowState>() {
+			{
+				add(WindowState.MAXIMIZED);
+				add(WindowState.MINIMIZED);
+				add(WindowState.NORMAL);
+				add(LiferayWindowState.EXCLUSIVE);
+				add(LiferayWindowState.POP_UP);
+			}
+		};
 
 	public static boolean isSupportedPortletMode(PortletMode portletMode) {
 		return _portletModes.contains(portletMode);
@@ -80,26 +105,7 @@ public class PortalContextImpl implements PortalContext {
 	private static final Set<WindowState> _windowStates = new HashSet<>();
 
 	static {
-		properties.setProperty(
-			MARKUP_HEAD_ELEMENT_SUPPORT, Boolean.TRUE.toString());
-
-		portletModes.add(PortletMode.EDIT);
-		portletModes.add(PortletMode.HELP);
-		portletModes.add(PortletMode.VIEW);
-		portletModes.add(LiferayPortletMode.ABOUT);
-		portletModes.add(LiferayPortletMode.CONFIG);
-		portletModes.add(LiferayPortletMode.EDIT_DEFAULTS);
-		portletModes.add(LiferayPortletMode.PREVIEW);
-		portletModes.add(LiferayPortletMode.PRINT);
-
 		_portletModes.addAll(portletModes);
-
-		windowStates.add(WindowState.MAXIMIZED);
-		windowStates.add(WindowState.MINIMIZED);
-		windowStates.add(WindowState.NORMAL);
-		windowStates.add(LiferayWindowState.EXCLUSIVE);
-		windowStates.add(LiferayWindowState.POP_UP);
-
 		_windowStates.addAll(windowStates);
 	}
 

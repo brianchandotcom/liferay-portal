@@ -68,17 +68,19 @@ public class RepositoryFactoryUtil {
 	}
 
 	private static final ConcurrentMap<String, RepositoryFactory>
-		_repositoryFactories = new ConcurrentHashMap<>();
+		_repositoryFactories =
+			new ConcurrentHashMap<String, RepositoryFactory>() {
+				{
+					ClassLoader classLoader =
+						PortalClassLoaderUtil.getClassLoader();
 
-	static {
-		ClassLoader classLoader = PortalClassLoaderUtil.getClassLoader();
+					for (String className : PropsValues.DL_REPOSITORY_IMPL) {
+						RepositoryFactory repositoryFactory =
+							new RepositoryFactoryImpl(className, classLoader);
 
-		for (String className : PropsValues.DL_REPOSITORY_IMPL) {
-			RepositoryFactory repositoryFactory = new RepositoryFactoryImpl(
-				className, classLoader);
-
-			_repositoryFactories.put(className, repositoryFactory);
-		}
-	}
+						put(className, repositoryFactory);
+					}
+				}
+			};
 
 }

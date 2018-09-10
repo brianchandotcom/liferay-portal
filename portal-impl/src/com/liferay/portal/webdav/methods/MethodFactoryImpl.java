@@ -50,37 +50,41 @@ public class MethodFactoryImpl implements MethodFactory {
 
 	private static class MethodHolder {
 
-		private static final Map<String, Object> _methods = new HashMap<>();
+		private static final Map<String, Object> _methods =
+			new HashMap<String, Object>() {
+				{
+					try {
+						for (String methodName :
+								Method.SUPPORTED_METHOD_NAMES) {
 
-		static {
-			try {
-				for (String methodName : Method.SUPPORTED_METHOD_NAMES) {
-					String defaultClassName = methodName.substring(1);
+							String defaultClassName = methodName.substring(1);
 
-					defaultClassName = StringUtil.toLowerCase(defaultClassName);
-					defaultClassName =
-						methodName.substring(0, 1) + defaultClassName;
-					defaultClassName =
-						"com.liferay.portal.webdav.methods." +
-							defaultClassName + "MethodImpl";
+							defaultClassName = StringUtil.toLowerCase(
+								defaultClassName);
+							defaultClassName =
+								methodName.substring(0, 1) + defaultClassName;
+							defaultClassName =
+								"com.liferay.portal.webdav.methods." +
+									defaultClassName + "MethodImpl";
 
-					String className = GetterUtil.getString(
-						PropsUtil.get(
-							MethodFactoryImpl.class.getName() + "." +
-								methodName),
-						defaultClassName);
+							String className = GetterUtil.getString(
+								PropsUtil.get(
+									MethodFactoryImpl.class.getName() + "." +
+										methodName),
+								defaultClassName);
 
-					_methods.put(
-						methodName,
-						InstanceFactory.newInstance(
-							MethodFactoryImpl.class.getClassLoader(),
-							className));
+							put(
+								methodName,
+								InstanceFactory.newInstance(
+									MethodFactoryImpl.class.getClassLoader(),
+									className));
+						}
+					}
+					catch (Exception e) {
+						throw new ExceptionInInitializerError(e);
+					}
 				}
-			}
-			catch (Exception e) {
-				throw new ExceptionInInitializerError(e);
-			}
-		}
+			};
 
 	}
 

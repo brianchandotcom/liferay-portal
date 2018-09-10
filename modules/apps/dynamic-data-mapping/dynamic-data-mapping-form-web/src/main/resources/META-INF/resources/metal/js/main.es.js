@@ -2,6 +2,7 @@ import {Config} from 'metal-state';
 import {EventHandler} from 'metal-events';
 import {pageStructure} from './util/config.es';
 import {PagesVisitor} from './util/visitors.es';
+import {isKeyInSet, isModifyingKey} from './util/dom.es';
 import Builder from './pages/builder/index.es';
 import Component from 'metal-jsx';
 import dom from 'metal-dom';
@@ -146,6 +147,14 @@ class Form extends Component {
 		saveButtonLabel: Config.string().value(Liferay.Language.get('save-form'))
 	}
 
+	checkEditorLimit(event, limit) {
+		const charCode = (event.which) ? event.which : event.keyCode;
+
+		if (this.isForbiddenKey(event, limit) && (charCode != 91)) {
+			event.preventDefault();
+		}
+	}
+
 	/**
 	 * @inheritDoc
 	 */
@@ -164,7 +173,16 @@ class Form extends Component {
 			dom.on('.forms-management-bar li', 'click', this._handleFormNavClicked.bind(this))
 		);
 
-		this._createEditor('nameEditor').then(editor => editor.on('change', this._handleNameEditorChanged.bind(this)));
+		this._createEditor('nameEditor').then(
+			editor => {
+				this._eventHandler.add(
+					dom.on(editor.element.$, 'keydown', this._handleTitleEditorKeydown.bind(this)),
+					dom.on(editor.element.$, 'keyup', this._handleTitleEditorCopyAndPaste.bind(this)),
+					dom.on(editor.element.$, 'keypress', this._handleTitleEditorCopyAndPaste.bind(this)),
+					editor.on('change', this._handleNameEditorChanged.bind(this))
+				);
+			}
+		);
 		this._createEditor('descriptionEditor').then(editor => editor.on('change', this._handleDescriptionEditorChanged.bind(this)));
 	}
 
@@ -191,6 +209,37 @@ class Form extends Component {
 				title: {}
 			}
 		};
+	}
+
+	isForbiddenKey(event, limit) {
+		const charCode = event.which ? event.which : event.keyCode;
+		let forbidden = false;
+
+		if (
+			event.target.innerText.length >= limit &&
+			isModifyingKey(charCode) &&
+			!isKeyInSet(charCode, ['BACKSPACE', 'DELETE', 'ESC', 'ENTER'])
+		) {
+			forbidden = true;
+		}
+		return forbidden;
+	}
+
+	preventCopyAndPaste(event, limit) {
+		const {target} = event;
+
+		if (this.isForbiddenKey(event, limit)) {
+			target.innerText = target.innerText.substr(0, limit);
+
+			const range = document.createRange();
+			const sel = window.getSelection();
+
+			range.setStart(target.childNodes[0], target.textContent.length);
+			range.collapse(true);
+
+			sel.removeAllRanges();
+			sel.addRange(range);
+		}
 	}
 
 	/**
@@ -442,6 +491,14 @@ class Form extends Component {
 		);
 
 		this.submitForm();
+	}
+
+	_handleTitleEditorCopyAndPaste(event) {
+		return this.preventCopyAndPaste(event, 120);
+	}
+
+	_handleTitleEditorKeydown(event) {
+		return this.checkEditorLimit(event, 120);
 	}
 
 	_openSidebar() {

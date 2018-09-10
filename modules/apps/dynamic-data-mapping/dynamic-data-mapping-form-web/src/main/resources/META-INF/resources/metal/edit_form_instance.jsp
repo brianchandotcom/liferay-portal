@@ -125,23 +125,59 @@ renderResponse.setTitle((formInstance == null) ? LanguageUtil.get(request, "new-
 	</div>
 </div>
 
-<aui:script require="<%= mainRequire %>">
-	main.DDMForm(
-		{
-			context: <%= serializedFormBuilderContext %>,
-			defaultLanguageId: '<%= ddmFormAdminDisplayContext.getDefaultLanguageId() %>',
-			dependencies: ['dynamic-data-mapping-form-field-type/metal'],
-			fieldTypes: <%= ddmFormAdminDisplayContext.getDDMFormFieldTypesJSONArray() %>,
-			formInstanceId: <%= formInstanceId %>,
-			localizedDescription: <%= ddmFormAdminDisplayContext.getFormLocalizedDescription() %>,
-			localizedName: <%= ddmFormAdminDisplayContext.getFormLocalizedName() %>,
-			modules: Liferay.MODULES,
-			namespace: '<portlet:namespace />',
-			rules: <%= serializedDDMFormRules %>,
-			spritemap: '<%= themeDisplay.getPathThemeImages() %>/clay/icons.svg'
+<aui:script>
+	var rawModuleName = '<%= mainRequire %>'.split(' ')[0];
+
+	Liferay.Forms.App = {
+		dispose: function() {
+			if (Liferay.Forms.instance) {
+				Liferay.Forms.instance.dispose();
+				Liferay.Forms.instance = null;
+			}
 		},
-		'#<portlet:namespace />-container',
-		function() {
+		reset: function() {
+			var pages;
+
+			if (Liferay.Forms.instance) {
+				pages = Liferay.Forms.instance.state.pages;
+			}
+			this.dispose();
+			this.start(pages);
+		},
+		start: function(sessionPages) {
+			Liferay.Loader.require(
+				rawModuleName,
+				function(packageName) {
+					var context = <%= serializedFormBuilderContext %>;
+
+					if (context.pages.length === 0 && sessionPages) {
+						context.pages = sessionPages;
+					}
+					packageName.DDMForm(
+						{
+							context: context,
+							defaultLanguageId: '<%= ddmFormAdminDisplayContext.getDefaultLanguageId() %>',
+							dependencies: ['dynamic-data-mapping-form-field-type/metal'],
+							fieldTypes: <%= ddmFormAdminDisplayContext.getDDMFormFieldTypesJSONArray() %>,
+							formInstanceId: <%= formInstanceId %>,
+							localizedDescription: <%= ddmFormAdminDisplayContext.getFormLocalizedDescription() %>,
+							localizedName: <%= ddmFormAdminDisplayContext.getFormLocalizedName() %>,
+							modules: Liferay.MODULES,
+							namespace: '<portlet:namespace />',
+							rules: <%= serializedDDMFormRules %>,
+							spritemap: '<%= themeDisplay.getPathThemeImages() %>/clay/icons.svg'
+						},
+						'#<portlet:namespace />-container',
+						function(ddmForm) {
+							Liferay.Forms.instance = ddmForm;
+						}
+					);
+				},
+				function(error) {
+				}
+			);
 		}
-	);
+	};
+
+	Liferay.Forms.App.start();
 </aui:script>

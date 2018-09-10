@@ -79,11 +79,14 @@
 
 	<div class="fragments-editor" id="{$id}">
 		{call com.liferay.layout.admin.web.FragmentsEditorToolbar.render}
+			{param availableLanguages: $availableLanguages /}
 			{param classPK: $classPK /}
+			{param defaultLanguageId: $defaultLanguageId /}
 			{param events: [
 				'toggleContextualSidebarButtonClick': $_handleToggleContextualSidebarButtonClick,
 				'translationLanguageChange': $_handleTranslationLanguageChange
 			] /}
+			{param languageId: $languageId /}
 			{param lastSaveDate: $lastSaveDate ?: '' /}
 			{param publishLayoutPageTemplateEntryURL: $publishLayoutPageTemplateEntryURL /}
 			{param publishRedirectURL: $redirectURL /}
@@ -92,9 +95,6 @@
 			{param savingChanges: $savingChanges ?: false /}
 			{param spritemap: $spritemap /}
 			{param store: $_store /}
-			{param availableLanguages: $availableLanguages /}
-			{param defaultLanguageId: $defaultLanguageId /}
-			{param languageId: $languageId /}
 			{param translationStatus: $translationStatus /}
 		{/call}
 

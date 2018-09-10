@@ -96,8 +96,6 @@ public class FragmentsEditorDisplayContext {
 	public SoyContext getEditorContext() throws PortalException {
 		SoyContext soyContext = SoyContextFactoryUtil.createSoyContext();
 
-		soyContext.put("lastSaveDate", "");
-
 		soyContext.put(
 			"addFragmentEntryLinkURL",
 			_getFragmentEntryActionURL("/layout/add_fragment_entry_link"));
@@ -158,6 +156,7 @@ public class FragmentsEditorDisplayContext {
 		soyContext.put("imageSelectorURL", itemSelectorURL.toString());
 
 		soyContext.put("languageId", _themeDisplay.getLanguageId());
+		soyContext.put("lastSaveDate", StringPool.BLANK);
 
 		if (_showMapping) {
 			soyContext.put(

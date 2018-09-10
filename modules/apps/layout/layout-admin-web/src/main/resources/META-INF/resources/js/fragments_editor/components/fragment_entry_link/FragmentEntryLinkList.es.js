@@ -7,7 +7,10 @@ import Soy from 'metal-soy';
 import './FragmentEntryLink.es';
 import {
 	CLEAR_DRAG_TARGET,
-	UPDATE_DRAG_TARGET
+	MOVE_FRAGMENT_ENTRY_LINK,
+	UPDATE_DRAG_TARGET,
+	UPDATE_LAST_SAVE_DATE,
+	UPDATE_SAVING_CHANGES_STATUS
 } from '../../actions/actions.es';
 import {DRAG_POSITIONS} from '../../reducers/placeholders.es';
 import templates from './FragmentEntryLinkList.soy';
@@ -98,10 +101,47 @@ class FragmentEntryLinkList extends Component {
 	_handleDrop(data, event) {
 		event.preventDefault();
 
-		this.store
-			.dispatchAction(
-				CLEAR_DRAG_TARGET
+		if (data.target) {
+			const placeholderId = data.source.dataset.fragmentEntryLinkId;
+			const targetId = data.target.dataset.fragmentEntryLinkId;
+
+			requestAnimationFrame(
+				() => {
+					this._initializeDragAndDrop();
+				}
 			);
+
+			this.store
+				.dispatchAction(
+					UPDATE_SAVING_CHANGES_STATUS,
+					{
+						savingChanges: true
+					}
+				)
+				.dispatchAction(
+					MOVE_FRAGMENT_ENTRY_LINK,
+					{
+						placeholderId: placeholderId,
+						targetBorder: this._targetBorder,
+						targetId: targetId
+					}
+				)
+				.dispatchAction(
+					UPDATE_LAST_SAVE_DATE,
+					{
+						lastSaveDate: new Date()
+					}
+				)
+				.dispatchAction(
+					UPDATE_SAVING_CHANGES_STATUS,
+					{
+						savingChanges: false
+					}
+				)
+				.dispatchAction(
+					CLEAR_DRAG_TARGET
+				);
+		}
 	}
 
 	/**

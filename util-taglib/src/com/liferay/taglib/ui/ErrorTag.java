@@ -21,6 +21,9 @@ import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.taglib.util.IncludeTag;
+import com.liferay.taglib.util.TagResourceBundleUtil;
+
+import java.util.ResourceBundle;
 
 import javax.portlet.PortletRequest;
 
@@ -213,7 +216,11 @@ public class ErrorTag extends IncludeTag implements BodyTag {
 			}
 
 			if (_translateMessage) {
-				alertMessage = LanguageUtil.get(request, alertMessage);
+				ResourceBundle resourceBundle =
+					TagResourceBundleUtil.getResourceBundle(pageContext);
+
+				alertMessage = LanguageUtil.get(
+					request, resourceBundle, alertMessage);
 			}
 
 			return alertMessage;
@@ -227,7 +234,11 @@ public class ErrorTag extends IncludeTag implements BodyTag {
 			String alertMessage = _message;
 
 			if (_translateMessage) {
-				alertMessage = LanguageUtil.get(request, _message);
+				ResourceBundle resourceBundle =
+					TagResourceBundleUtil.getResourceBundle(pageContext);
+
+				alertMessage = LanguageUtil.get(
+					request, resourceBundle, _message);
 			}
 
 			return alertMessage;

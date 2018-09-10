@@ -4050,6 +4050,10 @@ plugins.includes=</echo>
 			<arg line="7z a -md1024m ${project.dir}/dist/liferay-portal-tomcat-${lp.version}.7z liferay-portal-${lp.version}" />
 		</exec>
 
+		<exec dir="${tstamp.value}" executable="sh">
+			<arg line="tar -czvf ${project.dir}/dist/liferay-portal-tomcat-${lp.version}.tar.gz liferay-portal-${lp.version}" />
+		</exec>
+
 		<delete dir="${tstamp.value}" />
 	</target>
 

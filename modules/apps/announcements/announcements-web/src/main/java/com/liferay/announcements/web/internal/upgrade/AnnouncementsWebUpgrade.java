@@ -90,6 +90,11 @@ public class AnnouncementsWebUpgrade implements UpgradeStepRegistrator {
 			"1.0.2", "1.0.3", upgradePortletId, new UpgradePermission(true));
 
 		registry.register("1.0.3", "1.0.4", new UpgradePortletPreferences());
+
+		registry.register(
+			"1.0.4", "1.1.0",
+			new com.liferay.announcements.web.internal.upgrade.v1_1_0.
+				UpgradePortletPreferences());
 	}
 
 }

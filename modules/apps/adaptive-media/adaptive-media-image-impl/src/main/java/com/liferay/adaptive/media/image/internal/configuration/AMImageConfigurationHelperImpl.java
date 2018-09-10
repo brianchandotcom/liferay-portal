@@ -592,7 +592,7 @@ public class AMImageConfigurationHelperImpl
 		}
 	}
 
-	private static final Pattern _pattern = Pattern.compile("^\\w+$");
+	private static final Pattern _pattern = Pattern.compile("^(?:\\w|-)+$");
 	private static final Pattern _positiveNumberPattern = Pattern.compile(
 		"\\d*[1-9]\\d*");
 

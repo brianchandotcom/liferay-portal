@@ -7,6 +7,7 @@ import Component from 'metal-jsx';
 import FormRenderer from '../../components/Form/index.es';
 import FormSupport from '../../components/Form/FormSupport.es';
 import Sidebar from '../../components/Sidebar/index.es';
+import {pageStructure} from '../../util/config.es';
 
 /**
  * Builder.
@@ -54,6 +55,14 @@ class Builder extends Component {
 		 */
 
 		pages: Config.arrayOf(pageStructure).value([])
+
+		/**
+		 * @instance
+		 * @memberof LayoutProvider
+		 * @type {string}
+		 */
+
+		paginationMode: Config.string().required()
 	};
 
 	/**
@@ -295,6 +304,15 @@ class Builder extends Component {
 
 	/**
 	 * Continues the propagation of event.
+	 * @private
+	 */
+
+	_handlePaginationModeUpdated() {
+		this.emit('paginationModeUpdated');
+	}
+
+	/**
+	 * Continues the propagation of event.
 	 * @param {Array} pages
 	 * @private
 	 */
@@ -339,6 +357,7 @@ class Builder extends Component {
 			fieldTypes,
 			focusedField,
 			pages,
+			paginationMode,
 			spritemap
 		} = props;
 
@@ -352,6 +371,7 @@ class Builder extends Component {
 			pageDeleted: this._handlePageDeleted.bind(this),
 			pageReset: this._handlePageReset.bind(this),
 			pagesUpdated: this._handlePagesUpdated.bind(this)
+			paginationModeUpdated: this._handlePaginationModeUpdated.bind(this)
 		};
 
 		const sidebarEvents = {
@@ -369,6 +389,7 @@ class Builder extends Component {
 							editable={true}
 							events={FormRendererEvents}
 							pages={pages}
+							paginationMode={paginationMode}
 							ref="FormRenderer"
 							spritemap={spritemap}
 						/>

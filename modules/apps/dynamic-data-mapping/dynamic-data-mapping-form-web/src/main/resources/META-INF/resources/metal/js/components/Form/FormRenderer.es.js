@@ -1,6 +1,5 @@
 import '../Page/PageRenderer.es';
 import 'clay-button';
-import 'clay-dropdown';
 import {Config} from 'metal-state';
 import {DragDrop} from 'metal-drag-drop';
 import {pageStructure} from '../../util/config.es';
@@ -54,6 +53,15 @@ class FormRenderer extends Component {
 		defaultPageTitle: Config.string().value(Liferay.Language.get('untitled-page')),
 
 		/**
+		 * @default false
+		 * @instance
+		 * @memberof FormRenderer
+		 * @type {boolean}
+		 */
+
+		dropdownExpanded: Config.bool().value(false).internal(),
+
+		/**
 		 * @default grid
 		 * @instance
 		 * @memberof FormRenderer
@@ -88,6 +96,10 @@ class FormRenderer extends Component {
 	attached() {
 		if (this.editable && !this.dragAndDropDisabled) {
 			this._startDrag();
+		}
+
+		if (this.refs.dropdown) {
+			this.refs.dropdown.refs.dropdown.on('expandedChanged', this._handleExpandedChanged.bind(this));
 		}
 	}
 
@@ -130,6 +142,17 @@ class FormRenderer extends Component {
 					'settingsItem': 'delete-page'
 				}
 			);
+			
+			let label = Liferay.Language.get('switch-pagination-to-top');
+
+			if(this.paginationMode == 'wizard') {
+				label = Liferay.Language.get('switch-pagination-to-bottom');
+			}
+
+			pageSettingsItems.push({
+				label,
+				settingsItem: 'switch-page'
+			})
 		}
 
 		return pageSettingsItems;
@@ -140,6 +163,10 @@ class FormRenderer extends Component {
 			...state,
 			pageSettingsItems: this._getPageSettingsItems()
 		};
+	}
+
+	_handleExpandedChanged({newVal}) {
+		this.dropdownExpanded = newVal;
 	}
 
 	/**
@@ -159,7 +186,9 @@ class FormRenderer extends Component {
 	_handlePageSettingsClicked({data}) {
 		const {settingsItem} = data.item;
 
-		if (settingsItem === 'add-page') {
+		this.dropdownExpanded = false;
+
+		if (settingsItem == 'add-page') {
 			this._addPage();
 		}
 		else if (settingsItem === 'reset-page') {
@@ -168,6 +197,13 @@ class FormRenderer extends Component {
 		else if (settingsItem === 'delete-page') {
 			this._deletePage();
 		}
+		else if (settingsItem == 'switch-page') {
+			this._switchPage();
+		}
+	}
+
+	_switchPage() {
+		this.emit('paginationModeUpdated');
 	}
 
 	_deletePage() {
@@ -182,7 +218,6 @@ class FormRenderer extends Component {
 		const {pageId} = dataset;
 
 		this.activePage = parseInt(pageId, 10);
-
 		this.emit('activePageUpdated', this.activePage);
 	}
 
@@ -208,6 +243,32 @@ class FormRenderer extends Component {
 				}
 			);
 		}
+	}
+
+	/**
+	 * @private
+	 */
+
+	_handlePaginationLeftClicked() {
+		const index = this.activePage - 1;
+
+		this.emit(
+			'activePageUpdated',
+			index
+		);
+	}
+
+	/**
+	 * @private
+	 */
+
+	_handlePaginationRightClicked() {
+		const index = this.activePage + 1;
+
+		this.emit(
+			'activePageUpdated',
+			index
+		);
 	}
 
 	/**

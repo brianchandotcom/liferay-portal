@@ -25,6 +25,15 @@ class LayoutProvider extends Component {
 		initialPages: Config.arrayOf(pageStructure).value([]),
 
 		/**
+		 * @default 'wizard'
+		 * @instance
+		 * @memberof LayoutProvider
+		 * @type {?string}
+		 */
+
+		initialPaginationMode: Config.string().value('wizard'),
+
+		/**
 		 * @default undefined
 		 * @instance
 		 * @memberof LayoutProvider
@@ -54,6 +63,14 @@ class LayoutProvider extends Component {
 		pages: Config.arrayOf(pageStructure).valueFn('_pagesValueFn'),
 
 		/**
+		 * @instance
+		 * @memberof LayoutProvider
+		 * @type {string}
+		 */
+
+		paginationMode: Config.string().valueFn('_paginationModeValueFn'),
+
+		/**
 		 * @default undefined
 		 * @instance
 		 * @memberof LayoutProvider
@@ -77,6 +94,10 @@ class LayoutProvider extends Component {
 
 	_pagesValueFn() {
 		return this.props.initialPages;
+	}
+
+	_paginationModeValueFn() {
+		return this.props.initialPaginationMode;
 	}
 
 	_handleActivePageUpdated(activePage) {
@@ -380,6 +401,21 @@ class LayoutProvider extends Component {
 		);
 	}
 
+	_handlePaginationModeUpdated() {
+		const {paginationMode} = this.state;
+		let newMode = 'pagination';
+
+		if (paginationMode === newMode) {
+			newMode = 'wizard';
+		}
+
+		this.setState(
+			{
+				paginationMode: newMode
+			}
+		);
+	}
+
 	/**
 	 * @param {!Array} pages
 	 * @param {!Object} source
@@ -434,7 +470,7 @@ class LayoutProvider extends Component {
 
 	render() {
 		const {children, spritemap} = this.props;
-		const {activePage, focusedField, pages} = this.state;
+		const {activePage, focusedField, pages, paginationMode} = this.state;
 
 		if (children.length) {
 			const events = {
@@ -449,7 +485,7 @@ class LayoutProvider extends Component {
 				pageAdded: this._handlePageAdded.bind(this),
 				pageDeleted: this._handlePageDeleted.bind(this),
 				pageReset: this._handlePageReset.bind(this),
-				pagesUpdated: this._handlePagesUpdated.bind(this)
+				paginationModeUpdated: this._handlePaginationModeUpdated.bind(this)
 			};
 
 			for (let index = 0; index < children.length; index++) {
@@ -463,6 +499,7 @@ class LayoutProvider extends Component {
 						events,
 						focusedField,
 						pages,
+						paginationMode,
 						spritemap
 					}
 				);

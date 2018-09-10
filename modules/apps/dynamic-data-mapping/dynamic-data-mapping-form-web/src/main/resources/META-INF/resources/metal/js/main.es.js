@@ -29,6 +29,7 @@ class Form extends Component {
 		context: Config.shapeOf(
 			{
 				pages: Config.arrayOf(pageStructure),
+				paginationMode: Config.string(),
 				rules: Config.array()
 			}
 		).required().setter('_setContext'),
@@ -137,6 +138,15 @@ class Form extends Component {
 		pages: Config.arrayOf(pageStructure).valueFn('_pagesValueFn'),
 
 		/**
+		 * @default _paginationModeValueFn
+		 * @instance
+		 * @memberof Form
+		 * @type {!array}
+		 */
+
+		paginationMode: Config.string().valueFn('_paginationModeValueFn'),
+
+		/**
 		 * The represent the current active screen mode where 0 => FormBuilder and 1 => RuleBuilder
 		 * @default 'save-form'
 		 * @instance
@@ -192,7 +202,7 @@ class Form extends Component {
 			localizedDescription,
 			namespace
 		} = this.props;
-		const {pages} = this.state;
+		const {pages, paginationMode} = this.state;
 
 		const translationManager = Liferay.component(`${namespace}translationManager`);
 
@@ -202,6 +212,7 @@ class Form extends Component {
 			description: localizedDescription,
 			name: this._getLocalizedName(),
 			pages,
+			paginationMode,
 			rules: [],
 			successPageSettings: {
 				body: {},
@@ -260,9 +271,13 @@ class Form extends Component {
 		const layoutProviderProps = {
 			...this.props,
 			events: {
-				pagesChanged: this._handlePagesChanged.bind(this)
+				pagesChanged: this._handlePagesChanged.bind(this),
+				paginationModeChanged: this._handlePaginationModeChanded.bind(this)
+
 			},
-			initialPages: context.pages
+			initialPages: context.pages,
+			initialPaginationMode: context.paginationMode
+
 		};
 
 		let currentBuilder = <Builder namespace={this.props.namespace} ref="builder" />;
@@ -324,6 +339,12 @@ class Form extends Component {
 		this.refs.nameInput.value = JSON.stringify(name);
 		this.refs.serializedFormBuilderContextInput.value = this._getSerializedFormBuilderContext();
 		this.refs.serializedSettingsContextInput.value = JSON.stringify(settingsDDMForm.toJSON());
+	}
+
+	_paginationModeValueFn() {
+		const {context} = this.props;
+
+		return context.paginationMode;
 	}
 
 	_createEditor(name) {
@@ -426,6 +447,19 @@ class Form extends Component {
 		const descriptionEditor = this._getDescriptionEditor();
 
 		localizedDescription[editingLanguageId] = descriptionEditor.getHTML();
+	}
+
+	/**
+	 * @param newVal
+	 * Handles "paginationModeChanged" event. Updates the page mode to use it when form builder is saved.
+	 */
+
+	_handlePaginationModeChanded({newVal}) {
+		this.setState(
+			{
+				paginationMode: newVal
+			}
+		);
 	}
 
 	_handleFormNavClicked(event) {
@@ -548,7 +582,8 @@ class Form extends Component {
 						],
 						title: ''
 					}
-				]
+				],
+				paginationMode: 'wizard'
 			};
 		}
 

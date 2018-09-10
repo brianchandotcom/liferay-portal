@@ -5,15 +5,20 @@
 	{@param? _handleChangePage: any}
 	{@param? _handleDeleteButtonClicked: any}
 	{@param? _handleDuplicateButtonClicked: any}
+	{@param? _handleExpandedChanged: any}
 	{@param? _handleFieldEdited: any}
+	{@param? _handlePaginationLeftClicked: any}
+	{@param? _handlePaginationRightClicked: any}
 	{@param? _handlePageSettingsClicked: any}
 	{@param? _handleUpdatePage: any}
 	{@param? activePage: number}
 	{@param? defaultPageTitle: string}
+	{@param? dropdownExpanded: bool}
 	{@param? editable: bool}
 	{@param? modeRenderer: string}
 	{@param? pages: ?}
 	{@param? pageSettingsItems: ?}
+	{@param? paginationMode: string}
 
 	{let $contentRenderer: $modeRenderer ?: 'grid' /}
 	{let $total: length($pages) /}
@@ -22,15 +27,20 @@
 		{param _handleChangePage: $_handleChangePage /}
 		{param _handleDeleteButtonClicked: $_handleDeleteButtonClicked /}
 		{param _handleDuplicateButtonClicked: $_handleDuplicateButtonClicked /}
+		{param _handleExpandedChanged: $_handleExpandedChanged /}
 		{param _handleFieldEdited: $_handleFieldEdited /}
+		{param _handlePaginationLeftClicked: $_handlePaginationLeftClicked /}
+		{param _handlePaginationRightClicked: $_handlePaginationRightClicked /}
 		{param _handlePageSettingsClicked: $_handlePageSettingsClicked /}
 		{param _handleUpdatePage: $_handleUpdatePage /}
 		{param activePage: $activePage /}
 		{param contentRenderer: $contentRenderer /}
 		{param defaultPageTitle: $defaultPageTitle /}
+		{param dropdownExpanded: $dropdownExpanded /}
 		{param editable: $editable /}
 		{param pages: $pages /}
 		{param pageSettingsItems: $pageSettingsItems /}
+		{param paginationMode: $paginationMode /}
 		{param spritemap: $spritemap /}
 		{param total: $total /}
 	{/delcall}
@@ -41,29 +51,39 @@
 	{@param? _handleChangePage: any}
 	{@param? _handleDeleteButtonClicked: any}
 	{@param? _handleDuplicateButtonClicked: any}
+	{@param? _handleExpandedChanged: any}
 	{@param? _handleFieldEdited: any}
+	{@param? _handlePaginationLeftClicked: any}
+	{@param? _handlePaginationRightClicked: any}
 	{@param? _handlePageSettingsClicked: any}
 	{@param? _handleUpdatePage: any}
 	{@param? activePage: number}
 	{@param? contentRenderer: string}
 	{@param? defaultPageTitle: string}
+	{@param? dropdownExpanded: bool}
 	{@param? editable: bool}
 	{@param? pages: ?}
 	{@param? pageSettingsItems: ?}
+	{@param? paginationMode: string}
 	{@param? total: int}
 
 	<div class="position-relative">
-		{delcall FormRenderer.formHeader}
-			{param _handleChangePage: $_handleChangePage /}
-			{param _handlePageSettingsClicked: $_handlePageSettingsClicked /}
-			{param activePage: $activePage /}
-			{param contentRenderer: $contentRenderer /}
-			{param defaultPageTitle: $defaultPageTitle /}
-			{param editable: $editable /}
-			{param pages: $pages /}
-			{param pageSettingsItems: $pageSettingsItems /}
-			{param spritemap: $spritemap /}
-		{/delcall}
+		{if ($paginationMode == 'wizard') or (length($pages) == 1)}
+			{delcall FormRenderer.paginationContainer}
+				{param _handleChangePage: $_handleChangePage /}
+				{param _handleExpandedChanged: $_handleExpandedChanged /}
+				{param _handlePaginationLeftClicked: $_handlePaginationLeftClicked /}
+				{param _handlePaginationRightClicked: $_handlePaginationRightClicked /}
+				{param _handleSettingsPageClicked: $_handleSettingsPageClicked /}
+				{param activePage: $activePage /}
+				{param defaultPageTitle: $defaultPageTitle /}
+				{param dropdownExpanded: $dropdownExpanded /}
+				{param pages: $pages /}
+				{param pageSettingsItems: $pageSettingsItems /}
+				{param paginationMode: $paginationMode /}
+				{param spritemap: $spritemap /}
+			{/delcall}
+		{/if}
 
 		{for $page in $pages}
 			{call PageRenderer.render}
@@ -82,40 +102,76 @@
 				{param total: $total /}
 			{/call}
 		{/for}
+
+		{let $multiple: length($pages) > 1 /}
+
+		{if  $multiple and $paginationMode == 'pagination'}
+			{delcall FormRenderer.paginationContainer}
+				{param _handleChangePage: $_handleChangePage /}
+				{param _handleExpandedChanged: $_handleExpandedChanged /}
+				{param _handlePaginationLeftClicked: $_handlePaginationLeftClicked /}
+				{param _handlePaginationRightClicked: $_handlePaginationRightClicked /}
+				{param _handleSettingsPageClicked: $_handleSettingsPageClicked /}
+				{param activePage: $activePage /}
+				{param defaultPageTitle: $defaultPageTitle /}
+				{param dropdownExpanded: $dropdownExpanded /}
+				{param pages: $pages /}
+				{param pageSettingsItems: $pageSettingsItems /}
+				{param paginationMode: $paginationMode /}
+				{param spritemap: $spritemap /}
+			{/delcall}
+		{/if}
 	</div>
 {/deltemplate}
 
-{deltemplate FormRenderer.formHeader}
+{deltemplate FormRenderer.paginationContainer}
 	{@param spritemap: string}
 	{@param? _handleChangePage: any}
+	{@param? _handleExpandedChanged: any}
+	{@param? _handlePaginationLeftClicked: any}
+	{@param? _handlePaginationRightClicked: any}
 	{@param? _handlePageSettingsClicked: any}
 	{@param? activePage: number}
-	{@param? contentRenderer: string}
 	{@param? defaultPageTitle: string}
-	{@param? editable: bool}
+	{@param? dropdownExpanded: bool}
 	{@param? pages: ?}
 	{@param? pageSettingsItems: ?}
 	{@param? total: int}
+	{@param? paginationMode: string}
 
 	{let $multiple: length($pages) > 1 /}
 	{let $classes kind="text"}
-		ddm-form-header
+		ddm-form-pagination
+
 		{if $multiple}
-			{sp}pt-2 mb-4 multiple
+			{sp}position-relative
+		{else}
+			{sp}position-absolute
+		{/if}
+
+		{if $multiple and $paginationMode == 'wizard'}
+			{sp}wizard-mode
+		{elseif $multiple and $paginationMode == 'pagination'}
+			{sp}pagination-mode
 		{/if}
 	{/let}
 
 	<div class="{$classes}">
-		{if $multiple}
+		{if $multiple and ($paginationMode == 'wizard')}
 			{delcall FormRenderer.wizard}
 				{param _handleChangePage: $_handleChangePage /}
 				{param activePage: $activePage /}
-				{param contentRenderer: $contentRenderer /}
 				{param defaultPageTitle: $defaultPageTitle /}
-				{param editable: $editable /}
 				{param pages: $pages /}
-				{param pageSettingsItems: $pageSettingsItems /}
 				{param spritemap: $spritemap /}
+			{/delcall}
+		{elseif $multiple and ($paginationMode == 'pagination')}
+			{delcall FormRenderer.pagination}
+				{param _handleChangePage: $_handleChangePage /}
+				{param _handlePaginationLeftClicked: $_handlePaginationLeftClicked /}
+				{param _handlePaginationRightClicked: $_handlePaginationRightClicked /}
+				{param activePage: $activePage /}
+				{param pages: $pages /}
 			{/delcall}
 		{/if}
 
@@ -124,9 +180,12 @@
 				{param items: $pageSettingsItems /}
 				{param triggerClasses: 'component-action' /}
 				{param events: [
+					'expandedChanged': $_handleExpandedChanged,
 					'itemClicked': $_handlePageSettingsClicked
 				] /}
+				{param items: $pageSettingsItem /}
 				{param spritemap: $spritemap /}
+				{param triggerClasses: 'component-action' /}
 			{/call}
 		</div>
 	</div>
@@ -138,7 +197,7 @@
 	{@param? defaultPageTitle: string}
 	{@param? pages: ?}
 
-	<ol class="multi-step-indicator-label-top multi-step-nav multi-step-nav-collapse-sm">
+	<ol class="dmm-wizard multi-step-indicator-label-top multi-step-nav multi-step-nav-collapse-sm">
 		{for $page in $pages}
 			{let $title: $page.title ? $page.title : $defaultPageTitle /}
 			{let $pageId: index($page) /}
@@ -163,6 +222,62 @@
 			</li>
 		{/for}
 	</ol>
+{/deltemplate}
+
+{deltemplate FormRenderer.pagination}
+	{@param? _handleChangePage: any}
+	{@param? _handlePaginationLeftClicked: any}
+	{@param? _handlePaginationRightClicked: any}
+	{@param? activePage: number}
+	{@param? pages: ?}
+
+	<ul class="ddm-pagination justify-content-center pagination">
+		{let $wizardClasses kind="text"}
+			page-item
+
+			{if $activePage == 0}
+				{sp}visibility-hidden
+			{/if}
+		{/let}
+
+		<li class="{$wizardClasses}" data-onclick="{$_handlePaginationLeftClicked}">
+			<a class="page-link" href="javascript:;" role="button">
+				«
+				<span class="sr-only">Previous</span>
+			</a>
+		</li>
+
+		{for $page in $pages}
+			{let $pageId: index($page) /}
+			{let $step: $pageId + 1 /}
+			{let $classes kind="text"}
+				page-item
+
+				{if $pageId == $activePage}
+					{sp}active
+				{/if}
+			{/let}
+
+			<li class="{$classes}" data-onclick="{$_handleChangePage}" data-page-id="{$pageId}">
+				<a class="page-link" href="javascript:;">{$step}</a>
+			</li>
+		{/for}
+
+		{let $paginationClasses kind="text"}
+			page-item
+
+			{if $activePage == (length($pages) - 1)}
+				{sp}visibility-hidden
+			{/if}
+		{/let}
+
+		<li class="{$paginationClasses}" data-onclick="{$_handlePaginationRightClicked}">
+			<a class="page-link" href="javascript:;" role="button">
+				»
+				<span class="sr-only">Next</span>
+			</a>
+		</li>
+	</ul>
 {/deltemplate}
 
 {deltemplate FormRenderer.pages variant="'list'"}

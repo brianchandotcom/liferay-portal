@@ -15,20 +15,15 @@
 package com.liferay.sharing.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
-import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.messaging.Destination;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.MessageBus;
 import com.liferay.portal.kernel.messaging.MessageBusUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.model.UserNotificationDeliveryConstants;
-import com.liferay.portal.kernel.model.UserNotificationEvent;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.UserNotificationEventLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
@@ -331,48 +326,6 @@ public class SharingEntryLocalServiceTest {
 			null, serviceContext);
 
 		Assert.assertEquals(7, sharingEntry.getActionIds());
-	}
-
-	@Test
-	public void testAddSharingEntrySendsNotification() throws Exception {
-		long classNameId = _classNameLocalService.getClassNameId(
-			Group.class.getName());
-		long classPK = _group.getGroupId();
-
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
-
-		SharingEntry sharingEntry = _sharingEntryLocalService.addSharingEntry(
-			_fromUser.getUserId(), _toUser.getUserId(), classNameId, classPK,
-			_group.getGroupId(), true,
-			Arrays.asList(SharingEntryActionKey.VIEW), null, serviceContext);
-
-		List<UserNotificationEvent> userNotificationEvents =
-			_userNotificationEventLocalService.getUserNotificationEvents(
-				_toUser.getUserId());
-
-		Assert.assertEquals(
-			userNotificationEvents.toString(), 1,
-			userNotificationEvents.size());
-
-		UserNotificationEvent userNotificationEvent =
-			userNotificationEvents.get(0);
-
-		Assert.assertFalse(userNotificationEvent.isActionRequired());
-
-		Assert.assertEquals(
-			UserNotificationDeliveryConstants.TYPE_WEBSITE,
-			userNotificationEvent.getDeliveryType());
-
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
-			userNotificationEvent.getPayload());
-
-		Assert.assertEquals(
-			String.valueOf(sharingEntry.getSharingEntryId()),
-			jsonObject.getString("classPK"));
-
-		Assert.assertEquals(
-			_fromUser.getFullName(), jsonObject.getString("fromUserFullName"));
 	}
 
 	@Test(expected = InvalidSharingEntryActionKeyException.class)
@@ -1291,53 +1244,6 @@ public class SharingEntryLocalServiceTest {
 		Assert.assertNull(sharingEntry.getExpirationDate());
 	}
 
-	@Test
-	public void testUpdateSharingEntrySendsNotification() throws Exception {
-		long classNameId = _classNameLocalService.getClassNameId(
-			Group.class.getName());
-		long classPK = _group.getGroupId();
-
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
-
-		SharingEntry sharingEntry = _sharingEntryLocalService.addSharingEntry(
-			_fromUser.getUserId(), _toUser.getUserId(), classNameId, classPK,
-			_group.getGroupId(), true,
-			Arrays.asList(SharingEntryActionKey.VIEW), null, serviceContext);
-
-		sharingEntry = _sharingEntryLocalService.updateSharingEntry(
-			sharingEntry.getSharingEntryId(),
-			Arrays.asList(SharingEntryActionKey.VIEW), true, null,
-			serviceContext);
-
-		List<UserNotificationEvent> userNotificationEvents =
-			_userNotificationEventLocalService.getUserNotificationEvents(
-				_toUser.getUserId());
-
-		Assert.assertEquals(
-			userNotificationEvents.toString(), 2,
-			userNotificationEvents.size());
-
-		UserNotificationEvent userNotificationEvent =
-			userNotificationEvents.get(1);
-
-		Assert.assertFalse(userNotificationEvent.isActionRequired());
-
-		Assert.assertEquals(
-			UserNotificationDeliveryConstants.TYPE_WEBSITE,
-			userNotificationEvent.getDeliveryType());
-
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
-			userNotificationEvent.getPayload());
-
-		Assert.assertEquals(
-			String.valueOf(sharingEntry.getSharingEntryId()),
-			jsonObject.getString("classPK"));
-
-		Assert.assertEquals(
-			_fromUser.getFullName(), jsonObject.getString("fromUserFullName"));
-	}
-
 	@Test(expected = InvalidSharingEntryActionKeyException.class)
 	public void testUpdateSharingEntryWithEmptySharingEntryActionKeys()
 		throws Exception {
@@ -1488,10 +1394,6 @@ public class SharingEntryLocalServiceTest {
 
 	@DeleteAfterTestRun
 	private User _user;
-
-	@Inject
-	private UserNotificationEventLocalService
-		_userNotificationEventLocalService;
 
 	private static final class DisableSchedulerDestination
 		implements AutoCloseable {

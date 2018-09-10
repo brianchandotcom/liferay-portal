@@ -44,20 +44,23 @@ public class OrganizationSearch extends SearchContainer<Organization> {
 	public static final String EMPTY_RESULTS_MESSAGE =
 		"no-organizations-were-found";
 
-	public static List<String> headerNames = new ArrayList<>();
-	public static Map<String, String> orderableHeaders = new HashMap<>();
-
-	static {
-		headerNames.add("name");
-		headerNames.add("parent-organization");
-		headerNames.add("type");
-		headerNames.add("city");
-		headerNames.add("region");
-		headerNames.add("country");
-
-		orderableHeaders.put("name", "name");
-		orderableHeaders.put("type", "type");
-	}
+	public static List<String> headerNames = new ArrayList<String>() {
+		{
+			add("name");
+			add("parent-organization");
+			add("type");
+			add("city");
+			add("region");
+			add("country");
+		}
+	};
+	public static Map<String, String> orderableHeaders =
+		new HashMap<String, String>() {
+			{
+				put("name", "name");
+				put("type", "type");
+			}
+		};
 
 	public OrganizationSearch(
 		PortletRequest portletRequest, PortletURL iteratorURL) {

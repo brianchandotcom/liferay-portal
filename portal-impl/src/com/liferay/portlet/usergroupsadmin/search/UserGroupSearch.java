@@ -44,16 +44,19 @@ public class UserGroupSearch extends SearchContainer<UserGroup> {
 	public static final String EMPTY_RESULTS_MESSAGE =
 		"no-user-groups-were-found";
 
-	public static List<String> headerNames = new ArrayList<>();
-	public static Map<String, String> orderableHeaders = new HashMap<>();
-
-	static {
-		headerNames.add("name");
-		headerNames.add("description");
-
-		orderableHeaders.put("description", "description");
-		orderableHeaders.put("name", "name");
-	}
+	public static List<String> headerNames = new ArrayList<String>() {
+		{
+			add("name");
+			add("description");
+		}
+	};
+	public static Map<String, String> orderableHeaders =
+		new HashMap<String, String>() {
+			{
+				put("description", "description");
+				put("name", "name");
+			}
+		};
 
 	public UserGroupSearch(
 		PortletRequest portletRequest, PortletURL iteratorURL) {

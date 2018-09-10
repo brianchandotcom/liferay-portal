@@ -236,25 +236,27 @@ public class ClassLoaderComponentConfiguration extends ComponentConfiguration {
 		ClassLoaderComponentConfiguration.class);
 
 	private static final Map<String, Character> _charPoolChars =
-		new HashMap<>();
+		new HashMap<String, Character>() {
+			{
+				try {
+					for (Field field : CharPool.class.getFields()) {
+						if (Modifier.isStatic(field.getModifiers()) &&
+							(field.getType() == char.class)) {
 
-	static {
-		try {
-			for (Field field : CharPool.class.getFields()) {
-				if (Modifier.isStatic(field.getModifiers()) &&
-					(field.getType() == char.class)) {
-
-					_charPoolChars.put(
-						StringUtil.removeChar(
-							field.getName(), CharPool.UNDERLINE),
-						field.getChar(null));
+							put(
+								StringUtil.removeChar(
+									field.getName(), CharPool.UNDERLINE),
+								field.getChar(null));
+						}
+					}
+				}
+				catch (ReflectiveOperationException roe) {
+					throw new ExceptionInInitializerError(roe);
 				}
 			}
-		}
-		catch (ReflectiveOperationException roe) {
-			throw new ExceptionInInitializerError(roe);
-		}
+		};
 
+	static {
 		Constructor<ComponentProperties> constructor = null;
 
 		try {

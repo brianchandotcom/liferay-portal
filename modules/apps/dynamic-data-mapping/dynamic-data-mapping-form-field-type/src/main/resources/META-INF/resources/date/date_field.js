@@ -75,6 +75,33 @@ AUI.add(
 						return formattedDate || '';
 					},
 
+					getDateMask: function() {
+						var instance = this;
+
+						var mask = instance.get('mask');
+
+						var dateMask = [];
+
+						var items = mask.split('/');
+
+						items.forEach(
+							function(item, index) {
+								if (item == '%Y') {
+									dateMask.push(/\d/, /\d/, /\d/, /\d/);
+								}
+								else {
+									dateMask.push(/\d/, /\d/);
+								}
+
+								if (index < (items.length - 1)) {
+									dateMask.push('/');
+								}
+							}
+						);
+
+						return dateMask;
+					},
+
 					getISODate: function(date) {
 						var instance = this;
 
@@ -128,14 +155,6 @@ AUI.add(
 					render: function() {
 						var instance = this;
 
-						var pattern = instance.get('mask');
-
-						pattern = pattern.replace(/%d/, 'dd');
-						pattern = pattern.replace(/%m/, 'mm');
-						pattern = pattern.replace(/%y/, 'yy');
-
-						var autoCorrectedDatePipe = DDMDate.createAutoCorrectedDatePipe(pattern + 'HH:MM');
-
 						DateField.superclass.render.apply(instance, arguments);
 
 						var element = instance.getTriggerNode().getDOM();
@@ -143,8 +162,7 @@ AUI.add(
 						instance.dateMask = DDMDate.vanillaTextMask(
 							{
 								inputElement: element,
-								mask: [/\d/, /\d/, '/', /\d/, /\d/, '/', /\d/, /\d/, /\d/, /\d/],
-								pipe: autoCorrectedDatePipe,
+								mask: instance.getDateMask(),
 								placeholderChar: '_',
 								showMask: true
 							}

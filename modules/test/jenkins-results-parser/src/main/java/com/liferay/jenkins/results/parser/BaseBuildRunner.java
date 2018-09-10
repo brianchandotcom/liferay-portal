@@ -41,6 +41,8 @@ public abstract class BaseBuildRunner<T extends BuildData>
 
 	@Override
 	public void tearDown() {
+		initWorkspace();
+
 		tearDownWorkspace();
 	}
 

@@ -29,6 +29,21 @@ public class BuildDataFactory {
 			buildParameters, jenkinsJSONObject, runID);
 	}
 
+	public static BuildData newBuildData(
+		Map<String, String> buildParameters,
+		JenkinsJSONObject jenkinsJSONObject, String runID) {
+
+		String buildURL = buildParameters.get("BUILD_URL");
+
+		String jobName = BaseBuildData.getJobName(buildURL);
+
+		if (jobName.endsWith("-batch")) {
+			return newBatchBuildData(buildParameters, jenkinsJSONObject, runID);
+		}
+
+		return newTopLevelBuildData(buildParameters, jenkinsJSONObject, runID);
+	}
+
 	public static TopLevelBuildData newTopLevelBuildData(
 		Map<String, String> buildParameters,
 		JenkinsJSONObject jenkinsJSONObject, String runID) {

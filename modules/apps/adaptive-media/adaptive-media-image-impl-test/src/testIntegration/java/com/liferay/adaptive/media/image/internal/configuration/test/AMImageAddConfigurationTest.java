@@ -51,6 +51,25 @@ public class AMImageAddConfigurationTest
 		new LiferayIntegrationTestRule();
 
 	@Test
+	public void testAddConfigurationEntryWithAlphanumericCharactersUuid()
+		throws Exception {
+
+		Map<String, String> properties = new HashMap<>();
+
+		properties.put("max-height", "100");
+		properties.put("max-width", "100");
+
+		String uuid = "one-2-three_four";
+
+		AMImageConfigurationEntry amImageConfigurationEntry =
+			_amImageConfigurationHelper.addAMImageConfigurationEntry(
+				TestPropsValues.getCompanyId(), "one", "onedesc", uuid,
+				properties);
+
+		Assert.assertEquals(uuid, amImageConfigurationEntry.getUUID());
+	}
+
+	@Test
 	public void testAddConfigurationEntryWithBlankDescription()
 		throws Exception {
 
@@ -375,6 +394,20 @@ public class AMImageAddConfigurationTest
 
 		_amImageConfigurationHelper.addAMImageConfigurationEntry(
 			TestPropsValues.getCompanyId(), "one", "desc", "1", properties);
+	}
+
+	@Test(expected = AMImageConfigurationException.InvalidUuidException.class)
+	public void testAddConfigurationEntryWithNonalphanumericCharactersUuid()
+		throws Exception {
+
+		Map<String, String> properties = new HashMap<>();
+
+		properties.put("max-height", "100");
+		properties.put("max-width", "100");
+
+		_amImageConfigurationHelper.addAMImageConfigurationEntry(
+			TestPropsValues.getCompanyId(), "one", "onedesc", "a3%&!2",
+			properties);
 	}
 
 	@Test(expected = AMImageConfigurationException.InvalidHeightException.class)

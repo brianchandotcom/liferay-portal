@@ -432,20 +432,6 @@ AUI.add(
 														instance._updateContentImages(message.content, message.attributeDataImageId);
 													}
 
-													var tabs1BackButton = instance.one('#tabs1TabsBack');
-
-													if (tabs1BackButton) {
-														tabs1BackButton.attr('href', message.redirect);
-													}
-
-													var cancelButton = instance.one('#cancelButton');
-
-													if (cancelButton) {
-														if (message.redirect != '') {
-															cancelButton.attr('href', message.redirect);
-														}
-													}
-
 													if (saveStatus) {
 														var entry = instance.get('entry');
 

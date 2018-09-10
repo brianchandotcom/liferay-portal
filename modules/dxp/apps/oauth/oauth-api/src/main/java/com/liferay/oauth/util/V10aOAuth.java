@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.oauth.OAuthException;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.util.ClassLoaderPool;
 import com.liferay.portal.kernel.util.Digester;
 import com.liferay.portal.kernel.util.DigesterUtil;
 import com.liferay.portal.kernel.util.MethodHandler;
@@ -329,14 +328,6 @@ public class V10aOAuth implements OAuth {
 		ByteBuffer byteBuffer = serializer.toByteBuffer();
 
 		return byteBuffer.array();
-	}
-
-	private static String _getServletContextName() {
-		Thread currentThread = Thread.currentThread();
-
-		ClassLoader classLoader = currentThread.getContextClassLoader();
-
-		return ClassLoaderPool.getContextName(classLoader);
 	}
 
 	@SuppressWarnings("unused")

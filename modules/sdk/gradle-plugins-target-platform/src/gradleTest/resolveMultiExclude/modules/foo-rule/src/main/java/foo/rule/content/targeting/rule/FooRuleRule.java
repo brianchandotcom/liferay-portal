@@ -96,8 +96,4 @@ public class FooRuleRule extends BaseJSPRule {
 		Map<String, String> values) {
 	}
 
-	private boolean _getMatches(String typeSettings) {
-		return typeSettings.equals("foo");
-	}
-
 }

@@ -1967,16 +1967,6 @@ public class ServiceBuilder {
 		return SAXReaderFactory.getSAXReader(null, false, false);
 	}
 
-	private static boolean _isUADEnabled(List<Entity> entities) {
-		for (Entity entity : entities) {
-			if (entity.isUADEnabled()) {
-				return true;
-			}
-		}
-
-		return false;
-	}
-
 	private static void _mkdir(File dir) throws IOException {
 		Files.createDirectories(dir.toPath());
 	}

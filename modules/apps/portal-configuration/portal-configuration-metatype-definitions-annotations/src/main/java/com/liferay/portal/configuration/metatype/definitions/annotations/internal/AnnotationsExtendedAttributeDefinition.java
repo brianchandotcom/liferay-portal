@@ -108,18 +108,6 @@ public class AnnotationsExtendedAttributeDefinition
 		return _attributeDefinition.validate(value);
 	}
 
-	private ExtendedAttributeDefinition _getExtendedAttributeDefinition() {
-		try {
-			Method method = _configurationBeanClass.getMethod(
-				_attributeDefinition.getID());
-
-			return method.getAnnotation(ExtendedAttributeDefinition.class);
-		}
-		catch (NoSuchMethodException nsme) {
-			return null;
-		}
-	}
-
 	private void _processExtendedMetatypeFields() {
 		try {
 			Method method = _configurationBeanClass.getMethod(

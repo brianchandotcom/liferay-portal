@@ -76,14 +76,4 @@ public class UpgradePortletPreferences extends BaseUpgradePortletPreferences {
 		return PortletPreferencesFactoryUtil.toXML(portletPreferences);
 	}
 
-	private void _upgradeDisplayStylePreferences(
-			PortletPreferences portletPreferences, String includedLayouts,
-			String rootLayoutLevel, String rootLayoutType)
-		throws ReadOnlyException {
-
-		portletPreferences.setValue("includedLayouts", includedLayouts);
-		portletPreferences.setValue("rootLayoutLevel", rootLayoutLevel);
-		portletPreferences.setValue("rootLayoutType", rootLayoutType);
-	}
-
 }

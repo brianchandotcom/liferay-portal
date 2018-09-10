@@ -38,6 +38,9 @@ import javax.portlet.annotations.ActionMethod;
 import javax.portlet.annotations.EventMethod;
 import javax.portlet.annotations.PortletQName;
 
+import javax.xml.XMLConstants;
+import javax.xml.namespace.QName;
+
 /**
  * @author Neil Griffin
  */
@@ -104,6 +107,34 @@ public abstract class BaseBeanPortletImpl implements BeanPortlet {
 		}
 
 		return name.concat(StringPool.SEMICOLON).concat(value);
+	}
+
+	protected String getPublicRenderParameterNamespaceURI(
+		BeanApp beanApp, String id) {
+
+		Map<String, PublicRenderParameter> publicRenderParameterMap =
+			beanApp.getPublicRenderParameterMap();
+
+		PublicRenderParameter publicRenderParameter =
+			publicRenderParameterMap.get(id);
+
+		if (publicRenderParameter == null) {
+			return XMLConstants.NULL_NS_URI;
+		}
+
+		QName qName = publicRenderParameter.getQName();
+
+		if (qName == null) {
+			return XMLConstants.NULL_NS_URI;
+		}
+
+		String namespaceURI = qName.getNamespaceURI();
+
+		if (namespaceURI == null) {
+			return XMLConstants.NULL_NS_URI;
+		}
+
+		return namespaceURI;
 	}
 
 	protected HashMapDictionary<String, Object> toDictionary(BeanApp beanApp) {

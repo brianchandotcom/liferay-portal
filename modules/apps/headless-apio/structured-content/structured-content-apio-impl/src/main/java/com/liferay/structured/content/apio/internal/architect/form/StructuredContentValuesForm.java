@@ -33,7 +33,7 @@ public class StructuredContentValuesForm {
 			StructuredContentValuesForm::new
 		).addOptionalLinkedModel(
 			"mediaObject", MediaObjectIdentifier.class,
-			StructuredContentValuesForm::setImage
+			StructuredContentValuesForm::setDocument
 		).addOptionalString(
 			"name", StructuredContentValuesForm::setName
 		).addOptionalString(
@@ -41,8 +41,8 @@ public class StructuredContentValuesForm {
 		).build();
 	}
 
-	public Long getImage() {
-		return _image;
+	public Long getDocument() {
+		return _document;
 	}
 
 	public String getName() {
@@ -53,8 +53,8 @@ public class StructuredContentValuesForm {
 		return _value;
 	}
 
-	public void setImage(Long image) {
-		_image = image;
+	public void setDocument(Long document) {
+		_document = document;
 	}
 
 	public void setName(String name) {
@@ -65,7 +65,7 @@ public class StructuredContentValuesForm {
 		_value = value;
 	}
 
-	private Long _image;
+	private Long _document;
 	private String _name;
 	private String _value;
 

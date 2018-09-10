@@ -130,8 +130,8 @@ public class JournalArticleContentHelper {
 	private String _getData(
 		String type, StructuredContentValuesForm valuesForm) {
 
-		if (type.equals("image")) {
-			return _getImageData(valuesForm);
+		if (type.equals("image") || type.equals("document-library")) {
+			return _getFileData(valuesForm, type);
 		}
 
 		return valuesForm.getValue();
@@ -159,22 +159,25 @@ public class JournalArticleContentHelper {
 		return element;
 	}
 
-	private String _getImageData(StructuredContentValuesForm valuesForm) {
+	private String _getFileData(
+		StructuredContentValuesForm structuredContentValuesForm,
+		String type) {
+
 		return Try.fromFallible(
-			valuesForm::getImage
+			structuredContentValuesForm::getDocument
 		).map(
 			_dlAppService::getFileEntry
 		).map(
 			fileEntry -> {
 				JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
-				jsonObject.put("alt", valuesForm.getValue());
+				jsonObject.put("alt", structuredContentValuesForm.getValue());
 				jsonObject.put("fileEntryId", fileEntry.getFileEntryId());
 				jsonObject.put("groupId", fileEntry.getGroupId());
 				jsonObject.put("name", fileEntry.getFileName());
 				jsonObject.put("resourcePrimKey", fileEntry.getPrimaryKey());
 				jsonObject.put("title", fileEntry.getFileName());
-				jsonObject.put("type", "journal");
+				jsonObject.put("type", _getDocumentType(type));
 				jsonObject.put("uuid", fileEntry.getUuid());
 
 				return jsonObject.toString();
@@ -182,6 +185,15 @@ public class JournalArticleContentHelper {
 		).orElse(
 			null
 		);
+	}
+
+	private String _getDocumentType(String type) {
+
+		if (type.equals("document-library")) {
+			return "document";
+		}
+
+		return "journal";
 	}
 
 	private Element _getRootElement(String localeId, Document document) {
@@ -196,8 +208,8 @@ public class JournalArticleContentHelper {
 	private String _getType(DDMFormField ddmFormField) {
 		String type = ddmFormField.getType();
 
-		if (type.equals("ddm-image")) {
-			return "image";
+		if (type.equals("ddm-image") || (type.equals("ddm-documentlibrary"))) {
+			return ddmFormField.getDataType();
 		}
 
 		return type;

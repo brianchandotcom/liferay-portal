@@ -1026,7 +1026,9 @@ public class JournalArticleLocalServiceImpl
 
 		// Resources
 
-		addArticleResources(newArticle, true, true);
+		resourceLocalService.copyModelResources(
+			oldArticle.getCompanyId(), JournalArticle.class.getName(),
+			oldArticle.getResourcePrimKey(), resourcePrimKey);
 
 		// Small image
 

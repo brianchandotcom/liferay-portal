@@ -288,6 +288,15 @@ public class ResourceLocalServiceImpl extends ResourceLocalServiceBaseImpl {
 			companyId, groupId, 0, name, null, portletActions, false, false);
 	}
 
+	@Override
+	public void copyModelResources(
+			long companyId, String name, long oldPrimKey, long newPrimKey)
+		throws PortalException {
+
+		resourcePermissionLocalService.copyModelResourcePermissions(
+			companyId, name, oldPrimKey, newPrimKey);
+	}
+
 	/**
 	 * Deletes the resource associated with the model at the scope.
 	 *

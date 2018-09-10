@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.sharing.constants.SharingEntryActionKey;
 import com.liferay.sharing.interpreter.SharingEntryInterpreter;
 import com.liferay.sharing.model.SharingEntry;
 import com.liferay.sharing.renderer.SharingEntryEditRenderer;
@@ -96,6 +97,11 @@ public class SharedWithMeViewDisplayContext {
 		return sharingEntryEditRenderer.getURLEdit(
 			sharingEntryInterpreter.getEntry(sharingEntry),
 			liferayPortletRequest, liferayPortletResponse);
+	}
+
+	public boolean hasEditPermission(SharingEntry sharingEntry) {
+		return _sharingEntryLocalService.hasSharingPermission(
+			sharingEntry, SharingEntryActionKey.UPDATE);
 	}
 
 	public void populateResults(SearchContainer<SharingEntry> searchContainer) {

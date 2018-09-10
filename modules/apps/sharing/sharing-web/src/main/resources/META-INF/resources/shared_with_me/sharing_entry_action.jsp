@@ -45,18 +45,20 @@ data.put("id", HtmlUtil.escape(renderResponse.getNamespace()) + "editAsset");
 data.put("title", LanguageUtil.format(request, "edit-x", HtmlUtil.escape(sharedWithMeViewDisplayContext.getTitle(sharingEntry)), false));
 %>
 
-<liferay-ui:icon-menu
-	direction="left-side"
-	icon="<%= StringPool.BLANK %>"
-	markupView="lexicon"
-	message="<%= StringPool.BLANK %>"
-	showWhenSingleIcon="<%= true %>"
->
-	<liferay-ui:icon
-		data="<%= data %>"
-		message='<%= LanguageUtil.format(request, "edit-x", HtmlUtil.escape(sharedWithMeViewDisplayContext.getTitle(sharingEntry)), false) %>'
-		method="get"
-		url="<%= editPortletURL.toString() %>"
-		useDialog="<%= true %>"
-	/>
-</liferay-ui:icon-menu>
+<c:if test="<%= sharedWithMeViewDisplayContext.hasEditPermission(sharingEntry) %>">
+	<liferay-ui:icon-menu
+		direction="left-side"
+		icon="<%= StringPool.BLANK %>"
+		markupView="lexicon"
+		message="<%= StringPool.BLANK %>"
+		showWhenSingleIcon="<%= true %>"
+	>
+		<liferay-ui:icon
+			data="<%= data %>"
+			message='<%= LanguageUtil.format(request, "edit-x", HtmlUtil.escape(sharedWithMeViewDisplayContext.getTitle(sharingEntry)), false) %>'
+			method="get"
+			url="<%= editPortletURL.toString() %>"
+			useDialog="<%= true %>"
+		/>
+	</liferay-ui:icon-menu>
+</c:if>

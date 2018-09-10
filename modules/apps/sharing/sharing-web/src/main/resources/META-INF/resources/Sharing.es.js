@@ -13,6 +13,7 @@ class Sharing extends PortletBase {
 		this._classPK = config.classPK;
 		this._refererPortletNamespace = config.refererPortletNamespace;
 		this._sharingDialogId = config.sharingDialogId || 'sharingDialogId';
+		this._submitting = false;
 	}
 
 	/**
@@ -49,6 +50,9 @@ class Sharing extends PortletBase {
 	 */
 	_handleSubmit(event) {
 		event.preventDefault();
+		if (this._submitting) return;
+
+		this._submitting = true;
 
 		this.fetch(
 			this.shareActionURL,
@@ -61,8 +65,12 @@ class Sharing extends PortletBase {
 			}
 		).then(
 			response => {
-				parent.Liferay.Portlet.refresh(`#p_p_id${this._refererPortletNamespace}`);
-				this._closeDialog();
+				this._submitting = false;
+
+				if (response.ok) {
+					parent.Liferay.Portlet.refresh(`#p_p_id${this._refererPortletNamespace}`);
+					this._closeDialog();
+				}
 			}
 		);
 	}

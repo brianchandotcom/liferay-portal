@@ -196,8 +196,7 @@
 		</execute>
 	</command>
 
-	<command ignore="true" name="ViewHiddenSecurityCredential" priority="4">
-		<!-- Ignoring until LRQA-39644 is resolved -->
+	<command name="ViewHiddenSecurityCredential" priority="4">
 
 		<description message="This is a use case for LPS-73381." />
 

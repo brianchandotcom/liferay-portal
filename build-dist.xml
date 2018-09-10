@@ -3976,21 +3976,42 @@ plugins.includes=</echo>
 			<patternset
 				excludes="
 					liferay-portal-${lp.version}/data/hypersonic/**,
-					liferay-portal-${lp.version}/osgi/state/**"
+					liferay-portal-${lp.version}/osgi/state/**,
+					liferay-portal-${lp.version}/tomcat-${app.server.tomcat.version}/work/**"
 			/>
 		</unzip>
+
+		<move
+			file="${tstamp.value}/liferay-portal-${lp.version}/tomcat-${app.server.tomcat.version}"
+			tofile="${tstamp.value}/liferay-portal-${lp.version}/tomcat"
+		/>
+
+		<ant dir="portal-web" target="compile-tomcat">
+			<property name="app.server.portal.dir" value="${tstamp.value}/liferay-portal-${lp.version}/tomcat/webapps/ROOT" />
+		</ant>
+
+		<copy
+			preservelastmodified="true"
+			todir="${tstamp.value}/liferay-portal-${lp.version}/tomcat/work/Catalina/localhost/ROOT"
+		>
+			<fileset
+				dir="portal-web/classes/${app.server.type}"
+			>
+				<exclude name="**/*.jspc_error" />
+			</fileset>
+		</copy>
 
 		<chmod
 			perm="744"
 		>
 			<fileset
-				dir="${tstamp.value}/liferay-portal-${lp.version}/tomcat-${app.server.tomcat.version}/bin"
+				dir="${tstamp.value}/liferay-portal-${lp.version}/tomcat/bin"
 				includes="*.sh"
 			/>
 		</chmod>
 
 		<parallel>
-			<exec dir="${tstamp.value}/liferay-portal-${lp.version}/tomcat-${app.server.tomcat.version}/bin" executable="sh">
+			<exec dir="${tstamp.value}/liferay-portal-${lp.version}/tomcat/bin" executable="sh">
 				<arg value="catalina.sh" />
 				<arg value="run" />
 				<env key="LIFERAY_CLEAN_OSGI_STATE" value="true" />
@@ -4003,7 +4024,7 @@ plugins.includes=</echo>
 
 				<sleep seconds="5" />
 
-				<exec dir="${tstamp.value}/liferay-portal-${lp.version}/tomcat-${app.server.tomcat.version}/bin" executable="sh">
+				<exec dir="${tstamp.value}/liferay-portal-${lp.version}/tomcat/bin" executable="sh">
 					<arg value="shutdown.sh" />
 				</exec>
 
@@ -4027,6 +4048,10 @@ plugins.includes=</echo>
 
 		<exec dir="${tstamp.value}" executable="sh">
 			<arg line="7z a -md1024m ${project.dir}/dist/liferay-portal-tomcat-${lp.version}.7z liferay-portal-${lp.version}" />
+		</exec>
+
+		<exec dir="${tstamp.value}" executable="sh">
+			<arg line="tar -czvf ${project.dir}/dist/liferay-portal-tomcat-${lp.version}.tar.gz liferay-portal-${lp.version}" />
 		</exec>
 
 		<delete dir="${tstamp.value}" />

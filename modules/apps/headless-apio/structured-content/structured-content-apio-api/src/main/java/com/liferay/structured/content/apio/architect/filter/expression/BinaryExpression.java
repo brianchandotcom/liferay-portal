@@ -48,7 +48,7 @@ public interface BinaryExpression extends Expression {
 
 	public static enum Operation {
 
-		EQ
+		EQ, GE, LE
 
 	}
 

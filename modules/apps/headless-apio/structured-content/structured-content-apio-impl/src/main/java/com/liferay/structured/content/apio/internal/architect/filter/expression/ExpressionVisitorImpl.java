@@ -19,6 +19,7 @@ import com.liferay.structured.content.apio.architect.filter.expression.Expressio
 import com.liferay.structured.content.apio.architect.filter.expression.LiteralExpression;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -51,14 +52,18 @@ public class ExpressionVisitorImpl implements ExpressionVisitor<Expression> {
 		Expression leftBinaryOperationExpression,
 		Expression rightBinaryOperationExpression) {
 
-		if (binaryOperatorKind == BinaryOperatorKind.EQ) {
-			return new BinaryExpressionImpl(
-				leftBinaryOperationExpression, BinaryExpression.Operation.EQ,
-				rightBinaryOperationExpression);
-		}
+		Optional<BinaryExpression.Operation> binaryExpressionOperationOptional =
+			_getOperationOptional(binaryOperatorKind);
 
-		throw new UnsupportedOperationException(
-			"Unsupported method visitBinaryOperator");
+		return binaryExpressionOperationOptional.map(
+			binaryExpressionOperation -> new BinaryExpressionImpl(
+				leftBinaryOperationExpression, binaryExpressionOperation,
+				rightBinaryOperationExpression)
+		).orElseThrow(
+			() -> new UnsupportedOperationException(
+				"Unsupported method visitBinaryOperator with operation " +
+					binaryOperatorKind)
+		);
 	}
 
 	@Override
@@ -132,6 +137,22 @@ public class ExpressionVisitorImpl implements ExpressionVisitor<Expression> {
 
 		throw new UnsupportedOperationException(
 			"Unsupported method visitUnaryOperator");
+	}
+
+	private Optional<BinaryExpression.Operation> _getOperationOptional(
+		BinaryOperatorKind binaryOperatorKind) {
+
+		if (binaryOperatorKind == BinaryOperatorKind.EQ) {
+			return Optional.of(BinaryExpression.Operation.EQ);
+		}
+		else if (binaryOperatorKind == BinaryOperatorKind.GE) {
+			return Optional.of(BinaryExpression.Operation.GE);
+		}
+		else if (binaryOperatorKind == BinaryOperatorKind.LE) {
+			return Optional.of(BinaryExpression.Operation.LE);
+		}
+
+		return Optional.empty();
 	}
 
 }

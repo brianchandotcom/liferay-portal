@@ -48,18 +48,16 @@
 							<ul class="child-menu dropdown-menu" role="menu">
 								<#list navItem.getBrowsableChildren() as childNavigationItem>
 									<#assign
-										nav_child_attr_selected = ""
 										nav_child_css_class = ""
 									/>
 
 									<#if childNavigationItem.isSelected()>
 										<#assign
-											nav_child_attr_selected = "aria-selected='true'"
 											nav_child_css_class = "active"
 										/>
 									</#if>
 
-									<li class="${nav_child_css_class}" id="layout_${childNavigationItem.getLayoutId()}" ${nav_child_attr_selected} role="presentation">
+									<li class="${nav_child_css_class}" id="layout_${childNavigationItem.getLayoutId()}" role="presentation">
 										<a aria-labelledby="layout_${childNavigationItem.getLayoutId()}" href="${childNavigationItem.getURL()}" ${childNavigationItem.getTarget()} role="menuitem">${childNavigationItem.getName()}</a>
 									</li>
 								</#list>

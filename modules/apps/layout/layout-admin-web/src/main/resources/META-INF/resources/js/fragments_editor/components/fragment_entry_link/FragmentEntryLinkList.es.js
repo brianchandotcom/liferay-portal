@@ -72,16 +72,16 @@ class FragmentEntryLinkList extends Component {
 			const mouseY = event.target.mousePos_.y;
 			const targetItemRegion = position.getRegion(targetItem);
 
-			let nearestBorder = DRAG_POSITIONS.bottom;
+			this._targetBorder = DRAG_POSITIONS.bottom;
 
 			if (Math.abs(mouseY - targetItemRegion.top) <= Math.abs(mouseY - targetItemRegion.bottom)) {
-				nearestBorder = DRAG_POSITIONS.top;
+				this._targetBorder = DRAG_POSITIONS.top;
 			}
 
 			this.store.dispatchAction(
 				UPDATE_DRAG_TARGET,
 				{
-					hoveredFragmentEntryLinkBorder: nearestBorder,
+					hoveredFragmentEntryLinkBorder: this._targetBorder,
 					hoveredFragmentEntryLinkId: targetItem.dataset.fragmentEntryLinkId
 				}
 			);
@@ -205,7 +205,18 @@ FragmentEntryLinkList.STATE = {
 	 * @type {!string}
 	 */
 
-	hoveredFragmentEntryLinkId: Config.string()
+	hoveredFragmentEntryLinkId: Config.string(),
+
+	/**
+	 * Nearest border of the hovered fragment while dragging
+	 * @default undefined
+	 * @instance
+	 * @memberOf FragmentEntryLinkList
+	 * @review
+	 * @type {!string}
+	 */
+
+	_targetBorder: Config.internal().string()
 };
 
 Soy.register(FragmentEntryLinkList, templates);

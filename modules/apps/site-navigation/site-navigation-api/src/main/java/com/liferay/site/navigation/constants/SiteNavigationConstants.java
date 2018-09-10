@@ -29,6 +29,10 @@ public class SiteNavigationConstants {
 
 	public static final int TYPE_PRIVATE = 4;
 
+	public static final int TYPE_PRIVATE_PAGES_HIERARCHY = 4;
+
+	public static final int TYPE_PUBLIC_PAGES_HIERARCHY = 5;
+
 	public static final int TYPE_SECONDARY = 2;
 
 	public static final int TYPE_SOCIAL = 3;

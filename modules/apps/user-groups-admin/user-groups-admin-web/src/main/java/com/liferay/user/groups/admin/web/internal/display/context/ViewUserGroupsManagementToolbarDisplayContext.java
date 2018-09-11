@@ -245,7 +245,6 @@ public class ViewUserGroupsManagementToolbarDisplayContext {
 	public List<ViewTypeItem> getViewTypeItems() {
 		return new ViewTypeItemList(getPortletURL(), _displayStyle) {
 			{
-				addCardViewTypeItem();
 				addListViewTypeItem();
 				addTableViewTypeItem();
 			}

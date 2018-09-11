@@ -14,29 +14,95 @@
 
 package com.liferay.layout.page.template.service.impl;
 
+import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.base.LayoutPageTemplateStructureLocalServiceBaseImpl;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.SystemEventConstants;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.systemevent.SystemEvent;
+
+import java.util.Date;
 
 /**
- * The implementation of the layout page template structure local service.
- *
- * <p>
- * All custom service methods should be put in this class. Whenever methods are added, rerun ServiceBuilder to copy their definitions into the {@link com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService} interface.
- *
- * <p>
- * This is a local service. Methods of this service will not have security checks based on the propagated JAAS credentials because this service can only be accessed from within the same VM.
- * </p>
- *
- * @author Brian Wing Shun Chan
- * @see LayoutPageTemplateStructureLocalServiceBaseImpl
- * @see com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalServiceUtil
+ * @author Jürgen Kappler
  */
 public class LayoutPageTemplateStructureLocalServiceImpl
 	extends LayoutPageTemplateStructureLocalServiceBaseImpl {
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never reference this class directly. Always use {@link com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalServiceUtil} to access the layout page template structure local service.
-	 */
+	@Override
+	public LayoutPageTemplateStructure addLayoutPageTemplateStructure(
+			long userId, long groupId, long classNameId, long classPK,
+			String data, ServiceContext serviceContext)
+		throws PortalException {
+
+		User user = userLocalService.getUser(userId);
+
+		long layoutPageTemplateStructureId = counterLocalService.increment();
+
+		LayoutPageTemplateStructure layoutPageTemplateStructure =
+			layoutPageTemplateStructurePersistence.create(
+				layoutPageTemplateStructureId);
+
+		layoutPageTemplateStructure.setUuid(serviceContext.getUuid());
+		layoutPageTemplateStructure.setGroupId(groupId);
+		layoutPageTemplateStructure.setCompanyId(user.getCompanyId());
+		layoutPageTemplateStructure.setUserId(user.getUserId());
+		layoutPageTemplateStructure.setUserName(user.getFullName());
+		layoutPageTemplateStructure.setCreateDate(
+			serviceContext.getCreateDate(new Date()));
+		layoutPageTemplateStructure.setModifiedDate(
+			serviceContext.getModifiedDate(new Date()));
+		layoutPageTemplateStructure.setClassNameId(classNameId);
+		layoutPageTemplateStructure.setClassPK(classPK);
+		layoutPageTemplateStructure.setData(data);
+
+		layoutPageTemplateStructurePersistence.update(
+			layoutPageTemplateStructure);
+
+		return layoutPageTemplateStructure;
+	}
+
+	@Override
+	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
+	public LayoutPageTemplateStructure deleteLayoutPageTemplateStructure(
+			long groupId, long classNameId, long classPK)
+		throws PortalException {
+
+		LayoutPageTemplateStructure layoutPageTemplateStructure =
+			layoutPageTemplateStructurePersistence.findByG_C_C(
+				groupId, classNameId, classPK);
+
+		layoutPageTemplateStructurePersistence.remove(
+			layoutPageTemplateStructure);
+
+		return layoutPageTemplateStructure;
+	}
+
+	@Override
+	public LayoutPageTemplateStructure fetchLayoutPageTemplateStructure(
+		long groupId, long classNameId, long classPK) {
+
+		return layoutPageTemplateStructurePersistence.fetchByG_C_C(
+			groupId, classNameId, classPK);
+	}
+
+	@Override
+	public LayoutPageTemplateStructure updateLayoutPageTemplateStructure(
+			long groupId, long classNameId, long classPK, String data)
+		throws PortalException {
+
+		LayoutPageTemplateStructure layoutPageTemplateStructure =
+			layoutPageTemplateStructurePersistence.findByG_C_C(
+				groupId, classNameId, classPK);
+
+		layoutPageTemplateStructure.setModifiedDate(new Date());
+		layoutPageTemplateStructure.setData(data);
+
+		layoutPageTemplateStructurePersistence.update(
+			layoutPageTemplateStructure);
+
+		return layoutPageTemplateStructure;
+	}
 
 }

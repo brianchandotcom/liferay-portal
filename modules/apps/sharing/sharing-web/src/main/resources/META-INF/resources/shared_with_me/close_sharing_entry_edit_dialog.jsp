@@ -1,3 +1,4 @@
+<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -11,18 +12,21 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
+--%>
 
-package com.liferay.sharing.web.internal.constants;
+<%@ include file="/shared_with_me/init.jsp" %>
 
-/**
- * @author Sergio González
- */
-public class SharingPortletKeys {
+<%
+Portlet selPortlet = PortletLocalServiceUtil.getPortletById(company.getCompanyId(), portletDisplay.getId());
+%>
 
-	public static final String SHARED_WITH_ME =
-		"com_liferay_sharing_web_portlet_SharedWithMePortlet";
-
-	public static final String SHARING =
-		"com_liferay_sharing_web_portlet_SharingPortlet";
-
-}
+<aui:script>
+	Liferay.fire(
+		'closeWindow',
+		{
+			id: '<portlet:namespace />editAsset',
+			portletAjaxable: <%= selPortlet.isAjaxable() %>,
+			refresh: '<%= portletDisplay.getId() %>'
+		}
+	);
+</aui:script>

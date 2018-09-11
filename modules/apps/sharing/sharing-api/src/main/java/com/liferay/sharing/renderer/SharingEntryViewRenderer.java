@@ -12,17 +12,20 @@
  * details.
  */
 
-package com.liferay.sharing.web.internal.constants;
+package com.liferay.sharing.renderer;
+
+import java.io.IOException;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * @author Sergio González
  */
-public class SharingPortletKeys {
+public interface SharingEntryViewRenderer <T> {
 
-	public static final String SHARED_WITH_ME =
-		"com_liferay_sharing_web_portlet_SharedWithMePortlet";
-
-	public static final String SHARING =
-		"com_liferay_sharing_web_portlet_SharingPortlet";
+	public void render(
+			T entry, HttpServletRequest request, HttpServletResponse response)
+		throws IOException;
 
 }

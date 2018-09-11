@@ -1,3 +1,4 @@
+<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -11,18 +12,18 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
+--%>
 
-package com.liferay.sharing.web.internal.constants;
+<%@ include file="/shared_with_me/init.jsp" %>
 
-/**
- * @author Sergio González
- */
-public class SharingPortletKeys {
+<%
+long sharingEntryId = ParamUtil.getLong(request, "sharingEntryId");
 
-	public static final String SHARED_WITH_ME =
-		"com_liferay_sharing_web_portlet_SharedWithMePortlet";
+SharingEntry sharingEntry = SharingEntryLocalServiceUtil.getSharingEntry(sharingEntryId);
 
-	public static final String SHARING =
-		"com_liferay_sharing_web_portlet_SharingPortlet";
+SharingEntryInterpreter sharingEntryInterpreter = (SharingEntryInterpreter)renderRequest.getAttribute(SharingEntryInterpreter.class.getName());
 
-}
+SharingEntryViewRenderer sharingEntryViewRenderer = sharingEntryInterpreter.getSharingEntryViewRenderer();
+
+sharingEntryViewRenderer.render(sharingEntryInterpreter.getEntry(sharingEntry), request, response);
+%>

@@ -12,17 +12,22 @@
  * details.
  */
 
-package com.liferay.sharing.web.internal.constants;
+package com.liferay.sharing.renderer;
+
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
+import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+
+import javax.portlet.PortletURL;
 
 /**
  * @author Sergio González
  */
-public class SharingPortletKeys {
+public interface SharingEntryEditRenderer<T> {
 
-	public static final String SHARED_WITH_ME =
-		"com_liferay_sharing_web_portlet_SharedWithMePortlet";
-
-	public static final String SHARING =
-		"com_liferay_sharing_web_portlet_SharingPortlet";
+	public PortletURL getURLEdit(
+			T entry, LiferayPortletRequest liferayPortletRequest,
+			LiferayPortletResponse liferayPortletResponse)
+		throws PortalException;
 
 }

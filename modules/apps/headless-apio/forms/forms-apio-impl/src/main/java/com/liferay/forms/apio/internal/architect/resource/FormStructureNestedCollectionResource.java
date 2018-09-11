@@ -21,7 +21,7 @@ import com.liferay.apio.architect.resource.NestedCollectionResource;
 import com.liferay.apio.architect.routes.ItemRoutes;
 import com.liferay.apio.architect.routes.NestedCollectionRoutes;
 import com.liferay.content.space.apio.architect.identifier.ContentSpaceIdentifier;
-import com.liferay.dynamic.data.lists.model.DDLRecordSet;
+import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.forms.apio.architect.identifier.StructureIdentifier;
@@ -86,7 +86,7 @@ public class FormStructureNestedCollectionResource
 		Pagination pagination, Long groupId) {
 
 		ClassName className = _classNameService.fetchClassName(
-			DDLRecordSet.class.getName());
+			DDMFormInstance.class.getName());
 
 		List<DDMStructure> ddmStructures =
 			_ddmStructureLocalService.getStructures(

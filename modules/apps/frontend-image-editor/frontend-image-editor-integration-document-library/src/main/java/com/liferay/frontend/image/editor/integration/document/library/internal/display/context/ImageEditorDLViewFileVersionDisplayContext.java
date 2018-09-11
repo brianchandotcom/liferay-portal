@@ -24,9 +24,6 @@ import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.servlet.taglib.ui.Menu;
 import com.liferay.portal.kernel.servlet.taglib.ui.MenuItem;
 import com.liferay.portal.kernel.servlet.taglib.ui.ToolbarItem;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.ResourceBundleLoader;
-import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.List;
 import java.util.ResourceBundle;
@@ -44,14 +41,11 @@ public class ImageEditorDLViewFileVersionDisplayContext
 	public ImageEditorDLViewFileVersionDisplayContext(
 		DLViewFileVersionDisplayContext parentDLDisplayContext,
 		HttpServletRequest request, HttpServletResponse response,
-		FileVersion fileVersion, ResourceBundleLoader resourceBundleLoader) {
+		FileVersion fileVersion, ResourceBundle resourceBundle) {
 
 		super(_UUID, parentDLDisplayContext, request, response, fileVersion);
 
-		_resourceBundleLoader = resourceBundleLoader;
-
-		_themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		_resourceBundle = resourceBundle;
 
 		try {
 			FileEntry fileEntry = null;
@@ -83,15 +77,12 @@ public class ImageEditorDLViewFileVersionDisplayContext
 			return menu;
 		}
 
-		ResourceBundle resourceBundle =
-			_resourceBundleLoader.loadResourceBundle(_themeDisplay.getLocale());
-
 		ImageEditorDLDisplayContextHelper imageEditorDLDisplayContextHelper =
 			new ImageEditorDLDisplayContextHelper(fileVersion, request);
 
 		menuItems.add(
 			imageEditorDLDisplayContextHelper.
-				getJavacriptEditWithImageEditorMenuItem(resourceBundle));
+				getJavacriptEditWithImageEditorMenuItem(_resourceBundle));
 
 		return menu;
 	}
@@ -104,15 +95,12 @@ public class ImageEditorDLViewFileVersionDisplayContext
 			return toolbarItems;
 		}
 
-		ResourceBundle resourceBundle =
-			_resourceBundleLoader.loadResourceBundle(_themeDisplay.getLocale());
-
 		ImageEditorDLDisplayContextHelper imageEditorDLDisplayContextHelper =
 			new ImageEditorDLDisplayContextHelper(fileVersion, request);
 
 		toolbarItems.add(
 			imageEditorDLDisplayContextHelper.
-				getJavacriptEditWithImageEditorToolbarItem(resourceBundle));
+				getJavacriptEditWithImageEditorToolbarItem(_resourceBundle));
 
 		return toolbarItems;
 	}
@@ -123,7 +111,6 @@ public class ImageEditorDLViewFileVersionDisplayContext
 	private final FileEntry _fileEntry;
 	private final ImageEditorDLDisplayContextHelper
 		_imageEditorDLDisplayContextHelper;
-	private final ResourceBundleLoader _resourceBundleLoader;
-	private final ThemeDisplay _themeDisplay;
+	private final ResourceBundle _resourceBundle;
 
 }

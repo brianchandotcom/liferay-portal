@@ -29,11 +29,10 @@ import com.liferay.portal.kernel.editor.configuration.EditorConfigContributor;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.AggregateResourceBundleLoader;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
+import com.liferay.portal.kernel.util.ResourceBundleLoaderUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
-import com.liferay.portal.language.LanguageResources;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -171,8 +170,13 @@ public class KBAttachmentEditorConfigContributor
 		portletURL.setParameter(
 			"resourcePrimKey", String.valueOf(resourcePrimKey));
 
-		ResourceBundle resourceBundle =
-			_resourceBundleLoader.loadResourceBundle(themeDisplay.getLocale());
+		ResourceBundleLoader resourceBundleLoader =
+			ResourceBundleLoaderUtil.
+				getResourceBundleLoaderByBundleSymbolicName(
+					"com.liferay.knowledge.base.item.selector.web");
+
+		ResourceBundle resourceBundle = resourceBundleLoader.loadResourceBundle(
+			themeDisplay.getLocale());
 
 		ItemSelectorCriterion uploadItemSelectorCriterion =
 			new UploadItemSelectorCriterion(
@@ -207,18 +211,6 @@ public class KBAttachmentEditorConfigContributor
 		return urlItemSelectorCriterion;
 	}
 
-	@Reference(
-		target = "(bundle.symbolic.name=com.liferay.knowledge.base.item.selector.web)",
-		unbind = "-"
-	)
-	protected void setResourceBundleLoader(
-		ResourceBundleLoader resourceBundleLoader) {
-
-		_resourceBundleLoader = new AggregateResourceBundleLoader(
-			resourceBundleLoader, LanguageResources.RESOURCE_BUNDLE_LOADER);
-	}
-
 	private ItemSelector _itemSelector;
-	private ResourceBundleLoader _resourceBundleLoader;
 
 }

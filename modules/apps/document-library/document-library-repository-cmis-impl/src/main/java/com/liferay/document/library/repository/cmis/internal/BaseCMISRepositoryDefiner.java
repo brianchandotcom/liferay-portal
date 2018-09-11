@@ -22,9 +22,8 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.repository.registry.BaseRepositoryDefiner;
 import com.liferay.portal.kernel.repository.registry.CapabilityRegistry;
-import com.liferay.portal.kernel.util.CacheResourceBundleLoader;
-import com.liferay.portal.kernel.util.ClassResourceBundleLoader;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
+import com.liferay.portal.kernel.util.ResourceBundleLoaderUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
 import java.util.Locale;
@@ -39,8 +38,10 @@ public abstract class BaseCMISRepositoryDefiner extends BaseRepositoryDefiner {
 
 	@Override
 	public String getRepositoryTypeLabel(Locale locale) {
-		ResourceBundle resourceBundle =
-			_resourceBundleLoader.loadResourceBundle(locale);
+		ResourceBundleLoader resourceBundleLoader = getResourceBundleLoader();
+
+		ResourceBundle resourceBundle = resourceBundleLoader.loadResourceBundle(
+			locale);
 
 		return ResourceBundleUtil.getString(
 			resourceBundle, _MODEL_RESOURCE_NAME_PREFIX + getClassName());
@@ -66,15 +67,12 @@ public abstract class BaseCMISRepositoryDefiner extends BaseRepositoryDefiner {
 	protected abstract PortalCapabilityLocator getPortalCapabilityLocator();
 
 	protected ResourceBundleLoader getResourceBundleLoader() {
-		return _resourceBundleLoader;
+		return ResourceBundleLoaderUtil.
+			getResourceBundleLoaderByBundleSymbolicName(
+				"com.liferay.document.library.repository.cmis.impl");
 	}
 
 	private static final String _MODEL_RESOURCE_NAME_PREFIX = "model.resource.";
-
-	private final ResourceBundleLoader _resourceBundleLoader =
-		new CacheResourceBundleLoader(
-			new ClassResourceBundleLoader(
-				"content.Language", BaseCMISRepositoryDefiner.class));
 
 	private static class RefreshingProcessorCapability
 		implements ProcessorCapability {

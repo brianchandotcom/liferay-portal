@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
+import com.liferay.portal.kernel.util.ResourceBundleLoaderUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
 import java.util.ResourceBundle;
@@ -58,9 +59,13 @@ public class JournalUserNotificationHandler
 
 		String title = StringPool.BLANK;
 
-		ResourceBundle resourceBundle =
-			_resourceBundleLoader.loadResourceBundle(
-				serviceContext.getLocale());
+		ResourceBundleLoader resourceBundleLoader =
+			ResourceBundleLoaderUtil.
+				getResourceBundleLoaderByBundleSymbolicName(
+					"com.liferay.journal.lang");
+
+		ResourceBundle resourceBundle = resourceBundleLoader.loadResourceBundle(
+			serviceContext.getLocale());
 
 		JournalArticleAssetRenderer journalArticleAssetRenderer =
 			(JournalArticleAssetRenderer)assetRenderer;
@@ -127,18 +132,7 @@ public class JournalUserNotificationHandler
 		return title;
 	}
 
-	@Reference(
-		target = "(bundle.symbolic.name=com.liferay.journal.lang)", unbind = "-"
-	)
-	protected void setResourceBundleLoader(
-		ResourceBundleLoader resourceBundleLoader) {
-
-		_resourceBundleLoader = resourceBundleLoader;
-	}
-
 	@Reference
 	private Portal _portal;
-
-	private ResourceBundleLoader _resourceBundleLoader;
 
 }

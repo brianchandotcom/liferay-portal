@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.ResourceBundleLoader;
+import com.liferay.portal.kernel.util.ResourceBundleLoaderUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowDefinition;
@@ -72,7 +72,11 @@ public class WorkflowDefinitionPortletTab extends BaseWorkflowPortletTab {
 
 			WorkflowDefinitionDisplayContext displayContext =
 				new WorkflowDefinitionDisplayContext(
-					renderRequest, resourceBundleLoader, userLocalService);
+					renderRequest,
+					ResourceBundleLoaderUtil.
+						getResourceBundleLoaderByBundleSymbolicName(
+							"com.liferay.portal.workflow.web"),
+					userLocalService);
 
 			renderRequest.setAttribute(
 				WorkflowWebKeys.WORKFLOW_DEFINITION_DISPLAY_CONTEXT,
@@ -102,16 +106,6 @@ public class WorkflowDefinitionPortletTab extends BaseWorkflowPortletTab {
 	@Override
 	protected String getJspPath() {
 		return "/definition/view.jsp";
-	}
-
-	@Reference(
-		target = "(bundle.symbolic.name=com.liferay.portal.workflow.web)",
-		unbind = "-"
-	)
-	protected void setResourceBundleLoader(
-		ResourceBundleLoader resourceBundleLoader) {
-
-		this.resourceBundleLoader = resourceBundleLoader;
 	}
 
 	@Override
@@ -144,8 +138,6 @@ public class WorkflowDefinitionPortletTab extends BaseWorkflowPortletTab {
 		renderRequest.setAttribute(
 			WebKeys.WORKFLOW_DEFINITION, workflowDefinition);
 	}
-
-	protected ResourceBundleLoader resourceBundleLoader;
 
 	@Reference
 	protected UserLocalService userLocalService;

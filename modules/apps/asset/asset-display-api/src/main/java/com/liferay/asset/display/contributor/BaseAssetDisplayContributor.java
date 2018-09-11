@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
 import java.util.HashMap;
 import java.util.LinkedHashSet;
@@ -30,6 +31,9 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.Set;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
 
 /**
  * @author Jürgen Kappler
@@ -44,8 +48,7 @@ public abstract class BaseAssetDisplayContributor<T>
 
 		Set<AssetDisplayField> assetDisplayFields = new LinkedHashSet<>();
 
-		ResourceBundle resourceBundle = resourceBundleLoader.loadResourceBundle(
-			locale);
+		ResourceBundle resourceBundle = getResourceBundle(locale);
 
 		// Default fields for asset entry
 
@@ -138,8 +141,27 @@ public abstract class BaseAssetDisplayContributor<T>
 	protected abstract Object getFieldValue(
 		T assetEntryObject, String field, Locale locale);
 
-	protected abstract void setResourceBundleLoader(
-		ResourceBundleLoader resourceBundleLoader);
+	protected ResourceBundle getResourceBundle(Locale locale) {
+		if (resourceBundleLoader == null) {
+			Bundle bundle = FrameworkUtil.getBundle(getClass());
+
+			return ResourceBundleUtil.getBundle(
+				locale, bundle.getSymbolicName());
+		}
+
+		return resourceBundleLoader.loadResourceBundle(locale);
+	}
+
+	/**
+	 * @deprecated As of Judson (7.1.x), replaced with {@link
+	 *             #getResourceBundle(Locale)}
+	 */
+	@Deprecated
+	protected void setResourceBundleLoader(
+		ResourceBundleLoader resourceBundleLoader) {
+
+		this.resourceBundleLoader = resourceBundleLoader;
+	}
 
 	protected ResourceBundleLoader resourceBundleLoader;
 

@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
+import com.liferay.portal.kernel.util.ResourceBundleLoaderUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.security.service.access.policy.model.SAPEntry;
 import com.liferay.portal.security.service.access.policy.service.SAPEntryLocalService;
@@ -60,8 +61,13 @@ public class OAuth2JSONWSSAPEntryActivator {
 				continue;
 			}
 
+			ResourceBundleLoader resourceBundleLoader =
+				ResourceBundleLoaderUtil.
+					getResourceBundleLoaderByBundleSymbolicName(
+						"com.liferay.oauth2.provider.jsonws");
+
 			Map<Locale, String> map = ResourceBundleUtil.getLocalizationMap(
-				_resourceBundleLoader, name);
+				resourceBundleLoader, name);
 
 			_sapEntryLocalService.addSAPEntry(
 				_userLocalService.getDefaultUserId(companyId),
@@ -111,11 +117,6 @@ public class OAuth2JSONWSSAPEntryActivator {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		OAuth2JSONWSSAPEntryActivator.class);
-
-	@Reference(
-		target = "(bundle.symbolic.name=com.liferay.oauth2.provider.jsonws)"
-	)
-	private ResourceBundleLoader _resourceBundleLoader;
 
 	@Reference
 	private SAPEntryLocalService _sapEntryLocalService;

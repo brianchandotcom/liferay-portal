@@ -31,7 +31,7 @@ import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.ResourceBundleLoader;
+import com.liferay.portal.kernel.util.ResourceBundleLoaderUtil;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
@@ -72,7 +72,11 @@ public class BlogsEntryAssetRendererFactory
 		BlogsEntry entry = _blogsEntryLocalService.getEntry(classPK);
 
 		BlogsEntryAssetRenderer blogsEntryAssetRenderer =
-			new BlogsEntryAssetRenderer(entry, _resourceBundleLoader);
+			new BlogsEntryAssetRenderer(
+				entry,
+				ResourceBundleLoaderUtil.
+					getResourceBundleLoaderByBundleSymbolicName(
+						"com.liferay.blogs.web"));
 
 		blogsEntryAssetRenderer.setAssetRendererType(type);
 		blogsEntryAssetRenderer.setServletContext(_servletContext);
@@ -88,7 +92,11 @@ public class BlogsEntryAssetRendererFactory
 		BlogsEntry entry = _blogsEntryService.getEntry(groupId, urlTitle);
 
 		BlogsEntryAssetRenderer blogsEntryAssetRenderer =
-			new BlogsEntryAssetRenderer(entry, _resourceBundleLoader);
+			new BlogsEntryAssetRenderer(
+				entry,
+				ResourceBundleLoaderUtil.
+					getResourceBundleLoaderByBundleSymbolicName(
+						"com.liferay.blogs.web"));
 
 		blogsEntryAssetRenderer.setServletContext(_servletContext);
 
@@ -161,15 +169,6 @@ public class BlogsEntryAssetRendererFactory
 	}
 
 	@Reference(
-		target = "(bundle.symbolic.name=com.liferay.blogs.web)", unbind = "-"
-	)
-	public void setResourceBundleLoader(
-		ResourceBundleLoader resourceBundleLoader) {
-
-		_resourceBundleLoader = resourceBundleLoader;
-	}
-
-	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.blogs.web)", unbind = "-"
 	)
 	public void setServletContext(ServletContext servletContext) {
@@ -202,7 +201,6 @@ public class BlogsEntryAssetRendererFactory
 	@Reference(target = "(resource.name=" + BlogsConstants.RESOURCE_NAME + ")")
 	private PortletResourcePermission _portletResourcePermission;
 
-	private ResourceBundleLoader _resourceBundleLoader;
 	private ServletContext _servletContext;
 
 }

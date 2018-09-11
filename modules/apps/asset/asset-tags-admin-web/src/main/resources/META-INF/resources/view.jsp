@@ -79,13 +79,13 @@
 				</c:when>
 				<c:when test='<%= Objects.equals(assetTagsDisplayContext.getDisplayStyle(), "list") %>'>
 					<liferay-ui:search-container-column-text
-						cssClass="table-cell-expand table-list-title"
+						cssClass="table-cell-expand table-cell-minw-200 table-title"
 						name="name"
 						value="<%= tag.getName() %>"
 					/>
 
 					<liferay-ui:search-container-column-text
-						cssClass="table-cell-expand-small"
+						cssClass="table-cell-expand table-column-text-center"
 						name="usages"
 						value="<%= String.valueOf(fullTagsCount) %>"
 					/>

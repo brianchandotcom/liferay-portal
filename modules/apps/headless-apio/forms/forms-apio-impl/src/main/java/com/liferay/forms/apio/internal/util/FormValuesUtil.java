@@ -46,6 +46,9 @@ public final class FormValuesUtil {
 
 		DDMFormValues ddmFormValues = new DDMFormValues(ddmForm);
 
+		ddmFormValues.addAvailableLocale(locale);
+		ddmFormValues.setDefaultLocale(locale);
+
 		FormValuesUtil.FormFieldValueListToken formFieldValueListToken =
 			new FormValuesUtil.FormFieldValueListToken();
 

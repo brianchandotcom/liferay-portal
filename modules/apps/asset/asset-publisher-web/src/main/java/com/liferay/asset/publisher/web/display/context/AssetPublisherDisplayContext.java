@@ -251,6 +251,26 @@ public class AssetPublisherDisplayContext {
 		return _allAssetTagNames;
 	}
 
+	public List<AssetEntry> getAssetEntries() throws Exception {
+		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		AssetListEntry assetListEntry = fetchAssetListEntry();
+
+		if (isSelectionStyleManual()) {
+			return AssetPublisherUtil.getAssetEntries(
+				_portletRequest, _portletPreferences,
+				themeDisplay.getPermissionChecker(), getGroupIds(),
+				getAllAssetCategoryIds(), getAllAssetTagNames(), false,
+				isEnablePermissions());
+		}
+		else if (isSelectionStyleAssetList() && (assetListEntry != null)) {
+			return assetListEntry.getAssetEntries();
+		}
+
+		return Collections.emptyList();
+	}
+
 	public List<AssetEntryAction> getAssetEntryActions(String className) {
 		return _assetEntryActionRegistry.getAssetEntryActions(className);
 	}

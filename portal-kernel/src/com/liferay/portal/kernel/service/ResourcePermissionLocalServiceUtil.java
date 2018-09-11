@@ -758,6 +758,12 @@ public class ResourcePermissionLocalServiceUtil {
 			actionId);
 	}
 
+	public static void initPortletDefaultPermissions(
+		com.liferay.portal.kernel.model.Portlet portlet)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().initPortletDefaultPermissions(portlet);
+	}
+
 	/**
 	* Reassigns all the resource permissions from the source role to the
 	* destination role, and deletes the source role.

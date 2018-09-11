@@ -112,120 +112,124 @@ List<AssetEntry> assetEntries = editAssetListDisplayContext.getAssetEntries(rend
 			</liferay-ui:search-container>
 		</liferay-frontend:fieldset-group>
 	</liferay-frontend:edit-form-body>
-</liferay-frontend:edit-form>
 
-<%
-long[] groupIds = editAssetListDisplayContext.getGroupIds();
+	<liferay-frontend:edit-form-footer>
 
-for (long groupId : groupIds) {
-	Group group = GroupLocalServiceUtil.getGroup(groupId);
-%>
+		<%
+		long[] groupIds = editAssetListDisplayContext.getGroupIds();
 
-	<div class="select-asset-selector">
-		<div class="edit-controls lfr-meta-actions">
-			<liferay-ui:icon-menu
-				cssClass="select-existing-selector"
-				direction="right"
-				message='<%= LanguageUtil.format(request, (groupIds.length == 1) ? "select" : "select-in-x", HtmlUtil.escape(group.getDescriptiveName(locale)), false) %>'
-				showArrow="<%= false %>"
-				showWhenSingleIcon="<%= true %>"
-			>
+		for (long groupId : groupIds) {
+			Group group = GroupLocalServiceUtil.getGroup(groupId);
+		%>
 
-				<%
-				List<AssetRendererFactory<?>> assetRendererFactories = ListUtil.sort(AssetRendererFactoryRegistryUtil.getAssetRendererFactories(company.getCompanyId()), new AssetRendererFactoryTypeNameComparator(locale));
+			<div class="select-asset-selector">
+				<div class="edit-controls lfr-meta-actions">
+					<liferay-ui:icon-menu
+						cssClass="select-existing-selector"
+						direction="right"
+						message='<%= LanguageUtil.format(request, (groupIds.length == 1) ? "select" : "select-in-x", HtmlUtil.escape(group.getDescriptiveName(locale)), false) %>'
+						showArrow="<%= false %>"
+						showWhenSingleIcon="<%= true %>"
+					>
 
-				for (AssetRendererFactory<?> curRendererFactory : assetRendererFactories) {
-					long curGroupId = groupId;
+						<%
+						List<AssetRendererFactory<?>> assetRendererFactories = ListUtil.sort(AssetRendererFactoryRegistryUtil.getAssetRendererFactories(company.getCompanyId()), new AssetRendererFactoryTypeNameComparator(locale));
 
-					if (!curRendererFactory.isSelectable()) {
-						continue;
-					}
+						for (AssetRendererFactory<?> curRendererFactory : assetRendererFactories) {
+							long curGroupId = groupId;
 
-					PortletURL assetBrowserURL = PortletProviderUtil.getPortletURL(request, curRendererFactory.getClassName(), PortletProvider.Action.BROWSE);
+							if (!curRendererFactory.isSelectable()) {
+								continue;
+							}
 
-					if (assetBrowserURL == null) {
-						continue;
-					}
+							PortletURL assetBrowserURL = PortletProviderUtil.getPortletURL(request, curRendererFactory.getClassName(), PortletProvider.Action.BROWSE);
 
-					String portletId = curRendererFactory.getPortletId();
+							if (assetBrowserURL == null) {
+								continue;
+							}
 
-					if (group.isStagingGroup() && !group.isStagedPortlet(portletId)) {
-						curGroupId = group.getLiveGroupId();
-					}
+							String portletId = curRendererFactory.getPortletId();
 
-					assetBrowserURL.setParameter("groupId", String.valueOf(curGroupId));
-					assetBrowserURL.setParameter("selectedGroupIds", String.valueOf(curGroupId));
-					assetBrowserURL.setParameter("typeSelection", curRendererFactory.getClassName());
-					assetBrowserURL.setParameter("showNonindexable", String.valueOf(Boolean.TRUE));
-					assetBrowserURL.setParameter("showScheduled", String.valueOf(Boolean.TRUE));
-					assetBrowserURL.setParameter("eventName", eventName);
-					assetBrowserURL.setPortletMode(PortletMode.VIEW);
-					assetBrowserURL.setWindowState(LiferayWindowState.POP_UP);
+							if (group.isStagingGroup() && !group.isStagedPortlet(portletId)) {
+								curGroupId = group.getLiveGroupId();
+							}
 
-					Map<String, Object> data = new HashMap<String, Object>();
-
-					data.put("groupid", String.valueOf(curGroupId));
-
-					if (!curRendererFactory.isSupportsClassTypes()) {
-						data.put("href", assetBrowserURL.toString());
-
-						String type = curRendererFactory.getTypeName(locale);
-
-						data.put("destroyOnHide", true);
-						data.put("title", LanguageUtil.format(request, "select-x", type, false));
-						data.put("type", type);
-				%>
-
-						<liferay-ui:icon
-							cssClass="asset-selector"
-							data="<%= data %>"
-							id="<%= curGroupId + FriendlyURLNormalizerUtil.normalize(type) %>"
-							message="<%= HtmlUtil.escape(type) %>"
-							url="javascript:;"
-						/>
-
-					<%
-					}
-					else {
-						ClassTypeReader classTypeReader = curRendererFactory.getClassTypeReader();
-
-						List<ClassType> assetAvailableClassTypes = classTypeReader.getAvailableClassTypes(PortalUtil.getCurrentAndAncestorSiteGroupIds(curGroupId), locale);
-
-						for (ClassType assetAvailableClassType : assetAvailableClassTypes) {
-							assetBrowserURL.setParameter("subtypeSelectionId", String.valueOf(assetAvailableClassType.getClassTypeId()));
+							assetBrowserURL.setParameter("groupId", String.valueOf(curGroupId));
+							assetBrowserURL.setParameter("selectedGroupIds", String.valueOf(curGroupId));
+							assetBrowserURL.setParameter("typeSelection", curRendererFactory.getClassName());
 							assetBrowserURL.setParameter("showNonindexable", String.valueOf(Boolean.TRUE));
 							assetBrowserURL.setParameter("showScheduled", String.valueOf(Boolean.TRUE));
+							assetBrowserURL.setParameter("eventName", eventName);
+							assetBrowserURL.setPortletMode(PortletMode.VIEW);
+							assetBrowserURL.setWindowState(LiferayWindowState.POP_UP);
 
-							data.put("href", assetBrowserURL.toString());
+							Map<String, Object> data = new HashMap<String, Object>();
 
-							String type = assetAvailableClassType.getName();
+							data.put("groupid", String.valueOf(curGroupId));
 
-							data.put("destroyOnHide", true);
-							data.put("title", LanguageUtil.format(request, "select-x", type, false));
-							data.put("type", type);
-					%>
+							if (!curRendererFactory.isSupportsClassTypes()) {
+								data.put("href", assetBrowserURL.toString());
 
-							<liferay-ui:icon
-								cssClass="asset-selector"
-								data="<%= data %>"
-								id="<%= curGroupId + FriendlyURLNormalizerUtil.normalize(type) %>"
-								message="<%= HtmlUtil.escape(type) %>"
-								url="javascript:;"
-							/>
+								String type = curRendererFactory.getTypeName(locale);
 
-				<%
+								data.put("destroyOnHide", true);
+								data.put("title", LanguageUtil.format(request, "select-x", type, false));
+								data.put("type", type);
+						%>
+
+								<liferay-ui:icon
+									cssClass="asset-selector"
+									data="<%= data %>"
+									id="<%= curGroupId + FriendlyURLNormalizerUtil.normalize(type) %>"
+									message="<%= HtmlUtil.escape(type) %>"
+									url="javascript:;"
+								/>
+
+							<%
+							}
+							else {
+								ClassTypeReader classTypeReader = curRendererFactory.getClassTypeReader();
+
+								List<ClassType> assetAvailableClassTypes = classTypeReader.getAvailableClassTypes(PortalUtil.getCurrentAndAncestorSiteGroupIds(curGroupId), locale);
+
+								for (ClassType assetAvailableClassType : assetAvailableClassTypes) {
+									assetBrowserURL.setParameter("subtypeSelectionId", String.valueOf(assetAvailableClassType.getClassTypeId()));
+									assetBrowserURL.setParameter("showNonindexable", String.valueOf(Boolean.TRUE));
+									assetBrowserURL.setParameter("showScheduled", String.valueOf(Boolean.TRUE));
+
+									data.put("href", assetBrowserURL.toString());
+
+									String type = assetAvailableClassType.getName();
+
+									data.put("destroyOnHide", true);
+									data.put("title", LanguageUtil.format(request, "select-x", type, false));
+									data.put("type", type);
+							%>
+
+									<liferay-ui:icon
+										cssClass="asset-selector"
+										data="<%= data %>"
+										id="<%= curGroupId + FriendlyURLNormalizerUtil.normalize(type) %>"
+										message="<%= HtmlUtil.escape(type) %>"
+										url="javascript:;"
+									/>
+
+						<%
+								}
+							}
 						}
-					}
-				}
-				%>
+						%>
 
-			</liferay-ui:icon-menu>
-		</div>
-	</div>
+					</liferay-ui:icon-menu>
+				</div>
+			</div>
 
-<%
-}
-%>
+		<%
+		}
+		%>
+
+	</liferay-frontend:edit-form-footer>
+</liferay-frontend:edit-form>
 
 <aui:script>
 	function <portlet:namespace />moveSelectionDown(assetEntryOrder) {

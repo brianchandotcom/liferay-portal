@@ -61,7 +61,21 @@ AUI.add(
 
 					portletResourceNamespace: {
 						value: STR_BLANK
-					}
+					},
+
+					strings: {
+						value: {
+							addNode: Liferay.Language.get('add-node'),
+							cancel: Liferay.Language.get('cancel'),
+							close: Liferay.Language.get('close'),
+							deleteConnectorsMessage: Liferay.Language.get('are-you-sure-you-want-to-delete-the-selected-connectors'),
+							deleteNodesMessage: Liferay.Language.get('are-you-sure-you-want-to-delete-the-selected-nodes'),
+							propertyName: Liferay.Language.get('property-name'),
+							save: Liferay.Language.get('save'),
+							settings: Liferay.Language.get('settings'),
+							value: Liferay.Language.get('value'),
+						}
+					},
 				},
 
 				EXTENDS: DiagramBuilder,

@@ -198,11 +198,11 @@
 		<reference entity="Resource" package-path="com.liferay.portal" />
 		<reference entity="User" package-path="com.liferay.portal" />
 	</entity>
-	<entity local-service="true" name="LayoutPageTemplateSetting" remote-service="false" uuid="true">
+	<entity local-service="true" name="LayoutPageTemplateStructure" remote-service="false" uuid="true">
 
 		<!-- PK fields -->
 
-		<column name="layoutPageTemplateSettingId" primary="true" type="long" />
+		<column name="layoutPageTemplateStructureId" primary="true" type="long" />
 
 		<!-- Group instance -->
 
@@ -220,14 +220,14 @@
 
 		<column name="classNameId" type="long" />
 		<column name="classPK" type="long" />
-		<column name="settings" type="String" />
+		<column name="data" type="String" />
 
 		<!-- Finder methods -->
 
 		<finder name="GroupId" return-type="Collection">
 			<finder-column name="groupId" />
 		</finder>
-		<finder name="G_C_C" return-type="LayoutPageTemplateConfiguration" unique="true">
+		<finder name="G_C_C" return-type="LayoutPageTemplateStructure" unique="true">
 			<finder-column name="groupId" />
 			<finder-column name="classNameId" />
 			<finder-column name="classPK" />

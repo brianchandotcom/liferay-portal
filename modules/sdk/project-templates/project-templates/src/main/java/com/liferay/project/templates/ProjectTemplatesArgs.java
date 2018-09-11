@@ -71,6 +71,14 @@ public class ProjectTemplatesArgs {
 		return _name;
 	}
 
+	public String getOriginalModuleName() {
+		return _originalModuleName;
+	}
+
+	public String getOriginalModuleVersion() {
+		return _originalModuleVersion;
+	}
+
 	public String getPackageName() {
 		return _packageName;
 	}
@@ -155,6 +163,14 @@ public class ProjectTemplatesArgs {
 
 	public void setName(String name) {
 		_name = name;
+	}
+
+	public void setOriginalModuleName(String originalModuleName) {
+		_originalModuleName = originalModuleName;
+	}
+
+	public void setOriginalModuleVersion(String originalModuleVersion) {
+		_originalModuleVersion = originalModuleVersion;
 	}
 
 	public void setPackageName(String packageName) {
@@ -270,6 +286,18 @@ public class ProjectTemplatesArgs {
 		required = true
 	)
 	private String _name;
+
+	@Parameter(
+		description = "Provide the name of the original module which you want to override.",
+		names = "--original-module-name"
+	)
+	private String _originalModuleName;
+
+	@Parameter(
+		description = "The original module version.",
+		names = "--original-module-version"
+	)
+	private String _originalModuleVersion;
 
 	@Parameter(
 		description = "The main package name to use in the project.",

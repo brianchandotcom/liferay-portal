@@ -19,9 +19,11 @@ package com.liferay.source.formatter.dependencies;
  */
 public class SortJavaTerms2 {
 
+	@SuppressWarnings("unused")
 	private void _abc() {
 	}
 
+	@SuppressWarnings("unused")
 	private void _456() {
 	}
 
@@ -34,9 +36,11 @@ public class SortJavaTerms2 {
 	public void method2() {
 	}
 
+	@SuppressWarnings("unused")
 	private void _def() {
 	}
 
+	@SuppressWarnings("unused")
 	private void _1234() {
 	}
 

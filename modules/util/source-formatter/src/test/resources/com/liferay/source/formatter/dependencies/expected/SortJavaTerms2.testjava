@@ -28,15 +28,19 @@ public class SortJavaTerms2 {
 	public void method10() {
 	}
 
+	@SuppressWarnings("unused")
 	private void _456() {
 	}
 
+	@SuppressWarnings("unused")
 	private void _1234() {
 	}
 
+	@SuppressWarnings("unused")
 	private void _abc() {
 	}
 
+	@SuppressWarnings("unused")
 	private void _def() {
 	}
 

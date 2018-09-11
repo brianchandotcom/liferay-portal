@@ -131,9 +131,11 @@ public class JavaTermDividers {
 
 	}
 
+	@SuppressWarnings("unused")
 	private static void _methodPrivateStatic1() {
 	}
 
+	@SuppressWarnings("unused")
 	private static void _methodPrivateStatic2() {
 	}
 
@@ -144,9 +146,11 @@ public class JavaTermDividers {
 		String test = s;
 	}
 
+	@SuppressWarnings("unused")
 	private void _methodPrivate1() {
 	}
 
+	@SuppressWarnings("unused")
 	private void _methodPrivate2() {
 	}
 

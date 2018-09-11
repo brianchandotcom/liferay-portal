@@ -45,8 +45,13 @@
 	<td></td>
 </tr>
 <tr>
-	<td>IDENTITY_PROVIDER_CONNECTION_ATTRIBUTE_MAPPING_TEXTAREA</td>
-	<td>//textarea[contains(@id,'SamlAdminPortlet_userAttributeMappings')]</td>
+	<td>IDENTITY_PROVIDER_CONNECTION_ATTRIBUTE_ENABLE</td>
+	<td>//label[contains(@for,'attributesEnabled')]/input[@type='checkbox']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>IDENTITY_PROVIDER_CONNECTION_ATTRIBUTE_TEXTAREA</td>
+	<td>//textarea[contains(@id,'SamlAdminPortlet_attributeNames')]</td>
 	<td></td>
 </tr>
 </tbody>

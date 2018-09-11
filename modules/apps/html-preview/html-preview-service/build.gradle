@@ -1,6 +1,3 @@
-sourceCompatibility = "1.8"
-targetCompatibility = "1.8"
-
 buildService {
 	apiDir = "../html-preview-api/src/main/java"
 	testDir = "../html-preview-test/src/testIntegration/java"
@@ -8,7 +5,6 @@ buildService {
 
 dependencies {
 	compileOnly group: "biz.aQute.bnd", name: "biz.aQute.bndlib", version: "3.1.0"
-	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	compileOnly project(":apps:html-preview:html-preview-api")
 	compileOnly project(":apps:portal:portal-spring-extender-api")

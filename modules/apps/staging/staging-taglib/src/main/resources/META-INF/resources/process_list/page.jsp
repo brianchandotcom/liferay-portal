@@ -110,6 +110,7 @@
 				</c:when>
 				<c:when test='<%= displayStyle.equals("list") %>'>
 					<liferay-ui:search-container-column-text
+						cssClass="table-cell-expand table-cell-minw-200 table-title"
 						name="title"
 					>
 						<liferay-ui:user-portrait
@@ -133,19 +134,21 @@
 					</liferay-ui:search-container-column-text>
 
 					<liferay-ui:search-container-column-date
+						cssClass="table-cell-expand-smallest table-cell-ws-nowrap"
 						name="create-date"
 						orderable="<%= true %>"
 						value="<%= backgroundTask.getCreateDate() %>"
 					/>
 
 					<liferay-ui:search-container-column-date
+						cssClass="table-cell-expand-smallest table-cell-ws-nowrap"
 						name="completion-date"
 						orderable="<%= true %>"
 						value="<%= backgroundTask.getCompletionDate() %>"
 					/>
 
 					<liferay-ui:search-container-column-text
-						cssClass="background-task-status-column"
+						cssClass="background-task-status-column table-cell-expand table-cell-minw-200"
 					>
 						<liferay-staging:process-in-progress
 							backgroundTask="<%= backgroundTask %>"
@@ -155,9 +158,7 @@
 				</c:when>
 			</c:choose>
 
-			<liferay-ui:search-container-column-text
-				align="right"
-			>
+			<liferay-ui:search-container-column-text>
 				<liferay-staging:process-list-menu
 					backgroundTask="<%= backgroundTask %>"
 					deleteMenu="<%= deleteMenu %>"

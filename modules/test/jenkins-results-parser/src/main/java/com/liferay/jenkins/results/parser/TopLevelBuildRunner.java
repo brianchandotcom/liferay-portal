@@ -42,6 +42,16 @@ public abstract class TopLevelBuildRunner<T extends TopLevelBuildData>
 
 	protected TopLevelBuildRunner(T topLevelBuildData) {
 		super(topLevelBuildData);
+
+		Build build = BuildFactory.newBuild(
+			topLevelBuildData.getBuildURL(), null);
+
+		if (!(build instanceof TopLevelBuild)) {
+			throw new RuntimeException(
+				"Invalid build url " + topLevelBuildData.getBuildURL());
+		}
+
+		_topLevelBuild = (TopLevelBuild)build;
 	}
 
 	protected Set<String> getBatchNames() {
@@ -121,6 +131,8 @@ public abstract class TopLevelBuildRunner<T extends TopLevelBuildData>
 					invocationParameter.getValue()));
 		}
 
+		_topLevelBuild.addDownstreamBuilds(sb.toString());
+
 		try {
 			JenkinsResultsParserUtil.toString(sb.toString());
 		}
@@ -174,5 +186,7 @@ public abstract class TopLevelBuildRunner<T extends TopLevelBuildData>
 	private static final int _FILE_PROPAGATOR_EXPIRATION = 180;
 
 	private static final int _FILE_PROPAGATOR_THREAD_COUNT = 1;
+
+	private final TopLevelBuild _topLevelBuild;
 
 }

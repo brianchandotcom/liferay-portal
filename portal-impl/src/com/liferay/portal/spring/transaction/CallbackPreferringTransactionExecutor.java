@@ -30,6 +30,27 @@ import org.springframework.transaction.support.TransactionCallback;
 public class CallbackPreferringTransactionExecutor
 	implements TransactionExecutor {
 
+	/**
+	 * @deprecated As of Judson (7.1.x), replaced by {@link
+	 *             #CallbackPreferringTransactionExecutor(
+	 *             PlatformTransactionManager)}
+	 */
+	@Deprecated
+	public CallbackPreferringTransactionExecutor() {
+		_platformTransactionManager = null;
+	}
+
+	public CallbackPreferringTransactionExecutor(
+		PlatformTransactionManager platformTransactionManager) {
+
+		_platformTransactionManager = platformTransactionManager;
+	}
+
+	/**
+	 * @deprecated As of Judson (7.1.x), replaced by {@link #execute(
+	 *             TransactionAttributeAdapter, MethodInvocation)}
+	 */
+	@Deprecated
 	@Override
 	public Object execute(
 			PlatformTransactionManager platformTransactionManager,
@@ -37,30 +58,25 @@ public class CallbackPreferringTransactionExecutor
 			MethodInvocation methodInvocation)
 		throws Throwable {
 
-		CallbackPreferringPlatformTransactionManager
-			callbackPreferringPlatformTransactionManager =
-				(CallbackPreferringPlatformTransactionManager)
-					platformTransactionManager;
+		return _execute(
+			platformTransactionManager, transactionAttributeAdapter,
+			methodInvocation);
+	}
 
-		try {
-			Object result =
-				callbackPreferringPlatformTransactionManager.execute(
-					transactionAttributeAdapter,
-					createTransactionCallback(
-						callbackPreferringPlatformTransactionManager,
-						transactionAttributeAdapter, methodInvocation));
+	@Override
+	public Object execute(
+			TransactionAttributeAdapter transactionAttributeAdapter,
+			MethodInvocation methodInvocation)
+		throws Throwable {
 
-			if (result instanceof ThrowableHolder) {
-				ThrowableHolder throwableHolder = (ThrowableHolder)result;
+		return _execute(
+			_platformTransactionManager, transactionAttributeAdapter,
+			methodInvocation);
+	}
 
-				throw throwableHolder.getThrowable();
-			}
-
-			return result;
-		}
-		catch (ThrowableHolderException the) {
-			throw the.getCause();
-		}
+	@Override
+	public PlatformTransactionManager getPlatformTransactionManager() {
+		return _platformTransactionManager;
 	}
 
 	protected TransactionCallback<Object> createTransactionCallback(
@@ -111,6 +127,40 @@ public class CallbackPreferringTransactionExecutor
 
 	}
 
+	private Object _execute(
+			PlatformTransactionManager platformTransactionManager,
+			TransactionAttributeAdapter transactionAttributeAdapter,
+			MethodInvocation methodInvocation)
+		throws Throwable {
+
+		CallbackPreferringPlatformTransactionManager
+			callbackPreferringPlatformTransactionManager =
+				(CallbackPreferringPlatformTransactionManager)
+					platformTransactionManager;
+
+		try {
+			Object result =
+				callbackPreferringPlatformTransactionManager.execute(
+					transactionAttributeAdapter,
+					createTransactionCallback(
+						callbackPreferringPlatformTransactionManager,
+						transactionAttributeAdapter, methodInvocation));
+
+			if (result instanceof ThrowableHolder) {
+				ThrowableHolder throwableHolder = (ThrowableHolder)result;
+
+				throw throwableHolder.getThrowable();
+			}
+
+			return result;
+		}
+		catch (ThrowableHolderException the) {
+			throw the.getCause();
+		}
+	}
+
+	private final PlatformTransactionManager _platformTransactionManager;
+
 	private class CallbackPreferringTransactionCallback
 		implements TransactionCallback<Object> {
 
@@ -119,6 +169,9 @@ public class CallbackPreferringTransactionExecutor
 			TransactionStatusAdapter transactionStatusAdapter =
 				new TransactionStatusAdapter(
 					_platformTransactionManager, transactionStatus);
+
+			TransactionExecutorThreadLocal.pushTransactionExecutor(
+				CallbackPreferringTransactionExecutor.this);
 
 			TransactionLifecycleManager.fireTransactionCreatedEvent(
 				_transactionAttributeAdapter, transactionStatusAdapter);
@@ -154,6 +207,8 @@ public class CallbackPreferringTransactionExecutor
 					TransactionLifecycleManager.fireTransactionCommittedEvent(
 						_transactionAttributeAdapter, transactionStatusAdapter);
 				}
+
+				TransactionExecutorThreadLocal.popTransactionExecutor();
 			}
 		}
 

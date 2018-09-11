@@ -24,8 +24,8 @@ import com.liferay.portal.kernel.transaction.TransactionConfig;
 import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.spring.hibernate.PortletTransactionManager;
-import com.liferay.portal.spring.transaction.CurrentPlatformTransactionManagerUtil;
+import com.liferay.portal.spring.transaction.TransactionExecutor;
+import com.liferay.portal.spring.transaction.TransactionExecutorThreadLocal;
 
 import java.io.Closeable;
 
@@ -51,8 +51,6 @@ import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;
 import org.osgi.framework.InvalidSyntaxException;
 import org.osgi.framework.ServiceReference;
-
-import org.springframework.transaction.PlatformTransactionManager;
 
 /**
  * @author Shuyang Zhou
@@ -241,14 +239,13 @@ public class TransactionalTestRule implements TestRule {
 			};
 		}
 
-		ThreadLocal<Deque<PlatformTransactionManager>>
-			platformTransactionManagersThreadLocal =
-				ReflectionTestUtil.getFieldValue(
-					CurrentPlatformTransactionManagerUtil.class,
-					"_platformTransactionManagersThreadLocal");
+		ThreadLocal<Deque<TransactionExecutor>>
+			transactionExecutorsThreadLocal = ReflectionTestUtil.getFieldValue(
+				TransactionExecutorThreadLocal.class,
+				"_platformTransactionManagersThreadLocal");
 
-		Deque<PlatformTransactionManager> platformTransactionManagers =
-			platformTransactionManagersThreadLocal.get();
+		Deque<TransactionExecutor> transactionExecutors =
+			transactionExecutorsThreadLocal.get();
 
 		Bundle bundle = FrameworkUtil.getBundle(TransactionalTestRule.class);
 
@@ -256,32 +253,30 @@ public class TransactionalTestRule implements TestRule {
 
 		ServiceReference<?>[] serviceReferences =
 			bundleContext.getAllServiceReferences(
-				PortletTransactionManager.class.getName(),
+				TransactionExecutor.class.getName(),
 				"(origin.bundle.symbolic.name=" + originBundleSymbolicName +
 					")");
 
 		Assert.assertEquals(
 			StringBundler.concat(
-				"Expected 1 PortletTransactionManager for ",
-				originBundleSymbolicName, ", actually have ",
-				Arrays.toString(serviceReferences)),
+				"Expected 1 TransactionExecutor for ", originBundleSymbolicName,
+				", actually have ", Arrays.toString(serviceReferences)),
 			1, serviceReferences.length);
 
 		ServiceReference<?> serviceReference = serviceReferences[0];
 
-		PortletTransactionManager portletTransactionManager =
-			(PortletTransactionManager)bundleContext.getService(
-				serviceReference);
+		TransactionExecutor portletTransactionExecutor =
+			(TransactionExecutor)bundleContext.getService(serviceReference);
 
-		if (portletTransactionManager == platformTransactionManagers.peek()) {
+		if (portletTransactionExecutor == transactionExecutors.peek()) {
 			return () -> {
 			};
 		}
 
-		platformTransactionManagers.push(portletTransactionManager);
+		transactionExecutors.push(portletTransactionExecutor);
 
 		return () -> {
-			platformTransactionManagers.pop();
+			transactionExecutors.pop();
 
 			bundleContext.ungetService(serviceReference);
 		};

@@ -7,6 +7,7 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd"
 >
-	<bean class="com.liferay.portal.kernel.util.InfrastructureUtil" factory-method="getDataSource" id="liferayDataSource" />
 	<bean class="com.liferay.portal.kernel.util.InfrastructureUtil" factory-method="getTransactionManager" id="originalLiferayTransactionManager" />
+	<bean class="com.liferay.portal.spring.extender.internal.bean.ModuleDataSourceFactory" id="com.liferay.portal.spring.extender.internal.bean.ModuleDataSourceFactory" />
+	<bean factory-bean="com.liferay.portal.spring.extender.internal.bean.ModuleDataSourceFactory" factory-method="getDataSource" id="liferayDataSource" />
 </beans>

@@ -47,7 +47,10 @@ public class GitBisectToolJob extends BaseJob implements PortalTestClassJob {
 
 	@Override
 	public Set<String> getBatchNames() {
-		return Collections.emptySet();
+		String testBatchNames = JenkinsResultsParserUtil.getProperty(
+			getJobProperties(), "test.batch.names");
+
+		return getSetFromString(testBatchNames);
 	}
 
 	@Override

@@ -1371,7 +1371,7 @@ public class ArrayUtil {
 
 	public static void reverse(boolean[] array) {
 		for (int left = 0, right = array.length - 1; left < right;
-				left++, right--) {
+			 left++, right--) {
 
 			boolean value = array[left];
 
@@ -1382,7 +1382,7 @@ public class ArrayUtil {
 
 	public static void reverse(char[] array) {
 		for (int left = 0, right = array.length - 1; left < right;
-				left++, right--) {
+			 left++, right--) {
 
 			char value = array[left];
 
@@ -1393,7 +1393,7 @@ public class ArrayUtil {
 
 	public static void reverse(double[] array) {
 		for (int left = 0, right = array.length - 1; left < right;
-				left++, right--) {
+			 left++, right--) {
 
 			double value = array[left];
 
@@ -1404,7 +1404,7 @@ public class ArrayUtil {
 
 	public static void reverse(int[] array) {
 		for (int left = 0, right = array.length - 1; left < right;
-				left++, right--) {
+			 left++, right--) {
 
 			int value = array[left];
 
@@ -1415,7 +1415,7 @@ public class ArrayUtil {
 
 	public static void reverse(long[] array) {
 		for (int left = 0, right = array.length - 1; left < right;
-				left++, right--) {
+			 left++, right--) {
 
 			long value = array[left];
 
@@ -1426,7 +1426,7 @@ public class ArrayUtil {
 
 	public static void reverse(short[] array) {
 		for (int left = 0, right = array.length - 1; left < right;
-				left++, right--) {
+			 left++, right--) {
 
 			short value = array[left];
 
@@ -1437,7 +1437,7 @@ public class ArrayUtil {
 
 	public static <T> void reverse(T[] array) {
 		for (int left = 0, right = array.length - 1; left < right;
-				left++, right--) {
+			 left++, right--) {
 
 			T value = array[left];
 

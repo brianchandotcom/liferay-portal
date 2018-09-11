@@ -95,7 +95,7 @@ public class CopyFormInstanceFormInstanceMVCActionCommandTest
 			formInstanceSettingsDDMFormFieldValuesCopy.size());
 
 		for (int i = 0; i < formInstanceSettingsDDMFormFieldValuesCopy.size();
-				i++) {
+			 i++) {
 
 			DDMFormFieldValue ddmFormFieldValue =
 				formInstanceSettingsDDMFormFieldValues.get(i);

@@ -304,7 +304,7 @@ public class BaselinePlugin implements Plugin<Project> {
 			}
 
 			for (int majorVersion = lowestMajorVersion + 1;
-					majorVersion <= maxMajorVersion; majorVersion++) {
+				 majorVersion <= maxMajorVersion; majorVersion++) {
 
 				BaselineTask majorVersionBaselineTask = _addTaskBaseline(
 					newJarTask, majorVersion);

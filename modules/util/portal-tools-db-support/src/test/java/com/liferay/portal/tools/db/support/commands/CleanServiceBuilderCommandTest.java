@@ -157,7 +157,7 @@ public class CleanServiceBuilderCommandTest extends BaseCommandTestCase {
 					connection.prepareStatement(sql)) {
 
 				for (int buildNumber = 1; buildNumber <= _BUILD_NUMBER;
-						buildNumber++) {
+					 buildNumber++) {
 
 					_addServiceComponentRow(
 						preparedStatement, buildNumber, _NAMESPACE,

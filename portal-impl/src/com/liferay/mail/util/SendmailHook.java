@@ -214,7 +214,7 @@ public class SendmailHook implements Hook {
 					new UnsyncBufferedReader(fileReader)) {
 
 				for (String s = unsyncBufferedReader.readLine(); s != null;
-						s = unsyncBufferedReader.readLine()) {
+					 s = unsyncBufferedReader.readLine()) {
 
 					if (!s.endsWith(" " + userId)) {
 						sb.append(s);

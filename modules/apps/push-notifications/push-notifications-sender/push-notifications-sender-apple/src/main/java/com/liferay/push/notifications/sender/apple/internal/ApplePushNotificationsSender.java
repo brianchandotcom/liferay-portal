@@ -191,7 +191,7 @@ public class ApplePushNotificationsSender implements PushNotificationsSender {
 			List<String> localizedArguments = new ArrayList<>();
 
 			for (int i = 0; i < titleLocalizedArgumentsJSONArray.length();
-					i++) {
+				 i++) {
 
 				localizedArguments.add(
 					titleLocalizedArgumentsJSONArray.getString(i));

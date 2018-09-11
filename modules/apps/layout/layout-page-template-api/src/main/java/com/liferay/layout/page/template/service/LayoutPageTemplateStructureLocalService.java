@@ -28,10 +28,13 @@ import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.model.PersistedModel;
+import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -74,6 +77,10 @@ public interface LayoutPageTemplateStructureLocalService
 	public LayoutPageTemplateStructure addLayoutPageTemplateStructure(
 		LayoutPageTemplateStructure layoutPageTemplateStructure);
 
+	public LayoutPageTemplateStructure addLayoutPageTemplateStructure(
+		long userId, long groupId, long classNameId, long classPK, String data,
+		ServiceContext serviceContext) throws PortalException;
+
 	/**
 	* Creates a new layout page template structure with the primary key. Does not add the layout page template structure to the database.
 	*
@@ -104,6 +111,10 @@ public interface LayoutPageTemplateStructureLocalService
 	@Indexable(type = IndexableType.DELETE)
 	public LayoutPageTemplateStructure deleteLayoutPageTemplateStructure(
 		long layoutPageTemplateStructureId) throws PortalException;
+
+	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
+	public LayoutPageTemplateStructure deleteLayoutPageTemplateStructure(
+		long groupId, long classNameId, long classPK) throws PortalException;
 
 	/**
 	* @throws PortalException
@@ -174,6 +185,10 @@ public interface LayoutPageTemplateStructureLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public LayoutPageTemplateStructure fetchLayoutPageTemplateStructure(
 		long layoutPageTemplateStructureId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public LayoutPageTemplateStructure fetchLayoutPageTemplateStructure(
+		long groupId, long classNameId, long classPK);
 
 	/**
 	* Returns the layout page template structure matching the UUID and group.
@@ -289,4 +304,8 @@ public interface LayoutPageTemplateStructureLocalService
 	@Indexable(type = IndexableType.REINDEX)
 	public LayoutPageTemplateStructure updateLayoutPageTemplateStructure(
 		LayoutPageTemplateStructure layoutPageTemplateStructure);
+
+	public LayoutPageTemplateStructure updateLayoutPageTemplateStructure(
+		long groupId, long classNameId, long classPK, String data)
+		throws PortalException;
 }

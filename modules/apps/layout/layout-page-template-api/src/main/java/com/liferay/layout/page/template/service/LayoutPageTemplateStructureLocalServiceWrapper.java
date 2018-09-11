@@ -46,6 +46,15 @@ public class LayoutPageTemplateStructureLocalServiceWrapper
 		return _layoutPageTemplateStructureLocalService.addLayoutPageTemplateStructure(layoutPageTemplateStructure);
 	}
 
+	@Override
+	public com.liferay.layout.page.template.model.LayoutPageTemplateStructure addLayoutPageTemplateStructure(
+		long userId, long groupId, long classNameId, long classPK, String data,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _layoutPageTemplateStructureLocalService.addLayoutPageTemplateStructure(userId,
+			groupId, classNameId, classPK, data, serviceContext);
+	}
+
 	/**
 	* Creates a new layout page template structure with the primary key. Does not add the layout page template structure to the database.
 	*
@@ -82,6 +91,14 @@ public class LayoutPageTemplateStructureLocalServiceWrapper
 		long layoutPageTemplateStructureId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _layoutPageTemplateStructureLocalService.deleteLayoutPageTemplateStructure(layoutPageTemplateStructureId);
+	}
+
+	@Override
+	public com.liferay.layout.page.template.model.LayoutPageTemplateStructure deleteLayoutPageTemplateStructure(
+		long groupId, long classNameId, long classPK)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _layoutPageTemplateStructureLocalService.deleteLayoutPageTemplateStructure(groupId,
+			classNameId, classPK);
 	}
 
 	/**
@@ -184,6 +201,13 @@ public class LayoutPageTemplateStructureLocalServiceWrapper
 	public com.liferay.layout.page.template.model.LayoutPageTemplateStructure fetchLayoutPageTemplateStructure(
 		long layoutPageTemplateStructureId) {
 		return _layoutPageTemplateStructureLocalService.fetchLayoutPageTemplateStructure(layoutPageTemplateStructureId);
+	}
+
+	@Override
+	public com.liferay.layout.page.template.model.LayoutPageTemplateStructure fetchLayoutPageTemplateStructure(
+		long groupId, long classNameId, long classPK) {
+		return _layoutPageTemplateStructureLocalService.fetchLayoutPageTemplateStructure(groupId,
+			classNameId, classPK);
 	}
 
 	/**
@@ -333,6 +357,14 @@ public class LayoutPageTemplateStructureLocalServiceWrapper
 	public com.liferay.layout.page.template.model.LayoutPageTemplateStructure updateLayoutPageTemplateStructure(
 		com.liferay.layout.page.template.model.LayoutPageTemplateStructure layoutPageTemplateStructure) {
 		return _layoutPageTemplateStructureLocalService.updateLayoutPageTemplateStructure(layoutPageTemplateStructure);
+	}
+
+	@Override
+	public com.liferay.layout.page.template.model.LayoutPageTemplateStructure updateLayoutPageTemplateStructure(
+		long groupId, long classNameId, long classPK, String data)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _layoutPageTemplateStructureLocalService.updateLayoutPageTemplateStructure(groupId,
+			classNameId, classPK, data);
 	}
 
 	@Override

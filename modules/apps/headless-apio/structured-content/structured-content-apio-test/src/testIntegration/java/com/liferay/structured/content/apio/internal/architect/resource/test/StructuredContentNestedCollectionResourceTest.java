@@ -20,12 +20,14 @@ import com.liferay.apio.architect.resource.NestedCollectionResource;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalArticleConstants;
+import com.liferay.journal.model.JournalArticleWrapper;
 import com.liferay.journal.model.JournalFolderConstants;
 import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
@@ -50,6 +52,7 @@ import com.liferay.structured.content.apio.architect.sort.Sort;
 import com.liferay.structured.content.apio.architect.sort.SortParser;
 import com.liferay.structured.content.apio.architect.util.test.PaginationTestUtil;
 
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 import java.util.Date;
@@ -57,6 +60,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+
+import org.assertj.core.api.Assertions;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -81,6 +86,76 @@ public class StructuredContentNestedCollectionResourceTest {
 	@Before
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup();
+	}
+
+	@Test
+	public void testGetJournalArticleWrapper() throws Throwable {
+		Map<Locale, String> stringMap = new HashMap<>();
+
+		String title = RandomTestUtil.randomString();
+
+		stringMap.put(LocaleUtil.getDefault(), title);
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
+
+		JournalArticle journalArticle = JournalTestUtil.addArticle(
+			_group.getGroupId(),
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			JournalArticleConstants.CLASSNAME_ID_DEFAULT, title, false,
+			stringMap, stringMap, stringMap, null, LocaleUtil.getDefault(),
+			null, true, true, serviceContext);
+
+		JournalArticleWrapper journalArticleWrapper = _getJournalArticleWrapper(
+			journalArticle.getId(),
+			_getThemeDisplay(_group, LocaleUtil.getDefault()));
+
+		Assert.assertEquals(
+			title, journalArticleWrapper.getTitle(LocaleUtil.getDefault()));
+	}
+
+	@Test
+	public void testGetJournalArticleWrapperFilterByPermission()
+		throws Exception {
+
+		Map<Locale, String> stringMap = new HashMap<>();
+
+		String title = RandomTestUtil.randomString();
+
+		stringMap.put(LocaleUtil.getDefault(), title);
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
+
+		serviceContext.setAddGuestPermissions(false);
+		serviceContext.setAddGroupPermissions(false);
+
+		JournalArticle journalArticle = JournalTestUtil.addArticle(
+			_group.getGroupId(),
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			JournalArticleConstants.CLASSNAME_ID_DEFAULT, title, false,
+			stringMap, stringMap, stringMap, null, LocaleUtil.getDefault(),
+			null, true, true, serviceContext);
+
+		User user = UserTestUtil.addUser();
+
+		PermissionChecker permissionChecker =
+			PermissionCheckerFactoryUtil.create(user);
+
+		try (ContextUserReplace contextUserReplace =
+				new ContextUserReplace(user, permissionChecker)) {
+
+			Assertions.assertThatThrownBy(
+				() -> _getJournalArticleWrapper(
+					journalArticle.getId(),
+					_getThemeDisplay(_group, LocaleUtil.getDefault()))
+			).isInstanceOf(
+				PrincipalException.MustHavePermission.class
+			);
+		}
+		finally {
+			_userLocalService.deleteUser(user);
+		}
 	}
 
 	@Test
@@ -810,6 +885,29 @@ public class StructuredContentNestedCollectionResourceTest {
 			Filter.emptyFilter(), Sort.emptySort());
 
 		Assert.assertEquals(0, pageItems.getTotalCount());
+	}
+
+	private JournalArticleWrapper _getJournalArticleWrapper(
+			long journalArticleId, ThemeDisplay themeDisplay)
+		throws Throwable {
+
+		Class<? extends NestedCollectionResource> clazz =
+			_nestedCollectionResource.getClass();
+
+		Method method = clazz.getDeclaredMethod(
+			"_getJournalArticleWrapper", long.class, ThemeDisplay.class);
+
+		method.setAccessible(true);
+
+		try {
+			return (JournalArticleWrapper)method.invoke(
+				_nestedCollectionResource, journalArticleId, themeDisplay);
+		}
+		catch (InvocationTargetException ite) {
+			ite.printStackTrace();
+
+			throw ite.getCause();
+		}
 	}
 
 	private PageItems<JournalArticle> _getPageItems(

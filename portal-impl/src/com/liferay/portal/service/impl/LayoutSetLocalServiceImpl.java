@@ -38,6 +38,7 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.ThemeFactoryUtil;
+import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.impl.LayoutSetImpl;
 import com.liferay.portal.model.impl.LayoutSetModelImpl;
@@ -430,6 +431,10 @@ public class LayoutSetLocalServiceImpl extends LayoutSetLocalServiceBaseImpl {
 			long groupId, boolean privateLayout, String settings)
 		throws PortalException {
 
+		UnicodeProperties settingsProperties = new UnicodeProperties();
+
+		settingsProperties.fastLoad(settings);
+
 		LayoutSet layoutSet = layoutSetPersistence.findByG_P(
 			groupId, privateLayout);
 
@@ -437,7 +442,11 @@ public class LayoutSetLocalServiceImpl extends LayoutSetLocalServiceBaseImpl {
 
 		if (layoutSetBranch == null) {
 			layoutSet.setModifiedDate(new Date());
-			layoutSet.setSettings(settings);
+
+			validateSettings(
+				layoutSet.getSettingsProperties(), settingsProperties);
+
+			layoutSet.setSettingsProperties(settingsProperties);
 
 			layoutSetPersistence.update(layoutSet);
 
@@ -445,7 +454,11 @@ public class LayoutSetLocalServiceImpl extends LayoutSetLocalServiceBaseImpl {
 		}
 
 		layoutSetBranch.setModifiedDate(new Date());
-		layoutSetBranch.setSettings(settings);
+
+		validateSettings(
+			layoutSetBranch.getSettingsProperties(), settingsProperties);
+
+		layoutSetBranch.setSettingsProperties(settingsProperties);
 
 		layoutSetBranchPersistence.update(layoutSetBranch);
 
@@ -573,6 +586,33 @@ public class LayoutSetLocalServiceImpl extends LayoutSetLocalServiceBaseImpl {
 		}
 
 		return layoutSet;
+	}
+
+	protected void validateSettings(
+		UnicodeProperties oldSettingsProperties,
+		UnicodeProperties newSettingsProperties) {
+
+		boolean enableJavaScript =
+			PropsValues.
+				FIELD_ENABLE_COM_LIFERAY_PORTAL_KERNEL_MODEL_LAYOUTSET_JAVASCRIPT;
+
+		if (!enableJavaScript) {
+			String oldJavaScript = oldSettingsProperties.getProperty(
+				"javascript");
+
+			String newJavaScript = newSettingsProperties.getProperty(
+				"javascript");
+
+			if (!StringUtil.equals(oldJavaScript, newJavaScript)) {
+				if (Validator.isBlank(oldJavaScript)) {
+					newSettingsProperties.remove("javascript");
+				}
+				else {
+					newSettingsProperties.setProperty(
+						"javascript", oldJavaScript);
+				}
+			}
+		}
 	}
 
 	private LayoutSetBranch _getLayoutSetBranch(LayoutSet layoutSet)

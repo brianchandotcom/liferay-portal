@@ -2070,6 +2070,34 @@ public class ProjectTemplatesTest {
 	}
 
 	@Test
+	public void testBuildTemplateServiceBuilderPackageChecker()
+		throws Exception {
+
+		String name = "guestbook";
+		String packageName = "com.liferay.docs.guestbook";
+
+		File gradleProjectDir = _buildTemplateWithGradle(
+			"service-builder", name, "--package-name", packageName,
+			"--liferayVersion", "7.1");
+
+		File mavenProjectDir = _buildTemplateWithMaven(
+			"service-builder", name, "com.test", "-Dpackage=" + packageName,
+			"-DliferayVersion=7.1");
+
+		File gradleServiceXml = new File(
+			new File(gradleProjectDir, name + "-service"), "service.xml");
+		File mavenServiceXml = new File(
+			new File(mavenProjectDir, name + "-service"), "service.xml");
+
+		_changeServiceXmlPackagePath(gradleServiceXml);
+		_changeServiceXmlPackagePath(mavenServiceXml);
+
+		_testBuildFailTemplateServiceBuilder(
+			gradleProjectDir, mavenProjectDir, gradleProjectDir, name,
+			packageName, "");
+	}
+
+	@Test
 	public void testBuildTemplateServiceBuilderWithDashes70() throws Exception {
 		String name = "backend-integration";
 		String packageName = "com.liferay.docs.guestbook";
@@ -3896,7 +3924,8 @@ public class ProjectTemplatesTest {
 	}
 
 	private static Optional<String> _executeGradle(
-			File projectDir, boolean debug, String... taskPaths)
+			File projectDir, boolean debug, boolean buildAndFail,
+			String... taskPaths)
 		throws IOException {
 
 		final String repositoryUrl = mavenExecutor.getRepositoryUrl();
@@ -3992,17 +4021,27 @@ public class ProjectTemplatesTest {
 		gradleRunner.withGradleDistribution(_gradleDistribution);
 		gradleRunner.withProjectDir(projectDir);
 
-		BuildResult buildResult = gradleRunner.build();
+		BuildResult buildResult;
 
-		for (String taskPath : taskPaths) {
-			BuildTask buildTask = buildResult.task(taskPath);
+		if (buildAndFail) {
+			buildResult = gradleRunner.buildAndFail();
 
-			Assert.assertNotNull(
-				"Build task \"" + taskPath + "\" not found", buildTask);
+			stdOutput = buildResult.getOutput();
+		}
+		else {
+			buildResult = gradleRunner.build();
 
-			Assert.assertEquals(
-				"Unexpected outcome for task \"" + buildTask.getPath() + "\"",
-				TaskOutcome.SUCCESS, buildTask.getOutcome());
+			for (String taskPath : taskPaths) {
+				BuildTask buildTask = buildResult.task(taskPath);
+
+				Assert.assertNotNull(
+					"Build task \"" + taskPath + "\" not found", buildTask);
+
+				Assert.assertEquals(
+					"Unexpected outcome for task \"" + buildTask.getPath() +
+						"\"",
+					TaskOutcome.SUCCESS, buildTask.getOutcome());
+			}
 		}
 
 		if (debug) {
@@ -4013,13 +4052,21 @@ public class ProjectTemplatesTest {
 		return Optional.ofNullable(stdOutput);
 	}
 
+	private static Optional<String> _executeGradle(
+			File projectDir, boolean debug, String... taskPaths)
+		throws IOException {
+
+		return _executeGradle(projectDir, debug, false, taskPaths);
+	}
+
 	private static void _executeGradle(File projectDir, String... taskPaths)
 		throws IOException {
 
 		_executeGradle(projectDir, false, taskPaths);
 	}
 
-	private static String _executeMaven(File projectDir, String... args)
+	private static String _executeMaven(
+			File projectDir, boolean buildAndFail, String... args)
 		throws Exception {
 
 		File pomXmlFile = new File(projectDir, "pom.xml");
@@ -4058,9 +4105,21 @@ public class ProjectTemplatesTest {
 
 		MavenExecutor.Result result = mavenExecutor.execute(projectDir, args);
 
-		Assert.assertEquals(result.output, 0, result.exitCode);
+		if (buildAndFail) {
+			Assert.assertEquals(
+				"Process should get failed", 1, result.exitCode);
+		}
+		else {
+			Assert.assertEquals(result.output, 0, result.exitCode);
+		}
 
 		return result.output;
+	}
+
+	private static String _executeMaven(File projectDir, String... args)
+		throws Exception {
+
+		return _executeMaven(projectDir, false, args);
 	}
 
 	private static List<String> _sanitizeLines(List<String> lines) {
@@ -4623,6 +4682,66 @@ public class ProjectTemplatesTest {
 
 		return _buildTemplateWithGradle(
 			destinationDir, WorkspaceUtil.WORKSPACE, "test-workspace");
+	}
+
+	private void _changeServiceXmlPackagePath(File serviceXml)
+		throws Exception {
+
+		DocumentBuilderFactory documentBuilderFactory =
+			DocumentBuilderFactory.newInstance();
+
+		DocumentBuilder documentBuilder =
+			documentBuilderFactory.newDocumentBuilder();
+
+		Document document = documentBuilder.parse(serviceXml);
+
+		Element documentElement = document.getDocumentElement();
+
+		documentElement.setAttribute("package-path", "com.liferay.test");
+
+		TransformerFactory transformerFactory =
+			TransformerFactory.newInstance();
+
+		Transformer transformer = transformerFactory.newTransformer();
+
+		DOMSource domSource = new DOMSource(document);
+
+		StreamResult streamResult = new StreamResult(serviceXml);
+
+		transformer.transform(domSource, streamResult);
+	}
+
+	private void _testBuildFailTemplateServiceBuilder(
+			File gradleProjectDir, File mavenProjectDir, final File rootProject,
+			String name, String packageName, final String projectPath)
+		throws Exception {
+
+		String apiProjectName = name + "-api";
+		final String serviceProjectName = name + "-service";
+
+		_testContains(
+			gradleProjectDir, apiProjectName + "/bnd.bnd", "Export-Package:\\",
+			packageName + ".exception,\\", packageName + ".model,\\",
+			packageName + ".service,\\", packageName + ".service.persistence");
+
+		Optional<String> outPut = _executeGradle(
+			rootProject, false, true,
+			projectPath + ":" + serviceProjectName + _GRADLE_TASK_PATH_BUILD);
+
+		Assert.assertTrue(outPut.isPresent());
+
+		String outPutText = outPut.toString();
+
+		Assert.assertTrue(
+			"Expect exporting empty packages",
+			outPutText.contains("Exporting an empty package"));
+
+		String mavenOutPut = _executeMaven(
+			mavenProjectDir, true, _MAVEN_GOAL_PACKAGE);
+
+		Assert.assertTrue(
+			"Expect exporting empty packages",
+			mavenOutPut.contains("Exporting an empty package"));
 	}
 
 	private void _testBuildTemplateNpm70(

@@ -33,6 +33,7 @@ import com.liferay.structure.apio.architect.util.StructureRepresentorBuilderHelp
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.function.Function;
 import java.util.stream.Stream;
 
@@ -189,9 +190,15 @@ public class FormStructureRepresentorBuilderHelper {
 	private DDMFormSuccessPageSettings _getDDMFormSuccessPageSettings(
 		DDMStructure ddmStructure) {
 
-		DDMForm ddmForm = ddmStructure.getDDMForm();
-
-		return ddmForm.getDDMFormSuccessPageSettings();
+		return Optional.of(
+			ddmStructure.getDDMForm()
+		).map(
+			DDMForm::getDDMFormSuccessPageSettings
+		).filter(
+			DDMFormSuccessPageSettings::isEnabled
+		).orElse(
+			null
+		);
 	}
 
 	private DDMStructureVersion _getDDMStructureVersion(

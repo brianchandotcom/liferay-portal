@@ -1542,10 +1542,6 @@
 
 		<execute macro="Alert#viewRequestFailedToComplete" />
 
-		<execute macro="Alert#closeMessage">
-			<var name="messageType" value="ERROR" />
-		</execute>
-
 		<execute macro="Alert#viewExpireContentFailedMessage" />
 	</command>
 

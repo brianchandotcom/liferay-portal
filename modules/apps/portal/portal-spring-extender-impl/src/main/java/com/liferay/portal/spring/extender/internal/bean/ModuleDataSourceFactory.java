@@ -25,24 +25,16 @@ import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;
 
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
+
 /**
  * @author Preston Crary
  */
-public class ModuleDataSourceFactoryUtil {
+public class ModuleDataSourceFactory implements ApplicationContextAware {
 
-	public static DataSource getDataSource(
-		ModuleApplicationContextHolder moduleApplicationContextHolder) {
-
-		ModuleApplicationContext moduleApplicationContext =
-			moduleApplicationContextHolder.getModuleApplicationContext();
-
-		BundleContext bundleContext =
-			moduleApplicationContext.getBundleContext();
-
-		Bundle bundle = bundleContext.getBundle();
-
-		DataSource dataSource = _dataSources.getService(
-			bundle.getSymbolicName());
+	public DataSource getDataSource() {
+		DataSource dataSource = _dataSources.getService(_symbolicName);
 
 		if (dataSource == null) {
 			dataSource = InfrastructureUtil.getDataSource();
@@ -51,11 +43,23 @@ public class ModuleDataSourceFactoryUtil {
 		return dataSource;
 	}
 
+	@Override
+	public void setApplicationContext(ApplicationContext applicationContext) {
+		ModuleApplicationContext moduleApplicationContext =
+			(ModuleApplicationContext)applicationContext;
+
+		BundleContext bundleContext =
+			moduleApplicationContext.getBundleContext();
+
+		Bundle bundle = bundleContext.getBundle();
+
+		_symbolicName = bundle.getSymbolicName();
+	}
+
 	private static final ServiceTrackerMap<String, DataSource> _dataSources;
 
 	static {
-		Bundle bundle = FrameworkUtil.getBundle(
-			ModuleDataSourceFactoryUtil.class);
+		Bundle bundle = FrameworkUtil.getBundle(ModuleDataSourceFactory.class);
 
 		BundleContext bundleContext = bundle.getBundleContext();
 
@@ -67,5 +71,7 @@ public class ModuleDataSourceFactoryUtil {
 				emitter.emit(serviceReferenceBundle.getSymbolicName());
 			});
 	}
+
+	private String _symbolicName;
 
 }

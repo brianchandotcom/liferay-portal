@@ -66,6 +66,7 @@ public class SortJavaTerms1 {
 	public static void method4() {
 	}
 
+	@SuppressWarnings("unused")
 	private void _method5() {
 	}
 
@@ -106,6 +107,7 @@ public class SortJavaTerms1 {
 
 	}
 
+	@SuppressWarnings("unused")
 	private static void _method6() {
 	}
 

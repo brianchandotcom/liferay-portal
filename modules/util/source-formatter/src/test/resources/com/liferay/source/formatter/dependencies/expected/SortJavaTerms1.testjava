@@ -79,6 +79,7 @@ public class SortJavaTerms1 {
 
 	}
 
+	@SuppressWarnings("unused")
 	private static void _method6() {
 	}
 
@@ -86,6 +87,7 @@ public class SortJavaTerms1 {
 		_var12 = testArgument1 + testArgument2;
 	}
 
+	@SuppressWarnings("unused")
 	private void _method5() {
 	}
 

@@ -103,8 +103,10 @@ public class JavaTermDividers {
 		}
 
 	}
+	@SuppressWarnings("unused")
 	private static void _methodPrivateStatic1() {
 	}
+	@SuppressWarnings("unused")
 	private static void _methodPrivateStatic2() {
 	}
 	private JavaTermDividers() {
@@ -112,8 +114,10 @@ public class JavaTermDividers {
 	private JavaTermDividers(String s) {
 		String test = s;
 	}
+	@SuppressWarnings("unused")
 	private void _methodPrivate1() {
 	}
+	@SuppressWarnings("unused")
 	private void _methodPrivate2() {
 	}
 	private static final String _VAR_PRIVATE_STATIC_FINAL_1;

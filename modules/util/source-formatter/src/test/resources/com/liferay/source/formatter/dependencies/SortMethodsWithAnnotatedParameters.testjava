@@ -30,6 +30,7 @@ public class SortMethodsWithAnnotatedParameters {
 		int parameter1, @Annotation(parameter = 1) String parameter) {
 	}
 
+	@SuppressWarnings("unused")
 	private static void _method4(@Annotation(parameter = 1) String parameter) {
 		String test = parameter;
 	}
@@ -43,6 +44,7 @@ public class SortMethodsWithAnnotatedParameters {
 	public void method1(@Annotation(parameter = 1) String parameter) {
 	}
 
+	@SuppressWarnings("unused")
 	private void _method5(@Annotation(parameter = 1) String parameter) {
 		String test = parameter;
 	}

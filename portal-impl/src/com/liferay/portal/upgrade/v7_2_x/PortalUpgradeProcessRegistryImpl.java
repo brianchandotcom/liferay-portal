@@ -16,6 +16,9 @@ package com.liferay.portal.upgrade.v7_2_x;
 
 import aQute.bnd.version.Version;
 
+import com.liferay.portal.kernel.dao.db.DB;
+import com.liferay.portal.kernel.dao.db.DBManagerUtil;
+import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.upgrade.util.PortalUpgradeProcessRegistry;
 
@@ -31,8 +34,12 @@ public class PortalUpgradeProcessRegistryImpl
 	public void registerUpgradeProcesses(
 		TreeMap<Version, UpgradeProcess> upgradeProcesses) {
 
-		upgradeProcesses.put(
-			new Version("3.0.0"), new UpgradeSQLServerDatetime());
+		DB db = DBManagerUtil.getDB();
+
+		if (db.getDBType() == DBType.SQLSERVER) {
+			upgradeProcesses.put(
+				new Version("3.0.0"), new UpgradeSQLServerDatetime());
+		}
 	}
 
 }

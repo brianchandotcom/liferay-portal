@@ -952,9 +952,9 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 			for (ZipEntry zipEntry : zipEntries) {
 				String zipEntryName = zipEntry.getName();
 
-				String location =
-					zipEntryName + "?protocol=lpkg&static=true&lpkgPath=" +
-						path;
+				String location = StringBundler.concat(
+					zipEntryName, "?lpkgPath=", path,
+					"&protocol=lpkg&static=true");
 
 				try (InputStream inputStream = zipFile.getInputStream(
 						zipEntry)) {

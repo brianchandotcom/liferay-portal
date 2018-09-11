@@ -26,24 +26,21 @@ public class TransactionStatusAdapter
 	extends DefaultTransactionStatus
 	implements com.liferay.portal.kernel.transaction.TransactionStatus {
 
+	/**
+	 * @deprecated As of Judson (7.1.x), with no direct replacement
+	 */
+	@Deprecated
 	public TransactionStatusAdapter(
 		PlatformTransactionManager platformTransactionManager,
 		TransactionStatus transactionStatus) {
 
-		super(null, false, false, false, false, null);
-
-		_platformTransactionManager = platformTransactionManager;
-		_transactionStatus = transactionStatus;
+		this(transactionStatus);
 	}
 
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             #TransactionStatusAdapter(PlatformTransactionManager,
-	 *             TransactionStatus)}
-	 */
-	@Deprecated
 	public TransactionStatusAdapter(TransactionStatus transactionStatus) {
-		this(null, transactionStatus);
+		super(null, false, false, false, false, null);
+
+		_transactionStatus = transactionStatus;
 	}
 
 	@Override
@@ -56,9 +53,13 @@ public class TransactionStatusAdapter
 		_transactionStatus.flush();
 	}
 
+	/**
+	 * @deprecated As of Judson (7.1.x), with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public PlatformTransactionManager getPlatformTransactionManager() {
-		return _platformTransactionManager;
+		return null;
 	}
 
 	public TransactionStatus getTransactionStatus() {
@@ -102,7 +103,6 @@ public class TransactionStatusAdapter
 		_transactionStatus.setRollbackOnly();
 	}
 
-	private final PlatformTransactionManager _platformTransactionManager;
 	private final TransactionStatus _transactionStatus;
 
 }

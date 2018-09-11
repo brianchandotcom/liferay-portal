@@ -167,8 +167,7 @@ public class CallbackPreferringTransactionExecutor
 		@Override
 		public Object doInTransaction(TransactionStatus transactionStatus) {
 			TransactionStatusAdapter transactionStatusAdapter =
-				new TransactionStatusAdapter(
-					_platformTransactionManager, transactionStatus);
+				new TransactionStatusAdapter(transactionStatus);
 
 			TransactionExecutorThreadLocal.pushTransactionExecutor(
 				CallbackPreferringTransactionExecutor.this);

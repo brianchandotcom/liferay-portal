@@ -137,8 +137,6 @@ public class FormStructureRepresentorBuilderHelper {
 
 		return builder.types(
 			"FormSuccessPageSettings"
-		).addBoolean(
-			"enabled", DDMFormSuccessPageSettings::isEnabled
 		).addLocalizedStringByLocale(
 			"headline", getLocalizedString(DDMFormSuccessPageSettings::getTitle)
 		).addLocalizedStringByLocale(

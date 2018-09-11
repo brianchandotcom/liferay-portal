@@ -98,7 +98,8 @@ public class StructuredContentNestedCollectionResourceTest {
 
 		PageItems<JournalArticle> pageItems = _getPageItems(
 			PaginationTestUtil.of(10, 1), _group.getGroupId(),
-			_getThemeDisplay(_group), Filter.emptyFilter(), Sort.emptySort());
+			_getThemeDisplay(_group, LocaleUtil.getDefault()),
+			Filter.emptyFilter(), Sort.emptySort());
 
 		Assert.assertEquals(1, pageItems.getTotalCount());
 
@@ -109,9 +110,9 @@ public class StructuredContentNestedCollectionResourceTest {
 
 	@Test
 	public void testGetPageItemsFilterByPartialTitle() throws Exception {
-		Map<Locale, String> stringMap1 = new HashMap<>();
+		Map<Locale, String> stringMap = new HashMap<>();
 
-		stringMap1.put(LocaleUtil.getDefault(), "hello world");
+		stringMap.put(LocaleUtil.getDefault(), "hello world");
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
@@ -120,13 +121,13 @@ public class StructuredContentNestedCollectionResourceTest {
 			_group.getGroupId(),
 			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			JournalArticleConstants.CLASSNAME_ID_DEFAULT,
-			RandomTestUtil.randomString(), false, stringMap1, stringMap1,
-			stringMap1, null, LocaleUtil.getDefault(), null, true, true,
+			RandomTestUtil.randomString(), false, stringMap, stringMap,
+			stringMap, null, LocaleUtil.getDefault(), null, true, true,
 			serviceContext);
 
 		PageItems<JournalArticle> pageItems = _getPageItems(
 			PaginationTestUtil.of(10, 1), _group.getGroupId(),
-			_getThemeDisplay(_group),
+			_getThemeDisplay(_group, LocaleUtil.getDefault()),
 			new Filter(_filterParser.parse("(title eq 'hello')")),
 			Sort.emptySort());
 
@@ -135,9 +136,9 @@ public class StructuredContentNestedCollectionResourceTest {
 
 	@Test
 	public void testGetPageItemsFilterByPartialTitleWord() throws Exception {
-		Map<Locale, String> stringMap1 = new HashMap<>();
+		Map<Locale, String> stringMap = new HashMap<>();
 
-		stringMap1.put(LocaleUtil.getDefault(), "hello world");
+		stringMap.put(LocaleUtil.getDefault(), "hello world");
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
@@ -146,13 +147,13 @@ public class StructuredContentNestedCollectionResourceTest {
 			_group.getGroupId(),
 			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			JournalArticleConstants.CLASSNAME_ID_DEFAULT,
-			RandomTestUtil.randomString(), false, stringMap1, stringMap1,
-			stringMap1, null, LocaleUtil.getDefault(), null, true, true,
+			RandomTestUtil.randomString(), false, stringMap, stringMap,
+			stringMap, null, LocaleUtil.getDefault(), null, true, true,
 			serviceContext);
 
 		PageItems<JournalArticle> pageItems = _getPageItems(
 			PaginationTestUtil.of(10, 1), _group.getGroupId(),
-			_getThemeDisplay(_group),
+			_getThemeDisplay(_group, LocaleUtil.getDefault()),
 			new Filter(_filterParser.parse("(title eq 'hel')")),
 			Sort.emptySort());
 
@@ -163,9 +164,7 @@ public class StructuredContentNestedCollectionResourceTest {
 	public void testGetPageItemsFilterByTitle() throws Exception {
 		Map<Locale, String> stringMap1 = new HashMap<>();
 
-		String title1 = "title1";
-
-		stringMap1.put(LocaleUtil.getDefault(), title1);
+		stringMap1.put(LocaleUtil.getDefault(), "title1");
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
@@ -192,7 +191,7 @@ public class StructuredContentNestedCollectionResourceTest {
 
 		PageItems<JournalArticle> pageItems = _getPageItems(
 			PaginationTestUtil.of(10, 1), _group.getGroupId(),
-			_getThemeDisplay(_group),
+			_getThemeDisplay(_group, LocaleUtil.getDefault()),
 			new Filter(_filterParser.parse("(title eq 'title1')")),
 			Sort.emptySort());
 
@@ -201,6 +200,102 @@ public class StructuredContentNestedCollectionResourceTest {
 		List<JournalArticle> items = (List<JournalArticle>)pageItems.getItems();
 
 		Assert.assertEquals(journalArticle1, items.get(0));
+	}
+
+	@Test
+	public void testGetPageItemsFilterByTitleInLocaleWithDifferentDefaultLocale()
+		throws Exception {
+
+		Map<Locale, String> stringMap = new HashMap<>();
+
+		stringMap.put(LocaleUtil.SPAIN, "titulo1");
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
+
+		// Default Locale of Article is in Spanish (no English content or title)
+
+		JournalArticle journalArticle = JournalTestUtil.addArticle(
+			_group.getGroupId(),
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			JournalArticleConstants.CLASSNAME_ID_DEFAULT,
+			RandomTestUtil.randomString(), false, stringMap, stringMap,
+			stringMap, null, LocaleUtil.SPAIN, null, true, true,
+			serviceContext);
+
+		PageItems<JournalArticle> pageItems = _getPageItems(
+			PaginationTestUtil.of(10, 1), _group.getGroupId(),
+			_getThemeDisplay(_group, LocaleUtil.getDefault()),
+			new Filter(_filterParser.parse("(title eq 'titulo1')")),
+			Sort.emptySort());
+
+		Assert.assertEquals(1, pageItems.getTotalCount());
+
+		List<JournalArticle> items = (List<JournalArticle>)pageItems.getItems();
+
+		Assert.assertEquals(journalArticle, items.get(0));
+	}
+
+	@Test
+	public void testGetPageItemsFilterByTitleInLocaleWithDifferentLocale()
+		throws Exception {
+
+		Map<Locale, String> stringMap = new HashMap<>();
+
+		stringMap.put(LocaleUtil.getDefault(), RandomTestUtil.randomString());
+		stringMap.put(LocaleUtil.SPAIN, "titulo1");
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
+
+		JournalTestUtil.addArticle(
+			_group.getGroupId(),
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			JournalArticleConstants.CLASSNAME_ID_DEFAULT,
+			RandomTestUtil.randomString(), false, stringMap, stringMap,
+			stringMap, null, LocaleUtil.getDefault(), null, true, true,
+			serviceContext);
+
+		PageItems<JournalArticle> pageItems = _getPageItems(
+			PaginationTestUtil.of(10, 1), _group.getGroupId(),
+			_getThemeDisplay(_group, LocaleUtil.getDefault()),
+			new Filter(_filterParser.parse("(title eq 'titulo1')")),
+			Sort.emptySort());
+
+		Assert.assertEquals(0, pageItems.getTotalCount());
+	}
+
+	@Test
+	public void testGetPageItemsFilterByTitleInLocaleWithSameLocale()
+		throws Exception {
+
+		Map<Locale, String> stringMap = new HashMap<>();
+
+		stringMap.put(LocaleUtil.getDefault(), RandomTestUtil.randomString());
+		stringMap.put(LocaleUtil.SPAIN, "titulo1");
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
+
+		JournalArticle journalArticle = JournalTestUtil.addArticle(
+			_group.getGroupId(),
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			JournalArticleConstants.CLASSNAME_ID_DEFAULT,
+			RandomTestUtil.randomString(), false, stringMap, stringMap,
+			stringMap, null, LocaleUtil.getDefault(), null, true, true,
+			serviceContext);
+
+		PageItems<JournalArticle> pageItems = _getPageItems(
+			PaginationTestUtil.of(10, 1), _group.getGroupId(),
+			_getThemeDisplay(_group, LocaleUtil.SPAIN),
+			new Filter(_filterParser.parse("(title eq 'titulo1')")),
+			Sort.emptySort());
+
+		Assert.assertEquals(1, pageItems.getTotalCount());
+
+		List<JournalArticle> items = (List<JournalArticle>)pageItems.getItems();
+
+		Assert.assertEquals(journalArticle, items.get(0));
 	}
 
 	@Test
@@ -234,8 +329,8 @@ public class StructuredContentNestedCollectionResourceTest {
 
 		PageItems<JournalArticle> pageItems = _getPageItems(
 			PaginationTestUtil.of(10, 1), _group.getGroupId(),
-			_getThemeDisplay(_group), Filter.emptyFilter(),
-			new Sort(_sortParser.parse("title:asc")));
+			_getThemeDisplay(_group, LocaleUtil.getDefault()),
+			Filter.emptyFilter(), new Sort(_sortParser.parse("title:asc")));
 
 		Assert.assertEquals(2, pageItems.getTotalCount());
 
@@ -243,6 +338,97 @@ public class StructuredContentNestedCollectionResourceTest {
 
 		Assert.assertEquals(journalArticle1, items.get(0));
 		Assert.assertEquals(journalArticle2, items.get(1));
+	}
+
+	@Test
+	public void testGetPageItemsSortByTitleAscWithDifferentDefaultLocale()
+		throws Exception {
+
+		Map<Locale, String> stringMap1 = new HashMap<>();
+
+		stringMap1.put(LocaleUtil.getDefault(), "titleZ");
+		stringMap1.put(LocaleUtil.SPAIN, "title1");
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
+
+		JournalArticle journalArticle1 = JournalTestUtil.addArticle(
+			_group.getGroupId(),
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			JournalArticleConstants.CLASSNAME_ID_DEFAULT,
+			RandomTestUtil.randomString(), false, stringMap1, stringMap1,
+			stringMap1, null, LocaleUtil.getDefault(), null, true, true,
+			serviceContext);
+
+		Map<Locale, String> stringMap2 = new HashMap<>();
+
+		stringMap2.put(LocaleUtil.SPAIN, "titleA");
+
+		JournalArticle journalArticle2 = JournalTestUtil.addArticle(
+			_group.getGroupId(),
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			JournalArticleConstants.CLASSNAME_ID_DEFAULT,
+			RandomTestUtil.randomString(), false, stringMap2, stringMap2,
+			stringMap2, null, LocaleUtil.SPAIN, null, true, true,
+			serviceContext);
+
+		PageItems<JournalArticle> pageItems = _getPageItems(
+			PaginationTestUtil.of(10, 1), _group.getGroupId(),
+			_getThemeDisplay(_group, LocaleUtil.getDefault()),
+			Filter.emptyFilter(), new Sort(_sortParser.parse("title:asc")));
+
+		Assert.assertEquals(2, pageItems.getTotalCount());
+
+		List<JournalArticle> items = (List<JournalArticle>)pageItems.getItems();
+
+		Assert.assertEquals(journalArticle2, items.get(0));
+		Assert.assertEquals(journalArticle1, items.get(1));
+	}
+
+	@Test
+	public void testGetPageItemsSortByTitleAscWithNonedefaultLocale()
+		throws Exception {
+
+		Map<Locale, String> stringMap1 = new HashMap<>();
+
+		stringMap1.put(LocaleUtil.getDefault(), "title1");
+		stringMap1.put(LocaleUtil.SPAIN, "titleZ");
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
+
+		JournalArticle journalArticle1 = JournalTestUtil.addArticle(
+			_group.getGroupId(),
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			JournalArticleConstants.CLASSNAME_ID_DEFAULT,
+			RandomTestUtil.randomString(), false, stringMap1, stringMap1,
+			stringMap1, null, LocaleUtil.getDefault(), null, true, true,
+			serviceContext);
+
+		Map<Locale, String> stringMap2 = new HashMap<>();
+
+		stringMap2.put(LocaleUtil.getDefault(), "title2");
+		stringMap2.put(LocaleUtil.SPAIN, "titleA");
+
+		JournalArticle journalArticle2 = JournalTestUtil.addArticle(
+			_group.getGroupId(),
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			JournalArticleConstants.CLASSNAME_ID_DEFAULT,
+			RandomTestUtil.randomString(), false, stringMap2, stringMap2,
+			stringMap2, null, LocaleUtil.getDefault(), null, true, true,
+			serviceContext);
+
+		PageItems<JournalArticle> pageItems = _getPageItems(
+			PaginationTestUtil.of(10, 1), _group.getGroupId(),
+			_getThemeDisplay(_group, LocaleUtil.SPAIN), Filter.emptyFilter(),
+			new Sort(_sortParser.parse("title:asc")));
+
+		Assert.assertEquals(2, pageItems.getTotalCount());
+
+		List<JournalArticle> items = (List<JournalArticle>)pageItems.getItems();
+
+		Assert.assertEquals(journalArticle2, items.get(0));
+		Assert.assertEquals(journalArticle1, items.get(1));
 	}
 
 	@Test
@@ -276,8 +462,8 @@ public class StructuredContentNestedCollectionResourceTest {
 
 		PageItems<JournalArticle> pageItems = _getPageItems(
 			PaginationTestUtil.of(10, 1), _group.getGroupId(),
-			_getThemeDisplay(_group), Filter.emptyFilter(),
-			new Sort(_sortParser.parse("title")));
+			_getThemeDisplay(_group, LocaleUtil.getDefault()),
+			Filter.emptyFilter(), new Sort(_sortParser.parse("title")));
 
 		Assert.assertEquals(2, pageItems.getTotalCount());
 
@@ -318,8 +504,8 @@ public class StructuredContentNestedCollectionResourceTest {
 
 		PageItems<JournalArticle> pageItems = _getPageItems(
 			PaginationTestUtil.of(10, 1), _group.getGroupId(),
-			_getThemeDisplay(_group), Filter.emptyFilter(),
-			new Sort(_sortParser.parse("title:desc")));
+			_getThemeDisplay(_group, LocaleUtil.getDefault()),
+			Filter.emptyFilter(), new Sort(_sortParser.parse("title:desc")));
 
 		Assert.assertEquals(2, pageItems.getTotalCount());
 
@@ -367,7 +553,8 @@ public class StructuredContentNestedCollectionResourceTest {
 
 		PageItems<JournalArticle> pageItems = _getPageItems(
 			PaginationTestUtil.of(10, 1), _group.getGroupId(),
-			_getThemeDisplay(_group), Filter.emptyFilter(), Sort.emptySort());
+			_getThemeDisplay(_group, LocaleUtil.getDefault()),
+			Filter.emptyFilter(), Sort.emptySort());
 
 		Assert.assertEquals(1, pageItems.getTotalCount());
 
@@ -415,7 +602,8 @@ public class StructuredContentNestedCollectionResourceTest {
 
 		PageItems<JournalArticle> pageItems = _getPageItems(
 			PaginationTestUtil.of(10, 1), _group.getGroupId(),
-			_getThemeDisplay(_group), Filter.emptyFilter(), Sort.emptySort());
+			_getThemeDisplay(_group, LocaleUtil.getDefault()),
+			Filter.emptyFilter(), Sort.emptySort());
 
 		Assert.assertEquals(1, pageItems.getTotalCount());
 
@@ -459,7 +647,8 @@ public class StructuredContentNestedCollectionResourceTest {
 
 		PageItems<JournalArticle> pageItems = _getPageItems(
 			PaginationTestUtil.of(10, 1), _group.getGroupId(),
-			_getThemeDisplay(_group), Filter.emptyFilter(), Sort.emptySort());
+			_getThemeDisplay(_group, LocaleUtil.getDefault()),
+			Filter.emptyFilter(), Sort.emptySort());
 
 		Assert.assertEquals(1, pageItems.getTotalCount());
 
@@ -499,7 +688,8 @@ public class StructuredContentNestedCollectionResourceTest {
 
 		PageItems<JournalArticle> pageItems = _getPageItems(
 			PaginationTestUtil.of(10, 1), _group.getGroupId(),
-			_getThemeDisplay(_group), Filter.emptyFilter(), Sort.emptySort());
+			_getThemeDisplay(_group, LocaleUtil.getDefault()),
+			Filter.emptyFilter(), Sort.emptySort());
 
 		Assert.assertEquals(0, pageItems.getTotalCount());
 	}
@@ -535,7 +725,8 @@ public class StructuredContentNestedCollectionResourceTest {
 
 		PageItems<JournalArticle> pageItems = _getPageItems(
 			PaginationTestUtil.of(10, 1), _group.getGroupId(),
-			_getThemeDisplay(_group), Filter.emptyFilter(), Sort.emptySort());
+			_getThemeDisplay(_group, LocaleUtil.getDefault()),
+			Filter.emptyFilter(), Sort.emptySort());
 
 		Assert.assertEquals(0, pageItems.getTotalCount());
 	}
@@ -569,7 +760,8 @@ public class StructuredContentNestedCollectionResourceTest {
 
 		PageItems<JournalArticle> pageItems = _getPageItems(
 			PaginationTestUtil.of(10, 1), _group.getGroupId(),
-			_getThemeDisplay(_group), Filter.emptyFilter(), Sort.emptySort());
+			_getThemeDisplay(_group, LocaleUtil.getDefault()),
+			Filter.emptyFilter(), Sort.emptySort());
 
 		Assert.assertEquals(0, pageItems.getTotalCount());
 	}
@@ -593,7 +785,9 @@ public class StructuredContentNestedCollectionResourceTest {
 			filter, sort);
 	}
 
-	private ThemeDisplay _getThemeDisplay(Group group) throws Exception {
+	private ThemeDisplay _getThemeDisplay(Group group, Locale locale)
+		throws Exception {
+
 		ThemeDisplay themeDisplay = new ThemeDisplay();
 
 		Company company = CompanyLocalServiceUtil.getCompanyById(
@@ -601,7 +795,7 @@ public class StructuredContentNestedCollectionResourceTest {
 
 		themeDisplay.setCompany(company);
 
-		themeDisplay.setLocale(LocaleUtil.getDefault());
+		themeDisplay.setLocale(locale);
 		themeDisplay.setScopeGroupId(group.getGroupId());
 
 		return themeDisplay;

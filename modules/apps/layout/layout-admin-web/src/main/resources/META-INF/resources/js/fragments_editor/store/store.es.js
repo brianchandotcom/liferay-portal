@@ -36,6 +36,30 @@ const connect = function(component, store) {
 };
 
 /**
+ * Creates a store and links the given components to it.
+ * Each component will receive the store as `store` attribute.
+ * @param {object} initialState
+ * @param {function[]} reducers
+ * @param {Component[]} components
+ * @return {Store}
+ * @review
+ */
+
+const createStore = function(initialState, reducers, components = []) {
+	const store = new Store(initialState, reducers);
+
+	components.forEach(
+		component => {
+			component.store = store;
+
+			connect(component, store);
+		}
+	);
+
+	return store;
+};
+
+/**
  * Redux-like store that can be used for maintaining a State that can only be
  * modified with pure reducers.
  *
@@ -220,5 +244,5 @@ Store.STATE = {
 		.value({})
 };
 
-export {connect, Store};
+export {connect, createStore, Store};
 export default Store;

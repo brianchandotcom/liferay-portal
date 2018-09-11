@@ -91,7 +91,7 @@ public class XMLIndentationCheck extends BaseFileCheck {
 		}
 
 		for (int i = previousTokenOccurrence.getLineNumber() + 1;
-				i < tokenOccurrence.getLineNumber(); i++) {
+			 i < tokenOccurrence.getLineNumber(); i++) {
 
 			String line = lines[i - 1];
 

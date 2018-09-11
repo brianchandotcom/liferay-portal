@@ -32,7 +32,6 @@
 
 <aui:script sandbox="<%= true %>" use="liferay-portlet-url">
 	var formData = {};
-	var formMaxLengths = {};
 
 	var select = $('#<portlet:namespace />languageId');
 
@@ -46,9 +45,20 @@
 			_.forEach(
 				$('#<portlet:namespace />fm').formToArray(),
 				function(item, index) {
-					if (userNameFields.find('#' + item.name).length) {
-						formData[item.name] = item.value;
-						formMaxLengths[item.name] = userNameFields.find('#' + item.name).attr('maxLength');
+					var oldField = userNameFields.find('#' + item.name);
+
+					if (oldField.length) {
+						var data = {};
+
+						data.value = item.value;
+
+						var maxLength = oldField.attr('maxLength');
+
+						if (maxLength) {
+							data.maxLength = maxLength;
+						}
+
+						formData[item.name] = data;
 					}
 				}
 			);
@@ -71,11 +81,15 @@
 						_.forEach(
 							formData,
 							function(item, index) {
-								if (formMaxLengths[index]) {
-									userNameFields.find('#' + index).attr('maxLength', formMaxLengths[index]);
-								}
+								var newField = userNameFields.find('#' + index);
 
-								userNameFields.find('#' + index).val(item);
+								if (newField) {
+									newField.val(item.value);
+
+									if (item.maxLength) {
+										newField.attr('maxLength', item.maxLength);
+									}
+								}
 							}
 						);
 					},

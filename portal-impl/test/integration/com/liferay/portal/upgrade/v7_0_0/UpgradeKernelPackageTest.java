@@ -294,17 +294,17 @@ public class UpgradeKernelPackageTest extends UpgradeKernelPackage {
 				SQLTransformer.transform(sb.toString()));
 			ResultSet resultSet = preparedStatement.executeQuery()) {
 
-			if (expectedValue != null) {
+			if (expectedValue == null) {
+				Assert.assertFalse(
+					"Entry with id " + id + "should not exsit",
+					resultSet.next());
+			}
+			else {
 				Assert.assertTrue(
 					"Entry with id " + id + " should exist", resultSet.next());
 
 				Assert.assertEquals(
 					expectedValue, resultSet.getString(columnName));
-			}
-			else {
-				Assert.assertFalse(
-					"Entry with id " + id + "should not exsit",
-					resultSet.next());
 			}
 		}
 	}

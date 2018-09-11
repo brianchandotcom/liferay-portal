@@ -14,12 +14,18 @@
 
 package com.liferay.source.formatter.checkstyle.checks;
 
+import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.source.formatter.checkstyle.util.DetailASTUtil;
 
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
+import com.puppycrawl.tools.checkstyle.api.FullIdent;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Hugo Huijser
@@ -31,99 +37,266 @@ public class StaticBlockCheck extends BaseCheck {
 		return new int[] {TokenTypes.STATIC_INIT};
 	}
 
+	public void setImmutableFieldTypes(String immutableFieldTypes) {
+		_immutableFieldTypes = ArrayUtil.append(
+			_immutableFieldTypes, StringUtil.split(immutableFieldTypes));
+	}
+
 	@Override
 	protected void doVisitToken(DetailAST detailAST) {
-		DetailAST previousSiblingAST = detailAST.getPreviousSibling();
+		List<String> classObjectNames = _getClassObjectNames(detailAST);
 
-		while (true) {
-			if ((previousSiblingAST == null) ||
-				(previousSiblingAST.getType() != TokenTypes.VARIABLE_DEF)) {
+		if (classObjectNames.isEmpty()) {
+			return;
+		}
 
-				return;
+		List<DetailAST> methodCallASTList = DetailASTUtil.getAllChildTokens(
+			detailAST, true, TokenTypes.METHOD_CALL);
+
+		if (methodCallASTList.isEmpty()) {
+			return;
+		}
+
+		Map<String, List<DetailAST>> identASTMap = _getIdentASTMap(detailAST);
+
+		Map<String, DetailAST[]> variableDefMap = _getVariableDefMap(
+			detailAST, identASTMap);
+
+		for (DetailAST methodCallAST : methodCallASTList) {
+			_checkMethodCall(
+				methodCallAST, classObjectNames, identASTMap, variableDefMap);
+		}
+	}
+
+	private void _checkMethodCall(
+		DetailAST methodCallAST, List<String> classObjectNames,
+		Map<String, List<DetailAST>> identASTMap,
+		Map<String, DetailAST[]> variableDefMap) {
+
+		String variableName = DetailASTUtil.getVariableName(methodCallAST);
+
+		if (!classObjectNames.contains(variableName)) {
+			return;
+		}
+
+		DetailAST topLevelDetailAST = _getTopLevelDetailAST(methodCallAST);
+
+		int statementEndLineNumber = DetailASTUtil.getEndLine(
+			topLevelDetailAST);
+
+		List<DetailAST> variableASTList = identASTMap.get(variableName);
+
+		DetailAST firstUseVariableAST = variableASTList.get(0);
+
+		topLevelDetailAST = _getTopLevelDetailAST(firstUseVariableAST);
+
+		int statementStartLineNumber = DetailASTUtil.getStartLine(
+			topLevelDetailAST);
+
+		if (!_isRequiredMethodCall(
+				variableName, classObjectNames, identASTMap, variableDefMap,
+				statementStartLineNumber, statementEndLineNumber)) {
+
+			DetailAST dotAST = methodCallAST.findFirstToken(TokenTypes.DOT);
+
+			FullIdent fullIdent = FullIdent.createFullIdent(dotAST);
+
+			log(
+				methodCallAST.getLineNo(), _MSG_UNNEEDED_STATIC_BLOCK,
+				fullIdent.getText());
+		}
+	}
+
+	private List<String> _getClassObjectNames(DetailAST staticInitAST) {
+		List<String> staticObjectNames = new ArrayList<>();
+
+		DetailAST previousSiblingAST = staticInitAST.getPreviousSibling();
+
+		while (previousSiblingAST != null) {
+			DetailAST modifiersAST = previousSiblingAST.findFirstToken(
+				TokenTypes.MODIFIERS);
+
+			if (modifiersAST == null) {
+				previousSiblingAST = previousSiblingAST.getPreviousSibling();
+
+				continue;
 			}
 
-			_checkVariable(previousSiblingAST, detailAST);
+			DetailAST nameAST = previousSiblingAST.findFirstToken(
+				TokenTypes.IDENT);
+
+			String name = nameAST.getText();
+
+			if (previousSiblingAST.getType() != TokenTypes.VARIABLE_DEF) {
+				staticObjectNames.add(name);
+			}
+			else if (!name.equals("_log")) {
+				String typeName = DetailASTUtil.getTypeName(
+					previousSiblingAST, true);
+
+				if (!ArrayUtil.contains(_immutableFieldTypes, typeName)) {
+					staticObjectNames.add(name);
+				}
+			}
 
 			previousSiblingAST = previousSiblingAST.getPreviousSibling();
 		}
+
+		return staticObjectNames;
 	}
 
-	private void _checkVariable(
-		DetailAST variableDefAST, DetailAST staticBlockAST) {
+	private Map<String, List<DetailAST>> _getIdentASTMap(
+		DetailAST staticInitAST) {
 
-		DetailAST modifiersAST = variableDefAST.findFirstToken(
-			TokenTypes.MODIFIERS);
+		Map<String, List<DetailAST>> identASTMap = new HashMap<>();
 
-		if (!modifiersAST.branchContains(TokenTypes.FINAL) ||
-			!modifiersAST.branchContains(TokenTypes.LITERAL_STATIC)) {
+		List<DetailAST> identASTList = DetailASTUtil.getAllChildTokens(
+			staticInitAST, true, TokenTypes.IDENT);
 
-			return;
-		}
+		for (DetailAST identAST : identASTList) {
+			List<DetailAST> list = identASTMap.get(identAST.getText());
 
-		String typeName = DetailASTUtil.getTypeName(variableDefAST, false);
-
-		if (!typeName.equals("List") && !typeName.equals("Map") &&
-			!typeName.equals("Set")) {
-
-			return;
-		}
-
-		DetailAST identAST = variableDefAST.findFirstToken(TokenTypes.IDENT);
-
-		String variableName = identAST.getText();
-
-		int variableNameCount = _getIdentCount(staticBlockAST, variableName);
-
-		if (variableNameCount == 0) {
-			return;
-		}
-
-		List<DetailAST> methodCallASTList = null;
-
-		if (typeName.equals("Map")) {
-			methodCallASTList = DetailASTUtil.getMethodCalls(
-				staticBlockAST, variableName, "put");
-		}
-		else {
-			methodCallASTList = DetailASTUtil.getMethodCalls(
-				staticBlockAST, variableName, "add");
-		}
-
-		for (DetailAST methodCallAST : methodCallASTList) {
-			DetailAST parentAST = methodCallAST.getParent();
-
-			parentAST = parentAST.getParent();
-
-			parentAST = parentAST.getParent();
-
-			if (parentAST.getType() != TokenTypes.STATIC_INIT) {
-				return;
+			if (list == null) {
+				list = new ArrayList<>();
 			}
+
+			list.add(identAST);
+
+			identASTMap.put(identAST.getText(), list);
 		}
 
-		if (methodCallASTList.size() == variableNameCount) {
-			log(
-				variableDefAST, _MSG_UNNEEDED_STATIC_BLOCK, typeName,
-				variableName);
+		return identASTMap;
+	}
+
+	private DetailAST _getTopLevelDetailAST(DetailAST detailAST) {
+		DetailAST topLevelDetailAST = null;
+
+		DetailAST parentAST = detailAST;
+
+		while (true) {
+			DetailAST grandParentAST = parentAST.getParent();
+
+			if (grandParentAST.getType() == TokenTypes.STATIC_INIT) {
+				return topLevelDetailAST;
+			}
+
+			if (grandParentAST.getType() == TokenTypes.SLIST) {
+				topLevelDetailAST = parentAST;
+			}
+
+			parentAST = grandParentAST;
 		}
 	}
 
-	private int _getIdentCount(DetailAST detailAST, String name) {
-		int count = 0;
+	private Map<String, DetailAST[]> _getVariableDefMap(
+		DetailAST staticInitAST, Map<String, List<DetailAST>> identASTMap) {
 
-		for (DetailAST identAST :
-				DetailASTUtil.getAllChildTokens(
-					detailAST, true, TokenTypes.IDENT)) {
+		Map<String, DetailAST[]> variableDefMap = new HashMap<>();
 
-			if (name.equals(identAST.getText())) {
-				count++;
+		List<DetailAST> variableDefASTList = DetailASTUtil.getAllChildTokens(
+			staticInitAST, true, TokenTypes.VARIABLE_DEF);
+
+		for (DetailAST variableDefAST : variableDefASTList) {
+			DetailAST nameAST = variableDefAST.findFirstToken(TokenTypes.IDENT);
+
+			String name = nameAST.getText();
+
+			List<DetailAST> identASTList = identASTMap.get(name);
+
+			DetailAST firstIdentAST = identASTList.get(0);
+			DetailAST lastIdentAST = identASTList.get(identASTList.size() - 1);
+
+			variableDefMap.put(
+				name, new DetailAST[] {firstIdentAST, lastIdentAST});
+		}
+
+		return variableDefMap;
+	}
+
+	private boolean _isRequiredMethodCall(
+		String variableName, List<String> classObjectNames,
+		Map<String, List<DetailAST>> identASTMap,
+		Map<String, DetailAST[]> variableDefMap, int start, int end) {
+
+		for (Map.Entry<String, List<DetailAST>> entry :
+				identASTMap.entrySet()) {
+
+			String name = entry.getKey();
+
+			if (name.equals(variableName)) {
+				for (DetailAST detailAST : entry.getValue()) {
+					if (detailAST.getLineNo() > end) {
+						break;
+					}
+
+					DetailAST parentAST = detailAST.getParent();
+
+					if (parentAST.getType() == TokenTypes.DOT) {
+						continue;
+					}
+
+					if (parentAST.getType() == TokenTypes.ASSIGN) {
+						DetailAST literalNewAST = parentAST.findFirstToken(
+							TokenTypes.LITERAL_NEW);
+
+						if (literalNewAST != null) {
+							continue;
+						}
+					}
+
+					return true;
+				}
+
+				continue;
+			}
+
+			for (DetailAST detailAST : entry.getValue()) {
+				if ((detailAST.getLineNo() < start) ||
+					(detailAST.getLineNo() > end)) {
+
+					continue;
+				}
+
+				if (classObjectNames.contains(name)) {
+					return true;
+				}
+
+				DetailAST[] firstAndLastUsedDetailASTArray = variableDefMap.get(
+					name);
+
+				if (firstAndLastUsedDetailASTArray == null) {
+					continue;
+				}
+
+				DetailAST lastUsedDetailAST = firstAndLastUsedDetailASTArray[1];
+
+				if (lastUsedDetailAST.getLineNo() > end) {
+					return true;
+				}
+
+				DetailAST firstUsedDetailAST =
+					firstAndLastUsedDetailASTArray[0];
+
+				if (firstUsedDetailAST.getLineNo() < start) {
+					DetailAST topLevelDetailAST = _getTopLevelDetailAST(
+						firstUsedDetailAST);
+
+					int statementStartLineNumber = DetailASTUtil.getStartLine(
+						topLevelDetailAST);
+
+					return _isRequiredMethodCall(
+						variableName, classObjectNames, identASTMap,
+						variableDefMap, statementStartLineNumber, end);
+				}
 			}
 		}
 
-		return count;
+		return false;
 	}
 
 	private static final String _MSG_UNNEEDED_STATIC_BLOCK =
 		"static.block.unneeded";
+
+	private String[] _immutableFieldTypes = new String[0];
 
 }

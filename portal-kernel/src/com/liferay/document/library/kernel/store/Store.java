@@ -14,6 +14,8 @@
 
 package com.liferay.document.library.kernel.store;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.exception.PortalException;
 
 import java.io.File;
@@ -27,6 +29,7 @@ import java.io.InputStream;
  * @author Edward Han
  * @see    BaseStore
  */
+@ProviderType
 public interface Store {
 
 	public static final String VERSION_DEFAULT = "1.0";

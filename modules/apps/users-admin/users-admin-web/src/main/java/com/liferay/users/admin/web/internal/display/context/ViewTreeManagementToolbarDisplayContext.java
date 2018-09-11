@@ -119,7 +119,7 @@ public class ViewTreeManagementToolbarDisplayContext {
 							dropdownItem.setHref(
 								_renderResponse.createRenderURL(),
 								"mvcRenderCommandName",
-								"/users_admin/edit_user", "redirect",
+								"/users_admin/edit_user", "backURL",
 								currentURL.toString(),
 								"organizationsSearchContainerPrimaryKeys",
 								String.valueOf(

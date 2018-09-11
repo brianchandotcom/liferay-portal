@@ -31,7 +31,7 @@
 			<equals arg1="${pageVersioningEnabled}" arg2="true" />
 			<then>
 				<execute function="Click" locator1="Checkbox#ENABLED_ON_PUBLIC_PAGES" />
--				<execute function="Click" locator1="Checkbox#ENABLED_ON_PRIVATE_PAGES" />
+				<execute function="Click" locator1="Checkbox#ENABLED_ON_PRIVATE_PAGES" />
 			</then>
 		</if>
 

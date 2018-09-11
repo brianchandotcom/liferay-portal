@@ -413,7 +413,7 @@ describe(
 				};
 				const {FormRenderer} = builderComponent.refs;
 
-				FormRenderer._handleSettingsPageClicked(
+				FormRenderer._handlePageSettingsClicked(
 					{
 						data
 					}

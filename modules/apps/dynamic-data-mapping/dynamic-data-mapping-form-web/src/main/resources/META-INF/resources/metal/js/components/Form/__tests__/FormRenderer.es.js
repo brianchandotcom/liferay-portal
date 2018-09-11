@@ -238,7 +238,7 @@ describe(
 				);
 				const spy = jest.spyOn(component, 'emit');
 
-				component._handleSettingsPageClicked(
+				component._handlePageSettingsClicked(
 					{
 						data: {
 							item: {
@@ -271,7 +271,7 @@ describe(
 				);
 				const spy = jest.spyOn(component, 'emit');
 
-				component._handleSettingsPageClicked(
+				component._handlePageSettingsClicked(
 					{
 						data: {
 							item: {
@@ -287,7 +287,7 @@ describe(
 
 				jest.useFakeTimers();
 
-				component._handleSettingsPageClicked(
+				component._handlePageSettingsClicked(
 					{
 						data: {
 							item: {

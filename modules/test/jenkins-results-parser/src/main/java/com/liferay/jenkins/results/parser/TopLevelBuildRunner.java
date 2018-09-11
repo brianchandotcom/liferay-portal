@@ -15,9 +15,12 @@
 package com.liferay.jenkins.results.parser;
 
 import java.io.File;
+import java.io.IOException;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 import java.util.Set;
 
 import org.apache.commons.lang.StringUtils;
@@ -66,7 +69,7 @@ public abstract class TopLevelBuildRunner<T extends TopLevelBuildData>
 			"batch_" + JenkinsResultsParserUtil.getDistinctTimeStamp());
 		invocationParameters.put("TOP_LEVEL_RUN_ID", buildData.getRunID());
 
-		JenkinsResultsParserUtil.invokeJob(
+		invokeJob(
 			buildData.getCohortName(), buildData.getJobName() + "-batch",
 			invocationParameters);
 	}
@@ -74,6 +77,55 @@ public abstract class TopLevelBuildRunner<T extends TopLevelBuildData>
 	protected void invokeBatchJobs() {
 		for (String batchName : getBatchNames()) {
 			invokeBatchJob(batchName);
+		}
+	}
+
+	protected void invokeJob(
+		String cohortName, String jobName,
+		Map<String, String> invocationParameters) {
+
+		Properties buildProperties;
+
+		try {
+			buildProperties = JenkinsResultsParserUtil.getBuildProperties();
+		}
+		catch (IOException ioe) {
+			throw new RuntimeException(ioe);
+		}
+
+		List<JenkinsMaster> jenkinsMasters =
+			JenkinsResultsParserUtil.getJenkinsMasters(
+				buildProperties, cohortName);
+
+		String randomJenkinsURL =
+			JenkinsResultsParserUtil.getMostAvailableMasterURL(
+				"http://" + cohortName + ".liferay.com", jenkinsMasters.size());
+
+		StringBuilder sb = new StringBuilder();
+
+		sb.append(randomJenkinsURL);
+		sb.append("/job/");
+		sb.append(jobName);
+		sb.append("/buildWithParameters?token=");
+		sb.append(buildProperties.getProperty("jenkins.authentication.token"));
+
+		for (Map.Entry<String, String> invocationParameter :
+				invocationParameters.entrySet()) {
+
+			sb.append("&");
+			sb.append(
+				JenkinsResultsParserUtil.fixURL(invocationParameter.getKey()));
+			sb.append("=");
+			sb.append(
+				JenkinsResultsParserUtil.fixURL(
+					invocationParameter.getValue()));
+		}
+
+		try {
+			JenkinsResultsParserUtil.toString(sb.toString());
+		}
+		catch (IOException ioe) {
+			throw new RuntimeException(ioe);
 		}
 	}
 

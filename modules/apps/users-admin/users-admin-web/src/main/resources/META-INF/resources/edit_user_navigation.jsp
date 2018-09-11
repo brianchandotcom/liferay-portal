@@ -36,27 +36,30 @@ String screenNavigationCategoryKey = ParamUtil.getString(request, "screenNavigat
 String screenNavigationEntryKey = ParamUtil.getString(request, "screenNavigationEntryKey");
 %>
 
-<portlet:actionURL name="<%= actionCommandName %>" var="actionCommandURL" />
-
-<portlet:renderURL var="redirect">
-	<portlet:param name="mvcRenderCommandName" value="/users_admin/edit_user" />
-	<portlet:param name="p_u_i_d" value="<%= String.valueOf(selUserId) %>" />
-	<portlet:param name="screenNavigationCategoryKey" value="<%= screenNavigationCategoryKey %>" />
-	<portlet:param name="screenNavigationEntryKey" value="<%= screenNavigationEntryKey %>" />
-</portlet:renderURL>
-
-<portlet:renderURL var="viewUsersRenderURL" />
-
 <%
+PortletURL viewURL = renderResponse.createRenderURL();
+
+String backURL = ParamUtil.getString(request, "backURL", viewURL.toString());
+
 if (!portletName.equals(UsersAdminPortletKeys.MY_ACCOUNT)) {
 	portletDisplay.setShowBackIcon(true);
-	portletDisplay.setURLBack(viewUsersRenderURL.toString());
+	portletDisplay.setURLBack(backURL);
 
 	renderResponse.setTitle((selUser == null) ? LanguageUtil.get(request, "add-user") : LanguageUtil.format(request, "edit-user-x", selUser.getFullName(), false));
 }
 %>
 
+<portlet:renderURL var="redirect">
+	<portlet:param name="mvcRenderCommandName" value="/users_admin/edit_user" />
+	<portlet:param name="backURL" value="<%= backURL %>" />
+	<portlet:param name="p_u_i_d" value="<%= String.valueOf(selUserId) %>" />
+	<portlet:param name="screenNavigationCategoryKey" value="<%= screenNavigationCategoryKey %>" />
+	<portlet:param name="screenNavigationEntryKey" value="<%= screenNavigationEntryKey %>" />
+</portlet:renderURL>
+
 <liferay-ui:success key="userAdded" message="the-user-was-created-successfully" />
+
+<portlet:actionURL name="<%= actionCommandName %>" var="actionCommandURL" />
 
 <aui:form action="<%= actionCommandURL %>" cssClass="container-fluid-1280 portlet-users-admin-edit-user" data-senna-off="true" method="post" name="fm">
 	<aui:input name="redirect" type="hidden" value="<%= redirect.toString() %>" />
@@ -77,7 +80,7 @@ if (!portletName.equals(UsersAdminPortletKeys.MY_ACCOUNT)) {
 					<aui:button primary="<%= true %>" type="submit" />
 
 					<c:if test="<%= !portletName.equals(UsersAdminPortletKeys.MY_ACCOUNT) %>">
-						<aui:button href="<%= viewUsersRenderURL.toString() %>" type="cancel" />
+						<aui:button href="<%= backURL %>" type="cancel" />
 					</c:if>
 				</div>
 			</c:if>

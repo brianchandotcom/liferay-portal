@@ -22,10 +22,10 @@ AUI.add(
 
 				var title = icon.text();
 
-				WorkflowTasks._showPopup(icon.attr('href'), A.one(content), title, randomId, height);
+				WorkflowTasks._showPopup(icon.attr('href'), A.one(content), title, randomId, height, icon._node.id);
 			},
 
-			_showPopup: function(url, content, title, randomId, height) {
+			_showPopup: function(url, content, title, randomId, height, targetId) {
 				var instance = this;
 
 				var form = A.Node.create('<form />');
@@ -45,7 +45,7 @@ AUI.add(
 				if (content && !instance._content[randomId]) {
 					instance._content[randomId] = content;
 				}
-				else if (!content && title && title.trim().indexOf('Update Due Date') !== -1) {
+				else if (!content && targetId.endsWith('taskDueDateLink')) {
 					content = instance._content[randomId];
 				}
 

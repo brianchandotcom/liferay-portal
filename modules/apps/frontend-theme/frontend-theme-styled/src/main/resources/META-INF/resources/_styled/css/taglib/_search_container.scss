@@ -91,7 +91,7 @@
 	min-width: 200px;
 }
 
-.lfr-email-column, .lfr-website-column {
+.lfr-email-column, .lfr-website-column, .lfr-mobile-column {
 	min-width: 100px;
 
 	@include sm {

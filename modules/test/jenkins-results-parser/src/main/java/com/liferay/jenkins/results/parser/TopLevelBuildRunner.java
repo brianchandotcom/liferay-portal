@@ -15,9 +15,12 @@
 package com.liferay.jenkins.results.parser;
 
 import java.io.File;
+import java.io.IOException;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 import java.util.Set;
 
 import org.apache.commons.lang.StringUtils;
@@ -35,10 +38,22 @@ public abstract class TopLevelBuildRunner<T extends TopLevelBuildData>
 		propagateDistFilesToDistNodes();
 
 		invokeBatchJobs();
+
+		waitForInvokedJobs();
 	}
 
 	protected TopLevelBuildRunner(T topLevelBuildData) {
 		super(topLevelBuildData);
+
+		Build build = BuildFactory.newBuild(
+			topLevelBuildData.getBuildURL(), null);
+
+		if (!(build instanceof TopLevelBuild)) {
+			throw new RuntimeException(
+				"Invalid build url " + topLevelBuildData.getBuildURL());
+		}
+
+		_topLevelBuild = (TopLevelBuild)build;
 	}
 
 	protected Set<String> getBatchNames() {
@@ -66,7 +81,7 @@ public abstract class TopLevelBuildRunner<T extends TopLevelBuildData>
 			"batch_" + JenkinsResultsParserUtil.getDistinctTimeStamp());
 		invocationParameters.put("TOP_LEVEL_RUN_ID", buildData.getRunID());
 
-		JenkinsResultsParserUtil.invokeJob(
+		invokeJob(
 			buildData.getCohortName(), buildData.getJobName() + "-batch",
 			invocationParameters);
 	}
@@ -74,6 +89,57 @@ public abstract class TopLevelBuildRunner<T extends TopLevelBuildData>
 	protected void invokeBatchJobs() {
 		for (String batchName : getBatchNames()) {
 			invokeBatchJob(batchName);
+		}
+	}
+
+	protected void invokeJob(
+		String cohortName, String jobName,
+		Map<String, String> invocationParameters) {
+
+		Properties buildProperties;
+
+		try {
+			buildProperties = JenkinsResultsParserUtil.getBuildProperties();
+		}
+		catch (IOException ioe) {
+			throw new RuntimeException(ioe);
+		}
+
+		List<JenkinsMaster> jenkinsMasters =
+			JenkinsResultsParserUtil.getJenkinsMasters(
+				buildProperties, cohortName);
+
+		String randomJenkinsURL =
+			JenkinsResultsParserUtil.getMostAvailableMasterURL(
+				"http://" + cohortName + ".liferay.com", jenkinsMasters.size());
+
+		StringBuilder sb = new StringBuilder();
+
+		sb.append(randomJenkinsURL);
+		sb.append("/job/");
+		sb.append(jobName);
+		sb.append("/buildWithParameters?token=");
+		sb.append(buildProperties.getProperty("jenkins.authentication.token"));
+
+		for (Map.Entry<String, String> invocationParameter :
+				invocationParameters.entrySet()) {
+
+			sb.append("&");
+			sb.append(
+				JenkinsResultsParserUtil.fixURL(invocationParameter.getKey()));
+			sb.append("=");
+			sb.append(
+				JenkinsResultsParserUtil.fixURL(
+					invocationParameter.getValue()));
+		}
+
+		_topLevelBuild.addDownstreamBuilds(sb.toString());
+
+		try {
+			JenkinsResultsParserUtil.toString(sb.toString());
+		}
+		catch (IOException ioe) {
+			throw new RuntimeException(ioe);
 		}
 	}
 
@@ -99,6 +165,24 @@ public abstract class TopLevelBuildRunner<T extends TopLevelBuildData>
 		filePropagator.start(_FILE_PROPAGATOR_THREAD_COUNT);
 	}
 
+	protected void waitForInvokedJobs() {
+		while (true) {
+			_topLevelBuild.update();
+
+			System.out.println(_topLevelBuild.getStatusSummary());
+
+			int completed = _topLevelBuild.getDownstreamBuildCount("completed");
+			int total = _topLevelBuild.getDownstreamBuildCount(null);
+
+			if (completed >= total) {
+				break;
+			}
+
+			JenkinsResultsParserUtil.sleep(
+				_WAIT_FOR_INVOKED_JOB_DURATION * 1000);
+		}
+	}
+
 	private String _getJenkinsGitHubURL() {
 		String jenkinsCachedBranchName = workspace.getJenkinsCachedBranchName();
 
@@ -122,5 +206,9 @@ public abstract class TopLevelBuildRunner<T extends TopLevelBuildData>
 	private static final int _FILE_PROPAGATOR_EXPIRATION = 180;
 
 	private static final int _FILE_PROPAGATOR_THREAD_COUNT = 1;
+
+	private static final int _WAIT_FOR_INVOKED_JOB_DURATION = 30;
+
+	private final TopLevelBuild _topLevelBuild;
 
 }

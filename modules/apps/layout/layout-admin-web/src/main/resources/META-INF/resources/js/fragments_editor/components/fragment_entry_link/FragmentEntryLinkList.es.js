@@ -92,6 +92,19 @@ class FragmentEntryLinkList extends Component {
 	}
 
 	/**
+	* Callback that is executed when we leave a drag target.
+	* @param {!MouseEvent} event
+	* @private
+	* @review
+	*/
+
+	_handleDragEnd(data, event) {
+		this.store.dispatchAction(
+			CLEAR_DRAG_TARGET
+		);
+	}
+
+	/**
 	 * Callback that is executed when an item is dropped.
 	 * @param {!MouseEvent} event
 	 * @private
@@ -201,6 +214,11 @@ class FragmentEntryLinkList extends Component {
 		this._dragDrop.on(
 			DragDrop.Events.END,
 			this._handleDrop.bind(this)
+		);
+
+		this._dragDrop.on(
+			DragDrop.Events.TARGET_LEAVE,
+			this._handleDragEnd.bind(this)
 		);
 	}
 }

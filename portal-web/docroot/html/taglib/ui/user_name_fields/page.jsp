@@ -45,8 +45,20 @@
 			_.forEach(
 				$('#<portlet:namespace />fm').formToArray(),
 				function(item, index) {
-					if (userNameFields.find('#' + item.name).length) {
-						formData[item.name] = item.value;
+					var oldField = userNameFields.find('#' + item.name);
+
+					if (oldField.length) {
+						var data = {};
+
+						data.value = item.value;
+
+						var maxLength = oldField.attr('maxLength');
+
+						if (maxLength) {
+							data.maxLength = maxLength;
+						}
+
+						formData[item.name] = data;
 					}
 				}
 			);
@@ -69,7 +81,15 @@
 						_.forEach(
 							formData,
 							function(item, index) {
-								userNameFields.find('#' + index).val(item);
+								var newField = userNameFields.find('#' + index);
+
+								if (newField) {
+									newField.val(item.value);
+
+									if (item.maxLength) {
+										newField.attr('maxLength', item.maxLength);
+									}
+								}
 							}
 						);
 					},

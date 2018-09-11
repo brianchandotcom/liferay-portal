@@ -549,6 +549,14 @@ public abstract class UpgradeProcess
 		return _portalIndexesSQL.get(tableName);
 	}
 
+	protected Map<String, Integer> getTableColumnsMap(Class<?> tableClass)
+		throws Exception {
+
+		Field tableNameField = tableClass.getField("TABLE_COLUMNS_MAP");
+
+		return (Map<String, Integer>)tableNameField.get(null);
+	}
+
 	protected String getTableName(Class<?> tableClass) throws Exception {
 		Field tableNameField = tableClass.getField("TABLE_NAME");
 

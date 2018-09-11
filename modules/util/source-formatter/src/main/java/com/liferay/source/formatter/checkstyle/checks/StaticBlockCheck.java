@@ -130,7 +130,7 @@ public class StaticBlockCheck extends BaseCheck {
 			if (previousSiblingAST.getType() != TokenTypes.VARIABLE_DEF) {
 				staticObjectNames.add(name);
 			}
-			else if (!name.equals("_log")) {
+			else {
 				String typeName = DetailASTUtil.getTypeName(
 					previousSiblingAST, true);
 

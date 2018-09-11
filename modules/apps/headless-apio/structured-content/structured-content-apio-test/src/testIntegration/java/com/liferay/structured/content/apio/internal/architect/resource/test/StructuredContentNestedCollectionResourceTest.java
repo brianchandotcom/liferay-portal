@@ -216,6 +216,50 @@ public class StructuredContentNestedCollectionResourceTest {
 	}
 
 	@Test
+	public void testGetPageItemsFilterByPartialTitleWithSeveralWords()
+		throws Exception {
+
+		Map<Locale, String> stringMap1 = new HashMap<>();
+
+		stringMap1.put(LocaleUtil.getDefault(), "hello world");
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
+
+		JournalArticle journalArticle1 = JournalTestUtil.addArticle(
+			_group.getGroupId(),
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			JournalArticleConstants.CLASSNAME_ID_DEFAULT,
+			RandomTestUtil.randomString(), false, stringMap1, stringMap1,
+			stringMap1, null, LocaleUtil.getDefault(), null, true, true,
+			serviceContext);
+
+		Map<Locale, String> stringMap2 = new HashMap<>();
+
+		stringMap2.put(LocaleUtil.getDefault(), "hello");
+
+		JournalTestUtil.addArticle(
+			_group.getGroupId(),
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			JournalArticleConstants.CLASSNAME_ID_DEFAULT,
+			RandomTestUtil.randomString(), false, stringMap2, stringMap2,
+			stringMap2, null, LocaleUtil.getDefault(), null, true, true,
+			serviceContext);
+
+		PageItems<JournalArticle> pageItems = _getPageItems(
+			PaginationTestUtil.of(10, 1), _group.getGroupId(),
+			_getThemeDisplay(_group, LocaleUtil.getDefault()),
+			new Filter(_filterParser.parse("(title eq 'hello world')")),
+			Sort.emptySort());
+
+		Assert.assertEquals(1, pageItems.getTotalCount());
+
+		List<JournalArticle> items = (List<JournalArticle>)pageItems.getItems();
+
+		Assert.assertTrue("Items " + items, items.contains(journalArticle1));
+	}
+
+	@Test
 	public void testGetPageItemsFilterByPartialTitleWord() throws Exception {
 		Map<Locale, String> stringMap = new HashMap<>();
 

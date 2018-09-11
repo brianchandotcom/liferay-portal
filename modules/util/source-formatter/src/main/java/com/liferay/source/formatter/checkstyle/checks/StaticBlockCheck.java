@@ -24,7 +24,7 @@ import java.util.List;
 /**
  * @author Hugo Huijser
  */
-public class StaticCollectionCheck extends BaseCheck {
+public class StaticBlockCheck extends BaseCheck {
 
 	@Override
 	public int[] getDefaultTokens() {

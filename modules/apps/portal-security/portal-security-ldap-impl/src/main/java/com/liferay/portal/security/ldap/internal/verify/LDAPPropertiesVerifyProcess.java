@@ -303,8 +303,8 @@ public class LDAPPropertiesVerifyProcess extends VerifyProcess {
 						companyId, ldapServerId, postfix);
 
 					for (int i = 0;
-							i < LegacyLDAPPropsKeys.LDAP_KEYS_POSTFIXED.length;
-							i++) {
+						 i < LegacyLDAPPropsKeys.LDAP_KEYS_POSTFIXED.length;
+						 i++) {
 
 						keys.add(
 							LegacyLDAPPropsKeys.LDAP_KEYS_POSTFIXED[i] +

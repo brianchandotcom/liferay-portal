@@ -148,7 +148,7 @@ public class Base64 {
 		int pad = 0;
 
 		for (int i = base64.length() - 1; base64.charAt(i) == CharPool.EQUAL;
-				i--) {
+			 i--) {
 
 			pad++;
 		}

@@ -1321,7 +1321,7 @@ public class LayoutImpl extends LayoutBaseImpl {
 			new String[PropsValues.LAYOUT_FRIENDLY_URL_KEYWORDS.length];
 
 		for (int i = 0; i < PropsValues.LAYOUT_FRIENDLY_URL_KEYWORDS.length;
-				i++) {
+			 i++) {
 
 			String keyword = PropsValues.LAYOUT_FRIENDLY_URL_KEYWORDS[i];
 

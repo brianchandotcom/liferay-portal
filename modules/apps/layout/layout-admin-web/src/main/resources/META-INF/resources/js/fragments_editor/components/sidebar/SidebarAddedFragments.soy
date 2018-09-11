@@ -8,11 +8,11 @@
 	{@param spritemap: string}
 	{@param? _handleFragmentRemoveButtonClick: any}
 	{@param? store: ?}
-	{@param? structure: list<string>}
+	{@param? layoutData: ?}
 
 	<div class="sidebar-added-fragments">
-		{if $structure}
-			{foreach $fragmentEntryLinkId in $structure}
+		{if $fragmentEntryLinks and $layoutData and $layoutData.structure}
+			{foreach $fragmentEntryLinkId in $layoutData.structure}
 				{let $fragmentEntryLink: $fragmentEntryLinks[$fragmentEntryLinkId] /}
 
 				{if $fragmentEntryLink}

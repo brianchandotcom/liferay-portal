@@ -4038,6 +4038,10 @@ plugins.includes=</echo>
 			</sequential>
 		</parallel>
 
+		<exec dir="${tstamp.value}" executable="zip">
+			<arg line="-r -q ${project.dir}/dist/liferay-portal-tomcat-${lp.version}-with-state.zip liferay-portal-${lp.version}" />
+		</exec>
+
 		<exec dir="${tstamp.value}" executable="tar">
 			<arg line="-czf ${project.dir}/dist/liferay-portal-tomcat-${lp.version}.tar.gz liferay-portal-${lp.version}" />
 		</exec>

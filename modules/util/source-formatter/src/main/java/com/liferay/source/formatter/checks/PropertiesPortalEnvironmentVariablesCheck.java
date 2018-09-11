@@ -61,9 +61,6 @@ public class PropertiesPortalEnvironmentVariablesCheck extends BaseFileCheck {
 			if (Character.isLowerCase(c)) {
 				sb.append(Character.toUpperCase(c));
 			}
-			else if (c == CharPool.PERIOD) {
-				sb.append(CharPool.UNDERLINE);
-			}
 			else {
 				sb.append(CharPool.UNDERLINE);
 

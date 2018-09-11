@@ -1,0 +1,38 @@
+buildscript {
+	dependencies {
+		classpath group: "com.liferay", name: "com.liferay.gradle.plugins", version: "3.12.130"
+	}
+
+	repositories {
+		maven {
+			url "https://repository-cdn.liferay.com/nexus/content/groups/public"
+		}
+	}
+}
+
+apply plugin: "com.liferay.osgi.ext.plugin"
+apply plugin: "com.liferay.target.platform"
+
+task runGradleTest
+
+dependencies {
+	originalModule group: "com.liferay", name: "com.liferay.login.web"
+
+	targetPlatformBoms group: "com.liferay", name: "com.liferay.ce.portal.bom", version: "7.0.4"
+}
+
+repositories {
+	maven {
+		url "https://repository-cdn.liferay.com/nexus/content/groups/public"
+	}
+}
+
+runGradleTest {
+	doLast {
+		ResolvedArtifact originalModuleResolvedArtifact = configurations.originalModule.resolvedConfiguration.resolvedArtifacts.find {
+			it.name == "com.liferay.login.web"
+		}
+
+		assert originalModuleResolvedArtifact.file.name.contains("2.0.4")
+	}
+}

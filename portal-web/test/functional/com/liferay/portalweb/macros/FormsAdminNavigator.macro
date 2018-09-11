@@ -60,9 +60,9 @@
 	</command>
 
 	<command name="gotoFormBuilder">
-		<var name="key_assetTitle" value="Builder" />
+		<var name="key_assetTitle" value="Form" />
 
-		<execute function="AssertClick" locator1="NavBar#ASSET_TITLE_LINK" value1="Builder" />
+		<execute function="AssertClick" locator1="NavBar#ASSET_TITLE_LINK" value1="Form" />
 	</command>
 
 	<command name="gotoPermissions">

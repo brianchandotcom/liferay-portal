@@ -76,15 +76,18 @@ public class BaseUpgradeSQLServerDatetime extends UpgradeProcess {
 				String newTypeDefinition = StringBundler.concat(
 					newTypeName, "(", _NEW_SIZE, ")");
 
-				for (Map.Entry<String, Integer> tableColumnEntry :
-						getTableColumnsMap(tableClass).entrySet()) {
+				Map<String, Integer> tableColumnMap = getTableColumnsMap(
+					tableClass);
 
-					if (tableColumnEntry.getValue() != Types.TIMESTAMP) {
+				for (Map.Entry<String, Integer> entry :
+						tableColumnMap.entrySet()) {
+
+					if (entry.getValue() != Types.TIMESTAMP) {
 						continue;
 					}
 
 					String columnName = dbInspector.normalizeName(
-						tableColumnEntry.getKey(), databaseMetaData);
+						entry.getKey(), databaseMetaData);
 
 					try (ResultSet columnRS = databaseMetaData.getColumns(
 							null, null, tableName, columnName)) {

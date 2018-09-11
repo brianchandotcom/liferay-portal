@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
@@ -32,7 +31,6 @@ import com.liferay.portal.kernel.util.Portal;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
-import javax.portlet.PortletURL;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -77,9 +75,7 @@ public class EditRuleGroupInstanceMVCActionCommand
 				updateRuleGroupInstancesPriorities(actionRequest);
 			}
 
-			sendRedirect(
-				actionRequest, actionResponse,
-				getRedirect(actionRequest, actionResponse));
+			sendRedirect(actionRequest, actionResponse);
 		}
 		catch (Exception e) {
 			if (e instanceof NoSuchRuleGroupException ||
@@ -93,25 +89,6 @@ public class EditRuleGroupInstanceMVCActionCommand
 				throw e;
 			}
 		}
-	}
-
-	protected String getRedirect(
-		ActionRequest actionRequest, ActionResponse actionResponse) {
-
-		LiferayPortletResponse liferayPortletResponse =
-			_portal.getLiferayPortletResponse(actionResponse);
-
-		PortletURL portletURL = liferayPortletResponse.createRenderURL();
-
-		portletURL.setParameter(
-			"mvcRenderCommandName",
-			"/mobile_device_rules/edit_rule_group_instance");
-
-		String redirect = ParamUtil.getString(actionRequest, "redirect");
-
-		portletURL.setParameter("redirect", redirect);
-
-		return portletURL.toString();
 	}
 
 	@Reference(unbind = "-")

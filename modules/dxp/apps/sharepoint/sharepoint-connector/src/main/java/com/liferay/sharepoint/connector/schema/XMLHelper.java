@@ -58,8 +58,8 @@ public class XMLHelper {
 
 	public Element getElement(String nodeName, org.w3c.dom.Node w3CNode) {
 		for (org.w3c.dom.Node childW3CNode = w3CNode.getFirstChild();
-				childW3CNode != null;
-				childW3CNode = childW3CNode.getNextSibling()) {
+			 childW3CNode != null;
+			 childW3CNode = childW3CNode.getNextSibling()) {
 
 			String localName = childW3CNode.getLocalName();
 

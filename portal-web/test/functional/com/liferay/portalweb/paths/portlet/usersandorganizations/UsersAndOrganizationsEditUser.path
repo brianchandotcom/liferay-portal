@@ -168,6 +168,17 @@
 	<td></td>
 	<td></td>
 </tr>
+<!--ROLES_INHERITED_ROLES_SITE_ROLES-->
+<tr>
+	<td>ROLES_INHERITED_SITE_ROLES_TABLE_TITLE</td>
+	<td>//div[contains(@class,'inherited-site-roles')]//span[contains(.,'${key_roleTitle}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--ROLES_ORGANIZATION_ROLES-->
 <tr>
 	<td>ROLES_ORGANIZATION_ROLES_TABLE_TITLE</td>

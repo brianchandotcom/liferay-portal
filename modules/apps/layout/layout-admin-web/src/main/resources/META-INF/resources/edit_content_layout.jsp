@@ -42,7 +42,40 @@ renderResponse.setTitle(selLayout.getName(locale));
 />
 
 <soy:component-renderer
+	componentId='<%= renderResponse.getNamespace() + "fragmentsEditor" %>'
 	context="<%= fragmentsEditorDisplayContext.getEditorContext() %>"
 	module="layout-admin-web/js/fragments_editor/FragmentsEditor.es"
 	templateNamespace="com.liferay.layout.admin.web.FragmentsEditor.render"
 />
+
+<%
+JSONSerializer jsonSerializer = JSONFactoryUtil.createJSONSerializer();
+
+String contextString = jsonSerializer.serializeDeep(fragmentsEditorDisplayContext.getEditorContext());
+%>
+
+<aui:script require="layout-admin-web/js/fragments_editor/reducers/changes.es as ChangesReducerModule, layout-admin-web/js/fragments_editor/reducers/fragments.es as FragmentsReducerModule, layout-admin-web/js/fragments_editor/reducers/placeholders.es as PlaceholdersReducerModule, layout-admin-web/js/fragments_editor/reducers/translations.es as TranslationsReducerModule, layout-admin-web/js/fragments_editor/store/store.es as StoreModule">
+	const initialState = <%= contextString %>;
+
+	const reducers = [
+		ChangesReducerModule.saveChangesReducer,
+		FragmentsReducerModule.addFragmentEntryLinkReducer,
+		FragmentsReducerModule.removeFragmentEntryLinkReducer,
+		PlaceholdersReducerModule.updateDragTargetReducer,
+		TranslationsReducerModule.translationStatusReducer
+	];
+
+	Liferay
+		.componentReady(
+			'<portlet:namespace />fragmentsEditor'
+		)
+		.then(
+			function(fragmentsEditor) {
+				StoreModule.createStore(
+					initialState,
+					reducers,
+					[fragmentsEditor]
+				);
+			}
+		);
+</aui:script>

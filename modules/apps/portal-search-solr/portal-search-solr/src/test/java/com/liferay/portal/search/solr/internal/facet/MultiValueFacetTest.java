@@ -15,13 +15,13 @@
 package com.liferay.portal.search.solr.internal.facet;
 
 import com.liferay.portal.search.solr.internal.SolrIndexingFixture;
-import com.liferay.portal.search.test.util.facet.BaseSimpleFacetTestCase;
+import com.liferay.portal.search.test.util.facet.BaseMultiValueFacetTestCase;
 import com.liferay.portal.search.test.util.indexing.IndexingFixture;
 
 /**
  * @author André de Oliveira
  */
-public class MultiValueFacetTest extends BaseSimpleFacetTestCase {
+public class MultiValueFacetTest extends BaseMultiValueFacetTestCase {
 
 	@Override
 	protected IndexingFixture createIndexingFixture() {

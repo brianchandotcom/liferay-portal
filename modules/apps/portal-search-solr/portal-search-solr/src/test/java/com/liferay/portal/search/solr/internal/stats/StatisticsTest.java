@@ -18,18 +18,10 @@ import com.liferay.portal.search.solr.internal.SolrIndexingFixture;
 import com.liferay.portal.search.test.util.indexing.IndexingFixture;
 import com.liferay.portal.search.test.util.stats.BaseStatisticsTestCase;
 
-import org.junit.Test;
-
 /**
  * @author Miguel Angelo Caldas Gallindo
  */
 public class StatisticsTest extends BaseStatisticsTestCase {
-
-	@Override
-	@Test
-	public void testGetStats() throws Exception {
-		super.testGetStats();
-	}
 
 	@Override
 	protected IndexingFixture createIndexingFixture() {

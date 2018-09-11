@@ -30,81 +30,47 @@ import org.junit.Test;
 public class TitleFieldQueryBuilderTest
 	extends BaseTitleFieldQueryBuilderTestCase {
 
-	@Override
 	@Test
-	public void testBasicWordMatches() throws Exception {
-		super.testBasicWordMatches();
-	}
+	public void testMultiwordPhrasePrefixesElasticsearch() throws Exception {
+		addDocument("Name Tags");
+		addDocument("Names Tab");
+		addDocument("Tag Names");
+		addDocument("Tabs Names Tags");
 
-	@Override
-	@Test
-	public void testExactMatchBoost() throws Exception {
-		super.testExactMatchBoost();
-	}
+		assertSearch("\"name ta*\"", 1);
+		assertSearch("\"name tag*\"", 1);
+		assertSearch("\"name tags*\"", 1);
+		assertSearch("\"names ta*\"", 2);
+		assertSearch("\"names tab*\"", 1);
+		assertSearch("\"names tag*\"", 1);
+		assertSearch("\"names tags*\"", 1);
+		assertSearch("\"tabs name*\"", 1);
+		assertSearch("\"tabs names ta*\"", 1);
+		assertSearch("\"tabs names tag*\"", 1);
+		assertSearch("\"tabs names tags*\"", 1);
+		assertSearch("\"tabs names*\"", 1);
+		assertSearch("\"tag na*\"", 1);
+		assertSearch("\"tag name*\"", 1);
+		assertSearch("\"tag names*\"", 1);
 
-	@Override
-	public void testLuceneUnfriendlyTerms() throws Exception {
-		super.testLuceneUnfriendlyTerms();
-	}
-
-	@Override
-	@Test
-	public void testMultiwordPhrasePrefixes() throws Exception {
-		super.testMultiwordPhrasePrefixes();
-	}
-
-	@Override
-	@Test
-	public void testMultiwordPrefixes() throws Exception {
-		super.testMultiwordPrefixes();
-	}
-
-	@Override
-	@Test
-	public void testNull() throws Exception {
-		super.testNull();
-	}
-
-	@Override
-	@Test
-	public void testNumbers() throws Exception {
-		super.testNumbers();
-	}
-
-	@Override
-	@Test
-	public void testPhrasePrefixes() throws Exception {
-		super.testPhrasePrefixes();
-	}
-
-	@Override
-	@Test
-	public void testPhrases() throws Exception {
-		super.testPhrases();
-	}
-
-	@Override
-	@Test
-	public void testStopwords() throws Exception {
-		super.testStopwords();
-	}
-
-	@Override
-	@Test
-	public void testWhitespace() throws Exception {
-		super.testWhitespace();
-	}
-
-	@Override
-	@Test
-	public void testWildcardCharacters() throws Exception {
-		super.testWildcardCharacters();
-	}
-
-	@Override
-	@Test
-	public void testWordPrefixes() throws Exception {
-		super.testWordPrefixes();
+		assertSearchNoHits("\"name tab*\"");
+		assertSearchNoHits("\"name tabs*\"");
+		assertSearchNoHits("\"names tabs*\"");
+		assertSearchNoHits("\"tab na*\"");
+		assertSearchNoHits("\"tab names*\"");
+		assertSearchNoHits("\"tabs na ta*\"");
+		assertSearchNoHits("\"tabs name ta*\"");
+		assertSearchNoHits("\"tags na ta*\"");
+		assertSearchNoHits("\"tags names tabs*\"");
+		assertSearchNoHits("\"tags names*\"");
+		assertSearchNoHits("\"zz na*\"");
+		assertSearchNoHits("\"zz name*\"");
+		assertSearchNoHits("\"zz names*\"");
+		assertSearchNoHits("\"zz ta*\"");
+		assertSearchNoHits("\"zz tab*\"");
+		assertSearchNoHits("\"zz tabs*\"");
+		assertSearchNoHits("\"zz tag*\"");
+		assertSearchNoHits("\"zz tags*\"");
 	}
 
 	@Override

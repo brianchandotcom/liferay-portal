@@ -26,7 +26,6 @@ import com.liferay.portal.search.test.util.indexing.IndexingFixture;
 
 import java.util.Arrays;
 
-import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -35,14 +34,8 @@ import org.junit.Test;
  */
 public class ElasticsearchHighlightTest extends BaseHighlightTestCase {
 
-	@Ignore
-	@Override
 	@Test
-	public void testEllipsis() throws Exception {
-	}
-
-	@Test
-	public void testEllipsisWithUnifiedHighlighter() throws Exception {
+	public void testEllipsisElasticsearch() throws Exception {
 		String fieldName = Field.TITLE;
 
 		addDocuments(

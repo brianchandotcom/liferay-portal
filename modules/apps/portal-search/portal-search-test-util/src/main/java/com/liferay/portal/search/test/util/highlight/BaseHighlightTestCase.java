@@ -15,12 +15,10 @@
 package com.liferay.portal.search.test.util.highlight;
 
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.Query;
 import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.SearchContext;
-import com.liferay.portal.kernel.search.generic.StringQuery;
 import com.liferay.portal.kernel.search.highlight.HighlightUtil;
 import com.liferay.portal.kernel.util.Localization;
 import com.liferay.portal.kernel.util.LocalizationUtil;
@@ -28,16 +26,12 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.search.test.util.DocumentsAssert;
 import com.liferay.portal.search.test.util.IdempotentRetryAssert;
 import com.liferay.portal.search.test.util.indexing.BaseIndexingTestCase;
-import com.liferay.portal.search.test.util.indexing.DocumentCreationHelpers;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
-
-import org.junit.Test;
 
 import org.mockito.Mockito;
 
@@ -54,30 +48,6 @@ public abstract class BaseHighlightTestCase extends BaseIndexingTestCase {
 		LocalizationUtil localizationUtil = new LocalizationUtil();
 
 		localizationUtil.setLocalization(createLocalization());
-	}
-
-	@Test
-	public void testEllipsis() throws Exception {
-		String fieldName = Field.TITLE;
-
-		addDocuments(
-			value -> DocumentCreationHelpers.singleText(fieldName, value),
-			Arrays.asList(
-				"alpha", "alpha beta", "alpha beta alpha",
-				"alpha beta gamma alpha eta theta alpha zeta eta alpha iota",
-				"alpha beta gamma delta epsilon zeta eta theta iota alpha"));
-
-		Query query = new StringQuery(fieldName.concat(":alpha"));
-
-		assertSearch(
-			fieldName, query,
-			queryConfig -> queryConfig.setHighlightFragmentSize(20),
-			toFullHighlights(
-				"[H]alpha[/H]", "[H]alpha[/H] beta",
-				"[H]alpha[/H] beta [H]alpha[/H]",
-				"[H]alpha[/H] beta gamma...[H]alpha[/H] eta theta [H]alpha" +
-					"[/H]...zeta eta [H]alpha[/H] iota",
-				"[H]alpha[/H] beta gamma...theta iota [H]alpha[/H]"));
 	}
 
 	protected void assertSearch(

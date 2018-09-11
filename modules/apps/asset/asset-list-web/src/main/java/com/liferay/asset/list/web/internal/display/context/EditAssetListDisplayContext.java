@@ -16,6 +16,8 @@ package com.liferay.asset.list.web.internal.display.context;
 
 import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.model.AssetCategory;
+import com.liferay.asset.kernel.model.AssetEntry;
+import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.asset.kernel.model.AssetVocabulary;
@@ -23,15 +25,20 @@ import com.liferay.asset.kernel.model.ClassType;
 import com.liferay.asset.kernel.model.ClassTypeField;
 import com.liferay.asset.kernel.model.ClassTypeReader;
 import com.liferay.asset.kernel.service.AssetCategoryLocalServiceUtil;
+import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
 import com.liferay.asset.kernel.service.AssetTagLocalServiceUtil;
 import com.liferay.asset.kernel.service.AssetVocabularyServiceUtil;
 import com.liferay.asset.list.constants.AssetListWebKeys;
+import com.liferay.asset.list.model.AssetListEntry;
+import com.liferay.asset.list.service.AssetListEntryServiceUtil;
 import com.liferay.dynamic.data.mapping.util.DDMIndexer;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Layout;
@@ -41,8 +48,10 @@ import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
+import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -54,9 +63,13 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.kernel.xml.Document;
+import com.liferay.portal.kernel.xml.Element;
+import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.sites.kernel.util.SitesUtil;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Locale;
@@ -83,6 +96,119 @@ public class EditAssetListDisplayContext {
 	public static final String SCOPE_ID_LAYOUT_UUID_PREFIX = "LayoutUuid_";
 
 	public static final String SCOPE_ID_PARENT_GROUP_PREFIX = "ParentGroup_";
+
+	public static List<AssetEntry> getAssetEntries(
+			PortletRequest portletRequest, AssetListEntry assetListEntry,
+			PermissionChecker permissionChecker, long[] groupIds,
+			boolean deleteMissingAssetEntries, boolean checkPermission,
+			boolean includeNonVisibleAssets, int type)
+		throws Exception {
+
+		UnicodeProperties typeSettingsProperties = new UnicodeProperties(true);
+
+		typeSettingsProperties.fastLoad(assetListEntry.getTypeSettings());
+
+		String assetEntryXmlProperty = typeSettingsProperties.getProperty(
+			"assetEntryXml");
+
+		String[] assetEntryXmls = StringUtil.split(assetEntryXmlProperty);
+
+		List<AssetEntry> assetEntries = new ArrayList<>();
+
+		List<String> missingAssetEntryUuids = new ArrayList<>();
+
+		for (String assetEntryXml : assetEntryXmls) {
+			Document document = SAXReaderUtil.read(assetEntryXml);
+
+			Element rootElement = document.getRootElement();
+
+			long groupId = GetterUtil.getLong(
+				rootElement.elementText("asset-entry-group-id"));
+
+			String assetEntryUuid = rootElement.elementText("asset-entry-uuid");
+
+			String assetEntryType = rootElement.elementText("asset-entry-type");
+
+			AssetRendererFactory<?> assetRendererFactory =
+				AssetRendererFactoryRegistryUtil.
+					getAssetRendererFactoryByClassName(assetEntryType);
+
+			AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchEntry(
+				groupId, assetEntryUuid);
+
+			if (assetEntry == null) {
+				if (deleteMissingAssetEntries) {
+					missingAssetEntryUuids.add(assetEntryUuid);
+				}
+
+				continue;
+			}
+
+			if (!assetEntry.isVisible() && !includeNonVisibleAssets) {
+				continue;
+			}
+
+			assetRendererFactory =
+				AssetRendererFactoryRegistryUtil.
+					getAssetRendererFactoryByClassName(
+						assetEntry.getClassName());
+
+			if (assetRendererFactory == null) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(
+						"No asset renderer factory associated with " +
+							assetEntry.getClassName());
+				}
+
+				continue;
+			}
+
+			AssetRenderer<?> assetRenderer =
+				assetRendererFactory.getAssetRenderer(
+					assetEntry.getClassPK(), type);
+
+			if (!assetRendererFactory.isActive(
+					permissionChecker.getCompanyId())) {
+
+				if (deleteMissingAssetEntries) {
+					missingAssetEntryUuids.add(assetEntryUuid);
+				}
+
+				continue;
+			}
+
+			if (checkPermission) {
+				if (!assetRenderer.isDisplayable() &&
+					!includeNonVisibleAssets) {
+
+					continue;
+				}
+				else if (!assetRenderer.hasViewPermission(permissionChecker)) {
+					assetRenderer = assetRendererFactory.getAssetRenderer(
+						assetEntry.getClassPK(),
+						AssetRendererFactory.TYPE_LATEST_APPROVED);
+
+					if (!assetRenderer.hasViewPermission(permissionChecker)) {
+						continue;
+					}
+				}
+			}
+
+			assetEntries.add(assetEntry);
+		}
+
+		if (deleteMissingAssetEntries) {
+			removeAndStoreSelection(assetListEntry, missingAssetEntryUuids);
+
+			if (!missingAssetEntryUuids.isEmpty()) {
+				SessionMessages.add(
+					portletRequest, "deletedMissingAssetEntries",
+					missingAssetEntryUuids);
+			}
+		}
+
+		return assetEntries;
+	}
 
 	public static long[] getClassNameIds(
 		UnicodeProperties properties, long[] availableClassNameIds) {
@@ -222,6 +348,52 @@ public class EditAssetListDisplayContext {
 		}
 
 		return ArrayUtil.toLongArray(groupIds);
+	}
+
+	public static void removeAndStoreSelection(
+			AssetListEntry assetListEntry, List<String> assetEntryUuids)
+		throws Exception {
+
+		if (assetEntryUuids.isEmpty()) {
+			return;
+		}
+
+		UnicodeProperties typeSettingsProperties = new UnicodeProperties(true);
+
+		typeSettingsProperties.fastLoad(assetListEntry.getTypeSettings());
+
+		String assetEntryXmlProperty = typeSettingsProperties.getProperty(
+			"assetEntryXml");
+
+		String[] assetEntryXmls = StringUtil.split(assetEntryXmlProperty);
+
+		List<String> assetEntryXmlsList = ListUtil.fromArray(assetEntryXmls);
+
+		Iterator<String> itr = assetEntryXmlsList.iterator();
+
+		while (itr.hasNext()) {
+			String assetEntryXml = itr.next();
+
+			Document document = SAXReaderUtil.read(assetEntryXml);
+
+			Element rootElement = document.getRootElement();
+
+			String assetEntryUuid = rootElement.elementText("asset-entry-uuid");
+
+			if (assetEntryUuids.contains(assetEntryUuid)) {
+				itr.remove();
+			}
+		}
+
+		assetEntryXmls = assetEntryXmlsList.toArray(
+			new String[assetEntryXmlsList.size()]);
+
+		typeSettingsProperties.put(
+			"assetEntryXml", String.join(StringPool.COMMA, assetEntryXmls));
+
+		AssetListEntryServiceUtil.updateAssetListEntrySettings(
+			assetListEntry.getAssetListEntryId(),
+			typeSettingsProperties.toString());
 	}
 
 	public EditAssetListDisplayContext(
@@ -774,6 +946,9 @@ public class EditAssetListDisplayContext {
 
 		return availableClassTypeIds;
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		EditAssetListDisplayContext.class);
 
 	private Boolean _anyAssetType;
 	private long[] _availableClassNameIds;

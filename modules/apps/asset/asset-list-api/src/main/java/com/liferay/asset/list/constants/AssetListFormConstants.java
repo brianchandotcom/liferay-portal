@@ -21,6 +21,8 @@ public class AssetListFormConstants {
 
 	public static final String CATEGORY_KEY_GENERAL = "general";
 
+	public static final String ENTRY_KEY_ASSET_ENTRIES = "asset_entries";
+
 	public static final String ENTRY_KEY_CUSTOM_ATTRIBUTES =
 		"custom_attributes";
 

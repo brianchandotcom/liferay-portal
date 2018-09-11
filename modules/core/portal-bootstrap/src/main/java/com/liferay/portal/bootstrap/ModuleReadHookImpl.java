@@ -46,9 +46,17 @@ public class ModuleReadHookImpl implements ModuleReadHook {
 			return;
 		}
 
-		Path path = Paths.get(
+		Path bundleRevPath = Paths.get(
 			PropsValues.MODULE_FRAMEWORK_STATE_DIR, "org.eclipse.osgi",
-			String.valueOf(bundleId), "0/bundleFile");
+			String.valueOf(bundleId), "0");
+
+		File bundleIdDir = bundleRevPath.toFile();
+
+		if (!bundleIdDir.exists()) {
+			return;
+		}
+
+		Path path = Paths.get(bundleRevPath.toString(), "bundleFile");
 
 		File bundleFile = path.toFile();
 

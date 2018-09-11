@@ -122,6 +122,9 @@ public class EditAssetListDisplayContext {
 
 			Element rootElement = document.getRootElement();
 
+			long groupId = GetterUtil.getLong(
+				rootElement.elementText("asset-entry-group-id"));
+
 			String assetEntryUuid = rootElement.elementText("asset-entry-uuid");
 
 			String assetEntryType = rootElement.elementText("asset-entry-type");
@@ -130,30 +133,8 @@ public class EditAssetListDisplayContext {
 				AssetRendererFactoryRegistryUtil.
 					getAssetRendererFactoryByClassName(assetEntryType);
 
-			String portletId = null;
-
-			if (assetRendererFactory != null) {
-				portletId = assetRendererFactory.getPortletId();
-			}
-
-			AssetEntry assetEntry = null;
-
-			for (long groupId : groupIds) {
-				Group group = GroupLocalServiceUtil.fetchGroup(groupId);
-
-				if ((portletId != null) && group.isStagingGroup() &&
-					!group.isStagedPortlet(portletId)) {
-
-					groupId = group.getLiveGroupId();
-				}
-
-				assetEntry = AssetEntryLocalServiceUtil.fetchEntry(
-					groupId, assetEntryUuid);
-
-				if (assetEntry != null) {
-					break;
-				}
-			}
+			AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchEntry(
+				groupId, assetEntryUuid);
 
 			if (assetEntry == null) {
 				if (deleteMissingAssetEntries) {

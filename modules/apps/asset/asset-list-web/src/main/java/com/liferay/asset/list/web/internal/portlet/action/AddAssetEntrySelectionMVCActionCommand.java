@@ -103,7 +103,7 @@ public class AddAssetEntrySelectionMVCActionCommand
 		}
 
 		String assetEntryXml = _getAssetEntryXml(
-			assetEntryType, assetEntry.getClassUuid());
+			assetEntry.getGroupId(), assetEntryType, assetEntry.getClassUuid());
 
 		if (!assetEntryXmls.contains(assetEntryXml)) {
 			assetEntryXmls.add(assetEntryXml);
@@ -114,7 +114,7 @@ public class AddAssetEntrySelectionMVCActionCommand
 	}
 
 	private String _getAssetEntryXml(
-		String assetEntryType, String assetEntryUuid) {
+		long assetEntryGroupId, String assetEntryType, String assetEntryUuid) {
 
 		String xml = null;
 
@@ -122,6 +122,11 @@ public class AddAssetEntrySelectionMVCActionCommand
 			Document document = SAXReaderUtil.createDocument(StringPool.UTF8);
 
 			Element assetEntryElement = document.addElement("asset-entry");
+
+			Element assetEntryGroupIdElement = assetEntryElement.addElement(
+				"asset-entry-group-id");
+
+			assetEntryGroupIdElement.addText(String.valueOf(assetEntryGroupId));
 
 			Element assetEntryTypeElement = assetEntryElement.addElement(
 				"asset-entry-type");

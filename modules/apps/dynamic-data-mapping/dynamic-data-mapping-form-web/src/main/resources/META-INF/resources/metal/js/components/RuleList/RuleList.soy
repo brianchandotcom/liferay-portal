@@ -24,7 +24,7 @@
 	}
 	{@param strings: ?}
 	<div class="form-builder-rule-builder-container">
-		<h1 class="form-builder-section-title text-default">Rule Builder</h1>
+		<h1 class="form-builder-section-title text-default">{$strings.rules}</h1>
 
 		<div class="liferay-ddm-form-rule-rules-list-container">
 			{call .rule_list}
@@ -199,8 +199,11 @@
 	{@param action: string}
 	{@param expression: ?}
 	{@param label: ?}
+	{@param strings: ?}
 
 	<span><b>{$action} </b></span>
+
+	<span>{$strings['field']} </span>
 
 	{if $action == 'auto-fill'}
 
@@ -213,6 +216,8 @@
 		{/call}
 
 		<b> into </b>
+
+		<span>{$strings['field']} </span>
 
 		{call .label}
 			{param content: $label /}

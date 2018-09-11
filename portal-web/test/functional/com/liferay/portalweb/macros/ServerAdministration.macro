@@ -1,10 +1,12 @@
 <definition>
 	<command name="addCategoryLogLevels">
-		<execute function="AssertClick" locator1="NavBar#LOG_LEVELS" value1="Log Levels" />
+		<execute macro="Navigator#gotoNavItem">
+			<var name="navItem" value="Log Levels" />
+		</execute>
 
 		<execute function="AssertClick" locator1="NavBar#ADD_CATEGORY" value1="Add Category" />
 
-		<execute function="Type" locator1="ServerAdministrationLogLevels#ADD_CATEGORY_NAME_FIELD" value1="${catagoryName}" />
+		<execute function="Type" locator1="ServerAdministrationLogLevels#ADD_CATEGORY_NAME_FIELD" value1="${categoryName}" />
 
 		<execute function="Select" locator1="ServerAdministrationLogLevels#ADD_CATEGORY_PRIORITY_SELECT" value1="${categoryPriority}" />
 

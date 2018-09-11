@@ -113,26 +113,26 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "vocabul
 				</c:when>
 				<c:when test='<%= Objects.equals(assetCategoriesDisplayContext.getDisplayStyle(), "list") %>'>
 					<liferay-ui:search-container-column-text
-						cssClass="table-cell-expand table-list-title"
+						cssClass="table-cell-expand table-cell-minw-200 table-title"
 						href="<%= rowURL %>"
 						name="name"
 						value="<%= HtmlUtil.escape(vocabulary.getTitle(locale)) %>"
 					/>
 
 					<liferay-ui:search-container-column-text
-						cssClass="table-cell-expand"
+						cssClass="table-cell-expand table-cell-minw-200"
 						name="description"
 						value="<%= HtmlUtil.escape(vocabulary.getDescription(locale)) %>"
 					/>
 
 					<liferay-ui:search-container-column-date
-						cssClass="table-cell-expand-smallest"
+						cssClass="table-cell-ws-nowrap"
 						name="create-date"
 						property="createDate"
 					/>
 
 					<liferay-ui:search-container-column-text
-						cssClass="table-cell-expand-smallest"
+						cssClass="table-column-text-center"
 						name="number-of-categories"
 					>
 						<c:choose>
@@ -146,7 +146,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "vocabul
 					</liferay-ui:search-container-column-text>
 
 					<liferay-ui:search-container-column-text
-						cssClass="table-cell-expand-smallest"
+						cssClass="table-cell-expand-smallest table-cell-minw-150"
 						name="asset-type"
 						value="<%= assetCategoriesDisplayContext.getAssetType(vocabulary) %>"
 					/>

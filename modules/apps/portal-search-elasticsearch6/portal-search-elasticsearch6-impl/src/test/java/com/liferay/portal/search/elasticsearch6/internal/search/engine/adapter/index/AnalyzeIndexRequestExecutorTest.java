@@ -35,7 +35,7 @@ public class AnalyzeIndexRequestExecutorTest {
 	@Before
 	public void setUp() throws Exception {
 		_elasticsearchFixture = new ElasticsearchFixture(
-			PutMappingIndexRequestExecutorTest.class.getSimpleName());
+			AnalyzeIndexRequestExecutorTest.class.getSimpleName());
 
 		_elasticsearchFixture.setUp();
 

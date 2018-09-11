@@ -1,46 +1,31 @@
-## Static Collections
+## Static Blocks
 
-When possible, do not use a static block to add values to a set
+When possible, do not use static blocks to make method calls on variables.
+Instead, make those calls inside the variable definition.
 
-### Lists
+### Examples
 
-```java
-private static final List<String> _fruitList = Arrays.asList(
-    "Apple", "Banana", "Kiwi", "Mango", "Orange", "Peach", "Pear",
-    "Strawberry"));
-```
-
-Instead of
-
-```java
-private static final List<String> _fruitList = new ArrayList<>();
-
-static {
-    _fruitList.add("Apple");
-    _fruitList.add("Banana");
-    _fruitList.add("Kiwi");
-    _fruitList.add("Mango");
-    _fruitList.add("Orange");
-    _fruitList.add("Peach");
-    _fruitList.add("Pear");
-    _fruitList.add("Strawberry");
-}
-```
-
-### Maps
+---
 
 ```java
 private static final Map<String, String> _fruitMap =
     new HashMap<String, String>() {
         {
             put("Apple", "Green");
-            put("Banana, "Yellow");
-            put("Kiwi", "Brown");
-            put("Mango", "Yellow");
+            put("Banana", "Yellow");
             put("Orange", "Orange");
-            put("Peach", "Orange");
             put("Pear", "Green");
             put("Strawberry", "Red");
+        }
+    };
+private static final Map<String, String> _vegetableMap =
+    new HashMap<String, String>() {
+        {
+            put("Beet", "Red");
+            put("Carrot, "Orange");
+            put("Eggplant", "Purple");
+            put("Potato", "Yellow");
+            put("Spinach", "Green");
         }
     };
 ```
@@ -49,41 +34,56 @@ Instead of
 
 ```java
 private static final Map<String, String> _fruitMap = new HashMap<>();
+private static final Map<String, String> _vegetableMap = new HashMap<>();
 
 static {
     _fruitMap.put("Apple", "Green");
-    _fruitMap.put("Banana, "Yellow");
-    _fruitMap.put("Kiwi", "Brown");
-    _fruitMap.put("Mango", "Yellow");
+    _fruitMap.put("Banana", "Yellow");
     _fruitMap.put("Orange", "Orange");
-    _fruitMap.put("Peach", "Orange");
     _fruitMap.put("Pear", "Green");
     _fruitMap.put("Strawberry", "Red");
+
+    _vegetableMap.put("Beet", "Red");
+    _vegetableMap.put("Carrot, "Orange");
+    _vegetableMap.put("Eggplant", "Purple");
+    _vegetableMap.put("Potato", "Yellow");
+    _vegetableMap.put("Spinach", "Green");
 }
 ```
 
-### Sets
+---
 
 ```java
-private static final Set<String> _fruitSet = new HashSet<>(
-    Arrays.asList(
-        "Apple", "Banana", "Kiwi", "Mango", "Orange", "Peach", "Pear",
-        "Strawberry"));
+private static final List<Vegetable> _greenVegetablesList =
+    new ArrayList<String>() {
+        {
+            try {
+                for (Vegetable vegetable : _getVegetableList()) {
+                    if (vegetable.isGreen()) {
+                        add(vegetable);
+                    }
+                }
+            catch (Exception e) {
+                _log.error(e, e);
+            }
+        }
+    };
 ```
 
 Instead of
 
 ```java
-private static final Set<String> _fruitSet = new HashSet<>();
+private static final List<Vegetable> _greenVegetablesList = new ArrayList<>();
 
 static {
-    _fruitSet.add("Apple");
-    _fruitSet.add("Banana");
-    _fruitSet.add("Kiwi");
-    _fruitSet.add("Mango");
-    _fruitSet.add("Orange");
-    _fruitSet.add("Peach");
-    _fruitSet.add("Pear");
-    _fruitSet.add("Strawberry");
+    try {
+        for (Vegetable vegetable : _getVegetableList()) {
+            if (vegetable.isGreen()) {
+                _greenVegetablesList.add(vegetable);
+            }
+        }
+    catch (Exception e) {
+        _log.error(e, e);
+    }
 }
 ```

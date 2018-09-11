@@ -3902,9 +3902,9 @@ public class JournalArticleLocalServiceImpl
 
 		if (oldStatus == WorkflowConstants.STATUS_PENDING) {
 			article.setStatus(WorkflowConstants.STATUS_DRAFT);
-		}
 
-		journalArticlePersistence.update(article);
+			journalArticlePersistence.update(article);
+		}
 
 		List<JournalArticle> articleVersions =
 			journalArticlePersistence.findByG_A(

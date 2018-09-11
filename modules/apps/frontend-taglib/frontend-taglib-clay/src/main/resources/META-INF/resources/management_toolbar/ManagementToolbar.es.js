@@ -145,16 +145,18 @@ class ManagementToolbar extends ClayComponent {
 
 		this.selectedItems = elements.allSelectedElements.filter(':enabled').size();
 
-		this.actionItems = this.actionItems.map(
-			actionItem => {
-				return Object.assign(
-					actionItem,
-					{
-						disabled: event.actions && !event.actions.includes(actionItem.data.action)
-					}
-				);
-			}
-		);
+		if (this.actionItems) {
+			this.actionItems = this.actionItems.map(
+				actionItem => {
+					return Object.assign(
+						actionItem,
+						{
+							disabled: event.actions && !event.actions.includes(actionItem.data.action)
+						}
+					);
+				}
+			);
+		}
 	}
 }
 

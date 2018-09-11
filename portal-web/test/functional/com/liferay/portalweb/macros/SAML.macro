@@ -123,6 +123,7 @@
 		<execute macro="SAMLNavigation#gotoServiceProviderConnection" />
 
 		<execute macro="SAMLPortlet#addServiceProviderConnection">
+			<var name="Attributes" value="${Attributes}" />
 			<var name="nameIdentifierAttributeName" value="${nameIdentifierAttributeName}" />
 			<var name="nameIdentifierFormat" value="${nameIdentifierFormat}" />
 			<var name="SPEntityID" value="${samlEntityID}" />
@@ -166,6 +167,6 @@
 
 		<execute function="Pause" locator1="5000" />
 
-		<execute function="AssertLocation" value1="${spURL}" />
+		<execute function="AssertLocation" value1="${specificURL}" />
 	</command>
 </definition>

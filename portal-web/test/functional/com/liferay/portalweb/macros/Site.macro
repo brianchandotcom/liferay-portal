@@ -326,6 +326,42 @@
 		<execute macro="Alert#viewSuccessMessage" />
 	</command>
 
+	<command name="assignSiteRoleToUserGroup">
+		<var name="key_userGroupName" value="${userGroupName}" />
+
+		<execute macro="Navigator#gotoNavItem">
+			<var name="navItem" value="User Groups" />
+		</execute>
+
+		<execute macro="LexiconEntry#changeDisplayStyle">
+			<var name="displayStyle" value="table" />
+		</execute>
+
+		<execute function="AssertTextEquals" locator1="SiteMembershipsUserGroups#USER_GROUP_TABLE_NAME" value1="${userGroupName}" />
+
+		<execute function="Click" locator1="SiteMembershipsUserGroups#USER_GROUP_TABLE_ACTIONS" />
+
+		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Assign Site Roles">
+			<var name="key_menuItem" value="Assign Site Roles" />
+		</execute>
+
+		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
+
+		<execute macro="LexiconEntry#changeDisplayStyle">
+			<var name="displayStyle" value="cards" />
+		</execute>
+
+		<execute function="Check" locator1="Card#SPECIFIC_CHECKBOX">
+			<var name="key_cardText" value="${roleName}" />
+		</execute>
+
+		<execute function="SelectFrameTop" />
+
+		<execute macro="Button#clickDone" />
+
+		<execute macro="Alert#viewSuccessMessage" />
+	</command>
+
 	<command name="assignUserAsMemberCP">
 		<var name="key_cardText" value="${userScreenName}" />
 

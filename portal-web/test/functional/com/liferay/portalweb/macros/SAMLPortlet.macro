@@ -21,6 +21,15 @@
 			</then>
 		</if>
 
+		<if>
+			<isset var="Attributes" />
+			<then>
+				<execute function="Check" locator1="CPSAMLAdminIdentityProviderConnection#IDENTITY_PROVIDER_CONNECTION_ATTRIBUTE_ENABLE" />
+
+				<execute function="Type" locator1="CPSAMLAdminIdentityProviderConnection#IDENTITY_PROVIDER_CONNECTION_ATTRIBUTE_TEXTAREA" value1="${Attributes}" />
+			</then>
+		</if>
+
 		<execute macro="PortletEntry#save" />
 	</command>
 

@@ -38,6 +38,8 @@ public abstract class TopLevelBuildRunner<T extends TopLevelBuildData>
 		propagateDistFilesToDistNodes();
 
 		invokeBatchJobs();
+
+		waitForInvokedJobs();
 	}
 
 	protected TopLevelBuildRunner(T topLevelBuildData) {
@@ -163,6 +165,24 @@ public abstract class TopLevelBuildRunner<T extends TopLevelBuildData>
 		filePropagator.start(_FILE_PROPAGATOR_THREAD_COUNT);
 	}
 
+	protected void waitForInvokedJobs() {
+		while (true) {
+			_topLevelBuild.update();
+
+			System.out.println(_topLevelBuild.getStatusSummary());
+
+			int completed = _topLevelBuild.getDownstreamBuildCount("completed");
+			int total = _topLevelBuild.getDownstreamBuildCount(null);
+
+			if (completed >= total) {
+				break;
+			}
+
+			JenkinsResultsParserUtil.sleep(
+				_WAIT_FOR_INVOKED_JOB_DURATION * 1000);
+		}
+	}
+
 	private String _getJenkinsGitHubURL() {
 		String jenkinsCachedBranchName = workspace.getJenkinsCachedBranchName();
 
@@ -186,6 +206,8 @@ public abstract class TopLevelBuildRunner<T extends TopLevelBuildData>
 	private static final int _FILE_PROPAGATOR_EXPIRATION = 180;
 
 	private static final int _FILE_PROPAGATOR_THREAD_COUNT = 1;
+
+	private static final int _WAIT_FOR_INVOKED_JOB_DURATION = 30;
 
 	private final TopLevelBuild _topLevelBuild;
 

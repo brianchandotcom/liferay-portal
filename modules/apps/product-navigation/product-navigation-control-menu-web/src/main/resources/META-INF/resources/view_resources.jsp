@@ -225,7 +225,7 @@ if (Validator.isNotNull(keywords)) {
 								</div>
 
 								<div class=" list-group-item-content">
-									<h4><%= title %></h4>
+									<h1><%= title %></h1>
 
 									<%
 									Date modifiedDate = assetEntry.getModifiedDate();
@@ -233,13 +233,13 @@ if (Validator.isNotNull(keywords)) {
 									String modifiedDateDescription = LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - modifiedDate.getTime(), true);
 									%>
 
-									<h6 class="text-default">
+									<h2 class="text-default">
 										<liferay-ui:message arguments="<%= new String[] {HtmlUtil.escape(assetRenderer.getUserName()), modifiedDateDescription} %>" key="x-modified-x-ago" />
-									</h6>
+									</h2>
 
-									<h5 class="text-default">
+									<h3 class="text-default">
 										<%= HtmlUtil.escape(StringUtil.shorten(assetRenderer.getSummary(liferayPortletRequest, liferayPortletResponse), 120)) %>
-									</h5>
+									</h3>
 								</div>
 							</li>
 						</c:otherwise>

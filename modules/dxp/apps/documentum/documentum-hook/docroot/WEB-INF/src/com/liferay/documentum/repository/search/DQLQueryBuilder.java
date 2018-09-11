@@ -286,30 +286,29 @@ public class DQLQueryBuilder {
 		}
 	}
 
-	private static final Map<String, String> _dqlFields;
-	private static final Set<String> _supportedFields;
-
-	static {
-		_dqlFields = new HashMap<>();
-
-		_dqlFields.put(Field.CREATE_DATE, Constants.R_CREATION_DATE);
-		_dqlFields.put(Field.MODIFIED_DATE, Constants.R_MODIFY_DATE);
-		_dqlFields.put(Field.NAME, Constants.OBJECT_NAME);
-		_dqlFields.put(Field.TITLE, Constants.OBJECT_NAME);
-		_dqlFields.put(Field.USER_NAME, Constants.R_CREATOR_NAME);
-		_dqlFields.put("modifiedDate", Constants.R_MODIFY_DATE);
-		_dqlFields.put("size_", Constants.R_CONTENT_SIZE);
-
-		_supportedFields = new HashSet<>();
-
-		_supportedFields.add(Field.CREATE_DATE);
-		_supportedFields.add(Field.FOLDER_ID);
-		_supportedFields.add(Field.MODIFIED_DATE);
-		_supportedFields.add(Field.NAME);
-		_supportedFields.add(Field.TITLE);
-		_supportedFields.add(Field.USER_ID);
-		_supportedFields.add(Field.USER_NAME);
-	}
+	private static final Map<String, String> _dqlFields =
+		new HashMap<String, String>() {
+			{
+				put(Field.CREATE_DATE, Constants.R_CREATION_DATE);
+				put(Field.MODIFIED_DATE, Constants.R_MODIFY_DATE);
+				put(Field.NAME, Constants.OBJECT_NAME);
+				put(Field.TITLE, Constants.OBJECT_NAME);
+				put(Field.USER_NAME, Constants.R_CREATOR_NAME);
+				put("modifiedDate", Constants.R_MODIFY_DATE);
+				put("size_", Constants.R_CONTENT_SIZE);
+			}
+		};
+	private static final Set<String> _supportedFields = new HashSet<String>() {
+		{
+			add(Field.CREATE_DATE);
+			add(Field.FOLDER_ID);
+			add(Field.MODIFIED_DATE);
+			add(Field.NAME);
+			add(Field.TITLE);
+			add(Field.USER_ID);
+			add(Field.USER_NAME);
+		}
+	};
 
 	private final ExtRepositoryQueryMapper _extRepositoryQueryMapper;
 

@@ -30,13 +30,13 @@ public class EntrySearch extends SearchContainer<Entry> {
 
 	public static final String EMPTY_RESULTS_MESSAGE = "no-reports-were-found";
 
-	public static List<String> headerNames = new ArrayList<>();
-
-	static {
-		headerNames.add("definition-name");
-		headerNames.add("requested-by");
-		headerNames.add("create-date");
-	}
+	public static List<String> headerNames = new ArrayList<String>() {
+		{
+			add("definition-name");
+			add("requested-by");
+			add("create-date");
+		}
+	};
 
 	public EntrySearch(PortletRequest portletRequest, PortletURL iteratorURL) {
 		super(

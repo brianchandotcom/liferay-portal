@@ -31,13 +31,13 @@ public class DefinitionSearch extends SearchContainer<Definition> {
 	public static final String EMPTY_RESULTS_MESSAGE =
 		"no-definitions-were-found";
 
-	public static List<String> headerNames = new ArrayList<>();
-
-	static {
-		headerNames.add("definition-name");
-		headerNames.add("source-name");
-		headerNames.add("create-date");
-	}
+	public static List<String> headerNames = new ArrayList<String>() {
+		{
+			add("definition-name");
+			add("source-name");
+			add("create-date");
+		}
+	};
 
 	public DefinitionSearch(
 		PortletRequest portletRequest, PortletURL iteratorURL) {

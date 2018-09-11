@@ -30,12 +30,12 @@ public class SourceSearch extends SearchContainer<Source> {
 
 	public static final String EMPTY_RESULTS_MESSAGE = "no-sources-were-found";
 
-	public static List<String> headerNames = new ArrayList<>();
-
-	static {
-		headerNames.add("source-name");
-		headerNames.add("create-date");
-	}
+	public static List<String> headerNames = new ArrayList<String>() {
+		{
+			add("source-name");
+			add("create-date");
+		}
+	};
 
 	public SourceSearch(PortletRequest portletRequest, PortletURL iteratorURL) {
 		super(

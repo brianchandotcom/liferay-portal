@@ -82,15 +82,9 @@ public class JournalArticleContentHelper {
 							_findFirstFormField(
 								structuredContentValuesForms, name);
 
-					String value = structuredContentValuesFormOptional.map(
-						structuredContentValuesForm -> _getData(
-							type, structuredContentValuesForm)
-					).orElse(
-						""
-					);
-
 					Element contentElement = _getContentElement(
-						document, localeId, value);
+						document, localeId, structuredContentValuesFormOptional,
+						type);
 
 					dynamicElement.appendChild(contentElement);
 
@@ -117,36 +111,46 @@ public class JournalArticleContentHelper {
 	}
 
 	private Element _getContentElement(
-		Document document, String localeId, String data) {
+		Document document, String localeId,
+		Optional<StructuredContentValuesForm>
+			structuredContentValuesFormOptional,
+		String type) {
 
 		Element element = document.createElement("dynamic-content");
 
 		element.setAttribute("language-id", localeId);
-		element.appendChild(document.createCDATASection(data));
 
-		return element;
+		return structuredContentValuesFormOptional.map(
+			structuredContentValuesForm -> {
+				if (type.equals("list") &&
+					_isJsonArray(structuredContentValuesForm.getValue())) {
+
+					return _getDynamicContentList(
+						document, element, structuredContentValuesForm);
+				}
+
+				String data = _getData(structuredContentValuesForm, type);
+
+				element.appendChild(document.createCDATASection(data));
+
+				return element;
+			}
+		).orElse(
+			element
+		);
 	}
 
 	private String _getData(
-		String type, StructuredContentValuesForm structuredContentValuesForm) {
+		StructuredContentValuesForm structuredContentValuesForm, String type) {
 
 		if (type.equals("image") || type.equals("document-library")) {
 			return _getFileData(structuredContentValuesForm, type);
-		} else if (type.equals("ddm-geolocation")) {
+		}
+		else if (type.equals("ddm-geolocation")) {
 			return _getGeoLocationData(structuredContentValuesForm);
 		}
 
 		return structuredContentValuesForm.getValue();
-	}
-
-	private String _getGeoLocationData(StructuredContentValuesForm structuredContentValuesForm) {
-
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
-		jsonObject.put("latitude", structuredContentValuesForm.getLatitude());
-		jsonObject.put("longitude", structuredContentValuesForm.getLongitude());
-
-		return jsonObject.toString();
 	}
 
 	private Document _getDocument() throws ParserConfigurationException {
@@ -157,6 +161,42 @@ public class JournalArticleContentHelper {
 			documentBuilderFactory.newDocumentBuilder();
 
 		return documentBuilder.newDocument();
+	}
+
+	private String _getDocumentType(String type) {
+		if (type.equals("document-library")) {
+			return "document";
+		}
+
+		return "journal";
+	}
+
+	private Element _getDynamicContentList(
+		Document document, Element element,
+		StructuredContentValuesForm structuredContentValuesForm) {
+
+		return Try.fromFallible(
+			structuredContentValuesForm::getValue
+		).map(
+			JSONFactoryUtil::createJSONArray
+		).map(
+			jsonArray -> {
+				for (int i = 0; i < jsonArray.length(); i++) {
+					Element optionElement = document.createElement("option");
+
+					String value = jsonArray.getString(i);
+
+					optionElement.appendChild(
+						document.createCDATASection(value));
+
+					element.appendChild(optionElement);
+				}
+
+				return element;
+			}
+		).orElse(
+			element
+		);
 	}
 
 	private Element _getDynamicElement(
@@ -172,8 +212,7 @@ public class JournalArticleContentHelper {
 	}
 
 	private String _getFileData(
-		StructuredContentValuesForm structuredContentValuesForm,
-		String type) {
+		StructuredContentValuesForm structuredContentValuesForm, String type) {
 
 		return Try.fromFallible(
 			structuredContentValuesForm::getDocument
@@ -199,13 +238,15 @@ public class JournalArticleContentHelper {
 		);
 	}
 
-	private String _getDocumentType(String type) {
+	private String _getGeoLocationData(
+		StructuredContentValuesForm structuredContentValuesForm) {
 
-		if (type.equals("document-library")) {
-			return "document";
-		}
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
-		return "journal";
+		jsonObject.put("latitude", structuredContentValuesForm.getLatitude());
+		jsonObject.put("longitude", structuredContentValuesForm.getLongitude());
+
+		return jsonObject.toString();
 	}
 
 	private Element _getRootElement(String localeId, Document document) {
@@ -220,15 +261,25 @@ public class JournalArticleContentHelper {
 	private String _getType(DDMFormField ddmFormField) {
 		String type = ddmFormField.getType();
 
-		if (type.equals("ddm-image") || (type.equals("ddm-documentlibrary")) || (type.equals("checkbox"))) {
+		if (type.equals("ddm-image") || type.equals("ddm-documentlibrary") ||
+			type.equals("checkbox")) {
+
 			return ddmFormField.getDataType();
-		} else if (type.equals("ddm-text-html")) {
+		}
+		else if (type.equals("ddm-text-html")) {
 			return "text_area";
-		} else if (type.equals("select")) {
+		}
+		else if (type.equals("select")) {
 			return "list";
 		}
 
 		return type;
+	}
+
+	private boolean _isJsonArray(String value) {
+		return Try.fromFallible(
+			() -> JSONFactoryUtil.createJSONArray(value)
+		).isSuccess();
 	}
 
 	private String _transformToString(Document document)

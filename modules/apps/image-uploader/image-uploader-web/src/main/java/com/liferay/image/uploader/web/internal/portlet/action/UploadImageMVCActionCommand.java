@@ -265,6 +265,14 @@ public class UploadImageMVCActionCommand extends BaseMVCActionCommand {
 						"an-unexpected-error-occurred-while-uploading-your-" +
 							"file");
 				}
+				else if (e instanceof UploadRequestSizeException) {
+					errorMessage = themeDisplay.translate(
+						"request-is-larger-than-x-and-could-not-be-processed",
+						TextFormatter.formatStorageSize(
+							_uploadServletRequestConfigurationHelper.
+								getMaxSize(),
+							themeDisplay.getLocale()));
+				}
 
 				JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 

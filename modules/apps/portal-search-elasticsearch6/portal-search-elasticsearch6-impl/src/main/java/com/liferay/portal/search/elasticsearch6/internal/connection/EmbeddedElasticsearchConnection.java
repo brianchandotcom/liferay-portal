@@ -337,9 +337,8 @@ public class EmbeddedElasticsearchConnection
 
 			_log.debug(
 				StringBundler.concat(
-					"Started ",
-					elasticsearchConfiguration.clusterName(), " in ",
-					stopWatch.getTime(), " ms"));
+					"Started ", elasticsearchConfiguration.clusterName(),
+					" in ", stopWatch.getTime(), " ms"));
 		}
 
 		return client;

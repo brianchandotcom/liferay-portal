@@ -64,6 +64,10 @@ public class PropertiesLongLinesCheck extends BaseFileCheck {
 			return;
 		}
 
+		if (trimmedLine.matches("# Env: \\w*")) {
+			return;
+		}
+
 		int lineLength = getLineLength(line);
 
 		if (lineLength <= getMaxLineLength()) {

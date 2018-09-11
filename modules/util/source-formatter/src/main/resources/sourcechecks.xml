@@ -370,6 +370,7 @@
 		<check name="PropertiesLiferayPluginPackageFileCheck" />
 		<check name="PropertiesLiferayPluginPackageLiferayVersionsCheck" />
 		<check name="PropertiesLongLinesCheck" />
+		<check name="PropertiesPortalEnvironmentVariablesCheck" />
 		<check name="PropertiesPortalFileCheck" />
 		<check name="PropertiesPortletFileCheck" />
 		<check name="PropertiesSourceFormatterContentCheck" />

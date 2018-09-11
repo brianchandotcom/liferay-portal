@@ -67,7 +67,7 @@ public class ModuleReadHookImpl implements ModuleReadHook {
 			else {
 				Matcher matcher = _pattern.matcher(location);
 
-				if (matcher.matches()) {
+				if (matcher.find()) {
 					try (ZipFile zipFile = new ZipFile(matcher.group(2));
 						InputStream inputStream = zipFile.getInputStream(
 							zipFile.getEntry(matcher.group(1)))) {

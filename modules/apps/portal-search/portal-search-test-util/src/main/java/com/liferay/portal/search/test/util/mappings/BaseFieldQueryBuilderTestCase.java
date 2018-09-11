@@ -15,8 +15,10 @@
 package com.liferay.portal.search.test.util.mappings;
 
 import com.liferay.portal.kernel.search.Document;
+import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.Query;
+import com.liferay.portal.kernel.search.filter.TermFilter;
 import com.liferay.portal.search.analysis.FieldQueryBuilder;
 import com.liferay.portal.search.test.util.DocumentsAssert;
 import com.liferay.portal.search.test.util.IdempotentRetryAssert;
@@ -118,6 +120,10 @@ public abstract class BaseFieldQueryBuilderTestCase
 		FieldQueryBuilder fieldQueryBuilder = createFieldQueryBuilder();
 
 		Query query = fieldQueryBuilder.build(getField(), keywords);
+
+		setPreBooleanFilter(
+			new TermFilter(Field.COMPANY_ID, String.valueOf(COMPANY_ID)),
+			query);
 
 		return search(createSearchContext(), query);
 	}

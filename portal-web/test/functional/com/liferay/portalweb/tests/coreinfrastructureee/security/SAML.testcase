@@ -16,6 +16,150 @@
 		</execute>
 	</set-up>
 
+	<command name="AddUserInheritedRolesAsSAMLAttributeStatements" priority="5">
+		<property name="test.name.skip.portal.instance" value="SAML#AddUserInheritedRolesAsSAMLAttributeStatements" />
+
+		<execute macro="SAML#configureLiferaySAMLAsIdP">
+			<var name="samlEntityID" value="samlidp" />
+		</execute>
+
+		<execute macro="SAML#configureLiferaySAMLAsSP">
+			<var name="Attributes" value="siteRoles" />
+			<var name="nameIdentifierAttributeName" value="emailAddress" />
+			<var name="samlEntityID" value="samlsp" />
+			<var name="spURL" value="http://www.able.com:9080/" />
+		</execute>
+
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Configuration" />
+			<var name="panel" value="Control Panel" />
+			<var name="portlet" value="Server Administration" />
+		</execute>
+
+		<execute macro="ServerAdministration#addCategoryLogLevels">
+			<var name="categoryName" value="com.liferay.saml.opensaml.integration.internal.profile.BaseProfile" />
+			<var name="categoryPriority" value="DEBUG" />
+		</execute>
+
+		<execute macro="JSONRole#addSiteRole">
+			<var name="roleKey" value="TestSiteRole" />
+			<var name="roleTitle" value="TestSiteRole" />
+		</execute>
+
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Sites" />
+			<var name="panel" value="Control Panel" />
+			<var name="portlet" value="Sites" />
+		</execute>
+
+		<execute macro="Site#addBlankCP">
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Users" />
+			<var name="panel" value="Control Panel" />
+			<var name="portlet" value="User Groups" />
+		</execute>
+
+		<execute macro="UserGroup#addCP">
+			<var name="userGroupName" value="UG UserGroup Name" />
+		</execute>
+
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoSite">
+			<var name="site" value="Site Name" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Members" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Site Memberships" />
+		</execute>
+
+		<execute macro="Site#assignUserGroupAsMemberCP">
+			<var name="siteName" value="Site Name" />
+			<var name="userGroupName" value="UG UserGroup Name" />
+		</execute>
+
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoSite">
+			<var name="site" value="Site Name" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Members" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Site Memberships" />
+		</execute>
+
+		<execute macro="Site#assignSiteRoleToUserGroup">
+			<var name="roleName" value="TestSiteRole" />
+			<var name="userGroupName" value="UG UserGroup Name" />
+		</execute>
+
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Users" />
+			<var name="panel" value="Control Panel" />
+			<var name="portlet" value="User Groups" />
+		</execute>
+
+		<execute macro="UserGroup#assignMemberCP">
+			<var name="userGroupName" value="UG UserGroup Name" />
+			<var name="userScreenName" value="test" />
+		</execute>
+
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Users" />
+			<var name="panel" value="Control Panel" />
+			<var name="portlet" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#gotoEditCP">
+			<var name="userScreenName" value="test" />
+		</execute>
+
+		<execute macro="User#viewUserInfomationRolesCP">
+			<var name="roleTitle" value="TestSiteRole" />
+			<var name="roleType" value="Inherited Site Roles" />
+		</execute>
+
+		<execute macro="User#logoutPG" />
+
+		<execute macro="User#viewLoggedOutPG" />
+
+		<execute macro="User#logoutPG">
+			<var name="specificURL" value="http://www.able.com:9080/" />
+		</execute>
+
+		<execute macro="User#viewLoggedOutPG" />
+
+		<execute macro="SAML#executeSPInitiatedSSO">
+			<var name="password" value="test" />
+			<var name="specificURL" value="http://www.able.com:9080/" />
+			<var name="userEmailAddress" value="test@liferay.com" />
+		</execute>
+
+		<execute macro="User#viewLoggedInPG">
+			<var name="userFirstName" value="Test" />
+			<var name="userLastName" value="Test" />
+		</execute>
+
+		<execute function="AssertConsoleTextPresent" value1="TestSiteRole" />
+	</command>
+
 	<command name="AssertSSOIdleSessionTakesPrecedenceOverIdPSessionTimeout" priority="4">
 		<property name="test.name.skip.portal.instance" value="CPSAML#AssertSSOIdleSessionTakesPrecedenceOverIdPSessionTimeout" />
 		<property name="web.xml.timeout" value="2" />

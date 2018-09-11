@@ -36,24 +36,22 @@ public class PowwowServiceProviderFactory {
 	}
 
 	private static final Map<String, PowwowServiceProvider>
-		_powwowServiceProviders;
+		_powwowServiceProviders = new HashMap<String, PowwowServiceProvider>() {
+			{
+				PowwowServiceProvider bbbPowwowServiceProvider =
+					new BBBPowwowServiceProvider();
 
-	static {
-		_powwowServiceProviders = new HashMap<>();
+				put(
+					bbbPowwowServiceProvider.getPowwowServiceProviderKey(),
+					bbbPowwowServiceProvider);
 
-		PowwowServiceProvider bbbPowwowServiceProvider =
-			new BBBPowwowServiceProvider();
+				PowwowServiceProvider zoomPowwowServiceProvider =
+					new ZoomPowwowServiceProvider();
 
-		_powwowServiceProviders.put(
-			bbbPowwowServiceProvider.getPowwowServiceProviderKey(),
-			bbbPowwowServiceProvider);
-
-		PowwowServiceProvider zoomPowwowServiceProvider =
-			new ZoomPowwowServiceProvider();
-
-		_powwowServiceProviders.put(
-			zoomPowwowServiceProvider.getPowwowServiceProviderKey(),
-			zoomPowwowServiceProvider);
-	}
+				put(
+					zoomPowwowServiceProvider.getPowwowServiceProviderKey(),
+					zoomPowwowServiceProvider);
+			}
+		};
 
 }

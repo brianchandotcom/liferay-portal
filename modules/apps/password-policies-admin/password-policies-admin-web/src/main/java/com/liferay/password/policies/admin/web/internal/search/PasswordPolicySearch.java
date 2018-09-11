@@ -43,16 +43,19 @@ public class PasswordPolicySearch extends SearchContainer<PasswordPolicy> {
 	public static final String EMPTY_RESULTS_MESSAGE =
 		"no-password-policies-were-found";
 
-	public static List<String> headerNames = new ArrayList<>();
-	public static Map<String, String> orderableHeaders = new HashMap<>();
-
-	static {
-		headerNames.add("name");
-		headerNames.add("description");
-
-		orderableHeaders.put("description", "description");
-		orderableHeaders.put("name", "name");
-	}
+	public static List<String> headerNames = new ArrayList<String>() {
+		{
+			add("name");
+			add("description");
+		}
+	};
+	public static Map<String, String> orderableHeaders =
+		new HashMap<String, String>() {
+			{
+				put("description", "description");
+				put("name", "name");
+			}
+		};
 
 	public PasswordPolicySearch(
 		PortletRequest portletRequest, PortletURL iteratorURL) {

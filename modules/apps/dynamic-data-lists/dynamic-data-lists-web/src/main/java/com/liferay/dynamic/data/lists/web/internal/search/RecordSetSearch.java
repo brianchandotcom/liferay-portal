@@ -30,14 +30,14 @@ public class RecordSetSearch extends SearchContainer<DDLRecordSet> {
 
 	public static final String EMPTY_RESULTS_MESSAGE = "no-entries-were-found";
 
-	public static List<String> headerNames = new ArrayList<>();
-
-	static {
-		headerNames.add("id");
-		headerNames.add("name");
-		headerNames.add("description");
-		headerNames.add("modified-date");
-	}
+	public static List<String> headerNames = new ArrayList<String>() {
+		{
+			add("id");
+			add("name");
+			add("description");
+			add("modified-date");
+		}
+	};
 
 	public RecordSetSearch(
 		PortletRequest portletRequest, PortletURL iteratorURL) {

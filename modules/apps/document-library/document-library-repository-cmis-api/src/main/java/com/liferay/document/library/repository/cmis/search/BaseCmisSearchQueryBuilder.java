@@ -504,22 +504,21 @@ public class BaseCmisSearchQueryBuilder implements CMISSearchQueryBuilder {
 	private static final Log _log = LogFactoryUtil.getLog(
 		BaseCmisSearchQueryBuilder.class);
 
-	private static final Map<String, String> _cmisFields;
+	private static final Map<String, String> _cmisFields =
+		new HashMap<String, String>() {
+			{
+				put(Field.CREATE_DATE, "cmis:creationDate");
+				put(Field.MODIFIED_DATE, "cmis:lastModificationDate");
+				put(Field.NAME, "cmis:name");
+				put(Field.TITLE, "cmis:name");
+				put(Field.USER_ID, "cmis:createdBy");
+				put(Field.USER_NAME, "cmis:createdBy");
+			}
+		};
 	private static final Set<String> _supportedFields = new HashSet<>(
 		Arrays.asList(
 			Field.CREATE_DATE, Field.FOLDER_ID, Field.MODIFIED_DATE, Field.NAME,
 			Field.TITLE, Field.USER_ID, Field.USER_NAME));
-
-	static {
-		_cmisFields = new HashMap<>();
-
-		_cmisFields.put(Field.CREATE_DATE, "cmis:creationDate");
-		_cmisFields.put(Field.MODIFIED_DATE, "cmis:lastModificationDate");
-		_cmisFields.put(Field.NAME, "cmis:name");
-		_cmisFields.put(Field.TITLE, "cmis:name");
-		_cmisFields.put(Field.USER_ID, "cmis:createdBy");
-		_cmisFields.put(Field.USER_NAME, "cmis:createdBy");
-	}
 
 	private final RepositoryEntryLocalService _repositoryEntryLocalService;
 	private final UserLocalService _userLocalService;

@@ -31,15 +31,15 @@ public class AssetBrowserSearch extends SearchContainer<AssetEntry> {
 
 	public static final String EMPTY_RESULTS_MESSAGE = "there-are-no-results";
 
-	public static List<String> headerNames = new ArrayList<>();
-
-	static {
-		headerNames.add("title");
-		headerNames.add("description");
-		headerNames.add("user-name");
-		headerNames.add("modified-date");
-		headerNames.add("scope");
-	}
+	public static List<String> headerNames = new ArrayList<String>() {
+		{
+			add("title");
+			add("description");
+			add("user-name");
+			add("modified-date");
+			add("scope");
+		}
+	};
 
 	public AssetBrowserSearch(
 		PortletRequest portletRequest, int delta, PortletURL iteratorURL) {

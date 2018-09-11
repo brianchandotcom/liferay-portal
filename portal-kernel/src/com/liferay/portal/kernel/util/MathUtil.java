@@ -196,14 +196,15 @@ public class MathUtil {
 
 	private static final Log _log = LogFactoryUtil.getLog(MathUtil.class);
 
-	private static final Map<Long, Integer> _base2LogValues = new HashMap<>();
+	private static final Map<Long, Integer> _base2LogValues =
+		new HashMap<Long, Integer>() {
+			{
+				put(0L, Integer.MIN_VALUE);
 
-	static {
-		_base2LogValues.put(0L, Integer.MIN_VALUE);
-
-		for (int i = 0; i < 63; i++) {
-			_base2LogValues.put(base2Pow(i), i);
-		}
-	}
+				for (int i = 0; i < 63; i++) {
+					put(base2Pow(i), i);
+				}
+			}
+		};
 
 }

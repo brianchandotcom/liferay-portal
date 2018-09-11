@@ -63,14 +63,15 @@ public enum SearchScopePreference {
 	}
 
 	private static final Map<String, SearchScopePreference>
-		_searchScopePreferences = new HashMap<>();
-
-	static {
-		for (SearchScopePreference searchScopePreference : values()) {
-			_searchScopePreferences.put(
-				searchScopePreference._preferenceString, searchScopePreference);
-		}
-	}
+		_searchScopePreferences = new HashMap<String, SearchScopePreference>() {
+			{
+				for (SearchScopePreference searchScopePreference : values()) {
+					put(
+						searchScopePreference._preferenceString,
+						searchScopePreference);
+				}
+			}
+		};
 
 	private final String _preferenceString;
 	private final SearchScope _searchScope;

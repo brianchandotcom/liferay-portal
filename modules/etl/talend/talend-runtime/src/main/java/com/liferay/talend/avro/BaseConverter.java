@@ -99,17 +99,15 @@ public abstract class BaseConverter<DatumT, AvroT>
 
 	protected List<Schema.Field> schemaFields;
 
-	private static final Map<Schema.Type, AvroConverter> _converterRegistry;
-
-	static {
-		_converterRegistry = new HashMap<>();
-
-		_converterRegistry.put(
-			Schema.Type.BOOLEAN, new StringBooleanConverter());
-		_converterRegistry.put(Schema.Type.INT, new StringIntConverter());
-		_converterRegistry.put(Schema.Type.LONG, new StringLongConverter());
-		_converterRegistry.put(Schema.Type.STRING, new StringStringConverter());
-	}
+	private static final Map<Schema.Type, AvroConverter> _converterRegistry =
+		new HashMap<Schema.Type, AvroConverter>() {
+			{
+				put(Schema.Type.BOOLEAN, new StringBooleanConverter());
+				put(Schema.Type.INT, new StringIntConverter());
+				put(Schema.Type.LONG, new StringLongConverter());
+				put(Schema.Type.STRING, new StringStringConverter());
+			}
+		};
 
 	/**
 	 * Class of DI data

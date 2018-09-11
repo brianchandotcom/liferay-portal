@@ -30,12 +30,12 @@ public class WorkflowDefinitionLinkSearch
 
 	public static final String EMPTY_RESULTS_MESSAGE = "no-entries-were-found";
 
-	public static List<String> headerNames = new ArrayList<>();
-
-	static {
-		headerNames.add("resource");
-		headerNames.add("workflow");
-	}
+	public static List<String> headerNames = new ArrayList<String>() {
+		{
+			add("resource");
+			add("workflow");
+		}
+	};
 
 	public WorkflowDefinitionLinkSearch(
 		PortletRequest portletRequest, PortletURL iteratorURL) {

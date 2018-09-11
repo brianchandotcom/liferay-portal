@@ -77,25 +77,25 @@ public class FolderConverter extends BaseXStreamConverter {
 		return fields;
 	}
 
-	protected static List<String> fields = new LinkedList<>();
-
-	static {
-		fields.add(FieldConstants.COMPANY_ID);
-		fields.add(FieldConstants.CREATE_DATE);
-		fields.add(FieldConstants.DESCRIPTION);
-		fields.add(FieldConstants.ESCAPED_MODEL);
-		fields.add(FieldConstants.FOLDER_ID);
-		fields.add(FieldConstants.GROUP_ID);
-		fields.add(FieldConstants.LAST_POST_DATE);
-		fields.add(FieldConstants.MODIFIED_DATE);
-		fields.add(FieldConstants.MOUNT_POINT);
-		fields.add(FieldConstants.NAME);
-		fields.add(FieldConstants.PARENT_FOLDER_ID);
-		fields.add(FieldConstants.REPOSITORY_ID);
-		fields.add(FieldConstants.USER_ID);
-		fields.add(FieldConstants.USER_NAME);
-		fields.add(FieldConstants.USER_UUID);
-		fields.add(FieldConstants.UUID);
-	}
+	protected static List<String> fields = new LinkedList<String>() {
+		{
+			add(FieldConstants.COMPANY_ID);
+			add(FieldConstants.CREATE_DATE);
+			add(FieldConstants.DESCRIPTION);
+			add(FieldConstants.ESCAPED_MODEL);
+			add(FieldConstants.FOLDER_ID);
+			add(FieldConstants.GROUP_ID);
+			add(FieldConstants.LAST_POST_DATE);
+			add(FieldConstants.MODIFIED_DATE);
+			add(FieldConstants.MOUNT_POINT);
+			add(FieldConstants.NAME);
+			add(FieldConstants.PARENT_FOLDER_ID);
+			add(FieldConstants.REPOSITORY_ID);
+			add(FieldConstants.USER_ID);
+			add(FieldConstants.USER_NAME);
+			add(FieldConstants.USER_UUID);
+			add(FieldConstants.UUID);
+		}
+	};
 
 }

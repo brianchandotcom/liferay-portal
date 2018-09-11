@@ -1284,7 +1284,11 @@ public class WabProcessor {
 
 	private static final Log _log = LogFactoryUtil.getLog(WabProcessor.class);
 
-	private static final Attrs _optionalAttrs = new Attrs();
+	private static final Attrs _optionalAttrs = new Attrs() {
+		{
+			put("resolution:", "optional");
+		}
+	};
 	private static final Map<String, String> _xsds =
 		new ConcurrentHashMap<String, String>() {
 			{
@@ -1316,10 +1320,6 @@ public class WabProcessor {
 				put("xsl", "http://www.w3.org/1999/XSL/Transform");
 			}
 		};
-
-	static {
-		_optionalAttrs.put("resolution:", "optional");
-	}
 
 	private String _bundleVersion;
 	private String _context;

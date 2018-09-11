@@ -44,13 +44,14 @@ public enum Isolation {
 		_value = value;
 	}
 
-	private static final Map<Integer, Isolation> _isolations = new HashMap<>();
-
-	static {
-		for (Isolation isolation : EnumSet.allOf(Isolation.class)) {
-			_isolations.put(isolation._value, isolation);
-		}
-	}
+	private static final Map<Integer, Isolation> _isolations =
+		new HashMap<Integer, Isolation>() {
+			{
+				for (Isolation isolation : EnumSet.allOf(Isolation.class)) {
+					put(isolation._value, isolation);
+				}
+			}
+		};
 
 	private final int _value;
 

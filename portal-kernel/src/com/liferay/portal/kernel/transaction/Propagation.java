@@ -45,13 +45,15 @@ public enum Propagation {
 	}
 
 	private static final Map<Integer, Propagation> _propagations =
-		new HashMap<>();
+		new HashMap<Integer, Propagation>() {
+			{
+				for (Propagation propagation :
+						EnumSet.allOf(Propagation.class)) {
 
-	static {
-		for (Propagation propagation : EnumSet.allOf(Propagation.class)) {
-			_propagations.put(propagation._value, propagation);
-		}
-	}
+					put(propagation._value, propagation);
+				}
+			}
+		};
 
 	private final int _value;
 

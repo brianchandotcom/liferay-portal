@@ -350,15 +350,16 @@ public class PortalGitWorkingDirectory extends GitWorkingDirectory {
 		}
 
 		private static Map<Integer, String[]> _markerFileNames =
-			new HashMap<>();
-
-		static {
-			_markerFileNames.put(0, new String[] {"subsystem.bnd", ".gitrepo"});
-			_markerFileNames.put(1, new String[] {"app.bnd"});
-			_markerFileNames.put(2, new String[] {"bnd.bnd"});
-			_markerFileNames.put(
-				3, new String[] {"build.gradle", "build.xml", "pom.xml"});
-		}
+			new HashMap<Integer, String[]>() {
+				{
+					put(0, new String[] {"subsystem.bnd", ".gitrepo"});
+					put(1, new String[] {"app.bnd"});
+					put(2, new String[] {"bnd.bnd"});
+					put(
+						3,
+						new String[] {"build.gradle", "build.xml", "pom.xml"});
+				}
+			};
 
 		private final File _file;
 		private final int _priority;

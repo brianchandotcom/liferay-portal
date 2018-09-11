@@ -169,12 +169,15 @@ public class PortalUpgradeProcess extends UpgradeProcess {
 	private static final String _INITIAL_SCHEMA_VERSION = "0.1.0";
 
 	private static final TreeMap<Version, UpgradeProcess> _upgradeProcesses =
-		new TreeMap<>();
+		new TreeMap<Version, UpgradeProcess>() {
+			{
+				put(
+					new Version(_INITIAL_SCHEMA_VERSION),
+					new DummyUpgradeProcess());
+			}
+		};
 
 	static {
-		_upgradeProcesses.put(
-			new Version(_INITIAL_SCHEMA_VERSION), new DummyUpgradeProcess());
-
 		PortalUpgradeProcessRegistry portalUpgradeProcessRegistry =
 			new PortalUpgradeProcessRegistryImpl();
 

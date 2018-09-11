@@ -33,16 +33,19 @@ public class WorkflowDefinitionSearch
 
 	public static final String EMPTY_RESULTS_MESSAGE = "no-entries-were-found";
 
-	public static List<String> headerNames = new ArrayList<>();
-	public static Map<String, String> orderableHeaders = new HashMap<>();
-
-	static {
-		headerNames.add("title");
-		headerNames.add("description");
-		headerNames.add("modifiedDate");
-
-		orderableHeaders.put("title", "modifiedDate");
-	}
+	public static List<String> headerNames = new ArrayList<String>() {
+		{
+			add("title");
+			add("description");
+			add("modifiedDate");
+		}
+	};
+	public static Map<String, String> orderableHeaders =
+		new HashMap<String, String>() {
+			{
+				put("title", "modifiedDate");
+			}
+		};
 
 	public WorkflowDefinitionSearch(
 		PortletRequest portletRequest, PortletURL iteratorURL) {

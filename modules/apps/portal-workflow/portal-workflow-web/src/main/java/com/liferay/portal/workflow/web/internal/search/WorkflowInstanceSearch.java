@@ -36,16 +36,16 @@ import javax.portlet.PortletURL;
  */
 public class WorkflowInstanceSearch extends SearchContainer<WorkflowInstance> {
 
-	public static List<String> headerNames = new ArrayList<>();
-
-	static {
-		headerNames.add("asset-title");
-		headerNames.add("asset-type");
-		headerNames.add("status");
-		headerNames.add("definition");
-		headerNames.add("last-activity-date");
-		headerNames.add("end-date");
-	}
+	public static List<String> headerNames = new ArrayList<String>() {
+		{
+			add("asset-title");
+			add("asset-type");
+			add("status");
+			add("definition");
+			add("last-activity-date");
+			add("end-date");
+		}
+	};
 
 	public WorkflowInstanceSearch(
 		PortletRequest portletRequest, PortletURL iteratorURL) {

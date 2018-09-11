@@ -92,30 +92,30 @@ public class FileEntryConverter extends BaseXStreamConverter {
 		return fields;
 	}
 
-	protected static List<String> fields = new LinkedList<>();
-
-	static {
-		fields.add(FieldConstants.COMPANY_ID);
-		fields.add(FieldConstants.CREATE_DATE);
-		fields.add(FieldConstants.DESCRIPTION);
-		fields.add(FieldConstants.ESCAPED_MODEL);
-		fields.add(FieldConstants.EXTENSION);
-		fields.add(FieldConstants.FILE_ENTRY_ID);
-		fields.add(FieldConstants.FILE_VERSION);
-		fields.add(FieldConstants.FOLDER_ID);
-		fields.add(FieldConstants.GROUP_ID);
-		fields.add(FieldConstants.MANUAL_CHECK_IN_REQUIRED);
-		fields.add(FieldConstants.MIME_TYPE);
-		fields.add(FieldConstants.MODIFIED_DATE);
-		fields.add(FieldConstants.READ_COUNT);
-		fields.add(FieldConstants.REPOSITORY_ID);
-		fields.add(FieldConstants.SIZE);
-		fields.add(FieldConstants.TITLE);
-		fields.add(FieldConstants.USER_ID);
-		fields.add(FieldConstants.USER_NAME);
-		fields.add(FieldConstants.USER_UUID);
-		fields.add(FieldConstants.UUID);
-		fields.add(FieldConstants.VERSION);
-	}
+	protected static List<String> fields = new LinkedList<String>() {
+		{
+			add(FieldConstants.COMPANY_ID);
+			add(FieldConstants.CREATE_DATE);
+			add(FieldConstants.DESCRIPTION);
+			add(FieldConstants.ESCAPED_MODEL);
+			add(FieldConstants.EXTENSION);
+			add(FieldConstants.FILE_ENTRY_ID);
+			add(FieldConstants.FILE_VERSION);
+			add(FieldConstants.FOLDER_ID);
+			add(FieldConstants.GROUP_ID);
+			add(FieldConstants.MANUAL_CHECK_IN_REQUIRED);
+			add(FieldConstants.MIME_TYPE);
+			add(FieldConstants.MODIFIED_DATE);
+			add(FieldConstants.READ_COUNT);
+			add(FieldConstants.REPOSITORY_ID);
+			add(FieldConstants.SIZE);
+			add(FieldConstants.TITLE);
+			add(FieldConstants.USER_ID);
+			add(FieldConstants.USER_NAME);
+			add(FieldConstants.USER_UUID);
+			add(FieldConstants.UUID);
+			add(FieldConstants.VERSION);
+		}
+	};
 
 }

@@ -34,12 +34,12 @@ public class FeedSearch extends SearchContainer<JournalFeed> {
 
 	public static final String EMPTY_RESULTS_MESSAGE = "no-feeds-were-found";
 
-	public static List<String> headerNames = new ArrayList<>();
-
-	static {
-		headerNames.add("id");
-		headerNames.add("description");
-	}
+	public static List<String> headerNames = new ArrayList<String>() {
+		{
+			add("id");
+			add("description");
+		}
+	};
 
 	public FeedSearch(PortletRequest portletRequest, PortletURL iteratorURL) {
 		super(

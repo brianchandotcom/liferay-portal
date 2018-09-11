@@ -43,11 +43,12 @@ public class FormInstanceRecordSearch
 
 	public static final String EMPTY_RESULTS_MESSAGE = "no-entries-were-found";
 
-	public static Map<String, String> orderableHeaders = new HashMap<>();
-
-	static {
-		orderableHeaders.put("modified-date", "modified-date");
-	}
+	public static Map<String, String> orderableHeaders =
+		new HashMap<String, String>() {
+			{
+				put("modified-date", "modified-date");
+			}
+		};
 
 	public static OrderByComparator<DDMFormInstanceRecord>
 		getDDMFormInstanceRecordOrderByComparator(

@@ -38,19 +38,22 @@ import javax.portlet.PortletURL;
  */
 public class WorkflowTaskSearch extends SearchContainer<WorkflowTask> {
 
-	public static List<String> headerNames = new ArrayList<>();
-	public static Map<String, String> orderableHeaders = new HashMap<>();
-
-	static {
-		headerNames.add("asset-title");
-		headerNames.add("asset-type");
-		headerNames.add("task");
-		headerNames.add("last-activity-date");
-		headerNames.add("due-date");
-
-		orderableHeaders.put("due-date", "due-date");
-		orderableHeaders.put("last-activity-date", "last-activity-date");
-	}
+	public static List<String> headerNames = new ArrayList<String>() {
+		{
+			add("asset-title");
+			add("asset-type");
+			add("task");
+			add("last-activity-date");
+			add("due-date");
+		}
+	};
+	public static Map<String, String> orderableHeaders =
+		new HashMap<String, String>() {
+			{
+				put("due-date", "due-date");
+				put("last-activity-date", "last-activity-date");
+			}
+		};
 
 	public WorkflowTaskSearch(
 		PortletRequest portletRequest, PortletURL iteratorURL) {

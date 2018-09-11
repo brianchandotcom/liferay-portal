@@ -45,13 +45,13 @@ public enum SearchScope {
 	}
 
 	private static final Map<String, SearchScope> _searchScopes =
-		new HashMap<>();
-
-	static {
-		for (SearchScope searchScope : values()) {
-			_searchScopes.put(searchScope._parameterString, searchScope);
-		}
-	}
+		new HashMap<String, SearchScope>() {
+			{
+				for (SearchScope searchScope : values()) {
+					put(searchScope._parameterString, searchScope);
+				}
+			}
+		};
 
 	private final String _parameterString;
 

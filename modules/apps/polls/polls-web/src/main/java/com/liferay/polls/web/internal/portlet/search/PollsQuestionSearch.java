@@ -30,14 +30,14 @@ public class PollsQuestionSearch extends SearchContainer<PollsQuestion> {
 
 	public static final String EMPTY_RESULTS_MESSAGE = "no-entries-were-found";
 
-	public static List<String> headerNames = new ArrayList<>();
-
-	static {
-		headerNames.add("title");
-		headerNames.add("num-of-votes");
-		headerNames.add("last-vote-date");
-		headerNames.add("expiration-date");
-	}
+	public static List<String> headerNames = new ArrayList<String>() {
+		{
+			add("title");
+			add("num-of-votes");
+			add("last-vote-date");
+			add("expiration-date");
+		}
+	};
 
 	public PollsQuestionSearch(
 		PortletRequest portletRequest, PortletURL iteratorURL) {

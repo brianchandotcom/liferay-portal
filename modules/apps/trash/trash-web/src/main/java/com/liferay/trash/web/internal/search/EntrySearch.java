@@ -52,20 +52,23 @@ public class EntrySearch extends SearchContainer<TrashEntry> {
 	public static final String EMPTY_RESULTS_MESSAGE =
 		"the-recycle-bin-is-empty";
 
-	public static List<String> headerNames = new ArrayList<>();
-	public static Map<String, String> orderableHeaders = new HashMap<>();
-
-	static {
-		headerNames.add("name");
-		headerNames.add("type");
-		headerNames.add("removed-date");
-		headerNames.add("removed-by");
-
-		orderableHeaders.put("name", "name");
-		orderableHeaders.put("removed-by", "removed-by");
-		orderableHeaders.put("removed-date", "removed-date");
-		orderableHeaders.put("type", "type");
-	}
+	public static List<String> headerNames = new ArrayList<String>() {
+		{
+			add("name");
+			add("type");
+			add("removed-date");
+			add("removed-by");
+		}
+	};
+	public static Map<String, String> orderableHeaders =
+		new HashMap<String, String>() {
+			{
+				put("name", "name");
+				put("removed-by", "removed-by");
+				put("removed-date", "removed-date");
+				put("type", "type");
+			}
+		};
 
 	public EntrySearch(PortletRequest portletRequest, PortletURL iteratorURL) {
 		super(

@@ -259,22 +259,26 @@ public class TLDUtil {
 
 	private static final Map<File, Map<String, File>> _nestedXSDCache =
 		new ConcurrentHashMap<>();
-	private static final Map<String, File> _portalDefinitions = new HashMap<>();
 
-	static {
-		String gradleUserHome = System.getProperty("gradle.user.home");
+	private static final Map<String, File> _portalDefinitions =
+		new HashMap<String, File>() {
+			{
+				String gradleUserHome = System.getProperty("gradle.user.home");
 
-		if (gradleUserHome != null) {
-			File definitionsDir = new File(gradleUserHome, "/../definitions");
+				if (gradleUserHome != null) {
+					File definitionsDir = new File(
+						gradleUserHome, "/../definitions");
 
-			if (definitionsDir.exists()) {
-				for (File definitionFile : definitionsDir.listFiles()) {
-					String definitionFileName = definitionFile.getName();
+					if (definitionsDir.exists()) {
+						for (File definitionFile : definitionsDir.listFiles()) {
+							String definitionFileName =
+								definitionFile.getName();
 
-					_portalDefinitions.put(definitionFileName, definitionFile);
+							put(definitionFileName, definitionFile);
+						}
+					}
 				}
 			}
-		}
-	}
+		};
 
 }

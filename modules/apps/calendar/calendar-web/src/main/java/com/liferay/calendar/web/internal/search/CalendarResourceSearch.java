@@ -44,18 +44,21 @@ public class CalendarResourceSearch extends SearchContainer<CalendarResource> {
 	public static final String EMPTY_RESULTS_MESSAGE =
 		"no-calendar-resources-were-found";
 
-	public static List<String> headerNames = new ArrayList<>();
-	public static Map<String, String> orderableHeaders = new HashMap<>();
-
-	static {
-		headerNames.add("code");
-		headerNames.add("name");
-		headerNames.add("description");
-		headerNames.add("active");
-
-		orderableHeaders.put("code", "code");
-		orderableHeaders.put("name", "name");
-	}
+	public static List<String> headerNames = new ArrayList<String>() {
+		{
+			add("code");
+			add("name");
+			add("description");
+			add("active");
+		}
+	};
+	public static Map<String, String> orderableHeaders =
+		new HashMap<String, String>() {
+			{
+				put("code", "code");
+				put("name", "name");
+			}
+		};
 
 	public CalendarResourceSearch(
 		PortletRequest portletRequest, String curParam,

@@ -14,6 +14,8 @@
 
 package com.liferay.document.library.kernel.store;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.exception.PortalException;
 
 import java.io.File;
@@ -27,6 +29,7 @@ import java.io.InputStream;
  * @author Edward Han
  * @see    BaseStore
  */
+@ProviderType
 public interface Store {
 
 	public static final String VERSION_DEFAULT = "1.0";
@@ -46,6 +49,11 @@ public interface Store {
 		throws PortalException;
 
 	public void checkRoot(long companyId);
+
+	public void copyFileToStore(
+			long companyId, long repositoryId, String fileName,
+			String versionLabel, Store targetStore)
+		throws PortalException;
 
 	public void copyFileVersion(
 			long companyId, long repositoryId, String fileName,
@@ -105,6 +113,11 @@ public interface Store {
 		String versionLabel);
 
 	public void move(String srcDir, String destDir);
+
+	public void moveFileToStore(
+			long companyId, long repositoryId, String fileName,
+			String versionLabel, Store targetStore)
+		throws PortalException;
 
 	public void updateFile(
 			long companyId, long repositoryId, long newRepositoryId,

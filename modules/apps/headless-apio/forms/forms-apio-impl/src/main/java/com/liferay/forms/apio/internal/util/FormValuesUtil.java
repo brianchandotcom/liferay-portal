@@ -72,7 +72,7 @@ public final class FormValuesUtil {
 
 			Value value = _EMPTY_VALUE;
 
-			if ((ddmFormField != null) && !ddmFormField.isTransient()) {
+			if (ddmFormField != null) {
 				value = Optional.ofNullable(
 					formFieldValue.value
 				).map(

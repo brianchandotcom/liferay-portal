@@ -297,7 +297,7 @@ public class StructureRepresentorBuilderHelperImpl
 	private static List<String> _getNestedFieldNames(
 		List<String> ddmFormFieldNames, DDMStructure ddmStructure) {
 
-		List<DDMFormField> ddmFormFields = ddmStructure.getDDMFormFields(false);
+		List<DDMFormField> ddmFormFields = ddmStructure.getDDMFormFields(true);
 
 		Stream<DDMFormField> ddmFormFieldStream = ddmFormFields.stream();
 

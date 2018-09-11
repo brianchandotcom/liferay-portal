@@ -65,6 +65,27 @@ import java.rmi.RemoteException;
  */
 @ProviderType
 public class SharingEntryServiceSoap {
+	public static com.liferay.sharing.model.SharingEntrySoap addOrUpdateSharingEntry(
+		long toUserId, long classNameId, long classPK, long groupId,
+		boolean shareable,
+		java.util.Collection<com.liferay.sharing.constants.SharingEntryActionKey> sharingEntryActionKeys,
+		java.util.Date expirationDate,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws RemoteException {
+		try {
+			com.liferay.sharing.model.SharingEntry returnValue = SharingEntryServiceUtil.addOrUpdateSharingEntry(toUserId,
+					classNameId, classPK, groupId, shareable,
+					sharingEntryActionKeys, expirationDate, serviceContext);
+
+			return com.liferay.sharing.model.SharingEntrySoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static com.liferay.sharing.model.SharingEntrySoap addSharingEntry(
 		long toUserId, long classNameId, long classPK, long groupId,
 		boolean shareable,
@@ -88,11 +109,12 @@ public class SharingEntryServiceSoap {
 
 	public static com.liferay.sharing.model.SharingEntrySoap updateSharingEntry(
 		long sharingEntryId,
-		java.util.Collection<com.liferay.sharing.constants.SharingEntryActionKey> sharingEntryActionKeys)
+		java.util.Collection<com.liferay.sharing.constants.SharingEntryActionKey> sharingEntryActionKeys,
+		boolean shareable, java.util.Date expirationDate)
 		throws RemoteException {
 		try {
 			com.liferay.sharing.model.SharingEntry returnValue = SharingEntryServiceUtil.updateSharingEntry(sharingEntryId,
-					sharingEntryActionKeys);
+					sharingEntryActionKeys, shareable, expirationDate);
 
 			return com.liferay.sharing.model.SharingEntrySoap.toSoapModel(returnValue);
 		}

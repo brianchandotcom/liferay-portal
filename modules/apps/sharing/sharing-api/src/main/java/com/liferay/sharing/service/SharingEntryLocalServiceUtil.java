@@ -42,6 +42,19 @@ public class SharingEntryLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.sharing.service.impl.SharingEntryLocalServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static com.liferay.sharing.model.SharingEntry addOrUpdateSharingEntry(
+		long fromUserId, long toUserId, long classNameId, long classPK,
+		long groupId, boolean shareable,
+		java.util.Collection<com.liferay.sharing.constants.SharingEntryActionKey> sharingEntryActionKeys,
+		java.util.Date expirationDate,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .addOrUpdateSharingEntry(fromUserId, toUserId, classNameId,
+			classPK, groupId, shareable, sharingEntryActionKeys,
+			expirationDate, serviceContext);
+	}
+
 	public static com.liferay.sharing.model.SharingEntry addSharingEntry(
 		long fromUserId, long toUserId, long classNameId, long classPK,
 		long groupId, boolean shareable,
@@ -421,10 +434,12 @@ public class SharingEntryLocalServiceUtil {
 
 	public static com.liferay.sharing.model.SharingEntry updateSharingEntry(
 		long sharingEntryId,
-		java.util.Collection<com.liferay.sharing.constants.SharingEntryActionKey> sharingEntryActionKeys)
+		java.util.Collection<com.liferay.sharing.constants.SharingEntryActionKey> sharingEntryActionKeys,
+		boolean shareable, java.util.Date expirationDate)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
-				   .updateSharingEntry(sharingEntryId, sharingEntryActionKeys);
+				   .updateSharingEntry(sharingEntryId, sharingEntryActionKeys,
+			shareable, expirationDate);
 	}
 
 	/**

@@ -55,6 +55,44 @@ import com.liferay.sharing.service.SharingEntryServiceUtil;
  */
 @ProviderType
 public class SharingEntryServiceHttp {
+	public static com.liferay.sharing.model.SharingEntry addOrUpdateSharingEntry(
+		HttpPrincipal httpPrincipal, long toUserId, long classNameId,
+		long classPK, long groupId, boolean shareable,
+		java.util.Collection<com.liferay.sharing.constants.SharingEntryActionKey> sharingEntryActionKeys,
+		java.util.Date expirationDate,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		try {
+			MethodKey methodKey = new MethodKey(SharingEntryServiceUtil.class,
+					"addOrUpdateSharingEntry",
+					_addOrUpdateSharingEntryParameterTypes0);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey,
+					toUserId, classNameId, classPK, groupId, shareable,
+					sharingEntryActionKeys, expirationDate, serviceContext);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return (com.liferay.sharing.model.SharingEntry)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
 	public static com.liferay.sharing.model.SharingEntry addSharingEntry(
 		HttpPrincipal httpPrincipal, long toUserId, long classNameId,
 		long classPK, long groupId, boolean shareable,
@@ -64,7 +102,7 @@ public class SharingEntryServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(SharingEntryServiceUtil.class,
-					"addSharingEntry", _addSharingEntryParameterTypes0);
+					"addSharingEntry", _addSharingEntryParameterTypes1);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					toUserId, classNameId, classPK, groupId, shareable,
@@ -94,14 +132,16 @@ public class SharingEntryServiceHttp {
 
 	public static com.liferay.sharing.model.SharingEntry updateSharingEntry(
 		HttpPrincipal httpPrincipal, long sharingEntryId,
-		java.util.Collection<com.liferay.sharing.constants.SharingEntryActionKey> sharingEntryActionKeys)
+		java.util.Collection<com.liferay.sharing.constants.SharingEntryActionKey> sharingEntryActionKeys,
+		boolean shareable, java.util.Date expirationDate)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(SharingEntryServiceUtil.class,
-					"updateSharingEntry", _updateSharingEntryParameterTypes3);
+					"updateSharingEntry", _updateSharingEntryParameterTypes4);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
-					sharingEntryId, sharingEntryActionKeys);
+					sharingEntryId, sharingEntryActionKeys, shareable,
+					expirationDate);
 
 			Object returnObj = null;
 
@@ -126,12 +166,18 @@ public class SharingEntryServiceHttp {
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(SharingEntryServiceHttp.class);
-	private static final Class<?>[] _addSharingEntryParameterTypes0 = new Class[] {
+	private static final Class<?>[] _addOrUpdateSharingEntryParameterTypes0 = new Class[] {
 			long.class, long.class, long.class, long.class, boolean.class,
 			java.util.Collection.class, java.util.Date.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
-	private static final Class<?>[] _updateSharingEntryParameterTypes3 = new Class[] {
-			long.class, java.util.Collection.class
+	private static final Class<?>[] _addSharingEntryParameterTypes1 = new Class[] {
+			long.class, long.class, long.class, long.class, boolean.class,
+			java.util.Collection.class, java.util.Date.class,
+			com.liferay.portal.kernel.service.ServiceContext.class
+		};
+	private static final Class<?>[] _updateSharingEntryParameterTypes4 = new Class[] {
+			long.class, java.util.Collection.class, boolean.class,
+			java.util.Date.class
 		};
 }

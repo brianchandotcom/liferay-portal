@@ -44,6 +44,22 @@ import org.osgi.framework.FrameworkUtil;
 public class SharingEntryServiceImpl extends SharingEntryServiceBaseImpl {
 
 	@Override
+	public SharingEntry addOrUpdateSharingEntry(
+			long toUserId, long classNameId, long classPK, long groupId,
+			boolean shareable,
+			Collection<SharingEntryActionKey> sharingEntryActionKeys,
+			Date expirationDate, ServiceContext serviceContext)
+		throws PortalException {
+
+		_checkSharingPermission(
+			getUserId(), classNameId, classPK, groupId, sharingEntryActionKeys);
+
+		return sharingEntryLocalService.addOrUpdateSharingEntry(
+			getUserId(), toUserId, classNameId, classPK, groupId, shareable,
+			sharingEntryActionKeys, expirationDate, serviceContext);
+	}
+
+	@Override
 	public SharingEntry addSharingEntry(
 			long toUserId, long classNameId, long classPK, long groupId,
 			boolean shareable,
@@ -90,7 +106,8 @@ public class SharingEntryServiceImpl extends SharingEntryServiceBaseImpl {
 	@Override
 	public SharingEntry updateSharingEntry(
 			long sharingEntryId,
-			Collection<SharingEntryActionKey> sharingEntryActionKeys)
+			Collection<SharingEntryActionKey> sharingEntryActionKeys,
+			boolean shareable, Date expirationDate)
 		throws PortalException {
 
 		SharingEntry sharingEntry = sharingEntryPersistence.findByPrimaryKey(
@@ -102,7 +119,7 @@ public class SharingEntryServiceImpl extends SharingEntryServiceBaseImpl {
 			sharingEntryActionKeys);
 
 		return sharingEntryLocalService.updateSharingEntry(
-			sharingEntryId, sharingEntryActionKeys);
+			sharingEntryId, sharingEntryActionKeys, shareable, expirationDate);
 	}
 
 	@ServiceReference(type = ClassNameLocalService.class)

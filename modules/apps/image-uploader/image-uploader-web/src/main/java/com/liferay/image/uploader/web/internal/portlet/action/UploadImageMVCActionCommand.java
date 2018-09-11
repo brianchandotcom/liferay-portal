@@ -266,13 +266,12 @@ public class UploadImageMVCActionCommand extends BaseMVCActionCommand {
 							"file");
 				}
 				else if (e instanceof UploadRequestSizeException) {
-					maxFileSize =
-						_uploadServletRequestConfigurationHelper.getMaxSize();
-
 					errorMessage = themeDisplay.translate(
 						"request-is-larger-than-x-and-could-not-be-processed",
 						TextFormatter.formatStorageSize(
-							maxFileSize, themeDisplay.getLocale()));
+							_uploadServletRequestConfigurationHelper.
+								getMaxSize(),
+							themeDisplay.getLocale()));
 				}
 
 				JSONObject jsonObject = JSONFactoryUtil.createJSONObject();

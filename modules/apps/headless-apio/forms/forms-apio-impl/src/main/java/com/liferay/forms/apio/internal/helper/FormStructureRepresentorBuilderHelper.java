@@ -125,8 +125,6 @@ public class FormStructureRepresentorBuilderHelper {
 			"transient", DDMFormField::isTransient
 		).addNested(
 			"grid", ddmFormField -> ddmFormField, this::_buildDDMFormField
-		).addString(
-			"indexType", DDMFormField::getIndexType
 		);
 
 		return ddmFormFieldFirstStepBuilder;

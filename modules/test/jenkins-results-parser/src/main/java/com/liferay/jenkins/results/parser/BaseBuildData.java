@@ -165,8 +165,11 @@ public abstract class BaseBuildData extends JSONObject implements BuildData {
 		}
 
 		if (!has("jenkins_github_url")) {
-			String jenkinsGithubURL = buildParameters.getOrDefault(
-				"JENKINS_GITHUB_URL", _DEFAULT_JENKINS_GITHUB_URL);
+			String jenkinsGithubURL = buildParameters.get("JENKINS_GITHUB_URL");
+
+			if ((jenkinsGithubURL == null) || jenkinsGithubURL.equals("")) {
+				jenkinsGithubURL = _DEFAULT_JENKINS_GITHUB_URL;
+			}
 
 			put("jenkins_github_url", jenkinsGithubURL);
 		}

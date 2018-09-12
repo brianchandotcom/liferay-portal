@@ -97,7 +97,7 @@ public class RenameDependencyAction implements Action<FileCopyDetails> {
 			}
 		}
 
-		if (Validator.isNull(fileName) || (fileName.indexOf('.') == -1) ||
+		if (Validator.isNull(fileName) ||
 			(_getVersionStart(fileName) < fileName.length())) {
 
 			throw new GradleException(

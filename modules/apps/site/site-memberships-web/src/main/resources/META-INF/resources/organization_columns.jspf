@@ -68,35 +68,39 @@
 	</c:when>
 	<c:otherwise>
 		<liferay-ui:search-container-column-text
-			cssClass="table-cell-content"
+			cssClass="table-cell-expand table-title"
 			name="name"
 			orderable="<%= true %>"
 			value="<%= organization.getName() %>"
 		/>
 
 		<liferay-ui:search-container-column-text
-			cssClass="table-cell-content"
+			cssClass="table-cell-expand"
 			name="parent-organization"
 			value="<%= HtmlUtil.escape(organization.getParentOrganizationName()) %>"
 		/>
 
 		<liferay-ui:search-container-column-text
+			cssClass="table-cell-expand-smallest"
 			name="type"
 			orderable="<%= true %>"
 			value="<%= LanguageUtil.get(request, organization.getType()) %>"
 		/>
 
 		<liferay-ui:search-container-column-text
+			cssClass="table-cell-expand-smallest"
 			name="city"
 			value="<%= HtmlUtil.escape(organization.getAddress().getCity()) %>"
 		/>
 
 		<liferay-ui:search-container-column-text
+			cssClass="table-cell-expand-smallest"
 			name="region"
 			value="<%= UsersAdmin.ORGANIZATION_REGION_NAME_ACCESSOR.get(organization) %>"
 		/>
 
 		<liferay-ui:search-container-column-text
+			cssClass="table-cell-expand-smallest"
 			name="country"
 			value="<%= UsersAdmin.ORGANIZATION_COUNTRY_NAME_ACCESSOR.get(organization) %>"
 		/>

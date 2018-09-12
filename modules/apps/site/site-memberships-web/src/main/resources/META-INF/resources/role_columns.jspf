@@ -54,18 +54,19 @@
 	</c:when>
 	<c:when test='<%= displayStyle.equals("list") %>'>
 		<liferay-ui:search-container-column-text
-			cssClass="table-cell-content"
+			cssClass="table-cell-expand-small table-title"
 			name="title"
 			value="<%= HtmlUtil.escape(role.getTitle(locale)) %>"
 		/>
 
 		<liferay-ui:search-container-column-text
-			cssClass="table-cell-content"
+			cssClass="table-cell-expand"
 			name="description"
 			value="<%= HtmlUtil.escape(role.getDescription(locale)) %>"
 		/>
 
 		<liferay-ui:search-container-column-text
+			cssClass="table-cell-expand-smallest"
 			name="type"
 			value="<%= LanguageUtil.get(request, role.getTypeLabel()) %>"
 		/>

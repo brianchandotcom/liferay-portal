@@ -30,8 +30,7 @@ import org.osgi.service.component.annotations.Component;
 	property = {
 		"javax.portlet.name=" + MDRPortletKeys.MOBILE_DEVICE_RULES,
 		"mvc.command.name=/mobile_device_rules/view_actions"
-	},
-	service = MVCRenderCommand.class
+	}
 )
 public class ViewActionsMVCRenderCommand implements MVCRenderCommand {
 

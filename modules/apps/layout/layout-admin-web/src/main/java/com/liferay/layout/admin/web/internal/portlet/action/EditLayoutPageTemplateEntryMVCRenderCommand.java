@@ -30,8 +30,7 @@ import org.osgi.service.component.annotations.Component;
 	property = {
 		"javax.portlet.name=" + LayoutAdminPortletKeys.GROUP_PAGES,
 		"mvc.command.name=/layout/edit_layout_page_template_entry"
-	},
-	service = MVCRenderCommand.class
+	}
 )
 public class EditLayoutPageTemplateEntryMVCRenderCommand
 	implements MVCRenderCommand {

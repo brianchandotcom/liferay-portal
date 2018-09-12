@@ -31,8 +31,7 @@ import org.osgi.service.component.annotations.Component;
 	property = {
 		"javax.portlet.name=" + ImageUploaderPortletKeys.IMAGE_UPLOADER,
 		"mvc.command.name=/image_uploader/view"
-	},
-	service = MVCRenderCommand.class
+	}
 )
 public class UploadImageMVCRenderCommand implements MVCRenderCommand {
 

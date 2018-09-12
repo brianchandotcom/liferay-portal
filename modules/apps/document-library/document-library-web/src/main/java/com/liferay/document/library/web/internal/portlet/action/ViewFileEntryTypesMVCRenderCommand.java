@@ -30,8 +30,7 @@ import org.osgi.service.component.annotations.Component;
 	property = {
 		"javax.portlet.name=" + DLPortletKeys.DOCUMENT_LIBRARY_ADMIN,
 		"mvc.command.name=/document_library/view_file_entry_types"
-	},
-	service = MVCRenderCommand.class
+	}
 )
 public class ViewFileEntryTypesMVCRenderCommand implements MVCRenderCommand {
 

@@ -35,8 +35,7 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	immediate = true,
-	property = "service.ranking:Integer=" + DefaultSelectedFieldNamesQueryConfigContributor.RANKING,
-	service = QueryConfigContributor.class
+	property = "service.ranking:Integer=" + DefaultSelectedFieldNamesQueryConfigContributor.RANKING
 )
 public class DefaultSelectedFieldNamesQueryConfigContributor
 	implements QueryConfigContributor {

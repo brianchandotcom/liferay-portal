@@ -27,7 +27,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Michael C. Han
  */
-@Component(service = HighlighterTranslator.class)
+@Component
 public class DefaultHighlighterTranslator implements HighlighterTranslator {
 
 	@Override

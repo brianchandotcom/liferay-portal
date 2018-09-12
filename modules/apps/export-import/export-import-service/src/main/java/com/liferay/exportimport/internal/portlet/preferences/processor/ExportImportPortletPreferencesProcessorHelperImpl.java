@@ -35,10 +35,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Mate Thurzo
  */
-@Component(
-	immediate = true,
-	service = ExportImportPortletPreferencesProcessorHelper.class
-)
+@Component(immediate = true)
 @ProviderType
 public class ExportImportPortletPreferencesProcessorHelperImpl
 	implements ExportImportPortletPreferencesProcessorHelper {

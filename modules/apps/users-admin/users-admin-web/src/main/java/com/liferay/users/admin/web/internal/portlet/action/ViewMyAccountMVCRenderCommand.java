@@ -39,8 +39,7 @@ import org.osgi.service.component.annotations.Reference;
 	property = {
 		"javax.portlet.name=" + UsersAdminPortletKeys.MY_ACCOUNT,
 		"mvc.command.name=/", "mvc.command.name=/my_account/view"
-	},
-	service = MVCRenderCommand.class
+	}
 )
 public class ViewMyAccountMVCRenderCommand implements MVCRenderCommand {
 

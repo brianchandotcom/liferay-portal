@@ -54,7 +54,7 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
  */
 @Component(
 	configurationPid = "com.liferay.portal.search.configuration.SearchEngineHelperConfiguration",
-	immediate = true, service = SearchEngineHelper.class
+	immediate = true
 )
 public class SearchEngineHelperImpl implements SearchEngineHelper {
 

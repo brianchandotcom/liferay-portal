@@ -33,7 +33,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 /**
  * @author Carlos Sierra Andrés
  */
-@Component(service = {ScopeChecker.class, ScopeContext.class})
+@Component
 public class ThreadLocalScopeContextScopeChecker
 	implements ScopeChecker, ScopeContext {
 

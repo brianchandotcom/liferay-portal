@@ -30,8 +30,7 @@ import org.osgi.service.component.annotations.Component;
 	property = {
 		"javax.portlet.name=" + BlogsPortletKeys.BLOGS_AGGREGATOR,
 		"mvc.command.name=/", "mvc.command.name=/blogs_aggregator/view"
-	},
-	service = MVCRenderCommand.class
+	}
 )
 public class BlogsAggregatorViewMVCRenderCommand implements MVCRenderCommand {
 

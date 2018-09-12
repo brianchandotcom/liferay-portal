@@ -34,8 +34,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Alejandro Tardín
  */
 @Component(
-	property = FormNavigatorContextConstants.FORM_NAVIGATOR_ID + "=" + FormNavigatorConstants.FORM_NAVIGATOR_ID_JOURNAL,
-	service = FormNavigatorContextProvider.class
+	property = FormNavigatorContextConstants.FORM_NAVIGATOR_ID + "=" + FormNavigatorConstants.FORM_NAVIGATOR_ID_JOURNAL
 )
 public class JournalFormNavigatorContextProvider
 	implements FormNavigatorContextProvider<JournalArticle> {

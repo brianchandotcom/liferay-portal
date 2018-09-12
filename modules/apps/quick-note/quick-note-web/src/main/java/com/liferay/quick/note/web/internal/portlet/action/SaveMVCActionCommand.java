@@ -42,8 +42,7 @@ import org.osgi.service.component.annotations.Component;
 	property = {
 		"javax.portlet.name=" + QuickNotePortletKeys.QUICK_NOTE,
 		"mvc.command.name=save"
-	},
-	service = MVCActionCommand.class
+	}
 )
 public class SaveMVCActionCommand implements MVCActionCommand {
 

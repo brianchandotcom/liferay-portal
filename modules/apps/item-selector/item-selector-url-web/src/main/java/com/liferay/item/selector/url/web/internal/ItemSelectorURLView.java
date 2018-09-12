@@ -43,7 +43,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Roberto Díaz
  */
-@Component(service = ItemSelectorView.class)
+@Component
 public class ItemSelectorURLView
 	implements ItemSelectorView<URLItemSelectorCriterion> {
 

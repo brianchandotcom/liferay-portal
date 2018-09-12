@@ -30,8 +30,7 @@ import org.osgi.service.component.annotations.Reference;
 	property = {
 		"key=auth.failure", "key=auth.max.failures",
 		"service.ranking:Integer=" + Integer.MAX_VALUE
-	},
-	service = AuthFailure.class
+	}
 )
 public class TestAuthFailure implements AuthFailure {
 

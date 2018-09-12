@@ -43,8 +43,7 @@ import org.osgi.service.component.annotations.Reference;
 	property = {
 		"javax.portlet.name=" + JournalPortletKeys.JOURNAL,
 		"model.class.name=com.liferay.journal.model.JournalArticle"
-	},
-	service = AssetEntryAction.class
+	}
 )
 public class JournalPermissionAssetEntryAction implements AssetEntryAction {
 

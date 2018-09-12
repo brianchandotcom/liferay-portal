@@ -37,9 +37,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Jürgen Kappler
  */
 @Component(
-	immediate = true,
-	property = "type=" + TemplateContextContributor.TYPE_THEME,
-	service = TemplateContextContributor.class
+	immediate = true, property = "type=" + TemplateContextContributor.TYPE_THEME
 )
 public class StagingBarTemplateContextContributor
 	implements TemplateContextContributor {

@@ -30,9 +30,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Pavel Savinov
  */
 @Component(
-	immediate = true,
-	property = "type=" + TemplateContextContributor.TYPE_THEME,
-	service = TemplateContextContributor.class
+	immediate = true, property = "type=" + TemplateContextContributor.TYPE_THEME
 )
 public class LayoutEditModeTemplateContextContributor
 	implements TemplateContextContributor {

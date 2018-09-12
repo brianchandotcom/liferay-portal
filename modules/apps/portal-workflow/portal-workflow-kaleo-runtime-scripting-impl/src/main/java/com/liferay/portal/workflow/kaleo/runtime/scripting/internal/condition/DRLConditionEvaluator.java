@@ -38,8 +38,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Michael C. Han
  */
 @Component(
-	enabled = false, immediate = true, property = "scripting.language=drl",
-	service = ConditionEvaluator.class
+	enabled = false, immediate = true, property = "scripting.language=drl"
 )
 public class DRLConditionEvaluator implements ConditionEvaluator {
 

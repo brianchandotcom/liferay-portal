@@ -28,8 +28,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Gergely Mathe
  */
 @Component(
-	property = "model.class.name=com.liferay.dynamic.data.mapping.model.DDMStructure",
-	service = PermissionUpdateHandler.class
+	property = "model.class.name=com.liferay.dynamic.data.mapping.model.DDMStructure"
 )
 public class DDMStructurePermissionUpdateHandler
 	implements PermissionUpdateHandler {

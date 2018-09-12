@@ -77,8 +77,7 @@ import org.osgi.service.component.annotations.Reference;
 	property = {
 		"javax.portlet.name=" + ConfigurationAdminPortletKeys.SYSTEM_SETTINGS,
 		"mvc.command.name=bindConfiguration"
-	},
-	service = MVCActionCommand.class
+	}
 )
 public class BindConfigurationMVCActionCommand implements MVCActionCommand {
 

@@ -41,8 +41,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Alejandro Tardín
  */
 @Component(
-	configurationPid = "com.liferay.asset.auto.tagger.internal.configuration.AssetAutoTaggerSystemConfiguration",
-	service = AssetAutoTaggerConfigurationFactory.class
+	configurationPid = "com.liferay.asset.auto.tagger.internal.configuration.AssetAutoTaggerSystemConfiguration"
 )
 public class AssetAutoTaggerConfigurationFactoryImpl
 	implements AssetAutoTaggerConfigurationFactory {

@@ -38,7 +38,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Adolfo Pérez
  * @author André de Oliveira
  */
-@Component(immediate = true, service = SearchResultContributor.class)
+@Component(immediate = true)
 public class MBMessageCommentSearchResultContributor
 	implements SearchResultContributor {
 

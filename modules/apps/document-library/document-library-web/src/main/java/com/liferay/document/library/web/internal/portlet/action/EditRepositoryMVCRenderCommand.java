@@ -37,8 +37,7 @@ import org.osgi.service.component.annotations.Component;
 		"javax.portlet.name=" + DLPortletKeys.DOCUMENT_LIBRARY_ADMIN,
 		"javax.portlet.name=" + DLPortletKeys.MEDIA_GALLERY_DISPLAY,
 		"mvc.command.name=/document_library/edit_repository"
-	},
-	service = MVCRenderCommand.class
+	}
 )
 public class EditRepositoryMVCRenderCommand implements MVCRenderCommand {
 

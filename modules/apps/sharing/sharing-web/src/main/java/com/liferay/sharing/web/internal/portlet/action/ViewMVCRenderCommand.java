@@ -42,8 +42,7 @@ import org.osgi.service.component.annotations.Reference;
 	property = {
 		"javax.portlet.name=" + SharingPortletKeys.SHARING,
 		"mvc.command.name=/", "mvc.command.name=/sharing/share"
-	},
-	service = MVCRenderCommand.class
+	}
 )
 public class ViewMVCRenderCommand implements MVCRenderCommand {
 

@@ -29,8 +29,7 @@ import org.osgi.service.component.annotations.Component;
 	property = {
 		"javax.portlet.name=" + TestPortlet.PORTLET_NAME,
 		"mvc.command.name=" + TestMVCActionCommand1.TEST_MVC_ACTION_COMMAND_NAME
-	},
-	service = MVCActionCommand.class
+	}
 )
 public class TestMVCActionCommand1 implements MVCActionCommand {
 

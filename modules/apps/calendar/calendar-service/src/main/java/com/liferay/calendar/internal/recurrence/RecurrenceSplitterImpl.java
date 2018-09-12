@@ -33,7 +33,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Adam Brandizzi
  */
-@Component(service = RecurrenceSplitter.class)
+@Component
 public class RecurrenceSplitterImpl implements RecurrenceSplitter {
 
 	@Override

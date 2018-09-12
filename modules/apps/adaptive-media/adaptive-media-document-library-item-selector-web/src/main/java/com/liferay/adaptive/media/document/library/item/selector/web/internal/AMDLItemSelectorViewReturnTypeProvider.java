@@ -27,10 +27,8 @@ import org.osgi.service.component.annotations.Component;
  * @author Sergio González
  */
 @Component(
-	property = {
-		"item.selector.view.key=dl-file", "item.selector.view.key=dl-image"
-	},
-	service = ItemSelectorViewReturnTypeProvider.class
+	property =
+		{"item.selector.view.key=dl-file", "item.selector.view.key=dl-image"}
 )
 public class AMDLItemSelectorViewReturnTypeProvider
 	implements ItemSelectorViewReturnTypeProvider {

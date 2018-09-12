@@ -31,8 +31,7 @@ import org.osgi.service.component.annotations.Component;
 	property = {
 		"javax.portlet.name=" + ChangesetPortletKeys.CHANGESET,
 		"mvc.command.name=exportImportChangeset"
-	},
-	service = MVCRenderCommand.class
+	}
 )
 public class ExportImportChangesetMVCRenderCommand implements MVCRenderCommand {
 

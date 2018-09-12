@@ -35,7 +35,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Rafael Praxedes
  */
-@Component(immediate = true, service = DDMFormBuilderContextFactory.class)
+@Component(immediate = true)
 public class DDMFormBuilderContextFactoryImpl
 	implements DDMFormBuilderContextFactory {
 

@@ -33,8 +33,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = "model.class.name=com.liferay.organizations.service.internal.configuration.OrganizationTypeConfiguration",
-	service = ConfigurationModelListener.class
+	property = "model.class.name=com.liferay.organizations.service.internal.configuration.OrganizationTypeConfiguration"
 )
 public class OrganizationTypeConfigurationModelListener
 	implements ConfigurationModelListener {

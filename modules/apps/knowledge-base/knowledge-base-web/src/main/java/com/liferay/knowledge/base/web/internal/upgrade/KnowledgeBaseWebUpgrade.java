@@ -31,7 +31,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Adolfo Pérez
  * @author Roberto Díaz
  */
-@Component(immediate = true, service = UpgradeStepRegistrator.class)
+@Component(immediate = true)
 public class KnowledgeBaseWebUpgrade implements UpgradeStepRegistrator {
 
 	@Override

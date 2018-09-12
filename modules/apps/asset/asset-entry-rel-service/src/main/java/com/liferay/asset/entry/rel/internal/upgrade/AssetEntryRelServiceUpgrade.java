@@ -23,9 +23,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Eudaldo Alonso
  */
-@Component(
-	enabled = false, immediate = true, service = UpgradeStepRegistrator.class
-)
+@Component(enabled = false, immediate = true)
 public class AssetEntryRelServiceUpgrade implements UpgradeStepRegistrator {
 
 	@Override

@@ -39,8 +39,7 @@ import org.osgi.service.component.annotations.Component;
 		"javax.portlet.name=" + BookmarksPortletKeys.BOOKMARKS,
 		"javax.portlet.name=" + BookmarksPortletKeys.BOOKMARKS_ADMIN,
 		"mvc.command.name=/bookmarks/move_entry"
-	},
-	service = MVCRenderCommand.class
+	}
 )
 public class MoveEntryMVCRenderCommand implements MVCRenderCommand {
 

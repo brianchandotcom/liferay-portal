@@ -51,8 +51,7 @@ import org.osgi.service.component.annotations.Reference;
 	property = {
 		"javax.portlet.name=" + ConfigurationAdminPortletKeys.SYSTEM_SETTINGS,
 		"mvc.command.name=/search"
-	},
-	service = MVCRenderCommand.class
+	}
 )
 public class SearchMVCRenderCommand implements MVCRenderCommand {
 

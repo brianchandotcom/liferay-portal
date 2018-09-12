@@ -30,7 +30,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Miguel Angelo Caldas Gallindo
  */
-@Component(immediate = true, service = StatsTranslator.class)
+@Component(immediate = true)
 public class DefaultStatsTranslator implements StatsTranslator {
 
 	@Override

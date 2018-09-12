@@ -31,8 +31,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = "model.class.name=com.liferay.oauth2.provider.model.OAuth2Application",
-	service = ModelResourcePermission.class
+	property = "model.class.name=com.liferay.oauth2.provider.model.OAuth2Application"
 )
 public class OAuth2ApplicationModelResourcePermission
 	implements ModelResourcePermission<OAuth2Application> {

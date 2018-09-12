@@ -25,10 +25,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Eudaldo Alonso
  */
-@Component(
-	property = "form.navigator.category.order:Integer=40",
-	service = FormNavigatorCategory.class
-)
+@Component(property = "form.navigator.category.order:Integer=40")
 public class BackgroundStylesFormNavigatorCategory
 	implements FormNavigatorCategory {
 

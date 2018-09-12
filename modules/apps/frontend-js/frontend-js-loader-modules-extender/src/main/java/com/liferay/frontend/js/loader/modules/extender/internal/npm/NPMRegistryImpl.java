@@ -66,7 +66,7 @@ import org.osgi.util.tracker.BundleTrackerCustomizer;
  *
  * @author Iván Zaera
  */
-@Component(immediate = true, service = NPMRegistry.class)
+@Component(immediate = true)
 public class NPMRegistryImpl implements NPMRegistry {
 
 	@Override

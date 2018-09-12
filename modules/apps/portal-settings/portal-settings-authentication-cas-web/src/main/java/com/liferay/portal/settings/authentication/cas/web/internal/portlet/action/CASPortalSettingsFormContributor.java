@@ -31,7 +31,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Tomas Polesovsky
  */
-@Component(immediate = true, service = PortalSettingsFormContributor.class)
+@Component(immediate = true)
 public class CASPortalSettingsFormContributor
 	implements PortalSettingsFormContributor {
 

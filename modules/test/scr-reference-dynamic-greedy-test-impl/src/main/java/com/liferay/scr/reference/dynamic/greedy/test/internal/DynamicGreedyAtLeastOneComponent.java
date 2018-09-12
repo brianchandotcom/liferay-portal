@@ -30,8 +30,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
  */
 @Component(
 	enabled = false, immediate = true,
-	property = "reference.cardinality=at_least_one",
-	service = DynamicGreedyComponent.class
+	property = "reference.cardinality=at_least_one"
 )
 public class DynamicGreedyAtLeastOneComponent
 	implements DynamicGreedyComponent {

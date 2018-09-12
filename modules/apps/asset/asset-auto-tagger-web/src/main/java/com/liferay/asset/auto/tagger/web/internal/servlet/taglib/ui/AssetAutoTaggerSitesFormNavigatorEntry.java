@@ -39,7 +39,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Alejandro Tardín
  */
-@Component(immediate = true, service = FormNavigatorEntry.class)
+@Component(immediate = true)
 public class AssetAutoTaggerSitesFormNavigatorEntry
 	extends BaseJSPFormNavigatorEntry<Group>
 	implements FormNavigatorEntry<Group> {

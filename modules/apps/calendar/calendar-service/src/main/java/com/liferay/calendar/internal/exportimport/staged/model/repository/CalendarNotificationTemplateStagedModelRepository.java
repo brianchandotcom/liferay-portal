@@ -32,8 +32,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = "model.class.name=com.liferay.calendar.model.CalendarNotificationTemplate",
-	service = StagedModelRepository.class
+	property = "model.class.name=com.liferay.calendar.model.CalendarNotificationTemplate"
 )
 public class CalendarNotificationTemplateStagedModelRepository
 	implements StagedModelRepository<CalendarNotificationTemplate> {

@@ -25,8 +25,7 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	immediate = true,
-	property = "model.class.name=com.liferay.journal.model.JournalArticle",
-	service = EditPortletProvider.class
+	property = "model.class.name=com.liferay.journal.model.JournalArticle"
 )
 public class JournalEditPortletProvider
 	extends BasePortletProvider implements EditPortletProvider {

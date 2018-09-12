@@ -49,8 +49,7 @@ import org.osgi.service.component.annotations.Reference;
 	property = {
 		"model.class.name=com.liferay.trash.kernel.model.TrashEntry",
 		"model.class.name=com.liferay.trash.model.TrashEntry"
-	},
-	service = ViewPortletProvider.class
+	}
 )
 public class TrashViewPortletProvider
 	extends BasePortletProvider implements ViewPortletProvider {

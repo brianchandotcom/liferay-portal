@@ -28,7 +28,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Mate Thurzo
  */
-@Component(immediate = true, service = StagingModelListener.class)
+@Component(immediate = true)
 public class StagingModelListenerImpl<T extends BaseModel<T>>
 	implements StagingModelListener<T> {
 

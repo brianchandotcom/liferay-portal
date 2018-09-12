@@ -25,10 +25,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Eudaldo Alonso
  */
-@Component(
-	property = "form.navigator.category.order:Integer=20",
-	service = FormNavigatorCategory.class
-)
+@Component(property = "form.navigator.category.order:Integer=20")
 public class MarginAndPaddingFormNavigatorCategory
 	implements FormNavigatorCategory {
 

@@ -43,10 +43,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Iván Zaera
  */
-@Component(
-	immediate = true, property = "service.ranking:Integer=-100",
-	service = DLDisplayContextFactory.class
-)
+@Component(immediate = true, property = "service.ranking:Integer=-100")
 public class GoogleDocsDLDisplayContextFactory
 	implements DLDisplayContextFactory {
 

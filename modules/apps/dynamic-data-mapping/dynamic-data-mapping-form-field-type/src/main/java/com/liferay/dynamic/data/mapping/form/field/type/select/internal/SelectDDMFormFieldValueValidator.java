@@ -37,10 +37,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Marcellus Tavares
  */
-@Component(
-	immediate = true, property = "ddm.form.field.type.name=select",
-	service = DDMFormFieldValueValidator.class
-)
+@Component(immediate = true, property = "ddm.form.field.type.name=select")
 public class SelectDDMFormFieldValueValidator
 	implements DDMFormFieldValueValidator {
 

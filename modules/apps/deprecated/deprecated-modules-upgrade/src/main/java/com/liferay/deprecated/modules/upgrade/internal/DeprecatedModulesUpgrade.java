@@ -34,7 +34,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	configurationPid = "com.liferay.deprecated.modules.upgrade.internal.DeprecatedModulesUpgradeConfiguration",
-	immediate = true, service = UpgradeStepRegistrator.class
+	immediate = true
 )
 public class DeprecatedModulesUpgrade implements UpgradeStepRegistrator {
 

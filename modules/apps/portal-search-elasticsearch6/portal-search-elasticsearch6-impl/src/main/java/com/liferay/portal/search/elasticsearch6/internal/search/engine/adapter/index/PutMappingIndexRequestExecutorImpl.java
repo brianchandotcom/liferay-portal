@@ -30,7 +30,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Dylan Rebelak
  */
-@Component(immediate = true, service = PutMappingIndexRequestExecutor.class)
+@Component(immediate = true)
 public class PutMappingIndexRequestExecutorImpl
 	implements PutMappingIndexRequestExecutor {
 

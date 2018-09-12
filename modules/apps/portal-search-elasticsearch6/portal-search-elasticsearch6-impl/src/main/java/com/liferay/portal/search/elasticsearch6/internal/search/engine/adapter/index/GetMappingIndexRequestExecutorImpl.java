@@ -35,7 +35,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Dylan Rebelak
  */
-@Component(immediate = true, service = GetMappingIndexRequestExecutor.class)
+@Component(immediate = true)
 public class GetMappingIndexRequestExecutorImpl
 	implements GetMappingIndexRequestExecutor {
 

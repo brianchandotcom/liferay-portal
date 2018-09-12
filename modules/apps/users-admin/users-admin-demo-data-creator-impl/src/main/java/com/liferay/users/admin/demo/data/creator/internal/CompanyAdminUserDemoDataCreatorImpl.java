@@ -27,7 +27,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Pei-Jung Lan
  */
-@Component(service = CompanyAdminUserDemoDataCreator.class)
+@Component
 public class CompanyAdminUserDemoDataCreatorImpl
 	extends BaseUserDemoDataCreator implements CompanyAdminUserDemoDataCreator {
 

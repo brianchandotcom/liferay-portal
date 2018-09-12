@@ -28,8 +28,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Gergely Mathe
  */
 @Component(
-	property = "model.class.name=com.liferay.mobile.device.rules.model.MDRRuleGroupInstance",
-	service = PermissionUpdateHandler.class
+	property = "model.class.name=com.liferay.mobile.device.rules.model.MDRRuleGroupInstance"
 )
 public class MDRRuleGroupInstancePermissionUpdateHandler
 	implements PermissionUpdateHandler {

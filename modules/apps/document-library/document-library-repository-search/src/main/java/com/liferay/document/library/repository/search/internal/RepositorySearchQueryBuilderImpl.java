@@ -40,7 +40,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Mika Koivisto
  */
-@Component(immediate = true, service = RepositorySearchQueryBuilder.class)
+@Component(immediate = true)
 public class RepositorySearchQueryBuilderImpl
 	implements RepositorySearchQueryBuilder {
 

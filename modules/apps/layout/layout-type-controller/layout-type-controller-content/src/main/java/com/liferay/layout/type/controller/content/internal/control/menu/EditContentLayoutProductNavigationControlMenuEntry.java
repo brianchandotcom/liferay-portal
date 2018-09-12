@@ -40,8 +40,7 @@ import org.osgi.service.component.annotations.Reference;
 	property = {
 		"product.navigation.control.menu.category.key=" + ProductNavigationControlMenuCategoryKeys.USER,
 		"product.navigation.control.menu.entry.order:Integer=100"
-	},
-	service = ProductNavigationControlMenuEntry.class
+	}
 )
 public class EditContentLayoutProductNavigationControlMenuEntry
 	extends BaseJSPProductNavigationControlMenuEntry

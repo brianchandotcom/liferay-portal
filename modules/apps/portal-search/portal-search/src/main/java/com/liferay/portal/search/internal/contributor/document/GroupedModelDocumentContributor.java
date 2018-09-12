@@ -27,10 +27,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Michael C. Han
  */
-@Component(
-	immediate = true, property = "service.ranking:Integer=10000",
-	service = DocumentContributor.class
-)
+@Component(immediate = true, property = "service.ranking:Integer=10000")
 public class GroupedModelDocumentContributor implements DocumentContributor {
 
 	@Override

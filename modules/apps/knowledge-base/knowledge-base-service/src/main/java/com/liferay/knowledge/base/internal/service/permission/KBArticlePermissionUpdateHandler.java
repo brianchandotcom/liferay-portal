@@ -29,8 +29,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Adolfo Pérez
  */
 @Component(
-	property = "model.class.name=com.liferay.knowledge.base.model.KBArticle",
-	service = PermissionUpdateHandler.class
+	property = "model.class.name=com.liferay.knowledge.base.model.KBArticle"
 )
 public class KBArticlePermissionUpdateHandler
 	implements PermissionUpdateHandler {

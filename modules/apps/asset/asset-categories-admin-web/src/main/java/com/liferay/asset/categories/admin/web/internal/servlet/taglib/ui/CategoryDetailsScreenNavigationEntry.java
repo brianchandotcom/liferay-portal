@@ -38,8 +38,7 @@ import org.osgi.service.component.annotations.Reference;
 	property = {
 		"screen.navigation.category.order:Integer=10",
 		"screen.navigation.entry.order:Integer=10"
-	},
-	service = {ScreenNavigationCategory.class, ScreenNavigationEntry.class}
+	}
 )
 public class CategoryDetailsScreenNavigationEntry
 	implements ScreenNavigationCategory, ScreenNavigationEntry<AssetCategory> {

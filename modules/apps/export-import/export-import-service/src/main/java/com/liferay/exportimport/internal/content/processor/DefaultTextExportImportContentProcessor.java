@@ -27,10 +27,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Daniel Kocsis
  */
-@Component(
-	immediate = true, property = "model.class.name=java.lang.String",
-	service = ExportImportContentProcessor.class
-)
+@Component(immediate = true, property = "model.class.name=java.lang.String")
 public class DefaultTextExportImportContentProcessor
 	implements ExportImportContentProcessor<String> {
 

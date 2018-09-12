@@ -28,10 +28,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Raymond Augé
  * @author Roberto Díaz
  */
-@Component(
-	property = "name=alloyeditor",
-	service = {Editor.class, EditorRenderer.class}
-)
+@Component(property = "name=alloyeditor")
 public class AlloyEditorEditor implements Editor, EditorRenderer {
 
 	@Override

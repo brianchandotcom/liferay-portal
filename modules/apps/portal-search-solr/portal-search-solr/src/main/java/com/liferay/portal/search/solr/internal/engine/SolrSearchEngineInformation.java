@@ -23,7 +23,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Adam Brandizzi
  */
-@Component(immediate = true, service = SearchEngineInformation.class)
+@Component(immediate = true)
 public class SolrSearchEngineInformation implements SearchEngineInformation {
 
 	@Override

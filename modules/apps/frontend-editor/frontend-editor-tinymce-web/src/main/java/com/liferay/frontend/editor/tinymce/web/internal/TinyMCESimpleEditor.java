@@ -28,10 +28,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Raymond Augé
  * @author Roberto Díaz
  */
-@Component(
-	property = "name=tinymce_simple",
-	service = {Editor.class, EditorRenderer.class}
-)
+@Component(property = "name=tinymce_simple")
 public class TinyMCESimpleEditor implements Editor, EditorRenderer {
 
 	@Override

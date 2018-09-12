@@ -28,10 +28,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Raymond Augé
  * @author Roberto Díaz
  */
-@Component(
-	property = "name=ckeditor_bbcode",
-	service = {Editor.class, EditorRenderer.class}
-)
+@Component(property = "name=ckeditor_bbcode")
 public class CKEditorBBCodeEditor implements Editor, EditorRenderer {
 
 	@Override

@@ -36,8 +36,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	enabled = false, immediate = true,
-	property = Constants.SERVICE_RANKING + ":Integer=100",
-	service = InvokerPortletFactory.class
+	property = Constants.SERVICE_RANKING + ":Integer=100"
 )
 public class MonitoringInvokerPortletFactoryImpl
 	implements InvokerPortletFactory {

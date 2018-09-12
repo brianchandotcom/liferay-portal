@@ -43,9 +43,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Drew Brokke
  */
-@Component(
-	immediate = true, service = PrefsPropsToConfigurationUpgradeHelper.class
-)
+@Component(immediate = true)
 public class PrefsPropsToConfigurationUpgradeHelperImpl
 	implements PrefsPropsToConfigurationUpgradeHelper {
 

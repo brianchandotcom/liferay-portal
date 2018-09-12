@@ -30,7 +30,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Shuyang Zhou
  */
-@Component(immediate = true, service = PortalExecutorManager.class)
+@Component(immediate = true)
 public class PortalExecutorManagerImpl implements PortalExecutorManager {
 
 	@Override

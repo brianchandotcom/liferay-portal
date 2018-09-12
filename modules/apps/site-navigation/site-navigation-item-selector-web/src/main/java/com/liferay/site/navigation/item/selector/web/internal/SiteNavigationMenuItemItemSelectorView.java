@@ -47,10 +47,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Eudaldo Alonso
  */
-@Component(
-	property = "item.selector.view.order:Integer=300",
-	service = ItemSelectorView.class
-)
+@Component(property = "item.selector.view.order:Integer=300")
 public class SiteNavigationMenuItemItemSelectorView
 	implements ItemSelectorView<SiteNavigationMenuItemItemSelectorCriterion> {
 

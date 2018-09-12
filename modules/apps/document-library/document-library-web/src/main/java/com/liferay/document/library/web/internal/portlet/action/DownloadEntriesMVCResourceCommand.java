@@ -64,8 +64,7 @@ import org.osgi.service.component.annotations.Reference;
 		"javax.portlet.name=" + DLPortletKeys.MEDIA_GALLERY_DISPLAY,
 		"mvc.command.name=/document_library/download_entry",
 		"mvc.command.name=/document_library/download_folder"
-	},
-	service = MVCResourceCommand.class
+	}
 )
 public class DownloadEntriesMVCResourceCommand implements MVCResourceCommand {
 

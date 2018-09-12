@@ -31,8 +31,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = "indexer.class.name=com.liferay.document.library.kernel.model.DLFolder",
-	service = ModelIndexerWriterContributor.class
+	property = "indexer.class.name=com.liferay.document.library.kernel.model.DLFolder"
 )
 public class DLFolderModelIndexerWriterContributor
 	implements ModelIndexerWriterContributor<DLFolder> {

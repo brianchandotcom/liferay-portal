@@ -28,7 +28,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Julio Camarero
  */
-@Component(immediate = true, service = UserToolAssetAddonEntry.class)
+@Component(immediate = true)
 public class LocalesUserToolAssetAddonEntry
 	extends BaseJSPAssetAddonEntry implements UserToolAssetAddonEntry {
 

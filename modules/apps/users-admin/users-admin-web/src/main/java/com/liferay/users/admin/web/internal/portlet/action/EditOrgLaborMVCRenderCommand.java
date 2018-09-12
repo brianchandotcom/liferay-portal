@@ -34,8 +34,7 @@ import org.osgi.service.component.annotations.Component;
 	property = {
 		"javax.portlet.name=" + UsersAdminPortletKeys.USERS_ADMIN,
 		"mvc.command.name=/users_admin/edit_org_labor"
-	},
-	service = MVCRenderCommand.class
+	}
 )
 public class EditOrgLaborMVCRenderCommand implements MVCRenderCommand {
 

@@ -33,7 +33,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Pei-Jung Lan
  */
-@Component(immediate = true, service = UserInitialsGenerator.class)
+@Component(immediate = true)
 public class UserInitialsGeneratorImpl implements UserInitialsGenerator {
 
 	@Override

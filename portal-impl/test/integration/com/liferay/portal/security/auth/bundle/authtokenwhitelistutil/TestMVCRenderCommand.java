@@ -32,8 +32,7 @@ import org.osgi.service.component.annotations.Component;
 		"mvc.command.name=" + TestMVCRenderCommand.TEST_MVC_COMMAND_NAME,
 		"portlet.add.default.resource.check.whitelist.mvc.action=1",
 		"service.ranking:Integer=" + Integer.MAX_VALUE
-	},
-	service = MVCRenderCommand.class
+	}
 )
 public class TestMVCRenderCommand implements MVCRenderCommand {
 

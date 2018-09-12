@@ -49,10 +49,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Eudaldo Alonso
  */
-@Component(
-	property = "item.selector.view.order:Integer=100",
-	service = ItemSelectorView.class
-)
+@Component(property = "item.selector.view.order:Integer=100")
 public class LayoutScopesItemSelectorView
 	implements ItemSelectorView<SiteItemSelectorCriterion> {
 

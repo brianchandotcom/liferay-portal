@@ -31,8 +31,7 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	immediate = true,
-	property = "model.class.name=" + PortalProductNavigationControlMenuApplicationType.ProductNavigationControlMenu.CLASS_NAME,
-	service = ViewPortletProvider.class
+	property = "model.class.name=" + PortalProductNavigationControlMenuApplicationType.ProductNavigationControlMenu.CLASS_NAME
 )
 @Deprecated
 public class ProductNavigationControlMenuViewPortletProvider

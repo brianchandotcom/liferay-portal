@@ -36,7 +36,7 @@ import org.osgi.service.component.annotations.Modified;
  */
 @Component(
 	configurationPid = "com.liferay.portal.search.configuration.ReindexConfiguration",
-	immediate = true, service = BatchIndexingHelper.class
+	immediate = true
 )
 public class BatchIndexingHelperImpl implements BatchIndexingHelper {
 

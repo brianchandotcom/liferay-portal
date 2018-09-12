@@ -25,8 +25,7 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	immediate = true,
-	property = "model.class.name=com.liferay.portal.kernel.model.LayoutSetPrototype",
-	service = ViewPortletProvider.class
+	property = "model.class.name=com.liferay.portal.kernel.model.LayoutSetPrototype"
 )
 public class LayoutSetPrototypeViewPortletProvider
 	extends BasePortletProvider implements ViewPortletProvider {

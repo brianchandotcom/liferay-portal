@@ -29,8 +29,7 @@ import org.osgi.service.component.annotations.Component;
 	property = {
 		"model.class.name=com.liferay.wiki.model.WikiPage",
 		"service.ranking:Integer=100"
-	},
-	service = {EditPortletProvider.class, ViewPortletProvider.class}
+	}
 )
 public class WikiPortletProvider
 	extends BasePortletProvider

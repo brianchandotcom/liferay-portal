@@ -82,7 +82,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
  */
 @Component(
 	configurationPid = "com.liferay.portal.security.ldap.configuration.LDAPConfiguration",
-	immediate = true, service = PortalLDAP.class
+	immediate = true
 )
 public class DefaultPortalLDAP implements PortalLDAP {
 

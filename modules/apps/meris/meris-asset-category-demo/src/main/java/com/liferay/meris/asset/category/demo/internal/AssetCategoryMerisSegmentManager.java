@@ -44,7 +44,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Eduardo Garcia
  */
-@Component(immediate = true, service = MerisSegmentManager.class)
+@Component(immediate = true)
 public class AssetCategoryMerisSegmentManager
 	implements MerisSegmentManager
 		<AssetCategoryMerisSegment, AssetCategoryMerisProfile> {

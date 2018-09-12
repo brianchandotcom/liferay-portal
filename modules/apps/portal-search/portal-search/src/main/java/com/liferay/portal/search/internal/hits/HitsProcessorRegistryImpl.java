@@ -36,7 +36,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 /**
  * @author Michael C. Han
  */
-@Component(immediate = true, service = HitsProcessorRegistry.class)
+@Component(immediate = true)
 public class HitsProcessorRegistryImpl implements HitsProcessorRegistry {
 
 	@Override

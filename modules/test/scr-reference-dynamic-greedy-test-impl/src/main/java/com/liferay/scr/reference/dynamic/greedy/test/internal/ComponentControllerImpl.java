@@ -23,7 +23,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Preston Crary
  */
-@Component(immediate = true, service = ComponentController.class)
+@Component(immediate = true)
 public class ComponentControllerImpl implements ComponentController {
 
 	@Override

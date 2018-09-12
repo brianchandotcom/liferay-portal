@@ -41,7 +41,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Michael C. Han
  */
-@Component(service = FacetTranslator.class)
+@Component
 public class DefaultFacetTranslator implements FacetTranslator {
 
 	@Override

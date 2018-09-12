@@ -30,10 +30,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Marcellus Tavares
  */
-@Component(
-	immediate = true, property = "ddm.form.field.type.name=numeric",
-	service = DDMFormFieldValueValidator.class
-)
+@Component(immediate = true, property = "ddm.form.field.type.name=numeric")
 public class NumericDDMFormFieldValueValidator
 	implements DDMFormFieldValueValidator {
 

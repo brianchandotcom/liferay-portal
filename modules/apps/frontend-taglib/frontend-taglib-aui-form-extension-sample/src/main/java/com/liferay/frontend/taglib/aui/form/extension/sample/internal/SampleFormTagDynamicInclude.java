@@ -28,7 +28,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Carlos Sierra Andrés
  */
-@Component(immediate = true, service = TagDynamicInclude.class)
+@Component(immediate = true)
 public class SampleFormTagDynamicInclude implements TagDynamicInclude {
 
 	@Override

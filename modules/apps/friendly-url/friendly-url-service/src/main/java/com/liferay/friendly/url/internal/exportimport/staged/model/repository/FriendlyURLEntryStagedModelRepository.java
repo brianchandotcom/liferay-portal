@@ -36,8 +36,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = "model.class.name=com.liferay.friendly.url.model.FriendlyURLEntry",
-	service = StagedModelRepository.class
+	property = "model.class.name=com.liferay.friendly.url.model.FriendlyURLEntry"
 )
 public class FriendlyURLEntryStagedModelRepository
 	implements StagedModelRepository<FriendlyURLEntry> {

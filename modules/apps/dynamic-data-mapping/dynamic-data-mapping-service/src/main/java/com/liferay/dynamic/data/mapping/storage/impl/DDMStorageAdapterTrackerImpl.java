@@ -29,7 +29,7 @@ import org.osgi.service.component.annotations.Deactivate;
 /**
  * @author Leonardo Barros
  */
-@Component(immediate = true, service = DDMStorageAdapterTracker.class)
+@Component(immediate = true)
 public class DDMStorageAdapterTrackerImpl implements DDMStorageAdapterTracker {
 
 	@Override

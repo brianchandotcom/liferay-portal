@@ -31,8 +31,7 @@ import org.osgi.service.component.annotations.Component;
 	property = {
 		"javax.portlet.name=" + StagingBarPortletKeys.STAGING_BAR,
 		"mvc.command.name=editLayoutBranch"
-	},
-	service = MVCRenderCommand.class
+	}
 )
 public class EditLayoutBranchMVCRenderCommand implements MVCRenderCommand {
 

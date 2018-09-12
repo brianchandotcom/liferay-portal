@@ -34,8 +34,7 @@ import org.osgi.service.component.annotations.Reference;
 		"javax.portlet.name=" + DLPortletKeys.DOCUMENT_LIBRARY,
 		"javax.portlet.name=" + DLPortletKeys.DOCUMENT_LIBRARY_ADMIN,
 		"mvc.command.name=/document_library/search"
-	},
-	service = MVCRenderCommand.class
+	}
 )
 public class SearchMVCRenderCommand implements MVCRenderCommand {
 

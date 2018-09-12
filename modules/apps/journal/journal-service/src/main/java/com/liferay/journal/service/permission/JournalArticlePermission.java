@@ -33,8 +33,7 @@ import org.osgi.service.component.annotations.Reference;
  * @deprecated As of Judson (7.1.x), with no direct replacement
  */
 @Component(
-	property = "model.class.name=com.liferay.journal.model.JournalArticle",
-	service = BaseModelPermissionChecker.class
+	property = "model.class.name=com.liferay.journal.model.JournalArticle"
 )
 @Deprecated
 public class JournalArticlePermission implements BaseModelPermissionChecker {

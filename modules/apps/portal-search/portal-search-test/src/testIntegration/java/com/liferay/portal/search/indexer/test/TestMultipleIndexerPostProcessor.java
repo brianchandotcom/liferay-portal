@@ -33,8 +33,7 @@ import org.osgi.service.component.annotations.Component;
 	property = {
 		"indexer.class.name=com.liferay.message.boards.model.MBMessage",
 		"indexer.class.name=com.liferay.message.boards.model.MBThread"
-	},
-	service = IndexerPostProcessor.class
+	}
 )
 public class TestMultipleIndexerPostProcessor implements IndexerPostProcessor {
 

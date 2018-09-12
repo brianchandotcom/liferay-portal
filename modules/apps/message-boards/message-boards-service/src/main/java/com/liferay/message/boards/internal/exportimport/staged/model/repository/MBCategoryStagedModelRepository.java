@@ -32,8 +32,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = "model.class.name=com.liferay.message.boards.model.MBCategory",
-	service = StagedModelRepository.class
+	property = "model.class.name=com.liferay.message.boards.model.MBCategory"
 )
 public class MBCategoryStagedModelRepository
 	implements StagedModelRepository<MBCategory> {

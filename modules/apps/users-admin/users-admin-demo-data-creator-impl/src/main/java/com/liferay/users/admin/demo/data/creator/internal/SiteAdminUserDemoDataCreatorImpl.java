@@ -30,7 +30,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Sergio González
  */
-@Component(service = SiteAdminUserDemoDataCreator.class)
+@Component
 public class SiteAdminUserDemoDataCreatorImpl
 	extends BaseUserDemoDataCreator implements SiteAdminUserDemoDataCreator {
 

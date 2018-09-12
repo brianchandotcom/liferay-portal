@@ -79,7 +79,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Eduardo Garcia
  */
-@Component(service = FriendlyURLResolver.class)
+@Component
 public class DisplayPageFriendlyURLResolver implements FriendlyURLResolver {
 
 	@Override

@@ -36,7 +36,7 @@ import org.xhtmlrenderer.util.FSImageWriter;
 /**
  * @author Pavel Savinov
  */
-@Component(immediate = true, service = HtmlPreviewProcessor.class)
+@Component(immediate = true)
 public class ImageHtmlPreviewProcessor implements HtmlPreviewProcessor {
 
 	@Override

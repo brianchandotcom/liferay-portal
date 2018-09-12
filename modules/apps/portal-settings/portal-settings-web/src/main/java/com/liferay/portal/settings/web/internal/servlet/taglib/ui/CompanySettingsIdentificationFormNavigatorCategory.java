@@ -27,8 +27,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Philip Jones
  */
 @Component(
-	immediate = true, property = "form.navigator.category.order:Integer=30",
-	service = FormNavigatorCategory.class
+	immediate = true, property = "form.navigator.category.order:Integer=30"
 )
 public class CompanySettingsIdentificationFormNavigatorCategory
 	implements FormNavigatorCategory {

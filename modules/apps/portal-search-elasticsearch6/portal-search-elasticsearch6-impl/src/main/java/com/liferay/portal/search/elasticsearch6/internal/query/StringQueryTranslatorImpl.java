@@ -25,7 +25,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Michael C. Han
  */
-@Component(immediate = true, service = StringQueryTranslator.class)
+@Component(immediate = true)
 public class StringQueryTranslatorImpl implements StringQueryTranslator {
 
 	@Override

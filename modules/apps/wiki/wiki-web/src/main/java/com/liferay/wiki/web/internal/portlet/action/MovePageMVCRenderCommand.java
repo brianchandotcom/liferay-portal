@@ -42,8 +42,7 @@ import org.osgi.service.component.annotations.Component;
 		"javax.portlet.name=" + WikiPortletKeys.WIKI_ADMIN,
 		"javax.portlet.name=" + WikiPortletKeys.WIKI_DISPLAY,
 		"mvc.command.name=/wiki/move_page"
-	},
-	service = MVCRenderCommand.class
+	}
 )
 public class MovePageMVCRenderCommand implements MVCRenderCommand {
 

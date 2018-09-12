@@ -36,8 +36,7 @@ import org.osgi.service.component.annotations.Component;
 	property = {
 		"javax.portlet.name=" + WikiPortletKeys.WIKI_ADMIN,
 		"mvc.command.name=/wiki/view_node_deleted_attachments"
-	},
-	service = MVCRenderCommand.class
+	}
 )
 public class ViewNodeDeletedAttachmentMVCRenderCommand
 	implements MVCRenderCommand {

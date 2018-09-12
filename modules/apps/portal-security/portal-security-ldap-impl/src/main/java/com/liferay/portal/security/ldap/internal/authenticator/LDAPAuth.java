@@ -73,10 +73,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
  * @author Scott Lee
  * @author Josef Sustacek
  */
-@Component(
-	immediate = true, property = "key=auth.pipeline.pre",
-	service = Authenticator.class
-)
+@Component(immediate = true, property = "key=auth.pipeline.pre")
 public class LDAPAuth implements Authenticator {
 
 	public static final String RESULT_PASSWORD_EXP_WARNING =

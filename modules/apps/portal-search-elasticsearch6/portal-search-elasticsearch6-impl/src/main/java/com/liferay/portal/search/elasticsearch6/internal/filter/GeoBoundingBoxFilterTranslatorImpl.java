@@ -27,7 +27,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Michael C. Han
  */
-@Component(immediate = true, service = GeoBoundingBoxFilterTranslator.class)
+@Component(immediate = true)
 public class GeoBoundingBoxFilterTranslatorImpl
 	implements GeoBoundingBoxFilterTranslator {
 

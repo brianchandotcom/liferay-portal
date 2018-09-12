@@ -24,7 +24,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Zoltan Csaszi
  */
-@Component(immediate = true, service = ModelAdapterBuilder.class)
+@Component(immediate = true)
 public class StagedWorkflowDefinitionLinkModelAdapterBuilder
 	implements ModelAdapterBuilder
 		<WorkflowDefinitionLink, StagedWorkflowDefinitionLink> {

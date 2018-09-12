@@ -27,10 +27,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Gergely Mathe
  */
-@Component(
-	property = "model.class.name=com.liferay.portal.kernel.model.Layout",
-	service = PermissionUpdateHandler.class
-)
+@Component(property = "model.class.name=com.liferay.portal.kernel.model.Layout")
 public class LayoutPermissionUpdateHandler implements PermissionUpdateHandler {
 
 	@Override

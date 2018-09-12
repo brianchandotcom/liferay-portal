@@ -32,7 +32,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 /**
  * @author Marcellus Tavares
  */
-@Component(immediate = true, service = DDMExpressionFactory.class)
+@Component(immediate = true)
 public class DDMExpressionFactoryImpl implements DDMExpressionFactory {
 
 	@Override

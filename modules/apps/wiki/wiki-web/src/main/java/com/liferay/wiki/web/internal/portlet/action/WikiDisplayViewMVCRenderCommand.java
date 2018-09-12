@@ -51,8 +51,7 @@ import org.osgi.service.component.annotations.Reference;
 	property = {
 		"javax.portlet.name=" + WikiPortletKeys.WIKI_DISPLAY,
 		"mvc.command.name=/", "mvc.command.name=/wiki_display/view"
-	},
-	service = MVCRenderCommand.class
+	}
 )
 public class WikiDisplayViewMVCRenderCommand implements MVCRenderCommand {
 

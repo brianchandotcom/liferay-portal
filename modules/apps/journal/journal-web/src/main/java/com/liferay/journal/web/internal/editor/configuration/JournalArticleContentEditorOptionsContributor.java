@@ -32,10 +32,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Jürgen Kappler
  */
-@Component(
-	property = "javax.portlet.name=" + JournalPortletKeys.JOURNAL,
-	service = EditorOptionsContributor.class
-)
+@Component(property = "javax.portlet.name=" + JournalPortletKeys.JOURNAL)
 public class JournalArticleContentEditorOptionsContributor
 	implements EditorOptionsContributor {
 

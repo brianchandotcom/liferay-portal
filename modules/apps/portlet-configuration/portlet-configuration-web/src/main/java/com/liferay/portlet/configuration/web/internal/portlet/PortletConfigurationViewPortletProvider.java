@@ -35,8 +35,7 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	immediate = true,
-	property = "model.class.name=" + PortletConfigurationApplicationType.PortletConfiguration.CLASS_NAME,
-	service = ViewPortletProvider.class
+	property = "model.class.name=" + PortletConfigurationApplicationType.PortletConfiguration.CLASS_NAME
 )
 public class PortletConfigurationViewPortletProvider
 	extends BasePortletProvider implements ViewPortletProvider {

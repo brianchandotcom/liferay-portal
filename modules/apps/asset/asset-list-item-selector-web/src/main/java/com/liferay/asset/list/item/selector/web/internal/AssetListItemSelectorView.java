@@ -46,7 +46,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Pavel Savinov
  */
-@Component(immediate = true, service = ItemSelectorView.class)
+@Component(immediate = true)
 public class AssetListItemSelectorView
 	implements ItemSelectorView<AssetListItemSelectorCriterion> {
 

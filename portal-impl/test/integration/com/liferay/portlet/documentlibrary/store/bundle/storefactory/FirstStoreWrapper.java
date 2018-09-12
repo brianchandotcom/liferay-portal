@@ -24,8 +24,7 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	immediate = true,
-	property = {"service.ranking:Integer=1", "store.type=test"},
-	service = StoreWrapper.class
+	property = {"service.ranking:Integer=1", "store.type=test"}
 )
 public class FirstStoreWrapper implements StoreWrapper {
 

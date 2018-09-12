@@ -58,7 +58,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	configurationPid = "com.liferay.portal.search.configuration.IndexWriterHelperConfiguration",
-	immediate = true, service = IndexWriterHelper.class
+	immediate = true
 )
 public class IndexWriterHelperImpl implements IndexWriterHelper {
 

@@ -41,7 +41,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Michael C. Han
  */
-@Component(service = SortTranslator.class)
+@Component
 public class DefaultSortTranslator implements SortTranslator {
 
 	@Override

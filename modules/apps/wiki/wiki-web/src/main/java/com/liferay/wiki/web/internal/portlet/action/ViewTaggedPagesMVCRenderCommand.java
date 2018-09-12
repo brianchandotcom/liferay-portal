@@ -33,8 +33,7 @@ import org.osgi.service.component.annotations.Component;
 		"javax.portlet.name=" + WikiPortletKeys.WIKI_ADMIN,
 		"javax.portlet.name=" + WikiPortletKeys.WIKI_DISPLAY,
 		"mvc.command.name=/wiki/view_tagged_pages"
-	},
-	service = MVCRenderCommand.class
+	}
 )
 public class ViewTaggedPagesMVCRenderCommand implements MVCRenderCommand {
 

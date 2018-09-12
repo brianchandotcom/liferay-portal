@@ -49,8 +49,7 @@ import org.osgi.service.component.annotations.Reference;
 	property = {
 		"javax.portlet.name=" + SocialActivityPortletKeys.SOCIAL_ACTIVITY,
 		"mvc.command.name=/", "mvc.command.name=/social_activity/view"
-	},
-	service = MVCRenderCommand.class
+	}
 )
 public class ViewMVCRenderCommand implements MVCRenderCommand {
 

@@ -35,8 +35,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = "model.class.name=com.liferay.site.navigation.model.SiteNavigationMenu",
-	service = StagedModelRepository.class
+	property = "model.class.name=com.liferay.site.navigation.model.SiteNavigationMenu"
 )
 public class SiteNavigationMenuStagedModelRepository
 	implements StagedModelRepository<SiteNavigationMenu> {

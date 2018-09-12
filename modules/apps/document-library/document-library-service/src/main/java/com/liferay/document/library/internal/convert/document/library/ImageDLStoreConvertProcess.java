@@ -31,7 +31,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Adolfo Pérez
  */
-@Component(immediate = true, service = DLStoreConvertProcess.class)
+@Component(immediate = true)
 public class ImageDLStoreConvertProcess implements DLStoreConvertProcess {
 
 	@Override

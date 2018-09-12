@@ -34,10 +34,8 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	immediate = true,
-	property = {
-		"login.web.navigation.position=pre", "service.ranking:Integer=200"
-	},
-	service = PageInclude.class
+	property =
+		{"login.web.navigation.position=pre", "service.ranking:Integer=200"}
 )
 public class AnonymousNavigationPrePageInclude implements PageInclude {
 

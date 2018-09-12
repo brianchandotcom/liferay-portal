@@ -22,7 +22,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Michael Bowerman
  */
-@Component(immediate = true, service = UpgradeStepRegistrator.class)
+@Component(immediate = true)
 public class LayoutImplUpgrade implements UpgradeStepRegistrator {
 
 	@Override

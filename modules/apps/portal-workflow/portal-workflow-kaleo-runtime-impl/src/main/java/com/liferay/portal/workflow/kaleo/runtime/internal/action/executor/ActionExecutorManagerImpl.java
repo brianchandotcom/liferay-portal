@@ -37,7 +37,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 /**
  * @author Leonardo Barros
  */
-@Component(immediate = true, service = ActionExecutorManager.class)
+@Component(immediate = true)
 public class ActionExecutorManagerImpl implements ActionExecutorManager {
 
 	@Override

@@ -32,10 +32,6 @@ import org.osgi.service.component.annotations.Component;
 		"model.class.name=com.liferay.message.boards.model.MBDiscussion",
 		"model.class.name=com.liferay.message.boards.model.MBMessage",
 		"model.class.name=com.liferay.message.boards.model.MBThread"
-	},
-	service = {
-		EditPortletProvider.class, ManagePortletProvider.class,
-		ViewPortletProvider.class
 	}
 )
 public class MBAdminEditPortletProvider

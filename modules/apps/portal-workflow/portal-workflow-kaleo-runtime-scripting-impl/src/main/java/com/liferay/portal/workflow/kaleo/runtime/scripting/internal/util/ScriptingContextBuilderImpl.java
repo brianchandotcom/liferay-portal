@@ -37,7 +37,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Michael C. Han
  */
-@Component(immediate = true, service = ScriptingContextBuilder.class)
+@Component(immediate = true)
 public class ScriptingContextBuilderImpl implements ScriptingContextBuilder {
 
 	@Override

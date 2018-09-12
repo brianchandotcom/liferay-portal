@@ -34,8 +34,7 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	immediate = true,
-	property = "model.class.name=com.liferay.portal.kernel.servlet.taglib.ui.BreadcrumbEntry",
-	service = ViewPortletProvider.class
+	property = "model.class.name=com.liferay.portal.kernel.servlet.taglib.ui.BreadcrumbEntry"
 )
 public class SiteNavigationBreadcrumbEntryViewPortletProvider
 	extends BasePortletProvider implements ViewPortletProvider {

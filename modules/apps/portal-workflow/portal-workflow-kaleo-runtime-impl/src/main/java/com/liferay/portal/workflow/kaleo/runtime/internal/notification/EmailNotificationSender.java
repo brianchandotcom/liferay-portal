@@ -49,8 +49,7 @@ import org.osgi.service.component.annotations.Reference;
 		"fromAddress=no-reply@liferay.com",
 		"fromName=Liferay Portal Workflow Notifications",
 		"notification.type=email"
-	},
-	service = NotificationSender.class
+	}
 )
 public class EmailNotificationSender
 	extends BaseNotificationSender implements NotificationSender {

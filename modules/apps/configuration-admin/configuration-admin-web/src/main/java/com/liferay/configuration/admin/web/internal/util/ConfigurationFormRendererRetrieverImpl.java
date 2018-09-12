@@ -25,7 +25,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Jorge Ferrer
  */
-@Component(immediate = true, service = ConfigurationFormRendererRetriever.class)
+@Component(immediate = true)
 public class ConfigurationFormRendererRetrieverImpl
 	implements ConfigurationFormRendererRetriever {
 

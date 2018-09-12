@@ -34,8 +34,7 @@ import org.osgi.service.component.annotations.Component;
 	property = {
 		"lang.type=" + TemplateConstants.LANG_TYPE_SOY,
 		"type=" + TemplateContextContributor.TYPE_GLOBAL
-	},
-	service = TemplateContextContributor.class
+	}
 )
 public class ThemeDisplaySoyTemplateContextContributor
 	implements TemplateContextContributor {

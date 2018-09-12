@@ -38,7 +38,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Eudaldo Alonso
  */
-@Component(immediate = true, service = DocumentContributor.class)
+@Component(immediate = true)
 public class TrashedModelDocumentContributor implements DocumentContributor {
 
 	@Override

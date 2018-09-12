@@ -27,7 +27,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Michael C. Han
  */
-@Component(immediate = true, service = DocumentContributor.class)
+@Component(immediate = true)
 public class AuditedModelDocumentContributor implements DocumentContributor {
 
 	@Override

@@ -35,8 +35,7 @@ import org.osgi.service.component.annotations.Component;
 		"javax.portlet.name=" + MBPortletKeys.MESSAGE_BOARDS,
 		"javax.portlet.name=" + MBPortletKeys.MESSAGE_BOARDS_ADMIN,
 		"mvc.command.name=/message_boards/move_category"
-	},
-	service = MVCRenderCommand.class
+	}
 )
 public class MoveCategoryMVCRenderAction implements MVCRenderCommand {
 

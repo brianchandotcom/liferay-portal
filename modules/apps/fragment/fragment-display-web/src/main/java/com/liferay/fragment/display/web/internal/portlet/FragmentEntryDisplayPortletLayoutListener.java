@@ -35,8 +35,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = "javax.portlet.name=" + FragmentPortletKeys.FRAGMENT_DISPLAY,
-	service = PortletLayoutListener.class
+	property = "javax.portlet.name=" + FragmentPortletKeys.FRAGMENT_DISPLAY
 )
 public class FragmentEntryDisplayPortletLayoutListener
 	implements PortletLayoutListener {

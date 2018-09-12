@@ -32,7 +32,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Raymond Augé
  * @author Hugo Huijser
  */
-@Component(immediate = true, service = SortFactory.class)
+@Component(immediate = true)
 public class SortFactoryImpl implements SortFactory {
 
 	@Override

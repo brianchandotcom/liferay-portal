@@ -32,8 +32,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = "model.class.name=com.liferay.knowledge.base.model.KBFolder",
-	service = StagedModelRepository.class
+	property = "model.class.name=com.liferay.knowledge.base.model.KBFolder"
 )
 public class KBFolderStagedModelRepository
 	implements StagedModelRepository<KBFolder> {

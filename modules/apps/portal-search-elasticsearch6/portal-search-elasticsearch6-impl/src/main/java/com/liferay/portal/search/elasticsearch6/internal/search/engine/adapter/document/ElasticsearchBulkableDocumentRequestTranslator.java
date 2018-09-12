@@ -44,10 +44,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Michael C. Han
  */
-@Component(
-	property = "search.engine.impl=Elasticsearch",
-	service = BulkableDocumentRequestTranslator.class
-)
+@Component(property = "search.engine.impl=Elasticsearch")
 public class ElasticsearchBulkableDocumentRequestTranslator
 	implements BulkableDocumentRequestTranslator
 		<DeleteRequestBuilder, IndexRequestBuilder, UpdateRequestBuilder,

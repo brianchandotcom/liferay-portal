@@ -38,8 +38,7 @@ import org.osgi.service.component.annotations.Reference;
 	property = {
 		"javax.portlet.name=" + UserAssociatedDataPortletKeys.USER_ASSOCIATED_DATA,
 		"mvc.command.name=/view_uad_applications_summary"
-	},
-	service = MVCRenderCommand.class
+	}
 )
 public class ViewUADApplicationsSummaryMVCRenderCommand
 	implements MVCRenderCommand {

@@ -46,7 +46,7 @@ import org.osgi.util.tracker.BundleTrackerCustomizer;
 /**
  * @author Preston Crary
  */
-@Component(immediate = true, service = JSPServletFactory.class)
+@Component(immediate = true)
 public class JSPServletFactoryImpl implements JSPServletFactory {
 
 	@Activate

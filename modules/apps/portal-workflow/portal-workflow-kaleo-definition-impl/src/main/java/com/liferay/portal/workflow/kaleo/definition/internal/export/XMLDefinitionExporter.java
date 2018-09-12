@@ -42,7 +42,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Michael C. Han
  */
-@Component(immediate = true, service = DefinitionExporter.class)
+@Component(immediate = true)
 public class XMLDefinitionExporter implements DefinitionExporter {
 
 	@Override

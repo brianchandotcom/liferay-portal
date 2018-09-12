@@ -78,10 +78,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Alvaro del Castillo
  * @author Jorge Ferrer
  */
-@Component(
-	property = {"importer=MediaWiki", "page=/wiki/import/mediawiki.jsp"},
-	service = WikiImporter.class
-)
+@Component(property = {"importer=MediaWiki", "page=/wiki/import/mediawiki.jsp"})
 public class MediaWikiImporter implements WikiImporter {
 
 	public static final String FORMAT_CREOLE = "creole";

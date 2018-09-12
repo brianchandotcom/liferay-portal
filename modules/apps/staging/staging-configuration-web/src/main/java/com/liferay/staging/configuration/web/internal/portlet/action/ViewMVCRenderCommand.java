@@ -35,8 +35,7 @@ import org.osgi.service.component.annotations.Component;
 		"javax.portlet.name=" +
 			StagingConfigurationPortletKeys.STAGING_CONFIGURATION,
 		"mvc.command.name=staging"
-	},
-	service = MVCRenderCommand.class
+	}
 )
 public class ViewMVCRenderCommand implements MVCRenderCommand {
 

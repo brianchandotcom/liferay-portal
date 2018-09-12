@@ -41,8 +41,7 @@ import org.osgi.service.component.annotations.Reference;
 		"javax.portlet.name=" + WikiPortletKeys.WIKI_ADMIN,
 		"javax.portlet.name=" + WikiPortletKeys.WIKI_DISPLAY,
 		"mvc.command.name=/wiki/compare_versions"
-	},
-	service = MVCRenderCommand.class
+	}
 )
 public class CompareVersionsMVCRenderCommand implements MVCRenderCommand {
 

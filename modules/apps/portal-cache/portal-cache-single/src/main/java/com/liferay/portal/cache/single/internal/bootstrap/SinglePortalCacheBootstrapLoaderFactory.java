@@ -24,10 +24,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Tina Tian
  */
-@Component(
-	enabled = false, immediate = true,
-	service = PortalCacheBootstrapLoaderFactory.class
-)
+@Component(enabled = false, immediate = true)
 public class SinglePortalCacheBootstrapLoaderFactory
 	implements PortalCacheBootstrapLoaderFactory {
 

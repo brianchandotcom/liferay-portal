@@ -25,7 +25,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Adolfo Pérez
  */
-@Component(immediate = true, service = HotDeployListener.class)
+@Component(immediate = true)
 public class TestHotDeployListener implements HotDeployListener {
 
 	@Override

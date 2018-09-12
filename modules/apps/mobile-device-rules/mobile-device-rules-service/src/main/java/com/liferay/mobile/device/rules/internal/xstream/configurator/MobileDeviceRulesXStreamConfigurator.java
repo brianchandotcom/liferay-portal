@@ -31,7 +31,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Mate Thurzo
  */
-@Component(immediate = true, service = XStreamConfigurator.class)
+@Component(immediate = true)
 public class MobileDeviceRulesXStreamConfigurator
 	implements XStreamConfigurator {
 

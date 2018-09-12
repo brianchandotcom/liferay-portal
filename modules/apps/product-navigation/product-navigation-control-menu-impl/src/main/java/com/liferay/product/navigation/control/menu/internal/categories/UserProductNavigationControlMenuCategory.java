@@ -29,8 +29,7 @@ import org.osgi.service.component.annotations.Component;
 	property = {
 		"product.navigation.control.menu.category.key=" + ProductNavigationControlMenuCategoryKeys.ROOT,
 		"product.navigation.control.menu.category.order:Integer=300"
-	},
-	service = ProductNavigationControlMenuCategory.class
+	}
 )
 public class UserProductNavigationControlMenuCategory
 	implements ProductNavigationControlMenuCategory {

@@ -49,8 +49,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	configurationPid = "com.liferay.document.library.opener.google.drive.internal.configuration.DLOpenerGoogleDriveConfiguration",
-	configurationPolicy = ConfigurationPolicy.REQUIRE, immediate = true,
-	service = DLPortletToolbarContributorContext.class
+	configurationPolicy = ConfigurationPolicy.REQUIRE, immediate = true
 )
 public class DLOpenerGoogleDriveDLPortletToolbarContributorContext
 	implements DLPortletToolbarContributorContext {

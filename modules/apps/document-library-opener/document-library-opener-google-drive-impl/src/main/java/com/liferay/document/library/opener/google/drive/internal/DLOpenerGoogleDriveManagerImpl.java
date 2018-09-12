@@ -52,7 +52,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Adolfo Pérez
  */
-@Component(immediate = true, service = DLOpenerGoogleDriveManager.class)
+@Component(immediate = true)
 public class DLOpenerGoogleDriveManagerImpl
 	implements DLOpenerGoogleDriveManager {
 

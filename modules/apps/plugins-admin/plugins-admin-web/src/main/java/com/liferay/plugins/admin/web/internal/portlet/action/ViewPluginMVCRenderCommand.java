@@ -29,8 +29,7 @@ import org.osgi.service.component.annotations.Component;
 	property = {
 		"javax.portlet.name=" + PluginsAdminPortletKeys.PLUGINS_ADMIN,
 		"mvc.command.name=/"
-	},
-	service = MVCRenderCommand.class
+	}
 )
 public class ViewPluginMVCRenderCommand implements MVCRenderCommand {
 

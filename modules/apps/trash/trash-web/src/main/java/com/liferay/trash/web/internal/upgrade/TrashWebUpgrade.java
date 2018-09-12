@@ -56,7 +56,7 @@ import org.osgi.service.component.annotations.Component;
  *
  * @author Eudaldo Alonso
  */
-@Component(immediate = true, service = UpgradeStepRegistrator.class)
+@Component(immediate = true)
 public class TrashWebUpgrade implements UpgradeStepRegistrator {
 
 	@Override

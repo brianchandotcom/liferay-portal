@@ -33,7 +33,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Vilmos Papp
  */
-@Component(service = LDAPFilterValidator.class)
+@Component
 public class LDAPFilterValidatorImpl implements LDAPFilterValidator {
 
 	@Override

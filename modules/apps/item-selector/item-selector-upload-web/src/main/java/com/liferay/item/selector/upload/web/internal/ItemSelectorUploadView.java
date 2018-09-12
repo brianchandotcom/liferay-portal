@@ -44,9 +44,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Ambrín Chaudhary
  */
-@Component(
-	property = "item.selector.view.key=upload", service = ItemSelectorView.class
-)
+@Component(property = "item.selector.view.key=upload")
 public class ItemSelectorUploadView
 	implements ItemSelectorView<UploadItemSelectorCriterion> {
 

@@ -41,8 +41,7 @@ import org.osgi.service.component.annotations.Reference;
 		"javax.portlet.name=" + PortletKeys.FAST_LOGIN,
 		"javax.portlet.name=" + PortletKeys.LOGIN,
 		"mvc.command.name=/login/associate_google_user"
-	},
-	service = MVCRenderCommand.class
+	}
 )
 public class AssociateGoogleUserMVCRenderCommand implements MVCRenderCommand {
 

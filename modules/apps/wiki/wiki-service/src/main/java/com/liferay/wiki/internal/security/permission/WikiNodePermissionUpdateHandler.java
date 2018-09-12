@@ -27,10 +27,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Gergely Mathe
  */
-@Component(
-	property = "model.class.name=com.liferay.wiki.model.WikiNode",
-	service = PermissionUpdateHandler.class
-)
+@Component(property = "model.class.name=com.liferay.wiki.model.WikiNode")
 public class WikiNodePermissionUpdateHandler
 	implements PermissionUpdateHandler {
 

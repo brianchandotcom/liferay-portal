@@ -43,10 +43,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Julio Camarero
  */
-@Component(
-	immediate = true,
-	service = ProductNavigationControlMenuCategoryRegistry.class
-)
+@Component(immediate = true)
 public class ProductNavigationControlMenuCategoryRegistryImpl
 	implements ProductNavigationControlMenuCategoryRegistry {
 

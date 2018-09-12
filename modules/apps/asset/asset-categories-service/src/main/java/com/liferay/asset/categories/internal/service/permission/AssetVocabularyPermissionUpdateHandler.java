@@ -28,8 +28,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Gergely Mathe
  */
 @Component(
-	property = "model.class.name=com.liferay.asset.kernel.model.AssetVocabulary",
-	service = PermissionUpdateHandler.class
+	property = "model.class.name=com.liferay.asset.kernel.model.AssetVocabulary"
 )
 public class AssetVocabularyPermissionUpdateHandler
 	implements PermissionUpdateHandler {

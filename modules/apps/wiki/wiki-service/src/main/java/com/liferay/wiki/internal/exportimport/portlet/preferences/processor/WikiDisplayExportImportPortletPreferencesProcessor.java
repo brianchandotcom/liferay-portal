@@ -51,8 +51,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = "javax.portlet.name=" + WikiPortletKeys.WIKI_DISPLAY,
-	service = ExportImportPortletPreferencesProcessor.class
+	property = "javax.portlet.name=" + WikiPortletKeys.WIKI_DISPLAY
 )
 public class WikiDisplayExportImportPortletPreferencesProcessor
 	implements ExportImportPortletPreferencesProcessor {

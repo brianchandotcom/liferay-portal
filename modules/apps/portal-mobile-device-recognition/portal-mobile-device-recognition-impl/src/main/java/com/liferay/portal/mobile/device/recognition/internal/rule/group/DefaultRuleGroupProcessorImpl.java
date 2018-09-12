@@ -44,7 +44,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 /**
  * @author Edward Han
  */
-@Component(immediate = true, service = RuleGroupProcessor.class)
+@Component(immediate = true)
 public class DefaultRuleGroupProcessorImpl implements RuleGroupProcessor {
 
 	@Override

@@ -54,7 +54,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
  * @author André de Oliveira
  * @author Lino Alves
  */
-@Component(immediate = true, service = SearchLayoutFactory.class)
+@Component(immediate = true)
 public class SearchLayoutFactoryImpl implements SearchLayoutFactory {
 
 	@Override

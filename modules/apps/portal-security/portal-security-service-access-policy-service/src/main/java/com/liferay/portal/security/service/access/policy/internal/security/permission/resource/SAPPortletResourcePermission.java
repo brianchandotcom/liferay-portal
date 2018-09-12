@@ -26,8 +26,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Preston Crary
  */
 @Component(
-	immediate = true, property = "resource.name=" + SAPConstants.RESOURCE_NAME,
-	service = PortletResourcePermission.class
+	immediate = true, property = "resource.name=" + SAPConstants.RESOURCE_NAME
 )
 public class SAPPortletResourcePermission implements PortletResourcePermission {
 

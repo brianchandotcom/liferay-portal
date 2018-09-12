@@ -50,10 +50,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 /**
  * @author Eduardo Garcia
  */
-@Component(
-	property = "item.selector.view.order:Integer=100",
-	service = ItemSelectorView.class
-)
+@Component(property = "item.selector.view.order:Integer=100")
 public class JournalItemSelectorView
 	implements ItemSelectorView<JournalItemSelectorCriterion> {
 

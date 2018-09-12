@@ -30,8 +30,7 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	immediate = true,
-	property = "model.class.name=com.liferay.portal.upload.internal.configuration.UploadServletRequestConfiguration",
-	service = ConfigurationModelListener.class
+	property = "model.class.name=com.liferay.portal.upload.internal.configuration.UploadServletRequestConfiguration"
 )
 public class UploadServletRequestConfigurationModelListener
 	implements ConfigurationModelListener {

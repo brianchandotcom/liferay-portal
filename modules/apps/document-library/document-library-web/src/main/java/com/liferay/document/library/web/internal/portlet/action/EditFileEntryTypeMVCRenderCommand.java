@@ -46,8 +46,7 @@ import org.osgi.service.component.annotations.Reference;
 		"javax.portlet.name=" + DLPortletKeys.DOCUMENT_LIBRARY_ADMIN,
 		"javax.portlet.name=" + DLPortletKeys.MEDIA_GALLERY_DISPLAY,
 		"mvc.command.name=/document_library/edit_file_entry_type"
-	},
-	service = MVCRenderCommand.class
+	}
 )
 public class EditFileEntryTypeMVCRenderCommand implements MVCRenderCommand {
 

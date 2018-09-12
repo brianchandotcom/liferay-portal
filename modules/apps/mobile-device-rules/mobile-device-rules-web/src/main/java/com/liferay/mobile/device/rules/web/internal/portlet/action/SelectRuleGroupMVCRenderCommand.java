@@ -29,8 +29,7 @@ import org.osgi.service.component.annotations.Component;
 	property = {
 		"javax.portlet.name=" + MDRPortletKeys.MOBILE_DEVICE_RULES,
 		"mvc.command.name=/mobile_device_rules/select_rule_group"
-	},
-	service = MVCRenderCommand.class
+	}
 )
 public class SelectRuleGroupMVCRenderCommand implements MVCRenderCommand {
 

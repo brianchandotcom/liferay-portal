@@ -28,8 +28,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Gergely Mathe
  */
 @Component(
-	property = "model.class.name=com.liferay.calendar.model.CalendarResource",
-	service = PermissionUpdateHandler.class
+	property = "model.class.name=com.liferay.calendar.model.CalendarResource"
 )
 public class CalendarResourcePermissionUpdateHandler
 	implements PermissionUpdateHandler {

@@ -35,7 +35,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Edward Han
  */
-@Component(immediate = true, service = ActionHandler.class)
+@Component(immediate = true)
 public class LayoutTemplateModificationActionHandler implements ActionHandler {
 
 	public static String getHandlerType() {

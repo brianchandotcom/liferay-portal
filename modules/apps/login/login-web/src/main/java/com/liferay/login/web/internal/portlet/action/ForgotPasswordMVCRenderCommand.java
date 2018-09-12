@@ -33,8 +33,7 @@ import org.osgi.service.component.annotations.Component;
 		"javax.portlet.name=" + LoginPortletKeys.FAST_LOGIN,
 		"javax.portlet.name=" + LoginPortletKeys.LOGIN,
 		"mvc.command.name=/login/forgot_password"
-	},
-	service = MVCRenderCommand.class
+	}
 )
 public class ForgotPasswordMVCRenderCommand implements MVCRenderCommand {
 

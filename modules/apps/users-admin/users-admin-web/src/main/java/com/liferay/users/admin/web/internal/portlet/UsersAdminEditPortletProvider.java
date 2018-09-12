@@ -27,11 +27,7 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	immediate = true,
-	property = "model.class.name=com.liferay.portal.kernel.model.User",
-	service = {
-		EditPortletProvider.class, ManagePortletProvider.class,
-		ViewPortletProvider.class
-	}
+	property = "model.class.name=com.liferay.portal.kernel.model.User"
 )
 public class UsersAdminEditPortletProvider
 	extends BasePortletProvider

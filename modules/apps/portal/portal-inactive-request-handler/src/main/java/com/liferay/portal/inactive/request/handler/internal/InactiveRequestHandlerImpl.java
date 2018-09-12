@@ -50,7 +50,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	configurationPid = "com.liferay.portal.inactive.request.handler.configuration.InactiveRequestHandlerConfiguration",
-	immediate = true, service = InactiveRequestHandler.class
+	immediate = true
 )
 public class InactiveRequestHandlerImpl implements InactiveRequestHandler {
 

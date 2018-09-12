@@ -55,8 +55,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 		"javax.portlet.name=" + ConfigurationAdminPortletKeys.SYSTEM_SETTINGS,
 		"mvc.command.name=/view_factory_instances",
 		"service.ranking:Integer=" + (Integer.MAX_VALUE - 1000)
-	},
-	service = MVCRenderCommand.class
+	}
 )
 public class ViewFactoryInstancesMVCRenderCommand implements MVCRenderCommand {
 

@@ -34,10 +34,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Michael C. Han
  */
-@Component(
-	immediate = true, property = "notification.type=user-notification",
-	service = NotificationSender.class
-)
+@Component(immediate = true, property = "notification.type=user-notification")
 public class UserNotificationMessageSender
 	extends BaseNotificationSender implements NotificationSender {
 

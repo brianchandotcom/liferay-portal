@@ -48,10 +48,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Sergio González
  */
-@Component(
-	immediate = true, property = "adaptive.media.key=blogs",
-	service = AMImageOptimizer.class
-)
+@Component(immediate = true, property = "adaptive.media.key=blogs")
 public class BlogsAMImageOptimizer implements AMImageOptimizer {
 
 	@Override

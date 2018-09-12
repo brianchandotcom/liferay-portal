@@ -30,8 +30,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
  */
 @Component(
 	enabled = false, immediate = true,
-	property = "reference.cardinality=mandatory",
-	service = DynamicGreedyComponent.class
+	property = "reference.cardinality=mandatory"
 )
 public class DynamicGreedyMandatoryComponent implements DynamicGreedyComponent {
 

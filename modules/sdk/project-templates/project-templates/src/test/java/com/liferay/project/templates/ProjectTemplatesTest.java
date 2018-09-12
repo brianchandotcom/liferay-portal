@@ -709,6 +709,72 @@ public class ProjectTemplatesTest {
 	}
 
 	@Test
+	public void testBuildTemplateFormField71WithHyphen() throws Exception {
+		File gradleProjectDir = _buildTemplateWithGradle(
+			"form-field", "foo-bar", "--liferayVersion", "7.1");
+
+		_testContains(
+			gradleProjectDir, "bnd.bnd", "Bundle-Name: foo-bar",
+			"Web-ContextPath: /dynamic-data-foo-bar-form-field");
+		_testContains(
+			gradleProjectDir, "build.gradle",
+			"apply plugin: \"com.liferay.plugin\"",
+			_DEPENDENCY_PORTAL_KERNEL + ", version: \"3.0.0");
+		_testContains(
+			gradleProjectDir, "package.json",
+			"\"name\": \"dynamic-data-foo-bar-form-field\"",
+			",foo-bar_field.js &&");
+		_testContains(
+			gradleProjectDir,
+			"src/main/java/foo/bar/form/field/FooBarDDMFormFieldRenderer.java",
+			"property = \"ddm.form.field.type.name=fooBar\"",
+			"public class FooBarDDMFormFieldRenderer extends " +
+				"BaseDDMFormFieldRenderer {",
+			"DDMFooBar.render", "/META-INF/resources/foo-bar.soy");
+		_testContains(
+			gradleProjectDir,
+			"src/main/java/foo/bar/form/field/FooBarDDMFormFieldType.java",
+			"ddm.form.field.type.description=foo-bar-description",
+			"ddm.form.field.type.js.class.name=Liferay.DDM.Field.FooBar",
+			"ddm.form.field.type.js.module=foo-bar-form-field",
+			"ddm.form.field.type.label=foo-bar-label",
+			"ddm.form.field.type.name=fooBar",
+			"public class FooBarDDMFormFieldType extends BaseDDMFormFieldType",
+			"return \"fooBar\";");
+		_testContains(
+			gradleProjectDir, "src/main/resources/META-INF/resources/config.js",
+			"field-foo-bar", "'foo-bar-form-field': {",
+			"path: 'foo-bar_field.js',");
+		_testContains(
+			gradleProjectDir,
+			"src/main/resources/META-INF/resources/foo-bar.soy",
+			"{namespace DDMFooBar}", "variant=\"'fooBar'\"",
+			"foo-bar-form-field");
+		_testContains(
+			gradleProjectDir,
+			"src/main/resources/META-INF/resources/foo-bar.es.js",
+			"import templates from './foo-bar.soy';", "* FooBar Component",
+			"class FooBar extends Component", "Soy.register(FooBar,",
+			"!window.DDMFooBar", "window.DDMFooBar",
+			"window.DDMFooBar.render = FooBar;", "export default FooBar;");
+		_testContains(
+			gradleProjectDir,
+			"src/main/resources/META-INF/resources/foo-bar_field.js",
+			"'foo-bar-form-field',", "var FooBarField",
+			"value: 'foo-bar-form-field'", "NAME: 'foo-bar-form-field'",
+			"Liferay.namespace('DDM.Field').FooBar = FooBarField;");
+
+		File mavenProjectDir = _buildTemplateWithMaven(
+			"form-field", "foo-bar", "com.test", "-DclassName=FooBar",
+			"-Dpackage=foo.bar", "-DliferayVersion=7.1");
+
+		_testContains(
+			mavenProjectDir, "bnd.bnd", "-contract: JavaPortlet,JavaServlet");
+
+		_buildProjects(gradleProjectDir, mavenProjectDir);
+	}
+
+	@Test
 	public void testBuildTemplateFormFieldInWorkspace() throws Exception {
 		_testBuildTemplateWithWorkspace(
 			"form-field", "foobar", "build/libs/foobar-1.0.0.jar");

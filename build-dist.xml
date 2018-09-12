@@ -3977,7 +3977,9 @@ plugins.includes=</echo>
 				excludes="
 					liferay-portal-${lp.version}/data/hypersonic/**,
 					liferay-portal-${lp.version}/osgi/state/**,
-					liferay-portal-${lp.version}/tomcat-${app.server.tomcat.version}/work/**"
+					liferay-portal-${lp.version}/tomcat-${app.server.tomcat.version}/work/**,
+					liferay-portal-${lp.version}/tomcat-${app.server.tomcat.version}/webapps/ROOT/html/**,
+					liferay-portal-${lp.version}/tomcat-${app.server.tomcat.version}/webapps/ROOT/WEB-INF/tld/**"
 			/>
 		</unzip>
 
@@ -3999,6 +4001,24 @@ plugins.includes=</echo>
 			>
 				<exclude name="**/*.jspc_error" />
 			</fileset>
+		</copy>
+
+		<copy
+			preservelastmodified="true"
+			todir="${tstamp.value}/liferay-portal-${lp.version}/tomcat/webapps/ROOT/WEB-INF/tld"
+		>
+			<fileset
+				dir="portal-web/docroot/WEB-INF/tld"
+			/>
+		</copy>
+
+		<copy
+			preservelastmodified="true"
+			todir="${tstamp.value}/liferay-portal-${lp.version}/tomcat/webapps/ROOT/html"
+		>
+			<fileset
+				dir="portal-web/docroot/html"
+			/>
 		</copy>
 
 		<chmod

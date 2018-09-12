@@ -1,18 +1,17 @@
-/* eslint no-spaced-func: 0 */
-
 import {Config} from 'metal-state';
 import {EventHandler} from 'metal-events';
 import {isKeyInSet, isModifyingKey} from './util/dom.es';
 import {pageStructure} from './util/config.es';
-import {PagesVisitor} from './util/visitors.es';
 import {sub} from './util/strings.es';
 import AutoSave from './util/AutoSave.es';
 import Builder from './pages/builder/index.es';
+import ClayModal from 'clay-modal';
 import Component from 'metal-jsx';
 import dom from 'metal-dom';
 import LayoutProvider from './components/LayoutProvider/index.es';
 import loader from './components/FieldsLoader/index.es';
 import RuleBuilder from './pages/RuleBuilder/index.es';
+import StateSyncronizer from './util/StateSyncronizer.es';
 
 /**
  * Form.
@@ -142,7 +141,7 @@ class Form extends Component {
 	static STATE = {
 
 		/**
-		 * The represent the current active screen mode where 0 => FormBuilder and 1 => RuleBuilder
+		 * Represent the current active screen mode where 0 => FormBuilder and 1 => RuleBuilder
 		 * @default 0
 		 * @instance
 		 * @memberof Form
@@ -152,7 +151,7 @@ class Form extends Component {
 		activeFormMode: Config.number().value(0),
 
 		/**
-		 * The represent the current active screen mode where 0 => FormBuilder and 1 => RuleBuilder
+		 * Internal mirror of the pages state
 		 * @default _pagesValueFn
 		 * @instance
 		 * @memberof Form
@@ -171,7 +170,7 @@ class Form extends Component {
 		paginationMode: Config.string().valueFn('_paginationModeValueFn'),
 
 		/**
-		 * The represent the current active screen mode where 0 => FormBuilder and 1 => RuleBuilder
+		 * The label of the save button
 		 * @default 'save-form'
 		 * @instance
 		 * @memberof Form
@@ -195,44 +194,10 @@ class Form extends Component {
 		}
 	}
 
-	/**
-	 * @inheritDoc
-	 */
-
-	created() {
-		const {namespace} = this.props;
-
-		this._eventHandler = new EventHandler();
-
-		this.autoSave = new AutoSave(
-			{
-				form: document.querySelector(`#${namespace}editForm`),
-				interval: Liferay.DDM.FormSettings.autosaveInterval,
-				namespace,
-				stateRetriever: () => {
-					this.syncInputValues();
-
-					return this.getState();
-				},
-				url: Liferay.DDM.FormSettings.autosaveURL
-			}
-		);
-
-		this._eventHandler.add(
-			this.autoSave.on('autosaved', this._updateAutoSaveMessage.bind(this))
-		);
-	}
-
 	disposed() {
-		const settingsDDMForm = Liferay.component('settingsDDMForm');
-
-		settingsDDMForm.destroy();
-
-		this.autoSave.dispose();
+		this._autoSave.dispose();
 
 		this._eventHandler.removeAllListeners();
-
-		Liferay.destroyComponents();
 	}
 
 	/**
@@ -240,22 +205,104 @@ class Form extends Component {
 	 */
 
 	attached() {
-		this._eventHandler.add(
-			dom.on('#addFieldButton', 'click', this._handleAddFieldButtonClicked.bind(this)),
-			dom.on('.forms-management-bar li', 'click', this._handleFormNavClicked.bind(this))
-		);
+		const {layoutProvider} = this.refs;
+		const {localizedDescription, localizedName, namespace} = this.props;
+		const {paginationMode} = this.state;
 
-		this._createEditor('nameEditor').then(
-			editor => {
-				this._eventHandler.add(
-					dom.on(editor.element.$, 'keydown', this._handleTitleEditorKeydown.bind(this)),
-					dom.on(editor.element.$, 'keyup', this._handleTitleEditorCopyAndPaste.bind(this)),
-					dom.on(editor.element.$, 'keypress', this._handleTitleEditorCopyAndPaste.bind(this)),
-					editor.on('change', this._handleNameEditorChanged.bind(this))
+		this._eventHandler = new EventHandler();
+
+		Promise.all(
+			[
+				this._createEditor('nameEditor').then(
+					editor => {
+						this._eventHandler.add(
+							dom.on(editor.element.$, 'keydown', this._handleNameEditorKeydown.bind(this)),
+							dom.on(editor.element.$, 'keyup', this._handleNameEditorCopyAndPaste.bind(this)),
+							dom.on(editor.element.$, 'keypress', this._handleNameEditorCopyAndPaste.bind(this))
+						);
+
+						return editor;
+					}
+				),
+				this._createEditor('descriptionEditor'),
+				this._getSettingsDDMForm()
+			]
+		).then(
+			results => {
+				const translationManager = Liferay.component(`${namespace}translationManager`);
+
+				this._stateSyncronizer = new StateSyncronizer(
+					{
+						descriptionEditor: results[1],
+						layoutProvider,
+						localizedDescription,
+						localizedName,
+						nameEditor: results[0],
+						namespace,
+						paginationMode,
+						settingsDDMForm: results[2],
+						translationManager
+					}
 				);
+
+				this._autoSave = new AutoSave(
+					{
+						form: document.querySelector(`#${namespace}editForm`),
+						interval: Liferay.DDM.FormSettings.autosaveInterval,
+						namespace,
+						stateSyncronizer: this._stateSyncronizer,
+						url: Liferay.DDM.FormSettings.autosaveURL
+					}
+				);
+
+				this._eventHandler.add(this._autoSave.on('autosaved', this._updateAutoSaveMessage.bind(this)));
 			}
 		);
-		this._createEditor('descriptionEditor').then(editor => editor.on('change', this._handleDescriptionEditorChanged.bind(this)));
+
+		this._eventHandler.add(
+			dom.on('.back-url-link', 'click', this._handleBackButtonClicked.bind(this)),
+			dom.on('.forms-management-bar li', 'click', this._handleFormNavClicked.bind(this)),
+			dom.on('#addFieldButton', 'click', this._handleAddFieldButtonClicked.bind(this))
+		);
+	}
+
+	_getSettingsDDMForm() {
+		let promise;
+
+		const settingsDDMForm = Liferay.component('settingsDDMForm');
+
+		if (settingsDDMForm) {
+			promise = Promise.resolve(settingsDDMForm);
+		}
+		else {
+			promise = Liferay.componentReady('settingsDDMForm');
+		}
+
+		return promise;
+	}
+
+	_handleBackButtonClicked(event) {
+		if (this._autoSave.hasUnsavedChanges()) {
+			event.preventDefault();
+			event.stopPropagation();
+
+			const href = event.delegateTarget.href;
+
+			this.refs.discardChangesModal.visible = true;
+
+			const listener = this.refs.discardChangesModal.addListener(
+				'clickButton',
+				({target}) => {
+					if (target.classList.contains('close-modal')) {
+						window.location.href = href;
+					}
+
+					listener.dispose();
+
+					this.refs.discardChangesModal.emit('hide');
+				}
+			);
+		}
 	}
 
 	_updateAutoSaveMessage({savedAsDraft, modifiedDate}) {
@@ -278,32 +325,6 @@ class Form extends Component {
 				modifiedDate
 			]
 		);
-	}
-
-	getState() {
-		const {
-			defaultLanguageId,
-			localizedDescription,
-			namespace
-		} = this.props;
-		const {pages, paginationMode} = this.state;
-
-		const translationManager = Liferay.component(`${namespace}translationManager`);
-
-		return {
-			availableLanguageIds: translationManager && translationManager.get('availableLocales'),
-			defaultLanguageId,
-			description: localizedDescription,
-			name: this._getLocalizedName(),
-			pages,
-			paginationMode,
-			rules: [],
-			successPageSettings: {
-				body: {},
-				enabled: false,
-				title: {}
-			}
-		};
 	}
 
 	isForbiddenKey(event, limit) {
@@ -344,14 +365,11 @@ class Form extends Component {
 	render() {
 		const {
 			context,
-			namespace,
 			spritemap,
 			strings
 		} = this.props;
 
-		const {
-			saveButtonLabel
-		} = this.state;
+		const {saveButtonLabel} = this.state;
 
 		const layoutProviderProps = {
 			...this.props,
@@ -361,27 +379,21 @@ class Form extends Component {
 
 			},
 			initialPages: context.pages,
-			initialPaginationMode: context.paginationMode
-
+			initialPaginationMode: context.paginationMode,
+			ref: 'layoutProvider'
 		};
 
-		let currentBuilder = <Builder namespace={this.props.namespace} ref="builder" />;
-
-		if (parseInt(this.state.activeFormMode, 10)) {
-			currentBuilder = <RuleBuilder pages={context.pages} rules={this.props.rules} spritemap={spritemap} />;
-		}
-
-		const settingsDDMForm = Liferay.component('settingsDDMForm');
+		const showRuleBuilder = parseInt(this.state.activeFormMode, 10) === 1;
 
 		return (
-			<div>
-				<input name={`${namespace}description`} ref="descriptionInput" type="hidden" value={JSON.stringify(this._getLocalizedDescription())} />
-				<input name={`${namespace}name`} ref="nameInput" type="hidden" value={JSON.stringify(this._getLocalizedName())} />
-				<input name={`${namespace}serializedFormBuilderContext`} ref="serializedFormBuilderContextInput" type="hidden" value={this._getSerializedFormBuilderContext()} />
-				<input name={`${namespace}serializedSettingsContext`} ref="serializedSettingsContextInput" type="hidden" value={settingsDDMForm && JSON.stringify(settingsDDMForm.get('context'))} />
-
+			<div class={'ddm-form-builder'}>
 				<LayoutProvider {...layoutProviderProps}>
-					{currentBuilder}
+					{showRuleBuilder && (
+						<RuleBuilder pages={context.pages} rules={this.props.rules} spritemap={spritemap} />
+					)}
+					{!showRuleBuilder && (
+						<Builder namespace={this.props.namespace} ref="builder" />
+					)}
 				</LayoutProvider>
 
 				<div class="container-fluid-1280">
@@ -396,6 +408,30 @@ class Form extends Component {
 							{strings['preview-form']}
 						</button>
 					</div>
+
+					<ClayModal
+						body={strings['any-unsaved-changes-will-be-lost-are-you-sure-you-want-to-leave']}
+						footerButtons={
+							[
+								{
+									'alignment': 'right',
+									'label': strings.leave,
+									'style': 'secondary',
+									'type': 'close'
+								},
+								{
+									'alignment': 'right',
+									'label': strings.stay,
+									'style': 'primary',
+									'type': 'button'
+								}
+							]
+						}
+						ref={'discardChangesModal'}
+						size={'sm'}
+						spritemap={spritemap}
+						title={strings['leave-form']}
+					/>
 				</div>
 			</div>
 		);
@@ -404,30 +440,9 @@ class Form extends Component {
 	submitForm() {
 		const {namespace} = this.props;
 
-		this.refs.nameInput.value = JSON.stringify(this._getLocalizedName());
-
-		this.syncInputValues();
+		this._stateSyncronizer.syncInputs();
 
 		submitForm(document.querySelector(`#${namespace}editForm`));
-	}
-
-	syncInputValues() {
-		const state = this.getState();
-		const {
-			description,
-			name
-		} = state;
-
-		const settingsDDMForm = Liferay.component('settingsDDMForm');
-
-		const publishedField = settingsDDMForm.getField('published');
-
-		publishedField.set('value', this.props.published);
-
-		this.refs.descriptionInput.value = JSON.stringify(description);
-		this.refs.nameInput.value = JSON.stringify(name);
-		this.refs.serializedFormBuilderContextInput.value = this._getSerializedFormBuilderContext();
-		this.refs.serializedSettingsContextInput.value = JSON.stringify(settingsDDMForm.toJSON());
 	}
 
 	_paginationModeValueFn() {
@@ -470,58 +485,6 @@ class Form extends Component {
 		return promise;
 	}
 
-	_getDescriptionEditor() {
-		const {namespace} = this.props;
-
-		return window[`${namespace}descriptionEditor`];
-	}
-
-	_getLocalizedDescription() {
-		const {localizedDescription} = this.props;
-
-		return localizedDescription;
-	}
-
-	_getLocalizedName() {
-		const {
-			defaultLanguageId,
-			localizedName
-		} = this.props;
-
-		if (!localizedName[defaultLanguageId].trim()) {
-			localizedName[defaultLanguageId] = Liferay.Language.get('untitled-form');
-		}
-
-		return localizedName;
-	}
-
-	_getNameEditor() {
-		const {namespace} = this.props;
-
-		return window[`${namespace}nameEditor`];
-	}
-
-	_getSerializedFormBuilderContext() {
-		const state = this.getState();
-
-		const visitor = new PagesVisitor(state.pages);
-
-		return JSON.stringify(
-			{
-				...state,
-				pages: visitor.mapPages(
-					page => {
-						return {
-							...page,
-							description: page.localizedDescription,
-							title: page.localizedTitle
-						};
-					}
-				)
-			}
-		);
-	}
-
 	/**
 	 * Handles click on plus button. Button shows Sidebar when clicked.
 	 * @private
@@ -529,13 +492,6 @@ class Form extends Component {
 
 	_handleAddFieldButtonClicked() {
 		this._openSidebar();
-	}
-
-	_handleDescriptionEditorChanged(event) {
-		const {editingLanguageId, localizedDescription} = this.props;
-		const descriptionEditor = this._getDescriptionEditor();
-
-		localizedDescription[editingLanguageId] = descriptionEditor.getHTML();
 	}
 
 	/**
@@ -557,13 +513,16 @@ class Form extends Component {
 		const addButton = document.querySelector('#addFieldButton');
 		const formBuilderButtons = document.querySelector('.ddm-form-builder-buttons');
 		const publishIcon = document.querySelector('.publish-icon');
+
 		if (navItemIndex !== this.state.activeFormMode) {
 			this.setState(
 				{
 					activeFormMode: parseInt(navItemIndex, 10)
 				}
 			);
+
 			document.querySelector('.forms-management-bar li>a.active').classList.remove('active');
+
 			if (parseInt(this.state.activeFormMode, 10)) {
 				formBuilderButtons.classList.add('hide');
 				publishIcon.classList.add('hide');
@@ -573,15 +532,9 @@ class Form extends Component {
 				addButton.classList.remove('hide');
 				publishIcon.classList.remove('hide');
 			}
+
 			target.classList.add('active');
 		}
-	}
-
-	_handleNameEditorChanged(event) {
-		const {editingLanguageId, localizedName} = this.props;
-		const nameEditor = this._getNameEditor();
-
-		localizedName[editingLanguageId] = nameEditor.getHTML();
 	}
 
 	/*
@@ -618,11 +571,11 @@ class Form extends Component {
 		this.submitForm();
 	}
 
-	_handleTitleEditorCopyAndPaste(event) {
+	_handleNameEditorCopyAndPaste(event) {
 		return this.preventCopyAndPaste(event, 120);
 	}
 
-	_handleTitleEditorKeydown(event) {
+	_handleNameEditorKeydown(event) {
 		return this.checkEditorLimit(event, 120);
 	}
 

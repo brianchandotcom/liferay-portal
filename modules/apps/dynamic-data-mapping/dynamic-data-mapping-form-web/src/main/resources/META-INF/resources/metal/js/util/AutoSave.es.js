@@ -10,11 +10,16 @@ class AutoSave extends PortletBase {
 		form: Config.any(),
 		interval: Config.number().setter('_setInterval'),
 		saveAsDraft: Config.bool().value(true),
-		stateRetriever: Config.func().value(() => ({})),
+		stateSyncronizer: Config.any(),
 		url: Config.string()
 	};
 
 	created() {
+		const currentState = this.getCurrentState();
+		const currentStateHash = this.getStateHash(currentState);
+
+		this._lastKownHash = currentStateHash;
+
 		this.start();
 	}
 
@@ -37,21 +42,20 @@ class AutoSave extends PortletBase {
 	}
 
 	saveIfNeeded() {
-		const currentState = this.getCurrentState();
-		const currentStateHash = this.getStateHash(currentState);
+		const {stateSyncronizer} = this;
 
 		if (this._pendingRequest) {
 			this._pendingRequest.then(() => this.saveIfNeeded()).catch (() => {});
 		}
-		else if (this.savedStateHash === undefined || this.savedStateHash !== currentStateHash) {
+		else if (this.hasUnsavedChanges() && !stateSyncronizer.isEmpty()) {
 			this.save();
 		}
 	}
 
 	getCurrentState() {
-		const {stateRetriever} = this;
+		const {stateSyncronizer} = this;
 
-		return stateRetriever();
+		return stateSyncronizer.getState();
 	}
 
 	getStateHash(state) {
@@ -64,8 +68,15 @@ class AutoSave extends PortletBase {
 		);
 	}
 
+	hasUnsavedChanges() {
+		const currentState = this.getCurrentState();
+		const currentStateHash = this.getStateHash(currentState);
+
+		return this._lastKownHash !== currentStateHash;
+	}
+
 	saveStateHash(state) {
-		this.savedStateHash = this.getStateHash(state);
+		this._lastKownHash = this.getStateHash(state);
 	}
 
 	save() {
@@ -135,6 +146,10 @@ class AutoSave extends PortletBase {
 	}
 
 	_getFormData() {
+		const {stateSyncronizer} = this;
+
+		stateSyncronizer.syncInputs();
+
 		const formData = new FormData(this.form);
 
 		const state = this.getCurrentState();

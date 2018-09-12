@@ -89,6 +89,7 @@ import org.gradle.testkit.runner.TaskOutcome;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
@@ -536,6 +537,48 @@ public class ProjectTemplatesTest {
 	}
 
 	@Test
+	public void testBuildTemplateExt() throws Exception {
+		File gradleProjectDir = _buildTemplateWithGradle(
+			"modules-ext", "loginExt", "--original-module-name",
+			"com.liferay.login.web", "--original-module-version", "1.0.0");
+
+		_testContains(
+			gradleProjectDir, "build.gradle", "buildscript {", "repositories {",
+			"originalModule group: \"com.liferay\", name: " +
+				"\"com.liferay.login.web\", version: \"1.0.0\"",
+			"apply plugin: \"com.liferay.osgi.ext.plugin\"");
+
+		_executeGradle(gradleProjectDir, _GRADLE_TASK_PATH_BUILD);
+
+		_testExists(
+			gradleProjectDir, "build/libs/com.liferay.login.web-1.0.0.ext.jar");
+	}
+
+	@Test
+	public void testBuildTemplateExtInWorkspace() throws Exception {
+		File workspaceDir = _buildWorkspace();
+
+		File workspaceProjectDir = _buildTemplateWithGradle(
+			new File(workspaceDir, "ext"), "modules-ext", "loginExt",
+			"--original-module-name", "com.liferay.login.web",
+			"--original-module-version", "1.0.0");
+
+		_testContains(
+			workspaceProjectDir, "build.gradle",
+			"originalModule group: \"com.liferay\", name: " +
+				"\"com.liferay.login.web\", version: \"1.0.0\"");
+
+		_testNotContains(
+			workspaceProjectDir, "build.gradle", true, "^repositories \\{.*");
+
+		_executeGradle(workspaceDir, ":ext:loginExt:build");
+
+		_testExists(
+			workspaceProjectDir,
+			"build/libs/com.liferay.login.web-1.0.0.ext.jar");
+	}
+
+	@Test
 	public void testBuildTemplateFMPortletWithBOM() throws Exception {
 		File gradleProjectDir = _buildTemplateWithGradle(
 			"freemarker-portlet", "freemarker-dependency-management",
@@ -870,6 +913,41 @@ public class ProjectTemplatesTest {
 	public void testBuildTemplateLiferayVersionValid712() throws Exception {
 		_buildTemplateWithGradle(
 			"mvc-portlet", "test", "--liferayVersion", "7.1.2");
+	}
+
+	@Test
+	public void testBuildTemplateModulesExtGradle() throws Exception {
+		File gradleProjectDir = _buildTemplateWithGradle(
+			"modules-ext", "foo-ext", "--original-module-name",
+			"com.liferay.login.web", "--original-module-version", "2.0.4");
+
+		_testContains(
+			gradleProjectDir, "build.gradle",
+			"originalModule group: \"com.liferay\", ",
+			"name: \"com.liferay.login.web\", version: \"2.0.4\"");
+
+		if (Validator.isNotNull(_BUILD_PROJECTS) &&
+			_BUILD_PROJECTS.equals("true")) {
+
+			_executeGradle(gradleProjectDir, _GRADLE_TASK_PATH_BUILD);
+
+			File gradleOutputDir = new File(gradleProjectDir, "build/libs");
+
+			Path gradleOutputPath = FileTestUtil.getFile(
+				gradleOutputDir.toPath(), _OUTPUT_FILENAME_GLOB_REGEX, 1);
+
+			Assert.assertNotNull(gradleOutputPath);
+
+			Assert.assertTrue(Files.exists(gradleOutputPath));
+		}
+	}
+
+	@Test(expected = Error.class)
+	public void testBuildTemplateModulesExtMaven() throws Exception {
+		_buildTemplateWithMaven(
+			"modules-ext", "foo-ext", "com.test",
+			"-DoriginalModuleName=com.liferay.login.web",
+			"-DoriginalModuleVersion=2.0.4");
 	}
 
 	@Test
@@ -2234,6 +2312,7 @@ public class ProjectTemplatesTest {
 		_buildProjects(gradleProjectDir, mavenProjectDir);
 	}
 
+	@Ignore
 	@Test
 	public void testBuildTemplateSoyPortlet70() throws Exception {
 		File gradleProjectDir = _buildTemplateWithGradle(

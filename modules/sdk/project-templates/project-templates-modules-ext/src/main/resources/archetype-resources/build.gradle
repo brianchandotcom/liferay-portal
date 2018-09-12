@@ -1,0 +1,29 @@
+#if (${projectType} != "workspace")buildscript {
+	dependencies {
+		classpath group: "com.liferay", name: "com.liferay.gradle.plugins", version: "@com.liferay.gradle.plugins.version@"
+	}
+
+	repositories {
+		maven {
+			url "https://repository-cdn.liferay.com/nexus/content/groups/public"
+		}
+	}
+}
+
+apply plugin: "com.liferay.osgi.ext.plugin"
+
+#end
+dependencies {
+#if (${dependencyManagementEnabled} == "true")
+	originalModule group: "com.liferay", name: "${originalModuleName}"
+#else
+	originalModule group: "com.liferay", name: "${originalModuleName}", version: "${originalModuleVersion}"
+#end
+}
+#if (${projectType} != "workspace")
+
+repositories {
+	maven {
+		url "https://repository-cdn.liferay.com/nexus/content/groups/public"
+	}
+}#end

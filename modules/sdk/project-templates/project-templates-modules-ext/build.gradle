@@ -4,9 +4,9 @@ dependencies {
 }
 
 generateSampleProject {
-	args "--class-name", "Foo", "--liferayVersion", "7.1", "--name", "foo"
+	args "--original-module-name", "com.liferay.login.web", "--original-module-version", "2.0.4", "--name", "foo-ext"
 
 	doFirst {
-		delete "${buildDir}/foo"
+		delete "${buildDir}/foo-ext"
 	}
 }

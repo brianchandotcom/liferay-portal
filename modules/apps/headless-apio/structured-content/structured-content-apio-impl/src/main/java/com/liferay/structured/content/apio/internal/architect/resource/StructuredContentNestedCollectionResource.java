@@ -352,8 +352,7 @@ public class StructuredContentNestedCollectionResource
 				"localized_title_".concat(LocaleUtil.toLanguageId(locale)));
 
 			TermQuery termQuery = new TermQueryImpl(
-				localizedFieldName,
-				StringUtil.toLowerCase(String.valueOf(fieldValue)));
+				localizedFieldName, String.valueOf(fieldValue));
 
 			BooleanClause booleanClause = BooleanClauseFactoryUtil.create(
 				termQuery, BooleanClauseOccur.MUST.getName());

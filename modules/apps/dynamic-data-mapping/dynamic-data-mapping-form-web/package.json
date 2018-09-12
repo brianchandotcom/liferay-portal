@@ -60,6 +60,7 @@
 		}
 	},
 	"dependencies": {
+		"autobind-decorator": "^2.1.0",
 		"classnames": "^2.2.6",
 		"clay-checkbox": "^2.2.0",
 		"clay-icon": "^2.2.0",
@@ -138,7 +139,7 @@
 		"start": "node watch.js",
 		"test": "npm run build-soy && NODE_ENV=test jest --coverage && npm run clean",
 		"test:coverage:open": "opn build/coverage/lcov-report/index.html",
-		"test:snapshots": "npm run soy && NODE_ENV=test jest --coverage -u && npm run clean"
+		"test:snapshots": "npm run build-soy && NODE_ENV=test jest --coverage -u && npm run clean"
 	},
 	"version": "2.0.0"
 }

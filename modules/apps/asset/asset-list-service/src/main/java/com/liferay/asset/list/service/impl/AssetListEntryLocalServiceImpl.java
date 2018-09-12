@@ -68,6 +68,9 @@ public class AssetListEntryLocalServiceImpl
 
 		// Resources
 
+		serviceContext.setAddGroupPermissions(true);
+		serviceContext.setAddGuestPermissions(true);
+
 		resourceLocalService.addModelResources(assetListEntry, serviceContext);
 
 		return assetListEntry;

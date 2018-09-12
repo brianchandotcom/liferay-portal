@@ -100,37 +100,42 @@
 			</c:when>
 			<c:otherwise>
 				<liferay-ui:search-container-column-text
-					cssClass="table-list-title"
+					cssClass="table-cell-expand table-cell-minw-200 table-title"
 					href="<%= rowURL %>"
 					name="asset-title"
 					value="<%= workflowInstanceViewDisplayContext.getAssetTitle(workflowInstance) %>"
 				/>
 
 				<liferay-ui:search-container-column-text
+					cssClass="table-cell-expand-smaller table-cell-minw-150"
 					href="<%= rowURL %>"
 					name="asset-type"
 					value="<%= workflowInstanceViewDisplayContext.getAssetType(workflowInstance) %>"
 				/>
 
 				<liferay-ui:search-container-column-text
+					cssClass="table-cell-expand-smallest"
 					href="<%= rowURL %>"
 					name="status"
 					value="<%= workflowInstanceViewDisplayContext.getStatus(workflowInstance) %>"
 				/>
 
 				<liferay-ui:search-container-column-text
+					cssClass="table-cell-expand-smaller table-cell-minw-150"
 					href="<%= rowURL %>"
 					name="definition"
 					value="<%= workflowInstanceViewDisplayContext.getDefinition(workflowInstance) %>"
 				/>
 
 				<liferay-ui:search-container-column-date
+					cssClass="table-cell-ws-nowrap"
 					href="<%= rowURL %>"
 					name="last-activity-date"
 					value="<%= workflowInstanceViewDisplayContext.getLastActivityDate(workflowInstance) %>"
 				/>
 
 				<liferay-ui:search-container-column-date
+					cssClass="table-cell-ws-nowrap"
 					href="<%= rowURL %>"
 					name="end-date"
 					value="<%= workflowInstanceViewDisplayContext.getEndDate(workflowInstance) %>"
@@ -139,7 +144,6 @@
 				<c:choose>
 					<c:when test="<%= !workflowInstance.isComplete() %>">
 						<liferay-ui:search-container-column-jsp
-							align="right"
 							path="/instance/workflow_instance_action.jsp"
 						/>
 					</c:when>

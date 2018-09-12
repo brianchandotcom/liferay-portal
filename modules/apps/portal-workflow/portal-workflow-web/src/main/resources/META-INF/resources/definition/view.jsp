@@ -89,19 +89,21 @@ WorkflowDefinitionSearch workflowDefinitionSearch = new WorkflowDefinitionSearch
 			%>
 
 			<liferay-ui:search-container-column-text
-				cssClass="table-list-title"
+				cssClass="table-cell-expand table-cell-minw-200 table-title"
 				href="<%= rowURL %>"
 				name="title"
 				value="<%= workflowDefinitionDisplayContext.getTitle(workflowDefinition) %>"
 			/>
 
 			<liferay-ui:search-container-column-text
+				cssClass="table-cell-expand table-cell-minw-300"
 				href="<%= rowURL %>"
 				name="description"
 				value="<%= workflowDefinitionDisplayContext.getDescription(workflowDefinition) %>"
 			/>
 
 			<liferay-ui:search-container-column-date
+				cssClass="table-cell-expand-smaller table-cell-ws-nowrap"
 				href="<%= rowURL %>"
 				name="last-modified"
 				userName="<%= workflowDefinitionDisplayContext.getUserName(workflowDefinition) %>"

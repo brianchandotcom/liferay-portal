@@ -56,38 +56,27 @@
 	</command>
 
 	<command name="tearDownCP">
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Custom Fields" />
-		</execute>
+		<for list="Blogs Entry,Calendar Event,Document,Documents Folder,Knowledge Base Article,Knowledge Base Folder,Message Boards Category,Message Boards Message,Organization,Page,Role,Site,User,User Group,Web Content Article,Web Content Folder,Wiki Page" param="resourceName">
+			<execute macro="ProductMenu#gotoPortlet">
+				<var name="category" value="Configuration" />
+				<var name="panel" value="Control Panel" />
+				<var name="portlet" value="Custom Fields" />
+			</execute>
 
-		<while>
-			<condition function="IsElementPresent" locator1="CustomFields#RESOURCE_TABLE_CUSTOM_FIELDS_LINK_GENERIC" />
-			<then>
-				<execute function="Click" locator1="CustomFields#RESOURCE_TABLE_CUSTOM_FIELDS_LINK_GENERIC" />
+			<execute function="AssertClick" locator1="CustomFields#RESOURCE_TABLE_RESOURCE_LINK" value1="${resourceName}">
+				<var name="key_resourceName" value="${resourceName}" />
+			</execute>
 
-				<while>
-					<condition function="IsElementPresent" locator1="CustomFieldsEditResource#CUSTOM_FIELDS_TABLE_ACTIONS_GENERIC" />
-					<then>
-						<execute function="AssertClick" locator1="CustomFieldsEditResource#CUSTOM_FIELDS_TABLE_ACTIONS_GENERIC" value1="Actions" />
+			<if>
+				<condition function="IsElementNotPresent" locator1="Message#EMPTY_INFO" />
+				<then>
+					<execute macro="PortletEntry#selectAll" />
 
-						<execute macro="MenuItem#clickNoError">
-							<var name="menuItem" value="Delete" />
-						</execute>
+					<execute function="Click" locator1="Icon#DELETE" />
+				</then>
+			</if>
 
-						<execute function="AssertConfirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
-
-						<execute macro="Alert#viewSuccessMessage" />
-					</then>
-				</while>
-
-				<execute macro="ProductMenu#gotoPortlet">
-					<var name="category" value="Configuration" />
-					<var name="panel" value="Control Panel" />
-					<var name="portlet" value="Custom Fields" />
-				</execute>
-			</then>
-		</while>
+			<execute function="AssertElementPresent" locator1="Message#EMPTY_INFO" />
+		</for>
 	</command>
 </definition>

@@ -180,27 +180,28 @@ String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 						</c:if>
 
 						<liferay-ui:search-container-column-jsp
-							cssClass="table-cell-content"
+							cssClass="table-cell-expand table-cell-minw-200 table-title"
 							href="<%= editURL %>"
 							name="title"
 							path="/article_title.jsp"
 						/>
 
 						<liferay-ui:search-container-column-text
-							cssClass="table-cell-content"
+							cssClass="table-cell-expand table-cell-minw-200"
 							name="description"
 							value="<%= StringUtil.shorten(HtmlUtil.stripHtml(curArticle.getDescription(locale)), 200) %>"
 						/>
 
 						<c:if test="<%= journalDisplayContext.isSearch() %>">
 							<liferay-ui:search-container-column-text
-								cssClass="table-cell-content"
+								cssClass="table-cell-expand-smallest table-cell-minw-200"
 								name="path"
 								value="<%= JournalHelperUtil.getAbsolutePath(liferayPortletRequest, curArticle.getFolderId()) %>"
 							/>
 						</c:if>
 
 						<liferay-ui:search-container-column-text
+							cssClass="table-cell-expand-smallest table-cell-minw-100"
 							name="author"
 							value="<%= HtmlUtil.escape(PortalUtil.getUserName(curArticle)) %>"
 						/>
@@ -210,11 +211,13 @@ String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 						/>
 
 						<liferay-ui:search-container-column-date
+							cssClass="table-cell-expand-smallest table-cell-ws-nowrap"
 							name="modified-date"
 							value="<%= curArticle.getModifiedDate() %>"
 						/>
 
 						<liferay-ui:search-container-column-date
+							cssClass="table-cell-expand-smallest table-cell-ws-nowrap"
 							name="display-date"
 							value="<%= curArticle.getDisplayDate() %>"
 						/>
@@ -224,6 +227,7 @@ String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 						%>
 
 						<liferay-ui:search-container-column-text
+							cssClass="table-cell-expand-smallest table-cell-minw-100"
 							name="type"
 							value="<%= HtmlUtil.escape(ddmStructure.getName(locale)) %>"
 						/>
@@ -330,19 +334,20 @@ String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 						</c:if>
 
 						<liferay-ui:search-container-column-text
-							cssClass="table-cell-content"
+							cssClass="table-cell-expand table-cell-minw-200 table-list-title"
 							href="<%= rowURL.toString() %>"
 							name="title"
 							value="<%= HtmlUtil.escape(curFolder.getName()) %>"
 						/>
 
 						<liferay-ui:search-container-column-text
-							cssClass="table-cell-content"
+							cssClass="table-cell-expand table-cell-minw-200"
 							name="description"
 							value="<%= HtmlUtil.escape(curFolder.getDescription()) %>"
 						/>
 
 						<liferay-ui:search-container-column-text
+							cssClass="table-cell-expand-smallest table-cell-minw-150"
 							name="author"
 							value="<%= HtmlUtil.escape(PortalUtil.getUserName(curFolder)) %>"
 						/>
@@ -353,16 +358,19 @@ String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 						/>
 
 						<liferay-ui:search-container-column-date
+							cssClass="table-cell-expand-smallest table-cell-ws-nowrap"
 							name="modified-date"
 							value="<%= curFolder.getModifiedDate() %>"
 						/>
 
 						<liferay-ui:search-container-column-text
+							cssClass="table-cell-expand-smallest table-cell-ws-nowrap"
 							name="display-date"
 							value="--"
 						/>
 
 						<liferay-ui:search-container-column-text
+							cssClass="table-cell-expand-smallest table-cell-minw-150"
 							name="type"
 							value='<%= LanguageUtil.get(request, "folder") %>'
 						/>

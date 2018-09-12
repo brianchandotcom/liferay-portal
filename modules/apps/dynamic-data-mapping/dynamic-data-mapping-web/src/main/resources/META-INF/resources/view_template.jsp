@@ -125,7 +125,7 @@ if (layout != null) {
 
 				<c:if test='<%= !excludedColumnNames.contains("name") %>'>
 					<liferay-ui:search-container-column-text
-						cssClass="table-cell-expand-small table-list-title"
+						cssClass="table-cell-expand table-cell-minw-200 table-title"
 						href="<%= rowHREF %>"
 						name="name"
 						value="<%= HtmlUtil.escape(template.getName(locale)) %>"
@@ -151,7 +151,7 @@ if (layout != null) {
 					%>
 
 					<liferay-ui:search-container-column-text
-						cssClass="table-cell-expand-smallest"
+						cssClass="table-cell-expand-smallest table-cell-minw-150"
 						href="<%= rowHREF %>"
 						name="structure"
 						value="<%= HtmlUtil.escape(structureName) %>"
@@ -178,7 +178,7 @@ if (layout != null) {
 
 				<c:if test='<%= !excludedColumnNames.contains("language") %>'>
 					<liferay-ui:search-container-column-text
-						cssClass="table-cell-expand-smallest"
+						cssClass="table-cell-expand-smallest table-cell-minw-100"
 						href="<%= rowHREF %>"
 						name="language"
 						value='<%= LanguageUtil.get(request, HtmlUtil.escape(template.getLanguage()) + "[stands-for]") %>'
@@ -200,7 +200,7 @@ if (layout != null) {
 
 				<c:if test='<%= !excludedColumnNames.contains("modified-date") %>'>
 					<liferay-ui:search-container-column-date
-						cssClass="table-cell-expand-smallest"
+						cssClass="table-cell-expand-smallest table-cell-ws-nowrap"
 						href="<%= rowHREF %>"
 						name="modified-date"
 						orderable="<%= true %>"

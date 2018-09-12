@@ -15,24 +15,26 @@
 --%>
 
 <liferay-ui:search-container-column-text
-	cssClass="table-cell-content"
+	cssClass="table-cell-expand-small table-cell-minw-200 table-title"
 	href="<%= rowHREF %>"
 	name="name"
 	value="<%= ruleGroup.getName(locale) %>"
 />
 
 <liferay-ui:search-container-column-text
-	cssClass="table-cell-content"
+	cssClass="table-cell-expand table-cell-minw-300"
 	name="description"
 	value="<%= ruleGroup.getDescription(locale) %>"
 />
 
 <liferay-ui:search-container-column-text
+	cssClass="table-cell-expand-smallest table-cell-minw-150"
 	name="scope"
 	value="<%= LanguageUtil.get(resourceBundle, group.getScopeLabel(themeDisplay)) %>"
 />
 
 <liferay-ui:search-container-column-date
+	cssClass="table-cell-ws-nowrap"
 	name="modified-date"
 	value="<%= ruleGroup.getModifiedDate() %>"
 />

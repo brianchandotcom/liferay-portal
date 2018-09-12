@@ -74,7 +74,7 @@ String displayStyle = blogEntriesManagementToolbarDisplayContext.getDisplayStyle
 	portletURL="<%= restoreTrashEntriesURL %>"
 />
 
-<div class="container-fluid-1280 main-content-body">
+<div class="container-fluid container-fluid-max-xl main-content-body">
 	<aui:form action="<%= portletURL.toString() %>" method="get" name="fm">
 		<aui:input name="<%= Constants.CMD %>" type="hidden" />
 		<aui:input name="redirect" type="hidden" value="<%= portletURL.toString() %>" />

@@ -101,18 +101,20 @@ String thumbnailSrc = DLUtil.getThumbnailSrc(fileEntry, themeDisplay);
 	</c:when>
 	<c:otherwise>
 		<liferay-ui:search-container-column-text
-			cssClass="table-cell-content"
+			cssClass="table-cell-expand table-cell-minw-200 table-title"
 			name="title"
 		>
 			<%= HtmlUtil.escape(fileEntry.getTitle()) %>
 		</liferay-ui:search-container-column-text>
 
 		<liferay-ui:search-container-column-text
+			cssClass="table-cell-expand-smaller"
 			name="size"
 			value="<%= TextFormatter.formatStorageSize(fileEntry.getSize(), locale) %>"
 		/>
 
 		<liferay-ui:search-container-column-text
+			cssClass="table-cell-expand-smaller table-cell-minw-150"
 			name="modified-date"
 		>
 			<liferay-ui:message arguments="<%= new String[] {LanguageUtil.getTimeDescription(locale, System.currentTimeMillis() - fileEntry.getModifiedDate().getTime(), true), HtmlUtil.escape(fileEntry.getUserName())} %>" key="x-ago-by-x" translateArguments="<%= false %>" />

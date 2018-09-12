@@ -59,7 +59,10 @@
 					}
 				).render();
 
-				if (data.fileName.indexOf('.soy.js') > -1) {
+				if (data.fileName.endsWith('.soy')) {
+					return false;
+				}
+				else if (data.fileName.endsWith('.soy.js')) {
 					window.location.reload();
 				}
 				else {

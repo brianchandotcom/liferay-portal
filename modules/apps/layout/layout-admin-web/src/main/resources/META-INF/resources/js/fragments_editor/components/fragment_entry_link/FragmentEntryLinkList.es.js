@@ -174,7 +174,46 @@ class FragmentEntryLinkList extends Component {
 	 */
 
 	_handleFragmentMove(event) {
-		this.emit('move', event);
+		const placeholderId = event.fragmentEntryLinkId;
+		const placeholderIndex = this.structure.indexOf(placeholderId);
+		const targetId = this.structure[placeholderIndex + event.direction];
+
+		if (event.direction === 1) {
+			this._targetBorder = DRAG_POSITIONS.bottom;
+		}
+		else {
+			this._targetBorder = DRAG_POSITIONS.top;
+		}
+
+		if (targetId) {
+			this.store
+				.dispatchAction(
+					UPDATE_SAVING_CHANGES_STATUS,
+					{
+						savingChanges: true
+					}
+				)
+				.dispatchAction(
+					MOVE_FRAGMENT_ENTRY_LINK,
+					{
+						placeholderId: placeholderId,
+						targetBorder: this._targetBorder,
+						targetId: targetId
+					}
+				)
+				.dispatchAction(
+					UPDATE_LAST_SAVE_DATE,
+					{
+						lastSaveDate: new Date()
+					}
+				)
+				.dispatchAction(
+					UPDATE_SAVING_CHANGES_STATUS,
+					{
+						savingChanges: false
+					}
+				);
+		}
 	}
 
 	/**
@@ -264,6 +303,17 @@ FragmentEntryLinkList.STATE = {
 	 */
 
 	hoveredFragmentEntryLinkId: Config.string(),
+
+	/**
+	 * Array of fragmentEntryLinks
+	 * @default undefined
+	 * @instance
+	 * @memberOf FragmentEntryLinkList
+	 * @review
+	 * @type {!array}
+	 */
+
+	structure: Config.array(),
 
 	/**
 	 * Nearest border of the hovered fragment while dragging

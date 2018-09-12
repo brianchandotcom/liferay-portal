@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.util.PropsValues;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -50,17 +49,13 @@ public class ModuleReadHookImpl implements ModuleReadHook {
 			PropsValues.MODULE_FRAMEWORK_STATE_DIR, "org.eclipse.osgi",
 			String.valueOf(bundleId), "0");
 
-		File bundleIdDir = bundleRevPath.toFile();
-
-		if (!bundleIdDir.exists()) {
+		if (Files.notExists(bundleRevPath)) {
 			return;
 		}
 
-		Path path = Paths.get(bundleRevPath.toString(), "bundleFile");
+		Path path = bundleRevPath.resolve("bundleFile");
 
-		File bundleFile = path.toFile();
-
-		if (bundleFile.exists()) {
+		if (Files.exists(path)) {
 			return;
 		}
 
@@ -68,9 +63,7 @@ public class ModuleReadHookImpl implements ModuleReadHook {
 			if (location.startsWith("file")) {
 				URL url = new URL(location);
 
-				File file = new File(url.getPath());
-
-				Files.copy(file.toPath(), path);
+				Files.copy(Paths.get(url.getPath()), path);
 			}
 			else {
 				Matcher matcher = _pattern.matcher(location);

@@ -152,7 +152,7 @@ class FormRenderer extends Component {
 			pageSettingsItems.push(
 				{
 					label,
-					settingsItem: 'switch-page'
+					settingsItem: 'switch-pagination-mode'
 				}
 			);
 		}
@@ -199,12 +199,12 @@ class FormRenderer extends Component {
 		else if (settingsItem === 'delete-page') {
 			this._deletePage();
 		}
-		else if (settingsItem == 'switch-page') {
-			this._switchPage();
+		else if (settingsItem == 'switch-pagination-mode') {
+			this._switchPaginationMode();
 		}
 	}
 
-	_switchPage() {
+	_switchPaginationMode() {
 		this.emit('paginationModeUpdated');
 	}
 

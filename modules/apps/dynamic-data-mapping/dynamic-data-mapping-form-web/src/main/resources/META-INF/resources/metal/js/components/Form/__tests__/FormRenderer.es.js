@@ -242,7 +242,7 @@ describe(
 					{
 						data: {
 							item: {
-								settingsItem: 'switch-page'
+								settingsItem: 'switch-pagination-mode'
 							}
 						}
 					}
@@ -275,7 +275,7 @@ describe(
 					{
 						data: {
 							item: {
-								settingsItem: 'switch-page'
+								settingsItem: 'switch-pagination-mode'
 							}
 						}
 					}
@@ -291,7 +291,7 @@ describe(
 					{
 						data: {
 							item: {
-								settingsItem: 'switch-page'
+								settingsItem: 'switch-pagination-mode'
 							}
 						}
 					}
@@ -825,7 +825,7 @@ describe(
 								},
 								{
 									'label': 'switch-pagination-to-bottom',
-									'settingsItem': 'switch-page'
+									'settingsItem': 'switch-pagination-mode'
 								}
 							]
 						);

@@ -15,7 +15,7 @@
 --%>
 
 <liferay-ui:search-container-column-text
-	cssClass="table-cell-content"
+	cssClass="table-cell-expand table-cell-minw-200 table-title"
 	name="name"
 	orderable="<%= true %>"
 >
@@ -69,12 +69,13 @@
 </liferay-ui:search-container-column-text>
 
 <liferay-ui:search-container-column-text
+	cssClass="table-cell-expand-smaller table-cell-ws-nowrap"
 	name="child-sites"
 >
 	<c:choose>
 		<c:when test="<%= hasAddChildSitePermisison && GroupPermissionUtil.contains(permissionChecker, curGroup, ActionKeys.VIEW) %>">
-			<aui:a href="<%= (viewSubsitesURL != null) ? viewSubsitesURL.toString() : StringPool.BLANK %>">
-				<span class="text-primary"><liferay-ui:message arguments="<%= String.valueOf(childSites.size()) %>" key="x-child-sites" /></span>
+			<aui:a cssClass="table-link" href="<%= (viewSubsitesURL != null) ? viewSubsitesURL.toString() : StringPool.BLANK %>">
+				<span class="child-sites-text"><liferay-ui:message arguments="<%= String.valueOf(childSites.size()) %>" key="x-child-sites" /></span>
 			</aui:a>
 		</c:when>
 		<c:otherwise>
@@ -84,11 +85,13 @@
 </liferay-ui:search-container-column-text>
 
 <liferay-ui:search-container-column-text
+	cssClass="table-cell-expand-smallest table-cell-ws-nowrap"
 	name="membership-type"
 	value="<%= LanguageUtil.get(request, curGroup.getTypeLabel()) %>"
 />
 
 <liferay-ui:search-container-column-text
+	cssClass="table-cell-expand-smallest table-cell-minw-150"
 	name="members"
 >
 	<span onmouseover="Liferay.Portal.ToolTip.show(this, '<liferay-ui:message key="inherited-memberships-are-not-included-in-members-count" unicode="<%= true %>" />');">
@@ -137,6 +140,7 @@
 </c:if>
 
 <liferay-ui:search-container-column-text
+	cssClass="table-cell-smallest table-cell-ws-nowrap table-column-text-center"
 	name="active"
 	value='<%= LanguageUtil.get(request, (curGroup.isActive() ? "yes" : "no")) %>'
 />

@@ -28,6 +28,7 @@ import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Adolfo Pérez
+ * @author Roberto Díaz
  */
 @Component(immediate = true, service = UpgradeStepRegistrator.class)
 public class AnnouncementsWebUpgrade implements UpgradeStepRegistrator {
@@ -67,10 +68,17 @@ public class AnnouncementsWebUpgrade implements UpgradeStepRegistrator {
 				return new String[][] {
 					{
 						"1_WAR_soannouncementsportlet",
-						PortletKeys.ANNOUNCEMENTS
+						"com_liferay_announcements_web_portlet_" +
+							"AnnouncementsPortlet"
 					},
-					{"83", PortletKeys.ALERTS},
-					{"84", PortletKeys.ANNOUNCEMENTS}
+					{
+						"83",
+					 	"com_liferay_announcements_web_portlet_AlertsPortlet"
+					},
+					{
+						"84",
+					 	"com_liferay_announcements_web_portlet_" +
+							"AnnouncementsPortlet"}
 				};
 			}
 

@@ -43,6 +43,7 @@ dependencies {
 	testCompile project(":core:petra:petra-string")
 
 	testIntegrationCompile group: "org.springframework", name: "spring-web", version: "4.1.9.RELEASE"
+	testIntegrationCompile project(":apps:dynamic-data-mapping:dynamic-data-mapping-form-builder")
 	testIntegrationCompile project(":apps:export-import:export-import-test-util")
 	testIntegrationCompile project(":apps:portal:portal-upgrade-api")
 	testIntegrationCompile project(":core:registry-api")

@@ -824,7 +824,7 @@ describe(
 									'settingsItem': 'delete-page'
 								},
 								{
-									'label': 'switch-pagination-mode',
+									'label': 'switch-pagination-to-bottom',
 									'settingsItem': 'switch-page'
 								}
 							]
@@ -858,10 +858,6 @@ describe(
 								{
 									'label': Liferay.Language.get('reset-page'),
 									'settingsItem': 'reset-page'
-								},
-								{
-									'label': 'switch-pagination-mode',
-									'settingsItem': 'switch-page'
 								}
 							]
 						);

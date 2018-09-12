@@ -178,7 +178,7 @@ public class SearchBarPortletDisplayBuilderTest {
 				_http, _layoutLocalService, _portal);
 
 		searchBarPortletDisplayBuilder.setSearchScopePreference(
-			SearchScopePreference.EVERYTHING);
+			SearchScopePreference.getSearchScopePreference("everything"));
 		searchBarPortletDisplayBuilder.setThemeDisplay(_themeDisplay);
 
 		return searchBarPortletDisplayBuilder;

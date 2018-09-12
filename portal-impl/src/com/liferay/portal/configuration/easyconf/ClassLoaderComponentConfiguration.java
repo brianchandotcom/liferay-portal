@@ -15,7 +15,6 @@
 package com.liferay.portal.configuration.easyconf;
 
 import com.germinus.easyconf.AggregatedProperties;
-import com.germinus.easyconf.ComponentConfiguration;
 import com.germinus.easyconf.ComponentProperties;
 import com.germinus.easyconf.ConfigurationNotFoundException;
 import com.germinus.easyconf.Conventions;
@@ -41,50 +40,16 @@ import org.apache.commons.configuration.Configuration;
 /**
  * @author Raymond Augé
  */
-public class ClassLoaderComponentConfiguration extends ComponentConfiguration {
+public class ClassLoaderComponentConfiguration {
 
 	public ClassLoaderComponentConfiguration(
 		ClassLoader classLoader, String companyId, String componentName) {
-
-		super(companyId, componentName);
 
 		_classLoader = classLoader;
 		_companyId = companyId;
 		_componentName = componentName;
 	}
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-
-		if (!(obj instanceof ComponentConfiguration)) {
-			return false;
-		}
-
-		ComponentConfiguration componentConfiguration =
-			(ComponentConfiguration)obj;
-
-		return _componentName.equals(componentConfiguration.getComponentName());
-	}
-
-	@Override
-	public String getComponentName() {
-		return _componentName;
-	}
-
-	@Override
-	public Object getConfigurationObject() {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public Object getConfigurationObject(String configurationName) {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
 	public ComponentProperties getProperties() {
 		ComponentProperties componentProperties = _getAvailableProperties();
 
@@ -94,23 +59,6 @@ public class ClassLoaderComponentConfiguration extends ComponentConfiguration {
 		}
 
 		return componentProperties;
-	}
-
-	@Override
-	public int hashCode() {
-		return _componentName.hashCode();
-	}
-
-	@Override
-	public void saveConfigurationObject(Object configurationObject) {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public void saveConfigurationObject(
-		String confName, Object configurationObject) {
-
-		throw new UnsupportedOperationException();
 	}
 
 	protected static String decode(String s) {

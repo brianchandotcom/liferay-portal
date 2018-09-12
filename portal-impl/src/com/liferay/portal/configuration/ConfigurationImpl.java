@@ -14,7 +14,6 @@
 
 package com.liferay.portal.configuration;
 
-import com.germinus.easyconf.ComponentConfiguration;
 import com.germinus.easyconf.ComponentProperties;
 
 import com.liferay.portal.configuration.easyconf.ClassLoaderAggregateProperties;
@@ -79,8 +78,8 @@ public class ConfigurationImpl
 	public ConfigurationImpl(
 		ClassLoader classLoader, String name, long companyId, String webId) {
 
-		_componentConfiguration = new ClassLoaderComponentConfiguration(
-			classLoader, webId, name);
+		_classLoaderComponentConfiguration =
+			new ClassLoaderComponentConfiguration(classLoader, webId, name);
 
 		printSources(companyId, webId);
 	}
@@ -369,7 +368,7 @@ public class ConfigurationImpl
 	}
 
 	protected ComponentProperties getComponentProperties() {
-		return _componentConfiguration.getProperties();
+		return _classLoaderComponentConfiguration.getProperties();
 	}
 
 	protected com.germinus.easyconf.Filter getEasyConfFilter(Filter filter) {
@@ -480,7 +479,8 @@ public class ConfigurationImpl
 
 	private static final Object _nullValue = new Object();
 
-	private final ComponentConfiguration _componentConfiguration;
+	private final ClassLoaderComponentConfiguration
+		_classLoaderComponentConfiguration;
 	private final Map<String, Object> _configurationArrayCache =
 		new ConcurrentHashMap<>();
 	private final Map<String, Object> _configurationCache =

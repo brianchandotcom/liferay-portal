@@ -1,8 +1,17 @@
 import java.nio.file.Paths
 
-plugins {
-	id "de.undercouch.download" version "3.4.3"
+buildscript {
+	dependencies {
+		classpath "de.undercouch:gradle-download-task:3.4.3"
+	}
+	repositories {
+		maven {
+			url "https://plugins.gradle.org/m2/"
+		}
+	}
 }
+
+apply plugin: "de.undercouch.download"
 
 task downloadZipFile(type: Download) {
 	doFirst {

@@ -1,0 +1,46 @@
+$c: '.ddm-form-pagination';
+
+#{$c} {
+	align-items: center;
+	display: flex;
+	justify-content: space-between;
+	padding: 0 2.4rem 0 3rem;
+
+	&.position-absolute {
+		right: 0;
+	}
+
+	&.wizard-mode {
+		border-bottom: 1px solid $light-400;
+		margin-bottom: 1.4rem;
+		padding-bottom: .2rem;
+	}
+
+	&.pagination-mode {
+		border-top: 1px solid $light-400;
+		margin-bottom: -25px;
+		margin-top: 1.4rem;
+		min-height: 90px;
+	}
+
+	.dmm-wizard,
+	.ddm-pagination {
+		width: 100%;
+	}
+
+	.ddm-pagination {
+		margin-bottom: 0;
+
+		.ddm-page-settings {
+			margin-left: 0;
+		}
+	}
+
+	.ddm-page-settings {
+		margin-left: 2.4rem;
+	}
+
+	.multi-step-item {
+		cursor: pointer;
+	}
+}

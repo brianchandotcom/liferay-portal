@@ -29,78 +29,80 @@
 List layoutTemplates = LayoutTemplateLocalServiceUtil.getLayoutTemplates();
 %>
 
-<liferay-ui:search-container
-	iteratorURL="<%= portletURL %>"
-	total="<%= layoutTemplates.size() %>"
->
-	<liferay-ui:search-container-results
-		results="<%= ListUtil.subList(layoutTemplates, searchContainer.getStart(), searchContainer.getEnd()) %>"
-	/>
-
-	<liferay-ui:search-container-row
-		className="com.liferay.portal.kernel.model.LayoutTemplate"
-		modelVar="layoutTemplate"
+<div class="container-fluid container-fluid-max-xl container-view">
+	<liferay-ui:search-container
+		iteratorURL="<%= portletURL %>"
+		total="<%= layoutTemplates.size() %>"
 	>
-
-		<%
-		PluginPackage pluginPackage = layoutTemplate.getPluginPackage();
-		PluginSetting pluginSetting = PluginSettingLocalServiceUtil.getPluginSetting(company.getCompanyId(), layoutTemplate.getLayoutTemplateId(), Plugin.TYPE_LAYOUT_TEMPLATE);
-
-		PortletURL rowURL = renderResponse.createRenderURL();
-
-		rowURL.setParameter("mvcRenderCommandName", "/plugins_admin/edit_plugin");
-		rowURL.setParameter("redirect", currentURL);
-
-		if (pluginPackage != null) {
-			rowURL.setParameter("moduleId", pluginPackage.getModuleId());
-		}
-
-		rowURL.setParameter("pluginId", layoutTemplate.getLayoutTemplateId());
-		rowURL.setParameter("pluginType", Plugin.TYPE_LAYOUT_TEMPLATE);
-		rowURL.setParameter("title", layoutTemplate.getName());
-		%>
-
-		<liferay-ui:search-container-column-text
-			cssClass="table-cell-content"
-			name="layout-template"
-		>
-			<aui:a href="<%= showEditPluginHREF ? rowURL.toString() : null %>">
-				<img alt="<liferay-ui:message escapeAttribute="<%= true %>" key="thumbnail" />" class="plugin-thumbnail" src="<%= layoutTemplate.getStaticResourcePath() + HtmlUtil.escapeAttribute(layoutTemplate.getThumbnailPath()) %>" />
-
-				<strong><%= HtmlUtil.escape(layoutTemplate.getName(locale)) %></strong>
-			</aui:a>
-		</liferay-ui:search-container-column-text>
-
-		<liferay-ui:search-container-column-text
-			cssClass="table-cell-content"
-			name="active"
-			value='<%= LanguageUtil.get(request, (pluginSetting.isActive() ? "yes" : "no")) %>'
+		<liferay-ui:search-container-results
+			results="<%= ListUtil.subList(layoutTemplates, searchContainer.getStart(), searchContainer.getEnd()) %>"
 		/>
 
-		<liferay-ui:search-container-column-text
-			cssClass="table-cell-content"
-			name="roles"
-			value="<%= HtmlUtil.escape(StringUtil.merge(pluginSetting.getRolesArray(), StringPool.COMMA_AND_SPACE)) %>"
-		/>
-
-		<liferay-ui:search-container-column-text
-			name=""
+		<liferay-ui:search-container-row
+			className="com.liferay.portal.kernel.model.LayoutTemplate"
+			modelVar="layoutTemplate"
 		>
-			<liferay-ui:icon-menu
-				direction="down"
-				markupView="lexicon"
-				showWhenSingleIcon="<%= true %>"
+
+			<%
+			PluginPackage pluginPackage = layoutTemplate.getPluginPackage();
+			PluginSetting pluginSetting = PluginSettingLocalServiceUtil.getPluginSetting(company.getCompanyId(), layoutTemplate.getLayoutTemplateId(), Plugin.TYPE_LAYOUT_TEMPLATE);
+
+			PortletURL rowURL = renderResponse.createRenderURL();
+
+			rowURL.setParameter("mvcRenderCommandName", "/plugins_admin/edit_plugin");
+			rowURL.setParameter("redirect", currentURL);
+
+			if (pluginPackage != null) {
+				rowURL.setParameter("moduleId", pluginPackage.getModuleId());
+			}
+
+			rowURL.setParameter("pluginId", layoutTemplate.getLayoutTemplateId());
+			rowURL.setParameter("pluginType", Plugin.TYPE_LAYOUT_TEMPLATE);
+			rowURL.setParameter("title", layoutTemplate.getName());
+			%>
+
+			<liferay-ui:search-container-column-text
+				cssClass="table-cell-expand table-cell-minw-200 table-title"
+				name="layout-template"
 			>
-				<liferay-ui:icon
-					message="edit"
-					method="post"
-					url="<%= rowURL.toString() %>"
-				/>
-			</liferay-ui:icon-menu>
-		</liferay-ui:search-container-column-text>
-	</liferay-ui:search-container-row>
+				<aui:a href="<%= showEditPluginHREF ? rowURL.toString() : null %>">
+					<img alt="<liferay-ui:message escapeAttribute="<%= true %>" key="thumbnail" />" class="plugin-thumbnail" src="<%= layoutTemplate.getStaticResourcePath() + HtmlUtil.escapeAttribute(layoutTemplate.getThumbnailPath()) %>" />
 
-	<liferay-ui:search-iterator
-		markupView="lexicon"
-	/>
-</liferay-ui:search-container>
+					<strong><%= HtmlUtil.escape(layoutTemplate.getName(locale)) %></strong>
+				</aui:a>
+			</liferay-ui:search-container-column-text>
+
+			<liferay-ui:search-container-column-text
+				cssClass="table-cell-expand-small table-cell-minw-75"
+				name="active"
+				value='<%= LanguageUtil.get(request, (pluginSetting.isActive() ? "yes" : "no")) %>'
+			/>
+
+			<liferay-ui:search-container-column-text
+				cssClass="table-cell-expand table-cell-minw-200"
+				name="roles"
+				value="<%= HtmlUtil.escape(StringUtil.merge(pluginSetting.getRolesArray(), StringPool.COMMA_AND_SPACE)) %>"
+			/>
+
+			<liferay-ui:search-container-column-text
+				name=""
+			>
+				<liferay-ui:icon-menu
+					direction="down"
+					markupView="lexicon"
+					showWhenSingleIcon="<%= true %>"
+				>
+					<liferay-ui:icon
+						message="edit"
+						method="post"
+						url="<%= rowURL.toString() %>"
+					/>
+				</liferay-ui:icon-menu>
+			</liferay-ui:search-container-column-text>
+		</liferay-ui:search-container-row>
+
+		<liferay-ui:search-iterator
+			markupView="lexicon"
+		/>
+	</liferay-ui:search-container>
+</div>

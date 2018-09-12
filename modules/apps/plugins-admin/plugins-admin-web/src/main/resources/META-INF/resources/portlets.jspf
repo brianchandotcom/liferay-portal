@@ -31,46 +31,46 @@ List<Portlet> portlets = PortletLocalServiceUtil.getPortlets(company.getCompanyI
 portlets = ListUtil.sort(portlets, new PortletTitleComparator(application, locale));
 %>
 
-<liferay-ui:search-container
-	iteratorURL="<%= portletURL %>"
-	total="<%= portlets.size() %>"
->
-	<liferay-ui:search-container-results
-		results="<%= ListUtil.subList(portlets, searchContainer.getStart(), searchContainer.getEnd()) %>"
-	/>
-
-	<liferay-ui:search-container-row
-		className="com.liferay.portal.kernel.model.Portlet"
-		modelVar="portlet"
+<div class="container-fluid container-fluid-max-xl container-view">
+	<liferay-ui:search-container
+		iteratorURL="<%= portletURL %>"
+		total="<%= portlets.size() %>"
 	>
+		<liferay-ui:search-container-results
+			results="<%= ListUtil.subList(portlets, searchContainer.getStart(), searchContainer.getEnd()) %>"
+		/>
 
-		<%
-		PluginPackage pluginPackage = portlet.getPluginPackage();
-
-		PortletURL rowURL = renderResponse.createRenderURL();
-
-		rowURL.setParameter("mvcRenderCommandName", "/plugins_admin/edit_plugin");
-		rowURL.setParameter("redirect", currentURL);
-
-		if (pluginPackage != null) {
-			rowURL.setParameter("moduleId", pluginPackage.getModuleId());
-		}
-
-		rowURL.setParameter("pluginId", portlet.getPortletId());
-		rowURL.setParameter("pluginType", Plugin.TYPE_PORTLET);
-
-		String title = PortalUtil.getPortletTitle(portlet, application, locale);
-
-		rowURL.setParameter("title", title);
-		%>
-
-		<liferay-ui:search-container-column-text
-			cssClass="table-cell-content"
-			href="<%= rowURL %>"
-			name="portlet"
+		<liferay-ui:search-container-row
+			className="com.liferay.portal.kernel.model.Portlet"
+			modelVar="portlet"
 		>
-			<aui:a href="<%= showEditPluginHREF ? rowURL.toString() : null %>">
-				<strong>
+
+			<%
+			PluginPackage pluginPackage = portlet.getPluginPackage();
+
+			PortletURL rowURL = renderResponse.createRenderURL();
+
+			rowURL.setParameter("mvcRenderCommandName", "/plugins_admin/edit_plugin");
+			rowURL.setParameter("redirect", currentURL);
+
+			if (pluginPackage != null) {
+				rowURL.setParameter("moduleId", pluginPackage.getModuleId());
+			}
+
+			rowURL.setParameter("pluginId", portlet.getPortletId());
+			rowURL.setParameter("pluginType", Plugin.TYPE_PORTLET);
+
+			String title = PortalUtil.getPortletTitle(portlet, application, locale);
+
+			rowURL.setParameter("title", title);
+			%>
+
+			<liferay-ui:search-container-column-text
+				cssClass="table-cell-expand table-cell-minw-200 table-title"
+				href="<%= rowURL %>"
+				name="portlet"
+			>
+				<aui:a href="<%= showEditPluginHREF ? rowURL.toString() : null %>">
 					<c:choose>
 						<c:when test="<%= Validator.isNotNull(title) %>">
 							<%= title %>
@@ -82,34 +82,34 @@ portlets = ListUtil.sort(portlets, new PortletTitleComparator(application, local
 							<%= portlet.getPortletName() %>
 						</c:otherwise>
 					</c:choose>
-				</strong>
-			</aui:a>
-		</liferay-ui:search-container-column-text>
+				</aui:a>
+			</liferay-ui:search-container-column-text>
 
-		<liferay-ui:search-container-column-text
-			cssClass="table-cell-content"
-			name="active"
-			value='<%= LanguageUtil.get(request, (portlet.isActive() ? "yes" : "no")) %>'
-		/>
+			<liferay-ui:search-container-column-text
+				cssClass="table-cell-expand table-cell-ws-nowrap"
+				name="active"
+				value='<%= LanguageUtil.get(request, (portlet.isActive() ? "yes" : "no")) %>'
+			/>
 
-		<liferay-ui:search-container-column-text
-			name=""
-		>
-			<liferay-ui:icon-menu
-				direction="down"
-				markupView="lexicon"
-				showWhenSingleIcon="<%= true %>"
+			<liferay-ui:search-container-column-text
+				name=""
 			>
-				<liferay-ui:icon
-					message="edit"
-					method="post"
-					url="<%= rowURL.toString() %>"
-				/>
-			</liferay-ui:icon-menu>
-		</liferay-ui:search-container-column-text>
-	</liferay-ui:search-container-row>
+				<liferay-ui:icon-menu
+					direction="down"
+					markupView="lexicon"
+					showWhenSingleIcon="<%= true %>"
+				>
+					<liferay-ui:icon
+						message="edit"
+						method="post"
+						url="<%= rowURL.toString() %>"
+					/>
+				</liferay-ui:icon-menu>
+			</liferay-ui:search-container-column-text>
+		</liferay-ui:search-container-row>
 
-	<liferay-ui:search-iterator
-		markupView="lexicon"
-	/>
-</liferay-ui:search-container>
+		<liferay-ui:search-iterator
+			markupView="lexicon"
+		/>
+	</liferay-ui:search-container>
+</div>

@@ -149,10 +149,12 @@ class FormRenderer extends Component {
 				label = Liferay.Language.get('switch-pagination-to-bottom');
 			}
 
-			pageSettingsItems.push({
-				label,
-				settingsItem: 'switch-page'
-			});
+			pageSettingsItems.push(
+				{
+					label,
+					settingsItem: 'switch-page'
+				}
+			);
 		}
 
 		return pageSettingsItems;

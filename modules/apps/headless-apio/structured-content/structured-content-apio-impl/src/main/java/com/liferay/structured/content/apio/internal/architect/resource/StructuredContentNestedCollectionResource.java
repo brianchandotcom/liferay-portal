@@ -69,7 +69,6 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.structure.apio.architect.identifier.ContentStructureIdentifier;
 import com.liferay.structured.content.apio.architect.filter.Filter;
@@ -352,8 +351,7 @@ public class StructuredContentNestedCollectionResource
 				"localized_title_".concat(LocaleUtil.toLanguageId(locale)));
 
 			TermQuery termQuery = new TermQueryImpl(
-				localizedFieldName,
-				StringUtil.toLowerCase(String.valueOf(fieldValue)));
+				localizedFieldName, String.valueOf(fieldValue));
 
 			BooleanClause booleanClause = BooleanClauseFactoryUtil.create(
 				termQuery, BooleanClauseOccur.MUST.getName());

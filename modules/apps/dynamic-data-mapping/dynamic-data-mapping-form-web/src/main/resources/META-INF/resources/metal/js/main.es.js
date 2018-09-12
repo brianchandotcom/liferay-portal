@@ -1,8 +1,12 @@
+/* eslint no-spaced-func: 0 */
+
 import {Config} from 'metal-state';
 import {EventHandler} from 'metal-events';
+import {isKeyInSet, isModifyingKey} from './util/dom.es';
 import {pageStructure} from './util/config.es';
 import {PagesVisitor} from './util/visitors.es';
-import {isKeyInSet, isModifyingKey} from './util/dom.es';
+import {sub} from './util/strings.es';
+import AutoSave from './util/AutoSave.es';
 import Builder from './pages/builder/index.es';
 import Component from 'metal-jsx';
 import dom from 'metal-dom';
@@ -95,6 +99,16 @@ class Form extends Component {
 		namespace: Config.string().required(),
 
 		/**
+		 * Wether the form is published or not
+		 * @default false
+		 * @instance
+		 * @memberof Form
+		 * @type {!boolean}
+		 */
+
+		published: Config.bool().value(false),
+
+		/**
 		 * The rules of a form.
 		 * @default undefined
 		 * @instance
@@ -112,7 +126,17 @@ class Form extends Component {
 		 * @type {!string}
 		 */
 
-		spritemap: Config.string().required()
+		spritemap: Config.string().required(),
+
+		/**
+		 * Map of translated strings
+		 * @default {}
+		 * @instance
+		 * @memberof Form
+		 * @type {!object}
+		 */
+
+		strings: Config.object().value({})
 	};
 
 	static STATE = {
@@ -154,7 +178,13 @@ class Form extends Component {
 		 * @type {!string}
 		 */
 
-		saveButtonLabel: Config.string().value(Liferay.Language.get('save-form'))
+		saveButtonLabel: Config.string().valueFn('_saveButtonLabelValueFn')
+	}
+
+	_saveButtonLabelValueFn() {
+		const {strings} = this.props;
+
+		return strings['save-form'];
 	}
 
 	checkEditorLimit(event, limit) {
@@ -170,7 +200,39 @@ class Form extends Component {
 	 */
 
 	created() {
+		const {namespace} = this.props;
+
 		this._eventHandler = new EventHandler();
+
+		this.autoSave = new AutoSave(
+			{
+				form: document.querySelector(`#${namespace}editForm`),
+				interval: Liferay.DDM.FormSettings.autosaveInterval,
+				namespace,
+				stateRetriever: () => {
+					this.syncInputValues();
+
+					return this.getState();
+				},
+				url: Liferay.DDM.FormSettings.autosaveURL
+			}
+		);
+
+		this._eventHandler.add(
+			this.autoSave.on('autosaved', this._updateAutoSaveMessage.bind(this))
+		);
+	}
+
+	disposed() {
+		const settingsDDMForm = Liferay.component('settingsDDMForm');
+
+		settingsDDMForm.destroy();
+
+		this.autoSave.dispose();
+
+		this._eventHandler.removeAllListeners();
+
+		Liferay.destroyComponents();
 	}
 
 	/**
@@ -194,6 +256,28 @@ class Form extends Component {
 			}
 		);
 		this._createEditor('descriptionEditor').then(editor => editor.on('change', this._handleDescriptionEditorChanged.bind(this)));
+	}
+
+	_updateAutoSaveMessage({savedAsDraft, modifiedDate}) {
+		const {namespace, strings} = this.props;
+
+		let message = '';
+
+		if (savedAsDraft) {
+			message = strings['draft-x'];
+		}
+		else {
+			message = strings['saved-x'];
+		}
+
+		const autoSaveMessageNode = document.querySelector(`#${namespace}autosaveMessage`);
+
+		autoSaveMessageNode.innerHTML = sub(
+			message,
+			[
+				modifiedDate
+			]
+		);
 	}
 
 	getState() {
@@ -261,7 +345,8 @@ class Form extends Component {
 		const {
 			context,
 			namespace,
-			spritemap
+			spritemap,
+			strings
 		} = this.props;
 
 		const {
@@ -302,13 +387,13 @@ class Form extends Component {
 				<div class="container-fluid-1280">
 					<div class="button-holder ddm-form-builder-buttons">
 						<button class="btn btn-primary ddm-button btn-default" ref="publishButton" type="button">
-							{Liferay.Language.get('publish-button')}
+							{strings['publish-form']}
 						</button>
 						<button class="btn ddm-button btn-default" data-onclick="_handleSaveButtonClicked" ref="saveButton">
 							{saveButtonLabel}
 						</button>
 						<button class="btn ddm-button btn-link" ref="previewButton" type="button">
-							{Liferay.Language.get('preview-form')}
+							{strings['preview-form']}
 						</button>
 					</div>
 				</div>
@@ -334,6 +419,10 @@ class Form extends Component {
 		} = state;
 
 		const settingsDDMForm = Liferay.component('settingsDDMForm');
+
+		const publishedField = settingsDDMForm.getField('published');
+
+		publishedField.set('value', this.props.published);
 
 		this.refs.descriptionInput.value = JSON.stringify(description);
 		this.refs.nameInput.value = JSON.stringify(name);
@@ -516,11 +605,13 @@ class Form extends Component {
 	 */
 
 	_handleSaveButtonClicked(event) {
+		const {strings} = this.props;
+
 		event.preventDefault();
 
 		this.setState(
 			{
-				saveButtonLabel: Liferay.Language.get('saving')
+				saveButtonLabel: strings.saving
 			}
 		);
 

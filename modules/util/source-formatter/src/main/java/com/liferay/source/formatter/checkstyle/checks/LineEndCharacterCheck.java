@@ -54,7 +54,7 @@ public class LineEndCharacterCheck extends BaseCheck {
 				detailAST, getLine(detailAST.getLineNo() - 1))) {
 
 			log(
-				detailAST.getLineNo(), _MSG_INCORRECT_END_LINE_CHARACTER,
+				detailAST, _MSG_INCORRECT_END_LINE_CHARACTER,
 				detailAST.getText());
 		}
 	}

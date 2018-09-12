@@ -59,7 +59,7 @@ public class LineBreakBeforeGenericStartCheck extends BaseCheck {
 			String s = StringUtil.trim(
 				line.substring(0, detailAST.getColumnNo()));
 
-			log(detailAST.getLineNo(), _MSG_INCORRECT_LINE_BREAK, s);
+			log(detailAST, _MSG_INCORRECT_LINE_BREAK, s);
 
 			return;
 		}

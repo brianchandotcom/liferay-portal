@@ -77,7 +77,7 @@ public class MapIterationCheck extends BaseCheck {
 						typeAST, true, TokenTypes.WILDCARD_TYPE);
 
 				if (wildcardTypeASTList.isEmpty()) {
-					log(forEachClauseAST.getLineNo(), _MSG_USE_ENTRY_SET);
+					log(forEachClauseAST, _MSG_USE_ENTRY_SET);
 				}
 			}
 		}

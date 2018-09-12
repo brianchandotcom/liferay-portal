@@ -41,7 +41,7 @@ public class SemiColonCheck extends BaseCheck {
 			(previousSiblingAST.getType() == TokenTypes.INTERFACE_DEF) ||
 			(previousSiblingAST.getType() == TokenTypes.METHOD_DEF)) {
 
-			log(detailAST.getLineNo(), _MSG_UNNECESSARY_SEMI_COLON);
+			log(detailAST, _MSG_UNNECESSARY_SEMI_COLON);
 		}
 		else if (previousSiblingAST.getType() == TokenTypes.ENUM_CONSTANT_DEF) {
 			DetailAST nextSiblingAST = detailAST.getNextSibling();
@@ -49,7 +49,7 @@ public class SemiColonCheck extends BaseCheck {
 			if ((nextSiblingAST != null) &&
 				(nextSiblingAST.getType() == TokenTypes.RCURLY)) {
 
-				log(detailAST.getLineNo(), _MSG_UNNECESSARY_SEMI_COLON);
+				log(detailAST, _MSG_UNNECESSARY_SEMI_COLON);
 			}
 		}
 	}

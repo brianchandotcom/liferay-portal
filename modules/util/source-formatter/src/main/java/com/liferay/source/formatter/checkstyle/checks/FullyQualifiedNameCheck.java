@@ -59,9 +59,7 @@ public class FullyQualifiedNameCheck extends BaseCheck {
 			if (!_isFullyQualifiedNameRequired(
 					detailAST, fullyQualifiedName, name, nameASTList)) {
 
-				log(
-					nameAST.getLineNo(), _MSG_USE_IMPORT_STATEMENT,
-					fullyQualifiedName);
+				log(nameAST, _MSG_USE_IMPORT_STATEMENT, fullyQualifiedName);
 			}
 		}
 	}

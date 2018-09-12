@@ -145,7 +145,7 @@ public class UnprocessedExceptionCheck extends BaseCheck {
 				exceptionClassName.equals("SystemException")) {
 
 				log(
-					parameterDefAST.getLineNo(), _MSG_UNPROCESSED_EXCEPTION,
+					parameterDefAST, _MSG_UNPROCESSED_EXCEPTION,
 					originalExceptionClassName);
 
 				break;
@@ -211,9 +211,7 @@ public class UnprocessedExceptionCheck extends BaseCheck {
 		if ((parentAST.getType() == TokenTypes.LITERAL_THROW) ||
 			(parentAST.getType() == TokenTypes.SLIST)) {
 
-			log(
-				detailAST.getLineNo(), _MSG_UNPROCESSED_EXCEPTION,
-				exceptionVariableName);
+			log(detailAST, _MSG_UNPROCESSED_EXCEPTION, exceptionVariableName);
 		}
 	}
 

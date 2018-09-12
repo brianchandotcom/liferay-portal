@@ -45,7 +45,7 @@ public class MissingAuthorCheck extends BaseCheck {
 			detailAST.getLineNo());
 
 		if (javadoc == null) {
-			log(detailAST.getLineNo(), _MSG_MISSING_AUTHOR);
+			log(detailAST, _MSG_MISSING_AUTHOR);
 
 			return;
 		}
@@ -58,7 +58,7 @@ public class MissingAuthorCheck extends BaseCheck {
 			}
 		}
 
-		log(detailAST.getLineNo(), _MSG_MISSING_AUTHOR);
+		log(detailAST, _MSG_MISSING_AUTHOR);
 	}
 
 	private static final String _MSG_MISSING_AUTHOR = "author.missing";

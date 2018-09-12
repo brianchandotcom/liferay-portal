@@ -73,7 +73,7 @@ public class FrameworkBundleCheck extends BaseCheck {
 				methodCallAST, variableName, false);
 
 			if (variableTypeName.equals("Bundle")) {
-				log(methodCallAST.getLineNo(), _MSG_USE_BUNDLE_GET_HEADERS);
+				log(methodCallAST, _MSG_USE_BUNDLE_GET_HEADERS);
 			}
 		}
 	}

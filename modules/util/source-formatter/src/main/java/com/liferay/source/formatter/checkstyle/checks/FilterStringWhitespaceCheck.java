@@ -64,7 +64,7 @@ public class FilterStringWhitespaceCheck extends BaseCheck {
 			String literalStringValue = literalStringAST.getText();
 
 			if (literalStringValue.contains(" = ")) {
-				log(nameAST.getLineNo(), _MSG_INCORRECT_WHITESPACE, name);
+				log(nameAST, _MSG_INCORRECT_WHITESPACE, name);
 
 				return;
 			}

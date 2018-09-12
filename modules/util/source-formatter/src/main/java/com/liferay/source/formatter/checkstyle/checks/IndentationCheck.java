@@ -99,14 +99,12 @@ public class IndentationCheck extends BaseCheck {
 
 		if (expectedTabCount != leadingTabCount) {
 			if (_isInsideChain(detailAST)) {
-				log(
-					detailAST.getLineNo(),
-					_MSG_INCORRECT_INDENTATION_INSIDE_CHAIN);
+				log(detailAST, _MSG_INCORRECT_INDENTATION_INSIDE_CHAIN);
 			}
 			else {
 				log(
-					detailAST.getLineNo(), _MSG_INCORRECT_INDENTATION,
-					leadingTabCount, expectedTabCount);
+					detailAST, _MSG_INCORRECT_INDENTATION, leadingTabCount,
+					expectedTabCount);
 			}
 		}
 	}

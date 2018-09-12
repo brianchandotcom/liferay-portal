@@ -62,9 +62,7 @@ public class InstanceofOrderCheck extends BaseCheck {
 		String typeName2 = DetailASTUtil.getTypeName(nextConditionAST, false);
 
 		if (comparator.compare(typeName1, typeName2) > 0) {
-			log(
-				nextConditionAST.getLineNo(), _MSG_ORDER_INSTANCEOF, typeName2,
-				typeName1);
+			log(nextConditionAST, _MSG_ORDER_INSTANCEOF, typeName2, typeName1);
 		}
 	}
 

@@ -65,7 +65,7 @@ public class JavadocCheck extends BaseCheck {
 				arguments = new Object[] {nameAST.getText()};
 			}
 
-			log(detailAST.getLineNo(), _MSG_MULTIPLE_JAVADOC, arguments);
+			log(detailAST, _MSG_MULTIPLE_JAVADOC, arguments);
 		}
 	}
 

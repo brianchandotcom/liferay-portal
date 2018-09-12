@@ -64,7 +64,7 @@ public class LocalPatternCheck extends BaseCheck {
 
 		DetailAST nameAST = detailAST.findFirstToken(TokenTypes.IDENT);
 
-		log(detailAST.getLineNo(), _MSG_LOCAL_PATTERN, nameAST.getText());
+		log(detailAST, _MSG_LOCAL_PATTERN, nameAST.getText());
 	}
 
 	private static final String _MSG_LOCAL_PATTERN = "pattern.local";

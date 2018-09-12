@@ -68,9 +68,7 @@ public class UnwrappedVariableInfoCheck extends BaseCheck {
 
 		DetailAST nameAST = detailAST.findFirstToken(TokenTypes.IDENT);
 
-		log(
-			detailAST.getLineNo(), _MSG_UNWRAPPED_VARIABLE_INFO,
-			nameAST.getText());
+		log(detailAST, _MSG_UNWRAPPED_VARIABLE_INFO, nameAST.getText());
 	}
 
 	private static final String _MSG_UNWRAPPED_VARIABLE_INFO =

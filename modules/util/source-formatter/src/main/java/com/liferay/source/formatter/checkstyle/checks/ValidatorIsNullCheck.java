@@ -54,7 +54,7 @@ public class ValidatorIsNullCheck extends BaseCheck {
 
 			if (childAST.getType() == TokenTypes.NUM_INT) {
 				log(
-					methodCallAST.getLineNo(), _MSG_INVALID_METHOD_NAME,
+					methodCallAST, _MSG_INVALID_METHOD_NAME,
 					StringBundler.concat(className, ".", methodName, "(long)"));
 
 				continue;
@@ -77,7 +77,7 @@ public class ValidatorIsNullCheck extends BaseCheck {
 				(childAST.getType() == TokenTypes.LITERAL_LONG)) {
 
 				log(
-					methodCallAST.getLineNo(), _MSG_INVALID_METHOD_NAME,
+					methodCallAST, _MSG_INVALID_METHOD_NAME,
 					StringBundler.concat(className, ".", methodName, "(long)"));
 
 				continue;
@@ -91,7 +91,7 @@ public class ValidatorIsNullCheck extends BaseCheck {
 				!typeName.equals("String")) {
 
 				log(
-					methodCallAST.getLineNo(), _MSG_RESERVED_METHOD,
+					methodCallAST, _MSG_RESERVED_METHOD,
 					StringBundler.concat(className, ".", methodName));
 			}
 		}

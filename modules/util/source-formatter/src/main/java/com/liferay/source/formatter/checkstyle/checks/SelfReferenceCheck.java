@@ -69,7 +69,7 @@ public class SelfReferenceCheck extends BaseCheck {
 
 				if (secondChildAST.getType() == TokenTypes.IDENT) {
 					log(
-						methodCallAST.getLineNo(), _MSG_UNNEEDED_SELF_REFERENCE,
+						methodCallAST, _MSG_UNNEEDED_SELF_REFERENCE,
 						secondChildAST.getText(),
 						firstChildAST.getText() + StringPool.PERIOD);
 				}

@@ -49,7 +49,7 @@ public class NumberSuffixCheck extends BaseCheck {
 
 		if (text.endsWith(suffix)) {
 			log(
-				detailAST.getLineNo(), _MSG_INCORRECT_SUFFIX,
+				detailAST, _MSG_INCORRECT_SUFFIX,
 				StringUtil.toUpperCase(suffix), type);
 		}
 	}

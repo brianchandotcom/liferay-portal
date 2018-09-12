@@ -49,7 +49,7 @@ public class StringBundlerNamingCheck extends BaseCheck {
 
 		if (!name.matches("_?(sb|.*SB)([0-9]*)?")) {
 			log(
-				detailAST.getLineNo(), _MSG_INCORRECT_VARIABLE_NAME,
+				detailAST, _MSG_INCORRECT_VARIABLE_NAME,
 				_getTokenTypeName(detailAST), name);
 		}
 	}

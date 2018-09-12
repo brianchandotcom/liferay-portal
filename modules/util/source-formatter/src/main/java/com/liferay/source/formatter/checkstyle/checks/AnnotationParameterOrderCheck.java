@@ -51,7 +51,7 @@ public class AnnotationParameterOrderCheck extends BaseCheck {
 				(previousName.compareToIgnoreCase(name) > 0)) {
 
 				log(
-					annotationMemberValuePairAST.getLineNo(),
+					annotationMemberValuePairAST,
 					_MSG_UNSORTED_ANNOTATION_PARAMETER, name);
 			}
 

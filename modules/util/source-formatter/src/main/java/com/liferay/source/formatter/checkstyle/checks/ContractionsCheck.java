@@ -40,7 +40,7 @@ public class ContractionsCheck extends BaseCheck {
 				!Character.isLetterOrDigit(
 					s.charAt(i + contraction.length()))) {
 
-				log(detailAST.getLineNo(), _MSG_AVOID_CONTRACTION, contraction);
+				log(detailAST, _MSG_AVOID_CONTRACTION, contraction);
 			}
 		}
 	}

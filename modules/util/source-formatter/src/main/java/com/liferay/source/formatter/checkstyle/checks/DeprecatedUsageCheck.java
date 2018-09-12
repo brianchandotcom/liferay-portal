@@ -226,7 +226,7 @@ public class DeprecatedUsageCheck extends BaseCheck {
 
 			if (classInfo.isDeprecatedClass()) {
 				log(
-					literalNewAST.getLineNo(), _MSG_DEPRECATED_TYPE_CALL,
+					literalNewAST, _MSG_DEPRECATED_TYPE_CALL,
 					fullyQualifiedClassName);
 
 				continue;
@@ -249,7 +249,7 @@ public class DeprecatedUsageCheck extends BaseCheck {
 					classInfo.getJavaConstructors(false))) {
 
 				log(
-					literalNewAST.getLineNo(), _MSG_DEPRECATED_CONSTRUCTOR_CALL,
+					literalNewAST, _MSG_DEPRECATED_CONSTRUCTOR_CALL,
 					constructorName);
 			}
 		}
@@ -321,12 +321,10 @@ public class DeprecatedUsageCheck extends BaseCheck {
 			}
 
 			if (classInfo.isDeprecatedClass()) {
-				log(
-					dotAST.getLineNo(), _MSG_DEPRECATED_TYPE_CALL,
-					fullyQualifiedClassName);
+				log(dotAST, _MSG_DEPRECATED_TYPE_CALL, fullyQualifiedClassName);
 			}
 			else {
-				log(dotAST.getLineNo(), _MSG_DEPRECATED_FIELD_CALL, fieldName);
+				log(dotAST, _MSG_DEPRECATED_FIELD_CALL, fieldName);
 			}
 		}
 	}
@@ -368,7 +366,7 @@ public class DeprecatedUsageCheck extends BaseCheck {
 
 			if (classInfo.isDeprecatedClass()) {
 				log(
-					methodCallAST.getLineNo(), _MSG_DEPRECATED_TYPE_CALL,
+					methodCallAST, _MSG_DEPRECATED_TYPE_CALL,
 					fullyQualifiedClassName);
 
 				continue;
@@ -390,9 +388,7 @@ public class DeprecatedUsageCheck extends BaseCheck {
 					methodName, parameterTypeNames,
 					classInfo.getJavaMethods(false))) {
 
-				log(
-					methodCallAST.getLineNo(), _MSG_DEPRECATED_METHOD_CALL,
-					methodName);
+				log(methodCallAST, _MSG_DEPRECATED_METHOD_CALL, methodName);
 			}
 		}
 	}
@@ -475,7 +471,7 @@ public class DeprecatedUsageCheck extends BaseCheck {
 			fullyQualifiedClassName, packageName, directoryPath);
 
 		if ((classInfo != null) && classInfo.isDeprecatedClass()) {
-			log(detailAST.getLineNo(), _MSG_DEPRECATED_TYPE_CALL, className);
+			log(detailAST, _MSG_DEPRECATED_TYPE_CALL, className);
 		}
 	}
 

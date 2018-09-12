@@ -90,9 +90,7 @@ public class UnusedParameterCheck extends BaseCheck {
 			}
 
 			if (!_isReferencedMethod(classAST, detailAST)) {
-				log(
-					detailAST.getLineNo(), _MSG_UNUSED_PARAMETER,
-					parameterName);
+				log(detailAST, _MSG_UNUSED_PARAMETER, parameterName);
 			}
 		}
 	}

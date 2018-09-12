@@ -48,7 +48,7 @@ public class StringCastCheck extends BaseCheck {
 				methodCallAST, variableNameAST.getText(), false);
 
 			if (variableTypeName.equals("String")) {
-				log(methodCallAST.getLineNo(), _MSG_UNNEEDED_STRING_CAST);
+				log(methodCallAST, _MSG_UNNEEDED_STRING_CAST);
 			}
 		}
 	}

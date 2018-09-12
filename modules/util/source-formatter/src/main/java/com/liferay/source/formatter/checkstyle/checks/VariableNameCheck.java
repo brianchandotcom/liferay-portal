@@ -82,7 +82,7 @@ public class VariableNameCheck extends BaseCheck {
 				String newName =
 					name.substring(0, x) + array[0] + name.substring(y);
 
-				log(detailAST.getLineNo(), _MSG_RENAME_VARIABLE, name, newName);
+				log(detailAST, _MSG_RENAME_VARIABLE, name, newName);
 			}
 		}
 	}
@@ -117,7 +117,7 @@ public class VariableNameCheck extends BaseCheck {
 		}
 
 		if (!_classHasVariableWithName(detailAST, newName)) {
-			log(detailAST.getLineNo(), _MSG_RENAME_VARIABLE, name, newName);
+			log(detailAST, _MSG_RENAME_VARIABLE, name, newName);
 		}
 	}
 
@@ -186,7 +186,7 @@ public class VariableNameCheck extends BaseCheck {
 			}
 
 			log(
-				detailAST.getLineNo(), _MSG_TYPO_VARIABLE, name,
+				detailAST, _MSG_TYPO_VARIABLE, name,
 				StringBundler.concat(
 					leadingUnderline, expectedName, nameTrailingDigits));
 
@@ -237,7 +237,7 @@ public class VariableNameCheck extends BaseCheck {
 		}
 
 		log(
-			detailAST.getLineNo(), _MSG_TYPO_VARIABLE, name,
+			detailAST, _MSG_TYPO_VARIABLE, name,
 			_getExpectedVariableName(
 				typeName, leadingUnderline, nameTrailingDigits));
 	}

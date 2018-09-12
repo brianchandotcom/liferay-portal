@@ -67,7 +67,7 @@ public class NotRequireThisCheck extends BaseCheck {
 				}
 			}
 
-			log(thisAST.getLineNo(), _MSG_VARIABLE_THIS_NOT_REQUIRED, name);
+			log(thisAST, _MSG_VARIABLE_THIS_NOT_REQUIRED, name);
 		}
 	}
 

@@ -93,7 +93,7 @@ public class SizeIsZeroCheck extends BaseCheck {
 
 			if (typeName.matches(".*(Collection|List|Map|Set)")) {
 				log(
-					methodCallAST.getLineNo(), _MSG_USE_METHOD,
+					methodCallAST, _MSG_USE_METHOD,
 					variableName + ".isEmpty()");
 			}
 		}

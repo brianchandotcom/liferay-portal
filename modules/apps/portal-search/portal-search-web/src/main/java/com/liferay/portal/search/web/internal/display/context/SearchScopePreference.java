@@ -55,6 +55,15 @@ public enum SearchScopePreference {
 		return _searchScope;
 	}
 
+	private static void _populateMap(
+		Map<String, SearchScopePreference> searchScopePreferences) {
+
+		for (SearchScopePreference searchScopePreference : values()) {
+			searchScopePreferences.put(
+				searchScopePreference._preferenceString, searchScopePreference);
+		}
+	}
+
 	private SearchScopePreference(
 		String preferenceString, SearchScope searchScope) {
 
@@ -65,11 +74,7 @@ public enum SearchScopePreference {
 	private static final Map<String, SearchScopePreference>
 		_searchScopePreferences = new HashMap<String, SearchScopePreference>() {
 			{
-				for (SearchScopePreference searchScopePreference : values()) {
-					put(
-						searchScopePreference._preferenceString,
-						searchScopePreference);
-				}
+				_populateMap(this);
 			}
 		};
 

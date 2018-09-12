@@ -1,6 +1,6 @@
 dependencies {
-	compileOnly group: "org.apache.maven.archetype", name: "archetype-common", version: "2.4"
 	compileOnly group: "com.liferay", name: "com.liferay.project.templates", version: "4.1.7"
+	compileOnly group: "org.apache.maven.archetype", name: "archetype-common", version: "2.4"
 }
 
 generateSampleProject {

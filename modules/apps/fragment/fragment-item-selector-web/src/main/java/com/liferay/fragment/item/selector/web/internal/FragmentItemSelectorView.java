@@ -51,10 +51,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Pavel Savinov
  */
-@Component(
-	property = "item.selector.view.order:Integer=100",
-	service = ItemSelectorView.class
-)
+@Component(property = "item.selector.view.order:Integer=100")
 public class FragmentItemSelectorView
 	implements ItemSelectorView<FragmentItemSelectorCriterion> {
 

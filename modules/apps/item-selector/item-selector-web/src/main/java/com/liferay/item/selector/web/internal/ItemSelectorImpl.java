@@ -57,7 +57,7 @@ import org.osgi.service.component.annotations.ReferencePolicy;
  * @author Iván Zaera
  * @author Roberto Díaz
  */
-@Component(service = ItemSelector.class)
+@Component
 public class ItemSelectorImpl implements ItemSelector {
 
 	public static final String JSON = "_json";

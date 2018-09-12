@@ -27,8 +27,7 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	immediate = true,
-	property = "resource.name=" + OAuth2ProviderConstants.RESOURCE_NAME,
-	service = PortletResourcePermission.class
+	property = "resource.name=" + OAuth2ProviderConstants.RESOURCE_NAME
 )
 public class OAuth2ProviderPortletResourcePermission
 	implements PortletResourcePermission {

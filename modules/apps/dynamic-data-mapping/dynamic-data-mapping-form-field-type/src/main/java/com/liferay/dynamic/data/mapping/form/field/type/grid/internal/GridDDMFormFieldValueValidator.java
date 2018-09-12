@@ -36,10 +36,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Pedro Queiroz
  */
-@Component(
-	immediate = true, property = "ddm.form.field.type.name=grid",
-	service = DDMFormFieldValueValidator.class
-)
+@Component(immediate = true, property = "ddm.form.field.type.name=grid")
 public class GridDDMFormFieldValueValidator
 	implements DDMFormFieldValueValidator {
 

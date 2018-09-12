@@ -42,10 +42,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Carlos Sierra Andrés
  */
-@Component(
-	immediate = true, property = "service.ranking:Integer=100",
-	service = JavaScriptMinifier.class
-)
+@Component(immediate = true, property = "service.ranking:Integer=100")
 public class GoogleJavaScriptMinifier implements JavaScriptMinifier {
 
 	@Override

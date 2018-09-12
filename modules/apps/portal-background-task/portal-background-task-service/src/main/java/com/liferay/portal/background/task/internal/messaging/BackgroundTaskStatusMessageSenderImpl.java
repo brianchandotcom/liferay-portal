@@ -27,7 +27,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Andrew Betts
  */
-@Component(immediate = true, service = BackgroundTaskStatusMessageSender.class)
+@Component(immediate = true)
 public class BackgroundTaskStatusMessageSenderImpl
 	implements BackgroundTaskStatusMessageSender {
 

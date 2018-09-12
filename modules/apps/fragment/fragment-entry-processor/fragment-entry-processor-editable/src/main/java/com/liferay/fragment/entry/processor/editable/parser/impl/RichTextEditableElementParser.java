@@ -27,10 +27,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Eudaldo Alonso
  */
-@Component(
-	immediate = true, property = "type=rich-text",
-	service = EditableElementParser.class
-)
+@Component(immediate = true, property = "type=rich-text")
 public class RichTextEditableElementParser implements EditableElementParser {
 
 	@Override

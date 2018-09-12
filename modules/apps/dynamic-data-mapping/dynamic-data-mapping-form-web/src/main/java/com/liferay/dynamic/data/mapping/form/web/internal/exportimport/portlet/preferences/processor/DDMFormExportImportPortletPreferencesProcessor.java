@@ -44,8 +44,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = "javax.portlet.name=" + DDMPortletKeys.DYNAMIC_DATA_MAPPING_FORM,
-	service = ExportImportPortletPreferencesProcessor.class
+	property = "javax.portlet.name=" + DDMPortletKeys.DYNAMIC_DATA_MAPPING_FORM
 )
 public class DDMFormExportImportPortletPreferencesProcessor
 	implements ExportImportPortletPreferencesProcessor {

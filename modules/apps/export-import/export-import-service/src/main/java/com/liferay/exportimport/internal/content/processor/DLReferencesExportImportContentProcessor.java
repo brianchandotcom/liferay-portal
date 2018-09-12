@@ -62,10 +62,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Gergely Mathe
  */
-@Component(
-	immediate = true, property = "content.processor.type=DLReferences",
-	service = ExportImportContentProcessor.class
-)
+@Component(immediate = true, property = "content.processor.type=DLReferences")
 public class DLReferencesExportImportContentProcessor
 	implements ExportImportContentProcessor<String> {
 

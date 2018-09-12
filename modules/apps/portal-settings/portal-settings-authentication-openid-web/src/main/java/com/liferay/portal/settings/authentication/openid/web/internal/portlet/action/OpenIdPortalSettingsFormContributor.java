@@ -29,7 +29,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Stian Sigvartsen
  */
-@Component(immediate = true, service = PortalSettingsFormContributor.class)
+@Component(immediate = true)
 public class OpenIdPortalSettingsFormContributor
 	implements PortalSettingsFormContributor {
 

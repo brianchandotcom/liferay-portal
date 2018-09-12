@@ -38,8 +38,7 @@ import org.osgi.service.component.annotations.Component;
 	property = {
 		"javax.portlet.name=" + ExportImportPortletKeys.EXPORT_IMPORT,
 		"mvc.command.name=publishLayoutsSimple"
-	},
-	service = MVCRenderCommand.class
+	}
 )
 public class PublishLayoutsSimpleMVCRenderCommand implements MVCRenderCommand {
 

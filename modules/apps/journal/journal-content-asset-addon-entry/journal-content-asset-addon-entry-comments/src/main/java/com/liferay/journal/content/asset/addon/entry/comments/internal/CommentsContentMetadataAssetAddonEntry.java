@@ -43,8 +43,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	configurationPid = "com.liferay.journal.configuration.JournalServiceConfiguration",
-	configurationPolicy = ConfigurationPolicy.OPTIONAL, immediate = true,
-	service = ContentMetadataAssetAddonEntry.class
+	configurationPolicy = ConfigurationPolicy.OPTIONAL, immediate = true
 )
 public class CommentsContentMetadataAssetAddonEntry
 	extends BaseJSPAssetAddonEntry implements ContentMetadataAssetAddonEntry {

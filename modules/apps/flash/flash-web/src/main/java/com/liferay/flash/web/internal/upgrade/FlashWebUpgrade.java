@@ -27,7 +27,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Peter Fellwock
  */
-@Component(immediate = true, service = UpgradeStepRegistrator.class)
+@Component(immediate = true)
 public class FlashWebUpgrade implements UpgradeStepRegistrator {
 
 	@Override

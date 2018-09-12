@@ -39,7 +39,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 /**
  * @author Edward C. Han
  */
-@Component(immediate = true, service = ActionHandlerManager.class)
+@Component(immediate = true)
 public class DefaultActionHandlerManagerImpl implements ActionHandlerManager {
 
 	@Override

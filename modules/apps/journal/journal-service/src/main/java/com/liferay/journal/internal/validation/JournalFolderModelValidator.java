@@ -43,8 +43,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = "model.class.name=com.liferay.journal.model.JournalFolder",
-	service = ModelValidator.class
+	property = "model.class.name=com.liferay.journal.model.JournalFolder"
 )
 public class JournalFolderModelValidator
 	implements ModelValidator<JournalFolder> {

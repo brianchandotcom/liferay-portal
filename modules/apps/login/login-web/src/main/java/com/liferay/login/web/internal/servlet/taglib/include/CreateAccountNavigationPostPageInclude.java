@@ -37,10 +37,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = {
-		"login.web.navigation.position=post", "service.ranking:Integer=200"
-	},
-	service = PageInclude.class
+	property =
+		{"login.web.navigation.position=post", "service.ranking:Integer=200"}
 )
 public class CreateAccountNavigationPostPageInclude implements PageInclude {
 

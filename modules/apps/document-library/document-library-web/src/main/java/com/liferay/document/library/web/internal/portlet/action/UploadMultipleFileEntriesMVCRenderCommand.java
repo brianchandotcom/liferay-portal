@@ -32,8 +32,7 @@ import org.osgi.service.component.annotations.Component;
 		"javax.portlet.name=" + DLPortletKeys.DOCUMENT_LIBRARY_ADMIN,
 		"javax.portlet.name=" + DLPortletKeys.MEDIA_GALLERY_DISPLAY,
 		"mvc.command.name=/document_library/upload_multiple_file_entries"
-	},
-	service = MVCRenderCommand.class
+	}
 )
 public class UploadMultipleFileEntriesMVCRenderCommand
 	implements MVCRenderCommand {

@@ -34,8 +34,7 @@ import org.osgi.service.component.annotations.Component;
 	property = {
 		"javax.portlet.name=hello_soy_portlet", "mvc.command.name=/",
 		"mvc.command.name=View"
-	},
-	service = MVCRenderCommand.class
+	}
 )
 public class HelloSoyViewMVCRenderCommand implements MVCRenderCommand {
 

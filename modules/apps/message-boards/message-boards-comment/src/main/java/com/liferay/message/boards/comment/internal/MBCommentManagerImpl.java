@@ -60,7 +60,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Alexander Chow
  * @author Raymond Augé
  */
-@Component(service = CommentManager.class)
+@Component
 public class MBCommentManagerImpl implements CommentManager {
 
 	@Override

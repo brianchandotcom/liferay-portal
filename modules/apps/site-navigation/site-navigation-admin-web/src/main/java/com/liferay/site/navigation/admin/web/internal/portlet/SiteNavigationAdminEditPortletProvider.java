@@ -25,8 +25,7 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	immediate = true,
-	property = "model.class.name=com.liferay.site.navigation.model.SiteNavigationMenu",
-	service = EditPortletProvider.class
+	property = "model.class.name=com.liferay.site.navigation.model.SiteNavigationMenu"
 )
 public class SiteNavigationAdminEditPortletProvider
 	extends BasePortletProvider implements EditPortletProvider {

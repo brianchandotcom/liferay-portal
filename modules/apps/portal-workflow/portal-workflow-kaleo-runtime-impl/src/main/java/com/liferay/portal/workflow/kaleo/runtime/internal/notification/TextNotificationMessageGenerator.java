@@ -22,10 +22,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Michael C. Han
  */
-@Component(
-	immediate = true, property = "template.language=text",
-	service = NotificationMessageGenerator.class
-)
+@Component(immediate = true, property = "template.language=text")
 public class TextNotificationMessageGenerator
 	implements NotificationMessageGenerator {
 

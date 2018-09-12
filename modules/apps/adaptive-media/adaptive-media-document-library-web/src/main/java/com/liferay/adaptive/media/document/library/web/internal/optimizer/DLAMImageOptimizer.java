@@ -51,10 +51,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Sergio González
  */
-@Component(
-	immediate = true, property = "adaptive.media.key=document-library",
-	service = AMImageOptimizer.class
-)
+@Component(immediate = true, property = "adaptive.media.key=document-library")
 public class DLAMImageOptimizer implements AMImageOptimizer {
 
 	@Override

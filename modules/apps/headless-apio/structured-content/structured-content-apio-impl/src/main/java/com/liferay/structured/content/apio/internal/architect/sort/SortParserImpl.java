@@ -35,7 +35,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Cristina González
  * @review
  */
-@Component(immediate = true, service = SortParser.class)
+@Component(immediate = true)
 public class SortParserImpl implements SortParser {
 
 	/**

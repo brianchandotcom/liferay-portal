@@ -25,8 +25,7 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	immediate = true,
-	property = "model.class.name=com.liferay.invitation.invite.members.model.MemberRequest",
-	service = EditPortletProvider.class
+	property = "model.class.name=com.liferay.invitation.invite.members.model.MemberRequest"
 )
 public class EditMemberRequestPortletProvider
 	extends BasePortletProvider implements EditPortletProvider {

@@ -33,8 +33,7 @@ import org.osgi.service.component.annotations.Component;
 	property = {
 		"indexer.class.name=com.liferay.portal.kernel.model.User",
 		"indexer.class.name=com.liferay.portal.kernel.model.UserGroup"
-	},
-	service = IndexerPostProcessor.class
+	}
 )
 public class TestMultipleEntityIndexerPostProcessor
 	implements IndexerPostProcessor {

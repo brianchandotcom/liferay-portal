@@ -25,8 +25,7 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	immediate = true,
-	property = "type=" + EditorEmbedProviderTypeConstants.VIDEO,
-	service = EditorEmbedProvider.class
+	property = "type=" + EditorEmbedProviderTypeConstants.VIDEO
 )
 public class VimeoEditorEmbedProvider implements EditorEmbedProvider {
 

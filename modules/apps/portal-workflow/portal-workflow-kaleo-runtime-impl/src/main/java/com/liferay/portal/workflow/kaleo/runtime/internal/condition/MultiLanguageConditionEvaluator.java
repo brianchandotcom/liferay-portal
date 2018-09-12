@@ -37,7 +37,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 /**
  * @author Michael C. Han
  */
-@Component(immediate = true, service = ConditionEvaluator.class)
+@Component(immediate = true)
 public class MultiLanguageConditionEvaluator implements ConditionEvaluator {
 
 	@Override

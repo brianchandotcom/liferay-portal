@@ -28,8 +28,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Gergely Mathe
  */
 @Component(
-	property = "model.class.name=com.liferay.bookmarks.model.BookmarksEntry",
-	service = PermissionUpdateHandler.class
+	property = "model.class.name=com.liferay.bookmarks.model.BookmarksEntry"
 )
 public class BookmarksEntryPermissionUpdateHandler
 	implements PermissionUpdateHandler {

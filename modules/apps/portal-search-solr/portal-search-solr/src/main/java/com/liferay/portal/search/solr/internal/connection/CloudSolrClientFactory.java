@@ -29,9 +29,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Michael C. Han
  * @author Tibor Lipusz
  */
-@Component(
-	immediate = true, property = "type=CLOUD", service = SolrClientFactory.class
-)
+@Component(immediate = true, property = "type=CLOUD")
 public class CloudSolrClientFactory implements SolrClientFactory {
 
 	@Override

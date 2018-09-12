@@ -31,7 +31,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author André de Oliveira
  */
-@Component(immediate = true, service = PortletSharedRequestHelper.class)
+@Component(immediate = true)
 public class PortletSharedRequestHelperImpl
 	implements PortletSharedRequestHelper {
 

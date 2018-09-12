@@ -31,8 +31,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = "indexer.class.name=com.liferay.document.library.kernel.model.DLFileEntry",
-	service = ModelVisibilityContributor.class
+	property = "indexer.class.name=com.liferay.document.library.kernel.model.DLFileEntry"
 )
 public class DLFileEntryModelVisibilityContributor
 	implements ModelVisibilityContributor {

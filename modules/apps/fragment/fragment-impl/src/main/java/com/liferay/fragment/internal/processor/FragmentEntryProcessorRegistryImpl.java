@@ -36,7 +36,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Pavel Savinov
  */
-@Component(immediate = true, service = FragmentEntryProcessorRegistry.class)
+@Component(immediate = true)
 public class FragmentEntryProcessorRegistryImpl
 	implements FragmentEntryProcessorRegistry {
 

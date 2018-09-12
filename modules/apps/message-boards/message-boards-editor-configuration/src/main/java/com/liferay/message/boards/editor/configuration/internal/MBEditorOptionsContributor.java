@@ -38,8 +38,7 @@ import org.osgi.service.component.annotations.Component;
 		"editor.name=ckeditor", "editor.name=ckeditor_bbcode",
 		"javax.portlet.name=" + MBPortletKeys.MESSAGE_BOARDS,
 		"javax.portlet.name=" + MBPortletKeys.MESSAGE_BOARDS_ADMIN
-	},
-	service = EditorOptionsContributor.class
+	}
 )
 public class MBEditorOptionsContributor implements EditorOptionsContributor {
 

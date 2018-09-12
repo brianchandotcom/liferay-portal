@@ -47,8 +47,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = "javax.portlet.name=" + MBPortletKeys.MESSAGE_BOARDS,
-	service = ExportImportPortletPreferencesProcessor.class
+	property = "javax.portlet.name=" + MBPortletKeys.MESSAGE_BOARDS
 )
 public class MBExportImportPortletPreferencesProcessor
 	implements ExportImportPortletPreferencesProcessor {

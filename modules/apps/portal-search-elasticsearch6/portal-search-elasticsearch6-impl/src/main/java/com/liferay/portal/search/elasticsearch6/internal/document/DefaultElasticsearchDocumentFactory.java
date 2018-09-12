@@ -42,7 +42,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Michael C. Han
  * @author Milen Dyankov
  */
-@Component(immediate = true, service = ElasticsearchDocumentFactory.class)
+@Component(immediate = true)
 public class DefaultElasticsearchDocumentFactory
 	implements ElasticsearchDocumentFactory {
 

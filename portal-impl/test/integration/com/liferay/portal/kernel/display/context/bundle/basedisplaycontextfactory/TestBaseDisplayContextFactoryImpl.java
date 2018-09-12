@@ -21,7 +21,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Manuel de la Peña
  */
-@Component(immediate = true, service = TestDisplayContextFactory.class)
+@Component(immediate = true)
 public class TestBaseDisplayContextFactoryImpl
 	implements TestDisplayContextFactory {
 }

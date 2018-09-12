@@ -27,8 +27,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Scott Lee
  */
 @Component(
-	immediate = true, property = "javax.portlet.name=" + MailPortletKeys.MAIL,
-	service = MailboxFactory.class
+	immediate = true, property = "javax.portlet.name=" + MailPortletKeys.MAIL
 )
 public class IMAPMailboxFactory implements MailboxFactory {
 

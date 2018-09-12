@@ -23,10 +23,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Eduardo Lundgren
  */
-@Component(
-	immediate = true, property = "notification.type=im",
-	service = NotificationSender.class
-)
+@Component(immediate = true, property = "notification.type=im")
 public class IMNotificationSender implements NotificationSender {
 
 	@Override

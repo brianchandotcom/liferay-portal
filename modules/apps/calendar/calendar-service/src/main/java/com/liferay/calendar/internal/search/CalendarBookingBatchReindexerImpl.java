@@ -31,7 +31,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author André de Oliveira
  */
-@Component(immediate = true, service = CalendarBookingBatchReindexer.class)
+@Component(immediate = true)
 public class CalendarBookingBatchReindexerImpl
 	implements CalendarBookingBatchReindexer {
 

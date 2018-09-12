@@ -61,7 +61,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Alexander Chow
  */
-@Component(immediate = true, service = DDMIndexer.class)
+@Component(immediate = true)
 public class DDMIndexerImpl implements DDMIndexer {
 
 	@Override

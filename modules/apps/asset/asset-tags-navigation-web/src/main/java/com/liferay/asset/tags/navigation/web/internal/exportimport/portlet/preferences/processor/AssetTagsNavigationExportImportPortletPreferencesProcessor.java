@@ -33,8 +33,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = "javax.portlet.name=" + AssetTagsNavigationPortletKeys.ASSET_TAGS_NAVIGATION,
-	service = ExportImportPortletPreferencesProcessor.class
+	property = "javax.portlet.name=" + AssetTagsNavigationPortletKeys.ASSET_TAGS_NAVIGATION
 )
 public class AssetTagsNavigationExportImportPortletPreferencesProcessor
 	implements ExportImportPortletPreferencesProcessor {

@@ -43,8 +43,7 @@ import org.osgi.service.component.annotations.Reference;
 	property = {
 		"javax.portlet.name=" + PortalInstancesPortletKeys.PORTAL_INSTANCES,
 		"mvc.command.name=/portal_instances/edit_instance"
-	},
-	service = MVCRenderCommand.class
+	}
 )
 public class EditInstanceMVCRenderCommand implements MVCRenderCommand {
 

@@ -78,7 +78,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Eduardo Garcia
  */
-@Component(immediate = true, service = UpgradeStepRegistrator.class)
+@Component(immediate = true)
 public class JournalServiceUpgrade implements UpgradeStepRegistrator {
 
 	@Override

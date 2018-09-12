@@ -54,7 +54,7 @@ import org.osgi.service.component.annotations.Component;
  *
  * @author Paulo Cruz
  */
-@Component(immediate = true, service = StructureRepresentorBuilderHelper.class)
+@Component(immediate = true)
 public class StructureRepresentorBuilderHelperImpl
 	implements StructureRepresentorBuilderHelper {
 

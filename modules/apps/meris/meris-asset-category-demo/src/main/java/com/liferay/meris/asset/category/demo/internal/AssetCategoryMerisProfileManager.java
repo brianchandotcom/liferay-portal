@@ -33,7 +33,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Eduardo Garcia
  */
-@Component(immediate = true, service = MerisProfileManager.class)
+@Component(immediate = true)
 public class AssetCategoryMerisProfileManager
 	implements MerisProfileManager<AssetCategoryMerisProfile> {
 

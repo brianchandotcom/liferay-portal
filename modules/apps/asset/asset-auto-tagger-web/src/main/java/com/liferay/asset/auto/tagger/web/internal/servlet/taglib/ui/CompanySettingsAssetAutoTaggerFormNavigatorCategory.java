@@ -29,7 +29,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Alejandro Tardín
  */
-@Component(immediate = true, service = FormNavigatorCategory.class)
+@Component(immediate = true)
 public class CompanySettingsAssetAutoTaggerFormNavigatorCategory
 	implements FormNavigatorCategory {
 

@@ -32,7 +32,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Michael C. Han
  */
-@Component(immediate = true, service = MultiMatchQueryTranslator.class)
+@Component(immediate = true)
 public class MultiMatchQueryTranslatorImpl
 	implements MultiMatchQueryTranslator {
 

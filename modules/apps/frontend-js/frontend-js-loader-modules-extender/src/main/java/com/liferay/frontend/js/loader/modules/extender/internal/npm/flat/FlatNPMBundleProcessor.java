@@ -59,7 +59,7 @@ import org.osgi.service.component.annotations.Reference;
  *
  * @author Iván Zaera
  */
-@Component(immediate = true, service = JSBundleProcessor.class)
+@Component(immediate = true)
 public class FlatNPMBundleProcessor implements JSBundleProcessor {
 
 	@Override

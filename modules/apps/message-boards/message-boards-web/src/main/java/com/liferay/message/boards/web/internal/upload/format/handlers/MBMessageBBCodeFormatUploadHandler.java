@@ -32,9 +32,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Alejandro Tardín
  */
-@Component(
-	property = "format=bbcode", service = MBMessageFormatUploadHandler.class
-)
+@Component(property = "format=bbcode")
 public class MBMessageBBCodeFormatUploadHandler
 	implements MBMessageFormatUploadHandler {
 

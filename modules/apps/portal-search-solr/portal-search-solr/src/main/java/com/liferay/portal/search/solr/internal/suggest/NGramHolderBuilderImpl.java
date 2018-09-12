@@ -29,7 +29,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Michael C. Han
  */
-@Component(immediate = true, service = NGramHolderBuilder.class)
+@Component(immediate = true)
 public class NGramHolderBuilderImpl implements NGramHolderBuilder {
 
 	@Override

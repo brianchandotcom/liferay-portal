@@ -45,8 +45,7 @@ import org.osgi.service.component.annotations.Reference;
 		"javax.portlet.name=" + BlogsPortletKeys.BLOGS_ADMIN,
 		"javax.portlet.name=" + BlogsPortletKeys.BLOGS_AGGREGATOR,
 		"mvc.command.name=/blogs/edit_entry"
-	},
-	service = MVCRenderCommand.class
+	}
 )
 public class EditEntryMVCRenderCommand implements MVCRenderCommand {
 

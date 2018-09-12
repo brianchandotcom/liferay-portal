@@ -43,10 +43,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Alejandro Hernández
  */
-@Component(
-	property = {"source=unsplash", "type=image"},
-	service = FileEntryDemoDataCreator.class
-)
+@Component(property = {"source=unsplash", "type=image"})
 public class UnsplashFileEntryDemoDataCreatorImpl
 	implements FileEntryDemoDataCreator {
 

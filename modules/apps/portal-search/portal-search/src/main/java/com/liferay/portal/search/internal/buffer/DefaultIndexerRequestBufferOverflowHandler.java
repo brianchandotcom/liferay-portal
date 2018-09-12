@@ -35,8 +35,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	configurationPid = "com.liferay.portal.search.configuration.IndexerRegistryConfiguration",
-	immediate = true, property = "mode=DEFAULT",
-	service = IndexerRequestBufferOverflowHandler.class
+	immediate = true, property = "mode=DEFAULT"
 )
 public class DefaultIndexerRequestBufferOverflowHandler
 	implements IndexerRequestBufferOverflowHandler {

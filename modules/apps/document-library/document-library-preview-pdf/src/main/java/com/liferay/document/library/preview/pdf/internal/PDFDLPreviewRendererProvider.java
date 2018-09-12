@@ -39,8 +39,7 @@ import org.osgi.service.component.annotations.Reference;
 	property = {
 		"content.type=" + ContentTypes.APPLICATION_PDF,
 		"content.type=" + ContentTypes.APPLICATION_X_PDF
-	},
-	service = DLPreviewRendererProvider.class
+	}
 )
 public class PDFDLPreviewRendererProvider implements DLPreviewRendererProvider {
 

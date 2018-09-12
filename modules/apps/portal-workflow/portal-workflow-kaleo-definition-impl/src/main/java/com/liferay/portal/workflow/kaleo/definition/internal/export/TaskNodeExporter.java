@@ -30,9 +30,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Michael C. Han
  */
-@Component(
-	immediate = true, property = "node.type=TASK", service = NodeExporter.class
-)
+@Component(immediate = true, property = "node.type=TASK")
 public class TaskNodeExporter extends BaseNodeExporter implements NodeExporter {
 
 	@Override

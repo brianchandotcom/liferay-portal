@@ -40,8 +40,7 @@ import org.osgi.service.component.annotations.Reference;
 	property = {
 		"javax.portlet.name=" + AMPortletKeys.ADAPTIVE_MEDIA,
 		"mvc.command.name=/adaptive_media/edit_image_configuration_entry"
-	},
-	service = MVCRenderCommand.class
+	}
 )
 public class EditImageConfigurationEntryMVCRenderCommand
 	implements MVCRenderCommand {

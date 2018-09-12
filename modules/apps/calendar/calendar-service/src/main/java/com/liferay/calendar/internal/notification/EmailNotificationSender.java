@@ -33,10 +33,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Eduardo Lundgren
  */
-@Component(
-	immediate = true, property = "notification.type=email",
-	service = NotificationSender.class
-)
+@Component(immediate = true, property = "notification.type=email")
 public class EmailNotificationSender implements NotificationSender {
 
 	@Override

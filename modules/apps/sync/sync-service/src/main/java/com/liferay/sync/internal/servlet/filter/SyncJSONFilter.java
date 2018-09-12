@@ -63,8 +63,7 @@ import org.osgi.service.component.annotations.Reference;
 	property = {
 		"after-filter=Upload Servlet Request Filter", "servlet-context-name=",
 		"servlet-filter-name=Sync JSON Filter", "url-pattern=/api/jsonws/*"
-	},
-	service = Filter.class
+	}
 )
 public class SyncJSONFilter implements Filter {
 

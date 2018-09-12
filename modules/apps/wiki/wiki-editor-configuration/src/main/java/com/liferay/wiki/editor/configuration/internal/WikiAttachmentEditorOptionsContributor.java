@@ -40,8 +40,7 @@ import org.osgi.service.component.annotations.Component;
 		"javax.portlet.name=" + WikiPortletKeys.WIKI,
 		"javax.portlet.name=" + WikiPortletKeys.WIKI_ADMIN,
 		"javax.portlet.name=" + WikiPortletKeys.WIKI_DISPLAY
-	},
-	service = EditorOptionsContributor.class
+	}
 )
 public class WikiAttachmentEditorOptionsContributor
 	implements EditorOptionsContributor {

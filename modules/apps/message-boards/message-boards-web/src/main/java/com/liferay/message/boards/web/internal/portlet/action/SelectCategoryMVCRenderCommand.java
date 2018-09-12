@@ -36,8 +36,7 @@ import org.osgi.service.component.annotations.Reference;
 		"javax.portlet.name=" + MBPortletKeys.MESSAGE_BOARDS,
 		"javax.portlet.name=" + MBPortletKeys.MESSAGE_BOARDS_ADMIN,
 		"mvc.command.name=/message_boards/select_category"
-	},
-	service = MVCRenderCommand.class
+	}
 )
 public class SelectCategoryMVCRenderCommand implements MVCRenderCommand {
 

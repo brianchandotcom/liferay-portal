@@ -32,7 +32,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Eudaldo Alonso
  */
-@Component(immediate = true, service = PortletConfigurationIconLocator.class)
+@Component(immediate = true)
 public class MVCPortletConfigurationIconLocator
 	implements PortletConfigurationIconLocator {
 

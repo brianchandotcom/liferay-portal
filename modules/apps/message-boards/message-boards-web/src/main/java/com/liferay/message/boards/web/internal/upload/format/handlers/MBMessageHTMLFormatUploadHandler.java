@@ -30,9 +30,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Alejandro Tardín
  */
-@Component(
-	property = "format=html", service = MBMessageFormatUploadHandler.class
-)
+@Component(property = "format=html")
 public class MBMessageHTMLFormatUploadHandler
 	implements MBMessageFormatUploadHandler {
 

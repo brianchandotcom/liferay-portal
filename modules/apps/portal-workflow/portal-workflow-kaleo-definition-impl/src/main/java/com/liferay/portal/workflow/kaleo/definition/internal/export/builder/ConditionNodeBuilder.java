@@ -26,10 +26,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Michael C. Han
  */
-@Component(
-	immediate = true, property = "node.type=CONDITION",
-	service = NodeBuilder.class
-)
+@Component(immediate = true, property = "node.type=CONDITION")
 public class ConditionNodeBuilder
 	extends BaseNodeBuilder<Condition> implements NodeBuilder {
 

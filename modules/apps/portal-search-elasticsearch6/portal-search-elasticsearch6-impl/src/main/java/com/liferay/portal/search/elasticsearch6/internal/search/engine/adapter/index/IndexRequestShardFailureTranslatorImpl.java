@@ -24,7 +24,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Michael C. Han
  */
-@Component(service = IndexRequestShardFailureTranslator.class)
+@Component
 public class IndexRequestShardFailureTranslatorImpl
 	implements IndexRequestShardFailureTranslator {
 

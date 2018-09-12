@@ -39,8 +39,7 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	immediate = true,
-	property = "model=com.liferay.analytics.model.AnalyticsEventsMessage",
-	service = JSONObjectMapper.class
+	property = "model=com.liferay.analytics.model.AnalyticsEventsMessage"
 )
 public class AnalyticsEventsMessageJSONObjectMapper
 	implements JSONObjectMapper<AnalyticsEventsMessage> {

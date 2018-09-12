@@ -34,7 +34,7 @@ import org.osgi.service.component.annotations.Deactivate;
 /**
  * @author Sergio González
  */
-@Component(service = AMImageScalerTracker.class)
+@Component
 public class AMImageScalerTrackerImpl implements AMImageScalerTracker {
 
 	@Activate

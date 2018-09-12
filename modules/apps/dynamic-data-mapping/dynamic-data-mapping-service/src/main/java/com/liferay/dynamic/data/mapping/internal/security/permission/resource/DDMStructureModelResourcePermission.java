@@ -35,8 +35,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = "model.class.name=com.liferay.dynamic.data.mapping.model.DDMStructure",
-	service = ModelResourcePermission.class
+	property = "model.class.name=com.liferay.dynamic.data.mapping.model.DDMStructure"
 )
 public class DDMStructureModelResourcePermission
 	implements ModelResourcePermission<DDMStructure> {

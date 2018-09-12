@@ -35,7 +35,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Sergio González
  */
-@Component(immediate = true, service = PortletConfigurationIconLocator.class)
+@Component(immediate = true)
 public class LegacyConfigurationIconLocator
 	implements PortletConfigurationIconLocator {
 

@@ -30,10 +30,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Dylan Rebelak
  */
-@Component(
-	immediate = true, property = "search.engine.impl=Elasticsearch",
-	service = ClusterRequestExecutor.class
-)
+@Component(immediate = true, property = "search.engine.impl=Elasticsearch")
 public class ElasticsearchClusterRequestExecutor
 	implements ClusterRequestExecutor {
 

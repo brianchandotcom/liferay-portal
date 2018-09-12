@@ -27,10 +27,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Ambrín Chaudhary
  */
-@Component(
-	property = "name=alloyeditor_bbcode",
-	service = {Editor.class, EditorRenderer.class}
-)
+@Component(property = "name=alloyeditor_bbcode")
 public class AlloyEditorBBCodeEditor implements Editor, EditorRenderer {
 
 	@Override

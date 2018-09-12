@@ -24,8 +24,7 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	immediate = true,
-	property = "configurationPid=com.liferay.users.admin.configuration.UserFileUploadsConfiguration",
-	service = ConfigurationDDMFormDeclaration.class
+	property = "configurationPid=com.liferay.users.admin.configuration.UserFileUploadsConfiguration"
 )
 public class UserFileUploadsConfigurationDDMFormDeclaration
 	implements ConfigurationDDMFormDeclaration {

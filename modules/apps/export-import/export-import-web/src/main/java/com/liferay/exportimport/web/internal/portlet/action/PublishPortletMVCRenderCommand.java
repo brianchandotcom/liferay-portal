@@ -37,8 +37,7 @@ import org.osgi.service.component.annotations.Reference;
 	property = {
 		"javax.portlet.name=" + ExportImportPortletKeys.EXPORT_IMPORT,
 		"mvc.command.name=publishPortlet"
-	},
-	service = MVCRenderCommand.class
+	}
 )
 public class PublishPortletMVCRenderCommand implements MVCRenderCommand {
 

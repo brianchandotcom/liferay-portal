@@ -45,8 +45,7 @@ import org.osgi.service.component.annotations.Reference;
 	property = {
 		"javax.portlet.name=" + FragmentPortletKeys.FRAGMENT,
 		"mvc.command.name=/fragment/export_fragment_entries"
-	},
-	service = MVCResourceCommand.class
+	}
 )
 public class ExportFragmentEntriesMVCResourceCommand
 	implements MVCResourceCommand {

@@ -56,7 +56,7 @@ import org.osgi.util.tracker.BundleTracker;
  */
 @Component(
 	configurationPid = "com.liferay.portal.cluster.multiple.configuration.ClusterExecutorConfiguration",
-	immediate = true, service = ClusterChannelFactory.class
+	immediate = true
 )
 public class JGroupsClusterChannelFactory implements ClusterChannelFactory {
 

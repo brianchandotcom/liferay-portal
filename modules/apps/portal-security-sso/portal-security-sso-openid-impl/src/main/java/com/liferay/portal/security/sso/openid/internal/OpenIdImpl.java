@@ -39,7 +39,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	configurationPid = "com.liferay.portal.security.sso.openid.configuration.OpenIdConfiguration",
-	immediate = true, service = OpenId.class
+	immediate = true
 )
 public class OpenIdImpl implements OpenId {
 

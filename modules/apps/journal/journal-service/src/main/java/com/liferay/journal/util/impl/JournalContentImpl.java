@@ -65,7 +65,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Raymond Augé
  * @author Michael Young
  */
-@Component(service = {IdentifiableOSGiService.class, JournalContent.class})
+@Component
 public class JournalContentImpl
 	implements IdentifiableOSGiService, JournalContent {
 

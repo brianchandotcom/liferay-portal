@@ -48,8 +48,7 @@ import org.osgi.service.component.annotations.Reference;
 		"javax.portlet.name=" + PortletKeys.FAST_LOGIN,
 		"javax.portlet.name=" + PortletKeys.LOGIN,
 		"mvc.command.name=/login/openid"
-	},
-	service = MVCRenderCommand.class
+	}
 )
 public class OpenIdLoginMVCRenderCommand implements MVCRenderCommand {
 

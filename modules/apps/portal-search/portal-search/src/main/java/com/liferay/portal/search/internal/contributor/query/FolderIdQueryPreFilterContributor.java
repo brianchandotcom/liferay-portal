@@ -28,7 +28,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Michael C. Han
  */
-@Component(immediate = true, service = QueryPreFilterContributor.class)
+@Component(immediate = true)
 public class FolderIdQueryPreFilterContributor
 	implements QueryPreFilterContributor {
 

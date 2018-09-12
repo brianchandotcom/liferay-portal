@@ -38,8 +38,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = "model.class.name=com.liferay.dynamic.data.mapping.model.DDMStructure",
-	service = RelationshipResource.class
+	property = "model.class.name=com.liferay.dynamic.data.mapping.model.DDMStructure"
 )
 public class DDMStructureJournalRelationshipResource
 	implements RelationshipResource<DDMStructure> {

@@ -30,8 +30,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Alejandro Tardín
  */
 @Component(
-	property = FormNavigatorContextConstants.FORM_NAVIGATOR_ID + "=" + FormNavigatorConstants.FORM_NAVIGATOR_ID_USERS,
-	service = FormNavigatorContextProvider.class
+	property = FormNavigatorContextConstants.FORM_NAVIGATOR_ID + "=" + FormNavigatorConstants.FORM_NAVIGATOR_ID_USERS
 )
 public class UsersFormNavigatorContextProvider
 	implements FormNavigatorContextProvider<User> {

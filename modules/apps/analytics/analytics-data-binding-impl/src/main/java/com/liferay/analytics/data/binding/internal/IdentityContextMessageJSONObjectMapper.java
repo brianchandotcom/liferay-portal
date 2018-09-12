@@ -33,8 +33,7 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	immediate = true,
-	property = "model=com.liferay.analytics.model.IdentityContextMessage",
-	service = JSONObjectMapper.class
+	property = "model=com.liferay.analytics.model.IdentityContextMessage"
 )
 public class IdentityContextMessageJSONObjectMapper
 	implements JSONObjectMapper<IdentityContextMessage> {

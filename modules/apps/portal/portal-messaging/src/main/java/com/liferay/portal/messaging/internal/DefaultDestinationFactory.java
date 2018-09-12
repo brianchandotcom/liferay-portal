@@ -37,7 +37,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 /**
  * @author Michael C. Han
  */
-@Component(immediate = true, service = DestinationFactory.class)
+@Component(immediate = true)
 public class DefaultDestinationFactory implements DestinationFactory {
 
 	@Override

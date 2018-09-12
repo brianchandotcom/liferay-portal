@@ -85,7 +85,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Michael C. Han
  */
-@Component(immediate = true, service = OpenIdServiceHandler.class)
+@Component(immediate = true)
 public class OpenIdServiceHandlerImpl implements OpenIdServiceHandler {
 
 	@Override

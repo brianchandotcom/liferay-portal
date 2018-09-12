@@ -27,8 +27,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = "indexer.class.name=com.liferay.calendar.model.CalendarBooking",
-	service = ModelPreFilterContributor.class
+	property = "indexer.class.name=com.liferay.calendar.model.CalendarBooking"
 )
 public class CalendarBookingModelPreFilterContributor
 	implements ModelPreFilterContributor {

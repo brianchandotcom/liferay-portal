@@ -29,10 +29,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Alejandro Tardín
  */
 @Component(
-	property = {
-		"format=html", "html.tag.name=img", "service.ranking:Integer=2"
-	},
-	service = AttachmentElementReplacer.class
+	property = {"format=html", "html.tag.name=img", "service.ranking:Integer=2"}
 )
 public class AMHTMLImageAttachmentElementReplacer
 	implements AttachmentElementReplacer {

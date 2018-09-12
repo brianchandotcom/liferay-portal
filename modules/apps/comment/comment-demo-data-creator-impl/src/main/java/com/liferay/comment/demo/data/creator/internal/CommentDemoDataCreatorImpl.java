@@ -45,7 +45,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Alejandro Hernández
  */
-@Component(service = CommentDemoDataCreator.class)
+@Component
 public class CommentDemoDataCreatorImpl implements CommentDemoDataCreator {
 
 	@Override

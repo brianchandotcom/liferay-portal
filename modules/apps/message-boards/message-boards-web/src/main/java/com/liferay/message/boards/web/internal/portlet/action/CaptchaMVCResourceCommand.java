@@ -34,8 +34,7 @@ import org.osgi.service.component.annotations.Component;
 		"javax.portlet.name=" + MBPortletKeys.MESSAGE_BOARDS,
 		"javax.portlet.name=" + MBPortletKeys.MESSAGE_BOARDS_ADMIN,
 		"mvc.command.name=/message_boards/captcha"
-	},
-	service = MVCResourceCommand.class
+	}
 )
 public class CaptchaMVCResourceCommand implements MVCResourceCommand {
 

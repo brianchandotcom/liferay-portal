@@ -26,7 +26,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Marco Leo
  */
-@Component(immediate = true, service = TermsSetFilterTranslator.class)
+@Component(immediate = true)
 public class TermsSetFilterTranslatorImpl implements TermsSetFilterTranslator {
 
 	@Override

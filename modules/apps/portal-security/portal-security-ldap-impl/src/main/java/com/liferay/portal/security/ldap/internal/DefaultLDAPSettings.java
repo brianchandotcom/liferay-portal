@@ -42,7 +42,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Michael C. Han
  * @author Brian Wing Shun Chan
  */
-@Component(immediate = true, service = LDAPSettings.class)
+@Component(immediate = true)
 public class DefaultLDAPSettings implements LDAPSettings {
 
 	@Override

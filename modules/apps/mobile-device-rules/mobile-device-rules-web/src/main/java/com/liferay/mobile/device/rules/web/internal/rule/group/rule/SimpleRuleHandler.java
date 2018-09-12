@@ -38,7 +38,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Edward Han
  * @author Milen Daynkov
  */
-@Component(immediate = true, service = RuleHandler.class)
+@Component(immediate = true)
 public class SimpleRuleHandler implements RuleHandler {
 
 	public static final String PROPERTY_OS = "os";

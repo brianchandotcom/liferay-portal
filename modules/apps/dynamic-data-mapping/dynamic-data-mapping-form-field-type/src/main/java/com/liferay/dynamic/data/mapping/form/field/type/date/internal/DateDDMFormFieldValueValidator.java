@@ -36,10 +36,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Marcela Cunha
  * @author Pedro Queiroz
  */
-@Component(
-	immediate = true, property = "ddm.form.field.type.name=date",
-	service = DDMFormFieldValueValidator.class
-)
+@Component(immediate = true, property = "ddm.form.field.type.name=date")
 public class DateDDMFormFieldValueValidator
 	implements DDMFormFieldValueValidator {
 

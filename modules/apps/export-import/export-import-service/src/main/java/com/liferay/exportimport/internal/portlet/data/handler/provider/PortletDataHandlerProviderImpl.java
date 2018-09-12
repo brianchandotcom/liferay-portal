@@ -26,7 +26,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Mate Thurzo
  */
-@Component(immediate = true, service = PortletDataHandlerProvider.class)
+@Component(immediate = true)
 public class PortletDataHandlerProviderImpl
 	implements PortletDataHandlerProvider {
 

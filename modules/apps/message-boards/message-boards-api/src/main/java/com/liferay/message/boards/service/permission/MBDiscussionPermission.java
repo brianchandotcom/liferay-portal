@@ -43,8 +43,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = "model.class.name=com.liferay.message.boards.model.MBDiscussion",
-	service = BaseModelPermissionChecker.class
+	property = "model.class.name=com.liferay.message.boards.model.MBDiscussion"
 )
 public class MBDiscussionPermission implements BaseModelPermissionChecker {
 

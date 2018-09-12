@@ -42,8 +42,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = "javax.portlet.name=" + AssetPublisherPortletKeys.ASSET_PUBLISHER,
-	service = PortletLayoutListener.class
+	property = "javax.portlet.name=" + AssetPublisherPortletKeys.ASSET_PUBLISHER
 )
 public class AssetPublisherPortletLayoutListener
 	implements PortletLayoutListener {

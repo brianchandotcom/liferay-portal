@@ -34,8 +34,7 @@ import org.osgi.service.component.annotations.Component;
 	property = {
 		"javax.portlet.name=" + DDMPortletKeys.DYNAMIC_DATA_MAPPING_FORM,
 		"mvc.command.name=captcha"
-	},
-	service = MVCResourceCommand.class
+	}
 )
 public class CaptchaMVCResourceCommand implements MVCResourceCommand {
 

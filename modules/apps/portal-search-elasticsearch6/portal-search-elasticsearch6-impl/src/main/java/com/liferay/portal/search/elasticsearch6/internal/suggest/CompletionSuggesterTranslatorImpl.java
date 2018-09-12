@@ -26,7 +26,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Michael C. Han
  */
-@Component(immediate = true, service = CompletionSuggesterTranslator.class)
+@Component(immediate = true)
 public class CompletionSuggesterTranslatorImpl
 	implements CompletionSuggesterTranslator {
 

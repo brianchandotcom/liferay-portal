@@ -31,8 +31,7 @@ import org.osgi.service.component.annotations.Component;
 	property = {
 		"javax.portlet.name=" + WeDeployAuthPortletKeys.WEDEPLOY_AUTH_ADMIN,
 		"mvc.command.name=/wedeploy_auth_admin/edit_wedeploy_auth_app"
-	},
-	service = MVCRenderCommand.class
+	}
 )
 public class EditWeDeployAuthAppMVCRenderCommand implements MVCRenderCommand {
 

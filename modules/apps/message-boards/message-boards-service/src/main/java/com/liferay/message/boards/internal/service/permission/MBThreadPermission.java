@@ -24,8 +24,7 @@ import org.osgi.service.component.annotations.Component;
 @Component(
 	immediate = true,
 	property =
-		{"model.class.name=com.liferay.message.boards.model.MBThread"},
-	service = BaseModelPermissionChecker.class
+		{"model.class.name=com.liferay.message.boards.model.MBThread"}
 )
 public class MBThreadPermission
 	extends MBMessagePermission implements BaseModelPermissionChecker {

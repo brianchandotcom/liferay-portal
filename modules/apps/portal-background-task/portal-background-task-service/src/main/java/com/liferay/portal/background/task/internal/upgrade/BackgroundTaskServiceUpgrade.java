@@ -24,7 +24,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Cristina Rodríguez
  */
-@Component(immediate = true, service = UpgradeStepRegistrator.class)
+@Component(immediate = true)
 public class BackgroundTaskServiceUpgrade implements UpgradeStepRegistrator {
 
 	@Override

@@ -54,8 +54,7 @@ import org.osgi.service.component.annotations.Reference;
 	property = {
 		"template.language=freemarker", "template.language=soy",
 		"template.language=velocity"
-	},
-	service = NotificationMessageGenerator.class
+	}
 )
 public class TemplateNotificationMessageGenerator
 	implements NotificationMessageGenerator {

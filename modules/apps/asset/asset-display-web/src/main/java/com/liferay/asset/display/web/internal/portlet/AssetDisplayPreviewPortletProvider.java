@@ -25,8 +25,7 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	immediate = true,
-	property = "model.class.name=com.liferay.asset.kernel.model.AssetEntry",
-	service = PreviewPortletProvider.class
+	property = "model.class.name=com.liferay.asset.kernel.model.AssetEntry"
 )
 public class AssetDisplayPreviewPortletProvider
 	extends BasePortletProvider implements PreviewPortletProvider {

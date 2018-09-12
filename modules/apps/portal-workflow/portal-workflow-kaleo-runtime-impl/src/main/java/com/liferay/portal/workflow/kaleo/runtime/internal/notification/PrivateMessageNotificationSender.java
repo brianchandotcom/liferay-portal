@@ -28,10 +28,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Michael C. Han
  */
-@Component(
-	immediate = true, property = "notification.type=private-message",
-	service = NotificationSender.class
-)
+@Component(immediate = true, property = "notification.type=private-message")
 public class PrivateMessageNotificationSender
 	extends BaseNotificationSender implements NotificationSender {
 

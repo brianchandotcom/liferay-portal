@@ -35,8 +35,7 @@ import org.osgi.service.component.annotations.Component;
 		"javax.portlet.name=" + PollsPortletKeys.POLLS,
 		"javax.portlet.name=" + PollsPortletKeys.POLLS_DISPLAY,
 		"mvc.command.name=/polls/edit_question"
-	},
-	service = MVCRenderCommand.class
+	}
 )
 public class EditQuestionMVCRenderCommand implements MVCRenderCommand {
 

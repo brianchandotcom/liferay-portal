@@ -42,8 +42,7 @@ import org.osgi.service.component.annotations.Reference;
 	property = {
 		"javax.portlet.name=" + MDRPortletKeys.MOBILE_DEVICE_RULES,
 		"mvc.command.name=/mobile_device_rules/edit_rule"
-	},
-	service = MVCRenderCommand.class
+	}
 )
 public class EditRuleMVCRenderCommand implements MVCRenderCommand {
 

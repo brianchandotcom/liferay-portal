@@ -31,7 +31,7 @@ import org.osgi.service.component.annotations.Deactivate;
 /**
  * @author Michael C. Han
  */
-@Component(immediate = true, service = RelatedEntryIndexerRegistry.class)
+@Component(immediate = true)
 public class RelatedEntryIndexerRegistryImpl
 	implements RelatedEntryIndexerRegistry {
 

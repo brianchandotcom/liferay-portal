@@ -24,7 +24,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Samuel Ziemer
  */
-@Component(immediate = true, service = UpgradeStepRegistrator.class)
+@Component(immediate = true)
 public class AuditStorageServiceUpgrade implements UpgradeStepRegistrator {
 
 	@Override

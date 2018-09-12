@@ -25,8 +25,7 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	immediate = true,
-	property = ContributorConstants.ENTRY_CLASS_NAME_PROPERTY_KEY + "=com.liferay.trash.model.TrashEntry",
-	service = SortFieldNameTranslator.class
+	property = ContributorConstants.ENTRY_CLASS_NAME_PROPERTY_KEY + "=com.liferay.trash.model.TrashEntry"
 )
 public class TrashSortFieldNameTranslator implements SortFieldNameTranslator {
 

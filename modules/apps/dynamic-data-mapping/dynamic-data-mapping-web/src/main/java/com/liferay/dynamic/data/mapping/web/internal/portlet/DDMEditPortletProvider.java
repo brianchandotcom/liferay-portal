@@ -29,8 +29,7 @@ import org.osgi.service.component.annotations.Component;
 	property = {
 		"model.class.name=com.liferay.dynamic.data.mapping.model.DDMStructure",
 		"model.class.name=com.liferay.dynamic.data.mapping.model.DDMTemplate"
-	},
-	service = {EditPortletProvider.class, ViewPortletProvider.class}
+	}
 )
 public class DDMEditPortletProvider
 	extends BasePortletProvider

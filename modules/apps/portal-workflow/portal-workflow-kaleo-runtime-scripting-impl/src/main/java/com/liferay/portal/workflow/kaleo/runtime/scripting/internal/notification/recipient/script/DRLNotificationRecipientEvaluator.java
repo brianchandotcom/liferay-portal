@@ -35,8 +35,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Michael C. Han
  */
 @Component(
-	enabled = false, immediate = true, property = "scripting.language=drl",
-	service = NotificationRecipientEvaluator.class
+	enabled = false, immediate = true, property = "scripting.language=drl"
 )
 public class DRLNotificationRecipientEvaluator
 	implements NotificationRecipientEvaluator {

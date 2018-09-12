@@ -41,8 +41,7 @@ import org.osgi.service.component.annotations.Reference;
 	property = {
 		"javax.portlet.name=" + CurrencyConverterPortletKeys.CURRENCY_CONVERTER,
 		"mvc.command.name=edit"
-	},
-	service = MVCActionCommand.class
+	}
 )
 public class EditPreferencesMVCActionCommand implements MVCActionCommand {
 

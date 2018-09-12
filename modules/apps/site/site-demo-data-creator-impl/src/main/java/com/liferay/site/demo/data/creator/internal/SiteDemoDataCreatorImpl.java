@@ -41,7 +41,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Pei-Jung Lan
  */
-@Component(service = SiteDemoDataCreator.class)
+@Component
 public class SiteDemoDataCreatorImpl implements SiteDemoDataCreator {
 
 	@Override

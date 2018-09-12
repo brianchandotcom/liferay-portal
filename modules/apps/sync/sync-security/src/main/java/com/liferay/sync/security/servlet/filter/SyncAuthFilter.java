@@ -38,8 +38,7 @@ import org.osgi.service.component.annotations.Component;
 	property = {
 		"servlet-context-name=", "servlet-filter-name=Sync Auth Filter",
 		"url-pattern=/api/jsonws/*"
-	},
-	service = Filter.class
+	}
 )
 public class SyncAuthFilter implements Filter {
 

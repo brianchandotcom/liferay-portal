@@ -49,8 +49,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = "factoryPid=com.liferay.portal.security.ldap.configuration.LDAPServerConfiguration",
-	service = ConfigurationProvider.class
+	property = "factoryPid=com.liferay.portal.security.ldap.configuration.LDAPServerConfiguration"
 )
 public class LDAPServerConfigurationProviderImpl
 	extends BaseConfigurationProvider<LDAPServerConfiguration>

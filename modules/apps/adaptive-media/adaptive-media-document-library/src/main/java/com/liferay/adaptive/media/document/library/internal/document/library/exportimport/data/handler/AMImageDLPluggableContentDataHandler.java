@@ -52,8 +52,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = "model.class.name=com.liferay.portal.kernel.repository.model.FileEntry",
-	service = DLPluggableContentDataHandler.class
+	property = "model.class.name=com.liferay.portal.kernel.repository.model.FileEntry"
 )
 public class AMImageDLPluggableContentDataHandler
 	implements DLPluggableContentDataHandler<FileEntry> {

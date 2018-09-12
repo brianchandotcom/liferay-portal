@@ -31,7 +31,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Tina Tian
  */
-@Component(enabled = false, immediate = true, service = ClusterExecutor.class)
+@Component(enabled = false, immediate = true)
 public class SingleClusterExecutor implements ClusterExecutor {
 
 	@Override

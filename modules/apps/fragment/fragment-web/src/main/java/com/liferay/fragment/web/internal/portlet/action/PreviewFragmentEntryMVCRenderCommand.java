@@ -30,8 +30,7 @@ import org.osgi.service.component.annotations.Component;
 	property = {
 		"javax.portlet.name=" + FragmentPortletKeys.FRAGMENT,
 		"mvc.command.name=/fragment/preview_fragment_entry"
-	},
-	service = MVCRenderCommand.class
+	}
 )
 public class PreviewFragmentEntryMVCRenderCommand implements MVCRenderCommand {
 

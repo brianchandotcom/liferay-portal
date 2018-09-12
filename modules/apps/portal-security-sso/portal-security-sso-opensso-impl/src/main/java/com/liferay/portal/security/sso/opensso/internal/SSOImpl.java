@@ -35,7 +35,7 @@ import org.osgi.service.component.annotations.Modified;
  */
 @Component(
 	configurationPid = "com.liferay.portal.security.sso.opensso.configuration.OpenSSOConfiguration",
-	immediate = true, service = SSO.class
+	immediate = true
 )
 public class SSOImpl implements SSO {
 

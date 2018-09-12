@@ -32,8 +32,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = "model.class.name=com.liferay.asset.kernel.model.JournalFeed",
-	service = StagedModelRepository.class
+	property = "model.class.name=com.liferay.asset.kernel.model.JournalFeed"
 )
 public class JournalFeedStagedModelRepository
 	implements StagedModelRepository<JournalFeed> {

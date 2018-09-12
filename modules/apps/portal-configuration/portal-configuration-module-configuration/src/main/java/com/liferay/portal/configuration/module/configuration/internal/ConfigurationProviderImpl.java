@@ -49,7 +49,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Jürgen Kappler
  * @author Jorge Ferrer
  */
-@Component(immediate = true, service = ConfigurationProvider.class)
+@Component(immediate = true)
 public class ConfigurationProviderImpl implements ConfigurationProvider {
 
 	@Override

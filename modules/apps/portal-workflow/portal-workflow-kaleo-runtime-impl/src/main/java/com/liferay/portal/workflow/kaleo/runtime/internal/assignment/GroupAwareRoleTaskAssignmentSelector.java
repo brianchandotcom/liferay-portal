@@ -41,8 +41,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = "assignee.class.name=com.liferay.portal.kernel.model.Role",
-	service = TaskAssignmentSelector.class
+	property = "assignee.class.name=com.liferay.portal.kernel.model.Role"
 )
 public class GroupAwareRoleTaskAssignmentSelector
 	implements TaskAssignmentSelector {

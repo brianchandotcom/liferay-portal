@@ -61,8 +61,7 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
  */
 @Component(
 	immediate = true,
-	property = Constants.SERVICE_PID + "=com.liferay.portal.messaging.configuration.DestinationWorkerConfiguration",
-	service = {ManagedServiceFactory.class, MessageBus.class}
+	property = Constants.SERVICE_PID + "=com.liferay.portal.messaging.configuration.DestinationWorkerConfiguration"
 )
 public class DefaultMessageBus implements ManagedServiceFactory, MessageBus {
 

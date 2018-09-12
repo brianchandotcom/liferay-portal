@@ -38,8 +38,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = {"description.fields=description", "title.fields=title"},
-	service = FieldQueryBuilderFactory.class
+	property = {"description.fields=description", "title.fields=title"}
 )
 public class FieldQueryBuilderFactoryImpl implements FieldQueryBuilderFactory {
 

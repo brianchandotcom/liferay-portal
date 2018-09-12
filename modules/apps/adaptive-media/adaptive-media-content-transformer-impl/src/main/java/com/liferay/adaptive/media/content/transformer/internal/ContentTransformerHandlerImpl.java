@@ -37,7 +37,7 @@ import org.osgi.service.component.annotations.Deactivate;
  *
  * @author Alejandro Tardín
  */
-@Component(immediate = true, service = ContentTransformerHandler.class)
+@Component(immediate = true)
 public class ContentTransformerHandlerImpl
 	implements ContentTransformerHandler {
 

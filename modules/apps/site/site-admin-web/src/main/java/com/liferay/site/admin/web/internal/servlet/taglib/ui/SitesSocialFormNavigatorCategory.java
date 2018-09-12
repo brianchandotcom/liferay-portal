@@ -25,10 +25,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Sergio González
  */
-@Component(
-	property = "form.navigator.category.order:Integer=30",
-	service = FormNavigatorCategory.class
-)
+@Component(property = "form.navigator.category.order:Integer=30")
 public class SitesSocialFormNavigatorCategory implements FormNavigatorCategory {
 
 	@Override

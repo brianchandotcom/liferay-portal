@@ -40,8 +40,7 @@ import org.osgi.service.component.annotations.Reference;
 	property = {
 		"javax.portlet.name=" + ConfigurationAdminPortletKeys.SYSTEM_SETTINGS,
 		"mvc.command.name=deleteConfiguration"
-	},
-	service = MVCActionCommand.class
+	}
 )
 public class DeleteConfigurationMVCActionCommand implements MVCActionCommand {
 

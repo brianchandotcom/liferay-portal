@@ -30,8 +30,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = "indexer.class.name=com.liferay.document.library.kernel.model.DLFileEntry",
-	service = KeywordQueryContributor.class
+	property = "indexer.class.name=com.liferay.document.library.kernel.model.DLFileEntry"
 )
 public class DLFileEntryKeywordQueryContributor
 	implements KeywordQueryContributor {

@@ -45,8 +45,7 @@ import org.osgi.service.component.annotations.Reference;
 	property = {
 		"javax.portlet.name=" + UsersAdminPortletKeys.USERS_ADMIN,
 		"mvc.command.name=/users_admin/get_users_count"
-	},
-	service = MVCResourceCommand.class
+	}
 )
 public class GetUsersCountMVCResourceCommand implements MVCResourceCommand {
 

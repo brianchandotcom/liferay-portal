@@ -30,8 +30,7 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	immediate = true,
-	property = "model.class.name=com.liferay.portal.kernel.model.MembershipRequest",
-	service = EditPortletProvider.class
+	property = "model.class.name=com.liferay.portal.kernel.model.MembershipRequest"
 )
 public class SiteMembershipsEditPortletProvider
 	extends BasePortletProvider implements EditPortletProvider {

@@ -27,7 +27,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Adolfo Pérez
  */
-@Component(immediate = true, service = AMURIResolver.class)
+@Component(immediate = true)
 public class DefaultAMURIResolver implements AMURIResolver {
 
 	@Override

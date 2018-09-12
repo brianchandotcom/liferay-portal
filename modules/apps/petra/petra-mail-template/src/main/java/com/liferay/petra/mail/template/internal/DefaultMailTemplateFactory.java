@@ -25,8 +25,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Adolfo Pérez
  */
 @Component(
-	property = Constants.SERVICE_RANKING + ":Integer=" + Integer.MIN_VALUE,
-	service = MailTemplateFactory.class
+	property = Constants.SERVICE_RANKING + ":Integer=" + Integer.MIN_VALUE
 )
 public class DefaultMailTemplateFactory implements MailTemplateFactory {
 

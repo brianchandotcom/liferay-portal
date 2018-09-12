@@ -35,7 +35,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	configurationPid = "com.liferay.captcha.configuration.CaptchaConfiguration",
-	immediate = true, service = CaptchaSettings.class
+	immediate = true
 )
 public class CaptchaSettingsImpl implements CaptchaSettings {
 

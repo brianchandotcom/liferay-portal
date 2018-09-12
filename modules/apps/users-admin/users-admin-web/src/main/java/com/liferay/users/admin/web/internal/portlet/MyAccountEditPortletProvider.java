@@ -28,11 +28,7 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	immediate = true,
-	property = "model.class.name=" + PortalMyAccountApplicationType.MyAccount.CLASS_NAME,
-	service = {
-		EditPortletProvider.class, ManagePortletProvider.class,
-		ViewPortletProvider.class
-	}
+	property = "model.class.name=" + PortalMyAccountApplicationType.MyAccount.CLASS_NAME
 )
 public class MyAccountEditPortletProvider
 	extends BasePortletProvider

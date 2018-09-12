@@ -37,8 +37,7 @@ import org.osgi.service.component.annotations.Component;
 		"editor.config.key=contentEditor",
 		"javax.portlet.name=" + BlogsPortletKeys.BLOGS,
 		"javax.portlet.name=" + BlogsPortletKeys.BLOGS_ADMIN
-	},
-	service = EditorOptionsContributor.class
+	}
 )
 public class BlogsContentEditorOptionsContributor
 	implements EditorOptionsContributor {

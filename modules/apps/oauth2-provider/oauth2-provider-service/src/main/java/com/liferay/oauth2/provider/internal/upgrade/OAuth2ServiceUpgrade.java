@@ -22,7 +22,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Carlos Sierra Andrés
  */
-@Component(service = UpgradeStepRegistrator.class)
+@Component
 public class OAuth2ServiceUpgrade implements UpgradeStepRegistrator {
 
 	@Override

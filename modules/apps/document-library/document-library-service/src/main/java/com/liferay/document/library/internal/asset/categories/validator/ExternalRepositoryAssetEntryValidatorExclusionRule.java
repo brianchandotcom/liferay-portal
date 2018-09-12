@@ -29,8 +29,7 @@ import org.osgi.service.component.annotations.Reference;
 	property = {
 		"model.class.name=com.liferay.document.library.kernel.model.DLFileEntry",
 		"model.class.name=com.liferay.portal.kernel.repository.model.FileEntry"
-	},
-	service = AssetEntryValidatorExclusionRule.class
+	}
 )
 public class ExternalRepositoryAssetEntryValidatorExclusionRule
 	implements AssetEntryValidatorExclusionRule {

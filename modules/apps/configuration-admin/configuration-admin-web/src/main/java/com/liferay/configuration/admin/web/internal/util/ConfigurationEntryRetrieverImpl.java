@@ -52,7 +52,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Jorge Ferrer
  * @author Michael C. Han
  */
-@Component(immediate = true, service = ConfigurationEntryRetriever.class)
+@Component(immediate = true)
 public class ConfigurationEntryRetrieverImpl
 	implements ConfigurationEntryRetriever {
 

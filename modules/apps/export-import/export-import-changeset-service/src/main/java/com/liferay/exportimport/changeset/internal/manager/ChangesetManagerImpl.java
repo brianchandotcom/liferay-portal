@@ -47,7 +47,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Mate Thurzo
  */
-@Component(immediate = true, service = ChangesetManager.class)
+@Component(immediate = true)
 public class ChangesetManagerImpl implements ChangesetManager {
 
 	@Override

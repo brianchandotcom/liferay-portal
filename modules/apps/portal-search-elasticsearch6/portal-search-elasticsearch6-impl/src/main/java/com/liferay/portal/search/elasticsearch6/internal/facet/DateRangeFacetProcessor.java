@@ -34,8 +34,7 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	immediate = true,
-	property = "class.name=com.liferay.portal.kernel.search.facet.DateRangeFacet",
-	service = FacetProcessor.class
+	property = "class.name=com.liferay.portal.kernel.search.facet.DateRangeFacet"
 )
 public class DateRangeFacetProcessor
 	implements FacetProcessor<SearchRequestBuilder> {

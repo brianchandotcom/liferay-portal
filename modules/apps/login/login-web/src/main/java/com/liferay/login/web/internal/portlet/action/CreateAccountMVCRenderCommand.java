@@ -32,8 +32,7 @@ import org.osgi.service.component.annotations.Component;
 		"javax.portlet.name=" + LoginPortletKeys.FAST_LOGIN,
 		"javax.portlet.name=" + LoginPortletKeys.LOGIN,
 		"mvc.command.name=/login/create_account"
-	},
-	service = MVCRenderCommand.class
+	}
 )
 public class CreateAccountMVCRenderCommand implements MVCRenderCommand {
 

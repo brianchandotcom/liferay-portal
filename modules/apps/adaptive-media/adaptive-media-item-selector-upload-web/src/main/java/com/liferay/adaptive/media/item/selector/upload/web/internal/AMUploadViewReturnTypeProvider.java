@@ -26,10 +26,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Alejandro Tardín
  */
-@Component(
-	property = "item.selector.view.key=upload",
-	service = ItemSelectorViewReturnTypeProvider.class
-)
+@Component(property = "item.selector.view.key=upload")
 public class AMUploadViewReturnTypeProvider
 	implements ItemSelectorViewReturnTypeProvider {
 

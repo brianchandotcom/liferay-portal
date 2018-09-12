@@ -32,7 +32,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Michael C. Han
  */
-@Component(immediate = true, service = SolrDocumentFactory.class)
+@Component(immediate = true)
 public class DefaultSolrDocumentFactory implements SolrDocumentFactory {
 
 	@Override

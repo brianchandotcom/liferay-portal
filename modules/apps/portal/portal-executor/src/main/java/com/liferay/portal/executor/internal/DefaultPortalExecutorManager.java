@@ -41,7 +41,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
  * @author Shuyang Zhou
  * @author Preston Crary
  */
-@Component(immediate = true, service = PortalExecutorManager.class)
+@Component(immediate = true)
 public class DefaultPortalExecutorManager implements PortalExecutorManager {
 
 	public static final String DEFAULT_CONFIG_NAME = "default";

@@ -33,7 +33,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Mate Thurzo
  */
-@Component(immediate = true, service = StagedModelRepositoryHelper.class)
+@Component(immediate = true)
 public class StagedModelRepositoryHelperImpl
 	implements StagedModelRepositoryHelper {
 

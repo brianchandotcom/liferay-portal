@@ -40,8 +40,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 		"javax.portlet.name=" + UsersAdminPortletKeys.MY_ORGANIZATIONS,
 		"javax.portlet.name=" + UsersAdminPortletKeys.USERS_ADMIN,
 		"mvc.command.name=/", "mvc.command.name=/users_admin/view"
-	},
-	service = MVCRenderCommand.class
+	}
 )
 public class ViewMVCRenderCommand implements MVCRenderCommand {
 

@@ -30,8 +30,7 @@ import org.osgi.service.component.annotations.Component;
 	property = {
 		"javax.portlet.name=" + BlogsPortletKeys.BLOGS,
 		"mvc.command.name=/blogs/view_not_published_entries"
-	},
-	service = MVCRenderCommand.class
+	}
 )
 public class BlogsViewNotPublishedEntriesMVCRenderCommand
 	implements MVCRenderCommand {

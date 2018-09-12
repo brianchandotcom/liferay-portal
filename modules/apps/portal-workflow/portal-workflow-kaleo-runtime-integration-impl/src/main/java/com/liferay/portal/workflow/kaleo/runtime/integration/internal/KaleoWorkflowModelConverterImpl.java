@@ -59,7 +59,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Shuyang Zhou
  */
-@Component(immediate = true, service = KaleoWorkflowModelConverter.class)
+@Component(immediate = true)
 public class KaleoWorkflowModelConverterImpl
 	implements KaleoWorkflowModelConverter {
 

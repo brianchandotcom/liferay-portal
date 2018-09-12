@@ -51,8 +51,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = "javax.portlet.name=" + BookmarksPortletKeys.BOOKMARKS,
-	service = ExportImportPortletPreferencesProcessor.class
+	property = "javax.portlet.name=" + BookmarksPortletKeys.BOOKMARKS
 )
 public class BookmarksExportImportPortletPreferencesProcessor
 	implements ExportImportPortletPreferencesProcessor {

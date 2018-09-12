@@ -33,8 +33,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = "javax.portlet.name=" + SiteNavigationLanguagePortletKeys.SITE_NAVIGATION_LANGUAGE,
-	service = ExportImportPortletPreferencesProcessor.class
+	property = "javax.portlet.name=" + SiteNavigationLanguagePortletKeys.SITE_NAVIGATION_LANGUAGE
 )
 public class SiteNavigationLanguageExportImportPortletPreferencesProcessor
 	implements ExportImportPortletPreferencesProcessor {

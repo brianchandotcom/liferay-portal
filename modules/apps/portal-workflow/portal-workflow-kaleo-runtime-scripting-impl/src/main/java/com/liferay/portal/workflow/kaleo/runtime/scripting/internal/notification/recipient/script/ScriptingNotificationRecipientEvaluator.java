@@ -39,8 +39,7 @@ import org.osgi.service.component.annotations.Reference;
 		"scripting.language=beanshell", "scripting.language=groovy",
 		"scripting.language=javascript", "scripting.language=python",
 		"scripting.language=ruby"
-	},
-	service = NotificationRecipientEvaluator.class
+	}
 )
 public class ScriptingNotificationRecipientEvaluator
 	implements NotificationRecipientEvaluator {

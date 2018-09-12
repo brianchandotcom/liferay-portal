@@ -31,7 +31,7 @@ import org.osgi.service.component.annotations.Modified;
  */
 @Component(
 	configurationPid = "com.liferay.portal.upload.internal.configuration.UploadServletRequestConfiguration",
-	immediate = true, service = UploadServletRequestConfigurationHelper.class
+	immediate = true
 )
 public class UploadServletRequestConfigurationHelperImpl
 	implements UploadServletRequestConfigurationHelper {

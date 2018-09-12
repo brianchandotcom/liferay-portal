@@ -30,10 +30,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Sergio González
  */
-@Component(
-	immediate = true, property = "adaptive.media.key=document-library",
-	service = AMImageCounter.class
-)
+@Component(immediate = true, property = "adaptive.media.key=document-library")
 public class DLAMImageCounter implements AMImageCounter {
 
 	@Override

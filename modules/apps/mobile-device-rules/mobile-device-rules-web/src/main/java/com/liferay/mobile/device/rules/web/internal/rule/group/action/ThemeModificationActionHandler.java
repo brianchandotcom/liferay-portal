@@ -38,7 +38,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Edward Han
  */
-@Component(immediate = true, service = ActionHandler.class)
+@Component(immediate = true)
 public class ThemeModificationActionHandler implements ActionHandler {
 
 	public static String getHandlerType() {

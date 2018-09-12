@@ -38,8 +38,7 @@ import org.osgi.service.component.annotations.Reference;
 		"com.liferay.portal.workflow.kaleo.runtime.action.executor.language=javascript",
 		"com.liferay.portal.workflow.kaleo.runtime.action.executor.language=python",
 		"com.liferay.portal.workflow.kaleo.runtime.action.executor.language=ruby"
-	},
-	service = ActionExecutor.class
+	}
 )
 public class ScriptActionExecutor implements ActionExecutor {
 

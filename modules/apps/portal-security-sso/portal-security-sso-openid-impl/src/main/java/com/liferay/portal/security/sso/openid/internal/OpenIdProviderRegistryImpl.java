@@ -48,8 +48,7 @@ import org.osgi.service.component.annotations.ReferencePolicy;
 		"open.id.ax.type.fullname[yahoo]=http://axschema.org/namePerson",
 		"open.id.ax.type.lastname[default]=http://schema.openid.net/namePerson/last",
 		"open.id.url[yahoo]=open.login.yahooapis.com"
-	},
-	service = OpenIdProviderRegistry.class
+	}
 )
 public class OpenIdProviderRegistryImpl implements OpenIdProviderRegistry {
 

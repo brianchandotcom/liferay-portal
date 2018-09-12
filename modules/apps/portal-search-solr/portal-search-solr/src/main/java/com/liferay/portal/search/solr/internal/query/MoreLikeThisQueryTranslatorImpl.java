@@ -28,7 +28,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Michael C. Han
  */
-@Component(immediate = true, service = MoreLikeThisQueryTranslator.class)
+@Component(immediate = true)
 public class MoreLikeThisQueryTranslatorImpl
 	implements MoreLikeThisQueryTranslator {
 

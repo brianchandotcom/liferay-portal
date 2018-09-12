@@ -60,8 +60,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	configurationPid = "com.liferay.document.library.asset.auto.tagger.tensorflow.internal.configuration.TensorFlowImageAssetAutoTagProviderProcessConfiguration",
-	property = "model.class.name=com.liferay.document.library.kernel.model.DLFileEntry",
-	service = AssetAutoTagProvider.class
+	property = "model.class.name=com.liferay.document.library.kernel.model.DLFileEntry"
 )
 public class TensorFlowImageAssetAutoTagProvider
 	implements AssetAutoTagProvider<FileEntry> {

@@ -29,8 +29,7 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	immediate = true,
-	property = "assignee.class.name=com.liferay.portal.kernel.model.User",
-	service = TaskAssignmentSelector.class
+	property = "assignee.class.name=com.liferay.portal.kernel.model.User"
 )
 public class DefaultTaskAssignmentSelector implements TaskAssignmentSelector {
 

@@ -29,8 +29,7 @@ import org.osgi.service.component.annotations.Reference;
  * @deprecated As of Judson (7.1.x), with no direct replacement
  */
 @Component(
-	property = "model.class.name=com.liferay.knowledge.base.model.KBComment",
-	service = BaseModelPermissionChecker.class
+	property = "model.class.name=com.liferay.knowledge.base.model.KBComment"
 )
 @Deprecated
 public class KBCommentPermission implements BaseModelPermissionChecker {

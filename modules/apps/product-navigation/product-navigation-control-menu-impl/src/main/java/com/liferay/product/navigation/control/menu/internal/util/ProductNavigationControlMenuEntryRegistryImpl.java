@@ -40,9 +40,7 @@ import org.osgi.service.component.annotations.Deactivate;
 /**
  * @author Julio Camarero
  */
-@Component(
-	immediate = true, service = ProductNavigationControlMenuEntryRegistry.class
-)
+@Component(immediate = true)
 public class ProductNavigationControlMenuEntryRegistryImpl
 	implements ProductNavigationControlMenuEntryRegistry {
 

@@ -59,8 +59,7 @@ import org.osgi.service.metatype.AttributeDefinition;
 		"javax.portlet.name=" +
 			ConfigurationAdminPortletKeys.SYSTEM_SETTINGS,
 		"mvc.command.name=export"
-	},
-	service = MVCResourceCommand.class
+	}
 )
 public class ExportConfigurationMVCResourceCommand
 	implements MVCResourceCommand {

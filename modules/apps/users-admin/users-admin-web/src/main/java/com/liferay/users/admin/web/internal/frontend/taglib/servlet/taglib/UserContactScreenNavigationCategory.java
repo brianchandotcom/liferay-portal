@@ -25,10 +25,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Pei-Jung Lan
  */
-@Component(
-	property = "screen.navigation.category.order:Integer=20",
-	service = ScreenNavigationCategory.class
-)
+@Component(property = "screen.navigation.category.order:Integer=20")
 public class UserContactScreenNavigationCategory
 	implements ScreenNavigationCategory {
 

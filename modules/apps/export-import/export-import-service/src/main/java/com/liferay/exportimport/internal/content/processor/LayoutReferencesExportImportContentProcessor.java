@@ -63,8 +63,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	configurationPid = "com.liferay.exportimport.configuration.ExportImportServiceConfiguration",
-	immediate = true, property = "content.processor.type=LayoutReferences",
-	service = ExportImportContentProcessor.class
+	immediate = true, property = "content.processor.type=LayoutReferences"
 )
 public class LayoutReferencesExportImportContentProcessor
 	implements ExportImportContentProcessor<String> {

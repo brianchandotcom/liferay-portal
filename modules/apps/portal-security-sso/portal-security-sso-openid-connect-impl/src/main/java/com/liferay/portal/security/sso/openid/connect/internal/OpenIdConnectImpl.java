@@ -29,7 +29,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Michael C. Han
  */
-@Component(immediate = true, service = OpenIdConnect.class)
+@Component(immediate = true)
 public class OpenIdConnectImpl implements OpenIdConnect {
 
 	@Override

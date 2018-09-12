@@ -33,8 +33,7 @@ import org.osgi.service.component.annotations.Component;
 		"editor.config.key=subtitleEditor", "editor.config.key=titleEditor",
 		"javax.portlet.name=" + BlogsPortletKeys.BLOGS,
 		"javax.portlet.name=" + BlogsPortletKeys.BLOGS_ADMIN
-	},
-	service = EditorOptionsContributor.class
+	}
 )
 public class BlogsTextEditorOptionsContributor
 	implements EditorOptionsContributor {

@@ -38,7 +38,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Michael C. Han
  */
-@Component(service = AnalyzeIndexRequestExecutor.class)
+@Component
 public class AnalyzeIndexRequestExecutorImpl
 	implements AnalyzeIndexRequestExecutor {
 

@@ -32,9 +32,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Michael C. Han
  */
-@Component(
-	immediate = true, service = CommonSearchRequestBuilderAssembler.class
-)
+@Component(immediate = true)
 public class CommonSearchRequestBuilderAssemblerImpl
 	implements CommonSearchRequestBuilderAssembler {
 

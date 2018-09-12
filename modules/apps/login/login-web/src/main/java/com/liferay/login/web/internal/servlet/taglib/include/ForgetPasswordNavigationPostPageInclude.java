@@ -34,10 +34,8 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	immediate = true,
-	property = {
-		"login.web.navigation.position=post", "service.ranking:Integer=100"
-	},
-	service = PageInclude.class
+	property =
+		{"login.web.navigation.position=post", "service.ranking:Integer=100"}
 )
 public class ForgetPasswordNavigationPostPageInclude implements PageInclude {
 

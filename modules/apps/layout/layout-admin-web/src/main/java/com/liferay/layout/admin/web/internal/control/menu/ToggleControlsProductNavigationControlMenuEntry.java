@@ -49,8 +49,7 @@ import org.osgi.service.component.annotations.Component;
 	property = {
 		"product.navigation.control.menu.category.key=" + ProductNavigationControlMenuCategoryKeys.TOOLS,
 		"product.navigation.control.menu.entry.order:Integer=200"
-	},
-	service = ProductNavigationControlMenuEntry.class
+	}
 )
 public class ToggleControlsProductNavigationControlMenuEntry
 	extends BaseProductNavigationControlMenuEntry

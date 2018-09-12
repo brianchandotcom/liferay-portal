@@ -33,8 +33,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = "javax.portlet.name=" + SiteNavigationBreadcrumbPortletKeys.SITE_NAVIGATION_BREADCRUMB,
-	service = ExportImportPortletPreferencesProcessor.class
+	property = "javax.portlet.name=" + SiteNavigationBreadcrumbPortletKeys.SITE_NAVIGATION_BREADCRUMB
 )
 public class SiteNavigationBreadcrumbExportImportPortletPreferencesProcessor
 	implements ExportImportPortletPreferencesProcessor {

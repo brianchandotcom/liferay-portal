@@ -43,7 +43,7 @@ import org.osgi.service.component.runtime.dto.ComponentDescriptionDTO;
  */
 @Component(
 	configurationPid = "com.liferay.portal.component.blacklist.internal.ComponentBlacklistConfiguration",
-	immediate = true, service = ComponentBlacklist.class
+	immediate = true
 )
 public class ComponentBlacklistImpl implements ComponentBlacklist {
 

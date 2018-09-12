@@ -33,8 +33,7 @@ import org.osgi.service.component.annotations.Component;
 		"javax.portlet.name=" + PortletKeys.MY_SITES_DIRECTORY,
 		"javax.portlet.name=" + PortletKeys.SITE_MEMBERS_DIRECTORY,
 		"mvc.command.name=/directory/view_user"
-	},
-	service = MVCRenderCommand.class
+	}
 )
 public class ViewOrganizationDirectoryMVCRenderCommand
 	implements MVCRenderCommand {

@@ -34,10 +34,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Dylan Rebelak
  */
-@Component(
-	immediate = true, property = "search.engine.impl=Elasticsearch",
-	service = IndexRequestExecutor.class
-)
+@Component(immediate = true, property = "search.engine.impl=Elasticsearch")
 public class ElasticsearchIndexRequestExecutor implements IndexRequestExecutor {
 
 	@Override

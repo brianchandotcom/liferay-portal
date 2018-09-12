@@ -28,11 +28,7 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	immediate = true,
-	property = "model.class.name=" + AnnouncementsConstants.CLASS_NAME_ALERTS_ENTRY,
-	service = {
-		EditPortletProvider.class, ManagePortletProvider.class,
-		ViewPortletProvider.class
-	}
+	property = "model.class.name=" + AnnouncementsConstants.CLASS_NAME_ALERTS_ENTRY
 )
 public class AlertsEditPortletProvider
 	extends BasePortletProvider

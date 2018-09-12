@@ -41,7 +41,7 @@ import org.osgi.service.component.annotations.Component;
  * @author David Arques
  * @review
  */
-@Component(immediate = true, service = FilterParser.class)
+@Component(immediate = true)
 public class FilterParserImpl implements FilterParser {
 
 	@Override

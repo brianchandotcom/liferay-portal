@@ -25,7 +25,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Bryan Engler
  */
-@Component(immediate = true, service = SearchPermissionFilterContributor.class)
+@Component(immediate = true)
 public class CalendarSearchPermissionFilterContributor
 	implements SearchPermissionFilterContributor {
 

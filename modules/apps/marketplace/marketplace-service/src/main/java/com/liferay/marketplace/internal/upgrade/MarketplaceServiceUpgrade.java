@@ -27,7 +27,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Joan Kim
  * @author Ryan Park
  */
-@Component(immediate = true, service = UpgradeStepRegistrator.class)
+@Component(immediate = true)
 public class MarketplaceServiceUpgrade implements UpgradeStepRegistrator {
 
 	@Override

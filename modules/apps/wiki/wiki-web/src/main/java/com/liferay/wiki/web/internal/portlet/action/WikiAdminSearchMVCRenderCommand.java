@@ -34,8 +34,7 @@ import org.osgi.service.component.annotations.Reference;
 	property = {
 		"javax.portlet.name=" + WikiPortletKeys.WIKI_ADMIN,
 		"mvc.command.name=/wiki/search"
-	},
-	service = MVCRenderCommand.class
+	}
 )
 public class WikiAdminSearchMVCRenderCommand implements MVCRenderCommand {
 

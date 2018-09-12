@@ -15,7 +15,6 @@
 package com.liferay.dynamic.data.mapping.form.renderer.internal.util;
 
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.servlet.http.HttpServletRequest;
@@ -29,11 +28,7 @@ public class DDMFormTemplateContextFactoryUtil {
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		if (themeDisplay != null) {
-			return themeDisplay.getPathThemeImages();
-		}
-
-		return ParamUtil.getString(request, "pathThemeImages");
+		return themeDisplay.getPathThemeImages();
 	}
 
 }

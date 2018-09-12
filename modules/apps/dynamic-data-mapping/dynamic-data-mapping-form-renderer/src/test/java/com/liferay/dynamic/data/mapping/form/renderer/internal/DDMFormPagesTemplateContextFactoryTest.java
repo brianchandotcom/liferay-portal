@@ -42,6 +42,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.ResourceBundleLoaderUtil;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.util.HtmlImpl;
@@ -74,7 +75,7 @@ import org.powermock.modules.junit4.PowerMockRunner;
 /**
  * @author Marcellus Tavares
  */
-@PrepareForTest(ResourceBundleLoaderUtil.class)
+@PrepareForTest({ResourceBundleLoaderUtil.class, ResourceBundleUtil.class})
 @RunWith(PowerMockRunner.class)
 @SuppressStaticInitializationFor(
 	"com.liferay.portal.kernel.util.ResourceBundleLoaderUtil"
@@ -88,6 +89,7 @@ public class DDMFormPagesTemplateContextFactoryTest extends PowerMockito {
 		setUpHtmlUtil();
 		setUpLanguageUtil();
 		setUpResourceBundleLoaderUtil();
+		setUpResourceBundleUtil();
 		setUpDDMFormTemplateContextFactoryUtil();
 	}
 
@@ -984,6 +986,18 @@ public class DDMFormPagesTemplateContextFactoryTest extends PowerMockito {
 			ResourceBundleLoaderUtil.getPortalResourceBundleLoader()
 		).thenReturn(
 			portalResourceBundleLoader
+		);
+	}
+
+	protected void setUpResourceBundleUtil() {
+		PowerMockito.mockStatic(ResourceBundleUtil.class);
+
+		PowerMockito.when(
+			ResourceBundleUtil.getBundle(
+				Matchers.anyString(), Matchers.any(Locale.class),
+				Matchers.any(ClassLoader.class))
+		).thenReturn(
+			ResourceBundleUtil.EMPTY_RESOURCE_BUNDLE
 		);
 	}
 

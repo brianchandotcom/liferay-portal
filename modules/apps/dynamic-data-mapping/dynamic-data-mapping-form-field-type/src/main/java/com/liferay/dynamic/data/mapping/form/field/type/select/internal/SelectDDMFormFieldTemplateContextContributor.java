@@ -27,12 +27,14 @@ import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.AggregateResourceBundle;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.ResourceBundleLoaderUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -40,6 +42,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.ResourceBundle;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -84,8 +88,17 @@ public class SelectDDMFormFieldTemplateContextContributor
 
 		Map<String, String> stringsMap = new HashMap<>();
 
-		ResourceBundle resourceBundle = getResourceBundle(
-			ddmFormFieldRenderingContext.getLocale());
+		Locale displayLocale;
+
+		if (ddmFormFieldRenderingContext.isViewMode()) {
+			displayLocale = ddmFormFieldRenderingContext.getLocale();
+		}
+		else {
+			displayLocale = getDisplayLocale(
+				ddmFormFieldRenderingContext.getHttpServletRequest());
+		}
+
+		ResourceBundle resourceBundle = getResourceBundle(displayLocale);
 
 		stringsMap.put(
 			"chooseAnOption",
@@ -116,6 +129,14 @@ public class SelectDDMFormFieldTemplateContextContributor
 					ddmFormFieldRenderingContext.getValue(), "[]")));
 
 		return parameters;
+	}
+
+	protected Locale getDisplayLocale(HttpServletRequest httpServletRequest) {
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		return themeDisplay.getLocale();
 	}
 
 	protected boolean getMultiple(

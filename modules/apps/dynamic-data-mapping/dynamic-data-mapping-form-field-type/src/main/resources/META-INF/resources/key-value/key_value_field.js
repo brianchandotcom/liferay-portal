@@ -22,8 +22,6 @@ AUI.add(
 
 					strings: {
 						value: {
-							cancel: Liferay.Language.get('cancel'),
-							done: Liferay.Language.get('done'),
 							keyLabel: Liferay.Language.get('field-name')
 						}
 					},

@@ -5,8 +5,10 @@ buildscript {
 		classpath "de.undercouch:gradle-download-task:3.4.3"
 	}
 	repositories {
+		mavenCentral()
+
 		maven {
-			url "https://plugins.gradle.org/m2/"
+			url "https://repository-cdn.liferay.com/nexus/content/groups/public"
 		}
 	}
 }

@@ -9,8 +9,21 @@ installer for Talend Open Studio (TOS) written in Go.
 * [Go 1.11](https://golang.org/)
 * [Gox - Simple Go Cross Compilation](https://github.com/mitchellh/gox)
 * Required resources for the installer
-	* [3rd party dependencies](https://github.com/liferay/liferay-portal/tree/master/modules/etl/talend/installer/_resources): (`3rd-party-dependencies`)
+	* [3rd party dependencies](#fetching-the-3rd-party-dependencies) (`3rd-party-dependencies`)
 	* [Component artifact files](#building-the-component-artifacts) (`component-artifacts` and `component-definition`)
+
+### Fetching the 3rd party dependencies
+In order to retrieve the third party dependency files, there is a Gradle script
+which does that work for us.
+
+You only need to run the `getThirdPartyDependencies` task from the `build.gradle`
+in the installer's project root:
+
+`$ gradlew getThirdPartyDependencies`
+
+It creates a directory in this project root, named `_resources` where the
+dependencies are downloaded, more precisely in its sub-folder called:
+`3rd-party-dependencies` <-- This folder will be needed for the packaging.
 
 ### Building the component artifacts
 

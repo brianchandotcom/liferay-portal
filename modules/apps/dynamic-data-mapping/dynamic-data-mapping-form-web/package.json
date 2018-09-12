@@ -30,8 +30,6 @@
 						"./node_modules/eslint-plugin-react"
 					],
 					"rules": {
-						"no-spaced-fun": 0,
-						"space-after-keywords": "off",
 						"keyword-spacing": [
 							2,
 							{

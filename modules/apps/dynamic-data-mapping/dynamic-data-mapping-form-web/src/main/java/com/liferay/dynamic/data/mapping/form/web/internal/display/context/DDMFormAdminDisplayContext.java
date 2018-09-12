@@ -576,7 +576,9 @@ public class DDMFormAdminDisplayContext {
 		return _jsonFactory;
 	}
 
-	public DDMStructureVersion getLatestDDMStructureVersion() throws PortalException {
+	public DDMStructureVersion getLatestDDMStructureVersion()
+		throws PortalException {
+
 		DDMStructure structure = getDDMStructure();
 
 		if (structure == null) {
@@ -587,7 +589,8 @@ public class DDMFormAdminDisplayContext {
 	}
 
 	public long getLatestDDMStructureVersionId() throws PortalException {
-		DDMStructureVersion latestDDMStructureVersion = getLatestDDMStructureVersion();
+		DDMStructureVersion latestDDMStructureVersion =
+			getLatestDDMStructureVersion();
 
 		if (latestDDMStructureVersion == null) {
 			return 0;
@@ -812,15 +815,18 @@ public class DDMFormAdminDisplayContext {
 
 		JSONSerializer jsonSerializer = _jsonFactory.createJSONSerializer();
 
-		DDMStructureVersion ddmStructureVersion = getLatestDDMStructureVersion();
+		DDMStructureVersion ddmStructureVersion =
+			getLatestDDMStructureVersion();
 
 		Locale defaultLocale = themeDisplay.getSiteDefaultLocale();
 
-		DDMFormBuilderContextRequest ddmFormBuilderContextRequest = DDMFormBuilderContextRequest.with(
-			Optional.ofNullable(null), themeDisplay.getRequest(),
-			themeDisplay.getResponse(), defaultLocale, true);
+		DDMFormBuilderContextRequest ddmFormBuilderContextRequest =
+			DDMFormBuilderContextRequest.with(
+				Optional.ofNullable(null), themeDisplay.getRequest(),
+				themeDisplay.getResponse(), defaultLocale, true);
 
-		ddmFormBuilderContextRequest.addProperty("ddmStructureVersion", ddmStructureVersion);
+		ddmFormBuilderContextRequest.addProperty(
+			"ddmStructureVersion", ddmStructureVersion);
 
 		DDMFormBuilderContextResponse ddmFormBuilderContextResponse =
 			_ddmFormBuilderContextFactory.create(ddmFormBuilderContextRequest);

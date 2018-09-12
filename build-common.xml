@@ -1427,10 +1427,17 @@ artifact.url=${remote.repository.url}/com/liferay/portal/com.liferay.${processed
 						toDir="${project.dir}/.gradle/caches/modules-2/files-2.1"
 					/>
 
-					<copy
-						file="${project.dir}/${build.binaries.cache.dir}/${build.binaries.gradle.file}"
-						todir="${project.dir}/tools"
-					/>
+					<if>
+						<not>
+							<available file="${project.dir}/tools/${build.binaries.gradle.file}" type="file" />
+						</not>
+						<then>
+							<copy
+								file="${project.dir}/${build.binaries.cache.dir}/${build.binaries.gradle.file}"
+								todir="${project.dir}/tools"
+							/>
+						</then>
+					</if>
 				</then>
 			</if>
 

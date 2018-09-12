@@ -47,12 +47,13 @@ public class JavaUpgradeClassCheck extends BaseFileCheck {
 			return content;
 		}
 
-		_checkAnnotation(fileName, content);
+		//_checkAnnotation(fileName, content);
 		_checkRegistryVersion(fileName, content);
 
 		return content;
 	}
 
+	@SuppressWarnings("unused")
 	private void _checkAnnotation(String fileName, String content) {
 
 		// LPS-59828

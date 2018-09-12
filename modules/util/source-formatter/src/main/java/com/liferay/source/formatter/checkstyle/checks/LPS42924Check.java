@@ -46,7 +46,7 @@ public class LPS42924Check extends BaseCheck {
 			detailAST, "PortalUtil", "getClassNameId");
 
 		for (DetailAST methodCallAST : methodCallASTList) {
-			log(methodCallAST.getLineNo(), _MSG_LPS_42924);
+			log(methodCallAST, _MSG_LPS_42924);
 		}
 	}
 

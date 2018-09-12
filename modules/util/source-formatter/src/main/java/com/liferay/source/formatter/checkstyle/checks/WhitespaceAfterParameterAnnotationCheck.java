@@ -57,9 +57,7 @@ public class WhitespaceAfterParameterAnnotationCheck extends BaseCheck {
 		char c = line.charAt(rparenAST.getColumnNo() + 1);
 
 		if (!Character.isWhitespace(c)) {
-			log(
-				rparenAST.getLineNo(), _MSG_MISSING_WHITESPACE,
-				rparenAST.getText());
+			log(rparenAST, _MSG_MISSING_WHITESPACE, rparenAST.getText());
 		}
 	}
 

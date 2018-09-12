@@ -49,7 +49,6 @@
 		<suppress checks="PersistenceCallCheck" files="modules/apps/portal/portal-upgrade-test/src/testIntegration/java/com/liferay/portal/upgrade/test/BaseBuildAutoUpgradeTestCase\.java" />
 		<suppress checks="PlusStatementCheck" files="portal-kernel/src/com/liferay/portal/kernel/io/BigEndianCodec\.java" />
 		<suppress checks="ReferenceAnnotationCheck" files="portal-impl/test/integration/.*" />
-		<suppress checks="StaticBlockCheck" files="portal-impl/src/com/liferay/portal/metadata/BaseRawMetadataProcessor\.java" />
 		<suppress checks="StaticVariableNameCheck" files="portal-impl/src/com/liferay/portal/language/LanguageResources\.java" />
 		<suppress checks="StaticVariableNameCheck" files="portal-impl/src/com/liferay/portal/util/PropsValues\.java" />
 		<suppress checks="StaticVariableNameCheck" files="portal-impl/test/integration/com/liferay/portal/security/pwd/bundle/pwdtoolkitutil/TestToolkit\.java" />

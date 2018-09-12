@@ -104,7 +104,7 @@ public class ParsePrimitiveTypeCheck extends BaseCheck {
 					methodCallAST, "Exception", "NumberFormatException")) {
 
 				log(
-					methodCallAST.getLineNo(), _MSG_USE_GETTER_UTIL_METHOD,
+					methodCallAST, _MSG_USE_GETTER_UTIL_METHOD,
 					getterUtilMethodName, className, methodName);
 			}
 		}

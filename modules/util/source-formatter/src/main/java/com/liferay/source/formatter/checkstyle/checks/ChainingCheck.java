@@ -140,7 +140,7 @@ public class ChainingCheck extends BaseCheck {
 			int concatsCount = Collections.frequency(chain, "concat");
 
 			if (concatsCount > 2) {
-				log(methodCallAST.getLineNo(), _MSG_AVOID_TOO_MANY_CONCAT);
+				log(methodCallAST, _MSG_AVOID_TOO_MANY_CONCAT);
 
 				continue;
 			}
@@ -150,7 +150,7 @@ public class ChainingCheck extends BaseCheck {
 			}
 
 			log(
-				methodCallAST.getLineNo(), _MSG_AVOID_CHAINING,
+				methodCallAST, _MSG_AVOID_CHAINING,
 				DetailASTUtil.getMethodName(methodCallAST));
 		}
 	}
@@ -219,7 +219,7 @@ public class ChainingCheck extends BaseCheck {
 					TokenTypes.LITERAL_IF))) {
 
 			log(
-				methodCallAST.getLineNo(), _MSG_ALLOWED_CHAINING,
+				methodCallAST, _MSG_ALLOWED_CHAINING,
 				StringBundler.concat(
 					classOrVariableName, StringPool.PERIOD,
 					DetailASTUtil.getMethodName(methodCallAST)));
@@ -237,7 +237,7 @@ public class ChainingCheck extends BaseCheck {
 			!DetailASTUtil.hasParentWithTokenType(
 				methodCallAST, TokenTypes.SUPER_CTOR_CALL)) {
 
-			log(methodCallAST.getLineNo(), _MSG_AVOID_CHAINING, methodName);
+			log(methodCallAST, _MSG_AVOID_CHAINING, methodName);
 		}
 	}
 
@@ -260,7 +260,7 @@ public class ChainingCheck extends BaseCheck {
 		}
 
 		log(
-			methodCallAST.getLineNo(), _MSG_INCORRECT_STYLING,
+			methodCallAST, _MSG_INCORRECT_STYLING,
 			DetailASTUtil.getMethodName(methodCallAST));
 	}
 

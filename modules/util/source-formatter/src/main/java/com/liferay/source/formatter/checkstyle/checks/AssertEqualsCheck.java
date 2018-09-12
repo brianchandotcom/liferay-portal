@@ -59,7 +59,7 @@ public class AssertEqualsCheck extends BaseCheck {
 
 				if ((typeAST != null) && _isHits(typeAST)) {
 					log(
-						methodCallAST.getLineNo(), _MSG_ASSERT_ADD_INFORMATION,
+						methodCallAST, _MSG_ASSERT_ADD_INFORMATION,
 						variableName + ".toString()");
 				}
 
@@ -74,7 +74,7 @@ public class AssertEqualsCheck extends BaseCheck {
 
 				if ((typeAST != null) && DetailASTUtil.isArray(typeAST)) {
 					log(
-						methodCallAST.getLineNo(), _MSG_ASSERT_ADD_INFORMATION,
+						methodCallAST, _MSG_ASSERT_ADD_INFORMATION,
 						"Arrays.toString(" + variableName + ")");
 				}
 
@@ -89,7 +89,7 @@ public class AssertEqualsCheck extends BaseCheck {
 
 				if ((typeAST != null) && DetailASTUtil.isCollection(typeAST)) {
 					log(
-						methodCallAST.getLineNo(), _MSG_ASSERT_ADD_INFORMATION,
+						methodCallAST, _MSG_ASSERT_ADD_INFORMATION,
 						variableName + ".toString()");
 				}
 			}

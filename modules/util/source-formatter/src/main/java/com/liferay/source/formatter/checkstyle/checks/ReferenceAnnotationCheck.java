@@ -72,9 +72,7 @@ public class ReferenceAnnotationCheck extends BaseCheck {
 
 		if (!matcher.find()) {
 			if (!_containsMethod(classDefAST, defaultUnbindMethodName)) {
-				log(
-					methodDefAST.getLineNo(),
-					_MSG_MISSING_DYNAMIC_POLICY_UNBIND);
+				log(methodDefAST, _MSG_MISSING_DYNAMIC_POLICY_UNBIND);
 			}
 
 			return;
@@ -104,7 +102,7 @@ public class ReferenceAnnotationCheck extends BaseCheck {
 
 			if (!modifiersAST.branchContains(TokenTypes.LITERAL_STATIC)) {
 				log(
-					methodDefAST.getLineNo(), _MSG_MOVE_REFERENCE, methodName,
+					methodDefAST, _MSG_MOVE_REFERENCE, methodName,
 					variableName);
 			}
 		}
@@ -119,7 +117,7 @@ public class ReferenceAnnotationCheck extends BaseCheck {
 		if (policyOptionName.endsWith(_POLICY_OPTION_GREEDY) &&
 			policyName.endsWith(_POLICY_STATIC)) {
 
-			log(annotationAST.getLineNo(), _MSG_INCORRECT_GREEDY_POLICY_OPTION);
+			log(annotationAST, _MSG_INCORRECT_GREEDY_POLICY_OPTION);
 		}
 	}
 
@@ -204,9 +202,7 @@ public class ReferenceAnnotationCheck extends BaseCheck {
 			DetailAST identAST = variableDefAST.findFirstToken(
 				TokenTypes.IDENT);
 
-			log(
-				identAST.getLineNo(), _MSG_MISSING_VOLATILE,
-				identAST.getText());
+			log(identAST, _MSG_MISSING_VOLATILE, identAST.getText());
 		}
 	}
 

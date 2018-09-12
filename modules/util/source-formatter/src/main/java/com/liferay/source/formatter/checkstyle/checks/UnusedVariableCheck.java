@@ -74,9 +74,7 @@ public class UnusedVariableCheck extends BaseCheck {
 			if (!variableName.equals("serialVersionUID") &&
 				(Collections.frequency(tokenNames, variableName) == 1)) {
 
-				log(
-					variableDefAST.getLineNo(), _MSG_UNUSED_VARIABLE,
-					variableName);
+				log(variableDefAST, _MSG_UNUSED_VARIABLE, variableName);
 			}
 		}
 	}

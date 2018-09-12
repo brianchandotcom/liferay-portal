@@ -147,7 +147,7 @@ public class AppendCheck extends StringConcatenationCheck {
 				maxLineLength) {
 
 			log(
-				methodCallAST.getLineNo(), MSG_COMBINE_LITERAL_STRINGS,
+				methodCallAST, MSG_COMBINE_LITERAL_STRINGS,
 				previousLiteralStringValue, literalStringValue);
 		}
 		else {
@@ -157,7 +157,7 @@ public class AppendCheck extends StringConcatenationCheck {
 
 			if (pos != -1) {
 				log(
-					methodCallAST.getLineNo(), MSG_MOVE_LITERAL_STRING,
+					methodCallAST, MSG_MOVE_LITERAL_STRING,
 					literalStringValue.substring(0, pos + 1));
 			}
 		}
@@ -172,7 +172,7 @@ public class AppendCheck extends StringConcatenationCheck {
 			parameterDetailAST, true, TokenTypes.STRING_LITERAL);
 
 		if (!literalStringASTList.isEmpty()) {
-			log(parameterDetailAST.getLineNo(), _MSG_INCORRECT_PLUS);
+			log(parameterDetailAST, _MSG_INCORRECT_PLUS);
 		}
 	}
 
@@ -207,7 +207,7 @@ public class AppendCheck extends StringConcatenationCheck {
 		if (DetailASTUtil.getStartLine(methodCallAST) !=
 				DetailASTUtil.getEndLine(methodCallAST)) {
 
-			log(methodCallAST.getLineNo(), _MSG_INCORRECT_LINE_BREAK);
+			log(methodCallAST, _MSG_INCORRECT_LINE_BREAK);
 
 			return true;
 		}

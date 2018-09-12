@@ -63,18 +63,15 @@ public class TestClassCheck extends BaseCheck {
 		if (name.endsWith("TestCase")) {
 			if (!modifiersAST.branchContains(TokenTypes.ABSTRACT)) {
 				log(
-					detailAST.getLineNo(),
-					_MSG_INCORRECT_ABSTRACT_TEST_CASE_CLASS,
+					detailAST, _MSG_INCORRECT_ABSTRACT_TEST_CASE_CLASS,
 					name.substring(0, name.length() - 4));
 			}
 			else if (name.contains("Base") && !name.startsWith("Base")) {
-				log(detailAST.getLineNo(), _MSG_INVALID_BASE_CLASS_NAME, name);
+				log(detailAST, _MSG_INVALID_BASE_CLASS_NAME, name);
 			}
 		}
 		else if (modifiersAST.branchContains(TokenTypes.ABSTRACT)) {
-			log(
-				detailAST.getLineNo(), _MSG_INCORRECT_ABSTRACT_TEST_CLASS,
-				name);
+			log(detailAST, _MSG_INCORRECT_ABSTRACT_TEST_CLASS, name);
 		}
 	}
 

@@ -101,9 +101,7 @@ public class StaticBlockCheck extends BaseCheck {
 
 			FullIdent fullIdent = FullIdent.createFullIdent(dotAST);
 
-			log(
-				methodCallAST.getLineNo(), _MSG_UNNEEDED_STATIC_BLOCK,
-				fullIdent.getText());
+			log(methodCallAST, _MSG_UNNEEDED_STATIC_BLOCK, fullIdent.getText());
 		}
 	}
 

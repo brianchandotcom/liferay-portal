@@ -76,7 +76,7 @@ public class UnusedMethodCheck extends BaseCheck {
 			if (!ArrayUtil.contains(_allowedMethodNames, name) &&
 				!referencedMethodNames.contains(nameAST.getText())) {
 
-				log(methodDefAST.getLineNo(), _MSG_UNUSED_METHOD, name);
+				log(methodDefAST, _MSG_UNUSED_METHOD, name);
 			}
 		}
 	}

@@ -63,7 +63,7 @@ public class ArquillianCheck extends BaseCheck {
 				"/testIntegration/resources/arquillian.xml");
 
 		if (!xmlFile.exists()) {
-			log(detailAST.getLineNo(), _MSG_INVALID_IMPORT);
+			log(detailAST, _MSG_INVALID_IMPORT);
 		}
 	}
 

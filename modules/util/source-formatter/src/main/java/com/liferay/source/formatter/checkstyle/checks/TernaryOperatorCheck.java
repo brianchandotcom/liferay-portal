@@ -34,7 +34,7 @@ public class TernaryOperatorCheck extends BaseCheck {
 		if (DetailASTUtil.getStartLine(detailAST) !=
 				DetailASTUtil.getEndLine(detailAST)) {
 
-			log(detailAST.getLineNo(), _MSG_AVOID_TERNARY_OPERATOR);
+			log(detailAST, _MSG_AVOID_TERNARY_OPERATOR);
 		}
 	}
 

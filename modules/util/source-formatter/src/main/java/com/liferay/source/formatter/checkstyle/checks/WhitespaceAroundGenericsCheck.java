@@ -49,18 +49,14 @@ public class WhitespaceAroundGenericsCheck extends BaseCheck {
 				(c != CharPool.PERIOD) && (c != CharPool.GREATER_THAN) &&
 				(c != CharPool.OPEN_BRACKET) && (c != CharPool.SPACE)) {
 
-				log(
-					detailAST.getLineNo(), _MSG_MISSING_WHITESPACE,
-					detailAST.getText());
+				log(detailAST, _MSG_MISSING_WHITESPACE, detailAST.getText());
 			}
 		}
 		else {
 			char c = line.charAt(detailAST.getColumnNo() - 1);
 
 			if (c == CharPool.SPACE) {
-				log(
-					detailAST.getLineNo(), _MSG_REDUNDANT_WHITESPACE,
-					detailAST.getText());
+				log(detailAST, _MSG_REDUNDANT_WHITESPACE, detailAST.getText());
 			}
 		}
 	}

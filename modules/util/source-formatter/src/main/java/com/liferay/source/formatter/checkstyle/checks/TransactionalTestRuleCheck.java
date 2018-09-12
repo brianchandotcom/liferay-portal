@@ -43,7 +43,7 @@ public class TransactionalTestRuleCheck extends BaseCheck {
 		String fileName = fileContents.getFileName();
 
 		if (fileName.endsWith("StagedModelDataHandlerTest.java")) {
-			log(detailAST.getLineNo(), _MSG_INVALID_IMPORT);
+			log(detailAST, _MSG_INVALID_IMPORT);
 		}
 	}
 

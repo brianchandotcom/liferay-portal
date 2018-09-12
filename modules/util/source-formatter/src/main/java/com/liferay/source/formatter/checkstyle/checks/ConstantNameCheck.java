@@ -125,13 +125,13 @@ public class ConstantNameCheck
 		if (!matcher.find()) {
 			if (typeName == null) {
 				log(
-					nameAST.getLineNo(), _MSG_INVALID_CONSTANT_NAME,
-					accessLevel, nameAST.getText(), regex);
+					nameAST, _MSG_INVALID_CONSTANT_NAME, accessLevel,
+					nameAST.getText(), regex);
 			}
 			else {
 				log(
-					nameAST.getLineNo(), _MSG_INVALID_CONSTANT_TYPE_NAME,
-					accessLevel, nameAST.getText(), typeName, regex);
+					nameAST, _MSG_INVALID_CONSTANT_TYPE_NAME, accessLevel,
+					nameAST.getText(), typeName, regex);
 			}
 		}
 	}

@@ -48,7 +48,7 @@ public class OperatorOrderCheck extends BaseCheck {
 				_LITERAL_OR_NUM_TYPES, secondChildAST.getType())) {
 
 			log(
-				firstChildAST.getLineNo(), _MSG_LITERAL_OR_NUM_LEFT_ARGUMENT,
+				firstChildAST, _MSG_LITERAL_OR_NUM_LEFT_ARGUMENT,
 				firstChildAST.getText());
 		}
 	}

@@ -44,8 +44,8 @@ public class EnumConstantOrderCheck extends BaseEnumConstantCheck {
 
 		if (comparator.compare(name1, name2) > 0) {
 			log(
-				enumConstantDefAST1.getLineNo(),
-				_MSG_ENUM_CONSTANT_ORDER_INCORRECT, name1, name2);
+				enumConstantDefAST1, _MSG_ENUM_CONSTANT_ORDER_INCORRECT, name1,
+				name2);
 		}
 	}
 

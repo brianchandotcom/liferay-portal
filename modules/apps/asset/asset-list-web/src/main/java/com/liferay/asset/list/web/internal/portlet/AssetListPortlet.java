@@ -72,13 +72,12 @@ public class AssetListPortlet extends MVCPortlet {
 	@Override
 	protected boolean isSessionErrorException(Throwable cause) {
 		if (cause instanceof AssetListEntryTitleException ||
-			cause instanceof DuplicateAssetListEntryTitleException ||
-			super.isSessionErrorException(cause)) {
+			cause instanceof DuplicateAssetListEntryTitleException) {
 
 			return true;
 		}
 
-		return false;
+		return super.isSessionErrorException(cause);
 	}
 
 	@Reference

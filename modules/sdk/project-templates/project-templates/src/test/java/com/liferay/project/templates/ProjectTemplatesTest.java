@@ -89,6 +89,7 @@ import org.gradle.testkit.runner.TaskOutcome;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
@@ -2311,6 +2312,7 @@ public class ProjectTemplatesTest {
 		_buildProjects(gradleProjectDir, mavenProjectDir);
 	}
 
+	@Ignore
 	@Test
 	public void testBuildTemplateSoyPortlet70() throws Exception {
 		File gradleProjectDir = _buildTemplateWithGradle(

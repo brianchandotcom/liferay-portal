@@ -16,10 +16,8 @@ package com.liferay.layout.admin.web.internal.servlet.taglib.ui;
 
 import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorConstants;
 import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorEntry;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapDictionary;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
+import com.liferay.portal.util.PropsValues;
 
 import java.util.Dictionary;
 
@@ -41,17 +39,17 @@ public class LayoutJavaScriptFormNavigatorEntry
 
 	@Activate
 	public void activate(BundleContext bundleContext) {
-		String layoutJavaScriptEnabled = PropsUtil.get(
-			PropsKeys.
-				FIELD_ENABLE_COM_LIFERAY_PORTAL_KERNEL_MODEL_LAYOUT_JAVASCRIPT);
+		boolean enableJavaScript =
+			PropsValues.
+				FIELD_ENABLE_COM_LIFERAY_PORTAL_KERNEL_MODEL_LAYOUT_JAVASCRIPT;
 
-		if (!GetterUtil.getBoolean(layoutJavaScriptEnabled)) {
+		if (!enableJavaScript) {
 			return;
 		}
 
 		Dictionary<String, Object> properties = new HashMapDictionary<>();
 
-		properties.put("form.navigator.entry.order", Integer.valueOf(90));
+		properties.put("form.navigator.entry.order", 90);
 
 		_serviceRegistration = bundleContext.registerService(
 			FormNavigatorEntry.class, this, properties);

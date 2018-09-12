@@ -67,9 +67,12 @@ public class ExpressionVisitorImpl implements ExpressionVisitor<Object> {
 	}
 
 	private Object _normalizeLiteral(String literal) {
+		literal = StringUtil.toLowerCase(literal);
+
+		literal = StringUtil.unquote(literal);
+
 		return StringUtil.replace(
-			StringUtil.unquote(literal), StringPool.DOUBLE_APOSTROPHE,
-			StringPool.APOSTROPHE);
+			literal, StringPool.DOUBLE_APOSTROPHE, StringPool.APOSTROPHE);
 	}
 
 }

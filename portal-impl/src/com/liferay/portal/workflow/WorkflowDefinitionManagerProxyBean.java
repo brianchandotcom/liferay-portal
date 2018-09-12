@@ -40,7 +40,6 @@ public class WorkflowDefinitionManagerProxyBean
 	 * @deprecated As of Judson (7.1.x), replaced by {@link
 	 *             #deployWorkflowDefinition(long, long, String, String,
 	 *             byte[])}
-	 * @review
 	 */
 	@Deprecated
 	@Override
@@ -86,7 +85,6 @@ public class WorkflowDefinitionManagerProxyBean
 	/**
 	 * @deprecated As of Judson (7.1.x), replaced by {@link
 	 *             #getLatestWorkflowDefinition(long, String)}
-	 * @review
 	 */
 	@Deprecated
 	@Override

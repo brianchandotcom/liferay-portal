@@ -2153,17 +2153,21 @@ public abstract class BaseBuild implements Build {
 			return;
 		}
 
-		JSONObject actionJSONObject = actionsJSONArray.getJSONObject(0);
+		for (int i = 0; i < actionsJSONArray.length(); i++) {
+			JSONObject actionJSONObject = actionsJSONArray.getJSONObject(i);
 
-		if (actionJSONObject.has("parameters")) {
+			if (!actionJSONObject.has("parameters")) {
+				continue;
+			}
+
 			JSONArray parametersJSONArray = actionJSONObject.getJSONArray(
 				"parameters");
 
 			_parameters = new HashMap<>(parametersJSONArray.length());
 
-			for (int i = 0; i < parametersJSONArray.length(); i++) {
+			for (int j = 0; j < parametersJSONArray.length(); j++) {
 				JSONObject parameterJSONObject =
-					parametersJSONArray.getJSONObject(i);
+					parametersJSONArray.getJSONObject(j);
 
 				Object value = parameterJSONObject.opt("value");
 

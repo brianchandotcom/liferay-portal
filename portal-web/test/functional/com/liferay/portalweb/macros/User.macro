@@ -1772,18 +1772,23 @@
 			<var name="menuItem" value="Active" />
 		</execute>
 
-		<if>
-			<condition function="IsElementPresent" locator1="ContentRow#ENTRY_CONTENT_ROW_1" />
-			<then>
-				<execute macro="PortletEntry#selectAll" />
+		<while>
+			<condition function="IsElementPresent" locator1="ContentRow#ENTRY_CONTENT_ROW_NUMBER">
+				<var name="key_rowNumber" value="2" />
+			</condition>
 
-				<execute function="AssertClickNoError" locator1="Button#DEACTIVATE" value1="Deactivate" />
+			<then>
+				<execute function="Click#waitForMenuToggleJSClick" locator1="ContentRow#ENTRY_CONTENT_ROW_NUMBER_ELLIPSIS">
+					<var name="key_rowNumber" value="2" />
+				</execute>
+
+				<execute macro="MenuItem#clickNoError">
+					<var name="menuItem" value="Deactivate" />
+				</execute>
 
 				<execute function="AssertConfirm" value1="Are you sure you want to deactivate the selected users?" />
-
-				<execute macro="Alert#viewSuccessMessage" />
 			</then>
-		</if>
+		</while>
 
 		<execute function="Click" locator1="Dropdown#FILTER_AND_ORDER" />
 

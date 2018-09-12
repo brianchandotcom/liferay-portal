@@ -27,7 +27,7 @@ import org.apache.maven.archetype.ArchetypeGenerationResult;
 /**
  * @author Charles Wu
  */
-public class ModulesExtProjectTemplateCustomzier
+public class ModulesExtProjectTemplateCustomizer
 	implements ProjectTemplateCustomizer {
 
 	@Override

@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<archetype-descriptor name="liferay-module-ext">
+<archetype-descriptor name="liferay-module-modules-ext">
 	<fileSets>
 		<fileSet filtered="true" packaged="true">
 			<directory>src/main/java</directory>

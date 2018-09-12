@@ -16,6 +16,8 @@ package com.liferay.asset.list.web.internal.portlet;
 
 import com.liferay.asset.list.constants.AssetListPortletKeys;
 import com.liferay.asset.list.constants.AssetListWebKeys;
+import com.liferay.asset.list.exception.AssetListEntryTitleException;
+import com.liferay.asset.list.exception.DuplicateAssetListEntryTitleException;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationRegistry;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 
@@ -65,6 +67,17 @@ public class AssetListPortlet extends MVCPortlet {
 			_screenNavigationRegistry);
 
 		super.doDispatch(renderRequest, renderResponse);
+	}
+
+	@Override
+	protected boolean isSessionErrorException(Throwable cause) {
+		if (cause instanceof AssetListEntryTitleException ||
+			cause instanceof DuplicateAssetListEntryTitleException) {
+
+			return true;
+		}
+
+		return super.isSessionErrorException(cause);
 	}
 
 	@Reference

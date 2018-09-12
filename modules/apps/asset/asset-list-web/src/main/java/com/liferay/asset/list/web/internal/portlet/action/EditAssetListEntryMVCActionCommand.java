@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
+import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 
@@ -61,13 +62,21 @@ public class EditAssetListEntryMVCActionCommand extends BaseMVCActionCommand {
 
 		AssetListEntry assetListEntry = null;
 
-		if (assetListEntryId <= 0) {
-			assetListEntry = _assetListEntryService.addAssetListEntry(
-				serviceContext.getScopeGroupId(), title, type, serviceContext);
+		try {
+			if (assetListEntryId <= 0) {
+				assetListEntry = _assetListEntryService.addAssetListEntry(
+					serviceContext.getScopeGroupId(), title, type,
+					serviceContext);
+			}
+			else {
+				assetListEntry = _assetListEntryService.updateAssetListEntry(
+					assetListEntryId, title);
+			}
 		}
-		else {
-			assetListEntry = _assetListEntryService.updateAssetListEntry(
-				assetListEntryId, title);
+		catch (Exception e) {
+			SessionErrors.add(actionRequest, e.getClass());
+
+			hideDefaultErrorMessage(actionRequest);
 		}
 
 		String redirect = _getRedirectURL(actionResponse, assetListEntry);
@@ -84,9 +93,12 @@ public class EditAssetListEntryMVCActionCommand extends BaseMVCActionCommand {
 		PortletURL portletURL = liferayPortletResponse.createRenderURL();
 
 		portletURL.setParameter("mvcPath", "/edit_asset_list_entry.jsp");
-		portletURL.setParameter(
-			"assetListEntryId",
-			String.valueOf(assetListEntry.getAssetListEntryId()));
+
+		if (assetListEntry != null) {
+			portletURL.setParameter(
+				"assetListEntryId",
+				String.valueOf(assetListEntry.getAssetListEntryId()));
+		}
 
 		return portletURL.toString();
 	}

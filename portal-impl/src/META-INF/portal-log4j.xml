@@ -157,7 +157,7 @@
 	</category>
 
 	<category name="com.liferay.portal.equinox.log.bridge.internal">
-		<priority value="INFO" />
+		<priority value="OFF" />
 	</category>
 
 	<category name="com.liferay.portal.events.ChannelHubAppShutdownAction">

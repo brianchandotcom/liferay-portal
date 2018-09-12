@@ -44,27 +44,28 @@
 		/>
 
 		<liferay-ui:search-container-column-text
-			cssClass="table-cell-content"
+			cssClass="table-cell-expand table-cell-minw-200 table-title"
 			href="<%= rowURL %>"
 			name="web-id"
 			value="<%= HtmlUtil.escape(curCompany.getWebId()) %>"
 		/>
 
 		<liferay-ui:search-container-column-text
-			cssClass="table-cell-content"
+			cssClass="table-cell-expand table-cell-minw-200"
 			href="<%= rowURL %>"
 			name="virtual-host"
 			value="<%= curCompany.getVirtualHostname() %>"
 		/>
 
 		<liferay-ui:search-container-column-text
-			cssClass="table-cell-content"
+			cssClass="table-cell-expand table-cell-minw-200"
 			href="<%= rowURL %>"
 			name="mail-domain"
 			property="mx"
 		/>
 
 		<liferay-ui:search-container-column-text
+			cssClass="table-cell-ws-nowrap table-column-text-center"
 			href="<%= rowURL %>"
 			name="num-of-users"
 			value="<%= String.valueOf(UserLocalServiceUtil.searchCount(curCompany.getCompanyId(), null, WorkflowConstants.STATUS_APPROVED, null)) %>"
@@ -75,12 +76,14 @@
 		%>
 
 		<liferay-ui:search-container-column-text
+			cssClass="table-cell-ws-nowrap table-column-text-center"
 			href="<%= rowURL %>"
 			name="max-num-of-users"
 			value='<%= (maxUsers > 0) ? String.valueOf(maxUsers) : LanguageUtil.get(request, "unlimited") %>'
 		/>
 
 		<liferay-ui:search-container-column-text
+			cssClass="table-cell-ws-nowrap table-column-text-center"
 			href="<%= rowURL %>"
 			name="active"
 			value='<%= LanguageUtil.get(request, curCompany.isActive() ? "yes" : "no") %>'

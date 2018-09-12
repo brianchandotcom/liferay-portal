@@ -16,7 +16,6 @@ package com.liferay.portal.configuration.easyconf;
 
 import com.germinus.easyconf.AggregatedProperties;
 import com.germinus.easyconf.ComponentProperties;
-import com.germinus.easyconf.ConfigurationNotFoundException;
 import com.germinus.easyconf.Conventions;
 
 import com.liferay.petra.string.CharPool;
@@ -51,14 +50,42 @@ public class ClassLoaderComponentConfiguration {
 	}
 
 	public ComponentProperties getProperties() {
-		ComponentProperties componentProperties = _getAvailableProperties();
-
-		if (!componentProperties.hasBaseConfiguration()) {
-			throw new ConfigurationNotFoundException(
-				_componentName, "The base properties file was not found");
+		if (_properties != null) {
+			return _properties;
 		}
 
-		return componentProperties;
+		SystemProperties.set("base.path", ".");
+
+		ClassLoaderAggregateProperties classLoaderAggregateProperties =
+			new ClassLoaderAggregateProperties(
+				_classLoader, _companyId, _componentName);
+
+		classLoaderAggregateProperties.addGlobalFileName(
+			Conventions.GLOBAL_CONFIGURATION_FILE +
+				Conventions.PROPERTIES_EXTENSION);
+
+		classLoaderAggregateProperties.addBaseFileName(
+			_componentName + Conventions.PROPERTIES_EXTENSION);
+
+		if (_log.isInfoEnabled()) {
+			_log.info(
+				StringBundler.concat(
+					"Properties for ", _componentName, " loaded from ",
+					String.valueOf(
+						classLoaderAggregateProperties.loadedSources())));
+		}
+
+		_loadEnvOverrides(classLoaderAggregateProperties);
+
+		try {
+			_properties = _CONSTRUCTOR.newInstance(
+				new Object[] {classLoaderAggregateProperties});
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+		}
+
+		return _properties;
 	}
 
 	protected static String decode(String s) {
@@ -110,45 +137,6 @@ public class ClassLoaderComponentConfiguration {
 		sb.append(s.substring(position));
 
 		return sb.toString();
-	}
-
-	private ComponentProperties _getAvailableProperties() {
-		if (_properties != null) {
-			return _properties;
-		}
-
-		SystemProperties.set("base.path", ".");
-
-		ClassLoaderAggregateProperties classLoaderAggregateProperties =
-			new ClassLoaderAggregateProperties(
-				_classLoader, _companyId, _componentName);
-
-		classLoaderAggregateProperties.addGlobalFileName(
-			Conventions.GLOBAL_CONFIGURATION_FILE +
-				Conventions.PROPERTIES_EXTENSION);
-
-		classLoaderAggregateProperties.addBaseFileName(
-			_componentName + Conventions.PROPERTIES_EXTENSION);
-
-		if (_log.isInfoEnabled()) {
-			_log.info(
-				StringBundler.concat(
-					"Properties for ", _componentName, " loaded from ",
-					String.valueOf(
-						classLoaderAggregateProperties.loadedSources())));
-		}
-
-		_loadEnvOverrides(classLoaderAggregateProperties);
-
-		try {
-			_properties = _CONSTRUCTOR.newInstance(
-				new Object[] {classLoaderAggregateProperties});
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-		}
-
-		return _properties;
 	}
 
 	private void _loadEnvOverrides(Configuration configuration) {

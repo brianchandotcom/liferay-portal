@@ -1801,7 +1801,7 @@
 			<then>
 				<execute macro="PortletEntry#selectAll" />
 
-				<execute function="Click" locator1="Icon#DELETE" />
+				<execute function="ClickNoError" locator1="Icon#DELETE" />
 
 				<execute function="AssertConfirm" value1="Are you sure you want to permanently delete the selected users?" />
 

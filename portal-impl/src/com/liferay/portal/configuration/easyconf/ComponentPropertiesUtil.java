@@ -19,7 +19,6 @@ import com.germinus.easyconf.ComponentProperties;
 import com.germinus.easyconf.Conventions;
 
 import com.liferay.petra.string.CharPool;
-import com.liferay.portal.kernel.exception.LoggedExceptionInInitializerError;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -161,28 +160,10 @@ public class ComponentPropertiesUtil {
 	private static final Log _log = LogFactoryUtil.getLog(
 		ComponentPropertiesUtil.class);
 
-	private static final Map<String, Character> _charPoolChars =
-		new HashMap<String, Character>() {
-			{
-				try {
-					for (Field field : CharPool.class.getFields()) {
-						if (Modifier.isStatic(field.getModifiers()) &&
-							(field.getType() == char.class)) {
-
-							put(
-								StringUtil.removeChar(
-									field.getName(), CharPool.UNDERLINE),
-								field.getChar(null));
-						}
-					}
-				}
-				catch (ReflectiveOperationException roe) {
-					throw new ExceptionInInitializerError(roe);
-				}
-			}
-		};
+	private static final Map<String, Character> _charPoolChars;
 
 	static {
+
 		Constructor<ComponentProperties> constructor = null;
 
 		try {
@@ -190,9 +171,22 @@ public class ComponentPropertiesUtil {
 				AggregatedProperties.class);
 
 			constructor.setAccessible(true);
+
+			_charPoolChars = new HashMap<>();
+
+			for (Field field : CharPool.class.getFields()) {
+				if (Modifier.isStatic(field.getModifiers()) &&
+					(field.getType() == char.class)) {
+
+					_charPoolChars.put(
+						StringUtil.removeChar(
+							field.getName(), CharPool.UNDERLINE),
+						field.getChar(null));
+				}
+			}
 		}
 		catch (Exception e) {
-			throw new LoggedExceptionInInitializerError(e);
+			throw new ExceptionInInitializerError(e);
 		}
 
 		_CONSTRUCTOR = constructor;

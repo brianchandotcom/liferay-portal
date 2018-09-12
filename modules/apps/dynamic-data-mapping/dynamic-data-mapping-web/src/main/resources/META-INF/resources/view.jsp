@@ -51,7 +51,7 @@ if (ddmDisplay.getTitle(locale) != null) {
 	<aui:input name="redirect" type="hidden" value="<%= ddmDisplayContext.getStructureSearchActionURL() %>" />
 	<aui:input name="deleteStructureIds" type="hidden" />
 
-	<div class="container-fluid-1280" id="<portlet:namespace />entriesContainer">
+	<div class="container-fluid container-fluid-max-xl" id="<portlet:namespace />entriesContainer">
 		<liferay-ui:search-container
 			id="ddmStructures"
 			rowChecker="<%= new DDMStructureRowChecker(renderResponse) %>"
@@ -87,22 +87,22 @@ if (ddmDisplay.getTitle(locale) != null) {
 				/>
 
 				<liferay-ui:search-container-column-text
-					cssClass="table-cell-content"
+					cssClass="table-cell-expand table-cell-minw-200 table-title"
 					href="<%= rowHREF %>"
 					name="name"
 					value="<%= HtmlUtil.escape(structure.getName(locale)) %>"
 				/>
 
 				<liferay-ui:search-container-column-text
-					cssClass="table-cell-content"
+					cssClass="table-cell-expand table-cell-minw-200"
 					href="<%= rowHREF %>"
 					name="description"
-					truncate="<%= true %>"
 					value="<%= HtmlUtil.escape(structure.getDescription(locale)) %>"
 				/>
 
 				<c:if test="<%= Validator.isNull(storageTypeValue) %>">
 					<liferay-ui:search-container-column-text
+						cssClass="table-cell-expand-smaller"
 						href="<%= rowHREF %>"
 						name="storage-type"
 						value="<%= LanguageUtil.get(request, HtmlUtil.escape(structure.getStorageType())) %>"
@@ -111,6 +111,7 @@ if (ddmDisplay.getTitle(locale) != null) {
 
 				<c:if test="<%= scopeClassNameId == 0 %>">
 					<liferay-ui:search-container-column-text
+						cssClass="table-cell-expand-smallest table-cell-minw-150"
 						href="<%= rowHREF %>"
 						name="type"
 						value="<%= HtmlUtil.escape(ResourceActionsUtil.getModelResource(locale, structure.getClassName())) %>"
@@ -122,11 +123,13 @@ if (ddmDisplay.getTitle(locale) != null) {
 				%>
 
 				<liferay-ui:search-container-column-text
+					cssClass="table-cell-expand-smallest table-cell-minw-150"
 					name="scope"
 					value="<%= LanguageUtil.get(request, group.getScopeLabel(themeDisplay)) %>"
 				/>
 
 				<liferay-ui:search-container-column-date
+					cssClass="table-cell-expand-smallest table-cell-ws-nowrap"
 					href="<%= rowHREF %>"
 					name="modified-date"
 					orderable="<%= true %>"

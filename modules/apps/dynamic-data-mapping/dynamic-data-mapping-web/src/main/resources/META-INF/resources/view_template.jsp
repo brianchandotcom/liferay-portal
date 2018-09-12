@@ -63,7 +63,7 @@ if (layout != null) {
 		<c:otherwise>
 			<liferay-ui:header
 				backURL="<%= PortalUtil.escapeRedirect(ddmDisplay.getViewTemplatesBackURL(liferayPortletRequest, liferayPortletResponse, classPK)) %>"
-				cssClass="container-fluid-1280"
+				cssClass="container-fluid container-fluid-max-xl"
 				title="<%= ddmDisplay.getViewTemplatesTitle(structure, controlPanel, ddmDisplayContext.isSearch(), locale) %>"
 			/>
 		</c:otherwise>
@@ -74,7 +74,7 @@ if (layout != null) {
 	<aui:input name="redirect" type="hidden" value="<%= ddmDisplayContext.getTemplateSearchActionURL() %>" />
 	<aui:input name="deleteTemplateIds" type="hidden" />
 
-	<div class="container-fluid-1280" id="<portlet:namespace />entriesContainer">
+	<div class="container-fluid container-fluid-max-xl" id="<portlet:namespace />entriesContainer">
 		<liferay-ui:search-container
 			id="<%= ddmDisplayContext.getTemplateSearchContainerId() %>"
 			rowChecker="<%= new DDMTemplateRowChecker(renderResponse) %>"
@@ -125,7 +125,7 @@ if (layout != null) {
 
 				<c:if test='<%= !excludedColumnNames.contains("name") %>'>
 					<liferay-ui:search-container-column-text
-						cssClass="table-cell-content"
+						cssClass="table-cell-expand-small table-list-title"
 						href="<%= rowHREF %>"
 						name="name"
 						value="<%= HtmlUtil.escape(template.getName(locale)) %>"
@@ -133,7 +133,7 @@ if (layout != null) {
 				</c:if>
 
 				<liferay-ui:search-container-column-jsp
-					cssClass="table-cell-content"
+					cssClass="table-cell-expand"
 					name="description"
 					path="/template_description.jsp"
 				/>
@@ -151,6 +151,7 @@ if (layout != null) {
 					%>
 
 					<liferay-ui:search-container-column-text
+						cssClass="table-cell-expand-smallest"
 						href="<%= rowHREF %>"
 						name="structure"
 						value="<%= HtmlUtil.escape(structureName) %>"
@@ -159,6 +160,7 @@ if (layout != null) {
 
 				<c:if test='<%= !excludedColumnNames.contains("type") && (classNameId == 0) %>'>
 					<liferay-ui:search-container-column-text
+						cssClass="table-cell-expand-smallest"
 						href="<%= rowHREF %>"
 						name="type"
 						value="<%= HtmlUtil.escape(ddmDisplay.getTemplateType(template, locale)) %>"
@@ -167,6 +169,7 @@ if (layout != null) {
 
 				<c:if test='<%= !excludedColumnNames.contains("mode") %>'>
 					<liferay-ui:search-container-column-text
+						cssClass="table-cell-expand-smallest"
 						href="<%= rowHREF %>"
 						name="mode"
 						value="<%= LanguageUtil.get(request, HtmlUtil.escape(template.getMode())) %>"
@@ -175,6 +178,7 @@ if (layout != null) {
 
 				<c:if test='<%= !excludedColumnNames.contains("language") %>'>
 					<liferay-ui:search-container-column-text
+						cssClass="table-cell-expand-smallest"
 						href="<%= rowHREF %>"
 						name="language"
 						value='<%= LanguageUtil.get(request, HtmlUtil.escape(template.getLanguage()) + "[stands-for]") %>'
@@ -188,6 +192,7 @@ if (layout != null) {
 					%>
 
 					<liferay-ui:search-container-column-text
+						cssClass="table-cell-expand-smallest"
 						name="scope"
 						value="<%= LanguageUtil.get(request, group.getScopeLabel(themeDisplay)) %>"
 					/>
@@ -195,6 +200,7 @@ if (layout != null) {
 
 				<c:if test='<%= !excludedColumnNames.contains("modified-date") %>'>
 					<liferay-ui:search-container-column-date
+						cssClass="table-cell-expand-smallest"
 						href="<%= rowHREF %>"
 						name="modified-date"
 						orderable="<%= true %>"

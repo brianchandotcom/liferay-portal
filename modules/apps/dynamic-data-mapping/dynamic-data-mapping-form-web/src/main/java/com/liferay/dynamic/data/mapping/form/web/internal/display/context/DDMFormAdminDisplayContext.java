@@ -576,15 +576,22 @@ public class DDMFormAdminDisplayContext {
 		return _jsonFactory;
 	}
 
-	public long getLatestDDMStructureVersionId() throws PortalException {
+	public DDMStructureVersion getLatestDDMStructureVersion() throws PortalException {
 		DDMStructure structure = getDDMStructure();
 
 		if (structure == null) {
-			return 0;
+			return null;
 		}
 
-		DDMStructureVersion latestDDMStructureVersion =
-			structure.getLatestStructureVersion();
+		return structure.getLatestStructureVersion();
+	}
+
+	public long getLatestDDMStructureVersionId() throws PortalException {
+		DDMStructureVersion latestDDMStructureVersion = getLatestDDMStructureVersion();
+
+		if (latestDDMStructureVersion == null) {
+			return 0;
+		}
 
 		return latestDDMStructureVersion.getStructureVersionId();
 	}
@@ -805,24 +812,18 @@ public class DDMFormAdminDisplayContext {
 
 		JSONSerializer jsonSerializer = _jsonFactory.createJSONSerializer();
 
-		Optional<DDMStructure> ddmStructureOptional = Optional.ofNullable(
-			_ddmStructureLocalService.fetchDDMStructure(getDDMStructureId()));
+		DDMStructureVersion ddmStructureVersion = getLatestDDMStructureVersion();
 
 		Locale defaultLocale = themeDisplay.getSiteDefaultLocale();
 
-		if (ddmStructureOptional.isPresent()) {
-			DDMStructure ddmStructure = ddmStructureOptional.get();
+		DDMFormBuilderContextRequest ddmFormBuilderContextRequest = DDMFormBuilderContextRequest.with(
+			Optional.ofNullable(null), themeDisplay.getRequest(),
+			themeDisplay.getResponse(), defaultLocale, true);
 
-			DDMForm ddmForm = ddmStructure.getDDMForm();
-
-			defaultLocale = ddmForm.getDefaultLocale();
-		}
+		ddmFormBuilderContextRequest.addProperty("ddmStructureVersion", ddmStructureVersion);
 
 		DDMFormBuilderContextResponse ddmFormBuilderContextResponse =
-			_ddmFormBuilderContextFactory.create(
-				DDMFormBuilderContextRequest.with(
-					ddmStructureOptional, themeDisplay.getRequest(),
-					themeDisplay.getResponse(), defaultLocale, true));
+			_ddmFormBuilderContextFactory.create(ddmFormBuilderContextRequest);
 
 		return jsonSerializer.serializeDeep(
 			ddmFormBuilderContextResponse.getContext());

@@ -1,4 +1,5 @@
 {
+	"index.indexing.slowlog.level": "warn",
 	"index.indexing.slowlog.threshold.index.debug": "2s",
 	"index.indexing.slowlog.threshold.index.info": "5s",
 	"index.indexing.slowlog.threshold.index.trace": "500ms",

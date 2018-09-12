@@ -1808,6 +1808,8 @@
 				<execute macro="Alert#viewSuccessMessage" />
 			</then>
 		</if>
+
+		<execute function="AssertElementPresent" locator1="Message#EMPTY_INFO" />
 	</command>
 
 	<command name="tearDownSpecificUser">

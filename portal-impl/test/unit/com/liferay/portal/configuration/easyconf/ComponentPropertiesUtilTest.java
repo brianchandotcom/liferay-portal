@@ -16,6 +16,7 @@ package com.liferay.portal.configuration.easyconf;
 
 import com.liferay.portal.kernel.test.CaptureHandler;
 import com.liferay.portal.kernel.test.JDKLoggerTestUtil;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 
 import java.util.List;
 import java.util.logging.Level;
@@ -27,46 +28,41 @@ import org.junit.Test;
 /**
  * @author Shuyang Zhou
  */
-public class ClassLoaderComponentConfigurationTest {
+public class ComponentPropertiesUtilTest {
 
 	@Test
 	public void testDecode() {
 
 		// Nothing to decode
 
-		Assert.assertEquals(
-			"abcDEF", ClassLoaderComponentConfiguration.decode("abcDEF"));
+		Assert.assertEquals("abcDEF", _decode("abcDEF"));
 
 		// Incompleted encoded content
 
-		Assert.assertEquals(
-			"abc_DEF", ClassLoaderComponentConfiguration.decode("abc_DEF"));
+		Assert.assertEquals("abc_DEF", _decode("abc_DEF"));
 
 		// Encoded with CharPool chars
 
 		Assert.assertEquals(
 			"abc:D,^E[F]g_H",
-			ClassLoaderComponentConfiguration.decode(
+			_decode(
 				"abc_COLON_D_COMMA__CARET_E_OPENBRACKET_F_CLOSEBRACKET_" +
 					"_LOWERCASEG__UNDERLINE__UPPERCASEH_"));
 
 		// Encoded with unicode chars
 
 		Assert.assertEquals(
-			"abc:D,^E[F]",
-			ClassLoaderComponentConfiguration.decode(
-				"abc_58_D_44__94_E_91_F_93_"));
+			"abc:D,^E[F]", _decode("abc_58_D_44__94_E_91_F_93_"));
 
 		// Encoded with illegal content
 
 		try (CaptureHandler captureHandler =
 				JDKLoggerTestUtil.configureJDKLogger(
-					ClassLoaderComponentConfiguration.class.getName(),
-					Level.WARNING)) {
+					ComponentPropertiesUtil.class.getName(), Level.WARNING)) {
 
 			String s = "abc_xyz_D_-1__DEF__GH";
 
-			Assert.assertEquals(s, ClassLoaderComponentConfiguration.decode(s));
+			Assert.assertEquals(s, _decode(s));
 
 			List<LogRecord> logRecords = captureHandler.getLogRecords();
 
@@ -93,6 +89,12 @@ public class ClassLoaderComponentConfigurationTest {
 					"\", preserve it literally",
 				logRecord.getMessage());
 		}
+	}
+
+	private static String _decode(String s) {
+		return ReflectionTestUtil.invoke(
+			ComponentPropertiesUtil.class, "_decode",
+			new Class<?>[] {String.class}, s);
 	}
 
 }

@@ -32,6 +32,8 @@ AUI.add(
 						var instance = this;
 
 						instance._renderTimer = A.later(RENDER_INTERVAL_IN_PROGRESS, instance, instance._renderExportProcesses);
+
+						Liferay.once('beforeNavigate', instance.destroy.bind(instance));
 					},
 
 					destructor: function() {

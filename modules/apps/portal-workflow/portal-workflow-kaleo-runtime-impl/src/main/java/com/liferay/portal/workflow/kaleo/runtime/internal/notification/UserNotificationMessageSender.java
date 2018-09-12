@@ -68,7 +68,8 @@ public class UserNotificationMessageSender
 				if (UserNotificationManagerUtil.isDeliver(
 						notificationRecipient.getUserId(),
 						PortletKeys.MY_WORKFLOW_TASK, 0,
-						MyWorkflowTasksConstants.NOTIFICATION_TYPE_MY_WORKFLOW_TASKS,
+						MyWorkflowTasksConstants.
+							NOTIFICATION_TYPE_MY_WORKFLOW_TASKS,
 						UserNotificationDeliveryConstants.TYPE_WEBSITE)) {
 
 					_userNotificationEventLocalService.

@@ -18,8 +18,8 @@ import com.liferay.portal.kernel.model.UserNotificationDeliveryConstants;
 import com.liferay.portal.kernel.notifications.UserNotificationDefinition;
 import com.liferay.portal.kernel.notifications.UserNotificationDeliveryType;
 import com.liferay.portal.kernel.util.PortletKeys;
-
 import com.liferay.portal.workflow.constants.MyWorkflowTasksConstants;
+
 import org.osgi.service.component.annotations.Component;
 
 /**

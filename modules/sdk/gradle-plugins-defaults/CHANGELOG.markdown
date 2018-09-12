@@ -4521,10 +4521,28 @@ used inside `build.gradle` files.
 
 ## 5.5.40 - 2018-09-11
 
+### Changed
+- [LPS-84119]: Update the [Liferay Gradle Plugins] dependency to version
+3.12.131.
+
+## 5.5.41 - 2018-09-11
+
+### Changed
+- [LPS-74544]: Update the [Liferay Gradle Plugins] dependency to version
+3.12.132.
+
+## 5.5.42 - 2018-09-11
+
 ### Fixed
 - [LPS-69453]: Avoid throwing an exception while running
 `gradlew deployDependencies` when the value of the `Bundle-Symbolic-Name`
 manifest header for the deployed JAR does not contain a period.
+
+## 5.5.43 - 2018-09-11
+
+### Changed
+- [LPS-84119]: Update the [Liferay Gradle Plugins] dependency to version
+3.12.133.
 
 [Find Security Bugs]: https://github.com/liferay/liferay-portal/tree/master/modules/third-party/com-h3xstream-findsecbugs
 [Gradle Dependency Management]: https://github.com/spring-gradle-plugins/dependency-management-plugin

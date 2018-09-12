@@ -71,6 +71,9 @@ public class SourceFormatter {
 		DEFAULT_EXCLUDE_SYNTAX_PATTERNS = {
 			new ExcludeSyntaxPattern(ExcludeSyntax.GLOB, "**/.git/**"),
 			new ExcludeSyntaxPattern(ExcludeSyntax.GLOB, "**/.gradle/**"),
+			new ExcludeSyntaxPattern(ExcludeSyntax.GLOB, "**/.idea/**"),
+			new ExcludeSyntaxPattern(ExcludeSyntax.GLOB, "**/.m2/**"),
+			new ExcludeSyntaxPattern(ExcludeSyntax.GLOB, "**/.settings/**"),
 			new ExcludeSyntaxPattern(ExcludeSyntax.GLOB, "**/bin/**"),
 			new ExcludeSyntaxPattern(ExcludeSyntax.GLOB, "**/build/**"),
 			new ExcludeSyntaxPattern(ExcludeSyntax.GLOB, "**/classes/**"),

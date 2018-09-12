@@ -228,14 +228,14 @@ if (parentOrganization != null) {
 		</portlet:renderURL>
 
 		<liferay-ui:search-container-column-text
-			cssClass="table-cell-content"
+			cssClass="table-cell-expand table-cell-minw-200 table-title"
 			href="<%= rowURL %>"
 			name="name"
 			property="name"
 		/>
 
 		<liferay-ui:search-container-column-text
-			cssClass="table-cell-content"
+			cssClass="table-cell-expand table-cell-minw-150"
 			href="<%= rowURL %>"
 			name="type"
 			value="<%= LanguageUtil.get(request, curOrganization.getType()) %>"

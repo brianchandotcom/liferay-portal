@@ -77,21 +77,21 @@
 			</c:when>
 			<c:otherwise>
 				<liferay-ui:search-container-column-text
-					cssClass="important table-cell-content"
+					cssClass="table-cell-expand table-cell-minw-200 table-title"
 					href="<%= rowURL %>"
 					name="name"
 					value="<%= HtmlUtil.escape(curOrganization.getName()) %>"
 				/>
 
 				<liferay-ui:search-container-column-text
-					cssClass="table-cell-content"
+					cssClass="table-cell-expand table-cell-minw-100 table-cell-ws-nowrap"
 					href="<%= rowURL %>"
 					name="type"
 					value="<%= LanguageUtil.get(request, curOrganization.getType()) %>"
 				/>
 
 				<liferay-ui:search-container-column-text
-					cssClass="table-cell-content"
+					cssClass="table-cell-expand-smaller table-cell-minw-100 table-cell-ws-nowrap"
 					href="<%= rowURL %>"
 					name="status"
 					value=""
@@ -171,7 +171,7 @@
 			</c:when>
 			<c:otherwise>
 				<liferay-ui:search-container-column-text
-					cssClass="important table-cell-content"
+					cssClass="table-cell-expand table-cell-minw-200 table-title"
 					href="<%= rowURL %>"
 					name="name"
 					orderable="<%= true %>"
@@ -179,14 +179,14 @@
 				/>
 
 				<liferay-ui:search-container-column-text
-					cssClass="table-cell-content"
+					cssClass="table-cell-expand table-cell-minw-100 table-cell-ws-nowrap"
 					href="<%= rowURL %>"
 					name="type"
 					value='<%= LanguageUtil.get(request, "user") %>'
 				/>
 
 				<liferay-ui:search-container-column-text
-					cssClass="table-cell-content"
+					cssClass="table-cell-expand-smaller table-cell-minw-100 table-cell-ws-nowrap"
 					href="<%= rowURL %>"
 					name="status"
 					value="<%= LanguageUtil.get(request, userStatus) %>"

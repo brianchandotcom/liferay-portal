@@ -85,11 +85,13 @@ PortletURL portletURL = (PortletURL)request.getAttribute("edit_roles.jsp-portlet
 		rowIdProperty="screenName"
 	>
 		<liferay-ui:search-container-column-text
+			cssClass="table-cell-expand table-cell-minw-200 table-title"
 			name="name"
 			property="fullName"
 		/>
 
 		<liferay-ui:search-container-column-text
+			cssClass="table-cell-expand table-cell-minw-200"
 			name="screen-name"
 			property="screenName"
 		/>

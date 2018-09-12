@@ -62,12 +62,14 @@ import com.liferay.portal.kernel.search.IndexerRegistry;
 import com.liferay.portal.kernel.search.Query;
 import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.SearchContext;
-import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
+import com.liferay.portal.kernel.search.TermQuery;
+import com.liferay.portal.kernel.search.generic.TermQueryImpl;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.structure.apio.architect.identifier.ContentStructureIdentifier;
 import com.liferay.structured.content.apio.architect.filter.Filter;
@@ -349,12 +351,11 @@ public class StructuredContentNestedCollectionResource
 			String localizedFieldName = Field.getSortableFieldName(
 				"localized_title_".concat(LocaleUtil.toLanguageId(locale)));
 
-			BooleanQueryImpl booleanQuery = new BooleanQueryImpl();
+			TermQuery termQuery = new TermQueryImpl(
+				localizedFieldName, String.valueOf(fieldValue));
 
 			BooleanClause booleanClause = BooleanClauseFactoryUtil.create(
-				booleanQuery.addTerm(
-					localizedFieldName, String.valueOf(fieldValue), false),
-				BooleanClauseOccur.MUST.getName());
+				termQuery, BooleanClauseOccur.MUST.getName());
 
 			return Optional.of(booleanClause);
 		}

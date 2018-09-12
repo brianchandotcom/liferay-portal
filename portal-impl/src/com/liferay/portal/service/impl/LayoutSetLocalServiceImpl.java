@@ -600,18 +600,7 @@ public class LayoutSetLocalServiceImpl extends LayoutSetLocalServiceBaseImpl {
 			String oldJavaScript = oldSettingsProperties.getProperty(
 				"javascript");
 
-			String newJavaScript = newSettingsProperties.getProperty(
-				"javascript");
-
-			if (!StringUtil.equals(oldJavaScript, newJavaScript)) {
-				if (Validator.isBlank(oldJavaScript)) {
-					newSettingsProperties.remove("javascript");
-				}
-				else {
-					newSettingsProperties.setProperty(
-						"javascript", oldJavaScript);
-				}
-			}
+			newSettingsProperties.setProperty("javascript", oldJavaScript);
 		}
 	}
 

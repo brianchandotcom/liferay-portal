@@ -78,9 +78,13 @@ renderResponse.setTitle((formInstance == null) ? LanguageUtil.get(request, "new-
 
 	<aui:form action="<%= saveFormInstanceURL %>" cssClass="ddm-form-builder-form" enctype="multipart/form-data" method="post" name="editForm">
 		<aui:input name="ddmStructureId" type="hidden" value="<%= ddmStructureId %>" />
+		<aui:input name="description" type="hidden" value="<%= ddmFormAdminDisplayContext.getFormLocalizedDescription() %>" />
 		<aui:input name="formInstanceId" type="hidden" value="<%= formInstanceId %>" />
 		<aui:input name="groupId" type="hidden" value="<%= groupId %>" />
+		<aui:input name="name" type="hidden" value="<%= ddmFormAdminDisplayContext.getFormLocalizedName() %>" />
 		<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
+		<aui:input name="serializedFormBuilderContext" type="hidden" value="<%= serializedFormBuilderContext %>" />
+		<aui:input name="serializedSettingsContext" type="hidden" value="" />
 
 		<%@ include file="/admin/exceptions.jspf" %>
 
@@ -110,11 +114,6 @@ renderResponse.setTitle((formInstance == null) ? LanguageUtil.get(request, "new-
 					/>
 				</h5>
 			</div>
-		</div>
-
-		<div class="container-fluid-1280">
-			<div id="<portlet:namespace />formBuilder"></div>
-			<div id="<portlet:namespace />ruleBuilder"></div>
 		</div>
 
 		<div id="<portlet:namespace />-container"></div>
@@ -182,12 +181,16 @@ renderResponse.setTitle((formInstance == null) ? LanguageUtil.get(request, "new-
 							rules: <%= serializedDDMFormRules %>,
 							spritemap: '<%= themeDisplay.getPathThemeImages() %>/clay/icons.svg',
 							strings: {
+								'any-unsaved-changes-will-be-lost-are-you-sure-you-want-to-leave': '<liferay-ui:message key="any-unsaved-changes-will-be-lost-are-you-sure-you-want-to-leave" />',
 								'draft-x': '<liferay-ui:message key="draft-x" />',
+								'leave': '<liferay-ui:message key="leave" />',
+								'leave-form': '<liferay-ui:message key="leave-form" />',
 								'preview-form': '<liferay-ui:message key="preview-form" />',
 								'publish-form': '<liferay-ui:message key="publish-form" />',
 								'save-form': '<liferay-ui:message key="save-form" />',
 								'saved-x': '<liferay-ui:message key="saved-x" />',
-								'saving': '<liferay-ui:message key="saving" />'
+								'saving': '<liferay-ui:message key="saving" />',
+								'stay': '<liferay-ui:message key="stay" />'
 							}
 						},
 						'#<portlet:namespace />-container',
@@ -205,6 +208,22 @@ renderResponse.setTitle((formInstance == null) ? LanguageUtil.get(request, "new-
 	var clearPortletHandlers = function(event) {
 			if (event.portletId === '<%= portletDisplay.getRootPortletId() %>') {
 				Liferay.Forms.App.dispose();
+
+				var settingsDDMForm = Liferay.component('settingsDDMForm');
+
+				var translationManager = Liferay.component('<portlet:namespace />translationManager');
+
+				Liferay.destroyComponents(
+					function(component) {
+						var destroy = false;
+
+						if (component === settingsDDMForm || component === translationManager) {
+							destroy = true;
+						}
+
+						return destroy;
+					}
+				);
 
 				Liferay.detach('destroyPortlet', clearPortletHandlers);
 			}

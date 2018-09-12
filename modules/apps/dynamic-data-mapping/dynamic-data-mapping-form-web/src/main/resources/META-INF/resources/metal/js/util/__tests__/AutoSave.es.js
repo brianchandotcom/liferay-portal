@@ -22,6 +22,7 @@ describe(
 	() => {
 		let component;
 		let form;
+		let stateSyncronizer;
 
 		afterEach(
 			() => {
@@ -41,14 +42,23 @@ describe(
 
 				form = createForm();
 
+				stateSyncronizer = {
+					getState: () => {
+						return {
+							pages: stateSyncronizer.pages
+						};
+					},
+					'isEmpty': () => true,
+					pages: [],
+					syncInputs: () => {}
+				};
+
 				component = new AutoSave(
 					{
 						form,
 						interval: AUTOSAVE_INTERVAL,
 						namespace: '',
-						stateRetriever: () => {
-							return {};
-						},
+						stateSyncronizer,
 						url: URL
 					}
 				);
@@ -74,6 +84,13 @@ describe(
 			'should call save function only once when time has passed but state has not changed',
 			() => {
 				const saveSpy = jest.spyOn(component, 'save');
+
+				stateSyncronizer.getState = () => {
+					return {
+						newState: true
+					};
+				};
+				stateSyncronizer.isEmpty = () => false;
 
 				fetch.mockResponse(
 					JSON.stringify({}),

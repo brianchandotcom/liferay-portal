@@ -103,6 +103,12 @@ class FormRenderer extends Component {
 		}
 	}
 
+	disposeInternal() {
+		if (this._dragAndDrop) {
+			this._dragAndDrop.dispose();
+		}
+	}
+
 	/**
 	 * @inheritDoc
 	 */

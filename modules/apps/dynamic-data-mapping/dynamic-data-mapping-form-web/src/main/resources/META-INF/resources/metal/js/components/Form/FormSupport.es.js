@@ -36,12 +36,12 @@ const addFieldToColumn = (pages, pageIndex, rowIndex, columnIndex, field) => {
 	return pages;
 };
 
-const checkEmptyPage = pages => {
+const emptyPages = pages => {
 	let empty = true;
 	const visitor = new PagesVisitor(pages);
 
 	visitor.mapFields(
-		field => {
+		() => {
 			empty = false;
 		}
 	);
@@ -159,7 +159,7 @@ const updateField = (
 export default {
 	addFieldToColumn,
 	addRow,
-	checkEmptyPage,
+	emptyPages,
 	generateFieldName,
 	getColumn,
 	getField,

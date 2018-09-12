@@ -113,8 +113,13 @@ public class AutoCloseUtil {
 			sb.append("close out certain pull requests see this ");
 			sb.append("<a href=\"https://in.liferay.com/web/global.");
 			sb.append("engineering/wiki/-/wiki/Quality+Assurance+Main/Test");
-			sb.append("+Batch+Automatic+Close+List\">article</a>.</p>");
-			sb.append("<p auto-close=\"false\"><strong><em>*This pull will ");
+			sb.append("+Batch+Automatic+Close+List\">article</a>.</p><p");
+
+			if (!(topLevelBuild instanceof SourceFormatBuild)) {
+				sb.append(" auto-close=\"false\"");
+			}
+
+			sb.append("><strong><em>*This pull will ");
 			sb.append("no longer automatically close if this comment is ");
 			sb.append("available. If you believe this is a mistake please ");
 			sb.append("reopen this pull by entering the following command ");

@@ -27,7 +27,9 @@ import java.nio.file.Path;
 import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
@@ -206,13 +208,25 @@ public class FileUtil extends com.liferay.gradle.util.FileUtil {
 			"--exclude-standard", "--modified", "--others", "-z");
 
 		if (Validator.isNull(result)) {
-			if (_logger.isWarnEnabled()) {
+			result = _getGitIgnoredFileNamesResult(project, rootDir);
+
+			if (Validator.isNull(result) && _logger.isWarnEnabled()) {
 				_logger.warn(
 					"Unable to remove ignored files, Git returned an empty " +
 						"result");
+
+				return false;
 			}
 
-			return false;
+			String[] ignoredFileNames = result.split("\\000");
+
+			Set<File> ignoredFiles = new HashSet<>();
+
+			for (String fileName : ignoredFileNames) {
+				ignoredFiles.add(new File(rootDir, fileName));
+			}
+
+			return files.removeAll(ignoredFiles);
 		}
 
 		String[] committedFileNames = result.split("\\000");
@@ -239,6 +253,73 @@ public class FileUtil extends com.liferay.gradle.util.FileUtil {
 		catch (IOException ioe) {
 			throw new UncheckedIOException(
 				"Unable to get canonical path of " + file, ioe);
+		}
+	}
+
+	private static String _getGitIgnoredFileNamesResult(
+		Project project, File rootDir) {
+
+		List<File> gitIgnoreDirs = _getGitIgnoreDirs(rootDir);
+
+		for (File gitIgnoreDir : gitIgnoreDirs) {
+			File file = new File(gitIgnoreDir, _GIT_IGNORE_FILE_NAME);
+
+			file.renameTo(new File(gitIgnoreDir, _GIT_IGNORE_TEMP_FILE_NAME));
+		}
+
+		String result = _getGitResult(
+			project, rootDir, "ls-files",
+			"--exclude-per-directory=" + _GIT_IGNORE_TEMP_FILE_NAME,
+			"--ignored", "--others", "-z");
+
+		for (File gitIgnoreDir : gitIgnoreDirs) {
+			File file = new File(gitIgnoreDir, _GIT_IGNORE_TEMP_FILE_NAME);
+
+			file.renameTo(new File(gitIgnoreDir, _GIT_IGNORE_FILE_NAME));
+		}
+
+		return result;
+	}
+
+	private static List<File> _getGitIgnoreDirs(File dir) {
+		try {
+			final List<File> gitIgnoreDirs = new ArrayList<>();
+
+			Files.walkFileTree(
+				dir.toPath(),
+				new SimpleFileVisitor<Path>() {
+
+					@Override
+					public FileVisitResult preVisitDirectory(
+							Path path, BasicFileAttributes basicFileAttributes)
+						throws IOException {
+
+						String dirName = String.valueOf(path.getFileName());
+
+						if (_excludedDirNames.contains(dirName)) {
+							return FileVisitResult.SKIP_SUBTREE;
+						}
+
+						Path gitIgnorePath = path.resolve(
+							_GIT_IGNORE_FILE_NAME);
+
+						if (Files.exists(gitIgnorePath)) {
+							gitIgnoreDirs.add(path.toFile());
+						}
+
+						return FileVisitResult.CONTINUE;
+					}
+
+				});
+
+			return gitIgnoreDirs;
+		}
+		catch (IOException ioe) {
+			if (_logger.isWarnEnabled()) {
+				_logger.warn("Unable to get .gitignore files");
+			}
+
+			return Collections.emptyList();
 		}
 	}
 
@@ -273,7 +354,14 @@ public class FileUtil extends com.liferay.gradle.util.FileUtil {
 
 	private static final char _DIGEST_SEPARATOR = '-';
 
+	private static final String _GIT_IGNORE_FILE_NAME = ".gitignore";
+
+	private static final String _GIT_IGNORE_TEMP_FILE_NAME = ".gitignore.temp";
+
 	private static final Logger _logger = Logging.getLogger(FileUtil.class);
+
+	private static final List<String> _excludedDirNames = Arrays.asList(
+		"bin", "build", "classes", "node_modules", "test-classes", "tmp");
 
 	private static class FileComparator implements Comparator<File> {
 

@@ -37,40 +37,30 @@ import java.util.Map;
 import org.apache.commons.configuration.Configuration;
 
 /**
- * @author Raymond Augé
+ * @author Shuyang Zhou
  */
-public class ClassLoaderComponentConfiguration {
+public class ComponentPropertiesUtil {
 
-	public ClassLoaderComponentConfiguration(
+	public static ComponentProperties createComponentProperties(
 		ClassLoader classLoader, String companyId, String componentName) {
-
-		_classLoader = classLoader;
-		_companyId = companyId;
-		_componentName = componentName;
-	}
-
-	public ComponentProperties getProperties() {
-		if (_properties != null) {
-			return _properties;
-		}
 
 		SystemProperties.set("base.path", ".");
 
 		ClassLoaderAggregateProperties classLoaderAggregateProperties =
 			new ClassLoaderAggregateProperties(
-				_classLoader, _companyId, _componentName);
+				classLoader, companyId, componentName);
 
 		classLoaderAggregateProperties.addGlobalFileName(
 			Conventions.GLOBAL_CONFIGURATION_FILE +
 				Conventions.PROPERTIES_EXTENSION);
 
 		classLoaderAggregateProperties.addBaseFileName(
-			_componentName + Conventions.PROPERTIES_EXTENSION);
+			componentName.concat(Conventions.PROPERTIES_EXTENSION));
 
 		if (_log.isInfoEnabled()) {
 			_log.info(
 				StringBundler.concat(
-					"Properties for ", _componentName, " loaded from ",
+					"Properties for ", componentName, " loaded from ",
 					String.valueOf(
 						classLoaderAggregateProperties.loadedSources())));
 		}
@@ -78,17 +68,17 @@ public class ClassLoaderComponentConfiguration {
 		_loadEnvOverrides(classLoaderAggregateProperties);
 
 		try {
-			_properties = _CONSTRUCTOR.newInstance(
+			return _CONSTRUCTOR.newInstance(
 				new Object[] {classLoaderAggregateProperties});
 		}
 		catch (Exception e) {
 			_log.error(e, e);
 		}
 
-		return _properties;
+		return null;
 	}
 
-	protected static String decode(String s) {
+	private static String _decode(String s) {
 		int index = -1;
 		int openUnderLine = -1;
 		int position = 0;
@@ -139,7 +129,7 @@ public class ClassLoaderComponentConfiguration {
 		return sb.toString();
 	}
 
-	private void _loadEnvOverrides(Configuration configuration) {
+	private static void _loadEnvOverrides(Configuration configuration) {
 		Map<String, String> env = System.getenv();
 
 		for (Map.Entry<String, String> entry : env.entrySet()) {
@@ -149,7 +139,7 @@ public class ClassLoaderComponentConfiguration {
 				continue;
 			}
 
-			String newKey = decode(
+			String newKey = _decode(
 				StringUtil.toLowerCase(
 					key.substring(_ENV_OVERRIDE_PREFIX.length())));
 
@@ -169,7 +159,7 @@ public class ClassLoaderComponentConfiguration {
 	private static final String _ENV_OVERRIDE_PREFIX = "LIFERAY_";
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		ClassLoaderComponentConfiguration.class);
+		ComponentPropertiesUtil.class);
 
 	private static final Map<String, Character> _charPoolChars =
 		new HashMap<String, Character>() {
@@ -207,10 +197,5 @@ public class ClassLoaderComponentConfiguration {
 
 		_CONSTRUCTOR = constructor;
 	}
-
-	private final ClassLoader _classLoader;
-	private final String _companyId;
-	private final String _componentName;
-	private ComponentProperties _properties;
 
 }

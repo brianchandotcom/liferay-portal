@@ -15,6 +15,7 @@
 package com.liferay.portal.lpkg.deployer.internal;
 
 import com.liferay.osgi.util.bundle.BundleStartLevelUtil;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.concurrent.DefaultNoticeableFuture;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
@@ -61,8 +62,6 @@ import java.util.jar.Attributes;
 import java.util.jar.JarFile;
 import java.util.jar.JarOutputStream;
 import java.util.jar.Manifest;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
@@ -478,6 +477,24 @@ public class DefaultLPKGDeployer implements LPKGDeployer {
 		}
 	}
 
+	private boolean _isValid(String string) {
+		int index = string.lastIndexOf(StringPool.DASH);
+
+		if (index == -1) {
+			return true;
+		}
+
+		String version = string.substring(index + 1, string.length() - 4);
+
+		int count = StringUtil.count(version, StringPool.PERIOD);
+
+		if ((count == 2) || (count == 3)) {
+			return false;
+		}
+
+		return true;
+	}
+
 	private Properties _loadOverrideWarsProperties(BundleContext bundleContext)
 		throws IOException {
 
@@ -570,9 +587,7 @@ public class DefaultLPKGDeployer implements LPKGDeployer {
 				}
 
 				if (checkFileName) {
-					Matcher matcher = _pattern.matcher(pathName);
-
-					if (matcher.matches()) {
+					if (!_isValid(pathName)) {
 						if (_log.isWarnEnabled()) {
 							_log.warn(
 								"Override file " + path +
@@ -705,9 +720,6 @@ public class DefaultLPKGDeployer implements LPKGDeployer {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		DefaultLPKGDeployer.class);
-
-	private static final Pattern _pattern = Pattern.compile(
-		".*?(-\\d+\\.\\d+\\.\\d+)\\..+?\\.[jw]ar");
 
 	private Path _deploymentDirPath;
 	private BundleTracker<List<Bundle>> _lpkgBundleTracker;

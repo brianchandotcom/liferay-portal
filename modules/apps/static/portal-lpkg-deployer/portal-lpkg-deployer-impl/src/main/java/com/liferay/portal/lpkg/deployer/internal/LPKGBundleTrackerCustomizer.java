@@ -60,8 +60,6 @@ import java.util.jar.JarFile;
 import java.util.jar.JarInputStream;
 import java.util.jar.JarOutputStream;
 import java.util.jar.Manifest;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
@@ -392,6 +390,16 @@ public class LPKGBundleTrackerCustomizer
 		return sb.toString();
 	}
 
+	private String _extractFileName(String string) {
+		int endIndex = string.lastIndexOf(StringPool.DASH);
+
+		int beginIndex = string.lastIndexOf(StringPool.SLASH, endIndex) + 1;
+
+		String name = string.substring(beginIndex, endIndex);
+
+		return name.concat(string.substring(string.length() - 4));
+	}
+
 	private boolean _isBundleInstalled(Bundle bundle, URL url, String location)
 		throws IOException {
 
@@ -440,15 +448,11 @@ public class LPKGBundleTrackerCustomizer
 
 		String path = url.getPath();
 
-		Matcher matcher = _pattern.matcher(path);
+		String name = _extractFileName(path);
 
-		if (matcher.find()) {
-			path = matcher.group(1) + matcher.group(3);
-		}
+		name = StringUtil.toLowerCase(name);
 
-		path = StringUtil.toLowerCase(path);
-
-		if (_overrideFileNames.contains(path)) {
+		if (_overrideFileNames.contains(name)) {
 			Bundle bundle = _bundleContext.getBundle(location);
 
 			if (bundle != null) {
@@ -738,8 +742,6 @@ public class LPKGBundleTrackerCustomizer
 	private static final Log _log = LogFactoryUtil.getLog(
 		LPKGBundleTrackerCustomizer.class);
 
-	private static final Pattern _pattern = Pattern.compile(
-		"!/(.*?)-\\d+\\.\\d+\\.\\d+(\\..+)?(\\.[jw]ar)");
 	private static final List<String> _staticLPKGBundleSymbolicNames =
 		StaticLPKGResolver.getStaticLPKGBundleSymbolicNames();
 

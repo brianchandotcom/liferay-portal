@@ -96,8 +96,6 @@ import java.util.concurrent.Future;
 import java.util.jar.Attributes;
 import java.util.jar.JarInputStream;
 import java.util.jar.Manifest;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
@@ -908,28 +906,24 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 					continue;
 				}
 
-				Matcher matcher = _pattern.matcher(name);
+				String fileName = _extractFileName(name) + ".jar";
 
-				if (matcher.matches()) {
-					String fileName = matcher.group(1) + ".jar";
+				if (overrideStaticFileNames.contains(fileName)) {
+					if (_log.isInfoEnabled()) {
+						StringBundler sb = new StringBundler(7);
 
-					if (overrideStaticFileNames.contains(fileName)) {
-						if (_log.isInfoEnabled()) {
-							StringBundler sb = new StringBundler(7);
+						sb.append(zipFile);
+						sb.append(":");
+						sb.append(zipEntry);
+						sb.append(" is overridden by ");
+						sb.append(PropsValues.MODULE_FRAMEWORK_BASE_DIR);
+						sb.append("/static/");
+						sb.append(fileName);
 
-							sb.append(zipFile);
-							sb.append(":");
-							sb.append(zipEntry);
-							sb.append(" is overridden by ");
-							sb.append(PropsValues.MODULE_FRAMEWORK_BASE_DIR);
-							sb.append("/static/");
-							sb.append(fileName);
-
-							_log.info(sb.toString());
-						}
-
-						continue;
+						_log.info(sb.toString());
 					}
+
+					continue;
 				}
 
 				zipEntries.add(zipEntry);
@@ -970,6 +964,22 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 		}
 
 		return bundles;
+	}
+
+	private String _extractFileName(String string) {
+		int endIndex = string.indexOf(StringPool.DASH);
+
+		if (endIndex == -1) {
+			endIndex = string.indexOf(StringPool.QUESTION);
+
+			if (endIndex == -1) {
+				endIndex = string.length();
+			}
+		}
+
+		int beginIndex = string.lastIndexOf(StringPool.SLASH, endIndex) + 1;
+
+		return string.substring(beginIndex, endIndex);
 	}
 
 	private Attributes _getExtraManifestAttributes() {
@@ -1175,6 +1185,24 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 		return true;
 	}
 
+	private boolean _isValid(String string) {
+		int index = string.lastIndexOf(StringPool.DASH);
+
+		if (index == -1) {
+			return true;
+		}
+
+		String version = string.substring(index + 1, string.length() - 4);
+
+		int count = StringUtil.count(version, StringPool.PERIOD);
+
+		if ((count == 2) || (count == 3)) {
+			return false;
+		}
+
+		return true;
+	}
+
 	private void _refreshBundles(List<Bundle> refreshBundles) {
 		FrameworkWiring frameworkWiring = _framework.adapt(
 			FrameworkWiring.class);
@@ -1325,9 +1353,7 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 						return FileVisitResult.CONTINUE;
 					}
 
-					Matcher matcher = _pattern.matcher(fileName);
-
-					if (!matcher.matches()) {
+					if (_isValid(fileName)) {
 						jarPaths.add(filePath.toAbsolutePath());
 
 						return FileVisitResult.CONTINUE;
@@ -1447,13 +1473,13 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 		}
 
 		for (Bundle bundle : bundleContext.getBundles()) {
+			if (bundle.getBundleId() == 0) {
+				continue;
+			}
+
 			String location = bundle.getLocation();
 
-			Matcher matcher = _pattern.matcher(location);
-
-			if (matcher.find()) {
-				location = matcher.group(1) + "*.jar";
-			}
+			location = _extractFileName(location);
 
 			if (overrideLPKGFileNames.contains(location)) {
 				bundle.uninstall();
@@ -1739,9 +1765,6 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		ModuleFrameworkImpl.class);
-
-	private static final Pattern _pattern = Pattern.compile(
-		"(.*?)-\\d+\\.\\d+\\.\\d+(\\..+)?\\.jar");
 
 	private Framework _framework;
 	private final Map<ApplicationContext, List<ServiceRegistration<?>>>

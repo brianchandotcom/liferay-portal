@@ -10,3 +10,7 @@
 
 # Output of the go coverage tool, specifically when used with LiteIDE
 *.out
+
+# Resource and temp folder for the installer
+.tempDir
+_resources

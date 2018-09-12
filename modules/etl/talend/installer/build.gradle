@@ -1,0 +1,31 @@
+import java.nio.file.Paths
+
+plugins {
+	id "de.undercouch.download" version "3.4.3"
+}
+
+task downloadZipFile(type: Download) {
+	doFirst {
+		println "Downloading 3rd party dependencies..."
+	}
+	src "https://github.com/ZoltanTakacs/liferay-binaries-cache-2017/archive/talend-installer-3rd-party-cache.zip"
+	dest new File(".tempDir", "talend-installer-3rd-party-cache.zip")
+	onlyIfModified true
+}
+
+task getThirdPartyDependencies(dependsOn: downloadZipFile, type: Copy) {
+	description "Downloads the third party dependency files for the installer of Talend Liferay component"
+	from zipTree(downloadZipFile.dest)
+	into ".tempDir"
+}
+
+task moveFolder {
+	doLast {
+		ant.move file: Paths.get(".tempDir", "liferay-binaries-cache-2017-talend-installer-3rd-party-cache", ".m2"),
+		todir: Paths.get("_resources", "3rd-party-dependencies")
+	}
+}
+
+getThirdPartyDependencies.finalizedBy(moveFolder)
+
+defaultTasks "getThirdPartyDependencies"

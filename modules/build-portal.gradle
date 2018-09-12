@@ -1,6 +1,8 @@
 import com.liferay.gradle.plugins.baseline.BaselinePlugin
 import com.liferay.gradle.plugins.baseline.BaselineTask
 
+import org.gradle.util.GUtil
+
 buildscript {
 	apply from: file("../modules/build-buildscript.gradle"), to: buildscript
 }

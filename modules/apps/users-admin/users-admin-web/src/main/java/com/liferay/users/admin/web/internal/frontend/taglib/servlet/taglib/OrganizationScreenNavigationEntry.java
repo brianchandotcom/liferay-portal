@@ -22,7 +22,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.service.OrganizationServiceUtil;
+import com.liferay.portal.kernel.service.OrganizationService;
 import com.liferay.portal.kernel.util.AggregateResourceBundle;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -46,11 +46,13 @@ public class OrganizationScreenNavigationEntry
 	implements ScreenNavigationEntry<Organization> {
 
 	public OrganizationScreenNavigationEntry(
-		JSPRenderer jspRenderer, Portal portal, String entryKey,
-		String categoryKey, String jspPath, String mvcActionCommandName,
+		JSPRenderer jspRenderer, OrganizationService organizationService,
+		Portal portal, String entryKey, String categoryKey, String jspPath,
+		String mvcActionCommandName,
 		BiFunction<User, Organization, Boolean> isVisiblePredicate) {
 
 		_jspRenderer = jspRenderer;
+		_organizationService = organizationService;
 		_portal = portal;
 		_entryKey = entryKey;
 		_categoryKey = categoryKey;
@@ -107,7 +109,7 @@ public class OrganizationScreenNavigationEntry
 		Organization organization = null;
 
 		try {
-			organization = OrganizationServiceUtil.fetchOrganization(
+			organization = _organizationService.fetchOrganization(
 				organizationId);
 		}
 		catch (PortalException pe) {
@@ -146,6 +148,7 @@ public class OrganizationScreenNavigationEntry
 	private final String _jspPath;
 	private final JSPRenderer _jspRenderer;
 	private final String _mvcActionCommandName;
+	private final OrganizationService _organizationService;
 	private final Portal _portal;
 
 }

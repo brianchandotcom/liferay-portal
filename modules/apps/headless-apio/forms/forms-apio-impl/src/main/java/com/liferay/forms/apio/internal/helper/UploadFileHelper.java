@@ -104,7 +104,9 @@ public class UploadFileHelper {
 			_dlAppService::getFileEntry
 		).map(
 			fileEntry -> new FileEntryValue(
-				fileEntry.getGroupId(), fileEntry.getUuid())
+				fileEntry.getFileEntryId(), fileEntry.getGroupId(),
+				fileEntry.getTitle(), fileEntry.getMimeType(),
+				fileEntry.getUuid(), fileEntry.getVersion())
 		).map(
 			gson::toJson
 		).map(

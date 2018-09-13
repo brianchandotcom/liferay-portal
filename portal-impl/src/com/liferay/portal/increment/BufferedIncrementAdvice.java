@@ -14,6 +14,9 @@
 
 package com.liferay.portal.increment;
 
+import com.liferay.portal.internal.increment.BufferedIncreasableEntry;
+import com.liferay.portal.internal.increment.BufferedIncrementConfiguration;
+import com.liferay.portal.internal.increment.BufferedIncrementProcessor;
 import com.liferay.portal.kernel.cache.key.CacheKeyGenerator;
 import com.liferay.portal.kernel.cache.key.CacheKeyGeneratorUtil;
 import com.liferay.portal.kernel.increment.BufferedIncrement;
@@ -40,9 +43,7 @@ import org.aopalliance.intercept.MethodInvocation;
 /**
  * @author     Zsolt Berentey
  * @author     Shuyang Zhou
- * @deprecated As of Judson (7.1.x), with no direct replacement
  */
-@Deprecated
 public class BufferedIncrementAdvice
 	extends AnnotationChainableMethodAdvice<BufferedIncrement> {
 

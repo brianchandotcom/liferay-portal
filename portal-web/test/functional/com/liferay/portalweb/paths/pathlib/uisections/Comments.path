@@ -99,11 +99,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>PUBLISH_COMMENT_BUTTON</td>
-	<td>//div[(@class='lfr-discussion-body') and contains (.,'${key_entryComment}')]//button[contains(.,'Publish')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>REPLY_BODY</td>
 	<td>//div[@class='lfr-discussion-message']</td>
 	<td></td>

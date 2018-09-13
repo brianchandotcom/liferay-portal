@@ -19,18 +19,6 @@ class FragmentsEditorToolbar extends Component {
 	_handleToggleContextualSidebarButtonClick() {
 		this.emit('toggleContextualSidebarButtonClick');
 	}
-
-	/**
-	 * @param {{languageId: string}} event
-	 * @private
-	 * @review
-	 */
-
-	_handleTranslationLanguageChange(event) {
-		const {languageId} = event;
-
-		this.emit('translationLanguageChange', {languageId});
-	}
 }
 
 /**

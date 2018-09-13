@@ -90,6 +90,13 @@ public class IncorrectWhitespace {
 			String[] stringArray1 = {"test1"};
 		}
 
+		for (int i = i;
+			 i < s2.indexOf("Hello World Hello World Hello World Hello World");
+			 i++) {
+
+			s1 = "test";
+		}
+
 		List<String> list = null;
 
 		for (String s : list) {

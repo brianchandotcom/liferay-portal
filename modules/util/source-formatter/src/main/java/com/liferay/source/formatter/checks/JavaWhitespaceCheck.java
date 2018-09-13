@@ -23,6 +23,9 @@ import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.IOException;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 /**
  * @author Hugo Huijser
  */
@@ -35,7 +38,62 @@ public class JavaWhitespaceCheck extends WhitespaceCheck {
 
 		content = _formatWhitespace(fileName, content);
 
+		content = _formatForStatement(content);
+
 		content = StringUtil.replace(content, "\n\n\n", "\n\n");
+
+		return content;
+	}
+
+	private String _formatForStatement(String content) {
+		Pattern pattern = Pattern.compile("\tfor \\(");
+
+		Matcher matcher = pattern.matcher(content);
+
+		while (matcher.find()) {
+			String statement = null;
+
+			int x = matcher.start();
+
+			while (true) {
+				x = content.indexOf(StringPool.CLOSE_PARENTHESIS, x + 1);
+
+				statement = content.substring(matcher.start(), x + 1);
+
+				if (getLevel(statement) == 0) {
+					break;
+				}
+			}
+
+			x = statement.indexOf(";\n");
+
+			if (x == -1) {
+				continue;
+			}
+
+			for (int i = getLineNumber(statement, x) + 1;; i++) {
+				String line = getLine(statement, i);
+
+				if (line == null) {
+					break;
+				}
+
+				String leadingWhitespace = _getLeadingWhitespace(line);
+
+				if (leadingWhitespace.contains(StringPool.SPACE)) {
+					continue;
+				}
+
+				String newLine = StringUtil.replaceFirst(
+					line, leadingWhitespace, leadingWhitespace + " ");
+
+				String newStatement = StringUtil.replaceFirst(
+					statement, line, newLine);
+
+				return StringUtil.replaceFirst(
+					content, statement, newStatement);
+			}
+		}
 
 		return content;
 	}
@@ -123,6 +181,21 @@ public class JavaWhitespaceCheck extends WhitespaceCheck {
 		}
 
 		return content;
+	}
+
+	private String _getLeadingWhitespace(String s) {
+		StringBundler sb = new StringBundler();
+
+		for (char c : s.toCharArray()) {
+			if (Character.isWhitespace(c)) {
+				sb.append(c);
+			}
+			else {
+				return sb.toString();
+			}
+		}
+
+		return sb.toString();
 	}
 
 }

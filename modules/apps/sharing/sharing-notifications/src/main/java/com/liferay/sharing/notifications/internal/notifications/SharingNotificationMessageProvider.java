@@ -48,8 +48,26 @@ public class SharingNotificationMessageProvider {
 		return ResourceBundleUtil.getString(
 			resourceBundle, "x-has-shared-x-with-you-for-x",
 			_getUserName(sharingEntry, resourceBundle),
-			_getSharingEntryAssetTitle(sharingEntry, locale),
+			getSharingEntryAssetTitle(sharingEntry, locale),
 			_getActionName(sharingEntry, resourceBundle));
+	}
+
+	public String getSharingEntryAssetTitle(
+			SharingEntry sharingEntry, Locale locale)
+		throws PortalException {
+
+		AssetRenderer assetRenderer =
+			NotificationsSharingEntryUtil.getAssetRenderer(sharingEntry);
+
+		if (assetRenderer != null) {
+			return assetRenderer.getTitle(locale);
+		}
+		else {
+			ResourceBundle resourceBundle =
+				_resourceBundleLoader.loadResourceBundle(locale);
+
+			return ResourceBundleUtil.getString(resourceBundle, "something");
+		}
 	}
 
 	private String _getActionName(
@@ -72,24 +90,6 @@ public class SharingNotificationMessageProvider {
 		}
 
 		return ResourceBundleUtil.getString(resourceBundle, "nothing");
-	}
-
-	private String _getSharingEntryAssetTitle(
-			SharingEntry sharingEntry, Locale locale)
-		throws PortalException {
-
-		AssetRenderer assetRenderer =
-			NotificationsSharingEntryUtil.getAssetRenderer(sharingEntry);
-
-		if (assetRenderer != null) {
-			return assetRenderer.getTitle(locale);
-		}
-		else {
-			ResourceBundle resourceBundle =
-				_resourceBundleLoader.loadResourceBundle(locale);
-
-			return ResourceBundleUtil.getString(resourceBundle, "something");
-		}
 	}
 
 	private String _getUserName(

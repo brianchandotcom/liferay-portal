@@ -14,7 +14,6 @@
 
 package com.liferay.sharing.notifications.internal.service;
 
-import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -37,13 +36,12 @@ import com.liferay.sharing.notifications.internal.notifications.SharingNotificat
 import com.liferay.sharing.notifications.internal.util.NotificationsSharingEntryUtil;
 import com.liferay.sharing.service.SharingEntryLocalService;
 import com.liferay.sharing.service.SharingEntryLocalServiceWrapper;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 import java.util.Collection;
 import java.util.Date;
 import java.util.ResourceBundle;
-
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Alejandro Tardín
@@ -109,11 +107,10 @@ public class NotificationsSharingEntryLocalServiceWrapper
 		ResourceBundle resourceBundle =
 			_resourceBundleLoader.loadResourceBundle(user.getLocale());
 
-		AssetRenderer<?> assetRenderer =
-			NotificationsSharingEntryUtil.getAssetRenderer(sharingEntry);
-
 		String linkText = ResourceBundleUtil.getString(
-			resourceBundle, "view-x", assetRenderer.getTitle(user.getLocale()));
+			resourceBundle, "view-x",
+			_sharingNotificationMessageProvider.getSharingEntryAssetTitle(
+				sharingEntry, user.getLocale()));
 
 		return StringBundler.concat(
 			"<a href=\"", entryURL, "\">", linkText, "</a>");

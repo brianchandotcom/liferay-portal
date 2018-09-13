@@ -125,7 +125,7 @@ public class NotificationsSharingEntryLocalServiceWrapper
 
 			SubscriptionSender subscriptionSender = new SubscriptionSender();
 
-			String message = _sharingNotificationUtil.getMessage(
+			String message = _sharingNotificationUtil.getNotificationMessage(
 				sharingEntry, user.getLocale());
 
 			subscriptionSender.setSubject(message);

@@ -29,11 +29,12 @@ import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.sharing.constants.SharingEntryActionKey;
 import com.liferay.sharing.model.SharingEntry;
 import com.liferay.sharing.service.SharingEntryLocalService;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 import java.util.Locale;
 import java.util.ResourceBundle;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Alejandro Tardín
@@ -57,7 +58,8 @@ public class SharingNotificationUtil {
 		return null;
 	}
 
-	public String getMessage(SharingEntry sharingEntry, Locale locale)
+	public String getNotificationMessage(
+			SharingEntry sharingEntry, Locale locale)
 		throws PortalException {
 
 		ResourceBundle resourceBundle =

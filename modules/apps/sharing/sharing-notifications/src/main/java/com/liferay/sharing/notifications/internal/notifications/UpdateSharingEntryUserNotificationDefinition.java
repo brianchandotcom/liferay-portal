@@ -36,8 +36,8 @@ public class UpdateSharingEntryUserNotificationDefinition
 		super(
 			SharingPortletKeys.SHARING, 0,
 			UserNotificationDefinition.NOTIFICATION_TYPE_UPDATE_ENTRY,
-			"receive-a-notification-when-your-permissions-change-for-content-" +
-				"shared-with-you");
+			"receive-a-notification-when-someone-modifies-your-permissions-" +
+				"for-content-shared-with-you");
 
 		addUserNotificationDeliveryType(
 			new UserNotificationDeliveryType(

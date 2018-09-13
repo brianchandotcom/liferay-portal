@@ -70,3 +70,12 @@
 		</div>
 	</div>
 </div>
+
+<div id="<portlet:namespace />ManageCollaborators_<%= fileEntry.getFileEntryId() %>"></div>
+
+<aui:script require="sharing-document-library/dynamic_section/js/ManageCollaborators.es">
+	new sharingDocumentLibraryDynamic_sectionJsManageCollaboratorsEs.default(
+		{},
+		<portlet:namespace />ManageCollaborators_<%= fileEntry.getFileEntryId()%>
+	);
+</aui:script>

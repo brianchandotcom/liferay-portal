@@ -4954,7 +4954,7 @@ information. Make sure to commit in all build services results.
 	</target>
 
 	<target name="setup-testable-tomcat-gc">
-		<setup-testable-tomcat-gc />
+		<setup-testable-tomcat-gc test.portal.bundle.version="@{test.portal.bundle.version}" />
 	</target>
 
 	<target name="slim-profile-jdk8">

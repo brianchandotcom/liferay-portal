@@ -18,6 +18,6 @@ runGradleTest {
 	doLast {
 		File bndrunFile = new File(buildDir, "tmp/resolve/resolve.bndrun")
 
-		assert bndrun.text.contains("foo.portlet;version='[1.0.0,1.0.1)")
+		assert bndrunFile.text.contains("foo.portlet;version='[1.0.0,1.0.1)")
 	}
 }

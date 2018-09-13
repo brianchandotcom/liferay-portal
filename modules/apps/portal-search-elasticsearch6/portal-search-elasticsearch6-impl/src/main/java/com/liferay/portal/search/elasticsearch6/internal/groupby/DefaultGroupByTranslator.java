@@ -195,7 +195,7 @@ public class DefaultGroupByTranslator implements GroupByTranslator {
 				FieldSortBuilder fieldSortBuilder = SortBuilders.fieldSort(
 					sortFieldName);
 
-				fieldSortBuilder.unmappedType("string");
+				fieldSortBuilder.unmappedType("keyword");
 
 				sortBuilder = fieldSortBuilder;
 			}

@@ -6271,7 +6271,7 @@ osb.lcs.portlet.oauth.consumer.secret=${osb.lcs.portlet.oauth.consumer.secret}</
 	</category>
 
 	<category name="com.liferay.portal.equinox.log.bridge.internal">
-		<priority value="DEBUG" />
+		<priority value="INFO" />
 	</category>
 
 	<category name="com.liferay.portal.spring.hibernate.DialectDetector">

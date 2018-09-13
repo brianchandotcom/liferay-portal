@@ -75,6 +75,23 @@ public class GitHubDevSyncUtil {
 			synchronize);
 	}
 
+	public static RemoteGitBranch fetchCachedRemoteGitBranch(
+		GitWorkingDirectory gitWorkingDirectory, String cachedBranchName) {
+
+		List<GitRemote> gitHubDevGitRemotes = getGitHubDevGitRemotes(
+			gitWorkingDirectory);
+
+		RemoteGitBranch remoteGitBranch =
+			gitWorkingDirectory.getRemoteGitBranch(
+				cachedBranchName, getRandomGitRemote(gitHubDevGitRemotes));
+
+		if (!gitWorkingDirectory.localSHAExists(remoteGitBranch.getSHA())) {
+			gitWorkingDirectory.fetch(remoteGitBranch);
+		}
+
+		return remoteGitBranch;
+	}
+
 	public static String getCachedBranchName(PullRequest pullRequest) {
 		return getCachedBranchName(
 			pullRequest.getReceiverUsername(), pullRequest.getSenderUsername(),
@@ -1309,16 +1326,8 @@ public class GitHubDevSyncUtil {
 			receiverUsername, senderUsername, senderBranchSHA,
 			upstreamBranchSHA);
 
-		List<GitRemote> gitHubDevGitRemotes = getGitHubDevGitRemotes(
-			gitWorkingDirectory);
-
-		RemoteGitBranch remoteGitBranch =
-			gitWorkingDirectory.getRemoteGitBranch(
-				cachedBranchName, getRandomGitRemote(gitHubDevGitRemotes));
-
-		if (!gitWorkingDirectory.localSHAExists(remoteGitBranch.getSHA())) {
-			gitWorkingDirectory.fetch(remoteGitBranch);
-		}
+		RemoteGitBranch remoteGitBranch = fetchCachedRemoteGitBranch(
+			gitWorkingDirectory, cachedBranchName);
 
 		LocalGitBranch cachedLocalGitBranch =
 			GitBranchFactory.newLocalGitBranch(

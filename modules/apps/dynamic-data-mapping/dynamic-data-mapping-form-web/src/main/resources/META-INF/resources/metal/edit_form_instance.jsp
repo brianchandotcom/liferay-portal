@@ -39,6 +39,10 @@ renderResponse.setTitle((formInstance == null) ? LanguageUtil.get(request, "new-
 	<portlet:param name="mvcRenderCommandName" value="/admin/edit_form_instance" />
 </portlet:actionURL>
 
+<div class="lfr-alert-container">
+	<div class="container-fluid-1280 lfr-alert-wrapper"></div>
+</div>
+
 <div class="portlet-forms" id="<portlet:namespace />formContainer">
 	<clay:navigation-bar
 		componentId="formsNavigationBar"
@@ -138,7 +142,22 @@ renderResponse.setTitle((formInstance == null) ? LanguageUtil.get(request, "new-
 		publishFormInstanceURL: '<%= publishFormInstanceURL.toString() %>',
 		restrictedFormURL: '<%= ddmFormAdminDisplayContext.getRestrictedFormURL() %>',
 		sharedFormURL: '<%= ddmFormAdminDisplayContext.getSharedFormURL() %>',
-		showPagination: true
+		showPagination: true,
+		strings: {
+			'any-unsaved-changes-will-be-lost-are-you-sure-you-want-to-leave': '<liferay-ui:message key="any-unsaved-changes-will-be-lost-are-you-sure-you-want-to-leave" />',
+			'draft-x': '<liferay-ui:message key="draft-x" />',
+			'leave': '<liferay-ui:message key="leave" />',
+			'leave-form': '<liferay-ui:message key="leave-form" />',
+			'preview-form': '<liferay-ui:message key="preview-form" />',
+			'publish-form': '<liferay-ui:message key="publish-form" />',
+			'save-form': '<liferay-ui:message key="save-form" />',
+			'saved-x': '<liferay-ui:message key="saved-x" />',
+			'saving': '<liferay-ui:message key="saving" />',
+			'stay': '<liferay-ui:message key="stay" />',
+			'the-form-was-published-successfully-access-it-with-this-url-x': '<liferay-ui:message key="the-form-was-published-successfully-access-it-with-this-url-x" />',
+			'the-form-was-unpublished-successfully': '<liferay-ui:message key="the-form-was-unpublished-successfully" />',
+			'unpublish-form': '<liferay-ui:message key="unpublish-form" />'
+		}
 	};
 
 	Liferay.Forms.App = {
@@ -178,20 +197,10 @@ renderResponse.setTitle((formInstance == null) ? LanguageUtil.get(request, "new-
 							localizedName: <%= ddmFormAdminDisplayContext.getFormLocalizedName() %>,
 							modules: Liferay.MODULES,
 							namespace: '<portlet:namespace />',
+							published: !!<%= ddmFormAdminDisplayContext.isFormPublished() %>,
 							rules: <%= serializedDDMFormRules %>,
-							spritemap: '<%= themeDisplay.getPathThemeImages() %>/clay/icons.svg',
-							strings: {
-								'any-unsaved-changes-will-be-lost-are-you-sure-you-want-to-leave': '<liferay-ui:message key="any-unsaved-changes-will-be-lost-are-you-sure-you-want-to-leave" />',
-								'draft-x': '<liferay-ui:message key="draft-x" />',
-								'leave': '<liferay-ui:message key="leave" />',
-								'leave-form': '<liferay-ui:message key="leave-form" />',
-								'preview-form': '<liferay-ui:message key="preview-form" />',
-								'publish-form': '<liferay-ui:message key="publish-form" />',
-								'save-form': '<liferay-ui:message key="save-form" />',
-								'saved-x': '<liferay-ui:message key="saved-x" />',
-								'saving': '<liferay-ui:message key="saving" />',
-								'stay': '<liferay-ui:message key="stay" />'
-							}
+							spritemap: '<%= themeDisplay.getPathThemeImages() %>/lexicon/icons.svg',
+							strings: Liferay.DDM.FormSettings.strings
 						},
 						'#<portlet:namespace />-container',
 						function(ddmForm) {

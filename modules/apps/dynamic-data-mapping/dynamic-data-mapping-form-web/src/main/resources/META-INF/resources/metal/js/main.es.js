@@ -3,6 +3,7 @@ import {EventHandler} from 'metal-events';
 import {isKeyInSet, isModifyingKey} from './util/dom.es';
 import {pageStructure} from './util/config.es';
 import {sub} from './util/strings.es';
+import autobind from 'autobind-decorator';
 import AutoSave from './util/AutoSave.es';
 import Builder from './pages/builder/index.es';
 import ClayModal from 'clay-modal';
@@ -10,6 +11,7 @@ import Component from 'metal-jsx';
 import dom from 'metal-dom';
 import LayoutProvider from './components/LayoutProvider/index.es';
 import loader from './components/FieldsLoader/index.es';
+import PublishButton from './components/PublishButton/PublishButton.es';
 import RuleBuilder from './pages/RuleBuilder/index.es';
 import StateSyncronizer from './util/StateSyncronizer.es';
 
@@ -178,6 +180,11 @@ class Form extends Component {
 		 */
 
 		saveButtonLabel: Config.string().valueFn('_saveButtonLabelValueFn')
+	}
+
+	@autobind
+	_handleBeforePublish() {
+		return this._autoSave.save(false);
 	}
 
 	_saveButtonLabelValueFn() {
@@ -365,6 +372,8 @@ class Form extends Component {
 	render() {
 		const {
 			context,
+			namespace,
+			published,
 			spritemap,
 			strings
 		} = this.props;
@@ -398,9 +407,13 @@ class Form extends Component {
 
 				<div class="container-fluid-1280">
 					<div class="button-holder ddm-form-builder-buttons">
-						<button class="btn btn-primary ddm-button btn-default" ref="publishButton" type="button">
-							{strings['publish-form']}
-						</button>
+						<PublishButton
+							beforePublish={this._handleBeforePublish}
+							namespace={namespace}
+							published={published}
+							spritemap={spritemap}
+							url={Liferay.DDM.FormSettings.publishFormInstanceURL}
+						/>
 						<button class="btn ddm-button btn-default" data-onclick="_handleSaveButtonClicked" ref="saveButton">
 							{saveButtonLabel}
 						</button>

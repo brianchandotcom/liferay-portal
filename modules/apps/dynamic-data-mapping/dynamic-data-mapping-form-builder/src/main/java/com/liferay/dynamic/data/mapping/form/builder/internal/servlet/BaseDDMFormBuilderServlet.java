@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.dynamic.data.mapping.form.builder.internal.servlet.base;
+package com.liferay.dynamic.data.mapping.form.builder.internal.servlet;
 
 import com.liferay.portal.events.EventsProcessorUtil;
 import com.liferay.portal.kernel.events.ActionException;

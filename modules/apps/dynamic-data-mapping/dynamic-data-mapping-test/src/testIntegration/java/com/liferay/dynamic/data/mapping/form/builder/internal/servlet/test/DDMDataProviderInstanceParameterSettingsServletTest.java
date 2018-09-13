@@ -48,18 +48,21 @@ public class DDMDataProviderInstanceParameterSettingsServletTest {
 	public void testThemeDisplayIsPresent()
 		throws IOException, ServletException {
 
-		MockHttpServletRequest request = new MockHttpServletRequest();
-		MockHttpServletResponse response = new MockHttpServletResponse();
+		MockHttpServletRequest mockHttpServletRequest =
+			new MockHttpServletRequest();
+		MockHttpServletResponse mockHttpServletResponse =
+			new MockHttpServletResponse();
 
-		request.setAttribute(
+		mockHttpServletRequest.setAttribute(
 			WebKeys.CURRENT_URL,
 			"http://liferay.com/web/guest/dynamic-data-mapping-form-builder-" +
 				"provider-instance-parameter-settings");
 
 		_ddmDataProviderInstanceParameterSettingsServlet.service(
-			request, response);
+			mockHttpServletRequest, mockHttpServletResponse);
 
-		Assert.assertNotNull(request.getAttribute(WebKeys.THEME_DISPLAY));
+		Assert.assertNotNull(
+			mockHttpServletRequest.getAttribute(WebKeys.THEME_DISPLAY));
 	}
 
 	@Inject(

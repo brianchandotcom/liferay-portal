@@ -14,7 +14,6 @@
 
 package com.liferay.dynamic.data.mapping.form.builder.internal.servlet;
 
-import com.liferay.dynamic.data.mapping.form.builder.internal.servlet.base.BaseDDMFormBuilderServlet;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;

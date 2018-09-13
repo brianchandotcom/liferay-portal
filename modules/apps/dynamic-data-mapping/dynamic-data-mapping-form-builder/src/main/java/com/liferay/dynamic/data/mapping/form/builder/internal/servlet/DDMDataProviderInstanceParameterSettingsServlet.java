@@ -19,7 +19,6 @@ import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderInputParame
 import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderOutputParametersSettings;
 import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderParameterSettings;
 import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderTracker;
-import com.liferay.dynamic.data.mapping.form.builder.internal.servlet.base.BaseDDMFormBuilderServlet;
 import com.liferay.dynamic.data.mapping.io.DDMFormValuesDeserializer;
 import com.liferay.dynamic.data.mapping.io.DDMFormValuesDeserializerDeserializeRequest;
 import com.liferay.dynamic.data.mapping.io.DDMFormValuesDeserializerDeserializeResponse;

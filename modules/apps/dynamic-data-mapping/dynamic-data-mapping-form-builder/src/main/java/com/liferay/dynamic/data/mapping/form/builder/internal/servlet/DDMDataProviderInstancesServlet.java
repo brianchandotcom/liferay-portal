@@ -14,7 +14,6 @@
 
 package com.liferay.dynamic.data.mapping.form.builder.internal.servlet;
 
-import com.liferay.dynamic.data.mapping.form.builder.internal.servlet.base.BaseDDMFormBuilderServlet;
 import com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance;
 import com.liferay.dynamic.data.mapping.service.DDMDataProviderInstanceLocalService;
 import com.liferay.dynamic.data.mapping.util.comparator.DataProviderInstanceNameComparator;

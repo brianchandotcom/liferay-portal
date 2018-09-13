@@ -14,10 +14,14 @@
 
 package com.liferay.portal.search.elasticsearch6.internal.connection;
 
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
+import org.elasticsearch.common.logging.LogConfigurator;
 import org.elasticsearch.common.settings.Settings;
 import org.elasticsearch.env.Environment;
 import org.elasticsearch.node.InternalSettingsPreparer;
@@ -37,6 +41,15 @@ public class EmbeddedElasticsearchNode extends Node {
 		List<Class<? extends Plugin>> classpathPlugins = Arrays.asList(
 			Netty4Plugin.class);
 
+		try {
+			LogConfigurator.configure(environment);
+		}
+		catch (Exception e) {
+			if (_log.isDebugEnabled()) {
+				_log.debug("File not found: log4j2.properties", e);
+			}
+		}
+
 		return PluginJarConflictCheckSuppression.execute(
 			() -> new EmbeddedElasticsearchNode(environment, classpathPlugins));
 	}
@@ -47,5 +60,8 @@ public class EmbeddedElasticsearchNode extends Node {
 
 		super(environment, classpathPlugins);
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		EmbeddedElasticsearchNode.class);
 
 }

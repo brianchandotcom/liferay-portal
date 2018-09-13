@@ -25,8 +25,8 @@ import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.sharing.constants.SharingPortletKeys;
 import com.liferay.sharing.service.SharingEntryService;
-import com.liferay.sharing.web.internal.constants.SharingPortletKeys;
 import com.liferay.sharing.web.internal.display.SharingEntryPermissionDisplayActionKey;
 
 import java.util.Date;
@@ -69,7 +69,7 @@ public class ShareEntryMVCActionCommand extends BaseMVCActionCommand {
 
 		Date expirationDate = ParamUtil.getDate(
 			actionRequest, "expirationDate",
-			DateFormatFactoryUtil.getDate(themeDisplay.getLocale()));
+			DateFormatFactoryUtil.getDate(themeDisplay.getLocale()), null);
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			actionRequest);

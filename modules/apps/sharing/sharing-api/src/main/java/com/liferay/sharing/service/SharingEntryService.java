@@ -77,5 +77,6 @@ public interface SharingEntryService extends BaseService {
 
 	public SharingEntry updateSharingEntry(long sharingEntryId,
 		Collection<SharingEntryActionKey> sharingEntryActionKeys,
-		boolean shareable, Date expirationDate) throws PortalException;
+		boolean shareable, Date expirationDate, ServiceContext serviceContext)
+		throws PortalException;
 }

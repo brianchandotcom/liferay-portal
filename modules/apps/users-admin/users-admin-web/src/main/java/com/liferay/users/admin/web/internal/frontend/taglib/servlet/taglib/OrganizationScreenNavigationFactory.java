@@ -19,6 +19,7 @@ import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.OrganizationService;
 import com.liferay.portal.kernel.util.Portal;
 
 import java.util.function.BiFunction;
@@ -53,8 +54,8 @@ public class OrganizationScreenNavigationFactory {
 		BiFunction<User, Organization, Boolean> isVisiblePredicate) {
 
 		return new OrganizationScreenNavigationEntry(
-			_jspRenderer, _portal, entryKey, categoryKey, jspPath,
-			mvcActionCommandName, isVisiblePredicate);
+			_jspRenderer, _organizationService, _portal, entryKey, categoryKey,
+			jspPath, mvcActionCommandName, isVisiblePredicate);
 	}
 
 	public ScreenNavigationEntry<Organization> createUpdateOnlyEntry(
@@ -80,6 +81,9 @@ public class OrganizationScreenNavigationFactory {
 
 	@Reference
 	private JSPRenderer _jspRenderer;
+
+	@Reference
+	private OrganizationService _organizationService;
 
 	@Reference
 	private Portal _portal;

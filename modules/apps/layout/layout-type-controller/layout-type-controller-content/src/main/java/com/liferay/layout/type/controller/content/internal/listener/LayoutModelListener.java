@@ -65,7 +65,7 @@ public class LayoutModelListener extends BaseModelListener<Layout> {
 		long layoutPageTemplateEntryId = GetterUtil.getLong(
 			typeSettingsProperties.get("layoutPageTemplateEntryId"));
 
-		LayoutPageTemplateStructure existingLayoutPageTemplateStructure =
+		LayoutPageTemplateStructure layoutPageTemplateStructure =
 			_layoutPageTemplateStructureLocalService.
 				fetchLayoutPageTemplateStructure(
 					layout.getGroupId(),
@@ -73,20 +73,23 @@ public class LayoutModelListener extends BaseModelListener<Layout> {
 						LayoutPageTemplateEntry.class.getName()),
 					layoutPageTemplateEntryId);
 
-		if ((existingLayoutPageTemplateStructure == null) ||
-			Validator.isNull(existingLayoutPageTemplateStructure.getData())) {
+		if (layoutPageTemplateStructure == null) {
+			return;
+		}
 
+		String data = layoutPageTemplateStructure.getData();
+
+		if (Validator.isNull(data)) {
 			return;
 		}
 
 		try {
-			JSONObject existingData = JSONFactoryUtil.createJSONObject(
-				existingLayoutPageTemplateStructure.getData());
+			JSONObject dataJSONObject = JSONFactoryUtil.createJSONObject(data);
 
-			JSONArray existingJsonStructureArray = existingData.getJSONArray(
+			JSONArray structureJSONArray = dataJSONObject.getJSONArray(
 				"structure");
 
-			if (existingJsonStructureArray == null) {
+			if (structureJSONArray == null) {
 				return;
 			}
 
@@ -106,37 +109,35 @@ public class LayoutModelListener extends BaseModelListener<Layout> {
 			ServiceContext serviceContext =
 				ServiceContextThreadLocal.getServiceContext();
 
-			JSONArray newJsonStructureArray = JSONFactoryUtil.createJSONArray();
+			JSONArray newStructureJSONArray = JSONFactoryUtil.createJSONArray();
 
-			for (int i = 0; i < existingJsonStructureArray.length(); i++) {
-				FragmentEntryLink existingFragmentEntryLink =
-					fragmentEntryLinksMap.get(
-						existingJsonStructureArray.getLong(i));
+			for (int i = 0; i < structureJSONArray.length(); i++) {
+				FragmentEntryLink fragmentEntryLink = fragmentEntryLinksMap.get(
+					structureJSONArray.getLong(i));
 
-				if (existingFragmentEntryLink != null) {
-					FragmentEntryLink fragmentEntryLink =
-						_fragmentEntryLinkLocalService.addFragmentEntryLink(
-							existingFragmentEntryLink.getUserId(),
-							existingFragmentEntryLink.getGroupId(),
-							existingFragmentEntryLink.getFragmentEntryLinkId(),
-							existingFragmentEntryLink.getFragmentEntryId(),
-							_portal.getClassNameId(Layout.class.getName()),
-							layout.getPlid(),
-							existingFragmentEntryLink.getCss(),
-							existingFragmentEntryLink.getHtml(),
-							existingFragmentEntryLink.getJs(),
-							existingFragmentEntryLink.getEditableValues(),
-							existingFragmentEntryLink.getPosition(),
-							serviceContext);
-
-					newJsonStructureArray.put(
-						fragmentEntryLink.getFragmentEntryLinkId());
+				if (fragmentEntryLink == null) {
+					continue;
 				}
+
+				FragmentEntryLink newFragmentEntryLink =
+					_fragmentEntryLinkLocalService.addFragmentEntryLink(
+						fragmentEntryLink.getUserId(),
+						fragmentEntryLink.getGroupId(),
+						fragmentEntryLink.getFragmentEntryLinkId(),
+						fragmentEntryLink.getFragmentEntryId(),
+						_portal.getClassNameId(Layout.class.getName()),
+						layout.getPlid(), fragmentEntryLink.getCss(),
+						fragmentEntryLink.getHtml(), fragmentEntryLink.getJs(),
+						fragmentEntryLink.getEditableValues(),
+						fragmentEntryLink.getPosition(), serviceContext);
+
+				newStructureJSONArray.put(
+					newFragmentEntryLink.getFragmentEntryLinkId());
 			}
 
-			JSONObject newData = JSONFactoryUtil.createJSONObject();
+			JSONObject newDataJSONObject = JSONFactoryUtil.createJSONObject();
 
-			newData.put("structure", newJsonStructureArray);
+			newDataJSONObject.put("structure", newStructureJSONArray);
 
 			LayoutPageTemplateStructure newLayoutPageTemplateSetting =
 				_layoutPageTemplateStructureLocalService.
@@ -149,14 +150,14 @@ public class LayoutModelListener extends BaseModelListener<Layout> {
 					updateLayoutPageTemplateStructure(
 						layout.getGroupId(),
 						_portal.getClassNameId(Layout.class), layout.getPlid(),
-						newData.toString());
+						newDataJSONObject.toString());
 			}
 			else {
 				_layoutPageTemplateStructureLocalService.
 					addLayoutPageTemplateStructure(
 						layout.getUserId(), layout.getGroupId(),
 						_portal.getClassNameId(Layout.class), layout.getPlid(),
-						newData.toString(), serviceContext);
+						newDataJSONObject.toString(), serviceContext);
 			}
 		}
 		catch (PortalException pe) {

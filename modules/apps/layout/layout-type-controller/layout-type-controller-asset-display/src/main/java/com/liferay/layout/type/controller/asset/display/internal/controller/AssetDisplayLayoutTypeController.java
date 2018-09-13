@@ -40,7 +40,7 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.taglib.servlet.PipingServletResponse;
 
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -158,8 +158,6 @@ public class AssetDisplayLayoutTypeController
 			Layout layout, long layoutPageTemplateEntryId)
 		throws JSONException {
 
-		List<FragmentEntryLink> fragmentEntryLinks = new ArrayList<>();
-
 		LayoutPageTemplateStructure layoutPageTemplateStructure =
 			_layoutPageTemplateStructureLocalService.
 				fetchLayoutPageTemplateStructure(
@@ -168,22 +166,25 @@ public class AssetDisplayLayoutTypeController
 						LayoutPageTemplateEntry.class.getName()),
 					layoutPageTemplateEntryId);
 
-		if ((layoutPageTemplateStructure == null) ||
-			Validator.isNull(layoutPageTemplateStructure.getData())) {
-
-			return fragmentEntryLinks;
+		if (layoutPageTemplateStructure == null) {
+			return Collections.emptyList();
 		}
 
-		JSONObject data = JSONFactoryUtil.createJSONObject(
-			layoutPageTemplateStructure.getData());
+		String data = layoutPageTemplateStructure.getData();
 
-		JSONArray jsonArray = data.getJSONArray("structure");
-
-		if (jsonArray == null) {
-			return fragmentEntryLinks;
+		if (Validator.isNull(data)) {
+			return Collections.emptyList();
 		}
 
-		fragmentEntryLinks =
+		JSONObject dataJSONObject = JSONFactoryUtil.createJSONObject(data);
+
+		JSONArray structureJSONArray = dataJSONObject.getJSONArray("structure");
+
+		if (structureJSONArray == null) {
+			return Collections.emptyList();
+		}
+
+		List<FragmentEntryLink> fragmentEntryLinks =
 			_fragmentEntryLinkLocalService.getFragmentEntryLinks(
 				layout.getGroupId(),
 				_portal.getClassNameId(Layout.class.getName()),
@@ -196,9 +197,9 @@ public class AssetDisplayLayoutTypeController
 				FragmentEntryLink::getFragmentEntryLinkId,
 				fragmentEntryLink -> fragmentEntryLink));
 
-		for (int i = 0; i < jsonArray.length(); i++) {
+		for (int i = 0; i < structureJSONArray.length(); i++) {
 			FragmentEntryLink fragmentEntryLink = fragmentEntryLinksMap.get(
-				jsonArray.getLong(i));
+				structureJSONArray.getLong(i));
 
 			if (fragmentEntryLink != null) {
 				fragmentEntryLinks.add(fragmentEntryLink);

@@ -1,4 +1,8 @@
-import {CLEAR_DRAG_TARGET, UPDATE_DRAG_TARGET} from '../actions/actions.es';
+import {
+	CLEAR_DRAG_TARGET,
+	UPDATE_DRAG_TARGET,
+	UPDATE_HIGHLIGHT_MAPPING_STATUS
+} from '../actions/actions.es';
 
 /**
  * Available drag positions
@@ -36,7 +40,32 @@ function updateDragTargetReducer(state, actionType, payload) {
 	return nextState;
 }
 
+/**
+ * @param {!object} state
+ * @param {!string} actionType
+ * @param {object} payload
+ * @param {bool} payload.highlightMapping
+ * @return {object}
+ * @review
+ */
+function updateHighlightMappingReducer(state, actionType, payload) {
+	let nextState = state;
+
+	if (actionType === UPDATE_HIGHLIGHT_MAPPING_STATUS) {
+		nextState = Object.assign(
+			{},
+			nextState,
+			{
+				highlightMapping: !!payload.highlightMapping
+			}
+		);
+	}
+
+	return nextState;
+}
+
 export {
 	DRAG_POSITIONS,
-	updateDragTargetReducer
+	updateDragTargetReducer,
+	updateHighlightMappingReducer
 };

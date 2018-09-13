@@ -1,0 +1,23 @@
+$colors: (
+	"white": #fff
+);
+$theme-colors: (
+	"primary": #0b5fff
+);
+$toolbar-height: 3rem;
+
+body {
+	overflow: hidden;
+}
+
+.google-docs-toolbar {
+	background-color: map-get($theme-colors, "primary");
+	color: map-get($colors, "white");
+	height: $toolbar-height;
+	max-height: $toolbar-height;
+}
+
+.google-docs-iframe {
+	height: calc(100vh - #{$toolbar-height});
+	width: 100%;
+}

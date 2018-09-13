@@ -10,6 +10,10 @@ dependencies {
 	compileOnly project(":apps:document-library-opener:document-library-opener-api")
 	compileOnly project(":apps:document-library-opener:document-library-opener-google-drive-api")
 	compileOnly project(":apps:document-library:document-library-api")
+	compileOnly project(":apps:frontend-taglib:frontend-taglib")
+	compileOnly project(":apps:frontend-taglib:frontend-taglib-clay")
+	compileOnly project(":apps:frontend-taglib:frontend-taglib-soy")
 	compileOnly project(":apps:upload:upload-api")
+	compileOnly project(":core:petra:petra-lang")
 	compileOnly project(":core:petra:petra-string")
 }

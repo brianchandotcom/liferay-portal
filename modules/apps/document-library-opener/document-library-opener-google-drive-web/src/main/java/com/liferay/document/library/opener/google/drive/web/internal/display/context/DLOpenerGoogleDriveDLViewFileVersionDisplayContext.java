@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.servlet.HttpMethods;
+import com.liferay.portal.kernel.servlet.taglib.ui.JavaScriptMenuItem;
 import com.liferay.portal.kernel.servlet.taglib.ui.JavaScriptUIItem;
 import com.liferay.portal.kernel.servlet.taglib.ui.Menu;
 import com.liferay.portal.kernel.servlet.taglib.ui.MenuItem;
@@ -103,28 +104,35 @@ public class DLOpenerGoogleDriveDLViewFileVersionDisplayContext
 	}
 
 	private MenuItem _createCheckoutInGoogleDocsMenuItem() {
-		URLMenuItem menuItem = new URLMenuItem();
+		JavaScriptMenuItem javaScriptMenuItem = new JavaScriptMenuItem();
 
-		menuItem.setLabel(
+		javaScriptMenuItem.setOnClick(
+			StringBundler.concat(
+				_getNamespace(), "redirectNotification('",
+				_getActionURL(
+					DLOpenerGoogleDriveWebConstants.GOOGLE_DRIVE_CHECKOUT),
+				"')"));
+
+		javaScriptMenuItem.setLabel(
 			LanguageUtil.get(_resourceBundle, "checkout-to-google-docs"));
-		menuItem.setMethod(HttpMethods.POST);
-		menuItem.setURL(
-			_getActionURL(
-				DLOpenerGoogleDriveWebConstants.GOOGLE_DRIVE_CHECKOUT));
 
-		return menuItem;
+		return javaScriptMenuItem;
 	}
 
 	private MenuItem _createEditInGoogleDocsMenuItem() {
-		URLMenuItem menuItem = new URLMenuItem();
+		JavaScriptMenuItem javaScriptMenuItem = new JavaScriptMenuItem();
 
-		menuItem.setLabel(
+		javaScriptMenuItem.setOnClick(
+			StringBundler.concat(
+				_getNamespace(), "redirectNotification('",
+				_getActionURL(
+					DLOpenerGoogleDriveWebConstants.GOOGLE_DRIVE_EDIT),
+				"')"));
+
+		javaScriptMenuItem.setLabel(
 			LanguageUtil.get(_resourceBundle, "edit-in-google-docs"));
-		menuItem.setMethod(HttpMethods.POST);
-		menuItem.setURL(
-			_getActionURL(DLOpenerGoogleDriveWebConstants.GOOGLE_DRIVE_EDIT));
 
-		return menuItem;
+		return javaScriptMenuItem;
 	}
 
 	private String _getActionURL(String cmd) {

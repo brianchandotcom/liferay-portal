@@ -36,6 +36,8 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.ResourceBundle;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -315,7 +317,15 @@ public class SelectDDMFormFieldTemplateContextContributorTest
 		SelectDDMFormFieldTemplateContextContributor spy = PowerMockito.spy(
 			_selectDDMFormFieldTemplateContextContributor);
 
-		PowerMockitoStubber stubber = PowerMockito.doReturn(_resourceBundle);
+		PowerMockitoStubber stubber = PowerMockito.doReturn(LocaleUtil.US);
+
+		stubber.when(
+			spy
+		).getDisplayLocale(
+			Matchers.any(HttpServletRequest.class)
+		);
+
+		stubber = PowerMockito.doReturn(_resourceBundle);
 
 		stubber.when(
 			spy

@@ -22,9 +22,11 @@ import com.liferay.dynamic.data.mapping.model.DDMFormLayout;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormTestUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
@@ -60,6 +62,8 @@ public class DDMFormTemplateContextFactoryTest {
 	@Before
 	public void setUp() throws Exception {
 		_request = new MockHttpServletRequest();
+
+		setUpThemeDisplay();
 
 		_originalSiteDefaultLocale = LocaleThreadLocal.getSiteDefaultLocale();
 		_originalThemeDisplayDefaultLocale =
@@ -388,6 +392,15 @@ public class DDMFormTemplateContextFactoryTest {
 				ddmForm, ddmFormRenderingContext);
 
 		Assert.assertEquals(true, templateContext.get("viewMode"));
+	}
+
+	protected void setUpThemeDisplay() {
+		ThemeDisplay themeDisplay = new ThemeDisplay();
+
+		themeDisplay.setPathContext("/my/path/context/");
+		themeDisplay.setPathThemeImages("/my/theme/images/");
+
+		_request.setAttribute(WebKeys.THEME_DISPLAY, themeDisplay);
 	}
 
 	@Inject

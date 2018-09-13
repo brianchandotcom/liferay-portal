@@ -175,7 +175,7 @@ public class CaseInsensitiveDictionaryMap<K, V> extends Dictionary<K, V> impleme
 	public V put(K key, V value) {
 		requireNonNull(value);
 		if (key instanceof String) {
-			Object wrappedKey = keyWrap(((String) key).intern());
+			Object wrappedKey = keyWrap(((String) key));
 			V previous = map.remove(wrappedKey); // remove so we put key into map
 			map.put(wrappedKey, value);
 			return previous;
@@ -584,4 +584,4 @@ public class CaseInsensitiveDictionaryMap<K, V> extends Dictionary<K, V> impleme
 		}
 	}
 }
-
+/* @generated */

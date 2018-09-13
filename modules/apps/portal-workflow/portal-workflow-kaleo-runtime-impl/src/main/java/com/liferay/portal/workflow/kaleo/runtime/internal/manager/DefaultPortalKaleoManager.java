@@ -138,15 +138,6 @@ public class DefaultPortalKaleoManager
 
 			serviceContext.setCompanyId(companyId);
 
-			Locale defaultLocale = LocaleUtil.getDefault();
-
-			String languageId = LocaleUtil.toLanguageId(defaultLocale);
-
-			String localizedTitle = StringPool.BLANK;
-
-			localizedTitle = LocalizationUtil.updateLocalization(
-				localizedTitle, "Title", definitionName, languageId);
-
 			int kaleoDefinitionsCount =
 				kaleoDefinitionLocalService.getKaleoDefinitionsCount(
 					definitionName, serviceContext);
@@ -173,6 +164,10 @@ public class DefaultPortalKaleoManager
 			}
 
 			User defaultUser = userLocalService.getDefaultUser(companyId);
+
+			String localizedTitle = LocalizationUtil.updateLocalization(
+				StringPool.BLANK, "Title", definitionName,
+				LocaleUtil.toLanguageId(LocaleUtil.getDefault()));
 
 			_workflowDefinitionManager.deployWorkflowDefinition(
 				serviceContext.getCompanyId(), defaultUser.getUserId(),

@@ -14,6 +14,10 @@
 
 package com.liferay.portal.equinox.log.bridge.internal;
 
+import com.liferay.petra.log4j.Log4JUtil;
+import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
+import com.liferay.portal.kernel.util.StringBundler;
+
 import org.eclipse.equinox.log.ExtendedLogReaderService;
 import org.eclipse.osgi.internal.hookregistry.ActivatorHookFactory;
 import org.eclipse.osgi.internal.hookregistry.HookConfigurator;
@@ -22,6 +26,7 @@ import org.eclipse.osgi.internal.hookregistry.HookRegistry;
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
+import org.osgi.util.tracker.ServiceTracker;
 
 /**
  * @author Raymond Augé
@@ -59,6 +64,32 @@ public class PortalHookConfigurator
 		}
 
 		bundleContext.addBundleListener(_bundleStartStopLogger);
+
+		ServiceTracker<ModuleServiceLifecycle, Void> serviceTracker =
+			new ServiceTracker<ModuleServiceLifecycle, Void>(
+				bundleContext,
+				bundleContext.createFilter(
+					StringBundler.concat(
+						"(&(objectClass=",
+						ModuleServiceLifecycle.class.getName(), ")",
+						ModuleServiceLifecycle.PORTAL_INITIALIZED, ")")),
+				null) {
+
+				@Override
+				public Void addingService(
+					ServiceReference<ModuleServiceLifecycle> serviceReference) {
+
+					Log4JUtil.setLevel(
+						BundleStartStopLogger.class.getName(), "INFO", false);
+
+					close();
+
+					return null;
+				}
+
+			};
+
+		serviceTracker.open();
 	}
 
 	@Override

@@ -356,7 +356,6 @@ public class FragmentsEditorDisplayContext {
 					"fragmentEntryLinkId",
 					String.valueOf(fragmentEntryLink.getFragmentEntryLinkId()));
 				soyContext.put("name", fragmentEntry.getName());
-				soyContext.put("position", fragmentEntryLink.getPosition());
 
 				soyContexts.add(soyContext);
 			}

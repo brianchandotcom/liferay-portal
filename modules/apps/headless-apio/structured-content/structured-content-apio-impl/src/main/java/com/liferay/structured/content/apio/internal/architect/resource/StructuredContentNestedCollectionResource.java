@@ -53,8 +53,6 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.search.BooleanClause;
-import com.liferay.portal.kernel.search.BooleanClauseFactoryUtil;
-import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.Indexer;
@@ -62,8 +60,6 @@ import com.liferay.portal.kernel.search.IndexerRegistry;
 import com.liferay.portal.kernel.search.Query;
 import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.SearchContext;
-import com.liferay.portal.kernel.search.TermQuery;
-import com.liferay.portal.kernel.search.generic.TermQueryImpl;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -87,13 +83,8 @@ import com.liferay.structured.content.apio.internal.model.JournalArticleWrapper;
 import com.liferay.structured.content.apio.internal.model.RenderedJournalArticle;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Optional;
-import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -236,16 +227,20 @@ public class StructuredContentNestedCollectionResource
 	}
 
 	@SuppressWarnings("unchecked")
-	protected Map<String, Object> getFilterFieldsMap(Filter filter) {
+	protected BooleanClause<Query> getBooleanClause(
+		Filter filter, Locale locale) {
+
 		if ((filter == null) || (filter == Filter.emptyFilter())) {
-			return Collections.emptyMap();
+			return null;
 		}
 
 		try {
 			Expression expression = filter.getExpression();
 
-			return (Map<String, Object>)expression.accept(
-				new ExpressionVisitorImpl());
+			return (BooleanClause<Query>)expression.accept(
+				new ExpressionVisitorImpl(
+					locale,
+					_structuredContentSingleEntitySchemaBasedEdmProvider));
 		}
 		catch (ExpressionVisitException eve) {
 			throw new InvalidFilterException(
@@ -301,12 +296,11 @@ public class StructuredContentNestedCollectionResource
 		searchContext.setAttribute(
 			Field.STATUS, WorkflowConstants.STATUS_APPROVED);
 
-		List<BooleanClause<Query>> booleanClauses = _getBooleanClauses(
-			filter, locale);
+		BooleanClause<Query> booleanClause = getBooleanClause(filter, locale);
 
-		if (!booleanClauses.isEmpty()) {
+		if (booleanClause != null) {
 			searchContext.setBooleanClauses(
-				booleanClauses.toArray(new BooleanClause[0]));
+				new BooleanClause[] {booleanClause});
 		}
 
 		searchContext.setCompanyId(companyId);
@@ -342,48 +336,6 @@ public class StructuredContentNestedCollectionResource
 		_journalArticleService.deleteArticle(
 			journalArticle.getGroupId(), journalArticle.getArticleId(),
 			journalArticle.getArticleResourceUuid(), new ServiceContext());
-	}
-
-	private Optional<BooleanClause<Query>> _getBooleanClauseOptional(
-		String fieldName, Object fieldValue, Locale locale) {
-
-		if (Objects.equals(fieldName, "title")) {
-			String localizedFieldName = Field.getSortableFieldName(
-				"localized_title_".concat(LocaleUtil.toLanguageId(locale)));
-
-			TermQuery termQuery = new TermQueryImpl(
-				localizedFieldName, String.valueOf(fieldValue));
-
-			BooleanClause booleanClause = BooleanClauseFactoryUtil.create(
-				termQuery, BooleanClauseOccur.MUST.getName());
-
-			return Optional.of(booleanClause);
-		}
-
-		return Optional.empty();
-	}
-
-	private List<BooleanClause<Query>> _getBooleanClauses(
-		Filter filter, Locale locale) {
-
-		Map<String, Object> filterFieldsMap = getFilterFieldsMap(filter);
-
-		Set<Map.Entry<String, Object>> entries = filterFieldsMap.entrySet();
-
-		Stream<Map.Entry<String, Object>> stream = entries.stream();
-
-		return stream.map(
-			entry -> _getBooleanClauseOptional(
-				entry.getKey(), entry.getValue(), locale)
-		).flatMap(
-			booleanClauseOptional -> booleanClauseOptional.map(
-				Stream::of
-			).orElseGet(
-				Stream::empty
-			)
-		).collect(
-			Collectors.toList()
-		);
 	}
 
 	private List<DDMFormFieldValue> _getFormFieldValues(

@@ -99,6 +99,7 @@
 		"babel-preset-metal-jsx": "^0.1.1",
 		"browser-sync": "^2.24.7",
 		"check-source-formatting": "^2.0.12",
+		"cross-env": "^5.2.0",
 		"cross-spawn": "^6.0.5",
 		"eslint": "^4.10.0",
 		"eslint-config-liferay": "^2.0.8",
@@ -156,7 +157,7 @@
 		"csf": "csf src/**/*.es.js src/**/*.soy src/**/*.jsp --fail-on-errors",
 		"format": "npm run csf -- -i",
 		"start": "node watch.js",
-		"test": "npm run build-soy && NODE_ENV=test jest --coverage && npm run clean",
+		"test": "npm run build-soy && cross-env NODE_ENV=test jest --coverage && npm run clean",
 		"test:coverage:open": "opn build/coverage/lcov-report/index.html",
 		"test:snapshots": "npm run build-soy && NODE_ENV=test jest --coverage -u && npm run clean"
 	},

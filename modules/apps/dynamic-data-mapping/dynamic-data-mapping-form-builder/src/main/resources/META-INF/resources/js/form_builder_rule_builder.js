@@ -78,8 +78,6 @@ AUI.add(
 					initializer: function() {
 						var instance = this;
 
-						instance._createBadgeTooltip();
-
 						instance._getUserRoles();
 					},
 
@@ -150,10 +148,6 @@ AUI.add(
 						var instance = this;
 
 						(new A.EventHandle(instance._eventHandlers)).detach();
-
-						if (instance._tooltip) {
-							instance._tooltip.destroy();
-						}
 					},
 
 					getFields: function() {
@@ -298,20 +292,6 @@ AUI.add(
 						else {
 							instance.syncUI();
 						}
-					},
-
-					_createBadgeTooltip: function() {
-						var instance = this;
-
-						instance._tooltip = new A.TooltipDelegate(
-							{
-								position: 'bottom',
-								trigger: '.label',
-								triggerHideEvent: ['blur', 'mouseleave'],
-								triggerShowEvent: ['focus', 'mouseover'],
-								visible: false
-							}
-						);
 					},
 
 					_fillDataProviders: function() {

@@ -12,29 +12,50 @@
 	{@param? _closeDialog: any}
 	{@param? _handleInputChange: any}
 	{@param? _handleSubmit: any}
+	{@param? _handleValidateEmail: any}
+	{@param? emailErrorMessage: string}
+	{@param? errorMessage: string}
 
 	<div id="{$id}" class="sharing-modal-content">
-		<form action="{$shareActionURL}" method="post" data-onsubmit="{$_handleSubmit}">
+		<form
+			action="{$shareActionURL}"
+			data-onsubmit="{$_handleSubmit}"
+			method="post"
+		>
+			{if $errorMessage}
+				<div class="alert alert-danger" role="alert">
+					<strong class="lead">{msg desc=""}error{/msg}:</strong> {$errorMessage}
+				</div>
+			{/if}
+
 			<h4>{msg desc=""}invite-to-collaborate{/msg}</h4>
 
-			<div class="form-group">
-				<input class="form-control" type="text" name="userEmailAddress" placeholder="{msg desc=""}enter-an-email-address{/msg}" data-onchange="{$_handleInputChange}" />
+			<div class="form-group {$emailErrorMessage ? ' has-error' : '' }">
+				<input
+					class="form-control"
+					type="text"
+					name="userEmailAddress"
+					placeholder="{msg desc=""}enter-an-email-address{/msg}"
+					data-onchange="{$_handleInputChange}"
+					data-onblur="{$_handleValidateEmail}"
+				/>
 
+				{if $emailErrorMessage}
+					<div class="form-feedback-item">{$emailErrorMessage}</div>
+				{/if}
 				<div class="form-text">{msg desc=""}use-commas-to-include-multiple-collaborators{/msg}</div>
 			</div>
 
 			<div class="form-group">
 				<div class="custom-control custom-checkbox">
 					<label>
-						{let $shareableAttributes kind="attributes"}
+						<input
 							class="custom-control-input"
 							data-onchange="{$_handleInputChange}"
 							name="shareable"
 							type="checkbox"
 							checked="checked"
-						{/let}
-
-						<input {$shareableAttributes} />
+						/>
 
 						<span class="custom-control-label">
 							<span class="custom-control-label-text">{msg desc=""}allow-the-document-to-be-shared-with-other-users{/msg}</span>
@@ -49,7 +70,7 @@
 				{foreach $sharingEntryPermissionDisplay in $sharingEntryPermissionDisplays}
 					<div class="custom-control custom-radio">
 						<label>
-							{let $sharingPermissionKeyAttributes kind="attributes"}
+							<input
 								{if $sharingEntryPermissionDisplayActionId == $sharingEntryPermissionDisplay.sharingEntryPermissionDisplayActionId}
 									checked="checked"
 								{/if}
@@ -61,9 +82,7 @@
 								{if not $sharingEntryPermissionDisplay.enabled}
 									disabled="disabled"
 								{/if}
-							{/let}
-
-							<input {$sharingPermissionKeyAttributes} />
+							/>
 
 							<span class="custom-control-label">
 								<span class="custom-control-label-text">

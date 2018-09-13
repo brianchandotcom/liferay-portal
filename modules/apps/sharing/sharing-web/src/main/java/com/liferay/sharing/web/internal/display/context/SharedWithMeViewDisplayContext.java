@@ -28,7 +28,6 @@ import com.liferay.sharing.service.SharingEntryLocalService;
 import com.liferay.sharing.web.internal.interpreter.SharingEntryInterpreterTracker;
 
 import java.util.List;
-import java.util.Optional;
 
 import javax.portlet.PortletURL;
 
@@ -48,30 +47,28 @@ public class SharedWithMeViewDisplayContext {
 	}
 
 	public String getAssetTypeTitle(SharingEntry sharingEntry) {
-		Optional<SharingEntryInterpreter> sharingEntryInterpreter =
-			_sharingEntryInterpreterTracker.getSharingEntryInterpreterOptional(
+		SharingEntryInterpreter sharingEntryInterpreter =
+			_sharingEntryInterpreterTracker.getSharingEntryInterpreter(
 				sharingEntry.getClassNameId());
 
-		return sharingEntryInterpreter.map(
-			curSharingEntryInterpreter ->
-				curSharingEntryInterpreter.getAssetTypeTitle(
-					sharingEntry, _themeDisplay.getLocale())
-		).orElse(
-			StringPool.BLANK
-		);
+		if (sharingEntryInterpreter == null) {
+			return StringPool.BLANK;
+		}
+
+		return sharingEntryInterpreter.getAssetTypeTitle(
+			sharingEntry, _themeDisplay.getLocale());
 	}
 
 	public String getTitle(SharingEntry sharingEntry) {
-		Optional<SharingEntryInterpreter> sharingEntryInterpreterOptional =
-			_sharingEntryInterpreterTracker.getSharingEntryInterpreterOptional(
+		SharingEntryInterpreter sharingEntryInterpreter =
+			_sharingEntryInterpreterTracker.getSharingEntryInterpreter(
 				sharingEntry.getClassNameId());
 
-		return sharingEntryInterpreterOptional.map(
-			curSharingEntryInterpreter ->
-				curSharingEntryInterpreter.getTitle(sharingEntry)
-		).orElse(
-			StringPool.BLANK
-		);
+		if (sharingEntryInterpreter == null) {
+			return StringPool.BLANK;
+		}
+
+		return sharingEntryInterpreter.getTitle(sharingEntry);
 	}
 
 	public PortletURL getURLEdit(
@@ -80,16 +77,13 @@ public class SharedWithMeViewDisplayContext {
 			LiferayPortletResponse liferayPortletResponse)
 		throws PortalException {
 
-		Optional<SharingEntryInterpreter> sharingEntryInterpreterOptional =
-			_sharingEntryInterpreterTracker.getSharingEntryInterpreterOptional(
+		SharingEntryInterpreter sharingEntryInterpreter =
+			_sharingEntryInterpreterTracker.getSharingEntryInterpreter(
 				sharingEntry.getClassNameId());
 
-		if (!sharingEntryInterpreterOptional.isPresent()) {
+		if (sharingEntryInterpreter == null) {
 			return null;
 		}
-
-		SharingEntryInterpreter sharingEntryInterpreter =
-			sharingEntryInterpreterOptional.get();
 
 		SharingEntryEditRenderer sharingEntryEditRenderer =
 			sharingEntryInterpreter.getSharingEntryEditRenderer();

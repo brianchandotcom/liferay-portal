@@ -26,8 +26,6 @@ import com.liferay.sharing.service.SharingEntryLocalService;
 import com.liferay.sharing.web.internal.constants.SharingPortletKeys;
 import com.liferay.sharing.web.internal.interpreter.SharingEntryInterpreterTracker;
 
-import java.util.Optional;
-
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
@@ -72,16 +70,15 @@ public class SharedWithMeViewSharingEntryMVCRenderCommand
 						sharingEntryId));
 			}
 
-			Optional<SharingEntryInterpreter> sharingEntryInterpreterOptional =
-				_sharingEntryInterpreterTracker.
-					getSharingEntryInterpreterOptional(
-						sharingEntry.getClassNameId());
-
 			SharingEntryInterpreter sharingEntryInterpreter =
-				sharingEntryInterpreterOptional.orElseThrow(
-					() -> new PortletException(
-						"sharing entry interpreter is null for class name id " +
-							sharingEntry.getClassNameId()));
+				_sharingEntryInterpreterTracker.getSharingEntryInterpreter(
+					sharingEntry.getClassNameId());
+
+			if (sharingEntryInterpreter == null) {
+				throw new PortletException(
+					"sharing entry interpreter is null for class name id " +
+						sharingEntry.getClassNameId());
+			}
 
 			renderRequest.setAttribute(
 				SharingEntryInterpreter.class.getName(),

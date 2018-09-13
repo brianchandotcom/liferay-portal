@@ -21,8 +21,6 @@ import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.sharing.interpreter.SharingEntryInterpreter;
 
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Stream;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
@@ -55,16 +53,19 @@ public class SharingEntryInterpreterTracker {
 		_serviceTrackerMap.close();
 	}
 
-	public Optional<SharingEntryInterpreter> getSharingEntryInterpreterOptional(
+	public SharingEntryInterpreter getSharingEntryInterpreter(
 		long classNameId) {
 
 		List<SharingEntryInterpreter> sharingEntryInterpreters =
 			_serviceTrackerMap.getService(classNameId);
 
-		Stream<SharingEntryInterpreter> stream =
-			sharingEntryInterpreters.stream();
+		if ((sharingEntryInterpreters == null) ||
+			sharingEntryInterpreters.isEmpty()) {
 
-		return stream.findFirst();
+			return null;
+		}
+
+		return sharingEntryInterpreters.get(0);
 	}
 
 	@Reference

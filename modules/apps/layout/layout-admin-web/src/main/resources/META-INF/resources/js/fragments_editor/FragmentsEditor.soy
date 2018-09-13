@@ -30,11 +30,9 @@
 	{@param? contextualSidebarVisible: bool}
 	{@param? _dropTargetClass: string}
 	{@param? _handleEditableChanged: any}
-	{@param? _handleHideContextualSidebar: any}
 	{@param? _handleMappeableFieldClicked: any}
 	{@param? _handleMappeableFieldSelected: any}
 	{@param? _handleMappingTypeSelected: any}
-	{@param? _handleToggleContextualSidebarButtonClick: any}
 	{@param? _handleSelectAssetTypeButtonClick: any}
 	{@param? _handleSelectMappingDialogVisibleChanged: any}
 	{@param? _handleSelectMappingTypeDialogVisibleChanged: any}
@@ -80,7 +78,6 @@
 			{param classPK: $classPK /}
 			{param defaultLanguageId: $defaultLanguageId /}
 			{param events: [
-				'toggleContextualSidebarButtonClick': $_handleToggleContextualSidebarButtonClick,
 				'translationLanguageChange': $_handleTranslationLanguageChange
 			] /}
 			{param languageId: $languageId /}
@@ -98,7 +95,6 @@
 		{call com.liferay.layout.admin.web.FragmentsEditorSidebar.render}
 			{param dropTargetClass: $_dropTargetClass /}
 			{param events: [
-				'hide': $_handleHideContextualSidebar,
 				'selectAssetTypeButtonClick': $_handleSelectAssetTypeButtonClick,
 				'toggleHighlightMapping': $_handleToggleHighlightMapping
 			] /}

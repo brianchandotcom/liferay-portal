@@ -1,17 +1,15 @@
 /* eslint no-spaced-func: 0 */
 
-import 'url-search-params-polyfill';
 import {Config} from 'metal-state';
 import objectHash from 'object-hash';
-import PortletBase from 'frontend-js-web/liferay/PortletBase.es';
+import URLEncodedFetcher from './URLEncodedFetcher.es';
 
-class AutoSave extends PortletBase {
-	static STATE = {
+class AutoSave extends URLEncodedFetcher {
+	static PROPS = {
 		form: Config.any(),
 		interval: Config.number().setter('_setInterval'),
 		saveAsDraft: Config.bool().value(true),
-		stateSyncronizer: Config.any(),
-		url: Config.string()
+		stateSyncronizer: Config.any()
 	};
 
 	created() {
@@ -28,10 +26,12 @@ class AutoSave extends PortletBase {
 	}
 
 	start() {
+		const {interval} = this.props;
+
 		this.stop();
 
-		if (this.interval > 0) {
-			this._intervalId = setInterval(() => this.saveIfNeeded(), this.interval);
+		if (interval > 0) {
+			this._intervalId = setInterval(() => this.saveIfNeeded(), interval);
 		}
 	}
 
@@ -42,7 +42,7 @@ class AutoSave extends PortletBase {
 	}
 
 	saveIfNeeded() {
-		const {stateSyncronizer} = this;
+		const {stateSyncronizer} = this.props;
 
 		if (this._pendingRequest) {
 			this._pendingRequest.then(() => this.saveIfNeeded()).catch (() => {});
@@ -53,7 +53,7 @@ class AutoSave extends PortletBase {
 	}
 
 	getCurrentState() {
-		const {stateSyncronizer} = this;
+		const {stateSyncronizer} = this.props;
 
 		return stateSyncronizer.getState();
 	}
@@ -79,24 +79,13 @@ class AutoSave extends PortletBase {
 		this._lastKownHash = this.getStateHash(state);
 	}
 
-	save() {
+	save(saveAsDraft = this.props.saveAsDraft) {
+		const {stateSyncronizer} = this.props;
 		const currentState = this.getCurrentState();
 
-		const headers = {
-			'Accept': 'application/json',
-			'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
-		};
+		stateSyncronizer.syncInputs();
 
-		this._pendingRequest = fetch(
-			this.url,
-			{
-				body: this._getFormData(),
-				credentials: 'include',
-				headers,
-				method: 'POST'
-			}
-		)
-			.then(response => response.json())
+		this._pendingRequest = this.fetch(this._getFormData(saveAsDraft))
 			.then(
 				responseData => {
 					this._pendingRequest = null;
@@ -109,7 +98,7 @@ class AutoSave extends PortletBase {
 						'autosaved',
 						{
 							modifiedDate: responseData.modifiedDate,
-							savedAsDraft: this.saveAsDraft
+							savedAsDraft: saveAsDraft
 						}
 					);
 
@@ -117,14 +106,8 @@ class AutoSave extends PortletBase {
 				}
 			)
 			.catch (
-				error => {
+				() => {
 					this._pendingRequest = null;
-
-					const sessionStatus = Liferay.Session.get('sessionState');
-
-					if (sessionStatus === 'expired' || error.status === 401) {
-						window.location.reload();
-					}
 				}
 			);
 
@@ -132,37 +115,33 @@ class AutoSave extends PortletBase {
 	}
 
 	_defineIds(response) {
-		const formInstanceIdNode = this.one('#formInstanceId');
+		const {namespace} = this.props;
+
+		const formInstanceIdNode = document.querySelector(`#${namespace}formInstanceId`);
 
 		if (formInstanceIdNode && formInstanceIdNode.value === '0') {
 			formInstanceIdNode.value = response.formInstanceId;
 		}
 
-		const ddmStructureIdNode = this.one('#ddmStructureId');
+		const ddmStructureIdNode = document.querySelector(`#${namespace}ddmStructureId`);
 
 		if (ddmStructureIdNode && ddmStructureIdNode.value === '0') {
 			ddmStructureIdNode.value = response.ddmStructureId;
 		}
 	}
 
-	_getFormData() {
-		const {stateSyncronizer} = this;
+	_getFormData(saveAsDraft) {
+		const {form, namespace} = this.props;
 
-		stateSyncronizer.syncInputs();
-
-		const formData = new FormData(this.form);
+		const formData = new FormData(form);
 
 		const state = this.getCurrentState();
 
-		formData.set(this.ns('name'), JSON.stringify(state.name));
-		formData.set(this.ns('published'), JSON.stringify(this.published));
-		formData.set(this.ns('saveAsDraft'), this.saveAsDraft);
+		formData.set(`${namespace}name`, JSON.stringify(state.name));
+		formData.set(`${namespace}published`, JSON.stringify(this.published));
+		formData.set(`${namespace}saveAsDraft`, saveAsDraft);
 
-		const searchParams = new URLSearchParams();
-
-		formData.forEach((value, key) => searchParams.set(key, value));
-
-		return searchParams;
+		return formData;
 	}
 
 	_setInterval(minutes) {

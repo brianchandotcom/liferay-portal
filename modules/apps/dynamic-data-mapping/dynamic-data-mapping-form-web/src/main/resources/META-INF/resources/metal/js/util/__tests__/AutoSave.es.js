@@ -72,7 +72,7 @@ describe(
 
 				saveIfNeededMock.mockImplementation(() => null);
 
-				jest.advanceTimersByTime(component.interval * 3);
+				jest.advanceTimersByTime(component.props.interval * 3);
 
 				expect(saveIfNeededMock).toHaveBeenCalledTimes(3);
 
@@ -99,7 +99,7 @@ describe(
 					}
 				);
 
-				jest.advanceTimersByTime(component.interval * 3);
+				jest.advanceTimersByTime(component.props.interval * 3);
 
 				expect(saveSpy).toHaveBeenCalledTimes(1);
 
@@ -113,7 +113,7 @@ describe(
 				const spy = jest.spyOn(component, 'saveStateHash');
 
 				const modifiedDate = 'date-1';
-				const saveAsDraft = component.saveAsDraft;
+				const saveAsDraft = component.props.saveAsDraft;
 
 				fetch.mockResponse(
 					JSON.stringify(
@@ -170,7 +170,7 @@ describe(
 				const spy = jest.spyOn(component, 'emit');
 
 				const modifiedDate = 'date-1';
-				const saveAsDraft = component.saveAsDraft;
+				const saveAsDraft = component.props.saveAsDraft;
 
 				fetch.mockResponse(
 					JSON.stringify(

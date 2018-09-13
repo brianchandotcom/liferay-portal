@@ -12,7 +12,7 @@ class Sharing extends PortletBase {
 		this._classNameId = config.classNameId;
 		this._classPK = config.classPK;
 		this._refererPortletNamespace = config.refererPortletNamespace;
-		this._sharingDialogId = config.sharingDialogId || 'sharingDialogId';
+		this._sharingDialogId = config.sharingDialogId;
 	}
 
 	/**

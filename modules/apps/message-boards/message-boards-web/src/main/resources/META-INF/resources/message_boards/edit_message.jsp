@@ -292,6 +292,7 @@ if (portletTitleBasedNavigation) {
 
 							<liferay-ui:search-iterator
 								markupView="lexicon"
+								paginate="<%= false %>"
 							/>
 						</liferay-ui:search-container>
 					</c:if>

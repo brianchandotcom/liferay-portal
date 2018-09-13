@@ -55,27 +55,17 @@ String contextString = jsonSerializer.serializeDeep(fragmentsEditorDisplayContex
 %>
 
 <aui:script require="layout-admin-web/js/fragments_editor/reducers/changes.es as ChangesReducerModule, layout-admin-web/js/fragments_editor/reducers/fragments.es as FragmentsReducerModule, layout-admin-web/js/fragments_editor/reducers/placeholders.es as PlaceholdersReducerModule, layout-admin-web/js/fragments_editor/reducers/translations.es as TranslationsReducerModule, layout-admin-web/js/fragments_editor/store/store.es as StoreModule">
-	const initialState = <%= contextString %>;
-
-	const reducers = [
-		ChangesReducerModule.saveChangesReducer,
-		FragmentsReducerModule.addFragmentEntryLinkReducer,
-		FragmentsReducerModule.removeFragmentEntryLinkReducer,
-		PlaceholdersReducerModule.updateDragTargetReducer,
-		TranslationsReducerModule.translationStatusReducer
-	];
-
-	Liferay
-		.componentReady(
+	StoreModule.createStore(
+		<%= contextString %>,
+		[
+			ChangesReducerModule.saveChangesReducer,
+			FragmentsReducerModule.addFragmentEntryLinkReducer,
+			FragmentsReducerModule.removeFragmentEntryLinkReducer,
+			PlaceholdersReducerModule.updateDragTargetReducer,
+			TranslationsReducerModule.translationStatusReducer
+		],
+		[
 			'<portlet:namespace />fragmentsEditor'
-		)
-		.then(
-			function(fragmentsEditor) {
-				StoreModule.createStore(
-					initialState,
-					reducers,
-					[fragmentsEditor]
-				);
-			}
-		);
+		]
+	);
 </aui:script>

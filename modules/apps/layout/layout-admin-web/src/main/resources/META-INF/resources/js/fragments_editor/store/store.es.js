@@ -42,16 +42,26 @@ const connect = function(component, store) {
  * Each component will receive the store as `store` attribute.
  * @param {object} initialState
  * @param {function[]} reducers
- * @param {Component[]} components
+ * @param {string[]} componentIds
  * @return {Store}
  * @review
  */
 
-const createStore = function(initialState, reducers, components = []) {
+const createStore = function(initialState, reducers, componentIds = []) {
 	const store = new Store(initialState, reducers);
 
-	components.forEach(
-		component => connect(component, store)
+	componentIds.forEach(
+		componentId => {
+			Liferay
+				.componentReady(
+					componentId
+				)
+				.then(
+					component => {
+						connect(component, store);
+					}
+				);
+		}
 	);
 
 	return store;

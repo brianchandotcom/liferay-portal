@@ -8,6 +8,8 @@ import State, {Config} from 'metal-state';
  */
 
 const connect = function(component, store) {
+	component.store = store;
+
 	store.on(
 		'change',
 		(nextState) => Object.entries(nextState).forEach(
@@ -49,11 +51,7 @@ const createStore = function(initialState, reducers, components = []) {
 	const store = new Store(initialState, reducers);
 
 	components.forEach(
-		component => {
-			component.store = store;
-
-			connect(component, store);
-		}
+		component => connect(component, store)
 	);
 
 	return store;

@@ -65,35 +65,35 @@ public class PortalHookConfigurator
 
 		bundleContext.addBundleListener(_bundleStartStopLogger);
 
-		ServiceTracker<ModuleServiceLifecycle, Void> serviceTracker =
-			new ServiceTracker<ModuleServiceLifecycle, Void>(
-				bundleContext,
-				bundleContext.createFilter(
-					StringBundler.concat(
-						"(&(objectClass=",
-						ModuleServiceLifecycle.class.getName(), ")",
-						ModuleServiceLifecycle.PORTAL_INITIALIZED, ")")),
-				null) {
+		_serviceTracker = new ServiceTracker<ModuleServiceLifecycle, Void>(
+			bundleContext,
+			bundleContext.createFilter(
+				StringBundler.concat(
+					"(&(objectClass=", ModuleServiceLifecycle.class.getName(),
+					")", ModuleServiceLifecycle.PORTAL_INITIALIZED, ")")),
+			null) {
 
-				@Override
-				public Void addingService(
-					ServiceReference<ModuleServiceLifecycle> serviceReference) {
+			@Override
+			public Void addingService(
+				ServiceReference<ModuleServiceLifecycle> serviceReference) {
 
-					Log4JUtil.setLevel(
-						BundleStartStopLogger.class.getName(), "INFO", false);
+				Log4JUtil.setLevel(
+					BundleStartStopLogger.class.getName(), "INFO", false);
 
-					close();
+				close();
 
-					return null;
-				}
+				return null;
+			}
 
-			};
+		};
 
-		serviceTracker.open();
+		_serviceTracker.open();
 	}
 
 	@Override
 	public void stop(BundleContext bundleContext) throws Exception {
+		_serviceTracker.close();
+
 		ServiceReference<ExtendedLogReaderService> serviceReference =
 			bundleContext.getServiceReference(ExtendedLogReaderService.class);
 
@@ -108,5 +108,6 @@ public class PortalHookConfigurator
 
 	private final BundleStartStopLogger _bundleStartStopLogger;
 	private final PortalSynchronousLogListener _portalSynchronousLogListener;
+	private ServiceTracker<ModuleServiceLifecycle, Void> _serviceTracker;
 
 }

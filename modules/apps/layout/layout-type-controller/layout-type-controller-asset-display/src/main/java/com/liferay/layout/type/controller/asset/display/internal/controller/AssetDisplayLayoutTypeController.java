@@ -43,6 +43,8 @@ import com.liferay.taglib.servlet.PipingServletResponse;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletResponse;
@@ -181,11 +183,18 @@ public class AssetDisplayLayoutTypeController
 			return fragmentEntryLinks;
 		}
 
-		Map<Long, FragmentEntryLink> fragmentEntryLinksMap =
-			_fragmentEntryLinkLocalService.getFragmentEntryLinksMap(
+		fragmentEntryLinks =
+			_fragmentEntryLinkLocalService.getFragmentEntryLinks(
 				layout.getGroupId(),
 				_portal.getClassNameId(Layout.class.getName()),
 				layout.getPlid());
+
+		Stream<FragmentEntryLink> stream = fragmentEntryLinks.stream();
+
+		Map<Long, FragmentEntryLink> fragmentEntryLinksMap = stream.collect(
+			Collectors.toMap(
+				FragmentEntryLink::getFragmentEntryLinkId,
+				fragmentEntryLink -> fragmentEntryLink));
 
 		for (int i = 0; i < jsonArray.length(); i++) {
 			FragmentEntryLink fragmentEntryLink = fragmentEntryLinksMap.get(

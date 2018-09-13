@@ -35,8 +35,11 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -87,12 +90,18 @@ public class LayoutModelListener extends BaseModelListener<Layout> {
 				return;
 			}
 
-			Map<Long, FragmentEntryLink> fragmentEntryLinksMap =
-				_fragmentEntryLinkLocalService.getFragmentEntryLinksMap(
+			List<FragmentEntryLink> fragmentEntryLinks =
+				_fragmentEntryLinkLocalService.getFragmentEntryLinks(
 					layout.getGroupId(),
-					_portal.getClassNameId(
-						LayoutPageTemplateEntry.class.getName()),
-					layoutPageTemplateEntryId);
+					_portal.getClassNameId(Layout.class.getName()),
+					layout.getPlid());
+
+			Stream<FragmentEntryLink> stream = fragmentEntryLinks.stream();
+
+			Map<Long, FragmentEntryLink> fragmentEntryLinksMap = stream.collect(
+				Collectors.toMap(
+					FragmentEntryLink::getFragmentEntryLinkId,
+					fragmentEntryLink -> fragmentEntryLink));
 
 			ServiceContext serviceContext =
 				ServiceContextThreadLocal.getServiceContext();

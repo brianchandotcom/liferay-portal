@@ -305,131 +305,13 @@ public class BeanPortletExtension implements Extension {
 		try {
 			Bundle bundle = FrameworkUtil.getBundle(BeanPortletExtension.class);
 
-			URL portletDescriptorURL = bundle.getEntry("/WEB-INF/portlet.xml");
+			_addBeanPortletsFromPortletDescriptor(bundle);
 
-			if (portletDescriptorURL != null) {
-				try {
-					PortletDescriptor portletDescriptor =
-						PortletDescriptorParser.parse(portletDescriptorURL);
-
-					_beanFilters.addAll(portletDescriptor.getBeanFilters());
-
-					for (BeanPortlet beanPortlet :
-							portletDescriptor.getBeanPortlets()) {
-
-						_beanPortlets.put(
-							beanPortlet.getPortletName(), beanPortlet);
-
-						_scanBeanPortletClass(
-							_loadBeanPortletClass(
-								beanPortlet.getPortletClassName()),
-							beanPortlet.getPortletName());
-					}
-				}
-				catch (Exception e) {
-					_log.error(e, e);
-				}
-			}
-
-			for (Class<?> clazz : _portletConfigurationsClasses) {
-				PortletConfigurations portletConfigurations =
-					clazz.getAnnotation(PortletConfigurations.class);
-
-				for (PortletConfiguration portletConfiguration :
-						portletConfigurations.value()) {
-
-					_addBeanPortlet(clazz, portletConfiguration);
-					_scanBeanPortletClass(
-						clazz, portletConfiguration.portletName());
-				}
-			}
-
-			for (Class<?> clazz : _portletConfigurationClasses) {
-				PortletConfiguration portletConfiguration = clazz.getAnnotation(
-					PortletConfiguration.class);
-
-				_addBeanPortlet(clazz, portletConfiguration);
-				_scanBeanPortletClass(
-					clazz, portletConfiguration.portletName());
-			}
-
-			for (Class<?> annotatedClass : _portletLifecycleFilterClasses) {
-				_beanFilters.add(new BeanFilterAnnotationImpl(annotatedClass));
-			}
-
-			for (Class<?> portletListenerClass : _portletListenerClasses) {
-				PortletListener portletListener =
-					portletListenerClass.getAnnotation(PortletListener.class);
-
-				URLGenerationListener urlGenerationListener =
-					new URLGenerationListener(
-						portletListener.ordinal(),
-						portletListenerClass.getName());
-
-				for (BeanPortlet beanPortlet : _beanPortlets.values()) {
-					BeanApp beanApp = beanPortlet.getBeanApp();
-
-					List<URLGenerationListener> urlGenerationListeners =
-						beanApp.getURLGenerationListeners();
-
-					urlGenerationListeners.add(urlGenerationListener);
-				}
-			}
-
-			URL liferayDescriptorURL = bundle.getEntry(
-				"WEB-INF/liferay-portlet.xml");
-
-			if (liferayDescriptorURL != null) {
-				try {
-					LiferayDescriptor liferayDescriptor =
-						LiferayDescriptorParser.parse(liferayDescriptorURL);
-
-					for (String portletName :
-							liferayDescriptor.getPortletNames()) {
-
-						BeanPortlet beanPortlet = _beanPortlets.get(
-							portletName);
-
-						if (beanPortlet == null) {
-							beanPortlet = new BeanPortletDefaultImpl(
-								portletName);
-
-							_beanPortlets.put(portletName, beanPortlet);
-						}
-
-						beanPortlet.addLiferayConfiguration(
-							liferayDescriptor.getPortletConfiguration(
-								portletName));
-					}
-				}
-				catch (Exception e) {
-					_log.error(e, e);
-				}
-			}
-
-			URL displayDescriptorURL = bundle.getEntry(
-				"WEB-INF/liferay-display.xml");
-
-			if (displayDescriptorURL != null) {
-				try {
-					Map<String, String> map = DisplayDescriptorParser.parse(
-						displayDescriptorURL);
-
-					for (Map.Entry<String, String> entry : map.entrySet()) {
-						BeanPortlet beanPortlet = _beanPortlets.get(
-							entry.getKey());
-
-						if (beanPortlet != null) {
-							beanPortlet.addLiferayConfiguration(
-								"com.liferay.portlet.display-category",
-								entry.getValue());
-						}
-					}
-				}
-				catch (Exception e) {
-					_log.error(e, e);
-				}
-			}
+			_addBeanPortletsFromAnnotatedClasses();
+			_addBeanFiltersFromAnnotatedClasses();
+			_addListenersFromAnnotatedClasses();
+			_addBeanPortletsFromLiferayDescriptor(bundle);
+			_addLiferayDisplayCategoryToBeanPortlets(bundle);
 
 			afterBeanDiscovery.addContext(new PortletRequestBeanContext());
 			afterBeanDiscovery.addContext(new PortletSessionBeanContext());
@@ -598,6 +480,12 @@ public class BeanPortletExtension implements Extension {
 		_resourceBundleLoaderRegistrations.clear();
 	}
 
+	private void _addBeanFiltersFromAnnotatedClasses() {
+		for (Class<?> annotatedClass : _portletLifecycleFilterClasses) {
+			_beanFilters.add(new BeanFilterAnnotationImpl(annotatedClass));
+		}
+	}
+
 	private void _addBeanPortlet(
 		Class<?> beanPortletClass, PortletConfiguration portletConfiguration) {
 
@@ -628,6 +516,130 @@ public class BeanPortletExtension implements Extension {
 				portletApplication, portletConfiguration,
 				_getLiferayPortletConfiguration(configuredPortletName),
 				beanPortletClass.getName()));
+	}
+
+	private void _addBeanPortletsFromAnnotatedClasses() {
+		for (Class<?> clazz : _portletConfigurationsClasses) {
+			PortletConfigurations portletConfigurations = clazz.getAnnotation(
+				PortletConfigurations.class);
+
+			for (PortletConfiguration portletConfiguration :
+					portletConfigurations.value()) {
+
+				_addBeanPortlet(clazz, portletConfiguration);
+				_scanBeanPortletClass(
+					clazz, portletConfiguration.portletName());
+			}
+		}
+
+		for (Class<?> clazz : _portletConfigurationClasses) {
+			PortletConfiguration portletConfiguration = clazz.getAnnotation(
+				PortletConfiguration.class);
+
+			_addBeanPortlet(clazz, portletConfiguration);
+			_scanBeanPortletClass(clazz, portletConfiguration.portletName());
+		}
+	}
+
+	private void _addBeanPortletsFromLiferayDescriptor(Bundle bundle) {
+		URL liferayDescriptorURL = bundle.getEntry(
+			"WEB-INF/liferay-portlet.xml");
+
+		if (liferayDescriptorURL != null) {
+			try {
+				LiferayDescriptor liferayDescriptor =
+					LiferayDescriptorParser.parse(liferayDescriptorURL);
+
+				for (String portletName : liferayDescriptor.getPortletNames()) {
+					BeanPortlet beanPortlet = _beanPortlets.get(portletName);
+
+					if (beanPortlet == null) {
+						beanPortlet = new BeanPortletDefaultImpl(portletName);
+
+						_beanPortlets.put(portletName, beanPortlet);
+					}
+
+					beanPortlet.addLiferayConfiguration(
+						liferayDescriptor.getPortletConfiguration(portletName));
+				}
+			}
+			catch (Exception e) {
+				_log.error(e, e);
+			}
+		}
+	}
+
+	private void _addBeanPortletsFromPortletDescriptor(Bundle bundle) {
+		URL portletDescriptorURL = bundle.getEntry("/WEB-INF/portlet.xml");
+
+		if (portletDescriptorURL != null) {
+			try {
+				PortletDescriptor portletDescriptor =
+					PortletDescriptorParser.parse(portletDescriptorURL);
+
+				_beanFilters.addAll(portletDescriptor.getBeanFilters());
+
+				for (BeanPortlet beanPortlet :
+						portletDescriptor.getBeanPortlets()) {
+
+					_beanPortlets.put(
+						beanPortlet.getPortletName(), beanPortlet);
+
+					_scanBeanPortletClass(
+						_loadBeanPortletClass(
+							beanPortlet.getPortletClassName()),
+						beanPortlet.getPortletName());
+				}
+			}
+			catch (Exception e) {
+				_log.error(e, e);
+			}
+		}
+	}
+
+	private void _addLiferayDisplayCategoryToBeanPortlets(Bundle bundle) {
+		URL displayDescriptorURL = bundle.getEntry(
+			"WEB-INF/liferay-display.xml");
+
+		if (displayDescriptorURL != null) {
+			try {
+				Map<String, String> map = DisplayDescriptorParser.parse(
+					displayDescriptorURL);
+
+				for (Map.Entry<String, String> entry : map.entrySet()) {
+					BeanPortlet beanPortlet = _beanPortlets.get(entry.getKey());
+
+					if (beanPortlet != null) {
+						beanPortlet.addLiferayConfiguration(
+							"com.liferay.portlet.display-category",
+							entry.getValue());
+					}
+				}
+			}
+			catch (Exception e) {
+				_log.error(e, e);
+			}
+		}
+	}
+
+	private void _addListenersFromAnnotatedClasses() {
+		for (Class<?> portletListenerClass : _portletListenerClasses) {
+			PortletListener portletListener =
+				portletListenerClass.getAnnotation(PortletListener.class);
+
+			URLGenerationListener urlGenerationListener =
+				new URLGenerationListener(
+					portletListener.ordinal(), portletListenerClass.getName());
+
+			for (BeanPortlet beanPortlet : _beanPortlets.values()) {
+				BeanApp beanApp = beanPortlet.getBeanApp();
+
+				List<URLGenerationListener> urlGenerationListeners =
+					beanApp.getURLGenerationListeners();
+
+				urlGenerationListeners.add(urlGenerationListener);
+			}
+		}
 	}
 
 	private void _associateMethods(

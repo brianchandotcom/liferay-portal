@@ -115,7 +115,10 @@ public class AutoCloseUtil {
 			sb.append("engineering/wiki/-/wiki/Quality+Assurance+Main/Test");
 			sb.append("+Batch+Automatic+Close+List\">article</a>.</p><p");
 
-			if (topLevelBuild instanceof SourceFormatBuild) {
+			boolean sourceFormatBuild =
+				topLevelBuild instanceof SourceFormatBuild;
+
+			if (sourceFormatBuild) {
 				sb.append("><strong><em>*");
 			}
 			else {
@@ -128,7 +131,7 @@ public class AutoCloseUtil {
 			sb.append("pull by entering the following command as a comment.");
 			sb.append("</em></strong><pre>ci&#58;reopen</pre></p>");
 
-			if (topLevelBuild instanceof SourceFormatBuild) {
+			if (sourceFormatBuild) {
 				sb.append("<strong><em>*The reopened pull request may ");
 				sb.append("be automatically closed again if other critical ");
 				sb.append("batches or tests fail.</em></strong>");

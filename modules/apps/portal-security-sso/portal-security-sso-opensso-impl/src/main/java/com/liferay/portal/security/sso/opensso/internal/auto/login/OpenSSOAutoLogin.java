@@ -14,7 +14,8 @@
 
 package com.liferay.portal.security.sso.opensso.internal.auto.login;
 
-import com.liferay.petra.string.StringBundler;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
@@ -36,6 +37,7 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PwdGenerator;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.security.exportimport.UserImporter;
@@ -50,8 +52,12 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.osgi.framework.BundleContext;
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferenceCardinality;
 
 /**
  * Participates in every unauthenticated HTTP request to Liferay Portal.
@@ -79,6 +85,12 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true, service = AutoLogin.class
 )
 public class OpenSSOAutoLogin extends BaseAutoLogin {
+
+	@Activate
+	protected void activate(BundleContext bundleContext) {
+		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
+			bundleContext, OpenSSO.class, "version");
+	}
 
 	protected User addUser(
 			long companyId, String firstName, String lastName,
@@ -118,6 +130,11 @@ public class OpenSSOAutoLogin extends BaseAutoLogin {
 			organizationIds, roleIds, userGroupIds, sendEmail, serviceContext);
 	}
 
+	@Deactivate
+	protected void deactivate() {
+		_serviceTrackerMap.close();
+	}
+
 	@Override
 	protected String[] doLogin(
 			HttpServletRequest request, HttpServletResponse response)
@@ -132,13 +149,18 @@ public class OpenSSOAutoLogin extends BaseAutoLogin {
 			return null;
 		}
 
-		if (!_openSSO.isAuthenticated(
+		String version = openSSOConfiguration.version();
+
+		OpenSSO openSSO = _serviceTrackerMap.getService(version);
+
+		if ((openSSO == null) ||
+			!openSSO.isAuthenticated(
 				request, openSSOConfiguration.serviceURL())) {
 
 			return null;
 		}
 
-		Map<String, String> nameValues = _openSSO.getAttributes(
+		Map<String, String> nameValues = openSSO.getAttributes(
 			request, openSSOConfiguration.serviceURL());
 
 		String screenName = nameValues.get(
@@ -196,7 +218,7 @@ public class OpenSSOAutoLogin extends BaseAutoLogin {
 		}
 		else {
 			if (Validator.isNull(emailAddress)) {
-				return doHandleException(
+				return handleException(
 					request, response, new Exception("Email address is null"));
 			}
 		}
@@ -269,9 +291,8 @@ public class OpenSSOAutoLogin extends BaseAutoLogin {
 		_configurationProvider = configurationProvider;
 	}
 
-	@Reference(unbind = "-")
+	@Reference(cardinality = ReferenceCardinality.AT_LEAST_ONE, unbind = "-")
 	protected void setOpenSSO(OpenSSO openSSO) {
-		_openSSO = openSSO;
 	}
 
 	@Reference(unbind = "-")
@@ -295,12 +316,12 @@ public class OpenSSOAutoLogin extends BaseAutoLogin {
 		OpenSSOAutoLogin.class);
 
 	private ConfigurationProvider _configurationProvider;
-	private OpenSSO _openSSO;
 
 	@Reference
 	private Portal _portal;
 
 	private ScreenNameGenerator _screenNameGenerator;
+	private ServiceTrackerMap<String, OpenSSO> _serviceTrackerMap;
 	private UserImporter _userImporter;
 	private UserLocalService _userLocalService;
 

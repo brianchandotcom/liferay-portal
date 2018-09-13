@@ -32,16 +32,16 @@ import com.liferay.portal.kernel.util.SubscriptionSender;
 import com.liferay.sharing.constants.SharingEntryActionKey;
 import com.liferay.sharing.constants.SharingPortletKeys;
 import com.liferay.sharing.model.SharingEntry;
-import com.liferay.sharing.notifications.internal.notifications.SharingNotificationMessageProvider;
-import com.liferay.sharing.notifications.internal.util.NotificationsSharingEntryUtil;
+import com.liferay.sharing.notifications.internal.util.SharingNotificationUtil;
 import com.liferay.sharing.service.SharingEntryLocalService;
 import com.liferay.sharing.service.SharingEntryLocalServiceWrapper;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 import java.util.Collection;
 import java.util.Date;
 import java.util.ResourceBundle;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Alejandro Tardín
@@ -109,7 +109,7 @@ public class NotificationsSharingEntryLocalServiceWrapper
 
 		String linkText = ResourceBundleUtil.getString(
 			resourceBundle, "view-x",
-			_sharingNotificationMessageProvider.getSharingEntryAssetTitle(
+			_sharingNotificationUtil.getSharingEntryAssetTitle(
 				sharingEntry, user.getLocale()));
 
 		return StringBundler.concat(
@@ -125,12 +125,12 @@ public class NotificationsSharingEntryLocalServiceWrapper
 
 			SubscriptionSender subscriptionSender = new SubscriptionSender();
 
-			String message = _sharingNotificationMessageProvider.getMessage(
+			String message = _sharingNotificationUtil.getMessage(
 				sharingEntry, user.getLocale());
 
 			subscriptionSender.setSubject(message);
 
-			String entryURL = NotificationsSharingEntryUtil.getEntryURL(
+			String entryURL = _sharingNotificationUtil.getEntryURL(
 				sharingEntry, serviceContext.getLiferayPortletRequest(),
 				serviceContext.getLiferayPortletResponse());
 
@@ -179,8 +179,7 @@ public class NotificationsSharingEntryLocalServiceWrapper
 	private ResourceBundleLoader _resourceBundleLoader;
 
 	@Reference
-	private SharingNotificationMessageProvider
-		_sharingNotificationMessageProvider;
+	private SharingNotificationUtil _sharingNotificationUtil;
 
 	@Reference
 	private UserLocalService _userLocalService;

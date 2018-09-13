@@ -12,11 +12,15 @@
  * details.
  */
 
-package com.liferay.sharing.notifications.internal.notifications;
+package com.liferay.sharing.notifications.internal.util;
 
+import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.model.AssetRenderer;
+import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
+import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.UserNotificationEventLocalService;
 import com.liferay.portal.kernel.util.HtmlUtil;
@@ -24,20 +28,34 @@ import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.sharing.constants.SharingEntryActionKey;
 import com.liferay.sharing.model.SharingEntry;
-import com.liferay.sharing.notifications.internal.util.NotificationsSharingEntryUtil;
 import com.liferay.sharing.service.SharingEntryLocalService;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 import java.util.Locale;
 import java.util.ResourceBundle;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Alejandro Tardín
  */
-@Component(service = SharingNotificationMessageProvider.class)
-public class SharingNotificationMessageProvider {
+@Component(service = SharingNotificationUtil.class)
+public class SharingNotificationUtil {
+
+	public String getEntryURL(
+			SharingEntry sharingEntry,
+			LiferayPortletRequest liferayPortletRequest,
+			LiferayPortletResponse liferayPortletResponse)
+		throws Exception {
+
+		AssetRenderer assetRenderer = _getAssetRenderer(sharingEntry);
+
+		if (assetRenderer != null) {
+			return assetRenderer.getURLViewInContext(
+				liferayPortletRequest, liferayPortletResponse, null);
+		}
+
+		return null;
+	}
 
 	public String getMessage(SharingEntry sharingEntry, Locale locale)
 		throws PortalException {
@@ -56,8 +74,7 @@ public class SharingNotificationMessageProvider {
 			SharingEntry sharingEntry, Locale locale)
 		throws PortalException {
 
-		AssetRenderer assetRenderer =
-			NotificationsSharingEntryUtil.getAssetRenderer(sharingEntry);
+		AssetRenderer assetRenderer = _getAssetRenderer(sharingEntry);
 
 		if (assetRenderer != null) {
 			return assetRenderer.getTitle(locale);
@@ -90,6 +107,20 @@ public class SharingNotificationMessageProvider {
 		}
 
 		return ResourceBundleUtil.getString(resourceBundle, "nothing");
+	}
+
+	private AssetRenderer<?> _getAssetRenderer(SharingEntry sharingEntry)
+		throws PortalException {
+
+		AssetRendererFactory<?> assetRendererFactory =
+			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
+				sharingEntry.getClassName());
+
+		if (assetRendererFactory == null) {
+			return null;
+		}
+
+		return assetRendererFactory.getAssetRenderer(sharingEntry.getClassPK());
 	}
 
 	private String _getUserName(

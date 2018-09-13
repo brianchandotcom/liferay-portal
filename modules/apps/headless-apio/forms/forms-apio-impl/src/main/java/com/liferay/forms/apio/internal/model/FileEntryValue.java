@@ -19,12 +19,23 @@ package com.liferay.forms.apio.internal.model;
  */
 public class FileEntryValue {
 
-	public FileEntryValue(long groupId, String uuid) {
+	public FileEntryValue(
+		long fileEntryId, long groupId, String title, String type, String uuid,
+		String version) {
+
+		this.fileEntryId = fileEntryId;
 		this.groupId = groupId;
+		this.title = title;
+		this.type = type;
 		this.uuid = uuid;
+		this.version = version;
 	}
 
+	public final long fileEntryId;
 	public final long groupId;
+	public final String title;
+	public final String type;
 	public final String uuid;
+	public final String version;
 
 }

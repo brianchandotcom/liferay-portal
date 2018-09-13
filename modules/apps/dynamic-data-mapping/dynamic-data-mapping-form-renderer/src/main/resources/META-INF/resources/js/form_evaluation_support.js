@@ -103,7 +103,6 @@ AUI.add(
 									readOnly: fieldContext.readOnly,
 									required: fieldContext.required,
 									valid: fieldContext.valid,
-									value: fieldContext.value,
 									visible: fieldContext.visible
 								},
 								field.getEvaluationContext(fieldContext)

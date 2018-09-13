@@ -6244,9 +6244,6 @@ public class JournalArticleLocalServiceImpl
 
 		AssetEntry assetEntry = null;
 
-		String title = article.getTitleMapAsXML();
-		String description = article.getDescriptionMapAsXML();
-
 		if (addDraftAssetEntry) {
 			assetEntry = assetEntryLocalService.updateEntry(
 				userId, article.getGroupId(), article.getCreateDate(),
@@ -6254,8 +6251,9 @@ public class JournalArticleLocalServiceImpl
 				article.getPrimaryKey(), article.getUuid(),
 				getClassTypeId(article), assetCategoryIds, assetTagNames,
 				isListable(article), false, null, null, null,
-				article.getExpirationDate(), ContentTypes.TEXT_HTML, title,
-				description, description, null, article.getLayoutUuid(), 0, 0,
+				article.getExpirationDate(), ContentTypes.TEXT_HTML,
+				article.getTitle(), article.getDescription(),
+				article.getDescription(), null, article.getLayoutUuid(), 0, 0,
 				priority);
 		}
 		else {
@@ -6276,7 +6274,8 @@ public class JournalArticleLocalServiceImpl
 				journalArticleResource.getUuid(), getClassTypeId(article),
 				assetCategoryIds, assetTagNames, isListable(article), visible,
 				null, null, publishDate, article.getExpirationDate(),
-				ContentTypes.TEXT_HTML, title, description, description, null,
+				ContentTypes.TEXT_HTML, article.getTitle(),
+				article.getDescription(), article.getDescription(), null,
 				article.getLayoutUuid(), 0, 0, priority);
 		}
 

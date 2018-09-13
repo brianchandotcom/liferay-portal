@@ -69,7 +69,7 @@ public class ShareEntryMVCActionCommand extends BaseMVCActionCommand {
 
 		Date expirationDate = ParamUtil.getDate(
 			actionRequest, "expirationDate",
-			DateFormatFactoryUtil.getDate(themeDisplay.getLocale()));
+			DateFormatFactoryUtil.getDate(themeDisplay.getLocale()), null);
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			actionRequest);

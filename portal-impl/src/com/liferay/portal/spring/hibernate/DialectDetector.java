@@ -148,10 +148,10 @@ public class DialectDetector {
 			throw new RuntimeException("No dialect found");
 		}
 		else if (dialectKey != null) {
-			if (_log.isDebugEnabled()) {
+			if (_log.isInfoEnabled()) {
 				Class<?> clazz = dialect.getClass();
 
-				_log.debug("Using dialect " + clazz.getName());
+				_log.info("Using dialect " + clazz.getName());
 			}
 
 			_dialects.put(dialectKey, dialect);

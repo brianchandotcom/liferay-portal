@@ -57,12 +57,12 @@ public class SharingEntryLocalServiceImpl
 			fromUserId, toUserId, classNameId, classPK);
 
 		if (sharingEntry == null) {
-			return addSharingEntry(
+			return sharingEntryLocalService.addSharingEntry(
 				fromUserId, toUserId, classNameId, classPK, groupId, shareable,
 				sharingEntryActionKeys, expirationDate, serviceContext);
 		}
 
-		return updateSharingEntry(
+		return sharingEntryLocalService.updateSharingEntry(
 			sharingEntry.getSharingEntryId(), sharingEntryActionKeys, shareable,
 			expirationDate, serviceContext);
 	}

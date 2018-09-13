@@ -111,11 +111,11 @@ public class FormInstanceRecordNestedCollectionResource
 			"FormInstanceRecord"
 		).identifier(
 			DDMFormInstanceRecord::getFormInstanceRecordId
-		).addBoolean(
-			"draft", this::_getDraft
 		).addBidirectionalModel(
 			"formInstance", "formInstanceRecords", FormInstanceIdentifier.class,
 			DDMFormInstanceRecord::getFormInstanceId
+		).addBoolean(
+			"draft", this::_getDraft
 		).addDate(
 			"dateCreated", DDMFormInstanceRecord::getCreateDate
 		).addDate(

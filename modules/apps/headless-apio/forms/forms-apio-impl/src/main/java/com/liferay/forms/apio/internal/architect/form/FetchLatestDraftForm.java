@@ -18,6 +18,7 @@ import com.liferay.apio.architect.form.Form;
 
 /**
  * @author Paulo Cruz
+ * @review
  */
 public class FetchLatestDraftForm {
 

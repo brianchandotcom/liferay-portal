@@ -27,6 +27,7 @@ import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Paulo Cruz
+ * @review
  */
 @Component(immediate = true, service = FetchLatestRecordHelper.class)
 public class FetchLatestRecordHelper {

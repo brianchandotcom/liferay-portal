@@ -7,6 +7,8 @@ import Soy from 'metal-soy';
 import './SidebarAddedFragments.es';
 import './SidebarAvailableFragments.es';
 import './SidebarMapping.es';
+import {HIDE_SIDEBAR} from '../../actions/actions.es';
+import {Store} from '../../store/store.es';
 import templates from './FragmentsEditorSidebar.soy';
 
 /**
@@ -137,7 +139,7 @@ class FragmentsEditorSidebar extends Component {
 	 */
 
 	_handleHide() {
-		this.emit('hide');
+		this.store.dispatchAction(HIDE_SIDEBAR);
 	}
 
 	/**
@@ -146,7 +148,7 @@ class FragmentsEditorSidebar extends Component {
 	 */
 
 	_handleHideSidebarButtonClick() {
-		this.emit('hide');
+		this.store.dispatchAction(HIDE_SIDEBAR);
 	}
 
 	/**
@@ -266,7 +268,18 @@ FragmentsEditorSidebar.STATE = {
 	_tabEventProxy: Config
 		.object()
 		.internal()
-		.value(null)
+		.value(null),
+
+	/**
+	 * Store instance
+	 * @default undefined
+	 * @instance
+	 * @memberOf FragmentsEditorSidebar
+	 * @review
+	 * @type {Store}
+	 */
+
+	store: Config.instanceOf(Store)
 };
 
 Soy.register(FragmentsEditorSidebar, templates);

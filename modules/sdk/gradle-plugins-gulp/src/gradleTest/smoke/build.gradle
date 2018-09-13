@@ -4,6 +4,10 @@ apply plugin: "com.liferay.gulp"
 
 task runGradleTest
 
+node {
+	nodeVersion = "8.9.0"
+}
+
 runGradleTest {
 	dependsOn gulpHello
 

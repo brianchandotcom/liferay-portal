@@ -15,6 +15,14 @@ const ADD_FRAGMENT_ENTRY_LINK = 'addFragmentEntryLink';
 const CLEAR_DRAG_TARGET = 'clearDragTarget';
 
 /**
+ * Change languageId action type
+ * @review
+ * @type {string}
+ */
+
+const CHANGE_LANGUAGE_ID = 'languageId';
+
+/**
  * Remove fragment entry link action type
  * @review
  * @type {string}
@@ -56,6 +64,7 @@ const UPDATE_TRANSLATION_STATUS = 'updateTranslationStatus';
 
 export {
 	ADD_FRAGMENT_ENTRY_LINK,
+	CHANGE_LANGUAGE_ID,
 	CLEAR_DRAG_TARGET,
 	REMOVE_FRAGMENT_ENTRY_LINK,
 	UPDATE_DRAG_TARGET,

@@ -63,7 +63,9 @@ public class SelfReferenceCheck extends BaseCheck {
 			if ((firstChildAST.getType() == TokenTypes.LITERAL_THIS) ||
 				(methodClassName.equals(className) &&
 				 !_isInsideAnonymousClass(methodCallAST) &&
-				 !_isInsideInnerClass(methodCallAST, className))) {
+				 !_isInsideInnerClass(methodCallAST, className) &&
+				 !DetailASTUtil.hasParentWithTokenType(
+					 methodCallAST, TokenTypes.INSTANCE_INIT))) {
 
 				DetailAST secondChildAST = firstChildAST.getNextSibling();
 

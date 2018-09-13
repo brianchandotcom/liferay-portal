@@ -32,8 +32,6 @@ import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -177,8 +175,7 @@ public class JournalDDMTemplateDisplayContext {
 
 		int total = DDMTemplateServiceUtil.searchCount(
 			themeDisplay.getCompanyId(), groupIds,
-			new long[] {PortalUtil.getClassNameId(DDMStructure.class)},
-			_getDDMTemplateClassPKs(),
+			new long[] {PortalUtil.getClassNameId(DDMStructure.class)}, null,
 			PortalUtil.getClassNameId(JournalArticle.class), _getKeywords(),
 			StringPool.BLANK, StringPool.BLANK, WorkflowConstants.STATUS_ANY);
 
@@ -186,8 +183,7 @@ public class JournalDDMTemplateDisplayContext {
 
 		List<DDMTemplate> results = DDMTemplateServiceUtil.search(
 			themeDisplay.getCompanyId(), groupIds,
-			new long[] {PortalUtil.getClassNameId(DDMStructure.class)},
-			_getDDMTemplateClassPKs(),
+			new long[] {PortalUtil.getClassNameId(DDMStructure.class)}, null,
 			PortalUtil.getClassNameId(JournalArticle.class), _getKeywords(),
 			StringPool.BLANK, StringPool.BLANK, WorkflowConstants.STATUS_ANY,
 			ddmTemplateSearch.getStart(), ddmTemplateSearch.getEnd(),
@@ -320,27 +316,6 @@ public class JournalDDMTemplateDisplayContext {
 		_classPK = ParamUtil.getLong(_request, "classPK");
 
 		return _classPK;
-	}
-
-	private long[] _getDDMTemplateClassPKs() {
-		if (_getClassPK() > 0) {
-			return new long[] {_getClassPK()};
-		}
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)_renderRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		List<DDMStructure> ddmStructures =
-			DDMStructureLocalServiceUtil.getClassStructures(
-				themeDisplay.getCompanyId(),
-				PortalUtil.getClassNameId(JournalArticle.class));
-
-		List<Long> classPKs = ListUtil.toList(
-			ddmStructures, DDMStructure.STRUCTURE_ID_ACCESSOR);
-
-		classPKs.add(0, 0L);
-
-		return ArrayUtil.toLongArray(classPKs);
 	}
 
 	private List<DropdownItem> _getFilterNavigationDropdownItems() {

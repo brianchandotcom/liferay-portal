@@ -1,7 +1,10 @@
 import Component from 'metal-component';
+import {Config} from 'metal-state';
 import Soy from 'metal-soy';
 
 import './TranslationStatus.es';
+import {TOGGLE_SIDEBAR} from '../../actions/actions.es';
+import {Store} from '../../store/store.es';
 import templates from './FragmentsEditorToolbar.soy';
 
 /**
@@ -17,7 +20,7 @@ class FragmentsEditorToolbar extends Component {
 	 */
 
 	_handleToggleContextualSidebarButtonClick() {
-		this.emit('toggleContextualSidebarButtonClick');
+		this.store.dispatchAction(TOGGLE_SIDEBAR);
 	}
 
 	/**
@@ -40,7 +43,19 @@ class FragmentsEditorToolbar extends Component {
  * @type {!Object}
  */
 
-FragmentsEditorToolbar.STATE = {};
+FragmentsEditorToolbar.STATE = {
+
+	/**
+	 * Store instance
+	 * @default undefined
+	 * @instance
+	 * @memberOf FragmentsEditorToolbar
+	 * @review
+	 * @type {Store}
+	 */
+
+	store: Config.instanceOf(Store)
+};
 
 Soy.register(FragmentsEditorToolbar, templates);
 

@@ -310,7 +310,24 @@ public class BeanPortletExtension implements Extension {
 			_addBeanPortletsFromAnnotatedClasses();
 			_addBeanFiltersFromAnnotatedClasses();
 			_addListenersFromAnnotatedClasses();
-			_addBeanPortletsFromLiferayDescriptor(bundle);
+
+			URL liferayDescriptorURL = bundle.getEntry(
+				"WEB-INF/liferay-portlet.xml");
+
+			if (liferayDescriptorURL != null) {
+				try {
+					_liferayDescriptor = LiferayDescriptorParser.parse(
+						liferayDescriptorURL);
+				}
+				catch (Exception e) {
+					_log.error(e, e);
+				}
+			}
+
+			if (_liferayDescriptor != null) {
+				_addBeanPortletsFromLiferayDescriptor();
+			}
+
 			_addLiferayDisplayCategoryToBeanPortlets(bundle);
 
 			afterBeanDiscovery.addContext(new PortletRequestBeanContext());
@@ -374,29 +391,18 @@ public class BeanPortletExtension implements Extension {
 			}
 		}
 
-		URL liferayDescriptorURL = bundle.getEntry(
-			"WEB-INF/liferay-portlet.xml");
-
-		if ((liferayDescriptorURL != null) && _log.isWarnEnabled()) {
-			try {
-				LiferayDescriptor liferayDescriptor =
-					LiferayDescriptorParser.parse(liferayDescriptorURL);
-
-				for (String portletName : liferayDescriptor.getPortletNames()) {
-					if (_beanPortlets.containsKey(portletName)) {
-						continue;
-					}
-
-					_log.warn(
-						StringBundler.concat(
-							"Portlet with the name ", portletName,
-							" is described in liferay-portlet.xml but does ",
-							"not have a matching entry in portlet.xml or ",
-							"@PortletConfiguration annotation"));
+		if ((_liferayDescriptor != null) && _log.isWarnEnabled()) {
+			for (String portletName : _liferayDescriptor.getPortletNames()) {
+				if (_beanPortlets.containsKey(portletName)) {
+					continue;
 				}
-			}
-			catch (Exception e) {
-				_log.error(e, e);
+
+				_log.warn(
+					StringBundler.concat(
+						"Portlet with the name ", portletName,
+						" is described in liferay-portlet.xml but does not ",
+						"have a matching entry in portlet.xml or ",
+						"@PortletConfiguration annotation"));
 			}
 		}
 
@@ -541,31 +547,18 @@ public class BeanPortletExtension implements Extension {
 		}
 	}
 
-	private void _addBeanPortletsFromLiferayDescriptor(Bundle bundle) {
-		URL liferayDescriptorURL = bundle.getEntry(
-			"WEB-INF/liferay-portlet.xml");
+	private void _addBeanPortletsFromLiferayDescriptor() {
+		for (String portletName : _liferayDescriptor.getPortletNames()) {
+			BeanPortlet beanPortlet = _beanPortlets.get(portletName);
 
-		if (liferayDescriptorURL != null) {
-			try {
-				LiferayDescriptor liferayDescriptor =
-					LiferayDescriptorParser.parse(liferayDescriptorURL);
+			if (beanPortlet == null) {
+				beanPortlet = new BeanPortletDefaultImpl(portletName);
 
-				for (String portletName : liferayDescriptor.getPortletNames()) {
-					BeanPortlet beanPortlet = _beanPortlets.get(portletName);
-
-					if (beanPortlet == null) {
-						beanPortlet = new BeanPortletDefaultImpl(portletName);
-
-						_beanPortlets.put(portletName, beanPortlet);
-					}
-
-					beanPortlet.addLiferayConfiguration(
-						liferayDescriptor.getPortletConfiguration(portletName));
-				}
+				_beanPortlets.put(portletName, beanPortlet);
 			}
-			catch (Exception e) {
-				_log.error(e, e);
-			}
+
+			beanPortlet.addLiferayConfiguration(
+				_liferayDescriptor.getPortletConfiguration(portletName));
 		}
 	}
 
@@ -932,6 +925,7 @@ public class BeanPortletExtension implements Extension {
 		_filterRegistrations = new ArrayList<>();
 	private final List<ScannedMethod> _headerMethods = new ArrayList<>();
 	private final List<ScannedMethod> _initMethods = new ArrayList<>();
+	private LiferayDescriptor _liferayDescriptor;
 	private final List<Class<?>> _liferayPortletConfigurationClasses =
 		new ArrayList<>();
 	private final List<Class<?>> _liferayPortletConfigurationsClasses =

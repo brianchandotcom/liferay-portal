@@ -39,6 +39,14 @@ const REMOVE_FRAGMENT_ENTRY_LINK = 'removeFragmentEntryLink';
 const UPDATE_DRAG_TARGET = 'updateDragTarget';
 
 /**
+ * Update editable value action type
+ * @review
+ * @type {string}
+ */
+
+const UPDATE_EDITABLE_VALUE = 'updateEditableValue';
+
+/**
  * Update last save date action type
  * @review
  * @type {string}
@@ -68,6 +76,7 @@ export {
 	MOVE_FRAGMENT_ENTRY_LINK,
 	REMOVE_FRAGMENT_ENTRY_LINK,
 	UPDATE_DRAG_TARGET,
+	UPDATE_EDITABLE_VALUE,
 	UPDATE_LAST_SAVE_DATE,
 	UPDATE_SAVING_CHANGES_STATUS,
 	UPDATE_TRANSLATION_STATUS

@@ -116,7 +116,7 @@ public class TransactionalTestRule implements TestRule {
 
 				@Override
 				public void evaluate() throws Throwable {
-					try (Closeable closeable = _installTransactionManager(
+					try (Closeable closeable = _installTransactionExecutor(
 							_originBundleSymbolicName)) {
 
 						TransactionInvokerUtil.invoke(
@@ -191,7 +191,7 @@ public class TransactionalTestRule implements TestRule {
 				final Object target, final Object... params)
 			throws Throwable {
 
-			try (Closeable closeable = _installTransactionManager(
+			try (Closeable closeable = _installTransactionExecutor(
 					_originBundleSymbolicName)) {
 
 				return TransactionInvokerUtil.invoke(
@@ -230,7 +230,7 @@ public class TransactionalTestRule implements TestRule {
 
 	}
 
-	private static Closeable _installTransactionManager(
+	private static Closeable _installTransactionExecutor(
 			String originBundleSymbolicName)
 		throws InvalidSyntaxException {
 
@@ -242,7 +242,7 @@ public class TransactionalTestRule implements TestRule {
 		ThreadLocal<Deque<TransactionExecutor>>
 			transactionExecutorsThreadLocal = ReflectionTestUtil.getFieldValue(
 				TransactionExecutorThreadLocal.class,
-				"_platformTransactionManagersThreadLocal");
+				"_transactionExecutorThreadLocal");
 
 		Deque<TransactionExecutor> transactionExecutors =
 			transactionExecutorsThreadLocal.get();

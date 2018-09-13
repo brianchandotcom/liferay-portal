@@ -27,14 +27,12 @@ import com.liferay.registry.ServiceTracker;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
-import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.runner.RunWith;
 
 /**
  * @author Manuel de la Peña
  */
-@Ignore
 @RunWith(Arquillian.class)
 public class OrganizationServiceVerifyProcessTest
 	extends BaseVerifyProcessTestCase {

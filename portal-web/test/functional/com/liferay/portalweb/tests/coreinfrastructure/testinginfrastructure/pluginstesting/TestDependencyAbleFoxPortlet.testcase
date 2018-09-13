@@ -2,7 +2,7 @@
 	<property name="portal.release" value="true" />
 	<property name="portal.upstream" value="true" />
 	<property name="testray.main.component.name" value="Test Plugins" />
-	<property name="portlet.plugins.includes" value="test-dependency-able-portlet,test-dependency-baker-portlet,test-dependency-charlie-portlet,test-dependency-dog-portlet,test-dependency-easy-portlet" />
+	<property name="portlet.plugins.includes" value="test-dependency-able-portlet,test-dependency-baker-portlet,test-dependency-charlie-portlet,test-dependency-dog-portlet" />
 
 	<set-up>
 		<execute macro="User#firstLoginPG" />
@@ -53,14 +53,6 @@
 
 		<execute macro="Portlet#addPG">
 			<var name="portletName" value="Test Dependency Dog" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Test Dependency Page" />
-		</execute>
-
-		<execute macro="Portlet#viewCannotAddPG">
-			<var name="portletName" value="Test Dependency Easy" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">

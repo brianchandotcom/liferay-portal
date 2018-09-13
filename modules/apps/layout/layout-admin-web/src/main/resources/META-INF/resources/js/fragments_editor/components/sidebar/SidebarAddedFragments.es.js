@@ -64,37 +64,6 @@ class SidebarAddedFragments extends Component {
 SidebarAddedFragments.STATE = {
 
 	/**
-	 * List of FragmentEntryLinks
-	 * @default []
-	 * @instance
-	 * @memberOf SidebarAddedFragments
-	 * @review
-	 * @type {Array<{
-	 *   fragmentEntryLinkId: !string,
-	 *   name: !string
-	 * }>}
-	 */
-
-	fragmentEntryLinks: Config.arrayOf(
-		Config.shapeOf(
-			{
-				fragmentEntryLinkId: Config.string().required(),
-				name: Config.string().required()
-			}
-		)
-	).value([]),
-
-	/**
-	 * Path of the available icons.
-	 * @default undefined
-	 * @instance
-	 * @memberOf SidebarAddedFragments
-	 * @type {!string}
-	 */
-
-	spritemap: Config.string().required(),
-
-	/**
 	 * Store instance
 	 * @default undefined
 	 * @instance

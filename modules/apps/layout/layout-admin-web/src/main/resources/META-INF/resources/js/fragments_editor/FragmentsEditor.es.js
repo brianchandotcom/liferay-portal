@@ -89,14 +89,9 @@ class FragmentsEditor extends Component {
 	 */
 
 	_getFragmentEntryLinkIndex(fragmentEntryLinkId) {
-		return this.fragmentEntryLinks.indexOf(
-			this.fragmentEntryLinks.find(
-				fragmentEntryLink => (
-					fragmentEntryLink.fragmentEntryLinkId ===
-					fragmentEntryLinkId
-				)
-			)
-		);
+		const structure = this.layoutData.structure || [];
+
+		return structure.indexOf(fragmentEntryLinkId);
 	}
 
 	/**
@@ -130,28 +125,54 @@ class FragmentsEditor extends Component {
 
 	_handleFragmentMove(data) {
 		const direction = data.direction;
-		const index = this._getFragmentEntryLinkIndex(
-			data.fragmentEntryLinkId
+		const index = this._getFragmentEntryLinkIndex(data.fragmentEntryLinkId);
+
+		const nextData = Object.assign(
+			{},
+			this.layoutData,
+			{
+				structure: [
+					...(this.layoutData.structure || [])
+				]
+			}
 		);
 
 		if (
-			(direction === FragmentEntryLink.MOVE_DIRECTIONS.DOWN && index < this.fragmentEntryLinks.length - 1) ||
-			(direction === FragmentEntryLink.MOVE_DIRECTIONS.UP && index > 0)
+			(
+				(direction === FragmentEntryLink.MOVE_DIRECTIONS.DOWN) &&
+				(index < nextData.structure.length - 1)
+			) ||
+			(
+				(direction === FragmentEntryLink.MOVE_DIRECTIONS.UP) &&
+				(index > 0)
+			)
 		) {
+
+			nextData.structure = this._swapListElements(
+				Array.prototype.slice.call(nextData.structure),
+				index,
+				index + direction
+			);
+
 			const formData = new FormData();
 
 			formData.append(
-				`${this.portletNamespace}fragmentEntryLinkId1`,
-				this.fragmentEntryLinks[index].fragmentEntryLinkId
+				`${this.portletNamespace}classNameId`,
+				this.classNameId
 			);
 
 			formData.append(
-				`${this.portletNamespace}fragmentEntryLinkId2`,
-				this.fragmentEntryLinks[index + direction].fragmentEntryLinkId
+				`${this.portletNamespace}classPK`,
+				this.classPK
+			);
+
+			formData.append(
+				`${this.portletNamespace}data`,
+				JSON.stringify(nextData)
 			);
 
 			fetch(
-				this.updateFragmentEntryLinksURL,
+				this.updateLayoutPageTemplateDataURL,
 				{
 					body: formData,
 					credentials: 'include',
@@ -172,13 +193,13 @@ class FragmentsEditor extends Component {
 								savingChanges: false
 							}
 						);
-				}
-			);
 
-			this.fragmentEntryLinks = this._swapListElements(
-				Array.prototype.slice.call(this.fragmentEntryLinks),
-				index,
-				index + direction
+					requestAnimationFrame(
+						() => {
+							this.layoutData = nextData;
+						}
+					);
+				}
 			);
 		}
 	}
@@ -357,11 +378,7 @@ class FragmentsEditor extends Component {
 			fragmentEntryLinkId
 		);
 
-		const index = this._getFragmentEntryLinkIndex(
-			fragmentEntryLinkId
-		);
-
-		if (component && index !== -1) {
+		if (component && this.fragmentEntryLinks[fragmentEntryLinkId]) {
 			const newEditableValues = component.setEditableValue(
 				editableValueId,
 				editableValueContent
@@ -369,12 +386,16 @@ class FragmentsEditor extends Component {
 
 			const newFragmentEntryLink = Object.assign(
 				{},
-				this.fragmentEntryLinks[index],
+				this.fragmentEntryLinks[fragmentEntryLinkId],
 				{editableValues: newEditableValues}
 			);
 
-			const newFragmentEntryLinks = [...this.fragmentEntryLinks];
-			newFragmentEntryLinks[index] = newFragmentEntryLink;
+			const newFragmentEntryLinks = Object.assign(
+				{},
+				this.fragmentEntryLinks
+			);
+
+			newFragmentEntryLinks[fragmentEntryLinkId] = newFragmentEntryLink;
 
 			this.fragmentEntryLinks = newFragmentEntryLinks;
 
@@ -646,17 +667,6 @@ FragmentsEditor.STATE = Object.assign(
 		 */
 
 		spritemap: Config.string().required(),
-
-		/**
-		 * URL for swapping to fragmentEntryLinks.
-		 * @default undefined
-		 * @instance
-		 * @memberOf FragmentsEditor
-		 * @review
-		 * @type {!string}
-		 */
-
-		updateFragmentEntryLinksURL: Config.string().required(),
 
 		/**
 		 * URL for updating the asset type associated to a template.

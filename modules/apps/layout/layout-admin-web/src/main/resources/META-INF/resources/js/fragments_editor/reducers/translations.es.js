@@ -38,7 +38,10 @@ function translationStatusReducer(state, actionType) {
  */
 
 function _getEditableValues(fragmentEntryLinks) {
-	return fragmentEntryLinks
+	return Object.values(fragmentEntryLinks)
+		.filter(
+			fragmentEntryLink => fragmentEntryLink.editableValues
+		)
 		.map(
 			fragmentEntryLink => (
 				fragmentEntryLink.editableValues[EDITABLE_VALUES_KEY]

@@ -55,23 +55,14 @@ const INITIAL_STATE = {
 	deleteFragmentEntryLinkURL: Config.string().required(),
 
 	/**
-	 * List of fragment instances being used, the order
-	 * of the elements in this array defines their position.
-	 * @default []
+	 * List of fragment instances being used.
+	 * @default {}
 	 * @instance
-	 * @memberOf FragmentsEditor
 	 * @review
-	 * @type {Array<{
-	 *   config: Object,
-	 *   content: string,
-	 *   editableValues: Object,
-	 *   fragmentEntryId: !string,
-	 *   fragmentEntryLinkId: !string,
-	 *   name: !string
-	 * }>}
+	 * @type {!object}
 	 */
 
-	fragmentEntryLinks: Config.arrayOf(
+	fragmentEntryLinks: Config.objectOf(
 		Config.shapeOf(
 			{
 				config: Config.object().value({}),
@@ -82,7 +73,7 @@ const INITIAL_STATE = {
 				name: Config.string().required()
 			}
 		)
-	).value([]),
+	).value({}),
 
 	/**
 	 * Position where a fragment is being dragged to
@@ -121,6 +112,26 @@ const INITIAL_STATE = {
 		.value(''),
 
 	/**
+	 * Data associated to the layout
+	 * @default {structure: []}
+	 * @instance
+	 * @review
+	 * @type {{structure: Array<string>}}
+	 */
+
+	layoutData: Config
+		.shapeOf(
+			{
+				structure: Config.arrayOf(Config.string())
+			}
+		)
+		.value(
+			{
+				structure: []
+			}
+		),
+
+	/**
 	 * Portlet namespace needed for prefixing form inputs
 	 * @default undefined
 	 * @instance
@@ -152,7 +163,17 @@ const INITIAL_STATE = {
 
 	savingChanges: Config.bool()
 		.internal()
-		.value(false)
+		.value(false),
+
+	/**
+	 * URL for updating layout data.
+	 * @default undefined
+	 * @instance
+	 * @review
+	 * @type {!string}
+	 */
+
+	updateLayoutPageTemplateDataURL: Config.string().required()
 };
 
 export {INITIAL_STATE};

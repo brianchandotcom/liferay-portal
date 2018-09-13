@@ -446,6 +446,10 @@ public class LPKGBundleTrackerCustomizer
 	private boolean _isOverridden(String symbolicName, URL url, String location)
 		throws Throwable {
 
+		if (_overrideFileNames.isEmpty()) {
+			return false;
+		}
+
 		String path = url.getPath();
 
 		String name = _extractFileName(path);

@@ -906,24 +906,26 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 					continue;
 				}
 
-				String fileName = _extractFileName(name) + ".jar";
+				if (!overrideStaticFileNames.isEmpty()) {
+					String fileName = _extractFileName(name) + ".jar";
 
-				if (overrideStaticFileNames.contains(fileName)) {
-					if (_log.isInfoEnabled()) {
-						StringBundler sb = new StringBundler(7);
+					if (overrideStaticFileNames.contains(fileName)) {
+						if (_log.isInfoEnabled()) {
+							StringBundler sb = new StringBundler(7);
 
-						sb.append(zipFile);
-						sb.append(":");
-						sb.append(zipEntry);
-						sb.append(" is overridden by ");
-						sb.append(PropsValues.MODULE_FRAMEWORK_BASE_DIR);
-						sb.append("/static/");
-						sb.append(fileName);
+							sb.append(zipFile);
+							sb.append(":");
+							sb.append(zipEntry);
+							sb.append(" is overridden by ");
+							sb.append(PropsValues.MODULE_FRAMEWORK_BASE_DIR);
+							sb.append("/static/");
+							sb.append(fileName);
 
-						_log.info(sb.toString());
+							_log.info(sb.toString());
+						}
+
+						continue;
 					}
-
-					continue;
 				}
 
 				zipEntries.add(zipEntry);
@@ -1472,17 +1474,19 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 			}
 		}
 
-		for (Bundle bundle : bundleContext.getBundles()) {
-			if (bundle.getBundleId() == 0) {
-				continue;
-			}
+		if (!overrideLPKGFileNames.isEmpty()) {
+			for (Bundle bundle : bundleContext.getBundles()) {
+				if (bundle.getBundleId() == 0) {
+					continue;
+				}
 
-			String location = bundle.getLocation();
+				String location = bundle.getLocation();
 
-			location = _extractFileName(location);
+				location = _extractFileName(location);
 
-			if (overrideLPKGFileNames.contains(location)) {
-				bundle.uninstall();
+				if (overrideLPKGFileNames.contains(location)) {
+					bundle.uninstall();
+				}
 			}
 		}
 

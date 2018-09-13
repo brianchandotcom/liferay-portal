@@ -30,6 +30,16 @@
 						"./node_modules/eslint-plugin-react"
 					],
 					"rules": {
+						"keyword-spacing": [
+							2,
+							{
+								"overrides": {
+									"catch": {
+										"after": true
+									}
+								}
+							}
+						],
 						"no-console": 0,
 						"no-unknown-property": 0,
 						"react/jsx-uses-react": 0,
@@ -62,16 +72,20 @@
 	"dependencies": {
 		"autobind-decorator": "^2.1.0",
 		"classnames": "^2.2.6",
-		"clay-checkbox": "^2.2.0",
-		"clay-icon": "^2.2.0",
-		"clay-management-toolbar": "^2.2.0",
-		"clay-modal": "^2.2.0",
-		"clay-radio": "^2.2.0",
+		"clay-checkbox": "^2.3.2",
+		"clay-icon": "^2.3.2",
+		"clay-management-toolbar": "^2.3.2",
+		"clay-modal": "^2.3.2",
+		"clay-radio": "^2.3.2",
+		"isomorphic-fetch": "^2.2.1",
 		"metal-dom": "^2.16.5",
 		"metal-drag-drop": "^3.1.0",
 		"metal-events": "^2.16.5",
 		"metal-jsx": "^2.16.5",
-		"metal-state": "^2.16.5"
+		"metal-state": "^2.16.5",
+		"object-hash": "^1.3.0",
+		"url-search-params-polyfill": "^5.0.0",
+		"whatwg-fetch": "^3.0.0"
 	},
 	"devDependencies": {
 		"babel-cli": "^6.26.0",
@@ -83,21 +97,24 @@
 		"babel-plugin-transform-runtime": "^6.23.0",
 		"babel-preset-env": "^1.7.0",
 		"babel-preset-metal-jsx": "^0.1.1",
-		"browser-sync": "^2.24.6",
-		"check-source-formatting": "^2.0.4",
+		"browser-sync": "^2.24.7",
+		"check-source-formatting": "^2.0.12",
+		"cross-env": "^5.2.0",
 		"cross-spawn": "^6.0.5",
 		"eslint": "^4.10.0",
 		"eslint-config-liferay": "^2.0.8",
 		"eslint-plugin-react": "^7.4.0",
-		"jest": "^23.4.1",
+		"jest": "^23.6.0",
+		"jest-fetch-mock": "^1.6.6",
 		"liferay-jest-junit-reporter": "0.0.4",
-		"liferay-npm-bundler": "^2.1.0",
+		"liferay-npm-bundler": "^2.2.1",
 		"metal-jest-serializer": "^2.0.0",
 		"metal-tools-soy": "^6.0.0",
 		"opn-cli": "^3.1.0",
 		"rimraf": "^2.6.2"
 	},
 	"jest": {
+		"automock": false,
 		"coverageDirectory": "build/coverage",
 		"coverageThreshold": {
 			"global": {
@@ -113,7 +130,10 @@
 			"/__mock__/",
 			"/__fixtures__/"
 		],
-		"setupTestFrameworkScriptFile": "<rootDir>/src/main/resources/META-INF/resources/metal/js/test/setup.js",
+		"setupFiles": [
+			"<rootDir>/src/main/resources/META-INF/resources/metal/js/test/setup.js"
+		],
+		"setupTestFrameworkScriptFile": "<rootDir>/src/main/resources/META-INF/resources/metal/js/test/setup_framework.js",
 		"snapshotSerializers": [
 			"metal-jest-serializer"
 		],
@@ -137,7 +157,7 @@
 		"csf": "csf src/**/*.es.js src/**/*.soy src/**/*.jsp --fail-on-errors",
 		"format": "npm run csf -- -i",
 		"start": "node watch.js",
-		"test": "npm run build-soy && NODE_ENV=test jest --coverage && npm run clean",
+		"test": "npm run build-soy && cross-env NODE_ENV=test jest --coverage && npm run clean",
 		"test:coverage:open": "opn build/coverage/lcov-report/index.html",
 		"test:snapshots": "npm run build-soy && NODE_ENV=test jest --coverage -u && npm run clean"
 	},

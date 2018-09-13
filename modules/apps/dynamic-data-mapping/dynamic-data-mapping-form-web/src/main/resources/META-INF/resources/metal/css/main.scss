@@ -293,7 +293,7 @@ textarea[class^="form-builder-page-header"] {
 	padding: 0;
 }
 
-.sheet {
+.ddm-form-builder {
 	.modal {
 		display: none;
 		margin: inherit;
@@ -309,7 +309,7 @@ textarea[class^="form-builder-page-header"] {
 }
 
 @media (min-width: 576px) {
-	.sheet .modal-sm {
+	.ddm-form-builder .modal-sm {
 		max-width: 300px;
 	}
 }

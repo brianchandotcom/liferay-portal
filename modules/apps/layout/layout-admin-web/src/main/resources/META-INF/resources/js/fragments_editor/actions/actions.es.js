@@ -63,6 +63,14 @@ const TOGGLE_SIDEBAR = 'toggleSidebar';
 const UPDATE_DRAG_TARGET = 'updateDragTarget';
 
 /**
+ * Update editable value action type
+ * @review
+ * @type {string}
+ */
+
+const UPDATE_EDITABLE_VALUE = 'updateEditableValue';
+
+/**
  * Update last save date action type
  * @review
  * @type {string}
@@ -95,6 +103,7 @@ export {
 	REMOVE_FRAGMENT_ENTRY_LINK,
 	TOGGLE_SIDEBAR,
 	UPDATE_DRAG_TARGET,
+	UPDATE_EDITABLE_VALUE,
 	UPDATE_LAST_SAVE_DATE,
 	UPDATE_SAVING_CHANGES_STATUS,
 	UPDATE_TRANSLATION_STATUS

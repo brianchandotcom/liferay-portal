@@ -129,9 +129,9 @@ public class AutoCloseUtil {
 			sb.append("</em></strong><pre>ci&#58;reopen</pre></p>");
 
 			if (topLevelBuild instanceof SourceFormatBuild) {
-				sb.append("<strong><em>*The reopened pull request will still ");
-				sb.append(" be automatically closed if other critical batches");
-				sb.append(" or tests fail.</em></strong>");
+				sb.append("<strong><em>*The reopened pull request may ");
+				sb.append("be automatically closed again if other critical ");
+				sb.append("batches or tests fail.</em></strong>");
 			}
 
 			sb.append("<hr /><h3>Critical Failure Details:</h3>");

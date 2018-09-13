@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.search.web.internal.display.context.SearchScope;
 import com.liferay.portal.search.web.internal.display.context.SearchScopePreference;
 
 import org.junit.Assert;
@@ -168,6 +169,19 @@ public class SearchBarPortletDisplayBuilderTest {
 
 		Assert.assertEquals(
 			"/web/guest/home", searchBarPortletDisplayContext.getSearchURL());
+	}
+
+	@Test
+	public void testSearchScope() {
+		SearchBarPortletDisplayBuilder searchBarPortletDisplayBuilder =
+			createSearchBarPortletDisplayBuilder();
+
+		searchBarPortletDisplayBuilder.setScopeParameterValue(
+			SearchScope.EVERYTHING.getParameterString());
+
+		Assert.assertEquals(
+			SearchScope.EVERYTHING,
+			searchBarPortletDisplayBuilder.getSearchScope());
 	}
 
 	protected SearchBarPortletDisplayBuilder

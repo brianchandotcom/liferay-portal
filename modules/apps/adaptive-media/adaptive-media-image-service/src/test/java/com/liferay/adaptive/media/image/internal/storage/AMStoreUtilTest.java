@@ -57,8 +57,8 @@ public class AMStoreUtilTest {
 
 		String configurationUuid = RandomTestUtil.randomString();
 
-		String fileVersionPath =
-			AMStoreUtil.getFileVersionPath(fileVersion, configurationUuid);
+		String fileVersionPath = AMStoreUtil.getFileVersionPath(
+			fileVersion, configurationUuid);
 
 		Assert.assertEquals(
 			"adaptive/" + configurationUuid + "/1/2/3/4/", fileVersionPath);

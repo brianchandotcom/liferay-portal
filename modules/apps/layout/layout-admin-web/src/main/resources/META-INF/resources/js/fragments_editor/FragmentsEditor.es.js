@@ -85,16 +85,6 @@ class FragmentsEditor extends Component {
 	}
 
 	/**
-	 * Toggle highlightMapping attribute value
-	 * @private
-	 * @review
-	 */
-
-	_handleToggleHighlightMapping() {
-		this._highlightMapping = !this._highlightMapping;
-	}
-
-	/**
 	 * Swap the positions of two fragmentEntryLinks
 	 * @param {Array} list
 	 * @param {number} indexA

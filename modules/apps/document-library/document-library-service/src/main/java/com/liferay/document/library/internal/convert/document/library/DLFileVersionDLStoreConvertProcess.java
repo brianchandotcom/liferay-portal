@@ -17,6 +17,7 @@ package com.liferay.document.library.internal.convert.document.library;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileVersion;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
+import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
 import com.liferay.document.library.kernel.service.DLFileVersionLocalService;
 import com.liferay.document.library.kernel.store.Store;
 import com.liferay.portal.convert.documentlibrary.DLStoreConvertProcess;
@@ -63,7 +64,13 @@ public class DLFileVersionDLStoreConvertProcess
 
 		actionableDynamicQuery.setPerformActionMethod(
 			(DLFileVersion dlFileVersion) -> {
-				DLFileEntry dlFileEntry = dlFileVersion.getFileEntry();
+				DLFileEntry dlFileEntry =
+					_dlFileEntryLocalService.fetchDLFileEntry(
+						dlFileVersion.getFileEntryId());
+
+				if (dlFileEntry == null) {
+					return;
+				}
 
 				long repositoryId = DLFolderConstants.getDataRepositoryId(
 					dlFileVersion.getRepositoryId(),
@@ -93,6 +100,9 @@ public class DLFileVersionDLStoreConvertProcess
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		DLFileVersionDLStoreConvertProcess.class);
+
+	@Reference
+	private DLFileEntryLocalService _dlFileEntryLocalService;
 
 	@Reference
 	private DLFileVersionLocalService _dlFileVersionLocalService;

@@ -115,16 +115,29 @@ public class AutoCloseUtil {
 			sb.append("engineering/wiki/-/wiki/Quality+Assurance+Main/Test");
 			sb.append("+Batch+Automatic+Close+List\">article</a>.</p><p");
 
-			if (!(topLevelBuild instanceof SourceFormatBuild)) {
-				sb.append(" auto-close=\"false\"");
+			boolean sourceFormatBuild =
+				topLevelBuild instanceof SourceFormatBuild;
+
+			if (sourceFormatBuild) {
+				sb.append("><strong><em>*");
+			}
+			else {
+				sb.append(" auto-close=\"false\"><strong><em>*This pull will ");
+				sb.append("no longer automatically close if this comment is ");
+				sb.append("available. ");
 			}
 
-			sb.append("><strong><em>*This pull will ");
-			sb.append("no longer automatically close if this comment is ");
-			sb.append("available. If you believe this is a mistake please ");
-			sb.append("reopen this pull by entering the following command ");
-			sb.append("as a comment.</em></strong></p><pre>ci&#58;reopen");
-			sb.append("</pre><hr /><h3>Critical Failure Details:</h3>");
+			sb.append("If you believe this is a mistake please reopen this ");
+			sb.append("pull by entering the following command as a comment.");
+			sb.append("</em></strong><pre>ci&#58;reopen</pre></p>");
+
+			if (sourceFormatBuild) {
+				sb.append("<strong><em>*The reopened pull request may ");
+				sb.append("be automatically closed again if other critical ");
+				sb.append("batches or tests fail.</em></strong>");
+			}
+
+			sb.append("<hr /><h3>Critical Failure Details:</h3>");
 
 			for (Build failedDownstreamBuild : failedDownstreamBuilds) {
 				try {

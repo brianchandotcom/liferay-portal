@@ -1,7 +1,12 @@
 {
     "env": {
         "test": {
+            "presets": [
+                "env",
+                "metal-jsx"
+            ],
             "plugins": [
+                "transform-class-properties",
                 "transform-decorators-legacy",
                 ["module-resolver", {
                     "alias": {

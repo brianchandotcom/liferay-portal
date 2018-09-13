@@ -60,19 +60,31 @@ public class OrganizationScreenNavigationRegistrar {
 
 	protected void registerScreenNavigationCategories() {
 		_registerScreenNavigationCategory(
-			new OrganizationScreenNavigationCategory(
+			_organizationScreenNavigationFactory.createCategory(
 				FormNavigatorConstants.
-					CATEGORY_KEY_ORGANIZATION_ORGANIZATION_INFORMATION));
+					CATEGORY_KEY_ORGANIZATION_ORGANIZATION_INFORMATION),
+			10);
+		_registerScreenNavigationCategory(
+			_organizationScreenNavigationFactory.createCategory(
+				FormNavigatorConstants.CATEGORY_KEY_ORGANIZATION_MISCELLANEOUS),
+			20);
 	}
 
 	protected void registerScreenNavigationEntries() {
 		_registerScreenNavigationEntry(
-			_organizationScreenNavigationFactory.create(
+			_organizationScreenNavigationFactory.createEntry(
 				"general",
 				FormNavigatorConstants.
 					CATEGORY_KEY_ORGANIZATION_ORGANIZATION_INFORMATION,
-				"/organization/general.jsp"),
-			Integer.MAX_VALUE);
+				"/organization/general.jsp", "/users_admin/edit_organization"),
+			10);
+		_registerScreenNavigationEntry(
+			_organizationScreenNavigationFactory.createUpdateOnlyEntry(
+				"reminder-queries",
+				FormNavigatorConstants.CATEGORY_KEY_ORGANIZATION_MISCELLANEOUS,
+				"/organization/reminder_queries.jsp",
+				"/users_admin/organization/update_reminder_queries"),
+			20);
 	}
 
 	private Dictionary _getProperties() {
@@ -83,12 +95,8 @@ public class OrganizationScreenNavigationRegistrar {
 		return new HashMapDictionary<String, Object>() {
 			{
 				if (serviceRanking != null) {
-					put(
-						"screen.navigation.category.order:Integer",
-						serviceRanking);
-					put(
-						"screen.navigation.entry.order:Integer",
-						serviceRanking);
+					put("screen.navigation.category.order", serviceRanking);
+					put("screen.navigation.entry.order", serviceRanking);
 				}
 			}
 		};
@@ -103,7 +111,7 @@ public class OrganizationScreenNavigationRegistrar {
 
 	private void _registerScreenNavigationCategory(
 		ScreenNavigationCategory screenNavigationCategory,
-		Dictionary<String, String> properties) {
+		Dictionary<String, Object> properties) {
 
 		_screenNavigationCategoryServiceRegistrations.add(
 			_bundleContext.registerService(

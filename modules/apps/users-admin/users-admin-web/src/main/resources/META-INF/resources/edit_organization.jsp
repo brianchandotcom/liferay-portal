@@ -17,13 +17,44 @@
 <%@ include file="/init.jsp" %>
 
 <%
+String redirect = ParamUtil.getString(request, "redirect");
+
+String backURL = ParamUtil.getString(request, "backURL", redirect);
+
 long organizationId = ParamUtil.getLong(request, "organizationId");
 
 Organization organization = OrganizationServiceUtil.fetchOrganization(organizationId);
 
+String type = BeanParamUtil.getString(organization, request, "type");
+
+portletDisplay.setShowBackIcon(true);
+portletDisplay.setURLBack(backURL);
+
+String headerTitle = null;
+
+if (organization != null) {
+	headerTitle = LanguageUtil.format(request, "edit-x", organization.getName(), false);
+}
+else if (Validator.isNotNull(type)) {
+	headerTitle = LanguageUtil.format(request, "add-x", type);
+}
+else {
+	headerTitle = LanguageUtil.get(request, "add-organization");
+}
+
+renderResponse.setTitle(headerTitle);
+
 PortletURL portletURL = liferayPortletResponse.createRenderURL();
 
 portletURL.setParameter("mvcRenderCommandName", "/users_admin/edit_organization");
+
+if (Validator.isNotNull(redirect)) {
+	portletURL.setParameter("redirect", redirect);
+}
+
+if (Validator.isNotNull(backURL)) {
+	portletURL.setParameter("backURL", backURL);
+}
 
 if (organization != null) {
 	portletURL.setParameter("organizationId", String.valueOf(organizationId));

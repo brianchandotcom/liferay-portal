@@ -27,6 +27,9 @@ public class UsersAdminWebKeys {
 
 	public static final String JSP_PATH = "JSP_PATH";
 
+	public static final String ORGANIZATION_SCREEN_NAVIGATION_DISPLAY_CONTEXT =
+		"ORGANIZATION_SCREEN_NAVIGATION_DISPLAY_CONTEXT";
+
 	public static final String SELECTED_USER = "SELECTED_USER";
 
 	public static final String STATUS = "STATUS";

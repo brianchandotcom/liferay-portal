@@ -55,7 +55,7 @@ public class SharingEntryInterpreterTracker {
 		_serviceTrackerMap.close();
 	}
 
-	public Optional<SharingEntryInterpreter> getSharingEntryInterpreter(
+	public Optional<SharingEntryInterpreter> getSharingEntryInterpreterOptional(
 		long classNameId) {
 
 		List<SharingEntryInterpreter> sharingEntryInterpreters =

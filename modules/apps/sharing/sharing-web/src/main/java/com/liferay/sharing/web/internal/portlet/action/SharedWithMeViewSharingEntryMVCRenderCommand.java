@@ -73,8 +73,9 @@ public class SharedWithMeViewSharingEntryMVCRenderCommand
 			}
 
 			Optional<SharingEntryInterpreter> sharingEntryInterpreterOptional =
-				_sharingEntryInterpreterTracker.getSharingEntryInterpreter(
-					sharingEntry.getClassNameId());
+				_sharingEntryInterpreterTracker.
+					getSharingEntryInterpreterOptional(
+						sharingEntry.getClassNameId());
 
 			SharingEntryInterpreter sharingEntryInterpreter =
 				sharingEntryInterpreterOptional.orElseThrow(

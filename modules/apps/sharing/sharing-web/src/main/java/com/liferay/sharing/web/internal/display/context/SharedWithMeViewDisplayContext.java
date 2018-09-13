@@ -49,7 +49,7 @@ public class SharedWithMeViewDisplayContext {
 
 	public String getAssetTypeTitle(SharingEntry sharingEntry) {
 		Optional<SharingEntryInterpreter> sharingEntryInterpreter =
-			_sharingEntryInterpreterTracker.getSharingEntryInterpreter(
+			_sharingEntryInterpreterTracker.getSharingEntryInterpreterOptional(
 				sharingEntry.getClassNameId());
 
 		return sharingEntryInterpreter.map(
@@ -63,7 +63,7 @@ public class SharedWithMeViewDisplayContext {
 
 	public String getTitle(SharingEntry sharingEntry) {
 		Optional<SharingEntryInterpreter> sharingEntryInterpreterOptional =
-			_sharingEntryInterpreterTracker.getSharingEntryInterpreter(
+			_sharingEntryInterpreterTracker.getSharingEntryInterpreterOptional(
 				sharingEntry.getClassNameId());
 
 		return sharingEntryInterpreterOptional.map(
@@ -81,7 +81,7 @@ public class SharedWithMeViewDisplayContext {
 		throws PortalException {
 
 		Optional<SharingEntryInterpreter> sharingEntryInterpreterOptional =
-			_sharingEntryInterpreterTracker.getSharingEntryInterpreter(
+			_sharingEntryInterpreterTracker.getSharingEntryInterpreterOptional(
 				sharingEntry.getClassNameId());
 
 		if (!sharingEntryInterpreterOptional.isPresent()) {

@@ -20,7 +20,7 @@ runGradleTest {
 
 	doLast {
 		String[] fileNames = [
-			"src/main/java/com/example/sample/GreetingBuilder.java",
+			"src/main/java/com/liferay/sample/GreetingBuilder.java",
 			"src/main/resources/META-INF/javadocs-all.xml",
 			"src/main/resources/META-INF/javadocs-rt.xml"
 		]

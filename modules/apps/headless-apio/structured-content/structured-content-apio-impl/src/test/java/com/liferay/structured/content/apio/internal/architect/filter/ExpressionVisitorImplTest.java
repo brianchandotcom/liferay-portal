@@ -50,7 +50,7 @@ public class ExpressionVisitorImplTest {
 			"'L''Oreal'", LiteralExpression.Type.STRING);
 
 		Assert.assertEquals(
-			"L'Oreal",
+			"l'oreal",
 			_expressionVisitorImpl.visitLiteralExpression(literalExpression));
 	}
 
@@ -60,7 +60,7 @@ public class ExpressionVisitorImplTest {
 			"'L''Oreal and L''Oreal'", LiteralExpression.Type.STRING);
 
 		Assert.assertEquals(
-			"L'Oreal and L'Oreal",
+			"l'oreal and l'oreal",
 			_expressionVisitorImpl.visitLiteralExpression(literalExpression));
 	}
 
@@ -70,7 +70,7 @@ public class ExpressionVisitorImplTest {
 			"'L'Oreal'", LiteralExpression.Type.STRING);
 
 		Assert.assertEquals(
-			"L'Oreal",
+			"l'oreal",
 			_expressionVisitorImpl.visitLiteralExpression(literalExpression));
 	}
 
@@ -80,7 +80,7 @@ public class ExpressionVisitorImplTest {
 			"'LOreal'", LiteralExpression.Type.STRING);
 
 		Assert.assertEquals(
-			"LOreal",
+			"loreal",
 			_expressionVisitorImpl.visitLiteralExpression(literalExpression));
 	}
 

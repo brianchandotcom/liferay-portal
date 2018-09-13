@@ -41,7 +41,7 @@ public class StructuredContentNestedCollectionResourceTest {
 			_structuredContentNestedCollectionResource.getFilterFieldsMap(
 				filter);
 
-		Assert.assertEquals("Title Value", filterFieldsMap.get("title"));
+		Assert.assertEquals("title value", filterFieldsMap.get("title"));
 	}
 
 	@Test

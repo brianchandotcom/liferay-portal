@@ -6,7 +6,25 @@ window.Liferay = {
 				get: (arg) => 'en_US'
 			};
 		}
+		else if (name.endsWith('settingsDDMForm')) {
+			component = {
+				getField: () => {
+					return {
+						getValue: () => true
+					}
+				}
+			};
+		}
 		return component;
+	},
+	DDM: {
+		FormSettings: {
+			strings: {
+				'publish-form': 'Publish Form',
+				'the-form-was-published-successfully-access-it-with-this-url-x': 'the-form-was-published-successfully-access-it-with-this-url-x',
+				'unpublish-form': 'Unpublish Form'
+			}
+		}
 	},
 	Language: {
 		get: key => key

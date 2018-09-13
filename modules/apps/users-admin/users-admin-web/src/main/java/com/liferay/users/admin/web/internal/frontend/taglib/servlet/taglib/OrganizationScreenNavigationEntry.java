@@ -16,13 +16,19 @@ package com.liferay.users.admin.web.internal.frontend.taglib.servlet.taglib;
 
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.OrganizationServiceUtil;
 import com.liferay.portal.kernel.util.AggregateResourceBundle;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.users.admin.constants.UserFormConstants;
+import com.liferay.users.admin.web.internal.constants.UsersAdminWebKeys;
 
 import java.io.IOException;
 
@@ -39,18 +45,27 @@ import javax.servlet.http.HttpServletResponse;
 public class OrganizationScreenNavigationEntry
 	implements ScreenNavigationEntry<Organization> {
 
+	public static final BiFunction<User, Organization, Boolean>
+		ORGANIZATION_EXISTS_PREDICATE = (user, organization) -> {
+			if (organization != null) {
+				return true;
+			}
+
+			return false;
+		};
+
 	public OrganizationScreenNavigationEntry(
 		JSPRenderer jspRenderer, Portal portal, String entryKey,
-		String categoryKey, String jspPath) {
+		String categoryKey, String jspPath, String mvcActionCommandName) {
 
 		this(
 			jspRenderer, portal, entryKey, categoryKey, jspPath,
-			_defaultIsVisiblePredicate);
+			mvcActionCommandName, _defaultIsVisiblePredicate);
 	}
 
 	public OrganizationScreenNavigationEntry(
 		JSPRenderer jspRenderer, Portal portal, String entryKey,
-		String categoryKey, String jspPath,
+		String categoryKey, String jspPath, String mvcActionCommandName,
 		BiFunction<User, Organization, Boolean> isVisiblePredicate) {
 
 		_jspRenderer = jspRenderer;
@@ -58,6 +73,7 @@ public class OrganizationScreenNavigationEntry
 		_entryKey = entryKey;
 		_categoryKey = categoryKey;
 		_jspPath = jspPath;
+		_mvcActionCommandName = mvcActionCommandName;
 		_isVisiblePredicate = isVisiblePredicate;
 	}
 
@@ -90,7 +106,45 @@ public class OrganizationScreenNavigationEntry
 	public void render(HttpServletRequest request, HttpServletResponse response)
 		throws IOException {
 
-		_jspRenderer.renderJSP(request, response, _jspPath);
+		OrganizationScreenNavigationDisplayContext displayContext =
+			new OrganizationScreenNavigationDisplayContext();
+
+		displayContext.setActionCommandName(_mvcActionCommandName);
+
+		String redirect = ParamUtil.getString(request, "redirect");
+
+		String backURL = ParamUtil.getString(request, "backURL", redirect);
+
+		displayContext.setBackURL(backURL);
+
+		displayContext.setFormLabel(getLabel(request.getLocale()));
+		displayContext.setJspPath(_jspPath);
+
+		long organizationId = ParamUtil.getLong(request, "organizationId");
+
+		Organization organization = null;
+
+		try {
+			organization = OrganizationServiceUtil.fetchOrganization(
+				organizationId);
+		}
+		catch (PortalException pe) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(pe, pe);
+			}
+		}
+
+		displayContext.setOrganization(organization);
+		displayContext.setOrganizationId(organizationId);
+		displayContext.setScreenNavigationCategoryKey(_categoryKey);
+		displayContext.setScreenNavigationEntryKey(_entryKey);
+
+		request.setAttribute(
+			UsersAdminWebKeys.ORGANIZATION_SCREEN_NAVIGATION_DISPLAY_CONTEXT,
+			displayContext);
+
+		_jspRenderer.renderJSP(
+			request, response, "/edit_organization_navigation.jsp");
 	}
 
 	protected ResourceBundle getResourceBundle(Locale locale) {
@@ -101,6 +155,9 @@ public class OrganizationScreenNavigationEntry
 			resourceBundle, _portal.getResourceBundle(locale));
 	}
 
+	private static final Log _log = LogFactoryUtil.getLog(
+		OrganizationScreenNavigationEntry.class);
+
 	private static final BiFunction<User, Organization, Boolean>
 		_defaultIsVisiblePredicate = (user, organization) -> true;
 
@@ -109,6 +166,7 @@ public class OrganizationScreenNavigationEntry
 	private final BiFunction<User, Organization, Boolean> _isVisiblePredicate;
 	private final String _jspPath;
 	private final JSPRenderer _jspRenderer;
+	private final String _mvcActionCommandName;
 	private final Portal _portal;
 
 }

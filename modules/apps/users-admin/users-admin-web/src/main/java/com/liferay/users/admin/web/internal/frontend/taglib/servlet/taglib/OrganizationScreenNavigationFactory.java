@@ -14,6 +14,7 @@
 
 package com.liferay.users.admin.web.internal.frontend.taglib.servlet.taglib;
 
+import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationCategory;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
 import com.liferay.portal.kernel.model.Organization;
@@ -33,20 +34,37 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class OrganizationScreenNavigationFactory {
 
-	public ScreenNavigationEntry<Organization> create(
-		String entryKey, String categoryKey, String jspPath) {
-
-		return new OrganizationScreenNavigationEntry(
-			_jspRenderer, _portal, entryKey, categoryKey, jspPath);
+	public ScreenNavigationCategory createCategory(String categoryKey) {
+		return new OrganizationScreenNavigationCategory(categoryKey);
 	}
 
-	public ScreenNavigationEntry<Organization> create(
+	public ScreenNavigationEntry<Organization> createEntry(
 		String entryKey, String categoryKey, String jspPath,
+		String mvcActionCommandName) {
+
+		return new OrganizationScreenNavigationEntry(
+			_jspRenderer, _portal, entryKey, categoryKey, jspPath,
+			mvcActionCommandName);
+	}
+
+	public ScreenNavigationEntry<Organization> createEntry(
+		String entryKey, String categoryKey, String jspPath,
+		String mvcActionCommandName,
 		BiFunction<User, Organization, Boolean> isVisiblePredicate) {
 
 		return new OrganizationScreenNavigationEntry(
 			_jspRenderer, _portal, entryKey, categoryKey, jspPath,
-			isVisiblePredicate);
+			mvcActionCommandName, isVisiblePredicate);
+	}
+
+	public ScreenNavigationEntry<Organization> createUpdateOnlyEntry(
+		String entryKey, String categoryKey, String jspPath,
+		String mvcActionCommandName) {
+
+		return new OrganizationScreenNavigationEntry(
+			_jspRenderer, _portal, entryKey, categoryKey, jspPath,
+			mvcActionCommandName,
+			OrganizationScreenNavigationEntry.ORGANIZATION_EXISTS_PREDICATE);
 	}
 
 	@Reference

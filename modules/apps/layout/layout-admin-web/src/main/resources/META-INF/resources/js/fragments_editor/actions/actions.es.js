@@ -111,6 +111,14 @@ const UPDATE_DRAG_TARGET = 'updateDragTarget';
 const UPDATE_EDITABLE_VALUE = 'updateEditableValue';
 
 /**
+ * Update highlight mapping status action type
+ * @review
+ * @type {string}
+ */
+
+const UPDATE_HIGHLIGHT_MAPPING_STATUS = 'updateHighlightMappingStatus';
+
+/**
  * Update last save date action type
  * @review
  * @type {string}
@@ -149,6 +157,7 @@ export {
 	SELECT_MAPPEABLE_TYPE,
 	UPDATE_DRAG_TARGET,
 	UPDATE_EDITABLE_VALUE,
+	UPDATE_HIGHLIGHT_MAPPING_STATUS,
 	UPDATE_LAST_SAVE_DATE,
 	UPDATE_SAVING_CHANGES_STATUS,
 	UPDATE_TRANSLATION_STATUS

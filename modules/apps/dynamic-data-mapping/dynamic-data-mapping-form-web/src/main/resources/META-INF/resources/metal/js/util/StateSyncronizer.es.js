@@ -2,7 +2,6 @@
 
 import {Config} from 'metal-state';
 import {EventHandler} from 'metal-events';
-import {pageStructure} from './config.es';
 import {PagesVisitor} from './visitors.es';
 import PortletBase from 'frontend-js-web/liferay/PortletBase.es';
 import FormSupport from '../components/Form/FormSupport.es';
@@ -14,18 +13,15 @@ class StateSyncronizer extends PortletBase {
 		localizedDescription: Config.object().value({}),
 		localizedName: Config.object().value({}),
 		nameEditor: Config.any(),
-		pages: Config.arrayOf(pageStructure).valueFn('_pagesValueFn'),
-		paginationMode: Config.string(),
 		settingsDDMForm: Config.any(),
 		translationManager: Config.any()
 	};
 
 	created() {
-		const {descriptionEditor, layoutProvider, nameEditor} = this;
+		const {descriptionEditor, nameEditor} = this;
 		this._eventHandler = new EventHandler();
 
 		this._eventHandler.add(
-			layoutProvider.on('pagesChanged', this._handlePagesChanged.bind(this)),
 			descriptionEditor.on('change', this._handleDescriptionEditorChanged.bind(this)),
 			nameEditor.on('change', this._handleNameEditorChanged.bind(this))
 		);
@@ -36,15 +32,15 @@ class StateSyncronizer extends PortletBase {
 	}
 
 	getState() {
-		const {localizedDescription, pages, paginationMode, translationManager} = this;
+		const {layoutProvider, localizedDescription, translationManager} = this;
 
 		return {
 			availableLanguageIds: translationManager.get('availableLocales'),
 			defaultLanguageId: translationManager.get('defaultLocale'),
 			description: localizedDescription,
 			name: this._getLocalizedName(),
-			pages,
-			paginationMode,
+			pages: layoutProvider.state.pages,
+			paginationMode: layoutProvider.state.paginationMode,
 			rules: [],
 			successPageSettings: {
 				body: {},
@@ -55,9 +51,9 @@ class StateSyncronizer extends PortletBase {
 	}
 
 	isEmpty() {
-		const {pages} = this;
+		const {layoutProvider} = this;
 
-		return FormSupport.emptyPages(pages);
+		return FormSupport.emptyPages(layoutProvider.state.pages);
 	}
 
 	syncInputs() {
@@ -122,16 +118,6 @@ class StateSyncronizer extends PortletBase {
 		const editor = window[nameEditor.name];
 
 		localizedName[translationManager.get('editingLocale')] = editor.getHTML();
-	}
-
-	_handlePagesChanged({newVal}) {
-		this.pages = newVal;
-	}
-
-	_pagesValueFn() {
-		const {layoutProvider} = this;
-
-		return layoutProvider.state.pages;
 	}
 }
 

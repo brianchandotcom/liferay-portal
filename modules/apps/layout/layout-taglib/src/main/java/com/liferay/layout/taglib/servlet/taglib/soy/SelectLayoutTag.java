@@ -200,7 +200,7 @@ public class SelectLayoutTag extends ComponentRendererTag {
 			groupId, privateLayout, parentLayoutId);
 
 		for (Layout layout : layouts) {
-			if (StagingUtil.isIncomplete(layout)) {
+			if (layout.isHidden() || StagingUtil.isIncomplete(layout)) {
 				continue;
 			}
 

@@ -14,11 +14,10 @@
 
 package com.liferay.portal.configuration;
 
-import com.germinus.easyconf.ComponentConfiguration;
 import com.germinus.easyconf.ComponentProperties;
 
 import com.liferay.portal.configuration.easyconf.ClassLoaderAggregateProperties;
-import com.liferay.portal.configuration.easyconf.ClassLoaderComponentConfiguration;
+import com.liferay.portal.configuration.easyconf.ComponentPropertiesUtil;
 import com.liferay.portal.kernel.configuration.Filter;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -79,8 +78,9 @@ public class ConfigurationImpl
 	public ConfigurationImpl(
 		ClassLoader classLoader, String name, long companyId, String webId) {
 
-		_componentConfiguration = new ClassLoaderComponentConfiguration(
-			classLoader, webId, name);
+		_componentProperties =
+			ComponentPropertiesUtil.createComponentProperties(
+				classLoader, webId, name);
 
 		printSources(companyId, webId);
 	}
@@ -88,11 +88,9 @@ public class ConfigurationImpl
 	@Override
 	public void addProperties(Properties properties) {
 		try {
-			ComponentProperties componentProperties = getComponentProperties();
-
 			ClassLoaderAggregateProperties classLoaderAggregateProperties =
 				(ClassLoaderAggregateProperties)
-					componentProperties.toConfiguration();
+					_componentProperties.toConfiguration();
 
 			Field field1 = CompositeConfiguration.class.getDeclaredField(
 				"configList");
@@ -145,9 +143,7 @@ public class ConfigurationImpl
 		Object value = _configurationCache.get(key);
 
 		if (value == null) {
-			ComponentProperties componentProperties = getComponentProperties();
-
-			value = componentProperties.getProperty(key);
+			value = _componentProperties.getProperty(key);
 
 			if (value == null) {
 				value = _nullValue;
@@ -168,9 +164,7 @@ public class ConfigurationImpl
 		Object value = _configurationCache.get(key);
 
 		if (value == null) {
-			ComponentProperties componentProperties = getComponentProperties();
-
-			value = componentProperties.getString(key);
+			value = _componentProperties.getString(key);
 
 			if (value == null) {
 				value = _nullValue;
@@ -200,9 +194,7 @@ public class ConfigurationImpl
 		}
 
 		if (value == null) {
-			ComponentProperties componentProperties = getComponentProperties();
-
-			value = componentProperties.getString(
+			value = _componentProperties.getString(
 				key, getEasyConfFilter(filter));
 
 			if (filterCacheKey != null) {
@@ -226,9 +218,7 @@ public class ConfigurationImpl
 		Object value = _configurationArrayCache.get(key);
 
 		if (value == null) {
-			ComponentProperties componentProperties = getComponentProperties();
-
-			String[] array = componentProperties.getStringArray(key);
+			String[] array = _componentProperties.getStringArray(key);
 
 			value = _fixArrayValue(array);
 
@@ -253,9 +243,7 @@ public class ConfigurationImpl
 		}
 
 		if (value == null) {
-			ComponentProperties componentProperties = getComponentProperties();
-
-			String[] array = componentProperties.getStringArray(
+			String[] array = _componentProperties.getStringArray(
 				key, getEasyConfFilter(filter));
 
 			value = _fixArrayValue(array);
@@ -288,13 +276,11 @@ public class ConfigurationImpl
 
 		Properties properties = new Properties();
 
-		ComponentProperties componentProperties = getComponentProperties();
-
 		Properties componentPropertiesProperties =
-			componentProperties.getProperties();
+			_componentProperties.getProperties();
 
 		for (String key : componentPropertiesProperties.stringPropertyNames()) {
-			properties.setProperty(key, componentProperties.getString(key));
+			properties.setProperty(key, _componentProperties.getString(key));
 		}
 
 		_properties = properties;
@@ -312,11 +298,9 @@ public class ConfigurationImpl
 	@Override
 	public void removeProperties(Properties properties) {
 		try {
-			ComponentProperties componentProperties = getComponentProperties();
-
 			ClassLoaderAggregateProperties classLoaderAggregateProperties =
 				(ClassLoaderAggregateProperties)
-					componentProperties.toConfiguration();
+					_componentProperties.toConfiguration();
 
 			CompositeConfiguration compositeConfiguration =
 				classLoaderAggregateProperties.getBaseConfiguration();
@@ -361,15 +345,9 @@ public class ConfigurationImpl
 
 	@Override
 	public void set(String key, String value) {
-		ComponentProperties componentProperties = getComponentProperties();
-
-		componentProperties.setProperty(key, value);
+		_componentProperties.setProperty(key, value);
 
 		clearCache();
-	}
-
-	protected ComponentProperties getComponentProperties() {
-		return _componentConfiguration.getProperties();
 	}
 
 	protected com.germinus.easyconf.Filter getEasyConfFilter(Filter filter) {
@@ -384,9 +362,7 @@ public class ConfigurationImpl
 	}
 
 	protected void printSources(long companyId, String webId) {
-		ComponentProperties componentProperties = getComponentProperties();
-
-		List<String> sources = componentProperties.getLoadedSources();
+		List<String> sources = _componentProperties.getLoadedSources();
 
 		for (int i = sources.size() - 1; i >= 0; i--) {
 			String source = sources.get(i);
@@ -480,7 +456,7 @@ public class ConfigurationImpl
 
 	private static final Object _nullValue = new Object();
 
-	private final ComponentConfiguration _componentConfiguration;
+	private final ComponentProperties _componentProperties;
 	private final Map<String, Object> _configurationArrayCache =
 		new ConcurrentHashMap<>();
 	private final Map<String, Object> _configurationCache =

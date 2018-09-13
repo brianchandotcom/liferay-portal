@@ -16,6 +16,7 @@ package com.liferay.portal.configuration.easyconf;
 
 import com.germinus.easyconf.AggregatedProperties;
 import com.germinus.easyconf.ConfigurationException;
+import com.germinus.easyconf.ConfigurationNotFoundException;
 import com.germinus.easyconf.Conventions;
 import com.germinus.easyconf.DatasourceURL;
 import com.germinus.easyconf.FileConfigurationChangedReloadingStrategy;
@@ -71,12 +72,12 @@ public class ClassLoaderAggregateProperties extends AggregatedProperties {
 		Configuration configuration = _addPropertiesSource(
 			fileName, url, _baseCompositeConfiguration);
 
-		if (configuration != null) {
-			_baseConfigurationLoaded = true;
-
-			if (configuration.isEmpty() && _log.isDebugEnabled()) {
-				_log.debug("Empty configuration " + fileName);
-			}
+		if (configuration == null) {
+			throw new ConfigurationNotFoundException(
+				_componentName, "The base properties file was not found");
+		}
+		else if (configuration.isEmpty() && _log.isDebugEnabled()) {
+			_log.debug("Empty configuration " + fileName);
 		}
 	}
 
@@ -136,11 +137,6 @@ public class ClassLoaderAggregateProperties extends AggregatedProperties {
 		}
 
 		return value;
-	}
-
-	@Override
-	public boolean hasBaseConfiguration() {
-		return _baseConfigurationLoaded;
 	}
 
 	@Override
@@ -443,7 +439,6 @@ public class ClassLoaderAggregateProperties extends AggregatedProperties {
 
 	private final CompositeConfiguration _baseCompositeConfiguration =
 		new CompositeConfiguration();
-	private boolean _baseConfigurationLoaded;
 	private final ClassLoader _classLoader;
 	private final String _companyId;
 	private final String _componentName;

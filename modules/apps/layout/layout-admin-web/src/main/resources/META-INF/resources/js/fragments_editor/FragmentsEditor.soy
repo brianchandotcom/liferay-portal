@@ -27,7 +27,7 @@
 	{@param redirectURL: string}
 	{@param sidebarTabs: list<[enabled:bool, id:string, label:string]>}
 	{@param spritemap: string}
-	{@param? _contextualSidebarVisible: bool}
+	{@param? contextualSidebarVisible: bool}
 	{@param? _dropTargetClass: string}
 	{@param? _handleEditableChanged: any}
 	{@param? _handleHideContextualSidebar: any}
@@ -111,7 +111,7 @@
 			{param sidebarTabs: $sidebarTabs /}
 			{param spritemap: $spritemap /}
 			{param store: $store /}
-			{param visible: $_contextualSidebarVisible ?: true /}
+			{param visible: $contextualSidebarVisible ?: true /}
 		{/call}
 
 		<div class="contextual-sidebar-content">

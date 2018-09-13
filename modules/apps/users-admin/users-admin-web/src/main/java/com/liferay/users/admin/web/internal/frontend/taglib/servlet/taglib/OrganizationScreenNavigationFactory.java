@@ -42,9 +42,9 @@ public class OrganizationScreenNavigationFactory {
 		String entryKey, String categoryKey, String jspPath,
 		String mvcActionCommandName) {
 
-		return new OrganizationScreenNavigationEntry(
-			_jspRenderer, _portal, entryKey, categoryKey, jspPath,
-			mvcActionCommandName);
+		return createEntry(
+			entryKey, categoryKey, jspPath, mvcActionCommandName,
+			_IS_VISIBLE_PREDICATE_ALWAYS);
 	}
 
 	public ScreenNavigationEntry<Organization> createEntry(
@@ -61,11 +61,22 @@ public class OrganizationScreenNavigationFactory {
 		String entryKey, String categoryKey, String jspPath,
 		String mvcActionCommandName) {
 
-		return new OrganizationScreenNavigationEntry(
-			_jspRenderer, _portal, entryKey, categoryKey, jspPath,
-			mvcActionCommandName,
-			OrganizationScreenNavigationEntry.ORGANIZATION_EXISTS_PREDICATE);
+		return createEntry(
+			entryKey, categoryKey, jspPath, mvcActionCommandName,
+			_IS_VISIBLE_PREDICATE_ORGANIZATION_EXISTS);
 	}
+
+	private static final BiFunction<User, Organization, Boolean>
+		_IS_VISIBLE_PREDICATE_ALWAYS = (user, organization) -> true;
+
+	private static final BiFunction<User, Organization, Boolean>
+		_IS_VISIBLE_PREDICATE_ORGANIZATION_EXISTS = (user, organization) -> {
+			if (organization != null) {
+				return true;
+			}
+
+			return false;
+		};
 
 	@Reference
 	private JSPRenderer _jspRenderer;

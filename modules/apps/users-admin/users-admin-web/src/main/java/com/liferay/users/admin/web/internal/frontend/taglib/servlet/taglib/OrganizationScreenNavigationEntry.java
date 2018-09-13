@@ -45,24 +45,6 @@ import javax.servlet.http.HttpServletResponse;
 public class OrganizationScreenNavigationEntry
 	implements ScreenNavigationEntry<Organization> {
 
-	public static final BiFunction<User, Organization, Boolean>
-		ORGANIZATION_EXISTS_PREDICATE = (user, organization) -> {
-			if (organization != null) {
-				return true;
-			}
-
-			return false;
-		};
-
-	public OrganizationScreenNavigationEntry(
-		JSPRenderer jspRenderer, Portal portal, String entryKey,
-		String categoryKey, String jspPath, String mvcActionCommandName) {
-
-		this(
-			jspRenderer, portal, entryKey, categoryKey, jspPath,
-			mvcActionCommandName, _defaultIsVisiblePredicate);
-	}
-
 	public OrganizationScreenNavigationEntry(
 		JSPRenderer jspRenderer, Portal portal, String entryKey,
 		String categoryKey, String jspPath, String mvcActionCommandName,
@@ -157,9 +139,6 @@ public class OrganizationScreenNavigationEntry
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		OrganizationScreenNavigationEntry.class);
-
-	private static final BiFunction<User, Organization, Boolean>
-		_defaultIsVisiblePredicate = (user, organization) -> true;
 
 	private final String _categoryKey;
 	private final String _entryKey;

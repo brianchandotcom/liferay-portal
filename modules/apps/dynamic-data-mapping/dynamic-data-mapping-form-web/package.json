@@ -123,8 +123,8 @@
 			}
 		},
 		"moduleNameMapper": {
-			"clay-(.*)$": "<rootDir>/node_modules/clay-$1",
-			"(.*)\\.soy$": "$1.soy.js"
+			"(.*)\\.soy$": "$1.soy.js",
+			"clay-(.*)$": "<rootDir>/node_modules/clay-$1"
 		},
 		"modulePathIgnorePatterns": [
 			"/classes/",

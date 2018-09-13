@@ -68,7 +68,7 @@ public class ImageStorageTest {
 
 		String configurationUuid = RandomTestUtil.randomString();
 
-		String fileVersionPath = _imageStorage.getFileVersionPath(
+		String fileVersionPath = AMStoreUtil.getFileVersionPath(
 			fileVersion, configurationUuid);
 
 		Assert.assertEquals(

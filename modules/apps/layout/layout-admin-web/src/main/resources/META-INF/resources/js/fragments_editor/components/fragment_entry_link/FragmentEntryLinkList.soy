@@ -17,7 +17,6 @@
 	{@param? structure: list<string>}
 	{@param? _handleEditableChanged: any}
 	{@param? _handleFragmentMove: any}
-	{@param? _handleFragmentRemove: any}
 	{@param? _handleMappeableFieldClicked: any}
 	{@param? mapping: bool}
 	{@param? mappingFieldsURL: string}
@@ -69,8 +68,7 @@
 							{param events: [
 								'editableChanged': $_handleEditableChanged,
 								'mappeableFieldClicked': $_handleMappeableFieldClicked,
-								'move': $_handleFragmentMove,
-								'remove': $_handleFragmentRemove
+								'move': $_handleFragmentMove
 							] /}
 							{param fragmentEntryLinkId: $fragmentEntryLink.fragmentEntryLinkId /}
 							{param styleModifier: $styleModifier /}

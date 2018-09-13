@@ -445,17 +445,6 @@ FragmentsEditor.STATE = Object.assign(
 		mappingFieldsURL: Config.string().value(null),
 
 		/**
-		 * Currently selected language id.
-		 * @default undefined
-		 * @instance
-		 * @memberOf FragmentsEditor
-		 * @review
-		 * @type {!string}
-		 */
-
-		languageId: Config.string().required(),
-
-		/**
 		 *
 		 * @default undefined
 		 * @instance

@@ -108,11 +108,9 @@ public class CounterTransactionExecutor
 			TransactionStatusAdapter transactionStatusAdapter)
 		throws Throwable {
 
-		_rollback(
+		throw _rollback(
 			platformTransactionManager, throwable, transactionAttributeAdapter,
 			transactionStatusAdapter);
-
-		throw throwable;
 	}
 
 	@Override
@@ -122,11 +120,9 @@ public class CounterTransactionExecutor
 			TransactionStatusAdapter transactionStatusAdapter)
 		throws Throwable {
 
-		_rollback(
+		throw _rollback(
 			_platformTransactionManager, throwable, transactionAttributeAdapter,
 			transactionStatusAdapter);
-
-		throw throwable;
 	}
 
 	/**
@@ -172,11 +168,9 @@ public class CounterTransactionExecutor
 			returnValue = methodInvocation.proceed();
 		}
 		catch (Throwable throwable) {
-			_rollback(
+			throw _rollback(
 				platformTransactionManager, throwable,
 				transactionAttributeAdapter, transactionStatusAdapter);
-
-			throw throwable;
 		}
 
 		_commit(platformTransactionManager, transactionStatusAdapter);
@@ -184,7 +178,7 @@ public class CounterTransactionExecutor
 		return returnValue;
 	}
 
-	private void _rollback(
+	private Throwable _rollback(
 			PlatformTransactionManager platformTransactionManager,
 			Throwable throwable,
 			TransactionAttributeAdapter transactionAttributeAdapter,
@@ -213,6 +207,8 @@ public class CounterTransactionExecutor
 				throw t;
 			}
 		}
+
+		return throwable;
 	}
 
 	private TransactionStatusAdapter _start(

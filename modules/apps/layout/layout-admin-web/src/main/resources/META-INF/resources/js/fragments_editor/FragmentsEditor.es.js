@@ -348,21 +348,7 @@ FragmentsEditor.STATE = Object.assign(
 		 * @type {!string}
 		 */
 
-		_dropTargetClass: Config.string().internal().value('dropTarget'),
-
-		/**
-		 * If true, editable values should be highlighted.
-		 * @default false
-		 * @instance
-		 * @memberOf FragmentsEditor
-		 * @private
-		 * @review
-		 * @type {boolean}
-		 */
-
-		_highlightMapping: Config.bool()
-			.internal()
-			.value(false)
+		_dropTargetClass: Config.string().internal().value('dropTarget')
 	},
 
 	INITIAL_STATE

@@ -27,15 +27,9 @@
 	{@param redirectURL: string}
 	{@param sidebarTabs: list<[enabled:bool, id:string, label:string]>}
 	{@param spritemap: string}
-	{@param? contextualSidebarVisible: bool}
 	{@param? _dropTargetClass: string}
-	{@param? _highlightMapping: bool}
-	{@param? selectMappingDialogEditableId: string}
-	{@param? selectMappingDialogEditableType: string}
-	{@param? selectMappingDialogFragmentEntryLinkId: string}
-	{@param? selectMappingDialogMappedFieldId: string}
-	{@param? selectMappingDialogVisible: bool}
-	{@param? selectMappingTypeDialogVisible: bool}
+	{@param? contextualSidebarVisible: bool}
+	{@param? highlightMapping: bool}
 	{@param? getAssetClassTypesURL: any}
 	{@param? getAssetDisplayContributorsURL: any}
 	{@param? hoveredFragmentEntryLinkBorder: string}
@@ -45,6 +39,12 @@
 	{@param? mappingFieldsURL: string}
 	{@param? publishLayoutPageTemplateEntryURL: string}
 	{@param? savingChanges: bool}
+	{@param? selectMappingDialogEditableId: string}
+	{@param? selectMappingDialogEditableType: string}
+	{@param? selectMappingDialogFragmentEntryLinkId: string}
+	{@param? selectMappingDialogMappedFieldId: string}
+	{@param? selectMappingDialogVisible: bool}
+	{@param? selectMappingTypeDialogVisible: bool}
 	{@param? selectedMappingTypes: [
 		subtype: [
 			id: string,
@@ -84,7 +84,7 @@
 			{param dropTargetClass: $_dropTargetClass /}
 			{param fragmentCollections: $fragmentCollections /}
 			{param fragmentEntryLinks: $fragmentEntryLinks /}
-			{param highlightMapping: $_highlightMapping ?: false /}
+			{param highlightMapping: $highlightMapping ?: false /}
 			{param layoutData: $layoutData /}
 			{param ref: 'sidebar' /}
 			{param selectedMappingTypes: $selectedMappingTypes /}
@@ -108,7 +108,7 @@
 				{param imageSelectorURL: $imageSelectorURL /}
 				{param languageId: $languageId /}
 				{param layoutData: $layoutData /}
-				{param mapping: $_highlightMapping ?: false /}
+				{param mapping: $highlightMapping ?: false /}
 				{param mappingFieldsURL: $mappingFieldsURL /}
 				{param portletNamespace: $portletNamespace /}
 				{param ref: 'fragmentsEditorRender' /}

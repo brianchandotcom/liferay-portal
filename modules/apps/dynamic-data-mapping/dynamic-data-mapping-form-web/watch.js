@@ -70,7 +70,7 @@ function buildJS(fileName, callback) {
 			];
 			fs.writeFileSync('.npmbundlerrc', JSON.stringify(parsedBundlerConfig));
 			exec(
-				'npm run bundler',
+				'npm run bundler -- --no-tracking',
 				function() {
 					fs.writeFileSync('.npmbundlerrc', npmbundlerrc);
 					callback(null, result);

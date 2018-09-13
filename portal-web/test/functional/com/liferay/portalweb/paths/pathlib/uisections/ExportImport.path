@@ -78,6 +78,11 @@
 </tr>
 <!--CONTENT-->
 <tr>
+	<td>CONTENT</td>
+	<td>//label//input[contains(@id,'PORTLET_DATA')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CONTENT_CHOOSE_CONTENT_CONTENT_CHANGE_LINK</td>
 	<td>//a[@data-portlettitle='${key_contentName}']</td>
 	<td></td>

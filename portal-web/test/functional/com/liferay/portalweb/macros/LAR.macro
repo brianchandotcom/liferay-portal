@@ -104,9 +104,25 @@
 		<execute function="SelectFrame" locator1="IFrame#CONFIGURATION_DIALOG" />
 
 		<if>
+			<condition function="IsNotChecked" locator1="ExportImport#CONTENT" />
+			<then>
+				<execute function="Check" locator1="ExportImport#CONTENT" />
+
+				<execute function="Pause" value1="1000" />
+			</then>
+		</if>
+
+		<if>
 			<isset var="larFileName" />
 			<then>
 				<execute function="Type" locator1="ExportImport#EXPORT_FILE_NAME" value1="${larFileName}" />
+			</then>
+		</if>
+
+		<if>
+			<equals arg1="${exportIndividualDeletions}" arg2="true" />
+			<then>
+				<execute function="Check" locator1="Checkbox#DELETIONS" />
 			</then>
 		</if>
 
@@ -287,15 +303,6 @@
 		<execute function="Pause" locator1="5000" />
 
 		<if>
-			<equals arg1="${importPermissions}" arg2="true" />
-			<then>
-				<execute function="Click" locator1="ExportImport#PERMISSIONS_TITLE" />
-
-				<execute function="Check#checkToggleSwitch" locator1="Checkbox#PERMISSIONS" />
-			</then>
-		</if>
-
-		<if>
 			<equals arg1="${cannotImport}" arg2="true" />
 			<then>
 				<execute function="AssertTextEquals" locator1="SitePagesImport#VALIDATION_ERROR_MESSAGE_HEADER" value1="The file ${larFileName} cannot be imported." />
@@ -321,6 +328,31 @@
 					<equals arg1="${mirrorWithOverwriting}" arg2="true" />
 					<then>
 						<execute macro="LAR#_mirrorWithOverwriting" />
+					</then>
+				</if>
+
+				<if>
+					<equals arg1="${importDeletions}" arg2="true" />
+					<then>
+						<execute function="Check" locator1="Checkbox#DELETIONS" />
+					</then>
+				</if>
+
+				<if>
+					<condition function="IsNotChecked" locator1="ExportImport#CONTENT" />
+					<then>
+						<execute function="Check" locator1="ExportImport#CONTENT" />
+
+						<execute function="Pause" value1="1000" />
+					</then>
+				</if>
+
+				<if>
+					<equals arg1="${importPermissions}" arg2="true" />
+					<then>
+						<execute function="Click" locator1="ExportImport#PERMISSIONS_TITLE" />
+
+						<execute function="Check#checkToggleSwitch" locator1="Checkbox#PERMISSIONS" />
 					</then>
 				</if>
 
@@ -583,6 +615,7 @@
 		<execute macro="LAR#_selectImportFile">
 			<var name="cannotImport" value="${cannotImport}" />
 			<var name="failureExpected" value="${failureExpected}" />
+			<var name="importDeletions" value="${importDeletions}" />
 			<var name="importPermissions" value="${importPermissions}" />
 			<var name="larFileName" value="${larFileName}" />
 			<var name="mirrorWithOverwriting" value="${mirrorWithOverwriting}" />

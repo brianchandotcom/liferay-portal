@@ -13,7 +13,6 @@ class Sharing extends PortletBase {
 		this._classPK = config.classPK;
 		this._refererPortletNamespace = config.refererPortletNamespace;
 		this._sharingDialogId = config.sharingDialogId || 'sharingDialogId';
-		this._submitting = false;
 	}
 
 	/**
@@ -85,9 +84,9 @@ class Sharing extends PortletBase {
 	_handleSubmit(event) {
 		event.preventDefault();
 
-		if (this._submitting || !this._validateRequiredEmail(this.userEmailAddress)) return;
+		if (this.submitting || !this._validateRequiredEmail(this.userEmailAddress)) return;
 
-		this._submitting = true;
+		this.submitting = true;
 
 		this.fetch(
 			this.shareActionURL,
@@ -100,7 +99,7 @@ class Sharing extends PortletBase {
 			}
 		)
 			.then(response => {
-				this._submitting = false;
+				this.submitting = false;
 
 				if (response.ok) {
 					parent.Liferay.Portlet.refresh(`#p_p_id${this._refererPortletNamespace}`);
@@ -117,7 +116,7 @@ class Sharing extends PortletBase {
 				}
 			})
 			.catch(err => {
-				this._submitting = false;
+				this.submitting = false;
 				this.errorMessage = err.message;
 			});
 	}
@@ -150,6 +149,7 @@ Sharing.STATE = {
 	sharingEntryPermissionDisplayActionId: Config.string().required()
 	errorMessage: Config.string().value(''),
 	emailErrorMessage: Config.string().value(''),
+	submitting: Config.bool().value(false),
 };
 
 Soy.register(Sharing, templates);

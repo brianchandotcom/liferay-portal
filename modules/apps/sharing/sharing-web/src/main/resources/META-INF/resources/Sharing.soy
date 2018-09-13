@@ -15,6 +15,7 @@
 	{@param? _handleValidateEmail: any}
 	{@param? emailErrorMessage: string}
 	{@param? errorMessage: string}
+	{@param? submitting: bool}
 
 	<div id="{$id}" class="sharing-modal-content">
 		<form
@@ -104,7 +105,15 @@
 						</div>
 
 						<div class="btn-group-item">
-							<button class="btn btn-primary" type="submit">{msg desc=""}share{/msg}</button>
+							<button
+								class="btn btn-primary"
+								type="submit"
+								{if $submitting}
+									disabled="disabled"
+								{/if}
+							>
+								{msg desc=""}share{/msg}
+							</button>
 						</div>
 					</div>
 				</div>

@@ -16,6 +16,7 @@ package com.liferay.portal.search.web.internal.display.context;
 
 import com.liferay.portal.kernel.util.Validator;
 
+import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -55,10 +56,6 @@ public enum SearchScopePreference {
 		return _searchScope;
 	}
 
-	private static SearchScopePreference[] _enumValues() {
-		return values();
-	}
-
 	private SearchScopePreference(
 		String preferenceString, SearchScope searchScope) {
 
@@ -70,7 +67,7 @@ public enum SearchScopePreference {
 		_searchScopePreferences = new HashMap<String, SearchScopePreference>() {
 			{
 				for (SearchScopePreference searchScopePreference :
-						_enumValues()) {
+						EnumSet.allOf(SearchScopePreference.class)) {
 
 					put(
 						searchScopePreference._preferenceString,

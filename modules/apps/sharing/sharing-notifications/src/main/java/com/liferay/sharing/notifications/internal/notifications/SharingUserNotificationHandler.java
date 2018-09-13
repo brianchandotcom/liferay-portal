@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserNotificationEventLocalService;
 import com.liferay.sharing.constants.SharingPortletKeys;
 import com.liferay.sharing.model.SharingEntry;
+import com.liferay.sharing.notifications.internal.util.SharingNotificationUtil;
 import com.liferay.sharing.service.SharingEntryLocalService;
 
 import org.osgi.service.component.annotations.Component;
@@ -66,7 +67,7 @@ public class SharingUserNotificationHandler
 			return null;
 		}
 
-		return _sharingNotificationMessageProvider.getMessage(
+		return _sharingNotificationUtil.getMessage(
 			sharingEntry, serviceContext.getLocale());
 	}
 
@@ -74,8 +75,7 @@ public class SharingUserNotificationHandler
 	private SharingEntryLocalService _sharingEntryLocalService;
 
 	@Reference
-	private SharingNotificationMessageProvider
-		_sharingNotificationMessageProvider;
+	private SharingNotificationUtil _sharingNotificationUtil;
 
 	@Reference
 	private UserNotificationEventLocalService

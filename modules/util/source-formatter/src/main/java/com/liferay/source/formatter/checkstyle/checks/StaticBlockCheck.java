@@ -75,7 +75,9 @@ public class StaticBlockCheck extends BaseCheck {
 
 		String variableName = DetailASTUtil.getVariableName(methodCallAST);
 
-		if (!classObjectNames.contains(variableName)) {
+		if (!classObjectNames.contains(variableName) ||
+			variableName.equals("_log")) {
+
 			return;
 		}
 

@@ -21,7 +21,15 @@
 			<var name="rowEntry" value="${rowEntry}" />
 		</execute>
 
-		<execute function="Confirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
+		<if>
+			<isset var="confirmationText" />
+			<then>
+				<execute function="Confirm" value1="${confirmationText}" />
+			</then>
+			<else>
+				<execute function="Confirm#assertPartialConfirmation" value1="" />
+			</else>
+		</if>
 
 		<if>
 			<isset var="failure" />

@@ -48,6 +48,7 @@ import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.UserGroupLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -1610,6 +1611,12 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 		int birthdayDay = birthdayCal.get(Calendar.DAY_OF_MONTH);
 		int birthdayYear = birthdayCal.get(Calendar.YEAR);
 
+		ServiceContext serviceContext = ldapUser.getServiceContext();
+
+		if (modifiedDate != null) {
+			serviceContext.setModifiedDate(modifiedDate);
+		}
+
 		user = _userLocalService.updateUser(
 			user.getUserId(), password, StringPool.BLANK, StringPool.BLANK,
 			passwordReset, ldapUser.getReminderQueryQuestion(),
@@ -1627,15 +1634,9 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 			ldapUser.getJobTitle(), ldapUser.getGroupIds(),
 			ldapUser.getOrganizationIds(), ldapUser.getRoleIds(),
 			ldapUser.getUserGroupRoles(), ldapUser.getUserGroupIds(),
-			ldapUser.getServiceContext());
+			serviceContext);
 
 		if (user.getStatus() != ldapUser.getStatus()) {
-			ServiceContext serviceContext = new ServiceContext();
-
-			if (modifiedDate != null) {
-				serviceContext.setModifiedDate(modifiedDate);
-			}
-
 			user = _userLocalService.updateStatus(
 				user.getUserId(), ldapUser.getStatus(), serviceContext);
 		}
@@ -1653,7 +1654,7 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 	protected String updateUserPassword(
 			LDAPImportConfiguration ldapImportConfiguration, long userId,
 			String screenName, String password, boolean passwordReset,
-			Date passwordModifiedDate)
+			Date modifiedDate)
 		throws PortalException {
 
 		if (!ldapImportConfiguration.importUserPasswordEnabled()) {
@@ -1671,13 +1672,22 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 			}
 		}
 
-		User user = _userLocalService.updatePassword(
-			userId, password, password, passwordReset, true);
+		ServiceContext serviceContext = new ServiceContext();
 
-		if (passwordModifiedDate != null) {
-			user.setPasswordModifiedDate(passwordModifiedDate);
+		serviceContext.setModifiedDate(modifiedDate);
+
+		try {
+			ServiceContextThreadLocal.pushServiceContext(serviceContext);
+
+			User user = _userLocalService.updatePassword(
+				userId, password, password, passwordReset, true);
+
+			user.setPasswordModifiedDate(modifiedDate);
 
 			_userLocalService.updateUser(user);
+		}
+		finally {
+			ServiceContextThreadLocal.popServiceContext();
 		}
 
 		return password;

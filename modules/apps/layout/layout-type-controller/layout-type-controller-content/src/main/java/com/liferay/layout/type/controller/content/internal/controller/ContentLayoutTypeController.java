@@ -39,6 +39,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.taglib.servlet.PipingServletResponse;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -236,6 +237,8 @@ public class ContentLayoutTypeController extends BaseLayoutTypeControllerImpl {
 			return Collections.emptyList();
 		}
 
+		List<FragmentEntryLink> fragmentEntryLinksList = new ArrayList<>();
+
 		List<FragmentEntryLink> fragmentEntryLinks =
 			_fragmentEntryLinkLocalService.getFragmentEntryLinks(
 				layout.getGroupId(),
@@ -254,11 +257,11 @@ public class ContentLayoutTypeController extends BaseLayoutTypeControllerImpl {
 				structureJSONArray.getLong(i));
 
 			if (fragmentEntryLink != null) {
-				fragmentEntryLinks.add(fragmentEntryLink);
+				fragmentEntryLinksList.add(fragmentEntryLink);
 			}
 		}
 
-		return fragmentEntryLinks;
+		return fragmentEntryLinksList;
 	}
 
 	private static final String _EDIT_LAYOUT_PAGE =

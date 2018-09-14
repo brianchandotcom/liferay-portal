@@ -25,9 +25,9 @@ import com.liferay.sharing.interpreter.SharingEntryInterpreter;
 import com.liferay.sharing.model.SharingEntry;
 import com.liferay.sharing.renderer.SharingEntryEditRenderer;
 import com.liferay.sharing.service.SharingEntryLocalService;
-import com.liferay.sharing.web.internal.interpreter.SharingEntryInterpreterTracker;
 
 import java.util.List;
+import java.util.function.Function;
 
 import javax.portlet.PortletURL;
 
@@ -39,17 +39,17 @@ public class SharedWithMeViewDisplayContext {
 	public SharedWithMeViewDisplayContext(
 		ThemeDisplay themeDisplay,
 		SharingEntryLocalService sharingEntryLocalService,
-		SharingEntryInterpreterTracker sharingEntryInterpreterTracker) {
+		Function<SharingEntry, SharingEntryInterpreter<Object>>
+			sharingEntryInterpreterFunction) {
 
 		_themeDisplay = themeDisplay;
 		_sharingEntryLocalService = sharingEntryLocalService;
-		_sharingEntryInterpreterTracker = sharingEntryInterpreterTracker;
+		_sharingEntryInterpreterFunction = sharingEntryInterpreterFunction;
 	}
 
 	public String getAssetTypeTitle(SharingEntry sharingEntry) {
-		SharingEntryInterpreter<?> sharingEntryInterpreter =
-			_sharingEntryInterpreterTracker.getSharingEntryInterpreter(
-				sharingEntry.getClassNameId());
+		SharingEntryInterpreter<Object> sharingEntryInterpreter =
+			_sharingEntryInterpreterFunction.apply(sharingEntry);
 
 		if (sharingEntryInterpreter == null) {
 			return StringPool.BLANK;
@@ -60,9 +60,8 @@ public class SharedWithMeViewDisplayContext {
 	}
 
 	public String getTitle(SharingEntry sharingEntry) {
-		SharingEntryInterpreter<?> sharingEntryInterpreter =
-			_sharingEntryInterpreterTracker.getSharingEntryInterpreter(
-				sharingEntry.getClassNameId());
+		SharingEntryInterpreter<Object> sharingEntryInterpreter =
+			_sharingEntryInterpreterFunction.apply(sharingEntry);
 
 		if (sharingEntryInterpreter == null) {
 			return StringPool.BLANK;
@@ -78,8 +77,7 @@ public class SharedWithMeViewDisplayContext {
 		throws PortalException {
 
 		SharingEntryInterpreter<Object> sharingEntryInterpreter =
-			_sharingEntryInterpreterTracker.getSharingEntryInterpreter(
-				sharingEntry.getClassNameId());
+			_sharingEntryInterpreterFunction.apply(sharingEntry);
 
 		if (sharingEntryInterpreter == null) {
 			return null;
@@ -112,8 +110,8 @@ public class SharedWithMeViewDisplayContext {
 		searchContainer.setResults(sharingEntries);
 	}
 
-	private final SharingEntryInterpreterTracker
-		_sharingEntryInterpreterTracker;
+	private final Function<SharingEntry, SharingEntryInterpreter<Object>>
+		_sharingEntryInterpreterFunction;
 	private final SharingEntryLocalService _sharingEntryLocalService;
 	private final ThemeDisplay _themeDisplay;
 

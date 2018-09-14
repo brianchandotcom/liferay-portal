@@ -43,62 +43,26 @@ else {
 }
 
 renderResponse.setTitle(headerTitle);
+
+PortletURL portletURL = liferayPortletResponse.createRenderURL();
+
+portletURL.setParameter("mvcRenderCommandName", "/users_admin/edit_organization");
+
+if (Validator.isNotNull(redirect)) {
+	portletURL.setParameter("redirect", redirect);
+}
+
+if (Validator.isNotNull(backURL)) {
+	portletURL.setParameter("backURL", backURL);
+}
+
+if (organization != null) {
+	portletURL.setParameter("organizationId", String.valueOf(organizationId));
+}
 %>
 
-<portlet:actionURL name="/users_admin/edit_organization" var="editOrganizationActionURL" />
-
-<portlet:renderURL var="editOrganizationRenderURL">
-	<portlet:param name="mvcRenderCommandName" value="/users_admin/edit_organization" />
-	<portlet:param name="backURL" value="<%= backURL %>" />
-</portlet:renderURL>
-
-<aui:form action="<%= editOrganizationActionURL %>" cssClass="container-fluid-1280" method="post" name="fm">
-	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= (organization == null) ? Constants.ADD : Constants.UPDATE %>" />
-	<aui:input name="redirect" type="hidden" value="<%= editOrganizationRenderURL %>" />
-	<aui:input name="backURL" type="hidden" value="<%= backURL %>" />
-	<aui:input name="organizationId" type="hidden" value="<%= organizationId %>" />
-
-	<%
-	request.setAttribute("addresses.className", Organization.class.getName());
-	request.setAttribute("addresses.classPK", organizationId);
-	request.setAttribute("emailAddresses.className", Organization.class.getName());
-	request.setAttribute("emailAddresses.classPK", organizationId);
-	request.setAttribute("phones.className", Organization.class.getName());
-	request.setAttribute("phones.classPK", organizationId);
-	request.setAttribute("websites.className", Organization.class.getName());
-	request.setAttribute("websites.classPK", organizationId);
-	%>
-
-	<liferay-util:buffer
-		var="htmlTop"
-	>
-		<c:if test="<%= organization != null %>">
-
-			<%
-			long logoId = organization.getLogoId();
-			%>
-
-			<div class="organization-info">
-				<div class="float-container">
-					<img alt="<%= HtmlUtil.escapeAttribute(organization.getName()) %>" class="organization-logo" src="<%= themeDisplay.getPathImage() %>/organization_logo?img_id=<%= logoId %>&t=<%= WebServerServletTokenUtil.getToken(logoId) %>" />
-
-					<span class="organization-name"><%= HtmlUtil.escape(organization.getName()) %></span>
-				</div>
-			</div>
-		</c:if>
-	</liferay-util:buffer>
-
-	<liferay-ui:form-navigator
-		backURL="<%= backURL %>"
-		formModelBean="<%= organization %>"
-		htmlTop="<%= htmlTop %>"
-		id="<%= FormNavigatorConstants.FORM_NAVIGATOR_ID_ORGANIZATIONS %>"
-		markupView="lexicon"
-	/>
-</aui:form>
-
-<aui:script>
-	function <portlet:namespace />createURL(href, value, onclick) {
-		return '<a href="' + href + '"' + (onclick ? ' onclick="' + onclick + '" ' : '') + '>' + value + '</a>';
-	}
-</aui:script>
+<liferay-frontend:screen-navigation
+	context="<%= organization %>"
+	key="<%= UserFormConstants.SCREEN_NAVIGATION_KEY_ORGANIZATIONS %>"
+	portletURL="<%= portletURL %>"
+/>

@@ -54,7 +54,6 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.Http;
-import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -68,7 +67,6 @@ import java.util.List;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
-import javax.portlet.PortletPreferences;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -298,19 +296,6 @@ public class EditOrganizationMVCActionCommand extends BaseMVCActionCommand {
 				publicLayoutSetPrototypeLinkEnabled,
 				privateLayoutSetPrototypeLinkEnabled);
 		}
-
-		// Reminder queries
-
-		String reminderQueries = actionRequest.getParameter("reminderQueries");
-
-		PortletPreferences portletPreferences = organization.getPreferences();
-
-		LocalizationUtil.setLocalizedPreferencesValues(
-			actionRequest, portletPreferences, "reminderQueries");
-
-		portletPreferences.setValue("reminderQueries", reminderQueries);
-
-		portletPreferences.store();
 
 		return organization;
 	}

@@ -129,7 +129,7 @@
 </tr>
 <tr>
 	<td>PREVIEW_ENTRY_SELECTED</td>
-	<td>//div[contains(@class,'open')]//li[@class='active' and contains(.,'${key_viewEntrySelected}')]</td>
+	<td>//div[contains(@class,'show')]//li[@class='active' and contains(.,'${key_viewEntrySelected}')]</td>
 	<td></td>
 </tr>
 <tr>

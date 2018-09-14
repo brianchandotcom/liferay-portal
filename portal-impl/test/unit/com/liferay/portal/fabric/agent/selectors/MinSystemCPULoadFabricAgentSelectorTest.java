@@ -18,10 +18,10 @@ import com.liferay.portal.fabric.agent.FabricAgent;
 import com.liferay.portal.fabric.status.AdvancedOperatingSystemMXBean;
 import com.liferay.portal.fabric.status.FabricStatus;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
-import com.liferay.portal.kernel.util.ProxyUtil;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
+import java.lang.reflect.Proxy;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -121,7 +121,7 @@ public class MinSystemCPULoadFabricAgentSelectorTest {
 	}
 
 	protected FabricAgent createFabricAgent(Double systemCpuLoad) {
-		return (FabricAgent)ProxyUtil.newProxyInstance(
+		return (FabricAgent)Proxy.newProxyInstance(
 			FabricAgent.class.getClassLoader(),
 			new Class<?>[] {FabricAgent.class},
 			new FabricAgentInvocationHandler(systemCpuLoad));
@@ -167,7 +167,7 @@ public class MinSystemCPULoadFabricAgentSelectorTest {
 			String methodName = method.getName();
 
 			if (methodName.equals("getFabricStatus")) {
-				return ProxyUtil.newProxyInstance(
+				return Proxy.newProxyInstance(
 					FabricStatus.class.getClassLoader(),
 					new Class<?>[] {FabricStatus.class},
 					new FabricStatusInvocationHandler(_systemCpuLoad));
@@ -196,7 +196,7 @@ public class MinSystemCPULoadFabricAgentSelectorTest {
 			String methodName = method.getName();
 
 			if (methodName.equals("getAdvancedOperatingSystemMXBean")) {
-				return ProxyUtil.newProxyInstance(
+				return Proxy.newProxyInstance(
 					AdvancedOperatingSystemMXBean.class.getClassLoader(),
 					new Class<?>[] {AdvancedOperatingSystemMXBean.class},
 					new AdvancedOperatingSystemMXBeanInvocationHandler(

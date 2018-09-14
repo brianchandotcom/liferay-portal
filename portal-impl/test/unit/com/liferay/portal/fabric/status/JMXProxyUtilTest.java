@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.process.ProcessCallable;
 import com.liferay.portal.kernel.process.ProcessException;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
-import com.liferay.portal.kernel.util.ProxyUtil;
 
 import java.io.Serializable;
 
@@ -34,6 +33,7 @@ import java.lang.management.PlatformManagedObject;
 import java.lang.management.ThreadInfo;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
+import java.lang.reflect.Proxy;
 
 import java.util.Arrays;
 import java.util.List;
@@ -222,7 +222,7 @@ public class JMXProxyUtilTest {
 		Assert.assertTrue(
 			JMXProxyUtil.equals(
 				objectName,
-				ProxyUtil.newProxyInstance(
+				Proxy.newProxyInstance(
 					JMXProxyUtil.class.getClassLoader(),
 					new Class<?>[] {Runnable.class},
 					new JMXProxyUtil.JMXProxyInvocationHandler(
@@ -230,7 +230,7 @@ public class JMXProxyUtilTest {
 		Assert.assertFalse(
 			JMXProxyUtil.equals(
 				objectName,
-				ProxyUtil.newProxyInstance(
+				Proxy.newProxyInstance(
 					JMXProxyUtil.class.getClassLoader(),
 					new Class<?>[] {Runnable.class},
 					new InvocationHandler() {

@@ -53,10 +53,17 @@ public abstract class PortalWorkspace extends BaseWorkspace {
 			_companionPortalWorkbench =
 				WorkbenchFactory.newCompanionPortalWorkbench(
 					_primaryPortalWorkbench);
+			_otherPortalWorkbench = WorkbenchFactory.newOtherPortalWorkbench(
+				_primaryPortalWorkbench);
 		}
 		else {
 			_companionPortalWorkbench = null;
+			_otherPortalWorkbench = null;
 		}
+	}
+
+	protected OtherPortalWorkbench getOtherPortalWorkbench() {
+		return _otherPortalWorkbench;
 	}
 
 	protected PortalWorkbench getPrimaryPortalWorkbench() {
@@ -73,7 +80,10 @@ public abstract class PortalWorkspace extends BaseWorkspace {
 			_companionPortalWorkbench.setUp();
 		}
 
-		_checkoutOtherPortalLocalGitBranch();
+		if (_otherPortalWorkbench != null) {
+			_otherPortalWorkbench.setUp();
+		}
+
 
 		_checkoutPluginsLocalGitBranch();
 	}
@@ -88,60 +98,11 @@ public abstract class PortalWorkspace extends BaseWorkspace {
 			_companionPortalWorkbench.tearDown();
 		}
 
-		cleanupLocalGitBranch(_otherPortalLocalGitBranch);
+		if (_otherPortalWorkbench != null) {
+			_otherPortalWorkbench.tearDown();
+		}
+
 		cleanupLocalGitBranch(_pluginsLocalGitBranch);
-	}
-	protected PortalLocalGitBranch getOtherPortalLocalGitBranch() {
-		if (_otherPortalLocalGitBranch != null) {
-			return _otherPortalLocalGitBranch;
-		}
-
-		String portalUpstreamBranchName =
-			_primaryPortalWorkbench.getUpstreamBranchName();
-
-		String otherPortalBranchName;
-
-		if (portalUpstreamBranchName.contains("7.0.x")) {
-			otherPortalBranchName = portalUpstreamBranchName.replace(
-				"7.0.x", "master");
-		}
-		else if (portalUpstreamBranchName.contains("7.1.x")) {
-			otherPortalBranchName = portalUpstreamBranchName.replace(
-				"7.1.x", "7.0.x");
-		}
-		else if (portalUpstreamBranchName.contains("master")) {
-			otherPortalBranchName = portalUpstreamBranchName.replace(
-				"master", "7.0.x");
-		}
-		else {
-			return null;
-		}
-
-		String otherPortalGitRepositoryName = "liferay-portal-ee";
-
-		if (otherPortalBranchName.equals("master")) {
-			otherPortalGitRepositoryName = otherPortalGitRepositoryName.replace(
-				"-ee", "");
-		}
-
-		LocalGitRepository otherPortalLocalGitRepository =
-			GitRepositoryFactory.getLocalGitRepository(
-				otherPortalGitRepositoryName, otherPortalBranchName);
-
-		RemoteGitRef remoteGitRef = GitUtil.getRemoteGitRef(
-			JenkinsResultsParserUtil.combine(
-				"https://github.com/liferay/", otherPortalGitRepositoryName,
-				"/tree/", otherPortalBranchName));
-
-		LocalGitBranch otherPortalLocalGitBranch =
-			GitHubDevSyncUtil.createCachedLocalGitBranch(
-				otherPortalLocalGitRepository, remoteGitRef,
-				true);
-
-		_otherPortalLocalGitBranch =
-			(PortalLocalGitBranch)otherPortalLocalGitBranch;
-
-		return _otherPortalLocalGitBranch;
 	}
 
 	protected PluginsLocalGitBranch getPluginsLocalGitBranch() {
@@ -179,17 +140,6 @@ public abstract class PortalWorkspace extends BaseWorkspace {
 	@Override
 	protected void writeWorkbenchPropertiesFiles() {
 		_primaryPortalWorkbench.writePropertiesFiles();
-	}
-
-	private void _checkoutOtherPortalLocalGitBranch() {
-		PortalLocalGitBranch otherPortalLocalGitBranch =
-			getOtherPortalLocalGitBranch();
-
-		if (otherPortalLocalGitBranch == null) {
-			return;
-		}
-
-		checkoutLocalGitBranch(otherPortalLocalGitBranch);
 	}
 
 	private void _checkoutPluginsLocalGitBranch() {
@@ -262,7 +212,7 @@ public abstract class PortalWorkspace extends BaseWorkspace {
 			"liferay-portal(-ee)?)/.*");
 
 	private final CompanionPortalWorkbench _companionPortalWorkbench;
-	private PortalLocalGitBranch _otherPortalLocalGitBranch;
+	private final OtherPortalWorkbench _otherPortalWorkbench;
 	private PluginsLocalGitBranch _pluginsLocalGitBranch;
 	private final PortalWorkbench _primaryPortalWorkbench;
 

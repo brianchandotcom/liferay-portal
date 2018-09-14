@@ -1,30 +1,29 @@
 import PublishButton from '../PublishButton.es';
-import {dom} from 'metal-dom';
 
 const formInstanceId = '12345';
 const namespace = 'portlet_namespace';
 const spritemap = 'spritemap';
 const url = 'publish/url';
 
-const createInput = (id, value) => {
-	dom.enterDocument(`<input id="${namespace}${id}" value="${value}" />`);
-
-	return document.querySelector(`#${namespace}${id}`);
+const props = {
+	formInstanceId,
+	namespace,
+	published: true,
+	resolvePublishURL: () => Promise.resolve({formInstanceId, publishURL: 'published/form'}),
+	spritemap,
+	url
 };
 
 describe(
 	'PublishButton',
 	() => {
 		let component;
-		let formInstanceIdInput;
 
 		afterEach(
 			() => {
 				if (component) {
 					component.dispose();
 				}
-
-				dom.exitDocument(formInstanceIdInput);
 			}
 		);
 
@@ -32,22 +31,13 @@ describe(
 			() => {
 				jest.useFakeTimers();
 				fetch.resetMocks();
-
-				createInput('formInstanceId', formInstanceId);
 			}
 		);
 
 		it(
 			'should render published',
 			() => {
-				component = new PublishButton(
-					{
-						namespace,
-						published: true,
-						spritemap,
-						url
-					}
-				);
+				component = new PublishButton(props);
 
 				expect(component).toMatchSnapshot();
 			}
@@ -58,10 +48,8 @@ describe(
 			() => {
 				component = new PublishButton(
 					{
-						namespace,
-						published: false,
-						spritemap,
-						url
+						...props,
+						published: false
 					}
 				);
 
@@ -75,14 +63,7 @@ describe(
 				it(
 					'should call fetch with published=true',
 					() => {
-						component = new PublishButton(
-							{
-								namespace,
-								published: false,
-								spritemap,
-								url
-							}
-						);
+						component = new PublishButton(props);
 
 						const fetchSpy = jest.spyOn(component, 'fetch');
 
@@ -113,14 +94,7 @@ describe(
 				it(
 					'should call fetch with published=false',
 					() => {
-						component = new PublishButton(
-							{
-								namespace,
-								published: false,
-								spritemap,
-								url
-							}
-						);
+						component = new PublishButton(props);
 
 						const fetchSpy = jest.spyOn(component, 'fetch');
 
@@ -153,10 +127,8 @@ describe(
 					() => {
 						component = new PublishButton(
 							{
-								namespace,
-								published: false,
-								spritemap,
-								url
+								...props,
+								published: false
 							}
 						);
 
@@ -173,10 +145,8 @@ describe(
 					() => {
 						component = new PublishButton(
 							{
-								namespace,
-								published: true,
-								spritemap,
-								url
+								...props,
+								published: true
 							}
 						);
 
@@ -191,14 +161,7 @@ describe(
 				it(
 					'should be called when button is clicked',
 					() => {
-						component = new PublishButton(
-							{
-								namespace,
-								published: true,
-								spritemap,
-								url
-							}
-						);
+						component = new PublishButton(props);
 
 						const toggleSpy = jest.spyOn(component, 'toggle');
 

@@ -1,22 +1,18 @@
-/* eslint no-spaced-func: 0 */
-
 import {Config} from 'metal-state';
-import {Alert} from 'frontend-js-web/liferay/compat/alert/Alert.es';
 import ClayButton from 'clay-button';
+import Notifications from '../../util/Notifications.es';
 import URLEncodedFetcher from '../../util/URLEncodedFetcher.es';
 
 class PublishButton extends URLEncodedFetcher {
 	static PROPS = {
-		beforePublish: Config.func().value(() => Promise.resolve()),
 		namespace: Config.string().required(),
 		published: Config.bool().value(false),
+		resolvePublishURL: Config.func().value(() => Promise.resolve({})),
 		spritemap: Config.string().required()
 	};
 
 	disposeInternal() {
-		if (this._alert && !this._alert.isDisposed()) {
-			this._alert.dispose();
-		}
+		Notifications.closeAlert();
 	}
 
 	publish() {
@@ -43,7 +39,6 @@ class PublishButton extends URLEncodedFetcher {
 
 	render() {
 		const {published, spritemap} = this.props;
-
 		const {strings} = Liferay.DDM.FormSettings;
 
 		return (
@@ -61,91 +56,50 @@ class PublishButton extends URLEncodedFetcher {
 		);
 	}
 
-	_createFormURL() {
-		let formURL;
-
-		const settingsDDMForm = Liferay.component('settingsDDMForm');
-
-		const requireAuthenticationField = settingsDDMForm.getField('requireAuthentication');
-
-		if (requireAuthenticationField.getValue()) {
-			formURL = Liferay.DDM.FormSettings.restrictedFormURL;
-		}
-		else {
-			formURL = Liferay.DDM.FormSettings.sharedFormURL;
-		}
-
-		return formURL + this._getFormInstanceId();
-	}
-
-	_getFormInstanceId() {
-		const {namespace} = this.props;
-
-		return document.querySelector(`#${namespace}formInstanceId`).value;
-	}
-
 	_handleButtonClicked() {
 		this.toggle();
 	}
 
 	_savePublished(published) {
-		const {beforePublish, namespace} = this.props;
+		const {namespace, resolvePublishURL} = this.props;
+		const {strings} = Liferay.DDM.FormSettings;
 
-		const payload = {
-			[`${namespace}formInstanceId`]: this._getFormInstanceId(),
-			[`${namespace}published`]: published
-		};
+		return resolvePublishURL().then(
+			({formInstanceId, publishURL}) => {
+				const payload = {
+					[`${namespace}formInstanceId`]: formInstanceId,
+					[`${namespace}published`]: published
+				};
+				return this.fetch(payload).then(
+					() => {
+						this.props.published = published;
 
-		return beforePublish().then(() => this.fetch(payload))
-			.then(
-				responseData => {
-					this.props.published = published;
-
-					if (published) {
-						this._showPublishAlert();
-					}
-					else {
-						this._showUnpublishAlert();
-					}
-
-					return responseData;
-				}
-			);
-	}
-
-	_showAlert(message) {
-		const {namespace} = this.props;
-
-		if (this._alert && !this._alert.isDisposed()) {
-			this._alert.dispose();
-		}
-
-		this._alert = new Alert(
-			{
-				body: message,
-				events: {
-					visibleChanged: ({newVal}) => {
-						if (!newVal) {
-							this._alert.close();
+						if (published) {
+							this._showPublishAlert(publishURL);
 						}
+						else {
+							this._showUnpublishAlert();
+						}
+
+						return publishURL;
 					}
-				},
-				hideDelay: 3000,
-				visible: true
-			},
-			document.querySelector(`#p_p_id${namespace} .lfr-alert-wrapper`)
+				);
+			}
+		).catch(
+			() => {
+				Notifications.showAlert(strings['please-add-at-least-one-field'], 'danger');
+			}
 		);
 	}
 
-	_showPublishAlert() {
+	_showPublishAlert(publishURL) {
 		const {strings} = Liferay.DDM.FormSettings;
-		const formUrl = this._createFormURL();
 		const message = strings['the-form-was-published-successfully-access-it-with-this-url-x'];
 
-		this._showAlert(
+		Notifications.showAlert(
 			message.replace(
 				/\{0\}/gim,
-				`<span style="font-weight: 500"><a href=${formUrl} target="_blank">${formUrl}</a></span>`
+				`<span style="font-weight: 500"><a href=${publishURL} target="_blank">${publishURL}</a></span>`
 			)
 		);
 	}
@@ -153,7 +107,7 @@ class PublishButton extends URLEncodedFetcher {
 	_showUnpublishAlert() {
 		const {strings} = Liferay.DDM.FormSettings;
 
-		this._showAlert(strings['the-form-was-unpublished-successfully']);
+		Notifications.showAlert(strings['the-form-was-unpublished-successfully']);
 	}
 }
 

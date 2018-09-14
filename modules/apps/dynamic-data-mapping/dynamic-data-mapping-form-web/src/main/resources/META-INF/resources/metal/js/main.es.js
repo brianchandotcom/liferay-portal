@@ -12,6 +12,7 @@ import dom from 'metal-dom';
 import LayoutProvider from './components/LayoutProvider/index.es';
 import loader from './components/FieldsLoader/index.es';
 import PublishButton from './components/PublishButton/PublishButton.es';
+import PreviewButton from './components/PreviewButton/PreviewButton.es';
 import RuleBuilder from './pages/RuleBuilder/index.es';
 import StateSyncronizer from './util/StateSyncronizer.es';
 
@@ -67,7 +68,7 @@ class Form extends Component {
 		 * @type {!array}
 		 */
 
-		formInstanceId: Config.number().value(0),
+		formInstanceId: Config.string().value(0),
 
 		/**
 		 * A map with all translated values available as the form description.
@@ -183,8 +184,24 @@ class Form extends Component {
 	}
 
 	@autobind
-	_handleBeforePublish() {
-		return this._autoSave.save(false);
+	_resolvePublishURL() {
+		return this._autoSave.save(false).then(
+			() => {
+				return {
+					formInstanceId: this._getFormInstanceId(),
+					publishURL: this._createFormURL()
+				};
+			}
+		);
+	}
+
+	@autobind
+	_resolvePreviewURL() {
+		return this._autoSave.save(true).then(
+			() => {
+				return `${this._createFormURL()}/preview`;
+			}
+		);
 	}
 
 	_saveButtonLabelValueFn() {
@@ -271,6 +288,29 @@ class Form extends Component {
 			dom.on('.forms-management-bar li', 'click', this._handleFormNavClicked.bind(this)),
 			dom.on('#addFieldButton', 'click', this._handleAddFieldButtonClicked.bind(this))
 		);
+	}
+
+	_createFormURL() {
+		let formURL;
+
+		const settingsDDMForm = Liferay.component('settingsDDMForm');
+
+		const requireAuthenticationField = settingsDDMForm.getField('requireAuthentication');
+
+		if (requireAuthenticationField.getValue()) {
+			formURL = Liferay.DDM.FormSettings.restrictedFormURL;
+		}
+		else {
+			formURL = Liferay.DDM.FormSettings.sharedFormURL;
+		}
+
+		return formURL + this._getFormInstanceId();
+	}
+
+	_getFormInstanceId() {
+		const {namespace} = this.props;
+
+		return document.querySelector(`#${namespace}formInstanceId`).value;
 	}
 
 	_getSettingsDDMForm() {
@@ -372,6 +412,7 @@ class Form extends Component {
 	render() {
 		const {
 			context,
+			formInstanceId,
 			namespace,
 			published,
 			spritemap,
@@ -408,18 +449,21 @@ class Form extends Component {
 				<div class="container-fluid-1280">
 					<div class="button-holder ddm-form-builder-buttons">
 						<PublishButton
-							beforePublish={this._handleBeforePublish}
+							formInstanceId={formInstanceId}
 							namespace={namespace}
 							published={published}
+							resolvePublishURL={this._resolvePublishURL}
 							spritemap={spritemap}
 							url={Liferay.DDM.FormSettings.publishFormInstanceURL}
 						/>
 						<button class="btn ddm-button btn-default" data-onclick="_handleSaveButtonClicked" ref="saveButton">
 							{saveButtonLabel}
 						</button>
-						<button class="btn ddm-button btn-link" ref="previewButton" type="button">
-							{strings['preview-form']}
-						</button>
+						<PreviewButton
+							namespace={namespace}
+							resolvePreviewURL={this._resolvePreviewURL}
+							spritemap={spritemap}
+						/>
 					</div>
 
 					<ClayModal

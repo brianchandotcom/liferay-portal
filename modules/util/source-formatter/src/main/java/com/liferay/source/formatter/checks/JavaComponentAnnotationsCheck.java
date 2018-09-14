@@ -15,15 +15,18 @@
 package com.liferay.source.formatter.checks;
 
 import com.liferay.petra.string.CharPool;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.NaturalOrderStringComparator;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.tools.ToolsUtil;
+import com.liferay.source.formatter.checks.util.SourceUtil;
 import com.liferay.source.formatter.parser.JavaClass;
 import com.liferay.source.formatter.parser.JavaTerm;
 
 import java.io.IOException;
 
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -46,11 +49,55 @@ public class JavaComponentAnnotationsCheck extends JavaAnnotationsCheck {
 		String fileName, JavaClass javaClass, String annotation,
 		String indent) {
 
-		if (!annotation.contains("@Component(")) {
+		if (!annotation.contains("@Component")) {
 			return annotation;
 		}
 
-		return _formatAnnotationParameterProperties(annotation);
+		annotation = _formatAnnotationParameterProperties(annotation);
+		annotation = _formatServiceAttribute(
+			annotation, javaClass.getImplementedClassNames());
+
+		return annotation;
+	}
+
+	private String _addServiceAttribute(
+		String annotation, List<String> implementedClassNames) {
+
+		String serviceAttribute = _getServiceAttribute(implementedClassNames);
+
+		if (!annotation.contains("(")) {
+			return StringBundler.concat(
+				annotation.substring(0, annotation.length() - 1), "(",
+				serviceAttribute, ")\n");
+		}
+
+		Matcher matcher = _attributePattern.matcher(annotation);
+
+		while (matcher.find()) {
+			if (!ToolsUtil.isInsideQuotes(annotation, matcher.end()) &&
+				(getLevel(annotation.substring(0, matcher.end()), "{", "}") ==
+					0)) {
+
+				String attributeName = matcher.group(1);
+
+				if (attributeName.compareTo("service") > 0) {
+					return StringUtil.insert(
+						annotation, serviceAttribute + ", ", matcher.start(1));
+				}
+			}
+		}
+
+		String indent = SourceUtil.getIndent(annotation);
+
+		if (annotation.endsWith("\n" + indent + ")\n")) {
+			int pos = annotation.lastIndexOf("\n", annotation.length() - 2);
+
+			return StringUtil.insert(
+				annotation, ",\n\t" + indent + serviceAttribute, pos);
+		}
+
+		return StringUtil.replaceLast(
+			annotation, ')', ", " + serviceAttribute + ")");
 	}
 
 	private String _formatAnnotationParameterProperties(String annotation) {
@@ -61,7 +108,7 @@ public class JavaComponentAnnotationsCheck extends JavaAnnotationsCheck {
 			int x = matcher.end();
 
 			while (true) {
-				x = annotation.indexOf(CharPool.CLOSE_CURLY_BRACE, x + 1);
+				x = annotation.indexOf(CharPool.CLOSE_CURLY_BRACE, x);
 
 				if (!ToolsUtil.isInsideQuotes(annotation, x)) {
 					break;
@@ -123,8 +170,51 @@ public class JavaComponentAnnotationsCheck extends JavaAnnotationsCheck {
 		return annotation;
 	}
 
+	private String _formatServiceAttribute(
+		String annotation, List<String> implementedClassNames) {
+
+		Matcher matcher = _serviceAttributePattern.matcher(annotation);
+
+		if (!matcher.find()) {
+			return _addServiceAttribute(annotation, implementedClassNames);
+		}
+
+		return annotation;
+	}
+
+	private String _getServiceAttribute(List<String> implementedClassNames) {
+		if (implementedClassNames.isEmpty()) {
+			return "service = {}";
+		}
+
+		if (implementedClassNames.size() == 1) {
+			return StringBundler.concat(
+				"service = ", implementedClassNames.get(0), ".class");
+		}
+
+		StringBundler sb = new StringBundler(
+			implementedClassNames.size() * 3 + 1);
+
+		sb.append("service = {");
+
+		for (String implementedClassName : implementedClassNames) {
+			sb.append(implementedClassName);
+			sb.append(".class");
+			sb.append(", ");
+		}
+
+		sb.setIndex(sb.index() - 1);
+
+		sb.append("}");
+
+		return sb.toString();
+	}
+
 	private final Pattern _annotationParameterPropertyPattern = Pattern.compile(
 		"\t(\\w+) = \\{");
+	private final Pattern _attributePattern = Pattern.compile("\\W(\\w+)\\s*=");
+	private final Pattern _serviceAttributePattern = Pattern.compile(
+		"\\Wservice\\s*=");
 
 	private class AnnotationParameterPropertyComparator
 		extends NaturalOrderStringComparator {

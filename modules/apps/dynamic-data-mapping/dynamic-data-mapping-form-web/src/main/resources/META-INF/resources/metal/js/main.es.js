@@ -88,6 +88,16 @@ class Form extends Component {
 		 * @type {!array}
 		 */
 
+		functionsMetadata: Config.object().value({}),
+
+		/**
+		 * The context for rendering a layout that represents a form.
+		 * @default undefined
+		 * @instance
+		 * @memberof Form
+		 * @type {!array}
+		 */
+
 		localizedName: Config.object().value({}),
 
 		/**
@@ -439,7 +449,7 @@ class Form extends Component {
 			<div class={'ddm-form-builder'}>
 				<LayoutProvider {...layoutProviderProps}>
 					{showRuleBuilder && (
-						<RuleBuilder pages={context.pages} rules={this.props.rules} spritemap={spritemap} />
+						<RuleBuilder functionsMetadata={this.props.functionsMetadata} pages={context.pages} rules={this.props.rules} spritemap={spritemap} />
 					)}
 					{!showRuleBuilder && (
 						<Builder namespace={this.props.namespace} ref="builder" />

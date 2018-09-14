@@ -12,6 +12,41 @@ import RuleEditor from '../../components/RuleEditor/index.es';
 
 class RuleBuilder extends Component {
 	static PROPS = {
+		functionsMetadata: Config.object(
+			{
+				number: Config.arrayOf(
+					Config.shapeOf(
+						{
+							label: Config.string(),
+							name: Config.string(),
+							parameterTypes: Config.array(),
+							returnType: Config.string()
+						}
+					)
+				),
+				text: Config.arrayOf(
+					Config.shapeOf(
+						{
+							label: Config.string(),
+							name: Config.string(),
+							parameterTypes: Config.array(),
+							returnType: Config.string()
+						}
+					)
+				),
+				user: Config.arrayOf(
+					Config.shapeOf(
+						{
+							label: Config.string(),
+							name: Config.string(),
+							parameterTypes: Config.array(),
+							returnType: Config.string()
+						}
+					)
+				)
+			}
+		),
+
 		pages: Config.array().required(),
 
 		rules: Config.arrayOf(

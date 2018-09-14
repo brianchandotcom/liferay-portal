@@ -40,7 +40,7 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.taglib.servlet.PipingServletResponse;
 
-import java.util.Collections;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -158,6 +158,8 @@ public class AssetDisplayLayoutTypeController
 			Layout layout, long layoutPageTemplateEntryId)
 		throws JSONException {
 
+		List<FragmentEntryLink> fragmentEntryLinksList = new ArrayList<>();
+
 		LayoutPageTemplateStructure layoutPageTemplateStructure =
 			_layoutPageTemplateStructureLocalService.
 				fetchLayoutPageTemplateStructure(
@@ -167,13 +169,13 @@ public class AssetDisplayLayoutTypeController
 					layoutPageTemplateEntryId);
 
 		if (layoutPageTemplateStructure == null) {
-			return Collections.emptyList();
+			return fragmentEntryLinksList;
 		}
 
 		String data = layoutPageTemplateStructure.getData();
 
 		if (Validator.isNull(data)) {
-			return Collections.emptyList();
+			return fragmentEntryLinksList;
 		}
 
 		JSONObject dataJSONObject = JSONFactoryUtil.createJSONObject(data);
@@ -181,14 +183,14 @@ public class AssetDisplayLayoutTypeController
 		JSONArray structureJSONArray = dataJSONObject.getJSONArray("structure");
 
 		if (structureJSONArray == null) {
-			return Collections.emptyList();
+			return fragmentEntryLinksList;
 		}
 
 		List<FragmentEntryLink> fragmentEntryLinks =
 			_fragmentEntryLinkLocalService.getFragmentEntryLinks(
 				layout.getGroupId(),
-				_portal.getClassNameId(Layout.class.getName()),
-				layout.getPlid());
+				_portal.getClassNameId(LayoutPageTemplateEntry.class.getName()),
+				layoutPageTemplateEntryId);
 
 		Stream<FragmentEntryLink> stream = fragmentEntryLinks.stream();
 
@@ -202,11 +204,11 @@ public class AssetDisplayLayoutTypeController
 				structureJSONArray.getLong(i));
 
 			if (fragmentEntryLink != null) {
-				fragmentEntryLinks.add(fragmentEntryLink);
+				fragmentEntryLinksList.add(fragmentEntryLink);
 			}
 		}
 
-		return fragmentEntryLinks;
+		return fragmentEntryLinksList;
 	}
 
 	private long _getLayoutPageTemplateEntryId(

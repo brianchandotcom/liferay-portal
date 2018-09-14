@@ -35,20 +35,22 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class OrganizationScreenNavigationFactory {
 
-	public ScreenNavigationCategory createCategory(String categoryKey) {
+	public ScreenNavigationCategory createScreenNavigationCategory(
+		String categoryKey) {
+
 		return new OrganizationScreenNavigationCategory(categoryKey);
 	}
 
-	public ScreenNavigationEntry<Organization> createEntry(
+	public ScreenNavigationEntry<Organization> createScreenNavigationEntry(
 		String entryKey, String categoryKey, String jspPath,
 		String mvcActionCommandName) {
 
-		return createEntry(
+		return createScreenNavigationEntry(
 			entryKey, categoryKey, jspPath, mvcActionCommandName,
 			_IS_VISIBLE_PREDICATE_ALWAYS);
 	}
 
-	public ScreenNavigationEntry<Organization> createEntry(
+	public ScreenNavigationEntry<Organization> createScreenNavigationEntry(
 		String entryKey, String categoryKey, String jspPath,
 		String mvcActionCommandName,
 		BiFunction<User, Organization, Boolean> isVisiblePredicate) {
@@ -58,11 +60,12 @@ public class OrganizationScreenNavigationFactory {
 			jspPath, mvcActionCommandName, isVisiblePredicate);
 	}
 
-	public ScreenNavigationEntry<Organization> createUpdateOnlyEntry(
-		String entryKey, String categoryKey, String jspPath,
-		String mvcActionCommandName) {
+	public ScreenNavigationEntry<Organization>
+		createUpdateOnlyScreenNavigationEntry(
+			String entryKey, String categoryKey, String jspPath,
+			String mvcActionCommandName) {
 
-		return createEntry(
+		return createScreenNavigationEntry(
 			entryKey, categoryKey, jspPath, mvcActionCommandName,
 			_IS_VISIBLE_PREDICATE_ORGANIZATION_EXISTS);
 	}

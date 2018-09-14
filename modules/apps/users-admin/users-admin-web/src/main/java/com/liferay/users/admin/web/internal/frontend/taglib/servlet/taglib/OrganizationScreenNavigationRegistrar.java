@@ -60,26 +60,27 @@ public class OrganizationScreenNavigationRegistrar {
 
 	protected void registerScreenNavigationCategories() {
 		_registerScreenNavigationCategory(
-			_organizationScreenNavigationFactory.createCategory(
+			_organizationScreenNavigationFactory.createScreenNavigationCategory(
 				_CATEGORY_ORGANIZATION_INFORMATION),
 			10);
 		_registerScreenNavigationCategory(
-			_organizationScreenNavigationFactory.createCategory(
+			_organizationScreenNavigationFactory.createScreenNavigationCategory(
 				_CATEGORY_MISCELLANEOUS),
 			20);
 	}
 
 	protected void registerScreenNavigationEntries() {
 		_registerScreenNavigationEntry(
-			_organizationScreenNavigationFactory.createEntry(
+			_organizationScreenNavigationFactory.createScreenNavigationEntry(
 				"general", _CATEGORY_ORGANIZATION_INFORMATION,
 				"/organization/general.jsp", "/users_admin/edit_organization"),
 			10);
 		_registerScreenNavigationEntry(
-			_organizationScreenNavigationFactory.createUpdateOnlyEntry(
-				"reminder-queries", _CATEGORY_MISCELLANEOUS,
-				"/organization/reminder_queries.jsp",
-				"/users_admin/organization/update_reminder_queries"),
+			_organizationScreenNavigationFactory.
+				createUpdateOnlyScreenNavigationEntry(
+					"reminder-queries", _CATEGORY_MISCELLANEOUS,
+					"/organization/reminder_queries.jsp",
+					"/users_admin/organization/update_reminder_queries"),
 			20);
 	}
 

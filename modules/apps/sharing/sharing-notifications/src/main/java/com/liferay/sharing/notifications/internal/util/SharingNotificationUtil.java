@@ -48,11 +48,15 @@ public class SharingNotificationUtil {
 			LiferayPortletResponse liferayPortletResponse)
 		throws Exception {
 
-		AssetRenderer assetRenderer = _getAssetRenderer(sharingEntry);
+		if ((liferayPortletRequest != null) &&
+			(liferayPortletResponse != null)) {
 
-		if (assetRenderer != null) {
-			return assetRenderer.getURLViewInContext(
-				liferayPortletRequest, liferayPortletResponse, null);
+			AssetRenderer assetRenderer = _getAssetRenderer(sharingEntry);
+
+			if (assetRenderer != null) {
+				return assetRenderer.getURLViewInContext(
+					liferayPortletRequest, liferayPortletResponse, null);
+			}
 		}
 
 		return null;

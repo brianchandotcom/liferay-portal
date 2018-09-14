@@ -46,6 +46,10 @@ public class JavaAnnotationsCheck extends BaseFileCheck {
 	protected String formatAnnotation(
 		String fileName, String content, String annotation, String indent) {
 
+		if (!annotation.contains(StringPool.OPEN_PARENTHESIS)) {
+			return annotation;
+		}
+
 		annotation = _fixAnnotationLineBreaks(annotation, indent);
 		annotation = _fixSingleValueArray(annotation);
 
@@ -163,18 +167,16 @@ public class JavaAnnotationsCheck extends BaseFileCheck {
 		String previousAnnotation = null;
 
 		for (String annotation : annotations) {
-			String newAnnotation = annotation;
+			String newAnnotation = formatAnnotation(
+				fileName, content, annotation, indent);
 
 			if (newAnnotation.contains(StringPool.OPEN_PARENTHESIS)) {
-				newAnnotation = formatAnnotation(
-					fileName, content, annotation, indent);
-
 				newAnnotation = _formatAnnotations(
 					fileName, content, newAnnotation, indent + "\t\t", false);
-
-				annotationsBlock = StringUtil.replace(
-					annotationsBlock, annotation, newAnnotation);
 			}
+
+			annotationsBlock = StringUtil.replace(
+				annotationsBlock, annotation, newAnnotation);
 
 			if (!sortAnnotations) {
 				continue;

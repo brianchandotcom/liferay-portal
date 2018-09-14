@@ -104,7 +104,7 @@
 		"csf": "csf src/**/metal/**/*.es.js src/**/metal/**/*.soy",
 		"format": "npm run csf -- -i",
 		"lint": "eslint src/main/resources/META-INF/resources/metal/",
-		"soy": "metalsoy --soyDeps './node_modules/com.liferay.frontend.taglib.clay/META-INF/resources/node_modules/*/src/*.soy'",
+		"soy": "metalsoy --soyDeps \"./node_modules/com.liferay.frontend.taglib.clay/META-INF/resources/node_modules/*/src/*.soy\"",
 		"test": "npm run soy && NODE_ENV=test jest --coverage && npm run clean",
 		"test:snapshots": "npm run soy && NODE_ENV=test jest --coverage -u && npm run clean"
 	},

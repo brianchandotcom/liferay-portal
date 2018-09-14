@@ -149,7 +149,7 @@
 	"scripts": {
 		"build": "npm run build-soy && npm run build-js && npm run bundler && npm run clean",
 		"build-js": "babel --ignore '**/__tests__/*.js,**/__tests__/*/*.js' --source-maps -d classes/META-INF/resources src/main/resources/META-INF/resources",
-		"build-soy": "metalsoy --soyDeps './node_modules/com.liferay.frontend.taglib.clay/META-INF/resources/node_modules/*/src/*.soy'",
+		"build-soy": "metalsoy --soyDeps \"./node_modules/com.liferay.frontend.taglib.clay/META-INF/resources/node_modules/*/src/*.soy\"",
 		"bundler": "liferay-npm-bundler",
 		"checkFormat": "npm run csf",
 		"clean": "npm run clean-soy",

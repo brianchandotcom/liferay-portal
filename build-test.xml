@@ -4105,7 +4105,7 @@ war.path=${app.server.weblogic.portal.dir}/</echo>
 					<propertyregex
 						input="@{patch.file.path}"
 						property="patch.name"
-						regexp=".*liferay-(fix-pack-)?(.*).zip"
+						regexp=".*liferay-(fix-pack-)?(.*-\d{4})(-build\d*)?(-src)?.zip"
 						replace="\2"
 					/>
 

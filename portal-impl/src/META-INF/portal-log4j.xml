@@ -1020,6 +1020,10 @@
 		<priority value="ERROR" />
 	</category>
 
+	<category name="org.apache.aries.jax.rs.whiteboard.activator.CxfJaxrsBundleActivator">
+		<priority value="WARN" />
+	</category>
+
 	<category name="org.apache.axis">
 		<priority value="INFO" />
 	</category>

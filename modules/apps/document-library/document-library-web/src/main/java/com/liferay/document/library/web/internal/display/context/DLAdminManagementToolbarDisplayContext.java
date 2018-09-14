@@ -40,6 +40,8 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
+import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.servlet.taglib.ui.Menu;
 import com.liferay.portal.kernel.servlet.taglib.ui.URLMenuItem;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -52,6 +54,7 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.staging.StagingGroupHelper;
 import com.liferay.staging.StagingGroupHelperUtil;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -184,6 +187,15 @@ public class DLAdminManagementToolbarDisplayContext {
 				}
 			}
 		};
+	}
+
+	public List<String> getAvailableActions(FileEntry fileEntry) {
+		return Arrays.asList(
+			"download", "move", "deleteEntries", "checkin", "checkout");
+	}
+
+	public List<String> getAvailableActions(Folder folder) {
+		return Arrays.asList("download", "move", "deleteEntries");
 	}
 
 	public String getClearResultsURL() {

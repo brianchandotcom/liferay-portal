@@ -119,9 +119,9 @@ if (portletTitleBasedNavigation && (folderId != DLFolderConstants.DEFAULT_PARENT
 
 					Map<String, Object> rowData = new HashMap<String, Object>();
 
+					rowData.put("actions", String.join(StringPool.COMMA, dlAdminManagementToolbarDisplayContext.getAvailableActions(fileEntry)));
 					rowData.put("draggable", draggable);
 					rowData.put("title", fileEntry.getTitle());
-					rowData.put("actions", "checkin,download,move");
 
 					row.setData(rowData);
 
@@ -366,10 +366,10 @@ if (portletTitleBasedNavigation && (folderId != DLFolderConstants.DEFAULT_PARENT
 
 					rowData.put("draggable", draggable);
 
+					rowData.put("actions", String.join(StringPool.COMMA, dlAdminManagementToolbarDisplayContext.getAvailableActions(curFolder)));
 					rowData.put("folder", true);
 					rowData.put("folder-id", curFolder.getFolderId());
 					rowData.put("title", curFolder.getName());
-					rowData.put("actions", "move,edit,permissions");
 
 					row.setData(rowData);
 

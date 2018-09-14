@@ -1080,6 +1080,8 @@
 	</command>
 
 	<command name="LockAndUnlockThread" priority="4">
+		<description message="This is a test case for UC-6." />
+
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Message Boards Page" />
 		</execute>

@@ -111,6 +111,9 @@ public class RenderPortletAction extends Action {
 			request, null, columnId, columnPos, columnCount, boundary,
 			decorate);
 
+		PortletContainerUtil.processPublicRenderParameters(
+			request, themeDisplay.getLayout());
+
 		PortletContainerUtil.render(request, response, portlet);
 
 		return null;

@@ -52,11 +52,17 @@
 		</if>
 	</tear-down>
 
-	<command name="AssertPageTemplateNotEditableinStagingLiveSite" priority="5">
-		<execute macro="ProductMenu#gotoSite">
+	<command name="AssertFragmentNotAccessibleinStagingLiveSite" priority="5">
+		<execute macro="ProductMenu#gotoLiveSite">
 			<var name="site" value="Site Name" />
 		</execute>
 
+		<execute macro="ProductMenu#viewNoPortlet">
+			<var name="category" value="Build" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Page Fragments" />
+		</execute>
+	</command>
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Build" />
 			<var name="panel" value="Site Administration" />

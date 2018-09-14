@@ -29,6 +29,8 @@ public interface Workbench {
 
 	public File getDirectory();
 
+	public String getFileContent(String filePath);
+
 	public String getGitHubDevBranchName();
 
 	public String getGitHubURL();

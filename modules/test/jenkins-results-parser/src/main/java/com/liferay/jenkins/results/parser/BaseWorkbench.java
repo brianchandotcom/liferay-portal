@@ -15,6 +15,7 @@
 package com.liferay.jenkins.results.parser;
 
 import java.io.File;
+import java.io.IOException;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -39,6 +40,19 @@ public abstract class BaseWorkbench implements Workbench {
 	@Override
 	public File getDirectory() {
 		return _localGitRepository.getDirectory();
+	}
+
+	public String getFileContent(String filePath) {
+		File file = new File(getDirectory(), filePath);
+
+		try {
+			String fileContent = JenkinsResultsParserUtil.read(file);
+
+			return fileContent.trim();
+		}
+		catch (IOException ioe) {
+			throw new RuntimeException(ioe);
+		}
 	}
 
 	@Override

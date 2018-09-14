@@ -21,8 +21,6 @@ import java.util.Properties;
  */
 public interface PortalWorkbench extends Workbench {
 
-	public String getFileContent(String filePath);
-
 	public void setPortalBuildProperties(Properties properties);
 
 	public void setPortalJobProperties(Job job);

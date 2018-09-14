@@ -23,20 +23,6 @@ public abstract class BasePortalWorkbench
 	extends BaseWorkbench implements PortalWorkbench {
 
 	@Override
-	public String getFileContent(String filePath) {
-		File file = new File(getDirectory(), filePath);
-
-		try {
-			String fileContent = JenkinsResultsParserUtil.read(file);
-
-			return fileContent.trim();
-		}
-		catch (IOException ioe) {
-			throw new RuntimeException(ioe);
-		}
-	}
-
-	@Override
 	public void setPortalBuildProperties(Properties properties) {
 		_portalLocalGitRepository.setBuildProperties(properties);
 	}

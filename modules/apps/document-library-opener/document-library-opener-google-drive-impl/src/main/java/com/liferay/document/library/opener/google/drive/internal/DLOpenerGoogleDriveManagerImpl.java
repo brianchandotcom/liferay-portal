@@ -94,7 +94,7 @@ public class DLOpenerGoogleDriveManagerImpl
 					DLOpenerFileEntryReferenceConstants.TYPE_EDIT);
 
 			return new DLOpenerGoogleDriveFileReference(
-				uploadedFile.getId(), fileEntry.getFileEntryId(),
+				fileEntry.getFileEntryId(),
 				_getGoogleDocsEditURL(uploadedFile.getId(), googleDocsMimeType),
 				new CachingSupplier<>(
 					() -> _getGoogleDriveFileTitle(userId, fileEntry)),
@@ -139,7 +139,7 @@ public class DLOpenerGoogleDriveManagerImpl
 					DLOpenerFileEntryReferenceConstants.TYPE_NEW);
 
 			return new DLOpenerGoogleDriveFileReference(
-				uploadedFile.getId(), fileEntry.getFileEntryId(),
+				fileEntry.getFileEntryId(),
 				_getGoogleDocsEditURL(uploadedFile.getId(), googleDocsMimeType),
 				new CachingSupplier<>(
 					() -> _getGoogleDriveFileTitle(userId, fileEntry)),
@@ -235,7 +235,7 @@ public class DLOpenerGoogleDriveManagerImpl
 			_checkCredential(userId);
 
 			return new DLOpenerGoogleDriveFileReference(
-				googleDriveFileId, fileEntry.getFileEntryId(),
+				fileEntry.getFileEntryId(),
 				_getGoogleDocsEditURL(
 					googleDriveFileId,
 					DLOpenerGoogleDriveMimeTypes.getGoogleDocsMimeType(

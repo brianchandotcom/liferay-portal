@@ -24,10 +24,9 @@ import java.util.function.Supplier;
 public class DLOpenerGoogleDriveFileReference {
 
 	public DLOpenerGoogleDriveFileReference(
-		String googleDriveFileId, long fileEntryId, String googleDocsEditURL,
+		long fileEntryId, String googleDocsEditURL,
 		Supplier<String> titleSupplier, Supplier<File> fileSupplier) {
 
-		_googleDriveFileId = googleDriveFileId;
 		_fileEntryId = fileEntryId;
 		_googleDocsEditURL = googleDocsEditURL;
 		_titleSupplier = titleSupplier;
@@ -46,10 +45,6 @@ public class DLOpenerGoogleDriveFileReference {
 		return _googleDocsEditURL;
 	}
 
-	public String getGoogleDriveFileId() {
-		return _googleDriveFileId;
-	}
-
 	public String getTitle() {
 		return _titleSupplier.get();
 	}
@@ -57,7 +52,6 @@ public class DLOpenerGoogleDriveFileReference {
 	private final long _fileEntryId;
 	private final Supplier<File> _fileSupplier;
 	private final String _googleDocsEditURL;
-	private final String _googleDriveFileId;
 	private final Supplier<String> _titleSupplier;
 
 }

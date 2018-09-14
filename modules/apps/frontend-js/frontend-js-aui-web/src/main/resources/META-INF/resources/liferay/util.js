@@ -382,7 +382,7 @@
 
 				result = {};
 
-				var getterFn = _.isFunction(attributeGetter);
+				var getterFn = Liferay.Util.isFunction(attributeGetter);
 				var getterString = _.isString(attributeGetter);
 
 				var attrs = el.attributes;
@@ -1093,7 +1093,7 @@
 			var selectBox = $('#' + selectBoxId);
 			var toggleBox = $('#' + toggleBoxId);
 
-			var dynamicValue = _.isFunction(value);
+			var dynamicValue = Liferay.Util.isFunction(value);
 
 			var toggle = function() {
 				var currentValue = selectBox.val();

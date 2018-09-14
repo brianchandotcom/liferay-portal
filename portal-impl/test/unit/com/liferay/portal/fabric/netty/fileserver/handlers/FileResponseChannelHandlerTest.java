@@ -14,6 +14,7 @@
 
 package com.liferay.portal.fabric.netty.fileserver.handlers;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.fabric.netty.codec.serialization.AnnotatedObjectDecoder;
 import com.liferay.portal.fabric.netty.fileserver.FileResponse;
 import com.liferay.portal.fabric.netty.util.NettyUtil;
@@ -22,7 +23,6 @@ import com.liferay.portal.kernel.concurrent.NoticeableFuture;
 import com.liferay.portal.kernel.test.CaptureHandler;
 import com.liferay.portal.kernel.test.JDKLoggerTestUtil;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Time;
 
 import io.netty.channel.Channel;
@@ -148,9 +148,9 @@ public class FileResponseChannelHandlerTest {
 
 			Assert.assertEquals(
 				StringBundler.concat(
-					"Unable to place result ", String.valueOf(fileResponse),
+					"Unable to place result ", fileResponse,
 					" because no future exists with ID ",
-					String.valueOf(fileResponse.getPath())),
+					fileResponse.getPath()),
 				logRecord.getMessage());
 		}
 	}
@@ -188,9 +188,9 @@ public class FileResponseChannelHandlerTest {
 
 			Assert.assertEquals(
 				StringBundler.concat(
-					"Unable to place result ", String.valueOf(fileResponse),
+					"Unable to place result ", fileResponse,
 					" because no future exists with ID ",
-					String.valueOf(fileResponse.getPath())),
+					fileResponse.getPath()),
 				logRecord.getMessage());
 		}
 	}

@@ -14,6 +14,7 @@
 
 package com.liferay.portal.fabric.netty.repository;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.fabric.netty.codec.serialization.AnnotatedObjectDecoder;
 import com.liferay.portal.fabric.netty.fileserver.FileHelperUtil;
 import com.liferay.portal.fabric.netty.fileserver.FileResponse;
@@ -27,7 +28,6 @@ import com.liferay.portal.kernel.test.JDKLoggerTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
 import com.liferay.portal.kernel.test.rule.NewEnv;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.test.rule.AdviseWith;
 import com.liferay.portal.test.rule.AspectJNewEnvTestRule;
 
@@ -256,16 +256,16 @@ public class NettyRepositoryTest {
 
 			Assert.assertEquals(
 				StringBundler.concat(
-					"Fetched remote file ", String.valueOf(remoteFilePath),
-					" to ", String.valueOf(localFilePath)),
+					"Fetched remote file ", remoteFilePath, " to ",
+					localFilePath),
 				logRecord.getMessage());
 
 			logRecord = logRecords.get(3);
 
 			Assert.assertEquals(
 				StringBundler.concat(
-					"Fetched remote file ", String.valueOf(remoteFilePath),
-					" to ", String.valueOf(localFilePath)),
+					"Fetched remote file ", remoteFilePath, " to ",
+					localFilePath),
 				logRecord.getMessage());
 		}
 		finally {
@@ -451,9 +451,9 @@ public class NettyRepositoryTest {
 
 			Assert.assertEquals(
 				StringBundler.concat(
-					"Remote file ", String.valueOf(remoteFilePath),
+					"Remote file ", remoteFilePath,
 					" is not modified, use cached local file ",
-					String.valueOf(cachedLocalFilePath)),
+					cachedLocalFilePath),
 				logRecord.getMessage());
 		}
 

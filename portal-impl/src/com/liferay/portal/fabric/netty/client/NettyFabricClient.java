@@ -14,6 +14,7 @@
 
 package com.liferay.portal.fabric.netty.client;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.fabric.client.FabricClient;
 import com.liferay.portal.fabric.local.agent.LocalFabricAgent;
 import com.liferay.portal.fabric.netty.agent.NettyFabricAgentConfig;
@@ -36,7 +37,6 @@ import com.liferay.portal.kernel.process.ProcessCallable;
 import com.liferay.portal.kernel.process.ProcessExecutor;
 import com.liferay.portal.kernel.process.TerminationProcessException;
 import com.liferay.portal.kernel.util.NamedThreadFactory;
-import com.liferay.portal.kernel.util.StringBundler;
 
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.Channel;
@@ -219,9 +219,8 @@ public class NettyFabricClient implements FabricClient {
 							_log.warn(
 								StringBundler.concat(
 									"Forcibly terminate fabric worker ",
-									String.valueOf(entry.getKey()),
-									" with exit code ",
-									String.valueOf(tpe.getExitCode())));
+									entry.getKey(), " with exit code ",
+									tpe.getExitCode()));
 						}
 
 						continue;

@@ -14,6 +14,7 @@
 
 package com.liferay.portal.fabric.netty.fileserver.handlers;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.fabric.netty.NettyTestUtil;
 import com.liferay.portal.fabric.netty.fileserver.CompressionLevel;
 import com.liferay.portal.fabric.netty.fileserver.FileHelperUtil;
@@ -28,7 +29,6 @@ import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
 import com.liferay.portal.kernel.test.rule.NewEnv;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.test.rule.AdviseWith;
 import com.liferay.portal.test.rule.AspectJNewEnvTestRule;
@@ -472,10 +472,9 @@ public class FileUploadChannelHandlerTest {
 				else {
 					Assert.assertEquals(
 						StringBundler.concat(
-							"Unable to place result ",
-							String.valueOf(fileResponse),
+							"Unable to place result ", fileResponse,
 							" because no future exists with ID ",
-							String.valueOf(fileResponse.getPath())),
+							fileResponse.getPath()),
 						logRecord.getMessage());
 				}
 			}

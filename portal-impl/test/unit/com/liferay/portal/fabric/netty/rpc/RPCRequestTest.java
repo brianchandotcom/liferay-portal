@@ -14,13 +14,13 @@
 
 package com.liferay.portal.fabric.netty.rpc;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.fabric.netty.NettyTestUtil;
 import com.liferay.portal.kernel.concurrent.DefaultNoticeableFuture;
 import com.liferay.portal.kernel.concurrent.NoticeableFuture;
 import com.liferay.portal.kernel.test.CaptureHandler;
 import com.liferay.portal.kernel.test.JDKLoggerTestUtil;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
-import com.liferay.portal.kernel.util.StringBundler;
 
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelOutboundHandlerAdapter;
@@ -170,8 +170,7 @@ public class RPCRequestTest {
 
 		Assert.assertEquals(
 			StringBundler.concat(
-				"{id=", String.valueOf(_ID), ", rpcCallable=",
-				rpcCallable.toString(), "}"),
+				"{id=", _ID, ", rpcCallable=", rpcCallable.toString(), "}"),
 			rpcRequest.toString());
 	}
 

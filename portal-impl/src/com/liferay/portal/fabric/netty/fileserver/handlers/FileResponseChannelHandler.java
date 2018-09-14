@@ -14,12 +14,12 @@
 
 package com.liferay.portal.fabric.netty.fileserver.handlers;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.fabric.netty.codec.serialization.ObjectDecodeChannelInboundHandler;
 import com.liferay.portal.fabric.netty.fileserver.FileResponse;
 import com.liferay.portal.kernel.concurrent.AsyncBroker;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
@@ -56,9 +56,9 @@ public class FileResponseChannelHandler
 
 				_log.error(
 					StringBundler.concat(
-						"Unable to place result ", String.valueOf(fileResponse),
+						"Unable to place result ", fileResponse,
 						" because no future exists with ID ",
-						String.valueOf(fileResponse.getPath())));
+						fileResponse.getPath()));
 			}
 
 			return null;

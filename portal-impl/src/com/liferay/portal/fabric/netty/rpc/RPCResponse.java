@@ -14,12 +14,12 @@
 
 package com.liferay.portal.fabric.netty.rpc;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.fabric.netty.handlers.NettyChannelAttributes;
 import com.liferay.portal.kernel.concurrent.AsyncBroker;
 import com.liferay.portal.kernel.concurrent.NoticeableFuture;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 
 import io.netty.channel.Channel;
 
@@ -76,9 +76,8 @@ public class RPCResponse<T extends Serializable> extends RPCSerializable {
 			if (!asyncBroker.takeWithResult(id, _result)) {
 				_log.error(
 					StringBundler.concat(
-						"Unable to place result ", String.valueOf(_result),
-						" because no future exists with ID ",
-						String.valueOf(id)));
+						"Unable to place result ", _result,
+						" because no future exists with ID ", id));
 			}
 		}
 	}

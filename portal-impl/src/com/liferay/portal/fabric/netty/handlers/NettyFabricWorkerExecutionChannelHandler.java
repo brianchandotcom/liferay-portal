@@ -15,6 +15,7 @@
 package com.liferay.portal.fabric.netty.handlers;
 
 import com.liferay.petra.process.ClassPathUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.fabric.agent.FabricAgent;
 import com.liferay.portal.fabric.netty.agent.NettyFabricAgentStub;
 import com.liferay.portal.fabric.netty.fileserver.FileHelperUtil;
@@ -37,7 +38,6 @@ import com.liferay.portal.kernel.process.ProcessCallable;
 import com.liferay.portal.kernel.process.ProcessConfig;
 import com.liferay.portal.kernel.process.ProcessException;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import io.netty.channel.Channel;
@@ -323,9 +323,8 @@ public class NettyFabricWorkerExecutionChannelHandler
 			if (nettyStubFabricWorker == null) {
 				throw new ProcessException(
 					StringBundler.concat(
-						"Unable to locate fabric worker on channel ",
-						String.valueOf(channel), ", with fabric worker id ",
-						String.valueOf(_id)));
+						"Unable to locate fabric worker on channel ", channel,
+						", with fabric worker id ", _id));
 			}
 
 			if (_throwable != null) {

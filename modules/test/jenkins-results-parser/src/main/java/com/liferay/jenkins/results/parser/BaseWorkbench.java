@@ -109,6 +109,11 @@ public abstract class BaseWorkbench implements Workbench {
 			getGitHubURL(), " - ", getBranchSHA());
 	}
 
+	@Override
+	public void writePropertiesFiles() {
+		_localGitRepository.writePropertiesFiles();
+	}
+
 	protected BaseWorkbench(
 		String gitHubURL, String upstreamBranchName, String branchSHA) {
 

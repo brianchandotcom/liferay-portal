@@ -1,10 +1,25 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
 package com.liferay.jenkins.results.parser;
 
-import org.json.JSONObject;
-
 import java.io.File;
+
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import org.json.JSONObject;
 
 /**
  * @author Michael Hashimoto
@@ -128,9 +143,8 @@ public abstract class BaseWorkbench implements Workbench {
 		_jsonObject.put("git_hub_url", gitHubURL);
 		_jsonObject.put("upstream_branch_name", upstreamBranchName);
 
-		_localGitRepository =
-			GitRepositoryFactory.getLocalGitRepository(
-				matcher.group("repositoryName"), upstreamBranchName);
+		_localGitRepository = GitRepositoryFactory.getLocalGitRepository(
+			matcher.group("repositoryName"), upstreamBranchName);
 
 		if (PullRequest.isValidGitHubPullRequestURL(gitHubURL)) {
 			PullRequest pullRequest = new PullRequest(gitHubURL);
@@ -210,10 +224,10 @@ public abstract class BaseWorkbench implements Workbench {
 		}
 	}
 
+	private static final Pattern _gitHubURLPattern = Pattern.compile(
+		"https://[^/]+/[^/]+/(?<repositoryName>[^/]+)/.*");
+
 	private final JSONObject _jsonObject;
 	private final LocalGitRepository _localGitRepository;
-
-	private static final Pattern _gitHubURLPattern = Pattern.compile(
-		"https://[^/]+/(?<repositoryName>[^/]+)/.*");
 
 }

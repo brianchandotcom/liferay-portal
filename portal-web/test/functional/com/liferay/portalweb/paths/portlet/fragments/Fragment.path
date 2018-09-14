@@ -87,7 +87,7 @@
 </tr>
 <tr>
 	<td>PAGE_TEMPLATE_FRAGMENT_HEADER_POSITION</td>
-	<td>//div[@data-position='${key_position}']//li[contains(.,'${key_fragmentName}')]</td>
+	<td>xpath=(//div[contains(@class,'fragment-entry-link-list')]/div[${key_position}])//li[contains(.,'${key_fragmentName}')]</td>
 	<td></td>
 </tr>
 <tr>

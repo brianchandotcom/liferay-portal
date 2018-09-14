@@ -96,8 +96,9 @@ public class LayoutModelListener extends BaseModelListener<Layout> {
 			List<FragmentEntryLink> fragmentEntryLinks =
 				_fragmentEntryLinkLocalService.getFragmentEntryLinks(
 					layout.getGroupId(),
-					_portal.getClassNameId(Layout.class.getName()),
-					layout.getPlid());
+					_portal.getClassNameId(
+						LayoutPageTemplateEntry.class.getName()),
+					layoutPageTemplateEntryId);
 
 			Stream<FragmentEntryLink> stream = fragmentEntryLinks.stream();
 

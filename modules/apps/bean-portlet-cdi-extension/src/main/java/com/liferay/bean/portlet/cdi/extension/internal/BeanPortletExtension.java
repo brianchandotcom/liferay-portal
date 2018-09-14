@@ -45,6 +45,7 @@ import java.lang.reflect.Type;
 import java.net.URL;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -328,7 +329,19 @@ public class BeanPortletExtension implements Extension {
 				_addBeanPortletsFromLiferayDescriptor();
 			}
 
-			_addLiferayDisplayCategoryToBeanPortlets(bundle);
+			URL displayDescriptorURL = bundle.getEntry(
+				"WEB-INF/liferay-display.xml");
+
+			if (displayDescriptorURL != null) {
+				try {
+					_displayDescriptorCategories =
+						DisplayDescriptorParser.parse(displayDescriptorURL);
+				}
+				catch (Exception e) {
+					_displayDescriptorCategories = Collections.emptyMap();
+					_log.error(e, e);
+				}
+			}
 
 			afterBeanDiscovery.addContext(new PortletRequestBeanContext());
 			afterBeanDiscovery.addContext(new PortletSessionBeanContext());
@@ -521,7 +534,8 @@ public class BeanPortletExtension implements Extension {
 			new BeanPortletAnnotationImpl(
 				portletApplication, portletConfiguration,
 				_getLiferayPortletConfiguration(configuredPortletName),
-				beanPortletClass.getName()));
+				beanPortletClass.getName(),
+				_displayDescriptorCategories.get(configuredPortletName)));
 	}
 
 	private void _addBeanPortletsFromAnnotatedClasses() {
@@ -552,7 +566,8 @@ public class BeanPortletExtension implements Extension {
 			BeanPortlet beanPortlet = _beanPortlets.get(portletName);
 
 			if (beanPortlet == null) {
-				beanPortlet = new BeanPortletDefaultImpl(portletName);
+				beanPortlet = new BeanPortletDefaultImpl(
+					portletName, _displayDescriptorCategories.get(portletName));
 
 				_beanPortlets.put(portletName, beanPortlet);
 			}
@@ -582,31 +597,6 @@ public class BeanPortletExtension implements Extension {
 						_loadBeanPortletClass(
 							beanPortlet.getPortletClassName()),
 						beanPortlet.getPortletName());
-				}
-			}
-			catch (Exception e) {
-				_log.error(e, e);
-			}
-		}
-	}
-
-	private void _addLiferayDisplayCategoryToBeanPortlets(Bundle bundle) {
-		URL displayDescriptorURL = bundle.getEntry(
-			"WEB-INF/liferay-display.xml");
-
-		if (displayDescriptorURL != null) {
-			try {
-				Map<String, String> map = DisplayDescriptorParser.parse(
-					displayDescriptorURL);
-
-				for (Map.Entry<String, String> entry : map.entrySet()) {
-					BeanPortlet beanPortlet = _beanPortlets.get(entry.getKey());
-
-					if (beanPortlet != null) {
-						beanPortlet.addLiferayConfiguration(
-							"com.liferay.portlet.display-category",
-							entry.getValue());
-					}
 				}
 			}
 			catch (Exception e) {
@@ -671,7 +661,9 @@ public class BeanPortletExtension implements Extension {
 					BeanPortlet beanPortlet = _beanPortlets.get(portletName);
 
 					if (beanPortlet == null) {
-						beanPortlet = new BeanPortletDefaultImpl(portletName);
+						beanPortlet = new BeanPortletDefaultImpl(
+							portletName,
+							_displayDescriptorCategories.get(portletName));
 
 						_beanPortlets.put(portletName, beanPortlet);
 					}
@@ -920,6 +912,7 @@ public class BeanPortletExtension implements Extension {
 	private final List<BeanFilter> _beanFilters = new ArrayList<>();
 	private final Map<String, BeanPortlet> _beanPortlets = new HashMap<>();
 	private final List<ScannedMethod> _destroyMethods = new ArrayList<>();
+	private Map<String, String> _displayDescriptorCategories;
 	private final List<ScannedMethod> _eventMethods = new ArrayList<>();
 	private final List<ServiceRegistration<PortletFilter>>
 		_filterRegistrations = new ArrayList<>();

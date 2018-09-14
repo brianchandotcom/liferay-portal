@@ -87,11 +87,6 @@ public abstract class BaseBeanPortletImpl implements BeanPortlet {
 	}
 
 	@Override
-	public void addLiferayConfiguration(String name, String value) {
-		_liferayConfiguration.put(name, value);
-	}
-
-	@Override
 	public void addPortletDependency(PortletDependency portletDependency) {
 		_resourceDependencies.add(portletDependency);
 	}
@@ -140,6 +135,13 @@ public abstract class BaseBeanPortletImpl implements BeanPortlet {
 	protected HashMapDictionary<String, Object> toDictionary(BeanApp beanApp) {
 		HashMapDictionary<String, Object> dictionary =
 			new HashMapDictionary<>();
+
+		String displayCategory = getDisplayCategory();
+
+		if (displayCategory != null) {
+			dictionary.put(
+				"com.liferay.portlet.display-category", displayCategory);
+		}
 
 		String defaultNamespace = beanApp.getDefaultNamespace();
 

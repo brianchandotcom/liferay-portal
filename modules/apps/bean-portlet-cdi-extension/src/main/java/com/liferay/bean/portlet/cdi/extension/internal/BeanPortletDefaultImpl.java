@@ -21,13 +21,19 @@ import java.util.Dictionary;
  */
 public class BeanPortletDefaultImpl extends BaseBeanPortletImpl {
 
-	public BeanPortletDefaultImpl(String portletName) {
+	public BeanPortletDefaultImpl(String portletName, String displayCategory) {
 		_portletName = portletName;
+		_displayCategory = displayCategory;
 	}
 
 	@Override
 	public BeanApp getBeanApp() {
 		return _beanApp;
+	}
+
+	@Override
+	public String getDisplayCategory() {
+		return _displayCategory;
 	}
 
 	@Override
@@ -55,6 +61,7 @@ public class BeanPortletDefaultImpl extends BaseBeanPortletImpl {
 	}
 
 	private final BeanApp _beanApp = new BeanAppDefaultImpl();
+	private final String _displayCategory;
 	private final String _portletName;
 
 }

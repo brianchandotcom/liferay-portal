@@ -21,6 +21,7 @@ import com.liferay.bean.portlet.cdi.extension.internal.PortletDependency;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.util.HashMapDictionary;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -54,12 +55,14 @@ public class BeanPortletAnnotationImpl extends BaseBeanPortletImpl {
 		PortletApplication portletApplication,
 		PortletConfiguration portletConfiguration,
 		LiferayPortletConfiguration liferayPortletConfiguration,
-		String portletClassName) {
+		String portletClassName, String descriptorDisplayCategory) {
 
 		_beanApp = new BeanAppAnnotationImpl(portletApplication);
 
 		_portletConfiguration = portletConfiguration;
 		_portletClassName = portletClassName;
+
+		String displayCategory = descriptorDisplayCategory;
 
 		String[] propertyNames = null;
 
@@ -82,12 +85,23 @@ public class BeanPortletAnnotationImpl extends BaseBeanPortletImpl {
 					propertyName = propertyName.substring(0, equalsPos);
 
 					propertyValue = propertyName.substring(equalsPos + 1);
+
+					if (Validator.isNull(displayCategory) &&
+						propertyName.equals(
+							"com.liferay.portlet.display-category")) {
+
+						displayCategory = propertyValue;
+
+						continue;
+					}
 				}
 
 				_liferayPortletConfigurationProperties.put(
 					propertyName, propertyValue);
 			}
 		}
+
+		_displayCategory = displayCategory;
 
 		for (Dependency dependency : portletConfiguration.dependencies()) {
 			addPortletDependency(
@@ -104,6 +118,11 @@ public class BeanPortletAnnotationImpl extends BaseBeanPortletImpl {
 	@Override
 	public BeanApp getBeanApp() {
 		return _beanApp;
+	}
+
+	@Override
+	public String getDisplayCategory() {
+		return _displayCategory;
 	}
 
 	@Override
@@ -368,6 +387,7 @@ public class BeanPortletAnnotationImpl extends BaseBeanPortletImpl {
 	private static final String _ENGLISH_EN = Locale.ENGLISH.getLanguage();
 
 	private final BeanApp _beanApp;
+	private final String _displayCategory;
 	private final Map<String, String> _liferayPortletConfigurationProperties;
 	private final String _portletClassName;
 	private final PortletConfiguration _portletConfiguration;

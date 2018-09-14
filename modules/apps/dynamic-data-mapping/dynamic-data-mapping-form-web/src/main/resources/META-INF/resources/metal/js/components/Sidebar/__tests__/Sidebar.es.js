@@ -6,36 +6,42 @@ const spritemap = 'icons.svg';
 const fieldTypes = [
 	{
 		description: 'Select date from a Datepicker.',
+		group: 'basic',
 		icon: 'calendar',
 		label: 'Date',
 		name: 'date'
 	},
 	{
 		description: 'Single line or multiline text area.',
+		group: 'basic',
 		icon: 'text',
 		label: 'Text Field',
 		name: 'text'
 	},
 	{
 		description: 'Select only one item with a radio button.',
+		group: 'basic',
 		icon: 'radio-button',
 		label: 'Single Selection',
 		name: 'radio'
 	},
 	{
 		description: 'Choose one or more options from a list.',
+		group: 'basic',
 		icon: 'list',
 		label: 'Select from list',
 		name: 'select'
 	},
 	{
 		description: 'Select options from a matrix.',
+		group: 'basic',
 		icon: 'grid',
 		label: 'Grid',
 		name: 'grid'
 	},
 	{
 		description: 'Select multiple options using a checkbox.',
+		group: 'basic',
 		icon: 'select-from-list',
 		label: 'Multiple Selection',
 		name: 'checkbox'

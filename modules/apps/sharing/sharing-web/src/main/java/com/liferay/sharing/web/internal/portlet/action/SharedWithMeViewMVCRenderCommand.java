@@ -14,14 +14,22 @@
 
 package com.liferay.sharing.web.internal.portlet.action;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
+import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.sharing.interpreter.SharingEntryInterpreter;
+import com.liferay.sharing.model.SharingEntry;
 import com.liferay.sharing.service.SharingEntryLocalService;
 import com.liferay.sharing.web.internal.constants.SharingPortletKeys;
 import com.liferay.sharing.web.internal.display.context.SharedWithMeViewDisplayContext;
 import com.liferay.sharing.web.internal.interpreter.SharingEntryInterpreterTracker;
 
+import java.util.Objects;
+
+import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
@@ -35,7 +43,8 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + SharingPortletKeys.SHARED_WITH_ME,
-		"mvc.command.name=/", "mvc.command.name=/shared_with_me/view"
+		"mvc.command.name=/", "mvc.command.name=/shared_with_me/view",
+		"mvc.command.name=/shared_with_me/view_sharing_entry"
 	},
 	service = MVCRenderCommand.class
 )
@@ -43,10 +52,51 @@ public class SharedWithMeViewMVCRenderCommand implements MVCRenderCommand {
 
 	@Override
 	public String render(
-		RenderRequest renderRequest, RenderResponse renderResponse) {
+			RenderRequest renderRequest, RenderResponse renderResponse)
+		throws PortletException {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
+
+		if (Objects.equals(
+				renderRequest.getParameter("mvcRenderCommandName"),
+				"/shared_with_me/view_sharing_entry")) {
+
+			long sharingEntryId = ParamUtil.getLong(
+				renderRequest, "sharingEntryId");
+
+			try {
+				SharingEntry sharingEntry =
+					_sharingEntryLocalService.getSharingEntry(sharingEntryId);
+
+				if (sharingEntry.getToUserId() != themeDisplay.getUserId()) {
+					throw new PrincipalException(
+						StringBundler.concat(
+							"user id ", themeDisplay.getUserId(),
+							" does not have permission to view sharing entry ",
+							"id ", sharingEntryId));
+				}
+
+				SharingEntryInterpreter<?> sharingEntryInterpreter =
+					_sharingEntryInterpreterTracker.getSharingEntryInterpreter(
+						sharingEntry.getClassNameId());
+
+				if (sharingEntryInterpreter == null) {
+					throw new PortletException(
+						"sharing entry interpreter is null for class name id " +
+							sharingEntry.getClassNameId());
+				}
+
+				renderRequest.setAttribute(
+					SharingEntryInterpreter.class.getName(),
+					sharingEntryInterpreter);
+
+				return "/shared_with_me/view_sharing_entry.jsp";
+			}
+			catch (Exception e) {
+				throw new PortletException(e);
+			}
+		}
 
 		SharedWithMeViewDisplayContext sharedWithMeViewDisplayContext =
 			new SharedWithMeViewDisplayContext(

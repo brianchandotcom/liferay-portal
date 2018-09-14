@@ -351,7 +351,8 @@ public interface SharingEntryLocalService extends BaseLocalService,
 
 	public SharingEntry updateSharingEntry(long sharingEntryId,
 		Collection<SharingEntryActionKey> sharingEntryActionKeys,
-		boolean shareable, Date expirationDate) throws PortalException;
+		boolean shareable, Date expirationDate, ServiceContext serviceContext)
+		throws PortalException;
 
 	/**
 	* Updates the sharing entry in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.

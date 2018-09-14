@@ -12,12 +12,12 @@
  * details.
  */
 
-package com.liferay.sharing.web.internal.notifications;
+package com.liferay.sharing.notifications.internal.notifications;
 
 import com.liferay.portal.kernel.model.UserNotificationDeliveryConstants;
 import com.liferay.portal.kernel.notifications.UserNotificationDefinition;
 import com.liferay.portal.kernel.notifications.UserNotificationDeliveryType;
-import com.liferay.sharing.web.internal.constants.SharingPortletKeys;
+import com.liferay.sharing.constants.SharingPortletKeys;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -37,6 +37,11 @@ public class AddSharingEntryUserNotificationDefinition
 			SharingPortletKeys.SHARING, 0,
 			UserNotificationDefinition.NOTIFICATION_TYPE_ADD_ENTRY,
 			"receive-a-notification-when-someone-shares-content-with-you");
+
+		addUserNotificationDeliveryType(
+			new UserNotificationDeliveryType(
+				"email", UserNotificationDeliveryConstants.TYPE_EMAIL, true,
+				true));
 
 		addUserNotificationDeliveryType(
 			new UserNotificationDeliveryType(

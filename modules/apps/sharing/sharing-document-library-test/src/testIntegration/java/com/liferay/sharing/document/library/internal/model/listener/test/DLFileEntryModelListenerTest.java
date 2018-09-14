@@ -27,13 +27,13 @@ import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.RoleConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
-import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -96,6 +96,12 @@ public class DLFileEntryModelListenerTest {
 
 		_classNameId = _classNameLocalService.getClassNameId(
 			DLFileEntry.class.getName());
+
+		_folder = _dlAppLocalService.addFolder(
+			_user.getUserId(), _group.getGroupId(),
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			StringUtil.randomString(), StringUtil.randomString(),
+			serviceContext);
 	}
 
 	@Test
@@ -147,7 +153,7 @@ public class DLFileEntryModelListenerTest {
 
 		long classNameId = _classNameLocalService.getClassNameId(
 			DLFolder.class.getName());
-		long classPK = RandomTestUtil.randomLong();
+		long classPK = _folder.getFolderId();
 
 		SharingEntry sharingEntry = _sharingEntryLocalService.addSharingEntry(
 			_user.getUserId(), _groupUser.getUserId(), classNameId, classPK,
@@ -221,6 +227,7 @@ public class DLFileEntryModelListenerTest {
 	private DLTrashService _dlTrashService;
 
 	private FileEntry _fileEntry;
+	private Folder _folder;
 	private Group _group;
 	private User _groupUser;
 

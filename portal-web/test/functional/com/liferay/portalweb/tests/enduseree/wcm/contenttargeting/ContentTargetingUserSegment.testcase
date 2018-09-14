@@ -227,7 +227,6 @@
 
 		<execute macro="WebContent#addWithCategoryCP">
 			<var name="categoryName" value="Male Non Users" />
-			<var name="userSegmentSelectChildSite" value="true" />
 			<var name="vocabularyName" value="User Segment" />
 			<var name="webContentContent" value="Targeted Web Content Content" />
 			<var name="webContentTitle" value="Targeted Web Content Title" />

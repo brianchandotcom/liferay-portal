@@ -144,10 +144,14 @@ class Select extends Component {
 
 	prepareStateForRender(states) {
 		const {predefinedValue, value} = states;
+		let newValue = value;
+		if(typeof(newValue) === "string") {
+			newValue = [value];
+		}
 		return {
 			...states,
 			predefinedValue: predefinedValue && predefinedValue.length ? predefinedValue[0] : '',
-			value: value && value.length ? value[0] : ''
+			value: newValue && newValue.length ? newValue[0] : ''
 		};
 	}
 

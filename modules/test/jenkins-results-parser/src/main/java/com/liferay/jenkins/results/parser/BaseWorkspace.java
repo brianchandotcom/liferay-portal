@@ -148,8 +148,6 @@ public abstract class BaseWorkspace implements Workspace {
 
 	protected abstract void setGitRepositoryJobProperties(Job job);
 
-	protected abstract boolean synchronizeGitBranches();
-
 	protected abstract void writeGitRepositoryPropertiesFiles();
 
 	private String _jenkinsCachedBranchName;

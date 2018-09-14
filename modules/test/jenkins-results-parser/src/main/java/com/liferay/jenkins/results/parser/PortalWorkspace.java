@@ -49,7 +49,7 @@ public abstract class PortalWorkspace extends BaseWorkspace {
 	}
 
 	@Override
-	protected void checkoutLocalGitBranches() {
+	protected void setUpWorkbenches() {
 		setUpJenkinsWorkbench();
 
 		_checkoutPrimaryPortalLocalGitBranch();
@@ -64,7 +64,9 @@ public abstract class PortalWorkspace extends BaseWorkspace {
 	}
 
 	@Override
-	protected void cleanupLocalGitBranches() {
+	protected void tearDownWorkbenches() {
+		tearDownJenkinsWorkbench();
+
 		cleanupLocalGitBranch(_basePortalLocalGitBranch);
 		cleanupLocalGitBranch(_companionPortalLocalGitBranch);
 		cleanupLocalGitBranch(_otherPortalLocalGitBranch);
@@ -224,12 +226,12 @@ public abstract class PortalWorkspace extends BaseWorkspace {
 	}
 
 	@Override
-	protected void setGitRepositoryJobProperties(Job job) {
+	protected void setWorkbenchJobProperties(Job job) {
 		_primaryPortalLocalGitRepository.setJobProperties(job);
 	}
 
 	@Override
-	protected void writeGitRepositoryPropertiesFiles() {
+	protected void writeWorkbenchPropertiesFiles() {
 		_primaryPortalLocalGitRepository.writePropertiesFiles();
 	}
 

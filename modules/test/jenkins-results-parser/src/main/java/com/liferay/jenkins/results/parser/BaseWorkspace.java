@@ -51,24 +51,18 @@ public abstract class BaseWorkspace implements Workspace {
 
 	@Override
 	public void setUp(Job job) {
-		checkoutLocalGitBranches();
+		setUpWorkbenches();
 
 		if (job != null) {
-			setGitRepositoryJobProperties(job);
+			setWorkbenchJobProperties(job);
 		}
 
-		writeGitRepositoryPropertiesFiles();
+		writeWorkbenchPropertiesFiles();
 	}
 
 	@Override
 	public void tearDown() {
-		cleanupLocalGitBranches();
-	}
-
-	protected void setUpJenkinsWorkbench() {
-		if (_jenkinsWorkbench != null) {
-			_jenkinsWorkbench.setUp();
-		}
+		tearDownWorkbenches();
 	}
 
 	protected void checkoutLocalGitBranch(LocalGitBranch localGitBranch) {
@@ -91,8 +85,6 @@ public abstract class BaseWorkspace implements Workspace {
 
 		gitWorkingDirectory.displayLog();
 	}
-
-	protected abstract void checkoutLocalGitBranches();
 
 	protected void cleanupLocalGitBranch(LocalGitBranch localGitBranch) {
 		if (localGitBranch == null) {
@@ -121,9 +113,17 @@ public abstract class BaseWorkspace implements Workspace {
 		gitWorkingDirectory.displayLog();
 	}
 
-	protected abstract void cleanupLocalGitBranches();
+	protected void setUpJenkinsWorkbench() {
+		if (_jenkinsWorkbench != null) {
+			_jenkinsWorkbench.setUp();
+		}
+	}
 
-	protected abstract void setGitRepositoryJobProperties(Job job);
+	protected void setUpWorkbenches() {
+		setUpJenkinsWorkbench();
+	}
+
+	protected abstract void setWorkbenchJobProperties(Job job);
 
 	protected void tearDownJenkinsWorkbench() {
 		if (_jenkinsWorkbench != null) {
@@ -131,7 +131,11 @@ public abstract class BaseWorkspace implements Workspace {
 		}
 	}
 
-	protected abstract void writeGitRepositoryPropertiesFiles();
+	protected void tearDownWorkbenches() {
+		tearDownJenkinsWorkbench();
+	}
+
+	protected abstract void writeWorkbenchPropertiesFiles();
 
 	private JenkinsWorkbench _jenkinsWorkbench;
 

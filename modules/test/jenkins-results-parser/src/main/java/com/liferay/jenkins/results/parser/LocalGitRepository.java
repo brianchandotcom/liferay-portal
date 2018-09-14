@@ -44,7 +44,7 @@ public class LocalGitRepository extends BaseGitRepository {
 			gitWorkingDirectory.getGitRemote("upstream"));
 	}
 
-	public void writeGitRepositoryPropertiesFiles() {
+	public void writePropertiesFiles() {
 		for (Map.Entry<String, Properties> entry :
 				_propertiesFilesMap.entrySet()) {
 

@@ -31,4 +31,6 @@ public interface Workbench {
 
 	public void tearDown();
 
+	public void writePropertiesFiles();
+
 }

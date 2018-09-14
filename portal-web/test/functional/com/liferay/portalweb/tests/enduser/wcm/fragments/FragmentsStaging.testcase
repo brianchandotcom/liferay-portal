@@ -63,12 +63,53 @@
 			<var name="portlet" value="Page Fragments" />
 		</execute>
 	</command>
+
+	<command name="AssertFragmentsAlwaysPublish" priority="5">
+		<execute macro="JSONFragment#addFragmentCollection">
+			<var name="groupKey" value="Test Site Name-staging" />
+			<var name="name" value="Collection Name" />
+			<var name="site" value="false" />
+		</execute>
+
+		<execute macro="JSONFragment#addFragment">
+			<var name="collectionName" value="Collection Name" />
+			<var name="groupKey" value="Test Site Name-staging" />
+			<var name="name" value="Fragment Name" />
+			<var name="site" value="false" />
+		</execute>
+
+		<execute macro="Navigator#gotoStagedSitePage">
+			<var name="pageName" value="Staging Test Page" />
+			<var name="siteName" value="Test Site Name" />
+		</execute>
+
+		<execute macro="Staging#gotoPublishToLive" />
+
+		<execute macro="Staging#publishToLive" />
+
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Build" />
 			<var name="panel" value="Site Administration" />
 			<var name="portlet" value="Pages" />
 		</execute>
 
-		<execute macro="LayoutPageTemplates#viewPageTemplateNotAccessible" />
+		<execute macro="NavItem#gotoPageTemplates" />
+
+		<execute macro="LayoutPageTemplates#addCollection">
+			<var name="collectionName" value="Page Template Collection" />
+		</execute>
+
+		<execute macro="Navigator#gotoNavNested">
+			<var name="navNested" value="Page Template Collection" />
+		</execute>
+
+		<execute macro="LayoutPageTemplates#add">
+			<var name="pageTemplateName" value="Page Template Name" />
+		</execute>
+
+		<execute macro="LayoutPageTemplates#selectFragment">
+			<var name="collectionName" value="Collection Name" />
+			<var name="fragmentName" value="Fragment Name" />
+		</execute>
 	</command>
 </definition>

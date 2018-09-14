@@ -70,7 +70,7 @@ public class SharedWithMeViewSharingEntryMVCRenderCommand
 						sharingEntryId));
 			}
 
-			SharingEntryInterpreter sharingEntryInterpreter =
+			SharingEntryInterpreter<?> sharingEntryInterpreter =
 				_sharingEntryInterpreterTracker.getSharingEntryInterpreter(
 					sharingEntry.getClassNameId());
 

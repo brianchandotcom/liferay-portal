@@ -47,7 +47,7 @@ public class SharedWithMeViewDisplayContext {
 	}
 
 	public String getAssetTypeTitle(SharingEntry sharingEntry) {
-		SharingEntryInterpreter sharingEntryInterpreter =
+		SharingEntryInterpreter<?> sharingEntryInterpreter =
 			_sharingEntryInterpreterTracker.getSharingEntryInterpreter(
 				sharingEntry.getClassNameId());
 
@@ -60,7 +60,7 @@ public class SharedWithMeViewDisplayContext {
 	}
 
 	public String getTitle(SharingEntry sharingEntry) {
-		SharingEntryInterpreter sharingEntryInterpreter =
+		SharingEntryInterpreter<?> sharingEntryInterpreter =
 			_sharingEntryInterpreterTracker.getSharingEntryInterpreter(
 				sharingEntry.getClassNameId());
 
@@ -77,7 +77,7 @@ public class SharedWithMeViewDisplayContext {
 			LiferayPortletResponse liferayPortletResponse)
 		throws PortalException {
 
-		SharingEntryInterpreter sharingEntryInterpreter =
+		SharingEntryInterpreter<Object> sharingEntryInterpreter =
 			_sharingEntryInterpreterTracker.getSharingEntryInterpreter(
 				sharingEntry.getClassNameId());
 
@@ -85,7 +85,7 @@ public class SharedWithMeViewDisplayContext {
 			return null;
 		}
 
-		SharingEntryEditRenderer sharingEntryEditRenderer =
+		SharingEntryEditRenderer<Object> sharingEntryEditRenderer =
 			sharingEntryInterpreter.getSharingEntryEditRenderer();
 
 		return sharingEntryEditRenderer.getURLEdit(

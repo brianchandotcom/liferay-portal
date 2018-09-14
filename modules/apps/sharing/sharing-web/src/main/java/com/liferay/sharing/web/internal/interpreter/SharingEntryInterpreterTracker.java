@@ -36,16 +36,18 @@ public class SharingEntryInterpreterTracker {
 
 	@Activate
 	public void activate(BundleContext bundleContext) {
-		_serviceTrackerMap = ServiceTrackerMapFactory.openMultiValueMap(
-			bundleContext, SharingEntryInterpreter.class,
-			"(model.class.name=*)",
-			(serviceReference, emitter) -> {
-				emitter.emit(
-					_classNameLocalService.getClassNameId(
-						(String)serviceReference.getProperty(
-							"model.class.name")));
-			},
-			new PropertyServiceReferenceComparator<>("service.ranking"));
+		_serviceTrackerMap =
+			(ServiceTrackerMap<Long, List<SharingEntryInterpreter<?>>>)
+				(ServiceTrackerMap)
+					ServiceTrackerMapFactory.openMultiValueMap(
+						bundleContext, SharingEntryInterpreter.class,
+						"(model.class.name=*)",
+						(serviceReference, emitter) -> emitter.emit(
+							_classNameLocalService.getClassNameId(
+								(String)serviceReference.getProperty(
+									"model.class.name"))),
+						new PropertyServiceReferenceComparator<>(
+							"service.ranking"));
 	}
 
 	@Deactivate
@@ -53,10 +55,10 @@ public class SharingEntryInterpreterTracker {
 		_serviceTrackerMap.close();
 	}
 
-	public SharingEntryInterpreter getSharingEntryInterpreter(
+	public <T> SharingEntryInterpreter<T> getSharingEntryInterpreter(
 		long classNameId) {
 
-		List<SharingEntryInterpreter> sharingEntryInterpreters =
+		List<SharingEntryInterpreter<?>> sharingEntryInterpreters =
 			_serviceTrackerMap.getService(classNameId);
 
 		if ((sharingEntryInterpreters == null) ||
@@ -65,13 +67,13 @@ public class SharingEntryInterpreterTracker {
 			return null;
 		}
 
-		return sharingEntryInterpreters.get(0);
+		return (SharingEntryInterpreter<T>)sharingEntryInterpreters.get(0);
 	}
 
 	@Reference
 	private ClassNameLocalService _classNameLocalService;
 
-	private ServiceTrackerMap<Long, List<SharingEntryInterpreter>>
+	private ServiceTrackerMap<Long, List<SharingEntryInterpreter<?>>>
 		_serviceTrackerMap;
 
 }

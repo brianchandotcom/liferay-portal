@@ -69,10 +69,10 @@
 			{elseif $_selectedTab == 'added'}
 				{call com.liferay.layout.admin.web.SidebarAddedFragments.render}
 					{param fragmentEntryLinks: $fragmentEntryLinks /}
+					{param layoutData: $layoutData /}
 					{param ref: 'sidebarTab' /}
 					{param spritemap: $spritemap /}
 					{param store: $store /}
-					{param layoutData: $layoutData /}
 				{/call}
 			{elseif $_selectedTab == 'mapping'}
 				{call com.liferay.layout.admin.web.SidebarMapping.render}

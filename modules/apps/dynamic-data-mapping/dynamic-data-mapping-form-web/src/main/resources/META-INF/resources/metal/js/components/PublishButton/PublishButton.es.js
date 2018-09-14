@@ -7,7 +7,7 @@ class PublishButton extends URLEncodedFetcher {
 	static PROPS = {
 		namespace: Config.string().required(),
 		published: Config.bool().value(false),
-		resolvePublishURL: Config.func().value(() => Promise.resolve({})),
+		resolvePublishURL: Config.func().required(),
 		spritemap: Config.string().required()
 	};
 

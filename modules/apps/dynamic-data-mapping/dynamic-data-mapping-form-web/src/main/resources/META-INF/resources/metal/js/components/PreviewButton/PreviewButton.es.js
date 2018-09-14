@@ -5,7 +5,7 @@ import Notifications from '../../util/Notifications.es';
 
 class PreviewButton extends Component {
 	static PROPS = {
-		resolvePreviewURL: Config.func().value(() => Promise.resolve()),
+		resolvePreviewURL: Config.func().required(),
 		spritemap: Config.string().required()
 	};
 

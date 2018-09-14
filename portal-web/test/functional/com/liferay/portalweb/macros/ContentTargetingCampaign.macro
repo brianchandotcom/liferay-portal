@@ -429,8 +429,9 @@
 		<if>
 			<isset var="userSegmentSelect" />
 			<then>
-				<execute macro="MenuItem#click">
+				<execute macro="LexiconEntry#gotoEntryMenuItem">
 					<var name="menuItem" value="Edit" />
+					<var name="rowEntry" value="${campaignName}" />
 				</execute>
 
 				<execute function="AssertTextEquals" locator1="EditCampaign#CAMPAIGN_USER_SEGMENT_APPLIED" value1="${userSegmentSelect}" />

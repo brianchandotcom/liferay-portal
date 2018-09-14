@@ -19,6 +19,8 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.NaturalOrderStringComparator;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.tools.ToolsUtil;
+import com.liferay.source.formatter.parser.JavaClass;
+import com.liferay.source.formatter.parser.JavaTerm;
 
 import java.io.IOException;
 
@@ -32,15 +34,17 @@ public class JavaComponentAnnotationsCheck extends JavaAnnotationsCheck {
 
 	@Override
 	protected String doProcess(
-			String fileName, String absolutePath, String content)
+			String fileName, String absolutePath, JavaTerm javaTerm,
+			String fileContent)
 		throws IOException {
 
-		return formatAnnotations(fileName, content, false);
+		return formatAnnotations(fileName, (JavaClass)javaTerm, false);
 	}
 
 	@Override
 	protected String formatAnnotation(
-		String fileName, String content, String annotation, String indent) {
+		String fileName, JavaClass javaClass, String annotation,
+		String indent) {
 
 		if (!annotation.contains("@Component(")) {
 			return annotation;

@@ -22,6 +22,8 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.tools.ToolsUtil;
+import com.liferay.source.formatter.parser.JavaClass;
+import com.liferay.source.formatter.parser.JavaTerm;
 
 import java.io.IOException;
 
@@ -33,18 +35,20 @@ import java.util.regex.Pattern;
 /**
  * @author Hugo Huijser
  */
-public class JavaAnnotationsCheck extends BaseFileCheck {
+public class JavaAnnotationsCheck extends BaseJavaTermCheck {
 
 	@Override
 	protected String doProcess(
-			String fileName, String absolutePath, String content)
+			String fileName, String absolutePath, JavaTerm javaTerm,
+			String fileContent)
 		throws IOException {
 
-		return formatAnnotations(fileName, content, true);
+		return formatAnnotations(fileName, (JavaClass)javaTerm, true);
 	}
 
 	protected String formatAnnotation(
-		String fileName, String content, String annotation, String indent) {
+		String fileName, JavaClass javaClass, String annotation,
+		String indent) {
 
 		if (!annotation.contains(StringPool.OPEN_PARENTHESIS)) {
 			return annotation;
@@ -57,8 +61,14 @@ public class JavaAnnotationsCheck extends BaseFileCheck {
 	}
 
 	protected String formatAnnotations(
-			String fileName, String content, boolean sortAnnotations)
+			String fileName, JavaClass javaClass, boolean sortAnnotations)
 		throws IOException {
+
+		String content = javaClass.getContent();
+
+		if (javaClass.getParentJavaClass() != null) {
+			return content;
+		}
 
 		List<String> annotationsBlocks = _getAnnotationsBlocks(content);
 
@@ -66,13 +76,18 @@ public class JavaAnnotationsCheck extends BaseFileCheck {
 			String indent = _getIndent(annotationsBlock);
 
 			String newAnnotationsBlock = _formatAnnotations(
-				fileName, content, annotationsBlock, indent, sortAnnotations);
+				fileName, javaClass, annotationsBlock, indent, sortAnnotations);
 
 			content = StringUtil.replace(
 				content, "\n" + annotationsBlock, "\n" + newAnnotationsBlock);
 		}
 
 		return content;
+	}
+
+	@Override
+	protected String[] getCheckableJavaTermNames() {
+		return new String[] {JAVA_CLASS};
 	}
 
 	private String _fixAnnotationLineBreaks(String annotation, String indent) {
@@ -158,7 +173,7 @@ public class JavaAnnotationsCheck extends BaseFileCheck {
 	}
 
 	private String _formatAnnotations(
-			String fileName, String content, String annotationsBlock,
+			String fileName, JavaClass javaClass, String annotationsBlock,
 			String indent, boolean sortAnnotations)
 		throws IOException {
 
@@ -168,11 +183,11 @@ public class JavaAnnotationsCheck extends BaseFileCheck {
 
 		for (String annotation : annotations) {
 			String newAnnotation = formatAnnotation(
-				fileName, content, annotation, indent);
+				fileName, javaClass, annotation, indent);
 
 			if (newAnnotation.contains(StringPool.OPEN_PARENTHESIS)) {
 				newAnnotation = _formatAnnotations(
-					fileName, content, newAnnotation, indent + "\t\t", false);
+					fileName, javaClass, newAnnotation, indent + "\t\t", false);
 			}
 
 			annotationsBlock = StringUtil.replace(

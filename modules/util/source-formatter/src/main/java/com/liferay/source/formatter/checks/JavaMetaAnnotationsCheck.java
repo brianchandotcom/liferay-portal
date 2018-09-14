@@ -18,6 +18,8 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.source.formatter.checks.util.JavaSourceUtil;
+import com.liferay.source.formatter.parser.JavaClass;
+import com.liferay.source.formatter.parser.JavaTerm;
 
 import java.io.IOException;
 
@@ -31,23 +33,26 @@ public class JavaMetaAnnotationsCheck extends JavaAnnotationsCheck {
 
 	@Override
 	protected String doProcess(
-			String fileName, String absolutePath, String content)
+			String fileName, String absolutePath, JavaTerm javaTerm,
+			String fileContent)
 		throws IOException {
 
-		return formatAnnotations(fileName, content, false);
+		return formatAnnotations(fileName, (JavaClass)javaTerm, false);
 	}
 
 	@Override
 	protected String formatAnnotation(
-		String fileName, String content, String annotation, String indent) {
+		String fileName, JavaClass javaClass, String annotation,
+		String indent) {
 
 		if (!annotation.contains("@Meta.")) {
 			return annotation;
 		}
 
-		_checkDelimeters(fileName, content, annotation);
+		_checkDelimeters(fileName, javaClass.getContent(), annotation);
 
-		annotation = _fixOCDId(fileName, content, annotation);
+		annotation = _fixOCDId(
+			fileName, annotation, javaClass.getPackageName());
 		annotation = _fixTypeProperties(annotation);
 
 		return annotation;
@@ -101,14 +106,13 @@ public class JavaMetaAnnotationsCheck extends JavaAnnotationsCheck {
 	}
 
 	private String _fixOCDId(
-		String fileName, String content, String annotation) {
+		String fileName, String annotation, String packageName) {
 
 		return annotation.replaceFirst(
 			"(@Meta\\.OCD\\([^\\{]+id = )\".+?\"",
 			StringBundler.concat(
-				"$1\"", JavaSourceUtil.getPackageName(content),
-				StringPool.PERIOD, JavaSourceUtil.getClassName(fileName),
-				StringPool.QUOTE));
+				"$1\"", packageName, StringPool.PERIOD,
+				JavaSourceUtil.getClassName(fileName), StringPool.QUOTE));
 	}
 
 	private String _fixTypeProperties(String annotation) {

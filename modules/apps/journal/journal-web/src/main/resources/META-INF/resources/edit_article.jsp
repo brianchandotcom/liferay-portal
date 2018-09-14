@@ -216,7 +216,7 @@ if (classNameId > JournalArticleConstants.CLASSNAME_ID_DEFAULT) {
 	<aui:input name="articleIds" type="hidden" value="<%= articleId + JournalPortlet.VERSION_SEPARATOR + version %>" />
 	<aui:input name="version" type="hidden" value="<%= ((article == null) || article.isNew()) ? version : article.getVersion() %>" />
 	<aui:input name="articleURL" type="hidden" value="<%= editArticleRenderURL %>" />
-	<aui:input name="changeStructure" type="hidden" />
+	<aui:input name="changeDDMStructure" type="hidden" />
 	<aui:input name="ddmStructureId" type="hidden" />
 	<aui:input name="ddmTemplateId" type="hidden" />
 	<aui:input name="workflowAction" type="hidden" value="<%= String.valueOf(WorkflowConstants.ACTION_SAVE_DRAFT) %>" />

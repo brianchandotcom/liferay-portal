@@ -14,9 +14,6 @@
 
 package com.liferay.jenkins.results.parser;
 
-import java.io.File;
-import java.io.IOException;
-
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -90,6 +87,10 @@ public abstract class PortalWorkspace extends BaseWorkspace {
 		_pluginsWorkbench.setUp();
 	}
 
+	protected void setWorkbenchJobProperties(Job job) {
+		_primaryPortalWorkbench.setPortalJobProperties(job);
+	}
+
 	@Override
 	protected void tearDownWorkbenches() {
 		tearDownJenkinsWorkbench();
@@ -108,69 +109,10 @@ public abstract class PortalWorkspace extends BaseWorkspace {
 	}
 
 	@Override
-	protected void setWorkbenchJobProperties(Job job) {
-		_primaryPortalWorkbench.setPortalJobProperties(job);
-	}
-
-	@Override
 	protected void writeWorkbenchPropertiesFiles() {
 		_primaryPortalWorkbench.writePropertiesFiles();
 
 		_pluginsWorkbench.writePropertiesFiles();
-	}
-
-	private LocalGitBranch _getLocalGitBranchFromGitCommit(
-		String gitCommitFileName, LocalGitRepository localGitRepository) {
-
-		String gitCommitFileContent = _getPortalLocalGitRepositoryFileContent(
-			gitCommitFileName);
-
-		LocalGitBranch localGitBranch = null;
-
-		if (gitCommitFileContent.matches("[0-9a-f]{5,40}")) {
-			localGitBranch = GitHubDevSyncUtil.createCachedLocalGitBranch(
-				localGitRepository, localGitRepository.getUpstreamBranchName(),
-				gitCommitFileContent, true);
-		}
-		else if (PullRequest.isValidGitHubPullRequestURL(
-					gitCommitFileContent)) {
-
-			PullRequest pullRequest = new PullRequest(gitCommitFileContent);
-
-			localGitBranch = GitHubDevSyncUtil.createCachedLocalGitBranch(
-				localGitRepository, pullRequest, true);
-		}
-		else if (GitUtil.isValidGitHubRefURL(gitCommitFileContent)) {
-			RemoteGitRef remoteGitRef = GitUtil.getRemoteGitRef(
-				gitCommitFileContent);
-
-			localGitBranch = GitHubDevSyncUtil.createCachedLocalGitBranch(
-				localGitRepository, remoteGitRef, true);
-		}
-
-		if (localGitBranch == null) {
-			throw new RuntimeException(
-				JenkinsResultsParserUtil.combine(
-					"Invalid ", gitCommitFileName, " ", gitCommitFileContent));
-		}
-
-		return localGitBranch;
-	}
-
-	private String _getPortalLocalGitRepositoryFileContent(String fileName) {
-		LocalGitRepository localGitRepository =
-			_primaryPortalWorkbench.getLocalGitRepository();
-
-		File file = new File(localGitRepository.getDirectory(), fileName);
-
-		try {
-			String fileContent = JenkinsResultsParserUtil.read(file);
-
-			return fileContent.trim();
-		}
-		catch (IOException ioe) {
-			throw new RuntimeException(ioe);
-		}
 	}
 
 	private static final Pattern _portalGitHubURLPattern = Pattern.compile(

@@ -65,54 +65,6 @@ public abstract class BaseWorkspace implements Workspace {
 		tearDownWorkbenches();
 	}
 
-	protected void checkoutLocalGitBranch(LocalGitBranch localGitBranch) {
-		System.out.println();
-		System.out.println("##");
-		System.out.println("## " + localGitBranch.toString());
-		System.out.println("##");
-		System.out.println();
-
-		GitWorkingDirectory gitWorkingDirectory =
-			localGitBranch.getGitWorkingDirectory();
-
-		gitWorkingDirectory.createLocalGitBranch(localGitBranch, true);
-
-		gitWorkingDirectory.checkoutLocalGitBranch(localGitBranch);
-
-		gitWorkingDirectory.reset("--hard " + localGitBranch.getSHA());
-
-		gitWorkingDirectory.clean();
-
-		gitWorkingDirectory.displayLog();
-	}
-
-	protected void cleanupLocalGitBranch(LocalGitBranch localGitBranch) {
-		if (localGitBranch == null) {
-			return;
-		}
-
-		System.out.println();
-		System.out.println("##");
-		System.out.println("## " + localGitBranch.toString());
-		System.out.println("##");
-		System.out.println();
-
-		GitWorkingDirectory gitWorkingDirectory =
-			localGitBranch.getGitWorkingDirectory();
-
-		LocalGitBranch upstreamLocalGitBranch =
-			gitWorkingDirectory.getLocalGitBranch(
-				gitWorkingDirectory.getUpstreamBranchName());
-
-		gitWorkingDirectory.checkoutLocalGitBranch(upstreamLocalGitBranch);
-
-		gitWorkingDirectory.reset("--hard " + localGitBranch.getSHA());
-
-		gitWorkingDirectory.clean();
-
-		gitWorkingDirectory.displayLog();
-	}
-
 	protected void setUpJenkinsWorkbench() {
 		if (_jenkinsWorkbench != null) {
 			_jenkinsWorkbench.setUp();

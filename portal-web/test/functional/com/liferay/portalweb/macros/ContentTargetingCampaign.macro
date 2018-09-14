@@ -493,7 +493,7 @@
 		<for list="${viewTrackingActionsList}" param="trackingAction">
 			<var name="key_trackingAction" value="${trackingAction}" />
 
-			<execute function="AssertTextEquals#assertPartialText" locator1="EditCampaign#CAMPAIGN_TRACKING_ACTIONS_APPLIED" value1="${trackingAction}" />
+			<execute function="AssertTextEquals#assertTextCaseInsensitive" locator1="EditCampaign#CAMPAIGN_TRACKING_ACTIONS_APPLIED" value1="${trackingAction}" />
 
 			<var name="key_fieldName" value="${trackingAction}" />
 

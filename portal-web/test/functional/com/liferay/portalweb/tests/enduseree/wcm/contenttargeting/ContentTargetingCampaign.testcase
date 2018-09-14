@@ -185,7 +185,7 @@
 			<var name="formAlias" value="Form Alias" />
 			<var name="formId" value="Form id" />
 			<var name="formTrackingActionSelect" value="Submit" />
-			<var name="viewTrackingActionsList" value="Form" />
+			<var name="viewTrackingActionsList" value="Custom Form" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoSite">

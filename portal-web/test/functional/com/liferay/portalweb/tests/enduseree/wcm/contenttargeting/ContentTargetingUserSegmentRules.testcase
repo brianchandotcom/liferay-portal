@@ -1329,7 +1329,7 @@
 		<execute macro="ContentTargetingUserSegment#viewRulesCP">
 			<var name="endTime" value="11:30 PM" />
 			<var name="startTime" value="10:30 AM" />
-			<var name="viewUserSegmentRuleList" value="Time" />
+			<var name="viewUserSegmentRuleList" value="Access Time" />
 		</execute>
 	</command>
 

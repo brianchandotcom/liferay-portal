@@ -488,7 +488,7 @@
 				</then>
 			</if>
 
-			<execute function="AssertTextEquals#assertPartialText" locator1="EditUserSegment#USER_SEGMENT_RULE_APPLIED" value1="${usersegmentRuleName}" />
+			<execute function="AssertTextEquals#assertTextCaseInsensitive" locator1="EditUserSegment#USER_SEGMENT_RULE_APPLIED" value1="${usersegmentRuleName}" />
 
 			<if>
 				<not>

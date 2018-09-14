@@ -28,22 +28,8 @@ import org.json.JSONObject;
 public abstract class BaseWorkbench implements Workbench {
 
 	@Override
-	public String getBranchHeadSHA() {
-		return _jsonObject.getString("branch_head_sha");
-	}
-
-	@Override
-	public String getBranchSHA() {
-		return _jsonObject.getString("branch_sha");
-	}
-
-	@Override
-	public File getDirectory() {
-		return _localGitRepository.getDirectory();
-	}
-
 	public String getFileContent(String filePath) {
-		File file = new File(getDirectory(), filePath);
+		File file = new File(_getDirectory(), filePath);
 
 		try {
 			String fileContent = JenkinsResultsParserUtil.read(file);
@@ -61,16 +47,6 @@ public abstract class BaseWorkbench implements Workbench {
 	}
 
 	@Override
-	public String getGitHubURL() {
-		return _jsonObject.getString("git_hub_url");
-	}
-
-	@Override
-	public JSONObject getJSONObject() {
-		return _jsonObject;
-	}
-
-	@Override
 	public LocalGitRepository getLocalGitRepository() {
 		return _localGitRepository;
 	}
@@ -84,7 +60,7 @@ public abstract class BaseWorkbench implements Workbench {
 	public void setUp() {
 		System.out.println();
 		System.out.println("##");
-		System.out.println("## " + getDirectory());
+		System.out.println("## " + _getDirectory());
 		System.out.println("## " + toString());
 		System.out.println("##");
 		System.out.println();
@@ -94,7 +70,7 @@ public abstract class BaseWorkbench implements Workbench {
 
 		LocalGitBranch localGitBranch =
 			gitWorkingDirectory.createLocalGitBranch(
-				getBranchSHA(), true, getBranchSHA());
+				_getBranchSHA(), true, _getBranchSHA());
 
 		gitWorkingDirectory.createLocalGitBranch(localGitBranch, true);
 
@@ -118,7 +94,7 @@ public abstract class BaseWorkbench implements Workbench {
 
 		System.out.println();
 		System.out.println("##");
-		System.out.println("## " + getDirectory());
+		System.out.println("## " + _getDirectory());
 		System.out.println("## " + upstreamLocalGitBranch.toString());
 		System.out.println("##");
 		System.out.println();
@@ -135,12 +111,7 @@ public abstract class BaseWorkbench implements Workbench {
 	@Override
 	public String toString() {
 		return JenkinsResultsParserUtil.combine(
-			getGitHubURL(), " - ", getBranchSHA());
-	}
-
-	@Override
-	public void writePropertiesFiles() {
-		_localGitRepository.writePropertiesFiles();
+			_getGitHubURL(), " - ", _getBranchSHA());
 	}
 
 	protected BaseWorkbench(
@@ -202,10 +173,26 @@ public abstract class BaseWorkbench implements Workbench {
 			_jsonObject.put("branch_sha", branchSHA);
 		}
 		else {
-			_jsonObject.put("branch_sha", getBranchHeadSHA());
+			_jsonObject.put("branch_sha", _getBranchHeadSHA());
 		}
 
 		_validateJSONObject();
+	}
+
+	private String _getBranchHeadSHA() {
+		return _jsonObject.getString("branch_head_sha");
+	}
+
+	private String _getBranchSHA() {
+		return _jsonObject.getString("branch_sha");
+	}
+
+	private File _getDirectory() {
+		return _localGitRepository.getDirectory();
+	}
+
+	private String _getGitHubURL() {
+		return _jsonObject.getString("git_hub_url");
 	}
 
 	private void _validateJSONObject() {

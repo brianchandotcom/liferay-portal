@@ -14,28 +14,14 @@
 
 package com.liferay.jenkins.results.parser;
 
-import org.json.JSONObject;
-
-import java.io.File;
-
 /**
  * @author Michael Hashimoto
  */
 public interface Workbench {
 
-	public String getBranchHeadSHA();
-
-	public String getBranchSHA();
-
-	public File getDirectory();
-
 	public String getFileContent(String filePath);
 
 	public String getGitHubDevBranchName();
-
-	public String getGitHubURL();
-
-	public JSONObject getJSONObject();
 
 	public LocalGitRepository getLocalGitRepository();
 
@@ -44,7 +30,5 @@ public interface Workbench {
 	public void setUp();
 
 	public void tearDown();
-
-	public void writePropertiesFiles();
 
 }

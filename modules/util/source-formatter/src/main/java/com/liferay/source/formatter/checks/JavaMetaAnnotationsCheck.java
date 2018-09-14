@@ -17,6 +17,7 @@ package com.liferay.source.formatter.checks;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.source.formatter.checks.util.JavaSourceUtil;
 
 import java.io.IOException;
 
@@ -46,7 +47,10 @@ public class JavaMetaAnnotationsCheck extends JavaAnnotationsCheck {
 
 		_checkDelimeters(fileName, content, annotation);
 
-		return _fixTypeProperties(annotation);
+		annotation = _fixOCDId(fileName, content, annotation);
+		annotation = _fixTypeProperties(annotation);
+
+		return annotation;
 	}
 
 	private void _checkDelimeter(
@@ -94,6 +98,17 @@ public class JavaMetaAnnotationsCheck extends JavaAnnotationsCheck {
 				fileName, content, matcher, "name", StringPool.DASH,
 				StringPool.PERIOD);
 		}
+	}
+
+	private String _fixOCDId(
+		String fileName, String content, String annotation) {
+
+		return annotation.replaceFirst(
+			"(@Meta\\.OCD\\([^\\{]+id = )\".+?\"",
+			StringBundler.concat(
+				"$1\"", JavaSourceUtil.getPackageName(content),
+				StringPool.PERIOD, JavaSourceUtil.getClassName(fileName),
+				StringPool.QUOTE));
 	}
 
 	private String _fixTypeProperties(String annotation) {

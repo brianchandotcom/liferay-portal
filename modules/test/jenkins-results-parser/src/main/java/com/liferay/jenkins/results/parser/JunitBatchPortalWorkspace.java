@@ -43,10 +43,9 @@ public class JunitBatchPortalWorkspace extends BatchPortalWorkspace {
 			"release.versions.test.other.dir",
 			String.valueOf(otherPortalLocalGitBranch.getDirectory()));
 
-		PortalLocalGitRepository portalLocalGitRepository =
-			getPrimaryPortalLocalGitRepository();
+		PortalWorkbench primaryPortalWorkbench = getPrimaryPortalWorkbench();
 
-		portalLocalGitRepository.setBuildProperties(properties);
+		primaryPortalWorkbench.setPortalBuildProperties(properties);
 	}
 
 }

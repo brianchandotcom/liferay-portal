@@ -38,21 +38,27 @@ public abstract class PortalWorkspace extends BaseWorkspace {
 	protected PortalWorkspace(
 		String portalGitHubURL, String portalUpstreamBranchName) {
 
-		String portalGitRepositoryName = _getPortalGitRepositoryName(
-			portalGitHubURL);
+		Workbench workbench = WorkbenchFactory.newWorkbench(
+			portalGitHubURL, portalUpstreamBranchName);
 
-		_primaryPortalLocalGitRepository = _getPortalLocalGitRepository(
-			portalGitRepositoryName, portalUpstreamBranchName);
+		if (!(workbench instanceof PortalWorkbench)) {
+			throw new RuntimeException("Invalid workbench");
+		}
 
-		_primaryPortalLocalGitBranch = _getPortalLocalGitBranch(
-			_primaryPortalLocalGitRepository, portalGitHubURL);
+		_primaryPortalWorkbench = (PortalWorkbench)workbench;
+
+		_primaryPortalWorkbench.setUp();
+	}
+
+	protected PortalWorkbench getPrimaryPortalWorkbench() {
+		return _primaryPortalWorkbench;
 	}
 
 	@Override
 	protected void setUpWorkbenches() {
 		setUpJenkinsWorkbench();
 
-		_checkoutPrimaryPortalLocalGitBranch();
+		_primaryPortalWorkbench.setUp();
 
 		_checkoutBasePortalLocalGitBranch();
 
@@ -67,11 +73,12 @@ public abstract class PortalWorkspace extends BaseWorkspace {
 	protected void tearDownWorkbenches() {
 		tearDownJenkinsWorkbench();
 
+		_primaryPortalWorkbench.tearDown();
+
 		cleanupLocalGitBranch(_basePortalLocalGitBranch);
 		cleanupLocalGitBranch(_companionPortalLocalGitBranch);
 		cleanupLocalGitBranch(_otherPortalLocalGitBranch);
 		cleanupLocalGitBranch(_pluginsLocalGitBranch);
-		cleanupLocalGitBranch(_primaryPortalLocalGitBranch);
 	}
 
 	protected PortalLocalGitBranch getBasePortalLocalGitBranch() {
@@ -80,7 +87,7 @@ public abstract class PortalWorkspace extends BaseWorkspace {
 		}
 
 		String portalUpstreamBranchName =
-			_primaryPortalLocalGitBranch.getUpstreamBranchName();
+			_primaryPortalWorkbench.getUpstreamBranchName();
 
 		if (!portalUpstreamBranchName.contains("-private")) {
 			return null;
@@ -116,7 +123,7 @@ public abstract class PortalWorkspace extends BaseWorkspace {
 		}
 
 		String portalUpstreamBranchName =
-			_primaryPortalLocalGitBranch.getUpstreamBranchName();
+			_primaryPortalWorkbench.getUpstreamBranchName();
 
 		if (!portalUpstreamBranchName.equals("7.0.x") &&
 			!portalUpstreamBranchName.equals("7.1.x") &&
@@ -147,7 +154,7 @@ public abstract class PortalWorkspace extends BaseWorkspace {
 		}
 
 		String portalUpstreamBranchName =
-			_primaryPortalLocalGitBranch.getUpstreamBranchName();
+			_primaryPortalWorkbench.getUpstreamBranchName();
 
 		String otherPortalBranchName;
 
@@ -200,7 +207,7 @@ public abstract class PortalWorkspace extends BaseWorkspace {
 		}
 
 		String pluginsBranchName =
-			_primaryPortalLocalGitBranch.getUpstreamBranchName();
+			_primaryPortalWorkbench.getUpstreamBranchName();
 
 		if (pluginsBranchName.contains("7.0.x") ||
 			pluginsBranchName.contains("7.1.x") ||
@@ -221,18 +228,14 @@ public abstract class PortalWorkspace extends BaseWorkspace {
 		return _pluginsLocalGitBranch;
 	}
 
-	protected PortalLocalGitRepository getPrimaryPortalLocalGitRepository() {
-		return _primaryPortalLocalGitRepository;
-	}
-
 	@Override
 	protected void setWorkbenchJobProperties(Job job) {
-		_primaryPortalLocalGitRepository.setJobProperties(job);
+		_primaryPortalWorkbench.setPortalJobProperties(job);
 	}
 
 	@Override
 	protected void writeWorkbenchPropertiesFiles() {
-		_primaryPortalLocalGitRepository.writePropertiesFiles();
+		_primaryPortalWorkbench.writePropertiesFiles();
 	}
 
 	private void _checkoutBasePortalLocalGitBranch() {
@@ -245,13 +248,16 @@ public abstract class PortalWorkspace extends BaseWorkspace {
 
 		checkoutLocalGitBranch(basePortalLocalGitBranch);
 
+		LocalGitRepository primaryPortalLocalGitRepository =
+			_primaryPortalWorkbench.getLocalGitRepository();
+
 		GitWorkingDirectory gitWorkingDirectory =
-			_primaryPortalLocalGitRepository.getGitWorkingDirectory();
+			primaryPortalLocalGitRepository.getGitWorkingDirectory();
 
 		gitWorkingDirectory.fetch(basePortalLocalGitBranch);
 
 		File gitCommitPortalFile = new File(
-			_primaryPortalLocalGitRepository.getDirectory(),
+			primaryPortalLocalGitRepository.getDirectory(),
 			"git-commit-portal");
 
 		try {
@@ -263,7 +269,7 @@ public abstract class PortalWorkspace extends BaseWorkspace {
 		}
 
 		AntUtil.callTarget(
-			_primaryPortalLocalGitRepository.getDirectory(),
+			primaryPortalLocalGitRepository.getDirectory(),
 			"build-working-dir.xml", "prepare-working-dir", null);
 	}
 
@@ -280,9 +286,12 @@ public abstract class PortalWorkspace extends BaseWorkspace {
 		try {
 			String path = "modules/private";
 
+			LocalGitRepository primaryPortalLocalGitRepository =
+				_primaryPortalWorkbench.getLocalGitRepository();
+
 			JenkinsResultsParserUtil.copy(
 				new File(companionPortalLocalGitBranch.getDirectory(), path),
-				new File(_primaryPortalLocalGitBranch.getDirectory(), path));
+				new File(primaryPortalLocalGitRepository.getDirectory(), path));
 		}
 		catch (IOException ioe) {
 			throw new RuntimeException(ioe);
@@ -309,10 +318,6 @@ public abstract class PortalWorkspace extends BaseWorkspace {
 		}
 
 		checkoutLocalGitBranch(pluginsLocalGitBranch);
-	}
-
-	private void _checkoutPrimaryPortalLocalGitBranch() {
-		checkoutLocalGitBranch(_primaryPortalLocalGitBranch);
 	}
 
 	private LocalGitBranch _getLocalGitBranchFromGitCommit(
@@ -353,67 +358,11 @@ public abstract class PortalWorkspace extends BaseWorkspace {
 		return localGitBranch;
 	}
 
-	private String _getPortalGitRepositoryName(String portalGitHubURL) {
-		Matcher matcher = _portalGitHubURLPattern.matcher(portalGitHubURL);
-
-		if (!matcher.find()) {
-			throw new RuntimeException(
-				"Invalid portal GitHub URL " + portalGitHubURL);
-		}
-
-		return matcher.group("gitRepositoryName");
-	}
-
-	private PortalLocalGitBranch _getPortalLocalGitBranch(
-		PortalLocalGitRepository portalLocalGitRepository,
-		String portalGitHubURL) {
-
-		LocalGitBranch localGitBranch;
-
-		if (PullRequest.isValidGitHubPullRequestURL(portalGitHubURL)) {
-			PullRequest pullRequest = new PullRequest(portalGitHubURL);
-
-			localGitBranch = GitHubDevSyncUtil.createCachedLocalGitBranch(
-				portalLocalGitRepository, pullRequest, true);
-		}
-		else if (GitUtil.isValidGitHubRefURL(portalGitHubURL)) {
-			RemoteGitRef remoteGitRef = GitUtil.getRemoteGitRef(
-				portalGitHubURL);
-
-			localGitBranch = GitHubDevSyncUtil.createCachedLocalGitBranch(
-				portalLocalGitRepository, remoteGitRef, true);
-		}
-		else {
-			throw new RuntimeException(
-				"Invalid portal GitHub URL " + portalGitHubURL);
-		}
-
-		if (!(localGitBranch instanceof PortalLocalGitBranch)) {
-			throw new RuntimeException(
-				"Invalid local Git branch " + localGitBranch);
-		}
-
-		return (PortalLocalGitBranch)localGitBranch;
-	}
-
-	private PortalLocalGitRepository _getPortalLocalGitRepository(
-		String portalGitRepositoryName, String portalUpstreamBranchName) {
-
-		LocalGitRepository localGitRepository =
-			GitRepositoryFactory.getLocalGitRepository(
-				portalGitRepositoryName, portalUpstreamBranchName);
-
-		if (!(localGitRepository instanceof PortalLocalGitRepository)) {
-			throw new RuntimeException(
-				"Invalid local Git repository " + localGitRepository);
-		}
-
-		return (PortalLocalGitRepository)localGitRepository;
-	}
-
 	private String _getPortalLocalGitRepositoryFileContent(String fileName) {
-		File file = new File(
-			_primaryPortalLocalGitRepository.getDirectory(), fileName);
+		LocalGitRepository localGitRepository =
+			_primaryPortalWorkbench.getLocalGitRepository();
+
+		File file = new File(localGitRepository.getDirectory(), fileName);
 
 		try {
 			String fileContent = JenkinsResultsParserUtil.read(file);
@@ -433,7 +382,6 @@ public abstract class PortalWorkspace extends BaseWorkspace {
 	private PortalLocalGitBranch _companionPortalLocalGitBranch;
 	private PortalLocalGitBranch _otherPortalLocalGitBranch;
 	private PluginsLocalGitBranch _pluginsLocalGitBranch;
-	private final PortalLocalGitBranch _primaryPortalLocalGitBranch;
-	private final PortalLocalGitRepository _primaryPortalLocalGitRepository;
+	private final PortalWorkbench _primaryPortalWorkbench;
 
 }

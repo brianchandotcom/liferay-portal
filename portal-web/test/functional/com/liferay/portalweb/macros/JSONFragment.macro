@@ -1,10 +1,5 @@
 <definition>
 	<command name="_addFragment">
-		<execute macro="JSONGroup#getGroupIdByName">
-			<return name="groupId" />
-			<var name="groupName" value="${groupName}" />
-		</execute>
-
 		<execute macro="JSONCompany#getPortalURL">
 			<return name="portalURL" />
 		</execute>
@@ -43,20 +38,6 @@
 			<return name="portalURL" />
 		</execute>
 
-		<execute macro="JSONGroup#getGroupIdByName">
-			<return name="groupId" />
-			<var name="groupName" value="${groupName}" />
-		</execute>
-
-		<if>
-			<not>
-				<isset var="groupId" />
-			</not>
-			<then>
-				<fail message="Please set 'groupId'." />
-			</then>
-		</if>
-
 		<var name="curl"><![CDATA[
 			${portalURL}/api/jsonws/fragment.fragmentcollection/add-fragment-collection \
 			-u test@liferay.com:test \
@@ -71,6 +52,35 @@
 	</command>
 
 	<command name="addFragment">
+		<if>
+			<isset var="groupName" />
+			<then>
+				<execute macro="JSONGroup#getGroupIdByName">
+					<return name="groupId" />
+					<var name="groupName" value="${groupName}" />
+				</execute>
+			</then>
+		</if>
+
+		<if>
+			<isset var="groupKey" />
+			<then>
+				<execute macro="JSONGroup#getGroupIdByGroupKey">
+					<return name="groupId" />
+					<var name="groupKey" value="${groupKey}" />
+				</execute>
+			</then>
+		</if>
+
+		<if>
+			<not>
+				<isset var="status" />
+			</not>
+			<then>
+				<var name="status" value="0" />
+			</then>
+		</if>
+
 		<if>
 			<not>
 				<isset var="name" />
@@ -91,23 +101,53 @@
 
 		<if>
 			<not>
-				<isset var="status" />
+				<isset var="groupId" />
 			</not>
 			<then>
-				<var name="status" value="0" />
+				<fail message="Please set 'groupKey or groupName to get groupId'." />
 			</then>
 		</if>
 
 		<execute macro="JSONFragment#_addFragment">
 			<var name="collectionName" value="${collectionName}" />
 			<var name="fragmentFile" value="${fragmentFile}" />
-			<var name="groupName" value="${groupName}" />
+			<var name="groupId" value="${groupId}" />
 			<var name="name" value="${name}" />
 			<var name="status" value="${status}" />
 		</execute>
 	</command>
 
 	<command name="addFragmentCollection">
+		<if>
+			<isset var="groupName" />
+			<then>
+				<execute macro="JSONGroup#getGroupIdByName">
+					<return name="groupId" />
+					<var name="groupName" value="${groupName}" />
+				</execute>
+			</then>
+		</if>
+
+		<if>
+			<isset var="groupKey" />
+			<then>
+				<execute macro="JSONGroup#getGroupIdByGroupKey">
+					<return name="groupId" />
+					<var name="groupKey" value="${groupKey}" />
+					<var name="site" value="${site}" />
+				</execute>
+			</then>
+		</if>
+
+		<if>
+			<not>
+				<isset var="groupId" />
+			</not>
+			<then>
+				<fail message="Please set 'groupKey or groupName to get groupId'." />
+			</then>
+		</if>
+
 		<if>
 			<not>
 				<isset var="name" />
@@ -117,17 +157,8 @@
 			</then>
 		</if>
 
-		<if>
-			<not>
-				<isset var="groupName" />
-			</not>
-			<then>
-				<fail message="Please set 'groupName'." />
-			</then>
-		</if>
-
 		<execute macro="JSONFragment#_addFragmentCollection">
-			<var name="groupName" value="${groupName}" />
+			<var name="groupId" value="${groupId}" />
 			<var name="name" value="${name}" />
 		</execute>
 	</command>

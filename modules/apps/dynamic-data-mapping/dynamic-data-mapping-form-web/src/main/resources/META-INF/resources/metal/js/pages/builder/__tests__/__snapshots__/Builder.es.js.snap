@@ -225,101 +225,44 @@ exports[`Builder should render the default markup 1`] = `
         </div>
       </nav>
       <div class="ddm-sidebar-body">
-        <ul class="list-group">
-          <li class="list-group-header">
-            <h3 class="list-group-header-title">basic-elements</h3>
-          </li>
-          <div class="ddm-drag-item list-group-item list-group-item-flex" data-ddm-field-type-index="0" ref="field0">
-            <div class="autofit-col">
-              <div class="sticker sticker-secondary">
-                <svg class="lexicon-icon lexicon-icon-calendar" aria-hidden="true">
-                  <use xlinkHref="icons.svg#calendar"></use>
+        <div aria-orientation="vertical" class="ddm-field-types-panel panel-group" id="accordion03" role="tablist">
+          <div class="panel panel-secondary">
+            <a href="#ddm-field-types-basic-body" id="ddm-field-types-basic-header" aria-controls="collapseTwo" aria-expanded="true" class="collapse-icon panel-header panel-header-link" data-parent="#accordion03" data-toggle="collapse" role="tab">
+              <span class="panel-title">basic-elements</span>
+              <span class="collapse-icon-closed">
+                <svg aria-hidden="true" class="lexicon-icon lexicon-icon-angle-right">
+                  <use xlink:href="icons.svg#angle-right"></use>
                 </svg>
-              </div>
-            </div>
-            <div class="autofit-col autofit-col-expand">
-              <h4 class="list-group-title text-truncate">
-                <span>Date</span>
-              </h4>
-              <p class="list-group-subtitle text-truncate">Select date from a Datepicker.</p>
+              </span>
+              <span class="collapse-icon-open">
+                <svg aria-hidden="true" class="lexicon-icon lexicon-icon-angle-down">
+                  <use xlink:href="icons.svg#angle-down"></use>
+                </svg>
+              </span>
+            </a>
+            <div aria-labelledby="#ddm-field-types-basic-header" id="ddm-field-types-basic-body" class="panel-collapse show" role="tabpanel">
+              <div class="panel-body p-0 m-0 list-group"></div>
             </div>
           </div>
-          <div class="ddm-drag-item list-group-item list-group-item-flex" data-ddm-field-type-index="1" ref="field1">
-            <div class="autofit-col">
-              <div class="sticker sticker-secondary">
-                <svg class="lexicon-icon lexicon-icon-text" aria-hidden="true">
-                  <use xlinkHref="icons.svg#text"></use>
+          <div class="panel panel-secondary">
+            <a href="#ddm-field-types-customized-body" id="ddm-field-types-customized-header" aria-controls="collapseTwo" aria-expanded="true" class="collapse-icon panel-header panel-header-link" data-parent="#accordion03" data-toggle="collapse" role="tab">
+              <span class="panel-title">customized-elements</span>
+              <span class="collapse-icon-closed">
+                <svg aria-hidden="true" class="lexicon-icon lexicon-icon-angle-right">
+                  <use xlink:href="icons.svg#angle-right"></use>
                 </svg>
-              </div>
-            </div>
-            <div class="autofit-col autofit-col-expand">
-              <h4 class="list-group-title text-truncate">
-                <span>Text Field</span>
-              </h4>
-              <p class="list-group-subtitle text-truncate">Single line or multiline text area.</p>
+              </span>
+              <span class="collapse-icon-open">
+                <svg aria-hidden="true" class="lexicon-icon lexicon-icon-angle-down">
+                  <use xlink:href="icons.svg#angle-down"></use>
+                </svg>
+              </span>
+            </a>
+            <div aria-labelledby="#ddm-field-types-customized-header" id="ddm-field-types-customized-body" class="panel-collapse show" role="tabpanel">
+              <div class="panel-body p-0 m-0 list-group"></div>
             </div>
           </div>
-          <div class="ddm-drag-item list-group-item list-group-item-flex" data-ddm-field-type-index="2" ref="field2">
-            <div class="autofit-col">
-              <div class="sticker sticker-secondary">
-                <svg class="lexicon-icon lexicon-icon-radio-button" aria-hidden="true">
-                  <use xlinkHref="icons.svg#radio-button"></use>
-                </svg>
-              </div>
-            </div>
-            <div class="autofit-col autofit-col-expand">
-              <h4 class="list-group-title text-truncate">
-                <span>Single Selection</span>
-              </h4>
-              <p class="list-group-subtitle text-truncate">Select only one item with a radio button.</p>
-            </div>
-          </div>
-          <div class="ddm-drag-item list-group-item list-group-item-flex" data-ddm-field-type-index="3" ref="field3">
-            <div class="autofit-col">
-              <div class="sticker sticker-secondary">
-                <svg class="lexicon-icon lexicon-icon-list" aria-hidden="true">
-                  <use xlinkHref="icons.svg#list"></use>
-                </svg>
-              </div>
-            </div>
-            <div class="autofit-col autofit-col-expand">
-              <h4 class="list-group-title text-truncate">
-                <span>Select from list</span>
-              </h4>
-              <p class="list-group-subtitle text-truncate">Choose one or more options from a list.</p>
-            </div>
-          </div>
-          <div class="ddm-drag-item list-group-item list-group-item-flex" data-ddm-field-type-index="4" ref="field4">
-            <div class="autofit-col">
-              <div class="sticker sticker-secondary">
-                <svg class="lexicon-icon lexicon-icon-grid" aria-hidden="true">
-                  <use xlinkHref="icons.svg#grid"></use>
-                </svg>
-              </div>
-            </div>
-            <div class="autofit-col autofit-col-expand">
-              <h4 class="list-group-title text-truncate">
-                <span>Grid</span>
-              </h4>
-              <p class="list-group-subtitle text-truncate">Select options from a matrix.</p>
-            </div>
-          </div>
-          <div class="ddm-drag-item list-group-item list-group-item-flex" data-ddm-field-type-index="5" ref="field5">
-            <div class="autofit-col">
-              <div class="sticker sticker-secondary">
-                <svg class="lexicon-icon lexicon-icon-select-from-list" aria-hidden="true">
-                  <use xlinkHref="icons.svg#select-from-list"></use>
-                </svg>
-              </div>
-            </div>
-            <div class="autofit-col autofit-col-expand">
-              <h4 class="list-group-title text-truncate">
-                <span>Multiple Selection</span>
-              </h4>
-              <p class="list-group-subtitle text-truncate">Select multiple options using a checkbox.</p>
-            </div>
-          </div>
-        </ul>
+        </div>
       </div>
     </div>
   </div>
@@ -561,101 +504,44 @@ exports[`Builder should show modal when trash button gets clicked 1`] = `
         </div>
       </nav>
       <div class="ddm-sidebar-body">
-        <ul class="list-group">
-          <li class="list-group-header">
-            <h3 class="list-group-header-title">basic-elements</h3>
-          </li>
-          <div class="ddm-drag-item list-group-item list-group-item-flex" data-ddm-field-type-index="0" ref="field0">
-            <div class="autofit-col">
-              <div class="sticker sticker-secondary">
-                <svg class="lexicon-icon lexicon-icon-calendar" aria-hidden="true">
-                  <use xlinkHref="icons.svg#calendar"></use>
+        <div aria-orientation="vertical" class="ddm-field-types-panel panel-group" id="accordion03" role="tablist">
+          <div class="panel panel-secondary">
+            <a href="#ddm-field-types-basic-body" id="ddm-field-types-basic-header" aria-controls="collapseTwo" aria-expanded="true" class="collapse-icon panel-header panel-header-link" data-parent="#accordion03" data-toggle="collapse" role="tab">
+              <span class="panel-title">basic-elements</span>
+              <span class="collapse-icon-closed">
+                <svg aria-hidden="true" class="lexicon-icon lexicon-icon-angle-right">
+                  <use xlink:href="icons.svg#angle-right"></use>
                 </svg>
-              </div>
-            </div>
-            <div class="autofit-col autofit-col-expand">
-              <h4 class="list-group-title text-truncate">
-                <span>Date</span>
-              </h4>
-              <p class="list-group-subtitle text-truncate">Select date from a Datepicker.</p>
+              </span>
+              <span class="collapse-icon-open">
+                <svg aria-hidden="true" class="lexicon-icon lexicon-icon-angle-down">
+                  <use xlink:href="icons.svg#angle-down"></use>
+                </svg>
+              </span>
+            </a>
+            <div aria-labelledby="#ddm-field-types-basic-header" id="ddm-field-types-basic-body" class="panel-collapse show" role="tabpanel">
+              <div class="panel-body p-0 m-0 list-group"></div>
             </div>
           </div>
-          <div class="ddm-drag-item list-group-item list-group-item-flex" data-ddm-field-type-index="1" ref="field1">
-            <div class="autofit-col">
-              <div class="sticker sticker-secondary">
-                <svg class="lexicon-icon lexicon-icon-text" aria-hidden="true">
-                  <use xlinkHref="icons.svg#text"></use>
+          <div class="panel panel-secondary">
+            <a href="#ddm-field-types-customized-body" id="ddm-field-types-customized-header" aria-controls="collapseTwo" aria-expanded="true" class="collapse-icon panel-header panel-header-link" data-parent="#accordion03" data-toggle="collapse" role="tab">
+              <span class="panel-title">customized-elements</span>
+              <span class="collapse-icon-closed">
+                <svg aria-hidden="true" class="lexicon-icon lexicon-icon-angle-right">
+                  <use xlink:href="icons.svg#angle-right"></use>
                 </svg>
-              </div>
-            </div>
-            <div class="autofit-col autofit-col-expand">
-              <h4 class="list-group-title text-truncate">
-                <span>Text Field</span>
-              </h4>
-              <p class="list-group-subtitle text-truncate">Single line or multiline text area.</p>
+              </span>
+              <span class="collapse-icon-open">
+                <svg aria-hidden="true" class="lexicon-icon lexicon-icon-angle-down">
+                  <use xlink:href="icons.svg#angle-down"></use>
+                </svg>
+              </span>
+            </a>
+            <div aria-labelledby="#ddm-field-types-customized-header" id="ddm-field-types-customized-body" class="panel-collapse show" role="tabpanel">
+              <div class="panel-body p-0 m-0 list-group"></div>
             </div>
           </div>
-          <div class="ddm-drag-item list-group-item list-group-item-flex" data-ddm-field-type-index="2" ref="field2">
-            <div class="autofit-col">
-              <div class="sticker sticker-secondary">
-                <svg class="lexicon-icon lexicon-icon-radio-button" aria-hidden="true">
-                  <use xlinkHref="icons.svg#radio-button"></use>
-                </svg>
-              </div>
-            </div>
-            <div class="autofit-col autofit-col-expand">
-              <h4 class="list-group-title text-truncate">
-                <span>Single Selection</span>
-              </h4>
-              <p class="list-group-subtitle text-truncate">Select only one item with a radio button.</p>
-            </div>
-          </div>
-          <div class="ddm-drag-item list-group-item list-group-item-flex" data-ddm-field-type-index="3" ref="field3">
-            <div class="autofit-col">
-              <div class="sticker sticker-secondary">
-                <svg class="lexicon-icon lexicon-icon-list" aria-hidden="true">
-                  <use xlinkHref="icons.svg#list"></use>
-                </svg>
-              </div>
-            </div>
-            <div class="autofit-col autofit-col-expand">
-              <h4 class="list-group-title text-truncate">
-                <span>Select from list</span>
-              </h4>
-              <p class="list-group-subtitle text-truncate">Choose one or more options from a list.</p>
-            </div>
-          </div>
-          <div class="ddm-drag-item list-group-item list-group-item-flex" data-ddm-field-type-index="4" ref="field4">
-            <div class="autofit-col">
-              <div class="sticker sticker-secondary">
-                <svg class="lexicon-icon lexicon-icon-grid" aria-hidden="true">
-                  <use xlinkHref="icons.svg#grid"></use>
-                </svg>
-              </div>
-            </div>
-            <div class="autofit-col autofit-col-expand">
-              <h4 class="list-group-title text-truncate">
-                <span>Grid</span>
-              </h4>
-              <p class="list-group-subtitle text-truncate">Select options from a matrix.</p>
-            </div>
-          </div>
-          <div class="ddm-drag-item list-group-item list-group-item-flex" data-ddm-field-type-index="5" ref="field5">
-            <div class="autofit-col">
-              <div class="sticker sticker-secondary">
-                <svg class="lexicon-icon lexicon-icon-select-from-list" aria-hidden="true">
-                  <use xlinkHref="icons.svg#select-from-list"></use>
-                </svg>
-              </div>
-            </div>
-            <div class="autofit-col autofit-col-expand">
-              <h4 class="list-group-title text-truncate">
-                <span>Multiple Selection</span>
-              </h4>
-              <p class="list-group-subtitle text-truncate">Select multiple options using a checkbox.</p>
-            </div>
-          </div>
-        </ul>
+        </div>
       </div>
     </div>
   </div>

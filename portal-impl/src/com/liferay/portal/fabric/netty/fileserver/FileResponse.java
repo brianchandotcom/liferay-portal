@@ -14,9 +14,9 @@
 
 package com.liferay.portal.fabric.netty.fileserver;
 
+import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.io.PathHolder;
-import com.liferay.portal.kernel.util.HashUtil;
 
 import java.io.Serializable;
 

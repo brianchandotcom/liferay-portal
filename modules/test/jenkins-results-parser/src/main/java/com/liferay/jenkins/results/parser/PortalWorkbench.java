@@ -18,4 +18,7 @@ package com.liferay.jenkins.results.parser;
  * @author Michael Hashimoto
  */
 public interface PortalWorkbench extends Workbench {
+
+	public String getFileContent(String filePath);
+
 }

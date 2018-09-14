@@ -2,6 +2,7 @@ package com.liferay.jenkins.results.parser;
 
 import org.json.JSONObject;
 
+import java.io.File;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -21,6 +22,11 @@ public abstract class BaseWorkbench implements Workbench {
 	}
 
 	@Override
+	public File getDirectory() {
+		return _localGitRepository.getDirectory();
+	}
+
+	@Override
 	public String getGitHubDevBranchName() {
 		return _jsonObject.getString("git_hub_dev_branch_name");
 	}
@@ -36,10 +42,15 @@ public abstract class BaseWorkbench implements Workbench {
 	}
 
 	@Override
+	public String getUpstreamBranchName() {
+		return _jsonObject.getString("upstream_branch_name");
+	}
+
+	@Override
 	public void setUp() {
 		System.out.println();
 		System.out.println("##");
-		System.out.println("## " + _localGitRepository.getDirectory());
+		System.out.println("## " + getDirectory());
 		System.out.println("## " + toString());
 		System.out.println("##");
 		System.out.println();
@@ -73,7 +84,7 @@ public abstract class BaseWorkbench implements Workbench {
 
 		System.out.println();
 		System.out.println("##");
-		System.out.println("## " + _localGitRepository.getDirectory());
+		System.out.println("## " + getDirectory());
 		System.out.println("## " + upstreamLocalGitBranch.toString());
 		System.out.println("##");
 		System.out.println();
@@ -181,6 +192,11 @@ public abstract class BaseWorkbench implements Workbench {
 
 		if (!_jsonObject.has("git_hub_url")) {
 			throw new RuntimeException("Please set required git_hub_url");
+		}
+
+		if (!_jsonObject.has("upstream_branch_name")) {
+			throw new RuntimeException(
+				"Please set required upstream_branch_name");
 		}
 	}
 

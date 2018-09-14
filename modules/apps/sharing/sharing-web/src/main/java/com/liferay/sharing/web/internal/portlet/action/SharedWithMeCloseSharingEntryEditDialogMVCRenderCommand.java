@@ -15,7 +15,7 @@
 package com.liferay.sharing.web.internal.portlet.action;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
-import com.liferay.sharing.web.internal.constants.SharingPortletKeys;
+import com.liferay.sharing.constants.SharingPortletKeys;
 
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;

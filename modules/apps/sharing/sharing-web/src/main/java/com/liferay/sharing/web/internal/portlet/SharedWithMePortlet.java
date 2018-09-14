@@ -15,7 +15,7 @@
 package com.liferay.sharing.web.internal.portlet;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
-import com.liferay.sharing.web.internal.constants.SharingPortletKeys;
+import com.liferay.sharing.constants.SharingPortletKeys;
 
 import javax.portlet.Portlet;
 

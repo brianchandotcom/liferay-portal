@@ -358,6 +358,49 @@
 		<return value="${groupId}" />
 	</command>
 
+	<command name="getGroupIdByGroupKey">
+		<if>
+			<not>
+				<isset var="groupKey" />
+			</not>
+			<then>
+				<fail message="Please set 'groupKey'." />
+			</then>
+		</if>
+
+		<if>
+			<not>
+				<isset var="site" />
+			</not>
+			<then>
+				<var name="site" value="true" />
+			</then>
+		</if>
+
+		<execute macro="JSONCompany#getCompanyId">
+			<return name="companyId" />
+		</execute>
+
+		<execute macro="JSONCompany#getPortalURL">
+			<return name="portalURL" />
+		</execute>
+
+		<var name="curl"><![CDATA[
+			${portalURL}/api/jsonws/group/get-groups/company-id/${companyId}/parent-group-id/0/site/${site} \
+				-u test@liferay.com:test
+		]]></var>
+
+		<echo message="${curl}', '$.[?(@[\'groupKey\'] == \'${groupKey}\')][\'groupId\']" />
+
+		<var method="JSONCurlUtil#get('${curl}', '$.[?(@[\'groupKey\'] == \'${groupKey}\')][\'groupId\']')" name="groupId" />
+
+		<var method="StringUtil#replace('${groupId}', '[&quot;', '')" name="groupId" />
+
+		<var method="StringUtil#replace('${groupId}', '&quot;]', '')" name="groupId" />
+
+		<return value="${groupId}" />
+	</command>
+
 	<command name="getGroupName">
 		<if>
 			<not>

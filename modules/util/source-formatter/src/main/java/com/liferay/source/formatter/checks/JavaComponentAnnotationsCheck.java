@@ -50,10 +50,6 @@ public class JavaComponentAnnotationsCheck extends JavaAnnotationsCheck {
 	}
 
 	private String _formatAnnotationParameterProperties(String annotation) {
-		if (!annotation.contains("@Component(")) {
-			return annotation;
-		}
-
 		Matcher matcher = _annotationParameterPropertyPattern.matcher(
 			annotation);
 

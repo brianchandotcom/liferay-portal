@@ -60,6 +60,9 @@ public abstract class PortalWorkspace extends BaseWorkspace {
 			_companionPortalWorkbench = null;
 			_otherPortalWorkbench = null;
 		}
+
+		_pluginsWorkbench = WorkbenchFactory.newPluginsWorkbench(
+			_primaryPortalWorkbench);
 	}
 
 	protected OtherPortalWorkbench getOtherPortalWorkbench() {
@@ -84,8 +87,7 @@ public abstract class PortalWorkspace extends BaseWorkspace {
 			_otherPortalWorkbench.setUp();
 		}
 
-
-		_checkoutPluginsLocalGitBranch();
+		_pluginsWorkbench.setUp();
 	}
 
 	@Override
@@ -102,34 +104,7 @@ public abstract class PortalWorkspace extends BaseWorkspace {
 			_otherPortalWorkbench.tearDown();
 		}
 
-		cleanupLocalGitBranch(_pluginsLocalGitBranch);
-	}
-
-	protected PluginsLocalGitBranch getPluginsLocalGitBranch() {
-		if (_pluginsLocalGitBranch != null) {
-			return _pluginsLocalGitBranch;
-		}
-
-		String pluginsBranchName =
-			_primaryPortalWorkbench.getUpstreamBranchName();
-
-		if (pluginsBranchName.contains("7.0.x") ||
-			pluginsBranchName.contains("7.1.x") ||
-			pluginsBranchName.contains("master")) {
-
-			pluginsBranchName = "7.0.x";
-		}
-
-		LocalGitRepository pluginsLocalGitRepository =
-			GitRepositoryFactory.getLocalGitRepository(
-				"liferay-plugins-ee", pluginsBranchName);
-
-		LocalGitBranch pluginsLocalGitBranch = _getLocalGitBranchFromGitCommit(
-			"git-commit-plugins", pluginsLocalGitRepository);
-
-		_pluginsLocalGitBranch = (PluginsLocalGitBranch)pluginsLocalGitBranch;
-
-		return _pluginsLocalGitBranch;
+		_pluginsWorkbench.tearDown();
 	}
 
 	@Override
@@ -140,17 +115,8 @@ public abstract class PortalWorkspace extends BaseWorkspace {
 	@Override
 	protected void writeWorkbenchPropertiesFiles() {
 		_primaryPortalWorkbench.writePropertiesFiles();
-	}
 
-	private void _checkoutPluginsLocalGitBranch() {
-		PluginsLocalGitBranch pluginsLocalGitBranch =
-			getPluginsLocalGitBranch();
-
-		if (pluginsLocalGitBranch == null) {
-			return;
-		}
-
-		checkoutLocalGitBranch(pluginsLocalGitBranch);
+		_pluginsWorkbench.writePropertiesFiles();
 	}
 
 	private LocalGitBranch _getLocalGitBranchFromGitCommit(
@@ -213,7 +179,7 @@ public abstract class PortalWorkspace extends BaseWorkspace {
 
 	private final CompanionPortalWorkbench _companionPortalWorkbench;
 	private final OtherPortalWorkbench _otherPortalWorkbench;
-	private PluginsLocalGitBranch _pluginsLocalGitBranch;
+	private final PluginsWorkbench _pluginsWorkbench;
 	private final PortalWorkbench _primaryPortalWorkbench;
 
 }

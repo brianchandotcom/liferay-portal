@@ -5267,7 +5267,26 @@ information. Make sure to commit in all build services results.
 		<get-database-property property.name="database.schema" />
 		<get-database-property property.name="database.username" />
 
-		<clean-restart-sybase />
+		<condition else="false" property="rebuild.sybase" value="true">
+			<length length="25000000000" mode="all" when="lt">
+				<fileset
+					dir="/opt/sybase/data"
+					includes="*"
+				/>
+			</length>
+		</condition>
+
+		<if>
+			<not>
+				<equals arg1="${rebuild.sybase}" arg2="true" />
+			</not>
+			<then>
+				<clean-restart-sybase retry="true" />
+			</then>
+			<else>
+				<clean-restart-sybase />
+			</else>
+		</if>
 
 		<echo file="create-header.sql">use master
 dump transaction master with no_log

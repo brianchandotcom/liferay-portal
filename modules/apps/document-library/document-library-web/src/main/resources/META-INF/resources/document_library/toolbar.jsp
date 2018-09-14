@@ -16,10 +16,6 @@
 
 <%@ include file="/document_library/init.jsp" %>
 
-<%
-DLAdminManagementToolbarDisplayContext dlAdminManagementToolbarDisplayContext = new DLAdminManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, request, dlAdminDisplayContext);
-%>
-
 <clay:management-toolbar
 	actionDropdownItems="<%= dlAdminManagementToolbarDisplayContext.getActionDropdownItems() %>"
 	actionHandler='<%= renderResponse.getNamespace() + "DocumentLibrary" %>'

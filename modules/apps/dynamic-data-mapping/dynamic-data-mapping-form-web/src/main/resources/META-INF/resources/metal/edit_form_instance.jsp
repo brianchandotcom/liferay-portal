@@ -147,6 +147,7 @@ renderResponse.setTitle((formInstance == null) ? LanguageUtil.get(request, "new-
 		strings: {
 			'any-unsaved-changes-will-be-lost-are-you-sure-you-want-to-leave': '<liferay-ui:message key="any-unsaved-changes-will-be-lost-are-you-sure-you-want-to-leave" />',
 			'draft-x': '<liferay-ui:message key="draft-x" />',
+			'error': '<liferay-ui:message key="error" />',
 			'leave': '<liferay-ui:message key="leave" />',
 			'leave-form': '<liferay-ui:message key="leave-form" />',
 			'please-add-at-least-one-field': '<liferay-ui:message key="please-add-at-least-one-field" />',
@@ -158,7 +159,8 @@ renderResponse.setTitle((formInstance == null) ? LanguageUtil.get(request, "new-
 			'stay': '<liferay-ui:message key="stay" />',
 			'the-form-was-published-successfully-access-it-with-this-url-x': '<liferay-ui:message key="the-form-was-published-successfully-access-it-with-this-url-x" />',
 			'the-form-was-unpublished-successfully': '<liferay-ui:message key="the-form-was-unpublished-successfully" />',
-			'unpublish-form': '<liferay-ui:message key="unpublish-form" />'
+			'unpublish-form': '<liferay-ui:message key="unpublish-form" />',
+			'your-request-failed-to-complete': '<liferay-ui:message key="your-request-failed-to-complete" />'
 		}
 	};
 

@@ -87,7 +87,7 @@ class PublishButton extends URLEncodedFetcher {
 			}
 		).catch(
 			() => {
-				Notifications.showAlert(strings['please-add-at-least-one-field'], 'danger');
+				Notifications.showError(strings['your-request-failed-to-complete']);
 			}
 		);
 	}

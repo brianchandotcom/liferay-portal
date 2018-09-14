@@ -11,7 +11,7 @@ class Notifications {
 		clearTimeout(this._hideTimeout);
 	}
 
-	static showAlert(message = '', style = 'success', hideDelay = 3000) {
+	static showAlert(message = '', title = '', style = 'success', hideDelay = 3000) {
 		const {portletNamespace, spritemap} = Liferay.DDM.FormSettings;
 
 		this.closeAlert();
@@ -23,13 +23,19 @@ class Notifications {
 				message,
 				spritemap,
 				style,
-				title: '',
+				title,
 				visible: true
 			},
 			document.querySelector(`#p_p_id${portletNamespace} .lfr-alert-wrapper`)
 		);
 
 		this._hideTimeout = setTimeout(() => this.closeAlert(), hideDelay);
+	}
+
+	static showError(message) {
+		const {strings} = Liferay.DDM.FormSettings;
+
+		this.showAlert(message, strings.error, 'danger');
 	}
 
 }

@@ -534,6 +534,7 @@ public class BeanPortletExtension implements Extension {
 			new BeanPortletAnnotationImpl(
 				portletApplication, portletConfiguration,
 				_getLiferayPortletConfiguration(configuredPortletName),
+				_liferayDescriptor.getConfiguration(configuredPortletName),
 				beanPortletClass.getName(),
 				_displayDescriptorCategories.get(configuredPortletName)));
 	}
@@ -567,13 +568,11 @@ public class BeanPortletExtension implements Extension {
 
 			if (beanPortlet == null) {
 				beanPortlet = new BeanPortletDefaultImpl(
-					portletName, _displayDescriptorCategories.get(portletName));
+					portletName, _displayDescriptorCategories.get(portletName),
+					_liferayDescriptor.getConfiguration(portletName));
 
 				_beanPortlets.put(portletName, beanPortlet);
 			}
-
-			beanPortlet.addLiferayConfiguration(
-				_liferayDescriptor.getPortletConfiguration(portletName));
 		}
 	}
 
@@ -663,7 +662,8 @@ public class BeanPortletExtension implements Extension {
 					if (beanPortlet == null) {
 						beanPortlet = new BeanPortletDefaultImpl(
 							portletName,
-							_displayDescriptorCategories.get(portletName));
+							_displayDescriptorCategories.get(portletName),
+							_liferayDescriptor.getConfiguration(portletName));
 
 						_beanPortlets.put(portletName, beanPortlet);
 					}

@@ -27,7 +27,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.EnumMap;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -77,13 +76,6 @@ public abstract class BaseBeanPortletImpl implements BeanPortlet {
 
 				return beanMethods;
 			});
-	}
-
-	@Override
-	public void addLiferayConfiguration(
-		Map<String, String> liferayConfiguration) {
-
-		_liferayConfiguration.putAll(liferayConfiguration);
 	}
 
 	@Override
@@ -141,6 +133,12 @@ public abstract class BaseBeanPortletImpl implements BeanPortlet {
 		if (displayCategory != null) {
 			dictionary.put(
 				"com.liferay.portlet.display-category", displayCategory);
+		}
+
+		Map<String, String> liferayConfiguration = getLiferayConfiguration();
+
+		if (liferayConfiguration != null) {
+			dictionary.putAll(liferayConfiguration);
 		}
 
 		String defaultNamespace = beanApp.getDefaultNamespace();
@@ -251,8 +249,6 @@ public abstract class BaseBeanPortletImpl implements BeanPortlet {
 
 		dictionary.put("javax.portlet.version", beanApp.getSpecVersion());
 
-		dictionary.putAll(_liferayConfiguration);
-
 		return dictionary;
 	}
 
@@ -279,7 +275,6 @@ public abstract class BaseBeanPortletImpl implements BeanPortlet {
 
 	private final EnumMap<MethodType, List<BeanMethod>> _beanMethods =
 		new EnumMap<>(MethodType.class);
-	private final Map<String, String> _liferayConfiguration = new HashMap<>();
 	private final List<PortletDependency> _resourceDependencies =
 		new ArrayList<>();
 

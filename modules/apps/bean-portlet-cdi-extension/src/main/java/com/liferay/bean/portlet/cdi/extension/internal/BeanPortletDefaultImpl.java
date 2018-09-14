@@ -15,15 +15,20 @@
 package com.liferay.bean.portlet.cdi.extension.internal;
 
 import java.util.Dictionary;
+import java.util.Map;
 
 /**
  * @author Neil Griffin
  */
 public class BeanPortletDefaultImpl extends BaseBeanPortletImpl {
 
-	public BeanPortletDefaultImpl(String portletName, String displayCategory) {
+	public BeanPortletDefaultImpl(
+		String portletName, String displayCategory,
+		Map<String, String> liferayConfiguration) {
+
 		_portletName = portletName;
 		_displayCategory = displayCategory;
+		_liferayConfiguration = liferayConfiguration;
 	}
 
 	@Override
@@ -34,6 +39,11 @@ public class BeanPortletDefaultImpl extends BaseBeanPortletImpl {
 	@Override
 	public String getDisplayCategory() {
 		return _displayCategory;
+	}
+
+	@Override
+	public Map<String, String> getLiferayConfiguration() {
+		return _liferayConfiguration;
 	}
 
 	@Override
@@ -62,6 +72,7 @@ public class BeanPortletDefaultImpl extends BaseBeanPortletImpl {
 
 	private final BeanApp _beanApp = new BeanAppDefaultImpl();
 	private final String _displayCategory;
+	private final Map<String, String> _liferayConfiguration;
 	private final String _portletName;
 
 }

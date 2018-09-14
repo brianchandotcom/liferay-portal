@@ -23,21 +23,21 @@ import java.util.Set;
  */
 public class LiferayDescriptor {
 
-	public void addPortletConfiguration(
-		String portletName, Map<String, String> portletConfiguration) {
+	public void addConfiguration(
+		String portletName, Map<String, String> configuration) {
 
-		_liferayPortletConfigurations.put(portletName, portletConfiguration);
+		_configurations.put(portletName, configuration);
 	}
 
-	public Map<String, String> getPortletConfiguration(String portletName) {
-		return _liferayPortletConfigurations.get(portletName);
+	public Map<String, String> getConfiguration(String portletName) {
+		return _configurations.get(portletName);
 	}
 
 	public Set<String> getPortletNames() {
-		return _liferayPortletConfigurations.keySet();
+		return _configurations.keySet();
 	}
 
-	private final Map<String, Map<String, String>>
-		_liferayPortletConfigurations = new HashMap<>();
+	private final Map<String, Map<String, String>> _configurations =
+		new HashMap<>();
 
 }

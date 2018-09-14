@@ -55,6 +55,7 @@ public class BeanPortletAnnotationImpl extends BaseBeanPortletImpl {
 		PortletApplication portletApplication,
 		PortletConfiguration portletConfiguration,
 		LiferayPortletConfiguration liferayPortletConfiguration,
+		Map<String, String> liferayDescriptorConfiguration,
 		String portletClassName, String descriptorDisplayCategory) {
 
 		_beanApp = new BeanAppAnnotationImpl(portletApplication);
@@ -71,10 +72,10 @@ public class BeanPortletAnnotationImpl extends BaseBeanPortletImpl {
 		}
 
 		if ((propertyNames == null) || (propertyNames.length == 0)) {
-			_liferayPortletConfigurationProperties = Collections.emptyMap();
+			_liferayConfiguration = Collections.emptyMap();
 		}
 		else {
-			_liferayPortletConfigurationProperties = new HashMap<>();
+			_liferayConfiguration = new HashMap<>();
 
 			for (String propertyName : propertyNames) {
 				String propertyValue = null;
@@ -96,10 +97,11 @@ public class BeanPortletAnnotationImpl extends BaseBeanPortletImpl {
 					}
 				}
 
-				_liferayPortletConfigurationProperties.put(
-					propertyName, propertyValue);
+				_liferayConfiguration.put(propertyName, propertyValue);
 			}
 		}
+
+		_liferayConfiguration.putAll(liferayDescriptorConfiguration);
 
 		_displayCategory = displayCategory;
 
@@ -123,6 +125,11 @@ public class BeanPortletAnnotationImpl extends BaseBeanPortletImpl {
 	@Override
 	public String getDisplayCategory() {
 		return _displayCategory;
+	}
+
+	@Override
+	public Map<String, String> getLiferayConfiguration() {
+		return _liferayConfiguration;
 	}
 
 	@Override
@@ -355,7 +362,7 @@ public class BeanPortletAnnotationImpl extends BaseBeanPortletImpl {
 			dictionary.put("javax.portlet.window-state", supportedWindowStates);
 		}
 
-		dictionary.putAll(_liferayPortletConfigurationProperties);
+		dictionary.putAll(_liferayConfiguration);
 
 		return dictionary;
 	}
@@ -388,7 +395,7 @@ public class BeanPortletAnnotationImpl extends BaseBeanPortletImpl {
 
 	private final BeanApp _beanApp;
 	private final String _displayCategory;
-	private final Map<String, String> _liferayPortletConfigurationProperties;
+	private final Map<String, String> _liferayConfiguration;
 	private final String _portletClassName;
 	private final PortletConfiguration _portletConfiguration;
 	private final Set<String> _portletModes;

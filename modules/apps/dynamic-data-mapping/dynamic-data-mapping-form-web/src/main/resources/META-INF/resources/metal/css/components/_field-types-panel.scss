@@ -1,0 +1,16 @@
+$c: '.ddm-field-types-panel';
+
+#{$c} {
+	.panel-secondary > a {
+		padding-left: 17px;
+	}
+
+	.panel-secondary, 
+	.ddm-drag-item {
+		border-radius: 0;
+	}
+
+	.ddm-drag-item:last-child {
+		border-bottom: none;
+	}
+}

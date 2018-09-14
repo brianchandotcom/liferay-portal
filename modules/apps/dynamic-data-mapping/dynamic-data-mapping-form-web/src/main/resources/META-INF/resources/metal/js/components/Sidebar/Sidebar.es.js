@@ -84,7 +84,7 @@ class Sidebar extends Component {
 		 * @type {?(array|undefined)}
 		 */
 
-		fieldTypes: Config.array().value([]).required(),
+		fieldTypes: Config.array().value([]),
 
 		/**
 		 * @default false
@@ -299,7 +299,6 @@ class Sidebar extends Component {
 
 	attached() {
 		this._bindDragAndDrop();
-
 		this._eventHandler.add(
 			dom.on(document, 'mousedown', this._handleDocumentMouseDown.bind(this), true)
 		);
@@ -427,14 +426,9 @@ class Sidebar extends Component {
 						</div>
 					</nav>
 					<div class="ddm-sidebar-body">
-						{!editMode && (
-							<ul class="list-group">
-								<li class="list-group-header">
-									<h3 class="list-group-header-title">{Liferay.Language.get('basic-elements')}</h3>
-								</li>
-								{this._renderListElements()}
-							</ul>
-						)}
+						{!editMode &&
+							this._groupFieldTypes()
+						}
 						{editMode && (
 							<div class="sidebar-body">
 								<div class="tab-content">
@@ -452,6 +446,58 @@ class Sidebar extends Component {
 						)}
 					</div>
 				</div>
+			</div>
+		);
+	}
+
+	_groupFieldTypes() {
+		const {spritemap} = this.props;
+		const {fieldTypesGroup} = this.state;
+		const group = Object.keys(fieldTypesGroup);
+
+		return (
+			<div aria-orientation="vertical" class="ddm-field-types-panel panel-group" id="accordion03" role="tablist">
+				{group.map(
+					(key, index) => (
+						<div class="panel panel-secondary" key={`fields-group-${key}-${index}`}>
+							<a
+								aria-controls="collapseTwo"
+								aria-expanded="true"
+								class="collapse-icon panel-header panel-header-link"
+								data-parent="#accordion03"
+								data-toggle="collapse"
+								href={`#ddm-field-types-${key}-body`}
+								id={`ddm-field-types-${key}-header`}
+								role="tab"
+							>
+								<span class="panel-title">{fieldTypesGroup[key].label}</span>
+								<span class="collapse-icon-closed">
+									<svg aria-hidden="true" class="lexicon-icon lexicon-icon-angle-right">
+										<use xlink:href={`${spritemap}#angle-right`} />
+									</svg>
+								</span>
+								<span class="collapse-icon-open">
+									<svg aria-hidden="true" class="lexicon-icon lexicon-icon-angle-down">
+										<use xlink:href={`${spritemap}#angle-down`} />
+									</svg>
+								</span>
+							</a>
+							<div
+								aria-labelledby={`#ddm-field-types-${key}-header`}
+								class="panel-collapse show"
+								id={`ddm-field-types-${key}-body`}
+								role="tabpanel"
+							>
+								<div class="panel-body p-0 m-0 list-group">
+									<BoxFieldTypes
+										fieldTypes={fieldTypesGroup[key].fields}
+										spritemap={spritemap}
+									/>
+								</div>
+							</div>
+						</div>
+					)
+				)}
 			</div>
 		);
 	}
@@ -554,48 +600,6 @@ class Sidebar extends Component {
 							<span class="navbar-text-truncate">{name}</span>
 						</a>
 					</li>
-				);
-			}
-		);
-	}
-
-	_renderListElements() {
-		const {fieldTypes, spritemap} = this.props;
-
-		return fieldTypes.filter(fieldType => !fieldType.system).map(
-			(fieldType, index) => {
-				return (
-					<div
-						class="ddm-drag-item list-group-item list-group-item-flex"
-						data-ddm-field-type-index={index}
-						key={`field${index}`}
-						ref={`field${index}`}
-					>
-						<div class="autofit-col">
-							<div class="sticker sticker-secondary">
-								<svg
-									aria-hidden="true"
-									class={`lexicon-icon lexicon-icon-${
-										fieldType.icon
-									}`}
-								>
-									<use
-										xlinkHref={`${spritemap}#${fieldType.icon}`}
-									/>
-								</svg>
-							</div>
-						</div>
-						<div class="autofit-col autofit-col-expand">
-							<h4 class="list-group-title text-truncate">
-								<span>{fieldType.label}</span>
-							</h4>
-							{fieldType.description && (
-								<p class="list-group-subtitle text-truncate">
-									{fieldType.description}
-								</p>
-							)}
-						</div>
-					</div>
 				);
 			}
 		);

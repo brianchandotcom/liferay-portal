@@ -8,24 +8,17 @@
 
 		<execute macro="User#firstLoginPG" />
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Sites" />
+		<execute macro="JSONGroup#addGroup">
+			<var name="groupName" value="Test Site Name" />
 		</execute>
 
-		<execute macro="Site#addBlankCP">
-			<var name="siteName" value="Site Name" />
+		<execute macro="JSONLayout#addLayoutByGroupName">
+			<var name="groupName" value="Test Site Name" />
+			<var name="layoutName" value="Staging Test Page" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Staging Test Page" />
+		<execute macro="Navigator#openWithAppendToBaseURL">
+			<var name="urlAppend" value="web/test-site-name" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoPortlet">
@@ -35,7 +28,7 @@
 		</execute>
 
 		<execute macro="Staging#activateStagingCP">
-			<var name="siteName" value="Site Name" />
+			<var name="siteName" value="Test Site Name" />
 		</execute>
 	</set-up>
 

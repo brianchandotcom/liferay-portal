@@ -5963,15 +5963,21 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 			// Update digest
 
+			user = userPersistence.fetchByPrimaryKey(user.getUserId());
+
+			String digest = user.getDigest();
+
 			if (skipLiferayCheck ||
 				!PropsValues.AUTH_PIPELINE_ENABLE_LIFERAY_CHECK ||
-				Validator.isNull(user.getDigest())) {
+				Validator.isNull(digest)) {
 
-				String digest = user.getDigest(password);
+				String newDigest = user.getDigest(password);
 
-				user.setDigest(digest);
+				if (!newDigest.equals(digest)) {
+					user.setDigest(newDigest);
 
-				user = userPersistence.update(user);
+					user = userPersistence.update(user);
+				}
 			}
 		}
 

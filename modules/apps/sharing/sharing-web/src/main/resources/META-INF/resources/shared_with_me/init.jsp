@@ -33,12 +33,8 @@ page import="com.liferay.portal.kernel.portlet.LiferayWindowState" %><%@
 page import="com.liferay.portal.kernel.portlet.PortletURLUtil" %><%@
 page import="com.liferay.portal.kernel.service.PortletLocalServiceUtil" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
-page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
 page import="com.liferay.portal.kernel.util.WebKeys" %><%@
-page import="com.liferay.sharing.interpreter.SharingEntryInterpreter" %><%@
 page import="com.liferay.sharing.model.SharingEntry" %><%@
-page import="com.liferay.sharing.renderer.SharingEntryViewRenderer" %><%@
-page import="com.liferay.sharing.service.SharingEntryLocalServiceUtil" %><%@
 page import="com.liferay.sharing.web.internal.display.context.SharedWithMeViewDisplayContext" %>
 
 <%@ page import="java.util.HashMap" %><%@

@@ -18,13 +18,16 @@ import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
+import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderConstants;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.sharing.interpreter.SharingEntryInterpreter;
 import com.liferay.sharing.model.SharingEntry;
+import com.liferay.sharing.renderer.SharingEntryViewRenderer;
 import com.liferay.sharing.service.SharingEntryLocalService;
 import com.liferay.sharing.web.internal.constants.SharingPortletKeys;
 import com.liferay.sharing.web.internal.display.context.SharedWithMeViewDisplayContext;
@@ -82,7 +85,7 @@ public class SharedWithMeViewMVCRenderCommand implements MVCRenderCommand {
 							"id ", sharingEntryId));
 				}
 
-				SharingEntryInterpreter<?> sharingEntryInterpreter =
+				SharingEntryInterpreter<Object> sharingEntryInterpreter =
 					_getSharingEntryInterpreter(sharingEntry.getClassNameId());
 
 				if (sharingEntryInterpreter == null) {
@@ -91,11 +94,15 @@ public class SharedWithMeViewMVCRenderCommand implements MVCRenderCommand {
 							sharingEntry.getClassNameId());
 				}
 
-				renderRequest.setAttribute(
-					SharingEntryInterpreter.class.getName(),
-					sharingEntryInterpreter);
+				SharingEntryViewRenderer<Object> sharingEntryViewRenderer =
+					sharingEntryInterpreter.getSharingEntryViewRenderer();
 
-				return "/shared_with_me/view_sharing_entry.jsp";
+				sharingEntryViewRenderer.render(
+					sharingEntryInterpreter.getEntry(sharingEntry),
+					_portal.getHttpServletRequest(renderRequest),
+					_portal.getHttpServletResponse(renderResponse));
+
+				return MVCRenderConstants.MVC_PATH_VALUE_SKIP_DISPATCH;
 			}
 			catch (Exception e) {
 				throw new PortletException(e);
@@ -143,6 +150,9 @@ public class SharedWithMeViewMVCRenderCommand implements MVCRenderCommand {
 
 	@Reference
 	private ClassNameLocalService _classNameLocalService;
+
+	@Reference
+	private Portal _portal;
 
 	private ServiceTrackerMap<Long, SharingEntryInterpreter<?>>
 		_serviceTrackerMap;

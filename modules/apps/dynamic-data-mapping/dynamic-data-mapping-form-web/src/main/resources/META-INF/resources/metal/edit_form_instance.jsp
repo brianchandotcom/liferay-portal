@@ -220,15 +220,13 @@ renderResponse.setTitle((formInstance == null) ? LanguageUtil.get(request, "new-
 			if (event.portletId === '<%= portletDisplay.getRootPortletId() %>') {
 				Liferay.Forms.App.dispose();
 
-				var settingsDDMForm = Liferay.component('settingsDDMForm');
-
 				var translationManager = Liferay.component('<portlet:namespace />translationManager');
 
 				Liferay.destroyComponents(
 					function(component) {
 						var destroy = false;
 
-						if (component === settingsDDMForm || component === translationManager) {
+						if (component === translationManager) {
 							destroy = true;
 						}
 

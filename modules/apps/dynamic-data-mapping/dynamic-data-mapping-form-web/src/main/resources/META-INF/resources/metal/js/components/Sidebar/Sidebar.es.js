@@ -26,6 +26,14 @@ class Sidebar extends Component {
 		activeTab: Config.number().value(0).internal(),
 
 		/**
+		 * @instance
+		 * @memberof Sidebar
+		 * @type {array}
+		 */
+
+		fieldTypesGroup: Config.object().valueFn('_fieldTypesGroupValueFn'),
+
+		/**
 		 * @default false
 		 * @instance
 		 * @memberof Sidebar
@@ -96,6 +104,31 @@ class Sidebar extends Component {
 
 		spritemap: Config.string().required()
 	};
+
+	_fieldTypesGroupValueFn() {
+		const {fieldTypes} = this.props;
+		const group = {
+			basic: {
+				fields: [],
+				label: Liferay.Language.get('basic-elements')
+			},
+			customized: {
+				fields: [],
+				label: Liferay.Language.get('customized-elements')
+			}
+		};
+
+		return fieldTypes.reduce(
+			(prev, next, index, original) => {
+				if (next.group && !next.system) {
+					prev[next.group].fields.push(next);
+				}
+
+				return prev;
+			},
+			group
+		);
+	}
 
 	_openValueFn() {
 		const {open} = this.props;

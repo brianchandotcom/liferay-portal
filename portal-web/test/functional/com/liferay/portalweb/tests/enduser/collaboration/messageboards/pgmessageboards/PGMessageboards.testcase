@@ -777,6 +777,64 @@
 		</execute>
 	</command>
 
+	<command name="LockAndUnlockThread" priority="4">
+		<description message="This is a test case for UC-6." />
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Message Boards Page" />
+		</execute>
+
+		<execute macro="MessageboardsThread#addPG">
+			<var name="threadBody" value="Message Boards Thread Body" />
+			<var name="threadSubject" value="Message Boards Thread Subject" />
+		</execute>
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Message Boards Page" />
+		</execute>
+
+		<execute macro="MessageboardsThread#lockPG">
+			<var name="threadSubject" value="Message Boards Thread Subject" />
+		</execute>
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Message Boards Page" />
+		</execute>
+
+		<execute macro="MessageboardsThread#viewLockedPG">
+			<var name="threadSubject" value="Message Boards Thread Subject" />
+		</execute>
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Message Boards Page" />
+		</execute>
+
+		<execute macro="MessageboardsThread#unlockPG">
+			<var name="threadSubject" value="Message Boards Thread Subject" />
+		</execute>
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Message Boards Page" />
+		</execute>
+
+		<execute macro="MessageboardsThread#replyPG">
+			<var name="threadBody" value="Message Boards Thread Body" />
+			<var name="threadReplyBody" value="Message Boards Thread Reply Body" />
+			<var name="threadSubject" value="Message Boards Thread Subject" />
+		</execute>
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Message Boards Page" />
+		</execute>
+
+		<execute macro="MessageboardsThread#viewReplyPG">
+			<var name="replyCount" value="1" />
+			<var name="threadBody" value="Message Boards Thread Body" />
+			<var name="threadReplyBody" value="Message Boards Thread Reply Body" />
+			<var name="threadSubject" value="Message Boards Thread Subject" />
+		</execute>
+	</command>
+
 	<command name="MoveMBCategory1ThreadToCategory2" priority="4">
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Message Boards Page" />

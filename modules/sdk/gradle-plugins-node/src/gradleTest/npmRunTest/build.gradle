@@ -3,6 +3,10 @@ apply plugin: "java"
 
 task runGradleTest
 
+node {
+	nodeVersion = "8.4.0"
+}
+
 runGradleTest {
 	dependsOn check
 

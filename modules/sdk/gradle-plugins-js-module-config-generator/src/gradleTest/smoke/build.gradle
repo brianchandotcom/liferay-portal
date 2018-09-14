@@ -7,6 +7,10 @@ configJSModules {
 	include "**/*.js"
 }
 
+node {
+	nodeVersion = "8.9.0"
+}
+
 runGradleTest {
 	dependsOn classes
 

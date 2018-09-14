@@ -14,16 +14,24 @@
 
 package com.liferay.structured.content.apio.internal.architect.sort;
 
+import com.liferay.structured.content.apio.architect.entity.EntityField;
 import com.liferay.structured.content.apio.architect.sort.InvalidSortException;
 import com.liferay.structured.content.apio.architect.sort.SortField;
+import com.liferay.structured.content.apio.internal.architect.filter.StructuredContentSingleEntitySchemaBasedEdmProvider;
 
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 import java.util.Optional;
+import java.util.function.Function;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.assertj.core.api.AbstractThrowableAssert;
 import org.assertj.core.api.Assertions;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 
 /**
@@ -31,16 +39,26 @@ import org.junit.Test;
  */
 public class SortParserImplTest {
 
+	@Before
+	public void setUp() {
+		_sortParserImpl = new SortParserImpl();
+
+		_sortParserImpl.setStructuredContentSingleEntitySchemaBasedEdmProvider(
+			_structuredContentSingleEntitySchemaBasedEdmProvider);
+	}
+
 	@Test
 	public void testGetSortFieldOptionalAsc() {
 		Optional<SortField> sortFieldOptional =
-			_sortParserImpl.getSortFieldOptional("field:asc");
+			_sortParserImpl.getSortFieldOptional("fieldExternal:asc");
 
 		Assert.assertTrue(sortFieldOptional.isPresent());
 
 		SortField sortField = sortFieldOptional.get();
 
-		Assert.assertEquals("field", sortField.getFieldName());
+		Assert.assertEquals(
+			"fieldInternal",
+			sortField.getSortableFieldName(Locale.getDefault()));
 
 		Assert.assertTrue(sortField.isAscending());
 	}
@@ -48,13 +66,15 @@ public class SortParserImplTest {
 	@Test
 	public void testGetSortFieldOptionalDefault() {
 		Optional<SortField> sortFieldOptional =
-			_sortParserImpl.getSortFieldOptional("field");
+			_sortParserImpl.getSortFieldOptional("fieldExternal");
 
 		Assert.assertTrue(sortFieldOptional.isPresent());
 
 		SortField sortField = sortFieldOptional.get();
 
-		Assert.assertEquals("field", sortField.getFieldName());
+		Assert.assertEquals(
+			"fieldInternal",
+			sortField.getSortableFieldName(Locale.getDefault()));
 
 		Assert.assertTrue(sortField.isAscending());
 	}
@@ -62,13 +82,15 @@ public class SortParserImplTest {
 	@Test
 	public void testGetSortFieldOptionalDesc() {
 		Optional<SortField> sortFieldOptional =
-			_sortParserImpl.getSortFieldOptional("field:desc");
+			_sortParserImpl.getSortFieldOptional("fieldExternal:desc");
 
 		Assert.assertTrue(sortFieldOptional.isPresent());
 
 		SortField sortField = sortFieldOptional.get();
 
-		Assert.assertEquals("field", sortField.getFieldName());
+		Assert.assertEquals(
+			"fieldInternal",
+			sortField.getSortableFieldName(Locale.getDefault()));
 
 		Assert.assertTrue(!sortField.isAscending());
 	}
@@ -76,7 +98,8 @@ public class SortParserImplTest {
 	@Test
 	public void testGetSortFieldOptionalInvalidSyntax() {
 		AbstractThrowableAssert exception = Assertions.assertThatThrownBy(
-			() -> _sortParserImpl.getSortFieldOptional("field:desc:another")
+			() -> _sortParserImpl.getSortFieldOptional(
+				"fieldExternal:desc:another")
 		).isInstanceOf(
 			InvalidSortException.class
 		);
@@ -148,7 +171,7 @@ public class SortParserImplTest {
 
 	@Test
 	public void testParseOneField() {
-		List<SortField> sortFields = _sortParserImpl.parse("field1");
+		List<SortField> sortFields = _sortParserImpl.parse("fieldExternal1");
 
 		Assert.assertEquals(
 			"One sort field should be obtained: " + sortFields, 1,
@@ -156,7 +179,9 @@ public class SortParserImplTest {
 
 		SortField sortField = sortFields.get(0);
 
-		Assert.assertEquals("field1", sortField.getFieldName());
+		Assert.assertEquals(
+			"fieldInternal1",
+			sortField.getSortableFieldName(Locale.getDefault()));
 	}
 
 	@Test
@@ -170,7 +195,8 @@ public class SortParserImplTest {
 
 	@Test
 	public void testParseTwoFields() {
-		List<SortField> sortFields = _sortParserImpl.parse("field1,field2");
+		List<SortField> sortFields = _sortParserImpl.parse(
+			"fieldExternal1,fieldExternal2");
 
 		Assert.assertEquals(
 			"Two sort fields should be obtained: " + sortFields, 2,
@@ -178,13 +204,17 @@ public class SortParserImplTest {
 
 		SortField sortField = sortFields.get(0);
 
-		Assert.assertEquals("field1", sortField.getFieldName());
+		Assert.assertEquals(
+			"fieldInternal1",
+			sortField.getSortableFieldName(Locale.getDefault()));
 
 		Assert.assertTrue(sortField.isAscending());
 
 		SortField sortField2 = sortFields.get(1);
 
-		Assert.assertEquals("field2", sortField2.getFieldName());
+		Assert.assertEquals(
+			"fieldInternal2",
+			sortField2.getSortableFieldName(Locale.getDefault()));
 
 		Assert.assertTrue(sortField2.isAscending());
 	}
@@ -192,7 +222,7 @@ public class SortParserImplTest {
 	@Test
 	public void testParseTwoFieldsAscAndDesc() {
 		List<SortField> sortFields = _sortParserImpl.parse(
-			"field1:asc,field2:desc");
+			"fieldExternal1:asc,fieldExternal2:desc");
 
 		Assert.assertEquals(
 			"Two sort fields should be obtained: " + sortFields, 2,
@@ -200,13 +230,17 @@ public class SortParserImplTest {
 
 		SortField sortField = sortFields.get(0);
 
-		Assert.assertEquals("field1", sortField.getFieldName());
+		Assert.assertEquals(
+			"fieldInternal1",
+			sortField.getSortableFieldName(Locale.getDefault()));
 
 		Assert.assertTrue(sortField.isAscending());
 
 		SortField sortField2 = sortFields.get(1);
 
-		Assert.assertEquals("field2", sortField2.getFieldName());
+		Assert.assertEquals(
+			"fieldInternal2",
+			sortField2.getSortableFieldName(Locale.getDefault()));
 
 		Assert.assertTrue(!sortField2.isAscending());
 	}
@@ -214,7 +248,7 @@ public class SortParserImplTest {
 	@Test
 	public void testParseTwoFieldsDefaultAndDesc() {
 		List<SortField> sortFields = _sortParserImpl.parse(
-			"field1,field2:desc");
+			"fieldExternal1,fieldExternal2:desc");
 
 		Assert.assertEquals(
 			"Two sort fields should be obtained: " + sortFields, 2,
@@ -222,17 +256,50 @@ public class SortParserImplTest {
 
 		SortField sortField = sortFields.get(0);
 
-		Assert.assertEquals("field1", sortField.getFieldName());
+		Assert.assertEquals(
+			"fieldInternal1",
+			sortField.getSortableFieldName(Locale.getDefault()));
 
 		Assert.assertTrue(sortField.isAscending());
 
 		SortField sortField2 = sortFields.get(1);
 
-		Assert.assertEquals("field2", sortField2.getFieldName());
+		Assert.assertEquals(
+			"fieldInternal2",
+			sortField2.getSortableFieldName(Locale.getDefault()));
 
 		Assert.assertTrue(!sortField2.isAscending());
 	}
 
-	private static final SortParserImpl _sortParserImpl = new SortParserImpl();
+	private static final StructuredContentSingleEntitySchemaBasedEdmProvider
+		_structuredContentSingleEntitySchemaBasedEdmProvider =
+			new StructuredContentSingleEntitySchemaBasedEdmProvider() {
+
+				@Override
+				public Map<String, EntityField> getEntityFieldsMap() {
+					return Stream.of(
+						new EntityField(
+							"fieldExternal", EntityField.Type.STRING,
+							locale -> "fieldInternal"),
+						new EntityField(
+							"fieldExternal1", EntityField.Type.STRING,
+							locale -> "fieldInternal1"),
+						new EntityField(
+							"fieldExternal2", EntityField.Type.STRING,
+							locale -> "fieldInternal2")
+					).collect(
+						Collectors.toMap(
+							EntityField::getName, Function.identity())
+					);
+				}
+
+				@Override
+				public String getName() {
+					return "SomeEntityName";
+				}
+
+			};
+
+	private SortParserImpl _sortParserImpl;
 
 }

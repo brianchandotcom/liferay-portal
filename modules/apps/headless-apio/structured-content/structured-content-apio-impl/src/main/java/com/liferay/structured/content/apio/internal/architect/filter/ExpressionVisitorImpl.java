@@ -15,14 +15,22 @@
 package com.liferay.structured.content.apio.internal.architect.filter;
 
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.search.BooleanClause;
+import com.liferay.portal.kernel.search.BooleanClauseFactoryUtil;
+import com.liferay.portal.kernel.search.BooleanClauseOccur;
+import com.liferay.portal.kernel.search.Query;
+import com.liferay.portal.kernel.search.TermQuery;
+import com.liferay.portal.kernel.search.generic.TermQueryImpl;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.structured.content.apio.architect.entity.EntityField;
 import com.liferay.structured.content.apio.architect.filter.expression.BinaryExpression;
 import com.liferay.structured.content.apio.architect.filter.expression.ExpressionVisitor;
 import com.liferay.structured.content.apio.architect.filter.expression.LiteralExpression;
 import com.liferay.structured.content.apio.architect.filter.expression.MemberExpression;
 
-import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 import java.util.Objects;
 
 /**
@@ -30,16 +38,22 @@ import java.util.Objects;
  */
 public class ExpressionVisitorImpl implements ExpressionVisitor<Object> {
 
+	public ExpressionVisitorImpl(
+		Locale locale,
+		StructuredContentSingleEntitySchemaBasedEdmProvider
+			structuredContentSingleEntitySchemaBasedEdmProvider) {
+
+		_locale = locale;
+		_structuredContentSingleEntitySchemaBasedEdmProvider =
+			structuredContentSingleEntitySchemaBasedEdmProvider;
+	}
+
 	@Override
-	public Object visitBinaryExpressionOperation(
+	public BooleanClause<Query> visitBinaryExpressionOperation(
 		BinaryExpression.Operation operation, Object left, Object right) {
 
 		if (operation == BinaryExpression.Operation.EQ) {
-			return new HashMap<String, Object>() {
-				{
-					put((String)left, right);
-				}
-			};
+			return _getBooleanClause((EntityField)left, right, _locale);
 		}
 		else {
 			throw new UnsupportedOperationException(
@@ -63,7 +77,21 @@ public class ExpressionVisitorImpl implements ExpressionVisitor<Object> {
 	public Object visitMemberExpression(MemberExpression memberExpression) {
 		List<String> resourcePath = memberExpression.getResourcePath();
 
-		return String.valueOf(resourcePath.get(0));
+		Map<String, EntityField> entityFieldsMap =
+			_structuredContentSingleEntitySchemaBasedEdmProvider.
+				getEntityFieldsMap();
+
+		return entityFieldsMap.get(resourcePath.get(0));
+	}
+
+	private BooleanClause<Query> _getBooleanClause(
+		EntityField entityField, Object fieldValue, Locale locale) {
+
+		TermQuery termQuery = new TermQueryImpl(
+			entityField.getSortableName(locale), String.valueOf(fieldValue));
+
+		return BooleanClauseFactoryUtil.create(
+			termQuery, BooleanClauseOccur.MUST.getName());
 	}
 
 	private Object _normalizeLiteral(String literal) {
@@ -74,5 +102,9 @@ public class ExpressionVisitorImpl implements ExpressionVisitor<Object> {
 		return StringUtil.replace(
 			literal, StringPool.DOUBLE_APOSTROPHE, StringPool.APOSTROPHE);
 	}
+
+	private final Locale _locale;
+	private final StructuredContentSingleEntitySchemaBasedEdmProvider
+		_structuredContentSingleEntitySchemaBasedEdmProvider;
 
 }

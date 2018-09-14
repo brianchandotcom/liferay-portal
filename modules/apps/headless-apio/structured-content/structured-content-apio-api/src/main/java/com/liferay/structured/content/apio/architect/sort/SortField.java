@@ -14,7 +14,11 @@
 
 package com.liferay.structured.content.apio.architect.sort;
 
+import com.liferay.structured.content.apio.architect.entity.EntityField;
+
 import java.io.Serializable;
+
+import java.util.Locale;
 
 /**
  * Models a Sort Field.
@@ -27,23 +31,28 @@ public class SortField implements Serializable {
 	/**
 	 * Creates a new sort field.
 	 *
-	 * @param  fieldName - the name of the field
+	 * @param  entityField - the entity field
 	 * @param  asc - if the sort should be ascending
 	 * @review
 	 */
-	public SortField(String fieldName, boolean asc) {
-		_fieldName = fieldName;
+	public SortField(EntityField entityField, boolean asc) {
+		if (entityField == null) {
+			throw new IllegalArgumentException("EntityField is null");
+		}
+
 		_asc = asc;
+		_entityField = entityField;
 	}
 
 	/**
 	 * Returns the name of the field.
 	 *
+	 * @param  locale - the locale
 	 * @return - the name of the field
 	 * @review
 	 */
-	public String getFieldName() {
-		return _fieldName;
+	public String getSortableFieldName(Locale locale) {
+		return _entityField.getSortableName(locale);
 	}
 
 	/**
@@ -57,6 +66,6 @@ public class SortField implements Serializable {
 	}
 
 	private final boolean _asc;
-	private final String _fieldName;
+	private final EntityField _entityField;
 
 }

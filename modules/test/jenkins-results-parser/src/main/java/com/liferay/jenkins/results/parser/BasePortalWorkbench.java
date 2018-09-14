@@ -26,11 +26,6 @@ public abstract class BasePortalWorkbench
 	}
 
 	@Override
-	public void setPortalBuildProperties(Properties properties) {
-		_portalLocalGitRepository.setBuildProperties(properties);
-	}
-
-	@Override
 	public String getFileContent(String filePath) {
 		File file = new File(getDirectory(), filePath);
 
@@ -42,6 +37,16 @@ public abstract class BasePortalWorkbench
 		catch (IOException ioe) {
 			throw new RuntimeException(ioe);
 		}
+	}
+
+	@Override
+	public void setPortalBuildProperties(Properties properties) {
+		_portalLocalGitRepository.setBuildProperties(properties);
+	}
+
+	@Override
+	public void setPortalJobProperties(Job job) {
+		_portalLocalGitRepository.setJobProperties(job);
 	}
 
 	private final PortalLocalGitRepository _portalLocalGitRepository;

@@ -25,4 +25,6 @@ public interface PortalWorkbench extends Workbench {
 
 	public void setPortalBuildProperties(Properties properties);
 
+	public void setPortalJobProperties(Job job);
+
 }

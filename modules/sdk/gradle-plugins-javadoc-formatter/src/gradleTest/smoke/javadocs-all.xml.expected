@@ -3,7 +3,7 @@
 <javadocs>
 	<javadoc>
 		<name>GreetingBuilder</name>
-		<type>com.example.sample.GreetingBuilder</type>
+		<type>com.liferay.sample.GreetingBuilder</type>
 		<author><![CDATA[Brian Wing Shun Chan]]></author>
 		<constructor>
 			<name>GreetingBuilder</name>

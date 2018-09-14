@@ -14,13 +14,10 @@
 
 package com.liferay.sharing.web.internal.interpreter;
 
-import com.liferay.osgi.service.tracker.collections.map.PropertyServiceReferenceComparator;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.sharing.interpreter.SharingEntryInterpreter;
-
-import java.util.List;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
@@ -37,17 +34,15 @@ public class SharingEntryInterpreterTracker {
 	@Activate
 	public void activate(BundleContext bundleContext) {
 		_serviceTrackerMap =
-			(ServiceTrackerMap<Long, List<SharingEntryInterpreter<?>>>)
+			(ServiceTrackerMap<Long, SharingEntryInterpreter<?>>)
 				(ServiceTrackerMap)
-					ServiceTrackerMapFactory.openMultiValueMap(
+					ServiceTrackerMapFactory.openSingleValueMap(
 						bundleContext, SharingEntryInterpreter.class,
 						"(model.class.name=*)",
 						(serviceReference, emitter) -> emitter.emit(
 							_classNameLocalService.getClassNameId(
 								(String)serviceReference.getProperty(
-									"model.class.name"))),
-						new PropertyServiceReferenceComparator<>(
-							"service.ranking"));
+									"model.class.name"))));
 	}
 
 	@Deactivate
@@ -58,22 +53,14 @@ public class SharingEntryInterpreterTracker {
 	public <T> SharingEntryInterpreter<T> getSharingEntryInterpreter(
 		long classNameId) {
 
-		List<SharingEntryInterpreter<?>> sharingEntryInterpreters =
-			_serviceTrackerMap.getService(classNameId);
-
-		if ((sharingEntryInterpreters == null) ||
-			sharingEntryInterpreters.isEmpty()) {
-
-			return null;
-		}
-
-		return (SharingEntryInterpreter<T>)sharingEntryInterpreters.get(0);
+		return (SharingEntryInterpreter<T>)_serviceTrackerMap.getService(
+			classNameId);
 	}
 
 	@Reference
 	private ClassNameLocalService _classNameLocalService;
 
-	private ServiceTrackerMap<Long, List<SharingEntryInterpreter<?>>>
+	private ServiceTrackerMap<Long, SharingEntryInterpreter<?>>
 		_serviceTrackerMap;
 
 }

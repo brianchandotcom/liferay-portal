@@ -135,8 +135,9 @@
 	{if $options}
 		<div {$attributes}>
 			<ul class="list-unstyled">
-				{foreach $item in $options}
-					<li class="dropdown-item">{$item.value}</li>
+				<li class="dropdown-item" data-option-value="">Choose an option</li>
+				{foreach $option in $options}
+					<li class="dropdown-item" data-option-value="{$option.name}">{$option.value}</li>
 				{/foreach}
 			</ul>
 		</div>

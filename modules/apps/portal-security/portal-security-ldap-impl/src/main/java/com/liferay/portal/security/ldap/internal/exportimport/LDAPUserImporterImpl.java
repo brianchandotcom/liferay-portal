@@ -1537,38 +1537,38 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 			passwordReset = user.isPasswordReset();
 		}
 
-			if ((modifiedDate != null) &&
-				modifiedDate.equals(user.getModifiedDate())) {
-					if ((ldapUser.isUpdatePassword() ||
-						 !ldapImportConfiguration.
-							 importUserPasswordEnabled()) &&
-						!modifiedDate.equals(user.getPasswordModifiedDate())) {
+		if ((modifiedDate != null) &&
+			modifiedDate.equals(user.getModifiedDate())) {
 
-						updateUserPassword(
-							ldapImportConfiguration, user.getUserId(),
-							user.getScreenName(), password, passwordReset,
-							modifiedDate);
+			if ((ldapUser.isUpdatePassword() ||
+				 !ldapImportConfiguration.importUserPasswordEnabled()) &&
+				!modifiedDate.equals(user.getPasswordModifiedDate())) {
 
-						if (_log.isDebugEnabled()) {
-							_log.debug(
-								StringBundler.concat(
-									"Synchronizing password for ",
-									user.getEmailAddress(),
-									" because it might be out of date"));
-						}
-					}
+				updateUserPassword(
+					ldapImportConfiguration, user.getUserId(),
+					user.getScreenName(), password, passwordReset,
+					modifiedDate);
 
-					return user;
-			}
-			else if ((modifiedDate == null) && !isNew) {
-				if (_log.isInfoEnabled()) {
-					_log.info(
-						"Skipping user " + user.getEmailAddress() +
-							" because the LDAP entry was never modified");
+				if (_log.isDebugEnabled()) {
+					_log.debug(
+						StringBundler.concat(
+							"Synchronizing password for ",
+							user.getEmailAddress(),
+							" because it might be out of date"));
 				}
-
-				return user;
 			}
+
+			return user;
+		}
+		else if ((modifiedDate == null) && !isNew) {
+			if (_log.isInfoEnabled()) {
+				_log.info(
+					"Skipping user " + user.getEmailAddress() +
+						" because the LDAP entry was never modified");
+			}
+
+			return user;
+		}
 
 		LDAPServerConfiguration ldapServerConfiguration =
 			_ldapServerConfigurationProvider.getConfiguration(

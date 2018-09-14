@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.security.ldap.LDAPSettings;
 import com.liferay.portal.kernel.service.UserGroupLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.security.exportimport.UserExporter;
 import com.liferay.portal.security.exportimport.UserOperation;
@@ -321,13 +320,14 @@ public class LDAPUserExporterImpl implements UserExporter {
 
 				if ((modifiedDate != null) &&
 					modifiedDate.equals(user.getModifiedDate())) {
-						if (_log.isDebugEnabled()) {
-							_log.debug(
-								"Skipping user " + user.getEmailAddress() +
-									" because he is already synchronized");
-						}
 
-						return;
+					if (_log.isDebugEnabled()) {
+						_log.debug(
+							"Skipping user " + user.getEmailAddress() +
+								" because he is already synchronized");
+					}
+
+					return;
 				}
 			}
 

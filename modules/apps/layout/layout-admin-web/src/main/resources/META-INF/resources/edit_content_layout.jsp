@@ -50,13 +50,11 @@ renderResponse.setTitle(selLayout.getName(locale));
 
 <%
 JSONSerializer jsonSerializer = JSONFactoryUtil.createJSONSerializer();
-
-String contextString = jsonSerializer.serializeDeep(fragmentsEditorDisplayContext.getEditorContext());
 %>
 
 <aui:script require="layout-admin-web/js/fragments_editor/reducers/changes.es as ChangesReducerModule, layout-admin-web/js/fragments_editor/reducers/fragments.es as FragmentsReducerModule, layout-admin-web/js/fragments_editor/reducers/placeholders.es as PlaceholdersReducerModule, layout-admin-web/js/fragments_editor/reducers/translations.es as TranslationsReducerModule, layout-admin-web/js/fragments_editor/store/store.es as StoreModule">
 	StoreModule.createStore(
-		<%= contextString %>,
+		<%= jsonSerializer.serializeDeep(fragmentsEditorDisplayContext.getEditorContext()) %>,
 		[
 			ChangesReducerModule.saveChangesReducer,
 			FragmentsReducerModule.addFragmentEntryLinkReducer,

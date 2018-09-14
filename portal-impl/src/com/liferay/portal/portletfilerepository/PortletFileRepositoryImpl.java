@@ -583,13 +583,13 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 		sb.append(fileEntry.getGroupId());
 		sb.append(StringPool.SLASH);
 
-		String title = fileEntry.getTitle();
+		String fileName = fileEntry.getFileName();
 
 		if (fileEntry.isInTrash()) {
-			title = TrashUtil.getOriginalTitle(fileEntry.getTitle());
+			fileName = TrashUtil.getOriginalTitle(fileEntry.getTitle());
 		}
 
-		sb.append(URLCodec.encodeURL(HtmlUtil.unescape(title)));
+		sb.append(URLCodec.encodeURL(HtmlUtil.unescape(fileName)));
 
 		sb.append(StringPool.SLASH);
 		sb.append(URLCodec.encodeURL(fileEntry.getUuid()));

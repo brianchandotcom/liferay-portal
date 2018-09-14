@@ -40,6 +40,7 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.taglib.servlet.PipingServletResponse;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -184,6 +185,8 @@ public class AssetDisplayLayoutTypeController
 			return Collections.emptyList();
 		}
 
+		List<FragmentEntryLink> fragmentEntryLinksList = new ArrayList<>();
+
 		List<FragmentEntryLink> fragmentEntryLinks =
 			_fragmentEntryLinkLocalService.getFragmentEntryLinks(
 				layout.getGroupId(),
@@ -202,11 +205,11 @@ public class AssetDisplayLayoutTypeController
 				structureJSONArray.getLong(i));
 
 			if (fragmentEntryLink != null) {
-				fragmentEntryLinks.add(fragmentEntryLink);
+				fragmentEntryLinksList.add(fragmentEntryLink);
 			}
 		}
 
-		return fragmentEntryLinks;
+		return fragmentEntryLinksList;
 	}
 
 	private long _getLayoutPageTemplateEntryId(

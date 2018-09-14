@@ -39,6 +39,7 @@ public class JavaWhitespaceCheck extends WhitespaceCheck {
 		content = _formatWhitespace(fileName, content);
 
 		content = _formatForStatement(content);
+		content = _formatGenerics(content);
 
 		content = StringUtil.replace(content, "\n\n\n", "\n\n");
 
@@ -81,6 +82,51 @@ public class JavaWhitespaceCheck extends WhitespaceCheck {
 
 			for (int i = getLineNumber(statement, x) + 1;; i++) {
 				String line = getLine(statement, i);
+
+				if (line == null) {
+					break;
+				}
+
+				String newContent = _fixMissingLeadingSpace(
+					content, statement, line);
+
+				if (!newContent.equals(content)) {
+					return newContent;
+				}
+			}
+		}
+
+		return content;
+	}
+
+	private String _formatGenerics(String content) {
+		Matcher matcher = _genericsPattern.matcher(content);
+
+		while (matcher.find()) {
+			String statement = _getStatement(
+				content, matcher.start(), "<", ">");
+
+			if (statement == null) {
+				continue;
+			}
+
+			int x = -1;
+
+			while (true) {
+				x = statement.indexOf(",\n", x + 1);
+
+				if (x == -1) {
+					break;
+				}
+
+				String s = statement.substring(0, x);
+
+				if (getLevel(s, "<", ">") != 1) {
+					continue;
+				}
+
+				String line = getLine(
+					statement, getLineNumber(statement, x) + 1);
 
 				if (line == null) {
 					break;
@@ -218,5 +264,6 @@ public class JavaWhitespaceCheck extends WhitespaceCheck {
 	}
 
 	private final Pattern _forStatementPattern = Pattern.compile("\tfor \\(");
+	private final Pattern _genericsPattern = Pattern.compile("\t<");
 
 }

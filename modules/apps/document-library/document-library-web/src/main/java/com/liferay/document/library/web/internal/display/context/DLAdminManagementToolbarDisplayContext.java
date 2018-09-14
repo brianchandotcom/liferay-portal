@@ -189,12 +189,12 @@ public class DLAdminManagementToolbarDisplayContext {
 		};
 	}
 
-	public List<String> getAvailableActions(FileEntry fileEntry) {
+	public List<String> getAvailableActionDropdownItems(FileEntry fileEntry) {
 		return Arrays.asList(
 			"download", "move", "deleteEntries", "checkin", "checkout");
 	}
 
-	public List<String> getAvailableActions(Folder folder) {
+	public List<String> getAvailableActionDropdownItems(Folder folder) {
 		return Arrays.asList("download", "move", "deleteEntries");
 	}
 

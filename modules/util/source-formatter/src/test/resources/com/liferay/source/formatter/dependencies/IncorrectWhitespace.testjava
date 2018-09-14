@@ -24,6 +24,8 @@ import java.util.List;
 
 import javax.portlet.Portlet;
 
+import org.elasticsearch.action.admin.indices.mapping.get.GetFieldMappingsResponse;
+
 import org.osgi.service.component.annotations.Component;
 
 /**
@@ -87,6 +89,13 @@ public class IncorrectWhitespace {
 			String [] stringArray1 = {"test1"};
 		}
 
+		for (int i = i;
+			i < s2.indexOf("Hello World Hello World Hello World Hello World");
+			i++) {
+
+			s1 = "test";
+		}
+
 		List <String> list = null;
 
 		for (String s: list) {
@@ -145,6 +154,13 @@ public class IncorrectWhitespace {
 			   JSONWebServiceSerializeException,
 			JSONWebServiceTransportException {
 	}
+
+	protected Map
+		<String,
+		Map
+			<String,
+			Map<String, GetFieldMappingsResponse.FieldMappingMetaData>>>
+				mappings;
 
 	protected class SubClass1 {
 

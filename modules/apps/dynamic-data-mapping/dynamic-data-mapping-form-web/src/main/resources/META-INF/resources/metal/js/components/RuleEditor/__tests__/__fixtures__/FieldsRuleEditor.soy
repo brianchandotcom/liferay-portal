@@ -1,0 +1,24 @@
+{namespace FieldsRuleEditor}
+
+{template .render}
+	{@param? type: string}
+
+	<div>
+		{switch $type}
+			{case 'text'}
+				{call .Text /}
+			{case 'select'}
+				{call .Select /}
+			{default}
+				<div class="ddm-template-undefined">Undefined template.</div>
+		{/switch}
+	</div>
+{/template}
+
+{template .Text}
+	<p>Text Field</p>
+{/template}
+
+{template .Select}
+	<p>Select Field</p>
+{/template}

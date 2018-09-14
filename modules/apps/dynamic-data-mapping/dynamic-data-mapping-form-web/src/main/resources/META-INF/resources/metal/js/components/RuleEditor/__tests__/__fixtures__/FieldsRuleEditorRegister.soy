@@ -1,0 +1,13 @@
+{namespace FieldsRuleEditorRegister}
+
+{deltemplate PageRenderer.RegisterFieldType variant="'text'"}
+	{call FieldsRuleEditor.render data="all"}
+		{param type: 'text' /}
+	{/call}
+{/deltemplate}
+
+{deltemplate PageRenderer.RegisterFieldType variant="'select'"}
+	{call FieldsRuleEditor.render data="all"}
+		{param type: 'select' /}
+	{/call}
+{/deltemplate}

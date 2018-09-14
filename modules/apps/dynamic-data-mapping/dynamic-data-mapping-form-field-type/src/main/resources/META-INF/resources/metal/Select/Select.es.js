@@ -171,10 +171,14 @@ class Select extends Component {
 				value: event.target.innerText
 			}
 		);
+
+		this.setState({open: !this.open});
 	}
 
 	_handleClick() {
-		this.setState({open: !this.open});
+		if(!this.readOnly) {
+			this.setState({open: !this.open});
+		}
 	}
 }
 

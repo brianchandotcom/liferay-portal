@@ -26,12 +26,9 @@ import com.liferay.sharing.renderer.SharingEntryEditRenderer;
 
 import javax.portlet.PortletURL;
 
-import org.osgi.service.component.annotations.Component;
-
 /**
  * @author Sergio González
  */
-@Component(service = DLFileEntrySharingEntryEditRenderer.class)
 public class DLFileEntrySharingEntryEditRenderer
 	implements SharingEntryEditRenderer<FileEntry> {
 

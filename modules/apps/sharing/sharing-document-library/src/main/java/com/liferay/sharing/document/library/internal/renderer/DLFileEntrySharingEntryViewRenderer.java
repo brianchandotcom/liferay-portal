@@ -26,15 +26,15 @@ import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Sergio González
  */
-@Component(service = DLFileEntrySharingEntryViewRenderer.class)
 public class DLFileEntrySharingEntryViewRenderer
 	implements SharingEntryViewRenderer<FileEntry> {
+
+	public DLFileEntrySharingEntryViewRenderer(ServletContext servletContext) {
+		_servletContext = servletContext;
+	}
 
 	@Override
 	public void render(
@@ -64,9 +64,6 @@ public class DLFileEntrySharingEntryViewRenderer
 	private static final Log _log = LogFactoryUtil.getLog(
 		DLFileEntrySharingEntryViewRenderer.class);
 
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.sharing.document.library)"
-	)
-	private ServletContext _servletContext;
+	private final ServletContext _servletContext;
 
 }

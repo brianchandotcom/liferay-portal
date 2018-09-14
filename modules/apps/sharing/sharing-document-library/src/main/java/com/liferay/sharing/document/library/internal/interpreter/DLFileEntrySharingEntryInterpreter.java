@@ -30,6 +30,9 @@ import com.liferay.sharing.renderer.SharingEntryViewRenderer;
 
 import java.util.Locale;
 
+import javax.servlet.ServletContext;
+
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -80,18 +83,28 @@ public class DLFileEntrySharingEntryInterpreter
 		return StringPool.BLANK;
 	}
 
+	@Activate
+	protected void activate() {
+		_dlFileEntrySharingEntryEditRenderer =
+			new DLFileEntrySharingEntryEditRenderer();
+		_dlFileEntrySharingEntryViewRenderer =
+			new DLFileEntrySharingEntryViewRenderer(_servletContext);
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		DLFileEntrySharingEntryInterpreter.class);
 
 	@Reference
 	private DLAppLocalService _dlAppLocalService;
 
-	@Reference
 	private DLFileEntrySharingEntryEditRenderer
 		_dlFileEntrySharingEntryEditRenderer;
-
-	@Reference
 	private DLFileEntrySharingEntryViewRenderer
 		_dlFileEntrySharingEntryViewRenderer;
+
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.sharing.document.library)"
+	)
+	private ServletContext _servletContext;
 
 }

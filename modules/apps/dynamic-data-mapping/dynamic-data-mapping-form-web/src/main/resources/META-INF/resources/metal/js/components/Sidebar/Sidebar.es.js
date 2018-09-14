@@ -7,8 +7,8 @@ import classnames from 'classnames';
 import ClayButton from 'clay-button';
 import Component, {Fragment} from 'metal-jsx';
 import dom from 'metal-dom';
-import FormRenderer, {FormSupport} from '../Form/index.es.js';
 import FieldTypeBox from '../FieldTypeBox/FieldTypeBox.es.js';
+import FormRenderer, {FormSupport} from '../Form/index.es.js';
 
 /**
  * Sidebar is a tooling to mount forms.
@@ -187,8 +187,9 @@ class Sidebar extends Component {
 		}
 
 		const {fieldTypes} = this.props;
-		const fieldIndex = data.source.dataset.ddmFieldTypeIndex;
-		const fieldType = fieldTypes[Number(fieldIndex)];
+		const fieldTypeName = data.source.dataset.fieldTypeName;
+
+		const fieldType = fieldTypes.find(({name}) => name === fieldTypeName);
 		const indexes = FormSupport.getIndexes(data.target.parentElement);
 
 		this.emit(
@@ -491,11 +492,10 @@ class Sidebar extends Component {
 							>
 								<div class="panel-body p-0 m-0 list-group">
 									{fieldTypesGroup[key].fields.map(
-										(field, index) => (
+										fieldType => (
 											<FieldTypeBox
-												fieldId={index}
-												fieldType={field}
-												key={`${field.label}-${index}`}
+												fieldType={fieldType}
+												key={fieldType.name}
 												spritemap={spritemap}
 											/>
 										)

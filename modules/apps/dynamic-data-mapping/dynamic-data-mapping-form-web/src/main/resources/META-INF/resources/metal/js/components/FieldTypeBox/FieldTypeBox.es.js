@@ -1,32 +1,32 @@
-const FieldTypeBox = ({spritemap, fieldType, fieldId}) => {
+const FieldTypeBox = ({fieldType, spritemap}) => {
+	const {description, icon, label, name} = fieldType;
+
 	return (
 		<div
 			class="ddm-drag-item list-group-item list-group-item-flex"
-			data-ddm-field-type-index={fieldId}
-			key={`field${fieldId}`}
-			ref={`field${fieldId}`}
+			data-field-type-name={name}
+			key={`fieldType_${name}`}
+			ref={`fieldType_${name}`}
 		>
 			<div class="autofit-col">
 				<div class="sticker sticker-secondary">
 					<svg
 						aria-hidden="true"
-						class={`lexicon-icon lexicon-icon-${
-							fieldType.icon
-						}`}
+						class={`lexicon-icon lexicon-icon-${icon}`}
 					>
 						<use
-							xlink:href={`${spritemap}#${fieldType.icon}`}
+							xlink:href={`${spritemap}#${icon}`}
 						/>
 					</svg>
 				</div>
 			</div>
 			<div class="autofit-col autofit-col-expand">
 				<h4 class="list-group-title text-truncate">
-					<span>{fieldType.label}</span>
+					<span>{label}</span>
 				</h4>
-				{fieldType.description && (
+				{description && (
 					<p class="list-group-subtitle text-truncate">
-						{fieldType.description}
+						{description}
 					</p>
 				)}
 			</div>

@@ -156,7 +156,6 @@
 		<check name="JavaLocalSensitiveComparisonCheck" />
 		<check name="JavaLongLinesCheck" />
 		<check name="JavaMetaAnnotationsCheck" />
-		<check name="JavaMetaOCDIdCheck" />
 		<check name="JavaModifiedServiceMethodCheck" />
 		<check name="JavaPackagePathCheck" />
 		<check name="JavaParameterAnnotationsCheck" />

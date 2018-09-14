@@ -366,7 +366,7 @@ if (Validator.isNotNull(requestUpdateStructureURL)) {
 
 				form.fm('parentStructureId').val(event.ddmstructureid);
 
-				form.fm('parentStructureName').val(AUI._.unescape(event.name));
+				form.fm('parentStructureName').val(Liferay.Util.unescape(event.name));
 
 				form.fm('removeParentStructureButton').attr('disabled', false).removeClass('disabled');
 			}

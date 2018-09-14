@@ -116,7 +116,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "move"),
 
 					form.fm('parentCategoryId').val(event.categoryid);
 
-					form.fm('parentCategoryName').val(_.unescape(event.name));
+					form.fm('parentCategoryName').val(Liferay.Util.unescape(event.name));
 
 					Liferay.Util.toggleDisabled('#<portlet:namespace />removeCategoryButton', false);
 				}

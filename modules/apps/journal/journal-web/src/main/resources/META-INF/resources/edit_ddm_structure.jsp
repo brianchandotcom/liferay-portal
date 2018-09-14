@@ -212,7 +212,7 @@ renderResponse.setTitle((ddmStructure != null) ? LanguageUtil.format(request, "e
 
 				form.fm('parentStructureId').val(event.ddmstructureid);
 
-				form.fm('parentDDMStructureName').val(AUI._.unescape(event.name));
+				form.fm('parentDDMStructureName').val(Liferay.Util.unescape(event.name));
 
 				form.fm('removeParentDDMStructureButton').attr('disabled', false).removeClass('disabled');
 			}

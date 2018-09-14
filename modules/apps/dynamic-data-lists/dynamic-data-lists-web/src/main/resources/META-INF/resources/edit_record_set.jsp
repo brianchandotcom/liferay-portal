@@ -187,7 +187,7 @@ if (ddlDisplayContext.isAdminPortlet()) {
 			function(event) {
 				AUI.$('#<portlet:namespace />ddmStructureId').val(event.ddmstructureid);
 
-				AUI.$('#<portlet:namespace />ddmStructureNameDisplay').val(_.unescape(event.name));
+				AUI.$('#<portlet:namespace />ddmStructureNameDisplay').val(Liferay.Util.unescape(event.name));
 			}
 		);
 	}

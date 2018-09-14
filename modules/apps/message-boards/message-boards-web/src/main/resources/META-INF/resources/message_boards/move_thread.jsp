@@ -137,7 +137,7 @@ if (portletTitleBasedNavigation) {
 
 					form.fm('mbCategoryId').val(event.categoryid);
 
-					form.fm('categoryName').val(_.unescape(event.name));
+					form.fm('categoryName').val(Liferay.Util.unescape(event.name));
 				}
 			);
 		}

@@ -71,6 +71,7 @@ public abstract class BasePortletToolbarContributor
 		menu.setIcon("plus");
 		menu.setMarkupView("lexicon");
 		menu.setMenuItems(portletTitleMenuItems);
+		menu.setMessage("add");
 		menu.setScroll(false);
 		menu.setShowArrow(false);
 		menu.setShowWhenSingleIcon(true);

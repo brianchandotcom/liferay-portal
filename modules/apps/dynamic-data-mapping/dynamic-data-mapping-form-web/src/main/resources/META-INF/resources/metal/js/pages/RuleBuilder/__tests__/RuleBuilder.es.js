@@ -1,5 +1,6 @@
 import RuleBuilder from '../RuleBuilder.es';
 import {dom as MetalTestUtil} from 'metal-dom';
+import '../../../components/RuleEditor/__tests__/__fixtures__/FieldsRuleEditor.es';
 
 const spritemap = 'icons.svg';
 let component;

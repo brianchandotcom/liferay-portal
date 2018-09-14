@@ -8,6 +8,7 @@ import ClayButton from 'clay-button';
 import Component, {Fragment} from 'metal-jsx';
 import dom from 'metal-dom';
 import FormRenderer, {FormSupport} from '../Form/index.es.js';
+import FieldTypeBox from '../FieldTypeBox/FieldTypeBox.es.js';
 
 /**
  * Sidebar is a tooling to mount forms.
@@ -489,10 +490,16 @@ class Sidebar extends Component {
 								role="tabpanel"
 							>
 								<div class="panel-body p-0 m-0 list-group">
-									<BoxFieldTypes
-										fieldTypes={fieldTypesGroup[key].fields}
-										spritemap={spritemap}
-									/>
+									{fieldTypesGroup[key].fields.map(
+										(field, index) => (
+											<FieldTypeBox
+												fieldId={index}
+												fieldType={field}
+												key={`${field.label}-${index}`}
+												spritemap={spritemap}
+											/>
+										)
+									)}
 								</div>
 							</div>
 						</div>

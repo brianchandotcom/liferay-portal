@@ -42,6 +42,11 @@ public abstract class BaseWorkbench implements Workbench {
 	}
 
 	@Override
+	public LocalGitRepository getLocalGitRepository() {
+		return _localGitRepository;
+	}
+
+	@Override
 	public String getUpstreamBranchName() {
 		return _jsonObject.getString("upstream_branch_name");
 	}

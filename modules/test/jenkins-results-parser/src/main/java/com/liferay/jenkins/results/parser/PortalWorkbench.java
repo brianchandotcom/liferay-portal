@@ -14,11 +14,15 @@
 
 package com.liferay.jenkins.results.parser;
 
+import java.util.Properties;
+
 /**
  * @author Michael Hashimoto
  */
 public interface PortalWorkbench extends Workbench {
 
 	public String getFileContent(String filePath);
+
+	public void setPortalBuildProperties(Properties properties);
 
 }

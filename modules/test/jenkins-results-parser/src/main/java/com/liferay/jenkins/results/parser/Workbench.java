@@ -35,6 +35,8 @@ public interface Workbench {
 
 	public JSONObject getJSONObject();
 
+	public LocalGitRepository getLocalGitRepository();
+
 	public String getUpstreamBranchName();
 
 	public void setUp();

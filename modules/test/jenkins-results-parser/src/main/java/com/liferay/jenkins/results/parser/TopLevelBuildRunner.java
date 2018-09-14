@@ -184,11 +184,17 @@ public abstract class TopLevelBuildRunner<T extends TopLevelBuildData>
 	}
 
 	private String _getJenkinsGitHubURL() {
-		String jenkinsCachedBranchName = workspace.getJenkinsCachedBranchName();
+		if (JenkinsResultsParserUtil.isCINode()) {
+			JenkinsWorkbench jenkinsWorkbench = workspace.getJenkinsWorkbench();
 
-		if (jenkinsCachedBranchName != null) {
-			return "https://github-dev.liferay.com/liferay/liferay-jenkins-ee" +
-				"/tree/" + jenkinsCachedBranchName;
+			String gitHubDevBranchName =
+				jenkinsWorkbench.getGitHubDevBranchName();
+
+			if (gitHubDevBranchName != null) {
+				return JenkinsResultsParserUtil.combine(
+					"https://github-dev.liferay.com/liferay/",
+					"liferay-jenkins-ee/tree/", gitHubDevBranchName);
+			}
 		}
 
 		BuildData buildData = getBuildData();

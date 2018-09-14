@@ -20,51 +20,28 @@ package com.liferay.jenkins.results.parser;
 public abstract class BaseWorkspace implements Workspace {
 
 	@Override
-	public void addJenkinsLocalGitBranch(String jenkinsGitHubURL) {
-		if (jenkinsGitHubURL == null) {
-			return;
-		}
-
+	public void addJenkinsWorkbench(String jenkinsGitHubURL) {
 		if (!JenkinsResultsParserUtil.isCINode()) {
 			return;
 		}
 
-		LocalGitRepository jenkinsLocalGitRepository =
-			GitRepositoryFactory.getLocalGitRepository(
-				"liferay-jenkins-ee", "master");
-
-		LocalGitBranch localGitBranch;
-
-		if (PullRequest.isValidGitHubPullRequestURL(jenkinsGitHubURL)) {
-			PullRequest pullRequest = new PullRequest(jenkinsGitHubURL);
-
-			localGitBranch = GitHubDevSyncUtil.createCachedLocalGitBranch(
-				jenkinsLocalGitRepository, pullRequest, true);
-
-			_jenkinsCachedBranchName = GitHubDevSyncUtil.getCachedBranchName(
-				pullRequest);
-		}
-		else if (GitUtil.isValidGitHubRefURL(jenkinsGitHubURL)) {
-			RemoteGitRef remoteGitRef = GitUtil.getRemoteGitRef(
-				jenkinsGitHubURL);
-
-			localGitBranch = GitHubDevSyncUtil.createCachedLocalGitBranch(
-				jenkinsLocalGitRepository, remoteGitRef, true);
-
-			_jenkinsCachedBranchName = GitHubDevSyncUtil.getCachedBranchName(
-				remoteGitRef);
-		}
-		else {
-			throw new RuntimeException(
-				"Invalid jenkins GitHub url " + jenkinsGitHubURL);
+		if (jenkinsGitHubURL == null) {
+			return;
 		}
 
-		_jenkinsLocalGitBranch = localGitBranch;
+		Workbench workbench = WorkbenchFactory.newWorkbench(
+			jenkinsGitHubURL, "master");
+
+		if (!(workbench instanceof JenkinsWorkbench)) {
+			throw new RuntimeException("Invalid workbench " + workbench);
+		}
+
+		_jenkinsWorkbench = (JenkinsWorkbench)workbench;
 	}
 
 	@Override
-	public String getJenkinsCachedBranchName() {
-		return _jenkinsCachedBranchName;
+	public JenkinsWorkbench getJenkinsWorkbench() {
+		return _jenkinsWorkbench;
 	}
 
 	@Override
@@ -88,9 +65,9 @@ public abstract class BaseWorkspace implements Workspace {
 		cleanupLocalGitBranches();
 	}
 
-	protected void checkoutJenkinsLocalGitBranch() {
-		if (_jenkinsLocalGitBranch != null) {
-			checkoutLocalGitBranch(_jenkinsLocalGitBranch);
+	protected void setUpJenkinsWorkbench() {
+		if (_jenkinsWorkbench != null) {
+			_jenkinsWorkbench.setUp();
 		}
 	}
 
@@ -148,9 +125,14 @@ public abstract class BaseWorkspace implements Workspace {
 
 	protected abstract void setGitRepositoryJobProperties(Job job);
 
+	protected void tearDownJenkinsWorkbench() {
+		if (_jenkinsWorkbench != null) {
+			_jenkinsWorkbench.tearDown();
+		}
+	}
+
 	protected abstract void writeGitRepositoryPropertiesFiles();
 
-	private String _jenkinsCachedBranchName;
-	private LocalGitBranch _jenkinsLocalGitBranch;
+	private JenkinsWorkbench _jenkinsWorkbench;
 
 }

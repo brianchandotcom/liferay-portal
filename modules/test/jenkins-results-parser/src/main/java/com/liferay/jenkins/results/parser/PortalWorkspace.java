@@ -50,7 +50,7 @@ public abstract class PortalWorkspace extends BaseWorkspace {
 
 	@Override
 	protected void checkoutLocalGitBranches() {
-		checkoutJenkinsLocalGitBranch();
+		setUpJenkinsWorkbench();
 
 		_checkoutPrimaryPortalLocalGitBranch();
 

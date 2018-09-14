@@ -48,12 +48,12 @@ public class OrganizationScreenNavigationRegistrar {
 	@Deactivate
 	public void deactivate() {
 		_screenNavigationEntryServiceRegistrations.forEach(
-			serviceRegistration -> serviceRegistration.unregister());
+			ServiceRegistration::unregister);
 
 		_screenNavigationEntryServiceRegistrations.clear();
 
 		_screenNavigationCategoryServiceRegistrations.forEach(
-			serviceRegistration -> serviceRegistration.unregister());
+			ServiceRegistration::unregister);
 
 		_screenNavigationCategoryServiceRegistrations.clear();
 	}

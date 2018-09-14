@@ -11,8 +11,11 @@ AUI.add(
 
 				EXTENDS: Liferay.DDM.Renderer.Field,
 
-				NAME: '${artifactId}-form-field'
+				NAME: '${artifactId}-form-field',
 
+				prototype: {
+
+				}
 			}
 		);
 

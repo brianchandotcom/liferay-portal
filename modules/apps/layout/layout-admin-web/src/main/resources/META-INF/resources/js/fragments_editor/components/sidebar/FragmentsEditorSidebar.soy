@@ -18,7 +18,7 @@
 	{@param sidebarTabs: list<[enabled:bool, id:string, label:string]>}
 	{@param spritemap: string}
 	{@param? dropTargetClass: string}
-	{@param? structure: list<string>}
+	{@param? layoutData: ?}
 	{@param? _handleHide: any}
 	{@param? _handleHideSidebarButtonClick: any}
 	{@param? _handleTabClick: any}
@@ -69,10 +69,10 @@
 			{elseif $_selectedTab == 'added'}
 				{call com.liferay.layout.admin.web.SidebarAddedFragments.render}
 					{param fragmentEntryLinks: $fragmentEntryLinks /}
+					{param layoutData: $layoutData /}
 					{param ref: 'sidebarTab' /}
 					{param spritemap: $spritemap /}
 					{param store: $store /}
-					{param structure: $structure /}
 				{/call}
 			{elseif $_selectedTab == 'mapping'}
 				{call com.liferay.layout.admin.web.SidebarMapping.render}

@@ -68,12 +68,12 @@
 		]
 	]}
 	{@param? status: string}
+	{@param? store: ?}
 	{@param? translationStatus: [
 		languageValues: list<[languageId: string, values: list<string>]>,
 		translationKeys: list<string>
 	]}
 	{@param? updateLayoutPageTemplateEntryAssetTypeURL: any}
-	{@param? _store: ?}
 
 	<div class="fragments-editor" id="{$id}">
 		{call com.liferay.layout.admin.web.FragmentsEditorToolbar.render}
@@ -92,7 +92,7 @@
 			{param portletNamespace: $portletNamespace /}
 			{param savingChanges: $savingChanges ?: false /}
 			{param spritemap: $spritemap /}
-			{param store: $_store /}
+			{param store: $store /}
 			{param translationStatus: $translationStatus /}
 		{/call}
 
@@ -106,12 +106,12 @@
 			{param fragmentCollections: $fragmentCollections /}
 			{param fragmentEntryLinks: $fragmentEntryLinks /}
 			{param highlightMapping: $_highlightMapping ?: false /}
+			{param layoutData: $layoutData /}
 			{param ref: 'sidebar' /}
 			{param selectedMappingTypes: $selectedMappingTypes /}
 			{param sidebarTabs: $sidebarTabs /}
 			{param spritemap: $spritemap /}
-			{param store: $_store /}
-			{param structure: $layoutData.structure /}
+			{param store: $store /}
 			{param visible: $_contextualSidebarVisible ?: true /}
 		{/call}
 
@@ -130,14 +130,14 @@
 				{param hoveredFragmentEntryLinkId: $hoveredFragmentEntryLinkId /}
 				{param imageSelectorURL: $imageSelectorURL /}
 				{param languageId: $languageId /}
+				{param layoutData: $layoutData /}
 				{param mapping: $_highlightMapping ?: false /}
 				{param mappingFieldsURL: $mappingFieldsURL /}
 				{param portletNamespace: $portletNamespace /}
 				{param ref: 'fragmentsEditorRender' /}
 				{param selectedMappingTypes: $selectedMappingTypes /}
 				{param spritemap: $spritemap /}
-				{param store: $_store /}
-				{param structure: $layoutData.structure /}
+				{param store: $store /}
 				{param translating: $languageId != $defaultLanguageId /}
 			{/call}
 		</div>
@@ -156,7 +156,7 @@
 				{param portletNamespace: $portletNamespace /}
 				{param selectedMappingTypes: $selectedMappingTypes /}
 				{param spritemap: $spritemap /}
-				{param store: $_store /}
+				{param store: $store /}
 				{param visible: $_selectMappingDialogVisible ?: false /}
 			{/call}
 		{/if}
@@ -172,7 +172,7 @@
 				{param getAssetDisplayContributorsURL: $getAssetDisplayContributorsURL /}
 				{param portletNamespace: $portletNamespace /}
 				{param spritemap: $spritemap /}
-				{param store: $_store /}
+				{param store: $store /}
 				{param updateLayoutPageTemplateEntryAssetTypeURL: $updateLayoutPageTemplateEntryAssetTypeURL /}
 				{param visible: $_selectMappingTypeDialogVisible ?: false /}
 			{/call}

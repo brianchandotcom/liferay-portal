@@ -8,6 +8,8 @@ import State, {Config} from 'metal-state';
  */
 
 const connect = function(component, store) {
+	component.store = store;
+
 	store.on(
 		'change',
 		(nextState) => Object.entries(nextState).forEach(
@@ -33,6 +35,36 @@ const connect = function(component, store) {
 			store._setInitialState(nextState);
 		}
 	);
+};
+
+/**
+ * Creates a store and links the given components to it.
+ * Each component will receive the store as `store` attribute.
+ * @param {object} initialState
+ * @param {function[]} reducers
+ * @param {string[]} componentIds
+ * @return {Store}
+ * @review
+ */
+
+const createStore = function(initialState, reducers, componentIds = []) {
+	const store = new Store(initialState, reducers);
+
+	componentIds.forEach(
+		componentId => {
+			Liferay
+				.componentReady(
+					componentId
+				)
+				.then(
+					component => {
+						connect(component, store);
+					}
+				);
+		}
+	);
+
+	return store;
 };
 
 /**
@@ -220,5 +252,5 @@ Store.STATE = {
 		.value({})
 };
 
-export {connect, Store};
+export {connect, createStore, Store};
 export default Store;

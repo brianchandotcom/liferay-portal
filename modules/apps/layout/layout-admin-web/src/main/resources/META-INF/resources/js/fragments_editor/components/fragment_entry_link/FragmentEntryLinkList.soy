@@ -14,7 +14,7 @@
 	{@param? dropTargetClass: string}
 	{@param? hoveredFragmentEntryLinkBorder: string}
 	{@param? hoveredFragmentEntryLinkId: string}
-	{@param? structure: list<string>}
+	{@param? layoutData: ?}
 	{@param? _handleEditableChanged: any}
 	{@param? _handleFragmentMove: any}
 	{@param? _handleMappeableFieldClicked: any}
@@ -47,8 +47,8 @@
 	{/let}
 
 	<div class="{$entryLinksClasses}" ref="fragmentEntryLinks">
-		{if $structure and (length($structure) > 0)}
-			{foreach $fragmentEntryLinkId in $structure}
+		{if $fragmentEntryLinks and $layoutData and $layoutData.structure and (length($layoutData.structure) > 0)}
+			{foreach $fragmentEntryLinkId in $layoutData.structure}
 				{let $fragmentEntryLink: $fragmentEntryLinks[$fragmentEntryLinkId] /}
 
 				{if $fragmentEntryLink}

@@ -7,22 +7,15 @@ import './components/dialogs/SelectMappingTypeDialog.es';
 import './components/fragment_entry_link/FragmentEntryLinkList.es';
 import './components/sidebar/FragmentsEditorSidebar.es';
 import './components/toolbar/FragmentsEditorToolbar.es';
-import {
-	addFragmentEntryLinkReducer,
-	removeFragmentEntryLinkReducer
-} from './reducers/fragments.es';
-import {connect, Store} from './store/store.es';
+import {Store} from './store/store.es';
 import FragmentEntryLink from './components/fragment_entry_link/FragmentEntryLink.es';
 import {INITIAL_STATE} from './store/state.es';
-import {saveChangesReducer} from './reducers/changes.es';
 import templates from './FragmentsEditor.soy';
-import {translationStatusReducer} from './reducers/translations.es';
 import {
 	UPDATE_LAST_SAVE_DATE,
 	UPDATE_SAVING_CHANGES_STATUS,
 	UPDATE_TRANSLATION_STATUS
 } from './actions/actions.es';
-import {updateDragTargetReducer} from './reducers/placeholders.es';
 
 /**
  * FragmentsEditor
@@ -30,30 +23,6 @@ import {updateDragTargetReducer} from './reducers/placeholders.es';
  */
 
 class FragmentsEditor extends Component {
-
-	/**
-	 * @inheritDoc
-	 * @review
-	 */
-
-	constructor(attributes) {
-		super(attributes);
-
-		this._store = new Store(
-			attributes,
-			[
-				addFragmentEntryLinkReducer,
-				removeFragmentEntryLinkReducer,
-				saveChangesReducer,
-				translationStatusReducer,
-				updateDragTargetReducer
-			]
-		);
-
-		connect(this, this._store);
-
-		this._store.dispatchAction(UPDATE_TRANSLATION_STATUS);
-	}
 
 	/**
 	 * Focus a fragmentEntryLink for a given ID
@@ -180,7 +149,7 @@ class FragmentsEditor extends Component {
 				}
 			).then(
 				() => {
-					this._store
+					this.store
 						.dispatchAction(
 							UPDATE_LAST_SAVE_DATE,
 							{
@@ -411,7 +380,7 @@ class FragmentsEditor extends Component {
 
 	_updateFragmentEntryLink(fragmentEntryLink) {
 		if (!this.savingChanges) {
-			this._store.dispatchAction(
+			this.store.dispatchAction(
 				UPDATE_SAVING_CHANGES_STATUS,
 				{
 					savingChanges: true
@@ -439,7 +408,7 @@ class FragmentsEditor extends Component {
 				}
 			).then(
 				() => {
-					this._store
+					this.store
 						.dispatchAction(
 							UPDATE_LAST_SAVE_DATE,
 							{
@@ -669,6 +638,28 @@ FragmentsEditor.STATE = Object.assign(
 		spritemap: Config.string().required(),
 
 		/**
+		 * Store instance
+		 * @default undefined
+		 * @instance
+		 * @memberOf FragmentsEditor
+		 * @review
+		 * @type {Store}
+		 */
+
+		store: Config.instanceOf(Store),
+
+		/**
+		 * URL for swapping to fragmentEntryLinks.
+		 * @default undefined
+		 * @instance
+		 * @memberOf FragmentsEditor
+		 * @review
+		 * @type {!string}
+		 */
+
+		updateFragmentEntryLinksURL: Config.string().required(),
+
+		/**
 		 * URL for updating the asset type associated to a template.
 		 * @default undefined
 		 * @instance
@@ -806,21 +797,7 @@ FragmentsEditor.STATE = Object.assign(
 		_selectMappingTypeDialogVisible: Config
 			.bool()
 			.internal()
-			.value(false),
-
-		/**
-		 * Store instance
-		 * @default undefined
-		 * @instance
-		 * @memberOf FragmentsEditor
-		 * @private
-		 * @review
-		 * @type {Store}
-		 */
-
-		_store: Config
-			.instanceOf(Store)
-			.internal()
+			.value(false)
 	},
 
 	INITIAL_STATE

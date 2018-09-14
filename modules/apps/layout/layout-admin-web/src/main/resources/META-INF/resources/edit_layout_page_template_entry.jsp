@@ -34,7 +34,28 @@ renderResponse.setTitle(layoutPageTemplateDisplayContext.getLayoutPageTemplateEn
 />
 
 <soy:component-renderer
+	componentId='<%= renderResponse.getNamespace() + "fragmentsEditor" %>'
 	context="<%= fragmentsEditorDisplayContext.getEditorContext() %>"
 	module="layout-admin-web/js/fragments_editor/FragmentsEditor.es"
 	templateNamespace="com.liferay.layout.admin.web.FragmentsEditor.render"
 />
+
+<%
+JSONSerializer jsonSerializer = JSONFactoryUtil.createJSONSerializer();
+%>
+
+<aui:script require="layout-admin-web/js/fragments_editor/reducers/changes.es as ChangesReducerModule, layout-admin-web/js/fragments_editor/reducers/fragments.es as FragmentsReducerModule, layout-admin-web/js/fragments_editor/reducers/placeholders.es as PlaceholdersReducerModule, layout-admin-web/js/fragments_editor/reducers/translations.es as TranslationsReducerModule, layout-admin-web/js/fragments_editor/store/store.es as StoreModule">
+	StoreModule.createStore(
+		<%= jsonSerializer.serializeDeep(fragmentsEditorDisplayContext.getEditorContext()) %>,
+		[
+			ChangesReducerModule.saveChangesReducer,
+			FragmentsReducerModule.addFragmentEntryLinkReducer,
+			FragmentsReducerModule.removeFragmentEntryLinkReducer,
+			PlaceholdersReducerModule.updateDragTargetReducer,
+			TranslationsReducerModule.translationStatusReducer
+		],
+		[
+			'<portlet:namespace />fragmentsEditor'
+		]
+	);
+</aui:script>

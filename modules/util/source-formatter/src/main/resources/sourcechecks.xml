@@ -119,6 +119,7 @@
 		<check name="JavaBooleanUsageCheck" />
 		<check name="JavaCollatorUtilCheck" />
 		<check name="JavaCombineLinesCheck" />
+		<check name="JavaComponentAnnotationsCheck" />
 		<check name="JavaConfigurationAdminCheck" />
 		<check name="JavaConfigurationCategoryCheck" />
 		<check name="JavaConstructorParametersCheck" />
@@ -154,6 +155,7 @@
 		<check name="JavaLineBreakCheck" />
 		<check name="JavaLocalSensitiveComparisonCheck" />
 		<check name="JavaLongLinesCheck" />
+		<check name="JavaMetaAnnotationsCheck" />
 		<check name="JavaMetaOCDIdCheck" />
 		<check name="JavaModifiedServiceMethodCheck" />
 		<check name="JavaPackagePathCheck" />

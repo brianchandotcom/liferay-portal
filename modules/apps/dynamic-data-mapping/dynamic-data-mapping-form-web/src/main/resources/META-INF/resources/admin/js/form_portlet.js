@@ -391,7 +391,7 @@ AUI.add(
 										footer: [
 											{
 												cssClass: 'btn-secondary',
-												label: Liferay.Language.get('leave'),
+												label: Liferay.Language.get('leave-page'),
 												on: {
 													click: function() {
 														confirm.call(instance, dialog);

@@ -52,11 +52,15 @@ import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.AggregateResourceBundle;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PrefsParamUtil;
+import com.liferay.portal.kernel.util.ResourceBundleLoader;
+import com.liferay.portal.kernel.util.ResourceBundleLoaderUtil;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.SessionParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -65,6 +69,7 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.List;
 import java.util.Locale;
+import java.util.ResourceBundle;
 import java.util.Set;
 import java.util.stream.Stream;
 
@@ -579,6 +584,20 @@ public class DDMFormDisplayContext {
 		return portletDisplay.getPortletResource();
 	}
 
+	protected ResourceBundle getResourceBundle(Locale locale) {
+		ResourceBundleLoader portalResourceBundleLoader =
+			ResourceBundleLoaderUtil.getPortalResourceBundleLoader();
+
+		ResourceBundle portalResourceBundle =
+			portalResourceBundleLoader.loadResourceBundle(locale);
+
+		ResourceBundle moduleResourceBundle = ResourceBundleUtil.getBundle(
+			"content.Language", locale, getClass());
+
+		return new AggregateResourceBundle(
+			moduleResourceBundle, portalResourceBundle);
+	}
+
 	protected String getSubmitLabel(
 		DDMFormInstance ddmFormInstance, Locale locale) {
 
@@ -587,11 +606,13 @@ public class DDMFormDisplayContext {
 		boolean workflowEnabled = hasWorkflowEnabled(
 			ddmFormInstance, themeDisplay);
 
+		ResourceBundle resourceBundle = getResourceBundle(locale);
+
 		if (workflowEnabled) {
-			return LanguageUtil.get(locale, "submit-for-publication");
+			return LanguageUtil.get(resourceBundle, "submit-for-publication");
 		}
 
-		return LanguageUtil.get(locale, "submit");
+		return LanguageUtil.get(resourceBundle, "submit-form");
 	}
 
 	protected ThemeDisplay getThemeDisplay() {

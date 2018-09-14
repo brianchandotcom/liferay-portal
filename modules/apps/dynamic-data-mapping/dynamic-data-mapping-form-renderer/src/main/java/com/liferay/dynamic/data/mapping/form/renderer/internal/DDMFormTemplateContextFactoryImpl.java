@@ -191,7 +191,7 @@ public class DDMFormTemplateContextFactoryImpl
 
 		String submitLabel = GetterUtil.getString(
 			ddmFormRenderingContext.getSubmitLabel(),
-			LanguageUtil.get(locale, "submit"));
+			LanguageUtil.get(resourceBundle, "submit-form"));
 
 		templateContext.put("submitLabel", submitLabel);
 

@@ -75,7 +75,9 @@
 
 <aui:script require="sharing-document-library/dynamic_section/js/ManageCollaborators.es">
 	new sharingDocumentLibraryDynamic_sectionJsManageCollaboratorsEs.default(
-		{},
+		{
+			pathThemeImages: '<%= themeDisplay.getPathThemeImages() %>'
+		},
 		<portlet:namespace />ManageCollaborators_<%= fileEntry.getFileEntryId()%>
 	);
 </aui:script>

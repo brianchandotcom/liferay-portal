@@ -4,7 +4,48 @@
  *
  */
 {template .render}
+	{@param pathThemeImages: string}
+	{@param? _collaboratorsDialogOpen: bool}
+	{@param? _handleManageCollaboratorsButtonClick: any}
+	{@param? _handleCancelButtonClick: any}
+	{@param? _handleSaveButtonClick: any}
+
 	<div id="manageCollaborators">
-		<button class="btn btn-link" type="button">{msg desc=""}manage-collaborators{/msg} </button>
+		<button class="btn btn-link" data-onclick="{$_handleManageCollaboratorsButtonClick}" type="button">{msg desc=""}manage-collaborators{/msg}</button>
+
+		{if $_collaboratorsDialogOpen}
+			{call .collaboratorsDialog}
+				{param pathThemeImages: $pathThemeImages /}
+				{param _handleCancelButtonClick: $_handleCancelButtonClick /}
+				{param _handleSaveButtonClick: $_handleSaveButtonClick /}
+			{/call}
+		{/if}
 	</div>
+{/template}
+
+{template .collaboratorsDialog}
+	{@param pathThemeImages: string}
+	{@param? _handleCancelButtonClick: any}
+	{@param? _handleSaveButtonClick: any}
+
+	{call liferay.frontend.Modal.render}
+		{param body kind="html"}
+			<h1>dialog body</h1>
+		{/param}
+
+		{param footer kind="html"}
+			<button class="btn btn-link" data-onclick="{$_handleCancelButtonClick}" type="button">{msg desc=""}cancel{/msg}</button>
+			<button class="btn btn-primary" data-onclick="{$_handleSaveButtonClick}" type="button">{msg desc=""}save{/msg}</button>
+		{/param}
+
+		{param dialogClasses: 'modal-dialog-sm ambrin' /}
+
+		{param header kind="html"}
+			{msg desc=""}collaborators{/msg}
+		{/param}
+
+		{param ref: 'modal' /}
+
+		{param spritemap: $pathThemeImages + '/lexicon/icons.svg' /}
+	{/call}
 {/template}

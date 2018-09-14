@@ -17,4 +17,6 @@ dependencies {
 	compileOnly project(":apps:sharing:sharing-api")
 	compileOnly project(":core:petra:petra-function")
 	compileOnly project(":core:petra:petra-string")
+
+	soyCompile project(":apps:frontend-js:frontend-js-web")
 }

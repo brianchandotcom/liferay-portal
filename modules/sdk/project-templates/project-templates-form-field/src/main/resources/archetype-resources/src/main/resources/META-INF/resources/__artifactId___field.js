@@ -14,7 +14,6 @@ AUI.add(
 				NAME: '${artifactId}-form-field',
 
 				prototype: {
-
 				}
 			}
 		);

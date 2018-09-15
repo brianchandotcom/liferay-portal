@@ -2000,7 +2000,10 @@ wrapper.java.additional.11="-Dfile.encoding=UTF-8"]]></replacevalue>
 
 		<echo append="true" file="${app.server.tomcat.dir}/conf/logging.properties">
 			<![CDATA[
-org.apache.catalina.startup.ClassLoaderFactory.level=SEVERE]]>
+org.apache.catalina.startup.Catalina.level=INFO
+org.apache.catalina.startup.ClassLoaderFactory.level=SEVERE
+org.apache.catalina.startup.VersionLoggerListener.level=INFO
+org.apache.level=WARNING]]>
 		</echo>
 
 		<replace

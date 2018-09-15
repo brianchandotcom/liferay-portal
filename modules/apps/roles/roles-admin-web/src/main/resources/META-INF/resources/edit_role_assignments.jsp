@@ -71,7 +71,7 @@ renderResponse.setTitle(role.getTitle(locale));
 	viewTypeItems="<%= editRoleAssignmentsManagementToolbarDisplayContext.getViewTypeItems() %>"
 />
 
-<aui:form action="<%= portletURL.toString() %>" cssClass="container-fluid container-fluid-max-xl container-form-lg" method="post" name="fm">
+<aui:form action="<%= portletURL.toString() %>" cssClass="container-fluid container-fluid-max-xl container-form-view" method="post" name="fm">
 	<aui:input name="tabs2" type="hidden" value="<%= tabs2 %>" />
 	<aui:input name="tabs3" type="hidden" value="current" />
 	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />

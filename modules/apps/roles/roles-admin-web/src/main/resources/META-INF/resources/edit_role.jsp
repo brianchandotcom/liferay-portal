@@ -66,7 +66,7 @@ renderResponse.setTitle((role == null) ? LanguageUtil.get(request, "new-role") :
 	<portlet:param name="type" value="<%= String.valueOf(type) %>" />
 </portlet:renderURL>
 
-<aui:form action="<%= editRoleURL %>" cssClass="container-fluid container-fluid-max-xl container-form-lg" method="post" name="fm">
+<aui:form action="<%= editRoleURL %>" cssClass="container-fluid container-fluid-max-xl container-form-view" method="post" name="fm">
 	<aui:input name="redirect" type="hidden" value="<%= editRoleRenderURL %>" />
 	<aui:input name="roleId" type="hidden" value="<%= roleId %>" />
 

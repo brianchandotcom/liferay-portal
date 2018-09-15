@@ -16,7 +16,6 @@ package com.liferay.forms.apio.internal.architect.form;
 
 import com.liferay.apio.architect.file.BinaryFile;
 import com.liferay.apio.architect.form.Form;
-import com.liferay.apio.architect.form.Form.Builder;
 
 /**
  * Instances of this class represent the values extracted from a media object
@@ -34,7 +33,7 @@ public class MediaObjectCreatorForm {
 	 * @return a media object creator form
 	 */
 	public static Form<MediaObjectCreatorForm> buildForm(
-		Builder<MediaObjectCreatorForm> formBuilder) {
+		Form.Builder<MediaObjectCreatorForm> formBuilder) {
 
 		return formBuilder.title(
 			__ -> "The media object creator form"

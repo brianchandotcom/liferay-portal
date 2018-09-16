@@ -98,7 +98,7 @@ public class FormInstanceNestedCollectionResource
 			FetchLatestDraftForm::buildForm
 		).addCustomRoute(
 			postRoute, this::_uploadFile, MediaObjectIdentifier.class,
-			(credentials, aLong) -> true, MediaObjectCreatorForm::buildForm
+			this::_hasPermission, MediaObjectCreatorForm::buildForm
 		).build();
 	}
 

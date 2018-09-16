@@ -45,7 +45,6 @@ import com.liferay.portal.apio.user.CurrentUser;
 import com.liferay.portal.kernel.model.Company;
 
 import java.util.List;
-import java.util.function.BiFunction;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -81,24 +80,13 @@ public class FormInstanceNestedCollectionResource
 	public ItemRoutes<DDMFormInstance, Long> itemRoutes(
 		ItemRoutes.Builder<DDMFormInstance, Long> builder) {
 
-		GetRoute fetchLatestDraftRoute = new FetchLatestDraftRoute();
-
-		BiFunction<Credentials, Long, Boolean> hasPermissionFunction =
-			(credentials, identifier) -> Try.fromFallible(
-				() -> _hasPermission.forAddingIn(
-					FormInstanceRecordIdentifier.class
-				).apply(
-					credentials, identifier
-				)
-			).orElse(
-				false
-			);
+		GetRoute getRoute = new FetchLatestDraftRoute();
 
 		return builder.addGetter(
 			_ddmFormInstanceService::getFormInstance
 		).addCustomRoute(
-			fetchLatestDraftRoute, this::_fetchLatestDraft, CurrentUser.class,
-			FormInstanceRecordIdentifier.class, hasPermissionFunction,
+			getRoute, this::_fetchLatestDraft, CurrentUser.class,
+			FormInstanceRecordIdentifier.class, this::_hasPermission,
 			FetchLatestDraftForm::buildForm
 		).build();
 	}
@@ -222,6 +210,20 @@ public class FormInstanceNestedCollectionResource
 			company.getCompanyId(), groupId);
 
 		return new PageItems<>(ddmFormInstances, count);
+	}
+
+	private Boolean _hasPermission(
+		Credentials credentials, Long formInstanceId) {
+
+		return Try.fromFallible(
+			() -> _hasPermission.forAddingIn(
+				FormInstanceRecordIdentifier.class
+			).apply(
+				credentials, formInstanceId
+			)
+		).orElse(
+			false
+		);
 	}
 
 	@Reference

@@ -18,7 +18,6 @@ import com.liferay.apio.architect.form.Form;
 
 /**
  * @author Paulo Cruz
- * @review
  */
 public class FetchLatestDraftForm {
 
@@ -28,6 +27,7 @@ public class FetchLatestDraftForm {
 	 *
 	 * @param  formBuilder the {@code Form} builder
 	 * @return a context form instance
+	 * @review
 	 */
 	public static Form<FetchLatestDraftForm> buildForm(
 		Form.Builder<FetchLatestDraftForm> formBuilder) {

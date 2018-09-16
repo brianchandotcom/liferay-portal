@@ -82,14 +82,13 @@ public class UploadFileHelper {
 		String title = mediaObjectCreatorForm.getTitle();
 		String mimeType = binaryFile.getMimeType();
 		String description = mediaObjectCreatorForm.getDescription();
-		String changelog = mediaObjectCreatorForm.getChangelog();
 
 		return Try.fromFallible(
 			ddmFormInstance::getGroupId
 		).map(
 			repositoryId -> _dlAppService.addFileEntry(
 				repositoryId, folderId, sourceFileName, mimeType, title,
-				description, changelog, inputStream, size, serviceContext)
+				description, null, inputStream, size, serviceContext)
 		).orElse(
 			null
 		);

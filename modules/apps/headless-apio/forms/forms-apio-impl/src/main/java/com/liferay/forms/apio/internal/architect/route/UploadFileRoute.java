@@ -23,7 +23,7 @@ public class UploadFileRoute extends PostRoute {
 
 	@Override
 	public String getName() {
-		return "upload-file-to-root-folder";
+		return "upload-file";
 	}
 
 }

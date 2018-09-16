@@ -73,7 +73,13 @@ public class UploadFileHelper {
 
 		InputStream inputStream = binaryFile.getInputStream();
 
-		long folderId = 0;
+		Optional<Long> folderIdOptional =
+			mediaObjectCreatorForm.getFolderIdOptional();
+
+		long folderId = folderIdOptional.orElse(
+			0L
+		);
+
 		long size = binaryFile.getSize();
 
 		ServiceContext serviceContext = new ServiceContext();

@@ -29,8 +29,6 @@ import com.liferay.forms.apio.internal.model.FileEntryValue;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.ServiceContext;
 
-import java.io.InputStream;
-
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -69,13 +67,6 @@ public class UploadFileHelper {
 		DDMFormInstance ddmFormInstance,
 		MediaObjectCreatorForm mediaObjectCreatorForm) {
 
-		BinaryFile binaryFile = mediaObjectCreatorForm.getBinaryFile();
-
-		InputStream inputStream = binaryFile.getInputStream();
-
-		long size = binaryFile.getSize();
-		String mimeType = binaryFile.getMimeType();
-
 		Optional<Long> folderIdOptional =
 			mediaObjectCreatorForm.getFolderIdOptional();
 
@@ -83,16 +74,17 @@ public class UploadFileHelper {
 			0L
 		);
 
-		String description = mediaObjectCreatorForm.getDescription();
-		String sourceFileName = mediaObjectCreatorForm.getName();
-		String title = mediaObjectCreatorForm.getTitle();
+		BinaryFile binaryFile = mediaObjectCreatorForm.getBinaryFile();
 
 		return Try.fromFallible(
 			ddmFormInstance::getGroupId
 		).map(
 			repositoryId -> _dlAppService.addFileEntry(
-				repositoryId, folderId, sourceFileName, mimeType, title,
-				description, null, inputStream, size, new ServiceContext())
+				repositoryId, folderId, mediaObjectCreatorForm.getName(),
+				binaryFile.getMimeType(), mediaObjectCreatorForm.getTitle(),
+				mediaObjectCreatorForm.getDescription(), null,
+				binaryFile.getInputStream(), binaryFile.getSize(),
+				new ServiceContext())
 		).orElse(
 			null
 		);

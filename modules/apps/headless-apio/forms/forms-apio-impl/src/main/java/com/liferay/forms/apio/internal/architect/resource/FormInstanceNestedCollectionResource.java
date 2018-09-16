@@ -86,7 +86,7 @@ public class FormInstanceNestedCollectionResource
 			_ddmFormInstanceService::getFormInstance
 		).addCustomRoute(
 			uploadFileRoute, this::_uploadFile, MediaObjectIdentifier.class,
-			this::_getCredentialsBiFunction, MediaObjectCreatorForm::buildForm
+			this::_hasPermission, MediaObjectCreatorForm::buildForm
 		).build();
 	}
 
@@ -183,20 +183,6 @@ public class FormInstanceNestedCollectionResource
 		).build();
 	}
 
-	private Boolean _getCredentialsBiFunction(
-		Credentials credentials, Long formInstanceId) {
-
-		return Try.fromFallible(
-			() -> _hasPermission.forAddingIn(
-				FormInstanceRecordIdentifier.class
-			).apply(
-				credentials, formInstanceId
-			)
-		).orElse(
-			false
-		);
-	}
-
 	private PageItems<DDMFormInstance> _getPageItems(
 		Pagination pagination, long groupId, Company company) {
 
@@ -208,6 +194,20 @@ public class FormInstanceNestedCollectionResource
 			company.getCompanyId(), groupId);
 
 		return new PageItems<>(ddmFormInstances, count);
+	}
+
+	private Boolean _hasPermission(
+		Credentials credentials, Long formInstanceId) {
+
+		return Try.fromFallible(
+			() -> _hasPermission.forAddingIn(
+				FormInstanceRecordIdentifier.class
+			).apply(
+				credentials, formInstanceId
+			)
+		).orElse(
+			false
+		);
 	}
 
 	private FileEntry _uploadFile(

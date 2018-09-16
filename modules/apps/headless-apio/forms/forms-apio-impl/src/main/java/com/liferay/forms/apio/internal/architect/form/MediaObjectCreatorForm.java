@@ -46,11 +46,11 @@ public class MediaObjectCreatorForm {
 			__ -> "This form can be used to create a media object"
 		).constructor(
 			MediaObjectCreatorForm::new
-		).addOptionalString(
-			"description", MediaObjectCreatorForm::setDescription
 		).addOptionalLinkedModel(
 			"folder", FolderIdentifier.class,
 			MediaObjectCreatorForm::setFolderId
+		).addOptionalString(
+			"description", MediaObjectCreatorForm::setDescription
 		).addRequiredFile(
 			"binaryFile", MediaObjectCreatorForm::setBinaryFile
 		).addRequiredString(

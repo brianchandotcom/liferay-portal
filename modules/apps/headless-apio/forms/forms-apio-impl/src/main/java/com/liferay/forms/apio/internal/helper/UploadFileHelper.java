@@ -96,7 +96,7 @@ public class UploadFileHelper {
 
 	private Long _extractFileEntryId(DDMFormFieldValue ddmFormFieldValue) {
 		return Try.fromFallible(
-			() -> ddmFormFieldValue.getValue()
+			ddmFormFieldValue::getValue
 		).map(
 			Value::getValues
 		).map(

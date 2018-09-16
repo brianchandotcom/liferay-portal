@@ -16,6 +16,9 @@ package com.liferay.forms.apio.internal.architect.form;
 
 import com.liferay.apio.architect.file.BinaryFile;
 import com.liferay.apio.architect.form.Form;
+import com.liferay.folder.apio.architect.identifier.FolderIdentifier;
+
+import java.util.Optional;
 
 /**
  * Instances of this class represent the values extracted from a media object
@@ -45,6 +48,9 @@ public class MediaObjectCreatorForm {
 			MediaObjectCreatorForm::new
 		).addOptionalString(
 			"description", MediaObjectCreatorForm::setDescription
+		).addOptionalLinkedModel(
+			"folder", FolderIdentifier.class,
+			MediaObjectCreatorForm::setFolderId
 		).addRequiredFile(
 			"binaryFile", MediaObjectCreatorForm::setBinaryFile
 		).addRequiredString(
@@ -60,6 +66,10 @@ public class MediaObjectCreatorForm {
 
 	public String getDescription() {
 		return _description;
+	}
+
+	public Optional<Long> getFolderIdOptional() {
+		return Optional.ofNullable(_folderId);
 	}
 
 	public String getName() {
@@ -78,6 +88,10 @@ public class MediaObjectCreatorForm {
 		_description = description;
 	}
 
+	public void setFolderId(Long folderId) {
+		_folderId = folderId;
+	}
+
 	public void setName(String name) {
 		_name = name;
 	}
@@ -88,6 +102,7 @@ public class MediaObjectCreatorForm {
 
 	private BinaryFile _binaryFile;
 	private String _description;
+	private Long _folderId;
 	private String _name;
 	private String _title;
 

@@ -59,7 +59,7 @@ public class UploadFileHelper {
 				"document_library"
 			)
 		).map(
-			field -> _findField(field, ddmFormFieldValues)
+			field -> _findField(field.getName(), ddmFormFieldValues)
 		).forEach(
 			optional -> optional.ifPresent(this::_setFileEntryAsFormFieldValue)
 		);
@@ -73,6 +73,9 @@ public class UploadFileHelper {
 
 		InputStream inputStream = binaryFile.getInputStream();
 
+		long size = binaryFile.getSize();
+		String mimeType = binaryFile.getMimeType();
+
 		Optional<Long> folderIdOptional =
 			mediaObjectCreatorForm.getFolderIdOptional();
 
@@ -80,21 +83,16 @@ public class UploadFileHelper {
 			0L
 		);
 
-		long size = binaryFile.getSize();
-
-		ServiceContext serviceContext = new ServiceContext();
-
+		String description = mediaObjectCreatorForm.getDescription();
 		String sourceFileName = mediaObjectCreatorForm.getName();
 		String title = mediaObjectCreatorForm.getTitle();
-		String mimeType = binaryFile.getMimeType();
-		String description = mediaObjectCreatorForm.getDescription();
 
 		return Try.fromFallible(
 			ddmFormInstance::getGroupId
 		).map(
 			repositoryId -> _dlAppService.addFileEntry(
 				repositoryId, folderId, sourceFileName, mimeType, title,
-				description, null, inputStream, size, serviceContext)
+				description, null, inputStream, size, new ServiceContext())
 		).orElse(
 			null
 		);
@@ -122,16 +120,13 @@ public class UploadFileHelper {
 	}
 
 	private Optional<DDMFormFieldValue> _findField(
-		DDMFormField formField, List<DDMFormFieldValue> ddmFormFieldValues) {
+		String formFieldName, List<DDMFormFieldValue> ddmFormFieldValues) {
 
 		Stream<DDMFormFieldValue> ddmFormFieldValuesStream =
 			ddmFormFieldValues.stream();
 
 		return ddmFormFieldValuesStream.filter(
-			value -> value.getName(
-			).equals(
-				formField.getName()
-			)
+			value -> formFieldName.equals(value.getName())
 		).findFirst();
 	}
 

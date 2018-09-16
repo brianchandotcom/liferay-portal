@@ -44,8 +44,6 @@ public class MediaObjectCreatorForm {
 		).constructor(
 			MediaObjectCreatorForm::new
 		).addOptionalString(
-			"changeLog", MediaObjectCreatorForm::setChangelog
-		).addOptionalString(
 			"description", MediaObjectCreatorForm::setDescription
 		).addRequiredFile(
 			"binaryFile", MediaObjectCreatorForm::setBinaryFile
@@ -58,10 +56,6 @@ public class MediaObjectCreatorForm {
 
 	public BinaryFile getBinaryFile() {
 		return _binaryFile;
-	}
-
-	public String getChangelog() {
-		return _changelog;
 	}
 
 	public String getDescription() {
@@ -80,10 +74,6 @@ public class MediaObjectCreatorForm {
 		_binaryFile = binaryFile;
 	}
 
-	public void setChangelog(String changelog) {
-		_changelog = changelog;
-	}
-
 	public void setDescription(String description) {
 		_description = description;
 	}
@@ -97,7 +87,6 @@ public class MediaObjectCreatorForm {
 	}
 
 	private BinaryFile _binaryFile;
-	private String _changelog;
 	private String _description;
 	private String _name;
 	private String _title;

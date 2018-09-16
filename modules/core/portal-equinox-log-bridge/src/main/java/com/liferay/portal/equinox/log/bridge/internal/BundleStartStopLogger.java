@@ -14,7 +14,7 @@
 
 package com.liferay.portal.equinox.log.bridge.internal;
 
-import com.liferay.portal.events.StartupHelperUtil;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import org.osgi.framework.BundleEvent;
 import org.osgi.framework.SynchronousBundleListener;
@@ -27,33 +27,35 @@ import org.slf4j.LoggerFactory;
  */
 public class BundleStartStopLogger implements SynchronousBundleListener {
 
+	public BundleStartStopLogger(AtomicBoolean atomicBoolean) {
+		_portalStarted = atomicBoolean;
+	}
+
 	@Override
 	public void bundleChanged(BundleEvent bundleEvent) {
-		if ((StartupHelperUtil.getStartupHelper() == null) ||
-			!StartupHelperUtil.isStartupFinished()) {
-
+		if (_portalStarted.get()) {
 			if (_log.isInfoEnabled()) {
 				if (bundleEvent.getType() == BundleEvent.STARTED) {
-					_log.debug("STARTED {}", bundleEvent.getBundle());
+					_log.info("STARTED {}", bundleEvent.getBundle());
 				}
 				else if (bundleEvent.getType() == BundleEvent.STOPPED) {
-					_log.debug("STOPPED {}", bundleEvent.getBundle());
+					_log.info("STOPPED {}", bundleEvent.getBundle());
 				}
 			}
 		}
-		else if ((StartupHelperUtil.getStartupHelper() != null) &&
-				 StartupHelperUtil.isStartupFinished()) {
-
+		else if (_log.isDebugEnabled()) {
 			if (bundleEvent.getType() == BundleEvent.STARTED) {
-				_log.info("STARTED {}", bundleEvent.getBundle());
+				_log.debug("STARTED {}", bundleEvent.getBundle());
 			}
 			else if (bundleEvent.getType() == BundleEvent.STOPPED) {
-				_log.info("STOPPED {}", bundleEvent.getBundle());
+				_log.debug("STOPPED {}", bundleEvent.getBundle());
 			}
 		}
 	}
 
 	private static final Logger _log = LoggerFactory.getLogger(
 		BundleStartStopLogger.class);
+
+	private final AtomicBoolean _portalStarted;
 
 }

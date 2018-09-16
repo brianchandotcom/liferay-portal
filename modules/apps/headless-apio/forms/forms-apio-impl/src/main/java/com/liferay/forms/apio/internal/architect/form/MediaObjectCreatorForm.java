@@ -22,6 +22,7 @@ import com.liferay.apio.architect.form.Form;
  * creator form.
  *
  * @author Javier Gamarra
+ * @review
  */
 public class MediaObjectCreatorForm {
 
@@ -31,6 +32,7 @@ public class MediaObjectCreatorForm {
 	 *
 	 * @param  formBuilder the {@code Form} builder
 	 * @return a media object creator form
+	 * @review
 	 */
 	public static Form<MediaObjectCreatorForm> buildForm(
 		Form.Builder<MediaObjectCreatorForm> formBuilder) {

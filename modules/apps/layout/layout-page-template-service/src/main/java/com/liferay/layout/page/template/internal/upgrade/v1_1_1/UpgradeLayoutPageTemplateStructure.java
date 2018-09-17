@@ -19,14 +19,12 @@ import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
-import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.Portal;
@@ -45,16 +43,11 @@ public class UpgradeLayoutPageTemplateStructure extends UpgradeProcess {
 
 	public UpgradeLayoutPageTemplateStructure(
 		FragmentEntryLinkLocalService fragmentEntryLinkLocalService,
-		LayoutLocalService layoutLocalService,
-		LayoutPageTemplateEntryLocalService layoutPageTemplateEntryLocalService,
 		LayoutPageTemplateStructureLocalService
 			layoutPageTemplateStructureLocalService,
 		Portal portal) {
 
 		_fragmentEntryLinkLocalService = fragmentEntryLinkLocalService;
-		_layoutLocalService = layoutLocalService;
-		_layoutPageTemplateEntryLocalService =
-			layoutPageTemplateEntryLocalService;
 		_layoutPageTemplateStructureLocalService =
 			layoutPageTemplateStructureLocalService;
 		_portal = portal;
@@ -72,23 +65,18 @@ public class UpgradeLayoutPageTemplateStructure extends UpgradeProcess {
 		long classNameId = _portal.getClassNameId(Layout.class.getName());
 
 		try (PreparedStatement ps = connection.prepareStatement(
-				"select plid from Layout where type_ = ?")) {
+				"select groupId, userId, plid from Layout where type_ = ?")) {
 
 			ps.setString(1, "content");
 
 			try (ResultSet rs = ps.executeQuery()) {
 				while (rs.next()) {
+					long groupId = rs.getLong("groupId");
+					long userId = rs.getLong("userId");
 					long plid = rs.getLong("plid");
 
-					Layout layout = _layoutLocalService.fetchLayout(plid);
-
-					if (layout == null) {
-						continue;
-					}
-
 					_updateLayoutPageTemplateStructure(
-						classNameId, layout.getUserId(), layout.getGroupId(),
-						layout.getPlid());
+						classNameId, userId, groupId, plid);
 				}
 			}
 		}
@@ -100,7 +88,7 @@ public class UpgradeLayoutPageTemplateStructure extends UpgradeProcess {
 
 		StringBuilder sb = new StringBuilder(6);
 
-		sb.append("select layoutPageTemplateEntryId from ");
+		sb.append("select groupId, userId, layoutPageTemplateEntryId from ");
 		sb.append("LayoutPageTemplateEntry where type_ in (");
 		sb.append(LayoutPageTemplateEntryTypeConstants.TYPE_BASIC);
 		sb.append(", ");
@@ -112,22 +100,14 @@ public class UpgradeLayoutPageTemplateStructure extends UpgradeProcess {
 
 			try (ResultSet rs = ps.executeQuery()) {
 				while (rs.next()) {
+					long groupId = rs.getLong("groupId");
+					long userId = rs.getLong("userId");
 					long layoutPageTemplateEntryId = rs.getLong(
 						"layoutPageTemplateEntryId");
 
-					LayoutPageTemplateEntry layoutPageTemplateEntry =
-						_layoutPageTemplateEntryLocalService.
-							fetchLayoutPageTemplateEntry(
-								layoutPageTemplateEntryId);
-
-					if (layoutPageTemplateEntry == null) {
-						continue;
-					}
-
 					_updateLayoutPageTemplateStructure(
-						classNameId, layoutPageTemplateEntry.getUserId(),
-						layoutPageTemplateEntry.getGroupId(),
-						layoutPageTemplateEntry.getLayoutPageTemplateEntryId());
+						classNameId, userId, groupId,
+						layoutPageTemplateEntryId);
 				}
 			}
 		}
@@ -183,9 +163,6 @@ public class UpgradeLayoutPageTemplateStructure extends UpgradeProcess {
 	}
 
 	private final FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;
-	private final LayoutLocalService _layoutLocalService;
-	private final LayoutPageTemplateEntryLocalService
-		_layoutPageTemplateEntryLocalService;
 	private final LayoutPageTemplateStructureLocalService
 		_layoutPageTemplateStructureLocalService;
 	private final Portal _portal;

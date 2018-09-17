@@ -16,22 +16,14 @@ package com.liferay.portal.search.elasticsearch6.internal.groupby;
 
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.GroupBy;
-import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.QueryConfig;
-import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.search.elasticsearch6.internal.ElasticsearchIndexingFixture;
 import com.liferay.portal.search.elasticsearch6.internal.connection.ElasticsearchFixture;
 import com.liferay.portal.search.elasticsearch6.internal.connection.LiferayIndexCreator;
-import com.liferay.portal.search.elasticsearch6.internal.count.ElasticsearchCountTest;
-import com.liferay.portal.search.test.util.IdempotentRetryAssert;
 import com.liferay.portal.search.test.util.groupby.BaseGroupByTestCase;
 import com.liferay.portal.search.test.util.indexing.BaseIndexingTestCase;
 import com.liferay.portal.search.test.util.indexing.IndexingFixture;
 
-import java.util.Map;
-import java.util.concurrent.TimeUnit;
-
-import org.junit.Assert;
 import org.junit.Test;
 
 /**
@@ -41,67 +33,52 @@ import org.junit.Test;
 public class GroupByTest extends BaseGroupByTestCase {
 
 	@Test
-	public void testSameFieldNames() throws Exception {
-		addDocuments("one", 1);
+	public void testFieldNamesSame() throws Exception {
+		indexDuplicates("one", 1);
 
-		SearchContext searchContext = createSearchContext();
+		assertSearch(
+			indexingTestHelper -> {
+				indexingTestHelper.define(
+					searchContext -> searchContext.setGroupBy(
+						new GroupBy(GROUP_FIELD)));
 
-		searchContext.setGroupBy(new GroupBy(GROUP_FIELD));
+				indexingTestHelper.search();
 
-		IdempotentRetryAssert.retryAssert(
-			3, TimeUnit.SECONDS,
-			() -> {
-				assertSameFieldNames("one", searchContext);
-
-				return null;
+				indexingTestHelper.verify(
+					hits -> assertFieldNames(
+						"one", getFieldNames(hits), hits, indexingTestHelper));
 			});
 	}
 
 	@Test
-	public void testSameFieldNamesWithSelectedFieldNames() throws Exception {
-		addDocuments("one", 1);
+	public void testFieldNamesSameWithSelected() throws Exception {
+		indexDuplicates("one", 1);
 
-		SearchContext searchContext = createSearchContext();
+		assertSearch(
+			indexingTestHelper -> {
+				indexingTestHelper.define(
+					searchContext -> {
+						searchContext.setGroupBy(new GroupBy(GROUP_FIELD));
 
-		searchContext.setGroupBy(new GroupBy(GROUP_FIELD));
+						QueryConfig queryConfig =
+							searchContext.getQueryConfig();
 
-		QueryConfig queryConfig = searchContext.getQueryConfig();
+						queryConfig.addSelectedFieldNames(
+							Field.COMPANY_ID, Field.UID);
+					});
 
-		queryConfig.addSelectedFieldNames(Field.COMPANY_ID, Field.UID);
+				indexingTestHelper.search();
 
-		IdempotentRetryAssert.retryAssert(
-			3, TimeUnit.SECONDS,
-			() -> {
-				assertSameFieldNames("one", searchContext);
-
-				return null;
+				indexingTestHelper.verify(
+					hits -> assertFieldNames(
+						"one", getFieldNames(hits), hits, indexingTestHelper));
 			});
-	}
-
-	protected void assertSameFieldNames(String key, SearchContext searchContext)
-		throws Exception {
-
-		Hits hits1 = search(searchContext);
-
-		Assert.assertNotEquals(0, hits1.getLength());
-
-		Map<String, Hits> groupedHitsMap = hits1.getGroupedHits();
-
-		Hits hits2 = groupedHitsMap.get(key);
-
-		Assert.assertNotNull(hits2);
-
-		Assert.assertNotEquals(0, hits2.getLength());
-
-		Assert.assertEquals(
-			sort(getFieldNames(hits1.doc(0))),
-			sort(getFieldNames(hits2.doc(0))));
 	}
 
 	@Override
 	protected IndexingFixture createIndexingFixture() {
 		ElasticsearchFixture elasticsearchFixture = new ElasticsearchFixture(
-			ElasticsearchCountTest.class.getSimpleName());
+			getClass());
 
 		return new ElasticsearchIndexingFixture(
 			elasticsearchFixture, BaseIndexingTestCase.COMPANY_ID,

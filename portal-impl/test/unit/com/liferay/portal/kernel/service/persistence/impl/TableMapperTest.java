@@ -356,6 +356,9 @@ public class TableMapperTest {
 		PortalCache<Long, long[]> leftToRightPortalCache =
 			_tableMapperImpl.leftToRightPortalCache;
 
+		leftToRightPortalCache = ReflectionTestUtil.getFieldValue(
+			leftToRightPortalCache, "_portalCache");
+
 		Class<?> clazz = leftToRightPortalCache.getClass();
 
 		Assert.assertEquals(
@@ -374,6 +377,9 @@ public class TableMapperTest {
 
 		PortalCache<Long, long[]> rightToLeftPortalCache =
 			_tableMapperImpl.rightToLeftPortalCache;
+
+		rightToLeftPortalCache = ReflectionTestUtil.getFieldValue(
+			rightToLeftPortalCache, "_portalCache");
 
 		clazz = rightToLeftPortalCache.getClass();
 

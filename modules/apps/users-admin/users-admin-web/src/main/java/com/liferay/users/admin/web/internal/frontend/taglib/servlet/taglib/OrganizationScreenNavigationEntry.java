@@ -32,7 +32,6 @@ import com.liferay.users.admin.web.internal.display.context.OrganizationScreenNa
 import java.io.IOException;
 
 import java.util.Locale;
-import java.util.ResourceBundle;
 import java.util.function.BiFunction;
 
 import javax.servlet.http.HttpServletRequest;
@@ -71,7 +70,10 @@ public class OrganizationScreenNavigationEntry
 
 	@Override
 	public String getLabel(Locale locale) {
-		return LanguageUtil.get(getResourceBundle(locale), _entryKey);
+		return LanguageUtil.get(
+			ResourceBundleUtil.getBundle(
+				locale, OrganizationScreenNavigationEntry.class),
+			_entryKey);
 	}
 
 	@Override
@@ -134,12 +136,6 @@ public class OrganizationScreenNavigationEntry
 
 		_jspRenderer.renderJSP(
 			request, response, "/edit_organization_navigation.jsp");
-	}
-
-	protected ResourceBundle getResourceBundle(Locale locale) {
-		return ResourceBundleUtil.getBundle(
-			"content.Language", locale,
-			OrganizationScreenNavigationEntry.class);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

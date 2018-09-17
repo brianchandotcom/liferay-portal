@@ -108,7 +108,7 @@ public class BeanAppAnnotationImpl implements BeanApp {
 	}
 
 	@Override
-	public Map<String, PublicRenderParameter> getPublicRenderParameterMap() {
+	public Map<String, PublicRenderParameter> getPublicRenderParameters() {
 		return _publicRenderParameterMap;
 	}
 

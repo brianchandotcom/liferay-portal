@@ -31,7 +31,7 @@ public interface BeanApp {
 
 	public List<Event> getEvents();
 
-	public Map<String, PublicRenderParameter> getPublicRenderParameterMap();
+	public Map<String, PublicRenderParameter> getPublicRenderParameters();
 
 	public String getSpecVersion();
 

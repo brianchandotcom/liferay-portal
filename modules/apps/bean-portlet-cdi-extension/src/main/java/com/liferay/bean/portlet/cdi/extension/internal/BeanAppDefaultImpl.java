@@ -45,7 +45,7 @@ public class BeanAppDefaultImpl implements BeanApp {
 	}
 
 	@Override
-	public Map<String, PublicRenderParameter> getPublicRenderParameterMap() {
+	public Map<String, PublicRenderParameter> getPublicRenderParameters() {
 		return Collections.emptyMap();
 	}
 

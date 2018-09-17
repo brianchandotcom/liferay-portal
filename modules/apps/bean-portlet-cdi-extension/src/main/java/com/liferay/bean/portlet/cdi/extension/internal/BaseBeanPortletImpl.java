@@ -99,11 +99,11 @@ public abstract class BaseBeanPortletImpl implements BeanPortlet {
 	protected String getPublicRenderParameterNamespaceURI(
 		BeanApp beanApp, String id) {
 
-		Map<String, PublicRenderParameter> publicRenderParameterMap =
-			beanApp.getPublicRenderParameterMap();
+		Map<String, PublicRenderParameter> publicRenderParameters =
+			beanApp.getPublicRenderParameters();
 
 		PublicRenderParameter publicRenderParameter =
-			publicRenderParameterMap.get(id);
+			publicRenderParameters.get(id);
 
 		if (publicRenderParameter == null) {
 			return XMLConstants.NULL_NS_URI;

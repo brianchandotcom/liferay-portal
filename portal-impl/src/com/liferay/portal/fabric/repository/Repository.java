@@ -14,9 +14,9 @@
 
 package com.liferay.portal.fabric.repository;
 
+import com.liferay.petra.concurrent.AsyncBroker;
+import com.liferay.petra.concurrent.NoticeableFuture;
 import com.liferay.portal.fabric.netty.fileserver.FileResponse;
-import com.liferay.portal.kernel.concurrent.AsyncBroker;
-import com.liferay.portal.kernel.concurrent.NoticeableFuture;
 
 import java.nio.file.Path;
 

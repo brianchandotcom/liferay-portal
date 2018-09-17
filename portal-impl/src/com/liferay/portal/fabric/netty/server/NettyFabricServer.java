@@ -14,6 +14,7 @@
 
 package com.liferay.portal.fabric.netty.server;
 
+import com.liferay.petra.concurrent.DefaultNoticeableFuture;
 import com.liferay.portal.fabric.agent.FabricAgentRegistry;
 import com.liferay.portal.fabric.netty.codec.serialization.AnnotatedObjectDecoder;
 import com.liferay.portal.fabric.netty.codec.serialization.AnnotatedObjectEncoder;
@@ -24,7 +25,6 @@ import com.liferay.portal.fabric.netty.rpc.handlers.NettyRPCChannelHandler;
 import com.liferay.portal.fabric.netty.util.NamedThreadFactory;
 import com.liferay.portal.fabric.netty.util.NettyUtil;
 import com.liferay.portal.fabric.server.FabricServer;
-import com.liferay.portal.kernel.concurrent.DefaultNoticeableFuture;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 

@@ -14,12 +14,12 @@
 
 package com.liferay.portal.fabric.netty.rpc;
 
+import com.liferay.petra.concurrent.AsyncBroker;
+import com.liferay.petra.concurrent.DefaultNoticeableFuture;
+import com.liferay.petra.concurrent.NoticeableFuture;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.fabric.netty.NettyTestUtil;
 import com.liferay.portal.fabric.netty.handlers.NettyChannelAttributes;
-import com.liferay.portal.kernel.concurrent.AsyncBroker;
-import com.liferay.portal.kernel.concurrent.DefaultNoticeableFuture;
-import com.liferay.portal.kernel.concurrent.NoticeableFuture;
 import com.liferay.portal.kernel.test.CaptureHandler;
 import com.liferay.portal.kernel.test.JDKLoggerTestUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;

@@ -14,9 +14,9 @@
 
 package com.liferay.portal.fabric.netty.rpc;
 
+import com.liferay.petra.concurrent.BaseFutureListener;
+import com.liferay.petra.concurrent.NoticeableFuture;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.concurrent.BaseFutureListener;
-import com.liferay.portal.kernel.concurrent.NoticeableFuture;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 

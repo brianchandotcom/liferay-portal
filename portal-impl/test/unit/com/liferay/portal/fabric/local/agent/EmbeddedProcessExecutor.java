@@ -14,8 +14,8 @@
 
 package com.liferay.portal.fabric.local.agent;
 
+import com.liferay.petra.concurrent.DefaultNoticeableFuture;
 import com.liferay.portal.fabric.local.worker.EmbeddedProcessChannel;
-import com.liferay.portal.kernel.concurrent.DefaultNoticeableFuture;
 import com.liferay.portal.kernel.process.ProcessCallable;
 import com.liferay.portal.kernel.process.ProcessChannel;
 import com.liferay.portal.kernel.process.ProcessConfig;

@@ -14,6 +14,10 @@
 
 package com.liferay.portal.fabric.netty.handlers;
 
+import com.liferay.petra.concurrent.BaseFutureListener;
+import com.liferay.petra.concurrent.FutureListener;
+import com.liferay.petra.concurrent.NoticeableFuture;
+import com.liferay.petra.concurrent.NoticeableFutureConverter;
 import com.liferay.petra.process.ClassPathUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringUtil;
@@ -28,10 +32,6 @@ import com.liferay.portal.fabric.netty.worker.NettyFabricWorkerConfig;
 import com.liferay.portal.fabric.netty.worker.NettyFabricWorkerStub;
 import com.liferay.portal.fabric.repository.Repository;
 import com.liferay.portal.fabric.worker.FabricWorker;
-import com.liferay.portal.kernel.concurrent.BaseFutureListener;
-import com.liferay.portal.kernel.concurrent.FutureListener;
-import com.liferay.portal.kernel.concurrent.NoticeableFuture;
-import com.liferay.portal.kernel.concurrent.NoticeableFutureConverter;
 import com.liferay.portal.kernel.io.PathHolder;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;

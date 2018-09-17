@@ -14,12 +14,12 @@
 
 package com.liferay.portal.fabric.netty.worker;
 
+import com.liferay.petra.concurrent.NoticeableFuture;
 import com.liferay.portal.fabric.netty.handlers.NettyChannelAttributes;
 import com.liferay.portal.fabric.netty.rpc.ChannelThreadLocal;
 import com.liferay.portal.fabric.netty.rpc.RPCCallable;
 import com.liferay.portal.fabric.netty.util.NettyUtil;
 import com.liferay.portal.fabric.worker.FabricWorker;
-import com.liferay.portal.kernel.concurrent.NoticeableFuture;
 import com.liferay.portal.kernel.process.ProcessCallable;
 import com.liferay.portal.kernel.process.ProcessException;
 

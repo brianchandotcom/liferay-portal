@@ -14,10 +14,10 @@
 
 package com.liferay.portal.fabric.local.agent;
 
+import com.liferay.petra.concurrent.DefaultNoticeableFuture;
 import com.liferay.portal.fabric.agent.FabricAgent;
 import com.liferay.portal.fabric.status.LocalFabricStatus;
 import com.liferay.portal.fabric.worker.FabricWorker;
-import com.liferay.portal.kernel.concurrent.DefaultNoticeableFuture;
 import com.liferay.portal.kernel.process.ProcessCallable;
 import com.liferay.portal.kernel.process.ProcessException;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;

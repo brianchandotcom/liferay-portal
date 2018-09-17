@@ -14,8 +14,8 @@
 
 package com.liferay.portal.fabric.netty.util;
 
-import com.liferay.portal.kernel.concurrent.FutureListener;
-import com.liferay.portal.kernel.concurrent.NoticeableFuture;
+import com.liferay.petra.concurrent.FutureListener;
+import com.liferay.petra.concurrent.NoticeableFuture;
 
 import io.netty.channel.Channel;
 
@@ -40,8 +40,8 @@ public class NettyUtilAdvice {
 	@Around(
 		"execution(public static void com.liferay.portal.fabric.netty.util." +
 			"NettyUtil.scheduleCancellation(io.netty.channel.Channel, " +
-				"com.liferay.portal.kernel.concurrent.NoticeableFuture, " +
-					"long)) && args(channel, noticeableFuture, timeout)"
+				"com.liferay.petra.concurrent.NoticeableFuture, long)) && " +
+					"args(channel, noticeableFuture, timeout)"
 	)
 	public <T> void scheduleCancellation(
 		Channel channel, final NoticeableFuture<T> noticeableFuture,

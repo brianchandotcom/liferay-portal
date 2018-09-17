@@ -14,8 +14,8 @@
 
 package com.liferay.portal.fabric.netty.rpc;
 
-import com.liferay.portal.kernel.concurrent.DefaultNoticeableFuture;
-import com.liferay.portal.kernel.concurrent.NoticeableFuture;
+import com.liferay.petra.concurrent.DefaultNoticeableFuture;
+import com.liferay.petra.concurrent.NoticeableFuture;
 import com.liferay.portal.kernel.process.ProcessCallable;
 
 import java.io.Serializable;

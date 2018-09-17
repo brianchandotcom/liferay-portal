@@ -14,6 +14,8 @@
 
 package com.liferay.portal.fabric.netty.agent;
 
+import com.liferay.petra.concurrent.DefaultNoticeableFuture;
+import com.liferay.petra.concurrent.FutureListener;
 import com.liferay.petra.reflect.ObjectGraphUtil;
 import com.liferay.portal.fabric.FabricPathMappingVisitor;
 import com.liferay.portal.fabric.InputResource;
@@ -25,8 +27,6 @@ import com.liferay.portal.fabric.repository.Repository;
 import com.liferay.portal.fabric.status.FabricStatus;
 import com.liferay.portal.fabric.status.RemoteFabricStatus;
 import com.liferay.portal.fabric.worker.FabricWorker;
-import com.liferay.portal.kernel.concurrent.DefaultNoticeableFuture;
-import com.liferay.portal.kernel.concurrent.FutureListener;
 import com.liferay.portal.kernel.process.ProcessCallable;
 import com.liferay.portal.kernel.process.ProcessConfig;
 

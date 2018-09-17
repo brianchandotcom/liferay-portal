@@ -14,12 +14,12 @@
 
 package com.liferay.portal.fabric.netty.fileserver.handlers;
 
+import com.liferay.petra.concurrent.AsyncBroker;
+import com.liferay.petra.concurrent.NoticeableFuture;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.fabric.netty.codec.serialization.AnnotatedObjectDecoder;
 import com.liferay.portal.fabric.netty.fileserver.FileResponse;
 import com.liferay.portal.fabric.netty.util.NettyUtil;
-import com.liferay.portal.kernel.concurrent.AsyncBroker;
-import com.liferay.portal.kernel.concurrent.NoticeableFuture;
 import com.liferay.portal.kernel.test.CaptureHandler;
 import com.liferay.portal.kernel.test.JDKLoggerTestUtil;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;

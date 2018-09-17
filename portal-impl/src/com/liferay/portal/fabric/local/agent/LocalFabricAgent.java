@@ -14,13 +14,13 @@
 
 package com.liferay.portal.fabric.local.agent;
 
+import com.liferay.petra.concurrent.FutureListener;
+import com.liferay.petra.concurrent.NoticeableFuture;
 import com.liferay.portal.fabric.agent.FabricAgent;
 import com.liferay.portal.fabric.local.worker.LocalFabricWorker;
 import com.liferay.portal.fabric.status.FabricStatus;
 import com.liferay.portal.fabric.status.LocalFabricStatus;
 import com.liferay.portal.fabric.worker.FabricWorker;
-import com.liferay.portal.kernel.concurrent.FutureListener;
-import com.liferay.portal.kernel.concurrent.NoticeableFuture;
 import com.liferay.portal.kernel.process.ProcessCallable;
 import com.liferay.portal.kernel.process.ProcessConfig;
 import com.liferay.portal.kernel.process.ProcessException;

@@ -14,6 +14,8 @@
 
 package com.liferay.portal.fabric.netty.repository;
 
+import com.liferay.petra.concurrent.AsyncBroker;
+import com.liferay.petra.concurrent.NoticeableFuture;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.fabric.netty.codec.serialization.AnnotatedObjectDecoder;
 import com.liferay.portal.fabric.netty.fileserver.FileHelperUtil;
@@ -21,8 +23,6 @@ import com.liferay.portal.fabric.netty.fileserver.FileResponse;
 import com.liferay.portal.fabric.netty.fileserver.handlers.FileResponseChannelHandler;
 import com.liferay.portal.fabric.netty.fileserver.handlers.FileServerTestUtil;
 import com.liferay.portal.fabric.netty.util.NettyUtilAdvice;
-import com.liferay.portal.kernel.concurrent.AsyncBroker;
-import com.liferay.portal.kernel.concurrent.NoticeableFuture;
 import com.liferay.portal.kernel.test.CaptureHandler;
 import com.liferay.portal.kernel.test.JDKLoggerTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -695,7 +695,7 @@ public class NettyRepositoryTest {
 		}
 
 		@Around(
-			"execution(public void com.liferay.portal.kernel.concurrent." +
+			"execution(public void com.liferay.petra.concurrent." +
 				"DefaultNoticeableFuture.set(Object))"
 		)
 		public void set(ProceedingJoinPoint proceedingJoinPoint)

@@ -14,8 +14,8 @@
 
 package com.liferay.portal.fabric.local.worker;
 
+import com.liferay.petra.concurrent.NoticeableFuture;
 import com.liferay.portal.fabric.status.JMXProxyUtil;
-import com.liferay.portal.kernel.concurrent.NoticeableFuture;
 import com.liferay.portal.kernel.process.ProcessCallable;
 import com.liferay.portal.kernel.process.ProcessChannel;
 

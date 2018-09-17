@@ -14,9 +14,9 @@
 
 package com.liferay.portal.fabric.agent;
 
+import com.liferay.petra.concurrent.BaseFutureListener;
+import com.liferay.petra.concurrent.NoticeableFuture;
 import com.liferay.portal.fabric.worker.FabricWorker;
-import com.liferay.portal.kernel.concurrent.BaseFutureListener;
-import com.liferay.portal.kernel.concurrent.NoticeableFuture;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.process.ClassPathUtil;

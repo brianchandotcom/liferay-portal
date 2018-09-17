@@ -14,6 +14,7 @@
 
 package com.liferay.portal.fabric.netty.fileserver;
 
+import com.liferay.petra.concurrent.AsyncBroker;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.fabric.netty.codec.serialization.AnnotatedObjectDecoder;
 import com.liferay.portal.fabric.netty.codec.serialization.AnnotatedObjectEncoder;
@@ -21,7 +22,6 @@ import com.liferay.portal.fabric.netty.fileserver.handlers.FileRequestChannelHan
 import com.liferay.portal.fabric.netty.fileserver.handlers.FileResponseChannelHandler;
 import com.liferay.portal.fabric.netty.fileserver.handlers.FileServerTestUtil;
 import com.liferay.portal.fabric.netty.util.NamedThreadFactory;
-import com.liferay.portal.kernel.concurrent.AsyncBroker;
 
 import io.netty.bootstrap.Bootstrap;
 import io.netty.bootstrap.ServerBootstrap;

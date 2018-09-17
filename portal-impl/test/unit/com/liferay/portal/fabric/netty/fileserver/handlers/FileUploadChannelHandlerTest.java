@@ -14,13 +14,13 @@
 
 package com.liferay.portal.fabric.netty.fileserver.handlers;
 
+import com.liferay.petra.concurrent.AsyncBroker;
+import com.liferay.petra.concurrent.NoticeableFuture;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.fabric.netty.NettyTestUtil;
 import com.liferay.portal.fabric.netty.fileserver.CompressionLevel;
 import com.liferay.portal.fabric.netty.fileserver.FileHelperUtil;
 import com.liferay.portal.fabric.netty.fileserver.FileResponse;
-import com.liferay.portal.kernel.concurrent.AsyncBroker;
-import com.liferay.portal.kernel.concurrent.NoticeableFuture;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.portal.kernel.nio.FileChannelWrapper;
 import com.liferay.portal.kernel.test.CaptureHandler;

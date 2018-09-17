@@ -14,6 +14,9 @@
 
 package com.liferay.portal.fabric.netty.handlers;
 
+import com.liferay.petra.concurrent.DefaultNoticeableFuture;
+import com.liferay.petra.concurrent.FutureListener;
+import com.liferay.petra.concurrent.NoticeableFuture;
 import com.liferay.petra.reflect.ObjectGraphUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
@@ -42,9 +45,6 @@ import com.liferay.portal.fabric.netty.worker.NettyFabricWorkerConfig;
 import com.liferay.portal.fabric.netty.worker.NettyFabricWorkerStub;
 import com.liferay.portal.fabric.repository.MockRepository;
 import com.liferay.portal.fabric.worker.FabricWorker;
-import com.liferay.portal.kernel.concurrent.DefaultNoticeableFuture;
-import com.liferay.portal.kernel.concurrent.FutureListener;
-import com.liferay.portal.kernel.concurrent.NoticeableFuture;
 import com.liferay.portal.kernel.process.ProcessCallable;
 import com.liferay.portal.kernel.process.ProcessConfig;
 import com.liferay.portal.kernel.process.ProcessException;

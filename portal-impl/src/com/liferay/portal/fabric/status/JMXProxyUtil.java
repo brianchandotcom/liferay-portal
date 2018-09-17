@@ -14,7 +14,7 @@
 
 package com.liferay.portal.fabric.status;
 
-import com.liferay.portal.kernel.concurrent.NoticeableFuture;
+import com.liferay.petra.concurrent.NoticeableFuture;
 import com.liferay.portal.kernel.process.ProcessCallable;
 import com.liferay.portal.kernel.process.ProcessException;
 

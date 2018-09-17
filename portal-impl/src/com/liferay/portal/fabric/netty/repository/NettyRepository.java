@@ -14,6 +14,11 @@
 
 package com.liferay.portal.fabric.netty.repository;
 
+import com.liferay.petra.concurrent.AsyncBroker;
+import com.liferay.petra.concurrent.BaseFutureListener;
+import com.liferay.petra.concurrent.DefaultNoticeableFuture;
+import com.liferay.petra.concurrent.NoticeableFuture;
+import com.liferay.petra.concurrent.NoticeableFutureConverter;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.fabric.netty.fileserver.FileHelperUtil;
 import com.liferay.portal.fabric.netty.fileserver.FileRequest;
@@ -21,11 +26,6 @@ import com.liferay.portal.fabric.netty.fileserver.FileResponse;
 import com.liferay.portal.fabric.netty.util.NettyUtil;
 import com.liferay.portal.fabric.repository.Repository;
 import com.liferay.portal.fabric.repository.RepositoryHelperUtil;
-import com.liferay.portal.kernel.concurrent.AsyncBroker;
-import com.liferay.portal.kernel.concurrent.BaseFutureListener;
-import com.liferay.portal.kernel.concurrent.DefaultNoticeableFuture;
-import com.liferay.portal.kernel.concurrent.NoticeableFuture;
-import com.liferay.portal.kernel.concurrent.NoticeableFutureConverter;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 

@@ -109,11 +109,10 @@ AUI.add(
 		};
 
 		DEFAULTS_FORM_VALIDATOR.STRINGS.structureRestrictedFieldName =
-			Lang.sub(Liferay.Language.get('x-is-a-reserved-word'), [RESTRICTED_NAME]);;
+			Lang.sub(Liferay.Language.get('x-is-a-reserved-word'), [RESTRICTED_NAME]);
 
 		DEFAULTS_FORM_VALIDATOR.RULES.structureRestrictedFieldName = function(value) {
-
-			return RESTRICTED_NAME != value;
+			return RESTRICTED_NAME !== value;
 		};
 
 		var applyStyles = function(node, styleContent) {

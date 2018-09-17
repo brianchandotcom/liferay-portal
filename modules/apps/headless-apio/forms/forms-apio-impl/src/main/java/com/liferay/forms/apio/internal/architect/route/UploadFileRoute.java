@@ -12,30 +12,18 @@
  * details.
  */
 
-package com.liferay.forms.apio.internal.model;
+package com.liferay.forms.apio.internal.architect.route;
+
+import com.liferay.apio.architect.custom.actions.PostRoute;
 
 /**
  * @author Javier Gamarra
  */
-public class FileEntryValue {
+public class UploadFileRoute extends PostRoute {
 
-	public FileEntryValue(
-		long fileEntryId, long groupId, String title, String type, String uuid,
-		String version) {
-
-		this.fileEntryId = fileEntryId;
-		this.groupId = groupId;
-		this.title = title;
-		this.type = type;
-		this.uuid = uuid;
-		this.version = version;
+	@Override
+	public String getName() {
+		return "upload-file";
 	}
-
-	public final long fileEntryId;
-	public final long groupId;
-	public final String title;
-	public final String type;
-	public final String uuid;
-	public final String version;
 
 }

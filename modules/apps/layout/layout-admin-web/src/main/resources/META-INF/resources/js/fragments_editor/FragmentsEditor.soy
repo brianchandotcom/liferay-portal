@@ -29,7 +29,6 @@
 	{@param spritemap: string}
 	{@param? contextualSidebarVisible: bool}
 	{@param? _dropTargetClass: string}
-	{@param? _handleEditableChanged: any}
 	{@param? _handleMappeableFieldClicked: any}
 	{@param? _handleMappeableFieldSelected: any}
 	{@param? _handleMappingTypeSelected: any}
@@ -112,7 +111,6 @@
 				{param defaultLanguageId: $defaultLanguageId /}
 				{param dropTargetClass: $_dropTargetClass ?: '' /}
 				{param events: [
-					'editableChanged': $_handleEditableChanged,
 					'mappeableFieldClicked': $_handleMappeableFieldClicked
 				] /}
 				{param fragmentEntryLinks: $fragmentEntryLinks /}

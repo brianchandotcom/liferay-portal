@@ -102,7 +102,7 @@ exports[`Sidebar should render a Sidebar closed 1`] = `
             <h4 class="list-group-title text-truncate">
               <span>Select from list</span>
             </h4>
-            <p class="list-group-subtitle text-truncate">Choose an or more options from a list.</p>
+            <p class="list-group-subtitle text-truncate">Choose one or more options from a list.</p>
           </div>
         </div>
         <div class="ddm-drag-item list-group-item list-group-item-flex" data-ddm-field-type-index="4" ref="field4">
@@ -243,7 +243,7 @@ exports[`Sidebar should render a Sidebar open 1`] = `
             <h4 class="list-group-title text-truncate">
               <span>Select from list</span>
             </h4>
-            <p class="list-group-subtitle text-truncate">Choose an or more options from a list.</p>
+            <p class="list-group-subtitle text-truncate">Choose one or more options from a list.</p>
           </div>
         </div>
         <div class="ddm-drag-item list-group-item list-group-item-flex" data-ddm-field-type-index="4" ref="field4">
@@ -384,7 +384,7 @@ exports[`Sidebar should render a Sidebar with fieldTypes 1`] = `
             <h4 class="list-group-title text-truncate">
               <span>Select from list</span>
             </h4>
-            <p class="list-group-subtitle text-truncate">Choose an or more options from a list.</p>
+            <p class="list-group-subtitle text-truncate">Choose one or more options from a list.</p>
           </div>
         </div>
         <div class="ddm-drag-item list-group-item list-group-item-flex" data-ddm-field-type-index="4" ref="field4">
@@ -525,7 +525,7 @@ exports[`Sidebar should render a Sidebar with spritemap 1`] = `
             <h4 class="list-group-title text-truncate">
               <span>Select from list</span>
             </h4>
-            <p class="list-group-subtitle text-truncate">Choose an or more options from a list.</p>
+            <p class="list-group-subtitle text-truncate">Choose one or more options from a list.</p>
           </div>
         </div>
         <div class="ddm-drag-item list-group-item list-group-item-flex" data-ddm-field-type-index="4" ref="field4">
@@ -666,7 +666,7 @@ exports[`Sidebar should render the default markup 1`] = `
             <h4 class="list-group-title text-truncate">
               <span>Select from list</span>
             </h4>
-            <p class="list-group-subtitle text-truncate">Choose an or more options from a list.</p>
+            <p class="list-group-subtitle text-truncate">Choose one or more options from a list.</p>
           </div>
         </div>
         <div class="ddm-drag-item list-group-item list-group-item-flex" data-ddm-field-type-index="4" ref="field4">

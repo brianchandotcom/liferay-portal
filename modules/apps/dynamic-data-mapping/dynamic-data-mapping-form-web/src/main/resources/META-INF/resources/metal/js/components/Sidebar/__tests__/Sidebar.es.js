@@ -23,7 +23,7 @@ const fieldTypes = [
 		name: 'radio'
 	},
 	{
-		description: 'Choose an or more options from a list.',
+		description: 'Choose one or more options from a list.',
 		icon: 'list',
 		label: 'Select from list',
 		name: 'select'

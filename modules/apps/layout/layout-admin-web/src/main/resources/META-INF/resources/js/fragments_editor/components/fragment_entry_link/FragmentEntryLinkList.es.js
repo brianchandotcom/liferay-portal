@@ -37,16 +37,6 @@ class FragmentEntryLinkList extends Component {
 	 * @review
 	 */
 
-	_handleEditableChanged(event) {
-		this.emit('editableChanged', event);
-	}
-
-	/**
-	 * @param {object} event
-	 * @private
-	 * @review
-	 */
-
 	_handleFragmentMove(event) {
 		this.emit('move', event);
 	}

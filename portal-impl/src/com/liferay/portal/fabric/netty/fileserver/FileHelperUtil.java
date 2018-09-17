@@ -14,9 +14,9 @@
 
 package com.liferay.portal.fabric.netty.fileserver;
 
+import com.liferay.petra.io.BigEndianCodec;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.io.BigEndianCodec;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 

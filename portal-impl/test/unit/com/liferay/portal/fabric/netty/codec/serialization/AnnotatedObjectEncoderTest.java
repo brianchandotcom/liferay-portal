@@ -14,7 +14,7 @@
 
 package com.liferay.portal.fabric.netty.codec.serialization;
 
-import com.liferay.portal.kernel.io.ProtectedAnnotatedObjectInputStream;
+import com.liferay.petra.io.ProtectedAnnotatedObjectInputStream;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
 
 import io.netty.buffer.ByteBuf;

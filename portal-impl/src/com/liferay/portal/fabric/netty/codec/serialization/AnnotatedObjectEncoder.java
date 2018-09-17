@@ -14,7 +14,7 @@
 
 package com.liferay.portal.fabric.netty.codec.serialization;
 
-import com.liferay.portal.kernel.io.AnnotatedObjectOutputStream;
+import com.liferay.petra.io.AnnotatedObjectOutputStream;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.ByteBufOutputStream;

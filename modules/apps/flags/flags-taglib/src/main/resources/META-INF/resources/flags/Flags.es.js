@@ -3,6 +3,7 @@ import PortletBase from 'frontend-js-web/liferay/PortletBase.es';
 import Soy from 'metal-soy';
 import templates from './Flags.soy';
 import {Config} from 'metal-state';
+import ClayButton from 'clay-button';
 
 /**
  * It opens a dialog where the user can flag the page.

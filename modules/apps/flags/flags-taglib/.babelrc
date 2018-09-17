@@ -1,0 +1,10 @@
+{
+	"env": {
+		"production": {
+			"presets": ["env"]
+		},
+		"test": {
+			"presets": ["env"]
+		}
+	}
+}

@@ -22,9 +22,14 @@ import javax.xml.namespace.QName;
 public abstract class BasePublicRenderParameterImpl
 	implements PublicRenderParameter {
 
+	public BasePublicRenderParameterImpl(String identifier, QName qName) {
+		_identifer = identifier;
+		_qName = qName;
+	}
+
 	@Override
 	public String getIdentifier() {
-		return _id;
+		return _identifer;
 	}
 
 	@Override
@@ -32,17 +37,7 @@ public abstract class BasePublicRenderParameterImpl
 		return _qName;
 	}
 
-	@Override
-	public void setIdentifier(String identifier) {
-		_id = identifier;
-	}
-
-	@Override
-	public void setQName(QName qName) {
-		_qName = qName;
-	}
-
-	private String _id;
-	private QName _qName;
+	private final String _identifer;
+	private final QName _qName;
 
 }

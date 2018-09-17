@@ -30,26 +30,27 @@ public class PublicRenderParameterAnnotationImpl
 	public PublicRenderParameterAnnotationImpl(
 		PublicRenderParameterDefinition publicRenderParameterDefinition) {
 
-		this(
+		super(
 			publicRenderParameterDefinition.identifier(),
-			publicRenderParameterDefinition.qname());
+			new QName(
+				_getNamespaceURI(publicRenderParameterDefinition),
+				_getLocalPart(publicRenderParameterDefinition)));
 	}
 
-	public PublicRenderParameterAnnotationImpl(
-		String id, PortletQName portletQName) {
+	private static final String _getLocalPart(
+		PublicRenderParameterDefinition publicRenderParameterDefinition) {
 
-		setIdentifier(id);
-		setQName(
-			new QName(portletQName.namespaceURI(), portletQName.localPart()));
+		PortletQName portletQName = publicRenderParameterDefinition.qname();
+
+		return portletQName.localPart();
 	}
 
-	@Override
-	public void setName(String name) {
+	private static final String _getNamespaceURI(
+		PublicRenderParameterDefinition publicRenderParameterDefinition) {
 
-		// The @PublicRenderParameterDefinition annotation does not have the
-		// name feature that is available in portlet.xml
+		PortletQName portletQName = publicRenderParameterDefinition.qname();
 
-		throw new UnsupportedOperationException();
+		return portletQName.namespaceURI();
 	}
 
 }

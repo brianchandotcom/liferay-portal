@@ -285,13 +285,41 @@ public class LayoutPageTemplateEntryServiceHttp {
 		}
 	}
 
+	public static com.liferay.layout.page.template.model.LayoutPageTemplateEntry fetchLayoutPageTemplateEntryByUuidAndGroupId(
+		HttpPrincipal httpPrincipal, String uuid, long groupId) {
+		try {
+			MethodKey methodKey = new MethodKey(LayoutPageTemplateEntryServiceUtil.class,
+					"fetchLayoutPageTemplateEntryByUuidAndGroupId",
+					_fetchLayoutPageTemplateEntryByUuidAndGroupIdParameterTypes7);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey, uuid,
+					groupId);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return (com.liferay.layout.page.template.model.LayoutPageTemplateEntry)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
 	public static int getLayoutPageTemplateCollectionsCount(
 		HttpPrincipal httpPrincipal, long groupId,
 		long layoutPageTemplateCollectionId) {
 		try {
 			MethodKey methodKey = new MethodKey(LayoutPageTemplateEntryServiceUtil.class,
 					"getLayoutPageTemplateCollectionsCount",
-					_getLayoutPageTemplateCollectionsCountParameterTypes7);
+					_getLayoutPageTemplateCollectionsCountParameterTypes8);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
 					layoutPageTemplateCollectionId);
@@ -320,7 +348,7 @@ public class LayoutPageTemplateEntryServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(LayoutPageTemplateEntryServiceUtil.class,
 					"getLayoutPageTemplateCollectionsCount",
-					_getLayoutPageTemplateCollectionsCountParameterTypes8);
+					_getLayoutPageTemplateCollectionsCountParameterTypes9);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
 					layoutPageTemplateCollectionId, status);
@@ -349,7 +377,7 @@ public class LayoutPageTemplateEntryServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(LayoutPageTemplateEntryServiceUtil.class,
 					"getLayoutPageTemplateCollectionsCount",
-					_getLayoutPageTemplateCollectionsCountParameterTypes9);
+					_getLayoutPageTemplateCollectionsCountParameterTypes10);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
 					layoutPageTemplateCollectionId, name);
@@ -378,7 +406,7 @@ public class LayoutPageTemplateEntryServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(LayoutPageTemplateEntryServiceUtil.class,
 					"getLayoutPageTemplateCollectionsCount",
-					_getLayoutPageTemplateCollectionsCountParameterTypes10);
+					_getLayoutPageTemplateCollectionsCountParameterTypes11);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
 					layoutPageTemplateCollectionId, name, status);
@@ -408,7 +436,7 @@ public class LayoutPageTemplateEntryServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(LayoutPageTemplateEntryServiceUtil.class,
 					"getLayoutPageTemplateEntries",
-					_getLayoutPageTemplateEntriesParameterTypes11);
+					_getLayoutPageTemplateEntriesParameterTypes12);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
 					type, status, start, end, orderByComparator);
@@ -438,7 +466,7 @@ public class LayoutPageTemplateEntryServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(LayoutPageTemplateEntryServiceUtil.class,
 					"getLayoutPageTemplateEntries",
-					_getLayoutPageTemplateEntriesParameterTypes12);
+					_getLayoutPageTemplateEntriesParameterTypes13);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
 					type, start, end, orderByComparator);
@@ -467,7 +495,7 @@ public class LayoutPageTemplateEntryServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(LayoutPageTemplateEntryServiceUtil.class,
 					"getLayoutPageTemplateEntries",
-					_getLayoutPageTemplateEntriesParameterTypes13);
+					_getLayoutPageTemplateEntriesParameterTypes14);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
 					layoutPageTemplateCollectionId, start, end);
@@ -496,7 +524,7 @@ public class LayoutPageTemplateEntryServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(LayoutPageTemplateEntryServiceUtil.class,
 					"getLayoutPageTemplateEntries",
-					_getLayoutPageTemplateEntriesParameterTypes14);
+					_getLayoutPageTemplateEntriesParameterTypes15);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
 					layoutPageTemplateCollectionId, status, start, end);
@@ -526,7 +554,7 @@ public class LayoutPageTemplateEntryServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(LayoutPageTemplateEntryServiceUtil.class,
 					"getLayoutPageTemplateEntries",
-					_getLayoutPageTemplateEntriesParameterTypes15);
+					_getLayoutPageTemplateEntriesParameterTypes16);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
 					layoutPageTemplateCollectionId, status, start, end,
@@ -557,7 +585,7 @@ public class LayoutPageTemplateEntryServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(LayoutPageTemplateEntryServiceUtil.class,
 					"getLayoutPageTemplateEntries",
-					_getLayoutPageTemplateEntriesParameterTypes16);
+					_getLayoutPageTemplateEntriesParameterTypes17);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
 					layoutPageTemplateCollectionId, start, end,
@@ -587,7 +615,7 @@ public class LayoutPageTemplateEntryServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(LayoutPageTemplateEntryServiceUtil.class,
 					"getLayoutPageTemplateEntries",
-					_getLayoutPageTemplateEntriesParameterTypes17);
+					_getLayoutPageTemplateEntriesParameterTypes18);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
 					classNameId, classTypeId, type);
@@ -616,7 +644,7 @@ public class LayoutPageTemplateEntryServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(LayoutPageTemplateEntryServiceUtil.class,
 					"getLayoutPageTemplateEntries",
-					_getLayoutPageTemplateEntriesParameterTypes18);
+					_getLayoutPageTemplateEntriesParameterTypes19);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
 					classNameId, classTypeId, type, status);
@@ -646,7 +674,7 @@ public class LayoutPageTemplateEntryServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(LayoutPageTemplateEntryServiceUtil.class,
 					"getLayoutPageTemplateEntries",
-					_getLayoutPageTemplateEntriesParameterTypes19);
+					_getLayoutPageTemplateEntriesParameterTypes20);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
 					classNameId, classTypeId, type, status, start, end,
@@ -677,7 +705,7 @@ public class LayoutPageTemplateEntryServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(LayoutPageTemplateEntryServiceUtil.class,
 					"getLayoutPageTemplateEntries",
-					_getLayoutPageTemplateEntriesParameterTypes20);
+					_getLayoutPageTemplateEntriesParameterTypes21);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
 					classNameId, classTypeId, type, start, end,
@@ -709,7 +737,7 @@ public class LayoutPageTemplateEntryServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(LayoutPageTemplateEntryServiceUtil.class,
 					"getLayoutPageTemplateEntries",
-					_getLayoutPageTemplateEntriesParameterTypes21);
+					_getLayoutPageTemplateEntriesParameterTypes22);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
 					classNameId, classTypeId, name, type, status, start, end,
@@ -740,7 +768,7 @@ public class LayoutPageTemplateEntryServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(LayoutPageTemplateEntryServiceUtil.class,
 					"getLayoutPageTemplateEntries",
-					_getLayoutPageTemplateEntriesParameterTypes22);
+					_getLayoutPageTemplateEntriesParameterTypes23);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
 					classNameId, classTypeId, name, type, start, end,
@@ -772,7 +800,7 @@ public class LayoutPageTemplateEntryServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(LayoutPageTemplateEntryServiceUtil.class,
 					"getLayoutPageTemplateEntries",
-					_getLayoutPageTemplateEntriesParameterTypes23);
+					_getLayoutPageTemplateEntriesParameterTypes24);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
 					layoutPageTemplateCollectionId, name, status, start, end,
@@ -803,7 +831,7 @@ public class LayoutPageTemplateEntryServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(LayoutPageTemplateEntryServiceUtil.class,
 					"getLayoutPageTemplateEntries",
-					_getLayoutPageTemplateEntriesParameterTypes24);
+					_getLayoutPageTemplateEntriesParameterTypes25);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
 					layoutPageTemplateCollectionId, name, start, end,
@@ -834,7 +862,7 @@ public class LayoutPageTemplateEntryServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(LayoutPageTemplateEntryServiceUtil.class,
 					"getLayoutPageTemplateEntries",
-					_getLayoutPageTemplateEntriesParameterTypes25);
+					_getLayoutPageTemplateEntriesParameterTypes26);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
 					name, type, status, start, end, orderByComparator);
@@ -864,7 +892,7 @@ public class LayoutPageTemplateEntryServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(LayoutPageTemplateEntryServiceUtil.class,
 					"getLayoutPageTemplateEntries",
-					_getLayoutPageTemplateEntriesParameterTypes26);
+					_getLayoutPageTemplateEntriesParameterTypes27);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
 					name, type, start, end, orderByComparator);
@@ -894,7 +922,7 @@ public class LayoutPageTemplateEntryServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(LayoutPageTemplateEntryServiceUtil.class,
 					"getLayoutPageTemplateEntriesByType",
-					_getLayoutPageTemplateEntriesByTypeParameterTypes27);
+					_getLayoutPageTemplateEntriesByTypeParameterTypes28);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
 					layoutPageTemplateCollectionId, type, start, end,
@@ -923,7 +951,7 @@ public class LayoutPageTemplateEntryServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(LayoutPageTemplateEntryServiceUtil.class,
 					"getLayoutPageTemplateEntriesCount",
-					_getLayoutPageTemplateEntriesCountParameterTypes28);
+					_getLayoutPageTemplateEntriesCountParameterTypes29);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
 					type);
@@ -951,7 +979,7 @@ public class LayoutPageTemplateEntryServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(LayoutPageTemplateEntryServiceUtil.class,
 					"getLayoutPageTemplateEntriesCount",
-					_getLayoutPageTemplateEntriesCountParameterTypes29);
+					_getLayoutPageTemplateEntriesCountParameterTypes30);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
 					type, status);
@@ -980,7 +1008,7 @@ public class LayoutPageTemplateEntryServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(LayoutPageTemplateEntryServiceUtil.class,
 					"getLayoutPageTemplateEntriesCount",
-					_getLayoutPageTemplateEntriesCountParameterTypes30);
+					_getLayoutPageTemplateEntriesCountParameterTypes31);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
 					layoutPageTemplateFolderId);
@@ -1009,7 +1037,7 @@ public class LayoutPageTemplateEntryServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(LayoutPageTemplateEntryServiceUtil.class,
 					"getLayoutPageTemplateEntriesCount",
-					_getLayoutPageTemplateEntriesCountParameterTypes31);
+					_getLayoutPageTemplateEntriesCountParameterTypes32);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
 					layoutPageTemplateFolderId, status);
@@ -1038,7 +1066,7 @@ public class LayoutPageTemplateEntryServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(LayoutPageTemplateEntryServiceUtil.class,
 					"getLayoutPageTemplateEntriesCount",
-					_getLayoutPageTemplateEntriesCountParameterTypes32);
+					_getLayoutPageTemplateEntriesCountParameterTypes33);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
 					classNameId, classTypeId, type);
@@ -1067,7 +1095,7 @@ public class LayoutPageTemplateEntryServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(LayoutPageTemplateEntryServiceUtil.class,
 					"getLayoutPageTemplateEntriesCount",
-					_getLayoutPageTemplateEntriesCountParameterTypes33);
+					_getLayoutPageTemplateEntriesCountParameterTypes34);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
 					classNameId, classTypeId, type, status);
@@ -1096,7 +1124,7 @@ public class LayoutPageTemplateEntryServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(LayoutPageTemplateEntryServiceUtil.class,
 					"getLayoutPageTemplateEntriesCount",
-					_getLayoutPageTemplateEntriesCountParameterTypes34);
+					_getLayoutPageTemplateEntriesCountParameterTypes35);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
 					classNameId, classTypeId, name, type);
@@ -1125,7 +1153,7 @@ public class LayoutPageTemplateEntryServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(LayoutPageTemplateEntryServiceUtil.class,
 					"getLayoutPageTemplateEntriesCount",
-					_getLayoutPageTemplateEntriesCountParameterTypes35);
+					_getLayoutPageTemplateEntriesCountParameterTypes36);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
 					classNameId, classTypeId, name, type, status);
@@ -1154,7 +1182,7 @@ public class LayoutPageTemplateEntryServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(LayoutPageTemplateEntryServiceUtil.class,
 					"getLayoutPageTemplateEntriesCount",
-					_getLayoutPageTemplateEntriesCountParameterTypes36);
+					_getLayoutPageTemplateEntriesCountParameterTypes37);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
 					layoutPageTemplateFolderId, name);
@@ -1183,7 +1211,7 @@ public class LayoutPageTemplateEntryServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(LayoutPageTemplateEntryServiceUtil.class,
 					"getLayoutPageTemplateEntriesCount",
-					_getLayoutPageTemplateEntriesCountParameterTypes37);
+					_getLayoutPageTemplateEntriesCountParameterTypes38);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
 					layoutPageTemplateFolderId, name, status);
@@ -1211,7 +1239,7 @@ public class LayoutPageTemplateEntryServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(LayoutPageTemplateEntryServiceUtil.class,
 					"getLayoutPageTemplateEntriesCount",
-					_getLayoutPageTemplateEntriesCountParameterTypes38);
+					_getLayoutPageTemplateEntriesCountParameterTypes39);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
 					name, type);
@@ -1240,7 +1268,7 @@ public class LayoutPageTemplateEntryServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(LayoutPageTemplateEntryServiceUtil.class,
 					"getLayoutPageTemplateEntriesCount",
-					_getLayoutPageTemplateEntriesCountParameterTypes39);
+					_getLayoutPageTemplateEntriesCountParameterTypes40);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
 					name, type, status);
@@ -1269,7 +1297,7 @@ public class LayoutPageTemplateEntryServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(LayoutPageTemplateEntryServiceUtil.class,
 					"getLayoutPageTemplateEntriesCountByType",
-					_getLayoutPageTemplateEntriesCountByTypeParameterTypes40);
+					_getLayoutPageTemplateEntriesCountByTypeParameterTypes41);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
 					layoutPageTemplateCollectionId, type);
@@ -1299,7 +1327,7 @@ public class LayoutPageTemplateEntryServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(LayoutPageTemplateEntryServiceUtil.class,
 					"updateLayoutPageTemplateEntry",
-					_updateLayoutPageTemplateEntryParameterTypes41);
+					_updateLayoutPageTemplateEntryParameterTypes42);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					layoutPageTemplateEntryId, defaultTemplate);
@@ -1332,7 +1360,7 @@ public class LayoutPageTemplateEntryServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(LayoutPageTemplateEntryServiceUtil.class,
 					"updateLayoutPageTemplateEntry",
-					_updateLayoutPageTemplateEntryParameterTypes42);
+					_updateLayoutPageTemplateEntryParameterTypes43);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					layoutPageTemplateEntryId, status);
@@ -1366,7 +1394,7 @@ public class LayoutPageTemplateEntryServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(LayoutPageTemplateEntryServiceUtil.class,
 					"updateLayoutPageTemplateEntry",
-					_updateLayoutPageTemplateEntryParameterTypes43);
+					_updateLayoutPageTemplateEntryParameterTypes44);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					layoutPageTemplateEntryId, previewFileEntryId);
@@ -1400,7 +1428,7 @@ public class LayoutPageTemplateEntryServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(LayoutPageTemplateEntryServiceUtil.class,
 					"updateLayoutPageTemplateEntry",
-					_updateLayoutPageTemplateEntryParameterTypes44);
+					_updateLayoutPageTemplateEntryParameterTypes45);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					layoutPageTemplateEntryId, classNameId, classTypeId);
@@ -1435,7 +1463,7 @@ public class LayoutPageTemplateEntryServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(LayoutPageTemplateEntryServiceUtil.class,
 					"updateLayoutPageTemplateEntry",
-					_updateLayoutPageTemplateEntryParameterTypes45);
+					_updateLayoutPageTemplateEntryParameterTypes46);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					layoutPageTemplateEntryId, fragmentEntryIds,
@@ -1469,7 +1497,7 @@ public class LayoutPageTemplateEntryServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(LayoutPageTemplateEntryServiceUtil.class,
 					"updateLayoutPageTemplateEntry",
-					_updateLayoutPageTemplateEntryParameterTypes46);
+					_updateLayoutPageTemplateEntryParameterTypes47);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					layoutPageTemplateEntryId, name);
@@ -1504,7 +1532,7 @@ public class LayoutPageTemplateEntryServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(LayoutPageTemplateEntryServiceUtil.class,
 					"updateLayoutPageTemplateEntry",
-					_updateLayoutPageTemplateEntryParameterTypes47);
+					_updateLayoutPageTemplateEntryParameterTypes48);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					layoutPageTemplateEntryId, name, fragmentEntryIds,
@@ -1553,134 +1581,136 @@ public class LayoutPageTemplateEntryServiceHttp {
 		new Class[] { long.class, long.class, long.class };
 	private static final Class<?>[] _fetchLayoutPageTemplateEntryParameterTypes6 =
 		new Class[] { long.class };
-	private static final Class<?>[] _getLayoutPageTemplateCollectionsCountParameterTypes7 =
-		new Class[] { long.class, long.class };
+	private static final Class<?>[] _fetchLayoutPageTemplateEntryByUuidAndGroupIdParameterTypes7 =
+		new Class[] { String.class, long.class };
 	private static final Class<?>[] _getLayoutPageTemplateCollectionsCountParameterTypes8 =
-		new Class[] { long.class, long.class, int.class };
+		new Class[] { long.class, long.class };
 	private static final Class<?>[] _getLayoutPageTemplateCollectionsCountParameterTypes9 =
-		new Class[] { long.class, long.class, String.class };
+		new Class[] { long.class, long.class, int.class };
 	private static final Class<?>[] _getLayoutPageTemplateCollectionsCountParameterTypes10 =
+		new Class[] { long.class, long.class, String.class };
+	private static final Class<?>[] _getLayoutPageTemplateCollectionsCountParameterTypes11 =
 		new Class[] { long.class, long.class, String.class, int.class };
-	private static final Class<?>[] _getLayoutPageTemplateEntriesParameterTypes11 =
+	private static final Class<?>[] _getLayoutPageTemplateEntriesParameterTypes12 =
 		new Class[] {
 			long.class, int.class, int.class, int.class, int.class,
 			com.liferay.portal.kernel.util.OrderByComparator.class
 		};
-	private static final Class<?>[] _getLayoutPageTemplateEntriesParameterTypes12 =
+	private static final Class<?>[] _getLayoutPageTemplateEntriesParameterTypes13 =
 		new Class[] {
 			long.class, int.class, int.class, int.class,
 			com.liferay.portal.kernel.util.OrderByComparator.class
 		};
-	private static final Class<?>[] _getLayoutPageTemplateEntriesParameterTypes13 =
-		new Class[] { long.class, long.class, int.class, int.class };
 	private static final Class<?>[] _getLayoutPageTemplateEntriesParameterTypes14 =
-		new Class[] { long.class, long.class, int.class, int.class, int.class };
+		new Class[] { long.class, long.class, int.class, int.class };
 	private static final Class<?>[] _getLayoutPageTemplateEntriesParameterTypes15 =
+		new Class[] { long.class, long.class, int.class, int.class, int.class };
+	private static final Class<?>[] _getLayoutPageTemplateEntriesParameterTypes16 =
 		new Class[] {
 			long.class, long.class, int.class, int.class, int.class,
 			com.liferay.portal.kernel.util.OrderByComparator.class
 		};
-	private static final Class<?>[] _getLayoutPageTemplateEntriesParameterTypes16 =
+	private static final Class<?>[] _getLayoutPageTemplateEntriesParameterTypes17 =
 		new Class[] {
 			long.class, long.class, int.class, int.class,
 			com.liferay.portal.kernel.util.OrderByComparator.class
 		};
-	private static final Class<?>[] _getLayoutPageTemplateEntriesParameterTypes17 =
-		new Class[] { long.class, long.class, long.class, int.class };
 	private static final Class<?>[] _getLayoutPageTemplateEntriesParameterTypes18 =
-		new Class[] { long.class, long.class, long.class, int.class, int.class };
+		new Class[] { long.class, long.class, long.class, int.class };
 	private static final Class<?>[] _getLayoutPageTemplateEntriesParameterTypes19 =
+		new Class[] { long.class, long.class, long.class, int.class, int.class };
+	private static final Class<?>[] _getLayoutPageTemplateEntriesParameterTypes20 =
 		new Class[] {
 			long.class, long.class, long.class, int.class, int.class, int.class,
 			int.class, com.liferay.portal.kernel.util.OrderByComparator.class
 		};
-	private static final Class<?>[] _getLayoutPageTemplateEntriesParameterTypes20 =
-		new Class[] {
-			long.class, long.class, long.class, int.class, int.class, int.class,
-			com.liferay.portal.kernel.util.OrderByComparator.class
-		};
 	private static final Class<?>[] _getLayoutPageTemplateEntriesParameterTypes21 =
 		new Class[] {
-			long.class, long.class, long.class, String.class, int.class,
-			int.class, int.class, int.class,
+			long.class, long.class, long.class, int.class, int.class, int.class,
 			com.liferay.portal.kernel.util.OrderByComparator.class
 		};
 	private static final Class<?>[] _getLayoutPageTemplateEntriesParameterTypes22 =
 		new Class[] {
 			long.class, long.class, long.class, String.class, int.class,
-			int.class, int.class,
+			int.class, int.class, int.class,
 			com.liferay.portal.kernel.util.OrderByComparator.class
 		};
 	private static final Class<?>[] _getLayoutPageTemplateEntriesParameterTypes23 =
 		new Class[] {
-			long.class, long.class, String.class, int.class, int.class,
-			int.class, com.liferay.portal.kernel.util.OrderByComparator.class
+			long.class, long.class, long.class, String.class, int.class,
+			int.class, int.class,
+			com.liferay.portal.kernel.util.OrderByComparator.class
 		};
 	private static final Class<?>[] _getLayoutPageTemplateEntriesParameterTypes24 =
 		new Class[] {
 			long.class, long.class, String.class, int.class, int.class,
-			com.liferay.portal.kernel.util.OrderByComparator.class
+			int.class, com.liferay.portal.kernel.util.OrderByComparator.class
 		};
 	private static final Class<?>[] _getLayoutPageTemplateEntriesParameterTypes25 =
 		new Class[] {
-			long.class, String.class, int.class, int.class, int.class, int.class,
+			long.class, long.class, String.class, int.class, int.class,
 			com.liferay.portal.kernel.util.OrderByComparator.class
 		};
 	private static final Class<?>[] _getLayoutPageTemplateEntriesParameterTypes26 =
 		new Class[] {
+			long.class, String.class, int.class, int.class, int.class, int.class,
+			com.liferay.portal.kernel.util.OrderByComparator.class
+		};
+	private static final Class<?>[] _getLayoutPageTemplateEntriesParameterTypes27 =
+		new Class[] {
 			long.class, String.class, int.class, int.class, int.class,
 			com.liferay.portal.kernel.util.OrderByComparator.class
 		};
-	private static final Class<?>[] _getLayoutPageTemplateEntriesByTypeParameterTypes27 =
+	private static final Class<?>[] _getLayoutPageTemplateEntriesByTypeParameterTypes28 =
 		new Class[] {
 			long.class, long.class, int.class, int.class, int.class,
 			com.liferay.portal.kernel.util.OrderByComparator.class
 		};
-	private static final Class<?>[] _getLayoutPageTemplateEntriesCountParameterTypes28 =
-		new Class[] { long.class, int.class };
 	private static final Class<?>[] _getLayoutPageTemplateEntriesCountParameterTypes29 =
-		new Class[] { long.class, int.class, int.class };
+		new Class[] { long.class, int.class };
 	private static final Class<?>[] _getLayoutPageTemplateEntriesCountParameterTypes30 =
-		new Class[] { long.class, long.class };
+		new Class[] { long.class, int.class, int.class };
 	private static final Class<?>[] _getLayoutPageTemplateEntriesCountParameterTypes31 =
-		new Class[] { long.class, long.class, int.class };
+		new Class[] { long.class, long.class };
 	private static final Class<?>[] _getLayoutPageTemplateEntriesCountParameterTypes32 =
-		new Class[] { long.class, long.class, long.class, int.class };
+		new Class[] { long.class, long.class, int.class };
 	private static final Class<?>[] _getLayoutPageTemplateEntriesCountParameterTypes33 =
-		new Class[] { long.class, long.class, long.class, int.class, int.class };
+		new Class[] { long.class, long.class, long.class, int.class };
 	private static final Class<?>[] _getLayoutPageTemplateEntriesCountParameterTypes34 =
-		new Class[] { long.class, long.class, long.class, String.class, int.class };
+		new Class[] { long.class, long.class, long.class, int.class, int.class };
 	private static final Class<?>[] _getLayoutPageTemplateEntriesCountParameterTypes35 =
+		new Class[] { long.class, long.class, long.class, String.class, int.class };
+	private static final Class<?>[] _getLayoutPageTemplateEntriesCountParameterTypes36 =
 		new Class[] {
 			long.class, long.class, long.class, String.class, int.class,
 			int.class
 		};
-	private static final Class<?>[] _getLayoutPageTemplateEntriesCountParameterTypes36 =
-		new Class[] { long.class, long.class, String.class };
 	private static final Class<?>[] _getLayoutPageTemplateEntriesCountParameterTypes37 =
-		new Class[] { long.class, long.class, String.class, int.class };
+		new Class[] { long.class, long.class, String.class };
 	private static final Class<?>[] _getLayoutPageTemplateEntriesCountParameterTypes38 =
-		new Class[] { long.class, String.class, int.class };
+		new Class[] { long.class, long.class, String.class, int.class };
 	private static final Class<?>[] _getLayoutPageTemplateEntriesCountParameterTypes39 =
+		new Class[] { long.class, String.class, int.class };
+	private static final Class<?>[] _getLayoutPageTemplateEntriesCountParameterTypes40 =
 		new Class[] { long.class, String.class, int.class, int.class };
-	private static final Class<?>[] _getLayoutPageTemplateEntriesCountByTypeParameterTypes40 =
+	private static final Class<?>[] _getLayoutPageTemplateEntriesCountByTypeParameterTypes41 =
 		new Class[] { long.class, long.class, int.class };
-	private static final Class<?>[] _updateLayoutPageTemplateEntryParameterTypes41 =
-		new Class[] { long.class, boolean.class };
 	private static final Class<?>[] _updateLayoutPageTemplateEntryParameterTypes42 =
-		new Class[] { long.class, int.class };
+		new Class[] { long.class, boolean.class };
 	private static final Class<?>[] _updateLayoutPageTemplateEntryParameterTypes43 =
-		new Class[] { long.class, long.class };
+		new Class[] { long.class, int.class };
 	private static final Class<?>[] _updateLayoutPageTemplateEntryParameterTypes44 =
-		new Class[] { long.class, long.class, long.class };
+		new Class[] { long.class, long.class };
 	private static final Class<?>[] _updateLayoutPageTemplateEntryParameterTypes45 =
+		new Class[] { long.class, long.class, long.class };
+	private static final Class<?>[] _updateLayoutPageTemplateEntryParameterTypes46 =
 		new Class[] {
 			long.class, long[].class, String.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
-	private static final Class<?>[] _updateLayoutPageTemplateEntryParameterTypes46 =
-		new Class[] { long.class, String.class };
 	private static final Class<?>[] _updateLayoutPageTemplateEntryParameterTypes47 =
+		new Class[] { long.class, String.class };
+	private static final Class<?>[] _updateLayoutPageTemplateEntryParameterTypes48 =
 		new Class[] {
 			long.class, String.class, long[].class,
 			com.liferay.portal.kernel.service.ServiceContext.class

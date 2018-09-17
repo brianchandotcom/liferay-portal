@@ -91,6 +91,13 @@ public class LayoutPageTemplateEntryServiceWrapper
 		return _layoutPageTemplateEntryService.fetchLayoutPageTemplateEntry(layoutPageTemplateEntryId);
 	}
 
+	@Override
+	public com.liferay.layout.page.template.model.LayoutPageTemplateEntry fetchLayoutPageTemplateEntryByUuidAndGroupId(
+		String uuid, long groupId) {
+		return _layoutPageTemplateEntryService.fetchLayoutPageTemplateEntryByUuidAndGroupId(uuid,
+			groupId);
+	}
+
 	/**
 	* @deprecated As of Judson (7.1.x), with no direct replacement
 	*/

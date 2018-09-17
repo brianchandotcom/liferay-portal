@@ -142,7 +142,10 @@ public class ExpressionVisitorImpl implements ExpressionVisitor<Expression> {
 	private Optional<BinaryExpression.Operation> _getOperationOptional(
 		BinaryOperatorKind binaryOperatorKind) {
 
-		if (binaryOperatorKind == BinaryOperatorKind.EQ) {
+		if (binaryOperatorKind == BinaryOperatorKind.AND) {
+			return Optional.of(BinaryExpression.Operation.AND);
+		}
+		else if (binaryOperatorKind == BinaryOperatorKind.EQ) {
 			return Optional.of(BinaryExpression.Operation.EQ);
 		}
 		else if (binaryOperatorKind == BinaryOperatorKind.GE) {
@@ -150,6 +153,9 @@ public class ExpressionVisitorImpl implements ExpressionVisitor<Expression> {
 		}
 		else if (binaryOperatorKind == BinaryOperatorKind.LE) {
 			return Optional.of(BinaryExpression.Operation.LE);
+		}
+		else if (binaryOperatorKind == BinaryOperatorKind.OR) {
+			return Optional.of(BinaryExpression.Operation.OR);
 		}
 
 		return Optional.empty();

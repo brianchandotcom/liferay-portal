@@ -33,6 +33,7 @@ import org.apache.olingo.server.core.uri.parser.Parser;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * <code>FilterParserImpl</code> transforms a String containing an oData filter
@@ -71,20 +72,27 @@ public class FilterParserImpl implements FilterParser {
 		}
 	}
 
+	@Reference(unbind = "-")
+	public void setStructuredContentSingleEntitySchemaBasedEdmProvider(
+		StructuredContentSingleEntitySchemaBasedEdmProvider
+			structuredContentSingleEntitySchemaBasedEdmProvider) {
+
+		_structuredContentSingleEntitySchemaBasedEdmProvider =
+			structuredContentSingleEntitySchemaBasedEdmProvider;
+	}
+
 	@Activate
 	protected void activate() {
-		_baseSingleEntitySchemaBasedEdmProvider =
-			new StructuredContentSingleEntitySchemaBasedEdmProvider();
-
 		_parser = new Parser(
-			new EdmProviderImpl(_baseSingleEntitySchemaBasedEdmProvider),
+			new EdmProviderImpl(
+				_structuredContentSingleEntitySchemaBasedEdmProvider),
 			OData.newInstance());
 	}
 
 	private UriInfo _getUriInfo(String filterString) {
 		try {
 			return _parser.parseUri(
-				_baseSingleEntitySchemaBasedEdmProvider.getName(),
+				_structuredContentSingleEntitySchemaBasedEdmProvider.getName(),
 				"$filter=" + Encoder.encode(filterString), null, null);
 		}
 		catch (ODataException ode) {
@@ -99,8 +107,8 @@ public class FilterParserImpl implements FilterParser {
 	private static final Log _log = LogFactoryUtil.getLog(
 		FilterParserImpl.class);
 
-	private BaseSingleEntitySchemaBasedEdmProvider
-		_baseSingleEntitySchemaBasedEdmProvider;
 	private Parser _parser;
+	private StructuredContentSingleEntitySchemaBasedEdmProvider
+		_structuredContentSingleEntitySchemaBasedEdmProvider;
 
 }

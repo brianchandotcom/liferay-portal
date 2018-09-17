@@ -27,6 +27,11 @@ import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.search.BooleanClause;
+import com.liferay.portal.kernel.search.BooleanClauseOccur;
+import com.liferay.portal.kernel.search.Query;
+import com.liferay.portal.kernel.search.QueryTerm;
+import com.liferay.portal.kernel.search.generic.TermQueryImpl;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
@@ -86,6 +91,25 @@ public class StructuredContentNestedCollectionResourceTest {
 	@Before
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup();
+	}
+
+	@Test
+	public void testGetBooleanClauseWithExistingProperty() throws Exception {
+		BooleanClause<Query> queryBooleanClause = getBooleanClause(
+			new Filter(_filterParser.parse("title eq 'Title Value'")),
+			LocaleUtil.US);
+
+		Assert.assertEquals(
+			BooleanClauseOccur.MUST,
+			queryBooleanClause.getBooleanClauseOccur());
+
+		TermQueryImpl termQuery = (TermQueryImpl)queryBooleanClause.getClause();
+
+		QueryTerm queryTerm = termQuery.getQueryTerm();
+
+		Assert.assertEquals(
+			"localized_title_en_US_sortable", queryTerm.getField());
+		Assert.assertEquals("title value", queryTerm.getValue());
 	}
 
 	@Test
@@ -1019,6 +1043,22 @@ public class StructuredContentNestedCollectionResourceTest {
 			Filter.emptyFilter(), Sort.emptySort());
 
 		Assert.assertEquals(0, pageItems.getTotalCount());
+	}
+
+	protected BooleanClause<Query> getBooleanClause(
+			Filter filter, Locale locale)
+		throws Exception {
+
+		Class<? extends NestedCollectionResource> clazz =
+			_nestedCollectionResource.getClass();
+
+		Method method = clazz.getDeclaredMethod(
+			"getBooleanClause", Filter.class, Locale.class);
+
+		method.setAccessible(true);
+
+		return (BooleanClause<Query>)method.invoke(
+			_nestedCollectionResource, filter, locale);
 	}
 
 	private JournalArticleWrapper _getJournalArticleWrapper(

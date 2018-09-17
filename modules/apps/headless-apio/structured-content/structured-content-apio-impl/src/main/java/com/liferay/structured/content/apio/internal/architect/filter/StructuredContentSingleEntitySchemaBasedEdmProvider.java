@@ -14,8 +14,16 @@
 
 package com.liferay.structured.content.apio.internal.architect.filter;
 
-import java.util.HashMap;
+import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.structured.content.apio.architect.entity.EntityField;
+
 import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * Provides the entity data model from the Indexed Entity (JournalArticle).
@@ -23,12 +31,16 @@ import java.util.Map;
  * @author Julio Camarero
  * @review
  */
+@Component(
+	immediate = true,
+	service = StructuredContentSingleEntitySchemaBasedEdmProvider.class
+)
 public class StructuredContentSingleEntitySchemaBasedEdmProvider
 	extends BaseSingleEntitySchemaBasedEdmProvider {
 
 	@Override
-	public Map<String, EntityType> getEntityTypesMap() {
-		return _entityTypesMap;
+	public Map<String, EntityField> getEntityFieldsMap() {
+		return _entityFieldsMap;
 	}
 
 	@Override
@@ -36,12 +48,16 @@ public class StructuredContentSingleEntitySchemaBasedEdmProvider
 		return "StructuredContent";
 	}
 
-	private static final Map<String, EntityType> _entityTypesMap =
-		new HashMap<String, EntityType>() {
-			{
-				put("datePublished", EntityType.DATE);
-				put("title", EntityType.STRING);
-			}
-		};
+	private static final Map<String, EntityField> _entityFieldsMap = Stream.of(
+		new EntityField(
+			"datePublished", EntityField.Type.DATE,
+			locale -> Field.getSortableFieldName("datePublished")),
+		new EntityField(
+			"title", EntityField.Type.STRING,
+			locale -> Field.getSortableFieldName(
+				"localized_title_".concat(LocaleUtil.toLanguageId(locale))))
+	).collect(
+		Collectors.toMap(EntityField::getName, Function.identity())
+	);
 
 }

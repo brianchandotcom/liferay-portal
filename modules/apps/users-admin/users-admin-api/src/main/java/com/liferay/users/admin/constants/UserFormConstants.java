@@ -48,6 +48,9 @@ public class UserFormConstants {
 
 	public static final String ENTRY_KEY_ROLES = "roles";
 
+	public static final String SCREEN_NAVIGATION_KEY_ORGANIZATIONS =
+		"edit.organization.form";
+
 	public static final String SCREEN_NAVIGATION_KEY_USERS = "edit.user.form";
 
 }

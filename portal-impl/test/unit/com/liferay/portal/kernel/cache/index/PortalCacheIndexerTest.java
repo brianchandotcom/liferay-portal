@@ -52,6 +52,9 @@ public class PortalCacheIndexerTest {
 		_portalCache = PortalCacheHelperUtil.getPortalCache(
 			PortalCacheManagerNames.MULTI_VM, RandomTestUtil.randomString());
 
+		_portalCache = ReflectionTestUtil.getFieldValue(
+			_portalCache, "_portalCache");
+
 		_portalCacheIndexer = new PortalCacheIndexer<>(
 			_indexEncoder, _portalCache);
 

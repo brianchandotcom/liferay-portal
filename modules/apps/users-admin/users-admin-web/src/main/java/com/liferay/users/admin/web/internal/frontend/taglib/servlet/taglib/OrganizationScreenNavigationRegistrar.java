@@ -16,12 +16,18 @@ package com.liferay.users.admin.web.internal.frontend.taglib.servlet.taglib;
 
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationCategory;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
+import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
+import com.liferay.portal.kernel.model.Organization;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.OrganizationService;
 import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorConstants;
 import com.liferay.portal.kernel.util.HashMapDictionary;
+import com.liferay.portal.kernel.util.Portal;
 
 import java.util.Dictionary;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.function.BiFunction;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceRegistration;
@@ -60,28 +66,62 @@ public class OrganizationScreenNavigationRegistrar {
 
 	protected void registerScreenNavigationCategories() {
 		_registerScreenNavigationCategory(
-			_organizationScreenNavigationFactory.createScreenNavigationCategory(
+			new OrganizationScreenNavigationCategory(
 				_CATEGORY_ORGANIZATION_INFORMATION),
 			10);
+
 		_registerScreenNavigationCategory(
-			_organizationScreenNavigationFactory.createScreenNavigationCategory(
-				_CATEGORY_MISCELLANEOUS),
+			new OrganizationScreenNavigationCategory(_CATEGORY_MISCELLANEOUS),
 			20);
 	}
 
 	protected void registerScreenNavigationEntries() {
 		_registerScreenNavigationEntry(
-			_organizationScreenNavigationFactory.createScreenNavigationEntry(
+			_createScreenNavigationEntry(
 				"general", _CATEGORY_ORGANIZATION_INFORMATION,
 				"/organization/general.jsp", "/users_admin/edit_organization"),
 			10);
 		_registerScreenNavigationEntry(
-			_organizationScreenNavigationFactory.
-				createUpdateOnlyScreenNavigationEntry(
-					"reminder-queries", _CATEGORY_MISCELLANEOUS,
-					"/organization/reminder_queries.jsp",
-					"/users_admin/organization/update_reminder_queries"),
+			_createUpdateOnlyScreenNavigationEntry(
+				"reminder-queries", _CATEGORY_MISCELLANEOUS,
+				"/organization/reminder_queries.jsp",
+				"/users_admin/organization/update_reminder_queries"),
 			20);
+	}
+
+	private ScreenNavigationEntry<Organization> _createScreenNavigationEntry(
+		String entryKey, String categoryKey, String jspPath,
+		String mvcActionCommandName) {
+
+		return _createScreenNavigationEntry(
+			entryKey, categoryKey, jspPath, mvcActionCommandName,
+			(user, organization) -> true);
+	}
+
+	private ScreenNavigationEntry<Organization> _createScreenNavigationEntry(
+		String entryKey, String categoryKey, String jspPath,
+		String mvcActionCommandName,
+		BiFunction<User, Organization, Boolean> isVisiblePredicate) {
+
+		return new OrganizationScreenNavigationEntry(
+			_jspRenderer, _organizationService, _portal, entryKey, categoryKey,
+			jspPath, mvcActionCommandName, isVisiblePredicate);
+	}
+
+	private ScreenNavigationEntry<Organization>
+		_createUpdateOnlyScreenNavigationEntry(
+			String entryKey, String categoryKey, String jspPath,
+			String mvcActionCommandName) {
+
+		return _createScreenNavigationEntry(
+			entryKey, categoryKey, jspPath, mvcActionCommandName,
+			(user, organization) -> {
+				if (organization != null) {
+					return true;
+				}
+
+				return false;
+			});
 	}
 
 	private Dictionary _getProperties() {
@@ -157,8 +197,13 @@ public class OrganizationScreenNavigationRegistrar {
 	private BundleContext _bundleContext;
 
 	@Reference
-	private OrganizationScreenNavigationFactory
-		_organizationScreenNavigationFactory;
+	private JSPRenderer _jspRenderer;
+
+	@Reference
+	private OrganizationService _organizationService;
+
+	@Reference
+	private Portal _portal;
 
 	private final List<ServiceRegistration<ScreenNavigationCategory>>
 		_screenNavigationCategoryServiceRegistrations =

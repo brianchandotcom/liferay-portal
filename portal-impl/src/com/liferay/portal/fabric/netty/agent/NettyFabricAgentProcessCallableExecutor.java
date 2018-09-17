@@ -15,10 +15,10 @@
 package com.liferay.portal.fabric.netty.agent;
 
 import com.liferay.petra.concurrent.NoticeableFuture;
+import com.liferay.petra.process.ProcessCallable;
 import com.liferay.portal.fabric.netty.rpc.RPCUtil;
 import com.liferay.portal.fabric.netty.rpc.SyncProcessRPCCallable;
 import com.liferay.portal.fabric.status.JMXProxyUtil;
-import com.liferay.portal.kernel.process.ProcessCallable;
 
 import io.netty.channel.Channel;
 

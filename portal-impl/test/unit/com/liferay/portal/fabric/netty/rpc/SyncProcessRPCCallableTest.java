@@ -15,7 +15,7 @@
 package com.liferay.portal.fabric.netty.rpc;
 
 import com.liferay.petra.concurrent.NoticeableFuture;
-import com.liferay.portal.kernel.process.ProcessCallable;
+import com.liferay.petra.process.ProcessCallable;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
 
 import java.util.concurrent.ExecutionException;

@@ -14,7 +14,7 @@
 
 package com.liferay.portal.fabric;
 
-import com.liferay.portal.kernel.process.ProcessCallable;
+import com.liferay.petra.process.ProcessCallable;
 
 import java.io.Serializable;
 

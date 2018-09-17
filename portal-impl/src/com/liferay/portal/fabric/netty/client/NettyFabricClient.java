@@ -16,6 +16,9 @@ package com.liferay.portal.fabric.netty.client;
 
 import com.liferay.petra.concurrent.DefaultNoticeableFuture;
 import com.liferay.petra.concurrent.NoticeableFuture;
+import com.liferay.petra.process.ProcessCallable;
+import com.liferay.petra.process.ProcessExecutor;
+import com.liferay.petra.process.TerminationProcessException;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.fabric.client.FabricClient;
 import com.liferay.portal.fabric.local.agent.LocalFabricAgent;
@@ -34,9 +37,6 @@ import com.liferay.portal.fabric.repository.Repository;
 import com.liferay.portal.fabric.worker.FabricWorker;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.process.ProcessCallable;
-import com.liferay.portal.kernel.process.ProcessExecutor;
-import com.liferay.portal.kernel.process.TerminationProcessException;
 
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.Channel;

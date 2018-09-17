@@ -14,8 +14,8 @@
 
 package com.liferay.portal.fabric.status;
 
+import com.liferay.petra.process.ProcessCallable;
 import com.liferay.petra.reflect.ReflectionUtil;
-import com.liferay.portal.kernel.process.ProcessCallable;
 
 import java.lang.management.BufferPoolMXBean;
 import java.lang.management.ClassLoadingMXBean;

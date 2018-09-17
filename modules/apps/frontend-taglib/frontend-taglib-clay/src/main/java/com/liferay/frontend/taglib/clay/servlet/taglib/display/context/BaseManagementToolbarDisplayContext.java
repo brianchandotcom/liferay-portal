@@ -143,7 +143,7 @@ public class BaseManagementToolbarDisplayContext
 					add(
 						dropdownItem -> {
 							dropdownItem.setActive(
-								parameterValue.equals(entry.getKey()));
+								parameterValue.equals(entry.getValue()));
 							dropdownItem.setHref(
 								entryURL, parameterName, entry.getValue());
 							dropdownItem.setLabel(

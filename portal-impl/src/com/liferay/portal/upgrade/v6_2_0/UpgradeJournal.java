@@ -16,6 +16,7 @@ package com.liferay.portal.upgrade.v6_2_0;
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.petra.xml.XMLUtil;
+import com.liferay.portal.dao.orm.common.SQLTransformer;
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -443,16 +444,22 @@ public class UpgradeJournal extends BaseUpgradePortletPreferences {
 	}
 
 	protected void updateAssetEntryClassTypeId() throws Exception {
+		StringBundler sb = new StringBundler(2);
+
+		sb.append("select distinct companyId, groupId, resourcePrimKey, ");
+		sb.append("structureId from JournalArticle where structureId != ''");
+
+		String selectStatement = sb.toString();
+
 		try (LoggingTimer loggingTimer = new LoggingTimer();
-			PreparedStatement ps1 = connection.prepareStatement(
-				"select distinct companyId, groupId, resourcePrimKey, " +
-					"structureId from JournalArticle where structureId != ''");
-			ResultSet rs = ps1.executeQuery()) {
+			PreparedStatement selectPS = connection.prepareStatement(
+				SQLTransformer.transform(selectStatement));
+			ResultSet rs = selectPS.executeQuery()) {
 
 			long classNameId = PortalUtil.getClassNameId(
 				"com.liferay.portlet.journal.model.JournalArticle");
 
-			try (PreparedStatement ps2 =
+			try (PreparedStatement updatePS =
 					AutoBatchPreparedStatementUtil.concurrentAutoBatch(
 						connection,
 						"update AssetEntry set classTypeId = ? where " +
@@ -467,15 +474,15 @@ public class UpgradeJournal extends BaseUpgradePortletPreferences {
 					long ddmStructureId = getDDMStructureId(
 						groupId, getCompanyGroupId(companyId), structureId);
 
-					ps2.setLong(1, ddmStructureId);
+					updatePS.setLong(1, ddmStructureId);
 
-					ps2.setLong(2, classNameId);
-					ps2.setLong(3, resourcePrimKey);
+					updatePS.setLong(2, classNameId);
+					updatePS.setLong(3, resourcePrimKey);
 
-					ps2.addBatch();
+					updatePS.addBatch();
 				}
 
-				ps2.executeBatch();
+				updatePS.executeBatch();
 			}
 		}
 	}
@@ -855,10 +862,16 @@ public class UpgradeJournal extends BaseUpgradePortletPreferences {
 	}
 
 	protected void updateLinkToLayoutContent() throws Exception {
+		StringBundler sb = new StringBundler(2);
+
+		sb.append("select id_, groupId, content from JournalArticle where ");
+		sb.append("structureId != '' and content like '%link_to_layout%'");
+
+		String selectStatement = sb.toString();
+
 		try (LoggingTimer loggingTimer = new LoggingTimer();
 			PreparedStatement selectPS = connection.prepareStatement(
-				"select id_, groupId, content from JournalArticle where " +
-					"structureId != '' and content like '%link_to_layout%'");
+				SQLTransformer.transform(selectStatement));
 			PreparedStatement updatePS =
 				AutoBatchPreparedStatementUtil.autoBatch(
 					connection.prepareStatement(

@@ -183,8 +183,8 @@ public class ElasticsearchSearchEngineAdapterIndexRequestTest {
 	public void testExecuteGetFieldMappingIndexRequest() {
 		String mappingName = "testGetFieldMapping";
 		String mappingSource =
-			"{\"properties\": {\"testField\": {\"type\": \"keyword\"}, " +
-				"\"otherTestField\": {\"type\": \"keyword\"}}}";
+			"{\"properties\":{\"testField\":{\"type\":\"keyword\"}, " +
+				"\"otherTestField\":{\"type\":\"keyword\"}}}";
 
 		_putMapping(mappingName, mappingSource);
 
@@ -220,7 +220,7 @@ public class ElasticsearchSearchEngineAdapterIndexRequestTest {
 	public void testExecuteGetMappingIndexRequest() throws JSONException {
 		String mappingName = "testGetMapping";
 		String mappingSource =
-			"{\"properties\": {\"testField\": {\"type\": \"keyword\"}}}";
+			"{\"properties\":{\"testField\":{\"type\":\"keyword\"}}}";
 
 		_putMapping(mappingName, mappingSource);
 
@@ -261,7 +261,7 @@ public class ElasticsearchSearchEngineAdapterIndexRequestTest {
 	public void testExecutePutMappingIndexRequest() {
 		String mappingName = "testPutMapping";
 		String mappingSource =
-			"{\"properties\": {\"testField\": {\"type\": \"keyword\"}}}";
+			"{\"properties\":{\"testField\":{\"type\":\"keyword\"}}}";
 
 		PutMappingIndexRequest putMappingIndexRequest =
 			new PutMappingIndexRequest(

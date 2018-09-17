@@ -14,9 +14,6 @@
 
 package com.liferay.portal.fabric.status;
 
-import com.liferay.portal.kernel.util.Accessor;
-import com.liferay.portal.kernel.util.ListUtil;
-
 import java.lang.management.BufferPoolMXBean;
 import java.lang.management.ManagementFactory;
 import java.lang.management.PlatformLoggingMXBean;
@@ -38,8 +35,8 @@ public abstract class BaseFabricStatusTestCase {
 		List<? extends PlatformManagedObject> platformManagedObjects2) {
 
 		Assert.assertArrayEquals(
-			ListUtil.toArray(platformManagedObjects1, accessor),
-			ListUtil.toArray(platformManagedObjects2, accessor));
+			_toObjectNames(platformManagedObjects1),
+			_toObjectNames(platformManagedObjects2));
 	}
 
 	protected void assertEquals(
@@ -87,24 +84,20 @@ public abstract class BaseFabricStatusTestCase {
 			fabricStatus.getThreadMXBean());
 	}
 
-	protected static final Accessor<PlatformManagedObject, ObjectName>
-		accessor = new Accessor<PlatformManagedObject, ObjectName>() {
+	private static ObjectName[] _toObjectNames(
+		List<? extends PlatformManagedObject> platformManagedObjects) {
 
-			@Override
-			public ObjectName get(PlatformManagedObject platformManagedObject) {
-				return platformManagedObject.getObjectName();
-			}
+		ObjectName[] objectNames =
+			new ObjectName[platformManagedObjects.size()];
 
-			@Override
-			public Class<ObjectName> getAttributeClass() {
-				return ObjectName.class;
-			}
+		for (int i = 0; i < platformManagedObjects.size(); i++) {
+			PlatformManagedObject platformManagedObject =
+				platformManagedObjects.get(i);
 
-			@Override
-			public Class<PlatformManagedObject> getTypeClass() {
-				return PlatformManagedObject.class;
-			}
+			objectNames[i] = platformManagedObject.getObjectName();
+		}
 
-		};
+		return objectNames;
+	}
 
 }

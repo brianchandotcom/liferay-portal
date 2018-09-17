@@ -16,6 +16,7 @@ package com.liferay.users.admin.web.internal.frontend.taglib.servlet.taglib;
 
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationCategory;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.users.admin.constants.UserFormConstants;
 
 import java.util.Locale;
@@ -37,7 +38,10 @@ public class OrganizationScreenNavigationCategory
 
 	@Override
 	public String getLabel(Locale locale) {
-		return LanguageUtil.get(locale, _categoryKey);
+		return LanguageUtil.get(
+			ResourceBundleUtil.getBundle(
+				locale, OrganizationScreenNavigationEntry.class),
+			_categoryKey);
 	}
 
 	@Override

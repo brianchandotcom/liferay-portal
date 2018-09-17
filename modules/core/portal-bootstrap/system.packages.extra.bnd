@@ -298,7 +298,16 @@ Provide-Capability:\
 	osgi.contract;\
 		osgi.contract=JavaServlet;\
 		uses:="javax.servlet,javax.servlet.annotation,javax.servlet.descriptor,javax.servlet.http";\
-		version:Version=3.1
+		version:Version=3.1,\
+	osgi.contract;\
+		osgi.contract=JavaEL;\
+		version:Version=2.1.0,\
+	osgi.contract;\
+		osgi.contract=JavaEL;\
+		version:Version=2.2.0,\
+	osgi.contract;\
+		osgi.contract=JavaEL;\
+		version:Version=3.0.0
 -includeresource:\
 	-@lib/com.liferay.portal.app.license.api.jar,\
 	@../../../lib/development/jms.jar,\

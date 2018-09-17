@@ -15,6 +15,10 @@
 package com.liferay.portal.settings.web.internal.portlet.action;
 
 import com.liferay.document.library.kernel.service.DLAppLocalService;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.dao.orm.Disjunction;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.exception.AccountNameException;
 import com.liferay.portal.kernel.exception.AddressCityException;
 import com.liferay.portal.kernel.exception.AddressStreetException;
@@ -29,9 +33,11 @@ import com.liferay.portal.kernel.exception.NoSuchListTypeException;
 import com.liferay.portal.kernel.exception.NoSuchRegionException;
 import com.liferay.portal.kernel.exception.PhoneNumberException;
 import com.liferay.portal.kernel.exception.PhoneNumberExtensionException;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.WebsiteURLException;
 import com.liferay.portal.kernel.model.Address;
 import com.liferay.portal.kernel.model.EmailAddress;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Phone;
 import com.liferay.portal.kernel.model.Website;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseFormMVCActionCommand;
@@ -39,20 +45,29 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.service.CompanyService;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PropertiesParamUtil;
+import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.settings.constants.PortalSettingsPortletKeys;
+import com.liferay.portal.settings.web.internal.exception.RequiredLocaleException;
+import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.users.admin.kernel.util.UsersAdminUtil;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
+import javax.portlet.PortletPreferences;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -136,6 +151,8 @@ public class EditCompanyMVCActionCommand extends BaseFormMVCActionCommand {
 	protected void doValidateForm(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
+
+		_validateAvailableLanguages(actionRequest);
 	}
 
 	@Reference(unbind = "-")
@@ -196,8 +213,124 @@ public class EditCompanyMVCActionCommand extends BaseFormMVCActionCommand {
 		_portal.resetCDNHosts();
 	}
 
+	private String[] _getRequiredLocaleMessageArguments(List<Group> groups)
+		throws PortalException {
+
+		if (groups.isEmpty()) {
+			return new String[0];
+		}
+		else if (groups.size() == 1) {
+			Group group = groups.get(0);
+
+			return new String[] {group.getDescriptiveName()};
+		}
+		else if (groups.size() == 2) {
+			Group group1 = groups.get(0);
+			Group group2 = groups.get(1);
+
+			return new String[] {
+				group1.getDescriptiveName(), group2.getDescriptiveName()
+			};
+		}
+		else {
+			int moreGroups = groups.size() - 2;
+
+			Group group1 = groups.get(0);
+			Group group2 = groups.get(1);
+
+			return new String[] {
+				group1.getDescriptiveName(), group2.getDescriptiveName(),
+				String.valueOf(moreGroups)
+			};
+		}
+	}
+
+	private String _getRequiredLocaleMessageKey(List<Group> groups) {
+		if (groups.isEmpty()) {
+			return StringPool.BLANK;
+		}
+		else if (groups.size() == 1) {
+			return "language-cannot-be-removed-because-it-is-in-use-by-the-" +
+				"following-site-x";
+		}
+		else if (groups.size() == 2) {
+			return "one-or-more-languages-cannot-be-removed-because-they-are-" +
+				"in-use-by-the-following-sites-x-and-x";
+		}
+
+		return "one-or-more-languages-cannot-be-removed-because-they-are-in-" +
+			"use-by-the-following-sites-x,-x-and-x-more";
+	}
+
+	private void _validateAvailableLanguages(ActionRequest actionRequest)
+		throws PortalException {
+
+		long companyId = _portal.getCompanyId(actionRequest);
+
+		PortletPreferences portletPreferences = PrefsPropsUtil.getPreferences(
+			companyId);
+
+		UnicodeProperties properties = PropertiesParamUtil.getProperties(
+			actionRequest, "settings--");
+
+		String newLanguageIds = properties.getProperty(PropsKeys.LOCALES);
+
+		if (Validator.isNull(newLanguageIds)) {
+			return;
+		}
+
+		String oldLanguageIds = portletPreferences.getValue(
+			PropsKeys.LOCALES, StringPool.BLANK);
+
+		if (Objects.equals(oldLanguageIds, newLanguageIds)) {
+			return;
+		}
+
+		List<String> removedLanguageIds = new ArrayList<>();
+
+		for (String oldLanguageId : oldLanguageIds.split(StringPool.COMMA)) {
+			if (!StringUtil.contains(
+					newLanguageIds, oldLanguageId, StringPool.COMMA)) {
+
+				removedLanguageIds.add(oldLanguageId);
+			}
+		}
+
+		if (removedLanguageIds.isEmpty()) {
+			return;
+		}
+
+		Disjunction disjunction = RestrictionsFactoryUtil.disjunction();
+
+		for (String removedLanguageId : removedLanguageIds) {
+			disjunction.add(
+				RestrictionsFactoryUtil.like(
+					"typeSettings", "%languageId=" + removedLanguageId + "%"));
+		}
+
+		DynamicQuery dynamicQuery = _groupLocalService.dynamicQuery();
+
+		dynamicQuery.add(disjunction);
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.like(
+				"typeSettings", "%inheritLocales=false%"));
+
+		List<Group> groups = _groupLocalService.dynamicQuery(dynamicQuery);
+
+		if (!groups.isEmpty()) {
+			RequiredLocaleException rle = new RequiredLocaleException(
+				_getRequiredLocaleMessageArguments(groups),
+				_getRequiredLocaleMessageKey(groups));
+
+			SessionErrors.add(actionRequest, rle.getClass(), rle);
+		}
+	}
+
 	private CompanyService _companyService;
 	private DLAppLocalService _dlAppLocalService;
+
+	@Reference
+	private GroupLocalService _groupLocalService;
 
 	@Reference
 	private Portal _portal;

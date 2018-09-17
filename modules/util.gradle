@@ -5,6 +5,8 @@ import com.liferay.gradle.util.StringUtil
 
 import java.util.regex.Matcher
 
+import org.gradle.util.GUtil
+
 buildscript {
 	apply from: file("build-buildscript.gradle"), to: buildscript
 }
@@ -77,7 +79,7 @@ repositories {
 wrapper {
 	File wrapperDir = projectDir.parentFile
 
-	distributionUrl = "../../tools/gradle-${gradle.gradleVersion}.LIFERAY-PATCHED-3-bin.zip"
+	distributionUrl = "../../tools/gradle-${gradle.gradleVersion}.LIFERAY-PATCHED-1-bin.zip"
 	dependsOn wrapperSubrepo
 
 	doLast {

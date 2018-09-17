@@ -87,6 +87,8 @@ if (article != null) {
 	defaultLanguageId = LocalizationUtil.getDefaultLanguageId(article.getContent(), LocaleUtil.getSiteDefault());
 }
 
+Locale defaultLocale = LocaleUtil.fromLanguageId(defaultLanguageId);
+
 boolean showHeader = ParamUtil.getBoolean(request, "showHeader", true);
 
 boolean hideDefaultSuccessMessage = ParamUtil.getBoolean(request, "hideDefaultSuccessMessage", false);
@@ -285,6 +287,17 @@ if (classNameId > JournalArticleConstants.CLASSNAME_ID_DEFAULT) {
 					<liferay-ui:message key="there-is-a-publication-workflow-in-process" />
 				</div>
 			</c:if>
+		</c:if>
+
+		<c:if test="<%= journalWebConfiguration.changeableDefaultLanguage() %>">
+			<div class="default-language mb-3 text-primary">
+				<liferay-ui:icon
+					icon="info-circle"
+					markupView="lexicon"
+				/>
+
+				<liferay-ui:message arguments="<%= defaultLocale.getDisplayName(locale) %>" key="default-language-x" />
+			</div>
 		</c:if>
 
 		<liferay-frontend:form-navigator

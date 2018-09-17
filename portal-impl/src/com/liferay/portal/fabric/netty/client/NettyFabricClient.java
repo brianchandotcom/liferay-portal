@@ -26,6 +26,7 @@ import com.liferay.portal.fabric.netty.handlers.NettyChannelAttributes;
 import com.liferay.portal.fabric.netty.handlers.NettyFabricWorkerExecutionChannelHandler;
 import com.liferay.portal.fabric.netty.repository.NettyRepository;
 import com.liferay.portal.fabric.netty.rpc.handlers.NettyRPCChannelHandler;
+import com.liferay.portal.fabric.netty.util.NamedThreadFactory;
 import com.liferay.portal.fabric.netty.util.NettyUtil;
 import com.liferay.portal.fabric.repository.Repository;
 import com.liferay.portal.fabric.worker.FabricWorker;
@@ -36,7 +37,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.process.ProcessCallable;
 import com.liferay.portal.kernel.process.ProcessExecutor;
 import com.liferay.portal.kernel.process.TerminationProcessException;
-import com.liferay.portal.kernel.util.NamedThreadFactory;
 
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.Channel;
@@ -104,8 +104,7 @@ public class NettyFabricClient implements FabricClient {
 			new NioEventLoopGroup(
 				_nettyFabricClientConfig.getEventLoopGroupThreadCount(),
 				new NamedThreadFactory(
-					"Netty Fabric Client/NIO Event Loop Group",
-					Thread.NORM_PRIORITY, null)));
+					"Netty Fabric Client/NIO Event Loop Group")));
 		_bootstrap.handler(new NettyFabricClientChannelInitializer());
 
 		int reconnectCount = _nettyFabricClientConfig.getReconnectCount();
@@ -154,8 +153,7 @@ public class NettyFabricClient implements FabricClient {
 		int threadCount, String threadPoolName) {
 
 		EventExecutorGroup eventExecutorGroup = new DefaultEventExecutorGroup(
-			threadCount,
-			new NamedThreadFactory(threadPoolName, Thread.NORM_PRIORITY, null));
+			threadCount, new NamedThreadFactory(threadPoolName));
 
 		NettyUtil.bindShutdown(
 			_bootstrap.group(), eventExecutorGroup,

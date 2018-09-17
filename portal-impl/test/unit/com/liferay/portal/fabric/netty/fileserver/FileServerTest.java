@@ -20,8 +20,8 @@ import com.liferay.portal.fabric.netty.codec.serialization.AnnotatedObjectEncode
 import com.liferay.portal.fabric.netty.fileserver.handlers.FileRequestChannelHandler;
 import com.liferay.portal.fabric.netty.fileserver.handlers.FileResponseChannelHandler;
 import com.liferay.portal.fabric.netty.fileserver.handlers.FileServerTestUtil;
+import com.liferay.portal.fabric.netty.util.NamedThreadFactory;
 import com.liferay.portal.kernel.concurrent.AsyncBroker;
-import com.liferay.portal.kernel.util.NamedThreadFactory;
 
 import io.netty.bootstrap.Bootstrap;
 import io.netty.bootstrap.ServerBootstrap;
@@ -290,15 +290,9 @@ public class FileServerTest {
 	private Path _destFile;
 	private final EventExecutorGroup _fileServerEventExecutorGroup =
 		new NioEventLoopGroup(
-			1,
-			new NamedThreadFactory(
-				"FileServer-EventLoop", Thread.MAX_PRIORITY,
-				FileServerTest.class.getClassLoader()));
+			1, new NamedThreadFactory("FileServer-EventLoop"));
 	private final EventLoopGroup _nioEventLoopGroup = new NioEventLoopGroup(
-		1,
-		new NamedThreadFactory(
-			"IO-EventLoop", Thread.MAX_PRIORITY,
-			FileServerTest.class.getClassLoader()));
+		1, new NamedThreadFactory("IO-EventLoop"));
 	private int _port;
 	private Channel _serverChannel;
 	private Path _sourceFilePath;

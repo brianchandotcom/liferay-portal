@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.search.BooleanClauseFactoryUtil;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.Query;
 import com.liferay.portal.kernel.search.generic.TermQueryImpl;
+import com.liferay.portal.kernel.search.generic.TermRangeQueryImpl;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.structured.content.apio.architect.entity.EntityField;
 import com.liferay.structured.content.apio.architect.filter.expression.BinaryExpression;
@@ -92,6 +93,9 @@ public class ExpressionVisitorImpl implements ExpressionVisitor<Object> {
 		if (Objects.equals(BinaryExpression.Operation.EQ, operation)) {
 			query = _getEQQuery(entityField, fieldValue, locale);
 		}
+		else if (Objects.equals(BinaryExpression.Operation.GE, operation)) {
+			query = _getGEQuery(entityField, fieldValue, locale);
+		}
 		else {
 			return Optional.empty();
 		}
@@ -106,6 +110,14 @@ public class ExpressionVisitorImpl implements ExpressionVisitor<Object> {
 
 		return new TermQueryImpl(
 			entityField.getSortableName(locale), String.valueOf(fieldValue));
+	}
+
+	private Query _getGEQuery(
+		EntityField entityField, Object fieldValue, Locale locale) {
+
+		return new TermRangeQueryImpl(
+			entityField.getSortableName(locale), String.valueOf(fieldValue),
+			null, true, true);
 	}
 
 	private Object _normalizeLiteral(String literal) {

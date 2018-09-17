@@ -17,6 +17,8 @@ package com.liferay.bean.portlet.cdi.extension.internal;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 
+import java.util.Objects;
+
 /**
  * @author Neil Griffin
  */
@@ -26,6 +28,28 @@ public class PortletDependency {
 		_name = name;
 		_scope = scope;
 		_version = version;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+
+		if ((obj == null) || !(obj instanceof PortletDependency)) {
+			return false;
+		}
+
+		PortletDependency portletDependency = (PortletDependency)obj;
+
+		if (Objects.equals(_name, portletDependency.getName()) &&
+			Objects.equals(_scope, portletDependency.getScope()) &&
+			Objects.equals(_version, portletDependency.getVersion())) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	public String getName() {
@@ -38,6 +62,11 @@ public class PortletDependency {
 
 	public String getVersion() {
 		return _version;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(_name, _scope, _version);
 	}
 
 	@Override

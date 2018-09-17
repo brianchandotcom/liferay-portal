@@ -21,8 +21,6 @@
 	{@param? highlightMapping: bool}
 	{@param? _handleHide: any}
 	{@param? _handleHideSidebarButtonClick: any}
-	{@param? _handleTabClick: any}
-	{@param? _selectedTab: string}
 	{@param? selectedMappingTypes: [
 		subtype: [
 			id: string,
@@ -38,15 +36,13 @@
 
 	{call liferay.frontend.ContextualSidebar.render}
 		{param body kind="html"}
-			{call .sidebarBody}
+			{call com.liferay.layout.admin.web.FragmentsEditorSidebarContent.render}
 				{param dropTargetClass: $dropTargetClass /}
 				{param fragmentCollections: $fragmentCollections /}
 				{param fragmentEntryLinks: $fragmentEntryLinks /}
-				{param handleTabClick: $_handleTabClick /}
 				{param highlightMapping: $highlightMapping ?: false /}
 				{param layoutData: $layoutData /}
 				{param selectedMappingTypes: $selectedMappingTypes /}
-				{param selectedTab: $_selectedTab /}
 				{param sidebarTabs: $sidebarTabs /}
 				{param spritemap: $spritemap /}
 				{param store: $store /}
@@ -69,85 +65,6 @@
 		{param ref: 'contextualSidebar' /}
 		{param visible: $visible ?: true /}
 	{/call}
-{/template}
-
-{template .sidebarBody}
-	{@param fragmentCollections: list<[
-		fragmentEntries: list<[
-			fragmentEntryId: string,
-			imagePreviewURL: string,
-			name: string
-		]>,
-		fragmentCollectionId: string,
-		name: string
-	]>}
-	{@param fragmentEntryLinks: ?}
-	{@param highlightMapping: bool}
-	{@param sidebarTabs: list<[enabled:bool, id:string, label:string]>}
-	{@param spritemap: string}
-	{@param? dropTargetClass: string}
-	{@param? handleTabClick: any}
-	{@param? layoutData: ?}
-	{@param? selectedTab: string}
-	{@param? selectedMappingTypes: [
-		subtype: [
-			id: string,
-			label: string
-		],
-		type: [
-			id: string,
-			label: string
-		]
-	]}
-	{@param? store: ?}
-
-	<div>
-		<div class="sidebar-section">
-			<nav class="navbar navbar-expand-md navbar-underline">
-				<ul class="navbar-nav">
-					{if $sidebarTabs}
-						{foreach $sidebarTab in $sidebarTabs}
-							{if $sidebarTab.enabled}
-								{call .sidebarTab}
-									{param active: $sidebarTab.id == $selectedTab /}
-									{param id: $sidebarTab.id /}
-									{param key: $sidebarTab.id /}
-									{param handleTabClick: $handleTabClick /}
-									{param label: $sidebarTab.label /}
-								{/call}
-							{/if}
-						{/foreach}
-					{/if}
-				</ul>
-			</nav>
-		</div>
-
-		{if $selectedTab == 'available'}
-			{call com.liferay.layout.admin.web.SidebarAvailableFragments.render}
-				{param dropTargetClass: $dropTargetClass /}
-				{param fragmentCollections: $fragmentCollections /}
-				{param ref: 'sidebarTab' /}
-				{param spritemap: $spritemap /}
-				{param store: $store /}
-			{/call}
-		{elseif $selectedTab == 'added'}
-			{call com.liferay.layout.admin.web.SidebarAddedFragments.render}
-				{param fragmentEntryLinks: $fragmentEntryLinks /}
-				{param layoutData: $layoutData /}
-				{param ref: 'sidebarTab' /}
-				{param spritemap: $spritemap /}
-				{param store: $store /}
-			{/call}
-		{elseif $selectedTab == 'mapping'}
-			{call com.liferay.layout.admin.web.SidebarMapping.render}
-				{param highlightMapping: $highlightMapping ?: false /}
-				{param ref: 'sidebarTab' /}
-				{param selectedMappingTypes: $selectedMappingTypes /}
-				{param spritemap: $spritemap /}
-				{param store: $store /}
-			{/call}
-		{/if}
-	</div>
 {/template}
 
 /**
@@ -178,34 +95,4 @@
 			</button>
 		</div>
 	</div>
-{/template}
-
-/**
- * Sidebar tab
- */
-{template .sidebarTab}
-	{@param id: string}
-	{@param handleTabClick: any}
-	{@param active: bool}
-	{@param label: string}
-
-	<li class="nav-item">
-		{let $navLinkClasses kind="text"}
-			nav-link
-			{if $active}
-				{sp}active
-			{/if}
-		{/let}
-
-		<a
-			class="{$navLinkClasses}"
-			data-onclick="{$handleTabClick}"
-			data-tab-id="{$id}"
-			href="javascript:;"
-		>
-			<span class="text-truncate">
-				{$label}
-			</span>
-		</a>
-	</li>
 {/template}

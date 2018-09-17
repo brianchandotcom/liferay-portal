@@ -18,7 +18,9 @@ import com.liferay.portal.kernel.search.BooleanClause;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.Query;
 import com.liferay.portal.kernel.search.QueryTerm;
+import com.liferay.portal.kernel.search.TermRangeQuery;
 import com.liferay.portal.kernel.search.generic.TermQueryImpl;
+import com.liferay.portal.kernel.search.generic.TermRangeQueryImpl;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.structured.content.apio.architect.entity.EntityField;
 import com.liferay.structured.content.apio.architect.filter.expression.BinaryExpression;
@@ -63,6 +65,60 @@ public class ExpressionVisitorImplTest {
 
 		Assert.assertEquals(entityField.getName(), queryTerm.getField());
 		Assert.assertEquals(value, queryTerm.getValue());
+	}
+
+	@SuppressWarnings("unchecked")
+	@Test
+	public void testVisitBinaryExpressionOperationWithGreaterEqualOperation() {
+		Map<String, EntityField> entityFieldsMap =
+			_structuredContentSingleEntitySchemaBasedEdmProvider.
+				getEntityFieldsMap();
+
+		EntityField entityField = entityFieldsMap.get("title");
+
+		String value = "title1";
+
+		BooleanClause<Query> queryBooleanClause =
+			_expressionVisitorImpl.visitBinaryExpressionOperation(
+				BinaryExpression.Operation.GE, entityField, value);
+
+		Assert.assertEquals(
+			BooleanClauseOccur.MUST,
+			queryBooleanClause.getBooleanClauseOccur());
+
+		TermRangeQuery termRangeQuery =
+			(TermRangeQueryImpl)queryBooleanClause.getClause();
+
+		Assert.assertEquals(entityField.getName(), termRangeQuery.getField());
+		Assert.assertEquals(value, termRangeQuery.getLowerTerm());
+		Assert.assertNull(termRangeQuery.getUpperTerm());
+	}
+
+	@SuppressWarnings("unchecked")
+	@Test
+	public void testVisitBinaryExpressionOperationWithLowerEqualOperation() {
+		Map<String, EntityField> entityFieldsMap =
+			_structuredContentSingleEntitySchemaBasedEdmProvider.
+				getEntityFieldsMap();
+
+		EntityField entityField = entityFieldsMap.get("title");
+
+		String value = "title1";
+
+		BooleanClause<Query> queryBooleanClause =
+			_expressionVisitorImpl.visitBinaryExpressionOperation(
+				BinaryExpression.Operation.LE, entityField, value);
+
+		Assert.assertEquals(
+			BooleanClauseOccur.MUST,
+			queryBooleanClause.getBooleanClauseOccur());
+
+		TermRangeQuery termRangeQuery =
+			(TermRangeQueryImpl)queryBooleanClause.getClause();
+
+		Assert.assertEquals(entityField.getName(), termRangeQuery.getField());
+		Assert.assertEquals(value, termRangeQuery.getUpperTerm());
+		Assert.assertNull(termRangeQuery.getLowerTerm());
 	}
 
 	@Test

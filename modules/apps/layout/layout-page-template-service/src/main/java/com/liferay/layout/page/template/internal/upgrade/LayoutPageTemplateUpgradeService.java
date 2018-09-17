@@ -14,10 +14,14 @@
 
 package com.liferay.layout.page.template.internal.upgrade;
 
+import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.layout.page.template.internal.upgrade.v1_1_0.UpgradeLayoutPrototype;
+import com.liferay.layout.page.template.internal.upgrade.v1_1_1.UpgradeLayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
+import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
 import org.osgi.service.component.annotations.Component;
@@ -38,13 +42,29 @@ public class LayoutPageTemplateUpgradeService
 			"1.0.0", "1.1.0",
 			new UpgradeLayoutPrototype(
 				_companyLocalService, _layoutPageTemplateEntryLocalService));
+
+		registry.register(
+			"1.1.0", "1.1.1",
+			new UpgradeLayoutPageTemplateStructure(
+				_fragmentEntryLinkLocalService,
+				_layoutPageTemplateStructureLocalService, _portal));
 	}
 
 	@Reference
 	private CompanyLocalService _companyLocalService;
 
 	@Reference
+	private FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;
+
+	@Reference
 	private LayoutPageTemplateEntryLocalService
 		_layoutPageTemplateEntryLocalService;
+
+	@Reference
+	private LayoutPageTemplateStructureLocalService
+		_layoutPageTemplateStructureLocalService;
+
+	@Reference
+	private Portal _portal;
 
 }

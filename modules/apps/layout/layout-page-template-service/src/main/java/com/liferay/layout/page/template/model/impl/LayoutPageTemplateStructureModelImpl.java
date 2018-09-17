@@ -98,7 +98,7 @@ public class LayoutPageTemplateStructureModelImpl extends BaseModelImpl<LayoutPa
 		TABLE_COLUMNS_MAP.put("data_", Types.VARCHAR);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table LayoutPageTemplateStructure (uuid_ VARCHAR(75) null,layoutPageTemplateStructureId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,data_ VARCHAR(75) null)";
+	public static final String TABLE_SQL_CREATE = "create table LayoutPageTemplateStructure (uuid_ VARCHAR(75) null,layoutPageTemplateStructureId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,data_ STRING null)";
 	public static final String TABLE_SQL_DROP = "drop table LayoutPageTemplateStructure";
 	public static final String ORDER_BY_JPQL = " ORDER BY layoutPageTemplateStructure.layoutPageTemplateStructureId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY LayoutPageTemplateStructure.layoutPageTemplateStructureId ASC";

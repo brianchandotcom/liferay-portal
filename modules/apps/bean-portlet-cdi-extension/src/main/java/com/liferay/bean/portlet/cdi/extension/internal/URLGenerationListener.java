@@ -21,28 +21,9 @@ import com.liferay.petra.string.StringPool;
  */
 public class URLGenerationListener {
 
-	public URLGenerationListener() {
-	}
-
 	public URLGenerationListener(int ordinal, String listenerClassName) {
 		_ordinal = ordinal;
 		_listenerClassName = listenerClassName;
-	}
-
-	public String getListenerClassName() {
-		return _listenerClassName;
-	}
-
-	public int getOrdinal() {
-		return _ordinal;
-	}
-
-	public void setListenerClassName(String listenerClassName) {
-		_listenerClassName = listenerClassName;
-	}
-
-	public void setOrdinal(int ordinal) {
-		_ordinal = ordinal;
 	}
 
 	@Override
@@ -55,7 +36,7 @@ public class URLGenerationListener {
 			StringPool.SEMICOLON).concat(String.valueOf(_ordinal));
 	}
 
-	private String _listenerClassName;
-	private int _ordinal;
+	private final String _listenerClassName;
+	private final int _ordinal;
 
 }

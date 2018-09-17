@@ -27,8 +27,4 @@ public interface Event {
 
 	public QName getQName();
 
-	public void setName(String name);
-
-	public void setQName(QName qName);
-
 }

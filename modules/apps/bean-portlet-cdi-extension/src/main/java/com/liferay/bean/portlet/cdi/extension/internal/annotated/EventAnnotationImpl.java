@@ -40,22 +40,12 @@ public class EventAnnotationImpl extends BaseEventImpl {
 	}
 
 	public EventAnnotationImpl(PortletQName portletQName) {
-		setQName(
-			new QName(portletQName.namespaceURI(), portletQName.localPart()));
+		super(new QName(portletQName.namespaceURI(), portletQName.localPart()));
 	}
 
 	@Override
 	public List<QName> getAliasQNames() {
 		return _aliasQNames;
-	}
-
-	@Override
-	public void setName(String name) {
-
-		// The @Event annotation does not have the name feature that
-		// is available in portlet.xml
-
-		throw new UnsupportedOperationException();
 	}
 
 	private final List<QName> _aliasQNames = new ArrayList<>();

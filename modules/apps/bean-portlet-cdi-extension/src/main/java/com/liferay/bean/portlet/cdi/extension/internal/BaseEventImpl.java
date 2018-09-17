@@ -21,16 +21,15 @@ import javax.xml.namespace.QName;
  */
 public abstract class BaseEventImpl implements Event {
 
+	public BaseEventImpl(QName qName) {
+		_qName = qName;
+	}
+
 	@Override
 	public QName getQName() {
 		return _qName;
 	}
 
-	@Override
-	public void setQName(QName qName) {
-		_qName = qName;
-	}
-
-	private QName _qName;
+	private final QName _qName;
 
 }

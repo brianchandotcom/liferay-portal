@@ -1,6 +1,12 @@
 buildscript {
 	dependencies {
-		classpath fileTree(dir: pluginClasspathDir, include: "*.jar")
+		classpath group: "com.liferay", name: "com.liferay.gradle.plugins.wedeploy", version: "latest.release"
+	}
+
+	repositories {
+		maven {
+			url "https://repository-cdn.liferay.com/nexus/content/groups/public"
+		}
 	}
 }
 

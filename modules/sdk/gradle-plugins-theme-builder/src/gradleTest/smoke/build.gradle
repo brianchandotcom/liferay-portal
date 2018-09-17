@@ -18,8 +18,8 @@ runGradleTest {
 
 		String[] expectedFileNames = [
 			"WEB-INF/liferay-look-and-feel.xml",
-			"css/aui.css",
-			"css/aui_rtl.css",
+			"css/clay.css",
+			"css/clay_rtl.css",
 			"css/main.css",
 			"css/main_rtl.css",
 			"fonts/opensans-regular-webfont.woff",

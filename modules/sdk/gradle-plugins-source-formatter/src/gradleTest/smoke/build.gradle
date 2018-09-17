@@ -1,0 +1,30 @@
+apply plugin: "com.liferay.source.formatter"
+apply plugin: "java"
+
+task runGradleTest
+
+repositories {
+	maven {
+		url "https://repository-cdn.liferay.com/nexus/content/groups/public"
+	}
+}
+
+runGradleTest {
+	dependsOn formatSource
+
+	doLast {
+		String[] fileNames = [
+			"src/main/java/com/liferay/sample/GreetingBuilder.java"
+		]
+
+		for (String fileName in fileNames) {
+			File generatedFile = file(fileName)
+
+			assert generatedFile.exists()
+
+			File expectedFile = file(generatedFile.name + ".expected")
+
+			assert expectedFile.text.normalize() == generatedFile.text.normalize()
+		}
+	}
+}

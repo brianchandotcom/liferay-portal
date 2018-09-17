@@ -21,6 +21,7 @@ import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.service.FragmentEntryLinkLocalServiceUtil;
+import com.liferay.fragment.service.FragmentEntryLocalServiceUtil;
 import com.liferay.fragment.util.FragmentTestUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Group;
@@ -45,10 +46,10 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
- * @author Pavel Savinov
+ * @author Kyle Miho
  */
 @RunWith(Arquillian.class)
-public class FragmentEntryLinkStagedModelDataHandlerTest
+public class FragmentEntryStagedModelDataHandlerTest
 	extends BaseStagedModelDataHandlerTestCase {
 
 	@ClassRule
@@ -64,7 +65,9 @@ public class FragmentEntryLinkStagedModelDataHandlerTest
 	}
 
 	@Test
-	public void testStageFragmentEntryLink() throws Exception {
+	public void testUpdateFragmentEntryWithFragmentEntryLink()
+		throws Exception {
+
 		Map<String, List<StagedModel>> dependentStagedModelsMap =
 			addDependentStagedModelsMap(stagingGroup);
 
@@ -75,20 +78,20 @@ public class FragmentEntryLinkStagedModelDataHandlerTest
 		StagedModel stagedModel = addStagedModel(
 			stagingGroup, dependentStagedModelsMap);
 
-		FragmentEntryLink fragmentEntryLink =
-			FragmentEntryLinkLocalServiceUtil.
-				fetchFragmentEntryLinkByUuidAndGroupId(
-					stagedModel.getUuid(), stagingGroup.getGroupId());
+		FragmentEntry fragmentEntry = (FragmentEntry)stagedModel;
 
-		stagedModel = FragmentEntryLinkLocalServiceUtil.updateFragmentEntryLink(
-			TestPropsValues.getUserId(),
-			fragmentEntryLink.getFragmentEntryLinkId(),
-			fragmentEntryLink.getFragmentEntryLinkId(),
-			fragmentEntryLink.getFragmentEntryId(),
-			PortalUtil.getClassNameId(Layout.class),
-			fragmentEntryLink.getClassPK(), "css", "html", "js",
-			StringPool.BLANK, fragmentEntryLink.getPosition() + 1,
-			serviceContext);
+		FragmentEntryLink fragmentEntryLink =
+			FragmentEntryLinkLocalServiceUtil.addFragmentEntryLink(
+				TestPropsValues.getUserId(), stagingGroup.getGroupId(), 0,
+				fragmentEntry.getFragmentEntryId(),
+				PortalUtil.getClassNameId(Layout.class),
+				stagingGroup.getDefaultPublicPlid(), fragmentEntry.getCss(),
+				fragmentEntry.getHtml(), fragmentEntry.getJs(),
+				StringPool.BLANK, 0, serviceContext);
+
+		stagedModel = FragmentEntryLocalServiceUtil.updateFragmentEntry(
+			TestPropsValues.getUserId(), fragmentEntry.getFragmentEntryId(),
+			fragmentEntry.getName(), "css", "html", "js", 0);
 
 		try {
 			exportImportStagedModel(stagedModel);
@@ -100,8 +103,17 @@ public class FragmentEntryLinkStagedModelDataHandlerTest
 		StagedModel importedStagedModel = getStagedModel(
 			stagedModel.getUuid(), liveGroup);
 
+		FragmentEntry importedFragmentEntry =
+			(FragmentEntry)importedStagedModel;
+
 		Assert.assertNotNull(importedStagedModel);
 
+		Assert.assertNotEquals(
+			fragmentEntryLink.getCss(), importedFragmentEntry.getCss());
+		Assert.assertNotEquals(
+			fragmentEntryLink.getHtml(), importedFragmentEntry.getHtml());
+		Assert.assertNotEquals(
+			fragmentEntryLink.getJs(), importedFragmentEntry.getJs());
 		validateImportedStagedModel(stagedModel, importedStagedModel);
 	}
 
@@ -114,23 +126,19 @@ public class FragmentEntryLinkStagedModelDataHandlerTest
 		FragmentCollection fragmentCollection =
 			FragmentTestUtil.addFragmentCollection(group.getGroupId());
 
-		FragmentEntry fragmentEntry = FragmentTestUtil.addFragmentEntry(
+		return FragmentTestUtil.addFragmentEntry(
 			fragmentCollection.getFragmentCollectionId());
-
-		return FragmentTestUtil.addFragmentEntryLink(
-			fragmentEntry, PortalUtil.getClassNameId(Layout.class),
-			group.getDefaultPublicPlid());
 	}
 
 	@Override
 	protected StagedModel getStagedModel(String uuid, Group group) {
-		return FragmentTestUtil.fetchFragmentEntryLink(
+		return FragmentEntryLocalServiceUtil.fetchFragmentEntryByUuidAndGroupId(
 			uuid, group.getGroupId());
 	}
 
 	@Override
 	protected Class<? extends StagedModel> getStagedModelClass() {
-		return FragmentEntryLink.class;
+		return FragmentEntry.class;
 	}
 
 	@Override
@@ -138,19 +146,16 @@ public class FragmentEntryLinkStagedModelDataHandlerTest
 			StagedModel stagedModel, StagedModel importedStagedModel)
 		throws Exception {
 
-		FragmentEntryLink fragmentEntryLink = (FragmentEntryLink)stagedModel;
-		FragmentEntryLink importedFragmentEntryLink =
-			(FragmentEntryLink)importedStagedModel;
+		FragmentEntry fragmentEntry = (FragmentEntry)stagedModel;
+		FragmentEntry importedFragmentEntry =
+			(FragmentEntry)importedStagedModel;
 
 		Assert.assertEquals(
-			importedFragmentEntryLink.getCss(), fragmentEntryLink.getCss());
+			importedFragmentEntry.getCss(), fragmentEntry.getCss());
 		Assert.assertEquals(
-			importedFragmentEntryLink.getHtml(), fragmentEntryLink.getHtml());
+			importedFragmentEntry.getHtml(), fragmentEntry.getHtml());
 		Assert.assertEquals(
-			importedFragmentEntryLink.getJs(), fragmentEntryLink.getJs());
-		Assert.assertEquals(
-			importedFragmentEntryLink.getPosition(),
-			fragmentEntryLink.getPosition());
+			importedFragmentEntry.getJs(), fragmentEntry.getJs());
 	}
 
 }

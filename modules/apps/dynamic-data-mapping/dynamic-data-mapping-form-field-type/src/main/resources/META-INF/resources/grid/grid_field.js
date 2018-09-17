@@ -126,7 +126,7 @@ AUI.add(
 
 						var target = event.currentTarget;
 
-						var value = instance.get('value');
+						var value = A.merge({}, instance.get('value'));
 
 						value[target.attr('data-row')] = target.attr('value');
 

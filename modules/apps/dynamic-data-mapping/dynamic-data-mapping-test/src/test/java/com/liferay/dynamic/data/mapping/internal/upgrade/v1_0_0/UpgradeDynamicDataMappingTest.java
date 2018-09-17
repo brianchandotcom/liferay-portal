@@ -155,16 +155,19 @@ public class UpgradeDynamicDataMappingTest extends PowerMockito {
 			null, null, null);
 	}
 
-	@Test(expected = UpgradeException.class)
+	@Test
 	public void testCreateNewFieldNameWithConflictingNewFieldName()
 		throws Exception {
 
 		Set<String> existingFieldNames = new HashSet<>();
 
 		existingFieldNames.add("myna");
+		existingFieldNames.add("myna1");
 
-		_upgradeDynamicDataMapping.createNewDDMFormFieldName(
-			"?my/--na", existingFieldNames);
+		Assert.assertEquals(
+			"myna2",
+			_upgradeDynamicDataMapping.createNewDDMFormFieldName(
+				"?my/--na", existingFieldNames));
 	}
 
 	@Test

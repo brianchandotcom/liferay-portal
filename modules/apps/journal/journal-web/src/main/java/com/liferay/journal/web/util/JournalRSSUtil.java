@@ -604,7 +604,7 @@ public class JournalRSSUtil {
 			}
 		}
 		else if (!contentField.equals(
-					 JournalFeedConstants.WEB_CONTENT_DESCRIPTION)) {
+					JournalFeedConstants.WEB_CONTENT_DESCRIPTION)) {
 
 			Document document = SAXReaderUtil.read(
 				article.getContentByLocale(languageId));

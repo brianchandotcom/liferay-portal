@@ -944,7 +944,7 @@ public class JournalFolderLocalServiceImpl
 			}
 		}
 		else if (restrictionType ==
-					 JournalFolderConstants.RESTRICTION_TYPE_INHERIT) {
+					JournalFolderConstants.RESTRICTION_TYPE_INHERIT) {
 
 			if (originalDDMStructureIds.isEmpty()) {
 				originalDDMStructureIds.add(
@@ -958,7 +958,7 @@ public class JournalFolderLocalServiceImpl
 			}
 		}
 		else if (restrictionType ==
-					 JournalFolderConstants.RESTRICTION_TYPE_WORKFLOW) {
+					JournalFolderConstants.RESTRICTION_TYPE_WORKFLOW) {
 
 			String workflowDefinition = ParamUtil.getString(
 				serviceContext,

@@ -458,7 +458,7 @@ public class PluginPackageUtil {
 				status = PluginPackageImpl.STATUS_NEWER_VERSION_INSTALLED;
 			}
 			else if (installedPluginPackage.isPreviousVersionThan(
-						 pluginPackage)) {
+						pluginPackage)) {
 
 				status = PluginPackageImpl.STATUS_OLDER_VERSION_INSTALLED;
 			}

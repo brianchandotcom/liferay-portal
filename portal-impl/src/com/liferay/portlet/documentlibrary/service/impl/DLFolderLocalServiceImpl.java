@@ -890,7 +890,7 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 				}
 			}
 			else if (restrictionType ==
-						 DLFolderConstants.RESTRICTION_TYPE_INHERIT) {
+						DLFolderConstants.RESTRICTION_TYPE_INHERIT) {
 
 				if (originalFileEntryTypeIds.isEmpty()) {
 					originalFileEntryTypeIds.add(
@@ -904,7 +904,7 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 				}
 			}
 			else if (restrictionType ==
-						 DLFolderConstants.RESTRICTION_TYPE_WORKFLOW) {
+						DLFolderConstants.RESTRICTION_TYPE_WORKFLOW) {
 
 				String workflowDefinition = ParamUtil.getString(
 					serviceContext,

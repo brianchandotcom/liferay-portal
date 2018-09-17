@@ -355,7 +355,7 @@ public class LayoutReferencesExportImportContentProcessor
 						layoutSet = group.getPublicLayoutSet();
 					}
 					else if (urlSBString.contains(
-								 _DATA_HANDLER_PRIVATE_LAYOUT_SET_SECURE_URL) ||
+								_DATA_HANDLER_PRIVATE_LAYOUT_SET_SECURE_URL) ||
 							 urlSBString.contains(
 								 _DATA_HANDLER_PRIVATE_LAYOUT_SET_URL)) {
 
@@ -839,7 +839,7 @@ public class LayoutReferencesExportImportContentProcessor
 					layoutSet = group.getPublicLayoutSet();
 				}
 				else if (urlSBString.contains(
-							 _DATA_HANDLER_PRIVATE_LAYOUT_SET_SECURE_URL) ||
+							_DATA_HANDLER_PRIVATE_LAYOUT_SET_SECURE_URL) ||
 						 urlSBString.contains(
 							 _DATA_HANDLER_PRIVATE_LAYOUT_SET_URL)) {
 

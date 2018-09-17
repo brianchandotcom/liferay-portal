@@ -134,7 +134,7 @@ public class SystemEventHierarchyEntryThreadLocal {
 			systemEventSetKey = CounterLocalServiceUtil.increment();
 		}
 		else if (parentSystemEventHierarchyEntry.getAction() ==
-					 SystemEventConstants.ACTION_SKIP) {
+					SystemEventConstants.ACTION_SKIP) {
 
 			return null;
 		}

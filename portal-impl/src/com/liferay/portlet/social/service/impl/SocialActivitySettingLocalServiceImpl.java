@@ -334,7 +334,7 @@ public class SocialActivitySettingLocalServiceImpl
 						defaultActivityDefinition.isCountersEnabled()));
 			}
 			else if (name.equals(
-						 SocialActivitySettingConstants.NAME_LOG_ENABLED)) {
+						SocialActivitySettingConstants.NAME_LOG_ENABLED)) {
 
 				activityDefinition.setLogActivity(
 					GetterUtil.getBoolean(

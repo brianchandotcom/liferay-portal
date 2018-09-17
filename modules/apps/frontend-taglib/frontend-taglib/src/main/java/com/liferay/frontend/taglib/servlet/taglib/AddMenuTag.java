@@ -74,20 +74,20 @@ public class AddMenuTag extends IncludeTag {
 					defaultMenuItems.add(addMenuItem);
 				}
 				else if (Objects.equals(
-							 AddMenuKeys.AddMenuType.FAVORITE,
-							 addMenuItem.getType())) {
+							AddMenuKeys.AddMenuType.FAVORITE,
+							addMenuItem.getType())) {
 
 					favoriteMenuItems.add(addMenuItem);
 				}
 				else if (Objects.equals(
-							 AddMenuKeys.AddMenuType.PRIMARY,
-							 addMenuItem.getType())) {
+							AddMenuKeys.AddMenuType.PRIMARY,
+							addMenuItem.getType())) {
 
 					primaryMenuItems.add(addMenuItem);
 				}
 				else if (Objects.equals(
-							 AddMenuKeys.AddMenuType.RECENT,
-							 addMenuItem.getType())) {
+							AddMenuKeys.AddMenuType.RECENT,
+							addMenuItem.getType())) {
 
 					recentMenuItems.add(addMenuItem);
 				}

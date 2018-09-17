@@ -122,8 +122,8 @@ public class WikiSocialActivityHelper {
 				label = "x-removed-the-attachment-x";
 			}
 			else if (type ==
-						 SocialActivityConstants.
-							 TYPE_RESTORE_ATTACHMENT_FROM_TRASH) {
+						SocialActivityConstants.
+							TYPE_RESTORE_ATTACHMENT_FROM_TRASH) {
 
 				label = "x-restored-the-attachment-x";
 			}
@@ -222,7 +222,7 @@ public class WikiSocialActivityHelper {
 			return "icon-paperclip";
 		}
 		else if (type ==
-					 SocialActivityConstants.TYPE_MOVE_ATTACHMENT_TO_TRASH) {
+					SocialActivityConstants.TYPE_MOVE_ATTACHMENT_TO_TRASH) {
 
 			return "icon-remove";
 		}
@@ -230,8 +230,8 @@ public class WikiSocialActivityHelper {
 			return "icon-trash";
 		}
 		else if (type ==
-					 SocialActivityConstants.
-						 TYPE_RESTORE_ATTACHMENT_FROM_TRASH) {
+					SocialActivityConstants.
+						TYPE_RESTORE_ATTACHMENT_FROM_TRASH) {
 
 			return "icon-undo";
 		}

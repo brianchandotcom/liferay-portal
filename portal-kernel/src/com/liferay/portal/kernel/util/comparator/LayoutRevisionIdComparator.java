@@ -51,7 +51,7 @@ public class LayoutRevisionIdComparator
 			value = 1;
 		}
 		else if (layoutRevision1.getLayoutRevisionId() <
-					 layoutRevision2.getLayoutRevisionId()) {
+					layoutRevision2.getLayoutRevisionId()) {
 
 			value = -1;
 		}

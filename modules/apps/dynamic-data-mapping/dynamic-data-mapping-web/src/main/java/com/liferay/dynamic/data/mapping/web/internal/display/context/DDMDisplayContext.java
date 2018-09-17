@@ -988,7 +988,7 @@ public class DDMDisplayContext {
 			templateTypeValue = DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY;
 		}
 		else if (scopeTemplateType.equals(
-					 DDMTemplateConstants.TEMPLATE_TYPE_FORM)) {
+					DDMTemplateConstants.TEMPLATE_TYPE_FORM)) {
 
 			templateTypeValue = DDMTemplateConstants.TEMPLATE_TYPE_FORM;
 		}

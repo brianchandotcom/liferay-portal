@@ -67,21 +67,21 @@ public class DefaultProcessAwareExportImportLifecycleListener
 				onProcessFailed(exportImportLifecycleEvent);
 			}
 			else if (code ==
-						 ExportImportLifecycleConstants.
-							 EVENT_LAYOUT_EXPORT_STARTED) {
+						ExportImportLifecycleConstants.
+							EVENT_LAYOUT_EXPORT_STARTED) {
 
 				onProcessStarted(exportImportLifecycleEvent);
 			}
 			else if (code ==
-						 ExportImportLifecycleConstants.
-							 EVENT_LAYOUT_EXPORT_SUCCEEDED) {
+						ExportImportLifecycleConstants.
+							EVENT_LAYOUT_EXPORT_SUCCEEDED) {
 
 				onProcessSucceeded(exportImportLifecycleEvent);
 			}
 		}
 		else if (processFlag ==
-					 ExportImportLifecycleConstants.
-						 PROCESS_FLAG_LAYOUT_IMPORT_IN_PROCESS) {
+					ExportImportLifecycleConstants.
+						PROCESS_FLAG_LAYOUT_IMPORT_IN_PROCESS) {
 
 			if (code ==
 					ExportImportLifecycleConstants.EVENT_LAYOUT_IMPORT_FAILED) {
@@ -89,21 +89,21 @@ public class DefaultProcessAwareExportImportLifecycleListener
 				onProcessFailed(exportImportLifecycleEvent);
 			}
 			else if (code ==
-						 ExportImportLifecycleConstants.
-							 EVENT_LAYOUT_IMPORT_STARTED) {
+						ExportImportLifecycleConstants.
+							EVENT_LAYOUT_IMPORT_STARTED) {
 
 				onProcessStarted(exportImportLifecycleEvent);
 			}
 			else if (code ==
-						 ExportImportLifecycleConstants.
-							 EVENT_LAYOUT_IMPORT_SUCCEEDED) {
+						ExportImportLifecycleConstants.
+							EVENT_LAYOUT_IMPORT_SUCCEEDED) {
 
 				onProcessSucceeded(exportImportLifecycleEvent);
 			}
 		}
 		else if (processFlag ==
-					 ExportImportLifecycleConstants.
-						 PROCESS_FLAG_LAYOUT_STAGING_IN_PROCESS) {
+					ExportImportLifecycleConstants.
+						PROCESS_FLAG_LAYOUT_STAGING_IN_PROCESS) {
 
 			if ((code ==
 					ExportImportLifecycleConstants.
@@ -115,8 +115,8 @@ public class DefaultProcessAwareExportImportLifecycleListener
 				onProcessFailed(exportImportLifecycleEvent);
 			}
 			else if ((code ==
-						 ExportImportLifecycleConstants.
-							 EVENT_PUBLICATION_LAYOUT_LOCAL_STARTED) ||
+						ExportImportLifecycleConstants.
+							EVENT_PUBLICATION_LAYOUT_LOCAL_STARTED) ||
 					 (code ==
 						 ExportImportLifecycleConstants.
 							 EVENT_PUBLICATION_LAYOUT_REMOTE_STARTED)) {
@@ -124,8 +124,8 @@ public class DefaultProcessAwareExportImportLifecycleListener
 				onProcessStarted(exportImportLifecycleEvent);
 			}
 			else if ((code ==
-						 ExportImportLifecycleConstants.
-							 EVENT_PUBLICATION_LAYOUT_LOCAL_SUCCEEDED) ||
+						ExportImportLifecycleConstants.
+							EVENT_PUBLICATION_LAYOUT_LOCAL_SUCCEEDED) ||
 					 (code ==
 						 ExportImportLifecycleConstants.
 							 EVENT_PUBLICATION_LAYOUT_REMOTE_SUCCEEDED)) {
@@ -134,8 +134,8 @@ public class DefaultProcessAwareExportImportLifecycleListener
 			}
 		}
 		else if (processFlag ==
-					 ExportImportLifecycleConstants.
-						 PROCESS_FLAG_PORTLET_EXPORT_IN_PROCESS) {
+					ExportImportLifecycleConstants.
+						PROCESS_FLAG_PORTLET_EXPORT_IN_PROCESS) {
 
 			if (code ==
 					ExportImportLifecycleConstants.
@@ -144,21 +144,21 @@ public class DefaultProcessAwareExportImportLifecycleListener
 				onProcessFailed(exportImportLifecycleEvent);
 			}
 			else if (code ==
-						 ExportImportLifecycleConstants.
-							 EVENT_PORTLET_EXPORT_STARTED) {
+						ExportImportLifecycleConstants.
+							EVENT_PORTLET_EXPORT_STARTED) {
 
 				onProcessStarted(exportImportLifecycleEvent);
 			}
 			else if (code ==
-						 ExportImportLifecycleConstants.
-							 EVENT_PORTLET_EXPORT_SUCCEEDED) {
+						ExportImportLifecycleConstants.
+							EVENT_PORTLET_EXPORT_SUCCEEDED) {
 
 				onProcessSucceeded(exportImportLifecycleEvent);
 			}
 		}
 		else if (processFlag ==
-					 ExportImportLifecycleConstants.
-						 PROCESS_FLAG_PORTLET_IMPORT_IN_PROCESS) {
+					ExportImportLifecycleConstants.
+						PROCESS_FLAG_PORTLET_IMPORT_IN_PROCESS) {
 
 			if (code ==
 					ExportImportLifecycleConstants.
@@ -167,21 +167,21 @@ public class DefaultProcessAwareExportImportLifecycleListener
 				onProcessFailed(exportImportLifecycleEvent);
 			}
 			else if (code ==
-						 ExportImportLifecycleConstants.
-							 EVENT_PORTLET_IMPORT_STARTED) {
+						ExportImportLifecycleConstants.
+							EVENT_PORTLET_IMPORT_STARTED) {
 
 				onProcessStarted(exportImportLifecycleEvent);
 			}
 			else if (code ==
-						 ExportImportLifecycleConstants.
-							 EVENT_PORTLET_IMPORT_SUCCEEDED) {
+						ExportImportLifecycleConstants.
+							EVENT_PORTLET_IMPORT_SUCCEEDED) {
 
 				onProcessSucceeded(exportImportLifecycleEvent);
 			}
 		}
 		else if (processFlag ==
-					 ExportImportLifecycleConstants.
-						 PROCESS_FLAG_PORTLET_STAGING_IN_PROCESS) {
+					ExportImportLifecycleConstants.
+						PROCESS_FLAG_PORTLET_STAGING_IN_PROCESS) {
 
 			if (code ==
 					ExportImportLifecycleConstants.
@@ -190,14 +190,14 @@ public class DefaultProcessAwareExportImportLifecycleListener
 				onProcessFailed(exportImportLifecycleEvent);
 			}
 			else if (code ==
-						 ExportImportLifecycleConstants.
-							 EVENT_PUBLICATION_PORTLET_LOCAL_STARTED) {
+						ExportImportLifecycleConstants.
+							EVENT_PUBLICATION_PORTLET_LOCAL_STARTED) {
 
 				onProcessStarted(exportImportLifecycleEvent);
 			}
 			else if (code ==
-						 ExportImportLifecycleConstants.
-							 EVENT_PUBLICATION_PORTLET_LOCAL_SUCCEEDED) {
+						ExportImportLifecycleConstants.
+							EVENT_PUBLICATION_PORTLET_LOCAL_SUCCEEDED) {
 
 				onProcessSucceeded(exportImportLifecycleEvent);
 			}

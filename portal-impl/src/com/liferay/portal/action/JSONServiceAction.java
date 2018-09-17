@@ -216,7 +216,7 @@ public class JSONServiceAction extends JSONAction {
 			return new Date(ParamUtil.getLong(request, parameter));
 		}
 		else if (typeNameOrClassDescriptor.equals(
-					 ServiceContext.class.getName())) {
+					ServiceContext.class.getName())) {
 
 			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(value);
 
@@ -397,7 +397,7 @@ public class JSONServiceAction extends JSONAction {
 			return new String[0][0];
 		}
 		else if (typeNameOrClassDescriptor.equals(
-					 "java.util.Map<java.util.Locale, java.lang.String>")) {
+					"java.util.Map<java.util.Locale, java.lang.String>")) {
 
 			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(value);
 

@@ -835,7 +835,7 @@ public class SocialActivityCounterLocalServiceImpl
 				activityCounterDefinition.getPeriodLength());
 		}
 		else if (!activityCounter.isActivePeriod(
-					 activityCounterDefinition.getPeriodLength())) {
+					activityCounterDefinition.getPeriodLength())) {
 
 			activityCounter = lockProtectedAddActivityCounter(
 				groupId, classNameId, classPK,

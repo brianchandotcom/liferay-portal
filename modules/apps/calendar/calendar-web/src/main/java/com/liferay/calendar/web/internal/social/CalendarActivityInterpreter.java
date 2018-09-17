@@ -107,7 +107,7 @@ public class CalendarActivityInterpreter extends BaseSocialActivityInterpreter {
 			return "activity-calendar-booking-move-to-trash-in";
 		}
 		else if (activityType ==
-					 SocialActivityConstants.TYPE_RESTORE_FROM_TRASH) {
+					SocialActivityConstants.TYPE_RESTORE_FROM_TRASH) {
 
 			if (Validator.isNull(groupName)) {
 				return "activity-calendar-booking-restore-from-trash";

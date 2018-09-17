@@ -2350,7 +2350,7 @@ public class PortletDataContextImpl implements PortletDataContext {
 					WorkflowConstants.ACTION_PUBLISH);
 			}
 			else if (workflowedModel.getStatus() ==
-						 WorkflowConstants.STATUS_DRAFT) {
+						WorkflowConstants.STATUS_DRAFT) {
 
 				serviceContext.setWorkflowAction(
 					WorkflowConstants.ACTION_SAVE_DRAFT);

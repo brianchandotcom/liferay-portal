@@ -91,7 +91,7 @@ public class BookmarksEntryActivityInterpreter
 			return "activity-bookmarks-entry-move-to-trash-in";
 		}
 		else if (activityType ==
-					 SocialActivityConstants.TYPE_RESTORE_FROM_TRASH) {
+					SocialActivityConstants.TYPE_RESTORE_FROM_TRASH) {
 
 			if (Validator.isNull(groupName)) {
 				return "activity-bookmarks-entry-restore-from-trash";

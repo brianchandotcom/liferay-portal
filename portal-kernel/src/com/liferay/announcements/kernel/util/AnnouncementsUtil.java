@@ -233,8 +233,8 @@ public class AnnouncementsUtil {
 				}
 			}
 			else if (RolePermissionUtil.contains(
-						 themeDisplay.getPermissionChecker(), role.getRoleId(),
-						 ActionKeys.MANAGE_ANNOUNCEMENTS)) {
+						themeDisplay.getPermissionChecker(), role.getRoleId(),
+						ActionKeys.MANAGE_ANNOUNCEMENTS)) {
 
 				filteredRoles.add(role);
 			}

@@ -150,8 +150,8 @@ public class PortletCategoryUtil {
 								 portlet.getRootPortletId())) {
 					}
 					else if (!PortletPermissionUtil.contains(
-								 permissionChecker, layout, portlet,
-								 ActionKeys.ADD_TO_PAGE)) {
+								permissionChecker, layout, portlet,
+								ActionKeys.ADD_TO_PAGE)) {
 					}
 					else if (!portlet.isInstanceable() &&
 							 layoutTypePortlet.hasPortletId(

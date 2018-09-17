@@ -102,12 +102,12 @@ public class SharingNotificationUtil {
 			return ResourceBundleUtil.getString(resourceBundle, "editing");
 		}
 		else if (_sharingEntryLocalService.hasSharingPermission(
-					 sharingEntry, SharingEntryActionKey.ADD_DISCUSSION)) {
+					sharingEntry, SharingEntryActionKey.ADD_DISCUSSION)) {
 
 			return ResourceBundleUtil.getString(resourceBundle, "commenting");
 		}
 		else if (_sharingEntryLocalService.hasSharingPermission(
-					 sharingEntry, SharingEntryActionKey.VIEW)) {
+					sharingEntry, SharingEntryActionKey.VIEW)) {
 
 			return ResourceBundleUtil.getString(resourceBundle, "viewing");
 		}

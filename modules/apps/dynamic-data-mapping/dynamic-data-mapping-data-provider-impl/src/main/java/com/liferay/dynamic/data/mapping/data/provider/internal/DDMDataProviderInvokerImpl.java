@@ -78,13 +78,13 @@ public class DDMDataProviderInvokerImpl implements DDMDataProviderInvoker {
 					DDMDataProviderResponseStatus.COMMAND_EXCEPTION);
 			}
 			else if (failureType ==
-						 HystrixRuntimeException.FailureType.SHORTCIRCUIT) {
+						HystrixRuntimeException.FailureType.SHORTCIRCUIT) {
 
 				builder = builder.withStatus(
 					DDMDataProviderResponseStatus.SHORT_CIRCUIT);
 			}
 			else if (failureType ==
-						 HystrixRuntimeException.FailureType.TIMEOUT) {
+						HystrixRuntimeException.FailureType.TIMEOUT) {
 
 				builder = builder.withStatus(
 					DDMDataProviderResponseStatus.TIMEOUT);

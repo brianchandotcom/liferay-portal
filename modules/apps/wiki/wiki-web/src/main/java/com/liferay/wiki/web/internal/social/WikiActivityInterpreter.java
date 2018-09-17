@@ -186,7 +186,7 @@ public class WikiActivityInterpreter extends BaseSocialActivityInterpreter {
 			return "activity-wiki-page-add-attachment-in";
 		}
 		else if (activityType ==
-					 SocialActivityConstants.TYPE_MOVE_ATTACHMENT_TO_TRASH) {
+					SocialActivityConstants.TYPE_MOVE_ATTACHMENT_TO_TRASH) {
 
 			if (Validator.isNull(groupName)) {
 				return "activity-wiki-page-remove-attachment";
@@ -195,8 +195,8 @@ public class WikiActivityInterpreter extends BaseSocialActivityInterpreter {
 			return "activity-wiki-page-remove-attachment-in";
 		}
 		else if (activityType ==
-					 SocialActivityConstants.
-						 TYPE_RESTORE_ATTACHMENT_FROM_TRASH) {
+					SocialActivityConstants.
+						TYPE_RESTORE_ATTACHMENT_FROM_TRASH) {
 
 			if (Validator.isNull(groupName)) {
 				return "activity-wiki-page-restore-attachment";
@@ -212,7 +212,7 @@ public class WikiActivityInterpreter extends BaseSocialActivityInterpreter {
 			return "activity-wiki-page-move-to-trash-in";
 		}
 		else if (activityType ==
-					 SocialActivityConstants.TYPE_RESTORE_FROM_TRASH) {
+					SocialActivityConstants.TYPE_RESTORE_FROM_TRASH) {
 
 			if (Validator.isNull(groupName)) {
 				return "activity-wiki-page-restore-from-trash";

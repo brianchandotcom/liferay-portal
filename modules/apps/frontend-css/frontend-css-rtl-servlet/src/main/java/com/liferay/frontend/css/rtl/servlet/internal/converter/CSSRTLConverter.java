@@ -85,7 +85,7 @@ public class CSSRTLConverter {
 				_reverseValue(cssExpressionMemberFunction.getExpression());
 			}
 			else if (icssExpressionMember instanceof
-						 CSSExpressionMemberTermSimple) {
+						CSSExpressionMemberTermSimple) {
 
 				CSSExpressionMemberTermSimple cssExpressionMemberTermSimple =
 					(CSSExpressionMemberTermSimple)icssExpressionMember;
@@ -94,7 +94,7 @@ public class CSSRTLConverter {
 					_reverse(cssExpressionMemberTermSimple.getValue()));
 			}
 			else if (icssExpressionMember instanceof
-						 CSSExpressionMemberTermURI) {
+						CSSExpressionMemberTermURI) {
 
 				CSSExpressionMemberTermURI cssExpressionMemberTermURI =
 					(CSSExpressionMemberTermURI)icssExpressionMember;

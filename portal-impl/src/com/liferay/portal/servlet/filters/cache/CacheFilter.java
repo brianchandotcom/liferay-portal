@@ -208,8 +208,8 @@ public class CacheFilter extends BasePortalFilter {
 				privateLayout = true;
 			}
 			else if (servletPath.startsWith(
-						 PropsValues.
-							 LAYOUT_FRIENDLY_URL_PUBLIC_SERVLET_MAPPING)) {
+						PropsValues.
+							LAYOUT_FRIENDLY_URL_PUBLIC_SERVLET_MAPPING)) {
 
 				privateLayout = false;
 			}

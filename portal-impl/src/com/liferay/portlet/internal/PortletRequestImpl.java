@@ -976,7 +976,7 @@ public abstract class PortletRequestImpl implements LiferayPortletRequest {
 					}
 				}
 				else if (!privateRenderParameterNames.contains(
-							 requestParameter.getName())) {
+							requestParameter.getName())) {
 
 					requestParameter.setValues(null);
 				}

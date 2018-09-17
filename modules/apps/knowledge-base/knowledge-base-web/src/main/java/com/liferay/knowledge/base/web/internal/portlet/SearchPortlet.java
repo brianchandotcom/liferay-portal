@@ -87,7 +87,7 @@ public class SearchPortlet extends BaseKBPortlet {
 			include(path, renderRequest, renderResponse);
 		}
 		else if (SessionErrors.contains(
-					 renderRequest, NoSuchArticleException.class.getName()) ||
+					renderRequest, NoSuchArticleException.class.getName()) ||
 				 SessionErrors.contains(
 					 renderRequest, NoSuchCommentException.class.getName()) ||
 				 SessionErrors.contains(

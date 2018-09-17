@@ -185,8 +185,8 @@ public class EditPublishConfigurationMVCActionCommand
 			StagingUtil.publishLayouts(userId, exportImportConfiguration);
 		}
 		else if (exportImportConfiguration.getType() ==
-					 ExportImportConfigurationConstants.
-						 TYPE_PUBLISH_LAYOUT_REMOTE) {
+					ExportImportConfigurationConstants.
+						TYPE_PUBLISH_LAYOUT_REMOTE) {
 
 			StagingUtil.copyRemoteLayouts(exportImportConfiguration);
 		}

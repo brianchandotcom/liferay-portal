@@ -162,7 +162,7 @@ public class InvokerFilterHelper {
 				}
 			}
 			else if (_filterMappingsMap.replace(
-						 filterName, oldFilterMappings, newFilterMappings)) {
+						filterName, oldFilterMappings, newFilterMappings)) {
 
 				break;
 			}
@@ -187,7 +187,7 @@ public class InvokerFilterHelper {
 				}
 			}
 			else if (_filterMappingsMap.replace(
-						 filterName, oldFilterMappings, newFilterMappings)) {
+						filterName, oldFilterMappings, newFilterMappings)) {
 
 				break;
 			}

@@ -109,7 +109,7 @@ public class AbsolutePortalURLBuilderImpl implements AbsolutePortalURLBuilder {
 					sb.append(resourcePath);
 				}
 				else if (PortletDependency.Type.JAVASCRIPT ==
-							 portletDependency.getType()) {
+							portletDependency.getType()) {
 
 					String resourcePath = javaScriptURN;
 

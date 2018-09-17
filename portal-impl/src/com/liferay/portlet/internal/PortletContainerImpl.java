@@ -555,7 +555,7 @@ public class PortletContainerImpl implements PortletContainer {
 			windowState = WindowState.MAXIMIZED;
 		}
 		else if (layoutTypePortlet.hasStateMinPortletId(
-					 portlet.getPortletId())) {
+					portlet.getPortletId())) {
 
 			windowState = WindowState.MINIMIZED;
 		}
@@ -569,37 +569,37 @@ public class PortletContainerImpl implements PortletContainer {
 			portletMode = LiferayPortletMode.ABOUT;
 		}
 		else if (layoutTypePortlet.hasModeConfigPortletId(
-					 portlet.getPortletId())) {
+					portlet.getPortletId())) {
 
 			portletMode = LiferayPortletMode.CONFIG;
 		}
 		else if (layoutTypePortlet.hasModeEditPortletId(
-					 portlet.getPortletId())) {
+					portlet.getPortletId())) {
 
 			portletMode = PortletMode.EDIT;
 		}
 		else if (layoutTypePortlet.hasModeEditDefaultsPortletId(
-					 portlet.getPortletId())) {
+					portlet.getPortletId())) {
 
 			portletMode = LiferayPortletMode.EDIT_DEFAULTS;
 		}
 		else if (layoutTypePortlet.hasModeEditGuestPortletId(
-					 portlet.getPortletId())) {
+					portlet.getPortletId())) {
 
 			portletMode = LiferayPortletMode.EDIT_GUEST;
 		}
 		else if (layoutTypePortlet.hasModeHelpPortletId(
-					 portlet.getPortletId())) {
+					portlet.getPortletId())) {
 
 			portletMode = PortletMode.HELP;
 		}
 		else if (layoutTypePortlet.hasModePreviewPortletId(
-					 portlet.getPortletId())) {
+					portlet.getPortletId())) {
 
 			portletMode = LiferayPortletMode.PREVIEW;
 		}
 		else if (layoutTypePortlet.hasModePrintPortletId(
-					 portlet.getPortletId())) {
+					portlet.getPortletId())) {
 
 			portletMode = LiferayPortletMode.PRINT;
 		}

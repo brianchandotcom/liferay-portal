@@ -147,14 +147,14 @@ public class ImageEditorDLDisplayContextHelper {
 			_showImageEditorAction = false;
 		}
 		else if (!_fileEntry.containsPermission(
-					 _themeDisplay.getPermissionChecker(), ActionKeys.UPDATE) ||
+					_themeDisplay.getPermissionChecker(), ActionKeys.UPDATE) ||
 				 (_fileEntry.isCheckedOut() && !_fileEntry.hasLock())) {
 
 			_showImageEditorAction = false;
 		}
 		else if (!ArrayUtil.contains(
-					 PropsValues.DL_FILE_ENTRY_PREVIEW_IMAGE_MIME_TYPES,
-					 _fileEntry.getMimeType())) {
+					PropsValues.DL_FILE_ENTRY_PREVIEW_IMAGE_MIME_TYPES,
+					_fileEntry.getMimeType())) {
 
 			_showImageEditorAction = false;
 		}

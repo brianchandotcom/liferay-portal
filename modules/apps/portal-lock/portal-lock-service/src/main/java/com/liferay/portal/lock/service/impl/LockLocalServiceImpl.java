@@ -273,7 +273,7 @@ public class LockLocalServiceImpl extends LockLocalServiceBaseImpl {
 								lock.setNew(true);
 							}
 							else if (Objects.equals(
-										 lock.getOwner(), expectedOwner)) {
+										lock.getOwner(), expectedOwner)) {
 
 								lock.setCreateDate(new Date());
 								lock.setClassName(className);

@@ -87,7 +87,7 @@ public class OpenIdConnectLoginRequestMVCActionCommand
 				SessionErrors.add(actionRequest, e.getClass());
 			}
 			else if (e instanceof
-						 UserEmailAddressException.MustNotBeDuplicate) {
+						UserEmailAddressException.MustNotBeDuplicate) {
 
 				SessionErrors.add(actionRequest, e.getClass());
 			}

@@ -879,7 +879,7 @@ public class ResourceActionsImpl implements ResourceActions {
 						actions.add(ActionKeys.PREFERENCES);
 					}
 					else if (StringUtil.equalsIgnoreCase(
-								 actionId, "edit_guest")) {
+								actionId, "edit_guest")) {
 
 						actions.add(ActionKeys.GUEST_PREFERENCES);
 					}

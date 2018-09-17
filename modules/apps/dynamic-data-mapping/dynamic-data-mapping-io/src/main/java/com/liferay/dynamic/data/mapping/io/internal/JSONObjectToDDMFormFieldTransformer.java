@@ -105,7 +105,7 @@ public class JSONObjectToDDMFormFieldTransformer {
 				serializedDDMFormFieldProperty);
 		}
 		else if (Objects.equals(
-					 ddmFormFieldTypeSetting.getType(), "validation")) {
+					ddmFormFieldTypeSetting.getType(), "validation")) {
 
 			return deserializeDDMFormFieldValidation(
 				serializedDDMFormFieldProperty);

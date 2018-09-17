@@ -1828,7 +1828,7 @@ public class CalendarBookingLocalServiceImpl
 				notificationTemplateType = NotificationTemplateType.DECLINE;
 			}
 			else if (childCalendarBookingMap.containsKey(
-						 childCalendarBooking.getCalendarId())) {
+						childCalendarBooking.getCalendarId())) {
 
 				notificationTemplateType = NotificationTemplateType.UPDATE;
 			}
@@ -2558,7 +2558,7 @@ public class CalendarBookingLocalServiceImpl
 					calendarBooking.getFirstReminderNotificationType();
 			}
 			else if (_isInCheckInterval(
-						 deltaTime, calendarBooking.getSecondReminder())) {
+						deltaTime, calendarBooking.getSecondReminder())) {
 
 				notificationType =
 					calendarBooking.getSecondReminderNotificationType();

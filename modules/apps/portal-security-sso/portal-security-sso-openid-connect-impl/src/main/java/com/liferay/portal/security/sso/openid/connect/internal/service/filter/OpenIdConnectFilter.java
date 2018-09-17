@@ -94,7 +94,7 @@ public class OpenIdConnectFilter extends BaseFilter {
 					"OpenId Connect authentication flow not started");
 			}
 			else if (!OpenIdConnectFlowState.AUTH_REQUESTED.equals(
-						 openIdConnectFlowState)) {
+						openIdConnectFlowState)) {
 
 				throw new OpenIdConnectServiceException.AuthenticationException(
 					"OpenId Connect session already complete");

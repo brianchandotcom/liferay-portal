@@ -119,7 +119,7 @@ public class RSSFeedEntry {
 				sanitizedValue = _sanitize(syndContent.getValue(), baseURL);
 			}
 			else if (Objects.equals(
-						 RSSUtil.getFormatType(feedType), RSSUtil.RSS) &&
+						RSSUtil.getFormatType(feedType), RSSUtil.RSS) &&
 					 (type.equals("text/html") || type.equals("text/xhtml"))) {
 
 				sanitizedValue = _sanitize(syndContent.getValue(), baseURL);

@@ -115,7 +115,7 @@ public abstract class BaseNodeBuilder<T extends Node> implements NodeBuilder {
 					kaleoNotificationRecipient.getAddress());
 			}
 			else if (recipientClassName.equals(
-						 RecipientType.ASSIGNEES.getValue())) {
+						RecipientType.ASSIGNEES.getValue())) {
 
 				recipient = new AssigneesRecipient();
 			}
@@ -126,7 +126,7 @@ public abstract class BaseNodeBuilder<T extends Node> implements NodeBuilder {
 					role.getName(), role.getTypeLabel());
 			}
 			else if (recipientClassName.equals(
-						 RecipientType.SCRIPT.getValue())) {
+						RecipientType.SCRIPT.getValue())) {
 
 				recipient = new ScriptRecipient(
 					kaleoNotificationRecipient.getRecipientScript(),

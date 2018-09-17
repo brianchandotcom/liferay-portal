@@ -264,7 +264,7 @@ public class DDMFormBuilderContextFactoryHelper {
 				(DDMFormFieldOptions)propertyValue, availableLocales);
 		}
 		else if (Objects.equals(
-					 ddmFormFieldTypeSetting.getType(), "validation")) {
+					ddmFormFieldTypeSetting.getType(), "validation")) {
 
 			return doCreateDDMFormFieldValue(
 				(DDMFormFieldValidation)propertyValue);

@@ -211,7 +211,7 @@ public class BookmarksUtil {
 					obj = BookmarksEntryLocalServiceUtil.getEntry(entryClassPK);
 				}
 				else if (entryClassName.equals(
-							 BookmarksFolder.class.getName())) {
+							BookmarksFolder.class.getName())) {
 
 					obj = BookmarksFolderLocalServiceUtil.getFolder(
 						entryClassPK);

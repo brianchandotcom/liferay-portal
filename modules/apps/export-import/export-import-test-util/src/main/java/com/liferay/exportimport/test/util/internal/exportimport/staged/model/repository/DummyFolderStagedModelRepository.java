@@ -281,7 +281,7 @@ public class DummyFolderStagedModelRepository
 								stagedModelType.getReferrerClassNameId()));
 					}
 					else if (referrerClassNameId ==
-								 StagedModelType.REFERRER_CLASS_NAME_ID_ANY) {
+								StagedModelType.REFERRER_CLASS_NAME_ID_ANY) {
 
 						dynamicQuery.add(classNameIdProperty.isNotNull());
 					}

@@ -298,7 +298,7 @@ public class BaseCmisSearchQueryBuilder implements CMISSearchQueryBuilder {
 					currentCMISJunction = anyCMISConjunction;
 				}
 				else if (booleanClauseOccur.equals(
-							 BooleanClauseOccur.MUST_NOT)) {
+							BooleanClauseOccur.MUST_NOT)) {
 
 					currentCMISJunction = notCMISConjunction;
 				}
@@ -398,7 +398,7 @@ public class BaseCmisSearchQueryBuilder implements CMISSearchQueryBuilder {
 					currentCMISJunction = anyCMISConjunction;
 				}
 				else if (booleanClauseOccur.equals(
-							 BooleanClauseOccur.MUST_NOT)) {
+							BooleanClauseOccur.MUST_NOT)) {
 
 					currentCMISJunction = notCMISConjunction;
 				}

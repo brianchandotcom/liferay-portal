@@ -105,7 +105,7 @@ public class ThemeBuilderCompareTest {
 					_styledJarFile = jarFile;
 				}
 				else if (line.contains(
-							 "com.liferay.frontend.theme.unstyled-")) {
+							"com.liferay.frontend.theme.unstyled-")) {
 
 					_unstyledJarFile = jarFile;
 				}

@@ -121,7 +121,7 @@ public class MicroblogsUtil {
 			return MicroblogsEntryConstants.NOTIFICATION_TYPE_TAG;
 		}
 		else if (microblogsEntry.getType() ==
-					 MicroblogsEntryConstants.TYPE_REPLY) {
+					MicroblogsEntryConstants.TYPE_REPLY) {
 
 			long rootMicroblogsEntryId = getRootMicroblogsEntryId(
 				microblogsEntry);

@@ -236,7 +236,7 @@ public class LDAPAuth implements Authenticator {
 			}
 		}
 		else if (authMethod.equals(
-					 LDAPConstants.AUTH_METHOD_PASSWORD_COMPARE)) {
+					LDAPConstants.AUTH_METHOD_PASSWORD_COMPARE)) {
 
 			ldapAuthResult = new LDAPAuthResult();
 

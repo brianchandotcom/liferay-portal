@@ -111,8 +111,7 @@ public class CommentUserNotificationHandler
 			}
 		}
 		else if (notificationType ==
-					 UserNotificationDefinition.
-						 NOTIFICATION_TYPE_UPDATE_ENTRY) {
+					UserNotificationDefinition.NOTIFICATION_TYPE_UPDATE_ENTRY) {
 
 			if (assetRenderer != null) {
 				message = "x-updated-a-comment-to-x";

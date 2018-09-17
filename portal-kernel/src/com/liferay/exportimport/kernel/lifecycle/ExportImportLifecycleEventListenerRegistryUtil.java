@@ -154,7 +154,7 @@ public class ExportImportLifecycleEventListenerRegistryUtil {
 							exportImportLifecycleListener);
 			}
 			else if (exportImportLifecycleListener instanceof
-						 EventAwareExportImportLifecycleListener) {
+						EventAwareExportImportLifecycleListener) {
 
 				exportImportLifecycleListener =
 					ExportImportLifecycleListenerFactoryUtil.create(

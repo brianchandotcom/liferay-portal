@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.concurrent.NoticeableFuture;
 import com.liferay.portal.kernel.test.CaptureHandler;
 import com.liferay.portal.kernel.test.JDKLoggerTestUtil;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
-import com.liferay.portal.kernel.util.Time;
 
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandler;
@@ -37,6 +36,7 @@ import java.nio.file.attribute.FileTime;
 
 import java.util.List;
 import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.LogRecord;
 
@@ -73,7 +73,7 @@ public class FileResponseChannelHandlerTest {
 		byte[] data = FileServerTestUtil.createRandomData(1024);
 
 		long lastModified = FileServerTestUtil.getFileSystemTime(
-			System.currentTimeMillis() - Time.DAY);
+			System.currentTimeMillis() - TimeUnit.DAYS.toMillis(1));
 
 		FileResponse fileResponse = new FileResponse(
 			_path, data.length, lastModified, false);

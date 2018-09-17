@@ -29,7 +29,6 @@ import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
 import com.liferay.portal.kernel.test.rule.NewEnv;
-import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.test.rule.AdviseWith;
 import com.liferay.portal.test.rule.AspectJNewEnvTestRule;
 
@@ -57,6 +56,7 @@ import java.util.List;
 import java.util.Queue;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.LogRecord;
 
@@ -266,7 +266,7 @@ public class FileUploadChannelHandlerTest {
 		byte[] data = FileServerTestUtil.createRandomData(1024);
 
 		long lastModified = FileServerTestUtil.getFileSystemTime(
-			System.currentTimeMillis() - Time.DAY);
+			System.currentTimeMillis() - TimeUnit.DAYS.toMillis(1));
 
 		Path file = doTestUpload(
 			data, lastModified, false, inEventLoop, fail, postAsyncBroker);
@@ -284,7 +284,7 @@ public class FileUploadChannelHandlerTest {
 			Paths.get("testFolder"));
 
 		long lastModified = FileServerTestUtil.getFileSystemTime(
-			System.currentTimeMillis() - Time.DAY);
+			System.currentTimeMillis() - TimeUnit.DAYS.toMillis(1));
 
 		Files.setLastModifiedTime(
 			testFolder, FileTime.fromMillis(lastModified));

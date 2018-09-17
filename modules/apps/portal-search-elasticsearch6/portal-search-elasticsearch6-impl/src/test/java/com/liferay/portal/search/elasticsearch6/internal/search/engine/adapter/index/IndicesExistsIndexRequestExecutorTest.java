@@ -17,10 +17,10 @@ package com.liferay.portal.search.elasticsearch6.internal.search.engine.adapter.
 import com.liferay.portal.search.elasticsearch6.internal.connection.ElasticsearchConnectionManager;
 import com.liferay.portal.search.elasticsearch6.internal.connection.ElasticsearchFixture;
 import com.liferay.portal.search.elasticsearch6.internal.connection.TestElasticsearchConnectionManager;
-import com.liferay.portal.search.engine.adapter.index.FlushIndexRequest;
+import com.liferay.portal.search.engine.adapter.index.IndicesExistsIndexRequest;
 
-import org.elasticsearch.action.admin.indices.flush.FlushRequest;
-import org.elasticsearch.action.admin.indices.flush.FlushRequestBuilder;
+import org.elasticsearch.action.admin.indices.exists.indices.IndicesExistsRequest;
+import org.elasticsearch.action.admin.indices.exists.indices.IndicesExistsRequestBuilder;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -30,12 +30,12 @@ import org.junit.Test;
 /**
  * @author Michael C. Han
  */
-public class FlushIndexRequestExecutorTest {
+public class IndicesExistsIndexRequestExecutorTest {
 
 	@Before
 	public void setUp() throws Exception {
 		_elasticsearchFixture = new ElasticsearchFixture(
-			FlushIndexRequestExecutorTest.class.getSimpleName());
+			IndicesExistsIndexRequestExecutorTest.class.getSimpleName());
 
 		_elasticsearchFixture.setUp();
 
@@ -50,36 +50,33 @@ public class FlushIndexRequestExecutorTest {
 
 	@Test
 	public void testIndexRequestTranslation() {
-		FlushIndexRequest flushIndexRequest = new FlushIndexRequest(
-			_INDEX_NAME);
+		IndicesExistsIndexRequest indicesExistsIndexRequest =
+			new IndicesExistsIndexRequest(_INDEX_NAME_1, _INDEX_NAME_2);
 
-		flushIndexRequest.setForce(true);
-		flushIndexRequest.setWaitIfOngoing(true);
+		IndicesExistsIndexRequestExecutorImpl
+			indicesExistsIndexRequestExecutorImpl =
+				new IndicesExistsIndexRequestExecutorImpl() {
+					{
+						elasticsearchConnectionManager =
+							_elasticsearchConnectionManager;
+					}
+				};
 
-		FlushIndexRequestExecutorImpl flushIndexRequestExecutorImpl =
-			new FlushIndexRequestExecutorImpl() {
-				{
-					elasticsearchConnectionManager =
-						_elasticsearchConnectionManager;
+		IndicesExistsRequestBuilder indicesExistsRequestBuilder =
+			indicesExistsIndexRequestExecutorImpl.
+				createIndicesExistsRequestBuilder(indicesExistsIndexRequest);
 
-					indexRequestShardFailureTranslator =
-						new IndexRequestShardFailureTranslatorImpl();
-				}
-			};
+		IndicesExistsRequest indicesExistsRequest =
+			indicesExistsRequestBuilder.request();
 
-		FlushRequestBuilder flushRequestBuilder =
-			flushIndexRequestExecutorImpl.createFlushRequestBuilder(
-				flushIndexRequest);
-
-		FlushRequest flushRequest = flushRequestBuilder.request();
-
-		Assert.assertArrayEquals(
-			new String[] {_INDEX_NAME}, flushRequest.indices());
-		Assert.assertTrue(flushRequest.force());
-		Assert.assertTrue(flushRequest.waitIfOngoing());
+		Assert.assertEquals(2, indicesExistsRequest.indices().length);
+		Assert.assertEquals(_INDEX_NAME_1, indicesExistsRequest.indices()[0]);
+		Assert.assertEquals(_INDEX_NAME_2, indicesExistsRequest.indices()[1]);
 	}
 
-	private static final String _INDEX_NAME = "test_request_index";
+	private static final String _INDEX_NAME_1 = "test_request_index1";
+
+	private static final String _INDEX_NAME_2 = "test_request_index2";
 
 	private ElasticsearchConnectionManager _elasticsearchConnectionManager;
 	private ElasticsearchFixture _elasticsearchFixture;

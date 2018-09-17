@@ -175,7 +175,7 @@
 					<var name="rowEntry" value="${navigationMenu}" />
 				</execute>
 
-				<execute function="Confirm" value1="Do you want to replace ${navigationMenu} for ${currentPrimaryNavigationMenu} as primary navigation? This action will affect all the pages using primary navigation." />
+				<execute function="AssertConfirm" value1="Do you want to replace ${navigationMenu} for ${currentPrimaryNavigationMenu} as primary navigation? This action will affect all the pages using primary navigation." />
 			</then>
 			<else>
 				<execute macro="LexiconEntry#gotoEntryMenuItem">

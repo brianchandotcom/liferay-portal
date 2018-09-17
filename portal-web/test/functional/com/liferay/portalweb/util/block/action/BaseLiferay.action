@@ -205,7 +205,7 @@
 		<default>
 			<description message="Assert confirmation window has the value ${value1}." />
 
-			<execute function="Confirm#assertConfirmation" />
+			<execute function="AssertConfirm#assertConfirmation" />
 		</default>
 	</command>
 

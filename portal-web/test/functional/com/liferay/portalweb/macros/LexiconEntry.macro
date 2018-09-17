@@ -24,10 +24,10 @@
 		<if>
 			<isset var="confirmationText" />
 			<then>
-				<execute function="Confirm" value1="${confirmationText}" />
+				<execute function="AssertConfirm" value1="${confirmationText}" />
 			</then>
 			<else>
-				<execute function="Confirm#assertPartialConfirmation" value1="" />
+				<execute function="AssertConfirm#assertPartialConfirmation" value1="" />
 			</else>
 		</if>
 

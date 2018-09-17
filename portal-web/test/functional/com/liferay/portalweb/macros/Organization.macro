@@ -364,7 +364,7 @@
 			<var name="menuItem" value="Delete" />
 		</execute>
 
-		<execute function="Confirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
+		<execute function="AssertConfirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
 
 		<execute macro="Alert#viewSuccessMessage" />
 
@@ -647,7 +647,7 @@
 
 				<execute function="AssertClickNoError" locator1="UsersAndOrganizationsOrganization#MENU_DELETE" value1="Delete" />
 
-				<execute function="Confirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
+				<execute function="AssertConfirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
 			</then>
 		</while>
 	</command>

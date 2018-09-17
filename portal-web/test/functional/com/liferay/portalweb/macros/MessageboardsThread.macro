@@ -456,7 +456,7 @@
 				<then>
 					<execute function="AssertClickNoError" locator1="Button#PREVIEW" value1="Preview" />
 
-					<execute function="Confirm" value1="In order to preview your changes, the message will be saved as a draft and other users may not be able to see it. Are you sure you want to do this?" />
+					<execute function="AssertConfirm" value1="In order to preview your changes, the message will be saved as a draft and other users may not be able to see it. Are you sure you want to do this?" />
 
 					<var name="key_threadSubject" value="${threadSubject}" />
 					<var name="key_userName" value="${userName}" />

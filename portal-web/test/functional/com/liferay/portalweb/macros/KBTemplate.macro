@@ -41,7 +41,7 @@
 
 				<execute function="AssertClickNoError" locator1="Button#DELETE" value1="Delete" />
 
-				<execute function="Confirm" value1="Are you sure you want to delete the selected templates?" />
+				<execute function="AssertConfirm" value1="Are you sure you want to delete the selected templates?" />
 
 				<execute macro="Alert#viewSuccessMessage" />
 			</then>

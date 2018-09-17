@@ -198,7 +198,7 @@
 
 		<execute function="KeyPress#keyPressNoError" locator1="KaleoDesignerEditWorkflow#VIEW_FORM_CONNECTOR" value1="\DELETE" />
 
-		<execute function="Confirm" value1="Are you sure you want to delete the selected connector(s)?" />
+		<execute function="AssertConfirm" value1="Are you sure you want to delete the selected connector(s)?" />
 
 		<execute function="Pause" locator1="1000" />
 
@@ -213,7 +213,7 @@
 
 		<execute function="ClickNoError" locator1="KaleoDesignerEditWorkflow#VIEW_FORM_NODE_DELETE_ICON" />
 
-		<execute function="Confirm" value1="Are you sure you want to delete the selected node(s)?" />
+		<execute function="AssertConfirm" value1="Are you sure you want to delete the selected node(s)?" />
 
 		<execute function="Pause" locator1="1000" />
 

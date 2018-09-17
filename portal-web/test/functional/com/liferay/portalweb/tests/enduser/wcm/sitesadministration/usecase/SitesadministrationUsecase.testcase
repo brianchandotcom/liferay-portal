@@ -1168,13 +1168,13 @@
 
 		<execute function="Open#openNoError" locator1="${portalURL}/web/russia2018/Arenas" />
 
-		<execute function="Confirm" value1="Welcome to Russia." />
+		<execute function="AssertConfirm" value1="Welcome to Russia." />
 
 		<execute macro="User#logoutPG" />
 
 		<execute function="Open#openNoError" locator1="${portalURL}/web/russia2018/Arenas" />
 
-		<execute function="Confirm" value1="Welcome to Russia." />
+		<execute function="AssertConfirm" value1="Welcome to Russia." />
 
 		<execute macro="User#loginUserPG">
 			<var name="password" value="test" />

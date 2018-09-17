@@ -75,17 +75,6 @@
 			</else>
 		</if>
 
-		<for list="Audience Targeting" param="contentName">
-			<var name="key_contentName" value="${contentName}" />
-
-			<if>
-				<condition function="IsElementPresent" locator1="SiteSettingsStaging#CONTENT_CHECKBOX" />
-				<then>
-					<execute function="Click" locator1="SiteSettingsStaging#CONTENT_CHECKBOX" />
-				</then>
-			</if>
-		</for>
-
 		<if>
 			<isset var="uncheckContent" />
 			<then>

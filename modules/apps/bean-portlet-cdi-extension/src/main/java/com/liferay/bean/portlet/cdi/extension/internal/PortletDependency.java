@@ -22,10 +22,6 @@ import com.liferay.petra.string.StringPool;
  */
 public class PortletDependency {
 
-	public PortletDependency() {
-		this(null, null, null);
-	}
-
 	public PortletDependency(String name, String scope, String version) {
 		_name = name;
 		_scope = scope;
@@ -42,18 +38,6 @@ public class PortletDependency {
 
 	public String getVersion() {
 		return _version;
-	}
-
-	public void setName(String name) {
-		_name = name;
-	}
-
-	public void setScope(String scope) {
-		_scope = scope;
-	}
-
-	public void setVersion(String version) {
-		_version = version;
 	}
 
 	@Override
@@ -79,8 +63,8 @@ public class PortletDependency {
 		return sb.toString();
 	}
 
-	private String _name;
-	private String _scope;
-	private String _version;
+	private final String _name;
+	private final String _scope;
+	private final String _version;
 
 }

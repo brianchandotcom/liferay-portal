@@ -194,7 +194,7 @@
 			<elseif>
 				<equals arg1="${databaseType}" arg2="MariaDB" />
 				<then>
-					<execute function="AssertConsoleTextPresent" value1="Using dialect com.liferay.portal.dao.orm.hibernate.MariaDBDialect for MariaDB" />
+					<execute function="AssertConsoleTextPresent" value1="Using dialect com.liferay.portal.dao.orm.hibernate.MariaDBDialect for MySQL" />
 				</then>
 			</elseif>
 			<elseif>

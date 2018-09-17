@@ -8,7 +8,6 @@ import './components/fragment_entry_link/FragmentEntryLinkList.es';
 import './components/sidebar/FragmentsEditorSidebar.es';
 import './components/toolbar/FragmentsEditorToolbar.es';
 import {Store} from './store/store.es';
-import FragmentEntryLink from './components/fragment_entry_link/FragmentEntryLink.es';
 import {INITIAL_STATE} from './store/state.es';
 import templates from './FragmentsEditor.soy';
 import {

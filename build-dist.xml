@@ -3604,39 +3604,6 @@ plugins.includes=</echo>
 							tofile="dist/${tstamp.value}/liferay-portal-${lp.version}/tomcat"
 						/>
 
-						<ant dir="portal-web" target="compile-tomcat">
-							<property name="app.server.portal.dir" value="dist/${tstamp.value}/liferay-portal-${lp.version}/tomcat/webapps/ROOT" />
-						</ant>
-
-						<copy
-							preservelastmodified="true"
-							todir="dist/${tstamp.value}/liferay-portal-${lp.version}/tomcat/webapps/ROOT/html"
-						>
-							<fileset
-								dir="portal-web/docroot/html"
-							/>
-						</copy>
-
-						<copy
-							preservelastmodified="true"
-							todir="dist/${tstamp.value}/liferay-portal-${lp.version}/tomcat/webapps/ROOT/WEB-INF/tld"
-						>
-							<fileset
-								dir="portal-web/docroot/WEB-INF/tld"
-							/>
-						</copy>
-
-						<copy
-							preservelastmodified="true"
-							todir="dist/${tstamp.value}/liferay-portal-${lp.version}/tomcat/work/Catalina/localhost/ROOT"
-						>
-							<fileset
-								dir="portal-web/classes/${app.server.type}"
-							>
-								<exclude name="**/*.jspc_error" />
-							</fileset>
-						</copy>
-
 						<parallel>
 							<exec dir="dist/${tstamp.value}/liferay-portal-${lp.version}/tomcat/bin" executable="sh">
 								<arg value="catalina.sh" />

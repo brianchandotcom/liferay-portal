@@ -213,55 +213,6 @@ public class EditCompanyMVCActionCommand extends BaseFormMVCActionCommand {
 		_portal.resetCDNHosts();
 	}
 
-	private String[] _getRequiredLocaleMessageArguments(List<Group> groups)
-		throws PortalException {
-
-		if (groups.isEmpty()) {
-			return new String[0];
-		}
-		else if (groups.size() == 1) {
-			Group group = groups.get(0);
-
-			return new String[] {group.getDescriptiveName()};
-		}
-		else if (groups.size() == 2) {
-			Group group1 = groups.get(0);
-			Group group2 = groups.get(1);
-
-			return new String[] {
-				group1.getDescriptiveName(), group2.getDescriptiveName()
-			};
-		}
-		else {
-			int moreGroups = groups.size() - 2;
-
-			Group group1 = groups.get(0);
-			Group group2 = groups.get(1);
-
-			return new String[] {
-				group1.getDescriptiveName(), group2.getDescriptiveName(),
-				String.valueOf(moreGroups)
-			};
-		}
-	}
-
-	private String _getRequiredLocaleMessageKey(List<Group> groups) {
-		if (groups.isEmpty()) {
-			return StringPool.BLANK;
-		}
-		else if (groups.size() == 1) {
-			return "language-cannot-be-removed-because-it-is-in-use-by-the-" +
-				"following-site-x";
-		}
-		else if (groups.size() == 2) {
-			return "one-or-more-languages-cannot-be-removed-because-they-are-" +
-				"in-use-by-the-following-sites-x-and-x";
-		}
-
-		return "one-or-more-languages-cannot-be-removed-because-they-are-in-" +
-			"use-by-the-following-sites-x,-x-and-x-more";
-	}
-
 	private void _validateAvailableLanguages(ActionRequest actionRequest)
 		throws PortalException {
 
@@ -318,9 +269,7 @@ public class EditCompanyMVCActionCommand extends BaseFormMVCActionCommand {
 		List<Group> groups = _groupLocalService.dynamicQuery(dynamicQuery);
 
 		if (!groups.isEmpty()) {
-			RequiredLocaleException rle = new RequiredLocaleException(
-				_getRequiredLocaleMessageArguments(groups),
-				_getRequiredLocaleMessageKey(groups));
+			RequiredLocaleException rle = new RequiredLocaleException(groups);
 
 			SessionErrors.add(actionRequest, rle.getClass(), rle);
 		}

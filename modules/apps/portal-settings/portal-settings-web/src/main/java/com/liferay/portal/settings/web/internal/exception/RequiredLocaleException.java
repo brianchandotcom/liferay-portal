@@ -14,7 +14,11 @@
 
 package com.liferay.portal.settings.web.internal.exception;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Group;
+
+import java.util.List;
 
 /**
  * @author Samuel Trong Tran
@@ -22,6 +26,12 @@ import com.liferay.portal.kernel.exception.PortalException;
 public class RequiredLocaleException extends PortalException {
 
 	public RequiredLocaleException() {
+	}
+
+	public RequiredLocaleException(List<Group> groups) throws PortalException {
+		this(
+			_getRequiredLocaleMessageArguments(groups),
+			_getRequiredLocaleMessageKey(groups));
 	}
 
 	public RequiredLocaleException(String msg) {
@@ -57,6 +67,56 @@ public class RequiredLocaleException extends PortalException {
 
 	public void setMessageKey(String messageKey) {
 		_messageKey = messageKey;
+	}
+
+	private static String[] _getRequiredLocaleMessageArguments(
+			List<Group> groups)
+		throws PortalException {
+
+		if (groups.isEmpty()) {
+			return new String[0];
+		}
+		else if (groups.size() == 1) {
+			Group group = groups.get(0);
+
+			return new String[] {group.getDescriptiveName()};
+		}
+		else if (groups.size() == 2) {
+			Group group1 = groups.get(0);
+			Group group2 = groups.get(1);
+
+			return new String[] {
+				group1.getDescriptiveName(), group2.getDescriptiveName()
+			};
+		}
+		else {
+			int moreGroups = groups.size() - 2;
+
+			Group group1 = groups.get(0);
+			Group group2 = groups.get(1);
+
+			return new String[] {
+				group1.getDescriptiveName(), group2.getDescriptiveName(),
+				String.valueOf(moreGroups)
+			};
+		}
+	}
+
+	private static String _getRequiredLocaleMessageKey(List<Group> groups) {
+		if (groups.isEmpty()) {
+			return StringPool.BLANK;
+		}
+		else if (groups.size() == 1) {
+			return "language-cannot-be-removed-because-it-is-in-use-by-the-" +
+				"following-site-x";
+		}
+		else if (groups.size() == 2) {
+			return "one-or-more-languages-cannot-be-removed-because-they-are-" +
+				"in-use-by-the-following-sites-x-and-x";
+		}
+
+		return "one-or-more-languages-cannot-be-removed-because-they-are-in-" +
+			"use-by-the-following-sites-x,-x-and-x-more";
 	}
 
 	private String[] _messageArguments;

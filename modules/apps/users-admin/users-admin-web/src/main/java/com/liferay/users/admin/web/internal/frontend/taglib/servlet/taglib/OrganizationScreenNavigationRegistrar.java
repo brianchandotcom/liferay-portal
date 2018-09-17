@@ -115,11 +115,11 @@ public class OrganizationScreenNavigationRegistrar {
 		return _createScreenNavigationEntry(
 			entryKey, categoryKey, jspPath, mvcActionCommandName,
 			(user, organization) -> {
-				if (organization != null) {
-					return true;
+				if (organization == null) {
+					return false;
 				}
 
-				return false;
+				return true;
 			});
 	}
 

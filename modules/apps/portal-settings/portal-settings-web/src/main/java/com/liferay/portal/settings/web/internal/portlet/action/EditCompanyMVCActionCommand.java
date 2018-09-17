@@ -269,9 +269,9 @@ public class EditCompanyMVCActionCommand extends BaseFormMVCActionCommand {
 		List<Group> groups = _groupLocalService.dynamicQuery(dynamicQuery);
 
 		if (!groups.isEmpty()) {
-			RequiredLocaleException rle = new RequiredLocaleException(groups);
-
-			SessionErrors.add(actionRequest, rle.getClass(), rle);
+			SessionErrors.add(
+				actionRequest, RequiredLocaleException.class,
+				new RequiredLocaleException(groups));
 		}
 	}
 

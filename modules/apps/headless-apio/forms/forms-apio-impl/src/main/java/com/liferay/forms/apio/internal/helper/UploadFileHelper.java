@@ -16,13 +16,18 @@ package com.liferay.forms.apio.internal.helper;
 
 import com.google.gson.Gson;
 
+import com.liferay.apio.architect.file.BinaryFile;
 import com.liferay.apio.architect.functional.Try;
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
+import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
 import com.liferay.dynamic.data.mapping.model.UnlocalizedValue;
 import com.liferay.dynamic.data.mapping.model.Value;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
+import com.liferay.forms.apio.internal.architect.form.MediaObjectCreatorForm;
 import com.liferay.forms.apio.internal.model.FileEntryValue;
+import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.service.ServiceContext;
 
 import java.util.Collection;
 import java.util.List;
@@ -52,15 +57,42 @@ public class UploadFileHelper {
 				"document_library"
 			)
 		).map(
-			field -> _findField(field, ddmFormFieldValues)
+			field -> _findField(field.getName(), ddmFormFieldValues)
 		).forEach(
 			optional -> optional.ifPresent(this::_setFileEntryAsFormFieldValue)
 		);
 	}
 
+	public FileEntry uploadFile(
+		DDMFormInstance ddmFormInstance,
+		MediaObjectCreatorForm mediaObjectCreatorForm) {
+
+		Optional<Long> folderIdOptional =
+			mediaObjectCreatorForm.getFolderIdOptional();
+
+		long folderId = folderIdOptional.orElse(
+			0L
+		);
+
+		BinaryFile binaryFile = mediaObjectCreatorForm.getBinaryFile();
+
+		return Try.fromFallible(
+			ddmFormInstance::getGroupId
+		).map(
+			repositoryId -> _dlAppService.addFileEntry(
+				repositoryId, folderId, mediaObjectCreatorForm.getName(),
+				binaryFile.getMimeType(), mediaObjectCreatorForm.getTitle(),
+				mediaObjectCreatorForm.getDescription(), null,
+				binaryFile.getInputStream(), binaryFile.getSize(),
+				new ServiceContext())
+		).orElse(
+			null
+		);
+	}
+
 	private Long _extractFileEntryId(DDMFormFieldValue ddmFormFieldValue) {
 		return Try.fromFallible(
-			() -> ddmFormFieldValue.getValue()
+			ddmFormFieldValue::getValue
 		).map(
 			Value::getValues
 		).map(
@@ -80,16 +112,13 @@ public class UploadFileHelper {
 	}
 
 	private Optional<DDMFormFieldValue> _findField(
-		DDMFormField formField, List<DDMFormFieldValue> ddmFormFieldValues) {
+		String formFieldName, List<DDMFormFieldValue> ddmFormFieldValues) {
 
 		Stream<DDMFormFieldValue> ddmFormFieldValuesStream =
 			ddmFormFieldValues.stream();
 
 		return ddmFormFieldValuesStream.filter(
-			value -> value.getName(
-			).equals(
-				formField.getName()
-			)
+			value -> formFieldName.equals(value.getName())
 		).findFirst();
 	}
 
@@ -104,7 +133,9 @@ public class UploadFileHelper {
 			_dlAppService::getFileEntry
 		).map(
 			fileEntry -> new FileEntryValue(
-				fileEntry.getGroupId(), fileEntry.getUuid())
+				fileEntry.getFileEntryId(), fileEntry.getGroupId(),
+				fileEntry.getTitle(), fileEntry.getMimeType(),
+				fileEntry.getUuid(), fileEntry.getVersion())
 		).map(
 			gson::toJson
 		).map(

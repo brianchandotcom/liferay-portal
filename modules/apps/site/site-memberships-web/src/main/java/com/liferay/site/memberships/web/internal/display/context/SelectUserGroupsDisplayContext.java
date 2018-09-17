@@ -23,8 +23,6 @@ import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.UserGroup;
-import com.liferay.portal.kernel.portlet.PortalPreferences;
-import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserGroupLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -35,7 +33,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portlet.sitesadmin.search.UserGroupSiteMembershipChecker;
 import com.liferay.portlet.usergroupsadmin.search.UserGroupDisplayTerms;
 import com.liferay.portlet.usergroupsadmin.search.UserGroupSearch;
-import com.liferay.site.memberships.web.internal.constants.SiteMembershipsPortletKeys;
 
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -75,12 +72,7 @@ public class SelectUserGroupsDisplayContext {
 			return _displayStyle;
 		}
 
-		PortalPreferences portalPreferences =
-			PortletPreferencesFactoryUtil.getPortalPreferences(_request);
-
-		_displayStyle = portalPreferences.getValue(
-			SiteMembershipsPortletKeys.SITE_MEMBERSHIPS_ADMIN, "display-style",
-			"icon");
+		_displayStyle = ParamUtil.getString(_request, "displayStyle", "list");
 
 		return _displayStyle;
 	}
@@ -269,7 +261,6 @@ public class SelectUserGroupsDisplayContext {
 
 		return new ViewTypeItemList(portletURL, getDisplayStyle()) {
 			{
-				addCardViewTypeItem();
 				addListViewTypeItem();
 				addTableViewTypeItem();
 			}

@@ -14,9 +14,11 @@
 
 package com.liferay.portal.kernel.service.persistence.impl;
 
-import com.liferay.portal.kernel.cache.MultiVMPool;
-import com.liferay.portal.kernel.cache.MultiVMPoolUtil;
 import com.liferay.portal.kernel.cache.PortalCache;
+import com.liferay.portal.kernel.cache.PortalCacheHelperUtil;
+import com.liferay.portal.kernel.cache.PortalCacheManager;
+import com.liferay.portal.kernel.cache.PortalCacheManagerNames;
+import com.liferay.portal.kernel.cache.PortalCacheManagerProvider;
 import com.liferay.portal.kernel.dao.jdbc.MappingSqlQuery;
 import com.liferay.portal.kernel.dao.jdbc.MappingSqlQueryFactory;
 import com.liferay.portal.kernel.dao.jdbc.MappingSqlQueryFactoryUtil;
@@ -40,8 +42,6 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.tools.ToolDependencies;
 import com.liferay.portal.util.PropsImpl;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
 
 import java.io.Serializable;
 
@@ -56,7 +56,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.function.Function;
 
 import javax.sql.DataSource;
 
@@ -93,7 +92,8 @@ public class TableMapperTest {
 
 	@Before
 	public void setUp() {
-		MultiVMPoolUtil.clear();
+		PortalCacheHelperUtil.clearPortalCaches(
+			PortalCacheManagerNames.MULTI_VM);
 
 		MappingSqlQueryFactoryUtil mappingSqlQueryFactoryUtil =
 			new MappingSqlQueryFactoryUtil();
@@ -1553,13 +1553,13 @@ public class TableMapperTest {
 	}
 
 	protected void testDestroy(TableMapper<?, ?> tableMapper) {
-		Registry registry = RegistryUtil.getRegistry();
-
-		MultiVMPool multiVMPool = registry.callService(
-			MultiVMPool.class, Function.identity());
+		PortalCacheManager<?, ?> portalCacheManager =
+			PortalCacheManagerProvider.getPortalCacheManager(
+				PortalCacheManagerNames.MULTI_VM);
 
 		Map<String, PortalCache<?, ?>> portalCaches =
-			ReflectionTestUtil.getFieldValue(multiVMPool, "_portalCaches");
+			ReflectionTestUtil.getFieldValue(
+				portalCacheManager, "_dynamicPortalCaches");
 
 		Assert.assertEquals(portalCaches.toString(), 2, portalCaches.size());
 

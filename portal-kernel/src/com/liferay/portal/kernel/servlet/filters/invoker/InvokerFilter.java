@@ -16,7 +16,8 @@ package com.liferay.portal.kernel.servlet.filters.invoker;
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.cache.PortalCache;
-import com.liferay.portal.kernel.cache.SingleVMPoolUtil;
+import com.liferay.portal.kernel.cache.PortalCacheHelperUtil;
+import com.liferay.portal.kernel.cache.PortalCacheManagerNames;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.HttpOnlyCookieServletResponse;
@@ -154,7 +155,8 @@ public class InvokerFilter extends BasePortalLifecycle implements Filter {
 	@Override
 	protected void doPortalInit() throws Exception {
 		if (_INVOKER_FILTER_CHAIN_ENABLED) {
-			_filterChains = SingleVMPoolUtil.getPortalCache(
+			_filterChains = PortalCacheHelperUtil.getPortalCache(
+				PortalCacheManagerNames.SINGLE_VM,
 				_filterConfig.getFilterName());
 		}
 

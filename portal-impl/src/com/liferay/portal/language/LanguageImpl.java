@@ -16,8 +16,9 @@ package com.liferay.portal.language;
 
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.cache.MultiVMPoolUtil;
 import com.liferay.portal.kernel.cache.PortalCache;
+import com.liferay.portal.kernel.cache.PortalCacheHelperUtil;
+import com.liferay.portal.kernel.cache.PortalCacheManagerNames;
 import com.liferay.portal.kernel.cache.PortalCacheMapSynchronizeUtil;
 import com.liferay.portal.kernel.cache.PortalCacheMapSynchronizeUtil.Synchronizer;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -108,15 +109,16 @@ import javax.servlet.http.HttpServletResponse;
 public class LanguageImpl implements Language, Serializable {
 
 	public void afterPropertiesSet() {
-		_companyLocalesPortalCache = MultiVMPoolUtil.getPortalCache(
+		_companyLocalesPortalCache = PortalCacheHelperUtil.getPortalCache(
+			PortalCacheManagerNames.MULTI_VM,
 			_COMPANY_LOCALES_PORTAL_CACHE_NAME);
 
 		PortalCacheMapSynchronizeUtil.synchronize(
 			_companyLocalesPortalCache, _companyLocalesBags,
 			_removeSynchronizer);
 
-		_groupLocalesPortalCache = MultiVMPoolUtil.getPortalCache(
-			_GROUP_LOCALES_PORTAL_CACHE_NAME);
+		_groupLocalesPortalCache = PortalCacheHelperUtil.getPortalCache(
+			PortalCacheManagerNames.MULTI_VM, _GROUP_LOCALES_PORTAL_CACHE_NAME);
 
 		PortalCacheMapSynchronizeUtil.synchronize(
 			_groupLocalesPortalCache, _groupLanguageCodeLocalesMapMap,

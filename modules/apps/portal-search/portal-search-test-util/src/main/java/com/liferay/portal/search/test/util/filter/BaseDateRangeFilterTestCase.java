@@ -16,15 +16,12 @@ package com.liferay.portal.search.test.util.filter;
 
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.Field;
-import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.Query;
-import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.search.filter.DateRangeFilterBuilder;
 import com.liferay.portal.search.internal.filter.DateRangeFilterBuilderImpl;
 import com.liferay.portal.search.test.util.DocumentsAssert;
-import com.liferay.portal.search.test.util.IdempotentRetryAssert;
 import com.liferay.portal.search.test.util.indexing.BaseIndexingTestCase;
 import com.liferay.portal.search.test.util.indexing.DocumentCreationHelpers;
 
@@ -35,7 +32,6 @@ import java.time.ZonedDateTime;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 import org.junit.Test;
 
@@ -227,21 +223,16 @@ public abstract class BaseDateRangeFilterTestCase extends BaseIndexingTestCase {
 	}
 
 	protected void assertSearch(List<String> expectedValues) throws Exception {
-		IdempotentRetryAssert.retryAssert(
-			10, TimeUnit.SECONDS,
-			() -> {
-				SearchContext searchContext = createSearchContext();
+		assertSearch(
+			indexingTestHelper -> {
+				indexingTestHelper.setFilter(dateRangeFilterBuilder.build());
 
-				Hits hits = search(
-					searchContext,
-					booleanQuery -> setPreBooleanFilter(
-						dateRangeFilterBuilder.build(), booleanQuery));
+				indexingTestHelper.search();
 
-				DocumentsAssert.assertValues(
-					(String)searchContext.getAttribute("queryString"),
-					hits.getDocs(), FIELD, expectedValues);
-
-				return null;
+				indexingTestHelper.verify(
+					hits -> DocumentsAssert.assertValues(
+						indexingTestHelper.getQueryString(), hits.getDocs(),
+						FIELD, expectedValues));
 			});
 	}
 
@@ -264,6 +255,7 @@ public abstract class BaseDateRangeFilterTestCase extends BaseIndexingTestCase {
 		return Date.from(zonedDateTime.toInstant());
 	}
 
+	@Override
 	protected void setPreBooleanFilter(Filter filter, Query query) {
 		BooleanFilter booleanFilter = new BooleanFilter();
 

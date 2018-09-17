@@ -16,13 +16,11 @@ package com.liferay.portal.search.test.util.indexing;
 
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
-import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.IndexSearcher;
 import com.liferay.portal.kernel.search.IndexWriter;
-import com.liferay.portal.kernel.search.ParseException;
 import com.liferay.portal.kernel.search.Query;
 import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.SearchContext;
@@ -192,7 +190,11 @@ public abstract class BaseIndexingTestCase {
 	protected Hits search(
 		SearchContext searchContext, QueryContributor queryContributor) {
 
-		return search(searchContext, _getQuery(queryContributor));
+		Query query = getDefaultQuery();
+
+		queryContributor.contribute(query);
+
+		return search(searchContext, query);
 	}
 
 	protected void setPreBooleanFilter(Filter filter, Query query) {
@@ -221,47 +223,45 @@ public abstract class BaseIndexingTestCase {
 				_hits.getDocs(), fieldName, expectedValues);
 		}
 
-		public void search() {
-			QueryContributor queryContributor = null;
+		public void define(Consumer<SearchContext> consumer) {
+			consumer.accept(_searchContext);
+		}
 
-			if (_filter != null) {
-				queryContributor =
-					booleanQuery -> setPreBooleanFilter(_filter, booleanQuery);
+		public String getQueryString() {
+			return (String)_searchContext.getAttribute("queryString");
+		}
+
+		public void search() {
+			Query query = _query;
+
+			if (query == null) {
+				query = getDefaultQuery();
 			}
 
-			_hits = BaseIndexingTestCase.this.search(
-				_searchContext, _getQuery(queryContributor));
+			if (_filter != null) {
+				setPreBooleanFilter(_filter, query);
+			}
+
+			_hits = BaseIndexingTestCase.this.search(_searchContext, query);
 		}
 
 		public void setFilter(Filter filter) {
 			_filter = filter;
 		}
 
+		public void setQuery(Query query) {
+			_query = query;
+		}
+
+		public void verify(Consumer<Hits> consumer) {
+			consumer.accept(_hits);
+		}
+
 		private Filter _filter;
 		private Hits _hits;
+		private Query _query;
 		private final SearchContext _searchContext;
 
-	}
-
-	private Query _getQuery(QueryContributor queryContributor) {
-		Query query = getDefaultQuery();
-
-		if (queryContributor == null) {
-			return query;
-		}
-
-		BooleanQuery booleanQuery = new BooleanQueryImpl();
-
-		try {
-			booleanQuery.add(query, BooleanClauseOccur.MUST);
-		}
-		catch (ParseException pe) {
-			throw new RuntimeException(pe);
-		}
-
-		queryContributor.contribute(booleanQuery);
-
-		return booleanQuery;
 	}
 
 	private final DocumentFixture _documentFixture = new DocumentFixture();

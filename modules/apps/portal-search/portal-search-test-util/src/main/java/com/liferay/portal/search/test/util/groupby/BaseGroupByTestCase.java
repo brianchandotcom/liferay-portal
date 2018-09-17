@@ -14,13 +14,13 @@
 
 package com.liferay.portal.search.test.util.groupby;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.GroupBy;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.QueryConfig;
-import com.liferay.portal.kernel.search.SearchContext;
-import com.liferay.portal.search.test.util.IdempotentRetryAssert;
+import com.liferay.portal.search.test.util.AssertUtils;
 import com.liferay.portal.search.test.util.indexing.BaseIndexingTestCase;
 import com.liferay.portal.search.test.util.indexing.DocumentCreationHelpers;
 
@@ -28,10 +28,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -44,119 +45,129 @@ import org.junit.Test;
 public abstract class BaseGroupByTestCase extends BaseIndexingTestCase {
 
 	@Test
-	public void testDefaultFieldNames() throws Exception {
-		addDocuments("one", 1);
+	public void testFieldNamesDefault() throws Exception {
+		indexDuplicates("one", 1);
 
-		SearchContext searchContext = createSearchContext();
+		assertSearch(
+			indexingTestHelper -> {
+				indexingTestHelper.define(
+					searchContext -> searchContext.setGroupBy(
+						new GroupBy(GROUP_FIELD)));
 
-		searchContext.setGroupBy(new GroupBy(GROUP_FIELD));
+				indexingTestHelper.search();
 
-		IdempotentRetryAssert.retryAssert(
-			3, TimeUnit.SECONDS,
-			() -> {
-				assertFieldNames(
-					"one",
-					new String[] {
-						"companyId", "entryClassName", "entryClassPK",
-						"groupId", "uid", "userName"
-					},
-					searchContext);
+				indexingTestHelper.verify(
+					hits -> assertFieldNames(
+						"one",
+						Arrays.asList(
+							"companyId", "entryClassName", "entryClassPK",
+							"groupId", "uid", "userName"),
+						hits, indexingTestHelper));
+			});
+	}
 
-				return null;
+	@Test
+	public void testFieldNamesSelected() throws Exception {
+		indexDuplicates("one", 1);
+
+		assertSearch(
+			indexingTestHelper -> {
+				String[] fieldNames = {Field.COMPANY_ID, Field.UID};
+
+				indexingTestHelper.define(
+					searchContext -> {
+						searchContext.setGroupBy(new GroupBy(GROUP_FIELD));
+
+						QueryConfig queryConfig =
+							searchContext.getQueryConfig();
+
+						queryConfig.addSelectedFieldNames(fieldNames);
+					});
+
+				indexingTestHelper.search();
+
+				indexingTestHelper.verify(
+					hits -> assertFieldNames(
+						"one", Arrays.asList(fieldNames), hits,
+						indexingTestHelper));
 			});
 	}
 
 	@Test
 	public void testGroupBy() throws Exception {
-		addDocuments("sixteen", 16);
-		addDocuments("three", 3);
-		addDocuments("two", 2);
+		Map<String, Integer> map1 = new HashMap<String, Integer>() {
+			{
+				put("sixteen", 16);
+				put("three", 3);
+				put("two", 2);
+			}
+		};
 
-		SearchContext searchContext = createSearchContext();
+		map1.forEach((key, value) -> indexDuplicates(key, value));
 
-		searchContext.setGroupBy(new GroupBy(GROUP_FIELD));
+		Set<Map.Entry<String, Integer>> entries = map1.entrySet();
 
-		IdempotentRetryAssert.retryAssert(
-			3, TimeUnit.SECONDS,
-			() -> {
-				Map<String, Hits> groupedHitsMap = searchGroups(searchContext);
+		Map<String, String> map2 = entries.stream().collect(
+			Collectors.toMap(
+				Map.Entry::getKey,
+				entry -> getCountPairString(
+					entry.getValue(), entry.getValue())));
 
-				Assert.assertEquals(
-					groupedHitsMap.toString(), 3, groupedHitsMap.size());
+		assertSearch(
+			indexingTestHelper -> {
+				indexingTestHelper.define(
+					searchContext -> searchContext.setGroupBy(
+						new GroupBy(GROUP_FIELD)));
 
-				assertGroup("sixteen", 16, groupedHitsMap);
-				assertGroup("three", 3, groupedHitsMap);
-				assertGroup("two", 2, groupedHitsMap);
+				indexingTestHelper.search();
 
-				return null;
-			});
-	}
-
-	@Test
-	public void testSelectedFieldNames() throws Exception {
-		addDocuments("one", 1);
-
-		SearchContext searchContext = createSearchContext();
-
-		searchContext.setGroupBy(new GroupBy(GROUP_FIELD));
-
-		QueryConfig queryConfig = searchContext.getQueryConfig();
-
-		String[] fieldNames = {Field.COMPANY_ID, Field.UID};
-
-		queryConfig.addSelectedFieldNames(fieldNames);
-
-		IdempotentRetryAssert.retryAssert(
-			3, TimeUnit.SECONDS,
-			() -> {
-				assertFieldNames("one", fieldNames, searchContext);
-
-				return null;
+				indexingTestHelper.verify(
+					hits -> assertGroups(map2, hits, indexingTestHelper));
 			});
 	}
 
 	@Test
 	public void testStartAndEnd() throws Exception {
-		addDocuments("sixteen", 16);
+		indexDuplicates("sixteen", 16);
 
-		SearchContext searchContext = createSearchContext();
+		assertSearch(
+			indexingTestHelper -> {
+				indexingTestHelper.define(
+					searchContext -> {
+						searchContext.setEnd(9);
+						searchContext.setGroupBy(new GroupBy(GROUP_FIELD));
+						searchContext.setStart(4);
+					});
 
-		searchContext.setEnd(9);
-		searchContext.setGroupBy(new GroupBy(GROUP_FIELD));
-		searchContext.setStart(4);
+				indexingTestHelper.search();
 
-		IdempotentRetryAssert.retryAssert(
-			3, TimeUnit.SECONDS,
-			() -> {
-				Map<String, Hits> groupedHitsMap = searchGroups(searchContext);
-
-				assertGroup("sixteen", 16, 6, groupedHitsMap);
-
-				return null;
+				indexingTestHelper.verify(
+					hits -> assertGroups(
+						toMap("sixteen", "16|6"), hits, indexingTestHelper));
 			});
 	}
 
 	@Test
 	public void testStartAndSize() throws Exception {
-		addDocuments("sixteen", 16);
+		indexDuplicates("sixteen", 16);
 
-		SearchContext searchContext = createSearchContext();
+		assertSearch(
+			indexingTestHelper -> {
+				indexingTestHelper.define(
+					searchContext -> {
+						GroupBy groupBy = new GroupBy(GROUP_FIELD);
 
-		GroupBy groupBy = new GroupBy(GROUP_FIELD);
+						groupBy.setSize(3);
+						groupBy.setStart(8);
 
-		groupBy.setSize(3);
-		groupBy.setStart(8);
+						searchContext.setGroupBy(groupBy);
+					});
 
-		searchContext.setGroupBy(groupBy);
+				indexingTestHelper.search();
 
-		IdempotentRetryAssert.retryAssert(
-			3, TimeUnit.SECONDS,
-			() -> {
-				Map<String, Hits> groupedHitsMap = searchGroups(searchContext);
-
-				assertGroup("sixteen", 16, 3, groupedHitsMap);
-
-				return null;
+				indexingTestHelper.verify(
+					hits -> assertGroups(
+						toMap("sixteen", "16|3"), hits, indexingTestHelper));
 			});
 	}
 
@@ -168,49 +179,54 @@ public abstract class BaseGroupByTestCase extends BaseIndexingTestCase {
 		return list.toString();
 	}
 
-	protected void addDocuments(final String name, int count) throws Exception {
-		String field = GROUP_FIELD;
-
-		for (int i = 1; i <= count; i++) {
-			addDocument(DocumentCreationHelpers.singleKeyword(field, name));
-		}
-	}
-
 	protected void assertFieldNames(
-			String key, String[] fieldNames, SearchContext searchContext)
-		throws Exception {
+		String key, Collection<String> fieldNames, Hits hits1,
+		IndexingTestHelper indexingTestHelper) {
 
-		Map<String, Hits> groupedHitsMap = searchGroups(searchContext);
+		Map<String, Hits> hitsMap = hits1.getGroupedHits();
 
-		Hits hits = groupedHitsMap.get(key);
-
-		Assert.assertNotNull(hits);
+		Hits hits2 = hitsMap.get(key);
 
 		Assert.assertEquals(
-			sort(Arrays.asList(fieldNames)), sort(getFieldNames(hits.doc(0))));
+			indexingTestHelper.getQueryString(), sort(fieldNames),
+			sort(getFieldNames(hits2)));
 	}
 
-	protected void assertGroup(
-		String key, int hitsCount, int docsCount,
-		Map<String, Hits> groupedHitsMap) {
+	protected void assertGroups(
+		Map<String, String> expectedCountsMap, Hits hits,
+		IndexingTestHelper indexingTestHelper) {
 
-		Hits hits = groupedHitsMap.get(key);
+		Map<String, Hits> hitsMap = hits.getGroupedHits();
 
-		Assert.assertNotNull(hits);
-		Assert.assertEquals(hits.toString(), hitsCount, hits.getLength());
+		Collection<Map.Entry<String, Hits>> entries = hitsMap.entrySet();
 
+		Map<String, String> actualCountsMap = entries.stream().collect(
+			Collectors.toMap(
+				Map.Entry::getKey,
+				entry -> getCountPairString(entry.getValue())));
+
+		AssertUtils.assertEquals(
+			indexingTestHelper.getQueryString(), expectedCountsMap,
+			actualCountsMap);
+	}
+
+	protected String getCountPairString(Hits hits) {
 		Document[] docs = hits.getDocs();
 
-		Assert.assertEquals(Arrays.toString(docs), docsCount, docs.length);
+		return getCountPairString(hits.getLength(), docs.length);
 	}
 
-	protected void assertGroup(
-		String key, int count, Map<String, Hits> groupedHitsMap) {
-
-		assertGroup(key, count, count, groupedHitsMap);
+	protected String getCountPairString(int hitsCount, int docsCount) {
+		return hitsCount + StringPool.PIPE + docsCount;
 	}
 
-	protected Set<String> getFieldNames(Document document) {
+	protected Collection<String> getFieldNames(Hits hits) {
+		Assert.assertNotNull(hits);
+
+		Assert.assertNotEquals(0, hits.getLength());
+
+		Document document = hits.doc(0);
+
 		Map<String, Field> fields = document.getFields();
 
 		Assert.assertFalse(fields.isEmpty());
@@ -218,16 +234,20 @@ public abstract class BaseGroupByTestCase extends BaseIndexingTestCase {
 		return fields.keySet();
 	}
 
-	protected Map<String, Hits> searchGroups(SearchContext searchContext)
-		throws Exception {
+	protected void indexDuplicates(final String name, int count) {
+		String field = GROUP_FIELD;
 
-		Hits hits = search(searchContext);
-
-		Map<String, Hits> groupedHitsMap = hits.getGroupedHits();
-
-		Assert.assertNotNull(groupedHitsMap);
-
-		return groupedHitsMap;
+		for (int i = 1; i <= count; i++) {
+			try {
+				addDocument(DocumentCreationHelpers.singleKeyword(field, name));
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		}
 	}
 
 	protected static final String GROUP_FIELD = Field.USER_NAME;

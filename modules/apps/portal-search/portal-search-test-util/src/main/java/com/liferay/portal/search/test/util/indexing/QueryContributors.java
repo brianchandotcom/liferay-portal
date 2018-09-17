@@ -15,6 +15,8 @@
 package com.liferay.portal.search.test.util.indexing;
 
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
+import com.liferay.portal.kernel.search.BooleanQuery;
+import com.liferay.portal.kernel.search.ParseException;
 import com.liferay.portal.kernel.search.Query;
 import com.liferay.portal.kernel.search.generic.MatchQuery;
 import com.liferay.portal.kernel.search.generic.TermQueryImpl;
@@ -25,22 +27,22 @@ import com.liferay.portal.kernel.search.generic.TermQueryImpl;
 public class QueryContributors {
 
 	public static QueryContributor dummy() {
-		return booleanQuery -> {
+		return query -> {
 		};
 	}
 
-	public static QueryContributor must(Query query) {
-		return booleanQuery -> QueryContributor.add(
-			booleanQuery, query, BooleanClauseOccur.MUST);
+	public static QueryContributor must(Query query1) {
+		return query2 -> _add(
+			(BooleanQuery)query2, query1, BooleanClauseOccur.MUST);
 	}
 
 	public static QueryContributor mustMatch(String field, String value) {
 		return must(new MatchQuery(field, value));
 	}
 
-	public static QueryContributor mustNot(Query query) {
-		return booleanQuery -> QueryContributor.add(
-			booleanQuery, query, BooleanClauseOccur.MUST_NOT);
+	public static QueryContributor mustNot(Query query1) {
+		return query2 -> _add(
+			(BooleanQuery)query2, query1, BooleanClauseOccur.MUST_NOT);
 	}
 
 	public static QueryContributor mustNotMatch(String field, String value) {
@@ -53,6 +55,18 @@ public class QueryContributors {
 
 	public static QueryContributor mustTerm(String field, String value) {
 		return must(new TermQueryImpl(field, value));
+	}
+
+	private static void _add(
+		BooleanQuery booleanQuery, Query query,
+		BooleanClauseOccur booleanClauseOccur) {
+
+		try {
+			booleanQuery.add(query, booleanClauseOccur);
+		}
+		catch (ParseException pe) {
+			throw new RuntimeException(pe);
+		}
 	}
 
 }

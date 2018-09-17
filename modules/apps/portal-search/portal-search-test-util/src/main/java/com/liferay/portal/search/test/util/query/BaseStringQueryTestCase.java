@@ -14,18 +14,18 @@
 
 package com.liferay.portal.search.test.util.query;
 
+import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.search.filter.TermFilter;
 import com.liferay.portal.kernel.search.generic.StringQuery;
 import com.liferay.portal.search.test.util.DocumentsAssert;
-import com.liferay.portal.search.test.util.IdempotentRetryAssert;
 import com.liferay.portal.search.test.util.indexing.BaseIndexingTestCase;
 import com.liferay.portal.search.test.util.indexing.DocumentCreationHelpers;
 
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 import org.junit.Test;
 
@@ -144,11 +144,23 @@ public abstract class BaseStringQueryTestCase extends BaseIndexingTestCase {
 			Arrays.asList(values));
 	}
 
-	protected void assertSearch(String query, List<String> expectedValues)
+	protected void assertSearch(String queryString, List<String> expectedValues)
 		throws Exception {
 
-		IdempotentRetryAssert.retryAssert(
-			5, TimeUnit.SECONDS, () -> doAssertSearch(query, expectedValues));
+		assertSearch(
+			indexingTestHelper -> {
+				indexingTestHelper.setFilter(
+					new TermFilter(
+						Field.COMPANY_ID, String.valueOf(COMPANY_ID)));
+				indexingTestHelper.setQuery(new StringQuery(queryString));
+
+				indexingTestHelper.search();
+
+				indexingTestHelper.verify(
+					hits -> DocumentsAssert.assertValues(
+						indexingTestHelper.getQueryString(), hits.getDocs(),
+						_FIELD_NAME, expectedValues));
+			});
 	}
 
 	protected Void doAssertSearch(String query, List<String> expectedValues)
@@ -156,7 +168,7 @@ public abstract class BaseStringQueryTestCase extends BaseIndexingTestCase {
 
 		SearchContext searchContext = createSearchContext();
 
-		StringQuery stringQuery = _createStringQuery(query, searchContext);
+		StringQuery stringQuery = new StringQuery(query);
 
 		Hits hits = search(searchContext, stringQuery);
 
@@ -164,16 +176,6 @@ public abstract class BaseStringQueryTestCase extends BaseIndexingTestCase {
 			query, hits.getDocs(), _FIELD_NAME, expectedValues);
 
 		return null;
-	}
-
-	private StringQuery _createStringQuery(
-		String query, SearchContext searchContext) {
-
-		StringQuery stringQuery = new StringQuery(query);
-
-		stringQuery.setQueryConfig(searchContext.getQueryConfig());
-
-		return stringQuery;
 	}
 
 	private static final String _FIELD_NAME = "title";

@@ -14,9 +14,6 @@
 
 package com.liferay.portal.search.test.util.indexing;
 
-import com.liferay.portal.kernel.search.BooleanClauseOccur;
-import com.liferay.portal.kernel.search.BooleanQuery;
-import com.liferay.portal.kernel.search.ParseException;
 import com.liferay.portal.kernel.search.Query;
 
 /**
@@ -24,18 +21,6 @@ import com.liferay.portal.kernel.search.Query;
  */
 public interface QueryContributor {
 
-	public static void add(
-		BooleanQuery booleanQuery, Query query,
-		BooleanClauseOccur booleanClauseOccur) {
-
-		try {
-			booleanQuery.add(query, booleanClauseOccur);
-		}
-		catch (ParseException pe) {
-			throw new RuntimeException(pe);
-		}
-	}
-
-	public void contribute(BooleanQuery booleanQuery);
+	public void contribute(Query query);
 
 }

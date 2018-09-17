@@ -138,6 +138,14 @@ public class LayoutPageTemplateEntryServiceImpl
 		return layoutPageTemplateEntry;
 	}
 
+	@Override
+	public LayoutPageTemplateEntry fetchLayoutPageTemplateEntryByUuidAndGroupId(
+		String uuid, long groupId) {
+
+		return layoutPageTemplateEntryLocalService.
+			fetchLayoutPageTemplateEntryByUuidAndGroupId(uuid, groupId);
+	}
+
 	/**
 	 * @deprecated As of Judson (7.1.x), with no direct replacement
 	 */

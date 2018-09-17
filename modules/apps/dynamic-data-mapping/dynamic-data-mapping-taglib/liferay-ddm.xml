@@ -30,6 +30,11 @@
 				<outputType>com.liferay.dynamic.data.mapping.storage.DDMFormValues</outputType>
 			</attribute>
 			<attribute>
+				<name>documentLibrarySelectorURL</name>
+				<inputType>java.lang.String</inputType>
+				<outputType>java.lang.String</outputType>
+			</attribute>
+			<attribute>
 				<name>fieldsNamespace</name>
 				<inputType>java.lang.String</inputType>
 				<outputType>java.lang.String</outputType>
@@ -39,6 +44,11 @@
 				<inputType>boolean</inputType>
 				<outputType>boolean</outputType>
 				<defaultValue>false</defaultValue>
+			</attribute>
+			<attribute>
+				<name>imageSelectorURL</name>
+				<inputType>java.lang.String</inputType>
+				<outputType>java.lang.String</outputType>
 			</attribute>
 			<attribute>
 				<name>localizable</name>

@@ -98,11 +98,11 @@ public abstract class BaseTemplateRendererTag extends com.liferay.taglib.util.In
 
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
-		setNamespacedAttribute(request, "className", _className);
-		setNamespacedAttribute(request, "contextObjects", _contextObjects);
-		setNamespacedAttribute(request, "displayStyle", _displayStyle);
-		setNamespacedAttribute(request, "displayStyleGroupId", _displayStyleGroupId);
-		setNamespacedAttribute(request, "entries", _entries);
+		request.setAttribute("liferay-ddm:template-renderer:className", _className);
+		request.setAttribute("liferay-ddm:template-renderer:contextObjects", _contextObjects);
+		request.setAttribute("liferay-ddm:template-renderer:displayStyle", _displayStyle);
+		request.setAttribute("liferay-ddm:template-renderer:displayStyleGroupId", String.valueOf(_displayStyleGroupId));
+		request.setAttribute("liferay-ddm:template-renderer:entries", _entries);
 	}
 
 	protected static final String _ATTRIBUTE_NAMESPACE = "liferay-ddm:template-renderer:";

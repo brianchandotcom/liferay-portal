@@ -38,7 +38,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.process.ProcessCallable;
 import com.liferay.portal.kernel.process.ProcessConfig;
 import com.liferay.portal.kernel.process.ProcessException;
-import com.liferay.portal.kernel.util.ArrayUtil;
 
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelFuture;
@@ -53,12 +52,14 @@ import java.io.IOException;
 import java.io.Serializable;
 
 import java.net.MalformedURLException;
+import java.net.URL;
 import java.net.URLClassLoader;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -394,12 +395,16 @@ public class NettyFabricWorkerExecutionChannelHandler
 			builder.setRuntimeClassPath(_runtimeClassPath);
 
 			try {
+				List<URL> urls = new ArrayList<>();
+
+				Collections.addAll(
+					urls, ClassPathUtil.getClassPathURLs(_bootstrapClassPath));
+
+				Collections.addAll(
+					urls, ClassPathUtil.getClassPathURLs(_runtimeClassPath));
+
 				builder.setReactClassLoader(
-					new URLClassLoader(
-						ArrayUtil.append(
-							ClassPathUtil.getClassPathURLs(_bootstrapClassPath),
-							ClassPathUtil.getClassPathURLs(
-								_runtimeClassPath))));
+					new URLClassLoader(urls.toArray(new URL[urls.size()])));
 			}
 			catch (MalformedURLException murle) {
 				throw new ProcessException(murle);

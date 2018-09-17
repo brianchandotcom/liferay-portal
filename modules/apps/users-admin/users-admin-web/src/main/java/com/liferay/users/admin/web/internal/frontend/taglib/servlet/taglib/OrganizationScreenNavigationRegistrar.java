@@ -124,11 +124,11 @@ public class OrganizationScreenNavigationRegistrar {
 			});
 	}
 
-	private Dictionary _getProperties() {
+	private Dictionary<String, Object> _getProperties() {
 		return _getProperties(null);
 	}
 
-	private Dictionary _getProperties(Integer serviceRanking) {
+	private Dictionary<String, Object> _getProperties(Integer serviceRanking) {
 		return new HashMapDictionary<String, Object>() {
 			{
 				if (serviceRanking != null) {

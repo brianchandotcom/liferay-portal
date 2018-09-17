@@ -429,8 +429,9 @@
 		<if>
 			<isset var="userSegmentSelect" />
 			<then>
-				<execute macro="MenuItem#click">
+				<execute macro="LexiconEntry#gotoEntryMenuItem">
 					<var name="menuItem" value="Edit" />
+					<var name="rowEntry" value="${campaignName}" />
 				</execute>
 
 				<execute function="AssertTextEquals" locator1="EditCampaign#CAMPAIGN_USER_SEGMENT_APPLIED" value1="${userSegmentSelect}" />
@@ -492,7 +493,7 @@
 		<for list="${viewTrackingActionsList}" param="trackingAction">
 			<var name="key_trackingAction" value="${trackingAction}" />
 
-			<execute function="AssertTextEquals#assertPartialText" locator1="EditCampaign#CAMPAIGN_TRACKING_ACTIONS_APPLIED" value1="${trackingAction}" />
+			<execute function="AssertTextEquals#assertTextCaseInsensitive" locator1="EditCampaign#CAMPAIGN_TRACKING_ACTIONS_APPLIED" value1="${trackingAction}" />
 
 			<var name="key_fieldName" value="${trackingAction}" />
 

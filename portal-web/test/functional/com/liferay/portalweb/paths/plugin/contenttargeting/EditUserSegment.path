@@ -207,7 +207,7 @@
 <!--USER_SEGMENT_RULE_USER_ATTRIBUTES_SITE_MEMBER-->
 <tr>
 	<td>USER_SEGMENT_RULE_USER_ATTRIBUTES_SITE_MEMBER_SELECT</td>
-	<td>//div[contains(@class,'field-editor') and contains(@class,'expanded')]//select[contains(@id,'siteId') and contains(.,'${key_selectSiteMemberSite}')]</td>
+	<td>//div[contains(@class,'field-editor') and contains(@class,'expanded')]//a[contains(@id,'openSitesLink') and contains(.,'${key_selectSiteMemberSite}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -255,12 +255,12 @@
 <!--USER_SEGMENT_RULE_USER_ATTRIBUTES_SITE_ROLE-->
 <tr>
 	<td>USER_SEGMENT_RULE_USER_ATTRIBUTES_SITE_ROLE_SITE_ROLE_SELECT</td>
-	<td>//div[contains(@class,'siterolerule')]//div[contains(@class,'field-editor') and contains(@class,'expanded')]//select[contains(@id,'roleId')]</td>
+	<td>//div[contains(@class,'siterolerule')]//div[contains(@class,'field-editor') and contains(@class,'expanded')]//a[contains(@id,'openSiteRoleLink')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>USER_SEGMENT_RULE_USER_ATTRIBUTES_SITE_ROLE_SITE_SELECT</td>
-	<td>//div[contains(@class,'siterolerule')]//div[contains(@class,'field-editor') and contains(@class,'expanded')]//select[contains(@id,'siteId')]</td>
+	<td>//div[contains(@class,'siterolerule')]//div[contains(@class,'field-editor') and contains(@class,'expanded')]//a[contains(@id,'openSiteRoleLink')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -271,7 +271,7 @@
 <!--USER_SEGMENT_RULE_USER_ATTRIBUTES_USERGROUP_MEMBER-->
 <tr>
 	<td>USER_SEGMENT_RULE_USER_ATTRIBUTES_USERGROUP_MEMBER_SELECT</td>
-	<td>//div[contains(@class,'field-editor') and contains(@class,'expanded')]//select[contains(@id,'userGroupId')]</td>
+	<td>//div[contains(@class,'field-editor') and contains(@class,'expanded')]//a[contains(@id,'openUserGroupsLink')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -282,7 +282,7 @@
 <!--USER_SEGMENT_RULE_USER_ATTRIBUTES_USER_SIGNED_IN-->
 <tr>
 	<td>USER_SEGMENT_RULE_USER_ATTRIBUTES_USER_SIGNED_IN_MESSAGE</td>
-	<td>//div[contains(@class,'field-editor') and contains(@class,'expanded')]//p[@class='text-default']</td>
+	<td>//div[contains(@class,'field-editor') and contains(@class,'expanded')]/p[@class='text-secondary']</td>
 	<td></td>
 </tr>
 <tr>

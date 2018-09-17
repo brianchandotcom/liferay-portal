@@ -8,6 +8,24 @@
 		<execute macro="TestCase#setUpPortalInstance" />
 
 		<execute macro="User#firstLoginPG" />
+
+		<execute macro="JSONGroup#addGroup">
+			<var name="groupName" value="Test Site Name" />
+		</execute>
+
+		<execute macro="JSONLayout#addLayoutByGroupName">
+			<var name="groupName" value="Test Site Name" />
+			<var name="layoutName" value="Test Page Name" />
+		</execute>
+
+		<execute macro="JSONCategory#addVocabularyByGroupName">
+			<var name="groupName" value="Test Site Name" />
+			<var name="title" value="Vocabulary Name" />
+		</execute>
+
+		<execute macro="Navigator#openWithAppendToBaseURL">
+			<var name="urlAppend" value="web/test-site-name/" />
+		</execute>
 	</set-up>
 
 	<tear-down>
@@ -19,7 +37,9 @@
 				<execute macro="PortalInstances#tearDownCP" />
 			</then>
 			<else>
-				<execute macro="Vocabulary#tearDownCP" />
+				<execute macro="JSONGroup#deleteGroupByName">
+					<var name="groupName" value="Test Site Name" />
+				</execute>
 			</else>
 		</if>
 	</tear-down>

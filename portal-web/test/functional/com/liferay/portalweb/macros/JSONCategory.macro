@@ -1,0 +1,57 @@
+<definition>
+	<command name="_addVocabulary">
+		<if>
+			<not>
+				<isset var="groupId" />
+			</not>
+			<then>
+				<fail message="Please set 'groupId'." />
+			</then>
+		</if>
+
+		<execute macro="JSONCompany#getPortalURL">
+			<return name="portalURL" />
+		</execute>
+
+		<var name="curl"><![CDATA[
+			${portalURL}/api/jsonws/assetvocabulary/add-vocabulary \
+				-u test@liferay.com:test \
+				-d groupId=${groupId} \
+				-d title=${title}
+		]]></var>
+
+		<execute class="com.liferay.poshi.runner.util.JSONCurlUtil" method="post">
+			<arg value="${curl}" />
+		</execute>
+	</command>
+
+	<command name="addVocabularyByGroupName">
+		<if>
+			<not>
+				<isset var="groupName" />
+			</not>
+			<then>
+				<fail message="Please set 'groupName'." />
+			</then>
+		</if>
+
+		<if>
+			<not>
+				<isset var="title" />
+			</not>
+			<then>
+				<fail message="Please set 'title'." />
+			</then>
+		</if>
+
+		<execute macro="JSONGroup#getGroupIdByName">
+			<return name="groupId" />
+			<var name="groupName" value="${groupName}" />
+		</execute>
+
+		<execute macro="JSONCategory#_addVocabulary">
+			<var name="groupId" value="${groupId}" />
+			<var name="title" value="${title}" />
+		</execute>
+	</command>
+</definition>

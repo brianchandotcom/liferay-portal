@@ -15,7 +15,7 @@
 package com.liferay.bean.portlet.cdi.extension.internal;
 
 import java.util.Dictionary;
-import java.util.List;
+import java.util.Set;
 
 /**
  * @author Neil Griffin
@@ -26,7 +26,7 @@ public interface BeanFilter {
 
 	public String getFilterName();
 
-	public List<String> getPortletNames();
+	public Set<String> getPortletNames();
 
 	public Dictionary<String, Object> toDictionary();
 

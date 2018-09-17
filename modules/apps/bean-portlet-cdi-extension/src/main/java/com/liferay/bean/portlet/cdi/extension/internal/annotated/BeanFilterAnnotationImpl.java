@@ -19,7 +19,8 @@ import com.liferay.portal.kernel.util.HashMapDictionary;
 
 import java.util.Arrays;
 import java.util.Dictionary;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.portlet.annotations.InitParameter;
 import javax.portlet.annotations.PortletLifecycleFilter;
@@ -34,7 +35,8 @@ public class BeanFilterAnnotationImpl implements BeanFilter {
 		_portletLifecycleFilter = filterClass.getAnnotation(
 			PortletLifecycleFilter.class);
 
-		_portletNames = Arrays.asList(_portletLifecycleFilter.portletNames());
+		_portletNames = new HashSet<>(
+			Arrays.asList(_portletLifecycleFilter.portletNames()));
 	}
 
 	@Override
@@ -48,7 +50,7 @@ public class BeanFilterAnnotationImpl implements BeanFilter {
 	}
 
 	@Override
-	public List<String> getPortletNames() {
+	public Set<String> getPortletNames() {
 		return _portletNames;
 	}
 
@@ -76,6 +78,6 @@ public class BeanFilterAnnotationImpl implements BeanFilter {
 
 	private final Class<?> _filterClass;
 	private final PortletLifecycleFilter _portletLifecycleFilter;
-	private final List<String> _portletNames;
+	private final Set<String> _portletNames;
 
 }

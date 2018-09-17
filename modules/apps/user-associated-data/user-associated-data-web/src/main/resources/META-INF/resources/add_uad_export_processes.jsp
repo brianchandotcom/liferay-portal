@@ -82,6 +82,13 @@ renderResponse.setTitle(StringBundler.concat(selectedUser.getFullName(), " - ", 
 						keyProperty="applicationKey"
 						modelVar="uadApplicationExportDisplay"
 					>
+
+						<%
+						if (uadApplicationExportDisplay.getDataCount() == 0) {
+							row.setCssClass(row.getCssClass() + " table-disabled");
+						}
+						%>
+
 						<liferay-ui:search-container-column-text
 							cssClass="table-cell-expand table-list-title"
 							name="application"

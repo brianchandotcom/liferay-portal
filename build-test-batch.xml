@@ -726,7 +726,7 @@ app.server.type=@{app.server.type}]]></echo>
 
 			<execute>
 				<![CDATA[
-					tar --gzip --list --verbose --file=liferay-portal-bundle-@{app.server.type}.tar.gz
+					tar --file=liferay-portal-bundle-@{app.server.type}.tar.gz --gzip --list --verbose
 				]]>
 			</execute>
 		</sequential>
@@ -3967,13 +3967,13 @@ log.sanitizer.enabled=false</echo>
 					</else>
 				</if>
 
-				<echo>tar --verbose --extract --gzip --to-stdout --file=liferay-portal-source.tar.gz modules/core/portal-bootstrap/build/system.packages.extra.mf > modules/core/portal-bootstrap/system.packages.extra.mf</echo>
+				<echo>tar --extract --file=liferay-portal-source.tar.gz modules/core/portal-bootstrap/build/system.packages.extra.mf --gzip --to-stdout--verbose  > modules/core/portal-bootstrap/system.packages.extra.mf</echo>
 
 				<execute>
 					<![CDATA[
 						mkdir -p modules/core/portal-bootstrap
 
-						tar --verbose --extract --gzip --to-stdout --file=liferay-portal-source.tar.gz modules/core/portal-bootstrap/build/system.packages.extra.mf > modules/core/portal-bootstrap/system.packages.extra.mf
+						tar --extract --file=liferay-portal-source.tar.gz modules/core/portal-bootstrap/build/system.packages.extra.mf --gzip --to-stdout --verbose > modules/core/portal-bootstrap/system.packages.extra.mf
 					]]>
 				</execute>
 			</test-set-up>
@@ -4214,13 +4214,13 @@ log.sanitizer.enabled=false</echo>
 
 						<antcall inheritAll="false" target="install-portal-snapshots" />
 
-						<echo>tar --verbose --extract --gzip --to-stdout --file=liferay-portal-source.tar.gz modules/core/portal-bootstrap/build/system.packages.extra.mf > modules/core/portal-bootstrap/system.packages.extra.mf</echo>
+						<echo>tar --extract --file=liferay-portal-source.tar.gz modules/core/portal-bootstrap/build/system.packages.extra.mf --gzip --to-stdout --verbose > modules/core/portal-bootstrap/system.packages.extra.mf</echo>
 
 						<execute>
 							<![CDATA[
 								mkdir -p modules/core/portal-bootstrap
 
-								tar --verbose --extract --gzip --to-stdout --file=liferay-portal-source.tar.gz modules/core/portal-bootstrap/build/system.packages.extra.mf > modules/core/portal-bootstrap/system.packages.extra.mf
+								tar --extract --file=liferay-portal-source.tar.gz modules/core/portal-bootstrap/build/system.packages.extra.mf --gzip --to-stdout --verbose > modules/core/portal-bootstrap/system.packages.extra.mf
 							]]>
 						</execute>
 					</then>
@@ -4802,13 +4802,13 @@ ${output.content}</echo>
 			</test-action>
 
 			<test-set-up>
-				<echo>tar --verbose --extract --gzip --to-stdout --file=liferay-portal-source.tar.gz modules/core/portal-bootstrap/build/system.packages.extra.mf > modules/core/portal-bootstrap/system.packages.extra.mf</echo>
+				<echo>tar --extract --file=liferay-portal-source.tar.gz modules/core/portal-bootstrap/build/system.packages.extra.mf --gzip --to-stdout --verbose > modules/core/portal-bootstrap/system.packages.extra.mf</echo>
 
 				<execute>
 					<![CDATA[
 						mkdir -p modules/core/portal-bootstrap
 
-						tar --verbose --extract --gzip --to-stdout --file=liferay-portal-source.tar.gz modules/core/portal-bootstrap/build/system.packages.extra.mf > modules/core/portal-bootstrap/system.packages.extra.mf
+						tar --extract --file=liferay-portal-source.tar.gz modules/core/portal-bootstrap/build/system.packages.extra.mf --gzip --to-stdout --verbose > modules/core/portal-bootstrap/system.packages.extra.mf
 					]]>
 				</execute>
 

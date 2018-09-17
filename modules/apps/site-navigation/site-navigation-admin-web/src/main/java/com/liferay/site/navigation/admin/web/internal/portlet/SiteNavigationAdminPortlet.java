@@ -14,17 +14,9 @@
 
 package com.liferay.site.navigation.admin.web.internal.portlet;
 
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
-import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextFactory;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.site.navigation.admin.constants.SiteNavigationAdminPortletKeys;
 import com.liferay.site.navigation.admin.web.internal.constants.SiteNavigationAdminWebKeys;
-import com.liferay.site.navigation.service.SiteNavigationMenuLocalService;
 import com.liferay.site.navigation.type.SiteNavigationMenuItemTypeRegistry;
 
 import java.io.IOException;
@@ -71,21 +63,6 @@ public class SiteNavigationAdminPortlet extends MVCPortlet {
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws IOException, PortletException {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		try {
-			ServiceContext serviceContext = ServiceContextFactory.getInstance(
-				renderRequest);
-
-			_siteNavigationMenuLocalService.addDefaultSiteNavigationMenu(
-				themeDisplay.getUserId(), themeDisplay.getScopeGroupId(),
-				serviceContext);
-		}
-		catch (PortalException pe) {
-			_log.error("Unable to create default primary navigation menu", pe);
-		}
-
 		renderRequest.setAttribute(
 			SiteNavigationAdminWebKeys.SITE_NAVIGATION_MENU_ITEM_TYPE_REGISTRY,
 			_siteNavigationMenuItemTypeRegistry);
@@ -93,14 +70,8 @@ public class SiteNavigationAdminPortlet extends MVCPortlet {
 		super.doDispatch(renderRequest, renderResponse);
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(
-		SiteNavigationAdminPortlet.class);
-
 	@Reference
 	private SiteNavigationMenuItemTypeRegistry
 		_siteNavigationMenuItemTypeRegistry;
-
-	@Reference
-	private SiteNavigationMenuLocalService _siteNavigationMenuLocalService;
 
 }

@@ -17,10 +17,10 @@
 		<suppress checks="JavaDiamondOperatorCheck" files="modules/sdk/ant-mirrors-get/.*" />
 		<suppress checks="JavaImportsCheck" files="modules/sdk/gradle-plugins/src/gradleTest/osgiExt/src/main/java/com/liferay/login/web/internal/portlet/util/LoginUtil\.java" />
 		<suppress checks="JavaModuleInternalImportsCheck" files="modules/sdk/gradle-plugins/src/gradleTest/osgiExt/src/main/java/com/liferay/login/web/internal/portlet/util/LoginUtil\.java" />
+		<suppress checks="JavaPackagePathCheck" files="modules/sdk/gradle-plugins-source-formatter/src/gradleTest/.*" />
 		<suppress checks="JavaPackagePathCheck" files="modules/sdk/gradle-plugins/src/gradleTest/ext/.*" />
 		<suppress checks="JavaPackagePathCheck" files="modules/sdk/gradle-plugins/src/gradleTest/extAlternative/.*" />
 		<suppress checks="JavaPackagePathCheck" files="modules/sdk/gradle-plugins/src/gradleTest/osgiExt/src/main/java/com/liferay/login/web/internal/portlet/util/LoginUtil\.java" />
-		<suppress checks="JavaPackagePathCheck" files="modules/sdk/gradle-plugins-source-formatter/src/gradleTest/.*" />
 		<suppress checks="JavaTermOrderCheck" files="modules/sdk/gradle-plugins-source-formatter/src/gradleTest/smoke/src/main/java/com/liferay/sample/GreetingBuilder\.java" />
 		<suppress checks="JavaXMLSecurityCheck" files="modules/sdk/ant-bnd/src/main/java/com/liferay/ant/bnd/jsp/JspAnalyzerPlugin\.java" />
 		<suppress checks="JavaXMLSecurityCheck" files="modules/sdk/ant-bnd/src/main/java/com/liferay/ant/bnd/service/ServiceAnalyzerPlugin\.java" />

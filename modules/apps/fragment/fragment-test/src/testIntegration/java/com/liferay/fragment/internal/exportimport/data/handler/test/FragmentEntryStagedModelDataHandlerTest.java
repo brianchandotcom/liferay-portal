@@ -23,6 +23,7 @@ import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.service.FragmentEntryLinkLocalServiceUtil;
 import com.liferay.fragment.service.FragmentEntryLocalServiceUtil;
 import com.liferay.fragment.util.FragmentTestUtil;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.StagedModel;
@@ -85,8 +86,8 @@ public class FragmentEntryStagedModelDataHandlerTest
 				fragmentEntry.getFragmentEntryId(),
 				PortalUtil.getClassNameId(Layout.class),
 				stagingGroup.getDefaultPublicPlid(), fragmentEntry.getCss(),
-				fragmentEntry.getHtml(), fragmentEntry.getJs(), "", 0,
-				serviceContext);
+				fragmentEntry.getHtml(), fragmentEntry.getJs(),
+				StringPool.BLANK, 0, serviceContext);
 
 		stagedModel = FragmentEntryLocalServiceUtil.updateFragmentEntry(
 			TestPropsValues.getUserId(), fragmentEntry.getFragmentEntryId(),
@@ -150,9 +151,9 @@ public class FragmentEntryStagedModelDataHandlerTest
 			(FragmentEntry)importedStagedModel;
 
 		Assert.assertEquals(
-			importedFragmentEntry.getHtml(), fragmentEntry.getHtml());
-		Assert.assertEquals(
 			importedFragmentEntry.getCss(), fragmentEntry.getCss());
+		Assert.assertEquals(
+			importedFragmentEntry.getHtml(), fragmentEntry.getHtml());
 		Assert.assertEquals(
 			importedFragmentEntry.getJs(), fragmentEntry.getJs());
 	}

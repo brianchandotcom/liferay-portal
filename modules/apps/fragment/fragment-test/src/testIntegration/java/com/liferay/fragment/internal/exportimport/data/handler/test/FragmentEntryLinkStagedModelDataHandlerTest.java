@@ -143,9 +143,9 @@ public class FragmentEntryLinkStagedModelDataHandlerTest
 			(FragmentEntryLink)importedStagedModel;
 
 		Assert.assertEquals(
-			importedFragmentEntryLink.getHtml(), fragmentEntryLink.getHtml());
-		Assert.assertEquals(
 			importedFragmentEntryLink.getCss(), fragmentEntryLink.getCss());
+		Assert.assertEquals(
+			importedFragmentEntryLink.getHtml(), fragmentEntryLink.getHtml());
 		Assert.assertEquals(
 			importedFragmentEntryLink.getJs(), fragmentEntryLink.getJs());
 		Assert.assertEquals(

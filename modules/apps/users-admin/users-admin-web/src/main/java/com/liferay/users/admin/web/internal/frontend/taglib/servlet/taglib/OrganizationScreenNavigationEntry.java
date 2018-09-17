@@ -23,9 +23,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.OrganizationService;
-import com.liferay.portal.kernel.util.AggregateResourceBundle;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.users.admin.constants.UserFormConstants;
 import com.liferay.users.admin.web.internal.constants.UsersAdminWebKeys;
@@ -48,13 +46,12 @@ public class OrganizationScreenNavigationEntry
 
 	public OrganizationScreenNavigationEntry(
 		JSPRenderer jspRenderer, OrganizationService organizationService,
-		Portal portal, String entryKey, String categoryKey, String jspPath,
+		String entryKey, String categoryKey, String jspPath,
 		String mvcActionCommandName,
 		BiFunction<User, Organization, Boolean> isVisibleBiFunction) {
 
 		_jspRenderer = jspRenderer;
 		_organizationService = organizationService;
-		_portal = portal;
 		_entryKey = entryKey;
 		_categoryKey = categoryKey;
 		_jspPath = jspPath;
@@ -140,11 +137,9 @@ public class OrganizationScreenNavigationEntry
 	}
 
 	protected ResourceBundle getResourceBundle(Locale locale) {
-		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-			"content.Language", locale, getClass());
-
-		return new AggregateResourceBundle(
-			resourceBundle, _portal.getResourceBundle(locale));
+		return ResourceBundleUtil.getBundle(
+			"content.Language", locale,
+			OrganizationScreenNavigationEntry.class);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
@@ -157,6 +152,5 @@ public class OrganizationScreenNavigationEntry
 	private final JSPRenderer _jspRenderer;
 	private final String _mvcActionCommandName;
 	private final OrganizationService _organizationService;
-	private final Portal _portal;
 
 }

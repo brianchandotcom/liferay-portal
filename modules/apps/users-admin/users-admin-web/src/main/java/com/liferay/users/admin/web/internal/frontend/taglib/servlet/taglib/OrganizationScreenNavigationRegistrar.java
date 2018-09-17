@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.OrganizationService;
 import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorConstants;
 import com.liferay.portal.kernel.util.HashMapDictionary;
-import com.liferay.portal.kernel.util.Portal;
 
 import java.util.Dictionary;
 import java.util.List;
@@ -104,8 +103,8 @@ public class OrganizationScreenNavigationRegistrar {
 		BiFunction<User, Organization, Boolean> isVisibleBiFunction) {
 
 		return new OrganizationScreenNavigationEntry(
-			_jspRenderer, _organizationService, _portal, entryKey, categoryKey,
-			jspPath, mvcActionCommandName, isVisibleBiFunction);
+			_jspRenderer, _organizationService, entryKey, categoryKey, jspPath,
+			mvcActionCommandName, isVisibleBiFunction);
 	}
 
 	private ScreenNavigationEntry<Organization>
@@ -201,9 +200,6 @@ public class OrganizationScreenNavigationRegistrar {
 
 	@Reference
 	private OrganizationService _organizationService;
-
-	@Reference
-	private Portal _portal;
 
 	private final List<ServiceRegistration<ScreenNavigationCategory>>
 		_screenNavigationCategoryServiceRegistrations =

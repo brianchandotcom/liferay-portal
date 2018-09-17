@@ -806,7 +806,7 @@ create table PasswordPolicy (
 	minNumbers INTEGER,
 	minSymbols INTEGER,
 	minUpperCase INTEGER,
-	regex VARCHAR(75) null,
+	regex STRING null,
 	history BOOLEAN,
 	historyCount INTEGER,
 	expireable BOOLEAN,

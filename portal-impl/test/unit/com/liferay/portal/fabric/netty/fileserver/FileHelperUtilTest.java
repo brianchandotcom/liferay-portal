@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.test.CaptureHandler;
 import com.liferay.portal.kernel.test.JDKLoggerTestUtil;
 import com.liferay.portal.kernel.test.SwappableSecurityManager;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
-import com.liferay.portal.kernel.util.JavaDetector;
 
 import java.io.File;
 import java.io.IOException;
@@ -142,12 +141,7 @@ public class FileHelperUtilTest {
 			Assert.fail();
 		}
 		catch (Exception e) {
-			if (JavaDetector.isJDK8()) {
-				Assert.assertSame(ioException, e.getCause());
-			}
-			else {
-				Assert.assertSame(ioException, e);
-			}
+			Assert.assertSame(ioException, e.getCause());
 		}
 		finally {
 			Files.delete(undeleteableFilePath);

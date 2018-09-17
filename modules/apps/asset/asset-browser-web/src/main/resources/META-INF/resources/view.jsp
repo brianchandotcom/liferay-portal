@@ -39,7 +39,9 @@
 	<aui:input name="typeSelection" type="hidden" value="<%= assetBrowserDisplayContext.getTypeSelection() %>" />
 
 	<liferay-ui:search-container
+		id="selectAssetEntries"
 		searchContainer="<%= assetBrowserDisplayContext.getAssetBrowserSearch() %>"
+		var="assetEntriesSearchContainer"
 	>
 		<liferay-ui:search-container-row
 			className="com.liferay.asset.kernel.model.AssetEntry"
@@ -65,6 +67,8 @@
 				data.put("assettype", assetRendererFactory.getTypeName(locale, assetBrowserDisplayContext.getSubtypeSelectionId()));
 				data.put("entityid", assetEntry.getEntryId());
 				data.put("groupdescriptivename", group.getDescriptiveName(locale));
+
+				row.setData(data);
 
 				cssClass = "selector-button";
 			}
@@ -95,7 +99,7 @@
 						<h5>
 							<c:choose>
 								<c:when test="<%= assetEntry.getEntryId() != assetBrowserDisplayContext.getRefererAssetEntryId() %>">
-									<aui:a cssClass="<%= cssClass %>" data="<%= data %>" href="javascript:;">
+									<aui:a cssClass="<%= cssClass %>" href="javascript:;">
 										<%= HtmlUtil.escape(assetRenderer.getTitle(locale)) %>
 									</aui:a>
 								</c:when>
@@ -121,7 +125,6 @@
 							<c:when test="<%= Validator.isNotNull(assetRenderer.getThumbnailPath(renderRequest)) %>">
 								<liferay-frontend:vertical-card
 									cssClass="<%= cssClass %>"
-									data="<%= data %>"
 									imageUrl="<%= assetRenderer.getThumbnailPath(renderRequest) %>"
 									subtitle="<%= HtmlUtil.escape(group.getDescriptiveName(locale)) %>"
 									title="<%= assetRenderer.getTitle(locale) %>"
@@ -130,7 +133,6 @@
 							<c:otherwise>
 								<liferay-frontend:icon-vertical-card
 									cssClass="<%= cssClass %>"
-									data="<%= data %>"
 									icon="<%= assetRendererFactory.getIconCssClass() %>"
 									subtitle="<%= HtmlUtil.escape(group.getDescriptiveName(locale)) %>"
 									title="<%= assetRenderer.getTitle(locale) %>"
@@ -146,7 +148,7 @@
 					>
 						<c:choose>
 							<c:when test="<%= assetEntry.getEntryId() != assetBrowserDisplayContext.getRefererAssetEntryId() %>">
-								<aui:a cssClass="<%= cssClass %>" data="<%= data %>" href="javascript:;">
+								<aui:a cssClass="<%= cssClass %>" href="javascript:;">
 									<%= HtmlUtil.escape(assetRenderer.getTitle(locale)) %>
 								</aui:a>
 							</c:when>
@@ -187,6 +189,32 @@
 	</liferay-ui:search-container>
 </aui:form>
 
-<aui:script>
-	Liferay.Util.selectEntityHandler('#<portlet:namespace />selectAssetFm', '<%= HtmlUtil.escapeJS(assetBrowserDisplayContext.getEventName()) %>');
+<aui:script use="liferay-search-container">
+	var searchContainer = Liferay.SearchContainer.get('<portlet:namespace />selectAssetEntries');
+
+	searchContainer.on(
+		'rowToggled',
+		function(event) {
+			var selectedItems = event.elements.allSelectedElements;
+
+			var arr = [];
+
+			selectedItems.each(
+				function() {
+					var row = this.ancestor('tr');
+
+					var data = row.getDOM().dataset;
+
+					arr.push(data);
+				}
+			);
+
+			Liferay.Util.getOpener().Liferay.fire(
+				'<%= HtmlUtil.escapeJS(assetBrowserDisplayContext.getEventName()) %>',
+				{
+					data: arr
+				}
+			);
+		}
+	);
 </aui:script>

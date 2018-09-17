@@ -23,9 +23,9 @@ import com.liferay.portal.kernel.service.OrganizationService;
 import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorConstants;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 
+import java.util.ArrayList;
 import java.util.Dictionary;
 import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.function.BiFunction;
 
 import org.osgi.framework.BundleContext;
@@ -202,10 +202,8 @@ public class OrganizationScreenNavigationRegistrar {
 	private OrganizationService _organizationService;
 
 	private final List<ServiceRegistration<ScreenNavigationCategory>>
-		_screenNavigationCategoryServiceRegistrations =
-			new CopyOnWriteArrayList<>();
+		_screenNavigationCategoryServiceRegistrations = new ArrayList<>();
 	private final List<ServiceRegistration<ScreenNavigationEntry>>
-		_screenNavigationEntryServiceRegistrations =
-			new CopyOnWriteArrayList<>();
+		_screenNavigationEntryServiceRegistrations = new ArrayList<>();
 
 }

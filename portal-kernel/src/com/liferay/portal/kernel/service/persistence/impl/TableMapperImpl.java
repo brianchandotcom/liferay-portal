@@ -14,9 +14,9 @@
 
 package com.liferay.portal.kernel.service.persistence.impl;
 
-import com.liferay.portal.kernel.cache.MultiVMPoolUtil;
 import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.cache.PortalCacheHelperUtil;
+import com.liferay.portal.kernel.cache.PortalCacheManagerNames;
 import com.liferay.portal.kernel.dao.jdbc.MappingSqlQuery;
 import com.liferay.portal.kernel.dao.jdbc.MappingSqlQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.jdbc.ParamSetter;
@@ -99,10 +99,12 @@ public class TableMapperImpl<L extends BaseModel<L>, R extends BaseModel<R>>
 					leftColumnName, " = ?"),
 				RowMapper.PRIMARY_KEY, ParamSetter.BIGINT);
 
-		leftToRightPortalCache = MultiVMPoolUtil.getPortalCache(
+		leftToRightPortalCache = PortalCacheHelperUtil.getPortalCache(
+			PortalCacheManagerNames.MULTI_VM,
 			StringBundler.concat(
 				TableMapper.class.getName(), "-", tableName, "-LeftToRight"));
-		rightToLeftPortalCache = MultiVMPoolUtil.getPortalCache(
+		rightToLeftPortalCache = PortalCacheHelperUtil.getPortalCache(
+			PortalCacheManagerNames.MULTI_VM,
 			StringBundler.concat(
 				TableMapper.class.getName(), "-", tableName, "-RightToLeft"));
 	}
@@ -280,9 +282,11 @@ public class TableMapperImpl<L extends BaseModel<L>, R extends BaseModel<R>>
 
 	@Override
 	public void destroy() {
-		MultiVMPoolUtil.removePortalCache(
+		PortalCacheHelperUtil.removePortalCache(
+			PortalCacheManagerNames.MULTI_VM,
 			leftToRightPortalCache.getPortalCacheName());
-		MultiVMPoolUtil.removePortalCache(
+		PortalCacheHelperUtil.removePortalCache(
+			PortalCacheManagerNames.MULTI_VM,
 			rightToLeftPortalCache.getPortalCacheName());
 	}
 

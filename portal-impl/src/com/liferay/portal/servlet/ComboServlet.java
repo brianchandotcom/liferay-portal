@@ -17,7 +17,8 @@ package com.liferay.portal.servlet;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.cache.PortalCache;
-import com.liferay.portal.kernel.cache.SingleVMPoolUtil;
+import com.liferay.portal.kernel.cache.PortalCacheHelperUtil;
+import com.liferay.portal.kernel.cache.PortalCacheManagerNames;
 import com.liferay.portal.kernel.exception.NoSuchLayoutException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -481,10 +482,11 @@ public class ComboServlet extends HttpServlet {
 	private static final Log _log = LogFactoryUtil.getLog(ComboServlet.class);
 
 	private static final PortalCache<String, byte[][]> _bytesArrayPortalCache =
-		SingleVMPoolUtil.getPortalCache(ComboServlet.class.getName());
+		PortalCacheHelperUtil.getPortalCache(
+			PortalCacheManagerNames.SINGLE_VM, ComboServlet.class.getName());
 	private static final PortalCache<String, FileContentBag>
-		_fileContentBagPortalCache = SingleVMPoolUtil.getPortalCache(
-			FileContentBag.class.getName());
+		_fileContentBagPortalCache = PortalCacheHelperUtil.getPortalCache(
+			PortalCacheManagerNames.SINGLE_VM, FileContentBag.class.getName());
 
 	private final Set<String> _protectedParameters = SetUtil.fromArray(
 		new String[] {

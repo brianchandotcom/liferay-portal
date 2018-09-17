@@ -15,7 +15,8 @@
 package com.liferay.portal.util;
 
 import com.liferay.portal.kernel.cache.PortalCache;
-import com.liferay.portal.kernel.cache.SingleVMPoolUtil;
+import com.liferay.portal.kernel.cache.PortalCacheHelperUtil;
+import com.liferay.portal.kernel.cache.PortalCacheManagerNames;
 import com.liferay.portal.kernel.configuration.Filter;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -90,6 +91,7 @@ public class JavaScriptBundleUtil {
 		JavaScriptBundleUtil.class.getName();
 
 	private static final PortalCache<String, String[]> _portalCache =
-		SingleVMPoolUtil.getPortalCache(_CACHE_NAME);
+		PortalCacheHelperUtil.getPortalCache(
+			PortalCacheManagerNames.SINGLE_VM, _CACHE_NAME);
 
 }

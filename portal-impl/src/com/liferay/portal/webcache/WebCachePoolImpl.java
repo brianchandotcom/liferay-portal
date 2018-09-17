@@ -15,7 +15,8 @@
 package com.liferay.portal.webcache;
 
 import com.liferay.portal.kernel.cache.PortalCache;
-import com.liferay.portal.kernel.cache.SingleVMPoolUtil;
+import com.liferay.portal.kernel.cache.PortalCacheHelperUtil;
+import com.liferay.portal.kernel.cache.PortalCacheManagerNames;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.Time;
@@ -29,7 +30,8 @@ import com.liferay.portal.kernel.webcache.WebCachePool;
 public class WebCachePoolImpl implements WebCachePool {
 
 	public void afterPropertiesSet() {
-		_portalCache = SingleVMPoolUtil.getPortalCache(_CACHE_NAME);
+		_portalCache = PortalCacheHelperUtil.getPortalCache(
+			PortalCacheManagerNames.SINGLE_VM, _CACHE_NAME);
 	}
 
 	@Override

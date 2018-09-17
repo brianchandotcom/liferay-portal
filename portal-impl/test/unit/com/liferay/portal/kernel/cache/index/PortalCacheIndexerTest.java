@@ -14,9 +14,10 @@
 
 package com.liferay.portal.kernel.cache.index;
 
-import com.liferay.portal.kernel.cache.MultiVMPoolUtil;
 import com.liferay.portal.kernel.cache.PortalCache;
+import com.liferay.portal.kernel.cache.PortalCacheHelperUtil;
 import com.liferay.portal.kernel.cache.PortalCacheListener;
+import com.liferay.portal.kernel.cache.PortalCacheManagerNames;
 import com.liferay.portal.kernel.concurrent.test.MappedMethodCallableInvocationHandler;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
@@ -48,8 +49,8 @@ public class PortalCacheIndexerTest {
 	public void setUp() throws Exception {
 		ToolDependencies.wireCaches();
 
-		_portalCache = MultiVMPoolUtil.getPortalCache(
-			RandomTestUtil.randomString());
+		_portalCache = PortalCacheHelperUtil.getPortalCache(
+			PortalCacheManagerNames.MULTI_VM, RandomTestUtil.randomString());
 
 		_portalCacheIndexer = new PortalCacheIndexer<>(
 			_indexEncoder, _portalCache);
@@ -124,8 +125,8 @@ public class PortalCacheIndexerTest {
 
 	@Test
 	public void testConstructor() {
-		_portalCache = MultiVMPoolUtil.getPortalCache(
-			RandomTestUtil.randomString());
+		_portalCache = PortalCacheHelperUtil.getPortalCache(
+			PortalCacheManagerNames.MULTI_VM, RandomTestUtil.randomString());
 
 		_portalCache.put(_INDEX_1_KEY_1, _VALUE);
 

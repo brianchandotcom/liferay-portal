@@ -19,7 +19,8 @@ import aQute.bnd.version.Version;
 import com.liferay.portal.dao.orm.common.SQLTransformer;
 import com.liferay.portal.events.StartupHelperUtil;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
-import com.liferay.portal.kernel.cache.MultiVMPoolUtil;
+import com.liferay.portal.kernel.cache.PortalCacheHelperUtil;
+import com.liferay.portal.kernel.cache.PortalCacheManagerNames;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
@@ -203,7 +204,8 @@ public class DBUpgrader {
 		}
 
 		if (StartupHelperUtil.isUpgraded()) {
-			MultiVMPoolUtil.clear();
+			PortalCacheHelperUtil.clearPortalCaches(
+				PortalCacheManagerNames.MULTI_VM);
 		}
 	}
 

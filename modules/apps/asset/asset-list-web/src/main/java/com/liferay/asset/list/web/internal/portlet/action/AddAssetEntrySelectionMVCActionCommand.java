@@ -48,10 +48,13 @@ public class AddAssetEntrySelectionMVCActionCommand
 		long assetListEntryId = ParamUtil.getLong(
 			actionRequest, "assetListEntryId");
 
-		long assetEntryId = ParamUtil.getLong(actionRequest, "assetEntryId");
+		long[] assetEntryIds = ParamUtil.getLongValues(
+			actionRequest, "assetEntryIds");
 
-		_assetListEntryService.addAssetEntrySelection(
-			assetListEntryId, assetEntryId);
+		for (long assetEntryId : assetEntryIds) {
+			_assetListEntryService.addAssetEntrySelection(
+				assetListEntryId, assetEntryId);
+		}
 	}
 
 	@Reference

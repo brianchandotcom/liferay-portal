@@ -60,6 +60,7 @@ JSONSerializer jsonSerializer = JSONFactoryUtil.createJSONSerializer();
 			FragmentsReducerModule.addFragmentEntryLinkReducer,
 			FragmentsReducerModule.moveFragmentEntryLinkReducer,
 			FragmentsReducerModule.removeFragmentEntryLinkReducer,
+			FragmentsReducerModule.updateEditableValueReducer,
 			PlaceholdersReducerModule.updateDragTargetReducer,
 			TranslationsReducerModule.translationStatusReducer
 		],

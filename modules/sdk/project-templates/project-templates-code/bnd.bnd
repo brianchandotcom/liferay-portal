@@ -1,5 +1,5 @@
-Bundle-Description: Generates application code from a set of Liferay templates.
-Bundle-Name: Liferay Code Templates
+Bundle-Description: Generates useful application code for Liferay development.
+Bundle-Name: Liferay Project Templates Code
 Bundle-SymbolicName: com.liferay.project.templates.code
 Bundle-Version: 1.0.0
 Liferay-Versions: [7,8)

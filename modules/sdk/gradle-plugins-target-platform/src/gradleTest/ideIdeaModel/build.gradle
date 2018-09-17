@@ -12,7 +12,15 @@ runGradleTest {
 	doLast {
 		assert plugins.hasPlugin("com.liferay.target.platform")
 
-		assert idea.module.scopes["PROVIDED"]["plus"][0].name == "targetPlatformIDE"
+		def plusConfigurationNames = []
+
+		idea.module.scopes["PROVIDED"]["plus"].each {
+			Configuration plusConfiguration ->
+
+			plusConfigurationNames.add(plusConfiguration.name)
+		}
+
+		assert plusConfigurationNames.contains("targetPlatformIDE")
 
 		Set<Dependency> ideaDependencies = idea.module.resolveDependencies()
 

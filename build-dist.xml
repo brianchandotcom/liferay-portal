@@ -3595,6 +3595,78 @@ plugins.includes=</echo>
 					/>
 				</chmod>
 
+				<if>
+					<equals arg1="${zip.executable.file}" arg2="liferay-portal-tomcat" />
+					<then>
+						<move
+							file="dist/${tstamp.value}/liferay-portal-${lp.version}/tomcat-${app.server.tomcat.version}"
+							preservelastmodified="true"
+							tofile="dist/${tstamp.value}/liferay-portal-${lp.version}/tomcat"
+						/>
+
+						<ant dir="portal-web" target="compile-tomcat">
+							<property name="app.server.portal.dir" value="dist/${tstamp.value}/liferay-portal-${lp.version}/tomcat/webapps/ROOT" />
+						</ant>
+
+						<copy
+							preservelastmodified="true"
+							todir="dist/${tstamp.value}/liferay-portal-${lp.version}/tomcat/webapps/ROOT/html"
+						>
+							<fileset
+								dir="portal-web/docroot/html"
+							/>
+						</copy>
+
+						<copy
+							preservelastmodified="true"
+							todir="dist/${tstamp.value}/liferay-portal-${lp.version}/tomcat/webapps/ROOT/WEB-INF/tld"
+						>
+							<fileset
+								dir="portal-web/docroot/WEB-INF/tld"
+							/>
+						</copy>
+
+						<copy
+							preservelastmodified="true"
+							todir="dist/${tstamp.value}/liferay-portal-${lp.version}/tomcat/work/Catalina/localhost/ROOT"
+						>
+							<fileset
+								dir="portal-web/classes/${app.server.type}"
+							>
+								<exclude name="**/*.jspc_error" />
+							</fileset>
+						</copy>
+
+						<parallel>
+							<exec dir="dist/${tstamp.value}/liferay-portal-${lp.version}/tomcat/bin" executable="sh">
+								<arg value="catalina.sh" />
+								<arg value="run" />
+								<env key="LIFERAY_CLEAN_OSGI_STATE" value="true" />
+							</exec>
+
+							<sequential>
+								<waitfor>
+									<http url="http://localhost:8080" />
+								</waitfor>
+
+								<sleep seconds="5" />
+
+								<exec dir="dist/${tstamp.value}/liferay-portal-${lp.version}/tomcat/bin" executable="sh">
+									<arg value="shutdown.sh" />
+								</exec>
+
+								<sleep seconds="20" />
+
+								<delete dir="dist/${tstamp.value}/liferay-portal-${lp.version}">
+									<patternset
+										includes="**/logs/**"
+									/>
+								</delete>
+							</sequential>
+						</parallel>
+					</then>
+				</if>
+
 				<exec dir="dist/${tstamp.value}" executable="7z">
 					<arg value="a" />
 					<arg value="-md1024m" />
@@ -3980,113 +4052,6 @@ plugins.includes=</echo>
 			<param name="zip.executable.file" value="liferay-portal-tomcat" />
 			<param name="zip.executable.dir" value="${app.server.tomcat.dir}" />
 		</antcall>
-
-		<local name="tstamp.value" />
-
-		<tstamp>
-			<format pattern="yyyyMMddkkmmssSSS" property="tstamp.value" />
-		</tstamp>
-
-		<mkdir dir="${tstamp.value}" />
-
-		<exec dir="${tstamp.value}" executable="7z">
-			<arg value="x" />
-			<arg value="-x!liferay-portal-${lp.version}/data/hypersonic/**" />
-			<arg value="-x!liferay-portal-${lp.version}/osgi/state/**" />
-			<arg value="-x!liferay-portal-${lp.version}/tomcat-${app.server.tomcat.version}/work/**" />
-			<arg value="../dist/liferay-portal-tomcat-${lp.version}.7z" />
-		</exec>
-
-		<move
-			file="${tstamp.value}/liferay-portal-${lp.version}/tomcat-${app.server.tomcat.version}"
-			tofile="${tstamp.value}/liferay-portal-${lp.version}/tomcat"
-		/>
-
-		<ant dir="portal-web" target="compile-tomcat">
-			<property name="app.server.portal.dir" value="${tstamp.value}/liferay-portal-${lp.version}/tomcat/webapps/ROOT" />
-		</ant>
-
-		<copy
-			preservelastmodified="true"
-			todir="${tstamp.value}/liferay-portal-${lp.version}/tomcat/webapps/ROOT/html"
-		>
-			<fileset
-				dir="portal-web/docroot/html"
-			/>
-		</copy>
-
-		<copy
-			preservelastmodified="true"
-			todir="${tstamp.value}/liferay-portal-${lp.version}/tomcat/webapps/ROOT/WEB-INF/tld"
-		>
-			<fileset
-				dir="portal-web/docroot/WEB-INF/tld"
-			/>
-		</copy>
-
-		<copy
-			preservelastmodified="true"
-			todir="${tstamp.value}/liferay-portal-${lp.version}/tomcat/work/Catalina/localhost/ROOT"
-		>
-			<fileset
-				dir="portal-web/classes/${app.server.type}"
-			>
-				<exclude name="**/*.jspc_error" />
-			</fileset>
-		</copy>
-
-		<chmod
-			perm="744"
-		>
-			<fileset
-				dir="${tstamp.value}/liferay-portal-${lp.version}/tomcat/bin"
-				includes="*.sh"
-			/>
-		</chmod>
-
-		<parallel>
-			<exec dir="${tstamp.value}/liferay-portal-${lp.version}/tomcat/bin" executable="sh">
-				<arg value="catalina.sh" />
-				<arg value="run" />
-				<env key="LIFERAY_CLEAN_OSGI_STATE" value="true" />
-			</exec>
-
-			<sequential>
-				<waitfor>
-					<http url="http://localhost:8080" />
-				</waitfor>
-
-				<sleep seconds="5" />
-
-				<exec dir="${tstamp.value}/liferay-portal-${lp.version}/tomcat/bin" executable="sh">
-					<arg value="shutdown.sh" />
-				</exec>
-
-				<sleep seconds="20" />
-
-				<delete dir="${tstamp.value}/liferay-portal-${lp.version}">
-					<patternset
-						includes="**/logs/**"
-					/>
-				</delete>
-			</sequential>
-		</parallel>
-
-		<echo>Calling 7-Zip, this will take a few minutes...</echo>
-
-		<delete failonerror="false" file="${project.dir}/dist/liferay-portal-tomcat-${lp.version}.7z" />
-
-		<exec dir="${tstamp.value}" executable="7z">
-			<arg line="a -md1024m ${project.dir}/dist/liferay-portal-tomcat-${lp.version}.7z liferay-portal-${lp.version}/osgi" />
-		</exec>
-
-		<delete dir="${tstamp.value}/liferay-portal-${lp.version}/osgi" />
-
-		<exec dir="${tstamp.value}" executable="7z">
-			<arg line="a -md1024m ${project.dir}/dist/liferay-portal-tomcat-${lp.version}.7z liferay-portal-${lp.version}" />
-		</exec>
-
-		<delete dir="${tstamp.value}" />
 	</target>
 
 	<target name="zip-weblogic-custom">

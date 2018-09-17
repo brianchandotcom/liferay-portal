@@ -15,8 +15,6 @@
 package com.liferay.structured.content.apio.internal.architect.resource.test;
 
 import com.liferay.apio.architect.pagination.PageItems;
-import com.liferay.apio.architect.pagination.Pagination;
-import com.liferay.apio.architect.resource.NestedCollectionResource;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalArticleConstants;
@@ -41,8 +39,6 @@ import com.liferay.structured.content.apio.architect.sort.Sort;
 import com.liferay.structured.content.apio.architect.sort.SortParser;
 import com.liferay.structured.content.apio.architect.util.test.PaginationTestUtil;
 
-import java.lang.reflect.Method;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -56,7 +52,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
- * @author Cristina González
+ * @author Julio Camarero
  */
 @RunWith(Arquillian.class)
 public class StructuredContentNestedCollectionResourceSortingTest {
@@ -102,10 +98,11 @@ public class StructuredContentNestedCollectionResourceSortingTest {
 			stringMap2, null, LocaleUtil.getDefault(), null, true, true,
 			serviceContext);
 
-		PageItems<JournalArticle> pageItems = _getPageItems(
-			PaginationTestUtil.of(10, 1), _group.getGroupId(),
-			_getThemeDisplay(_group, LocaleUtil.getDefault()),
-			Filter.emptyFilter(), new Sort(_sortParser.parse("title:asc")));
+		PageItems<JournalArticle> pageItems =
+			_structuredContentNestedCollectionResourceProxy.getPageItems(
+				PaginationTestUtil.of(10, 1), _group.getGroupId(),
+				_getThemeDisplay(_group, LocaleUtil.getDefault()),
+				Filter.emptyFilter(), new Sort(_sortParser.parse("title:asc")));
 
 		Assert.assertEquals(2, pageItems.getTotalCount());
 
@@ -147,10 +144,11 @@ public class StructuredContentNestedCollectionResourceSortingTest {
 			stringMap2, null, LocaleUtil.SPAIN, null, true, true,
 			serviceContext);
 
-		PageItems<JournalArticle> pageItems = _getPageItems(
-			PaginationTestUtil.of(10, 1), _group.getGroupId(),
-			_getThemeDisplay(_group, LocaleUtil.getDefault()),
-			Filter.emptyFilter(), new Sort(_sortParser.parse("title:asc")));
+		PageItems<JournalArticle> pageItems =
+			_structuredContentNestedCollectionResourceProxy.getPageItems(
+				PaginationTestUtil.of(10, 1), _group.getGroupId(),
+				_getThemeDisplay(_group, LocaleUtil.getDefault()),
+				Filter.emptyFilter(), new Sort(_sortParser.parse("title:asc")));
 
 		Assert.assertEquals(2, pageItems.getTotalCount());
 
@@ -193,10 +191,11 @@ public class StructuredContentNestedCollectionResourceSortingTest {
 			stringMap2, null, LocaleUtil.getDefault(), null, true, true,
 			serviceContext);
 
-		PageItems<JournalArticle> pageItems = _getPageItems(
-			PaginationTestUtil.of(10, 1), _group.getGroupId(),
-			_getThemeDisplay(_group, LocaleUtil.SPAIN), Filter.emptyFilter(),
-			new Sort(_sortParser.parse("title:asc")));
+		PageItems<JournalArticle> pageItems =
+			_structuredContentNestedCollectionResourceProxy.getPageItems(
+				PaginationTestUtil.of(10, 1), _group.getGroupId(),
+				_getThemeDisplay(_group, LocaleUtil.SPAIN),
+				Filter.emptyFilter(), new Sort(_sortParser.parse("title:asc")));
 
 		Assert.assertEquals(2, pageItems.getTotalCount());
 
@@ -235,10 +234,11 @@ public class StructuredContentNestedCollectionResourceSortingTest {
 			stringMap2, null, LocaleUtil.getDefault(), null, true, true,
 			serviceContext);
 
-		PageItems<JournalArticle> pageItems = _getPageItems(
-			PaginationTestUtil.of(10, 1), _group.getGroupId(),
-			_getThemeDisplay(_group, LocaleUtil.getDefault()),
-			Filter.emptyFilter(), new Sort(_sortParser.parse("title")));
+		PageItems<JournalArticle> pageItems =
+			_structuredContentNestedCollectionResourceProxy.getPageItems(
+				PaginationTestUtil.of(10, 1), _group.getGroupId(),
+				_getThemeDisplay(_group, LocaleUtil.getDefault()),
+				Filter.emptyFilter(), new Sort(_sortParser.parse("title")));
 
 		Assert.assertEquals(2, pageItems.getTotalCount());
 
@@ -277,10 +277,12 @@ public class StructuredContentNestedCollectionResourceSortingTest {
 			stringMap2, null, LocaleUtil.getDefault(), null, true, true,
 			serviceContext);
 
-		PageItems<JournalArticle> pageItems = _getPageItems(
-			PaginationTestUtil.of(10, 1), _group.getGroupId(),
-			_getThemeDisplay(_group, LocaleUtil.getDefault()),
-			Filter.emptyFilter(), new Sort(_sortParser.parse("title:desc")));
+		PageItems<JournalArticle> pageItems =
+			_structuredContentNestedCollectionResourceProxy.getPageItems(
+				PaginationTestUtil.of(10, 1), _group.getGroupId(),
+				_getThemeDisplay(_group, LocaleUtil.getDefault()),
+				Filter.emptyFilter(),
+				new Sort(_sortParser.parse("title:desc")));
 
 		Assert.assertEquals(2, pageItems.getTotalCount());
 
@@ -288,25 +290,6 @@ public class StructuredContentNestedCollectionResourceSortingTest {
 
 		Assert.assertEquals(journalArticle2, items.get(0));
 		Assert.assertEquals(journalArticle1, items.get(1));
-	}
-
-	private PageItems<JournalArticle> _getPageItems(
-			Pagination pagination, long contentSpaceId,
-			ThemeDisplay themeDisplay, Filter filter, Sort sort)
-		throws Exception {
-
-		Class<? extends NestedCollectionResource> clazz =
-			_nestedCollectionResource.getClass();
-
-		Method method = clazz.getDeclaredMethod(
-			"_getPageItems", Pagination.class, long.class, ThemeDisplay.class,
-			Filter.class, Sort.class);
-
-		method.setAccessible(true);
-
-		return (PageItems)method.invoke(
-			_nestedCollectionResource, pagination, contentSpaceId, themeDisplay,
-			filter, sort);
 	}
 
 	private ThemeDisplay _getThemeDisplay(Group group, Locale locale)
@@ -328,12 +311,11 @@ public class StructuredContentNestedCollectionResourceSortingTest {
 	@DeleteAfterTestRun
 	private Group _group;
 
-	@Inject(
-		filter = "component.name=com.liferay.structured.content.apio.internal.architect.resource.StructuredContentNestedCollectionResource"
-	)
-	private NestedCollectionResource _nestedCollectionResource;
-
 	@Inject
 	private SortParser _sortParser;
+
+	@Inject
+	private StructuredContentNestedCollectionResourceProxy
+		_structuredContentNestedCollectionResourceProxy;
 
 }

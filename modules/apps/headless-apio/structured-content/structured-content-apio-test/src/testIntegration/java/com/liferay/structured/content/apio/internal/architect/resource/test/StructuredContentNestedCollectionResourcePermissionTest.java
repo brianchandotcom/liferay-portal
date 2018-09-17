@@ -15,12 +15,9 @@
 package com.liferay.structured.content.apio.internal.architect.resource.test;
 
 import com.liferay.apio.architect.pagination.PageItems;
-import com.liferay.apio.architect.pagination.Pagination;
-import com.liferay.apio.architect.resource.NestedCollectionResource;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalArticleConstants;
-import com.liferay.journal.model.JournalArticleWrapper;
 import com.liferay.journal.model.JournalFolderConstants;
 import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.journal.test.util.JournalTestUtil;
@@ -49,9 +46,6 @@ import com.liferay.structured.content.apio.architect.filter.Filter;
 import com.liferay.structured.content.apio.architect.sort.Sort;
 import com.liferay.structured.content.apio.architect.util.test.PaginationTestUtil;
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -66,7 +60,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
- * @author Cristina González
+ * @author Julio Camarero
  */
 @RunWith(Arquillian.class)
 public class StructuredContentNestedCollectionResourcePermissionTest {
@@ -115,9 +109,10 @@ public class StructuredContentNestedCollectionResourcePermissionTest {
 				new ContextUserReplace(user, permissionChecker)) {
 
 			Assertions.assertThatThrownBy(
-				() -> _getJournalArticleWrapper(
-					journalArticle.getId(),
-					_getThemeDisplay(_group, LocaleUtil.getDefault()))
+				() -> _structuredContentNestedCollectionResourceProxy.
+					getJournalArticleWrapper(
+						journalArticle.getId(),
+						_getThemeDisplay(_group, LocaleUtil.getDefault()))
 			).isInstanceOf(
 				PrincipalException.MustHavePermission.class
 			);
@@ -155,58 +150,17 @@ public class StructuredContentNestedCollectionResourcePermissionTest {
 		try (ContextUserReplace contextUserReplace =
 				new ContextUserReplace(user, permissionChecker)) {
 
-			PageItems<JournalArticle> pageItems = _getPageItems(
-				PaginationTestUtil.of(10, 1), _group.getGroupId(),
-				_getThemeDisplay(_group, LocaleUtil.getDefault()),
-				Filter.emptyFilter(), Sort.emptySort());
+			PageItems<JournalArticle> pageItems =
+				_structuredContentNestedCollectionResourceProxy.getPageItems(
+					PaginationTestUtil.of(10, 1), _group.getGroupId(),
+					_getThemeDisplay(_group, LocaleUtil.getDefault()),
+					Filter.emptyFilter(), Sort.emptySort());
 
 			Assert.assertEquals(0, pageItems.getTotalCount());
 		}
 		finally {
 			_userLocalService.deleteUser(user);
 		}
-	}
-
-	private JournalArticleWrapper _getJournalArticleWrapper(
-			long journalArticleId, ThemeDisplay themeDisplay)
-		throws Throwable {
-
-		Class<? extends NestedCollectionResource> clazz =
-			_nestedCollectionResource.getClass();
-
-		Method method = clazz.getDeclaredMethod(
-			"_getJournalArticleWrapper", long.class, ThemeDisplay.class);
-
-		method.setAccessible(true);
-
-		try {
-			return (JournalArticleWrapper)method.invoke(
-				_nestedCollectionResource, journalArticleId, themeDisplay);
-		}
-		catch (InvocationTargetException ite) {
-			ite.printStackTrace();
-
-			throw ite.getCause();
-		}
-	}
-
-	private PageItems<JournalArticle> _getPageItems(
-			Pagination pagination, long contentSpaceId,
-			ThemeDisplay themeDisplay, Filter filter, Sort sort)
-		throws Exception {
-
-		Class<? extends NestedCollectionResource> clazz =
-			_nestedCollectionResource.getClass();
-
-		Method method = clazz.getDeclaredMethod(
-			"_getPageItems", Pagination.class, long.class, ThemeDisplay.class,
-			Filter.class, Sort.class);
-
-		method.setAccessible(true);
-
-		return (PageItems)method.invoke(
-			_nestedCollectionResource, pagination, contentSpaceId, themeDisplay,
-			filter, sort);
 	}
 
 	private ThemeDisplay _getThemeDisplay(Group group, Locale locale)
@@ -231,10 +185,9 @@ public class StructuredContentNestedCollectionResourcePermissionTest {
 	@Inject
 	private JournalArticleLocalService _journalArticleLocalService;
 
-	@Inject(
-		filter = "component.name=com.liferay.structured.content.apio.internal.architect.resource.StructuredContentNestedCollectionResource"
-	)
-	private NestedCollectionResource _nestedCollectionResource;
+	@Inject
+	private StructuredContentNestedCollectionResourceProxy
+		_structuredContentNestedCollectionResourceProxy;
 
 	@Inject
 	private UserLocalService _userLocalService;

@@ -263,7 +263,7 @@ public class StructuredContentNestedCollectionResource
 			ThemeDisplay themeDisplay)
 		throws PortalException {
 
-		Long structureId = structuredContentCreatorForm.getStructure();
+		Long structureId = structuredContentCreatorForm.getStructureId();
 
 		DDMStructure ddmStructure = _ddmStructureService.getStructure(
 			structureId);

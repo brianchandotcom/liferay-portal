@@ -64,7 +64,7 @@ public class StructuredContentCreatorForm {
 			"displayDate", StructuredContentCreatorForm::setDisplayDate
 		).addRequiredLinkedModel(
 			"structure", ContentStructureIdentifier.class,
-			StructuredContentCreatorForm::setStructure
+			StructuredContentCreatorForm::setStructureId
 		).addOptionalNestedModelList(
 			"values", StructuredContentValuesForm::buildValuesForm,
 			StructuredContentCreatorForm::setStructuredContentValuesForms
@@ -166,8 +166,8 @@ public class StructuredContentCreatorForm {
 	 * @return the structured content's structure ID
 	 * @review
 	 */
-	public Long getStructure() {
-		return _structure;
+	public Long getStructureId() {
+		return _structureId;
 	}
 
 	/**
@@ -228,14 +228,14 @@ public class StructuredContentCreatorForm {
 		_keywords = keywords;
 	}
 
-	public void setStructure(Long structure) {
-		_structure = structure;
-	}
-
 	public void setStructuredContentValuesForms(
 		List<StructuredContentValuesForm> structuredContentValuesForms) {
 
 		_structuredContentValuesForms = structuredContentValuesForms;
+	}
+
+	public void setStructureId(Long structureId) {
+		_structureId = structureId;
 	}
 
 	public void setTemplate(String template) {
@@ -257,9 +257,9 @@ public class StructuredContentCreatorForm {
 	private Integer _displayDateMonth;
 	private Integer _displayDateYear;
 	private List<String> _keywords;
-	private Long _structure;
 	private List<StructuredContentValuesForm> _structuredContentValuesForms =
 		new ArrayList<>();
+	private Long _structureId;
 	private String _template;
 	private String _text;
 	private String _title;

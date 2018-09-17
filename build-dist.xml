@@ -3667,12 +3667,11 @@ plugins.includes=</echo>
 					</then>
 				</if>
 
-				<exec dir="dist/${tstamp.value}" executable="7z">
-					<arg value="a" />
-					<arg value="-md1024m" />
-					<arg value="${project.dir}/dist/${zip.executable.file}-${lp.version}.7z" />
-					<arg value="liferay-portal-${lp.version}" />
-				</exec>
+				<execute dir="dist/${tstamp.value}">
+					<![CDATA[
+						7z a -md1024m ${project.dir}/dist/${zip.executable.file}-${lp.version}.7z liferay-portal-${lp.version}
+					]]>
+				</execute>
 
 				<delete dir="dist/${tstamp.value}" />
 			</then>

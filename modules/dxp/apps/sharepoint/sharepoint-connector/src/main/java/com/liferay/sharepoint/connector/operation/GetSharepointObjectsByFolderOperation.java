@@ -50,7 +50,7 @@ public class GetSharepointObjectsByFolderOperation extends BaseOperation {
 			query = new Query(null);
 		}
 		else if (objectTypeFilter.equals(
-					 SharepointConnection.ObjectTypeFilter.FILES)) {
+					SharepointConnection.ObjectTypeFilter.FILES)) {
 
 			query = new Query(
 				new EqOperator(
@@ -60,7 +60,7 @@ public class GetSharepointObjectsByFolderOperation extends BaseOperation {
 						SharepointConstants.FS_OBJ_TYPE_FILE)));
 		}
 		else if (objectTypeFilter.equals(
-					 SharepointConnection.ObjectTypeFilter.FOLDERS)) {
+					SharepointConnection.ObjectTypeFilter.FOLDERS)) {
 
 			query = new Query(
 				new EqOperator(

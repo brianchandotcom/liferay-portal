@@ -206,7 +206,7 @@ public class DQLQueryBuilder {
 					dqlJunction = anyDQLConjunction;
 				}
 				else if (booleanClauseOccur.equals(
-							 BooleanClauseOccur.MUST_NOT)) {
+							BooleanClauseOccur.MUST_NOT)) {
 
 					dqlJunction = notDQLConjunction;
 				}

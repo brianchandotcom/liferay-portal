@@ -424,7 +424,7 @@ public class DocumentumRepository
 					deleteFile(idfSession, idfDocument);
 				}
 				else if (extRepositoryObjectType ==
-							 ExtRepositoryObjectType.FOLDER) {
+							ExtRepositoryObjectType.FOLDER) {
 
 					IDfFolder idfFolder = (IDfFolder)idfSession.getObject(
 						idfId);

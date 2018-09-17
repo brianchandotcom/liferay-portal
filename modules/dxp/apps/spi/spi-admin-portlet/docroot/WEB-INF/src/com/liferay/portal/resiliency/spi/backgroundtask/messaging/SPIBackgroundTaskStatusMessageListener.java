@@ -99,7 +99,7 @@ public class SPIBackgroundTaskStatusMessageListener
 				spiDefinition.setStatus(SPIAdminConstants.STATUS_STARTED);
 			}
 			else if (spiDefinition.getStatus() ==
-						 SPIAdminConstants.STATUS_STOPPING) {
+						SPIAdminConstants.STATUS_STOPPING) {
 
 				spiDefinition.setStatus(SPIAdminConstants.STATUS_STOPPED);
 			}
@@ -113,7 +113,7 @@ public class SPIBackgroundTaskStatusMessageListener
 				spiDefinition.setStatus(SPIAdminConstants.STATUS_STOPPED);
 			}
 			else if (spiDefinition.getStatus() ==
-						 SPIAdminConstants.STATUS_STOPPING) {
+						SPIAdminConstants.STATUS_STOPPING) {
 
 				if (spiDefinition.isAlive()) {
 					spiDefinition.setStatus(SPIAdminConstants.STATUS_STARTED);

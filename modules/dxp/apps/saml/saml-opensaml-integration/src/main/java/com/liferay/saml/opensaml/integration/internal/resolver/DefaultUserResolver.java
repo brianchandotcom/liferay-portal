@@ -259,13 +259,13 @@ public class DefaultUserResolver implements UserResolver {
 					companyId, subjectNameIdentifier);
 			}
 			else if (subjectNameIdentifierType.endsWith(
-						 _SUBJECT_NAME_TYPE_SCREENNAME)) {
+						_SUBJECT_NAME_TYPE_SCREENNAME)) {
 
 				return _userLocalService.getUserByScreenName(
 					companyId, subjectNameIdentifier);
 			}
 			else if (subjectNameIdentifierType.endsWith(
-						 _SUBJECT_NAME_TYPE_UUID)) {
+						_SUBJECT_NAME_TYPE_UUID)) {
 
 				return _userLocalService.getUserByUuidAndCompanyId(
 					subjectNameIdentifier, companyId);

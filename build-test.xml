@@ -4124,6 +4124,82 @@ war.path=${app.server.weblogic.portal.dir}/</echo>
 		</sequential>
 	</macrodef>
 
+	<macrodef name="validate-installed-patch">
+		<attribute name="patch.file.zip.url" />
+		<attribute default="${app.server.parent.dir}/patching-tool" name="patching.tool.dir" />
+
+		<sequential>
+			<delete file="@{patching.tool.dir}/logs/patching-tool.log" />
+
+			<execute dir="@{patching.tool.dir}">
+				patching-tool${file.suffix.bat} info
+			</execute>
+
+			<local name="patch.name" />
+
+			<propertyregex
+				input="@{patch.file.zip.url}"
+				property="patch.name"
+				regexp=".*liferay-(fix-pack-)?(.*-\d{4})(-build\d*)?(-src)?.zip"
+				replace="\2"
+			/>
+
+			<fail message="${patch.name} was not installed.">
+				<condition>
+					<not>
+						<resourcecontains
+							resource="@{patching.tool.dir}/logs/patching-tool.log"
+							substring="[*I] ${patch.name} :: Installed"
+						/>
+					</not>
+				</condition>
+			</fail>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="validate-installed-patches">
+		<attribute default="${app.server.parent.dir}/patching-tool" name="patching.tool.dir" />
+
+		<sequential>
+			<delete file="@{patching.tool.dir}/logs/patching-tool.log" />
+
+			<execute dir="@{patching.tool.dir}">
+				patching-tool${file.suffix.bat} info
+			</execute>
+
+			<for param="patch.file.path">
+				<fileset
+					dir="@{patching.tool.dir}/patches"
+					erroronmissingdir="false"
+					id="fileset.id"
+				>
+					<include name="*.zip" />
+				</fileset>
+				<sequential>
+					<local name="patch.name" />
+
+					<propertyregex
+						input="@{patch.file.path}"
+						property="patch.name"
+						regexp=".*liferay-(fix-pack-)?(.*-\d{4})(-build\d*)?(-src)?.zip"
+						replace="\2"
+					/>
+
+					<fail message="${patch.name} was not installed.">
+						<condition>
+							<not>
+								<resourcecontains
+									resource="@{patching.tool.dir}/logs/patching-tool.log"
+									substring="[*I] ${patch.name} :: Installed"
+								/>
+							</not>
+						</condition>
+					</fail>
+				</sequential>
+			</for>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="wait-for-app-server">
 		<attribute name="app.server.bin.dir" />
 		<attribute default="0" name="app.server.bundle.index" />

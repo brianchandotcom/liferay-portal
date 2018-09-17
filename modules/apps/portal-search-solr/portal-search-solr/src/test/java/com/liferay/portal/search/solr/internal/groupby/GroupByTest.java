@@ -15,15 +15,12 @@
 package com.liferay.portal.search.solr.internal.groupby;
 
 import com.liferay.portal.kernel.search.GroupBy;
-import com.liferay.portal.kernel.search.Hits;
-import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.search.solr.internal.SolrIndexingFixture;
-import com.liferay.portal.search.test.util.IdempotentRetryAssert;
 import com.liferay.portal.search.test.util.groupby.BaseGroupByTestCase;
 import com.liferay.portal.search.test.util.indexing.IndexingFixture;
 
-import java.util.Map;
-import java.util.concurrent.TimeUnit;
+import java.util.Arrays;
+import java.util.Collections;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -37,36 +34,27 @@ public class GroupByTest extends BaseGroupByTestCase {
 
 	@Test
 	public void testSolrReturnsGroupedHitsOnly() throws Exception {
-		addDocuments("one", 1);
+		indexDuplicates("one", 1);
 
-		SearchContext searchContext = createSearchContext();
+		assertSearch(
+			indexingTestHelper -> {
+				indexingTestHelper.define(
+					searchContext -> searchContext.setGroupBy(
+						new GroupBy(GROUP_FIELD)));
 
-		searchContext.setGroupBy(new GroupBy(GROUP_FIELD));
+				indexingTestHelper.search();
 
-		IdempotentRetryAssert.retryAssert(
-			3, TimeUnit.SECONDS,
-			() -> {
-				assertGroupedHitsOnly("one", searchContext);
+				indexingTestHelper.verify(
+					hits -> {
+						Assert.assertEquals(
+							indexingTestHelper.getQueryString(),
+							Collections.emptyList(),
+							Arrays.asList(hits.getDocs()));
 
-				return null;
+						assertGroups(
+							toMap("one", "1|1"), hits, indexingTestHelper);
+					});
 			});
-	}
-
-	protected void assertGroupedHitsOnly(
-			String key, SearchContext searchContext)
-		throws Exception {
-
-		Hits hits1 = search(searchContext);
-
-		Assert.assertEquals(hits1.toString(), 0, hits1.getLength());
-
-		Map<String, Hits> groupedHitsMap = hits1.getGroupedHits();
-
-		Hits hits2 = groupedHitsMap.get(key);
-
-		Assert.assertNotNull(hits2);
-
-		Assert.assertNotEquals(0, hits2.getLength());
 	}
 
 	@Override

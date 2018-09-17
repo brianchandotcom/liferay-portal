@@ -1,0 +1,268 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
+package com.liferay.document.library.opener.google.drive.internal.background.task;
+
+import com.google.api.client.auth.oauth2.Credential;
+import com.google.api.client.googleapis.javanet.GoogleNetHttpTransport;
+import com.google.api.client.googleapis.media.MediaHttpUploader;
+import com.google.api.client.http.FileContent;
+import com.google.api.client.json.jackson2.JacksonFactory;
+import com.google.api.services.drive.Drive;
+
+import com.liferay.document.library.kernel.service.DLAppLocalService;
+import com.liferay.document.library.opener.google.drive.constants.DLOpenerGoogleDriveMimeTypes;
+import com.liferay.document.library.opener.google.drive.internal.OAuth2Manager;
+import com.liferay.document.library.opener.google.drive.internal.constants.GoogleDriveBackgroundTaskConstants;
+import com.liferay.document.library.opener.service.DLOpenerFileEntryReferenceLocalService;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.backgroundtask.BackgroundTask;
+import com.liferay.portal.kernel.backgroundtask.BackgroundTaskConstants;
+import com.liferay.portal.kernel.backgroundtask.BackgroundTaskExecutor;
+import com.liferay.portal.kernel.backgroundtask.BackgroundTaskResult;
+import com.liferay.portal.kernel.backgroundtask.BackgroundTaskStatusMessageSender;
+import com.liferay.portal.kernel.backgroundtask.BackgroundTaskThreadLocal;
+import com.liferay.portal.kernel.backgroundtask.BaseBackgroundTaskExecutor;
+import com.liferay.portal.kernel.backgroundtask.display.BackgroundTaskDisplay;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.messaging.Message;
+import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
+
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.Serializable;
+
+import java.util.Map;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
+/**
+ * @author Sergio González
+ */
+@Component(
+	immediate = true,
+	property = "background.task.executor.class.name=com.liferay.document.library.opener.google.drive.internal.background.task.UploadGoogleDriveDocumentBackgroundTaskExecutor",
+	service = BackgroundTaskExecutor.class
+)
+public class UploadGoogleDriveDocumentBackgroundTaskExecutor
+	extends BaseBackgroundTaskExecutor {
+
+	public UploadGoogleDriveDocumentBackgroundTaskExecutor() {
+		setBackgroundTaskStatusMessageTranslator(
+			new UploadGoogleDriveDocumentBackgroundTaskStatusMessageTranslator());
+		setIsolationLevel(BackgroundTaskConstants.ISOLATION_LEVEL_TASK_NAME);
+	}
+
+	@Override
+	public BackgroundTaskExecutor clone() {
+		return this;
+	}
+
+	@Override
+	public BackgroundTaskResult execute(BackgroundTask backgroundTask)
+		throws Exception {
+
+		Map<String, Serializable> taskContextMap =
+			backgroundTask.getTaskContextMap();
+
+		long fileEntryId = GetterUtil.getLong(
+			taskContextMap.get(
+				GoogleDriveBackgroundTaskConstants.FILE_ENTRY_ID));
+		long companyId = GetterUtil.getLong(
+			taskContextMap.get(GoogleDriveBackgroundTaskConstants.COMPANY_ID));
+		long userId = GetterUtil.getLong(
+			taskContextMap.get(GoogleDriveBackgroundTaskConstants.USER_ID));
+		String cmd = (String)taskContextMap.get(
+			GoogleDriveBackgroundTaskConstants.CMD);
+
+		_sendStatusMessage(
+			GoogleDriveBackgroundTaskConstants.PORTAL_START, companyId,
+			fileEntryId);
+
+		if (cmd.equals(GoogleDriveBackgroundTaskConstants.CHECKOUT)) {
+			uploadGoogleDriveDocument(fileEntryId, userId, true);
+		}
+		else {
+			uploadGoogleDriveDocument(fileEntryId, userId, false);
+		}
+
+		_sendStatusMessage(
+			GoogleDriveBackgroundTaskConstants.PORTAL_END, companyId,
+			fileEntryId);
+
+		return BackgroundTaskResult.SUCCESS;
+	}
+
+	@Override
+	public BackgroundTaskDisplay getBackgroundTaskDisplay(
+		BackgroundTask backgroundTask) {
+
+		return null;
+	}
+
+	@Override
+	public String handleException(BackgroundTask backgroundTask, Exception e) {
+		Map<String, Serializable> taskContextMap =
+			backgroundTask.getTaskContextMap();
+
+		long fileEntryId = GetterUtil.getLong(
+			taskContextMap.get(
+				GoogleDriveBackgroundTaskConstants.FILE_ENTRY_ID));
+
+		try {
+			FileEntry fileEntry = _dlAppLocalService.getFileEntry(fileEntryId);
+
+			_dlOpenerFileEntryReferenceLocalService.
+				deleteDLOpenerFileEntryReference(fileEntry);
+		}
+		catch (PortalException pe) {
+			_log.error(pe, pe);
+		}
+
+		return StringPool.BLANK;
+	}
+
+	protected void uploadGoogleDriveDocument(
+			long fileEntryId, long userId, boolean add)
+		throws Exception {
+
+		FileEntry fileEntry = _dlAppLocalService.getFileEntry(fileEntryId);
+
+		com.google.api.services.drive.model.File file =
+			new com.google.api.services.drive.model.File();
+
+		String googleDocsMimeType =
+			DLOpenerGoogleDriveMimeTypes.getGoogleDocsMimeType(
+				fileEntry.getMimeType());
+
+		file.setMimeType(googleDocsMimeType);
+
+		file.setName(fileEntry.getTitle());
+
+		Drive drive = new Drive.Builder(
+			GoogleNetHttpTransport.newTrustedTransport(),
+			JacksonFactory.getDefaultInstance(), _getCredential(userId)
+		).build();
+
+		Drive.Files driveFiles = drive.files();
+
+		Drive.Files.Create driveFilesCreate = null;
+
+		if (add) {
+			FileContent fileContent = new FileContent(
+				fileEntry.getMimeType(), _getFileEntryFile(fileEntry));
+
+			driveFilesCreate = driveFiles.create(file, fileContent);
+		}
+		else {
+			driveFilesCreate = driveFiles.create(file);
+		}
+
+		MediaHttpUploader mediaHttpUploader =
+			driveFilesCreate.getMediaHttpUploader();
+
+		final long backgroundTaskId =
+			BackgroundTaskThreadLocal.getBackgroundTaskId();
+
+		mediaHttpUploader.setProgressListener(
+			curMediaHttpUploader -> {
+				Message message = new Message();
+
+				message.put(
+					BackgroundTaskConstants.BACKGROUND_TASK_ID,
+					backgroundTaskId);
+
+				message.put(
+					"uploadState", curMediaHttpUploader.getUploadState());
+				message.put(
+					"status", BackgroundTaskConstants.STATUS_IN_PROGRESS);
+
+				_backgroundTaskStatusMessageSender.
+					sendBackgroundTaskStatusMessage(message);
+			});
+
+		com.google.api.services.drive.model.File uploadedFile =
+			driveFilesCreate.execute();
+
+		_dlOpenerFileEntryReferenceLocalService.
+			updateDLOpenerFileEntryReference(uploadedFile.getId(), fileEntry);
+	}
+
+	private Credential _getCredential(long userId)
+		throws IOException, PrincipalException {
+
+		Credential credential = _oAuth2Manager.getCredential(userId);
+
+		if (credential == null) {
+			throw new PrincipalException(
+				StringBundler.concat(
+					"User ", userId,
+					" does not have a valid Google credential"));
+		}
+
+		return credential;
+	}
+
+	private File _getFileEntryFile(FileEntry fileEntry)
+		throws IOException, PortalException {
+
+		try (InputStream is = fileEntry.getContentStream()) {
+			return FileUtil.createTempFile(is);
+		}
+	}
+
+	private void _sendStatusMessage(
+		String phase, long companyId, long fileEntryId) {
+
+		Message message = new Message();
+
+		message.put(
+			BackgroundTaskConstants.BACKGROUND_TASK_ID,
+			BackgroundTaskThreadLocal.getBackgroundTaskId());
+		message.put(GoogleDriveBackgroundTaskConstants.COMPANY_ID, companyId);
+		message.put(
+			GoogleDriveBackgroundTaskConstants.FILE_ENTRY_ID, fileEntryId);
+		message.put(GoogleDriveBackgroundTaskConstants.PHASE, phase);
+		message.put("status", BackgroundTaskConstants.STATUS_IN_PROGRESS);
+
+		_backgroundTaskStatusMessageSender.sendBackgroundTaskStatusMessage(
+			message);
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		UploadGoogleDriveDocumentBackgroundTaskExecutor.class);
+
+	@Reference
+	private BackgroundTaskStatusMessageSender
+		_backgroundTaskStatusMessageSender;
+
+	@Reference
+	private DLAppLocalService _dlAppLocalService;
+
+	@Reference
+	private DLOpenerFileEntryReferenceLocalService
+		_dlOpenerFileEntryReferenceLocalService;
+
+	@Reference
+	private OAuth2Manager _oAuth2Manager;
+
+}

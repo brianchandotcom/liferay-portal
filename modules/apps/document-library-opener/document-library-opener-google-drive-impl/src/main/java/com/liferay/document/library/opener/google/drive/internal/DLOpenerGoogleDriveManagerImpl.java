@@ -16,7 +16,6 @@ package com.liferay.document.library.opener.google.drive.internal;
 
 import com.google.api.client.auth.oauth2.Credential;
 import com.google.api.client.googleapis.javanet.GoogleNetHttpTransport;
-import com.google.api.client.http.FileContent;
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.JsonFactory;
 import com.google.api.client.json.jackson2.JacksonFactory;
@@ -25,23 +24,30 @@ import com.google.api.services.drive.Drive;
 import com.liferay.document.library.opener.constants.DLOpenerFileEntryReferenceConstants;
 import com.liferay.document.library.opener.google.drive.DLOpenerGoogleDriveFileReference;
 import com.liferay.document.library.opener.google.drive.DLOpenerGoogleDriveManager;
-import com.liferay.document.library.opener.google.drive.constants.DLOpenerGoogleDriveMimeTypes;
+import com.liferay.document.library.opener.google.drive.internal.background.task.UploadGoogleDriveDocumentBackgroundTaskExecutor;
+import com.liferay.document.library.opener.google.drive.internal.constants.GoogleDriveBackgroundTaskConstants;
 import com.liferay.document.library.opener.model.DLOpenerFileEntryReference;
 import com.liferay.document.library.opener.service.DLOpenerFileEntryReferenceLocalService;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.background.task.constants.BackgroundTaskContextMapConstants;
+import com.liferay.portal.kernel.backgroundtask.BackgroundTask;
+import com.liferay.portal.kernel.backgroundtask.BackgroundTaskManager;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.FileUtil;
-import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.Serializable;
 
 import java.security.GeneralSecurityException;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Supplier;
 
@@ -61,48 +67,41 @@ public class DLOpenerGoogleDriveManagerImpl
 			long userId, FileEntry fileEntry)
 		throws PortalException {
 
-		try {
-			com.google.api.services.drive.model.File file =
-				new com.google.api.services.drive.model.File();
+		final String jobName =
+			"googleDriveFileEntry-" + fileEntry.getFileEntryId();
 
-			String googleDocsMimeType =
-				DLOpenerGoogleDriveMimeTypes.getGoogleDocsMimeType(
-					fileEntry.getMimeType());
+		Map<String, Serializable> taskContextMap = new HashMap<>();
 
-			file.setMimeType(googleDocsMimeType);
+		taskContextMap.put(
+			GoogleDriveBackgroundTaskConstants.CMD,
+			GoogleDriveBackgroundTaskConstants.CHECKOUT);
+		taskContextMap.put(
+			GoogleDriveBackgroundTaskConstants.COMPANY_ID,
+			fileEntry.getCompanyId());
+		taskContextMap.put(
+			BackgroundTaskContextMapConstants.DELETE_ON_SUCCESS, true);
+		taskContextMap.put(
+			GoogleDriveBackgroundTaskConstants.FILE_ENTRY_ID,
+			fileEntry.getFileEntryId());
+		taskContextMap.put(GoogleDriveBackgroundTaskConstants.USER_ID, userId);
 
-			file.setName(fileEntry.getTitle());
+		BackgroundTask backgroundTask =
+			_backgroundTaskManager.addBackgroundTask(
+				userId, CompanyConstants.SYSTEM, jobName,
+				UploadGoogleDriveDocumentBackgroundTaskExecutor.class.getName(),
+				taskContextMap, new ServiceContext());
 
-			FileContent fileContent = new FileContent(
-				fileEntry.getMimeType(), _getFileEntryFile(fileEntry));
+		_dlOpenerFileEntryReferenceLocalService.
+			addPlaceholderDLOpenerFileEntryReference(
+				userId, fileEntry,
+				DLOpenerFileEntryReferenceConstants.TYPE_EDIT);
 
-			Drive drive = new Drive.Builder(
-				_netHttpTransport, _jsonFactory, _getCredential(userId)
-			).build();
-
-			Drive.Files driveFiles = drive.files();
-
-			Drive.Files.Create driveFilesCreate = driveFiles.create(
-				file, fileContent);
-
-			com.google.api.services.drive.model.File uploadedFile =
-				driveFilesCreate.execute();
-
-			_dlOpenerFileEntryReferenceLocalService.
-				addDLOpenerFileEntryReference(
-					userId, uploadedFile.getId(), fileEntry,
-					DLOpenerFileEntryReferenceConstants.TYPE_EDIT);
-
-			return new DLOpenerGoogleDriveFileReference(
-				fileEntry.getFileEntryId(),
-				_getGoogleDocsEditURL(uploadedFile.getId(), googleDocsMimeType),
-				new CachingSupplier<>(
-					() -> _getGoogleDriveFileTitle(userId, fileEntry)),
-				() -> _getContentFile(userId, fileEntry));
-		}
-		catch (IOException ioe) {
-			throw new PortalException(ioe);
-		}
+		return new DLOpenerGoogleDriveFileReference(
+			fileEntry.getFileEntryId(),
+			new CachingSupplier<>(
+				() -> _getGoogleDriveFileTitle(userId, fileEntry)),
+			() -> _getContentFile(userId, fileEntry),
+			backgroundTask.getBackgroundTaskId());
 	}
 
 	@Override
@@ -110,44 +109,41 @@ public class DLOpenerGoogleDriveManagerImpl
 			long userId, FileEntry fileEntry)
 		throws PortalException {
 
-		try {
-			com.google.api.services.drive.model.File file =
-				new com.google.api.services.drive.model.File();
+		final String jobName =
+			"googleDriveFileEntry-" + fileEntry.getFileEntryId();
 
-			String googleDocsMimeType =
-				DLOpenerGoogleDriveMimeTypes.getGoogleDocsMimeType(
-					fileEntry.getMimeType());
+		Map<String, Serializable> taskContextMap = new HashMap<>();
 
-			file.setMimeType(googleDocsMimeType);
+		taskContextMap.put(
+			GoogleDriveBackgroundTaskConstants.CMD,
+			GoogleDriveBackgroundTaskConstants.CREATE);
+		taskContextMap.put(
+			GoogleDriveBackgroundTaskConstants.COMPANY_ID,
+			fileEntry.getCompanyId());
+		taskContextMap.put(
+			BackgroundTaskContextMapConstants.DELETE_ON_SUCCESS, true);
+		taskContextMap.put(
+			GoogleDriveBackgroundTaskConstants.FILE_ENTRY_ID,
+			fileEntry.getFileEntryId());
+		taskContextMap.put(GoogleDriveBackgroundTaskConstants.USER_ID, userId);
 
-			file.setName(fileEntry.getTitle());
+		BackgroundTask backgroundTask =
+			_backgroundTaskManager.addBackgroundTask(
+				userId, CompanyConstants.SYSTEM, jobName,
+				UploadGoogleDriveDocumentBackgroundTaskExecutor.class.getName(),
+				taskContextMap, new ServiceContext());
 
-			Drive drive = new Drive.Builder(
-				_netHttpTransport, _jsonFactory, _getCredential(userId)
-			).build();
+		_dlOpenerFileEntryReferenceLocalService.
+			addPlaceholderDLOpenerFileEntryReference(
+				userId, fileEntry,
+				DLOpenerFileEntryReferenceConstants.TYPE_NEW);
 
-			Drive.Files driveFiles = drive.files();
-
-			Drive.Files.Create driveFilesCreate = driveFiles.create(file);
-
-			com.google.api.services.drive.model.File uploadedFile =
-				driveFilesCreate.execute();
-
-			_dlOpenerFileEntryReferenceLocalService.
-				addDLOpenerFileEntryReference(
-					userId, uploadedFile.getId(), fileEntry,
-					DLOpenerFileEntryReferenceConstants.TYPE_NEW);
-
-			return new DLOpenerGoogleDriveFileReference(
-				fileEntry.getFileEntryId(),
-				_getGoogleDocsEditURL(uploadedFile.getId(), googleDocsMimeType),
-				new CachingSupplier<>(
-					() -> _getGoogleDriveFileTitle(userId, fileEntry)),
-				() -> _getContentFile(userId, fileEntry));
-		}
-		catch (IOException ioe) {
-			throw new PortalException(ioe);
-		}
+		return new DLOpenerGoogleDriveFileReference(
+			fileEntry.getFileEntryId(),
+			new CachingSupplier<>(
+				() -> _getGoogleDriveFileTitle(userId, fileEntry)),
+			() -> _getContentFile(userId, fileEntry),
+			backgroundTask.getBackgroundTaskId());
 	}
 
 	@Override
@@ -236,13 +232,9 @@ public class DLOpenerGoogleDriveManagerImpl
 
 			return new DLOpenerGoogleDriveFileReference(
 				fileEntry.getFileEntryId(),
-				_getGoogleDocsEditURL(
-					googleDriveFileId,
-					DLOpenerGoogleDriveMimeTypes.getGoogleDocsMimeType(
-						fileEntry.getMimeType())),
 				new CachingSupplier<>(
 					() -> _getGoogleDriveFileTitle(userId, fileEntry)),
-				() -> _getContentFile(userId, fileEntry));
+				() -> _getContentFile(userId, fileEntry), 0);
 		}
 		catch (IOException ioe) {
 			throw new PortalException(ioe);
@@ -298,23 +290,6 @@ public class DLOpenerGoogleDriveManagerImpl
 		return credential;
 	}
 
-	private File _getFileEntryFile(FileEntry fileEntry)
-		throws IOException, PortalException {
-
-		try (InputStream is = fileEntry.getContentStream()) {
-			return FileUtil.createTempFile(is);
-		}
-	}
-
-	private String _getGoogleDocsEditURL(
-		String googleDriveFileId, String mimeType) {
-
-		return StringBundler.concat(
-			"https://docs.google.com/",
-			_mimeTypePathFragmentMapping.get(mimeType), "/d/",
-			googleDriveFileId, "/edit");
-	}
-
 	private String _getGoogleDriveFileId(FileEntry fileEntry)
 		throws PortalException {
 
@@ -346,16 +321,8 @@ public class DLOpenerGoogleDriveManagerImpl
 		}
 	}
 
-	private static final Map<String, String> _mimeTypePathFragmentMapping =
-		MapUtil.fromArray(
-			DLOpenerGoogleDriveMimeTypes.APPLICATION_VND_GOOGLE_APPS_DOCUMENT,
-			"document",
-			DLOpenerGoogleDriveMimeTypes.
-				APPLICATION_VND_GOOGLE_APPS_PRESENTATION,
-			"presentation",
-			DLOpenerGoogleDriveMimeTypes.
-				APPLICATION_VND_GOOGLE_APPS_SPREADSHEET,
-			"spreadsheets");
+	@Reference
+	private BackgroundTaskManager _backgroundTaskManager;
 
 	@Reference
 	private DLOpenerFileEntryReferenceLocalService

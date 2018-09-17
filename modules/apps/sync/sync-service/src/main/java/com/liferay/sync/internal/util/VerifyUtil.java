@@ -320,8 +320,8 @@ public class VerifyUtil {
 						}
 					}
 					else if (type.equals(
-								 SyncDLObjectConstants.
-									 TYPE_PRIVATE_WORKING_COPY)) {
+								SyncDLObjectConstants.
+									TYPE_PRIVATE_WORKING_COPY)) {
 
 						DLFileEntry dlFileEntry =
 							_dlFileEntryLocalService.fetchDLFileEntry(

@@ -779,12 +779,12 @@ public class WebServerServlet extends HttpServlet {
 				queryString = "&imageThumbnail=1";
 			}
 			else if (imageId ==
-						 thumbnailCapability.getCustom1ImageId(fileEntry)) {
+						thumbnailCapability.getCustom1ImageId(fileEntry)) {
 
 				queryString = "&imageThumbnail=2";
 			}
 			else if (imageId ==
-						 thumbnailCapability.getCustom2ImageId(fileEntry)) {
+						thumbnailCapability.getCustom2ImageId(fileEntry)) {
 
 				queryString = "&imageThumbnail=3";
 			}

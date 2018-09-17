@@ -50,7 +50,7 @@ public class DefaultMBHomeDisplayContext implements MBHomeDisplayContext {
 				false);
 		}
 		else if (parentCategoryId !=
-					 MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID) {
+					MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID) {
 
 			title = "add-subcategory[message-board]";
 		}

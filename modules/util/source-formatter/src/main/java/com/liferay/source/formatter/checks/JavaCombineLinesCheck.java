@@ -923,7 +923,7 @@ public class JavaCombineLinesCheck extends BaseFileCheck {
 					}
 				}
 				else if ((trimmedLine.length() + previousLineLength) <
-							 getMaxLineLength()) {
+							getMaxLineLength()) {
 
 					if ((getLevel(line, "{", "}") == 0) &&
 						(!trimmedLine.startsWith("new ") ||

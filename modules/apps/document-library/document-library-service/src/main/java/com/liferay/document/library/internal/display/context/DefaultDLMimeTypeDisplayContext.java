@@ -41,32 +41,32 @@ public class DefaultDLMimeTypeDisplayContext
 			return "file-icon-color-7";
 		}
 		else if (_containsMimeType(
-					 _dlConfiguration.compressedFileMimeTypes(), mimeType)) {
+					_dlConfiguration.compressedFileMimeTypes(), mimeType)) {
 
 			return "file-icon-color-1";
 		}
 		else if (_containsMimeType(
-					 _dlConfiguration.multimediaFileMimeTypes(), mimeType)) {
+					_dlConfiguration.multimediaFileMimeTypes(), mimeType)) {
 
 			return "file-icon-color-3";
 		}
 		else if (_containsMimeType(
-					 _dlConfiguration.presentationFileMimeTypes(), mimeType)) {
+					_dlConfiguration.presentationFileMimeTypes(), mimeType)) {
 
 			return "file-icon-color-4";
 		}
 		else if (_containsMimeType(
-					 _dlConfiguration.spreadSheetFileMimeTypes(), mimeType)) {
+					_dlConfiguration.spreadSheetFileMimeTypes(), mimeType)) {
 
 			return "file-icon-color-2";
 		}
 		else if (_containsMimeType(
-					 _dlConfiguration.textFileMimeTypes(), mimeType)) {
+					_dlConfiguration.textFileMimeTypes(), mimeType)) {
 
 			return "file-icon-color-6";
 		}
 		else if (_containsMimeType(
-					 _dlConfiguration.vectorialFileMimeTypes(), mimeType)) {
+					_dlConfiguration.vectorialFileMimeTypes(), mimeType)) {
 
 			return "file-icon-color-5";
 		}

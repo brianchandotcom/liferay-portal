@@ -48,7 +48,7 @@ public class PwdAuthenticator {
 			return true;
 		}
 		else if (GetterUtil.getBoolean(
-					 PropsUtil.get(PropsKeys.AUTH_MAC_ALLOW))) {
+					PropsUtil.get(PropsKeys.AUTH_MAC_ALLOW))) {
 
 			try {
 				MessageDigest digester = MessageDigest.getInstance(

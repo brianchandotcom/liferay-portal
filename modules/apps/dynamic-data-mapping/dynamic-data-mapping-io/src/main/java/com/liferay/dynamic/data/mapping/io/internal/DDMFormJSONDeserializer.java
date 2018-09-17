@@ -139,7 +139,7 @@ public class DDMFormJSONDeserializer implements DDMFormDeserializer {
 				serializedDDMFormFieldProperty);
 		}
 		else if (Objects.equals(
-					 ddmFormFieldTypeSetting.getType(), "validation")) {
+					ddmFormFieldTypeSetting.getType(), "validation")) {
 
 			return deserializeDDMFormFieldValidation(
 				serializedDDMFormFieldProperty);

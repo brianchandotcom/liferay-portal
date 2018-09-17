@@ -143,7 +143,7 @@ public class BlogsActivityInterpreter extends BaseSocialActivityInterpreter {
 			return "activity-blogs-entry-move-to-trash-in";
 		}
 		else if (activityType ==
-					 SocialActivityConstants.TYPE_RESTORE_FROM_TRASH) {
+					SocialActivityConstants.TYPE_RESTORE_FROM_TRASH) {
 
 			if (Validator.isNull(groupName)) {
 				return "activity-blogs-entry-restore-from-trash";

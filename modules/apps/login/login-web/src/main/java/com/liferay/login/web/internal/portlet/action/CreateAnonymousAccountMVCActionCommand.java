@@ -228,7 +228,7 @@ public class CreateAnonymousAccountMVCActionCommand
 					actionRequest, actionResponse, jsonObject);
 			}
 			else if (e instanceof
-						 UserEmailAddressException.MustNotBeDuplicate) {
+						UserEmailAddressException.MustNotBeDuplicate) {
 
 				User user = _userLocalService.getUserByEmailAddress(
 					themeDisplay.getCompanyId(), emailAddress);

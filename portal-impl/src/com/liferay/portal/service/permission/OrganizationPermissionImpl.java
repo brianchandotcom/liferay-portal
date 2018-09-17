@@ -144,8 +144,8 @@ public class OrganizationPermissionImpl implements OrganizationPermission {
 				return true;
 			}
 			else if (permissionChecker.hasPermission(
-						 groupId, Organization.class.getName(),
-						 organization.getOrganizationId(), actionId)) {
+						groupId, Organization.class.getName(),
+						organization.getOrganizationId(), actionId)) {
 
 				return true;
 			}

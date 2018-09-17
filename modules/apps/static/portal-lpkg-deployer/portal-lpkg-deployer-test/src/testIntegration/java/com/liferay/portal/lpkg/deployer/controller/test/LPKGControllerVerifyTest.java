@@ -65,8 +65,8 @@ public class LPKGControllerVerifyTest {
 				warBundle = bundle;
 			}
 			else if (symbolicName.equals(
-						 _LPKG_NAME + StringPool.DASH + _SYMBOLIC_NAME +
-							 "-war-wrapper")) {
+						_LPKG_NAME + StringPool.DASH + _SYMBOLIC_NAME +
+							"-war-wrapper")) {
 
 				warWrapperBundle = bundle;
 			}
@@ -112,8 +112,8 @@ public class LPKGControllerVerifyTest {
 				warBundle = bundle;
 			}
 			else if (symbolicName.equals(
-						 _LPKG_NAME + StringPool.DASH + _SYMBOLIC_NAME +
-							 "-war-wrapper")) {
+						_LPKG_NAME + StringPool.DASH + _SYMBOLIC_NAME +
+							"-war-wrapper")) {
 
 				warWrapperBundle = bundle;
 			}

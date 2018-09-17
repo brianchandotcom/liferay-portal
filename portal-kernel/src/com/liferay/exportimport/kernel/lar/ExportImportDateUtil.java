@@ -510,53 +510,53 @@ public class ExportImportDateUtil {
 			return RANGE_ALL;
 		}
 		else if (exportImportConfiguration.getType() ==
-					 ExportImportConfigurationConstants.TYPE_EXPORT_PORTLET) {
+					ExportImportConfigurationConstants.TYPE_EXPORT_PORTLET) {
 
 			return RANGE_ALL;
 		}
 		else if (exportImportConfiguration.getType() ==
-					 ExportImportConfigurationConstants.TYPE_IMPORT_LAYOUT) {
+					ExportImportConfigurationConstants.TYPE_IMPORT_LAYOUT) {
 
 			return RANGE_ALL;
 		}
 		else if (exportImportConfiguration.getType() ==
-					 ExportImportConfigurationConstants.TYPE_IMPORT_PORTLET) {
+					ExportImportConfigurationConstants.TYPE_IMPORT_PORTLET) {
 
 			return RANGE_ALL;
 		}
 		else if (exportImportConfiguration.getType() ==
-					 ExportImportConfigurationConstants.
-						 TYPE_PUBLISH_LAYOUT_LOCAL) {
+					ExportImportConfigurationConstants.
+						TYPE_PUBLISH_LAYOUT_LOCAL) {
 
 			return RANGE_FROM_LAST_PUBLISH_DATE;
 		}
 		else if (exportImportConfiguration.getType() ==
-					 ExportImportConfigurationConstants.
-						 TYPE_PUBLISH_LAYOUT_REMOTE) {
+					ExportImportConfigurationConstants.
+						TYPE_PUBLISH_LAYOUT_REMOTE) {
 
 			return RANGE_FROM_LAST_PUBLISH_DATE;
 		}
 		else if (exportImportConfiguration.getType() ==
-					 ExportImportConfigurationConstants.
-						 TYPE_PUBLISH_PORTLET_LOCAL) {
+					ExportImportConfigurationConstants.
+						TYPE_PUBLISH_PORTLET_LOCAL) {
 
 			return RANGE_FROM_LAST_PUBLISH_DATE;
 		}
 		else if (exportImportConfiguration.getType() ==
-					 ExportImportConfigurationConstants.
-						 TYPE_PUBLISH_PORTLET_REMOTE) {
+					ExportImportConfigurationConstants.
+						TYPE_PUBLISH_PORTLET_REMOTE) {
 
 			return RANGE_FROM_LAST_PUBLISH_DATE;
 		}
 		else if (exportImportConfiguration.getType() ==
-					 ExportImportConfigurationConstants.
-						 TYPE_SCHEDULED_PUBLISH_LAYOUT_LOCAL) {
+					ExportImportConfigurationConstants.
+						TYPE_SCHEDULED_PUBLISH_LAYOUT_LOCAL) {
 
 			return RANGE_FROM_LAST_PUBLISH_DATE;
 		}
 		else if (exportImportConfiguration.getType() ==
-					 ExportImportConfigurationConstants.
-						 TYPE_SCHEDULED_PUBLISH_LAYOUT_REMOTE) {
+					ExportImportConfigurationConstants.
+						TYPE_SCHEDULED_PUBLISH_LAYOUT_REMOTE) {
 
 			return RANGE_FROM_LAST_PUBLISH_DATE;
 		}

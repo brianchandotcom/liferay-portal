@@ -191,7 +191,7 @@ public class GetFileSetTask extends Task {
 								missingClassNames.remove(className);
 							}
 							else if (fileName.equals(
-										 className.concat(".java"))) {
+										className.concat(".java"))) {
 
 								srcPaths.add(path);
 							}

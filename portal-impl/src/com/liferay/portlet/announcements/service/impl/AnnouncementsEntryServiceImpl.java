@@ -144,8 +144,8 @@ public class AnnouncementsEntryServiceImpl
 					}
 				}
 				else if (!RolePermissionUtil.contains(
-							 permissionChecker, classPK,
-							 ActionKeys.MANAGE_ANNOUNCEMENTS)) {
+							permissionChecker, classPK,
+							ActionKeys.MANAGE_ANNOUNCEMENTS)) {
 
 					throw new PrincipalException.MustHavePermission(
 						permissionChecker, className, classPK,

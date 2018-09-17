@@ -44,27 +44,27 @@ public abstract class BaseMatchQueryTranslatorImpl {
 			return "constant_score_auto";
 		}
 		else if (matchQueryRewriteMethod ==
-					 MatchQuery.RewriteMethod.CONSTANT_SCORE_BOOLEAN) {
+					MatchQuery.RewriteMethod.CONSTANT_SCORE_BOOLEAN) {
 
 			return "constant_score_boolean";
 		}
 		else if (matchQueryRewriteMethod ==
-					 MatchQuery.RewriteMethod.CONSTANT_SCORE_FILTER) {
+					MatchQuery.RewriteMethod.CONSTANT_SCORE_FILTER) {
 
 			return "constant_score_filter";
 		}
 		else if (matchQueryRewriteMethod ==
-					 MatchQuery.RewriteMethod.SCORING_BOOLEAN) {
+					MatchQuery.RewriteMethod.SCORING_BOOLEAN) {
 
 			return "scoring_boolean";
 		}
 		else if (matchQueryRewriteMethod ==
-					 MatchQuery.RewriteMethod.TOP_TERMS_N) {
+					MatchQuery.RewriteMethod.TOP_TERMS_N) {
 
 			return "top_terms_N";
 		}
 		else if (matchQueryRewriteMethod ==
-					 MatchQuery.RewriteMethod.TOP_TERMS_BOOST_N) {
+					MatchQuery.RewriteMethod.TOP_TERMS_BOOST_N) {
 
 			return "top_terms_boost_N";
 		}

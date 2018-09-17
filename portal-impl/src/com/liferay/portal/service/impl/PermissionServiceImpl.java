@@ -159,7 +159,7 @@ public class PermissionServiceImpl extends PermissionServiceBaseImpl {
 				ActionKeys.CONFIGURATION);
 		}
 		else if (!permissionChecker.hasPermission(
-					 groupId, name, primKey, ActionKeys.PERMISSIONS)) {
+					groupId, name, primKey, ActionKeys.PERMISSIONS)) {
 
 			AssetRendererFactory<?> assetRendererFactory =
 				AssetRendererFactoryRegistryUtil.

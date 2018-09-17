@@ -39,7 +39,7 @@ public class ImportExportPermissionConversionFilter
 			return true;
 		}
 		else if (resourcePermission.getScope() ==
-					 ResourceConstants.SCOPE_GROUP) {
+					ResourceConstants.SCOPE_GROUP) {
 
 			Group group = GroupLocalServiceUtil.fetchGroup(
 				Long.valueOf(resourcePermission.getPrimKey()));

@@ -171,7 +171,7 @@ public class MBMessageStagedModelDataHandler
 			}
 		}
 		else if (message.getCategoryId() !=
-					 MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID) {
+					MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID) {
 
 			StagedModelDataHandlerUtil.exportReferenceStagedModel(
 				portletDataContext, message, message.getCategory(),

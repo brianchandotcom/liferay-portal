@@ -1489,7 +1489,7 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 					stagedModelType.getReferrerClassNameId()));
 		}
 		else if (referrerClassNameId ==
-					 StagedModelType.REFERRER_CLASS_NAME_ID_ANY) {
+					StagedModelType.REFERRER_CLASS_NAME_ID_ANY) {
 
 			dynamicQuery.add(referrerClassNameIdProperty.isNotNull());
 		}

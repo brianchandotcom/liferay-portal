@@ -82,8 +82,8 @@ public class MicroblogsUserNotificationHandler
 				resourceBundle, "x-commented-on-your-post", userFullName);
 		}
 		else if (notificationType ==
-					 MicroblogsEntryConstants.
-						 NOTIFICATION_TYPE_REPLY_TO_REPLIED) {
+					MicroblogsEntryConstants.
+						NOTIFICATION_TYPE_REPLY_TO_REPLIED) {
 
 			long parentMicroblogsEntryUserId =
 				microblogsEntry.fetchParentMicroblogsEntryUserId();
@@ -98,15 +98,15 @@ public class MicroblogsUserNotificationHandler
 			}
 		}
 		else if (notificationType ==
-					 MicroblogsEntryConstants.
-						 NOTIFICATION_TYPE_REPLY_TO_TAGGED) {
+					MicroblogsEntryConstants.
+						NOTIFICATION_TYPE_REPLY_TO_TAGGED) {
 
 			title = ResourceBundleUtil.getString(
 				resourceBundle, "x-commented-on-a-post-you-are-tagged-in",
 				userFullName);
 		}
 		else if (notificationType ==
-					 MicroblogsEntryConstants.NOTIFICATION_TYPE_TAG) {
+					MicroblogsEntryConstants.NOTIFICATION_TYPE_TAG) {
 
 			title = ResourceBundleUtil.getString(
 				resourceBundle, "x-tagged-you-in-a-post", userFullName);

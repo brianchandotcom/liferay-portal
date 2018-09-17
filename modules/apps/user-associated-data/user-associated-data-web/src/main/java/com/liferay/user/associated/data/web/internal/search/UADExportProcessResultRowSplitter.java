@@ -50,7 +50,7 @@ public class UADExportProcessResultRowSplitter implements ResultRowSplitter {
 				failedProcesses.add(resultRow);
 			}
 			else if (backgroundTask.getStatus() ==
-						 BackgroundTaskConstants.STATUS_SUCCESSFUL) {
+						BackgroundTaskConstants.STATUS_SUCCESSFUL) {
 
 				resultRow.setCssClass(
 					resultRow.getCssClass() +

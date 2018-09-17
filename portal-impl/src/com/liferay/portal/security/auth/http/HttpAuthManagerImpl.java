@@ -85,7 +85,7 @@ public class HttpAuthManagerImpl implements HttpAuthManager {
 				httpAuthorizationHeader);
 		}
 		else if (StringUtil.equalsIgnoreCase(
-					 scheme, HttpAuthorizationHeader.SCHEME_DIGEST)) {
+					scheme, HttpAuthorizationHeader.SCHEME_DIGEST)) {
 
 			generateDigestChallenge(
 				httpServletRequest, httpServletResponse,
@@ -165,7 +165,7 @@ public class HttpAuthManagerImpl implements HttpAuthManager {
 			return getBasicUserId(httpServletRequest, httpAuthorizationHeader);
 		}
 		else if (StringUtil.equalsIgnoreCase(
-					 scheme, HttpAuthorizationHeader.SCHEME_DIGEST)) {
+					scheme, HttpAuthorizationHeader.SCHEME_DIGEST)) {
 
 			return getDigestUserId(httpServletRequest, httpAuthorizationHeader);
 		}
@@ -200,7 +200,7 @@ public class HttpAuthManagerImpl implements HttpAuthManager {
 				httpServletRequest, authorization, authorizationParts);
 		}
 		else if (StringUtil.equalsIgnoreCase(
-					 scheme, HttpAuthorizationHeader.SCHEME_DIGEST)) {
+					scheme, HttpAuthorizationHeader.SCHEME_DIGEST)) {
 
 			return parseDigest(
 				httpServletRequest, authorization, authorizationParts);

@@ -158,7 +158,7 @@ public class OpenIdLoginMVCActionCommand extends BaseMVCActionCommand {
 				SessionErrors.add(actionRequest, e.getClass());
 			}
 			else if (e instanceof
-						 UserEmailAddressException.MustNotBeDuplicate) {
+						UserEmailAddressException.MustNotBeDuplicate) {
 
 				SessionErrors.add(actionRequest, e.getClass());
 			}

@@ -77,7 +77,7 @@ public class DLFolderActivityInterpreter extends BaseSocialActivityInterpreter {
 			return "activity-document-library-folder-move-to-trash-in";
 		}
 		else if (activityType ==
-					 SocialActivityConstants.TYPE_RESTORE_FROM_TRASH) {
+					SocialActivityConstants.TYPE_RESTORE_FROM_TRASH) {
 
 			if (Validator.isNull(groupName)) {
 				return "activity-document-library-folder-restore-from-trash";

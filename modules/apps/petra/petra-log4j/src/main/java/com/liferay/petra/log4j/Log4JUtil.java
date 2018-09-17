@@ -243,7 +243,7 @@ public class Log4JUtil {
 			return java.util.logging.Level.FINE;
 		}
 		else if (StringUtil.equalsIgnoreCase(
-					 priority, Level.ERROR.toString())) {
+					priority, Level.ERROR.toString())) {
 
 			return java.util.logging.Level.SEVERE;
 		}

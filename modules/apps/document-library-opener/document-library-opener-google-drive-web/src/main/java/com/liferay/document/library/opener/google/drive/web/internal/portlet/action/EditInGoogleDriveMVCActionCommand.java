@@ -157,13 +157,13 @@ public class EditInGoogleDriveMVCActionCommand extends BaseMVCActionCommand {
 			}
 		}
 		else if (cmd.equals(
-					 DLOpenerGoogleDriveWebConstants.
-						 GOOGLE_DRIVE_CANCEL_CHECKOUT)) {
+					DLOpenerGoogleDriveWebConstants.
+						GOOGLE_DRIVE_CANCEL_CHECKOUT)) {
 
 			_dlAppService.cancelCheckOut(fileEntryId);
 		}
 		else if (cmd.equals(
-					 DLOpenerGoogleDriveWebConstants.GOOGLE_DRIVE_CHECKIN)) {
+					DLOpenerGoogleDriveWebConstants.GOOGLE_DRIVE_CHECKIN)) {
 
 			boolean majorVersion = ParamUtil.getBoolean(
 				actionRequest, "majorVersion");
@@ -176,7 +176,7 @@ public class EditInGoogleDriveMVCActionCommand extends BaseMVCActionCommand {
 				fileEntryId, majorVersion, changeLog, serviceContext);
 		}
 		else if (cmd.equals(
-					 DLOpenerGoogleDriveWebConstants.GOOGLE_DRIVE_CHECKOUT)) {
+					DLOpenerGoogleDriveWebConstants.GOOGLE_DRIVE_CHECKOUT)) {
 
 			try {
 				ServiceContext serviceContext =
@@ -197,7 +197,7 @@ public class EditInGoogleDriveMVCActionCommand extends BaseMVCActionCommand {
 			}
 		}
 		else if (cmd.equals(
-					 DLOpenerGoogleDriveWebConstants.GOOGLE_DRIVE_EDIT)) {
+					DLOpenerGoogleDriveWebConstants.GOOGLE_DRIVE_EDIT)) {
 
 			_saveDLOpenerGoogleDriveFileReference(
 				actionRequest,

@@ -81,7 +81,7 @@ public class MoveAssetEntrySelectionMVCActionCommand
 				_moveSelectionDown(typeSettingsProperties, assetEntryOrder);
 			}
 			else if (Objects.equals(
-						 moveDirection, AssetListSelectionConstants.MOVE_UP)) {
+						moveDirection, AssetListSelectionConstants.MOVE_UP)) {
 
 				_moveSelectionUp(typeSettingsProperties, assetEntryOrder);
 			}

@@ -69,10 +69,10 @@ public class GetDDMTemplateMVCResourceCommand extends BaseMVCResourceCommand {
 			contentType = ContentTypes.APPLICATION_JSON;
 		}
 		else if (Objects.equals(
-					 GetterUtil.getString(
-						 ddmTemplate.getLanguage(),
-						 TemplateConstants.LANG_TYPE_VM),
-					 TemplateConstants.LANG_TYPE_XSL)) {
+					GetterUtil.getString(
+						ddmTemplate.getLanguage(),
+						TemplateConstants.LANG_TYPE_VM),
+					TemplateConstants.LANG_TYPE_XSL)) {
 
 			contentType = ContentTypes.TEXT_XML_UTF8;
 		}

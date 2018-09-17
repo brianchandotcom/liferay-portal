@@ -179,7 +179,7 @@ public class OpenIdServiceHandlerImpl implements OpenIdServiceHandler {
 							}
 						}
 						else if (openIdAXType.equals(
-									 _OPEN_ID_AX_ATTR_FIRST_NAME)) {
+									_OPEN_ID_AX_ATTR_FIRST_NAME)) {
 
 							if (Validator.isNull(firstName)) {
 								firstName = getFirstValue(
@@ -188,7 +188,7 @@ public class OpenIdServiceHandlerImpl implements OpenIdServiceHandler {
 							}
 						}
 						else if (openIdAXType.equals(
-									 _OPEN_ID_AX_ATTR_FULL_NAME)) {
+									_OPEN_ID_AX_ATTR_FULL_NAME)) {
 
 							String fullName = fetchResponse.getAttributeValue(
 								_OPEN_ID_AX_ATTR_FULL_NAME);
@@ -206,7 +206,7 @@ public class OpenIdServiceHandlerImpl implements OpenIdServiceHandler {
 							}
 						}
 						else if (openIdAXType.equals(
-									 _OPEN_ID_AX_ATTR_LAST_NAME)) {
+									_OPEN_ID_AX_ATTR_LAST_NAME)) {
 
 							if (Validator.isNull(lastName)) {
 								lastName = getFirstValue(

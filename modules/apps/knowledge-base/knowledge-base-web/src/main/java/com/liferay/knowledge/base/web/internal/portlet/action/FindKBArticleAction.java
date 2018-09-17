@@ -263,7 +263,7 @@ public class FindKBArticleAction extends BaseStrutsAction {
 						}
 					}
 					else if (resourcePrimKey ==
-								 kbArticle.getResourcePrimKey()) {
+								kbArticle.getResourcePrimKey()) {
 
 						return getKBArticleURL(
 							layout.getPlid(), portlet.getPortletId(), kbArticle,

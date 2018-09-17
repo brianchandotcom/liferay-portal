@@ -269,12 +269,12 @@ public class AssetListDisplayContext {
 			title = HtmlUtil.escape(assetListEntry.getTitle());
 		}
 		else if (assetListEntryType ==
-					 AssetListEntryTypeConstants.TYPE_DYNAMIC) {
+					AssetListEntryTypeConstants.TYPE_DYNAMIC) {
 
 			title = "new-dynamic-asset-list";
 		}
 		else if (assetListEntryType ==
-					 AssetListEntryTypeConstants.TYPE_MANUAL) {
+					AssetListEntryTypeConstants.TYPE_MANUAL) {
 
 			title = "new-manual-asset-list";
 		}

@@ -94,7 +94,7 @@ public class MicroblogsActivityInterpreter
 				sb.append(": ");
 			}
 			else if (microblogsEntry.getType() ==
-						 MicroblogsEntryConstants.TYPE_REPOST) {
+						MicroblogsEntryConstants.TYPE_REPOST) {
 
 				sb.append(serviceContext.translate("reposted-from"));
 				sb.append(" ");

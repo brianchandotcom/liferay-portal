@@ -172,8 +172,8 @@ public class EditArticleDisplayPageDisplayContext {
 			displayPageType = AssetDisplayPageConstants.TYPE_SPECIFIC;
 		}
 		else if (Objects.equals(
-					 assetDisplayPageEntry.getType(),
-					 AssetDisplayPageConstants.TYPE_DEFAULT)) {
+					assetDisplayPageEntry.getType(),
+					AssetDisplayPageConstants.TYPE_DEFAULT)) {
 
 			displayPageType = AssetDisplayPageConstants.TYPE_DEFAULT;
 		}

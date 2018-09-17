@@ -281,7 +281,7 @@ public class SoyTemplateRecord extends SoyAbstractValue implements SoyRecord {
 						_propertyName(field.getName()), NullData.INSTANCE);
 				}
 				else if (ClassUtils.isPrimitiveOrWrapper(
-							 fieldValue.getClass()) ||
+							fieldValue.getClass()) ||
 						 String.class.isInstance(fieldValue)) {
 
 					soyMapData.put(field.getName(), fieldValue);
@@ -305,7 +305,7 @@ public class SoyTemplateRecord extends SoyAbstractValue implements SoyRecord {
 							_propertyName(method.getName()), NullData.INSTANCE);
 					}
 					else if (ClassUtils.isPrimitiveOrWrapper(
-								 methodValue.getClass()) ||
+								methodValue.getClass()) ||
 							 String.class.isInstance(methodValue)) {
 
 						soyMapData.put(

@@ -52,34 +52,33 @@ public abstract class BaseExportImportLifecycleListener
 				getThrowableAttribute(attributes));
 		}
 		else if (code ==
-					 ExportImportLifecycleConstants.
-						 EVENT_LAYOUT_EXPORT_STARTED) {
+					ExportImportLifecycleConstants.
+						EVENT_LAYOUT_EXPORT_STARTED) {
 
 			onLayoutExportStarted(getPortletDataContextAttribute(attributes));
 		}
 		else if (code ==
-					 ExportImportLifecycleConstants.
-						 EVENT_LAYOUT_EXPORT_SUCCEEDED) {
+					ExportImportLifecycleConstants.
+						EVENT_LAYOUT_EXPORT_SUCCEEDED) {
 
 			onLayoutExportSucceeded(getPortletDataContextAttribute(attributes));
 		}
 		else if (code ==
-					 ExportImportLifecycleConstants.
-						 EVENT_LAYOUT_IMPORT_FAILED) {
+					ExportImportLifecycleConstants.EVENT_LAYOUT_IMPORT_FAILED) {
 
 			onLayoutImportFailed(
 				getPortletDataContextAttribute(attributes),
 				getThrowableAttribute(attributes));
 		}
 		else if (code ==
-					 ExportImportLifecycleConstants.
-						 EVENT_LAYOUT_IMPORT_STARTED) {
+					ExportImportLifecycleConstants.
+						EVENT_LAYOUT_IMPORT_STARTED) {
 
 			onLayoutImportStarted(getPortletDataContextAttribute(attributes));
 		}
 		else if (code ==
-					 ExportImportLifecycleConstants.
-						 EVENT_LAYOUT_IMPORT_SUCCEEDED) {
+					ExportImportLifecycleConstants.
+						EVENT_LAYOUT_IMPORT_SUCCEEDED) {
 
 			if ((processFlag ==
 					ExportImportLifecycleConstants.
@@ -97,43 +96,43 @@ public abstract class BaseExportImportLifecycleListener
 			}
 		}
 		else if (code ==
-					 ExportImportLifecycleConstants.
-						 EVENT_PORTLET_EXPORT_FAILED) {
+					ExportImportLifecycleConstants.
+						EVENT_PORTLET_EXPORT_FAILED) {
 
 			onPortletExportFailed(
 				getPortletDataContextAttribute(attributes),
 				getThrowableAttribute(attributes));
 		}
 		else if (code ==
-					 ExportImportLifecycleConstants.
-						 EVENT_PORTLET_EXPORT_STARTED) {
+					ExportImportLifecycleConstants.
+						EVENT_PORTLET_EXPORT_STARTED) {
 
 			onPortletExportStarted(getPortletDataContextAttribute(attributes));
 		}
 		else if (code ==
-					 ExportImportLifecycleConstants.
-						 EVENT_PORTLET_EXPORT_SUCCEEDED) {
+					ExportImportLifecycleConstants.
+						EVENT_PORTLET_EXPORT_SUCCEEDED) {
 
 			onPortletExportSucceeded(
 				getPortletDataContextAttribute(attributes));
 		}
 		else if (code ==
-					 ExportImportLifecycleConstants.
-						 EVENT_PORTLET_IMPORT_FAILED) {
+					ExportImportLifecycleConstants.
+						EVENT_PORTLET_IMPORT_FAILED) {
 
 			onPortletImportFailed(
 				getPortletDataContextAttribute(attributes),
 				getThrowableAttribute(attributes));
 		}
 		else if (code ==
-					 ExportImportLifecycleConstants.
-						 EVENT_PORTLET_IMPORT_STARTED) {
+					ExportImportLifecycleConstants.
+						EVENT_PORTLET_IMPORT_STARTED) {
 
 			onPortletImportStarted(getPortletDataContextAttribute(attributes));
 		}
 		else if (code ==
-					 ExportImportLifecycleConstants.
-						 EVENT_PORTLET_IMPORT_SUCCEEDED) {
+					ExportImportLifecycleConstants.
+						EVENT_PORTLET_IMPORT_SUCCEEDED) {
 
 			if ((processFlag ==
 					ExportImportLifecycleConstants.
@@ -151,74 +150,74 @@ public abstract class BaseExportImportLifecycleListener
 			}
 		}
 		else if (code ==
-					 ExportImportLifecycleConstants.
-						 EVENT_PUBLICATION_LAYOUT_LOCAL_FAILED) {
+					ExportImportLifecycleConstants.
+						EVENT_PUBLICATION_LAYOUT_LOCAL_FAILED) {
 
 			onLayoutLocalPublicationFailed(
 				getExportImportConfigurationAttribute(attributes),
 				getThrowableAttribute(attributes));
 		}
 		else if (code ==
-					 ExportImportLifecycleConstants.
-						 EVENT_PUBLICATION_LAYOUT_LOCAL_STARTED) {
+					ExportImportLifecycleConstants.
+						EVENT_PUBLICATION_LAYOUT_LOCAL_STARTED) {
 
 			onLayoutLocalPublicationStarted(
 				getExportImportConfigurationAttribute(attributes));
 		}
 		else if (code ==
-					 ExportImportLifecycleConstants.
-						 EVENT_PUBLICATION_LAYOUT_LOCAL_SUCCEEDED) {
+					ExportImportLifecycleConstants.
+						EVENT_PUBLICATION_LAYOUT_LOCAL_SUCCEEDED) {
 
 			onLayoutLocalPublicationSucceeded(
 				getExportImportConfigurationAttribute(attributes));
 		}
 		else if (code ==
-					 ExportImportLifecycleConstants.
-						 EVENT_PUBLICATION_LAYOUT_REMOTE_FAILED) {
+					ExportImportLifecycleConstants.
+						EVENT_PUBLICATION_LAYOUT_REMOTE_FAILED) {
 
 			onLayoutRemotePublicationFailed(
 				getExportImportConfigurationAttribute(attributes),
 				getThrowableAttribute(attributes));
 		}
 		else if (code ==
-					 ExportImportLifecycleConstants.
-						 EVENT_PUBLICATION_LAYOUT_REMOTE_STARTED) {
+					ExportImportLifecycleConstants.
+						EVENT_PUBLICATION_LAYOUT_REMOTE_STARTED) {
 
 			onLayoutRemotePublicationStarted(
 				getExportImportConfigurationAttribute(attributes));
 		}
 		else if (code ==
-					 ExportImportLifecycleConstants.
-						 EVENT_PUBLICATION_LAYOUT_REMOTE_SUCCEEDED) {
+					ExportImportLifecycleConstants.
+						EVENT_PUBLICATION_LAYOUT_REMOTE_SUCCEEDED) {
 
 			onLayoutRemotePublicationSucceeded(
 				getExportImportConfigurationAttribute(attributes));
 		}
 		else if (code ==
-					 ExportImportLifecycleConstants.
-						 EVENT_PUBLICATION_PORTLET_LOCAL_FAILED) {
+					ExportImportLifecycleConstants.
+						EVENT_PUBLICATION_PORTLET_LOCAL_FAILED) {
 
 			onPortletPublicationFailed(
 				getExportImportConfigurationAttribute(attributes),
 				getThrowableAttribute(attributes));
 		}
 		else if (code ==
-					 ExportImportLifecycleConstants.
-						 EVENT_PUBLICATION_PORTLET_LOCAL_STARTED) {
+					ExportImportLifecycleConstants.
+						EVENT_PUBLICATION_PORTLET_LOCAL_STARTED) {
 
 			onPortletPublicationStarted(
 				getExportImportConfigurationAttribute(attributes));
 		}
 		else if (code ==
-					 ExportImportLifecycleConstants.
-						 EVENT_PUBLICATION_PORTLET_LOCAL_SUCCEEDED) {
+					ExportImportLifecycleConstants.
+						EVENT_PUBLICATION_PORTLET_LOCAL_SUCCEEDED) {
 
 			onPortletPublicationSucceeded(
 				getExportImportConfigurationAttribute(attributes));
 		}
 		else if (code ==
-					 ExportImportLifecycleConstants.
-						 EVENT_STAGED_MODEL_EXPORT_FAILED) {
+					ExportImportLifecycleConstants.
+						EVENT_STAGED_MODEL_EXPORT_FAILED) {
 
 			onStagedModelExportFailed(
 				getPortletDataContextAttribute(attributes),
@@ -226,24 +225,24 @@ public abstract class BaseExportImportLifecycleListener
 				getThrowableAttribute(attributes));
 		}
 		else if (code ==
-					 ExportImportLifecycleConstants.
-						 EVENT_STAGED_MODEL_EXPORT_STARTED) {
+					ExportImportLifecycleConstants.
+						EVENT_STAGED_MODEL_EXPORT_STARTED) {
 
 			onStagedModelExportStarted(
 				getPortletDataContextAttribute(attributes),
 				getStagedModelAttribute(attributes));
 		}
 		else if (code ==
-					 ExportImportLifecycleConstants.
-						 EVENT_STAGED_MODEL_EXPORT_SUCCEEDED) {
+					ExportImportLifecycleConstants.
+						EVENT_STAGED_MODEL_EXPORT_SUCCEEDED) {
 
 			onStagedModelExportSucceeded(
 				getPortletDataContextAttribute(attributes),
 				getStagedModelAttribute(attributes));
 		}
 		else if (code ==
-					 ExportImportLifecycleConstants.
-						 EVENT_STAGED_MODEL_IMPORT_FAILED) {
+					ExportImportLifecycleConstants.
+						EVENT_STAGED_MODEL_IMPORT_FAILED) {
 
 			onStagedModelImportFailed(
 				getPortletDataContextAttribute(attributes),
@@ -251,16 +250,16 @@ public abstract class BaseExportImportLifecycleListener
 				getThrowableAttribute(attributes));
 		}
 		else if (code ==
-					 ExportImportLifecycleConstants.
-						 EVENT_STAGED_MODEL_IMPORT_STARTED) {
+					ExportImportLifecycleConstants.
+						EVENT_STAGED_MODEL_IMPORT_STARTED) {
 
 			onStagedModelImportStarted(
 				getPortletDataContextAttribute(attributes),
 				getStagedModelAttribute(attributes));
 		}
 		else if (code ==
-					 ExportImportLifecycleConstants.
-						 EVENT_STAGED_MODEL_IMPORT_SUCCEEDED) {
+					ExportImportLifecycleConstants.
+						EVENT_STAGED_MODEL_IMPORT_SUCCEEDED) {
 
 			onStagedModelImportSucceeded(
 				getPortletDataContextAttribute(attributes),

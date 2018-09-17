@@ -133,7 +133,7 @@ public abstract class BaseSingleEntitySchemaBasedEdmProvider
 				EdmPrimitiveTypeKind.Date.getFullQualifiedName();
 		}
 		else if (Objects.equals(
-					 entityField.getType(), EntityField.Type.STRING)) {
+					entityField.getType(), EntityField.Type.STRING)) {
 
 			fullQualifiedName =
 				EdmPrimitiveTypeKind.String.getFullQualifiedName();

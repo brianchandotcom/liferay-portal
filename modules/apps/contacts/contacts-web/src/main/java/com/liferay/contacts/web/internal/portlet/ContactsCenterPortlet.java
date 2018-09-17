@@ -616,7 +616,7 @@ public class ContactsCenterPortlet extends MVCPortlet {
 				message = "please-enter-a-valid-last-name";
 			}
 			else if (e instanceof UserEmailAddressException.
-						 MustNotBeDuplicate) {
+						MustNotBeDuplicate) {
 
 				message = "the-email-address-you-requested-is-already-taken";
 			}
@@ -861,7 +861,7 @@ public class ContactsCenterPortlet extends MVCPortlet {
 			}
 		}
 		else if (filterBy.equals(
-					 ContactsConstants.FILTER_BY_TYPE_MY_CONTACTS) &&
+					ContactsConstants.FILTER_BY_TYPE_MY_CONTACTS) &&
 				 !portletId.equals(ContactsPortletKeys.MEMBERS)) {
 
 			List<Entry> entries = entryLocalService.search(

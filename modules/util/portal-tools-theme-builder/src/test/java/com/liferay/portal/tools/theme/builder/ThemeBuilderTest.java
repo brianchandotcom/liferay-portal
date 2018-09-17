@@ -61,7 +61,7 @@ public class ThemeBuilderTest {
 					_styledJarFile = file;
 				}
 				else if (line.contains(
-							 "com.liferay.frontend.theme.unstyled-")) {
+							"com.liferay.frontend.theme.unstyled-")) {
 
 					_unstyledJarFile = file;
 				}

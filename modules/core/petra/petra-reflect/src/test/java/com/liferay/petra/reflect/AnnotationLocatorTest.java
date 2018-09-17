@@ -542,7 +542,7 @@ public class AnnotationLocatorTest {
 							expectedMix.value(), actualMix.value());
 					}
 					else if (expectedAnnotation.annotationType() ==
-								 Method.class) {
+								Method.class) {
 
 						Method expectedType = (Method)expectedAnnotation;
 						Method actualMethod = (Method)actualAnnotation;

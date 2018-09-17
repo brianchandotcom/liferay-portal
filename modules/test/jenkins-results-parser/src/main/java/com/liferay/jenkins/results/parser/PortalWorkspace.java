@@ -327,7 +327,7 @@ public abstract class PortalWorkspace extends BaseWorkspace {
 				gitCommitFileContent, synchronizeGitBranches());
 		}
 		else if (PullRequest.isValidGitHubPullRequestURL(
-					 gitCommitFileContent)) {
+					gitCommitFileContent)) {
 
 			PullRequest pullRequest = new PullRequest(gitCommitFileContent);
 

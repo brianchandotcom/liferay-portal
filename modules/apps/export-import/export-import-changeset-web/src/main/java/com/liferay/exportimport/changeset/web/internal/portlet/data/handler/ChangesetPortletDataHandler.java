@@ -143,7 +143,7 @@ public class ChangesetPortletDataHandler extends BasePortletDataHandler {
 						changesetCollectionId);
 			}
 			else if (ExportImportDateUtil.isRangeFromLastPublishDate(
-						 portletDataContext)) {
+						portletDataContext)) {
 
 				changesetCollection =
 					_changesetCollectionLocalService.fetchChangesetCollection(

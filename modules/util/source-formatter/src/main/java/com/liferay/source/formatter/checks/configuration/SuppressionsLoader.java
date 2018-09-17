@@ -60,7 +60,7 @@ public class SuppressionsLoader {
 					true);
 			}
 			else if (absolutePath.endsWith(
-						 "source-formatter-suppressions.xml")) {
+						"source-formatter-suppressions.xml")) {
 
 				sourceFormatterSuppressions = _loadCheckstyleSuppressions(
 					sourceFormatterSuppressions,

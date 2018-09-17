@@ -320,7 +320,7 @@ public class BaselinePlugin implements Plugin<Project> {
 			}
 		}
 		else if (baselineConfigurationExtension.
-					 isLowestMajorVersionRequired()) {
+					isLowestMajorVersionRequired()) {
 
 			throw new GradleException(
 				"Please configure a lowest major version for " +

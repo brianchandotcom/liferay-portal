@@ -104,13 +104,13 @@ public class EditActivitySettingsMVCActionCommand extends BaseMVCActionCommand {
 				SocialActivityCounterConstants.TYPE_CREATOR);
 		}
 		else if (activityCounterName.equals(
-					 SocialActivityCounterConstants.NAME_PARTICIPATION)) {
+					SocialActivityCounterConstants.NAME_PARTICIPATION)) {
 
 			activityCounterDefinition.setOwnerType(
 				SocialActivityCounterConstants.TYPE_ACTOR);
 		}
 		else if (activityCounterName.equals(
-					 SocialActivityCounterConstants.NAME_POPULARITY)) {
+					SocialActivityCounterConstants.NAME_POPULARITY)) {
 
 			activityCounterDefinition.setOwnerType(
 				SocialActivityCounterConstants.TYPE_ASSET);

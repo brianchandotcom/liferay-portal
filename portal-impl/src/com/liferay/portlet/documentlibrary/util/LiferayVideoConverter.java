@@ -217,7 +217,7 @@ public class LiferayVideoConverter extends LiferayConverter {
 					previousPacketSize, streamIndex, timeStampOffset);
 			}
 			else if (inputIStreamCoder.getCodecType() ==
-						 ICodec.Type.CODEC_TYPE_VIDEO) {
+						ICodec.Type.CODEC_TYPE_VIDEO) {
 
 				keyPacketFound = isKeyPacketFound(inputIPacket, keyPacketFound);
 

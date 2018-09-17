@@ -398,22 +398,22 @@ public class UserGroupFinderImpl
 			join = CustomSQLUtil.get(JOIN_BY_USER_GROUP_GROUP_ROLE);
 		}
 		else if (key.equals(
-					 UserGroupFinderConstants.PARAM_KEY_USER_GROUPS_GROUPS)) {
+					UserGroupFinderConstants.PARAM_KEY_USER_GROUPS_GROUPS)) {
 
 			join = CustomSQLUtil.get(JOIN_BY_USER_GROUPS_GROUPS);
 		}
 		else if (key.equals(
-					 UserGroupFinderConstants.PARAM_KEY_USER_GROUPS_ROLES)) {
+					UserGroupFinderConstants.PARAM_KEY_USER_GROUPS_ROLES)) {
 
 			join = CustomSQLUtil.get(JOIN_BY_USER_GROUPS_ROLES);
 		}
 		else if (key.equals(
-					 UserGroupFinderConstants.PARAM_KEY_USER_GROUPS_TEAMS)) {
+					UserGroupFinderConstants.PARAM_KEY_USER_GROUPS_TEAMS)) {
 
 			join = CustomSQLUtil.get(JOIN_BY_USER_GROUPS_TEAMS);
 		}
 		else if (key.equals(
-					 UserGroupFinderConstants.PARAM_KEY_USER_GROUPS_USERS)) {
+					UserGroupFinderConstants.PARAM_KEY_USER_GROUPS_USERS)) {
 
 			join = CustomSQLUtil.get(JOIN_BY_USER_GROUPS_USERS);
 		}
@@ -462,7 +462,7 @@ public class UserGroupFinderImpl
 			join = CustomSQLUtil.get(JOIN_BY_USER_GROUP_GROUP_ROLE);
 		}
 		else if (key.equals(
-					 UserGroupFinderConstants.PARAM_KEY_USER_GROUPS_GROUPS)) {
+					UserGroupFinderConstants.PARAM_KEY_USER_GROUPS_GROUPS)) {
 
 			if (value instanceof Long) {
 				join = CustomSQLUtil.get(JOIN_BY_USER_GROUPS_GROUPS);
@@ -494,17 +494,17 @@ public class UserGroupFinderImpl
 			}
 		}
 		else if (key.equals(
-					 UserGroupFinderConstants.PARAM_KEY_USER_GROUPS_ROLES)) {
+					UserGroupFinderConstants.PARAM_KEY_USER_GROUPS_ROLES)) {
 
 			join = CustomSQLUtil.get(JOIN_BY_USER_GROUPS_ROLES);
 		}
 		else if (key.equals(
-					 UserGroupFinderConstants.PARAM_KEY_USER_GROUPS_TEAMS)) {
+					UserGroupFinderConstants.PARAM_KEY_USER_GROUPS_TEAMS)) {
 
 			join = CustomSQLUtil.get(JOIN_BY_USER_GROUPS_TEAMS);
 		}
 		else if (key.equals(
-					 UserGroupFinderConstants.PARAM_KEY_USER_GROUPS_USERS)) {
+					UserGroupFinderConstants.PARAM_KEY_USER_GROUPS_USERS)) {
 
 			join = CustomSQLUtil.get(JOIN_BY_USER_GROUPS_USERS);
 		}

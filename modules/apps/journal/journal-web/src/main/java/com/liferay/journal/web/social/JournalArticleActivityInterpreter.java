@@ -136,7 +136,7 @@ public class JournalArticleActivityInterpreter
 			return "activity-journal-article-move-to-trash-in";
 		}
 		else if (activityType ==
-					 SocialActivityConstants.TYPE_RESTORE_FROM_TRASH) {
+					SocialActivityConstants.TYPE_RESTORE_FROM_TRASH) {
 
 			if (Validator.isNull(groupName)) {
 				return "activity-journal-article-restore-from-trash";

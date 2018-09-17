@@ -70,7 +70,7 @@ public class BuildThemeMojo extends AbstractMojo {
 					themeStyledArtifactPresent = true;
 				}
 				else if (artifactId.equals(
-							 "com.liferay.frontend.theme.unstyled") &&
+							"com.liferay.frontend.theme.unstyled") &&
 						 (_themeBuilderArgs.getUnstyledDir() == null)) {
 
 					Artifact artifact = _resolveArtifact(dependency);

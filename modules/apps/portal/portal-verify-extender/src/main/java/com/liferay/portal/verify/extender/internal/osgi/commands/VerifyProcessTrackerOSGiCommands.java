@@ -105,7 +105,7 @@ public class VerifyProcessTrackerOSGiCommands {
 					verifyProcessName + " verify process succeeded");
 			}
 			else if (release.getState() ==
-						 ReleaseConstants.STATE_VERIFY_FAILURE) {
+						ReleaseConstants.STATE_VERIFY_FAILURE) {
 
 				System.out.println(
 					verifyProcessName + " verify process failed");

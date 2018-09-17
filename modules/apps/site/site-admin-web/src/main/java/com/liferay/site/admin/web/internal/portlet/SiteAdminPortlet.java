@@ -397,7 +397,7 @@ public class SiteAdminPortlet extends MVCPortlet {
 			include("/error.jsp", renderRequest, renderResponse);
 		}
 		else if (SessionErrors.contains(
-					 renderRequest, NoSuchLayoutSetException.class.getName())) {
+					renderRequest, NoSuchLayoutSetException.class.getName())) {
 
 			include("/view.jsp", renderRequest, renderResponse);
 		}
@@ -1029,7 +1029,7 @@ public class SiteAdminPortlet extends MVCPortlet {
 			}
 		}
 		else if (creationType.equals(
-					 SiteAdminConstants.CREATION_TYPE_INITIALIZER)) {
+					SiteAdminConstants.CREATION_TYPE_INITIALIZER)) {
 
 			String siteInitializerKey = ParamUtil.getString(
 				actionRequest, "siteInitializerKey");

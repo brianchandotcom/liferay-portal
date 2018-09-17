@@ -111,8 +111,8 @@ public class DLFileEntryTypeServiceTest {
 				_contractDLFileEntryType = dlFileEntryType;
 			}
 			else if (fileEntryTypeKey.equals(
-						 DLFileEntryTypeConstants.
-							 FILE_ENTRY_TYPE_KEY_MARKETING_BANNER)) {
+						DLFileEntryTypeConstants.
+							FILE_ENTRY_TYPE_KEY_MARKETING_BANNER)) {
 
 				_marketingBannerDLFileEntryType = dlFileEntryType;
 			}

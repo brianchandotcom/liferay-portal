@@ -61,7 +61,7 @@ public class LiferayConnectionWizardDefinition
 			return "LiferayWizard_icon_16x16.png";
 		}
 		else if (definitionImageType ==
-					 DefinitionImageType.WIZARD_BANNER_75X66) {
+					DefinitionImageType.WIZARD_BANNER_75X66) {
 
 			return "LiferayWizard_banner_75x66.png";
 		}

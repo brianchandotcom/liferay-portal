@@ -3647,7 +3647,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 			groupKey = getOrgGroupName(organization.getName());
 		}
 		else if (!GroupConstants.USER_PERSONAL_SITE.equals(
-					 group.getGroupKey())) {
+					group.getGroupKey())) {
 
 			groupKey = String.valueOf(classPK);
 		}

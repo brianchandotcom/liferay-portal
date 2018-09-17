@@ -103,13 +103,13 @@ public class TiffOrientationTransformer {
 			return ImageToolUtil.flipHorizontal(renderedImage);
 		}
 		else if (tiffOrientationValue ==
-					 _ORIENTATION_VALUE_MIRROR_HORIZONTAL_ROTATE_90_CW) {
+					_ORIENTATION_VALUE_MIRROR_HORIZONTAL_ROTATE_90_CW) {
 
 			return ImageToolUtil.flipVertical(
 				ImageToolUtil.rotate(renderedImage, 90));
 		}
 		else if (tiffOrientationValue ==
-					 _ORIENTATION_VALUE_MIRROR_HORIZONTAL_ROTATE_270_CW) {
+					_ORIENTATION_VALUE_MIRROR_HORIZONTAL_ROTATE_270_CW) {
 
 			return ImageToolUtil.flipVertical(
 				ImageToolUtil.rotate(renderedImage, 270));

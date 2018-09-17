@@ -265,7 +265,7 @@ public class JavaIfStatementCheck extends IfStatementCheck {
 				int expectedLeadingWhitespace = 0;
 
 				if (previousLine.contains(StringPool.TAB + "else if (")) {
-					expectedLeadingWhitespace = baseLeadingWhitespace + 4;
+					expectedLeadingWhitespace = baseLeadingWhitespace + 3;
 				}
 				else if (previousLine.contains(StringPool.TAB + "if (")) {
 					expectedLeadingWhitespace = baseLeadingWhitespace + 4;

@@ -75,7 +75,6 @@ public class JavaWhitespaceCheck extends WhitespaceCheck {
 					!previousLine.contains("\t(") &&
 					!previousLine.contains("\t<") &&
 					!previousLine.contains("\t ") &&
-					!previousLine.contains("\telse if (") &&
 					!previousLine.contains("\tfor (") &&
 					!previousLine.contains("\timplements ") &&
 					!previousLine.contains("\tthrows ")) {

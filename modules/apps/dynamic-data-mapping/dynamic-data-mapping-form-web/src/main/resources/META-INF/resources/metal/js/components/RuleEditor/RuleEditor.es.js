@@ -3,6 +3,7 @@ import {Config} from 'metal-state';
 import Component from 'metal-component';
 import Soy from 'metal-soy';
 import templates from './RuleEditor.soy.js';
+import {PagesVisitor} from '../../util/visitors.es';
 
 /**
  * RuleEditor.
@@ -188,33 +189,24 @@ class RuleEditor extends Component {
 		}
 	}
 
-	_getFieldsData(fieldName) {
-		const pages = this.pages;
-
+	_getFieldsData() {
 		const fieldData = [];
+		const pages = this.pages;
+		const visitor = new PagesVisitor(pages);
 
-		if (pages) {
-			for (let page = 0; page < pages.length; page++) {
-				const rows = pages[page].rows;
-				for (let row = 0; row < rows.length; row++) {
-					const cols = rows[row].columns;
-					for (let col = 0; col < cols.length; col++) {
-						const fields = cols[col].fields;
-						for (let field = 0; field < fields.length; field++) {
-							fieldData.push(
-								{
-									dataType: pages[page].rows[row].columns[col].fields[field].dataType,
-									name: pages[page].rows[row].columns[col].fields[field].fieldName,
-									options: pages[page].rows[row].columns[col].fields[field].options,
-									type: pages[page].rows[row].columns[col].fields[field].type,
-									value: pages[page].rows[row].columns[col].fields[field].label
-								}
-							);
-						}
+		visitor.mapFields(
+			field => {
+				fieldData.push(
+					{
+						dataType: field.dataType,
+						name: field.fieldName,
+						options: field.options,
+						type: field.type,
+						value: field.label
 					}
-				}
+				);
 			}
-		}
+		);
 
 		return fieldData;
 	}
@@ -224,37 +216,30 @@ class RuleEditor extends Component {
 			type = 'text';
 		}
 
-		const metaDataSelected = this.functionsMetadata[type];
-
-		const operators = [];
-
-		for (let item = 0; item < metaDataSelected.length; item++) {
-			const operatorList = {};
-			operatorList.value = metaDataSelected[item].label;
-			operatorList.name = metaDataSelected[item].name;
-			operatorList.parameterTypes = metaDataSelected[item].parameterTypes;
-			operatorList.returnType = metaDataSelected[item].returnType;
-
-			operators.push(operatorList);
-		}
-
-		return operators;
+		return this.functionsMetadata[type].map(
+			metadata => {
+				return {
+					...metadata,
+					value: metadata.label
+				};
+			}
+		);
 	}
 
-	_getConditionIndex(originalEvent, fieldClass) {
-		const firstOperand = originalEvent.delegateTarget.closest(fieldClass);
+	_getConditionIndex({delegateTarget}, fieldClass) {
+		const firstOperand = delegateTarget.closest(fieldClass);
 
-		return firstOperand.getAttribute(fieldClass.substring(1) + '-index');
+		return firstOperand.getAttribute(`${fieldClass.substring(1)}-index`);
 	}
 
 	_getFieldType(fieldName) {
-		const fieldSelected = this.firstOperandList.filter(
+		const selectedField = this.firstOperandList.filter(
 			field => {
 				return field.name === fieldName;
 			}
 		);
 
-		return fieldSelected[0].type;
+		return selectedField[0].type;
 	}
 
 	_fieldHasOptions(field) {
@@ -264,9 +249,7 @@ class RuleEditor extends Component {
 	_handleOperatorSelection(event) {
 		const {originalEvent, value} = event;
 		const fieldName = originalEvent.target.getAttribute('data-option-value');
-
 		const index = this._getConditionIndex(originalEvent, '.condition-operator');
-
 		let copyOfConditions = this.conditions;
 
 		if (!fieldName || !this._isBinary(fieldName)) {
@@ -457,6 +440,7 @@ class RuleEditor extends Component {
 
 	_hideTypeField(index) {
 		const conditionTypeElement = document.querySelector(`[condition-type-index="${index}"]`);
+
 		if (conditionTypeElement) {
 			conditionTypeElement.classList.add('hide');
 		}
@@ -512,10 +496,8 @@ class RuleEditor extends Component {
 
 	_hideTypeValues(index) {
 		this._hideTypeValueInput(index);
-
-		this._hideTypeValueSelect(index);
-
 		this._hideTypeValueOption(index);
+		this._hideTypeValueSelect(index);
 	}
 
 	_isBinary(value) {
@@ -550,9 +532,7 @@ class RuleEditor extends Component {
 		let copyOfConditions = this.conditions;
 
 		copyOfConditions = this._clearOperatorValue(copyOfConditions, index);
-
 		copyOfConditions = this._clearFirstOperandValue(copyOfConditions, index);
-
 		copyOfConditions = this._clearSecondOperandValue(copyOfConditions, index);
 
 		this.setState(

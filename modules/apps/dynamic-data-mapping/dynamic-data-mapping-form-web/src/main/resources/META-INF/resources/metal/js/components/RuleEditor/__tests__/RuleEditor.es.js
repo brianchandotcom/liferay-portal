@@ -67,7 +67,7 @@ const firstOperandList = [
 			}
 		],
 		value: 'Nome',
-		type: 'text',
+		type: 'text'
 	},
 	{
 		dataType: 'string',
@@ -79,7 +79,7 @@ const firstOperandList = [
 			}
 		],
 		value: 'Sobrenome',
-		type: 'text',
+		type: 'text'
 	},
 	{
 		dataType: 'string',
@@ -95,7 +95,7 @@ const firstOperandList = [
 			}
 		],
 		value: 'Estado civil',
-		type: 'select',
+		type: 'select'
 	}
 ];
 
@@ -356,8 +356,8 @@ describe(
 
 				expect(
 					!type && typeValue &&
-					!typeValueSelect && typeValueSelectOptions
-					&& secondOperandReseted
+					!typeValueSelect && typeValueSelectOptions &&
+					secondOperandReseted
 				).toEqual(true);
 			}
 		);

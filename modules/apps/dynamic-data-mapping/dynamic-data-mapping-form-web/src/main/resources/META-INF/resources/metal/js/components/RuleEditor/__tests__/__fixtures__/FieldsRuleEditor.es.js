@@ -14,9 +14,9 @@ class FieldsRuleEditor extends Component {
 						getAttribute: () => {
 							return mock;
 						}
-					},
+					}
 				},
-				value,
+				value
 			}
 		);
 	}

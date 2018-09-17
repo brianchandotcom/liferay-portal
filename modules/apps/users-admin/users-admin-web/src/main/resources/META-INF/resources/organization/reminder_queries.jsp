@@ -17,9 +17,9 @@
 <%@ include file="/init.jsp" %>
 
 <%
-long organizationId = ParamUtil.getLong(request, "organizationId");
+OrganizationScreenNavigationDisplayContext organizationScreenNavigationDisplayContext = (OrganizationScreenNavigationDisplayContext)request.getAttribute(UsersAdminWebKeys.ORGANIZATION_SCREEN_NAVIGATION_DISPLAY_CONTEXT);
 
-Organization organization = OrganizationServiceUtil.fetchOrganization(organizationId);
+Organization organization = organizationScreenNavigationDisplayContext.getOrganization();
 
 String reminderQueries = ParamUtil.getString(request, "reminderQueries");
 

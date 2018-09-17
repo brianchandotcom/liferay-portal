@@ -20,16 +20,13 @@ import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalArticleConstants;
 import com.liferay.journal.model.JournalFolderConstants;
 import com.liferay.journal.test.util.JournalTestUtil;
-import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -38,6 +35,7 @@ import com.liferay.structured.content.apio.architect.filter.Filter;
 import com.liferay.structured.content.apio.architect.sort.Sort;
 import com.liferay.structured.content.apio.architect.sort.SortParser;
 import com.liferay.structured.content.apio.architect.util.test.PaginationTestUtil;
+import com.liferay.structured.content.apio.architect.util.test.ThemeDisplayTestUtil;
 
 import java.util.HashMap;
 import java.util.List;
@@ -101,7 +99,7 @@ public class StructuredContentNestedCollectionResourceSortingTest {
 		PageItems<JournalArticle> pageItems =
 			_structuredContentNestedCollectionResourceProxy.getPageItems(
 				PaginationTestUtil.of(10, 1), _group.getGroupId(),
-				_getThemeDisplay(_group, LocaleUtil.getDefault()),
+				ThemeDisplayTestUtil.from(_group, LocaleUtil.getDefault()),
 				Filter.emptyFilter(), new Sort(_sortParser.parse("title:asc")));
 
 		Assert.assertEquals(2, pageItems.getTotalCount());
@@ -147,7 +145,7 @@ public class StructuredContentNestedCollectionResourceSortingTest {
 		PageItems<JournalArticle> pageItems =
 			_structuredContentNestedCollectionResourceProxy.getPageItems(
 				PaginationTestUtil.of(10, 1), _group.getGroupId(),
-				_getThemeDisplay(_group, LocaleUtil.getDefault()),
+				ThemeDisplayTestUtil.from(_group, LocaleUtil.getDefault()),
 				Filter.emptyFilter(), new Sort(_sortParser.parse("title:asc")));
 
 		Assert.assertEquals(2, pageItems.getTotalCount());
@@ -194,7 +192,7 @@ public class StructuredContentNestedCollectionResourceSortingTest {
 		PageItems<JournalArticle> pageItems =
 			_structuredContentNestedCollectionResourceProxy.getPageItems(
 				PaginationTestUtil.of(10, 1), _group.getGroupId(),
-				_getThemeDisplay(_group, LocaleUtil.SPAIN),
+				ThemeDisplayTestUtil.from(_group, LocaleUtil.SPAIN),
 				Filter.emptyFilter(), new Sort(_sortParser.parse("title:asc")));
 
 		Assert.assertEquals(2, pageItems.getTotalCount());
@@ -237,7 +235,7 @@ public class StructuredContentNestedCollectionResourceSortingTest {
 		PageItems<JournalArticle> pageItems =
 			_structuredContentNestedCollectionResourceProxy.getPageItems(
 				PaginationTestUtil.of(10, 1), _group.getGroupId(),
-				_getThemeDisplay(_group, LocaleUtil.getDefault()),
+				ThemeDisplayTestUtil.from(_group, LocaleUtil.getDefault()),
 				Filter.emptyFilter(), new Sort(_sortParser.parse("title")));
 
 		Assert.assertEquals(2, pageItems.getTotalCount());
@@ -280,7 +278,7 @@ public class StructuredContentNestedCollectionResourceSortingTest {
 		PageItems<JournalArticle> pageItems =
 			_structuredContentNestedCollectionResourceProxy.getPageItems(
 				PaginationTestUtil.of(10, 1), _group.getGroupId(),
-				_getThemeDisplay(_group, LocaleUtil.getDefault()),
+				ThemeDisplayTestUtil.from(_group, LocaleUtil.getDefault()),
 				Filter.emptyFilter(),
 				new Sort(_sortParser.parse("title:desc")));
 
@@ -290,22 +288,6 @@ public class StructuredContentNestedCollectionResourceSortingTest {
 
 		Assert.assertEquals(journalArticle2, items.get(0));
 		Assert.assertEquals(journalArticle1, items.get(1));
-	}
-
-	private ThemeDisplay _getThemeDisplay(Group group, Locale locale)
-		throws Exception {
-
-		ThemeDisplay themeDisplay = new ThemeDisplay();
-
-		Company company = CompanyLocalServiceUtil.getCompanyById(
-			group.getCompanyId());
-
-		themeDisplay.setCompany(company);
-
-		themeDisplay.setLocale(locale);
-		themeDisplay.setScopeGroupId(group.getGroupId());
-
-		return themeDisplay;
 	}
 
 	@DeleteAfterTestRun

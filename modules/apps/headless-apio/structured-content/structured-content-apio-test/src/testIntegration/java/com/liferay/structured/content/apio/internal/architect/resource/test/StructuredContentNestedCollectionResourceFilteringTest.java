@@ -20,21 +20,18 @@ import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalArticleConstants;
 import com.liferay.journal.model.JournalFolderConstants;
 import com.liferay.journal.test.util.JournalTestUtil;
-import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.search.BooleanClause;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.Query;
 import com.liferay.portal.kernel.search.QueryTerm;
 import com.liferay.portal.kernel.search.generic.TermQueryImpl;
-import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -43,6 +40,7 @@ import com.liferay.structured.content.apio.architect.filter.Filter;
 import com.liferay.structured.content.apio.architect.filter.FilterParser;
 import com.liferay.structured.content.apio.architect.sort.Sort;
 import com.liferay.structured.content.apio.architect.util.test.PaginationTestUtil;
+import com.liferay.structured.content.apio.architect.util.test.ThemeDisplayTestUtil;
 
 import java.util.HashMap;
 import java.util.List;
@@ -114,7 +112,7 @@ public class StructuredContentNestedCollectionResourceFilteringTest {
 		PageItems<JournalArticle> pageItems =
 			_structuredContentNestedCollectionResourceProxy.getPageItems(
 				PaginationTestUtil.of(10, 1), _group.getGroupId(),
-				_getThemeDisplay(_group, LocaleUtil.getDefault()),
+				ThemeDisplayTestUtil.from(_group, LocaleUtil.getDefault()),
 				new Filter(_filterParser.parse("(title eq 'hello')")),
 				Sort.emptySort());
 
@@ -155,7 +153,7 @@ public class StructuredContentNestedCollectionResourceFilteringTest {
 		PageItems<JournalArticle> pageItems =
 			_structuredContentNestedCollectionResourceProxy.getPageItems(
 				PaginationTestUtil.of(10, 1), _group.getGroupId(),
-				_getThemeDisplay(_group, LocaleUtil.getDefault()),
+				ThemeDisplayTestUtil.from(_group, LocaleUtil.getDefault()),
 				new Filter(_filterParser.parse("(title eq 'hello world')")),
 				Sort.emptySort());
 
@@ -186,7 +184,7 @@ public class StructuredContentNestedCollectionResourceFilteringTest {
 		PageItems<JournalArticle> pageItems =
 			_structuredContentNestedCollectionResourceProxy.getPageItems(
 				PaginationTestUtil.of(10, 1), _group.getGroupId(),
-				_getThemeDisplay(_group, LocaleUtil.getDefault()),
+				ThemeDisplayTestUtil.from(_group, LocaleUtil.getDefault()),
 				new Filter(_filterParser.parse("(title eq 'hel')")),
 				Sort.emptySort());
 
@@ -225,7 +223,7 @@ public class StructuredContentNestedCollectionResourceFilteringTest {
 		PageItems<JournalArticle> pageItems =
 			_structuredContentNestedCollectionResourceProxy.getPageItems(
 				PaginationTestUtil.of(10, 1), _group.getGroupId(),
-				_getThemeDisplay(_group, LocaleUtil.getDefault()),
+				ThemeDisplayTestUtil.from(_group, LocaleUtil.getDefault()),
 				new Filter(_filterParser.parse("(title eq 'title1')")),
 				Sort.emptySort());
 
@@ -260,7 +258,7 @@ public class StructuredContentNestedCollectionResourceFilteringTest {
 		PageItems<JournalArticle> pageItems =
 			_structuredContentNestedCollectionResourceProxy.getPageItems(
 				PaginationTestUtil.of(10, 1), _group.getGroupId(),
-				_getThemeDisplay(_group, LocaleUtil.getDefault()),
+				ThemeDisplayTestUtil.from(_group, LocaleUtil.getDefault()),
 				new Filter(_filterParser.parse("(title eq 'titulo1')")),
 				Sort.emptySort());
 
@@ -294,7 +292,7 @@ public class StructuredContentNestedCollectionResourceFilteringTest {
 		PageItems<JournalArticle> pageItems =
 			_structuredContentNestedCollectionResourceProxy.getPageItems(
 				PaginationTestUtil.of(10, 1), _group.getGroupId(),
-				_getThemeDisplay(_group, LocaleUtil.getDefault()),
+				ThemeDisplayTestUtil.from(_group, LocaleUtil.getDefault()),
 				new Filter(_filterParser.parse("(title eq 'titulo1')")),
 				Sort.emptySort());
 
@@ -324,7 +322,7 @@ public class StructuredContentNestedCollectionResourceFilteringTest {
 		PageItems<JournalArticle> pageItems =
 			_structuredContentNestedCollectionResourceProxy.getPageItems(
 				PaginationTestUtil.of(10, 1), _group.getGroupId(),
-				_getThemeDisplay(_group, LocaleUtil.SPAIN),
+				ThemeDisplayTestUtil.from(_group, LocaleUtil.SPAIN),
 				new Filter(_filterParser.parse("(title eq 'titulo1')")),
 				Sort.emptySort());
 
@@ -369,7 +367,7 @@ public class StructuredContentNestedCollectionResourceFilteringTest {
 		PageItems<JournalArticle> pageItems =
 			_structuredContentNestedCollectionResourceProxy.getPageItems(
 				PaginationTestUtil.of(10, 1), _group.getGroupId(),
-				_getThemeDisplay(_group, LocaleUtil.getDefault()),
+				ThemeDisplayTestUtil.from(_group, LocaleUtil.getDefault()),
 				new Filter(_filterParser.parse("(title eq 'great title')")),
 				Sort.emptySort());
 
@@ -415,7 +413,7 @@ public class StructuredContentNestedCollectionResourceFilteringTest {
 		PageItems<JournalArticle> pageItems =
 			_structuredContentNestedCollectionResourceProxy.getPageItems(
 				PaginationTestUtil.of(10, 1), _group.getGroupId(),
-				_getThemeDisplay(_group, LocaleUtil.getDefault()),
+				ThemeDisplayTestUtil.from(_group, LocaleUtil.getDefault()),
 				new Filter(_filterParser.parse("(title eq 'Great Title')")),
 				Sort.emptySort());
 
@@ -425,22 +423,6 @@ public class StructuredContentNestedCollectionResourceFilteringTest {
 
 		Assert.assertTrue(items.contains(journalArticle1));
 		Assert.assertTrue(items.contains(journalArticle2));
-	}
-
-	private ThemeDisplay _getThemeDisplay(Group group, Locale locale)
-		throws Exception {
-
-		ThemeDisplay themeDisplay = new ThemeDisplay();
-
-		Company company = CompanyLocalServiceUtil.getCompanyById(
-			group.getCompanyId());
-
-		themeDisplay.setCompany(company);
-
-		themeDisplay.setLocale(locale);
-		themeDisplay.setScopeGroupId(group.getGroupId());
-
-		return themeDisplay;
 	}
 
 	@Inject

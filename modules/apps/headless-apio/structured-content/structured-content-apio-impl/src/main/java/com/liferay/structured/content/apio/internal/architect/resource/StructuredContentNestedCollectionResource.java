@@ -661,7 +661,7 @@ public class StructuredContentNestedCollectionResource
 		String content = _getDefaultContent(
 			structuredContentUpdaterForm.getValues(), ddmStructure, locale,
 			() -> _getDefaultValue(
-				structuredContentUpdaterForm.getText(),
+				structuredContentUpdaterForm.getTextOptional(),
 				journalArticle.getContent()));
 
 		String ddmTemplateKey = _getTemplateKey(
@@ -674,28 +674,29 @@ public class StructuredContentNestedCollectionResource
 				groupId, journalArticle.getFolderId(),
 				journalArticle.getArticleId(), journalArticle.getVersion(),
 				_getDefaultValue(
-					structuredContentUpdaterForm.getTitleMap(locale),
+					structuredContentUpdaterForm.getTitleMapOptional(locale),
 					journalArticle.getTitleMap()),
 				_getDefaultValue(
-					structuredContentUpdaterForm.getDescriptionMap(locale),
+					structuredContentUpdaterForm.getDescriptionMapOptional(
+						locale),
 					journalArticle.getDescriptionMap()),
 				journalArticle.getFriendlyURLMap(), content,
 				journalArticle.getDDMStructureKey(), ddmTemplateKey,
 				journalArticle.getLayoutUuid(),
 				_getDefaultValue(
-					structuredContentUpdaterForm.getDisplayDateMonth(),
+					structuredContentUpdaterForm.getDisplayDateMonthOptional(),
 					displayDate.getMonth()),
 				_getDefaultValue(
-					structuredContentUpdaterForm.getDisplayDateDay(),
+					structuredContentUpdaterForm.getDisplayDateDayOptional(),
 					displayDate.getDate()),
 				_getDefaultValue(
-					structuredContentUpdaterForm.getDisplayDateYear(),
+					structuredContentUpdaterForm.getDisplayDateYearOptional(),
 					displayDate.getYear()),
 				_getDefaultValue(
-					structuredContentUpdaterForm.getDisplayDateHour(),
+					structuredContentUpdaterForm.getDisplayDateHourOptional(),
 					displayDate.getHours()),
 				_getDefaultValue(
-					structuredContentUpdaterForm.getDisplayDateMinute(),
+					structuredContentUpdaterForm.getDisplayDateMinuteOptional(),
 					displayDate.getMinutes()),
 				0, 0, 0, 0, 0, true, 0, 0, 0, 0, 0, true, true, false, null,
 				null, null, null, serviceContext);

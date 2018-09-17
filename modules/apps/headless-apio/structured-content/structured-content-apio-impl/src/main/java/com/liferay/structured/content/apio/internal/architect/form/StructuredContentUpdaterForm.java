@@ -73,8 +73,8 @@ public class StructuredContentUpdaterForm {
 	 * @return the structured content's description map
 	 * @review
 	 */
-	public Optional<Map<Locale, String>> getDescriptionMap() {
-		return _getStringMap(Locale.getDefault(), _description);
+	public Optional<Map<Locale, String>> getDescriptionMapOptional() {
+		return _getStringMapOptional(Locale.getDefault(), _description);
 	}
 
 	/**
@@ -83,8 +83,10 @@ public class StructuredContentUpdaterForm {
 	 * @return the structured content's description map
 	 * @review
 	 */
-	public Optional<Map<Locale, String>> getDescriptionMap(Locale locale) {
-		return _getStringMap(locale, _description);
+	public Optional<Map<Locale, String>> getDescriptionMapOptional(
+		Locale locale) {
+
+		return _getStringMapOptional(locale, _description);
 	}
 
 	/**
@@ -93,7 +95,7 @@ public class StructuredContentUpdaterForm {
 	 * @return the structured content's display date day
 	 * @review
 	 */
-	public Optional<Integer> getDisplayDateDay() {
+	public Optional<Integer> getDisplayDateDayOptional() {
 		return Optional.ofNullable(_displayDateDay);
 	}
 
@@ -103,7 +105,7 @@ public class StructuredContentUpdaterForm {
 	 * @return the structured content's display date hour
 	 * @review
 	 */
-	public Optional<Integer> getDisplayDateHour() {
+	public Optional<Integer> getDisplayDateHourOptional() {
 		return Optional.ofNullable(_displayDateHour);
 	}
 
@@ -113,7 +115,7 @@ public class StructuredContentUpdaterForm {
 	 * @return the structured content's display date minute
 	 * @review
 	 */
-	public Optional<Integer> getDisplayDateMinute() {
+	public Optional<Integer> getDisplayDateMinuteOptional() {
 		return Optional.ofNullable(_displayDateMinute);
 	}
 
@@ -123,7 +125,7 @@ public class StructuredContentUpdaterForm {
 	 * @return the structured content's display date month
 	 * @review
 	 */
-	public Optional<Integer> getDisplayDateMonth() {
+	public Optional<Integer> getDisplayDateMonthOptional() {
 		return Optional.ofNullable(_displayDateMonth);
 	}
 
@@ -133,7 +135,7 @@ public class StructuredContentUpdaterForm {
 	 * @return the structured content's display date year
 	 * @review
 	 */
-	public Optional<Integer> getDisplayDateYear() {
+	public Optional<Integer> getDisplayDateYearOptional() {
 		return Optional.ofNullable(_displayDateYear);
 	}
 
@@ -153,7 +155,7 @@ public class StructuredContentUpdaterForm {
 	 * @return the structured content's text
 	 * @review
 	 */
-	public Optional<String> getText() {
+	public Optional<String> getTextOptional() {
 		return Optional.ofNullable(_text);
 	}
 
@@ -163,8 +165,8 @@ public class StructuredContentUpdaterForm {
 	 * @return the structured content's title map
 	 * @review
 	 */
-	public Optional<Map<Locale, String>> getTitleMap() {
-		return _getStringMap(Locale.getDefault(), _title);
+	public Optional<Map<Locale, String>> getTitleMapOptional() {
+		return _getStringMapOptional(Locale.getDefault(), _title);
 	}
 
 	/**
@@ -173,8 +175,8 @@ public class StructuredContentUpdaterForm {
 	 * @return the structured content's title map
 	 * @review
 	 */
-	public Optional<Map<Locale, String>> getTitleMap(Locale locale) {
-		return _getStringMap(locale, _title);
+	public Optional<Map<Locale, String>> getTitleMapOptional(Locale locale) {
+		return _getStringMapOptional(locale, _title);
 	}
 
 	public List<StructuredContentValuesForm> getValues() {
@@ -213,7 +215,7 @@ public class StructuredContentUpdaterForm {
 		_values = values;
 	}
 
-	private Optional<Map<Locale, String>> _getStringMap(
+	private Optional<Map<Locale, String>> _getStringMapOptional(
 		Locale locale, String value) {
 
 		return Optional.ofNullable(

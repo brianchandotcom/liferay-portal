@@ -81,7 +81,7 @@ public class JournalArticleContentHelper {
 
 					Optional<StructuredContentValuesForm>
 						structuredContentValuesFormOptional =
-							_findFirstFormField(
+							_findFirstFormFieldOptional(
 								structuredContentValuesForms, name);
 
 					Element contentElement = _getContentElement(
@@ -100,7 +100,7 @@ public class JournalArticleContentHelper {
 		);
 	}
 
-	private Optional<StructuredContentValuesForm> _findFirstFormField(
+	private Optional<StructuredContentValuesForm> _findFirstFormFieldOptional(
 		List<StructuredContentValuesForm> structuredContentValuesForms,
 		String name) {
 

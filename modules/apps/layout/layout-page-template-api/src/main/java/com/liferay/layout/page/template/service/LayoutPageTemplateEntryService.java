@@ -82,6 +82,10 @@ public interface LayoutPageTemplateEntryService extends BaseService {
 	public LayoutPageTemplateEntry fetchLayoutPageTemplateEntry(
 		long layoutPageTemplateEntryId) throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public LayoutPageTemplateEntry fetchLayoutPageTemplateEntryByUuidAndGroupId(
+		String uuid, long groupId);
+
 	/**
 	* @deprecated As of Judson (7.1.x), with no direct replacement
 	*/

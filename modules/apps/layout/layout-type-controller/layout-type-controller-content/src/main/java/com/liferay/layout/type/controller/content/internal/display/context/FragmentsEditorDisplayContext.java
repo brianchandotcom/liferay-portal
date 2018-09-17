@@ -192,6 +192,25 @@ public class FragmentsEditorDisplayContext {
 		return soyContext;
 	}
 
+	public SoyContext getFragmentsEditorSidebarContext()
+		throws PortalException {
+
+		SoyContext soyContext = SoyContextFactoryUtil.createSoyContext();
+
+		soyContext.put(
+			"fragmentCollections", _getSoyContextFragmentCollections());
+		soyContext.put(
+			"fragmentEntryLinks", _getSoyContextFragmentEntryLinks());
+		soyContext.put("sidebarTabs", _getSidebarTabs());
+		soyContext.put(
+			"layoutData", JSONFactoryUtil.createJSONObject(_getLayoutData()));
+		soyContext.put(
+			"spritemap",
+			_themeDisplay.getPathThemeImages() + "/lexicon/icons.svg");
+
+		return soyContext;
+	}
+
 	private Map<String, Object> _getDefaultConfigurations() {
 		Map<String, Object> configurations = new HashMap<>();
 

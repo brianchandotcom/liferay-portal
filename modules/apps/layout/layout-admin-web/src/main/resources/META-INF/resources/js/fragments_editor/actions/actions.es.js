@@ -15,12 +15,28 @@ const ADD_FRAGMENT_ENTRY_LINK = 'addFragmentEntryLink';
 const CLEAR_DRAG_TARGET = 'clearDragTarget';
 
 /**
+ * Hide Fragments editor sidebar
+ * @review
+ * @type {string}
+ */
+
+const HIDE_SIDEBAR = 'hideSidebar';
+
+/**
  * Remove fragment entry link action type
  * @review
  * @type {string}
  */
 
 const REMOVE_FRAGMENT_ENTRY_LINK = 'removeFragmentEntryLink';
+
+/**
+ * Toggle Fragments editor sidebar
+ * @review
+ * @type {string}
+ */
+
+const TOGGLE_SIDEBAR = 'toggleSidebar';
 
 /**
  * Update drag target action type
@@ -57,7 +73,9 @@ const UPDATE_TRANSLATION_STATUS = 'updateTranslationStatus';
 export {
 	ADD_FRAGMENT_ENTRY_LINK,
 	CLEAR_DRAG_TARGET,
+	HIDE_SIDEBAR,
 	REMOVE_FRAGMENT_ENTRY_LINK,
+	TOGGLE_SIDEBAR,
 	UPDATE_DRAG_TARGET,
 	UPDATE_LAST_SAVE_DATE,
 	UPDATE_SAVING_CHANGES_STATUS,

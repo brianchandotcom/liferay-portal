@@ -1,7 +1,10 @@
 import Component from 'metal-component';
+import {Config} from 'metal-state';
 import {object} from 'metal';
 import Soy from 'metal-soy';
 
+import {CHANGE_LANGUAGE_ID} from '../../actions/actions.es';
+import {Store} from '../../store/store.es';
 import templates from './TranslationStatus.soy';
 
 /**
@@ -51,13 +54,36 @@ class TranslationStatus extends Component {
 	_handleLanguageChange(event) {
 		event.preventDefault();
 
-		this.emit(
-			'languageChange',
-			{languageId: event.delegateTarget.getAttribute('data-languageid')}
+		this.store.dispatchAction(
+			CHANGE_LANGUAGE_ID,
+			{
+				languageId: event.delegateTarget.getAttribute('data-languageid')
+			}
 		);
 	}
-
 }
+
+/**
+ * State definition.
+ * @review
+ * @static
+ * @type {!Object}
+ */
+
+TranslationStatus.STATE = {
+
+	/**
+	 * Store instance
+	 * @default undefined
+	 * @instance
+	 * @memberOf TranslationStatus
+	 * @private
+	 * @review
+	 * @type {Store}
+	 */
+
+	store: Config.instanceOf(Store)
+};
 
 Soy.register(TranslationStatus, templates);
 

@@ -303,17 +303,6 @@ class FragmentsEditor extends Component {
 	}
 
 	/**
-	 * Callback executed when the translation language has changed
-	 * @private
-	 * @param {{languageId: string}} event
-	 * @review
-	 */
-
-	_handleTranslationLanguageChange(event) {
-		this.languageId = event.languageId;
-	}
-
-	/**
 	 * Swap the positions of two fragmentEntryLinks
 	 * @param {Array} list
 	 * @param {number} indexA
@@ -555,17 +544,6 @@ FragmentsEditor.STATE = Object.assign(
 		 */
 
 		mappingFieldsURL: Config.string().value(null),
-
-		/**
-		 * Currently selected language id.
-		 * @default undefined
-		 * @instance
-		 * @memberOf FragmentsEditor
-		 * @review
-		 * @type {!string}
-		 */
-
-		languageId: Config.string().required(),
 
 		/**
 		 *

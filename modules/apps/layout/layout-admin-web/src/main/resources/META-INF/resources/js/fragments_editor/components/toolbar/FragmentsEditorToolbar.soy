@@ -11,7 +11,6 @@
 	{@param portletNamespace: string}
 	{@param spritemap: string}
 	{@param? _handleToggleContextualSidebarButtonClick: any}
-	{@param? _handleTranslationLanguageChange: any}
 	{@param? languageId: string}
 	{@param? publishLayoutPageTemplateEntryURL: string}
 	{@param? publishRedirectURL: string}
@@ -33,7 +32,6 @@
 					{call com.liferay.layout.admin.web.TranslationStatus.render}
 						{param availableLanguages: $availableLanguages /}
 						{param defaultLanguageId: $defaultLanguageId /}
-						{param events: ['languageChange': $_handleTranslationLanguageChange] /}
 						{param languageId: $languageId ?: $defaultLanguageId /}
 						{param spritemap: $spritemap /}
 						{param store: $store /}

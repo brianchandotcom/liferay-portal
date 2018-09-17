@@ -101,11 +101,11 @@ public class OrganizationScreenNavigationRegistrar {
 	private ScreenNavigationEntry<Organization> _createScreenNavigationEntry(
 		String entryKey, String categoryKey, String jspPath,
 		String mvcActionCommandName,
-		BiFunction<User, Organization, Boolean> isVisiblePredicate) {
+		BiFunction<User, Organization, Boolean> isVisibleBiFunction) {
 
 		return new OrganizationScreenNavigationEntry(
 			_jspRenderer, _organizationService, _portal, entryKey, categoryKey,
-			jspPath, mvcActionCommandName, isVisiblePredicate);
+			jspPath, mvcActionCommandName, isVisibleBiFunction);
 	}
 
 	private ScreenNavigationEntry<Organization>

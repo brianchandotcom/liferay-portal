@@ -22,6 +22,6 @@ FragmentsEditorDisplayContext fragmentsEditorDisplayContext = new FragmentsEdito
 
 <soy:component-renderer
 	context="<%= fragmentsEditorDisplayContext.getFragmentsEditorSidebarContext() %>"
-	module="layout-admin-web/js/fragments_editor/components/sidebar/FragmentsEditorSidebar.es"
-	templateNamespace="com.liferay.layout.admin.web.FragmentsEditorSidebar.render"
+	module="layout-admin-web/js/fragments_editor/components/sidebar/FragmentsEditorSidebarContent.es"
+	templateNamespace="com.liferay.layout.admin.web.FragmentsEditorSidebarContent.render"
 />

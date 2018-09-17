@@ -188,6 +188,10 @@ public class DynamicPortalCacheManager<K extends Serializable, V>
 		for (DynamicPortalCache<K, V> dynamicPortalCache :
 				_dynamicPortalCaches.values()) {
 
+			if (dynamicPortalCache == null) {
+				continue;
+			}
+
 			dynamicPortalCache.setPortalCache(
 				_portalCacheManager.getPortalCache(
 					dynamicPortalCache.getPortalCacheName(),

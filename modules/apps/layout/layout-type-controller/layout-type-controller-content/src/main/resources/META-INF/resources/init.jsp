@@ -17,10 +17,13 @@
 <%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet" %>
 
 <%@ taglib uri="http://liferay.com/tld/editor" prefix="liferay-editor" %><%@
+taglib uri="http://liferay.com/tld/aui" prefix="aui" %><%@
 taglib uri="http://liferay.com/tld/soy" prefix="soy" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %>
 
-<%@ page import="com.liferay.layout.type.controller.content.internal.display.context.FragmentsEditorDisplayContext" %>
+<%@ page import="com.liferay.layout.type.controller.content.internal.display.context.FragmentsEditorDisplayContext" %><%@
+page import="com.liferay.portal.kernel.json.JSONFactoryUtil" %><%@
+page import="com.liferay.portal.kernel.json.JSONSerializer" %>
 
 <liferay-theme:defineObjects />
 

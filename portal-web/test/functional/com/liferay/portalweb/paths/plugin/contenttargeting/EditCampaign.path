@@ -135,22 +135,22 @@
 <!--CAMPAIGN_TRACKING_ACTIONS_DDL_FORM-->
 <tr>
 	<td>CAMPAIGN_TRACKING_ACTIONS_DDL_FORM_NAME_FIELD</td>
-	<td>//div[contains(@class,'ddlformtrackingaction')]//input[contains(@id,'alias')]</td>
+	<td>//div[contains(@class,'ddmformtrackingaction')]//input[contains(@id,'alias')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>CAMPAIGN_TRACKING_ACTIONS_DDL_FORM_SELECT_BUTTON</td>
-	<td>//div[contains(@class,'ddlformtrackingaction')]//button</td>
+	<td>//div[contains(@class,'ddmformtrackingaction')]//button</td>
 	<td></td>
 </tr>
 <tr>
 	<td>CAMPAIGN_TRACKING_ACTIONS_DDL_FORM_FORM_NAME_FIELD</td>
-	<td>//div[contains(@class,'ddlformtrackingaction')]//input[@readonly='true']</td>
+	<td>//div[contains(@class,'ddmformtrackingaction')]//input[@readonly='true']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>CAMPAIGN_TRACKING_ACTIONS_DDL_FORM_TRACKING_ACTION_SELECT</td>
-	<td>//div[contains(@class,'ddlformtrackingaction')]//select[contains(@id,'eventType')]</td>
+	<td>//div[contains(@class,'ddmformtrackingaction')]//select[contains(@id,'eventType')]</td>
 	<td></td>
 </tr>
 <tr>

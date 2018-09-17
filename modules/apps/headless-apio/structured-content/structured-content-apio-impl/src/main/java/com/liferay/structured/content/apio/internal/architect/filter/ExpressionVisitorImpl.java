@@ -96,6 +96,9 @@ public class ExpressionVisitorImpl implements ExpressionVisitor<Object> {
 		else if (Objects.equals(BinaryExpression.Operation.GE, operation)) {
 			query = _getGEQuery(entityField, fieldValue, locale);
 		}
+		else if (Objects.equals(BinaryExpression.Operation.LE, operation)) {
+			query = _getLEQuery(entityField, fieldValue, locale);
+		}
 		else {
 			return Optional.empty();
 		}
@@ -118,6 +121,14 @@ public class ExpressionVisitorImpl implements ExpressionVisitor<Object> {
 		return new TermRangeQueryImpl(
 			entityField.getSortableName(locale), String.valueOf(fieldValue),
 			null, true, true);
+	}
+
+	private Query _getLEQuery(
+		EntityField entityField, Object fieldValue, Locale locale) {
+
+		return new TermRangeQueryImpl(
+			entityField.getSortableName(locale), null,
+			String.valueOf(fieldValue), false, true);
 	}
 
 	private Object _normalizeLiteral(String literal) {

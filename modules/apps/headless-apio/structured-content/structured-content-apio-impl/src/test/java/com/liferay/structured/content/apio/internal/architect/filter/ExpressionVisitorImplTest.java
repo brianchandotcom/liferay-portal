@@ -94,6 +94,33 @@ public class ExpressionVisitorImplTest {
 		Assert.assertNull(termRangeQuery.getUpperTerm());
 	}
 
+	@SuppressWarnings("unchecked")
+	@Test
+	public void testVisitBinaryExpressionOperationWithLowerEqualOperation() {
+		Map<String, EntityField> entityFieldsMap =
+			_structuredContentSingleEntitySchemaBasedEdmProvider.
+				getEntityFieldsMap();
+
+		EntityField entityField = entityFieldsMap.get("title");
+
+		String value = "title1";
+
+		BooleanClause<Query> queryBooleanClause =
+			_expressionVisitorImpl.visitBinaryExpressionOperation(
+				BinaryExpression.Operation.LE, entityField, value);
+
+		Assert.assertEquals(
+			BooleanClauseOccur.MUST,
+			queryBooleanClause.getBooleanClauseOccur());
+
+		TermRangeQuery termRangeQuery =
+			(TermRangeQueryImpl)queryBooleanClause.getClause();
+
+		Assert.assertEquals(entityField.getName(), termRangeQuery.getField());
+		Assert.assertEquals(value, termRangeQuery.getUpperTerm());
+		Assert.assertNull(termRangeQuery.getLowerTerm());
+	}
+
 	@Test
 	public void testVisitLiteralExpressionWithDoubleSingleQuotes() {
 		LiteralExpression literalExpression = new LiteralExpressionImpl(

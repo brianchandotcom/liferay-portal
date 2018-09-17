@@ -30,7 +30,6 @@
 	{@param? _contextualSidebarVisible: bool}
 	{@param? _dropTargetClass: string}
 	{@param? _handleEditableChanged: any}
-	{@param? _handleFragmentMove: any}
 	{@param? _handleHideContextualSidebar: any}
 	{@param? _handleMappeableFieldClicked: any}
 	{@param? _handleMappeableFieldSelected: any}
@@ -122,8 +121,7 @@
 				{param dropTargetClass: $_dropTargetClass ?: '' /}
 				{param events: [
 					'editableChanged': $_handleEditableChanged,
-					'mappeableFieldClicked': $_handleMappeableFieldClicked,
-					'move': $_handleFragmentMove
+					'mappeableFieldClicked': $_handleMappeableFieldClicked
 				] /}
 				{param fragmentEntryLinks: $fragmentEntryLinks /}
 				{param hoveredFragmentEntryLinkBorder: $hoveredFragmentEntryLinkBorder /}

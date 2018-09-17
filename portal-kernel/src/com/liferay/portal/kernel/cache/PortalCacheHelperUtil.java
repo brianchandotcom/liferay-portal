@@ -21,6 +21,49 @@ import java.io.Serializable;
  */
 public class PortalCacheHelperUtil {
 
+	public static void clearPortalCaches(String portalCacheManagerName) {
+		PortalCacheManager<?, ?> portalCacheManager =
+			PortalCacheManagerProvider.getPortalCacheManager(
+				portalCacheManagerName);
+
+		portalCacheManager.clearAll();
+	}
+
+	public static <K extends Serializable, V> PortalCache<K, V>
+		getPortalCache(String portalCacheManagerName, String portalCacheName) {
+
+		PortalCacheManager<?, ?> portalCacheManager =
+			PortalCacheManagerProvider.getPortalCacheManager(
+				portalCacheManagerName);
+
+		return (PortalCache<K, V>)portalCacheManager.getPortalCache(
+			portalCacheName);
+	}
+
+	public static <K extends Serializable, V> PortalCache<K, V> getPortalCache(
+		String portalCacheManagerName, String portalCacheName,
+		boolean blocking) {
+
+		PortalCacheManager<?, ?> portalCacheManager =
+			PortalCacheManagerProvider.getPortalCacheManager(
+				portalCacheManagerName);
+
+		return (PortalCache<K, V>)portalCacheManager.getPortalCache(
+			portalCacheName, blocking);
+	}
+
+	public static <K extends Serializable, V> PortalCache<K, V> getPortalCache(
+		String portalCacheManagerName, String portalCacheName, boolean blocking,
+		boolean mvcc) {
+
+		PortalCacheManager<?, ?> portalCacheManager =
+			PortalCacheManagerProvider.getPortalCacheManager(
+				portalCacheManagerName);
+
+		return (PortalCache<K, V>)portalCacheManager.getPortalCache(
+			portalCacheName, blocking, mvcc);
+	}
+
 	public static <K extends Serializable, V> void putWithoutReplicator(
 		PortalCache<K, V> portalCache, K key, V value) {
 
@@ -64,6 +107,16 @@ public class PortalCacheHelperUtil {
 				SkipReplicationThreadLocal.setEnabled(false);
 			}
 		}
+	}
+
+	public static void removePortalCache(
+		String portalCacheManagerName, String portalCacheName) {
+
+		PortalCacheManager<?, ?> portalCacheManager =
+			PortalCacheManagerProvider.getPortalCacheManager(
+				portalCacheManagerName);
+
+		portalCacheManager.removePortalCache(portalCacheName);
 	}
 
 	public static <K extends Serializable> void removeWithoutReplicator(

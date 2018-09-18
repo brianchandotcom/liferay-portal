@@ -5,7 +5,7 @@
  */
 {template .render}
 	{@param spritemap: string}
-	{@param? _handleCloseButtonClick: any}
+	{@param? _handleCancelButtonClick: any}
 	{@param? _handleMappingSubtypeSelectChange: any}
 	{@param? _handleMappingTypeSelectChange: any}
 	{@param? _handleSubmitButtonClick: any}
@@ -83,7 +83,7 @@
 					<button
 						class="btn btn-secondary"
 						data-dismiss="modal"
-						data-onclick="{$_handleCloseButtonClick}"
+						data-onclick="{$_handleCancelButtonClick}"
 						type="button"
 					>
 						{msg desc=""}cancel{/msg}

@@ -49,7 +49,7 @@ class SelectMappingTypeDialog extends PortletBase {
 	 * @review
 	 */
 
-	_handleCloseButtonClick() {
+	_handleCancelButtonClick() {
 		this.store
 			.dispatchAction(
 				HIDE_MAPPING_TYPE_DIALOG

@@ -579,6 +579,7 @@ public class JournalArticleIndexer
 
 		document.addKeywordSortable(Field.ARTICLE_ID, articleId);
 
+		document.addDate(Field.DISPLAY_DATE, journalArticle.getDisplayDate());
 		document.addKeyword(Field.LAYOUT_UUID, journalArticle.getLayoutUuid());
 		document.addKeyword(
 			Field.TREE_PATH,
@@ -589,7 +590,6 @@ public class JournalArticleIndexer
 			"ddmStructureKey", journalArticle.getDDMStructureKey());
 		document.addKeyword(
 			"ddmTemplateKey", journalArticle.getDDMTemplateKey());
-		document.addDate("displayDate", journalArticle.getDisplayDate());
 		document.addKeyword("head", JournalUtil.isHead(journalArticle));
 
 		boolean headListable = JournalUtil.isHeadListable(journalArticle);
@@ -618,7 +618,7 @@ public class JournalArticleIndexer
 	@Override
 	protected String doGetSortField(String orderByCol) {
 		if (orderByCol.equals("display-date")) {
-			return "displayDate";
+			return Field.DISPLAY_DATE;
 		}
 		else if (orderByCol.equals("id")) {
 			return Field.ENTRY_CLASS_PK;

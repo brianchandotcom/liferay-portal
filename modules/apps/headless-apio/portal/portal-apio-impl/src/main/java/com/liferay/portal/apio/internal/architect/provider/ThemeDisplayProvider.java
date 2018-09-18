@@ -56,8 +56,13 @@ public class ThemeDisplayProvider implements Provider<ThemeDisplay> {
 				PropsValues.SERVLET_SERVICE_EVENTS_PRE, httpServletRequest,
 				response);
 
-			return (ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)httpServletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
+
+			themeDisplay.setLocale(httpServletRequest.getLocale());
+
+			return themeDisplay;
 		}
 		catch (PortalException pe) {
 			throw new ServerErrorException(500, pe);

@@ -197,6 +197,10 @@ public class JournalContentDisplayContext {
 		ThemeDisplay themeDisplay = (ThemeDisplay)_portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
+		String viewMode = ParamUtil.getString(
+			_portletRequest, "viewMode", null);
+		int page = ParamUtil.getInteger(_portletRequest, "page", 1);
+
 		if (article.isApproved()) {
 			JournalContent journalContent =
 				(JournalContent)_portletRequest.getAttribute(
@@ -208,15 +212,17 @@ public class JournalContentDisplayContext {
 
 			_articleDisplay = journalContent.getDisplay(
 				article.getGroupId(), article.getArticleId(),
-				article.getVersion(), null, null, themeDisplay.getLanguageId(),
-				1, new PortletRequestModel(_portletRequest, _portletResponse),
+				article.getVersion(), getDDMTemplateKey(), viewMode,
+				themeDisplay.getLanguageId(), page,
+				new PortletRequestModel(_portletRequest, _portletResponse),
 				themeDisplay);
 		}
 		else {
 			try {
 				_articleDisplay =
 					JournalArticleLocalServiceUtil.getArticleDisplay(
-						article, null, null, themeDisplay.getLanguageId(), 1,
+						article, getDDMTemplateKey(), viewMode,
+						themeDisplay.getLanguageId(), page,
 						new PortletRequestModel(
 							_portletRequest, _portletResponse),
 						themeDisplay);

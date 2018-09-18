@@ -433,6 +433,19 @@ class LayoutProvider extends Component {
 	}
 
 	/**
+	 * Update the success page settings
+	 * @param {!Object} successPageSettings
+	 * @private
+	 */
+	_handleSuccessPageChanged(successPageSettings) {
+		this.setState(
+			{
+				successPageSettings
+			}
+		)
+	}
+
+	/**
 	 * @param {!Array} pages
 	 * @param {!Object} source
 	 * @private

@@ -386,6 +386,26 @@ class Builder extends Component {
 	}
 
 	/**
+	 * Continues the propagation of event.
+	 * @param {Object} successPageSettings
+	 * @private
+	 */
+	_handleSuccessPageChanged(successPageSettings) {
+		this.emit('successPageChanged', successPageSettings);
+	}
+
+	attached() {
+		const translationManager = document.querySelector('.ddm-translation-manager');
+
+		const formBasicInfo = document.querySelector('.ddm-form-basic-info');
+
+		if (translationManager && formBasicInfo) {
+			formBasicInfo.classList.remove('hide');
+			translationManager.classList.remove('hide');
+		}
+	}
+
+	/**
 	 * @inheritDoc
 	 */
 

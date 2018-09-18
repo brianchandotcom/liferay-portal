@@ -311,12 +311,17 @@ class FormRenderer extends Component {
 		}
 	}
 
-	_switchPaginationMode() {
-		this.emit('paginationModeUpdated');
+	/*
+	 * @param {Object} data
+	 * @private
+	 */
+
+	_handleSuccesPageChanged(successPageSettings) {
+		this.emit('successPageChanged', successPageSettings)
 	}
 
-	_deletePage() {
-		this.emit('pageDeleted', this.activePage);
+	_switchPaginationMode() {
+		this.emit('paginationModeUpdated');
 	}
 
 	_resetPage() {

@@ -88,7 +88,7 @@ public class DLInfoPanelFileEntryOwnerDynamicSection implements DynamicSection {
 			fromUserSharingEntries.stream();
 
 		List<User> sharingEntryToUsers = fromUserSharingEntriesStream.map(
-			SharingEntryModel::getFromUserId
+			SharingEntryModel::getToUserId
 		).map(
 			_userLocalService::fetchUserById
 		).filter(

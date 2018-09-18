@@ -14,14 +14,13 @@
 
 package com.liferay.portal.target.platform.indexer.internal;
 
+import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.target.platform.indexer.Indexer;
 
 import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
 
-import java.nio.file.FileSystem;
-import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
@@ -129,13 +128,12 @@ public class LPKGIndexer implements Indexer {
 	private boolean _readCachedIndex(OutputStream outputStream)
 		throws IOException {
 
-		try (FileSystem fileSystem = FileSystems.newFileSystem(
-				_lpkgFile.toPath(), null)) {
+		try (ZipFile zipFile = new ZipFile(_lpkgFile)) {
+			ZipEntry indexEntry = zipFile.getEntry("index.xml");
 
-			Path indexPath = fileSystem.getPath("index.xml");
-
-			if (Files.exists(indexPath)) {
-				Files.copy(indexPath, outputStream);
+			if (indexEntry != null) {
+				StreamUtil.transfer(
+					zipFile.getInputStream(indexEntry), outputStream, false);
 
 				return true;
 			}

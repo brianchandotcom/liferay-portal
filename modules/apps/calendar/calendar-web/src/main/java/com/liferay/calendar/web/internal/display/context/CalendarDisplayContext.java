@@ -26,8 +26,11 @@ import com.liferay.calendar.service.CalendarLocalService;
 import com.liferay.calendar.service.CalendarService;
 import com.liferay.calendar.util.RecurrenceUtil;
 import com.liferay.calendar.web.internal.security.permission.resource.CalendarPermission;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemList;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -38,9 +41,14 @@ import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -50,18 +58,22 @@ import javax.servlet.http.HttpServletRequest;
 public class CalendarDisplayContext {
 
 	public CalendarDisplayContext(
+		RenderRequest renderRequest, RenderResponse renderResponse,
 		GroupLocalService groupLocalService,
 		CalendarBookingLocalService calendarBookingLocalService,
 		CalendarBookingService calendarBookingService,
 		CalendarLocalService calendarLocalService,
-		CalendarService calendarService, ThemeDisplay themeDisplay) {
+		CalendarService calendarService) {
 
+		_renderRequest = renderRequest;
+		_renderResponse = renderResponse;
 		_groupLocalService = groupLocalService;
 		_calendarBookingLocalService = calendarBookingLocalService;
 		_calendarBookingService = calendarBookingService;
 		_calendarLocalService = calendarLocalService;
 		_calendarService = calendarService;
-		_themeDisplay = themeDisplay;
+		_themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
 	}
 
 	public List<CalendarBooking> getChildCalendarBookings(
@@ -151,6 +163,37 @@ public class CalendarDisplayContext {
 		return lastCalendarBooking.getRecurrenceObj();
 	}
 
+	public List<NavigationItem> getNavigationItems() {
+		HttpServletRequest request = PortalUtil.getHttpServletRequest(
+			_renderRequest);
+
+		String tabs1 = ParamUtil.getString(request, "tabs1", "calendar");
+
+		return new NavigationItemList() {
+			{
+				add(
+					navigationItem -> {
+						navigationItem.setActive(tabs1.equals("calendar"));
+						navigationItem.setHref(
+							_renderResponse.createRenderURL(), "tabs1",
+							"calendar");
+						navigationItem.setLabel(
+							LanguageUtil.get(request, "calendar"));
+					});
+
+				add(
+					navigationItem -> {
+						navigationItem.setActive(tabs1.equals("resources"));
+						navigationItem.setHref(
+							_renderResponse.createRenderURL(), "tabs1",
+							"resources");
+						navigationItem.setLabel(
+							LanguageUtil.get(request, "resources"));
+					});
+			}
+		};
+	}
+
 	public List<Calendar> getOtherCalendars(User user, long[] calendarIds)
 		throws PortalException {
 
@@ -237,6 +280,8 @@ public class CalendarDisplayContext {
 	private final CalendarLocalService _calendarLocalService;
 	private final CalendarService _calendarService;
 	private final GroupLocalService _groupLocalService;
+	private final RenderRequest _renderRequest;
+	private final RenderResponse _renderResponse;
 	private final ThemeDisplay _themeDisplay;
 
 }

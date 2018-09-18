@@ -303,7 +303,7 @@ public class CalendarPortlet extends MVCPortlet {
 			getCalendar(renderRequest);
 			getCalendarBooking(renderRequest);
 			getCalendarResource(renderRequest);
-			setRenderRequestAttributes(renderRequest);
+			setRenderRequestAttributes(renderRequest, renderResponse);
 		}
 		catch (Exception e) {
 			if (e instanceof NoSuchResourceException ||
@@ -1692,15 +1692,14 @@ public class CalendarPortlet extends MVCPortlet {
 		_groupLocalService = groupLocalService;
 	}
 
-	protected void setRenderRequestAttributes(RenderRequest renderRequest) {
-		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
+	protected void setRenderRequestAttributes(
+		RenderRequest renderRequest, RenderResponse renderResponse) {
 
 		CalendarDisplayContext calendarDisplayContext =
 			new CalendarDisplayContext(
-				_groupLocalService, _calendarBookingLocalService,
-				_calendarBookingService, _calendarLocalService,
-				_calendarService, themeDisplay);
+				renderRequest, renderResponse, _groupLocalService,
+				_calendarBookingLocalService, _calendarBookingService,
+				_calendarLocalService, _calendarService);
 
 		renderRequest.setAttribute(
 			CalendarWebKeys.CALENDAR_DISPLAY_CONTEXT, calendarDisplayContext);

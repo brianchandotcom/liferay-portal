@@ -60,9 +60,10 @@ public class LanguageImplWhenFormattingFromLocaleTest {
 
 		try {
 			Assert.assertEquals(
-				_LANG_KEY_WITH_ARGUMENT,
+				LanguageImplTestConstants.LANG_KEY_WITH_ARGUMENT,
 				_languageImpl.format(
-					nullableLocale, _LANG_KEY_WITH_ARGUMENT, "31"));
+					nullableLocale,
+					LanguageImplTestConstants.LANG_KEY_WITH_ARGUMENT, "31"));
 		}
 		finally {
 			LocaleThreadLocal.setDefaultLocale(defaultLocale);
@@ -72,7 +73,8 @@ public class LanguageImplWhenFormattingFromLocaleTest {
 	@Test
 	public void testFormatWithOneArgument() {
 		String value = _languageImpl.format(
-			LocaleUtil.US, _LANG_KEY_WITH_ARGUMENT, "31");
+			LocaleUtil.US, LanguageImplTestConstants.LANG_KEY_WITH_ARGUMENT,
+			"31");
 
 		Assert.assertEquals("31 Hours", value);
 	}
@@ -82,17 +84,20 @@ public class LanguageImplWhenFormattingFromLocaleTest {
 		Locale locale = LocaleUtil.US;
 
 		String value = _languageImpl.format(
-			locale, _LANG_KEY_WITH_ARGUMENT, _BIG_INTEGER, false);
+			locale, LanguageImplTestConstants.LANG_KEY_WITH_ARGUMENT,
+			LanguageImplTestConstants.BIG_INTEGER, false);
 
 		Assert.assertEquals("1,234,567,890 Hours", value);
 
 		value = _languageImpl.format(
-			locale, _LANG_KEY_WITH_ARGUMENT, _BIG_DOUBLE, false);
+			locale, LanguageImplTestConstants.LANG_KEY_WITH_ARGUMENT,
+			LanguageImplTestConstants.BIG_DOUBLE, false);
 
 		Assert.assertEquals("1,234,567,890.12 Hours", value);
 
 		value = _languageImpl.format(
-			locale, _LANG_KEY_WITH_ARGUMENT, _BIG_FLOAT, false);
+			locale, LanguageImplTestConstants.LANG_KEY_WITH_ARGUMENT,
+			LanguageImplTestConstants.BIG_FLOAT, false);
 
 		Assert.assertEquals("1,234,567.875 Hours", value);
 	}
@@ -102,17 +107,20 @@ public class LanguageImplWhenFormattingFromLocaleTest {
 		Locale locale = LocaleUtil.SPAIN;
 
 		String value = _languageImpl.format(
-			locale, _LANG_KEY_WITH_ARGUMENT, _BIG_INTEGER, false);
+			locale, LanguageImplTestConstants.LANG_KEY_WITH_ARGUMENT,
+			LanguageImplTestConstants.BIG_INTEGER, false);
 
 		Assert.assertEquals("1.234.567.890 horas", value);
 
 		value = _languageImpl.format(
-			locale, _LANG_KEY_WITH_ARGUMENT, _BIG_DOUBLE, false);
+			locale, LanguageImplTestConstants.LANG_KEY_WITH_ARGUMENT,
+			LanguageImplTestConstants.BIG_DOUBLE, false);
 
 		Assert.assertEquals("1.234.567.890,12 horas", value);
 
 		value = _languageImpl.format(
-			locale, _LANG_KEY_WITH_ARGUMENT, _BIG_FLOAT, false);
+			locale, LanguageImplTestConstants.LANG_KEY_WITH_ARGUMENT,
+			LanguageImplTestConstants.BIG_FLOAT, false);
 
 		Assert.assertEquals("1.234.567,875 horas", value);
 	}
@@ -120,9 +128,12 @@ public class LanguageImplWhenFormattingFromLocaleTest {
 	@Test
 	public void testFormatWithTwoArguments() {
 		String value = _languageImpl.format(
-			LocaleUtil.US, _LANG_KEY_WITH_ARGUMENTS, new Object[] {"A", "B"});
+			LocaleUtil.US, LanguageImplTestConstants.LANG_KEY_WITH_ARGUMENTS,
+			new Object[] {"A", "B"});
 
 		Assert.assertEquals("A has invited you to join B.", value);
 	}
+
+	private static LanguageImpl _languageImpl;
 
 }

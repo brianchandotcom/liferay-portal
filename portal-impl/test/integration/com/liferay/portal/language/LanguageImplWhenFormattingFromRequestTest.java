@@ -54,7 +54,7 @@ public class LanguageImplWhenFormattingFromRequestTest {
 	public void testFormatWithOneArgument() {
 		String value = _languageImpl.format(
 			_createMockHttpServletRequest(LocaleUtil.US),
-			_LANG_KEY_WITH_ARGUMENT, "31");
+			LanguageImplTestConstants.LANG_KEY_WITH_ARGUMENT, "31");
 
 		Assert.assertEquals("31 Hours", value);
 	}
@@ -63,7 +63,8 @@ public class LanguageImplWhenFormattingFromRequestTest {
 	public void testFormatWithOneLanguageWrapper() {
 		String value = _languageImpl.format(
 			_createMockHttpServletRequest(LocaleUtil.US),
-			_LANG_KEY_WITH_ARGUMENT, new LanguageWrapper("a", "31", "a"));
+			LanguageImplTestConstants.LANG_KEY_WITH_ARGUMENT,
+			new LanguageWrapper("a", "31", "a"));
 
 		Assert.assertEquals("a31a Hours", value);
 	}
@@ -74,17 +75,23 @@ public class LanguageImplWhenFormattingFromRequestTest {
 			LocaleUtil.US);
 
 		String value = _languageImpl.format(
-			httpServletRequest, _LANG_KEY_WITH_ARGUMENT, _BIG_INTEGER, false);
+			httpServletRequest,
+			LanguageImplTestConstants.LANG_KEY_WITH_ARGUMENT,
+			LanguageImplTestConstants.BIG_INTEGER, false);
 
 		Assert.assertEquals("1,234,567,890 Hours", value);
 
 		value = _languageImpl.format(
-			httpServletRequest, _LANG_KEY_WITH_ARGUMENT, _BIG_DOUBLE, false);
+			httpServletRequest,
+			LanguageImplTestConstants.LANG_KEY_WITH_ARGUMENT,
+			LanguageImplTestConstants.BIG_DOUBLE, false);
 
 		Assert.assertEquals("1,234,567,890.12 Hours", value);
 
 		value = _languageImpl.format(
-			httpServletRequest, _LANG_KEY_WITH_ARGUMENT, _BIG_FLOAT, false);
+			httpServletRequest,
+			LanguageImplTestConstants.LANG_KEY_WITH_ARGUMENT,
+			LanguageImplTestConstants.BIG_FLOAT, false);
 
 		Assert.assertEquals("1,234,567.875 Hours", value);
 	}
@@ -95,17 +102,23 @@ public class LanguageImplWhenFormattingFromRequestTest {
 			LocaleUtil.SPAIN);
 
 		String value = _languageImpl.format(
-			httpServletRequest, _LANG_KEY_WITH_ARGUMENT, _BIG_INTEGER, false);
+			httpServletRequest,
+			LanguageImplTestConstants.LANG_KEY_WITH_ARGUMENT,
+			LanguageImplTestConstants.BIG_INTEGER, false);
 
 		Assert.assertEquals("1.234.567.890 horas", value);
 
 		value = _languageImpl.format(
-			httpServletRequest, _LANG_KEY_WITH_ARGUMENT, _BIG_DOUBLE, false);
+			httpServletRequest,
+			LanguageImplTestConstants.LANG_KEY_WITH_ARGUMENT,
+			LanguageImplTestConstants.BIG_DOUBLE, false);
 
 		Assert.assertEquals("1.234.567.890,12 horas", value);
 
 		value = _languageImpl.format(
-			httpServletRequest, _LANG_KEY_WITH_ARGUMENT, _BIG_FLOAT, false);
+			httpServletRequest,
+			LanguageImplTestConstants.LANG_KEY_WITH_ARGUMENT,
+			LanguageImplTestConstants.BIG_FLOAT, false);
 
 		Assert.assertEquals("1.234.567,875 horas", value);
 	}
@@ -114,7 +127,8 @@ public class LanguageImplWhenFormattingFromRequestTest {
 	public void testFormatWithTwoArguments() {
 		String value = _languageImpl.format(
 			_createMockHttpServletRequest(LocaleUtil.US),
-			_LANG_KEY_WITH_ARGUMENTS, new Object[] {"A", "B"});
+			LanguageImplTestConstants.LANG_KEY_WITH_ARGUMENTS,
+			new Object[] {"A", "B"});
 
 		Assert.assertEquals("A has invited you to join B.", value);
 	}
@@ -128,7 +142,8 @@ public class LanguageImplWhenFormattingFromRequestTest {
 
 		String value = _languageImpl.format(
 			_createMockHttpServletRequest(LocaleUtil.US),
-			_LANG_KEY_WITH_ARGUMENTS, languageWrappers);
+			LanguageImplTestConstants.LANG_KEY_WITH_ARGUMENTS,
+			languageWrappers);
 
 		Assert.assertEquals("aAa has invited you to join bBb.", value);
 	}
@@ -146,5 +161,7 @@ public class LanguageImplWhenFormattingFromRequestTest {
 
 		return mockHttpServletRequest;
 	}
+
+	private static LanguageImpl _languageImpl;
 
 }

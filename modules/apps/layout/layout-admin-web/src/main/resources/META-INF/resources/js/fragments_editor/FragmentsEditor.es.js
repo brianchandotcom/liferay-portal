@@ -23,6 +23,14 @@ import {
 
 class FragmentsEditor extends Component {
 
+	created() {
+		requestAnimationFrame(
+			() => {
+				this.store.dispatchAction(UPDATE_TRANSLATION_STATUS);
+			}
+		);
+	}
+
 	/**
 	 * Focus a fragmentEntryLink for a given ID
 	 * @param {string} fragmentEntryLinkId

@@ -479,9 +479,6 @@ public class FileSystemStore extends BaseStore {
 			_fileSystemHelper = FileSystemHelper.createHardLinkFileSystemHelper(
 				getRootDir());
 		}
-		else {
-			_fileSystemHelper = FileSystemHelper.createBasicFileSystemHelper();
-		}
 	}
 
 	protected void deleteEmptyAncestors(File file) {
@@ -656,7 +653,8 @@ public class FileSystemStore extends BaseStore {
 	private static volatile FileSystemStoreConfiguration
 		_fileSystemStoreConfiguration;
 
-	private FileSystemHelper _fileSystemHelper;
+	private FileSystemHelper _fileSystemHelper =
+		FileSystemHelper.createBasicFileSystemHelper();
 	private final Map<RepositoryDirKey, File> _repositoryDirs =
 		new ConcurrentHashMap<>();
 	private File _rootDir;

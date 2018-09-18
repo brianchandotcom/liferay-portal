@@ -2,9 +2,11 @@ import {dom as MetalTestUtil} from 'metal-dom';
 import FormRenderer from '../FormRenderer.es';
 import FormSupport from '../FormSupport.es';
 import mockPages from './__mock__/mockPages.es';
+import mockSuccessPage from './__mock__/mockSuccessPage.es';
 
 let component;
 let pages = null;
+let successPageSettings = null;
 const spritemap = 'icons.svg';
 
 describe(
@@ -13,6 +15,7 @@ describe(
 		beforeEach(
 			() => {
 				pages = JSON.parse(JSON.stringify(mockPages));
+				successPageSettings = JSON.parse(JSON.stringify(mockSuccessPage));
 
 				jest.useFakeTimers();
 			}
@@ -33,7 +36,9 @@ describe(
 			() => {
 				component = new FormRenderer(
 					{
-						spritemap
+						spritemap,
+						pages,
+						successPageSettings
 					}
 				);
 
@@ -48,7 +53,8 @@ describe(
 					{
 						pages,
 						paginationMode: 'wizard',
-						spritemap
+						spritemap,
+						successPageSettings
 					}
 				);
 
@@ -63,7 +69,8 @@ describe(
 					{
 						pages,
 						paginationMode: 'pagination',
-						spritemap
+						spritemap,
+						successPageSettings
 					}
 				);
 
@@ -78,7 +85,8 @@ describe(
 					{
 						modeRenderer: 'list',
 						pages,
-						spritemap
+						spritemap,
+						successPageSettings
 					}
 				);
 
@@ -94,7 +102,8 @@ describe(
 						editable: true,
 						pages,
 						paginationMode: 'wizard',
-						spritemap
+						spritemap,
+						successPageSettings
 					}
 				);
 
@@ -111,7 +120,8 @@ describe(
 						editable: true,
 						pages,
 						paginationMode: 'wizard',
-						spritemap
+						spritemap,
+						successPageSettings
 					}
 				);
 
@@ -128,7 +138,8 @@ describe(
 						editable: true,
 						pages,
 						paginationMode: 'wizard',
-						spritemap
+						spritemap,
+						successPageSettings
 					}
 				);
 
@@ -154,7 +165,8 @@ describe(
 						editable: true,
 						pages,
 						paginationMode: 'wizard',
-						spritemap
+						spritemap,
+						successPageSettings
 					}
 				);
 
@@ -180,7 +192,8 @@ describe(
 						editable: true,
 						pages,
 						paginationMode: 'wizard',
-						spritemap
+						spritemap,
+						successPageSettings
 					}
 				);
 
@@ -208,7 +221,8 @@ describe(
 						editable: true,
 						pages: newPages,
 						paginationMode: 'wizard',
-						spritemap
+						spritemap,
+						successPageSettings
 					}
 				);
 
@@ -233,7 +247,8 @@ describe(
 						editable: true,
 						pages: newPages,
 						paginationMode: 'wizard',
-						spritemap
+						spritemap,
+						successPageSettings
 					}
 				);
 				const spy = jest.spyOn(component, 'emit');
@@ -266,7 +281,8 @@ describe(
 						editable: true,
 						pages: newPages,
 						paginationMode: 'wizard',
-						spritemap
+						spritemap,
+						successPageSettings
 					}
 				);
 				const spy = jest.spyOn(component, 'emit');
@@ -322,7 +338,8 @@ describe(
 						editable: true,
 						pages: newPages,
 						paginationMode: 'wizard',
-						spritemap
+						spritemap,
+						successPageSettings
 					}
 				);
 
@@ -347,7 +364,8 @@ describe(
 						editable: true,
 						pages: newPages,
 						paginationMode: 'pagination',
-						spritemap
+						spritemap,
+						successPageSettings
 					}
 				);
 
@@ -377,7 +395,8 @@ describe(
 						editable: true,
 						pages: newPages,
 						paginationMode: 'pagination',
-						spritemap
+						spritemap,
+						successPageSettings
 					}
 				);
 
@@ -406,7 +425,8 @@ describe(
 						editable: true,
 						pages: newPages,
 						paginationMode: 'pagination',
-						spritemap
+						spritemap,
+						successPageSettings
 					}
 				);
 
@@ -431,7 +451,8 @@ describe(
 						editable: true,
 						pages,
 						paginationMode: 'wizard',
-						spritemap
+						spritemap,
+						successPageSettings
 					}
 				);
 
@@ -451,7 +472,8 @@ describe(
 						editable: true,
 						pages,
 						paginationMode: 'wizard',
-						spritemap
+						spritemap,
+						successPageSettings
 					}
 				);
 
@@ -495,7 +517,8 @@ describe(
 						editable: true,
 						pages,
 						paginationMode: 'wizard',
-						spritemap
+						spritemap,
+						successPageSettings
 					}
 				);
 
@@ -523,7 +546,8 @@ describe(
 						editable: true,
 						pages,
 						paginationMode: 'wizard',
-						spritemap
+						spritemap,
+						successPageSettings
 					}
 				);
 
@@ -557,7 +581,8 @@ describe(
 						editable: false,
 						pages,
 						paginationMode: 'wizard',
-						spritemap
+						spritemap,
+						successPageSettings
 					}
 				);
 
@@ -587,7 +612,8 @@ describe(
 						editable: true,
 						pages,
 						paginationMode: 'wizard',
-						spritemap
+						spritemap,
+						successPageSettings
 					}
 				);
 
@@ -634,7 +660,8 @@ describe(
 						editable: true,
 						pages: newmockPages,
 						paginationMode: 'wizard',
-						spritemap
+						spritemap,
+						successPageSettings
 					}
 				);
 
@@ -668,7 +695,8 @@ describe(
 						editable: false,
 						pages: newmockPages,
 						paginationMode: 'wizard',
-						spritemap
+						spritemap,
+						successPageSettings
 					}
 				);
 
@@ -684,7 +712,8 @@ describe(
 						editable: true,
 						pages,
 						paginationMode: 'wizard',
-						spritemap
+						spritemap,
+						successPageSettings
 					}
 				);
 
@@ -714,7 +743,8 @@ describe(
 						editable: true,
 						pages,
 						paginationMode: 'wizard',
-						spritemap
+						spritemap,
+						successPageSettings
 					}
 				);
 
@@ -747,7 +777,8 @@ describe(
 								editable: true,
 								pages,
 								paginationMode: 'wizard',
-								spritemap
+								spritemap,
+								successPageSettings
 							}
 						);
 
@@ -775,7 +806,8 @@ describe(
 								editable: true,
 								pages,
 								paginationMode: 'wizard',
-								spritemap
+								spritemap,
+								successPageSettings
 							}
 						);
 
@@ -805,7 +837,8 @@ describe(
 								editable: true,
 								pages: pagesTemp,
 								paginationMode: 'wizard',
-								spritemap
+								spritemap,
+								successPageSettings
 							}
 						);
 
@@ -822,6 +855,10 @@ describe(
 								{
 									'label': Liferay.Language.get('delete-current-page'),
 									'settingsItem': 'delete-page'
+								},
+								{
+									'label': Liferay.Language.get('add-success-page'),
+									'settingsItem': 'add-success-page'
 								},
 								{
 									'label': 'switch-pagination-to-bottom',
@@ -841,7 +878,8 @@ describe(
 								editable: true,
 								pages,
 								paginationMode: 'wizard',
-								spritemap
+								spritemap,
+								successPageSettings
 							}
 						);
 
@@ -858,6 +896,10 @@ describe(
 								{
 									'label': Liferay.Language.get('reset-page'),
 									'settingsItem': 'reset-page'
+								},
+								{
+									'label': Liferay.Language.get('add-success-page'),
+									'settingsItem': 'add-success-page'
 								}
 							]
 						);
@@ -875,7 +917,8 @@ describe(
 								editable: true,
 								pages: newPages,
 								paginationMode: 'wizard',
-								spritemap
+								spritemap,
+								successPageSettings
 							}
 						);
 

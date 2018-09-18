@@ -1,6 +1,7 @@
 import Builder from '../Builder.es';
 import dom from 'metal-dom';
 import Pages from './__mock__/mockPages.es';
+import SucessPageSettings from './__mock__/mockSuccessPage.es';
 
 const spritemap = 'icons.svg';
 
@@ -9,6 +10,7 @@ let basicInfo;
 let component;
 let pages;
 let translationManager;
+let successPageSettings;
 
 const mockFieldType = {
 	description: 'Single line or multiline text area.',
@@ -102,6 +104,7 @@ describe(
 		beforeEach(
 			() => {
 				pages = JSON.parse(JSON.stringify(Pages));
+				successPageSettings = JSON.parse(JSON.stringify(SucessPageSettings));
 
 				jest.useFakeTimers();
 
@@ -118,7 +121,8 @@ describe(
 						fieldTypes,
 						pages,
 						paginationMode: 'wizard',
-						spritemap
+						spritemap,
+						successPageSettings
 					}
 				);
 			}
@@ -403,7 +407,8 @@ describe(
 						fieldTypes,
 						pages: componentPages,
 						paginationMode: 'wizard',
-						spritemap
+						spritemap,
+						successPageSettings
 					}
 				);
 				const data = {

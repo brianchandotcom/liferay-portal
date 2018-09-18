@@ -18,18 +18,8 @@
 
 <%
 DDMTemplate ddmTemplate = journalContentDisplayContext.getDDMTemplate();
-List<DDMTemplate> ddmTemplates = journalContentDisplayContext.getDDMTemplates();
 String ddmTemplateImageURL = ddmTemplate.getTemplateImageURL(themeDisplay);
 %>
-
-<c:choose>
-	<c:when test="<%= journalContentDisplayContext.isDefaultTemplate() %>">
-		<p class="text-muted"><liferay-ui:message key="web-content's-default-template" /> <liferay-ui:icon-help message="to-change-web-content's-default-template-you-have-to-edit-the-web-content" /></p>
-	</c:when>
-	<c:otherwise>
-		<p class="text-muted"><liferay-ui:message key="web-content-display-template" /></p>
-	</c:otherwise>
-</c:choose>
 
 <div class="row">
 	<div class="col-md-4">
@@ -51,13 +41,3 @@ String ddmTemplateImageURL = ddmTemplate.getTemplateImageURL(themeDisplay);
 		</liferay-frontend:horizontal-card>
 	</div>
 </div>
-
-<c:if test="<%= ddmTemplates.size() > 1 %>">
-	<div class="button-holder template-preview-button">
-		<aui:button cssClass="select-template" value="change" />
-
-		<c:if test="<%= !journalContentDisplayContext.isDefaultTemplate() %>">
-			<liferay-ui:message key="or" /> <aui:a cssClass="change-template" href="javascript:;" label="default-template" />
-		</c:if>
-	</div>
-</c:if>

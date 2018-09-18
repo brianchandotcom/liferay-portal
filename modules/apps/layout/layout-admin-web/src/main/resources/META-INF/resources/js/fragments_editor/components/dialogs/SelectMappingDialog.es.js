@@ -105,25 +105,25 @@ class SelectMappingDialog extends PortletBase {
 	}
 
 	/**
-	 * Emit a mappeableFieldSelected event
+	 * Map an editable
 	 * @param {string} [key='']
 	 * @private
 	 * @review
 	 */
 
-	_emitMappeableFieldSelected(key = '') {
+	_handleMappeableFieldSelected(key = '') {
 		this.store
 			.dispatchAction(
 				UPDATE_EDITABLE_VALUE,
-			{
-				editableId: this.editableId,
+				{
+					editableId: this.editableId,
 					editableValue: key,
 					editableValueId: 'mappedField',
 					fragmentEntryLinkId: this.fragmentEntryLinkId
-			}
+				}
 			).dispatchAction(
 				HIDE_MAPPING_DIALOG
-		);
+			);
 	}
 
 	/**
@@ -146,7 +146,7 @@ class SelectMappingDialog extends PortletBase {
 	 */
 
 	_handleUnmapButtonClick() {
-		this._emitMappeableFieldSelected('');
+		this._handleMappeableFieldSelected('');
 	}
 
 	/**
@@ -157,7 +157,7 @@ class SelectMappingDialog extends PortletBase {
 	 */
 
 	_handleMappeableFieldLinkClick(event) {
-		this._emitMappeableFieldSelected(
+		this._handleMappeableFieldSelected(
 			event.delegateTarget.dataset.key
 		);
 	}

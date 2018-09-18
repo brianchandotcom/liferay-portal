@@ -36,4 +36,11 @@ public interface AdvancedFileSystemStoreConfiguration {
 	)
 	public String rootDir();
 
+	@Meta.AD(
+		deflt = "false",
+		description = "file-system-store-configuration-use-hard-links-description",
+		name = "use-hard-links", required = false
+	)
+	public boolean useHardLinks();
+
 }

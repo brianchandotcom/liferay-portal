@@ -132,9 +132,7 @@ public class FileSystemStore extends BaseStore {
 		}
 
 		try {
-			toFileNameVersionFile.createNewFile();
-
-			FileUtil.copyFile(fromFileNameVersionFile, toFileNameVersionFile);
+			_copy(fromFileNameVersionFile, toFileNameVersionFile);
 		}
 		catch (IOException ioe) {
 			throw new SystemException(ioe);
@@ -380,14 +378,7 @@ public class FileSystemStore extends BaseStore {
 
 		File parentFile = fileNameDir.getParentFile();
 
-		boolean renamed = FileUtil.move(fileNameDir, newFileNameDir);
-
-		if (!renamed) {
-			throw new SystemException(
-				StringBundler.concat(
-					"File name directory was not renamed from ",
-					fileNameDir.getPath(), " to ", newFileNameDir.getPath()));
-		}
+		_move(fileNameDir, newFileNameDir);
 
 		deleteEmptyAncestors(companyId, repositoryId, parentFile);
 	}
@@ -419,14 +410,7 @@ public class FileSystemStore extends BaseStore {
 
 		File parentFile = fileNameDir.getParentFile();
 
-		boolean renamed = FileUtil.move(fileNameDir, newFileNameDir);
-
-		if (!renamed) {
-			throw new SystemException(
-				StringBundler.concat(
-					"File name directory was not renamed from ",
-					fileNameDir.getPath(), " to ", newFileNameDir.getPath()));
-		}
+		_move(fileNameDir, newFileNameDir);
 
 		deleteEmptyAncestors(companyId, repositoryId, parentFile);
 	}
@@ -475,16 +459,7 @@ public class FileSystemStore extends BaseStore {
 				companyId, repositoryId, fileName, toVersionLabel);
 		}
 
-		boolean renamed = FileUtil.move(
-			fromFileNameVersionFile, toFileNameVersionFile);
-
-		if (!renamed) {
-			throw new SystemException(
-				StringBundler.concat(
-					"File name version file was not renamed from ",
-					fromFileNameVersionFile.getPath(), " to ",
-					toFileNameVersionFile.getPath()));
-		}
+		_move(fromFileNameVersionFile, toFileNameVersionFile);
 	}
 
 	@Activate
@@ -671,6 +646,42 @@ public class FileSystemStore extends BaseStore {
 	}
 
 	protected ConfigurationAdmin configurationAdmin;
+
+	private void _copy(File fromFile, File toFile) throws IOException {
+		if (_fileSystemStoreConfiguration.useHardLinks()) {
+			Files.createLink(toFile.toPath(), fromFile.toPath());
+		}
+		else {
+			toFile.createNewFile();
+
+			FileUtil.copyFile(fromFile, toFile);
+		}
+	}
+
+	private void _move(File source, File destination) {
+		if (_fileSystemStoreConfiguration.useHardLinks()) {
+			try {
+				Files.move(source.toPath(), destination.toPath());
+			}
+			catch (IOException ioe) {
+				throw new SystemException(
+					StringBundler.concat(
+						"File name was not renamed from ", source.getPath(),
+						" to ", destination.getPath()),
+					ioe);
+			}
+		}
+		else {
+			boolean renamed = FileUtil.move(source, destination);
+
+			if (!renamed) {
+				throw new SystemException(
+					StringBundler.concat(
+						"File name was not renamed from ", source.getPath(),
+						" to ", destination.getPath()));
+			}
+		}
+	}
 
 	private static volatile FileSystemStoreConfiguration
 		_fileSystemStoreConfiguration;

@@ -30,6 +30,9 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.store.file.system.configuration.AdvancedFileSystemStoreConfiguration;
 
 import java.io.File;
+import java.io.IOException;
+
+import java.nio.file.Files;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -93,16 +96,7 @@ public class AdvancedFileSystemStore extends FileSystemStore {
 			File newFileNameVersionFile = new File(
 				newFileNameDir + StringPool.SLASH + newFileNameVersion);
 
-			boolean renamed = FileUtil.move(
-				fileNameVersionFile, newFileNameVersionFile);
-
-			if (!renamed) {
-				throw new SystemException(
-					StringBundler.concat(
-						"File name version file was not renamed from ",
-						fileNameVersionFile.getPath(), " to ",
-						newFileNameVersionFile.getPath()));
-			}
+			_move(fileNameVersionFile, newFileNameVersionFile);
 		}
 	}
 
@@ -356,6 +350,31 @@ public class AdvancedFileSystemStore extends FileSystemStore {
 		}
 
 		return path;
+	}
+
+	private void _move(File source, File destination) {
+		if (_advancedFileSystemStoreConfiguration.useHardLinks()) {
+			try {
+				Files.move(source.toPath(), destination.toPath());
+			}
+			catch (IOException ioe) {
+				throw new SystemException(
+					StringBundler.concat(
+						"File name was not renamed from ", source.getPath(),
+						" to ", destination.getPath()),
+					ioe);
+			}
+		}
+		else {
+			boolean renamed = FileUtil.move(source, destination);
+
+			if (!renamed) {
+				throw new SystemException(
+					StringBundler.concat(
+						"File name was not renamed from ", source.getPath(),
+						" to ", destination.getPath()));
+			}
+		}
 	}
 
 	private static final String _HOOK_EXTENSION = "afsh";

@@ -74,6 +74,7 @@ import javax.xml.transform.stream.StreamResult;
 import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpression;
+import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
 
 import net.diibadaaba.zipdiff.DifferenceCalculator;
@@ -3872,44 +3873,36 @@ public class ProjectTemplatesTest {
 	private static void _configurePomNpmConfiguration(File projectDir)
 		throws Exception {
 
-		DocumentBuilderFactory documentBuilderFactory =
-			DocumentBuilderFactory.newInstance();
-
-		DocumentBuilder documentBuilder =
-			documentBuilderFactory.newDocumentBuilder();
-
 		File pomXmlFile = new File(projectDir, "pom.xml");
 
-		Document document = documentBuilder.parse(pomXmlFile);
+		_editXml(
+			pomXmlFile,
+			document -> {
+				try {
+					NodeList nodeList =
+						(NodeList)_pomXmlNpmInstallXPathExpression.evaluate(
+							document, XPathConstants.NODESET);
 
-		NodeList nodeList = (NodeList)_pomXmlNpmInstallXPathExpression.evaluate(
-			document, XPathConstants.NODESET);
+					Node executionNode = nodeList.item(0);
 
-		Node executionNode = nodeList.item(0);
+					Element configurationElement = document.createElement(
+						"configuration");
 
-		Element configurationElement = document.createElement("configuration");
+					executionNode.appendChild(configurationElement);
 
-		executionNode.appendChild(configurationElement);
+					Element argumentsElement = document.createElement(
+						"arguments");
 
-		Element argumentsElement = document.createElement("arguments");
+					configurationElement.appendChild(argumentsElement);
 
-		configurationElement.appendChild(argumentsElement);
+					Text text = document.createTextNode(
+						"install --registry=" + _NODEJS_NPM_CI_REGISTRY);
 
-		Text text = document.createTextNode(
-			"install --registry=" + _NODEJS_NPM_CI_REGISTRY);
-
-		argumentsElement.appendChild(text);
-
-		TransformerFactory transformerFactory =
-			TransformerFactory.newInstance();
-
-		Transformer transformer = transformerFactory.newTransformer();
-
-		DOMSource domSource = new DOMSource(document);
-
-		StreamResult streamResult = new StreamResult(pomXmlFile);
-
-		transformer.transform(domSource, streamResult);
+					argumentsElement.appendChild(text);
+				}
+				catch (XPathExpressionException xpee) {
+				}
+			});
 	}
 
 	private static void _createNewFiles(String fileName, File... dirs)
@@ -3926,6 +3919,31 @@ public class ProjectTemplatesTest {
 
 			Assert.assertTrue(file.createNewFile());
 		}
+	}
+
+	private static void _editXml(File xmlFile, Consumer<Document> editor)
+		throws Exception {
+
+		DocumentBuilderFactory documentBuilderFactory =
+			DocumentBuilderFactory.newInstance();
+
+		DocumentBuilder documentBuilder =
+			documentBuilderFactory.newDocumentBuilder();
+
+		Document document = documentBuilder.parse(xmlFile);
+
+		editor.accept(document);
+
+		TransformerFactory transformerFactory =
+			TransformerFactory.newInstance();
+
+		Transformer transformer = transformerFactory.newTransformer();
+
+		DOMSource domSource = new DOMSource(document);
+
+		StreamResult streamResult = new StreamResult(xmlFile);
+
+		transformer.transform(domSource, streamResult);
 	}
 
 	private static Optional<String> _executeGradle(
@@ -4077,29 +4095,14 @@ public class ProjectTemplatesTest {
 		File pomXmlFile = new File(projectDir, "pom.xml");
 
 		if (pomXmlFile.exists()) {
-			DocumentBuilderFactory documentBuilderFactory =
-				DocumentBuilderFactory.newInstance();
-
-			DocumentBuilder documentBuilder =
-				documentBuilderFactory.newDocumentBuilder();
-
-			Document document = documentBuilder.parse(pomXmlFile);
-
-			_addNexusRepositoriesElement(
-				document, "repositories", "repository");
-			_addNexusRepositoriesElement(
-				document, "pluginRepositories", "pluginRepository");
-
-			TransformerFactory transformerFactory =
-				TransformerFactory.newInstance();
-
-			Transformer transformer = transformerFactory.newTransformer();
-
-			DOMSource domSource = new DOMSource(document);
-
-			StreamResult streamResult = new StreamResult(pomXmlFile);
-
-			transformer.transform(domSource, streamResult);
+			_editXml(
+				pomXmlFile,
+				document -> {
+					_addNexusRepositoriesElement(
+						document, "repositories", "repository");
+					_addNexusRepositoriesElement(
+						document, "pluginRepositories", "pluginRepository");
+				});
 		}
 
 		String[] completeArgs = new String[args.length + 1];
@@ -4687,31 +4690,6 @@ public class ProjectTemplatesTest {
 
 		return _buildTemplateWithGradle(
 			destinationDir, WorkspaceUtil.WORKSPACE, "test-workspace");
-	}
-
-	private void _editXml(File xmlFile, Consumer<Document> editor)
-		throws Exception {
-
-		DocumentBuilderFactory documentBuilderFactory =
-			DocumentBuilderFactory.newInstance();
-
-		DocumentBuilder documentBuilder =
-			documentBuilderFactory.newDocumentBuilder();
-
-		Document document = documentBuilder.parse(xmlFile);
-
-		editor.accept(document);
-
-		TransformerFactory transformerFactory =
-			TransformerFactory.newInstance();
-
-		Transformer transformer = transformerFactory.newTransformer();
-
-		DOMSource domSource = new DOMSource(document);
-
-		StreamResult streamResult = new StreamResult(xmlFile);
-
-		transformer.transform(domSource, streamResult);
 	}
 
 	private void _testBuildFailTemplateServiceBuilder(

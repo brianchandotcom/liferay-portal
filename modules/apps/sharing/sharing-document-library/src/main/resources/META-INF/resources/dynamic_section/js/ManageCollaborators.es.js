@@ -1,10 +1,15 @@
 import 'frontend-js-web/liferay/compat/modal/Modal.es';
+import 'clay-sticker';
+import 'clay-select';
 import Component from 'metal-component';
 import Soy from 'metal-soy';
 import templates from './ManageCollaborators.soy';
 import {Config} from 'metal-state';
 
 class ManageCollaborators extends Component {
+	attached(){
+		console.log(this.collaborators);
+	}
 
 	_handleManageCollaboratorsButtonClick() {
 		this._collaboratorsDialogOpen = true;
@@ -16,6 +21,10 @@ class ManageCollaborators extends Component {
 
 	_handleSaveButtonClick() {
 		this._collaboratorsDialogOpen = false;
+	}
+
+	_handleDeleteCollaborator() {
+		console.log('delete collaborator');
 	}
 }
 
@@ -31,13 +40,19 @@ ManageCollaborators.STATE = {
 	_collaboratorsDialogOpen: Config.bool().internal().value(false),
 
 	/**
+	 * List of collaborators
+	 * @type {Array.<Object>}
+	 */
+	collaborators: Config.array().required(),
+
+	/**
 	 * Path to images.
 	 * @instance
 	 * @memberof ManageCollaborators
 	 * @type {String}
 	 */
 
-	pathThemeImages: Config.string().required(),
+	spritemap: Config.string().required(),
 
 }
 

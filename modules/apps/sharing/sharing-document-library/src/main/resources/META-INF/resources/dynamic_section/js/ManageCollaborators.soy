@@ -4,8 +4,10 @@
  *
  */
 {template .render}
-	{@param pathThemeImages: string}
+	{@param collaborators: ?}
+	{@param spritemap: string}
 	{@param? _collaboratorsDialogOpen: bool}
+	{@param? _handleDeleteCollaborator: any}
 	{@param? _handleManageCollaboratorsButtonClick: any}
 	{@param? _handleCancelButtonClick: any}
 	{@param? _handleSaveButtonClick: any}
@@ -15,7 +17,9 @@
 
 		{if $_collaboratorsDialogOpen}
 			{call .collaboratorsDialog}
-				{param pathThemeImages: $pathThemeImages /}
+				{param collaborators: $collaborators /}
+				{param spritemap: $spritemap /}
+				{param _handleDeleteCollaborator: $_handleDeleteCollaborator /}
 				{param _handleCancelButtonClick: $_handleCancelButtonClick /}
 				{param _handleSaveButtonClick: $_handleSaveButtonClick /}
 			{/call}
@@ -24,13 +28,19 @@
 {/template}
 
 {template .collaboratorsDialog}
-	{@param pathThemeImages: string}
+	{@param collaborators: ?}
+	{@param spritemap: string}
+	{@param? _handleDeleteCollaborator: any}
 	{@param? _handleCancelButtonClick: any}
 	{@param? _handleSaveButtonClick: any}
 
 	{call liferay.frontend.Modal.render}
 		{param body kind="html"}
-			<h1>dialog body</h1>
+			{call .formDialog}
+				{param _handleDeleteCollaborator: $_handleDeleteCollaborator /}
+				{param collaborators: $collaborators /}
+				{param spritemap: $spritemap /}
+			{/call}
 		{/param}
 
 		{param footer kind="html"}
@@ -38,7 +48,7 @@
 			<button class="btn btn-primary" data-onclick="{$_handleSaveButtonClick}" type="button">{msg desc=""}save{/msg}</button>
 		{/param}
 
-		{param dialogClasses: 'modal-dialog-sm ambrin' /}
+		{param dialogClasses: 'manage-collaborators modal-dialog-sm' /}
 
 		{param header kind="html"}
 			{msg desc=""}collaborators{/msg}
@@ -46,6 +56,81 @@
 
 		{param ref: 'modal' /}
 
-		{param spritemap: $pathThemeImages + '/lexicon/icons.svg' /}
+		{param portalElement: 'body' /}
+
+		{param spritemap: $spritemap /}
 	{/call}
+{/template}
+
+{template .formDialog}
+	{@param _handleDeleteCollaborator: any}
+	{@param collaborators: ?}
+	{@param spritemap: string}
+
+	<ul class="list-group">
+	{foreach $user in $collaborators}
+		<li class="list-group-item list-group-item-flex">
+			{call .collaborator}
+				{param _handleDeleteCollaborator: $_handleDeleteCollaborator /}
+				{param spritemap: $spritemap /}
+				{param user: $user /}
+			{/call}
+		</li>
+	{/foreach}
+	</ul>
+{/template}
+
+{template .collaborator}
+	{@param _handleDeleteCollaborator: any}
+	{@param spritemap: string}
+	{@param user: ?}
+		<div class="autofit-row autofit-row-center">
+
+			<div class="autofit-col">
+				{call ClaySticker.render}
+					{param size: 'xl' /}
+					{param label: 'TT' /}
+					{param imageSrc: $user.imageSrc /}
+					{param shape: 'circle' /}
+				{/call}
+			</div>
+
+			<div class="autofit-col autofit-col-expand">
+				<h4>{$user.name}</h4>
+
+				{call ClaySelect.render}
+					{param id: 'regularSelectElement' /}
+					{param options: [
+						[
+							'label': 'Sample 1',
+							'value': '1'
+						],
+						[
+							'label': 'Sample 2',
+							'value': '2'
+						],
+						[
+							'label': 'Sample 3',
+							'value': '3'
+						],
+						[
+							'label': 'Sample 4',
+							'value': '4'
+						],
+					] /}
+				{/call}
+
+			</div>
+
+			<div class="autofit-col">
+				<button
+					class="btn btn-link"
+					data-onclick="{$_handleDeleteCollaborator}"
+				>
+					<svg class="lexicon-icon">
+						<use xlink:href="{$spritemap}#times-circle"></use>
+					</svg>
+				</button>
+			</div>
+	</div>
 {/template}

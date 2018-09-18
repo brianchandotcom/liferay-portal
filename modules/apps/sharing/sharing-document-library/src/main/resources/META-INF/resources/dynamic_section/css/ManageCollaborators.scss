@@ -1,0 +1,12 @@
+.manage-collaborators {
+	.form-group {
+		margin-bottom: 1em;
+	}
+
+	select.form-control:not([multiple]):not([size]) {
+		background-color: transparent;
+		font-size: .875rem;
+		padding-top: .25em;
+		height: 2rem;
+	}
+}

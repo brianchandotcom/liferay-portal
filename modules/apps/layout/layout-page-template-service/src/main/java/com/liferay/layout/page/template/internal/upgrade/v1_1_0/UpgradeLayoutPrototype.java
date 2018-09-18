@@ -16,8 +16,11 @@ package com.liferay.layout.page.template.internal.upgrade.v1_1_0;
 
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.model.LayoutPrototype;
 import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.service.LayoutPrototypeLocalService;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
@@ -27,9 +30,9 @@ import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.Timestamp;
 
+import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -38,8 +41,12 @@ import java.util.Map;
  */
 public class UpgradeLayoutPrototype extends UpgradeProcess {
 
-	public UpgradeLayoutPrototype(CompanyLocalService companyLocalService) {
+	public UpgradeLayoutPrototype(
+		CompanyLocalService companyLocalService,
+		LayoutPrototypeLocalService layoutPrototypeLocalService) {
+
 		_companyLocalService = companyLocalService;
+		_layoutPrototypeLocalService = layoutPrototypeLocalService;
 	}
 
 	@Override
@@ -60,20 +67,18 @@ public class UpgradeLayoutPrototype extends UpgradeProcess {
 		sb.append("?, ?, ?, ?, ?, ?)");
 
 		try (LoggingTimer loggingTimer = new LoggingTimer();
-			PreparedStatement ps1 = connection.prepareStatement(
-				"select * from LayoutPrototype");
-			PreparedStatement ps2 =
+			PreparedStatement ps =
 				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
-					connection, sb.toString());
-			ResultSet rs = ps1.executeQuery()) {
+					connection, sb.toString())) {
 
-			while (rs.next()) {
-				long layoutPrototypeId = rs.getLong("layoutPrototypeId");
-				long companyId = rs.getLong("companyId");
-				long userId = rs.getLong("userId");
-				String userName = rs.getString("userName");
-				Timestamp createDate = rs.getTimestamp("createDate");
-				String nameXML = rs.getString("name");
+			List<LayoutPrototype> layoutPrototypes =
+				_layoutPrototypeLocalService.getLayoutPrototypes(
+					QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+
+			for (LayoutPrototype layoutPrototype : layoutPrototypes) {
+				long companyId = layoutPrototype.getCompanyId();
+				Date createDate = layoutPrototype.getCreateDate();
+				String nameXML = layoutPrototype.getName();
 
 				Company company = _companyLocalService.getCompany(companyId);
 
@@ -83,25 +88,25 @@ public class UpgradeLayoutPrototype extends UpgradeProcess {
 				Locale defaultLocale = LocaleUtil.fromLanguageId(
 					LocalizationUtil.getDefaultLanguageId(nameXML));
 
-				ps2.setString(1, PortalUUIDUtil.generate());
-				ps2.setLong(2, increment());
-				ps2.setLong(3, company.getGroupId());
-				ps2.setLong(4, companyId);
-				ps2.setLong(5, userId);
-				ps2.setString(6, userName);
-				ps2.setTimestamp(7, createDate);
-				ps2.setTimestamp(8, createDate);
-				ps2.setLong(9, 0);
-				ps2.setString(10, nameMap.get(defaultLocale));
-				ps2.setInt(
+				ps.setString(1, PortalUUIDUtil.generate());
+				ps.setLong(2, increment());
+				ps.setLong(3, company.getGroupId());
+				ps.setLong(4, layoutPrototype.getCompanyId());
+				ps.setLong(5, layoutPrototype.getUserId());
+				ps.setString(6, layoutPrototype.getUserName());
+				ps.setDate(7, new java.sql.Date(createDate.getTime()));
+				ps.setDate(8, new java.sql.Date(createDate.getTime()));
+				ps.setLong(9, 0);
+				ps.setString(10, nameMap.get(defaultLocale));
+				ps.setInt(
 					11, LayoutPageTemplateEntryTypeConstants.TYPE_WIDGET_PAGE);
-				ps2.setLong(12, layoutPrototypeId);
-				ps2.setInt(13, WorkflowConstants.STATUS_APPROVED);
+				ps.setLong(12, layoutPrototype.getLayoutPrototypeId());
+				ps.setInt(13, WorkflowConstants.STATUS_APPROVED);
 
-				ps2.addBatch();
+				ps.addBatch();
 			}
 
-			ps2.executeBatch();
+			ps.executeBatch();
 		}
 	}
 
@@ -114,5 +119,6 @@ public class UpgradeLayoutPrototype extends UpgradeProcess {
 	}
 
 	private final CompanyLocalService _companyLocalService;
+	private final LayoutPrototypeLocalService _layoutPrototypeLocalService;
 
 }

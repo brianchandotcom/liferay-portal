@@ -45,9 +45,12 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.service.EmailAddressService;
 import com.liferay.portal.kernel.service.OrganizationService;
+import com.liferay.portal.kernel.service.PhoneService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
+import com.liferay.portal.kernel.service.WebsiteService;
 import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -63,6 +66,7 @@ import com.liferay.sites.kernel.util.SitesUtil;
 import com.liferay.users.admin.constants.UsersAdminPortletKeys;
 import com.liferay.users.admin.kernel.util.UsersAdminUtil;
 
+import java.util.Collections;
 import java.util.List;
 
 import javax.portlet.ActionRequest;
@@ -240,11 +244,7 @@ public class EditOrganizationMVCActionCommand extends BaseMVCActionCommand {
 
 		boolean site = ParamUtil.getBoolean(actionRequest, "site");
 		List<Address> addresses = UsersAdminUtil.getAddresses(actionRequest);
-		List<EmailAddress> emailAddresses = UsersAdminUtil.getEmailAddresses(
-			actionRequest);
 		List<OrgLabor> orgLabors = UsersAdminUtil.getOrgLabors(actionRequest);
-		List<Phone> phones = UsersAdminUtil.getPhones(actionRequest);
-		List<Website> websites = UsersAdminUtil.getWebsites(actionRequest);
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			Organization.class.getName(), actionRequest);
@@ -257,12 +257,23 @@ public class EditOrganizationMVCActionCommand extends BaseMVCActionCommand {
 
 			organization = _organizationService.addOrganization(
 				parentOrganizationId, name, type, regionId, countryId, statusId,
-				comments, site, addresses, emailAddresses, orgLabors, phones,
-				websites, serviceContext);
+				comments, site, addresses, Collections.emptyList(), orgLabors,
+				Collections.emptyList(), Collections.emptyList(),
+				serviceContext);
 		}
 		else {
 
 			// Update organization
+
+			List<EmailAddress> emailAddresses =
+				_emailAddressService.getEmailAddresses(
+					Organization.class.getName(), organizationId);
+
+			List<Phone> phones = _phoneService.getPhones(
+				Organization.class.getName(), organizationId);
+
+			List<Website> websites = _websiteService.getWebsites(
+				Organization.class.getName(), organizationId);
 
 			organization = _organizationService.updateOrganization(
 				organizationId, parentOrganizationId, name, type, regionId,
@@ -303,11 +314,20 @@ public class EditOrganizationMVCActionCommand extends BaseMVCActionCommand {
 	private DLAppLocalService _dlAppLocalService;
 
 	@Reference
+	private EmailAddressService _emailAddressService;
+
+	@Reference
 	private Http _http;
 
 	private OrganizationService _organizationService;
 
 	@Reference
+	private PhoneService _phoneService;
+
+	@Reference
 	private Portal _portal;
+
+	@Reference
+	private WebsiteService _websiteService;
 
 }

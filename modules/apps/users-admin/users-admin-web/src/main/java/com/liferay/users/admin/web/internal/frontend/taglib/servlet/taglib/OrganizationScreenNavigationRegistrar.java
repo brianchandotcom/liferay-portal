@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.OrganizationService;
 import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorConstants;
 import com.liferay.portal.kernel.util.HashMapDictionary;
+import com.liferay.users.admin.constants.UserFormConstants;
 
 import java.util.ArrayList;
 import java.util.Dictionary;
@@ -70,8 +71,11 @@ public class OrganizationScreenNavigationRegistrar {
 			10);
 
 		_registerScreenNavigationCategory(
+			new OrganizationScreenNavigationCategory(_CATEGORY_CONTACT), 20);
+
+		_registerScreenNavigationCategory(
 			new OrganizationScreenNavigationCategory(_CATEGORY_MISCELLANEOUS),
-			20);
+			30);
 	}
 
 	protected void registerScreenNavigationEntries() {
@@ -80,6 +84,12 @@ public class OrganizationScreenNavigationRegistrar {
 				"general", _CATEGORY_ORGANIZATION_INFORMATION,
 				"/organization/general.jsp", "/users_admin/edit_organization"),
 			10);
+		_registerScreenNavigationEntry(
+			_createUpdateOnlyScreenNavigationEntry(
+				"contact-information", _CATEGORY_CONTACT,
+				"/organization/contact_information.jsp",
+				"/users_admin/organization/update_contact_information"),
+			20);
 		_registerScreenNavigationEntry(
 			_createUpdateOnlyScreenNavigationEntry(
 				"reminder-queries", _CATEGORY_MISCELLANEOUS,
@@ -185,6 +195,9 @@ public class OrganizationScreenNavigationRegistrar {
 		_registerScreenNavigationEntry(
 			screenNavigationEntry, _getProperties(serviceRanking));
 	}
+
+	private static final String _CATEGORY_CONTACT =
+		UserFormConstants.CATEGORY_KEY_CONTACT;
 
 	private static final String _CATEGORY_MISCELLANEOUS =
 		FormNavigatorConstants.CATEGORY_KEY_ORGANIZATION_MISCELLANEOUS;

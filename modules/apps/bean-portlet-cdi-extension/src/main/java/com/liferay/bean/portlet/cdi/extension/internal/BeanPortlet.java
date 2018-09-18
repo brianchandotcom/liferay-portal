@@ -17,6 +17,7 @@ package com.liferay.bean.portlet.cdi.extension.internal;
 import java.util.Dictionary;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * @author Neil Griffin
@@ -25,8 +26,6 @@ public interface BeanPortlet {
 
 	public void addBeanMethod(BeanMethod beanMethod);
 
-	public void addPortletDependency(PortletDependency portletDependency);
-
 	public Map<MethodType, List<BeanMethod>> getBeanMethods();
 
 	public String getDisplayCategory();
@@ -34,6 +33,8 @@ public interface BeanPortlet {
 	public Map<String, String> getLiferayConfiguration();
 
 	public String getPortletClassName();
+
+	public Set<PortletDependency> getPortletDependencies();
 
 	public String getPortletName();
 

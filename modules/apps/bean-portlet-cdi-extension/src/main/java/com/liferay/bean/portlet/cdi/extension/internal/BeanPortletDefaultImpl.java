@@ -14,8 +14,10 @@
 
 package com.liferay.bean.portlet.cdi.extension.internal;
 
+import java.util.Collections;
 import java.util.Dictionary;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * @author Neil Griffin
@@ -44,6 +46,11 @@ public class BeanPortletDefaultImpl extends BaseBeanPortletImpl {
 	@Override
 	public String getPortletClassName() {
 		return null;
+	}
+
+	@Override
+	public Set<PortletDependency> getPortletDependencies() {
+		return Collections.emptySet();
 	}
 
 	@Override

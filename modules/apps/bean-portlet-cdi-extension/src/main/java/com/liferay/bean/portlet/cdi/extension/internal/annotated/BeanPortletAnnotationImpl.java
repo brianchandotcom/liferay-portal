@@ -105,8 +105,10 @@ public class BeanPortletAnnotationImpl extends BaseBeanPortletImpl {
 
 		_displayCategory = displayCategory;
 
+		_portletDependencies = new HashSet<>();
+
 		for (Dependency dependency : portletConfiguration.dependencies()) {
-			addPortletDependency(
+			_portletDependencies.add(
 				new PortletDependency(
 					dependency.name(), dependency.scope(),
 					dependency.version()));
@@ -130,6 +132,11 @@ public class BeanPortletAnnotationImpl extends BaseBeanPortletImpl {
 	@Override
 	public String getPortletClassName() {
 		return _portletClassName;
+	}
+
+	@Override
+	public Set<PortletDependency> getPortletDependencies() {
+		return _portletDependencies;
 	}
 
 	@Override
@@ -392,6 +399,7 @@ public class BeanPortletAnnotationImpl extends BaseBeanPortletImpl {
 	private final Map<String, String> _liferayConfiguration;
 	private final String _portletClassName;
 	private final PortletConfiguration _portletConfiguration;
+	private final Set<PortletDependency> _portletDependencies;
 	private final Set<String> _portletModes;
 
 }

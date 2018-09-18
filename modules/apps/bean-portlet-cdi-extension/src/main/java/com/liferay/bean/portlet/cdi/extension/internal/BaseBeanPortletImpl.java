@@ -80,49 +80,8 @@ public abstract class BaseBeanPortletImpl implements BeanPortlet {
 	}
 
 	@Override
-	public void addPortletDependency(PortletDependency portletDependency) {
-		_resourceDependencies.add(portletDependency);
-	}
-
-	@Override
 	public Map<MethodType, List<BeanMethod>> getBeanMethods() {
 		return _beanMethods;
-	}
-
-	protected static String toNameValuePair(String name, String value) {
-		if (Validator.isNull(value)) {
-			return name;
-		}
-
-		return name.concat(StringPool.SEMICOLON).concat(value);
-	}
-
-	protected String getPublicRenderParameterNamespaceURI(
-		BeanApp beanApp, String id) {
-
-		Map<String, PublicRenderParameter> publicRenderParameters =
-			beanApp.getPublicRenderParameters();
-
-		PublicRenderParameter publicRenderParameter =
-			publicRenderParameters.get(id);
-
-		if (publicRenderParameter == null) {
-			return XMLConstants.NULL_NS_URI;
-		}
-
-		QName qName = publicRenderParameter.getQName();
-
-		if (qName == null) {
-			return XMLConstants.NULL_NS_URI;
-		}
-
-		String namespaceURI = qName.getNamespaceURI();
-
-		if (namespaceURI == null) {
-			return XMLConstants.NULL_NS_URI;
-		}
-
-		return namespaceURI;
 	}
 
 	public Dictionary<String, Object> toDictionary(BeanApp beanApp) {
@@ -148,14 +107,17 @@ public abstract class BaseBeanPortletImpl implements BeanPortlet {
 			dictionary.put("javax.portlet.default-namespace", defaultNamespace);
 		}
 
-		if (!_resourceDependencies.isEmpty()) {
-			List<String> portletDependencies = new ArrayList<>();
+		Set<PortletDependency> portletDependencies = getPortletDependencies();
 
-			for (PortletDependency portletDependency : _resourceDependencies) {
-				portletDependencies.add(portletDependency.toString());
+		if (!portletDependencies.isEmpty()) {
+			List<String> tokenizedPortletDependencies = new ArrayList<>();
+
+			for (PortletDependency portletDependency : portletDependencies) {
+				tokenizedPortletDependencies.add(portletDependency.toString());
 			}
 
-			dictionary.put("javax.portlet.dependency", portletDependencies);
+			dictionary.put(
+				"javax.portlet.dependency", tokenizedPortletDependencies);
 		}
 
 		List<String> urlGenerationListeners = new ArrayList<>();
@@ -253,6 +215,42 @@ public abstract class BaseBeanPortletImpl implements BeanPortlet {
 		return dictionary;
 	}
 
+	protected static String toNameValuePair(String name, String value) {
+		if (Validator.isNull(value)) {
+			return name;
+		}
+
+		return name.concat(StringPool.SEMICOLON).concat(value);
+	}
+
+	protected String getPublicRenderParameterNamespaceURI(
+		BeanApp beanApp, String id) {
+
+		Map<String, PublicRenderParameter> publicRenderParameters =
+			beanApp.getPublicRenderParameters();
+
+		PublicRenderParameter publicRenderParameter =
+			publicRenderParameters.get(id);
+
+		if (publicRenderParameter == null) {
+			return XMLConstants.NULL_NS_URI;
+		}
+
+		QName qName = publicRenderParameter.getQName();
+
+		if (qName == null) {
+			return XMLConstants.NULL_NS_URI;
+		}
+
+		String namespaceURI = qName.getNamespaceURI();
+
+		if (namespaceURI == null) {
+			return XMLConstants.NULL_NS_URI;
+		}
+
+		return namespaceURI;
+	}
+
 	protected static final Set<String> liferayPortletModes =
 		new HashSet<String>() {
 			{
@@ -276,7 +274,5 @@ public abstract class BaseBeanPortletImpl implements BeanPortlet {
 
 	private final EnumMap<MethodType, List<BeanMethod>> _beanMethods =
 		new EnumMap<>(MethodType.class);
-	private final List<PortletDependency> _resourceDependencies =
-		new ArrayList<>();
 
 }

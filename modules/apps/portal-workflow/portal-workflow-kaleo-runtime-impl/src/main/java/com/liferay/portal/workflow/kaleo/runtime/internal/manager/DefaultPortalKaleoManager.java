@@ -166,7 +166,7 @@ public class DefaultPortalKaleoManager
 			User defaultUser = userLocalService.getDefaultUser(companyId);
 
 			String localizedTitle = LocalizationUtil.updateLocalization(
-				StringPool.BLANK, "Title", definitionName,
+				StringPool.BLANK, "title", definitionName,
 				LocaleUtil.toLanguageId(LocaleUtil.getDefault()));
 
 			_workflowDefinitionManager.deployWorkflowDefinition(

@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.search.BooleanClause;
 import com.liferay.portal.kernel.search.BooleanClauseFactoryUtil;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.Query;
+import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
 import com.liferay.portal.kernel.search.generic.TermQueryImpl;
 import com.liferay.portal.kernel.search.generic.TermRangeQueryImpl;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -54,7 +55,7 @@ public class ExpressionVisitorImpl implements ExpressionVisitor<Object> {
 		BinaryExpression.Operation operation, Object left, Object right) {
 
 		Optional<BooleanClause<Query>> booleanClauseOptional =
-			_getBooleanClause(operation, (EntityField)left, right, _locale);
+			_getBooleanClause(operation, left, right, _locale);
 
 		return booleanClauseOptional.orElseThrow(
 			() -> new UnsupportedOperationException(
@@ -84,20 +85,37 @@ public class ExpressionVisitorImpl implements ExpressionVisitor<Object> {
 		return entityFieldsMap.get(resourcePath.get(0));
 	}
 
+	private Query _getANDQuery(
+		BooleanClause<Query> left, BooleanClause<Query> right) {
+
+		BooleanQueryImpl booleanQuery = new BooleanQueryImpl();
+
+		booleanQuery.add(left.getClause(), BooleanClauseOccur.MUST);
+		booleanQuery.add(right.getClause(), BooleanClauseOccur.MUST);
+
+		return booleanQuery;
+	}
+
 	private Optional<BooleanClause<Query>> _getBooleanClause(
-		BinaryExpression.Operation operation, EntityField entityField,
-		Object fieldValue, Locale locale) {
+		BinaryExpression.Operation operation, Object left, Object right,
+		Locale locale) {
 
 		Query query = null;
 
-		if (Objects.equals(BinaryExpression.Operation.EQ, operation)) {
-			query = _getEQQuery(entityField, fieldValue, locale);
+		if (Objects.equals(BinaryExpression.Operation.AND, operation)) {
+			query = _getANDQuery((BooleanClause)left, (BooleanClause)right);
+		}
+		else if (Objects.equals(BinaryExpression.Operation.EQ, operation)) {
+			query = _getEQQuery((EntityField)left, right, locale);
 		}
 		else if (Objects.equals(BinaryExpression.Operation.GE, operation)) {
-			query = _getGEQuery(entityField, fieldValue, locale);
+			query = _getGEQuery((EntityField)left, right, locale);
 		}
 		else if (Objects.equals(BinaryExpression.Operation.LE, operation)) {
-			query = _getLEQuery(entityField, fieldValue, locale);
+			query = _getLEQuery((EntityField)left, right, locale);
+		}
+		else if (Objects.equals(BinaryExpression.Operation.OR, operation)) {
+			query = _getORQuery((BooleanClause)left, (BooleanClause)right);
 		}
 		else {
 			return Optional.empty();
@@ -129,6 +147,17 @@ public class ExpressionVisitorImpl implements ExpressionVisitor<Object> {
 		return new TermRangeQueryImpl(
 			entityField.getSortableName(locale), null,
 			String.valueOf(fieldValue), false, true);
+	}
+
+	private Query _getORQuery(
+		BooleanClause<Query> left, BooleanClause<Query> right) {
+
+		BooleanQueryImpl booleanQuery = new BooleanQueryImpl();
+
+		booleanQuery.add(left.getClause(), BooleanClauseOccur.SHOULD);
+		booleanQuery.add(right.getClause(), BooleanClauseOccur.SHOULD);
+
+		return booleanQuery;
 	}
 
 	private Object _normalizeLiteral(String literal) {

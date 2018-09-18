@@ -57,8 +57,8 @@ public class UpgradeLayoutPageTemplateStructure extends UpgradeProcess {
 	protected void doUpgrade() throws Exception {
 		upgradeSchema();
 
-		upgradeLayouts();
 		upgradeLayoutPageTemplates();
+		upgradeLayouts();
 	}
 
 	protected void upgradeLayouts() {

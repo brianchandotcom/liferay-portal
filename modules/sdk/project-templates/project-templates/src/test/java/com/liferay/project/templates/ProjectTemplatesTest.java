@@ -60,6 +60,7 @@ import java.util.Optional;
 import java.util.Properties;
 import java.util.TreeMap;
 import java.util.concurrent.Callable;
+import java.util.function.Consumer;
 import java.util.jar.JarFile;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -2033,8 +2034,14 @@ public class ProjectTemplatesTest {
 		File mavenServiceXml = new File(
 			new File(mavenProjectDir, name + "-service"), "service.xml");
 
-		_changeServiceXmlPackagePath(gradleServiceXml);
-		_changeServiceXmlPackagePath(mavenServiceXml);
+		Consumer<Document> editor = document -> {
+			Element documentElement = document.getDocumentElement();
+
+			documentElement.setAttribute("package-path", "com.liferay.test");
+		};
+
+		_editXml(gradleServiceXml, editor);
+		_editXml(mavenServiceXml, editor);
 
 		_testBuildFailTemplateServiceBuilder(
 			gradleProjectDir, mavenProjectDir, gradleProjectDir, name,
@@ -4682,7 +4689,7 @@ public class ProjectTemplatesTest {
 			destinationDir, WorkspaceUtil.WORKSPACE, "test-workspace");
 	}
 
-	private void _changeServiceXmlPackagePath(File serviceXml)
+	private void _editXml(File xmlFile, Consumer<Document> editor)
 		throws Exception {
 
 		DocumentBuilderFactory documentBuilderFactory =
@@ -4691,11 +4698,9 @@ public class ProjectTemplatesTest {
 		DocumentBuilder documentBuilder =
 			documentBuilderFactory.newDocumentBuilder();
 
-		Document document = documentBuilder.parse(serviceXml);
+		Document document = documentBuilder.parse(xmlFile);
 
-		Element documentElement = document.getDocumentElement();
-
-		documentElement.setAttribute("package-path", "com.liferay.test");
+		editor.accept(document);
 
 		TransformerFactory transformerFactory =
 			TransformerFactory.newInstance();
@@ -4704,7 +4709,7 @@ public class ProjectTemplatesTest {
 
 		DOMSource domSource = new DOMSource(document);
 
-		StreamResult streamResult = new StreamResult(serviceXml);
+		StreamResult streamResult = new StreamResult(xmlFile);
 
 		transformer.transform(domSource, streamResult);
 	}

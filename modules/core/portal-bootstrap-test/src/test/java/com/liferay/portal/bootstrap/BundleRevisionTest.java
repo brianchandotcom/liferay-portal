@@ -17,7 +17,6 @@ package com.liferay.portal.bootstrap;
 import com.liferay.portal.util.PropsValues;
 
 import java.io.File;
-import java.io.FileFilter;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -61,25 +60,11 @@ public class BundleRevisionTest {
 	}
 
 	private String _generateMessage(File file) throws IOException {
-		File[] files = file.listFiles(
-			new FileFilter() {
+		File bundleFile = new File(file, "bundleFile");
 
-				@Override
-				public boolean accept(File file) {
-					String name = file.getName();
-
-					return name.equals("bundleFile");
-				}
-
-			});
-
-		if (files.length == 0) {
+		if (!bundleFile.exists()) {
 			return "Unexpected directory " + file;
 		}
-
-		File bundleFile = files[0];
-
-		String symbolicName = null;
 
 		try (ZipFile zipFile = new ZipFile(bundleFile);
 			InputStream inputStream = zipFile.getInputStream(
@@ -89,10 +74,10 @@ public class BundleRevisionTest {
 
 			properties.load(inputStream);
 
-			symbolicName = properties.getProperty("Bundle-SymbolicName");
-		}
+			String symbolicName = properties.getProperty("Bundle-SymbolicName");
 
-		return symbolicName + " contains unexpected directory " + file;
+			return symbolicName + " contains unexpected directory " + file;
+		}
 	}
 
 	private static final List<String> _expectedNames = Arrays.asList(

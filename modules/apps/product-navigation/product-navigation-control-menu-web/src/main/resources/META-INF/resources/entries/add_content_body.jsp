@@ -29,7 +29,9 @@
 			<div class="sidebar-header">
 				<span><liferay-ui:message key="add" /></span>
 
-				<aui:icon cssClass="icon-monospaced sidenav-close" image="times" markupView="lexicon" url="javascript:;" />
+				<a aria-label="<%= LanguageUtil.get(request, "close") %>" class="icon-monospaced sidenav-close" href="javascript:;">
+					<aui:icon cssClass="icon-monospaced" image="times" markupView="lexicon" />
+				</a>
 			</div>
 
 			<div class="sidebar-body"></div>

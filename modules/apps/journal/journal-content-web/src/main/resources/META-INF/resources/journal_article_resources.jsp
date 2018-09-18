@@ -31,41 +31,38 @@ if (article.getGroupId() != themeDisplay.getScopeGroupId()) {
 String articleImageURL = HtmlUtil.escapeAttribute(assetRenderer.getThumbnailPath(liferayPortletRequest));
 %>
 
-<c:choose>
-	<c:when test="<%= Validator.isNotNull(articleImageURL) %>">
-		<liferay-frontend:vertical-card
-			cssClass="article-preview-content"
-			imageUrl="<%= articleImageURL %>"
-			title="<%= title %>"
-		>
-			<liferay-frontend:vertical-card-sticker-bottom>
-				<liferay-ui:user-portrait
-					cssClass="sticker sticker-bottom"
-					userId="<%= assetRenderer.getUserId() %>"
-				/>
-			</liferay-frontend:vertical-card-sticker-bottom>
+<div class="card card-type-asset <%= Validator.isNotNull(articleImageURL) ? "image-card" : "file-card" %>">
+	<div class="aspect-ratio card-item-first">
+		<c:choose>
+			<c:when test="<%= Validator.isNotNull(articleImageURL) %>">
+				<img alt="thumbnail" class="aspect-ratio-item-center-middle aspect-ratio-item-fluid" src="<%= articleImageURL %>">
+			</c:when>
+			<c:otherwise>
+				<div class="aspect-ratio-item-center-middle aspect-ratio-item-fluid card-type-asset-icon">
+					<svg aria-hidden="true" class="lexicon-icon lexicon-icon-web-content">
+						<use xlink:href="<%= themeDisplay.getPathThemeImages() %>/lexicon/icons.svg#web-content"></use>
+					</svg>
+				</div>
+			</c:otherwise>
+		</c:choose>
 
-			<liferay-frontend:vertical-card-footer>
-				<aui:workflow-status markupView="lexicon" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= article.getStatus() %>" />
-			</liferay-frontend:vertical-card-footer>
-		</liferay-frontend:vertical-card>
-	</c:when>
-	<c:otherwise>
-		<liferay-frontend:icon-vertical-card
-			cssClass="article-preview-content"
-			icon="web-content"
-			title="<%= title %>"
-		>
-			<liferay-frontend:vertical-card-sticker-bottom>
-				<liferay-ui:user-portrait
-					cssClass="sticker sticker-bottom"
-					userId="<%= assetRenderer.getUserId() %>"
-				/>
-			</liferay-frontend:vertical-card-sticker-bottom>
+		<liferay-ui:user-portrait
+			cssClass="sticker sticker-bottom-left"
+			userId="<%= assetRenderer.getUserId() %>"
+		/>
+	</div>
 
-			<liferay-frontend:vertical-card-footer>
-				<aui:workflow-status markupView="lexicon" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= article.getStatus() %>" />
-			</liferay-frontend:vertical-card-footer>
-		</liferay-frontend:icon-vertical-card>
-	</c:otherwise>
-</c:choose>
+	<div class="card-body">
+		<div class="card-row">
+			<div class="autofit-col autofit-col-expand">
+				<div class="card-title text-truncate" title="<%= title %>">
+					<%= title %>
+				</div>
+
+				<div class="card-detail">
+					<aui:workflow-status markupView="lexicon" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= article.getStatus() %>" />
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

@@ -162,7 +162,7 @@
 			<var name="button" value="Submit" />
 		</execute>
 
-		<execute function="Confirm" value1="Form submitted" />
+		<execute function="AssertConfirm" value1="Form submitted" />
 
 		<execute macro="IFrame#selectTopFrame" />
 	</command>

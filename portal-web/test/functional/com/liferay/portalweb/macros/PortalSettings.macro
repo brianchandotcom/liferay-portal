@@ -50,7 +50,7 @@
 
 		<execute function="AssertClickNoError" locator1="Button#SAVE" value1="Save" />
 
-		<execute function="Confirm" value1="Existing ratings data values will be adapted to match the new ratings type even though it may not be accurate. Do you want to continue?" />
+		<execute function="AssertConfirm" value1="Existing ratings data values will be adapted to match the new ratings type even though it may not be accurate. Do you want to continue?" />
 
 		<execute function="AssertSelectedLabel" locator1="Select#BLOGS_RATING" value1="${ratingType}" />
 	</command>

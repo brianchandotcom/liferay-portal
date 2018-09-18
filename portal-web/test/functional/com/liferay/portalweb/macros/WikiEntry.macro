@@ -20,11 +20,11 @@
 	</command>
 
 	<command name="confirmHTML">
-		<execute function="Confirm" value1="You may lose some formatting when switching from Creole to HTML. Do you want to continue?" />
+		<execute function="AssertConfirm" value1="You may lose some formatting when switching from Creole to HTML. Do you want to continue?" />
 	</command>
 
 	<command name="confirmMediaWiki">
-		<execute function="Confirm" value1="You may lose some formatting when switching from Creole to MediaWiki. Do you want to continue?" />
+		<execute function="AssertConfirm" value1="You may lose some formatting when switching from Creole to MediaWiki. Do you want to continue?" />
 	</command>
 
 	<command name="previewPageContent">

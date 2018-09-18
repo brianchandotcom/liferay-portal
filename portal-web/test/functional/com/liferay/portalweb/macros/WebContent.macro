@@ -178,7 +178,7 @@
 			<var name="key_ddlDataDefinitionName" value="${structureName}" />
 		</execute>
 
-		<execute function="Confirm#assertConfirmationNoWait" value1="Selecting a new structure changes the available templates and available feed item content. Do you want to proceed?" />
+		<execute function="AssertConfirm#assertConfirmationNoWait" value1="Selecting a new structure changes the available templates and available feed item content. Do you want to proceed?" />
 
 		<execute function="SelectFrame" value1="relative=top" />
 
@@ -405,7 +405,7 @@
 			<var name="key_ddlDataDefinitionName" value="${structureName}" />
 		</execute>
 
-		<execute function="Confirm#assertConfirmationNoWait" value1="Editing the current structure deletes all unsaved content." />
+		<execute function="AssertConfirm#assertConfirmationNoWait" value1="Editing the current structure deletes all unsaved content." />
 
 		<execute function="SelectFrame" value1="relative=top" />
 
@@ -864,7 +864,7 @@
 			<var name="rowEntry" value="${entryTitle}" />
 		</execute>
 
-		<execute function="Confirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
+		<execute function="AssertConfirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
 
 		<execute macro="Alert#viewSuccessMessage" />
 	</command>
@@ -1089,7 +1089,7 @@
 
 		<execute function="ClickNoError" locator1="Icon#EXPIRE" />
 
-		<execute function="Confirm" value1="Are you sure you want to expire the selected version?" />
+		<execute function="AssertConfirm" value1="Are you sure you want to expire the selected version?" />
 	</command>
 
 	<command name="getAssetId">
@@ -1381,7 +1381,7 @@
 			<var name="key_rowEntry" value="${templateName}" />
 		</execute>
 
-		<execute function="Confirm#assertConfirmationNoWait" value1="Editing the current template deletes all unsaved content." />
+		<execute function="AssertConfirm#assertConfirmationNoWait" value1="Editing the current template deletes all unsaved content." />
 
 		<execute macro="IFrame#selectTopFrame" />
 

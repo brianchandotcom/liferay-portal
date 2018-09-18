@@ -21,7 +21,7 @@
 			<var name="rowEntry" value="${applicationName}" />
 		</execute>
 
-		<execute function="Confirm#assertPartialConfirmation" value1="Are you sure you want to delete the application?" />
+		<execute function="AssertConfirm#assertPartialConfirmation" value1="Are you sure you want to delete the application?" />
 
 		<execute function="AssertElementNotPresent" locator1="OAuth2#ADMIN_TABLE_APP_NAME">
 			<var name="key_tableName" value="${applicationName}" />
@@ -352,7 +352,7 @@
 			<var name="key_rowEntry" value="${userName}" />
 		</execute>
 
-		<execute function="Confirm#waitForConfirmation" value1="Are you sure you want to revoke the authorization?" />
+		<execute function="AssertConfirm#waitForConfirmation" value1="Are you sure you want to revoke the authorization?" />
 
 		<execute macro="Alert#viewSuccessMessage" />
 
@@ -377,7 +377,7 @@
 
 		<execute function="AssertClickNoError" locator1="OAuth2#USER_CONNECTED_APP_REMOVE_ACCESS_BUTTON" value1="Remove Access" />
 
-		<execute function="Confirm#waitForConfirmation" value1="${applicationName} will no longer have access to your account. Removed access cannot be recovered." />
+		<execute function="AssertConfirm#waitForConfirmation" value1="${applicationName} will no longer have access to your account. Removed access cannot be recovered." />
 
 		<execute macro="Alert#viewSuccessMessage" />
 	</command>

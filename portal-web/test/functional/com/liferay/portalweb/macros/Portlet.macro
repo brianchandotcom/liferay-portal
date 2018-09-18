@@ -262,7 +262,7 @@
 			<var name="menuItem" value="Remove" />
 		</execute>
 
-		<execute function="Confirm" value1="Are you sure you want to remove this component?" />
+		<execute function="AssertConfirm" value1="Are you sure you want to remove this component?" />
 	</command>
 
 	<command name="dragAndDropPortletToColumnPG" summary="Drag and drop the '${portletName}' portlet from column ${columnNumberFrom} to column ${columnNumberTo}">

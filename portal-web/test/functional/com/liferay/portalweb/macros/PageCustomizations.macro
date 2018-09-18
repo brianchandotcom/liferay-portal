@@ -41,7 +41,7 @@
 					<var name="menuItem" value="Reset My Customizations" />
 				</execute>
 
-				<execute function="Confirm" value1="Are you sure you want to reset your customizations to default?" />
+				<execute function="AssertConfirm" value1="Are you sure you want to reset your customizations to default?" />
 			</else>
 		</if>
 	</command>

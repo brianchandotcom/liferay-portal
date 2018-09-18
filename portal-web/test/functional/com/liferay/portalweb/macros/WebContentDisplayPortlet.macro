@@ -97,7 +97,7 @@
 
 				<execute function="ClickNoError" locator1="WCEditWebContent#EDIT_TEMPLATE" />
 
-				<execute function="Confirm" value1="Editing the current template deletes all unsaved content." />
+				<execute function="AssertConfirm" value1="Editing the current template deletes all unsaved content." />
 			</else>
 		</if>
 

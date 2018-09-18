@@ -272,7 +272,7 @@
 
 					<execute function="AssertClickNoError" locator1="Button#SAVE" value1="Save" />
 
-					<execute function="Confirm" value1="You are making changes to the document types. If a document in this folder or its subfolders is currently in draft or pending workflow states, you may lose some or all of its metadata. A new version will be created for all other documents. Are you sure you wish to continue?" />
+					<execute function="AssertConfirm" value1="You are making changes to the document types. If a document in this folder or its subfolders is currently in draft or pending workflow states, you may lose some or all of its metadata. A new version will be created for all other documents. Are you sure you wish to continue?" />
 				</then>
 			</elseif>
 			<elseif>
@@ -302,7 +302,7 @@
 					<var name="menuItem" value="Delete" />
 				</execute>
 
-				<execute function="Confirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
+				<execute function="AssertConfirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
 
 				<execute macro="Alert#viewSuccessMessage" />
 			</then>
@@ -495,7 +495,7 @@
 			<var name="menuItem" value="Publish to Live" />
 		</execute>
 
-		<execute function="Confirm" value1="Are you sure you want to publish the selected folder?" />
+		<execute function="AssertConfirm" value1="Are you sure you want to publish the selected folder?" />
 
 		<execute function="AssertTextEquals" locator1="Staging#PROCESS_SUCCESSFUL" value1="Successful" />
 	</command>

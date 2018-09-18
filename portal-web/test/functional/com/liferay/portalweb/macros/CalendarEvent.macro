@@ -833,7 +833,7 @@
 
 									<execute function="AssertClickNoError" locator1="Calendar#SCHEDULER_EVENT_DIALOG_BOX_DELETE_BUTTON" value1="Delete" />
 
-									<execute function="Confirm#waitForConfirmation" value1="Would you like to delete this event?" />
+									<execute function="AssertConfirm#waitForConfirmation" value1="Would you like to delete this event?" />
 
 									<execute function="Pause" value1="2000" />
 								</then>
@@ -843,7 +843,7 @@
 
 								<execute function="AssertClickNoError" locator1="Calendar#SCHEDULER_EVENT_DIALOG_BOX_DELETE_BUTTON" value1="Delete" />
 
-								<execute function="Confirm#waitForConfirmation" value1="Deleting this event will cancel the meeting with your guests. Would you like to delete?" />
+								<execute function="AssertConfirm#waitForConfirmation" value1="Deleting this event will cancel the meeting with your guests. Would you like to delete?" />
 
 								<execute function="Pause" value1="2000" />
 							</else>
@@ -964,12 +964,12 @@
 			<then>
 				<execute function="AssertClickNoError" locator1="Calendar#SCHEDULER_EVENT_DIALOG_BOX_DELETE_BUTTON" value1="Delete" />
 
-				<execute function="Confirm#waitForConfirmation" value1="Would you like to delete this event?" />
+				<execute function="AssertConfirm#waitForConfirmation" value1="Would you like to delete this event?" />
 			</then>
 			<else>
 				<execute function="AssertClickNoError" locator1="Calendar#SCHEDULER_EVENT_DIALOG_BOX_DELETE_BUTTON" value1="Delete" />
 
-				<execute function="Confirm#waitForConfirmation" value1="Deleting this event will cancel the meeting with your guests. Would you like to delete?" />
+				<execute function="AssertConfirm#waitForConfirmation" value1="Deleting this event will cancel the meeting with your guests. Would you like to delete?" />
 			</else>
 		</if>
 
@@ -1010,7 +1010,7 @@
 
 		<execute function="AssertClickNoError" locator1="Calendar#SCHEDULER_EVENT_DIALOG_BOX_DELETE_BUTTON" value1="Delete" />
 
-		<execute function="Confirm#waitForConfirmation" value1="Deleting this event will cancel the meeting with your guests. Would you like to delete?" />
+		<execute function="AssertConfirm#waitForConfirmation" value1="Deleting this event will cancel the meeting with your guests. Would you like to delete?" />
 
 		<execute macro="CalendarScheduler#viewSpecificEventNotPresent">
 			<var name="eventTitle" value="${eventTitle}" />

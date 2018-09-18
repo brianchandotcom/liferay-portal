@@ -312,7 +312,7 @@
 
 		<execute function="ClickNoError" locator1="Icon#DELETE" />
 
-		<execute function="Confirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
+		<execute function="AssertConfirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
 
 		<execute macro="Alert#viewSuccessMessage" />
 	</command>
@@ -323,7 +323,7 @@
 			<var name="rowEntry" value="${userSegmentName}" />
 		</execute>
 
-		<execute function="Confirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
+		<execute function="AssertConfirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
 
 		<execute macro="Alert#viewSuccessMessage" />
 		<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="No User Segments were found" />
@@ -364,7 +364,7 @@
 
 					<execute function="ClickNoError" locator1="EditUserSegment#USER_SEGMENT_RULE_DELETE" />
 
-					<execute function="Confirm" value1="Are you sure you want to delete the selected field(s)?" />
+					<execute function="AssertConfirm" value1="Are you sure you want to delete the selected field(s)?" />
 				</for>
 			</then>
 		</if>

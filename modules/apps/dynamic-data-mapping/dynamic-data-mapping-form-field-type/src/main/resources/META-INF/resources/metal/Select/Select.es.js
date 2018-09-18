@@ -145,7 +145,7 @@ class Select extends Component {
 	prepareStateForRender(states) {
 		const {predefinedValue, value} = states;
 		let newValue = value;
-		if(typeof(newValue) === "string") {
+		if (typeof (newValue) === 'string') {
 			newValue = [value];
 		}
 		return {
@@ -176,7 +176,7 @@ class Select extends Component {
 	}
 
 	_handleClick() {
-		if(!this.readOnly) {
+		if (!this.readOnly) {
 			this.setState({open: !this.open});
 		}
 	}

@@ -19,7 +19,7 @@ import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.PortletDataException;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandler;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.model.adapter.StagedWorkflowDefinitionLink;
+import com.liferay.portal.kernel.model.adapter.StagedGroupedWorkflowDefinitionLink;
 import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
 import com.liferay.portal.kernel.xml.Element;
 
@@ -33,18 +33,20 @@ import org.osgi.service.component.annotations.Reference;
  * @author Zoltan Csaszi
  */
 @Component(immediate = true, service = StagedModelDataHandler.class)
-public class StagedWorkflowDefinitionLinkStagedModelDataHandler
-	extends BaseStagedModelDataHandler<StagedWorkflowDefinitionLink> {
+public class StagedGroupedWorkflowDefinitionLinkStagedModelDataHandler
+	extends BaseStagedModelDataHandler<StagedGroupedWorkflowDefinitionLink> {
 
 	public static final String[] CLASS_NAMES =
-		{StagedWorkflowDefinitionLink.class.getName()};
+		{StagedGroupedWorkflowDefinitionLink.class.getName()};
 
 	@Override
-	public void deleteStagedModel(StagedWorkflowDefinitionLink stagedModel)
+	public void deleteStagedModel(
+			StagedGroupedWorkflowDefinitionLink
+				stagedGroupedWorkflowDefinitionLink)
 		throws PortalException {
 
 		_workflowDefinitionLinkLocalService.deleteWorkflowDefinitionLink(
-			stagedModel);
+			stagedGroupedWorkflowDefinitionLink);
 	}
 
 	@Override
@@ -54,7 +56,7 @@ public class StagedWorkflowDefinitionLinkStagedModelDataHandler
 	}
 
 	@Override
-	public List<StagedWorkflowDefinitionLink>
+	public List<StagedGroupedWorkflowDefinitionLink>
 		fetchStagedModelsByUuidAndCompanyId(String uuid, long companyId) {
 
 		return Collections.emptyList();
@@ -68,19 +70,27 @@ public class StagedWorkflowDefinitionLinkStagedModelDataHandler
 	@Override
 	protected void doExportStagedModel(
 			PortletDataContext portletDataContext,
-			StagedWorkflowDefinitionLink stagedWorkflowDefinitionLink)
+			StagedGroupedWorkflowDefinitionLink
+				stagedGroupedWorkflowDefinitionLink)
 		throws Exception {
 
 		Element element = portletDataContext.getExportDataElement(
-			stagedWorkflowDefinitionLink);
+			stagedGroupedWorkflowDefinitionLink);
 
 		element.addAttribute(
 			"display-name",
-			stagedWorkflowDefinitionLink.getWorkflowDefinitionName());
+			stagedGroupedWorkflowDefinitionLink.getWorkflowDefinitionName());
 		element.addAttribute(
 			"version",
 			String.valueOf(
-				stagedWorkflowDefinitionLink.getWorkflowDefinitionVersion()));
+				stagedGroupedWorkflowDefinitionLink.
+					getWorkflowDefinitionVersion()));
+		element.addAttribute(
+			"referrer-class-pk",
+			String.valueOf(stagedGroupedWorkflowDefinitionLink.getClassPK()));
+		element.addAttribute(
+			"referrer-class-name",
+			String.valueOf(stagedGroupedWorkflowDefinitionLink.getClassName()));
 	}
 
 	@Override
@@ -92,7 +102,8 @@ public class StagedWorkflowDefinitionLinkStagedModelDataHandler
 	@Override
 	protected void doImportStagedModel(
 			PortletDataContext portletDataContext,
-			StagedWorkflowDefinitionLink stagedModel)
+			StagedGroupedWorkflowDefinitionLink
+				stagedGroupedWorkflowDefinitionLink)
 		throws Exception {
 	}
 

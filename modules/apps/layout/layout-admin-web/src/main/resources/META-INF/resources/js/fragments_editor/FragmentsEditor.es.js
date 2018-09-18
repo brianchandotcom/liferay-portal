@@ -70,27 +70,6 @@ class FragmentsEditor extends Component {
 	}
 
 	/**
-	 * Callback executed when a mappeable fragment has been clicked
-	 * @param {!{ fragmentEntryLinkId: !string, editableId: !string }} event
-	 * @private
-	 * @review
-	 */
-
-	_handleMappeableFieldClicked(event) {
-		this._selectMappingDialogEditableId = event.editableId;
-		this._selectMappingDialogEditableType = event.editableType;
-		this._selectMappingDialogFragmentEntryLinkId = event.fragmentEntryLinkId;
-		this._selectMappingDialogMappedFieldId = event.mappedFieldId;
-
-		if (this.selectedMappingTypes && this.selectedMappingTypes.type) {
-			this._selectMappingDialogVisible = true;
-		}
-		else {
-			this._handleSelectAssetTypeButtonClick();
-		}
-	}
-
-	/**
 	 * Callback executed when a mappeable field has been selected for the
 	 * given editable.
 	 * @param {!{
@@ -107,65 +86,6 @@ class FragmentsEditor extends Component {
 			event.editableId,
 			{mappedField: event.key}
 		);
-	}
-
-	/**
-	 * Callback executed when a mapping type has selected
-	 * @param {{
-	 * 	 mappingTypes: {
-	 *     subtype: {
-	 *   	  id: !string,
-	 *   	  label: !string
-	 *     },
-	 *     type: {
-	 *   	  id: !string,
-	 *   	  label: !string
-	 *     }
-	 * 	 }
-     * }} event
-	 * @private
-	 * @review
-	 */
-
-	_handleMappingTypeSelected(event) {
-		this.selectedMappingTypes = event.mappingTypes;
-
-		if (this._selectMappingDialogFragmentEntryLinkId &&
-			this._selectMappingDialogEditableId) {
-
-			this._selectMappingDialogVisible = true;
-		}
-	}
-
-	/**
-	 * Callback executed when the SelectMappingTypeDialog should be shown
-	 * @review
-	 */
-
-	_handleSelectAssetTypeButtonClick() {
-		this._selectMappingTypeDialogVisible = true;
-	}
-
-	/**
-	 * Callback executed when the SelectMappingDialog visibility changes
-	 * @param {{ newVal: boolean }} change
-	 * @private
-	 * @review
-	 */
-
-	_handleSelectMappingDialogVisibleChanged(change) {
-		this._selectMappingDialogVisible = change.newVal;
-	}
-
-	/**
-	 * Callback executed when the SelectMappingTypeDialog visibility changes
-	 * @param {{ newVal: boolean }} change
-	 * @private
-	 * @review
-	 */
-
-	_handleSelectMappingTypeDialogVisibleChanged(change) {
-		this._selectMappingTypeDialogVisible = change.newVal;
 	}
 
 	/**

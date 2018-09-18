@@ -29,12 +29,6 @@
 	{@param spritemap: string}
 	{@param? contextualSidebarVisible: bool}
 	{@param? _dropTargetClass: string}
-	{@param? _handleMappeableFieldClicked: any}
-	{@param? _handleMappeableFieldSelected: any}
-	{@param? _handleMappingTypeSelected: any}
-	{@param? _handleSelectAssetTypeButtonClick: any}
-	{@param? _handleSelectMappingDialogVisibleChanged: any}
-	{@param? _handleSelectMappingTypeDialogVisibleChanged: any}
 	{@param? _handleToggleHighlightMapping: any}
 	{@param? _highlightMapping: bool}
 	{@param? selectMappingDialogEditableId: string}
@@ -89,10 +83,6 @@
 
 		{call com.liferay.layout.admin.web.FragmentsEditorSidebar.render}
 			{param dropTargetClass: $_dropTargetClass /}
-			{param events: [
-				'selectAssetTypeButtonClick': $_handleSelectAssetTypeButtonClick,
-				'toggleHighlightMapping': $_handleToggleHighlightMapping
-			] /}
 			{param fragmentCollections: $fragmentCollections /}
 			{param fragmentEntryLinks: $fragmentEntryLinks /}
 			{param highlightMapping: $_highlightMapping ?: false /}
@@ -132,14 +122,10 @@
 
 		{if $mappingFieldsURL}
 			{call com.liferay.layout.admin.web.SelectMappingDialog.render}
-				{param editableId: $_selectMappingDialogEditableId /}
-				{param editableType: $_selectMappingDialogEditableType /}
-				{param events: [
-					'mappeableFieldSelected': $_handleMappeableFieldSelected,
-					'visibleChanged': $_handleSelectMappingDialogVisibleChanged
-				] /}
-				{param fragmentEntryLinkId: $_selectMappingDialogFragmentEntryLinkId /}
-				{param mappedFieldId: $_selectMappingDialogMappedFieldId /}
+				{param editableId: $selectMappingDialogEditableId /}
+				{param editableType: $selectMappingDialogEditableType /}
+				{param fragmentEntryLinkId: $selectMappingDialogFragmentEntryLinkId /}
+				{param mappedFieldId: $selectMappingDialogMappedFieldId /}
 				{param mappingFieldsURL: $mappingFieldsURL /}
 				{param portletNamespace: $portletNamespace /}
 				{param selectedMappingTypes: $selectedMappingTypes /}
@@ -153,8 +139,7 @@
 			{call com.liferay.layout.admin.web.SelectMappingTypeDialog.render}
 				{param classPK: $classPK /}
 				{param events: [
-					'mappingTypeSelected': $_handleMappingTypeSelected,
-					'visibleChanged': $_handleSelectMappingTypeDialogVisibleChanged
+					'mappingTypeSelected': $_handleMappingTypeSelected
 				] /}
 				{param getAssetClassTypesURL: $getAssetClassTypesURL /}
 				{param getAssetDisplayContributorsURL: $getAssetDisplayContributorsURL /}

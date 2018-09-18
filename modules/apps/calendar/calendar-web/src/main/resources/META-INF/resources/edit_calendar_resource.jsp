@@ -65,9 +65,11 @@ String code = BeanParamUtil.getString(calendarResource, request, "code");
 			persistState="<%= true %>"
 		>
 			<liferay-ui:panel
+				collapsible="<%= true %>"
 				defaultState="closed"
 				extended="<%= false %>"
 				id="calendarResourceDetailsPanel"
+				markupView="lexicon"
 				persistState="<%= true %>"
 				title="details"
 			>
@@ -104,9 +106,11 @@ String code = BeanParamUtil.getString(calendarResource, request, "code");
 			</liferay-ui:panel>
 
 			<liferay-ui:panel
+				collapsible="<%= true %>"
 				defaultState="closed"
 				extended="<%= false %>"
 				id="calendarResourceCategorizationPanel"
+				markupView="lexicon"
 				persistState="<%= true %>"
 				title="categorization"
 			>

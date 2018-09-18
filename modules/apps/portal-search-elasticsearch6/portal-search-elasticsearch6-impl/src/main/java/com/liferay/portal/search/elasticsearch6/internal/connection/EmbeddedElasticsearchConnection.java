@@ -42,6 +42,7 @@ import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.lang.time.StopWatch;
+import org.apache.logging.log4j.LogManager;
 
 import org.elasticsearch.client.Client;
 import org.elasticsearch.common.inject.Injector;
@@ -258,36 +259,6 @@ public class EmbeddedElasticsearchConnection
 			"path.repo", liferayHome.concat("/data/elasticsearch6/repo"));
 	}
 
-	protected void configurePlugin(String name, Settings settings) {
-		EmbeddedElasticsearchPluginManager embeddedElasticsearchPluginManager =
-			createEmbeddedElasticsearchPluginManager(name, settings);
-
-		try {
-			embeddedElasticsearchPluginManager.install();
-		}
-		catch (Exception ioe) {
-			throw new RuntimeException(
-				"Unable to install " + name + " plugin", ioe);
-		}
-	}
-
-	protected void configurePlugins() {
-		Settings settings = settingsBuilder.build();
-
-		String[] plugins = {
-			"analysis-icu", "analysis-kuromoji", "analysis-smartcn",
-			"analysis-stempel"
-		};
-
-		for (String plugin : plugins) {
-			removeObsoletePlugin(plugin, settings);
-		}
-
-		for (String plugin : plugins) {
-			configurePlugin(plugin, settings);
-		}
-	}
-
 	protected void configureTestMode() {
 		if (!PortalRunMode.isTestMode()) {
 			return;
@@ -315,13 +286,17 @@ public class EmbeddedElasticsearchConnection
 			_log.warn(sb.toString());
 		}
 
+		Settings settings = settingsBuilder.build();
+
+		installPlugins(settings);
+
 		if (_log.isDebugEnabled()) {
 			_log.debug(
 				"Starting embedded Elasticsearch cluster " +
 					elasticsearchConfiguration.clusterName());
 		}
 
-		_node = createNode(settingsBuilder.build());
+		_node = createNode(settings);
 
 		try {
 			_node.start();
@@ -387,6 +362,36 @@ public class EmbeddedElasticsearchConnection
 		close();
 	}
 
+	protected void installPlugin(String name, Settings settings) {
+		EmbeddedElasticsearchPluginManager embeddedElasticsearchPluginManager =
+			createEmbeddedElasticsearchPluginManager(name, settings);
+
+		try {
+			embeddedElasticsearchPluginManager.install();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(
+				"Unable to install " + name + " plugin", e);
+		}
+	}
+
+	protected void installPlugins(Settings settings) {
+		String[] plugins = {
+			"analysis-icu", "analysis-kuromoji", "analysis-smartcn",
+			"analysis-stempel"
+		};
+
+		for (String plugin : plugins) {
+			removeObsoletePlugin(plugin, settings);
+		}
+
+		for (String plugin : plugins) {
+			installPlugin(plugin, settings);
+		}
+
+		LogManager.shutdown();
+	}
+
 	@Override
 	protected void loadRequiredDefaultConfigurations() {
 		settingsBuilder.put("action.auto_create_index", false);
@@ -405,8 +410,6 @@ public class EmbeddedElasticsearchConnection
 		settingsBuilder.put("node.master", true);
 
 		configurePaths();
-
-		configurePlugins();
 
 		configureTestMode();
 	}

@@ -14,26 +14,20 @@
 
 package com.liferay.portal.language;
 
-import org.junit.experimental.runners.Enclosed;
-import org.junit.runner.RunWith;
-
 /**
  * @author Manuel de la Peña
  */
-@RunWith(Enclosed.class)
-public class LanguageImplTest {
+public class LanguageImplTestConstants {
 
-	private static final Double _BIG_DOUBLE = 1234567890.12D;
+	public static final Double BIG_DOUBLE = 1234567890.12D;
 
-	private static final Float _BIG_FLOAT = 1234567.85F;
+	public static final Float BIG_FLOAT = 1234567.85F;
 
-	private static final Integer _BIG_INTEGER = 1234567890;
+	public static final Integer BIG_INTEGER = 1234567890;
 
-	private static final String _LANG_KEY_WITH_ARGUMENT = "x-hours";
+	public static final String LANG_KEY_WITH_ARGUMENT = "x-hours";
 
-	private static final String _LANG_KEY_WITH_ARGUMENTS =
+	public static final String LANG_KEY_WITH_ARGUMENTS =
 		"x-has-invited-you-to-join-x";
-
-	private static LanguageImpl _languageImpl;
 
 }

@@ -180,6 +180,49 @@ module.framework.properties.osgi.console=11312</echo>
 		</sequential>
 	</macrodef>
 
+	<macrodef name="decompress">
+		<attribute name="dest" />
+		<attribute name="src" />
+
+		<sequential>
+			<local name="archive.basename" />
+
+			<basename file="@{src}" property="archive.basename" />
+
+			<if>
+				<matches pattern=".*\.7z$" string="${archive.basename}" />
+				<then>
+					<execute>
+						<![CDATA[
+							7z x @{src} -o@{dest} -aoa
+						]]>
+					</execute>
+				</then>
+				<elseif>
+					<matches pattern=".*\.tar\.gz$" string="${archive.basename}" />
+					<then>
+						<untar
+							dest="@{dest}"
+							src="@{src}"
+						/>
+					</then>
+				</elseif>
+				<elseif>
+					<matches pattern=".*\.zip$" string="${archive.basename}" />
+					<then>
+						<unzip
+							dest="@{dest}"
+							src="@{src}"
+						/>
+					</then>
+				</elseif>
+				<else>
+					<fail message="Unable to decompress ${archive.basename}." />
+				</else>
+			</if>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="generate-gulp-user-config-json">
 		<attribute name="portlet.name" />
 
@@ -8516,20 +8559,23 @@ ANT_OPTS=${env.ANT_OPTS}</echo>
 			<then>
 				<mkdir dir="${app.server.parent.dir}" />
 
-				<tstamp>
-					<format pattern="yyyyMMddkkmmssSSS" property="tstamp.value" />
-				</tstamp>
+				<local name="bundle.file.name" />
+
+				<basename file="${test.build.bundle.zip.url}" property="bundle.file.name" />
 
 				<mirrors-get
-					dest="${tstamp.value}.zip"
+					dest="${bundle.file.name}"
 					src="${test.build.bundle.zip.url}"
 				/>
 
-				<unzip
-					dest="${app.server.parent.dir}"
-					src="${tstamp.value}.zip"
-				>
-					<patternset
+				<decompress
+					dest="${project.dir}"
+					src="${bundle.file.name}"
+				/>
+
+				<move todir="${app.server.parent.dir}" verbose="true">
+					<fileset
+						dir="${project.dir}"
 						includes="liferay-*/**"
 					/>
 					<mapper
@@ -8537,17 +8583,24 @@ ANT_OPTS=${env.ANT_OPTS}</echo>
 						to="\1"
 						type="regexp"
 					/>
-				</unzip>
+				</move>
 
-				<delete file="${tstamp.value}.zip" />
+				<delete includeemptydirs="true">
+					<fileset
+						dir="${project.dir}"
+						includes="liferay-*/**"
+					/>
+				</delete>
+
+				<delete file="${bundle.file.name}" />
 
 				<chmod
 					perm="a+x"
 				>
 					<fileset
-						dir="${test.app.server.bin.dir}"
+						dir="${app.server.parent.dir}"
 					>
-						<include name="*.sh" />
+						<include name="**/*.sh" />
 					</fileset>
 				</chmod>
 			</then>
@@ -8670,16 +8723,23 @@ ANT_OPTS=${env.ANT_OPTS}</echo>
 					</elseif>
 				</if>
 
+				<local name="bundle.file.name" />
+
+				<basename file="${bundle.zip.url}" property="bundle.file.name" />
+
 				<mirrors-get
-					dest="liferay-portal-bundle.zip"
+					dest="${bundle.file.name}"
 					src="${bundle.zip.url}"
 				/>
 
-				<unzip
-					dest="${project.dir}/sql/"
-					src="liferay-portal-bundle.zip"
-				>
-					<patternset
+				<decompress
+					dest="${project.dir}"
+					src="${bundle.file.name}"
+				/>
+
+				<move todir="${project.dir}/sql" verbose="true">
+					<fileset
+						dir="${project.dir}"
 						includes="liferay-*/data/hypersonic/*"
 					/>
 					<mapper
@@ -8687,9 +8747,16 @@ ANT_OPTS=${env.ANT_OPTS}</echo>
 						to="\1"
 						type="regexp"
 					/>
-				</unzip>
+				</move>
 
-				<delete file="liferay-portal-bundle.zip" />
+				<delete includeemptydirs="true">
+					<fileset
+						dir="${project.dir}"
+						includes="liferay-*/**"
+					/>
+				</delete>
+
+				<delete file="${bundle.file.name}" />
 			</then>
 		</if>
 

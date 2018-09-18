@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.upgrade.BaseReplacePortletId;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.kernel.upgrade.UpgradeException;
 import com.liferay.portal.kernel.upgrade.UpgradeStep;
-import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 import com.liferay.portal.upgrade.release.BaseUpgradeWebModuleRelease;
 
@@ -73,12 +72,13 @@ public class AnnouncementsWebUpgrade implements UpgradeStepRegistrator {
 					},
 					{
 						"83",
-					 	"com_liferay_announcements_web_portlet_AlertsPortlet"
+						"com_liferay_announcements_web_portlet_AlertsPortlet"
 					},
 					{
 						"84",
-					 	"com_liferay_announcements_web_portlet_" +
-							"AnnouncementsPortlet"}
+						"com_liferay_announcements_web_portlet_" +
+							"AnnouncementsPortlet"
+					}
 				};
 			}
 

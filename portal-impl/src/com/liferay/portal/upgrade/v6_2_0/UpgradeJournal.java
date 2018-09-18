@@ -444,16 +444,12 @@ public class UpgradeJournal extends BaseUpgradePortletPreferences {
 	}
 
 	protected void updateAssetEntryClassTypeId() throws Exception {
-		StringBundler sb = new StringBundler(2);
-
-		sb.append("select distinct companyId, groupId, resourcePrimKey, ");
-		sb.append("structureId from JournalArticle where structureId != ''");
-
-		String selectStatement = sb.toString();
-
 		try (LoggingTimer loggingTimer = new LoggingTimer();
 			PreparedStatement selectPS = connection.prepareStatement(
-				SQLTransformer.transform(selectStatement));
+				SQLTransformer.transform(
+					"select distinct companyId, groupId, resourcePrimKey, " +
+						"structureId from JournalArticle where structureId " +
+							"!= ''"));
 			ResultSet rs = selectPS.executeQuery()) {
 
 			long classNameId = PortalUtil.getClassNameId(
@@ -862,16 +858,12 @@ public class UpgradeJournal extends BaseUpgradePortletPreferences {
 	}
 
 	protected void updateLinkToLayoutContent() throws Exception {
-		StringBundler sb = new StringBundler(2);
-
-		sb.append("select id_, groupId, content from JournalArticle where ");
-		sb.append("structureId != '' and content like '%link_to_layout%'");
-
-		String selectStatement = sb.toString();
-
 		try (LoggingTimer loggingTimer = new LoggingTimer();
 			PreparedStatement selectPS = connection.prepareStatement(
-				SQLTransformer.transform(selectStatement));
+				SQLTransformer.transform(
+					"select id_, groupId, content from JournalArticle where " +
+						"structureId != '' and content like " +
+							"'%link_to_layout%'"));
 			PreparedStatement updatePS =
 				AutoBatchPreparedStatementUtil.autoBatch(
 					connection.prepareStatement(

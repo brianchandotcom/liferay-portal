@@ -305,9 +305,9 @@ public class BeanPortletExtension implements Extension {
 		@Observes AfterBeanDiscovery afterBeanDiscovery) {
 
 		try {
-			Bundle bundle = FrameworkUtil.getBundle(BeanPortletExtension.class);
+			_bundle = FrameworkUtil.getBundle(BeanPortletExtension.class);
 
-			_addBeanPortletsFromPortletDescriptor(bundle);
+			_addBeanPortletsFromPortletDescriptor();
 
 			List<URLGenerationListener> urlGenerationListeners =
 				_getListenersFromAnnotatedClasses();
@@ -316,7 +316,7 @@ public class BeanPortletExtension implements Extension {
 
 			_addBeanFiltersFromAnnotatedClasses();
 
-			URL liferayDescriptorURL = bundle.getEntry(
+			URL liferayDescriptorURL = _bundle.getEntry(
 				"WEB-INF/liferay-portlet.xml");
 
 			if (liferayDescriptorURL != null) {
@@ -333,7 +333,7 @@ public class BeanPortletExtension implements Extension {
 				_addBeanPortletsFromLiferayDescriptor();
 			}
 
-			URL displayDescriptorURL = bundle.getEntry(
+			URL displayDescriptorURL = _bundle.getEntry(
 				"WEB-INF/liferay-display.xml");
 
 			if (displayDescriptorURL != null) {
@@ -372,9 +372,7 @@ public class BeanPortletExtension implements Extension {
 		_associateMethods(
 			beanManager, MethodType.SERVE_RESOURCE, _serveResourceMethods);
 
-		Bundle bundle = FrameworkUtil.getBundle(BeanPortletExtension.class);
-
-		BundleContext bundleContext = bundle.getBundleContext();
+		BundleContext bundleContext = _bundle.getBundleContext();
 
 		_portletRegistrations = new ArrayList<>();
 		_resourceBundleLoaderRegistrations = new ArrayList<>();
@@ -423,7 +421,7 @@ public class BeanPortletExtension implements Extension {
 			}
 		}
 
-		URL displayDescriptorURL = bundle.getEntry(
+		URL displayDescriptorURL = _bundle.getEntry(
 			"WEB-INF/liferay-display.xml");
 
 		if (displayDescriptorURL != null) {
@@ -589,8 +587,8 @@ public class BeanPortletExtension implements Extension {
 		}
 	}
 
-	private void _addBeanPortletsFromPortletDescriptor(Bundle bundle) {
-		URL portletDescriptorURL = bundle.getEntry("/WEB-INF/portlet.xml");
+	private void _addBeanPortletsFromPortletDescriptor() {
+		URL portletDescriptorURL = _bundle.getEntry("/WEB-INF/portlet.xml");
 
 		if (portletDescriptorURL != null) {
 			try {
@@ -924,6 +922,7 @@ public class BeanPortletExtension implements Extension {
 	private BeanApp _beanApp;
 	private final List<BeanFilter> _beanFilters = new ArrayList<>();
 	private final Map<String, BeanPortlet> _beanPortlets = new HashMap<>();
+	private Bundle _bundle;
 	private final List<ScannedMethod> _destroyMethods = new ArrayList<>();
 	private Map<String, String> _displayDescriptorCategories;
 	private final List<ScannedMethod> _eventMethods = new ArrayList<>();

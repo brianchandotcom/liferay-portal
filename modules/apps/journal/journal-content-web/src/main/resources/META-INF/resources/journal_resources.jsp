@@ -24,9 +24,9 @@ JournalArticle article = journalContentDisplayContext.getArticle();
 
 <aui:input id='<%= refererPortletName + "ddmTemplateKey" %>' name='<%= refererPortletName + "preferences--ddmTemplateKey--" %>' type="hidden" useNamespace="<%= false %>" value="<%= journalContentDisplayContext.getDDMTemplateKey() %>" />
 
-<p class="text-muted">
+<div class="sheet-subtitle">
 	<liferay-ui:message key="layout.types.article" />
-</p>
+</div>
 
 <div class="row">
 	<div class="col-md-4">
@@ -47,9 +47,9 @@ JournalArticle article = journalContentDisplayContext.getArticle();
 <c:if test="<%= article != null %>">
 	<liferay-util:include page="/journal_template.jsp" servletContext="<%= application %>" />
 
-	<h4>
+	<div class="sheet-subtitle">
 		<liferay-ui:message key="user-tools" />
-	</h4>
+	</div>
 
 	<liferay-asset:asset-addon-entry-selector
 		assetAddonEntries="<%= (List<AssetAddonEntry>)(List<?>)journalContentDisplayContext.getEnabledUserToolAssetAddonEntries() %>"
@@ -59,9 +59,9 @@ JournalArticle article = journalContentDisplayContext.getArticle();
 		title='<%= LanguageUtil.get(request, "select-user-tools") %>'
 	/>
 
-	<h4>
+	<div class="sheet-subtitle">
 		<liferay-ui:message key="content-metadata" />
-	</h4>
+	</div>
 
 	<liferay-asset:asset-addon-entry-selector
 		assetAddonEntries="<%= (List<AssetAddonEntry>)(List<?>)journalContentDisplayContext.getEnabledContentMetadataAssetAddonEntries() %>"
@@ -71,5 +71,9 @@ JournalArticle article = journalContentDisplayContext.getArticle();
 		title='<%= LanguageUtil.get(request, "select-content-metadata") %>'
 	/>
 
-	<aui:input name="preferences--enableViewCountIncrement--" type="toggle-switch" value="<%= journalContentDisplayContext.isEnableViewCountIncrement() %>" />
+	<div class="sheet-subtitle">
+		<liferay-ui:message key="enable" />
+	</div>
+
+	<aui:input label="view-count-increment" name="preferences--enableViewCountIncrement--" type="toggle-switch" value="<%= journalContentDisplayContext.isEnableViewCountIncrement() %>" />
 </c:if>

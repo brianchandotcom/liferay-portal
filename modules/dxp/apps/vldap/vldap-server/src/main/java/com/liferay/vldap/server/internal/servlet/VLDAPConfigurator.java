@@ -24,7 +24,7 @@ import org.osgi.service.component.annotations.Deactivate;
  * @author Jonathan Potter
  * @author Brian Wing Shun Chan
  */
-@Component
+@Component(service = {})
 public class VLDAPConfigurator {
 
 	@Activate

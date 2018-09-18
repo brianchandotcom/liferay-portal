@@ -61,7 +61,8 @@ import org.osgi.service.component.annotations.Reference;
 	property = {
 		"auth.verifier.OAuthVerifier.send.body=true",
 		"auth.verifier.OAuthVerifier.urls.includes=/api/*"
-	}
+	},
+	service = AuthVerifier.class
 )
 public class OAuthVerifier implements AuthVerifier {
 

@@ -29,7 +29,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Brian Greenwald
  * @author Prathima Shreenath
  */
-@Component(immediate = true)
+@Component(immediate = true, service = {})
 public class AuditEventManagerUtil {
 
 	public static AuditEvent addAuditEvent(AuditMessage auditMessage) {

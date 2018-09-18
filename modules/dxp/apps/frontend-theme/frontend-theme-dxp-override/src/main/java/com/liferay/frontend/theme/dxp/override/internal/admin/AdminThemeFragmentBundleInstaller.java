@@ -21,7 +21,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Shuyang Zhou
  */
-@Component(enabled = false, immediate = true)
+@Component(enabled = false, immediate = true, service = {})
 public class AdminThemeFragmentBundleInstaller
 	extends BaseThemeFragmentBundleInstaller {
 

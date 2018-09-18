@@ -4544,6 +4544,12 @@ manifest header for the deployed JAR does not contain a period.
 - [LPS-84119]: Update the [Liferay Gradle Plugins] dependency to version
 3.12.133.
 
+## 5.5.44 - 2018-09-12
+
+### Changed
+- [LPS-65845]: Update the [Liferay Gradle Plugins Cache] dependency to version
+1.0.13.
+
 [Find Security Bugs]: https://github.com/liferay/liferay-portal/tree/master/modules/third-party/com-h3xstream-findsecbugs
 [Gradle Dependency Management]: https://github.com/spring-gradle-plugins/dependency-management-plugin
 [Gradle License Report]: https://github.com/jk1/Gradle-License-Report
@@ -4551,6 +4557,7 @@ manifest header for the deployed JAR does not contain a period.
 [Liferay Gradle Plugins]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins
 [Liferay Gradle Plugins App Javadoc Builder]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-app-javadoc-builder
 [Liferay Gradle Plugins Baseline]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-baseline
+[Liferay Gradle Plugins Cache]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-cache
 [Liferay Gradle Plugins Change Log Builder]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-change-log-builder
 [Liferay Gradle Plugins Dependency Checker]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-dependency-checker
 [Liferay Gradle Plugins JSDoc]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-jsdoc
@@ -4570,6 +4577,7 @@ manifest header for the deployed JAR does not contain a period.
 [LPS-64098]: https://issues.liferay.com/browse/LPS-64098
 [LPS-65179]: https://issues.liferay.com/browse/LPS-65179
 [LPS-65633]: https://issues.liferay.com/browse/LPS-65633
+[LPS-65845]: https://issues.liferay.com/browse/LPS-65845
 [LPS-65930]: https://issues.liferay.com/browse/LPS-65930
 [LPS-66396]: https://issues.liferay.com/browse/LPS-66396
 [LPS-66762]: https://issues.liferay.com/browse/LPS-66762

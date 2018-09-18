@@ -57,11 +57,11 @@ public class UpgradeLayoutPageTemplateStructure extends UpgradeProcess {
 	protected void doUpgrade() throws Exception {
 		upgradeSchema();
 
-		upgradeContentLayouts();
+		upgradeLayouts();
 		upgradeLayoutPageTemplates();
 	}
 
-	protected void upgradeContentLayouts() {
+	protected void upgradeLayouts() {
 		long classNameId = PortalUtil.getClassNameId(Layout.class.getName());
 
 		List<Layout> layouts = _layoutLocalService.getLayouts(

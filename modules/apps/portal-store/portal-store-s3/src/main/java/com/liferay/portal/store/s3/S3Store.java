@@ -123,6 +123,34 @@ public class S3Store extends BaseStore {
 	}
 
 	@Override
+	public void copyFileVersion(
+			long companyId, long repositoryId, String fileName,
+			String fromVersionLabel, String toVersionLabel)
+		throws PortalException {
+
+		String oldKey = _s3KeyTransformer.getFileVersionKey(
+			companyId, repositoryId, fileName, fromVersionLabel);
+
+		if (!_amazonS3.doesObjectExist(_bucketName, oldKey)) {
+			throw new NoSuchFileException(
+				companyId, repositoryId, fileName, fromVersionLabel);
+		}
+
+		String newKey = _s3KeyTransformer.getFileVersionKey(
+			companyId, repositoryId, fileName, toVersionLabel);
+
+		if (_amazonS3.doesObjectExist(_bucketName, newKey)) {
+			throw new DuplicateFileException(
+				companyId, repositoryId, fileName, toVersionLabel);
+		}
+
+		CopyObjectRequest copyObjectRequest = new CopyObjectRequest(
+			_bucketName, oldKey, _bucketName, newKey);
+
+		_amazonS3.copyObject(copyObjectRequest);
+	}
+
+	@Override
 	public void deleteDirectory(
 		long companyId, long repositoryId, String dirName) {
 
@@ -379,6 +407,20 @@ public class S3Store extends BaseStore {
 		finally {
 			FileUtil.delete(file);
 		}
+	}
+
+	@Override
+	public void updateFileVersion(
+			long companyId, long repositoryId, String fileName,
+			String fromVersionLabel, String toVersionLabel)
+		throws PortalException {
+
+		String oldKey = _s3KeyTransformer.getFileVersionKey(
+			companyId, repositoryId, fileName, fromVersionLabel);
+		String newKey = _s3KeyTransformer.getFileVersionKey(
+			companyId, repositoryId, fileName, toVersionLabel);
+
+		moveObjects(oldKey, newKey);
 	}
 
 	@Activate

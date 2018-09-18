@@ -201,27 +201,6 @@ class FragmentsEditor extends Component {
 	}
 
 	/**
-	 * Toggle highlightMapping attribute value
-	 * @private
-	 * @review
-	 */
-
-	_handleToggleHighlightMapping() {
-		this._highlightMapping = !this._highlightMapping;
-	}
-
-	/**
-	 * Callback executed when the translation language has changed
-	 * @private
-	 * @param {{languageId: string}} event
-	 * @review
-	 */
-
-	_handleTranslationLanguageChange(event) {
-		this.languageId = event.languageId;
-	}
-
-	/**
 	 * Swap the positions of two fragmentEntryLinks
 	 * @param {Array} list
 	 * @param {number} indexA
@@ -602,20 +581,6 @@ FragmentsEditor.STATE = Object.assign(
 		 */
 
 		_dropTargetClass: Config.string().internal().value('dropTarget'),
-
-		/**
-		 * If true, editable values should be highlighted.
-		 * @default false
-		 * @instance
-		 * @memberOf FragmentsEditor
-		 * @private
-		 * @review
-		 * @type {boolean}
-		 */
-
-		_highlightMapping: Config.bool()
-			.internal()
-			.value(false),
 
 		/**
 		 * Editable type of the field that is being mapped

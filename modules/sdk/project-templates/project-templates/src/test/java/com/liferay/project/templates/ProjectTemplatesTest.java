@@ -2022,39 +2022,38 @@ public class ProjectTemplatesTest {
 		String name = "guestbook";
 		String packageName = "com.liferay.docs.guestbook";
 
-		String apiProjectName = name + "-api";
-		String serviceProjectName = name + "-service";
-
 		File gradleProjectDir = _buildTemplateWithGradle(
 			"service-builder", name, "--package-name", packageName,
 			"--liferayVersion", "7.1");
 
-		File mavenProjectDir = _buildTemplateWithMaven(
-			"service-builder", name, "com.test", "-Dpackage=" + packageName,
-			"-DliferayVersion=7.1");
-
 		File gradleServiceXml = new File(
-			new File(gradleProjectDir, serviceProjectName), "service.xml");
-		File mavenServiceXml = new File(
-			new File(mavenProjectDir, serviceProjectName), "service.xml");
+			new File(gradleProjectDir, name + "-service"), "service.xml");
 
-		Consumer<Document> editor = document -> {
+		Consumer<Document> consumer = document -> {
 			Element documentElement = document.getDocumentElement();
 
 			documentElement.setAttribute("package-path", "com.liferay.test");
 		};
 
-		_editXml(gradleServiceXml, editor);
-		_editXml(mavenServiceXml, editor);
+		_editXml(gradleServiceXml, consumer);
+
+		File mavenProjectDir = _buildTemplateWithMaven(
+			"service-builder", name, "com.test", "-Dpackage=" + packageName,
+			"-DliferayVersion=7.1");
+
+		File mavenServiceXml = new File(
+			new File(mavenProjectDir, name + "-service"), "service.xml");
+
+		_editXml(mavenServiceXml, consumer);
 
 		_testContains(
-			gradleProjectDir, apiProjectName + "/bnd.bnd", "Export-Package:\\",
+			gradleProjectDir, name + "-api/bnd.bnd", "Export-Package:\\",
 			packageName + ".exception,\\", packageName + ".model,\\",
 			packageName + ".service,\\", packageName + ".service.persistence");
 
 		Optional<String> stdOutput = _executeGradle(
 			gradleProjectDir, false, true,
-			serviceProjectName + _GRADLE_TASK_PATH_BUILD);
+			name + "-service" + _GRADLE_TASK_PATH_BUILD);
 
 		Assert.assertTrue(stdOutput.isPresent());
 
@@ -3945,7 +3944,7 @@ public class ProjectTemplatesTest {
 		}
 	}
 
-	private static void _editXml(File xmlFile, Consumer<Document> editor)
+	private static void _editXml(File xmlFile, Consumer<Document> consumer)
 		throws Exception {
 
 		DocumentBuilderFactory documentBuilderFactory =
@@ -3956,7 +3955,7 @@ public class ProjectTemplatesTest {
 
 		Document document = documentBuilder.parse(xmlFile);
 
-		editor.accept(document);
+		consumer.accept(document);
 
 		TransformerFactory transformerFactory =
 			TransformerFactory.newInstance();
@@ -4068,7 +4067,7 @@ public class ProjectTemplatesTest {
 		gradleRunner.withGradleDistribution(_gradleDistribution);
 		gradleRunner.withProjectDir(projectDir);
 
-		BuildResult buildResult;
+		BuildResult buildResult = null;
 
 		if (buildAndFail) {
 			buildResult = gradleRunner.buildAndFail();

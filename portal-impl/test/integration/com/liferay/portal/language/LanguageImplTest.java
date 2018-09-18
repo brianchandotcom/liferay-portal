@@ -14,13 +14,6 @@
 
 package com.liferay.portal.language;
 
-import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.WebKeys;
-
-import java.util.Locale;
-
-import org.apache.struts.mock.MockHttpServletRequest;
-
 import org.junit.experimental.runners.Enclosed;
 import org.junit.runner.RunWith;
 
@@ -42,26 +35,5 @@ public class LanguageImplTest {
 		"x-has-invited-you-to-join-x";
 
 	private static LanguageImpl _languageImpl;
-
-	private static final class MockLanguageServletRequest {
-
-		public MockLanguageServletRequest(Locale locale) {
-			ThemeDisplay themeDisplay = new ThemeDisplay();
-
-			themeDisplay.setLocale(locale);
-
-			_mockHttpServletRequest = new MockHttpServletRequest();
-
-			_mockHttpServletRequest.setAttribute(
-				WebKeys.THEME_DISPLAY, themeDisplay);
-		}
-
-		public MockHttpServletRequest getRequest() {
-			return _mockHttpServletRequest;
-		}
-
-		private final MockHttpServletRequest _mockHttpServletRequest;
-
-	}
 
 }

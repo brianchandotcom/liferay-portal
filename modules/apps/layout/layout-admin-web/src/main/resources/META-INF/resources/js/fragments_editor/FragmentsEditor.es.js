@@ -10,10 +10,6 @@ import './components/toolbar/FragmentsEditorToolbar.es';
 import {Store} from './store/store.es';
 import {INITIAL_STATE} from './store/state.es';
 import templates from './FragmentsEditor.soy';
-import {
-	UPDATE_LAST_SAVE_DATE,
-	UPDATE_SAVING_CHANGES_STATUS
-} from './actions/actions.es';
 
 /**
  * FragmentsEditor

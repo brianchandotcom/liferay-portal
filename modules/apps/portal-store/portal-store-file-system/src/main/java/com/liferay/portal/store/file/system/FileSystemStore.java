@@ -535,10 +535,7 @@ public class FileSystemStore extends BaseStore {
 
 		File repositoryDir = getRepositoryDir(companyId, repositoryId);
 
-		File fileNameDir = new File(
-			repositoryDir + StringPool.SLASH + fileName);
-
-		return fileNameDir;
+		return new File(repositoryDir + StringPool.SLASH + fileName);
 	}
 
 	protected void getFileNames(
@@ -572,10 +569,7 @@ public class FileSystemStore extends BaseStore {
 
 		File fileNameDir = getFileNameDir(companyId, repositoryId, fileName);
 
-		File fileNameVersionFile = new File(
-			fileNameDir + StringPool.SLASH + version);
-
-		return fileNameVersionFile;
+		return new File(fileNameDir + StringPool.SLASH + version);
 	}
 
 	protected String getHeadVersionLabel(

@@ -686,8 +686,8 @@ public class FileSystemStore extends BaseStore {
 			return (int)(_companyId * 11 + _repositoryId);
 		}
 
-		private long _companyId;
-		private long _repositoryId;
+		private final long _companyId;
+		private final long _repositoryId;
 
 	}
 

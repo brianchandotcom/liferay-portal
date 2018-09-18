@@ -99,7 +99,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = "site.initializer.key=" + WesterosBankSiteInitializer.KEY
+	property = "site.initializer.key=" + WesterosBankSiteInitializer.KEY,
+	service = SiteInitializer.class
 )
 public class WesterosBankSiteInitializer implements SiteInitializer {
 

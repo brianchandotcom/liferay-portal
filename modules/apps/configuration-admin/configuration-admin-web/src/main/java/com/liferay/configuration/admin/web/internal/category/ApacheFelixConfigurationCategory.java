@@ -21,7 +21,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Jorge Ferrer
  */
-@Component
+@Component(service = ConfigurationCategory.class)
 public class ApacheFelixConfigurationCategory implements ConfigurationCategory {
 
 	@Override

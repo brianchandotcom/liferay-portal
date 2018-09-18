@@ -31,7 +31,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Eduardo Perez
  * @review
  */
-@Component(immediate = true)
+@Component(immediate = true, service = NestedCollectionRouter.class)
 public class MyUserAccountEmailsNestedCollectionRouter
 	extends BaseUserAccountEmailsNestedCollectionRouter<MyUserAccountIdentifier>
 	implements NestedCollectionRouter

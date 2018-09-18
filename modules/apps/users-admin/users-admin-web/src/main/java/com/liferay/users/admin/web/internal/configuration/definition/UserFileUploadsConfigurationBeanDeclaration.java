@@ -22,7 +22,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Drew Brokke
  */
-@Component
+@Component(service = ConfigurationBeanDeclaration.class)
 public class UserFileUploadsConfigurationBeanDeclaration
 	implements ConfigurationBeanDeclaration {
 

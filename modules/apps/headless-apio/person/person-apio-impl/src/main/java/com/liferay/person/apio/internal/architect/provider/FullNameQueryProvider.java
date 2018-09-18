@@ -26,7 +26,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Alejandro Hernández
  */
-@Component
+@Component(service = Provider.class)
 public class FullNameQueryProvider implements Provider<FullNameQuery> {
 
 	@Override

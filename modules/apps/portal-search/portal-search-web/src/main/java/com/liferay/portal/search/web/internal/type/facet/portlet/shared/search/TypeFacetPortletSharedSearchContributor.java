@@ -34,7 +34,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = "javax.portlet.name=" + TypeFacetPortletKeys.TYPE_FACET
+	property = "javax.portlet.name=" + TypeFacetPortletKeys.TYPE_FACET,
+	service = PortletSharedSearchContributor.class
 )
 public class TypeFacetPortletSharedSearchContributor
 	implements PortletSharedSearchContributor {

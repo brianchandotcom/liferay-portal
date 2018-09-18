@@ -43,7 +43,8 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 	property = {
 		"block.unsecure.requests=true", "can.support.public.clients=true",
 		"enabled=true"
-	}
+	},
+	service = {}
 )
 public class LiferayAccessTokenServiceRegistrator {
 

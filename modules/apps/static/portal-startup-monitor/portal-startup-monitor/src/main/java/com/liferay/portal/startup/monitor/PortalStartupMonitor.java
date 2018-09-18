@@ -29,7 +29,7 @@ import org.osgi.service.component.annotations.ReferencePolicy;
 /**
  * @author Matthew Tambara
  */
-@Component(immediate = true)
+@Component(immediate = true, service = {})
 public class PortalStartupMonitor {
 
 	@Reference(

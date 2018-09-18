@@ -43,7 +43,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Rafael Praxedes
  */
-@Component(immediate = true)
+@Component(immediate = true, service = {})
 public class DDMFormTaglibUtil {
 
 	public static DDMForm getDDMForm(

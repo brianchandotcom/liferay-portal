@@ -31,7 +31,10 @@ import org.osgi.util.tracker.ServiceTracker;
 /**
  * @author Tomas Polesovsky
  */
-@Component(immediate = true, property = "service.ranking:Integer=1000")
+@Component(
+	immediate = true, property = "service.ranking:Integer=1000",
+	service = PermissionCheckerFactory.class
+)
 @ProviderType
 public class StagingPermissionCheckerFactory
 	implements PermissionCheckerFactory {

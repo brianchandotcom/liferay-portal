@@ -36,7 +36,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Eduardo Perez
  * @review
  */
-@Component(immediate = true)
+@Component(immediate = true, service = NestedCollectionRouter.class)
 public class BlogPostingCategoryNestedCollectionRouter
 	extends BaseCategoryNestedCollectionRouter<BlogPostingIdentifier>
 	implements NestedCollectionRouter

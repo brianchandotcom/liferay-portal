@@ -26,7 +26,7 @@ import org.osgi.service.component.annotations.Component;
  *
  * @author Alejandro Hernández
  */
-@Component(immediate = true)
+@Component(immediate = true, service = Provider.class)
 public class APIDescriptionProvider implements Provider<APIDescription> {
 
 	@Override

@@ -75,7 +75,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Marcellus Tavares
  * @author Bruno Basto
  */
-@Component(immediate = true)
+@Component(immediate = true, service = JournalConverter.class)
 public class JournalConverterImpl implements JournalConverter {
 
 	public JournalConverterImpl() {

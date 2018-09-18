@@ -25,7 +25,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Rafael Praxedes
  */
-@Component(immediate = true)
+@Component(immediate = true, service = {})
 public class DDMStructurePermission {
 
 	public static boolean contains(

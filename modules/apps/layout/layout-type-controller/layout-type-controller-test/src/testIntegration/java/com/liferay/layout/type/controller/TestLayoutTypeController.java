@@ -30,7 +30,8 @@ import org.osgi.service.component.annotations.Component;
 	property = {
 		"layout.type=testLayoutTypeController",
 		"service.ranking:Integer=" + Integer.MAX_VALUE
-	}
+	},
+	service = LayoutTypeController.class
 )
 public class TestLayoutTypeController implements LayoutTypeController {
 

@@ -47,7 +47,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
  * @author Carlos Sierra Andrés
  * @author Miguel Pastor
  */
-@Component(immediate = true)
+@Component(immediate = true, service = {})
 public class ConfiguratorExtender extends AbstractExtender {
 
 	@Activate

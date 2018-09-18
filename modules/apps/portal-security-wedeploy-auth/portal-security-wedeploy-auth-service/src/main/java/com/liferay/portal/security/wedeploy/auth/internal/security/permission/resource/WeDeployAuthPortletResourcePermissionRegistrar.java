@@ -30,7 +30,7 @@ import org.osgi.service.component.annotations.Deactivate;
 /**
  * @author Preston Crary
  */
-@Component(immediate = true)
+@Component(immediate = true, service = {})
 public class WeDeployAuthPortletResourcePermissionRegistrar {
 
 	@Activate

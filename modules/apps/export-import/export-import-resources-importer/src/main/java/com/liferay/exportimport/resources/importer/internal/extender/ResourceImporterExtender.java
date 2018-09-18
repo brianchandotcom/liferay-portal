@@ -51,7 +51,7 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
 /**
  * @author Michael C. Han
  */
-@Component(immediate = true)
+@Component(immediate = true, service = {})
 public class ResourceImporterExtender {
 
 	@Activate

@@ -107,7 +107,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = "site.initializer.key=" + PorygonSiteInitializer.KEY
+	property = "site.initializer.key=" + PorygonSiteInitializer.KEY,
+	service = SiteInitializer.class
 )
 public class PorygonSiteInitializer implements SiteInitializer {
 

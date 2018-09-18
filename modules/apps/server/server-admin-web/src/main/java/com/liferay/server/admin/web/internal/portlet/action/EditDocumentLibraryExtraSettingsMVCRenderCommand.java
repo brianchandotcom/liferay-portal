@@ -29,7 +29,8 @@ import org.osgi.service.component.annotations.Component;
 	property = {
 		"javax.portlet.name=" + PortletKeys.SERVER_ADMIN,
 		"mvc.command.name=/server_admin/edit_document_library_extra_settings"
-	}
+	},
+	service = MVCRenderCommand.class
 )
 public class EditDocumentLibraryExtraSettingsMVCRenderCommand
 	implements MVCRenderCommand {

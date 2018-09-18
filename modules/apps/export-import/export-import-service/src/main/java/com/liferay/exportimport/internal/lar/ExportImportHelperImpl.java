@@ -126,7 +126,7 @@ import org.xml.sax.XMLReader;
  * @author Julio Camarero
  * @author Mate Thurzo
  */
-@Component(immediate = true)
+@Component(immediate = true, service = ExportImportHelper.class)
 @ProviderType
 public class ExportImportHelperImpl implements ExportImportHelper {
 

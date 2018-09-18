@@ -23,7 +23,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Iván Zaera
  */
-@Component
+@Component(service = ConfigurationPidMapping.class)
 public class BlogsAdminPortletInstanceConfigurationPidMapping
 	implements ConfigurationPidMapping {
 

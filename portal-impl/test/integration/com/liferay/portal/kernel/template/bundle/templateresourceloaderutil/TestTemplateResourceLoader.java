@@ -23,7 +23,8 @@ import org.osgi.service.component.annotations.Component;
  * @author Philip Jones
  */
 @Component(
-	immediate = true, property = "service.ranking:Integer=" + Integer.MAX_VALUE
+	immediate = true, property = "service.ranking:Integer=" + Integer.MAX_VALUE,
+	service = TemplateResourceLoader.class
 )
 public class TestTemplateResourceLoader implements TemplateResourceLoader {
 

@@ -39,7 +39,8 @@ import org.osgi.service.component.annotations.Component;
 		"javax.portlet.name=" + AnnouncementsPortletKeys.ANNOUNCEMENTS,
 		"javax.portlet.name=" + AnnouncementsPortletKeys.ANNOUNCEMENTS_ADMIN,
 		"mvc.command.name=/announcements/view_entry"
-	}
+	},
+	service = MVCRenderCommand.class
 )
 public class ViewEntryMVCRenderCommand implements MVCRenderCommand {
 

@@ -58,7 +58,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Peter Shin
  * @author Fabio Pezzutto
  */
-@Component(immediate = true)
+@Component(immediate = true, service = {})
 public class CalendarUtil {
 
 	public static JSONObject getCalendarRenderingRules(

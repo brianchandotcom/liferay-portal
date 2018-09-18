@@ -24,7 +24,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Juergen Kappler
  */
-@Component(immediate = true)
+@Component(immediate = true, service = {})
 public class JournalServiceComponentProvider {
 
 	public static JournalServiceComponentProvider

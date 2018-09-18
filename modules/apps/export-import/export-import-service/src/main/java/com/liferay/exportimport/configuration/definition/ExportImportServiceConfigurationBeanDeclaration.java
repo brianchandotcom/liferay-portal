@@ -22,7 +22,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Michael Bowerman
  */
-@Component
+@Component(service = ConfigurationBeanDeclaration.class)
 public class ExportImportServiceConfigurationBeanDeclaration
 	implements ConfigurationBeanDeclaration {
 

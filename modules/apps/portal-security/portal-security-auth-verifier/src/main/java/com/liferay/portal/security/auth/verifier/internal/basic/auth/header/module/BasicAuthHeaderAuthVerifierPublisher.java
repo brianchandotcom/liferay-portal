@@ -34,7 +34,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	configurationPid = "com.liferay.portal.security.auth.verifier.internal.basic.auth.header.module.configuration.BasicAuthHeaderAuthVerifierConfiguration",
-	configurationPolicy = ConfigurationPolicy.REQUIRE
+	configurationPolicy = ConfigurationPolicy.REQUIRE, service = {}
 )
 public class BasicAuthHeaderAuthVerifierPublisher
 	extends BaseAuthVerifierPublisher {

@@ -34,7 +34,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
  * @author Alejandro Tardín
  * @author Jürgen Kappler
  */
-@Component
+@Component(service = AttachmentContentUpdater.class)
 public class DefaultAttachmentContentUpdater
 	implements AttachmentContentUpdater {
 

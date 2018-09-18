@@ -27,7 +27,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Cristina González
  */
-@Component
+@Component(service = Provider.class)
 public class SortProvider implements Provider<Sort> {
 
 	@Override

@@ -33,7 +33,8 @@ import org.osgi.service.component.annotations.Component;
 	property = {
 		"service.ranking:Integer=" + Integer.MAX_VALUE,
 		"webdav.storage.token=" + TestWebDAVStorage.TOKEN
-	}
+	},
+	service = WebDAVStorage.class
 )
 public class TestWebDAVStorage implements WebDAVStorage {
 

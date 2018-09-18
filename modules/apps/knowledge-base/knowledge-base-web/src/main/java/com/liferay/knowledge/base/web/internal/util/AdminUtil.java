@@ -23,7 +23,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Lance Ji
  */
-@Component
+@Component(service = {})
 public class AdminUtil {
 
 	public static DiffVersionsInfo getDiffVersionsInfo(

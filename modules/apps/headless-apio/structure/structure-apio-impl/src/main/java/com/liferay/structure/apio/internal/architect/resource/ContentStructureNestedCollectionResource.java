@@ -46,7 +46,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Paulo Cruz
  * @review
  */
-@Component
+@Component(service = NestedCollectionResource.class)
 public class ContentStructureNestedCollectionResource
 	implements NestedCollectionResource
 		<DDMStructure, Long, ContentStructureIdentifier, Long,

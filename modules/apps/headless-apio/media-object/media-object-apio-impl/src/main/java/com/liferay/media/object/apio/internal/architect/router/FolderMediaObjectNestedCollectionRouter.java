@@ -41,7 +41,7 @@ import org.osgi.service.component.annotations.Reference;
  *
  * @author Eduardo Perez
  */
-@Component(immediate = true)
+@Component(immediate = true, service = NestedCollectionRouter.class)
 public class FolderMediaObjectNestedCollectionRouter
 	implements NestedCollectionRouter
 		<FileEntry, Long, MediaObjectIdentifier, Long, FolderIdentifier> {

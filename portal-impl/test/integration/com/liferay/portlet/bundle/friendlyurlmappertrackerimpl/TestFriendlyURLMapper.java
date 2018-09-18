@@ -30,7 +30,8 @@ import org.osgi.service.component.annotations.Component;
 	property = {
 		"javax.portlet.name=FriendlyURLMapperTrackerImplTest",
 		"service.ranking:Integer=" + Integer.MAX_VALUE
-	}
+	},
+	service = FriendlyURLMapper.class
 )
 public class TestFriendlyURLMapper implements FriendlyURLMapper {
 

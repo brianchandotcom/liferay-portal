@@ -33,7 +33,8 @@ import org.osgi.service.component.annotations.Reference;
  * @author Alejandro Hernández
  */
 @Component(
-	property = "model.class.name=com.liferay.portal.kernel.repository.model.Folder"
+	property = "model.class.name=com.liferay.portal.kernel.repository.model.Folder",
+	service = HasPermission.class
 )
 public class FolderHasPermissionImpl implements HasPermission<Long> {
 

@@ -31,7 +31,8 @@ import org.osgi.service.component.annotations.Component;
 		"add.template.action.id=" + ActionKeys.ADD_PORTLET_DISPLAY_TEMPLATE,
 		"default.model.resource.name=true",
 		"model.class.name=com.liferay.portlet.display.template.PortletDisplayTemplate"
-	}
+	},
+	service = DDMTemplatePermissionSupport.class
 )
 public class PortletDisplayTemplateDDMTemplatePermissionSupport
 	implements DDMTemplatePermissionSupport {

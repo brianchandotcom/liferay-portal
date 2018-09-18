@@ -26,7 +26,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Shuyang Zhou
  */
-@Component(immediate = true)
+@Component(immediate = true, service = IndexValidatorFactory.class)
 public class IndexValidatorFactoryImpl implements IndexValidatorFactory {
 
 	@Override

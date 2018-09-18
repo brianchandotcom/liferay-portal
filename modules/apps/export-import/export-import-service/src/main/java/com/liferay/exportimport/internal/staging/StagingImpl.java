@@ -192,7 +192,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Wesley Gong
  * @author Zsolt Balogh
  */
-@Component(immediate = true)
+@Component(immediate = true, service = Staging.class)
 @ProviderType
 public class StagingImpl implements Staging {
 

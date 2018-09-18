@@ -32,7 +32,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 /**
  * @author Edward C. Han
  */
-@Component(immediate = true)
+@Component(immediate = true, service = {})
 public class PortalLDAPUtil {
 
 	public static String encodeFilterAttribute(

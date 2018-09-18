@@ -21,7 +21,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Adolfo Pérez
  */
-@Component
+@Component(service = ConfigurationBeanDeclaration.class)
 public class AMImageCompanyConfigurationBeanDeclaration
 	implements ConfigurationBeanDeclaration {
 

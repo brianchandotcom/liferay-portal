@@ -21,13 +21,11 @@ import com.liferay.journal.model.JournalArticleConstants;
 import com.liferay.journal.model.JournalFolderConstants;
 import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.journal.test.util.JournalTestUtil;
-import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
-import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.context.ContextUserReplace;
@@ -37,7 +35,6 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -63,7 +60,8 @@ import org.junit.runner.RunWith;
  * @author Julio Camarero
  */
 @RunWith(Arquillian.class)
-public class StructuredContentNestedCollectionResourcePermissionTest {
+public class StructuredContentNestedCollectionResourcePermissionTest
+	extends BaseStructuredContentNestedCollectionResourceTestCase {
 
 	@ClassRule
 	@Rule
@@ -109,10 +107,9 @@ public class StructuredContentNestedCollectionResourcePermissionTest {
 				new ContextUserReplace(user, permissionChecker)) {
 
 			Assertions.assertThatThrownBy(
-				() -> _structuredContentNestedCollectionResourceProxy.
-					getJournalArticleWrapper(
-						journalArticle.getId(),
-						_getThemeDisplay(_group, LocaleUtil.getDefault()))
+				() -> getJournalArticleWrapper(
+					journalArticle.getId(),
+					getThemeDisplay(_group, LocaleUtil.getDefault()))
 			).isInstanceOf(
 				PrincipalException.MustHavePermission.class
 			);
@@ -150,11 +147,10 @@ public class StructuredContentNestedCollectionResourcePermissionTest {
 		try (ContextUserReplace contextUserReplace =
 				new ContextUserReplace(user, permissionChecker)) {
 
-			PageItems<JournalArticle> pageItems =
-				_structuredContentNestedCollectionResourceProxy.getPageItems(
-					PaginationTestUtil.of(10, 1), _group.getGroupId(),
-					_getThemeDisplay(_group, LocaleUtil.getDefault()),
-					Filter.emptyFilter(), Sort.emptySort());
+			PageItems<JournalArticle> pageItems = getPageItems(
+				PaginationTestUtil.of(10, 1), _group.getGroupId(),
+				getThemeDisplay(_group, LocaleUtil.getDefault()),
+				Filter.emptyFilter(), Sort.emptySort());
 
 			Assert.assertEquals(0, pageItems.getTotalCount());
 		}
@@ -163,31 +159,11 @@ public class StructuredContentNestedCollectionResourcePermissionTest {
 		}
 	}
 
-	private ThemeDisplay _getThemeDisplay(Group group, Locale locale)
-		throws Exception {
-
-		ThemeDisplay themeDisplay = new ThemeDisplay();
-
-		Company company = CompanyLocalServiceUtil.getCompanyById(
-			group.getCompanyId());
-
-		themeDisplay.setCompany(company);
-
-		themeDisplay.setLocale(locale);
-		themeDisplay.setScopeGroupId(group.getGroupId());
-
-		return themeDisplay;
-	}
-
 	@DeleteAfterTestRun
 	private Group _group;
 
 	@Inject
 	private JournalArticleLocalService _journalArticleLocalService;
-
-	@Inject
-	private StructuredContentNestedCollectionResourceProxy
-		_structuredContentNestedCollectionResourceProxy;
 
 	@Inject
 	private UserLocalService _userLocalService;

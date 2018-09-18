@@ -40,7 +40,6 @@ import com.liferay.structured.content.apio.architect.filter.Filter;
 import com.liferay.structured.content.apio.architect.filter.FilterParser;
 import com.liferay.structured.content.apio.architect.sort.Sort;
 import com.liferay.structured.content.apio.architect.util.test.PaginationTestUtil;
-import com.liferay.structured.content.apio.architect.util.test.ThemeDisplayTestUtil;
 
 import java.util.HashMap;
 import java.util.List;
@@ -58,7 +57,8 @@ import org.junit.runner.RunWith;
  * @author Julio Camarero
  */
 @RunWith(Arquillian.class)
-public class StructuredContentNestedCollectionResourceFilteringTest {
+public class StructuredContentNestedCollectionResourceFilteringTest
+	extends BaseStructuredContentNestedCollectionResourceTestCase {
 
 	@ClassRule
 	@Rule
@@ -74,10 +74,9 @@ public class StructuredContentNestedCollectionResourceFilteringTest {
 
 	@Test
 	public void testGetBooleanClauseWithExistingProperty() throws Exception {
-		BooleanClause<Query> queryBooleanClause =
-			_structuredContentNestedCollectionResourceProxy.getBooleanClause(
-				new Filter(_filterParser.parse("title eq 'Title Value'")),
-				LocaleUtil.US);
+		BooleanClause<Query> queryBooleanClause = getBooleanClause(
+			new Filter(_filterParser.parse("title eq 'Title Value'")),
+			LocaleUtil.US);
 
 		Assert.assertEquals(
 			BooleanClauseOccur.MUST,
@@ -109,12 +108,11 @@ public class StructuredContentNestedCollectionResourceFilteringTest {
 			stringMap, null, LocaleUtil.getDefault(), null, true, true,
 			serviceContext);
 
-		PageItems<JournalArticle> pageItems =
-			_structuredContentNestedCollectionResourceProxy.getPageItems(
-				PaginationTestUtil.of(10, 1), _group.getGroupId(),
-				ThemeDisplayTestUtil.from(_group, LocaleUtil.getDefault()),
-				new Filter(_filterParser.parse("(title eq 'hello')")),
-				Sort.emptySort());
+		PageItems<JournalArticle> pageItems = getPageItems(
+			PaginationTestUtil.of(10, 1), _group.getGroupId(),
+			getThemeDisplay(_group, LocaleUtil.getDefault()),
+			new Filter(_filterParser.parse("(title eq 'hello')")),
+			Sort.emptySort());
 
 		Assert.assertEquals(0, pageItems.getTotalCount());
 	}
@@ -150,12 +148,11 @@ public class StructuredContentNestedCollectionResourceFilteringTest {
 			stringMap2, null, LocaleUtil.getDefault(), null, true, true,
 			serviceContext);
 
-		PageItems<JournalArticle> pageItems =
-			_structuredContentNestedCollectionResourceProxy.getPageItems(
-				PaginationTestUtil.of(10, 1), _group.getGroupId(),
-				ThemeDisplayTestUtil.from(_group, LocaleUtil.getDefault()),
-				new Filter(_filterParser.parse("(title eq 'hello world')")),
-				Sort.emptySort());
+		PageItems<JournalArticle> pageItems = getPageItems(
+			PaginationTestUtil.of(10, 1), _group.getGroupId(),
+			getThemeDisplay(_group, LocaleUtil.getDefault()),
+			new Filter(_filterParser.parse("(title eq 'hello world')")),
+			Sort.emptySort());
 
 		Assert.assertEquals(1, pageItems.getTotalCount());
 
@@ -181,12 +178,11 @@ public class StructuredContentNestedCollectionResourceFilteringTest {
 			stringMap, null, LocaleUtil.getDefault(), null, true, true,
 			serviceContext);
 
-		PageItems<JournalArticle> pageItems =
-			_structuredContentNestedCollectionResourceProxy.getPageItems(
-				PaginationTestUtil.of(10, 1), _group.getGroupId(),
-				ThemeDisplayTestUtil.from(_group, LocaleUtil.getDefault()),
-				new Filter(_filterParser.parse("(title eq 'hel')")),
-				Sort.emptySort());
+		PageItems<JournalArticle> pageItems = getPageItems(
+			PaginationTestUtil.of(10, 1), _group.getGroupId(),
+			getThemeDisplay(_group, LocaleUtil.getDefault()),
+			new Filter(_filterParser.parse("(title eq 'hel')")),
+			Sort.emptySort());
 
 		Assert.assertEquals(0, pageItems.getTotalCount());
 	}
@@ -220,12 +216,11 @@ public class StructuredContentNestedCollectionResourceFilteringTest {
 			stringMap2, null, LocaleUtil.getDefault(), null, true, true,
 			serviceContext);
 
-		PageItems<JournalArticle> pageItems =
-			_structuredContentNestedCollectionResourceProxy.getPageItems(
-				PaginationTestUtil.of(10, 1), _group.getGroupId(),
-				ThemeDisplayTestUtil.from(_group, LocaleUtil.getDefault()),
-				new Filter(_filterParser.parse("(title eq 'title1')")),
-				Sort.emptySort());
+		PageItems<JournalArticle> pageItems = getPageItems(
+			PaginationTestUtil.of(10, 1), _group.getGroupId(),
+			getThemeDisplay(_group, LocaleUtil.getDefault()),
+			new Filter(_filterParser.parse("(title eq 'title1')")),
+			Sort.emptySort());
 
 		Assert.assertEquals(1, pageItems.getTotalCount());
 
@@ -255,12 +250,11 @@ public class StructuredContentNestedCollectionResourceFilteringTest {
 			stringMap, null, LocaleUtil.SPAIN, null, true, true,
 			serviceContext);
 
-		PageItems<JournalArticle> pageItems =
-			_structuredContentNestedCollectionResourceProxy.getPageItems(
-				PaginationTestUtil.of(10, 1), _group.getGroupId(),
-				ThemeDisplayTestUtil.from(_group, LocaleUtil.getDefault()),
-				new Filter(_filterParser.parse("(title eq 'titulo1')")),
-				Sort.emptySort());
+		PageItems<JournalArticle> pageItems = getPageItems(
+			PaginationTestUtil.of(10, 1), _group.getGroupId(),
+			getThemeDisplay(_group, LocaleUtil.getDefault()),
+			new Filter(_filterParser.parse("(title eq 'titulo1')")),
+			Sort.emptySort());
 
 		Assert.assertEquals(1, pageItems.getTotalCount());
 
@@ -289,12 +283,11 @@ public class StructuredContentNestedCollectionResourceFilteringTest {
 			stringMap, null, LocaleUtil.getDefault(), null, true, true,
 			serviceContext);
 
-		PageItems<JournalArticle> pageItems =
-			_structuredContentNestedCollectionResourceProxy.getPageItems(
-				PaginationTestUtil.of(10, 1), _group.getGroupId(),
-				ThemeDisplayTestUtil.from(_group, LocaleUtil.getDefault()),
-				new Filter(_filterParser.parse("(title eq 'titulo1')")),
-				Sort.emptySort());
+		PageItems<JournalArticle> pageItems = getPageItems(
+			PaginationTestUtil.of(10, 1), _group.getGroupId(),
+			getThemeDisplay(_group, LocaleUtil.getDefault()),
+			new Filter(_filterParser.parse("(title eq 'titulo1')")),
+			Sort.emptySort());
 
 		Assert.assertEquals(0, pageItems.getTotalCount());
 	}
@@ -319,12 +312,11 @@ public class StructuredContentNestedCollectionResourceFilteringTest {
 			stringMap, null, LocaleUtil.getDefault(), null, true, true,
 			serviceContext);
 
-		PageItems<JournalArticle> pageItems =
-			_structuredContentNestedCollectionResourceProxy.getPageItems(
-				PaginationTestUtil.of(10, 1), _group.getGroupId(),
-				ThemeDisplayTestUtil.from(_group, LocaleUtil.SPAIN),
-				new Filter(_filterParser.parse("(title eq 'titulo1')")),
-				Sort.emptySort());
+		PageItems<JournalArticle> pageItems = getPageItems(
+			PaginationTestUtil.of(10, 1), _group.getGroupId(),
+			getThemeDisplay(_group, LocaleUtil.SPAIN),
+			new Filter(_filterParser.parse("(title eq 'titulo1')")),
+			Sort.emptySort());
 
 		Assert.assertEquals(1, pageItems.getTotalCount());
 
@@ -364,12 +356,11 @@ public class StructuredContentNestedCollectionResourceFilteringTest {
 			stringMap2, null, LocaleUtil.getDefault(), null, true, true,
 			serviceContext);
 
-		PageItems<JournalArticle> pageItems =
-			_structuredContentNestedCollectionResourceProxy.getPageItems(
-				PaginationTestUtil.of(10, 1), _group.getGroupId(),
-				ThemeDisplayTestUtil.from(_group, LocaleUtil.getDefault()),
-				new Filter(_filterParser.parse("(title eq 'great title')")),
-				Sort.emptySort());
+		PageItems<JournalArticle> pageItems = getPageItems(
+			PaginationTestUtil.of(10, 1), _group.getGroupId(),
+			getThemeDisplay(_group, LocaleUtil.getDefault()),
+			new Filter(_filterParser.parse("(title eq 'great title')")),
+			Sort.emptySort());
 
 		Assert.assertEquals(2, pageItems.getTotalCount());
 
@@ -410,12 +401,11 @@ public class StructuredContentNestedCollectionResourceFilteringTest {
 			stringMap2, null, LocaleUtil.getDefault(), null, true, true,
 			serviceContext);
 
-		PageItems<JournalArticle> pageItems =
-			_structuredContentNestedCollectionResourceProxy.getPageItems(
-				PaginationTestUtil.of(10, 1), _group.getGroupId(),
-				ThemeDisplayTestUtil.from(_group, LocaleUtil.getDefault()),
-				new Filter(_filterParser.parse("(title eq 'Great Title')")),
-				Sort.emptySort());
+		PageItems<JournalArticle> pageItems = getPageItems(
+			PaginationTestUtil.of(10, 1), _group.getGroupId(),
+			getThemeDisplay(_group, LocaleUtil.getDefault()),
+			new Filter(_filterParser.parse("(title eq 'Great Title')")),
+			Sort.emptySort());
 
 		Assert.assertEquals(2, pageItems.getTotalCount());
 
@@ -430,9 +420,5 @@ public class StructuredContentNestedCollectionResourceFilteringTest {
 
 	@DeleteAfterTestRun
 	private Group _group;
-
-	@Inject
-	private StructuredContentNestedCollectionResourceProxy
-		_structuredContentNestedCollectionResourceProxy;
 
 }

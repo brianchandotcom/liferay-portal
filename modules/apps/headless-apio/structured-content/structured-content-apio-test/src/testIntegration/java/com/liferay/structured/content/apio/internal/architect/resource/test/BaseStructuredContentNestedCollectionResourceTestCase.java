@@ -19,9 +19,13 @@ import com.liferay.apio.architect.pagination.Pagination;
 import com.liferay.apio.architect.resource.NestedCollectionResource;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalArticleWrapper;
+import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.search.BooleanClause;
 import com.liferay.portal.kernel.search.Query;
+import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.structured.content.apio.architect.filter.Filter;
 import com.liferay.structured.content.apio.architect.sort.Sort;
 
@@ -30,17 +34,10 @@ import java.lang.reflect.Method;
 
 import java.util.Locale;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Julio Camarero
  */
-@Component(
-	immediate = true,
-	service = StructuredContentNestedCollectionResourceProxy.class
-)
-public class StructuredContentNestedCollectionResourceProxy {
+public abstract class BaseStructuredContentNestedCollectionResourceTestCase {
 
 	protected BooleanClause<Query> getBooleanClause(
 			Filter filter, Locale locale)
@@ -100,8 +97,24 @@ public class StructuredContentNestedCollectionResourceProxy {
 			filter, sort);
 	}
 
-	@Reference(
-		target = "(component.name=com.liferay.structured.content.apio.internal.architect.resource.StructuredContentNestedCollectionResource)"
+	protected ThemeDisplay getThemeDisplay(Group group, Locale locale)
+		throws Exception {
+
+		ThemeDisplay themeDisplay = new ThemeDisplay();
+
+		Company company = CompanyLocalServiceUtil.getCompanyById(
+			group.getCompanyId());
+
+		themeDisplay.setCompany(company);
+
+		themeDisplay.setLocale(locale);
+		themeDisplay.setScopeGroupId(group.getGroupId());
+
+		return themeDisplay;
+	}
+
+	@Inject(
+		filter = "component.name=com.liferay.structured.content.apio.internal.architect.resource.StructuredContentNestedCollectionResource"
 	)
 	private NestedCollectionResource _nestedCollectionResource;
 

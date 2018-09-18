@@ -576,7 +576,7 @@ public class StructuredContentNestedCollectionResource
 			() -> _journalContent.getDisplay(
 				journalArticleWrapper.getGroupId(),
 				journalArticleWrapper.getArticleId(),
-				ddmTemplate.getTemplateKey(), null, locale.getLanguage(),
+				ddmTemplate.getTemplateKey(), null, locale.toString(),
 				journalArticleWrapper.getThemeDisplay())
 		).map(
 			JournalArticleDisplay::getContent

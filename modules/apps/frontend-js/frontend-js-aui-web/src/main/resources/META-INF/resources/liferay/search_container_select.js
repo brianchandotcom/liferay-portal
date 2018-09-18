@@ -194,7 +194,7 @@ AUI.add(
 
 								var rowActions = row.getData('actions');
 
-								return rowActions ? rowActions.split(',') : STR_ACTIONS_WILDCARD;
+								return (rowActions || rowActions === '') ? rowActions.split(',') : STR_ACTIONS_WILDCARD;
 							}
 						);
 

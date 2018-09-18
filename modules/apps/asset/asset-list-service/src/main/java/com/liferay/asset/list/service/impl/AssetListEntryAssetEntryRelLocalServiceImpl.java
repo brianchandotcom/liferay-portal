@@ -16,6 +16,7 @@ package com.liferay.asset.list.service.impl;
 
 import com.liferay.asset.list.model.AssetListEntryAssetEntryRel;
 import com.liferay.asset.list.service.base.AssetListEntryAssetEntryRelLocalServiceBaseImpl;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
 
@@ -50,6 +51,31 @@ public class AssetListEntryAssetEntryRelLocalServiceImpl
 	public AssetListEntryAssetEntryRel deleteAssetListEntryAssetEntryRel(
 			long assetListEntryId, int position)
 		throws PortalException {
+
+		TransactionCommitCallbackUtil.registerCallback(
+			() -> {
+				List<AssetListEntryAssetEntryRel> assetListEntryAssetEntryRels =
+					assetListEntryAssetEntryRelLocalService.
+						getAssetListEntryAssetEntryRels(
+							assetListEntryId, QueryUtil.ALL_POS,
+							QueryUtil.ALL_POS);
+
+				for (AssetListEntryAssetEntryRel assetListEntryAssetEntryRel :
+						assetListEntryAssetEntryRels) {
+
+					if (assetListEntryAssetEntryRel.getPosition() < position) {
+						continue;
+					}
+
+					assetListEntryAssetEntryRelLocalService.
+						moveAssetListEntryAssetEntryRel(
+							assetListEntryId,
+							assetListEntryAssetEntryRel.getPosition(),
+							assetListEntryAssetEntryRel.getPosition() - 1);
+				}
+
+				return null;
+			});
 
 		return assetListEntryAssetEntryRelPersistence.removeByA_P(
 			assetListEntryId, position);
@@ -89,8 +115,15 @@ public class AssetListEntryAssetEntryRelLocalServiceImpl
 		}
 
 		AssetListEntryAssetEntryRel swapAssetListEntryAssetEntryRel =
-			assetListEntryAssetEntryRelPersistence.findByA_P(
+			assetListEntryAssetEntryRelPersistence.fetchByA_P(
 				assetListEntryId, newPosition);
+
+		if (swapAssetListEntryAssetEntryRel == null) {
+			assetListEntryAssetEntryRel.setPosition(newPosition);
+
+			return assetListEntryAssetEntryRelPersistence.update(
+				assetListEntryAssetEntryRel);
+		}
 
 		assetListEntryAssetEntryRel.setPosition(-1);
 		swapAssetListEntryAssetEntryRel.setPosition(-2);

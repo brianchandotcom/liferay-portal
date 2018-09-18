@@ -1,4 +1,5 @@
 import '../Page/PageRenderer.es';
+import '../SuccessPage/SuccessPage.es';
 import 'clay-button';
 import {Config} from 'metal-state';
 import {DragDrop} from 'metal-drag-drop';
@@ -7,6 +8,7 @@ import Component from 'metal-component';
 import FormSupport from './FormSupport.es';
 import Soy from 'metal-soy';
 import templates from './FormRenderer.soy.js';
+import {setValue} from '../../util/i18n.es';
 
 /**
  * FormRenderer.
@@ -146,21 +148,38 @@ class FormRenderer extends Component {
 		return nextState;
 	}
 
+	/**
+	 * Render page options acordding the older form's options order
+	 * @private
+	 */
+
 	_getPageSettingsItems() {
+		if(!this.successPageSettings) return;
+
 		const pageSettingsItems = [
 			{
 				'label': Liferay.Language.get('add-new-page'),
 				'settingsItem': 'add-page'
 			}
 		];
+		const successPageEnabled = this.successPageSettings.enabled;
 
-		if (this.pages.length === 1) {
+		if ((this.pages.length === 1) && (this.activePage != -1)) {
 			pageSettingsItems.push(
 				{
 					'label': Liferay.Language.get('reset-page'),
 					'settingsItem': 'reset-page'
 				}
 			);
+
+			if(!successPageEnabled) {
+				pageSettingsItems.push(
+					{
+						'label': Liferay.Language.get('add-success-page'),
+						'settingsItem': 'add-success-page'
+					}
+				)
+			}
 		}
 		else {
 			pageSettingsItems.push(
@@ -169,6 +188,15 @@ class FormRenderer extends Component {
 					'settingsItem': 'delete-page'
 				}
 			);
+
+			if(!successPageEnabled) {
+				pageSettingsItems.push(
+					{
+						'label': Liferay.Language.get('add-success-page'),
+						'settingsItem': 'add-success-page'
+					}
+				)
+			}
 
 			let label = Liferay.Language.get('switch-pagination-to-top');
 
@@ -207,6 +235,38 @@ class FormRenderer extends Component {
 		this.emit('pageAdded');
 	}
 
+	/**
+	 * Add a success page to the context
+	 * @private
+	 */
+
+	_addSuccessPage() {
+		return this._updateSuccessPage(
+			{
+				body: "Your information was successfully received. Thank you for filling out the form.",
+				enabled: true,
+				title: "Done"
+			}, 
+			-1
+		);
+	}
+
+	_updateSuccessPage({body = "", title = "", enabled}, activePageValue) {
+		const language = themeDisplay.getLanguageId();
+		const successPageSettings = {
+			body: {},
+			enabled,
+			title: {}
+		}
+
+		this.activePage = activePageValue;
+
+		setValue(successPageSettings, language, 'body', body);
+		setValue(successPageSettings, language, 'title', title);
+
+		this.emit('activePageUpdated', this.activePage);
+		this.emit('successPageChanged', successPageSettings);
+	}
 	/*
 	 * @param {Object} data
 	 * @private
@@ -228,6 +288,9 @@ class FormRenderer extends Component {
 		}
 		else if (settingsItem == 'switch-pagination-mode') {
 			this._switchPaginationMode();
+		}
+		else if (settingsItem == 'add-success-page') {
+			this._addSuccessPage();
 		}
 	}
 

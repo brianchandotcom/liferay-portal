@@ -404,6 +404,22 @@ public class GroupServiceSoap {
 		}
 	}
 
+	public static com.liferay.portal.kernel.model.GroupSoap[] getGroups(
+		long companyId, long parentGroupId, String name, boolean site,
+		int start, int end) throws RemoteException {
+		try {
+			java.util.List<com.liferay.portal.kernel.model.Group> returnValue = GroupServiceUtil.getGroups(companyId,
+					parentGroupId, name, site, start, end);
+
+			return com.liferay.portal.kernel.model.GroupSoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	/**
 	* Returns the number of groups that are direct children of the parent
 	* group.
@@ -418,6 +434,21 @@ public class GroupServiceSoap {
 		try {
 			int returnValue = GroupServiceUtil.getGroupsCount(companyId,
 					parentGroupId, site);
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static int getGroupsCount(long companyId, long parentGroupId,
+		String name, boolean site) throws RemoteException {
+		try {
+			int returnValue = GroupServiceUtil.getGroupsCount(companyId,
+					parentGroupId, name, site);
 
 			return returnValue;
 		}

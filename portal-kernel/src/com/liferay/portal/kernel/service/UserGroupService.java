@@ -153,6 +153,13 @@ public interface UserGroupService extends BaseService {
 	public List<UserGroup> getUserGroups(long companyId)
 		throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<UserGroup> getUserGroups(long companyId, String name,
+		int start, int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getUserGroupsCount(long companyId, String name);
+
 	/**
 	* Returns all the user groups to which the user belongs.
 	*

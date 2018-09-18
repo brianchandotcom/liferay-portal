@@ -253,6 +253,14 @@ public class OrganizationServiceUtil {
 				   .getOrganizations(companyId, parentOrganizationId, start, end);
 	}
 
+	public static java.util.List<com.liferay.portal.kernel.model.Organization> getOrganizations(
+		long companyId, long parentOrganizationId, String name, int start,
+		int end) {
+		return getService()
+				   .getOrganizations(companyId, parentOrganizationId, name,
+			start, end);
+	}
+
 	/**
 	* Returns the number of organizations belonging to the parent organization.
 	*
@@ -265,6 +273,13 @@ public class OrganizationServiceUtil {
 		long parentOrganizationId) {
 		return getService()
 				   .getOrganizationsCount(companyId, parentOrganizationId);
+	}
+
+	public static int getOrganizationsCount(long companyId,
+		long parentOrganizationId, String name)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .getOrganizationsCount(companyId, parentOrganizationId, name);
 	}
 
 	/**

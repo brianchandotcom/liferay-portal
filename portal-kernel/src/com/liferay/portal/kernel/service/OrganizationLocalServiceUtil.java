@@ -575,6 +575,14 @@ public class OrganizationLocalServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.portal.kernel.model.Organization> getOrganizations(
+		long companyId, long parentOrganizationId, String name, int start,
+		int end) {
+		return getService()
+				   .getOrganizations(companyId, parentOrganizationId, name,
+			start, end);
+	}
+
+	public static java.util.List<com.liferay.portal.kernel.model.Organization> getOrganizations(
 		long companyId, String treePath) {
 		return getService().getOrganizations(companyId, treePath);
 	}
@@ -654,6 +662,12 @@ public class OrganizationLocalServiceUtil {
 		long parentOrganizationId) {
 		return getService()
 				   .getOrganizationsCount(companyId, parentOrganizationId);
+	}
+
+	public static int getOrganizationsCount(long companyId,
+		long parentOrganizationId, String name) {
+		return getService()
+				   .getOrganizationsCount(companyId, parentOrganizationId, name);
 	}
 
 	/**

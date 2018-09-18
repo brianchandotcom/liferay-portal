@@ -1016,6 +1016,10 @@ public interface UserLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public long[] getOrganizationPrimaryKeys(long userId);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getOrganizationsAndUserGroupsUsersCount(long[] organizationIds,
+		long[] userGroupIds);
+
 	/**
 	* Returns the primary keys of all the users belonging to the organization.
 	*

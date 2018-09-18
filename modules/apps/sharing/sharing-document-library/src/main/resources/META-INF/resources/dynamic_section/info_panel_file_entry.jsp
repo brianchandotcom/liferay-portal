@@ -16,6 +16,9 @@
 
 <%@ include file="/dynamic_section/init.jsp" %>
 
+<%
+	JSONArray collaboratorsJSONArray = JSONFactoryUtil.createJSONArray();
+%>
 <div class="autofit-row sidebar-panel widget-metadata">
 	<div class="autofit-col inline-item-before">
 
@@ -23,6 +26,12 @@
 		FileEntry fileEntry = (FileEntry)request.getAttribute("info_panel.jsp-fileEntry");
 
 		User owner = UserLocalServiceUtil.fetchUser(fileEntry.getUserId());
+
+
+		JSONObject ownerJSONObject = JSONFactoryUtil.createJSONObject();
+		ownerJSONObject.put("name", owner.getFullName());
+		ownerJSONObject.put("imageSrc", owner.getPortraitURL(themeDisplay));
+		collaboratorsJSONArray.put(ownerJSONObject);
 		%>
 
 		<div class="lfr-portal-tooltip" data-title="<%= LanguageUtil.format(resourceBundle, "x-is-the-owner", owner.getFullName()) %>">
@@ -40,6 +49,11 @@
 			List<User> sharingEntryToUsers = (List<User>)request.getAttribute("info_panel_file_entry.jsp-sharingEntryToUsers");
 
 			for (User sharingEntryToUser : sharingEntryToUsers) {
+
+				JSONObject userJSONObject = JSONFactoryUtil.createJSONObject();
+				userJSONObject.put("name", sharingEntryToUser.getFullName());
+				userJSONObject.put("imageSrc", sharingEntryToUser.getPortraitURL(themeDisplay));
+				collaboratorsJSONArray.put(userJSONObject);
 			%>
 
 				<div class="autofit-col">
@@ -73,10 +87,15 @@
 
 <div id="<portlet:namespace />ManageCollaborators_<%= fileEntry.getFileEntryId() %>"></div>
 
+<liferay-util:html-top>
+	<link href="<%= PortalUtil.getStaticResourceURL(request, StringBundler.concat(themeDisplay.getCDNBaseURL(), PortalUtil.getPathProxy(), application.getContextPath(), "/dynamic_section/css/ManageCollaborators.css")) %>" rel="stylesheet" type="text/css" />
+</liferay-util:html-top>
+
 <aui:script require="sharing-document-library/dynamic_section/js/ManageCollaborators.es">
 	new sharingDocumentLibraryDynamic_sectionJsManageCollaboratorsEs.default(
 		{
-			pathThemeImages: '<%= themeDisplay.getPathThemeImages() %>'
+			collaborators: <%= collaboratorsJSONArray %>,
+			spritemap: '<%= themeDisplay.getPathThemeImages() %>/lexicon/icons.svg'
 		},
 		<portlet:namespace />ManageCollaborators_<%= fileEntry.getFileEntryId()%>
 	);

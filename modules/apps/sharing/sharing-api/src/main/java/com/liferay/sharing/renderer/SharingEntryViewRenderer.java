@@ -22,7 +22,7 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * @author Sergio González
  */
-public interface SharingEntryViewRenderer <T> {
+public interface SharingEntryViewRenderer<T> {
 
 	public void render(
 			T entry, HttpServletRequest request, HttpServletResponse response)

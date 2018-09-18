@@ -18,6 +18,7 @@ import com.liferay.portal.util.PropsValues;
 
 import java.io.File;
 import java.io.FileFilter;
+import java.io.IOException;
 import java.io.InputStream;
 
 import java.nio.file.Files;
@@ -38,7 +39,7 @@ import org.junit.Test;
 public class BundleRevisionTest {
 
 	@Test
-	public void testBundleRevisions() throws Exception {
+	public void testBundleRevisions() throws IOException {
 		Path path = Paths.get(
 			PropsValues.MODULE_FRAMEWORK_STATE_DIR, "org.eclipse.osgi");
 
@@ -59,7 +60,7 @@ public class BundleRevisionTest {
 		}
 	}
 
-	private String _generateMessage(File file) throws Exception {
+	private String _generateMessage(File file) throws IOException {
 		File[] files = file.listFiles(
 			new FileFilter() {
 

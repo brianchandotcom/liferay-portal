@@ -48,6 +48,7 @@ function updateDragTargetReducer(state, actionType, payload) {
  * @return {object}
  * @review
  */
+
 function updateHighlightMappingReducer(state, actionType, payload) {
 	let nextState = state;
 

@@ -43,27 +43,27 @@ exports[`RuleBuilder should render rule screen editor when click add rule button
                 </h4>
               </div>
               <div class="condition-if form-group-item" condition-if-index="0">
-                <div>
+                <div id="fields-rule">
                   <p>Select Field</p>
                 </div>
               </div>
               <div class="condition-operator form-group-item" condition-operator-index="0">
-                <div>
+                <div id="fields-rule">
                   <p>Select Field</p>
                 </div>
               </div>
               <div class="condition-type form-group-item hide" condition-type-index="0">
-                <div>
+                <div id="fields-rule">
                   <p>Select Field</p>
                 </div>
               </div>
               <div class="condition-type-value form-group-item hide" condition-type-value-index="0">
-                <div>
+                <div id="fields-rule">
                   <p>Text Field</p>
                 </div>
               </div>
               <div class="condition-type-value-select form-group-item hide" condition-type-value-select-index="0">
-                <div>
+                <div id="fields-rule">
                   <p>Select Field</p>
                 </div>
               </div>
@@ -122,27 +122,27 @@ exports[`RuleBuilder should render rule screen editor when click edit button 1`]
                 </h4>
               </div>
               <div class="condition-if form-group-item" condition-if-index="0">
-                <div>
+                <div id="fields-rule">
                   <p>Select Field</p>
                 </div>
               </div>
               <div class="condition-operator form-group-item" condition-operator-index="0">
-                <div>
+                <div id="fields-rule">
                   <p>Select Field</p>
                 </div>
               </div>
               <div class="condition-type form-group-item hide" condition-type-index="0">
-                <div>
+                <div id="fields-rule">
                   <p>Select Field</p>
                 </div>
               </div>
               <div class="condition-type-value form-group-item hide" condition-type-value-index="0">
-                <div>
+                <div id="fields-rule">
                   <p>Text Field</p>
                 </div>
               </div>
               <div class="condition-type-value-select form-group-item hide" condition-type-value-select-index="0">
-                <div>
+                <div id="fields-rule">
                   <p>Select Field</p>
                 </div>
               </div>

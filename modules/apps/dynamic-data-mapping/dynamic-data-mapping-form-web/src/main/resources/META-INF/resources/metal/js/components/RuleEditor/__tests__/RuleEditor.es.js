@@ -66,8 +66,8 @@ const firstOperandList = [
 				value: 'Option'
 			}
 		],
-		value: 'Nome',
-		type: 'text'
+		type: 'text',
+		value: 'Nome'
 	},
 	{
 		dataType: 'string',
@@ -78,8 +78,8 @@ const firstOperandList = [
 				value: 'Option'
 			}
 		],
-		value: 'Sobrenome',
-		type: 'text'
+		type: 'text',
+		value: 'Sobrenome'
 	},
 	{
 		dataType: 'string',
@@ -94,8 +94,8 @@ const firstOperandList = [
 				value: 'Solteiro'
 			}
 		],
-		value: 'Estado civil',
-		type: 'select'
+		type: 'select',
+		value: 'Estado civil'
 	}
 ];
 
@@ -106,22 +106,22 @@ const secondOperandTypeSelectedList = [
 	}
 ];
 
-const conditionOperatorList = [
-	{value: 'Is equal to', name: 'equals-to', parameterTypes: ['text', 'text'], returnType: 'boolean'},
-	{value: 'Is not equal to', name: 'not-equals-to', parameterTypes: ['text', 'text'], returnType: 'boolean'},
-	{value: 'Contains', name: 'contains', parameterTypes: ['text', 'text'], returnType: 'boolean'},
-	{value: 'Does not contain', name: 'not-contains', parameterTypes: ['text', 'text'], returnType: 'boolean'},
-	{value: 'Is empty', name: 'is-empty', parameterTypes: ['text'], returnType: 'boolean'},
-	{value: 'Is not empty', name: 'not-is-empty', parameterTypes: ['text'], returnType: 'boolean'}
+const operatorsList = [
+	{name: 'equals-to', parameterTypes: ['text', 'text'], returnType: 'boolean', value: 'Is equal to'},
+	{name: 'not-equals-to', parameterTypes: ['text', 'text'], returnType: 'boolean', value: 'Is not equal to'},
+	{name: 'contains', parameterTypes: ['text', 'text'], returnType: 'boolean', value: 'Contains'},
+	{name: 'not-contains', parameterTypes: ['text', 'text'], returnType: 'boolean', value: 'Does not contain'},
+	{name: 'is-empty', parameterTypes: ['text'], returnType: 'boolean', value: 'Is empty'},
+	{name: 'not-is-empty', parameterTypes: ['text'], returnType: 'boolean', value: 'Is not empty'}
 ];
 
 const functionsMetadata = {text: [
-	{value: 'Is equal to', name: 'equals-to', parameterTypes: ['text', 'text'], returnType: 'boolean'},
-	{value: 'Is not equal to', name: 'not-equals-to', parameterTypes: ['text', 'text'], returnType: 'boolean'},
-	{value: 'Contains', name: 'contains', parameterTypes: ['text', 'text'], returnType: 'boolean'},
-	{value: 'Does not contain', name: 'not-contains', parameterTypes: ['text', 'text'], returnType: 'boolean'},
-	{value: 'Is empty', name: 'is-empty', parameterTypes: ['text'], returnType: 'boolean'},
-	{value: 'Is not empty', name: 'not-is-empty', parameterTypes: ['text'], returnType: 'boolean'}
+	{name: 'equals-to', parameterTypes: ['text', 'text'], returnType: 'boolean', value: 'Is equal to'},
+	{name: 'not-equals-to', parameterTypes: ['text', 'text'], returnType: 'boolean', value: 'Is not equal to'},
+	{name: 'contains', parameterTypes: ['text', 'text'], returnType: 'boolean', value: 'Contains'},
+	{name: 'not-contains', parameterTypes: ['text', 'text'], returnType: 'boolean', value: 'Does not contain'},
+	{name: 'is-empty', parameterTypes: ['text'], returnType: 'boolean', value: 'Is empty'},
+	{name: 'not-is-empty', parameterTypes: ['text'], returnType: 'boolean', value: 'Is not empty'}
 ]};
 
 describe(
@@ -144,17 +144,10 @@ describe(
 			'should hide third and fourth selectors by default',
 			() => {
 
-				const conditions = [{
-					operands: [{
-						type: 'text',
-						value: 'Nome'
-					}],
-					operator: 'Is not equal to'
-				}];
+				const conditions = [];
 
 				component = new RuleEditor(
 					{
-						conditionOperatorList,
 						conditions,
 						firstOperandList,
 						functionsMetadata,
@@ -188,19 +181,32 @@ describe(
 					}
 				];
 
+				const secondOperandTypeList = [
+					{
+						name: 'text',
+						value: 'Value'
+					},
+					{
+						name: 'field',
+						value: 'other-field'
+					}
+				];
+
 				component = new RuleEditor(
 					{
-						conditionOperatorList,
 						conditions,
 						firstOperandList,
 						functionsMetadata,
+						logicalOperator: 'or',
+						operatorsList,
 						pages,
+						secondOperandTypeList,
 						secondOperandTypeSelectedList,
 						spritemap
 					}
 				);
 
-				component.refs.conditionIf.emitFieldEdited('', 'Nome', jest.fn());
+				component.refs.conditionIf.emitFieldEdited('Nome', 'Nome', jest.fn());
 				component.refs.conditionOperator.emitFieldEdited('Is not equal to', 'not-equals-to', jest.fn());
 
 				const type = document.querySelector('.condition-type').classList.contains('hide');
@@ -233,13 +239,31 @@ describe(
 					}
 				];
 
+				const secondOperandTypeList = [
+					{
+						name: 'text',
+						value: 'Value'
+					},
+					{
+						name: 'field',
+						value: 'other-field'
+					}
+				];
+
+				const secondOperandTypeSelectedList = [
+					{
+						name: 'text',
+						value: 'Value'
+					}
+				];
+
 				component = new RuleEditor(
 					{
-						conditionOperatorList,
 						conditions,
 						firstOperandList,
 						functionsMetadata,
 						pages,
+						secondOperandTypeList,
 						secondOperandTypeSelectedList,
 						spritemap
 					}
@@ -280,9 +304,15 @@ describe(
 					}
 				];
 
+				const secondOperandTypeSelectedList = [
+					{
+						name: 'select',
+						value: 'Value'
+					}
+				];
+
 				component = new RuleEditor(
 					{
-						conditionOperatorList,
 						conditions,
 						firstOperandList,
 						functionsMetadata,
@@ -312,28 +342,34 @@ describe(
 		);
 
 		it(
-			'should reset and show fourth "select" selector when first, second and third have options selected and Third selector is other-field',
+			'should show all fields when fourth field is a text input',
 			() => {
 
 				const conditions = [
 					{
 						operands: [
 							{
-								type: 'select',
-								value: 'Estado civil'
+								type: 'text',
+								value: 'Nome'
 							},
 							{
 								type: '',
-								value: 'dghdg'
+								value: 'Any text'
 							}
 						],
 						operator: 'Is not equal to'
 					}
 				];
 
+				const secondOperandTypeSelectedList = [
+					{
+						name: 'text',
+						value: 'Value'
+					}
+				];
+
 				component = new RuleEditor(
 					{
-						conditionOperatorList,
 						conditions,
 						firstOperandList,
 						functionsMetadata,
@@ -343,48 +379,44 @@ describe(
 					}
 				);
 
-				component.refs.conditionIf.emitFieldEdited('', 'EstadoCivil', jest.fn());
+				component.refs.conditionIf.emitFieldEdited('', 'Nome', jest.fn());
 				component.refs.conditionOperator.emitFieldEdited('Is not equal to', 'not-equals-to', jest.fn());
-				component.refs.type.emitFieldEdited('other-field', 'field', jest.fn());
+				component.refs.type.emitFieldEdited('Value', 'text', jest.fn());
+				component.refs.typeValueInput.emitFieldEdited('', 'Nome', jest.fn());
 
-				const type = document.querySelector('.condition-type').classList.contains('hide');
-				const typeValue = document.querySelector('.condition-type-value').classList.contains('hide');
-				const typeValueSelect = document.querySelector('.condition-type-value-select').classList.contains('hide');
-				const typeValueSelectOptions = document.querySelector('.condition-type-value-select-options').classList.contains('hide');
-
-				const secondOperandReseted = (conditions[0].operands[1].type === '') && (conditions[0].operands[1].value === '');
-
-				expect(
-					!type && typeValue &&
-					!typeValueSelect && typeValueSelectOptions &&
-					secondOperandReseted
-				).toEqual(true);
+				expect(component).toMatchSnapshot();
 			}
 		);
 
 		it(
-			'should reset all fields selectors when first selector has no option is selected',
+			'should show all fields when fourth field is a select field',
 			() => {
 
 				const conditions = [
 					{
 						operands: [
 							{
-								type: 'select',
-								value: 'Estado civil'
+								type: 'text',
+								value: 'Nome'
 							},
 							{
-								type: '',
-								value: 'dghdg'
+								type: 'text',
+								value: 'Nome'
 							}
 						],
 						operator: 'Is not equal to'
 					}
 				];
 
+				const secondOperandTypeSelectedList = [
+					{
+						name: 'field',
+						value: 'other-field'
+					}
+				];
+
 				component = new RuleEditor(
 					{
-						conditionOperatorList,
 						conditions,
 						firstOperandList,
 						functionsMetadata,
@@ -394,129 +426,13 @@ describe(
 					}
 				);
 
-				component.refs.conditionIf.emitFieldEdited('', 'EstadoCivil', jest.fn());
+				component.refs.conditionIf.emitFieldEdited('', 'Nome', jest.fn());
 				component.refs.conditionOperator.emitFieldEdited('Is not equal to', 'not-equals-to', jest.fn());
 				component.refs.type.emitFieldEdited('other-field', 'field', jest.fn());
-				component.refs.typeValueSelect.emitFieldEdited('text', 'Sobrenome', jest.fn());
-				component.refs.conditionIf.emitFieldEdited('', '', jest.fn());
+				component.refs.typeValueSelect.emitFieldEdited('', 'Nome', jest.fn());
 
-				const type = document.querySelector('.condition-type').classList.contains('hide');
-				const typeValue = document.querySelector('.condition-type-value').classList.contains('hide');
-				const typeValueSelect = document.querySelector('.condition-type-value-select').classList.contains('hide');
-				const typeValueSelectOptions = document.querySelector('.condition-type-value-select-options').classList.contains('hide');
-
-				const firstOperandReseted = (conditions[0].operands[0].type === '') && (conditions[0].operands[0].value === '');
-				const secondOperandReseted = (conditions[0].operands[1].type === '') && (conditions[0].operands[1].value === '');
-				const operatorReseted = (conditions[0].operator === '');
-
-				expect(
-					type && typeValue && typeValueSelect &&
-					typeValueSelectOptions && firstOperandReseted &&
-					secondOperandReseted && operatorReseted
-				).toEqual(true);
-			}
-		);
-
-		it(
-			'should reset third and fourth fields selectors when second selector has no option is selected',
-			() => {
-
-				const conditions = [
-					{
-						operands: [
-							{
-								type: 'select',
-								value: 'Estado civil'
-							},
-							{
-								type: '',
-								value: 'dghdg'
-							}
-						],
-						operator: 'Is not equal to'
-					}
-				];
-
-				component = new RuleEditor(
-					{
-						firstOperandList,
-						conditions,
-						conditionOperatorList,
-						functionsMetadata,
-						pages,
-						secondOperandTypeSelectedList,
-						spritemap
-					}
-				);
-
-				component.refs.conditionIf.emitFieldEdited('', 'EstadoCivil', jest.fn());
-				component.refs.conditionOperator.emitFieldEdited('Is not equal to', 'not-equals-to', jest.fn());
-				component.refs.type.emitFieldEdited('other-field', 'field', jest.fn());
-				component.refs.typeValueSelect.emitFieldEdited('text', 'Sobrenome', jest.fn());
-				component.refs.conditionOperator.emitFieldEdited('', 'Choose an option', jest.fn());
-
-				const type = document.querySelector('.condition-type').classList.contains('hide');
-				const typeValue = document.querySelector('.condition-type-value').classList.contains('hide');
-				const typeValueSelect = document.querySelector('.condition-type-value-select').classList.contains('hide');
-				const typeValueSelectOptions = document.querySelector('.condition-type-value-select-options').classList.contains('hide');
-
-				const firstOperandReseted = (conditions[0].operands[0].type === '') && (conditions[0].operands[0].value === '');
-				const secondOperandReseted = (conditions[0].operands[1].type === '') && (conditions[0].operands[1].value === '');
-				const operatorReseted = (conditions[0].operator === '');
-
-				expect(
-					type && typeValue && typeValueSelect &&
-					typeValueSelectOptions && !firstOperandReseted &&
-					secondOperandReseted && operatorReseted
-				).toEqual(true);
-			}
-		);
-
-		it(
-			'should reset fourth field selector when third selector has no option is selected',
-			() => {
-
-				const conditions = [
-					{
-						operands: [
-							{
-								type: 'select',
-								value: 'Estado civil'
-							},
-							{
-								type: '',
-								value: 'dghdg'
-							}
-						],
-						operator: 'Is not equal to'
-					}
-				];
-
-				component = new RuleEditor(
-					{
-						firstOperandList,
-						conditions,
-						conditionOperatorList,
-						functionsMetadata,
-						pages,
-						secondOperandTypeSelectedList,
-						spritemap
-					}
-				);
-
-				component.refs.conditionIf.emitFieldEdited('', 'EstadoCivil', jest.fn());
-				component.refs.conditionOperator.emitFieldEdited('Is not equal to', 'not-equals-to', jest.fn());
-				component.refs.type.emitFieldEdited('other-field', 'field', jest.fn());
-				component.refs.typeValueSelect.emitFieldEdited('text', 'Sobrenome', jest.fn());
-				component.refs.type.emitFieldEdited('', 'Choose an option', jest.fn());
-
-				const firstOperandReseted = (conditions[0].operands[0].type === '') && (conditions[0].operands[0].value === '');
-				const secondOperandReseted = (conditions[0].operands[1].type === '') && (conditions[0].operands[1].value === '');
-				const operatorReseted = (conditions[0].operator === '');
-
-				expect(!firstOperandReseted && secondOperandReseted && !operatorReseted).toEqual(true);
+				expect(component).toMatchSnapshot();
 			}
 		);
 	}
-
 );

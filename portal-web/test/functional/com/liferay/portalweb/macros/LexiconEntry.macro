@@ -27,7 +27,7 @@
 				<execute function="AssertConfirm" value1="${confirmationText}" />
 			</then>
 			<else>
-				<execute function="AssertConfirm#assertPartialConfirmation" value1="" />
+				<execute function="Confirm" />
 			</else>
 		</if>
 

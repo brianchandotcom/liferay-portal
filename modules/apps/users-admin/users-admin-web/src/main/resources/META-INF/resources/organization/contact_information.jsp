@@ -34,17 +34,17 @@ request.setAttribute("websites.classPK", organizationId);
 <div class="sheet-section">
 	<h3 class="sheet-subtitle"><liferay-ui:message key="phone-numbers" /></h3>
 
-	<liferay-util:include page="/organization/phone_numbers.jsp" servletContext="<%= application %>" />
+	<liferay-util:include page="/common/phone_numbers.jsp" servletContext="<%= application %>" />
 </div>
 
 <div class="sheet-section">
 	<h3 class="sheet-subtitle"><liferay-ui:message key="additional-email-addresses" /></h3>
 
-	<liferay-util:include page="/organization/additional_email_addresses.jsp" servletContext="<%= application %>" />
+	<liferay-util:include page="/common/additional_email_addresses.jsp" servletContext="<%= application %>" />
 </div>
 
 <div class="sheet-section">
 	<h3 class="sheet-subtitle"><liferay-ui:message key="websites" /></h3>
 
-	<liferay-util:include page="/organization/websites.jsp" servletContext="<%= application %>" />
+	<liferay-util:include page="/common/websites.jsp" servletContext="<%= application %>" />
 </div>

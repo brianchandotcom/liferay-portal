@@ -2022,6 +2022,9 @@ public class ProjectTemplatesTest {
 		String name = "guestbook";
 		String packageName = "com.liferay.docs.guestbook";
 
+		String apiProjectName = name + "-api";
+		String serviceProjectName = name + "-service";
+
 		File gradleProjectDir = _buildTemplateWithGradle(
 			"service-builder", name, "--package-name", packageName,
 			"--liferayVersion", "7.1");
@@ -2031,9 +2034,9 @@ public class ProjectTemplatesTest {
 			"-DliferayVersion=7.1");
 
 		File gradleServiceXml = new File(
-			new File(gradleProjectDir, name + "-service"), "service.xml");
+			new File(gradleProjectDir, serviceProjectName), "service.xml");
 		File mavenServiceXml = new File(
-			new File(mavenProjectDir, name + "-service"), "service.xml");
+			new File(mavenProjectDir, serviceProjectName), "service.xml");
 
 		Consumer<Document> editor = document -> {
 			Element documentElement = document.getDocumentElement();
@@ -2044,9 +2047,29 @@ public class ProjectTemplatesTest {
 		_editXml(gradleServiceXml, editor);
 		_editXml(mavenServiceXml, editor);
 
-		_testBuildFailTemplateServiceBuilder(
-			gradleProjectDir, mavenProjectDir, gradleProjectDir, name,
-			packageName, "");
+		_testContains(
+			gradleProjectDir, apiProjectName + "/bnd.bnd", "Export-Package:\\",
+			packageName + ".exception,\\", packageName + ".model,\\",
+			packageName + ".service,\\", packageName + ".service.persistence");
+
+		Optional<String> stdOutput = _executeGradle(
+			gradleProjectDir, false, true,
+			name + ":" + serviceProjectName + _GRADLE_TASK_PATH_BUILD);
+
+		Assert.assertTrue(stdOutput.isPresent());
+
+		String gradleOutput = stdOutput.get();
+
+		Assert.assertTrue(
+			"Expected gradle output to include build error",
+			gradleOutput.contains("Exporting an empty package"));
+
+		String mavenOutput = _executeMaven(
+			mavenProjectDir, true, _MAVEN_GOAL_PACKAGE);
+
+		Assert.assertTrue(
+			"Expected maven output to include build error",
+			mavenOutput.contains("Exporting an empty package"));
 	}
 
 	@Test
@@ -4114,8 +4137,9 @@ public class ProjectTemplatesTest {
 		MavenExecutor.Result result = mavenExecutor.execute(projectDir, args);
 
 		if (buildAndFail) {
-			Assert.assertEquals(
-				"Process should get failed", 1, result.exitCode);
+			Assert.assertFalse(
+				"Expected build to fail. " + result.exitCode,
+				result.exitCode == 0);
 		}
 		else {
 			Assert.assertEquals(result.output, 0, result.exitCode);
@@ -4690,39 +4714,6 @@ public class ProjectTemplatesTest {
 
 		return _buildTemplateWithGradle(
 			destinationDir, WorkspaceUtil.WORKSPACE, "test-workspace");
-	}
-
-	private void _testBuildFailTemplateServiceBuilder(
-			File gradleProjectDir, File mavenProjectDir, final File rootProject,
-			String name, String packageName, final String projectPath)
-		throws Exception {
-
-		String apiProjectName = name + "-api";
-		final String serviceProjectName = name + "-service";
-
-		_testContains(
-			gradleProjectDir, apiProjectName + "/bnd.bnd", "Export-Package:\\",
-			packageName + ".exception,\\", packageName + ".model,\\",
-			packageName + ".service,\\", packageName + ".service.persistence");
-
-		Optional<String> outPut = _executeGradle(
-			rootProject, false, true,
-			projectPath + ":" + serviceProjectName + _GRADLE_TASK_PATH_BUILD);
-
-		Assert.assertTrue(outPut.isPresent());
-
-		String outPutText = outPut.toString();
-
-		Assert.assertTrue(
-			"Expect exporting empty packages",
-			outPutText.contains("Exporting an empty package"));
-
-		String mavenOutPut = _executeMaven(
-			mavenProjectDir, true, _MAVEN_GOAL_PACKAGE);
-
-		Assert.assertTrue(
-			"Expect exporting empty packages",
-			mavenOutPut.contains("Exporting an empty package"));
 	}
 
 	private void _testBuildTemplateNpm70(

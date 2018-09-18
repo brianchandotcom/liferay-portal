@@ -90,7 +90,7 @@ public class WorkflowTaskItemResource
 		).addLinkedModel(
 			"comment", CommentIdentifier.class, this::_getLinkedModelId
 		).addLinkedModel(
-			"mediaObject", MediaObjectIdentifier.class, this::_getLinkedModelId
+			"document", MediaObjectIdentifier.class, this::_getLinkedModelId
 		).addRelatedCollection(
 			"logs", WorkflowLogIdentifier.class
 		).addString(

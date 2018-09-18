@@ -37,7 +37,7 @@ public class StructuredContentValuesForm {
 		).addOptionalDouble(
 			"longitude", StructuredContentValuesForm::setLongitude
 		).addOptionalLinkedModel(
-			"mediaObject", MediaObjectIdentifier.class,
+			"document", MediaObjectIdentifier.class,
 			StructuredContentValuesForm::setDocument
 		).addOptionalLinkedModel(
 			"structuredContent", StructuredContentIdentifier.class,

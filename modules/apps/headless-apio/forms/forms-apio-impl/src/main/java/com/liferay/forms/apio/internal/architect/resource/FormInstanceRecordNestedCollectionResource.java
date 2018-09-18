@@ -139,7 +139,7 @@ public class FormInstanceRecordNestedCollectionResource
 			fieldValuesBuilder -> fieldValuesBuilder.types(
 				"FormFieldValue"
 			).addLinkedModel(
-				"mediaObject", MediaObjectIdentifier.class,
+				"document", MediaObjectIdentifier.class,
 				ddmFormFieldValue -> Try.fromFallible(
 					ddmFormFieldValue::getValue
 				).map(

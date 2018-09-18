@@ -152,6 +152,8 @@ public class EditCompanyMVCActionCommand extends BaseFormMVCActionCommand {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
+		_validateDefaultLanguage(actionRequest);
+
 		_validateAvailableLanguages(actionRequest);
 	}
 
@@ -272,6 +274,35 @@ public class EditCompanyMVCActionCommand extends BaseFormMVCActionCommand {
 			SessionErrors.add(
 				actionRequest, RequiredLocaleException.class,
 				new RequiredLocaleException(groups));
+		}
+	}
+
+	private void _validateDefaultLanguage(ActionRequest actionRequest)
+		throws PortalException {
+
+		String languageId = ParamUtil.getString(actionRequest, "languageId");
+
+		if (Validator.isNull(languageId)) {
+			return;
+		}
+
+		UnicodeProperties properties = PropertiesParamUtil.getProperties(
+			actionRequest, "settings--");
+
+		String newLanguageIds = properties.getProperty(PropsKeys.LOCALES);
+
+		if (Validator.isNull(newLanguageIds)) {
+			return;
+		}
+
+		if (!StringUtil.contains(
+				newLanguageIds, languageId, StringPool.COMMA)) {
+
+			SessionErrors.add(
+				actionRequest, RequiredLocaleException.class,
+				new RequiredLocaleException(
+					"you-cannot-remove-a-language-that-is-the-current-" +
+						"default-language"));
 		}
 	}
 

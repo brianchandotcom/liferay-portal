@@ -538,16 +538,34 @@ public class BeanPortletExtension implements Extension {
 			portletApplication = _portletApplication;
 		}
 
-		_beanApp = new BeanAppAnnotationImpl(
+		BeanApp annotatedBeanApp = new BeanAppAnnotationImpl(
 			portletApplication, urlGenerationListeners);
 
-		_beanPortlets.putIfAbsent(
-			configuredPortletName,
-			new BeanPortletAnnotationImpl(
-				beanPortletClass.getName(), portletConfiguration,
-				_getAnnotatedLiferayConfiguration(configuredPortletName),
-				_descriptorLiferayConfigurations.get(configuredPortletName),
-				_descriptorDisplayCategories.get(configuredPortletName)));
+		if (_beanApp == null) {
+			_beanApp = annotatedBeanApp;
+		}
+		else {
+			_beanApp = new BeanAppMergedImpl(annotatedBeanApp, _beanApp);
+		}
+
+		BeanPortlet annotatedBeanPortlet = new BeanPortletAnnotationImpl(
+			beanPortletClass.getName(), portletConfiguration,
+			_getAnnotatedLiferayConfiguration(configuredPortletName),
+			_descriptorLiferayConfigurations.get(configuredPortletName),
+			_descriptorDisplayCategories.get(configuredPortletName));
+
+		BeanPortlet descriptorBeanPortlet = _beanPortlets.get(
+			configuredPortletName);
+
+		if (descriptorBeanPortlet == null) {
+			_beanPortlets.put(configuredPortletName, annotatedBeanPortlet);
+		}
+		else {
+			BeanPortlet mergedBeanPortlet = new BeanPortletMergedImpl(
+				annotatedBeanPortlet, descriptorBeanPortlet);
+
+			_beanPortlets.put(configuredPortletName, mergedBeanPortlet);
+		}
 	}
 
 	private void _addBeanPortletsFromAnnotatedClasses(

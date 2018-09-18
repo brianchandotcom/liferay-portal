@@ -21,20 +21,32 @@
 
 			&:focus, &:hover {
 				.add-content-item {
+					clip: auto;
+					clip-path: none;
 					display: inline;
+					height: auto;
+					overflow: visible;
+					white-space: normal;
+					width: auto;
 				}
 			}
 
 			.add-content-item {
 				cursor: pointer;
-				display: none;
 				margin-right: 15px;
+				padding: 2px 10px;
 				position: absolute;
 				right: 0;
-				top: 0;
+				top: -2px;
 
 				@include respond-to(phone, tablet) {
+					clip: auto;
+					clip-path: none;
 					display: inline;
+					height: auto;
+					overflow: visible;
+					white-space: normal;
+					width: auto;
 				}
 			}
 

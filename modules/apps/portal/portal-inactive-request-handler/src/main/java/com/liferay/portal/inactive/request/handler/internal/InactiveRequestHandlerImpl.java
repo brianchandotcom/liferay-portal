@@ -17,6 +17,7 @@ package com.liferay.portal.inactive.request.handler.internal;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.inactive.request.handler.configuration.InactiveRequestHandlerConfiguration;
+import com.liferay.portal.kernel.exception.NoSuchLayoutException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -35,6 +36,7 @@ import java.net.URL;
 import java.util.Locale;
 import java.util.Map;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -65,7 +67,15 @@ public class InactiveRequestHandlerImpl implements InactiveRequestHandler {
 		PrintWriter printWriter = response.getWriter();
 
 		if (!_showInactiveRequestMessage) {
-			printWriter.print(StringPool.BLANK);
+			try {
+				_portal.sendError(
+					HttpServletResponse.SC_NOT_FOUND,
+					new NoSuchLayoutException(),
+					_portal.getOriginalServletRequest(request), response);
+			}
+			catch (ServletException se) {
+				throw new IOException(se);
+			}
 
 			return;
 		}

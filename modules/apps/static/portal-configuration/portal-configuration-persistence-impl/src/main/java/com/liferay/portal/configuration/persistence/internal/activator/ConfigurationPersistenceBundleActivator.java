@@ -68,7 +68,7 @@ public class ConfigurationPersistenceBundleActivator
 
 		properties.put(
 			PersistenceManager.PROPERTY_NAME,
-			ConfigurationPersistenceManager.class.getName());
+			ConfigurationPersistenceManager.NAME);
 		properties.put(Constants.SERVICE_RANKING, Integer.MAX_VALUE - 1000);
 
 		_configurationPersistenceManagerServiceRegistration =

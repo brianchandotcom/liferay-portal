@@ -19,7 +19,6 @@ import com.liferay.document.library.kernel.exception.NoSuchFileException;
 import com.liferay.document.library.kernel.store.BaseStore;
 import com.liferay.document.library.kernel.store.Store;
 import com.liferay.document.library.kernel.util.DLUtil;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.convert.documentlibrary.FileSystemStoreRootDirException;
@@ -29,7 +28,6 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.store.file.system.configuration.FileSystemStoreConfiguration;
 
@@ -133,7 +131,8 @@ public class FileSystemStore extends BaseStore {
 		}
 
 		try {
-			_copy(fromFileNameVersionFile, toFileNameVersionFile);
+			_fileSystemHelper.copy(
+				fromFileNameVersionFile, toFileNameVersionFile);
 		}
 		catch (IOException ioe) {
 			throw new SystemException(ioe);
@@ -379,7 +378,7 @@ public class FileSystemStore extends BaseStore {
 
 		File parentFile = fileNameDir.getParentFile();
 
-		_move(fileNameDir, newFileNameDir);
+		_fileSystemHelper.move(fileNameDir, newFileNameDir);
 
 		deleteEmptyAncestors(companyId, repositoryId, parentFile);
 	}
@@ -411,7 +410,7 @@ public class FileSystemStore extends BaseStore {
 
 		File parentFile = fileNameDir.getParentFile();
 
-		_move(fileNameDir, newFileNameDir);
+		_fileSystemHelper.move(fileNameDir, newFileNameDir);
 
 		deleteEmptyAncestors(companyId, repositoryId, parentFile);
 	}
@@ -460,7 +459,7 @@ public class FileSystemStore extends BaseStore {
 				companyId, repositoryId, fileName, toVersionLabel);
 		}
 
-		_move(fromFileNameVersionFile, toFileNameVersionFile);
+		_fileSystemHelper.move(fromFileNameVersionFile, toFileNameVersionFile);
 	}
 
 	@Activate
@@ -475,7 +474,14 @@ public class FileSystemStore extends BaseStore {
 		}
 
 		initializeRootDir();
-		_checkHardLinksSupported();
+
+		if (_fileSystemStoreConfiguration.useHardLinks()) {
+			_fileSystemHelper = FileSystemHelper.createHardLinkFileSystemHelper(
+				getRootDir());
+		}
+		else {
+			_fileSystemHelper = FileSystemHelper.createBasicFileSystemHelper();
+		}
 	}
 
 	protected void deleteEmptyAncestors(File file) {
@@ -619,6 +625,10 @@ public class FileSystemStore extends BaseStore {
 		return repositoryDir;
 	}
 
+	protected File getRootDir() {
+		return _rootDir;
+	}
+
 	protected String getRootDirName() {
 		return _fileSystemStoreConfiguration.rootDir();
 	}
@@ -649,99 +659,13 @@ public class FileSystemStore extends BaseStore {
 
 	protected ConfigurationAdmin configurationAdmin;
 
-	private void _checkHardLinksSupported() {
-		try {
-			_useHardLinks = false;
-
-			if (!_fileSystemStoreConfiguration.useHardLinks()) {
-				return;
-			}
-
-			File sourceFile = _getTemporaryFile();
-
-			if (sourceFile == null) {
-				return;
-			}
-
-			FileUtil.touch(sourceFile);
-
-			File destinationFile = _getTemporaryFile();
-
-			Files.createLink(destinationFile.toPath(), sourceFile.toPath());
-
-			sourceFile.delete();
-			destinationFile.delete();
-
-			_useHardLinks = true;
-		}
-		catch (IOException ioe) {
-			return;
-		}
-	}
-
-	private void _copy(File fromFile, File toFile) throws IOException {
-		if (_useHardLinks) {
-			Files.createLink(toFile.toPath(), fromFile.toPath());
-		}
-		else {
-			toFile.createNewFile();
-
-			FileUtil.copyFile(fromFile, toFile);
-		}
-	}
-
-	private File _getTemporaryFile() {
-		File tempFile = new File(getRootDirName(), StringUtil.randomString(5));
-
-		int tries = 0;
-
-		while ((tries < _MAX_TRIES) && tempFile.exists()) {
-			tempFile = new File(getRootDirName(), StringUtil.randomString(5));
-
-			tries++;
-		}
-
-		if (tries >= _MAX_TRIES) {
-			return null;
-		}
-
-		return tempFile;
-	}
-
-	private void _move(File source, File destination) {
-		if (_useHardLinks) {
-			try {
-				Files.move(source.toPath(), destination.toPath());
-			}
-			catch (IOException ioe) {
-				throw new SystemException(
-					StringBundler.concat(
-						"File name was not renamed from ", source.getPath(),
-						" to ", destination.getPath()),
-					ioe);
-			}
-		}
-		else {
-			boolean renamed = FileUtil.move(source, destination);
-
-			if (!renamed) {
-				throw new SystemException(
-					StringBundler.concat(
-						"File name was not renamed from ", source.getPath(),
-						" to ", destination.getPath()));
-			}
-		}
-	}
-
-	private static final int _MAX_TRIES = 10;
-
 	private static volatile FileSystemStoreConfiguration
 		_fileSystemStoreConfiguration;
 
+	private FileSystemHelper _fileSystemHelper;
 	private final Map<RepositoryDirKey, File> _repositoryDirs =
 		new ConcurrentHashMap<>();
 	private File _rootDir;
-	private boolean _useHardLinks;
 
 	private static class RepositoryDirKey {
 

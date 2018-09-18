@@ -207,16 +207,6 @@ class FragmentEntryLinkList extends Component {
 	}
 
 	/**
-	 * @param {object} event
-	 * @private
-	 * @review
-	 */
-
-	_handleMappeableFieldClicked(event) {
-		this.emit('mappeableFieldClicked', event);
-	}
-
-	/**
 	 * @private
 	 * @review
 	 */

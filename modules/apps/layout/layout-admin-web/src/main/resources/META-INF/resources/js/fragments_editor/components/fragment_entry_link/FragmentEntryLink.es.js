@@ -280,22 +280,6 @@ class FragmentEntryLink extends Component {
 	}
 
 	/**
-	 * Propagates mapButtonClick event.
-	 */
-
-	_handleMapButtonClick(event) {
-		this.emit(
-			'mappeableFieldClicked',
-			{
-				editableId: event.editableId,
-				editableType: event.editableType,
-				fragmentEntryLinkId: this.fragmentEntryLinkId,
-				mappedFieldId: event.mappedFieldId
-			}
-		);
-	}
-
-	/**
 	 * Renders the FragmentEntryLink content parsing with AUI
 	 * @param {string} content
 	 * @private

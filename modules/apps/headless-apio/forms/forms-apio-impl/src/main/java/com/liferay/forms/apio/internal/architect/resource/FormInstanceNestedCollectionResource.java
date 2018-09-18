@@ -56,7 +56,6 @@ import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 
 import java.util.List;
-import java.util.Locale;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -95,6 +94,11 @@ public class FormInstanceNestedCollectionResource
 		return builder.addGetter(
 			_ddmFormInstanceService::getFormInstance
 		).addCustomRoute(
+			new EvaluateContextRoute(), this::_evaluateContext,
+			DDMFormRenderingContext.class, AcceptLanguage.class,
+			FormContextIdentifier.class, this::_hasPermission,
+			FormContextForm::buildForm
+		).addCustomRoute(
 			new FetchLatestDraftRoute(), this::_fetchDDMFormInstanceRecord,
 			CurrentUser.class, FormInstanceRecordIdentifier.class,
 			this::_hasPermission, FetchLatestDraftForm::buildForm
@@ -102,11 +106,6 @@ public class FormInstanceNestedCollectionResource
 			new UploadFileRoute(), this::_uploadFile,
 			MediaObjectIdentifier.class, this::_hasPermission,
 			MediaObjectCreatorForm::buildForm
-		).addCustomRoute(
-			new EvaluateContextRoute(), this::_evaluateContext,
-			DDMFormRenderingContext.class, AcceptLanguage.class,
-			FormContextIdentifier.class, this::_hasPermission,
-			FormContextForm::buildForm
 		).build();
 	}
 

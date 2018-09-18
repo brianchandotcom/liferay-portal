@@ -17,8 +17,8 @@ package com.liferay.forms.apio.internal.architect.form;
 import com.liferay.apio.architect.form.Form;
 
 /**
- * Instances of this class represent the values extracted from a form
- * context form.
+ * Instances of this class represent the values extracted from a form context
+ * form.
  *
  * @author Victor Oliveira
  * @review

@@ -249,7 +249,7 @@ public class DefaultLPKGDeployer implements LPKGDeployer {
 				ZipEntry zipEntry = zipFile.getEntry(
 					"liferay-marketplace.properties");
 
-				jarOutputStream.putNextEntry(zipEntry);
+				jarOutputStream.putNextEntry(new ZipEntry(zipEntry.getName()));
 
 				StreamUtil.transfer(
 					zipFile.getInputStream(zipEntry), jarOutputStream, false);

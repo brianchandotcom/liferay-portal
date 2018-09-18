@@ -29,10 +29,10 @@ repositories {
 
 runGradleTest {
 	doLast {
-		ResolvedArtifact originalModuleResolvedArtifact = configurations.originalModule.resolvedConfiguration.resolvedArtifacts.find {
+		ResolvedArtifact resolvedArtifact = configurations.originalModule.resolvedConfiguration.resolvedArtifacts.find {
 			it.name == "com.liferay.login.web"
 		}
 
-		assert originalModuleResolvedArtifact.file.name.contains("2.0.4")
+		assert resolvedArtifact.file.name.contains("2.0.4")
 	}
 }

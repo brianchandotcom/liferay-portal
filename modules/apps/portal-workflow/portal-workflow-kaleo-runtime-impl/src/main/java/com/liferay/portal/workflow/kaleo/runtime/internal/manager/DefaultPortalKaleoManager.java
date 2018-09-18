@@ -15,6 +15,7 @@
 package com.liferay.portal.workflow.kaleo.runtime.internal.manager;
 
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -32,6 +33,7 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.workflow.WorkflowDefinition;
 import com.liferay.portal.kernel.workflow.WorkflowDefinitionManager;
 import com.liferay.portal.kernel.workflow.comparator.WorkflowComparatorFactory;
@@ -163,9 +165,13 @@ public class DefaultPortalKaleoManager
 
 			User defaultUser = userLocalService.getDefaultUser(companyId);
 
+			String localizedTitle = LocalizationUtil.updateLocalization(
+				StringPool.BLANK, "title", definitionName,
+				LocaleUtil.toLanguageId(LocaleUtil.getDefault()));
+
 			_workflowDefinitionManager.deployWorkflowDefinition(
 				serviceContext.getCompanyId(), defaultUser.getUserId(),
-				definitionName, definitionName, FileUtil.getBytes(inputStream));
+				localizedTitle, definitionName, FileUtil.getBytes(inputStream));
 		}
 	}
 

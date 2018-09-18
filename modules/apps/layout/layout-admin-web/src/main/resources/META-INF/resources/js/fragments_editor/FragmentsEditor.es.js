@@ -82,16 +82,6 @@ class FragmentsEditor extends Component {
 	}
 
 	/**
-	 * Callback executed when the sidebar should be hidden
-	 * @private
-	 * @review
-	 */
-
-	_handleHideContextualSidebar() {
-		this._contextualSidebarVisible = false;
-	}
-
-	/**
 	 * Callback executed when a mappeable fragment has been clicked
 	 * @param {!{ fragmentEntryLinkId: !string, editableId: !string }} event
 	 * @private
@@ -188,16 +178,6 @@ class FragmentsEditor extends Component {
 
 	_handleSelectMappingTypeDialogVisibleChanged(change) {
 		this._selectMappingTypeDialogVisible = change.newVal;
-	}
-
-	/**
-	 * Callback executed when the sidebar visible state should be toggled
-	 * @private
-	 * @review
-	 */
-
-	_handleToggleContextualSidebarButtonClick() {
-		this._contextualSidebarVisible = !this._contextualSidebarVisible;
 	}
 
 	/**
@@ -577,20 +557,6 @@ FragmentsEditor.STATE = Object.assign(
 		 */
 
 		updateLayoutPageTemplateEntryAssetTypeURL: Config.string(),
-
-		/**
-		 * Allow opening/closing contextual sidebar
-		 * @default true
-		 * @instance
-		 * @memberOf FragmentsEditor
-		 * @private
-		 * @review
-		 * @type {boolean}
-		 */
-
-		_contextualSidebarVisible: Config.bool()
-			.internal()
-			.value(true),
 
 		/**
 		 * CSS class for the fragments drop target.

@@ -10,6 +10,7 @@
 	{@param? _handlePaginationLeftClicked: any}
 	{@param? _handlePaginationRightClicked: any}
 	{@param? _handlePageSettingsClicked: any}
+	{@param? _handleSuccesPageChanged: any}
 	{@param? _handleUpdatePage: any}
 	{@param? activePage: number}
 	{@param? defaultPageTitle: string}
@@ -19,6 +20,8 @@
 	{@param? pages: ?}
 	{@param? pageSettingsItems: ?}
 	{@param? paginationMode: string}
+	{@param? successPageLabel: string}
+	{@param? successPageSettings: ?}
 
 	{let $contentRenderer: $modeRenderer ?: 'grid' /}
 	{let $total: length($pages) /}
@@ -32,6 +35,7 @@
 		{param _handlePaginationLeftClicked: $_handlePaginationLeftClicked /}
 		{param _handlePaginationRightClicked: $_handlePaginationRightClicked /}
 		{param _handlePageSettingsClicked: $_handlePageSettingsClicked /}
+		{param _handleSuccesPageChanged: $_handleSuccesPageChanged /}
 		{param _handleUpdatePage: $_handleUpdatePage /}
 		{param activePage: $activePage /}
 		{param contentRenderer: $contentRenderer /}
@@ -42,6 +46,8 @@
 		{param pageSettingsItems: $pageSettingsItems /}
 		{param paginationMode: $paginationMode /}
 		{param spritemap: $spritemap /}
+		{param successPageLabel: $successPageLabel /}
+		{param successPageSettings: $successPageSettings /}
 		{param total: $total /}
 	{/delcall}
 {/template}
@@ -56,6 +62,7 @@
 	{@param? _handlePaginationLeftClicked: any}
 	{@param? _handlePaginationRightClicked: any}
 	{@param? _handlePageSettingsClicked: any}
+	{@param? _handleSuccesPageChanged: any}
 	{@param? _handleUpdatePage: any}
 	{@param? activePage: number}
 	{@param? contentRenderer: string}
@@ -65,10 +72,12 @@
 	{@param? pages: ?}
 	{@param? pageSettingsItems: ?}
 	{@param? paginationMode: string}
+	{@param? successPageLabel: string}
+	{@param? successPageSettings: ?}
 	{@param? total: int}
 
 	<div class="position-relative">
-		{if ($paginationMode == 'wizard') or (length($pages) == 1)}
+		{if ($paginationMode == 'wizard') or (length($pages) == 1 and not $successPageSettings.enabled)}
 			{delcall FormRenderer.paginationContainer}
 				{param _handleChangePage: $_handleChangePage /}
 				{param _handleExpandedChanged: $_handleExpandedChanged /}
@@ -82,30 +91,41 @@
 				{param pageSettingsItems: $pageSettingsItems /}
 				{param paginationMode: $paginationMode /}
 				{param spritemap: $spritemap /}
+				{param successPageLabel: $successPageLabel /}
+				{param successPageSettings: $successPageSettings /}
 			{/delcall}
 		{/if}
 
-		{for $page in $pages}
-			{call PageRenderer.render}
-				{param activePage: $activePage /}
-				{param contentRenderer: $contentRenderer /}
-				{param editable: $editable /}
+		{if $activePage == -1}
+			{call SuccessPage.render}
+				{param successPageSettings: $successPageSettings /}
 				{param events: [
-					'deleteFieldClicked': $_handleDeleteButtonClicked,
-					'duplicateButtonClicked': $_handleDuplicateButtonClicked,
-					'fieldEdited': $_handleFieldEdited,
-					'updatePage': $_handleUpdatePage
+					'successPageChanged': $_handleSuccesPageChanged
 				] /}
-				{param page: $page /}
-				{param pageId: index($page) /}
-				{param spritemap: $spritemap /}
-				{param total: $total /}
 			{/call}
-		{/for}
+		{else}
+			{for $page in $pages}
+				{call PageRenderer.render}
+					{param activePage: $activePage /}
+					{param contentRenderer: $contentRenderer /}
+					{param editable: $editable /}
+					{param events: [
+						'deleteFieldClicked': $_handleDeleteButtonClicked,
+						'duplicateButtonClicked': $_handleDuplicateButtonClicked,
+						'fieldEdited': $_handleFieldEdited,
+						'updatePage': $_handleUpdatePage
+					] /}
+					{param page: $page /}
+					{param pageId: index($page) /}
+					{param spritemap: $spritemap /}
+					{param total: $total /}
+				{/call}
+			{/for}
+		{/if}
 
 		{let $multiple: length($pages) > 1 /}
 
-		{if  $multiple and $paginationMode == 'pagination'}
+		{if ($multiple and ($paginationMode == 'pagination')) or (($paginationMode == 'pagination') and (length($pages) == 1) and $successPageSettings.enabled)}
 			{delcall FormRenderer.paginationContainer}
 				{param _handleChangePage: $_handleChangePage /}
 				{param _handleExpandedChanged: $_handleExpandedChanged /}
@@ -119,6 +139,8 @@
 				{param pageSettingsItems: $pageSettingsItems /}
 				{param paginationMode: $paginationMode /}
 				{param spritemap: $spritemap /}
+				{param successPageLabel: $successPageLabel /}
+				{param successPageSettings: $successPageSettings /}
 			{/delcall}
 		{/if}
 	</div>
@@ -136,10 +158,12 @@
 	{@param? dropdownExpanded: bool}
 	{@param? pages: ?}
 	{@param? pageSettingsItems: ?}
-	{@param? total: int}
 	{@param? paginationMode: string}
+	{@param? successPageLabel: string}
+	{@param? successPageSettings: ?}
+	{@param? total: int}
 
-	{let $multiple: length($pages) > 1 /}
+	{let $multiple: length($pages) > 1 or $successPageSettings.enabled /}
 	{let $classes kind="text"}
 		ddm-form-pagination
 
@@ -164,6 +188,8 @@
 				{param defaultPageTitle: $defaultPageTitle /}
 				{param pages: $pages /}
 				{param spritemap: $spritemap /}
+				{param successPageLabel: $successPageLabel /}
+				{param successPageSettings: $successPageSettings /}
 			{/delcall}
 		{elseif $multiple and ($paginationMode == 'pagination')}
 			{delcall FormRenderer.pagination}
@@ -172,6 +198,8 @@
 				{param _handlePaginationRightClicked: $_handlePaginationRightClicked /}
 				{param activePage: $activePage /}
 				{param pages: $pages /}
+				{param successPageLabel: $successPageLabel /}
+				{param successPageSettings: $successPageSettings /}
 			{/delcall}
 		{/if}
 
@@ -194,6 +222,8 @@
 	{@param? activePage: number}
 	{@param? defaultPageTitle: string}
 	{@param? pages: ?}
+	{@param? successPageLabel: string}
+	{@param? successPageSettings: ?}
 
 	<ol class="dmm-wizard multi-step-indicator-label-top multi-step-nav multi-step-nav-collapse-sm">
 		{for $page in $pages}
@@ -202,7 +232,7 @@
 			{let $step: $pageId + 1 /}
 			{let $classes kind="text"}
 				multi-step-item
-				{if $step != length($pages)}
+				{if $step != length($pages) or $successPageSettings.enabled}
 					{sp}multi-step-item-expand
 				{/if}
 
@@ -215,10 +245,28 @@
 				<div class="multi-step-divider"></div>
 				<div class="multi-step-indicator">
 					<div class="multi-step-indicator-label">{$title}</div>
-					<a class="multi-step-icon" data-multi-step-icon="{$step}" href="#1"></a>
+					<a class="multi-step-icon" data-multi-step-icon="{$step}" href="javascript:;"></a>
 				</div>
 			</li>
 		{/for}
+
+		{if $successPageSettings.enabled}
+			{let $classes kind="text"}
+				multi-step-item complete
+
+				{if $activePage == -1}
+					{sp}active
+				{/if}
+			{/let}
+
+			<li class="{$classes}" data-onclick="{$_handleChangePage}" data-page-id="-1">
+				<div class="multi-step-divider"></div>
+				<div class="multi-step-indicator">
+					<div class="multi-step-indicator-label">{$successPageLabel}</div>
+					<a class="multi-step-icon" href="javascript:;"></a>
+				</div>
+			</li>
+		{/if}
 	</ol>
 {/deltemplate}
 
@@ -228,6 +276,8 @@
 	{@param? _handlePaginationRightClicked: any}
 	{@param? activePage: number}
 	{@param? pages: ?}
+	{@param? successPageLabel: string}
+	{@param? successPageSettings: ?}
 
 	<ul class="ddm-pagination justify-content-center pagination">
 		{let $wizardClasses kind="text"}
@@ -261,10 +311,24 @@
 			</li>
 		{/for}
 
+		{if $successPageSettings.enabled}
+			{let $classes kind="text"}
+				page-item
+
+				{if $activePage == -1}
+					{sp}active
+				{/if}
+			{/let}
+
+			<li class="{$classes}" data-onclick="{$_handleChangePage}" data-page-id="-1">
+				<a class="page-link" href="javascript:;">{$successPageLabel}</a>
+			</li>
+		{/if}
+
 		{let $paginationClasses kind="text"}
 			page-item
 
-			{if $activePage == (length($pages) - 1)}
+			{if ($activePage == (length($pages) - 1) and  not $successPageSettings.enabled) or ($successPageSettings.enabled and $activePage == -1)}
 				{sp}visibility-hidden
 			{/if}
 		{/let}

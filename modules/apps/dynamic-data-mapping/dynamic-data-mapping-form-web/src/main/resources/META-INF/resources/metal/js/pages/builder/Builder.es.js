@@ -63,7 +63,18 @@ class Builder extends Component {
 		 * @type {string}
 		 */
 
-		paginationMode: Config.string().required()
+		paginationMode: Config.string().required(),
+
+		/**
+		 * @instance
+		 * @memberof Builder
+		 * @type {object}
+		 */
+		successPageSettings: Config.shapeOf({
+			body: Config.object(),
+			enabled: Config.bool(),
+			title: Config.object()
+		})
 	};
 
 	/**
@@ -387,6 +398,7 @@ class Builder extends Component {
 			pages,
 			paginationMode,
 			spritemap,
+			successPageSettings,
 			visible
 		} = props;
 
@@ -400,7 +412,8 @@ class Builder extends Component {
 			pageDeleted: this._handlePageDeleted.bind(this),
 			pageReset: this._handlePageReset.bind(this),
 			pagesUpdated: this._handlePagesUpdated.bind(this),
-			paginationModeUpdated: this._handlePaginationModeUpdated.bind(this)
+			paginationModeUpdated: this._handlePaginationModeUpdated.bind(this),
+			successPageChanged: this._handleSuccessPageChanged.bind(this)
 		};
 
 		const sidebarEvents = {
@@ -421,6 +434,7 @@ class Builder extends Component {
 							paginationMode={paginationMode}
 							ref="FormRenderer"
 							spritemap={spritemap}
+							successPageSettings={successPageSettings}
 						/>
 						<ClayModal
 							body={Liferay.Language.get('are-you-sure-you-want-to-delete-this-field')}

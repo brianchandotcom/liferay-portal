@@ -9,6 +9,7 @@ import Builder from './pages/builder/index.es';
 import ClayModal from 'clay-modal';
 import Component from 'metal-jsx';
 import dom from 'metal-dom';
+import core from 'metal';
 import LayoutProvider from './components/LayoutProvider/index.es';
 import loader from './components/FieldsLoader/index.es';
 import PublishButton from './components/PublishButton/PublishButton.es';
@@ -36,7 +37,8 @@ class Form extends Component {
 			{
 				pages: Config.arrayOf(pageStructure),
 				paginationMode: Config.string(),
-				rules: Config.array()
+				rules: Config.array(),
+				successPageSettings: Config.object()
 			}
 		).required().setter('_setContext'),
 
@@ -441,10 +443,10 @@ class Form extends Component {
 			events: {
 				pagesChanged: this._handlePagesChanged.bind(this),
 				paginationModeChanged: this._handlePaginationModeChanded.bind(this)
-
 			},
 			initialPages: context.pages,
 			initialPaginationMode: context.paginationMode,
+			initialSuccessPageSettings: context.successPageSettings,
 			ref: 'layoutProvider'
 		};
 
@@ -680,6 +682,22 @@ class Form extends Component {
 	 */
 
 	_setContext(context) {
+		let {successPage, successPageSettings} = context;
+
+		if(!successPageSettings) {
+			successPageSettings = successPage;
+		}
+
+		if(core.isString(successPageSettings.title)){
+			successPageSettings.title = {};
+			successPageSettings.title[themeDisplay.getLanguageId()] = '';
+		}
+
+		if(core.isString(successPageSettings.body)){
+			successPageSettings.body = {};
+			successPageSettings.body[themeDisplay.getLanguageId()] = '';
+		}
+
 		if (!context.pages.length) {
 			context = {
 				...context,
@@ -705,7 +723,8 @@ class Form extends Component {
 						title: ''
 					}
 				],
-				paginationMode: 'wizard'
+				paginationMode: 'wizard',
+				successPageSettings
 			};
 		}
 

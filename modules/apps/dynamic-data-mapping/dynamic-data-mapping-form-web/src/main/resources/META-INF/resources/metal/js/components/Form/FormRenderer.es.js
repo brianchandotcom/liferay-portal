@@ -86,7 +86,25 @@ class FormRenderer extends Component {
 		 * @type {!string}
 		 */
 
-		spritemap: Config.string().required()
+		spritemap: Config.string().required(),
+
+		/**
+		 * @instance
+		 * @memberof FormRenderer
+		 * @type {string}
+		 */
+		successPageLabel: Config.string().value(Liferay.Language.get('success-page')),
+
+		/**
+		 * @instance
+		 * @memberof FormRenderer
+		 * @type {object}
+		 */
+		successPageSettings: Config.shapeOf({
+			body: Config.object(),
+			enabled: Config.bool(),
+			title: Config.object()
+		})
 	};
 
 	/**

@@ -34,13 +34,24 @@ class LayoutProvider extends Component {
 		initialPaginationMode: Config.string().value('wizard'),
 
 		/**
+		 * @instance
+		 * @memberof LayoutProvider
+		 * @type {object}
+		 */
+		initialSuccessPageSettings: Config.shapeOf({
+			body: Config.object(),
+			enabled: Config.bool(),
+			title: Config.object()
+		}),
+
+		/**
 		 * @default undefined
 		 * @instance
 		 * @memberof LayoutProvider
 		 * @type {?(array|undefined)}
 		 */
 
-		spritemap: Config.string()
+		spritemap: Config.string(),
 	};
 
 	static STATE = {
@@ -89,7 +100,9 @@ class LayoutProvider extends Component {
 				rowIndex: Config.number().required(),
 				type: Config.string().required()
 			}
-		).value({})
+		).value({}),
+
+		successPageSettings: Config.object().valueFn('_successPageSettingsValueFn')
 	};
 
 	_pagesValueFn() {
@@ -98,6 +111,10 @@ class LayoutProvider extends Component {
 
 	_paginationModeValueFn() {
 		return this.props.initialPaginationMode;
+	}
+
+	_successPageSettingsValueFn() {
+		return this.props.initialSuccessPageSettings
 	}
 
 	_handleActivePageUpdated(activePage) {
@@ -469,7 +486,7 @@ class LayoutProvider extends Component {
 
 	render() {
 		const {children, spritemap} = this.props;
-		const {activePage, focusedField, pages, paginationMode} = this.state;
+		const {activePage, focusedField, pages, paginationMode, successPageSettings} = this.state;
 
 		if (children.length) {
 			const events = {
@@ -484,8 +501,9 @@ class LayoutProvider extends Component {
 				pageAdded: this._handlePageAdded.bind(this),
 				pageDeleted: this._handlePageDeleted.bind(this),
 				pageReset: this._handlePageReset.bind(this),
-				paginationModeUpdated: this._handlePaginationModeUpdated.bind(this)
-			};
+				paginationModeUpdated: this._handlePaginationModeUpdated.bind(this),
+				successPageChanged: this._handleSuccessPageChanged.bind(this)
+			}
 
 			for (let index = 0; index < children.length; index++) {
 				const child = children[index];
@@ -499,7 +517,8 @@ class LayoutProvider extends Component {
 						focusedField,
 						pages,
 						paginationMode,
-						spritemap
+						spritemap,
+						successPageSettings
 					}
 				);
 			}

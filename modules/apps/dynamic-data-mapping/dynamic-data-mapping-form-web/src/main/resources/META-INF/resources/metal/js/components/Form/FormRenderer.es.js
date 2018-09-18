@@ -267,6 +267,20 @@ class FormRenderer extends Component {
 		this.emit('activePageUpdated', this.activePage);
 		this.emit('successPageChanged', successPageSettings);
 	}
+
+	_deletePage() {
+		this.emit('pageDeleted', this.activePage);
+	}
+
+	_deleteSuccessPage() {
+		return this._updateSuccessPage(
+			{
+				enabled: false,
+			}, 
+			this.pages.length - 1
+		);
+	}
+
 	/*
 	 * @param {Object} data
 	 * @private
@@ -282,6 +296,9 @@ class FormRenderer extends Component {
 		}
 		else if (settingsItem === 'reset-page') {
 			this._resetPage();
+		}
+		else if (settingsItem === 'delete-page' && this.activePage === -1) {
+			this._deleteSuccessPage();
 		}
 		else if (settingsItem === 'delete-page') {
 			this._deletePage();

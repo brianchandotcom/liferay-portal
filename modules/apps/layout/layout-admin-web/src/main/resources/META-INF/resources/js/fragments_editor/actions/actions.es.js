@@ -23,6 +23,14 @@ const CHANGE_LANGUAGE_ID = 'languageId';
 const CLEAR_DRAG_TARGET = 'clearDragTarget';
 
 /**
+ * Hide mapping type dialog
+ * @review
+ * @type {string}
+ */
+
+const HIDE_MAPPING_TYPE_DIALOG = 'hideMappingTypeDialog';
+
+/**
  * Hide Fragments editor sidebar
  * @review
  * @type {string}
@@ -39,6 +47,22 @@ const HIDE_SIDEBAR = 'hideSidebar';
 const MOVE_FRAGMENT_ENTRY_LINK = 'moveFragmentEntryLink';
 
 /**
+ * Open asset type dialog
+ * @review
+ * @type {string}
+ */
+
+const OPEN_ASSET_TYPE_DIALOG = 'openAssetTypeDialog';
+
+/**
+ * Open mapping fields dialog
+ * @review
+ * @type {string}
+ */
+
+const OPEN_MAPPING_FIELDS_DIALOG = 'openMappingFieldsDialog';
+
+/**
  * Remove fragment entry link action type
  * @review
  * @type {string}
@@ -47,12 +71,28 @@ const MOVE_FRAGMENT_ENTRY_LINK = 'moveFragmentEntryLink';
 const REMOVE_FRAGMENT_ENTRY_LINK = 'removeFragmentEntryLink';
 
 /**
+ * Select mappeable field
+ * @review
+ * @type {string}
+ */
+
+const SELECT_MAPPEABLE_FIELD = 'selectMappeableField';
+
+/**
  * Toggle Fragments editor sidebar
  * @review
  * @type {string}
  */
 
 const TOGGLE_SIDEBAR = 'toggleSidebar';
+
+/**
+ * Select mappeable type
+ * @review
+ * @type {string}
+ */
+
+const SELECT_MAPPEABLE_TYPE = 'selectMappeableType';
 
 /**
  * Update drag target action type
@@ -100,8 +140,13 @@ export {
 	CLEAR_DRAG_TARGET,
 	HIDE_SIDEBAR,
 	MOVE_FRAGMENT_ENTRY_LINK,
+	HIDE_MAPPING_TYPE_DIALOG,
+	OPEN_ASSET_TYPE_DIALOG,
+	OPEN_MAPPING_FIELDS_DIALOG,
 	REMOVE_FRAGMENT_ENTRY_LINK,
 	TOGGLE_SIDEBAR,
+	SELECT_MAPPEABLE_FIELD,
+	SELECT_MAPPEABLE_TYPE,
 	UPDATE_DRAG_TARGET,
 	UPDATE_EDITABLE_VALUE,
 	UPDATE_LAST_SAVE_DATE,

@@ -71,6 +71,9 @@ public interface AssetListEntryAssetEntryRelLocalService
 	public AssetListEntryAssetEntryRel addAssetListEntryAssetEntryRel(
 		AssetListEntryAssetEntryRel assetListEntryAssetEntryRel);
 
+	public AssetListEntryAssetEntryRel addAssetListEntryAssetEntryRel(
+		long assetListEntryId, long assetEntryId);
+
 	/**
 	* Creates a new asset list entry asset entry rel with the primary key. Does not add the asset list entry asset entry rel to the database.
 	*
@@ -101,6 +104,9 @@ public interface AssetListEntryAssetEntryRelLocalService
 	@Indexable(type = IndexableType.DELETE)
 	public AssetListEntryAssetEntryRel deleteAssetListEntryAssetEntryRel(
 		long assetListEntryAssetEntryRelId) throws PortalException;
+
+	public AssetListEntryAssetEntryRel deleteAssetListEntryAssetEntryRel(
+		long assetListEntryId, int position) throws PortalException;
 
 	/**
 	* @throws PortalException
@@ -201,6 +207,10 @@ public interface AssetListEntryAssetEntryRelLocalService
 	public List<AssetListEntryAssetEntryRel> getAssetListEntryAssetEntryRels(
 		int start, int end);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<AssetListEntryAssetEntryRel> getAssetListEntryAssetEntryRels(
+		long assetListEntryId, int start, int end);
+
 	/**
 	* Returns the number of asset list entry asset entry rels.
 	*
@@ -208,6 +218,9 @@ public interface AssetListEntryAssetEntryRelLocalService
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getAssetListEntryAssetEntryRelsCount();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getAssetListEntryAssetEntryRelsCount(long assetListEntryId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
@@ -222,6 +235,10 @@ public interface AssetListEntryAssetEntryRelLocalService
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException;
+
+	public AssetListEntryAssetEntryRel moveAssetListEntryAssetEntryRel(
+		long assetListEntryId, int position, int newPosition)
 		throws PortalException;
 
 	/**

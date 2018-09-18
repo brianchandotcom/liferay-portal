@@ -59,11 +59,17 @@ public interface AssetListEntryService extends BaseService {
 	public AssetListEntry addAssetListEntry(long groupId, String title,
 		int type, ServiceContext serviceContext) throws PortalException;
 
+	public void addAssetListEntryAssetEntryRel(long assetListEntryId,
+		long assetEntryId) throws PortalException;
+
 	public void deleteAssetListEntries(long[] assetListEntriesIds)
 		throws PortalException;
 
 	public AssetListEntry deleteAssetListEntry(long assetListEntryId)
 		throws PortalException;
+
+	public void deleteAssetListEntryAssetEntryRel(long assetListEntryId,
+		int position) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public AssetListEntry fetchAssetListEntry(long assetListEntryId)
@@ -89,6 +95,9 @@ public interface AssetListEntryService extends BaseService {
 	* @return the OSGi service identifier
 	*/
 	public String getOSGiServiceIdentifier();
+
+	public void moveAssetListEntryAssetEntryRel(long assetListEntryId,
+		int position, int newPosition) throws PortalException;
 
 	public AssetListEntry updateAssetListEntry(long assetListEntryId,
 		String title) throws PortalException;

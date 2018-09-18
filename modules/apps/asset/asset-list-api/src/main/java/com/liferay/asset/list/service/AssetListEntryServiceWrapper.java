@@ -43,6 +43,14 @@ public class AssetListEntryServiceWrapper implements AssetListEntryService,
 	}
 
 	@Override
+	public void addAssetListEntryAssetEntryRel(long assetListEntryId,
+		long assetEntryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_assetListEntryService.addAssetListEntryAssetEntryRel(assetListEntryId,
+			assetEntryId);
+	}
+
+	@Override
 	public void deleteAssetListEntries(long[] assetListEntriesIds)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_assetListEntryService.deleteAssetListEntries(assetListEntriesIds);
@@ -53,6 +61,14 @@ public class AssetListEntryServiceWrapper implements AssetListEntryService,
 		long assetListEntryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _assetListEntryService.deleteAssetListEntry(assetListEntryId);
+	}
+
+	@Override
+	public void deleteAssetListEntryAssetEntryRel(long assetListEntryId,
+		int position)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_assetListEntryService.deleteAssetListEntryAssetEntryRel(assetListEntryId,
+			position);
 	}
 
 	@Override
@@ -96,6 +112,14 @@ public class AssetListEntryServiceWrapper implements AssetListEntryService,
 	@Override
 	public String getOSGiServiceIdentifier() {
 		return _assetListEntryService.getOSGiServiceIdentifier();
+	}
+
+	@Override
+	public void moveAssetListEntryAssetEntryRel(long assetListEntryId,
+		int position, int newPosition)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_assetListEntryService.moveAssetListEntryAssetEntryRel(assetListEntryId,
+			position, newPosition);
 	}
 
 	@Override

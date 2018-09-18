@@ -55,6 +55,13 @@ public class AssetListEntryAssetEntryRelLocalServiceUtil {
 				   .addAssetListEntryAssetEntryRel(assetListEntryAssetEntryRel);
 	}
 
+	public static com.liferay.asset.list.model.AssetListEntryAssetEntryRel addAssetListEntryAssetEntryRel(
+		long assetListEntryId, long assetEntryId) {
+		return getService()
+				   .addAssetListEntryAssetEntryRel(assetListEntryId,
+			assetEntryId);
+	}
+
 	/**
 	* Creates a new asset list entry asset entry rel with the primary key. Does not add the asset list entry asset entry rel to the database.
 	*
@@ -91,6 +98,13 @@ public class AssetListEntryAssetEntryRelLocalServiceUtil {
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .deleteAssetListEntryAssetEntryRel(assetListEntryAssetEntryRelId);
+	}
+
+	public static com.liferay.asset.list.model.AssetListEntryAssetEntryRel deleteAssetListEntryAssetEntryRel(
+		long assetListEntryId, int position)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .deleteAssetListEntryAssetEntryRel(assetListEntryId, position);
 	}
 
 	/**
@@ -220,6 +234,12 @@ public class AssetListEntryAssetEntryRelLocalServiceUtil {
 		return getService().getAssetListEntryAssetEntryRels(start, end);
 	}
 
+	public static java.util.List<com.liferay.asset.list.model.AssetListEntryAssetEntryRel> getAssetListEntryAssetEntryRels(
+		long assetListEntryId, int start, int end) {
+		return getService()
+				   .getAssetListEntryAssetEntryRels(assetListEntryId, start, end);
+	}
+
 	/**
 	* Returns the number of asset list entry asset entry rels.
 	*
@@ -227,6 +247,12 @@ public class AssetListEntryAssetEntryRelLocalServiceUtil {
 	*/
 	public static int getAssetListEntryAssetEntryRelsCount() {
 		return getService().getAssetListEntryAssetEntryRelsCount();
+	}
+
+	public static int getAssetListEntryAssetEntryRelsCount(
+		long assetListEntryId) {
+		return getService()
+				   .getAssetListEntryAssetEntryRelsCount(assetListEntryId);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
@@ -246,6 +272,14 @@ public class AssetListEntryAssetEntryRelLocalServiceUtil {
 		java.io.Serializable primaryKeyObj)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getPersistedModel(primaryKeyObj);
+	}
+
+	public static com.liferay.asset.list.model.AssetListEntryAssetEntryRel moveAssetListEntryAssetEntryRel(
+		long assetListEntryId, int position, int newPosition)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .moveAssetListEntryAssetEntryRel(assetListEntryId, position,
+			newPosition);
 	}
 
 	/**

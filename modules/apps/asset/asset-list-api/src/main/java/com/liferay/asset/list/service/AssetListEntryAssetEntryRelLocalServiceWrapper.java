@@ -46,6 +46,13 @@ public class AssetListEntryAssetEntryRelLocalServiceWrapper
 		return _assetListEntryAssetEntryRelLocalService.addAssetListEntryAssetEntryRel(assetListEntryAssetEntryRel);
 	}
 
+	@Override
+	public com.liferay.asset.list.model.AssetListEntryAssetEntryRel addAssetListEntryAssetEntryRel(
+		long assetListEntryId, long assetEntryId) {
+		return _assetListEntryAssetEntryRelLocalService.addAssetListEntryAssetEntryRel(assetListEntryId,
+			assetEntryId);
+	}
+
 	/**
 	* Creates a new asset list entry asset entry rel with the primary key. Does not add the asset list entry asset entry rel to the database.
 	*
@@ -82,6 +89,14 @@ public class AssetListEntryAssetEntryRelLocalServiceWrapper
 		long assetListEntryAssetEntryRelId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _assetListEntryAssetEntryRelLocalService.deleteAssetListEntryAssetEntryRel(assetListEntryAssetEntryRelId);
+	}
+
+	@Override
+	public com.liferay.asset.list.model.AssetListEntryAssetEntryRel deleteAssetListEntryAssetEntryRel(
+		long assetListEntryId, int position)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _assetListEntryAssetEntryRelLocalService.deleteAssetListEntryAssetEntryRel(assetListEntryId,
+			position);
 	}
 
 	/**
@@ -223,6 +238,13 @@ public class AssetListEntryAssetEntryRelLocalServiceWrapper
 			end);
 	}
 
+	@Override
+	public java.util.List<com.liferay.asset.list.model.AssetListEntryAssetEntryRel> getAssetListEntryAssetEntryRels(
+		long assetListEntryId, int start, int end) {
+		return _assetListEntryAssetEntryRelLocalService.getAssetListEntryAssetEntryRels(assetListEntryId,
+			start, end);
+	}
+
 	/**
 	* Returns the number of asset list entry asset entry rels.
 	*
@@ -231,6 +253,11 @@ public class AssetListEntryAssetEntryRelLocalServiceWrapper
 	@Override
 	public int getAssetListEntryAssetEntryRelsCount() {
 		return _assetListEntryAssetEntryRelLocalService.getAssetListEntryAssetEntryRelsCount();
+	}
+
+	@Override
+	public int getAssetListEntryAssetEntryRelsCount(long assetListEntryId) {
+		return _assetListEntryAssetEntryRelLocalService.getAssetListEntryAssetEntryRelsCount(assetListEntryId);
 	}
 
 	@Override
@@ -253,6 +280,14 @@ public class AssetListEntryAssetEntryRelLocalServiceWrapper
 		java.io.Serializable primaryKeyObj)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _assetListEntryAssetEntryRelLocalService.getPersistedModel(primaryKeyObj);
+	}
+
+	@Override
+	public com.liferay.asset.list.model.AssetListEntryAssetEntryRel moveAssetListEntryAssetEntryRel(
+		long assetListEntryId, int position, int newPosition)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _assetListEntryAssetEntryRelLocalService.moveAssetListEntryAssetEntryRel(assetListEntryId,
+			position, newPosition);
 	}
 
 	/**

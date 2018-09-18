@@ -53,7 +53,7 @@ class LayoutProvider extends Component {
 		 * @type {?(array|undefined)}
 		 */
 
-		spritemap: Config.string(),
+		spritemap: Config.string()
 	};
 
 	static STATE = {

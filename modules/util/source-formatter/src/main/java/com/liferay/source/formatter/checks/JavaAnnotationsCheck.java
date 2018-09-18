@@ -115,15 +115,11 @@ public class JavaAnnotationsCheck extends BaseJavaTermCheck {
 	}
 
 	private String _fixSingleValueArray(String annotation) {
-		int x = -1;
+		Matcher matcher = _arrayPattern.matcher(annotation);
 
 		outerLoop:
-		while (true) {
-			x = annotation.indexOf("= {", x + 1);
-
-			if (x == -1) {
-				return annotation;
-			}
+		while (matcher.find()) {
+			int x = matcher.start();
 
 			if (ToolsUtil.isInsideQuotes(annotation, x)) {
 				continue;
@@ -141,7 +137,8 @@ public class JavaAnnotationsCheck extends BaseJavaTermCheck {
 				}
 
 				if (!ToolsUtil.isInsideQuotes(annotation, y)) {
-					arrayString = annotation.substring(x + 2, y + 1);
+					arrayString = annotation.substring(
+						matcher.end() - 1, y + 1);
 
 					if (getLevel(arrayString, "{", "}") == 0) {
 						break;
@@ -170,6 +167,8 @@ public class JavaAnnotationsCheck extends BaseJavaTermCheck {
 				return StringUtil.replace(annotation, arrayString, replacement);
 			}
 		}
+
+		return annotation;
 	}
 
 	private String _formatAnnotations(
@@ -308,6 +307,7 @@ public class JavaAnnotationsCheck extends BaseJavaTermCheck {
 		"[{=]\n.*(\" \\+\n\t*\")");
 	private final Pattern _annotationLineBreakPattern2 = Pattern.compile(
 		"=(\n\t*)\"");
+	private final Pattern _arrayPattern = Pattern.compile("=\\s+\\{");
 	private final Pattern _modifierPattern = Pattern.compile(
 		"[^\n]\n(\t*)(public|protected|private)");
 

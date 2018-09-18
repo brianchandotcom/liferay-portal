@@ -39,19 +39,18 @@ public final class EvaluateContextHelper {
 
 	public FormContextWrapper evaluateContext(
 			String fieldValues, DDMStructure ddmStructure,
-			DDMFormRenderingContext ddmFormRenderingContext, Locale locale)
-		throws PortalException {
+			DDMFormRenderingContext ddmFormRenderingContext, Locale locale) {
 
 		DDMForm ddmForm = ddmStructure.getDDMForm();
-		DDMFormLayout ddmFormLayout = ddmStructure.getDDMFormLayout();
 
-		_setEvaluatorLocale(ddmFormRenderingContext, locale);
+		ddmFormRenderingContext.setLocale(locale);
 
 		return Try.fromFallible(
 			() -> FormValuesUtil.getDDMFormValues(fieldValues, ddmForm, locale)
 		).map(
 			ddmFormValues -> _getEvaluationResult(
-				ddmForm, ddmFormValues, ddmFormLayout, ddmFormRenderingContext)
+				ddmForm, ddmFormValues, ddmStructure.getDDMFormLayout(),
+				ddmFormRenderingContext)
 		).orElse(
 			null
 		);
@@ -72,13 +71,6 @@ public final class EvaluateContextHelper {
 		).orElse(
 			null
 		);
-	}
-
-	private void _setEvaluatorLocale(
-		DDMFormRenderingContext ddmFormRenderingContext, Locale locale) {
-
-		LocaleThreadLocal.setThemeDisplayLocale(locale);
-		ddmFormRenderingContext.setLocale(locale);
 	}
 
 	@Reference

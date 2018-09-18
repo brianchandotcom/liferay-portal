@@ -306,14 +306,22 @@ public class BeanPortletExtension implements Extension {
 		try {
 			_bundle = FrameworkUtil.getBundle(BeanPortletExtension.class);
 
-			_addBeanPortletsFromPortletDescriptor();
+			URL displayDescriptorURL = _bundle.getEntry(
+				"WEB-INF/liferay-display.xml");
 
-			List<URLGenerationListener> urlGenerationListeners =
-				_getListenersFromAnnotatedClasses();
+			if (displayDescriptorURL != null) {
+				try {
+					_descriptorDisplayCategories =
+						DisplayDescriptorParser.parse(displayDescriptorURL);
+				}
+				catch (Exception e) {
+					_log.error(e, e);
+				}
+			}
 
-			_addBeanPortletsFromAnnotatedClasses(urlGenerationListeners);
-
-			_addBeanFiltersFromAnnotatedClasses();
+			if (_descriptorDisplayCategories == null) {
+				_descriptorDisplayCategories = Collections.emptyMap();
+			}
 
 			URL liferayDescriptorURL = _bundle.getEntry(
 				"WEB-INF/liferay-portlet.xml");
@@ -328,22 +336,17 @@ public class BeanPortletExtension implements Extension {
 				}
 			}
 
+			_addBeanPortletsFromPortletDescriptor();
+
+			List<URLGenerationListener> urlGenerationListeners =
+				_getListenersFromAnnotatedClasses();
+
+			_addBeanPortletsFromAnnotatedClasses(urlGenerationListeners);
+
+			_addBeanFiltersFromAnnotatedClasses();
+
 			if (!_descriptorLiferayConfigurations.isEmpty()) {
 				_addBeanPortletsFromLiferayDescriptor();
-			}
-
-			URL displayDescriptorURL = _bundle.getEntry(
-				"WEB-INF/liferay-display.xml");
-
-			if (displayDescriptorURL != null) {
-				try {
-					_descriptorDisplayCategories =
-						DisplayDescriptorParser.parse(displayDescriptorURL);
-				}
-				catch (Exception e) {
-					_descriptorDisplayCategories = Collections.emptyMap();
-					_log.error(e, e);
-				}
 			}
 
 			afterBeanDiscovery.addContext(new PortletRequestBeanContext());
@@ -544,8 +547,7 @@ public class BeanPortletExtension implements Extension {
 				beanPortletClass.getName(), portletConfiguration,
 				_getAnnotatedLiferayConfiguration(configuredPortletName),
 				_descriptorLiferayConfigurations.get(configuredPortletName),
-				_descriptorDisplayCategories.get(configuredPortletName),
-				urlGenerationListeners, _beanApp));
+				_descriptorDisplayCategories.get(configuredPortletName)));
 	}
 
 	private void _addBeanPortletsFromAnnotatedClasses(

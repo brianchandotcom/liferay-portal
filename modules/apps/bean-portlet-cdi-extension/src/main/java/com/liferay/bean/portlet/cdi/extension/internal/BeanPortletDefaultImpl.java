@@ -16,8 +16,11 @@ package com.liferay.bean.portlet.cdi.extension.internal;
 
 import java.util.Collections;
 import java.util.Dictionary;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
+
+import javax.xml.namespace.QName;
 
 /**
  * @author Neil Griffin
@@ -34,13 +37,63 @@ public class BeanPortletDefaultImpl extends BaseBeanPortletImpl {
 	}
 
 	@Override
+	public Map<String, List<String>> getContainerRuntimeOptions() {
+		return Collections.emptyMap();
+	}
+
+	@Override
+	public Map<String, String> getDescriptions() {
+		return Collections.emptyMap();
+	}
+
+	@Override
 	public String getDisplayCategory() {
 		return _displayCategory;
 	}
 
 	@Override
+	public Map<String, String> getDisplayNames() {
+		return Collections.emptyMap();
+	}
+
+	@Override
+	public int getExpirationCache() {
+		return 0;
+	}
+
+	@Override
+	public Map<String, String> getInitParams() {
+		return Collections.emptyMap();
+	}
+
+	@Override
+	public Map<String, String> getKeywords() {
+		return Collections.emptyMap();
+	}
+
+	@Override
 	public Map<String, String> getLiferayConfiguration() {
 		return _liferayConfiguration;
+	}
+
+	@Override
+	public int getMultiPartFileSizeThreshold() {
+		return 0;
+	}
+
+	@Override
+	public String getMultiPartLocation() {
+		return null;
+	}
+
+	@Override
+	public long getMultiPartMaxFileSize() {
+		return -1L;
+	}
+
+	@Override
+	public long getMultiPartMaxRequestSize() {
+		return -1L;
 	}
 
 	@Override
@@ -59,8 +112,68 @@ public class BeanPortletDefaultImpl extends BaseBeanPortletImpl {
 	}
 
 	@Override
+	public Map<String, Preference> getPreferences() {
+		return Collections.emptyMap();
+	}
+
+	@Override
 	public String getResourceBundle() {
 		return null;
+	}
+
+	@Override
+	public Map<String, String> getSecurityRoleRefs() {
+		return Collections.emptyMap();
+	}
+
+	@Override
+	public Map<String, String> getShortTitles() {
+		return Collections.emptyMap();
+	}
+
+	@Override
+	public Set<String> getSupportedLocales() {
+		return Collections.emptySet();
+	}
+
+	@Override
+	public Map<String, Set<String>> getSupportedPortletModes() {
+		return Collections.emptyMap();
+	}
+
+	@Override
+	public Set<QName> getSupportedProcessingEvents() {
+		return Collections.emptySet();
+	}
+
+	@Override
+	public Set<String> getSupportedPublicRenderParameters() {
+		return Collections.emptySet();
+	}
+
+	@Override
+	public Set<QName> getSupportedPublishingEvents() {
+		return Collections.emptySet();
+	}
+
+	@Override
+	public Map<String, Set<String>> getSupportedWindowStates() {
+		return Collections.emptyMap();
+	}
+
+	@Override
+	public Map<String, String> getTitles() {
+		return Collections.emptyMap();
+	}
+
+	@Override
+	public boolean isAsyncSupported() {
+		return false;
+	}
+
+	@Override
+	public boolean isMultiPartSupported() {
+		return false;
 	}
 
 	@Override

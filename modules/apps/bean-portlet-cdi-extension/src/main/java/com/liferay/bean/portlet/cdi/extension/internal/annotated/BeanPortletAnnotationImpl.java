@@ -16,33 +16,35 @@ package com.liferay.bean.portlet.cdi.extension.internal.annotated;
 
 import com.liferay.bean.portlet.LiferayPortletConfiguration;
 import com.liferay.bean.portlet.cdi.extension.internal.BaseBeanPortletImpl;
-import com.liferay.bean.portlet.cdi.extension.internal.BeanApp;
+import com.liferay.bean.portlet.cdi.extension.internal.BeanMethod;
+import com.liferay.bean.portlet.cdi.extension.internal.MethodType;
 import com.liferay.bean.portlet.cdi.extension.internal.PortletDependency;
-import com.liferay.bean.portlet.cdi.extension.internal.URLGenerationListener;
+import com.liferay.bean.portlet.cdi.extension.internal.Preference;
 import com.liferay.petra.string.CharPool;
-import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.Validator;
 
-import java.util.ArrayList;
+import java.lang.reflect.Method;
+
 import java.util.Arrays;
-import java.util.Dictionary;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
+import javax.portlet.annotations.ActionMethod;
 import javax.portlet.annotations.Dependency;
+import javax.portlet.annotations.EventMethod;
 import javax.portlet.annotations.InitParameter;
 import javax.portlet.annotations.LocaleString;
 import javax.portlet.annotations.Multipart;
 import javax.portlet.annotations.PortletConfiguration;
-import javax.portlet.annotations.Preference;
+import javax.portlet.annotations.PortletQName;
 import javax.portlet.annotations.RuntimeOption;
 import javax.portlet.annotations.SecurityRoleRef;
 import javax.portlet.annotations.Supports;
+
+import javax.xml.namespace.QName;
 
 /**
  * @author Neil Griffin
@@ -54,8 +56,7 @@ public class BeanPortletAnnotationImpl extends BaseBeanPortletImpl {
 		String portletClassName, PortletConfiguration portletConfiguration,
 		LiferayPortletConfiguration liferayPortletConfiguration,
 		Map<String, String> descriptorLiferayConfiguration,
-		String descriptorDisplayCategory,
-		List<URLGenerationListener> urlGenerationListeners, BeanApp beanApp) {
+		String descriptorDisplayCategory) {
 
 		_portletClassName = portletClassName;
 		_portletConfiguration = portletConfiguration;
@@ -101,6 +102,43 @@ public class BeanPortletAnnotationImpl extends BaseBeanPortletImpl {
 
 		_displayCategory = displayCategory;
 
+		_containerRuntimeOptions = new HashMap<>();
+
+		for (RuntimeOption runtimeOption :
+				_portletConfiguration.runtimeOptions()) {
+
+			_containerRuntimeOptions.put(
+				runtimeOption.name(), Arrays.asList(runtimeOption.values()));
+		}
+
+		_descriptions = new HashMap<>();
+
+		for (LocaleString localeString : portletConfiguration.description()) {
+			_descriptions.put(localeString.locale(), localeString.value());
+		}
+
+		_displayNames = new HashMap<>();
+
+		for (LocaleString localeString : portletConfiguration.displayName()) {
+			_displayNames.put(localeString.locale(), localeString.value());
+		}
+
+		_initParams = new HashMap<>();
+
+		for (InitParameter initParameter : _portletConfiguration.initParams()) {
+			String value = initParameter.value();
+
+			if (value != null) {
+				_initParams.put(initParameter.name(), value);
+			}
+		}
+
+		_keywords = new HashMap<>();
+
+		for (LocaleString localeString : _portletConfiguration.keywords()) {
+			_keywords.put(localeString.locale(), localeString.value());
+		}
+
 		_portletDependencies = new HashSet<>();
 
 		for (Dependency dependency : portletConfiguration.dependencies()) {
@@ -110,9 +148,83 @@ public class BeanPortletAnnotationImpl extends BaseBeanPortletImpl {
 					dependency.version()));
 		}
 
-		_portletModes = new HashSet<>(liferayPortletModes);
+		Multipart multipart = portletConfiguration.multipart();
 
-		_portletModes.addAll(beanApp.getCustomPortletModes());
+		if (multipart.supported()) {
+			_multiPartFileSizeThreshold = multipart.fileSizeThreshold();
+			_multiPartLocation = multipart.location();
+			_multiPartMaxFileSize = multipart.maxFileSize();
+			_multiPartMaxRequestSize = multipart.maxRequestSize();
+			_multiPartSupported = true;
+		}
+		else {
+			_multiPartFileSizeThreshold = 0;
+			_multiPartLocation = null;
+			_multiPartMaxFileSize = -1L;
+			_multiPartMaxRequestSize = -1L;
+			_multiPartSupported = false;
+		}
+
+		_preferences = new HashMap<>();
+
+		for (javax.portlet.annotations.Preference preference :
+				portletConfiguration.prefs()) {
+
+			_preferences.put(
+				preference.name(),
+				new Preference(
+					Arrays.asList(preference.values()),
+					preference.isReadOnly()));
+		}
+
+		_securityRoleRefs = new HashMap<>();
+
+		for (SecurityRoleRef securityRoleRef :
+				portletConfiguration.roleRefs()) {
+
+			_securityRoleRefs.put(
+				securityRoleRef.roleName(), securityRoleRef.roleLink());
+		}
+
+		_shortTitles = new HashMap<>();
+
+		for (LocaleString localeString : portletConfiguration.shortTitle()) {
+			_shortTitles.put(localeString.locale(), localeString.value());
+		}
+
+		_supportedLocales = new HashSet<>(
+			Arrays.asList(portletConfiguration.supportedLocales()));
+
+		_supportedPortletModes = new HashMap<>();
+		_supportedWindowStates = new HashMap<>();
+
+		for (Supports supports : _portletConfiguration.supports()) {
+			_supportedPortletModes.put(
+				supports.mimeType(),
+				new HashSet<>(Arrays.asList(supports.portletModes())));
+			_supportedWindowStates.put(
+				supports.mimeType(),
+				new HashSet<>(Arrays.asList(supports.windowStates())));
+		}
+
+		_supportedPublicRenderParameters = new HashSet<>(
+			Arrays.asList(portletConfiguration.publicParams()));
+
+		_titles = new HashMap<>();
+
+		for (LocaleString localeString : portletConfiguration.title()) {
+			_titles.put(localeString.locale(), localeString.value());
+		}
+	}
+
+	@Override
+	public Map<String, List<String>> getContainerRuntimeOptions() {
+		return _containerRuntimeOptions;
+	}
+
+	@Override
+	public Map<String, String> getDescriptions() {
+		return _descriptions;
 	}
 
 	@Override
@@ -121,8 +233,48 @@ public class BeanPortletAnnotationImpl extends BaseBeanPortletImpl {
 	}
 
 	@Override
+	public Map<String, String> getDisplayNames() {
+		return _displayNames;
+	}
+
+	@Override
+	public int getExpirationCache() {
+		return _portletConfiguration.cacheExpirationTime();
+	}
+
+	@Override
+	public Map<String, String> getInitParams() {
+		return _initParams;
+	}
+
+	@Override
+	public Map<String, String> getKeywords() {
+		return _keywords;
+	}
+
+	@Override
 	public Map<String, String> getLiferayConfiguration() {
 		return _liferayConfiguration;
+	}
+
+	@Override
+	public int getMultiPartFileSizeThreshold() {
+		return _multiPartFileSizeThreshold;
+	}
+
+	@Override
+	public String getMultiPartLocation() {
+		return _multiPartLocation;
+	}
+
+	@Override
+	public long getMultiPartMaxFileSize() {
+		return _multiPartMaxFileSize;
+	}
+
+	@Override
+	public long getMultiPartMaxRequestSize() {
+		return _multiPartMaxRequestSize;
 	}
 
 	@Override
@@ -141,261 +293,187 @@ public class BeanPortletAnnotationImpl extends BaseBeanPortletImpl {
 	}
 
 	@Override
+	public Map<String, Preference> getPreferences() {
+		return _preferences;
+	}
+
+	@Override
 	public String getResourceBundle() {
 		return _portletConfiguration.resourceBundle();
 	}
 
 	@Override
-	public Dictionary<String, Object> toDictionary(BeanApp beanApp) {
-		HashMapDictionary<String, Object> dictionary =
-			(HashMapDictionary<String, Object>)super.toDictionary(beanApp);
+	public Map<String, String> getSecurityRoleRefs() {
+		return _securityRoleRefs;
+	}
 
-		dictionary.put(
-			"javax.portlet.async-supported",
-			_portletConfiguration.asyncSupported());
+	@Override
+	public Map<String, String> getShortTitles() {
+		return _shortTitles;
+	}
 
-		Map<String, List<String>> containerRuntimeOptions = new HashMap<>(
-			beanApp.getContainerRuntimeOptions());
+	@Override
+	public Set<String> getSupportedLocales() {
+		return _supportedLocales;
+	}
 
-		for (RuntimeOption runtimeOption :
-				_portletConfiguration.runtimeOptions()) {
+	@Override
+	public Map<String, Set<String>> getSupportedPortletModes() {
+		return _supportedPortletModes;
+	}
 
-			containerRuntimeOptions.put(
-				runtimeOption.name(), Arrays.asList(runtimeOption.values()));
-		}
+	@Override
+	public Set<QName> getSupportedProcessingEvents() {
 
-		for (Map.Entry<String, List<String>> entry :
-				containerRuntimeOptions.entrySet()) {
+		// Must use lazy-initialization since it is necessary for all the
+		// bean methods to be added first, which happens after construction.
 
-			dictionary.put(
-				"javax.portlet.container-runtime-option.".concat(
-					entry.getKey()),
-				entry.getValue());
-		}
+		if (_supportedProcessingEvents == null) {
+			_supportedProcessingEvents = new HashSet<>();
 
-		dictionary.put(
-			"javax.portlet.expiration-cache",
-			_portletConfiguration.cacheExpirationTime());
+			Map<MethodType, List<BeanMethod>> beanMethods = getBeanMethods();
 
-		for (InitParameter initParameter : _portletConfiguration.initParams()) {
-			String value = initParameter.value();
+			List<BeanMethod> eventBeanMethods = beanMethods.get(
+				MethodType.EVENT);
 
-			if (value != null) {
-				dictionary.put(
-					"javax.portlet.init-param.".concat(initParameter.name()),
-					value);
-			}
-		}
+			if (eventBeanMethods != null) {
+				for (BeanMethod beanMethod : eventBeanMethods) {
+					Method beanEventMethod = beanMethod.getMethod();
 
-		_putEnglishText(
-			dictionary, "javax.portlet.description",
-			_portletConfiguration.description());
+					EventMethod eventMethod = beanEventMethod.getAnnotation(
+						EventMethod.class);
 
-		_putEnglishText(
-			dictionary, "javax.portlet.display-name",
-			_portletConfiguration.displayName());
-
-		_putEnglishText(
-			dictionary, "javax.portlet.info.keywords",
-			_portletConfiguration.keywords());
-
-		Multipart multipart = _portletConfiguration.multipart();
-
-		if (multipart.supported()) {
-			dictionary.put(
-				"javax.portlet.multipart.file-size-threshold",
-				multipart.fileSizeThreshold());
-
-			dictionary.put(
-				"javax.portlet.multipart.location", multipart.location());
-
-			dictionary.put(
-				"javax.portlet.multipart.max-file-size",
-				multipart.maxFileSize());
-
-			dictionary.put(
-				"javax.portlet.multipart.max-request-size",
-				multipart.maxRequestSize());
-		}
-
-		_putEnglishText(
-			dictionary, "javax.portlet.info.short-title",
-			_portletConfiguration.shortTitle());
-
-		_putEnglishText(
-			dictionary, "javax.portlet.info.title",
-			_portletConfiguration.title(), getPortletName());
-
-		List<String> supportedPortletModes = new ArrayList<>();
-
-		for (Supports supports : _portletConfiguration.supports()) {
-			StringBundler portletModesSB = new StringBundler();
-
-			String[] portletModes = supports.portletModes();
-
-			boolean first = true;
-
-			for (String portletMode : portletModes) {
-				if (_portletModes.contains(portletMode)) {
-					if (first) {
-						first = false;
-					}
-					else {
-						portletModesSB.append(",");
+					if (eventMethod == null) {
+						continue;
 					}
 
-					portletModesSB.append(portletMode);
+					for (PortletQName portletQName :
+							eventMethod.processingEvents()) {
+
+						_supportedProcessingEvents.add(
+							new QName(
+								portletQName.namespaceURI(),
+								portletQName.localPart()));
+					}
+				}
+			}
+		}
+
+		return _supportedProcessingEvents;
+	}
+
+	@Override
+	public Set<String> getSupportedPublicRenderParameters() {
+		return _supportedPublicRenderParameters;
+	}
+
+	@Override
+	public Set<QName> getSupportedPublishingEvents() {
+
+		// Must use lazy-initialization since it is necessary for all the
+		// bean methods to be added first, which happens after construction.
+
+		if (_supportedPublishingEvents == null) {
+			_supportedPublishingEvents = new HashSet<>();
+
+			Map<MethodType, List<BeanMethod>> beanMethods = getBeanMethods();
+
+			List<BeanMethod> actionMethods = beanMethods.get(MethodType.ACTION);
+
+			if (actionMethods != null) {
+				for (BeanMethod beanMethod : actionMethods) {
+					Method method = beanMethod.getMethod();
+
+					ActionMethod actionMethod = method.getAnnotation(
+						ActionMethod.class);
+
+					if (actionMethod == null) {
+						continue;
+					}
+
+					for (PortletQName portletQName :
+							actionMethod.publishingEvents()) {
+
+						_supportedPublishingEvents.add(
+							new QName(
+								portletQName.namespaceURI(),
+								portletQName.localPart()));
+					}
 				}
 			}
 
-			supportedPortletModes.add(
-				toNameValuePair(
-					supports.mimeType(), portletModesSB.toString()));
-		}
+			List<BeanMethod> eventMethods = beanMethods.get(MethodType.EVENT);
 
-		if (!supportedPortletModes.isEmpty()) {
-			dictionary.put("javax.portlet.portlet-mode", supportedPortletModes);
-		}
+			if (eventMethods != null) {
+				for (BeanMethod beanMethod : eventMethods) {
+					Method method = beanMethod.getMethod();
 
-		StringBuilder sb = new StringBuilder();
+					EventMethod eventMethod = method.getAnnotation(
+						EventMethod.class);
 
-		sb.append("<?xml version=\"1.0\"?>");
-		sb.append("<portlet-preferences>");
+					if (eventMethod == null) {
+						continue;
+					}
 
-		for (Preference preference : _portletConfiguration.prefs()) {
-			sb.append("<preference>");
-			sb.append("<name>");
-			sb.append(preference.name());
-			sb.append("</name>");
+					for (PortletQName portletQName :
+							eventMethod.publishingEvents()) {
 
-			for (String value : preference.values()) {
-				sb.append("<value>");
-				sb.append(value);
-				sb.append("</value>");
-			}
-
-			sb.append("<read-only>");
-			sb.append(preference.isReadOnly());
-			sb.append("</read-only>");
-
-			sb.append("</preference>");
-		}
-
-		sb.append("</portlet-preferences>");
-
-		dictionary.put("javax.portlet.preferences", sb.toString());
-
-		String resourceBundle = _portletConfiguration.resourceBundle();
-
-		if ((resourceBundle != null) && !resourceBundle.isEmpty()) {
-			dictionary.put("javax.portlet.resource-bundle", resourceBundle);
-		}
-
-		StringBundler securityRoleRefSB = new StringBundler();
-
-		boolean first = true;
-
-		for (SecurityRoleRef securityRoleRef :
-				_portletConfiguration.roleRefs()) {
-
-			if (first) {
-				first = false;
-			}
-			else {
-				securityRoleRefSB.append(",");
-			}
-
-			securityRoleRefSB.append(securityRoleRef.roleName());
-		}
-
-		if (securityRoleRefSB.length() > 0) {
-			dictionary.put(
-				"javax.portlet.security-role-ref",
-				securityRoleRefSB.toString());
-		}
-
-		dictionary.put(
-			"javax.portlet.supported-locale",
-			_portletConfiguration.supportedLocales());
-
-		List<String> supportedPublicRenderParameters = new ArrayList<>();
-
-		for (String identifier : _portletConfiguration.publicParams()) {
-			supportedPublicRenderParameters.add(
-				toNameValuePair(
-					identifier,
-					getPublicRenderParameterNamespaceURI(beanApp, identifier)));
-		}
-
-		dictionary.put(
-			"javax.portlet.supported-public-render-parameter",
-			supportedPublicRenderParameters);
-
-		List<String> supportedWindowStates = new ArrayList<>();
-
-		for (Supports supports : _portletConfiguration.supports()) {
-			StringBundler windowStatesSB = new StringBundler();
-
-			String[] windowStates = supports.windowStates();
-
-			first = true;
-
-			for (String windowState : windowStates) {
-				if (first) {
-					first = false;
+						_supportedPublishingEvents.add(
+							new QName(
+								portletQName.namespaceURI(),
+								portletQName.localPart()));
+					}
 				}
-				else {
-					windowStatesSB.append(",");
-				}
-
-				windowStatesSB.append(windowState);
-			}
-
-			supportedWindowStates.add(
-				toNameValuePair(
-					supports.mimeType(), windowStatesSB.toString()));
-		}
-
-		if (!supportedWindowStates.isEmpty()) {
-			dictionary.put("javax.portlet.window-state", supportedWindowStates);
-		}
-
-		dictionary.putAll(_liferayConfiguration);
-
-		return dictionary;
-	}
-
-	private static void _putEnglishText(
-		Dictionary<String, Object> dictionary, String key,
-		LocaleString[] localeStrings) {
-
-		_putEnglishText(dictionary, key, localeStrings, null);
-	}
-
-	private static void _putEnglishText(
-		Dictionary<String, Object> dictionary, String key,
-		LocaleString[] localeStrings, String defaultValue) {
-
-		for (LocaleString localeString : localeStrings) {
-			if (_ENGLISH_EN.equals(localeString.locale())) {
-				dictionary.put(key, localeString.value());
-
-				return;
 			}
 		}
 
-		if (defaultValue != null) {
-			dictionary.put(key, defaultValue);
-		}
+		return _supportedPublishingEvents;
 	}
 
-	private static final String _ENGLISH_EN = Locale.ENGLISH.getLanguage();
+	@Override
+	public Map<String, Set<String>> getSupportedWindowStates() {
+		return _supportedWindowStates;
+	}
 
+	@Override
+	public Map<String, String> getTitles() {
+		return _titles;
+	}
+
+	@Override
+	public boolean isAsyncSupported() {
+		return _portletConfiguration.asyncSupported();
+	}
+
+	@Override
+	public boolean isMultiPartSupported() {
+		return _multiPartSupported;
+	}
+
+	private final Map<String, List<String>> _containerRuntimeOptions;
+	private final Map<String, String> _descriptions;
 	private final String _displayCategory;
+	private final Map<String, String> _displayNames;
+	private final Map<String, String> _initParams;
+	private final Map<String, String> _keywords;
 	private final Map<String, String> _liferayConfiguration;
+	private final int _multiPartFileSizeThreshold;
+	private final String _multiPartLocation;
+	private final long _multiPartMaxFileSize;
+	private final long _multiPartMaxRequestSize;
+	private final boolean _multiPartSupported;
 	private final String _portletClassName;
 	private final PortletConfiguration _portletConfiguration;
 	private final Set<PortletDependency> _portletDependencies;
-	private final Set<String> _portletModes;
+	private final Map<String, Preference> _preferences;
+	private final Map<String, String> _securityRoleRefs;
+	private final Map<String, String> _shortTitles;
+	private final Set<String> _supportedLocales;
+	private final Map<String, Set<String>> _supportedPortletModes;
+	private Set<QName> _supportedProcessingEvents;
+	private final Set<String> _supportedPublicRenderParameters;
+	private Set<QName> _supportedPublishingEvents;
+	private final Map<String, Set<String>> _supportedWindowStates;
+	private final Map<String, String> _titles;
 
 }

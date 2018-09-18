@@ -19,6 +19,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import javax.xml.namespace.QName;
+
 /**
  * @author Neil Griffin
  */
@@ -28,9 +30,29 @@ public interface BeanPortlet {
 
 	public Map<MethodType, List<BeanMethod>> getBeanMethods();
 
+	public Map<String, List<String>> getContainerRuntimeOptions();
+
+	public Map<String, String> getDescriptions();
+
 	public String getDisplayCategory();
 
+	public Map<String, String> getDisplayNames();
+
+	public int getExpirationCache();
+
+	public Map<String, String> getInitParams();
+
+	public Map<String, String> getKeywords();
+
 	public Map<String, String> getLiferayConfiguration();
+
+	public int getMultiPartFileSizeThreshold();
+
+	public String getMultiPartLocation();
+
+	public long getMultiPartMaxFileSize();
+
+	public long getMultiPartMaxRequestSize();
 
 	public String getPortletClassName();
 
@@ -38,7 +60,31 @@ public interface BeanPortlet {
 
 	public String getPortletName();
 
+	public Map<String, Preference> getPreferences();
+
 	public String getResourceBundle();
+
+	public Map<String, String> getSecurityRoleRefs();
+
+	public Map<String, String> getShortTitles();
+
+	public Set<String> getSupportedLocales();
+
+	public Map<String, Set<String>> getSupportedPortletModes();
+
+	public Set<QName> getSupportedProcessingEvents();
+
+	public Set<String> getSupportedPublicRenderParameters();
+
+	public Set<QName> getSupportedPublishingEvents();
+
+	public Map<String, Set<String>> getSupportedWindowStates();
+
+	public Map<String, String> getTitles();
+
+	public boolean isAsyncSupported();
+
+	public boolean isMultiPartSupported();
 
 	public Dictionary<String, Object> toDictionary(BeanApp beanApp);
 

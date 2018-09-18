@@ -3,6 +3,11 @@ import PortletBase from 'frontend-js-web/liferay/PortletBase.es';
 import Soy from 'metal-soy';
 
 import 'frontend-js-web/liferay/compat/modal/Modal.es';
+import {
+	HIDE_MAPPING_TYPE_DIALOG,
+	SELECT_MAPPEABLE_TYPE
+} from '../../actions/actions.es';
+import {Store} from '../../store/store.es';
 import templates from './SelectMappingTypeDialog.soy';
 
 /**
@@ -39,44 +44,16 @@ class SelectMappingTypeDialog extends PortletBase {
 	}
 
 	/**
-	 * Emits a mappingTypeSelected event with the corresponding labels
-	 * @review
-	 */
-
-	_emitSelectedMappingLabels() {
-		const mappingTypes = {};
-		const subtype = this._mappingSubtypes.find(
-			subtype => subtype.id === this._selectedMappingSubtypeId
-		);
-		const type = this._mappingTypes.find(
-			type => type.id === this._selectedMappingTypeId
-		);
-
-		if (subtype) {
-			mappingTypes.subtype = {
-				id: this._selectedMappingSubtypeId,
-				label: subtype.label
-			};
-		}
-
-		if (type) {
-			mappingTypes.type = {
-				id: this._selectedMappingTypeId,
-				label: type.label
-			};
-		}
-
-		this.emit('mappingTypeSelected', {mappingTypes});
-	}
-
-	/**
 	 * Close asset type selection dialog
 	 * @private
 	 * @review
 	 */
 
 	_handleCloseButtonClick() {
-		this.visible = false;
+		this.store
+			.dispatchAction(
+				HIDE_MAPPING_TYPE_DIALOG
+			);
 	}
 
 	/**
@@ -123,23 +100,41 @@ class SelectMappingTypeDialog extends PortletBase {
 	 */
 
 	_handleSubmitButtonClick() {
+		const mappingTypes = {};
+		const subtype = this._mappingSubtypes.find(
+			subtype => subtype.id === this._selectedMappingSubtypeId
+		);
+		const type = this._mappingTypes.find(
+			type => type.id === this._selectedMappingTypeId
+		);
+
+		if (subtype) {
+			mappingTypes.subtype = {
+				id: this._selectedMappingSubtypeId,
+				label: subtype.label
+			};
+		}
+
+		if (type) {
+			mappingTypes.type = {
+				id: this._selectedMappingTypeId,
+				label: type.label
+			};
+		}
+
 		this._savingChanges = true;
 
-		return this.fetch(
-			this.updateLayoutPageTemplateEntryAssetTypeURL,
-			{
-				classNameId: this._selectedMappingTypeId,
-				classPK: this.classPK,
-				classTypeId: this._selectedMappingSubtypeId
-			}
-		)
-			.then(
-				response => response.json()
-			).then(
-				() => {
-					this._emitSelectedMappingLabels();
-					this.visible = false;
+		this.store
+			.dispatchAction(
+				SELECT_MAPPEABLE_TYPE,
+				{
+					mappingTypes,
+					selectedMappingSubtypeId: this._selectedMappingSubtypeId,
+					selectedMappingTypeId: this._selectedMappingTypeId
 				}
+			)
+			.dispatchAction(
+				HIDE_MAPPING_TYPE_DIALOG
 			);
 	}
 
@@ -150,9 +145,10 @@ class SelectMappingTypeDialog extends PortletBase {
 	 */
 
 	_handleVisibleChanged(change) {
-		if (this.visible !== change.newVal) {
-			this.visible = change.newVal;
-		}
+		this.store
+			.dispatchAction(
+				HIDE_MAPPING_TYPE_DIALOG
+			);
 
 		if (!change.newVal) {
 			this._mappingSubtypes = [];
@@ -270,26 +266,15 @@ SelectMappingTypeDialog.STATE = {
 	spritemap: Config.string().required(),
 
 	/**
-	 * URL for updating the asset type associated to a template.
+	 * Store instance
 	 * @default undefined
 	 * @instance
 	 * @memberOf SelectMappingTypeDialog
 	 * @review
-	 * @type {!string}
+	 * @type {Store}
 	 */
 
-	updateLayoutPageTemplateEntryAssetTypeURL: Config.string().required(),
-
-	/**
-	 * Whether to show the mapping dialog or not
-	 * @default undefined
-	 * @instance
-	 * @memberOf SelectMappingTypeDialog
-	 * @review
-	 * @type {!boolean}
-	 */
-
-	visible: Config.bool().required(),
+	store: Config.instanceOf(Store),
 
 	/**
 	 * List of available mapping types

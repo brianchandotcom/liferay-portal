@@ -4,8 +4,11 @@ import {object} from 'metal';
 import Soy from 'metal-soy';
 
 import './FragmentEditableFieldTooltip.es';
+
 import FragmentProcessors from '../fragment_processors/FragmentProcessors.es';
 import {getActiveEditableElement} from '../fragment_processors/EditableTextFragmentProcessor.es';
+import {OPEN_MAPPING_FIELDS_DIALOG} from '../../actions/actions.es';
+import {Store} from '../../store/store.es';
 import templates from './FragmentEditableField.soy';
 import {
 	UPDATE_EDITABLE_VALUE,
@@ -344,14 +347,16 @@ class FragmentEditableField extends Component {
 			this._showEditor = true;
 		}
 		else if (buttonId === TOOLTIP_BUTTONS.map.id) {
-			this.emit(
-				'mapButtonClicked',
-				{
-					editableId: this.editableId,
-					editableType: this.type,
-					mappedFieldId: this.editableValues.mappedField || ''
-				}
-			);
+			this.store
+				.dispatchAction(
+					OPEN_MAPPING_FIELDS_DIALOG,
+					{
+						editableId: this.editableId,
+						editableType: this.type,
+						fragmentEntryLinkId: this.fragmentEntryLinkId,
+						mappedFieldId: this.editableValues.mappedField || ''
+					}
+				);
 		}
 
 		this._showTooltip = false;
@@ -476,6 +481,17 @@ FragmentEditableField.STATE = {
 	 */
 
 	showMapping: Config.bool().required(),
+
+	/**
+	 * Store instance
+	 * @default undefined
+	 * @instance
+	 * @memberOf FragmentEditableField
+	 * @review
+	 * @type {Store}
+	 */
+
+	store: Config.instanceOf(Store),
 
 	/**
 	 * Flag indicating if the editable editor is active.

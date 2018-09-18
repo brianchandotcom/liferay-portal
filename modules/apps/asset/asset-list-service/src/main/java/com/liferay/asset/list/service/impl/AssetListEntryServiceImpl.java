@@ -51,6 +51,21 @@ public class AssetListEntryServiceImpl extends AssetListEntryServiceBaseImpl {
 	}
 
 	@Override
+	public void addAssetListEntryAssetEntryRel(
+			long assetListEntryId, long assetEntryId)
+		throws PortalException {
+
+		AssetListEntry assetListEntry =
+			assetListEntryLocalService.getAssetListEntry(assetListEntryId);
+
+		_assetListEntryModelResourcePermission.check(
+			getPermissionChecker(), assetListEntry, ActionKeys.UPDATE);
+
+		assetListEntryAssetEntryRelLocalService.addAssetListEntryAssetEntryRel(
+			assetListEntryId, assetEntryId);
+	}
+
+	@Override
 	public void deleteAssetListEntries(long[] assetListEntriesIds)
 		throws PortalException {
 
@@ -76,6 +91,21 @@ public class AssetListEntryServiceImpl extends AssetListEntryServiceBaseImpl {
 			getPermissionChecker(), assetListEntry, ActionKeys.DELETE);
 
 		return assetListEntryLocalService.deleteAssetListEntry(assetListEntry);
+	}
+
+	@Override
+	public void deleteAssetListEntryAssetEntryRel(
+			long assetListEntryId, int position)
+		throws PortalException {
+
+		AssetListEntry assetListEntry =
+			assetListEntryLocalService.getAssetListEntry(assetListEntryId);
+
+		_assetListEntryModelResourcePermission.check(
+			getPermissionChecker(), assetListEntry, ActionKeys.UPDATE);
+
+		assetListEntryAssetEntryRelLocalService.
+			deleteAssetListEntryAssetEntryRel(assetListEntryId, position);
 	}
 
 	@Override
@@ -121,6 +151,21 @@ public class AssetListEntryServiceImpl extends AssetListEntryServiceBaseImpl {
 	public int getAssetListEntriesCount(long groupId, String title) {
 		return assetListEntryPersistence.countByG_LikeT(
 			groupId, _customSQL.keywords(title, WildcardMode.SURROUND)[0]);
+	}
+
+	@Override
+	public void moveAssetListEntryAssetEntryRel(
+			long assetListEntryId, int position, int newPosition)
+		throws PortalException {
+
+		AssetListEntry assetListEntry =
+			assetListEntryLocalService.getAssetListEntry(assetListEntryId);
+
+		_assetListEntryModelResourcePermission.check(
+			getPermissionChecker(), assetListEntry, ActionKeys.UPDATE);
+
+		assetListEntryAssetEntryRelLocalService.moveAssetListEntryAssetEntryRel(
+			assetListEntryId, position, newPosition);
 	}
 
 	@Override

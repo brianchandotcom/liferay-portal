@@ -14,27 +14,70 @@
 
 package com.liferay.asset.list.service.impl;
 
+import com.liferay.asset.list.model.AssetListEntryAssetEntryRel;
 import com.liferay.asset.list.service.base.AssetListEntryAssetEntryRelLocalServiceBaseImpl;
+import com.liferay.portal.kernel.exception.PortalException;
 
 /**
- * The implementation of the asset list entry asset entry rel local service.
- *
- * <p>
- * All custom service methods should be put in this class. Whenever methods are added, rerun ServiceBuilder to copy their definitions into the {@link com.liferay.asset.list.service.AssetListEntryAssetEntryRelLocalService} interface.
- *
- * <p>
- * This is a local service. Methods of this service will not have security checks based on the propagated JAAS credentials because this service can only be accessed from within the same VM.
- * </p>
- *
- * @author Brian Wing Shun Chan
- * @see AssetListEntryAssetEntryRelLocalServiceBaseImpl
- * @see com.liferay.asset.list.service.AssetListEntryAssetEntryRelLocalServiceUtil
+ * @author Pavel savinov
  */
 public class AssetListEntryAssetEntryRelLocalServiceImpl
 	extends AssetListEntryAssetEntryRelLocalServiceBaseImpl {
-	/*
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never reference this class directly. Always use {@link com.liferay.asset.list.service.AssetListEntryAssetEntryRelLocalServiceUtil} to access the asset list entry asset entry rel local service.
-	 */
+
+	@Override
+	public AssetListEntryAssetEntryRel addAssetListEntryAssetEntryRel(
+		long assetListEntryId, long assetEntryId) {
+
+		long assetListEntryAssetEntryRelId = counterLocalService.increment();
+
+		AssetListEntryAssetEntryRel assetListEntryAssetEntryRel =
+			assetListEntryAssetEntryRelPersistence.create(
+				assetListEntryAssetEntryRelId);
+
+		assetListEntryAssetEntryRel.setAssetListEntryId(assetListEntryId);
+		assetListEntryAssetEntryRel.setAssetEntryId(assetEntryId);
+		assetListEntryAssetEntryRel.setPosition(
+			assetListEntryAssetEntryRelPersistence.countByAssetListEntryId(
+				assetListEntryId));
+
+		return assetListEntryAssetEntryRelPersistence.update(
+			assetListEntryAssetEntryRel);
+	}
+
+	@Override
+	public AssetListEntryAssetEntryRel deleteAssetListEntryAssetEntryRel(
+			long assetListEntryId, int position)
+		throws PortalException {
+
+		return assetListEntryAssetEntryRelPersistence.removeByA_P(
+			assetListEntryId, position);
+	}
+
+	@Override
+	public AssetListEntryAssetEntryRel moveAssetListEntryAssetEntryRel(
+			long assetListEntryId, int position, int newPosition)
+		throws PortalException {
+
+		AssetListEntryAssetEntryRel assetListEntryAssetEntryRel =
+			assetListEntryAssetEntryRelPersistence.findByA_P(
+				assetListEntryId, position);
+
+		int assetListEntryAssetEntryRelCount =
+			assetListEntryAssetEntryRelPersistence.countByAssetListEntryId(
+				assetListEntryId);
+
+		if ((newPosition < 0) ||
+			(newPosition >= assetListEntryAssetEntryRelCount)) {
+
+			return assetListEntryAssetEntryRel;
+		}
+
+		assetListEntryAssetEntryRel.setPosition(newPosition);
+
+		assetListEntryAssetEntryRelPersistence.update(
+			assetListEntryAssetEntryRel);
+
+		return assetListEntryAssetEntryRel;
+	}
+
 }

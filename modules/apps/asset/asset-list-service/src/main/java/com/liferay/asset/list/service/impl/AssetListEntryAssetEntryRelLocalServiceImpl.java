@@ -17,6 +17,7 @@ package com.liferay.asset.list.service.impl;
 import com.liferay.asset.list.model.AssetListEntryAssetEntryRel;
 import com.liferay.asset.list.service.base.AssetListEntryAssetEntryRelLocalServiceBaseImpl;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
 
 import java.util.List;
 
@@ -87,10 +88,33 @@ public class AssetListEntryAssetEntryRelLocalServiceImpl
 			return assetListEntryAssetEntryRel;
 		}
 
-		assetListEntryAssetEntryRel.setPosition(newPosition);
+		AssetListEntryAssetEntryRel swapAssetListEntryAssetEntryRel =
+			assetListEntryAssetEntryRelPersistence.findByA_P(
+				assetListEntryId, newPosition);
+
+		assetListEntryAssetEntryRel.setPosition(-1);
+		swapAssetListEntryAssetEntryRel.setPosition(-2);
 
 		assetListEntryAssetEntryRelPersistence.update(
 			assetListEntryAssetEntryRel);
+		assetListEntryAssetEntryRelPersistence.update(
+			swapAssetListEntryAssetEntryRel);
+
+		TransactionCommitCallbackUtil.registerCallback(
+			() -> {
+				assetListEntryAssetEntryRel.setPosition(newPosition);
+				swapAssetListEntryAssetEntryRel.setPosition(position);
+
+				assetListEntryAssetEntryRelLocalService.
+					updateAssetListEntryAssetEntryRel(
+						assetListEntryAssetEntryRel);
+
+				assetListEntryAssetEntryRelLocalService.
+					updateAssetListEntryAssetEntryRel(
+						swapAssetListEntryAssetEntryRel);
+
+				return null;
+			});
 
 		return assetListEntryAssetEntryRel;
 	}

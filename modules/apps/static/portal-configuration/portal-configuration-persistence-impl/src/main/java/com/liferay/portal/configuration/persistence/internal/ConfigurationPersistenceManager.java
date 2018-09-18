@@ -69,9 +69,6 @@ public class ConfigurationPersistenceManager
 	implements NotCachablePersistenceManager, PersistenceManager,
 			   ReloadablePersistenceManager {
 
-	public static final String NAME =
-		ConfigurationPersistenceManager.class.getName();
-
 	@Override
 	public void delete(final String pid) throws IOException {
 		if (System.getSecurityManager() != null) {

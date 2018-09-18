@@ -14,15 +14,18 @@
 
 package com.liferay.bean.portlet.cdi.extension.internal.xml;
 
+import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.kernel.xml.Document;
+import com.liferay.portal.kernel.xml.DocumentException;
+import com.liferay.portal.kernel.xml.Element;
+import com.liferay.portal.kernel.xml.UnsecureSAXReaderUtil;
+
 import java.io.IOException;
 
 import java.net.URL;
 
+import java.util.HashMap;
 import java.util.Map;
-
-import javax.xml.stream.XMLStreamException;
-
-import org.xml.sax.SAXException;
 
 /**
  * @author Neil Griffin
@@ -30,11 +33,27 @@ import org.xml.sax.SAXException;
 public class DisplayDescriptorParser {
 
 	public static Map<String, String> parse(URL displayDescriptorURL)
-		throws IOException, SAXException, XMLStreamException {
+		throws DocumentException, IOException {
 
-		// TODO
+		Map<String, String> displayCategoryMap = new HashMap<>();
 
-		return null;
+		String xml = HttpUtil.URLtoString(displayDescriptorURL);
+
+		Document document = UnsecureSAXReaderUtil.read(xml, true);
+
+		Element rootElement = document.getRootElement();
+
+		for (Element categoryElement : rootElement.elements("category")) {
+			String categoryName = categoryElement.attributeValue("name");
+
+			for (Element portletElement : categoryElement.elements("portlet")) {
+				String portletId = portletElement.attributeValue("id");
+
+				displayCategoryMap.put(portletId, categoryName);
+			}
+		}
+
+		return displayCategoryMap;
 	}
 
 }

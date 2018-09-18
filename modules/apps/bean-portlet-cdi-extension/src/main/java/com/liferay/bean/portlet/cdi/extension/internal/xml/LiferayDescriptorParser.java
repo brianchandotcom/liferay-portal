@@ -14,13 +14,19 @@
 
 package com.liferay.bean.portlet.cdi.extension.internal.xml;
 
+import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.DocumentException;
+import com.liferay.portal.kernel.xml.Element;
+import com.liferay.portal.kernel.xml.UnsecureSAXReaderUtil;
 
 import java.io.IOException;
 
 import java.net.URL;
 
+import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * @author Neil Griffin
@@ -31,9 +37,38 @@ public class LiferayDescriptorParser {
 			URL liferayDescriptorURL)
 		throws DocumentException, IOException {
 
-		// TODO
+		Map<String, Map<String, String>> configurations = new HashMap<>();
 
-		return null;
+		String xml = HttpUtil.URLtoString(liferayDescriptorURL);
+
+		Document document = UnsecureSAXReaderUtil.read(xml, true);
+
+		Element rootElement = document.getRootElement();
+
+		for (Element portletElement : rootElement.elements("portlet")) {
+			String portletName = null;
+
+			Map<String, String> configuration = new HashMap<>();
+
+			for (Element element : portletElement.elements()) {
+				String elementName = element.getName();
+
+				if (Objects.equals(elementName, "portlet-name")) {
+					portletName = element.getText();
+				}
+				else {
+					configuration.put(
+						"com.liferay.portlet.".concat(elementName),
+						element.getText());
+				}
+			}
+
+			if (portletName != null) {
+				configurations.put(portletName, configuration);
+			}
+		}
+
+		return new HashMap(configurations);
 	}
 
 }

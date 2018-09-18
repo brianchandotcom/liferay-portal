@@ -26,7 +26,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Shuyang Zhou
  */
-@Component
+@Component(service = SyndModelFactory.class)
 public class SyndModelFactoryImpl implements SyndModelFactory {
 
 	@Override

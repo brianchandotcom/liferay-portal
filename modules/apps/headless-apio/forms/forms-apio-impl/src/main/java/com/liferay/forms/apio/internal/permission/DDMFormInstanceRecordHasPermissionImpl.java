@@ -33,7 +33,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = "model.class.name=com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecord"
+	property = "model.class.name=com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecord",
+	service = HasPermission.class
 )
 public class DDMFormInstanceRecordHasPermissionImpl
 	implements HasPermission<Long> {

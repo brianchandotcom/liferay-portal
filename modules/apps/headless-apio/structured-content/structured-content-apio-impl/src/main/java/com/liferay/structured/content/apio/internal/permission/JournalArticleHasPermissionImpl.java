@@ -32,7 +32,8 @@ import org.osgi.service.component.annotations.Reference;
  * @author Alejandro Hernández
  */
 @Component(
-	property = "model.class.name=com.liferay.journal.model.JournalArticle"
+	property = "model.class.name=com.liferay.journal.model.JournalArticle",
+	service = HasPermission.class
 )
 public class JournalArticleHasPermissionImpl implements HasPermission<Long> {
 

@@ -48,7 +48,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = "name=com.liferay.document.library.web#/document_library/info_panel_file_entry.jsp#fileEntryOwner"
+	property = "name=com.liferay.document.library.web#/document_library/info_panel_file_entry.jsp#fileEntryOwner",
+	service = DynamicSection.class
 )
 public class DLInfoPanelFileEntryOwnerDynamicSection implements DynamicSection {
 

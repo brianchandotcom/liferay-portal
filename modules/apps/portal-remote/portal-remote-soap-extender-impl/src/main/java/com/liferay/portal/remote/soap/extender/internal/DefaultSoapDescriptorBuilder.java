@@ -25,7 +25,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Carlos Sierra Andrés
  */
-@Component
+@Component(service = SoapDescriptorBuilder.class)
 public class DefaultSoapDescriptorBuilder implements SoapDescriptorBuilder {
 
 	@Override

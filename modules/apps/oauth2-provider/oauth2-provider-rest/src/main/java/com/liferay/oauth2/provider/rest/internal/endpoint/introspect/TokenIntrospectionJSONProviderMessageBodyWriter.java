@@ -50,7 +50,8 @@ import org.osgi.service.component.annotations.Component;
 		"osgi.jaxrs.application.select=(osgi.jaxrs.name=Liferay.OAuth2.Application)",
 		"osgi.jaxrs.extension=true",
 		"osgi.jaxrs.name=TokenIntrospectionJSONProviderMessageBodyWriter"
-	}
+	},
+	service = MessageBodyWriter.class
 )
 @Produces("application/json")
 @Provider

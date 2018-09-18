@@ -44,7 +44,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Roberto Díaz
  * @author Alejandro Tardín
  */
-@Component
+@Component(service = UploadHandler.class)
 public class DefaultUploadHandler implements UploadHandler {
 
 	@Override

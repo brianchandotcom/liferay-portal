@@ -51,7 +51,8 @@ import org.osgi.service.http.whiteboard.HttpWhiteboardConstants;
  */
 @Component(
 	configurationPid = "com.liferay.portal.remote.http.tunnel.configuration.HttpTunnelExtenderConfiguration",
-	configurationPolicy = ConfigurationPolicy.REQUIRE, immediate = true
+	configurationPolicy = ConfigurationPolicy.REQUIRE, immediate = true,
+	service = {}
 )
 public class HttpTunnelExtender extends AbstractExtender {
 

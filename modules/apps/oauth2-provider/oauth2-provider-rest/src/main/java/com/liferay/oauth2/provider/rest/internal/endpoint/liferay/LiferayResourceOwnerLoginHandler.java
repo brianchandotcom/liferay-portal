@@ -41,7 +41,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Carlos Sierra Andrés
  */
-@Component
+@Component(service = ResourceOwnerLoginHandler.class)
 public class LiferayResourceOwnerLoginHandler
 	implements ResourceOwnerLoginHandler {
 

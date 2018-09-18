@@ -34,7 +34,8 @@ import org.osgi.service.component.annotations.Component;
 	property = {
 		"service.ranking:Integer=" + Integer.MAX_VALUE,
 		"urls.includes=/TestAuthVerifier/*,/TestAuthVerifierTest/*"
-	}
+	},
+	service = AuthVerifier.class
 )
 public class TestAuthVerifier implements AuthVerifier {
 

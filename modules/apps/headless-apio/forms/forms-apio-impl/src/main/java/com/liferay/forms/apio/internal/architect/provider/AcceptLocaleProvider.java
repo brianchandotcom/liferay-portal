@@ -24,7 +24,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Alejandro Hernández
  */
-@Component
+@Component(service = Provider.class)
 public class AcceptLocaleProvider implements Provider<AcceptLocale> {
 
 	@Override

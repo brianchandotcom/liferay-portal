@@ -46,7 +46,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Eduardo Perez
  * @review
  */
-@Component(immediate = true)
+@Component(immediate = true, service = CollectionResource.class)
 public class MyUserAccountCollectionResource
 	implements CollectionResource<UserWrapper, Long, MyUserAccountIdentifier> {
 

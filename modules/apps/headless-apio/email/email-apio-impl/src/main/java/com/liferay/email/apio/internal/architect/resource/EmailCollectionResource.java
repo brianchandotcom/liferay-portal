@@ -33,7 +33,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Javier Gamarra
  * @review
  */
-@Component(immediate = true)
+@Component(immediate = true, service = ItemResource.class)
 public class EmailCollectionResource
 	implements ItemResource<EmailAddress, Long, EmailIdentifier> {
 

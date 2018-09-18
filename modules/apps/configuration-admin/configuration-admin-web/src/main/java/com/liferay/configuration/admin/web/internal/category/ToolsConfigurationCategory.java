@@ -21,7 +21,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Pei-Jung Lan
  */
-@Component
+@Component(service = ConfigurationCategory.class)
 public class ToolsConfigurationCategory implements ConfigurationCategory {
 
 	@Override

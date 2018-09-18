@@ -33,7 +33,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Sergio González
  */
-@Component
+@Component(service = {})
 public class LayoutSetJavaScriptFormNavigatorEntry
 	extends BaseLayoutSetFormNavigatorEntry {
 

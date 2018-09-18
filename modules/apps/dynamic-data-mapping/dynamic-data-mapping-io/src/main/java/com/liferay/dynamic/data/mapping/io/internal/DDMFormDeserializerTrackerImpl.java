@@ -31,7 +31,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 /**
  * @author Leonardo Barros
  */
-@Component(immediate = true)
+@Component(immediate = true, service = DDMFormDeserializerTracker.class)
 public class DDMFormDeserializerTrackerImpl
 	implements DDMFormDeserializerTracker {
 

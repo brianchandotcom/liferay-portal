@@ -74,7 +74,7 @@ import org.osgi.service.component.annotations.ServiceScope;
 		"osgi.jaxrs.extension.select=(osgi.jaxrs.name=Liferay.OAuth2)",
 		"osgi.jaxrs.name=Liferay.OAuth2.HTTP.configurable.request.checker"
 	},
-	scope = ServiceScope.PROTOTYPE
+	scope = ServiceScope.PROTOTYPE, service = Feature.class
 )
 @Priority(Priorities.AUTHORIZATION - 8)
 @Provider

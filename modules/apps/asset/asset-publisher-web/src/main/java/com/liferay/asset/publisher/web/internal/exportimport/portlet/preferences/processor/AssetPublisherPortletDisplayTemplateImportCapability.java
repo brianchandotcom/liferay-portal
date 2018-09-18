@@ -34,7 +34,8 @@ import org.osgi.service.component.annotations.Component;
 	property = {
 		"name=AssetPublisherImportCapability",
 		"type=" + PortletDisplayTemplateConstants.DISPLAY_TEMPLATE_IMPORT
-	}
+	},
+	service = PortletDisplayTemplateRegister.class
 )
 public class AssetPublisherPortletDisplayTemplateImportCapability
 	implements PortletDisplayTemplateRegister {

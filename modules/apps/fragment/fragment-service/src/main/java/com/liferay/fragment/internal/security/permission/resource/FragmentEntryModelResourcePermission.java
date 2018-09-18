@@ -32,7 +32,8 @@ import org.osgi.service.component.annotations.Reference;
  * @author Pavel Savinov
  */
 @Component(
-	property = "model.class.name=com.liferay.fragment.model.FragmentEntry"
+	property = "model.class.name=com.liferay.fragment.model.FragmentEntry",
+	service = ModelResourcePermission.class
 )
 public class FragmentEntryModelResourcePermission
 	implements ModelResourcePermission<FragmentEntry> {

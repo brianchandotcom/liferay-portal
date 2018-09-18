@@ -22,7 +22,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Pei-Jung Lan
  */
-@Component
+@Component(service = ConfigurationBeanDeclaration.class)
 public class OpenOfficeConfigurationBeanDeclaration
 	implements ConfigurationBeanDeclaration {
 

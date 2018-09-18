@@ -42,7 +42,8 @@ import org.osgi.service.component.annotations.Reference;
  * @author Marcellus Tavares
  */
 @Component(
-	immediate = true, property = "ddm.form.layout.deserializer.type=json"
+	immediate = true, property = "ddm.form.layout.deserializer.type=json",
+	service = DDMFormLayoutDeserializer.class
 )
 public class DDMFormLayoutJSONDeserializer
 	implements DDMFormLayoutDeserializer {

@@ -28,7 +28,7 @@ import org.osgi.service.component.annotations.Component;
  *
  * @author Javier Gamarra
  */
-@Component(immediate = true)
+@Component(immediate = true, service = ExceptionMapper.class)
 public class DuplicateFriendlyURLEntryMapper
 	implements ExceptionMapper<DuplicateFriendlyURLEntryException> {
 

@@ -24,7 +24,10 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Marcellus Tavares
  */
-@Component(immediate = true, property = "ddm.form.field.type.name=checkbox")
+@Component(
+	immediate = true, property = "ddm.form.field.type.name=checkbox",
+	service = DDMFormFieldValueRequestParameterRetriever.class
+)
 public class CheckboxDDMFormFieldValueRequestParameterRetriever
 	implements DDMFormFieldValueRequestParameterRetriever {
 

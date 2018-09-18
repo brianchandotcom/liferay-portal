@@ -55,7 +55,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Eudaldo Alonso
  */
-@Component
+@Component(service = ExportArticleHelper.class)
 public class ExportArticleHelperImpl implements ExportArticleHelper {
 
 	@Override

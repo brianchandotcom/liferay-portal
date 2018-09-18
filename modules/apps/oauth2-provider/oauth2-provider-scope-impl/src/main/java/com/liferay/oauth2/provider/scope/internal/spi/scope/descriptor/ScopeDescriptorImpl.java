@@ -30,7 +30,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 /**
  * @author Carlos Sierra Andrés
  */
-@Component(property = "default=true")
+@Component(property = "default=true", service = ScopeDescriptor.class)
 public class ScopeDescriptorImpl implements ScopeDescriptor {
 
 	@Override

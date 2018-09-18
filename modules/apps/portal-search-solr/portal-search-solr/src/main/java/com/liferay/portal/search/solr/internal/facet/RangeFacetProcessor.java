@@ -42,7 +42,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = "class.name=com.liferay.portal.kernel.search.facet.RangeFacet"
+	property = "class.name=com.liferay.portal.kernel.search.facet.RangeFacet",
+	service = FacetProcessor.class
 )
 public class RangeFacetProcessor implements FacetProcessor<SolrQuery> {
 

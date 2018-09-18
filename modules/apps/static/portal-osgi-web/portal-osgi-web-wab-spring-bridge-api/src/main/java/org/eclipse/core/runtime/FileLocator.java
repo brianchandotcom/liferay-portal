@@ -36,7 +36,7 @@ import org.osgi.service.component.annotations.Deactivate;
  *
  * @author Raymond Augé
  */
-@Component(immediate = true)
+@Component(immediate = true, service = {})
 public class FileLocator {
 
 	public static URL resolve(URL url) throws IOException {

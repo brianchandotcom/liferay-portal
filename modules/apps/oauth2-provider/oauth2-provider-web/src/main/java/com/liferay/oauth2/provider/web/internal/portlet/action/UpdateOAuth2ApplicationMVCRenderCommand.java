@@ -42,7 +42,8 @@ import org.osgi.service.component.annotations.Reference;
 	property = {
 		"javax.portlet.name=" + OAuth2ProviderPortletKeys.OAUTH2_ADMIN,
 		"mvc.command.name=/admin/update_oauth2_application"
-	}
+	},
+	service = MVCRenderCommand.class
 )
 public class UpdateOAuth2ApplicationMVCRenderCommand
 	implements MVCRenderCommand {

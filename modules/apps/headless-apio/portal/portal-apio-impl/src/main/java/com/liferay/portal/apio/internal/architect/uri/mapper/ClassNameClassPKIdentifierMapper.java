@@ -39,7 +39,7 @@ import org.osgi.service.component.annotations.Reference;
  *
  * @author Alejandro Hernández
  */
-@Component(immediate = true)
+@Component(immediate = true, service = PathIdentifierMapper.class)
 public class ClassNameClassPKIdentifierMapper
 	implements PathIdentifierMapper<ClassNameClassPK> {
 

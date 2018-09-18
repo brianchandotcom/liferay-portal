@@ -34,7 +34,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Shuyang Zhou
  */
-@Component(property = "mode=DIRECT")
+@Component(property = "mode=DIRECT", service = SynchronousMessageSender.class)
 public class DirectSynchronousMessageSender
 	implements SynchronousMessageSender {
 

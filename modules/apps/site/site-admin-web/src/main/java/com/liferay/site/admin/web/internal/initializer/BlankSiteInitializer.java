@@ -28,7 +28,8 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	immediate = true,
-	property = "site.initializer.key=" + BlankSiteInitializer.KEY
+	property = "site.initializer.key=" + BlankSiteInitializer.KEY,
+	service = SiteInitializer.class
 )
 public class BlankSiteInitializer implements SiteInitializer {
 

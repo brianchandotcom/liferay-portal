@@ -43,7 +43,7 @@ import org.osgi.service.http.whiteboard.HttpWhiteboardConstants;
  */
 @Component(
 	configurationPid = "com.liferay.portal.remote.soap.extender.internal.configuration.SoapExtenderConfiguration",
-	configurationPolicy = ConfigurationPolicy.REQUIRE
+	configurationPolicy = ConfigurationPolicy.REQUIRE, service = {}
 )
 public class SoapExtender {
 

@@ -26,7 +26,7 @@ import org.osgi.service.component.annotations.Deactivate;
 /**
  * @author Shuyang Zhou
  */
-@Component(immediate = true)
+@Component(immediate = true, service = {})
 public class LoginPostActionEnabler {
 
 	@Activate

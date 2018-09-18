@@ -25,7 +25,10 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	immediate = true,
-	property = "model.class.name=com.liferay.journal.model.JournalArticle"
+	property = "model.class.name=com.liferay.journal.model.JournalArticle",
+	service = {
+		DDMStructurePermissionSupport.class, DDMTemplatePermissionSupport.class
+	}
 )
 public class JournalDDMPermissionSupport
 	implements DDMStructurePermissionSupport, DDMTemplatePermissionSupport {

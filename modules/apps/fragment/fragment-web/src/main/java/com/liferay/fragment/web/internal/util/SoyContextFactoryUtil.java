@@ -23,7 +23,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Pablo Molina
  */
-@Component(immediate = true)
+@Component(immediate = true, service = {})
 public class SoyContextFactoryUtil {
 
 	public static SoyContext createSoyContext() {

@@ -22,7 +22,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Chema Balsas
  */
-@Component(immediate = true)
+@Component(immediate = true, service = {})
 public class NPMResolverProvider {
 
 	public static NPMResolver getNPMResolver() {

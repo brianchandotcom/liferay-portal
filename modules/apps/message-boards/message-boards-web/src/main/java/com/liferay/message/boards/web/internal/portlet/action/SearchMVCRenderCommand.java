@@ -29,7 +29,8 @@ import org.osgi.service.component.annotations.Component;
 	property = {
 		"javax.portlet.name=" + MBPortletKeys.MESSAGE_BOARDS,
 		"mvc.command.name=/message_boards/search"
-	}
+	},
+	service = MVCRenderCommand.class
 )
 public class SearchMVCRenderCommand implements MVCRenderCommand {
 

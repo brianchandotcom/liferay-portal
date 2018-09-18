@@ -24,7 +24,8 @@ import org.osgi.service.component.annotations.Component;
  * @author Pedro Queiroz
  */
 @Component(
-	immediate = true, property = "ddm.form.field.type.name=document_library"
+	immediate = true, property = "ddm.form.field.type.name=document_library",
+	service = DDMFormFieldValueRequestParameterRetriever.class
 )
 public class DocumentLibraryDDMFormFieldValueRequestParameterRetriever
 	implements DDMFormFieldValueRequestParameterRetriever {

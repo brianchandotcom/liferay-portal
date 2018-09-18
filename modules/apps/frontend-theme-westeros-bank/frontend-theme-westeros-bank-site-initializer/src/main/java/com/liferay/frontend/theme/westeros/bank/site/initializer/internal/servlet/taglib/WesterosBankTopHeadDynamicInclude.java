@@ -40,7 +40,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Chema Balsas
  */
-@Component(immediate = true)
+@Component(immediate = true, service = DynamicInclude.class)
 public class WesterosBankTopHeadDynamicInclude implements DynamicInclude {
 
 	@Override

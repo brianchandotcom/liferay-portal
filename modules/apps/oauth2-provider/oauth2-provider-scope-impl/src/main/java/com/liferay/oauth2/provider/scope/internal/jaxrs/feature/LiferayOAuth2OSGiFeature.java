@@ -75,7 +75,7 @@ import org.osgi.util.tracker.ServiceTracker;
 		"osgi.jaxrs.application.select=(!(liferay.oauth2=false))",
 		"osgi.jaxrs.extension=true", "osgi.jaxrs.name=Liferay.OAuth2"
 	},
-	scope = ServiceScope.PROTOTYPE
+	scope = ServiceScope.PROTOTYPE, service = Feature.class
 )
 @Provider
 public class LiferayOAuth2OSGiFeature implements Feature {

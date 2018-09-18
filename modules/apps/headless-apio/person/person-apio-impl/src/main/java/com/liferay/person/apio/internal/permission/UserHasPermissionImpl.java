@@ -27,7 +27,10 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Alejandro Hernández
  */
-@Component(property = "model.class.name=com.liferay.portal.kernel.model.User")
+@Component(
+	property = "model.class.name=com.liferay.portal.kernel.model.User",
+	service = HasPermission.class
+)
 public class UserHasPermissionImpl implements HasPermission<Long> {
 
 	@Override

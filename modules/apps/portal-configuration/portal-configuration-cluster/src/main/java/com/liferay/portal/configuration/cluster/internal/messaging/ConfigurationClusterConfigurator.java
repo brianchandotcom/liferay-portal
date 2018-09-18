@@ -32,7 +32,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Michael C. Han
  */
-@Component(immediate = true)
+@Component(immediate = true, service = {})
 public class ConfigurationClusterConfigurator {
 
 	@Activate

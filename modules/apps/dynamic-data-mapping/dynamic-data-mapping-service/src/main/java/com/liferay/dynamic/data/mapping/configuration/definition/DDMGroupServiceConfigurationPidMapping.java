@@ -23,7 +23,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Marcellus Tavares
  */
-@Component
+@Component(service = ConfigurationPidMapping.class)
 public class DDMGroupServiceConfigurationPidMapping
 	implements ConfigurationPidMapping {
 

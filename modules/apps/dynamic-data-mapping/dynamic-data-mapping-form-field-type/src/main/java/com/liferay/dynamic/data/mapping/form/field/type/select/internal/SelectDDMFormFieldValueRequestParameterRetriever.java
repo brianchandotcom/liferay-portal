@@ -33,7 +33,10 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Marcellus Tavares
  */
-@Component(immediate = true, property = "ddm.form.field.type.name=select")
+@Component(
+	immediate = true, property = "ddm.form.field.type.name=select",
+	service = DDMFormFieldValueRequestParameterRetriever.class
+)
 public class SelectDDMFormFieldValueRequestParameterRetriever
 	implements DDMFormFieldValueRequestParameterRetriever {
 

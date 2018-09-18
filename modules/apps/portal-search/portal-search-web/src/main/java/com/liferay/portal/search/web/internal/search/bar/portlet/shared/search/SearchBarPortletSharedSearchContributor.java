@@ -45,7 +45,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = "javax.portlet.name=" + SearchBarPortletKeys.SEARCH_BAR
+	property = "javax.portlet.name=" + SearchBarPortletKeys.SEARCH_BAR,
+	service = PortletSharedSearchContributor.class
 )
 public class SearchBarPortletSharedSearchContributor
 	implements PortletSharedSearchContributor {

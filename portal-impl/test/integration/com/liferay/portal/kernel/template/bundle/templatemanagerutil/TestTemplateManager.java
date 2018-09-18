@@ -34,7 +34,8 @@ import org.osgi.service.component.annotations.Component;
 	immediate = true,
 	property = {
 		"language.type=English", "service.ranking:Integer=" + Integer.MAX_VALUE
-	}
+	},
+	service = TemplateManager.class
 )
 public class TestTemplateManager implements TemplateManager {
 

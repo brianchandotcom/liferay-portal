@@ -175,9 +175,12 @@ public class StructuredContentNestedCollectionResourceTest
 
 		Assert.assertEquals(1, pageItems.getTotalCount());
 
-		List<JournalArticle> items = (List<JournalArticle>)pageItems.getItems();
+		List<JournalArticle> journalArticles =
+			(List<JournalArticle>)pageItems.getItems();
 
-		Assert.assertTrue("Items " + items, items.contains(journalArticle));
+		Assert.assertTrue(
+			"Journal Articles: " + journalArticles,
+			journalArticles.contains(journalArticle));
 	}
 
 	@Test
@@ -263,11 +266,14 @@ public class StructuredContentNestedCollectionResourceTest
 
 		Assert.assertEquals(1, pageItems.getTotalCount());
 
-		List<JournalArticle> items = (List<JournalArticle>)pageItems.getItems();
+		List<JournalArticle> journalArticles =
+			(List<JournalArticle>)pageItems.getItems();
 
-		Assert.assertTrue("Items " + items, items.contains(journalArticle));
+		Assert.assertTrue(
+			"Journal Articles: " + journalArticles,
+			journalArticles.contains(journalArticle));
 
-		JournalArticle foundJournalArticle = items.get(0);
+		JournalArticle foundJournalArticle = journalArticles.get(0);
 
 		Assert.assertEquals(
 			"Version 1", foundJournalArticle.getTitle(LocaleUtil.getDefault()));
@@ -312,11 +318,14 @@ public class StructuredContentNestedCollectionResourceTest
 
 		Assert.assertEquals(1, pageItems.getTotalCount());
 
-		List<JournalArticle> items = (List<JournalArticle>)pageItems.getItems();
+		List<JournalArticle> journalArticles =
+			(List<JournalArticle>)pageItems.getItems();
 
-		Assert.assertTrue("Items " + items, items.contains(journalArticle));
+		Assert.assertTrue(
+			"Journal Articles: " + journalArticles,
+			journalArticles.contains(journalArticle));
 
-		JournalArticle foundJournalArticle = items.get(0);
+		JournalArticle foundJournalArticle = journalArticles.get(0);
 
 		Assert.assertEquals(
 			"Version 1", foundJournalArticle.getTitle(LocaleUtil.getDefault()));
@@ -357,11 +366,14 @@ public class StructuredContentNestedCollectionResourceTest
 
 		Assert.assertEquals(1, pageItems.getTotalCount());
 
-		List<JournalArticle> items = (List<JournalArticle>)pageItems.getItems();
+		List<JournalArticle> journalArticles =
+			(List<JournalArticle>)pageItems.getItems();
 
-		Assert.assertTrue("Items " + items, items.contains(journalArticle));
+		Assert.assertTrue(
+			"Journal Articles: " + journalArticles,
+			journalArticles.contains(journalArticle));
 
-		JournalArticle foundJournalArticle = items.get(0);
+		JournalArticle foundJournalArticle = journalArticles.get(0);
 
 		Assert.assertEquals(
 			"Version 2", foundJournalArticle.getTitle(LocaleUtil.getDefault()));

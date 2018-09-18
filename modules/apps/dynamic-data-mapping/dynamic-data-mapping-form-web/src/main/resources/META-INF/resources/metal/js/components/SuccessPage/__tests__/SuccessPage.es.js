@@ -1,4 +1,3 @@
-import {JSXComponent} from 'metal-jsx';
 import {dom as MetalTestUtil} from 'metal-dom';
 import SucessPageSettings from './__mock__/mockSuccessPage.es';
 import SuccessPage from '../SuccessPage.es';
@@ -30,12 +29,12 @@ describe.only(
 		it(
 			'should render the default layour',
 			() => {
-			
+
 				component = new SuccessPage(
 					{
 						contentLabel: 'Content',
-						titleLabel: 'Title',
-						successPageSettings
+						successPageSettings,
+						titleLabel: 'Title'
 					}
 				);
 
@@ -51,19 +50,19 @@ describe.only(
 				const newPageSettings = {
 					...successPageSettings,
 					enabled: true
-				}
-			
+				};
+
 				component = new SuccessPage(
 					{
 						contentLabel: 'Content',
-						titleLabel: 'Title',
-						successPageSettings: newPageSettings
+						successPageSettings: newPageSettings,
+						titleLabel: 'Title'
 					}
 				);
 				const spy = jest.spyOn(component, 'emit');
 				const titleNode = component.element.querySelector('input[data-setting="title"]');
 
-				titleNode.value = "Some title";
+				titleNode.value = 'Some title';
 
 				jest.runAllTimers();
 
@@ -79,19 +78,19 @@ describe.only(
 				const newPageSettings = {
 					...successPageSettings,
 					enabled: true
-				}
-			
+				};
+
 				component = new SuccessPage(
 					{
 						contentLabel: 'Content',
-						titleLabel: 'Title',
-						successPageSettings: newPageSettings
+						successPageSettings: newPageSettings,
+						titleLabel: 'Title'
 					}
 				);
 				const spy = jest.spyOn(component, 'emit');
 				const titleNode = component.element.querySelector('input[data-setting="body"]');
 
-				titleNode.value = "Some description";
+				titleNode.value = 'Some description';
 
 				jest.runAllTimers();
 

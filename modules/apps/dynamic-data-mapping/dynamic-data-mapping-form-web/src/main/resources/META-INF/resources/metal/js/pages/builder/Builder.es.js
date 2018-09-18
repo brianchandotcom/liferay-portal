@@ -70,11 +70,13 @@ class Builder extends Component {
 		 * @memberof Builder
 		 * @type {object}
 		 */
-		successPageSettings: Config.shapeOf({
-			body: Config.object(),
-			enabled: Config.bool(),
-			title: Config.object()
-		})
+		successPageSettings: Config.shapeOf(
+			{
+				body: Config.object(),
+				enabled: Config.bool(),
+				title: Config.object()
+			}
+		)
 	};
 
 	/**
@@ -366,7 +368,7 @@ class Builder extends Component {
 	_handlePagesUpdated(pages) {
 		this.emit('pagesUpdated', pages);
 	}
-	
+
 	/**
 	 * Continues the propagation of event.
 	 * @param {Array} pages

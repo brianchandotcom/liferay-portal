@@ -4,10 +4,10 @@ import FormSupport from '../FormSupport.es';
 import mockPages from './__mock__/mockPages.es';
 import mockSuccessPage from './__mock__/mockSuccessPage.es';
 
+const spritemap = 'icons.svg';
 let component;
 let pages = null;
 let successPageSettings = null;
-const spritemap = 'icons.svg';
 
 describe(
 	'FormRenderer',
@@ -36,8 +36,8 @@ describe(
 			() => {
 				component = new FormRenderer(
 					{
-						spritemap,
 						pages,
+						spritemap,
 						successPageSettings
 					}
 				);

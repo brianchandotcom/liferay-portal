@@ -2,7 +2,7 @@ import {capitalize} from './strings.es';
 
 export const setValue = (obj, languageId, prop, val) => {
 	if (!obj[prop]) {
-		obj[prop] = {}
+		obj[prop] = {};
 	}
 
 	obj[prop][languageId] = val;

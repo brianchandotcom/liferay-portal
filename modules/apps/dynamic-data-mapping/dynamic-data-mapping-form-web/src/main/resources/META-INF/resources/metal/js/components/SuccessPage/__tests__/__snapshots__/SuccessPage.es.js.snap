@@ -2,12 +2,12 @@
 
 exports[`SuccessPage should render the default layour 1`] = `
 <div class="ddm-page-success-layout">
-  <div class="form-builder-success-page pt-2 pb-3">
+  <div class="form-builder-success-page pb-3 pt-2">
     <label class="control-label">Title</label>
-    <input data-setting="title" class="form-builder-success-page-title form-control" value="" type="text">
+    <input class="form-builder-success-page-title form-control" data-setting="title" type="text" value="">
     <br>
     <label class="control-label">Content</label>
-    <input data-setting="body" class="form-builder-success-page-content form-control" value="" type="text">
+    <input class="form-builder-success-page-content form-control" data-setting="body" type="text" value="">
   </div>
 </div>
 `;

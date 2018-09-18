@@ -682,18 +682,19 @@ class Form extends Component {
 	 */
 
 	_setContext(context) {
-		let {successPage, successPageSettings} = context;
+		let {successPageSettings} = context;
+		const {successPage} = context;
 
-		if(!successPageSettings) {
+		if (!successPageSettings) {
 			successPageSettings = successPage;
 		}
 
-		if(core.isString(successPageSettings.title)){
+		if (core.isString(successPageSettings.title)) {
 			successPageSettings.title = {};
 			successPageSettings.title[themeDisplay.getLanguageId()] = '';
 		}
 
-		if(core.isString(successPageSettings.body)){
+		if (core.isString(successPageSettings.body)) {
 			successPageSettings.body = {};
 			successPageSettings.body[themeDisplay.getLanguageId()] = '';
 		}

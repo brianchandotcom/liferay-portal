@@ -7,6 +7,7 @@ import {setValue} from '../../util/i18n.es';
 
 class SucessPage extends Component {
 	static STATE = {
+
 		/**
 		 * @instance
 		 * @memberof SucessPage

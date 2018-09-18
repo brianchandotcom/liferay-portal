@@ -38,11 +38,13 @@ class LayoutProvider extends Component {
 		 * @memberof LayoutProvider
 		 * @type {object}
 		 */
-		initialSuccessPageSettings: Config.shapeOf({
-			body: Config.object(),
-			enabled: Config.bool(),
-			title: Config.object()
-		}),
+		initialSuccessPageSettings: Config.shapeOf(
+			{
+				body: Config.object(),
+				enabled: Config.bool(),
+				title: Config.object()
+			}
+		),
 
 		/**
 		 * @default undefined
@@ -51,7 +53,7 @@ class LayoutProvider extends Component {
 		 * @type {?(array|undefined)}
 		 */
 
-		spritemap: Config.string(),
+		spritemap: Config.string()
 	};
 
 	static STATE = {
@@ -114,7 +116,7 @@ class LayoutProvider extends Component {
 	}
 
 	_successPageSettingsValueFn() {
-		return this.props.initialSuccessPageSettings
+		return this.props.initialSuccessPageSettings;
 	}
 
 	_handleActivePageUpdated(activePage) {
@@ -383,28 +385,6 @@ class LayoutProvider extends Component {
 	}
 
 	/**
-	 * Return a new page object
-	 * @private
-	 * @returns {object}
-	 */
-
-	createNewPage() {
-		const languageId = themeDisplay.getLanguageId();
-		const page = {
-			description: '',
-			enabled: true,
-			rows: [FormSupport.implAddRow(12, [])],
-			showRequiredFieldsWarning: true,
-			title: ''
-		};
-
-		setLocalizedValue(page, languageId, 'title', '');
-		setLocalizedValue(page, languageId, 'description', '');
-
-		return page;
-	}
-
-	/**
 	 * @param {!Array} pages
 	 * @private
 	 */
@@ -442,7 +422,7 @@ class LayoutProvider extends Component {
 			{
 				successPageSettings
 			}
-		)
+		);
 	}
 
 	/**
@@ -470,21 +450,6 @@ class LayoutProvider extends Component {
 	 * @return {Object}
 	 */
 
-	_addRow(pages, target, fields) {
-		const {pageIndex, rowIndex} = target;
-		const newRow = FormSupport.implAddRow(12, fields);
-
-		return FormSupport.addRow(pages, rowIndex, pageIndex, newRow);
-	}
-
-	/**
-	 * @param {!Array} pages
-	 * @param {!Object} target
-	 * @param {!Object} field
-	 * @private
-	 * @return {Object}
-	 */
-
 	_setColumnFields(pages, target, fields) {
 		const {columnIndex, pageIndex, rowIndex} = target;
 
@@ -495,6 +460,28 @@ class LayoutProvider extends Component {
 			columnIndex,
 			fields
 		);
+	}
+
+	/**
+	 * Return a new page object
+	 * @private
+	 * @returns {object}
+	 */
+
+	createNewPage() {
+		const languageId = themeDisplay.getLanguageId();
+		const page = {
+			description: '',
+			enabled: true,
+			rows: [FormSupport.implAddRow(12, [])],
+			showRequiredFieldsWarning: true,
+			title: ''
+		};
+
+		setLocalizedValue(page, languageId, 'title', '');
+		setLocalizedValue(page, languageId, 'description', '');
+
+		return page;
 	}
 
 	render() {
@@ -516,7 +503,7 @@ class LayoutProvider extends Component {
 				pageReset: this._handlePageReset.bind(this),
 				paginationModeUpdated: this._handlePaginationModeUpdated.bind(this),
 				successPageChanged: this._handleSuccessPageChanged.bind(this)
-			}
+			};
 
 			for (let index = 0; index < children.length; index++) {
 				const child = children[index];

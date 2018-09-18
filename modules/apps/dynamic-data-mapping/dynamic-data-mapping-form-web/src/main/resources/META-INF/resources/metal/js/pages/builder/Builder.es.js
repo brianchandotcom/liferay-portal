@@ -265,7 +265,7 @@ class Builder extends Component {
 		let {activePage, pages} = this.props;
 		let openSidebar = false;
 
-		if (changes.activePage) {
+		if (changes.activePage && changes.activePage.newVal !== -1) {
 			activePage = changes.activePage.newVal;
 
 			if (!this._pageHasFields(pages, activePage)) {

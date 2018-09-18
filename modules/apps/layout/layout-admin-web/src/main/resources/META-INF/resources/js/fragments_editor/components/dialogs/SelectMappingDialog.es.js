@@ -163,18 +163,6 @@ class SelectMappingDialog extends PortletBase {
 	}
 
 	/**
-	 * Change asset type selection dialog visibility.
-	 * @private
-	 * @review
-	 */
-
-	_handleVisibleChanged(change) {
-		if (this.visible !== change.newVal) {
-			this.visible = change.newVal;
-		}
-	}
-
-	/**
 	 * Load the list of mappeable fields from the server
 	 * @private
 	 * @review
@@ -343,18 +331,6 @@ SelectMappingDialog.STATE = {
 	 */
 
 	store: Config.instanceOf(Store),
-	/**
-	 * Flag indicating if the SelectMappingDialog should be shown
-	 * @default false
-	 * @instance
-	 * @memberOf SelectMappingDialog
-	 * @review
-	 * @type {boolean}
-	 */
-
-	visible: Config
-		.bool()
-		.value(false),
 
 	/**
 	 * Flag indicating if mappeable fields are being loaded

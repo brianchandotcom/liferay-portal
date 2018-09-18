@@ -120,7 +120,7 @@
 			{/call}
 		</div>
 
-		{if $mappingFieldsURL}
+		{if $mappingFieldsURL and $selectMappingDialogVisible}
 			{call com.liferay.layout.admin.web.SelectMappingDialog.render}
 				{param editableId: $selectMappingDialogEditableId /}
 				{param editableType: $selectMappingDialogEditableType /}
@@ -131,11 +131,12 @@
 				{param selectedMappingTypes: $selectedMappingTypes /}
 				{param spritemap: $spritemap /}
 				{param store: $store /}
-				{param visible: $_selectMappingDialogVisible ?: false /}
 			{/call}
 		{/if}
-
-		{if $getAssetClassTypesURL and $getAssetDisplayContributorsURL and $updateLayoutPageTemplateEntryAssetTypeURL}
+		{if $getAssetClassTypesURL
+			and $getAssetDisplayContributorsURL
+			and $updateLayoutPageTemplateEntryAssetTypeURL
+			and $selectMappingTypeDialogVisible}
 			{call com.liferay.layout.admin.web.SelectMappingTypeDialog.render}
 				{param classPK: $classPK /}
 				{param events: [
@@ -147,7 +148,6 @@
 				{param spritemap: $spritemap /}
 				{param store: $store /}
 				{param updateLayoutPageTemplateEntryAssetTypeURL: $updateLayoutPageTemplateEntryAssetTypeURL /}
-				{param visible: $_selectMappingTypeDialogVisible ?: false /}
 			{/call}
 		{/if}
 	</div>

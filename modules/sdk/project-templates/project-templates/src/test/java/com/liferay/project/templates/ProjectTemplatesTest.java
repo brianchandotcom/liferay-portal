@@ -2016,6 +2016,32 @@ public class ProjectTemplatesTest {
 	}
 
 	@Test
+	public void testBuildTemplateServiceBuilderCheckExports() throws Exception {
+		String name = "guestbook";
+		String packageName = "com.liferay.docs.guestbook";
+
+		File gradleProjectDir = _buildTemplateWithGradle(
+			"service-builder", name, "--package-name", packageName,
+			"--liferayVersion", "7.1");
+
+		File mavenProjectDir = _buildTemplateWithMaven(
+			"service-builder", name, "com.test", "-Dpackage=" + packageName,
+			"-DliferayVersion=7.1");
+
+		File gradleServiceXml = new File(
+			new File(gradleProjectDir, name + "-service"), "service.xml");
+		File mavenServiceXml = new File(
+			new File(mavenProjectDir, name + "-service"), "service.xml");
+
+		_changeServiceXmlPackagePath(gradleServiceXml);
+		_changeServiceXmlPackagePath(mavenServiceXml);
+
+		_testBuildFailTemplateServiceBuilder(
+			gradleProjectDir, mavenProjectDir, gradleProjectDir, name,
+			packageName, "");
+	}
+
+	@Test
 	public void testBuildTemplateServiceBuilderNestedPath70() throws Exception {
 		File workspaceProjectDir = _buildTemplateWithGradle(
 			WorkspaceUtil.WORKSPACE, "ws-nested-path");
@@ -2067,34 +2093,6 @@ public class ProjectTemplatesTest {
 		_testBuildTemplateServiceBuilder(
 			gradleProjectDir, mavenProjectDir, workspaceProjectDir, "sample",
 			"com.test.sample", ":modules:nested:path:sample");
-	}
-
-	@Test
-	public void testBuildTemplateServiceBuilderPackageChecker()
-		throws Exception {
-
-		String name = "guestbook";
-		String packageName = "com.liferay.docs.guestbook";
-
-		File gradleProjectDir = _buildTemplateWithGradle(
-			"service-builder", name, "--package-name", packageName,
-			"--liferayVersion", "7.1");
-
-		File mavenProjectDir = _buildTemplateWithMaven(
-			"service-builder", name, "com.test", "-Dpackage=" + packageName,
-			"-DliferayVersion=7.1");
-
-		File gradleServiceXml = new File(
-			new File(gradleProjectDir, name + "-service"), "service.xml");
-		File mavenServiceXml = new File(
-			new File(mavenProjectDir, name + "-service"), "service.xml");
-
-		_changeServiceXmlPackagePath(gradleServiceXml);
-		_changeServiceXmlPackagePath(mavenServiceXml);
-
-		_testBuildFailTemplateServiceBuilder(
-			gradleProjectDir, mavenProjectDir, gradleProjectDir, name,
-			packageName, "");
 	}
 
 	@Test

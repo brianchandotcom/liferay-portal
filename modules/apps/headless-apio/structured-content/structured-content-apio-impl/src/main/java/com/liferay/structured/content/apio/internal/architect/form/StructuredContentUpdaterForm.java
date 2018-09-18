@@ -52,7 +52,7 @@ public class StructuredContentUpdaterForm {
 		).constructor(
 			StructuredContentUpdaterForm::new
 		).addOptionalDate(
-			"displayDate", StructuredContentUpdaterForm::setDisplayDate
+			"datePublished", StructuredContentUpdaterForm::setPublishedDate
 		).addOptionalNestedModelList(
 			"values", StructuredContentValuesForm::buildValuesForm,
 			StructuredContentUpdaterForm::setStructuredContentValuesForms
@@ -96,7 +96,7 @@ public class StructuredContentUpdaterForm {
 	 * @review
 	 */
 	public Optional<Integer> getDisplayDateDayOptional() {
-		return Optional.ofNullable(_displayDateDay);
+		return Optional.ofNullable(_publishedDateDay);
 	}
 
 	/**
@@ -106,7 +106,7 @@ public class StructuredContentUpdaterForm {
 	 * @review
 	 */
 	public Optional<Integer> getDisplayDateHourOptional() {
-		return Optional.ofNullable(_displayDateHour);
+		return Optional.ofNullable(_publishedDateHour);
 	}
 
 	/**
@@ -116,7 +116,7 @@ public class StructuredContentUpdaterForm {
 	 * @review
 	 */
 	public Optional<Integer> getDisplayDateMinuteOptional() {
-		return Optional.ofNullable(_displayDateMinute);
+		return Optional.ofNullable(_publishedDateMinute);
 	}
 
 	/**
@@ -126,7 +126,7 @@ public class StructuredContentUpdaterForm {
 	 * @review
 	 */
 	public Optional<Integer> getDisplayDateMonthOptional() {
-		return Optional.ofNullable(_displayDateMonth);
+		return Optional.ofNullable(_publishedDateMonth);
 	}
 
 	/**
@@ -136,7 +136,7 @@ public class StructuredContentUpdaterForm {
 	 * @review
 	 */
 	public Optional<Integer> getDisplayDateYearOptional() {
-		return Optional.ofNullable(_displayDateYear);
+		return Optional.ofNullable(_publishedDateYear);
 	}
 
 	public List<StructuredContentValuesForm> getStructuredContentValuesForms() {
@@ -187,16 +187,16 @@ public class StructuredContentUpdaterForm {
 		_description = description;
 	}
 
-	public void setDisplayDate(Date displayDate) {
+	public void setPublishedDate(Date publishedDate) {
 		Calendar calendar = Calendar.getInstance();
 
-		calendar.setTime(displayDate);
+		calendar.setTime(publishedDate);
 
-		_displayDateDay = calendar.get(Calendar.DATE);
-		_displayDateHour = calendar.get(Calendar.HOUR);
-		_displayDateMinute = calendar.get(Calendar.MINUTE);
-		_displayDateMonth = calendar.get(Calendar.MONTH);
-		_displayDateYear = calendar.get(Calendar.YEAR);
+		_publishedDateDay = calendar.get(Calendar.DATE);
+		_publishedDateHour = calendar.get(Calendar.HOUR);
+		_publishedDateMinute = calendar.get(Calendar.MINUTE);
+		_publishedDateMonth = calendar.get(Calendar.MONTH);
+		_publishedDateYear = calendar.get(Calendar.YEAR);
 	}
 
 	public void setStructuredContentValuesForms(
@@ -234,11 +234,11 @@ public class StructuredContentUpdaterForm {
 	}
 
 	private String _description;
-	private Integer _displayDateDay;
-	private Integer _displayDateHour;
-	private Integer _displayDateMinute;
-	private Integer _displayDateMonth;
-	private Integer _displayDateYear;
+	private Integer _publishedDateDay;
+	private Integer _publishedDateHour;
+	private Integer _publishedDateMinute;
+	private Integer _publishedDateMonth;
+	private Integer _publishedDateYear;
 	private List<StructuredContentValuesForm> _structuredContentValuesForms =
 		new ArrayList<>();
 	private String _template;

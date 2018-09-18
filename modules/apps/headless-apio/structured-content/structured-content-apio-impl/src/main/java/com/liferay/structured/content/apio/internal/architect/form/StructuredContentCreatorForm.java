@@ -61,7 +61,7 @@ public class StructuredContentCreatorForm {
 		).addOptionalStringList(
 			"keywords", StructuredContentCreatorForm::setKeywords
 		).addRequiredDate(
-			"displayDate", StructuredContentCreatorForm::setDisplayDate
+			"datePublished", StructuredContentCreatorForm::setPublishedDate
 		).addRequiredLinkedModel(
 			"structure", ContentStructureIdentifier.class,
 			StructuredContentCreatorForm::setStructureId
@@ -90,53 +90,53 @@ public class StructuredContentCreatorForm {
 	}
 
 	/**
-	 * Returns the structured content's display date day.
+	 * Returns the structured content's published date day.
 	 *
-	 * @return the structured content's display date day
+	 * @return the structured content's published date day
 	 * @review
 	 */
-	public int getDisplayDateDay() {
-		return _displayDateDay;
+	public int getPublishedDateDay() {
+		return _publishedDateDay;
 	}
 
 	/**
-	 * Returns the structured content's display date hour.
+	 * Returns the structured content's published date hour.
 	 *
-	 * @return the structured content's display date hour
+	 * @return the structured content's published date hour
 	 * @review
 	 */
-	public int getDisplayDateHour() {
-		return _displayDateHour;
+	public int getPublishedDateHour() {
+		return _publishedDateHour;
 	}
 
 	/**
-	 * Returns the structured content's display date minute.
+	 * Returns the structured content's published date minute.
 	 *
-	 * @return the structured content's display date minute
+	 * @return the structured content's published date minute
 	 * @review
 	 */
-	public int getDisplayDateMinute() {
-		return _displayDateMinute;
+	public int getPublishedDateMinute() {
+		return _publishedDateMinute;
 	}
 
 	/**
-	 * Returns the structured content's display date month.
+	 * Returns the structured content's published date month.
 	 *
-	 * @return the structured content's display date month
+	 * @return the structured content's published date month
 	 * @review
 	 */
-	public int getDisplayDateMonth() {
-		return _displayDateMonth;
+	public int getPublishedDateMonth() {
+		return _publishedDateMonth;
 	}
 
 	/**
-	 * Returns the structured content's display date year.
+	 * Returns the structured content's published date year.
 	 *
-	 * @return the structured content's display date year
+	 * @return the structured content's published date year
 	 * @review
 	 */
-	public int getDisplayDateYear() {
-		return _displayDateYear;
+	public int getPublishedDateYear() {
+		return _publishedDateYear;
 	}
 
 	/**
@@ -212,30 +212,22 @@ public class StructuredContentCreatorForm {
 		_description = description;
 	}
 
-	public void setDisplayDate(Date displayDate) {
-		Calendar calendar = Calendar.getInstance();
-
-		calendar.setTime(displayDate);
-
-		_displayDateMonth = calendar.get(Calendar.MONTH);
-		_displayDateDay = calendar.get(Calendar.DATE);
-		_displayDateYear = calendar.get(Calendar.YEAR);
-		_displayDateHour = calendar.get(Calendar.HOUR);
-		_displayDateMinute = calendar.get(Calendar.MINUTE);
 	}
 
 	public void setKeywords(List<String> keywords) {
 		_keywords = keywords;
 	}
 
-	public void setStructuredContentValuesForms(
-		List<StructuredContentValuesForm> structuredContentValuesForms) {
+	public void setPublishedDate(Date publishedDate) {
+		Calendar calendar = Calendar.getInstance();
 
-		_structuredContentValuesForms = structuredContentValuesForms;
-	}
+		calendar.setTime(publishedDate);
 
-	public void setStructureId(Long structureId) {
-		_structureId = structureId;
+		_publishedDateMonth = calendar.get(Calendar.MONTH);
+		_publishedDateDay = calendar.get(Calendar.DATE);
+		_publishedDateYear = calendar.get(Calendar.YEAR);
+		_publishedDateHour = calendar.get(Calendar.HOUR);
+		_publishedDateMinute = calendar.get(Calendar.MINUTE);
 	}
 
 	public void setTemplate(String template) {
@@ -251,12 +243,12 @@ public class StructuredContentCreatorForm {
 	}
 
 	private String _description;
-	private Integer _displayDateDay;
-	private Integer _displayDateHour;
-	private Integer _displayDateMinute;
-	private Integer _displayDateMonth;
-	private Integer _displayDateYear;
 	private List<String> _keywords;
+	private Integer _publishedDateDay;
+	private Integer _publishedDateHour;
+	private Integer _publishedDateMinute;
+	private Integer _publishedDateMonth;
+	private Integer _publishedDateYear;
 	private List<StructuredContentValuesForm> _structuredContentValuesForms =
 		new ArrayList<>();
 	private Long _structureId;

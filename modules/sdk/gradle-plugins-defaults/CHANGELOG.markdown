@@ -4556,6 +4556,12 @@ manifest header for the deployed JAR does not contain a period.
 - [LPS-84119]: Update the [Liferay Gradle Plugins] dependency to version
 3.12.134.
 
+## 5.5.46 - 2018-09-13
+
+### Changed
+- [LPS-84119]: Update the [Liferay Gradle Plugins] dependency to version
+3.12.135.
+
 [Find Security Bugs]: https://github.com/liferay/liferay-portal/tree/master/modules/third-party/com-h3xstream-findsecbugs
 [Gradle Dependency Management]: https://github.com/spring-gradle-plugins/dependency-management-plugin
 [Gradle License Report]: https://github.com/jk1/Gradle-License-Report

@@ -18,17 +18,15 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserWrapper;
 
 /**
- * This class serves as an alias for the current authenticated {@link User}.
+ * Serves as an alias for the current authenticated {@code User}.
  *
  * <p>
- * To use this class, add it as a parameter to the methods of the different
- * routes builders.
+ * To use this class, add it as a parameter to route builder methods.
  * </p>
  *
  * @author Alejandro Hernández
  * @author Carlos Sierra Andrés
  * @author Jorge Ferrer
- * @review
  */
 public class CurrentUser extends UserWrapper {
 

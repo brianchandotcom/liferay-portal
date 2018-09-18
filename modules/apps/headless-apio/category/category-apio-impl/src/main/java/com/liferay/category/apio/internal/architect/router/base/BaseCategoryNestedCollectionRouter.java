@@ -42,10 +42,10 @@ import java.util.Locale;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * Base class for {@code AssetCategory} {@code NestedCollectionRouter}.
+ * Provides the base class for the {@code *CategoryNestedCollectionRouter}
+ * classes.
  *
  * @author Eduardo Perez
- * @review
  */
 public abstract class BaseCategoryNestedCollectionRouter
 	<T extends Identifier<Long>> implements
@@ -53,12 +53,12 @@ public abstract class BaseCategoryNestedCollectionRouter
 			<AssetCategory, Long, CategoryIdentifier, Long, T> {
 
 	/**
-	 * Creates a new {@link AssetCategory} and links it to {@link AssetEntry}
-	 * identified by the provided ID.
+	 * Creates a new {@code AssetCategory} and links it to the {@code
+	 * AssetEntry} that corresponds to the provided ID.
 	 *
-	 * @param  classPK the {@link AssetEntry} ID
+	 * @param  classPK the {@code AssetEntry} ID
 	 * @param  nestedCategoryForm the form containing the new category data
-	 * @return the newly created {@link AssetCategory}
+	 * @return the new {@code AssetCategory}
 	 */
 	protected AssetCategory addAssetCategory(
 			long classPK, NestedCategoryForm nestedCategoryForm)
@@ -128,12 +128,12 @@ public abstract class BaseCategoryNestedCollectionRouter
 	}
 
 	/**
-	 * Links an {@link AssetCategory} to an {@link AssetEntry} identified by the
-	 * provided ID.
+	 * Links an {@code AssetCategory} to an {@code AssetEntry} that corresponds
+	 * to the provided ID.
 	 *
-	 * @param  classPK the {@link AssetEntry} ID
+	 * @param  classPK the {@code AssetEntry} ID
 	 * @param  linkedCategoryForm the form containing the category to link
-	 * @return the newly created {@link AssetCategory}
+	 * @return the new {@code AssetCategory}
 	 */
 	protected AssetCategory linkAssetCategory(
 			long classPK, LinkedCategoryForm linkedCategoryForm)

@@ -17,10 +17,9 @@ package com.liferay.person.apio.internal.query;
 import java.util.Optional;
 
 /**
- * Instances of this interface represent a query for retrieving persons by name.
+ * Represents a query for retrieving users by name.
  *
  * @author Alejandro Hernández
- * @review
  */
 public interface FullNameQuery {
 
@@ -28,7 +27,6 @@ public interface FullNameQuery {
 	 * Returns the user's name to search for.
 	 *
 	 * @return the user's name
-	 * @review
 	 */
 	public Optional<String> getFullNameOptional();
 

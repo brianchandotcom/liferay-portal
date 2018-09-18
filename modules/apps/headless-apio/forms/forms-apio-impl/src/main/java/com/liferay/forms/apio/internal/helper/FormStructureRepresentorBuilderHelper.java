@@ -41,12 +41,11 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * Provides the information necessary to expose DDMFormStructure resources
- * through a web API. The resources are mapped from the internal model {@code
- * DDMStructure}.
+ * Provides the information necessary to expose {@code DDMFormStructure}
+ * resources through a web API. The resources are mapped from the internal model
+ * {@code DDMStructure}.
  *
  * @author Javier Gamarra
- * @review
  */
 @Component(
 	immediate = true, service = FormStructureRepresentorBuilderHelper.class

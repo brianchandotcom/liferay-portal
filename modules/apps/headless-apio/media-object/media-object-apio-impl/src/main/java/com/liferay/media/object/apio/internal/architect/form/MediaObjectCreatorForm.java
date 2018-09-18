@@ -23,21 +23,18 @@ import com.liferay.portal.kernel.util.ListUtil;
 import java.util.List;
 
 /**
- * Instances of this class represent the values extracted from a media object
- * form.
+ * Represents the values extracted from a media object form.
  *
  * @author Javier Gamarra
- * @review
  */
 public class MediaObjectCreatorForm {
 
 	/**
-	 * Builds a {@code Form} that generates {@code MediaObjectCreatorForm}
-	 * depending on the HTTP body.
+	 * Builds a {@code Form} that generates a {@code MediaObjectCreatorForm}
+	 * that depends on the HTTP body.
 	 *
 	 * @param  formBuilder the {@code Form} builder
-	 * @return a folder form
-	 * @review
+	 * @return the folder form
 	 */
 	public static Form<MediaObjectCreatorForm> buildForm(
 		Form.Builder<MediaObjectCreatorForm> formBuilder) {
@@ -64,51 +61,46 @@ public class MediaObjectCreatorForm {
 	}
 
 	/**
-	 * Returns the media object's binaries
+	 * Returns the media object's binaries.
 	 *
-	 * @return the media object's binaries
-	 * @review
+	 * @return the binaries
 	 */
 	public BinaryFile getBinaryFile() {
 		return _binaryFile;
 	}
 
 	/**
-	 * Returns the media object's changelog
+	 * Returns the media object's changelog.
 	 *
-	 * @return the media object's changelog
-	 * @review
+	 * @return the changelog
 	 */
 	public String getChangelog() {
 		return _changelog;
 	}
 
 	/**
-	 * Returns the media object's description
+	 * Returns the media object's description.
 	 *
-	 * @return the media object's description
-	 * @review
+	 * @return the description
 	 */
 	public String getDescription() {
 		return _description;
 	}
 
 	/**
-	 * Returns the media object's name
+	 * Returns the media object's name.
 	 *
-	 * @return the media object's name
-	 * @review
+	 * @return the name
 	 */
 	public String getName() {
 		return _name;
 	}
 
 	/**
-	 * Returns the service context related with this form
+	 * Returns the service context related to this form.
 	 *
 	 * @param  groupId the group ID
 	 * @return the service context
-	 * @review
 	 */
 	public ServiceContext getServiceContext(long groupId) {
 		ServiceContext serviceContext = new ServiceContext();
@@ -126,10 +118,9 @@ public class MediaObjectCreatorForm {
 	}
 
 	/**
-	 * Returns the media object's title
+	 * Returns the media object's title.
 	 *
-	 * @return the media object's title
-	 * @review
+	 * @return the title
 	 */
 	public String getTitle() {
 		return _title;

@@ -17,11 +17,12 @@ package com.liferay.role.apio.identifier;
 import com.liferay.apio.architect.identifier.Identifier;
 
 /**
- * Holds information about a {@code Role} identifier. It's identified by the
- * internal {@code Role#getRoleId()}.
+ * Holds information about a {@code com.liferay.portal.kernel.model.Role}
+ * identifier. The internal method {@code
+ * com.liferay.portal.kernel.model.RoleModel#getRoleId()} returns the role
+ * identifier.
  *
  * @author Javier Gamarra
- * @review
  */
 public interface RoleIdentifier extends Identifier<Long> {
 }

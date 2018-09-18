@@ -23,12 +23,11 @@ import com.liferay.role.apio.internal.router.base.BaseUserAccountRoleNestedColle
 import org.osgi.service.component.annotations.Component;
 
 /**
- * Provides the information necessary to expose the Role resources contained
- * inside a MyUserAccount through a web API. The resources are mapped from the
+ * Provides the information necessary to expose the {@code Role} resources of a
+ * {@code MyUserAccount} through a web API. The resources are mapped from the
  * internal model {@link Role}.
  *
  * @author Eduardo Perez
- * @review
  */
 @Component(immediate = true)
 public class MyUserAcountRoleNestedCollectionRouter

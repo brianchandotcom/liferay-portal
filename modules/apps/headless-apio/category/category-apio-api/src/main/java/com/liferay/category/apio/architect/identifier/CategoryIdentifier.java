@@ -17,11 +17,11 @@ package com.liferay.category.apio.architect.identifier;
 import com.liferay.apio.architect.identifier.Identifier;
 
 /**
- * Holds information about a {@code Category} identifier. It's identified by the
- * internal {@code AssetCategory#getId()}.
+ * Holds information about a {@code Category} identifier. The internal method
+ * {@code com.liferay.asset.kernel.model.AssetCategory#getId()} returns the
+ * category's identifier.
  *
  * @author Javier Gamarra
- * @review
  */
 public interface CategoryIdentifier extends Identifier<Long> {
 }

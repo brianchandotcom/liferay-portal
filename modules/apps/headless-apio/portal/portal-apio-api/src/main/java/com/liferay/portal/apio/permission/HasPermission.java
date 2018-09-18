@@ -19,61 +19,58 @@ import com.liferay.apio.architect.credentials.Credentials;
 import com.liferay.apio.architect.identifier.Identifier;
 
 /**
- * Instances of this class contains the information necessary to calculate
- * permissions for the models exposed in Liferay Portal Apio APIs.
+ * Contains the information necessary to calculate permissions for the models
+ * exposed in Liferay Portal's Apio APIs.
  *
  * <p>
- * The different methods that this interface exposes are intended to be used
- * only in the {@code Routes.Builder} methods that need to check permissions.
- * And its signature applies exactly so they can be used as method references
- * {@code _hasPermission::forAdding}.
+ * The methods that this interface exposes are intended to be used only in the
+ * {@code Routes.Builder} methods that need to check permissions. Since the
+ * signatures of this interface's methods apply exactly, the methods can be used
+ * as method references (e.g., {@code _hasPermission::forAdding}).
  * </p>
  *
  * @author Alejandro Hernández
  * @author Javier Gamarra
  * @param  <T> the type of the model's identifier (e.g., {@code Long}, {@code
  *         String}, etc.)
- * @review
  */
 @SuppressWarnings("RedundantThrows")
 public interface HasPermission<T> {
 
 	/**
-	 * Returns {@code true} if the current {@code User} has permission to
-	 * perform that action.
+	 * Returns {@code true} if the current user has permission to perform the
+	 * add action.
 	 *
 	 * <p>
 	 * This method is intended to be used for providing a function to check
-	 * permissions in {@link
+	 * permissions in {@code
 	 * com.liferay.apio.architect.routes.CollectionRoutes.Builder#addCreator}
 	 * methods.
 	 * </p>
 	 *
-	 * @param  credentials the current request credentials
+	 * @param  credentials the current request's credentials
 	 * @return {@code true} if the current user can perform the action; {@code
 	 *         false} otherwise
-	 * @review
 	 */
 	public default Boolean forAdding(Credentials credentials) throws Exception {
 		return false;
 	}
 
 	/**
-	 * Returns {@code true} if the current {@code User} has permission to
-	 * perform that action.
+	 * Returns {@code true} if the current user has permission to perform the
+	 * add action in a specific location.
 	 *
 	 * <p>
 	 * This method is intended to be used for providing a function to check
-	 * permissions in {@link
+	 * permissions in {@code
 	 * com.liferay.apio.architect.routes.NestedCollectionRoutes.Builder#addCreator}
 	 * methods.
 	 * </p>
 	 *
-	 * @param  identifierClass the class of the parent resource's identifier. It
-	 *         must be a subclass of {@code Identifier<S>}.
+	 * @param  identifierClass the class of the parent resource's identifier.
+	 *         This must be a subclass of {@code Identifier<S>}.
 	 * @return {@code true} if the current user can perform the action; {@code
 	 *         false} otherwise
-	 * @review
 	 */
 	public default <S> HasNestedAddingPermissionFunction<S> forAddingIn(
 		Class<? extends Identifier<S>> identifierClass) {
@@ -82,20 +79,19 @@ public interface HasPermission<T> {
 	}
 
 	/**
-	 * Returns {@code true} if the current {@code User} has permission to
-	 * perform that action.
+	 * Returns {@code true} if the current user has permission to perform the
+	 * delete action.
 	 *
 	 * <p>
 	 * This method is intended to be used for providing a function to check
-	 * permissions in {@link
+	 * permissions in {@code
 	 * com.liferay.apio.architect.routes.ItemRoutes.Builder#addRemover} methods.
 	 * </p>
 	 *
-	 * @param  credentials the current request credentials
-	 * @param  id the ID of the model
+	 * @param  credentials the current request's credentials
+	 * @param  id the model's ID
 	 * @return {@code true} if the current user can perform the action; {@code
 	 *         false} otherwise
-	 * @review
 	 */
 	public default Boolean forDeleting(Credentials credentials, T id)
 		throws Exception {
@@ -104,20 +100,19 @@ public interface HasPermission<T> {
 	}
 
 	/**
-	 * Returns {@code true} if the current {@code User} has permission to
-	 * perform that action.
+	 * Returns {@code true} if the current user has permission to perform the
+	 * update action.
 	 *
 	 * <p>
 	 * This method is intended to be used for providing a function to check
-	 * permissions in {@link
+	 * permissions in {@code
 	 * com.liferay.apio.architect.routes.ItemRoutes.Builder#addUpdater} methods.
 	 * </p>
 	 *
-	 * @param  credentials the current request credentials
-	 * @param  id the ID of the model
+	 * @param  credentials the current request's credentials
+	 * @param  id the model's ID
 	 * @return {@code true} if the current user can perform the action; {@code
 	 *         false} otherwise
-	 * @review
 	 */
 	public default Boolean forUpdating(Credentials credentials, T id)
 		throws Exception {

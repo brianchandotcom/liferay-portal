@@ -20,7 +20,6 @@ import com.liferay.apio.architect.identifier.Identifier;
  * Holds information about a {@code FormInstanceRecord} identifier.
  *
  * @author Paulo Cruz
- * @review
  */
 public interface FormInstanceRecordIdentifier extends Identifier<Long> {
 }

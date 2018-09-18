@@ -59,7 +59,6 @@ import org.osgi.service.component.annotations.Reference;
  * Organization}.
  *
  * @author Eduardo Perez
- * @review
  */
 @Component(immediate = true)
 public class OrganizationCollectionResource

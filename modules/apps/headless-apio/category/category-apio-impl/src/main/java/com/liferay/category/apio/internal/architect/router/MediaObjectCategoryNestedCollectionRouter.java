@@ -29,12 +29,11 @@ import org.osgi.service.component.annotations.Reference;
 
 /**
  * Provides the information necessary to expose the {@code Category} resources
- * contained inside a <a href="http://schema.org/MediaObject">MediaObject</a>
- * through a web API. The resources are mapped from the internal model {@link
- * AssetCategory} and {@code FileEntry}.
+ * of a <a href="http://schema.org/MediaObject">MediaObject</a> through a web
+ * API. The resources are mapped from the internal models {@code AssetCategory}
+ * and {@code FileEntry}.
  *
  * @author Eduardo Perez
- * @review
  */
 @Component(immediate = true)
 public class MediaObjectCategoryNestedCollectionRouter

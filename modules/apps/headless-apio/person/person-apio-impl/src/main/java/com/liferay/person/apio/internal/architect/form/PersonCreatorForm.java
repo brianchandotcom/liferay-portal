@@ -23,20 +23,18 @@ import java.util.Date;
 import java.util.Optional;
 
 /**
- * Instances of this class represent the values extracted from a person creator
- * form.
+ * Represents the values extracted from a person creator form.
  *
  * @author Alejandro Hernández
- * @review
  */
 public class PersonCreatorForm {
 
 	/**
-	 * Builds a {@code Form} that generates {@code PersonCreatorForm} depending
-	 * on the HTTP body.
+	 * Builds a {@code Form} that generates a {@code PersonCreatorForm} that
+	 * depends on the HTTP body.
 	 *
 	 * @param  formBuilder the {@code Form} builder
-	 * @return a person creator form
+	 * @return the person creator form
 	 */
 	public static Form<PersonCreatorForm> buildForm(
 		Form.Builder<PersonCreatorForm> formBuilder) {
@@ -71,20 +69,18 @@ public class PersonCreatorForm {
 	}
 
 	/**
-	 * Returns the person's alternate name
+	 * Returns the person's alternate name.
 	 *
 	 * @return the person's alternate name
-	 * @review
 	 */
 	public String getAlternateName() {
 		return _alternateName;
 	}
 
 	/**
-	 * Returns the person's birthday day
+	 * Returns the person's birth day.
 	 *
-	 * @return the person's birthday day
-	 * @review
+	 * @return the person's birth day
 	 */
 	public int getBirthdayDay() {
 		if (_birthdayDay != null) {
@@ -95,10 +91,9 @@ public class PersonCreatorForm {
 	}
 
 	/**
-	 * Returns the person's birthday month
+	 * Returns the person's birth month.
 	 *
-	 * @return the person's birthday month
-	 * @review
+	 * @return the person's birth month
 	 */
 	public int getBirthdayMonth() {
 		if (_birthdayMonth != null) {
@@ -109,10 +104,9 @@ public class PersonCreatorForm {
 	}
 
 	/**
-	 * Returns the person's birthday year
+	 * Returns the person's birth year.
 	 *
-	 * @return the person's birthday year
-	 * @review
+	 * @return the person's birth year
 	 */
 	public int getBirthdayYear() {
 		if (_birthdayYear != null) {
@@ -123,30 +117,27 @@ public class PersonCreatorForm {
 	}
 
 	/**
-	 * Returns the person's email
+	 * Returns the person's email address.
 	 *
-	 * @return the person's email
-	 * @review
+	 * @return the person's email address
 	 */
 	public String getEmail() {
 		return _email;
 	}
 
 	/**
-	 * Returns the person's family name
+	 * Returns the person's family name.
 	 *
 	 * @return the person's family name
-	 * @review
 	 */
 	public String getFamilyName() {
 		return _familyName;
 	}
 
 	/**
-	 * Returns the person's given name
+	 * Returns the person's given name.
 	 *
 	 * @return the person's given name
-	 * @review
 	 */
 	public String getGivenName() {
 		return _givenName;
@@ -165,10 +156,9 @@ public class PersonCreatorForm {
 	}
 
 	/**
-	 * Returns the person's job title
+	 * Returns the person's job title.
 	 *
 	 * @return the person's job title
-	 * @review
 	 */
 	public String getJobTitle() {
 		return Optional.ofNullable(
@@ -179,10 +169,9 @@ public class PersonCreatorForm {
 	}
 
 	/**
-	 * Checks if the person is a male
+	 * Returns {@code true} if the person is male.
 	 *
 	 * @return {@code true} if the person is a male; {@code false} otherwise
-	 * @review
 	 */
 	public boolean isMale() {
 		return Optional.ofNullable(
@@ -193,11 +182,10 @@ public class PersonCreatorForm {
 	}
 
 	/**
-	 * Checks if the person has an alternate name
+	 * Returns {@code true} if the person has an alternate name.
 	 *
 	 * @return {@code true} if the person has an alternate name; {@code false}
 	 *         otherwise
-	 * @review
 	 */
 	public boolean needsAlternateName() {
 		return Validator.isNull(_alternateName);

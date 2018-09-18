@@ -20,20 +20,18 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 
 /**
- * User wrapper that includes a {@code ThemeDisplay} object to allow getting the
- * different absolute URLs.
+ * Provides a user wrapper that includes a {@code ThemeDisplay} object to allow
+ * retrieval of absolute URLs.
  *
  * @author Eduardo Perez
- * @review
  */
 public class UserWrapper extends com.liferay.portal.kernel.model.UserWrapper {
 
 	/**
-	 * Creates a new {@link UserWrapper}.
+	 * Creates a new {@code UserWrapper}.
 	 *
-	 * @param  user the user being wrapped
-	 * @param  themeDisplay the {@link ThemeDisplay} of the current request
-	 * @review
+	 * @param user the user
+	 * @param themeDisplay the current request's {@code ThemeDisplay}
 	 */
 	public UserWrapper(User user, ThemeDisplay themeDisplay) {
 		super(user);
@@ -45,7 +43,6 @@ public class UserWrapper extends com.liferay.portal.kernel.model.UserWrapper {
 	 * Returns the user's dashboard URL.
 	 *
 	 * @return the user's dashboard URL
-	 * @review
 	 */
 	public String getDashboardURL() {
 		return _getGroupURL(true);
@@ -55,7 +52,6 @@ public class UserWrapper extends com.liferay.portal.kernel.model.UserWrapper {
 	 * Returns the user's portrait URL.
 	 *
 	 * @return the user's portrait URL
-	 * @review
 	 */
 	public String getPortraitURL() {
 		return Try.success(
@@ -73,7 +69,6 @@ public class UserWrapper extends com.liferay.portal.kernel.model.UserWrapper {
 	 * Returns the user's profile URL.
 	 *
 	 * @return the user's profile URL
-	 * @review
 	 */
 	public String getProfileURL() {
 		return _getGroupURL(false);

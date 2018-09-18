@@ -32,10 +32,10 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * Base class for {@code Comment} {@code NestedCollectionRouters}.
+ * Defines the base class for the {@code *CommentNestedCollectionRouter}
+ * classes.
  *
  * @author Alejandro Hernández
- * @review
  */
 public abstract class BaseCommentNestedCollectionRouter
 	<T extends Identifier<Long>> implements
@@ -65,18 +65,16 @@ public abstract class BaseCommentNestedCollectionRouter
 	/**
 	 * Returns the {@code CommentManager} used to retrieve comments.
 	 *
-	 * @return the {@code CommentManager} instance
-	 * @review
+	 * @return the comment manager
 	 */
 	protected abstract CommentManager getCommentManager();
 
 	/**
-	 * Transforms a {@code classPK} into its {@link GroupedModel}.
+	 * Transforms a class primary key into its {@code GroupedModel}.
 	 *
-	 * @param  classPK the class PK
+	 * @param  classPK the class primary key
 	 * @return the grouped model
-	 * @throws PortalException if getting the {@code GroupedModel} fails
-	 * @review
+	 * @throws PortalException if getting the grouped model fails
 	 */
 	protected abstract GroupedModel getGroupedModel(long classPK)
 		throws PortalException;

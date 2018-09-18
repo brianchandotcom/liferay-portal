@@ -17,11 +17,11 @@ package com.liferay.comment.apio.architect.identifier;
 import com.liferay.apio.architect.identifier.Identifier;
 
 /**
- * Holds information about a {@code Comment} identifier. It's identified by the
- * internal {@code Comment#getCommentId()}.
+ * Holds information about a {@code com.liferay.portal.kernel.comment.Comment}
+ * identifier. The internal method {@code Comment#getCommentId()} returns the
+ * comment's ID.
  *
  * @author Alejandro Hernández
- * @review
  */
 public interface CommentIdentifier extends Identifier<Long> {
 }

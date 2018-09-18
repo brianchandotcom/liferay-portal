@@ -17,11 +17,11 @@ package com.liferay.content.space.apio.architect.identifier;
 import com.liferay.apio.architect.identifier.Identifier;
 
 /**
- * Holds information about a ContentSpace identifier. It's identified by the
- * internal {@code Group#getGroupId()}.
+ * Holds information about a content space identifier. The internal method
+ * {@code com.liferay.portal.kernel.model.GroupModel#getGroupId()} returns the
+ * identifier.
  *
  * @author Javier Gamarra
- * @review
  */
 public interface ContentSpaceIdentifier extends Identifier<Long> {
 }

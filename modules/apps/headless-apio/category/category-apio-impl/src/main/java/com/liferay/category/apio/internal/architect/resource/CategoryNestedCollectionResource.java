@@ -50,7 +50,6 @@ import org.osgi.service.component.annotations.Reference;
  *
  * @author Javier Gamarra
  * @author Eduardo Pérez
- * @review
  */
 @Component(immediate = true)
 public class CategoryNestedCollectionResource

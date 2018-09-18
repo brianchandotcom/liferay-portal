@@ -36,12 +36,11 @@ import org.osgi.service.component.annotations.Reference;
 
 /**
  * Provides the information necessary to expose the <a
- * href="http://schema.org/Person">Person</a> resources contained inside an <a
+ * href="http://schema.org/Person">Person</a> resources of an <a
  * href="http://schema.org/Organization">Organization</a> through a web API. The
  * resources are mapped from the internal model {@link UserWrapper}.
  *
  * @author Eduardo Perez
- * @review
  */
 @Component(immediate = true)
 public class OrganizationPersonNestedCollectionRouter

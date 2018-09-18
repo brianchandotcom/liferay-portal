@@ -20,7 +20,6 @@ import com.liferay.apio.architect.identifier.Identifier;
  * Holds information about a {@code DDMStructure} identifier.
  *
  * @author Paulo Cruz
- * @review
  */
 public interface StructureIdentifier extends Identifier<Long> {
 }

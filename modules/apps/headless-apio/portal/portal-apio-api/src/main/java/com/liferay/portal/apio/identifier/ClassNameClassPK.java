@@ -19,20 +19,20 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.model.ClassedModel;
 
 /**
- * Represents an identifier for entities with a className and classPK
+ * Represents an identifier for entities with a class name and class primary
+ * key.
  *
  * @author Alejandro Hernández
- * @review
  */
 @ProviderType
 public interface ClassNameClassPK {
 
 	/**
 	 * Creates and returns a new {@code ClassNameClassPK} from a class name and
-	 * class PK.
+	 * class primary key.
 	 *
 	 * @param  className the class name
-	 * @param  classPK the class PK
+	 * @param  classPK the class primary key
 	 * @return the new {@code ClassNameClassPK}
 	 */
 	public static ClassNameClassPK create(String className, long classPK) {
@@ -70,9 +70,9 @@ public interface ClassNameClassPK {
 	public String getClassName();
 
 	/**
-	 * Returns the class PK.
+	 * Returns the class primary key.
 	 *
-	 * @return the class PK
+	 * @return the class primary key
 	 */
 	public long getClassPK();
 

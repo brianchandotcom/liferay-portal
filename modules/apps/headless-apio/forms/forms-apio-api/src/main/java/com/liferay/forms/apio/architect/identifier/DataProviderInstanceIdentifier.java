@@ -20,7 +20,6 @@ import com.liferay.apio.architect.identifier.Identifier;
  * Holds information about a {@code DataProviderInstance} identifier.
  *
  * @author Victor Oliveira
- * @review
  */
 public interface DataProviderInstanceIdentifier extends Identifier<Long> {
 }

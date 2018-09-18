@@ -445,17 +445,17 @@ public class UpgradeJournal extends BaseUpgradePortletPreferences {
 
 	protected void updateAssetEntryClassTypeId() throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer();
-			PreparedStatement selectPS = connection.prepareStatement(
+			PreparedStatement ps1 = connection.prepareStatement(
 				SQLTransformer.transform(
 					"select distinct companyId, groupId, resourcePrimKey, " +
 						"structureId from JournalArticle where structureId " +
 							"!= ''"));
-			ResultSet rs = selectPS.executeQuery()) {
+			ResultSet rs = ps1.executeQuery()) {
 
 			long classNameId = PortalUtil.getClassNameId(
 				"com.liferay.portlet.journal.model.JournalArticle");
 
-			try (PreparedStatement updatePS =
+			try (PreparedStatement ps2 =
 					AutoBatchPreparedStatementUtil.concurrentAutoBatch(
 						connection,
 						"update AssetEntry set classTypeId = ? where " +
@@ -470,15 +470,15 @@ public class UpgradeJournal extends BaseUpgradePortletPreferences {
 					long ddmStructureId = getDDMStructureId(
 						groupId, getCompanyGroupId(companyId), structureId);
 
-					updatePS.setLong(1, ddmStructureId);
+					ps2.setLong(1, ddmStructureId);
 
-					updatePS.setLong(2, classNameId);
-					updatePS.setLong(3, resourcePrimKey);
+					ps2.setLong(2, classNameId);
+					ps2.setLong(3, resourcePrimKey);
 
-					updatePS.addBatch();
+					ps2.addBatch();
 				}
 
-				updatePS.executeBatch();
+				ps2.executeBatch();
 			}
 		}
 	}
@@ -859,16 +859,15 @@ public class UpgradeJournal extends BaseUpgradePortletPreferences {
 
 	protected void updateLinkToLayoutContent() throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer();
-			PreparedStatement selectPS = connection.prepareStatement(
+			PreparedStatement ps1 = connection.prepareStatement(
 				SQLTransformer.transform(
 					"select id_, groupId, content from JournalArticle where " +
 						"structureId != '' and content like " +
 							"'%link_to_layout%'"));
-			PreparedStatement updatePS =
-				AutoBatchPreparedStatementUtil.autoBatch(
-					connection.prepareStatement(
-						"update JournalArticle set content = ? where id_ = ?"));
-			ResultSet rs = selectPS.executeQuery()) {
+			PreparedStatement ps2 = AutoBatchPreparedStatementUtil.autoBatch(
+				connection.prepareStatement(
+					"update JournalArticle set content = ? where id_ = ?"));
+			ResultSet rs = ps1.executeQuery()) {
 
 			while (rs.next()) {
 				long id = rs.getLong("id_");
@@ -884,17 +883,17 @@ public class UpgradeJournal extends BaseUpgradePortletPreferences {
 						updateElement(groupId, element);
 					}
 
-					updatePS.setString(1, document.asXML());
-					updatePS.setLong(2, id);
+					ps2.setString(1, document.asXML());
+					ps2.setLong(2, id);
 
-					updatePS.addBatch();
+					ps2.addBatch();
 				}
 				catch (Exception e) {
 					_log.error("Unable to update content for article " + id, e);
 				}
 			}
 
-			updatePS.executeBatch();
+			ps2.executeBatch();
 		}
 	}
 

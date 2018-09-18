@@ -64,7 +64,6 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PredicateFilter;
-import com.liferay.portal.kernel.util.PrefsParamUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -198,14 +197,6 @@ public class JournalContentDisplayContext {
 		ThemeDisplay themeDisplay = (ThemeDisplay)_portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		String ddmTemplateKey = PrefsParamUtil.getString(
-			_portletRequest.getPreferences(), _portletRequest,
-			"ddmTemplateKey");
-
-		if (Validator.isNull(ddmTemplateKey)) {
-			ddmTemplateKey = article.getDDMTemplateKey();
-		}
-
 		String viewMode = ParamUtil.getString(
 			_portletRequest, "viewMode", null);
 		int page = ParamUtil.getInteger(_portletRequest, "page", 1);
@@ -221,7 +212,7 @@ public class JournalContentDisplayContext {
 
 			_articleDisplay = journalContent.getDisplay(
 				article.getGroupId(), article.getArticleId(),
-				article.getVersion(), ddmTemplateKey, viewMode,
+				article.getVersion(), getDDMTemplateKey(), viewMode,
 				themeDisplay.getLanguageId(), page,
 				new PortletRequestModel(_portletRequest, _portletResponse),
 				themeDisplay);
@@ -230,7 +221,7 @@ public class JournalContentDisplayContext {
 			try {
 				_articleDisplay =
 					JournalArticleLocalServiceUtil.getArticleDisplay(
-						article, ddmTemplateKey, viewMode,
+						article, getDDMTemplateKey(), viewMode,
 						themeDisplay.getLanguageId(), page,
 						new PortletRequestModel(
 							_portletRequest, _portletResponse),

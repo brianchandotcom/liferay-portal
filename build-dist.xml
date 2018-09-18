@@ -2552,6 +2552,26 @@ this task.
 						value="${env.JAVA_HOME}"
 					/>
 				</replace>
+
+				<chmod
+					perm="a+x"
+				>
+					<fileset
+						dir="${app.server.weblogic.bin.dir}"
+					>
+						<include name="**/*.sh" />
+					</fileset>
+				</chmod>
+
+				<chmod
+					perm="a+x"
+				>
+					<fileset
+						dir="${app.server.weblogic.instance.dir}"
+					>
+						<include name="**/*.sh" />
+					</fileset>
+				</chmod>
 			</then>
 			<elseif>
 				<os family="windows" />

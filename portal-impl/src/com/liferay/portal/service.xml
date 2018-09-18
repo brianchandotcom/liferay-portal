@@ -494,6 +494,12 @@
 			<finder-column name="liveGroupId" />
 			<finder-column name="groupKey" />
 		</finder>
+		<finder name="C_P_N_S" return-type="Collection">
+			<finder-column name="companyId" />
+			<finder-column name="parentGroupId" />
+			<finder-column comparator="LIKE" name="name" />
+			<finder-column name="site" />
+		</finder>
 		<finder name="C_P_S_I" return-type="Collection">
 			<finder-column name="companyId" />
 			<finder-column name="parentGroupId" />
@@ -1295,6 +1301,11 @@
 			<finder-column comparator="&gt;" name="organizationId" />
 			<finder-column name="companyId" />
 			<finder-column name="parentOrganizationId" />
+		</finder>
+		<finder name="C_P_N" return-type="Collection">
+			<finder-column name="companyId" />
+			<finder-column name="parentOrganizationId" />
+			<finder-column comparator="LIKE" name="name" />
 		</finder>
 
 		<!-- References -->
@@ -2831,6 +2842,10 @@
 		<finder name="C_N" return-type="UserGroup" unique="true">
 			<finder-column name="companyId" />
 			<finder-column case-sensitive="false" name="name" />
+		</finder>
+		<finder name="C_LikeN" return-type="Collection">
+			<finder-column name="companyId" />
+			<finder-column comparator="LIKE" name="name" />
 		</finder>
 		<finder db-index="false" name="U_C_P" return-type="Collection">
 			<finder-column comparator="&gt;" name="userGroupId" />

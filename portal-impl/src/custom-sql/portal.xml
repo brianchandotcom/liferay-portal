@@ -1533,6 +1533,31 @@
 				Users_Teams.userId = ?
 		]]>
 	</sql>
+	<sql id="com.liferay.portal.kernel.service.persistence.UserFinder.countByOrganizationsAndUserGroups">
+		<![CDATA[
+			SELECT
+				COUNT(*) AS COUNT_VALUE
+			FROM
+				(
+					(
+						SELECT
+							userId
+						FROM
+							Users_Orgs
+						WHERE
+							organizationId IN ([$ORGANIZATION_ID$])
+					) UNION
+					(
+						SELECT
+							userId
+						FROM
+							Users_UserGroups
+						WHERE
+							userGroupId IN ([$USER_GROUP_ID$])
+					)
+				) AS USER_IDS
+		]]>
+	</sql>
 	<sql id="com.liferay.portal.kernel.service.persistence.UserFinder.countBySocialUsers">
 		<![CDATA[
 			SELECT

@@ -18,6 +18,7 @@ import com.liferay.bean.portlet.LiferayPortletConfiguration;
 import com.liferay.bean.portlet.cdi.extension.internal.BaseBeanPortletImpl;
 import com.liferay.bean.portlet.cdi.extension.internal.BeanApp;
 import com.liferay.bean.portlet.cdi.extension.internal.PortletDependency;
+import com.liferay.bean.portlet.cdi.extension.internal.URLGenerationListener;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.util.HashMapDictionary;
@@ -56,9 +57,11 @@ public class BeanPortletAnnotationImpl extends BaseBeanPortletImpl {
 		PortletConfiguration portletConfiguration,
 		LiferayPortletConfiguration liferayPortletConfiguration,
 		Map<String, String> liferayDescriptorConfiguration,
-		String portletClassName, String descriptorDisplayCategory) {
+		String portletClassName, String descriptorDisplayCategory,
+		List<URLGenerationListener> urlGenerationListeners) {
 
-		_beanApp = new BeanAppAnnotationImpl(portletApplication);
+		_beanApp = new BeanAppAnnotationImpl(
+			portletApplication, urlGenerationListeners);
 
 		_portletConfiguration = portletConfiguration;
 		_portletClassName = portletClassName;

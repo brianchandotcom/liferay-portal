@@ -39,7 +39,10 @@ import javax.portlet.annotations.RuntimeOption;
  */
 public class BeanAppAnnotationImpl implements BeanApp {
 
-	public BeanAppAnnotationImpl(PortletApplication portletApplication) {
+	public BeanAppAnnotationImpl(
+		PortletApplication portletApplication,
+		List<URLGenerationListener> urlGenerationListeners) {
+
 		_containerRuntimeOptions = new HashMap<>();
 
 		for (RuntimeOption runtimeOption :
@@ -84,7 +87,7 @@ public class BeanAppAnnotationImpl implements BeanApp {
 		_specVersion = GetterUtil.getString(
 			portletApplication.version(), "3.0");
 
-		_urlGenerationListeners = new ArrayList<>();
+		_urlGenerationListeners = urlGenerationListeners;
 	}
 
 	@Override

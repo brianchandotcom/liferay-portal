@@ -308,9 +308,12 @@ public class BeanPortletExtension implements Extension {
 
 			_addBeanPortletsFromPortletDescriptor(bundle);
 
-			_addBeanPortletsFromAnnotatedClasses();
+			List<URLGenerationListener> urlGenerationListeners =
+				_getListenersFromAnnotatedClasses();
+
+			_addBeanPortletsFromAnnotatedClasses(urlGenerationListeners);
+
 			_addBeanFiltersFromAnnotatedClasses();
-			_addListenersFromAnnotatedClasses();
 
 			URL liferayDescriptorURL = bundle.getEntry(
 				"WEB-INF/liferay-portlet.xml");
@@ -506,7 +509,8 @@ public class BeanPortletExtension implements Extension {
 	}
 
 	private void _addBeanPortlet(
-		Class<?> beanPortletClass, PortletConfiguration portletConfiguration) {
+		Class<?> beanPortletClass, PortletConfiguration portletConfiguration,
+		List<URLGenerationListener> urlGenerationListeners) {
 
 		String configuredPortletName = portletConfiguration.portletName();
 
@@ -536,10 +540,13 @@ public class BeanPortletExtension implements Extension {
 				_getLiferayPortletConfiguration(configuredPortletName),
 				_liferayDescriptor.getConfiguration(configuredPortletName),
 				beanPortletClass.getName(),
-				_displayDescriptorCategories.get(configuredPortletName)));
+				_displayDescriptorCategories.get(configuredPortletName),
+				urlGenerationListeners));
 	}
 
-	private void _addBeanPortletsFromAnnotatedClasses() {
+	private void _addBeanPortletsFromAnnotatedClasses(
+		List<URLGenerationListener> urlGenerationListeners) {
+
 		for (Class<?> clazz : _portletConfigurationsClasses) {
 			PortletConfigurations portletConfigurations = clazz.getAnnotation(
 				PortletConfigurations.class);
@@ -547,7 +554,8 @@ public class BeanPortletExtension implements Extension {
 			for (PortletConfiguration portletConfiguration :
 					portletConfigurations.value()) {
 
-				_addBeanPortlet(clazz, portletConfiguration);
+				_addBeanPortlet(
+					clazz, portletConfiguration, urlGenerationListeners);
 				_scanBeanPortletClass(
 					clazz, portletConfiguration.portletName());
 			}
@@ -557,7 +565,8 @@ public class BeanPortletExtension implements Extension {
 			PortletConfiguration portletConfiguration = clazz.getAnnotation(
 				PortletConfiguration.class);
 
-			_addBeanPortlet(clazz, portletConfiguration);
+			_addBeanPortlet(
+				clazz, portletConfiguration, urlGenerationListeners);
 			_scanBeanPortletClass(clazz, portletConfiguration.portletName());
 		}
 	}
@@ -600,26 +609,6 @@ public class BeanPortletExtension implements Extension {
 			}
 			catch (Exception e) {
 				_log.error(e, e);
-			}
-		}
-	}
-
-	private void _addListenersFromAnnotatedClasses() {
-		for (Class<?> portletListenerClass : _portletListenerClasses) {
-			PortletListener portletListener =
-				portletListenerClass.getAnnotation(PortletListener.class);
-
-			URLGenerationListener urlGenerationListener =
-				new URLGenerationListener(
-					portletListener.ordinal(), portletListenerClass.getName());
-
-			for (BeanPortlet beanPortlet : _beanPortlets.values()) {
-				BeanApp beanApp = beanPortlet.getBeanApp();
-
-				List<URLGenerationListener> urlGenerationListeners =
-					beanApp.getURLGenerationListeners();
-
-				urlGenerationListeners.add(urlGenerationListener);
 			}
 		}
 	}
@@ -702,6 +691,23 @@ public class BeanPortletExtension implements Extension {
 		}
 
 		return null;
+	}
+
+	private List<URLGenerationListener> _getListenersFromAnnotatedClasses() {
+		List<URLGenerationListener> urlGenerationListeners = new ArrayList<>();
+
+		for (Class<?> portletListenerClass : _portletListenerClasses) {
+			PortletListener portletListener =
+				portletListenerClass.getAnnotation(PortletListener.class);
+
+			URLGenerationListener urlGenerationListener =
+				new URLGenerationListener(
+					portletListener.ordinal(), portletListenerClass.getName());
+
+			urlGenerationListeners.add(urlGenerationListener);
+		}
+
+		return urlGenerationListeners;
 	}
 
 	private Class<?> _loadBeanPortletClass(String className) {

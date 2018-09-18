@@ -2528,6 +2528,7 @@ public class ProjectTemplatesTest {
 		}
 	}
 
+	@Ignore
 	@Test
 	public void testBuildTemplateSoyPortlet71() throws Exception {
 		File gradleProjectDir = _buildTemplateWithGradle(

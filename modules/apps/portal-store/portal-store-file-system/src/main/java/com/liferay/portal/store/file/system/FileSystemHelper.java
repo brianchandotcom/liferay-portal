@@ -40,8 +40,11 @@ public abstract class FileSystemHelper {
 	public static FileSystemHelper createHardLinkFileSystemHelper(
 		File rootDir) {
 
+		File sourceFile = null;
+		File destinationFile = null;
+
 		try {
-			File sourceFile = _getTemporaryFile(rootDir);
+			sourceFile = _getTemporaryFile(rootDir);
 
 			if (sourceFile == null) {
 				return createBasicFileSystemHelper();
@@ -49,18 +52,27 @@ public abstract class FileSystemHelper {
 
 			FileUtil.touch(sourceFile);
 
-			File destinationFile = _getTemporaryFile(rootDir);
+			destinationFile = _getTemporaryFile(rootDir);
 
+			if (destinationFile == null) {
+				return createBasicFileSystemHelper();
+			}
 
 			Files.createLink(destinationFile.toPath(), sourceFile.toPath());
-
-			sourceFile.delete();
-			destinationFile.delete();
 
 			return createHardLinkFileSystemHelper();
 		}
 		catch (IOException ioe) {
 			return createBasicFileSystemHelper();
+		}
+		finally {
+			if (sourceFile != null) {
+				sourceFile.delete();
+			}
+
+			if (destinationFile != null) {
+				destinationFile.delete();
+			}
 		}
 	}
 

@@ -366,7 +366,13 @@ class Builder extends Component {
 	_handlePagesUpdated(pages) {
 		this.emit('pagesUpdated', pages);
 	}
-
+	
+	/**
+	 * Continues the propagation of event.
+	 * @param {Array} pages
+	 * @param {Number} pageIndex
+	 * @private
+	 */
 	_pageHasFields(pages, pageIndex) {
 		const visitor = new PagesVisitor([pages[pageIndex]]);
 

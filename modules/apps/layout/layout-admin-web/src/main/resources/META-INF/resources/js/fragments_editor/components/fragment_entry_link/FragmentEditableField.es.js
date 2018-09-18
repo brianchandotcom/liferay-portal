@@ -18,6 +18,14 @@ import {
 } from '../../actions/actions.es';
 
 /**
+ * Default key used for translated values when there is no languageId
+ * @review
+ * @type {!string}
+ */
+
+const DEFAULT_LANGUAGE_ID_KEY = 'defaultValue';
+
+/**
  * Buttons rendered inside the tooltip
  * @review
  */
@@ -300,6 +308,7 @@ class FragmentEditableField extends Component {
 				{
 					editableId: this.editableId,
 					editableValue: newValue,
+					editableValueId: this.languageId || DEFAULT_LANGUAGE_ID_KEY,
 					fragmentEntryLinkId: this.fragmentEntryLinkId
 				}
 			)

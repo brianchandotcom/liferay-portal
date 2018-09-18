@@ -8,14 +8,6 @@ import {DRAG_POSITIONS} from './placeholders.es';
 import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../components/fragment_entry_link/FragmentEntryLink.es';
 
 /**
- * Default key used for translated values when there is no languageId
- * @review
- * @type {!string}
- */
-
-const DEFAULT_LANGUAGE_ID_KEY = 'defaultValue';
-
-/**
  * @param {!object} state
  * @param {!string} actionType
  * @param {!object} payload
@@ -253,6 +245,7 @@ function removeFragmentEntryLinkReducer(state, actionType, payload) {
  * @param {string} payload.fragmentEntryLinkId
  * @param {string} payload.editableId
  * @param {string} payload.editableValue
+ * @param {string} payload.editableValueId
  * @return {object}
  * @review
  */
@@ -265,15 +258,15 @@ function updateEditableValueReducer(state, actionType, payload) {
 			if (actionType === UPDATE_EDITABLE_VALUE) {
 				const editableId = payload.editableId;
 				const editableValue = payload.editableValue;
+				const editableValueId = payload.editableValueId;
 				const editableValues = state.fragmentEntryLinks[payload.fragmentEntryLinkId].editableValues;
-				const languageId = state.languageId || DEFAULT_LANGUAGE_ID_KEY;
 
 				const nextEditableValues = _setIn(
 					editableValues,
 					[
 						EDITABLE_FRAGMENT_ENTRY_PROCESSOR,
 						editableId,
-						languageId
+						editableValueId
 					],
 					editableValue
 				);

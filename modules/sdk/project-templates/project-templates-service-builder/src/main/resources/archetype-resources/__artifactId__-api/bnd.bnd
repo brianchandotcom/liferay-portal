@@ -6,4 +6,5 @@ Export-Package:\
 	${package}.model,\
 	${package}.service,\
 	${package}.service.persistence
+-check: EXPORTS
 -includeresource: META-INF/service.xml=../${artifactId}-service/service.xml

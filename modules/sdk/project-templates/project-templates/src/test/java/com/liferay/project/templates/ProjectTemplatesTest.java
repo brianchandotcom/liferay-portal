@@ -60,6 +60,7 @@ import java.util.Optional;
 import java.util.Properties;
 import java.util.TreeMap;
 import java.util.concurrent.Callable;
+import java.util.function.Consumer;
 import java.util.jar.JarFile;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -73,6 +74,7 @@ import javax.xml.transform.stream.StreamResult;
 import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpression;
+import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
 
 import net.diibadaaba.zipdiff.DifferenceCalculator;
@@ -2016,6 +2018,60 @@ public class ProjectTemplatesTest {
 	}
 
 	@Test
+	public void testBuildTemplateServiceBuilderCheckExports() throws Exception {
+		String name = "guestbook";
+		String packageName = "com.liferay.docs.guestbook";
+
+		File gradleProjectDir = _buildTemplateWithGradle(
+			"service-builder", name, "--package-name", packageName,
+			"--liferayVersion", "7.1");
+
+		File gradleServiceXml = new File(
+			new File(gradleProjectDir, name + "-service"), "service.xml");
+
+		Consumer<Document> consumer = document -> {
+			Element documentElement = document.getDocumentElement();
+
+			documentElement.setAttribute("package-path", "com.liferay.test");
+		};
+
+		_editXml(gradleServiceXml, consumer);
+
+		File mavenProjectDir = _buildTemplateWithMaven(
+			"service-builder", name, "com.test", "-Dpackage=" + packageName,
+			"-DliferayVersion=7.1");
+
+		File mavenServiceXml = new File(
+			new File(mavenProjectDir, name + "-service"), "service.xml");
+
+		_editXml(mavenServiceXml, consumer);
+
+		_testContains(
+			gradleProjectDir, name + "-api/bnd.bnd", "Export-Package:\\",
+			packageName + ".exception,\\", packageName + ".model,\\",
+			packageName + ".service,\\", packageName + ".service.persistence");
+
+		Optional<String> stdOutput = _executeGradle(
+			gradleProjectDir, false, true,
+			name + "-service" + _GRADLE_TASK_PATH_BUILD);
+
+		Assert.assertTrue(stdOutput.isPresent());
+
+		String gradleOutput = stdOutput.get();
+
+		Assert.assertTrue(
+			"Expected gradle output to include build error. " + gradleOutput,
+			gradleOutput.contains("Exporting an empty package"));
+
+		String mavenOutput = _executeMaven(
+			mavenProjectDir, true, _MAVEN_GOAL_PACKAGE);
+
+		Assert.assertTrue(
+			"Expected maven output to include build error. " + mavenOutput,
+			mavenOutput.contains("Exporting an empty package"));
+	}
+
+	@Test
 	public void testBuildTemplateServiceBuilderNestedPath70() throws Exception {
 		File workspaceProjectDir = _buildTemplateWithGradle(
 			WorkspaceUtil.WORKSPACE, "ws-nested-path");
@@ -2471,6 +2527,7 @@ public class ProjectTemplatesTest {
 		}
 	}
 
+	@Ignore
 	@Test
 	public void testBuildTemplateSoyPortlet71() throws Exception {
 		File gradleProjectDir = _buildTemplateWithGradle(
@@ -3839,44 +3896,36 @@ public class ProjectTemplatesTest {
 	private static void _configurePomNpmConfiguration(File projectDir)
 		throws Exception {
 
-		DocumentBuilderFactory documentBuilderFactory =
-			DocumentBuilderFactory.newInstance();
-
-		DocumentBuilder documentBuilder =
-			documentBuilderFactory.newDocumentBuilder();
-
 		File pomXmlFile = new File(projectDir, "pom.xml");
 
-		Document document = documentBuilder.parse(pomXmlFile);
+		_editXml(
+			pomXmlFile,
+			document -> {
+				try {
+					NodeList nodeList =
+						(NodeList)_pomXmlNpmInstallXPathExpression.evaluate(
+							document, XPathConstants.NODESET);
 
-		NodeList nodeList = (NodeList)_pomXmlNpmInstallXPathExpression.evaluate(
-			document, XPathConstants.NODESET);
+					Node executionNode = nodeList.item(0);
 
-		Node executionNode = nodeList.item(0);
+					Element configurationElement = document.createElement(
+						"configuration");
 
-		Element configurationElement = document.createElement("configuration");
+					executionNode.appendChild(configurationElement);
 
-		executionNode.appendChild(configurationElement);
+					Element argumentsElement = document.createElement(
+						"arguments");
 
-		Element argumentsElement = document.createElement("arguments");
+					configurationElement.appendChild(argumentsElement);
 
-		configurationElement.appendChild(argumentsElement);
+					Text text = document.createTextNode(
+						"install --registry=" + _NODEJS_NPM_CI_REGISTRY);
 
-		Text text = document.createTextNode(
-			"install --registry=" + _NODEJS_NPM_CI_REGISTRY);
-
-		argumentsElement.appendChild(text);
-
-		TransformerFactory transformerFactory =
-			TransformerFactory.newInstance();
-
-		Transformer transformer = transformerFactory.newTransformer();
-
-		DOMSource domSource = new DOMSource(document);
-
-		StreamResult streamResult = new StreamResult(pomXmlFile);
-
-		transformer.transform(domSource, streamResult);
+					argumentsElement.appendChild(text);
+				}
+				catch (XPathExpressionException xpee) {
+				}
+			});
 	}
 
 	private static void _createNewFiles(String fileName, File... dirs)
@@ -3895,8 +3944,34 @@ public class ProjectTemplatesTest {
 		}
 	}
 
+	private static void _editXml(File xmlFile, Consumer<Document> consumer)
+		throws Exception {
+
+		DocumentBuilderFactory documentBuilderFactory =
+			DocumentBuilderFactory.newInstance();
+
+		DocumentBuilder documentBuilder =
+			documentBuilderFactory.newDocumentBuilder();
+
+		Document document = documentBuilder.parse(xmlFile);
+
+		consumer.accept(document);
+
+		TransformerFactory transformerFactory =
+			TransformerFactory.newInstance();
+
+		Transformer transformer = transformerFactory.newTransformer();
+
+		DOMSource domSource = new DOMSource(document);
+
+		StreamResult streamResult = new StreamResult(xmlFile);
+
+		transformer.transform(domSource, streamResult);
+	}
+
 	private static Optional<String> _executeGradle(
-			File projectDir, boolean debug, String... taskPaths)
+			File projectDir, boolean debug, boolean buildAndFail,
+			String... taskPaths)
 		throws IOException {
 
 		final String repositoryUrl = mavenExecutor.getRepositoryUrl();
@@ -3992,17 +4067,27 @@ public class ProjectTemplatesTest {
 		gradleRunner.withGradleDistribution(_gradleDistribution);
 		gradleRunner.withProjectDir(projectDir);
 
-		BuildResult buildResult = gradleRunner.build();
+		BuildResult buildResult = null;
 
-		for (String taskPath : taskPaths) {
-			BuildTask buildTask = buildResult.task(taskPath);
+		if (buildAndFail) {
+			buildResult = gradleRunner.buildAndFail();
 
-			Assert.assertNotNull(
-				"Build task \"" + taskPath + "\" not found", buildTask);
+			stdOutput = buildResult.getOutput();
+		}
+		else {
+			buildResult = gradleRunner.build();
 
-			Assert.assertEquals(
-				"Unexpected outcome for task \"" + buildTask.getPath() + "\"",
-				TaskOutcome.SUCCESS, buildTask.getOutcome());
+			for (String taskPath : taskPaths) {
+				BuildTask buildTask = buildResult.task(taskPath);
+
+				Assert.assertNotNull(
+					"Build task \"" + taskPath + "\" not found", buildTask);
+
+				Assert.assertEquals(
+					"Unexpected outcome for task \"" + buildTask.getPath() +
+						"\"",
+					TaskOutcome.SUCCESS, buildTask.getOutcome());
+			}
 		}
 
 		if (debug) {
@@ -4013,41 +4098,34 @@ public class ProjectTemplatesTest {
 		return Optional.ofNullable(stdOutput);
 	}
 
+	private static Optional<String> _executeGradle(
+			File projectDir, boolean debug, String... taskPaths)
+		throws IOException {
+
+		return _executeGradle(projectDir, debug, false, taskPaths);
+	}
+
 	private static void _executeGradle(File projectDir, String... taskPaths)
 		throws IOException {
 
 		_executeGradle(projectDir, false, taskPaths);
 	}
 
-	private static String _executeMaven(File projectDir, String... args)
+	private static String _executeMaven(
+			File projectDir, boolean buildAndFail, String... args)
 		throws Exception {
 
 		File pomXmlFile = new File(projectDir, "pom.xml");
 
 		if (pomXmlFile.exists()) {
-			DocumentBuilderFactory documentBuilderFactory =
-				DocumentBuilderFactory.newInstance();
-
-			DocumentBuilder documentBuilder =
-				documentBuilderFactory.newDocumentBuilder();
-
-			Document document = documentBuilder.parse(pomXmlFile);
-
-			_addNexusRepositoriesElement(
-				document, "repositories", "repository");
-			_addNexusRepositoriesElement(
-				document, "pluginRepositories", "pluginRepository");
-
-			TransformerFactory transformerFactory =
-				TransformerFactory.newInstance();
-
-			Transformer transformer = transformerFactory.newTransformer();
-
-			DOMSource domSource = new DOMSource(document);
-
-			StreamResult streamResult = new StreamResult(pomXmlFile);
-
-			transformer.transform(domSource, streamResult);
+			_editXml(
+				pomXmlFile,
+				document -> {
+					_addNexusRepositoriesElement(
+						document, "repositories", "repository");
+					_addNexusRepositoriesElement(
+						document, "pluginRepositories", "pluginRepository");
+				});
 		}
 
 		String[] completeArgs = new String[args.length + 1];
@@ -4058,9 +4136,22 @@ public class ProjectTemplatesTest {
 
 		MavenExecutor.Result result = mavenExecutor.execute(projectDir, args);
 
-		Assert.assertEquals(result.output, 0, result.exitCode);
+		if (buildAndFail) {
+			Assert.assertFalse(
+				"Expected build to fail. " + result.exitCode,
+				result.exitCode == 0);
+		}
+		else {
+			Assert.assertEquals(result.output, 0, result.exitCode);
+		}
 
 		return result.output;
+	}
+
+	private static String _executeMaven(File projectDir, String... args)
+		throws Exception {
+
+		return _executeMaven(projectDir, false, args);
 	}
 
 	private static List<String> _sanitizeLines(List<String> lines) {

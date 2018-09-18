@@ -14,21 +14,11 @@
 
 package com.liferay.asset.list.web.internal.portlet.action;
 
-import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.asset.list.constants.AssetListPortletKeys;
-import com.liferay.asset.list.model.AssetListEntry;
-import com.liferay.asset.list.service.AssetListEntryLocalService;
-import com.liferay.petra.string.StringPool;
-import com.liferay.petra.string.StringUtil;
+import com.liferay.asset.list.service.AssetListEntryService;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.UnicodeProperties;
-import com.liferay.portal.kernel.util.Validator;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -58,54 +48,13 @@ public class RemoveAssetEntrySelectionMVCActionCommand
 		long assetListEntryId = ParamUtil.getLong(
 			actionRequest, "assetListEntryId");
 
-		int assetEntryOrder = ParamUtil.getInteger(
-			actionRequest, "assetEntryOrder");
+		int position = ParamUtil.getInteger(actionRequest, "position");
 
-		AssetListEntry assetListEntry =
-			_assetListEntryLocalService.fetchAssetListEntry(assetListEntryId);
-
-		if (assetListEntry != null) {
-			UnicodeProperties typeSettingsProperties = new UnicodeProperties(
-				true);
-
-			typeSettingsProperties.fastLoad(assetListEntry.getTypeSettings());
-
-			_removeSelection(typeSettingsProperties, assetEntryOrder);
-
-			assetListEntry.setTypeSettings(typeSettingsProperties.toString());
-
-			_assetListEntryLocalService.updateAssetListEntry(assetListEntry);
-		}
-	}
-
-	private void _removeSelection(
-		UnicodeProperties typeSettingsProperties, int assetEntryOrder) {
-
-		String assetEntryXmlProperty = typeSettingsProperties.getProperty(
-			"assetEntryXml");
-
-		List<String> assetEntryXmls = new ArrayList<>();
-
-		if (Validator.isNotNull(assetEntryXmlProperty)) {
-			assetEntryXmls = StringUtil.split(assetEntryXmlProperty);
-		}
-
-		if (ListUtil.isEmpty(assetEntryXmls) ||
-			(assetEntryOrder >= assetEntryXmls.size())) {
-
-			return;
-		}
-
-		assetEntryXmls.remove(assetEntryOrder);
-
-		typeSettingsProperties.put(
-			"assetEntryXml", String.join(StringPool.COMMA, assetEntryXmls));
+		_assetListEntryService.deleteAssetListEntryAssetEntryRel(
+			assetListEntryId, position);
 	}
 
 	@Reference
-	private AssetListEntryLocalService _assetListEntryLocalService;
-
-	@Reference
-	private AssetTagLocalService _assetTagLocalService;
+	private AssetListEntryService _assetListEntryService;
 
 }

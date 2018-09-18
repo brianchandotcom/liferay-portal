@@ -1,0 +1,34 @@
+{namespace SuccessPage}
+
+{template .render}
+	{@param? contentLabel: string}
+	{@param? successPageSettings: ?}
+	{@param? titleLabel: string}
+	{@param? _handleSuccessPageSettingsChanged: any}
+
+	{delcall SuccessPage.container}
+		{param contentLabel: $contentLabel /}
+		{param successPageSettings: $successPageSettings /}
+		{param titleLabel: $titleLabel /}
+		{param _handleSuccessPageSettingsChanged: $_handleSuccessPageSettingsChanged /}
+	{/delcall}
+{/template}
+
+{deltemplate SuccessPage.container}
+	{@param? contentLabel: string}
+	{@param? successPageSettings: ?}
+	{@param? titleLabel: string}
+	{@param? _handleSuccessPageSettingsChanged: any}
+
+	<div class="ddm-page-success-layout">
+		<div class="form-builder-success-page pt-2 pb-3">
+			<label class="control-label">{$titleLabel}</label>
+			<input data-setting="title" data-onkeyup="{$_handleSuccessPageSettingsChanged}" class="form-builder-success-page-title form-control" value="{$successPageSettings.title.en_US}" type="text" />
+
+			<br />
+
+			<label class="control-label">{$contentLabel}</label>
+			<input data-setting="body" data-onkeyup="{$_handleSuccessPageSettingsChanged}" class="form-builder-success-page-content form-control" value="{$successPageSettings.body.en_US}" type="text" />
+		</div>
+	</div>
+{/deltemplate}	

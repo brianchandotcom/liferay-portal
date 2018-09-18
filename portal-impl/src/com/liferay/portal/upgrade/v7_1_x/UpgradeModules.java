@@ -36,6 +36,7 @@ public class UpgradeModules
 		"com.liferay.document.library.content.service",
 		"com.liferay.document.library.file.rank.service",
 		"com.liferay.document.library.sync.service",
+		"com.liferay.layout.page.template.service",
 		"com.liferay.message.boards.service",
 		"com.liferay.subscription.service", "com.liferay.trash.service"
 	};

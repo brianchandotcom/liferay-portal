@@ -187,14 +187,17 @@
 						{param secondOperandTypeList: $secondOperandTypeList /}
 						{param index: $index /}
 						{param spritemap: $spritemap /}
+						{param operatorSelected: $operatorSelected /}
 						{param secondOperandTypeSelectedList: $secondOperandTypeSelectedList /}
 					{/call}
 
-					<div class="condition-type-value form-group-item hide" condition-type-value-index="{$index}">
+					{let $visibleTextField: isNonnull($secondOperandTypeSelectedList) and ($secondOperandTypeSelectedList[$index].name == 'text') ? true : false /}
+					<div class="condition-type-value form-group-item {if not $visibleTextField}hide{/if}" condition-type-value-index="{$index}">
 						{delcall PageRenderer.RegisterFieldType variant="'text'"}
 							{param events: [
 								'fieldEdited': $_handleSecondOperandSelection
 							] /}
+							{param ref: 'typeValueInput' /}
 							{param spritemap: $spritemap /}
 							{param name: $secondOperandTypeName /}
 							{param value: $secondOperandTypeValue /}
@@ -202,7 +205,8 @@
 						{/delcall}
 					</div>
 
-					<div class="condition-type-value-select form-group-item hide" condition-type-value-select-index="{$index}">
+					{let $visibleSelectField: isNonnull($secondOperandTypeSelectedList) and ($secondOperandTypeSelectedList[$index].name == 'field') ? true : false /}
+					<div class="condition-type-value-select form-group-item {if not $visibleSelectField}hide{/if}" condition-type-value-select-index="{$index}">
 						{delcall PageRenderer.RegisterFieldType variant="'select'"}
 							{param events: [
 									'fieldEdited': $_handleSecondOperandSelection
@@ -214,13 +218,15 @@
 						{/delcall}
 					</div>
 
+					{let $visibleSelectOptionsField: isNonnull($secondOperandTypeSelectedList) and ($secondOperandTypeSelectedList[$index].name == 'select') ? true : false /}
 					{foreach $operand in $firstOperandList}
 						{if $operand.value == $firstOperandValueSelected}
-							<div class="condition-type-value-select-options form-group-item hide" condition-type-value-select-options-index="{$index}">
+							<div class="condition-type-value-select-options form-group-item {if not $visibleSelectOptionsField}hide{/if}" condition-type-value-select-options-index="{$index}">
 								{delcall PageRenderer.RegisterFieldType variant="'select'"}
 									{param events: [
 											'fieldEdited': $_handleSecondOperandSelection
 										] /}
+									{param ref: 'typeValueSelectOptions' /}
 									{param spritemap: $spritemap /}
 									{param options: $operand.options /}
 									{param value: [$secondOperandTypeValue] /}
@@ -268,6 +274,7 @@
 
 {template .secondOperandTypeList}
 	{@param? _handleTypeSelection: any}
+	{@param? operatorSelected: any}
 	{@param? secondOperandTypeList : list<[
 			value: string,
 			name: string
@@ -281,7 +288,8 @@
 	{@param index: int}
 	{@param? spritemap: string}
 
-	<div class="condition-type form-group-item hide" condition-type-index="{$index}">
+	{let $visible: $operatorSelected and isNonnull($secondOperandTypeSelectedList) and $secondOperandTypeSelectedList[$index].name != 'none' ? true: false /}
+	<div class="condition-type form-group-item {if not $visible}hide{/if}" condition-type-index="{$index}">
 		{delcall PageRenderer.RegisterFieldType variant="'select'"}
 			{param events: [
 				'fieldEdited': $_handleTypeSelection

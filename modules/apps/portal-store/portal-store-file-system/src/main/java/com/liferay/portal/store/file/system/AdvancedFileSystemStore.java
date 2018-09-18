@@ -116,6 +116,7 @@ public class AdvancedFileSystemStore extends FileSystemStore {
 		}
 
 		initializeRootDir();
+		_checkHardLinkSupported();
 	}
 
 	protected void buildPath(StringBundler sb, String fileNameFragment) {
@@ -352,8 +353,56 @@ public class AdvancedFileSystemStore extends FileSystemStore {
 		return path;
 	}
 
+	private void _checkHardLinkSupported() {
+		try {
+			_useHardLinks = false;
+
+			if (!_advancedFileSystemStoreConfiguration.useHardLinks()) {
+				return;
+			}
+
+			File sourceFile = _getTemporaryFile();
+
+			if (sourceFile == null) {
+				return;
+			}
+
+			FileUtil.touch(sourceFile);
+
+			File destinationFile = _getTemporaryFile();
+
+			Files.createLink(destinationFile.toPath(), sourceFile.toPath());
+
+			sourceFile.delete();
+			destinationFile.delete();
+
+			_useHardLinks = true;
+		}
+		catch (IOException ioe) {
+			return;
+		}
+	}
+
+	private File _getTemporaryFile() {
+		File tempFile = new File(getRootDirName(), StringUtil.randomString(5));
+
+		int tries = 0;
+
+		while ((tries < _MAX_TRIES) && tempFile.exists()) {
+			tempFile = new File(getRootDirName(), StringUtil.randomString(5));
+
+			tries++;
+		}
+
+		if (tries >= _MAX_TRIES) {
+			return null;
+		}
+
+		return tempFile;
+	}
+
 	private void _move(File source, File destination) {
-		if (_advancedFileSystemStoreConfiguration.useHardLinks()) {
+		if (_useHardLinks) {
 			try {
 				Files.move(source.toPath(), destination.toPath());
 			}
@@ -379,7 +428,11 @@ public class AdvancedFileSystemStore extends FileSystemStore {
 
 	private static final String _HOOK_EXTENSION = "afsh";
 
+	private static final int _MAX_TRIES = 10;
+
 	private static volatile AdvancedFileSystemStoreConfiguration
 		_advancedFileSystemStoreConfiguration;
+
+	private boolean _useHardLinks;
 
 }

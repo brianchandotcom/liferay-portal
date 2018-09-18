@@ -94,6 +94,12 @@ class FragmentEntryLink extends Component {
 				}
 			);
 		}
+
+		this._update(
+			this.languageId,
+			this.defaultLanguageId,
+			[this._updateEditableStatus]
+		);
 	}
 
 	/**

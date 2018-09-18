@@ -104,33 +104,28 @@ public class DLOpenerGoogleDriveDLViewFileVersionDisplayContext
 	}
 
 	private MenuItem _createCheckoutInGoogleDocsMenuItem() {
-		JavaScriptMenuItem javaScriptMenuItem = new JavaScriptMenuItem();
+		URLMenuItem menuItem = new URLMenuItem();
 
-		javaScriptMenuItem.setLabel(
+		menuItem.setLabel(
 			LanguageUtil.get(_resourceBundle, "checkout-to-google-docs"));
-		javaScriptMenuItem.setOnClick(
-			StringBundler.concat(
-				_getNamespace(), "redirectNotification('",
-				_getActionURL(
-					DLOpenerGoogleDriveWebConstants.GOOGLE_DRIVE_CHECKOUT),
-				"')"));
+		menuItem.setMethod(HttpMethods.POST);
+		menuItem.setURL(
+			_getActionURL(
+				DLOpenerGoogleDriveWebConstants.GOOGLE_DRIVE_CHECKOUT));
 
-		return javaScriptMenuItem;
+		return menuItem;
 	}
 
 	private MenuItem _createEditInGoogleDocsMenuItem() {
-		JavaScriptMenuItem javaScriptMenuItem = new JavaScriptMenuItem();
+		URLMenuItem menuItem = new URLMenuItem();
 
-		javaScriptMenuItem.setLabel(
+		menuItem.setLabel(
 			LanguageUtil.get(_resourceBundle, "edit-in-google-docs"));
-		javaScriptMenuItem.setOnClick(
-			StringBundler.concat(
-				_getNamespace(), "redirectNotification('",
-				_getActionURL(
-					DLOpenerGoogleDriveWebConstants.GOOGLE_DRIVE_EDIT),
-				"')"));
+		menuItem.setMethod(HttpMethods.POST);
+		menuItem.setURL(
+			_getActionURL(DLOpenerGoogleDriveWebConstants.GOOGLE_DRIVE_EDIT));
 
-		return javaScriptMenuItem;
+		return menuItem;
 	}
 
 	private String _getActionURL(String cmd) {

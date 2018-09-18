@@ -32,44 +32,93 @@ DLOpenerGoogleDriveFileReference dlOpenerGoogleDriveFileReference = (DLOpenerGoo
 	</portlet:renderURL>
 
 	<aui:script>
-		window.open('<%= openGoogleDocsURL %>');
+		!(function() {
+			var TIME_POLLING = 500;
+			var TIME_SHOW_MSG = 2000;
+			var isTimeConsumed = false;
+			var defaultError = '<liferay-ui:message key="an-unexpected-error-occurred" />';
+			var dialogId = '<portlet:namespace />LoadingDialog';
+			var url;
+
+			showStatusMessage = Liferay.lazyLoad(
+				'frontend-js-web/liferay/toast/commands/OpenToast.es',
+				function(toastCommands, data) {
+					toastCommands.openToast(data);
+				}
+			);
+
+			function showError(message) {
+				showStatusMessage({
+					title: '<liferay-ui:message key="error" />:',
+					message: message,
+					type: 'danger'
+				});
+			}
+
+			function navigate() {
+				if (url && isTimeConsumed) {
+					window.location.href = url;
+				}
+			}
+
+			function polling() {
+				fetch(
+					'<%= googleDriveBackgroundTaskStatusURL %>',
+					{
+						credentials: 'include',
+						method: 'POST'
+					}
+				)
+					.then(function(response) {
+						if (!response.ok) { throw defaultError; }
+						return response.json();
+					})
+					.then(function(response) {
+						if (response.complete) {
+								url = response.googleDocsEditURL;
+								navigate();
+						} else if (response.error) {
+							throw defaultError;
+						} else {
+							setTimeout(polling, TIME_POLLING);
+						}
+					})
+					.catch(function(error) {
+						showError(error);
+						Liferay.Util.getWindow(dialogId).hide();
+					})
+				;
+			}
+
+			Liferay.Util.openWindow(
+				{
+					id: dialogId,
+					dialog: {
+						bodyContent: '<p><liferay-ui:message key="you-are-being-redirected-to-an-external-editor-to-edit-this-document" /></p><div aria-hidden="true" class="loading-animation"></div>',
+						cssClass: 'google-docs-redirect-modal',
+						height: 172,
+						modal: true,
+						resizable: false,
+						title: '',
+						width: 320
+					}
+				},
+				function() {
+					setTimeout(polling, TIME_POLLING);
+					setTimeout(
+						function() {
+							isTimeConsumed = true;
+							navigate();
+						},
+						TIME_SHOW_MSG
+					);
+				}
+			);
+
+		})();
 	</aui:script>
 </c:if>
 
 <liferay-util:html-top>
 	<link href="<%= PortalUtil.getStaticResourceURL(request, StringBundler.concat(themeDisplay.getCDNBaseURL(), PortalUtil.getPathProxy(), application.getContextPath(), "/css/document_library.css")) %>" rel="stylesheet" type="text/css" />
 </liferay-util:html-top>
-
-<script>
-	window.<portlet:namespace />redirectNotification = function(url) {
-		var TIME_SHOW_MSG = 2000;
-
-		Liferay.Util.openWindow(
-			{
-				dialog:
-				{
-					bodyContent: '<p><liferay-ui:message key="you-are-being-redirected-to-an-external-editor-to-edit-this-document" /></p><div aria-hidden="true" class="loading-animation"></div>',
-					cssClass: 'google-docs-redirect-modal',
-					height: 172,
-					modal: true,
-					resizable: false,
-					title: '',
-					width: 320
-				}
-			}
-		);
-
-		setTimeout(
-			function() {
-				var form = document.createElement('form');
-
-				form.method = 'POST';
-				form.action = url;
-
-				document.body.appendChild(form);
-
-				form.submit();
-			},
-			TIME_SHOW_MSG);
-	}
-</script>

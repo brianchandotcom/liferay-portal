@@ -99,13 +99,13 @@ StagingGroupHelper stagingGroupHelper = StagingGroupHelperUtil.getStagingGroupHe
 							<c:if test="<%= canSubscribe %>">
 								<c:choose>
 									<c:when test="<%= subscribed %>">
-										<button aria-label="<liferay-ui:message key="subscribe-to-comments" />" class="btn btn-outline-primary btn-sm" onclick="<%= subscriptionOnClick %>" type="button">
-											<liferay-ui:message key="subscribe" />
+										<button aria-label="<liferay-ui:message key="unsubscribe-from-comments" />" class="btn btn-outline-primary btn-sm" onclick="<%= subscriptionOnClick %>" type="button">
+											<liferay-ui:message key="unsubscribe" />
 										</button>
 									</c:when>
 									<c:otherwise>
-										<button aria-label="<liferay-ui:message key="unsubscribe-from-comments" />" class="btn btn-outline-primary btn-sm" onclick="<%= subscriptionOnClick %>" type="button">
-											<liferay-ui:message key="unsubscribe" />
+										<button aria-label="<liferay-ui:message key="subscribe-to-comments" />" class="btn btn-outline-primary btn-sm" onclick="<%= subscriptionOnClick %>" type="button">
+											<liferay-ui:message key="subscribe" />
 										</button>
 									</c:otherwise>
 								</c:choose>

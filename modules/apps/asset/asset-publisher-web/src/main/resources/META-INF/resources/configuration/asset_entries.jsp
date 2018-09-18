@@ -228,7 +228,9 @@ for (long groupId : groupIds) {
 
 		submitForm(form);
 	}
+</aui:script>
 
+<aui:script use="liferay-item-selector-dialog">
 	function selectAssets(assetEntryList) {
 		var assetClassName;
 		var assetEntryIds = [];
@@ -248,9 +250,7 @@ for (long groupId : groupIds) {
 
 		submitForm(document.<portlet:namespace />fm);
 	}
-</aui:script>
 
-<aui:script use="liferay-item-selector-dialog">
 	$('body').on(
 		'click',
 		'.asset-selector a',

@@ -131,7 +131,7 @@
 	</liferay-frontend:edit-form-footer>
 </liferay-frontend:edit-form>
 
-<aui:script sandbox="<%= true %>">
+<aui:script use="liferay-item-selector-dialog">
 	$('body').on(
 		'click',
 		'.asset-selector a',

@@ -91,7 +91,7 @@
 	}
 	%>
 
-	var assetAddonEntrySelector = new Liferay.AssetAddonEntrySelector(
+	new Liferay.AssetAddonEntrySelector(
 		{
 			assetAddonEntries: assetAddonEntries,
 			dialogTitle: '<liferay-ui:message key="<%= title %>" />',

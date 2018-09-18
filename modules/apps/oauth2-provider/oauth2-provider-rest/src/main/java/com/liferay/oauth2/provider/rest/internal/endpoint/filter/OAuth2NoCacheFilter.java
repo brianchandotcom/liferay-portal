@@ -30,7 +30,8 @@ import org.osgi.service.component.annotations.Component;
 	property = {
 		"osgi.jaxrs.application.select=(osgi.jaxrs.name=Liferay.OAuth2.Application)",
 		"osgi.jaxrs.extension=true", "osgi.jaxrs.name=OAuth2NoCacheFilter"
-	}
+	},
+	service = ContainerResponseFilter.class
 )
 @Provider
 public class OAuth2NoCacheFilter implements ContainerResponseFilter {

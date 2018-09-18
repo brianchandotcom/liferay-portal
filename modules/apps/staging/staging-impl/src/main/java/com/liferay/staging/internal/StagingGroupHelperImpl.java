@@ -46,7 +46,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Akos Thurzo
  */
-@Component(immediate = true)
+@Component(immediate = true, service = StagingGroupHelper.class)
 @ProviderType
 public class StagingGroupHelperImpl implements StagingGroupHelper {
 

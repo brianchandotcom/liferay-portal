@@ -32,7 +32,8 @@ import org.osgi.service.component.annotations.Reference;
  * @author Pedro Queiroz
  */
 @Component(
-	immediate = true, property = "ddm.form.field.type.name=document_library"
+	immediate = true, property = "ddm.form.field.type.name=document_library",
+	service = DDMFormFieldValueRenderer.class
 )
 public class DocumentLibraryDDMFormFieldValueRenderer
 	implements DDMFormFieldValueRenderer {

@@ -32,7 +32,7 @@ import org.osgi.service.component.annotations.Modified;
  */
 @Component(
 	configurationPid = "com.liferay.portal.security.auth.verifier.internal.portal.session.module.configuration.PortalSessionAuthVerifierConfiguration",
-	configurationPolicy = ConfigurationPolicy.REQUIRE
+	configurationPolicy = ConfigurationPolicy.REQUIRE, service = {}
 )
 public class PortalSessionAuthVerifierPublisher
 	extends BaseAuthVerifierPublisher {

@@ -35,7 +35,7 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
 /**
  * @author Sergio González
  */
-@Component(immediate = true)
+@Component(immediate = true, service = {})
 public class StoreProvider {
 
 	@Activate

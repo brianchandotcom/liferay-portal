@@ -39,7 +39,9 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Eduardo Perez
  */
-@Component(immediate = true)
+@Component(
+	immediate = true, service = UserAccountRepresentorBuilderHelper.class
+)
 public class UserAccountRepresentorBuilderHelperImpl
 	implements UserAccountRepresentorBuilderHelper {
 

@@ -29,7 +29,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Preston Crary
  */
-@Component(immediate = true)
+@Component(immediate = true, service = {})
 public class KBFolderPermission {
 
 	public static boolean contains(

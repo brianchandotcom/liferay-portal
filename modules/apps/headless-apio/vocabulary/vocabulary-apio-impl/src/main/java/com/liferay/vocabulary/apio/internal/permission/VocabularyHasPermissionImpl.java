@@ -31,7 +31,8 @@ import org.osgi.service.component.annotations.Component;
  * @author Eduardo Perez
  */
 @Component(
-	property = "model.class.name=com.liferay.asset.kernel.model.AssetVocabulary"
+	property = "model.class.name=com.liferay.asset.kernel.model.AssetVocabulary",
+	service = HasPermission.class
 )
 public class VocabularyHasPermissionImpl implements HasPermission<Long> {
 

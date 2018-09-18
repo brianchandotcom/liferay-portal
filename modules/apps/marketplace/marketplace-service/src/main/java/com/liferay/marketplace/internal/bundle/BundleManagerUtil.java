@@ -26,7 +26,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Ryan Park
  */
-@Component
+@Component(service = {})
 public class BundleManagerUtil {
 
 	public static Bundle getBundle(String symbolicName, String version) {

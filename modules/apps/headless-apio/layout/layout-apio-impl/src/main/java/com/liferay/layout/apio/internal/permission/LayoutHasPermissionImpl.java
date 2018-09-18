@@ -26,7 +26,10 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Alejandro Hernández
  */
-@Component(property = "model.class.name=com.liferay.portal.kernel.model.Layout")
+@Component(
+	property = "model.class.name=com.liferay.portal.kernel.model.Layout",
+	service = HasPermission.class
+)
 public class LayoutHasPermissionImpl implements HasPermission<Long> {
 
 	@Override

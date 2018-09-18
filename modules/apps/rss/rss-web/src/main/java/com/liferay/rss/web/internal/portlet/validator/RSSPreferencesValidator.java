@@ -30,7 +30,8 @@ import org.osgi.service.component.annotations.Component;
  * @author Brian Wing Shun Chan
  */
 @Component(
-	immediate = true, property = "javax.portlet.name=" + RSSPortletKeys.RSS
+	immediate = true, property = "javax.portlet.name=" + RSSPortletKeys.RSS,
+	service = PreferencesValidator.class
 )
 public class RSSPreferencesValidator implements PreferencesValidator {
 

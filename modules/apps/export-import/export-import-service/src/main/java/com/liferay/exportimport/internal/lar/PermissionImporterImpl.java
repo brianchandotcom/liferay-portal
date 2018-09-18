@@ -63,7 +63,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Zsigmond Rab
  * @author Douglas Wong
  */
-@Component(enabled = true, immediate = true)
+@Component(enabled = true, immediate = true, service = PermissionImporter.class)
 public class PermissionImporterImpl implements PermissionImporter {
 
 	@Override

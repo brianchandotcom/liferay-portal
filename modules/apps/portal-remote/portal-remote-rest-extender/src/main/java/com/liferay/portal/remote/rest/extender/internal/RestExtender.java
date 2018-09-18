@@ -41,7 +41,7 @@ import org.osgi.service.jaxrs.runtime.JaxrsServiceRuntime;
  */
 @Component(
 	configurationPid = "com.liferay.portal.remote.rest.extender.configuration.RestExtenderConfiguration",
-	configurationPolicy = ConfigurationPolicy.REQUIRE
+	configurationPolicy = ConfigurationPolicy.REQUIRE, service = {}
 )
 public class RestExtender {
 

@@ -28,7 +28,8 @@ import org.osgi.service.component.annotations.Reference;
  * @author Philip Jones
  */
 @Component(
-	immediate = true, property = "service.ranking:Integer=" + Integer.MAX_VALUE
+	immediate = true, property = "service.ranking:Integer=" + Integer.MAX_VALUE,
+	service = AutoLogin.class
 )
 public class TestAutoLogin implements AutoLogin {
 

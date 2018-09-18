@@ -25,7 +25,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Lance Ji
  */
-@Component(immediate = true)
+@Component(immediate = true, service = {})
 public class XStreamAliasRegister {
 
 	@Activate

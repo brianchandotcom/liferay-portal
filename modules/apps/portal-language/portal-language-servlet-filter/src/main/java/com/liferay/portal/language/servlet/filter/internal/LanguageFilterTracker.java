@@ -48,7 +48,7 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
 /**
  * @author Carlos Sierra Andrés
  */
-@Component(immediate = true)
+@Component(immediate = true, service = {})
 public class LanguageFilterTracker {
 
 	@Activate

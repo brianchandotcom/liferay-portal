@@ -40,7 +40,8 @@ import org.osgi.service.component.annotations.Reference;
 	property = {
 		"javax.portlet.name=" + PortalSettingsPortletKeys.PORTAL_SETTINGS,
 		"mvc.command.name=/portal_settings/test_opensso"
-	}
+	},
+	service = MVCRenderCommand.class
 )
 public class PortalSettingsTestOpenSSOMVCRenderCommand
 	implements MVCRenderCommand {

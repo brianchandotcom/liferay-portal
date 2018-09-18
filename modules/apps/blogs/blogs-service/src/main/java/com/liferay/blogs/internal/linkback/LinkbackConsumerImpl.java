@@ -32,7 +32,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Alexander Chow
  * @author André de Oliveira
  */
-@Component
+@Component(service = LinkbackConsumer.class)
 public class LinkbackConsumerImpl implements LinkbackConsumer {
 
 	@Override

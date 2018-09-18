@@ -59,7 +59,8 @@ import org.osgi.util.tracker.BundleTrackerCustomizer;
  */
 @Component(
 	configurationPid = "com.liferay.portal.template.freemarker.configuration.FreeMarkerEngineConfiguration",
-	configurationPolicy = ConfigurationPolicy.OPTIONAL, immediate = true
+	configurationPolicy = ConfigurationPolicy.OPTIONAL, immediate = true,
+	service = TemplateClassResolver.class
 )
 public class LiferayTemplateClassResolver implements TemplateClassResolver {
 

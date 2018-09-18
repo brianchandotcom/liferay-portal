@@ -34,7 +34,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Matthew Tambara
  */
-@Component(immediate = true)
+@Component(immediate = true, service = {})
 public class ConfigurationCleaner {
 
 	@Activate

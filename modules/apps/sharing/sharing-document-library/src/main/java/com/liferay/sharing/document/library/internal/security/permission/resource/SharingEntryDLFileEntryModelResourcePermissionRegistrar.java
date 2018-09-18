@@ -40,7 +40,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Sergio González
  */
-@Component(immediate = true)
+@Component(immediate = true, service = {})
 public class SharingEntryDLFileEntryModelResourcePermissionRegistrar {
 
 	public static final String COMPONENT_NAME =

@@ -22,7 +22,8 @@ import org.osgi.service.component.annotations.Component;
  * @author Raymond Augé
  */
 @Component(
-	immediate = true, property = "service.ranking:Integer=" + Integer.MAX_VALUE
+	immediate = true, property = "service.ranking:Integer=" + Integer.MAX_VALUE,
+	service = EmailAddressGenerator.class
 )
 public class TestEmailAddressGenerator implements EmailAddressGenerator {
 

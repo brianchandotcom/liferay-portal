@@ -45,7 +45,7 @@ import org.osgi.service.component.annotations.Reference;
  *
  * @author Sarai Díaz
  */
-@Component
+@Component(service = NestedCollectionResource.class)
 public class WorkflowLogNestedCollectionResource
 	implements NestedCollectionResource
 		<WorkflowLog, Long, WorkflowLogIdentifier, Long,

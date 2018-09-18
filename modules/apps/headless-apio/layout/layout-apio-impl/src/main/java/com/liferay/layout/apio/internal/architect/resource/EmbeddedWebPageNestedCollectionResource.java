@@ -40,7 +40,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Pavel Savinov
  */
-@Component(immediate = true)
+@Component(immediate = true, service = NestedCollectionResource.class)
 public class EmbeddedWebPageNestedCollectionResource
 	implements NestedCollectionResource
 		<Layout, Long, EmbeddedWebPageIdentifier, Long, WebSiteIdentifier> {

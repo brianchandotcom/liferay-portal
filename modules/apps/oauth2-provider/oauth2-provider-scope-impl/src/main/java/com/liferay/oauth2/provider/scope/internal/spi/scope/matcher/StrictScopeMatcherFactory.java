@@ -22,7 +22,10 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Tomas Polesovsky
  */
-@Component(immediate = true, property = "type=strict")
+@Component(
+	immediate = true, property = "type=strict",
+	service = ScopeMatcherFactory.class
+)
 public class StrictScopeMatcherFactory implements ScopeMatcherFactory {
 
 	@Override

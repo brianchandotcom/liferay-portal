@@ -31,7 +31,8 @@ import org.osgi.service.component.annotations.Component;
 	property = {
 		"javax.portlet.name=SocialActivityInterpreterLocalServiceImplTest",
 		"service.ranking:Integer=" + Integer.MAX_VALUE
-	}
+	},
+	service = SocialActivityInterpreter.class
 )
 public class TestSocialActivityInterpreter
 	implements SocialActivityInterpreter {

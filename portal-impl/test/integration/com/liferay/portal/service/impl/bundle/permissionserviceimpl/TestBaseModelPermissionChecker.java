@@ -30,7 +30,8 @@ import org.osgi.service.component.annotations.Reference;
 	property = {
 		"model.class.name=PermissionServiceImplTest",
 		"service.ranking:Integer=" + Integer.MAX_VALUE
-	}
+	},
+	service = BaseModelPermissionChecker.class
 )
 public class TestBaseModelPermissionChecker
 	implements BaseModelPermissionChecker {

@@ -47,7 +47,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Ibai Ruiz
  * @author Eduardo Perez
  */
-@Component(immediate = true)
+@Component(immediate = true, service = NestedCollectionResource.class)
 public class KeywordNestedCollectionResource
 	implements NestedCollectionResource
 		<AssetTag, Long, KeywordIdentifier, Long, ContentSpaceIdentifier> {

@@ -36,7 +36,7 @@ import org.talend.components.api.Constants;
 @AutoService(ComponentInstaller.class)
 @Component(
 	name = Constants.COMPONENT_INSTALLER_PREFIX + LiferayFamilyDefinition.NAME,
-	provide = ComponentInstaller.class
+	provide = ComponentInstaller.class, service = ComponentInstaller.class
 )
 public class LiferayFamilyDefinition
 	extends AbstractComponentFamilyDefinition implements ComponentInstaller {

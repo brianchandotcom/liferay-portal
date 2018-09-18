@@ -58,7 +58,7 @@ import org.osgi.service.http.whiteboard.HttpWhiteboardConstants;
  */
 @Component(
 	configurationPid = "com.liferay.portal.remote.cxf.common.configuration.CXFEndpointPublisherConfiguration",
-	configurationPolicy = ConfigurationPolicy.REQUIRE
+	configurationPolicy = ConfigurationPolicy.REQUIRE, service = {}
 )
 public class CXFEndpointPublisher {
 

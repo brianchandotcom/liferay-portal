@@ -38,7 +38,10 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Michael C. Han
  */
-@Component(property = {"mode=DEFAULT", "timeout=10000"})
+@Component(
+	property = {"mode=DEFAULT", "timeout=10000"},
+	service = SynchronousMessageSender.class
+)
 public class DefaultSynchronousMessageSender
 	implements SynchronousMessageSender {
 

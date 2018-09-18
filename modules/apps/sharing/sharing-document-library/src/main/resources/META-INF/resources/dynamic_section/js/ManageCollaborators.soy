@@ -69,7 +69,7 @@
 
 	<ul class="list-group">
 	{foreach $user in $collaborators}
-		<li class="list-group-item list-group-item-flex">
+		<li class="list-group-item list-group-item-flex" id="collaborator{$user.id}">
 			{call .collaborator}
 				{param _handleDeleteCollaborator: $_handleDeleteCollaborator /}
 				{param spritemap: $spritemap /}
@@ -125,6 +125,7 @@
 			<div class="autofit-col">
 				<button
 					class="btn btn-link"
+					data-collaborator-id="{$user.id}"
 					data-onclick="{$_handleDeleteCollaborator}"
 				>
 					<svg class="lexicon-icon">

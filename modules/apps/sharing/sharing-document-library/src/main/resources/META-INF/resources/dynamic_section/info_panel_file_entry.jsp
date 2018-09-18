@@ -1,3 +1,8 @@
+<%@ page import="javax.portlet.PortletURL" %>
+<%@ page import="com.liferay.portal.kernel.portlet.PortletProviderUtil" %>
+<%@ page import="com.liferay.sharing.model.SharingEntry" %>
+<%@ page import="com.liferay.portal.kernel.portlet.PortletProvider" %>
+<%@ page import="javax.portlet.ActionRequest" %>
 <%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
@@ -18,6 +23,11 @@
 
 <%
 	JSONArray collaboratorsJSONArray = JSONFactoryUtil.createJSONArray();
+
+	PortletURL sharingEntryEditURL = PortletProviderUtil.getPortletURL(request, SharingEntry.class.getName(), PortletProvider.Action.EDIT);
+
+	sharingEntryEditURL.setParameter(ActionRequest.ACTION_NAME, "/sharing/manage_collaborators");
+	sharingEntryEditURL.setParameter("p_p_lifecycle", "1");
 %>
 <div class="autofit-row sidebar-panel widget-metadata">
 	<div class="autofit-col inline-item-before">
@@ -26,12 +36,6 @@
 		FileEntry fileEntry = (FileEntry)request.getAttribute("info_panel.jsp-fileEntry");
 
 		User owner = UserLocalServiceUtil.fetchUser(fileEntry.getUserId());
-
-
-		JSONObject ownerJSONObject = JSONFactoryUtil.createJSONObject();
-		ownerJSONObject.put("name", owner.getFullName());
-		ownerJSONObject.put("imageSrc", owner.getPortraitURL(themeDisplay));
-		collaboratorsJSONArray.put(ownerJSONObject);
 		%>
 
 		<div class="lfr-portal-tooltip" data-title="<%= LanguageUtil.format(resourceBundle, "x-is-the-owner", owner.getFullName()) %>">
@@ -51,6 +55,7 @@
 			for (User sharingEntryToUser : sharingEntryToUsers) {
 
 				JSONObject userJSONObject = JSONFactoryUtil.createJSONObject();
+				userJSONObject.put("id", sharingEntryToUser.getUserId());
 				userJSONObject.put("name", sharingEntryToUser.getFullName());
 				userJSONObject.put("imageSrc", sharingEntryToUser.getPortraitURL(themeDisplay));
 				collaboratorsJSONArray.put(userJSONObject);
@@ -95,7 +100,8 @@
 	new sharingDocumentLibraryDynamic_sectionJsManageCollaboratorsEs.default(
 		{
 			collaborators: <%= collaboratorsJSONArray %>,
-			spritemap: '<%= themeDisplay.getPathThemeImages() %>/lexicon/icons.svg'
+			spritemap: '<%= themeDisplay.getPathThemeImages() %>/lexicon/icons.svg',
+			uri: '<%= sharingEntryEditURL.toString() %>'
 		},
 		<portlet:namespace />ManageCollaborators_<%= fileEntry.getFileEntryId()%>
 	);

@@ -16,6 +16,7 @@ package com.liferay.portal.upgrade.v6_2_0;
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.petra.xml.XMLUtil;
+import com.liferay.portal.dao.orm.common.SQLTransformer;
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -445,8 +446,10 @@ public class UpgradeJournal extends BaseUpgradePortletPreferences {
 	protected void updateAssetEntryClassTypeId() throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer();
 			PreparedStatement ps1 = connection.prepareStatement(
-				"select distinct companyId, groupId, resourcePrimKey, " +
-					"structureId from JournalArticle where structureId != ''");
+				SQLTransformer.transform(
+					"select distinct companyId, groupId, resourcePrimKey, " +
+						"structureId from JournalArticle where structureId " +
+							"!= ''"));
 			ResultSet rs = ps1.executeQuery()) {
 
 			long classNameId = PortalUtil.getClassNameId(
@@ -856,14 +859,15 @@ public class UpgradeJournal extends BaseUpgradePortletPreferences {
 
 	protected void updateLinkToLayoutContent() throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer();
-			PreparedStatement selectPS = connection.prepareStatement(
-				"select id_, groupId, content from JournalArticle where " +
-					"structureId != '' and content like '%link_to_layout%'");
-			PreparedStatement updatePS =
-				AutoBatchPreparedStatementUtil.autoBatch(
-					connection.prepareStatement(
-						"update JournalArticle set content = ? where id_ = ?"));
-			ResultSet rs = selectPS.executeQuery()) {
+			PreparedStatement ps1 = connection.prepareStatement(
+				SQLTransformer.transform(
+					"select id_, groupId, content from JournalArticle where " +
+						"structureId != '' and content like " +
+							"'%link_to_layout%'"));
+			PreparedStatement ps2 = AutoBatchPreparedStatementUtil.autoBatch(
+				connection.prepareStatement(
+					"update JournalArticle set content = ? where id_ = ?"));
+			ResultSet rs = ps1.executeQuery()) {
 
 			while (rs.next()) {
 				long id = rs.getLong("id_");
@@ -879,17 +883,17 @@ public class UpgradeJournal extends BaseUpgradePortletPreferences {
 						updateElement(groupId, element);
 					}
 
-					updatePS.setString(1, document.asXML());
-					updatePS.setLong(2, id);
+					ps2.setString(1, document.asXML());
+					ps2.setLong(2, id);
 
-					updatePS.addBatch();
+					ps2.addBatch();
 				}
 				catch (Exception e) {
 					_log.error("Unable to update content for article " + id, e);
 				}
 			}
 
-			updatePS.executeBatch();
+			ps2.executeBatch();
 		}
 	}
 

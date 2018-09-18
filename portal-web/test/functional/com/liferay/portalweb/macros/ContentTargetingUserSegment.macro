@@ -286,9 +286,20 @@
 			<var name="userSegmentRule" value="Site Role" />
 		</execute>
 
-		<execute function="Select" locator1="EditUserSegment#USER_SEGMENT_RULE_USER_ATTRIBUTES_SITE_ROLE_SITE_ROLE_SELECT" value1="${siteRole}" />
+		<execute function="AssertClick" locator1="EditUserSegment#USER_SEGMENT_RULE_USER_ATTRIBUTES_SITE_ROLE_SELECT_BUTTON" value1="Select" />
 
-		<execute function="Select" locator1="EditUserSegment#USER_SEGMENT_RULE_USER_ATTRIBUTES_SITE_ROLE_SITE_SELECT" value1="${siteRoleSite}" />
+		<execute function="SelectFrame" locator1="IFrame#SELECT_SITE_ROLE" />
+
+		<execute function="AssertTextEquals" locator1="Message#INFO" value1="Please select a site to which you will assign a site role." />
+
+		<var name="key_siteRole" value="${siteRole}" />
+		<var name="key_siteRoleSite" value="${siteRoleSite}" />
+
+		<execute function="AssertClick" locator1="EditUserSegment#USER_SEGMENT_RULE_USER_ATTRIBUTES_SITE_ROLE_SITE_CHOOSE_BUTTON" value1="Choose" />
+
+		<execute function="AssertClick" locator1="EditUserSegment#USER_SEGMENT_RULE_USER_ATTRIBUTES_SITE_ROLE_SITE_ROLE_CHOOSE_BUTTON" value1="Choose" />
+
+		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 
 	<command name="addUserAttributesUserGroupMemberRuleCP">
@@ -621,8 +632,8 @@
 				<elseif>
 					<equals arg1="${usersegmentRuleName}" arg2="Site Role" />
 					<then>
-						<execute function="AssertSelectedLabel" locator1="EditUserSegment#USER_SEGMENT_RULE_USER_ATTRIBUTES_SITE_ROLE_SITE_ROLE_SELECT" value1="${siteRole}" />
-						<execute function="AssertSelectedLabel" locator1="EditUserSegment#USER_SEGMENT_RULE_USER_ATTRIBUTES_SITE_ROLE_SITE_SELECT" value1="${siteRoleSite}" />
+						<execute function="AssertTextEquals" locator1="EditUserSegment#USER_SEGMENT_RULE_USER_ATTRIBUTES_SITE_ROLE_SITE_ROLE_SELECT" value1="${siteRole}" />
+						<execute function="AssertTextEquals" locator1="EditUserSegment#USER_SEGMENT_RULE_USER_ATTRIBUTES_SITE_ROLE_SITE_SELECT" value1="${siteRoleSite}" />
 					</then>
 				</elseif>
 				<elseif>

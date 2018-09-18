@@ -26,7 +26,7 @@ editLayoutURL.setParameter("selPlid", String.valueOf(layout.getPlid()));
 %>
 
 <li class="control-menu-nav-item">
-	<a class="control-menu-icon lfr-portal-tooltip product-menu-toggle sidenav-toggler" data-title="<%= LanguageUtil.get(request, "edit") %>" href="<%= editLayoutURL.toString() %>">
+	<a aria-label="<%= HtmlUtil.escape(LanguageUtil.get(request, "edit")) %>" class="control-menu-icon lfr-portal-tooltip product-menu-toggle sidenav-toggler" data-title="<%= LanguageUtil.get(request, "edit") %>" href="<%= editLayoutURL.toString() %>">
 		<aui:icon cssClass="icon-monospaced" image="pencil" markupView="lexicon" />
 	</a>
 </li>

@@ -2,9 +2,9 @@
 
 exports[`PageRenderer should change the page title 1`] = `
 <div class="ddm-page-container-layout">
-  <div class="ddm-form-page pl-3 pr-3">
-    <textarea class="form-builder-page-header-title form-control" data-page-id="0" maxlength="120" value="Untitled name" placeholder="untitled-page-x-of-x"></textarea>
-    <textarea class="form-builder-page-header-description form-control" data-page-id="0" maxlength="120" placeholder="add-a-short-description-for-this-page"></textarea>
+  <div class="ddm-form-page pl-4 pr-4">
+    <textarea class="form-builder-page-header-title form-control p-0" data-page-id="0" maxlength="120" value="Untitled name" placeholder="untitled-page-x-of-x"></textarea>
+    <textarea class="form-builder-page-header-description form-control p-0" data-page-id="0" maxlength="120" placeholder="add-a-short-description-for-this-page"></textarea>
     <div class="form-builder-layout">
       <div class="layout-page">
         <div class="row">
@@ -139,9 +139,9 @@ exports[`PageRenderer should change the page title 1`] = `
 
 exports[`PageRenderer should change the page title 2`] = `
 <div class="ddm-page-container-layout">
-  <div class="ddm-form-page pl-3 pr-3">
-    <textarea class="form-builder-page-header-title form-control" data-page-id="0" maxlength="120" value="Untitled name" placeholder="untitled-page-x-of-x"></textarea>
-    <textarea class="form-builder-page-header-description form-control" data-page-id="0" maxlength="120" placeholder="add-a-short-description-for-this-page"></textarea>
+  <div class="ddm-form-page pl-4 pr-4">
+    <textarea class="form-builder-page-header-title form-control p-0" data-page-id="0" maxlength="120" value="Untitled name" placeholder="untitled-page-x-of-x"></textarea>
+    <textarea class="form-builder-page-header-description form-control p-0" data-page-id="0" maxlength="120" placeholder="add-a-short-description-for-this-page"></textarea>
     <div class="form-builder-layout">
       <div class="layout-page">
         <div class="row">
@@ -276,9 +276,9 @@ exports[`PageRenderer should change the page title 2`] = `
 
 exports[`PageRenderer should display empty drag message when there are rows with no columns specified 1`] = `
 <div class="ddm-page-container-layout">
-  <div class="ddm-form-page pl-3 pr-3">
-    <textarea class="form-builder-page-header-title form-control" data-page-id="0" maxlength="120"></textarea>
-    <textarea class="form-builder-page-header-description form-control" data-page-id="0" maxlength="120" placeholder="add-a-short-description-for-this-page"></textarea>
+  <div class="ddm-form-page pl-4 pr-4">
+    <textarea class="form-builder-page-header-title form-control p-0" data-page-id="0" maxlength="120"></textarea>
+    <textarea class="form-builder-page-header-description form-control p-0" data-page-id="0" maxlength="120" placeholder="add-a-short-description-for-this-page"></textarea>
     <div class="form-builder-layout">
       <div class="layout-page">
         <div class="row">
@@ -294,9 +294,9 @@ exports[`PageRenderer should display empty drag message when there are rows with
 
 exports[`PageRenderer should resize a specific column on the drag and drop layout 1`] = `
 <div class="ddm-page-container-layout">
-  <div class="ddm-form-page pl-3 pr-3">
-    <textarea class="form-builder-page-header-title form-control" data-page-id="0" maxlength="120" value="Untitled name"></textarea>
-    <textarea class="form-builder-page-header-description form-control" data-page-id="0" maxlength="120" placeholder="add-a-short-description-for-this-page"></textarea>
+  <div class="ddm-form-page pl-4 pr-4">
+    <textarea class="form-builder-page-header-title form-control p-0" data-page-id="0" maxlength="120" value="Untitled name"></textarea>
+    <textarea class="form-builder-page-header-description form-control p-0" data-page-id="0" maxlength="120" placeholder="add-a-short-description-for-this-page"></textarea>
     <div class="form-builder-layout">
       <div class="layout-page">
         <div class="row">

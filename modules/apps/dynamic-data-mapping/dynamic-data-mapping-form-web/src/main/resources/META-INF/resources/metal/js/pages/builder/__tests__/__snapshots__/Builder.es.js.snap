@@ -18,9 +18,9 @@ exports[`Builder should render the default markup 1`] = `
           </div>
         </div>
         <div class="ddm-page-container-layout">
-          <div class="ddm-form-page pl-3 pr-3">
-            <textarea class="form-builder-page-header-title form-control" data-page-id="0" maxlength="120" value="Untitled name"></textarea>
-            <textarea class="form-builder-page-header-description form-control" data-page-id="0" maxlength="120" placeholder="add-a-short-description-for-this-page"></textarea>
+          <div class="ddm-form-page pl-4 pr-4">
+            <textarea class="form-builder-page-header-title form-control p-0" data-page-id="0" maxlength="120" value="Untitled name"></textarea>
+            <textarea class="form-builder-page-header-description form-control p-0" data-page-id="0" maxlength="120" placeholder="add-a-short-description-for-this-page"></textarea>
             <div class="form-builder-layout">
               <div class="layout-page">
                 <div class="row">
@@ -275,6 +275,9 @@ exports[`Builder should render the default markup 1`] = `
     <li>
       <button class="btn dropdown-item btn-sm btn-link" aria-label="reset-page" type="button">reset-page</button>
     </li>
+    <li>
+      <button class="btn dropdown-item btn-sm btn-link" aria-label="add-success-page" type="button">add-success-page</button>
+    </li>
   </ul>
 </div>
 `;
@@ -297,9 +300,9 @@ exports[`Builder should show modal when trash button gets clicked 1`] = `
           </div>
         </div>
         <div class="ddm-page-container-layout">
-          <div class="ddm-form-page pl-3 pr-3">
-            <textarea class="form-builder-page-header-title form-control" data-page-id="0" maxlength="120" value="Untitled name" placeholder="untitled-page-x-of-x"></textarea>
-            <textarea class="form-builder-page-header-description form-control" data-page-id="0" maxlength="120" placeholder="add-a-short-description-for-this-page"></textarea>
+          <div class="ddm-form-page pl-4 pr-4">
+            <textarea class="form-builder-page-header-title form-control p-0" data-page-id="0" maxlength="120" value="Untitled name" placeholder="untitled-page-x-of-x"></textarea>
+            <textarea class="form-builder-page-header-description form-control p-0" data-page-id="0" maxlength="120" placeholder="add-a-short-description-for-this-page"></textarea>
             <div class="form-builder-layout">
               <div class="layout-page">
                 <div class="row">
@@ -553,6 +556,9 @@ exports[`Builder should show modal when trash button gets clicked 1`] = `
     </li>
     <li>
       <button class="btn dropdown-item btn-sm btn-link" aria-label="reset-page" type="button">reset-page</button>
+    </li>
+    <li>
+      <button class="btn dropdown-item btn-sm btn-link" aria-label="add-success-page" type="button">add-success-page</button>
     </li>
   </ul>
 </div>

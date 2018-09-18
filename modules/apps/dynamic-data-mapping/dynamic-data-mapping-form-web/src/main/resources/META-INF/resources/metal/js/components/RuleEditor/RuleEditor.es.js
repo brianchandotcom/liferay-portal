@@ -198,10 +198,8 @@ class RuleEditor extends Component {
 			field => {
 				fieldData.push(
 					{
-						dataType: field.dataType,
+						...field,
 						name: field.fieldName,
-						options: field.options,
-						type: field.type,
 						value: field.label
 					}
 				);
@@ -233,13 +231,17 @@ class RuleEditor extends Component {
 	}
 
 	_getFieldType(fieldName) {
+		let fieldType = '';
 		const selectedField = this.firstOperandList.filter(
 			field => {
 				return field.name === fieldName;
 			}
 		);
+		if (selectedField.length > 0) {
+			fieldType = selectedField[0].type;
+		}
 
-		return selectedField[0].type;
+		return fieldType;
 	}
 
 	_fieldHasOptions(field) {
@@ -250,33 +252,40 @@ class RuleEditor extends Component {
 		const {originalEvent, value} = event;
 		const fieldName = originalEvent.target.getAttribute('data-option-value');
 		const index = this._getConditionIndex(originalEvent, '.condition-operator');
+
 		let copyOfConditions = this.conditions;
 
-		if (!fieldName || !this._isBinary(fieldName)) {
+		const copyOfsecondOperandTypeSelectedList = this.secondOperandTypeSelectedList;
+
+		if (!fieldName) {
 			copyOfConditions = this._clearSecondOperandValue(copyOfConditions, index);
 
-			this._hideFields(index);
+			copyOfsecondOperandTypeSelectedList[index] = {name: '', value: ''};
+
+			copyOfConditions[index].operator = '';
 		}
 		else {
 			const copyOfSecondOperandList = this.secondOperandTypeList;
 
-			copyOfSecondOperandList[0].name = this.conditions[index].operands[0].type;
+			const configUnary = {name: 'none', value: 'none'};
+
+			if (this._isBinary(fieldName)) {
+				copyOfSecondOperandList[0].name = this.conditions[index].operands[0].type;
+				copyOfsecondOperandTypeSelectedList[index] = {name: '', value: ''};
+			}
+			else {
+				copyOfsecondOperandTypeSelectedList[index] = configUnary;
+			}
 
 			this.setState(
 				{
-					secondOperandTypeList: copyOfSecondOperandList
+					secondOperandTypeList: copyOfSecondOperandList,
+					secondOperandTypeSelectedList: copyOfsecondOperandTypeSelectedList
 				}
 			);
 
-			if (value) {
-				this._showTypeField(index);
-			}
-			else {
-				this._hideTypeField(index);
-			}
+			copyOfConditions[index].operator = value;
 		}
-
-		copyOfConditions[index].operator = value;
 
 		this.setState({conditions: copyOfConditions});
 	}
@@ -288,27 +297,6 @@ class RuleEditor extends Component {
 		const index = this._getConditionIndex(originalEvent, '.condition-type');
 
 		let copyOfConditions = this.conditions;
-
-		if (!fieldName) {
-			this._hideTypeValues(index);
-		}
-		else if (fieldName === 'field') {
-			this._hideTypeValueInput(index);
-			this._hideTypeValueOption(index);
-			this._showTypeValueSelect(index);
-		}
-		else {
-			if (this._fieldHasOptions(fieldName)) {
-				this._showTypeValueOption(index);
-				this._hideTypeValueInput(index);
-			}
-			else {
-				this._showTypeValueInput(index);
-				this._hideTypeValueOption(index);
-			}
-
-			this._hideTypeValueSelect(index);
-		}
 
 		let copyOfsecondOperandTypeSelectedList = [];
 
@@ -389,8 +377,6 @@ class RuleEditor extends Component {
 				secondOperandTypeSelectedList: copyOfsecondOperandTypeSelectedList
 			}
 		);
-
-		this._hideFields(index);
 	}
 
 	_handleSecondOperandSelection(event) {
@@ -433,73 +419,6 @@ class RuleEditor extends Component {
 		);
 	}
 
-	_hideFields(index) {
-		this._hideTypeField(index);
-		this._hideTypeValues(index);
-	}
-
-	_hideTypeField(index) {
-		const conditionTypeElement = document.querySelector(`[condition-type-index="${index}"]`);
-
-		if (conditionTypeElement) {
-			conditionTypeElement.classList.add('hide');
-		}
-	}
-
-	_hideTypeValueInput(index) {
-		const conditionTypeValue = document.querySelector(`[condition-type-value-index="${index}"]`);
-
-		if (conditionTypeValue) {
-			conditionTypeValue.classList.add('hide');
-		}
-	}
-
-	_showTypeValueInput(index) {
-		const conditionTypeValue = document.querySelector(`[condition-type-value-index="${index}"]`);
-
-		if (conditionTypeValue) {
-			conditionTypeValue.classList.remove('hide');
-		}
-	}
-
-	_hideTypeValueSelect(index) {
-		const conditionTypeValueSelect = document.querySelector(`[condition-type-value-select-index="${index}"]`);
-
-		if (conditionTypeValueSelect) {
-			conditionTypeValueSelect.classList.add('hide');
-		}
-	}
-
-	_showTypeValueSelect(index) {
-		const conditionTypeValueSelect = document.querySelector(`[condition-type-value-select-index="${index}"]`);
-
-		if (conditionTypeValueSelect) {
-			conditionTypeValueSelect.classList.remove('hide');
-		}
-	}
-
-	_hideTypeValueOption(index) {
-		const conditionTypeValueSelectOption = document.querySelector(`[condition-type-value-select-options-index="${index}"]`);
-
-		if (conditionTypeValueSelectOption) {
-			conditionTypeValueSelectOption.classList.add('hide');
-		}
-	}
-
-	_showTypeValueOption(index) {
-		const conditionTypeValueSelectOption = document.querySelector(`[condition-type-value-select-options-index="${index}"]`);
-
-		if (conditionTypeValueSelectOption) {
-			conditionTypeValueSelectOption.classList.remove('hide');
-		}
-	}
-
-	_hideTypeValues(index) {
-		this._hideTypeValueInput(index);
-		this._hideTypeValueOption(index);
-		this._hideTypeValueSelect(index);
-	}
-
 	_isBinary(value) {
 		return value === 'equals-to' || value === 'not-equals-to' || value === 'contains' || value === 'not-contains' || value === 'belongs-to' || value === 'greater-than' || value === 'greater-than-equals' || value === 'less-than' || value === 'less-than-equals';
 	}
@@ -540,14 +459,6 @@ class RuleEditor extends Component {
 				conditions: copyOfConditions
 			}
 		);
-	}
-
-	_showTypeField(index) {
-		const conditionTypeElement = document.querySelector(`[condition-type-index="${index}"]`);
-
-		if (conditionTypeElement) {
-			conditionTypeElement.classList.remove('hide');
-		}
 	}
 
 	attached() {

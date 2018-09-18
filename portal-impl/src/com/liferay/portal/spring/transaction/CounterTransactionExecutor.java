@@ -24,16 +24,48 @@ import org.springframework.transaction.PlatformTransactionManager;
 public class CounterTransactionExecutor
 	implements TransactionExecutor, TransactionHandler {
 
+	/**
+	 * @deprecated As of Judson (7.1.x), replaced by {@link
+	 *             #CounterTransactionExecutor(PlatformTransactionManager)}
+	 */
+	@Deprecated
+	public CounterTransactionExecutor() {
+		_platformTransactionManager = null;
+	}
+
+	public CounterTransactionExecutor(
+		PlatformTransactionManager platformTransactionManager) {
+
+		_platformTransactionManager = platformTransactionManager;
+	}
+
+	/**
+	 * @deprecated As of Judson (7.1.x), replaced by {@link #commit(
+	 *             TransactionAttributeAdapter, TransactionStatusAdapter)}
+	 */
+	@Deprecated
 	@Override
 	public void commit(
 		PlatformTransactionManager platformTransactionManager,
 		TransactionAttributeAdapter transactionAttributeAdapter,
 		TransactionStatusAdapter transactionStatusAdapter) {
 
-		platformTransactionManager.commit(
-			transactionStatusAdapter.getTransactionStatus());
+		_commit(platformTransactionManager, transactionStatusAdapter);
 	}
 
+	@Override
+	public void commit(
+		TransactionAttributeAdapter transactionAttributeAdapter,
+		TransactionStatusAdapter transactionStatusAdapter) {
+
+		_commit(_platformTransactionManager, transactionStatusAdapter);
+	}
+
+	/**
+	 * @deprecated As of Judson (7.1.x), replaced by {@link #execute(
+	 *             TransactionAttributeAdapter, MethodInvocation)}
+	 */
+	@Deprecated
 	@Override
 	public Object execute(
 			PlatformTransactionManager platformTransactionManager,
@@ -41,7 +73,93 @@ public class CounterTransactionExecutor
 			MethodInvocation methodInvocation)
 		throws Throwable {
 
-		TransactionStatusAdapter transactionStatusAdapter = start(
+		return _execute(
+			platformTransactionManager, transactionAttributeAdapter,
+			methodInvocation);
+	}
+
+	@Override
+	public Object execute(
+			TransactionAttributeAdapter transactionAttributeAdapter,
+			MethodInvocation methodInvocation)
+		throws Throwable {
+
+		return _execute(
+			_platformTransactionManager, transactionAttributeAdapter,
+			methodInvocation);
+	}
+
+	@Override
+	public PlatformTransactionManager getPlatformTransactionManager() {
+		return _platformTransactionManager;
+	}
+
+	/**
+	 * @deprecated As of Judson (7.1.x), replaced by {@link #rollback(
+	 *             Throwable, TransactionAttributeAdapter,
+	 *             TransactionStatusAdapter)}
+	 */
+	@Deprecated
+	@Override
+	public void rollback(
+			PlatformTransactionManager platformTransactionManager,
+			Throwable throwable,
+			TransactionAttributeAdapter transactionAttributeAdapter,
+			TransactionStatusAdapter transactionStatusAdapter)
+		throws Throwable {
+
+		throw _rollback(
+			platformTransactionManager, throwable, transactionAttributeAdapter,
+			transactionStatusAdapter);
+	}
+
+	@Override
+	public void rollback(
+			Throwable throwable,
+			TransactionAttributeAdapter transactionAttributeAdapter,
+			TransactionStatusAdapter transactionStatusAdapter)
+		throws Throwable {
+
+		throw _rollback(
+			_platformTransactionManager, throwable, transactionAttributeAdapter,
+			transactionStatusAdapter);
+	}
+
+	/**
+	 * @deprecated As of Judson (7.1.x), replaced by {@link #start(
+	 *             TransactionAttributeAdapter)}
+	 */
+	@Deprecated
+	@Override
+	public TransactionStatusAdapter start(
+		PlatformTransactionManager platformTransactionManager,
+		TransactionAttributeAdapter transactionAttributeAdapter) {
+
+		return _start(platformTransactionManager, transactionAttributeAdapter);
+	}
+
+	@Override
+	public TransactionStatusAdapter start(
+		TransactionAttributeAdapter transactionAttributeAdapter) {
+
+		return _start(_platformTransactionManager, transactionAttributeAdapter);
+	}
+
+	private void _commit(
+		PlatformTransactionManager platformTransactionManager,
+		TransactionStatusAdapter transactionStatusAdapter) {
+
+		platformTransactionManager.commit(
+			transactionStatusAdapter.getTransactionStatus());
+	}
+
+	private Object _execute(
+			PlatformTransactionManager platformTransactionManager,
+			TransactionAttributeAdapter transactionAttributeAdapter,
+			MethodInvocation methodInvocation)
+		throws Throwable {
+
+		TransactionStatusAdapter transactionStatusAdapter = _start(
 			platformTransactionManager, transactionAttributeAdapter);
 
 		Object returnValue = null;
@@ -50,20 +168,17 @@ public class CounterTransactionExecutor
 			returnValue = methodInvocation.proceed();
 		}
 		catch (Throwable throwable) {
-			rollback(
+			throw _rollback(
 				platformTransactionManager, throwable,
 				transactionAttributeAdapter, transactionStatusAdapter);
 		}
 
-		commit(
-			platformTransactionManager, transactionAttributeAdapter,
-			transactionStatusAdapter);
+		_commit(platformTransactionManager, transactionStatusAdapter);
 
 		return returnValue;
 	}
 
-	@Override
-	public void rollback(
+	private Throwable _rollback(
 			PlatformTransactionManager platformTransactionManager,
 			Throwable throwable,
 			TransactionAttributeAdapter transactionAttributeAdapter,
@@ -93,18 +208,18 @@ public class CounterTransactionExecutor
 			}
 		}
 
-		throw throwable;
+		return throwable;
 	}
 
-	@Override
-	public TransactionStatusAdapter start(
+	private TransactionStatusAdapter _start(
 		PlatformTransactionManager platformTransactionManager,
 		TransactionAttributeAdapter transactionAttributeAdapter) {
 
 		return new TransactionStatusAdapter(
-			platformTransactionManager,
 			platformTransactionManager.getTransaction(
 				transactionAttributeAdapter));
 	}
+
+	private final PlatformTransactionManager _platformTransactionManager;
 
 }

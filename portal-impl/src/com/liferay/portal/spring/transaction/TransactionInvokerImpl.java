@@ -36,16 +36,14 @@ public class TransactionInvokerImpl implements TransactionInvoker {
 			TransactionConfig transactionConfig, Callable<T> callable)
 		throws Throwable {
 
-		PlatformTransactionManager platformTransactionManager =
-			CurrentPlatformTransactionManagerUtil.
-				getCurrentPlatformTransactionManager();
+		TransactionExecutor transactionExecutor =
+			TransactionExecutorThreadLocal.getCurrentTransactionExecutor();
 
-		if (platformTransactionManager == null) {
-			platformTransactionManager = _platformTransactionManager;
+		if (transactionExecutor == null) {
+			transactionExecutor = _transactionExecutor;
 		}
 
-		return (T)_transactionExecutor.execute(
-			platformTransactionManager,
+		return (T)transactionExecutor.execute(
 			new TransactionAttributeAdapter(
 				TransactionAttributeBuilder.build(
 					true, transactionConfig.getIsolation(),
@@ -59,10 +57,12 @@ public class TransactionInvokerImpl implements TransactionInvoker {
 			new CallableMethodInvocation(callable));
 	}
 
+	/**
+	 * @deprecated As of Judson (7.1.x), with no direct replacement
+	 */
+	@Deprecated
 	public void setPlatformTransactionManager(
 		PlatformTransactionManager platformTransactionManager) {
-
-		_platformTransactionManager = platformTransactionManager;
 	}
 
 	public void setTransactionExecutor(
@@ -71,7 +71,6 @@ public class TransactionInvokerImpl implements TransactionInvoker {
 		_transactionExecutor = transactionExecutor;
 	}
 
-	private static PlatformTransactionManager _platformTransactionManager;
 	private static TransactionExecutor _transactionExecutor;
 
 	private static class CallableMethodInvocation implements MethodInvocation {

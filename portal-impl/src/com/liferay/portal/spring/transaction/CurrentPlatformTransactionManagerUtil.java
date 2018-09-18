@@ -26,7 +26,9 @@ import org.springframework.transaction.PlatformTransactionManager;
 
 /**
  * @author Shuyang Zhou
+ * @deprecated As of Judson (7.1.x), replaced by {@link TransactionExecutorThreadLocal}
  */
+@Deprecated
 public class CurrentPlatformTransactionManagerUtil {
 
 	public static final TransactionLifecycleListener

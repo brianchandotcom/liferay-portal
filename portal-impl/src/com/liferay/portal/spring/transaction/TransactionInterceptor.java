@@ -14,6 +14,8 @@
 
 package com.liferay.portal.spring.transaction;
 
+import aQute.bnd.annotation.ProviderType;
+
 import java.lang.reflect.Method;
 
 import org.aopalliance.intercept.MethodInterceptor;
@@ -26,6 +28,7 @@ import org.springframework.transaction.interceptor.TransactionAttributeSource;
 /**
  * @author Shuyang Zhou
  */
+@ProviderType
 public class TransactionInterceptor implements MethodInterceptor {
 
 	public TransactionAttributeSource getTransactionAttributeSource() {
@@ -56,14 +59,15 @@ public class TransactionInterceptor implements MethodInterceptor {
 			new TransactionAttributeAdapter(transactionAttribute);
 
 		return transactionExecutor.execute(
-			platformTransactionManager, transactionAttributeAdapter,
-			methodInvocation);
+			transactionAttributeAdapter, methodInvocation);
 	}
 
+	/**
+	 * @deprecated As of Judson (7.1.x), with no direct replacement
+	 */
+	@Deprecated
 	public void setPlatformTransactionManager(
 		PlatformTransactionManager platformTransactionManager) {
-
-		this.platformTransactionManager = platformTransactionManager;
 	}
 
 	public void setTransactionAttributeSource(
@@ -78,7 +82,12 @@ public class TransactionInterceptor implements MethodInterceptor {
 		this.transactionExecutor = transactionExecutor;
 	}
 
+	/**
+	 * @deprecated As of Judson (7.1.x), with no direct replacement
+	 */
+	@Deprecated
 	protected PlatformTransactionManager platformTransactionManager;
+
 	protected TransactionAttributeSource transactionAttributeSource;
 	protected TransactionExecutor transactionExecutor;
 

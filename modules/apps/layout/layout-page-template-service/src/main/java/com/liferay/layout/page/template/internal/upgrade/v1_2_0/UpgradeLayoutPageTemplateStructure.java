@@ -19,7 +19,9 @@ import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -38,7 +40,6 @@ import java.sql.Timestamp;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Objects;
 
 /**
  * @author Jürgen Kappler
@@ -59,28 +60,6 @@ public class UpgradeLayoutPageTemplateStructure extends UpgradeProcess {
 
 		upgradeLayoutPageTemplates();
 		upgradeLayouts();
-	}
-
-	protected void upgradeLayouts() {
-		long classNameId = PortalUtil.getClassNameId(Layout.class.getName());
-
-		List<Layout> layouts = _layoutLocalService.getLayouts(
-			QueryUtil.ALL_POS, QueryUtil.ALL_POS);
-
-		for (Layout layout : layouts) {
-			if (!Objects.equals(layout.getType(), "content")) {
-				continue;
-			}
-
-			Date createDate = layout.getCreateDate();
-
-			Timestamp createDateTimestamp = new Timestamp(createDate.getTime());
-
-			_updateLayoutPageTemplateStructure(
-				layout.getGroupId(), layout.getCompanyId(), layout.getUserId(),
-				layout.getUserName(), createDateTimestamp, classNameId,
-				layout.getPlid());
-		}
 	}
 
 	protected void upgradeLayoutPageTemplates() throws Exception {
@@ -116,6 +95,32 @@ public class UpgradeLayoutPageTemplateStructure extends UpgradeProcess {
 				}
 			}
 		}
+	}
+
+	protected void upgradeLayouts() throws PortalException {
+		long classNameId = PortalUtil.getClassNameId(Layout.class.getName());
+
+		ActionableDynamicQuery actionableDynamicQuery =
+			_layoutLocalService.getActionableDynamicQuery();
+
+		actionableDynamicQuery.setAddCriteriaMethod(
+			dynamicQuery -> dynamicQuery.add(
+				RestrictionsFactoryUtil.eq("type", "content")));
+
+		actionableDynamicQuery.setPerformActionMethod(
+			(Layout layout) -> {
+				Date createDate = layout.getCreateDate();
+
+				Timestamp createDateTimestamp = new Timestamp(
+					createDate.getTime());
+
+				_updateLayoutPageTemplateStructure(
+					layout.getGroupId(), layout.getCompanyId(),
+					layout.getUserId(), layout.getUserName(),
+					createDateTimestamp, classNameId, layout.getPlid());
+			});
+
+		actionableDynamicQuery.performActions();
 	}
 
 	protected void upgradeSchema() throws Exception {

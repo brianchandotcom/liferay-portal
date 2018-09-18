@@ -14,11 +14,15 @@
 
 package com.liferay.portal.security.sso.opensso.internal;
 
+import com.liferay.portal.kernel.json.JSONException;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.sso.OpenSSO;
 import com.liferay.portal.kernel.util.CookieKeys;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.URLCodec;
 import com.liferay.portal.util.HttpImpl;
 
 import java.io.IOException;
@@ -67,7 +71,7 @@ public class OpenSSOV13Impl extends OpenSSOImpl {
 
 		if (subjectId != null) {
 			String validateTokenUrl = StringUtil.replace(
-				_VALIDATE_TOKEN, "{#subjectId}", subjectId);
+				_VALIDATE_TOKEN, "{#subjectId}", URLCodec.encodeURL(subjectId));
 
 			String url = serviceUrl.concat(validateTokenUrl);
 
@@ -75,11 +79,23 @@ public class OpenSSOV13Impl extends OpenSSOImpl {
 
 			String result = httpImpl.URLtoString(url, true);
 
-			if (result.contains("\"valid\":true")) {
-				authenticated = true;
+			try {
+				JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+					result);
+
+				Boolean valid = (Boolean)jsonObject.get("valid");
+				String uid = (String)jsonObject.get("uid");
+				String realm = (String)jsonObject.get("realm");
+
+				if ((realm != null) && (uid != null) && valid) {
+					authenticated = true;
+				}
+				else if (_log.isDebugEnabled()) {
+					_log.debug("Invalid authentication: " + result);
+				}
 			}
-			else if (_log.isDebugEnabled()) {
-				_log.debug("Invalid authentication: " + result);
+			catch (JSONException jsone) {
+				throw new IOException(jsone);
 			}
 		}
 

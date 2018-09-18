@@ -17,37 +17,33 @@ package com.liferay.forms.apio.internal.architect.form;
 import com.liferay.apio.architect.form.Form;
 
 /**
- * Instances of this class represent the values extracted from a form instance
- * record form.
+ * Instances of this class represent the values extracted from a form context
+ * form.
  *
- * @author Paulo Cruz
+ * @author Victor Oliveira
  * @review
  */
-public class FormInstanceRecordForm {
+public class FormContextForm {
 
 	/**
-	 * Builds a {@code Form} that generates {@code FormInstanceRecordForm}
-	 * depending on the HTTP body.
+	 * Builds a {@code Form} that generates {@code FormContextForm} depending on
+	 * the HTTP body.
 	 *
 	 * @param  formBuilder the {@code Form} builder
-	 * @return a form instance record form
+	 * @return a context form instance
 	 * @review
 	 */
-	public static Form<FormInstanceRecordForm> buildForm(
-		Form.Builder<FormInstanceRecordForm> formBuilder) {
+	public static Form<FormContextForm> buildForm(
+		Form.Builder<FormContextForm> formBuilder) {
 
 		return formBuilder.title(
-			__ -> "The form instance record creator and updater form"
+			__ -> "The form context form"
 		).description(
-			__ ->
-				"This form can be used to create or update a form instance " +
-					"record"
+			__ -> "This form can be used to evaluate a form context"
 		).constructor(
-			FormInstanceRecordForm::new
-		).addRequiredBoolean(
-			"isDraft", FormInstanceRecordForm::setDraft
+			FormContextForm::new
 		).addRequiredString(
-			"fieldValues", FormInstanceRecordForm::setFieldValues
+			"fieldValues", FormContextForm::setFieldValues
 		).build();
 	}
 
@@ -55,19 +51,10 @@ public class FormInstanceRecordForm {
 		return _fieldValues;
 	}
 
-	public boolean isDraft() {
-		return _draft;
+	public void setFieldValues(String fieldValues) {
+		_fieldValues = fieldValues;
 	}
 
-	public void setDraft(boolean draft) {
-		_draft = draft;
-	}
-
-	public void setFieldValues(String formValues) {
-		_fieldValues = formValues;
-	}
-
-	private boolean _draft;
 	private String _fieldValues;
 
 }

@@ -21,17 +21,13 @@ import com.liferay.portal.kernel.exception.AddressCityException;
 import com.liferay.portal.kernel.exception.AddressStreetException;
 import com.liferay.portal.kernel.exception.AddressZipException;
 import com.liferay.portal.kernel.exception.DuplicateOrganizationException;
-import com.liferay.portal.kernel.exception.EmailAddressException;
 import com.liferay.portal.kernel.exception.NoSuchCountryException;
 import com.liferay.portal.kernel.exception.NoSuchListTypeException;
 import com.liferay.portal.kernel.exception.NoSuchOrganizationException;
 import com.liferay.portal.kernel.exception.NoSuchRegionException;
 import com.liferay.portal.kernel.exception.OrganizationNameException;
 import com.liferay.portal.kernel.exception.OrganizationParentException;
-import com.liferay.portal.kernel.exception.PhoneNumberException;
-import com.liferay.portal.kernel.exception.PhoneNumberExtensionException;
 import com.liferay.portal.kernel.exception.RequiredOrganizationException;
-import com.liferay.portal.kernel.exception.WebsiteURLException;
 import com.liferay.portal.kernel.model.Address;
 import com.liferay.portal.kernel.model.EmailAddress;
 import com.liferay.portal.kernel.model.Group;
@@ -148,16 +144,12 @@ public class EditOrganizationMVCActionCommand extends BaseMVCActionCommand {
 					 e instanceof AddressStreetException ||
 					 e instanceof AddressZipException ||
 					 e instanceof DuplicateOrganizationException ||
-					 e instanceof EmailAddressException ||
 					 e instanceof NoSuchCountryException ||
 					 e instanceof NoSuchListTypeException ||
 					 e instanceof NoSuchRegionException ||
 					 e instanceof OrganizationNameException ||
 					 e instanceof OrganizationParentException ||
-					 e instanceof PhoneNumberException ||
-					 e instanceof PhoneNumberExtensionException ||
-					 e instanceof RequiredOrganizationException ||
-					 e instanceof WebsiteURLException) {
+					 e instanceof RequiredOrganizationException) {
 
 				if (e instanceof NoSuchListTypeException) {
 					NoSuchListTypeException nslte = (NoSuchListTypeException)e;

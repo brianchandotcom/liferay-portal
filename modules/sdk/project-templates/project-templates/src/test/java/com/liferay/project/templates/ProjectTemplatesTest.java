@@ -2054,21 +2054,21 @@ public class ProjectTemplatesTest {
 
 		Optional<String> stdOutput = _executeGradle(
 			gradleProjectDir, false, true,
-			name + ":" + serviceProjectName + _GRADLE_TASK_PATH_BUILD);
+			serviceProjectName + _GRADLE_TASK_PATH_BUILD);
 
 		Assert.assertTrue(stdOutput.isPresent());
 
 		String gradleOutput = stdOutput.get();
 
 		Assert.assertTrue(
-			"Expected gradle output to include build error",
+			"Expected gradle output to include build error. " + gradleOutput,
 			gradleOutput.contains("Exporting an empty package"));
 
 		String mavenOutput = _executeMaven(
 			mavenProjectDir, true, _MAVEN_GOAL_PACKAGE);
 
 		Assert.assertTrue(
-			"Expected maven output to include build error",
+			"Expected maven output to include build error. " + mavenOutput,
 			mavenOutput.contains("Exporting an empty package"));
 	}
 

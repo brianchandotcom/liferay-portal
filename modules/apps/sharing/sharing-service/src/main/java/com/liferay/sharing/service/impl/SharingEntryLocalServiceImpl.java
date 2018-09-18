@@ -277,6 +277,15 @@ public class SharingEntryLocalServiceImpl
 	}
 
 	@Override
+	public SharingEntry deleteSharingEntry(long sharingEntryId)
+		throws PortalException {
+
+		SharingEntry sharingEntry = getSharingEntry(sharingEntryId);
+
+		return deleteSharingEntry(sharingEntry);
+	}
+
+	@Override
 	public SharingEntry deleteSharingEntry(
 			long fromUserId, long toUserId, long classNameId, long classPK)
 		throws PortalException {

@@ -98,7 +98,7 @@ public class StructuredContentNestedCollectionResourceTest
 			null, true, true, serviceContext);
 
 		JournalArticleWrapper journalArticleWrapper = getJournalArticleWrapper(
-			journalArticle.getId(),
+			journalArticle.getResourcePrimKey(),
 			getThemeDisplay(_group, LocaleUtil.getDefault()));
 
 		Assert.assertEquals(

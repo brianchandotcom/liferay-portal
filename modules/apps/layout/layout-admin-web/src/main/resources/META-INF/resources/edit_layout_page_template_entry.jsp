@@ -56,7 +56,6 @@ JSONSerializer jsonSerializer = JSONFactoryUtil.createJSONSerializer();
 			SidebarReducerModule.hideFragmentsEditorSidebarReducer,
 			SidebarReducerModule.toggleFragmentsEditorSidebarReducer,
 			PlaceholdersReducerModule.updateHighlightMappingReducer,
-			TranslationsReducerModule.languageIdReducer,
 			TranslationsReducerModule.translationStatusReducer
 		],
 		[

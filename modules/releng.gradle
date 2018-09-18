@@ -31,6 +31,7 @@ import org.eclipse.jgit.treewalk.filter.PathFilter
 
 import org.gradle.initialization.GradleLauncher
 import org.gradle.initialization.NestedBuildFactory
+import org.gradle.util.GUtil
 
 buildscript {
 	apply from: file("build-buildscript.gradle"), to: buildscript

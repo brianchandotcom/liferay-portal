@@ -27,8 +27,6 @@ public interface BeanPortlet {
 
 	public void addPortletDependency(PortletDependency portletDependency);
 
-	public BeanApp getBeanApp();
-
 	public Map<MethodType, List<BeanMethod>> getBeanMethods();
 
 	public String getDisplayCategory();
@@ -41,6 +39,6 @@ public interface BeanPortlet {
 
 	public String getResourceBundle();
 
-	public Dictionary<String, Object> toDictionary();
+	public Dictionary<String, Object> toDictionary(BeanApp beanApp);
 
 }

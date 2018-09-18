@@ -89,7 +89,7 @@ public class RegistrationUtil {
 	}
 
 	public static ServiceRegistration<Portlet> registerBeanPortlet(
-		BundleContext bundleContext, BeanPortlet beanPortlet,
+		BundleContext bundleContext, BeanApp beanApp, BeanPortlet beanPortlet,
 		ServletContext servletContext) {
 
 		try {
@@ -101,7 +101,8 @@ public class RegistrationUtil {
 				_log.debug("Registering bean portlet: " + portletId);
 			}
 
-			Dictionary<String, Object> dictionary = beanPortlet.toDictionary();
+			Dictionary<String, Object> dictionary = beanPortlet.toDictionary(
+				beanApp);
 
 			dictionary.put("javax.portlet.name", portletId);
 

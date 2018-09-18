@@ -32,11 +32,6 @@ public class BeanPortletDefaultImpl extends BaseBeanPortletImpl {
 	}
 
 	@Override
-	public BeanApp getBeanApp() {
-		return _beanApp;
-	}
-
-	@Override
 	public String getDisplayCategory() {
 		return _displayCategory;
 	}
@@ -62,15 +57,14 @@ public class BeanPortletDefaultImpl extends BaseBeanPortletImpl {
 	}
 
 	@Override
-	public Dictionary<String, Object> toDictionary() {
-		Dictionary<String, Object> dictionary = toDictionary(_beanApp);
+	public Dictionary<String, Object> toDictionary(BeanApp beanApp) {
+		Dictionary<String, Object> dictionary = super.toDictionary(beanApp);
 
 		dictionary.put("javax.portlet.info.title", _portletName);
 
 		return dictionary;
 	}
 
-	private final BeanApp _beanApp = new BeanAppDefaultImpl();
 	private final String _displayCategory;
 	private final Map<String, String> _liferayConfiguration;
 	private final String _portletName;

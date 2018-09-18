@@ -16,6 +16,7 @@ package com.liferay.bean.portlet.cdi.extension.internal;
 
 import com.liferay.bean.portlet.LiferayPortletConfiguration;
 import com.liferay.bean.portlet.LiferayPortletConfigurations;
+import com.liferay.bean.portlet.cdi.extension.internal.annotated.BeanAppAnnotationImpl;
 import com.liferay.bean.portlet.cdi.extension.internal.annotated.BeanFilterAnnotationImpl;
 import com.liferay.bean.portlet.cdi.extension.internal.annotated.BeanPortletAnnotationImpl;
 import com.liferay.bean.portlet.cdi.extension.internal.annotated.type.ApplicationScopedAnnotatedTypeImpl;
@@ -381,7 +382,7 @@ public class BeanPortletExtension implements Extension {
 		for (BeanPortlet beanPortlet : _beanPortlets.values()) {
 			ServiceRegistration<Portlet> portletServiceRegistration =
 				RegistrationUtil.registerBeanPortlet(
-					bundleContext, beanPortlet, servletContext);
+					bundleContext, _beanApp, beanPortlet, servletContext);
 
 			if (portletServiceRegistration != null) {
 				_portletRegistrations.add(portletServiceRegistration);
@@ -533,6 +534,9 @@ public class BeanPortletExtension implements Extension {
 			portletApplication = _portletApplication;
 		}
 
+		_beanApp = new BeanAppAnnotationImpl(
+			portletApplication, urlGenerationListeners);
+
 		_beanPortlets.putIfAbsent(
 			configuredPortletName,
 			new BeanPortletAnnotationImpl(
@@ -541,7 +545,7 @@ public class BeanPortletExtension implements Extension {
 				_liferayDescriptor.getConfiguration(configuredPortletName),
 				beanPortletClass.getName(),
 				_displayDescriptorCategories.get(configuredPortletName),
-				urlGenerationListeners));
+				urlGenerationListeners, _beanApp));
 	}
 
 	private void _addBeanPortletsFromAnnotatedClasses(
@@ -592,6 +596,8 @@ public class BeanPortletExtension implements Extension {
 			try {
 				PortletDescriptor portletDescriptor =
 					PortletDescriptorParser.parse(portletDescriptorURL);
+
+				_beanApp = portletDescriptor.getBeanApp();
 
 				_beanFilters.addAll(portletDescriptor.getBeanFilters());
 
@@ -915,6 +921,7 @@ public class BeanPortletExtension implements Extension {
 		};
 
 	private final List<ScannedMethod> _actionMethods = new ArrayList<>();
+	private BeanApp _beanApp;
 	private final List<BeanFilter> _beanFilters = new ArrayList<>();
 	private final Map<String, BeanPortlet> _beanPortlets = new HashMap<>();
 	private final List<ScannedMethod> _destroyMethods = new ArrayList<>();

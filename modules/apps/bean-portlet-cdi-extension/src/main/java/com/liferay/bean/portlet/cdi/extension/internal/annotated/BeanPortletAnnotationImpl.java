@@ -58,10 +58,7 @@ public class BeanPortletAnnotationImpl extends BaseBeanPortletImpl {
 		LiferayPortletConfiguration liferayPortletConfiguration,
 		Map<String, String> liferayDescriptorConfiguration,
 		String portletClassName, String descriptorDisplayCategory,
-		List<URLGenerationListener> urlGenerationListeners) {
-
-		_beanApp = new BeanAppAnnotationImpl(
-			portletApplication, urlGenerationListeners);
+		List<URLGenerationListener> urlGenerationListeners, BeanApp beanApp) {
 
 		_portletConfiguration = portletConfiguration;
 		_portletClassName = portletClassName;
@@ -117,12 +114,7 @@ public class BeanPortletAnnotationImpl extends BaseBeanPortletImpl {
 
 		_portletModes = new HashSet<>(liferayPortletModes);
 
-		_portletModes.addAll(_beanApp.getCustomPortletModes());
-	}
-
-	@Override
-	public BeanApp getBeanApp() {
-		return _beanApp;
+		_portletModes.addAll(beanApp.getCustomPortletModes());
 	}
 
 	@Override
@@ -151,15 +143,16 @@ public class BeanPortletAnnotationImpl extends BaseBeanPortletImpl {
 	}
 
 	@Override
-	public Dictionary<String, Object> toDictionary() {
-		HashMapDictionary<String, Object> dictionary = toDictionary(_beanApp);
+	public Dictionary<String, Object> toDictionary(BeanApp beanApp) {
+		HashMapDictionary<String, Object> dictionary =
+			(HashMapDictionary<String, Object>)toDictionary(beanApp);
 
 		dictionary.put(
 			"javax.portlet.async-supported",
 			_portletConfiguration.asyncSupported());
 
 		Map<String, List<String>> containerRuntimeOptions = new HashMap<>(
-			_beanApp.getContainerRuntimeOptions());
+			beanApp.getContainerRuntimeOptions());
 
 		for (RuntimeOption runtimeOption :
 				_portletConfiguration.runtimeOptions()) {
@@ -328,8 +321,7 @@ public class BeanPortletAnnotationImpl extends BaseBeanPortletImpl {
 			supportedPublicRenderParameters.add(
 				toNameValuePair(
 					identifier,
-					getPublicRenderParameterNamespaceURI(
-						_beanApp, identifier)));
+					getPublicRenderParameterNamespaceURI(beanApp, identifier)));
 		}
 
 		dictionary.put(
@@ -396,7 +388,6 @@ public class BeanPortletAnnotationImpl extends BaseBeanPortletImpl {
 
 	private static final String _ENGLISH_EN = Locale.ENGLISH.getLanguage();
 
-	private final BeanApp _beanApp;
 	private final String _displayCategory;
 	private final Map<String, String> _liferayConfiguration;
 	private final String _portletClassName;

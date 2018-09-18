@@ -26,6 +26,7 @@ import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Dictionary;
 import java.util.EnumMap;
 import java.util.HashSet;
 import java.util.List;
@@ -124,7 +125,7 @@ public abstract class BaseBeanPortletImpl implements BeanPortlet {
 		return namespaceURI;
 	}
 
-	protected HashMapDictionary<String, Object> toDictionary(BeanApp beanApp) {
+	public Dictionary<String, Object> toDictionary(BeanApp beanApp) {
 		HashMapDictionary<String, Object> dictionary =
 			new HashMapDictionary<>();
 

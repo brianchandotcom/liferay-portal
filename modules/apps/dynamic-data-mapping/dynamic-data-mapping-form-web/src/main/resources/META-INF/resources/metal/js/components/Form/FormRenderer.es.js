@@ -359,7 +359,12 @@ class FormRenderer extends Component {
 	 */
 
 	_handlePaginationLeftClicked() {
-		const index = this.activePage - 1;
+		const {activePage} = this;
+		let index = activePage - 1;
+
+		if(activePage == -1) {
+			index = this.pages.length -1
+		}
 
 		this.emit(
 			'activePageUpdated',
@@ -372,7 +377,12 @@ class FormRenderer extends Component {
 	 */
 
 	_handlePaginationRightClicked() {
-		const index = this.activePage + 1;
+		const {activePage} = this;
+		let index = activePage + 1;
+		
+		if(index == this.pages.length) {
+			index = -1;
+		}
 
 		this.emit(
 			'activePageUpdated',

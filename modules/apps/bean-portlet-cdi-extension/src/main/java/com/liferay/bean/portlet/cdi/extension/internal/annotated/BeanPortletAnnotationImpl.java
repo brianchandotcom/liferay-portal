@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.util.Validator;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.Dictionary;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -39,7 +38,6 @@ import javax.portlet.annotations.Dependency;
 import javax.portlet.annotations.InitParameter;
 import javax.portlet.annotations.LocaleString;
 import javax.portlet.annotations.Multipart;
-import javax.portlet.annotations.PortletApplication;
 import javax.portlet.annotations.PortletConfiguration;
 import javax.portlet.annotations.Preference;
 import javax.portlet.annotations.RuntimeOption;
@@ -53,15 +51,14 @@ import javax.portlet.annotations.Supports;
 public class BeanPortletAnnotationImpl extends BaseBeanPortletImpl {
 
 	public BeanPortletAnnotationImpl(
-		PortletApplication portletApplication,
-		PortletConfiguration portletConfiguration,
+		String portletClassName, PortletConfiguration portletConfiguration,
 		LiferayPortletConfiguration liferayPortletConfiguration,
-		Map<String, String> liferayDescriptorConfiguration,
-		String portletClassName, String descriptorDisplayCategory,
+		Map<String, String> descriptorLiferayConfiguration,
+		String descriptorDisplayCategory,
 		List<URLGenerationListener> urlGenerationListeners, BeanApp beanApp) {
 
-		_portletConfiguration = portletConfiguration;
 		_portletClassName = portletClassName;
+		_portletConfiguration = portletConfiguration;
 
 		String displayCategory = descriptorDisplayCategory;
 
@@ -71,12 +68,9 @@ public class BeanPortletAnnotationImpl extends BaseBeanPortletImpl {
 			propertyNames = liferayPortletConfiguration.properties();
 		}
 
-		if ((propertyNames == null) || (propertyNames.length == 0)) {
-			_liferayConfiguration = Collections.emptyMap();
-		}
-		else {
-			_liferayConfiguration = new HashMap<>();
+		_liferayConfiguration = new HashMap<>();
 
+		if ((propertyNames != null) && (propertyNames.length > 0)) {
 			for (String propertyName : propertyNames) {
 				String propertyValue = null;
 
@@ -101,7 +95,9 @@ public class BeanPortletAnnotationImpl extends BaseBeanPortletImpl {
 			}
 		}
 
-		_liferayConfiguration.putAll(liferayDescriptorConfiguration);
+		if (descriptorLiferayConfiguration != null) {
+			_liferayConfiguration.putAll(descriptorLiferayConfiguration);
+		}
 
 		_displayCategory = displayCategory;
 

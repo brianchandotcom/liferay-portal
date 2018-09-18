@@ -14,21 +14,24 @@
 
 package com.liferay.bean.portlet.cdi.extension.internal.xml;
 
+import com.liferay.portal.kernel.xml.DocumentException;
+
 import java.io.IOException;
 
 import java.net.URL;
 
-import javax.xml.stream.XMLStreamException;
-
-import org.xml.sax.SAXException;
+import java.util.Map;
 
 /**
  * @author Neil Griffin
  */
 public class PortletDescriptorParser {
 
-	public static PortletDescriptor parse(URL portletDescriptorURL)
-		throws IOException, SAXException, XMLStreamException {
+	public static PortletDescriptor parse(
+			URL portletDescriptorURL,
+			Map<String, String> displayDescriptorCategories,
+			Map<String, Map<String, String>> liferayConfigurations)
+		throws DocumentException, IOException {
 
 		// TODO
 

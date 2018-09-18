@@ -22,6 +22,7 @@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %>
 
 <%@ page import="com.liferay.document.library.display.context.DLMimeTypeDisplayContext" %><%@
 page import="com.liferay.document.library.kernel.util.DLUtil" %><%@
+page import="com.liferay.document.library.kernel.util.DLValidatorUtil" %><%@
 page import="com.liferay.journal.item.selector.web.internal.constants.JournalItemSelectorWebKeys" %><%@
 page import="com.liferay.journal.item.selector.web.internal.display.context.JournalItemSelectorViewDisplayContext" %><%@
 page import="com.liferay.journal.model.JournalArticle" %><%@

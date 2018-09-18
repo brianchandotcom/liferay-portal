@@ -88,6 +88,7 @@ else {
 	extensions="<%= ListUtil.toList(dlItemSelectorViewDisplayContext.getExtensions()) %>"
 	itemSelectedEventName="<%= dlItemSelectorViewDisplayContext.getItemSelectedEventName() %>"
 	itemSelectorReturnTypeResolver="<%= dlItemSelectorViewDisplayContext.getItemSelectorReturnTypeResolver() %>"
+	maxFileSize="<%= DLValidatorUtil.getMaxAllowableSize() %>"
 	portletURL="<%= dlItemSelectorViewDisplayContext.getPortletURL(request, liferayPortletResponse) %>"
 	repositoryEntries="<%= repositoryEntries %>"
 	repositoryEntriesCount="<%= repositoryEntriesCount %>"

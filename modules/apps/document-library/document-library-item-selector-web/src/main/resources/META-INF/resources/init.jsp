@@ -27,6 +27,7 @@ page import="com.liferay.document.library.kernel.model.DLFileShortcutConstants" 
 page import="com.liferay.document.library.kernel.model.DLFolderConstants" %><%@
 page import="com.liferay.document.library.kernel.service.DLAppServiceUtil" %><%@
 page import="com.liferay.document.library.kernel.util.DLUtil" %><%@
+page import="com.liferay.document.library.kernel.util.DLValidatorUtil" %><%@
 page import="com.liferay.portal.kernel.dao.search.SearchContainer" %><%@
 page import="com.liferay.portal.kernel.dao.search.SearchPaginationUtil" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@

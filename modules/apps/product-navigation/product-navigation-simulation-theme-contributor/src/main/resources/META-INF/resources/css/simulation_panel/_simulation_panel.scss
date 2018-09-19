@@ -43,13 +43,11 @@
 
 		small {
 			color: #A7A9BC;
-			margin: 4px 0 24px;
+			margin: 4px 0 16px;
 		}
 	}
 
 	.lfr-device-item {
-		cursor: pointer;
-
 		&.selected {
 			color: #FFF;
 
@@ -62,6 +60,10 @@
 			small {
 				color: #FFF;
 			}
+		}
+
+		.icon {
+			margin-top: 8px;
 		}
 	}
 

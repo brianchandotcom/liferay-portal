@@ -19,6 +19,7 @@ import com.liferay.announcements.kernel.service.AnnouncementsEntryLocalService;
 import com.liferay.announcements.uad.test.AnnouncementsEntryUADTestHelper;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -57,7 +58,9 @@ public class AnnouncementsEntryUADAnonymizerTest
 		throws Exception {
 
 		AnnouncementsEntry announcementsEntry =
-			_announcementsEntryUADTestHelper.addAnnouncementsEntry(userId);
+			AnnouncementsEntryUADTestHelper.addAnnouncementsEntry(
+				_announcementsEntryLocalService, _classNameLocalService,
+				userId);
 
 		if (deleteAfterTestRun) {
 			_announcementsEntries.add(announcementsEntry);
@@ -107,7 +110,7 @@ public class AnnouncementsEntryUADAnonymizerTest
 	private AnnouncementsEntryLocalService _announcementsEntryLocalService;
 
 	@Inject
-	private AnnouncementsEntryUADTestHelper _announcementsEntryUADTestHelper;
+	private ClassNameLocalService _classNameLocalService;
 
 	@Inject(filter = "component.name=*.AnnouncementsEntryUADAnonymizer")
 	private UADAnonymizer _uadAnonymizer;

@@ -175,8 +175,8 @@ class FragmentEntryLinkList extends Component {
 
 	_handleFragmentMove(event) {
 		const placeholderId = event.fragmentEntryLinkId;
-		const placeholderIndex = this.structure.indexOf(placeholderId);
-		const targetId = this.structure[placeholderIndex + event.direction];
+		const placeholderIndex = this.layoutData.structure.indexOf(placeholderId);
+		const targetId = this.layoutData.structure[placeholderIndex + event.direction];
 
 		if (event.direction === 1) {
 			this._targetBorder = DRAG_POSITIONS.bottom;
@@ -305,15 +305,25 @@ FragmentEntryLinkList.STATE = {
 	hoveredFragmentEntryLinkId: Config.string(),
 
 	/**
-	 * Array of fragmentEntryLinks
-	 * @default undefined
+	 * Data associated to the layout
+	 * @default {structure: []}
 	 * @instance
 	 * @memberOf FragmentEntryLinkList
 	 * @review
-	 * @type {!array}
+	 * @type {{structure: Array<string>}}
 	 */
 
-	structure: Config.array(),
+	layoutData: Config
+		.shapeOf(
+			{
+				structure: Config.arrayOf(Config.string())
+			}
+		)
+		.value(
+			{
+				structure: []
+			}
+		),
 
 	/**
 	 * Nearest border of the hovered fragment while dragging

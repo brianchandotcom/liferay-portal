@@ -46,7 +46,7 @@ import org.osgi.service.component.annotations.Reference;
  *
  * @author Javier Gamarra
  */
-@Component(immediate = true)
+@Component(immediate = true, service = CollectionResource.class)
 public class ContentSpaceCollectionResource
 	implements CollectionResource<Group, Long, ContentSpaceIdentifier> {
 

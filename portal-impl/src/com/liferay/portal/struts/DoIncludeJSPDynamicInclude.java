@@ -30,7 +30,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Raymond Augé
  */
-@Component
+@Component(service = {})
 public class DoIncludeJSPDynamicInclude extends BaseDynamicInclude {
 
 	@Override

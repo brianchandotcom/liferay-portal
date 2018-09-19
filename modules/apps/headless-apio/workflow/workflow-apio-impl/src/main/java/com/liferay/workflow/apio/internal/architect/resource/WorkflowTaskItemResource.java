@@ -48,7 +48,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Sarai Díaz
  * @review
  */
-@Component(immediate = true)
+@Component(immediate = true, service = ItemResource.class)
 public class WorkflowTaskItemResource
 	implements ItemResource<WorkflowTask, Long, WorkflowTaskIdentifier> {
 

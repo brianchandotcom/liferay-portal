@@ -30,7 +30,8 @@ import org.osgi.service.component.annotations.Component;
  * @author Leonardo Barros
  */
 @Component(
-	immediate = true, property = "ddm.form.instance.record.writer.type=xml"
+	immediate = true, property = "ddm.form.instance.record.writer.type=xml",
+	service = DDMFormInstanceRecordWriter.class
 )
 public class DDMFormInstanceRecordXMLWriter
 	implements DDMFormInstanceRecordWriter {

@@ -29,7 +29,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 /**
  * @author Tomas Polesovsky
  */
-@Component(immediate = true)
+@Component(immediate = true, service = BearerTokenProviderAccessor.class)
 public class DefaultBearerTokenProviderAccessor
 	implements BearerTokenProviderAccessor {
 

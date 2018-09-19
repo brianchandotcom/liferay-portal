@@ -40,7 +40,8 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	property = {
 		"social.bookmarks.priority:Integer=1", "social.bookmarks.type=linkedin"
-	}
+	},
+	service = SocialBookmark.class
 )
 public class LinkedInSocialBookmark implements SocialBookmark {
 

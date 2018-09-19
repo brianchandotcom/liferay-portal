@@ -32,7 +32,10 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Alejandro Hernández
  */
-@Component(property = "model.class.name=com.liferay.blogs.model.BlogsEntry")
+@Component(
+	property = "model.class.name=com.liferay.blogs.model.BlogsEntry",
+	service = HasPermission.class
+)
 public class BlogsEntryHasPermissionImpl implements HasPermission<Long> {
 
 	@Override

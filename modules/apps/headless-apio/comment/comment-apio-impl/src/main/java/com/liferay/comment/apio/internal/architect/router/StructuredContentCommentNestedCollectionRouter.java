@@ -36,7 +36,7 @@ import org.osgi.service.component.annotations.Reference;
  *
  * @author Eduardo Perez
  */
-@Component(immediate = true)
+@Component(immediate = true, service = NestedCollectionRouter.class)
 public class StructuredContentCommentNestedCollectionRouter
 	extends BaseCommentNestedCollectionRouter<StructuredContentIdentifier>
 	implements NestedCollectionRouter

@@ -31,7 +31,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Shuyang Zhou
  */
-@Component(immediate = true)
+@Component(immediate = true, service = SoyTemplateResourcesProvider.class)
 public class SoyTemplateResourcesProviderImpl
 	implements SoyTemplateResourcesProvider {
 

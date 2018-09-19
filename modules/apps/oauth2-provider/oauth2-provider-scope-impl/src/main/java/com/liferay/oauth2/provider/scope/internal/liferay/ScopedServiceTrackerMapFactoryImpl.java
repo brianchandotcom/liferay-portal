@@ -33,7 +33,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Carlos Sierra Andrés
  */
-@Component
+@Component(service = ScopedServiceTrackerMapFactory.class)
 public class ScopedServiceTrackerMapFactoryImpl
 	implements ScopedServiceTrackerMapFactory {
 

@@ -33,7 +33,7 @@ import org.osgi.service.component.annotations.Reference;
  *
  * @author Alejandro Hernández
  */
-@Component(immediate = true)
+@Component(immediate = true, service = ItemResource.class)
 public class AggregateRatingItemResource
 	implements ItemResource
 		<RatingsStats, ClassNameClassPK, AggregateRatingIdentifier> {

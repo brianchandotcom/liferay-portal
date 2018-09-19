@@ -39,7 +39,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Drew Brokke
  */
-@Component
+@Component(service = {})
 public class OrganizationScreenNavigationRegistrar {
 
 	@Activate

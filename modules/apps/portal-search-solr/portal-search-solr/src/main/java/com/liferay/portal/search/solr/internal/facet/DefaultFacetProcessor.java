@@ -30,7 +30,10 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Michael C. Han
  */
-@Component(immediate = true, property = "class.name=DEFAULT")
+@Component(
+	immediate = true, property = "class.name=DEFAULT",
+	service = FacetProcessor.class
+)
 public class DefaultFacetProcessor implements FacetProcessor<SolrQuery> {
 
 	@Override

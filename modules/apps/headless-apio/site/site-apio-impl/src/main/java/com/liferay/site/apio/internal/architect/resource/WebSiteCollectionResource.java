@@ -46,7 +46,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Victor Oliveira
  * @author Alejandro Hernández
  */
-@Component(immediate = true)
+@Component(immediate = true, service = CollectionResource.class)
 public class WebSiteCollectionResource
 	implements CollectionResource<GroupWrapper, Long, WebSiteIdentifier> {
 

@@ -39,7 +39,7 @@ import org.osgi.util.tracker.BundleTrackerCustomizer;
 /**
  * @author Michael C. Han
  */
-@Component(immediate = true)
+@Component(immediate = true, service = {})
 public class ConfigurationIndexingExtender {
 
 	@Activate

@@ -79,7 +79,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Carlos Sierra Andrés
  * @author Jorge Ferrer
  */
-@Component(immediate = true)
+@Component(immediate = true, service = CollectionResource.class)
 public class PersonCollectionResource
 	implements CollectionResource<UserWrapper, Long, PersonIdentifier> {
 

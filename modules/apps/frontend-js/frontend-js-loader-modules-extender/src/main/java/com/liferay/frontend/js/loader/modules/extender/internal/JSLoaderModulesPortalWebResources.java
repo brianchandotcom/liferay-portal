@@ -30,7 +30,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Raymond Augé
  */
-@Component(enabled = false, immediate = true)
+@Component(enabled = false, immediate = true, service = {})
 public class JSLoaderModulesPortalWebResources {
 
 	@Activate

@@ -22,7 +22,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Roberto Díaz
  */
-@Component
+@Component(service = ConfigurationBeanDeclaration.class)
 public class KBSearchPortletInstanceConfigurationBeanDeclaration
 	implements ConfigurationBeanDeclaration {
 

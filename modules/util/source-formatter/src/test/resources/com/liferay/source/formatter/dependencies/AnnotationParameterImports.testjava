@@ -24,7 +24,8 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	immediate = true,
-	property = StringPool.UNDERLINE + Constants.SUBSCRIBE_TO_COMMENTS
+	property = StringPool.UNDERLINE + Constants.SUBSCRIBE_TO_COMMENTS,
+	service = {}
 )
 public class AnnotationParameterImports {
 }

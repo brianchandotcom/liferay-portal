@@ -27,7 +27,10 @@ import org.osgi.service.component.annotations.Component;
  * @author Ambrin Chaudhary
  * @author Sergio González
  */
-@Component(property = "editor.name=ckeditor_creole")
+@Component(
+	property = "editor.name=ckeditor_creole",
+	service = EditorOptionsContributor.class
+)
 public class CKEditorCreoleOptionsContributor
 	implements EditorOptionsContributor {
 

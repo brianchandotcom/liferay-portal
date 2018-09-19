@@ -29,7 +29,8 @@ import org.osgi.service.component.annotations.Component;
 	property = {
 		"javax.portlet.name=" + PortalSettingsPortletKeys.PORTAL_SETTINGS,
 		"mvc.command.name=/portal_settings/view"
-	}
+	},
+	service = MVCRenderCommand.class
 )
 public class EditCompanyMVCRenderCommand implements MVCRenderCommand {
 

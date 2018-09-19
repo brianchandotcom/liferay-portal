@@ -64,7 +64,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Miguel Pastor
  */
-@Component(immediate = true)
+@Component(immediate = true, service = {})
 public class ModuleApplicationContextExtender extends AbstractExtender {
 
 	@Activate

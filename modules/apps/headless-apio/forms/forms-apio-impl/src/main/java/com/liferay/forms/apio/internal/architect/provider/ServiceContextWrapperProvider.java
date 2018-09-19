@@ -33,7 +33,7 @@ import org.osgi.service.component.annotations.Component;
  *
  * @author Paulo Cruz
  */
-@Component(immediate = true)
+@Component(immediate = true, service = Provider.class)
 public class ServiceContextWrapperProvider
 	implements Provider<ServiceContextWrapper> {
 

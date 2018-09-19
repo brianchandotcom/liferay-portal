@@ -27,7 +27,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Tom Wang
  */
-@Component(immediate = true)
+@Component(immediate = true, service = {})
 public class JournalHelperUtil {
 
 	public static String diffHtml(

@@ -30,7 +30,7 @@ import org.osgi.service.component.annotations.Component;
  *
  * @author Eduardo Perez
  */
-@Component(immediate = true)
+@Component(immediate = true, service = NestedCollectionRouter.class)
 public class MyUserAccountOrganizationNestedCollectionRouter
 	extends BaseUserAccountOrganizationNestedCollectionRouter
 		<MyUserAccountIdentifier>

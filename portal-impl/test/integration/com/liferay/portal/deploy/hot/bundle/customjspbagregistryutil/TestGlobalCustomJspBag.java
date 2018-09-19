@@ -36,7 +36,8 @@ import org.osgi.service.component.annotations.Component;
 		"context.id=TestGlobalCustomJspBag",
 		"context.name=Test Global Custom JSP Bag",
 		"service.ranking:Integer=" + Integer.MAX_VALUE
-	}
+	},
+	service = CustomJspBag.class
 )
 public class TestGlobalCustomJspBag implements CustomJspBag {
 

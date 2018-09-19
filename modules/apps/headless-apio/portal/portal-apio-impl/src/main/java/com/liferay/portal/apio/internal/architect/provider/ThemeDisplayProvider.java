@@ -42,7 +42,7 @@ import org.osgi.service.component.annotations.Component;
  *
  * @author Eduardo Perez
  */
-@Component(immediate = true)
+@Component(immediate = true, service = Provider.class)
 public class ThemeDisplayProvider implements Provider<ThemeDisplay> {
 
 	@Override

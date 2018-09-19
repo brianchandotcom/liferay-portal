@@ -31,7 +31,10 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Carlos Sierra Andrés
  */
-@Component(immediate = true, property = "name=temp_file")
+@Component(
+	immediate = true, property = "name=temp_file",
+	service = OutputStreamContainerFactory.class
+)
 public class TempFileOutputStreamContainerFactory
 	implements OutputStreamContainerFactory {
 

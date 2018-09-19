@@ -25,7 +25,7 @@ import org.osgi.service.component.runtime.ServiceComponentRuntime;
 /**
  * @author Shuyang Zhou
  */
-@Component(immediate = true)
+@Component(immediate = true, service = SystemChecker.class)
 public class DeclarativeServiceSoftCircularDependencySystemChecker
 	implements SystemChecker {
 

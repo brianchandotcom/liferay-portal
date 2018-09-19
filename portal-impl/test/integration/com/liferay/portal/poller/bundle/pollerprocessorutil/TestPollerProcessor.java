@@ -28,7 +28,8 @@ import org.osgi.service.component.annotations.Component;
 	property = {
 		"javax.portlet.name=PollerProcessorUtilTest",
 		"service.ranking:Integer=" + Integer.MAX_VALUE
-	}
+	},
+	service = PollerProcessor.class
 )
 public class TestPollerProcessor implements PollerProcessor {
 

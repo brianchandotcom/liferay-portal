@@ -29,7 +29,10 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Alejandro Tardín
  */
-@Component(immediate = true, property = "display.style=simple")
+@Component(
+	immediate = true, property = "display.style=simple",
+	service = ReadingTimeMessageProvider.class
+)
 public class SimpleReadingTimeMessageProviderImpl
 	implements ReadingTimeMessageProvider {
 

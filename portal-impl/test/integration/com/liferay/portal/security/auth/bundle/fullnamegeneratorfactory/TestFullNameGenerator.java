@@ -25,7 +25,8 @@ import org.osgi.service.component.annotations.Component;
  * @author Peter Fellwock
  */
 @Component(
-	immediate = true, property = "service.ranking:Integer=" + Integer.MAX_VALUE
+	immediate = true, property = "service.ranking:Integer=" + Integer.MAX_VALUE,
+	service = FullNameGenerator.class
 )
 public class TestFullNameGenerator implements FullNameGenerator {
 

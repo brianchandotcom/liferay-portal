@@ -22,7 +22,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Alejandro Tardín
  */
-@Component
+@Component(service = ConfigurationBeanDeclaration.class)
 public class TensorflowAssetAutoTagProviderCompanyConfigurationBeanDeclaration
 	implements ConfigurationBeanDeclaration {
 

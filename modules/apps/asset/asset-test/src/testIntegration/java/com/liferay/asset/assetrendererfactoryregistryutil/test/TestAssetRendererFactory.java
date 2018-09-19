@@ -39,7 +39,8 @@ import org.osgi.service.component.annotations.Component;
  * @author Peter Fellwock
  */
 @Component(
-	immediate = true, property = "service.ranking:Integer=" + Integer.MAX_VALUE
+	immediate = true, property = "service.ranking:Integer=" + Integer.MAX_VALUE,
+	service = AssetRendererFactory.class
 )
 public class TestAssetRendererFactory
 	implements AssetRendererFactory<TestAssetRendererModel> {

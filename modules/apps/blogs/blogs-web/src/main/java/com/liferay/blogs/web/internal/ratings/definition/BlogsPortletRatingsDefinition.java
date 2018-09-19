@@ -23,7 +23,10 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Roberto Díaz
  */
-@Component(property = "model.class.name=com.liferay.blogs.model.BlogsEntry")
+@Component(
+	property = "model.class.name=com.liferay.blogs.model.BlogsEntry",
+	service = PortletRatingsDefinition.class
+)
 public class BlogsPortletRatingsDefinition implements PortletRatingsDefinition {
 
 	@Override

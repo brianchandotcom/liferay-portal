@@ -77,7 +77,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = "site.initializer.key=" + FjordSiteInitializer.KEY
+	property = "site.initializer.key=" + FjordSiteInitializer.KEY,
+	service = SiteInitializer.class
 )
 public class FjordSiteInitializer implements SiteInitializer {
 

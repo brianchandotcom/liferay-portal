@@ -26,7 +26,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Lance Ji
  */
-@Component(immediate = true)
+@Component(immediate = true, service = {})
 public class PortletDisplayTemplateUtil {
 
 	public static List<TemplateHandler> getPortletDisplayTemplateHandlers() {

@@ -22,7 +22,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Lino Alves
  */
-@Component
+@Component(service = ConfigurationBeanDeclaration.class)
 public class DDMGroupServiceConfigurationBeanDeclaration
 	implements ConfigurationBeanDeclaration {
 

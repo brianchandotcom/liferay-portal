@@ -372,6 +372,14 @@ public abstract class BaseSourceCheck implements SourceCheck {
 	}
 
 	protected int getLineStartPos(String content, int lineNumber) {
+		if (lineNumber <= 0) {
+			return -1;
+		}
+
+		if (lineNumber == 1) {
+			return 0;
+		}
+
 		int x = 0;
 
 		for (int i = 1; i < lineNumber; i++) {

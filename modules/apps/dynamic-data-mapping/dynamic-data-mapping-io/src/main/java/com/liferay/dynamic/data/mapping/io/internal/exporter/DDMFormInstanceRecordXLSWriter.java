@@ -39,7 +39,8 @@ import org.osgi.service.component.annotations.Component;
  * @author Leonardo Barros
  */
 @Component(
-	immediate = true, property = "ddm.form.instance.record.writer.type=xls"
+	immediate = true, property = "ddm.form.instance.record.writer.type=xls",
+	service = DDMFormInstanceRecordWriter.class
 )
 public class DDMFormInstanceRecordXLSWriter
 	implements DDMFormInstanceRecordWriter {

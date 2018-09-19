@@ -23,7 +23,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Tomas Polesovsky
  */
-@Component
+@Component(service = ConfigurationPidMapping.class)
 public class RequestParameterAutoLoginCompanyServiceConfigurationPidMapping
 	implements ConfigurationPidMapping {
 

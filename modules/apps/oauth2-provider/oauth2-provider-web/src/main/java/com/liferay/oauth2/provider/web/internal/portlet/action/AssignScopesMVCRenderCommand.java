@@ -45,7 +45,8 @@ import org.osgi.service.component.annotations.Reference;
 	property = {
 		"javax.portlet.name=" + OAuth2ProviderPortletKeys.OAUTH2_ADMIN,
 		"mvc.command.name=/admin/assign_scopes"
-	}
+	},
+	service = MVCRenderCommand.class
 )
 public class AssignScopesMVCRenderCommand implements MVCRenderCommand {
 

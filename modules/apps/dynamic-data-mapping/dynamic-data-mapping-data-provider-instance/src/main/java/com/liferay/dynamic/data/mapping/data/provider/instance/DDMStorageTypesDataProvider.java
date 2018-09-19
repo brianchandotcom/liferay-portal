@@ -32,7 +32,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = "ddm.data.provider.instance.id=ddm-storage-types"
+	property = "ddm.data.provider.instance.id=ddm-storage-types",
+	service = DDMDataProvider.class
 )
 public class DDMStorageTypesDataProvider implements DDMDataProvider {
 

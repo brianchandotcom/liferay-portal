@@ -22,17 +22,17 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 
 import java.util.List;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Brian Wing Shun Chan
  */
-@Component(immediate = true, service = LayoutPrototypeUADTestHelper.class)
 public class LayoutPrototypeUADTestHelper {
 
-	public LayoutPrototype addLayoutPrototype(long userId) throws Exception {
-		return _layoutPrototypeLocalService.addLayoutPrototype(
+	public static LayoutPrototype addLayoutPrototype(
+			LayoutPrototypeLocalService layoutPrototypeLocalService,
+			long userId)
+		throws Exception {
+
+		return layoutPrototypeLocalService.addLayoutPrototype(
 			userId, TestPropsValues.getCompanyId(),
 			RandomTestUtil.randomLocaleStringMap(),
 			RandomTestUtil.randomLocaleStringMap(), true,
@@ -42,8 +42,5 @@ public class LayoutPrototypeUADTestHelper {
 	public void cleanUpDependencies(List<LayoutPrototype> layoutPrototypes)
 		throws Exception {
 	}
-
-	@Reference
-	private LayoutPrototypeLocalService _layoutPrototypeLocalService;
 
 }

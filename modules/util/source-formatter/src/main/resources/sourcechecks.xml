@@ -120,6 +120,7 @@
 		<check name="JavaCollatorUtilCheck" />
 		<check name="JavaCombineLinesCheck" />
 		<check name="JavaComponentAnnotationsCheck">
+			<property name="checkMismatchedServiceAttribute" value="false" />
 			<property name="enabled" value="false" />
 		</check>
 		<check name="JavaConfigurationAdminCheck" />

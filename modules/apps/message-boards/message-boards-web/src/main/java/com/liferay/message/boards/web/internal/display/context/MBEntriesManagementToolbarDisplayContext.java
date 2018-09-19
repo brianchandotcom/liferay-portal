@@ -133,6 +133,23 @@ public class MBEntriesManagementToolbarDisplayContext {
 		};
 	}
 
+	public List<String> getAvailableActionDropdownItems(MBCategory category)
+		throws PortalException {
+
+		List<String> availableActionDropdownItems = new ArrayList<>();
+
+		PermissionChecker permissionChecker =
+			_themeDisplay.getPermissionChecker();
+
+		if (MBCategoryPermission.contains(
+				permissionChecker, category, ActionKeys.DELETE)) {
+
+			availableActionDropdownItems.add("deleteEntries");
+		}
+
+		return availableActionDropdownItems;
+	}
+
 	public List<String> getAvailableActionDropdownItems(MBMessage message)
 		throws PortalException {
 

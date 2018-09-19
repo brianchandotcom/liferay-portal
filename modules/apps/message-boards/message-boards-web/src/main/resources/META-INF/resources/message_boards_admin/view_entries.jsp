@@ -91,6 +91,12 @@ MBEntriesManagementToolbarDisplayContext mbEntriesManagementToolbarDisplayContex
 
 						<%
 						row.setPrimaryKey(String.valueOf(curCategory.getCategoryId()));
+
+						Map<String, Object> rowData = new HashMap<String, Object>();
+
+						rowData.put("actions", String.join(StringPool.COMMA, mbEntriesManagementToolbarDisplayContext.getAvailableActionDropdownItems(curCategory)));
+
+						row.setData(rowData);
 						%>
 
 						<liferay-portlet:renderURL varImpl="rowURL">

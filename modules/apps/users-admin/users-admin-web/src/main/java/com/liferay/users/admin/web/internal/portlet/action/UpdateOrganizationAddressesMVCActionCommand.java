@@ -33,7 +33,6 @@ import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.users.admin.constants.UsersAdminPortletKeys;
 import com.liferay.users.admin.kernel.util.UsersAdmin;
@@ -87,12 +86,8 @@ public class UpdateOrganizationAddressesMVCActionCommand
 
 				SessionErrors.add(actionRequest, e.getClass(), e);
 
-				String redirect = _portal.escapeRedirect(
-					ParamUtil.getString(actionRequest, "redirect"));
-
-				if (Validator.isNotNull(redirect)) {
-					sendRedirect(actionRequest, actionResponse, redirect);
-				}
+				actionResponse.setRenderParameter(
+					"mvcPath", "/edit_organization.jsp");
 			}
 			else {
 				throw e;

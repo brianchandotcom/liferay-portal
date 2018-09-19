@@ -15,17 +15,22 @@
 package com.liferay.login.authentication.facebook.connect.web.internal.portlet.action;
 
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.UserEmailAddressException;
 import com.liferay.portal.kernel.facebook.FacebookConnect;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Contact;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserGroupRole;
+import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.struts.BaseStrutsAction;
@@ -158,13 +163,26 @@ public class FacebookConnectAction extends BaseStrutsAction {
 			themeDisplay.getCompanyId(), redirect, code);
 
 		if (Validator.isNotNull(token)) {
-			User user = setFacebookCredentials(
-				session, themeDisplay.getCompanyId(), token);
+			try {
+				User user = setFacebookCredentials(
+					session, themeDisplay.getCompanyId(), token);
 
-			if ((user != null) &&
-				(user.getStatus() == WorkflowConstants.STATUS_INCOMPLETE)) {
+				if ((user != null) &&
+					(user.getStatus() == WorkflowConstants.STATUS_INCOMPLETE)) {
 
-				redirectUpdateAccount(request, response, user);
+					redirectUpdateAccount(request, response, user);
+
+					return null;
+				}
+			}
+			catch (PortalException pe) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(pe, pe);
+				}
+
+				Class<?> clazz = pe.getClass();
+
+				sendError(clazz.getSimpleName(), request, response);
 
 				return null;
 			}
@@ -265,6 +283,22 @@ public class FacebookConnectAction extends BaseStrutsAction {
 		response.sendRedirect(portletURL.toString());
 	}
 
+	protected void sendError(
+			String error, HttpServletRequest request,
+			HttpServletResponse response)
+		throws Exception {
+
+		LiferayPortletURL portletURL = PortletURLFactoryUtil.create(
+			request, PortletKeys.LOGIN, PortletRequest.RENDER_PHASE);
+
+		portletURL.setParameter("error", error);
+		portletURL.setParameter(
+			"mvcRenderCommandName", "/login/facebook_connect_login_error");
+		portletURL.setWindowState(LiferayWindowState.POP_UP);
+
+		response.sendRedirect(portletURL.toString());
+	}
+
 	@Reference(unbind = "-")
 	protected void setFacebookConnect(FacebookConnect facebookConnect) {
 		_facebookConnect = facebookConnect;
@@ -287,7 +321,7 @@ public class FacebookConnectAction extends BaseStrutsAction {
 		if (_facebookConnect.isVerifiedAccountRequired(companyId) &&
 			!jsonObject.getBoolean("verified")) {
 
-			return null;
+			throw new MustVerifyEmailAddressException(companyId);
 		}
 
 		User user = null;
@@ -347,6 +381,8 @@ public class FacebookConnectAction extends BaseStrutsAction {
 			user = updateUser(user, jsonObject);
 		}
 		else {
+			_checkAllowUserCreation(companyId, jsonObject);
+
 			user = addUser(session, companyId, jsonObject);
 		}
 
@@ -416,8 +452,30 @@ public class FacebookConnectAction extends BaseStrutsAction {
 			userGroupRoles, userGroupIds, serviceContext);
 	}
 
+	private void _checkAllowUserCreation(long companyId, JSONObject jsonObject)
+		throws PortalException {
+
+		Company company = _companyLocalService.getCompany(companyId);
+
+		if (!company.isStrangers()) {
+			throw new StrangersNotAllowedException(companyId);
+		}
+
+		String emailAddress = jsonObject.getString("email");
+
+		if (company.hasCompanyMx(emailAddress)) {
+			if (!company.isStrangersWithMx()) {
+				throw new UserEmailAddressException.MustNotUseCompanyMx(
+					emailAddress);
+			}
+		}
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		FacebookConnectAction.class);
+
+	@Reference
+	private CompanyLocalService _companyLocalService;
 
 	private FacebookConnect _facebookConnect;
 	private final Map<String, String> _forwards = new HashMap<>();

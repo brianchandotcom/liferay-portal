@@ -15,7 +15,6 @@
 package com.liferay.notifications.uad.anonymizer.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.notifications.uad.test.UserNotificationDeliveryUADTestHelper;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserNotificationDelivery;
 import com.liferay.portal.kernel.service.UserNotificationDeliveryLocalService;
@@ -29,7 +28,6 @@ import com.liferay.user.associated.data.test.util.BaseUADAnonymizerTestCase;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.After;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.runner.RunWith;
@@ -46,12 +44,6 @@ public class UserNotificationDeliveryUADAnonymizerTest
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
 
-	@After
-	public void tearDown() throws Exception {
-		_userNotificationDeliveryUADTestHelper.cleanUpDependencies(
-			_userNotificationDeliveries);
-	}
-
 	@Override
 	protected UserNotificationDelivery addBaseModel(long userId)
 		throws Exception {
@@ -65,21 +57,14 @@ public class UserNotificationDeliveryUADAnonymizerTest
 		throws Exception {
 
 		UserNotificationDelivery userNotificationDelivery =
-			_userNotificationDeliveryUADTestHelper.addUserNotificationDelivery(
-				userId);
+			UserNotificationDeliveryUADTestHelper.addUserNotificationDelivery(
+				_userNotificationDeliveryLocalService, userId);
 
 		if (deleteAfterTestRun) {
 			_userNotificationDeliveries.add(userNotificationDelivery);
 		}
 
 		return userNotificationDelivery;
-	}
-
-	@Override
-	protected void deleteBaseModels(List<UserNotificationDelivery> baseModels)
-		throws Exception {
-
-		_userNotificationDeliveryUADTestHelper.cleanUpDependencies(baseModels);
 	}
 
 	@Override
@@ -115,9 +100,5 @@ public class UserNotificationDeliveryUADAnonymizerTest
 	@Inject
 	private UserNotificationDeliveryLocalService
 		_userNotificationDeliveryLocalService;
-
-	@Inject
-	private UserNotificationDeliveryUADTestHelper
-		_userNotificationDeliveryUADTestHelper;
 
 }

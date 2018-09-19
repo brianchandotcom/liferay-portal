@@ -19,36 +19,22 @@ import com.liferay.portal.kernel.model.UserNotificationDeliveryConstants;
 import com.liferay.portal.kernel.service.UserNotificationDeliveryLocalService;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 
-import java.util.List;
-
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Brian Wing Shun Chan
  */
-@Component(
-	immediate = true, service = UserNotificationDeliveryUADTestHelper.class
-)
 public class UserNotificationDeliveryUADTestHelper {
 
-	public UserNotificationDelivery addUserNotificationDelivery(long userId)
+	public static UserNotificationDelivery addUserNotificationDelivery(
+			UserNotificationDeliveryLocalService
+				userNotificationDeliveryLocalService,
+			long userId)
 		throws Exception {
 
-		return _userNotificationDeliveryLocalService.
+		return userNotificationDeliveryLocalService.
 			addUserNotificationDelivery(
 				userId, RandomTestUtil.randomString(), 0,
 				UserNotificationDeliveryConstants.TYPE_WEBSITE,
 				UserNotificationDeliveryConstants.TYPE_WEBSITE, false);
 	}
-
-	public void cleanUpDependencies(
-			List<UserNotificationDelivery> userNotificationDeliveries)
-		throws Exception {
-	}
-
-	@Reference
-	private UserNotificationDeliveryLocalService
-		_userNotificationDeliveryLocalService;
 
 }

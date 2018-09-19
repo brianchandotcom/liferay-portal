@@ -65,9 +65,11 @@ String code = BeanParamUtil.getString(calendarResource, request, "code");
 			persistState="<%= true %>"
 		>
 			<liferay-ui:panel
+				collapsible="<%= true %>"
 				defaultState="closed"
 				extended="<%= false %>"
 				id="calendarResourceDetailsPanel"
+				markupView="lexicon"
 				persistState="<%= true %>"
 				title="details"
 			>
@@ -104,9 +106,11 @@ String code = BeanParamUtil.getString(calendarResource, request, "code");
 			</liferay-ui:panel>
 
 			<liferay-ui:panel
+				collapsible="<%= true %>"
 				defaultState="closed"
 				extended="<%= false %>"
 				id="calendarResourceCategorizationPanel"
+				markupView="lexicon"
 				persistState="<%= true %>"
 				title="categorization"
 			>
@@ -120,15 +124,23 @@ String code = BeanParamUtil.getString(calendarResource, request, "code");
 					classPK="<%= calendarResourceId %>"
 				/>
 			</liferay-ui:panel>
-		</liferay-ui:panel-container>
 
-		<c:if test="<%= calendarResource == null %>">
-			<aui:field-wrapper label="permissions">
-				<liferay-ui:input-permissions
-					modelName="<%= CalendarResource.class.getName() %>"
-				/>
-			</aui:field-wrapper>
-		</c:if>
+			<c:if test="<%= calendarResource == null %>">
+				<liferay-ui:panel
+					collapsible="<%= true %>"
+					defaultState="closed"
+					extended="<%= false %>"
+					id="calendarResourcePermissionsPanel"
+					markupView="lexicon"
+					persistState="<%= true %>"
+					title="permissions"
+				>
+					<liferay-ui:input-permissions
+						modelName="<%= CalendarResource.class.getName() %>"
+					/>
+				</liferay-ui:panel>
+			</c:if>
+		</liferay-ui:panel-container>
 
 		<aui:button-row>
 			<aui:button type="submit" />

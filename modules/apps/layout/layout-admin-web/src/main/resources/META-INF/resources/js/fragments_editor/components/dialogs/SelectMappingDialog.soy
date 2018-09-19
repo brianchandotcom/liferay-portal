@@ -5,11 +5,9 @@
  */
 {template .render}
 	{@param spritemap: string}
-	{@param visible: bool}
 	{@param? _handleCancelButtonClick: any}
 	{@param? _handleUnmapButtonClick: any}
 	{@param? _handleMappeableFieldLinkClick: any}
-	{@param? _handleVisibleChanged: any}
 	{@param? _loadingMappeableFields: bool}
 	{@param? _mappeableFields: list<[
 		enabled: bool,
@@ -69,7 +67,7 @@
 		{/param}
 
 		{param dialogClasses: 'modal-dialog-sm select-mapping-dialog' /}
-		{param events: ['visibleChanged': $_handleVisibleChanged] /}
+		{param events: ['visibleChanged': $_handleCancelButtonClick] /}
 
 		{param header kind="html"}
 			{msg desc=""}mapping-fields{/msg}
@@ -77,7 +75,6 @@
 
 		{param ref: 'modal' /}
 		{param spritemap: $spritemap /}
-		{param visible: $visible /}
 	{/call}
 {/template}
 

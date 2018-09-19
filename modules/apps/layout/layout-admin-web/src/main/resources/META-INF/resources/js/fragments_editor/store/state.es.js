@@ -112,6 +112,16 @@ const INITIAL_STATE = {
 		.value(null),
 
 	/**
+	 * Currently selected language id.
+	 * @default undefined
+	 * @instance
+	 * @review
+	 * @type {!string}
+	 */
+
+	languageId: Config.string().required(),
+
+	/**
 	 * Last date when the autosave has been executed.
 	 * @default ''
 	 * @instance

@@ -23,6 +23,14 @@ import {
 
 class FragmentsEditor extends Component {
 
+	created() {
+		requestAnimationFrame(
+			() => {
+				this.store.dispatchAction(UPDATE_TRANSLATION_STATUS);
+			}
+		);
+	}
+
 	/**
 	 * Focus a fragmentEntryLink for a given ID
 	 * @param {string} fragmentEntryLinkId
@@ -188,17 +196,6 @@ class FragmentsEditor extends Component {
 
 	_handleToggleHighlightMapping() {
 		this._highlightMapping = !this._highlightMapping;
-	}
-
-	/**
-	 * Callback executed when the translation language has changed
-	 * @private
-	 * @param {{languageId: string}} event
-	 * @review
-	 */
-
-	_handleTranslationLanguageChange(event) {
-		this.languageId = event.languageId;
 	}
 
 	/**
@@ -443,17 +440,6 @@ FragmentsEditor.STATE = Object.assign(
 		 */
 
 		mappingFieldsURL: Config.string().value(null),
-
-		/**
-		 * Currently selected language id.
-		 * @default undefined
-		 * @instance
-		 * @memberOf FragmentsEditor
-		 * @review
-		 * @type {!string}
-		 */
-
-		languageId: Config.string().required(),
 
 		/**
 		 *

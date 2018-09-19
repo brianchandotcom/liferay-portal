@@ -7,6 +7,14 @@
 const ADD_FRAGMENT_ENTRY_LINK = 'addFragmentEntryLink';
 
 /**
+ * Change languageId action type
+ * @review
+ * @type {string}
+ */
+
+const CHANGE_LANGUAGE_ID = 'languageId';
+
+/**
  * Clear drag target action type
  * @review
  * @type {string}
@@ -80,6 +88,7 @@ const UPDATE_TRANSLATION_STATUS = 'updateTranslationStatus';
 
 export {
 	ADD_FRAGMENT_ENTRY_LINK,
+	CHANGE_LANGUAGE_ID,
 	CLEAR_DRAG_TARGET,
 	HIDE_SIDEBAR,
 	MOVE_FRAGMENT_ENTRY_LINK,

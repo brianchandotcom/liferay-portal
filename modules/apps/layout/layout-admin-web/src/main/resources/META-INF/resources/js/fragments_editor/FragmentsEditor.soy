@@ -37,7 +37,6 @@
 	{@param? _handleSelectMappingDialogVisibleChanged: any}
 	{@param? _handleSelectMappingTypeDialogVisibleChanged: any}
 	{@param? _handleToggleHighlightMapping: any}
-	{@param? _handleTranslationLanguageChange: any}
 	{@param? _highlightMapping: bool}
 	{@param? _selectMappingDialogEditableId: string}
 	{@param? _selectMappingDialogEditableType: string}
@@ -77,9 +76,6 @@
 			{param availableLanguages: $availableLanguages /}
 			{param classPK: $classPK /}
 			{param defaultLanguageId: $defaultLanguageId /}
-			{param events: [
-				'translationLanguageChange': $_handleTranslationLanguageChange
-			] /}
 			{param languageId: $languageId /}
 			{param lastSaveDate: $lastSaveDate ?: '' /}
 			{param publishLayoutPageTemplateEntryURL: $publishLayoutPageTemplateEntryURL /}

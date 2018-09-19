@@ -1,5 +1,5 @@
 <#if entries?has_content>
-	<ul aria-label="${languageUtil.get(locale, "breadcrumb")}" class="breadcrumb breadcrumb-horizontal" role="navigation">
+	<ul aria-label="${portletDisplay.getTitle()}" class="breadcrumb breadcrumb-horizontal" role="navigation">
 		<#assign cssClass = "" />
 
 		<#list entries as entry>

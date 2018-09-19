@@ -405,6 +405,11 @@ public class SharingEntryLocalServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.sharing.model.SharingEntry> getToUserSharingEntries(
+		long toUserId, int start, int end) {
+		return getService().getToUserSharingEntries(toUserId, start, end);
+	}
+
+	public static java.util.List<com.liferay.sharing.model.SharingEntry> getToUserSharingEntries(
 		long toUserId, long classNameId) {
 		return getService().getToUserSharingEntries(toUserId, classNameId);
 	}

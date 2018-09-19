@@ -69,6 +69,16 @@ public class ServiceBeanAopCacheManager {
 		_annotations.put(methodInvocation.getMethod(), annotations);
 	}
 
+	/**
+	 * @deprecated As of Judson (7.1.x), replaced by {@link
+	 *             #ServiceBeanAopCacheManager(MethodInterceptor)}
+	 */
+	@Deprecated
+	public ServiceBeanAopCacheManager() {
+		_classLevelMethodInterceptors = new ArrayList<>();
+		_fullMethodInterceptors = new ArrayList<>();
+	}
+
 	public ServiceBeanAopCacheManager(MethodInterceptor methodInterceptor) {
 		ArrayList<MethodInterceptor> classLevelMethodInterceptors =
 			new ArrayList<>();

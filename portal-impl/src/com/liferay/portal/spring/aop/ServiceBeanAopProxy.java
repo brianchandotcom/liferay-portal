@@ -21,6 +21,8 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 
+import org.aopalliance.intercept.MethodInterceptor;
+
 /**
  * @author Shuyang Zhou
  */
@@ -43,12 +45,23 @@ public class ServiceBeanAopProxy
 		return null;
 	}
 
+	/**
+	 * @deprecated As of Judson (7.1.x), replaced by {@link #ServiceBeanAopProxy(
+	 *             AdvisedSupport, ServiceBeanAopCacheManager)}
+	 */
+	@Deprecated
+	public ServiceBeanAopProxy(
+		AdvisedSupport advisedSupport, MethodInterceptor methodInterceptor,
+		ServiceBeanAopCacheManager serviceBeanAopCacheManager) {
+
+		this(advisedSupport, new ServiceBeanAopCacheManager(methodInterceptor));
+	}
+
 	public ServiceBeanAopProxy(
 		AdvisedSupport advisedSupport,
 		ServiceBeanAopCacheManager serviceBeanAopCacheManager) {
 
 		_advisedSupport = advisedSupport;
-
 		_serviceBeanAopCacheManager = serviceBeanAopCacheManager;
 	}
 

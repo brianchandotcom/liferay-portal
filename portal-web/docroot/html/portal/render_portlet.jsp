@@ -333,9 +333,7 @@ if (siteGroup.isStaged() && !siteGroup.isStagedRemotely() && !siteGroup.isStaged
 
 // Portlet decorate
 
-boolean tilesPortletDecorate = GetterUtil.getBoolean(TilesAttributeUtil.getTilesAttribute(pageContext, "portlet_decorate"), true);
-
-boolean portletDecorate = tilesPortletDecorate;
+boolean portletDecorate = true;
 
 Boolean portletDecorateObj = (Boolean)request.getAttribute(WebKeys.PORTLET_DECORATE);
 

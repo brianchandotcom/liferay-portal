@@ -21,12 +21,6 @@
 <%
 String tilesPortletContent = GetterUtil.getString(request.getAttribute(WebKeys.PORTLET_CONTENT_JSP));
 
-if (Validator.isBlank(tilesPortletContent)) {
-	tilesPortletContent = GetterUtil.getString(TilesAttributeUtil.getTilesAttribute(pageContext, "portlet_content"));
-}
-
-TilesAttributeUtil.removeComponentContext(pageContext);
-
 Portlet portlet = (Portlet)request.getAttribute(WebKeys.RENDER_PORTLET);
 
 PortletPreferences portletSetup = portletDisplay.getPortletSetup();

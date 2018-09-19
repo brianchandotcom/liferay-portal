@@ -35,20 +35,21 @@ import java.io.InputStream;
 
 import java.util.List;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Brian Wing Shun Chan
  */
-@Component(immediate = true, service = DLFileShortcutUADTestHelper.class)
 public class DLFileShortcutUADTestHelper {
 
-	public DLFileShortcut addDLFileShortcut(long userId) throws Exception {
+	public static DLFileShortcut addDLFileShortcut(
+			DLFileEntryLocalService dlFileEntryLocalService,
+			DLFileShortcutLocalService dlFileShortcutLocalService,
+			DLFolderLocalService dlFolderLocalService, long userId)
+		throws Exception {
+
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext();
 
-		DLFolder dlFolder = _dlFolderLocalService.addFolder(
+		DLFolder dlFolder = dlFolderLocalService.addFolder(
 			userId, TestPropsValues.getGroupId(), TestPropsValues.getGroupId(),
 			false, 0L, RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(), false, serviceContext);
@@ -57,7 +58,7 @@ public class DLFileShortcutUADTestHelper {
 
 		InputStream is = new ByteArrayInputStream(bytes);
 
-		DLFileEntry dlFileEntry = _dlFileEntryLocalService.addFileEntry(
+		DLFileEntry dlFileEntry = dlFileEntryLocalService.addFileEntry(
 			userId, dlFolder.getGroupId(), dlFolder.getRepositoryId(),
 			dlFolder.getFolderId(), RandomTestUtil.randomString(),
 			ContentTypes.TEXT_PLAIN, RandomTestUtil.randomString(),
@@ -65,42 +66,41 @@ public class DLFileShortcutUADTestHelper {
 			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT, null,
 			null, is, bytes.length, serviceContext);
 
-		return _dlFileShortcutLocalService.addFileShortcut(
+		return dlFileShortcutLocalService.addFileShortcut(
 			userId, TestPropsValues.getGroupId(), TestPropsValues.getGroupId(),
 			dlFolder.getFolderId(), dlFileEntry.getFileEntryId(),
 			serviceContext);
 	}
 
-	public DLFileShortcut addDLFileShortcutWithStatusByUserId(
-			long userId, long statusByUserId)
+	public static DLFileShortcut addDLFileShortcutWithStatusByUserId(
+			DLFileEntryLocalService dlFileEntryLocalService,
+			DLFileShortcutLocalService dlFileShortcutLocalService,
+			DLFolderLocalService dlFolderLocalService, long userId,
+			long statusByUserId)
 		throws Exception {
 
-		DLFileShortcut dlFileShortcut = addDLFileShortcut(userId);
+		DLFileShortcut dlFileShortcut = addDLFileShortcut(
+			dlFileEntryLocalService, dlFileShortcutLocalService,
+			dlFolderLocalService, userId);
 
-		return _dlFileShortcutLocalService.updateStatus(
+		return dlFileShortcutLocalService.updateStatus(
 			statusByUserId, dlFileShortcut.getFileShortcutId(),
 			WorkflowConstants.STATUS_DRAFT,
 			ServiceContextTestUtil.getServiceContext());
 	}
 
-	public void cleanUpDependencies(List<DLFileShortcut> dlFileShortcuts)
+	public static void cleanUpDependencies(
+			DLFileEntryLocalService dlFileEntryLocalService,
+			DLFolderLocalService dlFolderLocalService,
+			List<DLFileShortcut> dlFileShortcuts)
 		throws Exception {
 
 		for (DLFileShortcut dlFileShortcut : dlFileShortcuts) {
-			_dlFileEntryLocalService.deleteFileEntry(
+			dlFileEntryLocalService.deleteFileEntry(
 				dlFileShortcut.getToFileEntryId());
 
-			_dlFolderLocalService.deleteFolder(dlFileShortcut.getFolderId());
+			dlFolderLocalService.deleteFolder(dlFileShortcut.getFolderId());
 		}
 	}
-
-	@Reference
-	private DLFileEntryLocalService _dlFileEntryLocalService;
-
-	@Reference
-	private DLFileShortcutLocalService _dlFileShortcutLocalService;
-
-	@Reference
-	private DLFolderLocalService _dlFolderLocalService;
 
 }

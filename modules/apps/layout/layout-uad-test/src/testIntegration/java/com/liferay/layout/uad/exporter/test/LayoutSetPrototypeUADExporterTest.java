@@ -17,6 +17,7 @@ package com.liferay.layout.uad.exporter.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.layout.uad.test.LayoutSetPrototypeUADTestHelper;
 import com.liferay.portal.kernel.model.LayoutSetPrototype;
+import com.liferay.portal.kernel.service.LayoutSetPrototypeLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.test.rule.Inject;
@@ -27,7 +28,6 @@ import com.liferay.user.associated.data.test.util.BaseUADExporterTestCase;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.After;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.runner.RunWith;
@@ -44,16 +44,11 @@ public class LayoutSetPrototypeUADExporterTest
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
 
-	@After
-	public void tearDown() throws Exception {
-		_layoutSetPrototypeUADTestHelper.cleanUpDependencies(
-			_layoutSetPrototypes);
-	}
-
 	@Override
 	protected LayoutSetPrototype addBaseModel(long userId) throws Exception {
 		LayoutSetPrototype layoutSetPrototype =
-			_layoutSetPrototypeUADTestHelper.addLayoutSetPrototype(userId);
+			LayoutSetPrototypeUADTestHelper.addLayoutSetPrototype(
+				_layoutSetPrototypeLocalService, userId);
 
 		_layoutSetPrototypes.add(layoutSetPrototype);
 
@@ -70,12 +65,12 @@ public class LayoutSetPrototypeUADExporterTest
 		return _uadExporter;
 	}
 
+	@Inject
+	private LayoutSetPrototypeLocalService _layoutSetPrototypeLocalService;
+
 	@DeleteAfterTestRun
 	private final List<LayoutSetPrototype> _layoutSetPrototypes =
 		new ArrayList<>();
-
-	@Inject
-	private LayoutSetPrototypeUADTestHelper _layoutSetPrototypeUADTestHelper;
 
 	@Inject(filter = "component.name=*.LayoutSetPrototypeUADExporter")
 	private UADExporter _uadExporter;

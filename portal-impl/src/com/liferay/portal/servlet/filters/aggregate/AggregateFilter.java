@@ -64,7 +64,6 @@ import java.net.URLConnection;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.Future;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -507,15 +506,15 @@ public class AggregateFilter extends IgnoreModuleRequestFilter {
 			String finalContent = content;
 			String finalResourcePath = resourcePath;
 
-			_ongoingTasks.computeIfAbsent(
-				cacheCommonFileName,
-				key -> {
-					NoticeableExecutorService noticeableExecutorService =
-						_portalExecutorManager.getPortalExecutor(
-							AggregateFilter.class.getName());
+			NoticeableFuture<String> noticeableFuture =
+				_ongoingTasks.computeIfAbsent(
+					cacheCommonFileName,
+					key -> {
+						NoticeableExecutorService noticeableExecutorService =
+							_portalExecutorManager.getPortalExecutor(
+								AggregateFilter.class.getName());
 
-					NoticeableFuture<String> noticeableFuture =
-						noticeableExecutorService.submit(
+						return noticeableExecutorService.submit(
 							() -> {
 								String minifiedContent = null;
 
@@ -543,12 +542,10 @@ public class AggregateFilter extends IgnoreModuleRequestFilter {
 
 								return minifiedContent;
 							});
+					});
 
-					noticeableFuture.addFutureListener(
-						future -> _ongoingTasks.remove(key));
-
-					return noticeableFuture;
-				});
+			noticeableFuture.addFutureListener(
+				future -> _ongoingTasks.remove(cacheCommonFileName));
 
 			return content;
 		}
@@ -766,7 +763,7 @@ public class AggregateFilter extends IgnoreModuleRequestFilter {
 			PortalExecutorManager.class, AggregateFilter.class,
 			"_portalExecutorManager", true);
 
-	private final Map<String, Future<?>> _ongoingTasks =
+	private final Map<String, NoticeableFuture<String>> _ongoingTasks =
 		new ConcurrentHashMap<>();
 	private ServletContext _servletContext;
 	private File _tempDir;

@@ -42,7 +42,8 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
  */
 @Component(
 	immediate = true,
-	property = "ddm.data.provider.instance.id=workflow-definitions"
+	property = "ddm.data.provider.instance.id=workflow-definitions",
+	service = DDMDataProvider.class
 )
 public class WorkflowDefinitionsDataProvider implements DDMDataProvider {
 

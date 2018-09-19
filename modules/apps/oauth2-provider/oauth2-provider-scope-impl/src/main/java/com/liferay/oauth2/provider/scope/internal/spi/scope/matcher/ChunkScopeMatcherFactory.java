@@ -29,7 +29,10 @@ import org.osgi.service.component.annotations.Component;
  * @author Carlos Sierra Andrés
  */
 @Component(
-	property = {"default=true", "delimiter=" + StringPool.PERIOD, "type=chunks"}
+	property = {
+		"default=true", "delimiter=" + StringPool.PERIOD, "type=chunks"
+	},
+	service = ScopeMatcherFactory.class
 )
 public class ChunkScopeMatcherFactory implements ScopeMatcherFactory {
 

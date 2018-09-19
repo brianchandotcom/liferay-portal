@@ -38,7 +38,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Carlos Sierra Andrés
  */
-@Component
+@Component(service = SubjectCreator.class)
 public class LiferaySubjectCreator implements SubjectCreator {
 
 	@Override

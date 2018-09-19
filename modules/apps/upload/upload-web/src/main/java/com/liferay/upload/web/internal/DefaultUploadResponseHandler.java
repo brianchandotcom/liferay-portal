@@ -49,7 +49,8 @@ import org.osgi.service.component.annotations.Modified;
  */
 @Component(
 	configurationPid = "com.liferay.document.library.configuration.DLConfiguration",
-	property = "upload.response.handler.system.default=true"
+	property = "upload.response.handler.system.default=true",
+	service = UploadResponseHandler.class
 )
 public class DefaultUploadResponseHandler implements UploadResponseHandler {
 

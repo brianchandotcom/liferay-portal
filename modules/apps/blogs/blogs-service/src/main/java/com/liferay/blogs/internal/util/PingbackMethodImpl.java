@@ -66,7 +66,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Alexander Chow
  */
-@Component
+@Component(service = Method.class)
 public class PingbackMethodImpl implements Method {
 
 	public static final int ACCESS_DENIED = 49;

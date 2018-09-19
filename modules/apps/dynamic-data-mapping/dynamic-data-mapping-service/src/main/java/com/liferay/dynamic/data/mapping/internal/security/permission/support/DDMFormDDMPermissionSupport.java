@@ -27,7 +27,8 @@ import org.osgi.service.component.annotations.Component;
 	property = {
 		"default.model.resource.name=true",
 		"model.class.name=com.liferay.dynamic.data.mapping.model.DDMFormInstance"
-	}
+	},
+	service = DDMStructurePermissionSupport.class
 )
 public class DDMFormDDMPermissionSupport
 	implements DDMStructurePermissionSupport {

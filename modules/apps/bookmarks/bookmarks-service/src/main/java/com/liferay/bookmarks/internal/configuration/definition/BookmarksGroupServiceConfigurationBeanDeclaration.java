@@ -22,7 +22,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Iván Zaera
  */
-@Component
+@Component(service = ConfigurationBeanDeclaration.class)
 public class BookmarksGroupServiceConfigurationBeanDeclaration
 	implements ConfigurationBeanDeclaration {
 

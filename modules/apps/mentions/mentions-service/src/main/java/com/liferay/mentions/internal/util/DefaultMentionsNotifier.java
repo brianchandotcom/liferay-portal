@@ -47,7 +47,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Sergio González
  */
-@Component
+@Component(service = MentionsNotifier.class)
 public class DefaultMentionsNotifier implements MentionsNotifier {
 
 	@Override

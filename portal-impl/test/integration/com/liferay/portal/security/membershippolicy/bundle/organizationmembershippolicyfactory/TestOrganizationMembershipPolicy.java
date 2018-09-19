@@ -33,7 +33,8 @@ import org.osgi.service.component.annotations.Component;
  * @author Peter Fellwock
  */
 @Component(
-	immediate = true, property = "service.ranking:Integer=" + Integer.MAX_VALUE
+	immediate = true, property = "service.ranking:Integer=" + Integer.MAX_VALUE,
+	service = OrganizationMembershipPolicy.class
 )
 public class TestOrganizationMembershipPolicy
 	implements OrganizationMembershipPolicy {

@@ -35,7 +35,7 @@ import org.osgi.service.component.annotations.Deactivate;
 /**
  * @author Iván Zaera Avellón
  */
-@Component(immediate = true)
+@Component(immediate = true, service = {})
 public class TopHeadExtender extends AbstractExtender {
 
 	@Activate

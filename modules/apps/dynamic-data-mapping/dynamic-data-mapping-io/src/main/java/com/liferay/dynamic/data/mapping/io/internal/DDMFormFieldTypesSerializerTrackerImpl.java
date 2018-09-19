@@ -31,7 +31,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 /**
  * @author Leonardo Barros
  */
-@Component(immediate = true)
+@Component(immediate = true, service = DDMFormFieldTypesSerializerTracker.class)
 public class DDMFormFieldTypesSerializerTrackerImpl
 	implements DDMFormFieldTypesSerializerTracker {
 

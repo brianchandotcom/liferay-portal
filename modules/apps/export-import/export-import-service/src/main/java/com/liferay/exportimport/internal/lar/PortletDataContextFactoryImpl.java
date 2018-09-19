@@ -52,7 +52,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Mate Thurzo
  */
-@Component(immediate = true)
+@Component(immediate = true, service = PortletDataContextFactory.class)
 @ProviderType
 public class PortletDataContextFactoryImpl
 	implements PortletDataContextFactory {

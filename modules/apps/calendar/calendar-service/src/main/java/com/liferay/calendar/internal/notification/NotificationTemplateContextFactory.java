@@ -58,7 +58,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Eduardo Lundgren
  */
-@Component(immediate = true)
+@Component(immediate = true, service = {})
 public class NotificationTemplateContextFactory {
 
 	public static NotificationTemplateContext getInstance(

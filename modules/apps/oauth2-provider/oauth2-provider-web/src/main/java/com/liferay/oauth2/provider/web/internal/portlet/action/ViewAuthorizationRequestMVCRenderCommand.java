@@ -61,7 +61,8 @@ import org.osgi.service.component.annotations.Reference;
 		"javax.portlet.name=" + OAuth2ProviderPortletKeys.OAUTH2_AUTHORIZE,
 		"mvc.command.name=/",
 		"mvc.command.name=/authorize/view_authorization_request"
-	}
+	},
+	service = MVCRenderCommand.class
 )
 public class ViewAuthorizationRequestMVCRenderCommand
 	implements MVCRenderCommand {

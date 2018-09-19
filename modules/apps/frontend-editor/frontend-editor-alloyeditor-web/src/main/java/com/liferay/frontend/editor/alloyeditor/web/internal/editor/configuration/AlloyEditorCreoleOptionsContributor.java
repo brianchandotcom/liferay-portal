@@ -26,7 +26,10 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Chema Balsas
  */
-@Component(property = "editor.name=alloyeditor_creole")
+@Component(
+	property = "editor.name=alloyeditor_creole",
+	service = EditorOptionsContributor.class
+)
 public class AlloyEditorCreoleOptionsContributor
 	implements EditorOptionsContributor {
 

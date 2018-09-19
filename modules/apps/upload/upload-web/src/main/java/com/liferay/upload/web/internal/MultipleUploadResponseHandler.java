@@ -50,7 +50,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	configurationPid = "com.liferay.document.library.configuration.DLConfiguration",
-	property = "upload.response.handler=multiple"
+	property = "upload.response.handler=multiple",
+	service = UploadResponseHandler.class
 )
 public class MultipleUploadResponseHandler implements UploadResponseHandler {
 

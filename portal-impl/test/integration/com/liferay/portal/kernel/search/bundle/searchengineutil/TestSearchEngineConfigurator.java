@@ -27,7 +27,8 @@ import org.osgi.service.component.annotations.Reference;
  * @author Peter Fellwock
  */
 @Component(
-	immediate = true, property = "service.ranking:Integer=" + Integer.MAX_VALUE
+	immediate = true, property = "service.ranking:Integer=" + Integer.MAX_VALUE,
+	service = SearchEngineConfigurator.class
 )
 public class TestSearchEngineConfigurator implements SearchEngineConfigurator {
 

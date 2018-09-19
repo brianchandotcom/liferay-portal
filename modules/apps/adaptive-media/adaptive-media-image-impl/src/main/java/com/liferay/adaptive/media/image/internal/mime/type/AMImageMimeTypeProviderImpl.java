@@ -29,7 +29,8 @@ import org.osgi.service.component.annotations.Modified;
  * @author Sergio González
  */
 @Component(
-	configurationPid = "com.liferay.adaptive.media.image.internal.configuration.AMImageConfiguration"
+	configurationPid = "com.liferay.adaptive.media.image.internal.configuration.AMImageConfiguration",
+	service = AMImageMimeTypeProvider.class
 )
 public class AMImageMimeTypeProviderImpl implements AMImageMimeTypeProvider {
 

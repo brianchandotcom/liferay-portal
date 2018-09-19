@@ -29,7 +29,8 @@ import org.osgi.service.component.annotations.Reference;
 	property = {
 		"model.class.name=com.liferay.blogs.model.BlogsEntry",
 		"service.ranking:Integer=100"
-	}
+	},
+	service = ExportImportContentProcessor.class
 )
 public class AMBlogsEntryExportImportContentProcessor
 	implements ExportImportContentProcessor<String> {

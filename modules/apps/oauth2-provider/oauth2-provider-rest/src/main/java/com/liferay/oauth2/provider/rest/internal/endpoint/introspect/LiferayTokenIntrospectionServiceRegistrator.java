@@ -36,7 +36,8 @@ import org.osgi.service.component.annotations.Reference;
 	property = {
 		"oauth2.allow.token.introspection.endpoint=true",
 		"oauth2.allow.token.introspection.endpoint.public.clients=true"
-	}
+	},
+	service = {}
 )
 public class LiferayTokenIntrospectionServiceRegistrator {
 

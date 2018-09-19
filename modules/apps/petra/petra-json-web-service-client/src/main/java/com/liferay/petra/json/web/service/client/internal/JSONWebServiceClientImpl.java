@@ -36,7 +36,7 @@ import org.slf4j.LoggerFactory;
  * @author Ivica Cardic
  * @author Igor Beslic
  */
-@Component(factory = "JSONWebServiceClient")
+@Component(factory = "JSONWebServiceClient", service = {})
 public class JSONWebServiceClientImpl extends BaseJSONWebServiceClientImpl {
 
 	@Activate

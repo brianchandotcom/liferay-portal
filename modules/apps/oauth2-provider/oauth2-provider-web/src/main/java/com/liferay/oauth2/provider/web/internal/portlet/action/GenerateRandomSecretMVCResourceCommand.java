@@ -34,7 +34,8 @@ import org.osgi.service.component.annotations.Component;
 	property = {
 		"javax.portlet.name=" + OAuth2ProviderPortletKeys.OAUTH2_ADMIN,
 		"mvc.command.name=/admin/generate_random_secret"
-	}
+	},
+	service = MVCResourceCommand.class
 )
 public class GenerateRandomSecretMVCResourceCommand
 	implements MVCResourceCommand {

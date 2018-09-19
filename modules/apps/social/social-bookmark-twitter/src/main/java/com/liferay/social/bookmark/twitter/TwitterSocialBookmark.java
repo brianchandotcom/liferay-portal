@@ -38,8 +38,10 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property =
-		{"social.bookmarks.priority:Integer=3", "social.bookmarks.type=twitter"}
+	property = {
+		"social.bookmarks.priority:Integer=3", "social.bookmarks.type=twitter"
+	},
+	service = SocialBookmark.class
 )
 public class TwitterSocialBookmark implements SocialBookmark {
 

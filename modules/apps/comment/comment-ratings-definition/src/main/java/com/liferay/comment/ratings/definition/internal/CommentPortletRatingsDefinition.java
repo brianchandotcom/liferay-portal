@@ -27,7 +27,8 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	property =
-		{"model.class.name=com.liferay.message.boards.model.MBDiscussion"}
+		{"model.class.name=com.liferay.message.boards.model.MBDiscussion"},
+	service = PortletRatingsDefinition.class
 )
 public class CommentPortletRatingsDefinition
 	implements PortletRatingsDefinition {

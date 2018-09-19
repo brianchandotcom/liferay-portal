@@ -29,7 +29,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Roberto Díaz
  */
-@Component(immediate = true)
+@Component(immediate = true, service = WikiPageTitleValidator.class)
 public class DefaultWikiPageTitleValidator implements WikiPageTitleValidator {
 
 	@Override

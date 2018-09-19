@@ -34,7 +34,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Carlos Sierra Andrés
  * @author Jorge Ferrer
  */
-@Component(immediate = true)
+@Component(immediate = true, service = Provider.class)
 public class CompanyProvider implements Provider<Company> {
 
 	@Override

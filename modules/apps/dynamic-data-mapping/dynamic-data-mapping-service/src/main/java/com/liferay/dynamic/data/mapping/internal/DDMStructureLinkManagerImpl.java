@@ -28,7 +28,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Rafael Praxedes
  */
-@Component(immediate = true)
+@Component(immediate = true, service = DDMStructureLinkManager.class)
 public class DDMStructureLinkManagerImpl implements DDMStructureLinkManager {
 
 	@Override

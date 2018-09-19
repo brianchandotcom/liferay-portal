@@ -41,7 +41,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Lino Alves
  */
-@Component(immediate = true)
+@Component(immediate = true, service = {})
 public class DDMFormInstanceModelResourcePermissionRegistrar {
 
 	@Activate

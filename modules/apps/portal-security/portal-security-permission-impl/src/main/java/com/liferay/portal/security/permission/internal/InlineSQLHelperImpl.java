@@ -60,7 +60,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	configurationPid = "com.liferay.portal.security.permission.internal.configuration.InlinePermissionConfiguration",
-	immediate = true
+	immediate = true, service = InlineSQLHelper.class
 )
 public class InlineSQLHelperImpl implements InlineSQLHelper {
 

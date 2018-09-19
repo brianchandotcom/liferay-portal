@@ -64,7 +64,8 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
  * @author Tomas Polesovsky
  */
 @Component(
-	property = "auth.verifier.OAuth2JSONWSAuthVerifier.urls.includes=/api/jsonws/*"
+	property = "auth.verifier.OAuth2JSONWSAuthVerifier.urls.includes=/api/jsonws/*",
+	service = AuthVerifier.class
 )
 public class OAuth2JSONWSAuthVerifier implements AuthVerifier {
 

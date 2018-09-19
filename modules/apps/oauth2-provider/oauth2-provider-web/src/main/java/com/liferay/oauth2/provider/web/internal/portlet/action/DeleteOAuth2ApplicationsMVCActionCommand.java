@@ -39,7 +39,8 @@ import org.osgi.service.component.annotations.Reference;
 	property = {
 		"javax.portlet.name=" + OAuth2ProviderPortletKeys.OAUTH2_ADMIN,
 		"mvc.command.name=/admin/delete_oauth2_applications"
-	}
+	},
+	service = MVCActionCommand.class
 )
 public class DeleteOAuth2ApplicationsMVCActionCommand
 	implements MVCActionCommand {

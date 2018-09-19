@@ -30,7 +30,8 @@ import org.osgi.service.component.annotations.Component;
 	property = {
 		"name=UserGroupsAdminExportCapability",
 		"type=" + PortletDisplayTemplateConstants.DISPLAY_TEMPLATE_EXPORT
-	}
+	},
+	service = PortletDisplayTemplateRegister.class
 )
 public class UserGroupsAdminPortletDisplayTemplateExportCapability
 	implements PortletDisplayTemplateRegister {

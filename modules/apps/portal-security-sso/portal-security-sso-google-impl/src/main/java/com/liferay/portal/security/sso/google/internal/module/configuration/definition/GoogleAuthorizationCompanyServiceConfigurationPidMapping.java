@@ -23,7 +23,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Stian Sigvartsen
  */
-@Component
+@Component(service = ConfigurationPidMapping.class)
 public class GoogleAuthorizationCompanyServiceConfigurationPidMapping
 	implements ConfigurationPidMapping {
 

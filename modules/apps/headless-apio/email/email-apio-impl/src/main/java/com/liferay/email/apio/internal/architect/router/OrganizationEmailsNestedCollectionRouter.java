@@ -40,7 +40,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Javier Gamarra
  * @review
  */
-@Component(immediate = true)
+@Component(immediate = true, service = NestedCollectionRouter.class)
 public class OrganizationEmailsNestedCollectionRouter
 	implements NestedCollectionRouter
 		<EmailAddress, Long, EmailIdentifier, Long, OrganizationIdentifier> {

@@ -55,7 +55,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
  */
 @Component(
 	configurationPid = "com.liferay.portal.search.elasticsearch6.configuration.ElasticsearchConfiguration",
-	immediate = true
+	immediate = true, service = IndexFactory.class
 )
 public class CompanyIndexFactory implements IndexFactory {
 

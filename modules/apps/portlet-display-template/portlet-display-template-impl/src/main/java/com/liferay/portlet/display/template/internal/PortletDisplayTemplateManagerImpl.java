@@ -32,7 +32,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Leonardo Barros
  */
-@Component(immediate = true)
+@Component(immediate = true, service = PortletDisplayTemplateManager.class)
 public class PortletDisplayTemplateManagerImpl
 	implements PortletDisplayTemplateManager {
 

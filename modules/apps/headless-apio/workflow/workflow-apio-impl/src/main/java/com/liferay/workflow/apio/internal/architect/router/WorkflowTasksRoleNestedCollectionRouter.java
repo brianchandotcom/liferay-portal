@@ -38,7 +38,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Sarai Díaz
  * @review
  */
-@Component(immediate = true)
+@Component(immediate = true, service = NestedCollectionRouter.class)
 public class WorkflowTasksRoleNestedCollectionRouter
 	implements NestedCollectionRouter
 		<WorkflowTask, Long, WorkflowTaskIdentifier, Long, RoleIdentifier> {

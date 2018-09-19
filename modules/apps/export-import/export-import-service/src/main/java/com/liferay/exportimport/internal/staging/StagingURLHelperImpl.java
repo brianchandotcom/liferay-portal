@@ -35,7 +35,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Akos Thurzo
  */
-@Component(immediate = true)
+@Component(immediate = true, service = StagingURLHelper.class)
 @ProviderType
 public class StagingURLHelperImpl implements StagingURLHelper {
 

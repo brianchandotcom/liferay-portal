@@ -35,7 +35,8 @@ import org.osgi.service.component.annotations.Reference;
 	property = {
 		"name=PortletDisplayTemplateExporter",
 		"type=" + PortletDisplayTemplateConstants.DISPLAY_TEMPLATE_EXPORT
-	}
+	},
+	service = PortletDisplayTemplateRegister.class
 )
 public class PortletDisplayTemplateExportRegisterImpl
 	implements PortletDisplayTemplateRegister {

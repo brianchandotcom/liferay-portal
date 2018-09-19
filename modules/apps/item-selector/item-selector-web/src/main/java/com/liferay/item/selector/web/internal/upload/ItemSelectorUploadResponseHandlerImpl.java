@@ -34,7 +34,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Alejandro Tardín
  */
-@Component
+@Component(service = ItemSelectorUploadResponseHandler.class)
 public class ItemSelectorUploadResponseHandlerImpl
 	implements ItemSelectorUploadResponseHandler {
 

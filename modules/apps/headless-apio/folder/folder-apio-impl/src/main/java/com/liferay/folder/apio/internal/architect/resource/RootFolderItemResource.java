@@ -32,7 +32,7 @@ import org.osgi.service.component.annotations.Reference;
  *
  * @author Eduardo Perez
  */
-@Component(immediate = true)
+@Component(immediate = true, service = ItemResource.class)
 public class RootFolderItemResource
 	implements ItemResource<Group, Long, RootFolderIdentifier> {
 

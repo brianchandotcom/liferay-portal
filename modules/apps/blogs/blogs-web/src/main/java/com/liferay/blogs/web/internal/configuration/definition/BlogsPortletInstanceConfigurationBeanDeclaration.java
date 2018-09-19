@@ -22,7 +22,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Sergio González
  */
-@Component
+@Component(service = ConfigurationBeanDeclaration.class)
 public class BlogsPortletInstanceConfigurationBeanDeclaration
 	implements ConfigurationBeanDeclaration {
 

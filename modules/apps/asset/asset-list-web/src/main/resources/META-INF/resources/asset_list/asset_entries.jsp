@@ -246,14 +246,6 @@ SearchContainer assetListEntryAssetEntryRelSearchContainer = editAssetListDispla
 
 		submitForm(document.<portlet:namespace />fm, '<%= moveAssetEntrySelectionUpURL.toString() %>');
 	}
-
-	function selectAsset(assetEntryId, assetClassName, assetType, assetEntryTitle, groupName) {
-		<portlet:namespace />fm.<portlet:namespace />assetEntryId.value = assetEntryId;
-
-		<portlet:actionURL name="/asset_list/add_asset_entry_selection" var="addAssetEntrySelectionURL" />
-
-		submitForm(document.<portlet:namespace />fm, '<%= addAssetEntrySelectionURL.toString() %>');
-	}
 </aui:script>
 
 <aui:script sandbox="<%= true %>">
@@ -278,7 +270,9 @@ SearchContainer assetListEntryAssetEntryRelSearchContainer = editAssetListDispla
 					uri: currentTarget.data('href')
 				},
 				function(event) {
-					selectAsset(event.entityid, event.assetclassname, event.assettype, event.assettitle, event.groupdescriptivename);
+					<portlet:namespace />fm.<portlet:namespace />assetEntryId.value = event.entityid;
+
+					submitForm(document.<portlet:namespace />fm, '<portlet:actionURL name="/asset_list/add_asset_entry_selection" var="addAssetEntrySelectionURL" />');
 				}
 			);
 		}

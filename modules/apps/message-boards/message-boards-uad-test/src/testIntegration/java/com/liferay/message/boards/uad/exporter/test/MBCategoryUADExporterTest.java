@@ -16,6 +16,7 @@ package com.liferay.message.boards.uad.exporter.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.message.boards.model.MBCategory;
+import com.liferay.message.boards.service.MBCategoryLocalService;
 import com.liferay.message.boards.uad.test.MBCategoryUADTestHelper;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -28,7 +29,6 @@ import com.liferay.user.associated.data.test.util.WhenHasStatusByUserIdField;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.After;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.runner.RunWith;
@@ -52,22 +52,18 @@ public class MBCategoryUADExporterTest
 		throws Exception {
 
 		MBCategory mbCategory =
-			_mbCategoryUADTestHelper.addMBCategoryWithStatusByUserId(
-				userId, statusByUserId);
+			MBCategoryUADTestHelper.addMBCategoryWithStatusByUserId(
+				_mbCategoryLocalService, userId, statusByUserId);
 
 		_mbCategories.add(mbCategory);
 
 		return mbCategory;
 	}
 
-	@After
-	public void tearDown() throws Exception {
-		_mbCategoryUADTestHelper.cleanUpDependencies(_mbCategories);
-	}
-
 	@Override
 	protected MBCategory addBaseModel(long userId) throws Exception {
-		MBCategory mbCategory = _mbCategoryUADTestHelper.addMBCategory(userId);
+		MBCategory mbCategory = MBCategoryUADTestHelper.addMBCategory(
+			_mbCategoryLocalService, userId);
 
 		_mbCategories.add(mbCategory);
 
@@ -88,7 +84,7 @@ public class MBCategoryUADExporterTest
 	private final List<MBCategory> _mbCategories = new ArrayList<>();
 
 	@Inject
-	private MBCategoryUADTestHelper _mbCategoryUADTestHelper;
+	private MBCategoryLocalService _mbCategoryLocalService;
 
 	@Inject(filter = "component.name=*.MBCategoryUADExporter")
 	private UADExporter _uadExporter;

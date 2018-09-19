@@ -22,43 +22,34 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
-import java.util.List;
-
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Brian Wing Shun Chan
  */
-@Component(immediate = true, service = MBCategoryUADTestHelper.class)
 public class MBCategoryUADTestHelper {
 
-	public MBCategory addMBCategory(long userId) throws Exception {
+	public static MBCategory addMBCategory(
+			MBCategoryLocalService mbCategoryLocalService, long userId)
+		throws Exception {
+
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
 				TestPropsValues.getGroupId());
 
-		return _mbCategoryLocalService.addCategory(
+		return mbCategoryLocalService.addCategory(
 			userId, 0, RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(), serviceContext);
 	}
 
-	public MBCategory addMBCategoryWithStatusByUserId(
-			long userId, long statusByUserId)
+	public static MBCategory addMBCategoryWithStatusByUserId(
+			MBCategoryLocalService mbCategoryLocalService, long userId,
+			long statusByUserId)
 		throws Exception {
 
-		MBCategory mbCategory = addMBCategory(userId);
+		MBCategory mbCategory = addMBCategory(mbCategoryLocalService, userId);
 
-		return _mbCategoryLocalService.updateStatus(
+		return mbCategoryLocalService.updateStatus(
 			statusByUserId, mbCategory.getCategoryId(),
 			WorkflowConstants.STATUS_APPROVED);
 	}
-
-	public void cleanUpDependencies(List<MBCategory> mbCategories)
-		throws Exception {
-	}
-
-	@Reference
-	private MBCategoryLocalService _mbCategoryLocalService;
 
 }

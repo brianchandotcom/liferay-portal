@@ -30,7 +30,6 @@ import com.liferay.user.associated.data.test.util.WhenHasStatusByUserIdField;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.After;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.runner.RunWith;
@@ -54,17 +53,12 @@ public class MBCategoryUADAnonymizerTest
 		throws Exception {
 
 		MBCategory mbCategory =
-			_mbCategoryUADTestHelper.addMBCategoryWithStatusByUserId(
-				userId, statusByUserId);
+			MBCategoryUADTestHelper.addMBCategoryWithStatusByUserId(
+				_mbCategoryLocalService, userId, statusByUserId);
 
 		_mbCategories.add(mbCategory);
 
 		return mbCategory;
-	}
-
-	@After
-	public void tearDown() throws Exception {
-		_mbCategoryUADTestHelper.cleanUpDependencies(_mbCategories);
 	}
 
 	@Override
@@ -76,20 +70,14 @@ public class MBCategoryUADAnonymizerTest
 	protected MBCategory addBaseModel(long userId, boolean deleteAfterTestRun)
 		throws Exception {
 
-		MBCategory mbCategory = _mbCategoryUADTestHelper.addMBCategory(userId);
+		MBCategory mbCategory = MBCategoryUADTestHelper.addMBCategory(
+			_mbCategoryLocalService, userId);
 
 		if (deleteAfterTestRun) {
 			_mbCategories.add(mbCategory);
 		}
 
 		return mbCategory;
-	}
-
-	@Override
-	protected void deleteBaseModels(List<MBCategory> baseModels)
-		throws Exception {
-
-		_mbCategoryUADTestHelper.cleanUpDependencies(baseModels);
 	}
 
 	@Override
@@ -132,9 +120,6 @@ public class MBCategoryUADAnonymizerTest
 
 	@Inject
 	private MBCategoryLocalService _mbCategoryLocalService;
-
-	@Inject
-	private MBCategoryUADTestHelper _mbCategoryUADTestHelper;
 
 	@Inject(filter = "component.name=*.MBCategoryUADAnonymizer")
 	private UADAnonymizer _uadAnonymizer;

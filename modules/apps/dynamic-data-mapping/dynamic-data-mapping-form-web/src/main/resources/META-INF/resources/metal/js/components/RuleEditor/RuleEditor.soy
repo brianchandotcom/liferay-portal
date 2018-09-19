@@ -55,6 +55,7 @@
 
 		<ul class="liferay-ddm-form-builder-rule-condition-list liferay-ddm-form-rule-builder-timeline timeline {length($conditions) > 1 ? 'can-remove-item' : ''}">
 			{let $enableLogicalOperator: (length($conditions) > 1) ? true : false /}
+
 			{call .rulesHeader}
 				{param extraContent kind="html"}
 					{call .logicalOperatorDropDown}
@@ -66,8 +67,8 @@
 				{param logicalOperator: $strings[$logicalOperator] /}
 				{param title: $strings.condition /}
 			{/call}
-			{foreach $condition in $conditions}
 
+			{foreach $condition in $conditions}
 				{call .condition}
 					{param _handleFirstOperandSelection: $_handleFirstOperandSelection /}
 					{param _handleOperatorSelection: $_handleOperatorSelection /}
@@ -88,6 +89,7 @@
 					{param spritemap: $spritemap /}
 					{param readOnly: $readOnly /}
 				{/call}
+
 				{ifempty}
 					{call .condition}
 						{param _handleFirstOperandSelection: $_handleFirstOperandSelection /}
@@ -191,8 +193,9 @@
 						{param secondOperandTypeSelectedList: $secondOperandTypeSelectedList /}
 					{/call}
 
-					{let $visibleTextField: isNonnull($secondOperandTypeSelectedList) and ($secondOperandTypeSelectedList[$index].name == 'text') ? true : false /}
-					<div class="condition-type-value form-group-item {if not $visibleTextField}hide{/if}" condition-type-value-index="{$index}">
+					{let $textFieldVisible: isNonnull($secondOperandTypeSelectedList) and ($secondOperandTypeSelectedList[$index].name == 'text') ? true : false /}
+
+					<div class="condition-type-value form-group-item {if not $textFieldVisible}hide{/if}" condition-type-value-index="{$index}">
 						{delcall PageRenderer.RegisterFieldType variant="'text'"}
 							{param events: [
 								'fieldEdited': $_handleSecondOperandSelection
@@ -205,8 +208,9 @@
 						{/delcall}
 					</div>
 
-					{let $visibleSelectField: isNonnull($secondOperandTypeSelectedList) and ($secondOperandTypeSelectedList[$index].name == 'field') ? true : false /}
-					<div class="condition-type-value-select form-group-item {if not $visibleSelectField}hide{/if}" condition-type-value-select-index="{$index}">
+					{let $selectFieldVisible: isNonnull($secondOperandTypeSelectedList) and ($secondOperandTypeSelectedList[$index].name == 'field') ? true : false /}
+
+					<div class="condition-type-value-select form-group-item {if not $selectFieldVisible}hide{/if}" condition-type-value-select-index="{$index}">
 						{delcall PageRenderer.RegisterFieldType variant="'select'"}
 							{param events: [
 									'fieldEdited': $_handleSecondOperandSelection
@@ -218,10 +222,11 @@
 						{/delcall}
 					</div>
 
-					{let $visibleSelectOptionsField: isNonnull($secondOperandTypeSelectedList) and ($secondOperandTypeSelectedList[$index].name == 'select') ? true : false /}
+					{let $selectOptionsFieldVisible: isNonnull($secondOperandTypeSelectedList) and ($secondOperandTypeSelectedList[$index].name == 'select') ? true : false /}
+
 					{foreach $operand in $firstOperandList}
 						{if $operand.value == $firstOperandValueSelected}
-							<div class="condition-type-value-select-options form-group-item {if not $visibleSelectOptionsField}hide{/if}" condition-type-value-select-options-index="{$index}">
+							<div class="condition-type-value-select-options form-group-item {if not $selectOptionsFieldVisible}hide{/if}" condition-type-value-select-options-index="{$index}">
 								{delcall PageRenderer.RegisterFieldType variant="'select'"}
 									{param events: [
 											'fieldEdited': $_handleSecondOperandSelection
@@ -256,6 +261,7 @@
 	{@param? operatorSelected: string}
 	{@param index: int}
 	{@param? spritemap: string}
+
 	{let $readOnly: ($operatorsList and length($operatorsList) > 0) ? false : true /}
 
 	<div class="condition-operator form-group-item" condition-operator-index="{$index}">
@@ -289,6 +295,7 @@
 	{@param? spritemap: string}
 
 	{let $visible: $operatorSelected and isNonnull($secondOperandTypeSelectedList) and $secondOperandTypeSelectedList[$index].name != 'none' ? true: false /}
+
 	<div class="condition-type form-group-item {if not $visible}hide{/if}" condition-type-index="{$index}">
 		{delcall PageRenderer.RegisterFieldType variant="'select'"}
 			{param events: [
@@ -311,7 +318,6 @@
 	{@param? enableLogicalOperator: bool}
 
 	{let $attributes kind="attributes"}
-
 		class="btn btn-default dropdown-toggle dropdown-toggle-operator text-uppercase"
 
 		data-toggle="dropdown"

@@ -1,6 +1,6 @@
-import RuleBuilder from '../RuleBuilder.es';
-import {dom as MetalTestUtil} from 'metal-dom';
 import '../../../components/RuleEditor/__tests__/__fixtures__/FieldsRuleEditor.es';
+import dom from 'metal-dom';
+import RuleBuilder from '../RuleBuilder.es';
 
 const spritemap = 'icons.svg';
 let component;
@@ -86,13 +86,13 @@ describe(
 		it(
 			'should render rule screen editor when click edit button',
 			() => {
-				MetalTestUtil.enterDocument('<button id="addFieldButton" class="hide"></button>');
-
-				const ruleCardEdit = document.querySelector('.rule-card-edit');
+				dom.enterDocument('<button id="addFieldButton" class="hide"></button>');
 
 				component = new RuleBuilder(configView);
 
-				MetalTestUtil.triggerEvent(ruleCardEdit, 'click', {});
+				const ruleCardEdit = document.querySelector('.rule-card-edit');
+
+				dom.triggerEvent(ruleCardEdit, 'click', {});
 
 				jest.runAllTimers();
 
@@ -103,13 +103,13 @@ describe(
 		it(
 			'should render rule screen editor when click add rule button',
 			() => {
-				MetalTestUtil.enterDocument('<button id="addFieldButton" class="hide"></button>');
+				dom.enterDocument('<button id="addFieldButton" class="hide"></button>');
 
 				const ruleCardEdit = document.querySelector('#addFieldButton');
 
 				component = new RuleBuilder(configView);
 
-				MetalTestUtil.triggerEvent(ruleCardEdit, 'click', {});
+				dom.triggerEvent(ruleCardEdit, 'click', {});
 
 				jest.runAllTimers();
 

@@ -20,34 +20,21 @@ import com.liferay.portal.kernel.service.UserNotificationEventLocalService;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 
-import java.util.List;
-
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Brian Wing Shun Chan
  */
-@Component(immediate = true, service = UserNotificationEventUADTestHelper.class)
 public class UserNotificationEventUADTestHelper {
 
-	public UserNotificationEvent addUserNotificationEvent(long userId)
+	public static UserNotificationEvent addUserNotificationEvent(
+			UserNotificationEventLocalService userNotificationEventLocalService,
+			long userId)
 		throws Exception {
 
-		return _userNotificationEventLocalService.addUserNotificationEvent(
+		return userNotificationEventLocalService.addUserNotificationEvent(
 			userId, RandomTestUtil.randomString(), 0,
 			UserNotificationDeliveryConstants.TYPE_WEBSITE, 0,
 			RandomTestUtil.randomString(), false,
 			ServiceContextTestUtil.getServiceContext());
 	}
-
-	public void cleanUpDependencies(
-			List<UserNotificationEvent> userNotificationEvents)
-		throws Exception {
-	}
-
-	@Reference
-	private UserNotificationEventLocalService
-		_userNotificationEventLocalService;
 
 }

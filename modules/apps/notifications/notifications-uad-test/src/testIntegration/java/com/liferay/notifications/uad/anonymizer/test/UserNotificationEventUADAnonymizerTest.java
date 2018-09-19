@@ -29,7 +29,6 @@ import com.liferay.user.associated.data.test.util.BaseUADAnonymizerTestCase;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.After;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.runner.RunWith;
@@ -46,12 +45,6 @@ public class UserNotificationEventUADAnonymizerTest
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
 
-	@After
-	public void tearDown() throws Exception {
-		_userNotificationEventUADTestHelper.cleanUpDependencies(
-			_userNotificationEvents);
-	}
-
 	@Override
 	protected UserNotificationEvent addBaseModel(long userId) throws Exception {
 		return addBaseModel(userId, true);
@@ -63,21 +56,14 @@ public class UserNotificationEventUADAnonymizerTest
 		throws Exception {
 
 		UserNotificationEvent userNotificationEvent =
-			_userNotificationEventUADTestHelper.addUserNotificationEvent(
-				userId);
+			UserNotificationEventUADTestHelper.addUserNotificationEvent(
+				_userNotificationEventLocalService, userId);
 
 		if (deleteAfterTestRun) {
 			_userNotificationEvents.add(userNotificationEvent);
 		}
 
 		return userNotificationEvent;
-	}
-
-	@Override
-	protected void deleteBaseModels(List<UserNotificationEvent> baseModels)
-		throws Exception {
-
-		_userNotificationEventUADTestHelper.cleanUpDependencies(baseModels);
 	}
 
 	@Override
@@ -113,9 +99,5 @@ public class UserNotificationEventUADAnonymizerTest
 	@DeleteAfterTestRun
 	private final List<UserNotificationEvent> _userNotificationEvents =
 		new ArrayList<>();
-
-	@Inject
-	private UserNotificationEventUADTestHelper
-		_userNotificationEventUADTestHelper;
 
 }

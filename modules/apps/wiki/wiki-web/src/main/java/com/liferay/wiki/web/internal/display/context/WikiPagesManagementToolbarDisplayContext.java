@@ -20,10 +20,13 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.SafeConsumer;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItemList;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.servlet.taglib.ui.Menu;
 import com.liferay.portal.kernel.servlet.taglib.ui.URLMenuItem;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -33,9 +36,12 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.trash.TrashHelper;
 import com.liferay.wiki.constants.WikiWebKeys;
 import com.liferay.wiki.model.WikiNode;
+import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.web.internal.display.context.util.WikiURLHelper;
 import com.liferay.wiki.web.internal.portlet.toolbar.item.WikiPortletToolbarContributor;
+import com.liferay.wiki.web.internal.security.permission.resource.WikiPagePermission;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -99,6 +105,23 @@ public class WikiPagesManagementToolbarDisplayContext {
 						}));
 			}
 		};
+	}
+
+	public List<String> getAvailableActionDropdownItems(WikiPage wikiPage)
+		throws PortalException {
+
+		List<String> availableActionDropdownItems = new ArrayList<>();
+
+		PermissionChecker permissionChecker =
+			_themeDisplay.getPermissionChecker();
+
+		if (WikiPagePermission.contains(
+				permissionChecker, wikiPage, ActionKeys.DELETE)) {
+
+			availableActionDropdownItems.add("deletePages");
+		}
+
+		return availableActionDropdownItems;
 	}
 
 	public PortletURL getClearResultsURL() {

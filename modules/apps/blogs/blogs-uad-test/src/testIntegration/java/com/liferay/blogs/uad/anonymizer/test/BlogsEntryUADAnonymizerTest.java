@@ -30,7 +30,6 @@ import com.liferay.user.associated.data.test.util.WhenHasStatusByUserIdField;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.After;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.runner.RunWith;
@@ -54,17 +53,12 @@ public class BlogsEntryUADAnonymizerTest
 		throws Exception {
 
 		BlogsEntry blogsEntry =
-			_blogsEntryUADTestHelper.addBlogsEntryWithStatusByUserId(
-				userId, statusByUserId);
+			BlogsEntryUADTestHelper.addBlogsEntryWithStatusByUserId(
+				_blogsEntryLocalService, userId, statusByUserId);
 
 		_blogsEntries.add(blogsEntry);
 
 		return blogsEntry;
-	}
-
-	@After
-	public void tearDown() throws Exception {
-		_blogsEntryUADTestHelper.cleanUpDependencies(_blogsEntries);
 	}
 
 	@Override
@@ -76,20 +70,14 @@ public class BlogsEntryUADAnonymizerTest
 	protected BlogsEntry addBaseModel(long userId, boolean deleteAfterTestRun)
 		throws Exception {
 
-		BlogsEntry blogsEntry = _blogsEntryUADTestHelper.addBlogsEntry(userId);
+		BlogsEntry blogsEntry = BlogsEntryUADTestHelper.addBlogsEntry(
+			_blogsEntryLocalService, userId);
 
 		if (deleteAfterTestRun) {
 			_blogsEntries.add(blogsEntry);
 		}
 
 		return blogsEntry;
-	}
-
-	@Override
-	protected void deleteBaseModels(List<BlogsEntry> baseModels)
-		throws Exception {
-
-		_blogsEntryUADTestHelper.cleanUpDependencies(baseModels);
 	}
 
 	@Override
@@ -132,9 +120,6 @@ public class BlogsEntryUADAnonymizerTest
 
 	@Inject
 	private BlogsEntryLocalService _blogsEntryLocalService;
-
-	@Inject
-	private BlogsEntryUADTestHelper _blogsEntryUADTestHelper;
 
 	@Inject(filter = "component.name=*.BlogsEntryUADAnonymizer")
 	private UADAnonymizer _uadAnonymizer;

@@ -16,6 +16,7 @@ package com.liferay.blogs.uad.display.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.blogs.model.BlogsEntry;
+import com.liferay.blogs.service.BlogsEntryLocalService;
 import com.liferay.blogs.uad.test.BlogsEntryUADTestHelper;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -27,7 +28,6 @@ import com.liferay.user.associated.data.test.util.BaseUADDisplayTestCase;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.After;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.runner.RunWith;
@@ -44,14 +44,10 @@ public class BlogsEntryUADDisplayTest
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
 
-	@After
-	public void tearDown() throws Exception {
-		_blogsEntryUADTestHelper.cleanUpDependencies(_blogsEntries);
-	}
-
 	@Override
 	protected BlogsEntry addBaseModel(long userId) throws Exception {
-		BlogsEntry blogsEntry = _blogsEntryUADTestHelper.addBlogsEntry(userId);
+		BlogsEntry blogsEntry = BlogsEntryUADTestHelper.addBlogsEntry(
+			_blogsEntryLocalService, userId);
 
 		_blogsEntries.add(blogsEntry);
 
@@ -67,7 +63,7 @@ public class BlogsEntryUADDisplayTest
 	private final List<BlogsEntry> _blogsEntries = new ArrayList<>();
 
 	@Inject
-	private BlogsEntryUADTestHelper _blogsEntryUADTestHelper;
+	private BlogsEntryLocalService _blogsEntryLocalService;
 
 	@Inject(filter = "component.name=*.BlogsEntryUADDisplay")
 	private UADDisplay _uadDisplay;

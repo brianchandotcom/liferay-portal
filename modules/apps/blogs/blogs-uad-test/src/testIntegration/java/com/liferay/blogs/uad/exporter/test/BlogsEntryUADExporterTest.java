@@ -16,6 +16,7 @@ package com.liferay.blogs.uad.exporter.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.blogs.model.BlogsEntry;
+import com.liferay.blogs.service.BlogsEntryLocalService;
 import com.liferay.blogs.uad.test.BlogsEntryUADTestHelper;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -28,7 +29,6 @@ import com.liferay.user.associated.data.test.util.WhenHasStatusByUserIdField;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.After;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.runner.RunWith;
@@ -52,22 +52,18 @@ public class BlogsEntryUADExporterTest
 		throws Exception {
 
 		BlogsEntry blogsEntry =
-			_blogsEntryUADTestHelper.addBlogsEntryWithStatusByUserId(
-				userId, statusByUserId);
+			BlogsEntryUADTestHelper.addBlogsEntryWithStatusByUserId(
+				_blogsEntryLocalService, userId, statusByUserId);
 
 		_blogsEntries.add(blogsEntry);
 
 		return blogsEntry;
 	}
 
-	@After
-	public void tearDown() throws Exception {
-		_blogsEntryUADTestHelper.cleanUpDependencies(_blogsEntries);
-	}
-
 	@Override
 	protected BlogsEntry addBaseModel(long userId) throws Exception {
-		BlogsEntry blogsEntry = _blogsEntryUADTestHelper.addBlogsEntry(userId);
+		BlogsEntry blogsEntry = BlogsEntryUADTestHelper.addBlogsEntry(
+			_blogsEntryLocalService, userId);
 
 		_blogsEntries.add(blogsEntry);
 
@@ -88,7 +84,7 @@ public class BlogsEntryUADExporterTest
 	private final List<BlogsEntry> _blogsEntries = new ArrayList<>();
 
 	@Inject
-	private BlogsEntryUADTestHelper _blogsEntryUADTestHelper;
+	private BlogsEntryLocalService _blogsEntryLocalService;
 
 	@Inject(filter = "component.name=*.BlogsEntryUADExporter")
 	private UADExporter _uadExporter;

@@ -19,22 +19,27 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.SafeConsumer;
 import com.liferay.knowledge.base.constants.KBActionKeys;
+import com.liferay.knowledge.base.model.KBTemplate;
 import com.liferay.knowledge.base.model.KBTemplateSearchDisplay;
 import com.liferay.knowledge.base.service.KBTemplateServiceUtil;
 import com.liferay.knowledge.base.web.internal.search.KBTemplateSearch;
 import com.liferay.knowledge.base.web.internal.security.permission.resource.AdminPermission;
+import com.liferay.knowledge.base.web.internal.security.permission.resource.KBTemplatePermission;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -83,6 +88,23 @@ public class KBTemplatesManagementToolbarDisplayContext {
 					});
 			}
 		};
+	}
+
+	public List<String> getAvailableActionDropdownItems(KBTemplate kbTemplate)
+		throws PortalException {
+
+		List<String> availableActionDropdownItems = new ArrayList<>();
+
+		PermissionChecker permissionChecker =
+			_themeDisplay.getPermissionChecker();
+
+		if (KBTemplatePermission.contains(
+				permissionChecker, kbTemplate, ActionKeys.DELETE)) {
+
+			availableActionDropdownItems.add("deleteKBTemplates");
+		}
+
+		return availableActionDropdownItems;
 	}
 
 	public CreationMenu getCreationMenu() {

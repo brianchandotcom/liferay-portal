@@ -20,7 +20,9 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.SafeConsumer;
 import com.liferay.knowledge.base.constants.KBActionKeys;
 import com.liferay.knowledge.base.constants.KBFolderConstants;
+import com.liferay.knowledge.base.model.KBArticle;
 import com.liferay.knowledge.base.model.KBArticleSearchDisplay;
+import com.liferay.knowledge.base.model.KBFolder;
 import com.liferay.knowledge.base.model.KBTemplate;
 import com.liferay.knowledge.base.service.KBArticleServiceUtil;
 import com.liferay.knowledge.base.service.KBFolderServiceUtil;
@@ -28,6 +30,7 @@ import com.liferay.knowledge.base.service.KBTemplateServiceUtil;
 import com.liferay.knowledge.base.web.internal.search.EntriesChecker;
 import com.liferay.knowledge.base.web.internal.search.KBObjectsSearch;
 import com.liferay.knowledge.base.web.internal.security.permission.resource.AdminPermission;
+import com.liferay.knowledge.base.web.internal.security.permission.resource.KBArticlePermission;
 import com.liferay.knowledge.base.web.internal.security.permission.resource.KBFolderPermission;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
@@ -36,6 +39,7 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -46,6 +50,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -97,6 +102,40 @@ public class KBAdminManagementToolbarDisplayContext {
 					});
 			}
 		};
+	}
+
+	public List<String> getAvailableActionDropdownItems(KBArticle kbArticle)
+		throws PortalException {
+
+		List<String> availableActionDropdownItems = new ArrayList<>();
+
+		PermissionChecker permissionChecker =
+			_themeDisplay.getPermissionChecker();
+
+		if (KBArticlePermission.contains(
+				permissionChecker, kbArticle, ActionKeys.DELETE)) {
+
+			availableActionDropdownItems.add("deleteEntries");
+		}
+
+		return availableActionDropdownItems;
+	}
+
+	public List<String> getAvailableActionDropdownItems(KBFolder kbFolder)
+		throws PortalException {
+
+		List<String> availableActionDropdownItems = new ArrayList<>();
+
+		PermissionChecker permissionChecker =
+			_themeDisplay.getPermissionChecker();
+
+		if (KBFolderPermission.contains(
+				permissionChecker, kbFolder, ActionKeys.DELETE)) {
+
+			availableActionDropdownItems.add("deleteEntries");
+		}
+
+		return availableActionDropdownItems;
 	}
 
 	public CreationMenu getCreationMenu() throws PortalException {

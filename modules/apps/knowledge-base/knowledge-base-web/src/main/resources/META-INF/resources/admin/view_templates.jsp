@@ -57,6 +57,15 @@ KBTemplatesManagementToolbarDisplayContext kbTemplatesManagementToolbarDisplayCo
 					keyProperty="kbTemplateId"
 					modelVar="kbTemplate"
 				>
+
+					<%
+					Map<String, Object> rowData = new HashMap<String, Object>();
+
+					rowData.put("actions", String.join(StringPool.COMMA, kbTemplatesManagementToolbarDisplayContext.getAvailableActionDropdownItems(kbTemplate)));
+
+					row.setData(rowData);
+					%>
+
 					<liferay-ui:search-container-column-user
 						showDetails="<%= false %>"
 						userId="<%= kbTemplate.getUserId() %>"

@@ -9,6 +9,8 @@ dependencies {
 	testIntegrationCompile project (":apps:fragment:fragment-api")
 	testIntegrationCompile project (":apps:layout:layout-page-template-api")
 	testIntegrationCompile project (":apps:layout:layout-page-template-service")
+	testIntegrationCompile project(":apps:export-import:export-import-test")
+	testIntegrationCompile project(":apps:export-import:export-import-test-util")
 	testIntegrationCompile project(":core:petra:petra-string")
 	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
 }

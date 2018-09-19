@@ -98,6 +98,12 @@ public class LayoutPageTemplateEntryServiceUtil {
 				   .fetchLayoutPageTemplateEntry(layoutPageTemplateEntryId);
 	}
 
+	public static com.liferay.layout.page.template.model.LayoutPageTemplateEntry fetchLayoutPageTemplateEntryByUuidAndGroupId(
+		String uuid, long groupId) {
+		return getService()
+				   .fetchLayoutPageTemplateEntryByUuidAndGroupId(uuid, groupId);
+	}
+
 	/**
 	* @deprecated As of Judson (7.1.x), with no direct replacement
 	*/

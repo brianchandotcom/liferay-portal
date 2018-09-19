@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
@@ -64,11 +65,11 @@ public class LayoutPageTemplateEntryStagedModelDataHandlerTest
 		LayoutPageTemplateCollection layoutPageTemplateCollection =
 			LayoutPageTemplateCollectionServiceUtil.
 				addLayoutPageTemplateCollection(
-					TestPropsValues.getUserId(), group.getGroupId(),
-					"Test Collection", StringPool.BLANK, serviceContext);
+					group.getGroupId(), "Test Collection", StringPool.BLANK,
+					serviceContext);
 
 		return LayoutPageTemplateEntryServiceUtil.addLayoutPageTemplateEntry(
-			TestPropsValues.getUserId(), group.getGroupId(),
+			group.getGroupId(),
 			layoutPageTemplateCollection.getLayoutPageTemplateCollectionId(),
 			"Test Entry", LayoutPageTemplateEntryTypeConstants.TYPE_BASIC,
 			WorkflowConstants.STATUS_APPROVED, serviceContext);
@@ -100,8 +101,9 @@ public class LayoutPageTemplateEntryStagedModelDataHandlerTest
 		Assert.assertEquals(
 			stagedModel.getUuid(), importedStagedModel.getUuid());
 
-		Layout layoutPageTemplateEntry = (LayoutPageTemplateEntry)stagedModel;
-		Layout importLayoutPageTemplateEntry =
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			(LayoutPageTemplateEntry)stagedModel;
+		LayoutPageTemplateEntry importLayoutPageTemplateEntry =
 			(LayoutPageTemplateEntry)importedStagedModel;
 
 		Assert.assertEquals(

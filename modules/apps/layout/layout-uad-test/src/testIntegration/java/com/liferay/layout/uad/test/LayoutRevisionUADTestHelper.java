@@ -30,27 +30,28 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 
 import java.util.List;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Brian Wing Shun Chan
  */
-@Component(immediate = true, service = LayoutRevisionUADTestHelper.class)
 public class LayoutRevisionUADTestHelper {
 
-	public LayoutRevision addLayoutRevision(long userId) throws Exception {
+	public static LayoutRevision addLayoutRevision(
+			LayoutRevisionLocalService layoutRevisionLocalService,
+			LayoutSetBranchLocalService layoutSetBranchLocalService,
+			long userId)
+		throws Exception {
+
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext();
 
 		LayoutSetBranch layoutSetBranch =
-			_layoutSetBranchLocalService.addLayoutSetBranch(
+			layoutSetBranchLocalService.addLayoutSetBranch(
 				TestPropsValues.getUserId(), TestPropsValues.getGroupId(),
 				false, RandomTestUtil.randomString(),
 				RandomTestUtil.randomString(), false,
 				LayoutSetBranchConstants.ALL_BRANCHES, serviceContext);
 
-		return _layoutRevisionLocalService.addLayoutRevision(
+		return layoutRevisionLocalService.addLayoutRevision(
 			userId, layoutSetBranch.getLayoutSetBranchId(), 0,
 			LayoutRevisionConstants.DEFAULT_PARENT_LAYOUT_REVISION_ID, false,
 			serviceContext.getPlid(), LayoutConstants.DEFAULT_PLID, false,
@@ -60,36 +61,32 @@ public class LayoutRevisionUADTestHelper {
 			layoutSetBranch.getCss(), serviceContext);
 	}
 
-	public LayoutRevision addLayoutRevisionWithStatusByUserId(
-			long userId, long statusByUserId)
+	public static LayoutRevision addLayoutRevisionWithStatusByUserId(
+			LayoutRevisionLocalService layoutRevisionLocalService,
+			LayoutSetBranchLocalService layoutSetBranchLocalService,
+			UserLocalService userLocalService, long userId, long statusByUserId)
 		throws Exception {
 
-		LayoutRevision layoutRevision = addLayoutRevision(userId);
+		LayoutRevision layoutRevision = addLayoutRevision(
+			layoutRevisionLocalService, layoutSetBranchLocalService, userId);
 
-		User statusUser = _userLocalService.getUser(statusByUserId);
+		User statusUser = userLocalService.getUser(statusByUserId);
 
 		layoutRevision.setStatusByUserId(statusUser.getUserId());
 		layoutRevision.setStatusByUserName(statusUser.getFullName());
 
-		return _layoutRevisionLocalService.updateLayoutRevision(layoutRevision);
+		return layoutRevisionLocalService.updateLayoutRevision(layoutRevision);
 	}
 
-	public void cleanUpDependencies(List<LayoutRevision> layoutRevisions)
+	public static void cleanUpDependencies(
+			LayoutSetBranchLocalService layoutSetBranchLocalService,
+			List<LayoutRevision> layoutRevisions)
 		throws Exception {
 
 		for (LayoutRevision layoutRevision : layoutRevisions) {
-			_layoutSetBranchLocalService.deleteLayoutSetBranch(
+			layoutSetBranchLocalService.deleteLayoutSetBranch(
 				layoutRevision.getLayoutSetBranchId());
 		}
 	}
-
-	@Reference
-	private LayoutRevisionLocalService _layoutRevisionLocalService;
-
-	@Reference
-	private LayoutSetBranchLocalService _layoutSetBranchLocalService;
-
-	@Reference
-	private UserLocalService _userLocalService;
 
 }

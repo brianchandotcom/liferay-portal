@@ -30,16 +30,14 @@ import com.liferay.portal.test.randomizerbumpers.FriendlyURLRandomizerBumper;
 
 import java.util.List;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Brian Wing Shun Chan
  */
-@Component(immediate = true, service = LayoutFriendlyURLUADTestHelper.class)
 public class LayoutFriendlyURLUADTestHelper {
 
-	public LayoutFriendlyURL addLayoutFriendlyURL(long userId)
+	public static LayoutFriendlyURL addLayoutFriendlyURL(
+			LayoutFriendlyURLLocalService layoutFriendlyURLLocalService,
+			LayoutLocalService layoutLocalService, long userId)
 		throws Exception {
 
 		String name = RandomTestUtil.randomString(
@@ -50,29 +48,25 @@ public class LayoutFriendlyURLUADTestHelper {
 		String friendlyURL =
 			StringPool.SLASH + FriendlyURLNormalizerUtil.normalize(name);
 
-		Layout layout = _layoutLocalService.addLayout(
+		Layout layout = layoutLocalService.addLayout(
 			userId, TestPropsValues.getGroupId(), false,
 			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, name,
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			LayoutConstants.TYPE_PORTLET, false, friendlyURL,
 			ServiceContextTestUtil.getServiceContext());
 
-		return _layoutFriendlyURLLocalService.getLayoutFriendlyURL(
+		return layoutFriendlyURLLocalService.getLayoutFriendlyURL(
 			layout.getPlid(), layout.getDefaultLanguageId());
 	}
 
-	public void cleanUpDependencies(List<LayoutFriendlyURL> layoutFriendlyURLs)
+	public static void cleanUpDependencies(
+			LayoutLocalService layoutLocalService,
+			List<LayoutFriendlyURL> layoutFriendlyURLs)
 		throws Exception {
 
 		for (LayoutFriendlyURL layoutFriendlyURL : layoutFriendlyURLs) {
-			_layoutLocalService.deleteLayout(layoutFriendlyURL.getPlid());
+			layoutLocalService.deleteLayout(layoutFriendlyURL.getPlid());
 		}
 	}
-
-	@Reference
-	private LayoutFriendlyURLLocalService _layoutFriendlyURLLocalService;
-
-	@Reference
-	private LayoutLocalService _layoutLocalService;
 
 }

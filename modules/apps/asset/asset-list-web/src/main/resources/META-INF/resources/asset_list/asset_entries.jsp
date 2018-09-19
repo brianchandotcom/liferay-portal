@@ -34,13 +34,13 @@ SearchContainer assetListEntryAssetEntryRelSearchContainer = editAssetListDispla
 
 	<liferay-frontend:edit-form-body>
 		<h3 class="sheet-subtitle">
-				<span class="autofit-padded-no-gutters autofit-row">
-					<span class="autofit-col autofit-col-expand">
-						<span class="heading-text">
-							<liferay-ui:message key="asset-entries" />
-						</span>
+			<span class="autofit-padded-no-gutters autofit-row">
+				<span class="autofit-col autofit-col-expand">
+					<span class="heading-text">
+						<liferay-ui:message key="asset-entries" />
 					</span>
 				</span>
+			</span>
 		</h3>
 
 		<liferay-frontend:fieldset-group>

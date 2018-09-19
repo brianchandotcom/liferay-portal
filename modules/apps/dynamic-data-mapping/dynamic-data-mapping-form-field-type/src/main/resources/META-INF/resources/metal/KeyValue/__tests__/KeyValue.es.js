@@ -213,6 +213,7 @@ describe(
 				jest.runAllTimers();
 
 				const valueInput = component.element.querySelector('input.form-control');
+
 				valueInput.value = 'foo';
 				MetalTestUtil.triggerEvent(valueInput, 'input', {});
 			}
@@ -240,6 +241,7 @@ describe(
 				);
 
 				const valueInput = component.element.querySelector('input.form-control');
+
 				valueInput.value = 'My Name';
 				MetalTestUtil.triggerEvent(valueInput, 'input', {});
 

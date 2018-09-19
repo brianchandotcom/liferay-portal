@@ -90,6 +90,7 @@ class Builder extends Component {
 
 	_handleModal() {
 		const {modal} = this.refs;
+
 		modal.show();
 	}
 
@@ -128,6 +129,7 @@ class Builder extends Component {
 						pages: visitor.mapFields(
 							field => {
 								const {fieldName} = field;
+
 								if (fieldName === 'name') {
 									field = {
 										...field,

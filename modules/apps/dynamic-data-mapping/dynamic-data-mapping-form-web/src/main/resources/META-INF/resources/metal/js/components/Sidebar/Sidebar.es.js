@@ -146,6 +146,7 @@ class Sidebar extends Component {
 
 	_handleDocumentMouseDown(event) {
 		const {open} = this.state;
+
 		if (!open || this.element.contains(event.target)) {
 			return;
 		}

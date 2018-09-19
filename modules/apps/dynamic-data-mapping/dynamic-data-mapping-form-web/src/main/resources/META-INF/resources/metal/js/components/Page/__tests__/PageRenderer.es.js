@@ -115,6 +115,7 @@ describe(
 				);
 
 				const spy = jest.spyOn(component, 'emit');
+
 				component.element.querySelector('button[aria-label=\'trash\']').click();
 
 				expect(spy).toHaveBeenCalled();

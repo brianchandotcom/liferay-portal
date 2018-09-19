@@ -217,6 +217,7 @@ class PageRenderer extends Component {
 		const index = FormSupport.getIndexes(
 			dom.closest(event.target, '.col-ddm')
 		);
+
 		this.emit('deleteFieldClicked', index);
 	}
 
@@ -268,6 +269,7 @@ class PageRenderer extends Component {
 
 	_isEmptyPage({rows}) {
 		let empty = false;
+
 		if (!rows || !rows.length) {
 			empty = true;
 		}
@@ -275,6 +277,7 @@ class PageRenderer extends Component {
 			empty = !rows.some(
 				({columns}) => {
 					let hasFields = true;
+
 					if (!columns) {
 						hasFields = false;
 					}

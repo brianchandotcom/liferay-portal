@@ -16,6 +16,7 @@ package com.liferay.bookmarks.uad.display.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.bookmarks.model.BookmarksFolder;
+import com.liferay.bookmarks.service.BookmarksFolderLocalService;
 import com.liferay.bookmarks.uad.test.BookmarksFolderUADTestHelper;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -27,7 +28,6 @@ import com.liferay.user.associated.data.test.util.BaseUADDisplayTestCase;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.After;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.runner.RunWith;
@@ -44,15 +44,11 @@ public class BookmarksFolderUADDisplayTest
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
 
-	@After
-	public void tearDown() throws Exception {
-		_bookmarksFolderUADTestHelper.cleanUpDependencies(_bookmarksFolders);
-	}
-
 	@Override
 	protected BookmarksFolder addBaseModel(long userId) throws Exception {
 		BookmarksFolder bookmarksFolder =
-			_bookmarksFolderUADTestHelper.addBookmarksFolder(userId);
+			BookmarksFolderUADTestHelper.addBookmarksFolder(
+				_bookmarksFolderLocalService, userId);
 
 		_bookmarksFolders.add(bookmarksFolder);
 
@@ -64,11 +60,11 @@ public class BookmarksFolderUADDisplayTest
 		return _uadDisplay;
 	}
 
+	@Inject
+	private BookmarksFolderLocalService _bookmarksFolderLocalService;
+
 	@DeleteAfterTestRun
 	private final List<BookmarksFolder> _bookmarksFolders = new ArrayList<>();
-
-	@Inject
-	private BookmarksFolderUADTestHelper _bookmarksFolderUADTestHelper;
 
 	@Inject(filter = "component.name=*.BookmarksFolderUADDisplay")
 	private UADDisplay _uadDisplay;

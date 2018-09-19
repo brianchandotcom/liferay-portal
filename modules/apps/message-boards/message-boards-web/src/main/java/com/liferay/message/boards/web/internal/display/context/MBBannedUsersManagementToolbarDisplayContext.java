@@ -18,15 +18,22 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.SafeConsumer;
 import com.liferay.message.boards.constants.MBPortletKeys;
+import com.liferay.message.boards.model.MBBan;
+import com.liferay.message.boards.web.internal.security.permission.MBResourcePermission;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortalPreferences;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -47,6 +54,9 @@ public class MBBannedUsersManagementToolbarDisplayContext {
 
 		_portalPreferences = PortletPreferencesFactoryUtil.getPortalPreferences(
 			liferayPortletRequest);
+
+		_themeDisplay = (ThemeDisplay)_request.getAttribute(
+			WebKeys.THEME_DISPLAY);
 	}
 
 	public List<DropdownItem> getActionDropdownItems() {
@@ -64,6 +74,24 @@ public class MBBannedUsersManagementToolbarDisplayContext {
 						}));
 			}
 		};
+	}
+
+	public List<String> getAvailableActionDropdownItems(MBBan ban)
+		throws PortalException {
+
+		List<String> availableActionDropdownItems = new ArrayList<>();
+
+		PermissionChecker permissionChecker =
+			_themeDisplay.getPermissionChecker();
+
+		if (MBResourcePermission.contains(
+				permissionChecker, _themeDisplay.getScopeGroupId(),
+				ActionKeys.BAN_USER)) {
+
+			availableActionDropdownItems.add("unbanUser");
+		}
+
+		return availableActionDropdownItems;
 	}
 
 	public String getDisplayStyle() {
@@ -90,5 +118,6 @@ public class MBBannedUsersManagementToolbarDisplayContext {
 	private final LiferayPortletResponse _liferayPortletResponse;
 	private final PortalPreferences _portalPreferences;
 	private final HttpServletRequest _request;
+	private final ThemeDisplay _themeDisplay;
 
 }

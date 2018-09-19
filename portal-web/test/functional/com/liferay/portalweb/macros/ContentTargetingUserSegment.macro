@@ -290,14 +290,20 @@
 
 		<execute function="SelectFrame" locator1="IFrame#SELECT_SITE_ROLE" />
 
-		<execute function="AssertTextEquals" locator1="Message#INFO" value1="Please select a site to which you will assign a site role." />
+		<if>
+			<condition function="IsElementPresent" locator1="Message#INFO" />
+			<then>
+				<execute function="AssertTextEquals" locator1="Message#INFO" value1="Please select a site to which you will assign a site role." />
 
-		<var name="key_siteRole" value="${siteRole}" />
-		<var name="key_siteRoleSite" value="${siteRoleSite}" />
+				<execute function="AssertClick" locator1="EditUserSegment#USER_SEGMENT_RULE_USER_ATTRIBUTES_SITE_ROLE_SITE_CHOOSE_BUTTON" value1="Choose">
+					<var name="key_siteRoleSite" value="${siteRoleSite}" />
+				</execute>
+			</then>
+		</if>
 
-		<execute function="AssertClick" locator1="EditUserSegment#USER_SEGMENT_RULE_USER_ATTRIBUTES_SITE_ROLE_SITE_CHOOSE_BUTTON" value1="Choose" />
-
-		<execute function="AssertClick" locator1="EditUserSegment#USER_SEGMENT_RULE_USER_ATTRIBUTES_SITE_ROLE_SITE_ROLE_CHOOSE_BUTTON" value1="Choose" />
+		<execute function="AssertClick" locator1="EditUserSegment#USER_SEGMENT_RULE_USER_ATTRIBUTES_SITE_ROLE_SITE_ROLE_CHOOSE_BUTTON" value1="Choose">
+			<var name="key_siteRole" value="${siteRole}" />
+		</execute>
 
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>

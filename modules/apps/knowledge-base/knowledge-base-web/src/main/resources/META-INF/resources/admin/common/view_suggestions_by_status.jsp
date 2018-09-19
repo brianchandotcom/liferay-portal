@@ -39,14 +39,17 @@ KBCommentResultRowSplitter resultRowSplitter = (KBCommentResultRowSplitter)reque
 			keyProperty="kbCommentId"
 			modelVar="kbComment"
 		>
+			<c:if test="<%= kbSuggestionListManagementToolbarDisplayContext != null %>">
 
-			<%
-			Map<String, Object> rowData = new HashMap<String, Object>();
+				<%
+				Map<String, Object> rowData = new HashMap<String, Object>();
 
-			rowData.put("actions", String.join(StringPool.COMMA, kbSuggestionListManagementToolbarDisplayContext.getAvailableActionDropdownItems(kbComment)));
+				rowData.put("actions", String.join(StringPool.COMMA, kbSuggestionListManagementToolbarDisplayContext.getAvailableActionDropdownItems(kbComment)));
 
-			row.setData(rowData);
-			%>
+				row.setData(rowData);
+				%>
+
+			</c:if>
 
 			<liferay-ui:search-container-column-user
 				showDetails="<%= false %>"

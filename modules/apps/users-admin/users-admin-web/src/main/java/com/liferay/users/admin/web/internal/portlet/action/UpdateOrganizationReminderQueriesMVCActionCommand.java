@@ -45,11 +45,12 @@ import org.osgi.service.component.annotations.Reference;
 	property = {
 		"javax.portlet.name=" + UsersAdminPortletKeys.MY_ORGANIZATIONS,
 		"javax.portlet.name=" + UsersAdminPortletKeys.USERS_ADMIN,
-		"mvc.command.name=/users_admin/organization/update_reminder_queries"
+		"mvc.command.name=/users_admin/update_organization_reminder_queries"
 	},
 	service = MVCActionCommand.class
 )
-public class EditReminderQueriesMVCActionCommand extends BaseMVCActionCommand {
+public class UpdateOrganizationReminderQueriesMVCActionCommand
+	extends BaseMVCActionCommand {
 
 	@Override
 	protected void doProcessAction(

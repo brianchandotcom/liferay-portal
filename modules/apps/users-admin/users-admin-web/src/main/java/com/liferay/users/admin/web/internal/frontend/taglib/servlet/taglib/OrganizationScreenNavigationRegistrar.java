@@ -20,7 +20,6 @@ import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.OrganizationService;
-import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorConstants;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.users.admin.constants.UserFormConstants;
 
@@ -66,35 +65,32 @@ public class OrganizationScreenNavigationRegistrar {
 
 	protected void registerScreenNavigationCategories() {
 		_registerScreenNavigationCategory(
-			new OrganizationScreenNavigationCategory(
-				_CATEGORY_ORGANIZATION_INFORMATION),
-			10);
+			new OrganizationScreenNavigationCategory(_CATEGORY_GENERAL), 10);
 
 		_registerScreenNavigationCategory(
 			new OrganizationScreenNavigationCategory(_CATEGORY_CONTACT), 20);
-
-		_registerScreenNavigationCategory(
-			new OrganizationScreenNavigationCategory(_CATEGORY_MISCELLANEOUS),
-			30);
 	}
 
 	protected void registerScreenNavigationEntries() {
 		_registerScreenNavigationEntry(
 			_createScreenNavigationEntry(
-				"general", _CATEGORY_ORGANIZATION_INFORMATION,
-				"/organization/general.jsp", "/users_admin/edit_organization"),
+				"information", _CATEGORY_GENERAL,
+				"/organization/information.jsp",
+				"/users_admin/edit_organization"),
 			10);
+
+		_registerScreenNavigationEntry(
+			_createUpdateOnlyScreenNavigationEntry(
+				"reminder-queries", _CATEGORY_GENERAL,
+				"/organization/reminder_queries.jsp",
+				"/users_admin/update_organization_reminder_queries"),
+			30);
+
 		_registerScreenNavigationEntry(
 			_createUpdateOnlyScreenNavigationEntry(
 				"contact-information", _CATEGORY_CONTACT,
 				"/organization/contact_information.jsp",
-				"/users_admin/organization/update_contact_information"),
-			20);
-		_registerScreenNavigationEntry(
-			_createUpdateOnlyScreenNavigationEntry(
-				"reminder-queries", _CATEGORY_MISCELLANEOUS,
-				"/organization/reminder_queries.jsp",
-				"/users_admin/organization/update_reminder_queries"),
+				"/users_admin/update_organization_contact_information"),
 			20);
 	}
 
@@ -133,10 +129,6 @@ public class OrganizationScreenNavigationRegistrar {
 			});
 	}
 
-	private Dictionary<String, Object> _getProperties() {
-		return _getProperties(null);
-	}
-
 	private Dictionary<String, Object> _getProperties(Integer serviceRanking) {
 		return new HashMapDictionary<String, Object>() {
 			{
@@ -146,13 +138,6 @@ public class OrganizationScreenNavigationRegistrar {
 				}
 			}
 		};
-	}
-
-	private void _registerScreenNavigationCategory(
-		ScreenNavigationCategory screenNavigationCategory) {
-
-		_registerScreenNavigationCategory(
-			screenNavigationCategory, _getProperties());
 	}
 
 	private void _registerScreenNavigationCategory(
@@ -171,12 +156,6 @@ public class OrganizationScreenNavigationRegistrar {
 
 		_registerScreenNavigationCategory(
 			screenNavigationCategory, _getProperties(serviceRanking));
-	}
-
-	private void _registerScreenNavigationEntry(
-		ScreenNavigationEntry screenNavigationEntry) {
-
-		_registerScreenNavigationEntry(screenNavigationEntry, _getProperties());
 	}
 
 	private void _registerScreenNavigationEntry(
@@ -199,12 +178,8 @@ public class OrganizationScreenNavigationRegistrar {
 	private static final String _CATEGORY_CONTACT =
 		UserFormConstants.CATEGORY_KEY_CONTACT;
 
-	private static final String _CATEGORY_MISCELLANEOUS =
-		FormNavigatorConstants.CATEGORY_KEY_ORGANIZATION_MISCELLANEOUS;
-
-	private static final String _CATEGORY_ORGANIZATION_INFORMATION =
-		FormNavigatorConstants.
-			CATEGORY_KEY_ORGANIZATION_ORGANIZATION_INFORMATION;
+	private static final String _CATEGORY_GENERAL =
+		UserFormConstants.CATEGORY_KEY_GENERAL;
 
 	private BundleContext _bundleContext;
 

@@ -237,6 +237,13 @@ public class SharingEntryLocalServiceImpl
 
 	@Override
 	public List<SharingEntry> getToUserSharingEntries(
+		long toUserId, int start, int end) {
+
+		return sharingEntryPersistence.findByToUserId(toUserId, start, end);
+	}
+
+	@Override
+	public List<SharingEntry> getToUserSharingEntries(
 		long toUserId, long classNameId) {
 
 		return sharingEntryPersistence.findByTU_C(toUserId, classNameId);

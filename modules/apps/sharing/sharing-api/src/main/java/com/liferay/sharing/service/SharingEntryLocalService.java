@@ -333,6 +333,10 @@ public interface SharingEntryLocalService extends BaseLocalService,
 	public List<SharingEntry> getToUserSharingEntries(long toUserId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<SharingEntry> getToUserSharingEntries(long toUserId, int start,
+		int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<SharingEntry> getToUserSharingEntries(long toUserId,
 		long classNameId);
 

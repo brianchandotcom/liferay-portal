@@ -4,7 +4,9 @@ Bundle-Version: 1.0.0
 Export-Package:\
 	com.liferay.sharing.constants,\
 	com.liferay.sharing.exception,\
+	com.liferay.sharing.interpreter,\
 	com.liferay.sharing.model,\
+	com.liferay.sharing.renderer,\
 	com.liferay.sharing.security.permission,\
 	com.liferay.sharing.service,\
 	com.liferay.sharing.service.persistence

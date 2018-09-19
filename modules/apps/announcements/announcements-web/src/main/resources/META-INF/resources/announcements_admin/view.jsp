@@ -107,6 +107,12 @@ AnnouncementsAdminViewManagementToolbarDisplayContext announcementsAdminViewMana
 				rowURL.setParameter("mvcRenderCommandName", "/announcements/view_entry");
 				rowURL.setParameter("redirect", currentURL);
 				rowURL.setParameter("entryId", String.valueOf(entry.getEntryId()));
+
+				Map<String, Object> rowData = new HashMap<String, Object>();
+
+				rowData.put("actions", String.join(StringPool.COMMA, announcementsAdminViewManagementToolbarDisplayContext.getAvailableActionDropdownItems(entry)));
+
+				row.setData(rowData);
 				%>
 
 				<liferay-ui:search-container-column-text

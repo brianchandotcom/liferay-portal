@@ -41,8 +41,7 @@ describe(
 						),
 						_: {
 							assign: () => 0,
-							forEach: () => 0,
-							isFunction: () => false
+							forEach: () => 0
 						}
 					}
 				);

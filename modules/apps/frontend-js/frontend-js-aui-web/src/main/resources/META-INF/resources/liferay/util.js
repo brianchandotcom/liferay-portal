@@ -382,7 +382,7 @@
 
 				result = {};
 
-				var getterFn = _.isFunction(attributeGetter);
+				var getterFn = this.isFunction(attributeGetter);
 				var getterString = _.isString(attributeGetter);
 
 				var attrs = el.attributes;
@@ -638,6 +638,10 @@
 			}
 
 			return viewable;
+		},
+
+		isFunction: function(val) {
+			return typeof val === 'function';
 		},
 
 		isPhone: function() {
@@ -1093,7 +1097,7 @@
 			var selectBox = $('#' + selectBoxId);
 			var toggleBox = $('#' + toggleBoxId);
 
-			var dynamicValue = _.isFunction(value);
+			var dynamicValue = this.isFunction(value);
 
 			var toggle = function() {
 				var currentValue = selectBox.val();

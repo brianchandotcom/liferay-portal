@@ -64,7 +64,7 @@ public class MoveAssetEntrySelectionMVCActionCommand
 			newPosition = position + 1;
 		}
 
-		_assetListEntryService.moveAssetListEntryAssetEntryRel(
+		_assetListEntryService.moveAssetEntrySelection(
 			assetListEntryId, position, newPosition);
 	}
 

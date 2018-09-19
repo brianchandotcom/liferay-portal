@@ -38,6 +38,20 @@ import java.util.List;
 public class AssetListEntryServiceImpl extends AssetListEntryServiceBaseImpl {
 
 	@Override
+	public void addAssetEntrySelection(long assetListEntryId, long assetEntryId)
+		throws PortalException {
+
+		AssetListEntry assetListEntry =
+			assetListEntryLocalService.getAssetListEntry(assetListEntryId);
+
+		_assetListEntryModelResourcePermission.check(
+			getPermissionChecker(), assetListEntry, ActionKeys.UPDATE);
+
+		assetListEntryAssetEntryRelLocalService.addAssetListEntryAssetEntryRel(
+			assetListEntryId, assetEntryId);
+	}
+
+	@Override
 	public AssetListEntry addAssetListEntry(
 			long groupId, String title, int type, ServiceContext serviceContext)
 		throws PortalException {
@@ -51,8 +65,7 @@ public class AssetListEntryServiceImpl extends AssetListEntryServiceBaseImpl {
 	}
 
 	@Override
-	public void addAssetListEntryAssetEntryRel(
-			long assetListEntryId, long assetEntryId)
+	public void deleteAssetEntrySelection(long assetListEntryId, int position)
 		throws PortalException {
 
 		AssetListEntry assetListEntry =
@@ -61,8 +74,8 @@ public class AssetListEntryServiceImpl extends AssetListEntryServiceBaseImpl {
 		_assetListEntryModelResourcePermission.check(
 			getPermissionChecker(), assetListEntry, ActionKeys.UPDATE);
 
-		assetListEntryAssetEntryRelLocalService.addAssetListEntryAssetEntryRel(
-			assetListEntryId, assetEntryId);
+		assetListEntryAssetEntryRelLocalService.
+			deleteAssetListEntryAssetEntryRel(assetListEntryId, position);
 	}
 
 	@Override
@@ -91,21 +104,6 @@ public class AssetListEntryServiceImpl extends AssetListEntryServiceBaseImpl {
 			getPermissionChecker(), assetListEntry, ActionKeys.DELETE);
 
 		return assetListEntryLocalService.deleteAssetListEntry(assetListEntry);
-	}
-
-	@Override
-	public void deleteAssetListEntryAssetEntryRel(
-			long assetListEntryId, int position)
-		throws PortalException {
-
-		AssetListEntry assetListEntry =
-			assetListEntryLocalService.getAssetListEntry(assetListEntryId);
-
-		_assetListEntryModelResourcePermission.check(
-			getPermissionChecker(), assetListEntry, ActionKeys.UPDATE);
-
-		assetListEntryAssetEntryRelLocalService.
-			deleteAssetListEntryAssetEntryRel(assetListEntryId, position);
 	}
 
 	@Override
@@ -154,7 +152,7 @@ public class AssetListEntryServiceImpl extends AssetListEntryServiceBaseImpl {
 	}
 
 	@Override
-	public void moveAssetListEntryAssetEntryRel(
+	public void moveAssetEntrySelection(
 			long assetListEntryId, int position, int newPosition)
 		throws PortalException {
 

@@ -50,7 +50,7 @@ public class RemoveAssetEntrySelectionMVCActionCommand
 
 		int position = ParamUtil.getInteger(actionRequest, "position");
 
-		_assetListEntryService.deleteAssetListEntryAssetEntryRel(
+		_assetListEntryService.deleteAssetEntrySelection(
 			assetListEntryId, position);
 	}
 

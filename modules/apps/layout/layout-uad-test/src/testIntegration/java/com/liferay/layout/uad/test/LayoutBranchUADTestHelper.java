@@ -26,46 +26,43 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 
 import java.util.List;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Brian Wing Shun Chan
  */
-@Component(immediate = true, service = LayoutBranchUADTestHelper.class)
 public class LayoutBranchUADTestHelper {
 
-	public LayoutBranch addLayoutBranch(long userId) throws Exception {
+	public static LayoutBranch addLayoutBranch(
+			LayoutBranchLocalService layoutBranchLocalService,
+			LayoutSetBranchLocalService layoutSetBranchLocalService,
+			long userId)
+		throws Exception {
+
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext();
 
 		LayoutSetBranch layoutSetBranch =
-			_layoutSetBranchLocalService.addLayoutSetBranch(
+			layoutSetBranchLocalService.addLayoutSetBranch(
 				userId, TestPropsValues.getGroupId(), false,
 				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 				false, LayoutSetBranchConstants.ALL_BRANCHES, serviceContext);
 
 		serviceContext.setUserId(userId);
 
-		return _layoutBranchLocalService.addLayoutBranch(
+		return layoutBranchLocalService.addLayoutBranch(
 			layoutSetBranch.getLayoutSetBranchId(), serviceContext.getPlid(),
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(), true,
 			serviceContext);
 	}
 
-	public void cleanUpDependencies(List<LayoutBranch> layoutBranchs)
+	public static void cleanUpDependencies(
+			LayoutSetBranchLocalService layoutSetBranchLocalService,
+			List<LayoutBranch> layoutBranchs)
 		throws Exception {
 
 		for (LayoutBranch layoutBranch : layoutBranchs) {
-			_layoutSetBranchLocalService.deleteLayoutSetBranch(
+			layoutSetBranchLocalService.deleteLayoutSetBranch(
 				layoutBranch.getLayoutSetBranchId());
 		}
 	}
-
-	@Reference
-	private LayoutBranchLocalService _layoutBranchLocalService;
-
-	@Reference
-	private LayoutSetBranchLocalService _layoutSetBranchLocalService;
 
 }

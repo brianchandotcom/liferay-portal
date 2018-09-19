@@ -52,11 +52,11 @@ public class AnnouncementsFlagUADAnonymizerTest
 
 	@Override
 	protected AnnouncementsFlag addBaseModel(
-			long userId, boolean deleteAfterTestRun)
-		throws Exception {
+		long userId, boolean deleteAfterTestRun) {
 
 		AnnouncementsFlag announcementsFlag =
-			_announcementsFlagUADTestHelper.addAnnouncementsFlag(userId);
+			AnnouncementsFlagUADTestHelper.addAnnouncementsFlag(
+				_announcementsFlagLocalService, userId);
 
 		if (deleteAfterTestRun) {
 			_announcementsFlags.add(announcementsFlag);
@@ -101,9 +101,6 @@ public class AnnouncementsFlagUADAnonymizerTest
 	@DeleteAfterTestRun
 	private final List<AnnouncementsFlag> _announcementsFlags =
 		new ArrayList<>();
-
-	@Inject
-	private AnnouncementsFlagUADTestHelper _announcementsFlagUADTestHelper;
 
 	@Inject(filter = "component.name=*.AnnouncementsFlagUADAnonymizer")
 	private UADAnonymizer _uadAnonymizer;

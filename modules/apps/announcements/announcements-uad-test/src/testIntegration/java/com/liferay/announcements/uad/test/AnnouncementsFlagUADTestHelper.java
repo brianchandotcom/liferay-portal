@@ -19,24 +19,19 @@ import com.liferay.announcements.kernel.model.AnnouncementsFlagConstants;
 import com.liferay.announcements.kernel.service.AnnouncementsFlagLocalService;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Noah Sherrill
  */
-@Component(immediate = true, service = AnnouncementsFlagUADTestHelper.class)
 public class AnnouncementsFlagUADTestHelper {
 
-	public AnnouncementsFlag addAnnouncementsFlag(long userId)
-		throws Exception {
+	public static AnnouncementsFlag addAnnouncementsFlag(
+		AnnouncementsFlagLocalService announcementsFlagLocalService,
+		long userId) {
 
-		return _announcementsFlagLocalService.addFlag(
+		return announcementsFlagLocalService.addFlag(
 			userId, RandomTestUtil.randomLong(),
 			AnnouncementsFlagConstants.UNREAD);
 	}
-
-	@Reference
-	private AnnouncementsFlagLocalService _announcementsFlagLocalService;
 
 }

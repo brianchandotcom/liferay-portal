@@ -381,7 +381,7 @@
 	</command>
 
 	<command name="ReorderFragments" priority="5">
-		<property name="portal.acceptance" value="false" />
+		<property name="portal.acceptance" value="true" />
 
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Build" />

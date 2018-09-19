@@ -109,12 +109,9 @@ public class LayoutPageTemplateEntryStagedModelDataHandlerTest
 		Assert.assertEquals(
 			layoutPageTemplateEntry.getName(),
 			importLayoutPageTemplateEntry.getName());
-		Assert.assertEquals(layoutPageTemplateEntry.
-			getLayoutPageTemplateCollectionId(),
-			importLayoutPageTemplateEntry.getLayoutPageTemplateCollectionId());
 		Assert.assertEquals(
-			layoutPageTemplateEntry.getName(),
-			importLayoutPageTemplateEntry.getName());
+			layoutPageTemplateEntry.getType(),
+			importLayoutPageTemplateEntry.getType());
 	}
 
 }

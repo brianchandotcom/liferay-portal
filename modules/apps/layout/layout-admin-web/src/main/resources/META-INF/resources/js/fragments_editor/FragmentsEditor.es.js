@@ -12,8 +12,7 @@ import {INITIAL_STATE} from './store/state.es';
 import templates from './FragmentsEditor.soy';
 import {
 	UPDATE_LAST_SAVE_DATE,
-	UPDATE_SAVING_CHANGES_STATUS,
-	UPDATE_TRANSLATION_STATUS
+	UPDATE_SAVING_CHANGES_STATUS
 } from './actions/actions.es';
 
 /**
@@ -68,25 +67,6 @@ class FragmentsEditor extends Component {
 		const structure = this.layoutData.structure || [];
 
 		return structure.indexOf(fragmentEntryLinkId);
-	}
-
-	/**
-	 * Callback executed everytime an editable field has been changed
-	 * @param {{
-	 *   editableId: !string,
-	 *   fragmentEntryLinkId: !string,
-	 *   value: !string
-	 * }} data
-	 * @private
-	 * @review
-	 */
-
-	_handleEditableChanged(data) {
-		this._setFragmentEntryLinkEditableValue(
-			data.fragmentEntryLinkId,
-			data.editableId,
-			{[this.languageId || 'defaultValue']: data.value}
-		);
 	}
 
 	/**
@@ -212,107 +192,6 @@ class FragmentsEditor extends Component {
 		return list;
 	}
 
-	/**
-	 * Updates the given fragmentEntryLinkId editable value without mutating
-	 * the fragmentEntryLinks property but creating a new array and
-	 * synchronizing changes with server.
-	 *
-	 * @param {!string} fragmentEntryLinkId
-	 * @param {!string} editableValueId
-	 * @param {!object} editableValueContent
-	 * @private
-	 */
-
-	_setFragmentEntryLinkEditableValue(
-		fragmentEntryLinkId,
-		editableValueId,
-		editableValueContent
-	) {
-		const component = this._getFragmentEntryLinkComponent(
-			fragmentEntryLinkId
-		);
-
-		if (component && this.fragmentEntryLinks[fragmentEntryLinkId]) {
-			const newEditableValues = component.setEditableValue(
-				editableValueId,
-				editableValueContent
-			);
-
-			const newFragmentEntryLink = Object.assign(
-				{},
-				this.fragmentEntryLinks[fragmentEntryLinkId],
-				{editableValues: newEditableValues}
-			);
-
-			const newFragmentEntryLinks = Object.assign(
-				{},
-				this.fragmentEntryLinks
-			);
-
-			newFragmentEntryLinks[fragmentEntryLinkId] = newFragmentEntryLink;
-
-			this.fragmentEntryLinks = newFragmentEntryLinks;
-
-			this._updateFragmentEntryLink(newFragmentEntryLink);
-		}
-	}
-
-	/**
-	 * Sends the change of a single fragment entry link to the server.
-	 * @private
-	 * @review
-	 */
-
-	_updateFragmentEntryLink(fragmentEntryLink) {
-		if (!this.savingChanges) {
-			this.store.dispatchAction(
-				UPDATE_SAVING_CHANGES_STATUS,
-				{
-					savingChanges: true
-				}
-			);
-
-			const formData = new FormData();
-
-			formData.append(
-				`${this.portletNamespace}fragmentEntryLinkId`,
-				fragmentEntryLink.fragmentEntryLinkId
-			);
-
-			formData.append(
-				`${this.portletNamespace}editableValues`,
-				JSON.stringify(fragmentEntryLink.editableValues)
-			);
-
-			fetch(
-				this.editFragmentEntryLinkURL,
-				{
-					body: formData,
-					credentials: 'include',
-					method: 'POST'
-				}
-			).then(
-				() => {
-					this.store
-						.dispatchAction(
-							UPDATE_LAST_SAVE_DATE,
-							{
-								lastSaveDate: new Date()
-							}
-						)
-						.dispatchAction(
-							UPDATE_SAVING_CHANGES_STATUS,
-							{
-								savingChanges: false
-							}
-						)
-						.dispatchAction(
-							UPDATE_TRANSLATION_STATUS
-						);
-				}
-			);
-		}
-	}
 }
 
 /**

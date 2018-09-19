@@ -163,16 +163,6 @@ class FragmentEntryLinkList extends Component {
 	 * @review
 	 */
 
-	_handleEditableChanged(event) {
-		this.emit('editableChanged', event);
-	}
-
-	/**
-	 * @param {object} event
-	 * @private
-	 * @review
-	 */
-
 	_handleFragmentMove(event) {
 		const placeholderId = event.fragmentEntryLinkId;
 		const placeholderIndex = this.layoutData.structure.indexOf(placeholderId);

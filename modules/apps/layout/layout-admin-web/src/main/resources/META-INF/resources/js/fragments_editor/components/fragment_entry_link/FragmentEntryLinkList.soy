@@ -15,7 +15,6 @@
 	{@param? hoveredFragmentEntryLinkBorder: string}
 	{@param? hoveredFragmentEntryLinkId: string}
 	{@param? layoutData: ?}
-	{@param? _handleEditableChanged: any}
 	{@param? _handleFragmentMove: any}
 	{@param? _handleMappeableFieldClicked: any}
 	{@param? mapping: bool}
@@ -66,7 +65,6 @@
 							{param dropTargetClass: $dropTargetClass /}
 							{param editableValues: $fragmentEntryLink.editableValues /}
 							{param events: [
-								'editableChanged': $_handleEditableChanged,
 								'mappeableFieldClicked': $_handleMappeableFieldClicked,
 								'move': $_handleFragmentMove
 							] /}

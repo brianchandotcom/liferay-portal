@@ -17,9 +17,9 @@ package com.liferay.contacts.uad.display.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.contacts.model.Entry;
 import com.liferay.contacts.service.EntryLocalService;
-import com.liferay.contacts.uad.test.EntryUADTestHelper;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.user.associated.data.display.UADDisplay;
@@ -45,7 +45,10 @@ public class EntryUADDisplayTest extends BaseUADDisplayTestCase<Entry> {
 
 	@Override
 	protected Entry addBaseModel(long userId) throws Exception {
-		Entry entry = EntryUADTestHelper.addEntry(_entryLocalService, userId);
+		Entry entry = _entryLocalService.addEntry(
+			userId, RandomTestUtil.randomString(),
+			RandomTestUtil.randomString() + "@liferay.com",
+			RandomTestUtil.randomString());
 
 		_entries.add(entry);
 

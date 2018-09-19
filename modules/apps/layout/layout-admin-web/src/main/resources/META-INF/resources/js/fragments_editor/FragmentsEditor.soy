@@ -29,7 +29,6 @@
 	{@param spritemap: string}
 	{@param? contextualSidebarVisible: bool}
 	{@param? _dropTargetClass: string}
-	{@param? _handleToggleHighlightMapping: any}
 	{@param? _highlightMapping: bool}
 	{@param? selectMappingDialogEditableId: string}
 	{@param? selectMappingDialogEditableType: string}
@@ -139,9 +138,6 @@
 			and $selectMappingTypeDialogVisible}
 			{call com.liferay.layout.admin.web.SelectMappingTypeDialog.render}
 				{param classPK: $classPK /}
-				{param events: [
-					'mappingTypeSelected': $_handleMappingTypeSelected
-				] /}
 				{param getAssetClassTypesURL: $getAssetClassTypesURL /}
 				{param getAssetDisplayContributorsURL: $getAssetDisplayContributorsURL /}
 				{param portletNamespace: $portletNamespace /}

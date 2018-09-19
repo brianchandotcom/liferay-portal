@@ -17,6 +17,7 @@ package com.liferay.source.formatter.checks;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.NaturalOrderStringComparator;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.tools.ToolsUtil;
@@ -34,6 +35,17 @@ import java.util.regex.Pattern;
  * @author Hugo Huijser
  */
 public class JavaComponentAnnotationsCheck extends JavaAnnotationsCheck {
+
+	public void setCheckMismatchedServiceAttribute(
+		String checkMismatchedServiceAttribute) {
+
+		_checkMismatchedServiceAttribute = GetterUtil.getBoolean(
+			checkMismatchedServiceAttribute);
+	}
+
+	public void setCheckSelfRegistration(String checkSelfRegistration) {
+		_checkSelfRegistration = GetterUtil.getBoolean(checkSelfRegistration);
+	}
 
 	@Override
 	protected String doProcess(
@@ -55,15 +67,14 @@ public class JavaComponentAnnotationsCheck extends JavaAnnotationsCheck {
 
 		annotation = _formatAnnotationParameterProperties(annotation);
 		annotation = _formatServiceAttribute(
-			annotation, javaClass.getImplementedClassNames());
+			fileName, javaClass.getName(), annotation,
+			javaClass.getImplementedClassNames());
 
 		return annotation;
 	}
 
 	private String _addServiceAttribute(
-		String annotation, List<String> implementedClassNames) {
-
-		String serviceAttribute = _getServiceAttribute(implementedClassNames);
+		String annotation, String serviceAttribute) {
 
 		if (!annotation.contains("(")) {
 			return StringBundler.concat(
@@ -171,18 +182,46 @@ public class JavaComponentAnnotationsCheck extends JavaAnnotationsCheck {
 	}
 
 	private String _formatServiceAttribute(
-		String annotation, List<String> implementedClassNames) {
+		String fileName, String className, String annotation,
+		List<String> implementedClassNames) {
+
+		String expectedServiceAttribute = _getExpectedServiceAttribute(
+			implementedClassNames);
 
 		Matcher matcher = _serviceAttributePattern.matcher(annotation);
 
 		if (!matcher.find()) {
-			return _addServiceAttribute(annotation, implementedClassNames);
+			return _addServiceAttribute(annotation, expectedServiceAttribute);
+		}
+
+		if (!_checkMismatchedServiceAttribute && !_checkSelfRegistration) {
+			return annotation;
+		}
+
+		String serviceAttribute = _getServiceAttribute(
+			annotation, matcher.start() + 1);
+
+		if (_checkMismatchedServiceAttribute &&
+			!serviceAttribute.equals(expectedServiceAttribute)) {
+
+			addMessage(fileName, "Mismatched @Component 'service' attribute");
+		}
+
+		if (_checkSelfRegistration &&
+			serviceAttribute.matches(".*\\W" + className + "\\.class.*")) {
+
+			addMessage(
+				fileName,
+				"No need to register '" + className +
+					"' in @Component 'service' attribute");
 		}
 
 		return annotation;
 	}
 
-	private String _getServiceAttribute(List<String> implementedClassNames) {
+	private String _getExpectedServiceAttribute(
+		List<String> implementedClassNames) {
+
 		if (implementedClassNames.isEmpty()) {
 			return "service = {}";
 		}
@@ -210,9 +249,42 @@ public class JavaComponentAnnotationsCheck extends JavaAnnotationsCheck {
 		return sb.toString();
 	}
 
+	private String _getServiceAttribute(String annotation, int start) {
+		int end = start;
+
+		while (true) {
+			end = annotation.indexOf(CharPool.COMMA, end + 1);
+
+			if (end == -1) {
+				end = annotation.lastIndexOf(CharPool.CLOSE_PARENTHESIS);
+
+				break;
+			}
+
+			if (!ToolsUtil.isInsideQuotes(annotation, end) &&
+				(getLevel(annotation.substring(start, end), "{", "}") == 0)) {
+
+				break;
+			}
+		}
+
+		String serviceAttribute = StringUtil.trim(
+			annotation.substring(start, end));
+
+		if (!serviceAttribute.contains("\n")) {
+			return serviceAttribute;
+		}
+
+		return StringUtil.replace(
+			serviceAttribute, new String[] {"\t", "=\n", ",\n", "\n"},
+			new String[] {"", "= ", ", ", ""});
+	}
+
 	private final Pattern _annotationParameterPropertyPattern = Pattern.compile(
 		"\t(\\w+) = \\{");
 	private final Pattern _attributePattern = Pattern.compile("\\W(\\w+)\\s*=");
+	private boolean _checkMismatchedServiceAttribute;
+	private boolean _checkSelfRegistration;
 	private final Pattern _serviceAttributePattern = Pattern.compile(
 		"\\Wservice\\s*=");
 

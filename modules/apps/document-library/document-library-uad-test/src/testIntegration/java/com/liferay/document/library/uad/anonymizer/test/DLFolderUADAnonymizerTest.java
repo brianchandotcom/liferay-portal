@@ -30,7 +30,6 @@ import com.liferay.user.associated.data.test.util.WhenHasStatusByUserIdField;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.After;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -54,29 +53,24 @@ public class DLFolderUADAnonymizerTest
 			long userId, long statusByUserId)
 		throws Exception {
 
-		DLFolder dlFolder =
-			_dlFolderUADTestHelper.addDLFolderWithStatusByUserId(
-				userId, statusByUserId);
+		DLFolder dlFolder = DLFolderUADTestHelper.addDLFolderWithStatusByUserId(
+			_dlFolderLocalService, userId, statusByUserId);
 
 		_dlFolders.add(dlFolder);
 
 		return dlFolder;
 	}
 
-	@After
-	public void tearDown() throws Exception {
-		_dlFolderUADTestHelper.cleanUpDependencies(_dlFolders);
-	}
-
 	@Test
 	public void testDeleteDependentFolders() throws Exception {
-		DLFolder parentDLFolder = _dlFolderUADTestHelper.addDLFolder(
-			user.getUserId());
+		DLFolder parentDLFolder = DLFolderUADTestHelper.addDLFolder(
+			_dlFolderLocalService, user.getUserId());
 
 		_dlFolders.add(parentDLFolder);
 
-		DLFolder childDLFolder = _dlFolderUADTestHelper.addDLFolder(
-			user.getUserId(), parentDLFolder.getFolderId());
+		DLFolder childDLFolder = DLFolderUADTestHelper.addDLFolder(
+			_dlFolderLocalService, user.getUserId(),
+			parentDLFolder.getFolderId());
 
 		_dlFolders.add(childDLFolder);
 
@@ -94,20 +88,14 @@ public class DLFolderUADAnonymizerTest
 	protected DLFolder addBaseModel(long userId, boolean deleteAfterTestRun)
 		throws Exception {
 
-		DLFolder dlFolder = _dlFolderUADTestHelper.addDLFolder(userId);
+		DLFolder dlFolder = DLFolderUADTestHelper.addDLFolder(
+			_dlFolderLocalService, userId);
 
 		if (deleteAfterTestRun) {
 			_dlFolders.add(dlFolder);
 		}
 
 		return dlFolder;
-	}
-
-	@Override
-	protected void deleteBaseModels(List<DLFolder> baseModels)
-		throws Exception {
-
-		_dlFolderUADTestHelper.cleanUpDependencies(baseModels);
 	}
 
 	@Override
@@ -149,9 +137,6 @@ public class DLFolderUADAnonymizerTest
 
 	@DeleteAfterTestRun
 	private final List<DLFolder> _dlFolders = new ArrayList<>();
-
-	@Inject
-	private DLFolderUADTestHelper _dlFolderUADTestHelper;
 
 	@Inject(filter = "component.name=*.DLFolderUADAnonymizer")
 	private UADAnonymizer _uadAnonymizer;

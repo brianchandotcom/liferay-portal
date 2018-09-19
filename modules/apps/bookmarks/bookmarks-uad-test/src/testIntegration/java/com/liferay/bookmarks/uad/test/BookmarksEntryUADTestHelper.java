@@ -23,40 +23,38 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Noah Sherrill
  */
-@Component(immediate = true, service = BookmarksEntryUADTestHelper.class)
 public class BookmarksEntryUADTestHelper {
 
-	public BookmarksEntry addBookmarksEntry(long userId) throws Exception {
+	public static BookmarksEntry addBookmarksEntry(
+			BookmarksEntryLocalService bookmarksEntryLocalService, long userId)
+		throws Exception {
+
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
 				TestPropsValues.getGroupId());
 
-		return _bookmarksEntryLocalService.addEntry(
+		return bookmarksEntryLocalService.addEntry(
 			userId, serviceContext.getScopeGroupId(),
 			BookmarksFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			RandomTestUtil.randomString(), "http://www.liferay.com",
 			RandomTestUtil.randomString(), serviceContext);
 	}
 
-	public BookmarksEntry addBookmarksEntryWithStatusByUserId(
-			long userId, long statusByUserId)
+	public static BookmarksEntry addBookmarksEntryWithStatusByUserId(
+			BookmarksEntryLocalService bookmarksEntryLocalService, long userId,
+			long statusByUserId)
 		throws Exception {
 
-		BookmarksEntry bookmarksEntry = addBookmarksEntry(userId);
+		BookmarksEntry bookmarksEntry = addBookmarksEntry(
+			bookmarksEntryLocalService, userId);
 
-		_bookmarksEntryLocalService.updateStatus(
+		bookmarksEntryLocalService.updateStatus(
 			statusByUserId, bookmarksEntry, WorkflowConstants.STATUS_APPROVED);
 
 		return bookmarksEntry;
 	}
-
-	@Reference
-	private BookmarksEntryLocalService _bookmarksEntryLocalService;
 
 }

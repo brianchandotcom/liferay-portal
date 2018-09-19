@@ -54,8 +54,8 @@ public class BookmarksEntryUADAnonymizerTest
 		throws Exception {
 
 		BookmarksEntry bookmarksEntry =
-			_bookmarksEntryUADTestHelper.addBookmarksEntryWithStatusByUserId(
-				userId, statusByUserId);
+			BookmarksEntryUADTestHelper.addBookmarksEntryWithStatusByUserId(
+				_bookmarksEntryLocalService, userId, statusByUserId);
 
 		_bookmarksEntries.add(bookmarksEntry);
 
@@ -73,7 +73,8 @@ public class BookmarksEntryUADAnonymizerTest
 		throws Exception {
 
 		BookmarksEntry bookmarksEntry =
-			_bookmarksEntryUADTestHelper.addBookmarksEntry(userId);
+			BookmarksEntryUADTestHelper.addBookmarksEntry(
+				_bookmarksEntryLocalService, userId);
 
 		if (deleteAfterTestRun) {
 			_bookmarksEntries.add(bookmarksEntry);
@@ -123,9 +124,6 @@ public class BookmarksEntryUADAnonymizerTest
 
 	@Inject
 	private BookmarksEntryLocalService _bookmarksEntryLocalService;
-
-	@Inject
-	private BookmarksEntryUADTestHelper _bookmarksEntryUADTestHelper;
 
 	@Inject(filter = "component.name=*.BookmarksEntryUADAnonymizer")
 	private UADAnonymizer _uadAnonymizer;

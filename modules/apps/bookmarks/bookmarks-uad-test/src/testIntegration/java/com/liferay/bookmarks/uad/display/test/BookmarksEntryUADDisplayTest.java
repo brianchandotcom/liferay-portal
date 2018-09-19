@@ -16,6 +16,7 @@ package com.liferay.bookmarks.uad.display.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.bookmarks.model.BookmarksEntry;
+import com.liferay.bookmarks.service.BookmarksEntryLocalService;
 import com.liferay.bookmarks.uad.test.BookmarksEntryUADTestHelper;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -46,7 +47,8 @@ public class BookmarksEntryUADDisplayTest
 	@Override
 	protected BookmarksEntry addBaseModel(long userId) throws Exception {
 		BookmarksEntry bookmarksEntry =
-			_bookmarksEntryUADTestHelper.addBookmarksEntry(userId);
+			BookmarksEntryUADTestHelper.addBookmarksEntry(
+				_bookmarksEntryLocalService, userId);
 
 		_bookmarksEntries.add(bookmarksEntry);
 
@@ -62,7 +64,7 @@ public class BookmarksEntryUADDisplayTest
 	private final List<BookmarksEntry> _bookmarksEntries = new ArrayList<>();
 
 	@Inject
-	private BookmarksEntryUADTestHelper _bookmarksEntryUADTestHelper;
+	private BookmarksEntryLocalService _bookmarksEntryLocalService;
 
 	@Inject(filter = "component.name=*.BookmarksEntryUADDisplay")
 	private UADDisplay _uadDisplay;

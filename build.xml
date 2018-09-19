@@ -1124,20 +1124,13 @@ This target has been renamed to "snapshot-bundle". Please call "snapshot-bundle"
 
 		<clean-liferay-home />
 
-		<unzip
-			dest="${liferay.home}"
-			src="${project.dir}/tmp/${snapshot.bundle.file}"
-		>
-			<mapper>
-				<globmapper
-					from="liferay-portal-${git.working.branch.name}/*"
-					to="*"
-				/>
-			</mapper>
-			<patternset
-				excludes="${snapshot.bundle.excludes}"
-			/>
-		</unzip>
+		<execute dir="${project.dir}/tmp">
+			<![CDATA[
+				7z x ${snapshot.bundle.file} -o${liferay.home}
+			]]>
+		</execute>
+
+		<move file="${liferay.home}/liferay-portal-${git.working.branch.name}" tofile="${liferay.home}" />
 
 		<deploy-properties />
 
@@ -1145,7 +1138,7 @@ This target has been renamed to "snapshot-bundle". Please call "snapshot-bundle"
 			<os family="unix" />
 			<then>
 				<chmod
-					file="${app.server.tomcat.bin.dir}/*.sh"
+					file="${liferay.home}/tomcat/bin/*.sh"
 					perm="a+x"
 				/>
 			</then>

@@ -189,31 +189,29 @@ AUI.add(
 						var instance = this;
 
 						var actions = elements.getDOMNodes().map(
-							node => {
-								var row = A.one(node).ancestor(instance.get(STR_ROW_SELECTOR));
+							function(node) {
+								return A.one(node).ancestor(instance.get(STR_ROW_SELECTOR));
+							}
+						).filter(
+							function(item) {
+								const itemActions = item.getData('actions');
 
-								var rowActions = row.getData('actions');
+								return itemActions !== undefined && itemActions !== STR_ACTIONS_WILDCARD;
 
-								return (rowActions || rowActions === '') ? rowActions.split(',') : STR_ACTIONS_WILDCARD;
+							}
+						).map(
+							function(item) {
+								return item.getData('actions').split(',')
 							}
 						);
 
 						return actions.reduce(
 							function(commonActions, elementActions) {
-								if (elementActions !== STR_ACTIONS_WILDCARD) {
-									if (commonActions === STR_ACTIONS_WILDCARD) {
-										commonActions = elementActions;
+								return commonActions.filter(
+									function(action) {
+										return elementActions.includes(action);
 									}
-									else {
-										commonActions = commonActions.filter(
-											function(action) {
-												return elementActions.includes(action);
-											}
-										);
-									}
-								}
-
-								return commonActions;
+								);
 							},
 							actions[0]
 						);
@@ -250,20 +248,17 @@ AUI.add(
 					_notifyRowToggle: function() {
 						var instance = this;
 
+						var allSelectedElements = instance.getAllSelectedElements();
+
 						var payload =  {
+							actions: instance._getActions(allSelectedElements),
 							elements: {
 								allElements: instance._getAllElements(),
-								allSelectedElements: instance.getAllSelectedElements(),
+								allSelectedElements: allSelectedElements,
 								currentPageElements: instance._getCurrentPageElements(),
 								currentPageSelectedElements: instance.getCurrentPageSelectedElements()
 							}
 						};
-
-						var actions = instance._getActions(payload.elements.allSelectedElements);
-
-						if (actions !== STR_ACTIONS_WILDCARD) {
-							payload.actions = actions;
-						}
 
 						instance.get(STR_HOST).fire('rowToggled', payload);
 					},

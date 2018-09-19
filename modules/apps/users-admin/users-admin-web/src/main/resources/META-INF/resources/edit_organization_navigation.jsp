@@ -30,10 +30,12 @@ OrganizationScreenNavigationDisplayContext organizationScreenNavigationDisplayCo
 	<portlet:param name="screenNavigationEntryKey" value="<%= organizationScreenNavigationDisplayContext.getScreenNavigationEntryKey() %>" />
 </portlet:renderURL>
 
-<aui:form action="<%= editOrganizationActionURL %>" cssClass="container-fluid container-fluid-max-xl" method="post" name="fm">
+<aui:form action="<%= editOrganizationActionURL %>" cssClass="container-fluid container-fluid-max-xl" data-senna-off="true" method="post" name="fm">
 	<aui:input name="redirect" type="hidden" value="<%= editOrganizationRenderURL %>" />
 	<aui:input name="backURL" type="hidden" value="<%= organizationScreenNavigationDisplayContext.getBackURL() %>" />
 	<aui:input name="organizationId" type="hidden" value="<%= organizationScreenNavigationDisplayContext.getOrganizationId() %>" />
+	<aui:input name="screenNavigationCategoryKey" type="hidden" value="<%= organizationScreenNavigationDisplayContext.getScreenNavigationCategoryKey() %>" />
+	<aui:input name="screenNavigationEntryKey" type="hidden" value="<%= organizationScreenNavigationDisplayContext.getScreenNavigationEntryKey() %>" />
 
 	<aui:fieldset-group markupView="lexicon">
 		<div class="sheet">

@@ -22,15 +22,16 @@ String eventName = "_" + HtmlUtil.escapeJS(editAssetListDisplayContext.getPortle
 SearchContainer assetListEntryAssetEntryRelSearchContainer = editAssetListDisplayContext.getSearchContainer();
 %>
 
+<portlet:actionURL name="/asset_list/add_asset_entry_selection" var="addAssetEntrySelectionURL" />
+
 <liferay-frontend:edit-form
+	action="<%= addAssetEntrySelectionURL %>"
 	method="post"
 	name="fm"
 >
-	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
 	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 	<aui:input name="assetListEntryId" type="hidden" value="<%= assetListDisplayContext.getAssetListEntryId() %>" />
 	<aui:input name="assetEntryId" type="hidden" />
-	<aui:input name="position" type="hidden" />
 
 	<liferay-frontend:edit-form-body>
 		<h3 class="sheet-subtitle">
@@ -250,7 +251,7 @@ SearchContainer assetListEntryAssetEntryRelSearchContainer = editAssetListDispla
 				function(event) {
 					<portlet:namespace />fm.<portlet:namespace />assetEntryId.value = event.entityid;
 
-					submitForm(document.<portlet:namespace />fm, '<portlet:actionURL name="/asset_list/add_asset_entry_selection" var="addAssetEntrySelectionURL" />');
+					submitForm(document.<portlet:namespace />fm);
 				}
 			);
 		}

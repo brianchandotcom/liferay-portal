@@ -19,10 +19,17 @@ import {UPDATE_TRANSLATION_STATUS} from './actions/actions.es';
 
 class FragmentsEditor extends Component {
 
+	/**
+	 * @inheritDoc
+	 */
+
 	created() {
-		requestAnimationFrame(
+		this.once(
+			'storeChanged',
 			() => {
-				this.store.dispatchAction(UPDATE_TRANSLATION_STATUS);
+				this.store.dispatchAction(
+					UPDATE_TRANSLATION_STATUS
+				);
 			}
 		);
 	}

@@ -16,6 +16,9 @@ package com.liferay.document.library.uad.display.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.document.library.kernel.model.DLFileEntry;
+import com.liferay.document.library.kernel.service.DLAppLocalService;
+import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
+import com.liferay.document.library.kernel.service.DLFolderLocalService;
 import com.liferay.document.library.uad.test.DLFileEntryUADTestHelper;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -46,12 +49,15 @@ public class DLFileEntryUADDisplayTest
 
 	@After
 	public void tearDown() throws Exception {
-		_dlFileEntryUADTestHelper.cleanUpDependencies(_dlFileEntries);
+		DLFileEntryUADTestHelper.cleanUpDependencies(
+			_dlAppLocalService, _dlFileEntryLocalService, _dlFolderLocalService,
+			_dlFileEntries);
 	}
 
 	@Override
 	protected DLFileEntry addBaseModel(long userId) throws Exception {
-		DLFileEntry dlFileEntry = _dlFileEntryUADTestHelper.addDLFileEntry(
+		DLFileEntry dlFileEntry = DLFileEntryUADTestHelper.addDLFileEntry(
+			_dlAppLocalService, _dlFileEntryLocalService, _dlFolderLocalService,
 			userId);
 
 		_dlFileEntries.add(dlFileEntry);
@@ -64,11 +70,17 @@ public class DLFileEntryUADDisplayTest
 		return _uadDisplay;
 	}
 
+	@Inject
+	private DLAppLocalService _dlAppLocalService;
+
 	@DeleteAfterTestRun
 	private final List<DLFileEntry> _dlFileEntries = new ArrayList<>();
 
 	@Inject
-	private DLFileEntryUADTestHelper _dlFileEntryUADTestHelper;
+	private DLFileEntryLocalService _dlFileEntryLocalService;
+
+	@Inject
+	private DLFolderLocalService _dlFolderLocalService;
 
 	@Inject(filter = "component.name=*.DLFileEntryUADDisplay")
 	private UADDisplay _uadDisplay;

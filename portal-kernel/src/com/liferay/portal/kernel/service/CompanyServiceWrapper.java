@@ -151,6 +151,12 @@ public class CompanyServiceWrapper implements CompanyService,
 		return _companyService.getOSGiServiceIdentifier();
 	}
 
+	@Override
+	public void removeAnalyticsSettings(long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_companyService.removeAnalyticsSettings(companyId);
+	}
+
 	/**
 	* Removes the values that match the keys of the company's preferences.
 	*
@@ -165,6 +171,14 @@ public class CompanyServiceWrapper implements CompanyService,
 	public void removePreferences(long companyId, String[] keys)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_companyService.removePreferences(companyId, keys);
+	}
+
+	@Override
+	public void updateAnalyticsSettings(long companyId, String dataSourceId,
+		String weDeployKey, long[] groupIds)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_companyService.updateAnalyticsSettings(companyId, dataSourceId,
+			weDeployKey, groupIds);
 	}
 
 	/**

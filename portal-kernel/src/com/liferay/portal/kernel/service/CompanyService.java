@@ -145,6 +145,9 @@ public interface CompanyService extends BaseService {
 	*/
 	public String getOSGiServiceIdentifier();
 
+	public void removeAnalyticsSettings(long companyId)
+		throws PortalException;
+
 	/**
 	* Removes the values that match the keys of the company's preferences.
 	*
@@ -158,6 +161,9 @@ public interface CompanyService extends BaseService {
 	@JSONWebService(mode = JSONWebServiceMode.IGNORE)
 	public void removePreferences(long companyId, String[] keys)
 		throws PortalException;
+
+	public void updateAnalyticsSettings(long companyId, String dataSourceId,
+		String weDeployKey, long[] groupIds) throws PortalException;
 
 	/**
 	* Updates the company

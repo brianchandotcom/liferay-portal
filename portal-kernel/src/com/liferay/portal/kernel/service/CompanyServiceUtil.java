@@ -153,6 +153,11 @@ public class CompanyServiceUtil {
 		return getService().getOSGiServiceIdentifier();
 	}
 
+	public static void removeAnalyticsSettings(long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().removeAnalyticsSettings(companyId);
+	}
+
 	/**
 	* Removes the values that match the keys of the company's preferences.
 	*
@@ -166,6 +171,14 @@ public class CompanyServiceUtil {
 	public static void removePreferences(long companyId, String[] keys)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().removePreferences(companyId, keys);
+	}
+
+	public static void updateAnalyticsSettings(long companyId,
+		String dataSourceId, String weDeployKey, long[] groupIds)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService()
+			.updateAnalyticsSettings(companyId, dataSourceId, weDeployKey,
+			groupIds);
 	}
 
 	/**

@@ -241,6 +241,18 @@ public class CompanyServiceSoap {
 		}
 	}
 
+	public static void removeAnalyticsSettings(long companyId)
+		throws RemoteException {
+		try {
+			CompanyServiceUtil.removeAnalyticsSettings(companyId);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	/**
 	* Removes the values that match the keys of the company's preferences.
 	*
@@ -255,6 +267,20 @@ public class CompanyServiceSoap {
 		throws RemoteException {
 		try {
 			CompanyServiceUtil.removePreferences(companyId, keys);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static void updateAnalyticsSettings(long companyId,
+		String dataSourceId, String weDeployKey, long[] groupIds)
+		throws RemoteException {
+		try {
+			CompanyServiceUtil.updateAnalyticsSettings(companyId, dataSourceId,
+				weDeployKey, groupIds);
 		}
 		catch (Exception e) {
 			_log.error(e, e);

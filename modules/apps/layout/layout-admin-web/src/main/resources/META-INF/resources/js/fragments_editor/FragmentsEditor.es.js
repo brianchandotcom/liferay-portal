@@ -316,17 +316,6 @@ FragmentsEditor.STATE = Object.assign(
 		store: Config.instanceOf(Store),
 
 		/**
-		 * URL for swapping to fragmentEntryLinks.
-		 * @default undefined
-		 * @instance
-		 * @memberOf FragmentsEditor
-		 * @review
-		 * @type {!string}
-		 */
-
-		updateFragmentEntryLinksURL: Config.string().required(),
-
-		/**
 		 * URL for updating the asset type associated to a template.
 		 * @default undefined
 		 * @instance

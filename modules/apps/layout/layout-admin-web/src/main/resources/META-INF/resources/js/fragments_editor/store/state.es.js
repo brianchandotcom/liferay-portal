@@ -88,6 +88,17 @@ const INITIAL_STATE = {
 	).value({}),
 
 	/**
+	 * If true, editable values should be highlighted.
+	 * @default false
+	 * @instance
+	 * @review
+	 * @type {boolean}
+	 */
+
+	highlightMapping: Config.bool()
+		.value(false),
+
+	/**
 	 * Position where a fragment is being dragged to
 	 * @default null
 	 * @instance

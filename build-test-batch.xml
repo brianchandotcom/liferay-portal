@@ -716,6 +716,10 @@ app.server.type=@{app.server.type}]]></echo>
 				</then>
 			</if>
 
+			<chmod perm="a+x" type="file">
+				<fileset dir="bundles" includes="**/*.sh" />
+			</chmod>
+
 			<tar
 				basedir="."
 				compression="gzip"

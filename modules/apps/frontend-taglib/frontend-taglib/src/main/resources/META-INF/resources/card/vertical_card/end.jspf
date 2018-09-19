@@ -25,14 +25,14 @@
 
 						<c:if test="<%= Validator.isNotNull(title) %>">
 							<span class="lfr-card-title-text truncate-text">
-								<aui:a href="<%= url %>" onClick="<%= onClick %>" title="<%= HtmlUtil.escape(title) %>">
+								<aui:a href="<%= url %>" onClick="<%= onClick %>" title="<%= HtmlUtil.escapeAttribute(title) %>">
 									<%= HtmlUtil.escape(title) %>
 								</aui:a>
 							</span>
 						</c:if>
 
 						<c:if test="<%= Validator.isNotNull(subtitle) %>">
-							<span class="lfr-card-subtitle-text truncate-text" title="<%= HtmlUtil.escape(subtitle) %>">
+							<span class="lfr-card-subtitle-text truncate-text" title="<%= HtmlUtil.escapeAttribute(subtitle) %>">
 								<%= HtmlUtil.escape(subtitle) %>
 							</span>
 						</c:if>

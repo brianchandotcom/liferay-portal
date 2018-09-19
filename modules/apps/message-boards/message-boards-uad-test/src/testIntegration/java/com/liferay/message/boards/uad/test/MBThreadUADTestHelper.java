@@ -28,56 +28,57 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.List;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Brian Wing Shun Chan
  */
-@Component(immediate = true, service = MBThreadUADTestHelper.class)
 public class MBThreadUADTestHelper {
 
-	public MBThread addMBThread(long userId) throws Exception {
+	public static MBThread addMBThread(
+			MBCategoryLocalService mbCategoryLocalService,
+			MBMessageLocalService mbMessageLocalService,
+			MBThreadLocalService mbThreadLocalService, long userId)
+		throws Exception {
+
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
 				TestPropsValues.getGroupId());
 
-		MBCategory mbCategory = _mbCategoryLocalService.addCategory(
+		MBCategory mbCategory = mbCategoryLocalService.addCategory(
 			userId, 0, RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(), serviceContext);
 
-		MBMessage mbMessage = _mbMessageLocalService.addMessage(
+		MBMessage mbMessage = mbMessageLocalService.addMessage(
 			userId, RandomTestUtil.randomString(), TestPropsValues.getGroupId(),
 			mbCategory.getCategoryId(), RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(), serviceContext);
 
-		return _mbThreadLocalService.getMBThread(mbMessage.getThreadId());
+		return mbThreadLocalService.getMBThread(mbMessage.getThreadId());
 	}
 
-	public MBThread addMBThreadWithStatusByUserId(
-			long userId, long statusByUserId)
+	public static MBThread addMBThreadWithStatusByUserId(
+			MBCategoryLocalService mbCategoryLocalService,
+			MBMessageLocalService mbMessageLocalService,
+			MBThreadLocalService mbThreadLocalService, long userId,
+			long statusByUserId)
 		throws Exception {
 
-		MBThread mbThread = addMBThread(userId);
+		MBThread mbThread = addMBThread(
+			mbCategoryLocalService, mbMessageLocalService, mbThreadLocalService,
+			userId);
 
-		return _mbThreadLocalService.updateStatus(
+		return mbThreadLocalService.updateStatus(
 			statusByUserId, mbThread.getThreadId(),
 			WorkflowConstants.STATUS_APPROVED);
 	}
 
-	public void cleanUpDependencies(List<MBThread> mbThreads) throws Exception {
+	public static void cleanUpDependencies(
+			MBCategoryLocalService mbCategoryLocalService,
+			List<MBThread> mbThreads)
+		throws Exception {
+
 		for (MBThread mbThread : mbThreads) {
-			_mbCategoryLocalService.deleteCategory(mbThread.getCategoryId());
+			mbCategoryLocalService.deleteCategory(mbThread.getCategoryId());
 		}
 	}
-
-	@Reference
-	private MBCategoryLocalService _mbCategoryLocalService;
-
-	@Reference
-	private MBMessageLocalService _mbMessageLocalService;
-
-	@Reference
-	private MBThreadLocalService _mbThreadLocalService;
 
 }

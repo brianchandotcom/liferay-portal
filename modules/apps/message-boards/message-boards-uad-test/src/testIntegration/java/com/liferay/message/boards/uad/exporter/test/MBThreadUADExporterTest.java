@@ -16,6 +16,9 @@ package com.liferay.message.boards.uad.exporter.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.message.boards.model.MBThread;
+import com.liferay.message.boards.service.MBCategoryLocalService;
+import com.liferay.message.boards.service.MBMessageLocalService;
+import com.liferay.message.boards.service.MBThreadLocalService;
 import com.liferay.message.boards.uad.test.MBThreadUADTestHelper;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -51,9 +54,9 @@ public class MBThreadUADExporterTest
 			long userId, long statusByUserId)
 		throws Exception {
 
-		MBThread mbThread =
-			_mbThreadUADTestHelper.addMBThreadWithStatusByUserId(
-				userId, statusByUserId);
+		MBThread mbThread = MBThreadUADTestHelper.addMBThreadWithStatusByUserId(
+			_mbCategoryLocalService, _mbMessageLocalService,
+			_mbThreadLocalService, userId, statusByUserId);
 
 		_mbThreads.add(mbThread);
 
@@ -62,12 +65,15 @@ public class MBThreadUADExporterTest
 
 	@After
 	public void tearDown() throws Exception {
-		_mbThreadUADTestHelper.cleanUpDependencies(_mbThreads);
+		MBThreadUADTestHelper.cleanUpDependencies(
+			_mbCategoryLocalService, _mbThreads);
 	}
 
 	@Override
 	protected MBThread addBaseModel(long userId) throws Exception {
-		MBThread mbThread = _mbThreadUADTestHelper.addMBThread(userId);
+		MBThread mbThread = MBThreadUADTestHelper.addMBThread(
+			_mbCategoryLocalService, _mbMessageLocalService,
+			_mbThreadLocalService, userId);
 
 		_mbThreads.add(mbThread);
 
@@ -84,11 +90,17 @@ public class MBThreadUADExporterTest
 		return _uadExporter;
 	}
 
-	@DeleteAfterTestRun
-	private final List<MBThread> _mbThreads = new ArrayList<>();
+	@Inject
+	private MBCategoryLocalService _mbCategoryLocalService;
 
 	@Inject
-	private MBThreadUADTestHelper _mbThreadUADTestHelper;
+	private MBMessageLocalService _mbMessageLocalService;
+
+	@Inject
+	private MBThreadLocalService _mbThreadLocalService;
+
+	@DeleteAfterTestRun
+	private final List<MBThread> _mbThreads = new ArrayList<>();
 
 	@Inject(filter = "component.name=*.MBThreadUADExporter")
 	private UADExporter _uadExporter;

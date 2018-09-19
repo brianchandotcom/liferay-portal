@@ -16,6 +16,8 @@ package com.liferay.message.boards.uad.anonymizer.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.message.boards.model.MBThread;
+import com.liferay.message.boards.service.MBCategoryLocalService;
+import com.liferay.message.boards.service.MBMessageLocalService;
 import com.liferay.message.boards.service.MBThreadLocalService;
 import com.liferay.message.boards.uad.test.MBThreadUADTestHelper;
 import com.liferay.portal.kernel.model.User;
@@ -53,9 +55,9 @@ public class MBThreadUADAnonymizerTest
 			long userId, long statusByUserId)
 		throws Exception {
 
-		MBThread mbThread =
-			_mbThreadUADTestHelper.addMBThreadWithStatusByUserId(
-				userId, statusByUserId);
+		MBThread mbThread = MBThreadUADTestHelper.addMBThreadWithStatusByUserId(
+			_mbCategoryLocalService, _mbMessageLocalService,
+			_mbThreadLocalService, userId, statusByUserId);
 
 		_mbThreads.add(mbThread);
 
@@ -64,7 +66,8 @@ public class MBThreadUADAnonymizerTest
 
 	@After
 	public void tearDown() throws Exception {
-		_mbThreadUADTestHelper.cleanUpDependencies(_mbThreads);
+		MBThreadUADTestHelper.cleanUpDependencies(
+			_mbCategoryLocalService, _mbThreads);
 	}
 
 	@Override
@@ -76,7 +79,9 @@ public class MBThreadUADAnonymizerTest
 	protected MBThread addBaseModel(long userId, boolean deleteAfterTestRun)
 		throws Exception {
 
-		MBThread mbThread = _mbThreadUADTestHelper.addMBThread(userId);
+		MBThread mbThread = MBThreadUADTestHelper.addMBThread(
+			_mbCategoryLocalService, _mbMessageLocalService,
+			_mbThreadLocalService, userId);
 
 		if (deleteAfterTestRun) {
 			_mbThreads.add(mbThread);
@@ -89,7 +94,8 @@ public class MBThreadUADAnonymizerTest
 	protected void deleteBaseModels(List<MBThread> baseModels)
 		throws Exception {
 
-		_mbThreadUADTestHelper.cleanUpDependencies(baseModels);
+		MBThreadUADTestHelper.cleanUpDependencies(
+			_mbCategoryLocalService, baseModels);
 	}
 
 	@Override
@@ -129,13 +135,16 @@ public class MBThreadUADAnonymizerTest
 	}
 
 	@Inject
+	private MBCategoryLocalService _mbCategoryLocalService;
+
+	@Inject
+	private MBMessageLocalService _mbMessageLocalService;
+
+	@Inject
 	private MBThreadLocalService _mbThreadLocalService;
 
 	@DeleteAfterTestRun
 	private final List<MBThread> _mbThreads = new ArrayList<>();
-
-	@Inject
-	private MBThreadUADTestHelper _mbThreadUADTestHelper;
 
 	@Inject(filter = "component.name=*.MBThreadUADAnonymizer")
 	private UADAnonymizer _uadAnonymizer;

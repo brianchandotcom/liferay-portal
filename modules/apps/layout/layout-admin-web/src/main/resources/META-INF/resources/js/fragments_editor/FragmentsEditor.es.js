@@ -7,9 +7,10 @@ import './components/dialogs/SelectMappingTypeDialog.es';
 import './components/fragment_entry_link/FragmentEntryLinkList.es';
 import './components/sidebar/FragmentsEditorSidebar.es';
 import './components/toolbar/FragmentsEditorToolbar.es';
-import {Store} from './store/store.es';
 import {INITIAL_STATE} from './store/state.es';
+import {Store} from './store/store.es';
 import templates from './FragmentsEditor.soy';
+import {UPDATE_TRANSLATION_STATUS} from './actions/actions.es';
 
 /**
  * FragmentsEditor

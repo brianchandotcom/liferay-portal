@@ -17,13 +17,21 @@ package com.liferay.knowledge.base.web.internal.display.context;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.SafeConsumer;
+import com.liferay.knowledge.base.model.KBComment;
+import com.liferay.knowledge.base.web.internal.security.permission.resource.KBCommentPermission;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.WebKeys;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -51,6 +59,9 @@ public class KBSuggestionListManagementToolbarDisplayContext {
 
 		_currentURLObj = PortletURLUtil.getCurrent(
 			_liferayPortletRequest, _liferayPortletResponse);
+
+		_themeDisplay = (ThemeDisplay)_request.getAttribute(
+			WebKeys.THEME_DISPLAY);
 	}
 
 	public List<DropdownItem> getActionDropdownItems() {
@@ -66,6 +77,23 @@ public class KBSuggestionListManagementToolbarDisplayContext {
 					});
 			}
 		};
+	}
+
+	public List<String> getAvailableActionDropdownItems(KBComment kbComment)
+		throws PortalException {
+
+		List<String> availableActionDropdownItems = new ArrayList<>();
+
+		PermissionChecker permissionChecker =
+			_themeDisplay.getPermissionChecker();
+
+		if (KBCommentPermission.contains(
+				permissionChecker, kbComment, ActionKeys.DELETE)) {
+
+			availableActionDropdownItems.add("deleteKBComments");
+		}
+
+		return availableActionDropdownItems;
 	}
 
 	public List<DropdownItem> getFilterDropdownItems() {
@@ -214,5 +242,6 @@ public class KBSuggestionListManagementToolbarDisplayContext {
 	private final LiferayPortletResponse _liferayPortletResponse;
 	private final HttpServletRequest _request;
 	private final SearchContainer _searchContainer;
+	private final ThemeDisplay _themeDisplay;
 
 }

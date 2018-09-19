@@ -70,6 +70,7 @@ class PublishButton extends URLEncodedFetcher {
 					[`${namespace}formInstanceId`]: formInstanceId,
 					[`${namespace}published`]: published
 				};
+
 				return this.fetch(payload).then(
 					() => {
 						this.props.published = published;

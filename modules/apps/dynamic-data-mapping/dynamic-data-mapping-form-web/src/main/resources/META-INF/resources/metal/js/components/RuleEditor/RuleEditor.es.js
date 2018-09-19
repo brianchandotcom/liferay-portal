@@ -237,6 +237,7 @@ class RuleEditor extends Component {
 				return field.name === fieldName;
 			}
 		);
+
 		if (selectedField.length > 0) {
 			fieldType = selectedField[0].type;
 		}

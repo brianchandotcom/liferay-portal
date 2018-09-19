@@ -229,7 +229,11 @@ class Form extends Component {
 	}
 
 	disposed() {
-		this._autoSave.dispose();
+		super.disposed();
+
+		if (this._autoSave) {
+			this._autoSave.dispose();
+		}
 
 		this._eventHandler.removeAllListeners();
 	}
@@ -276,7 +280,8 @@ class Form extends Component {
 						paginationMode,
 						settingsDDMForm: results[2],
 						translationManager
-					}
+					},
+					this.element
 				);
 
 				this._autoSave = new AutoSave(
@@ -286,7 +291,8 @@ class Form extends Component {
 						namespace,
 						stateSyncronizer: this._stateSyncronizer,
 						url: Liferay.DDM.FormSettings.autosaveURL
-					}
+					},
+					this.element
 				);
 
 				this._eventHandler.add(this._autoSave.on('autosaved', this._updateAutoSaveMessage.bind(this)));

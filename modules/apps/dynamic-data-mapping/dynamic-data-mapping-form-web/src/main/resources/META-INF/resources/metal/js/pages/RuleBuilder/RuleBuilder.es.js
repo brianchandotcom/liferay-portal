@@ -189,7 +189,9 @@ class RuleBuilder extends Component {
 	 * @private
 	 */
 
-	dispose() {
+	disposed() {
+		super.disposed();
+
 		this._eventHandler.removeAllListeners();
 	}
 

@@ -27,6 +27,8 @@ class StateSyncronizer extends Component {
 	}
 
 	disposeInternal() {
+		super.disposeInternal();
+
 		this._eventHandler.removeAllListeners();
 	}
 

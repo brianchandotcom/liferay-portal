@@ -22,6 +22,8 @@ class AutoSave extends URLEncodedFetcher {
 	}
 
 	disposeInternal() {
+		super.disposeInternal();
+
 		this.stop();
 	}
 

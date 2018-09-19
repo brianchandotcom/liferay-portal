@@ -299,7 +299,9 @@ class Sidebar extends Component {
 	 * @inheritDoc
 	 */
 
-	dispose() {
+	disposeInternal() {
+		super.disposeInternal();
+
 		this._eventHandler.removeAllListeners();
 	}
 

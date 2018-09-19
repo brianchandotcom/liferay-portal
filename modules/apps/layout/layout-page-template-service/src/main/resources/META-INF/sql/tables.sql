@@ -47,5 +47,5 @@ create table LayoutPageTemplateStructure (
 	modifiedDate DATE null,
 	classNameId LONG,
 	classPK LONG,
-	data_ VARCHAR(75) null
+	data_ STRING null
 );

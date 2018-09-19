@@ -1,6 +1,6 @@
 import Soy from 'metal-soy';
 import {Config} from 'metal-state';
-
+import {openToast} from 'frontend-js-web/liferay/toast/commands/OpenToast.es';
 import PortletBase from 'frontend-js-web/liferay/PortletBase.es';
 
 import templates from './Sharing.soy';
@@ -103,6 +103,14 @@ class Sharing extends PortletBase {
 
 				if (response.ok) {
 					parent.Liferay.Portlet.refresh(`#p_p_id${this._refererPortletNamespace}`);
+
+					openToast(
+						{
+							message: repsonse,
+							title: Liferay.Language.get('success'),
+						}
+					);
+
 					this._closeDialog();
 
 					return response;

@@ -114,6 +114,13 @@ public class CalendarServiceUpgrade implements UpgradeStepRegistrator {
 					CalendarNotificationTemplateTable.class,
 					CalendarResourceTable.class, CalendarTable.class
 				}));
+
+		registry.register(
+			"4.0.0", "4.0.1",
+			new UpgradeDiscussionSubscriptionClassName(
+				_subscriptionLocalService, CalendarBooking.class.getName(),
+				UpgradeDiscussionSubscriptionClassName.DeletionMode.
+					DELETE_OLD));
 	}
 
 	@Reference

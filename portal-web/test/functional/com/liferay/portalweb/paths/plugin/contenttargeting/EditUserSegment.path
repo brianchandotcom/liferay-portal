@@ -254,13 +254,28 @@
 </tr>
 <!--USER_SEGMENT_RULE_USER_ATTRIBUTES_SITE_ROLE-->
 <tr>
+	<td>USER_SEGMENT_RULE_USER_ATTRIBUTES_SITE_ROLE_SELECT_BUTTON</td>
+	<td>//div[contains(@class,'field-editor') and contains(@class,'expanded')]//a[contains(.,'Select')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>USER_SEGMENT_RULE_USER_ATTRIBUTES_SITE_ROLE_SITE_ROLE_CHOOSE_BUTTON</td>
+	<td>//tr[contains(.,'${key_siteRole}')]/td[2]//button[contains(.,'Choose')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>USER_SEGMENT_RULE_USER_ATTRIBUTES_SITE_ROLE_SITE_ROLE_SELECT</td>
-	<td>//div[contains(@class,'siterolerule')]//div[contains(@class,'field-editor') and contains(@class,'expanded')]//a[contains(@id,'openSiteRoleLink')]</td>
+	<td>//div[contains(@class,'siterolerule')]//div[contains(@class,'field-editor') and contains(@class,'expanded')]//div[contains(@id,'roleTitleContainer')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>USER_SEGMENT_RULE_USER_ATTRIBUTES_SITE_ROLE_SITE_CHOOSE_BUTTON</td>
+	<td>//tr[contains(.,'${key_siteRoleSite}')]/td[3]//button[contains(.,'Choose')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>USER_SEGMENT_RULE_USER_ATTRIBUTES_SITE_ROLE_SITE_SELECT</td>
-	<td>//div[contains(@class,'siterolerule')]//div[contains(@class,'field-editor') and contains(@class,'expanded')]//a[contains(@id,'openSiteRoleLink')]</td>
+	<td>//div[contains(@class,'siterolerule')]//div[contains(@class,'field-editor') and contains(@class,'expanded')]//div[contains(@id,'siteMemberNameContainer')]</td>
 	<td></td>
 </tr>
 <tr>

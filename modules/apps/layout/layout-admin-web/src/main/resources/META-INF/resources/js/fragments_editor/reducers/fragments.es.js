@@ -1,9 +1,11 @@
-import {DRAG_POSITIONS} from './placeholders.es';
 import {
 	ADD_FRAGMENT_ENTRY_LINK,
 	MOVE_FRAGMENT_ENTRY_LINK,
-	REMOVE_FRAGMENT_ENTRY_LINK
+	REMOVE_FRAGMENT_ENTRY_LINK,
+	UPDATE_EDITABLE_VALUE
 } from '../actions/actions.es';
+import {DRAG_POSITIONS} from './placeholders.es';
+import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../components/fragment_entry_link/FragmentEntryLink.es';
 
 /**
  * @param {!object} state
@@ -236,6 +238,81 @@ function removeFragmentEntryLinkReducer(state, actionType, payload) {
 	);
 }
 
+/**
+ * @param {!object} state
+ * @param {!string} actionType
+ * @param {object} payload
+ * @param {string} payload.fragmentEntryLinkId
+ * @param {string} payload.editableId
+ * @param {string} payload.editableValue
+ * @param {string} payload.editableValueId
+ * @return {object}
+ * @review
+ */
+
+function updateEditableValueReducer(state, actionType, payload) {
+	let nextState = state;
+
+	return new Promise(
+		resolve => {
+			if (actionType === UPDATE_EDITABLE_VALUE) {
+				const editableId = payload.editableId;
+				const editableValue = payload.editableValue;
+				const editableValueId = payload.editableValueId;
+				const editableValues = state.fragmentEntryLinks[payload.fragmentEntryLinkId].editableValues;
+
+				const nextEditableValues = _setIn(
+					editableValues,
+					[
+						EDITABLE_FRAGMENT_ENTRY_PROCESSOR,
+						editableId,
+						editableValueId
+					],
+					editableValue
+				);
+
+				const formData = new FormData();
+
+				formData.append(
+					`${state.portletNamespace}fragmentEntryLinkId`,
+					payload.fragmentEntryLinkId
+				);
+
+				formData.append(
+					`${state.portletNamespace}editableValues`,
+					JSON.stringify(nextEditableValues)
+				);
+
+				fetch(
+					state.editFragmentEntryLinkURL,
+					{
+						body: formData,
+						credentials: 'include',
+						method: 'POST'
+					}
+				).then(
+					() => {
+						nextState = _setIn(
+							nextState,
+							[
+								'fragmentEntryLinks',
+								payload.fragmentEntryLinkId,
+								'editableValues'
+							],
+							nextEditableValues
+						);
+
+						resolve(nextState);
+					}
+				);
+			}
+			else {
+				resolve(nextState);
+			}
+		}
+	);
+}
+
 function _addFragmentEntryLink(
 	addFragmentEntryLinkURL,
 	fragmentEntryId,
@@ -388,6 +465,35 @@ function _removeFragmentEntryLink(
 }
 
 /**
+ * Recursively inserts a value inside an object creating
+ * a copy of the original target.
+ * @param {!object} Original object that will be copied
+ * @param {!string[]} Array of strings used for reaching the deep property
+ * @param {*} value Value to be inserted
+ * @return {!object} Copy of the original object with the new value
+ * @review
+ */
+
+function _setIn(object, keyPath, value) {
+	const nextKey = keyPath[0];
+	const target = Object.assign({}, object);
+
+	let nextValue = value;
+
+	if (keyPath.length > 1) {
+		nextValue = _setIn(
+			object[nextKey] || {},
+			keyPath.slice(1),
+			value
+		);
+	}
+
+	target[nextKey] = nextValue;
+
+	return target;
+}
+
+/**
  * Update layoutData
  * @param {!string} updateLayoutPageTemplateDataURL
  * @param {!string} portletNamespace
@@ -429,5 +535,6 @@ function _updateData(
 export {
 	addFragmentEntryLinkReducer,
 	moveFragmentEntryLinkReducer,
-	removeFragmentEntryLinkReducer
+	removeFragmentEntryLinkReducer,
+	updateEditableValueReducer
 };

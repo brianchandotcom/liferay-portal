@@ -519,11 +519,11 @@ public class PortletDescriptorParser {
 				publicRenderParameters.get(identifier);
 
 			if (publicRenderParameter == null) {
-				_log.error(
-					"Supported public render parameter references unknown " +
-						"identifier " + identifier);
-
-				continue;
+				if (_log.isWarnEnabled()) {
+					_log.warn(
+						"Supported public render parameter references " +
+							"unknown identifier " + identifier);
+				}
 			}
 
 			supportedPublicRenderParameters.add(identifier);

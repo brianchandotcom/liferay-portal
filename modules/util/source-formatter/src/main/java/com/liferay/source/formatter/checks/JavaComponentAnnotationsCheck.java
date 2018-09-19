@@ -61,9 +61,7 @@ public class JavaComponentAnnotationsCheck extends JavaAnnotationsCheck {
 	}
 
 	private String _addServiceAttribute(
-		String annotation, List<String> implementedClassNames) {
-
-		String serviceAttribute = _getServiceAttribute(implementedClassNames);
+		String annotation, String serviceAttribute) {
 
 		if (!annotation.contains("(")) {
 			return StringBundler.concat(
@@ -173,16 +171,21 @@ public class JavaComponentAnnotationsCheck extends JavaAnnotationsCheck {
 	private String _formatServiceAttribute(
 		String annotation, List<String> implementedClassNames) {
 
+		String expectedServiceAttribute = _getExpectedServiceAttribute(
+			implementedClassNames);
+
 		Matcher matcher = _serviceAttributePattern.matcher(annotation);
 
 		if (!matcher.find()) {
-			return _addServiceAttribute(annotation, implementedClassNames);
+			return _addServiceAttribute(annotation, expectedServiceAttribute);
 		}
 
 		return annotation;
 	}
 
-	private String _getServiceAttribute(List<String> implementedClassNames) {
+	private String _getExpectedServiceAttribute(
+		List<String> implementedClassNames) {
+
 		if (implementedClassNames.isEmpty()) {
 			return "service = {}";
 		}

@@ -16,6 +16,7 @@ package com.liferay.message.boards.uad.anonymizer.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.message.boards.model.MBMessage;
+import com.liferay.message.boards.service.MBCategoryLocalService;
 import com.liferay.message.boards.service.MBMessageLocalService;
 import com.liferay.message.boards.uad.test.MBMessageUADTestHelper;
 import com.liferay.portal.kernel.model.User;
@@ -54,8 +55,9 @@ public class MBMessageUADAnonymizerTest
 		throws Exception {
 
 		MBMessage mbMessage =
-			_mbMessageUADTestHelper.addMBMessageWithStatusByUserId(
-				userId, statusByUserId);
+			MBMessageUADTestHelper.addMBMessageWithStatusByUserId(
+				_mbCategoryLocalService, _mbMessageLocalService, userId,
+				statusByUserId);
 
 		_mbMessages.add(mbMessage);
 
@@ -64,7 +66,8 @@ public class MBMessageUADAnonymizerTest
 
 	@After
 	public void tearDown() throws Exception {
-		_mbMessageUADTestHelper.cleanUpDependencies(_mbMessages);
+		MBMessageUADTestHelper.cleanUpDependencies(
+			_mbCategoryLocalService, _mbMessages);
 	}
 
 	@Override
@@ -76,7 +79,8 @@ public class MBMessageUADAnonymizerTest
 	protected MBMessage addBaseModel(long userId, boolean deleteAfterTestRun)
 		throws Exception {
 
-		MBMessage mbMessage = _mbMessageUADTestHelper.addMBMessage(userId);
+		MBMessage mbMessage = MBMessageUADTestHelper.addMBMessage(
+			_mbCategoryLocalService, _mbMessageLocalService, userId);
 
 		if (deleteAfterTestRun) {
 			_mbMessages.add(mbMessage);
@@ -89,7 +93,8 @@ public class MBMessageUADAnonymizerTest
 	protected void deleteBaseModels(List<MBMessage> baseModels)
 		throws Exception {
 
-		_mbMessageUADTestHelper.cleanUpDependencies(baseModels);
+		MBMessageUADTestHelper.cleanUpDependencies(
+			_mbCategoryLocalService, baseModels);
 	}
 
 	@Override
@@ -127,13 +132,13 @@ public class MBMessageUADAnonymizerTest
 	}
 
 	@Inject
+	private MBCategoryLocalService _mbCategoryLocalService;
+
+	@Inject
 	private MBMessageLocalService _mbMessageLocalService;
 
 	@DeleteAfterTestRun
 	private final List<MBMessage> _mbMessages = new ArrayList<>();
-
-	@Inject
-	private MBMessageUADTestHelper _mbMessageUADTestHelper;
 
 	@Inject(filter = "component.name=*.MBMessageUADAnonymizer")
 	private UADAnonymizer _uadAnonymizer;

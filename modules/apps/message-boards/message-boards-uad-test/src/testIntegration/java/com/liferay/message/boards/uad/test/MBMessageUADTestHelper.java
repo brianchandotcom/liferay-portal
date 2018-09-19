@@ -30,35 +30,38 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Brian Wing Shun Chan
  */
-@Component(immediate = true, service = MBMessageUADTestHelper.class)
 public class MBMessageUADTestHelper {
 
-	public MBMessage addMBMessage(long userId) throws Exception {
+	public static MBMessage addMBMessage(
+			MBCategoryLocalService mbCategoryLocalService,
+			MBMessageLocalService mbMessageLocalService, long userId)
+		throws Exception {
+
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
 				TestPropsValues.getGroupId());
 
-		MBCategory mbCategory = _mbCategoryLocalService.addCategory(
+		MBCategory mbCategory = mbCategoryLocalService.addCategory(
 			userId, 0, RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(), serviceContext);
 
-		return _mbMessageLocalService.addMessage(
+		return mbMessageLocalService.addMessage(
 			userId, RandomTestUtil.randomString(), TestPropsValues.getGroupId(),
 			mbCategory.getCategoryId(), RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(), serviceContext);
 	}
 
-	public MBMessage addMBMessageWithStatusByUserId(
-			long userId, long statusByUserId)
+	public static MBMessage addMBMessageWithStatusByUserId(
+			MBCategoryLocalService mbCategoryLocalService,
+			MBMessageLocalService mbMessageLocalService, long userId,
+			long statusByUserId)
 		throws Exception {
 
-		MBMessage mbMessage = addMBMessage(userId);
+		MBMessage mbMessage = addMBMessage(
+			mbCategoryLocalService, mbMessageLocalService, userId);
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
@@ -68,23 +71,19 @@ public class MBMessageUADTestHelper {
 
 		workflowContext.put(WorkflowConstants.CONTEXT_URL, "http://localhost");
 
-		return _mbMessageLocalService.updateStatus(
+		return mbMessageLocalService.updateStatus(
 			statusByUserId, mbMessage.getMessageId(),
 			WorkflowConstants.STATUS_APPROVED, serviceContext, workflowContext);
 	}
 
-	public void cleanUpDependencies(List<MBMessage> mbMessages)
+	public static void cleanUpDependencies(
+			MBCategoryLocalService mbCategoryLocalService,
+			List<MBMessage> mbMessages)
 		throws Exception {
 
 		for (MBMessage mbMessage : mbMessages) {
-			_mbCategoryLocalService.deleteCategory(mbMessage.getCategoryId());
+			mbCategoryLocalService.deleteCategory(mbMessage.getCategoryId());
 		}
 	}
-
-	@Reference
-	private MBCategoryLocalService _mbCategoryLocalService;
-
-	@Reference
-	private MBMessageLocalService _mbMessageLocalService;
 
 }

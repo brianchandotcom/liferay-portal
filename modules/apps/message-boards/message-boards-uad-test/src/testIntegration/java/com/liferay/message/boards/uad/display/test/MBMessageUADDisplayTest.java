@@ -16,6 +16,8 @@ package com.liferay.message.boards.uad.display.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.message.boards.model.MBMessage;
+import com.liferay.message.boards.service.MBCategoryLocalService;
+import com.liferay.message.boards.service.MBMessageLocalService;
 import com.liferay.message.boards.uad.test.MBMessageUADTestHelper;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -45,12 +47,14 @@ public class MBMessageUADDisplayTest extends BaseUADDisplayTestCase<MBMessage> {
 
 	@After
 	public void tearDown() throws Exception {
-		_mbMessageUADTestHelper.cleanUpDependencies(_mbMessages);
+		MBMessageUADTestHelper.cleanUpDependencies(
+			_mbCategoryLocalService, _mbMessages);
 	}
 
 	@Override
 	protected MBMessage addBaseModel(long userId) throws Exception {
-		MBMessage mbMessage = _mbMessageUADTestHelper.addMBMessage(userId);
+		MBMessage mbMessage = MBMessageUADTestHelper.addMBMessage(
+			_mbCategoryLocalService, _mbMessageLocalService, userId);
 
 		_mbMessages.add(mbMessage);
 
@@ -62,11 +66,14 @@ public class MBMessageUADDisplayTest extends BaseUADDisplayTestCase<MBMessage> {
 		return _uadDisplay;
 	}
 
-	@DeleteAfterTestRun
-	private final List<MBMessage> _mbMessages = new ArrayList<>();
+	@Inject
+	private MBCategoryLocalService _mbCategoryLocalService;
 
 	@Inject
-	private MBMessageUADTestHelper _mbMessageUADTestHelper;
+	private MBMessageLocalService _mbMessageLocalService;
+
+	@DeleteAfterTestRun
+	private final List<MBMessage> _mbMessages = new ArrayList<>();
 
 	@Inject(filter = "component.name=*.MBMessageUADDisplay")
 	private UADDisplay _uadDisplay;

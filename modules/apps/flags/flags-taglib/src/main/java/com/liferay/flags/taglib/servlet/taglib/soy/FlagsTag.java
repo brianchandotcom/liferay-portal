@@ -15,8 +15,6 @@
 package com.liferay.flags.taglib.servlet.taglib.soy;
 
 import com.liferay.flags.configuration.FlagsGroupServiceConfiguration;
-import com.liferay.flags.taglib.internal.js.loader.modules.extender.npm.NPMResolverProvider;
-import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
 import com.liferay.frontend.taglib.soy.servlet.taglib.ComponentRendererTag;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -116,9 +114,7 @@ public class FlagsTag extends ComponentRendererTag {
 
 	@Override
 	public String getModule() {
-		NPMResolver npmResolver = NPMResolverProvider.getNPMResolver();
-
-		return npmResolver.resolveModuleName("flags-taglib/flags/Flags.es");
+		return "flags-taglib@4.0.0/flags/Flags.es";
 	}
 
 	public void setClassName(String className) {

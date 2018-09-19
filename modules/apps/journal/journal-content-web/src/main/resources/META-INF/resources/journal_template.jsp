@@ -75,6 +75,7 @@ String refererPortletName = ParamUtil.getString(request, "refererPortletName");
 		PortletURL selectDDMTemplateURL = PortletProviderUtil.getPortletURL(renderRequest, className, PortletProvider.Action.BROWSE);
 
 		selectDDMTemplateURL.setParameter("ddmStructureId", String.valueOf(ddmStructure.getStructureId()));
+		selectDDMTemplateURL.setWindowState(LiferayWindowState.POP_UP);
 
 		String portletId = PortletProviderUtil.getPortletId(className, PortletProvider.Action.BROWSE);
 		%>

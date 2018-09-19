@@ -17,6 +17,8 @@
 <%@ include file="/init.jsp" %>
 
 <%
+String[] installedPatches = PatcherUtil.getInstalledPatches();
+
 long uptimeDiff = System.currentTimeMillis() - PortalUtil.getUptime().getTime();
 long days = uptimeDiff / Time.DAY;
 long hours = (uptimeDiff / Time.HOUR) % 24;
@@ -38,6 +40,9 @@ long usedMemory = totalMemory - runtime.freeMemory();
 		<div class="panel-body">
 			<div class="alert alert-info">
 				<strong><liferay-ui:message key="info" /></strong>: <%= ReleaseInfo.getReleaseInfo() %>
+				<c:if test="<%= (installedPatches != null) && (installedPatches.length > 0) %>">
+					<strong><liferay-ui:message key="patch" /></strong>: <%= StringUtil.merge(installedPatches) %>
+				</c:if>
 				<strong><liferay-ui:message key="uptime" /></strong>:
 
 				<c:if test="<%= days > 0 %>">

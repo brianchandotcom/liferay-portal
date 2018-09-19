@@ -24,6 +24,7 @@ long categoryId = GetterUtil.getLong(request.getAttribute("view.jsp-categoryId")
 MBCategoryDisplay categoryDisplay = new MBCategoryDisplay(scopeGroupId, categoryId);
 
 SearchContainer entriesSearchContainer = (SearchContainer)request.getAttribute("view.jsp-entriesSearchContainer");
+MBEntriesManagementToolbarDisplayContext mbEntriesManagementToolbarDisplayContext = (MBEntriesManagementToolbarDisplayContext)request.getAttribute("view.jsp-mbEntriesManagementToolbarDisplayContext");
 %>
 
 <div class="container-fluid-1280 view-entries-container">
@@ -148,6 +149,12 @@ SearchContainer entriesSearchContainer = (SearchContainer)request.getAttribute("
 
 							row.setPrimaryKey(String.valueOf(thread.getThreadId()));
 							row.setRestricted(!MBMessagePermission.contains(permissionChecker, message, ActionKeys.VIEW));
+
+							Map<String, Object> rowData = new HashMap<String, Object>();
+
+							rowData.put("actions", String.join(StringPool.COMMA, mbEntriesManagementToolbarDisplayContext.getAvailableActionDropdownItems(message)));
+
+							row.setData(rowData);
 						}
 						%>
 

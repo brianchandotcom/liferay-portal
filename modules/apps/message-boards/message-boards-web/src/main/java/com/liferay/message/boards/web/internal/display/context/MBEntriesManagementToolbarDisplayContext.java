@@ -21,6 +21,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.SafeConsumer;
 import com.liferay.message.boards.constants.MBCategoryConstants;
 import com.liferay.message.boards.constants.MBPortletKeys;
 import com.liferay.message.boards.model.MBCategory;
+import com.liferay.message.boards.model.MBMessage;
 import com.liferay.message.boards.util.comparator.CategoryModifiedDateComparator;
 import com.liferay.message.boards.util.comparator.CategoryTitleComparator;
 import com.liferay.message.boards.util.comparator.MBObjectsModifiedDateComparator;
@@ -28,6 +29,7 @@ import com.liferay.message.boards.util.comparator.MBObjectsTitleComparator;
 import com.liferay.message.boards.util.comparator.ThreadModifiedDateComparator;
 import com.liferay.message.boards.util.comparator.ThreadTitleComparator;
 import com.liferay.message.boards.web.internal.security.permission.MBCategoryPermission;
+import com.liferay.message.boards.web.internal.security.permission.MBMessagePermission;
 import com.liferay.message.boards.web.internal.util.MBUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -38,6 +40,7 @@ import com.liferay.portal.kernel.portlet.PortalPreferences;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -45,6 +48,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.trash.TrashHelper;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -72,6 +76,9 @@ public class MBEntriesManagementToolbarDisplayContext {
 
 		_portalPreferences = PortletPreferencesFactoryUtil.getPortalPreferences(
 			liferayPortletRequest);
+
+		_themeDisplay = (ThemeDisplay)_request.getAttribute(
+			WebKeys.THEME_DISPLAY);
 	}
 
 	public List<DropdownItem> getActionDropdownItems() {
@@ -124,6 +131,31 @@ public class MBEntriesManagementToolbarDisplayContext {
 						}));
 			}
 		};
+	}
+
+	public List<String> getAvailableActionDropdownItems(MBMessage message)
+		throws PortalException {
+
+		List<String> availableActionDropdownItems = new ArrayList<>();
+
+		PermissionChecker permissionChecker =
+			_themeDisplay.getPermissionChecker();
+
+		if (MBMessagePermission.contains(
+				permissionChecker, message, ActionKeys.DELETE)) {
+
+			availableActionDropdownItems.add("deleteEntries");
+		}
+
+		if (MBCategoryPermission.contains(
+				permissionChecker, message.getGroupId(),
+				message.getCategoryId(), ActionKeys.LOCK_THREAD)) {
+
+			availableActionDropdownItems.add("lockEntries");
+			availableActionDropdownItems.add("unlockEntries");
+		}
+
+		return availableActionDropdownItems;
 	}
 
 	public CreationMenu getCreationMenu() throws PortalException {
@@ -502,6 +534,7 @@ public class MBEntriesManagementToolbarDisplayContext {
 	private String _orderByType;
 	private final PortalPreferences _portalPreferences;
 	private final HttpServletRequest _request;
+	private final ThemeDisplay _themeDisplay;
 	private final TrashHelper _trashHelper;
 
 }

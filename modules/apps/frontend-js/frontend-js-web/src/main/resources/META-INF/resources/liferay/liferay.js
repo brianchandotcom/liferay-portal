@@ -4,6 +4,7 @@ Liferay = window.Liferay || {};
 	var isFunction = function(val) {
 		return typeof val === 'function';
 	};
+
 	var isNode = function(node) {
 		return node && (node._node || node.jquery || node.nodeType);
 	};

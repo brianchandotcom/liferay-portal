@@ -1,9 +1,11 @@
 (function(_, Liferay) {
 	Liferay.lazyLoad = function() {
 		var failureCallback;
+
 		var isFunction = function(val) {
 			return typeof val === 'function';
 		};
+
 		var modules;
 		var successCallback;
 

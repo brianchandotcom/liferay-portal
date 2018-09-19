@@ -182,8 +182,8 @@
 		<property name="dummy.socket.proxy.disabled" value="true" />
 		<property name="test.name.skip.portal.instance" value="Login#OpenIDSmoke" />
 
-		<var method="PropsUtil#get('openid.password')" name="openIDPassword" />
-		<var method="PropsUtil#get('openid.username')" name="openIDUsername" />
+		<var method="PropsUtil#get('email.password.1')" name="openIDPassword" />
+		<var method="PropsUtil#get('email.address.1')" name="openIDUsername" />
 
 		<execute macro="User#firstLoginPG" />
 
@@ -199,19 +199,37 @@
 
 		<execute macro="User#logoutPG" />
 
-		<execute macro="User#loginUserWithOpenIDEnabledPG">
+		<execute macro="User#createUserViaOpenID">
 			<var name="openIDPassword" value="${openIDPassword}" />
+			<var name="openIDURL" value="https://me.yahoo.com/liferayqa" />
 			<var name="openIDUsername" value="${openIDUsername}" />
-			<var name="password" value="test" />
-			<var name="userEmailAddress" value="userea2@liferay.com" />
-			<var name="userName" value="userfn2" />
+			<var name="userEmailAddress" value="userea@liferay.com" />
+			<var name="userFirstName" value="userfn" />
+			<var name="userLastName" value="userln" />
+			<var name="userScreenName" value="usersn" />
 		</execute>
-
-		<execute macro="User#logoutPG" />
 
 		<execute macro="User#loginUserPG">
 			<var name="password" value="test" />
 			<var name="userEmailAddress" value="test@liferay.com" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Users" />
+			<var name="panel" value="Control Panel" />
+			<var name="portlet" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#editPasswordCP">
+			<var name="userEmailAddress" value="userea@liferay.com" />
+			<var name="userScreenName" value="usersn" />
+		</execute>
+
+		<execute macro="User#logoutPG" />
+
+		<execute macro="User#loginUserWithOpenIDEnabledPG">
+			<var name="openIDURL" value="https://me.yahoo.com/liferayqa" />
+			<var name="userFirstName" value="userfn" />
 		</execute>
 	</command>
 

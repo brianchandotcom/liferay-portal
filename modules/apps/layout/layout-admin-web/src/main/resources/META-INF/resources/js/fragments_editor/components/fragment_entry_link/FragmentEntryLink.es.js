@@ -32,7 +32,6 @@ class FragmentEntryLink extends Component {
 	 */
 
 	created() {
-		this._handleMapButtonClick = this._handleMapButtonClick.bind(this);
 		this._updateEditableStatus = this._updateEditableStatus.bind(this);
 	}
 

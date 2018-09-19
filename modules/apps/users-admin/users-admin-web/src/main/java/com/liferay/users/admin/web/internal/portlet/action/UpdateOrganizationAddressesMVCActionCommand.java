@@ -98,14 +98,14 @@ public class UpdateOrganizationAddressesMVCActionCommand
 	protected void updateAddresses(ActionRequest actionRequest)
 		throws Exception {
 
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
 		long organizationId = ParamUtil.getLong(
 			actionRequest, "organizationId");
 
 		Organization organization = _organizationService.getOrganization(
 			organizationId);
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
 
 		OrganizationPermissionUtil.check(
 			themeDisplay.getPermissionChecker(), organization,

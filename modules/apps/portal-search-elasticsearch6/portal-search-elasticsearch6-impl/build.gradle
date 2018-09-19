@@ -82,6 +82,7 @@ dependencies {
 	elasticsearchPlugins ext: "zip", group: "com.liferay", name: "org.elasticsearch.plugin.analysis.stempel", version: elasticsearchVersion
 
 	testCompile group: "com.liferay.portal", name: "com.liferay.util.java", version: "default"
+	testCompile group: "commons-configuration", name: "commons-configuration", version: "1.10"
 	testCompile group: "easyconf", name: "easyconf", version: "0.9.5"
 	testCompile group: "javax.servlet", name: "javax.servlet-api", version: "3.0.1"
 	testCompile group: "log4j", name: "log4j", version: "1.2.17"
@@ -96,6 +97,7 @@ dependencies {
 	testCompile project(":core:petra:petra-concurrent")
 	testCompile project(":core:petra:petra-lang")
 	testCompile project(":core:petra:petra-memory")
+	testCompile project(":core:petra:petra-process")
 	testCompile project(":core:petra:petra-reflect")
 }
 

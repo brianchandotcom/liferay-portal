@@ -102,12 +102,6 @@ public class CalendarServiceUpgrade implements UpgradeStepRegistrator {
 
 		registry.register(
 			"3.0.1", "4.0.0",
-			new UpgradeDiscussionSubscriptionClassName(
-				_subscriptionLocalService, CalendarBooking.class.getName(),
-				UpgradeDiscussionSubscriptionClassName.DeletionMode.ADD_NEW));
-
-		registry.register(
-			"3.0.1", "4.0.0",
 			new BaseUpgradeSQLServerDatetime(
 				new Class<?>[] {
 					CalendarBookingTable.class,

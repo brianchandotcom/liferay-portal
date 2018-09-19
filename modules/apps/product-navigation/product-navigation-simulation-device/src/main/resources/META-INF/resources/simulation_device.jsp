@@ -20,39 +20,39 @@
 	<div class="list-group-panel">
 		<div class="container-fluid devices">
 			<div class="default-devices row">
-				<div class="col-4 d-lg-block d-none lfr-device-item selected text-center" data-device="desktop">
+				<button class="btn btn-unstyled col-4 d-lg-block d-none lfr-device-item selected text-center" data-device="desktop" type="button">
 					<aui:icon cssClass="icon icon-monospaced" image="desktop" markupView="lexicon" />
 
 					<small><%= LanguageUtil.get(resourceBundle, "desktop") %></small>
-				</div>
+				</button>
 
-				<div class="col-4 d-lg-block d-none lfr-device-item text-center" data-device="tablet">
+				<button class="btn btn-unstyled col-4 d-lg-block d-none lfr-device-item text-center" data-device="tablet" type="button">
 					<aui:icon cssClass="icon icon-monospaced" image="tablet-portrait" markupView="lexicon" />
 
 					<aui:icon cssClass="hide icon icon-monospaced icon-rotate" image="tablet-landscape" markupView="lexicon" />
 
 					<small><%= LanguageUtil.get(resourceBundle, "tablet") %></small>
-				</div>
+				</button>
 
-				<div class="col-4 lfr-device-item text-center" data-device="smartphone">
+				<button class="btn btn-unstyled col-4 lfr-device-item text-center" data-device="smartphone" type="button">
 					<aui:icon cssClass="icon icon-monospaced" image="mobile-portrait" markupView="lexicon" />
 
 					<aui:icon cssClass="hide icon icon-monospaced icon-rotate" image="mobile-landscape" markupView="lexicon" />
 
 					<small><%= LanguageUtil.get(resourceBundle, "mobile") %></small>
-				</div>
+				</button>
 
-				<div class="col-4 d-lg-block d-none lfr-device-item text-center" data-device="autosize">
+				<button class="btn btn-unstyled col-4 d-lg-block d-none lfr-device-item text-center" data-device="autosize" type="button">
 					<aui:icon cssClass="icon icon-monospaced" image="autosize" markupView="lexicon" />
 
 					<small><%= LanguageUtil.get(resourceBundle, "autosize") %></small>
-				</div>
+				</button>
 
-				<div class="col-4 d-lg-block d-none lfr-device-item text-center" data-device="custom">
+				<button class="btn btn-unstyled col-4 d-lg-block d-none lfr-device-item text-center" data-device="custom" type="button">
 					<aui:icon cssClass="icon icon-monospaced" image="custom-size" markupView="lexicon" />
 
 					<small><liferay-ui:message key="custom" /></small>
-				</div>
+				</button>
 			</div>
 
 			<div class="custom-devices d-lg-flex d-none hide row" id="<portlet:namespace />customDeviceContainer">

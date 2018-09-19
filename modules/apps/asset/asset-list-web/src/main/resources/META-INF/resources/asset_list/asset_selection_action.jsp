@@ -24,7 +24,7 @@ ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_
 AssetListEntryAssetEntryRel assetListEntryAssetEntryRel = (AssetListEntryAssetEntryRel)row.getObject();
 %>
 
-<portlet:actionURL name="/asset_list/remove_asset_entry_selection" var="removeAssetEntrySelectionURL">
+<portlet:actionURL name="/asset_list/delete_asset_entry_selection" var="deleteAssetEntrySelectionURL">
 	<portlet:param name="redirect" value="<%= currentURL %>" />
 	<portlet:param name="assetListEntryId" value="<%= String.valueOf(assetListEntryAssetEntryRel.getAssetListEntryId()) %>" />
 	<portlet:param name="position" value="<%= String.valueOf(assetListEntryAssetEntryRel.getPosition()) %>" />
@@ -33,5 +33,5 @@ AssetListEntryAssetEntryRel assetListEntryAssetEntryRel = (AssetListEntryAssetEn
 <liferay-ui:icon
 	icon="times-circle"
 	markupView="lexicon"
-	url="<%= removeAssetEntrySelectionURL %>"
+	url="<%= deleteAssetEntrySelectionURL %>"
 />

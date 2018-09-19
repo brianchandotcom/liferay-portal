@@ -18,28 +18,19 @@ import com.liferay.contacts.model.Entry;
 import com.liferay.contacts.service.EntryLocalService;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 
-import java.util.List;
-
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author William Newbury
  */
-@Component(immediate = true, service = EntryUADTestHelper.class)
 public class EntryUADTestHelper {
 
-	public Entry addEntry(long userId) throws Exception {
-		return _entryLocalService.addEntry(
+	public static Entry addEntry(
+			EntryLocalService entryLocalService, long userId)
+		throws Exception {
+
+		return entryLocalService.addEntry(
 			userId, RandomTestUtil.randomString(),
 			RandomTestUtil.randomString() + "@liferay.com",
 			RandomTestUtil.randomString());
 	}
-
-	public void cleanUpDependencies(List<Entry> entries) throws Exception {
-	}
-
-	@Reference
-	private EntryLocalService _entryLocalService;
 
 }

@@ -323,8 +323,6 @@ class LayoutProvider extends Component {
 	_handlePageDeleted(pageIndex) {
 		const {pages} = this.state;
 
-		console.log(pageIndex, pages);
-
 		this.setState(
 			{
 				activePage: Math.max(0, pageIndex - 1),

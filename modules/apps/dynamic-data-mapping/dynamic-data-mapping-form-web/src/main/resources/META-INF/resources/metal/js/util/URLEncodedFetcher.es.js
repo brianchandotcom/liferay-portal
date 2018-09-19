@@ -29,12 +29,14 @@ class URLEncodedFetcher extends Component {
 		)
 			.then(response => response.json())
 			.catch (
-				error => {
+				reason => {
 					const sessionStatus = Liferay.Session.get('sessionState');
 
-					if (sessionStatus === 'expired' || error.status === 401) {
+					if (sessionStatus === 'expired' || reason.status === 401) {
 						window.location.reload();
 					}
+
+					throw reason;
 				}
 			);
 	}

@@ -137,7 +137,7 @@ describe(
 
 				fetch.mockReject({status: 401});
 
-				return component.save().then(
+				return component.save().catch(
 					() => {
 						expect(reloadMock).toHaveBeenCalledTimes(1);
 						reloadMock.mockRestore();
@@ -155,7 +155,7 @@ describe(
 
 				fetch.mockReject({status: 500});
 
-				return component.save().then(
+				return component.save().catch(
 					() => {
 						expect(reloadMock).not.toHaveBeenCalled();
 						reloadMock.mockRestore();
@@ -205,7 +205,7 @@ describe(
 					JSON.stringify(
 						{
 							ddmStructureId: 456,
-							formInstanceId: 123
+							formInstanceId: '123'
 						}
 					)
 				);

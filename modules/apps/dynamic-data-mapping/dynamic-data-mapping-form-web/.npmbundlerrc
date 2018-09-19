@@ -2,6 +2,7 @@
 	"config": {
 		"imports": {
 			"frontend-taglib-clay": {
+				"clay-alert": ">=2.1.12",
 				"clay-management-toolbar": ">=2.1.12",
 				"clay-button": ">=2.1.12",
 				"clay-dropdown": ">=2.1.12",
@@ -19,6 +20,9 @@
 				"metal-state": ">=2.16.5",
 				"metal-dom": ">=2.16.5",
 				"metal-events": ">=2.16.5"
+			},
+			"frontend-js-web": {
+				"/": ">=3.0.0"
 			}
 		}
 	},

@@ -251,7 +251,6 @@ public class EditOrganizationMVCActionCommand extends BaseMVCActionCommand {
 
 			List<Address> addresses = _addressService.getAddresses(
 				Organization.class.getName(), organizationId);
-
 			List<EmailAddress> emailAddresses =
 				_emailAddressService.getEmailAddresses(
 					Organization.class.getName(), organizationId);

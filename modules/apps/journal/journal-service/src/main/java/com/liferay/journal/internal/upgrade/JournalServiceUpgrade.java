@@ -18,6 +18,7 @@ import com.liferay.asset.display.page.service.AssetDisplayPageEntryLocalService;
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
+import com.liferay.comment.upgrade.UpgradeDiscussionSubscriptionClassName;
 import com.liferay.dynamic.data.mapping.service.DDMStorageLinkLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLinkLocalService;
@@ -52,6 +53,7 @@ import com.liferay.journal.internal.upgrade.v1_1_6.UpgradeAssetDisplayPageEntry;
 import com.liferay.journal.internal.upgrade.v2_0_0.util.JournalArticleTable;
 import com.liferay.journal.internal.upgrade.v2_0_0.util.JournalFeedTable;
 import com.liferay.journal.internal.upgrade.v2_0_0.util.JournalFolderTable;
+import com.liferay.journal.model.JournalArticle;
 import com.liferay.portal.configuration.upgrade.PrefsPropsToConfigurationUpgradeHelper;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -75,6 +77,7 @@ import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.kernel.upgrade.UpgradeException;
 import com.liferay.portal.kernel.upgrade.UpgradeStep;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
+import com.liferay.subscription.service.SubscriptionLocalService;
 
 import java.io.PrintWriter;
 
@@ -185,7 +188,13 @@ public class JournalServiceUpgrade implements UpgradeStepRegistrator {
 				_assetDisplayPageEntryLocalService));
 
 		registry.register(
-			"1.1.6", "2.0.0",
+			"1.1.6", "1.1.7",
+			new UpgradeDiscussionSubscriptionClassName(
+				_subscriptionLocalService, JournalArticle.class.getName(),
+				UpgradeDiscussionSubscriptionClassName.DeletionMode.ADD_NEW));
+
+		registry.register(
+			"1.1.7", "2.0.0",
 			new BaseUpgradeSQLServerDatetime(
 				new Class<?>[] {
 					JournalArticleTable.class, JournalFeedTable.class,
@@ -208,86 +217,6 @@ public class JournalServiceUpgrade implements UpgradeStepRegistrator {
 	}
 
 	@Reference(unbind = "-")
-	protected void setAssetCategoryLocalService(
-		AssetCategoryLocalService assetCategoryLocalService) {
-
-		_assetCategoryLocalService = assetCategoryLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setAssetEntryLocalService(
-		AssetEntryLocalService assetEntryLocalService) {
-
-		_assetEntryLocalService = assetEntryLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setAssetVocabularyLocalService(
-		AssetVocabularyLocalService assetVocabularyLocalService) {
-
-		_assetVocabularyLocalService = assetVocabularyLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setCompanyLocalService(
-		CompanyLocalService companyLocalService) {
-
-		_companyLocalService = companyLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setConfigurationAdmin(
-		ConfigurationAdmin configurationAdmin) {
-
-		_configurationAdmin = configurationAdmin;
-	}
-
-	@Reference(unbind = "-")
-	protected void setDDMStorageLinkLocalService(
-		DDMStorageLinkLocalService ddmStorageLinkLocalService) {
-
-		_ddmStorageLinkLocalService = ddmStorageLinkLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setDDMStructureLocalService(
-		DDMStructureLocalService ddmStructureLocalService) {
-
-		_ddmStructureLocalService = ddmStructureLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setDDMTemplateLinkLocalService(
-		DDMTemplateLinkLocalService ddmTemplateLinkLocalService) {
-
-		_ddmTemplateLinkLocalService = ddmTemplateLinkLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setDefaultDDMStructureHelper(
-		DefaultDDMStructureHelper defaultDDMStructureHelper) {
-
-		_defaultDDMStructureHelper = defaultDDMStructureHelper;
-	}
-
-	@Reference(unbind = "-")
-	protected void setGroupLocalService(GroupLocalService groupLocalService) {
-		_groupLocalService = groupLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setImageLocalService(ImageLocalService imageLocalService) {
-		_imageLocalService = imageLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setLayoutLocalService(
-		LayoutLocalService layoutLocalService) {
-
-		_layoutLocalService = layoutLocalService;
-	}
-
-	@Reference(unbind = "-")
 	protected void setPortalCapabilityLocator(
 		PortalCapabilityLocator portalCapabilityLocator) {
 
@@ -295,38 +224,10 @@ public class JournalServiceUpgrade implements UpgradeStepRegistrator {
 
 	}
 
-	@Reference(unbind = "-")
-	protected void setResourceActionLocalService(
-		ResourceActionLocalService resourceActionLocalService) {
-
-		_resourceActionLocalService = resourceActionLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setResourceActions(ResourceActions resourceActions) {
-		_resourceActions = resourceActions;
-	}
-
-	@Reference(unbind = "-")
-	protected void setResourceLocalService(
-		ResourceLocalService resourceLocalService) {
-
-		_resourceLocalService = resourceLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setSettingsFactory(SettingsFactory settingsFactory) {
-		_settingsFactory = settingsFactory;
-	}
-
-	@Reference(unbind = "-")
-	protected void setUserLocalService(UserLocalService userLocalService) {
-		_userLocalService = userLocalService;
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		JournalServiceUpgrade.class);
 
+	@Reference
 	private AssetCategoryLocalService _assetCategoryLocalService;
 
 	@Reference
@@ -334,19 +235,38 @@ public class JournalServiceUpgrade implements UpgradeStepRegistrator {
 		_assetDisplayPageEntryLocalService;
 
 	private AssetEntryLocalService _assetEntryLocalService;
+
+	@Reference
 	private AssetVocabularyLocalService _assetVocabularyLocalService;
+
+	@Reference
 	private CompanyLocalService _companyLocalService;
+
+	@Reference
 	private ConfigurationAdmin _configurationAdmin;
+
+	@Reference
 	private DDMStorageLinkLocalService _ddmStorageLinkLocalService;
+
+	@Reference
 	private DDMStructureLocalService _ddmStructureLocalService;
+
+	@Reference
 	private DDMTemplateLinkLocalService _ddmTemplateLinkLocalService;
+
+	@Reference
 	private DefaultDDMStructureHelper _defaultDDMStructureHelper;
+
+	@Reference
 	private GroupLocalService _groupLocalService;
+
+	@Reference
 	private ImageLocalService _imageLocalService;
 
 	@Reference
 	private JournalArticleImageUpgradeUtil _journalArticleImageUpgradeUtil;
 
+	@Reference
 	private LayoutLocalService _layoutLocalService;
 
 	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
@@ -356,14 +276,25 @@ public class JournalServiceUpgrade implements UpgradeStepRegistrator {
 	private PrefsPropsToConfigurationUpgradeHelper
 		_prefsPropsToConfigurationUpgradeHelper;
 
+	@Reference
 	private ResourceActionLocalService _resourceActionLocalService;
+
+	@Reference
 	private ResourceActions _resourceActions;
+
+	@Reference
 	private ResourceLocalService _resourceLocalService;
+
+	@Reference
 	private SettingsFactory _settingsFactory;
+
+	@Reference
+	private SubscriptionLocalService _subscriptionLocalService;
 
 	@Reference
 	private SystemEventLocalService _systemEventLocalService;
 
+	@Reference
 	private UserLocalService _userLocalService;
 
 }

@@ -17,14 +17,10 @@ package com.liferay.users.admin.web.internal.portlet.action;
 import com.liferay.asset.kernel.exception.AssetCategoryException;
 import com.liferay.asset.kernel.exception.AssetTagException;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
-import com.liferay.portal.kernel.exception.AddressCityException;
-import com.liferay.portal.kernel.exception.AddressStreetException;
-import com.liferay.portal.kernel.exception.AddressZipException;
 import com.liferay.portal.kernel.exception.DuplicateOrganizationException;
 import com.liferay.portal.kernel.exception.NoSuchCountryException;
 import com.liferay.portal.kernel.exception.NoSuchListTypeException;
 import com.liferay.portal.kernel.exception.NoSuchOrganizationException;
-import com.liferay.portal.kernel.exception.NoSuchRegionException;
 import com.liferay.portal.kernel.exception.OrganizationNameException;
 import com.liferay.portal.kernel.exception.OrganizationParentException;
 import com.liferay.portal.kernel.exception.RequiredOrganizationException;
@@ -41,6 +37,7 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.service.AddressService;
 import com.liferay.portal.kernel.service.EmailAddressService;
 import com.liferay.portal.kernel.service.OrganizationService;
 import com.liferay.portal.kernel.service.PhoneService;
@@ -140,13 +137,9 @@ public class EditOrganizationMVCActionCommand extends BaseMVCActionCommand {
 
 				SessionErrors.add(actionRequest, e.getClass(), e);
 			}
-			else if (e instanceof AddressCityException ||
-					 e instanceof AddressStreetException ||
-					 e instanceof AddressZipException ||
-					 e instanceof DuplicateOrganizationException ||
+			else if (e instanceof DuplicateOrganizationException ||
 					 e instanceof NoSuchCountryException ||
 					 e instanceof NoSuchListTypeException ||
-					 e instanceof NoSuchRegionException ||
 					 e instanceof OrganizationNameException ||
 					 e instanceof OrganizationParentException ||
 					 e instanceof RequiredOrganizationException) {
@@ -235,7 +228,6 @@ public class EditOrganizationMVCActionCommand extends BaseMVCActionCommand {
 		}
 
 		boolean site = ParamUtil.getBoolean(actionRequest, "site");
-		List<Address> addresses = UsersAdminUtil.getAddresses(actionRequest);
 		List<OrgLabor> orgLabors = UsersAdminUtil.getOrgLabors(actionRequest);
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
@@ -249,13 +241,16 @@ public class EditOrganizationMVCActionCommand extends BaseMVCActionCommand {
 
 			organization = _organizationService.addOrganization(
 				parentOrganizationId, name, type, regionId, countryId, statusId,
-				comments, site, addresses, Collections.emptyList(), orgLabors,
-				Collections.emptyList(), Collections.emptyList(),
-				serviceContext);
+				comments, site, Collections.emptyList(),
+				Collections.emptyList(), orgLabors, Collections.emptyList(),
+				Collections.emptyList(), serviceContext);
 		}
 		else {
 
 			// Update organization
+
+			List<Address> addresses = _addressService.getAddresses(
+				Organization.class.getName(), organizationId);
 
 			List<EmailAddress> emailAddresses =
 				_emailAddressService.getEmailAddresses(
@@ -300,6 +295,9 @@ public class EditOrganizationMVCActionCommand extends BaseMVCActionCommand {
 
 		return organization;
 	}
+
+	@Reference
+	private AddressService _addressService;
 
 	private DLAppLocalService _dlAppLocalService;
 

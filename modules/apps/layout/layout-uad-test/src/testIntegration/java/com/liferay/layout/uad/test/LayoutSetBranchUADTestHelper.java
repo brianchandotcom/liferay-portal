@@ -23,17 +23,17 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 
 import java.util.List;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Brian Wing Shun Chan
  */
-@Component(immediate = true, service = LayoutSetBranchUADTestHelper.class)
 public class LayoutSetBranchUADTestHelper {
 
-	public LayoutSetBranch addLayoutSetBranch(long userId) throws Exception {
-		return _layoutSetBranchLocalService.addLayoutSetBranch(
+	public static LayoutSetBranch addLayoutSetBranch(
+			LayoutSetBranchLocalService layoutSetBranchLocalService,
+			long userId)
+		throws Exception {
+
+		return layoutSetBranchLocalService.addLayoutSetBranch(
 			userId, TestPropsValues.getGroupId(), false,
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(), false,
 			LayoutSetBranchConstants.ALL_BRANCHES,
@@ -43,8 +43,5 @@ public class LayoutSetBranchUADTestHelper {
 	public void cleanUpDependencies(List<LayoutSetBranch> layoutSetBranchs)
 		throws Exception {
 	}
-
-	@Reference
-	private LayoutSetBranchLocalService _layoutSetBranchLocalService;
 
 }

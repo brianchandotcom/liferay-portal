@@ -29,7 +29,6 @@ import com.liferay.user.associated.data.test.util.BaseUADAnonymizerTestCase;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.After;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.runner.RunWith;
@@ -46,11 +45,6 @@ public class LayoutSetBranchUADAnonymizerTest
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
 
-	@After
-	public void tearDown() throws Exception {
-		_layoutSetBranchUADTestHelper.cleanUpDependencies(_layoutSetBranchs);
-	}
-
 	@Override
 	protected LayoutSetBranch addBaseModel(long userId) throws Exception {
 		return addBaseModel(userId, true);
@@ -62,20 +56,14 @@ public class LayoutSetBranchUADAnonymizerTest
 		throws Exception {
 
 		LayoutSetBranch layoutSetBranch =
-			_layoutSetBranchUADTestHelper.addLayoutSetBranch(userId);
+			LayoutSetBranchUADTestHelper.addLayoutSetBranch(
+				_layoutSetBranchLocalService, userId);
 
 		if (deleteAfterTestRun) {
 			_layoutSetBranchs.add(layoutSetBranch);
 		}
 
 		return layoutSetBranch;
-	}
-
-	@Override
-	protected void deleteBaseModels(List<LayoutSetBranch> baseModels)
-		throws Exception {
-
-		_layoutSetBranchUADTestHelper.cleanUpDependencies(baseModels);
 	}
 
 	@Override
@@ -117,9 +105,6 @@ public class LayoutSetBranchUADAnonymizerTest
 
 	@DeleteAfterTestRun
 	private final List<LayoutSetBranch> _layoutSetBranchs = new ArrayList<>();
-
-	@Inject
-	private LayoutSetBranchUADTestHelper _layoutSetBranchUADTestHelper;
 
 	@Inject(filter = "component.name=*.LayoutSetBranchUADAnonymizer")
 	private UADAnonymizer _uadAnonymizer;

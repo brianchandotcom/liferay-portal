@@ -43,6 +43,10 @@ public class JavaComponentAnnotationsCheck extends JavaAnnotationsCheck {
 			checkMismatchedServiceAttribute);
 	}
 
+	public void setCheckSelfRegistration(String checkSelfRegistration) {
+		_checkSelfRegistration = GetterUtil.getBoolean(checkSelfRegistration);
+	}
+
 	@Override
 	protected String doProcess(
 			String fileName, String absolutePath, JavaTerm javaTerm,
@@ -63,7 +67,8 @@ public class JavaComponentAnnotationsCheck extends JavaAnnotationsCheck {
 
 		annotation = _formatAnnotationParameterProperties(annotation);
 		annotation = _formatServiceAttribute(
-			fileName, annotation, javaClass.getImplementedClassNames());
+			fileName, javaClass.getName(), annotation,
+			javaClass.getImplementedClassNames());
 
 		return annotation;
 	}
@@ -177,7 +182,7 @@ public class JavaComponentAnnotationsCheck extends JavaAnnotationsCheck {
 	}
 
 	private String _formatServiceAttribute(
-		String fileName, String annotation,
+		String fileName, String className, String annotation,
 		List<String> implementedClassNames) {
 
 		String expectedServiceAttribute = _getExpectedServiceAttribute(
@@ -189,14 +194,26 @@ public class JavaComponentAnnotationsCheck extends JavaAnnotationsCheck {
 			return _addServiceAttribute(annotation, expectedServiceAttribute);
 		}
 
-		if (_checkMismatchedServiceAttribute) {
-			String serviceAttribute = _getServiceAttribute(
-				annotation, matcher.start() + 1);
+		if (!_checkMismatchedServiceAttribute && !_checkSelfRegistration) {
+			return annotation;
+		}
 
-			if (!serviceAttribute.equals(expectedServiceAttribute)) {
-				addMessage(
-					fileName, "Mismatched @Component 'service' attribute");
-			}
+		String serviceAttribute = _getServiceAttribute(
+			annotation, matcher.start() + 1);
+
+		if (_checkMismatchedServiceAttribute &&
+			!serviceAttribute.equals(expectedServiceAttribute)) {
+
+			addMessage(fileName, "Mismatched @Component 'service' attribute");
+		}
+
+		if (_checkSelfRegistration &&
+			serviceAttribute.matches(".*\\W" + className + "\\.class.*")) {
+
+			addMessage(
+				fileName,
+				"No need to register '" + className +
+					"' in @Component 'service' attribute");
 		}
 
 		return annotation;
@@ -267,6 +284,7 @@ public class JavaComponentAnnotationsCheck extends JavaAnnotationsCheck {
 		"\t(\\w+) = \\{");
 	private final Pattern _attributePattern = Pattern.compile("\\W(\\w+)\\s*=");
 	private boolean _checkMismatchedServiceAttribute;
+	private boolean _checkSelfRegistration;
 	private final Pattern _serviceAttributePattern = Pattern.compile(
 		"\\Wservice\\s*=");
 

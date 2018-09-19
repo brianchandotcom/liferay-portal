@@ -19,12 +19,11 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 
 import java.lang.reflect.Method;
 
-import org.apache.struts.mock.MockHttpServletRequest;
-
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.portlet.MockPortletRequest;
 
 /**

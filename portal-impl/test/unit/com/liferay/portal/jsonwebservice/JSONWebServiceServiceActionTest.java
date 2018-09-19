@@ -31,9 +31,6 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.struts.action.ActionMapping;
-import org.apache.struts.action.DynaActionForm;
-
 import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
@@ -116,8 +113,7 @@ public class JSONWebServiceServiceActionTest
 			new MockHttpServletResponse();
 
 		json = _jsonWebServiceServiceAction.getJSON(
-			new ActionMapping(), new DynaActionForm(), mockHttpServletRequest,
-			mockHttpServletResponse);
+			null, null, mockHttpServletRequest, mockHttpServletResponse);
 
 		Assert.assertEquals("{}", json);
 	}
@@ -144,8 +140,7 @@ public class JSONWebServiceServiceActionTest
 			new MockHttpServletResponse();
 
 		json = _jsonWebServiceServiceAction.getJSON(
-			new ActionMapping(), new DynaActionForm(), mockHttpServletRequest,
-			mockHttpServletResponse);
+			null, null, mockHttpServletRequest, mockHttpServletResponse);
 
 		Assert.assertEquals("\"Welcome 173 to Jupiter\"", json);
 	}
@@ -249,8 +244,7 @@ public class JSONWebServiceServiceActionTest
 			new MockHttpServletResponse();
 
 		json = _jsonWebServiceServiceAction.getJSON(
-			new ActionMapping(), new DynaActionForm(), mockHttpServletRequest,
-			mockHttpServletResponse);
+			null, null, mockHttpServletRequest, mockHttpServletResponse);
 
 		Assert.assertEquals("\"Welcome 173 to Jupiter\"", json);
 	}
@@ -277,8 +271,7 @@ public class JSONWebServiceServiceActionTest
 			new MockHttpServletResponse();
 
 		String json = _jsonWebServiceServiceAction.getJSON(
-			new ActionMapping(), new DynaActionForm(), mockHttpServletRequest,
-			mockHttpServletResponse);
+			null, null, mockHttpServletRequest, mockHttpServletResponse);
 
 		Assert.assertEquals("\"Welcome 173 to Jupiter\"", json);
 	}
@@ -302,8 +295,7 @@ public class JSONWebServiceServiceActionTest
 			new MockHttpServletResponse();
 
 		String json = _jsonWebServiceServiceAction.getJSON(
-			new ActionMapping(), new DynaActionForm(), mockHttpServletRequest,
-			mockHttpServletResponse);
+			null, null, mockHttpServletRequest, mockHttpServletResponse);
 
 		Assert.assertEquals("\"Welcome 173 to Jupiter\"", json);
 	}

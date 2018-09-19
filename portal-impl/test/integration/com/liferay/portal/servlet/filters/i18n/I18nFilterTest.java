@@ -30,8 +30,6 @@ import java.util.Locale;
 
 import javax.servlet.http.HttpSession;
 
-import org.apache.struts.Globals;
-
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -194,7 +192,7 @@ public class I18nFilterTest {
 
 		HttpSession session = _mockHttpServletRequest.getSession();
 
-		session.setAttribute(Globals.LOCALE_KEY, sessionLocale);
+		session.setAttribute("org.apache.struts.action.LOCALE", sessionLocale);
 
 		if (userLocale != null) {
 			User user = UserTestUtil.addUser(

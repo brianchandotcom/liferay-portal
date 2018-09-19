@@ -15,12 +15,14 @@
 package com.liferay.layout.uad.anonymizer.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.layout.uad.test.LayoutSetPrototypeUADTestHelper;
 import com.liferay.portal.kernel.model.LayoutSetPrototype;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.LayoutSetPrototypeLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.user.associated.data.anonymizer.UADAnonymizer;
@@ -56,8 +58,11 @@ public class LayoutSetPrototypeUADAnonymizerTest
 		throws Exception {
 
 		LayoutSetPrototype layoutSetPrototype =
-			LayoutSetPrototypeUADTestHelper.addLayoutSetPrototype(
-				_layoutSetPrototypeLocalService, userId);
+			_layoutSetPrototypeLocalService.addLayoutSetPrototype(
+				userId, TestPropsValues.getCompanyId(),
+				RandomTestUtil.randomLocaleStringMap(),
+				RandomTestUtil.randomLocaleStringMap(), true, true,
+				ServiceContextTestUtil.getServiceContext());
 
 		if (deleteAfterTestRun) {
 			_layoutSetPrototypes.add(layoutSetPrototype);

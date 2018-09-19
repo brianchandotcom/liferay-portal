@@ -15,11 +15,13 @@
 package com.liferay.layout.uad.exporter.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.layout.uad.test.LayoutSetPrototypeUADTestHelper;
 import com.liferay.portal.kernel.model.LayoutSetPrototype;
 import com.liferay.portal.kernel.service.LayoutSetPrototypeLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.user.associated.data.exporter.UADExporter;
@@ -47,8 +49,11 @@ public class LayoutSetPrototypeUADExporterTest
 	@Override
 	protected LayoutSetPrototype addBaseModel(long userId) throws Exception {
 		LayoutSetPrototype layoutSetPrototype =
-			LayoutSetPrototypeUADTestHelper.addLayoutSetPrototype(
-				_layoutSetPrototypeLocalService, userId);
+			_layoutSetPrototypeLocalService.addLayoutSetPrototype(
+				userId, TestPropsValues.getCompanyId(),
+				RandomTestUtil.randomLocaleStringMap(),
+				RandomTestUtil.randomLocaleStringMap(), true, true,
+				ServiceContextTestUtil.getServiceContext());
 
 		_layoutSetPrototypes.add(layoutSetPrototype);
 

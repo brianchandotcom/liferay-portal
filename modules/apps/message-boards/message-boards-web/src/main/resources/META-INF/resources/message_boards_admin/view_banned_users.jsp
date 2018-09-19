@@ -65,6 +65,15 @@ int totalBannedUsers = MBBanLocalServiceUtil.getBansCount(scopeGroupId);
 				keyProperty="banUserId"
 				modelVar="ban"
 			>
+
+				<%
+				Map<String, Object> rowData = new HashMap<String, Object>();
+
+				rowData.put("actions", String.join(StringPool.COMMA, mbBannedUsersManagementToolbarDisplayContext.getAvailableActionDropdownItems(ban)));
+
+				row.setData(rowData);
+				%>
+
 				<liferay-ui:search-container-column-user
 					showDetails="<%= false %>"
 					userId="<%= ban.getBanUserId() %>"

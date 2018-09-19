@@ -88,6 +88,17 @@ const INITIAL_STATE = {
 	).value({}),
 
 	/**
+	 * If true, editable values should be highlighted.
+	 * @default false
+	 * @instance
+	 * @review
+	 * @type {boolean}
+	 */
+
+	highlightMapping: Config.bool()
+		.value(false),
+
+	/**
 	 * Position where a fragment is being dragged to
 	 * @default null
 	 * @instance
@@ -110,6 +121,16 @@ const INITIAL_STATE = {
 	hoveredFragmentEntryLinkId: Config
 		.string()
 		.value(null),
+
+	/**
+	 * Currently selected language id.
+	 * @default undefined
+	 * @instance
+	 * @review
+	 * @type {!string}
+	 */
+
+	languageId: Config.string().required(),
 
 	/**
 	 * Last date when the autosave has been executed.
@@ -178,6 +199,90 @@ const INITIAL_STATE = {
 		.value(false),
 
 	/**
+	 * Editable type of the field that is being mapped
+	 * @default ''
+	 * @instance
+	 * @memberOf FragmentsEditor
+	 * @private
+	 * @review
+	 * @type {string}
+	 */
+
+	selectMappingDialogEditableType: Config
+		.string()
+		.value(''),
+
+	/**
+	 * EditableId of the field that is being mapped
+	 * @default ''
+	 * @instance
+	 * @memberOf FragmentsEditor
+	 * @private
+	 * @review
+	 * @type {string}
+	 */
+
+	selectMappingDialogEditableId: Config
+		.string()
+		.value(''),
+
+	/**
+	 * FragmentEntryLinkId of the field that is being mapped
+	 * @default ''
+	 * @instance
+	 * @memberOf FragmentsEditor
+	 * @private
+	 * @review
+	 * @type {string}
+	 */
+
+	selectMappingDialogFragmentEntryLinkId: Config
+		.string()
+		.value(''),
+
+	/**
+	 * Mapped field ID of the field that is being mapped
+	 * @default ''
+	 * @instance
+	 * @memberOf FragmentsEditor
+	 * @private
+	 * @review
+	 * @type {string}
+	 */
+
+	selectMappingDialogMappedFieldId: Config
+		.string()
+		.value(''),
+
+	/**
+	 * Flag indicating if the SelectMappingDialog should be shown
+	 * @default false
+	 * @instance
+	 * @memberOf FragmentsEditor
+	 * @private
+	 * @review
+	 * @type {boolean}
+	 */
+
+	selectMappingDialogVisible: Config
+		.bool()
+		.value(false),
+
+	/**
+	 * Flag indicating if the SelectMappingTypeDialog should be shown
+	 * @default false
+	 * @instance
+	 * @memberOf FragmentsEditor
+	 * @private
+	 * @review
+	 * @type {boolean}
+	 */
+
+	selectMappingTypeDialogVisible: Config
+		.bool()
+		.value(false),
+
+	/**
 	 * URL for updating layout data.
 	 * @default undefined
 	 * @instance
@@ -185,7 +290,18 @@ const INITIAL_STATE = {
 	 * @type {!string}
 	 */
 
-	updateLayoutPageTemplateDataURL: Config.string().required()
+	updateLayoutPageTemplateDataURL: Config.string().required(),
+
+	/**
+	 * URL for updating the asset type associated to a template.
+	 * @default undefined
+	 * @instance
+	 * @memberOf SelectMappingTypeDialog
+	 * @review
+	 * @type {!string}
+	 */
+
+	updateLayoutPageTemplateEntryAssetTypeURL: Config.string().required()
 };
 
 export {INITIAL_STATE};

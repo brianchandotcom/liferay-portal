@@ -4,9 +4,26 @@ import {object} from 'metal';
 import Soy from 'metal-soy';
 
 import './FragmentEditableFieldTooltip.es';
+
 import FragmentProcessors from '../fragment_processors/FragmentProcessors.es';
 import {getActiveEditableElement} from '../fragment_processors/EditableTextFragmentProcessor.es';
+import {OPEN_MAPPING_FIELDS_DIALOG} from '../../actions/actions.es';
+import {Store} from '../../store/store.es';
 import templates from './FragmentEditableField.soy';
+import {
+	UPDATE_EDITABLE_VALUE,
+	UPDATE_LAST_SAVE_DATE,
+	UPDATE_SAVING_CHANGES_STATUS,
+	UPDATE_TRANSLATION_STATUS
+} from '../../actions/actions.es';
+
+/**
+ * Default key used for translated values when there is no languageId
+ * @review
+ * @type {!string}
+ */
+
+const DEFAULT_LANGUAGE_ID_KEY = 'defaultValue';
 
 /**
  * Buttons rendered inside the tooltip
@@ -279,13 +296,37 @@ class FragmentEditableField extends Component {
 	 */
 
 	_handleEditableChanged(newValue) {
-		this.emit(
-			'editableChanged',
-			{
-				editableId: this.editableId,
-				value: newValue
-			}
-		);
+		this.store
+			.dispatchAction(
+				UPDATE_SAVING_CHANGES_STATUS,
+				{
+					savingChanges: true
+				}
+			)
+			.dispatchAction(
+				UPDATE_EDITABLE_VALUE,
+				{
+					editableId: this.editableId,
+					editableValue: newValue,
+					editableValueId: this.languageId || DEFAULT_LANGUAGE_ID_KEY,
+					fragmentEntryLinkId: this.fragmentEntryLinkId
+				}
+			)
+			.dispatchAction(
+				UPDATE_TRANSLATION_STATUS
+			)
+			.dispatchAction(
+				UPDATE_LAST_SAVE_DATE,
+				{
+					lastSaveDate: new Date()
+				}
+			)
+			.dispatchAction(
+				UPDATE_SAVING_CHANGES_STATUS,
+				{
+					savingChanges: false
+				}
+			);
 	}
 
 	/**
@@ -315,14 +356,16 @@ class FragmentEditableField extends Component {
 			this._showEditor = true;
 		}
 		else if (buttonId === TOOLTIP_BUTTONS.map.id) {
-			this.emit(
-				'mapButtonClicked',
-				{
-					editableId: this.editableId,
-					editableType: this.type,
-					mappedFieldId: this.editableValues.mappedField || ''
-				}
-			);
+			this.store
+				.dispatchAction(
+					OPEN_MAPPING_FIELDS_DIALOG,
+					{
+						editableId: this.editableId,
+						editableType: this.type,
+						fragmentEntryLinkId: this.fragmentEntryLinkId,
+						mappedFieldId: this.editableValues.mappedField || ''
+					}
+				);
 		}
 
 		this._showTooltip = false;
@@ -447,6 +490,17 @@ FragmentEditableField.STATE = {
 	 */
 
 	showMapping: Config.bool().required(),
+
+	/**
+	 * Store instance
+	 * @default undefined
+	 * @instance
+	 * @memberOf FragmentEditableField
+	 * @review
+	 * @type {Store}
+	 */
+
+	store: Config.instanceOf(Store),
 
 	/**
 	 * Flag indicating if the editable editor is active.

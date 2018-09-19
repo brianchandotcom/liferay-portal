@@ -2,6 +2,11 @@ import {Config} from 'metal-state';
 import PortletBase from 'frontend-js-web/liferay/PortletBase.es';
 import Soy from 'metal-soy';
 
+import {
+	HIDE_MAPPING_DIALOG,
+	UPDATE_EDITABLE_VALUE
+} from '../../actions/actions.es';
+import {Store} from '../../store/store.es';
 import templates from './SelectMappingDialog.soy';
 
 /**
@@ -100,23 +105,25 @@ class SelectMappingDialog extends PortletBase {
 	}
 
 	/**
-	 * Emit a mappeableFieldSelected event
+	 * Map an editable
 	 * @param {string} [key='']
 	 * @private
 	 * @review
 	 */
 
-	_emitMappeableFieldSelected(key = '') {
-		this.emit(
-			'mappeableFieldSelected',
-			{
-				editableId: this.editableId,
-				fragmentEntryLinkId: this.fragmentEntryLinkId,
-				key
-			}
-		);
-
-		this.visible = false;
+	_handleMappeableFieldSelected(key = '') {
+		this.store
+			.dispatchAction(
+				UPDATE_EDITABLE_VALUE,
+				{
+					editableId: this.editableId,
+					editableValue: key,
+					editableValueId: 'mappedField',
+					fragmentEntryLinkId: this.fragmentEntryLinkId
+				}
+			).dispatchAction(
+				HIDE_MAPPING_DIALOG
+			);
 	}
 
 	/**
@@ -126,7 +133,10 @@ class SelectMappingDialog extends PortletBase {
 	 */
 
 	_handleCancelButtonClick() {
-		this.visible = false;
+		this.store
+			.dispatchAction(
+				HIDE_MAPPING_DIALOG
+			);
 	}
 
 	/**
@@ -136,7 +146,7 @@ class SelectMappingDialog extends PortletBase {
 	 */
 
 	_handleUnmapButtonClick() {
-		this._emitMappeableFieldSelected('');
+		this._handleMappeableFieldSelected('');
 	}
 
 	/**
@@ -147,21 +157,9 @@ class SelectMappingDialog extends PortletBase {
 	 */
 
 	_handleMappeableFieldLinkClick(event) {
-		this._emitMappeableFieldSelected(
+		this._handleMappeableFieldSelected(
 			event.delegateTarget.dataset.key
 		);
-	}
-
-	/**
-	 * Change asset type selection dialog visibility.
-	 * @private
-	 * @review
-	 */
-
-	_handleVisibleChanged(change) {
-		if (this.visible !== change.newVal) {
-			this.visible = change.newVal;
-		}
 	}
 
 	/**
@@ -324,17 +322,15 @@ SelectMappingDialog.STATE = {
 		.required(),
 
 	/**
-	 * Flag indicating if the SelectMappingDialog should be shown
-	 * @default false
+	 * Store instance
+	 * @default undefined
 	 * @instance
 	 * @memberOf SelectMappingDialog
 	 * @review
-	 * @type {boolean}
+	 * @type {Store}
 	 */
 
-	visible: Config
-		.bool()
-		.value(false),
+	store: Config.instanceOf(Store),
 
 	/**
 	 * Flag indicating if mappeable fields are being loaded

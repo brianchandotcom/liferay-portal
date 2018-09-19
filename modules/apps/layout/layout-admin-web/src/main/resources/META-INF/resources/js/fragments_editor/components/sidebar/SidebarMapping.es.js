@@ -3,7 +3,10 @@ import {Config} from 'metal-state';
 import Soy from 'metal-soy';
 
 import 'frontend-js-web/liferay/compat/modal/Modal.es';
+import {OPEN_ASSET_TYPE_DIALOG} from '../../actions/actions.es';
+import {Store} from '../../store/store.es';
 import templates from './SidebarMapping.soy';
+import {UPDATE_HIGHLIGHT_MAPPING_STATUS} from '../../actions/actions.es';
 
 /**
  * SidebarMapping
@@ -17,9 +20,12 @@ class SidebarMapping extends Component {
 	 */
 
 	disposed() {
-		if (this.highlightMapping) {
-			this.emit('toggleHighlightMapping');
-		}
+		this.store.dispatchAction(
+			UPDATE_HIGHLIGHT_MAPPING_STATUS,
+			{
+				highlightMapping: false
+			}
+		);
 	}
 
 	/**
@@ -28,8 +34,13 @@ class SidebarMapping extends Component {
 	 * @review
 	 */
 
-	_handleHighlightMappingCheckboxChange() {
-		this.emit('toggleHighlightMapping');
+	_handleHighlightMappingCheckboxChange(event) {
+		this.store.dispatchAction(
+			UPDATE_HIGHLIGHT_MAPPING_STATUS,
+			{
+				highlightMapping: !!event.delegateTarget.checked
+			}
+		);
 	}
 
 	/**
@@ -39,7 +50,7 @@ class SidebarMapping extends Component {
 	 */
 
 	_handleSelectAssetTypeButtonClick() {
-		this.emit('selectAssetTypeButtonClick');
+		this.store.dispatchAction(OPEN_ASSET_TYPE_DIALOG);
 	}
 
 }
@@ -101,8 +112,18 @@ SidebarMapping.STATE = {
 				)
 			}
 		)
-		.value({})
+		.value({}),
 
+	/**
+	 * Store instance
+	 * @default undefined
+	 * @instance
+	 * @memberOf SidebarMapping
+	 * @review
+	 * @type {Store}
+	 */
+
+	store: Config.instanceOf(Store)
 };
 
 Soy.register(SidebarMapping, templates);

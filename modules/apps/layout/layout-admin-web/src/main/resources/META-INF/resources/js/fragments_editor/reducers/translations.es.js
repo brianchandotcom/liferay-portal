@@ -1,10 +1,37 @@
 import {
 	ADD_FRAGMENT_ENTRY_LINK,
+	CHANGE_LANGUAGE_ID,
 	REMOVE_FRAGMENT_ENTRY_LINK,
 	UPDATE_TRANSLATION_STATUS
 } from '../actions/actions.es';
 
 const EDITABLE_VALUES_KEY = 'com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor';
+
+/**
+ * Reducer for changing languageId
+ * @param {!object} state
+ * @param {!string} actionType
+ * @param {object} payload
+ * @param {string} payload.languageId
+ * @return {object}
+ * @review
+ */
+
+function languageIdReducer(state, actionType, payload) {
+	let nextState = state;
+
+	if (actionType === CHANGE_LANGUAGE_ID) {
+		nextState = Object.assign(
+			{},
+			nextState,
+			{
+				languageId: payload.languageId
+			}
+		);
+	}
+
+	return nextState;
+}
 
 /**
  * @param {!object} state
@@ -111,4 +138,7 @@ function _getTranslationStatus(languageIds, editableValues) {
 	};
 }
 
-export {translationStatusReducer};
+export {
+	languageIdReducer,
+	translationStatusReducer
+};

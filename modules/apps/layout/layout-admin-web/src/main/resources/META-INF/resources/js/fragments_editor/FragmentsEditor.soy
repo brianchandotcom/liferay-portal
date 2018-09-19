@@ -27,24 +27,9 @@
 	{@param redirectURL: string}
 	{@param sidebarTabs: list<[enabled:bool, id:string, label:string]>}
 	{@param spritemap: string}
-	{@param? contextualSidebarVisible: bool}
 	{@param? _dropTargetClass: string}
-	{@param? _handleEditableChanged: any}
-	{@param? _handleMappeableFieldClicked: any}
-	{@param? _handleMappeableFieldSelected: any}
-	{@param? _handleMappingTypeSelected: any}
-	{@param? _handleSelectAssetTypeButtonClick: any}
-	{@param? _handleSelectMappingDialogVisibleChanged: any}
-	{@param? _handleSelectMappingTypeDialogVisibleChanged: any}
-	{@param? _handleToggleHighlightMapping: any}
-	{@param? _handleTranslationLanguageChange: any}
-	{@param? _highlightMapping: bool}
-	{@param? _selectMappingDialogEditableId: string}
-	{@param? _selectMappingDialogEditableType: string}
-	{@param? _selectMappingDialogFragmentEntryLinkId: string}
-	{@param? _selectMappingDialogMappedFieldId: string}
-	{@param? _selectMappingDialogVisible: bool}
-	{@param? _selectMappingTypeDialogVisible: bool}
+	{@param? contextualSidebarVisible: bool}
+	{@param? highlightMapping: bool}
 	{@param? getAssetClassTypesURL: any}
 	{@param? getAssetDisplayContributorsURL: any}
 	{@param? hoveredFragmentEntryLinkBorder: string}
@@ -54,6 +39,12 @@
 	{@param? mappingFieldsURL: string}
 	{@param? publishLayoutPageTemplateEntryURL: string}
 	{@param? savingChanges: bool}
+	{@param? selectMappingDialogEditableId: string}
+	{@param? selectMappingDialogEditableType: string}
+	{@param? selectMappingDialogFragmentEntryLinkId: string}
+	{@param? selectMappingDialogMappedFieldId: string}
+	{@param? selectMappingDialogVisible: bool}
+	{@param? selectMappingTypeDialogVisible: bool}
 	{@param? selectedMappingTypes: [
 		subtype: [
 			id: string,
@@ -77,9 +68,6 @@
 			{param availableLanguages: $availableLanguages /}
 			{param classPK: $classPK /}
 			{param defaultLanguageId: $defaultLanguageId /}
-			{param events: [
-				'translationLanguageChange': $_handleTranslationLanguageChange
-			] /}
 			{param languageId: $languageId /}
 			{param lastSaveDate: $lastSaveDate ?: '' /}
 			{param publishLayoutPageTemplateEntryURL: $publishLayoutPageTemplateEntryURL /}
@@ -94,13 +82,9 @@
 
 		{call com.liferay.layout.admin.web.FragmentsEditorSidebar.render}
 			{param dropTargetClass: $_dropTargetClass /}
-			{param events: [
-				'selectAssetTypeButtonClick': $_handleSelectAssetTypeButtonClick,
-				'toggleHighlightMapping': $_handleToggleHighlightMapping
-			] /}
 			{param fragmentCollections: $fragmentCollections /}
 			{param fragmentEntryLinks: $fragmentEntryLinks /}
-			{param highlightMapping: $_highlightMapping ?: false /}
+			{param highlightMapping: $highlightMapping ?: false /}
 			{param layoutData: $layoutData /}
 			{param ref: 'sidebar' /}
 			{param selectedMappingTypes: $selectedMappingTypes /}
@@ -115,17 +99,13 @@
 				{param defaultEditorConfigurations: $defaultEditorConfigurations /}
 				{param defaultLanguageId: $defaultLanguageId /}
 				{param dropTargetClass: $_dropTargetClass ?: '' /}
-				{param events: [
-					'editableChanged': $_handleEditableChanged,
-					'mappeableFieldClicked': $_handleMappeableFieldClicked
-				] /}
 				{param fragmentEntryLinks: $fragmentEntryLinks /}
 				{param hoveredFragmentEntryLinkBorder: $hoveredFragmentEntryLinkBorder /}
 				{param hoveredFragmentEntryLinkId: $hoveredFragmentEntryLinkId /}
 				{param imageSelectorURL: $imageSelectorURL /}
 				{param languageId: $languageId /}
 				{param layoutData: $layoutData /}
-				{param mapping: $_highlightMapping ?: false /}
+				{param mapping: $highlightMapping ?: false /}
 				{param mappingFieldsURL: $mappingFieldsURL /}
 				{param portletNamespace: $portletNamespace /}
 				{param ref: 'fragmentsEditorRender' /}
@@ -136,39 +116,31 @@
 			{/call}
 		</div>
 
-		{if $mappingFieldsURL}
+		{if $mappingFieldsURL and $selectMappingDialogVisible}
 			{call com.liferay.layout.admin.web.SelectMappingDialog.render}
-				{param editableId: $_selectMappingDialogEditableId /}
-				{param editableType: $_selectMappingDialogEditableType /}
-				{param events: [
-					'mappeableFieldSelected': $_handleMappeableFieldSelected,
-					'visibleChanged': $_handleSelectMappingDialogVisibleChanged
-				] /}
-				{param fragmentEntryLinkId: $_selectMappingDialogFragmentEntryLinkId /}
-				{param mappedFieldId: $_selectMappingDialogMappedFieldId /}
+				{param editableId: $selectMappingDialogEditableId /}
+				{param editableType: $selectMappingDialogEditableType /}
+				{param fragmentEntryLinkId: $selectMappingDialogFragmentEntryLinkId /}
+				{param mappedFieldId: $selectMappingDialogMappedFieldId /}
 				{param mappingFieldsURL: $mappingFieldsURL /}
 				{param portletNamespace: $portletNamespace /}
 				{param selectedMappingTypes: $selectedMappingTypes /}
 				{param spritemap: $spritemap /}
 				{param store: $store /}
-				{param visible: $_selectMappingDialogVisible ?: false /}
 			{/call}
 		{/if}
-
-		{if $getAssetClassTypesURL and $getAssetDisplayContributorsURL and $updateLayoutPageTemplateEntryAssetTypeURL}
+		{if $getAssetClassTypesURL
+			and $getAssetDisplayContributorsURL
+			and $updateLayoutPageTemplateEntryAssetTypeURL
+			and $selectMappingTypeDialogVisible}
 			{call com.liferay.layout.admin.web.SelectMappingTypeDialog.render}
 				{param classPK: $classPK /}
-				{param events: [
-					'mappingTypeSelected': $_handleMappingTypeSelected,
-					'visibleChanged': $_handleSelectMappingTypeDialogVisibleChanged
-				] /}
 				{param getAssetClassTypesURL: $getAssetClassTypesURL /}
 				{param getAssetDisplayContributorsURL: $getAssetDisplayContributorsURL /}
 				{param portletNamespace: $portletNamespace /}
 				{param spritemap: $spritemap /}
 				{param store: $store /}
 				{param updateLayoutPageTemplateEntryAssetTypeURL: $updateLayoutPageTemplateEntryAssetTypeURL /}
-				{param visible: $_selectMappingTypeDialogVisible ?: false /}
 			{/call}
 		{/if}
 	</div>

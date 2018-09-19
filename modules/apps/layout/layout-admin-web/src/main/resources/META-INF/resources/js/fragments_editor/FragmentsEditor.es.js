@@ -7,14 +7,10 @@ import './components/dialogs/SelectMappingTypeDialog.es';
 import './components/fragment_entry_link/FragmentEntryLinkList.es';
 import './components/sidebar/FragmentsEditorSidebar.es';
 import './components/toolbar/FragmentsEditorToolbar.es';
-import {Store} from './store/store.es';
 import {INITIAL_STATE} from './store/state.es';
+import {Store} from './store/store.es';
 import templates from './FragmentsEditor.soy';
-import {
-	UPDATE_LAST_SAVE_DATE,
-	UPDATE_SAVING_CHANGES_STATUS,
-	UPDATE_TRANSLATION_STATUS
-} from './actions/actions.es';
+import {UPDATE_TRANSLATION_STATUS} from './actions/actions.es';
 
 /**
  * FragmentsEditor
@@ -22,6 +18,21 @@ import {
  */
 
 class FragmentsEditor extends Component {
+
+	/**
+	 * @inheritDoc
+	 */
+
+	created() {
+		this.once(
+			'storeChanged',
+			() => {
+				this.store.dispatchAction(
+					UPDATE_TRANSLATION_STATUS
+				);
+			}
+		);
+	}
 
 	/**
 	 * Focus a fragmentEntryLink for a given ID
@@ -63,46 +74,6 @@ class FragmentsEditor extends Component {
 	}
 
 	/**
-	 * Callback executed everytime an editable field has been changed
-	 * @param {{
-	 *   editableId: !string,
-	 *   fragmentEntryLinkId: !string,
-	 *   value: !string
-	 * }} data
-	 * @private
-	 * @review
-	 */
-
-	_handleEditableChanged(data) {
-		this._setFragmentEntryLinkEditableValue(
-			data.fragmentEntryLinkId,
-			data.editableId,
-			{[this.languageId || 'defaultValue']: data.value}
-		);
-	}
-
-	/**
-	 * Callback executed when a mappeable fragment has been clicked
-	 * @param {!{ fragmentEntryLinkId: !string, editableId: !string }} event
-	 * @private
-	 * @review
-	 */
-
-	_handleMappeableFieldClicked(event) {
-		this._selectMappingDialogEditableId = event.editableId;
-		this._selectMappingDialogEditableType = event.editableType;
-		this._selectMappingDialogFragmentEntryLinkId = event.fragmentEntryLinkId;
-		this._selectMappingDialogMappedFieldId = event.mappedFieldId;
-
-		if (this.selectedMappingTypes && this.selectedMappingTypes.type) {
-			this._selectMappingDialogVisible = true;
-		}
-		else {
-			this._handleSelectAssetTypeButtonClick();
-		}
-	}
-
-	/**
 	 * Callback executed when a mappeable field has been selected for the
 	 * given editable.
 	 * @param {!{
@@ -122,86 +93,6 @@ class FragmentsEditor extends Component {
 	}
 
 	/**
-	 * Callback executed when a mapping type has selected
-	 * @param {{
-	 * 	 mappingTypes: {
-	 *     subtype: {
-	 *   	  id: !string,
-	 *   	  label: !string
-	 *     },
-	 *     type: {
-	 *   	  id: !string,
-	 *   	  label: !string
-	 *     }
-	 * 	 }
-     * }} event
-	 * @private
-	 * @review
-	 */
-
-	_handleMappingTypeSelected(event) {
-		this.selectedMappingTypes = event.mappingTypes;
-
-		if (this._selectMappingDialogFragmentEntryLinkId &&
-			this._selectMappingDialogEditableId) {
-
-			this._selectMappingDialogVisible = true;
-		}
-	}
-
-	/**
-	 * Callback executed when the SelectMappingTypeDialog should be shown
-	 * @review
-	 */
-
-	_handleSelectAssetTypeButtonClick() {
-		this._selectMappingTypeDialogVisible = true;
-	}
-
-	/**
-	 * Callback executed when the SelectMappingDialog visibility changes
-	 * @param {{ newVal: boolean }} change
-	 * @private
-	 * @review
-	 */
-
-	_handleSelectMappingDialogVisibleChanged(change) {
-		this._selectMappingDialogVisible = change.newVal;
-	}
-
-	/**
-	 * Callback executed when the SelectMappingTypeDialog visibility changes
-	 * @param {{ newVal: boolean }} change
-	 * @private
-	 * @review
-	 */
-
-	_handleSelectMappingTypeDialogVisibleChanged(change) {
-		this._selectMappingTypeDialogVisible = change.newVal;
-	}
-
-	/**
-	 * Toggle highlightMapping attribute value
-	 * @private
-	 * @review
-	 */
-
-	_handleToggleHighlightMapping() {
-		this._highlightMapping = !this._highlightMapping;
-	}
-
-	/**
-	 * Callback executed when the translation language has changed
-	 * @private
-	 * @param {{languageId: string}} event
-	 * @review
-	 */
-
-	_handleTranslationLanguageChange(event) {
-		this.languageId = event.languageId;
-	}
-
-	/**
 	 * Swap the positions of two fragmentEntryLinks
 	 * @param {Array} list
 	 * @param {number} indexA
@@ -215,107 +106,6 @@ class FragmentsEditor extends Component {
 		return list;
 	}
 
-	/**
-	 * Updates the given fragmentEntryLinkId editable value without mutating
-	 * the fragmentEntryLinks property but creating a new array and
-	 * synchronizing changes with server.
-	 *
-	 * @param {!string} fragmentEntryLinkId
-	 * @param {!string} editableValueId
-	 * @param {!object} editableValueContent
-	 * @private
-	 */
-
-	_setFragmentEntryLinkEditableValue(
-		fragmentEntryLinkId,
-		editableValueId,
-		editableValueContent
-	) {
-		const component = this._getFragmentEntryLinkComponent(
-			fragmentEntryLinkId
-		);
-
-		if (component && this.fragmentEntryLinks[fragmentEntryLinkId]) {
-			const newEditableValues = component.setEditableValue(
-				editableValueId,
-				editableValueContent
-			);
-
-			const newFragmentEntryLink = Object.assign(
-				{},
-				this.fragmentEntryLinks[fragmentEntryLinkId],
-				{editableValues: newEditableValues}
-			);
-
-			const newFragmentEntryLinks = Object.assign(
-				{},
-				this.fragmentEntryLinks
-			);
-
-			newFragmentEntryLinks[fragmentEntryLinkId] = newFragmentEntryLink;
-
-			this.fragmentEntryLinks = newFragmentEntryLinks;
-
-			this._updateFragmentEntryLink(newFragmentEntryLink);
-		}
-	}
-
-	/**
-	 * Sends the change of a single fragment entry link to the server.
-	 * @private
-	 * @review
-	 */
-
-	_updateFragmentEntryLink(fragmentEntryLink) {
-		if (!this.savingChanges) {
-			this.store.dispatchAction(
-				UPDATE_SAVING_CHANGES_STATUS,
-				{
-					savingChanges: true
-				}
-			);
-
-			const formData = new FormData();
-
-			formData.append(
-				`${this.portletNamespace}fragmentEntryLinkId`,
-				fragmentEntryLink.fragmentEntryLinkId
-			);
-
-			formData.append(
-				`${this.portletNamespace}editableValues`,
-				JSON.stringify(fragmentEntryLink.editableValues)
-			);
-
-			fetch(
-				this.editFragmentEntryLinkURL,
-				{
-					body: formData,
-					credentials: 'include',
-					method: 'POST'
-				}
-			).then(
-				() => {
-					this.store
-						.dispatchAction(
-							UPDATE_LAST_SAVE_DATE,
-							{
-								lastSaveDate: new Date()
-							}
-						)
-						.dispatchAction(
-							UPDATE_SAVING_CHANGES_STATUS,
-							{
-								savingChanges: false
-							}
-						)
-						.dispatchAction(
-							UPDATE_TRANSLATION_STATUS
-						);
-				}
-			);
-		}
-	}
 }
 
 /**
@@ -445,17 +235,6 @@ FragmentsEditor.STATE = Object.assign(
 		mappingFieldsURL: Config.string().value(null),
 
 		/**
-		 * Currently selected language id.
-		 * @default undefined
-		 * @instance
-		 * @memberOf FragmentsEditor
-		 * @review
-		 * @type {!string}
-		 */
-
-		languageId: Config.string().required(),
-
-		/**
 		 *
 		 * @default undefined
 		 * @instance
@@ -537,17 +316,6 @@ FragmentsEditor.STATE = Object.assign(
 		store: Config.instanceOf(Store),
 
 		/**
-		 * URL for swapping to fragmentEntryLinks.
-		 * @default undefined
-		 * @instance
-		 * @memberOf FragmentsEditor
-		 * @review
-		 * @type {!string}
-		 */
-
-		updateFragmentEntryLinksURL: Config.string().required(),
-
-		/**
 		 * URL for updating the asset type associated to a template.
 		 * @default undefined
 		 * @instance
@@ -567,111 +335,7 @@ FragmentsEditor.STATE = Object.assign(
 		 * @type {!string}
 		 */
 
-		_dropTargetClass: Config.string().internal().value('dropTarget'),
-
-		/**
-		 * If true, editable values should be highlighted.
-		 * @default false
-		 * @instance
-		 * @memberOf FragmentsEditor
-		 * @private
-		 * @review
-		 * @type {boolean}
-		 */
-
-		_highlightMapping: Config.bool()
-			.internal()
-			.value(false),
-
-		/**
-		 * Editable type of the field that is being mapped
-		 * @default ''
-		 * @instance
-		 * @memberOf FragmentsEditor
-		 * @private
-		 * @review
-		 * @type {string}
-		 */
-
-		_selectMappingDialogEditableType: Config
-			.string()
-			.internal()
-			.value(''),
-
-		/**
-		 * EditableId of the field that is being mapped
-		 * @default ''
-		 * @instance
-		 * @memberOf FragmentsEditor
-		 * @private
-		 * @review
-		 * @type {string}
-		 */
-
-		_selectMappingDialogEditableId: Config
-			.string()
-			.internal()
-			.value(''),
-
-		/**
-		 * FragmentEntryLinkId of the field that is being mapped
-		 * @default ''
-		 * @instance
-		 * @memberOf FragmentsEditor
-		 * @private
-		 * @review
-		 * @type {string}
-		 */
-
-		_selectMappingDialogFragmentEntryLinkId: Config
-			.string()
-			.internal()
-			.value(''),
-
-		/**
-		 * Mapped field ID of the field that is being mapped
-		 * @default ''
-		 * @instance
-		 * @memberOf FragmentsEditor
-		 * @private
-		 * @review
-		 * @type {string}
-		 */
-
-		_selectMappingDialogMappedFieldId: Config
-			.string()
-			.internal()
-			.value(''),
-
-		/**
-		 * Flag indicating if the SelectMappingDialog should be shown
-		 * @default false
-		 * @instance
-		 * @memberOf FragmentsEditor
-		 * @private
-		 * @review
-		 * @type {boolean}
-		 */
-
-		_selectMappingDialogVisible: Config
-			.bool()
-			.internal()
-			.value(false),
-
-		/**
-		 * Flag indicating if the SelectMappingTypeDialog should be shown
-		 * @default false
-		 * @instance
-		 * @memberOf FragmentsEditor
-		 * @private
-		 * @review
-		 * @type {boolean}
-		 */
-
-		_selectMappingTypeDialogVisible: Config
-			.bool()
-			.internal()
-			.value(false)
+		_dropTargetClass: Config.string().internal().value('dropTarget')
 	},
 
 	INITIAL_STATE

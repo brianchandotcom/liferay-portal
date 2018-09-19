@@ -155,13 +155,13 @@ MBEntriesManagementToolbarDisplayContext mbEntriesManagementToolbarDisplayContex
 
 							row.setPrimaryKey(String.valueOf(thread.getThreadId()));
 							row.setRestricted(!MBMessagePermission.contains(permissionChecker, message, ActionKeys.VIEW));
-
-							Map<String, Object> rowData = new HashMap<String, Object>();
-
-							rowData.put("actions", String.join(StringPool.COMMA, mbEntriesManagementToolbarDisplayContext.getAvailableActionDropdownItems(message)));
-
-							row.setData(rowData);
 						}
+
+						Map<String, Object> rowData = new HashMap<String, Object>();
+
+						rowData.put("actions", String.join(StringPool.COMMA, mbEntriesManagementToolbarDisplayContext.getAvailableActionDropdownItems(message)));
+
+						row.setData(rowData);
 						%>
 
 						<liferay-portlet:renderURL varImpl="rowURL">

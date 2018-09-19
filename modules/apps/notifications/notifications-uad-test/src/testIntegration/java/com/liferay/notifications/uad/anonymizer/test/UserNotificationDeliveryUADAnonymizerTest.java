@@ -17,9 +17,11 @@ package com.liferay.notifications.uad.anonymizer.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserNotificationDelivery;
+import com.liferay.portal.kernel.model.UserNotificationDeliveryConstants;
 import com.liferay.portal.kernel.service.UserNotificationDeliveryLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.user.associated.data.anonymizer.UADAnonymizer;
@@ -57,8 +59,11 @@ public class UserNotificationDeliveryUADAnonymizerTest
 		throws Exception {
 
 		UserNotificationDelivery userNotificationDelivery =
-			UserNotificationDeliveryUADTestHelper.addUserNotificationDelivery(
-				_userNotificationDeliveryLocalService, userId);
+			_userNotificationDeliveryLocalService.
+				addUserNotificationDelivery(
+					userId, RandomTestUtil.randomString(), 0,
+					UserNotificationDeliveryConstants.TYPE_WEBSITE,
+					UserNotificationDeliveryConstants.TYPE_WEBSITE, false);
 
 		if (deleteAfterTestRun) {
 			_userNotificationDeliveries.add(userNotificationDelivery);

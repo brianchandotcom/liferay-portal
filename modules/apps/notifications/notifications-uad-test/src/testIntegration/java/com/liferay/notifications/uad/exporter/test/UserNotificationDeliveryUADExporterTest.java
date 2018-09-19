@@ -15,11 +15,12 @@
 package com.liferay.notifications.uad.exporter.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.notifications.uad.test.UserNotificationDeliveryUADTestHelper;
 import com.liferay.portal.kernel.model.UserNotificationDelivery;
+import com.liferay.portal.kernel.model.UserNotificationDeliveryConstants;
 import com.liferay.portal.kernel.service.UserNotificationDeliveryLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.user.associated.data.exporter.UADExporter;
@@ -49,8 +50,10 @@ public class UserNotificationDeliveryUADExporterTest
 		throws Exception {
 
 		UserNotificationDelivery userNotificationDelivery =
-			UserNotificationDeliveryUADTestHelper.addUserNotificationDelivery(
-				_userNotificationDeliveryLocalService, userId);
+			_userNotificationDeliveryLocalService.addUserNotificationDelivery(
+				userId, RandomTestUtil.randomString(), 0,
+				UserNotificationDeliveryConstants.TYPE_WEBSITE,
+				UserNotificationDeliveryConstants.TYPE_WEBSITE, false);
 
 		_userNotificationDeliveries.add(userNotificationDelivery);
 

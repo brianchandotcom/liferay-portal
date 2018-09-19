@@ -15,12 +15,15 @@
 package com.liferay.layout.uad.anonymizer.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.layout.uad.test.LayoutSetBranchUADTestHelper;
 import com.liferay.portal.kernel.model.LayoutSetBranch;
+import com.liferay.portal.kernel.model.LayoutSetBranchConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.LayoutSetBranchLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.user.associated.data.anonymizer.UADAnonymizer;
@@ -56,8 +59,11 @@ public class LayoutSetBranchUADAnonymizerTest
 		throws Exception {
 
 		LayoutSetBranch layoutSetBranch =
-			LayoutSetBranchUADTestHelper.addLayoutSetBranch(
-				_layoutSetBranchLocalService, userId);
+			_layoutSetBranchLocalService.addLayoutSetBranch(
+				userId, TestPropsValues.getGroupId(), false,
+				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+				false, LayoutSetBranchConstants.ALL_BRANCHES,
+				ServiceContextTestUtil.getServiceContext());
 
 		if (deleteAfterTestRun) {
 			_layoutSetBranchs.add(layoutSetBranch);

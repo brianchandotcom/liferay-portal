@@ -16,9 +16,11 @@ package com.liferay.document.library.uad.exporter.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.document.library.kernel.model.DLFileEntryType;
+import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalService;
 import com.liferay.document.library.uad.test.DLFileEntryTypeUADTestHelper;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.user.associated.data.exporter.UADExporter;
@@ -46,13 +48,15 @@ public class DLFileEntryTypeUADExporterTest
 
 	@After
 	public void tearDown() throws Exception {
-		_dlFileEntryTypeUADTestHelper.cleanUpDependencies(_dlFileEntryTypes);
+		DLFileEntryTypeUADTestHelper.cleanUpDependencies(
+			_dlFileEntryTypeLocalService, _portal, _dlFileEntryTypes);
 	}
 
 	@Override
 	protected DLFileEntryType addBaseModel(long userId) throws Exception {
 		DLFileEntryType dlFileEntryType =
-			_dlFileEntryTypeUADTestHelper.addDLFileEntryType(userId);
+			DLFileEntryTypeUADTestHelper.addDLFileEntryType(
+				_dlFileEntryTypeLocalService, _portal, userId);
 
 		_dlFileEntryTypes.add(dlFileEntryType);
 
@@ -69,11 +73,14 @@ public class DLFileEntryTypeUADExporterTest
 		return _uadExporter;
 	}
 
+	@Inject
+	private DLFileEntryTypeLocalService _dlFileEntryTypeLocalService;
+
 	@DeleteAfterTestRun
 	private final List<DLFileEntryType> _dlFileEntryTypes = new ArrayList<>();
 
 	@Inject
-	private DLFileEntryTypeUADTestHelper _dlFileEntryTypeUADTestHelper;
+	private Portal _portal;
 
 	@Inject(filter = "component.name=*.DLFileEntryTypeUADExporter")
 	private UADExporter _uadExporter;

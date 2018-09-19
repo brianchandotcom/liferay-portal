@@ -35,16 +35,16 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author William Newbury
  */
-@Component(immediate = true, service = DLFileEntryTypeUADTestHelper.class)
 public class DLFileEntryTypeUADTestHelper {
 
-	public DLFileEntryType addDLFileEntryType(long userId) throws Exception {
+	public static DLFileEntryType addDLFileEntryType(
+			DLFileEntryTypeLocalService dlFileEntryTypeLocalService,
+			Portal portal, long userId)
+		throws Exception {
+
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext();
 
@@ -74,17 +74,19 @@ public class DLFileEntryTypeUADTestHelper {
 			ddmForm, StorageEngineManager.STORAGE_TYPE_DEFAULT,
 			DDMStructureManager.STRUCTURE_TYPE_DEFAULT, serviceContext);
 
-		return _dlFileEntryTypeLocalService.addFileEntryType(
+		return dlFileEntryTypeLocalService.addFileEntryType(
 			userId, TestPropsValues.getGroupId(), RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(),
 			new long[] {ddmStructure.getStructureId()}, serviceContext);
 	}
 
-	public void cleanUpDependencies(List<DLFileEntryType> dlFileEntryTypes)
+	public static void cleanUpDependencies(
+			DLFileEntryTypeLocalService dlFileEntryTypeLocalService,
+			Portal portal, List<DLFileEntryType> dlFileEntryTypes)
 		throws Exception {
 
 		for (DLFileEntryType dlFileEntryType : dlFileEntryTypes) {
-			_dlFileEntryTypeLocalService.deleteFileEntryType(dlFileEntryType);
+			dlFileEntryTypeLocalService.deleteFileEntryType(dlFileEntryType);
 
 			for (DDMStructure ddmStructure :
 					dlFileEntryType.getDDMStructures()) {
@@ -102,11 +104,5 @@ public class DLFileEntryTypeUADTestHelper {
 			}
 		}
 	}
-
-	@Reference
-	protected Portal portal;
-
-	@Reference
-	private DLFileEntryTypeLocalService _dlFileEntryTypeLocalService;
 
 }

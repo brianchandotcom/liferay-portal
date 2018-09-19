@@ -226,28 +226,6 @@ SearchContainer assetListEntryAssetEntryRelSearchContainer = editAssetListDispla
 	</liferay-frontend:edit-form-footer>
 </liferay-frontend:edit-form>
 
-<aui:script>
-	function <portlet:namespace />moveSelectionDown(position) {
-		<portlet:namespace />fm.<portlet:namespace />position.value = position;
-
-		<portlet:actionURL name="/asset_list/move_asset_entry_selection" var="moveAssetEntrySelectionDownURL">
-			<portlet:param name="moveDirection" value="<%= AssetListSelectionConstants.MOVE_DOWN %>" />
-		</portlet:actionURL>
-
-		submitForm(document.<portlet:namespace />fm, '<%= moveAssetEntrySelectionDownURL.toString() %>');
-	}
-
-	function <portlet:namespace />moveSelectionUp(position) {
-		<portlet:namespace />fm.<portlet:namespace />position.value = position;
-
-		<portlet:actionURL name="/asset_list/move_asset_entry_selection" var="moveAssetEntrySelectionUpURL">
-			<portlet:param name="moveDirection" value="<%= AssetListSelectionConstants.MOVE_UP %>" />
-		</portlet:actionURL>
-
-		submitForm(document.<portlet:namespace />fm, '<%= moveAssetEntrySelectionUpURL.toString() %>');
-	}
-</aui:script>
-
 <aui:script sandbox="<%= true %>">
 	$('body').on(
 		'click',

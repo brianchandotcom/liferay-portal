@@ -32,53 +32,58 @@ boolean last = (position == (searchContainer.getTotal() - 1));
 	<c:when test="<%= (position == 0) && last %>">
 	</c:when>
 	<c:when test="<%= (position > 0) && !last %>">
-
-		<%
-		String taglibDownURL = "javascript:" + renderResponse.getNamespace() + "moveSelectionDown('" + position + "')";
-		%>
+		<portlet:actionURL name="/asset_list/move_asset_entry_selection" var="moveAssetEntrySelectionDownURL">
+			<portlet:param name="assetListEntryAssetEntryRelId" value="<%= String.valueOf(assetListEntryAssetEntryRel.getAssetListEntryAssetEntryRelId()) %>" />
+			<portlet:param name="position" value="<%= String.valueOf(position) %>" />
+			<portlet:param name="newPosition" value="<%= String.valueOf(position - 1) %>" />
+		</portlet:actionURL>
 
 		<liferay-ui:icon
 			icon="angle-down"
 			markupView="lexicon"
 			message="down"
-			url="<%= taglibDownURL %>"
+			url="<%= moveAssetEntrySelectionDownURL %>"
 		/>
 
-		<%
-		String taglibUpURL = "javascript:" + renderResponse.getNamespace() + "moveSelectionUp('" + position + "')";
-		%>
+		<portlet:actionURL name="/asset_list/move_asset_entry_selection" var="moveAssetEntrySelectionUpURL">
+			<portlet:param name="assetListEntryAssetEntryRelId" value="<%= String.valueOf(assetListEntryAssetEntryRel.getAssetListEntryAssetEntryRelId()) %>" />
+			<portlet:param name="position" value="<%= String.valueOf(position) %>" />
+			<portlet:param name="newPosition" value="<%= String.valueOf(position + 1) %>" />
+		</portlet:actionURL>
 
 		<liferay-ui:icon
 			icon="angle-up"
 			markupView="lexicon"
 			message="up"
-			url="<%= taglibUpURL %>"
+			url="<%= moveAssetEntrySelectionUpURL %>"
 		/>
 	</c:when>
 	<c:when test="<%= position == 0 %>">
-
-		<%
-		String taglibDownURL = "javascript:" + renderResponse.getNamespace() + "moveSelectionDown('" + position + "')";
-		%>
+		<portlet:actionURL name="/asset_list/move_asset_entry_selection" var="moveAssetEntrySelectionDownURL">
+			<portlet:param name="assetListEntryAssetEntryRelId" value="<%= String.valueOf(assetListEntryAssetEntryRel.getAssetListEntryAssetEntryRelId()) %>" />
+			<portlet:param name="position" value="<%= String.valueOf(position) %>" />
+			<portlet:param name="newPosition" value="<%= String.valueOf(position - 1) %>" />
+		</portlet:actionURL>
 
 		<liferay-ui:icon
 			icon="angle-down"
 			markupView="lexicon"
 			message="down"
-			url="<%= taglibDownURL %>"
+			url="<%= moveAssetEntrySelectionDownURL %>"
 		/>
 	</c:when>
 	<c:when test="<%= last %>">
-
-		<%
-		String taglibUpURL = "javascript:" + renderResponse.getNamespace() + "moveSelectionUp('" + position + "')";
-		%>
+		<portlet:actionURL name="/asset_list/move_asset_entry_selection" var="moveAssetEntrySelectionUpURL">
+			<portlet:param name="assetListEntryAssetEntryRelId" value="<%= String.valueOf(assetListEntryAssetEntryRel.getAssetListEntryAssetEntryRelId()) %>" />
+			<portlet:param name="position" value="<%= String.valueOf(position) %>" />
+			<portlet:param name="newPosition" value="<%= String.valueOf(position + 1) %>" />
+		</portlet:actionURL>
 
 		<liferay-ui:icon
 			icon="angle-up"
 			markupView="lexicon"
 			message="up"
-			url="<%= taglibUpURL %>"
+			url="<%= moveAssetEntrySelectionUpURL %>"
 		/>
 	</c:when>
 </c:choose>

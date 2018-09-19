@@ -43,7 +43,6 @@ page import="com.liferay.asset.list.exception.AssetListEntryTitleException" %><%
 page import="com.liferay.asset.list.exception.DuplicateAssetListEntryTitleException" %><%@
 page import="com.liferay.asset.list.model.AssetListEntry" %><%@
 page import="com.liferay.asset.list.model.AssetListEntryAssetEntryRel" %><%@
-page import="com.liferay.asset.list.web.internal.contants.AssetListSelectionConstants" %><%@
 page import="com.liferay.asset.list.web.internal.display.context.AssetListDisplayContext" %><%@
 page import="com.liferay.asset.list.web.internal.display.context.EditAssetListDisplayContext" %><%@
 page import="com.liferay.asset.list.web.internal.security.permission.resource.AssetListEntryPermission" %><%@

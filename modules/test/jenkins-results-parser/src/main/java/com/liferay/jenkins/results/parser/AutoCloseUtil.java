@@ -29,6 +29,8 @@ import org.apache.commons.lang.StringUtils;
  */
 public class AutoCloseUtil {
 
+	public static boolean debug = false;
+
 	public static boolean autoCloseOnCriticalBatchFailures(
 			PullRequest pullRequest, Build topLevelBuild)
 		throws Exception {
@@ -349,11 +351,37 @@ public class AutoCloseUtil {
 		}
 
 		if (testBatchNamesAutoClose != null) {
+			if (debug) {
+				System.out.println(
+					JenkinsResultsParserUtil.combine(
+						"Finding auto-close rules for ",
+						gitRepositoryBranchAutoClosePropertyName, "."));
+			}
+
 			String[] autoCloseRuleDataArray = StringUtils.split(
 				testBatchNamesAutoClose, ",");
 
 			for (String autoCloseRuleData : autoCloseRuleDataArray) {
-				list.add(new AutoCloseRule(autoCloseRuleData));
+				if (autoCloseRuleData.startsWith("#")) {
+					continue;
+				}
+
+				AutoCloseRule newAutoCloseRule = new AutoCloseRule(
+					autoCloseRuleData);
+
+				if (debug) {
+					System.out.println("\t" + newAutoCloseRule.toString());
+				}
+
+				list.add(newAutoCloseRule);
+			}
+
+			if (debug) {
+				System.out.println(
+					JenkinsResultsParserUtil.combine(
+						"Finished finding ",
+						gitRepositoryBranchAutoClosePropertyName,
+						" auto-close rules.\n"));
 			}
 		}
 
@@ -373,11 +401,18 @@ public class AutoCloseUtil {
 				"test.branch.names.auto.close[", gitHubRemoteGitRepositoryName,
 				"]"));
 
+		String branchName = pullRequest.getUpstreamBranchName();
+
 		if (testBranchNamesAutoClose == null) {
+			if (debug) {
+				System.out.println(
+					JenkinsResultsParserUtil.combine(
+						"Auto-close rules are deactivated for ",
+						gitHubRemoteGitRepositoryName, "(", branchName, ")."));
+			}
+
 			return false;
 		}
-
-		String branchName = pullRequest.getUpstreamBranchName();
 
 		List<String> testBranchNamesAutoCloseList = Arrays.asList(
 			testBranchNamesAutoClose.split(","));
@@ -440,89 +475,160 @@ public class AutoCloseUtil {
 		}
 
 		public List<Build> evaluate(List<Build> downstreamBuilds) {
-			downstreamBuilds = getMatchingBuilds(downstreamBuilds);
+			if (debug) {
+				System.out.println(
+					JenkinsResultsParserUtil.combine(
+						"Evaluating auto-close rule ", toString(), "."));
+			}
 
-			List<Build> failingInUpstreamJobDownstreamBuilds = new ArrayList<>(
-				downstreamBuilds.size());
+			try {
+				downstreamBuilds = getMatchingBuilds(downstreamBuilds);
 
-			for (Build downstreamBuild : downstreamBuilds) {
-				if (UpstreamFailureUtil.isBuildFailingInUpstreamJob(
-						downstreamBuild)) {
-
-					failingInUpstreamJobDownstreamBuilds.add(downstreamBuild);
-
-					continue;
+				if (debug) {
+					System.out.println(
+						JenkinsResultsParserUtil.combine(
+							"Found ", String.valueOf(downstreamBuilds.size()),
+							" builds that match this rule."));
 				}
 
-				List<TestResult> testResults = new ArrayList<>();
+				List<Build> failingInUpstreamJobDownstreamBuilds =
+					new ArrayList<>(downstreamBuilds.size());
 
-				testResults.addAll(downstreamBuild.getTestResults("FAILED"));
-				testResults.addAll(
-					downstreamBuild.getTestResults("REGRESSION"));
+				for (Build downstreamBuild : downstreamBuilds) {
+					if (UpstreamFailureUtil.isBuildFailingInUpstreamJob(
+							downstreamBuild)) {
 
-				boolean containsUniqueTestFailure = false;
+						failingInUpstreamJobDownstreamBuilds.add(
+							downstreamBuild);
 
-				if (testResults.isEmpty()) {
-					containsUniqueTestFailure = true;
-				}
-				else {
-					for (TestResult testResult : testResults) {
-						if (!UpstreamFailureUtil.isTestFailingInUpstreamJob(
-								testResult)) {
+						continue;
+					}
 
-							containsUniqueTestFailure = true;
+					List<TestResult> testResults = new ArrayList<>();
 
-							break;
+					testResults.addAll(
+						downstreamBuild.getTestResults("FAILED"));
+					testResults.addAll(
+						downstreamBuild.getTestResults("REGRESSION"));
+
+					boolean containsUniqueTestFailure = false;
+
+					if (testResults.isEmpty()) {
+						containsUniqueTestFailure = true;
+					}
+					else {
+						for (TestResult testResult : testResults) {
+							if (!UpstreamFailureUtil.isTestFailingInUpstreamJob(
+									testResult)) {
+
+								containsUniqueTestFailure = true;
+
+								break;
+							}
 						}
+					}
+
+					if (!containsUniqueTestFailure) {
+						failingInUpstreamJobDownstreamBuilds.add(
+							downstreamBuild);
 					}
 				}
 
-				if (!containsUniqueTestFailure) {
-					failingInUpstreamJobDownstreamBuilds.add(downstreamBuild);
+				if (debug) {
+					System.out.println(
+						JenkinsResultsParserUtil.combine(
+							String.valueOf(
+								failingInUpstreamJobDownstreamBuilds.size()),
+							" downstream builds are also failing in ",
+							"upstream."));
 				}
-			}
 
-			downstreamBuilds.removeAll(failingInUpstreamJobDownstreamBuilds);
+				downstreamBuilds.removeAll(
+					failingInUpstreamJobDownstreamBuilds);
 
-			if (downstreamBuilds.isEmpty()) {
+				if (downstreamBuilds.isEmpty()) {
+					System.out.println(toString() + " has PASSED.");
+
+					return Collections.emptyList();
+				}
+
+				List<Build> failedDownstreamBuilds = new ArrayList<>(
+					downstreamBuilds.size());
+
+				int failLimit = 0;
+
+				if (maxFailPercentage != -1) {
+					failLimit =
+						(int)(maxFailPercentage * downstreamBuilds.size());
+
+					if (failLimit > 0) {
+						failLimit--;
+					}
+				}
+				else {
+					failLimit = maxFailCount;
+				}
+
+				if (debug) {
+					System.out.println(
+						JenkinsResultsParserUtil.combine(
+							toString(), " fail limit is ",
+							String.valueOf(failLimit)));
+				}
+
+				for (Build downstreamBuild : downstreamBuilds) {
+					String status = downstreamBuild.getStatus();
+
+					if (!status.equals("completed")) {
+						continue;
+					}
+
+					String result = downstreamBuild.getResult();
+
+					if ((result != null) && !result.equals("SUCCESS")) {
+						if (debug) {
+							System.out.println(
+								JenkinsResultsParserUtil.combine(
+									"Found a matching failed build. ",
+									downstreamBuild.getDisplayName(),
+									" has failed."));
+						}
+
+						failedDownstreamBuilds.add(downstreamBuild);
+					}
+				}
+
+				if (failedDownstreamBuilds.size() > failLimit) {
+					if (debug) {
+						System.out.println(
+							JenkinsResultsParserUtil.combine(
+								"Found ",
+								String.valueOf(failedDownstreamBuilds.size()),
+								" matching failed builds.\n", toString(),
+								" has FAILED."));
+					}
+
+					return failedDownstreamBuilds;
+				}
+
+				if (debug) {
+					System.out.println(
+						JenkinsResultsParserUtil.combine(
+							"Found ",
+							String.valueOf(failedDownstreamBuilds.size()),
+							" matching failed builds.\n", toString(),
+							" has PASSED."));
+				}
+
 				return Collections.emptyList();
 			}
-
-			List<Build> failedDownstreamBuilds = new ArrayList<>(
-				downstreamBuilds.size());
-
-			int failLimit = 0;
-
-			if (maxFailPercentage != -1) {
-				failLimit = (int)(maxFailPercentage * downstreamBuilds.size());
-
-				if (failLimit > 0) {
-					failLimit--;
+			finally {
+				if (debug) {
+					System.out.println(
+						JenkinsResultsParserUtil.combine(
+							"Finished evaluating rule ", toString(), "\n"));
 				}
 			}
-			else {
-				failLimit = maxFailCount;
-			}
-
-			for (Build downstreamBuild : downstreamBuilds) {
-				String status = downstreamBuild.getStatus();
-
-				if (!status.equals("completed")) {
-					continue;
-				}
-
-				String result = downstreamBuild.getResult();
-
-				if ((result != null) && !result.equals("SUCCESS")) {
-					failedDownstreamBuilds.add(downstreamBuild);
-				}
-			}
-
-			if (failedDownstreamBuilds.size() > failLimit) {
-				return failedDownstreamBuilds;
-			}
-
-			return Collections.emptyList();
 		}
 
 		@Override

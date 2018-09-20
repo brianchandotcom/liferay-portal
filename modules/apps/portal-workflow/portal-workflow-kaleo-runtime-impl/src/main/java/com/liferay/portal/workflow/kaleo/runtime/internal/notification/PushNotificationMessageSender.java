@@ -100,8 +100,7 @@ public class PushNotificationMessageSender
 
 		JSONArray jsonArray = jsonFactory.createJSONArray();
 
-		Stream<NotificationRecipient> stream =
-			notificationRecipients.stream();
+		Stream<NotificationRecipient> stream = notificationRecipients.stream();
 
 		stream.filter(
 			notificationRecipient -> notificationRecipient.getUserId() > 0
@@ -123,8 +122,9 @@ public class PushNotificationMessageSender
 
 		List<NotificationRecipient> notificationRecipients = new ArrayList<>();
 
-		Collection<Set<NotificationRecipient>> notificationRecipientsCollection =
-			notificationRecipientsMap.values();
+		Collection<Set<NotificationRecipient>>
+			notificationRecipientsCollection =
+				notificationRecipientsMap.values();
 
 		Iterator<Set<NotificationRecipient>> iterator =
 			notificationRecipientsCollection.iterator();

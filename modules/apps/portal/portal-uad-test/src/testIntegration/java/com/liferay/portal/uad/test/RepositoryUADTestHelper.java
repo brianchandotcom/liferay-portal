@@ -24,37 +24,25 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.repository.liferayrepository.LiferayRepository;
 
-import java.util.List;
-
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Brian Wing Shun Chan
  */
-@Component(immediate = true, service = RepositoryUADTestHelper.class)
 public class RepositoryUADTestHelper {
 
-	public Repository addRepository(long userId) throws Exception {
-		long classNameId = _portal.getClassNameId(
+	public static Repository addRepository(
+			Portal portal, RepositoryLocalService repositoryLocalService,
+			long userId)
+		throws Exception {
+
+		long classNameId = portal.getClassNameId(
 			LiferayRepository.class.getName());
 
-		return _repositoryLocalService.addRepository(
+		return repositoryLocalService.addRepository(
 			userId, TestPropsValues.getGroupId(), classNameId,
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(), new UnicodeProperties(), true,
 			ServiceContextTestUtil.getServiceContext());
 	}
-
-	public void cleanUpDependencies(List<Repository> repositories)
-		throws Exception {
-	}
-
-	@Reference
-	private Portal _portal;
-
-	@Reference
-	private RepositoryLocalService _repositoryLocalService;
 
 }

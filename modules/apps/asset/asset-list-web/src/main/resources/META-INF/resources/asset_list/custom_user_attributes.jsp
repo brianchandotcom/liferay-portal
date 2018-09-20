@@ -42,7 +42,7 @@ String customUserAttributes = GetterUtil.getString(properties.getProperty("custo
 		</h3>
 
 		<liferay-frontend:fieldset-group>
-			<aui:input helpMessage='<%= LanguageUtil.get(resourceBundle, "custom-user-attributes-help") %>' label='<%= LanguageUtil.get(resourceBundle, "displayed-assets-must-match-these-custom-user-profile-attributes") %>' name="TypeSettingsProperties--customUserAttributes--" value="<%= customUserAttributes %>" />
+			<aui:input helpMessage="custom-user-attributes-help" label="displayed-assets-must-match-these-custom-user-profile-attributes" name="TypeSettingsProperties--customUserAttributes--" value="<%= customUserAttributes %>" />
 		</liferay-frontend:fieldset-group>
 	</liferay-frontend:edit-form-body>
 

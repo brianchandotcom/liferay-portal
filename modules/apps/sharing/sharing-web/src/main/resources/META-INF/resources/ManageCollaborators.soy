@@ -28,7 +28,7 @@
 			<div class="modal-item-last">
 				<div class="btn-group">
 					<div class="btn-group-item">
-						<button class="btn btn-link" data-onclick="{$_handleCancelButtonClick}" type="button">{msg desc=""}cancel{/msg}</button>
+						<button class="btn btn-default" data-onclick="{$_handleCancelButtonClick}" type="button">{msg desc=""}cancel{/msg}</button>
 					</div>
 
 					<div class="btn-group-item">
@@ -49,7 +49,6 @@
 			<div class="autofit-col">
 				{call ClaySticker.render}
 					{param size: 'xl' /}
-					{param label: 'TT' /}
 					{param imageSrc: $user.imageSrc /}
 					{param shape: 'circle' /}
 				{/call}
@@ -59,7 +58,7 @@
 				<h4>{$user.name}</h4>
 
 				{call ClaySelect.render}
-					{param id: 'regularSelectElement' /}
+					{param id: 'sharingEntryPermission' + $user.id /}
 					{param options: $user.sharingEntryPermissionDisplaySelectOptions /}
 				{/call}
 
@@ -67,7 +66,7 @@
 
 			<div class="autofit-col">
 				<button
-					class="btn btn-link"
+					class="btn"
 					data-collaborator-id="{$user.id}"
 					data-onclick="{$_handleDeleteCollaborator}"
 				>

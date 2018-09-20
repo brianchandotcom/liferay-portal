@@ -120,18 +120,17 @@ public class EmailNotificationSender
 		mailMessage.setCC(
 			getInternetAddresses(
 				notificationRecipients.get(NotificationReceptionType.CC)));
-
 		mailMessage.setBCC(
 			getInternetAddresses(
 				notificationRecipients.get(NotificationReceptionType.BCC)));
 
 		List<InternetAddress> internetAddresses = new ArrayList<>();
 
-		Collection<Set<NotificationRecipient>> notificationRecipientSetCollection =
+		Collection<Set<NotificationRecipient>> notificationRecipientsCollection =
 			notificationRecipients.values();
 
 		Iterator<Set<NotificationRecipient>> iterator =
-			notificationRecipientSetCollection.iterator();
+			notificationRecipientsCollection.iterator();
 
 		for (NotificationRecipient notificationRecipient : iterator.next()) {
 			if (UserNotificationManagerUtil.isDeliver(

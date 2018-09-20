@@ -96,14 +96,14 @@ public class PushNotificationMessageSender
 	}
 
 	protected JSONArray createUserIdsRecipientsJSONArray(
-		List<NotificationRecipient> notificationRecipientList) {
+		List<NotificationRecipient> notificationRecipients) {
 
 		JSONArray jsonArray = jsonFactory.createJSONArray();
 
-		Stream<NotificationRecipient> notificationRecipientStream =
-			notificationRecipientList.stream();
+		Stream<NotificationRecipient> stream =
+			notificationRecipients.stream();
 
-		notificationRecipientStream.filter(
+		stream.filter(
 			notificationRecipient -> notificationRecipient.getUserId() > 0
 		).forEach(
 			notificationRecipient ->
@@ -116,18 +116,18 @@ public class PushNotificationMessageSender
 	@Override
 	protected void doSendNotification(
 			Map<NotificationReceptionType, Set<NotificationRecipient>>
-				notificationRecipients,
+				notificationRecipientsMap,
 			String defaultSubject, String notificationMessage,
 			ExecutionContext executionContext)
 		throws Exception {
 
-		List<NotificationRecipient> recipientList = new ArrayList<>();
+		List<NotificationRecipient> notificationRecipients = new ArrayList<>();
 
-		Collection<Set<NotificationRecipient>> notificationRecipientSetCollection =
-			notificationRecipients.values();
+		Collection<Set<NotificationRecipient>> notificationRecipientsCollection =
+			notificationRecipientsMap.values();
 
 		Iterator<Set<NotificationRecipient>> iterator =
-			notificationRecipientSetCollection.iterator();
+			notificationRecipientsCollection.iterator();
 
 		for (NotificationRecipient notificationRecipient : iterator.next()) {
 			if (UserNotificationManagerUtil.isDeliver(
@@ -137,12 +137,12 @@ public class PushNotificationMessageSender
 						NOTIFICATION_TYPE_MY_WORKFLOW_TASKS,
 					UserNotificationDeliveryConstants.TYPE_PUSH)) {
 
-				recipientList.add(notificationRecipient);
+				notificationRecipients.add(notificationRecipient);
 			}
 		}
 
 		Message message = createMessage(
-			recipientList, notificationMessage, executionContext);
+			notificationRecipients, notificationMessage, executionContext);
 
 		messageBus.sendMessage(
 			PushNotificationsDestinationNames.PUSH_NOTIFICATION, message);

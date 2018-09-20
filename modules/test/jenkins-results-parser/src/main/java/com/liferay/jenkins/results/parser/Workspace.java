@@ -19,9 +19,9 @@ package com.liferay.jenkins.results.parser;
  */
 public interface Workspace {
 
-	public void addJenkinsWorkbench(String jenkinsGitHubURL);
+	public void addJenkinsWorkspaceGitRepository(String jenkinsGitHubURL);
 
-	public JenkinsWorkbench getJenkinsWorkbench();
+	public JenkinsWorkspaceGitRepository getJenkinsWorkspaceGitRepository();
 
 	public void setUp();
 

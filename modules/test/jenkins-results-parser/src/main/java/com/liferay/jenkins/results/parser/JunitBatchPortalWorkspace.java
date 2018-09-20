@@ -30,24 +30,24 @@ public class JunitBatchPortalWorkspace extends BatchPortalWorkspace {
 	}
 
 	private void _setPortalBuildProperties() {
-		OtherPortalWorkbench otherPortalWorkbench = getOtherPortalWorkbench();
+		OtherPortalWorkspaceGitRepository otherPortalWorkspaceGitRepository =
+			getOtherPortalWorkspaceGitRepository();
 
-		if (otherPortalWorkbench == null) {
+		if (otherPortalWorkspaceGitRepository == null) {
 			return;
 		}
 
 		Properties properties = new Properties();
 
-		LocalGitRepository otherPortalLocalGitRepository =
-			otherPortalWorkbench.getLocalGitRepository();
-
 		properties.put(
 			"release.versions.test.other.dir",
-			String.valueOf(otherPortalLocalGitRepository.getDirectory()));
+			String.valueOf(otherPortalWorkspaceGitRepository.getDirectory()));
 
-		PortalWorkbench primaryPortalWorkbench = getPrimaryPortalWorkbench();
+		PortalWorkspaceGitRepository primaryPortalWorkspaceGitRepository =
+			getPrimaryPortalWorkspaceGitRepository();
 
-		primaryPortalWorkbench.setPortalBuildProperties(properties);
+		primaryPortalWorkspaceGitRepository.setPortalBuildProperties(
+			properties);
 	}
 
 }

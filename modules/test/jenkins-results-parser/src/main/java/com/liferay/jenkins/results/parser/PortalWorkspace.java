@@ -35,93 +35,106 @@ public abstract class PortalWorkspace extends BaseWorkspace {
 	protected PortalWorkspace(
 		String portalGitHubURL, String portalUpstreamBranchName) {
 
-		Workbench workbench = WorkbenchFactory.newWorkbench(
-			portalGitHubURL, portalUpstreamBranchName);
+		WorkspaceGitRepository workspaceGitRepository =
+			GitRepositoryFactory.newWorkspaceGitRepository(
+				portalGitHubURL, portalUpstreamBranchName);
 
-		if (!(workbench instanceof PortalWorkbench)) {
-			throw new RuntimeException("Invalid workbench");
+		if (!(workspaceGitRepository instanceof
+				PortalWorkspaceGitRepository)) {
+
+			throw new RuntimeException("Invalid build runner Git repository");
 		}
 
-		_primaryPortalWorkbench = (PortalWorkbench)workbench;
+		_primaryPortalWorkspaceGitRepository =
+			(PortalWorkspaceGitRepository)workspaceGitRepository;
 
-		_primaryPortalWorkbench.setUp();
+		_primaryPortalWorkspaceGitRepository.setUp();
 
 		if (!portalUpstreamBranchName.startsWith("ee-")) {
-			_companionPortalWorkbench =
-				WorkbenchFactory.newCompanionPortalWorkbench(
-					_primaryPortalWorkbench);
-			_otherPortalWorkbench = WorkbenchFactory.newOtherPortalWorkbench(
-				_primaryPortalWorkbench);
+			_companionPortalWorkspaceGitRepository =
+				GitRepositoryFactory.newCompanionPortalWorkspaceGitRepository(
+					_primaryPortalWorkspaceGitRepository);
+			_otherPortalWorkspaceGitRepository =
+				GitRepositoryFactory.newOtherPortalWorkspaceGitRepository(
+					_primaryPortalWorkspaceGitRepository);
 		}
 		else {
-			_companionPortalWorkbench = null;
-			_otherPortalWorkbench = null;
+			_companionPortalWorkspaceGitRepository = null;
+			_otherPortalWorkspaceGitRepository = null;
 		}
 
-		_pluginsWorkbench = WorkbenchFactory.newPluginsWorkbench(
-			_primaryPortalWorkbench);
+		_pluginsWorkspaceGitRepository =
+			GitRepositoryFactory.newPluginsWorkspaceGitRepository(
+				_primaryPortalWorkspaceGitRepository);
 	}
 
-	protected OtherPortalWorkbench getOtherPortalWorkbench() {
-		return _otherPortalWorkbench;
+	protected OtherPortalWorkspaceGitRepository
+		getOtherPortalWorkspaceGitRepository() {
+
+		return _otherPortalWorkspaceGitRepository;
 	}
 
-	protected PortalWorkbench getPrimaryPortalWorkbench() {
-		return _primaryPortalWorkbench;
+	protected PortalWorkspaceGitRepository
+		getPrimaryPortalWorkspaceGitRepository() {
+
+		return _primaryPortalWorkspaceGitRepository;
 	}
 
 	@Override
-	protected void setUpWorkbenches() {
-		setUpJenkinsWorkbench();
+	protected void setUpWorkspaceGitRepositories() {
+		setUpJenkinsWorkspaceGitRepository();
 
-		_primaryPortalWorkbench.setUp();
+		_primaryPortalWorkspaceGitRepository.setUp();
 
-		if (_companionPortalWorkbench != null) {
-			_companionPortalWorkbench.setUp();
+		if (_companionPortalWorkspaceGitRepository != null) {
+			_companionPortalWorkspaceGitRepository.setUp();
 		}
 
-		if (_otherPortalWorkbench != null) {
-			_otherPortalWorkbench.setUp();
+		if (_otherPortalWorkspaceGitRepository != null) {
+			_otherPortalWorkspaceGitRepository.setUp();
 		}
 
-		_pluginsWorkbench.setUp();
+		_pluginsWorkspaceGitRepository.setUp();
 	}
 
-	protected void setWorkbenchJobProperties(Job job) {
-		_primaryPortalWorkbench.setPortalJobProperties(job);
-	}
-
-	@Override
-	protected void tearDownWorkbenches() {
-		tearDownJenkinsWorkbench();
-
-		_primaryPortalWorkbench.tearDown();
-
-		if (_companionPortalWorkbench != null) {
-			_companionPortalWorkbench.tearDown();
-		}
-
-		if (_otherPortalWorkbench != null) {
-			_otherPortalWorkbench.tearDown();
-		}
-
-		_pluginsWorkbench.tearDown();
+	protected void setWorkspaceGitRepositoryJobProperties(Job job) {
+		_primaryPortalWorkspaceGitRepository.setPortalJobProperties(job);
 	}
 
 	@Override
-	protected void writeWorkbenchPropertiesFiles() {
-		_primaryPortalWorkbench.writePropertiesFiles();
+	protected void tearDownWorkspaceGitRepositories() {
+		tearDownJenkinsWorkspaceGitRepository();
 
-		_pluginsWorkbench.writePropertiesFiles();
+		_primaryPortalWorkspaceGitRepository.tearDown();
+
+		if (_companionPortalWorkspaceGitRepository != null) {
+			_companionPortalWorkspaceGitRepository.tearDown();
+		}
+
+		if (_otherPortalWorkspaceGitRepository != null) {
+			_otherPortalWorkspaceGitRepository.tearDown();
+		}
+
+		_pluginsWorkspaceGitRepository.tearDown();
+	}
+
+	@Override
+	protected void writeWorkspaceGitRepositoryPropertiesFiles() {
+		_primaryPortalWorkspaceGitRepository.writePropertiesFiles();
+
+		_pluginsWorkspaceGitRepository.writePropertiesFiles();
 	}
 
 	private static final Pattern _portalGitHubURLPattern = Pattern.compile(
 		"https://github.com/[^/]+/(?<gitRepositoryName>" +
 			"liferay-portal(-ee)?)/.*");
 
-	private final CompanionPortalWorkbench _companionPortalWorkbench;
-	private final OtherPortalWorkbench _otherPortalWorkbench;
-	private final PluginsWorkbench _pluginsWorkbench;
-	private final PortalWorkbench _primaryPortalWorkbench;
+	private final CompanionPortalWorkspaceGitRepository
+		_companionPortalWorkspaceGitRepository;
+	private final OtherPortalWorkspaceGitRepository
+		_otherPortalWorkspaceGitRepository;
+	private final PluginsWorkspaceGitRepository _pluginsWorkspaceGitRepository;
+	private final PortalWorkspaceGitRepository
+		_primaryPortalWorkspaceGitRepository;
 
 }

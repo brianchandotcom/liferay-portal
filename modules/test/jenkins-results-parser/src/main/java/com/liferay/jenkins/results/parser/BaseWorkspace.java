@@ -20,7 +20,7 @@ package com.liferay.jenkins.results.parser;
 public abstract class BaseWorkspace implements Workspace {
 
 	@Override
-	public void addJenkinsWorkbench(String jenkinsGitHubURL) {
+	public void addJenkinsWorkspaceGitRepository(String jenkinsGitHubURL) {
 		if (!JenkinsResultsParserUtil.isCINode()) {
 			return;
 		}
@@ -29,19 +29,25 @@ public abstract class BaseWorkspace implements Workspace {
 			return;
 		}
 
-		Workbench workbench = WorkbenchFactory.newWorkbench(
-			jenkinsGitHubURL, "master");
+		WorkspaceGitRepository workspaceGitRepository =
+			GitRepositoryFactory.newWorkspaceGitRepository(
+				jenkinsGitHubURL, "master");
 
-		if (!(workbench instanceof JenkinsWorkbench)) {
-			throw new RuntimeException("Invalid workbench " + workbench);
+		if (!(workspaceGitRepository instanceof
+				JenkinsWorkspaceGitRepository)) {
+
+			throw new RuntimeException(
+				"Invalid build runner Git repository " +
+					workspaceGitRepository);
 		}
 
-		_jenkinsWorkbench = (JenkinsWorkbench)workbench;
+		_jenkinsWorkspaceGitRepository =
+			(JenkinsWorkspaceGitRepository)workspaceGitRepository;
 	}
 
 	@Override
-	public JenkinsWorkbench getJenkinsWorkbench() {
-		return _jenkinsWorkbench;
+	public JenkinsWorkspaceGitRepository getJenkinsWorkspaceGitRepository() {
+		return _jenkinsWorkspaceGitRepository;
 	}
 
 	@Override
@@ -51,44 +57,44 @@ public abstract class BaseWorkspace implements Workspace {
 
 	@Override
 	public void setUp(Job job) {
-		setUpWorkbenches();
+		setUpWorkspaceGitRepositories();
 
 		if (job != null) {
-			setWorkbenchJobProperties(job);
+			setWorkspaceGitRepositoryJobProperties(job);
 		}
 
-		writeWorkbenchPropertiesFiles();
+		writeWorkspaceGitRepositoryPropertiesFiles();
 	}
 
 	@Override
 	public void tearDown() {
-		tearDownWorkbenches();
+		tearDownWorkspaceGitRepositories();
 	}
 
-	protected void setUpJenkinsWorkbench() {
-		if (_jenkinsWorkbench != null) {
-			_jenkinsWorkbench.setUp();
+	protected void setUpJenkinsWorkspaceGitRepository() {
+		if (_jenkinsWorkspaceGitRepository != null) {
+			_jenkinsWorkspaceGitRepository.setUp();
 		}
 	}
 
-	protected void setUpWorkbenches() {
-		setUpJenkinsWorkbench();
+	protected void setUpWorkspaceGitRepositories() {
+		setUpJenkinsWorkspaceGitRepository();
 	}
 
-	protected abstract void setWorkbenchJobProperties(Job job);
+	protected abstract void setWorkspaceGitRepositoryJobProperties(Job job);
 
-	protected void tearDownJenkinsWorkbench() {
-		if (_jenkinsWorkbench != null) {
-			_jenkinsWorkbench.tearDown();
+	protected void tearDownJenkinsWorkspaceGitRepository() {
+		if (_jenkinsWorkspaceGitRepository != null) {
+			_jenkinsWorkspaceGitRepository.tearDown();
 		}
 	}
 
-	protected void tearDownWorkbenches() {
-		tearDownJenkinsWorkbench();
+	protected void tearDownWorkspaceGitRepositories() {
+		tearDownJenkinsWorkspaceGitRepository();
 	}
 
-	protected abstract void writeWorkbenchPropertiesFiles();
+	protected abstract void writeWorkspaceGitRepositoryPropertiesFiles();
 
-	private JenkinsWorkbench _jenkinsWorkbench;
+	private JenkinsWorkspaceGitRepository _jenkinsWorkspaceGitRepository;
 
 }

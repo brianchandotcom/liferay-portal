@@ -1,4 +1,3 @@
-import 'frontend-js-web/liferay/compat/modal/Modal.es';
 import 'clay-sticker';
 import 'clay-select';
 import Component from 'metal-component';
@@ -13,17 +12,7 @@ class ManageCollaborators extends Component {
 		this._deletedCollaborators = [];
 	}
 
-	_handleManageCollaboratorsButtonClick() {
-		this._collaboratorsDialogOpen = true;
-	}
-
-	_handleCancelButtonClick() {
-		this._collaboratorsDialogOpen = false;
-	}
-
 	_handleSaveButtonClick() {
-		this._collaboratorsDialogOpen = false;
-
 		console.log('fetch: '+ this.uri);
 
 		fetch(
@@ -61,15 +50,6 @@ class ManageCollaborators extends Component {
 }
 
 ManageCollaborators.STATE = {
-
-	/**
-	 * Flag to indicate if dialog should be open.
-	 * @default false
-	 * @instance
-	 * @memberof ManageCollaborators
-	 * @type {Boolean}
-	 */
-	_collaboratorsDialogOpen: Config.bool().internal().value(false),
 
 	/**
 	 * List of collaborators

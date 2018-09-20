@@ -23,7 +23,12 @@ import org.json.JSONObject;
  */
 public abstract class BaseGitRepository implements GitRepository {
 
-	public BaseGitRepository(String name) {
+	@Override
+	public String getName() {
+		return getFromJSONObjectString("name");
+	}
+
+	protected BaseGitRepository(String name) {
 		if ((name == null) || name.isEmpty()) {
 			throw new IllegalArgumentException("Name is null");
 		}
@@ -31,11 +36,6 @@ public abstract class BaseGitRepository implements GitRepository {
 		putIntoJSONObject("name", name);
 
 		validateJSONObject(_REQUIRED_KEYS);
-	}
-
-	@Override
-	public String getName() {
-		return getFromJSONObjectString("name");
 	}
 
 	protected Object getFromJSONObject(String key) {

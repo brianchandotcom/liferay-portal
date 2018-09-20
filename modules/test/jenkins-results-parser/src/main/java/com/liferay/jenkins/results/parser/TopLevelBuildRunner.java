@@ -185,7 +185,7 @@ public abstract class TopLevelBuildRunner<T extends TopLevelBuildData>
 
 	private String _getJenkinsGitHubURL() {
 		if (JenkinsResultsParserUtil.isCINode()) {
-			JenkinsWorkspaceGitRepository jenkinsWorkspaceGitRepository =
+			WorkspaceGitRepository jenkinsWorkspaceGitRepository =
 				workspace.getJenkinsWorkspaceGitRepository();
 
 			String gitHubDevBranchName =

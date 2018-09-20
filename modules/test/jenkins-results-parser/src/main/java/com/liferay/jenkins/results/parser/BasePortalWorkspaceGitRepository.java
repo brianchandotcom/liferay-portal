@@ -57,10 +57,12 @@ public abstract class BasePortalWorkspaceGitRepository
 		setPortalBuildProperties(properties);
 	}
 
+	@Override
 	public void setPortalSQLProperties(Properties properties) {
 		setProperties(_FILE_PATH_SQL_PROPERTIES, properties);
 	}
 
+	@Override
 	public void setPortalTestProperties(Properties properties) {
 		setProperties(_FILE_PATH_TEST_PROPERTIES, properties);
 	}

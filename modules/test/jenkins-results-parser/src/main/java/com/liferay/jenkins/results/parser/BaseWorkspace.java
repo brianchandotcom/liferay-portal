@@ -29,24 +29,13 @@ public abstract class BaseWorkspace implements Workspace {
 			return;
 		}
 
-		WorkspaceGitRepository workspaceGitRepository =
+		_jenkinsWorkspaceGitRepository =
 			GitRepositoryFactory.newWorkspaceGitRepository(
 				jenkinsGitHubURL, "master");
-
-		if (!(workspaceGitRepository instanceof
-				JenkinsWorkspaceGitRepository)) {
-
-			throw new RuntimeException(
-				"Invalid build runner Git repository " +
-					workspaceGitRepository);
-		}
-
-		_jenkinsWorkspaceGitRepository =
-			(JenkinsWorkspaceGitRepository)workspaceGitRepository;
 	}
 
 	@Override
-	public JenkinsWorkspaceGitRepository getJenkinsWorkspaceGitRepository() {
+	public WorkspaceGitRepository getJenkinsWorkspaceGitRepository() {
 		return _jenkinsWorkspaceGitRepository;
 	}
 
@@ -95,6 +84,6 @@ public abstract class BaseWorkspace implements Workspace {
 
 	protected abstract void writeWorkspaceGitRepositoryPropertiesFiles();
 
-	private JenkinsWorkspaceGitRepository _jenkinsWorkspaceGitRepository;
+	private WorkspaceGitRepository _jenkinsWorkspaceGitRepository;
 
 }

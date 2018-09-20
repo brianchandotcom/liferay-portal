@@ -115,11 +115,7 @@ public class GitRepositoryFactory {
 
 		WorkspaceGitRepository workspaceGitRepository;
 
-		if (gitHubURL.contains("/liferay-jenkins-ee")) {
-			workspaceGitRepository = new JenkinsWorkspaceGitRepository(
-				gitHubURL, upstreamBranchName, branchSHA);
-		}
-		else if (gitHubURL.contains("/liferay-plugins")) {
+		if (gitHubURL.contains("/liferay-plugins")) {
 			workspaceGitRepository = new PluginsWorkspaceGitRepository(
 				gitHubURL, upstreamBranchName, branchSHA);
 		}
@@ -128,7 +124,8 @@ public class GitRepositoryFactory {
 				gitHubURL, upstreamBranchName, branchSHA);
 		}
 		else {
-			throw new RuntimeException("Invalid GitHub URL " + gitHubURL);
+			workspaceGitRepository = new DefaultWorkspaceGitRepository(
+				gitHubURL, upstreamBranchName, branchSHA);
 		}
 
 		_workspaceGitRepository.put(gitHubURL, workspaceGitRepository);

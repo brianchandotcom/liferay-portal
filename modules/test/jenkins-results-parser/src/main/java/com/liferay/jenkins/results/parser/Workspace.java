@@ -21,7 +21,7 @@ public interface Workspace {
 
 	public void addJenkinsWorkspaceGitRepository(String jenkinsGitHubURL);
 
-	public JenkinsWorkspaceGitRepository getJenkinsWorkspaceGitRepository();
+	public WorkspaceGitRepository getJenkinsWorkspaceGitRepository();
 
 	public void setUp();
 

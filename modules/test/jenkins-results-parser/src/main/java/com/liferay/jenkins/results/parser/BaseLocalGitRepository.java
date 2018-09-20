@@ -74,6 +74,13 @@ public abstract class BaseLocalGitRepository
 					" at ", directory.toString()));
 		}
 
+		try {
+			putIntoJSONObject("directory", directory.getCanonicalPath());
+		}
+		catch (IOException ioe) {
+			throw new RuntimeException(ioe);
+		}
+
 		File dotGitFile = new File(directory, ".git");
 
 		if (!dotGitFile.exists()) {
@@ -84,13 +91,6 @@ public abstract class BaseLocalGitRepository
 		_gitWorkingDirectory =
 			GitWorkingDirectoryFactory.newGitWorkingDirectory(
 				upstreamBranchName, directory, name);
-
-		try {
-			putIntoJSONObject("directory", directory.getCanonicalPath());
-		}
-		catch (IOException ioe) {
-			throw new RuntimeException(ioe);
-		}
 
 		validateJSONObject(_REQUIRED_KEYS);
 	}

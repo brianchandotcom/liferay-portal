@@ -489,6 +489,8 @@ information.
 	</macrodef>
 
 	<macrodef name="deploy-properties">
+		<attribute default="${app.server.classes.portal.dir}" name="deploy.properties.dest" />
+
 		<sequential>
 			<if>
 				<and>
@@ -506,7 +508,7 @@ information.
 				<else>
 					<copy
 						overwrite="true"
-						todir="${app.server.classes.portal.dir}"
+						todir="@{deploy.properties.dest}"
 					>
 						<fileset
 							dir="${project.dir}/portal-impl/src"

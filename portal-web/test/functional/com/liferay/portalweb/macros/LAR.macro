@@ -881,8 +881,10 @@
 
 		<execute macro="Portlet#addPG">
 			<var name="i" value="${i}" />
-			<var name="portletName" value="User Segment Content List" />
+			<var name="portletName" value="Asset Publisher" />
 		</execute>
+
+		<execute macro="AssetPublisherPortlet#enableUserSegementFilter" />
 	</command>
 
 	<command name="viewExportTemplateCP">

@@ -29,7 +29,7 @@ import org.json.JSONObject;
 /**
  * @author Peter Yoo
  */
-public class GitHubRemoteGitRepository extends RemoteGitRepository {
+public class GitHubRemoteGitRepository extends BaseRemoteGitRepository {
 
 	public boolean addLabel(String color, String description, String name) {
 		if (hasLabel(name)) {

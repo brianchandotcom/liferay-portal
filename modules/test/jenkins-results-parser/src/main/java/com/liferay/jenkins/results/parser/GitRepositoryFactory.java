@@ -31,24 +31,8 @@ public class GitRepositoryFactory {
 			return _localGitRepositories.get(key);
 		}
 
-		LocalGitRepository localGitRepository = null;
-
-		if (gitRepositoryName.startsWith("com-liferay-")) {
-			localGitRepository = new GitSubrepositoryLocalGitRepository(
-				gitRepositoryName, upstreamBranchName);
-		}
-		else if (gitRepositoryName.startsWith("liferay-plugins")) {
-			localGitRepository = new PluginsLocalGitRepository(
-				gitRepositoryName, upstreamBranchName);
-		}
-		else if (gitRepositoryName.startsWith("liferay-portal")) {
-			localGitRepository = new PortalLocalGitRepository(
-				gitRepositoryName, upstreamBranchName);
-		}
-		else {
-			localGitRepository = new LocalGitRepository(
-				gitRepositoryName, upstreamBranchName);
-		}
+		LocalGitRepository localGitRepository = new DefaultLocalGitRepository(
+			gitRepositoryName, upstreamBranchName);
 
 		_localGitRepositories.put(key, localGitRepository);
 
@@ -64,7 +48,7 @@ public class GitRepositoryFactory {
 			return new GitHubRemoteGitRepository(gitRemote);
 		}
 
-		return new RemoteGitRepository(gitRemote);
+		return new DefaultRemoteGitRepository(gitRemote);
 	}
 
 	public static RemoteGitRepository getRemoteGitRepository(
@@ -74,7 +58,8 @@ public class GitRepositoryFactory {
 			return new GitHubRemoteGitRepository(gitRepositoryName, username);
 		}
 
-		return new RemoteGitRepository(hostname, gitRepositoryName, username);
+		return new DefaultRemoteGitRepository(
+			hostname, gitRepositoryName, username);
 	}
 
 	private static final Map<String, LocalGitRepository> _localGitRepositories =

@@ -17,46 +17,12 @@ package com.liferay.jenkins.results.parser;
 /**
  * @author Peter Yoo
  */
-public class RemoteGitRepository extends BaseGitRepository {
+public interface RemoteGitRepository extends GitRepository {
 
-	public String getHostname() {
-		return getFromJSONObjectString("hostname");
-	}
+	public String getHostname();
 
-	public String getRemoteURL() {
-		return JenkinsResultsParserUtil.combine(
-			"git@", getHostname(), ":", getUsername(), "/", getName());
-	}
+	public String getRemoteURL();
 
-	public String getUsername() {
-		return getFromJSONObjectString("username");
-	}
-
-	protected RemoteGitRepository(GitRemote gitRemote) {
-		this(
-			gitRemote.getHostname(), gitRemote.getGitRepositoryName(),
-			gitRemote.getUsername());
-	}
-
-	protected RemoteGitRepository(
-		String hostname, String gitRepositoryName, String username) {
-
-		super(gitRepositoryName);
-
-		if ((hostname == null) || hostname.isEmpty()) {
-			throw new IllegalArgumentException("Hostname is null");
-		}
-
-		if ((username == null) || username.isEmpty()) {
-			throw new IllegalArgumentException("Username is null");
-		}
-
-		putIntoJSONObject("hostname", hostname);
-		putIntoJSONObject("username", username);
-
-		validateJSONObject(_REQUIRED_KEYS);
-	}
-
-	private static final String[] _REQUIRED_KEYS = {"hostname", "username"};
+	public String getUsername();
 
 }

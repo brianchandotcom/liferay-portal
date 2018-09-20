@@ -14,17 +14,15 @@
 
 package com.liferay.jenkins.results.parser;
 
-import java.io.File;
-
 /**
- * @author Peter Yoo
+ * @author Michael Hashimoto
  */
-public interface LocalGitRepository extends GitRepository {
+public class DefaultLocalGitRepository extends BaseLocalGitRepository {
 
-	public File getDirectory();
+	protected DefaultLocalGitRepository(
+		String name, String upstreamBranchName) {
 
-	public GitWorkingDirectory getGitWorkingDirectory();
-
-	public String getUpstreamBranchName();
+		super(name, upstreamBranchName);
+	}
 
 }

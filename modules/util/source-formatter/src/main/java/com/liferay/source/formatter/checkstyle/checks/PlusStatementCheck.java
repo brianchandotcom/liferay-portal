@@ -40,8 +40,6 @@ public class PlusStatementCheck extends StringConcatenationCheck {
 	}
 
 	private void _checkPlusOperator(DetailAST detailAST) {
-		_checkTabbing(detailAST);
-
 		if (detailAST.getChildCount() != 2) {
 			return;
 		}
@@ -116,46 +114,6 @@ public class PlusStatementCheck extends StringConcatenationCheck {
 			log(
 				lastChildAST, MSG_MOVE_LITERAL_STRING,
 				literalString2.substring(0, pos + 1));
-		}
-	}
-
-	private void _checkTabbing(DetailAST detailAST) {
-		DetailAST afterPlusAST = detailAST.getLastChild();
-
-		if (afterPlusAST.getType() == TokenTypes.RPAREN) {
-			while (afterPlusAST.getType() != TokenTypes.LPAREN) {
-				afterPlusAST = afterPlusAST.getPreviousSibling();
-			}
-		}
-
-		int afterPlusLineNo = DetailASTUtil.getStartLine(afterPlusAST);
-
-		if (afterPlusLineNo == detailAST.getLineNo()) {
-			return;
-		}
-
-		String line1 = getLine(detailAST.getLineNo() - 1);
-		String line2 = getLine(afterPlusLineNo - 1);
-
-		int tabCount1 = _getLeadingTabCount(line1);
-		int tabCount2 = _getLeadingTabCount(line2);
-
-		if (tabCount1 == tabCount2) {
-			DetailAST firstChildAST = detailAST.getFirstChild();
-
-			if (firstChildAST != null) {
-				DetailAST lastChildAST = firstChildAST.getLastChild();
-
-				if ((lastChildAST != null) &&
-					(lastChildAST.getType() == TokenTypes.METHOD_CALL)) {
-
-					return;
-				}
-			}
-		}
-
-		if ((tabCount1 + 1) != tabCount2) {
-			log(afterPlusLineNo, _MSG_INCORRECT_TABBING, tabCount1 + 1);
 		}
 	}
 
@@ -235,7 +193,5 @@ public class PlusStatementCheck extends StringConcatenationCheck {
 
 		return false;
 	}
-
-	private static final String _MSG_INCORRECT_TABBING = "tabbing.incorrect";
 
 }

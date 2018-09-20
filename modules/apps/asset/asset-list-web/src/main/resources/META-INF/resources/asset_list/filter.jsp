@@ -27,18 +27,10 @@
 	<aui:input name="assetListEntryId" type="hidden" value="<%= assetListDisplayContext.getAssetListEntryId() %>" />
 
 	<liferay-frontend:edit-form-body>
-		<h3 class="sheet-subtitle">
-			<span class="autofit-padded-no-gutters autofit-row">
-				<span class="autofit-col autofit-col-expand">
-					<span class="heading-text">
-						<liferay-ui:message key="filter" />
-					</span>
-				</span>
-			</span>
-		</h3>
-
 		<liferay-frontend:fieldset-group>
-			<liferay-frontend:fieldset>
+			<liferay-frontend:fieldset
+				label="filter"
+			>
 				<liferay-asset:asset-tags-error />
 
 				<%

@@ -32,18 +32,10 @@
 		<liferay-ui:error exception="<%= AssetListEntryTitleException.class %>" message="please-enter-a-valid-title" />
 		<liferay-ui:error exception="<%= DuplicateAssetListEntryTitleException.class %>" message="an-asset-list-with-that-title-already-exists" />
 
-		<h3 class="sheet-subtitle">
-			<span class="autofit-padded-no-gutters autofit-row">
-				<span class="autofit-col autofit-col-expand">
-					<span class="heading-text">
-						<liferay-ui:message key="details" />
-					</span>
-				</span>
-			</span>
-		</h3>
-
 		<liferay-frontend:fieldset-group>
-			<liferay-frontend:fieldset>
+			<liferay-frontend:fieldset
+				label="details"
+			>
 				<aui:input name="title" placeholder="title" />
 			</liferay-frontend:fieldset>
 		</liferay-frontend:fieldset-group>

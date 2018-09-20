@@ -355,13 +355,17 @@ public class AutoCloseUtil {
 				System.out.println(
 					JenkinsResultsParserUtil.combine(
 						"Finding auto-close rules for ",
-							gitRepositoryBranchAutoClosePropertyName, "."));
+						gitRepositoryBranchAutoClosePropertyName, "."));
 			}
 
 			String[] autoCloseRuleDataArray = StringUtils.split(
 				testBatchNamesAutoClose, ",");
 
 			for (String autoCloseRuleData : autoCloseRuleDataArray) {
+				if (autoCloseRuleData.startsWith("#")) {
+					continue;
+				}
+
 				AutoCloseRule newAutoCloseRule = new AutoCloseRule(
 					autoCloseRuleData);
 

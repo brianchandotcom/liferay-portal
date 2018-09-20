@@ -258,7 +258,6 @@ class Sidebar extends Component {
 			this.refs.container,
 			transitionEnd,
 			() => {
-				console.log('open on prev');
 				this.emit('fieldBlurred');
 				this.open();
 			}

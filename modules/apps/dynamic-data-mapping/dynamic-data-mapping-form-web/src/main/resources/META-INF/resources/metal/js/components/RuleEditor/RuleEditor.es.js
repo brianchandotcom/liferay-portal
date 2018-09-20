@@ -189,10 +189,6 @@ class RuleEditor extends Component {
 		}
 	}
 
-	rendered() {
-		console.log(this.operatorsList);
-	}
-
 	_firstOperandListValueFn() {
 		const pages = this.pages;
 		const value = [];

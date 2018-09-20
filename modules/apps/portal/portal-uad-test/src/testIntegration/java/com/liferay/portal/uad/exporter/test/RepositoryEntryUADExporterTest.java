@@ -15,45 +15,50 @@
 package com.liferay.portal.uad.exporter.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-
 import com.liferay.portal.kernel.model.RepositoryEntry;
+import com.liferay.portal.kernel.service.RepositoryEntryLocalService;
+import com.liferay.portal.kernel.service.RepositoryLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.uad.test.RepositoryEntryUADTestHelper;
-
 import com.liferay.user.associated.data.exporter.UADExporter;
 import com.liferay.user.associated.data.test.util.BaseUADExporterTestCase;
-
-import org.junit.After;
-import org.junit.ClassRule;
-import org.junit.Rule;
-
-import org.junit.runner.RunWith;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import org.junit.After;
+import org.junit.ClassRule;
+import org.junit.Rule;
+import org.junit.runner.RunWith;
+
 /**
  * @author Brian Wing Shun Chan
- * @generated
  */
 @RunWith(Arquillian.class)
-public class RepositoryEntryUADExporterTest extends BaseUADExporterTestCase<RepositoryEntry> {
+public class RepositoryEntryUADExporterTest
+	extends BaseUADExporterTestCase<RepositoryEntry> {
+
 	@ClassRule
 	@Rule
-	public static final AggregateTestRule aggregateTestRule = new LiferayIntegrationTestRule();
+	public static final AggregateTestRule aggregateTestRule =
+		new LiferayIntegrationTestRule();
 
 	@After
 	public void tearDown() throws Exception {
-		_repositoryEntryUADTestHelper.cleanUpDependencies(_repositoryEntries);
+		RepositoryEntryUADTestHelper.cleanUpDependencies(
+			_repositoryLocalService, _repositoryEntries);
 	}
 
 	@Override
-	protected RepositoryEntry addBaseModel(long userId)
-		throws Exception {
-		RepositoryEntry repositoryEntry = _repositoryEntryUADTestHelper.addRepositoryEntry(userId);
+	protected RepositoryEntry addBaseModel(long userId) throws Exception {
+		RepositoryEntry repositoryEntry =
+			RepositoryEntryUADTestHelper.addRepositoryEntry(
+				_portal, _repositoryEntryLocalService, _repositoryLocalService,
+				userId);
 
 		_repositoryEntries.add(repositoryEntry);
 
@@ -70,10 +75,19 @@ public class RepositoryEntryUADExporterTest extends BaseUADExporterTestCase<Repo
 		return _uadExporter;
 	}
 
-	@DeleteAfterTestRun
-	private final List<RepositoryEntry> _repositoryEntries = new ArrayList<RepositoryEntry>();
 	@Inject
-	private RepositoryEntryUADTestHelper _repositoryEntryUADTestHelper;
+	private Portal _portal;
+
+	@DeleteAfterTestRun
+	private final List<RepositoryEntry> _repositoryEntries = new ArrayList<>();
+
+	@Inject
+	private RepositoryEntryLocalService _repositoryEntryLocalService;
+
+	@Inject
+	private RepositoryLocalService _repositoryLocalService;
+
 	@Inject(filter = "component.name=*.RepositoryEntryUADExporter")
 	private UADExporter _uadExporter;
+
 }

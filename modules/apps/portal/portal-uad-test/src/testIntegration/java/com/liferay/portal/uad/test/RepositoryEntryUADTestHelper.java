@@ -29,47 +29,41 @@ import com.liferay.portal.repository.liferayrepository.LiferayRepository;
 
 import java.util.List;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Brian Wing Shun Chan
  */
-@Component(immediate = true, service = RepositoryEntryUADTestHelper.class)
 public class RepositoryEntryUADTestHelper {
 
-	public RepositoryEntry addRepositoryEntry(long userId) throws Exception {
-		long classNameId = _portal.getClassNameId(
+	public static RepositoryEntry addRepositoryEntry(
+			Portal portal,
+			RepositoryEntryLocalService repositoryEntryLocalService,
+			RepositoryLocalService repositoryLocalService, long userId)
+		throws Exception {
+
+		long classNameId = portal.getClassNameId(
 			LiferayRepository.class.getName());
 
-		Repository repository = _repositoryLocalService.addRepository(
+		Repository repository = repositoryLocalService.addRepository(
 			TestPropsValues.getUserId(), TestPropsValues.getGroupId(),
 			classNameId, DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(), new UnicodeProperties(), true,
 			ServiceContextTestUtil.getServiceContext());
 
-		return _repositoryEntryLocalService.addRepositoryEntry(
+		return repositoryEntryLocalService.addRepositoryEntry(
 			userId, TestPropsValues.getGroupId(), repository.getRepositoryId(),
 			StringPool.BLANK, ServiceContextTestUtil.getServiceContext());
 	}
 
-	public void cleanUpDependencies(List<RepositoryEntry> repositoryEntries)
+	public static void cleanUpDependencies(
+			RepositoryLocalService repositoryLocalService,
+			List<RepositoryEntry> repositoryEntries)
 		throws Exception {
 
 		for (RepositoryEntry repositoryEntry : repositoryEntries) {
-			_repositoryLocalService.deleteRepository(
+			repositoryLocalService.deleteRepository(
 				repositoryEntry.getRepositoryId());
 		}
 	}
-
-	@Reference
-	private Portal _portal;
-
-	@Reference
-	private RepositoryEntryLocalService _repositoryEntryLocalService;
-
-	@Reference
-	private RepositoryLocalService _repositoryLocalService;
 
 }

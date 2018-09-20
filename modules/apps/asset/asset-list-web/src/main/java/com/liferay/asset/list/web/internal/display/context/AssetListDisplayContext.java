@@ -20,6 +20,7 @@ import com.liferay.asset.list.constants.AssetListFormConstants;
 import com.liferay.asset.list.constants.AssetListPortletKeys;
 import com.liferay.asset.list.constants.AssetListWebKeys;
 import com.liferay.asset.list.model.AssetListEntry;
+import com.liferay.asset.list.service.AssetListEntryLocalServiceUtil;
 import com.liferay.asset.list.service.AssetListEntryServiceUtil;
 import com.liferay.asset.list.web.internal.security.permission.resource.AssetListPermission;
 import com.liferay.asset.list.web.util.AssetListPortletUtil;
@@ -188,15 +189,13 @@ public class AssetListDisplayContext {
 		return _assetListEntriesSearchContainer;
 	}
 
-	public AssetListEntry getAssetListEntry() throws PortalException {
+	public AssetListEntry getAssetListEntry() {
 		if (_assetListEntry != null) {
 			return _assetListEntry;
 		}
 
-		long assetListEntryId = getAssetListEntryId();
-
-		_assetListEntry = AssetListEntryServiceUtil.fetchAssetListEntry(
-			assetListEntryId);
+		_assetListEntry = AssetListEntryLocalServiceUtil.fetchAssetListEntry(
+			getAssetListEntryId());
 
 		return _assetListEntry;
 	}
@@ -258,7 +257,7 @@ public class AssetListDisplayContext {
 		return searchActionURL.toString();
 	}
 
-	public String getAssetListEntryTitle() throws PortalException {
+	public String getAssetListEntryTitle() {
 		String title = StringPool.BLANK;
 
 		int assetListEntryType = getAssetListEntryType();
@@ -289,7 +288,7 @@ public class AssetListDisplayContext {
 		return assetListEntriesSearchContainer.getTotal();
 	}
 
-	public int getAssetListEntryType() throws PortalException {
+	public int getAssetListEntryType() {
 		if (_assetListEntryType != null) {
 			return _assetListEntryType;
 		}
@@ -413,9 +412,7 @@ public class AssetListDisplayContext {
 		return portletURL;
 	}
 
-	public List<ScreenNavigationEntry> getScreenNavigationEntries()
-		throws Exception {
-
+	public List<ScreenNavigationEntry> getScreenNavigationEntries() {
 		AssetListEntry assetListEntry = getAssetListEntry();
 
 		ScreenNavigationRegistry screenNavigationRegistry =

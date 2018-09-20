@@ -20,14 +20,40 @@
 JournalArticle article = journalContentDisplayContext.getArticle();
 DDMTemplate defaultDDMTemplate = journalContentDisplayContext.getDefaultDDMTemplate();
 DDMStructure ddmStructure = journalContentDisplayContext.getDDMStructure();
-DDMTemplate ddmTemplate = journalContentDisplayContext.getDDMTemplate();
 List<DDMTemplate> ddmTemplates = journalContentDisplayContext.getDDMTemplates();
 
 String refererPortletName = ParamUtil.getString(request, "refererPortletName");
 %>
 
-<div class="template-preview-content">
-	<liferay-util:include page="/journal_template_resources.jsp" servletContext="<%= application %>" />
+<div class="sheet-section">
+	<div class="sheet-subtitle">
+		<liferay-ui:message key="template" />
+	</div>
+
+	<div>
+		<liferay-ui:message key="please-select-one-option" />
+	</div>
+
+	<aui:input checked="<%= journalContentDisplayContext.isDefaultTemplate() %>" id='<%= refererPortletName + "ddmTemplateTypeDefault" %>' label='<%= LanguageUtil.format(request, "use-default-template-x", defaultDDMTemplate.getName(locale), false) %>' name='<%= refererPortletName + "ddmTemplateType" %>' type="radio" useNamespace="<%= false %>" value="default" />
+
+	<aui:input checked="<%= !journalContentDisplayContext.isDefaultTemplate() %>" id='<%= refererPortletName + "ddmTemplateTypeCustom" %>' label="use-a-specific-template" name='<%= refererPortletName + "ddmTemplateType" %>' type="radio" useNamespace="<%= false %>" value="custom" />
+
+	<div id="<%= refererPortletName + "customDDMTemplateContainer" %>">
+		<div class="template-preview-content">
+			<c:choose>
+				<c:when test="<%= journalContentDisplayContext.isDefaultTemplate() %>">
+					<p class="text-default">
+						<liferay-ui:message key="none" />
+					</p>
+				</c:when>
+				<c:otherwise>
+					<liferay-util:include page="/journal_template_resources.jsp" servletContext="<%= application %>" />
+				</c:otherwise>
+			</c:choose>
+		</div>
+
+		<aui:button id='<%= refererPortletName + "selectDDMTemplateButton" %>' useNamespace="<%= false %>" value="select" />
+	</div>
 </div>
 
 <c:if test="<%= ddmTemplates.size() > 1 %>">
@@ -43,61 +69,18 @@ String refererPortletName = ParamUtil.getString(request, "refererPortletName");
 		var form = A.one('#<%= refererPortletName %>fm');
 		var templateKeyInput = A.one('#<%= refererPortletName + "ddmTemplateKey" %>');
 
-		var templateId = <%= ddmTemplate.getTemplateId() %>;
-
-		var updateTemplate = function(ddmTemplateKey, ddmTemplateId) {
-			templateId = ddmTemplateId;
-
-			templateKeyInput.setAttribute('value', ddmTemplateKey);
-
-			templatePreview.html('<div class="loading-animation"></div>');
-
-			var data = Liferay.Util.ns(
-				'<%= PortalUtil.getPortletNamespace(JournalContentPortletKeys.JOURNAL_CONTENT) %>',
-				{
-					ddmTemplateKey: ddmTemplateKey
-				}
-			);
-
-			A.io.request(
-				'<liferay-portlet:resourceURL portletName="<%= JournalContentPortletKeys.JOURNAL_CONTENT %>" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>"><portlet:param name="mvcPath" value="/journal_template_resources.jsp" /><portlet:param name="articleResourcePrimKey" value="<%= String.valueOf(assetRenderer.getClassPK()) %>" /></liferay-portlet:resourceURL>',
-				{
-					data: data,
-					on: {
-						failure: function() {
-							templatePreview.html('<div class="alert alert-danger hidden"><liferay-ui:message key="an-unexpected-error-occurred" /></div>');
-						},
-						success: function(event, id, obj) {
-							var responseData = this.get('responseData');
-
-							templatePreview.plug(A.Plugin.ParseContent);
-
-							templatePreview.setContent(responseData);
-						}
-					}
-				}
-			);
-		}
-
-		templatePreview.delegate(
-			'click',
-			function(event) {
-				updateTemplate('<%= defaultDDMTemplate.getTemplateKey() %>', '<%= defaultDDMTemplate.getTemplateId() %>');
-			},
-			'.change-template'
-		);
-
 		<%
 		String className = DDMTemplate.class.getName() + "_" + JournalArticle.class.getName();
 
 		PortletURL selectDDMTemplateURL = PortletProviderUtil.getPortletURL(renderRequest, className, PortletProvider.Action.BROWSE);
 
 		selectDDMTemplateURL.setParameter("ddmStructureId", String.valueOf(ddmStructure.getStructureId()));
+		selectDDMTemplateURL.setWindowState(LiferayWindowState.POP_UP);
 
 		String portletId = PortletProviderUtil.getPortletId(className, PortletProvider.Action.BROWSE);
 		%>
 
-		templatePreview.delegate(
+		A.one('#<%= refererPortletName + "selectDDMTemplateButton" %>').on(
 			'click',
 			function(event) {
 				event.preventDefault();
@@ -114,7 +97,35 @@ String refererPortletName = ParamUtil.getString(request, "refererPortletName");
 						uri: '<%= selectDDMTemplateURL %>'
 					},
 					function(event) {
-						updateTemplate(event.ddmtemplatekey, event.ddmtemplateid);
+						templateKeyInput.setAttribute('value', event.ddmtemplatekey);
+
+						templatePreview.html('<div class="loading-animation"></div>');
+
+						var data = Liferay.Util.ns(
+							'<%= PortalUtil.getPortletNamespace(JournalContentPortletKeys.JOURNAL_CONTENT) %>',
+							{
+								ddmTemplateKey: event.ddmtemplatekey
+							}
+						);
+
+						A.io.request(
+							'<liferay-portlet:resourceURL portletName="<%= JournalContentPortletKeys.JOURNAL_CONTENT %>" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>"><portlet:param name="mvcPath" value="/journal_template_resources.jsp" /><portlet:param name="articleResourcePrimKey" value="<%= String.valueOf(assetRenderer.getClassPK()) %>" /></liferay-portlet:resourceURL>',
+							{
+								data: data,
+								on: {
+									failure: function() {
+										templatePreview.html('<div class="alert alert-danger hidden"><liferay-ui:message key="an-unexpected-error-occurred" /></div>');
+									},
+									success: function(event, id, obj) {
+										var responseData = this.get('responseData');
+
+										templatePreview.plug(A.Plugin.ParseContent);
+
+										templatePreview.setContent(responseData);
+									}
+								}
+							}
+						);
 
 						new Liferay.Alert(
 							{
@@ -134,8 +145,17 @@ String refererPortletName = ParamUtil.getString(request, "refererPortletName");
 
 					}
 				);
-			},
-			'.select-template'
+			}
 		);
+
+		A.one('#<%= refererPortletName + "ddmTemplateTypeDefault" %>').on(
+			'click',
+			function(event) {
+				templateKeyInput.setAttribute('value', '');
+			}
+		);
+
+		Liferay.Util.toggleRadio('<%= refererPortletName + "ddmTemplateTypeCustom" %>', '<%= refererPortletName + "customDDMTemplateContainer" %>', '');
+		Liferay.Util.toggleRadio('<%= refererPortletName + "ddmTemplateTypeDefault" %>', '', '<%= refererPortletName + "customDDMTemplateContainer" %>');
 	</aui:script>
 </c:if>

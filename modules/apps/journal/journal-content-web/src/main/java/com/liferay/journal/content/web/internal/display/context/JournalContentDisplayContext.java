@@ -80,7 +80,6 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
-import java.util.Objects;
 import java.util.stream.Stream;
 
 import javax.portlet.PortletMode;
@@ -776,21 +775,21 @@ public class JournalContentDisplayContext {
 	}
 
 	public boolean isDefaultTemplate() {
-		JournalArticleDisplay articleDisplay = getArticleDisplay();
+		String ddmTemplateKey = ParamUtil.getString(
+			_portletRequest, "ddmTemplateKey");
 
-		if ((articleDisplay == null) ||
-			Validator.isNull(articleDisplay.getDDMTemplateKey())) {
-
-			return true;
+		if (Validator.isNotNull(ddmTemplateKey)) {
+			return false;
 		}
 
-		if (Objects.equals(
-				articleDisplay.getDDMTemplateKey(), getDDMTemplateKey())) {
+		ddmTemplateKey =
+			_journalContentPortletInstanceConfiguration.ddmTemplateKey();
 
-			return true;
+		if (Validator.isNotNull(ddmTemplateKey)) {
+			return false;
 		}
 
-		return false;
+		return true;
 	}
 
 	public boolean isEnableViewCountIncrement() {

@@ -29,6 +29,8 @@ import org.apache.commons.lang.StringUtils;
  */
 public class AutoCloseUtil {
 
+	public static boolean debug = false;
+
 	public static boolean autoCloseOnCriticalBatchFailures(
 			PullRequest pullRequest, Build topLevelBuild)
 		throws Exception {
@@ -349,10 +351,12 @@ public class AutoCloseUtil {
 		}
 
 		if (testBatchNamesAutoClose != null) {
-			System.out.println(
-				JenkinsResultsParserUtil.combine(
-					"Finding auto-close rules for ",
-						gitRepositoryBranchAutoClosePropertyName, "."));
+			if (debug) {
+				System.out.println(
+					JenkinsResultsParserUtil.combine(
+						"Finding auto-close rules for ",
+							gitRepositoryBranchAutoClosePropertyName, "."));
+			}
 
 			String[] autoCloseRuleDataArray = StringUtils.split(
 				testBatchNamesAutoClose, ",");
@@ -361,16 +365,20 @@ public class AutoCloseUtil {
 				AutoCloseRule newAutoCloseRule = new AutoCloseRule(
 					autoCloseRuleData);
 
-				System.out.println("\t" + newAutoCloseRule.toString());
+				if (debug) {
+					System.out.println("\t" + newAutoCloseRule.toString());
+				}
 
 				list.add(newAutoCloseRule);
 			}
 
-			System.out.println(
-				JenkinsResultsParserUtil.combine(
-					"Finished finding ",
-					gitRepositoryBranchAutoClosePropertyName,
-					" auto-close rules.\n"));
+			if (debug) {
+				System.out.println(
+					JenkinsResultsParserUtil.combine(
+						"Finished finding ",
+						gitRepositoryBranchAutoClosePropertyName,
+						" auto-close rules.\n"));
+			}
 		}
 
 		return list;
@@ -392,10 +400,12 @@ public class AutoCloseUtil {
 		String branchName = pullRequest.getUpstreamBranchName();
 
 		if (testBranchNamesAutoClose == null) {
-			System.out.println(
-				JenkinsResultsParserUtil.combine(
-					"Auto-close rules are deactivated for ",
-					gitHubRemoteGitRepositoryName, "(", branchName, ")."));
+			if (debug) {
+				System.out.println(
+					JenkinsResultsParserUtil.combine(
+						"Auto-close rules are deactivated for ",
+						gitHubRemoteGitRepositoryName, "(", branchName, ")."));
+			}
 
 			return false;
 		}
@@ -461,17 +471,21 @@ public class AutoCloseUtil {
 		}
 
 		public List<Build> evaluate(List<Build> downstreamBuilds) {
-			System.out.println(
-				JenkinsResultsParserUtil.combine(
-					"Evaluating auto-close rule ", toString(), "."));
+			if (debug) {
+				System.out.println(
+					JenkinsResultsParserUtil.combine(
+						"Evaluating auto-close rule ", toString(), "."));
+			}
 
 			try {
 				downstreamBuilds = getMatchingBuilds(downstreamBuilds);
 
-				System.out.println(
-					JenkinsResultsParserUtil.combine(
-						"Found ", String.valueOf(downstreamBuilds.size()),
-						" builds that match this rule."));
+				if (debug) {
+					System.out.println(
+						JenkinsResultsParserUtil.combine(
+							"Found ", String.valueOf(downstreamBuilds.size()),
+							" builds that match this rule."));
+				}
 
 				List<Build> failingInUpstreamJobDownstreamBuilds =
 					new ArrayList<>(downstreamBuilds.size());
@@ -516,11 +530,14 @@ public class AutoCloseUtil {
 					}
 				}
 
-				System.out.println(
-					JenkinsResultsParserUtil.combine(
-						String.valueOf(
-							failingInUpstreamJobDownstreamBuilds.size()),
-						" downstream builds are also failing in upstream."));
+				if (debug) {
+					System.out.println(
+						JenkinsResultsParserUtil.combine(
+							String.valueOf(
+								failingInUpstreamJobDownstreamBuilds.size()),
+							" downstream builds are also failing in ",
+							"upstream."));
+				}
 
 				downstreamBuilds.removeAll(
 					failingInUpstreamJobDownstreamBuilds);
@@ -548,10 +565,12 @@ public class AutoCloseUtil {
 					failLimit = maxFailCount;
 				}
 
-				System.out.println(
-					JenkinsResultsParserUtil.combine(
-						toString(), " fail limit is ",
-						String.valueOf(failLimit)));
+				if (debug) {
+					System.out.println(
+						JenkinsResultsParserUtil.combine(
+							toString(), " fail limit is ",
+							String.valueOf(failLimit)));
+				}
 
 				for (Build downstreamBuild : downstreamBuilds) {
 					String status = downstreamBuild.getStatus();
@@ -563,39 +582,48 @@ public class AutoCloseUtil {
 					String result = downstreamBuild.getResult();
 
 					if ((result != null) && !result.equals("SUCCESS")) {
-						System.out.println(
-							JenkinsResultsParserUtil.combine(
-								"Found a matching failed build. ",
-								downstreamBuild.getDisplayName(),
-								" has failed."));
+						if (debug) {
+							System.out.println(
+								JenkinsResultsParserUtil.combine(
+									"Found a matching failed build. ",
+									downstreamBuild.getDisplayName(),
+									" has failed."));
+						}
 
 						failedDownstreamBuilds.add(downstreamBuild);
 					}
 				}
 
 				if (failedDownstreamBuilds.size() > failLimit) {
+					if (debug) {
+						System.out.println(
+							JenkinsResultsParserUtil.combine(
+								"Found ",
+								String.valueOf(failedDownstreamBuilds.size()),
+								" matching failed builds.\n", toString(),
+								" has FAILED."));
+					}
+
+					return failedDownstreamBuilds;
+				}
+
+				if (debug) {
 					System.out.println(
 						JenkinsResultsParserUtil.combine(
 							"Found ",
 							String.valueOf(failedDownstreamBuilds.size()),
 							" matching failed builds.\n", toString(),
-							" has FAILED."));
-
-					return failedDownstreamBuilds;
+							" has PASSED."));
 				}
-
-				System.out.println(
-					JenkinsResultsParserUtil.combine(
-						"Found ", String.valueOf(failedDownstreamBuilds.size()),
-						" matching failed builds.\n", toString(),
-						" has PASSED."));
 
 				return Collections.emptyList();
 			}
 			finally {
-				System.out.println(
-					JenkinsResultsParserUtil.combine(
-						"Finished evaluating rule ", toString(), "\n"));
+				if (debug) {
+					System.out.println(
+						JenkinsResultsParserUtil.combine(
+							"Finished evaluating rule ", toString(), "\n"));
+				}
 			}
 		}
 

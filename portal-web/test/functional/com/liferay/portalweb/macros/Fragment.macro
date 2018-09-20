@@ -17,26 +17,6 @@
 		</if>
 	</command>
 
-	<command name="gotoImportCollection">
-		<if>
-			<condition function="IsElementPresent" locator1="NavNested#NAV_NESTED_ELLIPSIS" />
-			<then>
-				<execute function="Click" locator1="NavNested#NAV_NESTED_ELLIPSIS" />
-			</then>
-			<else>
-				<execute macro="Button#click">
-					<var name="button" value="New" />
-				</execute>
-			</else>
-		</if>
-
-		<execute macro="MenuItem#click">
-			<var name="menuItem" value="Import" />
-		</execute>
-
-		<execute macro="IFrame#selectConfigurationFrame" />
-	</command>
-
 	<command name="addCollection">
 		<execute macro="Fragment#_gotoAddCollection" />
 
@@ -68,6 +48,26 @@
 		<execute macro="LexiconEntry#gotoEllipsisMenuItem">
 			<var name="menuItem" value="Export" />
 		</execute>
+	</command>
+
+	<command name="gotoImportCollection">
+		<if>
+			<condition function="IsElementPresent" locator1="NavNested#NAV_NESTED_ELLIPSIS" />
+			<then>
+				<execute function="Click" locator1="NavNested#NAV_NESTED_ELLIPSIS" />
+			</then>
+			<else>
+				<execute macro="Button#click">
+					<var name="button" value="New" />
+				</execute>
+			</else>
+		</if>
+
+		<execute macro="MenuItem#click">
+			<var name="menuItem" value="Import" />
+		</execute>
+
+		<execute macro="IFrame#selectConfigurationFrame" />
 	</command>
 
 	<command name="importCollectionFromDependenciesFolder">

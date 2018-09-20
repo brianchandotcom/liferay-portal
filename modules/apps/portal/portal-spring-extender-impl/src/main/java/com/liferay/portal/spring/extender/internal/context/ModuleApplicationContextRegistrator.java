@@ -91,7 +91,12 @@ public class ModuleApplicationContextRegistrator {
 	}
 
 	protected void stop() throws Exception {
-		_cleanInstropectionCaches(_extendeeBundle);
+		BundleWiring bundleWiring = _extendeeBundle.adapt(BundleWiring.class);
+
+		CachedIntrospectionResults.clearClassLoader(
+			bundleWiring.getClassLoader());
+
+		Introspector.flushCaches();
 
 		_applicationContextServicePublisher.unregister();
 
@@ -104,15 +109,6 @@ public class ModuleApplicationContextRegistrator {
 		_configurableApplicationContext.close();
 
 		_configurableApplicationContext = null;
-	}
-
-	private void _cleanInstropectionCaches(Bundle bundle) {
-		BundleWiring bundleWiring = bundle.adapt(BundleWiring.class);
-
-		CachedIntrospectionResults.clearClassLoader(
-			bundleWiring.getClassLoader());
-
-		Introspector.flushCaches();
 	}
 
 	private ConfigurableApplicationContext _createApplicationContext(

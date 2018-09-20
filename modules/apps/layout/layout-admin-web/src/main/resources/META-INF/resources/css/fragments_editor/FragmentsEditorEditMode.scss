@@ -1,0 +1,20 @@
+@import "./fragments_editor/FragmentEntryLink";
+
+@import "./fragments_editor/FragmentEntryLinkEditables";
+
+@import "./fragments_editor/FragmentsEditorToolbar";
+
+@import "./fragments_editor/FragmentsEditorSidebar";
+
+@import "./fragments_editor/SelectMappingDialog";
+
+.lfr-admin-panel .sidebar-body {
+	padding: 0 1.5rem;
+}
+
+.fragments-editor-sidebar-content {
+	.navbar-underline {
+		box-shadow: 0 1px 0 0 rgba(255, 255, 255, 0.2);
+		margin-bottom: 1.5rem;
+	}
+}

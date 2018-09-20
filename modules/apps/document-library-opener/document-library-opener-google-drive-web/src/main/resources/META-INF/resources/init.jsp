@@ -36,3 +36,5 @@ page import="com.liferay.portal.kernel.util.PortalUtil" %>
 <liferay-frontend:defineObjects />
 
 <liferay-theme:defineObjects />
+
+<portlet:defineObjects />

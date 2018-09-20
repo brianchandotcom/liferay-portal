@@ -35,6 +35,12 @@ String redirect = ParamUtil.getString(request, "redirect");
 	</head>
 
 	<body>
+		<portlet:actionURL name="/document_library/edit_in_google_docs" var="actionURL">
+			<portlet:param name="fileEntryId" value="<%= String.valueOf(dlOpenerGoogleDriveFileReference.getFileEntryId()) %>" />
+			<portlet:param name="redirect" value="<%= redirect %>" />
+		</portlet:actionURL>
+
+		<form action="<%= actionURL %>" method="post">
 		<div class="autofit-padded autofit-row autofit-row-center google-docs-toolbar">
 			<div class="autofit-col autofit-col-expand">
 				<div class="autofit-section">
@@ -42,62 +48,26 @@ String redirect = ParamUtil.getString(request, "redirect");
 						icon="angle-left"
 						id="closeAndCheckinBtn"
 						label='<%= LanguageUtil.format(resourceBundle, "save-and-return-to-x", themeDisplay.getSiteGroupName()) %>'
+						name="<%= renderResponse.getNamespace() + Constants.CMD %>"
 						size="sm"
+						type="submit"
+						value="<%= DLOpenerGoogleDriveWebConstants.GOOGLE_DRIVE_CHECKIN %>"
 					/>
 				</div>
 			</div>
-
-			<portlet:actionURL name="/document_library/edit_in_google_docs" var="actionURL">
-				<portlet:param name="fileEntryId" value="<%= String.valueOf(dlOpenerGoogleDriveFileReference.getFileEntryId()) %>" />
-				<portlet:param name="redirect" value="<%= redirect %>" />
-			</portlet:actionURL>
-
-			<%= actionURL %>
 
 			<div class="autofit-col">
 				<clay:button
 					id="discardChangesBtn"
 					label='<%= LanguageUtil.get(resourceBundle, "discard-changes") %>'
+					name="<%= renderResponse.getNamespace() + Constants.CMD %>"
 					size="sm"
+					type="submit"
+					value="<%= DLOpenerGoogleDriveWebConstants.GOOGLE_DRIVE_CANCEL_CHECKOUT %>"
 				/>
 			</div>
 		</div>
 
 		<iframe class="google-docs-iframe" frameborder="0" id="<portlet:namespace />gDocsIFrame" src="<%= googleDocsEditURL %>"></iframe>
-
-		<portlet:actionURL name="/document_library/edit_in_google_docs" var="checkInURL">
-			<portlet:param name="<%= Constants.CMD %>" value="<%= DLOpenerGoogleDriveWebConstants.GOOGLE_DRIVE_CHECKIN %>" />
-			<portlet:param name="fileEntryId" value="<%= String.valueOf(dlOpenerGoogleDriveFileReference.getFileEntryId()) %>" />
-		</portlet:actionURL>
-
-		<portlet:actionURL name="/document_library/edit_in_google_docs" var="cancelCheckoutURL">
-			<portlet:param name="<%= Constants.CMD %>" value="<%= DLOpenerGoogleDriveWebConstants.GOOGLE_DRIVE_CANCEL_CHECKOUT %>" />
-			<portlet:param name="fileEntryId" value="<%= String.valueOf(dlOpenerGoogleDriveFileReference.getFileEntryId()) %>" />
-		</portlet:actionURL>
-
-		<script type="application/javascript">
-			(function() {
-				function registerCloseEvent(elementId, url) {
-					var element = document.getElementById(elementId);
-
-					element.onclick = function() {
-						fetch(
-							url,
-							{
-								credentials: 'include',
-								method: 'POST'
-							}
-						).then(function(response) {
-							if (response.ok) {
-								window.close();
-							}
-						});
-					};
-				}
-
-				registerCloseEvent("closeAndCheckinBtn", '<%= checkInURL %>');
-				registerCloseEvent("discardChangesBtn", '<%= cancelCheckoutURL %>');
-			})();
-		</script>
 	</body>
 </html>

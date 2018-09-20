@@ -767,11 +767,13 @@ public class JenkinsResultsParserUtil {
 	}
 
 	public static GitWorkingDirectory getJenkinsGitWorkingDirectory() {
-		LocalGitRepository localGitRepository =
-			GitRepositoryFactory.getLocalGitRepository(
-				"liferay-jenkins-ee", "master");
+		String gitRepositoryName = "liferay-jenkins-ee";
 
-		return localGitRepository.getGitWorkingDirectory();
+		File gitRepositoryDir = new File(
+			getBaseGitRepositoryDir(), gitRepositoryName);
+
+		return GitWorkingDirectoryFactory.newGitWorkingDirectory(
+			"master", gitRepositoryDir, gitRepositoryName);
 	}
 
 	public static List<JenkinsMaster> getJenkinsMasters(
@@ -983,20 +985,24 @@ public class JenkinsResultsParserUtil {
 	}
 
 	public static PortalGitWorkingDirectory getPortalGitWorkingDirectory(
-		String portalBranchName) {
+		String upstreamBranchName) {
 
-		String portalGitRepositoryName = "liferay-portal";
+		String gitRepositoryName = "liferay-portal";
 
-		if (!portalBranchName.equals("master")) {
-			portalGitRepositoryName += "-ee";
+		if (!upstreamBranchName.equals("master")) {
+			gitRepositoryName += "-ee";
 		}
 
-		LocalGitRepository localGitRepository =
-			GitRepositoryFactory.getLocalGitRepository(
-				portalGitRepositoryName, portalBranchName);
+		File gitRepositoryDir = new File(
+			getBaseGitRepositoryDir(), gitRepositoryName);
 
 		GitWorkingDirectory gitWorkingDirectory =
-			localGitRepository.getGitWorkingDirectory();
+			GitWorkingDirectoryFactory.newGitWorkingDirectory(
+				upstreamBranchName, gitRepositoryDir, gitRepositoryName);
+
+		if (!(gitWorkingDirectory instanceof PortalGitWorkingDirectory)) {
+			throw new RuntimeException("Invalid Git working directory");
+		}
 
 		return (PortalGitWorkingDirectory)gitWorkingDirectory;
 	}

@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.Map;
 
@@ -43,7 +44,6 @@ import javax.portlet.PortletURL;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 
-import com.liferay.portal.kernel.util.WebKeys;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -116,7 +116,8 @@ public class GoogleDriveBackgroundTaskStatusMVCResourceCommand
 
 			portletURL.setWindowState(LiferayWindowState.EXCLUSIVE);
 
-			portletURL.setParameter("mvcRenderCommandName","/document_library/open_google_docs");
+			portletURL.setParameter(
+				"mvcRenderCommandName", "/document_library/open_google_docs");
 			portletURL.setParameter("fileEntryId", String.valueOf(fileEntryId));
 
 			String googleDocsEditURL = _getGoogleDocsEditURL(
@@ -126,8 +127,9 @@ public class GoogleDriveBackgroundTaskStatusMVCResourceCommand
 
 			portletURL.setParameter("googleDocsEditURL", googleDocsEditURL);
 
-			ThemeDisplay themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)resourceRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
 
 			portletURL.setParameter("redirect", themeDisplay.getURLCurrent());
 
@@ -165,10 +167,10 @@ public class GoogleDriveBackgroundTaskStatusMVCResourceCommand
 	private DLAppLocalService _dlAppLocalService;
 
 	@Reference
-	private Portal _portal;
-
-	@Reference
 	private DLOpenerFileEntryReferenceLocalService
 		_dlOpenerFileEntryReferenceLocalService;
+
+	@Reference
+	private Portal _portal;
 
 }

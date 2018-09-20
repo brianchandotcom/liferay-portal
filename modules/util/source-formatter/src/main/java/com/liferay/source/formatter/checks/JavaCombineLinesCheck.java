@@ -1103,15 +1103,15 @@ public class JavaCombineLinesCheck extends BaseFileCheck {
 	private static final String _FIT_ON_SINGLE_LINE_EXCLUDES =
 		"fit.on.single.line.excludes";
 
-	private final Pattern _combinedLinesPattern1 = Pattern.compile(
+	private static final Pattern _combinedLinesPattern1 = Pattern.compile(
 		"\n(\t*).+(=|\\]) (\\{)\n");
-	private final Pattern _combinedLinesPattern2 = Pattern.compile(
+	private static final Pattern _combinedLinesPattern2 = Pattern.compile(
 		"\n(\t*)@.+(\\()\n");
-	private final Pattern _combinedLinesPattern3 = Pattern.compile(
+	private static final Pattern _combinedLinesPattern3 = Pattern.compile(
 		"(\n\t*(private|protected|public) void)\n\t+(\\w+\\(\\)( \\{)?\n)");
-	private final Pattern _combinedLinesPattern4 = Pattern.compile(
+	private static final Pattern _combinedLinesPattern4 = Pattern.compile(
 		"(\n\t*(extends|implements))\n\t+([\\w.]+ \\{\n)");
-	private final Pattern _combinedLinesPattern5 = Pattern.compile(
+	private static final Pattern _combinedLinesPattern5 = Pattern.compile(
 		"(\n\t*(private|protected|public)( .*[^\\{;\n])?)\n\t*(.+ [\\{;]\n)");
 
 }

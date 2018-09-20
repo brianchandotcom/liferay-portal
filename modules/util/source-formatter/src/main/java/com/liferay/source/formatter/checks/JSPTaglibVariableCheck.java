@@ -81,7 +81,7 @@ public class JSPTaglibVariableCheck extends BaseFileCheck {
 		return content;
 	}
 
-	private final Pattern _taglibVariablePattern = Pattern.compile(
+	private static final Pattern _taglibVariablePattern = Pattern.compile(
 		"(\t*String (\\w+) = (.*);)\n\\s*%>\\s+(<[\\S\\s]*?>)\n");
 
 }

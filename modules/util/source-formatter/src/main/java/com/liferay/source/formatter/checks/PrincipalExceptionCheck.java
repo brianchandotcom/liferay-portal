@@ -46,7 +46,7 @@ public class PrincipalExceptionCheck extends BaseFileCheck {
 		return content;
 	}
 
-	private final Pattern _principalExceptionPattern = Pattern.compile(
+	private static final Pattern _principalExceptionPattern = Pattern.compile(
 		"SessionErrors\\.contains\\(\n?\t*(renderR|r)equest, " +
 			"PrincipalException\\.class\\.getName\\(\\)");
 

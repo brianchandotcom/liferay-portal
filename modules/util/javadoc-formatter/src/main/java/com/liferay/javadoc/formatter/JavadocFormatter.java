@@ -2365,6 +2365,9 @@ public class JavadocFormatter {
 		Files.write(file.toPath(), s.getBytes(StandardCharsets.UTF_8));
 	}
 
+	private static final Pattern _paragraphTagPattern = Pattern.compile(
+		"(^.*?(?=\n\n|$)+|(?<=<p>\n).*?(?=\n</p>))", Pattern.DOTALL);
+
 	private final String _author;
 	private Document _deprecationsDocument;
 	private final String _deprecationSyncDirName;
@@ -2380,8 +2383,6 @@ public class JavadocFormatter {
 	private final Set<String> _modifiedFileNames = new HashSet<>();
 	private final String _outputFilePrefix;
 	private String _packagePath;
-	private final Pattern _paragraphTagPattern = Pattern.compile(
-		"(^.*?(?=\n\n|$)+|(?<=<p>\n).*?(?=\n</p>))", Pattern.DOTALL);
 	private final boolean _updateJavadocs;
 
 }

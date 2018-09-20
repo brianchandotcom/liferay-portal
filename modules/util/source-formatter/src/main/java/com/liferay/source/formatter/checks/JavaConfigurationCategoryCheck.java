@@ -124,10 +124,11 @@ public class JavaConfigurationCategoryCheck extends BaseFileCheck {
 		"modules/apps/configuration-admin/configuration-admin-web/src/main" +
 			"/java/com/liferay/configuration/admin/web/internal/category";
 
-	private final Pattern _categoryKeyPattern = Pattern.compile(
+	private static final Pattern _categoryKeyPattern = Pattern.compile(
 		"String\\s+_CATEGORY_KEY\\s+=\\s+\"(\\w+)\"");
-	private List<String> _categoryKeys;
-	private final Pattern _categoryNamePattern = Pattern.compile(
+	private static final Pattern _categoryNamePattern = Pattern.compile(
 		"\n@ExtendedObjectClassDefinition\\(\\s*category\\s+=\\s+\"(\\w+)\"");
+
+	private List<String> _categoryKeys;
 
 }

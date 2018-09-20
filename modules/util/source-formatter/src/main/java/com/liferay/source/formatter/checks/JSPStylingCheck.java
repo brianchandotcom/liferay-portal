@@ -177,15 +177,15 @@ public class JSPStylingCheck extends StylingCheck {
 		return content;
 	}
 
-	private final Pattern _chainingPattern = Pattern.compile(
+	private static final Pattern _chainingPattern = Pattern.compile(
 		"\\WgetClass\\(\\)\\.");
-	private final Pattern _emptyJavaSourceTagPattern = Pattern.compile(
+	private static final Pattern _emptyJavaSourceTagPattern = Pattern.compile(
 		"\n\t*<%\n+\t*%>\n");
-	private final Pattern _incorrectClosingTagPattern = Pattern.compile(
+	private static final Pattern _incorrectClosingTagPattern = Pattern.compile(
 		"\n(\t*)\t((?!<\\w).)* />\n");
-	private final Pattern _incorrectLineBreakPattern = Pattern.compile(
+	private static final Pattern _incorrectLineBreakPattern = Pattern.compile(
 		"[\n\t]\\} ?(catch|else|finally) ");
-	private final Pattern _incorrectSingleLineJavaSourcePattern =
+	private static final Pattern _incorrectSingleLineJavaSourcePattern =
 		Pattern.compile("(\t*)(<% (.*) %>)\n");
 
 }

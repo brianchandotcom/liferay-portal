@@ -42,7 +42,7 @@ public class JSPLanguageUtilCheck extends BaseFileCheck {
 		return content;
 	}
 
-	private final Pattern _languageUtilPattern = Pattern.compile(
+	private static final Pattern _languageUtilPattern = Pattern.compile(
 		"LanguageUtil\\.get\\(locale,");
 
 }

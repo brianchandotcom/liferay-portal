@@ -533,11 +533,12 @@ public class JSPUnusedTermsCheck extends BaseFileCheck {
 	private static final String _UNUSED_VARIABLES_EXCLUDES =
 		"jsp.unused.variables.excludes";
 
-	private List<String> _allFileNames;
-	private final Pattern _compressedJSPImportPattern = Pattern.compile(
+	private static final Pattern _compressedJSPImportPattern = Pattern.compile(
 		"(<.*\n*(?:page|tag) import=\".*>\n*)+", Pattern.MULTILINE);
-	private Map<String, String> _contentsMap;
-	private final Pattern _taglibURIPattern = Pattern.compile(
+	private static final Pattern _taglibURIPattern = Pattern.compile(
 		"<%@\\s+taglib uri=.* prefix=\"(.*?)\" %>");
+
+	private List<String> _allFileNames;
+	private Map<String, String> _contentsMap;
 
 }

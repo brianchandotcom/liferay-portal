@@ -82,7 +82,7 @@ public class JavaModuleInternalImportsCheck extends BaseFileCheck {
 		}
 	}
 
-	private final Pattern _internalImportPattern = Pattern.compile(
+	private static final Pattern _internalImportPattern = Pattern.compile(
 		"\nimport com\\.liferay\\.(.*\\.internal\\.([a-z].*?\\.)?[A-Z].*?)" +
 			"[\\.|;]");
 

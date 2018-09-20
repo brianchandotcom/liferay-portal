@@ -303,12 +303,12 @@ public class JavaAnnotationsCheck extends BaseJavaTermCheck {
 		return annotations;
 	}
 
-	private final Pattern _annotationLineBreakPattern1 = Pattern.compile(
+	private static final Pattern _annotationLineBreakPattern1 = Pattern.compile(
 		"[{=]\n.*(\" \\+\n\t*\")");
-	private final Pattern _annotationLineBreakPattern2 = Pattern.compile(
+	private static final Pattern _annotationLineBreakPattern2 = Pattern.compile(
 		"=(\n\t*)\"");
-	private final Pattern _arrayPattern = Pattern.compile("=\\s+\\{");
-	private final Pattern _modifierPattern = Pattern.compile(
+	private static final Pattern _arrayPattern = Pattern.compile("=\\s+\\{");
+	private static final Pattern _modifierPattern = Pattern.compile(
 		"[^\n]\n(\t*)(public|protected|private)");
 
 }

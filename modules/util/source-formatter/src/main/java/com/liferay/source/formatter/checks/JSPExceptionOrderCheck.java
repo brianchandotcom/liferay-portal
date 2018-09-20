@@ -80,7 +80,7 @@ public class JSPExceptionOrderCheck extends BaseFileCheck {
 		return content;
 	}
 
-	private final Pattern _exceptionsPattern = Pattern.compile(
+	private static final Pattern _exceptionsPattern = Pattern.compile(
 		"(^[\t]*<liferay-ui:error exception=\"<%=.*\n)+", Pattern.MULTILINE);
 
 }

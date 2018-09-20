@@ -119,7 +119,7 @@ public class JSONPropertyOrderCheck extends BaseFileCheck {
 		return content;
 	}
 
-	private final Pattern _incorrectLineBreakPattern = Pattern.compile(
+	private static final Pattern _incorrectLineBreakPattern = Pattern.compile(
 		"\t[\\}\\]]{2}");
 
 }

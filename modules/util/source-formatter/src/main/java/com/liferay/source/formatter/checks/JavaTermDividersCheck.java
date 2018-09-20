@@ -162,7 +162,7 @@ public class JavaTermDividersCheck extends BaseJavaTermCheck {
 			classContent, "\n\n" + javaTermContent, "\n" + javaTermContent);
 	}
 
-	private final Pattern _missingEmptyLinePattern = Pattern.compile(
+	private static final Pattern _missingEmptyLinePattern = Pattern.compile(
 		"([^{\n]\n)(\t*\\}\n?)$");
 
 }

@@ -117,24 +117,24 @@ public class BNDImportsCheck extends BaseFileCheck {
 		return StringUtil.replace(content, match, replacement);
 	}
 
-	private final Pattern _conditionalPackagePattern = Pattern.compile(
+	private static final Pattern _conditionalPackagePattern = Pattern.compile(
 		"\n-conditionalpackage:(\\\\\n| )((.*?)(\n[^\t]|\\Z))",
 		Pattern.DOTALL | Pattern.MULTILINE);
-	private final Pattern _exportContentsPattern = Pattern.compile(
+	private static final Pattern _exportContentsPattern = Pattern.compile(
 		"\n-exportcontents:(\\\\\n| )((.*?)(\n[^\t]|\\Z))",
 		Pattern.DOTALL | Pattern.MULTILINE);
-	private final Pattern _exportsPattern = Pattern.compile(
+	private static final Pattern _exportsPattern = Pattern.compile(
 		"\nExport-Package:(\\\\\n| )((.*?)(\n[^\t]|\\Z))",
 		Pattern.DOTALL | Pattern.MULTILINE);
-	private final Pattern _importsPattern = Pattern.compile(
+	private static final Pattern _importsPattern = Pattern.compile(
 		"\nImport-Package:(\\\\\n| )((.*?)(\n[^\t]|\\Z))",
 		Pattern.DOTALL | Pattern.MULTILINE);
-	private final Pattern _internalPrivatePackagePattern = Pattern.compile(
-		"(,\\\\\n\t|: )(.*\\.internal.*)(\n|\\Z)");
-	private final Pattern _privatePackagesPattern = Pattern.compile(
+	private static final Pattern _internalPrivatePackagePattern =
+		Pattern.compile("(,\\\\\n\t|: )(.*\\.internal.*)(\n|\\Z)");
+	private static final Pattern _privatePackagesPattern = Pattern.compile(
 		"\nPrivate-Package:(\\\\\n| )((.*?)(\n[^\t]|\\Z))",
 		Pattern.DOTALL | Pattern.MULTILINE);
-	private final Pattern _wilcardImportPattern = Pattern.compile(
+	private static final Pattern _wilcardImportPattern = Pattern.compile(
 		"(\\S+\\*)(,\\\\\n|\n|\\Z)");
 
 }

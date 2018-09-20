@@ -32,16 +32,16 @@ public class JSPLanguageKeysCheck extends LanguageKeysCheck {
 			_taglibLanguageKeyPattern2, _taglibLanguageKeyPattern3);
 	}
 
-	private final Pattern _taglibLanguageKeyPattern1 = Pattern.compile(
+	private static final Pattern _taglibLanguageKeyPattern1 = Pattern.compile(
 		"(?:confirmation|label|(?:M|m)essage|message key|names|title)=\"[^A-Z" +
 			"<=%\\[\\s]+\"");
-	private final Pattern _taglibLanguageKeyPattern2 = Pattern.compile(
+	private static final Pattern _taglibLanguageKeyPattern2 = Pattern.compile(
 		StringBundler.concat(
 			"(aui:)(?:input|select|field-wrapper) (?!.*label=(?:'|\").*",
 			"(?:'|\\\").*name=\"[^<=%\\[\\s]+\")(?!.*name=\"[^<=%\\[\\s]+\".*",
 			"title=(?:'|\").+(?:'|\"))(?!.*name=\"[^<=%\\[\\s]+\".*type=\"",
 			"hidden\").*name=\"([^<=%\\[\\s]+)\""));
-	private final Pattern _taglibLanguageKeyPattern3 = Pattern.compile(
+	private static final Pattern _taglibLanguageKeyPattern3 = Pattern.compile(
 		"(liferay-ui:)(?:input-resource) .*id=\"([^<=%\\[\\s]+)\"(?!.*title=" +
 			"(?:'|\").+(?:'|\"))");
 

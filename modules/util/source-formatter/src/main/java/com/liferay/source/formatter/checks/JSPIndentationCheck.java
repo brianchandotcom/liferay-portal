@@ -522,9 +522,9 @@ public class JSPIndentationCheck extends BaseFileCheck {
 		}
 	}
 
-	private final Pattern _javaSourcePattern1 = Pattern.compile(
+	private static final Pattern _javaSourcePattern1 = Pattern.compile(
 		"\n(\t*)(<%\n(\t*[^\t%].*?))\n\t*%>\n", Pattern.DOTALL);
-	private final Pattern _javaSourcePattern2 = Pattern.compile(
+	private static final Pattern _javaSourcePattern2 = Pattern.compile(
 		"\n(\t*)([^\t\n]+[\"']<%=\n(\t*[^\t%].*?))\n\t*%>[\"']\n",
 		Pattern.DOTALL);
 

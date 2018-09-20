@@ -77,7 +77,7 @@ public abstract class DefinitionKeysCheck extends BaseFileCheck {
 		return content;
 	}
 
-	private final Pattern _definitionPattern = Pattern.compile(
+	private static final Pattern _definitionPattern = Pattern.compile(
 		"^([A-Za-z-]+?)[:=](\n|[\\s\\S]*?)(?=(\n[A-Za-z-]+?[:=])|\\Z)",
 		Pattern.MULTILINE);
 

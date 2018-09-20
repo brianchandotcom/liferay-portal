@@ -46,7 +46,7 @@ public class EmptyCollectionCheck extends BaseFileCheck {
 		}
 	}
 
-	private final Pattern _emptyCollectionPattern = Pattern.compile(
+	private static final Pattern _emptyCollectionPattern = Pattern.compile(
 		"Collections\\.EMPTY_(LIST|MAP|SET)");
 
 }

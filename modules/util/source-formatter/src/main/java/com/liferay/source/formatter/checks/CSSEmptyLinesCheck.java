@@ -65,13 +65,13 @@ public class CSSEmptyLinesCheck extends EmptyLinesCheck {
 		return content;
 	}
 
-	private final Pattern _emptyLineAfterOpenCurlyBrace = Pattern.compile(
-		"\\{\n\n\t*(?!(/\\* --|//))\\S");
-	private final Pattern _emptyLineBeforeCloseCurlyBrace = Pattern.compile(
-		"\n\n\t*\\}");
-	private final Pattern _missingEmptyLineAfterComment = Pattern.compile(
-		"-- \\*/\n.");
-	private final Pattern _missingEmptyLineBeforeComment = Pattern.compile(
-		".\n\t*/\\* --");
+	private static final Pattern _emptyLineAfterOpenCurlyBrace =
+		Pattern.compile("\\{\n\n\t*(?!(/\\* --|//))\\S");
+	private static final Pattern _emptyLineBeforeCloseCurlyBrace =
+		Pattern.compile("\n\n\t*\\}");
+	private static final Pattern _missingEmptyLineAfterComment =
+		Pattern.compile("-- \\*/\n.");
+	private static final Pattern _missingEmptyLineBeforeComment =
+		Pattern.compile(".\n\t*/\\* --");
 
 }

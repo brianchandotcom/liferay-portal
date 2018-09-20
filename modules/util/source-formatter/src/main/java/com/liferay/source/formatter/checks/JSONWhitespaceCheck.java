@@ -99,8 +99,9 @@ public class JSONWhitespaceCheck extends WhitespaceCheck {
 		return false;
 	}
 
-	private final Pattern _leadingSpacesPattern = Pattern.compile(
+	private static final Pattern _leadingSpacesPattern = Pattern.compile(
 		"(^[\t ]*)(  )([^ ])");
-	private final Pattern _missingWhitespacePattern = Pattern.compile(":\\S");
+	private static final Pattern _missingWhitespacePattern = Pattern.compile(
+		":\\S");
 
 }

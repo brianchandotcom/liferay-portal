@@ -220,9 +220,9 @@ public class JavaFinderImplCustomSQLCheck extends BaseJavaTermCheck {
 		return sb.toString();
 	}
 
-	private final Pattern _customQueryVariablePattern = Pattern.compile(
+	private static final Pattern _customQueryVariablePattern = Pattern.compile(
 		"=\\s+(\\w+)\\.class\\.getName\\(\\)\\s+\\+\\s+\"([\\.\\w]+)\";");
-	private final Pattern _stringUtilReplacePattern = Pattern.compile(
+	private static final Pattern _stringUtilReplacePattern = Pattern.compile(
 		"sql = StringUtil.replace\\(.*?\\);\n", Pattern.DOTALL);
 
 }

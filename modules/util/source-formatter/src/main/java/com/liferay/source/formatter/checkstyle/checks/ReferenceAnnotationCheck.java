@@ -306,7 +306,7 @@ public class ReferenceAnnotationCheck extends BaseCheck {
 
 	private static final String _POLICY_STATIC = "STATIC";
 
-	private final Pattern _referenceMethodContentPattern = Pattern.compile(
-		"^(\\w+) =\\s+\\w+;$");
+	private static final Pattern _referenceMethodContentPattern =
+		Pattern.compile("^(\\w+) =\\s+\\w+;$");
 
 }

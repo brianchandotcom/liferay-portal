@@ -97,7 +97,7 @@ public class XMLFriendlyURLRoutesFileCheck extends BaseFileCheck {
 		return releaseVersion.substring(0, pos);
 	}
 
-	private final Pattern _doctypePattern = Pattern.compile(
+	private static final Pattern _doctypePattern = Pattern.compile(
 		"DOCTYPE routes PUBLIC \"-//Liferay//DTD Friendly URL Routes " +
 			"([0-9]+)\\.[0-9]+\\.[0-9]+//EN\" \"http://www.liferay.com/dtd/" +
 				"liferay-friendly-url-routes_([0-9]+)_[0-9]+_[0-9]+\\.dtd");

@@ -89,7 +89,7 @@ public class GetterUtilCheck extends BaseFileCheck {
 		}
 	}
 
-	private final Pattern _getterUtilGetPattern = Pattern.compile(
+	private static final Pattern _getterUtilGetPattern = Pattern.compile(
 		"GetterUtil\\.get(Boolean|Double|Float|Integer|Long|Number|Object|" +
 			"Short|String)\\((.*?)\\);\n",
 		Pattern.DOTALL);

@@ -256,9 +256,9 @@ public class JSPDefineObjectsCheck extends BaseFileCheck {
 		}
 	};
 
-	private final Pattern _defineObjectsPattern = Pattern.compile(
+	private static final Pattern _defineObjectsPattern = Pattern.compile(
 		"\n\t*(<.*:defineObjects />)(\n|$)");
-	private final Pattern _missingEmptyLineBetweenDefineOjbectsPattern =
+	private static final Pattern _missingEmptyLineBetweenDefineOjbectsPattern =
 		Pattern.compile("<.*:defineObjects />\n<.*:defineObjects />\n");
 
 }

@@ -224,12 +224,13 @@ public class BBCodeParser {
 		return false;
 	}
 
-	private final Set<String> _blockElements;
-	private final Set<String> _inlineElements;
-	private final Set<String> _selfCloseElements;
-	private final Pattern _tagPattern = Pattern.compile(
+	private static final Pattern _tagPattern = Pattern.compile(
 		"^/?(?:b|center|code|colou?r|email|font|i|img|justify|left|li|list" +
 			"|pre|q|quote|right|s|size|table|td|th|tr|u|url|\\*)$",
 		Pattern.CASE_INSENSITIVE);
+
+	private final Set<String> _blockElements;
+	private final Set<String> _inlineElements;
+	private final Set<String> _selfCloseElements;
 
 }

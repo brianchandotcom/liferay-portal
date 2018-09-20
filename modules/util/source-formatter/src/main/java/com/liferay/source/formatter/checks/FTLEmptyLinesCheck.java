@@ -57,9 +57,9 @@ public class FTLEmptyLinesCheck extends EmptyLinesCheck {
 		return content;
 	}
 
-	private final Pattern _missingEmptyLineAfterCommentPattern =
+	private static final Pattern _missingEmptyLineAfterCommentPattern =
 		Pattern.compile("-->\n[^\n]");
-	private final Pattern _missingEmptyLineBeforeCommentPattern =
+	private static final Pattern _missingEmptyLineBeforeCommentPattern =
 		Pattern.compile("[^\n]\n\t*<#--");
 
 }

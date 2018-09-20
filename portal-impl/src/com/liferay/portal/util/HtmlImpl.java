@@ -963,6 +963,7 @@ public class HtmlImpl implements Html {
 		'<', '>', '*', '$', '"', '"', ' ', 9, 10, 13, 133, 8232
 	};
 
+	private static final Pattern _pattern = Pattern.compile("([\\s<&]|$)");
 	private static final Map<String, String> _unescapeMap =
 		new HashMap<String, String>() {
 			{
@@ -994,7 +995,5 @@ public class HtmlImpl implements Html {
 		_VALID_CHARS['-'] = true;
 		_VALID_CHARS['_'] = true;
 	}
-
-	private final Pattern _pattern = Pattern.compile("([\\s<&]|$)");
 
 }

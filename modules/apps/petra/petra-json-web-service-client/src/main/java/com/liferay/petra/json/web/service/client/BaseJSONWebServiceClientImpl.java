@@ -1177,10 +1177,13 @@ public abstract class BaseJSONWebServiceClientImpl
 	private static final Logger _logger = LoggerFactory.getLogger(
 		JSONWebServiceClientImpl.class);
 
+	private static final Pattern _errorMessagePattern = Pattern.compile(
+		"errorCode\":\\s*(\\d+).+message\":.+status\":\\s*(\\d+)");
+	private static final Pattern _statusPattern = Pattern.compile(
+		"status\":(\\d+)");
+
 	private AsyncHttpClient _asyncHttpClient;
 	private String _contextPath;
-	private final Pattern _errorMessagePattern = Pattern.compile(
-		"errorCode\":\\s*(\\d+).+message\":.+status\":\\s*(\\d+)");
 	private Map<String, String> _headers = Collections.emptyMap();
 	private String _hostName;
 	private int _hostPort = 80;
@@ -1202,6 +1205,5 @@ public abstract class BaseJSONWebServiceClientImpl
 	private String _proxyLogin;
 	private String _proxyPassword;
 	private String _proxyWorkstation;
-	private final Pattern _statusPattern = Pattern.compile("status\":(\\d+)");
 
 }

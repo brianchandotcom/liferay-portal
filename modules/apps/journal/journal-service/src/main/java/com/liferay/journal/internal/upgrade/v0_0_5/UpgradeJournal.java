@@ -614,6 +614,8 @@ public class UpgradeJournal extends UpgradeProcess {
 
 	private static final DateFormat _dateFormat =
 		DateFormatFactoryUtil.getSimpleDateFormat("yyyy-MM-dd");
+	private static final Pattern _nameAttributePattern = Pattern.compile(
+		"name=\"([^\"]+)\"");
 
 	static {
 		try {
@@ -633,8 +635,6 @@ public class UpgradeJournal extends UpgradeProcess {
 	private final DDMTemplateLinkLocalService _ddmTemplateLinkLocalService;
 	private final DefaultDDMStructureHelper _defaultDDMStructureHelper;
 	private final GroupLocalService _groupLocalService;
-	private final Pattern _nameAttributePattern = Pattern.compile(
-		"name=\"([^\"]+)\"");
 	private final ResourceActionLocalService _resourceActionLocalService;
 	private final ResourceActions _resourceActions;
 	private final ResourceLocalService _resourceLocalService;

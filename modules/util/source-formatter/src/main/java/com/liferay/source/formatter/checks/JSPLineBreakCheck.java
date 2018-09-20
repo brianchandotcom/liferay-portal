@@ -108,9 +108,9 @@ public class JSPLineBreakCheck extends LineBreakCheck {
 		return content;
 	}
 
-	private final Pattern _redundantLineBreakPattern1 = Pattern.compile(
+	private static final Pattern _redundantLineBreakPattern1 = Pattern.compile(
 		"[\n\t][^/\n\t].*(\\(\n)");
-	private final Pattern _redundantLineBreakPattern2 = Pattern.compile(
+	private static final Pattern _redundantLineBreakPattern2 = Pattern.compile(
 		"[\n\t][^/\n\t].*[|&](\n[\t ]*)");
 
 }

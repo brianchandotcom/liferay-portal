@@ -51,9 +51,9 @@ public class UnparameterizedClassCheck extends BaseFileCheck {
 		return content;
 	}
 
-	private final Pattern _unparameterizedClassTypePattern1 = Pattern.compile(
-		"\\Wnew Class[^<\\w]");
-	private final Pattern _unparameterizedClassTypePattern2 = Pattern.compile(
-		"\\WClass[\\[\\]]* \\w+ =");
+	private static final Pattern _unparameterizedClassTypePattern1 =
+		Pattern.compile("\\Wnew Class[^<\\w]");
+	private static final Pattern _unparameterizedClassTypePattern2 =
+		Pattern.compile("\\WClass[\\[\\]]* \\w+ =");
 
 }

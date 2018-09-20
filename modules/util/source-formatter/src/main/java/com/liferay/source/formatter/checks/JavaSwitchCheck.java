@@ -42,7 +42,7 @@ public class JavaSwitchCheck extends BaseFileCheck {
 		return content;
 	}
 
-	private final Pattern _switchStatementPattern = Pattern.compile(
+	private static final Pattern _switchStatementPattern = Pattern.compile(
 		"\tswitch \\(.*\\) \\{");
 
 }

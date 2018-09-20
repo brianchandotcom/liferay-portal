@@ -120,7 +120,7 @@ public class JSPXSSVulnerabilitiesCheck extends BaseFileCheck {
 		}
 	}
 
-	private final Pattern _xssPattern = Pattern.compile(
+	private static final Pattern _xssPattern = Pattern.compile(
 		"\\s+([^\\s]+)\\s*=\\s*(Bean)?ParamUtil\\.getString\\(");
 
 }

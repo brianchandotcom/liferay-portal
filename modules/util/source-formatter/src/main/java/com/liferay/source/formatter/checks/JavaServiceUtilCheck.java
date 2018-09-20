@@ -55,7 +55,7 @@ public class JavaServiceUtilCheck extends BaseFileCheck {
 		return content;
 	}
 
-	private final Pattern _serviceUtilPattern = Pattern.compile(
+	private static final Pattern _serviceUtilPattern = Pattern.compile(
 		"import com\\.liferay\\.[a-z]+\\.kernel\\..*ServiceUtil;");
 
 }

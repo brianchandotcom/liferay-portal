@@ -47,7 +47,7 @@ public class ValidatorEqualsCheck extends BaseFileCheck {
 		}
 	}
 
-	private final Pattern _validatorEqualsPattern = Pattern.compile(
+	private static final Pattern _validatorEqualsPattern = Pattern.compile(
 		"\\WValidator\\.equals\\(");
 
 }

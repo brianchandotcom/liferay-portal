@@ -38,7 +38,7 @@ public class JSPSubnameCheck extends BaseFileCheck {
 		return content;
 	}
 
-	private final Pattern _subnamePattern = Pattern.compile(
+	private static final Pattern _subnamePattern = Pattern.compile(
 		"\\s(_?sub[A-Z]\\w+)[; ]");
 
 }

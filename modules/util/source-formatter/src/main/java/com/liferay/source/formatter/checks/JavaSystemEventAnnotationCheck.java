@@ -116,7 +116,7 @@ public class JavaSystemEventAnnotationCheck extends BaseFileCheck {
 		}
 	}
 
-	private final Pattern _stagedModelTypesPattern = Pattern.compile(
+	private static final Pattern _stagedModelTypesPattern = Pattern.compile(
 		"StagedModelType\\(([a-zA-Z.]*(class|getClassName[\\(\\)]*))\\)");
 
 }

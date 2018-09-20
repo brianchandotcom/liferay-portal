@@ -216,13 +216,13 @@ public class JournalArticleImageUpgradeUtil {
 	private static final Log _log = LogFactoryUtil.getLog(
 		JournalArticleImageUpgradeUtil.class);
 
+	private static final Pattern _oldDocumentLibraryURLPattern =
+		Pattern.compile("uuid=([^&]+)&groupId=([^&]+)");
+
 	@Reference
 	private DLAppLocalService _dlAppLocalService;
 
 	@Reference
 	private Http _http;
-
-	private final Pattern _oldDocumentLibraryURLPattern = Pattern.compile(
-		"uuid=([^&]+)&groupId=([^&]+)");
 
 }

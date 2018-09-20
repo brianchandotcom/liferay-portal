@@ -144,9 +144,10 @@ public class JournalXSLURIResolver implements Externalizable, XSLURIResolver {
 	private static final Log _log = LogFactoryUtil.getLog(
 		JournalXSLURIResolver.class);
 
-	private String _languageId;
-	private final Pattern _templateIdPattern = Pattern.compile(
+	private static final Pattern _templateIdPattern = Pattern.compile(
 		".*_templateId=([0-9]+).*");
+
+	private String _languageId;
 	private Map<String, String> _tokens;
 
 }

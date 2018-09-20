@@ -60,7 +60,7 @@ public class PropertiesCommentsCheck extends BaseFileCheck {
 	private static final String[] _BRAND_NAMES =
 		{"jQuery", "reCAPTCHA", "svg4everybody", "tc"};
 
-	private final Pattern _commentPattern = Pattern.compile(
+	private static final Pattern _commentPattern = Pattern.compile(
 		"([^#]\\s*)?\\n\\s*#+\\s+(\\w[\\s\\w]+)(\\n\\s*#+.*[\\w]+.*)?$",
 		Pattern.MULTILINE);
 

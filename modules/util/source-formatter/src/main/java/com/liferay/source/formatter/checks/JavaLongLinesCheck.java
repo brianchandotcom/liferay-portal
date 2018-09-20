@@ -482,9 +482,9 @@ public class JavaLongLinesCheck extends BaseFileCheck {
 
 	private static final String _LINE_LENGTH_EXCLUDES = "line.length.excludes";
 
-	private final Pattern _annotationPattern1 = Pattern.compile(
+	private static final Pattern _annotationPattern1 = Pattern.compile(
 		"\n\t*@(.+)\\(\n");
-	private final Pattern _annotationPattern2 = Pattern.compile(
+	private static final Pattern _annotationPattern2 = Pattern.compile(
 		"^(@\\w+\\().*\\)");
 
 }

@@ -38,7 +38,7 @@ public class FTLIfStatementCheck extends IfStatementCheck {
 		return content;
 	}
 
-	private final Pattern _ifStatementPattern = Pattern.compile(
+	private static final Pattern _ifStatementPattern = Pattern.compile(
 		"[\t\n]<#(else)?if ([^?\n]*)>\n");
 
 }

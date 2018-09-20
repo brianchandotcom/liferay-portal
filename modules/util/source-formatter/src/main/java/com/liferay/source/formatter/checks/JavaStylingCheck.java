@@ -60,7 +60,7 @@ public class JavaStylingCheck extends StylingCheck {
 		return formatStyling(content);
 	}
 
-	private final Pattern _incorrectSynchronizedPattern = Pattern.compile(
-		"([\n\t])(synchronized) (private|public|protected)");
+	private static final Pattern _incorrectSynchronizedPattern =
+		Pattern.compile("([\n\t])(synchronized) (private|public|protected)");
 
 }

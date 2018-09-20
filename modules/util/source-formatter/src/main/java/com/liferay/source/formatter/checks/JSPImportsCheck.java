@@ -107,17 +107,18 @@ public class JSPImportsCheck extends BaseFileCheck {
 		return importsFormatter.format(content, uncompressedPattern);
 	}
 
-	private final Pattern _incorrectTaglibPattern = Pattern.compile(
+	private static final Pattern _incorrectTaglibPattern = Pattern.compile(
 		"(taglib )(prefix=\".+\") (uri=\".*\")");
-	private final Pattern _jspImportPattern = Pattern.compile(
+	private static final Pattern _jspImportPattern = Pattern.compile(
 		"(<%@\\s+(page|tag)\\s+import=\".+?\\s+%>\\s*)+");
-	private final Pattern _jspTaglibPattern = Pattern.compile(
+	private static final Pattern _jspTaglibPattern = Pattern.compile(
 		"(<%@\\s+taglib\\s+uri=\".+?\\s+%>\\s*)+");
-	private final Pattern _taglibSingleLinePattern = Pattern.compile(
+	private static final Pattern _taglibSingleLinePattern = Pattern.compile(
 		"(<%@)\\s+(page|tag|taglib)\\s+((import|uri)=.+?)\\s+(%>)\\s*");
-	private final Pattern _uncompressedJSPImportPattern = Pattern.compile(
-		"(<.*(?:page|tag) import=\".*>\n*)+", Pattern.MULTILINE);
-	private final Pattern _uncompressedJSPTaglibPattern = Pattern.compile(
-		"(<.*taglib uri=\".*>\n*)+", Pattern.MULTILINE);
+	private static final Pattern _uncompressedJSPImportPattern =
+		Pattern.compile(
+			"(<.*(?:page|tag) import=\".*>\n*)+", Pattern.MULTILINE);
+	private static final Pattern _uncompressedJSPTaglibPattern =
+		Pattern.compile("(<.*taglib uri=\".*>\n*)+", Pattern.MULTILINE);
 
 }

@@ -120,7 +120,7 @@ public class BNDDefinitionKeysCheck extends DefinitionKeysCheck {
 			content, "\n" + definitionKey + ":", "\n" + correctKey + ":");
 	}
 
-	private final Pattern _definitionKeyPattern = Pattern.compile(
+	private static final Pattern _definitionKeyPattern = Pattern.compile(
 		"([A-Za-z-]+?)[:=]");
 
 	private static class DefinitionComparator implements Comparator<String> {

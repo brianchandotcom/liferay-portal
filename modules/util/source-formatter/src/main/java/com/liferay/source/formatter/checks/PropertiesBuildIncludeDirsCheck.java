@@ -149,8 +149,9 @@ public class PropertiesBuildIncludeDirsCheck extends BaseFileCheck {
 		"test", "test-classes", "test-coverage", "test-results", "tmp"
 	};
 
-	private Set<String> _buildIncludeDirs;
-	private final Pattern _pattern = Pattern.compile(
+	private static final Pattern _pattern = Pattern.compile(
 		"([^\\S\\n]*)#build\\.include\\.dirs=\\\\(\\s*#.*)*");
+
+	private Set<String> _buildIncludeDirs;
 
 }

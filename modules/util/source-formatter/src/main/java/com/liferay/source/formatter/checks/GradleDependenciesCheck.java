@@ -183,9 +183,11 @@ public class GradleDependenciesCheck extends BaseFileCheck {
 		"compileOnly group: \"org.osgi\", name: \"osgi.core\", version: " +
 			"\"6.0.0\"";
 
-	private final Pattern _incorrectGroupNameVersionPattern = Pattern.compile(
-		"(^[^\\s]+)\\s+\"([^:]+?):([^:]+?):([^\"]+?)\"(.*?)", Pattern.DOTALL);
-	private final Pattern _incorrectWhitespacePattern = Pattern.compile(
+	private static final Pattern _incorrectGroupNameVersionPattern =
+		Pattern.compile(
+			"(^[^\\s]+)\\s+\"([^:]+?):([^:]+?):([^\"]+?)\"(.*?)",
+			Pattern.DOTALL);
+	private static final Pattern _incorrectWhitespacePattern = Pattern.compile(
 		":[^ \n]");
 
 	private class GradleDependencyComparator

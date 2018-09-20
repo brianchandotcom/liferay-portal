@@ -109,7 +109,7 @@ public class JavaElseStatementCheck extends BaseJavaTermCheck {
 		}
 	}
 
-	private final Pattern _elseStatementPattern = Pattern.compile(
+	private static final Pattern _elseStatementPattern = Pattern.compile(
 		"\t+else \\{\n\t(\t+)(return[ ;\n].*?)(.\\}.)", Pattern.DOTALL);
 
 }

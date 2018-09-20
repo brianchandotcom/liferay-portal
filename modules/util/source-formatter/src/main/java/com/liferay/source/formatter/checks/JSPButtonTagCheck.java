@@ -37,7 +37,7 @@ public class JSPButtonTagCheck extends BaseFileCheck {
 		return content;
 	}
 
-	private final Pattern _buttonTypePattern = Pattern.compile(
+	private static final Pattern _buttonTypePattern = Pattern.compile(
 		"<aui:button .*?type=\"button\"");
 
 }

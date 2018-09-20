@@ -223,9 +223,10 @@ public class JavaPackagePathCheck extends BaseJavaTermCheck {
 		}
 	}
 
+	private static final Pattern _internalPackagePattern = Pattern.compile(
+		"\\.(impl|internal)(\\.|\\Z)");
+
 	private final List<String> _allowedInternalPackageDirNames =
 		new ArrayList<>();
-	private final Pattern _internalPackagePattern = Pattern.compile(
-		"\\.(impl|internal)(\\.|\\Z)");
 
 }

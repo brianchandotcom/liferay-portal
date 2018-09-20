@@ -130,9 +130,9 @@ public class JavaMetaAnnotationsCheck extends JavaAnnotationsCheck {
 			annotation, StringPool.PERCENT, StringPool.BLANK, matcher.start());
 	}
 
-	private final Pattern _annotationMetaTypePattern = Pattern.compile(
+	private static final Pattern _annotationMetaTypePattern = Pattern.compile(
 		"[\\s\\(](name|description) = \"%");
-	private final Pattern _annotationMetaValueKeyPattern = Pattern.compile(
-		"\\s(\\w+) = \"([\\w\\.\\-]+?)\"");
+	private static final Pattern _annotationMetaValueKeyPattern =
+		Pattern.compile("\\s(\\w+) = \"([\\w\\.\\-]+?)\"");
 
 }

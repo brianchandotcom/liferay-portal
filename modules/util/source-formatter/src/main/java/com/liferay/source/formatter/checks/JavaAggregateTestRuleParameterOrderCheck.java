@@ -77,9 +77,9 @@ public class JavaAggregateTestRuleParameterOrderCheck extends BaseFileCheck {
 		return null;
 	}
 
-	private final Pattern _aggregateTestRulePattern = Pattern.compile(
+	private static final Pattern _aggregateTestRulePattern = Pattern.compile(
 		"new AggregateTestRule\\(");
-	private final Pattern _classNamePattern = Pattern.compile(
+	private static final Pattern _classNamePattern = Pattern.compile(
 		"(new )?([A-Z]\\w*?)[\\.\\(]");
 
 }

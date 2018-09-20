@@ -153,7 +153,7 @@ public class LiferayToHtmlSerializer extends ToHtmlSerializer {
 		printer.print("</p>");
 	}
 
-	private final Pattern _headerIdPattern = Pattern.compile(
+	private static final Pattern _headerIdPattern = Pattern.compile(
 		"\\[\\]\\(id=([^\\s]+?)\\)");
 
 }

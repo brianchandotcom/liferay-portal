@@ -111,9 +111,9 @@ public class MethodNamingCheck extends BaseCheck {
 
 	private static final String _MSG_RENAME_METHOD = "method.rename";
 
-	private final Pattern _doMethodNamePattern = Pattern.compile(
+	private static final Pattern _doMethodNamePattern = Pattern.compile(
 		"^_do([A-Z])(.*)$");
-	private final Pattern _nonMethodNamePattern = Pattern.compile(
+	private static final Pattern _nonMethodNamePattern = Pattern.compile(
 		"(^non|.*Non)([A-Z])(.*)");
 
 }

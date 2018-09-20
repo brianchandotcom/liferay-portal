@@ -271,12 +271,13 @@ public class GradleExportedPackageDependenciesCheck extends BaseFileCheck {
 		"test-classes", "test-coverage", "test-results", "tmp"
 	};
 
-	private final Pattern _dependenciesPattern = Pattern.compile(
+	private static final Pattern _dependenciesPattern = Pattern.compile(
 		"(\n|\\A)(\t*)dependencies \\{\n");
-	private final Pattern _dependencyNamePattern = Pattern.compile(
+	private static final Pattern _dependencyNamePattern = Pattern.compile(
 		".*, name: \"([^\"]*)\".*");
-	private final Pattern _dependencyVersionPattern = Pattern.compile(
+	private static final Pattern _dependencyVersionPattern = Pattern.compile(
 		".*, version: \"([^\"]*)\".*");
+
 	private Map<String, String> _emptyExportPackageBundleSymbolicMap;
 
 }

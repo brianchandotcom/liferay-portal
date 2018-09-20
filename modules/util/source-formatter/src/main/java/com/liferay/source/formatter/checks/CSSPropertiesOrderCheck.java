@@ -73,7 +73,7 @@ public class CSSPropertiesOrderCheck extends BaseFileCheck {
 		return content;
 	}
 
-	private final Pattern _propertiesPattern = Pattern.compile(
+	private static final Pattern _propertiesPattern = Pattern.compile(
 		"(^(\t*)[a-z]\\S*: .+;\n)+", Pattern.MULTILINE);
 
 	private class PropertyComparator extends NaturalOrderStringComparator {

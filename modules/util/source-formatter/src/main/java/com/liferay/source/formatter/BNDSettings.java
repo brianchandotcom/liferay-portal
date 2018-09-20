@@ -98,13 +98,14 @@ public class BNDSettings {
 		return _releaseVersion;
 	}
 
-	private final String _content;
-	private final Pattern _contentDirPattern = Pattern.compile(
+	private static final Pattern _contentDirPattern = Pattern.compile(
 		"\\scontent=(.*?)(,\\\\|\n|$)");
+	private static final Pattern _releaseVersionPattern = Pattern.compile(
+		"Bundle-Version: (.*)(\n|\\Z)");
+
+	private final String _content;
 	private final String _fileName;
 	private Properties _languageProperties;
 	private String _releaseVersion;
-	private final Pattern _releaseVersionPattern = Pattern.compile(
-		"Bundle-Version: (.*)(\n|\\Z)");
 
 }

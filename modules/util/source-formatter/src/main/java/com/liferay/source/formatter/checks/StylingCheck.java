@@ -222,9 +222,9 @@ public abstract class StylingCheck extends BaseFileCheck {
 		}
 	}
 
-	private final Pattern _booleanPattern = Pattern.compile(
+	private static final Pattern _booleanPattern = Pattern.compile(
 		"\\((\\!)?(\\w+)\\s+(==|!=)\\s+(false|true)\\)");
-	private final Pattern _redundantArrayInitializationPattern =
+	private static final Pattern _redundantArrayInitializationPattern =
 		Pattern.compile("\\W(\\w+)\\[\\]\\[\\] (\\w+ = )?\\{\n");
 
 }

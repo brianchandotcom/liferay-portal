@@ -67,7 +67,7 @@ public class JavaDeserializationSecurityCheck extends BaseFileCheck {
 		}
 	}
 
-	private final Pattern[] _javaSerializationVulnerabilityPatterns = {
+	private static final Pattern[] _javaSerializationVulnerabilityPatterns = {
 		Pattern.compile(
 			".*(new [a-z\\.\\s]*ObjectInputStream).*", Pattern.DOTALL),
 		Pattern.compile(

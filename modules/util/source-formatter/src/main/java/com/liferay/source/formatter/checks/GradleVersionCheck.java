@@ -134,9 +134,10 @@ public class GradleVersionCheck extends BaseFileCheck {
 		return true;
 	}
 
-	private final Pattern _bndConditionalPackagePattern = Pattern.compile(
-		"-conditionalpackage:(.*[^\\\\])(\n|\\Z)", Pattern.DOTALL);
-	private final Pattern _versionPattern = Pattern.compile(
+	private static final Pattern _bndConditionalPackagePattern =
+		Pattern.compile(
+			"-conditionalpackage:(.*[^\\\\])(\n|\\Z)", Pattern.DOTALL);
+	private static final Pattern _versionPattern = Pattern.compile(
 		"\n\t*(.* name: \"(.*?)\", version: \"(.*?)\")");
 
 }

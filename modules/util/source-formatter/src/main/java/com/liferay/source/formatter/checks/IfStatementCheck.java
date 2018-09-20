@@ -323,6 +323,6 @@ public abstract class IfStatementCheck extends BaseFileCheck {
 		return false;
 	}
 
-	private final Pattern _methodCallPattern = Pattern.compile("\\w\\(");
+	private static final Pattern _methodCallPattern = Pattern.compile("\\w\\(");
 
 }

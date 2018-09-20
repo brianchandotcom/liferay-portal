@@ -130,9 +130,9 @@ public class JavaStringBundlerConcatCheck extends BaseJavaTermCheck {
 		}
 	}
 
-	private final Pattern _stringBundlerConcatPattern = Pattern.compile(
+	private static final Pattern _stringBundlerConcatPattern = Pattern.compile(
 		"StringBundler\\.concat\\(");
-	private final Pattern _stringValueOfPattern = Pattern.compile(
+	private static final Pattern _stringValueOfPattern = Pattern.compile(
 		"String\\.valueOf\\(");
 
 }

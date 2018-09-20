@@ -507,20 +507,22 @@ public class LanguageKeysCheck extends BaseFileCheck {
 		return _portalLanguageProperties;
 	}
 
-	private final Pattern _applyLangMergerPluginPattern = Pattern.compile(
-		"^apply[ \t]+plugin[ \t]*:[ \t]+\"com.liferay.lang.merger\"$",
-		Pattern.MULTILINE);
+	private static final Pattern _applyLangMergerPluginPattern =
+		Pattern.compile(
+			"^apply[ \t]+plugin[ \t]*:[ \t]+\"com.liferay.lang.merger\"$",
+			Pattern.MULTILINE);
+	private static final Pattern _mergeLangPattern = Pattern.compile(
+		"mergeLang \\{\\s*sourceDirs = \\[(.*?)\\]", Pattern.DOTALL);
+	private static final Pattern _metaAnnotationDescriptionParameterPattern =
+		Pattern.compile(
+			"@Meta\\.(?:AD|OCD)\\([^\\{]*?description\\s*=\\s*\"(.+?)\"");
+	private static final Pattern _metaAnnotationNameParameterPattern =
+		Pattern.compile("@Meta\\.(?:AD|OCD)\\([^\\{]*?name\\s*=\\s*\"(.+?)\"");
+
 	private final Map<String, Properties> _buildGradleLanguagePropertiesMap =
 		new HashMap<>();
 	private final Map<String, Properties> _langModuleLanguagePropertiesMap =
 		new HashMap<>();
-	private final Pattern _mergeLangPattern = Pattern.compile(
-		"mergeLang \\{\\s*sourceDirs = \\[(.*?)\\]", Pattern.DOTALL);
-	private final Pattern _metaAnnotationDescriptionParameterPattern =
-		Pattern.compile(
-			"@Meta\\.(?:AD|OCD)\\([^\\{]*?description\\s*=\\s*\"(.+?)\"");
-	private final Pattern _metaAnnotationNameParameterPattern = Pattern.compile(
-		"@Meta\\.(?:AD|OCD)\\([^\\{]*?name\\s*=\\s*\"(.+?)\"");
 	private final Map<String, Properties> _moduleLanguagePropertiesMap =
 		new HashMap<>();
 	private Properties _portalLanguageProperties;

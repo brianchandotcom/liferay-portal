@@ -65,7 +65,7 @@ public class XMLProjectElementCheck extends BaseFileCheck {
 			content, firstLine, StringUtil.merge(list, "\n\t"));
 	}
 
-	private final Pattern _pattern = Pattern.compile(
+	private static final Pattern _pattern = Pattern.compile(
 		"\\s*\\S*\\s*=\\s*\"[^\"]*\"");
 
 }

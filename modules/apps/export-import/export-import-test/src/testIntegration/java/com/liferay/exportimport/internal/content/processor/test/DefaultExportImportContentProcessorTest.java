@@ -1197,6 +1197,7 @@ public class DefaultExportImportContentProcessorTest {
 	private static final Locale[] _locales =
 		{LocaleUtil.US, LocaleUtil.GERMANY, LocaleUtil.SPAIN};
 	private static String _oldLayoutFriendlyURLPrivateUserServletMapping;
+	private static final Pattern _pattern = Pattern.compile("href=|\\{|\\[");
 	private static ServiceTracker
 		<ExportImportContentProcessor, ExportImportContentProcessor>
 			_serviceTracker;
@@ -1219,7 +1220,6 @@ public class DefaultExportImportContentProcessorTest {
 	private Layout _livePrivateLayout;
 	private Layout _livePublicLayout;
 	private Locale _nondefaultLocale;
-	private final Pattern _pattern = Pattern.compile("href=|\\{|\\[");
 	private PortletDataContext _portletDataContextExport;
 	private PortletDataContext _portletDataContextImport;
 	private StagedModel _referrerStagedModel;

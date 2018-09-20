@@ -94,7 +94,7 @@ public class JSPLogFileNameCheck extends BaseFileCheck {
 			"Log _log = LogFactoryUtil.getLog(\"" + logFileName + "\")");
 	}
 
-	private final Pattern _logPattern = Pattern.compile(
+	private static final Pattern _logPattern = Pattern.compile(
 		"Log _log = LogFactoryUtil\\.getLog\\(\"(.*?)\"\\)");
 
 }

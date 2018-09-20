@@ -81,6 +81,6 @@ public class DebugPortExecutor extends BaseExecutor {
 		return null;
 	}
 
-	private final Pattern _pattern = Pattern.compile("address=(\\d+)");
+	private static final Pattern _pattern = Pattern.compile("address=(\\d+)");
 
 }

@@ -186,8 +186,9 @@ public abstract class VerifyProcess extends BaseDBProcess {
 
 	private static final Log _log = LogFactoryUtil.getLog(VerifyProcess.class);
 
-	private final Pattern _createTablePattern = Pattern.compile(
+	private static final Pattern _createTablePattern = Pattern.compile(
 		"create table (\\S*) \\(");
+
 	private Set<String> _portalTableNames;
 
 }

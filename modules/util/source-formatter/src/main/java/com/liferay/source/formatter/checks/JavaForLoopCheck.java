@@ -239,10 +239,10 @@ public class JavaForLoopCheck extends BaseJavaTermCheck {
 
 	private static final int _COLLECTION_TYPE_LIST = 1;
 
-	private final Pattern _arrayPattern = Pattern.compile(
+	private static final Pattern _arrayPattern = Pattern.compile(
 		"\tfor \\(int (\\w+) = 0;\\s+(\\w+) < (\\w+)\\.length;\\s+(\\w+)\\+" +
 			"\\+\\) \\{\n");
-	private final Pattern _listPattern = Pattern.compile(
+	private static final Pattern _listPattern = Pattern.compile(
 		"\tfor \\(int (\\w+) = 0;\\s+(\\w+) < (\\w+)\\.size\\(\\);\\s+(\\w+)" +
 			"\\+\\+\\) \\{\n");
 

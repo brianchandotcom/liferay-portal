@@ -307,27 +307,27 @@ public class XMLPoshiFileCheck extends BaseFileCheck {
 		return content;
 	}
 
-	private final Pattern _poshiCommandsPattern = Pattern.compile(
+	private static final Pattern _poshiCommandsPattern = Pattern.compile(
 		"\\<command.*name=\\\"([^\\\"]*)\\\".*\\>[\\s\\S]*?\\</command\\>" +
 			"[\\n|\\t]*?(?:[^(?:/\\>)]*?--\\>)*+");
-	private final Pattern _poshiElementWithNoChildPattern = Pattern.compile(
-		"\\\"[\\s]*\\>[\\n\\s\\t]*\\</[a-z\\-]+>");
-	private final Pattern _poshiEndLinesAfterClosingElementPattern =
+	private static final Pattern _poshiElementWithNoChildPattern =
+		Pattern.compile("\\\"[\\s]*\\>[\\n\\s\\t]*\\</[a-z\\-]+>");
+	private static final Pattern _poshiEndLinesAfterClosingElementPattern =
 		Pattern.compile("(\\</[a-z\\-]+>)(\\n+)\\t*\\<[a-z]+");
-	private final Pattern _poshiEndLinesBeforeClosingElementPattern =
+	private static final Pattern _poshiEndLinesBeforeClosingElementPattern =
 		Pattern.compile("(\\n+)(\\t*</[a-z\\-]+>)");
-	private final Pattern _poshiEndLinesPattern = Pattern.compile(
+	private static final Pattern _poshiEndLinesPattern = Pattern.compile(
 		"\\>\\n\\n\\n+(\\t*\\<)");
-	private final Pattern _poshiSetUpPattern = Pattern.compile(
+	private static final Pattern _poshiSetUpPattern = Pattern.compile(
 		"\\n[\\t]++\\<set-up\\>([\\s\\S]*?)\\</set-up\\>" +
 			"[\\n|\\t]*?(?:[^(?:/\\>)]*?--\\>)*+\\n");
-	private final Pattern _poshiTearDownPattern = Pattern.compile(
+	private static final Pattern _poshiTearDownPattern = Pattern.compile(
 		"\\n[\\t]++\\<tear-down\\>([\\s\\S]*?)\\</tear-down\\>" +
 			"[\\n|\\t]*?(?:[^(?:/\\>)]*?--\\>)*+\\n");
-	private final Pattern _poshiVariableLinePattern = Pattern.compile(
+	private static final Pattern _poshiVariableLinePattern = Pattern.compile(
 		"([\\t]*+)(\\<var.*?name=\\\"([^\\\"]*)\\\".*?/\\>" +
 			".*+(?:\\</var\\>)??)");
-	private final Pattern _poshiVariablesBlockPattern = Pattern.compile(
+	private static final Pattern _poshiVariablesBlockPattern = Pattern.compile(
 		"((?:[\\t]*+\\<var.*?\\>\\n[\\t]*+){2,}?)" +
 			"(?:(?:\\n){1,}+|\\</execute\\>)");
 

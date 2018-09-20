@@ -371,10 +371,11 @@ public class JavaTermComparator implements Comparator<JavaTerm> {
 		return -1;
 	}
 
-	private final String _customSQLContent;
-	private final Pattern _finderPattern = Pattern.compile(
+	private static final Pattern _finderPattern = Pattern.compile(
 		"((COUNT|FIND|JOIN)_|(do|filter)?([Cc]ount|[Ff]ind)).*");
-	private final Pattern _sqlKeyPattern = Pattern.compile(
+	private static final Pattern _sqlKeyPattern = Pattern.compile(
 		"\"\\.([^\"]+)\";\n");
+
+	private final String _customSQLContent;
 
 }

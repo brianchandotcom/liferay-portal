@@ -14,7 +14,14 @@
 
 package com.liferay.layout.type.controller.content.internal.control.menu;
 
+import com.liferay.layout.type.controller.content.internal.controller.ContentLayoutTypeController;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.LayoutTypeController;
+import com.liferay.portal.kernel.model.LayoutTypePortlet;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.product.navigation.control.menu.BaseJSPProductNavigationControlMenuEntry;
 import com.liferay.product.navigation.control.menu.ProductNavigationControlMenuEntry;
 import com.liferay.product.navigation.control.menu.constants.ProductNavigationControlMenuCategoryKeys;
@@ -59,7 +66,26 @@ public class ToggleEditLayoutModeProductNavigationControlMenuEntry
 
 	@Override
 	public boolean isShow(HttpServletRequest request) throws PortalException {
-		return false;
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		LayoutTypePortlet layoutTypePortlet =
+			themeDisplay.getLayoutTypePortlet();
+
+		LayoutTypeController layoutTypeController =
+			layoutTypePortlet.getLayoutTypeController();
+
+		if (layoutTypeController.isFullPageDisplayable()) {
+			return false;
+		}
+
+		if (!(layoutTypeController instanceof ContentLayoutTypeController)) {
+			return false;
+		}
+
+		return LayoutPermissionUtil.contains(
+			themeDisplay.getPermissionChecker(), themeDisplay.getLayout(),
+			ActionKeys.UPDATE);
 	}
 
 	@Override

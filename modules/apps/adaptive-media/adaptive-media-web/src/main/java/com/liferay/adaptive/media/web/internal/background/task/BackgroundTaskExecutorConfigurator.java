@@ -30,7 +30,7 @@ import org.osgi.service.component.annotations.Deactivate;
 /**
  * @author Sergio González
  */
-@Component(immediate = true, service = BackgroundTaskExecutorConfigurator.class)
+@Component(immediate = true, service = {})
 public class BackgroundTaskExecutorConfigurator {
 
 	@Activate

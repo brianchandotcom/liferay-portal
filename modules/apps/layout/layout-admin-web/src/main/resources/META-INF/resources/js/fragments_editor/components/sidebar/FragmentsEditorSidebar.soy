@@ -21,8 +21,6 @@
 	{@param? highlightMapping: bool}
 	{@param? _handleHide: any}
 	{@param? _handleHideSidebarButtonClick: any}
-	{@param? _handleTabClick: any}
-	{@param? _selectedTab: string}
 	{@param? selectedMappingTypes: [
 		subtype: [
 			id: string,
@@ -38,51 +36,17 @@
 
 	{call liferay.frontend.ContextualSidebar.render}
 		{param body kind="html"}
-			<div class="sidebar-section">
-				<nav class="navbar navbar-expand-md navbar-underline">
-					<ul class="navbar-nav">
-						{if $sidebarTabs}
-							{foreach $sidebarTab in $sidebarTabs}
-								{if $sidebarTab.enabled}
-									{call .sidebarTab}
-										{param active: $sidebarTab.id == $_selectedTab /}
-										{param id: $sidebarTab.id /}
-										{param key: $sidebarTab.id /}
-										{param handleTabClick: $_handleTabClick /}
-										{param label: $sidebarTab.label /}
-									{/call}
-								{/if}
-							{/foreach}
-						{/if}
-					</ul>
-				</nav>
-			</div>
-
-			{if $_selectedTab == 'available'}
-				{call com.liferay.layout.admin.web.SidebarAvailableFragments.render}
-					{param dropTargetClass: $dropTargetClass /}
-					{param fragmentCollections: $fragmentCollections /}
-					{param ref: 'sidebarTab' /}
-					{param spritemap: $spritemap /}
-					{param store: $store /}
-				{/call}
-			{elseif $_selectedTab == 'added'}
-				{call com.liferay.layout.admin.web.SidebarAddedFragments.render}
-					{param fragmentEntryLinks: $fragmentEntryLinks /}
-					{param layoutData: $layoutData /}
-					{param ref: 'sidebarTab' /}
-					{param spritemap: $spritemap /}
-					{param store: $store /}
-				{/call}
-			{elseif $_selectedTab == 'mapping'}
-				{call com.liferay.layout.admin.web.SidebarMapping.render}
-					{param highlightMapping: $highlightMapping ?: false /}
-					{param ref: 'sidebarTab' /}
-					{param selectedMappingTypes: $selectedMappingTypes /}
-					{param spritemap: $spritemap /}
-					{param store: $store /}
-				{/call}
-			{/if}
+			{call com.liferay.layout.admin.web.FragmentsEditorSidebarContent.render}
+				{param dropTargetClass: $dropTargetClass /}
+				{param fragmentCollections: $fragmentCollections /}
+				{param fragmentEntryLinks: $fragmentEntryLinks /}
+				{param highlightMapping: $highlightMapping ?: false /}
+				{param layoutData: $layoutData /}
+				{param selectedMappingTypes: $selectedMappingTypes /}
+				{param sidebarTabs: $sidebarTabs /}
+				{param spritemap: $spritemap /}
+				{param store: $store /}
+			{/call}
 		{/param}
 
 		{param elementClasses: 'fragments-editor-sidebar' /}
@@ -92,27 +56,10 @@
 		] /}
 
 		{param header kind="html"}
-			<div class="autofit-row sidebar-section">
-				<div class="autofit-col autofit-col-expand">
-					<h4 class="component-title">
-						<span class="text-truncate-inline">
-							{msg desc=""}fragments{/msg}
-						</span>
-					</h4>
-				</div>
-
-				<div class="autofit-col">
-					<button
-						class="component-action"
-						data-onclick="{$_handleHideSidebarButtonClick}"
-						type="button"
-					>
-						<svg class="icon-monospaced lexicon-icon">
-							<use xlink:href="{$spritemap}#times"></use>
-						</svg>
-					</button>
-				</div>
-			</div>
+			{call .sidebarHeader}
+				{param handleHideSidebarButtonClick: $_handleHideSidebarButtonClick /}
+				{param spritemap: $spritemap /}
+			{/call}
 		{/param}
 
 		{param ref: 'contextualSidebar' /}
@@ -121,31 +68,31 @@
 {/template}
 
 /**
- * Sidebar tab
+ * Sidebar header
  */
-{template .sidebarTab}
-	{@param id: string}
-	{@param handleTabClick: any}
-	{@param active: bool}
-	{@param label: string}
+{template .sidebarHeader}
+	{@param spritemap: string}
+	{@param? handleHideSidebarButtonClick: any}
 
-	<li class="nav-item">
-		{let $navLinkClasses kind="text"}
-			nav-link
-			{if $active}
-				{sp}active
-			{/if}
-		{/let}
+	<div class="autofit-row sidebar-section">
+		<div class="autofit-col autofit-col-expand">
+			<h4 class="component-title">
+				<span class="text-truncate-inline">
+					{msg desc=""}fragments{/msg}
+				</span>
+			</h4>
+		</div>
 
-		<a
-			class="{$navLinkClasses}"
-			data-onclick="{$handleTabClick}"
-			data-tab-id="{$id}"
-			href="javascript:;"
-		>
-			<span class="text-truncate">
-				{$label}
-			</span>
-		</a>
-	</li>
+		<div class="autofit-col">
+			<button
+				class="component-action"
+				data-onclick="{$handleHideSidebarButtonClick}"
+				type="button"
+			>
+				<svg class="icon-monospaced lexicon-icon">
+					<use xlink:href="{$spritemap}#times"></use>
+				</svg>
+			</button>
+		</div>
+	</div>
 {/template}

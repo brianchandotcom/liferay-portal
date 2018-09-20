@@ -28,7 +28,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.users.admin.constants.UsersAdminPortletKeys;
-import com.liferay.users.admin.kernel.util.UsersAdminUtil;
+import com.liferay.users.admin.kernel.util.UsersAdmin;
 
 import java.util.List;
 
@@ -93,12 +93,15 @@ public class UpdateOrganizationOpeningHoursMVCActionCommand
 			themeDisplay.getPermissionChecker(), organizationId,
 			ActionKeys.UPDATE);
 
-		List<OrgLabor> orgLabors = UsersAdminUtil.getOrgLabors(actionRequest);
+		List<OrgLabor> orgLabors = _usersAdmin.getOrgLabors(actionRequest);
 
-		UsersAdminUtil.updateOrgLabors(organizationId, orgLabors);
+		_usersAdmin.updateOrgLabors(organizationId, orgLabors);
 	}
 
 	@Reference
 	private OrgLaborService _orgLaborService;
+
+	@Reference
+	private UsersAdmin _usersAdmin;
 
 }

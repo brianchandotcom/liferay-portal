@@ -37,13 +37,6 @@ import org.aopalliance.intercept.MethodInvocation;
 public class AccessControlAdvisorImpl implements AccessControlAdvisor {
 
 	public AccessControlAdvisorImpl() {
-		Registry registry = RegistryUtil.getRegistry();
-
-		_serviceTracker = registry.trackServices(
-			AccessControlPolicy.class,
-			new AccessControlPolicyTrackerCustomizer());
-
-		_serviceTracker.open();
 	}
 
 	@Override
@@ -72,11 +65,11 @@ public class AccessControlAdvisorImpl implements AccessControlAdvisor {
 		}
 	}
 
-	private final List<AccessControlPolicy> _accessControlPolicies =
+	private static final List<AccessControlPolicy> _accessControlPolicies =
 		new CopyOnWriteArrayList<>();
-	private final ServiceTracker<?, AccessControlPolicy> _serviceTracker;
+	private static final ServiceTracker<?, ?> _serviceTracker;
 
-	private class AccessControlPolicyTrackerCustomizer
+	private static class AccessControlPolicyTrackerCustomizer
 		implements
 			ServiceTrackerCustomizer<AccessControlPolicy, AccessControlPolicy> {
 
@@ -112,6 +105,16 @@ public class AccessControlAdvisorImpl implements AccessControlAdvisor {
 			_accessControlPolicies.remove(accessControlPolicy);
 		}
 
+	}
+
+	static {
+		Registry registry = RegistryUtil.getRegistry();
+
+		_serviceTracker = registry.trackServices(
+			AccessControlPolicy.class,
+			new AccessControlPolicyTrackerCustomizer());
+
+		_serviceTracker.open();
 	}
 
 }

@@ -16,14 +16,11 @@ package com.liferay.journal.web.internal.portlet.filter;
 
 import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.journal.service.JournalArticleService;
+import com.liferay.journal.web.internal.portlet.action.ActionUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.servlet.SessionErrors;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.io.IOException;
 
@@ -65,18 +62,8 @@ public class JournalWebPortletFilter implements RenderFilter {
 		if (Objects.equals(path, "/edit_article.jsp") ||
 			Objects.equals(path, "/view_article_history.jsp")) {
 
-			ThemeDisplay themeDisplay =
-				(ThemeDisplay)renderRequest.getAttribute(WebKeys.THEME_DISPLAY);
-
-			long groupId = ParamUtil.getLong(
-				renderRequest, "groupId", themeDisplay.getScopeGroupId());
-
-			String articleId = ParamUtil.getString(renderRequest, "articleId");
-			int status = WorkflowConstants.STATUS_ANY;
-
 			try {
-				_journalArticleService.getLatestArticle(
-					groupId, articleId, status);
+				ActionUtil.getArticle(renderRequest);
 			}
 			catch (PrincipalException.MustHavePermission e) {
 				_log.error(e, e);

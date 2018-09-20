@@ -19,9 +19,10 @@ import com.liferay.portal.kernel.model.WorkflowDefinitionLink;
 import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portal.workflow.uad.test.WorkflowDefinitionLinkUADTestHelper;
 import com.liferay.user.associated.data.exporter.UADExporter;
 import com.liferay.user.associated.data.test.util.BaseUADExporterTestCase;
 
@@ -49,8 +50,10 @@ public class WorkflowDefinitionLinkUADExporterTest
 		throws Exception {
 
 		WorkflowDefinitionLink workflowDefinitionLink =
-			WorkflowDefinitionLinkUADTestHelper.addWorkflowDefinitionLink(
-				_workflowDefinitionLinkLocalService, userId);
+			_workflowDefinitionLinkLocalService.addWorkflowDefinitionLink(
+				userId, TestPropsValues.getCompanyId(),
+				TestPropsValues.getGroupId(), null, 0, 0,
+				RandomTestUtil.randomString(), 0);
 
 		_workflowDefinitionLinks.add(workflowDefinitionLink);
 

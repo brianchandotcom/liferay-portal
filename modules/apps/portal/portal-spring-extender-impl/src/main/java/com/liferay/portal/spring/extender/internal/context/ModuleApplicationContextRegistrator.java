@@ -14,6 +14,7 @@
 
 package com.liferay.portal.spring.extender.internal.context;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.bean.BeanLocatorImpl;
 import com.liferay.portal.kernel.bean.PortletBeanLocatorUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -26,6 +27,11 @@ import com.liferay.portal.spring.extender.internal.classloader.BundleResolverCla
 import com.liferay.portal.spring.extender.internal.loader.ModuleResourceLoader;
 
 import java.beans.Introspector;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Dictionary;
+import java.util.List;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.wiring.BundleWiring;
@@ -110,11 +116,8 @@ public class ModuleApplicationContextRegistrator {
 			Bundle extender, Bundle extendee)
 		throws RuntimeException {
 
-		SpringContextHeaderParser springContextHeaderParser =
-			new SpringContextHeaderParser(extendee);
-
-		String[] beanDefinitionFileNames =
-			springContextHeaderParser.getBeanDefinitionFileNames();
+		String[] beanDefinitionFileNames = _getBeanDefinitionFileNames(
+			extendee);
 
 		if (ArrayUtil.isEmpty(beanDefinitionFileNames)) {
 			return null;
@@ -138,6 +141,29 @@ public class ModuleApplicationContextRegistrator {
 		moduleApplicationContext.refresh();
 
 		return moduleApplicationContext;
+	}
+
+	private String[] _getBeanDefinitionFileNames(Bundle bundle) {
+		List<String> beanDefinitionFileNames = new ArrayList<>();
+
+		Dictionary<String, String> headers = bundle.getHeaders(
+			StringPool.BLANK);
+
+		String liferayService = headers.get("Liferay-Service");
+
+		if (liferayService != null) {
+			beanDefinitionFileNames.add("META-INF/spring/parent");
+		}
+
+		String springContext = headers.get("Liferay-Spring-Context");
+
+		if (springContext != null) {
+			Collections.addAll(
+				beanDefinitionFileNames, springContext.split(","));
+		}
+
+		return beanDefinitionFileNames.toArray(
+			new String[beanDefinitionFileNames.size()]);
 	}
 
 	private void _registerBeanLocator(

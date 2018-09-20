@@ -24,6 +24,12 @@ FragmentsEditorDisplayContext fragmentsEditorDisplayContext = new FragmentsEdito
 	editorName="alloyeditor"
 />
 
+<%
+Portlet portlet = PortletLocalServiceUtil.getPortletById(company.getCompanyId(), portletDisplay.getId());
+%>
+
+<link href="<%= PortalUtil.getStaticResourceURL(request, PortalUtil.getPathModule() + "/layout-admin-web/css/fragments_editor/FragmentsEditorEditMode.css") %>" rel="stylesheet">
+
 <soy:component-renderer
 	componentId='<%= renderResponse.getNamespace() + "fragments" %>'
 	context="<%= fragmentsEditorDisplayContext.getFragmentEntryLinkListContext() %>"

@@ -362,6 +362,10 @@ public class AutoCloseUtil {
 				testBatchNamesAutoClose, ",");
 
 			for (String autoCloseRuleData : autoCloseRuleDataArray) {
+				if (autoCloseRuleData.startsWith("#")) {
+					continue;
+				}
+
 				AutoCloseRule newAutoCloseRule = new AutoCloseRule(
 					autoCloseRuleData);
 

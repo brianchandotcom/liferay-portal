@@ -167,7 +167,7 @@ public class PullRequest {
 		while (true) {
 			try {
 				JSONArray jsonArray = JenkinsResultsParserUtil.toJSONArray(
-					gitHubApiUrl + page);
+					gitHubApiUrl + page, false);
 
 				if (jsonArray.length() == 0) {
 					break;

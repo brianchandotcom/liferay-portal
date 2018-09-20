@@ -40,8 +40,8 @@ renderResponse.setTitle(assetListDisplayContext.getAssetListEntryTitle());
 	<aui:model-context bean="<%= assetListEntry %>" model="<%= AssetListEntry.class %>" />
 
 	<liferay-frontend:edit-form-body>
-		<liferay-ui:error embed="<%= false %>" exception="<%= AssetListEntryTitleException.class %>" message="please-enter-a-valid-title" />
-		<liferay-ui:error embed="<%= false %>" exception="<%= DuplicateAssetListEntryTitleException.class %>" message="an-asset-list-with-that-title-already-exists" />
+		<liferay-ui:error exception="<%= AssetListEntryTitleException.class %>" message="please-enter-a-valid-title" />
+		<liferay-ui:error exception="<%= DuplicateAssetListEntryTitleException.class %>" message="an-asset-list-with-that-title-already-exists" />
 
 		<h3 class="sheet-subtitle">
 			<span class="autofit-padded-no-gutters autofit-row">

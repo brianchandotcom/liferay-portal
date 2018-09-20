@@ -1025,7 +1025,7 @@
 		<execute function="AssertTextEquals" locator1="Portlet#H1_HEADER" value1="FrontPage" />
 		<execute function="AssertTextEquals" locator1="WikiEntry#BODY" value1="${wikiPageContent}" />
 		<execute function="AssertElementPresent" locator1="Link#ADD_CHILD_PAGE" />
-		<execute function="AssertElementPresent" locator1="Comments#SUBSCRIBE_TO_COMMENTS_LINK" />
+		<execute function="AssertElementPresent" locator1="Button#SUBSCRIBE" />
 		<execute function="AssertElementPresent" locator1="Link#ATTACHMENTS" />
 		<execute function="AssertElementPresent" locator1="Wiki#ADT_SOCIAL_LAST_MODIFIED_MESSAGE" />
 		<execute function="AssertElementPresent" locator1="Icon#DETAILS" />
@@ -1058,7 +1058,7 @@
 		<execute function="AssertTextEquals" locator1="Link#DETAILS" value1="Details" />
 		<execute function="AssertTextEquals" locator1="Link#PRINT" value1="Print" />
 		<execute function="AssertElementPresent" locator1="Comments#PANEL_TOGGLE" />
-		<execute function="AssertElementPresent" locator1="Comments#SUBSCRIBE_TO_COMMENTS_LINK" />
+		<execute function="AssertElementPresent" locator1="Button#SUBSCRIBE" />
 		<execute function="AssertElementPresent" locator1="Ratings#YOUR_RATING_LABEL" />
 		<execute function="AssertElementPresent" locator1="Ratings#AVERAGE_LABEL" />
 	</command>

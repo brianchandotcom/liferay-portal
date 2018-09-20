@@ -15,7 +15,7 @@
 	</command>
 
 	<command name="subscribePG">
-		<execute function="AssertClick" locator1="Comments#SUBSCRIBE_TO_COMMENTS_LINK" value1="Subscribe to Comments" />
+		<execute function="AssertClick" locator1="Button#SUBSCRIBE" value1="Subscribe" />
 
 		<execute macro="Alert#viewSuccessMessage" />
 	</command>

@@ -326,7 +326,7 @@
 
 	<command name="viewAllSettingsEnabledPG">
 		<execute function="AssertTextEquals#assertPartialText" locator1="Icon#PRINT" value1="Print" />
-		<execute function="AssertTextEquals#assertPartialText" locator1="Comments#SUBSCRIBE_TO_COMMENTS_LINK" value1="Subscribe to Comments" />
+		<execute function="AssertElementPresent" locator1="Button#SUBSCRIBE" value1="Subscribe" />
 
 		<var name="key_assetTitle" value="${relatedAssetTitle}" />
 

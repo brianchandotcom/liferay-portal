@@ -21,9 +21,10 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.PortletItemLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portal.uad.test.PortletItemUADTestHelper;
 
 import com.liferay.user.associated.data.anonymizer.UADAnonymizer;
 import com.liferay.user.associated.data.test.util.BaseUADAnonymizerTestCase;
@@ -38,7 +39,6 @@ import java.util.List;
 
 /**
  * @author Brian Wing Shun Chan
- * @generated
  */
 @RunWith(Arquillian.class)
 public class PortletItemUADAnonymizerTest extends BaseUADAnonymizerTestCase<PortletItem> {
@@ -54,8 +54,9 @@ public class PortletItemUADAnonymizerTest extends BaseUADAnonymizerTestCase<Port
 	@Override
 	protected PortletItem addBaseModel(long userId, boolean deleteAfterTestRun)
 		throws Exception {
-		PortletItem portletItem = PortletItemUADTestHelper.addPortletItem(
-			_portletItemLocalService, userId);
+		PortletItem portletItem = _portletItemLocalService.addPortletItem(
+			userId, TestPropsValues.getGroupId(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), RandomTestUtil.randomString());
 
 		if (deleteAfterTestRun) {
 			_portletItems.add(portletItem);

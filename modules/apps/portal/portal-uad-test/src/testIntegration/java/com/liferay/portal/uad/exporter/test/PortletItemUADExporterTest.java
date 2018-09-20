@@ -20,9 +20,10 @@ import com.liferay.portal.kernel.model.PortletItem;
 import com.liferay.portal.kernel.service.PortletItemLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portal.uad.test.PortletItemUADTestHelper;
 
 import com.liferay.user.associated.data.exporter.UADExporter;
 import com.liferay.user.associated.data.test.util.BaseUADExporterTestCase;
@@ -37,7 +38,6 @@ import java.util.List;
 
 /**
  * @author Brian Wing Shun Chan
- * @generated
  */
 @RunWith(Arquillian.class)
 public class PortletItemUADExporterTest extends BaseUADExporterTestCase<PortletItem> {
@@ -47,8 +47,9 @@ public class PortletItemUADExporterTest extends BaseUADExporterTestCase<PortletI
 
 	@Override
 	protected PortletItem addBaseModel(long userId) throws Exception {
-		PortletItem portletItem = PortletItemUADTestHelper.addPortletItem(
-			_portletItemLocalService, userId);
+		PortletItem portletItem = _portletItemLocalService.addPortletItem(
+			userId, TestPropsValues.getGroupId(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), RandomTestUtil.randomString());
 
 		_portletItems.add(portletItem);
 

@@ -16,6 +16,10 @@
 
 <%@ include file="/dynamic_section/init.jsp" %>
 
+<%
+List<ObjectValuePair<SharingEntry, User>> sharingEntryToUserOVPs = (List<ObjectValuePair<SharingEntry, User>>)request.getAttribute("info_panel_file_entry.jsp-sharingEntryToUserOVPs");
+%>
+
 <div class="autofit-row sidebar-panel widget-metadata">
 	<div class="autofit-col inline-item-before">
 
@@ -37,9 +41,8 @@
 		<div class="autofit-row">
 
 			<%
-			List<User> sharingEntryToUsers = (List<User>)request.getAttribute("info_panel_file_entry.jsp-sharingEntryToUsers");
-
-			for (User sharingEntryToUser : sharingEntryToUsers) {
+			for (ObjectValuePair<SharingEntry, User> sharingEntryToUserOVP : sharingEntryToUserOVPs) {
+				User sharingEntryToUser = sharingEntryToUserOVP.getValue();
 			%>
 
 				<div class="autofit-col">
@@ -82,12 +85,16 @@ Map<String, Object> context = new HashMap<>();
 
 JSONArray collaboratorsJSONArray = JSONFactoryUtil.createJSONArray();
 
-for (User sharingEntryToUser : sharingEntryToUsers) {
+for (ObjectValuePair<SharingEntry, User> sharingEntryToUserOVP : sharingEntryToUserOVPs) {
+	SharingEntry sharingEntry = sharingEntryToUserOVP.getKey();
+	User sharingEntryToUser = sharingEntryToUserOVP.getValue();
+
 	JSONObject userJSONObject = JSONFactoryUtil.createJSONObject();
 
 	userJSONObject.put("id", sharingEntryToUser.getUserId());
 	userJSONObject.put("imageSrc", sharingEntryToUser.getPortraitURL(themeDisplay));
 	userJSONObject.put("name", sharingEntryToUser.getFullName());
+	userJSONObject.put("sharingEntryId", sharingEntry.getSharingEntryId());
 
 	collaboratorsJSONArray.put(userJSONObject);
 }

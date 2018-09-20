@@ -98,7 +98,11 @@ PortletURL portletURL = editRoleAssignmentsManagementToolbarDisplayContext.getPo
 		function(event) {
 			var nodes = event.elements.currentPageSelectedElements.getDOMNodes();
 
-			var <portlet:namespace />assigneeIds = AUI._.map(nodes, 'value');
+			var <portlet:namespace />assigneeIds = nodes.map(
+				function(node) {
+					return node.value;
+				}
+			);
 
 			var result = {};
 

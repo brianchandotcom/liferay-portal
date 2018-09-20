@@ -34,14 +34,12 @@ import java.io.InputStream;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Adolfo Pérez
  */
 @Component(
-	immediate = true, property = "mime.type=*",
-	service = AMImageScaler.class
+	immediate = true, property = "mime.type=*", service = AMImageScaler.class
 )
 public class AMDefaultImageScaler implements AMImageScaler {
 
@@ -51,7 +49,7 @@ public class AMDefaultImageScaler implements AMImageScaler {
 		AMImageConfigurationEntry amImageConfigurationEntry) {
 
 		try {
-			RenderedImage renderedImage = _tiffOrientationTransformer.transform(
+			RenderedImage renderedImage = TiffOrientationTransformer.transform(
 				() -> _getInputStream(fileVersion));
 
 			Map<String, String> properties =
@@ -89,8 +87,5 @@ public class AMDefaultImageScaler implements AMImageScaler {
 			throw new AMRuntimeException.IOException(pe);
 		}
 	}
-
-	@Reference
-	private TiffOrientationTransformer _tiffOrientationTransformer;
 
 }

@@ -14,9 +14,6 @@
 
 package com.liferay.portal.search.elasticsearch6.internal.groupby;
 
-import com.liferay.portal.kernel.search.Field;
-import com.liferay.portal.kernel.search.GroupBy;
-import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.search.elasticsearch6.internal.ElasticsearchIndexingFixture;
 import com.liferay.portal.search.elasticsearch6.internal.connection.ElasticsearchFixture;
 import com.liferay.portal.search.elasticsearch6.internal.connection.LiferayIndexCreator;
@@ -24,56 +21,11 @@ import com.liferay.portal.search.test.util.groupby.BaseGroupByTestCase;
 import com.liferay.portal.search.test.util.indexing.BaseIndexingTestCase;
 import com.liferay.portal.search.test.util.indexing.IndexingFixture;
 
-import org.junit.Test;
-
 /**
  * @author André de Oliveira
  * @author Tibor Lipusz
  */
 public class GroupByTest extends BaseGroupByTestCase {
-
-	@Test
-	public void testFieldNamesSame() throws Exception {
-		indexDuplicates("one", 1);
-
-		assertSearch(
-			indexingTestHelper -> {
-				indexingTestHelper.define(
-					searchContext -> searchContext.setGroupBy(
-						new GroupBy(GROUP_FIELD)));
-
-				indexingTestHelper.search();
-
-				indexingTestHelper.verify(
-					hits -> assertFieldNames(
-						"one", getFieldNames(hits), hits, indexingTestHelper));
-			});
-	}
-
-	@Test
-	public void testFieldNamesSameWithSelected() throws Exception {
-		indexDuplicates("one", 1);
-
-		assertSearch(
-			indexingTestHelper -> {
-				indexingTestHelper.define(
-					searchContext -> {
-						searchContext.setGroupBy(new GroupBy(GROUP_FIELD));
-
-						QueryConfig queryConfig =
-							searchContext.getQueryConfig();
-
-						queryConfig.addSelectedFieldNames(
-							Field.COMPANY_ID, Field.UID);
-					});
-
-				indexingTestHelper.search();
-
-				indexingTestHelper.verify(
-					hits -> assertFieldNames(
-						"one", getFieldNames(hits), hits, indexingTestHelper));
-			});
-	}
 
 	@Override
 	protected IndexingFixture createIndexingFixture() {

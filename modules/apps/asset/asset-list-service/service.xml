@@ -78,6 +78,10 @@
 			<finder-column name="assetListEntryId" />
 			<finder-column name="position" />
 		</finder>
+		<finder name="A_GtP" return-type="Collection">
+			<finder-column name="assetListEntryId" />
+			<finder-column comparator="&gt;" name="position" />
+		</finder>
 	</entity>
 	<exceptions>
 		<exception>AssetListEntryTitle</exception>

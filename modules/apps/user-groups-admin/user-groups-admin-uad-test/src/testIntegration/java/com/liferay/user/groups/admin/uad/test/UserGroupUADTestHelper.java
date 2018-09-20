@@ -31,12 +31,10 @@ public class UserGroupUADTestHelper {
 			UserGroupLocalService userGroupLocalService, long userId)
 		throws Exception {
 
-		String name = RandomTestUtil.randomString(
-			NumericStringRandomizerBumper.INSTANCE,
-			UniqueStringRandomizerBumper.INSTANCE);
-
 		return userGroupLocalService.addUserGroup(
-			userId, TestPropsValues.getCompanyId(), name,
+			userId, TestPropsValues.getCompanyId(), RandomTestUtil.randomString(
+				NumericStringRandomizerBumper.INSTANCE,
+				UniqueStringRandomizerBumper.INSTANCE),
 			RandomTestUtil.randomString(),
 			ServiceContextTestUtil.getServiceContext());
 	}

@@ -26,11 +26,6 @@ DLOpenerGoogleDriveFileReference dlOpenerGoogleDriveFileReference = (DLOpenerGoo
 		<portlet:param name="fileEntryId" value="<%= String.valueOf(dlOpenerGoogleDriveFileReference.getFileEntryId()) %>" />
 	</portlet:resourceURL>
 
-	<portlet:renderURL var="openGoogleDocsURL" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>">
-		<portlet:param name="mvcRenderCommandName" value="/document_library/open_google_docs" />
-		<portlet:param name="fileEntryId" value="<%= String.valueOf(dlOpenerGoogleDriveFileReference.getFileEntryId()) %>" />
-	</portlet:renderURL>
-
 	<aui:script>
 		!(function() {
 			var TIME_POLLING = 500;
@@ -69,24 +64,32 @@ DLOpenerGoogleDriveFileReference dlOpenerGoogleDriveFileReference = (DLOpenerGoo
 						method: 'POST'
 					}
 				)
-					.then(function(response) {
-						if (!response.ok) { throw defaultError; }
-						return response.json();
+					.then(
+						function(response) {
+							if (!response.ok) {
+								throw defaultError;
+							}
+
+							return response.json();
 					})
-					.then(function(response) {
-						if (response.complete) {
-								url = response.googleDocsEditURL;
-								navigate();
-						} else if (response.error) {
-							throw defaultError;
-						} else {
-							setTimeout(polling, TIME_POLLING);
-						}
+					.then(
+						function(response) {
+							if (response.complete) {
+									url = response.googleDocsEditURL;
+									navigate();
+							}
+							else if (response.error) {
+								throw defaultError;
+							}
+							else {
+								setTimeout(polling, TIME_POLLING);
+							}
 					})
-					.catch(function(error) {
-						showError(error);
-						Liferay.Util.getWindow(dialogId).hide();
-					})
+					.catch(
+						function(error) {
+							showError(error);
+							Liferay.Util.getWindow(dialogId).hide();
+						})
 				;
 			}
 

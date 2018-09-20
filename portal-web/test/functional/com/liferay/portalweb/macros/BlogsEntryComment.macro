@@ -98,6 +98,6 @@
 	</command>
 
 	<command name="viewSubscribedPG">
-		<execute function="AssertTextEquals" locator1="Comments#UNSUBSCRIBE_FROM_COMMENTS_LINK" value1="Unsubscribe from Comments" />
+		<execute function="AssertElementPresent" locator1="Button#UNSUBSCRIBE" value1="Unsubscribe" />
 	</command>
 </definition>

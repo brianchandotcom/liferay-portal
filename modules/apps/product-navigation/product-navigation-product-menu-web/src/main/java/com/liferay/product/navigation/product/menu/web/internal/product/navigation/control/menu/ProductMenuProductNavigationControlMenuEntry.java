@@ -86,6 +86,13 @@ public class ProductMenuProductNavigationControlMenuEntry
 			HttpServletRequest request, HttpServletResponse response)
 		throws IOException {
 
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		if (themeDisplay.isIsolated()) {
+			return false;
+		}
+
 		BodyBottomTag bodyBottomTag = new BodyBottomTag();
 
 		bodyBottomTag.setOutputKey("productMenu");
@@ -164,10 +171,6 @@ public class ProductMenuProductNavigationControlMenuEntry
 	public boolean isShow(HttpServletRequest request) throws PortalException {
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
-
-		if (themeDisplay.isIsolated()) {
-			return false;
-		}
 
 		if (themeDisplay.isImpersonated()) {
 			return true;

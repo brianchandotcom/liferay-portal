@@ -30,35 +30,38 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author William Newbury
  */
-@Component(immediate = true, service = WikiPageUADTestHelper.class)
 public class WikiPageUADTestHelper {
 
-	public WikiPage addWikiPage(long userId) throws Exception {
+	public static WikiPage addWikiPage(
+			WikiNodeLocalService wikiNodeLocalService,
+			WikiPageLocalService wikiPageLocalService, long userId)
+		throws Exception {
+
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
 				TestPropsValues.getGroupId());
 
-		WikiNode wikiNode = _wikiNodeLocalService.addNode(
+		WikiNode wikiNode = wikiNodeLocalService.addNode(
 			userId, RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(), serviceContext);
 
-		return _wikiPageLocalService.addPage(
+		return wikiPageLocalService.addPage(
 			userId, wikiNode.getNodeId(), RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(), false,
 			serviceContext);
 	}
 
-	public WikiPage addWikiPageWithStatusByUserId(
-			long userId, long statusByUserId)
+	public static WikiPage addWikiPageWithStatusByUserId(
+			WikiNodeLocalService wikiNodeLocalService,
+			WikiPageLocalService wikiPageLocalService, long userId,
+			long statusByUserId)
 		throws Exception {
 
-		WikiPage wikiPage = addWikiPage(userId);
+		WikiPage wikiPage = addWikiPage(
+			wikiNodeLocalService, wikiPageLocalService, userId);
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
@@ -68,23 +71,20 @@ public class WikiPageUADTestHelper {
 
 		workflowContext.put(WorkflowConstants.CONTEXT_URL, "http://localhost");
 
-		_wikiPageLocalService.updateStatus(
+		wikiPageLocalService.updateStatus(
 			statusByUserId, wikiPage, WorkflowConstants.STATUS_APPROVED,
 			serviceContext, workflowContext);
 
 		return wikiPage;
 	}
 
-	public void cleanUpDependencies(List<WikiPage> wikiPages) throws Exception {
+	public static void cleanUpDependencies(
+			WikiNodeLocalService wikiNodeLocalService, List<WikiPage> wikiPages)
+		throws Exception {
+
 		for (WikiPage wikiPage : wikiPages) {
-			_wikiNodeLocalService.deleteNode(wikiPage.getNodeId());
+			wikiNodeLocalService.deleteNode(wikiPage.getNodeId());
 		}
 	}
-
-	@Reference
-	private WikiNodeLocalService _wikiNodeLocalService;
-
-	@Reference
-	private WikiPageLocalService _wikiPageLocalService;
 
 }

@@ -23,6 +23,8 @@ import com.liferay.user.associated.data.exporter.UADExporter;
 import com.liferay.user.associated.data.test.util.BaseUADExporterTestCase;
 import com.liferay.user.associated.data.test.util.WhenHasStatusByUserIdField;
 import com.liferay.wiki.model.WikiPage;
+import com.liferay.wiki.service.WikiNodeLocalService;
+import com.liferay.wiki.service.WikiPageLocalService;
 import com.liferay.wiki.uad.test.WikiPageUADTestHelper;
 
 import java.util.ArrayList;
@@ -51,9 +53,9 @@ public class WikiPageUADExporterTest
 			long userId, long statusByUserId)
 		throws Exception {
 
-		WikiPage wikiPage =
-			_wikiPageUADTestHelper.addWikiPageWithStatusByUserId(
-				userId, statusByUserId);
+		WikiPage wikiPage = WikiPageUADTestHelper.addWikiPageWithStatusByUserId(
+			_wikiNodeLocalService, _wikiPageLocalService, userId,
+			statusByUserId);
 
 		_wikiPages.add(wikiPage);
 
@@ -62,12 +64,14 @@ public class WikiPageUADExporterTest
 
 	@After
 	public void tearDown() throws Exception {
-		_wikiPageUADTestHelper.cleanUpDependencies(_wikiPages);
+		WikiPageUADTestHelper.cleanUpDependencies(
+			_wikiNodeLocalService, _wikiPages);
 	}
 
 	@Override
 	protected WikiPage addBaseModel(long userId) throws Exception {
-		WikiPage wikiPage = _wikiPageUADTestHelper.addWikiPage(userId);
+		WikiPage wikiPage = WikiPageUADTestHelper.addWikiPage(
+			_wikiNodeLocalService, _wikiPageLocalService, userId);
 
 		_wikiPages.add(wikiPage);
 
@@ -87,10 +91,13 @@ public class WikiPageUADExporterTest
 	@Inject(filter = "component.name=*.WikiPageUADExporter")
 	private UADExporter _uadExporter;
 
-	@DeleteAfterTestRun
-	private final List<WikiPage> _wikiPages = new ArrayList<>();
+	@Inject
+	private WikiNodeLocalService _wikiNodeLocalService;
 
 	@Inject
-	private WikiPageUADTestHelper _wikiPageUADTestHelper;
+	private WikiPageLocalService _wikiPageLocalService;
+
+	@DeleteAfterTestRun
+	private final List<WikiPage> _wikiPages = new ArrayList<>();
 
 }

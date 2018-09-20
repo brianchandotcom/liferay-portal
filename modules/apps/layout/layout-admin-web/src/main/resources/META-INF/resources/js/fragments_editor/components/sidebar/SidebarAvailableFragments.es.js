@@ -284,7 +284,18 @@ SidebarAvailableFragments.STATE = {
 	 * @type {Store}
 	 */
 
-	store: Config.instanceOf(Store)
+	store: Config.instanceOf(Store),
+
+	/**
+	 * Internal DragDrop instance.
+	 * @default null
+	 * @instance
+	 * @memberOf SidebarAvailableFragments
+	 * @review
+	 * @type {object|null}
+	 */
+
+	_dragDrop: Config.internal().value(null)
 };
 
 Soy.register(SidebarAvailableFragments, templates);

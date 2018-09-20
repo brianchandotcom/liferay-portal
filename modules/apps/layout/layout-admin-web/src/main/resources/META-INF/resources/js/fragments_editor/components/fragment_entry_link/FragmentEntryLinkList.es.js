@@ -306,6 +306,17 @@ FragmentEntryLinkList.STATE = {
 		),
 
 	/**
+	 * Internal DragDrop instance.
+	 * @default null
+	 * @instance
+	 * @memberOf FragmentEntryLinkList
+	 * @review
+	 * @type {object|null}
+	 */
+
+	_dragDrop: Config.internal().value(null),
+
+	/**
 	 * Nearest border of the hovered fragment while dragging
 	 * @default undefined
 	 * @instance

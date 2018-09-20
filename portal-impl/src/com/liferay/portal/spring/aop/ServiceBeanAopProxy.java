@@ -91,6 +91,12 @@ public class ServiceBeanAopProxy
 		return serviceBeanMethodInvocation.proceed();
 	}
 
+	public void setServiceBeanAopCacheManager(
+		ServiceBeanAopCacheManager serviceBeanAopCacheManager) {
+
+		_serviceBeanAopCacheManager = serviceBeanAopCacheManager;
+	}
+
 	/**
 	 * @deprecated As of Judson (7.1.x), with no direct replacement
 	 */
@@ -103,6 +109,6 @@ public class ServiceBeanAopProxy
 	}
 
 	private final AdvisedSupport _advisedSupport;
-	private final ServiceBeanAopCacheManager _serviceBeanAopCacheManager;
+	private volatile ServiceBeanAopCacheManager _serviceBeanAopCacheManager;
 
 }

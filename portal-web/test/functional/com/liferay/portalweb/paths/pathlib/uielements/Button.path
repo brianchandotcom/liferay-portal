@@ -784,6 +784,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SUBSCRIBE</td>
+	<td>//button[contains(.,'Subscribe')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>TRANSFORM</td>
 	<td>//div[a/*[name()='svg'][@data-icon='transform']]</td>
 	<td></td>

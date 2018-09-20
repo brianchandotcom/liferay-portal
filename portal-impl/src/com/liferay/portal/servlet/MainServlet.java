@@ -128,7 +128,6 @@ import org.apache.struts.action.ActionServlet;
 import org.apache.struts.action.RequestProcessor;
 import org.apache.struts.config.ControllerConfig;
 import org.apache.struts.config.ModuleConfig;
-import org.apache.struts.tiles.TilesUtilImpl;
 
 /**
  * @author Brian Wing Shun Chan
@@ -487,7 +486,6 @@ public class MainServlet extends ActionServlet {
 
 		checkServletContext(request);
 		checkPortletRequestProcessor(request);
-		checkTilesDefinitionsFactory();
 
 		if (_log.isDebugEnabled()) {
 			_log.debug("Handle non-serializable request");
@@ -620,18 +618,11 @@ public class MainServlet extends ActionServlet {
 		request.setAttribute(WebKeys.CTX, servletContext);
 	}
 
+	/**
+	 * @deprecated As of Judson (7.1.x), with no direct replacement
+	 */
+	@Deprecated
 	protected void checkTilesDefinitionsFactory() {
-		ServletContext servletContext = getServletContext();
-
-		if (servletContext.getAttribute(TilesUtilImpl.DEFINITIONS_FACTORY) !=
-				null) {
-
-			return;
-		}
-
-		servletContext.setAttribute(
-			TilesUtilImpl.DEFINITIONS_FACTORY,
-			servletContext.getAttribute(TilesUtilImpl.DEFINITIONS_FACTORY));
 	}
 
 	protected void checkWebSettings(String xml) throws DocumentException {

@@ -31,7 +31,7 @@
 </tr>
 <tr>
 	<td>CONTENT_TITLE</td>
-	<td>//div[@class='list-group-item']//h4[contains(.,'${key_assetTitle}')]</td>
+	<td>//div[contains(@class,'list-group-item-content')]//*[contains(.,'${key_assetTitle}')]</td>
 	<td></td>
 </tr>
 <tr>

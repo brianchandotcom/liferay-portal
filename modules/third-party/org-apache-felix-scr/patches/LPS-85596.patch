@@ -1,0 +1,44 @@
+diff --git a/org/apache/felix/scr/impl/manager/RegionConfigurationSupport.java b/org/apache/felix/scr/impl/manager/RegionConfigurationSupport.java
+index b442255..8341761 100644
+--- a/org/apache/felix/scr/impl/manager/RegionConfigurationSupport.java
++++ b/org/apache/felix/scr/impl/manager/RegionConfigurationSupport.java
+@@ -669,17 +669,8 @@ public abstract class RegionConfigurationSupport implements ConfigurationListene
+ 
+ 		int index = 0;
+ 
+-		char[] chars;
+-
+-		try {
+-			chars = (char[])_valueField.get(value);
+-		}
+-		catch (ReflectiveOperationException roe) {
+-			throw new RuntimeException(roe);
+-		}
+-
+-		for (int i = 0; i < chars.length; i++) {
+-			char c = chars[i];
++		for (int i = 0; i < value.length(); i++) {
++			char c = value.charAt(i);
+ 
+ 			switch (c) {
+ 				case '\\':
+@@ -716,18 +707,5 @@ public abstract class RegionConfigurationSupport implements ConfigurationListene
+         return bundleContext.getService( caReference );
+     }
+ 
+-	private static final Field _valueField;
+-
+-	static {
+-		try {
+-			_valueField = String.class.getDeclaredField("value");
+-		}
+-		catch (ReflectiveOperationException roe) {
+-			throw new ExceptionInInitializerError(roe);
+-		}
+-
+-		_valueField.setAccessible(true);
+-	}
+-
+ }
+ /* @generated */
+\ No newline at end of file

@@ -355,6 +355,192 @@ public class AssetListEntryAssetEntryRelUtil {
 	}
 
 	/**
+	* Returns all the asset list entry asset entry rels where assetListEntryId = &#63; and position &gt; &#63;.
+	*
+	* @param assetListEntryId the asset list entry ID
+	* @param position the position
+	* @return the matching asset list entry asset entry rels
+	*/
+	public static List<AssetListEntryAssetEntryRel> findByA_GtP(
+		long assetListEntryId, int position) {
+		return getPersistence().findByA_GtP(assetListEntryId, position);
+	}
+
+	/**
+	* Returns a range of all the asset list entry asset entry rels where assetListEntryId = &#63; and position &gt; &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AssetListEntryAssetEntryRelModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param assetListEntryId the asset list entry ID
+	* @param position the position
+	* @param start the lower bound of the range of asset list entry asset entry rels
+	* @param end the upper bound of the range of asset list entry asset entry rels (not inclusive)
+	* @return the range of matching asset list entry asset entry rels
+	*/
+	public static List<AssetListEntryAssetEntryRel> findByA_GtP(
+		long assetListEntryId, int position, int start, int end) {
+		return getPersistence()
+				   .findByA_GtP(assetListEntryId, position, start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the asset list entry asset entry rels where assetListEntryId = &#63; and position &gt; &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AssetListEntryAssetEntryRelModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param assetListEntryId the asset list entry ID
+	* @param position the position
+	* @param start the lower bound of the range of asset list entry asset entry rels
+	* @param end the upper bound of the range of asset list entry asset entry rels (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching asset list entry asset entry rels
+	*/
+	public static List<AssetListEntryAssetEntryRel> findByA_GtP(
+		long assetListEntryId, int position, int start, int end,
+		OrderByComparator<AssetListEntryAssetEntryRel> orderByComparator) {
+		return getPersistence()
+				   .findByA_GtP(assetListEntryId, position, start, end,
+			orderByComparator);
+	}
+
+	/**
+	* Returns an ordered range of all the asset list entry asset entry rels where assetListEntryId = &#63; and position &gt; &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AssetListEntryAssetEntryRelModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param assetListEntryId the asset list entry ID
+	* @param position the position
+	* @param start the lower bound of the range of asset list entry asset entry rels
+	* @param end the upper bound of the range of asset list entry asset entry rels (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the ordered range of matching asset list entry asset entry rels
+	*/
+	public static List<AssetListEntryAssetEntryRel> findByA_GtP(
+		long assetListEntryId, int position, int start, int end,
+		OrderByComparator<AssetListEntryAssetEntryRel> orderByComparator,
+		boolean retrieveFromCache) {
+		return getPersistence()
+				   .findByA_GtP(assetListEntryId, position, start, end,
+			orderByComparator, retrieveFromCache);
+	}
+
+	/**
+	* Returns the first asset list entry asset entry rel in the ordered set where assetListEntryId = &#63; and position &gt; &#63;.
+	*
+	* @param assetListEntryId the asset list entry ID
+	* @param position the position
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching asset list entry asset entry rel
+	* @throws NoSuchEntryAssetEntryRelException if a matching asset list entry asset entry rel could not be found
+	*/
+	public static AssetListEntryAssetEntryRel findByA_GtP_First(
+		long assetListEntryId, int position,
+		OrderByComparator<AssetListEntryAssetEntryRel> orderByComparator)
+		throws com.liferay.asset.list.exception.NoSuchEntryAssetEntryRelException {
+		return getPersistence()
+				   .findByA_GtP_First(assetListEntryId, position,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the first asset list entry asset entry rel in the ordered set where assetListEntryId = &#63; and position &gt; &#63;.
+	*
+	* @param assetListEntryId the asset list entry ID
+	* @param position the position
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching asset list entry asset entry rel, or <code>null</code> if a matching asset list entry asset entry rel could not be found
+	*/
+	public static AssetListEntryAssetEntryRel fetchByA_GtP_First(
+		long assetListEntryId, int position,
+		OrderByComparator<AssetListEntryAssetEntryRel> orderByComparator) {
+		return getPersistence()
+				   .fetchByA_GtP_First(assetListEntryId, position,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the last asset list entry asset entry rel in the ordered set where assetListEntryId = &#63; and position &gt; &#63;.
+	*
+	* @param assetListEntryId the asset list entry ID
+	* @param position the position
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching asset list entry asset entry rel
+	* @throws NoSuchEntryAssetEntryRelException if a matching asset list entry asset entry rel could not be found
+	*/
+	public static AssetListEntryAssetEntryRel findByA_GtP_Last(
+		long assetListEntryId, int position,
+		OrderByComparator<AssetListEntryAssetEntryRel> orderByComparator)
+		throws com.liferay.asset.list.exception.NoSuchEntryAssetEntryRelException {
+		return getPersistence()
+				   .findByA_GtP_Last(assetListEntryId, position,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the last asset list entry asset entry rel in the ordered set where assetListEntryId = &#63; and position &gt; &#63;.
+	*
+	* @param assetListEntryId the asset list entry ID
+	* @param position the position
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching asset list entry asset entry rel, or <code>null</code> if a matching asset list entry asset entry rel could not be found
+	*/
+	public static AssetListEntryAssetEntryRel fetchByA_GtP_Last(
+		long assetListEntryId, int position,
+		OrderByComparator<AssetListEntryAssetEntryRel> orderByComparator) {
+		return getPersistence()
+				   .fetchByA_GtP_Last(assetListEntryId, position,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the asset list entry asset entry rels before and after the current asset list entry asset entry rel in the ordered set where assetListEntryId = &#63; and position &gt; &#63;.
+	*
+	* @param assetListEntryAssetEntryRelId the primary key of the current asset list entry asset entry rel
+	* @param assetListEntryId the asset list entry ID
+	* @param position the position
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next asset list entry asset entry rel
+	* @throws NoSuchEntryAssetEntryRelException if a asset list entry asset entry rel with the primary key could not be found
+	*/
+	public static AssetListEntryAssetEntryRel[] findByA_GtP_PrevAndNext(
+		long assetListEntryAssetEntryRelId, long assetListEntryId,
+		int position,
+		OrderByComparator<AssetListEntryAssetEntryRel> orderByComparator)
+		throws com.liferay.asset.list.exception.NoSuchEntryAssetEntryRelException {
+		return getPersistence()
+				   .findByA_GtP_PrevAndNext(assetListEntryAssetEntryRelId,
+			assetListEntryId, position, orderByComparator);
+	}
+
+	/**
+	* Removes all the asset list entry asset entry rels where assetListEntryId = &#63; and position &gt; &#63; from the database.
+	*
+	* @param assetListEntryId the asset list entry ID
+	* @param position the position
+	*/
+	public static void removeByA_GtP(long assetListEntryId, int position) {
+		getPersistence().removeByA_GtP(assetListEntryId, position);
+	}
+
+	/**
+	* Returns the number of asset list entry asset entry rels where assetListEntryId = &#63; and position &gt; &#63;.
+	*
+	* @param assetListEntryId the asset list entry ID
+	* @param position the position
+	* @return the number of matching asset list entry asset entry rels
+	*/
+	public static int countByA_GtP(long assetListEntryId, int position) {
+		return getPersistence().countByA_GtP(assetListEntryId, position);
+	}
+
+	/**
 	* Caches the asset list entry asset entry rel in the entity cache if it is enabled.
 	*
 	* @param assetListEntryAssetEntryRel the asset list entry asset entry rel

@@ -34,6 +34,13 @@ public class AssetListEntryServiceWrapper implements AssetListEntryService,
 	}
 
 	@Override
+	public void addAssetEntrySelection(long assetListEntryId, long assetEntryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_assetListEntryService.addAssetEntrySelection(assetListEntryId,
+			assetEntryId);
+	}
+
+	@Override
 	public com.liferay.asset.list.model.AssetListEntry addAssetListEntry(
 		long groupId, String title, int type,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
@@ -43,11 +50,10 @@ public class AssetListEntryServiceWrapper implements AssetListEntryService,
 	}
 
 	@Override
-	public void addAssetListEntryAssetEntryRel(long assetListEntryId,
-		long assetEntryId)
+	public void deleteAssetEntrySelection(long assetListEntryId, int position)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		_assetListEntryService.addAssetListEntryAssetEntryRel(assetListEntryId,
-			assetEntryId);
+		_assetListEntryService.deleteAssetEntrySelection(assetListEntryId,
+			position);
 	}
 
 	@Override
@@ -61,14 +67,6 @@ public class AssetListEntryServiceWrapper implements AssetListEntryService,
 		long assetListEntryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _assetListEntryService.deleteAssetListEntry(assetListEntryId);
-	}
-
-	@Override
-	public void deleteAssetListEntryAssetEntryRel(long assetListEntryId,
-		int position)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_assetListEntryService.deleteAssetListEntryAssetEntryRel(assetListEntryId,
-			position);
 	}
 
 	@Override
@@ -115,10 +113,10 @@ public class AssetListEntryServiceWrapper implements AssetListEntryService,
 	}
 
 	@Override
-	public void moveAssetListEntryAssetEntryRel(long assetListEntryId,
-		int position, int newPosition)
+	public void moveAssetEntrySelection(long assetListEntryId, int position,
+		int newPosition)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		_assetListEntryService.moveAssetListEntryAssetEntryRel(assetListEntryId,
+		_assetListEntryService.moveAssetEntrySelection(assetListEntryId,
 			position, newPosition);
 	}
 

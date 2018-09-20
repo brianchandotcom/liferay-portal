@@ -159,6 +159,14 @@ public class AssetListEntryAssetEntryRelPersistenceTest {
 	}
 
 	@Test
+	public void testCountByA_GtP() throws Exception {
+		_persistence.countByA_GtP(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextInt());
+
+		_persistence.countByA_GtP(0L, 0);
+	}
+
+	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		AssetListEntryAssetEntryRel newAssetListEntryAssetEntryRel = addAssetListEntryAssetEntryRel();
 

@@ -42,6 +42,12 @@ public class AssetListEntryServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.asset.list.service.impl.AssetListEntryServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static void addAssetEntrySelection(long assetListEntryId,
+		long assetEntryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().addAssetEntrySelection(assetListEntryId, assetEntryId);
+	}
+
 	public static com.liferay.asset.list.model.AssetListEntry addAssetListEntry(
 		long groupId, String title, int type,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
@@ -50,11 +56,10 @@ public class AssetListEntryServiceUtil {
 				   .addAssetListEntry(groupId, title, type, serviceContext);
 	}
 
-	public static void addAssetListEntryAssetEntryRel(long assetListEntryId,
-		long assetEntryId)
+	public static void deleteAssetEntrySelection(long assetListEntryId,
+		int position)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		getService()
-			.addAssetListEntryAssetEntryRel(assetListEntryId, assetEntryId);
+		getService().deleteAssetEntrySelection(assetListEntryId, position);
 	}
 
 	public static void deleteAssetListEntries(long[] assetListEntriesIds)
@@ -66,13 +71,6 @@ public class AssetListEntryServiceUtil {
 		long assetListEntryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().deleteAssetListEntry(assetListEntryId);
-	}
-
-	public static void deleteAssetListEntryAssetEntryRel(
-		long assetListEntryId, int position)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService()
-			.deleteAssetListEntryAssetEntryRel(assetListEntryId, position);
 	}
 
 	public static com.liferay.asset.list.model.AssetListEntry fetchAssetListEntry(
@@ -113,12 +111,11 @@ public class AssetListEntryServiceUtil {
 		return getService().getOSGiServiceIdentifier();
 	}
 
-	public static void moveAssetListEntryAssetEntryRel(long assetListEntryId,
+	public static void moveAssetEntrySelection(long assetListEntryId,
 		int position, int newPosition)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService()
-			.moveAssetListEntryAssetEntryRel(assetListEntryId, position,
-			newPosition);
+			.moveAssetEntrySelection(assetListEntryId, position, newPosition);
 	}
 
 	public static com.liferay.asset.list.model.AssetListEntry updateAssetListEntry(

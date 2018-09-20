@@ -1,4 +1,4 @@
-import '../../../components/RuleEditor/__tests__/__fixtures__/FieldsRuleEditor.es';
+import '../../../components/RuleEditor/__tests__/__fixtures__/RuleEditorMockField.es';
 import dom from 'metal-dom';
 import RuleBuilder from '../RuleBuilder.es';
 

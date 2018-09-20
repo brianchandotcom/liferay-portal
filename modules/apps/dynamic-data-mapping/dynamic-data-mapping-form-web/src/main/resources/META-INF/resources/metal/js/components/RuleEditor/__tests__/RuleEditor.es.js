@@ -1,5 +1,6 @@
 import RuleEditor from '../RuleEditor.es';
-import './__fixtures__/FieldsRuleEditor.es';
+import './__fixtures__/RuleEditorMockField.es';
+
 let component;
 
 const spritemap = 'icons.svg';
@@ -107,20 +108,20 @@ const secondOperandTypeSelectedList = [
 ];
 
 const operatorsList = [
-	{name: 'equals-to', parameterTypes: ['text', 'text'], returnType: 'boolean', value: 'Is equal to'},
-	{name: 'not-equals-to', parameterTypes: ['text', 'text'], returnType: 'boolean', value: 'Is not equal to'},
 	{name: 'contains', parameterTypes: ['text', 'text'], returnType: 'boolean', value: 'Contains'},
-	{name: 'not-contains', parameterTypes: ['text', 'text'], returnType: 'boolean', value: 'Does not contain'},
+	{name: 'equals-to', parameterTypes: ['text', 'text'], returnType: 'boolean', value: 'Is equal to'},
 	{name: 'is-empty', parameterTypes: ['text'], returnType: 'boolean', value: 'Is empty'},
+	{name: 'not-contains', parameterTypes: ['text', 'text'], returnType: 'boolean', value: 'Does not contain'},
+	{name: 'not-equals-to', parameterTypes: ['text', 'text'], returnType: 'boolean', value: 'Is not equal to'},
 	{name: 'not-is-empty', parameterTypes: ['text'], returnType: 'boolean', value: 'Is not empty'}
 ];
 
 const functionsMetadata = {text: [
-	{name: 'equals-to', parameterTypes: ['text', 'text'], returnType: 'boolean', value: 'Is equal to'},
-	{name: 'not-equals-to', parameterTypes: ['text', 'text'], returnType: 'boolean', value: 'Is not equal to'},
 	{name: 'contains', parameterTypes: ['text', 'text'], returnType: 'boolean', value: 'Contains'},
-	{name: 'not-contains', parameterTypes: ['text', 'text'], returnType: 'boolean', value: 'Does not contain'},
+	{name: 'equals-to', parameterTypes: ['text', 'text'], returnType: 'boolean', value: 'Is equal to'},
 	{name: 'is-empty', parameterTypes: ['text'], returnType: 'boolean', value: 'Is empty'},
+	{name: 'not-contains', parameterTypes: ['text', 'text'], returnType: 'boolean', value: 'Does not contain'},
+	{name: 'not-equals-to', parameterTypes: ['text', 'text'], returnType: 'boolean', value: 'Is not equal to'},
 	{name: 'not-is-empty', parameterTypes: ['text'], returnType: 'boolean', value: 'Is not empty'}
 ]};
 
@@ -149,7 +150,6 @@ describe(
 				component = new RuleEditor(
 					{
 						conditions,
-						firstOperandList,
 						functionsMetadata,
 						pages,
 						secondOperandTypeSelectedList,
@@ -158,10 +158,10 @@ describe(
 				);
 
 				const type = document.querySelector('.condition-type').classList.contains('hide');
-				const typeValue = document.querySelector('.condition-type-value').classList.contains('hide');
-				const typeValueSelect = document.querySelector('.condition-type-value-select').classList.contains('hide');
+				const typeValue = document.querySelector('.condition-type-value');
+				const typeValueSelect = document.querySelector('.condition-type-value-select');
 
-				expect(type && typeValue && typeValueSelect).toEqual(true);
+				expect(type && !typeValue && !typeValueSelect).toEqual(true);
 			}
 		);
 
@@ -210,9 +210,7 @@ describe(
 				component.refs.conditionOperator.emitFieldEdited('Is not equal to', 'not-equals-to', jest.fn());
 
 				const type = document.querySelector('.condition-type').classList.contains('hide');
-
 				const typeValue = document.querySelector('.condition-type-value').classList.contains('hide');
-
 				const typeValueSelect = document.querySelector('.condition-type-value-select').classList.contains('hide');
 
 				expect(!type && typeValue && typeValueSelect).toEqual(true);
@@ -273,17 +271,14 @@ describe(
 				component.refs.conditionOperator.emitFieldEdited('Is not equal to', 'not-equals-to', jest.fn());
 				component.refs.type.emitFieldEdited('Value', 'text', jest.fn());
 
+				const secondOperandEmpty = (conditions[0].operands[1].type === '') && (conditions[0].operands[1].value === '');
 				const type = document.querySelector('.condition-type').classList.contains('hide');
-
 				const typeValue = document.querySelector('.condition-type-value').classList.contains('hide');
-
 				const typeValueSelect = document.querySelector('.condition-type-value-select').classList.contains('hide');
-
-				const secondOperandReseted = (conditions[0].operands[1].type === '') && (conditions[0].operands[1].value === '');
 
 				expect(
 					!type && !typeValue &&
-					typeValueSelect && secondOperandReseted
+					typeValueSelect && secondOperandEmpty
 				).toEqual(true);
 			}
 		);
@@ -327,11 +322,8 @@ describe(
 				component.refs.type.emitFieldEdited('Value', 'select', jest.fn());
 
 				const type = document.querySelector('.condition-type').classList.contains('hide');
-
 				const typeValue = document.querySelector('.condition-type-value').classList.contains('hide');
-
 				const typeValueSelect = document.querySelector('.condition-type-value-select').classList.contains('hide');
-
 				const typeValueSelectOptions = document.querySelector('.condition-type-value-select-options').classList.contains('hide');
 
 				expect(
@@ -430,6 +422,62 @@ describe(
 				component.refs.conditionOperator.emitFieldEdited('Is not equal to', 'not-equals-to', jest.fn());
 				component.refs.type.emitFieldEdited('other-field', 'field', jest.fn());
 				component.refs.typeValueSelect.emitFieldEdited('', 'Nome', jest.fn());
+
+				expect(component).toMatchSnapshot();
+			}
+		);
+	}
+);
+
+describe(
+	'Regression',
+	() => {
+		it(
+			'LPS-85642 Should hide second operand and value when operator is reset',
+			() => {
+
+				const conditions = [
+					{
+						operands: [
+							{
+								type: 'text',
+								value: 'Nome'
+							},
+							{
+								type: 'text',
+								value: 'Nome'
+							}
+						],
+						operator: 'Is not equal to'
+					}
+				];
+
+				const secondOperandTypeSelectedList = [
+					{
+						name: 'field',
+						value: 'other-field'
+					}
+				];
+
+				component = new RuleEditor(
+					{
+						conditions,
+						firstOperandList,
+						functionsMetadata,
+						pages,
+						secondOperandTypeSelectedList,
+						spritemap
+					}
+				);
+
+				component.refs.conditionIf.emitFieldEdited('', 'Nome', jest.fn());
+				component.refs.conditionOperator.emitFieldEdited('Is not equal to', 'not-equals-to', jest.fn());
+				component.refs.type.emitFieldEdited('other-field', 'field', jest.fn());
+				component.refs.typeValueSelect.emitFieldEdited('', 'Nome', jest.fn());
+
+				component.refs.conditionOperator.emitFieldEdited('', '', jest.fn());
+
+				jest.runAllTimers();
 
 				expect(component).toMatchSnapshot();
 			}

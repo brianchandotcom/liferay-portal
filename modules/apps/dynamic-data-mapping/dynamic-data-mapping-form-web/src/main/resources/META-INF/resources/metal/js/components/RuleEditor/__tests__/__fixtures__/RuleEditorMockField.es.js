@@ -1,9 +1,9 @@
-import './FieldsRuleEditorRegister.soy.js';
+import './RuleEditorMockFieldRegister.soy.js';
 import Component from 'metal-component';
 import Soy from 'metal-soy';
-import templates from './FieldsRuleEditor.soy.js';
+import templates from './RuleEditorMockField.soy.js';
 
-class FieldsRuleEditor extends Component {
+class RuleEditorMockField extends Component {
 	emitFieldEdited(value, mock, fn) {
 		this.emit(
 			'fieldEdited',
@@ -22,6 +22,6 @@ class FieldsRuleEditor extends Component {
 	}
 }
 
-Soy.register(FieldsRuleEditor, templates);
+Soy.register(RuleEditorMockField, templates);
 
-export default FieldsRuleEditor;
+export default RuleEditorMockField;

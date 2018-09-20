@@ -14,7 +14,7 @@
 			]>
 		]>
 	}
-	{@param? operatorsList:  list<[
+	{@param? operators:  list<[
 			value: string,
 			name: string,
 			parameterTypes: list<string>,
@@ -80,7 +80,7 @@
 					{param index: index($condition) /}
 					{param logicalOperator: $strings[$logicalOperator] /}
 					{param operatorSelected: $condition.operator /}
-					{param operatorsList: $operatorsList /}
+					{param operators: $operators /}
 					{param readOnly: $readOnly /}
 					{param secondOperandTypeList: $secondOperandTypeList /}
 					{param secondOperandTypeName: '' /}
@@ -100,7 +100,7 @@
 						{param if: $strings.if /}
 						{param index: 0 /}
 						{param logicalOperator: $strings[$logicalOperator] /}
-						{param operatorsList: $operatorsList /}
+						{param operators: $operators /}
 						{param readOnly: $readOnly /}
 						{param secondOperandTypeList: $secondOperandTypeList /}
 						{param secondOperandTypeName: '' /}
@@ -116,21 +116,8 @@
 	{@param? _handleOperatorSelection: any}
 	{@param? _handleSecondOperandSelection: any}
 	{@param? _handleTypeSelection: any}
-	{@param firstOperandList : list<[
-			value: string,
-			type: string,
-			name: string,
-			options: list<[
-				label: string,
-				value: string
-			]>
-		]>
-	}
-	{@param if: string}
-	{@param index: int}
-	{@param readOnly: bool}
 	{@param? firstOperandValueSelected: string}
-	{@param? operatorsList:  list<[
+	{@param? operators:  list<[
 			value: string,
 			name: string,
 			parameterTypes: list<string>,
@@ -151,6 +138,19 @@
 		]>
 	}
 	{@param? spritemap: string}
+	{@param firstOperandList : list<[
+			value: string,
+			type: string,
+			name: string,
+			options: list<[
+				label: string,
+				value: string
+			]>
+		]>
+	}
+	{@param if: string}
+	{@param index: int}
+	{@param readOnly: bool}
 
 	<li class="form-builder-rule-condition-container timeline-item" condition-index="{$index}">
 		<div class="panel panel-default">
@@ -176,11 +176,11 @@
 						{/delcall}
 					</div>
 
-					{call .operatorsList}
+					{call .operators}
 						{param _handleOperatorSelection: $_handleOperatorSelection /}
 						{param index: $index /}
 						{param operatorSelected: $operatorSelected /}
-						{param operatorsList: $operatorsList /}
+						{param operators: $operators /}
 						{param spritemap: $spritemap /}
 					{/call}
 
@@ -193,52 +193,54 @@
 						{param spritemap: $spritemap /}
 					{/call}
 
-					{let $textFieldVisible: isNonnull($secondOperandTypeSelectedList) and ($secondOperandTypeSelectedList[$index].name == 'text') ? true : false /}
+					{if isNonnull($secondOperandTypeSelectedList) and isNonnull($secondOperandTypeSelectedList[$index])}
+						{let $textFieldVisible: ($secondOperandTypeSelectedList[$index].name == 'text') ? true : false /}
 
-					<div class="condition-type-value form-group-item {if not $textFieldVisible}hide{/if}" condition-type-value-index="{$index}">
-						{delcall PageRenderer.RegisterFieldType variant="'text'"}
-							{param events: [
-								'fieldEdited': $_handleSecondOperandSelection
-							] /}
-							{param ref: 'typeValueInput' /}
-							{param spritemap: $spritemap /}
-							{param name: $secondOperandTypeName /}
-							{param value: $secondOperandTypeValue /}
-							{param readOnly: $readOnly /}
-						{/delcall}
-					</div>
-
-					{let $selectFieldVisible: isNonnull($secondOperandTypeSelectedList) and ($secondOperandTypeSelectedList[$index].name == 'field') ? true : false /}
-
-					<div class="condition-type-value-select form-group-item {if not $selectFieldVisible}hide{/if}" condition-type-value-select-index="{$index}">
-						{delcall PageRenderer.RegisterFieldType variant="'select'"}
-							{param events: [
+						<div class="condition-type-value form-group-item {if not $textFieldVisible}hide{/if}" condition-type-value-index="{$index}">
+							{delcall PageRenderer.RegisterFieldType variant="'text'"}
+								{param events: [
 									'fieldEdited': $_handleSecondOperandSelection
 								] /}
-							{param ref: 'typeValueSelect' /}
-							{param spritemap: $spritemap /}
-							{param options: $firstOperandList /}
-							{param value: [$secondOperandTypeValue] /}
-						{/delcall}
-					</div>
+								{param ref: 'typeValueInput' /}
+								{param spritemap: $spritemap /}
+								{param name: $secondOperandTypeName /}
+								{param value: $secondOperandTypeValue /}
+								{param readOnly: $readOnly /}
+							{/delcall}
+						</div>
 
-					{let $selectOptionsFieldVisible: isNonnull($secondOperandTypeSelectedList) and ($secondOperandTypeSelectedList[$index].name == 'select') ? true : false /}
+						{let $selectFieldVisible: ($secondOperandTypeSelectedList[$index].name == 'field') ? true : false /}
 
-					{foreach $operand in $firstOperandList}
-						{if $operand.value == $firstOperandValueSelected}
-							<div class="condition-type-value-select-options form-group-item {if not $selectOptionsFieldVisible}hide{/if}" condition-type-value-select-options-index="{$index}">
-								{delcall PageRenderer.RegisterFieldType variant="'select'"}
-									{param events: [
-											'fieldEdited': $_handleSecondOperandSelection
-										] /}
-									{param ref: 'typeValueSelectOptions' /}
-									{param spritemap: $spritemap /}
-									{param options: $operand.options /}
-									{param value: [$secondOperandTypeValue] /}
-								{/delcall}
-							</div>
-						{/if}
-					{/foreach}
+						<div class="condition-type-value-select form-group-item {if not $selectFieldVisible}hide{/if}" condition-type-value-select-index="{$index}">
+							{delcall PageRenderer.RegisterFieldType variant="'select'"}
+								{param events: [
+										'fieldEdited': $_handleSecondOperandSelection
+									] /}
+								{param ref: 'typeValueSelect' /}
+								{param spritemap: $spritemap /}
+								{param options: $firstOperandList /}
+								{param value: [$secondOperandTypeValue] /}
+							{/delcall}
+						</div>
+
+						{let $selectOptionsFieldVisible: ($secondOperandTypeSelectedList[$index].name == 'select') ? true : false /}
+
+						{foreach $operand in $firstOperandList}
+							{if $operand.value == $firstOperandValueSelected}
+								<div class="condition-type-value-select-options form-group-item {if not $selectOptionsFieldVisible}hide{/if}" condition-type-value-select-options-index="{$index}">
+									{delcall PageRenderer.RegisterFieldType variant="'select'"}
+										{param events: [
+												'fieldEdited': $_handleSecondOperandSelection
+											] /}
+										{param ref: 'typeValueSelectOptions' /}
+										{param spritemap: $spritemap /}
+										{param options: $operand.options /}
+										{param value: [$secondOperandTypeValue] /}
+									{/delcall}
+								</div>
+							{/if}
+						{/foreach}
+					{/if}
 				</div>
 
 				<div class="timeline-increment">
@@ -249,9 +251,9 @@
 	</li>
 {/template}
 
-{template .operatorsList}
+{template .operators}
 	{@param? _handleOperatorSelection: any}
-	{@param? operatorsList:  list<[
+	{@param? operators:  list<[
 			value: string,
 			name: string,
 			parameterTypes: list<string>,
@@ -262,7 +264,7 @@
 	{@param? spritemap: string}
 	{@param index: int}
 
-	{let $readOnly: ($operatorsList and length($operatorsList) > 0) ? false : true /}
+	{let $readOnly: ($operators and length($operators) > 0) ? false : true /}
 
 	<div class="condition-operator form-group-item" condition-operator-index="{$index}">
 		{delcall PageRenderer.RegisterFieldType variant="'select'"}
@@ -271,7 +273,7 @@
 			] /}
 			{param readOnly: $readOnly /}
 			{param ref: 'conditionOperator' /}
-			{param options: $operatorsList /}
+			{param options: $operators /}
 			{param spritemap: $spritemap /}
 			{param value: [$operatorSelected] /}
 		{/delcall}
@@ -294,7 +296,7 @@
 	{@param index: int}
 	{@param? spritemap: string}
 
-	{let $visible: $operatorSelected and isNonnull($secondOperandTypeSelectedList) and $secondOperandTypeSelectedList[$index].name != 'none' ? true: false /}
+	{let $visible: $operatorSelected and isNonnull($secondOperandTypeSelectedList) and isNonnull($secondOperandTypeSelectedList[$index]) ? true : false /}
 
 	<div class="condition-type form-group-item {if not $visible}hide{/if}" condition-type-index="{$index}">
 		{delcall PageRenderer.RegisterFieldType variant="'select'"}
@@ -304,7 +306,7 @@
 			{param ref: 'type' /}
 			{param options: $secondOperandTypeList /}
 			{param spritemap: $spritemap /}
-			{param value: [isNonnull($secondOperandTypeSelectedList) ? $secondOperandTypeSelectedList[$index].value : ''] /}
+			{param value: [$visible ? $secondOperandTypeSelectedList?[$index].value : ''] /}
 		{/delcall}
 	</div>
 {/template}

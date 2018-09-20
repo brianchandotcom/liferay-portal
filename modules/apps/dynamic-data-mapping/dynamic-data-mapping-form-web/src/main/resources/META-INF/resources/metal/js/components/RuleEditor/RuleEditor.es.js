@@ -12,43 +12,6 @@ import templates from './RuleEditor.soy.js';
 
 class RuleEditor extends Component {
 	static STATE = {
-		functionsMetadata:
-			Config.shapeOf(
-				{
-					number: Config.arrayOf(
-						Config.shapeOf(
-							{
-								label: Config.string(),
-								name: Config.string(),
-								parameterTypes: Config.array(),
-								returnType: Config.string()
-							}
-						)
-					),
-					text: Config.arrayOf(
-						Config.shapeOf(
-							{
-								label: Config.string(),
-								name: Config.string(),
-								parameterTypes: Config.array(),
-								returnType: Config.string()
-							}
-						)
-					),
-					user: Config.arrayOf(
-						Config.shapeOf(
-							{
-								label: Config.string(),
-								name: Config.string(),
-								parameterTypes: Config.array(),
-								returnType: Config.string()
-							}
-						)
-					)
-				}
-			),
-
-		pages: Config.array().required(),
 
 		/**
 		 * @default 0
@@ -86,14 +49,7 @@ class RuleEditor extends Component {
 			)
 		).value([]),
 
-		operatorsList: Config.arrayOf(
-			Config.shapeOf(
-				{
-					label: Config.string(),
-					type: Config.string()
-				}
-			)
-		).internal(),
+		conditionTypes: Config.array().internal(),
 
 		firstOperandList: Config.arrayOf(
 			Config.shapeOf(
@@ -113,6 +69,54 @@ class RuleEditor extends Component {
 				}
 			)
 		).internal().valueFn('_firstOperandListValueFn'),
+
+		functionsMetadata: Config.shapeOf(
+			{
+				number: Config.arrayOf(
+					Config.shapeOf(
+						{
+							label: Config.string(),
+							name: Config.string(),
+							parameterTypes: Config.array(),
+							returnType: Config.string()
+						}
+					)
+				),
+				text: Config.arrayOf(
+					Config.shapeOf(
+						{
+							label: Config.string(),
+							name: Config.string(),
+							parameterTypes: Config.array(),
+							returnType: Config.string()
+						}
+					)
+				),
+				user: Config.arrayOf(
+					Config.shapeOf(
+						{
+							label: Config.string(),
+							name: Config.string(),
+							parameterTypes: Config.array(),
+							returnType: Config.string()
+						}
+					)
+				)
+			}
+		),
+
+		logicalOperator: Config.string().internal().value('or'),
+
+		operators: Config.arrayOf(
+			Config.shapeOf(
+				{
+					label: Config.string(),
+					type: Config.string()
+				}
+			)
+		).internal(),
+
+		pages: Config.array().required(),
 
 		readOnly: Config.bool().value(false),
 
@@ -143,10 +147,6 @@ class RuleEditor extends Component {
 				}
 			)
 		).internal().value([]),
-
-		conditionTypes: Config.array().internal(),
-
-		logicalOperator: Config.string().internal().value('or'),
 
 		/**
 		 * @default undefined
@@ -189,6 +189,75 @@ class RuleEditor extends Component {
 		}
 	}
 
+	syncPages() {
+		this.setState(
+			{
+				firstOperandList: this._firstOperandListValueFn()
+			}
+		);
+	}
+
+	_clearAllFieldsValues(index) {
+		let {conditions} = this;
+
+		conditions = this._clearFirstOperandValue(conditions, index);
+		conditions = this._clearOperatorValue(conditions, index);
+		conditions = this._clearSecondOperandValue(conditions, index);
+
+		this.setState(
+			{
+				conditions
+			}
+		);
+	}
+
+	_clearFirstOperandValue(conditions, index) {
+		if (conditions[index] && conditions[index].operands[0]) {
+			conditions[index].operands[0].type = '';
+			conditions[index].operands[0].value = '';
+		}
+
+		return conditions;
+	}
+
+	_clearOperatorValue(conditions, index) {
+		if (conditions[index]) {
+			conditions[index].operator = '';
+		}
+
+		return conditions;
+	}
+
+	_clearOperatorValues(index) {
+		let {conditions} = this;
+		const {secondOperandTypeSelectedList} = this;
+
+		conditions = this._clearOperatorValue(conditions, index);
+		conditions = this._clearSecondOperandValue(conditions, index);
+
+		secondOperandTypeSelectedList[index] = {name: '', value: ''};
+
+		this.setState(
+			{
+				conditions,
+				secondOperandTypeSelectedList
+			}
+		);
+	}
+
+	_clearSecondOperandValue(conditions, index) {
+		if (conditions[index] && conditions[index].operands[1]) {
+			conditions[index].operands[1].type = '';
+			conditions[index].operands[1].value = '';
+		}
+
+		return conditions;
+	}
+
+	_fieldHasOptions(field) {
+		return field === 'select' || field === 'radio' || field === 'checkbox';
+	}
+
 	_firstOperandListValueFn() {
 		const pages = this.pages;
 		const value = [];
@@ -207,21 +276,6 @@ class RuleEditor extends Component {
 		);
 
 		return value;
-	}
-
-	_getOperatorsByFieldType(type) {
-		if (this._fieldHasOptions(type)) {
-			type = 'text';
-		}
-
-		return this.functionsMetadata[type].map(
-			metadata => {
-				return {
-					...metadata,
-					value: metadata.label
-				};
-			}
-		);
 	}
 
 	_getConditionIndex({delegateTarget}, fieldClass) {
@@ -245,90 +299,27 @@ class RuleEditor extends Component {
 		return fieldType;
 	}
 
-	_fieldHasOptions(field) {
-		return field === 'select' || field === 'radio' || field === 'checkbox';
-	}
-
-	_handleOperatorSelection(event) {
-		const {originalEvent, value} = event;
-		const fieldName = originalEvent.target.getAttribute('data-option-value');
-		const index = this._getConditionIndex(originalEvent, '.condition-operator');
-
-		let copyOfConditions = [...this.conditions];
-
-		const copyOfsecondOperandTypeSelectedList = [...this.secondOperandTypeSelectedList];
-
-		if (!fieldName) {
-			copyOfConditions = this._clearSecondOperandValue(copyOfConditions, index);
-
-			copyOfsecondOperandTypeSelectedList[index] = {name: '', value: ''};
-
-			copyOfConditions[index].operator = '';
-		}
-		else {
-			const copyOfSecondOperandList = [...this.secondOperandTypeList];
-
-			const configUnary = {name: 'none', value: 'none'};
-
-			if (this._isBinary(fieldName)) {
-				copyOfSecondOperandList[0].name = this.conditions[index].operands[0].type;
-				copyOfsecondOperandTypeSelectedList[index] = {name: '', value: ''};
-			}
-			else {
-				copyOfsecondOperandTypeSelectedList[index] = configUnary;
-			}
-
-			this.setState(
-				{
-					secondOperandTypeList: copyOfSecondOperandList,
-					secondOperandTypeSelectedList: copyOfsecondOperandTypeSelectedList
-				}
-			);
-
-			copyOfConditions[index].operator = value;
+	_getOperatorsByFieldType(type) {
+		if (this._fieldHasOptions(type)) {
+			type = 'text';
 		}
 
-		this.setState({conditions: copyOfConditions});
-	}
-
-	_handleTypeSelection(event) {
-		const {originalEvent, value} = event;
-		const fieldName = originalEvent.target.getAttribute('data-option-value');
-
-		const index = this._getConditionIndex(originalEvent, '.condition-type');
-
-		let copyOfConditions = this.conditions;
-
-		let copyOfsecondOperandTypeSelectedList = [];
-
-		if (this.secondOperandTypeSelectedList) {
-			copyOfsecondOperandTypeSelectedList = this.secondOperandTypeSelectedList;
-		}
-
-		const newOperandType = {name: fieldName, value};
-
-		copyOfsecondOperandTypeSelectedList[index] = newOperandType;
-
-		copyOfConditions = this._clearSecondOperandValue(copyOfConditions, index);
-
-		this.setState(
-			{
-				conditions: copyOfConditions,
-				secondOperandTypeSelectedList: copyOfsecondOperandTypeSelectedList
+		return this.functionsMetadata[type].map(
+			metadata => {
+				return {
+					...metadata,
+					value: metadata.label
+				};
 			}
 		);
 	}
 
 	_handleFirstOperandSelection(event) {
 		const {originalEvent, value} = event;
-
 		const fieldName = originalEvent.target.getAttribute('data-option-value');
-
 		const index = this._getConditionIndex(originalEvent, '.condition-if');
-
-		let type = '';
-
 		let operators = [];
+		let type = '';
 
 		if (fieldName) {
 			type = this._getFieldType(fieldName);
@@ -344,45 +335,78 @@ class RuleEditor extends Component {
 			this._clearAllFieldsValues(index);
 		}
 
+		const {conditions} = this;
 		const operandSelected = {type, value};
-
-		const copyOfConditions = this.conditions;
 
 		if (this.conditions.length === 0) {
 			const operands = [];
 
 			operands.push(operandSelected);
 
-			copyOfConditions.push({operands});
+			conditions.push({operands});
 
 		}
 		else {
-			const previousFirstOperandValue = copyOfConditions[index].operands[0].value;
+			const previousFirstOperandValue = conditions[index].operands[0].value;
 
 			if (previousFirstOperandValue !== value) {
-				copyOfConditions[index].operands[0] = operandSelected;
-				copyOfConditions[index].operator = '';
+				conditions[index].operands[0] = operandSelected;
+				conditions[index].operator = '';
 			}
 		}
 
-		const copyOfsecondOperandTypeSelectedList = this.secondOperandTypeSelectedList;
-
+		const {secondOperandTypeSelectedList} = this;
 		const resetedConditionType = {name: '', value: ''};
 
-		copyOfsecondOperandTypeSelectedList[index] = resetedConditionType;
+		secondOperandTypeSelectedList[index] = resetedConditionType;
 
 		this.setState(
 			{
-				conditions: copyOfConditions,
-				operatorsList: operators,
-				secondOperandTypeSelectedList: copyOfsecondOperandTypeSelectedList
+				conditions,
+				operators,
+				secondOperandTypeSelectedList
 			}
 		);
 	}
 
+	_handleOperatorSelection(event) {
+		const {originalEvent, value} = event;
+		const fieldName = originalEvent.target.getAttribute('data-option-value');
+		const index = this._getConditionIndex(originalEvent, '.condition-operator');
+
+		if (fieldName) {
+			const {secondOperandTypeList, secondOperandTypeSelectedList} = this;
+
+			if (this._isBinary(fieldName)) {
+				secondOperandTypeList[0].name = this.conditions[index].operands[0].type;
+
+				if (secondOperandTypeSelectedList[index] === null) {
+					secondOperandTypeSelectedList[index] = {name: '', value: ''};
+				}
+			}
+			else {
+				secondOperandTypeSelectedList[index] = null;
+			}
+
+			const {conditions} = this;
+
+			conditions[index].operator = value;
+
+			this.setState(
+				{
+					conditions,
+					secondOperandTypeList,
+					secondOperandTypeSelectedList
+				}
+			);
+		}
+		else {
+			this._clearOperatorValues(index);
+		}
+	}
+
 	_handleSecondOperandSelection(event) {
 		const {originalEvent, value} = event;
-
 		let index;
 
 		if (!document.querySelector('.condition-type-value.hide')) {
@@ -407,15 +431,39 @@ class RuleEditor extends Component {
 			}
 		}
 
-		const copyOfConditions = this.conditions;
-
+		const {conditions} = this;
 		const operandSelected = {type, value};
 
-		copyOfConditions[index].operands[1] = operandSelected;
+		conditions[index].operands[1] = operandSelected;
 
 		this.setState(
 			{
-				conditions: copyOfConditions
+				conditions
+			}
+		);
+	}
+
+	_handleTypeSelection(event) {
+		const {originalEvent, value} = event;
+		const fieldName = originalEvent.target.getAttribute('data-option-value');
+		const index = this._getConditionIndex(originalEvent, '.condition-type');
+		let {conditions} = this;
+		let secondOperandTypeSelectedList = [];
+
+		if (this.secondOperandTypeSelectedList) {
+			secondOperandTypeSelectedList = this.secondOperandTypeSelectedList;
+		}
+
+		const newOperandType = {name: fieldName, value};
+
+		secondOperandTypeSelectedList[index] = newOperandType;
+
+		conditions = this._clearSecondOperandValue(conditions, index);
+
+		this.setState(
+			{
+				conditions,
+				secondOperandTypeSelectedList
 			}
 		);
 	}
@@ -431,46 +479,6 @@ class RuleEditor extends Component {
 			value === 'less-than' ||
 			value === 'not-contains' ||
 			value === 'not-equals-to'
-		);
-	}
-
-	_clearOperatorValue(copyOfConditions, index) {
-		if (copyOfConditions[index]) {
-			copyOfConditions[index].operator = '';
-		}
-
-		return copyOfConditions;
-	}
-
-	_clearFirstOperandValue(copyOfConditions, index) {
-		if (copyOfConditions[index] && copyOfConditions[index].operands[0]) {
-			copyOfConditions[index].operands[0].type = '';
-			copyOfConditions[index].operands[0].value = '';
-		}
-
-		return copyOfConditions;
-	}
-
-	_clearSecondOperandValue(copyOfConditions, index) {
-		if (copyOfConditions[index] && copyOfConditions[index].operands[1]) {
-			copyOfConditions[index].operands[1].type = '';
-			copyOfConditions[index].operands[1].value = '';
-		}
-
-		return copyOfConditions;
-	}
-
-	_clearAllFieldsValues(index) {
-		let copyOfConditions = this.conditions;
-
-		copyOfConditions = this._clearOperatorValue(copyOfConditions, index);
-		copyOfConditions = this._clearFirstOperandValue(copyOfConditions, index);
-		copyOfConditions = this._clearSecondOperandValue(copyOfConditions, index);
-
-		this.setState(
-			{
-				conditions: copyOfConditions
-			}
 		);
 	}
 }

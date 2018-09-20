@@ -596,7 +596,6 @@ class Form extends Component {
 	}
 
 	syncActiveFormMode(activeFormMode) {
-		const addButton = document.querySelector('#addFieldButton');
 		const formBasicInfo = document.querySelector('.ddm-form-basic-info');
 		const formBuilderButtons = document.querySelector('.ddm-form-builder-buttons');
 		const publishIcon = document.querySelector('.publish-icon');
@@ -609,7 +608,6 @@ class Form extends Component {
 			translationManager.classList.add('hide');
 		}
 		else {
-			addButton.classList.remove('hide');
 			formBasicInfo.classList.remove('hide');
 			formBuilderButtons.classList.remove('hide');
 			publishIcon.classList.remove('hide');

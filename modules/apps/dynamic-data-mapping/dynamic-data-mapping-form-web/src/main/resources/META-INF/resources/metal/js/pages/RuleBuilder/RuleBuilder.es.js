@@ -197,14 +197,18 @@ class RuleBuilder extends Component {
 	}
 
 	rendered() {
-		const addButton = document.querySelector('#addFieldButton');
 		const {mode} = this.state;
+		const {visible} = this.props;
 
-		if (mode === 'create' || mode === 'edit') {
-			addButton.classList.add('hide');
-		}
-		else {
-			addButton.classList.remove('hide');
+		if (visible) {
+			const addButton = document.querySelector('#addFieldButton');
+
+			if (mode === 'create' || mode === 'edit') {
+				addButton.classList.add('hide');
+			}
+			else {
+				addButton.classList.remove('hide');
+			}
 		}
 	}
 

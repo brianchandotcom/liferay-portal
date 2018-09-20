@@ -386,7 +386,8 @@ class Builder extends Component {
 			focusedField,
 			pages,
 			paginationMode,
-			spritemap
+			spritemap,
+			visible
 		} = props;
 
 		const FormRendererEvents = {
@@ -453,6 +454,7 @@ class Builder extends Component {
 					focusedField={focusedField}
 					ref="sidebar"
 					spritemap={spritemap}
+					visible={visible}
 				/>
 			</div>
 		);

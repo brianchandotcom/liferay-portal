@@ -430,6 +430,12 @@ class Sidebar extends Component {
 		this.refreshDragAndDrop();
 	}
 
+	syncVisible(visible) {
+		if (!visible) {
+			this.emit('fieldBlurred');
+		}
+	}
+
 	/**
 	 * @inheritDoc
 	 */

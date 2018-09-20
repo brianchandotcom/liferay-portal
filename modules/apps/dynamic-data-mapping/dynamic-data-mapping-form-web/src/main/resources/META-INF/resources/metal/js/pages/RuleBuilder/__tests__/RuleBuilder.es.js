@@ -64,35 +64,28 @@ describe(
 	() => {
 		beforeEach(
 			() => {
+				dom.enterDocument('<button id="addFieldButton" class="hide"></button>');
+
+				component = new RuleBuilder(configView);
+
 				jest.useFakeTimers();
 			}
 		);
 		afterEach(
 			() => {
+				const addbutton = document.querySelector('#addFieldButton');
+
 				if (component) {
 					component.dispose();
 				}
+
+				dom.exitDocument(addbutton);
 			}
 		);
 		it(
 			'should render the list of rules when mode is set to view',
 			() => {
-				component = new RuleBuilder(configView);
 				component.setState({mode: 'view'});
-				expect(component).toMatchSnapshot();
-			}
-		);
-
-		it(
-			'should render rule screen editor when click edit button',
-			() => {
-				dom.enterDocument('<button id="addFieldButton" class="hide"></button>');
-
-				component = new RuleBuilder(configView);
-
-				const ruleCardEdit = document.querySelector('.rule-card-edit');
-
-				dom.triggerEvent(ruleCardEdit, 'click', {});
 
 				jest.runAllTimers();
 
@@ -101,13 +94,9 @@ describe(
 		);
 
 		it(
-			'should render rule screen editor when click add rule button',
+			'should render rule screen editor when click edit button',
 			() => {
-				dom.enterDocument('<button id="addFieldButton" class="hide"></button>');
-
-				const ruleCardEdit = document.querySelector('#addFieldButton');
-
-				component = new RuleBuilder(configView);
+				const ruleCardEdit = document.querySelector('.rule-card-edit');
 
 				dom.triggerEvent(ruleCardEdit, 'click', {});
 

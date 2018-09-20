@@ -16,7 +16,6 @@ package com.liferay.asset.list.service.impl;
 
 import com.liferay.asset.list.model.AssetListEntryAssetEntryRel;
 import com.liferay.asset.list.service.base.AssetListEntryAssetEntryRelLocalServiceBaseImpl;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
 
@@ -55,17 +54,11 @@ public class AssetListEntryAssetEntryRelLocalServiceImpl
 		TransactionCommitCallbackUtil.registerCallback(
 			() -> {
 				List<AssetListEntryAssetEntryRel> assetListEntryAssetEntryRels =
-					assetListEntryAssetEntryRelLocalService.
-						getAssetListEntryAssetEntryRels(
-							assetListEntryId, QueryUtil.ALL_POS,
-							QueryUtil.ALL_POS);
+					assetListEntryAssetEntryRelPersistence.findByA_GtP(
+						assetListEntryId, position);
 
 				for (AssetListEntryAssetEntryRel assetListEntryAssetEntryRel :
 						assetListEntryAssetEntryRels) {
-
-					if (assetListEntryAssetEntryRel.getPosition() < position) {
-						continue;
-					}
 
 					assetListEntryAssetEntryRelLocalService.
 						moveAssetListEntryAssetEntryRel(

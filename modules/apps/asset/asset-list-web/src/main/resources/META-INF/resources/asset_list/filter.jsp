@@ -42,7 +42,7 @@ String redirect = editAssetListDisplayContext.getRedirectURL();
 		</h3>
 
 		<liferay-frontend:fieldset-group>
-			<aui:fieldset label="displayed-assets-must-match-these-rules" markupView="lexicon">
+			<liferay-frontend:fieldset>
 				<liferay-asset:asset-tags-error />
 
 				<%
@@ -66,6 +66,8 @@ String redirect = editAssetListDisplayContext.getRedirectURL();
 					<liferay-ui:message arguments="<%= messageArgument %>" key="only-one-rule-with-the-combination-x-is-supported" translateArguments="<%= false %>" />
 				</liferay-ui:error>
 
+				<p><liferay-ui:message key="displayed-assets-must-match-these-rules" /></p>
+
 				<div id="<portlet:namespace />ConditionForm"></div>
 
 				<%
@@ -86,7 +88,7 @@ String redirect = editAssetListDisplayContext.getRedirectURL();
 					module="asset-list-web/js/AutoField.es"
 					templateNamespace="com.liferay.asset.list.web.AutoField.render"
 				/>
-			</aui:fieldset>
+			</liferay-frontend:fieldset>
 		</liferay-frontend:fieldset-group>
 	</liferay-frontend:edit-form-body>
 

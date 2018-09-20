@@ -44,7 +44,10 @@ List<AssetRendererFactory<?>> classTypesAssetRendererFactories = new ArrayList()
 		</h3>
 
 		<liferay-frontend:fieldset-group>
-			<aui:fieldset cssClass="source-container" label="asset-entry-type" markupView="lexicon">
+			<liferay-frontend:fieldset
+				cssClass="source-container"
+			>
+				<p><liferay-ui:message key="asset-entry-type" /></p>
 
 				<%
 				Set<Long> availableClassNameIdsSet = SetUtil.fromArray(editAssetListDisplayContext.getAvailableClassNameIds());
@@ -249,7 +252,7 @@ List<AssetRendererFactory<?>> classTypesAssetRendererFactories = new ArrayList()
 						<aui:input name="TypeSettingsProperties--ddmStructureDisplayFieldValue--" type="hidden" value="<%= editAssetListDisplayContext.getDDMStructureDisplayFieldValue() %>" />
 					</div>
 				</c:if>
-			</aui:fieldset>
+			</liferay-frontend:fieldset>
 		</liferay-frontend:fieldset-group>
 	</liferay-frontend:edit-form-body>
 

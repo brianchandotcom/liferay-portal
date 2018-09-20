@@ -108,7 +108,7 @@ public class BNDWebContextPathCheck extends BaseFileCheck {
 		return false;
 	}
 
-	private final Pattern _jsonNamePattern = Pattern.compile(
+	private static final Pattern _jsonNamePattern = Pattern.compile(
 		"\n\\s*['\"]name['\"]:");
 
 }

@@ -96,9 +96,9 @@ public class StringUtilCheck extends BaseFileCheck {
 		}
 	}
 
-	private final Pattern _singleLengthStringPattern = Pattern.compile(
+	private static final Pattern _singleLengthStringPattern = Pattern.compile(
 		"^(\".\"|StringPool\\.([A-Z_]+))$");
-	private final Pattern _stringUtilReplacePattern = Pattern.compile(
+	private static final Pattern _stringUtilReplacePattern = Pattern.compile(
 		"StringUtil\\.(replace(First|Last)?)\\((.*?)\\);\n", Pattern.DOTALL);
 
 }

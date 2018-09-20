@@ -64,9 +64,9 @@ public class FTLLiferayVariableOrderCheck extends BaseFileCheck {
 		return content;
 	}
 
-	private final Pattern _liferayVariablePattern = Pattern.compile(
+	private static final Pattern _liferayVariablePattern = Pattern.compile(
 		"^\t*<#assign liferay_.*>\n", Pattern.MULTILINE);
-	private final Pattern _liferayVariablesPattern = Pattern.compile(
+	private static final Pattern _liferayVariablesPattern = Pattern.compile(
 		"(^\t*<#assign liferay_.*>\n)+", Pattern.MULTILINE);
 
 }

@@ -127,7 +127,7 @@ public class JavaEmptyLinesCheck extends EmptyLinesCheck {
 		return content;
 	}
 
-	private final Pattern _redundantEmptyLinePattern = Pattern.compile(
+	private static final Pattern _redundantEmptyLinePattern = Pattern.compile(
 		"\n(.*)-> \\{\n\n[\t ]*(?!// )\\S");
 
 }

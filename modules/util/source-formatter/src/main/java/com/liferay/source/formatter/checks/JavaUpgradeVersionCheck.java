@@ -513,15 +513,15 @@ public class JavaUpgradeVersionCheck extends BaseJavaTermCheck {
 	private static final String _JAVA_UPGRADE_PROCESS_EXCLUDES =
 		"java.upgrade.process.excludes";
 
-	private final Pattern _addColumnPattern = Pattern.compile(
+	private static final Pattern _addColumnPattern = Pattern.compile(
 		"alter table \\w+ add ");
-	private final Pattern _alterColumnTypePattern = Pattern.compile(
+	private static final Pattern _alterColumnTypePattern = Pattern.compile(
 		"AlterColumnType\\(\\s*\"(.+?)\",\\s*\"(\\S+) .+\"\\)");
-	private final Pattern _classNamePattern = Pattern.compile(
+	private static final Pattern _classNamePattern = Pattern.compile(
 		"^new ([\\s\\w.]+)\\(");
-	private final Pattern _dropColumnPattern = Pattern.compile(
+	private static final Pattern _dropColumnPattern = Pattern.compile(
 		"alter table \\w+ drop column");
-	private final Pattern _tableNamePattern = Pattern.compile(
+	private static final Pattern _tableNamePattern = Pattern.compile(
 		"String TABLE_NAME =\\s+\"(.+)\";");
 
 }

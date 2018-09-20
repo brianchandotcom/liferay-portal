@@ -126,10 +126,10 @@ public class PackageinfoBNDExportPackageCheck extends BaseFileCheck {
 		return false;
 	}
 
-	private final Pattern _exportContentsPattern = Pattern.compile(
+	private static final Pattern _exportContentsPattern = Pattern.compile(
 		"\n-exportcontents:(\\\\\n| )((.*?)(\n[^\t]|\\Z))",
 		Pattern.DOTALL | Pattern.MULTILINE);
-	private final Pattern _exportPackagePattern = Pattern.compile(
+	private static final Pattern _exportPackagePattern = Pattern.compile(
 		"\nExport-Package:(\\\\\n| )((.*?)(\n[^\t]|\\Z))",
 		Pattern.DOTALL | Pattern.MULTILINE);
 

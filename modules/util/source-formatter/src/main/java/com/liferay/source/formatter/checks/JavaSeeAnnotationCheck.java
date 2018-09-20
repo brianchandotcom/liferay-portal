@@ -38,7 +38,7 @@ public class JavaSeeAnnotationCheck extends BaseFileCheck {
 		return content;
 	}
 
-	private final Pattern _seeAnnotationPattern = Pattern.compile(
+	private static final Pattern _seeAnnotationPattern = Pattern.compile(
 		"[\n\t] ?\\* @see.*@");
 
 }

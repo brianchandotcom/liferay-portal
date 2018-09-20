@@ -82,9 +82,9 @@ public class PropertiesLiferayPluginPackageFileCheck extends BaseFileCheck {
 		return _fixIncorrectLicenses(absolutePath, content);
 	}
 
-	private final Pattern _licensesPattern = Pattern.compile(
+	private static final Pattern _licensesPattern = Pattern.compile(
 		"\nlicenses=(\\w+)\n");
-	private final Pattern _singleValueOnMultipleLinesPattern = Pattern.compile(
-		"\n.*=(\\\\\n *).*(\n[^ ]|\\Z)");
+	private static final Pattern _singleValueOnMultipleLinesPattern =
+		Pattern.compile("\n.*=(\\\\\n *).*(\n[^ ]|\\Z)");
 
 }

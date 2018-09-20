@@ -250,8 +250,7 @@ public class TargetPlatformRootProjectConfigurator implements Plugin<Project> {
 
 	private static final Pattern _dxpVersionPattern = Pattern.compile(
 		"7\\.[0-2]\\.1[0-9](\\.[0-9]+)?");
-
-	private final Pattern _externalVersionPattern = Pattern.compile(
+	private static final Pattern _externalVersionPattern = Pattern.compile(
 		"([0-9]+)\\.([0-9]+)-([A-Za-z]+)([0-9]+)");
 
 }

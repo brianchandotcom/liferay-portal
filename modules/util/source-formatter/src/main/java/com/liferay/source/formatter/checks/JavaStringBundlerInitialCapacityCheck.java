@@ -252,9 +252,9 @@ public class JavaStringBundlerInitialCapacityCheck extends BaseJavaTermCheck {
 		return false;
 	}
 
-	private final Pattern _loopPattern = Pattern.compile(
+	private static final Pattern _loopPattern = Pattern.compile(
 		"\t(do \\{|(for|while) \\()");
-	private final Pattern _stringBundlerPattern = Pattern.compile(
+	private static final Pattern _stringBundlerPattern = Pattern.compile(
 		"\n(\t+)(StringBundler )?(\\w+) = new StringBundler(\\(([0-9]+)?)\\)" +
 			";\n");
 

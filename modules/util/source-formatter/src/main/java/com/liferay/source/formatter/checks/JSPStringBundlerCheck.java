@@ -84,10 +84,11 @@ public class JSPStringBundlerCheck extends BaseFileCheck {
 		return content;
 	}
 
-	private final Pattern _sbAppendPattern = Pattern.compile(
+	private static final Pattern _sbAppendPattern = Pattern.compile(
 		"(sb|SB)[0-9]?\\.append\\(\\s*(\\S.*?)\\);\n", Pattern.DOTALL);
-	private final Pattern _sbAppendWithStartingSpacePattern = Pattern.compile(
-		"\n(\t*\\w*(sb|SB)[0-9]?\\.append\\(\".*\"\\);)\n\\s*\\w*(sb|SB)" +
-			"[0-9]?\\.append\\(\" .*\"\\);\n");
+	private static final Pattern _sbAppendWithStartingSpacePattern =
+		Pattern.compile(
+			"\n(\t*\\w*(sb|SB)[0-9]?\\.append\\(\".*\"\\);)\n\\s*\\w*(sb|SB)" +
+				"[0-9]?\\.append\\(\" .*\"\\);\n");
 
 }

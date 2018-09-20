@@ -365,10 +365,11 @@ public class DDMFormValidatorImpl implements DDMFormValidator {
 	private static final String[] _DDM_FORM_FIELD_INDEX_TYPES =
 		{StringPool.BLANK, "keyword", "text"};
 
-	private DDMExpressionFactory _ddmExpressionFactory;
-	private final Pattern _ddmFormFieldNamePattern = Pattern.compile(
+	private static final Pattern _ddmFormFieldNamePattern = Pattern.compile(
 		"([^\\p{Punct}|\\p{Space}$]|_)+");
-	private final Pattern _ddmFormFieldTypePattern = Pattern.compile(
+	private static final Pattern _ddmFormFieldTypePattern = Pattern.compile(
 		"([^\\p{Punct}|\\p{Space}$]|[-_])+");
+
+	private DDMExpressionFactory _ddmExpressionFactory;
 
 }

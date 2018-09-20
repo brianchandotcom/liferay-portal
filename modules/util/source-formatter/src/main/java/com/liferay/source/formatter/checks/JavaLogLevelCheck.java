@@ -79,7 +79,7 @@ public class JavaLogLevelCheck extends BaseFileCheck {
 		}
 	}
 
-	private final Pattern _logLevelPattern = Pattern.compile(
+	private static final Pattern _logLevelPattern = Pattern.compile(
 		"\n(\t+)_log.(debug|error|info|trace|warn)\\(");
 
 }

@@ -96,7 +96,7 @@ public class JavaLogParametersCheck extends BaseJavaTermCheck {
 		return new String[] {JAVA_CONSTRUCTOR, JAVA_METHOD};
 	}
 
-	private final Pattern _logPattern = Pattern.compile(
+	private static final Pattern _logPattern = Pattern.compile(
 		"_log\\.(debug|error|fatal|info|trace|warn)\\((.+?)\\);\n",
 		Pattern.DOTALL);
 

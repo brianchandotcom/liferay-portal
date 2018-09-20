@@ -94,8 +94,9 @@ public class SQLLongNamesCheck extends BaseFileCheck {
 
 	private static final int _MAX_NAME_LENGTH = 30;
 
-	private final Pattern _columnPattern = Pattern.compile("\n\t*(\\w+) ");
-	private final Pattern _createTablePattern = Pattern.compile(
+	private static final Pattern _columnPattern = Pattern.compile(
+		"\n\t*(\\w+) ");
+	private static final Pattern _createTablePattern = Pattern.compile(
 		"create table (\\w+) \\(");
 
 }

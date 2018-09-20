@@ -265,9 +265,11 @@ public class JavaInnerClassImportsCheck extends BaseFileCheck {
 		return content;
 	}
 
-	private final Pattern _innerClassImportPattern = Pattern.compile(
+	private static final Pattern _innerClassImportPattern = Pattern.compile(
 		"\nimport (([\\w.]+\\.([A-Z]\\w+))\\.([A-Z]\\w+));");
-	private final Pattern _outerClassPattern = Pattern.compile("\\.[A-Z]\\w+");
+	private static final Pattern _outerClassPattern = Pattern.compile(
+		"\\.[A-Z]\\w+");
+
 	private final List<String> _upperCasePackageNames = new ArrayList<>();
 
 }

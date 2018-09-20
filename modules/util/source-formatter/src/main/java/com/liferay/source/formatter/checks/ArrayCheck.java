@@ -143,13 +143,13 @@ public class ArrayCheck extends BaseFileCheck {
 		return content;
 	}
 
-	private final Pattern _addAllArraysAsListPattern = Pattern.compile(
+	private static final Pattern _addAllArraysAsListPattern = Pattern.compile(
 		"\\.addAll\\(\\s*Arrays\\.asList\\(");
-	private final Pattern _addAllListUtilFromArrayPattern = Pattern.compile(
-		"\\.addAll\\(\\s*ListUtil\\.fromArray\\(");
-	private final Pattern _arrayInitializationPattern = Pattern.compile(
+	private static final Pattern _addAllListUtilFromArrayPattern =
+		Pattern.compile("\\.addAll\\(\\s*ListUtil\\.fromArray\\(");
+	private static final Pattern _arrayInitializationPattern = Pattern.compile(
 		"(\\W\\w+(\\[\\])+)(\\s+)(\\w+ =)((\\s+)new \\w+(\\[\\])+)( \\{(\n)?)");
-	private final Pattern _emptyArrayPattern = Pattern.compile(
+	private static final Pattern _emptyArrayPattern = Pattern.compile(
 		"((\\[\\])+) \\{\\}");
 
 }

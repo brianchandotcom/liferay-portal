@@ -204,7 +204,7 @@ public class JavaModuleJavaxPortletInitParamTemplatePathCheck
 		return templatePath;
 	}
 
-	private final Pattern _pattern = Pattern.compile(
+	private static final Pattern _pattern = Pattern.compile(
 		"@Component\\([^)]*\"" +
 			"(javax\\.portlet\\.init-param\\.template-path[^\"]*)\"[^)]*\\)");
 

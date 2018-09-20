@@ -130,17 +130,17 @@ public class JSPEmptyLinesCheck extends EmptyLinesCheck {
 		return content;
 	}
 
-	private final Pattern _missingEmptyLinePattern1 = Pattern.compile(
+	private static final Pattern _missingEmptyLinePattern1 = Pattern.compile(
 		"[\t\n](--)?%>\n\t*(?!-->)\\S");
-	private final Pattern _missingEmptyLinePattern2 = Pattern.compile(
+	private static final Pattern _missingEmptyLinePattern2 = Pattern.compile(
 		"\\S(?!<\\!--)\n\t*<%(--)?\n");
-	private final Pattern _missingEmptyLinePattern3 = Pattern.compile(
+	private static final Pattern _missingEmptyLinePattern3 = Pattern.compile(
 		"[\t\n]<%\n\t*//");
-	private final Pattern _missingEmptyLinePattern4 = Pattern.compile(
+	private static final Pattern _missingEmptyLinePattern4 = Pattern.compile(
 		"[\t\n]//.*\n\t*%>\n");
-	private final Pattern _redundantEmptyLinePattern1 = Pattern.compile(
+	private static final Pattern _redundantEmptyLinePattern1 = Pattern.compile(
 		"[\n\t]<%\n\n(\t*)[^/\n\t]");
-	private final Pattern _redundantEmptyLinePattern2 = Pattern.compile(
+	private static final Pattern _redundantEmptyLinePattern2 = Pattern.compile(
 		"[\n\t][^/\n\t].*\n\n\t*%>");
 
 }

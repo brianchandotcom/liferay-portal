@@ -61,7 +61,7 @@ public class XMLPortletPreferencesFileCheck extends BaseFileCheck {
 		}
 	}
 
-	private final Pattern _incorrectDefaultPreferencesFileName =
+	private static final Pattern _incorrectDefaultPreferencesFileName =
 		Pattern.compile("/default-([\\w-]+)-portlet-preferences\\.xml$");
 
 	private class PortletPreferenceElementComparator extends ElementComparator {

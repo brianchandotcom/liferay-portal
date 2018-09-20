@@ -128,9 +128,9 @@ public class JavaReturnStatementCheck extends BaseJavaTermCheck {
 		return javaTermContent;
 	}
 
-	private final Pattern _relationalOperatorPattern = Pattern.compile(
+	private static final Pattern _relationalOperatorPattern = Pattern.compile(
 		".* (==|!=|<|>|>=|<=)[ \n].*");
-	private final Pattern _returnPattern = Pattern.compile(
+	private static final Pattern _returnPattern = Pattern.compile(
 		"\n(\t+)return (.*?);\n", Pattern.DOTALL);
 
 }

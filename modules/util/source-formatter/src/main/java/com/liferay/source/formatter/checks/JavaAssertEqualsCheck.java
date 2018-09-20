@@ -79,7 +79,7 @@ public class JavaAssertEqualsCheck extends BaseFileCheck {
 		return content;
 	}
 
-	private final Pattern _assertEqualsPattern = Pattern.compile(
+	private static final Pattern _assertEqualsPattern = Pattern.compile(
 		"Assert\\.assertEquals\\((.*?)\\);\n", Pattern.DOTALL);
 
 }

@@ -56,7 +56,8 @@ public class CommentAllowedContent {
 		return _attributeNamesMap;
 	}
 
+	private static final Pattern _pattern = Pattern.compile("\\s+");
+
 	private final Map<String, String[]> _attributeNamesMap = new HashMap<>();
-	private final Pattern _pattern = Pattern.compile("\\s+");
 
 }

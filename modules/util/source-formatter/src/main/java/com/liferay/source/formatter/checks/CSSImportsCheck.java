@@ -59,7 +59,7 @@ public class CSSImportsCheck extends BaseFileCheck {
 		return content;
 	}
 
-	private final Pattern _importsPattern = Pattern.compile(
+	private static final Pattern _importsPattern = Pattern.compile(
 		"(@import \".*\";(\n|\\Z))+", Pattern.MULTILINE);
 
 }

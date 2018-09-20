@@ -173,7 +173,7 @@ public class JavaJSPDynamicIncludeCheck extends BaseJavaTermCheck {
 		return null;
 	}
 
-	private final Pattern _jspPathPattern = Pattern.compile(
+	private static final Pattern _jspPathPattern = Pattern.compile(
 		".*\\s+return\\s+\"(\\S+)\";.*", Pattern.DOTALL);
 
 }

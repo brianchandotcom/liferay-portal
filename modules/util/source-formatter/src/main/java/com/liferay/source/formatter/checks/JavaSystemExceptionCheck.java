@@ -78,7 +78,7 @@ public class JavaSystemExceptionCheck extends BaseFileCheck {
 			StringUtil.replaceFirst(content, match, replacement));
 	}
 
-	private final Pattern _throwsSystemExceptionPattern = Pattern.compile(
-		"(\n\t+.*)throws(.*) SystemException(.*)( \\{|;\n)");
+	private static final Pattern _throwsSystemExceptionPattern =
+		Pattern.compile("(\n\t+.*)throws(.*) SystemException(.*)( \\{|;\n)");
 
 }

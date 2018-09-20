@@ -164,11 +164,11 @@ public class BNDIncludeResourceCheck extends BaseFileCheck {
 		"WEB-INF=src/main/resources/WEB-INF"
 	};
 
-	private final Pattern _includeDashResourcePattern = Pattern.compile(
+	private static final Pattern _includeDashResourcePattern = Pattern.compile(
 		"^Include-Resource:.+", Pattern.MULTILINE);
-	private final Pattern _includeResourceJarPattern = Pattern.compile(
+	private static final Pattern _includeResourceJarPattern = Pattern.compile(
 		"-[0-9\\.]+\\.jar");
-	private final Pattern _includeResourcePattern = Pattern.compile(
+	private static final Pattern _includeResourcePattern = Pattern.compile(
 		"^(-includeresource|Include-Resource):[\\s\\S]*?([^\\\\]\n|\\Z)",
 		Pattern.MULTILINE);
 

@@ -49,7 +49,7 @@ public class CSSHexColorsCheck extends BaseFileCheck {
 		return content;
 	}
 
-	private final Pattern _hexColorPattern = Pattern.compile(
+	private static final Pattern _hexColorPattern = Pattern.compile(
 		"#([0-9a-f]+)[\\( ;,]");
 
 }

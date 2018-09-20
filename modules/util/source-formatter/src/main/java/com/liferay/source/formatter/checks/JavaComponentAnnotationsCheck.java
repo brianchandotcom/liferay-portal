@@ -280,13 +280,15 @@ public class JavaComponentAnnotationsCheck extends JavaAnnotationsCheck {
 			new String[] {"", "= ", ", ", ""});
 	}
 
-	private final Pattern _annotationParameterPropertyPattern = Pattern.compile(
-		"\t(\\w+) = \\{");
-	private final Pattern _attributePattern = Pattern.compile("\\W(\\w+)\\s*=");
+	private static final Pattern _annotationParameterPropertyPattern =
+		Pattern.compile("\t(\\w+) = \\{");
+	private static final Pattern _attributePattern = Pattern.compile(
+		"\\W(\\w+)\\s*=");
+	private static final Pattern _serviceAttributePattern = Pattern.compile(
+		"\\Wservice\\s*=");
+
 	private boolean _checkMismatchedServiceAttribute;
 	private boolean _checkSelfRegistration;
-	private final Pattern _serviceAttributePattern = Pattern.compile(
-		"\\Wservice\\s*=");
 
 	private class AnnotationParameterPropertyComparator
 		extends NaturalOrderStringComparator {

@@ -86,7 +86,7 @@ public class JavaModuleServiceReferenceCheck extends BaseFileCheck {
 		return packageName + StringPool.PERIOD + className;
 	}
 
-	private final Pattern _serviceReferencePattern = Pattern.compile(
+	private static final Pattern _serviceReferencePattern = Pattern.compile(
 		"@ServiceReference\\(\\s*type = ([\\w.]+)\\.class\\)\n");
 
 }

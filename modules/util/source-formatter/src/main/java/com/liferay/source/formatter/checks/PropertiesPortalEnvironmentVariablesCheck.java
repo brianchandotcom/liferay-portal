@@ -158,7 +158,7 @@ public class PropertiesPortalEnvironmentVariablesCheck extends BaseFileCheck {
 			}
 		};
 
-	private final Pattern _pattern = Pattern.compile(
+	private static final Pattern _pattern = Pattern.compile(
 		"    #\\n(    # (?!Env:).*\\n)+    #(\\n(    # Env:.*\\n)+    #)?" +
 			"((\\n    [#\\w][#\\w].*)+)",
 		Pattern.MULTILINE);

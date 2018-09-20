@@ -75,7 +75,7 @@ public class JSPIncludeCheck extends BaseFileCheck {
 		return content;
 	}
 
-	private final Pattern _includeFilePattern = Pattern.compile(
+	private static final Pattern _includeFilePattern = Pattern.compile(
 		"\\s*@\\s*include\\s*file=['\"](.*)['\"]");
 
 }

@@ -42,7 +42,7 @@ public class JavaProcessCallableCheck extends BaseFileCheck {
 		return content;
 	}
 
-	private final Pattern _processCallablePattern = Pattern.compile(
+	private static final Pattern _processCallablePattern = Pattern.compile(
 		"implements ProcessCallable\\b");
 
 }

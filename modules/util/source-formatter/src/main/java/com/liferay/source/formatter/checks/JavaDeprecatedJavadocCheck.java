@@ -161,6 +161,10 @@ public class JavaDeprecatedJavadocCheck extends BaseFileCheck {
 		return _nextReleaseVersion;
 	}
 
+	private static final Pattern _deprecatedPattern = Pattern.compile(
+		"(\n\\s*\\* @deprecated)( As of (([\\w.]+)(,? \\(([\\w.]+)\\))?)" +
+			"(.*?)\n\\s*\\*( @|/))?",
+		Pattern.DOTALL);
 	private static final Map<String, String> _releaseInfoMap =
 		new HashMap<String, String>() {
 			{
@@ -172,10 +176,6 @@ public class JavaDeprecatedJavadocCheck extends BaseFileCheck {
 			}
 		};
 
-	private final Pattern _deprecatedPattern = Pattern.compile(
-		"(\n\\s*\\* @deprecated)( As of (([\\w.]+)(,? \\(([\\w.]+)\\))?)" +
-			"(.*?)\n\\s*\\*( @|/))?",
-		Pattern.DOTALL);
 	private String _nextReleaseCodeName;
 	private String _nextReleaseVersion;
 

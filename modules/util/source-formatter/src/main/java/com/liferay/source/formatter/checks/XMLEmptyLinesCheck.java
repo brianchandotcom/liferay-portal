@@ -109,15 +109,15 @@ public class XMLEmptyLinesCheck extends EmptyLinesCheck {
 		return content;
 	}
 
-	private final Pattern _emptyLineBetweenTagsPattern = Pattern.compile(
+	private static final Pattern _emptyLineBetweenTagsPattern = Pattern.compile(
 		"\n(\t*)<[\\w/].*[^-]>(\n\n)(\t*)<(\\w)");
-	private final Pattern _missingEmptyLineAfterCommentPattern =
+	private static final Pattern _missingEmptyLineAfterCommentPattern =
 		Pattern.compile("[\t ]-->\n[\t<]");
-	private final Pattern _missingEmptyLineBeforeCommentPattern =
+	private static final Pattern _missingEmptyLineBeforeCommentPattern =
 		Pattern.compile(">\n\t+<!--[\n ]");
-	private final Pattern _missingEmptyLinePattern = Pattern.compile(
+	private static final Pattern _missingEmptyLinePattern = Pattern.compile(
 		"<\\?xml .*\\?>\n<\\w");
-	private final Pattern _redundantEmptyLinePattern = Pattern.compile(
+	private static final Pattern _redundantEmptyLinePattern = Pattern.compile(
 		"<\\?xml .*\\?>\n\n<\\!DOCTYPE");
 
 }

@@ -166,11 +166,11 @@ public class JavaUpgradeClassCheck extends BaseFileCheck {
 	private static final String _UPGRADE_SERVICE_UTIL_EXCLUDES =
 		"upgrade.service.util.excludes";
 
-	private final Pattern _componentAnnotationPattern = Pattern.compile(
+	private static final Pattern _componentAnnotationPattern = Pattern.compile(
 		"@Component(\n|\\([\\s\\S]*?\\)\n)");
-	private final Pattern _registryRegisterPattern = Pattern.compile(
+	private static final Pattern _registryRegisterPattern = Pattern.compile(
 		"registry\\.register\\((.*?)\\);\n", Pattern.DOTALL);
-	private final Pattern _upgradeClassNamePattern = Pattern.compile(
+	private static final Pattern _upgradeClassNamePattern = Pattern.compile(
 		"new .*?(\\w+)\\(", Pattern.DOTALL);
 
 }

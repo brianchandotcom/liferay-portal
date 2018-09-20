@@ -213,8 +213,9 @@ public class JSPWhitespaceCheck extends WhitespaceCheck {
 		return content;
 	}
 
-	private final Pattern _directiveLinePattern = Pattern.compile("<%@\n?.*%>");
-	private final Pattern _javaSourceInsideJSPLinePattern = Pattern.compile(
-		"<%=(.+?)%>");
+	private static final Pattern _directiveLinePattern = Pattern.compile(
+		"<%@\n?.*%>");
+	private static final Pattern _javaSourceInsideJSPLinePattern =
+		Pattern.compile("<%=(.+?)%>");
 
 }

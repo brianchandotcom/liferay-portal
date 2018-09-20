@@ -263,7 +263,8 @@ public class JavaWhitespaceCheck extends WhitespaceCheck {
 		}
 	}
 
-	private final Pattern _forStatementPattern = Pattern.compile("\tfor \\(");
-	private final Pattern _genericsPattern = Pattern.compile("\t<");
+	private static final Pattern _forStatementPattern = Pattern.compile(
+		"\tfor \\(");
+	private static final Pattern _genericsPattern = Pattern.compile("\t<");
 
 }

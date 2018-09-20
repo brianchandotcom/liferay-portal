@@ -195,13 +195,13 @@ public class FTLTagCheck extends BaseFileCheck {
 		return sb.toString();
 	}
 
-	private final Pattern _assignTagsBlockPattern = Pattern.compile(
+	private static final Pattern _assignTagsBlockPattern = Pattern.compile(
 		"((\t*)<#assign[^<#/>]*=[^<#!/>]*/>(\n|$)+){2,}", Pattern.MULTILINE);
-	private final Pattern _incorrectAssignTagPattern = Pattern.compile(
+	private static final Pattern _incorrectAssignTagPattern = Pattern.compile(
 		"(<#assign .*=.*[^/])>(\n|$)");
-	private final Pattern _tagAttributePattern = Pattern.compile(
+	private static final Pattern _tagAttributePattern = Pattern.compile(
 		"\\s(\\S+)\\s*=");
-	private final Pattern _tagPattern = Pattern.compile(
+	private static final Pattern _tagPattern = Pattern.compile(
 		"(\\A|\n)(\t*)<@(\\S[^>]*?)(/?>)(\n|\\Z)", Pattern.DOTALL);
 
 }

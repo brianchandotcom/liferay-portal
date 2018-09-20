@@ -2079,14 +2079,15 @@ public class FileSystemImporter extends BaseImporter {
 	private static final Log _log = LogFactoryUtil.getLog(
 		FileSystemImporter.class);
 
+	private static final Pattern _fileEntryPattern = Pattern.compile(
+		"\\[\\$FILE=([^\\$]+)\\$\\]");
+	private static final Pattern _groupIdPattern = Pattern.compile(
+		"\\[\\$GROUP_ID\\$\\]");
+
 	private final Map<String, JSONObject> _assetJSONObjectMap = new HashMap<>();
 	private final Set<String> _ddmStructureKeys = new HashSet<>();
 	private String _defaultLayoutTemplateId;
 	private final Map<String, FileEntry> _fileEntries = new HashMap<>();
-	private final Pattern _fileEntryPattern = Pattern.compile(
-		"\\[\\$FILE=([^\\$]+)\\$\\]");
-	private final Pattern _groupIdPattern = Pattern.compile(
-		"\\[\\$GROUP_ID\\$\\]");
 	private final Map<String, Set<Long>> _primaryKeys = new HashMap<>();
 	private File _resourcesDir;
 

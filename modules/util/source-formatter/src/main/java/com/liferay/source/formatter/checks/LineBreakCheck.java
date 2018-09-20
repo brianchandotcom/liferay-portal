@@ -93,6 +93,7 @@ public abstract class LineBreakCheck extends BaseFileCheck {
 		return content;
 	}
 
-	private final Pattern _redundantCommaPattern = Pattern.compile(",\n\t+\\}");
+	private static final Pattern _redundantCommaPattern = Pattern.compile(
+		",\n\t+\\}");
 
 }

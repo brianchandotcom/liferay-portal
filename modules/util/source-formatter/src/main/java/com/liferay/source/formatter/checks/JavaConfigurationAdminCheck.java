@@ -69,7 +69,7 @@ public class JavaConfigurationAdminCheck extends BaseFileCheck {
 		return content;
 	}
 
-	private final Pattern _getConfigurationPattern = Pattern.compile(
+	private static final Pattern _getConfigurationPattern = Pattern.compile(
 		"\\W_?([cC]onfigurationAdmin)\\.\\s*((get|createFactory)" +
 			"Configuration)\\(");
 

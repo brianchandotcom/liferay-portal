@@ -166,9 +166,9 @@ public class JavaBooleanStatementCheck extends BaseJavaTermCheck {
 		return s;
 	}
 
-	private final Pattern _booleanPattern = Pattern.compile(
+	private static final Pattern _booleanPattern = Pattern.compile(
 		"\n(\t+)boolean (\\w+) =(.*?);\n", Pattern.DOTALL);
-	private final Pattern _relationalOperatorPattern = Pattern.compile(
+	private static final Pattern _relationalOperatorPattern = Pattern.compile(
 		".* (==|!=|<|>|>=|<=)[ \n].*");
 
 }

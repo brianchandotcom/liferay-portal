@@ -2142,7 +2142,7 @@ public class DDMStructureLocalServiceImpl
 	@ServiceReference(type = JSONFactory.class)
 	protected JSONFactory jsonFactory;
 
-	private final Pattern _callFunctionPattern = Pattern.compile(
+	private static final Pattern _callFunctionPattern = Pattern.compile(
 		"call\\(\\s*\'([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-" +
 			"[0-9a-f]{12})\'\\s*,\\s*\'(.*)\'\\s*,\\s*\'(.*)\'\\s*\\)");
 

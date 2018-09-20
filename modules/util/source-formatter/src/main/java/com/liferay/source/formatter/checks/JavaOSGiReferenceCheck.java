@@ -488,19 +488,20 @@ public class JavaOSGiReferenceCheck extends BaseFileCheck {
 		return _serviceProxyFactoryUtilClassNames;
 	}
 
+	private static final Pattern _referenceMethodContentPattern =
+		Pattern.compile("^(\\w+) =\\s+\\w+;$");
+	private static final Pattern _referenceMethodPattern = Pattern.compile(
+		"\n\t@Reference([\\s\\S]*?)\\s+((protected|public) void (\\w+?))\\(" +
+			"\\s*([ ,<>?\\w]+)\\s+\\w+\\) \\{\\s+([\\s\\S]*?)\\s*?\n\t\\}\n");
+	private static final Pattern _serviceUtilImportPattern = Pattern.compile(
+		"\nimport ([A-Za-z1-9\\.]*)\\.([A-Za-z1-9]*ServiceUtil);");
+
 	private final Set<String> _bndFileNames = new CopyOnWriteArraySet<>();
 	private final Map<String, String> _moduleFileContentsMap =
 		new ConcurrentHashMap<>();
 	private Map<String, String> _moduleFileNamesMap;
-	private final Pattern _referenceMethodContentPattern = Pattern.compile(
-		"^(\\w+) =\\s+\\w+;$");
-	private final Pattern _referenceMethodPattern = Pattern.compile(
-		"\n\t@Reference([\\s\\S]*?)\\s+((protected|public) void (\\w+?))\\(" +
-			"\\s*([ ,<>?\\w]+)\\s+\\w+\\) \\{\\s+([\\s\\S]*?)\\s*?\n\t\\}\n");
 	private List<String> _serviceProxyFactoryUtilClassNames;
 	private final List<String> _serviceReferenceUtilClassNames =
 		new ArrayList<>();
-	private final Pattern _serviceUtilImportPattern = Pattern.compile(
-		"\nimport ([A-Za-z1-9\\.]*)\\.([A-Za-z1-9]*ServiceUtil);");
 
 }

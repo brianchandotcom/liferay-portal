@@ -88,8 +88,9 @@ public class JavaModuleIllegalImportsCheck extends BaseFileCheck {
 		return content;
 	}
 
-	private boolean _checkRegistryInTestClasses;
-	private final Pattern _registryImportPattern = Pattern.compile(
+	private static final Pattern _registryImportPattern = Pattern.compile(
 		"\nimport (com\\.liferay\\.registry\\..+);");
+
+	private boolean _checkRegistryInTestClasses;
 
 }

@@ -47,7 +47,7 @@ public class JSPRedirectBackURLCheck extends BaseFileCheck {
 		return newContent;
 	}
 
-	private final Pattern _redirectBackURLPattern = Pattern.compile(
+	private static final Pattern _redirectBackURLPattern = Pattern.compile(
 		"(String redirect = ParamUtil\\.getString\\(request, \"redirect\".*" +
 			"\\);)\n(String backURL = ParamUtil\\.getString\\(request, \"" +
 				"backURL\", redirect\\);)");

@@ -43,7 +43,7 @@ public class JavaIOExceptionCheck extends BaseFileCheck {
 		return content;
 	}
 
-	private final Pattern _ioExceptionPattern = Pattern.compile(
+	private static final Pattern _ioExceptionPattern = Pattern.compile(
 		"\tthrow new IOException\\([\\s\\S]*?;\n");
 
 }

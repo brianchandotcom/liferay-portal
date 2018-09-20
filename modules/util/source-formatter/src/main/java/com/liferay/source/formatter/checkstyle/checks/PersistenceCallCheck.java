@@ -269,7 +269,7 @@ public class PersistenceCallCheck extends BaseCheck {
 	private static final String _MSG_ILLEGAL_PERSISTENCE_CALL =
 		"persistence.call.illegal";
 
-	private final Pattern _extendedClassPattern = Pattern.compile(
+	private static final Pattern _extendedClassPattern = Pattern.compile(
 		"\\sextends\\s+(\\w+)\\W");
 
 }

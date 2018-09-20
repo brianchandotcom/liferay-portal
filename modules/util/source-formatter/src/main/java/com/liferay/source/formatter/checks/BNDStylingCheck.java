@@ -127,15 +127,15 @@ public class BNDStylingCheck extends BaseFileCheck {
 		return content;
 	}
 
-	private final Pattern _incorrectIndentPattern = Pattern.compile(
+	private static final Pattern _incorrectIndentPattern = Pattern.compile(
 		"\n[^\t].*:\\\\\n(\t{2,})[^\t]");
-	private final Pattern _incorrectLineBreakPattern = Pattern.compile(
+	private static final Pattern _incorrectLineBreakPattern = Pattern.compile(
 		"(\\A|[^\\\\]\n)(\t*)([-\\w]+:)\\s*(.*,\\\\(\n|\\Z))");
-	private final Pattern _multipleValuesOnSingleLinePattern = Pattern.compile(
-		",(?!\\\\(\n|\\Z)).");
-	private final Pattern _singleValueOnMultipleLinesPattern = Pattern.compile(
-		"\n.*:(\\\\\n\t).*(\n[^\t]|\\Z)");
-	private final Pattern _trailingSemiColonPattern = Pattern.compile(
+	private static final Pattern _multipleValuesOnSingleLinePattern =
+		Pattern.compile(",(?!\\\\(\n|\\Z)).");
+	private static final Pattern _singleValueOnMultipleLinesPattern =
+		Pattern.compile("\n.*:(\\\\\n\t).*(\n[^\t]|\\Z)");
+	private static final Pattern _trailingSemiColonPattern = Pattern.compile(
 		";(\n|\\Z)");
 
 }

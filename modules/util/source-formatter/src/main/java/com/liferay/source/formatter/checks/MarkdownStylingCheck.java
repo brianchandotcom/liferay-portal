@@ -54,11 +54,11 @@ public class MarkdownStylingCheck extends BaseFileCheck {
 		return matcher.replaceAll("$1$2$4$6");
 	}
 
-	private final Pattern _boldHeaderPattern = Pattern.compile(
+	private static final Pattern _boldHeaderPattern = Pattern.compile(
 		"(\\A|\n)(#+ ?)(\\*+)([^\\*\n]+)(\\*+)(\n)");
-	private final Pattern _incorrectCodeSyntaxPattern = Pattern.compile(
+	private static final Pattern _incorrectCodeSyntaxPattern = Pattern.compile(
 		"\\S.*```|```.* ");
-	private final Pattern _incorrectHeaderNotationPattern = Pattern.compile(
-		"(\\A|\n)(#+[^#\n]+)(#+)(\n)");
+	private static final Pattern _incorrectHeaderNotationPattern =
+		Pattern.compile("(\\A|\n)(#+[^#\n]+)(#+)(\n)");
 
 }

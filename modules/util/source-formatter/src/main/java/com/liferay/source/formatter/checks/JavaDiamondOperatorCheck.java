@@ -68,7 +68,7 @@ public class JavaDiamondOperatorCheck extends BaseFileCheck {
 		return content;
 	}
 
-	private final Pattern _diamondOperatorPattern = Pattern.compile(
+	private static final Pattern _diamondOperatorPattern = Pattern.compile(
 		"(return|=)\n?(\t+| )new ([A-Za-z]+)(\\s*)<([^>][^;]*?)>" +
 			"\\(\n*\t*.*?\\);\n",
 		Pattern.DOTALL);

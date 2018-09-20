@@ -53,7 +53,7 @@ public class JavaModifiedServiceMethodCheck extends BaseJavaTermCheck {
 		return new String[] {JAVA_METHOD};
 	}
 
-	private final Pattern _missingEmptyLinePattern = Pattern.compile(
+	private static final Pattern _missingEmptyLinePattern = Pattern.compile(
 		"\tremovedService\\([^;]+;(\n)\t+addingService\\(");
 
 }

@@ -68,7 +68,7 @@ public class JavaEmptyLineAfterSuperCallCheck extends BaseJavaTermCheck {
 		return new String[] {JAVA_CONSTRUCTOR, JAVA_METHOD};
 	}
 
-	private final Pattern _constructorSuperCallPattern = Pattern.compile(
+	private static final Pattern _constructorSuperCallPattern = Pattern.compile(
 		"\tsuper\\(.*?;\n\t*([^\t])", Pattern.DOTALL);
 
 }

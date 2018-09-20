@@ -28,7 +28,7 @@ public class JSPSessionKeysCheck extends SessionKeysCheck {
 		return Arrays.asList(sessionKeyPattern, _taglibSessionKeyPattern);
 	}
 
-	private final Pattern _taglibSessionKeyPattern = Pattern.compile(
+	private static final Pattern _taglibSessionKeyPattern = Pattern.compile(
 		"<liferay-ui:error [^>]+>|<liferay-ui:success [^>]+>",
 		Pattern.MULTILINE);
 

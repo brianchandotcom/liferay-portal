@@ -237,15 +237,16 @@ public class BNDExportsCheck extends BaseFileCheck {
 		}
 	}
 
-	private final List<String> _allowedExportPackageDirNames =
-		new ArrayList<>();
-	private final Pattern _apiOrServiceBundleSymbolicNamePattern =
+	private static final Pattern _apiOrServiceBundleSymbolicNamePattern =
 		Pattern.compile("\\.(api|service)$");
-	private final Pattern _exportContentsPattern = Pattern.compile(
+	private static final Pattern _exportContentsPattern = Pattern.compile(
 		"\n-exportcontents:(\\\\\n| )((.*?)(\n[^\t]|\\Z))",
 		Pattern.DOTALL | Pattern.MULTILINE);
-	private final Pattern _exportsPattern = Pattern.compile(
+	private static final Pattern _exportsPattern = Pattern.compile(
 		"\nExport-Package:(\\\\\n| )((.*?)(\n[^\t]|\\Z))",
 		Pattern.DOTALL | Pattern.MULTILINE);
+
+	private final List<String> _allowedExportPackageDirNames =
+		new ArrayList<>();
 
 }

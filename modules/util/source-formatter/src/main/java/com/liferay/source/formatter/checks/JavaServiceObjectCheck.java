@@ -350,13 +350,14 @@ public class JavaServiceObjectCheck extends BaseJavaTermCheck {
 		"test-classes", "test-coverage", "test-results", "tmp"
 	};
 
-	private final Pattern _getterCallPattern = Pattern.compile(
+	private static final Pattern _getterCallPattern = Pattern.compile(
 		"\\W(\\w+)\\.\\s*(get)([A-Z]\\w*)\\(\\)");
-	private Map<String, Element> _serviceXMLElementsMap;
-	private final Pattern _setterCallPattern = Pattern.compile(
+	private static final Pattern _setterCallPattern = Pattern.compile(
 		"(\\w+)\\.\\s*set([A-Z]\\w*)\\([^;]+;");
-	private final Pattern _setterCallsPattern = Pattern.compile(
+	private static final Pattern _setterCallsPattern = Pattern.compile(
 		"(^[ \t]*\\w+\\.\\s*set[A-Z]\\w*\\([^;]+;\n)+",
 		Pattern.DOTALL | Pattern.MULTILINE);
+
+	private Map<String, Element> _serviceXMLElementsMap;
 
 }

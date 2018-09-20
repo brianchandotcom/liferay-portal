@@ -62,7 +62,7 @@ public class JSStylingCheck extends BaseFileCheck {
 		return content;
 	}
 
-	private final Pattern _multipleVarsOnSingleLinePattern = Pattern.compile(
-		"\t+var \\w+\\, ");
+	private static final Pattern _multipleVarsOnSingleLinePattern =
+		Pattern.compile("\t+var \\w+\\, ");
 
 }

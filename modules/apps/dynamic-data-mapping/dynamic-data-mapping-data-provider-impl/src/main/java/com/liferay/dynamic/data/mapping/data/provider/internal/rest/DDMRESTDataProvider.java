@@ -468,7 +468,9 @@ public class DDMRESTDataProvider implements DDMDataProvider {
 	@Reference
 	protected UserLocalService userLocalService;
 
-	private final Pattern _pathParameterPattern = Pattern.compile("\\{(.*)\\}");
+	private static final Pattern _pathParameterPattern = Pattern.compile(
+		"\\{(.*)\\}");
+
 	private PortalCache<String, DDMDataProviderResponse> _portalCache;
 
 }

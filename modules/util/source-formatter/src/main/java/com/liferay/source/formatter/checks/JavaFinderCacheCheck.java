@@ -73,7 +73,7 @@ public class JavaFinderCacheCheck extends BaseFileCheck {
 		return content;
 	}
 
-	private final Pattern _fetchByPrimaryKeysMethodPattern = Pattern.compile(
-		"@Override\n\tpublic Map<(.+)> fetchByPrimaryKeys\\(");
+	private static final Pattern _fetchByPrimaryKeysMethodPattern =
+		Pattern.compile("@Override\n\tpublic Map<(.+)> fetchByPrimaryKeys\\(");
 
 }

@@ -74,7 +74,7 @@ public class GradleProvidedDependenciesCheck extends BaseFileCheck {
 		return "compileOnly";
 	}
 
-	private final Pattern _blocksPattern = Pattern.compile(
+	private static final Pattern _blocksPattern = Pattern.compile(
 		"^(configurations|dependencies)\\s*(\\{\\s*\\}|\\{.*?\\n\\})",
 		Pattern.DOTALL | Pattern.MULTILINE);
 

@@ -184,12 +184,13 @@ public class GradleTestDependencyVersionCheck extends BaseFileCheck {
 		return matcher.group(1);
 	}
 
-	private final List<String> _allowedDependencyNames = new ArrayList<>();
-	private final Pattern _dependenciesPattern = Pattern.compile(
+	private static final Pattern _dependenciesPattern = Pattern.compile(
 		"(\n|\\A)(\t*)dependencies \\{\n");
-	private final Pattern _dependencyNamePattern = Pattern.compile(
+	private static final Pattern _dependencyNamePattern = Pattern.compile(
 		".*, name: \"([^\"]*)\".*");
-	private final Pattern _dependencyVersionPattern = Pattern.compile(
+	private static final Pattern _dependencyVersionPattern = Pattern.compile(
 		".*, version: \"([^\"]*)\".*");
+
+	private final List<String> _allowedDependencyNames = new ArrayList<>();
 
 }

@@ -86,7 +86,7 @@ public class FTLStringRelationalOperatorCheck extends BaseFileCheck {
 			content, match, replacement, matcher.start());
 	}
 
-	private final Pattern _stringRelationalOperationPattern = Pattern.compile(
-		"(\\W)([\\w.]+) ([!=]=) \"(\\w*)\"(.)");
+	private static final Pattern _stringRelationalOperationPattern =
+		Pattern.compile("(\\W)([\\w.]+) ([!=]=) \"(\\w*)\"(.)");
 
 }

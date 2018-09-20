@@ -253,13 +253,15 @@ public class GradleDependencyVersionCheck extends BaseFileCheck {
 	private static final String _MODULES_PROPERTIES_FILE_NAME =
 		"modules/modules.properties";
 
-	private final Pattern _dependenciesPattern = Pattern.compile(
+	private static final Pattern _dependenciesPattern = Pattern.compile(
 		"(\n|\\A)(\t*)dependencies \\{\n");
-	private final Pattern _dependencyNamePattern = Pattern.compile(
+	private static final Pattern _dependencyNamePattern = Pattern.compile(
 		".*, name: \"([^\"]*)\".*");
-	private final Pattern _dependencyVersionPattern = Pattern.compile(
+	private static final Pattern _dependencyVersionPattern = Pattern.compile(
 		".*, version: \"([^\"]*)\".*");
-	private final Pattern _majorVersionPattern = Pattern.compile("^[0-9]+");
+	private static final Pattern _majorVersionPattern = Pattern.compile(
+		"^[0-9]+");
+
 	private Map<String, Integer> _publishedMajorVersionsMap;
 
 }

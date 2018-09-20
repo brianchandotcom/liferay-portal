@@ -387,9 +387,10 @@ public class DDMFormRuleToDDMFormRuleModelConverterTest
 		field.set(_ddmFormRuleDeserializer, new JSONFactoryImpl());
 	}
 
-	private final Pattern _callFunctionPattern = Pattern.compile(
+	private static final Pattern _callFunctionPattern = Pattern.compile(
 		"call\\(\\s*\'([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-" +
 			"[0-9a-f]{12})\'\\s*,\\s*\'(.*)\'\\s*,\\s*\'(.*)\'\\s*\\)");
+
 	private DDMFormRuleConverter _ddmFormRuleConverter;
 	private final DDMFormRuleDeserializer _ddmFormRuleDeserializer =
 		new DDMFormRuleDeserializer();

@@ -15,14 +15,19 @@
 package com.liferay.portal.uad.anonymizer.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.SystemEvent;
+import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.SystemEventLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portal.uad.test.SystemEventUADTestHelper;
 import com.liferay.user.associated.data.anonymizer.UADAnonymizer;
 import com.liferay.user.associated.data.test.util.BaseUADAnonymizerTestCase;
 
@@ -54,8 +59,11 @@ public class SystemEventUADAnonymizerTest
 	protected SystemEvent addBaseModel(long userId, boolean deleteAfterTestRun)
 		throws Exception {
 
-		SystemEvent systemEvent = SystemEventUADTestHelper.addSystemEvent(
-			_systemEventLocalService, userId);
+		SystemEvent systemEvent = _systemEventLocalService.addSystemEvent(
+			userId, TestPropsValues.getGroupId(), Group.class.getName(),
+			RandomTestUtil.nextLong(), PortalUUIDUtil.generate(),
+			StringPool.BLANK, SystemEventConstants.TYPE_DELETE,
+			StringPool.BLANK);
 
 		if (deleteAfterTestRun) {
 			_systemEvents.add(systemEvent);

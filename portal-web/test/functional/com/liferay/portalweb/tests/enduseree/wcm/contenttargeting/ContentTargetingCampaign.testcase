@@ -274,7 +274,7 @@
 			<var name="linkAlias" value="Link Alias" />
 			<var name="linkId" value="Link id" />
 			<var name="linkTrackingActionSelect" value="Click" />
-			<var name="viewTrackingActionsList" value="Link,YouTube" />
+			<var name="viewTrackingActionsList" value="Link,YouTube Videos" />
 			<var name="youtubeAlias" value="Youtube Alias" />
 			<var name="youtubeTrackingActionSelect" value="Playing" />
 			<var name="youtubeVideoId" value="Youtube id" />

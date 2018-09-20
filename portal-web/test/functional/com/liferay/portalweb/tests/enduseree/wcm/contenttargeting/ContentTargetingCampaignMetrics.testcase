@@ -574,7 +574,7 @@
 
 		<execute macro="ContentTargetingCampaign#viewTrackingActionsCP">
 			<var name="campaignName" value="Campaign Name" />
-			<var name="viewTrackingActionsList" value="YouTube" />
+			<var name="viewTrackingActionsList" value="YouTube Videos" />
 			<var name="youtubeAlias" value="YouTube Alias" />
 			<var name="youtubeTrackingActionSelect" value="Playing" />
 			<var name="youtubeVideoId" value="YouTube id" />

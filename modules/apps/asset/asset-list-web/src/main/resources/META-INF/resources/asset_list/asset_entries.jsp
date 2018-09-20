@@ -19,7 +19,7 @@
 <%
 String eventName = "_" + HtmlUtil.escapeJS(editAssetListDisplayContext.getPortletResource()) + "_selectAsset";
 
-List<AssetEntry> assetEntries = editAssetListDisplayContext.getAssetEntries(renderRequest, assetListDisplayContext.getAssetListEntry(), permissionChecker, editAssetListDisplayContext.getGroupIds(), true, true, true, AssetRendererFactory.TYPE_LATEST);
+SearchContainer assetListEntryAssetEntryRelSearchContainer = editAssetListDisplayContext.getSearchContainer();
 %>
 
 <liferay-frontend:edit-form
@@ -30,8 +30,7 @@ List<AssetEntry> assetEntries = editAssetListDisplayContext.getAssetEntries(rend
 	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 	<aui:input name="assetListEntryId" type="hidden" value="<%= assetListDisplayContext.getAssetListEntryId() %>" />
 	<aui:input name="assetEntryId" type="hidden" />
-	<aui:input name="assetEntryOrder" type="hidden" />
-	<aui:input name="assetEntryType" type="hidden" />
+	<aui:input name="position" type="hidden" />
 
 	<liferay-frontend:edit-form-body>
 		<h3 class="sheet-subtitle">
@@ -48,21 +47,18 @@ List<AssetEntry> assetEntries = editAssetListDisplayContext.getAssetEntries(rend
 			<liferay-ui:search-container
 				compactEmptyResultsMessage="<%= true %>"
 				emptyResultsMessage="none"
-				iteratorURL="<%= currentURLObj %>"
-				total="<%= assetEntries.size() %>"
+				searchContainer="<%= assetListEntryAssetEntryRelSearchContainer %>"
 			>
-				<liferay-ui:search-container-results
-					results="<%= assetEntries.subList(searchContainer.getStart(), searchContainer.getResultEnd()) %>"
-				/>
-
 				<liferay-ui:search-container-row
-					className="com.liferay.asset.kernel.model.AssetEntry"
+					className="com.liferay.asset.list.model.AssetListEntryAssetEntryRel"
 					escapedModel="<%= true %>"
 					keyProperty="entryId"
-					modelVar="assetEntry"
+					modelVar="assetListEntryAssetEntryRel"
 				>
 
 					<%
+					AssetEntry assetEntry = AssetEntryServiceUtil.getEntry(assetListEntryAssetEntryRel.getAssetEntryId());
+
 					AssetRendererFactory<?> assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(assetEntry.getClassName());
 
 					AssetRenderer<?> assetRenderer = assetRendererFactory.getAssetRenderer(assetEntry.getClassPK(), AssetRendererFactory.TYPE_LATEST);
@@ -107,7 +103,6 @@ List<AssetEntry> assetEntries = editAssetListDisplayContext.getAssetEntries(rend
 
 				<liferay-ui:search-iterator
 					markupView="lexicon"
-					paginate="<%= total > SearchContainer.DEFAULT_DELTA %>"
 				/>
 			</liferay-ui:search-container>
 		</liferay-frontend:fieldset-group>
@@ -232,8 +227,8 @@ List<AssetEntry> assetEntries = editAssetListDisplayContext.getAssetEntries(rend
 </liferay-frontend:edit-form>
 
 <aui:script>
-	function <portlet:namespace />moveSelectionDown(assetEntryOrder) {
-		<portlet:namespace />fm.<portlet:namespace />assetEntryOrder.value = assetEntryOrder;
+	function <portlet:namespace />moveSelectionDown(position) {
+		<portlet:namespace />fm.<portlet:namespace />position.value = position;
 
 		<portlet:actionURL name="/asset_list/move_asset_entry_selection" var="moveAssetEntrySelectionDownURL">
 			<portlet:param name="moveDirection" value="<%= AssetListSelectionConstants.MOVE_DOWN %>" />
@@ -242,8 +237,8 @@ List<AssetEntry> assetEntries = editAssetListDisplayContext.getAssetEntries(rend
 		submitForm(document.<portlet:namespace />fm, '<%= moveAssetEntrySelectionDownURL.toString() %>');
 	}
 
-	function <portlet:namespace />moveSelectionUp(assetEntryOrder) {
-		<portlet:namespace />fm.<portlet:namespace />assetEntryOrder.value = assetEntryOrder;
+	function <portlet:namespace />moveSelectionUp(position) {
+		<portlet:namespace />fm.<portlet:namespace />position.value = position;
 
 		<portlet:actionURL name="/asset_list/move_asset_entry_selection" var="moveAssetEntrySelectionUpURL">
 			<portlet:param name="moveDirection" value="<%= AssetListSelectionConstants.MOVE_UP %>" />
@@ -254,7 +249,6 @@ List<AssetEntry> assetEntries = editAssetListDisplayContext.getAssetEntries(rend
 
 	function selectAsset(assetEntryId, assetClassName, assetType, assetEntryTitle, groupName) {
 		<portlet:namespace />fm.<portlet:namespace />assetEntryId.value = assetEntryId;
-		<portlet:namespace />fm.<portlet:namespace />assetEntryType.value = assetClassName;
 
 		<portlet:actionURL name="/asset_list/add_asset_entry_selection" var="addAssetEntrySelectionURL" />
 

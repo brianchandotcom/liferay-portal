@@ -34,12 +34,26 @@ public class AssetListEntryServiceWrapper implements AssetListEntryService,
 	}
 
 	@Override
+	public void addAssetEntrySelection(long assetListEntryId, long assetEntryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_assetListEntryService.addAssetEntrySelection(assetListEntryId,
+			assetEntryId);
+	}
+
+	@Override
 	public com.liferay.asset.list.model.AssetListEntry addAssetListEntry(
 		long groupId, String title, int type,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _assetListEntryService.addAssetListEntry(groupId, title, type,
 			serviceContext);
+	}
+
+	@Override
+	public void deleteAssetEntrySelection(long assetListEntryId, int position)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_assetListEntryService.deleteAssetEntrySelection(assetListEntryId,
+			position);
 	}
 
 	@Override
@@ -96,6 +110,14 @@ public class AssetListEntryServiceWrapper implements AssetListEntryService,
 	@Override
 	public String getOSGiServiceIdentifier() {
 		return _assetListEntryService.getOSGiServiceIdentifier();
+	}
+
+	@Override
+	public void moveAssetEntrySelection(long assetListEntryId, int position,
+		int newPosition)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_assetListEntryService.moveAssetEntrySelection(assetListEntryId,
+			position, newPosition);
 	}
 
 	@Override

@@ -16,6 +16,7 @@ package com.liferay.asset.list.service.base;
 
 import com.liferay.asset.list.model.AssetListEntry;
 import com.liferay.asset.list.service.AssetListEntryService;
+import com.liferay.asset.list.service.persistence.AssetListEntryAssetEntryRelPersistence;
 import com.liferay.asset.list.service.persistence.AssetListEntryPersistence;
 
 import com.liferay.portal.kernel.bean.BeanReference;
@@ -203,6 +204,44 @@ public abstract class AssetListEntryServiceBaseImpl extends BaseServiceImpl
 		this.userPersistence = userPersistence;
 	}
 
+	/**
+	 * Returns the asset list entry asset entry rel local service.
+	 *
+	 * @return the asset list entry asset entry rel local service
+	 */
+	public com.liferay.asset.list.service.AssetListEntryAssetEntryRelLocalService getAssetListEntryAssetEntryRelLocalService() {
+		return assetListEntryAssetEntryRelLocalService;
+	}
+
+	/**
+	 * Sets the asset list entry asset entry rel local service.
+	 *
+	 * @param assetListEntryAssetEntryRelLocalService the asset list entry asset entry rel local service
+	 */
+	public void setAssetListEntryAssetEntryRelLocalService(
+		com.liferay.asset.list.service.AssetListEntryAssetEntryRelLocalService assetListEntryAssetEntryRelLocalService) {
+		this.assetListEntryAssetEntryRelLocalService = assetListEntryAssetEntryRelLocalService;
+	}
+
+	/**
+	 * Returns the asset list entry asset entry rel persistence.
+	 *
+	 * @return the asset list entry asset entry rel persistence
+	 */
+	public AssetListEntryAssetEntryRelPersistence getAssetListEntryAssetEntryRelPersistence() {
+		return assetListEntryAssetEntryRelPersistence;
+	}
+
+	/**
+	 * Sets the asset list entry asset entry rel persistence.
+	 *
+	 * @param assetListEntryAssetEntryRelPersistence the asset list entry asset entry rel persistence
+	 */
+	public void setAssetListEntryAssetEntryRelPersistence(
+		AssetListEntryAssetEntryRelPersistence assetListEntryAssetEntryRelPersistence) {
+		this.assetListEntryAssetEntryRelPersistence = assetListEntryAssetEntryRelPersistence;
+	}
+
 	public void afterPropertiesSet() {
 	}
 
@@ -267,4 +306,8 @@ public abstract class AssetListEntryServiceBaseImpl extends BaseServiceImpl
 	protected com.liferay.portal.kernel.service.UserService userService;
 	@ServiceReference(type = UserPersistence.class)
 	protected UserPersistence userPersistence;
+	@BeanReference(type = com.liferay.asset.list.service.AssetListEntryAssetEntryRelLocalService.class)
+	protected com.liferay.asset.list.service.AssetListEntryAssetEntryRelLocalService assetListEntryAssetEntryRelLocalService;
+	@BeanReference(type = AssetListEntryAssetEntryRelPersistence.class)
+	protected AssetListEntryAssetEntryRelPersistence assetListEntryAssetEntryRelPersistence;
 }

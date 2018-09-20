@@ -10,3 +10,10 @@ create table AssetListEntry (
 	title VARCHAR(75) null,
 	type_ INTEGER
 );
+
+create table AssetListEntryAssetEntryRel (
+	assetListEntryAssetEntryRelId LONG not null primary key,
+	assetListEntryId LONG,
+	assetEntryId LONG,
+	position INTEGER
+);

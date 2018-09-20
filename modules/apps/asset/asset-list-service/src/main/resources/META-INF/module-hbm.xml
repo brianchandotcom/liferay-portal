@@ -3,6 +3,7 @@
 
 <hibernate-mapping auto-import="false" default-lazy="false">
 	<import class="com.liferay.asset.list.model.AssetListEntry" />
+	<import class="com.liferay.asset.list.model.AssetListEntryAssetEntryRel" />
 	<class name="com.liferay.asset.list.model.impl.AssetListEntryImpl" table="AssetListEntry">
 		<id access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="assetListEntryId" type="long">
 			<generator class="assigned" />
@@ -16,5 +17,13 @@
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="typeSettings" type="com.liferay.portal.dao.orm.hibernate.StringClobType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="title" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" column="type_" name="type" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+	</class>
+	<class name="com.liferay.asset.list.model.impl.AssetListEntryAssetEntryRelImpl" table="AssetListEntryAssetEntryRel">
+		<id access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="assetListEntryAssetEntryRelId" type="long">
+			<generator class="assigned" />
+		</id>
+		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="assetListEntryId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="assetEntryId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="position" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
 	</class>
 </hibernate-mapping>

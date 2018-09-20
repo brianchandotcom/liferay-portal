@@ -62,7 +62,83 @@ public class GitRepositoryFactory {
 			hostname, gitRepositoryName, username);
 	}
 
+	public static CompanionPortalWorkspaceGitRepository
+		newCompanionPortalWorkspaceGitRepository(
+			PortalWorkspaceGitRepository portalWorkspaceGitRepository) {
+
+		if (portalWorkspaceGitRepository == null) {
+			throw new RuntimeException(
+				"Portal build runner Git repository is null");
+		}
+
+		return new CompanionPortalWorkspaceGitRepository(
+			portalWorkspaceGitRepository);
+	}
+
+	public static OtherPortalWorkspaceGitRepository
+		newOtherPortalWorkspaceGitRepository(
+			PortalWorkspaceGitRepository portalWorkspaceGitRepository) {
+
+		if (portalWorkspaceGitRepository == null) {
+			throw new RuntimeException(
+				"Portal build runner Git repository is null");
+		}
+
+		return new OtherPortalWorkspaceGitRepository(
+			portalWorkspaceGitRepository);
+	}
+
+	public static PluginsWorkspaceGitRepository
+		newPluginsWorkspaceGitRepository(
+			PortalWorkspaceGitRepository portalWorkspaceGitRepository) {
+
+		if (portalWorkspaceGitRepository == null) {
+			throw new RuntimeException(
+				"Portal build runner Git repository is null");
+		}
+
+		return new PluginsWorkspaceGitRepository(portalWorkspaceGitRepository);
+	}
+
+	public static WorkspaceGitRepository newWorkspaceGitRepository(
+		String gitHubURL, String upstreamBranchName) {
+
+		return newWorkspaceGitRepository(gitHubURL, upstreamBranchName, null);
+	}
+
+	public static WorkspaceGitRepository newWorkspaceGitRepository(
+		String gitHubURL, String upstreamBranchName, String branchSHA) {
+
+		if (_workspaceGitRepository.containsKey(gitHubURL)) {
+			return _workspaceGitRepository.get(gitHubURL);
+		}
+
+		WorkspaceGitRepository workspaceGitRepository;
+
+		if (gitHubURL.contains("/liferay-jenkins-ee")) {
+			workspaceGitRepository = new JenkinsWorkspaceGitRepository(
+				gitHubURL, upstreamBranchName, branchSHA);
+		}
+		else if (gitHubURL.contains("/liferay-plugins")) {
+			workspaceGitRepository = new PluginsWorkspaceGitRepository(
+				gitHubURL, upstreamBranchName, branchSHA);
+		}
+		else if (gitHubURL.contains("/liferay-portal")) {
+			workspaceGitRepository = new DefaultPortalWorkspaceGitRepository(
+				gitHubURL, upstreamBranchName, branchSHA);
+		}
+		else {
+			throw new RuntimeException("Invalid GitHub URL " + gitHubURL);
+		}
+
+		_workspaceGitRepository.put(gitHubURL, workspaceGitRepository);
+
+		return _workspaceGitRepository.get(gitHubURL);
+	}
+
 	private static final Map<String, LocalGitRepository> _localGitRepositories =
 		new HashMap<>();
+	private static final Map<String, WorkspaceGitRepository>
+		_workspaceGitRepository = new HashMap<>();
 
 }

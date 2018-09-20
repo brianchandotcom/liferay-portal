@@ -178,7 +178,7 @@ public class KaleoDesignerDisplayContext {
 
 		return LanguageUtil.format(
 			getResourceBundle(), "copy-of-x",
-			kaleoDefinition.getTitle(defaultLanguageId));
+			HtmlUtil.escape(kaleoDefinition.getTitle(defaultLanguageId)));
 	}
 
 	public List<DropdownItem> getFilterItemsDropdownItems() {

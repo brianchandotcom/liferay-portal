@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -118,8 +119,9 @@ public class DuplicateWorkflowDefinitionMVCActionCommand
 			title = ParamUtil.getString(actionRequest, titleParameterName);
 
 			if (Validator.isNull(title)) {
-				title = ParamUtil.getString(
-					actionRequest, "defaultDuplicationTitle");
+				title = HtmlUtil.unescape(
+					ParamUtil.getString(
+						actionRequest, "defaultDuplicationTitle"));
 			}
 		}
 

@@ -17,7 +17,7 @@
 <%@ include file="/dynamic_section/init.jsp" %>
 
 <%
-List<ObjectValuePair<SharingEntry, User>> sharingEntryToUserOVPs = (List<ObjectValuePair<SharingEntry, User>>)request.getAttribute("info_panel_file_entry.jsp-sharingEntryToUserOVPs");
+JSONArray collaboratorsJSONArray = JSONFactoryUtil.createJSONArray();
 %>
 
 <div class="autofit-row sidebar-panel widget-metadata">
@@ -41,8 +41,15 @@ List<ObjectValuePair<SharingEntry, User>> sharingEntryToUserOVPs = (List<ObjectV
 		<div class="autofit-row">
 
 			<%
-			for (ObjectValuePair<SharingEntry, User> sharingEntryToUserOVP : sharingEntryToUserOVPs) {
-				User sharingEntryToUser = sharingEntryToUserOVP.getValue();
+			List<User> sharingEntryToUsers = (List<User>)request.getAttribute("info_panel_file_entry.jsp-sharingEntryToUsers");
+
+			for (User sharingEntryToUser : sharingEntryToUsers) {
+				JSONObject userJSONObject = JSONFactoryUtil.createJSONObject();
+
+				userJSONObject.put("id", sharingEntryToUser.getUserId());
+				userJSONObject.put("imageSrc", sharingEntryToUser.getPortraitURL(themeDisplay));
+				userJSONObject.put("name", sharingEntryToUser.getFullName());
+				collaboratorsJSONArray.put(userJSONObject);
 			%>
 
 				<div class="autofit-col">
@@ -74,47 +81,33 @@ List<ObjectValuePair<SharingEntry, User>> sharingEntryToUserOVPs = (List<ObjectV
 	</div>
 </div>
 
-<div id="<portlet:namespace />ManageCollaborators_<%= fileEntry.getFileEntryId() %>"></div>
-
-<liferay-util:html-top>
-	<link href="<%= PortalUtil.getStaticResourceURL(request, StringBundler.concat(themeDisplay.getCDNBaseURL(), PortalUtil.getPathProxy(), application.getContextPath(), "/dynamic_section/css/ManageCollaborators.css")) %>" rel="stylesheet" type="text/css" />
-</liferay-util:html-top>
+<clay:button
+	id='<%= liferayPortletResponse.getNamespace() + "manageCollaboratorsButton" %>'
+	label='<%= LanguageUtil.get(resourceBundle, "manage-collaborators") %>'
+	style="link"
+/>
 
 <%
-Map<String, Object> context = new HashMap<>();
-
-JSONArray collaboratorsJSONArray = JSONFactoryUtil.createJSONArray();
-
-for (ObjectValuePair<SharingEntry, User> sharingEntryToUserOVP : sharingEntryToUserOVPs) {
-	SharingEntry sharingEntry = sharingEntryToUserOVP.getKey();
-	User sharingEntryToUser = sharingEntryToUserOVP.getValue();
-
-	JSONObject userJSONObject = JSONFactoryUtil.createJSONObject();
-
-	userJSONObject.put("id", sharingEntryToUser.getUserId());
-	userJSONObject.put("imageSrc", sharingEntryToUser.getPortraitURL(themeDisplay));
-	userJSONObject.put("name", sharingEntryToUser.getFullName());
-	userJSONObject.put("sharingEntryId", sharingEntry.getSharingEntryId());
-
-	collaboratorsJSONArray.put(userJSONObject);
-}
-
-context.put("collaborators", collaboratorsJSONArray);
-
-String portletId = PortletProviderUtil.getPortletId(SharingEntry.class.getName(), PortletProvider.Action.EDIT);
-
-PortletURL sharingEntryEditURL = liferayPortletResponse.createLiferayPortletURL(portletId, PortletRequest.ACTION_PHASE);
-
-sharingEntryEditURL.setParameter(ActionRequest.ACTION_NAME, "/sharing/manage_collaborators");
-
-context.put("uri", sharingEntryEditURL.toString());
-
-context.put("spritemap", themeDisplay.getPathThemeImages() + "/lexicon/icons.svg");
+PortletURL manageCollaboratorsActionURL = PortletProviderUtil.getPortletURL(request, SharingEntry.class.getName(), PortletProvider.Action.EDIT);
 %>
 
-<soy:component-renderer
-	componentId='<%= liferayPortletResponse.getNamespace() + "manageCollaborators" %>'
-	context="<%= context %>"
-	module="sharing-document-library/dynamic_section/js/ManageCollaborators.es"
-	templateNamespace="com.liferay.sharing.document.library.ManageCollaborators.render"
-/>
+<aui:script>
+	var button = document.getElementById('<portlet:namespace/>manageCollaboratorsButton');
+
+	button.addEventListener(
+		'click',
+		function() {
+			Liferay.Util.openWindow(
+				{
+					dialog: {
+						height: 450,
+						width: 560
+					},
+					id: '<portlet:namespace />manageCollaboratorsDialog',
+					title: '<%= LanguageUtil.get(resourceBundle, "manage-collaborators") %>',
+					uri: '<%= manageCollaboratorsActionURL.toString() %>'
+				}
+			);
+		}
+	);
+</aui:script>

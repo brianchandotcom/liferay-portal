@@ -29,7 +29,6 @@ import com.liferay.user.associated.data.test.util.BaseUADAnonymizerTestCase;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.After;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.runner.RunWith;
@@ -46,11 +45,6 @@ public class PasswordPolicyUADAnonymizerTest
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
 
-	@After
-	public void tearDown() throws Exception {
-		_passwordPolicyUADTestHelper.cleanUpDependencies(_passwordPolicies);
-	}
-
 	@Override
 	protected PasswordPolicy addBaseModel(long userId) throws Exception {
 		return addBaseModel(userId, true);
@@ -62,20 +56,13 @@ public class PasswordPolicyUADAnonymizerTest
 		throws Exception {
 
 		PasswordPolicy passwordPolicy =
-			_passwordPolicyUADTestHelper.addPasswordPolicy(userId);
+			PasswordPolicyUADTestHelper.addPasswordPolicy(userId);
 
 		if (deleteAfterTestRun) {
 			_passwordPolicies.add(passwordPolicy);
 		}
 
 		return passwordPolicy;
-	}
-
-	@Override
-	protected void deleteBaseModels(List<PasswordPolicy> baseModels)
-		throws Exception {
-
-		_passwordPolicyUADTestHelper.cleanUpDependencies(baseModels);
 	}
 
 	@Override
@@ -117,9 +104,6 @@ public class PasswordPolicyUADAnonymizerTest
 
 	@Inject
 	private PasswordPolicyLocalService _passwordPolicyLocalService;
-
-	@Inject
-	private PasswordPolicyUADTestHelper _passwordPolicyUADTestHelper;
 
 	@Inject(filter = "component.name=*.PasswordPolicyUADAnonymizer")
 	private UADAnonymizer _uadAnonymizer;

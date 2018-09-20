@@ -27,7 +27,6 @@ import com.liferay.user.associated.data.test.util.BaseUADExporterTestCase;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.After;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.runner.RunWith;
@@ -44,15 +43,10 @@ public class PasswordPolicyUADExporterTest
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
 
-	@After
-	public void tearDown() throws Exception {
-		_passwordPolicyUADTestHelper.cleanUpDependencies(_passwordPolicies);
-	}
-
 	@Override
 	protected PasswordPolicy addBaseModel(long userId) throws Exception {
 		PasswordPolicy passwordPolicy =
-			_passwordPolicyUADTestHelper.addPasswordPolicy(userId);
+			PasswordPolicyUADTestHelper.addPasswordPolicy(userId);
 
 		_passwordPolicies.add(passwordPolicy);
 
@@ -71,9 +65,6 @@ public class PasswordPolicyUADExporterTest
 
 	@DeleteAfterTestRun
 	private final List<PasswordPolicy> _passwordPolicies = new ArrayList<>();
-
-	@Inject
-	private PasswordPolicyUADTestHelper _passwordPolicyUADTestHelper;
 
 	@Inject(filter = "component.name=*.PasswordPolicyUADExporter")
 	private UADExporter _uadExporter;

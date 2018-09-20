@@ -20,26 +20,19 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portlet.passwordpoliciesadmin.util.test.PasswordPolicyTestUtil;
 
-import java.util.List;
-
-import org.osgi.service.component.annotations.Component;
-
 /**
  * @author Brian Wing Shun Chan
  */
-@Component(immediate = true, service = PasswordPolicyUADTestHelper.class)
 public class PasswordPolicyUADTestHelper {
 
-	public PasswordPolicy addPasswordPolicy(long userId) throws Exception {
+	public static PasswordPolicy addPasswordPolicy(long userId)
+		throws Exception {
+
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
 				TestPropsValues.getGroupId(), userId);
 
 		return PasswordPolicyTestUtil.addPasswordPolicy(serviceContext);
-	}
-
-	public void cleanUpDependencies(List<PasswordPolicy> passwordPolicies)
-		throws Exception {
 	}
 
 }

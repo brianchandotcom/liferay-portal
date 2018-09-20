@@ -22,7 +22,7 @@ public abstract class BaseRemoteGitRepository
 
 	@Override
 	public String getHostname() {
-		return getFromJSONObjectString("hostname");
+		return getString("hostname");
 	}
 
 	@Override
@@ -33,7 +33,7 @@ public abstract class BaseRemoteGitRepository
 
 	@Override
 	public String getUsername() {
-		return getFromJSONObjectString("username");
+		return getString("username");
 	}
 
 	protected BaseRemoteGitRepository(GitRemote gitRemote) {

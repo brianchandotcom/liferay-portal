@@ -25,7 +25,7 @@ public abstract class BaseGitRepository implements GitRepository {
 
 	@Override
 	public String getName() {
-		return getFromJSONObjectString("name");
+		return getString("name");
 	}
 
 	protected BaseGitRepository(String name) {
@@ -38,16 +38,16 @@ public abstract class BaseGitRepository implements GitRepository {
 		validateJSONObject(_REQUIRED_KEYS);
 	}
 
-	protected Object getFromJSONObject(String key) {
+	protected Object get(String key) {
 		return _jsonObject.get(key);
 	}
 
-	protected File getFromJSONObjectFile(String key) {
-		return new File((String)getFromJSONObject(key));
+	protected File getFile(String key) {
+		return new File(getString(key));
 	}
 
-	protected String getFromJSONObjectString(String key) {
-		return (String)getFromJSONObject(key);
+	protected String getString(String key) {
+		return (String)get(key);
 	}
 
 	protected void putIntoJSONObject(String key, Object o) {

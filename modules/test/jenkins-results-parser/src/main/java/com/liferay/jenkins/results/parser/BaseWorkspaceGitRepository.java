@@ -45,7 +45,7 @@ public abstract class BaseWorkspaceGitRepository
 
 	@Override
 	public String getGitHubDevBranchName() {
-		return getFromJSONObjectString("git_hub_dev_branch_name");
+		return getString("git_hub_dev_branch_name");
 	}
 
 	@Override
@@ -200,15 +200,15 @@ public abstract class BaseWorkspaceGitRepository
 	}
 
 	private String _getBranchHeadSHA() {
-		return getFromJSONObjectString("branch_head_sha");
+		return getString("branch_head_sha");
 	}
 
 	private String _getBranchSHA() {
-		return getFromJSONObjectString("branch_sha");
+		return getString("branch_sha");
 	}
 
 	private String _getGitHubURL() {
-		return getFromJSONObjectString("git_hub_url");
+		return getString("git_hub_url");
 	}
 
 	private static final String[] _REQUIRED_CI_KEYS =

@@ -28,7 +28,7 @@ public abstract class BaseLocalGitRepository
 
 	@Override
 	public File getDirectory() {
-		return getFromJSONObjectFile("directory");
+		return getFile("directory");
 	}
 
 	@Override
@@ -38,7 +38,7 @@ public abstract class BaseLocalGitRepository
 
 	@Override
 	public String getUpstreamBranchName() {
-		return getFromJSONObjectString("upstream_branch_name");
+		return getString("upstream_branch_name");
 	}
 
 	protected BaseLocalGitRepository(String name, String upstreamBranchName) {

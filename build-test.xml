@@ -8610,7 +8610,12 @@ ANT_OPTS=${env.ANT_OPTS}</echo>
 
 				<delete file="liferay-portal-tools.zip" />
 
-				<prepare-jboss-module-configuration />
+				<if>
+					<equals arg1="${app.server.type}" arg2="jboss" />
+					<then>
+						<prepare-jboss-module-configuration />
+					</then>
+				</if>
 			</else>
 		</if>
 

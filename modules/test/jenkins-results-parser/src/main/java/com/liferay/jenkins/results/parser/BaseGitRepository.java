@@ -14,24 +14,60 @@
 
 package com.liferay.jenkins.results.parser;
 
+import java.io.File;
+
+import org.json.JSONObject;
+
 /**
  * @author Peter Yoo
  */
-public class BaseGitRepository implements GitRepository {
+public abstract class BaseGitRepository implements GitRepository {
 
 	public BaseGitRepository(String name) {
 		if ((name == null) || name.isEmpty()) {
 			throw new IllegalArgumentException("Name is null");
 		}
 
-		this.name = name;
+		putIntoJSONObject("name", name);
+
+		validateJSONObject(_REQUIRED_KEYS);
 	}
 
 	@Override
 	public String getName() {
-		return name;
+		return getFromJSONObjectString("name");
 	}
 
-	protected final String name;
+	protected Object getFromJSONObject(String key) {
+		return _jsonObject.get(key);
+	}
+
+	protected File getFromJSONObjectFile(String key) {
+		return new File((String)getFromJSONObject(key));
+	}
+
+	protected String getFromJSONObjectString(String key) {
+		return (String)getFromJSONObject(key);
+	}
+
+	protected void putIntoJSONObject(String key, Object o) {
+		if (_jsonObject.has(key)) {
+			throw new RuntimeException("JSONObject already contains " + key);
+		}
+
+		_jsonObject.put(key, o);
+	}
+
+	protected void validateJSONObject(String[] requiredKeys) {
+		for (String requiredKey : requiredKeys) {
+			if (!_jsonObject.has(requiredKey)) {
+				throw new RuntimeException("Missing " + requiredKey);
+			}
+		}
+	}
+
+	private static final String[] _REQUIRED_KEYS = {"name"};
+
+	private final JSONObject _jsonObject = new JSONObject();
 
 }

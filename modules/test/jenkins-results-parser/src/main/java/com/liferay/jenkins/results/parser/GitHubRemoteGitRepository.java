@@ -254,9 +254,11 @@ public class GitHubRemoteGitRepository extends RemoteGitRepository {
 	protected GitHubRemoteGitRepository(GitRemote gitRemote) {
 		super(gitRemote);
 
+		String hostname = getHostname();
+
 		if (!hostname.equals("github.com")) {
 			throw new IllegalArgumentException(
-				name + " is not a GitHub repository");
+				getName() + " is not a GitHub repository");
 		}
 	}
 

@@ -67,6 +67,49 @@ public abstract class BaseGroupByTestCase extends BaseIndexingTestCase {
 	}
 
 	@Test
+	public void testFieldNamesSame() throws Exception {
+		indexDuplicates("one", 1);
+
+		assertSearch(
+			indexingTestHelper -> {
+				indexingTestHelper.define(
+					searchContext -> searchContext.setGroupBy(
+						new GroupBy(GROUP_FIELD)));
+
+				indexingTestHelper.search();
+
+				indexingTestHelper.verify(
+					hits -> assertFieldNames(
+						"one", getFieldNames(hits), hits, indexingTestHelper));
+			});
+	}
+
+	@Test
+	public void testFieldNamesSameWithSelected() throws Exception {
+		indexDuplicates("one", 1);
+
+		assertSearch(
+			indexingTestHelper -> {
+				indexingTestHelper.define(
+					searchContext -> {
+						searchContext.setGroupBy(new GroupBy(GROUP_FIELD));
+
+						QueryConfig queryConfig =
+							searchContext.getQueryConfig();
+
+						queryConfig.addSelectedFieldNames(
+							Field.COMPANY_ID, Field.UID);
+					});
+
+				indexingTestHelper.search();
+
+				indexingTestHelper.verify(
+					hits -> assertFieldNames(
+						"one", getFieldNames(hits), hits, indexingTestHelper));
+			});
+	}
+
+	@Test
 	public void testFieldNamesSelected() throws Exception {
 		indexDuplicates("one", 1);
 

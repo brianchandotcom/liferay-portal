@@ -183,7 +183,6 @@ public class CompanyServiceImpl extends CompanyServiceBaseImpl {
 	 * @param companyId the primary key of the company
 	 * @param keys the company's preferences keys to be remove
 	 */
-	@JSONWebService(mode = JSONWebServiceMode.IGNORE)
 	@Override
 	public void removePreferences(long companyId, String[] keys)
 		throws PortalException {
@@ -518,7 +517,6 @@ public class CompanyServiceImpl extends CompanyServiceBaseImpl {
 	 * @param companyId the primary key of the company
 	 * @param properties the company's properties. See {@link UnicodeProperties}
 	 */
-	@JSONWebService(mode = JSONWebServiceMode.IGNORE)
 	@Override
 	public void updatePreferences(long companyId, UnicodeProperties properties)
 		throws PortalException {

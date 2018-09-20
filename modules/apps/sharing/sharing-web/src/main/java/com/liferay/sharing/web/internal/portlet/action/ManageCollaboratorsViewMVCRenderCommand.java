@@ -31,9 +31,9 @@ import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.sharing.constants.SharingPortletKeys;
 import com.liferay.sharing.model.SharingEntry;
 import com.liferay.sharing.service.SharingEntryLocalService;
+import com.liferay.sharing.web.internal.constants.SharingPortletKeys;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -54,8 +54,8 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {
-		"javax.portlet.name=" + SharingPortletKeys.SHARING,
-		"mvc.command.name=/sharing/manage_collaborators"
+		"javax.portlet.name=" + SharingPortletKeys.MANAGE_COLLABORATORS,
+		"mvc.command.name=/", "mvc.command.name=/sharing/manage_collaborators"
 	},
 	service = MVCRenderCommand.class
 )

@@ -54,9 +54,7 @@ renderResponse.setTitle(assetListDisplayContext.getAssetListEntryTitle());
 		</h3>
 
 		<liferay-frontend:fieldset-group>
-			<liferay-frontend:fieldset
-				markupView="lexicon"
-			>
+			<liferay-frontend:fieldset>
 				<aui:input name="title" placeholder="title" />
 			</liferay-frontend:fieldset>
 		</liferay-frontend:fieldset-group>

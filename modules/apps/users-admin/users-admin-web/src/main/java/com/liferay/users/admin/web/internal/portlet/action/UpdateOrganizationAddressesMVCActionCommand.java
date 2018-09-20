@@ -14,16 +14,15 @@
 
 package com.liferay.users.admin.web.internal.portlet.action;
 
-import com.liferay.portal.kernel.exception.EmailAddressException;
+import com.liferay.portal.kernel.exception.AddressCityException;
+import com.liferay.portal.kernel.exception.AddressStreetException;
+import com.liferay.portal.kernel.exception.AddressZipException;
+import com.liferay.portal.kernel.exception.NoSuchCountryException;
 import com.liferay.portal.kernel.exception.NoSuchListTypeException;
 import com.liferay.portal.kernel.exception.NoSuchOrganizationException;
-import com.liferay.portal.kernel.exception.PhoneNumberException;
-import com.liferay.portal.kernel.exception.PhoneNumberExtensionException;
-import com.liferay.portal.kernel.exception.WebsiteURLException;
-import com.liferay.portal.kernel.model.EmailAddress;
+import com.liferay.portal.kernel.exception.NoSuchRegionException;
+import com.liferay.portal.kernel.model.Address;
 import com.liferay.portal.kernel.model.Organization;
-import com.liferay.portal.kernel.model.Phone;
-import com.liferay.portal.kernel.model.Website;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
@@ -55,11 +54,11 @@ import org.osgi.service.component.annotations.Reference;
 	property = {
 		"javax.portlet.name=" + UsersAdminPortletKeys.MY_ORGANIZATIONS,
 		"javax.portlet.name=" + UsersAdminPortletKeys.USERS_ADMIN,
-		"mvc.command.name=/users_admin/update_organization_contact_information"
+		"mvc.command.name=/users_admin/update_organization_addresses"
 	},
 	service = MVCActionCommand.class
 )
-public class UpdateOrganizationContactInformationMVCActionCommand
+public class UpdateOrganizationAddressesMVCActionCommand
 	extends BaseMVCActionCommand {
 
 	@Override
@@ -68,7 +67,7 @@ public class UpdateOrganizationContactInformationMVCActionCommand
 		throws Exception {
 
 		try {
-			updateContactInformation(actionRequest);
+			updateAddresses(actionRequest);
 		}
 		catch (Exception e) {
 			if (e instanceof NoSuchOrganizationException ||
@@ -78,11 +77,12 @@ public class UpdateOrganizationContactInformationMVCActionCommand
 
 				actionResponse.setRenderParameter("mvcPath", "/error.jsp");
 			}
-			else if (e instanceof EmailAddressException ||
+			else if (e instanceof AddressCityException ||
+					 e instanceof AddressStreetException ||
+					 e instanceof AddressZipException ||
+					 e instanceof NoSuchCountryException ||
 					 e instanceof NoSuchListTypeException ||
-					 e instanceof PhoneNumberException ||
-					 e instanceof PhoneNumberExtensionException ||
-					 e instanceof WebsiteURLException) {
+					 e instanceof NoSuchRegionException) {
 
 				SessionErrors.add(actionRequest, e.getClass(), e);
 
@@ -95,7 +95,7 @@ public class UpdateOrganizationContactInformationMVCActionCommand
 		}
 	}
 
-	protected void updateContactInformation(ActionRequest actionRequest)
+	protected void updateAddresses(ActionRequest actionRequest)
 		throws Exception {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
@@ -111,26 +111,11 @@ public class UpdateOrganizationContactInformationMVCActionCommand
 			themeDisplay.getPermissionChecker(), organization,
 			ActionKeys.UPDATE);
 
-		List<EmailAddress> emailAddresses = UsersAdminUtil.getEmailAddresses(
-			actionRequest);
+		List<Address> addresses = UsersAdminUtil.getAddresses(actionRequest);
 
-		if (emailAddresses != null) {
-			_usersAdmin.updateEmailAddresses(
-				Organization.class.getName(), organizationId, emailAddresses);
-		}
-
-		List<Phone> phones = UsersAdminUtil.getPhones(actionRequest);
-
-		if (phones != null) {
-			_usersAdmin.updatePhones(
-				Organization.class.getName(), organizationId, phones);
-		}
-
-		List<Website> websites = UsersAdminUtil.getWebsites(actionRequest);
-
-		if (websites != null) {
-			_usersAdmin.updateWebsites(
-				Organization.class.getName(), organizationId, websites);
+		if (addresses != null) {
+			_usersAdmin.updateAddresses(
+				Organization.class.getName(), organizationId, addresses);
 		}
 	}
 

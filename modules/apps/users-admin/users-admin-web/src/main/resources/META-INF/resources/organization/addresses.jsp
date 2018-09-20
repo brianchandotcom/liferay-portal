@@ -14,4 +14,21 @@
  */
 --%>
 
-<%@ include file="/common/addresses.jsp" %>
+<%@ include file="/init.jsp" %>
+
+<%
+OrganizationScreenNavigationDisplayContext organizationScreenNavigationDisplayContext = (OrganizationScreenNavigationDisplayContext)request.getAttribute(UsersAdminWebKeys.ORGANIZATION_SCREEN_NAVIGATION_DISPLAY_CONTEXT);
+
+long organizationId = organizationScreenNavigationDisplayContext.getOrganizationId();
+
+Organization organization = organizationScreenNavigationDisplayContext.getOrganization();
+
+request.setAttribute("addresses.className", Organization.class.getName());
+request.setAttribute("addresses.classPK", organizationId);
+%>
+
+<div class="sheet-section">
+	<h3 class="sheet-subtitle"><liferay-ui:message key="addresses" /></h3>
+
+	<liferay-util:include page="/common/addresses.jsp" servletContext="<%= application %>" />
+</div>

@@ -19,28 +19,18 @@ import com.liferay.portal.kernel.service.PortletItemLocalService;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 
-import java.util.List;
-
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Brian Wing Shun Chan
  */
-@Component(immediate = true, service = PortletItemUADTestHelper.class)
 public class PortletItemUADTestHelper {
 
-	public PortletItem addPortletItem(long userId) throws Exception {
-		return _portletItemLocalService.addPortletItem(
+	public static PortletItem addPortletItem(
+			PortletItemLocalService portletItemLocalService, long userId)
+		throws Exception {
+
+		return portletItemLocalService.addPortletItem(
 			userId, TestPropsValues.getGroupId(), RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(), RandomTestUtil.randomString());
 	}
-
-	public void cleanUpDependencies(List<PortletItem> portletItems)
-		throws Exception {
-	}
-
-	@Reference
-	private PortletItemLocalService _portletItemLocalService;
 
 }

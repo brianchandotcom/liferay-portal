@@ -88,7 +88,12 @@ JSONArray collaboratorsJSONArray = JSONFactoryUtil.createJSONArray();
 />
 
 <%
-PortletURL manageCollaboratorsActionURL = PortletProviderUtil.getPortletURL(request, SharingEntry.class.getName(), PortletProvider.Action.EDIT);
+PortletURL manageCollaboratorsActionURL = PortletProviderUtil.getPortletURL(request, SharingEntry.class.getName(), PortletProvider.Action.MANAGE);
+
+manageCollaboratorsActionURL.setParameter("classNameId", String.valueOf(ClassNameLocalServiceUtil.getClassNameId(DLFileEntry.class.getName())));
+manageCollaboratorsActionURL.setParameter("classPK", String.valueOf(fileEntry.getFileEntryId()));
+
+manageCollaboratorsActionURL.setWindowState(LiferayWindowState.POP_UP);
 %>
 
 <aui:script>

@@ -23,12 +23,12 @@ import com.liferay.user.associated.data.exporter.UADExporter;
 import com.liferay.user.associated.data.test.util.BaseUADExporterTestCase;
 import com.liferay.user.associated.data.test.util.WhenHasStatusByUserIdField;
 import com.liferay.wiki.model.WikiNode;
+import com.liferay.wiki.service.WikiNodeLocalService;
 import com.liferay.wiki.uad.test.WikiNodeUADTestHelper;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.After;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.runner.RunWith;
@@ -51,23 +51,18 @@ public class WikiNodeUADExporterTest
 			long userId, long statusByUserId)
 		throws Exception {
 
-		WikiNode wikiNode =
-			_wikiNodeUADTestHelper.addWikiNodeWithStatusByUserId(
-				userId, statusByUserId);
+		WikiNode wikiNode = WikiNodeUADTestHelper.addWikiNodeWithStatusByUserId(
+			_wikiNodeLocalService, userId, statusByUserId);
 
 		_wikiNodes.add(wikiNode);
 
 		return wikiNode;
 	}
 
-	@After
-	public void tearDown() throws Exception {
-		_wikiNodeUADTestHelper.cleanUpDependencies(_wikiNodes);
-	}
-
 	@Override
 	protected WikiNode addBaseModel(long userId) throws Exception {
-		WikiNode wikiNode = _wikiNodeUADTestHelper.addWikiNode(userId);
+		WikiNode wikiNode = WikiNodeUADTestHelper.addWikiNode(
+			_wikiNodeLocalService, userId);
 
 		_wikiNodes.add(wikiNode);
 
@@ -87,10 +82,10 @@ public class WikiNodeUADExporterTest
 	@Inject(filter = "component.name=*.WikiNodeUADExporter")
 	private UADExporter _uadExporter;
 
+	@Inject
+	private WikiNodeLocalService _wikiNodeLocalService;
+
 	@DeleteAfterTestRun
 	private final List<WikiNode> _wikiNodes = new ArrayList<>();
-
-	@Inject
-	private WikiNodeUADTestHelper _wikiNodeUADTestHelper;
 
 }

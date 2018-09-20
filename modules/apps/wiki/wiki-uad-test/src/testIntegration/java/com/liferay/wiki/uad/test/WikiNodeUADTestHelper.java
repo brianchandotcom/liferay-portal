@@ -22,48 +22,40 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.service.WikiNodeLocalService;
 
-import java.util.List;
-
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author William Newbury
  */
-@Component(immediate = true, service = WikiNodeUADTestHelper.class)
 public class WikiNodeUADTestHelper {
 
-	public WikiNode addWikiNode(long userId) throws Exception {
+	public static WikiNode addWikiNode(
+			WikiNodeLocalService wikiNodeLocalService, long userId)
+		throws Exception {
+
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
 				TestPropsValues.getGroupId());
 
-		return _wikiNodeLocalService.addNode(
+		return wikiNodeLocalService.addNode(
 			userId, RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(), serviceContext);
 	}
 
-	public WikiNode addWikiNodeWithStatusByUserId(
-			long userId, long statusByUserId)
+	public static WikiNode addWikiNodeWithStatusByUserId(
+			WikiNodeLocalService wikiNodeLocalService, long userId,
+			long statusByUserId)
 		throws Exception {
 
-		WikiNode wikiNode = addWikiNode(userId);
+		WikiNode wikiNode = addWikiNode(wikiNodeLocalService, userId);
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
 				TestPropsValues.getGroupId());
 
-		_wikiNodeLocalService.updateStatus(
+		wikiNodeLocalService.updateStatus(
 			statusByUserId, wikiNode, WorkflowConstants.STATUS_APPROVED,
 			serviceContext);
 
 		return wikiNode;
 	}
-
-	public void cleanUpDependencies(List<WikiNode> wikiNodes) throws Exception {
-	}
-
-	@Reference
-	private WikiNodeLocalService _wikiNodeLocalService;
 
 }

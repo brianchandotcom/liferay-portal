@@ -158,10 +158,8 @@ public class ModuleApplicationContextRegistrator {
 
 		String springContext = headers.get("Liferay-Spring-Context");
 
-		if (springContext != null) {
-			Collections.addAll(
-				beanDefinitionFileNames, StringUtil.split(springContext, ','));
-		}
+		Collections.addAll(
+			beanDefinitionFileNames, StringUtil.split(springContext, ','));
 
 		return beanDefinitionFileNames.toArray(
 			new String[beanDefinitionFileNames.size()]);

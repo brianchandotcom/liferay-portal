@@ -92,7 +92,7 @@ public abstract class BaseLocalGitRepository
 			GitWorkingDirectoryFactory.newGitWorkingDirectory(
 				upstreamBranchName, directory, name);
 
-		validateJSONObject(_REQUIRED_KEYS);
+		validateKeys(_REQUIRED_KEYS);
 	}
 
 	protected String getDefaultRelativeGitRepositoryDirPath() {

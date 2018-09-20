@@ -16,58 +16,55 @@ package com.liferay.jenkins.results.parser;
 
 import java.io.File;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 /**
  * @author Peter Yoo
  */
-public abstract class BaseGitRepository implements GitRepository {
+public abstract class BaseGitRepository
+	extends JSONObject implements GitRepository {
 
 	@Override
 	public String getName() {
 		return getString("name");
 	}
 
+	@Override
+	public JSONObject put(String key, Object value) throws JSONException {
+		if (has(key)) {
+			throw new RuntimeException("Already contains " + key);
+		}
+
+		super.put(key, value);
+
+		return this;
+	}
+
 	protected BaseGitRepository(String name) {
+		super("{}");
+
 		if ((name == null) || name.isEmpty()) {
 			throw new IllegalArgumentException("Name is null");
 		}
 
 		put("name", name);
 
-		validateJSONObject(_REQUIRED_KEYS);
-	}
-
-	protected Object get(String key) {
-		return _jsonObject.opt(key);
+		validateKeys(_REQUIRED_KEYS);
 	}
 
 	protected File getFile(String key) {
 		return new File(getString(key));
 	}
 
-	protected String getString(String key) {
-		return (String)get(key);
-	}
-
-	protected void put(String key, Object o) {
-		if (_jsonObject.has(key)) {
-			throw new RuntimeException("JSON object already contains " + key);
-		}
-
-		_jsonObject.put(key, o);
-	}
-
-	protected void validateJSONObject(String[] requiredKeys) {
+	protected void validateKeys(String[] requiredKeys) {
 		for (String requiredKey : requiredKeys) {
-			if (!_jsonObject.has(requiredKey)) {
+			if (!has(requiredKey)) {
 				throw new RuntimeException("Missing " + requiredKey);
 			}
 		}
 	}
 
 	private static final String[] _REQUIRED_KEYS = {"name"};
-
-	private final JSONObject _jsonObject = new JSONObject();
 
 }

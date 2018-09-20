@@ -170,10 +170,10 @@ public abstract class BaseWorkspaceGitRepository
 			put("branch_sha", _getBranchHeadSHA());
 		}
 
-		validateJSONObject(_REQUIRED_KEYS);
+		validateKeys(_REQUIRED_KEYS);
 
 		if (JenkinsResultsParserUtil.isCINode()) {
-			validateJSONObject(_REQUIRED_CI_KEYS);
+			validateKeys(_REQUIRED_CI_KEYS);
 		}
 	}
 

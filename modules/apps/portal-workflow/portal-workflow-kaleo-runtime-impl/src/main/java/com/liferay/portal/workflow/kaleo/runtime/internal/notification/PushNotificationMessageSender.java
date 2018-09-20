@@ -19,6 +19,10 @@ import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageBus;
+import com.liferay.portal.kernel.model.UserNotificationDeliveryConstants;
+import com.liferay.portal.kernel.notifications.UserNotificationManagerUtil;
+import com.liferay.portal.kernel.util.PortletKeys;
+import com.liferay.portal.workflow.constants.MyWorkflowTasksConstants;
 import com.liferay.portal.workflow.kaleo.definition.NotificationReceptionType;
 import com.liferay.portal.workflow.kaleo.runtime.ExecutionContext;
 import com.liferay.portal.workflow.kaleo.runtime.internal.util.NotificationMessageHelper;
@@ -28,7 +32,10 @@ import com.liferay.portal.workflow.kaleo.runtime.notification.NotificationSender
 import com.liferay.push.notifications.constants.PushNotificationsConstants;
 import com.liferay.push.notifications.constants.PushNotificationsDestinationNames;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Stream;
@@ -57,7 +64,7 @@ public class PushNotificationMessageSender
 	}
 
 	protected Message createMessage(
-		Collection<Set<NotificationRecipient>> notificationRecipients,
+		List<NotificationRecipient> notificationRecipients,
 		String notificationMessage, ExecutionContext executionContext) {
 
 		Message message = new Message();
@@ -71,7 +78,7 @@ public class PushNotificationMessageSender
 	}
 
 	protected JSONObject createPayloadJSONObject(
-		Collection<Set<NotificationRecipient>> notificationRecipients,
+		List<NotificationRecipient> notificationRecipients,
 		String notificationMessage, ExecutionContext executionContext) {
 
 		JSONObject jsonObject =
@@ -83,21 +90,19 @@ public class PushNotificationMessageSender
 		jsonObject.put(PushNotificationsConstants.KEY_FROM, _fromName);
 		jsonObject.put(
 			PushNotificationsConstants.KEY_TO_USER_IDS,
-			createUserIdsRecipientsJSONArray(notificationRecipients.stream()));
+			createUserIdsRecipientsJSONArray(notificationRecipients));
 
 		return jsonObject;
 	}
 
 	protected JSONArray createUserIdsRecipientsJSONArray(
-		Stream<Set<NotificationRecipient>> notificationRecipientsSetStream) {
+		List<NotificationRecipient> notificationRecipients) {
 
 		JSONArray jsonArray = jsonFactory.createJSONArray();
 
-		Stream<NotificationRecipient> notificationRecipientStream =
-			notificationRecipientsSetStream.flatMap(
-				notificationRecipientSet -> notificationRecipientSet.stream());
+		Stream<NotificationRecipient> stream = notificationRecipients.stream();
 
-		notificationRecipientStream.filter(
+		stream.filter(
 			notificationRecipient -> notificationRecipient.getUserId() > 0
 		).forEach(
 			notificationRecipient ->
@@ -110,14 +115,34 @@ public class PushNotificationMessageSender
 	@Override
 	protected void doSendNotification(
 			Map<NotificationReceptionType, Set<NotificationRecipient>>
-				notificationRecipients,
+				notificationRecipientsMap,
 			String defaultSubject, String notificationMessage,
 			ExecutionContext executionContext)
 		throws Exception {
 
+		List<NotificationRecipient> notificationRecipients = new ArrayList<>();
+
+		Collection<Set<NotificationRecipient>>
+			notificationRecipientsCollection =
+				notificationRecipientsMap.values();
+
+		Iterator<Set<NotificationRecipient>> iterator =
+			notificationRecipientsCollection.iterator();
+
+		for (NotificationRecipient notificationRecipient : iterator.next()) {
+			if (UserNotificationManagerUtil.isDeliver(
+					notificationRecipient.getUserId(),
+					PortletKeys.MY_WORKFLOW_TASK, 0,
+					MyWorkflowTasksConstants.
+						NOTIFICATION_TYPE_MY_WORKFLOW_TASKS,
+					UserNotificationDeliveryConstants.TYPE_PUSH)) {
+
+				notificationRecipients.add(notificationRecipient);
+			}
+		}
+
 		Message message = createMessage(
-			notificationRecipients.values(), notificationMessage,
-			executionContext);
+			notificationRecipients, notificationMessage, executionContext);
 
 		messageBus.sendMessage(
 			PushNotificationsDestinationNames.PUSH_NOTIFICATION, message);

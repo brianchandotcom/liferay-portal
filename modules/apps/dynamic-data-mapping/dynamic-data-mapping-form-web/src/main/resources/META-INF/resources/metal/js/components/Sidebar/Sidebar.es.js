@@ -131,6 +131,37 @@ class Sidebar extends Component {
 		);
 	}
 
+	/**
+	 * Checks to see if browser supports CSS3 Transitions and returns the name
+	 * of the transitionend event; returns false if it's not supported
+	 * @protected
+	 * @return {string|boolean} The name of the transitionend event or false
+	 * if not supported
+	 */
+
+	_getTransitionEndEvent() {
+		const el = document.createElement('metalClayTransitionEnd');
+
+		const transitionEndEvents = {
+			MozTransition: 'transitionend',
+			OTransition: 'oTransitionEnd otransitionend',
+			transition: 'transitionend',
+			WebkitTransition: 'webkitTransitionEnd'
+		};
+
+		let eventName = false;
+
+		for (const name in transitionEndEvents) {
+			if (el.style[name] !== undefined) {
+				eventName = transitionEndEvents[name];
+
+				break;
+			}
+		}
+
+		return eventName;
+	}
+
 	_openValueFn() {
 		const {open} = this.props;
 
@@ -146,12 +177,19 @@ class Sidebar extends Component {
 
 	_handleDocumentMouseDown(event) {
 		const {open} = this.state;
+		const {transitionEnd} = this;
 
 		if (!open || this.element.contains(event.target)) {
 			return;
 		}
+
 		this.close();
-		setTimeout(() => this.emit('fieldBlurred'), 500);
+
+		dom.once(
+			this.refs.container,
+			transitionEnd,
+			() => this.emit('fieldBlurred')
+		);
 	}
 
 	/**
@@ -212,14 +250,18 @@ class Sidebar extends Component {
 	 */
 
 	_handlePreviousButtonClicked() {
+		const {transitionEnd} = this;
+
 		this.close();
 
-		setTimeout(
+		dom.once(
+			this.refs.container,
+			transitionEnd,
 			() => {
+				console.log('open on prev');
 				this.emit('fieldBlurred');
 				this.open();
-			},
-			500
+			}
 		);
 	}
 
@@ -281,11 +323,13 @@ class Sidebar extends Component {
 			}
 		);
 
-		this._dragAndDrop.on(
-			DragDrop.Events.END,
-			this._handleDragEnded.bind(this)
+		this._eventHandler.add(
+			this._dragAndDrop.on(
+				DragDrop.Events.END,
+				this._handleDragEnded.bind(this)
+			),
+			this._dragAndDrop.on(DragDrop.Events.DRAG, this._handleDragStarted.bind(this))
 		);
-		this._dragAndDrop.on(DragDrop.Events.DRAG, this._handleDragStarted.bind(this));
 	}
 
 	refreshDragAndDrop() {
@@ -302,6 +346,7 @@ class Sidebar extends Component {
 
 	attached() {
 		this._bindDragAndDrop();
+
 		this._eventHandler.add(
 			dom.on(document, 'mousedown', this._handleDocumentMouseDown.bind(this), true)
 		);
@@ -328,6 +373,17 @@ class Sidebar extends Component {
 		this._eventHandler = new EventHandler();
 		this._handleCloseButtonClicked = this._handleCloseButtonClicked.bind(this);
 		this._handleTabItemClicked = this._handleTabItemClicked.bind(this);
+
+		const transitionEnd = this._getTransitionEndEvent();
+
+		this.supportsTransitionEnd = transitionEnd !== false;
+		this.transitionEnd = transitionEnd || 'transitionend';
+	}
+
+	disposeDragAndDrop() {
+		if (this._dragAndDrop) {
+			this._dragAndDrop.dispose();
+		}
 	}
 
 	/**
@@ -338,6 +394,8 @@ class Sidebar extends Component {
 		super.disposeInternal();
 
 		this._eventHandler.removeAllListeners();
+		this.disposeDragAndDrop();
+		this.emit('fieldBlurred');
 	}
 
 	/**
@@ -346,14 +404,11 @@ class Sidebar extends Component {
 	 */
 
 	open() {
-		this.setState(
-			{
-				activeTab: 0,
-				open: true
-			}
-		);
-		this.once(
-			'rendered',
+		const {transitionEnd} = this;
+
+		dom.once(
+			this.refs.container,
+			transitionEnd,
 			() => {
 				if (this._isEditMode()) {
 					const firstInput = this.element.querySelector('input');
@@ -365,6 +420,14 @@ class Sidebar extends Component {
 				}
 			}
 		);
+
+		this.setState(
+			{
+				activeTab: 0,
+				open: true
+			}
+		);
+
 		this.refreshDragAndDrop();
 	}
 
@@ -394,7 +457,7 @@ class Sidebar extends Component {
 		const styles = classnames('sidebar-container', {open});
 
 		return (
-			<div class={styles} ref="sidebar">
+			<div class={styles} ref="container">
 				<div class="sidebar sidebar-light">
 					<nav class="component-tbar tbar">
 						<div class="container-fluid">

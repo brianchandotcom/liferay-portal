@@ -11,6 +11,24 @@
 		</for>
 	</command>
 
+	<command name="enableAnalyticsViaSiteSettings">
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Configuration" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Site Settings" />
+		</execute>
+
+		<execute macro="Navigator#gotoNavTab">
+			<var name="navTab" value="Advanced" />
+		</execute>
+
+		<execute macro="ContentTargeting#enableAnalytics">
+			<var name="analyticsList" value="${analyticsList}" />
+		</execute>
+
+		<execute macro="PortletEntry#save" />
+	</command>
+
 	<command name="expandPreview">
 		<var name="key_portletName" value="${portletName}" />
 

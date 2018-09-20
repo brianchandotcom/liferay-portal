@@ -211,8 +211,13 @@ public class DLAdminManagementToolbarDisplayContext {
 				permissionChecker, fileEntry, ActionKeys.UPDATE)) {
 
 			availableActionDropdownItems.add("move");
-			availableActionDropdownItems.add("checkin");
-			availableActionDropdownItems.add("checkout");
+
+			if (fileEntry.isCheckedOut()) {
+				availableActionDropdownItems.add("checkin");
+			}
+			else {
+				availableActionDropdownItems.add("checkout");
+			}
 		}
 
 		if (DLFileEntryPermission.contains(

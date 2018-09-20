@@ -123,11 +123,11 @@ public class PushNotificationMessageSender
 
 		List<NotificationRecipient> recipientList = new ArrayList<>();
 
-		Collection<Set<NotificationRecipient>> notificationRecipientCollection =
+		Collection<Set<NotificationRecipient>> notificationRecipientSetCollection =
 			notificationRecipients.values();
 
 		Iterator<Set<NotificationRecipient>> iterator =
-			notificationRecipientCollection.iterator();
+			notificationRecipientSetCollection.iterator();
 
 		for (NotificationRecipient notificationRecipient : iterator.next()) {
 			if (UserNotificationManagerUtil.isDeliver(

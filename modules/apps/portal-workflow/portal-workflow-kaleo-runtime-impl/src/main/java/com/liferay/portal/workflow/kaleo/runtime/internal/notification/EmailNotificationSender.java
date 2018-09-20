@@ -125,13 +125,13 @@ public class EmailNotificationSender
 			getInternetAddresses(
 				notificationRecipients.get(NotificationReceptionType.BCC)));
 
-		List<InternetAddress> bulkAddresses = new ArrayList<>();
+		List<InternetAddress> internetAddresses = new ArrayList<>();
 
-		Collection<Set<NotificationRecipient>> notificationRecipientCollection =
+		Collection<Set<NotificationRecipient>> notificationRecipientSetCollection =
 			notificationRecipients.values();
 
 		Iterator<Set<NotificationRecipient>> iterator =
-			notificationRecipientCollection.iterator();
+			notificationRecipientSetCollection.iterator();
 
 		for (NotificationRecipient notificationRecipient : iterator.next()) {
 			if (UserNotificationManagerUtil.isDeliver(
@@ -141,12 +141,14 @@ public class EmailNotificationSender
 						NOTIFICATION_TYPE_MY_WORKFLOW_TASKS,
 					UserNotificationDeliveryConstants.TYPE_EMAIL)) {
 
-				bulkAddresses.add(notificationRecipient.getInternetAddress());
+				internetAddresses.add(
+					notificationRecipient.getInternetAddress());
 			}
 		}
 
 		mailMessage.setBulkAddresses(
-			bulkAddresses.toArray(new InternetAddress[bulkAddresses.size()]));
+			internetAddresses.toArray(
+				new InternetAddress[internetAddresses.size()]));
 
 		_mailService.sendEmail(mailMessage);
 	}

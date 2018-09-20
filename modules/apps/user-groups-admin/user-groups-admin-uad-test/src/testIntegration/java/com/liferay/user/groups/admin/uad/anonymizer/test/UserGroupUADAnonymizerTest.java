@@ -29,7 +29,6 @@ import com.liferay.user.groups.admin.uad.test.UserGroupUADTestHelper;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.After;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.runner.RunWith;
@@ -46,11 +45,6 @@ public class UserGroupUADAnonymizerTest
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
 
-	@After
-	public void tearDown() throws Exception {
-		_userGroupUADTestHelper.cleanUpDependencies(_userGroups);
-	}
-
 	@Override
 	protected UserGroup addBaseModel(long userId) throws Exception {
 		return addBaseModel(userId, true);
@@ -60,20 +54,14 @@ public class UserGroupUADAnonymizerTest
 	protected UserGroup addBaseModel(long userId, boolean deleteAfterTestRun)
 		throws Exception {
 
-		UserGroup userGroup = _userGroupUADTestHelper.addUserGroup(userId);
+		UserGroup userGroup = UserGroupUADTestHelper.addUserGroup(
+			_userGroupLocalService, userId);
 
 		if (deleteAfterTestRun) {
 			_userGroups.add(userGroup);
 		}
 
 		return userGroup;
-	}
-
-	@Override
-	protected void deleteBaseModels(List<UserGroup> baseModels)
-		throws Exception {
-
-		_userGroupUADTestHelper.cleanUpDependencies(baseModels);
 	}
 
 	@Override
@@ -115,8 +103,5 @@ public class UserGroupUADAnonymizerTest
 
 	@DeleteAfterTestRun
 	private final List<UserGroup> _userGroups = new ArrayList<>();
-
-	@Inject
-	private UserGroupUADTestHelper _userGroupUADTestHelper;
 
 }

@@ -22,33 +22,23 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 
-import java.util.List;
-
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Brian Wing Shun Chan
  */
-@Component(immediate = true, service = UserGroupUADTestHelper.class)
 public class UserGroupUADTestHelper {
 
-	public UserGroup addUserGroup(long userId) throws Exception {
+	public static UserGroup addUserGroup(
+			UserGroupLocalService userGroupLocalService, long userId)
+		throws Exception {
+
 		String name = RandomTestUtil.randomString(
 			NumericStringRandomizerBumper.INSTANCE,
 			UniqueStringRandomizerBumper.INSTANCE);
 
-		return _userGroupLocalService.addUserGroup(
+		return userGroupLocalService.addUserGroup(
 			userId, TestPropsValues.getCompanyId(), name,
 			RandomTestUtil.randomString(),
 			ServiceContextTestUtil.getServiceContext());
 	}
-
-	public void cleanUpDependencies(List<UserGroup> userGroups)
-		throws Exception {
-	}
-
-	@Reference
-	private UserGroupLocalService _userGroupLocalService;
 
 }

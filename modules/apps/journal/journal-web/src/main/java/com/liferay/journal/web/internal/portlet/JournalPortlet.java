@@ -1259,6 +1259,14 @@ public class JournalPortlet extends MVCPortlet {
 
 		try {
 			ActionUtil.getFolder(renderRequest);
+
+			String path = getPath(renderRequest, renderResponse);
+
+			if (Objects.equals(path, "/edit_article.jsp") ||
+				Objects.equals(path, "/view_article_history.jsp")) {
+
+				ActionUtil.getArticle(renderRequest);
+			}
 		}
 		catch (Exception e) {
 			_log.error(e.getMessage());

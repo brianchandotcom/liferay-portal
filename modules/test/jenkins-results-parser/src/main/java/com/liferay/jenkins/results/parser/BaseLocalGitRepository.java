@@ -41,16 +41,6 @@ public abstract class BaseLocalGitRepository
 		return getFromJSONObjectString("upstream_branch_name");
 	}
 
-	public void writePropertiesFiles() {
-		for (Map.Entry<String, Properties> entry :
-				_propertiesFilesMap.entrySet()) {
-
-			JenkinsResultsParserUtil.writePropertiesFile(
-				new File(getDirectory(), entry.getKey()), entry.getValue(),
-				true);
-		}
-	}
-
 	protected BaseLocalGitRepository(String name, String upstreamBranchName) {
 		super(name);
 
@@ -109,22 +99,6 @@ public abstract class BaseLocalGitRepository
 		return getName();
 	}
 
-	protected Properties getProperties(String filePath) {
-		return _propertiesFilesMap.get(filePath);
-	}
-
-	protected void setProperties(String filePath, Properties properties) {
-		if (!_propertiesFilesMap.containsKey(filePath)) {
-			_propertiesFilesMap.put(filePath, new Properties());
-		}
-
-		Properties fileProperties = _propertiesFilesMap.get(filePath);
-
-		fileProperties.putAll(properties);
-
-		_propertiesFilesMap.put(filePath, fileProperties);
-	}
-
 	private static Properties _getRepositoryProperties() {
 		if (_properties != null) {
 			return _properties;
@@ -150,6 +124,5 @@ public abstract class BaseLocalGitRepository
 	private static Properties _properties;
 
 	private final GitWorkingDirectory _gitWorkingDirectory;
-	private final Map<String, Properties> _propertiesFilesMap = new HashMap<>();
 
 }

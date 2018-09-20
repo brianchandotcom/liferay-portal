@@ -17,6 +17,9 @@ package com.liferay.jenkins.results.parser;
 import java.io.File;
 import java.io.IOException;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Properties;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -100,6 +103,17 @@ public abstract class BaseWorkspaceGitRepository
 			_getGitHubURL(), " - ", _getBranchSHA());
 	}
 
+	@Override
+	public void writePropertiesFiles() {
+		for (Map.Entry<String, Properties> entry :
+				_propertiesFilesMap.entrySet()) {
+
+			JenkinsResultsParserUtil.writePropertiesFile(
+				new File(getDirectory(), entry.getKey()), entry.getValue(),
+				true);
+		}
+	}
+
 	protected BaseWorkspaceGitRepository(
 		String gitHubURL, String upstreamBranchName, String branchSHA) {
 
@@ -163,6 +177,18 @@ public abstract class BaseWorkspaceGitRepository
 		}
 	}
 
+	protected void setProperties(String filePath, Properties properties) {
+		if (!_propertiesFilesMap.containsKey(filePath)) {
+			_propertiesFilesMap.put(filePath, new Properties());
+		}
+
+		Properties fileProperties = _propertiesFilesMap.get(filePath);
+
+		fileProperties.putAll(properties);
+
+		_propertiesFilesMap.put(filePath, fileProperties);
+	}
+
 	private static String _getRepositoryName(String gitHubURL) {
 		Matcher matcher = _gitHubURLPattern.matcher(gitHubURL);
 
@@ -193,5 +219,7 @@ public abstract class BaseWorkspaceGitRepository
 
 	private static final Pattern _gitHubURLPattern = Pattern.compile(
 		"https://[^/]+/[^/]+/(?<repositoryName>[^/]+)/.*");
+
+	private final Map<String, Properties> _propertiesFilesMap = new HashMap<>();
 
 }

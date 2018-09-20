@@ -117,21 +117,24 @@ public class AssetListEntryAssetEntryRelLocalServiceImpl
 		}
 
 		assetListEntryAssetEntryRel.setPosition(-1);
-		swapAssetListEntryAssetEntryRel.setPosition(-2);
 
 		assetListEntryAssetEntryRelPersistence.update(
 			assetListEntryAssetEntryRel);
+
+		swapAssetListEntryAssetEntryRel.setPosition(-2);
+
 		assetListEntryAssetEntryRelPersistence.update(
 			swapAssetListEntryAssetEntryRel);
 
 		TransactionCommitCallbackUtil.registerCallback(
 			() -> {
 				assetListEntryAssetEntryRel.setPosition(newPosition);
-				swapAssetListEntryAssetEntryRel.setPosition(position);
 
 				assetListEntryAssetEntryRelLocalService.
 					updateAssetListEntryAssetEntryRel(
 						assetListEntryAssetEntryRel);
+
+				swapAssetListEntryAssetEntryRel.setPosition(position);
 
 				assetListEntryAssetEntryRelLocalService.
 					updateAssetListEntryAssetEntryRel(

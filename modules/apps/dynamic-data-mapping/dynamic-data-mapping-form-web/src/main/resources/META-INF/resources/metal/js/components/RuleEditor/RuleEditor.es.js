@@ -461,22 +461,6 @@ class RuleEditor extends Component {
 			}
 		);
 	}
-
-	attached() {
-		const addButton = document.querySelector('#addFieldButton');
-
-		if (addButton) {
-			addButton.classList.add('hide');
-		}
-	}
-
-	created() {
-		this.setState(
-			{
-				firstOperandList: this._getFieldsData()
-			}
-		);
-	}
 }
 
 Soy.register(RuleEditor, templates);

@@ -1,9 +1,11 @@
 import {Config} from 'metal-state';
+import {EventHandler} from 'metal-events';
 import {focusedFieldStructure, pageStructure} from '../../util/config.es';
 import {PagesVisitor} from '../../util/visitors.es';
 import autobind from 'autobind-decorator';
 import ClayModal from 'clay-modal';
 import Component from 'metal-jsx';
+import dom from 'metal-dom';
 import FormRenderer from '../../components/Form/index.es';
 import FormSupport from '../../components/Form/FormSupport.es';
 import Sidebar from '../../components/Sidebar/index.es';
@@ -102,6 +104,12 @@ class Builder extends Component {
 		const {sidebar} = this.refs;
 
 		sidebar.refreshDragAndDrop();
+	}
+
+	disposeInternal() {
+		super.disposeInternal();
+
+		this._eventHandler.removeAllListeners();
 	}
 
 	/**
@@ -276,6 +284,28 @@ class Builder extends Component {
 		sidebar.open();
 	}
 
+	syncVisible(visible) {
+		super.syncVisible(visible);
+
+		if (visible) {
+			this._eventHandler.add(
+				dom.on('#addFieldButton', 'click', this._handleAddFieldButtonClicked.bind(this))
+			);
+		}
+		else {
+			this._eventHandler.removeAllListeners();
+		}
+	}
+
+	/**
+	 * Handles click on plus button. Button shows Sidebar when clicked.
+	 * @private
+	 */
+
+	_handleAddFieldButtonClicked() {
+		this.openSidebar();
+	}
+
 	_handlePageDeleted(pageIndex) {
 		this.emit('pageDeleted', pageIndex);
 	}
@@ -336,15 +366,8 @@ class Builder extends Component {
 		return hasFields;
 	}
 
-	attached() {
-		const translationManager = document.querySelector('.ddm-translation-manager');
-
-		const formBasicInfo = document.querySelector('.ddm-form-basic-info');
-
-		if (translationManager && formBasicInfo) {
-			formBasicInfo.classList.remove('hide');
-			translationManager.classList.remove('hide');
-		}
+	created() {
+		this._eventHandler = new EventHandler();
 	}
 
 	/**

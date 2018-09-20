@@ -170,17 +170,18 @@ class RuleBuilder extends Component {
 		dom.addClasses(element, 'hide');
 	}
 
-	/**
-	 * Continues the propagation of event.
-	 * @param {!Event} event
-	 * @private
-	 */
+	syncVisible(visible) {
+		super.syncVisible(visible);
 
-	attached() {
-		this._eventHandler.add(
-			dom.on('#addFieldButton', 'click', this._handleAddRuleClick.bind(this)),
-			dom.on('.rule-card-edit', 'click', this._handleEditRuleClicked.bind(this))
-		);
+		if (visible) {
+			this._eventHandler.add(
+				dom.on('#addFieldButton', 'click', this._handleAddRuleClick.bind(this)),
+				dom.on('.rule-card-edit', 'click', this._handleEditRuleClicked.bind(this))
+			);
+		}
+		else {
+			this._eventHandler.removeAllListeners();
+		}
 	}
 
 	/**
@@ -189,10 +190,22 @@ class RuleBuilder extends Component {
 	 * @private
 	 */
 
-	disposed() {
-		super.disposed();
+	disposeInternal() {
+		super.disposeInternal();
 
 		this._eventHandler.removeAllListeners();
+	}
+
+	rendered() {
+		const addButton = document.querySelector('#addFieldButton');
+		const {mode} = this.state;
+
+		if (mode === 'create' || mode === 'edit') {
+			addButton.classList.add('hide');
+		}
+		else {
+			addButton.classList.remove('hide');
+		}
 	}
 
 	/**
@@ -202,23 +215,19 @@ class RuleBuilder extends Component {
 	 */
 
 	render() {
-		const {spritemap} = this.props;
-
-		let ruleScreen;
-
-		if (this.state.mode === 'edit') {
-			ruleScreen = <RuleEditor pages={this.props.pages} rules={this.props.rules} spritemap={spritemap} />;
-		}
-		else if (this.state.mode === 'create') {
-			ruleScreen = <RuleEditor functionsMetadata={this.props.functionsMetadata} pages={this.props.pages} spritemap={spritemap} />;
-		}
-		else {
-			ruleScreen = <RuleList pages={this.props.pages} rules={this.props.rules} spritemap={spritemap} />;
-		}
+		const {pages, rules, spritemap} = this.props;
 
 		return (
 			<div class="container">
-				{ruleScreen}
+				{this.state.mode === 'create' && (
+					<RuleEditor functionsMetadata={this.props.functionsMetadata} key={'create'} pages={pages} spritemap={spritemap} />
+				)}
+				{this.state.mode === 'edit' && (
+					<RuleEditor key={'edit'} pages={pages} rules={rules} spritemap={spritemap} />
+				)}
+				{this.state.mode === 'view' && (
+					<RuleList pages={pages} rules={rules} spritemap={spritemap} />
+				)}
 			</div>
 		);
 	}

@@ -505,7 +505,9 @@ class LayoutProvider extends Component {
 			}
 		}
 
-		return children;
+		return (
+			<span>{children}</span>
+		);
 	}
 }
 

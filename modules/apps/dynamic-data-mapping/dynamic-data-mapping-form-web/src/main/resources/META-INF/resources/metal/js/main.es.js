@@ -301,8 +301,7 @@ class Form extends Component {
 
 		this._eventHandler.add(
 			dom.on('.back-url-link', 'click', this._handleBackButtonClicked.bind(this)),
-			dom.on('.forms-management-bar li', 'click', this._handleFormNavClicked.bind(this)),
-			dom.on('#addFieldButton', 'click', this._handleAddFieldButtonClicked.bind(this))
+			dom.on('.forms-management-bar li', 'click', this._handleFormNavClicked.bind(this))
 		);
 	}
 
@@ -454,12 +453,17 @@ class Form extends Component {
 		return (
 			<div class={'ddm-form-builder'}>
 				<LayoutProvider {...layoutProviderProps}>
-					{showRuleBuilder && (
-						<RuleBuilder functionsMetadata={this.props.functionsMetadata} pages={context.pages} rules={this.props.rules} spritemap={spritemap} />
-					)}
-					{!showRuleBuilder && (
-						<Builder namespace={this.props.namespace} ref="builder" />
-					)}
+					<RuleBuilder
+						functionsMetadata={this.props.functionsMetadata}
+						rules={this.props.rules}
+						spritemap={spritemap}
+						visible={showRuleBuilder}
+					/>
+					<Builder
+						namespace={this.props.namespace}
+						ref="builder"
+						visible={!showRuleBuilder}
+					/>
 				</LayoutProvider>
 
 				<div class="container-fluid-1280">
@@ -559,15 +563,6 @@ class Form extends Component {
 	}
 
 	/**
-	 * Handles click on plus button. Button shows Sidebar when clicked.
-	 * @private
-	 */
-
-	_handleAddFieldButtonClicked() {
-		this._openSidebar();
-	}
-
-	/**
 	 * @param newVal
 	 * Handles "paginationModeChanged" event. Updates the page mode to use it when form builder is saved.
 	 */
@@ -583,30 +578,42 @@ class Form extends Component {
 	_handleFormNavClicked(event) {
 		const {delegateTarget, target} = event;
 		const {navItemIndex} = delegateTarget.dataset;
-		const addButton = document.querySelector('#addFieldButton');
-		const formBuilderButtons = document.querySelector('.ddm-form-builder-buttons');
-		const publishIcon = document.querySelector('.publish-icon');
 
 		if (navItemIndex !== this.state.activeFormMode) {
+			const newActiveFormMode = parseInt(navItemIndex, 10);
+
 			this.setState(
 				{
-					activeFormMode: parseInt(navItemIndex, 10)
+					activeFormMode: newActiveFormMode
 				}
 			);
 
-			document.querySelector('.forms-management-bar li>a.active').classList.remove('active');
-
-			if (parseInt(this.state.activeFormMode, 10)) {
-				formBuilderButtons.classList.add('hide');
-				publishIcon.classList.add('hide');
-			}
-			else {
-				formBuilderButtons.classList.remove('hide');
-				addButton.classList.remove('hide');
-				publishIcon.classList.remove('hide');
-			}
-
+			document.querySelector('.forms-management-bar li > a.active').classList.remove('active');
 			target.classList.add('active');
+
+			this.syncActiveFormMode(newActiveFormMode);
+		}
+	}
+
+	syncActiveFormMode(activeFormMode) {
+		const addButton = document.querySelector('#addFieldButton');
+		const formBasicInfo = document.querySelector('.ddm-form-basic-info');
+		const formBuilderButtons = document.querySelector('.ddm-form-builder-buttons');
+		const publishIcon = document.querySelector('.publish-icon');
+		const translationManager = document.querySelector('.ddm-translation-manager');
+
+		if (parseInt(activeFormMode, 10)) {
+			formBasicInfo.classList.add('hide');
+			formBuilderButtons.classList.add('hide');
+			publishIcon.classList.add('hide');
+			translationManager.classList.add('hide');
+		}
+		else {
+			addButton.classList.remove('hide');
+			formBasicInfo.classList.remove('hide');
+			formBuilderButtons.classList.remove('hide');
+			publishIcon.classList.remove('hide');
+			translationManager.classList.remove('hide');
 		}
 	}
 

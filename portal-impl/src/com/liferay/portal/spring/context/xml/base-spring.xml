@@ -56,10 +56,10 @@
 		<property name="nextMethodInterceptor" ref="transactionAdvice" />
 	</bean>
 	<bean class="com.liferay.portal.spring.aop.ServiceBeanAutoProxyCreator">
+		<property name="aopProxyFactory" ref="aopProxyFactory" />
 		<property name="beanMatcher">
 			<bean class="com.liferay.portal.spring.aop.ServiceBeanMatcher" />
 		</property>
-		<property name="aopProxyFactory" ref="aopProxyFactory" />
 	</bean>
 	<bean class="com.liferay.portal.spring.aop.SkipAdvice" id="serviceAdvice">
 		<property name="nextMethodInterceptor" ref="accessControlAdvice" />

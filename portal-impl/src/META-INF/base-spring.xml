@@ -52,22 +52,22 @@
 		<property name="nextMethodInterceptor" ref="transactionAdvice" />
 	</bean>
 	<bean class="com.liferay.portal.spring.aop.ServiceBeanAutoProxyCreator">
-		<property name="beanMatcher">
-			<bean class="com.liferay.portal.spring.aop.ServiceBeanMatcher">
-				<constructor-arg value="true" />
-			</bean>
-		</property>
 		<property name="aopProxyFactory">
 			<bean class="com.liferay.portal.spring.aop.AopProxyFactoryImpl">
 				<property name="methodInterceptor" ref="counterTransactionAdvice" />
 			</bean>
 		</property>
+		<property name="beanMatcher">
+			<bean class="com.liferay.portal.spring.aop.ServiceBeanMatcher">
+				<constructor-arg value="true" />
+			</bean>
+		</property>
 	</bean>
 	<bean class="com.liferay.portal.spring.aop.ServiceBeanAutoProxyCreator">
+		<property name="aopProxyFactory" ref="aopProxyFactory" />
 		<property name="beanMatcher">
 			<bean class="com.liferay.portal.spring.aop.ServiceBeanMatcher" />
 		</property>
-		<property name="aopProxyFactory" ref="aopProxyFactory" />
 	</bean>
 	<bean class="com.liferay.portal.spring.aop.SkipAdvice" id="serviceAdvice">
 		<property name="nextMethodInterceptor" ref="accessControlAdvice" />

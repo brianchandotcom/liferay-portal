@@ -74,7 +74,7 @@ public class ManageCollaboratorsViewMVCRenderCommand
 		template.put("spritemap", _getSpritemap(renderRequest));
 		template.put("uri", _getManageCollaboratorsActionURL(renderResponse));
 
-		return "manage_collaborators/ManageCollaborators";
+		return "ManageCollaborators";
 	}
 
 	protected Template getTemplate(RenderRequest renderRequest) {

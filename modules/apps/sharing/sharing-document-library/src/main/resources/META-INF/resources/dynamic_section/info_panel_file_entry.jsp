@@ -16,16 +16,6 @@
 
 <%@ include file="/dynamic_section/init.jsp" %>
 
-<%
-JSONArray collaboratorsJSONArray = JSONFactoryUtil.createJSONArray();
-
-String portletId = PortletProviderUtil.getPortletId(SharingEntry.class.getName(), PortletProvider.Action.EDIT);
-
-PortletURL sharingEntryEditURL = liferayPortletResponse.createLiferayPortletURL(portletId, PortletRequest.ACTION_PHASE);
-
-sharingEntryEditURL.setParameter(ActionRequest.ACTION_NAME, "/sharing/manage_collaborators");
-%>
-
 <div class="autofit-row sidebar-panel widget-metadata">
 	<div class="autofit-col inline-item-before">
 
@@ -50,12 +40,6 @@ sharingEntryEditURL.setParameter(ActionRequest.ACTION_NAME, "/sharing/manage_col
 			List<User> sharingEntryToUsers = (List<User>)request.getAttribute("info_panel_file_entry.jsp-sharingEntryToUsers");
 
 			for (User sharingEntryToUser : sharingEntryToUsers) {
-				JSONObject userJSONObject = JSONFactoryUtil.createJSONObject();
-
-				userJSONObject.put("id", sharingEntryToUser.getUserId());
-				userJSONObject.put("imageSrc", sharingEntryToUser.getPortraitURL(themeDisplay));
-				userJSONObject.put("name", sharingEntryToUser.getFullName());
-				collaboratorsJSONArray.put(userJSONObject);
 			%>
 
 				<div class="autofit-col">
@@ -93,13 +77,37 @@ sharingEntryEditURL.setParameter(ActionRequest.ACTION_NAME, "/sharing/manage_col
 	<link href="<%= PortalUtil.getStaticResourceURL(request, StringBundler.concat(themeDisplay.getCDNBaseURL(), PortalUtil.getPathProxy(), application.getContextPath(), "/dynamic_section/css/ManageCollaborators.css")) %>" rel="stylesheet" type="text/css" />
 </liferay-util:html-top>
 
-<aui:script require="sharing-document-library/dynamic_section/js/ManageCollaborators.es">
-	new sharingDocumentLibraryDynamic_sectionJsManageCollaboratorsEs.default(
-		{
-			collaborators: <%= collaboratorsJSONArray %>,
-			spritemap: '<%= themeDisplay.getPathThemeImages() %>/lexicon/icons.svg',
-			uri: '<%= sharingEntryEditURL.toString() %>'
-		},
-		<portlet:namespace />ManageCollaborators_<%= fileEntry.getFileEntryId() %>
-	);
-</aui:script>
+<%
+Map<String, Object> context = new HashMap<>();
+
+JSONArray collaboratorsJSONArray = JSONFactoryUtil.createJSONArray();
+
+for (User sharingEntryToUser : sharingEntryToUsers) {
+	JSONObject userJSONObject = JSONFactoryUtil.createJSONObject();
+
+	userJSONObject.put("id", sharingEntryToUser.getUserId());
+	userJSONObject.put("imageSrc", sharingEntryToUser.getPortraitURL(themeDisplay));
+	userJSONObject.put("name", sharingEntryToUser.getFullName());
+
+	collaboratorsJSONArray.put(userJSONObject);
+}
+
+context.put("collaborators", collaboratorsJSONArray);
+
+String portletId = PortletProviderUtil.getPortletId(SharingEntry.class.getName(), PortletProvider.Action.EDIT);
+
+PortletURL sharingEntryEditURL = liferayPortletResponse.createLiferayPortletURL(portletId, PortletRequest.ACTION_PHASE);
+
+sharingEntryEditURL.setParameter(ActionRequest.ACTION_NAME, "/sharing/manage_collaborators");
+
+context.put("uri", sharingEntryEditURL.toString());
+
+context.put("spritemap", themeDisplay.getPathThemeImages() + "/lexicon/icons.svg");
+%>
+
+<soy:component-renderer
+	componentId='<%= liferayPortletResponse.getNamespace() + "manageCollaborators" %>'
+	context="<%= context %>"
+	module="sharing-document-library/dynamic_section/js/ManageCollaborators.es"
+	templateNamespace="com.liferay.sharing.document.library.ManageCollaborators.render"
+/>

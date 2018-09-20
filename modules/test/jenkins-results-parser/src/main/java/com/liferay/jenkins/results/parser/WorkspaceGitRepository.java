@@ -17,13 +17,11 @@ package com.liferay.jenkins.results.parser;
 /**
  * @author Michael Hashimoto
  */
-public interface BuildRunnerGitRepository extends GitRepository {
+public interface WorkspaceGitRepository extends LocalGitRepository {
 
 	public String getFileContent(String filePath);
 
 	public String getGitHubDevBranchName();
-
-	public String getUpstreamBranchName();
 
 	public void setUp();
 

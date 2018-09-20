@@ -20,13 +20,11 @@ import java.io.IOException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.json.JSONObject;
-
 /**
  * @author Michael Hashimoto
  */
-public abstract class BaseBuildRunnerGitRepository
-	extends LocalGitRepository implements BuildRunnerGitRepository {
+public abstract class BaseWorkspaceGitRepository
+	extends BaseLocalGitRepository implements WorkspaceGitRepository {
 
 	@Override
 	public String getFileContent(String filePath) {
@@ -44,12 +42,7 @@ public abstract class BaseBuildRunnerGitRepository
 
 	@Override
 	public String getGitHubDevBranchName() {
-		return _jsonObject.getString("git_hub_dev_branch_name");
-	}
-
-	@Override
-	public String getUpstreamBranchName() {
-		return _jsonObject.getString("upstream_branch_name");
+		return getFromJSONObjectString("git_hub_dev_branch_name");
 	}
 
 	@Override
@@ -88,7 +81,6 @@ public abstract class BaseBuildRunnerGitRepository
 
 		System.out.println();
 		System.out.println("##");
-		System.out.println("## " + getDirectory());
 		System.out.println("## " + upstreamLocalGitBranch.toString());
 		System.out.println("##");
 		System.out.println();
@@ -108,18 +100,10 @@ public abstract class BaseBuildRunnerGitRepository
 			_getGitHubURL(), " - ", _getBranchSHA());
 	}
 
-	protected static String getRepositoryName(String gitHubURL) {
-		Matcher matcher = _gitHubURLPattern.matcher(gitHubURL);
-
-		matcher.find();
-
-		return matcher.group("repositoryName");
-	}
-
-	protected BaseBuildRunnerGitRepository(
+	protected BaseWorkspaceGitRepository(
 		String gitHubURL, String upstreamBranchName, String branchSHA) {
 
-		super(getRepositoryName(gitHubURL), upstreamBranchName);
+		super(_getRepositoryName(gitHubURL), upstreamBranchName);
 
 		Matcher matcher = _gitHubURLPattern.matcher(gitHubURL);
 
@@ -127,10 +111,7 @@ public abstract class BaseBuildRunnerGitRepository
 			throw new RuntimeException("Invalid GitHub URL " + gitHubURL);
 		}
 
-		_jsonObject = new JSONObject();
-
-		_jsonObject.put("git_hub_url", gitHubURL);
-		_jsonObject.put("upstream_branch_name", upstreamBranchName);
+		putIntoJSONObject("git_hub_url", gitHubURL);
 
 		if (PullRequest.isValidGitHubPullRequestURL(gitHubURL)) {
 			PullRequest pullRequest = new PullRequest(gitHubURL);
@@ -139,11 +120,11 @@ public abstract class BaseBuildRunnerGitRepository
 				GitHubDevSyncUtil.createCachedLocalGitBranch(
 					this, pullRequest, JenkinsResultsParserUtil.isCINode());
 
-			_jsonObject.put("branch_head_sha", localGitBranch.getSHA());
-			_jsonObject.put("branch_name", localGitBranch.getName());
+			putIntoJSONObject("branch_head_sha", localGitBranch.getSHA());
+			putIntoJSONObject("branch_name", localGitBranch.getName());
 
 			if (JenkinsResultsParserUtil.isCINode()) {
-				_jsonObject.put(
+				putIntoJSONObject(
 					"git_hub_dev_branch_name",
 					GitHubDevSyncUtil.getCachedBranchName(pullRequest));
 			}
@@ -155,11 +136,11 @@ public abstract class BaseBuildRunnerGitRepository
 				GitHubDevSyncUtil.createCachedLocalGitBranch(
 					this, remoteGitRef, JenkinsResultsParserUtil.isCINode());
 
-			_jsonObject.put("branch_head_sha", localGitBranch.getSHA());
-			_jsonObject.put("branch_name", localGitBranch.getName());
+			putIntoJSONObject("branch_head_sha", localGitBranch.getSHA());
+			putIntoJSONObject("branch_name", localGitBranch.getName());
 
 			if (JenkinsResultsParserUtil.isCINode()) {
-				_jsonObject.put(
+				putIntoJSONObject(
 					"git_hub_dev_branch_name",
 					GitHubDevSyncUtil.getCachedBranchName(remoteGitRef));
 			}
@@ -169,60 +150,48 @@ public abstract class BaseBuildRunnerGitRepository
 		}
 
 		if ((branchSHA != null) && branchSHA.matches("[0-9a-f]{7,40}")) {
-			_jsonObject.put("branch_sha", branchSHA);
+			putIntoJSONObject("branch_sha", branchSHA);
 		}
 		else {
-			_jsonObject.put("branch_sha", _getBranchHeadSHA());
+			putIntoJSONObject("branch_sha", _getBranchHeadSHA());
 		}
 
-		_validateJSONObject();
+		validateJSONObject(_REQUIRED_KEYS);
+
+		if (JenkinsResultsParserUtil.isCINode()) {
+			validateJSONObject(_REQUIRED_CI_KEYS);
+		}
+	}
+
+	private static String _getRepositoryName(String gitHubURL) {
+		Matcher matcher = _gitHubURLPattern.matcher(gitHubURL);
+
+		if (!matcher.find()) {
+			throw new RuntimeException("Invalid GitHub URL " + gitHubURL);
+		}
+
+		return matcher.group("repositoryName");
 	}
 
 	private String _getBranchHeadSHA() {
-		return _jsonObject.getString("branch_head_sha");
+		return getFromJSONObjectString("branch_head_sha");
 	}
 
 	private String _getBranchSHA() {
-		return _jsonObject.getString("branch_sha");
+		return getFromJSONObjectString("branch_sha");
 	}
 
 	private String _getGitHubURL() {
-		return _jsonObject.getString("git_hub_url");
+		return getFromJSONObjectString("git_hub_url");
 	}
 
-	private void _validateJSONObject() {
-		if (!_jsonObject.has("branch_head_sha")) {
-			throw new RuntimeException("Please set required branch_head_sha");
-		}
+	private static final String[] _REQUIRED_CI_KEYS =
+		{"git_hub_dev_branch_name"};
 
-		if (!_jsonObject.has("branch_name")) {
-			throw new RuntimeException("Please set required branch_name");
-		}
-
-		if (!_jsonObject.has("branch_sha")) {
-			throw new RuntimeException("Please set required branch_sha");
-		}
-
-		if (JenkinsResultsParserUtil.isCINode()) {
-			if (!_jsonObject.has("git_hub_dev_branch_name")) {
-				throw new RuntimeException(
-					"Please set required git_hub_dev_branch_name");
-			}
-		}
-
-		if (!_jsonObject.has("git_hub_url")) {
-			throw new RuntimeException("Please set required git_hub_url");
-		}
-
-		if (!_jsonObject.has("upstream_branch_name")) {
-			throw new RuntimeException(
-				"Please set required upstream_branch_name");
-		}
-	}
+	private static final String[] _REQUIRED_KEYS =
+		{"branch_head_sha", "branch_name", "branch_sha", "git_hub_url"};
 
 	private static final Pattern _gitHubURLPattern = Pattern.compile(
 		"https://[^/]+/[^/]+/(?<repositoryName>[^/]+)/.*");
-
-	private final JSONObject _jsonObject;
 
 }

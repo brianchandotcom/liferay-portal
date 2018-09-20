@@ -17,10 +17,16 @@ package com.liferay.gradle.plugins.source.formatter;
 import com.liferay.gradle.util.GradleUtil;
 import com.liferay.gradle.util.Validator;
 
+import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.StringReader;
+
 import org.gradle.api.Action;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.gradle.api.Task;
+import org.gradle.api.UncheckedIOException;
 import org.gradle.api.artifacts.Configuration;
 import org.gradle.api.artifacts.DependencySet;
 import org.gradle.api.execution.TaskExecutionGraph;
@@ -84,6 +90,9 @@ public class SourceFormatterPlugin implements Plugin<Project> {
 	}
 
 	private FormatSourceTask _addTaskCheckSourceFormatting(Project project) {
+		final ByteArrayOutputStream byteArrayOutputStream =
+			new ByteArrayOutputStream();
+
 		FormatSourceTask formatSourceTask = GradleUtil.addTask(
 			project, CHECK_SOURCE_FORMATTING_TASK_NAME, FormatSourceTask.class);
 
@@ -94,12 +103,26 @@ public class SourceFormatterPlugin implements Plugin<Project> {
 		formatSourceTask.setGroup(LifecycleBasePlugin.VERIFICATION_GROUP);
 		formatSourceTask.setPrintErrors(true);
 		formatSourceTask.setShowStatusUpdates(false);
+		formatSourceTask.setStandardOutput(byteArrayOutputStream);
 		formatSourceTask.setThrowException(true);
+
+		formatSourceTask.doLast(
+			new Action<Task>() {
+
+				@Override
+				public void execute(Task task) {
+					_prettyPrint(byteArrayOutputStream);
+				}
+
+			});
 
 		return formatSourceTask;
 	}
 
 	private FormatSourceTask _addTaskFormatSource(Project project) {
+		final ByteArrayOutputStream byteArrayOutputStream =
+			new ByteArrayOutputStream();
+
 		FormatSourceTask formatSourceTask = GradleUtil.addTask(
 			project, FORMAT_SOURCE_TASK_NAME, FormatSourceTask.class);
 
@@ -108,6 +131,17 @@ public class SourceFormatterPlugin implements Plugin<Project> {
 			"Runs Liferay Source Formatter to format the project files.");
 		formatSourceTask.setGroup("formatting");
 		formatSourceTask.setShowStatusUpdates(true);
+		formatSourceTask.setStandardOutput(byteArrayOutputStream);
+
+		formatSourceTask.doLast(
+			new Action<Task>() {
+
+				@Override
+				public void execute(Task task) {
+					_prettyPrint(byteArrayOutputStream);
+				}
+
+			});
 
 		return formatSourceTask;
 	}
@@ -171,6 +205,27 @@ public class SourceFormatterPlugin implements Plugin<Project> {
 				}
 
 			});
+	}
+
+	private void _prettyPrint(ByteArrayOutputStream byteArrayOutputStream) {
+		try {
+			String s = byteArrayOutputStream.toString();
+
+			try (BufferedReader bufferedReader = new BufferedReader(
+					new StringReader(s.trim()))) {
+
+				String line = null;
+
+				while ((line = bufferedReader.readLine()) != null) {
+					if (!line.matches("Processing checks: \\d*% completed")) {
+						System.out.println(line);
+					}
+				}
+			}
+		}
+		catch (IOException ioe) {
+			throw new UncheckedIOException(ioe);
+		}
 	}
 
 	private static final Spec<Task> _skipIfExecutingParentTaskSpec =

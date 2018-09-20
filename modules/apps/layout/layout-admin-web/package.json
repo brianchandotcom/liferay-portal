@@ -24,6 +24,7 @@
 		"metal-position": "^2.1.1",
 		"metal-soy": "^2.13.2",
 		"metal-state": "^2.13.2",
+		"metal-throttle": "^3.0.0",
 		"metal-uri": "^3.1.0"
 	},
 	"devDependencies": {

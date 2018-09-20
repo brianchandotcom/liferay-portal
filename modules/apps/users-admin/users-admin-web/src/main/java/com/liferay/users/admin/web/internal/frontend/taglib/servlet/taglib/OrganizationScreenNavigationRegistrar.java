@@ -105,6 +105,7 @@ public class OrganizationScreenNavigationRegistrar {
 				"/organization/contact_information.jsp",
 				"/users_admin/update_organization_contact_information"),
 			20);
+
 		_registerScreenNavigationEntry(
 			_createUpdateOnlyScreenNavigationEntry(
 				"opening-hours", _CATEGORY_CONTACT,

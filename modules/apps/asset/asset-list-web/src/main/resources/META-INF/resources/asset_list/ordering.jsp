@@ -29,7 +29,6 @@ String redirect = editAssetListDisplayContext.getRedirectURL();
 >
 	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 	<aui:input name="assetListEntryId" type="hidden" value="<%= assetListDisplayContext.getAssetListEntryId() %>" />
-	<aui:input name="type" type="hidden" value="<%= assetListDisplayContext.getAssetListEntryType() %>" />
 
 	<liferay-frontend:edit-form-body>
 		<h3 class="sheet-subtitle">

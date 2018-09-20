@@ -19,35 +19,21 @@ import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 
-import java.util.List;
-
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Brian Wing Shun Chan
  */
-@Component(
-	immediate = true, service = WorkflowDefinitionLinkUADTestHelper.class
-)
 public class WorkflowDefinitionLinkUADTestHelper {
 
-	public WorkflowDefinitionLink addWorkflowDefinitionLink(long userId)
+	public static WorkflowDefinitionLink addWorkflowDefinitionLink(
+			WorkflowDefinitionLinkLocalService
+				workflowDefinitionLinkLocalService,
+			long userId)
 		throws Exception {
 
-		return _workflowDefinitionLinkLocalService.addWorkflowDefinitionLink(
+		return workflowDefinitionLinkLocalService.addWorkflowDefinitionLink(
 			userId, TestPropsValues.getCompanyId(),
 			TestPropsValues.getGroupId(), null, 0, 0,
 			RandomTestUtil.randomString(), 0);
 	}
-
-	public void cleanUpDependencies(
-			List<WorkflowDefinitionLink> workflowDefinitionLinks)
-		throws Exception {
-	}
-
-	@Reference
-	private WorkflowDefinitionLinkLocalService
-		_workflowDefinitionLinkLocalService;
 
 }

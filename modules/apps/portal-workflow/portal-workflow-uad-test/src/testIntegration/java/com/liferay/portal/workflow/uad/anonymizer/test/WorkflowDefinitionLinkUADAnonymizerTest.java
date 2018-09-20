@@ -29,7 +29,6 @@ import com.liferay.user.associated.data.test.util.BaseUADAnonymizerTestCase;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.After;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.runner.RunWith;
@@ -46,12 +45,6 @@ public class WorkflowDefinitionLinkUADAnonymizerTest
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
 
-	@After
-	public void tearDown() throws Exception {
-		_workflowDefinitionLinkUADTestHelper.cleanUpDependencies(
-			_workflowDefinitionLinks);
-	}
-
 	@Override
 	protected WorkflowDefinitionLink addBaseModel(long userId)
 		throws Exception {
@@ -65,21 +58,14 @@ public class WorkflowDefinitionLinkUADAnonymizerTest
 		throws Exception {
 
 		WorkflowDefinitionLink workflowDefinitionLink =
-			_workflowDefinitionLinkUADTestHelper.addWorkflowDefinitionLink(
-				userId);
+			WorkflowDefinitionLinkUADTestHelper.addWorkflowDefinitionLink(
+				_workflowDefinitionLinkLocalService, userId);
 
 		if (deleteAfterTestRun) {
 			_workflowDefinitionLinks.add(workflowDefinitionLink);
 		}
 
 		return workflowDefinitionLink;
-	}
-
-	@Override
-	protected void deleteBaseModels(List<WorkflowDefinitionLink> baseModels)
-		throws Exception {
-
-		_workflowDefinitionLinkUADTestHelper.cleanUpDependencies(baseModels);
 	}
 
 	@Override
@@ -127,9 +113,5 @@ public class WorkflowDefinitionLinkUADAnonymizerTest
 	@DeleteAfterTestRun
 	private final List<WorkflowDefinitionLink> _workflowDefinitionLinks =
 		new ArrayList<>();
-
-	@Inject
-	private WorkflowDefinitionLinkUADTestHelper
-		_workflowDefinitionLinkUADTestHelper;
 
 }

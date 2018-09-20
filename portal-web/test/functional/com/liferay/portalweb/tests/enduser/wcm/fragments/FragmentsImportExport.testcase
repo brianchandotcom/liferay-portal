@@ -43,9 +43,9 @@
 		<description message="This is a test case for LPS-80625." />
 		<property name="portal.acceptance" value="true" />
 
-		<execute macro="Fragment#importCollectionFromDependenciesFolder">
-			<var name="collectionZipFile" value="fragment-invalid-zip.zip" />
-		</execute>
+		<execute macro="Fragment#gotoImportCollection" />
+
+		<execute function="UploadCommonFile" locator1="TextInput#FILE" value1="fragment-invalid-zip.zip" />
 
 		<execute macro="Button#click">
 			<var name="button" value="Import" />

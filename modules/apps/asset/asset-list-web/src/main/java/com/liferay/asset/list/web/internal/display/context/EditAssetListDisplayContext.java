@@ -597,16 +597,6 @@ public class EditAssetListDisplayContext {
 		return _orderByType2;
 	}
 
-	public String getPortletResource() {
-		if (_portletResource != null) {
-			return _portletResource;
-		}
-
-		_portletResource = ParamUtil.getString(_request, "portletResource");
-
-		return _portletResource;
-	}
-
 	public String getRedirectURL() {
 		if (Validator.isNotNull(_redirect)) {
 			return _redirect;
@@ -904,7 +894,6 @@ public class EditAssetListDisplayContext {
 	private String _orderByType1;
 	private String _orderByType2;
 	private final PortletRequest _portletRequest;
-	private String _portletResource;
 	private final PortletResponse _portletResponse;
 	private final UnicodeProperties _properties;
 	private String _redirect;

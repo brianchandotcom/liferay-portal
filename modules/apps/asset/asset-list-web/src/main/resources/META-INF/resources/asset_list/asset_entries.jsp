@@ -17,8 +17,6 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String eventName = "_" + HtmlUtil.escapeJS(editAssetListDisplayContext.getPortletResource()) + "_selectAsset";
-
 SearchContainer assetListEntryAssetEntryRelSearchContainer = editAssetListDisplayContext.getSearchContainer();
 %>
 
@@ -155,7 +153,7 @@ SearchContainer assetListEntryAssetEntryRelSearchContainer = editAssetListDispla
 							assetBrowserURL.setParameter("typeSelection", curRendererFactory.getClassName());
 							assetBrowserURL.setParameter("showNonindexable", String.valueOf(Boolean.TRUE));
 							assetBrowserURL.setParameter("showScheduled", String.valueOf(Boolean.TRUE));
-							assetBrowserURL.setParameter("eventName", eventName);
+							assetBrowserURL.setParameter("eventName", renderResponse.getNamespace() + "selectAsset");
 							assetBrowserURL.setPortletMode(PortletMode.VIEW);
 							assetBrowserURL.setWindowState(LiferayWindowState.POP_UP);
 
@@ -243,8 +241,8 @@ SearchContainer assetListEntryAssetEntryRelSearchContainer = editAssetListDispla
 						destroyOnHide: true,
 						modal: true
 					},
-					eventName: '<%= eventName %>',
-					id: '<%= eventName %>' + currentTarget.attr('id'),
+					eventName: '<portlet:namespace />selectAsset',
+					id: '<portlet:namespace />selectAsset' + currentTarget.attr('id'),
 					title: currentTarget.data('title'),
 					uri: currentTarget.data('href')
 				},

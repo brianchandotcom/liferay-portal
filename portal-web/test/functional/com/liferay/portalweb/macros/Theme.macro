@@ -1,8 +1,4 @@
 <definition>
-	<command name="configureLookAndFeelSameLook">
-		<execute function="Click" locator1="Radio#SAME_LOOK" />
-	</command>
-
 	<command name="configureLookAndFeelShowHeaderSearch">
 		<if>
 			<equals arg1="${showHeaderSearch}" arg2="true" />

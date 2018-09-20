@@ -1,16 +1,4 @@
 <definition>
-	<command name="addPG">
-		<execute macro="PageComment#reply">
-			<var name="commentBody" value="${commentBody}" />
-		</execute>
-
-		<var name="key_entryComment" value="${commentBody}" />
-
-		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
-		<execute function="AssertTextEquals" locator1="Comments#COMMENT_BODY_SPECIFIC" value1="${commentBody}" />
-		<execute function="AssertTextEquals" locator1="Comments#COMMENT_AUTHOR" value1="${commentAuthor}" />
-	</command>
-
 	<command name="addWithWorkflowPG">
 		<execute macro="PageComment#reply">
 			<var name="commentBody" value="${commentBody}" />

@@ -674,14 +674,6 @@
 		<execute macro="PortletEntry#save" />
 	</command>
 
-	<command name="enableRecycleBinCP">
-		<execute function="AssertClick" locator1="NavListItem#RECYCLE_BIN" value1="Recycle Bin" />
-
-		<execute function="Check" locator1="Checkbox#ENABLE_RECYCLE_BIN" />
-
-		<execute macro="PortletEntry#save" />
-	</command>
-
 	<command name="getSiteId">
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Configuration" />
@@ -1198,11 +1190,6 @@
 		</if>
 	</command>
 
-	<command name="viewDefaultThemePG">
-		<execute function="AssertElementNotPresent" locator1="Home#DARK_THEME" />
-		<execute function="AssertElementPresent" locator1="Home#DEFAULT_THEME" />
-	</command>
-
 	<command name="viewGlobalLandingDefault">
 		<var name="key_portletName" value="${portletName}" />
 		<var name="key_siteName" value="${siteName}" />
@@ -1389,19 +1376,6 @@
 		<execute function="AssertLocation" value1="${sitePageURL}" />
 	</command>
 
-	<command name="viewSiteHierarchyInBreadcrumbPG">
-		<if>
-			<isset var="breadcrumbListVisible" />
-			<then>
-				<for list="${breadcrumbListVisible}" param="breadcrumbName">
-					<var name="key_breadcrumbName" value="${breadcrumbName}" />
-
-					<execute function="AssertTextEquals" locator1="SitesDirectory#BREADCRUMB" value1="${breadcrumbName}" />
-				</for>
-			</then>
-		</if>
-	</command>
-
 	<command name="viewSiteMembershipsRequest">
 		<execute function="Click" locator1="Icon#INFO" />
 
@@ -1416,14 +1390,6 @@
 
 		<execute function="AssertTextEquals" locator1="SiteMembershipsViewMembershipRequests#USER_NAME" value1="${userFirstName} ${userLastName}" />
 		<execute function="AssertTextEquals" locator1="SiteMembershipsViewMembershipRequests#USER_COMMENTS" value1="Please allow me to join the Restricted Site." />
-	</command>
-
-	<command name="viewSiteNotClonedFromSiteTemplateCP">
-		<var name="key_siteTemplateName" value="${siteTemplateName}" />
-
-		<execute function="AssertClick" locator1="SitesEditSite#MENU_BASIC_INFORMATION_SITE_TEMPLATE" value1="Site Template" />
-
-		<execute function="AssertTextEquals#assertPartialText" locator1="SiteSettingsSiteTemplate#SITE_CLONED_FROM_TEMPLATE_MESSAGE" value1="Site Template" />
 	</command>
 
 	<command name="viewSiteRoleViaSiteMembershipsCP">

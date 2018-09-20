@@ -1,18 +1,4 @@
 <definition>
-	<command name="configureViewAvailableLanguages">
-		<execute function="SelectFrame" locator1="IFrame#CONFIGURATION" />
-
-		<execute macro="Panel#expandPanel">
-			<var name="panel" value="Languages" />
-		</execute>
-
-		<for list="${availableLanguages}" param="availableLanguage">
-			<execute function="AssertTextEquals#assertPartialText" locator1="LanguageConfiguration#LANGUAGES_AVAILABLE" value1="${availableLanguage}" />
-		</for>
-
-		<execute function="SelectFrame" value1="relative=top" />
-	</command>
-
 	<command name="configureViewCurrentLanguages">
 		<execute function="SelectFrame" locator1="IFrame#CONFIGURATION" />
 

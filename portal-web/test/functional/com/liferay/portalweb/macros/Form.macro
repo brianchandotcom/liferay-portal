@@ -14,15 +14,6 @@
 		</if>
 	</command>
 
-	<command name="addColumn">
-		<var name="key_columnLineNumber" value="${columnLineNumber}" />
-		<var name="key_rowNumber" value="${rowNumber}" />
-
-		<execute function="MouseOver#mouseOverNotVisible" locator1="Form#ADD_COLUMN_RIGHT" />
-
-		<execute function="DragAndDrop#dragAndDropToObjectNotVisible" locator1="Form#ADD_COLUMN_RIGHT" locator2="Form#ADD_COLUMN_LINE" value1="horizontal-scroll" />
-	</command>
-
 	<command name="addPage">
 		<execute function="Click" locator1="Form#PAGE_CONTROLS_ELLIPSIS_ICON" />
 
@@ -41,14 +32,6 @@
 		<var name="key_localizedLanguage" value="${localizedLanguage}" />
 
 		<execute function="AssertClick" locator1="Translation#ADD_MENULIST_LANGUAGE" value1="${localizedLanguage}" />
-	</command>
-
-	<command name="clickPublishSwitcher">
-		<execute function="Click" locator1="Form#PUBLISH_FORM_SWITCHER" />
-	</command>
-
-	<command name="clickSaveButton">
-		<execute function="AssertClick" locator1="Form#SAVE_FORM_BUTTON" value1="Save Form" />
 	</command>
 
 	<command name="closeSidebar">
@@ -207,10 +190,6 @@
 		</execute>
 	</command>
 
-	<command name="editPageDescription">
-		<execute function="Type" locator1="Form#PAGE_DESCRIPTION_FIELD" value1="${formPageDescription}" />
-	</command>
-
 	<command name="editPageTitle">
 		<execute function="Type" locator1="Form#PAGE_TITLE_FIELD" value1="${formPageName}" />
 	</command>
@@ -256,10 +235,6 @@
 
 	<command name="gotoAdvancedTab">
 		<execute function="AssertClick" locator1="Form#SIDEBAR_PROPERTIES_TAB" value1="Properties" />
-	</command>
-
-	<command name="gotoBasicTab">
-		<execute function="AssertClick" locator1="Form#SIDEBAR_BASIC_TAB" value1="Basic" />
 	</command>
 
 	<command name="gotoElementSetsTab">
@@ -319,16 +294,6 @@
 
 	<command name="save">
 		<execute function="AssertClick" locator1="Form#SAVE_FORM_BUTTON" value1="Save Form" />
-
-		<execute macro="Alert#viewSuccessMessage" />
-	</command>
-
-	<command name="saveAndPublish">
-		<execute function="Click" locator1="Form#SAVE_BUTTON_DROPDOWN" />
-
-		<execute macro="MenuItem#click">
-			<var name="menuItem" value="Save and Publish Live Page" />
-		</execute>
 
 		<execute macro="Alert#viewSuccessMessage" />
 	</command>

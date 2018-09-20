@@ -244,10 +244,6 @@
 		<execute function="AssertClick" locator1="ReportsAdmin#NAVIGATION_DEFINITIONS" value1="Definitions" />
 	</command>
 
-	<command name="gotoReports">
-		<execute function="AssertClick" locator1="ReportsAdmin#NAVIGATION_REPORTS" value1="Reports" />
-	</command>
-
 	<command name="gotoSources">
 		<execute function="AssertClick" locator1="ReportsAdmin#NAVIGATION_SOURCES" value1="Sources" />
 	</command>

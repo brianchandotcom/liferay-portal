@@ -17,10 +17,6 @@
 		<execute function="Click" locator1="ControlMenuAddPanel#ADD_PORTLET_LINK" value1="Add" />
 	</command>
 
-	<command name="_mobileClickAddPortlet">
-		<execute function="AssertClick" locator1="ControlMenuAddPanel#ADD_PORTLET_LINK" value1="Add" />
-	</command>
-
 	<command name="addDuplicatePG">
 		<var name="portletTypeKey" value="PORTLET" />
 
@@ -318,12 +314,6 @@
 		<execute function="MouseOver" locator1="Portlet#SPECIFIC_TITLE" />
 	</command>
 
-	<command name="openAdminURL">
-		<execute macro="Navigator#openSpecificURL">
-			<var name="url" value="${adminURL}" />
-		</execute>
-	</command>
-
 	<command name="selectApplicationDecorator">
 		<execute function="Select" locator1="Select#APPLICATION_DECORATORS" value1="${decorator}" />
 	</command>
@@ -449,28 +439,6 @@
 		<execute function="SikuliClick" locator1="Portlet#SIGN_IN_CUSTOM_LOOK_AND_FEEL" />
 	</command>
 
-	<command name="viewDefaultDisplayStyle">
-		<execute function="AssertElementPresent" locator1="Icon#DISPLAY_STYLE_ACTIVE">
-			<var name="key_displayStyle" value="${displayStyle}" />
-		</execute>
-	</command>
-
-	<command name="viewDisplayStyles">
-		<for list="${displayStyleList}" param="displayStyle">
-			<var method="StringUtil#upperCase('${displayStyle}')" name="displayStyleUppercase" />
-
-			<execute function="AssertElementPresent" locator1="Icon#DISPLAY_STYLE_${displayStyleUppercase}" />
-		</for>
-	</command>
-
-	<command name="viewDisplayStylesNotPresent">
-		<for list="${displayStyleList}" param="displayStyle">
-			<var method="StringUtil#upperCase('${displayStyle}')" name="displayStyleUppercase" />
-
-			<execute function="AssertElementNotPresent" locator1="Icon#DISPLAY_STYLE_${displayStyleUppercase}" />
-		</for>
-	</command>
-
 	<command name="viewDuplicatePG">
 		<var name="i" value="0" />
 
@@ -514,14 +482,6 @@
 				</execute>
 			</then>
 		</if>
-	</command>
-
-	<command name="viewPillTitle" summary="Assert that the ${portletName} portlet title has the text '${portletName}' in ALL CAPS">
-		<var name="key_portletName" value="${portletName}" />
-
-		<var method="StringUtil#upperCase('${portletName}')" name="portletNameUppercase" />
-
-		<execute function="AssertTextEquals" locator1="Portlet#TITLE" value1="${portletNameUppercase}" />
 	</command>
 
 	<command name="viewPortletOptionsMenulist">

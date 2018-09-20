@@ -748,16 +748,6 @@
 		<execute function="SelectFrame" locator1="IFrame#SITE_VARIATION_IFRAME" />
 	</command>
 
-	<command name="navigateToStagingMenuItem">
-		<execute function="Click" locator1="Icon#HEADER_VERTICAL_ELLIPSIS" />
-
-		<execute macro="MenuItem#click">
-			<var name="menuItem" value="Staging" />
-		</execute>
-
-		<execute function="SelectFrame" locator1="IFrame#CONFIGURATION_DIALOG" />
-	</command>
-
 	<command name="publishCustomPublication">
 		<execute macro="LexiconEntry#gotoAdd" />
 
@@ -1085,14 +1075,6 @@
 		<execute function="Click" locator1="Link#REFRESH_COUNTS" />
 	</command>
 
-	<command name="setHistoryVersionPG">
-		<execute function="Click" locator1="Icon#STAGING_BAR_VERTICAL_ELLIPSIS" />
-
-		<execute function="Click" locator1="Staging#HISTORY_BUTTON" />
-
-		<var method="selenium#getText(Staging#HISTORY_VERSION)" name="historyVersion" />
-	</command>
-
 	<command name="submitForPublicationPageRevision">
 		<if>
 			<condition function="IsTextEqual" locator1="Message#WORKFLOW_STATUS" value1="Draft" />
@@ -1169,14 +1151,6 @@
 		</if>
 
 		<execute macro="IFrame#closeFrame" />
-	</command>
-
-	<command name="viewIncompletePageViaStagingPageVariation">
-		<var name="key_page" value="${pageName}" />
-
-		<execute function="AssertTextEquals#assertPartialText" locator1="SitePages#INCOMPLETE_STAGING_PAGE_VARIATION_INFO_MESSAGE" value1="The page ${pageName} is not enabled in ${sitePagesVariationName}, but is available for other pages variations." />
-		<execute function="AssertTextEquals" locator1="SitePages#INCOMPLETE_STAGING_PAGE_VARIATION_ENABLE_BUTTON" value1="Enable in ${sitePagesVariationName}" />
-		<execute function="AssertTextEquals" locator1="SitePages#INCOMPLETE_STAGING_PAGE_VARIATION_DELETE_BUTTON" value1="Delete in All Pages Variations" />
 	</command>
 
 	<command name="viewNoPublishContentCountViaPortletStagingCP">

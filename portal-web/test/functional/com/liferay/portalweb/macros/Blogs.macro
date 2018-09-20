@@ -270,40 +270,6 @@
 		<execute macro="PortletEntry#publish" />
 	</command>
 
-	<command name="addWithCustomAbstractImage">
-		<execute macro="BlogsNavigator#gotoAddEntry" />
-
-		<execute macro="BlogsEntry#addEntryContent">
-			<var name="entryContent" value="${entryContent}" />
-			<var name="entrySubtitle" value="${entrySubtitle}" />
-			<var name="entryTitle" value="${entryTitle}" />
-		</execute>
-
-		<execute macro="Panel#expandPanel">
-			<var name="panel" value="Configuration" />
-		</execute>
-
-		<execute function="Click" locator1="Radio#CUSTOM_ABSTRACT" />
-
-		<execute function="Click" locator1="Button#SELECT" />
-
-		<execute macro="MenuItem#click">
-			<var name="menuItem" value="Basic Document" />
-		</execute>
-
-		<execute function="UploadCommonFile" locator1="TextInput#FILE" value1="${dmDocumentFile}" />
-
-		<execute macro="PortletEntry#inputTitle">
-			<var name="title" value="${dmDocumentTitle}" />
-		</execute>
-
-		<execute macro="PortletEntry#inputDescription">
-			<var name="description" value="${dmDocumentDescription}" />
-		</execute>
-
-		<execute macro="PortletEntry#publish" />
-	</command>
-
 	<command name="addWithDefaultAbstract">
 		<execute macro="BlogsNavigator#gotoAddEntry" />
 
@@ -592,12 +558,6 @@
 		<execute macro="Alert#viewSuccessMessage" />
 	</command>
 
-	<command name="unsubscribePG">
-		<execute function="AssertClick" locator1="Blogs#UNSUBSCRIBE_LINK" value1="Unsubscribe" />
-
-		<execute macro="Alert#viewSuccessMessage" />
-	</command>
-
 	<command name="viewControlsPG">
 		<var name="key_text" value="New Entry" />
 
@@ -611,31 +571,5 @@
 
 	<command name="viewNoEntryCP">
 		<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="No entries were found." />
-	</command>
-
-	<command name="viewNoPermissionCP">
-		<execute function="AssertTextEquals" locator1="Portlet#HEADER" value1="Blogs" />
-		<execute function="AssertElementPresent" locator1="NavBar#CONTAINER" />
-		<execute function="AssertTextEquals" locator1="Message#INFO" value1="No entries were found." />
-	</command>
-
-	<command name="viewNoPermissionPG">
-		<execute function="AssertTextEquals" locator1="Portlet#HEADER" value1="Blogs" />
-		<var name="key_text" value="New Entry" />
-
-		<execute function="AssertElementNotPresent" locator1="Button#ANY" />
-		<execute macro="MenuItem#viewNotPresent">
-			<var name="menuItem" value="Permissions" />
-		</execute>
-
-		<execute function="AssertElementNotPresent" locator1="Blogs#SUBSCRIBE_LINK" />
-
-		<var name="key_text" value="rss RSS" />
-
-		<execute function="AssertTextEquals" locator1="Button#ANY" value1="rss RSS" />
-	</command>
-
-	<command name="viewPermissionCP">
-		<execute function="AssertTextEquals" locator1="Blogs#PERMISSIONS" value1="Permissions" />
 	</command>
 </definition>

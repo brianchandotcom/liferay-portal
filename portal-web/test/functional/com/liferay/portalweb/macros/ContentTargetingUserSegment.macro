@@ -73,15 +73,6 @@
 		<execute function="DragAndDrop" locator1="EditUserSegment#USER_SEGMENT_RULES_RULE" locator2="ContentTargeting#FORM_BUILDER" value1="${userSegmentRule}" />
 	</command>
 
-	<command name="addSessionAttributesTimeRuleCP">
-		<execute macro="ContentTargetingUserSegment#addRuleCmdCP">
-			<var name="userSegmentRule" value="Time" />
-		</execute>
-
-		<execute function="Type" locator1="EditUserSegment#USER_SEGMENT_RULE_SESSION_ATTRIBUTES_OPERATING_START_TIME_FIELD" value1="${startTime}" />
-		<execute function="Type" locator1="EditUserSegment#USER_SEGMENT_RULE_SESSION_ATTRIBUTES_OPERATING_END_TIME_FIELD" value1="${endTime}" />
-	</command>
-
 	<command name="addSocialFacebookAgeRuleCP">
 		<execute macro="ContentTargetingUserSegment#addRuleCmdCP">
 			<var name="userSegmentRule" value="Facebook Age" />

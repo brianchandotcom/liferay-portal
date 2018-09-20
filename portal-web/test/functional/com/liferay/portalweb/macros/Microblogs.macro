@@ -25,33 +25,12 @@
 		<execute function="AssertClick" locator1="Button#POST" value1="Post" />
 	</command>
 
-	<command name="gotoMentionsTab">
-		<execute function="AssertClick" locator1="NavTab#MENTIONS" value1="Mentions" />
-
-		<execute function="AssertTextEquals" locator1="Microblogs#ACTIVE_TAB" value1="Mentions" />
-	</command>
-
 	<command name="gotoTimelineTab">
 		<execute function="AssertElementPresent#assertVisible" locator1="NavTab#TIMELINE" value1="Timeline" />
 
 		<execute function="AssertClick" locator1="NavTab#TIMELINE" value1="Timeline" />
 
 		<execute function="AssertTextEquals" locator1="Microblogs#ACTIVE_TAB" value1="Timeline" />
-	</command>
-
-	<command name="leaveComment">
-		<var name="key_actionType" value="Comment" />
-		<var name="key_entryContent" value="${entryContent}" />
-
-		<execute function="AssertClick" locator1="Microblogs#TIMELINE_ENTRY_ACTION" value1="Comment" />
-
-		<var name="key_entryStatus" value="Leave a comment" />
-
-		<execute function="AssertClick" locator1="Microblogs#STATUS_FIELD" value1="Leave a comment..." />
-
-		<execute function="Type#clickAtType" locator1="Microblogs#TEXT_AREA" value1="${entryComment}" />
-
-		<execute function="AssertClick" locator1="Button#POST" value1="Post" />
 	</command>
 
 	<command name="updateStatus">

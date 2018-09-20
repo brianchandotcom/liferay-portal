@@ -320,12 +320,6 @@
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 
-	<command name="tearDownScopePG">
-		<execute macro="WebContentDisplayPortlet#configureScopePG">
-			<var name="scopeSelection" value="Liferay" />
-		</execute>
-	</command>
-
 	<command name="undoMoveToRecycleBin">
 		<execute function="AssertClick" locator1="Link#UNDO" value1="Undo" />
 	</command>

@@ -15,32 +15,6 @@
 		</execute>
 	</command>
 
-	<command name="gotoPermissionSectionViaDropdown">
-		<var name="key_navItem" value="${contentTitle}" />
-
-		<if>
-			<condition function="IsNotVisible" locator1="RolesPermissionsNavigation#PERMISSIONS_NAVITEM" />
-
-			<then>
-				<var name="key_navItem" value="${sectionTitle}" />
-
-				<execute function="AssertClick" locator1="RolesPermissionsNavigation#PERMISSIONS_NAVITEM" value1="${sectionTitle}" />
-			</then>
-		</if>
-
-		<if>
-			<condition function="IsNotVisible" locator1="RolesPermissionsNavigation#${permissionName}" />
-
-			<then>
-				<var name="key_navItem" value="${contentTitle}" />
-
-				<execute function="AssertClick" locator1="RolesPermissionsNavigation#PERMISSIONS_NAVITEM" value1="${contentTitle}" />
-			</then>
-		</if>
-
-		<execute function="Click" locator1="RolesPermissionsNavigation#${permissionName}" />
-	</command>
-
 	<command name="gotoRoleType">
 		<execute macro="Navigator#gotoNavItem">
 			<var name="navItem" value="${roleType} Roles" />

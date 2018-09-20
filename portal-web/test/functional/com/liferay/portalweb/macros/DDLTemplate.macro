@@ -162,46 +162,6 @@
 		</execute>
 	</command>
 
-	<command name="copyCP">
-		<execute macro="DDLNavigator#gotoManageDataDefinitions" />
-
-		<execute macro="Search#searchCP">
-			<var name="searchTerm" value="${ddlDataDefinitionName}" />
-		</execute>
-
-		<execute function="Click#waitForMenuToggleJSClick" locator1="DDMSelectStructure#DDM_STRUCTURE_ELLIPSIS_1" />
-
-		<execute macro="MenuItem#click">
-			<var name="menuItem" value="Manage Templates" />
-		</execute>
-
-		<var name="key_ddlTemplateName" value="${ddlTemplateName}" />
-
-		<execute function="Click" locator1="DDMSelectTemplate#TEMPLATE_TABLE_ELLIPSIS" />
-
-		<execute macro="MenuItem#click">
-			<var name="menuItem" value="Copy" />
-		</execute>
-
-		<execute function="SelectFrame" locator1="IFrame#COPY_STRUCTURE" />
-
-		<execute macro="PortletEntry#inputName">
-			<var name="name" value="${dataDefinitionTemplateCopyName}" />
-		</execute>
-
-		<execute function="AssertClick" locator1="Button#COPY" value1="Copy" />
-
-		<execute function="AssertElementPresent" locator1="Message#SUCCESS" />
-
-		<execute function="AssertClick" locator1="Button#CLOSE" value1="Close" />
-
-		<var name="key_ddlTemplateName" value="${dataDefinitionTemplateCopyName}" />
-
-		<execute function="AssertTextEquals" locator1="DDMSelectTemplate#TEMPLATE_TABLE_NAME_LINK" value1="${dataDefinitionTemplateCopyName}" />
-
-		<execute function="SelectFrame" value1="relative=top" />
-	</command>
-
 	<command name="deleteTemplateCP">
 		<execute macro="DDLNavigator#gotoManageDataDefinitions" />
 
@@ -329,14 +289,6 @@
 		<execute function="Select" locator1="DDMEditStructure#DETAILS_MODE_SELECT" value1="${ddlFormTemplateMode}" />
 
 		<execute function="Pause" locator1="3000" />
-	</command>
-
-	<command name="editFormTemplatePG">
-		<execute function="Click" locator1="DDL#PORTLET_ACTIONS_EDIT_FORM_TEMPLATE" />
-
-		<execute macro="PortletEntry#inputName">
-			<var name="name" value="${ddlFormTemplateNameEdit}" />
-		</execute>
 	</command>
 
 	<command name="saveAndContinueFormTemplateCP">
@@ -480,9 +432,5 @@
 		<var name="key_ddlTemplateName" value="${ddlTemplateName}" />
 
 		<execute function="AssertElementNotPresent" locator1="DDMSelectTemplate#TEMPLATE_TABLE_NAME_LINK" />
-	</command>
-
-	<command name="viewWithNoPermissions">
-		<execute function="AssertTextEquals" locator1="Message#ERROR" value1="You do not have the required permissions." />
 	</command>
 </definition>

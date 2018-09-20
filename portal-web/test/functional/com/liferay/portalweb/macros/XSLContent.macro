@@ -9,15 +9,6 @@
 		<execute macro="SystemSettings#saveConfiguration" />
 	</command>
 
-	<command name="configureXSLContentPortlet">
-		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
-
-		<execute function="Type" locator1="TextInput#SETUP_XML_URL" value1="@portal_url@/${xmlURL}" />
-		<execute function="Type" locator1="TextInput#SETUP_XSL_URL" value1="@portal_url@/${xslURL}" />
-
-		<execute function="SelectFrameTop" value1="relative=top" />
-	</command>
-
 	<command name="gotoDocumentURL">
 		<var name="key_dmDocumentTitle" value="${dmDocumentTitle}" />
 

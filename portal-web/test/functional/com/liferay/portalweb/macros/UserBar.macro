@@ -115,13 +115,4 @@
 			</then>
 		</if>
 	</command>
-
-	<command name="viewUserPageLayoutPG">
-		<execute macro="Navigator#openURL" />
-
-		<execute function="Click" locator1="UserBar#USER_AVATAR_IMAGE" />
-
-		<execute function="AssertTextNotPresent" locator1="UserBar#USER_PROFILE" value1="My Profile" />
-		<execute function="AssertTextNotPresent" locator1="UserBar#USER_DASHBOARD" value1="My Dashboard" />
-	</command>
 </definition>

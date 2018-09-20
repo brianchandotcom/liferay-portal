@@ -16,31 +16,6 @@
 		</if>
 	</command>
 
-	<command name="MarkAsSpam">
-		<if>
-			<equals arg1="${assetType}" arg2="wikiPage" />
-			<then>
-				<var name="key_wikiPageTitle" value="${wikiPageTitle}" />
-
-				<execute function="Check" locator1="SpamModeration#WIKI_PAGE_TABLE_CHECKBOX" />
-
-				<execute function="AssertClickNoError" locator1="SpamModeration#WIKIS_SPAM_BUTTON" value1="Spam" />
-
-				<execute function="AssertConfirm" value1="Are you sure you want to mark the selected pages as spam?" />
-
-				<execute function="AssertElementPresent" locator1="Message#SUCCESS" />
-			</then>
-		</if>
-	</command>
-
-	<command name="navigateToDiscussions">
-		<execute function="AssertClick" locator1="SpamModeration#NAVIGATION_DISCUSSIONS" value1="Wikis" />
-	</command>
-
-	<command name="navigateToMessageBoards">
-		<execute function="AssertClick" locator1="SpamModeration#NAVIGATION_MESSAGE_BOARDS" value1="Wikis" />
-	</command>
-
 	<command name="navigateToWikis">
 		<execute function="AssertClick" locator1="SpamModeration#NAVIGATION_WIKIS" value1="Wikis" />
 	</command>

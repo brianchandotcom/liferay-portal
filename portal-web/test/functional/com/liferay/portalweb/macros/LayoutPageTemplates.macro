@@ -106,16 +106,6 @@
 		</execute>
 	</command>
 
-	<command name="gotoPortletConfiguration">
-		<execute function="MouseOver" locator1="Fragment#PAGE_TEMPLATE_NAVIGATION_PORTLET">
-			<var name="key_fragmentName" value="${fragmentName}" />
-		</execute>
-
-		<execute function="Click" locator1="Fragment#PAGE_TEMPLATE_PORTLET_CONFIGURE">
-			<var name="key_fragmentName" value="${fragmentName}" />
-		</execute>
-	</command>
-
 	<command name="moveFragment">
 		<if>
 			<equals arg1="${direction}" arg2="up" />
@@ -208,24 +198,6 @@
 		<execute function="AssertElementPresent" locator1="Fragment#PAGE_TEMPLATE_FRAGMENT_HEADER_POSITION">
 			<var name="key_fragmentName" value="${fragmentName}" />
 			<var name="key_position" value="${position}" />
-		</execute>
-	</command>
-
-	<command name="viewNavigationPortlet">
-		<if>
-			<contains string="${displayTemplateClass}" substring="{displayTemplateClass}" />
-			<then>
-				<var name="displayTemplateClass" value="navbar-blank" />
-			</then>
-		</if>
-
-		<execute function="AssertElementPresent" locator1="Fragment#PAGE_TEMPLATE_NAVIGATION_PORTLET">
-			<var name="key_fragmentName" value="${fragmentName}" />
-		</execute>
-
-		<execute function="AssertElementPresent" locator1="Fragment#PAGE_TEMPLATE_NAVIGATION_PORTLET_DISPLAY_CLASS">
-			<var name="key_displayTemplateClass" value="${displayTemplateClass}" />
-			<var name="key_fragmentName" value="${fragmentName}" />
 		</execute>
 	</command>
 </definition>

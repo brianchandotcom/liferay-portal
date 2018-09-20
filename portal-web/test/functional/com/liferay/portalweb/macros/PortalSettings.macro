@@ -230,22 +230,6 @@
 		<execute function="Type" locator1="TextArea#CONFIGURATION" value1="${editor}" />
 	</command>
 
-	<command name="disableLDAPCP">
-		<execute macro="PortalSettingsNavigator#gotoLDAP" />
-
-		<execute macro="FormFields#disableCheckbox">
-			<var name="fieldName" value="PortalSettingsPortlet_enabled" />
-		</execute>
-
-		<execute macro="PortletEntry#save" />
-
-		<execute macro="PortalSettingsNavigator#gotoLDAP" />
-
-		<execute macro="FormFields#viewCheckboxNotChecked">
-			<var name="fieldName" value="PortalSettingsPortlet_enabled" />
-		</execute>
-	</command>
-
 	<command name="editConfigurationAuthenticationCAS">
 		<execute function="Check" locator1="PortalSettingsAuthentication#AUTHENTICATION_CAS_ENABLED_CHECKBOX" />
 		<execute function="Type" locator1="PortalSettingsAuthentication#AUTHENTICATION_CAS_LOGIN_URL_FIELD" value1="${casLoginURL}" />
@@ -288,14 +272,6 @@
 		</if>
 
 		<execute macro="PortletEntry#save" />
-	</command>
-
-	<command name="editConfigurationAuthenticationGoogle">
-		<execute function="Check" locator1="Checkbox#ENABLE_GOOGLE_AUTHENTICATION" />
-
-		<execute function="Type" locator1="TextInput#GOOGLE_CLIENT_ID" value1="${googleClientID}" />
-
-		<execute function="Type" locator1="TextInput#GOOGLE_CLIENT_SECRET" value1="${googleClientSecret}" />
 	</command>
 
 	<command name="editConfigurationUsersDefaultUserAssociationsOrganizationSitesCP">
@@ -445,22 +421,6 @@
 		<execute function="Type" locator1="PortalSettingsAuthentication#AUTHENTICATION_GOOGLE_CLIENT_SECRET" value1="${googleClientSecret}" />
 
 		<execute macro="PortletEntry#save" />
-	</command>
-
-	<command name="enableImportLDAPCP">
-		<execute macro="PortalSettingsNavigator#gotoLDAP" />
-
-		<execute macro="FormFields#enableCheckbox">
-			<var name="fieldName" value="ldapImportEnabled" />
-		</execute>
-
-		<execute macro="PortletEntry#save" />
-
-		<execute macro="PortalSettingsNavigator#gotoLDAP" />
-
-		<execute macro="FormFields#viewCheckboxChecked">
-			<var name="fieldName" value="ldapImportEnabled" />
-		</execute>
 	</command>
 
 	<command name="enableOpenIDConnectCP">

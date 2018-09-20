@@ -36,12 +36,6 @@
 		<execute function="WaitForSPARefresh" />
 	</command>
 
-	<command name="_clickAddPage">
-		<execute function="AssertClick" locator1="Button#ADD_PAGE" value1="Add Page" />
-
-		<execute macro="Alert#viewSuccessMessage" />
-	</command>
-
 	<command name="_configurePage">
 		<if>
 			<equals arg1="${sitePageType}" arg2="Embedded" />

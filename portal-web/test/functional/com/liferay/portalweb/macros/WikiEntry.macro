@@ -1,8 +1,4 @@
 <definition>
-	<command name="addMediaWikiDescription">
-		<execute function="Type" locator1="TextArea#WEB_EDITOR" value1="${wikiPageContent}" />
-	</command>
-
 	<command name="addPageContent">
 		<execute macro="AlloyEditor#addContent">
 			<var name="content" value="${wikiPageContent}" />
@@ -21,20 +17,6 @@
 
 	<command name="confirmHTML">
 		<execute function="AssertConfirm" value1="You may lose some formatting when switching from Creole to HTML. Do you want to continue?" />
-	</command>
-
-	<command name="confirmMediaWiki">
-		<execute function="AssertConfirm" value1="You may lose some formatting when switching from Creole to MediaWiki. Do you want to continue?" />
-	</command>
-
-	<command name="previewPageContent">
-		<execute function="AssertTextEquals" locator1="WikiEntry#BODY" value1="${wikiPageContent}" />
-	</command>
-
-	<command name="previewPageTitle">
-		<var name="key_wikiPageTitle" value="${wikiPageTitle}" />
-
-		<execute function="AssertTextEquals#assertPartialText" locator1="Wiki#PAGE_HEADER" value1="${wikiPageTitle}" />
 	</command>
 
 	<command name="saveAsDraft">
@@ -64,13 +46,5 @@
 
 	<command name="viewPageContentBody">
 		<execute function="AssertTextEquals" locator1="WikiEntry#BODY" value1="${wikiPageContent}" />
-	</command>
-
-	<command name="viewPageFormat">
-		<execute macro="Panel#expandPanel">
-			<var name="panel" value="Configuration" />
-		</execute>
-
-		<execute function="AssertSelectedLabel" locator1="Wiki#ADD_PAGE_FORMAT_DROPDOWN" value1="${pageFormat}" />
 	</command>
 </definition>

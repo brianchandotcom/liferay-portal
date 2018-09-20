@@ -500,29 +500,6 @@
 		<execute function="AssertTextEquals" locator1="Staging#PROCESS_SUCCESSFUL" value1="Successful" />
 	</command>
 
-	<command name="removeFolderViewPermissionsPG">
-		<var name="key_dmFolderName" value="${dmFolderName}" />
-		<var method="StringUtil#lowerCase('${key_roleTitle}')" name="key_roleTitle" />
-
-		<execute function="Check" locator1="DocumentsAndMedia#ICON_FOLDER_CHECKBOX" />
-
-		<execute function="Click" locator1="DocumentsAndMedia#DESCRIPTIVE_LIST_VERTICAL_ELLIPSIS" />
-
-		<execute macro="MenuItem#click">
-			<var name="menuItem" value="Permissions" />
-		</execute>
-
-		<execute macro="IFrame#selectPermissionsFrame" />
-
-		<execute function="Uncheck" locator1="Permissions#CONFIGURATION_PERMISSIONS_VIEW_CHECKBOX" />
-
-		<execute macro="Button#clickSave" />
-
-		<execute function="AssertTextEquals#assertPartialText" locator1="Permissions#SUCCESS_MESSAGE" value1="Your request completed successfully." />
-
-		<execute function="SelectFrame" value1="relative=top" />
-	</command>
-
 	<command name="removePermissions">
 		<execute macro="DMFolder#viewFolderPermissionsPG">
 			<var name="dmFolder" value="${dmFolder}" />
@@ -665,31 +642,6 @@
 		</execute>
 
 		<execute macro="IFrame#selectPermissionsFrame" />
-	</command>
-
-	<command name="viewFolderViewPermissionsPG">
-		<execute macro="DMFolder#viewFolderPermissionsPG">
-			<var name="dmFolder" value="${dmFolder}" />
-			<var name="key_roleTitle" value="${roleTitle}" />
-		</execute>
-
-		<if>
-			<equals arg1="${viewPermissionValue}" arg2="checked" />
-			<then>
-				<execute function="AssertChecked" locator1="Permissions#CONTENT_PERMISSIONS_VIEW_CHECKBOX" value1="${roleTitle}" />
-			</then>
-			<elseif>
-				<equals arg1="${viewPermissionValue}" arg2="unchecked" />
-				<then>
-					<execute function="AssertNotChecked" locator1="Permissions#CONTENT_PERMISSIONS_VIEW_CHECKBOX" value1="${roleTitle}" />
-				</then>
-			</elseif>
-			<else>
-				<execute function="AssertChecked" locator1="Permissions#CONTENT_PERMISSIONS_VIEW_CHECKBOX" value1="${roleTitle}" />
-			</else>
-		</if>
-
-		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 
 	<command name="viewPG">

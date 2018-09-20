@@ -108,36 +108,6 @@
 		</for>
 	</command>
 
-	<command name="allowChangesToPageTemplateCP">
-		<var name="key_page" value="${pageName}" />
-
-		<execute function="Click" locator1="SitePages#PAGE_TREE_PAGE_SPECIFIC_PAGE" value1="sitePageName" />
-
-		<if>
-			<equals arg1="${allow}" arg2="true" />
-			<then>
-				<execute function="Check" locator1="SitePages#DETAILS_PAGE_TEMPLATE_PROTOTYPE_LINK_CHECKBOX" />
-
-				<execute function="Click" locator1="Button#SAVE" />
-			</then>
-			<else>
-				<execute function="Uncheck" locator1="SitePages#DETAILS_PAGE_TEMPLATE_PROTOTYPE_LINK_CHECKBOX" />
-
-				<execute function="Click" locator1="Button#SAVE" />
-			</else>
-		</if>
-	</command>
-
-	<command name="allowSiteAdminsToEditThisPageCP">
-		<var name="key_page" value="${pageName}" />
-
-		<execute function="Click" locator1="SitePages#PAGE_TREE_PAGE_SPECIFIC_PAGE" value1="sitePageName" />
-
-		<execute function="Check" locator1="Checkbox#ALLOW_SITE_ADMIN_MODIFY_PAGES" />
-
-		<execute function="Click" locator1="Button#SAVE" />
-	</command>
-
 	<command name="deleteCP">
 		<var name="key_siteTemplateName" value="${siteTemplateName}" />
 
@@ -281,21 +251,6 @@
 				<execute macro="Alert#viewSuccessMessage" />
 			</then>
 		</while>
-	</command>
-
-	<command name="toggleSiteAdminModifyPageCP">
-		<execute macro="SiteTemplates#gotoSettingsCP">
-			<var name="siteTemplateName" value="${siteTemplateName}" />
-		</execute>
-
-		<if>
-			<equals arg1="${toggleSiteAdminModifyPage}" arg2="true" />
-			<then>
-				<execute function="Click" locator1="ToggleSwitch#ALLOW_SITE_ADMIN_MODIFY_PAGES" />
-			</then>
-		</if>
-
-		<execute macro="Button#clickSave" />
 	</command>
 
 	<command name="viewCP">

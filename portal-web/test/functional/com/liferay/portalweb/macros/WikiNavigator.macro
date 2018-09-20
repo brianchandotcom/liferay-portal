@@ -37,20 +37,8 @@
 		<execute function="AssertClick" locator1="WikiEntry#BODY_LINK" value1="${wikiPageContent}" />
 	</command>
 
-	<command name="gotoChangeNode">
-		<execute function="AssertClick" locator1="Wiki#PAGE_TABS_CHANGE_NODE" value1="Change Node" />
-	</command>
-
 	<command name="gotoChangeParent">
 		<execute function="AssertClick" locator1="Wiki#PAGE_TABS_CHANGE_PARENT" value1="Change Parent" />
-	</command>
-
-	<command name="gotoChildPageCP">
-		<execute function="AssertTextEquals" locator1="Wiki#CHILD_PAGE_CONTENT" value1="${wikiChildPageContent}" />
-
-		<var name="key_wikiChildPageTitle" value="${wikiChildPageTitle}" />
-
-		<execute function="AssertClick" locator1="Wiki#CHILD_PAGE_TITLE" value1="${wikiChildPageTitle}" />
 	</command>
 
 	<command name="gotoChildPagePG">
@@ -85,10 +73,6 @@
 		<execute function="AssertElementNotPresent" locator1="Button#PLUS" />
 
 		<execute function="AssertVisible" locator1="Portlet#HEADER" value1="${wikiPageTitle}" />
-	</command>
-
-	<command name="gotoDetails">
-		<execute function="AssertClick" locator1="Link#DETAILS" value1="Details" />
 	</command>
 
 	<command name="gotoDraftPagesPG">
@@ -165,10 +149,6 @@
 		<execute function="AssertElementPresent" locator1="Dropdown#FILTER_AND_ORDER" />
 	</command>
 
-	<command name="gotoOrphanPagesPG">
-		<execute function="AssertClick" locator1="WikiTable#NAVIGATION_ORPHAN_PAGES" value1="Orphan Pages" />
-	</command>
-
 	<command name="gotoPG">
 		<if>
 			<equals arg1="${isOrphanPage}" arg2="true" />
@@ -191,13 +171,5 @@
 		<var name="key_wikiPageTitle" value="${wikiPageTitle}" />
 
 		<execute function="AssertClick" locator1="WikiTable#ALL_PAGES_WIKI_PAGE_TITLE" value1="${wikiPageTitle}" />
-	</command>
-
-	<command name="gotoRecentChangesPG">
-		<execute function="AssertClick" locator1="WikiTable#NAVIGATION_RECENT_CHANGES" value1="Recent Changes" />
-	</command>
-
-	<command name="gotoRename">
-		<execute function="AssertClick" locator1="Wiki#PAGE_TABS_RENAME" value1="Rename" />
 	</command>
 </definition>

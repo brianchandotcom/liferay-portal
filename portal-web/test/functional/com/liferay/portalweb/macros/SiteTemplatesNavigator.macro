@@ -1,16 +1,4 @@
 <definition>
-	<command name="gotoManageSiteTemplates">
-		<execute macro="LexiconEntry#openEntryMenu">
-			<var name="rowEntry" value="${siteTemplateName}" />
-		</execute>
-
-		<execute macro="MenuItem#click">
-			<var name="menuItem" value="Manage" />
-		</execute>
-
-		<execute macro="ProductMenuHelper#openProductMenu" />
-	</command>
-
 	<command name="gotoSiteTemplatesPage">
 		<var name="key_siteTemplateName" value="${siteTemplateName}" />
 

@@ -1,18 +1,4 @@
 <definition>
-	<command name="gotoControlPanelApps" summary="Navigate to Product Menu > Control Panel > Apps > ${portlet}">
-		<execute macro="ProductMenuHelper#expandPanel">
-			<var name="panel" value="Control Panel" />
-		</execute>
-
-		<execute macro="ProductMenuHelper#expandCategory">
-			<var name="category" value="Apps" />
-		</execute>
-
-		<execute macro="ProductMenuHelper#gotoPortlet">
-			<var name="portlet" value="${portlet}" />
-		</execute>
-	</command>
-
 	<command name="gotoControlPanelConfiguration" summary="Navigate to Product Menu > Control Panel > Configuration > ${portlet}">
 		<execute macro="ProductMenuHelper#expandPanel">
 			<var name="panel" value="Control Panel" />
@@ -63,36 +49,6 @@
 		<execute function="AssertClick" locator1="ProductMenu#LIVE_LINK" value1="Live" />
 	</command>
 
-	<command name="gotoLocalizedControlPanel" summary="Navigate to Product Menu > Control Panel > ${category} > ${portlet}">
-		<execute macro="ProductMenuHelper#expandPanel">
-			<var name="panel" value="Control Panel" />
-		</execute>
-
-		<execute macro="ProductMenuHelper#expandCategory">
-			<var name="category" value="${category}" />
-		</execute>
-
-		<execute macro="ProductMenuHelper#gotoPortlet">
-			<var name="portlet" value="${portlet}" />
-		</execute>
-	</command>
-
-	<command name="gotoLocalizedEditPage" summary="Navigate to Navigate to Product Menu > Sites > ${category} > ${page}">
-		<execute macro="ProductMenuHelper#expandPanel">
-			<var name="panel" value="Site Administration" />
-		</execute>
-
-		<execute macro="ProductMenuHelper#expandCategory">
-			<var name="category" value="${category}" />
-		</execute>
-
-		<var name="key_page" value="${page}" />
-
-		<execute function="Click#mouseOverClick" locator1="SitePages#SPECIFIC_PAGE_ELLIPSIS" />
-
-		<execute function="Click" locator1="SitePages#EDIT_SPECIFIC_PAGE" />
-	</command>
-
 	<command name="gotoLocalizedSite" summary="Navigate to Product Menu > Sites > Sites Modal > ${site}">
 		<execute macro="ProductMenuHelper#expandPanel">
 			<var name="panel" value="Site Administration" />
@@ -127,34 +83,6 @@
 		<execute function="AssertTextEquals#assertPartialText" locator1="ProductMenu#PRODUCT_MENU_PANEL_SITE_ADMINISTRATION_SITE_NAME" value1="${site}" />
 	</command>
 
-	<command name="gotoLocalizedSitesAdministration" summary="Navigate to Product Menu > Sites > ${category} > ${portlet}">
-		<execute macro="ProductMenuHelper#expandPanel">
-			<var name="panel" value="Site Administration" />
-		</execute>
-
-		<execute macro="ProductMenuHelper#expandCategory">
-			<var name="category" value="${category}" />
-		</execute>
-
-		<execute macro="ProductMenuHelper#gotoPortlet">
-			<var name="portlet" value="${portlet}" />
-		</execute>
-	</command>
-
-	<command name="gotoLocalizedUserMyAccount" summary="Navigate to Product Menu > User > My Account > ${portlet}">
-		<execute macro="ProductMenuHelper#expandPanel">
-			<var name="panel" value="User" />
-		</execute>
-
-		<execute macro="ProductMenuHelper#expandCategory">
-			<var name="category" value="${category}" />
-		</execute>
-
-		<execute macro="ProductMenuHelper#gotoPortlet">
-			<var name="portlet" value="${portlet}" />
-		</execute>
-	</command>
-
 	<command name="gotoPersonalSite" summary="Navigate to Product Menu > Profile" >
 		<execute macro="ProductMenuHelper#expandPanel">
 			<var name="panel" value="User" />
@@ -175,18 +103,6 @@
 		<execute macro="ProductMenuHelper#gotoPortlet">
 			<var name="portlet" value="${portlet}" />
 		</execute>
-	</command>
-
-	<command name="gotoPublicSite" summary="Navigate to Product Menu > Sites > Site Popup > ${site}">
-		<execute macro="ProductMenuHelper#expandPanel">
-			<var name="panel" value="Site Administration" />
-		</execute>
-
-		<execute macro="ProductMenuHelper#openSitesPopup" />
-
-		<var name="key_site" value="${site}" />
-
-		<execute function="AssertClick" locator1="ProductMenu#PUBLIC_SITE_LINK" value1="${site}" />
 	</command>
 
 	<command name="gotoSite" summary="Navigate to Product Menu > Sites > Sites Modal > ${site}">
@@ -211,20 +127,6 @@
 		</execute>
 
 		<execute function="AssertTextEquals#assertPartialText" locator1="ProductMenu#PRODUCT_MENU_PANEL_SITE_ADMINISTRATION_SITE_NAME" value1="${site}" />
-	</command>
-
-	<command name="gotoSitesCommerce" summary="Navigate to Product Menu > Sites > Commerce > ${portlet}">
-		<execute macro="ProductMenuHelper#expandPanel">
-			<var name="panel" value="Site Administration" />
-		</execute>
-
-		<execute macro="ProductMenuHelper#expandCategory">
-			<var name="category" value="Commerce" />
-		</execute>
-
-		<execute macro="ProductMenuHelper#gotoPortlet">
-			<var name="portlet" value="${portlet}" />
-		</execute>
 	</command>
 
 	<command name="gotoSitesConfiguration" summary="Navigate to Product Menu > Sites > Configuration > ${portlet}">
@@ -262,20 +164,6 @@
 
 		<execute macro="ProductMenuHelper#expandCategory">
 			<var name="category" value="Members" />
-		</execute>
-
-		<execute macro="ProductMenuHelper#gotoPortlet">
-			<var name="portlet" value="${portlet}" />
-		</execute>
-	</command>
-
-	<command name="gotoSitesPublishing" summary="Navigate to Product Menu > Sites > Publishing > ${portlet}">
-		<execute macro="ProductMenuHelper#expandPanel">
-			<var name="panel" value="Site Administration" />
-		</execute>
-
-		<execute macro="ProductMenuHelper#expandCategory">
-			<var name="category" value="Publishing" />
 		</execute>
 
 		<execute macro="ProductMenuHelper#gotoPortlet">
@@ -336,28 +224,6 @@
 		</if>
 
 		<execute macro="ProductMenuHelper#viewNoSite">
-			<var name="site" value="${site}" />
-		</execute>
-	</command>
-
-	<command name="viewSite" summary="View ${site} is available in the product menu.">
-		<execute macro="ProductMenuHelper#expandPanel">
-			<var name="panel" value="Site Administration" />
-		</execute>
-
-		<if>
-			<and>
-				<condition function="IsElementPresent" locator1="ProductMenu#SITES_POPUP" />
-				<condition function="IsNotVisible" locator1="ProductMenu#SITES_POPUP" />
-			</and>
-			<then>
-				<execute function="Click" locator1="ProductMenu#SITES_COMPASS" />
-
-				<execute function="AssertVisible" locator1="ProductMenu#SITES_POPUP" />
-			</then>
-		</if>
-
-		<execute macro="ProductMenuHelper#viewSite">
 			<var name="site" value="${site}" />
 		</execute>
 	</command>

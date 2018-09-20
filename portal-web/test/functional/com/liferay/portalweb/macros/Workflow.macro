@@ -9,15 +9,6 @@
 		</execute>
 	</command>
 
-	<command name="_openPreview">
-		<if>
-			<condition function="IsElementNotPresent#isNotVisible" locator1="MyWorkflowTasksTask#PREVIEW_TITLE" />
-			<then>
-				<execute function="Click" locator1="MyWorkflowTasksTask#PREVIEW" />
-			</then>
-		</if>
-	</command>
-
 	<command name="_tearDownWorkflow">
 		<var name="noWorkflow" value="No Workflow" />
 
@@ -997,23 +988,6 @@
 		<execute function="AssertElementPresent" locator1="MyWorkflowTasks#COMPLETED_TABLE_DUE_DATE" />
 	</command>
 
-	<command name="viewPreviewCategories">
-		<if>
-			<condition function="IsElementPresent" locator1="WorkflowSubmissionsTask#PREVIEW_MORE_DETAILS_HEADER_COLLAPSED" />
-			<then>
-				<execute function="AssertClick" locator1="WorkflowSubmissionsTask#PREVIEW_MORE_DETAILS_HEADER_COLLAPSED" value1="More Details" />
-			</then>
-		</if>
-
-		<execute function="AssertTextEquals#assertPartialText" locator1="WorkflowSubmissionsTask#PREVIEW_MORE_DETAILS_VOCABULARY" value1="${vocabularyName}:" />
-
-		<for list="${categoryNameList}" param="categoryName">
-			<var name="key_categoryName" value="${categoryName}" />
-
-			<execute function="AssertTextEquals" locator1="WorkflowSubmissionsTask#PREVIEW_MORE_DETAILS_CATEGORY" value1="${categoryName}" />
-		</for>
-	</command>
-
 	<command name="viewRejectedTask">
 		<execute macro="Workflow#_gotoPendingFilter" />
 
@@ -1128,19 +1102,6 @@
 
 	<command name="viewTaskHeaderTitle">
 		<execute function="AssertTextEquals" locator1="Portlet#HEADER" value1="${workflowTask}: ${kfProcessName}" />
-	</command>
-
-	<command name="viewTaskNotPresentAssignedToMyRoles">
-		<execute macro="Navigator#gotoNavTab">
-			<var name="navTab" value="Assigned to My Roles" />
-		</execute>
-
-		<execute macro="Workflow#_gotoPendingFilter" />
-
-		<execute function="AssertElementNotPresent" locator1="MyWorkflowTasks#ASSIGNED_TO_MY_ROLES_TABLE_TASK">
-			<var name="key_workflowAssetTitle" value="${workflowAssetTitle}" />
-			<var name="key_workflowTask" value="${workflowTask}" />
-		</execute>
 	</command>
 
 	<command name="withdrawTaskByActions">

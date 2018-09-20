@@ -2,14 +2,6 @@
 	<var name="ddlDataDefinitionName" value="Data Definition Name" />
 	<var name="ddlListName" value="List Name" />
 
-	<command name="gotoAddDisplayTemplate">
-		<execute macro="LexiconEntry#gotoAdd" />
-
-		<execute macro="MenuItem#click">
-			<var name="menuItem" value="Add Display Template" />
-		</execute>
-	</command>
-
 	<command name="gotoAddListRecord">
 		<execute function="Click#clickNoMouseOver" locator1="Button#PLUS" />
 

@@ -248,6 +248,10 @@
 			</then>
 		</if>
 
+		<!-- All macros that require return must have return statement that's called. -->
+
+		<return value="${newGeneratedClientSecret}" />
+
 		<if>
 			<isset var="applicationName" />
 			<then>
@@ -328,10 +332,6 @@
 		</if>
 
 		<execute macro="PortletEntry#save" />
-
-		<!-- LRQA-42606 -->
-
-		<return value="${newGeneratedClientSecret}" />
 	</command>
 
 	<command name="revokeGrantedAuthViaAdmin">

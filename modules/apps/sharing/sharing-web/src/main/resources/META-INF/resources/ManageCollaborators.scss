@@ -1,6 +1,6 @@
 .manage-collaborators {
-	.form-group {
-		margin-bottom: 1em;
+	.list-group-item {
+		border: 0;
 	}
 
 	select.form-control:not([multiple]):not([size]) {

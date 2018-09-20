@@ -106,10 +106,10 @@ manageCollaboratorsActionURL.setWindowState(LiferayWindowState.POP_UP);
 				{
 					dialog: {
 						height: 450,
-						width: 560
+						width: 320
 					},
 					id: '<portlet:namespace />manageCollaboratorsDialog',
-					title: '<%= LanguageUtil.get(resourceBundle, "manage-collaborators") %>',
+					title: '<%= LanguageUtil.get(resourceBundle, "collaborators") %>',
 					uri: '<%= manageCollaboratorsActionURL.toString() %>'
 				}
 			);

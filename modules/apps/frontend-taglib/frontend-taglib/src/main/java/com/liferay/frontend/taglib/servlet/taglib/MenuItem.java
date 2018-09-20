@@ -52,7 +52,7 @@ public class MenuItem
 		_url = url;
 
 		_anchorData = null;
-		_cssClass = null;
+		_cssClass = StringPool.BLANK;
 	}
 
 	public MenuItem(String id, String label, String url) {
@@ -61,7 +61,7 @@ public class MenuItem
 		_url = url;
 
 		_anchorData = null;
-		_cssClass = null;
+		_cssClass = StringPool.BLANK;
 	}
 
 	public MenuItem(String cssClass, String id, String label, String url) {

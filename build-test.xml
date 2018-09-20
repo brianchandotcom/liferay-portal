@@ -8498,46 +8498,35 @@ ANT_OPTS=${env.ANT_OPTS}</echo>
 			</then>
 			<else>
 				<if>
-					<equals arg1="${app.server.type}" arg2="jboss" />
+					<equals arg1="${app.server.type}" arg2="weblogic" />
 					<then>
-						<ant antfile="build-dist.xml" inheritAll="false" target="unzip-jboss" />
+						<ant antfile="build-dist.xml" inheritAll="false" target="unzip-weblogic-custom" />
+
+						<chmod
+							perm="a+x"
+						>
+							<fileset
+								dir="${app.server.weblogic.bin.dir}"
+							>
+								<include name="**/*.sh" />
+							</fileset>
+						</chmod>
+
+						<chmod
+							perm="a+x"
+						>
+							<fileset
+								dir="${app.server.weblogic.instance.dir}"
+							>
+								<include name="**/*.sh" />
+							</fileset>
+						</chmod>
+					</then>
+					<else>
+						<ant antfile="build-dist.xml" inheritAll="false" target="unzip-${app.server.type}" />
 
 						<ant antfile="build.xml" inheritAll="false" target="deploy-additional-jars" />
-					</then>
-					<elseif>
-						<equals arg1="${app.server.type}" arg2="tcserver" />
-						<then>
-							<ant antfile="build-dist.xml" inheritAll="false" target="unzip-tcserver" />
-
-							<ant antfile="build.xml" inheritAll="false" target="deploy-additional-jars" />
-						</then>
-					</elseif>
-					<elseif>
-						<equals arg1="${app.server.type}" arg2="weblogic" />
-						<then>
-							<ant antfile="build-dist.xml" inheritAll="false" target="unzip-weblogic-custom" />
-
-							<chmod
-								perm="a+x"
-							>
-								<fileset
-									dir="${app.server.weblogic.bin.dir}"
-								>
-									<include name="**/*.sh" />
-								</fileset>
-							</chmod>
-
-							<chmod
-								perm="a+x"
-							>
-								<fileset
-									dir="${app.server.weblogic.instance.dir}"
-								>
-									<include name="**/*.sh" />
-								</fileset>
-							</chmod>
-						</then>
-					</elseif>
+					</else>
 				</if>
 
 				<mkdir dir="dist" />

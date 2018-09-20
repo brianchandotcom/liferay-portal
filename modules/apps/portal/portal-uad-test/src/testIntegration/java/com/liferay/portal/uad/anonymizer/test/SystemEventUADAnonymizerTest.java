@@ -15,7 +15,6 @@
 package com.liferay.portal.uad.anonymizer.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-
 import com.liferay.portal.kernel.model.SystemEvent;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.SystemEventLocalService;
@@ -24,33 +23,27 @@ import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.uad.test.SystemEventUADTestHelper;
-
 import com.liferay.user.associated.data.anonymizer.UADAnonymizer;
 import com.liferay.user.associated.data.test.util.BaseUADAnonymizerTestCase;
-
-import org.junit.After;
-import org.junit.ClassRule;
-import org.junit.Rule;
-
-import org.junit.runner.RunWith;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import org.junit.ClassRule;
+import org.junit.Rule;
+import org.junit.runner.RunWith;
+
 /**
  * @author Brian Wing Shun Chan
- * @generated
  */
 @RunWith(Arquillian.class)
-public class SystemEventUADAnonymizerTest extends BaseUADAnonymizerTestCase<SystemEvent> {
+public class SystemEventUADAnonymizerTest
+	extends BaseUADAnonymizerTestCase<SystemEvent> {
+
 	@ClassRule
 	@Rule
-	public static final AggregateTestRule aggregateTestRule = new LiferayIntegrationTestRule();
-
-	@After
-	public void tearDown() throws Exception {
-		_systemEventUADTestHelper.cleanUpDependencies(_systemEvents);
-	}
+	public static final AggregateTestRule aggregateTestRule =
+		new LiferayIntegrationTestRule();
 
 	@Override
 	protected SystemEvent addBaseModel(long userId) throws Exception {
@@ -60,19 +53,15 @@ public class SystemEventUADAnonymizerTest extends BaseUADAnonymizerTestCase<Syst
 	@Override
 	protected SystemEvent addBaseModel(long userId, boolean deleteAfterTestRun)
 		throws Exception {
-		SystemEvent systemEvent = _systemEventUADTestHelper.addSystemEvent(userId);
+
+		SystemEvent systemEvent = SystemEventUADTestHelper.addSystemEvent(
+			_systemEventLocalService, userId);
 
 		if (deleteAfterTestRun) {
 			_systemEvents.add(systemEvent);
 		}
 
 		return systemEvent;
-	}
-
-	@Override
-	protected void deleteBaseModels(List<SystemEvent> baseModels)
-		throws Exception {
-		_systemEventUADTestHelper.cleanUpDependencies(baseModels);
 	}
 
 	@Override
@@ -83,12 +72,15 @@ public class SystemEventUADAnonymizerTest extends BaseUADAnonymizerTestCase<Syst
 	@Override
 	protected boolean isBaseModelAutoAnonymized(long baseModelPK, User user)
 		throws Exception {
-		SystemEvent systemEvent = _systemEventLocalService.getSystemEvent(baseModelPK);
+
+		SystemEvent systemEvent = _systemEventLocalService.getSystemEvent(
+			baseModelPK);
 
 		String userName = systemEvent.getUserName();
 
 		if ((systemEvent.getUserId() != user.getUserId()) &&
-				!userName.equals(user.getFullName())) {
+			!userName.equals(user.getFullName())) {
+
 			return true;
 		}
 
@@ -104,12 +96,13 @@ public class SystemEventUADAnonymizerTest extends BaseUADAnonymizerTestCase<Syst
 		return false;
 	}
 
-	@DeleteAfterTestRun
-	private final List<SystemEvent> _systemEvents = new ArrayList<SystemEvent>();
 	@Inject
 	private SystemEventLocalService _systemEventLocalService;
-	@Inject
-	private SystemEventUADTestHelper _systemEventUADTestHelper;
+
+	@DeleteAfterTestRun
+	private final List<SystemEvent> _systemEvents = new ArrayList<>();
+
 	@Inject(filter = "component.name=*.SystemEventUADAnonymizer")
 	private UADAnonymizer _uadAnonymizer;
+
 }

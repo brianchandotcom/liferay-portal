@@ -23,30 +23,20 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 
-import java.util.List;
-
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Brian Wing Shun Chan
  */
-@Component(immediate = true, service = SystemEventUADTestHelper.class)
 public class SystemEventUADTestHelper {
 
-	public SystemEvent addSystemEvent(long userId) throws Exception {
-		return _systemEventLocalService.addSystemEvent(
+	public static SystemEvent addSystemEvent(
+			SystemEventLocalService systemEventLocalService, long userId)
+		throws Exception {
+
+		return systemEventLocalService.addSystemEvent(
 			userId, TestPropsValues.getGroupId(), Group.class.getName(),
 			RandomTestUtil.nextLong(), PortalUUIDUtil.generate(),
 			StringPool.BLANK, SystemEventConstants.TYPE_DELETE,
 			StringPool.BLANK);
 	}
-
-	public void cleanUpDependencies(List<SystemEvent> systemEvents)
-		throws Exception {
-	}
-
-	@Reference
-	private SystemEventLocalService _systemEventLocalService;
 
 }

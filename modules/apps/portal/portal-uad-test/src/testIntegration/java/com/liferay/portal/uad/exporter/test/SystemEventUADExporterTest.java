@@ -15,44 +15,39 @@
 package com.liferay.portal.uad.exporter.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-
 import com.liferay.portal.kernel.model.SystemEvent;
+import com.liferay.portal.kernel.service.SystemEventLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.uad.test.SystemEventUADTestHelper;
-
 import com.liferay.user.associated.data.exporter.UADExporter;
 import com.liferay.user.associated.data.test.util.BaseUADExporterTestCase;
-
-import org.junit.After;
-import org.junit.ClassRule;
-import org.junit.Rule;
-
-import org.junit.runner.RunWith;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import org.junit.ClassRule;
+import org.junit.Rule;
+import org.junit.runner.RunWith;
+
 /**
  * @author Brian Wing Shun Chan
- * @generated
  */
 @RunWith(Arquillian.class)
-public class SystemEventUADExporterTest extends BaseUADExporterTestCase<SystemEvent> {
+public class SystemEventUADExporterTest
+	extends BaseUADExporterTestCase<SystemEvent> {
+
 	@ClassRule
 	@Rule
-	public static final AggregateTestRule aggregateTestRule = new LiferayIntegrationTestRule();
-
-	@After
-	public void tearDown() throws Exception {
-		_systemEventUADTestHelper.cleanUpDependencies(_systemEvents);
-	}
+	public static final AggregateTestRule aggregateTestRule =
+		new LiferayIntegrationTestRule();
 
 	@Override
 	protected SystemEvent addBaseModel(long userId) throws Exception {
-		SystemEvent systemEvent = _systemEventUADTestHelper.addSystemEvent(userId);
+		SystemEvent systemEvent = SystemEventUADTestHelper.addSystemEvent(
+			_systemEventLocalService, userId);
 
 		_systemEvents.add(systemEvent);
 
@@ -69,10 +64,13 @@ public class SystemEventUADExporterTest extends BaseUADExporterTestCase<SystemEv
 		return _uadExporter;
 	}
 
-	@DeleteAfterTestRun
-	private final List<SystemEvent> _systemEvents = new ArrayList<SystemEvent>();
 	@Inject
-	private SystemEventUADTestHelper _systemEventUADTestHelper;
+	private SystemEventLocalService _systemEventLocalService;
+
+	@DeleteAfterTestRun
+	private final List<SystemEvent> _systemEvents = new ArrayList<>();
+
 	@Inject(filter = "component.name=*.SystemEventUADExporter")
 	private UADExporter _uadExporter;
+
 }

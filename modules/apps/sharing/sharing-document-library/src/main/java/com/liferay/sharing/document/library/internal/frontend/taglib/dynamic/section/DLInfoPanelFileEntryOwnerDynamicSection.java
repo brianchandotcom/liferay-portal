@@ -21,18 +21,17 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.sharing.model.SharingEntry;
-import com.liferay.sharing.model.SharingEntryModel;
 import com.liferay.sharing.service.SharingEntryLocalService;
 import com.liferay.taglib.servlet.PipingServletResponse;
 
 import java.io.ByteArrayOutputStream;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
@@ -84,22 +83,22 @@ public class DLInfoPanelFileEntryOwnerDynamicSection implements DynamicSection {
 				themeDisplay.getUserId(), classNameId,
 				fileEntry.getFileEntryId(), 0, 4);
 
-		Stream<SharingEntry> fromUserSharingEntriesStream =
-			fromUserSharingEntries.stream();
+		List<ObjectValuePair<SharingEntry, User>> sharingEntryToUserOVPs =
+			new ArrayList<>();
 
-		List<User> sharingEntryToUsers = fromUserSharingEntriesStream.map(
-			SharingEntryModel::getToUserId
-		).map(
-			_userLocalService::fetchUserById
-		).filter(
-			user -> user != null
-		).collect(
-			Collectors.toList()
-		);
+		for (SharingEntry sharingEntry : fromUserSharingEntries) {
+			User toUser = _userLocalService.fetchUser(
+				sharingEntry.getToUserId());
+
+			if (toUser != null) {
+				sharingEntryToUserOVPs.add(
+					new ObjectValuePair<>(sharingEntry, toUser));
+			}
+		}
 
 		request.setAttribute(
-			"info_panel_file_entry.jsp-sharingEntryToUsers",
-			sharingEntryToUsers);
+			"info_panel_file_entry.jsp-sharingEntryToUserOVPs",
+			sharingEntryToUserOVPs);
 
 		RequestDispatcher requestDispatcher =
 			_servletContext.getRequestDispatcher(

@@ -365,6 +365,10 @@
 			<var name="site" value="Site Name" />
 		</execute>
 
+		<execute macro="ContentTargeting#enableAnalyticsViaSiteSettings">
+			<var name="analyticsList" value="Link,Link Clicks" />
+		</execute>
+
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Configuration" />
 			<var name="panel" value="Site Administration" />
@@ -524,6 +528,10 @@
 
 		<execute macro="ProductMenu#gotoSite">
 			<var name="site" value="Site Name" />
+		</execute>
+
+		<execute macro="ContentTargeting#enableAnalyticsViaSiteSettings">
+			<var name="analyticsList" value="YouTube Videos" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoPortlet">

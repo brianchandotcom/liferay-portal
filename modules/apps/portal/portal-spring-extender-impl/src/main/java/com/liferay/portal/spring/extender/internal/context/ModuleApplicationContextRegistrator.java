@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.configuration.configurator.ServiceConfigurator;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.spring.extender.internal.bean.ApplicationContextServicePublisher;
 import com.liferay.portal.spring.extender.internal.bundle.CompositeResourceLoaderBundle;
 import com.liferay.portal.spring.extender.internal.classloader.BundleResolverClassLoader;
@@ -159,7 +160,7 @@ public class ModuleApplicationContextRegistrator {
 
 		if (springContext != null) {
 			Collections.addAll(
-				beanDefinitionFileNames, springContext.split(","));
+				beanDefinitionFileNames, StringUtil.split(springContext, ','));
 		}
 
 		return beanDefinitionFileNames.toArray(

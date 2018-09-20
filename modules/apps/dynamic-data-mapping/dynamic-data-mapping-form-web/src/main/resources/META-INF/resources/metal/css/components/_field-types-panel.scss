@@ -3,6 +3,10 @@ $c: '.ddm-field-types-panel';
 #{$c} {
 	.panel-secondary > a {
 		padding-left: 17px;
+
+		&:hover {
+			background-color: #F0F5FF;
+		}
 	}
 
 	.panel-secondary,

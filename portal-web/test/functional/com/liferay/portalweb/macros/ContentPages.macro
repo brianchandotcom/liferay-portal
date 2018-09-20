@@ -4,9 +4,33 @@
 			<var name="menuItem" value="Public Page" />
 		</execute>
 
-		<execute macro="LexiconEntry#gotoEntry">
-			<var name="rowEntry" value="${pageTemplateName}" />
-		</execute>
+		<if>
+			<isset var="collectionName" />
+			<then>
+				<execute macro="Navigator#gotoNavNested">
+					<var name="navNested" value="${collectionName}" />
+				</execute>
+			</then>
+			<else>
+				<execute macro="Navigator#gotoNavNested">
+					<var name="navNested" value="Basic Pages" />
+				</execute>
+			</else>
+		</if>
+
+		<if>
+			<isset var="pageTemplateName" />
+			<then>
+				<execute macro="LexiconEntry#gotoEntry">
+					<var name="rowEntry" value="${pageTemplateName}" />
+				</execute>
+			</then>
+			<else>
+				<execute macro="Card#clickSitePagesCardLink">
+					<var name="cardName" value="Content Page" />
+				</execute>
+			</else>
+		</if>
 
 		<execute macro="PortletEntry#inputName">
 			<var name="name" value="${pageName}" />

@@ -20,9 +20,13 @@ import com.liferay.portal.kernel.model.OrgLabor;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.OrgLaborService;
+import com.liferay.portal.kernel.service.permission.OrganizationPermissionUtil;
 import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.users.admin.constants.UsersAdminPortletKeys;
 import com.liferay.users.admin.kernel.util.UsersAdminUtil;
 
@@ -79,10 +83,17 @@ public class UpdateOrganizationOpeningHoursMVCActionCommand
 	protected void updateOrgLabor(ActionRequest actionRequest)
 		throws Exception {
 
-		List<OrgLabor> orgLabors = UsersAdminUtil.getOrgLabors(actionRequest);
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
 
 		long organizationId = ParamUtil.getLong(
 			actionRequest, "organizationId");
+
+		OrganizationPermissionUtil.check(
+			themeDisplay.getPermissionChecker(), organizationId,
+			ActionKeys.UPDATE);
+
+		List<OrgLabor> orgLabors = UsersAdminUtil.getOrgLabors(actionRequest);
 
 		UsersAdminUtil.updateOrgLabors(organizationId, orgLabors);
 	}

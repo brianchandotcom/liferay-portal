@@ -16,10 +16,6 @@
 
 <%@ include file="/init.jsp" %>
 
-<%
-SearchContainer assetListEntryAssetEntryRelSearchContainer = editAssetListDisplayContext.getSearchContainer();
-%>
-
 <portlet:actionURL name="/asset_list/add_asset_entry_selection" var="addAssetEntrySelectionURL" />
 
 <liferay-frontend:edit-form
@@ -46,7 +42,7 @@ SearchContainer assetListEntryAssetEntryRelSearchContainer = editAssetListDispla
 			<liferay-ui:search-container
 				compactEmptyResultsMessage="<%= true %>"
 				emptyResultsMessage="none"
-				searchContainer="<%= assetListEntryAssetEntryRelSearchContainer %>"
+				searchContainer="<%= editAssetListDisplayContext.getSearchContainer() %>"
 			>
 				<liferay-ui:search-container-row
 					className="com.liferay.asset.list.model.AssetListEntryAssetEntryRel"

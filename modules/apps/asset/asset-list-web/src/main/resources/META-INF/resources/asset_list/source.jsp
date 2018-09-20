@@ -17,8 +17,6 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String redirect = editAssetListDisplayContext.getRedirectURL();
-
 List<AssetRendererFactory<?>> classTypesAssetRendererFactories = new ArrayList();
 %>
 
@@ -259,7 +257,7 @@ List<AssetRendererFactory<?>> classTypesAssetRendererFactories = new ArrayList()
 	<liferay-frontend:edit-form-footer>
 		<aui:button type="submit" />
 
-		<aui:button href="<%= redirect %>" type="cancel" />
+		<aui:button href="<%= editAssetListDisplayContext.getRedirectURL() %>" type="cancel" />
 	</liferay-frontend:edit-form-footer>
 </liferay-frontend:edit-form>
 

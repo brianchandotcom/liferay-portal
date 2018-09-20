@@ -17,8 +17,6 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String redirect = editAssetListDisplayContext.getRedirectURL();
-
 String customUserAttributes = GetterUtil.getString(properties.getProperty("customUserAttributes", StringPool.BLANK));
 %>
 
@@ -51,6 +49,6 @@ String customUserAttributes = GetterUtil.getString(properties.getProperty("custo
 	<liferay-frontend:edit-form-footer>
 		<aui:button type="submit" />
 
-		<aui:button href="<%= redirect %>" type="cancel" />
+		<aui:button href="<%= editAssetListDisplayContext.getRedirectURL() %>" type="cancel" />
 	</liferay-frontend:edit-form-footer>
 </liferay-frontend:edit-form>

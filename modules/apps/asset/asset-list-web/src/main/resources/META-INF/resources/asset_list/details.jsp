@@ -17,12 +17,8 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String redirect = editAssetListDisplayContext.getRedirectURL();
-
-AssetListEntry assetListEntry = assetListDisplayContext.getAssetListEntry();
-
 portletDisplay.setShowBackIcon(true);
-portletDisplay.setURLBack(redirect);
+portletDisplay.setURLBack(editAssetListDisplayContext.getRedirectURL());
 
 renderResponse.setTitle(assetListDisplayContext.getAssetListEntryTitle());
 %>
@@ -37,7 +33,7 @@ renderResponse.setTitle(assetListDisplayContext.getAssetListEntryTitle());
 	<aui:input name="assetListEntryId" type="hidden" value="<%= assetListDisplayContext.getAssetListEntryId() %>" />
 	<aui:input name="type" type="hidden" value="<%= assetListDisplayContext.getAssetListEntryType() %>" />
 
-	<aui:model-context bean="<%= assetListEntry %>" model="<%= AssetListEntry.class %>" />
+	<aui:model-context bean="<%= assetListDisplayContext.getAssetListEntry() %>" model="<%= AssetListEntry.class %>" />
 
 	<liferay-frontend:edit-form-body>
 		<liferay-ui:error exception="<%= AssetListEntryTitleException.class %>" message="please-enter-a-valid-title" />
@@ -63,6 +59,6 @@ renderResponse.setTitle(assetListDisplayContext.getAssetListEntryTitle());
 	<liferay-frontend:edit-form-footer>
 		<aui:button type="submit" />
 
-		<aui:button href="<%= redirect %>" type="cancel" />
+		<aui:button href="<%= editAssetListDisplayContext.getRedirectURL() %>" type="cancel" />
 	</liferay-frontend:edit-form-footer>
 </liferay-frontend:edit-form>

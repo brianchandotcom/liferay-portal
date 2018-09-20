@@ -59,20 +59,18 @@ public class ModuleApplicationContextRegistrator {
 
 	protected void start() throws Exception {
 		try {
-			ConfigurableApplicationContext configurableApplicationContext =
-				_createApplicationContext(_extenderBundle, _extendeeBundle);
+			_configurableApplicationContext = _createApplicationContext(
+				_extenderBundle, _extendeeBundle);
 
 			PortletBeanLocatorUtil.setBeanLocator(
 				_extendeeBundle.getSymbolicName(),
 				new BeanLocatorImpl(
 					new BundleResolverClassLoader(_extendeeBundle),
-					configurableApplicationContext));
+					_configurableApplicationContext));
 
 			_serviceConfigurator.initServices(
 				new ModuleResourceLoader(_extendeeBundle),
 				_extendeeClassLoader);
-
-			_configurableApplicationContext = configurableApplicationContext;
 
 			_applicationContextServicePublisher =
 				new ApplicationContextServicePublisher(

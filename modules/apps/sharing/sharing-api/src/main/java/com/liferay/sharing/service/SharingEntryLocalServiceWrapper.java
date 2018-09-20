@@ -17,6 +17,7 @@ package com.liferay.sharing.service;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.service.ServiceWrapper;
+import com.liferay.sharing.security.permission.SharingEntryAction;
 
 /**
  * Provides a wrapper for {@link SharingEntryLocalService}.
@@ -37,25 +38,25 @@ public class SharingEntryLocalServiceWrapper implements SharingEntryLocalService
 	public com.liferay.sharing.model.SharingEntry addOrUpdateSharingEntry(
 		long fromUserId, long toUserId, long classNameId, long classPK,
 		long groupId, boolean shareable,
-		java.util.Collection<com.liferay.sharing.constants.SharingEntryActionKey> sharingEntryActionKeys,
+		java.util.Collection<SharingEntryAction> sharingEntryActions,
 		java.util.Date expirationDate,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _sharingEntryLocalService.addOrUpdateSharingEntry(fromUserId,
 			toUserId, classNameId, classPK, groupId, shareable,
-			sharingEntryActionKeys, expirationDate, serviceContext);
+			sharingEntryActions, expirationDate, serviceContext);
 	}
 
 	@Override
 	public com.liferay.sharing.model.SharingEntry addSharingEntry(
 		long fromUserId, long toUserId, long classNameId, long classPK,
 		long groupId, boolean shareable,
-		java.util.Collection<com.liferay.sharing.constants.SharingEntryActionKey> sharingEntryActionKeys,
+		java.util.Collection<SharingEntryAction> sharingEntryActions,
 		java.util.Date expirationDate,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _sharingEntryLocalService.addSharingEntry(fromUserId, toUserId,
-			classNameId, classPK, groupId, shareable, sharingEntryActionKeys,
+			classNameId, classPK, groupId, shareable, sharingEntryActions,
 			expirationDate, serviceContext);
 	}
 
@@ -453,36 +454,36 @@ public class SharingEntryLocalServiceWrapper implements SharingEntryLocalService
 	@Override
 	public boolean hasShareableSharingPermission(long toUserId,
 		long classNameId, long classPK,
-		com.liferay.sharing.constants.SharingEntryActionKey sharingEntryActionKey) {
+		SharingEntryAction sharingEntryAction) {
 		return _sharingEntryLocalService.hasShareableSharingPermission(toUserId,
-			classNameId, classPK, sharingEntryActionKey);
+			classNameId, classPK, sharingEntryAction);
 	}
 
 	@Override
 	public boolean hasSharingPermission(long toUserId, long classNameId,
 		long classPK,
-		com.liferay.sharing.constants.SharingEntryActionKey sharingEntryActionKey) {
+		SharingEntryAction sharingEntryAction) {
 		return _sharingEntryLocalService.hasSharingPermission(toUserId,
-			classNameId, classPK, sharingEntryActionKey);
+			classNameId, classPK, sharingEntryAction);
 	}
 
 	@Override
 	public boolean hasSharingPermission(
 		com.liferay.sharing.model.SharingEntry sharingEntry,
-		com.liferay.sharing.constants.SharingEntryActionKey sharingEntryActionKey) {
+		SharingEntryAction sharingEntryAction) {
 		return _sharingEntryLocalService.hasSharingPermission(sharingEntry,
-			sharingEntryActionKey);
+			sharingEntryAction);
 	}
 
 	@Override
 	public com.liferay.sharing.model.SharingEntry updateSharingEntry(
 		long sharingEntryId,
-		java.util.Collection<com.liferay.sharing.constants.SharingEntryActionKey> sharingEntryActionKeys,
+		java.util.Collection<SharingEntryAction> sharingEntryActions,
 		boolean shareable, java.util.Date expirationDate,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _sharingEntryLocalService.updateSharingEntry(sharingEntryId,
-			sharingEntryActionKeys, shareable, expirationDate, serviceContext);
+			sharingEntryActions, shareable, expirationDate, serviceContext);
 	}
 
 	/**

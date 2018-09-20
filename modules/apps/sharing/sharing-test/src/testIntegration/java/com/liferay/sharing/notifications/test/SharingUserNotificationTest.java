@@ -31,9 +31,9 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.SynchronousMailTestRule;
 import com.liferay.portlet.notifications.test.BaseUserNotificationTestCase;
-import com.liferay.sharing.constants.SharingEntryActionKey;
 import com.liferay.sharing.constants.SharingPortletKeys;
 import com.liferay.sharing.model.SharingEntry;
+import com.liferay.sharing.security.permission.SharingEntryAction;
 import com.liferay.sharing.service.SharingEntryLocalService;
 
 import java.util.Arrays;
@@ -75,7 +75,7 @@ public class SharingUserNotificationTest extends BaseUserNotificationTestCase {
 
 		return _sharingEntryLocalService.addSharingEntry(
 			_fromUser.getUserId(), user.getUserId(), classNameId, classPK,
-			group.getGroupId(), true, Arrays.asList(SharingEntryActionKey.VIEW),
+			group.getGroupId(), true, Arrays.asList(SharingEntryAction.VIEW),
 			null, serviceContext);
 	}
 
@@ -102,7 +102,7 @@ public class SharingUserNotificationTest extends BaseUserNotificationTestCase {
 
 		return _sharingEntryLocalService.updateSharingEntry(
 			((SharingEntry)baseModel).getSharingEntryId(),
-			Arrays.asList(SharingEntryActionKey.VIEW), false, null,
+			Arrays.asList(SharingEntryAction.VIEW), false, null,
 			serviceContext);
 	}
 

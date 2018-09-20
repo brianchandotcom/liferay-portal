@@ -12,22 +12,22 @@
  * details.
  */
 
-package com.liferay.sharing.constants;
+package com.liferay.sharing.security.permission;
 
 import java.util.Objects;
 
 /**
  * @author Sergio González
  */
-public enum SharingEntryActionKey {
+public enum SharingEntryAction {
 
 	ADD_DISCUSSION("ADD_DISCUSSION", 4), UPDATE("UPDATE", 2), VIEW("VIEW", 1);
 
 	public static boolean isSupportedActionId(String actionId) {
-		for (SharingEntryActionKey sharingEntryActionKey :
-				SharingEntryActionKey.values()) {
+		for (SharingEntryAction sharingEntryAction :
+				SharingEntryAction.values()) {
 
-			if (Objects.equals(sharingEntryActionKey.getActionId(), actionId)) {
+			if (Objects.equals(sharingEntryAction.getActionId(), actionId)) {
 				return true;
 			}
 		}
@@ -35,7 +35,7 @@ public enum SharingEntryActionKey {
 		return false;
 	}
 
-	public static SharingEntryActionKey parseFromActionId(String actionId) {
+	public static SharingEntryAction parseFromActionId(String actionId) {
 		if (Objects.equals(ADD_DISCUSSION.getActionId(), actionId)) {
 			return ADD_DISCUSSION;
 		}
@@ -49,9 +49,7 @@ public enum SharingEntryActionKey {
 		throw new IllegalArgumentException("Invalid action ID " + actionId);
 	}
 
-	public static SharingEntryActionKey parseFromBitwiseValue(
-		long bitwiseValue) {
-
+	public static SharingEntryAction parseFromBitwiseValue(long bitwiseValue) {
 		if (Objects.equals(ADD_DISCUSSION.getBitwiseValue(), bitwiseValue)) {
 			return ADD_DISCUSSION;
 		}
@@ -74,7 +72,7 @@ public enum SharingEntryActionKey {
 		return _bitwiseValue;
 	}
 
-	private SharingEntryActionKey(String actionId, long bitwiseValue) {
+	private SharingEntryAction(String actionId, long bitwiseValue) {
 		_actionId = actionId;
 		_bitwiseValue = bitwiseValue;
 	}

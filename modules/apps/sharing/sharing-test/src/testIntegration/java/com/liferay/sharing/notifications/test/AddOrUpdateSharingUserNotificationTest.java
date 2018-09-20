@@ -31,9 +31,9 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.SynchronousMailTestRule;
 import com.liferay.portlet.notifications.test.BaseUserNotificationTestCase;
-import com.liferay.sharing.constants.SharingEntryActionKey;
 import com.liferay.sharing.constants.SharingPortletKeys;
 import com.liferay.sharing.model.SharingEntry;
+import com.liferay.sharing.security.permission.SharingEntryAction;
 import com.liferay.sharing.service.SharingEntryLocalService;
 
 import java.util.Arrays;
@@ -76,7 +76,7 @@ public class AddOrUpdateSharingUserNotificationTest
 
 		return _sharingEntryLocalService.addOrUpdateSharingEntry(
 			_fromUser.getUserId(), user.getUserId(), classNameId, classPK,
-			group.getGroupId(), true, Arrays.asList(SharingEntryActionKey.VIEW),
+			group.getGroupId(), true, Arrays.asList(SharingEntryAction.VIEW),
 			null, serviceContext);
 	}
 
@@ -107,8 +107,7 @@ public class AddOrUpdateSharingUserNotificationTest
 			sharingEntry.getFromUserId(), sharingEntry.getToUserId(),
 			sharingEntry.getClassNameId(), sharingEntry.getClassPK(),
 			sharingEntry.getGroupId(), sharingEntry.isShareable(),
-			Arrays.asList(
-				SharingEntryActionKey.VIEW, SharingEntryActionKey.UPDATE),
+			Arrays.asList(SharingEntryAction.VIEW, SharingEntryAction.UPDATE),
 			sharingEntry.getExpirationDate(), serviceContext);
 	}
 

@@ -22,20 +22,20 @@ import com.liferay.portal.kernel.exception.PortalException;
  * @author Brian Wing Shun Chan
  */
 @ProviderType
-public class InvalidSharingEntryActionKeyException extends PortalException {
+public class InvalidSharingEntryActionException extends PortalException {
 
-	public InvalidSharingEntryActionKeyException() {
+	public InvalidSharingEntryActionException() {
 	}
 
-	public InvalidSharingEntryActionKeyException(String msg) {
+	public InvalidSharingEntryActionException(String msg) {
 		super(msg);
 	}
 
-	public InvalidSharingEntryActionKeyException(String msg, Throwable cause) {
+	public InvalidSharingEntryActionException(String msg, Throwable cause) {
 		super(msg, cause);
 	}
 
-	public InvalidSharingEntryActionKeyException(Throwable cause) {
+	public InvalidSharingEntryActionException(Throwable cause) {
 		super(cause);
 	}
 

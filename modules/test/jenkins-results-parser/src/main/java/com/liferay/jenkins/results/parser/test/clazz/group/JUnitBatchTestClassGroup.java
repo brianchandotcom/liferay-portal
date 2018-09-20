@@ -58,6 +58,10 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 		return axisCount;
 	}
 
+	public Map<File, JunitBatchTestClass> getJunitTestClasses() {
+		return JunitBatchTestClass.getJunitTestClasses();
+	}
+
 	public static class JunitBatchTestClass extends BaseTestClass {
 
 		protected static JunitBatchTestClass getInstance(
@@ -103,6 +107,10 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 			}
 
 			return getInstance(file, gitWorkingDirectory, javaFile);
+		}
+
+		protected static Map<File, JunitBatchTestClass> getJunitTestClasses() {
+			return _junitTestClasses;
 		}
 
 		protected JunitBatchTestClass(
@@ -232,15 +240,35 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 		}
 
 		private void _initTestMethods() throws IOException {
+			Matcher classHeaderMatcher = _classHeaderPattern.matcher(
+				_srcFileContent);
+
+			boolean classIgnored = false;
+
+			if (classHeaderMatcher.find()) {
+				String annotations = classHeaderMatcher.group("annotations");
+
+				if (annotations.contains("@Ignore")) {
+					classIgnored = true;
+				}
+			}
+
 			Matcher methodHeaderMatcher = _methodHeaderPattern.matcher(
 				_srcFileContent);
 
 			while (methodHeaderMatcher.find()) {
 				String annotations = methodHeaderMatcher.group("annotations");
+
+				boolean methodIgnored = false;
+
+				if (classIgnored || annotations.contains("@Ignore")) {
+					methodIgnored = true;
+				}
+
 				String methodName = methodHeaderMatcher.group("methodName");
 
 				if (annotations.contains("@Test")) {
-					addTestMethod(methodName);
+					addTestMethod(methodIgnored, methodName);
 				}
 			}
 
@@ -264,6 +292,10 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 			}
 		}
 
+		private static Pattern _classHeaderPattern = Pattern.compile(
+			JenkinsResultsParserUtil.combine(
+				"\\t(?<annotations>(@[\\s\\S]+?))?public\\s+class\\s+",
+				"(?<className>[^\\(\\s]+)"));
 		private static final Map<File, JunitBatchTestClass> _junitTestClasses =
 			new HashMap<>();
 		private static Pattern _methodHeaderPattern = Pattern.compile(

@@ -64,7 +64,6 @@ import javax.portlet.MimeResponse;
 import javax.portlet.PortletRequest;
 
 import org.apache.commons.io.IOUtils;
-import org.apache.struts.tiles.taglib.ComponentConstants;
 
 /**
  * @author Brian Wing Shun Chan
@@ -233,9 +232,6 @@ public class StartupAction extends SimpleAction {
 		@Override
 		public void dependenciesFulfilled() {
 			try {
-				DistributedRegistry.registerDistributed(
-					ComponentConstants.COMPONENT_CONTEXT, Direction.DUPLEX,
-					MatchType.POSTFIX);
 				DistributedRegistry.registerDistributed(
 					MimeResponse.MARKUP_HEAD_ELEMENT, Direction.DUPLEX,
 					MatchType.EXACT);

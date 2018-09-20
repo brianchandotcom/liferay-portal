@@ -45,7 +45,7 @@ String resource = workflowDefinitionLinkSearchEntry.getResource();
 		String workflowAssignedValue = "";
 		%>
 
-		<aui:select cssClass="workflow-definition-form" label="<%= StringPool.BLANK %>" name='<%= "workflowDefinitionName@" + className %>' title="workflow-definition">
+		<aui:select cssClass="form-control-sm workflow-definition-form" label="<%= StringPool.BLANK %>" name='<%= "workflowDefinitionName@" + className %>' title="workflow-definition">
 
 			<%
 			String defaultWorkflowDefinitionLabel = workflowDefinitionLinkDisplayContext.getDefaultWorkflowDefinitionLabel(className);

@@ -79,14 +79,14 @@ JournalDDMStructuresDisplayContext journalDDMStructuresDisplayContext = new Jour
 			%>
 
 			<liferay-ui:search-container-column-text
-				cssClass="table-cell-content"
+				cssClass="table-cell-expand table-cell-minw-200 table-title"
 				href="<%= rowHREF %>"
 				name="name"
 				value="<%= HtmlUtil.escape(ddmStructure.getName(locale)) %>"
 			/>
 
 			<liferay-ui:search-container-column-text
-				cssClass="table-cell-content"
+				cssClass="table-cell-expand table-cell-minw-200"
 				name="description"
 				truncate="<%= true %>"
 				value="<%= HtmlUtil.escape(ddmStructure.getDescription(locale)) %>"
@@ -97,11 +97,13 @@ JournalDDMStructuresDisplayContext journalDDMStructuresDisplayContext = new Jour
 			%>
 
 			<liferay-ui:search-container-column-text
+				cssClass="table-cell-minw-150"
 				name="scope"
 				value="<%= LanguageUtil.get(request, group.getScopeLabel(themeDisplay)) %>"
 			/>
 
 			<liferay-ui:search-container-column-date
+				cssClass="table-cell-ws-nowrap"
 				name="modified-date"
 				value="<%= ddmStructure.getModifiedDate() %>"
 			/>

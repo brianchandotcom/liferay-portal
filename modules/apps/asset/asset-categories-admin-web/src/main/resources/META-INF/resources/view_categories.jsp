@@ -108,13 +108,13 @@ AssetCategoryUtil.addPortletBreadcrumbEntry(assetCategoriesDisplayContext.getVoc
 					<c:choose>
 						<c:when test="<%= assetCategoriesDisplayContext.isFlattenedNavigationAllowed() %>">
 							<liferay-ui:search-container-column-text
-								cssClass="table-cell-content"
+								cssClass="table-cell-expand table-cell-minw-200 table-title"
 								name="category"
 								value="<%= HtmlUtil.escape(curCategory.getTitle(locale)) %>"
 							/>
 
 							<liferay-ui:search-container-column-text
-								cssClass="table-cell-content"
+								cssClass="table-cell-expand table-cell-minw-200"
 								name="path"
 							>
 								<%= HtmlUtil.escape(curCategory.getPath(locale, true)) %> > <strong><%= HtmlUtil.escape(curCategory.getTitle(locale)) %></strong>
@@ -122,20 +122,20 @@ AssetCategoryUtil.addPortletBreadcrumbEntry(assetCategoriesDisplayContext.getVoc
 						</c:when>
 						<c:otherwise>
 							<liferay-ui:search-container-column-text
-								cssClass="table-cell-content"
+								cssClass="table-cell-expand table-cell-minw-200 table-title"
 								href="<%= rowURL %>"
 								name="category"
 								value="<%= HtmlUtil.escape(curCategory.getTitle(locale)) %>"
 							/>
 
 							<liferay-ui:search-container-column-text
-								cssClass="table-cell-content"
+								cssClass="table-cell-expand table-cell-minw-200"
 								name="description"
 								value="<%= HtmlUtil.escape(curCategory.getDescription(locale)) %>"
 							/>
 
 							<liferay-ui:search-container-column-text
-								cssClass="table-cell-content"
+								cssClass="table-cell-expand-smaller table-column-text-center"
 								name="subcategories"
 								value="<%= String.valueOf(subcategoriesCount) %>"
 							/>
@@ -143,6 +143,7 @@ AssetCategoryUtil.addPortletBreadcrumbEntry(assetCategoriesDisplayContext.getVoc
 					</c:choose>
 
 					<liferay-ui:search-container-column-date
+						cssClass="table-cell-ws-nowrap"
 						name="create-date"
 						property="createDate"
 					/>

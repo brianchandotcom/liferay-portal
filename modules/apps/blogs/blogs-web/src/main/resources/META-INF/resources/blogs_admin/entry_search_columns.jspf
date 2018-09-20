@@ -106,7 +106,7 @@
 	</c:when>
 	<c:otherwise>
 		<liferay-ui:search-container-column-text
-			cssClass="table-cell-content"
+			cssClass="table-cell-expand table-cell-minw-200 table-title"
 			href="<%= BlogsEntryPermission.contains(permissionChecker, entry, ActionKeys.UPDATE) ? rowURL : null %>"
 			name="title"
 			orderable="<%= false %>"
@@ -114,18 +114,21 @@
 		/>
 
 		<liferay-ui:search-container-column-text
+			cssClass="table-cell-expand-smallest table-cell-minw-150"
 			name="author"
 			orderable="<%= false %>"
 			property="userName"
 		/>
 
 		<liferay-ui:search-container-column-date
+			cssClass="table-cell-expand-smallest table-cell-ws-nowrap"
 			name="create-date"
 			orderable="<%= false %>"
 			property="createDate"
 		/>
 
 		<liferay-ui:search-container-column-date
+			cssClass="table-cell-expand-smallest table-cell-ws-nowrap"
 			name="display-date"
 			orderable="<%= false %>"
 			property="displayDate"

@@ -135,28 +135,32 @@ String displayStyle = siteNavigationAdminDisplayContext.getDisplayStyle();
 				</c:when>
 				<c:otherwise>
 					<liferay-ui:search-container-column-text
-						cssClass="table-cell-content"
+						cssClass="table-cell-expand table-cell-minw-200 table-list-title"
 						href="<%= siteNavigationAdminDisplayContext.hasEditPermission() ? editSiteNavigationMenuURL : null %>"
 						name="title"
 						value="<%= HtmlUtil.escape(siteNavigationMenu.getName()) %>"
 					/>
 
 					<liferay-ui:search-container-column-text
+						cssClass="table-cell-expand-smaller"
 						name="add-new-pages"
 						value='<%= siteNavigationMenu.isAuto() ? LanguageUtil.get(request, "yes") : StringPool.BLANK %>'
 					/>
 
 					<liferay-ui:search-container-column-text
+						cssClass="table-cell-expand-smaller table-cell-minw-150"
 						name="marked-as"
 						value="<%= LanguageUtil.get(request, siteNavigationMenu.getTypeKey()) %>"
 					/>
 
 					<liferay-ui:search-container-column-text
+						cssClass="table-cell-expand-smallest table-cell-minw-150"
 						name="author"
 						value="<%= HtmlUtil.escape(PortalUtil.getUserName(siteNavigationMenu)) %>"
 					/>
 
 					<liferay-ui:search-container-column-date
+						cssClass="table-cell-minw-150"
 						name="create-date"
 						property="createDate"
 					/>

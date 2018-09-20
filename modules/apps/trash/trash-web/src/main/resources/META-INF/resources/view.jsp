@@ -106,7 +106,7 @@ if (Validator.isNotNull(trashDisplayContext.getKeywords())) {
 	<portlet:param name="redirect" value="<%= currentURL %>" />
 </portlet:actionURL>
 
-<div class="closed container-fluid-1280 sidenav-container sidenav-right" id="<portlet:namespace />infoPanelId">
+<div class="closed container-fluid container-fluid-max-xl sidenav-container sidenav-right" id="<portlet:namespace />infoPanelId">
 	<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" id="/trash/info_panel" var="sidebarPanelURL" />
 
 	<liferay-frontend:sidebar-panel
@@ -224,7 +224,7 @@ if (Validator.isNotNull(trashDisplayContext.getKeywords())) {
 						</c:when>
 						<c:when test="<%= trashDisplayContext.isListView() %>">
 							<liferay-ui:search-container-column-text
-								cssClass="table-cell-content"
+								cssClass="table-cell-expand table-cell-minw-200 table-title"
 								name="name"
 							>
 								<aui:a href="<%= viewContentURLString %>">
@@ -268,16 +268,19 @@ if (Validator.isNotNull(trashDisplayContext.getKeywords())) {
 							</liferay-ui:search-container-column-text>
 
 							<liferay-ui:search-container-column-text
+								cssClass="table-cell-expand-smaller table-cell-minw-150"
 								name="type"
 								value="<%= ResourceActionsUtil.getModelResource(locale, trashEntry.getClassName()) %>"
 							/>
 
 							<liferay-ui:search-container-column-date
+								cssClass="table-cell-expand-smaller table-cell-ws-nowrap"
 								name="removed-date"
 								value="<%= trashEntry.getCreateDate() %>"
 							/>
 
 							<liferay-ui:search-container-column-text
+								cssClass="table-cell-expand-smallest table-cell-minw-150"
 								name="removed-by"
 								value="<%= HtmlUtil.escape(trashEntry.getUserName()) %>"
 							/>

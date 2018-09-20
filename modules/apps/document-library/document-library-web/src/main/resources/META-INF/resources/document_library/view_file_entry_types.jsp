@@ -32,7 +32,7 @@ DLViewFileEntryTypesDisplayContext dlViewFileEntryTypesDisplayContext = new DLVi
 	selectable="<%= false %>"
 />
 
-<div class="container-fluid-1280 main-content-body">
+<div class="container-fluid container-fluid-max-xl main-content-body">
 	<liferay-ui:error exception="<%= RequiredFileEntryTypeException.class %>" message="cannot-delete-a-document-type-that-is-presently-used-by-one-or-more-documents" />
 
 	<liferay-ui:search-container
@@ -54,7 +54,7 @@ DLViewFileEntryTypesDisplayContext dlViewFileEntryTypesDisplayContext = new DLVi
 			%>
 
 			<liferay-ui:search-container-column-text
-				cssClass="text-strong"
+				cssClass="table-cell-expand table-cell-minw-200 table-title"
 				href="<%= rowURL %>"
 				name="name"
 				value="<%= fileEntryType.getName(locale) %>"
@@ -65,17 +65,18 @@ DLViewFileEntryTypesDisplayContext dlViewFileEntryTypesDisplayContext = new DLVi
 			%>
 
 			<liferay-ui:search-container-column-text
+				cssClass="table-cell-expand-small table-cell-minw-150"
 				name="scope"
 				value="<%= LanguageUtil.get(request, group.getScopeLabel(themeDisplay)) %>"
 			/>
 
 			<liferay-ui:search-container-column-date
+				cssClass="table-cell-expand-small table-cell-ws-nowrap"
 				name="modified-date"
 				value="<%= fileEntryType.getModifiedDate() %>"
 			/>
 
 			<liferay-ui:search-container-column-jsp
-				align="right"
 				cssClass="entry-action"
 				path="/document_library/file_entry_type_action.jsp"
 			/>

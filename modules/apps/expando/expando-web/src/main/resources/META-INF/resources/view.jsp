@@ -58,6 +58,7 @@ Collections.sort(customAttributesDisplays, new CustomAttributesDisplayComparator
 			</portlet:renderURL>
 
 			<liferay-ui:search-container-column-text
+				cssClass="table-cell-expand table-cell-ws-nowrap table-title"
 				href="<%= rowURL %>"
 				name="resource"
 			>

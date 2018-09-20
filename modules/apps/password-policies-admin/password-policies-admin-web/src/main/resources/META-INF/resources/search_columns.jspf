@@ -39,21 +39,19 @@
 	</c:when>
 	<c:otherwise>
 		<liferay-ui:search-container-column-text
-			cssClass="table-cell-content"
+			cssClass="table-cell-expand-small table-cell-minw-200 table-title"
 			href="<%= rowHREF %>"
 			name="name"
-			truncate="<%= true %>"
 		>
-			<strong><%= passwordPolicy.getName() %></strong>
+			<%= passwordPolicy.getName() %>
 		</liferay-ui:search-container-column-text>
 
 		<liferay-ui:search-container-column-text
-			cssClass="table-cell-content"
+			cssClass="table-cell-expand table-cell-minw-300"
 			href="<%= rowHREF %>"
 			name="description"
 			orderable="<%= true %>"
 			property="description"
-			truncate="<%= true %>"
 		/>
 
 		<liferay-ui:search-container-column-jsp

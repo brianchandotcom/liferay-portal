@@ -225,7 +225,7 @@ OrderByComparator<BackgroundTask> orderByComparator = BackgroundTaskComparatorFa
 					</liferay-ui:search-container-column-text>
 
 					<liferay-ui:search-container-column-text
-						cssClass="table-cell-content"
+						cssClass="table-cell-expand table-cell-minw-200 table-title"
 						name="title"
 					>
 						<span id="<%= liferayPortletResponse.getNamespace() + "backgroundTaskName" + String.valueOf(backgroundTask.getBackgroundTaskId()) %>">
@@ -234,24 +234,27 @@ OrderByComparator<BackgroundTask> orderByComparator = BackgroundTaskComparatorFa
 					</liferay-ui:search-container-column-text>
 
 					<liferay-ui:search-container-column-jsp
+						cssClass="table-cell-minw-150"
 						name="status"
 						path="/publish_process_message.jsp"
 					/>
 
 					<liferay-ui:search-container-column-date
+						cssClass="table-cell-expand-smallest table-cell-ws-nowrap"
 						name="create-date"
 						orderable="<%= true %>"
 						value="<%= backgroundTask.getCreateDate() %>"
 					/>
 
 					<liferay-ui:search-container-column-date
+						cssClass="table-cell-expand-smallest table-cell-ws-nowrap"
 						name="completion-date"
 						orderable="<%= true %>"
 						value="<%= backgroundTask.getCompletionDate() %>"
 					/>
 
 					<liferay-ui:search-container-column-text
-						cssClass="table-cell-content"
+						cssClass="table-cell-expand table-cell-minw-200"
 						name="download"
 					>
 
@@ -273,6 +276,7 @@ OrderByComparator<BackgroundTask> orderByComparator = BackgroundTaskComparatorFa
 							<liferay-ui:icon
 								iconCssClass="download"
 								label="<%= true %>"
+								linkCssClass="table-link"
 								markupView="lexicon"
 								message="<%= sb.toString() %>"
 								method="get"

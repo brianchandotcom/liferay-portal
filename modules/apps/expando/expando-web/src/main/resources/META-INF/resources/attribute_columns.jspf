@@ -15,6 +15,7 @@
 --%>
 
 <liferay-ui:search-container-column-text
+	cssClass="table-cell-expand table-cell-minw-200 table-title"
 	name="name"
 >
 
@@ -32,18 +33,21 @@
 </liferay-ui:search-container-column-text>
 
 <liferay-ui:search-container-column-text
+	cssClass="table-cell-expand table-cell-minw-200"
 	href="<%= rowURL %>"
 	name="key"
 	value="<%= HtmlUtil.escape(name) %>"
 />
 
 <liferay-ui:search-container-column-text
+	cssClass="table-cell-expand table-cell-minw-200"
 	href="<%= rowURL %>"
 	name="type"
 	value="<%= LanguageUtil.get(request, ExpandoColumnConstants.getTypeLabel(type)) %>"
 />
 
 <liferay-ui:search-container-column-text
+	cssClass="table-cell-expand-smallest table-cell-ws-nowrap"
 	href="<%= rowURL %>"
 	name="hidden"
 >
@@ -56,6 +60,7 @@
 </liferay-ui:search-container-column-text>
 
 <liferay-ui:search-container-column-text
+	cssClass="table-cell-expand-smallest table-cell-ws-nowrap"
 	href="<%= rowURL %>"
 	name="searchable"
 >

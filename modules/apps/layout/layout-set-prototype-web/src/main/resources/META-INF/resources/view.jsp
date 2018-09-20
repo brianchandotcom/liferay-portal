@@ -195,7 +195,7 @@
 				</c:when>
 				<c:when test="<%= layoutSetPrototypeDisplayContext.isListView() %>">
 					<liferay-ui:search-container-column-text
-						cssClass="table-cell-content"
+						cssClass="table-cell-expand-small table-cell-minw-200 table-title"
 						name="name"
 					>
 						<aui:a href="<%= rowURL %>" target="_blank"><%= layoutSetPrototype.getName(locale) %></aui:a>
@@ -210,17 +210,19 @@
 					</liferay-ui:search-container-column-text>
 
 					<liferay-ui:search-container-column-text
-						cssClass="table-cell-content"
+						cssClass="table-cell-expand table-cell-minw-300"
 						name="description"
 						value="<%= layoutSetPrototype.getDescription(locale) %>"
 					/>
 
 					<liferay-ui:search-container-column-date
+						cssClass="table-cell-expand-smallest table-cell-ws-nowrap"
 						name="create-date"
 						property="createDate"
 					/>
 
 					<liferay-ui:search-container-column-text
+						cssClass="table-cell-expand-smallest table-cell-ws-nowrap table-column-text-center"
 						name="active"
 						value='<%= LanguageUtil.get(request, layoutSetPrototype.isActive()? "yes" : "no") %>'
 					/>

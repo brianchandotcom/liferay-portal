@@ -126,7 +126,7 @@ PortletURL portletURL = renderResponse.createRenderURL();
 					</liferay-portlet:renderURL>
 
 					<liferay-ui:search-container-column-text
-						cssClass="table-cell-content"
+						cssClass="table-cell-expand table-cell-minw-200 table-title"
 						href="<%= rowURL %>"
 						name="name"
 						orderable="<%= false %>"
@@ -134,13 +134,14 @@ PortletURL portletURL = renderResponse.createRenderURL();
 					/>
 
 					<liferay-ui:search-container-column-text
+						cssClass="table-cell-expand-smallest table-cell-ws-nowrap"
 						name="state"
 						orderable="<%= false %>"
 						value='<%= LanguageUtil.get(request, amImageConfigurationEntry.isEnabled() ? "enabled" : "disabled") %>'
 					/>
 
 					<liferay-ui:search-container-column-text
-						cssClass="table-cell-content"
+						cssClass="table-cell-expand table-cell-minw-200"
 						name="adapted-images"
 					>
 
@@ -195,6 +196,7 @@ PortletURL portletURL = renderResponse.createRenderURL();
 					%>
 
 					<liferay-ui:search-container-column-text
+						cssClass="table-cell-ws-nowrap"
 						name="max-width"
 						orderable="<%= false %>"
 						value='<%= (Validator.isNull(maxWidth) || maxWidth.equals("0")) ? LanguageUtil.get(request, "auto") : maxWidth + "px" %>'
@@ -205,6 +207,7 @@ PortletURL portletURL = renderResponse.createRenderURL();
 					%>
 
 					<liferay-ui:search-container-column-text
+						cssClass="table-cell-ws-nowrap"
 						name="max-height"
 						orderable="<%= false %>"
 						value='<%= (Validator.isNull(maxHeight) || maxHeight.equals("0")) ? LanguageUtil.get(request, "auto") : maxHeight + "px" %>'

@@ -22,12 +22,17 @@ ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_
 String randomNamespace = (String)row.getParameter("randomNamespace");
 %>
 
-<div hidden="true" id="<%= randomNamespace %>saveCancelGroup">
-	<button class="btn btn-primary" id="<%= randomNamespace %>saveButton" type="button")><%= LanguageUtil.get(request, "save") %></button>
-	<button class="btn btn-secondary" id="<%= randomNamespace %>cancelButton" type="button"><%= LanguageUtil.get(request, "cancel") %></button>
+<div class="btn-group btn-group-nowrap" hidden="true" id="<%= randomNamespace %>saveCancelGroup">
+	<div class="btn-group-item">
+		<button class="btn btn-primary btn-sm" id="<%= randomNamespace %>saveButton" type="button")><%= LanguageUtil.get(request, "save") %></button>
+	</div>
+
+	<div class="btn-group-item">
+		<button class="btn btn-secondary btn-sm" id="<%= randomNamespace %>cancelButton" type="button"><%= LanguageUtil.get(request, "cancel") %></button>
+	</div>
 </div>
 
-<button class="btn btn-secondary" id="<%= randomNamespace %>editButton" type="button"><%= LanguageUtil.get(request, "edit") %></button>
+<button class="btn btn-secondary btn-sm" id="<%= randomNamespace %>editButton" type="button"><%= LanguageUtil.get(request, "edit") %></button>
 
 <aui:script use="liferay-workflow-web">
 	var saveWorkflowDefinitionLink = A.rbind('saveWorkflowDefinitionLink', Liferay.WorkflowWeb, '<%= randomNamespace %>');

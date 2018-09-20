@@ -20,7 +20,7 @@
 
 <liferay-util:include page="/polls/management_bar.jsp" servletContext="<%= application %>" />
 
-<div class="container-fluid-1280 main-content-body">
+<div class="container-fluid container-fluid-max-xl main-content-body">
 	<aui:form method="post" name="fm">
 		<liferay-ui:error exception="<%= DuplicateVoteException.class %>" message="you-may-only-vote-once" />
 		<liferay-ui:error exception="<%= NoSuchChoiceException.class %>" message="please-select-an-option" />
@@ -44,13 +44,14 @@
 				%>
 
 				<liferay-ui:search-container-column-text
-					cssClass="table-cell-content"
+					cssClass="table-cell-expand table-cell-minw-200 table-title"
 					href="<%= rowURL %>"
 					name="title"
 					value="<%= HtmlUtil.escape(question.getTitle(locale)) %>"
 				/>
 
 				<liferay-ui:search-container-column-text
+					cssClass="table-cell-expand-smaller"
 					href="<%= rowURL %>"
 					name="num-of-votes"
 					value="<%= String.valueOf(PollsVoteLocalServiceUtil.getQuestionVotesCount(question.getQuestionId())) %>"
@@ -59,6 +60,7 @@
 				<c:choose>
 					<c:when test="<%= question.getLastVoteDate() != null %>">
 						<liferay-ui:search-container-column-date
+							cssClass="table-cell-expand-smaller table-cell-ws-nowrap"
 							href="<%= rowURL %>"
 							name="last-vote-date"
 							value="<%= question.getLastVoteDate() %>"
@@ -66,6 +68,7 @@
 					</c:when>
 					<c:otherwise>
 						<liferay-ui:search-container-column-text
+							cssClass="table-cell-expand-smaller table-cell-ws-nowrap"
 							href="<%= rowURL %>"
 							name="last-vote-date"
 							value='<%= LanguageUtil.get(request, "never") %>'
@@ -78,6 +81,7 @@
 						<c:choose>
 							<c:when test="<%= question.getExpirationDate().before(new Date()) %>">
 								<liferay-ui:search-container-column-text
+									cssClass="table-cell-expand-smaller table-cell-ws-nowrap"
 									href="<%= rowURL %>"
 									name="expiration-date"
 									value='<%= LanguageUtil.get(request, "expired") %>'
@@ -85,6 +89,7 @@
 							</c:when>
 							<c:otherwise>
 								<liferay-ui:search-container-column-date
+									cssClass="table-cell-expand-smaller table-cell-ws-nowrap"
 									href="<%= rowURL %>"
 									name="expiration-date"
 									value="<%= question.getExpirationDate() %>"
@@ -94,6 +99,7 @@
 					</c:when>
 					<c:otherwise>
 						<liferay-ui:search-container-column-text
+							cssClass="table-cell-expand-smaller table-cell-ws-nowrap"
 							href="<%= rowURL %>"
 							name="expiration-date"
 							value='<%= LanguageUtil.get(request, "never") %>'

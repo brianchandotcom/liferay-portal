@@ -42,7 +42,7 @@
 	</c:when>
 	<c:otherwise>
 		<liferay-ui:search-container-column-text
-			cssClass="table-cell-content"
+			cssClass="table-cell-expand-small table-cell-minw-200 table-title"
 			href="<%= rowURL %>"
 			name="title"
 			value="<%= HtmlUtil.escape(role.getTitle(locale)) %>"
@@ -57,14 +57,14 @@
 		</c:if>
 
 		<liferay-ui:search-container-column-text
-			cssClass="table-cell-content"
+			cssClass="table-cell-expand table-cell-minw-300"
 			href="<%= rowURL %>"
 			name="description"
 			value="<%= HtmlUtil.escape(role.getDescription(locale)) %>"
 		/>
 
 		<liferay-ui:search-container-column-text
-			cssClass="table-cell-content"
+			cssClass="table-cell-expand-smallest table-cell-ws-nowrap table-column-text-center"
 			href="<%= rowURL %>"
 			name="number-of-assignees"
 			value='<%= _isImpliedRole(role) ? LanguageUtil.get(request, "not-available") : String.valueOf(RoleLocalServiceUtil.getAssigneesTotal(role.getRoleId())) %>'

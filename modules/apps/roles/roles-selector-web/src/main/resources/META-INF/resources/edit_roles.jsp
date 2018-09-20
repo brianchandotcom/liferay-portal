@@ -60,22 +60,23 @@ PortletURL portletURL = (PortletURL)request.getAttribute("edit_roles.jsp-portlet
 		</portlet:renderURL>
 
 		<liferay-ui:search-container-column-text
+			cssClass="table-cell-expand-small table-cell-minw-200 table-title"
 			href="<%= rowURL %>"
 			name="title"
-			truncate="<%= true %>"
 			value="<%= role.getTitle(locale) %>"
 		/>
 
 		<liferay-ui:search-container-column-text
+			cssClass="table-cell-expand-smaller table-cell-minw-150 table-cell-ws-nowrap"
 			href="<%= rowURL %>"
 			name="type"
 			value="<%= LanguageUtil.get(request, role.getTypeLabel()) %>"
 		/>
 
 		<liferay-ui:search-container-column-text
+			cssClass="table-cell-expand table-cell-minw-300"
 			href="<%= rowURL %>"
 			name="description"
-			truncate="<%= true %>"
 			value="<%= role.getDescription(locale) %>"
 		/>
 	</liferay-ui:search-container-row>

@@ -157,12 +157,13 @@ JournalArticle article = journalDisplayContext.getArticle();
 							/>
 
 							<liferay-ui:search-container-column-text
-								cssClass="table-cell-content"
+								cssClass="table-cell-expand table-cell-minw-200 table-title"
 								name="title"
 								value="<%= HtmlUtil.escape(articleVersion.getTitle(locale)) %>"
 							/>
 
 							<liferay-ui:search-container-column-text
+								cssClass="table-cell-expand-smallest table-cell-minw-100"
 								name="version"
 								orderable="<%= true %>"
 							/>
@@ -172,6 +173,7 @@ JournalArticle article = journalDisplayContext.getArticle();
 							/>
 
 							<liferay-ui:search-container-column-date
+								cssClass="table-cell-expand-smallest table-cell-ws-nowrap"
 								name="modified-date"
 								orderable="<%= true %>"
 								property="modifiedDate"
@@ -179,6 +181,7 @@ JournalArticle article = journalDisplayContext.getArticle();
 
 							<c:if test="<%= article.getDisplayDate() != null %>">
 								<liferay-ui:search-container-column-date
+									cssClass="table-cell-expand-smallest table-cell-ws-nowrap"
 									name="display-date"
 									orderable="<%= true %>"
 									property="displayDate"
@@ -186,6 +189,7 @@ JournalArticle article = journalDisplayContext.getArticle();
 							</c:if>
 
 							<liferay-ui:search-container-column-text
+								cssClass="table-cell-expand-smallest table-cell-minw-100"
 								name="author"
 								value="<%= HtmlUtil.escape(PortalUtil.getUserName(articleVersion)) %>"
 							/>

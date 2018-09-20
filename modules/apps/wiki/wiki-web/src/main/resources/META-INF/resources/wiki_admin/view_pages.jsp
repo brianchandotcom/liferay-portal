@@ -238,13 +238,14 @@ WikiPagesManagementToolbarDisplayContext wikiPagesManagementToolbarDisplayContex
 						</c:when>
 						<c:otherwise>
 							<liferay-ui:search-container-column-text
-								cssClass="table-cell-content"
+								cssClass="table-cell-expand table-cell-minw-200 table-title"
 								href="<%= rowURL %>"
 								name="title"
 								value="<%= curPage.getTitle() %>"
 							/>
 
 							<liferay-ui:search-container-column-status
+								cssClass="table-cell-expand-smaller"
 								name="status"
 								status="<%= curPage.getStatus() %>"
 							/>
@@ -258,16 +259,19 @@ WikiPagesManagementToolbarDisplayContext wikiPagesManagementToolbarDisplayContex
 							%>
 
 							<liferay-ui:search-container-column-text
+								cssClass="table-cell-expand-smaller table-cell-minw-150"
 								name="revision"
 								value="<%= revision %>"
 							/>
 
 							<liferay-ui:search-container-column-text
+								cssClass="table-cell-expand-smaller table-cell-minw-150"
 								name="user"
 								value="<%= HtmlUtil.escape(PortalUtil.getUserName(curPage)) %>"
 							/>
 
 							<liferay-ui:search-container-column-date
+								cssClass="table-cell-ws-nowrap"
 								name="modified-date"
 								value="<%= curPage.getModifiedDate() %>"
 							/>

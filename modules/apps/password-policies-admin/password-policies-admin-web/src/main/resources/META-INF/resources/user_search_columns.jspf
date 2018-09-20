@@ -86,13 +86,13 @@
 		</c:when>
 		<c:otherwise>
 			<liferay-ui:search-container-column-text
-				cssClass="table-cell-content"
+				cssClass="table-cell-expand table-cell-minw-200 table-title"
 				name="name"
 				value="<%= name %>"
 			/>
 
 			<liferay-ui:search-container-column-text
-				cssClass="table-cell-content"
+				cssClass="table-cell-expand table-cell-minw-200"
 				name="screen-name"
 				orderable="<%= true %>"
 				property="screenName"

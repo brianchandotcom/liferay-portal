@@ -63,19 +63,19 @@ boolean showStripeMessage = workflowDefinitionLinkDisplayContext.showStripeMessa
 			/>
 
 			<liferay-ui:search-container-column-jsp
-				cssClass="table-cell-content table-list-title"
+				cssClass="table-cell-expand-small table-cell-minw-200 table-title"
 				name="asset-type"
 				path="/definition_link/workflow_definition_link_resource.jsp"
 			/>
 
 			<liferay-ui:search-container-column-jsp
-				cssClass="table-cell-content"
+				cssClass="table-cell-expand table-cell-minw-200"
 				name="workflow-assigned"
 				path="/definition_link/edit_workflow_definition_link.jsp"
 			/>
 
 			<liferay-ui:search-container-column-jsp
-				cssClass="table-cell-content text-right"
+				cssClass="table-cell-expand-small table-cell-ws-nowrap table-column-text-end"
 				path="/definition_link/workflow_definition_link_action.jsp"
 			/>
 		</liferay-ui:search-container-row>

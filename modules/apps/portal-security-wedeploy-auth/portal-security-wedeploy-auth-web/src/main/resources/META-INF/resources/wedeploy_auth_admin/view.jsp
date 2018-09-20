@@ -38,7 +38,7 @@ portletURL.setParameter("mvcRenderCommandName", "/wedeploy_auth_admin/view");
 	%>"
 />
 
-<div class="container-fluid-1080 main-content-body">
+<div class="container-fluid container-fluid-max-xl container-view">
 	<liferay-ui:search-container
 		emptyResultsMessage="no-wedeploy-apps-were-found"
 		id="weDeployAuthApps"
@@ -64,30 +64,35 @@ portletURL.setParameter("mvcRenderCommandName", "/wedeploy_auth_admin/view");
 			modelVar="weDeployAuthApp"
 		>
 			<liferay-ui:search-container-column-text
+				cssClass="table-cell-expand table-cell-minw-200 table-title"
 				name="name"
 				orderable="<%= false %>"
 				property="name"
 			/>
 
 			<liferay-ui:search-container-column-text
+				cssClass="table-cell-expand table-cell-minw-200"
 				name="redirect-uri"
 				orderable="<%= false %>"
 				property="redirectURI"
 			/>
 
 			<liferay-ui:search-container-column-text
+				cssClass="table-cell-expand table-cell-minw-200"
 				name="client-id"
 				orderable="<%= false %>"
 				property="clientId"
 			/>
 
 			<liferay-ui:search-container-column-text
+				cssClass="table-cell-expand table-cell-minw-200"
 				name="client-secret"
 				orderable="<%= false %>"
 				property="clientSecret"
 			/>
 
 			<liferay-ui:search-container-column-date
+				cssClass="table-cell-ws-nowrap"
 				name="modified-date"
 				orderable="<%= false %>"
 				property="modifiedDate"

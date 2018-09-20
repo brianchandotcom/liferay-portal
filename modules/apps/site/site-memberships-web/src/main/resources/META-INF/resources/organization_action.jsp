@@ -31,7 +31,7 @@ Organization organization = (Organization)row.getObject();
 
 	<liferay-ui:icon-delete
 		icon="times-circle"
-		linkCssClass="icon-monospaced text-default"
+		linkCssClass="table-action-link"
 		message="remove-membership"
 		showIcon="<%= true %>"
 		url="<%= deleteGroupOrganizationsURL %>"

@@ -108,7 +108,7 @@ WikiNodesManagementToolbarDisplayContext wikiNodesManagementToolbarDisplayContex
 	viewTypeItems="<%= wikiNodesManagementToolbarDisplayContext.getViewTypes() %>"
 />
 
-<div class="closed container-fluid-1280 sidenav-container sidenav-right" id="<portlet:namespace />infoPanelId">
+<div class="closed container-fluid container-fluid-max-xl sidenav-container sidenav-right" id="<portlet:namespace />infoPanelId">
 	<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" id="/wiki/node_info_panel" var="sidebarPanelURL" />
 
 	<liferay-frontend:sidebar-panel
@@ -210,18 +210,20 @@ WikiNodesManagementToolbarDisplayContext wikiNodesManagementToolbarDisplayContex
 						</c:when>
 						<c:otherwise>
 							<liferay-ui:search-container-column-text
-								cssClass="table-cell-content"
+								cssClass="table-cell-expand table-cell-minw-200 table-title"
 								href="<%= rowURL %>"
 								name="wiki"
 								value="<%= HtmlUtil.escape(node.getName()) %>"
 							/>
 
 							<liferay-ui:search-container-column-text
+								cssClass="table-cell-expand-small"
 								name="num-of-pages"
 								value="<%= String.valueOf(WikiPageServiceUtil.getPagesCount(scopeGroupId, node.getNodeId(), true)) %>"
 							/>
 
 							<liferay-ui:search-container-column-text
+								cssClass="table-cell-expand-smaller table-cell-ws-nowrap"
 								name="last-post-date"
 								value='<%= (node.getLastPostDate() == null) ? LanguageUtil.get(request, "never") : dateFormatDateTime.format(node.getLastPostDate()) %>'
 							/>

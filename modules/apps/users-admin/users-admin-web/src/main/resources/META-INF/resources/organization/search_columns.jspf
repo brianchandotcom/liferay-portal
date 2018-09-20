@@ -70,7 +70,7 @@
 	</c:when>
 	<c:otherwise>
 		<liferay-ui:search-container-column-text
-			cssClass="important table-cell-content"
+			cssClass="table-cell-expand table-cell-minw-200 table-title"
 			href="<%= rowURL %>"
 			name="name"
 			orderable="<%= true %>"
@@ -79,7 +79,7 @@
 
 		<c:if test="<%= Validator.isNotNull(keywords) %>">
 			<liferay-ui:search-container-column-text
-				cssClass="table-cell-content"
+				cssClass="table-cell-expand table-cell-minw-200"
 				href="<%= rowURL %>"
 				name="parent-organization"
 				value="<%= HtmlUtil.escape(organization.getParentOrganizationName()) %>"
@@ -87,7 +87,7 @@
 		</c:if>
 
 		<liferay-ui:search-container-column-text
-			cssClass="table-cell-content"
+			cssClass="table-cell-expand table-cell-minw-200"
 			href="<%= rowURL %>"
 			name="type"
 			orderable="<%= true %>"

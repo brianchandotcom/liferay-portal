@@ -19,12 +19,12 @@
 		</property>
 	</bean>
 	<bean class="com.liferay.portal.resiliency.spi.util.SPIConfigurationTemplate" id="com.liferay.portal.resiliency.spi.util.SPIConfigurationTemplate">
-		<property name="connectorPortMin" value="9000" />
 		<property name="connectorPortMax" value="9100" />
+		<property name="connectorPortMin" value="9000" />
 		<property name="javaExecutable" value="java" />
 		<property name="JVMArguments" value="-Xmx512m -XX:PermSize=200m" />
-		<property name="minThreads" value="20" />
 		<property name="maxThreads" value="100" />
+		<property name="minThreads" value="20" />
 		<property name="SPIAgentClassName" value="com.liferay.portal.resiliency.spi.agent.HttpClientSPIAgent" />
 		<property name="SPIPingInterval" value="5000" />
 		<property name="SPIPortalProperties" value="layout.parallel.render.enable=false,portal.resiliency.enabled=false" />

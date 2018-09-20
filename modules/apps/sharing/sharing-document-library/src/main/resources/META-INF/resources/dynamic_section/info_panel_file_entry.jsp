@@ -3,6 +3,7 @@
 <%@ page import="com.liferay.sharing.model.SharingEntry" %>
 <%@ page import="com.liferay.portal.kernel.portlet.PortletProvider" %>
 <%@ page import="javax.portlet.ActionRequest" %>
+<%@ page import="javax.portlet.PortletRequest" %>
 <%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
@@ -24,11 +25,13 @@
 <%
 	JSONArray collaboratorsJSONArray = JSONFactoryUtil.createJSONArray();
 
-	PortletURL sharingEntryEditURL = PortletProviderUtil.getPortletURL(request, SharingEntry.class.getName(), PortletProvider.Action.EDIT);
+	String portletId = PortletProviderUtil.getPortletId(SharingEntry.class.getName(), PortletProvider.Action.EDIT);
+
+	PortletURL sharingEntryEditURL = liferayPortletResponse.createLiferayPortletURL(portletId, PortletRequest.ACTION_PHASE);
 
 	sharingEntryEditURL.setParameter(ActionRequest.ACTION_NAME, "/sharing/manage_collaborators");
-	sharingEntryEditURL.setParameter("p_p_lifecycle", "1");
 %>
+
 <div class="autofit-row sidebar-panel widget-metadata">
 	<div class="autofit-col inline-item-before">
 

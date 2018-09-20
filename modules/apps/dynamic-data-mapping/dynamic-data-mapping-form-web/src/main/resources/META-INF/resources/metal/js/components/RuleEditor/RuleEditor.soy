@@ -72,39 +72,39 @@
 				{call .condition}
 					{param _handleFirstOperandSelection: $_handleFirstOperandSelection /}
 					{param _handleOperatorSelection: $_handleOperatorSelection /}
-					{param _handleTypeSelection: $_handleTypeSelection /}
 					{param _handleSecondOperandSelection: $_handleSecondOperandSelection /}
+					{param _handleTypeSelection: $_handleTypeSelection /}
 					{param firstOperandList: $firstOperandList /}
-					{param secondOperandTypeList: $secondOperandTypeList /}
-					{param secondOperandTypeSelectedList: $secondOperandTypeSelectedList /}
-					{param if: $strings.if /}
-					{param operatorsList: $operatorsList /}
-					{param index: index($condition) /}
 					{param firstOperandValueSelected: $condition.operands[0].value /}
-					{param operatorSelected: $condition.operator /}
-					{param secondOperandTypeSelected: $condition.operands[0].type /}
-					{param secondOperandTypeValue: isNonnull($condition.operands[1]) ? $condition.operands[1].value : '' /}
-					{param secondOperandTypeName: '' /}
+					{param if: $strings.if /}
+					{param index: index($condition) /}
 					{param logicalOperator: $strings[$logicalOperator] /}
-					{param spritemap: $spritemap /}
+					{param operatorSelected: $condition.operator /}
+					{param operatorsList: $operatorsList /}
 					{param readOnly: $readOnly /}
+					{param secondOperandTypeList: $secondOperandTypeList /}
+					{param secondOperandTypeName: '' /}
+					{param secondOperandTypeSelected: $condition.operands[0].type /}
+					{param secondOperandTypeSelectedList: $secondOperandTypeSelectedList /}
+					{param secondOperandTypeValue: isNonnull($condition.operands[1]) ? $condition.operands[1].value : '' /}
+					{param spritemap: $spritemap /}
 				{/call}
 
 				{ifempty}
 					{call .condition}
 						{param _handleFirstOperandSelection: $_handleFirstOperandSelection /}
 						{param _handleOperatorSelection: $_handleOperatorSelection /}
-						{param _handleTypeSelection: $_handleTypeSelection /}
 						{param _handleSecondOperandSelection: $_handleSecondOperandSelection /}
+						{param _handleTypeSelection: $_handleTypeSelection /}
 						{param firstOperandList: $firstOperandList /}
-						{param secondOperandTypeList: $secondOperandTypeList /}
-						{param operatorsList: $operatorsList /}
 						{param if: $strings.if /}
 						{param index: 0 /}
 						{param logicalOperator: $strings[$logicalOperator] /}
+						{param operatorsList: $operatorsList /}
+						{param readOnly: $readOnly /}
+						{param secondOperandTypeList: $secondOperandTypeList /}
 						{param secondOperandTypeName: '' /}
 						{param spritemap: $spritemap /}
-						{param readOnly: $readOnly /}
 					{/call}
 			{/foreach}
 		</ul>
@@ -112,6 +112,10 @@
 {/template}
 
 {template .condition}
+	{@param? _handleFirstOperandSelection: any}
+	{@param? _handleOperatorSelection: any}
+	{@param? _handleSecondOperandSelection: any}
+	{@param? _handleTypeSelection: any}
 	{@param firstOperandList : list<[
 			value: string,
 			type: string,
@@ -122,6 +126,20 @@
 			]>
 		]>
 	}
+	{@param if: string}
+	{@param index: int}
+	{@param readOnly: bool}
+	{@param? firstOperandValueSelected: string}
+	{@param? operatorsList:  list<[
+			value: string,
+			name: string,
+			parameterTypes: list<string>,
+			returnType: string
+		]>
+	}
+	{@param? operatorSelected: string}
+	{@param? secondOperandTypeName: string }
+	{@param? secondOperandTypeValue: any }
 	{@param? secondOperandTypeList : list<[
 			value: string,
 			name: string
@@ -132,25 +150,7 @@
 			name: string
 		]>
 	}
-	{@param? firstOperandValueSelected: string}
-	{@param? operatorSelected: string}
-	{@param? secondOperandTypeValue: any }
-	{@param? secondOperandTypeName: string }
-	{@param? _handleFirstOperandSelection: any}
-	{@param? _handleOperatorSelection: any}
-	{@param? _handleTypeSelection: any}
-	{@param? _handleSecondOperandSelection: any}
-	{@param if: string}
-	{@param readOnly: bool}
-	{@param index: int}
 	{@param? spritemap: string}
-	{@param? operatorsList:  list<[
-			value: string,
-			name: string,
-			parameterTypes: list<string>,
-			returnType: string
-		]>
-	}
 
 	<li class="form-builder-rule-condition-container timeline-item" condition-index="{$index}">
 		<div class="panel panel-default">
@@ -178,19 +178,19 @@
 
 					{call .operatorsList}
 						{param _handleOperatorSelection: $_handleOperatorSelection /}
-						{param operatorsList: $operatorsList /}
 						{param index: $index /}
-						{param spritemap: $spritemap /}
 						{param operatorSelected: $operatorSelected /}
+						{param operatorsList: $operatorsList /}
+						{param spritemap: $spritemap /}
 					{/call}
 
 					{call .secondOperandTypeList}
 						{param _handleTypeSelection: $_handleTypeSelection /}
-						{param secondOperandTypeList: $secondOperandTypeList /}
 						{param index: $index /}
-						{param spritemap: $spritemap /}
 						{param operatorSelected: $operatorSelected /}
+						{param secondOperandTypeList: $secondOperandTypeList /}
 						{param secondOperandTypeSelectedList: $secondOperandTypeSelectedList /}
+						{param spritemap: $spritemap /}
 					{/call}
 
 					{let $textFieldVisible: isNonnull($secondOperandTypeSelectedList) and ($secondOperandTypeSelectedList[$index].name == 'text') ? true : false /}
@@ -250,6 +250,7 @@
 {/template}
 
 {template .operatorsList}
+	{@param? _handleOperatorSelection: any}
 	{@param? operatorsList:  list<[
 			value: string,
 			name: string,
@@ -257,10 +258,9 @@
 			returnType: string
 		]>
 	}
-	{@param? _handleOperatorSelection: any}
 	{@param? operatorSelected: string}
-	{@param index: int}
 	{@param? spritemap: string}
+	{@param index: int}
 
 	{let $readOnly: ($operatorsList and length($operatorsList) > 0) ? false : true /}
 
@@ -304,7 +304,7 @@
 			{param ref: 'type' /}
 			{param options: $secondOperandTypeList /}
 			{param spritemap: $spritemap /}
-			{param value: isNonnull($secondOperandTypeSelectedList) ? $secondOperandTypeSelectedList[$index].value : ''/}
+			{param value: [isNonnull($secondOperandTypeSelectedList) ? $secondOperandTypeSelectedList[$index].value : ''] /}
 		{/delcall}
 	</div>
 {/template}

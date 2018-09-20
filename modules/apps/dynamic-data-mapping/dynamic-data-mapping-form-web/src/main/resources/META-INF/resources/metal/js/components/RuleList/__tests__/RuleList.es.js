@@ -1,5 +1,5 @@
 import RuleList from '../RuleList.es';
-import {dom as MetalTestUtil} from 'metal-dom';
+import {dom as dom} from 'metal-dom';
 
 let component;
 
@@ -159,7 +159,7 @@ describe(
 
 				const initialSize = component.rules.length;
 
-				MetalTestUtil.triggerEvent(deleteButton, 'click', {});
+				dom.triggerEvent(deleteButton, 'click', {});
 
 				jest.runAllTimers();
 
@@ -181,61 +181,6 @@ describe(
 				jest.runAllTimers();
 
 				expect(actionLabel).toEqual(contextLabel);
-			}
-		);
-
-		it(
-			'should show add button when listing the rules',
-			() => {
-				MetalTestUtil.enterDocument('<button id="addFieldButton" class="hide"></button>');
-				const addButton = document.querySelector('#addFieldButton');
-
-				component = new RuleList(
-					{
-						pages,
-						rules,
-						spritemap,
-						strings
-					}
-				);
-
-				component.rules['logical-operator'] = 'OR';
-
-				expect(addButton.classList.contains('hide')).toEqual(false);
-
-				MetalTestUtil.exitDocument(addButton);
-			}
-		);
-
-		it(
-			'should  hide translation manager and form basic info when listing the rules',
-			() => {
-				MetalTestUtil.enterDocument('<div class="ddm-translation-manager"></div>');
-
-				MetalTestUtil.enterDocument('<div class="ddm-form-basic-info"></div>');
-
-				const translationManager = document.querySelector('.ddm-translation-manager');
-
-				const formBasicInfo = document.querySelector('.ddm-form-basic-info');
-
-				component = new RuleList(
-					{
-						pages,
-						rules,
-						spritemap,
-						strings
-					}
-				);
-
-				component.rules['logical-operator'] = 'OR';
-
-				expect(
-					translationManager.classList.contains('hide') &&
-					formBasicInfo.classList.contains('hide')
-				).toEqual(true);
-
-				MetalTestUtil.exitDocument(translationManager);
-				MetalTestUtil.exitDocument(formBasicInfo);
 			}
 		);
 

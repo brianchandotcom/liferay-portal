@@ -1,9 +1,9 @@
 import 'clay-button';
 import {Config} from 'metal-state';
+import {PagesVisitor} from '../../util/visitors.es';
 import Component from 'metal-component';
 import Soy from 'metal-soy';
 import templates from './RuleEditor.soy.js';
-import {PagesVisitor} from '../../util/visitors.es';
 
 /**
  * RuleEditor.
@@ -93,7 +93,7 @@ class RuleEditor extends Component {
 					type: Config.string()
 				}
 			)
-		),
+		).internal(),
 
 		firstOperandList: Config.arrayOf(
 			Config.shapeOf(
@@ -112,7 +112,7 @@ class RuleEditor extends Component {
 					value: Config.string()
 				}
 			)
-		),
+		).internal().valueFn('_firstOperandListValueFn'),
 
 		readOnly: Config.bool().value(false),
 
@@ -142,11 +142,11 @@ class RuleEditor extends Component {
 					value: Config.string()
 				}
 			)
-		).value([]),
+		).internal().value([]),
 
-		conditionTypes: Config.array(),
+		conditionTypes: Config.array().internal(),
 
-		logicalOperator: Config.string().value('or'),
+		logicalOperator: Config.string().internal().value('or'),
 
 		/**
 		 * @default undefined
@@ -189,14 +189,18 @@ class RuleEditor extends Component {
 		}
 	}
 
-	_getFieldsData() {
-		const fieldData = [];
+	rendered() {
+		console.log(this.operatorsList);
+	}
+
+	_firstOperandListValueFn() {
 		const pages = this.pages;
+		const value = [];
 		const visitor = new PagesVisitor(pages);
 
 		visitor.mapFields(
 			field => {
-				fieldData.push(
+				value.push(
 					{
 						...field,
 						name: field.fieldName,
@@ -206,7 +210,7 @@ class RuleEditor extends Component {
 			}
 		);
 
-		return fieldData;
+		return value;
 	}
 
 	_getOperatorsByFieldType(type) {
@@ -254,9 +258,9 @@ class RuleEditor extends Component {
 		const fieldName = originalEvent.target.getAttribute('data-option-value');
 		const index = this._getConditionIndex(originalEvent, '.condition-operator');
 
-		let copyOfConditions = this.conditions;
+		let copyOfConditions = [...this.conditions];
 
-		const copyOfsecondOperandTypeSelectedList = this.secondOperandTypeSelectedList;
+		const copyOfsecondOperandTypeSelectedList = [...this.secondOperandTypeSelectedList];
 
 		if (!fieldName) {
 			copyOfConditions = this._clearSecondOperandValue(copyOfConditions, index);
@@ -266,7 +270,7 @@ class RuleEditor extends Component {
 			copyOfConditions[index].operator = '';
 		}
 		else {
-			const copyOfSecondOperandList = this.secondOperandTypeList;
+			const copyOfSecondOperandList = [...this.secondOperandTypeList];
 
 			const configUnary = {name: 'none', value: 'none'};
 
@@ -421,17 +425,29 @@ class RuleEditor extends Component {
 	}
 
 	_isBinary(value) {
-		return value === 'equals-to' || value === 'not-equals-to' || value === 'contains' || value === 'not-contains' || value === 'belongs-to' || value === 'greater-than' || value === 'greater-than-equals' || value === 'less-than' || value === 'less-than-equals';
+		return (
+			value === 'belongs-to' ||
+			value === 'contains' ||
+			value === 'equals-to' ||
+			value === 'greater-than-equals' ||
+			value === 'greater-than' ||
+			value === 'less-than-equals' ||
+			value === 'less-than' ||
+			value === 'not-contains' ||
+			value === 'not-equals-to'
+		);
 	}
 
 	_clearOperatorValue(copyOfConditions, index) {
-		copyOfConditions[index].operator = '';
+		if (copyOfConditions[index]) {
+			copyOfConditions[index].operator = '';
+		}
 
 		return copyOfConditions;
 	}
 
 	_clearFirstOperandValue(copyOfConditions, index) {
-		if (copyOfConditions[index].operands[0]) {
+		if (copyOfConditions[index] && copyOfConditions[index].operands[0]) {
 			copyOfConditions[index].operands[0].type = '';
 			copyOfConditions[index].operands[0].value = '';
 		}
@@ -440,7 +456,7 @@ class RuleEditor extends Component {
 	}
 
 	_clearSecondOperandValue(copyOfConditions, index) {
-		if (copyOfConditions[index].operands[1]) {
+		if (copyOfConditions[index] && copyOfConditions[index].operands[1]) {
 			copyOfConditions[index].operands[1].type = '';
 			copyOfConditions[index].operands[1].value = '';
 		}

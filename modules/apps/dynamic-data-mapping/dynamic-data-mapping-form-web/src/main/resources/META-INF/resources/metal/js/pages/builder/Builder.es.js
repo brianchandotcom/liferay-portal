@@ -285,9 +285,13 @@ class Builder extends Component {
 	}
 
 	syncVisible(visible) {
+		const addButton = document.querySelector('#addFieldButton');
+
 		super.syncVisible(visible);
 
 		if (visible) {
+			addButton.classList.remove('hide');
+
 			this._eventHandler.add(
 				dom.on('#addFieldButton', 'click', this._handleAddFieldButtonClicked.bind(this))
 			);

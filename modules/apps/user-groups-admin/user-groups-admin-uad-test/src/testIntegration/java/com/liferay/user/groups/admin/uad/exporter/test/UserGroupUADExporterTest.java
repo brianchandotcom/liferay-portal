@@ -17,13 +17,17 @@ package com.liferay.user.groups.admin.uad.exporter.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.service.UserGroupLocalService;
+import com.liferay.portal.kernel.test.randomizerbumpers.NumericStringRandomizerBumper;
+import com.liferay.portal.kernel.test.randomizerbumpers.UniqueStringRandomizerBumper;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.user.associated.data.exporter.UADExporter;
 import com.liferay.user.associated.data.test.util.BaseUADExporterTestCase;
-import com.liferay.user.groups.admin.uad.test.UserGroupUADTestHelper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,8 +50,13 @@ public class UserGroupUADExporterTest
 
 	@Override
 	protected UserGroup addBaseModel(long userId) throws Exception {
-		UserGroup userGroup = UserGroupUADTestHelper.addUserGroup(
-			_userGroupLocalService, userId);
+		UserGroup userGroup = _userGroupLocalService.addUserGroup(
+			userId, TestPropsValues.getCompanyId(),
+			RandomTestUtil.randomString(
+				NumericStringRandomizerBumper.INSTANCE,
+				UniqueStringRandomizerBumper.INSTANCE),
+			RandomTestUtil.randomString(),
+			ServiceContextTestUtil.getServiceContext());
 
 		_userGroups.add(userGroup);
 

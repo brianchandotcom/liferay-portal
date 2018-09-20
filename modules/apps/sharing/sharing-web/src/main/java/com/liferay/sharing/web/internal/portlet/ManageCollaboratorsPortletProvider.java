@@ -14,14 +14,9 @@
 
 package com.liferay.sharing.web.internal.portlet;
 
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.BasePortletProvider;
 import com.liferay.portal.kernel.portlet.ManagePortletProvider;
-import com.liferay.sharing.constants.SharingPortletKeys;
-
-import javax.portlet.PortletURL;
-
-import javax.servlet.http.HttpServletRequest;
+import com.liferay.sharing.web.internal.constants.SharingPortletKeys;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -33,24 +28,12 @@ import org.osgi.service.component.annotations.Component;
 	property = "model.class.name=com.liferay.sharing.model.SharingEntry",
 	service = ManagePortletProvider.class
 )
-public class SharingManagePortletProvider
+public class ManageCollaboratorsPortletProvider
 	extends BasePortletProvider implements ManagePortletProvider {
 
 	@Override
 	public String getPortletName() {
-		return SharingPortletKeys.SHARING;
-	}
-
-	@Override
-	public PortletURL getPortletURL(HttpServletRequest request)
-		throws PortalException {
-
-		PortletURL portletURL = super.getPortletURL(request);
-
-		portletURL.setParameter(
-			"mvcRenderCommandName", "/sharing/manage_collaborators");
-
-		return portletURL;
+		return SharingPortletKeys.MANAGE_COLLABORATORS;
 	}
 
 }

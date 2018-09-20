@@ -19,9 +19,11 @@ import com.liferay.portal.kernel.model.Team;
 import com.liferay.portal.kernel.service.TeamLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.site.teams.uad.test.TeamUADTestHelper;
 import com.liferay.user.associated.data.exporter.UADExporter;
 import com.liferay.user.associated.data.test.util.BaseUADExporterTestCase;
 
@@ -45,7 +47,10 @@ public class TeamUADExporterTest extends BaseUADExporterTestCase<Team> {
 
 	@Override
 	protected Team addBaseModel(long userId) throws Exception {
-		Team team = TeamUADTestHelper.addTeam(_teamLocalService, userId);
+		Team team = _teamLocalService.addTeam(
+			userId, TestPropsValues.getGroupId(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(),
+			ServiceContextTestUtil.getServiceContext());
 
 		_teams.add(team);
 

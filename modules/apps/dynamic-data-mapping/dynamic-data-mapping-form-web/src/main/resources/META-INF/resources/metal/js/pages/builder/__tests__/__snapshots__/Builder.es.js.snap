@@ -185,7 +185,7 @@ exports[`Builder should render the default markup 1`] = `
       </div>
     </div>
   </div>
-  <div class="sidebar-container" ref="sidebar">
+  <div class="sidebar-container" ref="container">
     <div class="sidebar sidebar-light">
       <nav class="component-tbar tbar">
         <div class="container-fluid">
@@ -464,7 +464,7 @@ exports[`Builder should show modal when trash button gets clicked 1`] = `
       </div>
     </div>
   </div>
-  <div class="sidebar-container" ref="sidebar">
+  <div class="sidebar-container" ref="container">
     <div class="sidebar sidebar-light">
       <nav class="component-tbar tbar">
         <div class="container-fluid">

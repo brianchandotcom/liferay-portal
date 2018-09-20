@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Sidebar should render a Sidebar closed 1`] = `
-<div class="sidebar-container" ref="sidebar">
+<div class="sidebar-container" ref="container">
   <div class="sidebar sidebar-light">
     <nav class="component-tbar tbar">
       <div class="container-fluid">
@@ -176,7 +176,7 @@ exports[`Sidebar should render a Sidebar closed 1`] = `
 `;
 
 exports[`Sidebar should render a Sidebar open 1`] = `
-<div class="sidebar-container open" ref="sidebar">
+<div class="sidebar-container open" ref="container">
   <div class="sidebar sidebar-light">
     <nav class="component-tbar tbar">
       <div class="container-fluid">
@@ -351,7 +351,7 @@ exports[`Sidebar should render a Sidebar open 1`] = `
 `;
 
 exports[`Sidebar should render a Sidebar with fieldTypes 1`] = `
-<div class="sidebar-container open" ref="sidebar">
+<div class="sidebar-container open" ref="container">
   <div class="sidebar sidebar-light">
     <nav class="component-tbar tbar">
       <div class="container-fluid">
@@ -526,7 +526,7 @@ exports[`Sidebar should render a Sidebar with fieldTypes 1`] = `
 `;
 
 exports[`Sidebar should render a Sidebar with spritemap 1`] = `
-<div class="sidebar-container open" ref="sidebar">
+<div class="sidebar-container open" ref="container">
   <div class="sidebar sidebar-light">
     <nav class="component-tbar tbar">
       <div class="container-fluid">
@@ -701,7 +701,7 @@ exports[`Sidebar should render a Sidebar with spritemap 1`] = `
 `;
 
 exports[`Sidebar should render the default markup 1`] = `
-<div class="sidebar-container" ref="sidebar">
+<div class="sidebar-container" ref="container">
   <div class="sidebar sidebar-light">
     <nav class="component-tbar tbar">
       <div class="container-fluid">

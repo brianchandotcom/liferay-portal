@@ -66,6 +66,9 @@ public class UpdateOrganizationOpeningHoursMVCActionCommand
 			}
 			else if (e instanceof NoSuchListTypeException) {
 				SessionErrors.add(actionRequest, e.getClass());
+
+				actionResponse.setRenderParameter(
+					"mvcPath", "/edit_organization.jsp");
 			}
 			else {
 				throw e;

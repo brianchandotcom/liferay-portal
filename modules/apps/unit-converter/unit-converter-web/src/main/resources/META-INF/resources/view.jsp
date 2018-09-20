@@ -248,8 +248,7 @@ UnitConverter unitConverter = UnitConverterUtil.getUnitConverter(type, fromId, t
 	var setBox = function(oldBox, newBox) {
 		oldBox.empty();
 
-		var options = _.map(
-			newBox,
+		var options = newBox.map(
 			function(item, index) {
 				return '<option value="' + index + '">' + item + '</option>';
 			}

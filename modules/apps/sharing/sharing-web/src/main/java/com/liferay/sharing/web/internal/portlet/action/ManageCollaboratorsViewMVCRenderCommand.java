@@ -155,7 +155,8 @@ public class ManageCollaboratorsViewMVCRenderCommand
 		PortletURL sharingEntryEditURL =
 			liferayPortletResponse.createLiferayPortletURL(
 				PortletProviderUtil.getPortletId(
-					SharingEntry.class.getName(), PortletProvider.Action.EDIT),
+					SharingEntry.class.getName(),
+					PortletProvider.Action.MANAGE),
 				PortletRequest.ACTION_PHASE);
 
 		sharingEntryEditURL.setParameter(

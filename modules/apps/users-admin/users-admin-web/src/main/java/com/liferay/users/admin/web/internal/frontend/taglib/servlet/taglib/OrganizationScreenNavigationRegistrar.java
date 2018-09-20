@@ -81,6 +81,13 @@ public class OrganizationScreenNavigationRegistrar {
 
 		_registerScreenNavigationEntry(
 			_createUpdateOnlyScreenNavigationEntry(
+				"organization-site", _CATEGORY_GENERAL,
+				"/organization/organization_site.jsp",
+				"/users_admin/update_organization_organization_site"),
+			20);
+
+		_registerScreenNavigationEntry(
+			_createUpdateOnlyScreenNavigationEntry(
 				"reminder-queries", _CATEGORY_GENERAL,
 				"/organization/reminder_queries.jsp",
 				"/users_admin/update_organization_reminder_queries"),

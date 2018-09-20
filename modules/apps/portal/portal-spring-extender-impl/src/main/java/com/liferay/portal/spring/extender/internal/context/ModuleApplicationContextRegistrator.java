@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.bean.PortletBeanLocatorUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.configuration.configurator.ServiceConfigurator;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.spring.extender.internal.bean.ApplicationContextServicePublisher;
 import com.liferay.portal.spring.extender.internal.bundle.CompositeResourceLoaderBundle;
@@ -117,10 +116,6 @@ public class ModuleApplicationContextRegistrator {
 
 		String[] beanDefinitionFileNames = _getBeanDefinitionFileNames(
 			extendee);
-
-		if (ArrayUtil.isEmpty(beanDefinitionFileNames)) {
-			return null;
-		}
 
 		ClassLoader classLoader = new BundleResolverClassLoader(
 			extendee, extender);

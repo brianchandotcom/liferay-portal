@@ -51,27 +51,25 @@ public class AssetListEntryAssetEntryRelLocalServiceImpl
 			long assetListEntryId, int position)
 		throws PortalException {
 
-		TransactionCommitCallbackUtil.registerCallback(
-			() -> {
-				List<AssetListEntryAssetEntryRel> assetListEntryAssetEntryRels =
-					assetListEntryAssetEntryRelPersistence.findByA_GtP(
-						assetListEntryId, position);
+		AssetListEntryAssetEntryRel assetListEntryAssetEntryRel =
+			assetListEntryAssetEntryRelPersistence.removeByA_P(
+				assetListEntryId, position);
 
-				for (AssetListEntryAssetEntryRel assetListEntryAssetEntryRel :
-						assetListEntryAssetEntryRels) {
+		List<AssetListEntryAssetEntryRel> assetListEntryAssetEntryRels =
+			assetListEntryAssetEntryRelPersistence.findByA_GtP(
+				assetListEntryId, position);
 
-					assetListEntryAssetEntryRelLocalService.
-						moveAssetListEntryAssetEntryRel(
-							assetListEntryId,
-							assetListEntryAssetEntryRel.getPosition(),
-							assetListEntryAssetEntryRel.getPosition() - 1);
-				}
+		for (AssetListEntryAssetEntryRel curAssetListEntryAssetEntryRel :
+				assetListEntryAssetEntryRels) {
 
-				return null;
-			});
+			curAssetListEntryAssetEntryRel.setPosition(
+				curAssetListEntryAssetEntryRel.getPosition() - 1);
 
-		return assetListEntryAssetEntryRelPersistence.removeByA_P(
-			assetListEntryId, position);
+			assetListEntryAssetEntryRelPersistence.update(
+				curAssetListEntryAssetEntryRel);
+		}
+
+		return assetListEntryAssetEntryRel;
 	}
 
 	@Override

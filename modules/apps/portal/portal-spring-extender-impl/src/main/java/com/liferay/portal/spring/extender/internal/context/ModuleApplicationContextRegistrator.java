@@ -88,10 +88,7 @@ public class ModuleApplicationContextRegistrator {
 	}
 
 	protected void stop() throws Exception {
-		BundleWiring bundleWiring = _extendeeBundle.adapt(BundleWiring.class);
-
-		CachedIntrospectionResults.clearClassLoader(
-			bundleWiring.getClassLoader());
+		CachedIntrospectionResults.clearClassLoader(_extendeeClassLoader);
 
 		Introspector.flushCaches();
 

@@ -49,24 +49,9 @@ String viewMoreURL = (String)request.getAttribute("liferay-frontend:add-menu:vie
 		}
 		%>
 
-		<a <%= AUIUtil.buildData(menuItem.getAnchorData()) %> class="<%= menuItem.getCssClass() %> btn btn-action <%= inline ? StringPool.BLANK : "btn-bottom-right" %> btn-primary" data-placement="left" data-qa-id="addButton" data-toggle="tooltip" href="<%= HtmlUtil.escapeAttribute(menuItem.getUrl()) %>" id="<%= namespace + id %>" title="<%= HtmlUtil.escapeAttribute(title) %>">
+		<a <%= AUIUtil.buildData(menuItem.getAnchorData()) %> class="<%= menuItem.getCssClass() %> btn btn-action <%= inline ? StringPool.BLANK : "btn-bottom-right" %> btn-primary lfr-portal-tooltip" data-qa-id="addButton" href="<%= HtmlUtil.escapeAttribute(menuItem.getUrl()) %>" id="<%= namespace + id %>" title="<%= HtmlUtil.escapeAttribute(title) %>">
 			<aui:icon image="plus" markupView="lexicon" />
 		</a>
-
-		<aui:script sandbox="<%= true %>">
-			$(document).ready(
-				function() {
-					$('[data-toggle="tooltip"]').tooltip();
-
-					Liferay.once(
-						'startNavigate',
-						function() {
-							$('[data-toggle="tooltip"]').tooltip('dispose');
-						}
-					);
-				}
-			);
-		</aui:script>
 	</c:when>
 	<c:otherwise>
 		<div class="add-menu btn-action-secondary <%= inline ? StringPool.BLANK : "btn-bottom-right" %> dropdown">

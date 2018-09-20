@@ -15,6 +15,7 @@
 package com.liferay.frontend.taglib.servlet.taglib;
 
 import com.liferay.frontend.taglib.servlet.taglib.util.AddMenuKeys;
+import com.liferay.petra.string.StringPool;
 import com.liferay.taglib.util.IncludeTag;
 
 import java.util.List;
@@ -62,7 +63,7 @@ public class AddMenuItemTag extends IncludeTag {
 
 		_addMenuType = AddMenuKeys.AddMenuType.DEFAULT;
 		_anchorData = null;
-		_cssClass = null;
+		_cssClass = StringPool.BLANK;
 		_id = null;
 		_title = null;
 		_url = null;
@@ -85,7 +86,7 @@ public class AddMenuItemTag extends IncludeTag {
 	private AddMenuKeys.AddMenuType _addMenuType =
 		AddMenuKeys.AddMenuType.DEFAULT;
 	private Map<String, Object> _anchorData;
-	private String _cssClass;
+	private String _cssClass = StringPool.BLANK;
 	private String _id;
 	private String _title;
 	private String _url;

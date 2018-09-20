@@ -29,7 +29,6 @@ import com.liferay.user.associated.data.test.util.BaseUADAnonymizerTestCase;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.After;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.runner.RunWith;
@@ -45,11 +44,6 @@ public class RoleUADAnonymizerTest extends BaseUADAnonymizerTestCase<Role> {
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
 
-	@After
-	public void tearDown() throws Exception {
-		_roleUADTestHelper.cleanUpDependencies(_roles);
-	}
-
 	@Override
 	protected Role addBaseModel(long userId) throws Exception {
 		return addBaseModel(userId, true);
@@ -59,18 +53,13 @@ public class RoleUADAnonymizerTest extends BaseUADAnonymizerTestCase<Role> {
 	protected Role addBaseModel(long userId, boolean deleteAfterTestRun)
 		throws Exception {
 
-		Role role = _roleUADTestHelper.addRole(userId);
+		Role role = RoleUADTestHelper.addRole(_roleLocalService, userId);
 
 		if (deleteAfterTestRun) {
 			_roles.add(role);
 		}
 
 		return role;
-	}
-
-	@Override
-	protected void deleteBaseModels(List<Role> baseModels) throws Exception {
-		_roleUADTestHelper.cleanUpDependencies(baseModels);
 	}
 
 	@Override
@@ -109,9 +98,6 @@ public class RoleUADAnonymizerTest extends BaseUADAnonymizerTestCase<Role> {
 
 	@DeleteAfterTestRun
 	private final List<Role> _roles = new ArrayList<>();
-
-	@Inject
-	private RoleUADTestHelper _roleUADTestHelper;
 
 	@Inject(filter = "component.name=*.RoleUADAnonymizer")
 	private UADAnonymizer _uadAnonymizer;

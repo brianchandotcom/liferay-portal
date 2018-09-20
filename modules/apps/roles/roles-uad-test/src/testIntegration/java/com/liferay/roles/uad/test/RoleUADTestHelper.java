@@ -21,31 +21,21 @@ import com.liferay.portal.kernel.test.randomizerbumpers.NumericStringRandomizerB
 import com.liferay.portal.kernel.test.randomizerbumpers.UniqueStringRandomizerBumper;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 
-import java.util.List;
-
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Brian Wing Shun Chan
  */
-@Component(immediate = true, service = RoleUADTestHelper.class)
 public class RoleUADTestHelper {
 
-	public Role addRole(long userId) throws Exception {
+	public static Role addRole(RoleLocalService roleLocalService, long userId)
+		throws Exception {
+
 		String name = RandomTestUtil.randomString(
 			NumericStringRandomizerBumper.INSTANCE,
 			UniqueStringRandomizerBumper.INSTANCE);
 
-		return _roleLocalService.addRole(
+		return roleLocalService.addRole(
 			userId, null, 0, name, null, null, RoleConstants.TYPE_REGULAR, null,
 			null);
 	}
-
-	public void cleanUpDependencies(List<Role> roles) throws Exception {
-	}
-
-	@Reference
-	private RoleLocalService _roleLocalService;
 
 }

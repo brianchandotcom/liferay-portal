@@ -129,7 +129,7 @@ public class ShareEntryMVCActionCommand extends BaseMVCActionCommand {
 			String errorMessage =
 				"an-unexpected-error-occurred-while-sharing-the-item";
 
-			if (t.getCause() instanceof PrincipalException) {
+			if (t instanceof PrincipalException) {
 				errorMessage = "you-do-not-have-permission-to-share-this-item";
 			}
 

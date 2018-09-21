@@ -12,38 +12,28 @@
  * details.
  */
 
-package com.liferay.sharing.document.library.internal.renderer;
+package com.liferay.sharing.web.internal.renderer;
 
-import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.model.AssetRenderer;
-import com.liferay.asset.kernel.model.AssetRendererFactory;
-import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
-import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.sharing.renderer.SharingEntryEditRenderer;
 
 import javax.portlet.PortletURL;
 
 /**
- * @author Sergio González
+ * @author Alejandro Tardín
  */
-public class DLFileEntrySharingEntryEditRenderer
-	implements SharingEntryEditRenderer<FileEntry> {
+public class AssetRendererSharingEntryEditRenderer
+	implements SharingEntryEditRenderer<AssetRenderer> {
 
 	@Override
 	public PortletURL getURLEdit(
-			FileEntry fileEntry, LiferayPortletRequest liferayPortletRequest,
+			AssetRenderer assetRenderer,
+			LiferayPortletRequest liferayPortletRequest,
 			LiferayPortletResponse liferayPortletResponse)
 		throws PortalException {
-
-		AssetRendererFactory<DLFileEntry> assetRendererFactory =
-			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClass(
-				DLFileEntry.class);
-
-		AssetRenderer<DLFileEntry> assetRenderer =
-			assetRendererFactory.getAssetRenderer(fileEntry.getFileEntryId());
 
 		try {
 			return assetRenderer.getURLEdit(

@@ -39,7 +39,7 @@ public abstract class BaseGitRepository implements GitRepository {
 	}
 
 	protected Object get(String key) {
-		return _jsonObject.get(key);
+		return _jsonObject.opt(key);
 	}
 
 	protected File getFile(String key) {

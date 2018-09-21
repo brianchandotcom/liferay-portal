@@ -24,7 +24,9 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 
@@ -88,10 +90,35 @@ public class LayoutPageTemplateStructureLocalServiceImpl
 
 	@Override
 	public LayoutPageTemplateStructure fetchLayoutPageTemplateStructure(
-		long groupId, long classNameId, long classPK) {
+			long groupId, long classNameId, long classPK)
+		throws PortalException {
 
-		return layoutPageTemplateStructurePersistence.fetchByG_C_C(
-			groupId, classNameId, classPK);
+		LayoutPageTemplateStructure layoutPageTemplateStructure =
+			layoutPageTemplateStructurePersistence.fetchByG_C_C(
+				groupId, classNameId, classPK);
+
+		if (layoutPageTemplateStructure != null) {
+			return layoutPageTemplateStructure;
+		}
+
+		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
+
+		List<FragmentEntryLink> fragmentEntryLinks =
+			_fragmentEntryLinkLocalService.getFragmentEntryLinks(
+				groupId, classNameId, classPK);
+
+		for (FragmentEntryLink fragmentEntryLink : fragmentEntryLinks) {
+			jsonArray.put(fragmentEntryLink.getFragmentEntryLinkId());
+		}
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+
+		jsonObject.put("structure", jsonArray);
+
+		return addLayoutPageTemplateStructure(
+			PrincipalThreadLocal.getUserId(), groupId, classNameId, classPK,
+			jsonObject.toString(),
+			ServiceContextThreadLocal.getServiceContext());
 	}
 
 	@Override

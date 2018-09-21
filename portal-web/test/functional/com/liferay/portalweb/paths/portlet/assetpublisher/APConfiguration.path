@@ -61,6 +61,22 @@
 	<td></td>
 	<td></td>
 </tr>
+<!--USER_SEGMENTS_FILTER-->
+<tr>
+	<td>ENABLE_USER_SEGMENTS_FILTER_LABEL</td>
+	<td>//label[contains(@for,'UserSegments')]/span[contains(@class,'label')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ENABLE_USER_SEGMENTS_FILTER</td>
+	<td>//input[contains(@id,'UserSegments')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--SOURCE_SCOPE-->
 <tr>
 	<td>SOURCE_DROPDOWN</td>

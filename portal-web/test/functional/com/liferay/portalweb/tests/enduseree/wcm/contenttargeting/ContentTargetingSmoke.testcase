@@ -171,7 +171,7 @@
 
 		<execute macro="PortletEntry#save" />
 
-		<for list="Campaign Content Display,User Segment Content Display,User Segment Content List" param="portletName">
+		<for list="Campaign Content Display,User Segment Content Display,Asset Publisher" param="portletName">
 			<execute macro="Navigator#gotoSitePage">
 				<var name="pageName" value="Test Page Name" />
 				<var name="siteName" value="Site Name" />
@@ -227,6 +227,13 @@
 			<var name="siteName" value="Site Name" />
 		</execute>
 
+		<execute macro="AssetPublisherPortlet#enableUserSegementFilter" />
+
+		<execute macro="Navigator#gotoSitePage">
+			<var name="pageName" value="Test Page Name" />
+			<var name="siteName" value="Site Name" />
+		</execute>
+
 		<execute macro="CampaignDisplayPortlet#viewPG">
 			<var name="entryContentText" value="WC Campaign Content" />
 			<var name="previewCampaignList" value="Campaign Name,default" />
@@ -251,8 +258,14 @@
 			<var name="siteName" value="Site Name" />
 		</execute>
 
-		<execute macro="UserSegmentContentListPortlet#viewContent">
-			<var name="viewEntryContentList" value="WC Campaign Content,WC User Segment Content" />
+		<execute macro="AssetPublisherPortlet#viewAssetPG">
+			<var name="assetContent" value="WC Campaign Content" />
+			<var name="assetTitle" value="WC Campaign Title" />
+		</execute>
+
+		<execute macro="AssetPublisherPortlet#viewAssetPG">
+			<var name="assetContent" value="WC User Segment Content" />
+			<var name="assetTitle" value="WC User Segment Title" />
 		</execute>
 
 		<!-- <execute macro="ProductMenu#gotoPortlet">

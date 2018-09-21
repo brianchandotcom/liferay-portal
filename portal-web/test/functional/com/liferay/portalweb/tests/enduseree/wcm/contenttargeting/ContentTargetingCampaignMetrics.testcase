@@ -365,6 +365,10 @@
 			<var name="site" value="Site Name" />
 		</execute>
 
+		<execute macro="ContentTargeting#enableAnalyticsViaSiteSettings">
+			<var name="analyticsList" value="Link,Link Clicks" />
+		</execute>
+
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Configuration" />
 			<var name="panel" value="Site Administration" />
@@ -526,6 +530,10 @@
 			<var name="site" value="Site Name" />
 		</execute>
 
+		<execute macro="ContentTargeting#enableAnalyticsViaSiteSettings">
+			<var name="analyticsList" value="YouTube Videos" />
+		</execute>
+
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Configuration" />
 			<var name="panel" value="Site Administration" />
@@ -566,7 +574,7 @@
 
 		<execute macro="ContentTargetingCampaign#viewTrackingActionsCP">
 			<var name="campaignName" value="Campaign Name" />
-			<var name="viewTrackingActionsList" value="YouTube" />
+			<var name="viewTrackingActionsList" value="YouTube Videos" />
 			<var name="youtubeAlias" value="YouTube Alias" />
 			<var name="youtubeTrackingActionSelect" value="Playing" />
 			<var name="youtubeVideoId" value="YouTube id" />

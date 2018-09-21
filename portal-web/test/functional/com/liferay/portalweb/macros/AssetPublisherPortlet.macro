@@ -639,6 +639,26 @@
 		<execute function="Check#checkToggleSwitch" locator1="APConfiguration#SUBSCRIPTIONS_ENABLE_RSS_SUBSCRIPTION" />
 	</command>
 
+	<command name="enableUserSegementFilter">
+		<execute macro="AssetPublisherPortlet#gotoConfigurationPG" />
+
+		<execute macro="Navigator#gotoNavTab">
+			<var name="navTab" value="Asset Selection" />
+		</execute>
+
+		<execute macro="Panel#expandPanel">
+			<var name="panel" value="User Segments Filter" />
+		</execute>
+
+		<execute function="AssertTextEquals" locator1="APConfiguration#ENABLE_USER_SEGMENTS_FILTER_LABEL" value1="User Segments Filter" />
+
+		<execute function="Check#checkToggleSwitch" locator1="APConfiguration#ENABLE_USER_SEGMENTS_FILTER" />
+
+		<execute macro="Button#clickSave" />
+
+		<execute function="SelectFrameTop" />
+	</command>
+
 	<command name="gotoConfigurationPG">
 		<if>
 			<contains string="${portletName}" substring="{portletName}" />

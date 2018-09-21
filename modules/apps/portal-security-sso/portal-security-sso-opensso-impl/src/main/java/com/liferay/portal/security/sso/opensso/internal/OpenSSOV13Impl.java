@@ -21,15 +21,16 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.sso.OpenSSO;
 import com.liferay.portal.kernel.util.CookieKeys;
+import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.URLCodec;
-import com.liferay.portal.util.HttpImpl;
 
 import java.io.IOException;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Marta Medio
@@ -75,17 +76,15 @@ public class OpenSSOV13Impl extends OpenSSOImpl {
 
 			String url = serviceUrl.concat(validateTokenUrl);
 
-			HttpImpl httpImpl = new HttpImpl();
-
-			String result = httpImpl.URLtoString(url, true);
+			String result = _http.URLtoString(url, true);
 
 			try {
 				JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
 					result);
 
-				Boolean valid = (Boolean)jsonObject.get("valid");
-				String uid = (String)jsonObject.get("uid");
-				String realm = (String)jsonObject.get("realm");
+				Boolean valid = jsonObject.getBoolean("valid");
+				String uid = jsonObject.getString("uid");
+				String realm = jsonObject.getString("realm");
 
 				if ((realm != null) && (uid != null) && valid) {
 					authenticated = true;
@@ -106,5 +105,8 @@ public class OpenSSOV13Impl extends OpenSSOImpl {
 		"/json/sessions/{#subjectId}?_action=validate";
 
 	private static final Log _log = LogFactoryUtil.getLog(OpenSSOV13Impl.class);
+
+	@Reference
+	private Http _http;
 
 }

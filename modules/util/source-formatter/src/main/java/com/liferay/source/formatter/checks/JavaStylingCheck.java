@@ -43,23 +43,22 @@ public class JavaStylingCheck extends StylingCheck {
 			content, " final static ", " static final ");
 
 		content = StringUtil.replace(
-			content,
-			new String[] {
-				";\n/**", "\t/*\n\t *", ";;\n", "\n/**\n *\n *",
-				"\n */\npackage "
-			},
-			new String[] {
-				";\n\n/**", "\t/**\n\t *", ";\n", "\n/**\n *",
-				"\n */\n\npackage "
-			});
+			content, new String[] {";\n/**", ";;\n", "\n */\npackage "},
+			new String[] {";\n\n/**", ";\n", "\n */\n\npackage "});
 
 		Matcher matcher = _incorrectSynchronizedPattern.matcher(content);
 
 		content = matcher.replaceAll("$1$3 $2");
 
+		matcher = _incorrectJavadocPattern.matcher(content);
+
+		content = matcher.replaceAll("$1*$3");
+
 		return formatStyling(content);
 	}
 
+	private static final Pattern _incorrectJavadocPattern = Pattern.compile(
+		"(\n([\t ]*)/\\*)(\n\\2 \\*)");
 	private static final Pattern _incorrectSynchronizedPattern =
 		Pattern.compile("([\n\t])(synchronized) (private|public|protected)");
 

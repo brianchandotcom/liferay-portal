@@ -24,14 +24,16 @@ import com.liferay.layout.type.controller.content.internal.constants.ContentLayo
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutTypeController;
 import com.liferay.portal.kernel.model.impl.BaseLayoutTypeControllerImpl;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.TransferHeadersHelperUtil;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -94,7 +96,7 @@ public class ContentLayoutTypeController extends BaseLayoutTypeControllerImpl {
 
 		if (layoutMode.equals(Constants.VIEW)) {
 			List<FragmentEntryLink> fragmentEntryLinks = _getFragmentEntryLinks(
-				layout);
+				layout, request);
 
 			request.setAttribute(
 				ContentLayoutTypeControllerWebKeys.LAYOUT_FRAGMENTS,
@@ -208,24 +210,32 @@ public class ContentLayoutTypeController extends BaseLayoutTypeControllerImpl {
 		this.servletContext = servletContext;
 	}
 
-	private List<FragmentEntryLink> _getFragmentEntryLinks(Layout layout)
-		throws JSONException {
+	private List<FragmentEntryLink> _getFragmentEntryLinks(
+			Layout layout, HttpServletRequest request)
+		throws Exception {
+
+		long classNameId = _portal.getClassNameId(Layout.class.getName());
 
 		LayoutPageTemplateStructure layoutPageTemplateStructure =
 			_layoutPageTemplateStructureLocalService.
 				fetchLayoutPageTemplateStructure(
-					layout.getGroupId(),
-					_portal.getClassNameId(Layout.class.getName()),
-					layout.getPlid());
+					layout.getGroupId(), classNameId, layout.getPlid());
 
-		if (layoutPageTemplateStructure == null) {
-			return Collections.emptyList();
-		}
+		if ((layoutPageTemplateStructure == null) ||
+			Validator.isNull(layoutPageTemplateStructure.getData())) {
 
-		String data = layoutPageTemplateStructure.getData();
+			ServiceContext serviceContext = ServiceContextFactory.getInstance(
+				request);
 
-		if (Validator.isNull(data)) {
-			return Collections.emptyList();
+			ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+			layoutPageTemplateStructure =
+				_layoutPageTemplateStructureLocalService.
+					rebuildLayoutPageTemplateStructureData(
+						themeDisplay.getUserId(),
+						themeDisplay.getScopeGroupId(), classNameId,
+						themeDisplay.getPlid(), serviceContext);
 		}
 
 		JSONObject dataJSONObject = JSONFactoryUtil.createJSONObject(

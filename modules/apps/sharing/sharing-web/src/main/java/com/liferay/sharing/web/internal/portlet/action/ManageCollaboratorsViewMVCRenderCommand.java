@@ -34,6 +34,8 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.sharing.model.SharingEntry;
 import com.liferay.sharing.service.SharingEntryLocalService;
 import com.liferay.sharing.web.internal.constants.SharingPortletKeys;
+import com.liferay.sharing.web.internal.display.SharingEntryPermissionDisplay;
+import com.liferay.sharing.web.internal.util.SharingUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -71,6 +73,9 @@ public class ManageCollaboratorsViewMVCRenderCommand
 
 		template.put(
 			"collaborators", _getCollaboratorsJSONArray(renderRequest));
+		template.put(
+			"sharingEntryPermissionDisplaySelectOptions",
+			_getSharingEntryPermissionDisplaySelectOptions(renderRequest));
 		template.put("spritemap", _getSpritemap(renderRequest));
 		template.put("uri", _getManageCollaboratorsActionURL(renderResponse));
 
@@ -165,6 +170,43 @@ public class ManageCollaboratorsViewMVCRenderCommand
 		return sharingEntryEditURL.toString();
 	}
 
+	private JSONArray _getSharingEntryPermissionDisplaySelectOptions(
+		RenderRequest renderRequest) {
+
+		long classNameId = ParamUtil.getLong(renderRequest, "classNameId");
+		long classPK = ParamUtil.getLong(renderRequest, "classPK");
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		List<SharingEntryPermissionDisplay> sharingEntryPermissionDisplays =
+			_sharingUtil.getSharingEntryPermissionDisplays(
+				themeDisplay.getPermissionChecker(), classNameId, classPK,
+				themeDisplay.getScopeGroupId(), themeDisplay.getLocale());
+
+		JSONArray sharingEntryPermissionDisplaySelectOptionsJSONArray =
+			JSONFactoryUtil.createJSONArray();
+
+		for (SharingEntryPermissionDisplay sharingEntryPermissionDisplay :
+				sharingEntryPermissionDisplays) {
+
+			JSONObject sharingEntryPermissionDisplaySelectOptionJSONObject =
+				JSONFactoryUtil.createJSONObject();
+
+			sharingEntryPermissionDisplaySelectOptionJSONObject.put(
+				"label", sharingEntryPermissionDisplay.getTitle());
+			sharingEntryPermissionDisplaySelectOptionJSONObject.put(
+				"value",
+				sharingEntryPermissionDisplay.
+					getSharingEntryPermissionDisplayActionKeyActionId());
+
+			sharingEntryPermissionDisplaySelectOptionsJSONArray.put(
+				sharingEntryPermissionDisplaySelectOptionJSONObject);
+		}
+
+		return sharingEntryPermissionDisplaySelectOptionsJSONArray;
+	}
+
 	private String _getSpritemap(RenderRequest renderRequest) {
 		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -180,6 +222,9 @@ public class ManageCollaboratorsViewMVCRenderCommand
 
 	@Reference
 	private SharingEntryLocalService _sharingEntryLocalService;
+
+	@Reference
+	private SharingUtil _sharingUtil;
 
 	@Reference
 	private UserLocalService _userLocalService;

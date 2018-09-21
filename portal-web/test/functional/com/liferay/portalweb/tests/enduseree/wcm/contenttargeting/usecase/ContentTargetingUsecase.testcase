@@ -1915,6 +1915,8 @@
 
 		<execute macro="LAR#setupContentTargeting" />
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="LAR#gotoExport">
 			<var name="siteScopeName" value="Site Name" />
 		</execute>
@@ -1967,8 +1969,9 @@
 			<var name="siteName" value="Import Site" />
 		</execute>
 
-		<execute macro="UserSegmentContentListPortlet#viewContent">
-			<var name="viewEntryContentList" value="Web Content Content" />
+		<execute macro="AssetPublisherPortlet#viewAssetPG">
+			<var name="assetContent" value="Web Content Content" />
+			<var name="assetTitle" value="Web Content Title" />
 		</execute>
 
 		<execute macro="UserSegmentContentDisplayPortlet#viewEntryPG">
@@ -2335,8 +2338,10 @@
 		</execute>
 
 		<execute macro="Portlet#addPG">
-			<var name="portletName" value="User Segment Content Display" />
+			<var name="portletName" value="Asset Publisher" />
 		</execute>
+
+		<execute macro="AssetPublisherPortlet#enableUserSegementFilter" />
 
 		<execute macro="Navigator#gotoStagedSitePage">
 			<var name="pageName" value="Test Page Name" />
@@ -2392,8 +2397,9 @@
 			<var name="siteName" value="Site Name" />
 		</execute>
 
-		<execute macro="UserSegmentContentListPortlet#configureDisplayFilter">
-			<var name="assetTypeFilter" value="Web Content Article" />
+		<execute macro="AssetPublisherPortlet#configureAssetTypePG">
+			<var name="assetSubtype" value="Any" />
+			<var name="selectedAsset" value="Web Content Article" />
 		</execute>
 
 		<execute macro="Navigator#gotoStagedSitePage">
@@ -2401,8 +2407,9 @@
 			<var name="siteName" value="Site Name" />
 		</execute>
 
-		<execute macro="UserSegmentContentListPortlet#viewContent">
-			<var name="viewEntryContentList" value="Web Content Content" />
+		<execute macro="AssetPublisherPortlet#viewAssetNotPresentPG">
+			<var name="assetContent" value="Web Content Content" />
+			<var name="assetTitle" value="Web Content Title" />
 		</execute>
 
 		<execute macro="CampaignDisplayPortlet#viewPG">
@@ -2431,8 +2438,9 @@
 			<var name="siteName" value="Site Name" />
 		</execute>
 
-		<execute macro="UserSegmentContentListPortlet#viewContent">
-			<var name="viewEntryContentList" value="Web Content Content" />
+		<execute macro="AssetPublisherPortlet#viewAssetNotPresentPG">
+			<var name="assetContent" value="Web Content Content" />
+			<var name="assetTitle" value="Web Content Title" />
 		</execute>
 
 		<execute macro="ContentTargeting#viewEntryOnStagingLiveMode">
@@ -2612,8 +2620,10 @@
 		</execute>
 
 		<execute macro="Portlet#addPG">
-			<var name="portletName" value="User Segment Content List" />
+			<var name="portletName" value="Asset Publisher" />
 		</execute>
+
+		<execute macro="AssetPublisherPortlet#enableUserSegementFilter" />
 
 		<execute macro="Navigator#gotoStagedSitePage">
 			<var name="pageName" value="Test Page Name" />
@@ -2629,8 +2639,9 @@
 			<var name="siteName" value="Site Name" />
 		</execute>
 
-		<execute macro="UserSegmentContentListPortlet#viewContent">
-			<var name="viewEntryContentList" value="Web Content Content" />
+		<execute macro="AssetPublisherPortlet#viewAssetPG">
+			<var name="assetContent" value="Web Content Content" />
+			<var name="assetTitle" value="Web Content Title" />
 		</execute>
 
 		<execute macro="Navigator#gotoSitePage">
@@ -2638,8 +2649,9 @@
 			<var name="siteName" value="Site Name" />
 		</execute>
 
-		<execute macro="UserSegmentContentListPortlet#viewContent">
-			<var name="viewEntryContentList" value="Web Content Content" />
+		<execute macro="AssetPublisherPortlet#viewAssetPG">
+			<var name="assetContent" value="Web Content Content" />
+			<var name="assetTitle" value="Web Content Title" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoSite">
@@ -2664,14 +2676,20 @@
 			<var name="siteName" value="Site Name" />
 		</execute>
 
-		<execute macro="UserSegmentContentListPortlet#viewContentNotPresent" />
+		<execute macro="AssetPublisherPortlet#viewAssetNotPresentPG">
+			<var name="assetContent" value="Web Content Content" />
+			<var name="assetTitle" value="Web Content Title" />
+		</execute>
 
 		<execute macro="Navigator#gotoSitePage">
 			<var name="pageName" value="Test Page Name" />
 			<var name="siteName" value="Site Name" />
 		</execute>
 
-		<execute macro="UserSegmentContentListPortlet#viewContentNotPresent" />
+		<execute macro="AssetPublisherPortlet#viewAssetNotPresentPG">
+			<var name="assetContent" value="Web Content Content" />
+			<var name="assetTitle" value="Web Content Title" />
+		</execute>
 	</command>
 
 	<command name="StagingCTEnabled" priority="4">
@@ -2748,8 +2766,10 @@
 		</execute>
 
 		<execute macro="Portlet#addPG">
-			<var name="portletName" value="User Segment Content List" />
+			<var name="portletName" value="Asset Publisher" />
 		</execute>
+
+		<execute macro="AssetPublisherPortlet#enableUserSegementFilter" />
 
 		<execute macro="Navigator#gotoStagedSitePage">
 			<var name="pageName" value="Test Page Name" />
@@ -2765,8 +2785,9 @@
 			<var name="siteName" value="Site Name" />
 		</execute>
 
-		<execute macro="UserSegmentContentListPortlet#viewContent">
-			<var name="viewEntryContentList" value="Web Content Content" />
+		<execute macro="AssetPublisherPortlet#viewAssetPG">
+			<var name="assetContent" value="Web Content Content" />
+			<var name="assetTitle" value="Web Content Title" />
 		</execute>
 
 		<execute macro="Navigator#gotoSitePage">
@@ -2774,8 +2795,9 @@
 			<var name="siteName" value="Site Name" />
 		</execute>
 
-		<execute macro="UserSegmentContentListPortlet#viewContent">
-			<var name="viewEntryContentList" value="Web Content Content" />
+		<execute macro="AssetPublisherPortlet#viewAssetPG">
+			<var name="assetContent" value="Web Content Content" />
+			<var name="assetTitle" value="Web Content Title" />
 		</execute>
 
 		<execute macro="Navigator#gotoStagedSitePage">
@@ -2801,15 +2823,19 @@
 			<var name="siteName" value="Site Name" />
 		</execute>
 
-		<execute macro="UserSegmentContentListPortlet#viewContentNotPresent" />
+		<execute macro="AssetPublisherPortlet#viewAssetNotPresentPG">
+			<var name="assetContent" value="Web Content Content" />
+			<var name="assetTitle" value="Web Content Title" />
+		</execute>
 
 		<execute macro="Navigator#gotoSitePage">
 			<var name="pageName" value="Test Page Name" />
 			<var name="siteName" value="Site Name" />
 		</execute>
 
-		<execute macro="UserSegmentContentListPortlet#viewContent">
-			<var name="viewEntryContentList" value="Web Content Content" />
+		<execute macro="AssetPublisherPortlet#viewAssetPG">
+			<var name="assetContent" value="Web Content Content" />
+			<var name="assetTitle" value="Web Content Title" />
 		</execute>
 
 		<execute macro="Navigator#gotoStagedSitePage">
@@ -2826,7 +2852,10 @@
 			<var name="siteName" value="Site Name" />
 		</execute>
 
-		<execute macro="UserSegmentContentListPortlet#viewContentNotPresent" />
+		<execute macro="AssetPublisherPortlet#viewAssetNotPresentPG">
+			<var name="assetContent" value="Web Content Content" />
+			<var name="assetTitle" value="Web Content Title" />
+		</execute>
 	</command>
 
 	<command name="UserSegmentAddCategorizationToContent" priority="4">
@@ -4653,7 +4682,7 @@
 		</execute>
 	</command>
 
-	<command name="UserSegmentViewAnyContentWithCategorizationViaContentListPortletAndExportImportLAR" priority="4">
+	<command name="UserSegmentViewAnyContentWithCategorizationViaAPPortletAndExportImportLAR" priority="4">
 		<description message="This is a use case for WCM-1347." />
 
 		<property name="content.targeting.release" value="true" />
@@ -4711,11 +4740,19 @@
 		</execute>
 
 		<execute macro="Portlet#addPG">
-			<var name="portletName" value="User Segment Content List" />
+			<var name="portletName" value="Asset Publisher" />
 		</execute>
 
-		<execute macro="UserSegmentContentListPortlet#viewContent">
-			<var name="viewEntryContentList" value="Web Content Content" />
+		<execute macro="AssetPublisherPortlet#enableUserSegementFilter" />
+
+		<execute macro="Navigator#gotoSitePage">
+			<var name="pageName" value="Test Page Name" />
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="AssetPublisherPortlet#viewAssetPG">
+			<var name="assetContent" value="Web Content Content" />
+			<var name="assetTitle" value="Web Content Title" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoPortlet">
@@ -4748,7 +4785,7 @@
 		</execute>
 
 		<execute macro="LAR#exportPortlet">
-			<var name="larFileName" value="User_Segment_Content_List.portlet.lar" />
+			<var name="larFileName" value="Asset_Publisher.portlet.lar" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoPortlet">
@@ -4801,15 +4838,16 @@
 		</execute>
 
 		<execute macro="Portlet#addPG">
-			<var name="portletName" value="User Segment Content List" />
+			<var name="portletName" value="Asset Publisher" />
 		</execute>
 
 		<execute macro="LAR#importPortlet">
-			<var name="larFileName" value="User_Segment_Content_List.portlet.lar" />
+			<var name="larFileName" value="Asset_Publisher.portlet.lar" />
 		</execute>
 
-		<execute macro="UserSegmentContentListPortlet#viewContent">
-			<var name="viewEntryContentList" value="Web Content Content" />
+		<execute macro="AssetPublisherPortlet#viewAssetPG">
+			<var name="assetContent" value="Web Content Content" />
+			<var name="assetTitle" value="Web Content Title" />
 		</execute>
 	</command>
 
@@ -4930,7 +4968,7 @@
 		</execute>
 	</command>
 
-	<command name="UserSegmentViewSpecificContentWithCategorizationViaContentListPortlet" priority="4">
+	<command name="UserSegmentViewSpecificContentWithCategorizationViaAPPortlet" priority="4">
 		<property name="content.targeting.release" value="true" />
 
 		<execute macro="ProductMenu#gotoSite">
@@ -4988,7 +5026,19 @@
 		</execute>
 
 		<execute macro="Portlet#addPG">
-			<var name="portletName" value="User Segment Content List" />
+			<var name="portletName" value="Asset Publisher" />
+		</execute>
+
+		<execute macro="AssetPublisherPortlet#enableUserSegementFilter" />
+
+		<execute macro="Navigator#gotoSitePage">
+			<var name="pageName" value="Test Page Name" />
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="AssetPublisherPortlet#configureAssetTypePG">
+			<var name="assetSubtype" value="Any" />
+			<var name="selectedAsset" value="Web Content Article" />
 		</execute>
 
 		<execute macro="Navigator#gotoSitePage">
@@ -4996,17 +5046,9 @@
 			<var name="siteName" value="Site Name" />
 		</execute>
 
-		<execute macro="UserSegmentContentListPortlet#configureDisplayFilter">
-			<var name="assetTypeFilter" value="Web Content Article" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Test Page Name" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="UserSegmentContentListPortlet#viewContent">
-			<var name="viewEntryContentList" value="Web Content Content" />
+		<execute macro="AssetPublisherPortlet#viewAssetPG">
+			<var name="assetContent" value="Web Content Content" />
+			<var name="assetTitle" value="Web Content Title" />
 		</execute>
 	</command>
 </definition>

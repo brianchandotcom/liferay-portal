@@ -133,7 +133,8 @@ public class ShareEntryMVCActionCommand extends BaseMVCActionCommand {
 				errorMessage = "you-do-not-have-permission-to-share-this-item";
 			}
 
-			jsonObject.put("erorrMessage", errorMessage);
+			jsonObject.put(
+				"erorrMessage", LanguageUtil.get(resourceBundle, errorMessage));
 
 			JSONPortletResponseUtil.writeJSON(
 				actionRequest, actionResponse, jsonObject);

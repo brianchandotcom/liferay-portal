@@ -59,12 +59,6 @@ public class ModuleApplicationContextRegistrator {
 
 	protected void start() throws Exception {
 		try {
-			Dictionary<String, String> headers = _extendeeBundle.getHeaders(
-				StringPool.BLANK);
-
-			String[] beanDefinitionFileNames = StringUtil.split(
-				headers.get("Liferay-Spring-Context"), ',');
-
 			ClassLoader classLoader = new BundleResolverClassLoader(
 				_extendeeBundle, _extenderBundle);
 
@@ -72,9 +66,12 @@ public class ModuleApplicationContextRegistrator {
 				new CompositeResourceLoaderBundle(
 					_extendeeBundle, _extenderBundle);
 
+			Dictionary<String, String> headers = _extendeeBundle.getHeaders(
+				StringPool.BLANK);
+
 			_configurableApplicationContext = new ModuleApplicationContext(
 				compositeResourceLoaderBundle, classLoader,
-				beanDefinitionFileNames);
+				StringUtil.split(headers.get("Liferay-Spring-Context"), ','));
 
 			_configurableApplicationContext.addBeanFactoryPostProcessor(
 				new ModuleBeanFactoryPostProcessor(

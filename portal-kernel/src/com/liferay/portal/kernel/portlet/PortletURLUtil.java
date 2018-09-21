@@ -381,7 +381,9 @@ public class PortletURLUtil {
 			// Do not set parameter values that are over 32 kb. See LEP-1755.
 
 			for (String value : values) {
-				if (value.length() > _CURRENT_URL_PARAMETER_THRESHOLD) {
+				if ((value == null) ||
+					(value.length() > _CURRENT_URL_PARAMETER_THRESHOLD)) {
+
 					addParam = false;
 
 					break;

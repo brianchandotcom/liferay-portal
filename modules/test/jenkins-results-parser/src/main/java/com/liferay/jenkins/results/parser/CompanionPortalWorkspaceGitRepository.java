@@ -27,7 +27,13 @@ public class CompanionPortalWorkspaceGitRepository
 			_getGitHubURL(primaryPortalWorkspaceGitRepository),
 			_getUpstreamBranchName(primaryPortalWorkspaceGitRepository),
 			_getBranchSHA(primaryPortalWorkspaceGitRepository));
+
+		this.primaryPortalWorkspaceGitRepository =
+			primaryPortalWorkspaceGitRepository;
 	}
+
+	protected final PortalWorkspaceGitRepository
+		primaryPortalWorkspaceGitRepository;
 
 	private static String _getBranchSHA(
 		PortalWorkspaceGitRepository primaryPortalWorkspaceGitRepository) {

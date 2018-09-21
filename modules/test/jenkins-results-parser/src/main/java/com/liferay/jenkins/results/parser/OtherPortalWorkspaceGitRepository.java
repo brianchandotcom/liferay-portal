@@ -26,7 +26,13 @@ public class OtherPortalWorkspaceGitRepository
 		super(
 			_getGitHubURL(primaryPortalWorkspaceGitRepository),
 			_getUpstreamBranchName(primaryPortalWorkspaceGitRepository), null);
+
+		this.primaryPortalWorkspaceGitRepository =
+			primaryPortalWorkspaceGitRepository;
 	}
+
+	protected final PortalWorkspaceGitRepository
+		primaryPortalWorkspaceGitRepository;
 
 	private static String _getGitHubURL(
 		PortalWorkspaceGitRepository primaryPortalWorkspaceGitRepository) {

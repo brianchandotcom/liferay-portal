@@ -192,29 +192,8 @@ public class JavaClassParser {
 	}
 
 	private static JavaTerm _getJavaTerm(
-			String classContent, int javaTermLineNumber,
-			int javaTermEndLineNumber, int lineNumber)
+			String metadata, String javaTermContent, int lineNumber)
 		throws IOException, ParseException {
-
-		if (javaTermEndLineNumber == -1) {
-			return null;
-		}
-
-		int x = SourceUtil.getLineStartPos(classContent, lineNumber);
-
-		String metadata = null;
-
-		if (javaTermLineNumber != lineNumber) {
-			int y = SourceUtil.getLineStartPos(
-				classContent, javaTermLineNumber);
-
-			metadata = classContent.substring(y, x);
-		}
-
-		int y = SourceUtil.getLineStartPos(
-			classContent, javaTermEndLineNumber + 1);
-
-		String javaTermContent = classContent.substring(x, y);
 
 		Matcher matcher = _javaTermStartLinePattern.matcher(javaTermContent);
 
@@ -228,12 +207,10 @@ public class JavaClassParser {
 			startLine, new String[] {"\t", "(\n", "\n", " synchronized "},
 			new String[] {"", "(", " ", " "});
 
-		if (metadata != null) {
-			javaTermContent = metadata + javaTermContent;
-		}
+		javaTermContent = metadata + javaTermContent;
 
 		if (startLine.startsWith("static {")) {
-			return new JavaStaticBlock(javaTermContent, javaTermLineNumber);
+			return new JavaStaticBlock(javaTermContent, lineNumber);
 		}
 
 		String accessModifier = JavaTerm.ACCESS_MODIFIER_DEFAULT;
@@ -251,8 +228,8 @@ public class JavaClassParser {
 		boolean isInterface = startLine.contains(" interface ");
 		boolean isStatic = startLine.contains(" static ");
 
-		x = startLine.indexOf(CharPool.EQUAL);
-		y = startLine.indexOf(CharPool.OPEN_PARENTHESIS);
+		int x = startLine.indexOf(CharPool.EQUAL);
+		int y = startLine.indexOf(CharPool.OPEN_PARENTHESIS);
 
 		if (startLine.contains(" @interface ") ||
 			startLine.contains(" class ") || startLine.contains(" enum ") ||
@@ -406,16 +383,16 @@ public class JavaClassParser {
 	}
 
 	private static JavaClass _parseJavaClass(
-			String className, String classContent, int lineNumber,
+			String className, String classContent, int classLineNumber,
 			String accessModifier, boolean isAbstract, boolean isStatic,
 			boolean isEnum, boolean isInterface, boolean anonymous)
 		throws IOException, ParseException {
 
 		JavaClass javaClass = new JavaClass(
-			className, classContent, accessModifier, lineNumber, isAbstract,
-			isStatic, isInterface, anonymous);
+			className, classContent, accessModifier, classLineNumber,
+			isAbstract, isStatic, isInterface, anonymous);
 
-		lineNumber = 0;
+		int lineNumber = 0;
 
 		int annotationLevel = 0;
 		int level = 0;
@@ -487,12 +464,29 @@ public class JavaClassParser {
 				lineNumber = _getCommentEndLineNumber(classContent, lineNumber);
 			}
 			else {
+				int x = SourceUtil.getLineStartPos(
+					classContent, javaTermLineNumber);
+				int y = SourceUtil.getLineStartPos(classContent, lineNumber);
+
+				String metadata = classContent.substring(x, y);
+
 				int javaTermEndLineNumber = _getJavaTermEndLineNumber(
 					classContent, lineNumber);
 
+				if (javaTermEndLineNumber == -1) {
+					throw new ParseException(
+						"Parsing error at line '" + StringUtil.trim(line) +
+							"'");
+				}
+
+				int z = SourceUtil.getLineStartPos(
+					classContent, javaTermEndLineNumber + 1);
+
+				String javaTermContent = classContent.substring(y, z);
+
 				JavaTerm javaTerm = _getJavaTerm(
-					classContent, javaTermLineNumber, javaTermEndLineNumber,
-					lineNumber);
+					metadata, javaTermContent,
+					classLineNumber + javaTermLineNumber - 1);
 
 				if (javaTerm == null) {
 					throw new ParseException(

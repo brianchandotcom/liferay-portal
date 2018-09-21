@@ -229,11 +229,6 @@ public abstract class OpenSSOImpl implements OpenSSO {
 	}
 
 	@Override
-	public abstract boolean isAuthenticated(
-			HttpServletRequest request, String serviceUrl)
-		throws IOException;
-
-	@Override
 	public boolean isValidServiceUrl(String serviceUrl) {
 		if (Validator.isNull(serviceUrl)) {
 			return false;

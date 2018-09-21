@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.sso.OpenSSO;
-import com.liferay.portal.kernel.util.CookieKeys;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.URLCodec;
@@ -47,25 +46,10 @@ public class OpenSSOV13Impl extends OpenSSOImpl {
 
 		boolean authenticated = false;
 
-		boolean hasCookieNames = false;
-
 		String[] cookieNames = getCookieNames(serviceUrl);
 
-		for (String cookieName : cookieNames) {
-			if (CookieKeys.getCookie(request, cookieName) != null) {
-				hasCookieNames = true;
-
-				break;
-			}
-		}
-
-		if (!hasCookieNames) {
-			if (_log.isInfoEnabled()) {
-				_log.info(
-					"User is not logged in because he has no OpenSSO cookies");
-			}
-
-			return false;
+		if (!hasCookieNames(request, cookieNames)) {
+			return authenticated;
 		}
 
 		String subjectId = getSubjectId(request, serviceUrl);

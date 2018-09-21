@@ -95,14 +95,16 @@ AUI.add(
 
 						var fieldsListContainer = boundingBox.one('.target-' + index);
 
-						fieldMessageContainer.append(
-							Lang.sub(
-								TPL_LABEL_ACTION,
-								{
-									message: Liferay.Language.get('from-data-provider')
-								}
-							)
-						);
+						if (!fieldMessageContainer._node.hasChildNodes()) {
+							fieldMessageContainer.append(
+								Lang.sub(
+									TPL_LABEL_ACTION,
+									{
+										message: Liferay.Language.get('from-data-provider')
+									}
+								)
+							);
+						}
 
 						instance._createDataProviderList().render(fieldsListContainer);
 

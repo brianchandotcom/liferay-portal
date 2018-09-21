@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBContext;
 import com.liferay.portal.kernel.dao.db.DBManager;
 import com.liferay.portal.kernel.dao.db.DBProcessContext;
+import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Release;
@@ -39,13 +40,13 @@ import com.liferay.portal.spring.extender.internal.classloader.BundleResolverCla
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
 
 import java.net.URL;
 
-import java.util.ArrayList;
 import java.util.Dictionary;
 import java.util.Hashtable;
-import java.util.List;
 
 import javax.sql.DataSource;
 
@@ -199,24 +200,7 @@ public class ModuleApplicationContextExtender extends AbstractExtender {
 			ClassLoader classLoader = new BundleResolverClassLoader(
 				_bundle, bundle);
 
-			List<ContextDependency> contextDependencies =
-				_processServiceReferences(_bundle);
-
-			for (ContextDependency contextDependency : contextDependencies) {
-				ServiceDependency serviceDependency =
-					_dependencyManager.createServiceDependency();
-
-				serviceDependency.setRequired(true);
-
-				Class<?> serviceClass = Class.forName(
-					contextDependency.getServiceClassName(), false,
-					classLoader);
-
-				serviceDependency.setService(
-					serviceClass, contextDependency.getFilterString());
-
-				_component.add(serviceDependency);
-			}
+			_processServiceReferences(classLoader);
 
 			Dictionary<String, String> headers = _bundle.getHeaders(
 				StringPool.BLANK);
@@ -364,41 +348,52 @@ public class ModuleApplicationContextExtender extends AbstractExtender {
 				properties);
 		}
 
-		private List<ContextDependency> _processServiceReferences(Bundle bundle)
-			throws IOException {
+		private void _processServiceReferences(ClassLoader classLoader)
+			throws Exception {
 
-			List<ContextDependency> contextDependencies = new ArrayList<>();
-
-			URL url = bundle.getEntry("OSGI-INF/context/context.dependencies");
+			URL url = _bundle.getEntry("OSGI-INF/context/context.dependencies");
 
 			if (url == null) {
-				return contextDependencies;
+				return;
 			}
 
-			List<String> lines = new ArrayList<>();
+			try (Reader reader = new InputStreamReader(url.openStream());
+				UnsyncBufferedReader unsyncBufferedReader =
+					new UnsyncBufferedReader(reader)) {
 
-			StringUtil.readLines(url.openStream(), lines);
+				String line = null;
 
-			for (String line : lines) {
-				if (Validator.isNull(line)) {
-					continue;
+				while ((line = unsyncBufferedReader.readLine()) != null) {
+					if (Validator.isNull(line)) {
+						continue;
+					}
+
+					line = line.trim();
+
+					int index = line.indexOf(' ');
+
+					String serviceClassName = line;
+
+					String filterString = null;
+
+					if (index != -1) {
+						serviceClassName = line.substring(0, index);
+						filterString = line.substring(index + 1);
+					}
+
+					ServiceDependency serviceDependency =
+						_dependencyManager.createServiceDependency();
+
+					serviceDependency.setRequired(true);
+
+					Class<?> serviceClass = Class.forName(
+						serviceClassName, false, classLoader);
+
+					serviceDependency.setService(serviceClass, filterString);
+
+					_component.add(serviceDependency);
 				}
-
-				line = line.trim();
-
-				String[] array = line.split(" ");
-
-				String filterString = "";
-
-				if (array.length > 1) {
-					filterString = array[1];
-				}
-
-				contextDependencies.add(
-					new ContextDependency(array[0], filterString));
 			}
-
-			return contextDependencies;
 		}
 
 		private final Bundle _bundle;
@@ -406,31 +401,6 @@ public class ModuleApplicationContextExtender extends AbstractExtender {
 		private final DependencyManager _dependencyManager;
 		private ServiceRegistration<UpgradeStep>
 			_upgradeStepServiceRegistration;
-
-		private class ContextDependency {
-
-			public ContextDependency(
-				String serviceClassName, String filterString) {
-
-				this.serviceClassName = serviceClassName;
-
-				if (!filterString.equals("")) {
-					this.filterString = filterString;
-				}
-			}
-
-			public String getFilterString() {
-				return filterString;
-			}
-
-			public String getServiceClassName() {
-				return serviceClassName;
-			}
-
-			protected String filterString;
-			protected final String serviceClassName;
-
-		}
 
 	}
 

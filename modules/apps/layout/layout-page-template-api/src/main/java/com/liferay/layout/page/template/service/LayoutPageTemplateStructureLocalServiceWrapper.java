@@ -210,6 +210,14 @@ public class LayoutPageTemplateStructureLocalServiceWrapper
 			classNameId, classPK);
 	}
 
+	@Override
+	public com.liferay.layout.page.template.model.LayoutPageTemplateStructure fetchLayoutPageTemplateStructure(
+		long groupId, long classNameId, long classPK, boolean rebuildStructure)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _layoutPageTemplateStructureLocalService.fetchLayoutPageTemplateStructure(groupId,
+			classNameId, classPK, rebuildStructure);
+	}
+
 	/**
 	* Returns the layout page template structure matching the UUID and group.
 	*
@@ -345,15 +353,6 @@ public class LayoutPageTemplateStructureLocalServiceWrapper
 		java.io.Serializable primaryKeyObj)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _layoutPageTemplateStructureLocalService.getPersistedModel(primaryKeyObj);
-	}
-
-	@Override
-	public com.liferay.layout.page.template.model.LayoutPageTemplateStructure rebuildLayoutPageTemplateStructureData(
-		long userId, long groupId, long classNameId, long classPK,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _layoutPageTemplateStructureLocalService.rebuildLayoutPageTemplateStructureData(userId,
-			groupId, classNameId, classPK, serviceContext);
 	}
 
 	/**

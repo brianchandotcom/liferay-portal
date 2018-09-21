@@ -190,6 +190,11 @@ public interface LayoutPageTemplateStructureLocalService
 	public LayoutPageTemplateStructure fetchLayoutPageTemplateStructure(
 		long groupId, long classNameId, long classPK);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public LayoutPageTemplateStructure fetchLayoutPageTemplateStructure(
+		long groupId, long classNameId, long classPK, boolean rebuildStructure)
+		throws PortalException;
+
 	/**
 	* Returns the layout page template structure matching the UUID and group.
 	*
@@ -294,10 +299,6 @@ public interface LayoutPageTemplateStructureLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException;
-
-	public LayoutPageTemplateStructure rebuildLayoutPageTemplateStructureData(
-		long userId, long groupId, long classNameId, long classPK,
-		ServiceContext serviceContext) throws PortalException;
 
 	/**
 	* Updates the layout page template structure in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.

@@ -38,6 +38,12 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 )
 public interface OpenSSOConfiguration {
 
+	@Meta.AD(
+		deflt = "openam-12", name = "version",
+		optionValues = {"openam-12", "openam-13"}, required = false
+	)
+	public String version();
+
 	@Meta.AD(deflt = "false", name = "enabled", required = false)
 	public boolean enabled();
 

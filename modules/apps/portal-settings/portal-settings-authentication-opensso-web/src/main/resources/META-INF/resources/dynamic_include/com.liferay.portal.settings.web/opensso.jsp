@@ -28,9 +28,15 @@ String screenNameAttr = openSSOConfiguration.screenNameAttr();
 String emailAddressAttr = openSSOConfiguration.emailAddressAttr();
 String firstNameAttr = openSSOConfiguration.firstNameAttr();
 String lastNameAttr = openSSOConfiguration.lastNameAttr();
+String version = openSSOConfiguration.version();
 %>
 
 <aui:fieldset>
+	<aui:select label="version" name='<%= PortalSettingsOpenSSOConstants.FORM_PARAMETER_NAMESPACE + "version" %>' value="<%= version %>">
+		<aui:option label="openam-12" value="<%= OpenSSOConfigurationKeys.VERSION_OPENAM_12 %>" />
+		<aui:option label="openam-13" value="<%= OpenSSOConfigurationKeys.VERSION_OPENAM_13 %>" />
+	</aui:select>
+
 	<aui:input id='<%= PortalUtil.generateRandomKey(request, "portal_settings_authentication_opensso") %>' name="<%= ActionRequest.ACTION_NAME %>" type="hidden" value="/portal_settings/opensso" />
 
 	<aui:input label="enabled" name='<%= PortalSettingsOpenSSOConstants.FORM_PARAMETER_NAMESPACE + "enabled" %>' type="checkbox" value="<%= enabled %>" />

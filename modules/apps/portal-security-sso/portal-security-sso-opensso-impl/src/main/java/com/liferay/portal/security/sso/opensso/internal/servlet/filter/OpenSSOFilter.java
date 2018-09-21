@@ -14,6 +14,8 @@
 
 package com.liferay.portal.security.sso.opensso.internal.servlet.filter;
 
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
@@ -23,6 +25,7 @@ import com.liferay.portal.kernel.settings.CompanyServiceSettingsLocator;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.URLCodec;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.sso.opensso.configuration.OpenSSOConfiguration;
@@ -35,7 +38,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.osgi.framework.BundleContext;
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -105,6 +111,17 @@ public class OpenSSOFilter extends BaseFilter {
 		return false;
 	}
 
+	@Activate
+	protected void activate(BundleContext bundleContext) {
+		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
+			bundleContext, OpenSSO.class, "version");
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		_serviceTrackerMap.close();
+	}
+
 	@Override
 	protected Log getLog() {
 		return _log;
@@ -130,6 +147,19 @@ public class OpenSSOFilter extends BaseFilter {
 		OpenSSOConfiguration openSSOConfiguration = getOpenSSOConfiguration(
 			companyId);
 
+		String version = openSSOConfiguration.version();
+
+		OpenSSO openSSO = _serviceTrackerMap.getService(version);
+
+		if (openSSO == null) {
+			_log.error(
+				StringBundler.concat(
+					"Selected OpenSSO version not implemented, no service ",
+					"found for version ", version));
+
+			return;
+		}
+
 		String requestURI = GetterUtil.getString(request.getRequestURI());
 
 		if (requestURI.endsWith("/portal/logout")) {
@@ -148,7 +178,7 @@ public class OpenSSOFilter extends BaseFilter {
 
 			// LEP-5943
 
-			authenticated = _openSSO.isAuthenticated(
+			authenticated = openSSO.isAuthenticated(
 				request, openSSOConfiguration.serviceURL());
 		}
 		catch (Exception e) {
@@ -166,7 +196,7 @@ public class OpenSSOFilter extends BaseFilter {
 
 			// LEP-5943
 
-			String newSubjectId = _openSSO.getSubjectId(
+			String newSubjectId = openSSO.getSubjectId(
 				request, openSSOConfiguration.serviceURL());
 
 			String oldSubjectId = (String)session.getAttribute(_SUBJECT_ID_KEY);
@@ -227,19 +257,15 @@ public class OpenSSOFilter extends BaseFilter {
 		_configurationProvider = configurationProvider;
 	}
 
-	@Reference(unbind = "-")
-	protected void setOpenSSO(OpenSSO openSSO) {
-		_openSSO = openSSO;
-	}
-
 	private static final String _SUBJECT_ID_KEY = "open.sso.subject.id";
 
 	private static final Log _log = LogFactoryUtil.getLog(OpenSSOFilter.class);
 
 	private ConfigurationProvider _configurationProvider;
-	private OpenSSO _openSSO;
 
 	@Reference
 	private Portal _portal;
+
+	private ServiceTrackerMap<String, OpenSSO> _serviceTrackerMap;
 
 }

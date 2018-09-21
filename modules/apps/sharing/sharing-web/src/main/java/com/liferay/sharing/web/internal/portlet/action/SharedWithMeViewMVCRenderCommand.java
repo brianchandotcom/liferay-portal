@@ -14,26 +14,21 @@
 
 package com.liferay.sharing.web.internal.portlet.action;
 
-import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
-import com.liferay.asset.kernel.model.AssetRendererFactory;
-import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
-import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderConstants;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
-import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.sharing.interpreter.SharingEntryInterpreter;
+import com.liferay.sharing.interpreter.SharingEntryInterpreterProvider;
 import com.liferay.sharing.model.SharingEntry;
 import com.liferay.sharing.renderer.SharingEntryViewRenderer;
 import com.liferay.sharing.service.SharingEntryLocalService;
 import com.liferay.sharing.web.internal.constants.SharingPortletKeys;
 import com.liferay.sharing.web.internal.display.context.SharedWithMeViewDisplayContext;
-import com.liferay.sharing.web.internal.interpreter.AssetRendererSharingEntryInterpreter;
 
 import java.util.Objects;
 
@@ -41,10 +36,7 @@ import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
-import org.osgi.framework.BundleContext;
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -89,7 +81,8 @@ public class SharedWithMeViewMVCRenderCommand implements MVCRenderCommand {
 				}
 
 				SharingEntryInterpreter<Object> sharingEntryInterpreter =
-					_getSharingEntryInterpreter(sharingEntry.getClassNameId());
+					_sharingEntryInterpreterProvider.getSharingEntryInterpreter(
+						sharingEntry);
 
 				if (sharingEntryInterpreter == null) {
 					throw new PortletException(
@@ -115,8 +108,7 @@ public class SharedWithMeViewMVCRenderCommand implements MVCRenderCommand {
 		SharedWithMeViewDisplayContext sharedWithMeViewDisplayContext =
 			new SharedWithMeViewDisplayContext(
 				themeDisplay, _sharingEntryLocalService,
-				sharingEntry -> _getSharingEntryInterpreter(
-					sharingEntry.getClassNameId()));
+				_sharingEntryInterpreterProvider::getSharingEntryInterpreter);
 
 		renderRequest.setAttribute(
 			SharedWithMeViewDisplayContext.class.getName(),
@@ -125,64 +117,11 @@ public class SharedWithMeViewMVCRenderCommand implements MVCRenderCommand {
 		return "/shared_with_me/view.jsp";
 	}
 
-	@Activate
-	protected void activate(BundleContext bundleContext) {
-		_serviceTrackerMap =
-			(ServiceTrackerMap<Long, SharingEntryInterpreter<?>>)
-				(ServiceTrackerMap)
-					ServiceTrackerMapFactory.openSingleValueMap(
-						bundleContext, SharingEntryInterpreter.class,
-						"(model.class.name=*)",
-						(serviceReference, emitter) -> emitter.emit(
-							_classNameLocalService.getClassNameId(
-								(String)serviceReference.getProperty(
-									"model.class.name"))));
-	}
-
-	@Deactivate
-	protected void deactivate() {
-		_serviceTrackerMap.close();
-	}
-
-	private <T> SharingEntryInterpreter<T> _getSharingEntryInterpreter(
-		long classNameId) {
-
-		SharingEntryInterpreter<T> sharingEntryInterpreter =
-			(SharingEntryInterpreter<T>)_serviceTrackerMap.getService(
-				classNameId);
-
-		if ((sharingEntryInterpreter == null) && _isAssetObject(classNameId)) {
-			return (SharingEntryInterpreter<T>)
-				_assetRendererSharingEntryInterpreter;
-		}
-
-		return sharingEntryInterpreter;
-	}
-
-	private boolean _isAssetObject(long classNameId) {
-		AssetRendererFactory<?> assetRendererFactory =
-			AssetRendererFactoryRegistryUtil.
-				getAssetRendererFactoryByClassNameId(classNameId);
-
-		if (assetRendererFactory != null) {
-			return true;
-		}
-
-		return false;
-	}
-
-	@Reference
-	private AssetRendererSharingEntryInterpreter
-		_assetRendererSharingEntryInterpreter;
-
-	@Reference
-	private ClassNameLocalService _classNameLocalService;
-
 	@Reference
 	private Portal _portal;
 
-	private ServiceTrackerMap<Long, SharingEntryInterpreter<?>>
-		_serviceTrackerMap;
+	@Reference
+	private SharingEntryInterpreterProvider _sharingEntryInterpreterProvider;
 
 	@Reference
 	private SharingEntryLocalService _sharingEntryLocalService;

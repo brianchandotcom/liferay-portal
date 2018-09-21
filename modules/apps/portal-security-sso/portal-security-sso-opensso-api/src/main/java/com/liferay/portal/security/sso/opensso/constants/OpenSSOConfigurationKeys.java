@@ -40,8 +40,4 @@ public class OpenSSOConfigurationKeys {
 
 	public static final String SERVICE_URL = "serviceURL";
 
-	public static final String VERSION_OPENAM_12 = "openam-12";
-
-	public static final String VERSION_OPENAM_13 = "openam-13";
-
 }

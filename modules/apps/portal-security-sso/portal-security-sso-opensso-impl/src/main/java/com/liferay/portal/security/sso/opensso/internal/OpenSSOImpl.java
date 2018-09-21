@@ -255,7 +255,7 @@ public class OpenSSOImpl implements OpenSSO {
 			return false;
 		}
 
-		String version = "openam-12";
+		int openamVersion = 12;
 
 		try {
 			OpenSSOConfiguration openSSOConfiguration =
@@ -265,7 +265,7 @@ public class OpenSSOImpl implements OpenSSO {
 						_portal.getCompanyId(request),
 						OpenSSOConstants.SERVICE_NAME));
 
-			version = openSSOConfiguration.version();
+			openamVersion = openSSOConfiguration.openamVersion();
 		}
 		catch (ConfigurationException ce) {
 			if (_log.isWarnEnabled()) {
@@ -273,7 +273,7 @@ public class OpenSSOImpl implements OpenSSO {
 			}
 		}
 
-		if (version.equals("openam-13")) {
+		if (openamVersion > 12) {
 			String subjectId = getSubjectId(request, serviceUrl);
 
 			if (subjectId != null) {

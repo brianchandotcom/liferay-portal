@@ -99,7 +99,6 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.config.ActionConfig;
 import org.apache.struts.config.ForwardConfig;
-import org.apache.struts.tiles.TilesRequestProcessor;
 import org.apache.struts.util.MessageResources;
 
 /**

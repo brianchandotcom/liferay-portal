@@ -36,9 +36,6 @@ import org.aopalliance.intercept.MethodInvocation;
  */
 public class AccessControlAdvisorImpl implements AccessControlAdvisor {
 
-	public AccessControlAdvisorImpl() {
-	}
-
 	@Override
 	public void accept(
 			MethodInvocation methodInvocation,

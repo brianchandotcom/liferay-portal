@@ -17,26 +17,6 @@
 		</if>
 	</command>
 
-	<command name="_gotoImportCollection">
-		<if>
-			<condition function="IsElementPresent" locator1="NavNested#NAV_NESTED_ELLIPSIS" />
-			<then>
-				<execute function="Click" locator1="NavNested#NAV_NESTED_ELLIPSIS" />
-			</then>
-			<else>
-				<execute macro="Button#click">
-					<var name="button" value="New" />
-				</execute>
-			</else>
-		</if>
-
-		<execute macro="MenuItem#click">
-			<var name="menuItem" value="Import" />
-		</execute>
-
-		<execute macro="IFrame#selectConfigurationFrame" />
-	</command>
-
 	<command name="addCollection">
 		<execute macro="Fragment#_gotoAddCollection" />
 
@@ -70,14 +50,42 @@
 		</execute>
 	</command>
 
+	<command name="gotoImportCollection">
+		<if>
+			<condition function="IsElementPresent" locator1="NavNested#NAV_NESTED_ELLIPSIS" />
+			<then>
+				<execute function="Click" locator1="NavNested#NAV_NESTED_ELLIPSIS" />
+			</then>
+			<else>
+				<execute macro="Button#click">
+					<var name="button" value="New" />
+				</execute>
+			</else>
+		</if>
+
+		<execute macro="MenuItem#click">
+			<var name="menuItem" value="Import" />
+		</execute>
+
+		<execute macro="IFrame#selectConfigurationFrame" />
+	</command>
+
 	<command name="importCollectionFromDependenciesFolder">
-		<execute macro="Fragment#_gotoImportCollection" />
+		<execute macro="Fragment#gotoImportCollection" />
 
 		<execute function="UploadCommonFile" locator1="TextInput#FILE" value1="${collectionZipFile}" />
+
+		<execute macro="Button#click">
+			<var name="button" value="Import" />
+		</execute>
+
+		<execute macro="Alert#viewSuccessMessage" />
+
+		<execute macro="IFrame#closeFrame" />
 	</command>
 
 	<command name="importCollectionFromTempFolder">
-		<execute macro="Fragment#_gotoImportCollection" />
+		<execute macro="Fragment#gotoImportCollection" />
 
 		<var method="PropsUtil#get('output.dir.name')" name="tempDir" />
 

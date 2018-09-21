@@ -304,17 +304,13 @@ public class FragmentsEditorDisplayContext {
 		return imageItemSelectorCriterion;
 	}
 
-	private String _getLayoutData() {
+	private String _getLayoutData() throws PortalException {
 		LayoutPageTemplateStructure layoutPageTemplateStructure =
 			LayoutPageTemplateStructureLocalServiceUtil.
 				fetchLayoutPageTemplateStructure(
 					_themeDisplay.getScopeGroupId(), _classNameId, _classPK);
 
-		if (layoutPageTemplateStructure != null) {
-			return layoutPageTemplateStructure.getData();
-		}
-
-		return StringPool.BLANK;
+		return layoutPageTemplateStructure.getData();
 	}
 
 	private LayoutPageTemplateEntry _getLayoutPageTemplateEntry()

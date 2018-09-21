@@ -16,14 +16,13 @@ package com.liferay.layout.page.template.internal.model.listener;
 
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.ModelListener;
-import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.util.Portal;
 
 import java.util.Objects;
@@ -38,13 +37,10 @@ import org.osgi.service.component.annotations.Reference;
 public class LayoutModelListener extends BaseModelListener<Layout> {
 
 	@Override
-	public void onAfterCreate(Layout layout) throws ModelListenerException {
+	public void onBeforeRemove(Layout layout) throws ModelListenerException {
 		if (!Objects.equals(layout.getType(), "content")) {
 			return;
 		}
-
-		ServiceContext serviceContext =
-			ServiceContextThreadLocal.getServiceContext();
 
 		try {
 			LayoutPageTemplateStructure layoutPageTemplateStructure =
@@ -53,36 +49,23 @@ public class LayoutModelListener extends BaseModelListener<Layout> {
 						layout.getGroupId(),
 						_portal.getClassNameId(Layout.class), layout.getPlid());
 
-			if (layoutPageTemplateStructure == null) {
+			if (layoutPageTemplateStructure != null) {
 				_layoutPageTemplateStructureLocalService.
-					addLayoutPageTemplateStructure(
-						layout.getUserId(), layout.getGroupId(),
-						_portal.getClassNameId(Layout.class), layout.getPlid(),
-						StringPool.BLANK, serviceContext);
+					deleteLayoutPageTemplateStructure(
+						layoutPageTemplateStructure);
 			}
 		}
 		catch (PortalException pe) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(pe, pe);
+			}
+
 			throw new ModelListenerException(pe);
 		}
 	}
 
-	@Override
-	public void onBeforeRemove(Layout layout) throws ModelListenerException {
-		if (!Objects.equals(layout.getType(), "content")) {
-			return;
-		}
-
-		LayoutPageTemplateStructure layoutPageTemplateStructure =
-			_layoutPageTemplateStructureLocalService.
-				fetchLayoutPageTemplateStructure(
-					layout.getGroupId(), _portal.getClassNameId(Layout.class),
-					layout.getPlid());
-
-		if (layoutPageTemplateStructure != null) {
-			_layoutPageTemplateStructureLocalService.
-				deleteLayoutPageTemplateStructure(layoutPageTemplateStructure);
-		}
-	}
+	private static final Log _log = LogFactoryUtil.getLog(
+		LayoutModelListener.class);
 
 	@Reference(unbind = "-")
 	private LayoutPageTemplateStructureLocalService

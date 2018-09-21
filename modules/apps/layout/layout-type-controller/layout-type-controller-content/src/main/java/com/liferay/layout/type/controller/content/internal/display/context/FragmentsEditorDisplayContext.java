@@ -282,7 +282,7 @@ public class FragmentsEditorDisplayContext {
 		return imageItemSelectorCriterion;
 	}
 
-	private String _getLayoutData() {
+	private String _getLayoutData() throws PortalException {
 		LayoutPageTemplateStructure layoutPageTemplateStructure =
 			LayoutPageTemplateStructureLocalServiceUtil.
 				fetchLayoutPageTemplateStructure(
@@ -290,11 +290,7 @@ public class FragmentsEditorDisplayContext {
 					PortalUtil.getClassNameId(Layout.class.getName()),
 					_themeDisplay.getPlid());
 
-		if (layoutPageTemplateStructure != null) {
-			return layoutPageTemplateStructure.getData();
-		}
-
-		return StringPool.BLANK;
+		return layoutPageTemplateStructure.getData();
 	}
 
 	private List<SoyContext> _getSidebarTabs() {

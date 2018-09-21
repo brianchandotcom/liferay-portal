@@ -72,7 +72,8 @@ String fullName = namespace + HtmlUtil.escapeJS(name);
 				}
 			</c:if>
 
-			, validateOnBlur: <%= validateOnBlur %>
+			, skipValidationTargetSelectors: ['a[class~=btn-cancel]'],
+			validateOnBlur: <%= validateOnBlur %>
 		}
 	);
 

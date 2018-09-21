@@ -100,6 +100,7 @@ AUI.add(
 							return instance._onSubmit;
 						}
 					},
+					skipValidationTargetSelectors: {},
 					validateOnBlur: {
 						validator: Lang.isBoolean,
 						value: true
@@ -124,6 +125,7 @@ AUI.add(
 							var formValidator = new A.FormValidator(
 								{
 									boundingBox: formNode,
+									skipValidationTargetSelectors: instance.get(''),
 									validateOnBlur: instance.get('validateOnBlur')
 								}
 							);

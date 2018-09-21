@@ -14,7 +14,6 @@
 	{@param? _handleSubmit: any}
 	{@param? _handleValidateEmail: any}
 	{@param? emailErrorMessage: string}
-	{@param? errorMessage: string}
 	{@param? submitting: bool}
 
 	<div id="{$id}" class="sharing-modal-content">
@@ -24,12 +23,6 @@
 			method="post"
 		>
 			<div class="sharing-modal-form-content">
-				{if $errorMessage}
-					<div class="alert alert-danger" role="alert">
-						<strong class="lead">{msg desc=""}error{/msg}:</strong> {$errorMessage}
-					</div>
-				{/if}
-
 				<div class="form-group {$emailErrorMessage ? ' has-error' : '' }">
 					<label for="userEmailAddress">{msg desc=""}invite-to-collaborate{/msg}</label>
 					<input

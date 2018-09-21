@@ -102,30 +102,33 @@ class Sharing extends PortletBase {
 				this.submitting = false;
 
 				if (response.ok) {
-					parent.Liferay.Portlet.refresh(`#p_p_id${this._refererPortletNamespace}`);
-
-					openToast(
-						{
-							message: repsonse,
-							title: Liferay.Language.get('success'),
-						}
-					);
-
-					this._closeDialog();
-
-					return response;
+					return response.json();
 				}
 
-				return response.json();
+				return response.json().then(json => {
+					const error = new Error(json.erorrMessage || response.statusText);
+					throw Object.assign(error, { response });
+				});
 			})
-			.then(response => {
-				if (response.error) {
-					throw response.error;
-				}
+			.then(json => {
+				parent.Liferay.Portlet.refresh(`#p_p_id${this._refererPortletNamespace}`);
+
+				openToast({
+					message: json.successMessage,
+				});
+
+				this._closeDialog();
 			})
-			.catch(err => {
+			.catch(error => {
 				this.submitting = false;
-				this.errorMessage = err.message;
+
+				openToast({
+					message: error.message,
+					title: Liferay.Language.get('error'),
+					type: 'danger'
+				});
+
+				this._closeDialog();
 			});
 	}
 
@@ -154,8 +157,7 @@ class Sharing extends PortletBase {
 Sharing.STATE = {
 	shareable: Config.bool().value(true),
 	shareActionURL: Config.string().required(),
-	sharingEntryPermissionDisplayActionId: Config.string().required()
-	errorMessage: Config.string().value(''),
+	sharingEntryPermissionDisplayActionId: Config.string().required(),
 	emailErrorMessage: Config.string().value(''),
 	submitting: Config.bool().value(false),
 };

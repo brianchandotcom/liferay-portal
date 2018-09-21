@@ -40,11 +40,11 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 @ProviderType
 public interface OpenSSOConfiguration {
 
-	@Meta.AD(deflt = "12", name = "openam-version", required = false)
-	public int openamVersion();
-
 	@Meta.AD(deflt = "false", name = "enabled", required = false)
 	public boolean enabled();
+
+	@Meta.AD(deflt = "12", name = "openam-version", required = false)
+	public int openamVersion();
 
 	@Meta.AD(
 		deflt = "false", description = "import-from-ldap-description",

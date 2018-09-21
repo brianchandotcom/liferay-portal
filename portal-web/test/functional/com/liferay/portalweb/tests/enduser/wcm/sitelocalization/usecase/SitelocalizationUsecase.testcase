@@ -25,7 +25,7 @@
 		</if>
 	</tear-down>
 
-	<command name="AvailableSiteLocalesSubsetOfAvailablePortalLocales" priority="5">
+	<command name="AvailableSiteLocalesSubsetNotAllowed" priority="5">
 		<property name="portal.acceptance" value="true" />
 		<property name="test.name.skip.portal.instance" value="SitelocalizationUsecase#AvailableSiteLocalesSubsetOfAvailablePortalLocales" />
 		<property name="testray.component.names" value="Site Localization" />
@@ -62,43 +62,8 @@
 
 		<execute macro="PortalSettings#configureCurrentLanguagesCP">
 			<var name="currentPortalLanguages" value="Arabic (Saudi Arabia),Czech (Czech Republic),French (France)" />
-		</execute>
-
-		<execute function="Refresh" />
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Site Settings" />
-		</execute>
-
-		<execute macro="Site#viewCurrentLanguagesCP">
-			<var name="availableSiteLanguages" value="Arabic (Saudi Arabia),Czech (Czech Republic),French (France)" />
-			<var name="currentSiteLanguages" value="English (United States),German (Germany),Spanish (Spain)" />
-			<var name="defaultSiteLanguage" value="English (United States)" />
-			<var name="displaySettings" value="Display Settings" />
-		</execute>
-
-		<execute macro="Alert#closePortalLocalizationWarning" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#gotoPageMenuItem">
-			<var name="menuItem" value="Configure" />
-			<var name="pageName" value="Language Test Page" />
-		</execute>
-
-		<execute macro="Navigator#gotoSEOPanel" />
-
-		<execute macro="Page#viewPageLocalization">
-			<var name="defaultSiteLanguageKey" value="es-ES" />
-			<var name="fieldName" value="HTML Title" />
+			<var name="errorMessage" value="Language cannot be removed because it is in use by the following site" />
+			<var name="failExpected" value="true" />
 		</execute>
 	</command>
 

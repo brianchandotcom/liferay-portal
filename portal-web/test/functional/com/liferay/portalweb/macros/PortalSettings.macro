@@ -177,7 +177,19 @@
 			</then>
 		</if>
 
-		<execute macro="PortletEntry#save" />
+		<if>
+			<equals arg1="${failExpected}" arg2="true" />
+			<then>
+				<execute macro="Button#clickSave" />
+
+				<execute macro="Alert#viewErrorMessage">
+					<var name="errorMessage" value="${errorMessage}" />
+				</execute>
+			</then>
+			<else>
+				<execute macro="PortletEntry#save" />
+			</else>
+		</if>
 	</command>
 
 	<command name="configureGoogleApps">

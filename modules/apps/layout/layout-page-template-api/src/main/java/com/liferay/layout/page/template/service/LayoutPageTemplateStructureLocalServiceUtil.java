@@ -338,6 +338,15 @@ public class LayoutPageTemplateStructureLocalServiceUtil {
 		return getService().getPersistedModel(primaryKeyObj);
 	}
 
+	public static com.liferay.layout.page.template.model.LayoutPageTemplateStructure rebuildLayoutPageTemplateStructureData(
+		long userId, long groupId, long classNameId, long classPK,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .rebuildLayoutPageTemplateStructureData(userId, groupId,
+			classNameId, classPK, serviceContext);
+	}
+
 	/**
 	* Updates the layout page template structure in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*

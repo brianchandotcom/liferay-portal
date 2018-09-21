@@ -41,8 +41,6 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
-import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -50,7 +48,6 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.template.soy.utils.SoyContext;
@@ -285,28 +282,13 @@ public class FragmentsEditorDisplayContext {
 		return imageItemSelectorCriterion;
 	}
 
-	private String _getLayoutData() throws PortalException {
-		long classNameId = PortalUtil.getClassNameId(Layout.class.getName());
-
+	private String _getLayoutData() {
 		LayoutPageTemplateStructure layoutPageTemplateStructure =
 			LayoutPageTemplateStructureLocalServiceUtil.
 				fetchLayoutPageTemplateStructure(
-					_themeDisplay.getScopeGroupId(), classNameId,
-					_themeDisplay.getPlid());
-
-		if ((layoutPageTemplateStructure == null) ||
-			Validator.isNull(layoutPageTemplateStructure.getData())) {
-
-			ServiceContext serviceContext = ServiceContextFactory.getInstance(
-				_request);
-
-			layoutPageTemplateStructure =
-				LayoutPageTemplateStructureLocalServiceUtil.
-					rebuildLayoutPageTemplateStructureData(
-						_themeDisplay.getUserId(),
-						_themeDisplay.getScopeGroupId(), classNameId,
-						_themeDisplay.getPlid(), serviceContext);
-		}
+					_themeDisplay.getScopeGroupId(),
+					PortalUtil.getClassNameId(Layout.class.getName()),
+					_themeDisplay.getPlid(), true);
 
 		return layoutPageTemplateStructure.getData();
 	}

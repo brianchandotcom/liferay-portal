@@ -18,7 +18,6 @@ import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
-import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
 import com.liferay.layout.type.controller.content.internal.constants.ContentLayoutTypeControllerConstants;
 import com.liferay.portal.kernel.exception.ModelListenerException;
@@ -60,22 +59,11 @@ public class LayoutModelListener extends BaseModelListener<Layout> {
 			return;
 		}
 
-		ServiceContext serviceContext =
-			ServiceContextThreadLocal.getServiceContext();
-
 		UnicodeProperties typeSettingsProperties =
 			layout.getTypeSettingsProperties();
 
 		long layoutPageTemplateEntryId = GetterUtil.getLong(
 			typeSettingsProperties.get("layoutPageTemplateEntryId"));
-
-		LayoutPageTemplateEntry layoutPageTemplateEntry =
-			_layoutPageTemplateEntryLocalService.fetchLayoutPageTemplateEntry(
-				layoutPageTemplateEntryId);
-
-		if (layoutPageTemplateEntry == null) {
-			return;
-		}
 
 		LayoutPageTemplateStructure layoutPageTemplateStructure =
 			_layoutPageTemplateStructureLocalService.
@@ -83,23 +71,16 @@ public class LayoutModelListener extends BaseModelListener<Layout> {
 					layout.getGroupId(),
 					_portal.getClassNameId(
 						LayoutPageTemplateEntry.class.getName()),
-					layoutPageTemplateEntryId);
+					layoutPageTemplateEntryId, true);
+
+		String data = layoutPageTemplateStructure.getData();
+
+		if (Validator.isNull(data)) {
+			return;
+		}
 
 		try {
-			if ((layoutPageTemplateStructure == null) ||
-				Validator.isNull(layoutPageTemplateStructure.getData())) {
-
-				layoutPageTemplateStructure =
-					_layoutPageTemplateStructureLocalService.
-						rebuildLayoutPageTemplateStructureData(
-							layout.getUserId(), layout.getGroupId(),
-							_portal.getClassNameId(
-								LayoutPageTemplateEntry.class.getName()),
-							layoutPageTemplateEntryId, serviceContext);
-			}
-
-			JSONObject dataJSONObject = JSONFactoryUtil.createJSONObject(
-				layoutPageTemplateStructure.getData());
+			JSONObject dataJSONObject = JSONFactoryUtil.createJSONObject(data);
 
 			JSONArray structureJSONArray = dataJSONObject.getJSONArray(
 				"structure");
@@ -121,6 +102,9 @@ public class LayoutModelListener extends BaseModelListener<Layout> {
 				Collectors.toMap(
 					FragmentEntryLink::getFragmentEntryLinkId,
 					fragmentEntryLink -> fragmentEntryLink));
+
+			ServiceContext serviceContext =
+				ServiceContextThreadLocal.getServiceContext();
 
 			JSONArray newStructureJSONArray = JSONFactoryUtil.createJSONArray();
 
@@ -189,10 +173,6 @@ public class LayoutModelListener extends BaseModelListener<Layout> {
 
 	@Reference
 	private FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;
-
-	@Reference
-	private LayoutPageTemplateEntryLocalService
-		_layoutPageTemplateEntryLocalService;
 
 	@Reference
 	private LayoutPageTemplateStructureLocalService

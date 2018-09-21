@@ -48,8 +48,6 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
-import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -57,7 +55,6 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.template.soy.utils.SoyContext;
@@ -307,25 +304,12 @@ public class FragmentsEditorDisplayContext {
 		return imageItemSelectorCriterion;
 	}
 
-	private String _getLayoutData() throws PortalException {
+	private String _getLayoutData() {
 		LayoutPageTemplateStructure layoutPageTemplateStructure =
 			LayoutPageTemplateStructureLocalServiceUtil.
 				fetchLayoutPageTemplateStructure(
-					_themeDisplay.getScopeGroupId(), _classNameId, _classPK);
-
-		if ((layoutPageTemplateStructure == null) ||
-			Validator.isNull(layoutPageTemplateStructure.getData())) {
-
-			ServiceContext serviceContext = ServiceContextFactory.getInstance(
-				_request);
-
-			layoutPageTemplateStructure =
-				LayoutPageTemplateStructureLocalServiceUtil.
-					rebuildLayoutPageTemplateStructureData(
-						_themeDisplay.getUserId(),
-						_themeDisplay.getScopeGroupId(), _classNameId, _classPK,
-						serviceContext);
-		}
+					_themeDisplay.getScopeGroupId(), _classNameId, _classPK,
+					true);
 
 		return layoutPageTemplateStructure.getData();
 	}

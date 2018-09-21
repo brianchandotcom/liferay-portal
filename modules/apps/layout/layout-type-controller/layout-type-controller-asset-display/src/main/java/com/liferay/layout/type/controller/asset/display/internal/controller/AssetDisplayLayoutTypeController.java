@@ -29,15 +29,18 @@ import com.liferay.layout.type.controller.asset.display.internal.constants.Asset
 import com.liferay.layout.type.controller.asset.display.internal.constants.AssetDisplayLayoutTypeControllerWebKeys;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutTypeController;
 import com.liferay.portal.kernel.model.impl.BaseLayoutTypeControllerImpl;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextFactory;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.taglib.servlet.PipingServletResponse;
 
 import java.util.ArrayList;
@@ -90,7 +93,7 @@ public class AssetDisplayLayoutTypeController
 				layout.getGroupId(), assetEntry);
 
 			List<FragmentEntryLink> fragmentEntryLinks = _getFragmentEntryLinks(
-				layout, layoutPageTemplateEntryId);
+				layout, layoutPageTemplateEntryId, request);
 
 			request.setAttribute(
 				AssetDisplayLayoutTypeControllerWebKeys.LAYOUT_FRAGMENTS,
@@ -156,28 +159,38 @@ public class AssetDisplayLayoutTypeController
 	}
 
 	private List<FragmentEntryLink> _getFragmentEntryLinks(
-			Layout layout, long layoutPageTemplateEntryId)
-		throws JSONException {
+			Layout layout, long layoutPageTemplateEntryId,
+			HttpServletRequest request)
+		throws Exception {
+
+		long classNameId = _portal.getClassNameId(
+			LayoutPageTemplateEntry.class.getName());
 
 		LayoutPageTemplateStructure layoutPageTemplateStructure =
 			_layoutPageTemplateStructureLocalService.
 				fetchLayoutPageTemplateStructure(
-					layout.getGroupId(),
-					_portal.getClassNameId(
-						LayoutPageTemplateEntry.class.getName()),
+					layout.getGroupId(), classNameId,
 					layoutPageTemplateEntryId);
 
-		if (layoutPageTemplateStructure == null) {
-			return Collections.emptyList();
+		if ((layoutPageTemplateStructure == null) ||
+			Validator.isNull(layoutPageTemplateStructure.getData())) {
+
+			ServiceContext serviceContext = ServiceContextFactory.getInstance(
+				request);
+
+			ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+			layoutPageTemplateStructure =
+				_layoutPageTemplateStructureLocalService.
+					rebuildLayoutPageTemplateStructureData(
+						themeDisplay.getUserId(),
+						themeDisplay.getScopeGroupId(), classNameId,
+						layoutPageTemplateEntryId, serviceContext);
 		}
 
-		String data = layoutPageTemplateStructure.getData();
-
-		if (Validator.isNull(data)) {
-			return Collections.emptyList();
-		}
-
-		JSONObject dataJSONObject = JSONFactoryUtil.createJSONObject(data);
+		JSONObject dataJSONObject = JSONFactoryUtil.createJSONObject(
+			layoutPageTemplateStructure.getData());
 
 		JSONArray structureJSONArray = dataJSONObject.getJSONArray("structure");
 

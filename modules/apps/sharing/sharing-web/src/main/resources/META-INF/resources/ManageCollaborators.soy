@@ -7,6 +7,7 @@
 	{@param id: string}
 	{@param collaborators: ?}
 	{@param spritemap: string}
+	{@param sharingEntryPermissionDisplaySelectOptions: list<?>}
 	{@param? _handleDeleteCollaborator: any}
 	{@param? _handleCancelButtonClick: any}
 	{@param? _handleSaveButtonClick: any}
@@ -17,6 +18,7 @@
 				<li class="list-group-item list-group-item-flex" id="collaborator{$user.id}">
 					{call .collaborator}
 						{param _handleDeleteCollaborator: $_handleDeleteCollaborator /}
+						{param sharingEntryPermissionDisplaySelectOptions: $sharingEntryPermissionDisplaySelectOptions /}
 						{param spritemap: $spritemap /}
 						{param user: $user /}
 					{/call}
@@ -42,6 +44,7 @@
 
 {template .collaborator}
 	{@param _handleDeleteCollaborator: any}
+	{@param sharingEntryPermissionDisplaySelectOptions: list<?>}
 	{@param spritemap: string}
 	{@param user: ?}
 		<div class="autofit-row autofit-row-center">
@@ -60,24 +63,7 @@
 
 				{call ClaySelect.render}
 					{param id: 'regularSelectElement' /}
-					{param options: [
-						[
-							'label': 'Sample 1',
-							'value': '1'
-						],
-						[
-							'label': 'Sample 2',
-							'value': '2'
-						],
-						[
-							'label': 'Sample 3',
-							'value': '3'
-						],
-						[
-							'label': 'Sample 4',
-							'value': '4'
-						],
-					] /}
+					{param options: $sharingEntryPermissionDisplaySelectOptions /}
 				{/call}
 
 			</div>

@@ -34,6 +34,7 @@ import java.util.Map;
 import java.util.Random;
 
 import org.junit.Assert;
+import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Test;
 
@@ -67,6 +68,25 @@ public class StringUtilTest {
 			}
 
 		};
+
+	@BeforeClass
+	public static void setUpClass() throws Exception {
+		final Method getMethod = Props.class.getMethod("get", String.class);
+
+		Props props = (Props)ProxyUtil.newProxyInstance(
+			Props.class.getClassLoader(), new Class<?>[] {Props.class},
+			(proxy, method, args) -> {
+				if (getMethod.equals(method) &&
+					args[0].equals(PropsKeys.UNICODE_TEXT_NORMALIZER_FORM)) {
+
+					return "NFC";
+				}
+
+				throw new UnsupportedOperationException();
+			});
+
+		PropsUtil.setProps(props);
+	}
 
 	@Test
 	public void testAppendParentheticalSuffixInteger() {
@@ -621,6 +641,14 @@ public class StringUtilTest {
 		Assert.assertEquals(
 			new String(codePoints, 0, 2) + "...",
 			StringUtil.shorten(string, 7));
+	}
+
+	@Test
+	public void testShortenStringWithUnicode() {
+		String value = StringUtil.shorten("abcdef\u00C1vwxyz", 10);
+		String value2 = StringUtil.shorten("abcdef\u0041\u0301vwxyz", 10);
+
+		Assert.assertEquals(value, value2);
 	}
 
 	@Test

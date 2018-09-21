@@ -52,11 +52,8 @@ public class WhenFormattingFromRequestTest {
 
 	@Test
 	public void testFormatWithOneArgument() {
-		HttpServletRequest httpServletRequest = _createMockHttpServletRequest(
-			LocaleUtil.US);
-
 		String value = _languageImpl.format(
-			httpServletRequest,
+			_createMockHttpServletRequest(LocaleUtil.US),
 			LanguageImplTestConstants.LANG_KEY_WITH_ARGUMENT, "31");
 
 		Assert.assertEquals("31 Hours", value);
@@ -64,11 +61,8 @@ public class WhenFormattingFromRequestTest {
 
 	@Test
 	public void testFormatWithOneLanguageWrapper() {
-		HttpServletRequest httpServletRequest = _createMockHttpServletRequest(
-			LocaleUtil.US);
-
 		String value = _languageImpl.format(
-			httpServletRequest,
+			_createMockHttpServletRequest(LocaleUtil.US),
 			LanguageImplTestConstants.LANG_KEY_WITH_ARGUMENT,
 			new LanguageWrapper("a", "31", "a"));
 
@@ -131,11 +125,8 @@ public class WhenFormattingFromRequestTest {
 
 	@Test
 	public void testFormatWithTwoArguments() {
-		HttpServletRequest httpServletRequest = _createMockHttpServletRequest(
-			LocaleUtil.US);
-
 		String value = _languageImpl.format(
-			httpServletRequest,
+			_createMockHttpServletRequest(LocaleUtil.US),
 			LanguageImplTestConstants.LANG_KEY_WITH_ARGUMENTS,
 			new Object[] {"A", "B"});
 
@@ -144,16 +135,13 @@ public class WhenFormattingFromRequestTest {
 
 	@Test
 	public void testFormatWithTwoLanguageWrappers() {
-		HttpServletRequest httpServletRequest = _createMockHttpServletRequest(
-			LocaleUtil.US);
-
 		LanguageWrapper[] languageWrappers = new LanguageWrapper[2];
 
 		languageWrappers[0] = new LanguageWrapper("a", "A", "a");
 		languageWrappers[1] = new LanguageWrapper("b", "B", "b");
 
 		String value = _languageImpl.format(
-			httpServletRequest,
+			_createMockHttpServletRequest(LocaleUtil.US),
 			LanguageImplTestConstants.LANG_KEY_WITH_ARGUMENTS,
 			languageWrappers);
 

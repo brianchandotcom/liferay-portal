@@ -14,6 +14,8 @@
 
 package com.liferay.sharing.web.internal.portlet.action;
 
+import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
+import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.petra.string.StringBundler;
@@ -31,6 +33,7 @@ import com.liferay.sharing.renderer.SharingEntryViewRenderer;
 import com.liferay.sharing.service.SharingEntryLocalService;
 import com.liferay.sharing.web.internal.constants.SharingPortletKeys;
 import com.liferay.sharing.web.internal.display.context.SharedWithMeViewDisplayContext;
+import com.liferay.sharing.web.internal.interpreter.AssetRendererSharingEntryInterpreter;
 
 import java.util.Objects;
 
@@ -144,9 +147,33 @@ public class SharedWithMeViewMVCRenderCommand implements MVCRenderCommand {
 	private <T> SharingEntryInterpreter<T> _getSharingEntryInterpreter(
 		long classNameId) {
 
-		return (SharingEntryInterpreter<T>)_serviceTrackerMap.getService(
-			classNameId);
+		SharingEntryInterpreter<T> sharingEntryInterpreter =
+			(SharingEntryInterpreter<T>)_serviceTrackerMap.getService(
+				classNameId);
+
+		if ((sharingEntryInterpreter == null) && _isAssetObject(classNameId)) {
+			return (SharingEntryInterpreter<T>)
+				_assetRendererSharingEntryInterpreter;
+		}
+
+		return sharingEntryInterpreter;
 	}
+
+	private boolean _isAssetObject(long classNameId) {
+		AssetRendererFactory<?> assetRendererFactory =
+			AssetRendererFactoryRegistryUtil.
+				getAssetRendererFactoryByClassNameId(classNameId);
+
+		if (assetRendererFactory != null) {
+			return true;
+		}
+
+		return false;
+	}
+
+	@Reference
+	private AssetRendererSharingEntryInterpreter
+		_assetRendererSharingEntryInterpreter;
 
 	@Reference
 	private ClassNameLocalService _classNameLocalService;

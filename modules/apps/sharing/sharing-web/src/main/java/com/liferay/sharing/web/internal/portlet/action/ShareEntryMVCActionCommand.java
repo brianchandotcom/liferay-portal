@@ -27,7 +27,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.sharing.constants.SharingPortletKeys;
 import com.liferay.sharing.service.SharingEntryService;
-import com.liferay.sharing.web.internal.display.SharingEntryPermissionDisplayActionKey;
+import com.liferay.sharing.web.internal.display.SharingEntryPermissionDisplayAction;
 
 import java.util.Date;
 
@@ -57,10 +57,8 @@ public class ShareEntryMVCActionCommand extends BaseMVCActionCommand {
 		long classNameId = ParamUtil.getLong(actionRequest, "classNameId");
 		long classPK = ParamUtil.getLong(actionRequest, "classPK");
 		boolean shareable = ParamUtil.getBoolean(actionRequest, "shareable");
-		String sharingEntryPermissionDisplayActionKeyActionId =
-			ParamUtil.getString(
-				actionRequest,
-				"sharingEntryPermissionDisplayActionKeyActionId");
+		String sharingEntryPermissionDisplayActionId = ParamUtil.getString(
+			actionRequest, "sharingEntryPermissionDisplayActionId");
 		String userEmailAddress = ParamUtil.getString(
 			actionRequest, "userEmailAddress");
 
@@ -74,10 +72,10 @@ public class ShareEntryMVCActionCommand extends BaseMVCActionCommand {
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			actionRequest);
 
-		SharingEntryPermissionDisplayActionKey
-			sharingEntryPermissionDisplayActionKey =
-				SharingEntryPermissionDisplayActionKey.parseFromActionId(
-					sharingEntryPermissionDisplayActionKeyActionId);
+		SharingEntryPermissionDisplayAction
+			sharingEntryPermissionDisplayAction =
+				SharingEntryPermissionDisplayAction.parseFromActionId(
+					sharingEntryPermissionDisplayActionId);
 
 		String[] userEmailAddresses = StringUtil.split(userEmailAddress);
 
@@ -89,8 +87,8 @@ public class ShareEntryMVCActionCommand extends BaseMVCActionCommand {
 				_sharingEntryService.addOrUpdateSharingEntry(
 					user.getUserId(), classNameId, classPK,
 					themeDisplay.getScopeGroupId(), shareable,
-					sharingEntryPermissionDisplayActionKey.
-						getSharingEntryActionKeys(),
+					sharingEntryPermissionDisplayAction.
+						getSharingEntryActions(),
 					expirationDate, serviceContext);
 			}
 		}

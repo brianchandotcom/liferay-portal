@@ -69,7 +69,7 @@
 		</finder>
 	</entity>
 	<exceptions>
-		<exception>InvalidSharingEntryActionKey</exception>
+		<exception>InvalidSharingEntryAction</exception>
 		<exception>InvalidSharingEntryExpirationDate</exception>
 		<exception>InvalidSharingEntryUser</exception>
 	</exceptions>

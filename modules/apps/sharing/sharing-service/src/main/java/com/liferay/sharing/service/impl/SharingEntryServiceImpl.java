@@ -25,8 +25,8 @@ import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.spring.extender.service.ServiceReference;
-import com.liferay.sharing.constants.SharingEntryActionKey;
 import com.liferay.sharing.model.SharingEntry;
+import com.liferay.sharing.security.permission.SharingEntryAction;
 import com.liferay.sharing.security.permission.SharingPermissionChecker;
 import com.liferay.sharing.service.base.SharingEntryServiceBaseImpl;
 
@@ -47,32 +47,32 @@ public class SharingEntryServiceImpl extends SharingEntryServiceBaseImpl {
 	public SharingEntry addOrUpdateSharingEntry(
 			long toUserId, long classNameId, long classPK, long groupId,
 			boolean shareable,
-			Collection<SharingEntryActionKey> sharingEntryActionKeys,
+			Collection<SharingEntryAction> sharingEntryActions,
 			Date expirationDate, ServiceContext serviceContext)
 		throws PortalException {
 
 		_checkSharingPermission(
-			getUserId(), classNameId, classPK, groupId, sharingEntryActionKeys);
+			getUserId(), classNameId, classPK, groupId, sharingEntryActions);
 
 		return sharingEntryLocalService.addOrUpdateSharingEntry(
 			getUserId(), toUserId, classNameId, classPK, groupId, shareable,
-			sharingEntryActionKeys, expirationDate, serviceContext);
+			sharingEntryActions, expirationDate, serviceContext);
 	}
 
 	@Override
 	public SharingEntry addSharingEntry(
 			long toUserId, long classNameId, long classPK, long groupId,
 			boolean shareable,
-			Collection<SharingEntryActionKey> sharingEntryActionKeys,
+			Collection<SharingEntryAction> sharingEntryActions,
 			Date expirationDate, ServiceContext serviceContext)
 		throws PortalException {
 
 		_checkSharingPermission(
-			getUserId(), classNameId, classPK, groupId, sharingEntryActionKeys);
+			getUserId(), classNameId, classPK, groupId, sharingEntryActions);
 
 		return sharingEntryLocalService.addSharingEntry(
 			getUserId(), toUserId, classNameId, classPK, groupId, shareable,
-			sharingEntryActionKeys, expirationDate, serviceContext);
+			sharingEntryActions, expirationDate, serviceContext);
 	}
 
 	@JSONWebService(mode = JSONWebServiceMode.IGNORE)
@@ -106,7 +106,7 @@ public class SharingEntryServiceImpl extends SharingEntryServiceBaseImpl {
 	@Override
 	public SharingEntry updateSharingEntry(
 			long sharingEntryId,
-			Collection<SharingEntryActionKey> sharingEntryActionKeys,
+			Collection<SharingEntryAction> sharingEntryActions,
 			boolean shareable, Date expirationDate,
 			ServiceContext serviceContext)
 		throws PortalException {
@@ -117,10 +117,10 @@ public class SharingEntryServiceImpl extends SharingEntryServiceBaseImpl {
 		_checkSharingPermission(
 			getUserId(), sharingEntry.getClassNameId(),
 			sharingEntry.getClassPK(), sharingEntry.getGroupId(),
-			sharingEntryActionKeys);
+			sharingEntryActions);
 
 		return sharingEntryLocalService.updateSharingEntry(
-			sharingEntryId, sharingEntryActionKeys, shareable, expirationDate,
+			sharingEntryId, sharingEntryActions, shareable, expirationDate,
 			serviceContext);
 	}
 
@@ -129,7 +129,7 @@ public class SharingEntryServiceImpl extends SharingEntryServiceBaseImpl {
 
 	private void _checkSharingPermission(
 			long fromUserId, long classNameId, long classPK, long groupId,
-			Collection<SharingEntryActionKey> sharingEntryActionKeys)
+			Collection<SharingEntryAction> sharingEntryActions)
 		throws PortalException {
 
 		SharingPermissionChecker sharingPermissionChecker =
@@ -144,19 +144,19 @@ public class SharingEntryServiceImpl extends SharingEntryServiceBaseImpl {
 		PermissionChecker permissionChecker = getPermissionChecker();
 
 		if (sharingPermissionChecker.hasPermission(
-				permissionChecker, classPK, groupId, sharingEntryActionKeys)) {
+				permissionChecker, classPK, groupId, sharingEntryActions)) {
 
 			return;
 		}
 
-		Stream<SharingEntryActionKey> sharingEntryActionKeyStream =
-			sharingEntryActionKeys.stream();
+		Stream<SharingEntryAction> sharingEntryActionStream =
+			sharingEntryActions.stream();
 
-		if (sharingEntryActionKeyStream.allMatch(
-				sharingEntryActionKey ->
+		if (sharingEntryActionStream.allMatch(
+				sharingEntryAction ->
 					sharingEntryLocalService.hasShareableSharingPermission(
 						permissionChecker.getUserId(), classNameId, classPK,
-						sharingEntryActionKey))) {
+						sharingEntryAction))) {
 
 			return;
 		}
@@ -170,10 +170,10 @@ public class SharingEntryServiceImpl extends SharingEntryServiceBaseImpl {
 			resourceName = className.getClassName();
 		}
 
-		sharingEntryActionKeyStream = sharingEntryActionKeys.stream();
+		sharingEntryActionStream = sharingEntryActions.stream();
 
-		String[] actionIds = sharingEntryActionKeyStream.map(
-			SharingEntryActionKey::getActionId
+		String[] actionIds = sharingEntryActionStream.map(
+			SharingEntryAction::getActionId
 		).toArray(
 			String[]::new
 		);

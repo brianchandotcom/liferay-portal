@@ -12,12 +12,11 @@
  * details.
  */
 
-package com.liferay.sharing.document.library.internal.renderer;
+package com.liferay.sharing.web.internal.renderer;
 
+import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.repository.model.FileEntry;
-import com.liferay.sharing.document.library.internal.constants.SharingDLWebKeys;
 import com.liferay.sharing.renderer.SharingEntryViewRenderer;
 
 import java.io.IOException;
@@ -28,25 +27,27 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * @author Sergio González
+ * @author Alejandro Tardín
  */
-public class DLFileEntrySharingEntryViewRenderer
-	implements SharingEntryViewRenderer<FileEntry> {
+public class AssetRendererSharingEntryViewRenderer
+	implements SharingEntryViewRenderer<AssetRenderer> {
 
-	public DLFileEntrySharingEntryViewRenderer(ServletContext servletContext) {
+	public AssetRendererSharingEntryViewRenderer(
+		ServletContext servletContext) {
+
 		_servletContext = servletContext;
 	}
 
 	@Override
 	public void render(
-			FileEntry fileEntry, HttpServletRequest request,
+			AssetRenderer assetRenderer, HttpServletRequest request,
 			HttpServletResponse response)
 		throws IOException {
 
 		RequestDispatcher requestDispatcher =
 			_servletContext.getRequestDispatcher(_JSP_PATH);
 
-		request.setAttribute(SharingDLWebKeys.FILE_ENTRY, fileEntry);
+		request.setAttribute(AssetRenderer.class.getName(), assetRenderer);
 
 		try {
 			requestDispatcher.include(request, response);
@@ -59,10 +60,10 @@ public class DLFileEntrySharingEntryViewRenderer
 	}
 
 	private static final String _JSP_PATH =
-		"/com.liferay.sharing.web/view_file_entry_sharing_entry.jsp";
+		"/shared_with_me/view_asset_entry_sharing_entry.jsp";
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		DLFileEntrySharingEntryViewRenderer.class);
+		AssetRendererSharingEntryViewRenderer.class);
 
 	private final ServletContext _servletContext;
 

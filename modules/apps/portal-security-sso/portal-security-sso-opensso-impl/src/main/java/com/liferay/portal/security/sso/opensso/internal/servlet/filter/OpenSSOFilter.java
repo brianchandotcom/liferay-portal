@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.settings.CompanyServiceSettingsLocator;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.URLCodec;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.sso.opensso.configuration.OpenSSOConfiguration;
@@ -151,7 +152,10 @@ public class OpenSSOFilter extends BaseFilter {
 		OpenSSO openSSO = _serviceTrackerMap.getService(version);
 
 		if (openSSO == null) {
-			_log.error("Selected OpenSSO version not implemented");
+			_log.error(
+				StringBundler.concat(
+					"Selected OpenSSO version not implemented, no service ",
+					"found for version ", version));
 
 			return;
 		}

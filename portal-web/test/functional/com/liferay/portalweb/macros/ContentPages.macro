@@ -42,4 +42,20 @@
 
 		<execute function="AssertElementPresent" locator1="Message#SUCCESS" />
 	</command>
+
+	<command name="viewFragment">
+		<execute function="AssertVisible" locator1="Fragment#CONTENT_PAGE_FRAGMENT">
+			<var name="key_content" value="${content}" />
+			<var name="key_fragmentClass" value="${fragmentClass}" />
+			<var name="key_position" value="${position}" />
+		</execute>
+	</command>
+
+	<command name="viewFragmentNotPresent">
+		<execute function="AssertElementNotPresent" locator1="Fragment#CONTENT_PAGE_FRAGMENT">
+			<var name="key_content" value="${content}" />
+			<var name="key_fragmentClass" value="${fragmentClass}" />
+			<var name="key_position" value="${position}" />
+		</execute>
+	</command>
 </definition>

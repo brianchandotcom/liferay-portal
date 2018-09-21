@@ -109,7 +109,7 @@ public class NotificationsSharingEntryLocalServiceWrapper
 
 		String linkText = ResourceBundleUtil.getString(
 			resourceBundle, "view-x",
-			_sharingNotificationUtil.getSharingEntryAssetTitle(
+			_sharingNotificationUtil.getSharingEntryObjectTitle(
 				sharingEntry, user.getLocale()));
 
 		return StringBundler.concat(
@@ -131,8 +131,7 @@ public class NotificationsSharingEntryLocalServiceWrapper
 			subscriptionSender.setSubject(message);
 
 			String entryURL = _sharingNotificationUtil.getEntryURL(
-				sharingEntry, serviceContext.getLiferayPortletRequest(),
-				serviceContext.getLiferayPortletResponse());
+				sharingEntry, serviceContext.getLiferayPortletRequest());
 
 			subscriptionSender.setBody(
 				_getMessageBody(sharingEntry, user, entryURL));

@@ -14,24 +14,25 @@
 
 package com.liferay.sharing.notifications.internal.util;
 
-import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
-import com.liferay.asset.kernel.model.AssetRenderer;
-import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
-import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.portlet.PortletProvider;
+import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.service.UserLocalService;
-import com.liferay.portal.kernel.service.UserNotificationEventLocalService;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.sharing.constants.SharingEntryActionKey;
+import com.liferay.sharing.interpreter.SharingEntryInterpreter;
+import com.liferay.sharing.interpreter.SharingEntryInterpreterProvider;
 import com.liferay.sharing.model.SharingEntry;
 import com.liferay.sharing.service.SharingEntryLocalService;
 
 import java.util.Locale;
 import java.util.ResourceBundle;
+
+import javax.portlet.PortletURL;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -44,19 +45,19 @@ public class SharingNotificationUtil {
 
 	public String getEntryURL(
 			SharingEntry sharingEntry,
-			LiferayPortletRequest liferayPortletRequest,
-			LiferayPortletResponse liferayPortletResponse)
+			LiferayPortletRequest liferayPortletRequest)
 		throws Exception {
 
-		if ((liferayPortletRequest != null) &&
-			(liferayPortletResponse != null)) {
+		if (liferayPortletRequest != null) {
+			PortletURL portletURL = PortletProviderUtil.getPortletURL(
+				liferayPortletRequest, SharingEntry.class.getName(),
+				PortletProvider.Action.PREVIEW);
 
-			AssetRenderer assetRenderer = _getAssetRenderer(sharingEntry);
+			portletURL.setParameter(
+				"sharingEntryId",
+				String.valueOf(sharingEntry.getSharingEntryId()));
 
-			if (assetRenderer != null) {
-				return assetRenderer.getURLViewInContext(
-					liferayPortletRequest, liferayPortletResponse, null);
-			}
+			return portletURL.toString();
 		}
 
 		return null;
@@ -72,18 +73,19 @@ public class SharingNotificationUtil {
 		return ResourceBundleUtil.getString(
 			resourceBundle, "x-has-shared-x-with-you-for-x",
 			_getUserName(sharingEntry, resourceBundle),
-			getSharingEntryAssetTitle(sharingEntry, locale),
+			getSharingEntryObjectTitle(sharingEntry, locale),
 			_getActionName(sharingEntry, resourceBundle));
 	}
 
-	public String getSharingEntryAssetTitle(
-			SharingEntry sharingEntry, Locale locale)
-		throws PortalException {
+	public String getSharingEntryObjectTitle(
+		SharingEntry sharingEntry, Locale locale) {
 
-		AssetRenderer assetRenderer = _getAssetRenderer(sharingEntry);
+		SharingEntryInterpreter<Object> sharingEntryInterpreter =
+			_sharingEntryInterpreterProvider.getSharingEntryInterpreter(
+				sharingEntry);
 
-		if (assetRenderer != null) {
-			return assetRenderer.getTitle(locale);
+		if (sharingEntryInterpreter != null) {
+			return sharingEntryInterpreter.getTitle(sharingEntry);
 		}
 		else {
 			ResourceBundle resourceBundle =
@@ -115,20 +117,6 @@ public class SharingNotificationUtil {
 		return ResourceBundleUtil.getString(resourceBundle, "nothing");
 	}
 
-	private AssetRenderer<?> _getAssetRenderer(SharingEntry sharingEntry)
-		throws PortalException {
-
-		AssetRendererFactory<?> assetRendererFactory =
-			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
-				sharingEntry.getClassName());
-
-		if (assetRendererFactory == null) {
-			return null;
-		}
-
-		return assetRendererFactory.getAssetRenderer(sharingEntry.getClassPK());
-	}
-
 	private String _getUserName(
 		SharingEntry sharingEntry, ResourceBundle resourceBundle) {
 
@@ -148,13 +136,12 @@ public class SharingNotificationUtil {
 	private ResourceBundleLoader _resourceBundleLoader;
 
 	@Reference
+	private SharingEntryInterpreterProvider _sharingEntryInterpreterProvider;
+
+	@Reference
 	private SharingEntryLocalService _sharingEntryLocalService;
 
 	@Reference
 	private UserLocalService _userLocalService;
-
-	@Reference
-	private UserNotificationEventLocalService
-		_userNotificationEventLocalService;
 
 }

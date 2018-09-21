@@ -39,9 +39,6 @@
 		<property name="nextMethodInterceptor" ref="systemEventAdvice" />
 	</bean>
 	<bean class="com.liferay.portal.security.access.control.AccessControlAdvice" id="accessControlAdvice">
-		<property name="accessControlAdvisor">
-			<bean class="com.liferay.portal.security.access.control.AccessControlAdvisorImpl" />
-		</property>
 		<property name="nextMethodInterceptor" ref="portalResiliencyAdvice" />
 	</bean>
 	<bean class="com.liferay.portal.service.ServiceContextAdvice" id="serviceContextAdvice">

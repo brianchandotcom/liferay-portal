@@ -21,19 +21,19 @@ public class CompanionPortalWorkspaceGitRepository
 	extends BasePortalWorkspaceGitRepository {
 
 	protected CompanionPortalWorkspaceGitRepository(
-		PortalWorkspaceGitRepository portalWorkspaceGitRepository) {
+		PortalWorkspaceGitRepository primaryPortalWorkspaceGitRepository) {
 
 		super(
-			_getGitHubURL(portalWorkspaceGitRepository),
-			_getUpstreamBranchName(portalWorkspaceGitRepository),
-			_getBranchSHA(portalWorkspaceGitRepository));
+			_getGitHubURL(primaryPortalWorkspaceGitRepository),
+			_getUpstreamBranchName(primaryPortalWorkspaceGitRepository),
+			_getBranchSHA(primaryPortalWorkspaceGitRepository));
 	}
 
 	private static String _getBranchSHA(
-		PortalWorkspaceGitRepository portalWorkspaceGitRepository) {
+		PortalWorkspaceGitRepository primaryPortalWorkspaceGitRepository) {
 
 		String gitCommitFileContent = _getGitCommitFileContent(
-			portalWorkspaceGitRepository);
+			primaryPortalWorkspaceGitRepository);
 
 		if (gitCommitFileContent.matches("[0-9a-f]{7,40}")) {
 			return gitCommitFileContent;
@@ -43,10 +43,10 @@ public class CompanionPortalWorkspaceGitRepository
 	}
 
 	private static String _getGitCommitFileContent(
-		PortalWorkspaceGitRepository portalWorkspaceGitRepository) {
+		PortalWorkspaceGitRepository primaryPortalWorkspaceGitRepository) {
 
 		String portalUpstreamBranchName =
-			portalWorkspaceGitRepository.getUpstreamBranchName();
+			primaryPortalWorkspaceGitRepository.getUpstreamBranchName();
 
 		String gitCommitFileName = "git-commit-portal";
 
@@ -54,14 +54,15 @@ public class CompanionPortalWorkspaceGitRepository
 			gitCommitFileName += "-private";
 		}
 
-		return portalWorkspaceGitRepository.getFileContent(gitCommitFileName);
+		return primaryPortalWorkspaceGitRepository.getFileContent(
+			gitCommitFileName);
 	}
 
 	private static String _getGitHubURL(
-		PortalWorkspaceGitRepository portalWorkspaceGitRepository) {
+		PortalWorkspaceGitRepository primaryPortalWorkspaceGitRepository) {
 
 		String gitCommitFileContent = _getGitCommitFileContent(
-			portalWorkspaceGitRepository);
+			primaryPortalWorkspaceGitRepository);
 
 		if (GitUtil.isValidGitHubRefURL(gitCommitFileContent) ||
 			PullRequest.isValidGitHubPullRequestURL(gitCommitFileContent)) {
@@ -70,7 +71,7 @@ public class CompanionPortalWorkspaceGitRepository
 		}
 
 		String upstreamBranchName = _getUpstreamBranchName(
-			portalWorkspaceGitRepository);
+			primaryPortalWorkspaceGitRepository);
 
 		StringBuilder sb = new StringBuilder();
 
@@ -87,10 +88,10 @@ public class CompanionPortalWorkspaceGitRepository
 	}
 
 	private static String _getUpstreamBranchName(
-		PortalWorkspaceGitRepository portalWorkspaceGitRepository) {
+		PortalWorkspaceGitRepository primaryPortalWorkspaceGitRepository) {
 
 		String portalUpstreamBranchName =
-			portalWorkspaceGitRepository.getUpstreamBranchName();
+			primaryPortalWorkspaceGitRepository.getUpstreamBranchName();
 
 		if (portalUpstreamBranchName.endsWith("-private")) {
 			return portalUpstreamBranchName.replace("-private", "");

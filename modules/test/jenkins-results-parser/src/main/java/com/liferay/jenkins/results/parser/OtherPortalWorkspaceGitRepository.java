@@ -21,18 +21,18 @@ public class OtherPortalWorkspaceGitRepository
 	extends BasePortalWorkspaceGitRepository {
 
 	protected OtherPortalWorkspaceGitRepository(
-		PortalWorkspaceGitRepository portalWorkspaceGitRepository) {
+		PortalWorkspaceGitRepository primaryPortalWorkspaceGitRepository) {
 
 		super(
-			_getGitHubURL(portalWorkspaceGitRepository),
-			_getUpstreamBranchName(portalWorkspaceGitRepository), null);
+			_getGitHubURL(primaryPortalWorkspaceGitRepository),
+			_getUpstreamBranchName(primaryPortalWorkspaceGitRepository), null);
 	}
 
 	private static String _getGitHubURL(
-		PortalWorkspaceGitRepository portalWorkspaceGitRepository) {
+		PortalWorkspaceGitRepository primaryPortalWorkspaceGitRepository) {
 
 		String upstreamBranchName = _getUpstreamBranchName(
-			portalWorkspaceGitRepository);
+			primaryPortalWorkspaceGitRepository);
 
 		StringBuilder sb = new StringBuilder();
 
@@ -49,10 +49,10 @@ public class OtherPortalWorkspaceGitRepository
 	}
 
 	private static String _getUpstreamBranchName(
-		PortalWorkspaceGitRepository portalWorkspaceGitRepository) {
+		PortalWorkspaceGitRepository primaryPortalWorkspaceGitRepository) {
 
 		String portalUpstreamBranchName =
-			portalWorkspaceGitRepository.getUpstreamBranchName();
+			primaryPortalWorkspaceGitRepository.getUpstreamBranchName();
 
 		if (portalUpstreamBranchName.contains("7.0.x")) {
 			return portalUpstreamBranchName.replace("7.0.x", "master");

@@ -220,11 +220,23 @@ public class SourceUtil {
 	private static int _adjustLevel(
 		int level, String text, String s, int diff) {
 
-		String[] lines = StringUtil.splitLines(text);
+		boolean multiLineComment = false;
 
 		forLoop:
-		for (String line : lines) {
+		for (String line : StringUtil.splitLines(text)) {
 			line = StringUtil.trim(line);
+
+			if (line.startsWith("/*")) {
+				multiLineComment = true;
+			}
+
+			if (multiLineComment) {
+				if (line.endsWith("*/")) {
+					multiLineComment = false;
+				}
+
+				continue;
+			}
 
 			if (line.startsWith("//") || line.startsWith("*")) {
 				continue;

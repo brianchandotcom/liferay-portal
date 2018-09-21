@@ -31,6 +31,7 @@ import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.storage.Fields;
 import com.liferay.dynamic.data.mapping.util.DDMTemplateHelper;
 import com.liferay.dynamic.data.mapping.util.DDMUtil;
+import com.liferay.exportimport.kernel.exception.ExportImportContentValidationException;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.journal.configuration.JournalFileUploadsConfiguration;
 import com.liferay.journal.constants.JournalPortletKeys;
@@ -1346,6 +1347,7 @@ public class JournalPortlet extends MVCPortlet {
 			cause instanceof DuplicateFeedIdException ||
 			cause instanceof DuplicateFileEntryException ||
 			cause instanceof DuplicateFolderNameException ||
+			cause instanceof ExportImportContentValidationException ||
 			cause instanceof FeedContentFieldException ||
 			cause instanceof FeedIdException ||
 			cause instanceof FeedNameException ||

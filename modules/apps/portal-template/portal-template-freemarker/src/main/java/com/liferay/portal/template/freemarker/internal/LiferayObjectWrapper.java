@@ -234,13 +234,13 @@ public class LiferayObjectWrapper extends DefaultObjectWrapper {
 								restrictedClass.getName()));
 					}
 
-					Package pkg = clazz.getPackage();
+					int index = className.lastIndexOf(StringPool.PERIOD);
 
-					if (pkg == null) {
+					if (index == -1) {
 						return _nullInstance;
 					}
 
-					String packageName = pkg.getName();
+					String packageName = className.substring(0, index);
 
 					packageName = packageName.concat(StringPool.PERIOD);
 

@@ -324,6 +324,23 @@ public abstract class OpenSSOImpl implements OpenSSO {
 		urlc.setRequestProperty("Cookie", sb.toString());
 	}
 
+	protected boolean hasCookieNames(
+		HttpServletRequest request, String[] cookieNames) {
+
+		for (String cookieName : cookieNames) {
+			if (CookieKeys.getCookie(request, cookieName) != null) {
+				return true;
+			}
+		}
+
+		if (_log.isInfoEnabled()) {
+			_log.info(
+				"User is not logged in because he has no OpenSSO cookies");
+		}
+
+		return false;
+	}
+
 	private static final String _GET_ATTRIBUTES = "/identity/attributes";
 
 	private static final String _GET_COOKIE_NAME =

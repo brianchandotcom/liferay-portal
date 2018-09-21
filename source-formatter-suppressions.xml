@@ -14,6 +14,9 @@
 		<suppress checks="IndentationCheck" files="portal-impl/test/integration/com/liferay/portal/xmlrpc/XmlRpcParserTest\.java" />
 		<suppress checks="IndentationCheck" files="portal-impl/test/unit/com/liferay/portal/nio/intraband/proxy/IntrabandProxyUtilTest\.java" />
 		<suppress checks="IndentationCheck" files="portal-kernel/src/com/liferay/portal/kernel/io/BigEndianCodec\.java" />
+		<suppress checks="JavadocCheck" files="portal-kernel/src/com/liferay/portal/kernel/cal/DayAndPosition\.java" />
+		<suppress checks="JavadocCheck" files="portal-kernel/src/com/liferay/portal/kernel/cal/Duration\.java" />
+		<suppress checks="JavadocCheck" files="portal-kernel/src/com/liferay/portal/kernel/cal/Recurrence\.java" />
 		<suppress checks="JSONNamingCheck" files="portal-impl/src/com/liferay/portal/action/JSONServiceAction\.java" />
 		<suppress checks="JSONNamingCheck" files="portal-kernel/src/com/liferay/portal/kernel/backgroundtask/display/BaseBackgroundTaskDisplay\.java" />
 		<suppress checks="JSONNamingCheck" files="util-java/src/com/liferay/util/Autocomplete\.java" />

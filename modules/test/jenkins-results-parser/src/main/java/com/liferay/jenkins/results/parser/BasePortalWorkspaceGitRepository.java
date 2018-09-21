@@ -121,28 +121,23 @@ public abstract class BasePortalWorkspaceGitRepository
 		setPortalBuildProperties(properties);
 	}
 
-	private static final String _FILE_PATH_APP_SERVER_PROPERTIES;
+	private static final String _FILE_PATH_APP_SERVER_PROPERTIES =
+		JenkinsResultsParserUtil.combine(
+			"app.server.", System.getenv("HOSTNAME"), ".properties");
 
-	private static final String _FILE_PATH_BUILD_PROPERTIES;
+	private static final String _FILE_PATH_BUILD_PROPERTIES =
+		JenkinsResultsParserUtil.combine(
+			"build.", System.getenv("HOSTNAME"), ".properties");
 
-	private static final String _FILE_PATH_SQL_PROPERTIES;
+	private static final String _FILE_PATH_SQL_PROPERTIES =
+		JenkinsResultsParserUtil.combine(
+			"sql/sql.", System.getenv("HOSTNAME"), ".properties");
 
-	private static final String _FILE_PATH_TEST_PROPERTIES;
+	private static final String _FILE_PATH_TEST_PROPERTIES =
+		JenkinsResultsParserUtil.combine(
+			"test.", System.getenv("HOSTNAME"), ".properties");
 
 	private static final Pattern _pattern = Pattern.compile(
 		"portal.build.properties\\[(?<portalBuildPropertyName>[^\\]]+)\\]");
-
-	static {
-		String hostname = System.getenv("HOSTNAME");
-
-		_FILE_PATH_APP_SERVER_PROPERTIES = JenkinsResultsParserUtil.combine(
-			"app.server.", hostname, ".properties");
-		_FILE_PATH_BUILD_PROPERTIES = JenkinsResultsParserUtil.combine(
-			"build.", hostname, ".properties");
-		_FILE_PATH_TEST_PROPERTIES = JenkinsResultsParserUtil.combine(
-			"test.", hostname, ".properties");
-		_FILE_PATH_SQL_PROPERTIES = JenkinsResultsParserUtil.combine(
-			"sql/sql.", hostname, ".properties");
-	}
 
 }

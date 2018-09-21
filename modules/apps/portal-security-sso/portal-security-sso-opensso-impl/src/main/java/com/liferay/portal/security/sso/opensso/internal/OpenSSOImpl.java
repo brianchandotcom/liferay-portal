@@ -14,13 +14,13 @@
 
 package com.liferay.portal.security.sso.opensso.internal;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.sso.OpenSSO;
 import com.liferay.portal.kernel.util.CookieKeys;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -266,7 +266,7 @@ public abstract class OpenSSOImpl implements OpenSSO {
 					_log.debug(
 						StringBundler.concat(
 							"URL ", url, " is invalid with response code ",
-							String.valueOf(responseCode)));
+							responseCode));
 				}
 
 				return false;
@@ -276,7 +276,7 @@ public abstract class OpenSSOImpl implements OpenSSO {
 				_log.debug(
 					StringBundler.concat(
 						"URL ", url, " is valid with response code ",
-						String.valueOf(responseCode)));
+						responseCode));
 			}
 		}
 		catch (IOException ioe) {

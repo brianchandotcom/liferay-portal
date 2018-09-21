@@ -1,0 +1,241 @@
+<definition component-name="portal-wcm">
+	<property name="portal.release" value="true" />
+	<property name="portal.upstream" value="true" />
+	<property name="testray.main.component.name" value="Content Pages" />
+
+	<set-up>
+		<execute macro="TestCase#setUpPortalInstance" />
+
+		<execute macro="User#firstLoginPG" />
+
+		<execute macro="JSONGroup#addGroup">
+			<var name="groupName" value="Site Name" />
+		</execute>
+
+		<execute macro="Navigator#openWithAppendToBaseURL">
+			<var name="urlAppend" value="group/site-name/~/control_panel/manage?p_p_id=com_liferay_staging_processes_web_portlet_StagingProcessesPortlet" />
+		</execute>
+
+		<execute macro="Staging#activateStagingCP">
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Build" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Page Fragments" />
+		</execute>
+
+		<execute macro="Fragment#importCollectionFromDependenciesFolder">
+			<var name="collectionZipFile" value="fragment-collection.zip" />
+		</execute>
+
+		<execute macro="Navigator#openWithAppendToBaseURL">
+			<var name="urlAppend" value="group/site-name-staging/~/control_panel/manage?p_p_id=com_liferay_layout_admin_web_portlet_GroupPagesPortlet" />
+		</execute>
+
+		<execute macro="ContentPages#addPage">
+			<var name="pageName" value="Test Content Page Name" />
+		</execute>
+
+		<execute macro="LayoutPageTemplates#selectFragment">
+			<var name="collectionName" value="Collection Name" />
+			<var name="fragmentName" value="Title" />
+		</execute>
+
+		<execute macro="LayoutPageTemplates#selectFragment">
+			<var name="collectionName" value="Collection Name" />
+			<var name="fragmentName" value="Rich Text" />
+		</execute>
+	</set-up>
+
+	<tear-down>
+		<var method="PropsUtil#get('test.portal.instance')" name="testPortalInstance" />
+
+		<if>
+			<equals arg1="${testPortalInstance}" arg2="true" />
+			<then>
+				<execute macro="PortalInstances#tearDownCP" />
+			</then>
+			<else>
+				<execute macro="Site#tearDownCP" />
+			</else>
+		</if>
+	</tear-down>
+
+	<command name="DeactivateStagingAfterPublish" priority="4">
+		<description message="Published content pages should remain if staging is deactivated." />
+
+		<execute macro="Navigator#openWithAppendToBaseURL">
+			<var name="urlAppend" value="group/site-name-staging/~/control_panel/manage?p_p_id=com_liferay_staging_processes_web_portlet_StagingProcessesPortlet" />
+		</execute>
+
+		<execute macro="Staging#publishCustomPublication" />
+
+		<execute macro="Staging#deactivateStagingCP">
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="Navigator#openWithAppendToBaseURL">
+			<var name="urlAppend" value="web/site-name/test-content-page-name" />
+		</execute>
+
+		<execute macro="ContentPages#viewFragment">
+			<var name="content" value="Lorem ipsum dolor sit amet" />
+			<var name="fragmentClass" value="header" />
+			<var name="position" value="1" />
+		</execute>
+
+		<execute macro="ContentPages#viewFragment">
+			<var name="content" value="Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum." />
+			<var name="fragmentClass" value="rich-text" />
+			<var name="position" value="2" />
+		</execute>
+	</command>
+
+	<command name="PublishContentPage" priority="5">
+		<description message="Content pages only appear in live view after being published and should appear properly." />
+
+		<execute macro="Navigator#openWithAppendToBaseURL">
+			<var name="urlAppend" value="web/site-name-staging/test-content-page-name" />
+		</execute>
+
+		<execute macro="ContentPages#viewFragment">
+			<var name="content" value="Lorem ipsum dolor sit amet" />
+			<var name="fragmentClass" value="header" />
+			<var name="position" value="1" />
+		</execute>
+
+		<execute macro="ContentPages#viewFragment">
+			<var name="content" value="Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum." />
+			<var name="fragmentClass" value="rich-text" />
+			<var name="position" value="2" />
+		</execute>
+
+		<execute macro="Navigator#openWithAppendToBaseURL">
+			<var name="urlAppend" value="web/site-name/test-content-page-name" />
+		</execute>
+
+		<execute function="AssertTextPresent" value1="The requested resource could not be found." />
+
+		<execute macro="Navigator#openWithAppendToBaseURL">
+			<var name="urlAppend" value="group/site-name-staging/~/control_panel/manage?p_p_id=com_liferay_staging_processes_web_portlet_StagingProcessesPortlet" />
+		</execute>
+
+		<execute macro="Staging#publishCustomPublication" />
+
+		<execute macro="Navigator#openWithAppendToBaseURL">
+			<var name="urlAppend" value="web/site-name/test-content-page-name" />
+		</execute>
+
+		<execute macro="ContentPages#viewFragment">
+			<var name="content" value="Lorem ipsum dolor sit amet" />
+			<var name="fragmentClass" value="header" />
+			<var name="position" value="1" />
+		</execute>
+
+		<execute macro="ContentPages#viewFragment">
+			<var name="content" value="Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum." />
+			<var name="fragmentClass" value="rich-text" />
+			<var name="position" value="2" />
+		</execute>
+	</command>
+
+	<command name="PublishEditedContentPage" priority="5">
+		<description message="Edits made to existing content pages should not appear in the live site until after published." />
+
+		<execute macro="Navigator#openWithAppendToBaseURL">
+			<var name="urlAppend" value="group/site-name-staging/~/control_panel/manage?p_p_id=com_liferay_staging_processes_web_portlet_StagingProcessesPortlet" />
+		</execute>
+
+		<execute macro="Staging#publishCustomPublication" />
+
+		<execute macro="Navigator#openWithAppendToBaseURL">
+			<var name="urlAppend" value="web/site-name-staging/test-content-page-name" />
+		</execute>
+
+		<execute macro="ContentPages#gotoEdit" />
+
+		<execute macro="LayoutPageTemplates#selectFragment">
+			<var name="collectionName" value="Collection Name" />
+			<var name="fragmentName" value="Content" />
+		</execute>
+
+		<execute macro="LayoutPageTemplates#moveFragment">
+			<var name="direction" value="down" />
+			<var name="fragmentName" value="Title" />
+		</execute>
+
+		<execute macro="Navigator#openWithAppendToBaseURL">
+			<var name="urlAppend" value="web/site-name-staging/test-content-page-name" />
+		</execute>
+
+		<execute macro="ContentPages#viewFragment">
+			<var name="content" value="Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum." />
+			<var name="fragmentClass" value="rich-text" />
+			<var name="position" value="1" />
+		</execute>
+
+		<execute macro="ContentPages#viewFragment">
+			<var name="content" value="Lorem ipsum dolor sit amet" />
+			<var name="fragmentClass" value="header" />
+			<var name="position" value="2" />
+		</execute>
+
+		<execute macro="ContentPages#viewFragment">
+			<var name="content" value="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean tempus eleifend lacus nec porttitor. Vestibulum pharetra ullamcorper felis volutpat commodo. Nam id ipsum placerat, hendrerit orci eu, congue nisi. Proin." />
+			<var name="fragmentClass" value="body" />
+			<var name="position" value="3" />
+		</execute>
+
+		<execute macro="Navigator#openWithAppendToBaseURL">
+			<var name="urlAppend" value="web/site-name/test-content-page-name" />
+		</execute>
+
+		<execute macro="ContentPages#viewFragment">
+			<var name="content" value="Lorem ipsum dolor sit amet" />
+			<var name="fragmentClass" value="header" />
+			<var name="position" value="1" />
+		</execute>
+
+		<execute macro="ContentPages#viewFragment">
+			<var name="content" value="Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum." />
+			<var name="fragmentClass" value="rich-text" />
+			<var name="position" value="2" />
+		</execute>
+
+		<execute macro="ContentPages#viewFragmentNotPresent">
+			<var name="content" value="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean tempus eleifend lacus nec porttitor. Vestibulum pharetra ullamcorper felis volutpat commodo. Nam id ipsum placerat, hendrerit orci eu, congue nisi. Proin." />
+			<var name="fragmentClass" value="body" />
+			<var name="position" value="3" />
+		</execute>
+
+		<execute macro="Navigator#openWithAppendToBaseURL">
+			<var name="urlAppend" value="group/site-name-staging/~/control_panel/manage?p_p_id=com_liferay_staging_processes_web_portlet_StagingProcessesPortlet" />
+		</execute>
+
+		<execute macro="Staging#publishCustomPublication" />
+
+		<execute macro="Navigator#openWithAppendToBaseURL">
+			<var name="urlAppend" value="web/site-name/test-content-page-name" />
+		</execute>
+
+		<execute macro="ContentPages#viewFragment">
+			<var name="content" value="Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum." />
+			<var name="fragmentClass" value="rich-text" />
+			<var name="position" value="1" />
+		</execute>
+
+		<execute macro="ContentPages#viewFragment">
+			<var name="content" value="Lorem ipsum dolor sit amet" />
+			<var name="fragmentClass" value="header" />
+			<var name="position" value="2" />
+		</execute>
+
+		<execute macro="ContentPages#viewFragment">
+			<var name="content" value="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean tempus eleifend lacus nec porttitor. Vestibulum pharetra ullamcorper felis volutpat commodo. Nam id ipsum placerat, hendrerit orci eu, congue nisi. Proin." />
+			<var name="fragmentClass" value="body" />
+			<var name="position" value="3" />
+		</execute>
+	</command>
+</definition>

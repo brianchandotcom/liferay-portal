@@ -24,7 +24,9 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 
@@ -88,23 +90,22 @@ public class LayoutPageTemplateStructureLocalServiceImpl
 
 	@Override
 	public LayoutPageTemplateStructure fetchLayoutPageTemplateStructure(
-		long groupId, long classNameId, long classPK) {
-
-		return layoutPageTemplateStructurePersistence.fetchByG_C_C(
-			groupId, classNameId, classPK);
-	}
-
-	@Override
-	public LayoutPageTemplateStructure rebuildLayoutPageTemplateStructureData(
-			long userId, long groupId, long classNameId, long classPK,
-			ServiceContext serviceContext)
+			long groupId, long classNameId, long classPK)
 		throws PortalException {
+
+		LayoutPageTemplateStructure layoutPageTemplateStructure =
+			layoutPageTemplateStructurePersistence.fetchByG_C_C(
+				groupId, classNameId, classPK);
+
+		if (layoutPageTemplateStructure != null) {
+			return layoutPageTemplateStructure;
+		}
+
+		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
 		List<FragmentEntryLink> fragmentEntryLinks =
 			_fragmentEntryLinkLocalService.getFragmentEntryLinks(
 				groupId, classNameId, classPK);
-
-		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
 		for (FragmentEntryLink fragmentEntryLink : fragmentEntryLinks) {
 			jsonArray.put(fragmentEntryLink.getFragmentEntryLinkId());
@@ -114,21 +115,10 @@ public class LayoutPageTemplateStructureLocalServiceImpl
 
 		jsonObject.put("structure", jsonArray);
 
-		LayoutPageTemplateStructure layoutPageTemplateStructure =
-			layoutPageTemplateStructurePersistence.findByG_C_C(
-				groupId, classNameId, classPK);
-
-		if (layoutPageTemplateStructure == null) {
-			layoutPageTemplateStructure = addLayoutPageTemplateStructure(
-				userId, groupId, classNameId, classPK, jsonObject.toString(),
-				serviceContext);
-		}
-		else {
-			layoutPageTemplateStructure = updateLayoutPageTemplateStructure(
-				groupId, classNameId, classPK, jsonObject.toString());
-		}
-
-		return layoutPageTemplateStructure;
+		return addLayoutPageTemplateStructure(
+			PrincipalThreadLocal.getUserId(), groupId, classNameId, classPK,
+			jsonObject.toString(),
+			ServiceContextThreadLocal.getServiceContext());
 	}
 
 	@Override

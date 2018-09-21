@@ -292,8 +292,7 @@ renderResponse.setTitle((ldapServerId == 0) ? LanguageUtil.get(resourceBundle, "
 	function <portlet:namespace />mapValues(fields, fieldValues) {
 		var form = AUI.$(document.<portlet:namespace />fm);
 
-		return AUI._.reduce(
-			fields,
+		return fields.reduce(
 			function(prev, item, index) {
 				var mappingValue = form.fm(fieldValues[index]).val();
 

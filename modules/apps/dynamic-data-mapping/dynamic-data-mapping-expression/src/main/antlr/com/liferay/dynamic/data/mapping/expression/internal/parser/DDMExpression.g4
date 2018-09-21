@@ -99,7 +99,30 @@ functionCallExpression
 	;
 
 functionParameters
-	: logicalOrExpression (COMMA logicalOrExpression)*
+	: functionParameter (COMMA functionParameter)*
+	;
+
+functionParameter
+	: array
+	| logicalOrExpression
+	;
+
+array
+	: floatingPointArray
+	| integerArray
+	| stringArray
+	;
+
+floatingPointArray 
+	: LBRACKET FloatingPointLiteral (COMMA FloatingPointLiteral)* RBRACKET # ToFloatingPointArray
+	;
+
+integerArray
+	: LBRACKET IntegerLiteral (COMMA IntegerLiteral)* RBRACKET # ToIntegerArray
+	;
+
+stringArray
+	: LBRACKET STRING (COMMA STRING)* RBRACKET # ToStringArray
 	;
 
 literal
@@ -154,6 +177,10 @@ GT
 	: '>'
 	;
 
+LBRACKET
+	: '['
+	;
+
 LE
 	: '<='
 	;
@@ -193,6 +220,10 @@ OR
 
 PLUS
 	: '+'
+	;
+
+RBRACKET
+	: ']'
 	;
 
 RPAREN

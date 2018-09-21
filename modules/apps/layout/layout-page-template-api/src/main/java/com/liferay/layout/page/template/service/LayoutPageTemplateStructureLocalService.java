@@ -295,6 +295,10 @@ public interface LayoutPageTemplateStructureLocalService
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException;
 
+	public LayoutPageTemplateStructure rebuildLayoutPageTemplateStructureData(
+		long userId, long groupId, long classNameId, long classPK,
+		ServiceContext serviceContext) throws PortalException;
+
 	/**
 	* Updates the layout page template structure in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*

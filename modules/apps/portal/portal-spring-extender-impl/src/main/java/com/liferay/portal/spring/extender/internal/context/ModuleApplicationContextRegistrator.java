@@ -59,7 +59,37 @@ public class ModuleApplicationContextRegistrator {
 
 	protected void start() throws Exception {
 		try {
-			_configurableApplicationContext = _createApplicationContext();
+			Dictionary<String, String> headers = _extendeeBundle.getHeaders(
+				StringPool.BLANK);
+
+			String[] beanDefinitionFileNames = StringUtil.split(
+				headers.get("Liferay-Spring-Context"), ',');
+
+			ClassLoader classLoader = new BundleResolverClassLoader(
+				_extendeeBundle, _extenderBundle);
+
+			Bundle compositeResourceLoaderBundle =
+				new CompositeResourceLoaderBundle(
+					_extendeeBundle, _extenderBundle);
+
+			_configurableApplicationContext = new ModuleApplicationContext(
+				compositeResourceLoaderBundle, classLoader,
+				beanDefinitionFileNames);
+
+			_configurableApplicationContext.addBeanFactoryPostProcessor(
+				new ModuleBeanFactoryPostProcessor(
+					classLoader, _extendeeBundle.getBundleContext()));
+
+			ApplicationContext parentApplicationContext =
+				ParentModuleApplicationContextHolder.getApplicationContext(
+					_extendeeBundle);
+
+			if (parentApplicationContext != null) {
+				_configurableApplicationContext.setParent(
+					parentApplicationContext);
+			}
+
+			_configurableApplicationContext.refresh();
 
 			PortletBeanLocatorUtil.setBeanLocator(
 				_extendeeBundle.getSymbolicName(),
@@ -101,41 +131,6 @@ public class ModuleApplicationContextRegistrator {
 		_configurableApplicationContext.close();
 
 		_configurableApplicationContext = null;
-	}
-
-	private ConfigurableApplicationContext _createApplicationContext() {
-		Dictionary<String, String> headers = _extendeeBundle.getHeaders(
-			StringPool.BLANK);
-
-		String[] beanDefinitionFileNames = StringUtil.split(
-			headers.get("Liferay-Spring-Context"), ',');
-
-		ClassLoader classLoader = new BundleResolverClassLoader(
-			_extendeeBundle, _extenderBundle);
-
-		Bundle compositeResourceLoaderBundle =
-			new CompositeResourceLoaderBundle(_extendeeBundle, _extenderBundle);
-
-		ModuleApplicationContext moduleApplicationContext =
-			new ModuleApplicationContext(
-				compositeResourceLoaderBundle, classLoader,
-				beanDefinitionFileNames);
-
-		moduleApplicationContext.addBeanFactoryPostProcessor(
-			new ModuleBeanFactoryPostProcessor(
-				classLoader, _extendeeBundle.getBundleContext()));
-
-		ApplicationContext parentApplicationContext =
-			ParentModuleApplicationContextHolder.getApplicationContext(
-				_extendeeBundle);
-
-		if (parentApplicationContext != null) {
-			moduleApplicationContext.setParent(parentApplicationContext);
-		}
-
-		moduleApplicationContext.refresh();
-
-		return moduleApplicationContext;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

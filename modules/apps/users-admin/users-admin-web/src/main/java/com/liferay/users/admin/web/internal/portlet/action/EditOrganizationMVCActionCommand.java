@@ -38,6 +38,7 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.service.AddressService;
 import com.liferay.portal.kernel.service.EmailAddressService;
+import com.liferay.portal.kernel.service.OrgLaborService;
 import com.liferay.portal.kernel.service.OrganizationService;
 import com.liferay.portal.kernel.service.PhoneService;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -52,7 +53,6 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.users.admin.constants.UsersAdminPortletKeys;
-import com.liferay.users.admin.kernel.util.UsersAdminUtil;
 
 import java.util.Collections;
 import java.util.List;
@@ -219,8 +219,6 @@ public class EditOrganizationMVCActionCommand extends BaseMVCActionCommand {
 			logoBytes = FileUtil.getBytes(fileEntry.getContentStream());
 		}
 
-		List<OrgLabor> orgLabors = UsersAdminUtil.getOrgLabors(actionRequest);
-
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			Organization.class.getName(), actionRequest);
 
@@ -233,8 +231,9 @@ public class EditOrganizationMVCActionCommand extends BaseMVCActionCommand {
 			organization = _organizationService.addOrganization(
 				parentOrganizationId, name, type, regionId, countryId, statusId,
 				comments, false, Collections.emptyList(),
-				Collections.emptyList(), orgLabors, Collections.emptyList(),
-				Collections.emptyList(), serviceContext);
+				Collections.emptyList(), Collections.emptyList(),
+				Collections.emptyList(), Collections.emptyList(),
+				serviceContext);
 		}
 		else {
 
@@ -251,6 +250,8 @@ public class EditOrganizationMVCActionCommand extends BaseMVCActionCommand {
 			List<EmailAddress> emailAddresses =
 				_emailAddressService.getEmailAddresses(
 					Organization.class.getName(), organizationId);
+			List<OrgLabor> orgLabors = _orgLaborService.getOrgLabors(
+				organizationId);
 			List<Phone> phones = _phoneService.getPhones(
 				Organization.class.getName(), organizationId);
 			List<Website> websites = _websiteService.getWebsites(
@@ -278,6 +279,9 @@ public class EditOrganizationMVCActionCommand extends BaseMVCActionCommand {
 	private Http _http;
 
 	private OrganizationService _organizationService;
+
+	@Reference
+	private OrgLaborService _orgLaborService;
 
 	@Reference
 	private PhoneService _phoneService;

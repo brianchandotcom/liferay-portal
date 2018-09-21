@@ -22,9 +22,9 @@ import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocal
 import com.liferay.layout.type.controller.content.internal.constants.ContentLayoutTypeControllerConstants;
 import com.liferay.layout.type.controller.content.internal.constants.ContentLayoutTypeControllerWebKeys;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Layout;
@@ -209,7 +209,7 @@ public class ContentLayoutTypeController extends BaseLayoutTypeControllerImpl {
 	}
 
 	private List<FragmentEntryLink> _getFragmentEntryLinks(Layout layout)
-		throws JSONException {
+		throws PortalException {
 
 		LayoutPageTemplateStructure layoutPageTemplateStructure =
 			_layoutPageTemplateStructureLocalService.

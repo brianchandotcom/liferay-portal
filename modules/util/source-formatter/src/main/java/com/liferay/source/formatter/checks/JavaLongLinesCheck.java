@@ -51,6 +51,7 @@ public class JavaLongLinesCheck extends BaseFileCheck {
 				lineNumber++;
 
 				if (line.startsWith("import ") || line.startsWith("package ") ||
+					line.startsWith(StringPool.SPACE) ||
 					line.matches("\\s*\\*.*") ||
 					(fileName.endsWith("Table.java") &&
 					 (line.contains("final String TABLE_") ||

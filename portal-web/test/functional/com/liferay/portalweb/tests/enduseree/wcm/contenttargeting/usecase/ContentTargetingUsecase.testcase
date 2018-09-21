@@ -4776,7 +4776,7 @@
 		</execute>
 
 		<execute macro="LAR#exportPortlet">
-			<var name="larFileName" value="${testName}_WebContent_portlet.lar" />
+			<var name="larFileName" value="WebContent_portlet.lar" />
 		</execute>
 
 		<execute macro="Navigator#gotoSitePage">
@@ -4829,7 +4829,7 @@
 		</execute>
 
 		<execute macro="LAR#importPortlet">
-			<var name="larFileName" value="${testName}_WebContent_portlet.lar" />
+			<var name="larFileName" value="WebContent_portlet.lar" />
 		</execute>
 
 		<execute macro="Navigator#gotoSitePage">

@@ -226,6 +226,34 @@ if (classNameId > JournalArticleConstants.CLASSNAME_ID_DEFAULT) {
 		<liferay-ui:error exception="<%= ArticleFriendlyURLException.class %>" message="you-must-define-a-friendly-url-for-default-language" />
 		<liferay-ui:error exception="<%= DuplicateFileEntryException.class %>" message="a-file-with-that-name-already-exists" />
 
+		<liferay-ui:error exception="<%= ExportImportContentValidationException.class %>">
+
+			<%
+			ExportImportContentValidationException eicve = (ExportImportContentValidationException)errorException;
+			%>
+
+			<c:choose>
+				<c:when test="<%= eicve.getType() == ExportImportContentValidationException.ARTICLE_NOT_FOUND %>">
+					<liferay-ui:message key="unable-to-validate-referenced-journal-article" />
+				</c:when>
+				<c:when test="<%= eicve.getType() == ExportImportContentValidationException.FILE_ENTRY_NOT_FOUND %>">
+					<liferay-ui:message arguments="<%= new String[] {MapUtil.toString(eicve.getDlReferenceParameters())} %>" key="unable-to-validate-referenced-file-entry-because-it-cannot-be-found-with-the-following-parameters-x" />
+				</c:when>
+				<c:when test="<%= eicve.getType() == ExportImportContentValidationException.LAYOUT_GROUP_NOT_FOUND %>">
+					<liferay-ui:message arguments="<%= new String[] {eicve.getLayoutURL(), eicve.getGroupFriendlyURL()} %>" key="unable-to-validate-referenced-page-with-url-x-because-the-page-group-with-url-x-cannot-be-found" />
+				</c:when>
+				<c:when test="<%= eicve.getType() == ExportImportContentValidationException.LAYOUT_NOT_FOUND %>">
+					<liferay-ui:message arguments="<%= new String[] {MapUtil.toString(eicve.getLayoutReferenceParameters())} %>" key="unable-to-validate-referenced-page-because-it-cannot-be-found-with-the-following-parameters-x" />
+				</c:when>
+				<c:when test="<%= eicve.getType() == ExportImportContentValidationException.LAYOUT_WITH_URL_NOT_FOUND %>">
+					<liferay-ui:message arguments="<%= new String[] {eicve.getLayoutURL()} %>" key="unable-to-validate-referenced-page-because-it-cannot-be-found-with-url-x" />
+				</c:when>
+				<c:otherwise>
+					<liferay-ui:message key="an-unexpected-error-occurred" />
+				</c:otherwise>
+			</c:choose>
+		</liferay-ui:error>
+
 		<liferay-ui:error exception="<%= FileSizeException.class %>">
 
 			<%

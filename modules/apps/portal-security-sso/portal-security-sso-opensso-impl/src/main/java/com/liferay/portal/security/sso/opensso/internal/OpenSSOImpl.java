@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.sso.OpenSSO;
 import com.liferay.portal.kernel.util.CookieKeys;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.io.IOException;
@@ -335,7 +336,9 @@ public abstract class OpenSSOImpl implements OpenSSO {
 
 		if (_log.isInfoEnabled()) {
 			_log.info(
-				"User is not logged in because he has no OpenSSO cookies");
+				StringBundler.concat(
+					"No OpenSSO cookies ", StringUtil.merge(cookieNames),
+					" found."));
 		}
 
 		return false;

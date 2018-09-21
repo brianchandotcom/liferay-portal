@@ -59,8 +59,7 @@ public class ModuleApplicationContextRegistrator {
 
 	protected void start() throws Exception {
 		try {
-			_configurableApplicationContext = _createApplicationContext(
-				_extenderBundle, _extendeeBundle);
+			_configurableApplicationContext = _createApplicationContext();
 
 			PortletBeanLocatorUtil.setBeanLocator(
 				_extendeeBundle.getSymbolicName(),
@@ -104,21 +103,18 @@ public class ModuleApplicationContextRegistrator {
 		_configurableApplicationContext = null;
 	}
 
-	private ConfigurableApplicationContext _createApplicationContext(
-			Bundle extender, Bundle extendee)
-		throws RuntimeException {
-
-		Dictionary<String, String> headers = extendee.getHeaders(
+	private ConfigurableApplicationContext _createApplicationContext() {
+		Dictionary<String, String> headers = _extendeeBundle.getHeaders(
 			StringPool.BLANK);
 
 		String[] beanDefinitionFileNames = StringUtil.split(
 			headers.get("Liferay-Spring-Context"), ',');
 
 		ClassLoader classLoader = new BundleResolverClassLoader(
-			extendee, extender);
+			_extendeeBundle, _extenderBundle);
 
 		Bundle compositeResourceLoaderBundle =
-			new CompositeResourceLoaderBundle(extendee, extender);
+			new CompositeResourceLoaderBundle(_extendeeBundle, _extenderBundle);
 
 		ModuleApplicationContext moduleApplicationContext =
 			new ModuleApplicationContext(
@@ -127,7 +123,7 @@ public class ModuleApplicationContextRegistrator {
 
 		moduleApplicationContext.addBeanFactoryPostProcessor(
 			new ModuleBeanFactoryPostProcessor(
-				classLoader, extendee.getBundleContext()));
+				classLoader, _extendeeBundle.getBundleContext()));
 
 		ApplicationContext parentApplicationContext =
 			ParentModuleApplicationContextHolder.getApplicationContext(

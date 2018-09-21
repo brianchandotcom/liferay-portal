@@ -42,7 +42,6 @@ import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferenceCardinality;
 
 /**
  * Participates in every login and logout that triggers an HTTP request to
@@ -252,10 +251,6 @@ public class OpenSSOFilter extends BaseFilter {
 		ConfigurationProvider configurationProvider) {
 
 		_configurationProvider = configurationProvider;
-	}
-
-	@Reference(cardinality = ReferenceCardinality.AT_LEAST_ONE, unbind = "-")
-	protected void setOpenSSO(OpenSSO openSSO) {
 	}
 
 	private static final String _SUBJECT_ID_KEY = "open.sso.subject.id";

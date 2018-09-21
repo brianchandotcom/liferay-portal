@@ -125,7 +125,7 @@ public abstract class BaseWorkspaceGitRepository
 			throw new RuntimeException("Invalid GitHub URL " + gitHubURL);
 		}
 
-		putIntoJSONObject("git_hub_url", gitHubURL);
+		put("git_hub_url", gitHubURL);
 
 		if (PullRequest.isValidGitHubPullRequestURL(gitHubURL)) {
 			PullRequest pullRequest = new PullRequest(gitHubURL);
@@ -134,11 +134,11 @@ public abstract class BaseWorkspaceGitRepository
 				GitHubDevSyncUtil.createCachedLocalGitBranch(
 					this, pullRequest, JenkinsResultsParserUtil.isCINode());
 
-			putIntoJSONObject("branch_head_sha", localGitBranch.getSHA());
-			putIntoJSONObject("branch_name", localGitBranch.getName());
+			put("branch_head_sha", localGitBranch.getSHA());
+			put("branch_name", localGitBranch.getName());
 
 			if (JenkinsResultsParserUtil.isCINode()) {
-				putIntoJSONObject(
+				put(
 					"git_hub_dev_branch_name",
 					GitHubDevSyncUtil.getCachedBranchName(pullRequest));
 			}
@@ -150,11 +150,11 @@ public abstract class BaseWorkspaceGitRepository
 				GitHubDevSyncUtil.createCachedLocalGitBranch(
 					this, remoteGitRef, JenkinsResultsParserUtil.isCINode());
 
-			putIntoJSONObject("branch_head_sha", localGitBranch.getSHA());
-			putIntoJSONObject("branch_name", localGitBranch.getName());
+			put("branch_head_sha", localGitBranch.getSHA());
+			put("branch_name", localGitBranch.getName());
 
 			if (JenkinsResultsParserUtil.isCINode()) {
-				putIntoJSONObject(
+				put(
 					"git_hub_dev_branch_name",
 					GitHubDevSyncUtil.getCachedBranchName(remoteGitRef));
 			}
@@ -164,10 +164,10 @@ public abstract class BaseWorkspaceGitRepository
 		}
 
 		if ((branchSHA != null) && branchSHA.matches("[0-9a-f]{7,40}")) {
-			putIntoJSONObject("branch_sha", branchSHA);
+			put("branch_sha", branchSHA);
 		}
 		else {
-			putIntoJSONObject("branch_sha", _getBranchHeadSHA());
+			put("branch_sha", _getBranchHeadSHA());
 		}
 
 		validateJSONObject(_REQUIRED_KEYS);

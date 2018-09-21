@@ -48,7 +48,7 @@ public abstract class BaseLocalGitRepository
 			throw new IllegalArgumentException("Upstream branch name is null");
 		}
 
-		putIntoJSONObject("upstream_branch_name", upstreamBranchName);
+		put("upstream_branch_name", upstreamBranchName);
 
 		Properties repositoryProperties = _getRepositoryProperties();
 
@@ -75,7 +75,7 @@ public abstract class BaseLocalGitRepository
 		}
 
 		try {
-			putIntoJSONObject("directory", directory.getCanonicalPath());
+			put("directory", directory.getCanonicalPath());
 		}
 		catch (IOException ioe) {
 			throw new RuntimeException(ioe);

@@ -33,7 +33,7 @@ public abstract class BaseGitRepository implements GitRepository {
 			throw new IllegalArgumentException("Name is null");
 		}
 
-		putIntoJSONObject("name", name);
+		put("name", name);
 
 		validateJSONObject(_REQUIRED_KEYS);
 	}
@@ -50,7 +50,7 @@ public abstract class BaseGitRepository implements GitRepository {
 		return (String)get(key);
 	}
 
-	protected void putIntoJSONObject(String key, Object o) {
+	protected void put(String key, Object o) {
 		if (_jsonObject.has(key)) {
 			throw new RuntimeException("JSONObject already contains " + key);
 		}

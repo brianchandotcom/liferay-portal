@@ -55,8 +55,8 @@ public abstract class BaseRemoteGitRepository
 			throw new IllegalArgumentException("Username is null");
 		}
 
-		putIntoJSONObject("hostname", hostname);
-		putIntoJSONObject("username", username);
+		put("hostname", hostname);
+		put("username", username);
 
 		validateJSONObject(_REQUIRED_KEYS);
 	}

@@ -14,6 +14,7 @@
 
 package com.liferay.portal.security.sso.opensso.configuration;
 
+import aQute.bnd.annotation.ProviderType;
 import aQute.bnd.annotation.metatype.Meta;
 
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
@@ -36,7 +37,14 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 	id = "com.liferay.portal.security.sso.opensso.configuration.OpenSSOConfiguration",
 	localization = "content/Language", name = "opensso-configuration-name"
 )
+@ProviderType
 public interface OpenSSOConfiguration {
+
+	@Meta.AD(
+		deflt = "openam-12", name = "version",
+		optionValues = {"openam-12", "openam-13"}, required = false
+	)
+	public String version();
 
 	@Meta.AD(deflt = "false", name = "enabled", required = false)
 	public boolean enabled();

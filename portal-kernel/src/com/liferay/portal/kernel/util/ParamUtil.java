@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import java.io.Serializable;
 
 import java.text.DateFormat;
-import java.text.Normalizer;
 
 import java.util.Date;
 import java.util.Enumeration;
@@ -182,7 +181,7 @@ public class ParamUtil {
 			request.getParameter(param), defaultValue);
 
 		if (returnValue != null) {
-			return _normalize(StringUtil.trim(returnValue));
+			return NormalizerUtil.normalize(StringUtil.trim(returnValue));
 		}
 
 		return null;
@@ -342,7 +341,7 @@ public class ParamUtil {
 			portletRequest.getParameter(param), defaultValue);
 
 		if (returnValue != null) {
-			return _normalize(StringUtil.trim(returnValue));
+			return NormalizerUtil.normalize(StringUtil.trim(returnValue));
 		}
 
 		return null;
@@ -502,7 +501,7 @@ public class ParamUtil {
 			serviceContext.getAttribute(param), defaultValue);
 
 		if (returnValue != null) {
-			return _normalize(StringUtil.trim(returnValue));
+			return NormalizerUtil.normalize(StringUtil.trim(returnValue));
 		}
 
 		return null;
@@ -1981,14 +1980,14 @@ public class ParamUtil {
 		String[] values = request.getParameterValues(param);
 
 		if (values == null) {
-			return _normalize(defaultValue);
+			return NormalizerUtil.normalize(defaultValue);
 		}
 
 		if (split && (values.length == 1)) {
-			return _normalize(StringUtil.split(values[0]));
+			return NormalizerUtil.normalize(StringUtil.split(values[0]));
 		}
 
-		return _normalize(values);
+		return NormalizerUtil.normalize(values);
 	}
 
 	/**
@@ -2241,7 +2240,8 @@ public class ParamUtil {
 	 * @return the request parameter value as a String
 	 */
 	public static String getString(HttpServletRequest request, String param) {
-		return _normalize(GetterUtil.getString(request.getParameter(param)));
+		return NormalizerUtil.normalize(
+			GetterUtil.getString(request.getParameter(param)));
 	}
 
 	/**
@@ -2271,7 +2271,7 @@ public class ParamUtil {
 	public static String getString(
 		PortletRequest portletRequest, String param) {
 
-		return _normalize(
+		return NormalizerUtil.normalize(
 			GetterUtil.getString(portletRequest.getParameter(param)));
 	}
 
@@ -2303,7 +2303,7 @@ public class ParamUtil {
 	public static String getString(
 		ServiceContext serviceContext, String param) {
 
-		return _normalize(
+		return NormalizerUtil.normalize(
 			GetterUtil.getString(serviceContext.getAttribute(param)));
 	}
 
@@ -2353,7 +2353,7 @@ public class ParamUtil {
 
 		return GetterUtil.getStringValues(
 			getParameterValues(request, param, null),
-			() -> _normalize(defaultValue));
+			() -> NormalizerUtil.normalize(defaultValue));
 	}
 
 	/**
@@ -2388,7 +2388,7 @@ public class ParamUtil {
 
 		return GetterUtil.getStringValues(
 			getParameterValues(portletRequest, param, null),
-			() -> _normalize(defaultValue));
+			() -> NormalizerUtil.normalize(defaultValue));
 	}
 
 	/**
@@ -2422,7 +2422,8 @@ public class ParamUtil {
 		ServiceContext serviceContext, String param, String[] defaultValue) {
 
 		return GetterUtil.getStringValues(
-			serviceContext.getAttribute(param), () -> _normalize(defaultValue));
+			serviceContext.getAttribute(param),
+			() -> NormalizerUtil.normalize(defaultValue));
 	}
 
 	/**
@@ -2479,49 +2480,6 @@ public class ParamUtil {
 		for (Map.Entry<String, Serializable> entry : attributes.entrySet()) {
 			System.out.println(
 				entry.getKey() + " = " + String.valueOf(entry.getValue()));
-		}
-	}
-
-	private static String _normalize(String input) {
-		if ((_FORM == null) || Validator.isNull(input)) {
-			return input;
-		}
-
-		return Normalizer.normalize(input, _FORM);
-	}
-
-	private static String[] _normalize(String[] input) {
-		if ((_FORM == null) || ArrayUtil.isEmpty(input)) {
-			return input;
-		}
-
-		for (int i = 0; i < input.length; i++) {
-			input[i] = Normalizer.normalize(input[i], _FORM);
-		}
-
-		return input;
-	}
-
-	private static final Normalizer.Form _FORM;
-
-	static {
-		String formString = PropsUtil.get(
-			PropsKeys.UNICODE_TEXT_NORMALIZER_FORM);
-
-		if ((formString == null) || formString.isEmpty()) {
-			_FORM = null;
-		}
-		else {
-			Normalizer.Form form = null;
-
-			try {
-				form = Normalizer.Form.valueOf(formString);
-			}
-			catch (IllegalArgumentException iae) {
-				form = null;
-			}
-
-			_FORM = form;
 		}
 	}
 

@@ -16,8 +16,6 @@ package com.liferay.source.formatter.parser;
 
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
-import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -70,7 +68,7 @@ public class JavaClassParser {
 					_parseJavaClass(
 						StringPool.BLANK, classContent, lineNumber,
 						JavaTerm.ACCESS_MODIFIER_PRIVATE, false, false, false,
-						true));
+						false, true));
 
 				break;
 			}
@@ -108,20 +106,24 @@ public class JavaClassParser {
 			isAbstract = true;
 		}
 
+		boolean isEnum = false;
 		boolean isInterface = false;
 
 		if (matcher.group(4) != null) {
 			String token = matcher.group(4);
 
-			if (token.equals("interface")) {
+			if (token.equals("enum")) {
+				isEnum = true;
+			}
+			else if (token.equals("interface")) {
 				isInterface = true;
 			}
 		}
 
 		JavaClass javaClass = _parseJavaClass(
 			className, classContent, lineNumber,
-			JavaTerm.ACCESS_MODIFIER_PUBLIC, isAbstract, false, isInterface,
-			false);
+			JavaTerm.ACCESS_MODIFIER_PUBLIC, isAbstract, false, isEnum,
+			isInterface, false);
 
 		javaClass.setPackageName(JavaSourceUtil.getPackageName(content));
 
@@ -167,6 +169,20 @@ public class JavaClassParser {
 		return line.substring(pos + 1);
 	}
 
+	private static int _getCommentEndLineNumber(
+		String classContent, int lineNumber) {
+
+		while (true) {
+			String line = SourceUtil.getLine(classContent, lineNumber);
+
+			if (line.endsWith("*/")) {
+				return lineNumber;
+			}
+
+			lineNumber++;
+		}
+	}
+
 	private static String _getConstructorOrMethodName(String line, int pos) {
 		line = line.substring(0, pos);
 
@@ -176,65 +192,67 @@ public class JavaClassParser {
 	}
 
 	private static JavaTerm _getJavaTerm(
-			String javaTermContent, String indent, int lineNumber)
+			String classContent, int javaTermLineNumber,
+			int javaTermEndLineNumber, int lineNumber)
 		throws IOException, ParseException {
 
-		String s = javaTermContent;
-
-		if (javaTermContent.startsWith(indent + "/*")) {
-			int pos = javaTermContent.indexOf("*/");
-
-			s = javaTermContent.substring(pos);
+		if (javaTermEndLineNumber == -1) {
+			return null;
 		}
 
-		Pattern pattern = Pattern.compile(
-			"(\n|^)" + indent +
-				"(private|protected|public|static)[ \n].*?[{;]\n",
-			Pattern.DOTALL);
+		int x = SourceUtil.getLineStartPos(classContent, lineNumber);
 
-		Matcher matcher = pattern.matcher(s);
+		String metadata = null;
+
+		if (javaTermLineNumber != lineNumber) {
+			int y = SourceUtil.getLineStartPos(
+				classContent, javaTermLineNumber);
+
+			metadata = classContent.substring(y, x);
+		}
+
+		int y = SourceUtil.getLineStartPos(
+			classContent, javaTermEndLineNumber + 1);
+
+		String javaTermContent = classContent.substring(x, y);
+
+		Matcher matcher = _javaTermStartLinePattern.matcher(javaTermContent);
 
 		if (!matcher.find()) {
 			return null;
 		}
 
-		s = s.substring(matcher.end(1), matcher.end() - 1);
+		String startLine = StringUtil.trim(matcher.group());
 
-		s = StringUtil.replace(
-			s, new String[] {"\t", "(\n", "\n", " synchronized "},
+		startLine = StringUtil.replace(
+			startLine, new String[] {"\t", "(\n", "\n", " synchronized "},
 			new String[] {"", "(", " ", " "});
 
-		for (String accessModifier : JavaTerm.ACCESS_MODIFIERS) {
-			JavaTerm javaTerm = _getJavaTerm(
-				javaTermContent, s, accessModifier, lineNumber);
+		if (metadata != null) {
+			javaTermContent = metadata + javaTermContent;
+		}
 
-			if (javaTerm != null) {
-				return javaTerm;
+		if (startLine.startsWith("static {")) {
+			return new JavaStaticBlock(javaTermContent, javaTermLineNumber);
+		}
+
+		String accessModifier = JavaTerm.ACCESS_MODIFIER_DEFAULT;
+
+		for (String curAccessModifier : JavaTerm.ACCESS_MODIFIERS) {
+			if (startLine.startsWith(curAccessModifier)) {
+				accessModifier = curAccessModifier;
+
+				break;
 			}
 		}
 
-		return null;
-	}
-
-	private static JavaTerm _getJavaTerm(
-			String javaTermContent, String startLine, String accessModifier,
-			int lineNumber)
-		throws IOException, ParseException {
-
-		if (startLine.startsWith("static {")) {
-			return new JavaStaticBlock(javaTermContent, lineNumber);
-		}
-
-		if (!startLine.startsWith(accessModifier)) {
-			return null;
-		}
-
 		boolean isAbstract = startLine.contains(" abstract ");
+		boolean isEnum = startLine.contains(" enum ");
 		boolean isInterface = startLine.contains(" interface ");
 		boolean isStatic = startLine.contains(" static ");
 
-		int x = startLine.indexOf(CharPool.EQUAL);
-		int y = startLine.indexOf(CharPool.OPEN_PARENTHESIS);
+		x = startLine.indexOf(CharPool.EQUAL);
+		y = startLine.indexOf(CharPool.OPEN_PARENTHESIS);
 
 		if (startLine.contains(" @interface ") ||
 			startLine.contains(" class ") || startLine.contains(" enum ") ||
@@ -242,7 +260,8 @@ public class JavaClassParser {
 
 			return _parseJavaClass(
 				_getClassName(startLine), javaTermContent, lineNumber,
-				accessModifier, isAbstract, isStatic, isInterface, false);
+				accessModifier, isAbstract, isStatic, isEnum, isInterface,
+				false);
 		}
 
 		if (((x > 0) && ((y == -1) || (y > x))) ||
@@ -260,13 +279,19 @@ public class JavaClassParser {
 		int spaceCount = StringUtil.count(
 			startLine.substring(0, y), CharPool.SPACE);
 
-		if (isStatic || (spaceCount > 1)) {
+		if (isStatic || (spaceCount > 1) ||
+			(accessModifier.equals(JavaTerm.ACCESS_MODIFIER_DEFAULT) &&
+			 (spaceCount > 0))) {
+
 			return new JavaMethod(
 				_getConstructorOrMethodName(startLine, y), javaTermContent,
 				accessModifier, lineNumber, isAbstract, isStatic);
 		}
 
-		if (spaceCount == 1) {
+		if ((spaceCount == 1) ||
+			(accessModifier.equals(JavaTerm.ACCESS_MODIFIER_DEFAULT) &&
+			 (spaceCount == 0))) {
+
 			return new JavaConstructor(
 				_getConstructorOrMethodName(startLine, y), javaTermContent,
 				accessModifier, lineNumber, isAbstract, isStatic);
@@ -275,18 +300,44 @@ public class JavaClassParser {
 		return null;
 	}
 
-	private static int _getLineStartPos(String content, int lineNumber) {
-		int x = 0;
+	private static int _getJavaTermEndLineNumber(
+		String classContent, int lineNumber) {
 
-		for (int i = 1; i < lineNumber; i++) {
-			x = content.indexOf(CharPool.NEW_LINE, x + 1);
+		int x = SourceUtil.getLineStartPos(classContent, lineNumber);
 
-			if (x == -1) {
-				return x;
+		String s = classContent.substring(x);
+
+		Matcher matcher = _javaTermEndPattern.matcher(s);
+
+		while (matcher.find()) {
+			String javaTermContent = s.substring(0, matcher.end());
+
+			if (SourceUtil.getLevel(javaTermContent, "{", "}") == 0) {
+				return lineNumber + StringUtil.count(javaTermContent, "\n") - 1;
 			}
 		}
 
-		return x + 1;
+		return -1;
+	}
+
+	private static int _getMatchingEndLineNumber(
+		String classContent, int lineNumber, String increaseLevelString,
+		String decreaseLevelString) {
+
+		int level = 0;
+
+		while (true) {
+			String line = SourceUtil.getLine(classContent, lineNumber);
+
+			level += SourceUtil.getLevel(
+				line, increaseLevelString, decreaseLevelString);
+
+			if (level == 0) {
+				return lineNumber;
+			}
+
+			lineNumber++;
+		}
 	}
 
 	private static String _getVariableName(String line) {
@@ -357,123 +408,91 @@ public class JavaClassParser {
 	private static JavaClass _parseJavaClass(
 			String className, String classContent, int lineNumber,
 			String accessModifier, boolean isAbstract, boolean isStatic,
-			boolean isInterface, boolean anonymous)
+			boolean isEnum, boolean isInterface, boolean anonymous)
 		throws IOException, ParseException {
 
 		JavaClass javaClass = new JavaClass(
 			className, classContent, accessModifier, lineNumber, isAbstract,
 			isStatic, isInterface, anonymous);
 
-		String indent = SourceUtil.getIndent(classContent) + StringPool.TAB;
+		lineNumber = 0;
 
-		UnsyncBufferedReader unsyncBufferedReader = new UnsyncBufferedReader(
-			new UnsyncStringReader(classContent));
-
-		String line = null;
-
-		int javaTermStartPos = -1;
+		int annotationLevel = 0;
 		int level = 0;
-		int javaClassLineNumber = 0;
-		int metadataAnnotationLevel = 0;
-		int metadataBlockCommentLevel = 0;
 
-		boolean insideJavaTerm = false;
-		boolean insideMetadataAnnotation = false;
-		boolean insideMetadataBlockComment = false;
-		boolean multiLineComment = false;
+		while (true) {
+			String line = SourceUtil.getLine(classContent, ++lineNumber);
 
-		while ((line = unsyncBufferedReader.readLine()) != null) {
-			javaClassLineNumber++;
-
-			if (!insideJavaTerm && line.startsWith(indent + "@")) {
-				insideMetadataAnnotation = true;
-
-				metadataAnnotationLevel = SourceUtil.getLevel(line);
-			}
-			else if (insideMetadataAnnotation) {
-				if ((metadataAnnotationLevel == 0) &&
-					Validator.isNotNull(line)) {
-
-					insideMetadataAnnotation = false;
-				}
-
-				metadataAnnotationLevel += SourceUtil.getLevel(line);
-			}
-
-			if (!insideJavaTerm && line.startsWith(indent + "/*")) {
-				insideMetadataBlockComment = true;
-
-				metadataBlockCommentLevel = SourceUtil.getLevel(
-					line, "/*", "*/");
-			}
-			else if (insideMetadataBlockComment) {
-				if ((metadataBlockCommentLevel == 0) &&
-					Validator.isNotNull(line)) {
-
-					insideMetadataBlockComment = false;
-				}
-
-				metadataBlockCommentLevel += SourceUtil.getLevel(
-					line, "/*", "*/");
-			}
-
-			if (!insideJavaTerm) {
-				if (javaTermStartPos == -1) {
-					if (line.matches(indent + "\\S+.*")) {
-						javaTermStartPos = _getLineStartPos(
-							classContent, javaClassLineNumber);
-					}
-				}
-				else if (Validator.isNull(line) && !insideMetadataAnnotation &&
-						 !insideMetadataBlockComment) {
-
-					javaTermStartPos = -1;
-				}
-			}
-
-			if (line.matches("\\s*//.*")) {
-				continue;
-			}
-
-			if (multiLineComment) {
-				if (line.matches(".*\\*/")) {
-					multiLineComment = false;
-				}
-
-				continue;
-			}
-
-			if (line.matches("\\s*/\\*.*")) {
-				multiLineComment = true;
-
-				continue;
-			}
-
+			annotationLevel += SourceUtil.getLevel(line);
 			level += SourceUtil.getLevel(line, "{", "}");
 
-			if (line.matches(
-					indent +
-						"((private|protected|public)( .*|$)|static \\{)")) {
+			if ((annotationLevel == 0) && (level != 0)) {
+				break;
+			}
+		}
 
-				insideJavaTerm = true;
-				insideMetadataAnnotation = false;
-				insideMetadataBlockComment = false;
+		if (isEnum) {
+			while (true) {
+				String line = StringUtil.trim(
+					SourceUtil.getLine(classContent, ++lineNumber));
+
+				level += SourceUtil.getLevel(line, "{", "}");
+
+				if (level == 0) {
+					return javaClass;
+				}
+
+				if (line.endsWith(";") && (level == 1)) {
+					break;
+				}
+			}
+		}
+
+		int javaTermLineNumber = -1;
+
+		while (true) {
+			String line = StringUtil.trim(
+				SourceUtil.getLine(classContent, ++lineNumber));
+
+			if ((line == null) || line.equals("}")) {
+				return javaClass;
 			}
 
-			if (insideJavaTerm && line.matches(".*[};]") && (level == 1)) {
-				int nextLineStartPos = _getLineStartPos(
-					classContent, javaClassLineNumber + 1);
+			if (line.equals(StringPool.BLANK) || line.startsWith("//")) {
+				continue;
+			}
 
-				String javaTermContent = classContent.substring(
-					javaTermStartPos, nextLineStartPos);
+			if (line.equals("/*") || line.matches("/\\*[^*].*")) {
+				lineNumber = _getCommentEndLineNumber(classContent, lineNumber);
 
-				int javaTermLineNumber =
-					lineNumber - 1 +
-						SourceUtil.getLineNumber(
-							classContent, javaTermStartPos);
+				continue;
+			}
+
+			if (line.equals("{")) {
+				lineNumber = _getMatchingEndLineNumber(
+					classContent, lineNumber, "{", "}");
+
+				continue;
+			}
+
+			if (javaTermLineNumber == -1) {
+				javaTermLineNumber = lineNumber;
+			}
+
+			if (line.startsWith("@")) {
+				lineNumber = _getMatchingEndLineNumber(
+					classContent, lineNumber, "(", ")");
+			}
+			else if (line.startsWith("/**")) {
+				lineNumber = _getCommentEndLineNumber(classContent, lineNumber);
+			}
+			else {
+				int javaTermEndLineNumber = _getJavaTermEndLineNumber(
+					classContent, lineNumber);
 
 				JavaTerm javaTerm = _getJavaTerm(
-					javaTermContent, indent, javaTermLineNumber);
+					classContent, javaTermLineNumber, javaTermEndLineNumber,
+					lineNumber);
 
 				if (javaTerm == null) {
 					throw new ParseException(
@@ -483,20 +502,19 @@ public class JavaClassParser {
 
 				javaClass.addChildJavaTerm(javaTerm);
 
-				insideJavaTerm = false;
-				insideMetadataAnnotation = false;
-				insideMetadataBlockComment = false;
-
-				javaTermStartPos = nextLineStartPos;
+				javaTermLineNumber = -1;
+				lineNumber = javaTermEndLineNumber;
 			}
 		}
-
-		return javaClass;
 	}
 
 	private static final Pattern _anonymousClassPattern = Pattern.compile(
 		"\n\t+(\\S.* )?new ((.|\\(\n|\\w\n)*\\)) \\{\n\n");
 	private static final Pattern _implementsPattern = Pattern.compile(
 		"(\\A|\\s)implements\\s");
+	private static final Pattern _javaTermEndPattern = Pattern.compile(
+		"[;}]\\s*?\n");
+	private static final Pattern _javaTermStartLinePattern = Pattern.compile(
+		".*?[{;]\\s*?\n", Pattern.DOTALL);
 
 }

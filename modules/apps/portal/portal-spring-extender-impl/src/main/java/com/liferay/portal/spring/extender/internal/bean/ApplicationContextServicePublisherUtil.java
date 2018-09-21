@@ -57,7 +57,7 @@ public class ApplicationContextServicePublisherUtil {
 				bean = applicationContext.getBean(beanName);
 
 				ServiceRegistration<?> serviceRegistration = _registerService(
-					bundleContext, bean);
+					bundleContext, beanName, bean);
 
 				if (serviceRegistration != null) {
 					serviceRegistrations.add(serviceRegistration);
@@ -88,7 +88,7 @@ public class ApplicationContextServicePublisherUtil {
 	}
 
 	private static ServiceRegistration<?> _registerService(
-		BundleContext bundleContext, Object bean) {
+		BundleContext bundleContext, String beanName, Object bean) {
 
 		OSGiBeanProperties osgiBeanProperties = null;
 
@@ -133,6 +133,7 @@ public class ApplicationContextServicePublisherUtil {
 		HashMapDictionary<String, Object> properties =
 			new HashMapDictionary<>();
 
+		properties.put("bean.id", beanName);
 		properties.put("origin.bundle.symbolic.name", bundle.getSymbolicName());
 
 		if (osgiBeanProperties != null) {

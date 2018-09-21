@@ -59,12 +59,12 @@ public class ModuleApplicationContextRegistrator {
 
 	protected void start() throws Exception {
 		try {
-			ClassLoader classLoader = new BundleResolverClassLoader(
-				_extendeeBundle, _extenderBundle);
-
 			Bundle compositeResourceLoaderBundle =
 				new CompositeResourceLoaderBundle(
 					_extendeeBundle, _extenderBundle);
+
+			ClassLoader classLoader = new BundleResolverClassLoader(
+				_extendeeBundle, _extenderBundle);
 
 			Dictionary<String, String> headers = _extendeeBundle.getHeaders(
 				StringPool.BLANK);

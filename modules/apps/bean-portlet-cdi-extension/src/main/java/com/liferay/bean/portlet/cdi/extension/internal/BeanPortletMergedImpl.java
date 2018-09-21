@@ -17,8 +17,10 @@ package com.liferay.bean.portlet.cdi.extension.internal;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -33,6 +35,12 @@ public class BeanPortletMergedImpl extends BaseBeanPortletImpl {
 	public BeanPortletMergedImpl(
 		BeanPortlet annotatedBeanPortlet, BeanPortlet descriptorBeanPortlet) {
 
+		super(
+			_mergeBeanMethods(
+				annotatedBeanPortlet.getBeanMethods(),
+				descriptorBeanPortlet.getBeanMethods()),
+			Collections.emptySet());
+
 		if (annotatedBeanPortlet.isAsyncSupported() ||
 			descriptorBeanPortlet.isAsyncSupported()) {
 
@@ -40,28 +48,6 @@ public class BeanPortletMergedImpl extends BaseBeanPortletImpl {
 		}
 		else {
 			_asyncSupported = false;
-		}
-
-		Map<MethodType, List<BeanMethod>> annotatedBeanMethods =
-			annotatedBeanPortlet.getBeanMethods();
-
-		for (Map.Entry<MethodType, List<BeanMethod>> entry :
-				annotatedBeanMethods.entrySet()) {
-
-			for (BeanMethod annotatedBeanMethod : entry.getValue()) {
-				addBeanMethod(annotatedBeanMethod);
-			}
-		}
-
-		Map<MethodType, List<BeanMethod>> descriptorBeanMethods =
-			descriptorBeanPortlet.getBeanMethods();
-
-		for (Map.Entry<MethodType, List<BeanMethod>> entry :
-				descriptorBeanMethods.entrySet()) {
-
-			for (BeanMethod descriptorBeanMethod : entry.getValue()) {
-				addBeanMethod(descriptorBeanMethod);
-			}
 		}
 
 		_containerRuntimeOptions = new HashMap<>(
@@ -126,8 +112,12 @@ public class BeanPortletMergedImpl extends BaseBeanPortletImpl {
 		_liferayConfiguration = new HashMap<>(
 			annotatedBeanPortlet.getLiferayConfiguration());
 
-		_liferayConfiguration.putAll(
-			descriptorBeanPortlet.getLiferayConfiguration());
+		Map<String, String> descriptorLiferayConfiguration =
+			descriptorBeanPortlet.getLiferayConfiguration();
+
+		if (descriptorLiferayConfiguration != null) {
+			_liferayConfiguration.putAll(descriptorLiferayConfiguration);
+		}
 
 		if (annotatedBeanPortlet.isMultiPartSupported() ||
 			descriptorBeanPortlet.isMultiPartSupported()) {
@@ -220,7 +210,7 @@ public class BeanPortletMergedImpl extends BaseBeanPortletImpl {
 
 		_shortTitles.putAll(descriptorBeanPortlet.getShortTitles());
 
-		_supportedLocales = new HashSet<>(
+		_supportedLocales = new LinkedHashSet<>(
 			annotatedBeanPortlet.getSupportedLocales());
 
 		_supportedLocales.addAll(descriptorBeanPortlet.getSupportedLocales());
@@ -231,19 +221,19 @@ public class BeanPortletMergedImpl extends BaseBeanPortletImpl {
 		_supportedPortletModes.putAll(
 			descriptorBeanPortlet.getSupportedPortletModes());
 
-		_supportedProcessingEvents = new HashSet<>(
+		_supportedProcessingEvents = new LinkedHashSet<>(
 			annotatedBeanPortlet.getSupportedProcessingEvents());
 
 		_supportedProcessingEvents.addAll(
 			descriptorBeanPortlet.getSupportedProcessingEvents());
 
-		_supportedPublicRenderParameters = new HashSet<>(
+		_supportedPublicRenderParameters = new LinkedHashSet<>(
 			annotatedBeanPortlet.getSupportedPublicRenderParameters());
 
 		_supportedPublicRenderParameters.addAll(
 			descriptorBeanPortlet.getSupportedPublicRenderParameters());
 
-		_supportedPublishingEvents = new HashSet<>(
+		_supportedPublishingEvents = new LinkedHashSet<>(
 			annotatedBeanPortlet.getSupportedPublishingEvents());
 
 		_supportedPublishingEvents.addAll(
@@ -398,6 +388,27 @@ public class BeanPortletMergedImpl extends BaseBeanPortletImpl {
 	@Override
 	public boolean isMultiPartSupported() {
 		return _multiPartSupported;
+	}
+
+	private static Set<BeanMethod> _mergeBeanMethods(
+		Map<MethodType, List<BeanMethod>> annotatedBeanMethods,
+		Map<MethodType, List<BeanMethod>> descriptorBeanMethods) {
+
+		Set<BeanMethod> beanMethods = new HashSet<>();
+
+		for (Map.Entry<MethodType, List<BeanMethod>>
+				entry: annotatedBeanMethods.entrySet()) {
+
+			beanMethods.addAll(entry.getValue());
+		}
+
+		for (Map.Entry<MethodType, List<BeanMethod>>
+				entry: descriptorBeanMethods.entrySet()) {
+
+			beanMethods.addAll(entry.getValue());
+		}
+
+		return beanMethods;
 	}
 
 	private final boolean _asyncSupported;

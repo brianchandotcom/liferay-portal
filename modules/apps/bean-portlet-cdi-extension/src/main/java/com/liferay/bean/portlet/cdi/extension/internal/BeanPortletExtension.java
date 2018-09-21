@@ -32,6 +32,7 @@ import com.liferay.bean.portlet.cdi.extension.internal.xml.DisplayDescriptorPars
 import com.liferay.bean.portlet.cdi.extension.internal.xml.LiferayDescriptorParser;
 import com.liferay.bean.portlet.cdi.extension.internal.xml.PortletDescriptor;
 import com.liferay.bean.portlet.cdi.extension.internal.xml.PortletDescriptorParser;
+import com.liferay.bean.portlet.cdi.extension.internal.xml.PortletScannerUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -51,6 +52,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -66,22 +68,9 @@ import javax.enterprise.inject.spi.BeforeBeanDiscovery;
 import javax.enterprise.inject.spi.Extension;
 import javax.enterprise.inject.spi.ProcessAnnotatedType;
 
-import javax.portlet.ActionRequest;
-import javax.portlet.ActionResponse;
-import javax.portlet.EventPortlet;
-import javax.portlet.EventRequest;
-import javax.portlet.EventResponse;
-import javax.portlet.HeaderPortlet;
-import javax.portlet.HeaderRequest;
-import javax.portlet.HeaderResponse;
 import javax.portlet.Portlet;
 import javax.portlet.PortletConfig;
 import javax.portlet.PortletSession;
-import javax.portlet.RenderRequest;
-import javax.portlet.RenderResponse;
-import javax.portlet.ResourceRequest;
-import javax.portlet.ResourceResponse;
-import javax.portlet.ResourceServingPortlet;
 import javax.portlet.annotations.ActionMethod;
 import javax.portlet.annotations.ContextPath;
 import javax.portlet.annotations.CustomPortletMode;
@@ -151,7 +140,7 @@ public class BeanPortletExtension implements Extension {
 		@Observes ProcessAnnotatedType<T> processAnnotatedType) {
 
 		if (_log.isDebugEnabled()) {
-			_log.debug("step2ProcessAnnotatedType=" + processAnnotatedType);
+			_log.debug("processAnnotatedType=" + processAnnotatedType);
 		}
 
 		AnnotatedType<T> annotatedType =
@@ -264,37 +253,37 @@ public class BeanPortletExtension implements Extension {
 			_liferayPortletConfigurationClasses.add(annotatedClass);
 		}
 
-		_actionMethods.addAll(
+		_scannedMethods.addAll(
 			_scanMethods(
 				annotatedClass, MethodType.ACTION, ActionMethod.class,
 				MethodSignature.ACTION));
 
-		_destroyMethods.addAll(
+		_scannedMethods.addAll(
 			_scanMethods(
 				annotatedClass, MethodType.DESTROY, DestroyMethod.class,
 				MethodSignature.DESTROY));
 
-		_eventMethods.addAll(
+		_scannedMethods.addAll(
 			_scanMethods(
 				annotatedClass, MethodType.EVENT, EventMethod.class,
 				MethodSignature.EVENT));
 
-		_headerMethods.addAll(
+		_scannedMethods.addAll(
 			_scanMethods(
 				annotatedClass, MethodType.HEADER, HeaderMethod.class,
 				MethodSignature.HEADER));
 
-		_initMethods.addAll(
+		_scannedMethods.addAll(
 			_scanMethods(
 				annotatedClass, MethodType.INIT, InitMethod.class,
 				MethodSignature.INIT));
 
-		_renderMethods.addAll(
+		_scannedMethods.addAll(
 			_scanMethods(
 				annotatedClass, MethodType.RENDER, RenderMethod.class,
 				MethodSignature.RENDER));
 
-		_serveResourceMethods.addAll(
+		_scannedMethods.addAll(
 			_scanMethods(
 				annotatedClass, MethodType.SERVE_RESOURCE,
 				ServeResourceMethod.class, MethodSignature.SERVE_RESOURCE));
@@ -318,9 +307,11 @@ public class BeanPortletExtension implements Extension {
 		URL displayDescriptorURL = bundle.getEntry(
 			"WEB-INF/liferay-display.xml");
 
+		Map<String, String> descriptorDisplayCategories = null;
+
 		if (displayDescriptorURL != null) {
 			try {
-				_descriptorDisplayCategories = DisplayDescriptorParser.parse(
+				descriptorDisplayCategories = DisplayDescriptorParser.parse(
 					displayDescriptorURL);
 			}
 			catch (Exception e) {
@@ -328,49 +319,60 @@ public class BeanPortletExtension implements Extension {
 			}
 		}
 
-		if (_descriptorDisplayCategories == null) {
-			_descriptorDisplayCategories = Collections.emptyMap();
+		if (descriptorDisplayCategories == null) {
+			descriptorDisplayCategories = Collections.emptyMap();
 		}
 
 		URL liferayDescriptorURL = bundle.getEntry(
 			"WEB-INF/liferay-portlet.xml");
 
+		Map<String, Map<String, String>> descriptorLiferayConfigurations = null;
+
 		if (liferayDescriptorURL != null) {
 			try {
-				_descriptorLiferayConfigurations =
-					LiferayDescriptorParser.parse(liferayDescriptorURL);
+				descriptorLiferayConfigurations = LiferayDescriptorParser.parse(
+					liferayDescriptorURL);
 			}
 			catch (Exception e) {
 				_log.error(e, e);
 			}
 		}
 
-		_addBeanPortletsFromPortletDescriptor(bundle);
+		if (descriptorLiferayConfigurations == null) {
+			descriptorLiferayConfigurations = Collections.emptyMap();
+		}
+
+		Map<String, Set<BeanMethod>> portletBeanMethods =
+			_collectPortletBeanMethods(beanManager);
+
+		Set<BeanMethod> wildcardBeanMethods = _collectWildcardBeanMethods(
+			beanManager);
+
+		_addBeanPortletsAndFiltersFromPortletDescriptor(
+			bundle, beanManager, portletBeanMethods, wildcardBeanMethods,
+			descriptorDisplayCategories, descriptorLiferayConfigurations);
+
+		_addBeanFiltersFromAnnotatedClasses();
 
 		List<URLGenerationListener> urlGenerationListeners =
 			_getListenersFromAnnotatedClasses();
 
-		_addBeanPortletsFromAnnotatedClasses(urlGenerationListeners);
+		_addBeanPortletsFromAnnotatedClasses(
+			beanManager, portletBeanMethods, wildcardBeanMethods,
+			descriptorDisplayCategories, descriptorLiferayConfigurations,
+			urlGenerationListeners);
 
-		_addBeanFiltersFromAnnotatedClasses();
+		_addBeanBeanPortletsFromScannedMethods(
+			portletBeanMethods, wildcardBeanMethods,
+			descriptorDisplayCategories, descriptorLiferayConfigurations);
 
-		_associateMethods(beanManager, MethodType.ACTION, _actionMethods);
-		_associateMethods(beanManager, MethodType.DESTROY, _destroyMethods);
-		_associateMethods(beanManager, MethodType.EVENT, _eventMethods);
-		_associateMethods(beanManager, MethodType.HEADER, _headerMethods);
-		_associateMethods(beanManager, MethodType.INIT, _initMethods);
-		_associateMethods(beanManager, MethodType.RENDER, _renderMethods);
-		_associateMethods(
-			beanManager, MethodType.SERVE_RESOURCE, _serveResourceMethods);
-
-		if (!_descriptorLiferayConfigurations.isEmpty()) {
-			_addBeanPortletsFromLiferayDescriptor();
+		if (!descriptorLiferayConfigurations.isEmpty()) {
+			_addBeanPortletsFromLiferayDescriptor(
+				portletBeanMethods, wildcardBeanMethods,
+				descriptorDisplayCategories, descriptorLiferayConfigurations);
 		}
 
 		BundleContext bundleContext = bundle.getBundleContext();
-
-		_portletRegistrations = new ArrayList<>();
-		_resourceBundleLoaderRegistrations = new ArrayList<>();
 
 		for (BeanPortlet beanPortlet : _beanPortlets.values()) {
 			ServiceRegistration<Portlet> portletServiceRegistration =
@@ -401,11 +403,11 @@ public class BeanPortletExtension implements Extension {
 			}
 		}
 
-		if (!_descriptorLiferayConfigurations.isEmpty() &&
+		if (!descriptorLiferayConfigurations.isEmpty() &&
 			_log.isWarnEnabled()) {
 
 			for (String portletName :
-					_descriptorLiferayConfigurations.keySet()) {
+					descriptorLiferayConfigurations.keySet()) {
 
 				if (_beanPortlets.containsKey(portletName)) {
 					continue;
@@ -497,6 +499,41 @@ public class BeanPortletExtension implements Extension {
 		_resourceBundleLoaderRegistrations.clear();
 	}
 
+	private void _addBeanBeanPortletsFromScannedMethods(
+		Map<String, Set<BeanMethod>> portletBeanMethods,
+		Set<BeanMethod> wildcardBeanMethods,
+		Map<String, String> descriptorDisplayCategories,
+		Map<String, Map<String, String>> descriptorLiferayConfigurations) {
+
+		Set<String> portletNames = new HashSet<>();
+
+		if (_beanApp == null) {
+			_beanApp = new BeanAppDefaultImpl();
+		}
+
+		for (ScannedMethod scannedMethod : _scannedMethods) {
+			Collections.addAll(portletNames, scannedMethod.getPortletNames());
+		}
+
+		for (String portletName : portletNames) {
+			if (Objects.equals("*", portletName)) {
+				continue;
+			}
+
+			BeanPortlet beanPortlet = _beanPortlets.get(portletName);
+
+			if (beanPortlet == null) {
+				beanPortlet = new BeanPortletDefaultImpl(
+					portletName, portletBeanMethods.get(portletName),
+					wildcardBeanMethods,
+					descriptorDisplayCategories.get(portletName),
+					descriptorLiferayConfigurations.get(portletName));
+
+				_beanPortlets.put(portletName, beanPortlet);
+			}
+		}
+	}
+
 	private void _addBeanFiltersFromAnnotatedClasses() {
 		for (Class<?> annotatedClass : _portletLifecycleFilterClasses) {
 			_beanFilters.add(new BeanFilterAnnotationImpl(annotatedClass));
@@ -504,7 +541,11 @@ public class BeanPortletExtension implements Extension {
 	}
 
 	private void _addBeanPortlet(
-		Class<?> beanPortletClass, PortletConfiguration portletConfiguration,
+		Class<?> beanPortletClass, Set<BeanMethod> beanMethods,
+		Set<BeanMethod> wildcardBeanMethods,
+		PortletConfiguration portletConfiguration,
+		Map<String, String> descriptorDisplayCategories,
+		Map<String, Map<String, String>> descriptorLiferayConfigurations,
 		List<URLGenerationListener> urlGenerationListeners) {
 
 		String configuredPortletName = portletConfiguration.portletName();
@@ -539,10 +580,11 @@ public class BeanPortletExtension implements Extension {
 		}
 
 		BeanPortlet annotatedBeanPortlet = new BeanPortletAnnotationImpl(
-			beanPortletClass.getName(), portletConfiguration,
+			beanPortletClass.getName(), beanMethods, wildcardBeanMethods,
+			portletConfiguration,
 			_getAnnotatedLiferayConfiguration(configuredPortletName),
-			_descriptorLiferayConfigurations.get(configuredPortletName),
-			_descriptorDisplayCategories.get(configuredPortletName));
+			descriptorLiferayConfigurations.get(configuredPortletName),
+			descriptorDisplayCategories.get(configuredPortletName));
 
 		BeanPortlet descriptorBeanPortlet = _beanPortlets.get(
 			configuredPortletName);
@@ -558,64 +600,22 @@ public class BeanPortletExtension implements Extension {
 		}
 	}
 
-	private void _addBeanPortletsFromAnnotatedClasses(
-		List<URLGenerationListener> urlGenerationListeners) {
+	private void _addBeanPortletsAndFiltersFromPortletDescriptor(
+		Bundle bundle, BeanManager beanManager,
+		Map<String, Set<BeanMethod>> portletBeanMethods,
+		Set<BeanMethod> wildcardBeanMethods,
+		Map<String, String> descriptorDisplayCategories,
+		Map<String, Map<String, String>> descriptorLiferayConfigurations) {
 
-		for (Class<?> clazz : _portletConfigurationsClasses) {
-			PortletConfigurations portletConfigurations = clazz.getAnnotation(
-				PortletConfigurations.class);
-
-			for (PortletConfiguration portletConfiguration :
-					portletConfigurations.value()) {
-
-				_addBeanPortlet(
-					clazz, portletConfiguration, urlGenerationListeners);
-				_scanBeanPortletClass(
-					clazz, portletConfiguration.portletName());
-			}
-		}
-
-		for (Class<?> clazz : _portletConfigurationClasses) {
-			PortletConfiguration portletConfiguration = clazz.getAnnotation(
-				PortletConfiguration.class);
-
-			_addBeanPortlet(
-				clazz, portletConfiguration, urlGenerationListeners);
-			_scanBeanPortletClass(clazz, portletConfiguration.portletName());
-		}
-	}
-
-	private void _addBeanPortletsFromLiferayDescriptor() {
-		for (Map.Entry<String, Map<String, String>> entry :
-				_descriptorLiferayConfigurations.entrySet()) {
-
-			String portletName = entry.getKey();
-
-			BeanPortlet beanPortlet = _beanPortlets.get(portletName);
-
-			if (beanPortlet == null) {
-				if (_beanApp == null) {
-					_beanApp = new BeanAppDefaultImpl();
-				}
-
-				beanPortlet = new BeanPortletDefaultImpl(
-					portletName, _descriptorDisplayCategories.get(portletName),
-					entry.getValue());
-
-				_beanPortlets.put(portletName, beanPortlet);
-			}
-		}
-	}
-
-	private void _addBeanPortletsFromPortletDescriptor(Bundle bundle) {
 		URL portletDescriptorURL = bundle.getEntry("/WEB-INF/portlet.xml");
 
 		if (portletDescriptorURL != null) {
 			try {
 				PortletDescriptor portletDescriptor =
 					PortletDescriptorParser.parse(
-						portletDescriptorURL, _descriptorDisplayCategories,
-						_descriptorLiferayConfigurations);
+						portletDescriptorURL, descriptorDisplayCategories,
+						descriptorLiferayConfigurations, beanManager,
+						portletBeanMethods, wildcardBeanMethods);
 
 				_beanApp = portletDescriptor.getBeanApp();
 
@@ -626,11 +626,6 @@ public class BeanPortletExtension implements Extension {
 
 					_beanPortlets.put(
 						beanPortlet.getPortletName(), beanPortlet);
-
-					_scanBeanPortletClass(
-						_loadBeanPortletClass(
-							beanPortlet.getPortletClassName()),
-						beanPortlet.getPortletName());
 				}
 			}
 			catch (Exception e) {
@@ -639,58 +634,164 @@ public class BeanPortletExtension implements Extension {
 		}
 	}
 
-	private void _associateMethods(
-		BeanManager beanManager, MethodType beanMethodType,
-		List<ScannedMethod> scannedMethods) {
+	private void _addBeanPortletsFromAnnotatedClasses(
+		BeanManager beanManager,
+		Map<String, Set<BeanMethod>> portletBeanMethods,
+		Set<BeanMethod> wildcardBeanMethods,
+		Map<String, String> descriptorDisplayCategories,
+		Map<String, Map<String, String>> descriptorLiferayConfigurations,
+		List<URLGenerationListener> urlGenerationListeners) {
 
-		for (ScannedMethod scannedMethod : scannedMethods) {
+		for (Class<?> clazz : _portletConfigurationsClasses) {
+			PortletConfigurations portletConfigurations = clazz.getAnnotation(
+				PortletConfigurations.class);
+
+			for (PortletConfiguration portletConfiguration :
+					portletConfigurations.value()) {
+
+				Set<BeanMethod> beanMethods = portletBeanMethods.get(
+					portletConfiguration.portletName());
+
+				if (beanMethods == null) {
+					beanMethods = new HashSet<>();
+				}
+				else {
+					beanMethods = new HashSet<>(beanMethods);
+				}
+
+				beanMethods.addAll(
+					PortletScannerUtil.getNonannotatedBeanMethods(
+						beanManager, clazz));
+
+				_addBeanPortlet(
+					clazz, beanMethods, wildcardBeanMethods,
+					portletConfiguration, descriptorDisplayCategories,
+					descriptorLiferayConfigurations, urlGenerationListeners);
+			}
+		}
+
+		for (Class<?> clazz : _portletConfigurationClasses) {
+			PortletConfiguration portletConfiguration = clazz.getAnnotation(
+				PortletConfiguration.class);
+
+			Set<BeanMethod> beanMethods = portletBeanMethods.get(
+				portletConfiguration.portletName());
+
+			if (beanMethods == null) {
+				beanMethods = new HashSet<>();
+			}
+			else {
+				beanMethods = new HashSet<>(beanMethods);
+			}
+
+			beanMethods.addAll(
+				PortletScannerUtil.getNonannotatedBeanMethods(
+					beanManager, clazz));
+
+			_addBeanPortlet(
+				clazz, beanMethods, wildcardBeanMethods, portletConfiguration,
+				descriptorDisplayCategories, descriptorLiferayConfigurations,
+				urlGenerationListeners);
+		}
+	}
+
+	private void _addBeanPortletsFromLiferayDescriptor(
+		Map<String, Set<BeanMethod>> portletBeanMethods,
+		Set<BeanMethod> wildcardBeanMethods,
+		Map<String, String> descriptorDisplayCategories,
+		Map<String, Map<String, String>> descriptorLiferayConfigurations) {
+
+		if (_beanApp == null) {
+			_beanApp = new BeanAppDefaultImpl();
+		}
+
+		for (Map.Entry<String, Map<String, String>> entry :
+				descriptorLiferayConfigurations.entrySet()) {
+
+			String portletName = entry.getKey();
+
+			BeanPortlet beanPortlet = _beanPortlets.get(portletName);
+
+			if (beanPortlet == null) {
+				beanPortlet = new BeanPortletDefaultImpl(
+					portletName, portletBeanMethods.get(portletName),
+					wildcardBeanMethods,
+					descriptorDisplayCategories.get(portletName),
+					entry.getValue());
+
+				_beanPortlets.put(portletName, beanPortlet);
+			}
+		}
+	}
+
+	private Map<String, Set<BeanMethod>> _collectPortletBeanMethods(
+		BeanManager beanManager) {
+
+		Map<String, Set<BeanMethod>> portletBeanMethods = new HashMap<>();
+
+		for (ScannedMethod scannedMethod : _scannedMethods) {
+			String[] portletNames = scannedMethod.getPortletNames();
+
+			if (portletNames == null) {
+				_log.error(
+					"Portlet names cannot be null for annotated method " +
+						scannedMethod.getMethod());
+				continue;
+			}
+
+			if ((portletNames.length > 0) && "*".equals(portletNames[0])) {
+				continue;
+			}
+
 			Class<?> clazz = scannedMethod.getClazz();
 			Method method = scannedMethod.getMethod();
-			String[] portletNames = scannedMethod.getPortletNames();
 			int ordinal = scannedMethod.getOrdinal();
 
 			BeanMethod beanMethod = new BeanMethod(
-				beanManager, beanMethodType, clazz, method, ordinal);
+				beanManager, scannedMethod.getMethodType(), clazz, method,
+				ordinal);
 
-			Class<?> beanClass = beanMethod.getBeanClass();
-
-			if (portletNames == null) {
-				String beanClassName = beanClass.getName();
-
-				for (BeanPortlet beanPortlet : _beanPortlets.values()) {
-					if (beanClassName.equals(
-							beanPortlet.getPortletClassName())) {
-
-						beanPortlet.addBeanMethod(beanMethod);
-					}
-				}
-			}
-			else if ((portletNames.length > 0) && "*".equals(portletNames[0])) {
-				for (BeanPortlet beanPortlet : _beanPortlets.values()) {
-					beanPortlet.addBeanMethod(beanMethod);
-				}
-			}
-			else {
+			if (portletNames != null) {
 				for (String portletName : portletNames) {
-					BeanPortlet beanPortlet = _beanPortlets.get(portletName);
+					Set<BeanMethod> beanMethods = portletBeanMethods.get(
+						portletName);
 
-					if (beanPortlet == null) {
-						if (_beanApp == null) {
-							_beanApp = new BeanAppDefaultImpl();
-						}
-
-						beanPortlet = new BeanPortletDefaultImpl(
-							portletName,
-							_descriptorDisplayCategories.get(portletName),
-							_descriptorLiferayConfigurations.get(portletName));
-
-						_beanPortlets.put(portletName, beanPortlet);
+					if (beanMethods == null) {
+						beanMethods = new HashSet<>();
 					}
 
-					beanPortlet.addBeanMethod(beanMethod);
+					beanMethods.add(beanMethod);
+
+					portletBeanMethods.put(portletName, beanMethods);
 				}
 			}
 		}
+
+		return portletBeanMethods;
+	}
+
+	private Set<BeanMethod> _collectWildcardBeanMethods(
+		BeanManager beanManager) {
+
+		Set<BeanMethod> wildcardBeanMethods = new HashSet<>();
+
+		for (ScannedMethod scannedMethod : _scannedMethods) {
+			String[] portletNames = scannedMethod.getPortletNames();
+
+			if ((portletNames.length > 0) && "*".equals(portletNames[0])) {
+				Class<?> clazz = scannedMethod.getClazz();
+				Method method = scannedMethod.getMethod();
+				int ordinal = scannedMethod.getOrdinal();
+
+				BeanMethod beanMethod = new BeanMethod(
+					beanManager, scannedMethod.getMethodType(), clazz, method,
+					ordinal);
+
+				wildcardBeanMethods.add(beanMethod);
+			}
+		}
+
+		return wildcardBeanMethods;
 	}
 
 	private LiferayPortletConfiguration _getAnnotatedLiferayConfiguration(
@@ -740,125 +841,6 @@ public class BeanPortletExtension implements Extension {
 		return urlGenerationListeners;
 	}
 
-	private Class<?> _loadBeanPortletClass(String className) {
-		try {
-			return Class.forName(className);
-		}
-		catch (ClassNotFoundException cnfe) {
-			_log.error(cnfe, cnfe);
-
-			return null;
-		}
-	}
-
-	private void _scanBeanPortletClass(
-		Class<?> beanPortletClass, String portletName) {
-
-		if (Portlet.class.isAssignableFrom(beanPortletClass)) {
-			try {
-				Method processActionMethod = beanPortletClass.getMethod(
-					"processAction", ActionRequest.class, ActionResponse.class);
-
-				if (!processActionMethod.isAnnotationPresent(
-						ActionMethod.class)) {
-
-					_actionMethods.add(
-						new ScannedMethod(
-							beanPortletClass, MethodType.ACTION,
-							processActionMethod, portletName));
-				}
-
-				Method destroyMethod = beanPortletClass.getMethod("destroy");
-
-				if (!destroyMethod.isAnnotationPresent(DestroyMethod.class)) {
-					_destroyMethods.add(
-						new ScannedMethod(
-							beanPortletClass, MethodType.DESTROY, destroyMethod,
-							portletName));
-				}
-
-				Method initMethod = beanPortletClass.getMethod(
-					"init", PortletConfig.class);
-
-				if (!initMethod.isAnnotationPresent(InitMethod.class)) {
-					_initMethods.add(
-						new ScannedMethod(
-							beanPortletClass, MethodType.INIT, initMethod,
-							portletName));
-				}
-
-				Method renderMethod = beanPortletClass.getMethod(
-					"render", RenderRequest.class, RenderResponse.class);
-
-				if (!renderMethod.isAnnotationPresent(RenderMethod.class)) {
-					_renderMethods.add(
-						new ScannedMethod(
-							beanPortletClass, MethodType.RENDER, renderMethod,
-							portletName));
-				}
-			}
-			catch (NoSuchMethodException nsme) {
-				_log.error(nsme, nsme);
-			}
-		}
-
-		if (EventPortlet.class.isAssignableFrom(beanPortletClass)) {
-			try {
-				Method eventMethod = beanPortletClass.getMethod(
-					"processEvent", EventRequest.class, EventResponse.class);
-
-				if (!eventMethod.isAnnotationPresent(EventMethod.class)) {
-					_eventMethods.add(
-						new ScannedMethod(
-							beanPortletClass, MethodType.EVENT, eventMethod,
-							portletName));
-				}
-			}
-			catch (NoSuchMethodException nsme) {
-				_log.error(nsme, nsme);
-			}
-		}
-
-		if (HeaderPortlet.class.isAssignableFrom(beanPortletClass)) {
-			try {
-				Method renderHeadersMethod = beanPortletClass.getMethod(
-					"renderHeaders", HeaderRequest.class, HeaderResponse.class);
-
-				if (!renderHeadersMethod.isAnnotationPresent(
-						HeaderMethod.class)) {
-
-					_headerMethods.add(
-						new ScannedMethod(
-							beanPortletClass, MethodType.HEADER,
-							renderHeadersMethod, portletName));
-				}
-			}
-			catch (NoSuchMethodException nsme) {
-				_log.error(nsme, nsme);
-			}
-		}
-
-		if (ResourceServingPortlet.class.isAssignableFrom(beanPortletClass)) {
-			try {
-				Method serveResourceMethod = beanPortletClass.getMethod(
-					"serveResource", ResourceRequest.class,
-					ResourceResponse.class);
-
-				if (!serveResourceMethod.isAnnotationPresent(
-						ServeResourceMethod.class)) {
-
-					_serveResourceMethods.add(
-						new ScannedMethod(
-							beanPortletClass, MethodType.SERVE_RESOURCE,
-							serveResourceMethod, portletName));
-				}
-			}
-			catch (NoSuchMethodException nsme) {
-				_log.error(nsme, nsme);
-			}
-		}
-	}
-
 	private List<ScannedMethod> _scanMethods(
 		Class<?> javaClass, MethodType methodType,
 		Class<? extends Annotation> annotationClass,
@@ -871,7 +853,7 @@ public class BeanPortletExtension implements Extension {
 				methodSignature.isMatch(method)) {
 
 				scannedMethods.add(
-					ScannedMethod.create(javaClass, methodType, method));
+					new ScannedMethod(javaClass, methodType, method));
 			}
 		}
 
@@ -944,18 +926,11 @@ public class BeanPortletExtension implements Extension {
 
 		};
 
-	private final List<ScannedMethod> _actionMethods = new ArrayList<>();
 	private BeanApp _beanApp;
 	private final List<BeanFilter> _beanFilters = new ArrayList<>();
 	private final Map<String, BeanPortlet> _beanPortlets = new HashMap<>();
-	private Map<String, String> _descriptorDisplayCategories;
-	private Map<String, Map<String, String>> _descriptorLiferayConfigurations;
-	private final List<ScannedMethod> _destroyMethods = new ArrayList<>();
-	private final List<ScannedMethod> _eventMethods = new ArrayList<>();
 	private final List<ServiceRegistration<PortletFilter>>
 		_filterRegistrations = new ArrayList<>();
-	private final List<ScannedMethod> _headerMethods = new ArrayList<>();
-	private final List<ScannedMethod> _initMethods = new ArrayList<>();
 	private final List<Class<?>> _liferayPortletConfigurationClasses =
 		new ArrayList<>();
 	private final List<Class<?>> _liferayPortletConfigurationsClasses =
@@ -968,10 +943,10 @@ public class BeanPortletExtension implements Extension {
 	private final List<Class<?>> _portletLifecycleFilterClasses =
 		new ArrayList<>();
 	private final List<Class<?>> _portletListenerClasses = new ArrayList<>();
-	private List<ServiceRegistration<Portlet>> _portletRegistrations;
-	private final List<ScannedMethod> _renderMethods = new ArrayList<>();
-	private List<ServiceRegistration<ResourceBundleLoader>>
+	private final List<ServiceRegistration<Portlet>> _portletRegistrations =
+		new ArrayList<>();
+	private final List<ServiceRegistration<ResourceBundleLoader>>
 		_resourceBundleLoaderRegistrations = new ArrayList<>();
-	private final List<ScannedMethod> _serveResourceMethods = new ArrayList<>();
+	private final List<ScannedMethod> _scannedMethods = new ArrayList<>();
 
 }

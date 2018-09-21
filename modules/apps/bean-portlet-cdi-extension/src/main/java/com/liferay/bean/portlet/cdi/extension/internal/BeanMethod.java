@@ -17,6 +17,7 @@ package com.liferay.bean.portlet.cdi.extension.internal;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
+import java.util.Objects;
 import java.util.Set;
 
 import javax.enterprise.inject.spi.Bean;
@@ -41,6 +42,13 @@ public class BeanMethod {
 
 	public BeanMethod(
 		BeanManager beanManager, MethodType type, Class<?> beanClass,
+		Method method) {
+
+		this(beanManager, type, beanClass, method, 0);
+	}
+
+	public BeanMethod(
+		BeanManager beanManager, MethodType type, Class<?> beanClass,
 		Method method, int ordinal) {
 
 		_beanManager = beanManager;
@@ -52,6 +60,31 @@ public class BeanMethod {
 		Set<Bean<?>> beans = beanManager.getBeans(beanClass);
 
 		_bean = beanManager.resolve(beans);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof BeanMethod)) {
+			return false;
+		}
+
+		BeanMethod beanMethod = (BeanMethod)obj;
+
+		Class<?> beanClass = beanMethod.getBeanClass();
+
+		if ((_ordinal == beanMethod.getOrdinal()) &&
+			Objects.equals(_beanClass.getName(), beanClass.getName()) &&
+			Objects.equals(_method, beanMethod.getMethod()) &&
+			(_type == beanMethod.getType())) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	public String getActionName() {
@@ -142,6 +175,11 @@ public class BeanMethod {
 
 	public MethodType getType() {
 		return _type;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(_beanClass.getName(), _method, _ordinal, _type);
 	}
 
 	public Object invoke(Object... args)

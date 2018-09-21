@@ -16,11 +16,12 @@ package com.liferay.bean.portlet.cdi.extension.internal;
 
 import java.util.Collections;
 import java.util.Dictionary;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-
-import javax.xml.namespace.QName;
 
 /**
  * @author Neil Griffin
@@ -28,8 +29,11 @@ import javax.xml.namespace.QName;
 public class BeanPortletDefaultImpl extends BaseBeanPortletImpl {
 
 	public BeanPortletDefaultImpl(
-		String portletName, String displayCategory,
+		String portletName, Set<BeanMethod> beanMethods,
+		Set<BeanMethod> wildcardBeanMethods, String displayCategory,
 		Map<String, String> liferayConfiguration) {
+
+		super(beanMethods, wildcardBeanMethods);
 
 		_portletName = portletName;
 		_displayCategory = displayCategory;
@@ -138,12 +142,7 @@ public class BeanPortletDefaultImpl extends BaseBeanPortletImpl {
 
 	@Override
 	public Map<String, Set<String>> getSupportedPortletModes() {
-		return Collections.emptyMap();
-	}
-
-	@Override
-	public Set<QName> getSupportedProcessingEvents() {
-		return Collections.emptySet();
+		return _supportedPortletModes;
 	}
 
 	@Override
@@ -152,13 +151,8 @@ public class BeanPortletDefaultImpl extends BaseBeanPortletImpl {
 	}
 
 	@Override
-	public Set<QName> getSupportedPublishingEvents() {
-		return Collections.emptySet();
-	}
-
-	@Override
 	public Map<String, Set<String>> getSupportedWindowStates() {
-		return Collections.emptyMap();
+		return _supportedWindowStates;
 	}
 
 	@Override
@@ -184,6 +178,30 @@ public class BeanPortletDefaultImpl extends BaseBeanPortletImpl {
 
 		return dictionary;
 	}
+
+	private static final Map<String, Set<String>> _supportedPortletModes =
+		new HashMap<String, Set<String>>() {
+			{
+				Set<String> portletModes = new HashSet<>();
+
+				portletModes.add("view");
+
+				put("text/html", portletModes);
+			}
+		};
+
+	private static final Map<String, Set<String>> _supportedWindowStates =
+		new HashMap<String, Set<String>>() {
+			{
+				Set<String> windowStates = new LinkedHashSet<>();
+
+				windowStates.add("normal");
+				windowStates.add("minimized");
+				windowStates.add("maximized");
+
+				put("text/html", windowStates);
+			}
+		};
 
 	private final String _displayCategory;
 	private final Map<String, String> _liferayConfiguration;

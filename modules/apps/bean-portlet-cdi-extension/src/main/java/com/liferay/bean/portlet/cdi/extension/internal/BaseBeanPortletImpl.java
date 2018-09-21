@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 
 import java.util.ArrayList;
@@ -36,6 +37,9 @@ import java.util.Map;
 import java.util.Set;
 
 import javax.portlet.PortletMode;
+import javax.portlet.annotations.ActionMethod;
+import javax.portlet.annotations.EventMethod;
+import javax.portlet.annotations.PortletQName;
 
 import javax.xml.XMLConstants;
 import javax.xml.namespace.QName;
@@ -45,42 +49,105 @@ import javax.xml.namespace.QName;
  */
 public abstract class BaseBeanPortletImpl implements BeanPortlet {
 
-	@Override
-	public void addBeanMethod(BeanMethod beanMethod) {
-		MethodType methodType = beanMethod.getType();
+	public BaseBeanPortletImpl(
+		Set<BeanMethod> beanMethods, Set<BeanMethod> wildcardBeanMethods) {
 
-		_beanMethods.compute(
-			methodType,
-			(keyMethodType, beanMethods) -> {
-				if (beanMethods == null) {
-					beanMethods = new ArrayList<>();
+		if (beanMethods != null) {
+			for (BeanMethod beanMethod : beanMethods) {
+				_addBeanMethod(beanMethod);
+			}
+		}
+
+		for (BeanMethod beanMethod : wildcardBeanMethods) {
+			_addBeanMethod(beanMethod);
+		}
+
+		List<BeanMethod> eventBeanMethods = _beanMethods.get(MethodType.EVENT);
+
+		if (eventBeanMethods != null) {
+			for (BeanMethod beanMethod : eventBeanMethods) {
+				Method beanEventMethod = beanMethod.getMethod();
+
+				EventMethod eventMethod = beanEventMethod.getAnnotation(
+					EventMethod.class);
+
+				if (eventMethod == null) {
+					continue;
 				}
 
-				if ((methodType == MethodType.HEADER) ||
-					(methodType == MethodType.RENDER) ||
-					(methodType == MethodType.SERVE_RESOURCE)) {
+				for (PortletQName portletQName :
+						eventMethod.processingEvents()) {
 
-					int index = Collections.binarySearch(
-						beanMethods, beanMethod,
-						Comparator.comparingInt(BeanMethod::getOrdinal));
-
-					if (index < 0) {
-						index = -index - 1;
-					}
-
-					beanMethods.add(index, beanMethod);
+					_supportedProcessingEvents.add(
+						new QName(
+							portletQName.namespaceURI(),
+							portletQName.localPart()));
 				}
-				else {
-					beanMethods.add(beanMethod);
+			}
+		}
+
+		List<BeanMethod> actionMethods = _beanMethods.get(MethodType.ACTION);
+
+		if (actionMethods != null) {
+			for (BeanMethod beanMethod : actionMethods) {
+				Method method = beanMethod.getMethod();
+
+				ActionMethod actionMethod = method.getAnnotation(
+					ActionMethod.class);
+
+				if (actionMethod == null) {
+					continue;
 				}
 
-				return beanMethods;
-			});
+				for (PortletQName portletQName :
+						actionMethod.publishingEvents()) {
+
+					_supportedPublishingEvents.add(
+						new QName(
+							portletQName.namespaceURI(),
+							portletQName.localPart()));
+				}
+			}
+		}
+
+		List<BeanMethod> eventMethods = _beanMethods.get(MethodType.EVENT);
+
+		if (eventMethods != null) {
+			for (BeanMethod beanMethod : eventMethods) {
+				Method method = beanMethod.getMethod();
+
+				EventMethod eventMethod = method.getAnnotation(
+					EventMethod.class);
+
+				if (eventMethod == null) {
+					continue;
+				}
+
+				for (PortletQName portletQName :
+						eventMethod.publishingEvents()) {
+
+					_supportedPublishingEvents.add(
+						new QName(
+							portletQName.namespaceURI(),
+							portletQName.localPart()));
+				}
+			}
+		}
 	}
 
 	@Override
 	public Map<MethodType, List<BeanMethod>> getBeanMethods() {
 		return _beanMethods;
+	}
+
+	@Override
+	public Set<QName> getSupportedProcessingEvents() {
+		return _supportedProcessingEvents;
+	}
+
+	@Override
+	public Set<QName> getSupportedPublishingEvents() {
+		return _supportedPublishingEvents;
 	}
 
 	public Dictionary<String, Object> toDictionary(BeanApp beanApp) {
@@ -492,6 +559,38 @@ public abstract class BaseBeanPortletImpl implements BeanPortlet {
 		}
 	}
 
+	private void _addBeanMethod(BeanMethod beanMethod) {
+		MethodType methodType = beanMethod.getType();
+
+		_beanMethods.compute(
+			methodType,
+			(keyMethodType, beanMethods) -> {
+				if (beanMethods == null) {
+					beanMethods = new ArrayList<>();
+				}
+
+				if ((methodType == MethodType.HEADER) ||
+					(methodType == MethodType.RENDER) ||
+					(methodType == MethodType.SERVE_RESOURCE)) {
+
+					int index = Collections.binarySearch(
+						beanMethods, beanMethod,
+						Comparator.comparingInt(BeanMethod::getOrdinal));
+
+					if (index < 0) {
+						index = -index - 1;
+					}
+
+					beanMethods.add(index, beanMethod);
+				}
+				else {
+					beanMethods.add(beanMethod);
+				}
+
+				return beanMethods;
+			});
+	}
+
 	private String _getPublicRenderParameterNamespaceURI(
 		BeanApp beanApp, String id) {
 
@@ -532,5 +631,7 @@ public abstract class BaseBeanPortletImpl implements BeanPortlet {
 
 	private final EnumMap<MethodType, List<BeanMethod>> _beanMethods =
 		new EnumMap<>(MethodType.class);
+	private final Set<QName> _supportedProcessingEvents = new HashSet<>();
+	private final Set<QName> _supportedPublishingEvents = new HashSet<>();
 
 }

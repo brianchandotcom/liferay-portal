@@ -15,10 +15,11 @@
 package com.liferay.bean.portlet.cdi.extension.internal.xml;
 
 import com.liferay.bean.portlet.cdi.extension.internal.BaseBeanPortletImpl;
+import com.liferay.bean.portlet.cdi.extension.internal.BeanMethod;
 import com.liferay.bean.portlet.cdi.extension.internal.PortletDependency;
 import com.liferay.bean.portlet.cdi.extension.internal.Preference;
 
-import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -31,7 +32,8 @@ import javax.xml.namespace.QName;
 public class BeanPortletDescriptorImpl extends BaseBeanPortletImpl {
 
 	public BeanPortletDescriptorImpl(
-		String portletName, Map<String, String> displayNames,
+		String portletName, Set<BeanMethod> beanMethods,
+		Set<BeanMethod> wildcardBeanMethods, Map<String, String> displayNames,
 		String portletClassName, Map<String, String> initParams,
 		int expirationCache, Map<String, Set<String>> supportedPortletModes,
 		Map<String, Set<String>> supportedWindowStates,
@@ -48,8 +50,9 @@ public class BeanPortletDescriptorImpl extends BaseBeanPortletImpl {
 		boolean multiPartSupported, int multiPartFileSizeThreshold,
 		String multiPartLocation, long multiPartMaxFileSize,
 		long multiPartMaxRequestSize, String displayCategory,
-		Map<String, String> liferayConfiguration,
-		Set<String> validCustomPortletModes) {
+		Map<String, String> liferayConfiguration) {
+
+		super(beanMethods, wildcardBeanMethods);
 
 		_portletName = portletName;
 		_displayNames = displayNames;
@@ -66,8 +69,17 @@ public class BeanPortletDescriptorImpl extends BaseBeanPortletImpl {
 		_descriptions = descriptions;
 		_preferences = preferences;
 		_securityRoleRefs = securityRoleRefs;
-		_supportedProcessingEvents = supportedProcessingEvents;
-		_supportedPublishingEvents = supportedPublishingEvents;
+
+		_supportedProcessingEvents = new LinkedHashSet<>(
+			supportedProcessingEvents);
+
+		_supportedProcessingEvents.addAll(super.getSupportedProcessingEvents());
+
+		_supportedPublishingEvents = new LinkedHashSet<>(
+			supportedPublishingEvents);
+
+		_supportedPublishingEvents.addAll(super.getSupportedPublishingEvents());
+
 		_supportedPublicRenderParameters = supportedPublicRenderParameters;
 		_containerRuntimeOptions = containerRuntimeOptions;
 		_portletDependencies = portletDependencies;
@@ -79,10 +91,6 @@ public class BeanPortletDescriptorImpl extends BaseBeanPortletImpl {
 		_multiPartMaxRequestSize = multiPartMaxRequestSize;
 		_displayCategory = displayCategory;
 		_liferayConfiguration = liferayConfiguration;
-
-		_portletModes = new HashSet<>(liferayPortletModes);
-
-		_portletModes.addAll(validCustomPortletModes);
 	}
 
 	@Override
@@ -241,7 +249,6 @@ public class BeanPortletDescriptorImpl extends BaseBeanPortletImpl {
 	private final boolean _multiPartSupported;
 	private final String _portletClassName;
 	private final Set<PortletDependency> _portletDependencies;
-	private final Set<String> _portletModes;
 	private final String _portletName;
 	private final Map<String, Preference> _preferences;
 	private final String _resourceBundle;

@@ -29,12 +29,6 @@ import javax.portlet.annotations.ServeResourceMethod;
  */
 public class ScannedMethod {
 
-	public static ScannedMethod create(
-		Class<?> clazz, MethodType methodType, Method method) {
-
-		return new ScannedMethod(clazz, methodType, method);
-	}
-
 	public ScannedMethod(Class<?> clazz, MethodType methodType, Method method) {
 		this(clazz, methodType, method, null);
 	}
@@ -44,6 +38,7 @@ public class ScannedMethod {
 		String configuredPortletName) {
 
 		_clazz = clazz;
+		_methodType = methodType;
 		_method = method;
 
 		int ordinal = 0;
@@ -123,6 +118,10 @@ public class ScannedMethod {
 		return _method;
 	}
 
+	public MethodType getMethodType() {
+		return _methodType;
+	}
+
 	public int getOrdinal() {
 		return _ordinal;
 	}
@@ -133,6 +132,7 @@ public class ScannedMethod {
 
 	private final Class<?> _clazz;
 	private final Method _method;
+	private final MethodType _methodType;
 	private final int _ordinal;
 	private final String[] _portletNames;
 

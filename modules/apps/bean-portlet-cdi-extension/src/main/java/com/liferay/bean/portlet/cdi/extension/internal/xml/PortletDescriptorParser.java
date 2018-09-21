@@ -16,6 +16,7 @@ package com.liferay.bean.portlet.cdi.extension.internal.xml;
 
 import com.liferay.bean.portlet.cdi.extension.internal.BeanApp;
 import com.liferay.bean.portlet.cdi.extension.internal.BeanFilter;
+import com.liferay.bean.portlet.cdi.extension.internal.BeanMethod;
 import com.liferay.bean.portlet.cdi.extension.internal.BeanPortlet;
 import com.liferay.bean.portlet.cdi.extension.internal.Event;
 import com.liferay.bean.portlet.cdi.extension.internal.PortletDependency;
@@ -52,6 +53,8 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
+import javax.enterprise.inject.spi.BeanManager;
+
 import javax.portlet.PortletMode;
 import javax.portlet.WindowState;
 
@@ -63,7 +66,10 @@ public class PortletDescriptorParser {
 	public static PortletDescriptor parse(
 			URL portletDescriptorURL,
 			Map<String, String> displayDescriptorCategories,
-			Map<String, Map<String, String>> liferayConfigurations)
+			Map<String, Map<String, String>> liferayConfigurations,
+			BeanManager beanManager,
+			Map<String, Set<BeanMethod>> portletBeanMethods,
+			Set<BeanMethod> wildcardBeanMethods)
 		throws DocumentException, IOException {
 
 		String xml = HttpUtil.URLtoString(portletDescriptorURL);
@@ -78,7 +84,8 @@ public class PortletDescriptorParser {
 		List<BeanFilter> beanFilters = _readBeanFilters(rootElement);
 
 		List<BeanPortlet> beanPortlets = _readBeanPortlets(
-			rootElement, beanApp, displayDescriptorCategories,
+			rootElement, beanApp, beanManager, portletBeanMethods,
+			wildcardBeanMethods, displayDescriptorCategories,
 			liferayConfigurations);
 
 		return new PortletDescriptor(beanApp, beanFilters, beanPortlets);
@@ -278,7 +285,9 @@ public class PortletDescriptorParser {
 	}
 
 	private static BeanPortlet _readBeanPortlet(
-		Element portletElement, BeanApp beanApp,
+		Element portletElement, BeanApp beanApp, BeanManager beanManager,
+		Map<String, Set<BeanMethod>> portletBeanMethods,
+		Set<BeanMethod> wildcardBeanMethods,
 		Map<String, String> displayDescriptorCategories,
 		Map<String, Map<String, String>> liferayConfigurations) {
 
@@ -294,7 +303,7 @@ public class PortletDescriptorParser {
 				GetterUtil.getString(displayNameElement.getText()));
 		}
 
-		String portletClass = GetterUtil.getString(
+		String portletClassName = GetterUtil.getString(
 			portletElement.elementText("portlet-class"));
 
 		Map<String, String> initParams = new HashMap<>();
@@ -590,22 +599,48 @@ public class PortletDescriptorParser {
 				multiPartMaxRequestSize);
 		}
 
+		Set<BeanMethod> beanMethods = portletBeanMethods.get(portletName);
+
+		if (beanMethods == null) {
+			beanMethods = new HashSet<>();
+		}
+		else {
+			beanMethods = new HashSet<>(beanMethods);
+		}
+
+		Class<?> portletClass = null;
+
+		try {
+			portletClass = Class.forName(portletClassName);
+		}
+		catch (ClassNotFoundException cnfe) {
+			_log.error("Unable to load portlet-class " + portletClassName);
+
+			return null;
+		}
+
+		beanMethods.addAll(
+			PortletScannerUtil.getNonannotatedBeanMethods(
+				beanManager, portletClass));
+
 		return new BeanPortletDescriptorImpl(
-			portletName, displayNames, portletClass, initParams,
-			expirationCache, supportedPortletModes, supportedWindowStates,
-			supportedLocales, resourceBundle, titles, shortTitles, keywords,
-			descriptions, preferences, securityRoleRefs,
-			supportedProcessingEvents, supportedPublishingEvents,
-			supportedPublicRenderParameters, containerRuntimeOptions,
-			portletDependencies, asyncSupported, multiPartSupported,
-			multiPartFileSizeThreshold, multiPartLocation, multiPartMaxFileSize,
-			multiPartMaxRequestSize,
+			portletName, beanMethods, wildcardBeanMethods, displayNames,
+			portletClassName, initParams, expirationCache,
+			supportedPortletModes, supportedWindowStates, supportedLocales,
+			resourceBundle, titles, shortTitles, keywords, descriptions,
+			preferences, securityRoleRefs, supportedProcessingEvents,
+			supportedPublishingEvents, supportedPublicRenderParameters,
+			containerRuntimeOptions, portletDependencies, asyncSupported,
+			multiPartSupported, multiPartFileSizeThreshold, multiPartLocation,
+			multiPartMaxFileSize, multiPartMaxRequestSize,
 			displayDescriptorCategories.get(portletName),
-			liferayConfigurations.get(portletName), validCustomPortletModes);
+			liferayConfigurations.get(portletName));
 	}
 
 	private static List<BeanPortlet> _readBeanPortlets(
-		Element rootElement, BeanApp beanApp,
+		Element rootElement, BeanApp beanApp, BeanManager beanManager,
+		Map<String, Set<BeanMethod>> portletBeanMethods,
+		Set<BeanMethod> wildcardBeanMethods,
 		Map<String, String> displayDescriptorCategories,
 		Map<String, Map<String, String>> liferayConfigurations) {
 
@@ -614,7 +649,8 @@ public class PortletDescriptorParser {
 		for (Element portletElement : rootElement.elements("portlet")) {
 			beanPortlets.add(
 				_readBeanPortlet(
-					portletElement, beanApp, displayDescriptorCategories,
+					portletElement, beanApp, beanManager, portletBeanMethods,
+					wildcardBeanMethods, displayDescriptorCategories,
 					liferayConfigurations));
 		}
 

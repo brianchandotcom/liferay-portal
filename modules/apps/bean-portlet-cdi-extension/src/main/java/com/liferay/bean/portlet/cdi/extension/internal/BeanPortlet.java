@@ -26,8 +26,6 @@ import javax.xml.namespace.QName;
  */
 public interface BeanPortlet {
 
-	public void addBeanMethod(BeanMethod beanMethod);
-
 	public Map<MethodType, List<BeanMethod>> getBeanMethods();
 
 	public Map<String, List<String>> getContainerRuntimeOptions();

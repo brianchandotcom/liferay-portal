@@ -31,6 +31,7 @@ import com.liferay.sharing.renderer.SharingEntryViewRenderer;
 import com.liferay.sharing.service.SharingEntryLocalService;
 import com.liferay.sharing.web.internal.constants.SharingPortletKeys;
 import com.liferay.sharing.web.internal.display.context.SharedWithMeViewDisplayContext;
+import com.liferay.sharing.web.internal.interpreter.AssetRendererSharingEntryInterpreter;
 
 import java.util.Objects;
 
@@ -144,9 +145,21 @@ public class SharedWithMeViewMVCRenderCommand implements MVCRenderCommand {
 	private <T> SharingEntryInterpreter<T> _getSharingEntryInterpreter(
 		long classNameId) {
 
-		return (SharingEntryInterpreter<T>)_serviceTrackerMap.getService(
-			classNameId);
+		SharingEntryInterpreter<T> sharingEntryInterpreter =
+			(SharingEntryInterpreter<T>)_serviceTrackerMap.getService(
+				classNameId);
+
+		if (sharingEntryInterpreter == null) {
+			return (SharingEntryInterpreter<T>)
+				_assetRendererSharingEntryInterpreter;
+		}
+
+		return sharingEntryInterpreter;
 	}
+
+	@Reference
+	private AssetRendererSharingEntryInterpreter
+		_assetRendererSharingEntryInterpreter;
 
 	@Reference
 	private ClassNameLocalService _classNameLocalService;

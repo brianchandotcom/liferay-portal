@@ -35,6 +35,7 @@ import com.liferay.sharing.model.SharingEntry;
 import com.liferay.sharing.service.SharingEntryLocalService;
 import com.liferay.sharing.web.internal.constants.SharingPortletKeys;
 import com.liferay.sharing.web.internal.display.SharingEntryPermissionDisplay;
+import com.liferay.sharing.web.internal.display.SharingEntryPermissionDisplayAction;
 import com.liferay.sharing.web.internal.util.SharingUtil;
 
 import java.util.ArrayList;
@@ -73,9 +74,6 @@ public class ManageCollaboratorsViewMVCRenderCommand
 
 		template.put(
 			"collaborators", _getCollaboratorsJSONArray(renderRequest));
-		template.put(
-			"sharingEntryPermissionDisplaySelectOptions",
-			_getSharingEntryPermissionDisplaySelectOptions(renderRequest));
 		template.put("spritemap", _getSpritemap(renderRequest));
 		template.put("uri", _getManageCollaboratorsActionURL(renderResponse));
 
@@ -140,6 +138,10 @@ public class ManageCollaboratorsViewMVCRenderCommand
 				userJSONObject.put("name", sharingEntryToUser.getFullName());
 				userJSONObject.put(
 					"sharingEntryId", sharingEntry.getSharingEntryId());
+				userJSONObject.put(
+					"sharingEntryPermissionDisplaySelectOptions",
+					_getSharingEntryPermissionDisplaySelectOptions(
+						sharingEntry, renderRequest));
 
 				collaboratorsJSONArray.put(userJSONObject);
 			}
@@ -171,7 +173,7 @@ public class ManageCollaboratorsViewMVCRenderCommand
 	}
 
 	private JSONArray _getSharingEntryPermissionDisplaySelectOptions(
-		RenderRequest renderRequest) {
+		SharingEntry sharingEntry, RenderRequest renderRequest) {
 
 		long classNameId = ParamUtil.getLong(renderRequest, "classNameId");
 		long classPK = ParamUtil.getLong(renderRequest, "classPK");
@@ -195,10 +197,25 @@ public class ManageCollaboratorsViewMVCRenderCommand
 
 			sharingEntryPermissionDisplaySelectOptionJSONObject.put(
 				"label", sharingEntryPermissionDisplay.getTitle());
+
+			String currentSharingEntryPermissionDisplayActionKeyActionId =
+				sharingEntryPermissionDisplay.
+					getSharingEntryPermissionDisplayActionId();
+
+			SharingEntryPermissionDisplayAction
+				userSharingEntryPermissionDisplayActionKey =
+					_sharingUtil.getSharingEntryPermissionDisplayActionKey(
+						sharingEntry);
+
+			sharingEntryPermissionDisplaySelectOptionJSONObject.put(
+				"selected",
+				currentSharingEntryPermissionDisplayActionKeyActionId.equals(
+					userSharingEntryPermissionDisplayActionKey.getActionId()));
+
 			sharingEntryPermissionDisplaySelectOptionJSONObject.put(
 				"value",
 				sharingEntryPermissionDisplay.
-					getSharingEntryPermissionDisplayActionKeyActionId());
+					getSharingEntryPermissionDisplayActionId());
 
 			sharingEntryPermissionDisplaySelectOptionsJSONArray.put(
 				sharingEntryPermissionDisplaySelectOptionJSONObject);

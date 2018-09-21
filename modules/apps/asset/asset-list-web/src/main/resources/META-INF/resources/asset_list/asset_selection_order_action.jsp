@@ -21,18 +21,20 @@ SearchContainer searchContainer = (SearchContainer)request.getAttribute("liferay
 
 ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 
-int assetEntryOrder = searchContainer.getStart() + row.getPos();
+AssetListEntryAssetEntryRel assetListEntryAssetEntryRel = (AssetListEntryAssetEntryRel)row.getObject();
 
-boolean last = (assetEntryOrder == (searchContainer.getTotal() - 1));
+int position = assetListEntryAssetEntryRel.getPosition();
+
+boolean last = (position == (searchContainer.getTotal() - 1));
 %>
 
 <c:choose>
-	<c:when test="<%= (assetEntryOrder == 0) && last %>">
+	<c:when test="<%= (position == 0) && last %>">
 	</c:when>
-	<c:when test="<%= (assetEntryOrder > 0) && !last %>">
+	<c:when test="<%= (position > 0) && !last %>">
 
 		<%
-		String taglibDownURL = "javascript:" + renderResponse.getNamespace() + "moveSelectionDown('" + assetEntryOrder + "')";
+		String taglibDownURL = "javascript:" + renderResponse.getNamespace() + "moveSelectionDown('" + position + "')";
 		%>
 
 		<liferay-ui:icon
@@ -43,7 +45,7 @@ boolean last = (assetEntryOrder == (searchContainer.getTotal() - 1));
 		/>
 
 		<%
-		String taglibUpURL = "javascript:" + renderResponse.getNamespace() + "moveSelectionUp('" + assetEntryOrder + "')";
+		String taglibUpURL = "javascript:" + renderResponse.getNamespace() + "moveSelectionUp('" + position + "')";
 		%>
 
 		<liferay-ui:icon
@@ -53,10 +55,10 @@ boolean last = (assetEntryOrder == (searchContainer.getTotal() - 1));
 			url="<%= taglibUpURL %>"
 		/>
 	</c:when>
-	<c:when test="<%= assetEntryOrder == 0 %>">
+	<c:when test="<%= position == 0 %>">
 
 		<%
-		String taglibDownURL = "javascript:" + renderResponse.getNamespace() + "moveSelectionDown('" + assetEntryOrder + "')";
+		String taglibDownURL = "javascript:" + renderResponse.getNamespace() + "moveSelectionDown('" + position + "')";
 		%>
 
 		<liferay-ui:icon
@@ -69,7 +71,7 @@ boolean last = (assetEntryOrder == (searchContainer.getTotal() - 1));
 	<c:when test="<%= last %>">
 
 		<%
-		String taglibUpURL = "javascript:" + renderResponse.getNamespace() + "moveSelectionUp('" + assetEntryOrder + "')";
+		String taglibUpURL = "javascript:" + renderResponse.getNamespace() + "moveSelectionUp('" + position + "')";
 		%>
 
 		<liferay-ui:icon

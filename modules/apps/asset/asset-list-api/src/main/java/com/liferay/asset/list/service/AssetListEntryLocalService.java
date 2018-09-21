@@ -63,6 +63,8 @@ public interface AssetListEntryLocalService extends BaseLocalService,
 	 *
 	 * Never modify or reference this interface directly. Always use {@link AssetListEntryLocalServiceUtil} to access the asset list entry local service. Add custom service methods to {@link com.liferay.asset.list.service.impl.AssetListEntryLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public void addAssetEntrySelection(long assetListEntryId, long assetEntryId)
+		throws PortalException;
 
 	/**
 	* Adds the asset list entry to the database. Also notifies the appropriate model listeners.
@@ -85,6 +87,9 @@ public interface AssetListEntryLocalService extends BaseLocalService,
 	*/
 	@Transactional(enabled = false)
 	public AssetListEntry createAssetListEntry(long assetListEntryId);
+
+	public void deleteAssetEntrySelection(long assetListEntryId, int position)
+		throws PortalException;
 
 	/**
 	* Deletes the asset list entry from the database. Also notifies the appropriate model listeners.
@@ -228,6 +233,9 @@ public interface AssetListEntryLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException;
+
+	public void moveAssetEntrySelection(long assetListEntryId, int position,
+		int newPosition) throws PortalException;
 
 	/**
 	* Updates the asset list entry in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.

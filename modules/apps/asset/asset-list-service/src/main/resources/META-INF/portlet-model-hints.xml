@@ -15,4 +15,10 @@
 		<field name="title" type="String" />
 		<field name="type" type="int" />
 	</model>
+	<model name="com.liferay.asset.list.model.AssetListEntryAssetEntryRel">
+		<field name="assetListEntryAssetEntryRelId" type="long" />
+		<field name="assetListEntryId" type="long" />
+		<field name="assetEntryId" type="long" />
+		<field name="position" type="int" />
+	</model>
 </model-hints>

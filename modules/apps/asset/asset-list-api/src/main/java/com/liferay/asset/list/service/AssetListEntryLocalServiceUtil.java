@@ -42,6 +42,11 @@ public class AssetListEntryLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.asset.list.service.impl.AssetListEntryLocalServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static void addAssetEntrySelection(long assetListEntryId,
+		long assetEntryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().addAssetEntrySelection(assetListEntryId, assetEntryId);
+	}
 
 	/**
 	* Adds the asset list entry to the database. Also notifies the appropriate model listeners.
@@ -72,6 +77,12 @@ public class AssetListEntryLocalServiceUtil {
 	public static com.liferay.asset.list.model.AssetListEntry createAssetListEntry(
 		long assetListEntryId) {
 		return getService().createAssetListEntry(assetListEntryId);
+	}
+
+	public static void deleteAssetEntrySelection(long assetListEntryId,
+		int position)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().deleteAssetEntrySelection(assetListEntryId, position);
 	}
 
 	/**
@@ -251,6 +262,13 @@ public class AssetListEntryLocalServiceUtil {
 		java.io.Serializable primaryKeyObj)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getPersistedModel(primaryKeyObj);
+	}
+
+	public static void moveAssetEntrySelection(long assetListEntryId,
+		int position, int newPosition)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService()
+			.moveAssetEntrySelection(assetListEntryId, position, newPosition);
 	}
 
 	/**

@@ -34,6 +34,13 @@ public class AssetListEntryLocalServiceWrapper
 		_assetListEntryLocalService = assetListEntryLocalService;
 	}
 
+	@Override
+	public void addAssetEntrySelection(long assetListEntryId, long assetEntryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_assetListEntryLocalService.addAssetEntrySelection(assetListEntryId,
+			assetEntryId);
+	}
+
 	/**
 	* Adds the asset list entry to the database. Also notifies the appropriate model listeners.
 	*
@@ -65,6 +72,13 @@ public class AssetListEntryLocalServiceWrapper
 	public com.liferay.asset.list.model.AssetListEntry createAssetListEntry(
 		long assetListEntryId) {
 		return _assetListEntryLocalService.createAssetListEntry(assetListEntryId);
+	}
+
+	@Override
+	public void deleteAssetEntrySelection(long assetListEntryId, int position)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_assetListEntryLocalService.deleteAssetEntrySelection(assetListEntryId,
+			position);
 	}
 
 	/**
@@ -262,6 +276,14 @@ public class AssetListEntryLocalServiceWrapper
 		java.io.Serializable primaryKeyObj)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _assetListEntryLocalService.getPersistedModel(primaryKeyObj);
+	}
+
+	@Override
+	public void moveAssetEntrySelection(long assetListEntryId, int position,
+		int newPosition)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_assetListEntryLocalService.moveAssetEntrySelection(assetListEntryId,
+			position, newPosition);
 	}
 
 	/**

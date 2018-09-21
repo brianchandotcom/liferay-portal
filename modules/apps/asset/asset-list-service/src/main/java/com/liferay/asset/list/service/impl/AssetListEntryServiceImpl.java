@@ -38,6 +38,20 @@ import java.util.List;
 public class AssetListEntryServiceImpl extends AssetListEntryServiceBaseImpl {
 
 	@Override
+	public void addAssetEntrySelection(long assetListEntryId, long assetEntryId)
+		throws PortalException {
+
+		AssetListEntry assetListEntry =
+			assetListEntryLocalService.getAssetListEntry(assetListEntryId);
+
+		_assetListEntryModelResourcePermission.check(
+			getPermissionChecker(), assetListEntry, ActionKeys.UPDATE);
+
+		assetListEntryLocalService.addAssetEntrySelection(
+			assetListEntryId, assetEntryId);
+	}
+
+	@Override
 	public AssetListEntry addAssetListEntry(
 			long groupId, String title, int type, ServiceContext serviceContext)
 		throws PortalException {
@@ -48,6 +62,20 @@ public class AssetListEntryServiceImpl extends AssetListEntryServiceBaseImpl {
 
 		return assetListEntryLocalService.addAssetListEntry(
 			getUserId(), groupId, title, type, serviceContext);
+	}
+
+	@Override
+	public void deleteAssetEntrySelection(long assetListEntryId, int position)
+		throws PortalException {
+
+		AssetListEntry assetListEntry =
+			assetListEntryLocalService.getAssetListEntry(assetListEntryId);
+
+		_assetListEntryModelResourcePermission.check(
+			getPermissionChecker(), assetListEntry, ActionKeys.UPDATE);
+
+		assetListEntryLocalService.deleteAssetEntrySelection(
+			assetListEntryId, position);
 	}
 
 	@Override
@@ -121,6 +149,21 @@ public class AssetListEntryServiceImpl extends AssetListEntryServiceBaseImpl {
 	public int getAssetListEntriesCount(long groupId, String title) {
 		return assetListEntryPersistence.countByG_LikeT(
 			groupId, _customSQL.keywords(title, WildcardMode.SURROUND)[0]);
+	}
+
+	@Override
+	public void moveAssetEntrySelection(
+			long assetListEntryId, int position, int newPosition)
+		throws PortalException {
+
+		AssetListEntry assetListEntry =
+			assetListEntryLocalService.getAssetListEntry(assetListEntryId);
+
+		_assetListEntryModelResourcePermission.check(
+			getPermissionChecker(), assetListEntry, ActionKeys.UPDATE);
+
+		assetListEntryLocalService.moveAssetEntrySelection(
+			assetListEntryId, position, newPosition);
 	}
 
 	@Override

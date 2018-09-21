@@ -22,6 +22,7 @@ import com.liferay.oauth2.provider.scope.liferay.ScopeDescriptorLocator;
 import com.liferay.oauth2.provider.scope.liferay.ScopeLocator;
 import com.liferay.oauth2.provider.service.OAuth2ApplicationScopeAliasesLocalService;
 import com.liferay.oauth2.provider.service.OAuth2ApplicationService;
+import com.liferay.oauth2.provider.service.OAuth2ScopeGrantLocalService;
 import com.liferay.oauth2.provider.web.internal.AssignableScopes;
 import com.liferay.oauth2.provider.web.internal.constants.OAuth2ProviderPortletKeys;
 import com.liferay.oauth2.provider.web.internal.constants.OAuth2ProviderWebKeys;
@@ -38,9 +39,9 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.Collection;
-import java.util.Collections;
 import java.util.Enumeration;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 
@@ -111,7 +112,9 @@ public class ViewAuthorizationRequestMVCRenderCommand
 			oAuth2AuthorizePortletDisplayContext.setOAuth2Parameters(
 				oAuth2Parameters);
 
-			List<String> allowedScopeAliases = Collections.emptyList();
+			AssignableScopes assignableScopes = new AssignableScopes(
+				_applicationDescriptorLocator, themeDisplay.getLocale(),
+				_scopeDescriptorLocator);
 
 			if (oAuth2Application.getOAuth2ApplicationScopeAliasesId() > 0) {
 				OAuth2ApplicationScopeAliases oAuth2ApplicationScopeAliases =
@@ -120,19 +123,13 @@ public class ViewAuthorizationRequestMVCRenderCommand
 							oAuth2Application.
 								getOAuth2ApplicationScopeAliasesId());
 
-				allowedScopeAliases =
-					oAuth2ApplicationScopeAliases.getScopeAliasesList();
+				String[] requestedScopeAliases = StringUtil.split(
+					oAuth2Parameters.get("scope"), StringPool.SPACE);
+
+				populateAssignableScopes(
+					assignableScopes, oAuth2ApplicationScopeAliases,
+					requestedScopeAliases);
 			}
-
-			AssignableScopes assignableScopes = new AssignableScopes(
-				_applicationDescriptorLocator, themeDisplay.getLocale(),
-				_scopeDescriptorLocator);
-			String[] requestedScopeAliases = StringUtil.split(
-				oAuth2Parameters.get("scope"), StringPool.SPACE);
-
-			populateAssignableScopes(
-				assignableScopes, themeDisplay.getCompanyId(),
-				allowedScopeAliases, requestedScopeAliases);
 
 			oAuth2AuthorizePortletDisplayContext.setAssignableScopes(
 				assignableScopes);
@@ -169,20 +166,33 @@ public class ViewAuthorizationRequestMVCRenderCommand
 	}
 
 	protected void populateAssignableScopes(
-		AssignableScopes authorizationModel, long companyId,
-		List<String> allowedScopeAliases, String[] requestedScopeAliases) {
+		AssignableScopes assignableScopes,
+		OAuth2ApplicationScopeAliases oAuth2ApplicationScopeAliases,
+		String[] requestedScopeAliases) {
+
+		Collection<LiferayOAuth2Scope> liferayOAuth2Scopes = new HashSet<>();
+
+		List<String> scopeAliasesList =
+			oAuth2ApplicationScopeAliases.getScopeAliasesList();
 
 		for (String requestedScopeAlias : requestedScopeAliases) {
-			if (!allowedScopeAliases.contains(requestedScopeAlias)) {
+			if (!scopeAliasesList.contains(requestedScopeAlias)) {
 				continue;
 			}
 
-			Collection<LiferayOAuth2Scope> liferayOAuth2Scopes =
+			liferayOAuth2Scopes.addAll(
 				_scopeFinderLocator.getLiferayOAuth2Scopes(
-					companyId, requestedScopeAlias);
-
-			authorizationModel.addLiferayOAuth2Scopes(liferayOAuth2Scopes);
+					oAuth2ApplicationScopeAliases.getCompanyId(),
+					requestedScopeAlias));
 		}
+
+		liferayOAuth2Scopes =
+			_oAuth2ScopeGrantLocalService.getFilteredLiferayOAuth2Scopes(
+				oAuth2ApplicationScopeAliases.
+					getOAuth2ApplicationScopeAliasesId(),
+				liferayOAuth2Scopes);
+
+		assignableScopes.addLiferayOAuth2Scopes(liferayOAuth2Scopes);
 	}
 
 	@Reference
@@ -194,6 +204,9 @@ public class ViewAuthorizationRequestMVCRenderCommand
 
 	@Reference
 	private OAuth2ApplicationService _oAuth2ApplicationService;
+
+	@Reference
+	private OAuth2ScopeGrantLocalService _oAuth2ScopeGrantLocalService;
 
 	@Reference
 	private Portal _portal;

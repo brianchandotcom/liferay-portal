@@ -33,7 +33,6 @@ import org.apache.struts.tiles.DefinitionsFactoryException;
 import org.apache.struts.tiles.NoSuchDefinitionException;
 import org.apache.struts.tiles.TilesUtilImpl;
 import org.apache.struts.tiles.xmlDefinition.FactorySet;
-import org.apache.struts.tiles.xmlDefinition.I18nFactorySet;
 
 /**
  * @author Brian Wing Shun Chan

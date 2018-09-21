@@ -205,7 +205,8 @@ public class LayoutPageTemplateStructureLocalServiceWrapper
 
 	@Override
 	public com.liferay.layout.page.template.model.LayoutPageTemplateStructure fetchLayoutPageTemplateStructure(
-		long groupId, long classNameId, long classPK) {
+		long groupId, long classNameId, long classPK)
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _layoutPageTemplateStructureLocalService.fetchLayoutPageTemplateStructure(groupId,
 			classNameId, classPK);
 	}

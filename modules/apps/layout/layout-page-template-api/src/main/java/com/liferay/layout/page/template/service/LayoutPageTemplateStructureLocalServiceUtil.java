@@ -204,7 +204,8 @@ public class LayoutPageTemplateStructureLocalServiceUtil {
 	}
 
 	public static com.liferay.layout.page.template.model.LayoutPageTemplateStructure fetchLayoutPageTemplateStructure(
-		long groupId, long classNameId, long classPK) {
+		long groupId, long classNameId, long classPK)
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .fetchLayoutPageTemplateStructure(groupId, classNameId,
 			classPK);

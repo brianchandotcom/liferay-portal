@@ -3426,6 +3426,8 @@ public class StringUtil {
 			return null;
 		}
 
+		s = NormalizerUtil.normalize(s);
+
 		if (s.codePointCount(0, s.length()) <= length) {
 			return s;
 		}

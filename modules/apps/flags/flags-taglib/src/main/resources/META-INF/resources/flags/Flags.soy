@@ -26,14 +26,6 @@
 	{@param? elementClasses: string}
 	{@param? reporterEmailAddress: string}
 
-	{let $title kind="text"}
-		{if not $enabled}
-			{msg desc=""}flags-are-disabled-because-this-entry-is-in-the-recycle-bin{/msg}
-		{else}
-			{$message}
-		{/if}
-	{/let}
-
 	{let $containerAttributes kind="attributes"}
 		class="taglib-flags
 			{if $elementClasses}
@@ -42,7 +34,6 @@
 		"
 
 		id="{$id}"
-		title="{$title}"
 	{/let}
 
 	{let $spritemap: $pathThemeImages + '/lexicon/icons.svg' /}

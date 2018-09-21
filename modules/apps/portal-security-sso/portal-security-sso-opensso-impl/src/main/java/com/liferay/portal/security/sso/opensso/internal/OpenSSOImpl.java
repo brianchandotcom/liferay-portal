@@ -17,12 +17,23 @@ package com.liferay.portal.security.sso.opensso.internal;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
+import com.liferay.portal.kernel.json.JSONException;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.module.configuration.ConfigurationException;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.security.sso.OpenSSO;
+import com.liferay.portal.kernel.settings.CompanyServiceSettingsLocator;
 import com.liferay.portal.kernel.util.CookieKeys;
+import com.liferay.portal.kernel.util.Http;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.URLCodec;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.security.sso.opensso.configuration.OpenSSOConfiguration;
+import com.liferay.portal.security.sso.opensso.constants.OpenSSOConstants;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -41,11 +52,15 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Michael C. Han
  * @author Marta Medio
  */
-public abstract class OpenSSOImpl implements OpenSSO {
+@Component(immediate = true, service = OpenSSO.class)
+public class OpenSSOImpl implements OpenSSO {
 
 	@Override
 	public Map<String, String> getAttributes(
@@ -230,6 +245,107 @@ public abstract class OpenSSOImpl implements OpenSSO {
 	}
 
 	@Override
+	public boolean isAuthenticated(
+			HttpServletRequest request, String serviceUrl)
+		throws IOException {
+
+		String[] cookieNames = getCookieNames(serviceUrl);
+
+		if (!hasCookieNames(request, cookieNames)) {
+			return false;
+		}
+
+		String version = "openam-12";
+
+		try {
+			OpenSSOConfiguration openSSOConfiguration =
+				_configurationProvider.getConfiguration(
+					OpenSSOConfiguration.class,
+					new CompanyServiceSettingsLocator(
+						_portal.getCompanyId(request),
+						OpenSSOConstants.SERVICE_NAME));
+
+			version = openSSOConfiguration.version();
+		}
+		catch (ConfigurationException ce) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(ce, ce);
+			}
+		}
+
+		if (version.equals("openam-13")) {
+			String subjectId = getSubjectId(request, serviceUrl);
+
+			if (subjectId != null) {
+				String validateTokenUrl = StringUtil.replace(
+					"/json/sessions/{#subjectId}?_action=validate",
+					"{#subjectId}", URLCodec.encodeURL(subjectId));
+
+				String url = serviceUrl.concat(validateTokenUrl);
+
+				String result = _http.URLtoString(url, true);
+
+				try {
+					JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+						result);
+
+					boolean valid = jsonObject.getBoolean("valid");
+					String uid = jsonObject.getString("uid");
+					String realm = jsonObject.getString("realm");
+
+					if ((realm != null) && (uid != null) && valid) {
+						return true;
+					}
+					else if (_log.isDebugEnabled()) {
+						_log.debug("Invalid authentication: " + result);
+					}
+				}
+				catch (JSONException jsone) {
+					throw new IOException(jsone);
+				}
+			}
+		}
+		else {
+			String url = serviceUrl.concat("/identity/isTokenValid");
+
+			URL urlObj = new URL(url);
+
+			HttpURLConnection httpURLConnection =
+				(HttpURLConnection)urlObj.openConnection();
+
+			httpURLConnection.setDoOutput(true);
+			httpURLConnection.setRequestMethod("POST");
+			httpURLConnection.setRequestProperty(
+				"Content-type", "application/x-www-form-urlencoded");
+
+			setCookieProperty(request, httpURLConnection, cookieNames);
+
+			OutputStreamWriter outputStreamWriter = new OutputStreamWriter(
+				httpURLConnection.getOutputStream());
+
+			outputStreamWriter.write("dummy");
+
+			outputStreamWriter.flush();
+
+			int responseCode = httpURLConnection.getResponseCode();
+
+			if (responseCode == HttpURLConnection.HTTP_OK) {
+				String data = StringUtil.toLowerCase(
+					StringUtil.read(httpURLConnection.getInputStream()));
+
+				if (data.contains("boolean=true")) {
+					return true;
+				}
+			}
+			else if (_log.isDebugEnabled()) {
+				_log.debug("Authentication response code " + responseCode);
+			}
+		}
+
+		return false;
+	}
+
+	@Override
 	public boolean isValidServiceUrl(String serviceUrl) {
 		if (Validator.isNull(serviceUrl)) {
 			return false;
@@ -335,8 +451,7 @@ public abstract class OpenSSOImpl implements OpenSSO {
 		}
 
 		if (_log.isInfoEnabled()) {
-			_log.info(
-				"No OpenSSO cookies: " + StringUtil.merge(cookieNames));
+			_log.info("No OpenSSO cookies: " + StringUtil.merge(cookieNames));
 		}
 
 		return false;
@@ -352,7 +467,16 @@ public abstract class OpenSSOImpl implements OpenSSO {
 
 	private static final Log _log = LogFactoryUtil.getLog(OpenSSOImpl.class);
 
+	@Reference
+	private ConfigurationProvider _configurationProvider;
+
 	private final Map<String, String[]> _cookieNamesMap =
 		new ConcurrentHashMap<>();
+
+	@Reference
+	private Http _http;
+
+	@Reference
+	private Portal _portal;
 
 }

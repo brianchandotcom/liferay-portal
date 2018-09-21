@@ -38,35 +38,39 @@ import org.springframework.core.annotation.AnnotationUtils;
 
 /**
  * @author Miguel Pastor
+ * @author Preston Crary
  */
-public class ApplicationContextServicePublisher {
+public class ApplicationContextServicePublisherUtil {
 
-	public ApplicationContextServicePublisher(
+	public static List<ServiceRegistration<?>> registerContext(
 		ApplicationContext applicationContext, BundleContext bundleContext) {
 
-		_applicationContext = applicationContext;
-		_bundleContext = bundleContext;
-	}
+		String[] beanNames = applicationContext.getBeanDefinitionNames();
 
-	public void register() {
-		for (String beanName : _applicationContext.getBeanDefinitionNames()) {
+		List<ServiceRegistration<?>> serviceRegistrations = new ArrayList<>(
+			beanNames.length + 1);
+
+		for (String beanName : beanNames) {
 			Object bean = null;
 
 			try {
-				bean = _applicationContext.getBean(beanName);
+				bean = applicationContext.getBean(beanName);
+
+				ServiceRegistration<?> serviceRegistration = _registerService(
+					bundleContext, bean);
+
+				if (serviceRegistration != null) {
+					serviceRegistrations.add(serviceRegistration);
+				}
 			}
 			catch (BeanIsAbstractException biae) {
 			}
 			catch (Exception e) {
 				_log.error("Unable to register service " + beanName, e);
 			}
-
-			if (bean != null) {
-				_registerService(bean);
-			}
 		}
 
-		Bundle bundle = _bundleContext.getBundle();
+		Bundle bundle = bundleContext.getBundle();
 
 		Dictionary<String, Object> properties = new HashMapDictionary<>();
 
@@ -75,21 +79,17 @@ public class ApplicationContextServicePublisher {
 			bundle.getSymbolicName());
 
 		ServiceRegistration<ApplicationContext> serviceRegistration =
-			_bundleContext.registerService(
-				ApplicationContext.class, _applicationContext, properties);
+			bundleContext.registerService(
+				ApplicationContext.class, applicationContext, properties);
 
-		_serviceRegistrations.add(serviceRegistration);
+		serviceRegistrations.add(serviceRegistration);
+
+		return serviceRegistrations;
 	}
 
-	public void unregister() {
-		for (ServiceRegistration<?> serviceReference : _serviceRegistrations) {
-			serviceReference.unregister();
-		}
+	private static ServiceRegistration<?> _registerService(
+		BundleContext bundleContext, Object bean) {
 
-		_serviceRegistrations.clear();
-	}
-
-	private void _registerService(Object bean) {
 		OSGiBeanProperties osgiBeanProperties = null;
 
 		try {
@@ -125,10 +125,10 @@ public class ApplicationContextServicePublisher {
 						"interfaces");
 			}
 
-			return;
+			return null;
 		}
 
-		Bundle bundle = _bundleContext.getBundle();
+		Bundle bundle = bundleContext.getBundle();
 
 		HashMapDictionary<String, Object> properties =
 			new HashMapDictionary<>();
@@ -140,19 +140,11 @@ public class ApplicationContextServicePublisher {
 				OSGiBeanProperties.Convert.toMap(osgiBeanProperties));
 		}
 
-		ServiceRegistration<?> serviceRegistration =
-			_bundleContext.registerService(
-				names.toArray(new String[names.size()]), bean, properties);
-
-		_serviceRegistrations.add(serviceRegistration);
+		return bundleContext.registerService(
+			names.toArray(new String[names.size()]), bean, properties);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		ApplicationContextServicePublisher.class);
-
-	private final ApplicationContext _applicationContext;
-	private final BundleContext _bundleContext;
-	private final List<ServiceRegistration<?>> _serviceRegistrations =
-		new ArrayList<>();
+		ApplicationContextServicePublisherUtil.class);
 
 }

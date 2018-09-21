@@ -134,7 +134,7 @@ public class ShareEntryMVCActionCommand extends BaseMVCActionCommand {
 			}
 
 			jsonObject.put(
-				"erorrMessage", LanguageUtil.get(resourceBundle, errorMessage));
+				"errorMessage", LanguageUtil.get(resourceBundle, errorMessage));
 
 			JSONPortletResponseUtil.writeJSON(
 				actionRequest, actionResponse, jsonObject);

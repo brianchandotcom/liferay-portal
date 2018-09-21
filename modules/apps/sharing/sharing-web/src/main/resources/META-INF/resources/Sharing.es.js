@@ -106,7 +106,7 @@ class Sharing extends PortletBase {
 				}
 
 				return response.json().then(json => {
-					const error = new Error(json.erorrMessage || response.statusText);
+					const error = new Error(json.errorMessage || response.statusText);
 					throw Object.assign(error, { response });
 				});
 			})

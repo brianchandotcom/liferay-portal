@@ -39,7 +39,7 @@ public class PortalTopLevelBuildRunner
 		}
 
 		if (JenkinsResultsParserUtil.isCINode()) {
-			workspace.addJenkinsLocalGitBranch(
+			workspace.addJenkinsWorkspaceGitRepository(
 				portalTopLevelBuildData.getJenkinsGitHubURL());
 		}
 	}

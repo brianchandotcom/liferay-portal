@@ -22,13 +22,6 @@ public class GitBranchFactory {
 	public static LocalGitBranch newLocalGitBranch(
 		LocalGitRepository localGitRepository, String name, String sha) {
 
-		if (localGitRepository instanceof PluginsLocalGitRepository) {
-			return new PluginsLocalGitBranch(localGitRepository, name, sha);
-		}
-		else if (localGitRepository instanceof PortalLocalGitRepository) {
-			return new PortalLocalGitBranch(localGitRepository, name, sha);
-		}
-
 		return new LocalGitBranch(localGitRepository, name, sha);
 	}
 

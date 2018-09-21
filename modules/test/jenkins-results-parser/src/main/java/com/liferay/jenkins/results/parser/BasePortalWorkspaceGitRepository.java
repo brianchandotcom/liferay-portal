@@ -21,17 +21,21 @@ import java.util.regex.Pattern;
 /**
  * @author Michael Hashimoto
  */
-public class PortalLocalGitRepository extends LocalGitRepository {
+public abstract class BasePortalWorkspaceGitRepository
+	extends BaseWorkspaceGitRepository implements PortalWorkspaceGitRepository {
 
-	public void setAppServerProperties(Properties properties) {
+	@Override
+	public void setPortalAppServerProperties(Properties properties) {
 		setProperties(_FILE_PATH_APP_SERVER_PROPERTIES, properties);
 	}
 
-	public void setBuildProperties(Properties properties) {
+	@Override
+	public void setPortalBuildProperties(Properties properties) {
 		setProperties(_FILE_PATH_BUILD_PROPERTIES, properties);
 	}
 
-	public void setJobProperties(Job job) {
+	@Override
+	public void setPortalJobProperties(Job job) {
 		Properties properties = new Properties();
 
 		Properties jobProperties = job.getJobProperties();
@@ -50,22 +54,28 @@ public class PortalLocalGitRepository extends LocalGitRepository {
 			}
 		}
 
-		setBuildProperties(properties);
+		setPortalBuildProperties(properties);
 	}
 
-	public void setSQLProperties(Properties properties) {
+	@Override
+	public void setPortalSQLProperties(Properties properties) {
 		setProperties(_FILE_PATH_SQL_PROPERTIES, properties);
 	}
 
-	public void setTestProperties(Properties properties) {
+	@Override
+	public void setPortalTestProperties(Properties properties) {
 		setProperties(_FILE_PATH_TEST_PROPERTIES, properties);
 	}
 
-	protected PortalLocalGitRepository(String name, String upstreamBranchName) {
-		super(name, upstreamBranchName);
+	protected BasePortalWorkspaceGitRepository(
+		String gitHubURL, String upstreamBranchName, String branchSHA) {
+
+		super(gitHubURL, upstreamBranchName, branchSHA);
 
 		if (upstreamBranchName.startsWith("ee-") ||
 			upstreamBranchName.endsWith("-private")) {
+
+			String name = getName();
 
 			if (!name.endsWith("-ee")) {
 				throw new IllegalArgumentException(
@@ -76,12 +86,13 @@ public class PortalLocalGitRepository extends LocalGitRepository {
 			}
 		}
 
-		_setBaseAppServerProperties();
-		_setBaseBuildProperties();
+		_setBasePortalAppServerProperties();
+		_setBasePortalBuildProperties();
 	}
 
 	@Override
 	protected String getDefaultRelativeGitRepositoryDirPath() {
+		String name = getName();
 		String upstreamBranchName = getUpstreamBranchName();
 
 		if (upstreamBranchName.equals("master")) {
@@ -92,46 +103,41 @@ public class PortalLocalGitRepository extends LocalGitRepository {
 			name.replace("-ee", ""), "-", upstreamBranchName);
 	}
 
-	private void _setBaseAppServerProperties() {
+	private void _setBasePortalAppServerProperties() {
 		Properties properties = new Properties();
 
 		properties.put("app.server.parent.dir", getDirectory() + "/bundles");
 
-		setAppServerProperties(properties);
+		setPortalAppServerProperties(properties);
 	}
 
-	private void _setBaseBuildProperties() {
+	private void _setBasePortalBuildProperties() {
 		Properties properties = new Properties();
 
 		properties.put("jsp.precompile", "off");
 		properties.put("jsp.precompile.parallel", "off");
 		properties.put("liferay.home", getDirectory() + "/bundles");
 
-		setBuildProperties(properties);
+		setPortalBuildProperties(properties);
 	}
 
-	private static final String _FILE_PATH_APP_SERVER_PROPERTIES;
+	private static final String _FILE_PATH_APP_SERVER_PROPERTIES =
+		JenkinsResultsParserUtil.combine(
+			"app.server.", System.getenv("HOSTNAME"), ".properties");
 
-	private static final String _FILE_PATH_BUILD_PROPERTIES;
+	private static final String _FILE_PATH_BUILD_PROPERTIES =
+		JenkinsResultsParserUtil.combine(
+			"build.", System.getenv("HOSTNAME"), ".properties");
 
-	private static final String _FILE_PATH_SQL_PROPERTIES;
+	private static final String _FILE_PATH_SQL_PROPERTIES =
+		JenkinsResultsParserUtil.combine(
+			"sql/sql.", System.getenv("HOSTNAME"), ".properties");
 
-	private static final String _FILE_PATH_TEST_PROPERTIES;
+	private static final String _FILE_PATH_TEST_PROPERTIES =
+		JenkinsResultsParserUtil.combine(
+			"test.", System.getenv("HOSTNAME"), ".properties");
 
 	private static final Pattern _pattern = Pattern.compile(
 		"portal.build.properties\\[(?<portalBuildPropertyName>[^\\]]+)\\]");
-
-	static {
-		String hostname = System.getenv("HOSTNAME");
-
-		_FILE_PATH_APP_SERVER_PROPERTIES = JenkinsResultsParserUtil.combine(
-			"app.server.", hostname, ".properties");
-		_FILE_PATH_BUILD_PROPERTIES = JenkinsResultsParserUtil.combine(
-			"build.", hostname, ".properties");
-		_FILE_PATH_TEST_PROPERTIES = JenkinsResultsParserUtil.combine(
-			"test.", hostname, ".properties");
-		_FILE_PATH_SQL_PROPERTIES = JenkinsResultsParserUtil.combine(
-			"sql/sql.", hostname, ".properties");
-	}
 
 }

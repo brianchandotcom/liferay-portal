@@ -17,45 +17,12 @@ package com.liferay.jenkins.results.parser;
 /**
  * @author Peter Yoo
  */
-public class RemoteGitRepository extends BaseGitRepository {
+public interface RemoteGitRepository extends GitRepository {
 
-	public String getHostname() {
-		return hostname;
-	}
+	public String getHostname();
 
-	public String getRemoteURL() {
-		return JenkinsResultsParserUtil.combine(
-			"git@", hostname, ":", username, "/", name);
-	}
+	public String getRemoteURL();
 
-	public String getUsername() {
-		return username;
-	}
-
-	protected RemoteGitRepository(GitRemote gitRemote) {
-		this(
-			gitRemote.getHostname(), gitRemote.getGitRepositoryName(),
-			gitRemote.getUsername());
-	}
-
-	protected RemoteGitRepository(
-		String hostname, String gitRepositoryName, String username) {
-
-		super(gitRepositoryName);
-
-		if ((hostname == null) || hostname.isEmpty()) {
-			throw new IllegalArgumentException("Hostname is null");
-		}
-
-		if ((username == null) || username.isEmpty()) {
-			throw new IllegalArgumentException("Username is null");
-		}
-
-		this.hostname = hostname;
-		this.username = username;
-	}
-
-	protected final String hostname;
-	protected final String username;
+	public String getUsername();
 
 }

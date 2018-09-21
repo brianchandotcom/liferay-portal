@@ -14,17 +14,21 @@
 
 package com.liferay.jenkins.results.parser;
 
-import java.io.File;
+import java.util.Properties;
 
 /**
- * @author Peter Yoo
+ * @author Michael Hashimoto
  */
-public interface LocalGitRepository extends GitRepository {
+public interface PortalWorkspaceGitRepository extends WorkspaceGitRepository {
 
-	public File getDirectory();
+	public void setPortalAppServerProperties(Properties properties);
 
-	public GitWorkingDirectory getGitWorkingDirectory();
+	public void setPortalBuildProperties(Properties properties);
 
-	public String getUpstreamBranchName();
+	public void setPortalJobProperties(Job job);
+
+	public void setPortalSQLProperties(Properties properties);
+
+	public void setPortalTestProperties(Properties properties);
 
 }

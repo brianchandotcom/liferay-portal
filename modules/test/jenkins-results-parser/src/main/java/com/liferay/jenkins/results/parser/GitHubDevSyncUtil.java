@@ -1280,10 +1280,10 @@ public class GitHubDevSyncUtil {
 		String senderBranchName, String senderUsername, String senderBranchSHA,
 		String upstreamBranchSHA, boolean synchronize) {
 
-		if (!JenkinsResultsParserUtil.isCINode()) {
-			GitWorkingDirectory gitWorkingDirectory =
-				localGitRepository.getGitWorkingDirectory();
+		GitWorkingDirectory gitWorkingDirectory =
+			localGitRepository.getGitWorkingDirectory();
 
+		if (!JenkinsResultsParserUtil.isCINode()) {
 			return gitWorkingDirectory.getRebasedLocalGitBranch(
 				JenkinsResultsParserUtil.combine(
 					gitWorkingDirectory.getUpstreamBranchName(), "-temp-",
@@ -1296,9 +1296,6 @@ public class GitHubDevSyncUtil {
 				upstreamBranchSHA);
 		}
 
-		GitWorkingDirectory gitWorkingDirectory =
-			localGitRepository.getGitWorkingDirectory();
-
 		if (synchronize) {
 			synchronizeToGitHubDev(
 				gitWorkingDirectory, receiverUsername, 0, senderBranchName,
@@ -1309,26 +1306,22 @@ public class GitHubDevSyncUtil {
 			receiverUsername, senderUsername, senderBranchSHA,
 			upstreamBranchSHA);
 
-		List<GitRemote> gitHubDevGitRemotes = getGitHubDevGitRemotes(
-			gitWorkingDirectory);
-
-		RemoteGitBranch remoteGitBranch =
-			gitWorkingDirectory.getRemoteGitBranch(
-				cachedBranchName, getRandomGitRemote(gitHubDevGitRemotes));
-
-		if (!gitWorkingDirectory.localSHAExists(remoteGitBranch.getSHA())) {
-			gitWorkingDirectory.fetch(remoteGitBranch);
-		}
-
 		LocalGitBranch cachedLocalGitBranch =
 			GitBranchFactory.newLocalGitBranch(
 				localGitRepository,
 				JenkinsResultsParserUtil.combine(
 					gitWorkingDirectory.getUpstreamBranchName(), "-temp-",
 					String.valueOf(System.currentTimeMillis())),
-				remoteGitBranch.getSHA());
+				upstreamBranchSHA);
 
-		return gitWorkingDirectory.createLocalGitBranch(cachedLocalGitBranch);
+		RemoteGitBranch cachedRemoteGitBranch =
+			gitWorkingDirectory.getRemoteGitBranch(
+				cachedBranchName,
+				getRandomGitRemote(
+					getGitHubDevGitRemotes(gitWorkingDirectory)));
+
+		return gitWorkingDirectory.fetch(
+			cachedLocalGitBranch, cachedRemoteGitBranch);
 	}
 
 	private static final long _BRANCH_EXPIRE_AGE_MILLIS =

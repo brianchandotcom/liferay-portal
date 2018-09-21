@@ -17,33 +17,12 @@ package com.liferay.jenkins.results.parser;
 /**
  * @author Michael Hashimoto
  */
-public class GitSubrepositoryLocalGitRepository extends LocalGitRepository {
+public class DefaultLocalGitRepository extends BaseLocalGitRepository {
 
-	protected GitSubrepositoryLocalGitRepository(
+	protected DefaultLocalGitRepository(
 		String name, String upstreamBranchName) {
 
 		super(name, upstreamBranchName);
-
-		if (upstreamBranchName.endsWith("-private") &&
-			!name.endsWith("-private")) {
-
-			throw new IllegalArgumentException(
-				JenkinsResultsParserUtil.combine(
-					"The local Git repository, ", name,
-					" should not be used with upstream branch ",
-					upstreamBranchName, ". Use ", name, "-private."));
-		}
-	}
-
-	@Override
-	protected String getDefaultRelativeGitRepositoryDirPath() {
-		String name = getName();
-
-		if (!name.endsWith("-private")) {
-			return name + "-private";
-		}
-
-		return name;
 	}
 
 }

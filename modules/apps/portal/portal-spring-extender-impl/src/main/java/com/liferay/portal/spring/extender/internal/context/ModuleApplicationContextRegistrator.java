@@ -28,8 +28,6 @@ import com.liferay.portal.spring.extender.internal.loader.ModuleResourceLoader;
 
 import java.beans.Introspector;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Dictionary;
 import java.util.List;
 
@@ -38,6 +36,7 @@ import org.osgi.framework.ServiceRegistration;
 import org.osgi.framework.wiring.BundleWiring;
 
 import org.springframework.beans.CachedIntrospectionResults;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.ConfigurableApplicationContext;
 
 /**
@@ -76,7 +75,7 @@ public class ModuleApplicationContextRegistrator {
 			_serviceRegistrations =
 				ApplicationContextServicePublisherUtil.registerContext(
 					_configurableApplicationContext,
-					_extendeeBundle.getBundleContext());
+					_extendeeBundle.getBundleContext(), false);
 		}
 		catch (Exception e) {
 			_log.error(
@@ -91,15 +90,8 @@ public class ModuleApplicationContextRegistrator {
 
 		Introspector.flushCaches();
 
-		if (_serviceRegistrations != null) {
-			for (ServiceRegistration<?> serviceReference :
-					_serviceRegistrations) {
-
-				serviceReference.unregister();
-			}
-
-			_serviceRegistrations.clear();
-		}
+		ApplicationContextServicePublisherUtil.unregisterContext(
+			_serviceRegistrations);
 
 		PortletBeanLocatorUtil.setBeanLocator(
 			_extendeeBundle.getSymbolicName(), null);
@@ -134,30 +126,24 @@ public class ModuleApplicationContextRegistrator {
 			new ModuleBeanFactoryPostProcessor(
 				classLoader, extendee.getBundleContext()));
 
+		ApplicationContext parentApplicationContext =
+			ParentModuleApplicationContextHolder.getApplicationContext(
+				_extendeeBundle);
+
+		if (parentApplicationContext != null) {
+			moduleApplicationContext.setParent(parentApplicationContext);
+		}
+
 		moduleApplicationContext.refresh();
 
 		return moduleApplicationContext;
 	}
 
 	private String[] _getBeanDefinitionFileNames(Bundle bundle) {
-		List<String> beanDefinitionFileNames = new ArrayList<>();
-
 		Dictionary<String, String> headers = bundle.getHeaders(
 			StringPool.BLANK);
 
-		String liferayService = headers.get("Liferay-Service");
-
-		if (liferayService != null) {
-			beanDefinitionFileNames.add("META-INF/spring/parent");
-		}
-
-		String springContext = headers.get("Liferay-Spring-Context");
-
-		Collections.addAll(
-			beanDefinitionFileNames, StringUtil.split(springContext, ','));
-
-		return beanDefinitionFileNames.toArray(
-			new String[beanDefinitionFileNames.size()]);
+		return StringUtil.split(headers.get("Liferay-Spring-Context"), ',');
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

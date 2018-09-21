@@ -62,6 +62,8 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
+import org.springframework.context.ApplicationContext;
+
 /**
  * @author Miguel Pastor
  */
@@ -204,6 +206,23 @@ public class ModuleApplicationContextExtender extends AbstractExtender {
 
 			Dictionary<String, String> headers = _bundle.getHeaders(
 				StringPool.BLANK);
+
+			String liferayService = headers.get("Liferay-Service");
+
+			if (liferayService != null) {
+				ServiceDependency serviceDependency =
+					_dependencyManager.createServiceDependency();
+
+				serviceDependency.setRequired(true);
+
+				serviceDependency.setService(
+					ApplicationContext.class,
+					StringBundler.concat(
+						"(org.springframework.parent.context.service.name=",
+						_bundle.getSymbolicName(), ")"));
+
+				_component.add(serviceDependency);
+			}
 
 			String requireSchemaVersion = headers.get(
 				"Liferay-Require-SchemaVersion");

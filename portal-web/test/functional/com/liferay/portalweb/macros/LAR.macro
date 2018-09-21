@@ -104,11 +104,19 @@
 		<execute function="SelectFrame" locator1="IFrame#CONFIGURATION_DIALOG" />
 
 		<if>
-			<condition function="IsNotChecked" locator1="ExportImport#CONTENT" />
+			<not>
+				<isset var="portletName" />
+			</not>
 			<then>
-				<execute function="Check" locator1="ExportImport#CONTENT" />
+				<if>
+					<condition function="IsNotChecked" locator1="ExportImport#CONTENT" />
+					<then>
 
-				<execute function="Pause" value1="1000" />
+						<execute function="Check" locator1="ExportImport#CONTENT" />
+
+						<execute function="Pause" value1="1000" />
+					</then>
+				</if>
 			</then>
 		</if>
 
@@ -339,11 +347,18 @@
 				</if>
 
 				<if>
-					<condition function="IsNotChecked" locator1="ExportImport#CONTENT" />
+					<not>
+						<isset var="portletName" />
+					</not>
 					<then>
-						<execute function="Check" locator1="ExportImport#CONTENT" />
+						<if>
+							<condition function="IsNotChecked" locator1="ExportImport#CONTENT" />
+							<then>
+								<execute function="Check" locator1="ExportImport#CONTENT" />
 
-						<execute function="Pause" value1="1000" />
+								<execute function="Pause" value1="1000" />
+							</then>
+						</if>
 					</then>
 				</if>
 
@@ -554,6 +569,7 @@
 		<execute macro="LAR#_export">
 			<var name="exportPermissions" value="${exportPermissions}" />
 			<var name="larFileName" value="${larFileName}" />
+			<var name="portletName" value="${portletName}" />
 		</execute>
 
 		<execute function="Click" locator1="Icon#CLOSE" />
@@ -619,6 +635,7 @@
 			<var name="importPermissions" value="${importPermissions}" />
 			<var name="larFileName" value="${larFileName}" />
 			<var name="mirrorWithOverwriting" value="${mirrorWithOverwriting}" />
+			<var name="portletName" value="${portletName}" />
 			<var name="uploadFrom" value="${uploadFrom}" />
 		</execute>
 

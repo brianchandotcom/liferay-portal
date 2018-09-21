@@ -4777,6 +4777,7 @@
 
 		<execute macro="LAR#exportPortlet">
 			<var name="larFileName" value="WebContent_portlet.lar" />
+			<var name="portletName" value="Asset Publisher" />
 		</execute>
 
 		<execute macro="Navigator#gotoSitePage">
@@ -4816,6 +4817,7 @@
 
 		<execute macro="LAR#importPortlet">
 			<var name="larFileName" value="Audience_Targeting.lar" />
+			<var name="portletName" value="Asset Publisher" />
 		</execute>
 
 		<execute macro="Navigator#openSiteURL">

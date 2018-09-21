@@ -665,8 +665,7 @@
 				selector += '[name=' + name + ']';
 			}
 
-			return _.reduce(
-				$(form).find(selector),
+			return $(form).find(selector).toArray().reduce(
 				function(prev, item, index) {
 					item = $(item);
 
@@ -689,8 +688,7 @@
 		listSelect: function(select, delimeter) {
 			select = Util.getDOM(select);
 
-			return _.reduce(
-				$(select).find('option'),
+			return $(select).find('option').toArray().reduce(
 				function(prev, item, index) {
 					var val = $(item).val();
 

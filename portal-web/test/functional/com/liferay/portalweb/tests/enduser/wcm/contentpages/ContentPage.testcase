@@ -127,6 +127,7 @@
 		<execute macro="NavItem#gotoPages" />
 
 		<execute macro="ContentPages#addPage">
+			<var name="collectionName" value="Page Template Collection" />
 			<var name="pageName" value="Test Page Name" />
 			<var name="pageTemplateName" value="Page Template Name" />
 		</execute>

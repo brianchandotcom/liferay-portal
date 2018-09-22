@@ -138,17 +138,8 @@ public class TransactionalPortalCacheHelper {
 	public static void commit() {
 		PortalCacheMap portalCacheMap = _popPortalCacheMap();
 
-		for (Map.Entry
-				<PortalCache<? extends Serializable, ?>, UncommittedBuffer>
-					portalCacheMapEntry : portalCacheMap.entrySet()) {
-
-			PortalCache<Serializable, Object> portalCache =
-				(PortalCache<Serializable, Object>)portalCacheMapEntry.getKey();
-
-			UncommittedBuffer uncommittedBuffer =
-				portalCacheMapEntry.getValue();
-
-			uncommittedBuffer.commitTo(portalCache);
+		for (UncommittedBuffer uncommittedBuffer : portalCacheMap.values()) {
+			uncommittedBuffer.commit();
 		}
 
 		portalCacheMap.clear();
@@ -197,7 +188,8 @@ public class TransactionalPortalCacheHelper {
 		UncommittedBuffer uncommittedBuffer = portalCacheMap.get(portalCache);
 
 		if (uncommittedBuffer == null) {
-			uncommittedBuffer = new UncommittedBuffer();
+			uncommittedBuffer = new UncommittedBuffer(
+				(PortalCache<Serializable, Object>)portalCache);
 
 			portalCacheMap.put(portalCache, uncommittedBuffer);
 		}
@@ -215,7 +207,8 @@ public class TransactionalPortalCacheHelper {
 		UncommittedBuffer uncommittedBuffer = portalCacheMap.get(portalCache);
 
 		if (uncommittedBuffer == null) {
-			uncommittedBuffer = new UncommittedBuffer();
+			uncommittedBuffer = new UncommittedBuffer(
+				(PortalCache<Serializable, Object>)portalCache);
 
 			portalCacheMap.put(portalCache, uncommittedBuffer);
 		}
@@ -278,14 +271,14 @@ public class TransactionalPortalCacheHelper {
 
 	private static class UncommittedBuffer {
 
-		public void commitTo(PortalCache<Serializable, Object> portalCache) {
+		public void commit() {
 			if (_removeAll) {
 				if (_skipReplicator) {
 					PortalCacheHelperUtil.removeAllWithoutReplicator(
-						portalCache);
+						_portalCache);
 				}
 				else {
-					portalCache.removeAll();
+					_portalCache.removeAll();
 				}
 			}
 
@@ -294,7 +287,7 @@ public class TransactionalPortalCacheHelper {
 
 				ValueEntry valueEntry = entry.getValue();
 
-				valueEntry.commitTo(portalCache, entry.getKey());
+				valueEntry.commitTo(_portalCache, entry.getKey());
 			}
 		}
 
@@ -326,6 +319,13 @@ public class TransactionalPortalCacheHelper {
 			}
 		}
 
+		private UncommittedBuffer(
+			PortalCache<Serializable, Object> portalCache) {
+
+			_portalCache = portalCache;
+		}
+
+		private final PortalCache<Serializable, Object> _portalCache;
 		private boolean _removeAll;
 		private boolean _skipReplicator = true;
 		private final Map<Serializable, ValueEntry> _uncommittedMap =

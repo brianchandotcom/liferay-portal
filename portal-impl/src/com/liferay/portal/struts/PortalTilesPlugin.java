@@ -99,8 +99,7 @@ public class PortalTilesPlugin implements PlugIn {
 				ServletContext servletContext)
 			throws DefinitionsFactoryException, NoSuchDefinitionException {
 
-			return _definitionsFactory.getDefinition(
-				name, servletRequest, servletContext);
+			return _componentDefinitions.get(name);
 		}
 
 		@Override
@@ -115,16 +114,11 @@ public class PortalTilesPlugin implements PlugIn {
 			ServletContext servletContext) {
 		}
 
-		private DefinitionsFactoryAdaptor(XmlDefinitionsSet xmlDefinitionsSet)
-			throws NoSuchDefinitionException {
-
-			_definitionsFactory =
-				new org.apache.struts.tiles.xmlDefinition.DefinitionsFactory(
-					xmlDefinitionsSet);
+		private DefinitionsFactoryAdaptor(XmlDefinitionsSet xmlDefinitionsSet) {
+			_componentDefinitions = xmlDefinitionsSet.getDefinitions();
 		}
 
-		private final org.apache.struts.tiles.xmlDefinition.DefinitionsFactory
-			_definitionsFactory;
+		private final Map<String, ComponentDefinition> _componentDefinitions;
 
 	}
 

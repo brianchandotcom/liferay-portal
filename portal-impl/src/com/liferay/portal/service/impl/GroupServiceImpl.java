@@ -388,6 +388,17 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 				companyId, parentGroupId, site, start, end));
 	}
 
+	@Override
+	public List<Group> getGroups(
+			long companyId, long parentGroupId, String name, boolean site,
+			int start, int end)
+		throws PortalException {
+
+		return filterGroups(
+			groupLocalService.getGroups(
+				companyId, parentGroupId, name, site, start, end));
+	}
+
 	/**
 	 * Returns the number of groups that are direct children of the parent
 	 * group.
@@ -410,6 +421,23 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 		}
 
 		return groupLocalService.getGroupsCount(companyId, parentGroupId, site);
+	}
+
+	@Override
+	public int getGroupsCount(
+			long companyId, long parentGroupId, String name, boolean site)
+		throws PortalException {
+
+		if (parentGroupId == 0) {
+			GroupPermissionUtil.check(getPermissionChecker(), ActionKeys.VIEW);
+		}
+		else {
+			GroupPermissionUtil.check(
+				getPermissionChecker(), parentGroupId, ActionKeys.VIEW);
+		}
+
+		return groupLocalService.getGroupsCount(
+			companyId, parentGroupId, name, site);
 	}
 
 	/**

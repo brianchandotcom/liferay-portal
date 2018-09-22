@@ -220,6 +220,11 @@ public interface GroupService extends BaseService {
 	public List<Group> getGroups(long companyId, long parentGroupId,
 		boolean site, int start, int end) throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<Group> getGroups(long companyId, long parentGroupId,
+		String name, boolean site, int start, int end)
+		throws PortalException;
+
 	/**
 	* Returns the number of groups that are direct children of the parent
 	* group.
@@ -232,6 +237,10 @@ public interface GroupService extends BaseService {
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getGroupsCount(long companyId, long parentGroupId, boolean site)
 		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getGroupsCount(long companyId, long parentGroupId, String name,
+		boolean site) throws PortalException;
 
 	/**
 	* Returns the number of groups that are direct children of the parent group

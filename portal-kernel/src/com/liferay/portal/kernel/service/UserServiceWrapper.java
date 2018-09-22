@@ -534,6 +534,14 @@ public class UserServiceWrapper implements UserService,
 		return _userService.getGtUserGroupUsers(gtUserId, userGroupId, size);
 	}
 
+	@Override
+	public int getOrganizationsAndUserGroupsUsersCount(long[] organizationIds,
+		long[] userGroupIds)
+		throws com.liferay.portal.kernel.security.auth.PrincipalException {
+		return _userService.getOrganizationsAndUserGroupsUsersCount(organizationIds,
+			userGroupIds);
+	}
+
 	/**
 	* Returns the primary keys of all the users belonging to the organization.
 	*

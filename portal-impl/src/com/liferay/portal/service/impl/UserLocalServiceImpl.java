@@ -2335,6 +2335,14 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		return userFinder.findByNoGroups();
 	}
 
+	@Override
+	public int getOrganizationsAndUserGroupsUsersCount(
+		long[] organizationIds, long[] userGroupIds) {
+
+		return userFinder.getOrganizationsAndUserGroupsUsersCount(
+			organizationIds, userGroupIds);
+	}
+
 	/**
 	 * Returns the primary keys of all the users belonging to the organization.
 	 *

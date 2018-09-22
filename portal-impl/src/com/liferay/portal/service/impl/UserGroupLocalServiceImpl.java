@@ -494,6 +494,13 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 		return userGroupPersistence.findByCompanyId(companyId);
 	}
 
+	@Override
+	public List<UserGroup> getUserGroups(
+		long companyId, String name, int start, int end) {
+
+		return userGroupPersistence.findByC_LikeN(companyId, name, start, end);
+	}
+
 	/**
 	 * Returns all the user groups with the primary keys.
 	 *
@@ -513,6 +520,11 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 		}
 
 		return userGroups;
+	}
+
+	@Override
+	public int getUserGroupsCount(long companyId, String name) {
+		return userGroupPersistence.countByC_LikeN(companyId, name);
 	}
 
 	/**

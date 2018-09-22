@@ -251,6 +251,14 @@ public class OrganizationServiceWrapper implements OrganizationService,
 			parentOrganizationId, start, end);
 	}
 
+	@Override
+	public java.util.List<com.liferay.portal.kernel.model.Organization> getOrganizations(
+		long companyId, long parentOrganizationId, String name, int start,
+		int end) {
+		return _organizationService.getOrganizations(companyId,
+			parentOrganizationId, name, start, end);
+	}
+
 	/**
 	* Returns the number of organizations belonging to the parent organization.
 	*
@@ -263,6 +271,13 @@ public class OrganizationServiceWrapper implements OrganizationService,
 	public int getOrganizationsCount(long companyId, long parentOrganizationId) {
 		return _organizationService.getOrganizationsCount(companyId,
 			parentOrganizationId);
+	}
+
+	@Override
+	public int getOrganizationsCount(long companyId, long parentOrganizationId,
+		String name) throws com.liferay.portal.kernel.exception.PortalException {
+		return _organizationService.getOrganizationsCount(companyId,
+			parentOrganizationId, name);
 	}
 
 	/**

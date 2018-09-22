@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
+import com.liferay.portal.kernel.service.UserServiceUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.CompanyTestUtil;
@@ -125,6 +126,48 @@ public class UserLocalServiceTest {
 	}
 
 	@Test
+	public void testGetOrganizationsAndUserGroupsUsersCount() throws Exception {
+		int iterationAmount = 3;
+
+		int expectedCount = 0;
+
+		long[] commonUsers = _createUsers(iterationAmount);
+
+		expectedCount += commonUsers.length;
+
+		long[] organizationIds = new long[iterationAmount];
+
+		for (int i = 0; i < iterationAmount; i++) {
+			long[] uniqueUsers = _createUsers(iterationAmount);
+
+			Organization organization = _setUpOrganization(
+				commonUsers, uniqueUsers);
+
+			organizationIds[i] = organization.getOrganizationId();
+
+			expectedCount += uniqueUsers.length;
+		}
+
+		long[] userGroupIds = new long[iterationAmount];
+
+		for (int i = 0; i < iterationAmount; i++) {
+			long[] uniqueUsers = _createUsers(iterationAmount);
+
+			UserGroup userGroup = _setUpUserGroup(commonUsers, uniqueUsers);
+
+			userGroupIds[i] = userGroup.getUserGroupId();
+
+			expectedCount += uniqueUsers.length;
+		}
+
+		int actualCount =
+			UserLocalServiceUtil.getOrganizationsAndUserGroupsUsersCount(
+				organizationIds, userGroupIds);
+
+		Assert.assertEquals(expectedCount, actualCount);
+	}
+
+	@Test
 	public void testGetOrganizationUsers() throws Exception {
 		Organization organization = OrganizationTestUtil.addOrganization();
 
@@ -187,8 +230,60 @@ public class UserLocalServiceTest {
 		}
 	}
 
+	private long[] _createUsers(int amount) throws Exception {
+		long[] userIds = new long[amount];
+
+		for (int i = 0; i < amount; i++) {
+			User user = UserTestUtil.addUser();
+
+			_users.add(user);
+
+			userIds[i] = user.getUserId();
+		}
+
+		return userIds;
+	}
+
+	private Organization _setUpOrganization(
+			long[] commonUserIds, long[] uniqueUserIds)
+		throws Exception {
+
+		Organization organization = OrganizationTestUtil.addOrganization();
+
+		_organizations.add(organization);
+
+		UserServiceUtil.addOrganizationUsers(
+			organization.getOrganizationId(), commonUserIds);
+		UserServiceUtil.addOrganizationUsers(
+			organization.getOrganizationId(), uniqueUserIds);
+
+		return organization;
+	}
+
+	private UserGroup _setUpUserGroup(
+			long[] commonUserIds, long[] uniqueUserIds)
+		throws Exception {
+
+		UserGroup userGroup = UserGroupTestUtil.addUserGroup();
+
+		_userGroups.add(userGroup);
+
+		UserServiceUtil.addUserGroupUsers(
+			userGroup.getUserGroupId(), commonUserIds);
+		UserServiceUtil.addUserGroupUsers(
+			userGroup.getUserGroupId(), uniqueUserIds);
+
+		return userGroup;
+	}
+
 	@DeleteAfterTestRun
 	private Company _company;
+
+	@DeleteAfterTestRun
+	private final List<Organization> _organizations = new ArrayList<>();
+
+	@DeleteAfterTestRun
+	private final List<UserGroup> _userGroups = new ArrayList<>();
 
 	@DeleteAfterTestRun
 	private final List<User> _users = new ArrayList<>();

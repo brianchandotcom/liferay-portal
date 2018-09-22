@@ -162,6 +162,7 @@ create index IX_ABE2D54 on Group_ (companyId, classNameId, parentGroupId);
 create unique index IX_5BDDB872 on Group_ (companyId, friendlyURL[$COLUMN_LENGTH:255$]);
 create unique index IX_ACD2B296 on Group_ (companyId, groupKey[$COLUMN_LENGTH:150$]);
 create unique index IX_AACD15F0 on Group_ (companyId, liveGroupId, groupKey[$COLUMN_LENGTH:150$]);
+create index IX_626D8698 on Group_ (companyId, parentGroupId, name[$COLUMN_LENGTH:4000$], site);
 create index IX_D4BFF38B on Group_ (companyId, parentGroupId, site, inheritContent);
 create index IX_63A2AABD on Group_ (companyId, site);
 create index IX_16218A38 on Group_ (liveGroupId);
@@ -245,7 +246,7 @@ create index IX_6AF0D434 on OrgLabor (organizationId);
 
 create index IX_6B83F1C7 on Organization_ (companyId, externalReferenceCode[$COLUMN_LENGTH:75$]);
 create unique index IX_E301BDF5 on Organization_ (companyId, name[$COLUMN_LENGTH:100$]);
-create index IX_418E4522 on Organization_ (companyId, parentOrganizationId);
+create index IX_D834B361 on Organization_ (companyId, parentOrganizationId, name[$COLUMN_LENGTH:100$]);
 create index IX_A9D85BA6 on Organization_ (uuid_[$COLUMN_LENGTH:75$], companyId);
 
 create index IX_2C1142E on PasswordPolicy (companyId, defaultPolicy);

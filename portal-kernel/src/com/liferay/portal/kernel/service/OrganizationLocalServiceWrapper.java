@@ -631,6 +631,14 @@ public class OrganizationLocalServiceWrapper implements OrganizationLocalService
 
 	@Override
 	public java.util.List<com.liferay.portal.kernel.model.Organization> getOrganizations(
+		long companyId, long parentOrganizationId, String name, int start,
+		int end) {
+		return _organizationLocalService.getOrganizations(companyId,
+			parentOrganizationId, name, start, end);
+	}
+
+	@Override
+	public java.util.List<com.liferay.portal.kernel.model.Organization> getOrganizations(
 		long companyId, String treePath) {
 		return _organizationLocalService.getOrganizations(companyId, treePath);
 	}
@@ -712,6 +720,13 @@ public class OrganizationLocalServiceWrapper implements OrganizationLocalService
 	public int getOrganizationsCount(long companyId, long parentOrganizationId) {
 		return _organizationLocalService.getOrganizationsCount(companyId,
 			parentOrganizationId);
+	}
+
+	@Override
+	public int getOrganizationsCount(long companyId, long parentOrganizationId,
+		String name) {
+		return _organizationLocalService.getOrganizationsCount(companyId,
+			parentOrganizationId, name);
 	}
 
 	/**

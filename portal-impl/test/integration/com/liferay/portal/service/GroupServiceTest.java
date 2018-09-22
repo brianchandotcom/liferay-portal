@@ -14,11 +14,15 @@
 
 package com.liferay.portal.service;
 
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.GroupConstants;
+import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.GroupServiceUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerTestRule;
@@ -42,6 +46,50 @@ public class GroupServiceTest {
 		new AggregateTestRule(
 			new LiferayIntegrationTestRule(),
 			PermissionCheckerTestRule.INSTANCE);
+
+	@Test
+	public void testGetGroupsLikeName() throws Exception {
+		String baseName = RandomTestUtil.randomString(10);
+		List<Group> expectedGroups = new ArrayList<>();
+
+		for (int i = 0; i < 10; i++) {
+			String uniqueName = baseName + String.valueOf(i);
+
+			Group group = GroupTestUtil.addGroup(
+				GroupConstants.DEFAULT_PARENT_GROUP_ID);
+
+			group.setName(uniqueName);
+
+			group = GroupLocalServiceUtil.updateGroup(group);
+
+			expectedGroups.add(group);
+		}
+
+		_groups.addAll(expectedGroups);
+		_groups.add(GroupTestUtil.addGroup());
+		_groups.add(GroupTestUtil.addGroup());
+		_groups.add(GroupTestUtil.addGroup());
+
+		String searchString = baseName + "%";
+
+		List<Group> actualGroups = GroupServiceUtil.getGroups(
+			TestPropsValues.getCompanyId(),
+			GroupConstants.DEFAULT_PARENT_GROUP_ID, searchString, true,
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+
+		Assert.assertEquals(
+			actualGroups.toString(), expectedGroups.size(),
+			actualGroups.size());
+
+		Assert.assertTrue(
+			actualGroups.toString(), actualGroups.containsAll(expectedGroups));
+
+		Assert.assertEquals(
+			expectedGroups.size(),
+			GroupServiceUtil.getGroupsCount(
+				TestPropsValues.getCompanyId(),
+				GroupConstants.DEFAULT_PARENT_GROUP_ID, searchString, true));
+	}
 
 	@Test
 	public void testGetGtGroups() throws Exception {

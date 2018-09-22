@@ -33,9 +33,12 @@ import java.nio.file.PathMatcher;
 import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
 
+import java.text.SimpleDateFormat;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -60,6 +63,73 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 
 	public Map<File, JunitBatchTestClass> getJunitTestClasses() {
 		return JunitBatchTestClass.getJunitTestClasses();
+	}
+
+	public void writeTestCSVReportFile() throws Exception {
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("Class Name");
+		sb.append(",");
+		sb.append("Method Name");
+		sb.append(",");
+		sb.append("Ignored");
+		sb.append(",");
+		sb.append("File Path");
+		sb.append("\n");
+
+		Map<File, JunitBatchTestClass> junitTestClasses = getJunitTestClasses();
+
+		for (Map.Entry<File, JUnitBatchTestClassGroup.JunitBatchTestClass>
+				entry : junitTestClasses.entrySet()) {
+
+			JUnitBatchTestClassGroup.JunitBatchTestClass junitBatchTestClass =
+				entry.getValue();
+
+			File testFile = junitBatchTestClass.getFile();
+
+			String testFileAbsolutePath = testFile.getAbsolutePath();
+
+			testFileAbsolutePath = testFileAbsolutePath.replace(
+				".class", ".java");
+
+			String className = testFile.getName();
+
+			className = className.replace(".class", "");
+
+			List<BaseTestClassGroup.BaseTestMethod> testMethods =
+				junitBatchTestClass.getTestMethods();
+
+			for (BaseTestClassGroup.BaseTestMethod testMethod : testMethods) {
+				sb.append(className);
+				sb.append(",");
+				sb.append(testMethod.getName());
+				sb.append(",");
+
+				if (testMethod.isIgnored()) {
+					sb.append("TRUE");
+				}
+				else {
+					sb.append("");
+				}
+
+				sb.append(",");
+				sb.append(testFileAbsolutePath);
+				sb.append("\n");
+			}
+		}
+
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM-dd-yyyy");
+
+		File reportCSVFile = new File(
+			JenkinsResultsParserUtil.combine(
+				"Report_", simpleDateFormat.format(new Date()), ".csv"));
+
+		try {
+			JenkinsResultsParserUtil.write(reportCSVFile, sb.toString());
+		}
+		catch (IOException ioe) {
+			throw new RuntimeException(ioe);
+		}
 	}
 
 	public static class JunitBatchTestClass extends BaseTestClass {

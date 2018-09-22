@@ -39,7 +39,7 @@
 						%>
 
 						<aui:select label="order-by" name="TypeSettingsProperties--orderByColumn1--" value="<%= orderByColumn1 %>" wrapperCssClass="field-inline w80">
-							<aui:option label="title" selected='<%= orderByColumn1.equals("title") %>' />
+							<aui:option label="title" selected='<%= orderByColumn1.equals("title") %>' value="title" />
 							<aui:option label="create-date" selected='<%= orderByColumn1.equals("createDate") %>' value="createDate" />
 							<aui:option label="modified-date" selected='<%= orderByColumn1.equals("modifiedDate") %>' value="modifiedDate" />
 							<aui:option label="publish-date" selected='<%= orderByColumn1.equals("publishDate") %>' value="publishDate" />
@@ -81,7 +81,7 @@
 						%>
 
 						<aui:select label="and-then-by" name="TypeSettingsProperties--orderByColumn2--" wrapperCssClass="field-inline w80">
-							<aui:option label="title" selected='<%= orderByColumn2.equals("title") %>' />
+							<aui:option label="title" selected='<%= orderByColumn2.equals("title") %>' value="title" />
 							<aui:option label="create-date" selected='<%= orderByColumn2.equals("createDate") %>' value="createDate" />
 							<aui:option label="modified-date" selected='<%= orderByColumn2.equals("modifiedDate") %>' value="modifiedDate" />
 							<aui:option label="publish-date" selected='<%= orderByColumn2.equals("publishDate") %>' value="publishDate" />

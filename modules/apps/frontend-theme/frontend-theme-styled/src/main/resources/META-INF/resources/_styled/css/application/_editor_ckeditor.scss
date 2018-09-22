@@ -40,7 +40,9 @@
 	}
 }
 
-span .cke_image_resizer {
+/* ---------- CKEditor image resizer ---------- */
+
+.cke_widget_image .cke_image_resizer {
 	background-clip: content-box;
 	bottom: -15px;
 	height: 40px;

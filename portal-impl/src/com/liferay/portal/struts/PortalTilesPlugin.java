@@ -14,6 +14,10 @@
 
 package com.liferay.portal.struts;
 
+import com.liferay.portal.kernel.xml.Document;
+import com.liferay.portal.kernel.xml.Element;
+import com.liferay.portal.kernel.xml.SAXReaderUtil;
+
 import java.io.InputStream;
 
 import java.util.Map;
@@ -26,8 +30,8 @@ import org.apache.struts.action.PlugIn;
 import org.apache.struts.config.ModuleConfig;
 import org.apache.struts.config.PlugInConfig;
 import org.apache.struts.tiles.DefinitionsFactoryConfig;
+import org.apache.struts.tiles.xmlDefinition.XmlDefinition;
 import org.apache.struts.tiles.xmlDefinition.XmlDefinitionsSet;
-import org.apache.struts.tiles.xmlDefinition.XmlParser;
 
 /**
  * @author Brian Wing Shun Chan
@@ -49,14 +53,31 @@ public class PortalTilesPlugin implements PlugIn {
 
 		XmlDefinitionsSet xmlDefinitionsSet = new XmlDefinitionsSet();
 
-		XmlParser xmlParser = new XmlParser();
-
-		xmlParser.setValidating(true);
-
 		try (InputStream inputStream = servletContext.getResourceAsStream(
 				_fileName)) {
 
-			xmlParser.parse(inputStream, xmlDefinitionsSet);
+			Document document = SAXReaderUtil.read(inputStream, false);
+
+			Element rootElement = document.getRootElement();
+
+			for (Element definitionElement :
+					rootElement.elements("definition")) {
+
+				XmlDefinition xmlDefinition = new XmlDefinition();
+
+				xmlDefinition.setExtends(
+					definitionElement.attributeValue("extends"));
+				xmlDefinition.setName(definitionElement.attributeValue("name"));
+				xmlDefinition.setPath(definitionElement.attributeValue("path"));
+
+				for (Element putElement : definitionElement.elements("put")) {
+					xmlDefinition.putAttribute(
+						putElement.attributeValue("name"),
+						putElement.attributeValue("value"));
+				}
+
+				xmlDefinitionsSet.putDefinition(xmlDefinition);
+			}
 
 			xmlDefinitionsSet.resolveInheritances();
 

@@ -524,6 +524,14 @@ public class UserServiceUtil {
 		return getService().getGtUserGroupUsers(gtUserId, userGroupId, size);
 	}
 
+	public static int getOrganizationsAndUserGroupsUsersCount(
+		long[] organizationIds, long[] userGroupIds)
+		throws com.liferay.portal.kernel.security.auth.PrincipalException {
+		return getService()
+				   .getOrganizationsAndUserGroupsUsersCount(organizationIds,
+			userGroupIds);
+	}
+
 	/**
 	* Returns the primary keys of all the users belonging to the organization.
 	*

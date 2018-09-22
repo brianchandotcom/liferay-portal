@@ -151,12 +151,12 @@ public class GroupModelImpl extends BaseModelImpl<Group> implements GroupModel {
 	public static final long GROUPKEY_COLUMN_BITMASK = 64L;
 	public static final long INHERITCONTENT_COLUMN_BITMASK = 128L;
 	public static final long LIVEGROUPID_COLUMN_BITMASK = 256L;
-	public static final long PARENTGROUPID_COLUMN_BITMASK = 512L;
-	public static final long SITE_COLUMN_BITMASK = 1024L;
-	public static final long TREEPATH_COLUMN_BITMASK = 2048L;
-	public static final long TYPE_COLUMN_BITMASK = 4096L;
-	public static final long UUID_COLUMN_BITMASK = 8192L;
-	public static final long NAME_COLUMN_BITMASK = 16384L;
+	public static final long NAME_COLUMN_BITMASK = 512L;
+	public static final long PARENTGROUPID_COLUMN_BITMASK = 1024L;
+	public static final long SITE_COLUMN_BITMASK = 2048L;
+	public static final long TREEPATH_COLUMN_BITMASK = 4096L;
+	public static final long TYPE_COLUMN_BITMASK = 8192L;
+	public static final long UUID_COLUMN_BITMASK = 16384L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -789,6 +789,10 @@ public class GroupModelImpl extends BaseModelImpl<Group> implements GroupModel {
 	public void setName(String name) {
 		_columnBitmask = -1L;
 
+		if (_originalName == null) {
+			_originalName = _name;
+		}
+
 		_name = name;
 	}
 
@@ -830,6 +834,10 @@ public class GroupModelImpl extends BaseModelImpl<Group> implements GroupModel {
 
 		setName(LocalizationUtil.updateLocalization(nameMap, getName(), "Name",
 				LocaleUtil.toLanguageId(defaultLocale)));
+	}
+
+	public String getOriginalName() {
+		return GetterUtil.getString(_originalName);
 	}
 
 	@JSON
@@ -1351,6 +1359,8 @@ public class GroupModelImpl extends BaseModelImpl<Group> implements GroupModel {
 
 		groupModelImpl._originalGroupKey = groupModelImpl._groupKey;
 
+		groupModelImpl._originalName = groupModelImpl._name;
+
 		groupModelImpl._originalType = groupModelImpl._type;
 
 		groupModelImpl._setOriginalType = false;
@@ -1652,6 +1662,7 @@ public class GroupModelImpl extends BaseModelImpl<Group> implements GroupModel {
 	private String _originalGroupKey;
 	private String _name;
 	private String _nameCurrentLanguageId;
+	private String _originalName;
 	private String _description;
 	private String _descriptionCurrentLanguageId;
 	private int _type;

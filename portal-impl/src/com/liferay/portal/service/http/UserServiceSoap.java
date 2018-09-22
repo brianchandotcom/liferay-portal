@@ -768,6 +768,21 @@ public class UserServiceSoap {
 		}
 	}
 
+	public static int getOrganizationsAndUserGroupsUsersCount(
+		long[] organizationIds, long[] userGroupIds) throws RemoteException {
+		try {
+			int returnValue = UserServiceUtil.getOrganizationsAndUserGroupsUsersCount(organizationIds,
+					userGroupIds);
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	/**
 	* Returns the primary keys of all the users belonging to the organization.
 	*

@@ -1353,6 +1353,13 @@ public class UserLocalServiceWrapper implements UserLocalService,
 		return _userLocalService.getOrganizationPrimaryKeys(userId);
 	}
 
+	@Override
+	public int getOrganizationsAndUserGroupsUsersCount(long[] organizationIds,
+		long[] userGroupIds) {
+		return _userLocalService.getOrganizationsAndUserGroupsUsersCount(organizationIds,
+			userGroupIds);
+	}
+
 	/**
 	* Returns the primary keys of all the users belonging to the organization.
 	*

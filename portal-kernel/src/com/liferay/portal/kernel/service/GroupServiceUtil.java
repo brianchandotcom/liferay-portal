@@ -252,6 +252,14 @@ public class GroupServiceUtil {
 		return getService().getGroups(companyId, parentGroupId, site, start, end);
 	}
 
+	public static java.util.List<com.liferay.portal.kernel.model.Group> getGroups(
+		long companyId, long parentGroupId, String name, boolean site,
+		int start, int end)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .getGroups(companyId, parentGroupId, name, site, start, end);
+	}
+
 	/**
 	* Returns the number of groups that are direct children of the parent
 	* group.
@@ -265,6 +273,12 @@ public class GroupServiceUtil {
 		boolean site)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getGroupsCount(companyId, parentGroupId, site);
+	}
+
+	public static int getGroupsCount(long companyId, long parentGroupId,
+		String name, boolean site)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getGroupsCount(companyId, parentGroupId, name, site);
 	}
 
 	/**

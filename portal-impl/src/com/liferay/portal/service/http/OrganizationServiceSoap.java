@@ -386,6 +386,23 @@ public class OrganizationServiceSoap {
 		}
 	}
 
+	public static com.liferay.portal.kernel.model.OrganizationSoap[] getOrganizations(
+		long companyId, long parentOrganizationId, String name, int start,
+		int end) throws RemoteException {
+		try {
+			java.util.List<com.liferay.portal.kernel.model.Organization> returnValue =
+				OrganizationServiceUtil.getOrganizations(companyId,
+					parentOrganizationId, name, start, end);
+
+			return com.liferay.portal.kernel.model.OrganizationSoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	/**
 	* Returns the number of organizations belonging to the parent organization.
 	*
@@ -399,6 +416,21 @@ public class OrganizationServiceSoap {
 		try {
 			int returnValue = OrganizationServiceUtil.getOrganizationsCount(companyId,
 					parentOrganizationId);
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static int getOrganizationsCount(long companyId,
+		long parentOrganizationId, String name) throws RemoteException {
+		try {
+			int returnValue = OrganizationServiceUtil.getOrganizationsCount(companyId,
+					parentOrganizationId, name);
 
 			return returnValue;
 		}

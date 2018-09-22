@@ -251,6 +251,15 @@ public class GroupServiceWrapper implements GroupService,
 			end);
 	}
 
+	@Override
+	public java.util.List<com.liferay.portal.kernel.model.Group> getGroups(
+		long companyId, long parentGroupId, String name, boolean site,
+		int start, int end)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _groupService.getGroups(companyId, parentGroupId, name, site,
+			start, end);
+	}
+
 	/**
 	* Returns the number of groups that are direct children of the parent
 	* group.
@@ -264,6 +273,13 @@ public class GroupServiceWrapper implements GroupService,
 	public int getGroupsCount(long companyId, long parentGroupId, boolean site)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _groupService.getGroupsCount(companyId, parentGroupId, site);
+	}
+
+	@Override
+	public int getGroupsCount(long companyId, long parentGroupId, String name,
+		boolean site)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _groupService.getGroupsCount(companyId, parentGroupId, name, site);
 	}
 
 	/**

@@ -592,6 +592,11 @@ public class UserGroupLocalServiceUtil {
 		return getService().getUserGroups(companyId);
 	}
 
+	public static java.util.List<com.liferay.portal.kernel.model.UserGroup> getUserGroups(
+		long companyId, String name, int start, int end) {
+		return getService().getUserGroups(companyId, name, start, end);
+	}
+
 	/**
 	* Returns all the user groups with the primary keys.
 	*
@@ -611,6 +616,10 @@ public class UserGroupLocalServiceUtil {
 	*/
 	public static int getUserGroupsCount() {
 		return getService().getUserGroupsCount();
+	}
+
+	public static int getUserGroupsCount(long companyId, String name) {
+		return getService().getUserGroupsCount(companyId, name);
 	}
 
 	/**

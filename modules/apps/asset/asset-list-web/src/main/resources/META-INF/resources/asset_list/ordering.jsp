@@ -39,14 +39,14 @@
 						%>
 
 						<aui:select label="order-by" name="TypeSettingsProperties--orderByColumn1--" value="<%= orderByColumn1 %>" wrapperCssClass="field-inline w80">
-							<aui:option label="title" />
-							<aui:option label="create-date" value="createDate" />
-							<aui:option label="modified-date" value="modifiedDate" />
-							<aui:option label="publish-date" value="publishDate" />
-							<aui:option label="expiration-date" value="expirationDate" />
-							<aui:option label="priority" value="priority" />
-							<aui:option label="view-count" value="viewCount" />
-							<aui:option label="ratings" value="ratings" />
+							<aui:option label="title" selected='<%= orderByColumn1.equals("title") %>' />
+							<aui:option label="create-date" selected='<%= orderByColumn1.equals("createDate") %>' value="createDate" />
+							<aui:option label="modified-date" selected='<%= orderByColumn1.equals("modifiedDate") %>' value="modifiedDate" />
+							<aui:option label="publish-date" selected='<%= orderByColumn1.equals("publishDate") %>' value="publishDate" />
+							<aui:option label="expiration-date" selected='<%= orderByColumn1.equals("expirationDate") %>' value="expirationDate" />
+							<aui:option label="priority" selected='<%= orderByColumn1.equals("priority") %>' value="priority" />
+							<aui:option label="view-count" selected='<%= orderByColumn1.equals("viewCount") %>' value="viewCount" />
+							<aui:option label="ratings" selected='<%= orderByColumn1.equals("ratings") %>' value="ratings" />
 						</aui:select>
 
 						<%

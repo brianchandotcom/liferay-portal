@@ -255,13 +255,9 @@ List<AssetRendererFactory<?>> classTypesAssetRendererFactories = new ArrayList()
 <aui:script sandbox="<%= true %>">
 	var Util = Liferay.Util;
 
-	var MAP_DDM_STRUCTURES = {};
-
 	var assetMultipleSelector = $('#<portlet:namespace />currentClassNameIds');
 	var assetSelector = $('#<portlet:namespace />anyAssetType');
 	var ddmStructureFieldName = $('#<portlet:namespace />ddmStructureFieldName');
-	var orderByColumn1 = $('#<portlet:namespace />orderByColumn1');
-	var orderByColumn2 = $('#<portlet:namespace />orderByColumn2');
 	var sourcePanel = $('.source-container');
 
 	<%
@@ -273,18 +269,13 @@ List<AssetRendererFactory<?>> classTypesAssetRendererFactories = new ArrayList()
 
 		var <%= className %>Options = $('#<portlet:namespace /><%= className %>Options');
 
-		function <portlet:namespace />toggle<%= className %>(removeOrderBySubtype) {
+		function <portlet:namespace />toggle<%= className %>() {
 			var assetOptions = assetMultipleSelector.find('option');
 
 			var showOptions = ((assetSelector.val() == '<%= curRendererFactory.getClassNameId() %>') ||
 				((assetSelector.val() == 'false') && (assetOptions.length == 1) && (assetOptions.eq(0).val() == '<%= curRendererFactory.getClassNameId() %>')));
 
 			<%= className %>Options.toggleClass('hide', !showOptions);
-
-			if (removeOrderBySubtype) {
-				orderByColumn1.find('.order-by-subtype').remove();
-				orderByColumn2.find('.order-by-subtype').remove();
-			}
 
 			<c:if test="<%= editAssetListDisplayContext.isShowSubtypeFieldsFilter() %>">
 				<%= className %>toggleSubclassesFields(true);
@@ -298,54 +289,6 @@ List<AssetRendererFactory<?>> classTypesAssetRendererFactories = new ArrayList()
 
 		if (assetAvailableClassTypes.isEmpty()) {
 			continue;
-		}
-
-		for (ClassType classType : assetAvailableClassTypes) {
-			List<ClassTypeField> classTypeFields = classType.getClassTypeFields();
-
-			if (classTypeFields.isEmpty()) {
-				continue;
-			}
-		%>
-
-			var optgroupClose = '</optgroup>';
-			var optgroupOpen = '<optgroup class="order-by-subtype" label="<%= HtmlUtil.escape(classType.getName()) %>">';
-
-			var columnBuffer1 = [optgroupOpen];
-			var columnBuffer2 = [optgroupOpen];
-
-			<%
-			String orderByColumn1 = editAssetListDisplayContext.getOrderByColumn1();
-			String orderByColumn2 = editAssetListDisplayContext.getOrderByColumn2();
-
-			for (ClassTypeField classTypeField : classTypeFields) {
-				String value = editAssetListDisplayContext.encodeName(classTypeField.getClassTypeId(), classTypeField.getName(), null);
-				String selectedOrderByColumn1 = StringPool.BLANK;
-				String selectedOrderByColumn2 = StringPool.BLANK;
-
-				if (orderByColumn1.equals(value)) {
-					selectedOrderByColumn1 = "selected";
-				}
-
-				if (orderByColumn2.equals(value)) {
-					selectedOrderByColumn2 = "selected";
-				}
-			%>
-
-				columnBuffer1.push('<option <%= selectedOrderByColumn1 %> value="<%= value %>"><%= HtmlUtil.escapeJS(classTypeField.getLabel()) %></option>');
-				columnBuffer2.push('<option <%= selectedOrderByColumn2 %> value="<%= value %>"><%= HtmlUtil.escapeJS(classTypeField.getLabel()) %></option>');
-
-			<%
-			}
-			%>
-
-			columnBuffer1.push(optgroupClose);
-			columnBuffer2.push(optgroupClose);
-
-			MAP_DDM_STRUCTURES['<%= className %>_<%= classType.getClassTypeId() %>_optTextOrderByColumn1'] = columnBuffer1.join('');
-			MAP_DDM_STRUCTURES['<%= className %>_<%= classType.getClassTypeId() %>_optTextOrderByColumn2'] = columnBuffer2.join('');
-
-		<%
 		}
 		%>
 
@@ -362,12 +305,6 @@ List<AssetRendererFactory<?>> classTypesAssetRendererFactories = new ArrayList()
 				structureOptions.removeClass('hide');
 
 				if ((selectedSubtype != 'false') && (selectedSubtype != 'true')) {
-					orderByColumn1.find('.order-by-subtype').remove();
-					orderByColumn2.find('.order-by-subtype').remove();
-
-					orderByColumn1.append(MAP_DDM_STRUCTURES['<%= className %>_' + selectedSubtype + '_optTextOrderByColumn1']);
-					orderByColumn2.append(MAP_DDM_STRUCTURES['<%= className %>_' + selectedSubtype + '_optTextOrderByColumn2']);
-
 					if (structureOptions.length) {
 						subtypeFieldsWrapper.removeClass('hide');
 					}
@@ -402,14 +339,14 @@ List<AssetRendererFactory<?>> classTypesAssetRendererFactories = new ArrayList()
 	}
 	%>
 
-	function <portlet:namespace />toggleSubclasses(removeOrderBySubtype) {
+	function <portlet:namespace />toggleSubclasses() {
 
 		<%
 		for (AssetRendererFactory<?> curRendererFactory : classTypesAssetRendererFactories) {
 			String className = editAssetListDisplayContext.getClassName(curRendererFactory);
 		%>
 
-			<portlet:namespace />toggle<%= className %>(removeOrderBySubtype);
+			<portlet:namespace />toggle<%= className %>();
 
 		<%
 		}
@@ -417,7 +354,7 @@ List<AssetRendererFactory<?>> classTypesAssetRendererFactories = new ArrayList()
 
 	}
 
-	<portlet:namespace />toggleSubclasses(false);
+	<portlet:namespace />toggleSubclasses();
 
 	assetSelector.on(
 		'change',
@@ -426,7 +363,7 @@ List<AssetRendererFactory<?>> classTypesAssetRendererFactories = new ArrayList()
 
 			$('#<portlet:namespace />ddmStructureFieldValue').val('');
 
-			<portlet:namespace />toggleSubclasses(true);
+			<portlet:namespace />toggleSubclasses();
 		}
 	);
 

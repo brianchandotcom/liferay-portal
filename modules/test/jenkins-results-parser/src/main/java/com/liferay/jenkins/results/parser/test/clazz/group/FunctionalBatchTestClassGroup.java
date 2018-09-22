@@ -63,10 +63,10 @@ public class FunctionalBatchTestClassGroup extends BatchTestClassGroup {
 			return;
 		}
 
-		List<File> modifiedModuleDirsList = null;
+		List<File> modifiedDirsList = null;
 
 		try {
-			modifiedModuleDirsList =
+			modifiedDirsList =
 				portalGitWorkingDirectory.getModifiedModuleDirsList();
 		}
 		catch (IOException ioe) {
@@ -82,16 +82,16 @@ public class FunctionalBatchTestClassGroup extends BatchTestClassGroup {
 
 		StringBuilder sb = new StringBuilder();
 
-		for (File modifiedModuleDir : modifiedModuleDirsList) {
-			File modifiedModuleTestProperties = new File(
-				modifiedModuleDir, "test.properties");
+		for (File modifiedDir : modifiedDirsList) {
+			File modifiedDirTestProperties = new File(
+				modifiedDir, "test.properties");
 
-			if (!modifiedModuleTestProperties.exists()) {
+			if (!modifiedDirTestProperties.exists()) {
 				continue;
 			}
 
 			Properties testProperties = JenkinsResultsParserUtil.getProperties(
-				modifiedModuleTestProperties);
+				modifiedDirTestProperties);
 
 			String testBatchRunPropertyQuery = null;
 

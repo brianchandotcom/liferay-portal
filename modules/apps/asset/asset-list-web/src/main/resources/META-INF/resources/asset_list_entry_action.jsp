@@ -29,25 +29,25 @@ AssetListEntry assetListEntry = (AssetListEntry)row.getObject();
 	message="<%= StringPool.BLANK %>"
 	showWhenSingleIcon="<%= true %>"
 >
-	<portlet:renderURL var="editAssetListEntryURL">
-		<portlet:param name="mvcPath" value="/edit_asset_list_entry.jsp" />
-		<portlet:param name="redirect" value="<%= currentURL %>" />
-		<portlet:param name="assetListEntryId" value="<%= String.valueOf(assetListEntry.getAssetListEntryId()) %>" />
-	</portlet:renderURL>
-
 	<c:if test="<%= AssetListEntryPermission.contains(permissionChecker, assetListEntry, ActionKeys.UPDATE) %>">
+		<portlet:renderURL var="editAssetListEntryURL">
+			<portlet:param name="mvcPath" value="/edit_asset_list_entry.jsp" />
+			<portlet:param name="redirect" value="<%= currentURL %>" />
+			<portlet:param name="assetListEntryId" value="<%= String.valueOf(assetListEntry.getAssetListEntryId()) %>" />
+		</portlet:renderURL>
+
 		<liferay-ui:icon
 			message="edit"
 			url="<%= editAssetListEntryURL %>"
 		/>
 	</c:if>
 
-	<portlet:actionURL name="/asset_list/delete_asset_list_entry" var="deleteAssetListEntryURL">
-		<portlet:param name="redirect" value="<%= currentURL %>" />
-		<portlet:param name="assetListEntryId" value="<%= String.valueOf(assetListEntry.getAssetListEntryId()) %>" />
-	</portlet:actionURL>
-
 	<c:if test="<%= AssetListEntryPermission.contains(permissionChecker, assetListEntry, ActionKeys.DELETE) %>">
+		<portlet:actionURL name="/asset_list/delete_asset_list_entry" var="deleteAssetListEntryURL">
+			<portlet:param name="redirect" value="<%= currentURL %>" />
+			<portlet:param name="assetListEntryId" value="<%= String.valueOf(assetListEntry.getAssetListEntryId()) %>" />
+		</portlet:actionURL>
+
 		<liferay-ui:icon-delete
 			url="<%= deleteAssetListEntryURL %>"
 		/>

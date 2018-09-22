@@ -32,7 +32,11 @@
 	sortingURL="<%= assetListDisplayContext.getSortingURL() %>"
 />
 
-<aui:form cssClass="container-fluid-1280" name="fm">
+<portlet:actionURL name="/asset_list/delete_asset_list_entry" var="deleteAssetListEntryURL">
+	<portlet:param name="redirect" value="<%= currentURL %>" />
+</portlet:actionURL>
+
+<aui:form action="<%= deleteAssetListEntryURL %>" cssClass="container-fluid-1280" name="fm">
 	<c:choose>
 		<c:when test="<%= assetListDisplayContext.getAssetListEntriesCount() > 0 %>">
 			<liferay-ui:search-container
@@ -102,7 +106,7 @@
 <aui:script>
 	var deleteSelectedAssetListEntries = function() {
 		if (confirm('<liferay-ui:message key="are-you-sure-you-want-to-delete-this" />')) {
-			submitForm(document.querySelector('#<portlet:namespace />fm'), '<portlet:actionURL name="/asset_list/delete_asset_list_entry"><portlet:param name="redirect" value="<%= currentURL %>" /></portlet:actionURL>');
+			submitForm(document.querySelector('#<portlet:namespace />fm'));
 		}
 	}
 

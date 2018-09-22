@@ -57,7 +57,6 @@
 
 					<liferay-ui:search-container-column-icon
 						icon="list"
-						toggleRowChecker="<%= false %>"
 					/>
 
 					<liferay-ui:search-container-column-text

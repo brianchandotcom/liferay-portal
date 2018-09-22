@@ -195,7 +195,7 @@ List<AssetRendererFactory<?>> classTypesAssetRendererFactories = new ArrayList()
 
 									<span class="asset-subtypefields hide" id="<portlet:namespace /><%= classType.getClassTypeId() %>_<%= className %>Options">
 										<portlet:renderURL var="selectStructureFieldURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-											<portlet:param name="mvcPath" value="/select_structure_field.jsp" />
+											<portlet:param name="mvcPath" value="/asset_list/select_structure_field.jsp" />
 											<portlet:param name="className" value="<%= assetRendererFactory.getClassName() %>" />
 											<portlet:param name="classTypeId" value="<%= String.valueOf(classType.getClassTypeId()) %>" />
 											<portlet:param name="eventName" value='<%= renderResponse.getNamespace() + "selectDDMStructureField" %>' />

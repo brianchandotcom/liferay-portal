@@ -14,7 +14,7 @@
 
 package com.liferay.portal.struts;
 
-import com.liferay.petra.string.StringPool;
+import java.io.InputStream;
 
 import java.util.Map;
 
@@ -32,7 +32,8 @@ import org.apache.struts.tiles.DefinitionsFactoryConfig;
 import org.apache.struts.tiles.DefinitionsFactoryException;
 import org.apache.struts.tiles.NoSuchDefinitionException;
 import org.apache.struts.tiles.TilesUtilImpl;
-import org.apache.struts.tiles.xmlDefinition.FactorySet;
+import org.apache.struts.tiles.xmlDefinition.XmlDefinitionsSet;
+import org.apache.struts.tiles.xmlDefinition.XmlParser;
 
 /**
  * @author Brian Wing Shun Chan
@@ -49,26 +50,36 @@ public class PortalTilesPlugin implements PlugIn {
 
 		ServletContext servletContext = servlet.getServletContext();
 
-		try {
+		XmlDefinitionsSet xmlDefinitionsSet = new XmlDefinitionsSet();
+
+		XmlParser xmlParser = new XmlParser();
+
+		xmlParser.setValidating(true);
+
+		try (InputStream inputStream = servletContext.getResourceAsStream(
+				_fileName)) {
+
+			xmlParser.parse(inputStream, xmlDefinitionsSet);
+
+			xmlDefinitionsSet.resolveInheritances();
+
 			servletContext.setAttribute(
 				TilesUtilImpl.DEFINITIONS_FACTORY,
-				new DefinitionsFactoryAdaptor(
-					new I18nFactorySet(servletContext, _properties)));
+				new DefinitionsFactoryAdaptor(xmlDefinitionsSet));
 		}
-		catch (DefinitionsFactoryException dfe) {
-			throw new ServletException(dfe);
+		catch (Exception e) {
+			throw new ServletException(e);
 		}
 	}
 
 	public void setCurrentPlugInConfigObject(PlugInConfig plugInConfig) {
-		_properties = plugInConfig.getProperties();
+		Map<String, String> properties = plugInConfig.getProperties();
 
-		_properties.put(
-			DefinitionsFactoryConfig.PARSER_VALIDATE_PARAMETER_NAME,
-			StringPool.TRUE);
+		_fileName = properties.get(
+			DefinitionsFactoryConfig.DEFINITIONS_CONFIG_PARAMETER_NAME);
 	}
 
-	private Map<String, String> _properties;
+	private String _fileName;
 
 	private static class DefinitionsFactoryAdaptor
 		implements DefinitionsFactory {
@@ -88,7 +99,7 @@ public class PortalTilesPlugin implements PlugIn {
 				ServletContext servletContext)
 			throws DefinitionsFactoryException, NoSuchDefinitionException {
 
-			return _factorySet.getDefinition(
+			return _definitionsFactory.getDefinition(
 				name, servletRequest, servletContext);
 		}
 
@@ -104,11 +115,16 @@ public class PortalTilesPlugin implements PlugIn {
 			ServletContext servletContext) {
 		}
 
-		private DefinitionsFactoryAdaptor(FactorySet factorySet) {
-			_factorySet = factorySet;
+		private DefinitionsFactoryAdaptor(XmlDefinitionsSet xmlDefinitionsSet)
+			throws NoSuchDefinitionException {
+
+			_definitionsFactory =
+				new org.apache.struts.tiles.xmlDefinition.DefinitionsFactory(
+					xmlDefinitionsSet);
 		}
 
-		private final FactorySet _factorySet;
+		private final org.apache.struts.tiles.xmlDefinition.DefinitionsFactory
+			_definitionsFactory;
 
 	}
 

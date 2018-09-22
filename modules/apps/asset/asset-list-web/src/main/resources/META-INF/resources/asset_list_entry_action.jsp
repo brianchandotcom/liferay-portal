@@ -42,6 +42,23 @@ AssetListEntry assetListEntry = (AssetListEntry)row.getObject();
 		/>
 	</c:if>
 
+	<c:if test="<%= AssetListEntryPermission.contains(permissionChecker, assetListEntry, ActionKeys.PERMISSIONS) %>">
+		<liferay-security:permissionsURL
+			modelResource="<%= AssetListEntry.class.getName() %>"
+			modelResourceDescription="<%= assetListEntry.getTitle() %>"
+			resourcePrimKey="<%= String.valueOf(assetListEntry.getAssetListEntryId()) %>"
+			var="assetListEntryPermissionsURL"
+			windowState="<%= LiferayWindowState.POP_UP.toString() %>"
+		/>
+
+		<liferay-ui:icon
+			message="permissions"
+			method="get"
+			url="<%= assetListEntryPermissionsURL %>"
+			useDialog="<%= true %>"
+		/>
+	</c:if>
+
 	<c:if test="<%= AssetListEntryPermission.contains(permissionChecker, assetListEntry, ActionKeys.DELETE) %>">
 		<portlet:actionURL name="/asset_list/delete_asset_list_entry" var="deleteAssetListEntryURL">
 			<portlet:param name="redirect" value="<%= currentURL %>" />

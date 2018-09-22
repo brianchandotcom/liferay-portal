@@ -59,17 +59,6 @@ AssetListEntry assetListEntry = (AssetListEntry)row.getObject();
 		/>
 	</c:if>
 
-	<c:if test="<%= AssetListEntryPermission.contains(permissionChecker, assetListEntry, ActionKeys.DELETE) %>">
-		<portlet:actionURL name="/asset_list/delete_asset_list_entry" var="deleteAssetListEntryURL">
-			<portlet:param name="redirect" value="<%= currentURL %>" />
-			<portlet:param name="assetListEntryId" value="<%= String.valueOf(assetListEntry.getAssetListEntryId()) %>" />
-		</portlet:actionURL>
-
-		<liferay-ui:icon-delete
-			url="<%= deleteAssetListEntryURL %>"
-		/>
-	</c:if>
-
 	<portlet:renderURL var="viewAssetListContentURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
 		<portlet:param name="mvcPath" value="/view_content.jsp" />
 		<portlet:param name="assetListEntryId" value="<%= String.valueOf(assetListEntry.getAssetListEntryId()) %>" />
@@ -80,4 +69,15 @@ AssetListEntry assetListEntry = (AssetListEntry)row.getObject();
 		url="<%= viewAssetListContentURL %>"
 		useDialog="<%= true %>"
 	/>
+
+	<c:if test="<%= AssetListEntryPermission.contains(permissionChecker, assetListEntry, ActionKeys.DELETE) %>">
+		<portlet:actionURL name="/asset_list/delete_asset_list_entry" var="deleteAssetListEntryURL">
+			<portlet:param name="redirect" value="<%= currentURL %>" />
+			<portlet:param name="assetListEntryId" value="<%= String.valueOf(assetListEntry.getAssetListEntryId()) %>" />
+		</portlet:actionURL>
+
+		<liferay-ui:icon-delete
+			url="<%= deleteAssetListEntryURL %>"
+		/>
+	</c:if>
 </liferay-ui:icon-menu>

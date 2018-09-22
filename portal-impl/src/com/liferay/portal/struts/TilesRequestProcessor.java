@@ -16,6 +16,8 @@ package com.liferay.portal.struts;
 
 import java.io.IOException;
 
+import java.util.Map;
+
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -27,9 +29,6 @@ import org.apache.struts.config.ForwardConfig;
 import org.apache.struts.config.ModuleConfig;
 import org.apache.struts.tiles.ComponentContext;
 import org.apache.struts.tiles.ComponentDefinition;
-import org.apache.struts.tiles.DefinitionsFactory;
-import org.apache.struts.tiles.DefinitionsFactoryException;
-import org.apache.struts.tiles.TilesUtilImpl;
 import org.apache.struts.tiles.taglib.ComponentConstants;
 
 /**
@@ -45,8 +44,8 @@ public class TilesRequestProcessor extends RequestProcessor {
 
 		ServletContext servletContext = getServletContext();
 
-		_definitionsFactory = (DefinitionsFactory)servletContext.getAttribute(
-			TilesUtilImpl.DEFINITIONS_FACTORY);
+		_componentDefinitions = (Map<String, ComponentDefinition>)
+			servletContext.getAttribute(PortalTilesPlugin.DEFINITIONS);
 	}
 
 	@Override
@@ -55,23 +54,17 @@ public class TilesRequestProcessor extends RequestProcessor {
 			HttpServletResponse response)
 		throws IOException, ServletException {
 
-		try {
-			ComponentDefinition componentDefinition =
-				_definitionsFactory.getDefinition(
-					uri, request, getServletContext());
+		ComponentDefinition componentDefinition = _componentDefinitions.get(
+			uri);
 
-			if (componentDefinition != null) {
-				ComponentContext componentContext = new ComponentContext(
-					componentDefinition.getAttributes());
+		if (componentDefinition != null) {
+			ComponentContext componentContext = new ComponentContext(
+				componentDefinition.getAttributes());
 
-				request.setAttribute(
-					ComponentConstants.COMPONENT_CONTEXT, componentContext);
+			request.setAttribute(
+				ComponentConstants.COMPONENT_CONTEXT, componentContext);
 
-				uri = componentDefinition.getPath();
-			}
-		}
-		catch (DefinitionsFactoryException dfe) {
-			throw new ServletException(dfe);
+			uri = componentDefinition.getPath();
 		}
 
 		doForward(uri, request, response);
@@ -90,6 +83,6 @@ public class TilesRequestProcessor extends RequestProcessor {
 		internalModuleRelativeForward(forward.getPath(), request, response);
 	}
 
-	private DefinitionsFactory _definitionsFactory;
+	private Map<String, ComponentDefinition> _componentDefinitions;
 
 }

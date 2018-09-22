@@ -20,18 +20,12 @@ import java.util.Map;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
-import javax.servlet.ServletRequest;
 
 import org.apache.struts.action.ActionServlet;
 import org.apache.struts.action.PlugIn;
 import org.apache.struts.config.ModuleConfig;
 import org.apache.struts.config.PlugInConfig;
-import org.apache.struts.tiles.ComponentDefinition;
-import org.apache.struts.tiles.DefinitionsFactory;
 import org.apache.struts.tiles.DefinitionsFactoryConfig;
-import org.apache.struts.tiles.DefinitionsFactoryException;
-import org.apache.struts.tiles.NoSuchDefinitionException;
-import org.apache.struts.tiles.TilesUtilImpl;
 import org.apache.struts.tiles.xmlDefinition.XmlDefinitionsSet;
 import org.apache.struts.tiles.xmlDefinition.XmlParser;
 
@@ -39,6 +33,9 @@ import org.apache.struts.tiles.xmlDefinition.XmlParser;
  * @author Brian Wing Shun Chan
  */
 public class PortalTilesPlugin implements PlugIn {
+
+	public static final String DEFINITIONS =
+		"org.apache.struts.tiles.definitions";
 
 	@Override
 	public void destroy() {
@@ -64,8 +61,7 @@ public class PortalTilesPlugin implements PlugIn {
 			xmlDefinitionsSet.resolveInheritances();
 
 			servletContext.setAttribute(
-				TilesUtilImpl.DEFINITIONS_FACTORY,
-				new DefinitionsFactoryAdaptor(xmlDefinitionsSet));
+				DEFINITIONS, xmlDefinitionsSet.getDefinitions());
 		}
 		catch (Exception e) {
 			throw new ServletException(e);
@@ -80,46 +76,5 @@ public class PortalTilesPlugin implements PlugIn {
 	}
 
 	private String _fileName;
-
-	private static class DefinitionsFactoryAdaptor
-		implements DefinitionsFactory {
-
-		@Override
-		public void destroy() {
-		}
-
-		@Override
-		public DefinitionsFactoryConfig getConfig() {
-			return null;
-		}
-
-		@Override
-		public ComponentDefinition getDefinition(
-				String name, ServletRequest servletRequest,
-				ServletContext servletContext)
-			throws DefinitionsFactoryException, NoSuchDefinitionException {
-
-			return _componentDefinitions.get(name);
-		}
-
-		@Override
-		public void init(
-			DefinitionsFactoryConfig definitionsFactoryConfig,
-			ServletContext servletContext) {
-		}
-
-		@Override
-		public void setConfig(
-			DefinitionsFactoryConfig definitionsFactoryConfig,
-			ServletContext servletContext) {
-		}
-
-		private DefinitionsFactoryAdaptor(XmlDefinitionsSet xmlDefinitionsSet) {
-			_componentDefinitions = xmlDefinitionsSet.getDefinitions();
-		}
-
-		private final Map<String, ComponentDefinition> _componentDefinitions;
-
-	}
 
 }

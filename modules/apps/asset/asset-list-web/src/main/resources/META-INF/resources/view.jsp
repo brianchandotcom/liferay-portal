@@ -48,11 +48,11 @@
 				>
 
 					<%
-					PortletURL editArticleURL = liferayPortletResponse.createRenderURL();
+					PortletURL editAssetListEntryURL = liferayPortletResponse.createRenderURL();
 
-					editArticleURL.setParameter("mvcPath", "/edit_asset_list_entry.jsp");
-					editArticleURL.setParameter("redirect", currentURL);
-					editArticleURL.setParameter("assetListEntryId", String.valueOf(assetListEntry.getAssetListEntryId()));
+                    editAssetListEntryURL.setParameter("mvcPath", "/edit_asset_list_entry.jsp");
+                    editAssetListEntryURL.setParameter("redirect", currentURL);
+                    editAssetListEntryURL.setParameter("assetListEntryId", String.valueOf(assetListEntry.getAssetListEntryId()));
 					%>
 
 					<liferay-ui:search-container-column-icon
@@ -64,7 +64,7 @@
 						colspan="<%= 2 %>"
 					>
 						<h5>
-							<aui:a href="<%= editArticleURL.toString() %>">
+							<aui:a href="<%= editAssetListEntryURL.toString() %>">
 								<%= HtmlUtil.escape(assetListEntry.getTitle()) %>
 							</aui:a>
 						</h5>

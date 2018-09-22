@@ -80,6 +80,9 @@ public class FunctionalBatchTestClassGroup extends BatchTestClassGroup {
 				ioe);
 		}
 
+		modifiedDirsList.addAll(
+			portalGitWorkingDirectory.getModifiedNonmoduleDirsList());
+
 		StringBuilder sb = new StringBuilder();
 
 		for (File modifiedDir : modifiedDirsList) {

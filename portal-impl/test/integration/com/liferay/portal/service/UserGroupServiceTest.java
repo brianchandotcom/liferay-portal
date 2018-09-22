@@ -14,10 +14,13 @@
 
 package com.liferay.portal.service;
 
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.model.UserGroup;
+import com.liferay.portal.kernel.service.UserGroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserGroupServiceUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserGroupTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -77,6 +80,48 @@ public class UserGroupServiceTest {
 
 			previousUserGroupId = userGroupId;
 		}
+	}
+
+	@Test
+	public void testGetUserGroupsLikeName() throws Exception {
+		String baseName = RandomTestUtil.randomString(10);
+		List<UserGroup> expectedUserGroups = new ArrayList<>();
+
+		for (int i = 0; i < 10; i++) {
+			String uniqueName = baseName + String.valueOf(i);
+
+			UserGroup userGroup = UserGroupTestUtil.addUserGroup();
+
+			userGroup.setName(uniqueName);
+
+			UserGroupLocalServiceUtil.updateUserGroup(userGroup);
+
+			expectedUserGroups.add(userGroup);
+		}
+
+		_userGroups.addAll(expectedUserGroups);
+		_userGroups.add(UserGroupTestUtil.addUserGroup());
+		_userGroups.add(UserGroupTestUtil.addUserGroup());
+		_userGroups.add(UserGroupTestUtil.addUserGroup());
+
+		String searchString = baseName + "%";
+
+		List<UserGroup> actualUserGroups = UserGroupServiceUtil.getUserGroups(
+			TestPropsValues.getCompanyId(), searchString, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS);
+
+		Assert.assertEquals(
+			actualUserGroups.toString(), expectedUserGroups.size(),
+			actualUserGroups.size());
+
+		Assert.assertTrue(
+			actualUserGroups.toString(),
+			actualUserGroups.containsAll(expectedUserGroups));
+
+		Assert.assertEquals(
+			expectedUserGroups.size(),
+			UserGroupServiceUtil.getUserGroupsCount(
+				TestPropsValues.getCompanyId(), searchString));
 	}
 
 	@DeleteAfterTestRun

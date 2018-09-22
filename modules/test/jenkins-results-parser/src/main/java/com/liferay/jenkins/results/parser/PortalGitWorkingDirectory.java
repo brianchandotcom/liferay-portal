@@ -15,6 +15,7 @@
 package com.liferay.jenkins.results.parser;
 
 import java.io.File;
+import java.io.FileFilter;
 import java.io.IOException;
 
 import java.nio.file.FileVisitResult;
@@ -25,6 +26,7 @@ import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -67,6 +69,40 @@ public class PortalGitWorkingDirectory extends GitWorkingDirectory {
 		}
 
 		return modifiedModuleDirsList;
+	}
+
+	public List<File> getModifiedNonmoduleDirsList() {
+		List<File> modifiedNonmoduleDirs = new ArrayList<>();
+
+		List<File> modifiedNonmoduleFiles = getModifiedFilesList(
+			"-v 'modules/'");
+
+		File workingDirectory = getWorkingDirectory();
+
+		List<File> nonmoduleDirList = Arrays.asList(
+			workingDirectory.listFiles(
+				new FileFilter() {
+
+					@Override
+					public boolean accept(File file) {
+						return file.isDirectory();
+					}
+
+				}));
+
+		for (File nonmoduleDir : nonmoduleDirList) {
+			for (File modifiedNonmoduleFile : modifiedNonmoduleFiles) {
+				if (JenkinsResultsParserUtil.isFileInDirectory(
+						nonmoduleDir, modifiedNonmoduleFile)) {
+
+					modifiedNonmoduleDirs.add(nonmoduleDir);
+
+					break;
+				}
+			}
+		}
+
+		return modifiedNonmoduleDirs;
 	}
 
 	public List<File> getModifiedNPMTestModuleDirsList() throws IOException {

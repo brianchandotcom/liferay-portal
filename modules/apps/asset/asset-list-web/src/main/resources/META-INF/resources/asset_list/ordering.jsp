@@ -33,29 +33,20 @@
 			>
 				<aui:row id="ordering">
 					<aui:col width="<%= 30 %>">
-
-						<%
-						String orderByColumn1 = editAssetListDisplayContext.getOrderByColumn1();
-						%>
-
-						<aui:select label="order-by" name="TypeSettingsProperties--orderByColumn1--" value="<%= orderByColumn1 %>" wrapperCssClass="field-inline w80">
-							<aui:option label="title" selected='<%= orderByColumn1.equals("title") %>' value="title" />
-							<aui:option label="create-date" selected='<%= orderByColumn1.equals("createDate") %>' value="createDate" />
-							<aui:option label="modified-date" selected='<%= orderByColumn1.equals("modifiedDate") %>' value="modifiedDate" />
-							<aui:option label="publish-date" selected='<%= orderByColumn1.equals("publishDate") %>' value="publishDate" />
-							<aui:option label="expiration-date" selected='<%= orderByColumn1.equals("expirationDate") %>' value="expirationDate" />
-							<aui:option label="priority" selected='<%= orderByColumn1.equals("priority") %>' value="priority" />
-							<aui:option label="view-count" selected='<%= orderByColumn1.equals("viewCount") %>' value="viewCount" />
-							<aui:option label="ratings" selected='<%= orderByColumn1.equals("ratings") %>' value="ratings" />
+						<aui:select label="order-by" name="TypeSettingsProperties--orderByColumn1--" wrapperCssClass="field-inline w80">
+							<aui:option label="title" selected='<%= Objects.equals(editAssetListDisplayContext.getOrderByColumn1(), "title") %>' value="title" />
+							<aui:option label="create-date" selected='<%= Objects.equals(editAssetListDisplayContext.getOrderByColumn1(), "createDate") %>' value="createDate" />
+							<aui:option label="modified-date" selected='<%= Objects.equals(editAssetListDisplayContext.getOrderByColumn1(), "modifiedDate") %>' value="modifiedDate" />
+							<aui:option label="publish-date" selected='<%= Objects.equals(editAssetListDisplayContext.getOrderByColumn1(), "publishDate") %>' value="publishDate" />
+							<aui:option label="expiration-date" selected='<%= Objects.equals(editAssetListDisplayContext.getOrderByColumn1(), "expirationDate") %>' value="expirationDate" />
+							<aui:option label="priority" selected='<%= Objects.equals(editAssetListDisplayContext.getOrderByColumn1(), "priority") %>' value="priority" />
+							<aui:option label="view-count" selected='<%= Objects.equals(editAssetListDisplayContext.getOrderByColumn1(), "viewCount") %>' value="viewCount" />
+							<aui:option label="ratings" selected='<%= Objects.equals(editAssetListDisplayContext.getOrderByColumn1(), "ratings") %>' value="ratings" />
 						</aui:select>
-
-						<%
-						String orderByType1 = editAssetListDisplayContext.getOrderByType1();
-						%>
 
 						<aui:field-wrapper cssClass="field-label-inline order-by-type-container">
 							<liferay-ui:icon
-								cssClass='<%= StringUtil.equalsIgnoreCase(orderByType1, "DESC") ? "hide icon" : "icon" %>'
+								cssClass='<%= StringUtil.equalsIgnoreCase(editAssetListDisplayContext.getOrderByType1(), "DESC") ? "hide icon" : "icon" %>'
 								icon="angle-up"
 								markupView="lexicon"
 								message="ascending"
@@ -63,41 +54,32 @@
 							/>
 
 							<liferay-ui:icon
-								cssClass='<%= StringUtil.equalsIgnoreCase(orderByType1, "ASC") ? "hide icon" : "icon" %>'
+								cssClass='<%= StringUtil.equalsIgnoreCase(editAssetListDisplayContext.getOrderByType1(), "ASC") ? "hide icon" : "icon" %>'
 								icon="angle-down"
 								markupView="lexicon"
 								message="descending"
 								url="javascript:;"
 							/>
 
-							<aui:input cssClass="order-by-type-field" name="TypeSettingsProperties--orderByType1--" type="hidden" value="<%= orderByType1 %>" />
+							<aui:input cssClass="order-by-type-field" name="TypeSettingsProperties--orderByType1--" type="hidden" value="<%= editAssetListDisplayContext.getOrderByType1() %>" />
 						</aui:field-wrapper>
 					</aui:col>
 
 					<aui:col width="<%= 30 %>">
-
-						<%
-						String orderByColumn2 = editAssetListDisplayContext.getOrderByColumn2();
-						%>
-
 						<aui:select label="and-then-by" name="TypeSettingsProperties--orderByColumn2--" wrapperCssClass="field-inline w80">
-							<aui:option label="title" selected='<%= orderByColumn2.equals("title") %>' value="title" />
-							<aui:option label="create-date" selected='<%= orderByColumn2.equals("createDate") %>' value="createDate" />
-							<aui:option label="modified-date" selected='<%= orderByColumn2.equals("modifiedDate") %>' value="modifiedDate" />
-							<aui:option label="publish-date" selected='<%= orderByColumn2.equals("publishDate") %>' value="publishDate" />
-							<aui:option label="expiration-date" selected='<%= orderByColumn2.equals("expirationDate") %>' value="expirationDate" />
-							<aui:option label="priority" selected='<%= orderByColumn2.equals("priority") %>' value="priority" />
-							<aui:option label="view-count" selected='<%= orderByColumn2.equals("viewCount") %>' value="viewCount" />
-							<aui:option label="ratings" selected='<%= orderByColumn2.equals("ratings") %>' value="ratings" />
+							<aui:option label="title" selected='<%= Objects.equals(editAssetListDisplayContext.getOrderByColumn2(), "title") %>' value="title" />
+							<aui:option label="create-date" selected='<%= Objects.equals(editAssetListDisplayContext.getOrderByColumn2(), "createDate") %>' value="createDate" />
+							<aui:option label="modified-date" selected='<%= Objects.equals(editAssetListDisplayContext.getOrderByColumn2(), "modifiedDate") %>' value="modifiedDate" />
+							<aui:option label="publish-date" selected='<%= Objects.equals(editAssetListDisplayContext.getOrderByColumn2(), "publishDate") %>' value="publishDate" />
+							<aui:option label="expiration-date" selected='<%= Objects.equals(editAssetListDisplayContext.getOrderByColumn2(), "expirationDate") %>' value="expirationDate" />
+							<aui:option label="priority" selected='<%= Objects.equals(editAssetListDisplayContext.getOrderByColumn2(), "priority") %>' value="priority" />
+							<aui:option label="view-count" selected='<%= Objects.equals(editAssetListDisplayContext.getOrderByColumn2(), "viewCount") %>' value="viewCount" />
+							<aui:option label="ratings" selected='<%= Objects.equals(editAssetListDisplayContext.getOrderByColumn2(), "ratings") %>' value="ratings" />
 						</aui:select>
-
-						<%
-						String orderByType2 = editAssetListDisplayContext.getOrderByType2();
-						%>
 
 						<aui:field-wrapper cssClass="field-label-inline order-by-type-container">
 							<liferay-ui:icon
-								cssClass='<%= StringUtil.equalsIgnoreCase(orderByType2, "DESC") ? "hide icon" : "icon" %>'
+								cssClass='<%= StringUtil.equalsIgnoreCase(editAssetListDisplayContext.getOrderByType2(), "DESC") ? "hide icon" : "icon" %>'
 								icon="angle-up"
 								markupView="lexicon"
 								message="ascending"
@@ -105,14 +87,14 @@
 							/>
 
 							<liferay-ui:icon
-								cssClass='<%= StringUtil.equalsIgnoreCase(orderByType2, "ASC") ? "hide icon" : "icon" %>'
+								cssClass='<%= StringUtil.equalsIgnoreCase(editAssetListDisplayContext.getOrderByType2(), "ASC") ? "hide icon" : "icon" %>'
 								icon="angle-down"
 								markupView="lexicon"
 								message="descending"
 								url="javascript:;"
 							/>
 
-							<aui:input cssClass="order-by-type-field" name="TypeSettingsProperties--orderByType2--" type="hidden" value="<%= orderByType2 %>" />
+							<aui:input cssClass="order-by-type-field" name="TypeSettingsProperties--orderByType2--" type="hidden" value="<%= editAssetListDisplayContext.getOrderByType2() %>" />
 						</aui:field-wrapper>
 					</aui:col>
 				</aui:row>

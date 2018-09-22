@@ -26,8 +26,6 @@
 	itemsTotal="<%= assetListDisplayContext.getAssetListEntryTotalItems() %>"
 	searchActionURL="<%= assetListDisplayContext.getAssetListEntrySearchActionURL() %>"
 	searchContainerId="assetListEntries"
-	searchFormName="searchFm"
-	showSearch="<%= true %>"
 	sortingOrder="<%= assetListDisplayContext.getOrderByType() %>"
 	sortingURL="<%= assetListDisplayContext.getSortingURL() %>"
 />

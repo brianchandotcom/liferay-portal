@@ -32,7 +32,7 @@
 				label="ordering"
 			>
 				<aui:row id="ordering">
-					<aui:col width="<%= 30 %>">
+					<aui:col width="<%= 50 %>">
 						<aui:select label="order-by" name="TypeSettingsProperties--orderByColumn1--" wrapperCssClass="field-inline w80">
 							<aui:option label="title" selected='<%= Objects.equals(editAssetListDisplayContext.getOrderByColumn1(), "title") %>' value="title" />
 							<aui:option label="create-date" selected='<%= Objects.equals(editAssetListDisplayContext.getOrderByColumn1(), "createDate") %>' value="createDate" />
@@ -65,7 +65,7 @@
 						</aui:field-wrapper>
 					</aui:col>
 
-					<aui:col width="<%= 30 %>">
+					<aui:col width="<%= 50 %>">
 						<aui:select label="and-then-by" name="TypeSettingsProperties--orderByColumn2--" wrapperCssClass="field-inline w80">
 							<aui:option label="title" selected='<%= Objects.equals(editAssetListDisplayContext.getOrderByColumn2(), "title") %>' value="title" />
 							<aui:option label="create-date" selected='<%= Objects.equals(editAssetListDisplayContext.getOrderByColumn2(), "createDate") %>' value="createDate" />

@@ -20,16 +20,12 @@ import com.liferay.portal.kernel.xml.SAXReaderUtil;
 
 import java.io.InputStream;
 
-import java.util.Map;
-
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 
 import org.apache.struts.action.ActionServlet;
 import org.apache.struts.action.PlugIn;
 import org.apache.struts.config.ModuleConfig;
-import org.apache.struts.config.PlugInConfig;
-import org.apache.struts.tiles.DefinitionsFactoryConfig;
 import org.apache.struts.tiles.xmlDefinition.XmlDefinition;
 import org.apache.struts.tiles.xmlDefinition.XmlDefinitionsSet;
 
@@ -54,7 +50,7 @@ public class PortalTilesPlugin implements PlugIn {
 		XmlDefinitionsSet xmlDefinitionsSet = new XmlDefinitionsSet();
 
 		try (InputStream inputStream = servletContext.getResourceAsStream(
-				_fileName)) {
+				"/WEB-INF/tiles-defs.xml")) {
 
 			Document document = SAXReaderUtil.read(inputStream, false);
 
@@ -88,14 +84,5 @@ public class PortalTilesPlugin implements PlugIn {
 			throw new ServletException(e);
 		}
 	}
-
-	public void setCurrentPlugInConfigObject(PlugInConfig plugInConfig) {
-		Map<String, String> properties = plugInConfig.getProperties();
-
-		_fileName = properties.get(
-			DefinitionsFactoryConfig.DEFINITIONS_CONFIG_PARAMETER_NAME);
-	}
-
-	private String _fileName;
 
 }

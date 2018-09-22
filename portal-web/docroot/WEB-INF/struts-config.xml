@@ -136,7 +136,5 @@
 
 	<!-- Tiles Plugin -->
 
-	<plug-in className="com.liferay.portal.struts.PortalTilesPlugin">
-		<set-property property="definitions-config" value="/WEB-INF/tiles-defs.xml" />
-	</plug-in>
+	<plug-in className="com.liferay.portal.struts.PortalTilesPlugin" />
 </struts-config>

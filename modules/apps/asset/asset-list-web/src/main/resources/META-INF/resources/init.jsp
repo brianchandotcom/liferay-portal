@@ -82,6 +82,7 @@ page import="java.util.Date" %><%@
 page import="java.util.HashMap" %><%@
 page import="java.util.List" %><%@
 page import="java.util.Map" %><%@
+page import="java.util.Objects" %><%@
 page import="java.util.Set" %>
 
 <%@ page import="javax.portlet.PortletMode" %><%@

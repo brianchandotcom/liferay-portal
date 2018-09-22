@@ -345,8 +345,8 @@
 			<var name="portlet" value="Navigation Menus" />
 		</execute>
 
-		<execute macro="LexiconEntry#gotoEntry">
-			<var name="rowEntry" value="Default" />
+		<execute macro="SiteNavigationMenu#addMenu">
+			<var name="menuName" value="Test Navigation Menu Name" />
 		</execute>
 
 		<execute macro="SiteNavigationMenu#addItem">
@@ -378,7 +378,7 @@
 		</execute>
 
 		<execute macro="SiteNavigationMenu#addMenu">
-			<var name="menuName" value="Primary Menu Name 1" />
+			<var name="menuName" value="Primary Menu Name" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoPortlet">
@@ -541,8 +541,25 @@
 			<var name="portlet" value="Navigation Menus" />
 		</execute>
 
+		<execute macro="SiteNavigationMenu#addMenu">
+			<var name="menuName" value="Test Navigation Menu Name" />
+		</execute>
+
+		<for list="1,2" param="index">
+			<execute macro="SiteNavigationMenu#addItem">
+				<var name="item" value="Page" />
+				<var name="pageName" value="Site Page Name ${index}" />
+			</execute>
+		</for>
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Build" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Navigation Menus" />
+		</execute>
+
 		<execute macro="LexiconEntry#gotoEntry">
-			<var name="rowEntry" value="Default" />
+			<var name="rowEntry" value="Test Navigation Menu Name" />
 		</execute>
 
 		<execute macro="SiteNavigationMenu#editItem">

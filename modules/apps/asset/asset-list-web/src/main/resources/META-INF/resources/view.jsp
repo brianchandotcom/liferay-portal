@@ -21,7 +21,7 @@
 	clearResultsURL="<%= assetListDisplayContext.getAssetListEntryClearResultsURL() %>"
 	componentId="assetListEntriesEntriesManagementToolbar"
 	creationMenu="<%= assetListDisplayContext.isShowAddAssetListEntryAction() ? assetListDisplayContext.getCreationMenu() : null %>"
-	disabled="<%= (assetListDisplayContext.getAssetListEntriesCount() > 0) ? false : true %>"
+	disabled="<%= assetListDisplayContext.getAssetListEntriesCount() <= 0 %>"
 	filterDropdownItems="<%= assetListDisplayContext.getAssetListEntryFilterItemsDropdownItems() %>"
 	itemsTotal="<%= assetListDisplayContext.getAssetListEntryTotalItems() %>"
 	searchActionURL="<%= assetListDisplayContext.getAssetListEntrySearchActionURL() %>"

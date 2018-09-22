@@ -21,6 +21,7 @@
 <%@ taglib uri="http://liferay.com/tld/asset" prefix="liferay-asset" %><%@
 taglib uri="http://liferay.com/tld/aui" prefix="aui" %><%@
 taglib uri="http://liferay.com/tld/clay" prefix="clay" %><%@
+taglib uri="http://liferay.com/tld/ddm" prefix="liferay-ddm" %><%@
 taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
 taglib uri="http://liferay.com/tld/portlet" prefix="liferay-portlet" %><%@
 taglib uri="http://liferay.com/tld/security" prefix="liferay-security" %><%@
@@ -48,6 +49,8 @@ page import="com.liferay.asset.list.web.internal.display.context.AssetListDispla
 page import="com.liferay.asset.list.web.internal.display.context.EditAssetListDisplayContext" %><%@
 page import="com.liferay.asset.list.web.internal.security.permission.resource.AssetListEntryPermission" %><%@
 page import="com.liferay.asset.publisher.constants.AssetPublisherPortletKeys" %><%@
+page import="com.liferay.dynamic.data.mapping.model.DDMStructure" %><%@
+page import="com.liferay.dynamic.data.mapping.storage.Field" %><%@
 page import="com.liferay.petra.string.StringPool" %><%@
 page import="com.liferay.portal.kernel.dao.search.SearchContainer" %><%@
 page import="com.liferay.portal.kernel.exception.NoSuchModelException" %><%@
@@ -76,6 +79,8 @@ page import="com.liferay.portal.kernel.util.Validator" %><%@
 page import="com.liferay.portal.kernel.util.WebKeys" %><%@
 page import="com.liferay.portal.kernel.workflow.WorkflowConstants" %><%@
 page import="com.liferay.taglib.search.ResultRow" %>
+
+<%@ page import="java.io.Serializable" %>
 
 <%@ page import="java.util.ArrayList" %><%@
 page import="java.util.Arrays" %><%@

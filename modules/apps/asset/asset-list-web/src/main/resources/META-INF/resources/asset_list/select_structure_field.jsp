@@ -84,7 +84,7 @@ portletURL.setParameter("classTypeId", String.valueOf(classTypeId));
 					<aui:input disabled="<%= true %>" name="buttonId" type="hidden" value='<%= renderResponse.getNamespace() + "applyButton" + name %>' />
 
 					<%
-					com.liferay.dynamic.data.mapping.storage.Field ddmField = new com.liferay.dynamic.data.mapping.storage.Field();
+					Field ddmField = new com.liferay.dynamic.data.mapping.storage.Field();
 
 					ddmField.setDefaultLocale(themeDisplay.getLocale());
 					ddmField.setDDMStructureId(ddmStructureId);

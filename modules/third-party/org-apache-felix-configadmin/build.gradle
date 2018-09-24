@@ -1,10 +1,6 @@
 task reJar(type: Jar)
 
 configurations {
-	archives.artifacts.removeAll {
-		it.archiveTask in [jarSources, zipJavadoc]
-	}
-
 	configAdmin
 }
 

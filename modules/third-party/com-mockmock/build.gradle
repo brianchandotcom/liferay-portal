@@ -18,12 +18,6 @@ compileJavaMvn {
 	workingDir = srcDir
 }
 
-configurations {
-	archives.artifacts.removeAll {
-		it.archiveTask in [jarSources, zipJavadoc]
-	}
-}
-
 downloadSrc {
 	from {
 		zipTree(FileUtil.get(project, mockMockSrcUrl))

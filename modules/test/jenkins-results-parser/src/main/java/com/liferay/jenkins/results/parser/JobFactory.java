@@ -97,6 +97,12 @@ public class JobFactory {
 			return _jobs.get(jobName);
 		}
 
+		if (jobName.equals("junit-test-csv-report")) {
+			_jobs.put(jobName, new PortalGitRepositoryJob(jobName));
+
+			return _jobs.get(jobName);
+		}
+
 		if (jobName.contains("test-plugins-acceptance-pullrequest(")) {
 			PluginsGitRepositoryJob pluginsGitRepositoryJob =
 				new PluginsGitRepositoryJob(jobName);

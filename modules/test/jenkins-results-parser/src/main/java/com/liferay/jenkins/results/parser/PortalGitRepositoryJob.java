@@ -22,7 +22,7 @@ import java.util.Set;
 /**
  * @author Michael Hashimoto
  */
-public abstract class PortalGitRepositoryJob
+public class PortalGitRepositoryJob
 	extends GitRepositoryJob implements PortalTestClassJob {
 
 	@Override

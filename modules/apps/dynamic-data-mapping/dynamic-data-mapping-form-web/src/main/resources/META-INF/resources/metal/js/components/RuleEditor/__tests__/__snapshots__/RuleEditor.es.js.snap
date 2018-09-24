@@ -77,6 +77,83 @@ exports[`Regression LPS-85642 Should hide second operand and value when operator
 </div>
 `;
 
+exports[`Regression LPS-85644 Should clear first operand when field is removed from pages 1`] = `
+<div class="form-builder-rule-builder">
+  <h2 class="form-builder-section-title text-default">rule</h2>
+  <h4 class="text-default">define-condition-and-action-to-change-fields-and-elements-on-the-form</h4>
+  <ul class="liferay-ddm-form-builder-rule-condition-list liferay-ddm-form-rule-builder-timeline timeline ">
+    <li class="timeline-item">
+      <div class="panel panel-default">
+        <div class="flex-container panel-body">
+          <div class="h4 panel-title">condition</div>
+          <div class="btn-group dropdown" style="">
+            <button class="btn btn-default dropdown-toggle dropdown-toggle-operator text-uppercase" data-toggle="dropdown" type="button" disabled="">
+              <span class="dropdown-toggle-selected-value">or</span>
+              <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu">
+              <li class="logic-operator text-uppercase" data-logical-operator-value="or">
+                <a href="#">or</a>
+              </li>
+              <li class="divider"></li>
+              <li class="logic-operator text-uppercase" data-logical-operator-value="and">
+                <a href="#">and</a>
+              </li>
+            </ul>
+          </div>
+          <div class="timeline-increment">
+            <span class="timeline-icon"></span>
+          </div>
+        </div>
+      </div>
+    </li>
+    <li class="form-builder-rule-condition-container timeline-item" condition-index="0">
+      <div class="panel panel-default">
+        <div class="flex-container panel-body">
+          <div class="form-group-autofit">
+            <div class="form-group-item form-group-item-label form-group-item-shrink">
+              <h4>
+                <span class="text-truncate-inline">
+                  <span class="text-truncate">if</span>
+                </span>
+              </h4>
+            </div>
+            <div class="condition-if form-group-item" condition-if-index="0">
+              <div id="fields-rule">
+                <p>Select Field</p>
+              </div>
+            </div>
+            <div class="condition-operator form-group-item" condition-operator-index="0">
+              <div id="fields-rule">
+                <p>Select Field</p>
+              </div>
+            </div>
+            <div class="condition-type form-group-item hide" condition-type-index="0">
+              <div id="fields-rule">
+                <p>Select Field</p>
+              </div>
+            </div>
+            <div class="condition-type-value form-group-item hide" condition-type-value-index="0">
+              <div id="fields-rule">
+                <p>Text Field</p>
+              </div>
+            </div>
+            <div class="condition-type-value-select form-group-item hide" condition-type-value-select-index="0">
+              <div id="fields-rule">
+                <p>Select Field</p>
+              </div>
+            </div>
+          </div>
+          <div class="timeline-increment">
+            <span class="timeline-icon"></span>
+          </div>
+        </div>
+      </div>
+    </li>
+  </ul>
+</div>
+`;
+
 exports[`RuleEditor should show all fields when fourth field is a select field 1`] = `
 <div class="form-builder-rule-builder">
   <h2 class="form-builder-section-title text-default">rule</h2>

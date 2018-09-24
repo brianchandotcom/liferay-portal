@@ -14,12 +14,13 @@
 
 package com.liferay.dynamic.data.mapping.form.evaluator.internal.functions;
 
-import com.liferay.dynamic.data.mapping.expression.DDMExpressionFactory;
-import com.liferay.dynamic.data.mapping.expression.DDMExpressionFunction;
+import com.liferay.dynamic.data.mapping.expression.DDMExpressionFunctionTracker;
 import com.liferay.dynamic.data.mapping.expression.internal.DDMExpressionFactoryImpl;
-import com.liferay.dynamic.data.mapping.form.evaluator.internal.DDMExpressionFunctionRegistry;
+
+import java.math.BigDecimal;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -33,90 +34,70 @@ import org.powermock.api.mockito.PowerMockito;
 @RunWith(MockitoJUnitRunner.class)
 public class AllFunctionTest extends PowerMockito {
 
-	@Test
-	public void testEvaluateFalse() throws Exception {
-		AllFunction allFunction = new AllFunction(
-			_ddmExpressionFactory, _ddmExpressionFunctionRegistry);
+	@Before
+	public void setUp() throws Exception {
+		_allFunction.ddmExpressionFactory = _ddmExpressionFactory;
 
-		Boolean result = (Boolean)allFunction.evaluate("#value# > 10");
+		field(
+			DDMExpressionFactoryImpl.class, "ddmExpressionFunctionTracker"
+		).set(
+			_ddmExpressionFactory, mock(DDMExpressionFunctionTracker.class)
+		);
+	}
+
+	@Test
+	public void testArrayFalse() throws Exception {
+		Boolean result = (Boolean)_allFunction.apply(
+			"#value# >= 1",
+			new BigDecimal[] {
+				new BigDecimal(0), new BigDecimal(2), new BigDecimal(3)
+			});
 
 		Assert.assertFalse(result);
 	}
 
 	@Test
-	public void testEvaluateFalse2() throws Exception {
-		AllFunction allFunction = new AllFunction(
-			_ddmExpressionFactory, _ddmExpressionFunctionRegistry);
-
-		Object parameters = new Integer[] {1, 2, 4};
-
-		Boolean result = (Boolean)allFunction.evaluate(
-			"invalid expression", parameters);
-
-		Assert.assertFalse(result);
-	}
-
-	@Test
-	public void testEvaluateFalse3() throws Exception {
-		AllFunction allFunction = new AllFunction(
-			_ddmExpressionFactory, _ddmExpressionFunctionRegistry);
-
-		Object parameters = new Integer[] {1, 2, 4};
-
-		Boolean result = (Boolean)allFunction.evaluate(
-			"#value# < 4", parameters);
-
-		Assert.assertFalse(result);
-	}
-
-	@Test
-	public void testEvaluateTrue() throws Exception {
-		_ddmExpressionFunctionRegistry.registerDDMExpressionFunction(
-			"eval", new EvalFunction());
-
-		AllFunction allFunction = new AllFunction(
-			_ddmExpressionFactory, _ddmExpressionFunctionRegistry);
-
-		Object parameters = new Double[] {1D, 2D, 4.5D};
-
-		Boolean result = (Boolean)allFunction.evaluate(
-			"eval(#value#, 1, 10)", parameters);
+	public void testArrayTrue() throws Exception {
+		Boolean result = (Boolean)_allFunction.apply(
+			"#value# >= 1",
+			new BigDecimal[] {
+				new BigDecimal(1), new BigDecimal(2), new BigDecimal(3)
+			});
 
 		Assert.assertTrue(result);
 	}
 
-	@Test(expected = IllegalArgumentException.class)
-	public void testIllegalArgument() throws Exception {
-		AllFunction allFunction = new AllFunction(
-			_ddmExpressionFactory, _ddmExpressionFunctionRegistry);
+	@Test
+	public void testEmptyArray() throws Exception {
+		Boolean result = (Boolean)_allFunction.apply(
+			"#value# >= 1", new BigDecimal[0]);
 
-		allFunction.evaluate();
+		Assert.assertFalse(result);
 	}
 
-	@Test(expected = IllegalArgumentException.class)
-	public void testIllegalArgument2() throws Exception {
-		AllFunction allFunction = new AllFunction(
-			_ddmExpressionFactory, _ddmExpressionFunctionRegistry);
+	@Test
+	public void testInvalidExpression1() throws Exception {
+		Boolean result = (Boolean)_allFunction.apply("#invalid# > 10", 11);
 
-		allFunction.evaluate(null);
+		Assert.assertFalse(result);
 	}
 
-	private final DDMExpressionFactory _ddmExpressionFactory =
+	@Test
+	public void testInvalidExpression2() throws Exception {
+		Boolean result = (Boolean)_allFunction.apply("#value# >>> 10", 11);
+
+		Assert.assertFalse(result);
+	}
+
+	@Test
+	public void testSingleValue() throws Exception {
+		Boolean result = (Boolean)_allFunction.apply("#value# >= 1", 2);
+
+		Assert.assertTrue(result);
+	}
+
+	private final AllFunction _allFunction = new AllFunction();
+	private final DDMExpressionFactoryImpl _ddmExpressionFactory =
 		new DDMExpressionFactoryImpl();
-	private final DDMExpressionFunctionRegistry _ddmExpressionFunctionRegistry =
-		new DDMExpressionFunctionRegistry();
-
-	private static class EvalFunction implements DDMExpressionFunction {
-
-		@Override
-		public Object evaluate(Object... parameters) {
-			Double parameter0 = (Double)parameters[0];
-			Double parameter1 = (Double)parameters[1];
-			Double parameter2 = (Double)parameters[2];
-
-			return parameter0 >= parameter1 && parameter0 <= parameter2;
-		}
-
-	}
 
 }

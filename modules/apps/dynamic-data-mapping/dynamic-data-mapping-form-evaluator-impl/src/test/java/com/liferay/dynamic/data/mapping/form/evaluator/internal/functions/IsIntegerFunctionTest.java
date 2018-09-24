@@ -23,25 +23,31 @@ import org.junit.Test;
 public class IsIntegerFunctionTest {
 
 	@Test
-	public void testEvaluateFalse() throws Exception {
+	public void testInteger() {
 		IsIntegerFunction isIntegerFunction = new IsIntegerFunction();
 
-		Assert.assertFalse((Boolean)isIntegerFunction.evaluate("simple text"));
-	}
+		Boolean result = isIntegerFunction.apply("12312545");
 
-	@Test(expected = IllegalArgumentException.class)
-	public void testEvaluateInvalid() throws Exception {
-		IsIntegerFunction isIntegerFunction = new IsIntegerFunction();
-
-		isIntegerFunction.evaluate("test", "test2");
+		Assert.assertTrue(result);
 	}
 
 	@Test
-	public void testEvaluateTrue() throws Exception {
+	public void testNotAInteger() {
 		IsIntegerFunction isIntegerFunction = new IsIntegerFunction();
 
-		Assert.assertTrue((Boolean)isIntegerFunction.evaluate("3"));
-		Assert.assertTrue((Boolean)isIntegerFunction.evaluate("-50"));
+		Boolean result = isIntegerFunction.apply("number");
+
+		Assert.assertFalse(result);
+	}
+
+	@Test
+	public void testOutbound() {
+		IsIntegerFunction isIntegerFunction = new IsIntegerFunction();
+
+		Boolean result = isIntegerFunction.apply(
+			"2312321243423432423424234233234324324242");
+
+		Assert.assertFalse(result);
 	}
 
 }

@@ -23,69 +23,35 @@ import org.junit.Test;
 public class IsEmailAddressFunctionTest {
 
 	@Test
-	public void testEvaluateFalse1() throws Exception {
+	public void testEmailList() {
 		IsEmailAddressFunction isEmailAddressFunction =
 			new IsEmailAddressFunction();
 
-		Assert.assertFalse(
-			(Boolean)isEmailAddressFunction.evaluate("simple text"));
+		Boolean result = isEmailAddressFunction.apply(
+			"test1@liferay.com, test2@liferay.com");
+
+		Assert.assertTrue(result);
 	}
 
 	@Test
-	public void testEvaluateFalse2() throws Exception {
+	public void testInvalidEmail() {
 		IsEmailAddressFunction isEmailAddressFunction =
 			new IsEmailAddressFunction();
 
-		Assert.assertFalse(
-			(Boolean)isEmailAddressFunction.evaluate(
-				"simple text1, simple text 2"));
+		Boolean result = isEmailAddressFunction.apply(
+			"test1@liferay.com, invalid email");
+
+		Assert.assertFalse(result);
 	}
 
 	@Test
-	public void testEvaluateFalse3() throws Exception {
+	public void testSingleEmail() {
 		IsEmailAddressFunction isEmailAddressFunction =
 			new IsEmailAddressFunction();
 
-		Assert.assertFalse(
-			(Boolean)isEmailAddressFunction.evaluate(
-				"simple text1, test@liferay.com"));
-	}
+		Boolean result = isEmailAddressFunction.apply("test@liferay.com");
 
-	@Test
-	public void testEvaluateFalse4() throws Exception {
-		IsEmailAddressFunction isEmailAddressFunction =
-			new IsEmailAddressFunction();
-
-		Assert.assertFalse(
-			(Boolean)isEmailAddressFunction.evaluate(
-				"test@liferay.com, simple text1"));
-	}
-
-	@Test(expected = IllegalArgumentException.class)
-	public void testEvaluateInvalid() throws Exception {
-		IsEmailAddressFunction isEmailAddressFunction =
-			new IsEmailAddressFunction();
-
-		isEmailAddressFunction.evaluate("test", "test2");
-	}
-
-	@Test
-	public void testEvaluateTrue1() throws Exception {
-		IsEmailAddressFunction isEmailAddressFunction =
-			new IsEmailAddressFunction();
-
-		Assert.assertTrue(
-			(Boolean)isEmailAddressFunction.evaluate("test@liferay.com"));
-	}
-
-	@Test
-	public void testEvaluateTrue2() throws Exception {
-		IsEmailAddressFunction isEmailAddressFunction =
-			new IsEmailAddressFunction();
-
-		Assert.assertTrue(
-			(Boolean)isEmailAddressFunction.evaluate(
-				"test@liferay.com, test@liferay.com"));
+		Assert.assertTrue(result);
 	}
 
 }

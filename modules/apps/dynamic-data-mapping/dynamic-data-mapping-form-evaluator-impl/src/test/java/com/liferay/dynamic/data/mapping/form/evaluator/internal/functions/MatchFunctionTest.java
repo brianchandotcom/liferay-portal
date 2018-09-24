@@ -23,48 +23,33 @@ import org.junit.Test;
 public class MatchFunctionTest {
 
 	@Test
-	public void testEvaluateFalse1() throws Exception {
+	public void testInvalidRegex() {
 		MatchFunction matchFunction = new MatchFunction();
 
-		Assert.assertEquals(false, matchFunction.evaluate("texto", "[0-9]+"));
+		Boolean result = matchFunction.apply(
+			"test@liferay", "\\\\S+[@\\S+\\.\\S+");
+
+		Assert.assertFalse(result);
 	}
 
 	@Test
-	public void testEvaluateFalse2() throws Exception {
+	public void testNotMatch() {
 		MatchFunction matchFunction = new MatchFunction();
 
-		Assert.assertEquals(false, matchFunction.evaluate("123", "[a-z]+"));
+		Boolean result = matchFunction.apply(
+			"test@liferay", "\\S+@\\S+\\.\\S+");
+
+		Assert.assertFalse(result);
 	}
 
 	@Test
-	public void testEvaluateFalse3() throws Exception {
+	public void testValidMatch() {
 		MatchFunction matchFunction = new MatchFunction();
 
-		Assert.assertEquals(false, matchFunction.evaluate("invalid*", "\\w+"));
-	}
+		Boolean result = matchFunction.apply(
+			"test@liferay.com", "\\S+@\\S+\\.\\S+");
 
-	@Test(expected = IllegalArgumentException.class)
-	public void testEvaluateInvalid() throws Exception {
-		MatchFunction matchFunction = new MatchFunction();
-
-		matchFunction.evaluate("value");
-	}
-
-	@Test
-	public void testEvaluateTrue1() throws Exception {
-		MatchFunction matchFunction = new MatchFunction();
-
-		Assert.assertEquals(
-			true, matchFunction.evaluate("Liferay123", "Liferay[0-9]{3}"));
-	}
-
-	@Test
-	public void testEvaluateTrue2() throws Exception {
-		MatchFunction matchFunction = new MatchFunction();
-
-		Assert.assertEquals(
-			true,
-			matchFunction.evaluate("admin@liferay.com", "\\w+@liferay.com"));
+		Assert.assertTrue(result);
 	}
 
 }

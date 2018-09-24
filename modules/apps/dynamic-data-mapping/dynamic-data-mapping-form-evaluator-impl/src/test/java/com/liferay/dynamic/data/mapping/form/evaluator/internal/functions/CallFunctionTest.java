@@ -14,167 +14,241 @@
 
 package com.liferay.dynamic.data.mapping.form.evaluator.internal.functions;
 
-import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormFieldEvaluationResult;
+import com.liferay.dynamic.data.mapping.expression.GetFieldPropertyRequest;
+import com.liferay.dynamic.data.mapping.expression.GetFieldPropertyResponse;
+import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormEvaluatorFieldContextKey;
+import com.liferay.dynamic.data.mapping.form.evaluator.internal.expression.DDMFormEvaluatorExpressionFieldAccessor;
+import com.liferay.dynamic.data.mapping.form.evaluator.internal.expression.DDMFormEvaluatorExpressionObserver;
+import com.liferay.dynamic.data.mapping.form.evaluator.internal.helper.DDMFormEvaluatorFormValuesHelper;
+import com.liferay.dynamic.data.mapping.model.DDMForm;
+import com.liferay.dynamic.data.mapping.model.UnlocalizedValue;
+import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
+import com.liferay.dynamic.data.mapping.test.util.DDMFormTestUtil;
+import com.liferay.dynamic.data.mapping.test.util.DDMFormValuesTestUtil;
 import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.util.KeyValuePair;
-import com.liferay.portal.util.PortalImpl;
 
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import org.mockito.Matchers;
+import org.mockito.invocation.InvocationOnMock;
 import org.mockito.runners.MockitoJUnitRunner;
+import org.mockito.stubbing.Answer;
+
+import org.powermock.api.mockito.PowerMockito;
 
 /**
  * @author Leonardo Barros
  */
 @RunWith(MockitoJUnitRunner.class)
-public class CallFunctionTest {
+public class CallFunctionTest extends PowerMockito {
+
+	@Before
+	public void setUp() {
+		setUpCallFunction();
+	}
 
 	@Test
 	public void testAutoSelectOption() {
-		Map<String, List<DDMFormFieldEvaluationResult>>
-			ddmFormFieldEvaluationResults = new HashMap<>();
+		DDMForm ddmForm = DDMFormTestUtil.createDDMForm("field0");
 
-		DDMFormFieldEvaluationResult ddmFormFieldEvaluationResult =
-			new DDMFormFieldEvaluationResult("field0", "1");
+		DDMFormValues ddmFormValues = DDMFormValuesTestUtil.createDDMFormValues(
+			ddmForm);
 
-		ddmFormFieldEvaluationResults.put(
-			"field0", Arrays.asList(ddmFormFieldEvaluationResult));
+		ddmFormValues.addDDMFormFieldValue(
+			DDMFormValuesTestUtil.createDDMFormFieldValue(
+				"1", "field0", new UnlocalizedValue("a")));
 
-		CallFunction callFunction = new CallFunction(
-			null, ddmFormFieldEvaluationResults, null, _jsonFactory,
-			new PortalImpl());
+		MockDDMExpressionObserver mockDDMExpressionObserver =
+			mockDDMExpressionObserver(ddmFormValues);
 
 		List<KeyValuePair> keyValuePairs = new ArrayList<>();
 
 		keyValuePairs.add(new KeyValuePair("key_1", "value_1"));
 
-		callFunction.setDDMFormFieldOptions("field0", keyValuePairs);
+		_callFunction.setDDMFormFieldOptions("field0", keyValuePairs);
 
 		JSONArray jsonArray = _jsonFactory.createJSONArray();
 
 		jsonArray.put("value_1");
 
-		Object value = ddmFormFieldEvaluationResult.getValue();
+		Object value = mockDDMExpressionObserver.getFieldPropertyValue(
+			"field0", "1", "value");
 
 		Assert.assertEquals(jsonArray.toString(), value.toString());
 	}
 
 	@Test
 	public void testGetFieldValueFromJSONArray() {
-		Map<String, List<DDMFormFieldEvaluationResult>>
-			ddmFormFieldEvaluationResults = new HashMap<>();
-
-		DDMFormFieldEvaluationResult ddmFormFieldEvaluationResult =
-			new DDMFormFieldEvaluationResult("field0", "1");
-
 		JSONArray jsonArray = _jsonFactory.createJSONArray();
 
 		jsonArray.put("test");
 
-		ddmFormFieldEvaluationResult.setValue(jsonArray);
-
-		ddmFormFieldEvaluationResults.put(
-			"field0", Arrays.asList(ddmFormFieldEvaluationResult));
-
-		CallFunction callFunction = new CallFunction(
-			null, ddmFormFieldEvaluationResults, null, _jsonFactory,
-			new PortalImpl());
+		mockDDMExpressionFieldAccessor(jsonArray);
 
 		Assert.assertEquals(
-			"test", callFunction.getDDMFormFieldValue("field0"));
+			"test", _callFunction.getDDMFormFieldValue("field0"));
 	}
 
 	@Test
 	public void testGetFieldValueFromString() {
-		Map<String, List<DDMFormFieldEvaluationResult>>
-			ddmFormFieldEvaluationResults = new HashMap<>();
-
-		DDMFormFieldEvaluationResult ddmFormFieldEvaluationResult =
-			new DDMFormFieldEvaluationResult("field0", "1");
-
-		ddmFormFieldEvaluationResult.setValue("test");
-
-		ddmFormFieldEvaluationResults.put(
-			"field0", Arrays.asList(ddmFormFieldEvaluationResult));
-
-		CallFunction callFunction = new CallFunction(
-			null, ddmFormFieldEvaluationResults, null, _jsonFactory,
-			new PortalImpl());
+		mockDDMExpressionFieldAccessor("test");
 
 		Assert.assertEquals(
-			"test", callFunction.getDDMFormFieldValue("field0"));
+			"test", _callFunction.getDDMFormFieldValue("field0"));
 	}
 
 	@Test
 	public void testNotAutoSelectOption() throws Exception {
-		Map<String, List<DDMFormFieldEvaluationResult>>
-			ddmFormFieldEvaluationResults = new HashMap<>();
+		DDMForm ddmForm = DDMFormTestUtil.createDDMForm("field0");
 
-		DDMFormFieldEvaluationResult ddmFormFieldEvaluationResult =
-			new DDMFormFieldEvaluationResult("field0", "1");
+		DDMFormValues ddmFormValues = DDMFormValuesTestUtil.createDDMFormValues(
+			ddmForm);
 
-		ddmFormFieldEvaluationResults.put(
-			"field0", Arrays.asList(ddmFormFieldEvaluationResult));
+		ddmFormValues.addDDMFormFieldValue(
+			DDMFormValuesTestUtil.createDDMFormFieldValue(
+				"1", "field0", new UnlocalizedValue("a")));
 
-		CallFunction callFunction = new CallFunction(
-			null, ddmFormFieldEvaluationResults, null, _jsonFactory,
-			new PortalImpl());
+		MockDDMExpressionObserver mockDDMExpressionObserver =
+			mockDDMExpressionObserver(ddmFormValues);
 
 		List<KeyValuePair> keyValuePairs = new ArrayList<>();
 
 		keyValuePairs.add(new KeyValuePair("key_1", "value_1"));
 		keyValuePairs.add(new KeyValuePair("key_2", "value_2"));
 
-		callFunction.setDDMFormFieldOptions("field0", keyValuePairs);
+		_callFunction.setDDMFormFieldOptions("field0", keyValuePairs);
 
-		Assert.assertNull(ddmFormFieldEvaluationResult.getValue());
+		Assert.assertNull(
+			mockDDMExpressionObserver.getFieldPropertyValue(
+				"field0", "1", "value"));
 	}
 
 	@Test
 	public void testSetDDMFormFieldOptionsRepeatableFields() {
-		Map<String, List<DDMFormFieldEvaluationResult>>
-			ddmFormFieldEvaluationResults = new HashMap<>();
+		DDMForm ddmForm = DDMFormTestUtil.createDDMForm("field0");
 
-		DDMFormFieldEvaluationResult ddmFormFieldEvaluationResult1 =
-			new DDMFormFieldEvaluationResult("field0", "1");
+		DDMFormValues ddmFormValues = DDMFormValuesTestUtil.createDDMFormValues(
+			ddmForm);
 
-		DDMFormFieldEvaluationResult ddmFormFieldEvaluationResult2 =
-			new DDMFormFieldEvaluationResult("field0", "2");
+		ddmFormValues.addDDMFormFieldValue(
+			DDMFormValuesTestUtil.createDDMFormFieldValue(
+				"1", "field0", new UnlocalizedValue("a")));
+		ddmFormValues.addDDMFormFieldValue(
+			DDMFormValuesTestUtil.createDDMFormFieldValue(
+				"2", "field0", new UnlocalizedValue("b")));
 
-		ddmFormFieldEvaluationResults.put(
-			"field0",
-			Arrays.asList(
-				ddmFormFieldEvaluationResult1, ddmFormFieldEvaluationResult2));
-
-		CallFunction callFunction = new CallFunction(
-			null, ddmFormFieldEvaluationResults, null, _jsonFactory,
-			new PortalImpl());
+		MockDDMExpressionObserver mockDDMExpressionObserver =
+			mockDDMExpressionObserver(ddmFormValues);
 
 		List<KeyValuePair> keyValuePairs = new ArrayList<>();
 
 		keyValuePairs.add(new KeyValuePair("key_1", "value_1"));
 		keyValuePairs.add(new KeyValuePair("key_2", "value_2"));
 
-		callFunction.setDDMFormFieldOptions("field0", keyValuePairs);
+		_callFunction.setDDMFormFieldOptions("field0", keyValuePairs);
 
 		Assert.assertEquals(
 			keyValuePairs,
-			ddmFormFieldEvaluationResult1.getProperty("options"));
+			mockDDMExpressionObserver.getFieldPropertyValue(
+				"field0", "1", "options"));
 		Assert.assertEquals(
 			keyValuePairs,
-			ddmFormFieldEvaluationResult2.getProperty("options"));
+			mockDDMExpressionObserver.getFieldPropertyValue(
+				"field0", "2", "options"));
 	}
 
+	public static class MockDDMExpressionObserver
+		extends DDMFormEvaluatorExpressionObserver {
+
+		public MockDDMExpressionObserver(DDMFormValues ddmFormValues) {
+			super(
+				new DDMFormEvaluatorFormValuesHelper(ddmFormValues),
+				_createFieldsPropertiesMap());
+		}
+
+		public Object getFieldPropertyValue(
+			String fieldName, String instanceId, String property) {
+
+			Map<String, Object> fieldProperties =
+				_fieldsPropertiesMap.getOrDefault(
+					new DDMFormEvaluatorFieldContextKey(fieldName, instanceId),
+					Collections.emptyMap());
+
+			return fieldProperties.get(property);
+		}
+
+		private static Map<DDMFormEvaluatorFieldContextKey, Map<String, Object>>
+			_createFieldsPropertiesMap() {
+
+			_fieldsPropertiesMap = new HashMap<>();
+
+			return _fieldsPropertiesMap;
+		}
+
+		private static Map<DDMFormEvaluatorFieldContextKey, Map<String, Object>>
+			_fieldsPropertiesMap;
+
+	}
+
+	protected void mockDDMExpressionFieldAccessor(Object... values) {
+		DDMFormEvaluatorExpressionFieldAccessor
+			ddmFormEvaluatorExpressionFieldAccessor = mock(
+				DDMFormEvaluatorExpressionFieldAccessor.class);
+
+		when(
+			ddmFormEvaluatorExpressionFieldAccessor.getFieldProperty(
+				Matchers.any(GetFieldPropertyRequest.class))
+		).then(
+			new Answer<GetFieldPropertyResponse>() {
+
+				@Override
+				public GetFieldPropertyResponse answer(
+						InvocationOnMock invocation)
+					throws Throwable {
+
+					GetFieldPropertyResponse.Builder builder =
+						GetFieldPropertyResponse.Builder.newBuilder(values);
+
+					return builder.build();
+				}
+
+			}
+		);
+
+		_callFunction.setDDMExpressionFieldAccessor(
+			ddmFormEvaluatorExpressionFieldAccessor);
+	}
+
+	protected MockDDMExpressionObserver mockDDMExpressionObserver(
+		DDMFormValues ddmFormValues) {
+
+		MockDDMExpressionObserver mockDDMExpressionObserver =
+			new MockDDMExpressionObserver(ddmFormValues);
+
+		_callFunction.setDDMExpressionObserver(mockDDMExpressionObserver);
+
+		return mockDDMExpressionObserver;
+	}
+
+	protected void setUpCallFunction() {
+		_callFunction = new CallFunction();
+
+		_callFunction.jsonFactory = _jsonFactory;
+	}
+
+	private CallFunction _callFunction;
 	private final JSONFactory _jsonFactory = new JSONFactoryImpl();
 
 }

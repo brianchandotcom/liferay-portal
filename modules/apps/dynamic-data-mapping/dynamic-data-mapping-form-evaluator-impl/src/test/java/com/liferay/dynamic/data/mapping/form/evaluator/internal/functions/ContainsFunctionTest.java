@@ -23,80 +23,39 @@ import org.junit.Test;
 public class ContainsFunctionTest {
 
 	@Test
-	public void testCaseInsensitiveComparison() throws Exception {
+	public void testApplyFalse() {
 		ContainsFunction containsFunction = new ContainsFunction();
 
-		Boolean result = (Boolean)containsFunction.evaluate(
-			"Some test", "Test");
+		Boolean result = containsFunction.apply("liferay", "forms");
+
+		Assert.assertFalse(result);
+	}
+
+	@Test
+	public void testApplyTrue() {
+		ContainsFunction containsFunction = new ContainsFunction();
+
+		Boolean result = containsFunction.apply("liferayFORMS", "forms");
 
 		Assert.assertTrue(result);
 	}
 
 	@Test
-	public void testEvaluateFalse1() throws Exception {
+	public void testApplyWithNull1() {
 		ContainsFunction containsFunction = new ContainsFunction();
 
-		Boolean result = (Boolean)containsFunction.evaluate(
-			"another text", "not contains");
+		Boolean result = containsFunction.apply(null, "forms");
 
 		Assert.assertFalse(result);
 	}
 
 	@Test
-	public void testEvaluateFalse2() throws Exception {
+	public void testApplyWithNull2() {
 		ContainsFunction containsFunction = new ContainsFunction();
 
-		Boolean result = (Boolean)containsFunction.evaluate(
-			null, "not contains");
+		Boolean result = containsFunction.apply("liferay", null);
 
 		Assert.assertFalse(result);
-	}
-
-	@Test
-	public void testEvaluateFalse3() throws Exception {
-		ContainsFunction containsFunction = new ContainsFunction();
-
-		Boolean result = (Boolean)containsFunction.evaluate(
-			"simple text", null);
-
-		Assert.assertFalse(result);
-	}
-
-	@Test
-	public void testEvaluateFalse4() throws Exception {
-		ContainsFunction containsFunction = new ContainsFunction();
-
-		Boolean result = (Boolean)containsFunction.evaluate(
-			"text", "simple text");
-
-		Assert.assertFalse(result);
-	}
-
-	@Test(expected = IllegalArgumentException.class)
-	public void testEvaluateInvalid() throws Exception {
-		ContainsFunction containsFunction = new ContainsFunction();
-
-		containsFunction.evaluate("test");
-	}
-
-	@Test
-	public void testEvaluateTrue1() throws Exception {
-		ContainsFunction containsFunction = new ContainsFunction();
-
-		Boolean result = (Boolean)containsFunction.evaluate(
-			"another text", "another");
-
-		Assert.assertTrue(result);
-	}
-
-	@Test
-	public void testEvaluateTrue2() throws Exception {
-		ContainsFunction containsFunction = new ContainsFunction();
-
-		Boolean result = (Boolean)containsFunction.evaluate(
-			"not contains 2", 2);
-
-		Assert.assertTrue(result);
 	}
 
 }

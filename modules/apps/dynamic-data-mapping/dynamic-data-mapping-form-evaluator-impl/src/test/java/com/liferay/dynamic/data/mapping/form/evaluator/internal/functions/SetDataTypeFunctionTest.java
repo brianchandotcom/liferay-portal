@@ -20,34 +20,13 @@ import org.junit.Test;
 /**
  * @author Leonardo Barros
  */
-public class IsEmptyFunctionTest {
+public class SetDataTypeFunctionTest {
 
 	@Test
-	public void testArray() {
-		IsEmptyFunction isEmptyFunction = new IsEmptyFunction();
+	public void testGetPropertyName() {
+		SetDataTypeFunction setDataTypeFunction = new SetDataTypeFunction();
 
-		Boolean result = isEmptyFunction.apply(
-			new String[] {"  ", "not empty "});
-
-		Assert.assertFalse(result);
-	}
-
-	@Test
-	public void testEmptyParameter() {
-		IsEmptyFunction isEmptyFunction = new IsEmptyFunction();
-
-		Boolean result = isEmptyFunction.apply(" ");
-
-		Assert.assertTrue(result);
-	}
-
-	@Test
-	public void testNullParameter() {
-		IsEmptyFunction isEmptyFunction = new IsEmptyFunction();
-
-		Boolean result = isEmptyFunction.apply(null);
-
-		Assert.assertTrue(result);
+		Assert.assertEquals("dataType", setDataTypeFunction.getPropertyName());
 	}
 
 }

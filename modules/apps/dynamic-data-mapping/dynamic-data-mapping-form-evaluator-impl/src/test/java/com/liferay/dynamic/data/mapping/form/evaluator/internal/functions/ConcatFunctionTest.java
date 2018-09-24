@@ -23,32 +23,42 @@ import org.junit.Test;
 public class ConcatFunctionTest {
 
 	@Test
-	public void testConcatConstants() throws Exception {
+	public void testApply1() {
 		ConcatFunction concatFunction = new ConcatFunction();
 
-		Assert.assertEquals(
-			"hello world!", concatFunction.evaluate("hello ", "world", "!"));
+		String actualString = concatFunction.apply(
+			new String[] {"liferay", "forms"});
+
+		Assert.assertEquals("liferayforms", actualString);
 	}
 
 	@Test
-	public void testConcatNull() throws Exception {
+	public void testApply2() {
 		ConcatFunction concatFunction = new ConcatFunction();
 
-		Assert.assertEquals("test", concatFunction.evaluate("test", null));
+		String actualString = concatFunction.apply(
+			new String[] {"liferay", null, "forms"});
+
+		Assert.assertEquals("liferayforms", actualString);
 	}
 
 	@Test
-	public void testConcatNullWithConstant() throws Exception {
+	public void testApply3() {
 		ConcatFunction concatFunction = new ConcatFunction();
 
-		Assert.assertEquals("test", concatFunction.evaluate(null, "test"));
+		String actualString = concatFunction.apply(
+			new String[] {"liferay", null});
+
+		Assert.assertEquals("liferay", actualString);
 	}
 
-	@Test(expected = IllegalArgumentException.class)
-	public void testInvalidNumberOfParameters() throws Exception {
+	@Test
+	public void testApply4() {
 		ConcatFunction concatFunction = new ConcatFunction();
 
-		concatFunction.evaluate("invalid");
+		String actualString = concatFunction.apply(new String[] {null, null});
+
+		Assert.assertEquals("", actualString);
 	}
 
 }

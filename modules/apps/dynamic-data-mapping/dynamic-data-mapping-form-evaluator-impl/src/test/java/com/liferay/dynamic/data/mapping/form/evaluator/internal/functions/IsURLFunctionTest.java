@@ -23,25 +23,30 @@ import org.junit.Test;
 public class IsURLFunctionTest {
 
 	@Test
-	public void testEvaluateFalse() throws Exception {
+	public void testInvalidURL() {
 		IsURLFunction isURLFunction = new IsURLFunction();
 
-		Assert.assertFalse((Boolean)isURLFunction.evaluate("simple text"));
-	}
+		Boolean result = isURLFunction.apply("invalid URL");
 
-	@Test(expected = IllegalArgumentException.class)
-	public void testEvaluateInvalid() throws Exception {
-		IsURLFunction isURLFunction = new IsURLFunction();
-
-		isURLFunction.evaluate("test", "test2");
+		Assert.assertFalse(result);
 	}
 
 	@Test
-	public void testEvaluateTrue() throws Exception {
+	public void testNullParameter() {
 		IsURLFunction isURLFunction = new IsURLFunction();
 
-		Assert.assertTrue(
-			(Boolean)isURLFunction.evaluate("http://www.liferay.com"));
+		Boolean result = isURLFunction.apply(null);
+
+		Assert.assertFalse(result);
+	}
+
+	@Test
+	public void testValidURL() {
+		IsURLFunction isURLFunction = new IsURLFunction();
+
+		Boolean result = isURLFunction.apply("http://www.liferay.com");
+
+		Assert.assertTrue(result);
 	}
 
 }

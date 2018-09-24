@@ -14,7 +14,7 @@
 
 package com.liferay.dynamic.data.mapping.form.evaluator.internal.functions;
 
-import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormFieldEvaluationResult;
+import com.liferay.dynamic.data.mapping.expression.UpdateFieldPropertyRequest;
 import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
@@ -22,10 +22,10 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.KeyValuePair;
-import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import org.junit.Assert;
@@ -33,71 +33,148 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import org.mockito.ArgumentCaptor;
+import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.mockito.runners.MockitoJUnitRunner;
 
-import org.powermock.modules.junit4.PowerMockRunner;
+import org.powermock.api.mockito.PowerMockito;
+import org.powermock.core.classloader.annotations.PrepareForTest;
 
 /**
  * @author Leonardo Barros
  */
-@RunWith(PowerMockRunner.class)
-public class SetOptionsFunctionTest extends BaseDDMFormRuleFunctionTestCase {
+@PrepareForTest(LanguageUtil.class)
+@RunWith(MockitoJUnitRunner.class)
+public class SetOptionsFunctionTest extends PowerMockito {
 
 	@Before
 	public void setUp() throws Exception {
-		setUpLanguageUtil();
+		_setOptionsFunction = new SetOptionsFunction();
+
+		_setOptionsFunction.jsonFactory = _jsonFactory;
+
+		_setUpLanguageUtil();
 	}
 
 	@Test
-	public void testEvaluate() {
-		JSONArray jsonArray = _jsonFactory.createJSONArray();
-
-		jsonArray.put(createJSONObject("value a", "label a"));
-		jsonArray.put(createJSONObject("value b", "label b"));
+	public void testApply() {
+		when(
+			_language.getLanguageId(new Locale("pt", "BR"))
+		).thenReturn(
+			"pt_BR"
+		);
 
 		JSONObject jsonObject = _jsonFactory.createJSONObject();
 
-		jsonObject.put(LanguageUtil.getLanguageId(LocaleUtil.US), jsonArray);
+		JSONArray jsonArray = _jsonFactory.createJSONArray();
 
-		DDMFormFieldEvaluationResult ddmFormFieldEvaluationResult =
-			new DDMFormFieldEvaluationResult(
-				"Field_1", StringUtil.randomString());
+		jsonArray.put(_createJSONObject("label1", "value1"));
+		jsonArray.put(_createJSONObject("label2", "value2"));
+		jsonArray.put(_createJSONObject("label3", "value3"));
 
-		Map<String, List<DDMFormFieldEvaluationResult>>
-			ddmFormFieldEvaluationResultsMap =
-				createDDMFormFieldEvaluationResultsMap(
-					ddmFormFieldEvaluationResult);
+		jsonObject.put("pt_BR", jsonArray);
 
-		SetOptionsFunction setOptionsFunction = new SetOptionsFunction(
-			ddmFormFieldEvaluationResultsMap, LocaleUtil.US, _jsonFactory);
+		String json = jsonObject.toJSONString();
 
-		setOptionsFunction.evaluate("Field_1", jsonObject.toJSONString());
+		DefaultDDMExpressionObserver defaultDDMExpressionObserver =
+			new DefaultDDMExpressionObserver();
 
-		List<KeyValuePair> keyValuePairs =
-			ddmFormFieldEvaluationResult.getProperty("options");
+		DefaultDDMExpressionObserver spy = spy(defaultDDMExpressionObserver);
 
-		Assert.assertEquals(keyValuePairs.toString(), 2, keyValuePairs.size());
+		_setOptionsFunction.setDDMExpressionObserver(spy);
 
-		KeyValuePair keyValuePair1 = keyValuePairs.get(0);
+		_setOptionsFunction.setDDMExpressionParameterAccessor(
+			new DefaultDDMExpressionParameterAccessor());
 
-		Assert.assertEquals("label a", keyValuePair1.getKey());
-		Assert.assertEquals("value a", keyValuePair1.getValue());
+		Boolean result = _setOptionsFunction.apply("optionList", json);
 
-		KeyValuePair keyValuePair2 = keyValuePairs.get(1);
+		ArgumentCaptor<UpdateFieldPropertyRequest> argumentCaptor =
+			ArgumentCaptor.forClass(UpdateFieldPropertyRequest.class);
 
-		Assert.assertEquals("label b", keyValuePair2.getKey());
-		Assert.assertEquals("value b", keyValuePair2.getValue());
+		Mockito.verify(
+			spy, Mockito.times(1)
+		).updateFieldProperty(
+			argumentCaptor.capture()
+		);
+
+		UpdateFieldPropertyRequest updateFieldPropertyRequest =
+			argumentCaptor.getValue();
+
+		Assert.assertEquals(
+			"optionList", updateFieldPropertyRequest.getField());
+
+		Map<String, Object> properties =
+			updateFieldPropertyRequest.getProperties();
+
+		Assert.assertTrue(properties.containsKey("options"));
+
+		List<KeyValuePair> keyValuePairs = new ArrayList() {
+			{
+				add(new KeyValuePair("value1", "label1"));
+				add(new KeyValuePair("value2", "label2"));
+				add(new KeyValuePair("value3", "label3"));
+			}
+		};
+
+		Assert.assertEquals(keyValuePairs, properties.get("options"));
+
+		Assert.assertTrue(result);
 	}
 
-	@Test(expected = IllegalArgumentException.class)
-	public void testIllegalArgument() throws Exception {
-		SetOptionsFunction setOptionsFunction = new SetOptionsFunction(
-			null, LocaleUtil.US, _jsonFactory);
+	@Test
+	public void testInvalidJSON() {
+		when(
+			_language.getLanguageId(new Locale("pt", "BR"))
+		).thenReturn(
+			"pt_BR"
+		);
 
-		setOptionsFunction.evaluate("param1");
+		DefaultDDMExpressionObserver defaultDDMExpressionObserver =
+			new DefaultDDMExpressionObserver();
+
+		DefaultDDMExpressionObserver spy = spy(defaultDDMExpressionObserver);
+
+		_setOptionsFunction.setDDMExpressionObserver(spy);
+
+		_setOptionsFunction.setDDMExpressionParameterAccessor(
+			new DefaultDDMExpressionParameterAccessor());
+
+		Boolean result = _setOptionsFunction.apply("optionList", "INVALID");
+
+		ArgumentCaptor<UpdateFieldPropertyRequest> argumentCaptor =
+			ArgumentCaptor.forClass(UpdateFieldPropertyRequest.class);
+
+		Mockito.verify(
+			spy, Mockito.times(1)
+		).updateFieldProperty(
+			argumentCaptor.capture()
+		);
+
+		UpdateFieldPropertyRequest updateFieldPropertyRequest =
+			argumentCaptor.getValue();
+
+		Assert.assertEquals(
+			"optionList", updateFieldPropertyRequest.getField());
+
+		Map<String, Object> properties =
+			updateFieldPropertyRequest.getProperties();
+
+		Assert.assertTrue(properties.containsKey("options"));
+
+		List<KeyValuePair> keyValuePairs = new ArrayList<>();
+
+		Assert.assertEquals(keyValuePairs, properties.get("options"));
+
+		Assert.assertTrue(result);
 	}
 
-	protected JSONObject createJSONObject(String label, String value) {
+	@Test
+	public void testNullObserver() {
+		Assert.assertFalse(_setOptionsFunction.apply("field", "json"));
+	}
+
+	private JSONObject _createJSONObject(String label, String value) {
 		JSONObject jsonObject = _jsonFactory.createJSONObject();
 
 		jsonObject.put("label", label);
@@ -106,21 +183,17 @@ public class SetOptionsFunctionTest extends BaseDDMFormRuleFunctionTestCase {
 		return jsonObject;
 	}
 
-	protected void setUpLanguageUtil() {
+	private void _setUpLanguageUtil() {
 		LanguageUtil languageUtil = new LanguageUtil();
-
-		_language = Mockito.mock(Language.class);
-
-		Mockito.when(
-			_language.getLanguageId(LocaleUtil.US)
-		).thenReturn(
-			"en_US"
-		);
 
 		languageUtil.setLanguage(_language);
 	}
 
-	private final JSONFactory _jsonFactory = new JSONFactoryImpl();
+	private static final JSONFactory _jsonFactory = new JSONFactoryImpl();
+
+	@Mock
 	private Language _language;
+
+	private SetOptionsFunction _setOptionsFunction;
 
 }

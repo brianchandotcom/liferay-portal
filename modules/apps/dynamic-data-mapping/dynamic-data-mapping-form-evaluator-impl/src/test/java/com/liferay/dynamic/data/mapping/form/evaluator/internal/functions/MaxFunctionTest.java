@@ -14,6 +14,8 @@
 
 package com.liferay.dynamic.data.mapping.form.evaluator.internal.functions;
 
+import java.math.BigDecimal;
+
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -23,38 +25,24 @@ import org.junit.Test;
 public class MaxFunctionTest {
 
 	@Test
-	public void testEvaluateMax1() throws Exception {
+	public void testEmptyArray() {
 		MaxFunction maxFunction = new MaxFunction();
 
-		Assert.assertEquals(6.0, maxFunction.evaluate(3, 2, 5, 6));
+		BigDecimal result = maxFunction.apply(new BigDecimal[0]);
+
+		Assert.assertEquals(BigDecimal.ZERO, result);
 	}
 
 	@Test
-	public void testEvaluateMax2() throws Exception {
+	public void testMax() {
 		MaxFunction maxFunction = new MaxFunction();
 
-		Assert.assertEquals(4.0, maxFunction.evaluate(4, 3, 2, 1));
-	}
+		BigDecimal result = maxFunction.apply(new BigDecimal[] {
+			new BigDecimal(1), new BigDecimal(10), new BigDecimal(3),
+			new BigDecimal(19), new BigDecimal(17)
+		});
 
-	@Test
-	public void testEvaluateMax3() throws Exception {
-		MaxFunction maxFunction = new MaxFunction();
-
-		Assert.assertEquals(8.0, maxFunction.evaluate(5, 6, 7, 8));
-	}
-
-	@Test(expected = IllegalArgumentException.class)
-	public void testInvalidNumber() throws Exception {
-		MaxFunction maxFunction = new MaxFunction();
-
-		maxFunction.evaluate(1, "invalid", 3);
-	}
-
-	@Test(expected = IllegalArgumentException.class)
-	public void testInvalidNumberOfParameters() throws Exception {
-		MaxFunction maxFunction = new MaxFunction();
-
-		maxFunction.evaluate(1);
+		Assert.assertEquals(new BigDecimal(19), result);
 	}
 
 }

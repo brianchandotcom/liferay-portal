@@ -14,6 +14,7 @@
 
 package com.liferay.dynamic.data.mapping.validator.internal;
 
+import com.liferay.dynamic.data.mapping.expression.DDMExpressionFunctionTracker;
 import com.liferay.dynamic.data.mapping.expression.internal.DDMExpressionFactoryImpl;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesTracker;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
@@ -762,8 +763,17 @@ public class DDMFormValuesValidatorTest extends PowerMockito {
 	}
 
 	protected void setUpDDMFormValuesValidator() throws Exception {
+		DDMExpressionFactoryImpl ddmExpressionFactoryImpl =
+			new DDMExpressionFactoryImpl();
+
+		field(
+			DDMExpressionFactoryImpl.class, "ddmExpressionFunctionTracker"
+		).set(
+			ddmExpressionFactoryImpl, mock(DDMExpressionFunctionTracker.class)
+		);
+
 		_ddmFormValuesValidatorImpl.setDDMExpressionFactory(
-			new DDMExpressionFactoryImpl());
+			ddmExpressionFactoryImpl);
 
 		_ddmFormValuesValidatorImpl.setJSONFactory(new JSONFactoryImpl());
 

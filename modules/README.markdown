@@ -88,6 +88,12 @@ File Name | Description
 `.lfrbuild-slim-public` | Deploys the module during the `ant all` execution if building a Liferay Slim Runtime in a public branch.
 `.lfrbuild-slim` | Deploys the module during the `ant all` execution if building a Liferay Slim Runtime.
 
+### Baseline
+
+File Name | Description
+--------- | -----------
+`.lfrbuild-packageinfo` | Ignores specified baseline warnings: `EXCESSIVE-VERSION-INCREASE`, `PACKAGE-REMOVED`, `VERSION-INCREASE-REQUIRED`, `VERSION-INCREASE-SUGGESTED`.
+
 ### Continuous Integration
 
 File Name | Description

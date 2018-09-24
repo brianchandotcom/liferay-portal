@@ -3,7 +3,27 @@
 <project basedir="." name="portal-test-db-upgrade-client" xmlns:antelope="antlib:ise.antelope.tasks">
 	<import file="build-test.xml" />
 
+	<macrodef name="clean-database-upgrade-client">
+		<sequential>
+			<stop-one-java-process process.name="LocalProcess" />
+			<stop-one-java-process process.name="DBUpgrader" />
+
+			<delete file="${db.upgrade.client.log}" />
+		</sequential>
+	</macrodef>
+
+	<macrodef name="get-database-upgrade-client-paths">
+		<sequential>
+			<property name="db.upgrade.client.home" value="${liferay.home}/tools/portal-tools-db-upgrade-client" />
+
+			<property name="db.upgrade.client.jar" value="${db.upgrade.client.home}/com.liferay.portal.tools.db.upgrade.client.jar" />
+			<property name="db.upgrade.client.log" value="${db.upgrade.client.home}/upgrade.log" />
+		</sequential>
+	</macrodef>
+
 	<target name="check-upgrade-client-additional-settings">
+		<get-database-upgrade-client-paths />
+
 		<parallel failonany="true">
 			<java
 				dir="${db.upgrade.client.home}"
@@ -31,9 +51,6 @@
 					<contains string="${jinfo.output}" substring="MaxHeapSize=4294967296" />
 					<then>
 						<echo message="Java memory was successfully set to 4GB during the upgrade process." />
-
-						<stop-one-java-process process.name="DBUpgrader" />
-						<stop-one-java-process process.name="LocalProcess" />
 					</then>
 					<else>
 						<fail message="Could not verify that Java memory was set to 4GB" />
@@ -41,9 +58,13 @@
 				</if>
 			</sequential>
 		</parallel>
+
+		<clean-database-upgrade-client />
 	</target>
 
 	<target name="check-upgrade-client-custom-log">
+		<get-database-upgrade-client-paths />
+
 		<java
 			dir="${db.upgrade.client.home}"
 			failonerror="true"
@@ -83,9 +104,13 @@
 		<echo message="The upgrade client custom log file was created successfully." />
 
 		<delete file="${db.upgrade.client.home}/log_file.txt" />
+
+		<clean-database-upgrade-client />
 	</target>
 
 	<target name="check-upgrade-client-gogoshell">
+		<get-database-upgrade-client-paths />
+
 		<parallel failonany="true">
 			<java
 				dir="${db.upgrade.client.home}"
@@ -116,9 +141,13 @@
 				<stop-one-java-process process.name="jar" />
 			</sequential>
 		</parallel>
+
+		<clean-database-upgrade-client />
 	</target>
 
 	<target name="check-upgrade-client-help">
+		<get-database-upgrade-client-paths />
+
 		<local name="upgrade.help.output" />
 
 		<java
@@ -143,9 +172,13 @@
 				<fail message="The upgrade client help screen failed to appear." />
 			</else>
 		</if>
+
+		<clean-database-upgrade-client />
 	</target>
 
 	<target name="check-upgrade-client-java-version">
+		<get-database-upgrade-client-paths />
+
 		<parallel failonany="true">
 			<java
 				dir="${db.upgrade.client.home}"
@@ -170,6 +203,8 @@
 				<if>
 					<isset property="java.error.unavailable" />
 					<then>
+						<clean-database-upgrade-client />
+
 						<fail message="The upgrade client should not be able to run on versions older than Java SE 8." />
 					</then>
 				</if>
@@ -177,5 +212,7 @@
 				<echo message="The upgrade client correctly failed to run on a version older than Java SE 8." />
 			</sequential>
 		</parallel>
+
+		<clean-database-upgrade-client />
 	</target>
 </project>

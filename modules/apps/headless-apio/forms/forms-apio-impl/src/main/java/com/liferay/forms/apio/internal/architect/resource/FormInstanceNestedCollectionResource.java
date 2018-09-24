@@ -54,6 +54,7 @@ import com.liferay.portal.apio.permission.HasPermission;
 import com.liferay.portal.apio.user.CurrentUser;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 
 import java.util.List;
 
@@ -95,9 +96,9 @@ public class FormInstanceNestedCollectionResource
 			_ddmFormInstanceService::getFormInstance
 		).addCustomRoute(
 			new EvaluateContextRoute(), this::_evaluateContext,
-			DDMFormRenderingContext.class, AcceptLanguage.class,
-			FormContextIdentifier.class, this::_hasPermission,
-			FormContextForm::buildForm
+			AcceptLanguage.class, DDMFormRenderingContext.class,
+			ThemeDisplay.class, FormContextIdentifier.class,
+			this::_hasPermission, FormContextForm::buildForm
 		).addCustomRoute(
 			new FetchLatestDraftRoute(), this::_fetchDDMFormInstanceRecord,
 			CurrentUser.class, FormInstanceRecordIdentifier.class,
@@ -204,8 +205,9 @@ public class FormInstanceNestedCollectionResource
 
 	private FormContextWrapper _evaluateContext(
 		Long ddmFormInstanceId, FormContextForm formContextForm,
+		AcceptLanguage language,
 		DDMFormRenderingContext ddmFormRenderingContext,
-		AcceptLanguage language) {
+		ThemeDisplay themeDisplay) {
 
 		return Try.fromFallible(
 			() -> _ddmFormInstanceService.getFormInstance(ddmFormInstanceId)

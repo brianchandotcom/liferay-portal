@@ -3428,11 +3428,11 @@ public class StringUtil {
 			return null;
 		}
 
-		s = Normalizer.normalize(s, Normalizer.Form.NFC);
-
 		if (s.codePointCount(0, s.length()) <= length) {
 			return s;
 		}
+
+		s = Normalizer.normalize(s, Normalizer.Form.NFC);
 
 		if (length < suffix.length()) {
 			return s.substring(0, s.offsetByCodePoints(0, length));

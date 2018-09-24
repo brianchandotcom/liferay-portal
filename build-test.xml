@@ -2459,6 +2459,44 @@ ${tomcat-gc-log}
 		</sequential>
 	</macrodef>
 
+	<macrodef name="record-test-junit-csv-report">
+		<sequential>
+			<local name="test.batch.name" />
+
+			<condition else="junit-test-csv-report-jdk8" property="test.batch.name" value="${test.batch.name}">
+				<isset property="test.batch.name" />
+			</condition>
+
+			<local name="top.level.job.name" />
+
+			<condition else="junit-test-csv-report" property="top.level.job.name" value="${env.TOP_LEVEL_JOB_NAME}">
+				<isset property="env.TOP_LEVEL_JOB_NAME" />
+			</condition>
+
+			<beanshell>
+				<![CDATA[
+					import com.liferay.jenkins.results.parser.Job;
+					import com.liferay.jenkins.results.parser.JobFactory;
+					import com.liferay.jenkins.results.parser.test.clazz.group.JUnitBatchTestClassGroup;
+					import com.liferay.jenkins.results.parser.test.clazz.group.TestClassGroupFactory;
+
+					Job job = JobFactory.newJob(project.getProperty("top.level.job.name"));
+
+					JUnitBatchTestClassGroup jUnitbatchTestClassGroup = (JUnitBatchTestClassGroup)TestClassGroupFactory.newBatchTestClassGroup(project.getProperty("test.batch.name"), job);
+
+					try {
+						jUnitbatchTestClassGroup.writeTestCSVReportFile();
+					}
+					catch (Exception e) {
+						e.printStackTrace;
+
+						throw e;
+					}
+				]]>
+			</beanshell>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="request-cmis-repository-vm">
 		<attribute name="cmis.repository.type" />
 
@@ -9445,6 +9483,10 @@ if (ppstate.equals("normal")) {
 				<echo></echo>
 			</then>
 		</if>
+	</target>
+
+	<target name="record-test-junit-csv-report">
+		<record-test-junit-csv-report />
 	</target>
 
 	<target name="record-test-plugin-names">

@@ -50,6 +50,16 @@
 		}
 	}
 
+	.form-builder {
+		.nav-tabs + .tab-content .tab-pane {
+			padding: 2rem 1rem;
+		}
+
+		.property-builder-fields-container .property-builder-field {
+			width: 33%;
+		}
+	}
+
 	.journal-article-preview {
 		padding: 0 20px;
 	}

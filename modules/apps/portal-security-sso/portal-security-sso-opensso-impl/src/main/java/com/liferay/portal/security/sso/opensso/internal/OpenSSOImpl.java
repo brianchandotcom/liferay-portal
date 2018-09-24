@@ -279,8 +279,8 @@ public class OpenSSOImpl implements OpenSSO {
 
 			if (subjectId != null) {
 				String validateTokenUrl = StringUtil.replace(
-					"/json/sessions/{#subjectId}?_action=validate",
-					"{#subjectId}", URLCodec.encodeURL(subjectId));
+					_VALIDATE_TOKEN_VERSION_13, "{#subjectId}",
+					URLCodec.encodeURL(subjectId));
 
 				String url = serviceUrl.concat(validateTokenUrl);
 
@@ -307,7 +307,7 @@ public class OpenSSOImpl implements OpenSSO {
 			}
 		}
 		else {
-			String url = serviceUrl.concat("/identity/isTokenValid");
+			String url = serviceUrl.concat(_VALIDATE_TOKEN_VERSION_12);
 
 			URL urlObj = new URL(url);
 
@@ -465,6 +465,12 @@ public class OpenSSOImpl implements OpenSSO {
 
 	private static final String _GET_COOKIE_NAMES =
 		"/identity/getCookieNamesToForward";
+
+	private static final String _VALIDATE_TOKEN_VERSION_12 =
+		"/identity/isTokenValid";
+
+	private static final String _VALIDATE_TOKEN_VERSION_13 =
+		"/json/sessions/{#subjectId}?_action=validate";
 
 	private static final Log _log = LogFactoryUtil.getLog(OpenSSOImpl.class);
 

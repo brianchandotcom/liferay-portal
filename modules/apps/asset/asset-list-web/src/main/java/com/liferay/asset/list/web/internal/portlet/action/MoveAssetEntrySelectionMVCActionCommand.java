@@ -16,12 +16,9 @@ package com.liferay.asset.list.web.internal.portlet.action;
 
 import com.liferay.asset.list.constants.AssetListPortletKeys;
 import com.liferay.asset.list.service.AssetListEntryService;
-import com.liferay.asset.list.web.internal.contants.AssetListSelectionConstants;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.util.ParamUtil;
-
-import java.util.Objects;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -52,17 +49,7 @@ public class MoveAssetEntrySelectionMVCActionCommand
 			actionRequest, "assetListEntryId");
 
 		int position = ParamUtil.getInteger(actionRequest, "position");
-
-		String moveDirection = ParamUtil.getString(
-			actionRequest, "moveDirection");
-
-		int newPosition = position - 1;
-
-		if (Objects.equals(
-				AssetListSelectionConstants.MOVE_DOWN, moveDirection)) {
-
-			newPosition = position + 1;
-		}
+		int newPosition = ParamUtil.getInteger(actionRequest, "newPosition");
 
 		_assetListEntryService.moveAssetEntrySelection(
 			assetListEntryId, position, newPosition);

@@ -16,17 +16,6 @@
 
 <%@ include file="/init.jsp" %>
 
-<%
-String redirect = editAssetListDisplayContext.getRedirectURL();
-
-AssetListEntry assetListEntry = assetListDisplayContext.getAssetListEntry();
-
-portletDisplay.setShowBackIcon(true);
-portletDisplay.setURLBack(redirect);
-
-renderResponse.setTitle(assetListDisplayContext.getAssetListEntryTitle());
-%>
-
 <portlet:actionURL name="/asset_list/edit_asset_list_entry" var="editAssetListEntryURL" />
 
 <liferay-frontend:edit-form
@@ -37,25 +26,15 @@ renderResponse.setTitle(assetListDisplayContext.getAssetListEntryTitle());
 	<aui:input name="assetListEntryId" type="hidden" value="<%= assetListDisplayContext.getAssetListEntryId() %>" />
 	<aui:input name="type" type="hidden" value="<%= assetListDisplayContext.getAssetListEntryType() %>" />
 
-	<aui:model-context bean="<%= assetListEntry %>" model="<%= AssetListEntry.class %>" />
+	<aui:model-context bean="<%= assetListDisplayContext.getAssetListEntry() %>" model="<%= AssetListEntry.class %>" />
 
 	<liferay-frontend:edit-form-body>
-		<liferay-ui:error embed="<%= false %>" exception="<%= AssetListEntryTitleException.class %>" message="please-enter-a-valid-title" />
-		<liferay-ui:error embed="<%= false %>" exception="<%= DuplicateAssetListEntryTitleException.class %>" message="an-asset-list-with-that-title-already-exists" />
-
-		<h3 class="sheet-subtitle">
-			<span class="autofit-padded-no-gutters autofit-row">
-				<span class="autofit-col autofit-col-expand">
-					<span class="heading-text">
-						<liferay-ui:message key="details" />
-					</span>
-				</span>
-			</span>
-		</h3>
+		<liferay-ui:error exception="<%= AssetListEntryTitleException.class %>" message="please-enter-a-valid-title" />
+		<liferay-ui:error exception="<%= DuplicateAssetListEntryTitleException.class %>" message="an-asset-list-with-that-title-already-exists" />
 
 		<liferay-frontend:fieldset-group>
 			<liferay-frontend:fieldset
-				markupView="lexicon"
+				label="details"
 			>
 				<aui:input name="title" placeholder="title" />
 			</liferay-frontend:fieldset>
@@ -65,6 +44,6 @@ renderResponse.setTitle(assetListDisplayContext.getAssetListEntryTitle());
 	<liferay-frontend:edit-form-footer>
 		<aui:button type="submit" />
 
-		<aui:button href="<%= redirect %>" type="cancel" />
+		<aui:button href="<%= editAssetListDisplayContext.getRedirectURL() %>" type="cancel" />
 	</liferay-frontend:edit-form-footer>
 </liferay-frontend:edit-form>

@@ -16,10 +16,6 @@
 
 <%@ include file="/init.jsp" %>
 
-<%
-String redirect = editAssetListDisplayContext.getRedirectURL();
-%>
-
 <portlet:actionURL name="/asset_list/edit_asset_list_entry_settings" var="editAssetListEntrySettingsURL" />
 
 <liferay-frontend:edit-form
@@ -29,43 +25,30 @@ String redirect = editAssetListDisplayContext.getRedirectURL();
 >
 	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 	<aui:input name="assetListEntryId" type="hidden" value="<%= assetListDisplayContext.getAssetListEntryId() %>" />
-	<aui:input name="type" type="hidden" value="<%= assetListDisplayContext.getAssetListEntryType() %>" />
 
 	<liferay-frontend:edit-form-body>
-		<h3 class="sheet-subtitle">
-			<span class="autofit-padded-no-gutters autofit-row">
-				<span class="autofit-col autofit-col-expand">
-					<span class="heading-text">
-						<liferay-ui:message key="filter" />
-					</span>
-				</span>
-			</span>
-		</h3>
-
 		<liferay-frontend:fieldset-group>
-			<aui:fieldset label="displayed-assets-must-match-these-rules" markupView="lexicon">
+			<liferay-frontend:fieldset
+				label="filter"
+			>
 				<liferay-asset:asset-tags-error />
-
-				<%
-				DuplicateQueryRuleException dqre = null;
-				%>
 
 				<liferay-ui:error exception="<%= DuplicateQueryRuleException.class %>">
 
 					<%
-					dqre = (DuplicateQueryRuleException)errorException;
-
-					String name = dqre.getName();
+					DuplicateQueryRuleException dqre = (DuplicateQueryRuleException)errorException;
 					%>
 
 					<liferay-util:buffer
 						var="messageArgument"
 					>
-						<em>(<liferay-ui:message key='<%= dqre.isContains() ? "contains" : "does-not-contain" %>' /> - <liferay-ui:message key='<%= dqre.isAndOperator() ? "all" : "any" %>' /> - <liferay-ui:message key='<%= name.equals("assetTags") ? "tags" : "categories" %>' />)</em>
+						<em>(<liferay-ui:message key='<%= dqre.isContains() ? "contains" : "does-not-contain" %>' /> - <liferay-ui:message key='<%= dqre.isAndOperator() ? "all" : "any" %>' /> - <liferay-ui:message key='<%= Objects.equals(dqre.getName(), "assetTags") ? "tags" : "categories" %>' />)</em>
 					</liferay-util:buffer>
 
 					<liferay-ui:message arguments="<%= messageArgument %>" key="only-one-rule-with-the-combination-x-is-supported" translateArguments="<%= false %>" />
 				</liferay-ui:error>
+
+				<p><liferay-ui:message key="displayed-assets-must-match-these-rules" /></p>
 
 				<div id="<portlet:namespace />ConditionForm"></div>
 
@@ -87,13 +70,13 @@ String redirect = editAssetListDisplayContext.getRedirectURL();
 					module="asset-list-web/js/AutoField.es"
 					templateNamespace="com.liferay.asset.list.web.AutoField.render"
 				/>
-			</aui:fieldset>
+			</liferay-frontend:fieldset>
 		</liferay-frontend:fieldset-group>
 	</liferay-frontend:edit-form-body>
 
 	<liferay-frontend:edit-form-footer>
 		<aui:button type="submit" />
 
-		<aui:button href="<%= redirect %>" type="cancel" />
+		<aui:button href="<%= editAssetListDisplayContext.getRedirectURL() %>" type="cancel" />
 	</liferay-frontend:edit-form-footer>
 </liferay-frontend:edit-form>

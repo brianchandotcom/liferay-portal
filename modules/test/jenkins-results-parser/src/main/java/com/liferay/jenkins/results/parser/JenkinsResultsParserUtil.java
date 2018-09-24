@@ -1033,8 +1033,11 @@ public class JenkinsResultsParserUtil {
 		String newValue = value;
 
 		while (matcher.find()) {
-			newValue = newValue.replace(
-				matcher.group(0), getProperty(properties, matcher.group(1)));
+			if (properties.containsKey(matcher.group(1))) {
+				newValue = newValue.replace(
+					matcher.group(0),
+					getProperty(properties, matcher.group(1)));
+			}
 		}
 
 		return newValue;
@@ -2021,6 +2024,11 @@ public class JenkinsResultsParserUtil {
 				"Unable to load properties file " +
 					basePropertiesFile.getPath(),
 				ioe);
+		}
+
+		for (String propertyName : properties.stringPropertyNames()) {
+			properties.setProperty(
+				propertyName, getProperty(properties, propertyName));
 		}
 
 		return properties;

@@ -172,33 +172,33 @@ public class UploadGoogleDriveDocumentBackgroundTaskExecutor
 				fileEntry.getMimeType(), _getFileEntryFile(fileEntry));
 
 			driveFilesCreate = driveFiles.create(file, fileContent);
+
+			MediaHttpUploader mediaHttpUploader =
+				driveFilesCreate.getMediaHttpUploader();
+
+			long backgroundTaskId =
+				BackgroundTaskThreadLocal.getBackgroundTaskId();
+
+			mediaHttpUploader.setProgressListener(
+				curMediaHttpUploader -> {
+					Message message = new Message();
+
+					message.put(
+						BackgroundTaskConstants.BACKGROUND_TASK_ID,
+						backgroundTaskId);
+
+					message.put(
+						"uploadState", curMediaHttpUploader.getUploadState());
+					message.put(
+						"status", BackgroundTaskConstants.STATUS_IN_PROGRESS);
+
+					_backgroundTaskStatusMessageSender.
+						sendBackgroundTaskStatusMessage(message);
+				});
 		}
 		else {
 			driveFilesCreate = driveFiles.create(file);
 		}
-
-		MediaHttpUploader mediaHttpUploader =
-			driveFilesCreate.getMediaHttpUploader();
-
-		final long backgroundTaskId =
-			BackgroundTaskThreadLocal.getBackgroundTaskId();
-
-		mediaHttpUploader.setProgressListener(
-			curMediaHttpUploader -> {
-				Message message = new Message();
-
-				message.put(
-					BackgroundTaskConstants.BACKGROUND_TASK_ID,
-					backgroundTaskId);
-
-				message.put(
-					"uploadState", curMediaHttpUploader.getUploadState());
-				message.put(
-					"status", BackgroundTaskConstants.STATUS_IN_PROGRESS);
-
-				_backgroundTaskStatusMessageSender.
-					sendBackgroundTaskStatusMessage(message);
-			});
 
 		com.google.api.services.drive.model.File uploadedFile =
 			driveFilesCreate.execute();

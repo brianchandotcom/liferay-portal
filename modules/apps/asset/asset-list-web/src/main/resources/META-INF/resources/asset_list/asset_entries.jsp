@@ -102,99 +102,94 @@
 	</liferay-frontend:edit-form-body>
 
 	<liferay-frontend:edit-form-footer>
-		<div class="select-asset-selector">
-			<div class="edit-controls lfr-meta-actions">
-				<liferay-ui:icon-menu
-					cssClass="select-existing-selector"
-					direction="right"
-					message="select"
-					showArrow="<%= false %>"
-					showWhenSingleIcon="<%= true %>"
-				>
+		<liferay-ui:icon-menu
+			direction="right"
+			message="select"
+			showArrow="<%= false %>"
+			showWhenSingleIcon="<%= true %>"
+		>
 
-					<%
-					List<AssetRendererFactory<?>> assetRendererFactories = ListUtil.sort(AssetRendererFactoryRegistryUtil.getAssetRendererFactories(company.getCompanyId()), new AssetRendererFactoryTypeNameComparator(locale));
+			<%
+			List<AssetRendererFactory<?>> assetRendererFactories = ListUtil.sort(AssetRendererFactoryRegistryUtil.getAssetRendererFactories(company.getCompanyId()), new AssetRendererFactoryTypeNameComparator(locale));
 
-					for (AssetRendererFactory<?> curRendererFactory : assetRendererFactories) {
-						if (!curRendererFactory.isSelectable()) {
-							continue;
-						}
+			for (AssetRendererFactory<?> curRendererFactory : assetRendererFactories) {
+				if (!curRendererFactory.isSelectable()) {
+					continue;
+				}
 
-						PortletURL assetBrowserURL = PortletProviderUtil.getPortletURL(request, curRendererFactory.getClassName(), PortletProvider.Action.BROWSE);
+				PortletURL assetBrowserURL = PortletProviderUtil.getPortletURL(request, curRendererFactory.getClassName(), PortletProvider.Action.BROWSE);
 
-						if (assetBrowserURL == null) {
-							continue;
-						}
+				if (assetBrowserURL == null) {
+					continue;
+				}
 
-						assetBrowserURL.setParameter("groupId", String.valueOf(themeDisplay.getScopeGroupId()));
-						assetBrowserURL.setParameter("selectedGroupIds", String.valueOf(themeDisplay.getScopeGroupId()));
-						assetBrowserURL.setParameter("typeSelection", curRendererFactory.getClassName());
+				assetBrowserURL.setParameter("groupId", String.valueOf(themeDisplay.getScopeGroupId()));
+				assetBrowserURL.setParameter("selectedGroupIds", String.valueOf(themeDisplay.getScopeGroupId()));
+				assetBrowserURL.setParameter("typeSelection", curRendererFactory.getClassName());
+				assetBrowserURL.setParameter("showNonindexable", String.valueOf(Boolean.TRUE));
+				assetBrowserURL.setParameter("showScheduled", String.valueOf(Boolean.TRUE));
+				assetBrowserURL.setParameter("eventName", renderResponse.getNamespace() + "selectAsset");
+				assetBrowserURL.setPortletMode(PortletMode.VIEW);
+				assetBrowserURL.setWindowState(LiferayWindowState.POP_UP);
+
+				Map<String, Object> data = new HashMap<String, Object>();
+
+				data.put("groupid", String.valueOf(themeDisplay.getScopeGroupId()));
+
+				if (!curRendererFactory.isSupportsClassTypes()) {
+					data.put("href", assetBrowserURL.toString());
+
+					String type = curRendererFactory.getTypeName(locale);
+
+					data.put("destroyOnHide", true);
+					data.put("title", LanguageUtil.format(request, "select-x", type, false));
+					data.put("type", type);
+			%>
+
+					<liferay-ui:icon
+						cssClass="asset-selector"
+						data="<%= data %>"
+						id="<%= themeDisplay.getScopeGroupId() + FriendlyURLNormalizerUtil.normalize(type) %>"
+						message="<%= HtmlUtil.escape(type) %>"
+						url="javascript:;"
+					/>
+
+				<%
+				}
+				else {
+					ClassTypeReader classTypeReader = curRendererFactory.getClassTypeReader();
+
+					List<ClassType> assetAvailableClassTypes = classTypeReader.getAvailableClassTypes(PortalUtil.getCurrentAndAncestorSiteGroupIds(themeDisplay.getScopeGroupId()), locale);
+
+					for (ClassType assetAvailableClassType : assetAvailableClassTypes) {
+						assetBrowserURL.setParameter("subtypeSelectionId", String.valueOf(assetAvailableClassType.getClassTypeId()));
 						assetBrowserURL.setParameter("showNonindexable", String.valueOf(Boolean.TRUE));
 						assetBrowserURL.setParameter("showScheduled", String.valueOf(Boolean.TRUE));
-						assetBrowserURL.setParameter("eventName", renderResponse.getNamespace() + "selectAsset");
-						assetBrowserURL.setPortletMode(PortletMode.VIEW);
-						assetBrowserURL.setWindowState(LiferayWindowState.POP_UP);
 
-						Map<String, Object> data = new HashMap<String, Object>();
+						data.put("href", assetBrowserURL.toString());
 
-						data.put("groupid", String.valueOf(themeDisplay.getScopeGroupId()));
+						String type = assetAvailableClassType.getName();
 
-						if (!curRendererFactory.isSupportsClassTypes()) {
-							data.put("href", assetBrowserURL.toString());
+						data.put("destroyOnHide", true);
+						data.put("title", LanguageUtil.format(request, "select-x", type, false));
+						data.put("type", type);
+				%>
 
-							String type = curRendererFactory.getTypeName(locale);
+						<liferay-ui:icon
+							cssClass="asset-selector"
+							data="<%= data %>"
+							id="<%= themeDisplay.getScopeGroupId() + FriendlyURLNormalizerUtil.normalize(type) %>"
+							message="<%= HtmlUtil.escape(type) %>"
+							url="javascript:;"
+						/>
 
-							data.put("destroyOnHide", true);
-							data.put("title", LanguageUtil.format(request, "select-x", type, false));
-							data.put("type", type);
-					%>
-
-							<liferay-ui:icon
-								cssClass="asset-selector"
-								data="<%= data %>"
-								id="<%= themeDisplay.getScopeGroupId() + FriendlyURLNormalizerUtil.normalize(type) %>"
-								message="<%= HtmlUtil.escape(type) %>"
-								url="javascript:;"
-							/>
-
-						<%
-						}
-						else {
-							ClassTypeReader classTypeReader = curRendererFactory.getClassTypeReader();
-
-							List<ClassType> assetAvailableClassTypes = classTypeReader.getAvailableClassTypes(PortalUtil.getCurrentAndAncestorSiteGroupIds(themeDisplay.getScopeGroupId()), locale);
-
-							for (ClassType assetAvailableClassType : assetAvailableClassTypes) {
-								assetBrowserURL.setParameter("subtypeSelectionId", String.valueOf(assetAvailableClassType.getClassTypeId()));
-								assetBrowserURL.setParameter("showNonindexable", String.valueOf(Boolean.TRUE));
-								assetBrowserURL.setParameter("showScheduled", String.valueOf(Boolean.TRUE));
-
-								data.put("href", assetBrowserURL.toString());
-
-								String type = assetAvailableClassType.getName();
-
-								data.put("destroyOnHide", true);
-								data.put("title", LanguageUtil.format(request, "select-x", type, false));
-								data.put("type", type);
-						%>
-
-								<liferay-ui:icon
-									cssClass="asset-selector"
-									data="<%= data %>"
-									id="<%= themeDisplay.getScopeGroupId() + FriendlyURLNormalizerUtil.normalize(type) %>"
-									message="<%= HtmlUtil.escape(type) %>"
-									url="javascript:;"
-								/>
-
-					<%
-							}
-						}
+			<%
 					}
-					%>
+				}
+			}
+			%>
 
-				</liferay-ui:icon-menu>
-			</div>
-		</div>
+		</liferay-ui:icon-menu>
 	</liferay-frontend:edit-form-footer>
 </liferay-frontend:edit-form>
 

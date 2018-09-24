@@ -12,10 +12,11 @@
  * details.
  */
 
-package com.liferay.document.library.opener.google.drive.web.internal.upload;
+package com.liferay.document.library.opener.google.drive.internal.upload;
 
 import com.liferay.document.library.kernel.exception.NoSuchFileEntryException;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
+import com.liferay.document.library.opener.google.drive.upload.UniqueFileEntryTitleProvider;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.language.Language;
@@ -34,17 +35,25 @@ import org.osgi.service.component.annotations.Reference;
  * @author Adolfo Pérez
  */
 @Component(immediate = true, service = UniqueFileEntryTitleProvider.class)
-public class UniqueFileEntryTitleProvider {
+public class UniqueFileEntryTitleProviderImpl
+	implements UniqueFileEntryTitleProvider {
 
+	@Override
 	public String provide(long groupId, long folderId, Locale locale)
 		throws PortalException {
 
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-			locale, UniqueFileEntryTitleProvider.class);
+			locale, UniqueFileEntryTitleProviderImpl.class);
 
-		return _uniqueFileNameProvider.provide(
-			_language.get(resourceBundle, "untitled"),
-			fileName -> _exists(groupId, folderId, fileName));
+		return _provide(
+			groupId, folderId, _language.get(resourceBundle, "untitled"));
+	}
+
+	@Override
+	public String provide(long groupId, long folderId, String fileName)
+		throws PortalException {
+
+		return _provide(groupId, folderId, fileName);
 	}
 
 	private boolean _exists(long groupId, long folderId, String fileName) {
@@ -65,8 +74,16 @@ public class UniqueFileEntryTitleProvider {
 		return false;
 	}
 
+	private String _provide(long groupId, long folderId, String fileName)
+		throws PortalException {
+
+		return _uniqueFileNameProvider.provide(
+			fileName,
+			generatedFileName -> _exists(groupId, folderId, generatedFileName));
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
-		UniqueFileEntryTitleProvider.class);
+		UniqueFileEntryTitleProviderImpl.class);
 
 	@Reference
 	private DLAppLocalService _dlAppLocalService;

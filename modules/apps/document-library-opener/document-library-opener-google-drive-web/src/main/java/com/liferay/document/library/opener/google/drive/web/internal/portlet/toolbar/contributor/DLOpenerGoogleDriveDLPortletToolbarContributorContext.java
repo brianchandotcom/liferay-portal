@@ -116,6 +116,8 @@ public class DLOpenerGoogleDriveDLPortletToolbarContributorContext
 				"folderId", String.valueOf(folderId));
 
 			liferayPortletURL.setParameter("contentType", contentType);
+			liferayPortletURL.setParameter(
+				"googleDocsRedirect", _portal.getCurrentURL(portletRequest));
 
 			return liferayPortletURL.toString();
 		}

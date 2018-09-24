@@ -1,4 +1,3 @@
-<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -12,11 +11,25 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
---%>
 
-<%@ include file="/init.jsp" %>
+package com.liferay.document.library.opener.google.drive.upload;
 
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+import aQute.bnd.annotation.ProviderType;
 
-<%@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %><%@
-taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
+import com.liferay.portal.kernel.exception.PortalException;
+
+import java.util.Locale;
+
+/**
+ * @author Adolfo Pérez
+ */
+@ProviderType
+public interface UniqueFileEntryTitleProvider {
+
+	public String provide(long groupId, long folderId, Locale locale)
+		throws PortalException;
+
+	public String provide(long groupId, long folderId, String fileName)
+		throws PortalException;
+
+}

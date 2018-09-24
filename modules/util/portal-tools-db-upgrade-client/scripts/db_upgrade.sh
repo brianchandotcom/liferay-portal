@@ -1,5 +1,8 @@
 #!/bin/bash
 
+#Ignore SIGHUP, to avoid stopping upgrade when terminal disconnects
+trap '' 1
+
 if [ -e /proc/$$/fd/255 ]
 then
 	DB_UPGRADE_PATH=`readlink /proc/$$/fd/255 2>/dev/null`

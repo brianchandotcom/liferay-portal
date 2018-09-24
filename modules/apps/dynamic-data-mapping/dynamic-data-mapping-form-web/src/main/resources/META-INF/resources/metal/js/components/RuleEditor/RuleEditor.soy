@@ -4,7 +4,6 @@
  * Prints the DDM rule settings.
  */
 {template .render}
-	{@param strings: ?}
 	{@param conditions: list<[
 			operator: string,
 			operands: list<[
@@ -14,17 +13,6 @@
 			]>
 		]>
 	}
-	{@param? operators:  list<[
-			value: string,
-			name: string,
-			parameterTypes: list<string>,
-			returnType: string
-		]>
-	}
-	{@param? _handleFirstOperandSelection: any}
-	{@param? _handleOperatorSelection: any}
-	{@param? _handleTypeSelection: any}
-	{@param? _handleSecondOperandSelection: any}
 	{@param firstOperandList : list<[
 			value: string,
 			type: string,
@@ -33,6 +21,20 @@
 				label: string,
 				value: string
 			]>
+		]>
+	}
+	{@param logicalOperator: string}
+	{@param readOnly: bool}
+	{@param strings: ?}
+	{@param? _handleFirstOperandSelection: any}
+	{@param? _handleOperatorSelection: any}
+	{@param? _handleSecondOperandSelection: any}
+	{@param? _handleTypeSelection: any}
+	{@param? operators:  list<[
+			value: string,
+			name: string,
+			parameterTypes: list<string>,
+			returnType: string
 		]>
 	}
 	{@param? secondOperandTypeList: list<[
@@ -45,9 +47,7 @@
 			name: string
 		]>
 	}
-	{@param logicalOperator: string}
 	{@param? spritemap: string}
-	{@param readOnly: bool}
 
 	<div class="form-builder-rule-builder">
 		<h2 class="form-builder-section-title text-default">{$strings.title}</h2>
@@ -79,8 +79,8 @@
 					{param if: $strings.if /}
 					{param index: index($condition) /}
 					{param logicalOperator: $strings[$logicalOperator] /}
-					{param operatorSelected: $condition.operator /}
 					{param operators: $operators /}
+					{param operatorSelected: $condition.operator /}
 					{param readOnly: $readOnly /}
 					{param secondOperandTypeList: $secondOperandTypeList /}
 					{param secondOperandTypeName: '' /}
@@ -112,6 +112,19 @@
 {/template}
 
 {template .condition}
+	{@param firstOperandList : list<[
+			value: string,
+			type: string,
+			name: string,
+			options: list<[
+				label: string,
+				value: string
+			]>
+		]>
+	}
+	{@param if: string}
+	{@param index: int}
+	{@param readOnly: bool}
 	{@param? _handleFirstOperandSelection: any}
 	{@param? _handleOperatorSelection: any}
 	{@param? _handleSecondOperandSelection: any}
@@ -126,7 +139,6 @@
 	}
 	{@param? operatorSelected: string}
 	{@param? secondOperandTypeName: string }
-	{@param? secondOperandTypeValue: any }
 	{@param? secondOperandTypeList : list<[
 			value: string,
 			name: string
@@ -137,20 +149,8 @@
 			name: string
 		]>
 	}
+	{@param? secondOperandTypeValue: any }
 	{@param? spritemap: string}
-	{@param firstOperandList : list<[
-			value: string,
-			type: string,
-			name: string,
-			options: list<[
-				label: string,
-				value: string
-			]>
-		]>
-	}
-	{@param if: string}
-	{@param index: int}
-	{@param readOnly: bool}
 
 	<li class="form-builder-rule-condition-container timeline-item" condition-index="{$index}">
 		<div class="panel panel-default">
@@ -169,8 +169,8 @@
 							{param events: [
 								'fieldEdited': $_handleFirstOperandSelection
 							] /}
-							{param ref: 'conditionIf' /}
 							{param options: $firstOperandList /}
+							{param ref: 'conditionIf' /}
 							{param spritemap: $spritemap /}
 							{param value: [$firstOperandValueSelected]   /}
 						{/delcall}
@@ -179,8 +179,8 @@
 					{call .operators}
 						{param _handleOperatorSelection: $_handleOperatorSelection /}
 						{param index: $index /}
-						{param operatorSelected: $operatorSelected /}
 						{param operators: $operators /}
+						{param operatorSelected: $operatorSelected /}
 						{param spritemap: $spritemap /}
 					{/call}
 
@@ -201,11 +201,11 @@
 								{param events: [
 									'fieldEdited': $_handleSecondOperandSelection
 								] /}
+								{param name: $secondOperandTypeName /}
+								{param readOnly: $readOnly /}
 								{param ref: 'typeValueInput' /}
 								{param spritemap: $spritemap /}
-								{param name: $secondOperandTypeName /}
 								{param value: $secondOperandTypeValue /}
-								{param readOnly: $readOnly /}
 							{/delcall}
 						</div>
 
@@ -216,9 +216,9 @@
 								{param events: [
 										'fieldEdited': $_handleSecondOperandSelection
 									] /}
+								{param options: $firstOperandList /}
 								{param ref: 'typeValueSelect' /}
 								{param spritemap: $spritemap /}
-								{param options: $firstOperandList /}
 								{param value: [$secondOperandTypeValue] /}
 							{/delcall}
 						</div>
@@ -232,9 +232,9 @@
 										{param events: [
 												'fieldEdited': $_handleSecondOperandSelection
 											] /}
+										{param options: $operand.options /}
 										{param ref: 'typeValueSelectOptions' /}
 										{param spritemap: $spritemap /}
-										{param options: $operand.options /}
 										{param value: [$secondOperandTypeValue] /}
 									{/delcall}
 								</div>
@@ -252,6 +252,7 @@
 {/template}
 
 {template .operators}
+	{@param index: int}
 	{@param? _handleOperatorSelection: any}
 	{@param? operators:  list<[
 			value: string,
@@ -262,7 +263,6 @@
 	}
 	{@param? operatorSelected: string}
 	{@param? spritemap: string}
-	{@param index: int}
 
 	{let $readOnly: ($operators and length($operators) > 0) ? false : true /}
 
@@ -271,9 +271,9 @@
 			{param events: [
 				'fieldEdited': $_handleOperatorSelection
 			] /}
+			{param options: $operators /}
 			{param readOnly: $readOnly /}
 			{param ref: 'conditionOperator' /}
-			{param options: $operators /}
 			{param spritemap: $spritemap /}
 			{param value: [$operatorSelected] /}
 		{/delcall}
@@ -281,6 +281,7 @@
 {/template}
 
 {template .secondOperandTypeList}
+	{@param index: int}
 	{@param? _handleTypeSelection: any}
 	{@param? operatorSelected: any}
 	{@param? secondOperandTypeList : list<[
@@ -293,7 +294,6 @@
 			name: string
 		]>
 	}
-	{@param index: int}
 	{@param? spritemap: string}
 
 	{let $visible: $operatorSelected and isNonnull($secondOperandTypeSelectedList) and isNonnull($secondOperandTypeSelectedList[$index]) ? true : false /}
@@ -303,8 +303,8 @@
 			{param events: [
 				'fieldEdited': $_handleTypeSelection
 			] /}
-			{param ref: 'type' /}
 			{param options: $secondOperandTypeList /}
+			{param ref: 'type' /}
 			{param spritemap: $spritemap /}
 			{param value: [$visible ? $secondOperandTypeSelectedList?[$index].value : ''] /}
 		{/delcall}
@@ -316,14 +316,12 @@
  */
 {template .logicalOperatorDropDown}
 	{@param strings: ?}
-	{@param? logicalOperator: string}
 	{@param? enableLogicalOperator: bool}
+	{@param? logicalOperator: string}
 
 	{let $attributes kind="attributes"}
 		class="btn btn-default dropdown-toggle dropdown-toggle-operator text-uppercase"
-
 		data-toggle="dropdown"
-
 		type="button"
 
 		{if not $enableLogicalOperator}

@@ -455,6 +455,56 @@ jdbc.counter.connectionProperties=oracle.jdbc.ReadTimeout=0;oracle.net.CONNECT_T
 		</sequential>
 	</macrodef>
 
+	<macrodef name="get-jinfo-output">
+		<attribute name="process.name" />
+
+		<sequential>
+			<var name="jinfo.output" unset="true" />
+
+			<execute>
+				<![CDATA[
+					jps > jps_output
+				]]>
+			</execute>
+
+			<local name="jps.output" />
+
+			<loadfile
+				property="jps.output"
+				srcfile="jps_output"
+			/>
+
+			<if>
+				<contains string="${jps.output}" substring="@{process.name}" />
+				<then>
+					<local name="java.process.pid" />
+
+					<propertyregex
+						input="${jps.output}"
+						override="true"
+						property="java.process.pid"
+						regexp="(|[\S\s]*\n)([0-9]+) @{process.name}[\S\s]*"
+						replace="\2"
+					/>
+
+					<execute>
+						<![CDATA[
+							jinfo -flags ${java.process.pid} > jinfo_output
+						]]>
+					</execute>
+
+					<loadfile
+						property="jinfo.output"
+						srcfile="jinfo_output"
+					/>
+				</then>
+			</if>
+
+			<delete file="jps_output" />
+			<delete file="jinfo_output" />
+		</sequential>
+	</macrodef>
+
 	<macrodef name="get-jstack-output">
 		<attribute name="process.name" />
 

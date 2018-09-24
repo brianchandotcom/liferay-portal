@@ -7,6 +7,7 @@ import classnames from 'classnames';
 import ClayButton from 'clay-button';
 import Component, {Fragment} from 'metal-jsx';
 import dom from 'metal-dom';
+import FieldTypeBox from '../FieldTypeBox/FieldTypeBox.es.js';
 import FormRenderer, {FormSupport} from '../Form/index.es.js';
 
 /**
@@ -24,6 +25,14 @@ class Sidebar extends Component {
 		 */
 
 		activeTab: Config.number().value(0).internal(),
+
+		/**
+		 * @instance
+		 * @memberof Sidebar
+		 * @type {array}
+		 */
+
+		fieldTypesGroup: Config.object().valueFn('_fieldTypesGroupValueFn'),
 
 		/**
 		 * @default false
@@ -76,7 +85,7 @@ class Sidebar extends Component {
 		 * @type {?(array|undefined)}
 		 */
 
-		fieldTypes: Config.array().value([]).required(),
+		fieldTypes: Config.array().value([]),
 
 		/**
 		 * @default false
@@ -97,6 +106,62 @@ class Sidebar extends Component {
 		spritemap: Config.string().required()
 	};
 
+	_fieldTypesGroupValueFn() {
+		const {fieldTypes} = this.props;
+		const group = {
+			basic: {
+				fields: [],
+				label: Liferay.Language.get('basic-elements')
+			},
+			customized: {
+				fields: [],
+				label: Liferay.Language.get('customized-elements')
+			}
+		};
+
+		return fieldTypes.reduce(
+			(prev, next, index, original) => {
+				if (next.group && !next.system) {
+					prev[next.group].fields.push(next);
+				}
+
+				return prev;
+			},
+			group
+		);
+	}
+
+	/**
+	 * Checks to see if browser supports CSS3 Transitions and returns the name
+	 * of the transitionend event; returns false if it's not supported
+	 * @protected
+	 * @return {string|boolean} The name of the transitionend event or false
+	 * if not supported
+	 */
+
+	_getTransitionEndEvent() {
+		const el = document.createElement('metalClayTransitionEnd');
+
+		const transitionEndEvents = {
+			MozTransition: 'transitionend',
+			OTransition: 'oTransitionEnd otransitionend',
+			transition: 'transitionend',
+			WebkitTransition: 'webkitTransitionEnd'
+		};
+
+		let eventName = false;
+
+		for (const name in transitionEndEvents) {
+			if (el.style[name] !== undefined) {
+				eventName = transitionEndEvents[name];
+
+				break;
+			}
+		}
+
+		return eventName;
+	}
+
 	_openValueFn() {
 		const {open} = this.props;
 
@@ -112,11 +177,19 @@ class Sidebar extends Component {
 
 	_handleDocumentMouseDown(event) {
 		const {open} = this.state;
+		const {transitionEnd} = this;
+
 		if (!open || this.element.contains(event.target)) {
 			return;
 		}
+
 		this.close();
-		setTimeout(() => this.emit('fieldBlurred'), 500);
+
+		dom.once(
+			this.refs.container,
+			transitionEnd,
+			() => this.emit('fieldBlurred')
+		);
 	}
 
 	/**
@@ -153,8 +226,9 @@ class Sidebar extends Component {
 		}
 
 		const {fieldTypes} = this.props;
-		const fieldIndex = data.source.dataset.ddmFieldTypeIndex;
-		const fieldType = fieldTypes[Number(fieldIndex)];
+		const fieldTypeName = data.source.dataset.fieldTypeName;
+
+		const fieldType = fieldTypes.find(({name}) => name === fieldTypeName);
 		const indexes = FormSupport.getIndexes(data.target.parentElement);
 
 		this.emit(
@@ -176,14 +250,17 @@ class Sidebar extends Component {
 	 */
 
 	_handlePreviousButtonClicked() {
+		const {transitionEnd} = this;
+
 		this.close();
 
-		setTimeout(
+		dom.once(
+			this.refs.container,
+			transitionEnd,
 			() => {
 				this.emit('fieldBlurred');
 				this.open();
-			},
-			500
+			}
 		);
 	}
 
@@ -245,11 +322,13 @@ class Sidebar extends Component {
 			}
 		);
 
-		this._dragAndDrop.on(
-			DragDrop.Events.END,
-			this._handleDragEnded.bind(this)
+		this._eventHandler.add(
+			this._dragAndDrop.on(
+				DragDrop.Events.END,
+				this._handleDragEnded.bind(this)
+			),
+			this._dragAndDrop.on(DragDrop.Events.DRAG, this._handleDragStarted.bind(this))
 		);
-		this._dragAndDrop.on(DragDrop.Events.DRAG, this._handleDragStarted.bind(this));
 	}
 
 	refreshDragAndDrop() {
@@ -293,14 +372,29 @@ class Sidebar extends Component {
 		this._eventHandler = new EventHandler();
 		this._handleCloseButtonClicked = this._handleCloseButtonClicked.bind(this);
 		this._handleTabItemClicked = this._handleTabItemClicked.bind(this);
+
+		const transitionEnd = this._getTransitionEndEvent();
+
+		this.supportsTransitionEnd = transitionEnd !== false;
+		this.transitionEnd = transitionEnd || 'transitionend';
+	}
+
+	disposeDragAndDrop() {
+		if (this._dragAndDrop) {
+			this._dragAndDrop.dispose();
+		}
 	}
 
 	/**
 	 * @inheritDoc
 	 */
 
-	dispose() {
+	disposeInternal() {
+		super.disposeInternal();
+
 		this._eventHandler.removeAllListeners();
+		this.disposeDragAndDrop();
+		this.emit('fieldBlurred');
 	}
 
 	/**
@@ -309,14 +403,11 @@ class Sidebar extends Component {
 	 */
 
 	open() {
-		this.setState(
-			{
-				activeTab: 0,
-				open: true
-			}
-		);
-		this.once(
-			'rendered',
+		const {transitionEnd} = this;
+
+		dom.once(
+			this.refs.container,
+			transitionEnd,
 			() => {
 				if (this._isEditMode()) {
 					const firstInput = this.element.querySelector('input');
@@ -328,7 +419,21 @@ class Sidebar extends Component {
 				}
 			}
 		);
+
+		this.setState(
+			{
+				activeTab: 0,
+				open: true
+			}
+		);
+
 		this.refreshDragAndDrop();
+	}
+
+	syncVisible(visible) {
+		if (!visible) {
+			this.emit('fieldBlurred');
+		}
 	}
 
 	/**
@@ -357,7 +462,7 @@ class Sidebar extends Component {
 		const styles = classnames('sidebar-container', {open});
 
 		return (
-			<div class={styles} ref="sidebar">
+			<div class={styles} ref="container">
 				<div class="sidebar sidebar-light">
 					<nav class="component-tbar tbar">
 						<div class="container-fluid">
@@ -392,14 +497,9 @@ class Sidebar extends Component {
 						</div>
 					</nav>
 					<div class="ddm-sidebar-body">
-						{!editMode && (
-							<ul class="list-group">
-								<li class="list-group-header">
-									<h3 class="list-group-header-title">{Liferay.Language.get('basic-elements')}</h3>
-								</li>
-								{this._renderListElements()}
-							</ul>
-						)}
+						{!editMode &&
+							this._groupFieldTypes()
+						}
 						{editMode && (
 							<div class="sidebar-body">
 								<div class="tab-content">
@@ -417,6 +517,63 @@ class Sidebar extends Component {
 						)}
 					</div>
 				</div>
+			</div>
+		);
+	}
+
+	_groupFieldTypes() {
+		const {spritemap} = this.props;
+		const {fieldTypesGroup} = this.state;
+		const group = Object.keys(fieldTypesGroup);
+
+		return (
+			<div aria-orientation="vertical" class="ddm-field-types-panel panel-group" id="accordion03" role="tablist">
+				{group.map(
+					(key, index) => (
+						<div class="panel panel-secondary" key={`fields-group-${key}-${index}`}>
+							<a
+								aria-controls="collapseTwo"
+								aria-expanded="true"
+								class="collapse-icon panel-header panel-header-link"
+								data-parent="#accordion03"
+								data-toggle="collapse"
+								href={`#ddm-field-types-${key}-body`}
+								id={`ddm-field-types-${key}-header`}
+								role="tab"
+							>
+								<span class="panel-title">{fieldTypesGroup[key].label}</span>
+								<span class="collapse-icon-closed">
+									<svg aria-hidden="true" class="lexicon-icon lexicon-icon-angle-right">
+										<use xlink:href={`${spritemap}#angle-right`} />
+									</svg>
+								</span>
+								<span class="collapse-icon-open">
+									<svg aria-hidden="true" class="lexicon-icon lexicon-icon-angle-down">
+										<use xlink:href={`${spritemap}#angle-down`} />
+									</svg>
+								</span>
+							</a>
+							<div
+								aria-labelledby={`#ddm-field-types-${key}-header`}
+								class="panel-collapse show"
+								id={`ddm-field-types-${key}-body`}
+								role="tabpanel"
+							>
+								<div class="panel-body p-0 m-0 list-group">
+									{fieldTypesGroup[key].fields.map(
+										fieldType => (
+											<FieldTypeBox
+												fieldType={fieldType}
+												key={fieldType.name}
+												spritemap={spritemap}
+											/>
+										)
+									)}
+								</div>
+							</div>
+						</div>
+					)
+				)}
 			</div>
 		);
 	}
@@ -519,48 +676,6 @@ class Sidebar extends Component {
 							<span class="navbar-text-truncate">{name}</span>
 						</a>
 					</li>
-				);
-			}
-		);
-	}
-
-	_renderListElements() {
-		const {fieldTypes, spritemap} = this.props;
-
-		return fieldTypes.filter(fieldType => !fieldType.system).map(
-			(fieldType, index) => {
-				return (
-					<div
-						class="ddm-drag-item list-group-item list-group-item-flex"
-						data-ddm-field-type-index={index}
-						key={`field${index}`}
-						ref={`field${index}`}
-					>
-						<div class="autofit-col">
-							<div class="sticker sticker-secondary">
-								<svg
-									aria-hidden="true"
-									class={`lexicon-icon lexicon-icon-${
-										fieldType.icon
-									}`}
-								>
-									<use
-										xlinkHref={`${spritemap}#${fieldType.icon}`}
-									/>
-								</svg>
-							</div>
-						</div>
-						<div class="autofit-col autofit-col-expand">
-							<h4 class="list-group-title text-truncate">
-								<span>{fieldType.label}</span>
-							</h4>
-							{fieldType.description && (
-								<p class="list-group-subtitle text-truncate">
-									{fieldType.description}
-								</p>
-							)}
-						</div>
-					</div>
 				);
 			}
 		);

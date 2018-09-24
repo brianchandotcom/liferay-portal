@@ -1,0 +1,20 @@
+$c: '.ddm-field-types-panel';
+
+#{$c} {
+	.panel-secondary > a {
+		padding-left: 17px;
+
+		&:hover {
+			background-color: #F0F5FF;
+		}
+	}
+
+	.panel-secondary,
+	.ddm-drag-item {
+		border-radius: 0;
+	}
+
+	.ddm-drag-item:last-child {
+		border-bottom: none;
+	}
+}

@@ -1,4 +1,4 @@
-import './__fixtures__/Fields.es';
+import './__fixtures__/MockField.es';
 import {dom as MetalTestUtil} from 'metal-dom';
 import mockPages from './__mock__/mockPages.es';
 import PageRenderer from '../PageRenderer.es';
@@ -115,6 +115,7 @@ describe(
 				);
 
 				const spy = jest.spyOn(component, 'emit');
+
 				component.element.querySelector('button[aria-label=\'trash\']').click();
 
 				expect(spy).toHaveBeenCalled();

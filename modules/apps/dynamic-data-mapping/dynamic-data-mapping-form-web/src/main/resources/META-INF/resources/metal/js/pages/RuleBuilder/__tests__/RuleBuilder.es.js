@@ -1,5 +1,6 @@
+import '../../../components/RuleEditor/__tests__/__fixtures__/RuleEditorMockField.es';
+import dom from 'metal-dom';
 import RuleBuilder from '../RuleBuilder.es';
-import {dom as MetalTestUtil} from 'metal-dom';
 
 const spritemap = 'icons.svg';
 let component;
@@ -63,35 +64,28 @@ describe(
 	() => {
 		beforeEach(
 			() => {
+				dom.enterDocument('<button id="addFieldButton" class="hide"></button>');
+
+				component = new RuleBuilder(configView);
+
 				jest.useFakeTimers();
 			}
 		);
 		afterEach(
 			() => {
+				const addbutton = document.querySelector('#addFieldButton');
+
 				if (component) {
 					component.dispose();
 				}
+
+				dom.exitDocument(addbutton);
 			}
 		);
 		it(
 			'should render the list of rules when mode is set to view',
 			() => {
-				component = new RuleBuilder(configView);
 				component.setState({mode: 'view'});
-				expect(component).toMatchSnapshot();
-			}
-		);
-
-		it(
-			'should render rule screen editor when click edit button',
-			() => {
-				MetalTestUtil.enterDocument('<button id="addFieldButton" class="hide"></button>');
-
-				const ruleCardEdit = document.querySelector('.rule-card-edit');
-
-				component = new RuleBuilder(configView);
-
-				MetalTestUtil.triggerEvent(ruleCardEdit, 'click', {});
 
 				jest.runAllTimers();
 
@@ -100,15 +94,11 @@ describe(
 		);
 
 		it(
-			'should render rule screen editor when click add rule button',
+			'should render rule screen editor when click edit button',
 			() => {
-				MetalTestUtil.enterDocument('<button id="addFieldButton" class="hide"></button>');
+				const ruleCardEdit = document.querySelector('.rule-card-edit');
 
-				const ruleCardEdit = document.querySelector('#addFieldButton');
-
-				component = new RuleBuilder(configView);
-
-				MetalTestUtil.triggerEvent(ruleCardEdit, 'click', {});
+				dom.triggerEvent(ruleCardEdit, 'click', {});
 
 				jest.runAllTimers();
 

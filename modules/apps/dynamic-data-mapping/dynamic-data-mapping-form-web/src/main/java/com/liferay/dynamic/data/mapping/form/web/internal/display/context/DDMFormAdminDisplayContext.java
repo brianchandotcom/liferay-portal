@@ -572,6 +572,13 @@ public class DDMFormAdminDisplayContext {
 			_ddmFormFieldTypeServicesTracker);
 	}
 
+	public String getFunctionsMetadata() throws PortalException {
+		DDMFormBuilderSettingsResponse ddmFormBuilderSettingsResponse =
+			getDDMFormBuilderSettingsResponse();
+
+		return ddmFormBuilderSettingsResponse.getFunctionsMetadata();
+	}
+
 	public JSONFactory getJSONFactory() {
 		return _jsonFactory;
 	}
@@ -789,16 +796,8 @@ public class DDMFormAdminDisplayContext {
 	}
 
 	public String getSerializedDDMFormRules() throws PortalException {
-		ThemeDisplay themeDisplay = formAdminRequestHelper.getThemeDisplay();
-
-		DDMFormBuilderSettingsRequest ddmFormBuilderSettingsRequest =
-			DDMFormBuilderSettingsRequest.with(
-				themeDisplay.getCompanyId(), themeDisplay.getScopeGroupId(), 0,
-				getDDMForm(), themeDisplay.getLocale());
-
 		DDMFormBuilderSettingsResponse ddmFormBuilderSettingsResponse =
-			_ddmFormBuilderSettingsRetriever.getSettings(
-				ddmFormBuilderSettingsRequest);
+			getDDMFormBuilderSettingsResponse();
 
 		return ddmFormBuilderSettingsResponse.getSerializedDDMFormRules();
 	}
@@ -917,6 +916,27 @@ public class DDMFormAdminDisplayContext {
 		}
 
 		return form;
+	}
+
+	protected DDMFormBuilderSettingsResponse getDDMFormBuilderSettingsResponse()
+		throws PortalException {
+
+		if (_ddmFormBuilderSettingsResponse != null) {
+			return _ddmFormBuilderSettingsResponse;
+		}
+
+		ThemeDisplay themeDisplay = formAdminRequestHelper.getThemeDisplay();
+
+		DDMFormBuilderSettingsRequest ddmFormBuilderSettingsRequest =
+			DDMFormBuilderSettingsRequest.with(
+				themeDisplay.getCompanyId(), themeDisplay.getScopeGroupId(), 0,
+				getDDMForm(), themeDisplay.getLocale());
+
+		_ddmFormBuilderSettingsResponse =
+			_ddmFormBuilderSettingsRetriever.getSettings(
+				ddmFormBuilderSettingsRequest);
+
+		return _ddmFormBuilderSettingsResponse;
 	}
 
 	protected OrderByComparator<DDMFormInstance>
@@ -1226,6 +1246,7 @@ public class DDMFormAdminDisplayContext {
 	private final AddDefaultSharedFormLayoutPortalInstanceLifecycleListener
 		_addDefaultSharedFormLayoutPortalInstanceLifecycleListener;
 	private final DDMFormBuilderContextFactory _ddmFormBuilderContextFactory;
+	private DDMFormBuilderSettingsResponse _ddmFormBuilderSettingsResponse;
 	private final DDMFormBuilderSettingsRetriever
 		_ddmFormBuilderSettingsRetriever;
 	private final DDMFormFieldTypeServicesTracker

@@ -12,6 +12,7 @@ class PagesVisitor {
 					...page,
 					...pageMapper(page, pageIndex)
 				};
+
 				return {
 					...newPage,
 					rows: newPage.rows.map(
@@ -20,6 +21,7 @@ class PagesVisitor {
 								...row,
 								...rowMapper(row, rowIndex, pageIndex)
 							};
+
 							return {
 								...newRow,
 								columns: newRow.columns.map(
@@ -28,6 +30,7 @@ class PagesVisitor {
 											...column,
 											...columnMapper(column, columnIndex, rowIndex, pageIndex)
 										};
+
 										return {
 											...newColumn,
 											fields: newColumn.fields.map(
@@ -36,6 +39,7 @@ class PagesVisitor {
 														...field,
 														...fieldMapper(field, fieldIndex, columnIndex, rowIndex, pageIndex)
 													};
+
 													return newField;
 												}
 											)

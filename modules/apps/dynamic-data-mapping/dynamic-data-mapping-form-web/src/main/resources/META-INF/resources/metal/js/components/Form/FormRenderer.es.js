@@ -104,6 +104,11 @@ class FormRenderer extends Component {
 	}
 
 	disposeInternal() {
+		super.disposeInternal();
+		this.disposeDragAndDrop();
+	}
+
+	disposeDragAndDrop() {
 		if (this._dragAndDrop) {
 			this._dragAndDrop.dispose();
 		}
@@ -116,9 +121,7 @@ class FormRenderer extends Component {
 	willReceiveState(nextState) {
 		if (nextState.pages) {
 			if (this.editable && !this.dragAndDropDisabled) {
-				if (this._dragAndDrop) {
-					this._dragAndDrop.disposeInternal();
-				}
+				this.disposeDragAndDrop();
 				this._startDrag();
 			}
 		}

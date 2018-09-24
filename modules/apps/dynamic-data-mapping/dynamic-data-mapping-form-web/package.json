@@ -40,6 +40,7 @@
 								}
 							}
 						],
+						"newline-after-var": 2,
 						"no-console": 0,
 						"no-unknown-property": 0,
 						"react/jsx-uses-react": 0,

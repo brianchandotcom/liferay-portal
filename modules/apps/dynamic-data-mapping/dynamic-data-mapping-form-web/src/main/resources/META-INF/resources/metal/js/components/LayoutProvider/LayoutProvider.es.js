@@ -290,6 +290,7 @@ class LayoutProvider extends Component {
 			columnIndex
 		);
 		const {fields} = column;
+
 		pages = FormSupport.removeFields(
 			pages,
 			pageIndex,
@@ -504,7 +505,9 @@ class LayoutProvider extends Component {
 			}
 		}
 
-		return children;
+		return (
+			<span>{children}</span>
+		);
 	}
 }
 

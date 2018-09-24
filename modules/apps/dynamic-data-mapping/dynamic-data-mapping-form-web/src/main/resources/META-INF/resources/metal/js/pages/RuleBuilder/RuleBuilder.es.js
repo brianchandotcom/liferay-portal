@@ -12,6 +12,41 @@ import RuleEditor from '../../components/RuleEditor/index.es';
 
 class RuleBuilder extends Component {
 	static PROPS = {
+		functionsMetadata: Config.object(
+			{
+				number: Config.arrayOf(
+					Config.shapeOf(
+						{
+							label: Config.string(),
+							name: Config.string(),
+							parameterTypes: Config.array(),
+							returnType: Config.string()
+						}
+					)
+				),
+				text: Config.arrayOf(
+					Config.shapeOf(
+						{
+							label: Config.string(),
+							name: Config.string(),
+							parameterTypes: Config.array(),
+							returnType: Config.string()
+						}
+					)
+				),
+				user: Config.arrayOf(
+					Config.shapeOf(
+						{
+							label: Config.string(),
+							name: Config.string(),
+							parameterTypes: Config.array(),
+							returnType: Config.string()
+						}
+					)
+				)
+			}
+		),
+
 		pages: Config.array().required(),
 
 		rules: Config.arrayOf(
@@ -68,7 +103,7 @@ class RuleBuilder extends Component {
 		 *
 		 */
 
-		mode: Config.oneOf(['view', 'edit']).value('view')
+		mode: Config.oneOf(['view', 'edit', 'create']).value('view')
 	};
 
 	/**
@@ -95,6 +130,14 @@ class RuleBuilder extends Component {
 		);
 	}
 
+	_showRuleCreation() {
+		this.setState(
+			{
+				mode: 'create'
+			}
+		);
+	}
+
 	/**
 	 * Show the rule screen to edit an existing rule. For now, this method does not receive the rule data for edition.
 	 * @param {!Event} event
@@ -112,7 +155,7 @@ class RuleBuilder extends Component {
 	 */
 
 	_handleAddRuleClick(event) {
-		this._showRuleEdition();
+		this._showRuleCreation();
 
 		this._hideAddRuleButton(event.delegateTarget);
 	}
@@ -127,17 +170,18 @@ class RuleBuilder extends Component {
 		dom.addClasses(element, 'hide');
 	}
 
-	/**
-	 * Continues the propagation of event.
-	 * @param {!Event} event
-	 * @private
-	 */
+	syncVisible(visible) {
+		super.syncVisible(visible);
 
-	attached() {
-		this._eventHandler.add(
-			dom.on('#addFieldButton', 'click', this._handleAddRuleClick.bind(this)),
-			dom.on('.rule-card-edit', 'click', this._handleEditRuleClicked.bind(this))
-		);
+		if (visible) {
+			this._eventHandler.add(
+				dom.on('#addFieldButton', 'click', this._handleAddRuleClick.bind(this)),
+				dom.on('.rule-card-edit', 'click', this._handleEditRuleClicked.bind(this))
+			);
+		}
+		else {
+			this._eventHandler.removeAllListeners();
+		}
 	}
 
 	/**
@@ -146,8 +190,26 @@ class RuleBuilder extends Component {
 	 * @private
 	 */
 
-	dispose() {
+	disposeInternal() {
+		super.disposeInternal();
+
 		this._eventHandler.removeAllListeners();
+	}
+
+	rendered() {
+		const {mode} = this.state;
+		const {visible} = this.props;
+
+		if (visible) {
+			const addButton = document.querySelector('#addFieldButton');
+
+			if (mode === 'create' || mode === 'edit') {
+				addButton.classList.add('hide');
+			}
+			else {
+				addButton.classList.remove('hide');
+			}
+		}
 	}
 
 	/**
@@ -157,20 +219,19 @@ class RuleBuilder extends Component {
 	 */
 
 	render() {
-		const {spritemap} = this.props;
-
-		let ruleScreen;
-
-		if (this.state.mode === 'edit') {
-			ruleScreen = <RuleEditor />;
-		}
-		else {
-			ruleScreen = <RuleList pages={this.props.pages} rules={this.props.rules} spritemap={spritemap} />;
-		}
+		const {pages, rules, spritemap} = this.props;
 
 		return (
 			<div class="container">
-				{ruleScreen}
+				{this.state.mode === 'create' && (
+					<RuleEditor functionsMetadata={this.props.functionsMetadata} key={'create'} pages={pages} spritemap={spritemap} />
+				)}
+				{this.state.mode === 'edit' && (
+					<RuleEditor key={'edit'} pages={pages} rules={rules} spritemap={spritemap} />
+				)}
+				{this.state.mode === 'view' && (
+					<RuleList pages={pages} rules={rules} spritemap={spritemap} />
+				)}
 			</div>
 		);
 	}

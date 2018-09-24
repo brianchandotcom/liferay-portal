@@ -2,7 +2,9 @@ import './SelectRegister.soy.js';
 import 'clay-icon';
 import 'dynamic-data-mapping-form-field-type/metal/FieldBase/index.es';
 import {Config} from 'metal-state';
+import {EventHandler} from 'metal-events';
 import Component from 'metal-component';
+import dom from 'metal-dom';
 import Soy from 'metal-soy';
 import templates from './Select.soy.js';
 
@@ -35,6 +37,8 @@ class Select extends Component {
 		 */
 
 		id: Config.string(),
+
+		key: Config.string(),
 
 		/**
 		 * @default undefined
@@ -137,18 +141,42 @@ class Select extends Component {
 		 * @type {?(string|undefined)}
 		 */
 
-		value: Config.array(),
-
-		key: Config.string()
+		value: Config.array()
 	};
+
+	attached() {
+		this._eventHandler = new EventHandler();
+
+		this._eventHandler.add(
+			dom.on(document, 'click', this._handleDocumentClicked.bind(this))
+		);
+	}
+
+	disposeInternal() {
+		super.disposeInternal();
+
+		this._eventHandler.removeAllListeners();
+	}
 
 	prepareStateForRender(states) {
 		const {predefinedValue, value} = states;
+		let newValue = value;
+
+		if (typeof (newValue) === 'string') {
+			newValue = [value];
+		}
+
 		return {
 			...states,
 			predefinedValue: predefinedValue && predefinedValue.length ? predefinedValue[0] : '',
-			value: value && value.length ? value[0] : ''
+			value: newValue && newValue.length ? newValue[0] : ''
 		};
+	}
+
+	_handleDocumentClicked({target}) {
+		if (!this.element.contains(target)) {
+			this.setState({open: false});
+		}
 	}
 
 	_handleItemClicked(event) {
@@ -167,10 +195,14 @@ class Select extends Component {
 				value: event.target.innerText
 			}
 		);
+
+		this.setState({open: !this.open});
 	}
 
 	_handleClick() {
-		this.setState({open: !this.open});
+		if (!this.readOnly) {
+			this.setState({open: !this.open});
+		}
 	}
 }
 

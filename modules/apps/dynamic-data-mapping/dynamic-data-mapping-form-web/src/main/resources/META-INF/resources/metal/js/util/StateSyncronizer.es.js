@@ -18,6 +18,7 @@ class StateSyncronizer extends Component {
 
 	created() {
 		const {descriptionEditor, nameEditor} = this.props;
+
 		this._eventHandler = new EventHandler();
 
 		this._eventHandler.add(
@@ -27,6 +28,8 @@ class StateSyncronizer extends Component {
 	}
 
 	disposeInternal() {
+		super.disposeInternal();
+
 		this._eventHandler.removeAllListeners();
 	}
 

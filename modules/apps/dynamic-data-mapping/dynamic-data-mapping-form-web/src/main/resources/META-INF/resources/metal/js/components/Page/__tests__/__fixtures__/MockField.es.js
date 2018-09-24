@@ -1,9 +1,9 @@
 import './FieldsRegister.soy.js';
 import Component from 'metal-component';
 import Soy from 'metal-soy';
-import templates from './Fields.soy.js';
+import templates from './MockField.soy.js';
 
-class Fields extends Component {
+class MockField extends Component {
 	emitFieldEdited() {
 		this.emit(
 			'fieldEdited',
@@ -16,6 +16,6 @@ class Fields extends Component {
 	}
 }
 
-Soy.register(Fields, templates);
+Soy.register(MockField, templates);
 
-export default Fields;
+export default MockField;

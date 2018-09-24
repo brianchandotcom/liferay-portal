@@ -42,4 +42,46 @@
 			</sequential>
 		</parallel>
 	</target>
+
+	<target name="check-upgrade-client-custom-log">
+		<java
+			dir="${db.upgrade.client.home}"
+			failonerror="true"
+			fork="true"
+			jar="${db.upgrade.client.jar}"
+			timeout="900000"
+		>
+			<arg value="-l" />
+			<arg value="&quot;log_file.txt&quot;" />
+		</java>
+
+		<if>
+			<not>
+				<available file="${db.upgrade.client.home}/log_file.txt" />
+			</not>
+			<then>
+				<fail message="The upgrade client custom log file was not created successfully." />
+			</then>
+		</if>
+
+		<local name="custom.log.file.output" />
+
+		<loadfile
+			property="custom.log.file.output"
+			srcfile="${db.upgrade.client.home}/log_file.txt"
+		/>
+
+		<if>
+			<not>
+				<contains string="${custom.log.file.output}" substring="com.liferay.portal.tools.db.upgrade.client.jar" />
+			</not>
+			<then>
+				<fail message="The upgrade client custom log file is missing some data." />
+			</then>
+		</if>
+
+		<echo message="The upgrade client custom log file was created successfully." />
+
+		<delete file="${db.upgrade.client.home}/log_file.txt" />
+	</target>
 </project>

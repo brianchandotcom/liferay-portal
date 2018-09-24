@@ -90,14 +90,22 @@ public class LayoutPageTemplateStructureLocalServiceImpl
 
 	@Override
 	public LayoutPageTemplateStructure fetchLayoutPageTemplateStructure(
-			long groupId, long classNameId, long classPK)
+		long groupId, long classNameId, long classPK) {
+
+		return layoutPageTemplateStructurePersistence.fetchByG_C_C(
+			groupId, classNameId, classPK);
+	}
+
+	@Override
+	public LayoutPageTemplateStructure fetchLayoutPageTemplateStructure(
+			long groupId, long classNameId, long classPK,
+			boolean rebuildStructure)
 		throws PortalException {
 
 		LayoutPageTemplateStructure layoutPageTemplateStructure =
-			layoutPageTemplateStructurePersistence.fetchByG_C_C(
-				groupId, classNameId, classPK);
+			fetchLayoutPageTemplateStructure(groupId, classNameId, classPK);
 
-		if (layoutPageTemplateStructure != null) {
+		if ((layoutPageTemplateStructure != null) || !rebuildStructure) {
 			return layoutPageTemplateStructure;
 		}
 

@@ -393,8 +393,6 @@
 	</command>
 
 	<command name="assignUserGroupAsMemberCP">
-		<var name="key_cardText" value="${userGroupName}" />
-
 		<execute macro="Navigator#gotoNavItem">
 			<var name="navItem" value="User Groups" />
 		</execute>

@@ -55,10 +55,12 @@ class Client {
 	 */
 	_getRequestBody(analytics, userId, context) {
 		const events = this._getContextEvents(analytics, context);
+		const {analyticsKey = '', dataSourceId} = analytics.config;
 
 		return {
-			analyticsKey: analytics.config.analyticsKey,
+			analyticsKey,
 			context,
+			dataSourceId,
 			events,
 			protocolVersion: '1.0',
 			userId,

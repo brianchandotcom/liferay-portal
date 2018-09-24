@@ -42,21 +42,24 @@ class Analytics {
 			instance = this;
 		}
 
-		const lcsClient = new LCSClient(config.uri);
-		const asahClient = new AsahClient();
+		const {dataSourceId, endpointUrl, flushInterval, uri} = config;
+
+		const lcsClient = new LCSClient(uri);
+		const asahClient = (dataSourceId && endpointUrl) && new AsahClient(endpointUrl);
 
 		instance.client = lcsClient;
 
 		instance._sendData = userId => {
-			asahClient.send(instance, userId);
+			if (asahClient) {
+				asahClient.send(instance, userId);
+			}
+
 			return lcsClient.send(instance, userId);
 		};
 
 		instance.config = config;
 
-		const analyticsKey = config.analyticsKey;
-
-		instance.asahIdentityEndpoint = `https://osbasahfarobackend-asahlfr.lfr.io/${analyticsKey}/identity/`;
+		instance.asahIdentityEndpoint = (dataSourceId && endpointUrl) && `${endpointUrl}/identity`;
 		instance.lcsIdentityEndpoint =
 			'https://analytics-gw.liferay.com/api/identitycontextgateway/send-identity-context';
 
@@ -78,7 +81,7 @@ class Analytics {
 
 		instance.flushInterval = setInterval(
 			() => instance.flush(),
-			config.flushInterval || FLUSH_INTERVAL
+			flushInterval || FLUSH_INTERVAL
 		);
 
 		return instance;
@@ -190,9 +193,12 @@ class Analytics {
 	 * @return {Promise} A promise returned by the fetch request.
 	 */
 	_sendIdentity(identity, userId) {
+		const {analyticsKey = '', dataSourceId} = this.config;
+
 		const bodyData = {
 			...fingerprint(),
-			analyticsKey: this.config.analyticsKey,
+			analyticsKey,
+			dataSourceId,
 			identity,
 			userId,
 		};
@@ -217,7 +223,9 @@ class Analytics {
 				mode: 'cors',
 			};
 
-			fetch(this.asahIdentityEndpoint, request);
+			if (this.asahIdentityEndpoint) {
+				fetch(this.asahIdentityEndpoint, request);
+			}
 
 			return fetch(this.lcsIdentityEndpoint, request).then(
 				() => newIdentityHash
@@ -384,6 +392,7 @@ class Analytics {
 	 *	   uri: 'https://analytics-gw.liferay.com/api/analyticsgateway/send-analytics-events'
 	 *	   userId: 'id-s7uatimmxgo',
 	 *     analyticsKey: 'MyAnalyticsKey',
+	 *     dataSourceId: 'MyDataSourceId',
 	 *   }
 	 * );
 	 */

@@ -26,6 +26,10 @@
 			margin-top: -7px;
 		}
 
+		.nav-tabs + .tab-content .tab-pane {
+			padding: 2rem 1rem;
+		}
+
 		.property-builder-drop-container, .tab-pane {
 			min-height: 500px;
 
@@ -38,6 +42,10 @@
 					width: auto;
 				}
 			}
+		}
+
+		.property-builder-fields-container .property-builder-field {
+			width: 33%;
 		}
 
 		.radio {

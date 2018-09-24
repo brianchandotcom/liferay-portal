@@ -62,7 +62,7 @@ class SelectCategory extends PortletBase {
 	 * @protected
 	 */
 
-	searchNodes_(event) {
+	_searchNodes(event) {
 		if (!this.originalNodes) {
 			this.originalNodes = this.nodes;
 		}
@@ -88,7 +88,7 @@ class SelectCategory extends PortletBase {
 	 * @protected
 	 */
 
-	selectedNodeChange_(event) {
+	_selectedNodeChange(event) {
 		let newVal = event.newVal;
 		let selectedNodes = this.selectedNodes_;
 

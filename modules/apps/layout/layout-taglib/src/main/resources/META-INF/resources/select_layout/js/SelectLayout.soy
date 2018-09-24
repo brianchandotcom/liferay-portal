@@ -6,9 +6,10 @@
 {template .render}
 	{@param nodes: list<?>}
 	{@param pathThemeImages: string}
+	{@param? _handleSearchFormSubmit: any}
+	{@param? _selectedNodeChange: any}
 	{@param? multiSelection: bool}
 	{@param? namespace: string}
-	{@param? _selectedNodeChange: any}
 	{@param? viewType: string}
 
 	<div class="select-layout">
@@ -16,7 +17,7 @@
 			<div class="container">
 				<div class="navbar-form navbar-form-autofit navbar-overlay navbar-overlay-sm-down">
 					<div class="container">
-						<form role="search">
+						<form role="search" data-onsubmit="{$_handleSearchFormSubmit}">
 							<div class="input-group">
 								<div class="input-group-item">
 									<input class="form-control input-group-inset input-group-inset-after" data-oninput="_searchNodes" name="{$namespace}filterKeywords" placeholder="{msg desc=""}search-for{/msg}" type="text" />

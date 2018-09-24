@@ -4,7 +4,7 @@ import Soy from 'metal-soy';
 import templates from './RuleEditorMockField.soy.js';
 
 class RuleEditorMockField extends Component {
-	emitFieldEdited(value, mock, fn) {
+	emitFieldEdited(value, fieldName) {
 		this.emit(
 			'fieldEdited',
 			{
@@ -12,7 +12,7 @@ class RuleEditorMockField extends Component {
 					delegateTarget: this.element.querySelector('p'),
 					target: {
 						getAttribute: () => {
-							return mock;
+							return fieldName;
 						}
 					}
 				},

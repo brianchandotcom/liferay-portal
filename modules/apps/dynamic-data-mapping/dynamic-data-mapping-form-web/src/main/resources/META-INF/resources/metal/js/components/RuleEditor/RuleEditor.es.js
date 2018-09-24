@@ -47,7 +47,7 @@ class RuleEditor extends Component {
 					operator: Config.string()
 				}
 			)
-		).value([]),
+		).internal().value([]),
 
 		conditionTypes: Config.array().internal(),
 
@@ -189,15 +189,49 @@ class RuleEditor extends Component {
 		}
 	}
 
-	syncPages() {
+	syncPages(pages) {
+		const {conditions} = this;
+		let newConditions = [...conditions];
+		const visitor = new PagesVisitor(pages);
+
+		conditions.forEach(
+			(condition, index) => {
+				let firstOperandFieldExists = false;
+				const secondOperand = condition.operands[1];
+				let secondOperandFieldExists = false;
+
+				visitor.mapFields(
+					({label}) => {
+						if (condition.operands[0].value === label) {
+							firstOperandFieldExists = true;
+						}
+
+						if (secondOperand && secondOperand.value === label) {
+							secondOperandFieldExists = true;
+						}
+					}
+				);
+
+				if (!firstOperandFieldExists) {
+					newConditions = this._clearAllFieldValues(index);
+					newConditions = this._clearOperatorValues(index);
+				}
+
+				if (!secondOperandFieldExists && secondOperand && secondOperand.type) {
+					newConditions = this._clearSecondOperandValue(newConditions, index);
+				}
+			}
+		);
+
 		this.setState(
 			{
+				conditions: newConditions,
 				firstOperandList: this._firstOperandListValueFn()
 			}
 		);
 	}
 
-	_clearAllFieldsValues(index) {
+	_clearAllFieldValues(index) {
 		let {conditions} = this;
 
 		conditions = this._clearFirstOperandValue(conditions, index);
@@ -206,9 +240,12 @@ class RuleEditor extends Component {
 
 		this.setState(
 			{
-				conditions
+				conditions,
+				operators: []
 			}
 		);
+
+		return conditions;
 	}
 
 	_clearFirstOperandValue(conditions, index) {
@@ -243,6 +280,8 @@ class RuleEditor extends Component {
 				secondOperandTypeSelectedList
 			}
 		);
+
+		return conditions;
 	}
 
 	_clearSecondOperandValue(conditions, index) {
@@ -332,7 +371,7 @@ class RuleEditor extends Component {
 
 		}
 		else {
-			this._clearAllFieldsValues(index);
+			this._clearAllFieldValues(index);
 		}
 
 		const {conditions} = this;

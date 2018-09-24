@@ -21,18 +21,20 @@
 	clearResultsURL="<%= assetListDisplayContext.getAssetListEntryClearResultsURL() %>"
 	componentId="assetListEntriesEntriesManagementToolbar"
 	creationMenu="<%= assetListDisplayContext.isShowAddAssetListEntryAction() ? assetListDisplayContext.getCreationMenu() : null %>"
-	disabled="<%= (assetListDisplayContext.getAssetListEntriesCount() > 0) ? false : true %>"
+	disabled="<%= assetListDisplayContext.getAssetListEntriesCount() <= 0 %>"
 	filterDropdownItems="<%= assetListDisplayContext.getAssetListEntryFilterItemsDropdownItems() %>"
 	itemsTotal="<%= assetListDisplayContext.getAssetListEntryTotalItems() %>"
 	searchActionURL="<%= assetListDisplayContext.getAssetListEntrySearchActionURL() %>"
 	searchContainerId="assetListEntries"
-	searchFormName="searchFm"
-	showSearch="<%= true %>"
 	sortingOrder="<%= assetListDisplayContext.getOrderByType() %>"
 	sortingURL="<%= assetListDisplayContext.getSortingURL() %>"
 />
 
-<aui:form cssClass="container-fluid-1280" name="fm">
+<portlet:actionURL name="/asset_list/delete_asset_list_entry" var="deleteAssetListEntryURL">
+	<portlet:param name="redirect" value="<%= currentURL %>" />
+</portlet:actionURL>
+
+<aui:form action="<%= deleteAssetListEntryURL %>" cssClass="container-fluid-1280" name="fm">
 	<c:choose>
 		<c:when test="<%= assetListDisplayContext.getAssetListEntriesCount() > 0 %>">
 			<liferay-ui:search-container
@@ -46,23 +48,28 @@
 				>
 
 					<%
-					PortletURL editArticleURL = liferayPortletResponse.createRenderURL();
+					String editURL = StringPool.BLANK;
 
-					editArticleURL.setParameter("mvcPath", "/edit_asset_list_entry.jsp");
-					editArticleURL.setParameter("redirect", currentURL);
-					editArticleURL.setParameter("assetListEntryId", String.valueOf(assetListEntry.getAssetListEntryId()));
+					if (AssetListEntryPermission.contains(permissionChecker, assetListEntry, ActionKeys.UPDATE)) {
+						PortletURL editAssetListEntryURL = liferayPortletResponse.createRenderURL();
+
+						editAssetListEntryURL.setParameter("mvcPath", "/edit_asset_list_entry.jsp");
+						editAssetListEntryURL.setParameter("redirect", currentURL);
+						editAssetListEntryURL.setParameter("assetListEntryId", String.valueOf(assetListEntry.getAssetListEntryId()));
+
+						editURL = editAssetListEntryURL.toString();
+					}
 					%>
 
 					<liferay-ui:search-container-column-icon
 						icon="list"
-						toggleRowChecker="<%= false %>"
 					/>
 
 					<liferay-ui:search-container-column-text
 						colspan="<%= 2 %>"
 					>
 						<h5>
-							<aui:a href="<%= editArticleURL.toString() %>">
+							<aui:a href="<%= editURL %>">
 								<%= HtmlUtil.escape(assetListEntry.getTitle()) %>
 							</aui:a>
 						</h5>
@@ -102,7 +109,7 @@
 <aui:script>
 	var deleteSelectedAssetListEntries = function() {
 		if (confirm('<liferay-ui:message key="are-you-sure-you-want-to-delete-this" />')) {
-			submitForm(document.querySelector('#<portlet:namespace />fm'), '<portlet:actionURL name="/asset_list/delete_asset_list_entry"><portlet:param name="redirect" value="<%= currentURL %>" /></portlet:actionURL>');
+			submitForm(document.querySelector('#<portlet:namespace />fm'));
 		}
 	}
 

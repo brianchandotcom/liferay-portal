@@ -1772,18 +1772,23 @@
 			<var name="menuItem" value="Active" />
 		</execute>
 
-		<if>
-			<condition function="IsElementPresent" locator1="ContentRow#ENTRY_CONTENT_ROW_1" />
+		<while>
+			<condition function="IsElementPresent" locator1="ContentRow#ENTRY_CONTENT_ROW_NUMBER">
+				<var name="key_rowNumber" value="2" />
+			</condition>
+
 			<then>
-				<execute macro="PortletEntry#selectAll" />
+				<execute function="Click#waitForMenuToggleJSClick" locator1="ContentRow#ENTRY_CONTENT_ROW_NUMBER_ELLIPSIS">
+					<var name="key_rowNumber" value="2" />
+				</execute>
 
-				<execute function="AssertClickNoError" locator1="Button#DEACTIVATE" value1="Deactivate" />
+				<execute macro="MenuItem#clickNoError">
+					<var name="menuItem" value="Deactivate" />
+				</execute>
 
-				<execute function="AssertConfirm" value1="Are you sure you want to deactivate the selected users?" />
-
-				<execute macro="Alert#viewSuccessMessage" />
+				<execute function="AssertConfirm" value1="Are you sure you want to deactivate this?" />
 			</then>
-		</if>
+		</while>
 
 		<execute function="Click" locator1="Dropdown#FILTER_AND_ORDER" />
 
@@ -1796,13 +1801,15 @@
 			<then>
 				<execute macro="PortletEntry#selectAll" />
 
-				<execute function="Click" locator1="Icon#DELETE" />
+				<execute function="ClickNoError" locator1="Icon#DELETE" />
 
 				<execute function="AssertConfirm" value1="Are you sure you want to permanently delete the selected users?" />
 
 				<execute macro="Alert#viewSuccessMessage" />
 			</then>
 		</if>
+
+		<execute function="AssertElementPresent" locator1="Message#EMPTY_INFO" />
 	</command>
 
 	<command name="tearDownSpecificUser">

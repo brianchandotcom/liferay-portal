@@ -44,11 +44,7 @@ class StateSyncronizer extends Component {
 			pages: layoutProvider.state.pages,
 			paginationMode: layoutProvider.state.paginationMode,
 			rules: [],
-			successPageSettings: {
-				body: {},
-				enabled: false,
-				title: {}
-			}
+			successPageSettings: layoutProvider.state.successPageSettings
 		};
 	}
 

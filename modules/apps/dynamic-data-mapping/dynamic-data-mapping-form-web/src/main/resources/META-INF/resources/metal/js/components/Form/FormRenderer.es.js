@@ -1,4 +1,5 @@
 import '../Page/PageRenderer.es';
+import '../SuccessPage/SuccessPage.es';
 import 'clay-button';
 import {Config} from 'metal-state';
 import {DragDrop} from 'metal-drag-drop';
@@ -7,6 +8,7 @@ import Component from 'metal-component';
 import FormSupport from './FormSupport.es';
 import Soy from 'metal-soy';
 import templates from './FormRenderer.soy.js';
+import {setValue} from '../../util/i18n.es';
 
 /**
  * FormRenderer.
@@ -86,7 +88,27 @@ class FormRenderer extends Component {
 		 * @type {!string}
 		 */
 
-		spritemap: Config.string().required()
+		spritemap: Config.string().required(),
+
+		/**
+		 * @instance
+		 * @memberof FormRenderer
+		 * @type {string}
+		 */
+		successPageLabel: Config.string().value(Liferay.Language.get('success-page')),
+
+		/**
+		 * @instance
+		 * @memberof FormRenderer
+		 * @type {object}
+		 */
+		successPageSettings: Config.shapeOf(
+			{
+				body: Config.object(),
+				enabled: Config.bool(),
+				title: Config.object()
+			}
+		).value({})
 	};
 
 	/**
@@ -128,6 +150,11 @@ class FormRenderer extends Component {
 		return nextState;
 	}
 
+	/**
+	 * Render page options acordding the older form's options order
+	 * @private
+	 */
+
 	_getPageSettingsItems() {
 		const pageSettingsItems = [
 			{
@@ -136,13 +163,24 @@ class FormRenderer extends Component {
 			}
 		];
 
-		if (this.pages.length === 1) {
+		const successPageEnabled = this.successPageSettings.enabled;
+
+		if ((this.pages.length === 1) && (this.activePage != -1)) {
 			pageSettingsItems.push(
 				{
 					'label': Liferay.Language.get('reset-page'),
 					'settingsItem': 'reset-page'
 				}
 			);
+
+			if (!successPageEnabled) {
+				pageSettingsItems.push(
+					{
+						'label': Liferay.Language.get('add-success-page'),
+						'settingsItem': 'add-success-page'
+					}
+				);
+			}
 		}
 		else {
 			pageSettingsItems.push(
@@ -152,6 +190,17 @@ class FormRenderer extends Component {
 				}
 			);
 
+			if (!successPageEnabled) {
+				pageSettingsItems.push(
+					{
+						'label': Liferay.Language.get('add-success-page'),
+						'settingsItem': 'add-success-page'
+					}
+				);
+			}
+		}
+
+		if (this.pages.length > 1) {
 			let label = Liferay.Language.get('switch-pagination-to-top');
 
 			if (this.paginationMode == 'wizard') {
@@ -189,6 +238,52 @@ class FormRenderer extends Component {
 		this.emit('pageAdded');
 	}
 
+	/**
+	 * Add a success page to the context
+	 * @private
+	 */
+
+	_addSuccessPage() {
+		return this._updateSuccessPage(
+			{
+				body: 'Your information was successfully received. Thank you for filling out the form.',
+				enabled: true,
+				title: 'Done'
+			},
+			-1
+		);
+	}
+
+	_updateSuccessPage({body = '', title = '', enabled}, activePageValue) {
+		const language = themeDisplay.getLanguageId();
+		const successPageSettings = {
+			body: {},
+			enabled,
+			title: {}
+		};
+
+		this.activePage = activePageValue;
+
+		setValue(successPageSettings, language, 'body', body);
+		setValue(successPageSettings, language, 'title', title);
+
+		this.emit('activePageUpdated', this.activePage);
+		this.emit('successPageChanged', successPageSettings);
+	}
+
+	_deletePage() {
+		this.emit('pageDeleted', this.activePage);
+	}
+
+	_deleteSuccessPage() {
+		return this._updateSuccessPage(
+			{
+				enabled: false
+			},
+			this.pages.length - 1
+		);
+	}
+
 	/*
 	 * @param {Object} data
 	 * @private
@@ -205,20 +300,31 @@ class FormRenderer extends Component {
 		else if (settingsItem === 'reset-page') {
 			this._resetPage();
 		}
+		else if (settingsItem === 'delete-page' && this.activePage === -1) {
+			this._deleteSuccessPage();
+		}
 		else if (settingsItem === 'delete-page') {
 			this._deletePage();
 		}
 		else if (settingsItem == 'switch-pagination-mode') {
 			this._switchPaginationMode();
 		}
+		else if (settingsItem == 'add-success-page') {
+			this._addSuccessPage();
+		}
+	}
+
+	/*
+	 * @param {Object} data
+	 * @private
+	 */
+
+	_handleSuccesPageChanged(successPageSettings) {
+		this.emit('successPageChanged', successPageSettings);
 	}
 
 	_switchPaginationMode() {
 		this.emit('paginationModeUpdated');
-	}
-
-	_deletePage() {
-		this.emit('pageDeleted', this.activePage);
 	}
 
 	_resetPage() {
@@ -261,7 +367,12 @@ class FormRenderer extends Component {
 	 */
 
 	_handlePaginationLeftClicked() {
-		const index = this.activePage - 1;
+		const {activePage} = this;
+		let index = activePage - 1;
+
+		if (activePage == -1) {
+			index = this.pages.length - 1;
+		}
 
 		this.emit(
 			'activePageUpdated',
@@ -274,7 +385,12 @@ class FormRenderer extends Component {
 	 */
 
 	_handlePaginationRightClicked() {
-		const index = this.activePage + 1;
+		const {activePage} = this;
+		let index = activePage + 1;
+
+		if (index == this.pages.length) {
+			index = -1;
+		}
 
 		this.emit(
 			'activePageUpdated',

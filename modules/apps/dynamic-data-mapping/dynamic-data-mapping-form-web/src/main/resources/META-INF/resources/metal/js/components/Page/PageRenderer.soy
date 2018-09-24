@@ -73,7 +73,7 @@
 
 	<div class="ddm-page-container-layout">
 		{if $activePage == $pageId}
-			<div class="ddm-form-page pl-3 pr-3">
+			<div class="ddm-form-page pl-4 pr-4">
 				{call .form}
 					{param _handlePageDescriptionChanged: $_handlePageDescriptionChanged /}
 					{param _handlePageTitleChanged: $_handlePageTitleChanged /}
@@ -142,7 +142,7 @@
 	{@param? titlePlaceholder: string}
 
 	{let $pageTitleAttributes kind="attributes"}
-		class="form-builder-page-header-title form-control"
+		class="form-builder-page-header-title form-control p-0"
 		data-onkeyup="{$_handlePageTitleChanged}"
 		data-page-id="{$pageId}"
 		maxlength="120"
@@ -151,7 +151,7 @@
 	{/let}
 
 	{let $pageDescriptionAttributes kind="attributes"}
-		class="form-builder-page-header-description form-control"
+		class="form-builder-page-header-description form-control p-0"
 		data-onkeyup="{$_handlePageDescriptionChanged}"
 		data-page-id="{$pageId}"
 		maxlength="120"

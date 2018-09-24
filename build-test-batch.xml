@@ -2946,6 +2946,55 @@ log.sanitizer.enabled=false</echo>
 		</run-batch-test>
 	</target>
 
+	<target name="database-upgrade-client-jdk8">
+		<run-batch-test>
+			<test-action>
+				<database-test-action database.type="mysql">
+					<action>
+						<exec executable="${database.service.executable}">
+							<arg line="${database.service.cmd.start}" />
+						</exec>
+					</action>
+				</database-test-action>
+
+				<antcall target="rebuild-legacy-database">
+					<param name="portal.version" value="6.2.5" />
+					<param name="data.archive.type" value="data-archive-polls" />
+					<param name="skip.get.testcase.database.properties" value="true" />
+				</antcall>
+
+				<prepare-database-upgrade-configuration />
+
+				<property name="db.upgrade.client.home" value="${liferay.home}/tools/portal-tools-db-upgrade-client" />
+
+				<property name="db.upgrade.client.jar" value="${db.upgrade.client.home}/com.liferay.portal.tools.db.upgrade.client.jar" />
+				<property name="db.upgrade.client.log" value="${db.upgrade.client.home}/upgrade.log" />
+
+				<for keepgoing="true" list="check-upgrade-client-gogoshell,check-upgrade-client-help,check-upgrade-client-java-version,check-upgrade-client-custom-log,check-upgrade-client-additional-settings" param="upgrade.test.target">
+					<sequential>
+						<ant antfile="build-test-db-upgrade-client.xml" target="@{upgrade.test.target}" />
+
+						<stop-one-java-process process.name="DBUpgrader" />
+
+						<delete file="${db.upgrade.client.log}" />
+					</sequential>
+				</for>
+			</test-action>
+
+			<test-set-up>
+				<if>
+					<isset property="env.DIST_PATH" />
+					<then>
+						<prepare-test-environment />
+					</then>
+					<else>
+						<prepare-test-build />
+					</else>
+				</if>
+			</test-set-up>
+		</run-batch-test>
+	</target>
+
 	<target name="deprecated-module-smoke-jdk8">
 		<run-deprecated-module-smoke />
 	</target>

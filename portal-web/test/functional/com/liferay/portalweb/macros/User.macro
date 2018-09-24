@@ -1786,7 +1786,7 @@
 					<var name="menuItem" value="Deactivate" />
 				</execute>
 
-				<execute function="AssertConfirm" value1="Are you sure you want to deactivate the selected users?" />
+				<execute function="AssertConfirm" value1="Are you sure you want to deactivate this?" />
 			</then>
 		</while>
 

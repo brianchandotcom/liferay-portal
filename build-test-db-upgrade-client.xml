@@ -144,4 +144,38 @@
 			</else>
 		</if>
 	</target>
+
+	<target name="check-upgrade-client-java-version">
+		<parallel failonany="true">
+			<java
+				dir="${db.upgrade.client.home}"
+				failonerror="true"
+				fork="true"
+				jar="${db.upgrade.client.jar}"
+				timeout="300000"
+			>
+				<env key="JAVA_HOME" value="${java.jdk.7.x64.home}" />
+			</java>
+
+			<sequential>
+				<local name="java.error.unavailable" />
+
+				<waitfor maxwait="15000" timeoutproperty="java.error.unavailable">
+					<resourcecontains
+						resource="${db.upgrade.client.log}"
+						substring="Unsupported major.minor version"
+					/>
+				</waitfor>
+
+				<if>
+					<isset property="java.error.unavailable" />
+					<then>
+						<fail message="The upgrade client should not be able to run on versions older than Java SE 8." />
+					</then>
+				</if>
+
+				<echo message="The upgrade client correctly failed to run on a version older than Java SE 8." />
+			</sequential>
+		</parallel>
+	</target>
 </project>

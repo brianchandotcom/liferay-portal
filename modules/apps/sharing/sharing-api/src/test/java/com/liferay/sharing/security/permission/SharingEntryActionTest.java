@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.sharing.constants;
+package com.liferay.sharing.security.permission;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -20,121 +20,117 @@ import org.junit.Test;
 /**
  * @author Sergio González
  */
-public class SharingEntryActionKeyTest {
+public class SharingEntryActionTest {
 
 	@Test
 	public void testIsSupportedActionIdWithAddDiscussionActionId()
 		throws Exception {
 
 		Assert.assertTrue(
-			SharingEntryActionKey.isSupportedActionId(
-				SharingEntryActionKey.ADD_DISCUSSION.getActionId()));
+			SharingEntryAction.isSupportedActionId(
+				SharingEntryAction.ADD_DISCUSSION.getActionId()));
 	}
 
 	@Test
 	public void testIsSupportedActionIdWithUpdateActionId() throws Exception {
 		Assert.assertTrue(
-			SharingEntryActionKey.isSupportedActionId(
-				SharingEntryActionKey.UPDATE.getActionId()));
+			SharingEntryAction.isSupportedActionId(
+				SharingEntryAction.UPDATE.getActionId()));
 	}
 
 	@Test
 	public void testIsSupportedActionIdWithViewActionId() throws Exception {
 		Assert.assertTrue(
-			SharingEntryActionKey.isSupportedActionId(
-				SharingEntryActionKey.VIEW.getActionId()));
+			SharingEntryAction.isSupportedActionId(
+				SharingEntryAction.VIEW.getActionId()));
 	}
 
 	@Test
 	public void testIsSupportedActionIdWithWrongActionId() throws Exception {
 		Assert.assertFalse(
-			SharingEntryActionKey.isSupportedActionId("UNSUPPORTED"));
+			SharingEntryAction.isSupportedActionId("UNSUPPORTED"));
 	}
 
 	@Test
 	public void testParseFromActionIdWithAddDiscussionActionId()
 		throws Exception {
 
-		SharingEntryActionKey addDiscussionSharingEntryActionKey =
-			SharingEntryActionKey.ADD_DISCUSSION;
+		SharingEntryAction addDiscussionSharingEntryAction =
+			SharingEntryAction.ADD_DISCUSSION;
 
 		Assert.assertEquals(
-			addDiscussionSharingEntryActionKey,
-			SharingEntryActionKey.parseFromActionId(
-				addDiscussionSharingEntryActionKey.getActionId()));
+			addDiscussionSharingEntryAction,
+			SharingEntryAction.parseFromActionId(
+				addDiscussionSharingEntryAction.getActionId()));
 	}
 
 	@Test
 	public void testParseFromActionIdWithUpdateActionId() throws Exception {
-		SharingEntryActionKey updateSharingEntryActionKey =
-			SharingEntryActionKey.UPDATE;
+		SharingEntryAction updateSharingEntryAction = SharingEntryAction.UPDATE;
 
 		Assert.assertEquals(
-			updateSharingEntryActionKey,
-			SharingEntryActionKey.parseFromActionId(
-				updateSharingEntryActionKey.getActionId()));
+			updateSharingEntryAction,
+			SharingEntryAction.parseFromActionId(
+				updateSharingEntryAction.getActionId()));
 	}
 
 	@Test
 	public void testParseFromActionIdWithViewActionId() throws Exception {
-		SharingEntryActionKey viewSharingEntryActionKey =
-			SharingEntryActionKey.VIEW;
+		SharingEntryAction viewSharingEntryAction = SharingEntryAction.VIEW;
 
 		Assert.assertEquals(
-			viewSharingEntryActionKey,
-			SharingEntryActionKey.parseFromActionId(
-				viewSharingEntryActionKey.getActionId()));
+			viewSharingEntryAction,
+			SharingEntryAction.parseFromActionId(
+				viewSharingEntryAction.getActionId()));
 	}
 
 	@Test(expected = IllegalArgumentException.class)
 	public void testParseFromActionIdWithWrongActionId() throws Exception {
-		SharingEntryActionKey.parseFromActionId("UNSUPPORTED");
+		SharingEntryAction.parseFromActionId("UNSUPPORTED");
 	}
 
 	@Test
 	public void testParseFromBitwiseValueWithAddDiscussionBitwiseValue()
 		throws Exception {
 
-		SharingEntryActionKey addDiscussionSharingEntryActionKey =
-			SharingEntryActionKey.ADD_DISCUSSION;
+		SharingEntryAction addDiscussionSharingEntryAction =
+			SharingEntryAction.ADD_DISCUSSION;
 
 		Assert.assertEquals(
-			addDiscussionSharingEntryActionKey,
-			SharingEntryActionKey.parseFromBitwiseValue(
-				addDiscussionSharingEntryActionKey.getBitwiseValue()));
+			addDiscussionSharingEntryAction,
+			SharingEntryAction.parseFromBitwiseValue(
+				addDiscussionSharingEntryAction.getBitwiseValue()));
 	}
 
 	@Test
 	public void testParseFromBitwiseValueWithUpdateBitwiseValue()
 		throws Exception {
 
-		SharingEntryActionKey updateSharingEntryActionKey =
-			SharingEntryActionKey.UPDATE;
+		SharingEntryAction updateSharingEntryAction = SharingEntryAction.UPDATE;
 
 		Assert.assertEquals(
-			updateSharingEntryActionKey,
-			SharingEntryActionKey.parseFromBitwiseValue(
-				updateSharingEntryActionKey.getBitwiseValue()));
+			updateSharingEntryAction,
+			SharingEntryAction.parseFromBitwiseValue(
+				updateSharingEntryAction.getBitwiseValue()));
 	}
 
 	@Test
 	public void testParseFromBitwiseValueWithViewBitwiseValue()
 		throws Exception {
 
-		SharingEntryActionKey viewSharingEntryActionKey =
-			SharingEntryActionKey.VIEW;
+		SharingEntryAction viewSharingEntryAction = SharingEntryAction.VIEW;
 
 		Assert.assertEquals(
-			viewSharingEntryActionKey,
-			SharingEntryActionKey.parseFromBitwiseValue(
-				viewSharingEntryActionKey.getBitwiseValue()));
+			viewSharingEntryAction,
+			SharingEntryAction.parseFromBitwiseValue(
+				viewSharingEntryAction.getBitwiseValue()));
 	}
 
 	@Test(expected = IllegalArgumentException.class)
 	public void testParseFromBitwiseValueWithWrongBitwiseValue()
 		throws Exception {
 
-		SharingEntryActionKey.parseFromActionId("8");
+		SharingEntryAction.parseFromActionId("8");
 	}
 
 }

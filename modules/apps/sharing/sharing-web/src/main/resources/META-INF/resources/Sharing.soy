@@ -7,7 +7,7 @@
 {template .render}
 	{@param id: string}
 	{@param shareActionURL: string}
-	{@param sharingEntryPermissionDisplayActionKeyActionId: string}
+	{@param sharingEntryPermissionDisplayActionId: string}
 	{@param sharingEntryPermissionDisplays: list<?>}
 	{@param? _closeDialog: any}
 	{@param? _handleInputChange: any}
@@ -50,14 +50,14 @@
 					<div class="custom-control custom-radio">
 						<label>
 							{let $sharingPermissionKeyAttributes kind="attributes"}
-								{if $sharingEntryPermissionDisplayActionKeyActionId == $sharingEntryPermissionDisplay.sharingEntryPermissionDisplayActionKeyActionId}
+								{if $sharingEntryPermissionDisplayActionId == $sharingEntryPermissionDisplay.sharingEntryPermissionDisplayActionId}
 									checked="checked"
 								{/if}
 								class="custom-control-input"
 								data-onchange="{$_handleInputChange}"
-								name="sharingEntryPermissionDisplayActionKeyActionId"
+								name="sharingEntryPermissionDisplayActionId"
 								type="radio"
-								value="{$sharingEntryPermissionDisplay.sharingEntryPermissionDisplayActionKeyActionId}"
+								value="{$sharingEntryPermissionDisplay.sharingEntryPermissionDisplayActionId}"
 								{if not $sharingEntryPermissionDisplay.enabled}
 									disabled="disabled"
 								{/if}

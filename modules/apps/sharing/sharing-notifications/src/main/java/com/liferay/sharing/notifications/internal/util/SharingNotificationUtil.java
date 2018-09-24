@@ -23,10 +23,10 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
-import com.liferay.sharing.constants.SharingEntryActionKey;
 import com.liferay.sharing.interpreter.SharingEntryInterpreter;
 import com.liferay.sharing.interpreter.SharingEntryInterpreterProvider;
 import com.liferay.sharing.model.SharingEntry;
+import com.liferay.sharing.security.permission.SharingEntryAction;
 import com.liferay.sharing.service.SharingEntryLocalService;
 
 import java.util.Locale;
@@ -99,17 +99,17 @@ public class SharingNotificationUtil {
 		SharingEntry sharingEntry, ResourceBundle resourceBundle) {
 
 		if (_sharingEntryLocalService.hasSharingPermission(
-				sharingEntry, SharingEntryActionKey.UPDATE)) {
+				sharingEntry, SharingEntryAction.UPDATE)) {
 
 			return ResourceBundleUtil.getString(resourceBundle, "editing");
 		}
 		else if (_sharingEntryLocalService.hasSharingPermission(
-					sharingEntry, SharingEntryActionKey.ADD_DISCUSSION)) {
+					sharingEntry, SharingEntryAction.ADD_DISCUSSION)) {
 
 			return ResourceBundleUtil.getString(resourceBundle, "commenting");
 		}
 		else if (_sharingEntryLocalService.hasSharingPermission(
-					sharingEntry, SharingEntryActionKey.VIEW)) {
+					sharingEntry, SharingEntryAction.VIEW)) {
 
 			return ResourceBundleUtil.getString(resourceBundle, "viewing");
 		}

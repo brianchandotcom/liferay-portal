@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.sharing.constants.SharingPortletKeys;
 import com.liferay.sharing.web.internal.display.SharingEntryPermissionDisplay;
-import com.liferay.sharing.web.internal.display.SharingEntryPermissionDisplayActionKey;
+import com.liferay.sharing.web.internal.display.SharingEntryPermissionDisplayAction;
 import com.liferay.sharing.web.internal.util.SharingUtil;
 
 import java.util.List;
@@ -87,8 +87,8 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 			"sharingEntryPermissionDisplays", sharingEntryPermissionDisplays);
 
 		template.put(
-			"sharingEntryPermissionDisplayActionKeyActionId",
-			SharingEntryPermissionDisplayActionKey.VIEW.getActionId());
+			"sharingEntryPermissionDisplayActionId",
+			SharingEntryPermissionDisplayAction.VIEW.getActionId());
 
 		return "Sharing";
 	}

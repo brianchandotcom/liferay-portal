@@ -36,12 +36,12 @@ public class SharingEntryServiceWrapper implements SharingEntryService,
 	public com.liferay.sharing.model.SharingEntry addOrUpdateSharingEntry(
 		long toUserId, long classNameId, long classPK, long groupId,
 		boolean shareable,
-		java.util.Collection<com.liferay.sharing.constants.SharingEntryActionKey> sharingEntryActionKeys,
+		java.util.Collection<com.liferay.sharing.security.permission.SharingEntryAction> sharingEntryActions,
 		java.util.Date expirationDate,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _sharingEntryService.addOrUpdateSharingEntry(toUserId,
-			classNameId, classPK, groupId, shareable, sharingEntryActionKeys,
+			classNameId, classPK, groupId, shareable, sharingEntryActions,
 			expirationDate, serviceContext);
 	}
 
@@ -49,13 +49,13 @@ public class SharingEntryServiceWrapper implements SharingEntryService,
 	public com.liferay.sharing.model.SharingEntry addSharingEntry(
 		long toUserId, long classNameId, long classPK, long groupId,
 		boolean shareable,
-		java.util.Collection<com.liferay.sharing.constants.SharingEntryActionKey> sharingEntryActionKeys,
+		java.util.Collection<com.liferay.sharing.security.permission.SharingEntryAction> sharingEntryActions,
 		java.util.Date expirationDate,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _sharingEntryService.addSharingEntry(toUserId, classNameId,
-			classPK, groupId, shareable, sharingEntryActionKeys,
-			expirationDate, serviceContext);
+			classPK, groupId, shareable, sharingEntryActions, expirationDate,
+			serviceContext);
 	}
 
 	/**
@@ -71,12 +71,12 @@ public class SharingEntryServiceWrapper implements SharingEntryService,
 	@Override
 	public com.liferay.sharing.model.SharingEntry updateSharingEntry(
 		long sharingEntryId,
-		java.util.Collection<com.liferay.sharing.constants.SharingEntryActionKey> sharingEntryActionKeys,
+		java.util.Collection<com.liferay.sharing.security.permission.SharingEntryAction> sharingEntryActions,
 		boolean shareable, java.util.Date expirationDate,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _sharingEntryService.updateSharingEntry(sharingEntryId,
-			sharingEntryActionKeys, shareable, expirationDate, serviceContext);
+			sharingEntryActions, shareable, expirationDate, serviceContext);
 	}
 
 	@Override

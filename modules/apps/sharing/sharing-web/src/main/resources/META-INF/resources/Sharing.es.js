@@ -56,7 +56,7 @@ class Sharing extends PortletBase {
 				classNameId: this._classNameId,
 				classPK: this._classPK,
 				shareable: this.shareable,
-				sharingEntryPermissionDisplayActionKeyActionId: this.sharingEntryPermissionDisplayActionKeyActionId,
+				sharingEntryPermissionDisplayActionId: this.sharingEntryPermissionDisplayActionId,
 				userEmailAddress: this._getEmailAdress(this.userEmailAddress)
 			}
 		).then(
@@ -91,7 +91,7 @@ class Sharing extends PortletBase {
 Sharing.STATE = {
 	shareable: Config.bool().value(true),
 	shareActionURL: Config.string().required(),
-	sharingEntryPermissionDisplayActionKeyActionId: Config.string().required()
+	sharingEntryPermissionDisplayActionId: Config.string().required()
 };
 
 Soy.register(Sharing, templates);

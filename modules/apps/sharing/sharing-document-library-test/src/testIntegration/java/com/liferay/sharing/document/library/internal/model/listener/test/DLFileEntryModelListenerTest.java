@@ -40,8 +40,8 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerTestRule;
-import com.liferay.sharing.constants.SharingEntryActionKey;
 import com.liferay.sharing.model.SharingEntry;
+import com.liferay.sharing.security.permission.SharingEntryAction;
 import com.liferay.sharing.service.SharingEntryLocalService;
 
 import java.util.Arrays;
@@ -115,8 +115,7 @@ public class DLFileEntryModelListenerTest {
 		_sharingEntryLocalService.addSharingEntry(
 			_user.getUserId(), _groupUser.getUserId(), _classNameId,
 			_fileEntry.getFileEntryId(), _fileEntry.getGroupId(), true,
-			Arrays.asList(
-				SharingEntryActionKey.UPDATE, SharingEntryActionKey.VIEW),
+			Arrays.asList(SharingEntryAction.UPDATE, SharingEntryAction.VIEW),
 			null, serviceContext);
 
 		List<SharingEntry> toUserSharingEntries =
@@ -147,8 +146,7 @@ public class DLFileEntryModelListenerTest {
 		_sharingEntryLocalService.addSharingEntry(
 			_user.getUserId(), _groupUser.getUserId(), _classNameId,
 			_fileEntry.getFileEntryId(), _fileEntry.getGroupId(), true,
-			Arrays.asList(
-				SharingEntryActionKey.UPDATE, SharingEntryActionKey.VIEW),
+			Arrays.asList(SharingEntryAction.UPDATE, SharingEntryAction.VIEW),
 			null, serviceContext);
 
 		long classNameId = _classNameLocalService.getClassNameId(
@@ -158,8 +156,7 @@ public class DLFileEntryModelListenerTest {
 		SharingEntry sharingEntry = _sharingEntryLocalService.addSharingEntry(
 			_user.getUserId(), _groupUser.getUserId(), classNameId, classPK,
 			_fileEntry.getGroupId(), true,
-			Arrays.asList(
-				SharingEntryActionKey.UPDATE, SharingEntryActionKey.VIEW),
+			Arrays.asList(SharingEntryAction.UPDATE, SharingEntryAction.VIEW),
 			null, serviceContext);
 
 		List<SharingEntry> toUserSharingEntries =
@@ -191,8 +188,7 @@ public class DLFileEntryModelListenerTest {
 		_sharingEntryLocalService.addSharingEntry(
 			_user.getUserId(), _groupUser.getUserId(), _classNameId,
 			_fileEntry.getFileEntryId(), _fileEntry.getGroupId(), true,
-			Arrays.asList(
-				SharingEntryActionKey.UPDATE, SharingEntryActionKey.VIEW),
+			Arrays.asList(SharingEntryAction.UPDATE, SharingEntryAction.VIEW),
 			null, serviceContext);
 
 		List<SharingEntry> toUserSharingEntries =

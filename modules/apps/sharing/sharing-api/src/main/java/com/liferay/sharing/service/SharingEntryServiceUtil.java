@@ -45,26 +45,26 @@ public class SharingEntryServiceUtil {
 	public static com.liferay.sharing.model.SharingEntry addOrUpdateSharingEntry(
 		long toUserId, long classNameId, long classPK, long groupId,
 		boolean shareable,
-		java.util.Collection<com.liferay.sharing.constants.SharingEntryActionKey> sharingEntryActionKeys,
+		java.util.Collection<com.liferay.sharing.security.permission.SharingEntryAction> sharingEntryActions,
 		java.util.Date expirationDate,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .addOrUpdateSharingEntry(toUserId, classNameId, classPK,
-			groupId, shareable, sharingEntryActionKeys, expirationDate,
+			groupId, shareable, sharingEntryActions, expirationDate,
 			serviceContext);
 	}
 
 	public static com.liferay.sharing.model.SharingEntry addSharingEntry(
 		long toUserId, long classNameId, long classPK, long groupId,
 		boolean shareable,
-		java.util.Collection<com.liferay.sharing.constants.SharingEntryActionKey> sharingEntryActionKeys,
+		java.util.Collection<com.liferay.sharing.security.permission.SharingEntryAction> sharingEntryActions,
 		java.util.Date expirationDate,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .addSharingEntry(toUserId, classNameId, classPK, groupId,
-			shareable, sharingEntryActionKeys, expirationDate, serviceContext);
+			shareable, sharingEntryActions, expirationDate, serviceContext);
 	}
 
 	/**
@@ -78,12 +78,12 @@ public class SharingEntryServiceUtil {
 
 	public static com.liferay.sharing.model.SharingEntry updateSharingEntry(
 		long sharingEntryId,
-		java.util.Collection<com.liferay.sharing.constants.SharingEntryActionKey> sharingEntryActionKeys,
+		java.util.Collection<com.liferay.sharing.security.permission.SharingEntryAction> sharingEntryActions,
 		boolean shareable, java.util.Date expirationDate,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
-				   .updateSharingEntry(sharingEntryId, sharingEntryActionKeys,
+				   .updateSharingEntry(sharingEntryId, sharingEntryActions,
 			shareable, expirationDate, serviceContext);
 	}
 

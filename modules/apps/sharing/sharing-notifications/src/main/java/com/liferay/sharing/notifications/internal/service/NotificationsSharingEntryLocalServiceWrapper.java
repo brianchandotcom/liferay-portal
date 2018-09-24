@@ -29,10 +29,10 @@ import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.SubscriptionSender;
-import com.liferay.sharing.constants.SharingEntryActionKey;
 import com.liferay.sharing.constants.SharingPortletKeys;
 import com.liferay.sharing.model.SharingEntry;
 import com.liferay.sharing.notifications.internal.util.SharingNotificationUtil;
+import com.liferay.sharing.security.permission.SharingEntryAction;
 import com.liferay.sharing.service.SharingEntryLocalService;
 import com.liferay.sharing.service.SharingEntryLocalServiceWrapper;
 
@@ -64,13 +64,13 @@ public class NotificationsSharingEntryLocalServiceWrapper
 	public SharingEntry addSharingEntry(
 			long fromUserId, long toUserId, long classNameId, long classPK,
 			long groupId, boolean shareable,
-			Collection<SharingEntryActionKey> sharingEntryActionKeys,
+			Collection<SharingEntryAction> sharingEntryActions,
 			Date expirationDate, ServiceContext serviceContext)
 		throws PortalException {
 
 		SharingEntry sharingEntry = super.addSharingEntry(
 			fromUserId, toUserId, classNameId, classPK, groupId, shareable,
-			sharingEntryActionKeys, expirationDate, serviceContext);
+			sharingEntryActions, expirationDate, serviceContext);
 
 		_sendNotificationEvent(
 			sharingEntry,
@@ -83,13 +83,13 @@ public class NotificationsSharingEntryLocalServiceWrapper
 	@Override
 	public SharingEntry updateSharingEntry(
 			long sharingEntryId,
-			Collection<SharingEntryActionKey> sharingEntryActionKeys,
+			Collection<SharingEntryAction> sharingEntryActions,
 			boolean shareable, Date expirationDate,
 			ServiceContext serviceContext)
 		throws PortalException {
 
 		SharingEntry sharingEntry = super.updateSharingEntry(
-			sharingEntryId, sharingEntryActionKeys, shareable, expirationDate,
+			sharingEntryId, sharingEntryActions, shareable, expirationDate,
 			serviceContext);
 
 		_sendNotificationEvent(

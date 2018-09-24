@@ -18,8 +18,8 @@ import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
-import com.liferay.sharing.constants.SharingEntryActionKey;
 import com.liferay.sharing.document.library.internal.security.permission.resource.SharingEntryDLFileEntryModelResourcePermissionRegistrar;
+import com.liferay.sharing.security.permission.SharingEntryAction;
 import com.liferay.sharing.security.permission.SharingPermissionChecker;
 
 import java.util.Arrays;
@@ -44,19 +44,17 @@ public class DLFileEntrySharingPermissionChecker
 	@Override
 	public boolean hasPermission(
 			PermissionChecker permissionChecker, long classPK, long groupId,
-			Collection<SharingEntryActionKey> sharingEntryActionKeys)
+			Collection<SharingEntryAction> sharingEntryActions)
 		throws PortalException {
 
-		for (SharingEntryActionKey sharingEntryActionKey :
-				sharingEntryActionKeys) {
-
-			if (!_actionKeysSet.contains(sharingEntryActionKey)) {
+		for (SharingEntryAction sharingEntryAction : sharingEntryActions) {
+			if (!_actionKeysSet.contains(sharingEntryAction)) {
 				return false;
 			}
 
 			if (!_dlFileEntryModelResourcePermission.contains(
 					permissionChecker, classPK,
-					sharingEntryActionKey.getActionId())) {
+					sharingEntryAction.getActionId())) {
 
 				return false;
 			}
@@ -65,11 +63,10 @@ public class DLFileEntrySharingPermissionChecker
 		return true;
 	}
 
-	private static final Set<SharingEntryActionKey> _actionKeysSet =
-		new HashSet<>(
-			Arrays.asList(
-				SharingEntryActionKey.ADD_DISCUSSION,
-				SharingEntryActionKey.UPDATE, SharingEntryActionKey.VIEW));
+	private static final Set<SharingEntryAction> _actionKeysSet = new HashSet<>(
+		Arrays.asList(
+			SharingEntryAction.ADD_DISCUSSION, SharingEntryAction.UPDATE,
+			SharingEntryAction.VIEW));
 
 	@Reference(
 		target = "(&(model.class.name=com.liferay.document.library.kernel.model.DLFileEntry)(!(component.name=" + SharingEntryDLFileEntryModelResourcePermissionRegistrar.COMPONENT_NAME + ")))"

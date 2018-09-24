@@ -27,11 +27,11 @@ import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.spring.extender.service.ServiceReference;
-import com.liferay.sharing.constants.SharingEntryActionKey;
-import com.liferay.sharing.exception.InvalidSharingEntryActionKeyException;
+import com.liferay.sharing.exception.InvalidSharingEntryActionException;
 import com.liferay.sharing.exception.InvalidSharingEntryExpirationDateException;
 import com.liferay.sharing.exception.InvalidSharingEntryUserException;
 import com.liferay.sharing.model.SharingEntry;
+import com.liferay.sharing.security.permission.SharingEntryAction;
 import com.liferay.sharing.service.base.SharingEntryLocalServiceBaseImpl;
 
 import java.util.Collection;
@@ -49,7 +49,7 @@ public class SharingEntryLocalServiceImpl
 	public SharingEntry addOrUpdateSharingEntry(
 			long fromUserId, long toUserId, long classNameId, long classPK,
 			long groupId, boolean shareable,
-			Collection<SharingEntryActionKey> sharingEntryActionKeys,
+			Collection<SharingEntryAction> sharingEntryActions,
 			Date expirationDate, ServiceContext serviceContext)
 		throws PortalException {
 
@@ -59,11 +59,11 @@ public class SharingEntryLocalServiceImpl
 		if (sharingEntry == null) {
 			return sharingEntryLocalService.addSharingEntry(
 				fromUserId, toUserId, classNameId, classPK, groupId, shareable,
-				sharingEntryActionKeys, expirationDate, serviceContext);
+				sharingEntryActions, expirationDate, serviceContext);
 		}
 
 		return sharingEntryLocalService.updateSharingEntry(
-			sharingEntry.getSharingEntryId(), sharingEntryActionKeys, shareable,
+			sharingEntry.getSharingEntryId(), sharingEntryActions, shareable,
 			expirationDate, serviceContext);
 	}
 
@@ -71,11 +71,11 @@ public class SharingEntryLocalServiceImpl
 	public SharingEntry addSharingEntry(
 			long fromUserId, long toUserId, long classNameId, long classPK,
 			long groupId, boolean shareable,
-			Collection<SharingEntryActionKey> sharingEntryActionKeys,
+			Collection<SharingEntryAction> sharingEntryActions,
 			Date expirationDate, ServiceContext serviceContext)
 		throws PortalException {
 
-		_validateSharingEntryActionKeys(sharingEntryActionKeys);
+		_validateSharingEntryActions(sharingEntryActions);
 
 		_validateUsers(fromUserId, toUserId);
 
@@ -100,11 +100,11 @@ public class SharingEntryLocalServiceImpl
 		sharingEntry.setShareable(shareable);
 		sharingEntry.setExpirationDate(expirationDate);
 
-		Stream<SharingEntryActionKey> sharingEntryActionKeyStream =
-			sharingEntryActionKeys.stream();
+		Stream<SharingEntryAction> sharingEntryActionStream =
+			sharingEntryActions.stream();
 
-		sharingEntryActionKeyStream.map(
-			SharingEntryActionKey::getBitwiseValue
+		sharingEntryActionStream.map(
+			SharingEntryAction::getBitwiseValue
 		).reduce(
 			(bitwiseValue1, bitwiseValue2) -> bitwiseValue1 | bitwiseValue2
 		).ifPresent(
@@ -252,7 +252,7 @@ public class SharingEntryLocalServiceImpl
 	@Override
 	public boolean hasShareableSharingPermission(
 		long toUserId, long classNameId, long classPK,
-		SharingEntryActionKey sharingEntryActionKey) {
+		SharingEntryAction sharingEntryAction) {
 
 		List<SharingEntry> sharingEntries =
 			sharingEntryPersistence.findByTU_C_C(
@@ -263,7 +263,7 @@ public class SharingEntryLocalServiceImpl
 				continue;
 			}
 
-			if (hasSharingPermission(sharingEntry, sharingEntryActionKey)) {
+			if (hasSharingPermission(sharingEntry, sharingEntryAction)) {
 				return true;
 			}
 		}
@@ -274,14 +274,14 @@ public class SharingEntryLocalServiceImpl
 	@Override
 	public boolean hasSharingPermission(
 		long toUserId, long classNameId, long classPK,
-		SharingEntryActionKey sharingEntryActionKey) {
+		SharingEntryAction sharingEntryAction) {
 
 		List<SharingEntry> sharingEntries =
 			sharingEntryPersistence.findByTU_C_C(
 				toUserId, classNameId, classPK);
 
 		for (SharingEntry sharingEntry : sharingEntries) {
-			if (hasSharingPermission(sharingEntry, sharingEntryActionKey)) {
+			if (hasSharingPermission(sharingEntry, sharingEntryAction)) {
 				return true;
 			}
 		}
@@ -291,12 +291,11 @@ public class SharingEntryLocalServiceImpl
 
 	@Override
 	public boolean hasSharingPermission(
-		SharingEntry sharingEntry,
-		SharingEntryActionKey sharingEntryActionKey) {
+		SharingEntry sharingEntry, SharingEntryAction sharingEntryAction) {
 
 		long actionIds = sharingEntry.getActionIds();
 
-		if ((actionIds & sharingEntryActionKey.getBitwiseValue()) != 0) {
+		if ((actionIds & sharingEntryAction.getBitwiseValue()) != 0) {
 			return true;
 		}
 
@@ -306,7 +305,7 @@ public class SharingEntryLocalServiceImpl
 	@Override
 	public SharingEntry updateSharingEntry(
 			long sharingEntryId,
-			Collection<SharingEntryActionKey> sharingEntryActionKeys,
+			Collection<SharingEntryAction> sharingEntryActions,
 			boolean shareable, Date expirationDate,
 			ServiceContext serviceContext)
 		throws PortalException {
@@ -314,18 +313,18 @@ public class SharingEntryLocalServiceImpl
 		SharingEntry sharingEntry = sharingEntryPersistence.findByPrimaryKey(
 			sharingEntryId);
 
-		_validateSharingEntryActionKeys(sharingEntryActionKeys);
+		_validateSharingEntryActions(sharingEntryActions);
 
 		_validateExpirationDate(expirationDate);
 
 		sharingEntry.setShareable(shareable);
 		sharingEntry.setExpirationDate(expirationDate);
 
-		Stream<SharingEntryActionKey> sharingEntryActionKeyStream =
-			sharingEntryActionKeys.stream();
+		Stream<SharingEntryAction> sharingEntryActionStream =
+			sharingEntryActions.stream();
 
-		sharingEntryActionKeyStream.map(
-			SharingEntryActionKey::getBitwiseValue
+		sharingEntryActionStream.map(
+			SharingEntryAction::getBitwiseValue
 		).reduce(
 			(bitwiseValue1, bitwiseValue2) -> bitwiseValue1 | bitwiseValue2
 		).ifPresent(
@@ -374,26 +373,24 @@ public class SharingEntryLocalServiceImpl
 		}
 	}
 
-	private void _validateSharingEntryActionKeys(
-			Collection<SharingEntryActionKey> sharedEntryActionKeys)
-		throws InvalidSharingEntryActionKeyException {
+	private void _validateSharingEntryActions(
+			Collection<SharingEntryAction> sharedEntryActionKeys)
+		throws InvalidSharingEntryActionException {
 
 		if (sharedEntryActionKeys.isEmpty()) {
-			throw new InvalidSharingEntryActionKeyException(
+			throw new InvalidSharingEntryActionException(
 				"Shared entry action keys is empty");
 		}
 
-		for (SharingEntryActionKey curSharingEntryActionKey :
-				sharedEntryActionKeys) {
-
-			if (curSharingEntryActionKey == null) {
-				throw new InvalidSharingEntryActionKeyException(
+		for (SharingEntryAction curSharingEntryAction : sharedEntryActionKeys) {
+			if (curSharingEntryAction == null) {
+				throw new InvalidSharingEntryActionException(
 					"Shared entry action keys contains a null value");
 			}
 		}
 
-		if (!sharedEntryActionKeys.contains(SharingEntryActionKey.VIEW)) {
-			throw new InvalidSharingEntryActionKeyException(
+		if (!sharedEntryActionKeys.contains(SharingEntryAction.VIEW)) {
+			throw new InvalidSharingEntryActionException(
 				"Shared entry action keys must contain VIEW shared entry " +
 					"action key");
 		}

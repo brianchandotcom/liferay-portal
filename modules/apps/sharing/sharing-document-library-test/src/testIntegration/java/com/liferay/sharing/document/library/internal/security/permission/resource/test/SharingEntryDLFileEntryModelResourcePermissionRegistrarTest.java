@@ -42,7 +42,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerTestRule;
-import com.liferay.sharing.constants.SharingEntryActionKey;
+import com.liferay.sharing.security.permission.SharingEntryAction;
 import com.liferay.sharing.service.SharingEntryLocalService;
 
 import java.util.Arrays;
@@ -99,7 +99,7 @@ public class SharingEntryDLFileEntryModelResourcePermissionRegistrarTest {
 	}
 
 	@Test
-	public void testUserWithAddDiscussionAndViewSharingEntryActionKeyCanAddDiscussionPrivateFileEntry()
+	public void testUserWithAddDiscussionAndViewSharingEntryActionCanAddDiscussionPrivateFileEntry()
 		throws Exception {
 
 		ServiceContext serviceContext =
@@ -110,8 +110,7 @@ public class SharingEntryDLFileEntryModelResourcePermissionRegistrarTest {
 			_user.getUserId(), _groupUser.getUserId(), _classNameId,
 			_fileEntry.getFileEntryId(), _fileEntry.getGroupId(), true,
 			Arrays.asList(
-				SharingEntryActionKey.ADD_DISCUSSION,
-				SharingEntryActionKey.VIEW),
+				SharingEntryAction.ADD_DISCUSSION, SharingEntryAction.VIEW),
 			null, serviceContext);
 
 		PermissionChecker permissionChecker =
@@ -127,7 +126,7 @@ public class SharingEntryDLFileEntryModelResourcePermissionRegistrarTest {
 	}
 
 	@Test
-	public void testUserWithAddDiscussionAndViewSharingEntryActionKeyCannotUpdatePrivateFileEntry()
+	public void testUserWithAddDiscussionAndViewSharingEntryActionCannotUpdatePrivateFileEntry()
 		throws Exception {
 
 		ServiceContext serviceContext =
@@ -138,8 +137,7 @@ public class SharingEntryDLFileEntryModelResourcePermissionRegistrarTest {
 			_user.getUserId(), _groupUser.getUserId(), _classNameId,
 			_fileEntry.getFileEntryId(), _fileEntry.getGroupId(), true,
 			Arrays.asList(
-				SharingEntryActionKey.ADD_DISCUSSION,
-				SharingEntryActionKey.VIEW),
+				SharingEntryAction.ADD_DISCUSSION, SharingEntryAction.VIEW),
 			null, serviceContext);
 
 		PermissionChecker permissionChecker =
@@ -155,7 +153,7 @@ public class SharingEntryDLFileEntryModelResourcePermissionRegistrarTest {
 	}
 
 	@Test
-	public void testUserWithoutAddDiscussionSharingEntryActionKeyCannotAddDiscussionPrivateFileEntry()
+	public void testUserWithoutAddDiscussionSharingEntryActionCannotAddDiscussionPrivateFileEntry()
 		throws Exception {
 
 		PermissionChecker permissionChecker =
@@ -187,7 +185,7 @@ public class SharingEntryDLFileEntryModelResourcePermissionRegistrarTest {
 	}
 
 	@Test
-	public void testUserWithoutUpdateSharingEntryActionKeyCannotUpdatePrivateFileEntry()
+	public void testUserWithoutUpdateSharingEntryActionCannotUpdatePrivateFileEntry()
 		throws Exception {
 
 		PermissionChecker permissionChecker =
@@ -203,7 +201,7 @@ public class SharingEntryDLFileEntryModelResourcePermissionRegistrarTest {
 	}
 
 	@Test
-	public void testUserWithoutViewSharingEntryActionKeyCannotViewPrivateFileEntry()
+	public void testUserWithoutViewSharingEntryActionCannotViewPrivateFileEntry()
 		throws Exception {
 
 		PermissionChecker permissionChecker =
@@ -219,7 +217,7 @@ public class SharingEntryDLFileEntryModelResourcePermissionRegistrarTest {
 	}
 
 	@Test
-	public void testUserWithUpdateAndViewSharingEntryActionKeyCannotAddDiscussionPrivateFileEntry()
+	public void testUserWithUpdateAndViewSharingEntryActionCannotAddDiscussionPrivateFileEntry()
 		throws Exception {
 
 		ServiceContext serviceContext =
@@ -229,8 +227,7 @@ public class SharingEntryDLFileEntryModelResourcePermissionRegistrarTest {
 		_sharingEntryLocalService.addSharingEntry(
 			_user.getUserId(), _groupUser.getUserId(), _classNameId,
 			_fileEntry.getFileEntryId(), _fileEntry.getGroupId(), true,
-			Arrays.asList(
-				SharingEntryActionKey.UPDATE, SharingEntryActionKey.VIEW),
+			Arrays.asList(SharingEntryAction.UPDATE, SharingEntryAction.VIEW),
 			null, serviceContext);
 
 		PermissionChecker permissionChecker =
@@ -246,7 +243,7 @@ public class SharingEntryDLFileEntryModelResourcePermissionRegistrarTest {
 	}
 
 	@Test
-	public void testUserWithUpdateAndViewSharingEntryActionKeyCanUpdatePrivateFileEntry()
+	public void testUserWithUpdateAndViewSharingEntryActionCanUpdatePrivateFileEntry()
 		throws Exception {
 
 		ServiceContext serviceContext =
@@ -256,8 +253,7 @@ public class SharingEntryDLFileEntryModelResourcePermissionRegistrarTest {
 		_sharingEntryLocalService.addSharingEntry(
 			_user.getUserId(), _groupUser.getUserId(), _classNameId,
 			_fileEntry.getFileEntryId(), _fileEntry.getGroupId(), true,
-			Arrays.asList(
-				SharingEntryActionKey.UPDATE, SharingEntryActionKey.VIEW),
+			Arrays.asList(SharingEntryAction.UPDATE, SharingEntryAction.VIEW),
 			null, serviceContext);
 
 		PermissionChecker permissionChecker =
@@ -273,7 +269,7 @@ public class SharingEntryDLFileEntryModelResourcePermissionRegistrarTest {
 	}
 
 	@Test
-	public void testUserWithViewSharingEntryActionKeyCanViewPrivateFileEntry()
+	public void testUserWithViewSharingEntryActionCanViewPrivateFileEntry()
 		throws Exception {
 
 		ServiceContext serviceContext =
@@ -283,7 +279,7 @@ public class SharingEntryDLFileEntryModelResourcePermissionRegistrarTest {
 		_sharingEntryLocalService.addSharingEntry(
 			_user.getUserId(), _groupUser.getUserId(), _classNameId,
 			_fileEntry.getFileEntryId(), _fileEntry.getGroupId(), true,
-			Arrays.asList(SharingEntryActionKey.VIEW), null, serviceContext);
+			Arrays.asList(SharingEntryAction.VIEW), null, serviceContext);
 
 		PermissionChecker permissionChecker =
 			PermissionCheckerFactoryUtil.create(_groupUser);

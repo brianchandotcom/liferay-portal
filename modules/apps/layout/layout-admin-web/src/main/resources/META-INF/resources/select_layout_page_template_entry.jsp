@@ -169,7 +169,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "select-template"));
 							<liferay-ui:search-iterator
 								displayStyle="icon"
 								markupView="lexicon"
-								searchResultCssClass="show-quick-actions-on-hover table table-autofit"
+								searchResultCssClass="display-style-icon list-unstyled row"
 							/>
 						</liferay-ui:search-container>
 

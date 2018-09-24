@@ -27,11 +27,7 @@ import com.liferay.asset.kernel.service.AssetTagLocalServiceUtil;
 import com.liferay.asset.kernel.service.AssetVocabularyServiceUtil;
 import com.liferay.asset.list.constants.AssetListFormConstants;
 import com.liferay.asset.list.constants.AssetListPortletKeys;
-import com.liferay.asset.list.constants.AssetListWebKeys;
-import com.liferay.asset.list.model.AssetListEntry;
 import com.liferay.asset.list.service.AssetListEntryAssetEntryRelLocalServiceUtil;
-import com.liferay.asset.list.service.AssetListEntryServiceUtil;
-import com.liferay.dynamic.data.mapping.util.DDMIndexer;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
@@ -62,16 +58,11 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.kernel.xml.Document;
-import com.liferay.portal.kernel.xml.Element;
-import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.sites.kernel.util.SitesUtil;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.List;
-import java.util.Locale;
 import java.util.Objects;
 import java.util.Set;
 
@@ -236,69 +227,14 @@ public class EditAssetListDisplayContext {
 		return ArrayUtil.toLongArray(groupIds);
 	}
 
-	public static void removeAndStoreSelection(
-			AssetListEntry assetListEntry, List<String> assetEntryUuids)
-		throws Exception {
-
-		if (assetEntryUuids.isEmpty()) {
-			return;
-		}
-
-		UnicodeProperties typeSettingsProperties = new UnicodeProperties(true);
-
-		typeSettingsProperties.fastLoad(assetListEntry.getTypeSettings());
-
-		String assetEntryXmlProperty = typeSettingsProperties.getProperty(
-			"assetEntryXml");
-
-		String[] assetEntryXmls = StringUtil.split(assetEntryXmlProperty);
-
-		List<String> assetEntryXmlsList = ListUtil.fromArray(assetEntryXmls);
-
-		Iterator<String> itr = assetEntryXmlsList.iterator();
-
-		while (itr.hasNext()) {
-			String assetEntryXml = itr.next();
-
-			Document document = SAXReaderUtil.read(assetEntryXml);
-
-			Element rootElement = document.getRootElement();
-
-			String assetEntryUuid = rootElement.elementText("asset-entry-uuid");
-
-			if (assetEntryUuids.contains(assetEntryUuid)) {
-				itr.remove();
-			}
-		}
-
-		assetEntryXmls = assetEntryXmlsList.toArray(
-			new String[assetEntryXmlsList.size()]);
-
-		typeSettingsProperties.put(
-			"assetEntryXml", String.join(StringPool.COMMA, assetEntryXmls));
-
-		AssetListEntryServiceUtil.updateAssetListEntrySettings(
-			assetListEntry.getAssetListEntryId(),
-			typeSettingsProperties.toString());
-	}
-
 	public EditAssetListDisplayContext(
 		PortletRequest portletRequest, PortletResponse portletResponse,
 		UnicodeProperties properties) {
-
-		_ddmIndexer = (DDMIndexer)portletRequest.getAttribute(
-			AssetListWebKeys.DDM_INDEXER);
 
 		_portletRequest = portletRequest;
 		_portletResponse = portletResponse;
 		_properties = properties;
 		_request = PortalUtil.getHttpServletRequest(portletRequest);
-	}
-
-	public String encodeName(
-		long ddmStructureId, String fieldName, Locale locale) {
-
-		return _ddmIndexer.encodeName(ddmStructureId, fieldName, locale);
 	}
 
 	public long getAssetListEntryId() {
@@ -704,28 +640,6 @@ public class EditAssetListDisplayContext {
 		return _anyAssetType;
 	}
 
-	public boolean isMergeURLTags() {
-		if (_mergeURLTags != null) {
-			return _mergeURLTags;
-		}
-
-		_mergeURLTags = GetterUtil.getBoolean(
-			_properties.getProperty("mergeUrlTags", null), true);
-
-		return _mergeURLTags;
-	}
-
-	public boolean isShowOnlyLayoutAssets() {
-		if (_showOnlyLayoutAssets != null) {
-			return _showOnlyLayoutAssets;
-		}
-
-		_showOnlyLayoutAssets = GetterUtil.getBoolean(
-			_properties.getProperty("showOnlyLayoutAssets", null));
-
-		return _showOnlyLayoutAssets;
-	}
-
 	public boolean isShowSubtypeFieldsFilter() {
 		return true;
 	}
@@ -882,13 +796,11 @@ public class EditAssetListDisplayContext {
 	private long[] _availableClassNameIds;
 	private long[] _classNameIds;
 	private long[] _classTypeIds;
-	private final DDMIndexer _ddmIndexer;
 	private String _ddmStructureDisplayFieldValue;
 	private String _ddmStructureFieldLabel;
 	private String _ddmStructureFieldName;
 	private String _ddmStructureFieldValue;
 	private long[] _groupIds;
-	private Boolean _mergeURLTags;
 	private String _orderByColumn1;
 	private String _orderByColumn2;
 	private String _orderByType1;
@@ -900,7 +812,6 @@ public class EditAssetListDisplayContext {
 	private long[] _referencedModelsGroupIds;
 	private final HttpServletRequest _request;
 	private SearchContainer _searchContainer;
-	private Boolean _showOnlyLayoutAssets;
 	private Boolean _subtypeFieldsFilterEnabled;
 
 }

@@ -9324,8 +9324,15 @@ cluster.link.bind.addr["cluster-link-udp"]=127.0.0.1</echo>
 	</target>
 
 	<target name="rebuild-legacy-database">
-		<get-testcase-property property.name="data.archive.type" />
-		<get-testcase-property property.name="portal.version" />
+		<if>
+			<not>
+				<isset property="skip.get.testcase.database.properties" />
+			</not>
+			<then>
+				<get-testcase-property property.name="data.archive.type" />
+				<get-testcase-property property.name="portal.version" />
+			</then>
+		</if>
 
 		<unzip
 			dest="${liferay.home}"

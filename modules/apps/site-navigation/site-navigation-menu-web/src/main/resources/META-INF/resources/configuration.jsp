@@ -21,10 +21,19 @@ String rootMenuItemType = siteNavigationMenuDisplayContext.getRootMenuItemType()
 
 SiteNavigationMenu siteNavigationMenu = siteNavigationMenuDisplayContext.getSiteNavigationMenu();
 
-String siteNavigationMenuName = LanguageUtil.get(request, "default");
+String siteNavigationMenuName = StringPool.BLANK;
 
 if (siteNavigationMenu != null) {
 	siteNavigationMenuName = siteNavigationMenu.getName();
+}
+else if (siteNavigationMenuDisplayContext.getSelectSiteNavigationMenuType() == SiteNavigationConstants.TYPE_PRIVATE_PAGES_HIERARCHY) {
+	siteNavigationMenuName = LanguageUtil.get(request, "private-pages-hierarchy");
+}
+else if (siteNavigationMenuDisplayContext.getSelectSiteNavigationMenuType() == SiteNavigationConstants.TYPE_PUBLIC_PAGES_HIERARCHY) {
+	siteNavigationMenuName = LanguageUtil.get(request, "public-pages-hierarchy");
+}
+else {
+	siteNavigationMenuName = LanguageUtil.get(request, layout.isPrivateLayout() ? "private-pages-hierarchy" : "public-pages-hierarchy");
 }
 %>
 
@@ -57,6 +66,19 @@ if (siteNavigationMenu != null) {
 									<aui:input checked="<%= !siteNavigationMenuDisplayContext.isSiteNavigationMenuSelected() %>" cssClass="select-navigation" label="select-navigation" name="selectNavigation" type="radio" value="0" />
 
 									<aui:select disabled="<%= siteNavigationMenuDisplayContext.isSiteNavigationMenuSelected() %>" label="" name="selectSiteNavigationMenuType" value="<%= siteNavigationMenuDisplayContext.getSelectSiteNavigationMenuType() %>">
+
+										<%
+										Group scopeGroup = themeDisplay.getScopeGroup();
+										%>
+
+										<c:if test="<%= scopeGroup.hasPublicLayouts() && layout.isPublicLayout() %>">
+											<aui:option label="public-pages-hierarchy" selected="<%= siteNavigationMenuDisplayContext.getSelectSiteNavigationMenuType() == SiteNavigationConstants.TYPE_PUBLIC_PAGES_HIERARCHY %>" value="<%= SiteNavigationConstants.TYPE_PUBLIC_PAGES_HIERARCHY %>" />
+										</c:if>
+
+										<c:if test="<%= scopeGroup.hasPrivateLayouts() && layout.isPrivateLayout() %>">
+											<aui:option label="private-pages-hierarchy" selected="<%= siteNavigationMenuDisplayContext.getSelectSiteNavigationMenuType() == SiteNavigationConstants.TYPE_PRIVATE_PAGES_HIERARCHY %>" value="<%= SiteNavigationConstants.TYPE_PRIVATE_PAGES_HIERARCHY %>" />
+										</c:if>
+
 										<aui:option label="primary-navigation" selected="<%= siteNavigationMenuDisplayContext.getSelectSiteNavigationMenuType() == SiteNavigationConstants.TYPE_PRIMARY %>" value="<%= SiteNavigationConstants.TYPE_PRIMARY %>" />
 										<aui:option label="private-navigation" selected="<%= siteNavigationMenuDisplayContext.getSelectSiteNavigationMenuType() == SiteNavigationConstants.TYPE_PRIVATE %>" value="<%= SiteNavigationConstants.TYPE_PRIVATE %>" />
 										<aui:option label="secondary-navigation" selected="<%= siteNavigationMenuDisplayContext.getSelectSiteNavigationMenuType() == SiteNavigationConstants.TYPE_SECONDARY %>" value="<%= SiteNavigationConstants.TYPE_SECONDARY %>" />

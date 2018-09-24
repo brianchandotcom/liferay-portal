@@ -35,18 +35,11 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.GroupConstants;
-import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
-import com.liferay.portal.kernel.security.auth.PrincipalException;
-import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
-import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
-import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -58,13 +51,10 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.sites.kernel.util.SitesUtil;
 
 import java.util.ArrayList;
-import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Objects;
-import java.util.Set;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
@@ -76,16 +66,6 @@ import javax.servlet.http.HttpServletRequest;
  * @author Pavel Savinov
  */
 public class EditAssetListDisplayContext {
-
-	public static final String SCOPE_ID_CHILD_GROUP_PREFIX = "ChildGroup_";
-
-	public static final String SCOPE_ID_GROUP_PREFIX = "Group_";
-
-	public static final String SCOPE_ID_LAYOUT_PREFIX = "Layout_";
-
-	public static final String SCOPE_ID_LAYOUT_UUID_PREFIX = "LayoutUuid_";
-
-	public static final String SCOPE_ID_PARENT_GROUP_PREFIX = "ParentGroup_";
 
 	public EditAssetListDisplayContext(
 		PortletRequest portletRequest, PortletResponse portletResponse,
@@ -364,131 +344,6 @@ public class EditAssetListDisplayContext {
 		return _ddmStructureFieldValue;
 	}
 
-	public long getGroupIdFromScopeId(
-			String scopeId, long siteGroupId, boolean privateLayout)
-		throws PortalException {
-
-		if (scopeId.startsWith(SCOPE_ID_CHILD_GROUP_PREFIX)) {
-			String scopeIdSuffix = scopeId.substring(
-				SCOPE_ID_CHILD_GROUP_PREFIX.length());
-
-			long childGroupId = GetterUtil.getLong(scopeIdSuffix);
-
-			Group childGroup = GroupLocalServiceUtil.getGroup(childGroupId);
-
-			if (!childGroup.hasAncestor(siteGroupId)) {
-				throw new PrincipalException();
-			}
-
-			return childGroupId;
-		}
-		else if (scopeId.startsWith(SCOPE_ID_GROUP_PREFIX)) {
-			String scopeIdSuffix = scopeId.substring(
-				SCOPE_ID_GROUP_PREFIX.length());
-
-			if (scopeIdSuffix.equals(GroupConstants.DEFAULT)) {
-				return siteGroupId;
-			}
-
-			long scopeGroupId = GetterUtil.getLong(scopeIdSuffix);
-
-			Group scopeGroup = GroupLocalServiceUtil.getGroup(scopeGroupId);
-
-			return scopeGroup.getGroupId();
-		}
-		else if (scopeId.startsWith(SCOPE_ID_LAYOUT_UUID_PREFIX)) {
-			String layoutUuid = scopeId.substring(
-				SCOPE_ID_LAYOUT_UUID_PREFIX.length());
-
-			Layout scopeIdLayout =
-				LayoutLocalServiceUtil.getLayoutByUuidAndGroupId(
-					layoutUuid, siteGroupId, privateLayout);
-
-			Group scopeIdGroup = GroupLocalServiceUtil.checkScopeGroup(
-				scopeIdLayout, PrincipalThreadLocal.getUserId());
-
-			return scopeIdGroup.getGroupId();
-		}
-		else if (scopeId.startsWith(SCOPE_ID_LAYOUT_PREFIX)) {
-
-			// Legacy portlet preferences
-
-			String scopeIdSuffix = scopeId.substring(
-				SCOPE_ID_LAYOUT_PREFIX.length());
-
-			long scopeIdLayoutId = GetterUtil.getLong(scopeIdSuffix);
-
-			Layout scopeIdLayout = LayoutLocalServiceUtil.getLayout(
-				siteGroupId, privateLayout, scopeIdLayoutId);
-
-			Group scopeIdGroup = scopeIdLayout.getScopeGroup();
-
-			return scopeIdGroup.getGroupId();
-		}
-		else if (scopeId.startsWith(SCOPE_ID_PARENT_GROUP_PREFIX)) {
-			String scopeIdSuffix = scopeId.substring(
-				SCOPE_ID_PARENT_GROUP_PREFIX.length());
-
-			long parentGroupId = GetterUtil.getLong(scopeIdSuffix);
-
-			Group parentGroup = GroupLocalServiceUtil.getGroup(parentGroupId);
-
-			if (!SitesUtil.isContentSharingWithChildrenEnabled(parentGroup)) {
-				throw new PrincipalException();
-			}
-
-			Group group = GroupLocalServiceUtil.getGroup(siteGroupId);
-
-			if (!group.hasAncestor(parentGroupId)) {
-				throw new PrincipalException();
-			}
-
-			return parentGroupId;
-		}
-		else {
-			throw new IllegalArgumentException("Invalid scope ID " + scopeId);
-		}
-	}
-
-	public long[] getGroupIds() {
-		if (_groupIds != null) {
-			return _groupIds;
-		}
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		_groupIds = getGroupIds(
-			_properties, themeDisplay.getScopeGroupId(),
-			themeDisplay.getLayout());
-
-		return _groupIds;
-	}
-
-	public long[] getGroupIds(
-		UnicodeProperties properties, long scopeGroupId, Layout layout) {
-
-		String[] scopeIds = StringUtil.split(
-			properties.getProperty(
-				"scopeIds", SCOPE_ID_GROUP_PREFIX + scopeGroupId));
-
-		Set<Long> groupIds = new LinkedHashSet<>();
-
-		for (String scopeId : scopeIds) {
-			try {
-				long groupId = getGroupIdFromScopeId(
-					scopeId, scopeGroupId, layout.isPrivateLayout());
-
-				groupIds.add(groupId);
-			}
-			catch (Exception e) {
-				continue;
-			}
-		}
-
-		return ArrayUtil.toLongArray(groupIds);
-	}
-
 	public String getOrderByColumn1() {
 		if (_orderByColumn1 != null) {
 			return _orderByColumn1;
@@ -564,8 +419,12 @@ public class EditAssetListDisplayContext {
 			return _referencedModelsGroupIds;
 		}
 
+		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
 		_referencedModelsGroupIds =
-			PortalUtil.getCurrentAndAncestorSiteGroupIds(getGroupIds(), true);
+			PortalUtil.getCurrentAndAncestorSiteGroupIds(
+				themeDisplay.getScopeGroupId(), true);
 
 		return _referencedModelsGroupIds;
 	}
@@ -606,8 +465,12 @@ public class EditAssetListDisplayContext {
 				return null;
 			}
 
+			ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
 			portletURL.setParameter(
-				"groupIds", StringUtil.merge(getGroupIds()));
+				"groupIds", String.valueOf(themeDisplay.getScopeGroupId()));
+
 			portletURL.setParameter(
 				"eventName", _portletResponse.getNamespace() + "selectTag");
 			portletURL.setParameter("selectedTagNames", "{selectedTagNames}");
@@ -622,8 +485,12 @@ public class EditAssetListDisplayContext {
 	}
 
 	public String getVocabularyIds() throws Exception {
+		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
 		List<AssetVocabulary> vocabularies =
-			AssetVocabularyServiceUtil.getGroupsVocabularies(getGroupIds());
+			AssetVocabularyServiceUtil.getGroupsVocabularies(
+				new long[] {themeDisplay.getScopeGroupId()});
 
 		return ListUtil.toString(
 			vocabularies, AssetVocabulary.VOCABULARY_ID_ACCESSOR);
@@ -800,7 +667,6 @@ public class EditAssetListDisplayContext {
 	private String _ddmStructureFieldLabel;
 	private String _ddmStructureFieldName;
 	private String _ddmStructureFieldValue;
-	private long[] _groupIds;
 	private String _orderByColumn1;
 	private String _orderByColumn2;
 	private String _orderByType1;

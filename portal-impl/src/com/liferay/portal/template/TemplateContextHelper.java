@@ -89,6 +89,8 @@ import com.liferay.portal.kernel.util.Validator_IW;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.webserver.WebServerServletTokenUtil;
 import com.liferay.portal.kernel.xml.SAXReader;
+import com.liferay.portal.struts.Definition;
+import com.liferay.portal.struts.PortalTilesPlugin;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -113,9 +115,6 @@ import javax.portlet.RenderResponse;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
-
-import org.apache.struts.tiles.ComponentContext;
-import org.apache.struts.tiles.taglib.ComponentConstants;
 
 /**
  * @author Tina Tian
@@ -867,30 +866,31 @@ public class TemplateContextHelper {
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		ComponentContext componentContext =
-			(ComponentContext)request.getAttribute(
-				ComponentConstants.COMPONENT_CONTEXT);
+		Definition definition = (Definition)request.getAttribute(
+			PortalTilesPlugin.DEFINITION);
 
-		if (componentContext == null) {
+		if (definition == null) {
 			themeDisplay.setTilesSelectable(true);
 
 			return;
 		}
 
-		String tilesTitle = (String)componentContext.getAttribute("title");
+		Map<String, String> attributes = definition.getAttributes();
+
+		String tilesTitle = attributes.get("title");
 
 		themeDisplay.setTilesTitle(tilesTitle);
 
 		contextObjects.put("tilesTitle", tilesTitle);
 
-		String tilesContent = (String)componentContext.getAttribute("content");
+		String tilesContent = attributes.get("content");
 
 		themeDisplay.setTilesContent(tilesContent);
 
 		contextObjects.put("tilesContent", tilesContent);
 
 		boolean tilesSelectable = GetterUtil.getBoolean(
-			(String)componentContext.getAttribute("selectable"));
+			attributes.get("selectable"));
 
 		themeDisplay.setTilesSelectable(tilesSelectable);
 

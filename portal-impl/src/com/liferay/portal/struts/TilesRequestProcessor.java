@@ -27,8 +27,6 @@ import org.apache.struts.action.ActionServlet;
 import org.apache.struts.action.RequestProcessor;
 import org.apache.struts.config.ForwardConfig;
 import org.apache.struts.config.ModuleConfig;
-import org.apache.struts.tiles.ComponentContext;
-import org.apache.struts.tiles.taglib.ComponentConstants;
 
 /**
  * @author Shuyang Zhou
@@ -56,11 +54,7 @@ public class TilesRequestProcessor extends RequestProcessor {
 		Definition definition = _definitions.get(uri);
 
 		if (definition != null) {
-			ComponentContext componentContext = new ComponentContext(
-				definition.getAttributes());
-
-			request.setAttribute(
-				ComponentConstants.COMPONENT_CONTEXT, componentContext);
+			request.setAttribute(PortalTilesPlugin.DEFINITION, definition);
 
 			uri = definition.getPath();
 		}

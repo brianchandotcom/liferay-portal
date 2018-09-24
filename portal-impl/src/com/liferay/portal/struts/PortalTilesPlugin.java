@@ -37,6 +37,9 @@ import org.apache.struts.config.ModuleConfig;
  */
 public class PortalTilesPlugin implements PlugIn {
 
+	public static final String DEFINITION =
+		"org.apache.struts.tiles.definition";
+
 	public static final String DEFINITIONS =
 		"org.apache.struts.tiles.definitions";
 

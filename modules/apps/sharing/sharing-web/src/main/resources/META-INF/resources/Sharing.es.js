@@ -24,7 +24,7 @@ class Sharing extends PortletBase {
 		const sharingDialog = Liferay.Util.getWindow(this._sharingDialogId);
 
 		if (sharingDialog && sharingDialog.hide) {
-			sharingDialog.hide();
+			setTimeout(() => { sharingDialog.hide() }, 500);
 		}
 	}
 

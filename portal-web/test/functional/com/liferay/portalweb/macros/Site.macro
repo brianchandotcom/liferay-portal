@@ -998,12 +998,8 @@
 				<execute function="AssertElementPresent" locator1="Message#EMPTY_INFO" />
 			</then>
 			<else>
-				<execute function="AssertElementPresent" locator1="Card#GENERIC_LARGE_TEXT" />
-
-				<var method="StringUtil#unquote('${searchValue}')" name="cardText" />
-
-				<execute function="AssertTextEquals" locator1="Card#SPECIFIC_LARGE_TEXT" value1="${cardText}">
-					<var name="key_cardText" value="${cardText}" />
+				<execute macro="LexiconEntry#viewEntryName">
+					<var method="StringUtil#unquote('${searchValue}')" name="rowEntry" />
 				</execute>
 			</else>
 		</if>

@@ -20,6 +20,11 @@ import com.liferay.portal.kernel.xml.SAXReaderUtil;
 
 import java.io.InputStream;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 
@@ -45,7 +50,9 @@ public class PortalTilesPlugin implements PlugIn {
 
 		ServletContext servletContext = servlet.getServletContext();
 
-		XmlDefinitionsSet xmlDefinitionsSet = new XmlDefinitionsSet();
+		Map<String, Definition> definitions = new HashMap<>();
+
+		List<Element> deferedElements = new ArrayList<>();
 
 		try (InputStream inputStream = servletContext.getResourceAsStream(
 				"/WEB-INF/tiles-defs.xml")) {
@@ -57,30 +64,64 @@ public class PortalTilesPlugin implements PlugIn {
 			for (Element definitionElement :
 					rootElement.elements("definition")) {
 
-				XmlDefinition xmlDefinition = new XmlDefinition();
+				String parentName = definitionElement.attributeValue("extends");
 
-				xmlDefinition.setExtends(
-					definitionElement.attributeValue("extends"));
-				xmlDefinition.setName(definitionElement.attributeValue("name"));
-				xmlDefinition.setPath(definitionElement.attributeValue("path"));
-
-				for (Element putElement : definitionElement.elements("put")) {
-					xmlDefinition.putAttribute(
-						putElement.attributeValue("name"),
-						putElement.attributeValue("value"));
+				if (parentName == null) {
+					_addDefinition(definitions, definitionElement, null);
 				}
+				else {
+					Definition parentDefinition = definitions.get(parentName);
 
-				xmlDefinitionsSet.putDefinition(xmlDefinition);
+					if (parentDefinition == null) {
+						deferedElements.add(rootElement);
+					}
+					else {
+						_addDefinition(
+							definitions, definitionElement, parentDefinition);
+					}
+				}
 			}
 
-			xmlDefinitionsSet.resolveInheritances();
+			for (Element definitionElement : deferedElements) {
+				Definition parentDefinition = definitions.get(
+					definitionElement.attributeValue("extends"));
 
-			servletContext.setAttribute(
-				DEFINITIONS, xmlDefinitionsSet.getDefinitions());
+				_addDefinition(
+					definitions, definitionElement, parentDefinition);
+			}
+
+			servletContext.setAttribute(DEFINITIONS, definitions);
 		}
 		catch (Exception e) {
 			throw new ServletException(e);
 		}
+	}
+
+	private void _addDefinition(
+		Map<String, Definition> definitions, Element definitionElement,
+		Definition parentDefinition) {
+
+		String name = definitionElement.attributeValue("name");
+
+		Map<String, String> attributes = new HashMap<>();
+
+		String path = definitionElement.attributeValue("path");
+
+		if (parentDefinition != null) {
+			attributes.putAll(parentDefinition.getAttributes());
+
+			if (path == null) {
+				path = parentDefinition.getPath();
+			}
+		}
+
+		for (Element putElement : definitionElement.elements("put")) {
+			attributes.put(
+				putElement.attributeValue("name"),
+				putElement.attributeValue("value"));
+		}
+
+		definitions.put(name, new Definition(path, attributes));
 	}
 
 }

@@ -43,7 +43,7 @@ public class TilesRequestProcessor extends RequestProcessor {
 
 		ServletContext servletContext = getServletContext();
 
-		_componentDefinitions = (Map<String, ComponentDefinition>)
+		_definitions = (Map<String, Definition>)
 			servletContext.getAttribute(PortalTilesPlugin.DEFINITIONS);
 	}
 
@@ -53,17 +53,16 @@ public class TilesRequestProcessor extends RequestProcessor {
 			HttpServletResponse response)
 		throws IOException, ServletException {
 
-		ComponentDefinition componentDefinition = _componentDefinitions.get(
-			uri);
+		Definition definition = _definitions.get(uri);
 
-		if (componentDefinition != null) {
+		if (definition != null) {
 			ComponentContext componentContext = new ComponentContext(
-				componentDefinition.getAttributes());
+				definition.getAttributes());
 
 			request.setAttribute(
 				ComponentConstants.COMPONENT_CONTEXT, componentContext);
 
-			uri = componentDefinition.getPath();
+			uri = definition.getPath();
 		}
 
 		doForward(uri, request, response);
@@ -82,6 +81,6 @@ public class TilesRequestProcessor extends RequestProcessor {
 		internalModuleRelativeForward(forward.getPath(), request, response);
 	}
 
-	private Map<String, ComponentDefinition> _componentDefinitions;
+	private Map<String, Definition> _definitions;
 
 }

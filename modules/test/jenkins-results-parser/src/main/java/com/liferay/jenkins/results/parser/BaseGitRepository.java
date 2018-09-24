@@ -48,11 +48,7 @@ public abstract class BaseGitRepository
 	protected BaseGitRepository(String name) {
 		super("{}");
 
-		if ((name == null) || name.isEmpty()) {
-			throw new IllegalArgumentException("Name is null");
-		}
-
-		put("name", name);
+		_setName(name);
 
 		validateKeys(_REQUIRED_KEYS);
 	}
@@ -91,6 +87,14 @@ public abstract class BaseGitRepository
 				throw new RuntimeException("Missing " + requiredKey);
 			}
 		}
+	}
+
+	private void _setName(String name) {
+		if ((name == null) || name.isEmpty()) {
+			throw new IllegalArgumentException("Name is null");
+		}
+
+		put("name", name);
 	}
 
 	private static final String _REPOSITORY_PROPERTIES_URL =

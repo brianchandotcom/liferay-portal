@@ -35,11 +35,13 @@ import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.io.StringReader;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Properties;
@@ -216,6 +218,14 @@ public abstract class Baseline {
 					if (!newVersionSuggested && !info.mismatch) {
 						continue;
 					}
+				}
+
+				Set<String> ignoredWarnings = getIgnoredWarnings(newJar, info);
+
+				if (ignoredWarnings.contains(warnings)) {
+					match = true;
+
+					continue;
 				}
 
 				boolean correctPackageInfo = generatePackageInfo(
@@ -530,6 +540,35 @@ public abstract class Baseline {
 		}
 
 		return correct;
+	}
+
+	protected Set<String> getIgnoredWarnings(Jar jar, Info info)
+		throws Exception {
+
+		Resource resource = jar.getResource(
+			info.packageName.replace('.', '/') + "/.lfrbuild-packageinfo");
+
+		if (resource == null) {
+			return Collections.emptySet();
+		}
+
+		Set<String> ignoredWarnings = new HashSet<>();
+
+		String content = IO.collect(resource.openInputStream());
+
+		try (BufferedReader bufferedReader = new BufferedReader(
+				new StringReader(content.trim()))) {
+
+			String line = null;
+
+			while ((line = bufferedReader.readLine()) != null) {
+				String s = line.trim();
+
+				ignoredWarnings.add(s.replace('-', ' '));
+			}
+		}
+
+		return ignoredWarnings;
 	}
 
 	protected Set<String> getMovedPackages() throws IOException {

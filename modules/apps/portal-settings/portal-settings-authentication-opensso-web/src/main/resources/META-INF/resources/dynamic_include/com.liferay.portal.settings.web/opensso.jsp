@@ -32,14 +32,14 @@ String version = openSSOConfiguration.version();
 %>
 
 <aui:fieldset>
+	<aui:input id='<%= PortalUtil.generateRandomKey(request, "portal_settings_authentication_opensso") %>' name="<%= ActionRequest.ACTION_NAME %>" type="hidden" value="/portal_settings/opensso" />
+
+	<aui:input label="enabled" name='<%= PortalSettingsOpenSSOConstants.FORM_PARAMETER_NAMESPACE + "enabled" %>' type="checkbox" value="<%= enabled %>" />
+
 	<aui:select label="version" name='<%= PortalSettingsOpenSSOConstants.FORM_PARAMETER_NAMESPACE + "version" %>' value="<%= version %>">
 		<aui:option label="openam-12" value="<%= OpenSSOConfigurationKeys.VERSION_OPENAM_12 %>" />
 		<aui:option label="openam-13" value="<%= OpenSSOConfigurationKeys.VERSION_OPENAM_13 %>" />
 	</aui:select>
-
-	<aui:input id='<%= PortalUtil.generateRandomKey(request, "portal_settings_authentication_opensso") %>' name="<%= ActionRequest.ACTION_NAME %>" type="hidden" value="/portal_settings/opensso" />
-
-	<aui:input label="enabled" name='<%= PortalSettingsOpenSSOConstants.FORM_PARAMETER_NAMESPACE + "enabled" %>' type="checkbox" value="<%= enabled %>" />
 
 	<aui:input helpMessage="import-opensso-users-from-ldap-help" label="import-opensso-users-from-ldap" name='<%= PortalSettingsOpenSSOConstants.FORM_PARAMETER_NAMESPACE + "importFromLDAP" %>' type="checkbox" value="<%= importFromLDAP %>" />
 

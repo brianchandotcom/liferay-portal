@@ -22,7 +22,7 @@ DLOpenerGoogleDriveFileReference dlOpenerGoogleDriveFileReference = (DLOpenerGoo
 long cssLastModifiedTime = PortalWebResourcesUtil.getLastModified(PortalWebResourceConstants.RESOURCE_TYPE_CSS);
 
 String googleDocsEditURL = ParamUtil.getString(request, "googleDocsEditURL");
-String redirect = ParamUtil.getString(request, "redirect");
+String googleDocsRedirect = ParamUtil.getString(request, "googleDocsRedirect");
 %>
 
 <!DOCTYPE html>
@@ -37,7 +37,7 @@ String redirect = ParamUtil.getString(request, "redirect");
 	<body>
 		<portlet:actionURL name="/document_library/edit_in_google_docs" var="actionURL">
 			<portlet:param name="fileEntryId" value="<%= String.valueOf(dlOpenerGoogleDriveFileReference.getFileEntryId()) %>" />
-			<portlet:param name="redirect" value="<%= redirect %>" />
+			<portlet:param name="redirect" value="<%= googleDocsRedirect %>" />
 		</portlet:actionURL>
 
 		<form action="<%= actionURL %>" method="post">

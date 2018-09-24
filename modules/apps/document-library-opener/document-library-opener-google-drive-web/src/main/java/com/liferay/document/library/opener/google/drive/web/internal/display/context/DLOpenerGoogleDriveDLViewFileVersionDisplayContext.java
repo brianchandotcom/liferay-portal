@@ -39,6 +39,7 @@ import com.liferay.portal.kernel.servlet.taglib.ui.MenuItem;
 import com.liferay.portal.kernel.servlet.taglib.ui.URLMenuItem;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.JavaConstants;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
 
 import java.util.Collection;
@@ -65,7 +66,7 @@ public class DLOpenerGoogleDriveDLViewFileVersionDisplayContext
 		FileVersion fileVersion, ResourceBundle resourceBundle,
 		DLOpenerFileEntryReferenceLocalService
 			dlOpenerFileEntryReferenceLocalService,
-		DLOpenerGoogleDriveManager dlOpenerGoogleDriveManager) {
+		DLOpenerGoogleDriveManager dlOpenerGoogleDriveManager, Portal portal) {
 
 		super(_UUID, parentDLDisplayContext, request, response, fileVersion);
 
@@ -73,6 +74,7 @@ public class DLOpenerGoogleDriveDLViewFileVersionDisplayContext
 		_dlOpenerFileEntryReferenceLocalService =
 			dlOpenerFileEntryReferenceLocalService;
 		_dlOpenerGoogleDriveManager = dlOpenerGoogleDriveManager;
+		_portal = portal;
 	}
 
 	@Override
@@ -137,6 +139,8 @@ public class DLOpenerGoogleDriveDLViewFileVersionDisplayContext
 		liferayPortletURL.setParameter(Constants.CMD, cmd);
 		liferayPortletURL.setParameter(
 			"fileEntryId", String.valueOf(fileVersion.getFileEntryId()));
+		liferayPortletURL.setParameter(
+			"googleDocsRedirect", _portal.getCurrentURL(request));
 
 		return liferayPortletURL.toString();
 	}
@@ -231,6 +235,7 @@ public class DLOpenerGoogleDriveDLViewFileVersionDisplayContext
 	private final DLOpenerFileEntryReferenceLocalService
 		_dlOpenerFileEntryReferenceLocalService;
 	private final DLOpenerGoogleDriveManager _dlOpenerGoogleDriveManager;
+	private final Portal _portal;
 	private final ResourceBundle _resourceBundle;
 
 }

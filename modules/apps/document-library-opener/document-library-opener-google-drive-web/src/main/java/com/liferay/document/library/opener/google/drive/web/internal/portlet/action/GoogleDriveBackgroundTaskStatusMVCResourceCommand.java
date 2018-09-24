@@ -30,13 +30,11 @@ import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.repository.model.FileEntry;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.Map;
 
@@ -127,11 +125,9 @@ public class GoogleDriveBackgroundTaskStatusMVCResourceCommand
 
 			portletURL.setParameter("googleDocsEditURL", googleDocsEditURL);
 
-			ThemeDisplay themeDisplay =
-				(ThemeDisplay)resourceRequest.getAttribute(
-					WebKeys.THEME_DISPLAY);
-
-			portletURL.setParameter("redirect", themeDisplay.getURLCurrent());
+			portletURL.setParameter(
+				"googleDocsRedirect",
+				ParamUtil.getString(resourceRequest, "googleDocsRedirect"));
 
 			jsonObject.put("googleDocsEditURL", portletURL.toString());
 		}

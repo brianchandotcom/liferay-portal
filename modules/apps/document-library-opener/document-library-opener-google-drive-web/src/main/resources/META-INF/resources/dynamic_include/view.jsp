@@ -24,6 +24,7 @@ DLOpenerGoogleDriveFileReference dlOpenerGoogleDriveFileReference = (DLOpenerGoo
 	<portlet:resourceURL id="/document_library/google_drive_background_task_status" var="googleDriveBackgroundTaskStatusURL">
 		<portlet:param name="backgroundTaskId" value="<%= String.valueOf(dlOpenerGoogleDriveFileReference.getBackgroundTaskId()) %>" />
 		<portlet:param name="fileEntryId" value="<%= String.valueOf(dlOpenerGoogleDriveFileReference.getFileEntryId()) %>" />
+		<portlet:param name="googleDocsRedirect" value='<%= ParamUtil.getString(request, "googleDocsRedirect") %>' />
 	</portlet:resourceURL>
 
 	<aui:script>

@@ -88,15 +88,22 @@ public class BaselineTask extends DefaultTask implements VerificationTask {
 		boolean match = baseline.execute();
 
 		if (!match) {
-			String message = "Semantic versioning is incorrect";
+			StringBuilder sb = new StringBuilder();
+
+			sb.append("Semantic versioning is incorrect ");
+			sb.append("{oldJarFile=");
+			sb.append(getOldJarFile());
+			sb.append(", newJarFile=");
+			sb.append(getNewJarFile());
+			sb.append("}");
 
 			if (getIgnoreFailures()) {
 				if (logger.isWarnEnabled()) {
-					logger.warn(message);
+					logger.warn(sb.toString());
 				}
 			}
 			else {
-				throw new GradleException(message);
+				throw new GradleException(sb.toString());
 			}
 		}
 	}

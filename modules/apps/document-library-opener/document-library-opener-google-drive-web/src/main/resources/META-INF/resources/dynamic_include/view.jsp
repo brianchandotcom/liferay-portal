@@ -27,7 +27,7 @@ DLOpenerGoogleDriveFileReference dlOpenerGoogleDriveFileReference = (DLOpenerGoo
 	</portlet:resourceURL>
 
 	<aui:script>
-		!(function() {
+		(function() {
 			var TIME_POLLING = 500;
 			var TIME_SHOW_MSG = 2000;
 			var isTimeConsumed = false;
@@ -64,33 +64,32 @@ DLOpenerGoogleDriveFileReference dlOpenerGoogleDriveFileReference = (DLOpenerGoo
 						method: 'POST'
 					}
 				)
-					.then(
-						function(response) {
-							if (!response.ok) {
-								throw defaultError;
-							}
+				.then(
+					function(response) {
+						if (!response.ok) {
+							throw defaultError;
+						}
 
-							return response.json();
-					})
-					.then(
-						function(response) {
-							if (response.complete) {
-									url = response.googleDocsEditURL;
-									navigate();
-							}
-							else if (response.error) {
-								throw defaultError;
-							}
-							else {
-								setTimeout(polling, TIME_POLLING);
-							}
-					})
-					.catch(
-						function(error) {
-							showError(error);
-							Liferay.Util.getWindow(dialogId).hide();
-						})
-				;
+						return response.json();
+				})
+				.then(
+					function(response) {
+						if (response.complete) {
+								url = response.googleDocsEditURL;
+								navigate();
+						}
+						else if (response.error) {
+							throw defaultError;
+						}
+						else {
+							setTimeout(polling, TIME_POLLING);
+						}
+				})
+				.catch(
+					function(error) {
+						showError(error);
+						Liferay.Util.getWindow(dialogId).hide();
+					});
 			}
 
 			Liferay.Util.openWindow(

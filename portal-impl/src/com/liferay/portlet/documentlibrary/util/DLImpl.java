@@ -595,20 +595,15 @@ public class DLImpl implements DL {
 		if (appendVersion) {
 			sb.append("?version=");
 			sb.append(fileVersion.getVersion());
+			sb.append("&t=");
+		}
+		else {
+			sb.append("?t=");
 		}
 
-		if (ImageProcessorUtil.isImageSupported(fileVersion)) {
-			if (appendVersion) {
-				sb.append("&t=");
-			}
-			else {
-				sb.append("?t=");
-			}
+		Date modifiedDate = fileVersion.getModifiedDate();
 
-			Date modifiedDate = fileVersion.getModifiedDate();
-
-			sb.append(modifiedDate.getTime());
-		}
+		sb.append(modifiedDate.getTime());
 
 		sb.append(queryString);
 

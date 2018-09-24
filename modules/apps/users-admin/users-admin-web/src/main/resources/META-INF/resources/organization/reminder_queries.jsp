@@ -36,63 +36,12 @@ if ((organization != null) && Validator.isNull(reminderQueries)) {
 Map<Locale, String> reminderQueriesMap = LocalizationUtil.getLocalizationMap(renderRequest, "reminderQueries");
 %>
 
-<div class="alert alert-info">
-	<liferay-ui:message key="specify-custom-reminder-queries-for-the-users-of-this-organization" />
+<div class="sheet-text">
+	<liferay-ui:message key="specify-custom-security-questions-for-the-users-of-this-organization" />
 </div>
 
-<aui:fieldset cssClass="reminder">
-	<aui:input label='<%= LanguageUtil.get(request, "default-language") + StringPool.COLON + StringPool.SPACE + defaultLocale.getDisplayName(defaultLocale) %>' name='<%= "reminderQueries_" + defaultLocale %>' type="textarea" value="<%= reminderQueries %>" />
-
-	<aui:select cssClass="localized-language-selector" label='<%= LanguageUtil.get(request, "localized-language") + StringPool.COLON %>' name="reminderQueryLanguageId">
-		<aui:option value="" />
-
-		<%
-		for (Locale curLocale : locales) {
-			if (curLocale.equals(defaultLocale)) {
-				continue;
-			}
-
-			String curReminderQueries = reminderQueriesMap.get(curLocale);
-
-			if ((organization != null) && Validator.isNull(curReminderQueries)) {
-				curReminderQueries = StringUtil.merge(organization.getReminderQueryQuestions(curLocale), StringPool.NEW_LINE);
-			}
-
-			String style = StringPool.BLANK;
-
-			if (Validator.isNotNull(curReminderQueries)) {
-				style = "font-weight: bold;";
-			}
-		%>
-
-			<aui:option label="<%= curLocale.getDisplayName(locale) %>" selected="<%= currentLanguageId.equals(LocaleUtil.toLanguageId(curLocale)) %>" style="<%= style %>" value="<%= LocaleUtil.toLanguageId(curLocale) %>" />
-
-		<%
-		}
-		%>
-
-	</aui:select>
-
-	<%
-	for (Locale curLocale : locales) {
-		if (curLocale.equals(defaultLocale)) {
-			continue;
-		}
-
-		String curReminderQueries = reminderQueriesMap.get(curLocale);
-
-		if ((organization != null) && Validator.isNull(curReminderQueries)) {
-			curReminderQueries = StringUtil.merge(organization.getReminderQueryQuestions(curLocale), StringPool.NEW_LINE);
-		}
-	%>
-
-		<aui:input name='<%= "reminderQueries_" + LocaleUtil.toLanguageId(curLocale) %>' type="hidden" value="<%= curReminderQueries %>" />
-
-	<%
-	}
-	%>
-
-	<aui:input cssClass="hide" label="" name="reminderQueries_temp" title="reminder-queries" type="textarea" />
+<aui:fieldset>
+	<aui:input id="reminderQueries" label="security-questions" localized="<%= true %>" name="reminderQueries" type="textarea" />
 </aui:fieldset>
 
 <aui:script sandbox="<%= true %>">

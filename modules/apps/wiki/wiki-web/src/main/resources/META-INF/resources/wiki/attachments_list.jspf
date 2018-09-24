@@ -52,7 +52,7 @@
 
 		<c:if test="<%= showPageAttachmentAction %>">
 			<liferay-ui:search-container-column-jsp
-				cssClass="entry-action table-column-text-center"
+				cssClass="entry-action table-cell-expand table-column-text-center"
 				name="action"
 				path="/wiki/page_attachment_action.jsp"
 			/>

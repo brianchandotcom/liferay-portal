@@ -15,16 +15,22 @@
 package com.liferay.wiki.web.internal;
 
 import com.liferay.document.library.kernel.model.DLFileEntry;
+import com.liferay.document.library.kernel.util.DLUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.TrashedModel;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.TempFileEntryUtil;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.trash.service.TrashEntryService;
+import com.liferay.wiki.constants.WikiConstants;
+import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.service.WikiPageService;
 
 import java.io.IOException;
@@ -70,18 +76,31 @@ public class WikiAttachmentsHelper {
 				}
 			}
 			else {
-				for (int i = 1; i <= numOfFiles; i++) {
-					String fileName = uploadPortletRequest.getFileName(
-						"file" + i);
-					InputStream inputStream =
-						uploadPortletRequest.getFileAsStream("file" + i);
+				ThemeDisplay themeDisplay =
+					(ThemeDisplay)actionRequest.getAttribute(
+						WebKeys.THEME_DISPLAY);
 
-					if (inputStream == null) {
-						continue;
-					}
+				String[] selectUploadedFiles = ParamUtil.getParameterValues(
+					actionRequest, "selectUploadedFile");
+
+				for (String selectUploadedFile : selectUploadedFiles) {
+					FileEntry tempFileEntry =
+						TempFileEntryUtil.getTempFileEntry(
+							themeDisplay.getScopeGroupId(),
+							themeDisplay.getUserId(),
+							WikiConstants.TEMP_FOLDER_NAME, selectUploadedFile);
+
+					WikiPage wikiPage = _wikiPageService.getPage(nodeId, title);
+
+					String uniqueFileName = DLUtil.getUniqueFileName(
+						wikiPage.getGroupId(),
+						wikiPage.getAttachmentsFolderId(),
+						TempFileEntryUtil.getOriginalTempFileName(
+							tempFileEntry.getFileName()));
 
 					ObjectValuePair<String, InputStream> inputStreamOVP =
-						new ObjectValuePair<>(fileName, inputStream);
+						new ObjectValuePair<>(
+							uniqueFileName, tempFileEntry.getContentStream());
 
 					inputStreamOVPs.add(inputStreamOVP);
 				}

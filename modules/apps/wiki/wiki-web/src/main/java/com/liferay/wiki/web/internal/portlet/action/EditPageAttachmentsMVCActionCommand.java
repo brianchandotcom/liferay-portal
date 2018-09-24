@@ -46,6 +46,7 @@ import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.upload.LiferayFileItemException;
 import com.liferay.portal.kernel.upload.UploadException;
+import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.upload.UploadRequestSizeException;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ContentTypes;
@@ -55,10 +56,15 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TextFormatter;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.upload.UploadHandler;
+import com.liferay.upload.UploadResponseHandler;
+import com.liferay.wiki.constants.WikiConstants;
 import com.liferay.wiki.constants.WikiPortletKeys;
 import com.liferay.wiki.exception.NoSuchNodeException;
 import com.liferay.wiki.exception.NoSuchPageException;
+import com.liferay.wiki.service.WikiPageService;
 import com.liferay.wiki.web.internal.WikiAttachmentsHelper;
+import com.liferay.wiki.web.internal.upload.TempAttachmentWikiUploadFileEntryHandler;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -109,6 +115,15 @@ public class EditPageAttachmentsMVCActionCommand extends BaseMVCActionCommand {
 			DLConfiguration.class, properties);
 	}
 
+	protected void addTempAttachment(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws Exception {
+
+		_uploadHandler.upload(
+			_tempAttachmentWikiUploadFileEntryHandler, _uploadResponseHandler,
+			actionRequest, actionResponse);
+	}
+
 	protected void deleteAttachment(
 			ActionRequest actionRequest, boolean moveToTrash)
 		throws Exception {
@@ -129,6 +144,40 @@ public class EditPageAttachmentsMVCActionCommand extends BaseMVCActionCommand {
 
 			addDeleteSuccessData(actionRequest, data);
 		}
+	}
+
+	protected void deleteTempAttachment(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws Exception {
+
+		UploadPortletRequest uploadPortletRequest =
+			_portal.getUploadPortletRequest(actionRequest);
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		long nodeId = ParamUtil.getLong(uploadPortletRequest, "nodeId");
+		String fileName = ParamUtil.getString(actionRequest, "fileName");
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+
+		try {
+			_wikiPageService.deleteTempFileEntry(
+				nodeId, WikiConstants.TEMP_FOLDER_NAME, fileName);
+
+			jsonObject.put("deleted", Boolean.TRUE);
+		}
+		catch (Exception e) {
+			jsonObject.put("deleted", Boolean.FALSE);
+
+			String errorMessage = themeDisplay.translate(
+				"an-unexpected-error-occurred-while-deleting-the-file");
+
+			jsonObject.put("errorMessage", errorMessage);
+		}
+
+		JSONPortletResponseUtil.writeJSON(
+			actionRequest, actionResponse, jsonObject);
 	}
 
 	@Override
@@ -162,11 +211,14 @@ public class EditPageAttachmentsMVCActionCommand extends BaseMVCActionCommand {
 
 				throw new PortalException(cause);
 			}
-			else if (cmd.equals(Constants.ADD)) {
-				_wikiAttachmentsHelper.addAttachments(actionRequest);
+			else if (cmd.equals(Constants.ADD_TEMP)) {
+				addTempAttachment(actionRequest, actionResponse);
 			}
 			else if (cmd.equals(Constants.DELETE)) {
 				deleteAttachment(actionRequest, false);
+			}
+			else if (cmd.equals(Constants.DELETE_TEMP)) {
+				deleteTempAttachment(actionRequest, actionResponse);
 			}
 			else if (cmd.equals(Constants.EMPTY_TRASH)) {
 				_wikiAttachmentsHelper.emptyTrash(actionRequest);
@@ -368,6 +420,19 @@ public class EditPageAttachmentsMVCActionCommand extends BaseMVCActionCommand {
 	@Reference
 	private Portal _portal;
 
+	@Reference
+	private TempAttachmentWikiUploadFileEntryHandler
+		_tempAttachmentWikiUploadFileEntryHandler;
+
+	@Reference
+	private UploadHandler _uploadHandler;
+
+	@Reference(target = "(upload.response.handler=multiple)")
+	private UploadResponseHandler _uploadResponseHandler;
+
 	private WikiAttachmentsHelper _wikiAttachmentsHelper;
+
+	@Reference
+	private WikiPageService _wikiPageService;
 
 }

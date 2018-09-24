@@ -4148,6 +4148,63 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 		</sequential>
 	</macrodef>
 
+	<macrodef name="stop-one-java-process">
+		<attribute name="process.name" />
+
+		<sequential>
+			<execute>
+				<![CDATA[
+					jps > jps_output
+				]]>
+			</execute>
+
+			<local name="jps.output" />
+
+			<loadfile
+				property="jps.output"
+				srcfile="jps_output"
+			/>
+
+			<if>
+				<contains string="${jps.output}" substring="@{process.name}" />
+				<then>
+					<local name="java.process.pid" />
+
+					<propertyregex
+						input="${jps.output}"
+						override="true"
+						property="java.process.pid"
+						regexp="(|[\S\s]*\n)([0-9]+) \S*@{process.name}[\S\s]*"
+						replace="\2"
+					/>
+
+					<if>
+						<os family="unix" />
+						<then>
+							<execute>
+								<![CDATA[
+									kill ${java.process.pid}
+								]]>
+							</execute>
+						</then>
+						<elseif>
+							<os family="windows" />
+							<then>
+								<execute>
+									<![CDATA[
+										taskkill /f /pid ${java.process.pid}
+									]]>
+								</execute>
+							</then>
+						</elseif>
+					</if>
+				</then>
+			</if>
+
+			<delete file="jps_output" />
+		</sequential>
+	</macrodef>
+
 	<macrodef name="uninstall-patches">
 		<attribute default="${app.server.parent.dir}/patching-tool" name="patching.tool.dir" />
 

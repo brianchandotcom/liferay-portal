@@ -220,23 +220,14 @@ public class OpenSSOFilter extends BaseFilter {
 		response.sendRedirect(redirect);
 	}
 
-	@Reference(unbind = "-")
-	protected void setConfigurationProvider(
-		ConfigurationProvider configurationProvider) {
-
-		_configurationProvider = configurationProvider;
-	}
-
-	@Reference(unbind = "-")
-	protected void setOpenSSO(OpenSSO openSSO) {
-		_openSSO = openSSO;
-	}
-
 	private static final String _SUBJECT_ID_KEY = "open.sso.subject.id";
 
 	private static final Log _log = LogFactoryUtil.getLog(OpenSSOFilter.class);
 
+	@Reference
 	private ConfigurationProvider _configurationProvider;
+
+	@Reference
 	private OpenSSO _openSSO;
 
 	@Reference

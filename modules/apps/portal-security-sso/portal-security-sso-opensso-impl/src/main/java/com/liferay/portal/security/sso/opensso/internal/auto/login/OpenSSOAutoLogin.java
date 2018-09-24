@@ -14,7 +14,6 @@
 
 package com.liferay.portal.security.sso.opensso.internal.auto.login;
 
-import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
@@ -36,6 +35,7 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PwdGenerator;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.security.exportimport.UserImporter;
@@ -196,7 +196,7 @@ public class OpenSSOAutoLogin extends BaseAutoLogin {
 		}
 		else {
 			if (Validator.isNull(emailAddress)) {
-				return doHandleException(
+				return handleException(
 					request, response, new Exception("Email address is null"));
 			}
 		}
@@ -262,46 +262,25 @@ public class OpenSSOAutoLogin extends BaseAutoLogin {
 				companyId, OpenSSOConstants.SERVICE_NAME));
 	}
 
-	@Reference(unbind = "-")
-	protected void setConfigurationProvider(
-		ConfigurationProvider configurationProvider) {
-
-		_configurationProvider = configurationProvider;
-	}
-
-	@Reference(unbind = "-")
-	protected void setOpenSSO(OpenSSO openSSO) {
-		_openSSO = openSSO;
-	}
-
-	@Reference(unbind = "-")
-	protected void setScreenNameGenerator(
-		ScreenNameGenerator screenNameGenerator) {
-
-		_screenNameGenerator = screenNameGenerator;
-	}
-
-	@Reference(unbind = "-")
-	protected void setUserImporter(UserImporter userImporter) {
-		_userImporter = userImporter;
-	}
-
-	@Reference(unbind = "-")
-	protected void setUserLocalService(UserLocalService userLocalService) {
-		_userLocalService = userLocalService;
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		OpenSSOAutoLogin.class);
 
+	@Reference
 	private ConfigurationProvider _configurationProvider;
+
+	@Reference
 	private OpenSSO _openSSO;
 
 	@Reference
 	private Portal _portal;
 
+	@Reference
 	private ScreenNameGenerator _screenNameGenerator;
+
+	@Reference
 	private UserImporter _userImporter;
+
+	@Reference
 	private UserLocalService _userLocalService;
 
 }

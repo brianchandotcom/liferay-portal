@@ -14,9 +14,11 @@
 
 package com.liferay.portal.security.sso.opensso.configuration;
 
+import aQute.bnd.annotation.ProviderType;
 import aQute.bnd.annotation.metatype.Meta;
 
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
+import com.liferay.portal.security.sso.opensso.constants.OpenSSOConfigurationKeys;
 
 /**
  * Defines the configuration property keys and sensible default values.
@@ -36,10 +38,21 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 	id = "com.liferay.portal.security.sso.opensso.configuration.OpenSSOConfiguration",
 	localization = "content/Language", name = "opensso-configuration-name"
 )
+@ProviderType
 public interface OpenSSOConfiguration {
 
 	@Meta.AD(deflt = "false", name = "enabled", required = false)
 	public boolean enabled();
+
+	@Meta.AD(
+		deflt = OpenSSOConfigurationKeys.VERSION_OPENAM_12, name = "version",
+		optionValues = {
+			OpenSSOConfigurationKeys.VERSION_OPENAM_12,
+			OpenSSOConfigurationKeys.VERSION_OPENAM_13
+		},
+		required = false
+	)
+	public String version();
 
 	@Meta.AD(
 		deflt = "false", description = "import-from-ldap-description",

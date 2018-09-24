@@ -1043,6 +1043,33 @@ public class JenkinsResultsParserUtil {
 		return newValue;
 	}
 
+	public static String getProperty(
+		Properties properties, String name, String... opts) {
+
+		StringBuilder sb = new StringBuilder();
+
+		sb.append(name);
+
+		if (opts != null) {
+			for (String opt : opts) {
+				sb.append("[");
+				sb.append(opt);
+				sb.append("]");
+			}
+		}
+
+		if (properties.containsKey(sb.toString())) {
+			return getProperty(properties, sb.toString());
+		}
+
+		if ((opts != null) && (opts.length > 0)) {
+			return getProperty(
+				properties, name, Arrays.copyOf(opts, opts.length - 1));
+		}
+
+		return null;
+	}
+
 	public static List<String> getRandomList(List<String> list, int size) {
 		if (list.size() < size) {
 			throw new IllegalStateException(

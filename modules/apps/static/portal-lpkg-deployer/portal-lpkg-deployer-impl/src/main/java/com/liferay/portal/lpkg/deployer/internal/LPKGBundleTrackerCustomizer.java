@@ -466,7 +466,8 @@ public class LPKGBundleTrackerCustomizer
 			if (_log.isInfoEnabled()) {
 				_log.info(
 					StringBundler.concat(
-						"Disabled ", symbolicName, ":", url.getPath()));
+						"Disabled ", symbolicName, StringPool.COLON,
+						url.getPath()));
 			}
 
 			return true;

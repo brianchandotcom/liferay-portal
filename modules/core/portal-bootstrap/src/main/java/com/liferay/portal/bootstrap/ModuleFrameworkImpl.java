@@ -914,7 +914,7 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 							StringBundler sb = new StringBundler(7);
 
 							sb.append(zipFile);
-							sb.append(":");
+							sb.append(StringPool.COLON);
 							sb.append(zipEntry);
 							sb.append(" is overridden by ");
 							sb.append(PropsValues.MODULE_FRAMEWORK_BASE_DIR);

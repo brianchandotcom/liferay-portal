@@ -405,9 +405,9 @@
 
 		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
 
-		<execute function="AssertTextEquals" locator1="Card#SPECIFIC_LARGE_TEXT" value1="${userGroupName}" />
-
-		<execute function="Check" locator1="Card#SPECIFIC_CHECKBOX" />
+		<execute macro="LexiconEntry#selectEntry">
+			<var name="rowEntry" value="${userGroupName}" />
+		</execute>
 
 		<execute function="SelectFrameTop" />
 

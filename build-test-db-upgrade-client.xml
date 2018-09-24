@@ -2,4 +2,44 @@
 
 <project basedir="." name="portal-test-db-upgrade-client" xmlns:antelope="antlib:ise.antelope.tasks">
 	<import file="build-test.xml" />
+
+	<target name="check-upgrade-client-additional-settings">
+		<parallel failonany="true">
+			<java
+				dir="${db.upgrade.client.home}"
+				failonerror="true"
+				fork="true"
+				jar="${db.upgrade.client.jar}"
+				timeout="900000"
+			>
+				<arg value="-j" />
+				<arg value="&quot;-Dfile.encoding=UTF8 -Duser.country=US -Duser.language=en -Duser.timezone=GMT -Xmx4096m&quot;" />
+			</java>
+
+			<sequential>
+				<waitfor maxwait="60000">
+					<available file="${db.upgrade.client.log}" />
+				</waitfor>
+
+				<sleep seconds="5" />
+
+				<get-jinfo-output process.name="DBUpgrader" />
+
+				<echo>${jinfo.output}</echo>
+
+				<if>
+					<contains string="${jinfo.output}" substring="MaxHeapSize=4294967296" />
+					<then>
+						<echo message="Java memory was successfully set to 4GB during the upgrade process." />
+
+						<stop-one-java-process process.name="DBUpgrader" />
+						<stop-one-java-process process.name="LocalProcess" />
+					</then>
+					<else>
+						<fail message="Could not verify that Java memory was set to 4GB" />
+					</else>
+				</if>
+			</sequential>
+		</parallel>
+	</target>
 </project>

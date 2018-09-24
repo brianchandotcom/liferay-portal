@@ -496,7 +496,7 @@ if (portletTitleBasedNavigation && (folderId != DLFolderConstants.DEFAULT_PARENT
 								<liferay-ui:search-container-column-date
 									cssClass="table-cell-expand-smallest table-cell-ws-nowrap"
 									name="modified-date"
-									value="<%= curFolder.getModifiedDate() %>"
+									value="<%= curFolder.getLastPostDate() %>"
 								/>
 							</c:if>
 

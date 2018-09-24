@@ -24,7 +24,9 @@ FragmentsEditorDisplayContext fragmentsEditorDisplayContext = new FragmentsEdito
 	editorName="alloyeditor"
 />
 
-<link href="<%= PortalUtil.getStaticResourceURL(request, PortalUtil.getPathModule() + "/layout-admin-web/css/fragments_editor/FragmentsEditorEditMode.css") %>" rel="stylesheet">
+<liferay-util:html-top>
+	<link href="<%= PortalUtil.getStaticResourceURL(request, PortalUtil.getPathModule() + "/layout-admin-web/css/fragments_editor/FragmentsEditorEditMode.css") %>" rel="stylesheet">
+</liferay-util:html-top>
 
 <soy:component-renderer
 	componentId='<%= renderResponse.getNamespace() + "fragments" %>'

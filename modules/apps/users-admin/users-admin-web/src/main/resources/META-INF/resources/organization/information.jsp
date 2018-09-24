@@ -19,51 +19,32 @@
 <%
 OrganizationScreenNavigationDisplayContext organizationScreenNavigationDisplayContext = (OrganizationScreenNavigationDisplayContext)request.getAttribute(UsersAdminWebKeys.ORGANIZATION_SCREEN_NAVIGATION_DISPLAY_CONTEXT);
 
-long organizationId = organizationScreenNavigationDisplayContext.getOrganizationId();
-
 Organization organization = organizationScreenNavigationDisplayContext.getOrganization();
 %>
 
 <aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= (organization == null) ? Constants.ADD : Constants.UPDATE %>" />
 
-<%
-request.setAttribute("addresses.className", Organization.class.getName());
-request.setAttribute("addresses.classPK", organizationId);
-request.setAttribute("emailAddresses.className", Organization.class.getName());
-request.setAttribute("emailAddresses.classPK", organizationId);
-request.setAttribute("phones.className", Organization.class.getName());
-request.setAttribute("phones.classPK", organizationId);
-request.setAttribute("websites.className", Organization.class.getName());
-request.setAttribute("websites.classPK", organizationId);
-%>
+<div class="sheet-section">
+	<h3 class="sheet-subtitle"><liferay-ui:message key="organization-information" /></h3>
 
-<liferay-util:buffer
-	var="htmlTop"
->
-	<c:if test="<%= organization != null %>">
+	<liferay-util:include page="/organization/details.jsp" servletContext="<%= application %>" />
+</div>
 
-		<%
-		long logoId = organization.getLogoId();
-		%>
+<div class="sheet-section">
+	<h3 class="sheet-subtitle"><liferay-ui:message key="more-information" /></h3>
 
-		<div class="organization-info">
-			<div class="float-container">
-				<img alt="<%= HtmlUtil.escapeAttribute(organization.getName()) %>" class="organization-logo" src="<%= themeDisplay.getPathImage() %>/organization_logo?img_id=<%= logoId %>&t=<%= WebServerServletTokenUtil.getToken(logoId) %>" />
+	<liferay-util:include page="/organization/categorization.jsp" servletContext="<%= application %>" />
 
-				<span class="organization-name"><%= HtmlUtil.escape(organization.getName()) %></span>
-			</div>
-		</div>
-	</c:if>
-</liferay-util:buffer>
+	<liferay-util:include page="/organization/comments.jsp" servletContext="<%= application %>" />
+</div>
 
-<liferay-ui:form-navigator
-	backURL="<%= organizationScreenNavigationDisplayContext.getBackURL() %>"
-	formModelBean="<%= organization %>"
-	htmlTop="<%= htmlTop %>"
-	id="<%= FormNavigatorConstants.FORM_NAVIGATOR_ID_ORGANIZATIONS %>"
-	markupView="lexicon"
-	showButtons="<%= false %>"
-/>
+<c:if test="<%= CustomFieldsUtil.hasVisibleCustomFields(company.getCompanyId(), User.class) %>">
+	<div class="sheet-section">
+		<h4 class="sheet-tertiary-title"><liferay-ui:message key="custom-fields" /></h4>
+
+		<liferay-util:include page="/organization/custom_fields.jsp" servletContext="<%= application %>" />
+	</div>
+</c:if>
 
 <aui:script>
 	function <portlet:namespace />createURL(href, value, onclick) {

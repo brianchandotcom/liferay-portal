@@ -45,6 +45,7 @@ import org.jboss.arquillian.test.api.ArquillianResource;
 import org.jboss.shrinkwrap.api.Archive;
 
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -53,6 +54,7 @@ import org.osgi.framework.ServiceReference;
 /**
  * @author Víctor Galán Grande
  */
+@Ignore
 @RunAsClient
 @RunWith(Arquillian.class)
 public class OAuth2WebServerServletTest extends BaseClientTestCase {

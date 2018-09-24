@@ -17,7 +17,8 @@ package com.liferay.jenkins.results.parser;
 import java.io.File;
 import java.io.IOException;
 
-import java.util.Properties;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * @author Peter Yoo
@@ -33,6 +34,23 @@ public abstract class BaseLocalGitRepository
 
 	@Override
 	public GitWorkingDirectory getGitWorkingDirectory() {
+		if (_gitWorkingDirectory != null) {
+			return _gitWorkingDirectory;
+		}
+
+		File directory = getDirectory();
+
+		File dotGitFile = new File(directory, ".git");
+
+		if (!dotGitFile.exists()) {
+			throw new IllegalArgumentException(
+				directory + " is not a valid Git repository");
+		}
+
+		_gitWorkingDirectory =
+			GitWorkingDirectoryFactory.newGitWorkingDirectory(
+				getUpstreamBranchName(), directory, getName());
+
 		return _gitWorkingDirectory;
 	}
 
@@ -44,53 +62,8 @@ public abstract class BaseLocalGitRepository
 	protected BaseLocalGitRepository(String name, String upstreamBranchName) {
 		super(name);
 
-		if ((upstreamBranchName == null) || upstreamBranchName.isEmpty()) {
-			throw new IllegalArgumentException("Upstream branch name is null");
-		}
-
-		put("upstream_branch_name", upstreamBranchName);
-
-		Properties repositoryProperties = getRepositoryProperties();
-
-		String gitRepositoryDirPropertyKey = _getGitRepositoryDirPropertyKey(
-			name, upstreamBranchName);
-
-		File directory;
-
-		if (repositoryProperties.containsKey(gitRepositoryDirPropertyKey)) {
-			directory = new File(
-				repositoryProperties.getProperty(gitRepositoryDirPropertyKey));
-		}
-		else {
-			directory = new File(
-				JenkinsResultsParserUtil.getBaseGitRepositoryDir(),
-				getDefaultRelativeGitRepositoryDirPath());
-		}
-
-		if (!directory.exists()) {
-			throw new RuntimeException(
-				JenkinsResultsParserUtil.combine(
-					"Unable to find Git repository directory for ", name,
-					" at ", directory.toString()));
-		}
-
-		try {
-			put("directory", directory.getCanonicalPath());
-		}
-		catch (IOException ioe) {
-			throw new RuntimeException(ioe);
-		}
-
-		File dotGitFile = new File(directory, ".git");
-
-		if (!dotGitFile.exists()) {
-			throw new IllegalArgumentException(
-				directory + " is not a valid Git repository");
-		}
-
-		_gitWorkingDirectory =
-			GitWorkingDirectoryFactory.newGitWorkingDirectory(
-				upstreamBranchName, directory, name);
+		_setDirectory(upstreamBranchName);
+		_setUpstreamBranchName(upstreamBranchName);
 
 		validateKeys(_REQUIRED_KEYS);
 	}
@@ -99,16 +72,61 @@ public abstract class BaseLocalGitRepository
 		return getName();
 	}
 
-	private String _getGitRepositoryDirPropertyKey(
-		String name, String upstreamBranchName) {
+	private void _setDirectory(String upstreamBranchName) {
+		File directory = null;
 
-		return JenkinsResultsParserUtil.combine(
-			"repository.dir[", name, "/" + upstreamBranchName, "]");
+		String repositoryDirPath = JenkinsResultsParserUtil.getProperty(
+			getRepositoryProperties(), "repository.dir", getName(),
+			upstreamBranchName);
+
+		if (repositoryDirPath != null) {
+			directory = new File(repositoryDirPath);
+		}
+
+		if ((directory == null) || !directory.exists()) {
+			directory = new File(
+				JenkinsResultsParserUtil.getBaseGitRepositoryDir(),
+				getDefaultRelativeGitRepositoryDirPath());
+		}
+
+		try {
+			put("directory", directory.getCanonicalPath());
+		}
+		catch (IOException ioe) {
+			throw new RuntimeException(
+				JenkinsResultsParserUtil.combine(
+					"Unable to find Git repository directory for ", getName(),
+					" at ", directory.toString()),
+				ioe);
+		}
+	}
+
+	private void _setUpstreamBranchName(String upstreamBranchName) {
+		if ((upstreamBranchName == null) || upstreamBranchName.isEmpty()) {
+			throw new IllegalArgumentException("Upstream branch name is null");
+		}
+
+		String upstreamBranchNamesString = JenkinsResultsParserUtil.getProperty(
+			getRepositoryProperties(), "upstream.branch.names", getName());
+
+		if (upstreamBranchNamesString == null) {
+			upstreamBranchNamesString = "master";
+		}
+
+		List<String> upstreamBranchNames = Arrays.asList(
+			upstreamBranchNamesString.split(","));
+
+		if (!upstreamBranchNames.contains(upstreamBranchName)) {
+			throw new IllegalArgumentException(
+				"Upstream branch name is not valid " + upstreamBranchName);
+		}
+
+		put("upstream_branch_name", upstreamBranchName);
 	}
 
 	private static final String[] _REQUIRED_KEYS =
 		{"directory", "upstream_branch_name"};
 
-	private final GitWorkingDirectory _gitWorkingDirectory;
+	private GitWorkingDirectory _gitWorkingDirectory;
 
 }

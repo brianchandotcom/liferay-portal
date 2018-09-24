@@ -43,6 +43,19 @@ class SelectCategory extends PortletBase {
 	}
 
 	/**
+	 * When the search form is submitted, nothing should happend,
+	 * as filtering is performed on keypress.
+	 * @param {Event} event
+	 * @private
+	 * @review
+	 */
+
+	_handleSearchFormSubmit(event) {
+		event.preventDefault();
+		event.stopImmediatePropagation();
+	}
+
+	/**
 	 * Searchs for nodes by name based on a filtering value
 	 *
 	 * @param {!Event} event

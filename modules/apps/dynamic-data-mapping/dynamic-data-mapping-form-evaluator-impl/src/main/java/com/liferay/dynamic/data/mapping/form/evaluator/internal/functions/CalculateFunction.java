@@ -15,51 +15,23 @@
 package com.liferay.dynamic.data.mapping.form.evaluator.internal.functions;
 
 import com.liferay.dynamic.data.mapping.constants.DDMConstants;
-import com.liferay.dynamic.data.mapping.expression.DDMExpressionFunction;
-import com.liferay.portal.kernel.util.Validator;
-
-import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Leonardo Barros
- */
-@Component(
-	factory = DDMConstants.EXPRESSION_FUNCTION_FACTORY_NAME,
-	service = DDMExpressionFunction.Function1.class
-)
-public class IsEmptyFunction
-	implements DDMExpressionFunction.Function1<Object, Boolean> {
-
-	@Override
-	public Boolean apply(Object parameter) {
-		if (parameter == null) {
-			return true;
-		}
-
-		if (isArray(parameter)) {
-			Object[] values = (Object[])parameter;
-
-			return Stream.of(
-				values
-			).allMatch(
-				Validator::isNull
-			);
-		}
-
-		return Validator.isNull(parameter);
-	}
+* @author Rafael Praxedes
+*/
+@Component(factory = DDMConstants.EXPRESSION_FUNCTION_FACTORY_NAME)
+public class CalculateFunction extends SetPropertyFunction<String> {
 
 	@Override
 	public String getName() {
-		return "isEmpty";
+		return "calculate";
 	}
 
-	protected boolean isArray(Object parameter) {
-		Class<?> clazz = parameter.getClass();
-
-		return clazz.isArray();
+	@Override
+	protected String getPropertyName() {
+		return "value";
 	}
 
 }

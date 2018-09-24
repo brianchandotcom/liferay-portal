@@ -14,6 +14,7 @@
 
 package com.liferay.dynamic.data.mapping.form.evaluator.internal.functions;
 
+import com.liferay.dynamic.data.mapping.constants.DDMConstants;
 import com.liferay.dynamic.data.mapping.expression.DDMExpressionFunction;
 
 import org.apache.commons.lang.math.NumberUtils;
@@ -24,8 +25,8 @@ import org.osgi.service.component.annotations.Component;
  * @author Leonardo Barros
  */
 @Component(
-	immediate = true, property = "ddm.form.evaluator.function.name=isInteger",
-	service = DDMExpressionFunction.class
+	factory = DDMConstants.EXPRESSION_FUNCTION_FACTORY_NAME,
+	service = DDMExpressionFunction.Function1.class
 )
 public class IsIntegerFunction
 	implements DDMExpressionFunction.Function1<Object, Boolean> {
@@ -36,6 +37,11 @@ public class IsIntegerFunction
 			parameter.toString(), Integer.MIN_VALUE);
 
 		return value != Integer.MIN_VALUE;
+	}
+
+	@Override
+	public String getName() {
+		return "isInteger";
 	}
 
 }

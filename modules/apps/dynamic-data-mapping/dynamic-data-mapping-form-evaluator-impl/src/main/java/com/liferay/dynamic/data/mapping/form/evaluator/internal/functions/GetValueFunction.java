@@ -14,6 +14,7 @@
 
 package com.liferay.dynamic.data.mapping.form.evaluator.internal.functions;
 
+import com.liferay.dynamic.data.mapping.constants.DDMConstants;
 import com.liferay.dynamic.data.mapping.expression.DDMExpressionFieldAccessor;
 import com.liferay.dynamic.data.mapping.expression.DDMExpressionFieldAccessorAware;
 import com.liferay.dynamic.data.mapping.expression.DDMExpressionFunction;
@@ -27,8 +28,11 @@ import org.osgi.service.component.annotations.Component;
  * @author Leonardo Barros
  */
 @Component(
-	immediate = true, property = "ddm.form.evaluator.function.name=getValue",
-	service = DDMExpressionFunction.class
+	factory = DDMConstants.EXPRESSION_FUNCTION_FACTORY_NAME,
+	service = {
+		DDMExpressionFieldAccessorAware.class,
+		DDMExpressionFunction.Function1.class
+	}
 )
 public class GetValueFunction
 	implements DDMExpressionFunction.Function1<String, Object>,
@@ -47,6 +51,11 @@ public class GetValueFunction
 			_ddmExpressionFieldAccessor.getFieldProperty(builder.build());
 
 		return getFieldPropertyResponse.getValue();
+	}
+
+	@Override
+	public String getName() {
+		return "getValue";
 	}
 
 	@Override

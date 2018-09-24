@@ -1593,6 +1593,88 @@ sendPasswordCaptchaEnabled=&quot;false&quot;</echo>
 		</sequential>
 	</macrodef>
 
+	<macrodef name="prepare-database-upgrade-configuration">
+		<sequential>
+			<delete file="${liferay.home}/osgi/configs/com.liferay.portal.search.configuration.IndexStatusManagerConfiguration.cfg" />
+			<delete file="${liferay.home}/tools/portal-tools-db-upgrade-client/upgrade.log" />
+
+			<echo file="${liferay.home}/osgi/configs/com.liferay.portal.search.configuration.IndexStatusManagerConfiguration.cfg">indexReadOnly=true</echo>
+
+			<if>
+				<equals arg1="${app.server.type}" arg2="jboss" />
+				<then>
+					<echo file="${liferay.home}/tools/portal-tools-db-upgrade-client/app-server.properties">dir=${app.server.dir}
+extra.lib.dirs=modules/system/layers/base/javax/mail,modules/system/layers/base/javax/persistence,modules/system/layers/base/javax/servlet,modules/system/layers/base/javax/transaction
+global.lib.dir=modules/com/liferay/portal/main
+portal.dir=standalone/deployments/ROOT.war
+server.detector.server.id=jboss</echo>
+				</then>
+				<elseif>
+					<equals arg1="${app.server.type}" arg2="tcserver" />
+					<then>
+						<echo file="${liferay.home}/tools/portal-tools-db-upgrade-client/app-server.properties">dir=${app.server.dir}
+extra.lib.dirs=runtimes/tomcat-9.0.10.A.RELEASE/lib
+global.lib.dir=instances/liferay/lib
+portal.dir=instances/liferay/webapps/ROOT
+server.detector.server.id=tomcat</echo>
+					</then>
+				</elseif>
+				<elseif>
+					<equals arg1="${app.server.type}" arg2="tomcat" />
+					<then>
+						<echo file="${liferay.home}/tools/portal-tools-db-upgrade-client/app-server.properties">dir=${app.server.dir}
+extra.lib.dirs=bin
+global.lib.dir=lib
+portal.dir=webapps/ROOT
+server.detector.server.id=tomcat</echo>
+					</then>
+				</elseif>
+				<elseif>
+					<equals arg1="${app.server.type}" arg2="weblogic" />
+					<then>
+						<echo file="${liferay.home}/tools/portal-tools-db-upgrade-client/app-server.properties">dir=${app.server.dir}
+extra.lib.dirs=domains/liferay/bin,wlserver/server/lib,domains/liferay/autodeploy/ROOT/WEB-INF/lib
+global.lib.dir=domains/liferay/lib
+portal.dir=domains/liferay/autodeploy/ROOT
+server.detector.server.id=weblogic</echo>
+					</then>
+				</elseif>
+				<elseif>
+					<equals arg1="${app.server.type}" arg2="websphere" />
+					<then>
+						<echo file="${liferay.home}/tools/portal-tools-db-upgrade-client/app-server.properties">dir=${app.server.dir}
+extra.lib.dirs=javaext
+global.lib.dir=lib
+portal.dir=profiles/liferay/installedApps/liferay-cell/liferay-portal.ear/liferay-portal.war
+server.detector.server.id=websphere</echo>
+					</then>
+				</elseif>
+				<elseif>
+					<equals arg1="${app.server.type}" arg2="wildfly" />
+					<then>
+						<echo file="${liferay.home}/tools/portal-tools-db-upgrade-client/app-server.properties">dir=${app.server.dir}
+extra.lib.dirs=modules/system/layers/base/javax/mail,modules/system/layers/base/javax/persistence,modules/system/layers/base/javax/servlet,modules/system/layers/base/javax/transaction
+global.lib.dir=modules/com/liferay/portal/main
+portal.dir=standalone/deployments/ROOT.war
+server.detector.server.id=wildfly</echo>
+					</then>
+				</elseif>
+			</if>
+
+			<get-database-property property.name="database.driver" />
+			<get-database-property property.name="database.password" />
+			<get-database-property property.name="database.url" />
+			<get-database-property property.name="database.username" />
+
+			<echo file="${liferay.home}/tools/portal-tools-db-upgrade-client/portal-upgrade-database.properties">jdbc.default.driverClassName=${database.driver}
+jdbc.default.url=${database.url}
+jdbc.default.username=${database.username}
+jdbc.default.password=${database.password}</echo>
+
+			<echo file="${liferay.home}/tools/portal-tools-db-upgrade-client/portal-upgrade-ext.properties">liferay.home=${liferay.home}</echo>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="prepare-edge-driver">
 		<sequential>
 			<if>
@@ -10749,83 +10831,7 @@ module.framework.properties.blacklist.portal.profile.names=${blacklist.portal.pr
 	</target>
 
 	<target name="upgrade-legacy-database">
-		<delete file="${liferay.home}/osgi/configs/com.liferay.portal.search.configuration.IndexStatusManagerConfiguration.cfg" />
-		<delete file="${liferay.home}/tools/portal-tools-db-upgrade-client/upgrade.log" />
-
-		<echo file="${liferay.home}/osgi/configs/com.liferay.portal.search.configuration.IndexStatusManagerConfiguration.cfg">indexReadOnly=true</echo>
-
-		<if>
-			<equals arg1="${app.server.type}" arg2="jboss" />
-			<then>
-				<echo file="${liferay.home}/tools/portal-tools-db-upgrade-client/app-server.properties">dir=${app.server.dir}
-extra.lib.dirs=modules/system/layers/base/javax/mail,modules/system/layers/base/javax/persistence,modules/system/layers/base/javax/servlet,modules/system/layers/base/javax/transaction
-global.lib.dir=modules/com/liferay/portal/main
-portal.dir=standalone/deployments/ROOT.war
-server.detector.server.id=jboss</echo>
-			</then>
-			<elseif>
-				<equals arg1="${app.server.type}" arg2="tcserver" />
-				<then>
-					<echo file="${liferay.home}/tools/portal-tools-db-upgrade-client/app-server.properties">dir=${app.server.dir}
-extra.lib.dirs=runtimes/tomcat-9.0.10.A.RELEASE/lib
-global.lib.dir=instances/liferay/lib
-portal.dir=instances/liferay/webapps/ROOT
-server.detector.server.id=tomcat</echo>
-				</then>
-			</elseif>
-			<elseif>
-				<equals arg1="${app.server.type}" arg2="tomcat" />
-				<then>
-					<echo file="${liferay.home}/tools/portal-tools-db-upgrade-client/app-server.properties">dir=${app.server.dir}
-extra.lib.dirs=bin
-global.lib.dir=lib
-portal.dir=webapps/ROOT
-server.detector.server.id=tomcat</echo>
-				</then>
-			</elseif>
-			<elseif>
-				<equals arg1="${app.server.type}" arg2="websphere" />
-				<then>
-					<echo file="${liferay.home}/tools/portal-tools-db-upgrade-client/app-server.properties">dir=${app.server.dir}
-extra.lib.dirs=javaext
-global.lib.dir=lib
-portal.dir=profiles/liferay/installedApps/liferay-cell/liferay-portal.ear/liferay-portal.war
-server.detector.server.id=websphere</echo>
-				</then>
-			</elseif>
-			<elseif>
-				<equals arg1="${app.server.type}" arg2="weblogic" />
-				<then>
-					<echo file="${liferay.home}/tools/portal-tools-db-upgrade-client/app-server.properties">dir=${app.server.dir}
-extra.lib.dirs=domains/liferay/bin,wlserver/server/lib,domains/liferay/autodeploy/ROOT/WEB-INF/lib
-global.lib.dir=domains/liferay/lib
-portal.dir=domains/liferay/autodeploy/ROOT
-server.detector.server.id=weblogic</echo>
-				</then>
-			</elseif>
-			<elseif>
-				<equals arg1="${app.server.type}" arg2="wildfly" />
-				<then>
-					<echo file="${liferay.home}/tools/portal-tools-db-upgrade-client/app-server.properties">dir=${app.server.dir}
-extra.lib.dirs=modules/system/layers/base/javax/mail,modules/system/layers/base/javax/persistence,modules/system/layers/base/javax/servlet,modules/system/layers/base/javax/transaction
-global.lib.dir=modules/com/liferay/portal/main
-portal.dir=standalone/deployments/ROOT.war
-server.detector.server.id=wildfly</echo>
-				</then>
-			</elseif>
-		</if>
-
-		<get-database-property property.name="database.driver" />
-		<get-database-property property.name="database.password" />
-		<get-database-property property.name="database.url" />
-		<get-database-property property.name="database.username" />
-
-		<echo file="${liferay.home}/tools/portal-tools-db-upgrade-client/portal-upgrade-database.properties">jdbc.default.driverClassName=${database.driver}
-jdbc.default.url=${database.url}
-jdbc.default.username=${database.username}
-jdbc.default.password=${database.password}</echo>
-
-		<echo file="${liferay.home}/tools/portal-tools-db-upgrade-client/portal-upgrade-ext.properties">liferay.home=${liferay.home}</echo>
+		<prepare-database-upgrade-configuration />
 
 		<trycatch property="upgrade.error">
 			<try>

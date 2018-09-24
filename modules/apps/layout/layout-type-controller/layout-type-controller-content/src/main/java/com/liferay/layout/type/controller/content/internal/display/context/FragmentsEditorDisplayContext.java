@@ -282,19 +282,15 @@ public class FragmentsEditorDisplayContext {
 		return imageItemSelectorCriterion;
 	}
 
-	private String _getLayoutData() {
+	private String _getLayoutData() throws PortalException {
 		LayoutPageTemplateStructure layoutPageTemplateStructure =
 			LayoutPageTemplateStructureLocalServiceUtil.
 				fetchLayoutPageTemplateStructure(
 					_themeDisplay.getScopeGroupId(),
 					PortalUtil.getClassNameId(Layout.class.getName()),
-					_themeDisplay.getPlid());
+					_themeDisplay.getPlid(), true);
 
-		if (layoutPageTemplateStructure != null) {
-			return layoutPageTemplateStructure.getData();
-		}
-
-		return StringPool.BLANK;
+		return layoutPageTemplateStructure.getData();
 	}
 
 	private List<SoyContext> _getSidebarTabs() {

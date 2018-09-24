@@ -16,14 +16,10 @@ package com.liferay.layout.page.template.internal.model.listener;
 
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.ModelListenerException;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.ModelListener;
-import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.util.Portal;
 
 import java.util.Objects;
@@ -36,35 +32,6 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(immediate = true, service = ModelListener.class)
 public class LayoutModelListener extends BaseModelListener<Layout> {
-
-	@Override
-	public void onAfterCreate(Layout layout) throws ModelListenerException {
-		if (!Objects.equals(layout.getType(), "content")) {
-			return;
-		}
-
-		ServiceContext serviceContext =
-			ServiceContextThreadLocal.getServiceContext();
-
-		try {
-			LayoutPageTemplateStructure layoutPageTemplateStructure =
-				_layoutPageTemplateStructureLocalService.
-					fetchLayoutPageTemplateStructure(
-						layout.getGroupId(),
-						_portal.getClassNameId(Layout.class), layout.getPlid());
-
-			if (layoutPageTemplateStructure == null) {
-				_layoutPageTemplateStructureLocalService.
-					addLayoutPageTemplateStructure(
-						layout.getUserId(), layout.getGroupId(),
-						_portal.getClassNameId(Layout.class), layout.getPlid(),
-						StringPool.BLANK, serviceContext);
-			}
-		}
-		catch (PortalException pe) {
-			throw new ModelListenerException(pe);
-		}
-	}
 
 	@Override
 	public void onBeforeRemove(Layout layout) throws ModelListenerException {

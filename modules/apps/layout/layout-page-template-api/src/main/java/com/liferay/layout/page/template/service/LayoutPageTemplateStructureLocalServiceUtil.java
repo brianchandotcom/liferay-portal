@@ -210,6 +210,14 @@ public class LayoutPageTemplateStructureLocalServiceUtil {
 			classPK);
 	}
 
+	public static com.liferay.layout.page.template.model.LayoutPageTemplateStructure fetchLayoutPageTemplateStructure(
+		long groupId, long classNameId, long classPK, boolean rebuildStructure)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .fetchLayoutPageTemplateStructure(groupId, classNameId,
+			classPK, rebuildStructure);
+	}
+
 	/**
 	* Returns the layout page template structure matching the UUID and group.
 	*

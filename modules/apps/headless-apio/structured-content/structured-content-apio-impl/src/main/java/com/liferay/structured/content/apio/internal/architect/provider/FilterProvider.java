@@ -50,8 +50,13 @@ public class FilterProvider implements Provider<Filter> {
 	}
 
 	@Reference(
-		target = "(entity.model.name=" + StructuredContentEntityModel.NAME + ")"
+		target = "(entity.model.name=" + StructuredContentEntityModel.NAME + ")",
+		unbind = "-"
 	)
+	public void setFilterParser(FilterParser filterParser) {
+		_filterParser = filterParser;
+	}
+
 	private FilterParser _filterParser;
 
 }

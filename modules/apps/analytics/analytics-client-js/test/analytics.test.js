@@ -1,5 +1,5 @@
 import AnalyticsClient from '../src/analytics';
-import {assert, expect} from 'chai';
+import {expect} from 'chai';
 
 let Analytics;
 let EVENT_ID = 0;
@@ -8,9 +8,7 @@ const ANALYTICS_IDENTITY = {email: 'foo@bar.com'};
 const ANALYTICS_KEY = 'ANALYTICS_KEY';
 const ENDPOINT_URL = 'https://osbasahcerebropublisher-asahlfr.lfr.io';
 const FLUSH_INTERVAL = 100;
-const LOCAL_USER_ID = 'LOCAL_USER_ID';
 const MOCKED_REQUEST_DURATION = 5000;
-const SERVICE_USER_ID = 'SERVICE_USER_ID';
 
 // Local Storage keys
 const STORAGE_KEY_EVENTS = 'lcs_client_batch';
@@ -172,19 +170,19 @@ describe('Analytics Client', () => {
 			let identityCalled = 0;
 
 			return Analytics.setIdentity(ANALYTICS_IDENTITY)
-			.then(() => {
-				fetchMock.restore();
-				fetchMock.mock(/asahlfr/ig, () => Promise.resolve(200));
-				fetchMock.mock(
-					/identity/ig,
-					function(url) {
-						identityCalled += 1;
-						return '';
-					}
-				);
-			})
-			.then(() => Analytics.setIdentity({email: 'john@liferay.com'}))
-			.then(() => expect(identityCalled).to.equal(1));
+				.then(() => {
+					fetchMock.restore();
+					fetchMock.mock(/asahlfr/ig, () => Promise.resolve(200));
+					fetchMock.mock(
+						/identity/ig,
+						function(url) {
+							identityCalled += 1;
+							return '';
+						}
+					);
+				})
+				.then(() => Analytics.setIdentity({email: 'john@liferay.com'}))
+				.then(() => expect(identityCalled).to.equal(1));
 		});
 
 		it('should not request the Identity Service when identity hasn\'t changed', () => {
@@ -202,19 +200,19 @@ describe('Analytics Client', () => {
 			let identityCalled = 0;
 
 			return Analytics.setIdentity(ANALYTICS_IDENTITY)
-			.then(() => {
-				fetchMock.restore();
-				fetchMock.mock(/asahlfr/ig, () => Promise.resolve(200));
-				fetchMock.mock(
-					/send-identity-context/,
-					function(url) {
-						identityCalled += 1;
-						return '';
-					}
-				)
-			})
-			.then(() => Analytics.setIdentity(ANALYTICS_IDENTITY))
-			.then(() => expect(identityCalled).to.equal(0));
+				.then(() => {
+					fetchMock.restore();
+					fetchMock.mock(/asahlfr/ig, () => Promise.resolve(200));
+					fetchMock.mock(
+						/send-identity-context/,
+						function(url) {
+							identityCalled += 1;
+							return '';
+						}
+					);
+				})
+				.then(() => Analytics.setIdentity(ANALYTICS_IDENTITY))
+				.then(() => expect(identityCalled).to.equal(0));
 		});
 
 		it('should only clear the persisted events when done', () => {
@@ -270,8 +268,8 @@ describe('Analytics Client', () => {
 			events.should.have.lengthOf(1);
 
 			events[0].should.deep.include({
-				eventId,
 				applicationId,
+				eventId,
 				properties,
 			});
 		});

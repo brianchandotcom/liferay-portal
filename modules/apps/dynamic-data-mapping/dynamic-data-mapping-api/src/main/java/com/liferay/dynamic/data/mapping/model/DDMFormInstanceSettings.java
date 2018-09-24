@@ -115,7 +115,7 @@ public interface DDMFormInstanceSettings {
 		label = "%redirect-url-on-success",
 		properties = "placeholder=%enter-a-valid-url",
 		validationErrorMessage = "%please-enter-a-valid-url",
-		validationExpression = "isURL(redirectURL)"
+		validationExpression = "isEmpty(redirectURL) OR isURL(redirectURL)"
 	)
 	public String redirectURL();
 

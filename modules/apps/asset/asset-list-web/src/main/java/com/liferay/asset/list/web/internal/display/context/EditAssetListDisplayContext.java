@@ -28,6 +28,7 @@ import com.liferay.asset.kernel.service.AssetVocabularyServiceUtil;
 import com.liferay.asset.list.constants.AssetListFormConstants;
 import com.liferay.asset.list.constants.AssetListPortletKeys;
 import com.liferay.asset.list.service.AssetListEntryAssetEntryRelLocalServiceUtil;
+import com.liferay.asset.util.comparator.AssetRendererFactoryTypeNameComparator;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
@@ -35,6 +36,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletProvider;
@@ -53,9 +55,12 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
+import javax.portlet.PortletMode;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
@@ -342,6 +347,108 @@ public class EditAssetListDisplayContext {
 		setDDMStructure();
 
 		return _ddmStructureFieldValue;
+	}
+
+	public Map<String, Map<String, Object>> getManualAddIconDataMap()
+		throws Exception {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		Map<String, Map<String, Object>> manualAddIconDataMap = new HashMap<>();
+
+		List<AssetRendererFactory<?>> assetRendererFactories = ListUtil.sort(
+			AssetRendererFactoryRegistryUtil.getAssetRendererFactories(
+				themeDisplay.getCompanyId()),
+			new AssetRendererFactoryTypeNameComparator(
+				themeDisplay.getLocale()));
+
+		for (AssetRendererFactory<?> curRendererFactory :
+				assetRendererFactories) {
+
+			if (!curRendererFactory.isSelectable()) {
+				continue;
+			}
+
+			PortletURL assetBrowserURL = PortletProviderUtil.getPortletURL(
+				_request, curRendererFactory.getClassName(),
+				PortletProvider.Action.BROWSE);
+
+			if (assetBrowserURL == null) {
+				continue;
+			}
+
+			assetBrowserURL.setParameter(
+				"groupId", String.valueOf(themeDisplay.getScopeGroupId()));
+			assetBrowserURL.setParameter(
+				"selectedGroupIds",
+				String.valueOf(themeDisplay.getScopeGroupId()));
+			assetBrowserURL.setParameter(
+				"typeSelection", curRendererFactory.getClassName());
+			assetBrowserURL.setParameter(
+				"showNonindexable", String.valueOf(Boolean.TRUE));
+			assetBrowserURL.setParameter(
+				"showScheduled", String.valueOf(Boolean.TRUE));
+			assetBrowserURL.setParameter(
+				"eventName", _portletResponse.getNamespace() + "selectAsset");
+			assetBrowserURL.setPortletMode(PortletMode.VIEW);
+			assetBrowserURL.setWindowState(LiferayWindowState.POP_UP);
+
+			if (!curRendererFactory.isSupportsClassTypes()) {
+				Map<String, Object> data = new HashMap<>();
+
+				data.put("destroyOnHide", true);
+				data.put(
+					"groupid", String.valueOf(themeDisplay.getScopeGroupId()));
+				data.put("href", assetBrowserURL.toString());
+
+				String type = curRendererFactory.getTypeName(
+					themeDisplay.getLocale());
+
+				data.put(
+					"title",
+					LanguageUtil.format(_request, "select-x", type, false));
+				data.put("type", type);
+
+				manualAddIconDataMap.put(type, data);
+
+				continue;
+			}
+
+			ClassTypeReader classTypeReader =
+				curRendererFactory.getClassTypeReader();
+
+			List<ClassType> assetAvailableClassTypes =
+				classTypeReader.getAvailableClassTypes(
+					PortalUtil.getCurrentAndAncestorSiteGroupIds(
+						themeDisplay.getScopeGroupId()),
+					themeDisplay.getLocale());
+
+			for (ClassType assetAvailableClassType : assetAvailableClassTypes) {
+				Map<String, Object> data = new HashMap<>();
+
+				data.put("destroyOnHide", true);
+				data.put(
+					"groupid", String.valueOf(themeDisplay.getScopeGroupId()));
+
+				assetBrowserURL.setParameter(
+					"subtypeSelectionId",
+					String.valueOf(assetAvailableClassType.getClassTypeId()));
+
+				data.put("href", assetBrowserURL.toString());
+
+				String type = assetAvailableClassType.getName();
+
+				data.put(
+					"title",
+					LanguageUtil.format(_request, "select-x", type, false));
+				data.put("type", type);
+
+				manualAddIconDataMap.put(type, data);
+			}
+		}
+
+		return manualAddIconDataMap;
 	}
 
 	public String getOrderByColumn1() {

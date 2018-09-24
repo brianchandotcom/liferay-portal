@@ -21,8 +21,6 @@ import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalArticleWrapper;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.search.BooleanClause;
-import com.liferay.portal.kernel.search.Query;
 import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.test.rule.Inject;
@@ -38,22 +36,6 @@ import java.util.Locale;
  * @author Julio Camarero
  */
 public abstract class BaseStructuredContentNestedCollectionResourceTestCase {
-
-	protected BooleanClause<Query> getBooleanClause(
-			Filter filter, Locale locale)
-		throws Exception {
-
-		Class<? extends NestedCollectionResource> clazz =
-			_nestedCollectionResource.getClass();
-
-		Method method = clazz.getDeclaredMethod(
-			"getBooleanClause", Filter.class, Locale.class);
-
-		method.setAccessible(true);
-
-		return (BooleanClause<Query>)method.invoke(
-			_nestedCollectionResource, filter, locale);
-	}
 
 	protected JournalArticleWrapper getJournalArticleWrapper(
 			long journalArticleId, ThemeDisplay themeDisplay)
@@ -95,6 +77,22 @@ public abstract class BaseStructuredContentNestedCollectionResourceTestCase {
 		return (PageItems)method.invoke(
 			_nestedCollectionResource, pagination, contentSpaceId, themeDisplay,
 			filter, sort);
+	}
+
+	protected com.liferay.portal.kernel.search.filter.Filter getSearchFilter(
+			Filter filter, Locale locale)
+		throws Exception {
+
+		Class<? extends NestedCollectionResource> clazz =
+			_nestedCollectionResource.getClass();
+
+		Method method = clazz.getDeclaredMethod(
+			"_getSearchFilter", Filter.class, Locale.class);
+
+		method.setAccessible(true);
+
+		return (com.liferay.portal.kernel.search.filter.Filter)method.invoke(
+			_nestedCollectionResource, filter, locale);
 	}
 
 	protected ThemeDisplay getThemeDisplay(Group group, Locale locale)

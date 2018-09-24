@@ -55,14 +55,22 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.ClassName;
 import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.search.BooleanClause;
+import com.liferay.portal.kernel.search.BooleanClauseOccur;
+import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
+import com.liferay.portal.kernel.search.IndexSearcherHelperUtil;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistry;
 import com.liferay.portal.kernel.search.Query;
 import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.search.SearchException;
+import com.liferay.portal.kernel.search.SearchResultPermissionFilter;
+import com.liferay.portal.kernel.search.SearchResultPermissionFilterFactory;
+import com.liferay.portal.kernel.search.filter.BooleanFilter;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.ClassNameService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -235,28 +243,6 @@ public class StructuredContentNestedCollectionResource
 		).build();
 	}
 
-	@SuppressWarnings("unchecked")
-	protected BooleanClause<Query> getBooleanClause(
-		Filter filter, Locale locale) {
-
-		if ((filter == null) || (filter == Filter.emptyFilter())) {
-			return null;
-		}
-
-		try {
-			Expression expression = filter.getExpression();
-
-			return (BooleanClause<Query>)expression.accept(
-				new ExpressionVisitorImpl(
-					locale,
-					_structuredContentSingleEntitySchemaBasedEdmProvider));
-		}
-		catch (ExpressionVisitException eve) {
-			throw new InvalidFilterException(
-				"Invalid filter: " + eve.getMessage(), eve);
-		}
-	}
-
 	private JournalArticleWrapper _addJournalArticle(
 			long contentSpaceId,
 			StructuredContentCreatorForm structuredContentCreatorForm,
@@ -307,8 +293,8 @@ public class StructuredContentNestedCollectionResource
 	}
 
 	private SearchContext _createSearchContext(
-		long companyId, long groupId, Locale locale, Filter filter, Sort sort,
-		int start, int end) {
+		long companyId, long groupId, Locale locale, Sort sort, int start,
+		int end) {
 
 		SearchContext searchContext = new SearchContext();
 
@@ -317,13 +303,6 @@ public class StructuredContentNestedCollectionResource
 		searchContext.setAttribute("head", Boolean.TRUE);
 		searchContext.setAttribute(
 			Field.STATUS, WorkflowConstants.STATUS_APPROVED);
-
-		BooleanClause<Query> booleanClause = getBooleanClause(filter, locale);
-
-		if (booleanClause != null) {
-			searchContext.setBooleanClauses(
-				new BooleanClause[] {booleanClause});
-		}
 
 		searchContext.setCompanyId(companyId);
 		searchContext.setEnd(end);
@@ -417,6 +396,27 @@ public class StructuredContentNestedCollectionResource
 		nestedDDMFormFieldValues.addAll(ddmFormFieldValues);
 
 		return nestedDDMFormFieldValues;
+	}
+
+	private Query _getFullQuery(
+			Filter filter, Locale locale, SearchContext searchContext)
+		throws SearchException {
+
+		Indexer<JournalArticle> indexer = _indexerRegistry.nullSafeGetIndexer(
+			JournalArticle.class);
+
+		com.liferay.portal.kernel.search.filter.Filter searchFilter =
+			_getSearchFilter(filter, locale);
+
+		BooleanQuery booleanQuery = indexer.getFullQuery(searchContext);
+
+		if (searchFilter != null) {
+			BooleanFilter preBooleanFilter = booleanQuery.getPreBooleanFilter();
+
+			preBooleanFilter.add(searchFilter, BooleanClauseOccur.MUST);
+		}
+
+		return booleanQuery;
 	}
 
 	private JSONObject _getGeoJSONObject(DDMFormFieldValue ddmFormFieldValue) {
@@ -545,14 +545,35 @@ public class StructuredContentNestedCollectionResource
 			ThemeDisplay themeDisplay, Filter filter, Sort sort)
 		throws PortalException {
 
-		Indexer<JournalArticle> indexer = _indexerRegistry.nullSafeGetIndexer(
-			JournalArticle.class);
+		SearchContext searchContext = _createSearchContext(
+			themeDisplay.getCompanyId(), contentSpaceId,
+			themeDisplay.getLocale(), sort, pagination.getStartPosition(),
+			pagination.getEndPosition());
 
-		Hits hits = indexer.search(
-			_createSearchContext(
-				themeDisplay.getCompanyId(), contentSpaceId,
-				themeDisplay.getLocale(), filter, sort,
-				pagination.getStartPosition(), pagination.getEndPosition()));
+		Query fullQuery = _getFullQuery(
+			filter, themeDisplay.getLocale(), searchContext);
+
+		PermissionChecker permissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
+		Hits hits = null;
+
+		if (permissionChecker != null) {
+			if (searchContext.getUserId() == 0) {
+				searchContext.setUserId(permissionChecker.getUserId());
+			}
+
+			SearchResultPermissionFilter searchResultPermissionFilter =
+				_searchResultPermissionFilterFactory.create(
+					searchContext1 -> IndexSearcherHelperUtil.search(
+						searchContext1, fullQuery),
+					permissionChecker);
+
+			hits = searchResultPermissionFilter.search(searchContext);
+		}
+		else {
+			hits = IndexSearcherHelperUtil.search(searchContext, fullQuery);
+		}
 
 		List<JournalArticleWrapper> journalArticleWrappers = Stream.of(
 			_journalHelper.getArticles(hits)
@@ -604,6 +625,29 @@ public class StructuredContentNestedCollectionResource
 		).collect(
 			Collectors.toList()
 		);
+	}
+
+	@SuppressWarnings("unchecked")
+	private com.liferay.portal.kernel.search.filter.Filter _getSearchFilter(
+		Filter filter, Locale locale) {
+
+		if ((filter == null) || (filter == Filter.emptyFilter())) {
+			return null;
+		}
+
+		try {
+			Expression expression = filter.getExpression();
+
+			return (com.liferay.portal.kernel.search.filter.Filter)
+				expression.accept(
+					new ExpressionVisitorImpl(
+						locale,
+						_structuredContentSingleEntitySchemaBasedEdmProvider));
+		}
+		catch (ExpressionVisitException eve) {
+			throw new InvalidFilterException(
+				"Invalid filter: " + eve.getMessage(), eve);
+		}
 	}
 
 	private List<com.liferay.portal.kernel.search.Sort> _getSorts(
@@ -742,6 +786,10 @@ public class StructuredContentNestedCollectionResource
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;
+
+	@Reference
+	private SearchResultPermissionFilterFactory
+		_searchResultPermissionFilterFactory;
 
 	@Reference
 	private StructuredContentSingleEntitySchemaBasedEdmProvider

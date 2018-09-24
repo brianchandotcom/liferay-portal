@@ -18,6 +18,8 @@ import com.liferay.dynamic.data.mapping.data.provider.DDMDataProvider;
 import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderRequest;
 import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderResponse;
 import com.liferay.dynamic.data.mapping.data.provider.internal.rest.DDMRESTDataProviderSettings;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.util.GetterUtil;
 
 import com.netflix.hystrix.HystrixCommand;
@@ -47,6 +49,7 @@ public class DDMDataProviderInvokeCommand
 
 		_ddmDataProvider = ddmDataProvider;
 		_ddmDataProviderRequest = ddmDataProviderRequest;
+		_permissionChecker = PermissionThreadLocal.getPermissionChecker();
 	}
 
 	protected static int getTimeout(
@@ -64,6 +67,8 @@ public class DDMDataProviderInvokeCommand
 
 	@Override
 	protected DDMDataProviderResponse run() throws Exception {
+		PermissionThreadLocal.setPermissionChecker(_permissionChecker);
+
 		return _ddmDataProvider.getData(_ddmDataProviderRequest);
 	}
 
@@ -77,5 +82,6 @@ public class DDMDataProviderInvokeCommand
 
 	private final DDMDataProvider _ddmDataProvider;
 	private final DDMDataProviderRequest _ddmDataProviderRequest;
+	private final PermissionChecker _permissionChecker;
 
 }

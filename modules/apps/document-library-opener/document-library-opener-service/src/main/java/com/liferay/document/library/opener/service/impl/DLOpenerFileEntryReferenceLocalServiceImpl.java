@@ -33,24 +33,8 @@ public class DLOpenerFileEntryReferenceLocalServiceImpl
 			long userId, String referenceKey, FileEntry fileEntry, int type)
 		throws PortalException {
 
-		User user = userLocalService.getUser(userId);
-
-		long dlOpenerFileEntryReferenceId = counterLocalService.increment();
-
-		DLOpenerFileEntryReference dlOpenerFileEntryReference =
-			dlOpenerFileEntryReferenceLocalService.
-				createDLOpenerFileEntryReference(dlOpenerFileEntryReferenceId);
-
-		dlOpenerFileEntryReference.setGroupId(fileEntry.getGroupId());
-		dlOpenerFileEntryReference.setCompanyId(fileEntry.getCompanyId());
-		dlOpenerFileEntryReference.setUserId(user.getUserId());
-		dlOpenerFileEntryReference.setUserName(user.getFullName());
-		dlOpenerFileEntryReference.setReferenceKey(referenceKey);
-		dlOpenerFileEntryReference.setFileEntryId(fileEntry.getFileEntryId());
-		dlOpenerFileEntryReference.setType(type);
-
-		return dlOpenerFileEntryReferencePersistence.update(
-			dlOpenerFileEntryReference);
+		return _addDLOpenerFileEntryReference(
+			userId, referenceKey, fileEntry, type);
 	}
 
 	@Override
@@ -58,23 +42,7 @@ public class DLOpenerFileEntryReferenceLocalServiceImpl
 			long userId, FileEntry fileEntry, int type)
 		throws PortalException {
 
-		User user = userLocalService.getUser(userId);
-
-		long dlOpenerFileEntryReferenceId = counterLocalService.increment();
-
-		DLOpenerFileEntryReference dlOpenerFileEntryReference =
-			dlOpenerFileEntryReferenceLocalService.
-				createDLOpenerFileEntryReference(dlOpenerFileEntryReferenceId);
-
-		dlOpenerFileEntryReference.setGroupId(fileEntry.getGroupId());
-		dlOpenerFileEntryReference.setCompanyId(fileEntry.getCompanyId());
-		dlOpenerFileEntryReference.setUserId(user.getUserId());
-		dlOpenerFileEntryReference.setUserName(user.getFullName());
-		dlOpenerFileEntryReference.setFileEntryId(fileEntry.getFileEntryId());
-		dlOpenerFileEntryReference.setType(type);
-
-		return dlOpenerFileEntryReferencePersistence.update(
-			dlOpenerFileEntryReference);
+		return _addDLOpenerFileEntryReference(userId, null, fileEntry, type);
 	}
 
 	@Override
@@ -122,5 +90,29 @@ public class DLOpenerFileEntryReferenceLocalServiceImpl
 
 	@ServiceReference(type = UserLocalService.class)
 	protected UserLocalService userLocalService;
+
+	private DLOpenerFileEntryReference _addDLOpenerFileEntryReference(
+			long userId, String referenceKey, FileEntry fileEntry, int type)
+		throws PortalException {
+
+		User user = userLocalService.getUser(userId);
+
+		long dlOpenerFileEntryReferenceId = counterLocalService.increment();
+
+		DLOpenerFileEntryReference dlOpenerFileEntryReference =
+			dlOpenerFileEntryReferenceLocalService.
+				createDLOpenerFileEntryReference(dlOpenerFileEntryReferenceId);
+
+		dlOpenerFileEntryReference.setGroupId(fileEntry.getGroupId());
+		dlOpenerFileEntryReference.setCompanyId(fileEntry.getCompanyId());
+		dlOpenerFileEntryReference.setUserId(user.getUserId());
+		dlOpenerFileEntryReference.setUserName(user.getFullName());
+		dlOpenerFileEntryReference.setReferenceKey(referenceKey);
+		dlOpenerFileEntryReference.setFileEntryId(fileEntry.getFileEntryId());
+		dlOpenerFileEntryReference.setType(type);
+
+		return dlOpenerFileEntryReferencePersistence.update(
+			dlOpenerFileEntryReference);
+	}
 
 }

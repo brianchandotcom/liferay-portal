@@ -66,7 +66,9 @@
 			,m=l.getElementsByTagName(o)[0],a.async=1,a.src=u,a.onload=c,
 			m.parentNode.insertBefore(a,m)})('../../build/analytics-all-min.js', function(){
 				Analytics.create({
-					analyticsKey: 'MyAnalyticsKey'
+					analyticsKey: 'MyAnalyticsKey',
+					dataSourceId: '1234',
+					endpointUrl: 'https://osbasahcerebropublisher-asahlfr.lfr.io'
 				});
 				Analytics.setIdentity({ email: 'foo@bar.com', name: 'Foo' });
 				Analytics.send('view', 'Layout', { message: 'This is a test'});

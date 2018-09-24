@@ -6,6 +6,7 @@ let EVENT_ID = 0;
 
 const ANALYTICS_IDENTITY = {email: 'foo@bar.com'};
 const ANALYTICS_KEY = 'ANALYTICS_KEY';
+const ENDPOINT_URL = 'https://osbasahcerebropublisher-asahlfr.lfr.io';
 const FLUSH_INTERVAL = 100;
 const LOCAL_USER_ID = 'LOCAL_USER_ID';
 const MOCKED_REQUEST_DURATION = 5000;
@@ -135,6 +136,8 @@ describe('Analytics Client', () => {
 			Analytics = AnalyticsClient.create(
 				{
 					analyticsKey: ANALYTICS_KEY,
+					dataSourceId: '1234',
+					endpointUrl: ENDPOINT_URL,
 				}
 			);
 
@@ -161,6 +164,8 @@ describe('Analytics Client', () => {
 			Analytics = AnalyticsClient.create(
 				{
 					analyticsKey: ANALYTICS_KEY,
+					dataSourceId: '1234',
+					endpointUrl: ENDPOINT_URL,
 				}
 			);
 

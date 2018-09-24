@@ -87,146 +87,6 @@ public class EditAssetListDisplayContext {
 
 	public static final String SCOPE_ID_PARENT_GROUP_PREFIX = "ParentGroup_";
 
-	public static long[] getClassNameIds(
-		UnicodeProperties properties, long[] availableClassNameIds) {
-
-		boolean anyAssetType = GetterUtil.getBoolean(
-			properties.getProperty("anyAssetType", Boolean.TRUE.toString()));
-		String selectionStyle = properties.getProperty(
-			"selectionStyle", "dynamic");
-
-		if (anyAssetType || selectionStyle.equals("manual")) {
-			return availableClassNameIds;
-		}
-
-		long defaultClassNameId = GetterUtil.getLong(
-			properties.getProperty("anyAssetType", null));
-
-		if (defaultClassNameId > 0) {
-			return new long[] {defaultClassNameId};
-		}
-
-		long[] classNameIds = GetterUtil.getLongValues(
-			StringUtil.split(
-				properties.getProperty("classNameIds", StringPool.BLANK)));
-
-		if (ArrayUtil.isNotEmpty(classNameIds)) {
-			return classNameIds;
-		}
-
-		return availableClassNameIds;
-	}
-
-	public static long getGroupIdFromScopeId(
-			String scopeId, long siteGroupId, boolean privateLayout)
-		throws PortalException {
-
-		if (scopeId.startsWith(SCOPE_ID_CHILD_GROUP_PREFIX)) {
-			String scopeIdSuffix = scopeId.substring(
-				SCOPE_ID_CHILD_GROUP_PREFIX.length());
-
-			long childGroupId = GetterUtil.getLong(scopeIdSuffix);
-
-			Group childGroup = GroupLocalServiceUtil.getGroup(childGroupId);
-
-			if (!childGroup.hasAncestor(siteGroupId)) {
-				throw new PrincipalException();
-			}
-
-			return childGroupId;
-		}
-		else if (scopeId.startsWith(SCOPE_ID_GROUP_PREFIX)) {
-			String scopeIdSuffix = scopeId.substring(
-				SCOPE_ID_GROUP_PREFIX.length());
-
-			if (scopeIdSuffix.equals(GroupConstants.DEFAULT)) {
-				return siteGroupId;
-			}
-
-			long scopeGroupId = GetterUtil.getLong(scopeIdSuffix);
-
-			Group scopeGroup = GroupLocalServiceUtil.getGroup(scopeGroupId);
-
-			return scopeGroup.getGroupId();
-		}
-		else if (scopeId.startsWith(SCOPE_ID_LAYOUT_UUID_PREFIX)) {
-			String layoutUuid = scopeId.substring(
-				SCOPE_ID_LAYOUT_UUID_PREFIX.length());
-
-			Layout scopeIdLayout =
-				LayoutLocalServiceUtil.getLayoutByUuidAndGroupId(
-					layoutUuid, siteGroupId, privateLayout);
-
-			Group scopeIdGroup = GroupLocalServiceUtil.checkScopeGroup(
-				scopeIdLayout, PrincipalThreadLocal.getUserId());
-
-			return scopeIdGroup.getGroupId();
-		}
-		else if (scopeId.startsWith(SCOPE_ID_LAYOUT_PREFIX)) {
-
-			// Legacy portlet preferences
-
-			String scopeIdSuffix = scopeId.substring(
-				SCOPE_ID_LAYOUT_PREFIX.length());
-
-			long scopeIdLayoutId = GetterUtil.getLong(scopeIdSuffix);
-
-			Layout scopeIdLayout = LayoutLocalServiceUtil.getLayout(
-				siteGroupId, privateLayout, scopeIdLayoutId);
-
-			Group scopeIdGroup = scopeIdLayout.getScopeGroup();
-
-			return scopeIdGroup.getGroupId();
-		}
-		else if (scopeId.startsWith(SCOPE_ID_PARENT_GROUP_PREFIX)) {
-			String scopeIdSuffix = scopeId.substring(
-				SCOPE_ID_PARENT_GROUP_PREFIX.length());
-
-			long parentGroupId = GetterUtil.getLong(scopeIdSuffix);
-
-			Group parentGroup = GroupLocalServiceUtil.getGroup(parentGroupId);
-
-			if (!SitesUtil.isContentSharingWithChildrenEnabled(parentGroup)) {
-				throw new PrincipalException();
-			}
-
-			Group group = GroupLocalServiceUtil.getGroup(siteGroupId);
-
-			if (!group.hasAncestor(parentGroupId)) {
-				throw new PrincipalException();
-			}
-
-			return parentGroupId;
-		}
-		else {
-			throw new IllegalArgumentException("Invalid scope ID " + scopeId);
-		}
-	}
-
-	public static long[] getGroupIds(
-		UnicodeProperties properties, long scopeGroupId, Layout layout) {
-
-		String[] scopeIds = StringUtil.split(
-			properties.getProperty(
-				"scopeIds", SCOPE_ID_GROUP_PREFIX + scopeGroupId));
-
-		Set<Long> groupIds = new LinkedHashSet<>();
-
-		for (String scopeId : scopeIds) {
-			try {
-				long groupId = getGroupIdFromScopeId(
-					scopeId, scopeGroupId, layout.isPrivateLayout());
-
-				groupIds.add(groupId);
-			}
-			catch (Exception e) {
-				continue;
-			}
-		}
-
-		return ArrayUtil.toLongArray(groupIds);
-	}
-
 	public EditAssetListDisplayContext(
 		PortletRequest portletRequest, PortletResponse portletResponse,
 		UnicodeProperties properties) {
@@ -407,6 +267,36 @@ public class EditAssetListDisplayContext {
 		return _classNameIds;
 	}
 
+	public long[] getClassNameIds(
+		UnicodeProperties properties, long[] availableClassNameIds) {
+
+		boolean anyAssetType = GetterUtil.getBoolean(
+			properties.getProperty("anyAssetType", Boolean.TRUE.toString()));
+		String selectionStyle = properties.getProperty(
+			"selectionStyle", "dynamic");
+
+		if (anyAssetType || selectionStyle.equals("manual")) {
+			return availableClassNameIds;
+		}
+
+		long defaultClassNameId = GetterUtil.getLong(
+			properties.getProperty("anyAssetType", null));
+
+		if (defaultClassNameId > 0) {
+			return new long[] {defaultClassNameId};
+		}
+
+		long[] classNameIds = GetterUtil.getLongValues(
+			StringUtil.split(
+				properties.getProperty("classNameIds", StringPool.BLANK)));
+
+		if (ArrayUtil.isNotEmpty(classNameIds)) {
+			return classNameIds;
+		}
+
+		return availableClassNameIds;
+	}
+
 	public long[] getClassTypeIds() {
 		if (_classTypeIds != null) {
 			return _classTypeIds;
@@ -474,6 +364,92 @@ public class EditAssetListDisplayContext {
 		return _ddmStructureFieldValue;
 	}
 
+	public long getGroupIdFromScopeId(
+			String scopeId, long siteGroupId, boolean privateLayout)
+		throws PortalException {
+
+		if (scopeId.startsWith(SCOPE_ID_CHILD_GROUP_PREFIX)) {
+			String scopeIdSuffix = scopeId.substring(
+				SCOPE_ID_CHILD_GROUP_PREFIX.length());
+
+			long childGroupId = GetterUtil.getLong(scopeIdSuffix);
+
+			Group childGroup = GroupLocalServiceUtil.getGroup(childGroupId);
+
+			if (!childGroup.hasAncestor(siteGroupId)) {
+				throw new PrincipalException();
+			}
+
+			return childGroupId;
+		}
+		else if (scopeId.startsWith(SCOPE_ID_GROUP_PREFIX)) {
+			String scopeIdSuffix = scopeId.substring(
+				SCOPE_ID_GROUP_PREFIX.length());
+
+			if (scopeIdSuffix.equals(GroupConstants.DEFAULT)) {
+				return siteGroupId;
+			}
+
+			long scopeGroupId = GetterUtil.getLong(scopeIdSuffix);
+
+			Group scopeGroup = GroupLocalServiceUtil.getGroup(scopeGroupId);
+
+			return scopeGroup.getGroupId();
+		}
+		else if (scopeId.startsWith(SCOPE_ID_LAYOUT_UUID_PREFIX)) {
+			String layoutUuid = scopeId.substring(
+				SCOPE_ID_LAYOUT_UUID_PREFIX.length());
+
+			Layout scopeIdLayout =
+				LayoutLocalServiceUtil.getLayoutByUuidAndGroupId(
+					layoutUuid, siteGroupId, privateLayout);
+
+			Group scopeIdGroup = GroupLocalServiceUtil.checkScopeGroup(
+				scopeIdLayout, PrincipalThreadLocal.getUserId());
+
+			return scopeIdGroup.getGroupId();
+		}
+		else if (scopeId.startsWith(SCOPE_ID_LAYOUT_PREFIX)) {
+
+			// Legacy portlet preferences
+
+			String scopeIdSuffix = scopeId.substring(
+				SCOPE_ID_LAYOUT_PREFIX.length());
+
+			long scopeIdLayoutId = GetterUtil.getLong(scopeIdSuffix);
+
+			Layout scopeIdLayout = LayoutLocalServiceUtil.getLayout(
+				siteGroupId, privateLayout, scopeIdLayoutId);
+
+			Group scopeIdGroup = scopeIdLayout.getScopeGroup();
+
+			return scopeIdGroup.getGroupId();
+		}
+		else if (scopeId.startsWith(SCOPE_ID_PARENT_GROUP_PREFIX)) {
+			String scopeIdSuffix = scopeId.substring(
+				SCOPE_ID_PARENT_GROUP_PREFIX.length());
+
+			long parentGroupId = GetterUtil.getLong(scopeIdSuffix);
+
+			Group parentGroup = GroupLocalServiceUtil.getGroup(parentGroupId);
+
+			if (!SitesUtil.isContentSharingWithChildrenEnabled(parentGroup)) {
+				throw new PrincipalException();
+			}
+
+			Group group = GroupLocalServiceUtil.getGroup(siteGroupId);
+
+			if (!group.hasAncestor(parentGroupId)) {
+				throw new PrincipalException();
+			}
+
+			return parentGroupId;
+		}
+		else {
+			throw new IllegalArgumentException("Invalid scope ID " + scopeId);
+		}
+	}
+
 	public long[] getGroupIds() {
 		if (_groupIds != null) {
 			return _groupIds;
@@ -487,6 +463,30 @@ public class EditAssetListDisplayContext {
 			themeDisplay.getLayout());
 
 		return _groupIds;
+	}
+
+	public long[] getGroupIds(
+		UnicodeProperties properties, long scopeGroupId, Layout layout) {
+
+		String[] scopeIds = StringUtil.split(
+			properties.getProperty(
+				"scopeIds", SCOPE_ID_GROUP_PREFIX + scopeGroupId));
+
+		Set<Long> groupIds = new LinkedHashSet<>();
+
+		for (String scopeId : scopeIds) {
+			try {
+				long groupId = getGroupIdFromScopeId(
+					scopeId, scopeGroupId, layout.isPrivateLayout());
+
+				groupIds.add(groupId);
+			}
+			catch (Exception e) {
+				continue;
+			}
+		}
+
+		return ArrayUtil.toLongArray(groupIds);
 	}
 
 	public String getOrderByColumn1() {

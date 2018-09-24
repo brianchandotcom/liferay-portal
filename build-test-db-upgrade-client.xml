@@ -117,4 +117,31 @@
 			</sequential>
 		</parallel>
 	</target>
+
+	<target name="check-upgrade-client-help">
+		<local name="upgrade.help.output" />
+
+		<java
+			dir="${db.upgrade.client.home}"
+			failonerror="true"
+			fork="true"
+			jar="${db.upgrade.client.jar}"
+			outputproperty="upgrade.help.output"
+			timeout="30000"
+		>
+			<arg value="-h" />
+		</java>
+
+		<echo>${upgrade.help.output}</echo>
+
+		<if>
+			<contains string="${upgrade.help.output}" substring="-h,--help" />
+			<then>
+				<echo message="The upgrade client help screen appeared successfully" />
+			</then>
+			<else>
+				<fail message="The upgrade client help screen failed to appear." />
+			</else>
+		</if>
+	</target>
 </project>

@@ -10,12 +10,16 @@
 	}
 
 	td.lfr-name-column,
-	.lfr-search-container-wrapper .list-group .list-group-item .autofit-col h5 {
+	.lfr-search-container-wrapper .list-group .list-group-item .autofit-col h4 {
 		font-weight: 600;
 	}
 
 	.required-warning {
 		margin: 0 0 20px;
+	}
+
+	.data-provider-instance-id, .data-provider-instance-modified-date {
+		margin-right: 20px;
 	}
 }
 

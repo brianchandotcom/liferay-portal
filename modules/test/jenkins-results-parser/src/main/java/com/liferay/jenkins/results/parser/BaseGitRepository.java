@@ -15,6 +15,10 @@
 package com.liferay.jenkins.results.parser;
 
 import java.io.File;
+import java.io.IOException;
+import java.io.StringReader;
+
+import java.util.Properties;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -57,6 +61,30 @@ public abstract class BaseGitRepository
 		return new File(getString(key));
 	}
 
+	protected Properties getRepositoryProperties() {
+		if (_repositoryProperties != null) {
+			return _repositoryProperties;
+		}
+
+		_repositoryProperties = new Properties();
+
+		try {
+			_repositoryProperties.load(
+				new StringReader(
+					JenkinsResultsParserUtil.toString(
+						_REPOSITORY_PROPERTIES_URL, false)));
+		}
+		catch (IOException ioe) {
+			System.out.println(
+				"SKIPPED downloading " + _REPOSITORY_PROPERTIES_URL);
+		}
+
+		_repositoryProperties = JenkinsResultsParserUtil.getProperties(
+			new File("repository.properties"));
+
+		return _repositoryProperties;
+	}
+
 	protected void validateKeys(String[] requiredKeys) {
 		for (String requiredKey : requiredKeys) {
 			if (!has(requiredKey)) {
@@ -65,6 +93,12 @@ public abstract class BaseGitRepository
 		}
 	}
 
+	private static final String _REPOSITORY_PROPERTIES_URL =
+		"http://mirrors-no-cache.lax.liferay.com/github.com/liferay" +
+			"/liferay-jenkins-ee/commands/repository.properties";
+
 	private static final String[] _REQUIRED_KEYS = {"name"};
+
+	private static Properties _repositoryProperties;
 
 }

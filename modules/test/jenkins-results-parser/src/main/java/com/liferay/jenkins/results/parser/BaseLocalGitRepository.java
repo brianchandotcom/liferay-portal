@@ -50,7 +50,7 @@ public abstract class BaseLocalGitRepository
 
 		put("upstream_branch_name", upstreamBranchName);
 
-		Properties repositoryProperties = _getRepositoryProperties();
+		Properties repositoryProperties = getRepositoryProperties();
 
 		String gitRepositoryDirPropertyKey = _getGitRepositoryDirPropertyKey(
 			name, upstreamBranchName);
@@ -99,18 +99,6 @@ public abstract class BaseLocalGitRepository
 		return getName();
 	}
 
-	private static Properties _getRepositoryProperties() {
-		if (_properties != null) {
-			return _properties;
-		}
-
-		File propertiesFile = new File("repository.properties");
-
-		_properties = JenkinsResultsParserUtil.getProperties(propertiesFile);
-
-		return _properties;
-	}
-
 	private String _getGitRepositoryDirPropertyKey(
 		String name, String upstreamBranchName) {
 
@@ -120,8 +108,6 @@ public abstract class BaseLocalGitRepository
 
 	private static final String[] _REQUIRED_KEYS =
 		{"directory", "upstream_branch_name"};
-
-	private static Properties _properties;
 
 	private final GitWorkingDirectory _gitWorkingDirectory;
 

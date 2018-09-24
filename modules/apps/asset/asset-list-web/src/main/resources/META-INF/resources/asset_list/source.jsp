@@ -287,53 +287,51 @@ List<AssetRendererFactory<?>> classTypesAssetRendererFactories = new ArrayList()
 
 		List<ClassType> assetAvailableClassTypes = classTypeReader.getAvailableClassTypes(editAssetListDisplayContext.getReferencedModelsGroupIds(), locale);
 
-		if (assetAvailableClassTypes.isEmpty()) {
+		if (assetAvailableClassTypes.isEmpty() || !editAssetListDisplayContext.isShowSubtypeFieldsFilter()) {
 			continue;
 		}
 		%>
 
 		var <%= className %>SubtypeSelector = $('#<portlet:namespace />anyClassType<%= className %>');
 
-		<c:if test="<%= editAssetListDisplayContext.isShowSubtypeFieldsFilter() %>">
-			function <%= className %>toggleSubclassesFields(hideSubtypeFilterEnableWrapper) {
-				var subtypeFieldsWrapper = $('#<portlet:namespace /><%= className %>subtypeFieldsWrapper, #<portlet:namespace /><%= className %>subtypeFieldsFilterEnableWrapper');
+		function <%= className %>toggleSubclassesFields(hideSubtypeFilterEnableWrapper) {
+			var subtypeFieldsWrapper = $('#<portlet:namespace /><%= className %>subtypeFieldsWrapper, #<portlet:namespace /><%= className %>subtypeFieldsFilterEnableWrapper');
 
-				var selectedSubtype = <%= className %>SubtypeSelector.val();
+			var selectedSubtype = <%= className %>SubtypeSelector.val();
 
-				var structureOptions = $('#<portlet:namespace />' + selectedSubtype + '_<%= className %>Options');
+			var structureOptions = $('#<portlet:namespace />' + selectedSubtype + '_<%= className %>Options');
 
-				structureOptions.removeClass('hide');
+			structureOptions.removeClass('hide');
 
-				if ((selectedSubtype != 'false') && (selectedSubtype != 'true')) {
-					if (structureOptions.length) {
-						subtypeFieldsWrapper.removeClass('hide');
-					}
-					else if (hideSubtypeFilterEnableWrapper) {
-						subtypeFieldsWrapper.addClass('hide');
-					}
+			if ((selectedSubtype != 'false') && (selectedSubtype != 'true')) {
+				if (structureOptions.length) {
+					subtypeFieldsWrapper.removeClass('hide');
 				}
 				else if (hideSubtypeFilterEnableWrapper) {
 					subtypeFieldsWrapper.addClass('hide');
 				}
 			}
+			else if (hideSubtypeFilterEnableWrapper) {
+				subtypeFieldsWrapper.addClass('hide');
+			}
+		}
 
-			<%= className %>toggleSubclassesFields(false);
+		<%= className %>toggleSubclassesFields(false);
 
-			<%= className %>SubtypeSelector.on(
-				'change',
-				function(event) {
-					setDDMFields('<%= className %>', '', '', '', '');
+		<%= className %>SubtypeSelector.on(
+			'change',
+			function(event) {
+				setDDMFields('<%= className %>', '', '', '', '');
 
-					var subtypeFieldsFilterEnabled = $('#<portlet:namespace />subtypeFieldsFilterEnabled<%= className %>');
+				var subtypeFieldsFilterEnabled = $('#<portlet:namespace />subtypeFieldsFilterEnabled<%= className %>');
 
-					subtypeFieldsFilterEnabled.prop('checked', false);
+				subtypeFieldsFilterEnabled.prop('checked', false);
 
-					sourcePanel.find('.asset-subtypefields').addClass('hide');
+				sourcePanel.find('.asset-subtypefields').addClass('hide');
 
-					<%= className %>toggleSubclassesFields(true);
-				}
-			);
-		</c:if>
+				<%= className %>toggleSubclassesFields(true);
+			}
+		);
 
 	<%
 	}

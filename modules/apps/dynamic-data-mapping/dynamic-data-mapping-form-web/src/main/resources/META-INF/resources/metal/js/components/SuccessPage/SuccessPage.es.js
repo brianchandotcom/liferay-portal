@@ -1,9 +1,8 @@
+import {Config} from 'metal-state';
+import {setValue} from '../../util/i18n.es';
 import Component from 'metal-component';
 import Soy from 'metal-soy';
-import {Config} from 'metal-state';
-
 import templates from './SucessPage.soy.js';
-import {setValue} from '../../util/i18n.es';
 
 class SucessPage extends Component {
 	static STATE = {

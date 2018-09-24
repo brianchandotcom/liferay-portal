@@ -1,24 +1,24 @@
 {namespace SuccessPage}
 
 {template .render}
+	{@param? _handleSuccessPageSettingsChanged: any}
 	{@param? contentLabel: string}
 	{@param? successPageSettings: ?}
 	{@param? titleLabel: string}
-	{@param? _handleSuccessPageSettingsChanged: any}
 
 	{delcall SuccessPage.container}
+		{param _handleSuccessPageSettingsChanged: $_handleSuccessPageSettingsChanged /}
 		{param contentLabel: $contentLabel /}
 		{param successPageSettings: $successPageSettings /}
 		{param titleLabel: $titleLabel /}
-		{param _handleSuccessPageSettingsChanged: $_handleSuccessPageSettingsChanged /}
 	{/delcall}
 {/template}
 
 {deltemplate SuccessPage.container}
+	{@param? _handleSuccessPageSettingsChanged: any}
 	{@param? contentLabel: string}
 	{@param? successPageSettings: ?}
 	{@param? titleLabel: string}
-	{@param? _handleSuccessPageSettingsChanged: any}
 
 	<div class="ddm-page-success-layout">
 		<div class="form-builder-success-page pb-3 pt-2">

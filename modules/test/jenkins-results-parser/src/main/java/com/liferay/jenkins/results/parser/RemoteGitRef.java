@@ -37,6 +37,10 @@ public class RemoteGitRef
 		return remoteRepository.getRemoteURL();
 	}
 
+	public String getRepositoryName() {
+		return _remoteGitRepository.getName();
+	}
+
 	public String getUsername() {
 		RemoteGitRepository remoteGitRepository = getRemoteGitRepository();
 

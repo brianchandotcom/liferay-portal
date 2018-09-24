@@ -23,6 +23,10 @@ public final class GetFieldPropertyRequest {
 		return _field;
 	}
 
+	public String getInstanceId() {
+		return _instanceId;
+	}
+
 	public String getProperty() {
 		return _property;
 	}
@@ -35,6 +39,12 @@ public final class GetFieldPropertyRequest {
 
 		public GetFieldPropertyRequest build() {
 			return _getFieldPropertyRequest;
+		}
+
+		public Builder withInstanceId(String instanceId) {
+			_getFieldPropertyRequest._instanceId = instanceId;
+
+			return this;
 		}
 
 		private Builder(String field, String property) {
@@ -51,6 +61,7 @@ public final class GetFieldPropertyRequest {
 	}
 
 	private String _field;
+	private String _instanceId;
 	private String _property;
 
 }

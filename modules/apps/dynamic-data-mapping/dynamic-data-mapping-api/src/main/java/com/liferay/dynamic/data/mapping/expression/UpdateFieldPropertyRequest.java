@@ -14,6 +14,7 @@
 
 package com.liferay.dynamic.data.mapping.expression;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -27,20 +28,20 @@ public final class UpdateFieldPropertyRequest {
 		return _field;
 	}
 
-	public <T> Optional<T> getParameter(String name) {
-		if (!_parameters.containsKey(name)) {
+	public String getInstanceId() {
+		return _instanceId;
+	}
+
+	public Map<String, Object> getProperties() {
+		return Collections.unmodifiableMap(_properties);
+	}
+
+	public <T> Optional<T> getProperty(String name) {
+		if (!_properties.containsKey(name)) {
 			return Optional.empty();
 		}
 
-		return Optional.of((T)_parameters.get(name));
-	}
-
-	public String getProperty() {
-		return _property;
-	}
-
-	public <T> T getValue() {
-		return (T)_value;
+		return Optional.of((T)_properties.get(name));
 	}
 
 	public static class Builder {
@@ -55,16 +56,21 @@ public final class UpdateFieldPropertyRequest {
 			return _updateFieldPropertyRequest;
 		}
 
+		public Builder withInstanceId(String instanceId) {
+			_updateFieldPropertyRequest._instanceId = instanceId;
+
+			return this;
+		}
+
 		public Builder withParameter(String name, Object value) {
-			_updateFieldPropertyRequest._parameters.put(name, value);
+			_updateFieldPropertyRequest._properties.put(name, value);
 
 			return this;
 		}
 
 		private Builder(String field, String property, Object value) {
 			_updateFieldPropertyRequest._field = field;
-			_updateFieldPropertyRequest._property = property;
-			_updateFieldPropertyRequest._value = value;
+			_updateFieldPropertyRequest._properties.put(property, value);
 		}
 
 		private final UpdateFieldPropertyRequest _updateFieldPropertyRequest =
@@ -76,8 +82,7 @@ public final class UpdateFieldPropertyRequest {
 	}
 
 	private String _field;
-	private Map<String, Object> _parameters = new HashMap<>();
-	private String _property;
-	private Object _value;
+	private String _instanceId;
+	private Map<String, Object> _properties = new HashMap<>();
 
 }

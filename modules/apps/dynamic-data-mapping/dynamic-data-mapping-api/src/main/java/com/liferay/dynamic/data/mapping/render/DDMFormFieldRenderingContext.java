@@ -30,6 +30,10 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class DDMFormFieldRenderingContext {
 
+	public DDMFormFieldRenderingContext() {
+		setFullContext(true);
+	}
+
 	/**
 	 * @deprecated As of Judson (7.1.x), with no direct replacement
 	 */
@@ -90,6 +94,10 @@ public class DDMFormFieldRenderingContext {
 		return MapUtil.getString(_properties, "value");
 	}
 
+	public boolean isFullContext() {
+		return MapUtil.getBoolean(_properties, "fullContext");
+	}
+
 	public boolean isReadOnly() {
 		return MapUtil.getBoolean(_properties, "readOnly");
 	}
@@ -128,6 +136,10 @@ public class DDMFormFieldRenderingContext {
 
 	public void setFields(Fields fields) {
 		_fields = fields;
+	}
+
+	public void setFullContext(boolean fullContext) {
+		_properties.put("fullContext", fullContext);
 	}
 
 	public void setHttpServletRequest(HttpServletRequest httpServletRequest) {

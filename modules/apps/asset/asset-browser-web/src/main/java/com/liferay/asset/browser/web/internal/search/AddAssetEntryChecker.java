@@ -25,24 +25,24 @@ import javax.portlet.RenderResponse;
 public class AddAssetEntryChecker extends EmptyOnClickRowChecker {
 
 	public AddAssetEntryChecker(
-		RenderResponse renderResponse, long refererAssetEntryId) {
+		RenderResponse renderResponse, long assetEntryId) {
 
 		super(renderResponse);
 
-		_refererAssetEntryId = refererAssetEntryId;
+		_assetEntryId = assetEntryId;
 	}
 
 	@Override
 	public boolean isDisabled(Object obj) {
 		AssetEntry assetEntry = (AssetEntry)obj;
 
-		if (assetEntry.getEntryId() == _refererAssetEntryId) {
+		if (assetEntry.getEntryId() == _assetEntryId) {
 			return true;
 		}
 
 		return super.isDisabled(obj);
 	}
 
-	private final long _refererAssetEntryId;
+	private final long _assetEntryId;
 
 }

@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.URLCodec;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.sso.opensso.configuration.OpenSSOConfiguration;
+import com.liferay.portal.security.sso.opensso.constants.OpenSSOConfigurationKeys;
 import com.liferay.portal.security.sso.opensso.constants.OpenSSOConstants;
 
 import java.io.IOException;
@@ -255,7 +256,7 @@ public class OpenSSOImpl implements OpenSSO {
 			return false;
 		}
 
-		String version = "openam-12";
+		String version = OpenSSOConfigurationKeys.VERSION_OPENAM_12;
 
 		try {
 			OpenSSOConfiguration openSSOConfiguration =
@@ -273,7 +274,7 @@ public class OpenSSOImpl implements OpenSSO {
 			}
 		}
 
-		if (version.equals("openam-13")) {
+		if (version.equals(OpenSSOConfigurationKeys.VERSION_OPENAM_13)) {
 			String subjectId = getSubjectId(request, serviceUrl);
 
 			if (subjectId != null) {

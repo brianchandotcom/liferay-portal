@@ -18,6 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 import aQute.bnd.annotation.metatype.Meta;
 
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
+import com.liferay.portal.security.sso.opensso.constants.OpenSSOConfigurationKeys;
 
 /**
  * Defines the configuration property keys and sensible default values.
@@ -44,8 +45,12 @@ public interface OpenSSOConfiguration {
 	public boolean enabled();
 
 	@Meta.AD(
-		deflt = "openam-12", name = "version",
-		optionValues = {"openam-12", "openam-13"}, required = false
+		deflt = OpenSSOConfigurationKeys.VERSION_OPENAM_12, name = "version",
+		optionValues = {
+			OpenSSOConfigurationKeys.VERSION_OPENAM_12,
+			OpenSSOConfigurationKeys.VERSION_OPENAM_13
+		},
+		required = false
 	)
 	public String version();
 

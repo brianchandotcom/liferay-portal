@@ -14,7 +14,6 @@
 
 package com.liferay.dynamic.data.mapping.form.field.type.numeric.internal;
 
-import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormFieldEvaluationResult;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTemplateContextContributor;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
@@ -23,6 +22,7 @@ import com.liferay.dynamic.data.mapping.render.DDMFormFieldRenderingContext;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.text.DecimalFormat;
@@ -95,13 +95,12 @@ public class NumericDDMFormFieldTemplateContextContributor
 		DDMFormField ddmFormField,
 		DDMFormFieldRenderingContext ddmFormFieldRenderingContext) {
 
-		DDMFormFieldEvaluationResult ddmFormFieldEvaluationResult =
-			(DDMFormFieldEvaluationResult)ddmFormFieldRenderingContext.
-				getProperty("ddmFormFieldEvaluationResult");
+		Map<String, Object> changedProperties =
+			(Map<String, Object>)ddmFormFieldRenderingContext.getProperty(
+				"changedProperties");
 
-		if (ddmFormFieldEvaluationResult != null) {
-			String dataType = ddmFormFieldEvaluationResult.getProperty(
-				"dataType");
+		if (MapUtil.isNotEmpty(changedProperties)) {
+			String dataType = (String)changedProperties.get("dataType");
 
 			if (dataType != null) {
 				return dataType;

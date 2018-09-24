@@ -15,27 +15,27 @@
 </tr>
 <tr>
 	<td>PREVIEW_AUTOSIZE</td>
-	<td>//div[@data-device='autosize']</td>
+	<td>//div[contains(@class,'devices')]/button[@data-device='autosize']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PREVIEW_SMARTPHONE</td>
-	<td>//div[@data-device='smartphone']</td>
+	<td>//div[contains(@class,'devices')]/button[@data-device='smartphone']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PREVIEW_TABLET</td>
-	<td>//div[@data-device='tablet']</td>
+	<td>//div[contains(@class,'devices')]/button[@data-device='tablet']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PREVIEW_DESKTOP</td>
-	<td>//div[@data-device='desktop']</td>
+	<td>//div[contains(@class,'devices')]/button[@data-device='desktop']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PREVIEW_CUSTOM</td>
-	<td>//div[@data-device='custom']</td>
+	<td>//div[contains(@class,'devices')]/button[@data-device='custom']</td>
 	<td></td>
 </tr>
 <tr>

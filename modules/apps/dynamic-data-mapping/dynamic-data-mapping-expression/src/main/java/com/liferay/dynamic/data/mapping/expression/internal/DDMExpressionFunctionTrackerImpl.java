@@ -14,63 +14,87 @@
 
 package com.liferay.dynamic.data.mapping.expression.internal;
 
+import com.liferay.dynamic.data.mapping.constants.DDMConstants;
 import com.liferay.dynamic.data.mapping.expression.DDMExpressionFunction;
 import com.liferay.dynamic.data.mapping.expression.DDMExpressionFunctionTracker;
-import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
-import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
+import com.liferay.dynamic.data.mapping.expression.internal.helper.DDMExpressionFunctionTrackerHelper;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
-import java.util.function.Function;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
-import org.osgi.framework.BundleContext;
-import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.ComponentFactory;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferenceCardinality;
+import org.osgi.service.component.annotations.ReferencePolicy;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Leonardo Barros
  */
-@Component(immediate = true)
+@Component(immediate = true, service = DDMExpressionFunctionTracker.class)
 public class DDMExpressionFunctionTrackerImpl
 	implements DDMExpressionFunctionTracker {
 
 	@Override
-	public DDMExpressionFunction getDDMExpressionFunction(String functionName) {
-		return ddmExpressionFunctionTrackerServiceTrackerMap.getService(
-			functionName);
+	public Map<String, DDMExpressionFunction> getDDMExpressionFunctions(
+		Set<String> functionNames) {
+
+		Map<String, DDMExpressionFunction> ddmExpressionFunctionsMap =
+			new HashMap<>(functionNames.size());
+
+		for (String functionName : functionNames) {
+			DDMExpressionFunction ddmExpressionFunction =
+				ddmExpressionFunctionTrackerHelper.getDDMExpressionFunction(
+					functionName);
+
+			if (ddmExpressionFunction != null) {
+				ddmExpressionFunctionsMap.put(
+					functionName, ddmExpressionFunction);
+			}
+		}
+
+		return ddmExpressionFunctionsMap;
 	}
 
 	@Override
-	public Map<String, DDMExpressionFunction> getDDMExpressionFunctions() {
-		Set<String> keySet =
-			ddmExpressionFunctionTrackerServiceTrackerMap.keySet();
+	public void ungetDDMExpressionFunctions(
+		Map<String, DDMExpressionFunction> ddmExpressionFunctionsMap) {
 
-		Stream<String> stream = keySet.stream();
+		for (Map.Entry<String, DDMExpressionFunction> entry :
+				ddmExpressionFunctionsMap.entrySet()) {
 
-		return stream.collect(
-			Collectors.toConcurrentMap(
-				Function.identity(),
-				key -> ddmExpressionFunctionTrackerServiceTrackerMap.getService(
-					key)));
+			ddmExpressionFunctionTrackerHelper.ungetDDMExpressionFunction(
+				entry.getValue());
+		}
 	}
 
-	@Activate
-	protected void activate(BundleContext bundleContext) {
-		ddmExpressionFunctionTrackerServiceTrackerMap =
-			ServiceTrackerMapFactory.openSingleValueMap(
-				bundleContext, DDMExpressionFunction.class,
-				"ddm.form.evaluator.function.name");
+	@Reference(
+		cardinality = ReferenceCardinality.MULTIPLE,
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY,
+		target = "(component.factory=" + DDMConstants.EXPRESSION_FUNCTION_FACTORY_NAME + ")",
+		unbind = "unsetComponentFactory"
+	)
+	protected void addComponentFactory(ComponentFactory componentFactory) {
+		ddmExpressionFunctionTrackerHelper.addComponentFactory(
+			componentFactory);
 	}
 
 	@Deactivate
 	protected void deactivate() {
-		ddmExpressionFunctionTrackerServiceTrackerMap.close();
+		ddmExpressionFunctionTrackerHelper.clear();
 	}
 
-	protected ServiceTrackerMap<String, DDMExpressionFunction>
-		ddmExpressionFunctionTrackerServiceTrackerMap;
+	protected void unsetComponentFactory(ComponentFactory componentFactory) {
+		ddmExpressionFunctionTrackerHelper.removeComponentFactory(
+			componentFactory);
+	}
+
+	protected DDMExpressionFunctionTrackerHelper
+		ddmExpressionFunctionTrackerHelper =
+			new DDMExpressionFunctionTrackerHelper();
 
 }

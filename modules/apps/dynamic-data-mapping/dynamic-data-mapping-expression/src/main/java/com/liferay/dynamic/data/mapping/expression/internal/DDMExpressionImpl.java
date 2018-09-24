@@ -19,6 +19,7 @@ import com.liferay.dynamic.data.mapping.expression.DDMExpressionActionHandler;
 import com.liferay.dynamic.data.mapping.expression.DDMExpressionException;
 import com.liferay.dynamic.data.mapping.expression.DDMExpressionFieldAccessor;
 import com.liferay.dynamic.data.mapping.expression.DDMExpressionFunction;
+import com.liferay.dynamic.data.mapping.expression.DDMExpressionFunctionTracker;
 import com.liferay.dynamic.data.mapping.expression.DDMExpressionObserver;
 import com.liferay.dynamic.data.mapping.expression.DDMExpressionParameterAccessor;
 import com.liferay.dynamic.data.mapping.expression.internal.parser.DDMExpressionLexer;
@@ -27,6 +28,7 @@ import com.liferay.dynamic.data.mapping.expression.model.Expression;
 
 import java.math.BigDecimal;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -47,6 +49,8 @@ public class DDMExpressionImpl<T> implements DDMExpression<T> {
 	@Override
 	public T evaluate() throws DDMExpressionException {
 		try {
+			_ddmExpressionFunctions = getDDMExpressionFunctions();
+
 			Set<String> undefinedFunctionNames = getUndefinedFunctionNames();
 
 			if (!undefinedFunctionNames.isEmpty()) {
@@ -56,7 +60,9 @@ public class DDMExpressionImpl<T> implements DDMExpression<T> {
 
 			DDMExpressionEvaluatorVisitor ddmExpressionEvaluatorVisitor =
 				new DDMExpressionEvaluatorVisitor(
-					_ddmExpressionFunctions, _variables);
+					_ddmExpressionFunctions, _variables,
+					_ddmExpressionActionHandler, _ddmExpressionFieldAccessor,
+					_ddmExpressionObserver, _ddmExpressionParameterAccessor);
 
 			return (T)_expressionContext.accept(ddmExpressionEvaluatorVisitor);
 		}
@@ -65,6 +71,9 @@ public class DDMExpressionImpl<T> implements DDMExpression<T> {
 		}
 		catch (Exception e) {
 			throw new DDMExpressionException(e);
+		}
+		finally {
+			ungetDDMExpressionFunctions();
 		}
 	}
 
@@ -136,6 +145,17 @@ public class DDMExpressionImpl<T> implements DDMExpression<T> {
 		}
 	}
 
+	protected Map<String, DDMExpressionFunction> getDDMExpressionFunctions() {
+		Set<String> expressionFunctionNames = getExpressionFunctionNames();
+
+		if (_ddmExpressionFunctionTracker == null) {
+			return Collections.emptyMap();
+		}
+
+		return _ddmExpressionFunctionTracker.getDDMExpressionFunctions(
+			expressionFunctionNames);
+	}
+
 	protected Set<String> getExpressionFunctionNames() {
 		return _ddmExpressionFunctionNames;
 	}
@@ -171,6 +191,12 @@ public class DDMExpressionImpl<T> implements DDMExpression<T> {
 		_ddmExpressionFunctions = ddmExpressionFunctions;
 	}
 
+	protected void setDDMExpressionFunctionTracker(
+		DDMExpressionFunctionTracker ddmExpressionFunctionTracker) {
+
+		_ddmExpressionFunctionTracker = ddmExpressionFunctionTracker;
+	}
+
 	protected void setDDMExpressionObserver(
 		DDMExpressionObserver ddmExpressionObserver) {
 
@@ -183,10 +209,21 @@ public class DDMExpressionImpl<T> implements DDMExpression<T> {
 		_ddmExpressionParameterAccessor = ddmExpressionParameterAccessor;
 	}
 
+	protected void ungetDDMExpressionFunctions() {
+		if (_ddmExpressionFunctions.isEmpty()) {
+			return;
+		}
+
+		_ddmExpressionFunctionTracker.ungetDDMExpressionFunctions(
+			_ddmExpressionFunctions);
+	}
+
 	private DDMExpressionActionHandler _ddmExpressionActionHandler;
 	private DDMExpressionFieldAccessor _ddmExpressionFieldAccessor;
 	private final Set<String> _ddmExpressionFunctionNames = new HashSet<>();
-	private Map<String, DDMExpressionFunction> _ddmExpressionFunctions;
+	private Map<String, DDMExpressionFunction> _ddmExpressionFunctions =
+		new HashMap<>();
+	private DDMExpressionFunctionTracker _ddmExpressionFunctionTracker;
 	private DDMExpressionObserver _ddmExpressionObserver;
 	private DDMExpressionParameterAccessor _ddmExpressionParameterAccessor;
 	private final DDMExpressionParser.ExpressionContext _expressionContext;

@@ -17,6 +17,7 @@ package com.liferay.dynamic.data.mapping.expression;
 import aQute.bnd.annotation.ProviderType;
 
 import java.util.Map;
+import java.util.Set;
 
 /**
  * @author Leonardo Barros
@@ -24,8 +25,10 @@ import java.util.Map;
 @ProviderType
 public interface DDMExpressionFunctionTracker {
 
-	public DDMExpressionFunction getDDMExpressionFunction(String functionName);
+	public Map<String, DDMExpressionFunction> getDDMExpressionFunctions(
+		Set<String> functionNames);
 
-	public Map<String, DDMExpressionFunction> getDDMExpressionFunctions();
+	public void ungetDDMExpressionFunctions(
+		Map<String, DDMExpressionFunction> ddmExpressionFunctionsMap);
 
 }

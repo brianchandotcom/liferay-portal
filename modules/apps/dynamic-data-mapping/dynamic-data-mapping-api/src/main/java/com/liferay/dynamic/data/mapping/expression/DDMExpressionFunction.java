@@ -61,35 +61,32 @@ public interface DDMExpressionFunction {
 		return null;
 	}
 
-	@FunctionalInterface
+	public String getName();
+
 	public interface Function0<R> extends DDMExpressionFunction {
 
 		public R apply();
 
 	}
 
-	@FunctionalInterface
 	public interface Function1<A, R> extends DDMExpressionFunction {
 
 		public R apply(A a);
 
 	}
 
-	@FunctionalInterface
 	public interface Function2<A, B, R> extends DDMExpressionFunction {
 
 		public R apply(A a, B b);
 
 	}
 
-	@FunctionalInterface
 	public interface Function3<A, B, C, R> extends DDMExpressionFunction {
 
 		public R apply(A a, B b, C c);
 
 	}
 
-	@FunctionalInterface
 	public interface Function4<A, B, C, D, R> extends DDMExpressionFunction {
 
 		public R apply(A a, B b, C c, D d);

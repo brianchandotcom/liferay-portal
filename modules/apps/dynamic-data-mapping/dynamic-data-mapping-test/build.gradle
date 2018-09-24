@@ -29,6 +29,7 @@ dependencies {
 	testCompile group: "org.slf4j", name: "slf4j-api", version: "1.7.22"
 	testCompile group: "xerces", name: "xercesImpl", version: "2.11.0"
 	testCompile project(":apps:dynamic-data-mapping:dynamic-data-mapping-api")
+	testCompile project(":apps:dynamic-data-mapping:dynamic-data-mapping-expression")
 	testCompile project(":apps:dynamic-data-mapping:dynamic-data-mapping-io")
 	testCompile project(":apps:dynamic-data-mapping:dynamic-data-mapping-service")
 	testCompile project(":apps:dynamic-data-mapping:dynamic-data-mapping-test-util")

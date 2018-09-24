@@ -14,9 +14,11 @@
 
 package com.liferay.dynamic.data.mapping.expression.internal;
 
+import com.liferay.dynamic.data.mapping.expression.CreateExpressionRequest;
 import com.liferay.dynamic.data.mapping.expression.DDMExpression;
 import com.liferay.dynamic.data.mapping.expression.DDMExpressionFunction;
 import com.liferay.dynamic.data.mapping.expression.DDMExpressionFunctionTracker;
+import com.liferay.dynamic.data.mapping.expression.internal.functions.PowFunction;
 
 import java.math.BigDecimal;
 
@@ -27,6 +29,7 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import org.mockito.Matchers;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
@@ -46,25 +49,28 @@ public class DDMExpressionFactoryImplTest extends PowerMockito {
 		ddmExpressionFactory.ddmExpressionFunctionTracker =
 			_ddmExpressionFunctionTracker;
 
-		DDMExpressionFunction.Function2<BigDecimal, BigDecimal, BigDecimal>
-			pow = (n1, n2) -> n1.pow(n2.intValue());
-
 		Map<String, DDMExpressionFunction> functions = new HashMap() {
 			{
-				put("pow", pow);
+				put("pow", new PowFunction());
 			}
 		};
 
 		when(
-			_ddmExpressionFunctionTracker.getDDMExpressionFunctions()
+			_ddmExpressionFunctionTracker.getDDMExpressionFunctions(
+				Matchers.any())
 		).thenReturn(
 			functions
 		);
 
-		DDMExpression<BigDecimal> ddmExpression =
-			ddmExpressionFactory.createDDMExpression("pow(2,3)");
+		CreateExpressionRequest.Builder builder =
+			CreateExpressionRequest.Builder.newBuilder("pow(2,3)");
 
-		Assert.assertEquals(new BigDecimal(8), ddmExpression.evaluate());
+		DDMExpression<BigDecimal> ddmExpression =
+			ddmExpressionFactory.createExpression(builder.build());
+
+		BigDecimal actual = ddmExpression.evaluate();
+
+		Assert.assertEquals(0, actual.compareTo(new BigDecimal(8)));
 	}
 
 	@Mock

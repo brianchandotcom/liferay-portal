@@ -55,6 +55,15 @@ public class DLOpenerFileEntryReferenceLocalServiceWrapper
 			referenceKey, fileEntry, type);
 	}
 
+	@Override
+	public com.liferay.document.library.opener.model.DLOpenerFileEntryReference addPlaceholderDLOpenerFileEntryReference(
+		long userId,
+		com.liferay.portal.kernel.repository.model.FileEntry fileEntry, int type)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _dlOpenerFileEntryReferenceLocalService.addPlaceholderDLOpenerFileEntryReference(userId,
+			fileEntry, type);
+	}
+
 	/**
 	* Creates a new dl opener file entry reference with the primary key. Does not add the dl opener file entry reference to the database.
 	*
@@ -294,6 +303,14 @@ public class DLOpenerFileEntryReferenceLocalServiceWrapper
 	public com.liferay.document.library.opener.model.DLOpenerFileEntryReference updateDLOpenerFileEntryReference(
 		com.liferay.document.library.opener.model.DLOpenerFileEntryReference dlOpenerFileEntryReference) {
 		return _dlOpenerFileEntryReferenceLocalService.updateDLOpenerFileEntryReference(dlOpenerFileEntryReference);
+	}
+
+	@Override
+	public com.liferay.document.library.opener.model.DLOpenerFileEntryReference updateDLOpenerFileEntryReference(
+		String referenceKey,
+		com.liferay.portal.kernel.repository.model.FileEntry fileEntry) {
+		return _dlOpenerFileEntryReferenceLocalService.updateDLOpenerFileEntryReference(referenceKey,
+			fileEntry);
 	}
 
 	@Override

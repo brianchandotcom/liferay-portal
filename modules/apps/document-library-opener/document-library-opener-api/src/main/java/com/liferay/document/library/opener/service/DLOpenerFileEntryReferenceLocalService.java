@@ -76,6 +76,9 @@ public interface DLOpenerFileEntryReferenceLocalService extends BaseLocalService
 		long userId, String referenceKey, FileEntry fileEntry, int type)
 		throws PortalException;
 
+	public DLOpenerFileEntryReference addPlaceholderDLOpenerFileEntryReference(
+		long userId, FileEntry fileEntry, int type) throws PortalException;
+
 	/**
 	* Creates a new dl opener file entry reference with the primary key. Does not add the dl opener file entry reference to the database.
 	*
@@ -249,4 +252,7 @@ public interface DLOpenerFileEntryReferenceLocalService extends BaseLocalService
 	@Indexable(type = IndexableType.REINDEX)
 	public DLOpenerFileEntryReference updateDLOpenerFileEntryReference(
 		DLOpenerFileEntryReference dlOpenerFileEntryReference);
+
+	public DLOpenerFileEntryReference updateDLOpenerFileEntryReference(
+		String referenceKey, FileEntry fileEntry);
 }

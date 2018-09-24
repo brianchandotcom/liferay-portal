@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.repository.model.FileShortcut;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -84,7 +85,7 @@ public class DLOpenerGoogleDriveDLDisplayContextFactory
 				themeDisplay.getLocale(),
 				DLOpenerGoogleDriveDLDisplayContextFactory.class),
 			_dlOpenerFileEntryReferenceLocalService,
-			_dlOpenerGoogleDriveManager);
+			_dlOpenerGoogleDriveManager, _portal);
 	}
 
 	@Reference
@@ -93,5 +94,8 @@ public class DLOpenerGoogleDriveDLDisplayContextFactory
 
 	@Reference
 	private DLOpenerGoogleDriveManager _dlOpenerGoogleDriveManager;
+
+	@Reference
+	private Portal _portal;
 
 }

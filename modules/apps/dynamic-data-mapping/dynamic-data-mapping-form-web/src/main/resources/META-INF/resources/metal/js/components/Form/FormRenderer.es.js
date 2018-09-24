@@ -108,7 +108,7 @@ class FormRenderer extends Component {
 				enabled: Config.bool(),
 				title: Config.object()
 			}
-		)
+		).value({})
 	};
 
 	/**
@@ -163,56 +163,56 @@ class FormRenderer extends Component {
 			}
 		];
 
-		if (this.successPageSettings) {
-			const successPageEnabled = this.successPageSettings.enabled;
+		const successPageEnabled = this.successPageSettings.enabled;
 
-			if ((this.pages.length === 1) && (this.activePage != -1)) {
+		if ((this.pages.length === 1) && (this.activePage != -1)) {
+			pageSettingsItems.push(
+				{
+					'label': Liferay.Language.get('reset-page'),
+					'settingsItem': 'reset-page'
+				}
+			);
+
+			if (!successPageEnabled) {
 				pageSettingsItems.push(
 					{
-						'label': Liferay.Language.get('reset-page'),
-						'settingsItem': 'reset-page'
-					}
-				);
-
-				if (!successPageEnabled) {
-					pageSettingsItems.push(
-						{
-							'label': Liferay.Language.get('add-success-page'),
-							'settingsItem': 'add-success-page'
-						}
-					);
-				}
-			}
-			else {
-				pageSettingsItems.push(
-					{
-						'label': Liferay.Language.get('delete-current-page'),
-						'settingsItem': 'delete-page'
-					}
-				);
-
-				if (!successPageEnabled) {
-					pageSettingsItems.push(
-						{
-							'label': Liferay.Language.get('add-success-page'),
-							'settingsItem': 'add-success-page'
-						}
-					);
-				}
-
-				let label = Liferay.Language.get('switch-pagination-to-top');
-
-				if (this.paginationMode == 'wizard') {
-					label = Liferay.Language.get('switch-pagination-to-bottom');
-				}
-
-				pageSettingsItems.push(
-					{
-						label,
-						settingsItem: 'switch-pagination-mode'
+						'label': Liferay.Language.get('add-success-page'),
+						'settingsItem': 'add-success-page'
 					}
 				);
 			}
+		}
+		else {
+			pageSettingsItems.push(
+				{
+					'label': Liferay.Language.get('delete-current-page'),
+					'settingsItem': 'delete-page'
+				}
+			);
+
+			if (!successPageEnabled) {
+				pageSettingsItems.push(
+					{
+						'label': Liferay.Language.get('add-success-page'),
+						'settingsItem': 'add-success-page'
+					}
+				);
+			}
+		}
+
+		if (this.pages.length > 1) {
+			let label = Liferay.Language.get('switch-pagination-to-top');
+
+			if (this.paginationMode == 'wizard') {
+				label = Liferay.Language.get('switch-pagination-to-bottom');
+			}
+
+			pageSettingsItems.push(
+				{
+					label,
+					settingsItem: 'switch-pagination-mode'
+				}
+			);
 		}
 
 		return pageSettingsItems;

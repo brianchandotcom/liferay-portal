@@ -242,9 +242,6 @@
 /portal/streambuffer.jar
 /portal/stringtemplate.jar
 /portal/struts-core.jar
-/portal/struts-el.jar
-/portal/struts-extras.jar
-/portal/struts-taglib.jar
 /portal/tagsoup.jar
 /portal/tika-core.jar
 /portal/tika-parsers.jar

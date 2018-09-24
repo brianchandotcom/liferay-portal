@@ -367,9 +367,6 @@ Provide-Capability:\
 	@../../../lib/portal/spring-webmvc-portlet.jar,\
 	@../../../lib/portal/spring-webmvc.jar,\
 	@../../../lib/portal/struts-core.jar,\
-	@../../../lib/portal/struts-extras.jar,\
-	@../../../lib/portal/struts-taglib.jar,\
-	@../../../lib/portal/struts-tiles.jar,\
 	@../../../lib/portal/tika-core.jar,\
 	@../../../lib/portal/tika-parsers.jar,\
 	@../../../lib/portal/xalan.jar,\

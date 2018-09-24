@@ -286,8 +286,7 @@ public class AssetPublisherDisplayContext {
 			WebKeys.THEME_DISPLAY);
 
 		if (isSelectionStyleAssetList() && (assetListEntry != null)) {
-			_assetEntryQuery = assetListEntry.getAssetEntryQuery(
-				themeDisplay.getLayout());
+			_assetEntryQuery = assetListEntry.getAssetEntryQuery();
 		}
 		else {
 			_assetEntryQuery = AssetPublisherUtil.getAssetEntryQuery(

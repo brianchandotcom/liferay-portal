@@ -151,9 +151,14 @@ public class AssetListEntryWrapper implements AssetListEntry,
 	}
 
 	@Override
-	public com.liferay.asset.kernel.service.persistence.AssetEntryQuery getAssetEntryQuery(
-		com.liferay.portal.kernel.model.Layout layout) {
-		return _assetListEntry.getAssetEntryQuery(layout);
+	public java.util.List<com.liferay.asset.kernel.model.AssetEntry> getAssetEntries(
+		int start, int end) {
+		return _assetListEntry.getAssetEntries(start, end);
+	}
+
+	@Override
+	public com.liferay.asset.kernel.service.persistence.AssetEntryQuery getAssetEntryQuery() {
+		return _assetListEntry.getAssetEntryQuery();
 	}
 
 	/**

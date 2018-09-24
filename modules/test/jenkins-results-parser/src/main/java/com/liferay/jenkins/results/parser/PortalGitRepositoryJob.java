@@ -73,9 +73,16 @@ public abstract class PortalGitRepositoryJob
 	protected PortalGitRepositoryJob(String jobName) {
 		super(jobName);
 
-		gitWorkingDirectory =
-			JenkinsResultsParserUtil.getPortalGitWorkingDirectory(
-				getBranchName());
+		if (JenkinsResultsParserUtil.isCINode()) {
+			gitWorkingDirectory =
+				JenkinsResultsParserUtil.getPortalGitWorkingDirectory(
+					getBranchName());
+		}
+		else {
+			gitWorkingDirectory =
+				GitWorkingDirectoryFactory.newGitWorkingDirectory(
+					getBranchName(), System.getProperty("user.dir"));
+		}
 
 		setGitRepositoryDir(gitWorkingDirectory.getWorkingDirectory());
 

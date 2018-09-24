@@ -1135,7 +1135,7 @@ This target has been renamed to "snapshot-bundle". Please call "snapshot-bundle"
 			tofile="${liferay.home}"
 		/>
 
-		<deploy-properties deploy.properties.dest="${app.server.parent.dir}/tomcat/WEB-INF/classes" />
+		<deploy-properties deploy.properties.dest="${app.server.parent.dir}/tomcat/webapps/ROOT/WEB-INF/classes" />
 
 		<if>
 			<os family="unix" />

@@ -84,4 +84,37 @@
 
 		<delete file="${db.upgrade.client.home}/log_file.txt" />
 	</target>
+
+	<target name="check-upgrade-client-gogoshell">
+		<parallel failonany="true">
+			<java
+				dir="${db.upgrade.client.home}"
+				fork="true"
+				jar="${db.upgrade.client.jar}"
+				timeout="900000"
+			>
+				<arg value="-s" />
+			</java>
+
+			<sequential>
+				<waitfor maxwait="900000" timeoutproperty="gogoshell.not.started">
+					<resourcecontains
+						resource="${db.upgrade.client.log}"
+						substring="You are connected to Gogo shell."
+					/>
+				</waitfor>
+
+				<if>
+					<isset property="gogoshell.not.started" />
+					<then>
+						<fail message="The Gogo shell failed to open before the test timed out." />
+					</then>
+				</if>
+
+				<echo message="A Gogo shell opened successfully." />
+
+				<stop-one-java-process process.name="jar" />
+			</sequential>
+		</parallel>
+	</target>
 </project>

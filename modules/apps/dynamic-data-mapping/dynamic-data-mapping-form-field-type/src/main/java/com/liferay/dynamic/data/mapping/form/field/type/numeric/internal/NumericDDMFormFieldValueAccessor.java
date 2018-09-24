@@ -20,10 +20,13 @@ import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 
+import java.math.BigDecimal;
+
 import java.text.NumberFormat;
 import java.text.ParseException;
 
 import java.util.Locale;
+import java.util.function.IntFunction;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -37,17 +40,24 @@ import org.osgi.service.component.annotations.Component;
 	}
 )
 public class NumericDDMFormFieldValueAccessor
-	implements DDMFormFieldValueAccessor<Number> {
+	implements DDMFormFieldValueAccessor<BigDecimal> {
 
 	@Override
-	public Number getValue(DDMFormFieldValue ddmFormFieldValue, Locale locale) {
+	public IntFunction<BigDecimal[]> getArrayGeneratorFunction() {
+		return BigDecimal[]::new;
+	}
+
+	@Override
+	public BigDecimal getValue(
+		DDMFormFieldValue ddmFormFieldValue, Locale locale) {
+
 		Value value = ddmFormFieldValue.getValue();
 
 		try {
 			NumberFormat formatter = NumericDDMFormFieldUtil.getNumberFormat(
 				locale);
 
-			return formatter.parse(value.getString(locale));
+			return (BigDecimal)formatter.parse(value.getString(locale));
 		}
 		catch (ParseException pe) {
 			if (_log.isDebugEnabled()) {

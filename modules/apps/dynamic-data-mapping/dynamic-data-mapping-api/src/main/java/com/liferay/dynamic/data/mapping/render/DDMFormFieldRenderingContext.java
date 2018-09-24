@@ -31,7 +31,7 @@ import javax.servlet.http.HttpServletResponse;
 public class DDMFormFieldRenderingContext {
 
 	public DDMFormFieldRenderingContext() {
-		setFullContext(true);
+		setReturnFullContext(true);
 	}
 
 	/**
@@ -94,16 +94,16 @@ public class DDMFormFieldRenderingContext {
 		return MapUtil.getString(_properties, "value");
 	}
 
-	public boolean isFullContext() {
-		return MapUtil.getBoolean(_properties, "fullContext");
-	}
-
 	public boolean isReadOnly() {
 		return MapUtil.getBoolean(_properties, "readOnly");
 	}
 
 	public boolean isRequired() {
 		return MapUtil.getBoolean(_properties, "required");
+	}
+
+	public boolean isReturnFullContext() {
+		return MapUtil.getBoolean(_properties, "returnFullContext");
 	}
 
 	public boolean isShowEmptyFieldLabel() {
@@ -136,10 +136,6 @@ public class DDMFormFieldRenderingContext {
 
 	public void setFields(Fields fields) {
 		_fields = fields;
-	}
-
-	public void setFullContext(boolean fullContext) {
-		_properties.put("fullContext", fullContext);
 	}
 
 	public void setHttpServletRequest(HttpServletRequest httpServletRequest) {
@@ -190,6 +186,10 @@ public class DDMFormFieldRenderingContext {
 
 	public void setRequired(boolean required) {
 		_properties.put("required", required);
+	}
+
+	public void setReturnFullContext(boolean fullContext) {
+		_properties.put("returnFullContext", fullContext);
 	}
 
 	public void setShowEmptyFieldLabel(boolean showEmptyFieldLabel) {

@@ -100,7 +100,7 @@ public class DDMFieldSettingsDDMFormContextServlet
 
 			ddmFormRenderingContext.setDDMFormValues(ddmFormValues);
 
-			ddmFormRenderingContext.setFullContext(true);
+			ddmFormRenderingContext.setReturnFullContext(true);
 			ddmFormRenderingContext.setHttpServletRequest(request);
 			ddmFormRenderingContext.setHttpServletResponse(response);
 			ddmFormRenderingContext.setContainerId("settings");

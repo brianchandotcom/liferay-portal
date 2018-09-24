@@ -30,7 +30,7 @@ import javax.servlet.http.HttpServletResponse;
 public class DDMFormRenderingContext {
 
 	public DDMFormRenderingContext() {
-		setFullContext(true);
+		setReturnFullContext(true);
 	}
 
 	public void addProperty(String key, Object value) {
@@ -73,12 +73,12 @@ public class DDMFormRenderingContext {
 		return _submitLabel;
 	}
 
-	public boolean isFullContext() {
-		return MapUtil.getBoolean(_properties, "fullContext");
-	}
-
 	public boolean isReadOnly() {
 		return _readOnly;
+	}
+
+	public boolean isReturnFullContext() {
+		return MapUtil.getBoolean(_properties, "returnFullContext");
 	}
 
 	public boolean isShowRequiredFieldsWarning() {
@@ -99,10 +99,6 @@ public class DDMFormRenderingContext {
 
 	public void setDDMFormValues(DDMFormValues ddmFormValues) {
 		_ddmFormValues = ddmFormValues;
-	}
-
-	public void setFullContext(boolean fullContext) {
-		_properties.put("fullContext", fullContext);
 	}
 
 	public void setGroupId(long groupId) {
@@ -129,6 +125,10 @@ public class DDMFormRenderingContext {
 
 	public void setReadOnly(boolean readOnly) {
 		_readOnly = readOnly;
+	}
+
+	public void setReturnFullContext(boolean fullContext) {
+		_properties.put("returnFullContext", fullContext);
 	}
 
 	public void setShowRequiredFieldsWarning(

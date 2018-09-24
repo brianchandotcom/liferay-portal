@@ -55,7 +55,7 @@ public class IdeaDefaultsPlugin extends BaseDefaultsPlugin<IdeaPlugin> {
 		Project project, final IdeaPlugin ideaPlugin) {
 
 		_configureIdeaModuleIml(project, ideaPlugin);
-		_configureTaskIdea(ideaPlugin);
+		_configureTaskIdea(project);
 
 		project.afterEvaluate(
 			new Action<Project>() {
@@ -186,10 +186,10 @@ public class IdeaDefaultsPlugin extends BaseDefaultsPlugin<IdeaPlugin> {
 		ideaModuleIml.withXml(closure);
 	}
 
-	private void _configureTaskIdea(IdeaPlugin ideaPlugin) {
-		Task task = ideaPlugin.getLifecycleTask();
+	private void _configureTaskIdea(Project project) {
+		Task task = GradleUtil.getTask(project, _IDEA_TASK_NAME);
 
-		task.dependsOn(ideaPlugin.getCleanTask());
+		task.dependsOn(_CLEAN_IDEA_TASK_NAME);
 	}
 
 	private IdeaModule _getIdeaModule(IdeaPlugin ideaPlugin) {
@@ -199,5 +199,9 @@ public class IdeaDefaultsPlugin extends BaseDefaultsPlugin<IdeaPlugin> {
 
 		return ideaModule;
 	}
+
+	private static final String _CLEAN_IDEA_TASK_NAME = "cleanIdea";
+
+	private static final String _IDEA_TASK_NAME = "idea";
 
 }

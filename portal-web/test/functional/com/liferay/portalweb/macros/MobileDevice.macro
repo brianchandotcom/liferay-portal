@@ -58,14 +58,14 @@
 
 		<execute function="AssertElementNotPresent" locator1="IFrame#LOADING_MESSAGE" />
 
+		<var name="key_deviceType" value="${deviceType}" />
+
 		<if>
 			<equals arg1="${deviceType}" arg2="smartphone" />
 			<then>
 				<take-screenshot />
 
-				<execute function="Click" locator1="ControlMenuPreviewPanel#PREVIEW_SMARTPHONE" />
-
-				<var name="key_deviceType" value="${deviceType}" />
+				<execute function="Click" locator1="ControlMenuPreviewPanel#PREVIEW_DATA_DEVICE_BUTTON" />
 
 				<execute function="AssertElementPresent" locator1="ControlMenuPreviewPanel#PREVIEW_DEVICE_IFRAME" />
 
@@ -74,13 +74,11 @@
 			<elseif>
 				<equals arg1="${deviceType}" arg2="tablet" />
 				<then>
-					<execute function="Click" locator1="ControlMenuPreviewPanel#PREVIEW_TABLET" />
+					<execute function="Click" locator1="ControlMenuPreviewPanel#PREVIEW_DATA_DEVICE_BUTTON" />
 
 					<take-screenshot />
 
-					<execute function="Click" locator1="ControlMenuPreviewPanel#PREVIEW_TABLET" />
-
-					<var name="key_deviceType" value="${deviceType}" />
+					<execute function="Click" locator1="ControlMenuPreviewPanel#PREVIEW_DATA_DEVICE_BUTTON" />
 
 					<execute function="AssertElementPresent" locator1="ControlMenuPreviewPanel#PREVIEW_DEVICE_IFRAME" />
 
@@ -90,7 +88,7 @@
 			<elseif>
 				<equals arg1="${deviceType}" arg2="desktop" />
 				<then>
-					<execute function="Click" locator1="ControlMenuPreviewPanel#PREVIEW_DESKTOP" />
+					<execute function="Click" locator1="ControlMenuPreviewPanel#PREVIEW_DATA_DEVICE_BUTTON" />
 
 					<execute function="AssertElementPresent" locator1="ControlMenuPreviewPanel#PREVIEW_DEVICE_GENERAL_IFRAME" />
 
@@ -100,7 +98,7 @@
 			<elseif>
 				<equals arg1="${deviceType}" arg2="custom" />
 				<then>
-					<execute function="Click" locator1="ControlMenuPreviewPanel#PREVIEW_CUSTOM" />
+					<execute function="Click" locator1="ControlMenuPreviewPanel#PREVIEW_DATA_DEVICE_BUTTON" />
 
 					<execute function="AssertElementPresent" locator1="ControlMenuPreviewPanel#PREVIEW_DEVICE_GENERAL_IFRAME" />
 

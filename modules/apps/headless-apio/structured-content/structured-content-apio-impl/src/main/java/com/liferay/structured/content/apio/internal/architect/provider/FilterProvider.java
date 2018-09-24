@@ -48,7 +48,11 @@ public class FilterProvider implements Provider<Filter> {
 		}
 	}
 
-	@Reference
+	@Reference(unbind = "-")
+	public void setFilterParser(FilterParser filterParser) {
+		_filterParser = filterParser;
+	}
+
 	private FilterParser _filterParser;
 
 }

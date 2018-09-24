@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.structured.content.apio.architect.entity.EntityModel;
 import com.liferay.structured.content.apio.architect.filter.FilterParser;
-import com.liferay.structured.content.apio.architect.filter.InvalidFilterException;
 import com.liferay.structured.content.apio.architect.filter.expression.Expression;
 import com.liferay.structured.content.apio.architect.filter.expression.ExpressionVisitException;
 import com.liferay.structured.content.apio.internal.architect.filter.expression.ExpressionVisitorImpl;
@@ -58,7 +57,7 @@ public class FilterParserImpl implements FilterParser {
 		}
 
 		if (Validator.isNull(filterString)) {
-			throw new InvalidFilterException("Filter is null");
+			throw new ExpressionVisitException("Filter is null");
 		}
 
 		UriInfo uriInfo = _getUriInfo(filterString);
@@ -76,17 +75,15 @@ public class FilterParserImpl implements FilterParser {
 		}
 	}
 
-	private UriInfo _getUriInfo(String filterString) {
+	private UriInfo _getUriInfo(String filterString)
+		throws ExpressionVisitException {
+
 		try {
 			return _parser.parseUri(
 				_path, "$filter=" + Encoder.encode(filterString), null, null);
 		}
 		catch (ODataException ode) {
-			throw new InvalidFilterException(
-				String.format(
-					"Invalid query computed from filter '%s': '%s'",
-					filterString, ode.getMessage()),
-				ode);
+			throw new ExpressionVisitException(ode.getMessage(), ode);
 		}
 	}
 

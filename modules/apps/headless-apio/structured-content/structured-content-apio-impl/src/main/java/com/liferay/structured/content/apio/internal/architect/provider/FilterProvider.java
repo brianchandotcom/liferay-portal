@@ -44,7 +44,11 @@ public class FilterProvider implements Provider<Filter> {
 			return new Filter(_filterParser.parse(filterString));
 		}
 		catch (Exception e) {
-			throw new InvalidFilterException(e.getMessage(), e);
+			throw new InvalidFilterException(
+				String.format(
+					"Invalid query computed from filter '%s': '%s'",
+					filterString, e.getMessage()),
+				e);
 		}
 	}
 

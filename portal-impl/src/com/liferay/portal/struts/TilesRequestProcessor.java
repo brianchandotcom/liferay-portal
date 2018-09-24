@@ -28,7 +28,6 @@ import org.apache.struts.action.RequestProcessor;
 import org.apache.struts.config.ForwardConfig;
 import org.apache.struts.config.ModuleConfig;
 import org.apache.struts.tiles.ComponentContext;
-import org.apache.struts.tiles.ComponentDefinition;
 import org.apache.struts.tiles.taglib.ComponentConstants;
 
 /**

@@ -26,8 +26,6 @@ import javax.servlet.ServletException;
 import org.apache.struts.action.ActionServlet;
 import org.apache.struts.action.PlugIn;
 import org.apache.struts.config.ModuleConfig;
-import org.apache.struts.tiles.xmlDefinition.XmlDefinition;
-import org.apache.struts.tiles.xmlDefinition.XmlDefinitionsSet;
 
 /**
  * @author Brian Wing Shun Chan

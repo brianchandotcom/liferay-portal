@@ -14,6 +14,7 @@
 
 package com.liferay.dynamic.data.mapping.form.builder.internal.converter;
 
+import com.liferay.dynamic.data.mapping.expression.CreateExpressionRequest;
 import com.liferay.dynamic.data.mapping.expression.DDMExpression;
 import com.liferay.dynamic.data.mapping.expression.DDMExpressionException;
 import com.liferay.dynamic.data.mapping.expression.DDMExpressionFactory;
@@ -34,6 +35,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.function.UnaryOperator;
+import java.util.stream.Collector;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -157,7 +159,7 @@ public class DDMFormRuleConverter {
 		).map(
 			trimOperation.andThen(quoteOperation)
 		).collect(
-			Collectors.joining(StringPool.COMMA_AND_SPACE)
+			getCollector(operand.getType())
 		);
 	}
 
@@ -223,9 +225,13 @@ public class DDMFormRuleConverter {
 
 	protected Expression createExpression(String expressionString) {
 		try {
+			CreateExpressionRequest createExpressionRequest =
+				CreateExpressionRequest.Builder.newBuilder(
+					expressionString
+				).build();
+
 			DDMExpression<Boolean> ddmExpression =
-				ddmExpressionFactory.createBooleanDDMExpression(
-					expressionString);
+				ddmExpressionFactory.createExpression(createExpressionRequest);
 
 			return ddmExpression.getModel();
 		}
@@ -235,6 +241,18 @@ public class DDMFormRuleConverter {
 					"Unable to parse expression \"%s\"", expressionString),
 				ddmee);
 		}
+	}
+
+	protected Collector<CharSequence, ?, String> getCollector(
+		String operandType) {
+
+		if (operandType.equals("list")) {
+			return Collectors.joining(
+				StringPool.COMMA_AND_SPACE, StringPool.OPEN_BRACKET,
+				StringPool.CLOSE_BRACKET);
+		}
+
+		return Collectors.joining(StringPool.COMMA_AND_SPACE);
 	}
 
 	protected boolean isNumericConstant(String operandType) {

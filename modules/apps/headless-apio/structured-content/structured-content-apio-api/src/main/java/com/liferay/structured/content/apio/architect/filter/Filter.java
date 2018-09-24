@@ -63,6 +63,18 @@ public class Filter {
 		return _expression;
 	}
 
+	@Override
+	public String toString() {
+		final StringBuilder sb = new StringBuilder(3);
+
+		sb.append("Filter{");
+		sb.append("_expression=");
+		sb.append(_expression);
+		sb.append('}');
+
+		return sb.toString();
+	}
+
 	private Filter() {
 		_expression = null;
 	}

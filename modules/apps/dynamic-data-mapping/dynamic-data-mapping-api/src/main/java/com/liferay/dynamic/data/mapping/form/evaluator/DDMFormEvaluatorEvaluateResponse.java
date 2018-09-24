@@ -26,7 +26,9 @@ import java.util.Set;
 public final class DDMFormEvaluatorEvaluateResponse {
 
 	@JSON(name = "fields")
-	public Map<String, Map<String, Object>> getDDMFormFieldsPropertyChanges() {
+	public Map<DDMFormEvaluatorFieldContextKey, Map<String, Object>>
+		getDDMFormFieldsPropertyChanges() {
+
 		return _ddmFormFieldsPropertyChanges;
 	}
 
@@ -37,7 +39,8 @@ public final class DDMFormEvaluatorEvaluateResponse {
 	public static class Builder {
 
 		public static Builder newBuilder(
-			Map<String, Map<String, Object>> ddmFormFieldsPropertyChanges) {
+			Map<DDMFormEvaluatorFieldContextKey, Map<String, Object>>
+				ddmFormFieldsPropertyChanges) {
 
 			return new Builder(ddmFormFieldsPropertyChanges);
 		}
@@ -56,7 +59,8 @@ public final class DDMFormEvaluatorEvaluateResponse {
 		}
 
 		private Builder(
-			Map<String, Map<String, Object>> ddmFormFieldsPropertyChanges) {
+			Map<DDMFormEvaluatorFieldContextKey, Map<String, Object>>
+				ddmFormFieldsPropertyChanges) {
 
 			_ddmFormEvaluatorEvaluateResponse._ddmFormFieldsPropertyChanges =
 				Collections.unmodifiableMap(ddmFormFieldsPropertyChanges);
@@ -71,7 +75,8 @@ public final class DDMFormEvaluatorEvaluateResponse {
 	private DDMFormEvaluatorEvaluateResponse() {
 	}
 
-	private Map<String, Map<String, Object>> _ddmFormFieldsPropertyChanges;
+	private Map<DDMFormEvaluatorFieldContextKey, Map<String, Object>>
+		_ddmFormFieldsPropertyChanges;
 	private Set<Integer> _disabledPagesIndexes;
 
 }

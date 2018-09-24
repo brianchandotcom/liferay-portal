@@ -56,6 +56,10 @@ public final class DDMFormEvaluatorEvaluateRequest {
 			return new Builder(ddmForm, ddmFormValues, locale);
 		}
 
+		public DDMFormEvaluatorEvaluateRequest build() {
+			return _ddmFormEvaluatorEvaluateRequest;
+		}
+
 		public Builder withCompanyId(long companyId) {
 			_ddmFormEvaluatorEvaluateRequest._companyId = companyId;
 

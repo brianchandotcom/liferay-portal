@@ -43,8 +43,11 @@ public interface OpenSSOConfiguration {
 	@Meta.AD(deflt = "false", name = "enabled", required = false)
 	public boolean enabled();
 
-	@Meta.AD(deflt = "12", name = "openam-version", required = false)
-	public int openamVersion();
+	@Meta.AD(
+		deflt = "openam-12", name = "version",
+		optionValues = {"openam-12", "openam-13"}, required = false
+	)
+	public String version();
 
 	@Meta.AD(
 		deflt = "false", description = "import-from-ldap-description",

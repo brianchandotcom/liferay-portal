@@ -14,20 +14,13 @@
 
 package com.liferay.layout.page.template.internal.model.listener;
 
-import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.ModelListenerException;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.ModelListener;
-import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.util.Portal;
-
-import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -38,34 +31,6 @@ import org.osgi.service.component.annotations.Reference;
 @Component(immediate = true, service = ModelListener.class)
 public class LayoutPageTemplateEntryModelListener
 	extends BaseModelListener<LayoutPageTemplateEntry> {
-
-	@Override
-	public void onAfterCreate(LayoutPageTemplateEntry layoutPageTemplateEntry)
-		throws ModelListenerException {
-
-		if (Objects.equals(
-				layoutPageTemplateEntry.getType(),
-				LayoutPageTemplateEntryTypeConstants.TYPE_WIDGET_PAGE)) {
-
-			return;
-		}
-
-		ServiceContext serviceContext =
-			ServiceContextThreadLocal.getServiceContext();
-
-		try {
-			_layoutPageTemplateStructureLocalService.
-				addLayoutPageTemplateStructure(
-					layoutPageTemplateEntry.getUserId(),
-					layoutPageTemplateEntry.getGroupId(),
-					_portal.getClassNameId(LayoutPageTemplateEntry.class),
-					layoutPageTemplateEntry.getLayoutPageTemplateEntryId(),
-					StringPool.BLANK, serviceContext);
-		}
-		catch (PortalException pe) {
-			throw new ModelListenerException(pe);
-		}
-	}
 
 	@Override
 	public void onBeforeRemove(LayoutPageTemplateEntry layoutPageTemplateEntry)

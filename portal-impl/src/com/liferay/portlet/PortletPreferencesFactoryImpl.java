@@ -16,7 +16,8 @@ package com.liferay.portlet;
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.cache.PortalCache;
-import com.liferay.portal.kernel.cache.SingleVMPoolUtil;
+import com.liferay.portal.kernel.cache.PortalCacheHelperUtil;
+import com.liferay.portal.kernel.cache.PortalCacheManagerNames;
 import com.liferay.portal.kernel.cache.key.CacheKeyGenerator;
 import com.liferay.portal.kernel.cache.key.CacheKeyGeneratorUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -958,7 +959,8 @@ public class PortletPreferencesFactoryImpl
 
 	private Map<String, Preference> _defaultPreferencesMap;
 	private final PortalCache<String, Map<String, Preference>>
-		_preferencesMapPortalCache = SingleVMPoolUtil.getPortalCache(
+		_preferencesMapPortalCache = PortalCacheHelperUtil.getPortalCache(
+			PortalCacheManagerNames.SINGLE_VM,
 			PortletPreferencesFactoryImpl.class.getName());
 
 }

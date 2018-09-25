@@ -46,8 +46,6 @@ public class MediaObjectCreatorForm {
 		).constructor(
 			MediaObjectCreatorForm::new
 		).addOptionalString(
-			"changeLog", MediaObjectCreatorForm::setChangelog
-		).addOptionalString(
 			"description", MediaObjectCreatorForm::setDescription
 		).addOptionalString(
 			"headline", MediaObjectCreatorForm::setTitle

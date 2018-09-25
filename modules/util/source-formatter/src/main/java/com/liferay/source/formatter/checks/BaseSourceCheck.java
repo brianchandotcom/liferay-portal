@@ -351,20 +351,7 @@ public abstract class BaseSourceCheck implements SourceCheck {
 	}
 
 	protected String getLine(String content, int lineNumber) {
-		int nextLineStartPos = getLineStartPos(content, lineNumber);
-
-		if (nextLineStartPos == -1) {
-			return null;
-		}
-
-		int nextLineEndPos = content.indexOf(
-			CharPool.NEW_LINE, nextLineStartPos);
-
-		if (nextLineEndPos == -1) {
-			return content.substring(nextLineStartPos);
-		}
-
-		return content.substring(nextLineStartPos, nextLineEndPos);
+		return SourceUtil.getLine(content, lineNumber);
 	}
 
 	protected int getLineNumber(String content, int pos) {
@@ -372,25 +359,7 @@ public abstract class BaseSourceCheck implements SourceCheck {
 	}
 
 	protected int getLineStartPos(String content, int lineNumber) {
-		if (lineNumber <= 0) {
-			return -1;
-		}
-
-		if (lineNumber == 1) {
-			return 0;
-		}
-
-		int x = 0;
-
-		for (int i = 1; i < lineNumber; i++) {
-			x = content.indexOf(CharPool.NEW_LINE, x + 1);
-
-			if (x == -1) {
-				return x;
-			}
-		}
-
-		return x + 1;
+		return SourceUtil.getLineStartPos(content, lineNumber);
 	}
 
 	protected int getMaxLineLength() {

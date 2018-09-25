@@ -22,6 +22,7 @@ import com.liferay.source.formatter.parser.comparator.JavaTermComparator;
 import java.io.IOException;
 
 import java.util.List;
+import java.util.Objects;
 
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
@@ -83,7 +84,11 @@ public class JavaTermOrderCheck extends BaseJavaTermCheck {
 		JavaTerm previousJavaTerm = null;
 
 		for (JavaTerm javaTerm : childJavaTerms) {
-			if (javaTerm.isJavaStaticBlock()) {
+			if (javaTerm.isJavaStaticBlock() ||
+				Objects.equals(
+					javaTerm.getAccessModifier(),
+					JavaTerm.ACCESS_MODIFIER_DEFAULT)) {
+
 				continue;
 			}
 

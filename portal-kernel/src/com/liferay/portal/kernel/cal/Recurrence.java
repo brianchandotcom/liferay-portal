@@ -12,7 +12,7 @@
  * details.
  */
 
-/*
+/**
  * Copyright (c) 2000, Columbia University.  All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -124,7 +124,7 @@ public class Recurrence implements Serializable {
 
 		DayAndPosition[] b = new DayAndPosition[byDay.length];
 
-		/*
+		/**
 		 * System.arraycopy isn't good enough -- we want to clone each
 		 * individual element.
 		 */
@@ -260,7 +260,7 @@ public class Recurrence implements Serializable {
 	 */
 	public Calendar getDtEnd() {
 
-		/*
+		/**
 		 * Make dtEnd a cloned dtStart, so non-time fields of the Calendar
 		 * are accurate.
 		 */
@@ -427,7 +427,7 @@ public class Recurrence implements Serializable {
 
 		byDay = new DayAndPosition[b.length];
 
-		/*
+		/**
 		 * System.arraycopy isn't good enough -- we want to clone each
 		 * individual element.
 		 */

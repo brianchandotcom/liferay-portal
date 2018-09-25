@@ -20,6 +20,10 @@ import com.liferay.media.object.apio.internal.architect.form.MediaObjectCreatorF
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.ListUtil;
+
+import java.util.Optional;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -48,14 +52,24 @@ public class MediaObjectHelper {
 			MediaObjectCreatorForm mediaObjectCreatorForm)
 		throws PortalException {
 
-		BinaryFile binaryFile = mediaObjectCreatorForm.getBinaryFile();
-
 		ServiceContext serviceContext =
 			mediaObjectCreatorForm.getServiceContext(repositoryId);
 
+		if (ListUtil.isNotEmpty(mediaObjectCreatorForm.getCategories())) {
+			serviceContext.setAssetCategoryIds(
+				ArrayUtil.toLongArray(mediaObjectCreatorForm.getCategories()));
+		}
+
+		BinaryFile binaryFile = mediaObjectCreatorForm.getBinaryFile();
+
+		Optional<String> titleOptional =
+			mediaObjectCreatorForm.getTitleOptional();
+
+		String title = titleOptional.orElse(binaryFile.getName());
+
 		return _dlAppService.addFileEntry(
-			repositoryId, folderId, mediaObjectCreatorForm.getName(),
-			binaryFile.getMimeType(), mediaObjectCreatorForm.getTitle(),
+			repositoryId, folderId, binaryFile.getName(),
+			binaryFile.getMimeType(), title,
 			mediaObjectCreatorForm.getDescription(), null,
 			binaryFile.getInputStream(), binaryFile.getSize(), serviceContext);
 	}

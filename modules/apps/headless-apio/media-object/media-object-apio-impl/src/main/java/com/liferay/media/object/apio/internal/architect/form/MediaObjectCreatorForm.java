@@ -16,11 +16,13 @@ package com.liferay.media.object.apio.internal.architect.form;
 
 import com.liferay.apio.architect.file.BinaryFile;
 import com.liferay.apio.architect.form.Form;
+import com.liferay.category.apio.architect.identifier.CategoryIdentifier;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Represents the values extracted from a media object form.
@@ -45,16 +47,17 @@ public class MediaObjectCreatorForm {
 			__ -> "This form can be used to create a media object"
 		).constructor(
 			MediaObjectCreatorForm::new
+		).addOptionalLinkedModelList(
+			"categories", CategoryIdentifier.class,
+			MediaObjectCreatorForm::setCategories
 		).addOptionalString(
 			"description", MediaObjectCreatorForm::setDescription
 		).addOptionalString(
-			"headline", MediaObjectCreatorForm::setTitle
+			"title", MediaObjectCreatorForm::setTitle
 		).addOptionalStringList(
 			"keywords", MediaObjectCreatorForm::setKeywords
 		).addRequiredFile(
 			"binaryFile", MediaObjectCreatorForm::setBinaryFile
-		).addRequiredString(
-			"name", MediaObjectCreatorForm::setName
 		).build();
 	}
 
@@ -67,17 +70,12 @@ public class MediaObjectCreatorForm {
 		return _binaryFile;
 	}
 
-	/**
-	 * Returns the media object's changelog.
-	 *
-	 * @return the changelog
-	 */
-	public String getChangelog() {
-		return _changelog;
+	public List<Long> getCategories() {
+		return _categories;
 	}
 
 	/**
-	 * Returns the media object's description.
+	 * Returns the media object's description
 	 *
 	 * @return the description
 	 */
@@ -85,17 +83,12 @@ public class MediaObjectCreatorForm {
 		return _description;
 	}
 
-	/**
-	 * Returns the media object's name.
-	 *
-	 * @return the name
-	 */
-	public String getName() {
-		return _name;
+	public List<String> getKeywords() {
+		return _keywords;
 	}
 
 	/**
-	 * Returns the service context related to this form.
+	 * Returns the service context related with this form
 	 *
 	 * @param  groupId the group ID
 	 * @return the service context
@@ -120,16 +113,16 @@ public class MediaObjectCreatorForm {
 	 *
 	 * @return the title
 	 */
-	public String getTitle() {
-		return _title;
+	public Optional<String> getTitleOptional() {
+		return Optional.ofNullable(_title);
 	}
 
 	public void setBinaryFile(BinaryFile binaryFile) {
 		_binaryFile = binaryFile;
 	}
 
-	public void setChangelog(String changelog) {
-		_changelog = changelog;
+	public void setCategories(List<Long> categories) {
+		_categories = categories;
 	}
 
 	public void setDescription(String description) {
@@ -140,19 +133,14 @@ public class MediaObjectCreatorForm {
 		_keywords = keywords;
 	}
 
-	public void setName(String name) {
-		_name = name;
-	}
-
 	public void setTitle(String title) {
 		_title = title;
 	}
 
 	private BinaryFile _binaryFile;
-	private String _changelog;
+	private List<Long> _categories;
 	private String _description;
 	private List<String> _keywords;
-	private String _name;
 	private String _title;
 
 }

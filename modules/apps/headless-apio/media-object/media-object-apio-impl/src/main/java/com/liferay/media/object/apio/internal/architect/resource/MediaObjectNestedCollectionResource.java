@@ -130,7 +130,7 @@ public class MediaObjectNestedCollectionResource
 		).addString(
 			"headline", FileEntry::getTitle
 		).addString(
-			"name", FileEntry::getFileName
+			"title", FileEntry::getTitle
 		).addStringList(
 			"keywords", this::_getMediaObjectAssetTags
 		).build();

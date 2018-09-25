@@ -40,7 +40,8 @@ class Sharing extends PortletBase {
 	_getEmailAdress(emailAddress = '') {
 		return emailAddress
 			.toLowerCase()
-			.split(/[\s,;]+/);
+			.split(/[\s,;]+/)
+			.filter(email => !!email);
 	}
 
 	/**
@@ -51,7 +52,7 @@ class Sharing extends PortletBase {
 	_handleValidateEmail(event) {
 		const value = event.delegateTarget.value;
 
-		this._validateRequiredEmail(value);
+		this._validateEmail(value);
 	}
 
 	/**
@@ -61,15 +62,27 @@ class Sharing extends PortletBase {
 	 * @private
 	 * @review
 	 */
-	_validateRequiredEmail(value) {
-		const valid = value && value.trim
-			? !!value.trim()
-			: !!value
+	_validateEmail(value) {
+		const empty = value && value.trim
+			? !value.trim()
+			: !value
 		;
+
+		this.emailErrorMessage = empty
+			? Liferay.Language.get('this-field-is-required')
+			: ''
+		;
+
+		if (empty) return false;
+
+		const emailRegex = /.+@.+\..+/i;
+		const valid = this._getEmailAdress(value).every(
+			email => emailRegex.test(email)
+		);
 
 		this.emailErrorMessage = valid
 			? ''
-			: Liferay.Language.get('this-field-is-required')
+			: Liferay.Language.get('please-enter-a-valid-email-address')
 		;
 
 		return valid;
@@ -84,7 +97,7 @@ class Sharing extends PortletBase {
 	_handleSubmit(event) {
 		event.preventDefault();
 
-		if (this.submitting || !this._validateRequiredEmail(this.userEmailAddress)) return;
+		if (this.submitting || !this._validateEmail(this.userEmailAddress)) return;
 
 		this.submitting = true;
 

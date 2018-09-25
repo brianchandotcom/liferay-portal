@@ -107,7 +107,9 @@ public class AssetListDisplayContext {
 
 		searchContainer.setResults(assetEntries);
 
-		searchContainer.setTotal(assetEntries.size());
+		int totalCount = assetListEntry.getAssetEntriesCount();
+
+		searchContainer.setTotal(totalCount);
 
 		_assetListContentSearchContainer = searchContainer;
 

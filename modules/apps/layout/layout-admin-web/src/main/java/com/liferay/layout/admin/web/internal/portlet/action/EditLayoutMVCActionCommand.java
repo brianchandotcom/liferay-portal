@@ -97,7 +97,7 @@ public class EditLayoutMVCActionCommand extends BaseMVCActionCommand {
 		Map<Locale, String> robotsMap = LocalizationUtil.getLocalizationMap(
 			actionRequest, "robots");
 		String type = ParamUtil.getString(uploadPortletRequest, "type");
-		boolean hidden = !ParamUtil.getBoolean(
+		boolean showInMenu = ParamUtil.getBoolean(
 			uploadPortletRequest, "showInMenu");
 		Map<Locale, String> friendlyURLMap =
 			LocalizationUtil.getLocalizationMap(actionRequest, "friendlyURL");
@@ -125,7 +125,8 @@ public class EditLayoutMVCActionCommand extends BaseMVCActionCommand {
 		layout = _layoutService.updateLayout(
 			groupId, privateLayout, layoutId, layout.getParentLayoutId(),
 			nameMap, titleMap, descriptionMap, keywordsMap, robotsMap, type,
-			hidden, friendlyURLMap, !deleteLogo, iconBytes, serviceContext);
+			!showInMenu, friendlyURLMap, !deleteLogo, iconBytes,
+			serviceContext);
 
 		themeDisplay.clearLayoutFriendlyURL(layout);
 

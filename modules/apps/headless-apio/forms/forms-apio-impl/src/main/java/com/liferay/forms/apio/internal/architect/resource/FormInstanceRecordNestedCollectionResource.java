@@ -87,7 +87,7 @@ public class FormInstanceRecordNestedCollectionResource
 
 	@Override
 	public String getName() {
-		return "form-instance-record";
+		return "form-record";
 	}
 
 	@Override
@@ -108,11 +108,11 @@ public class FormInstanceRecordNestedCollectionResource
 		Representor.Builder<DDMFormInstanceRecord, Long> builder) {
 
 		return builder.types(
-			"FormInstanceRecord"
+			"FormRecord"
 		).identifier(
 			DDMFormInstanceRecord::getFormInstanceRecordId
 		).addBidirectionalModel(
-			"formInstance", "formInstanceRecords", FormInstanceIdentifier.class,
+			"form", "formRecords", FormInstanceIdentifier.class,
 			DDMFormInstanceRecord::getFormInstanceId
 		).addBoolean(
 			"draft", this::_isDraft

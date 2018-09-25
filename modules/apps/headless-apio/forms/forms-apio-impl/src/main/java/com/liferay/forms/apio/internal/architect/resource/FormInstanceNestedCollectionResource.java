@@ -88,7 +88,7 @@ public class FormInstanceNestedCollectionResource
 
 	@Override
 	public String getName() {
-		return "form-instance";
+		return "form";
 	}
 
 	@Override
@@ -118,11 +118,11 @@ public class FormInstanceNestedCollectionResource
 		Representor.Builder<DDMFormInstance, Long> builder) {
 
 		return builder.types(
-			"FormInstance"
+			"Form"
 		).identifier(
 			DDMFormInstance::getFormInstanceId
 		).addBidirectionalModel(
-			"contentSpace", "formInstances", ContentSpaceIdentifier.class,
+			"contentSpace", "forms", ContentSpaceIdentifier.class,
 			DDMFormInstance::getGroupId
 		).addDate(
 			"dateCreated", DDMFormInstance::getCreateDate

@@ -65,9 +65,6 @@ public class FormStructureRepresentorBuilderHelper {
 				DDMStructure::getGroupId);
 
 		bidirectionalModelStepBuilder.addNested(
-			"version", this::_getDDMStructureVersion,
-			this::_buildDDMStructureVersion
-		).addNested(
 			"successPage", this::_getDDMFormSuccessPageSettings,
 			this::_buildDDMFormSuccessPageSettings
 		).addNestedList(
@@ -137,21 +134,10 @@ public class FormStructureRepresentorBuilderHelper {
 		return builder.types(
 			"FormSuccessPageSettings"
 		).addLocalizedStringByLocale(
-			"headline", getLocalizedString(DDMFormSuccessPageSettings::getTitle)
+			"description", getLocalizedString(
+				DDMFormSuccessPageSettings::getBody)
 		).addLocalizedStringByLocale(
-			"text", getLocalizedString(DDMFormSuccessPageSettings::getBody)
-		).build();
-	}
-
-	private NestedRepresentor<DDMStructureVersion> _buildDDMStructureVersion(
-		NestedRepresentor.Builder<DDMStructureVersion> nestedBuilder) {
-
-		return nestedBuilder.types(
-			"StructureVersion"
-		).addLinkedModel(
-			"creator", PersonIdentifier.class, DDMStructureVersion::getUserId
-		).addString(
-			"name", DDMStructureVersion::getVersion
+			"headline", getLocalizedString(DDMFormSuccessPageSettings::getTitle)
 		).build();
 	}
 
@@ -193,16 +179,6 @@ public class FormStructureRepresentorBuilderHelper {
 			DDMForm::getDDMFormSuccessPageSettings
 		).filter(
 			DDMFormSuccessPageSettings::isEnabled
-		).orElse(
-			null
-		);
-	}
-
-	private DDMStructureVersion _getDDMStructureVersion(
-		DDMStructure ddmStructure) {
-
-		return Try.fromFallible(
-			ddmStructure::getStructureVersion
 		).orElse(
 			null
 		);

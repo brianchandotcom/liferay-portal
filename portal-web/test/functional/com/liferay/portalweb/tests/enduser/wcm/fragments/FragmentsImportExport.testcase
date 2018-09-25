@@ -60,9 +60,9 @@
 		<description message="This is a test case for LPS-80625." />
 		<property name="portal.acceptance" value="true" />
 
-		<execute macro="FragmentsAdmin#importCollectionFromDependenciesFolder">
-			<var name="collectionZipFile" value="Document_1.doc" />
-		</execute>
+		<execute macro="FragmentsAdmin#gotoImportCollection" />
+
+		<execute function="UploadCommonFile" locator1="TextInput#FILE" value1="Document_1.doc" />
 
 		<execute function="AssertTextEquals" locator1="Message#ERROR_FORM_VALIDATION" value1="Please enter a file with a valid extension (zip)." />
 

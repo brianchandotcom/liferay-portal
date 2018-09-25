@@ -71,7 +71,7 @@ public class ExecUtil {
 
 		processBuilder.directory(baseDir.getAbsoluteFile());
 
-		Process process = processBuilder.start();
+		Process process = new BufferedProcess(2000000, processBuilder.start());
 
 		long duration = 0;
 		int returnCode = -1;

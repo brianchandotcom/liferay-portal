@@ -98,7 +98,20 @@ public class JobFactory {
 		}
 
 		if (jobName.equals("junit-test-csv-report")) {
-			_jobs.put(jobName, new PortalGitRepositoryJob(jobName));
+			PortalGitRepositoryJob portalGitRepositoryJob =
+				new PortalGitRepositoryJob(jobName) {
+
+					@Override
+					protected GitWorkingDirectory getNewGitWorkingDirectory() {
+						return GitWorkingDirectoryFactory.
+							newGitWorkingDirectory(
+								getBranchName(),
+								System.getProperty("user.dir"));
+					}
+
+				};
+
+			_jobs.put(jobName, portalGitRepositoryJob);
 
 			return _jobs.get(jobName);
 		}

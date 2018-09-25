@@ -238,6 +238,12 @@
 		</attribute>
 	</tag>
 	<tag>
+		<description>Renders a scheduler for scheduled publications.</description>
+		<name>input-scheduler</name>
+		<tag-class>com.liferay.staging.taglib.servlet.taglib.InputSchedulerTag</tag-class>
+		<body-content>JSP</body-content>
+	</tag>
+	<tag>
 		<description>Renders a <![CDATA[<code>Navbar</code>]]> containing a staging menu with page versioning information, if available.</description>
 		<name>menu</name>
 		<tag-class>com.liferay.staging.taglib.servlet.taglib.MenuTag</tag-class>

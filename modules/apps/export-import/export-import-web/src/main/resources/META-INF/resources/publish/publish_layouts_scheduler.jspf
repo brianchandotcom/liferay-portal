@@ -31,13 +31,7 @@
 			value="true"
 		/>
 
-		<ul class="hide options portlet-list select-options" id="<portlet:namespace />selectSchedule">
-			<li>
-				<aui:input name="jobName" type="hidden" />
-
-				<liferay-ui:input-scheduler />
-			</li>
-		</ul>
+		<liferay-staging:input-scheduler />
 	</li>
 </ul>
 

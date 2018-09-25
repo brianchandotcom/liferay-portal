@@ -322,3 +322,20 @@
 .process-summary-subsection {
 	margin: 1rem 0;
 }
+
+.staging-publish-schedule {
+	th {
+		min-width: 10em;
+		padding-top: 0.7em;
+		text-align: right;
+		vertical-align: top;
+	}
+
+	.bottom-gap {
+		padding-bottom: 2em;
+	}
+
+	.number-input {
+		width: 10em;
+	}
+}

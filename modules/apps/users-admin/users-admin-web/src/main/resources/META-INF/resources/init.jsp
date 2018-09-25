@@ -134,7 +134,6 @@ page import="com.liferay.portal.kernel.util.FastDateFormatFactoryUtil" %><%@
 page import="com.liferay.portal.kernel.util.GetterUtil" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
 page import="com.liferay.portal.kernel.util.ListUtil" %><%@
-page import="com.liferay.portal.kernel.util.LocaleUtil" %><%@
 page import="com.liferay.portal.kernel.util.LocalizationUtil" %><%@
 page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
 page import="com.liferay.portal.kernel.util.PortalUtil" %><%@
@@ -188,7 +187,6 @@ page import="java.util.Collections" %><%@
 page import="java.util.HashMap" %><%@
 page import="java.util.LinkedHashMap" %><%@
 page import="java.util.List" %><%@
-page import="java.util.Locale" %><%@
 page import="java.util.Map" %><%@
 page import="java.util.Set" %>
 

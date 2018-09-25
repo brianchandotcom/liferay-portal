@@ -21,84 +21,11 @@ OrganizationScreenNavigationDisplayContext organizationScreenNavigationDisplayCo
 
 Organization organization = organizationScreenNavigationDisplayContext.getOrganization();
 
-String reminderQueries = ParamUtil.getString(request, "reminderQueries");
-
-String currentLanguageId = LanguageUtil.getLanguageId(request);
-Locale defaultLocale = LocaleUtil.getDefault();
-String defaultLanguageId = LocaleUtil.toLanguageId(defaultLocale);
-
-Set<Locale> locales = LanguageUtil.getAvailableLocales();
-
-if ((organization != null) && Validator.isNull(reminderQueries)) {
-	reminderQueries = StringUtil.merge(organization.getReminderQueryQuestions(defaultLocale), StringPool.NEW_LINE);
-}
-
-Map<Locale, String> reminderQueriesMap = LocalizationUtil.getLocalizationMap(renderRequest, "reminderQueries");
+String xml = LocalizationUtil.getLocalizationXmlFromPreferences(organization.getPreferences(), renderRequest, "reminderQueries");
 %>
 
 <div class="sheet-text">
 	<liferay-ui:message key="specify-custom-security-questions-for-the-users-of-this-organization" />
 </div>
 
-<aui:fieldset>
-	<aui:input id="reminderQueries" label="security-questions" localized="<%= true %>" name="reminderQueries" type="textarea" />
-</aui:fieldset>
-
-<aui:script sandbox="<%= true %>">
-	var lastLanguageId = '<%= currentLanguageId %>';
-	var reminderQueriesChanged = false;
-	var reminderQueriesTemp = $('#<portlet:namespace />reminderQueries_temp');
-
-	function updateReminderQueriesLanguage() {
-		var selLanguageId = $(document.<portlet:namespace />fm).fm('reminderQueryLanguageId').val();
-
-		if (reminderQueriesChanged && (lastLanguageId != '<%= defaultLanguageId %>')) {
-			$('#<portlet:namespace />reminderQueries_' + lastLanguageId).val(reminderQueriesTemp.val());
-
-			reminderQueriesChanged = false;
-		}
-
-		if (selLanguageId) {
-			updateReminderQueriesLanguageTemps(selLanguageId);
-		}
-
-		reminderQueriesTemp.toggleClass('hide', !selLanguageId);
-
-		lastLanguageId = selLanguageId;
-	}
-
-	function updateReminderQueriesLanguageTemps(lang) {
-		if (lang != '<%= defaultLanguageId %>') {
-			var reminderQueriesValue = $('#<portlet:namespace />reminderQueries_' + lang).val();
-
-			if (!reminderQueriesValue) {
-				reminderQueriesValue = $('#<portlet:namespace />reminderQueries_<%= defaultLanguageId %>').val();
-			}
-
-			reminderQueriesTemp.val(reminderQueriesValue);
-		}
-	}
-
-	var reminderQueriesHandle = Liferay.on('submitForm', updateReminderQueriesLanguage);
-
-	function clearReminderQueriesHandle(event) {
-		if (event.portletId === '<%= portletDisplay.getRootPortletId() %>') {
-			reminderQueriesHandle.detach();
-
-			Liferay.detach('destroyPortlet', clearReminderQueriesHandle);
-		}
-	}
-
-	updateReminderQueriesLanguageTemps(lastLanguageId);
-
-	Liferay.on('destroyPortlet', clearReminderQueriesHandle);
-
-	$('#<portlet:namespace />reminderQueryLanguageId').on('change', updateReminderQueriesLanguage);
-
-	reminderQueriesTemp.on(
-		'change',
-		function() {
-			reminderQueriesChanged = true;
-		}
-	);
-</aui:script>
+<aui:input id="reminderQueries" label="security-questions" localized="<%= true %>" name="reminderQueries" type="textarea" value="<%= xml %>" />

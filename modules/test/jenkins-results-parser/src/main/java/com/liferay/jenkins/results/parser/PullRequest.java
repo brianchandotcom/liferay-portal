@@ -329,17 +329,25 @@ public class PullRequest {
 	}
 
 	public boolean isAutoCloseCommentAvailable() {
+		if (_autoCloseCommentAvailable != null) {
+			return _autoCloseCommentAvailable;
+		}
+
 		List<Comment> comments = getComments();
 
 		for (Comment comment : comments) {
 			String commentBody = comment.getBody();
 
 			if (commentBody.contains("auto-close=\"false\"")) {
-				return true;
+				_autoCloseCommentAvailable = true;
+
+				return _autoCloseCommentAvailable;
 			}
 		}
 
-		return false;
+		_autoCloseCommentAvailable = false;
+
+		return _autoCloseCommentAvailable;
 	}
 
 	public void refresh() {
@@ -386,6 +394,10 @@ public class PullRequest {
 
 			ioe.printStackTrace();
 		}
+	}
+
+	public void resetAutoCloseCommentAvailable() {
+		_autoCloseCommentAvailable = null;
 	}
 
 	public void setTestSuiteStatus(TestSuiteStatus testSuiteStatus) {
@@ -590,6 +602,7 @@ public class PullRequest {
 			"https://github.com/(?<owner>[^/]+)/",
 			"(?<gitHubRemoteGitRepositoryName>[^/]+)/pull/(?<number>\\d+)"));
 
+	private Boolean _autoCloseCommentAvailable;
 	private GitHubRemoteGitRepository _gitHubRemoteGitRepository;
 	private String _gitHubRemoteGitRepositoryName;
 	private JSONObject _jsonObject;

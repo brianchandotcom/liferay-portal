@@ -56,7 +56,7 @@ String portletResource = ParamUtil.getString(request, "portletResource");
 			showButtons="<%= false %>"
 		/>
 
-		<c:if test="<%= assetPublisherDisplayContext.isSelectionStyleDynamic() || assetPublisherDisplayContext.isSelectionStyleManual() %>">
+		<c:if test="<%= !assetPublisherDisplayContext.isSelectionStyleAssetList() %>">
 			<div class="mb-2">
 				<aui:a cssClass="create-asset-list-link" href="javascript:;">
 					<liferay-ui:message key="create-an-asset-list-from-this-configuration" />

@@ -36,13 +36,13 @@ public abstract class PortalWorkspace extends BaseWorkspace {
 		String portalGitHubURL, String portalUpstreamBranchName) {
 
 		WorkspaceGitRepository workspaceGitRepository =
-			GitRepositoryFactory.newWorkspaceGitRepository(
+			WorkspaceUtil.getWorkspaceGitRepository(
 				portalGitHubURL, portalUpstreamBranchName);
 
 		if (!(workspaceGitRepository instanceof
 				PortalWorkspaceGitRepository)) {
 
-			throw new RuntimeException("Invalid build runner Git repository");
+			throw new RuntimeException("Invalid workspace Git repository");
 		}
 
 		_primaryPortalWorkspaceGitRepository =
@@ -50,27 +50,22 @@ public abstract class PortalWorkspace extends BaseWorkspace {
 
 		_primaryPortalWorkspaceGitRepository.setUp();
 
-		if (!portalUpstreamBranchName.startsWith("ee-")) {
-			_companionPortalWorkspaceGitRepository =
-				GitRepositoryFactory.newCompanionPortalWorkspaceGitRepository(
-					_primaryPortalWorkspaceGitRepository);
-			_otherPortalWorkspaceGitRepository =
-				GitRepositoryFactory.newOtherPortalWorkspaceGitRepository(
-					_primaryPortalWorkspaceGitRepository);
-		}
-		else {
-			_companionPortalWorkspaceGitRepository = null;
-			_otherPortalWorkspaceGitRepository = null;
-		}
+		_companionPortalWorkspaceGitRepository =
+			WorkspaceUtil.getDependencyWorkspaceGitRepository(
+				"portal.companion", _primaryPortalWorkspaceGitRepository);
+
+		_companionPortalWorkspaceGitRepository.setUp();
+
+		_otherPortalWorkspaceGitRepository =
+			WorkspaceUtil.getDependencyWorkspaceGitRepository(
+				"portal.other", _primaryPortalWorkspaceGitRepository);
 
 		_pluginsWorkspaceGitRepository =
-			GitRepositoryFactory.newPluginsWorkspaceGitRepository(
-				_primaryPortalWorkspaceGitRepository);
+			WorkspaceUtil.getDependencyWorkspaceGitRepository(
+				"portal.plugins", _primaryPortalWorkspaceGitRepository);
 	}
 
-	protected OtherPortalWorkspaceGitRepository
-		getOtherPortalWorkspaceGitRepository() {
-
+	protected WorkspaceGitRepository getOtherPortalWorkspaceGitRepository() {
 		return _otherPortalWorkspaceGitRepository;
 	}
 
@@ -129,11 +124,9 @@ public abstract class PortalWorkspace extends BaseWorkspace {
 		"https://github.com/[^/]+/(?<gitRepositoryName>" +
 			"liferay-portal(-ee)?)/.*");
 
-	private final CompanionPortalWorkspaceGitRepository
-		_companionPortalWorkspaceGitRepository;
-	private final OtherPortalWorkspaceGitRepository
-		_otherPortalWorkspaceGitRepository;
-	private final PluginsWorkspaceGitRepository _pluginsWorkspaceGitRepository;
+	private final WorkspaceGitRepository _companionPortalWorkspaceGitRepository;
+	private final WorkspaceGitRepository _otherPortalWorkspaceGitRepository;
+	private final WorkspaceGitRepository _pluginsWorkspaceGitRepository;
 	private final PortalWorkspaceGitRepository
 		_primaryPortalWorkspaceGitRepository;
 

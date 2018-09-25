@@ -89,6 +89,19 @@ StringBuilder friendlyURLBase = new StringBuilder();
 	<c:when test="<%= !group.isLayoutPrototype() %>">
 		<aui:input name="name" />
 
+		<div class="form-group">
+
+			<%
+			String showInHierarchyLabel = "show-in-public-pages-hierarchy-menu";
+
+			if (selLayout.isPrivateLayout()) {
+				showInHierarchyLabel = "show-in-private-pages-hierarchy-menu";
+			}
+			%>
+
+			<aui:input helpMessage="if-disabled-this-page-does-not-show-up-in-the-pages-hierarchy-menu" label="<%= showInHierarchyLabel %>" name="showInMenu" type="toggle-switch" value="<%= !selLayout.isHidden() %>" />
+		</div>
+
 		<c:choose>
 			<c:when test="<%= selLayoutType.isURLFriendliable() %>">
 				<div class="form-group">

@@ -33,6 +33,10 @@
 		display: none;
 	}
 
+	.hide-data-labels .toggle-switch-handle::after {
+		content: normal !important;
+	}
+
 	.label-holder {
 		font-weight: 700;
 		padding: 15px 0 5px;

@@ -31,6 +31,3 @@ page import="com.liferay.taglib.aui.ScriptTag" %>
 
 <%@ page import="java.util.Iterator" %><%@
 page import="java.util.concurrent.ConcurrentHashMap" %>
-
-<%@ page import="org.apache.struts.tiles.ComponentContext" %><%@
-page import="org.apache.struts.tiles.taglib.ComponentConstants" %>

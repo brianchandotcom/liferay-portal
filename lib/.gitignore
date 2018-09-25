@@ -209,7 +209,6 @@
 /portal/poi-ooxml-schemas.jar
 /portal/poi-scratchpad.jar
 /portal/poi.jar
-/portal/portals-bridges.jar
 /portal/rdffilter.jar
 /portal/rhino.jar
 /portal/rome.jar
@@ -242,10 +241,6 @@
 /portal/streambuffer.jar
 /portal/stringtemplate.jar
 /portal/struts-core.jar
-/portal/struts-el.jar
-/portal/struts-extras.jar
-/portal/struts-taglib.jar
-/portal/struts-tiles.jar
 /portal/tagsoup.jar
 /portal/tika-core.jar
 /portal/tika-parsers.jar

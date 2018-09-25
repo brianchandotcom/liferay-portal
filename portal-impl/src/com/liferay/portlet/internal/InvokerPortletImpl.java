@@ -114,7 +114,7 @@ public class InvokerPortletImpl
 		_initialize(
 			portletModel, portlet, portletConfig, portletContext,
 			invokerFilterContainer, checkAuthToken, facesPortlet, false,
-			strutsPortlet, strutsBridgePortlet);
+			strutsPortlet);
 	}
 
 	public InvokerPortletImpl(
@@ -127,7 +127,7 @@ public class InvokerPortletImpl
 		_initialize(
 			portletModel, portlet, portletConfig, portletContext,
 			invokerFilterContainer, checkAuthToken, facesPortlet, headerPortlet,
-			strutsPortlet, strutsBridgePortlet);
+			strutsPortlet);
 	}
 
 	public InvokerPortletImpl(
@@ -153,13 +153,9 @@ public class InvokerPortletImpl
 		boolean strutsPortlet = ClassUtil.isSubclass(
 			portletClass, StrutsPortlet.class);
 
-		boolean strutsBridgePortlet = ClassUtil.isSubclass(
-			portletClass, "org.apache.portals.bridges.struts.StrutsPortlet");
-
 		_initialize(
 			portletModel, portlet, null, portletContext, invokerFilterContainer,
-			checkAuthToken, facesPortlet, headerPortlet, strutsPortlet,
-			strutsBridgePortlet);
+			checkAuthToken, facesPortlet, headerPortlet, strutsPortlet);
 	}
 
 	@Override
@@ -299,7 +295,7 @@ public class InvokerPortletImpl
 
 	@Override
 	public boolean isStrutsBridgePortlet() {
-		return _strutsBridgePortlet;
+		return false;
 	}
 
 	@Override
@@ -757,8 +753,7 @@ public class InvokerPortletImpl
 		com.liferay.portal.kernel.model.Portlet portletModel, Portlet portlet,
 		PortletConfig portletConfig, PortletContext portletContext,
 		InvokerFilterContainer invokerFilterContainer, boolean checkAuthToken,
-		boolean facesPortlet, boolean headerPortlet, boolean strutsPortlet,
-		boolean strutsBridgePortlet) {
+		boolean facesPortlet, boolean headerPortlet, boolean strutsPortlet) {
 
 		_portletModel = portletModel;
 		_portlet = portlet;
@@ -767,7 +762,6 @@ public class InvokerPortletImpl
 		_facesPortlet = facesPortlet;
 		_headerPortlet = headerPortlet;
 		_strutsPortlet = strutsPortlet;
-		_strutsBridgePortlet = strutsBridgePortlet;
 
 		_expCache = portletModel.getExpCache();
 		_liferayPortletConfig = (LiferayPortletConfig)portletConfig;
@@ -801,7 +795,6 @@ public class InvokerPortletImpl
 	private ClassLoader _portletClassLoader;
 	private String _portletId;
 	private com.liferay.portal.kernel.model.Portlet _portletModel;
-	private boolean _strutsBridgePortlet;
 	private boolean _strutsPortlet;
 
 }

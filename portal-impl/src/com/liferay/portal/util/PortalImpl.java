@@ -6629,9 +6629,7 @@ public class PortalImpl implements Portal {
 		InvokerPortlet invokerPortlet = PortletInstanceFactoryUtil.create(
 			portlet, servletContext);
 
-		if (invokerPortlet.isStrutsBridgePortlet() ||
-			invokerPortlet.isStrutsPortlet()) {
-
+		if (invokerPortlet.isStrutsPortlet()) {
 			return false;
 		}
 

@@ -23,12 +23,14 @@ if ((sb != null) && themeDisplay.isStateExclusive()) {
 	sb.writeTo(out);
 }
 else {
-	ComponentContext componentContext = (ComponentContext)request.getAttribute(ComponentConstants.COMPONENT_CONTEXT);
+	Definition definition = (Definition)request.getAttribute(PortalTilesPlugin.DEFINITION);
 
 	boolean tilesPopUp = false;
 
-	if (componentContext != null) {
-		tilesPopUp = GetterUtil.getBoolean(componentContext.getAttribute("pop_up"));
+	if (definition != null) {
+		Map<String, String> attributes = definition.getAttributes();
+
+		tilesPopUp = GetterUtil.getBoolean(attributes.get("pop_up"));
 	}
 
 	if (tilesPopUp || themeDisplay.isStatePopUp() || themeDisplay.isWidget()) {

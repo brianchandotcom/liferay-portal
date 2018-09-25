@@ -14,6 +14,7 @@ Import-Package:\
 	!org.apache.log.format,\
 	!org.apache.log.output.io,\
 	!org.apache.oro.text.perl,\
+	!org.apache.struts.*,\
 	\
 	!org.slf4j.spi,\
 	\

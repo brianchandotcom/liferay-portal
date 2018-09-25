@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.model.Theme;
 import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.servlet.PluginContextListener;
 import com.liferay.portal.kernel.servlet.ServletContextPool;
-import com.liferay.portal.kernel.servlet.taglib.DynamicIncludeUtil;
 import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.template.TemplateContextContributor;
@@ -291,10 +290,6 @@ public class ThemeUtil {
 			ServletContext servletContext, HttpServletRequest request,
 			HttpServletResponse response, String path, Theme theme)
 		throws Exception {
-
-		DynamicIncludeUtil.include(
-			request, response, ThemeUtil.class.getName() + "#doIncludeJSP",
-			true);
 
 		if (theme.isWARFile()) {
 			ServletContext themeServletContext = servletContext.getContext(

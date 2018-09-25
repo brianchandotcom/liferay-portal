@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.security.xml.SecureXMLFactoryProviderUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.structured.content.apio.internal.architect.form.StructuredContentLocationForm;
 import com.liferay.structured.content.apio.internal.architect.form.StructuredContentValuesForm;
 
 import java.io.StringWriter;
@@ -249,8 +250,12 @@ public class JournalArticleContentHelper {
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
-		jsonObject.put("latitude", structuredContentValuesForm.getLatitude());
-		jsonObject.put("longitude", structuredContentValuesForm.getLongitude());
+		StructuredContentLocationForm structuredContentLocationForm =
+			structuredContentValuesForm.getStructuredContentLocationForm();
+
+		jsonObject.put("latitude", structuredContentLocationForm.getLatitude());
+		jsonObject.put(
+			"longitude", structuredContentLocationForm.getLongitude());
 
 		return jsonObject.toString();
 	}

@@ -32,10 +32,9 @@ public class StructuredContentValuesForm {
 			__ -> "This form is used to create the values of a structured form"
 		).constructor(
 			StructuredContentValuesForm::new
-		).addOptionalDouble(
-			"latitude", StructuredContentValuesForm::setLatitude
-		).addOptionalDouble(
-			"longitude", StructuredContentValuesForm::setLongitude
+		).addOptionalNestedModel(
+			"geo", StructuredContentLocationForm::buildValuesForm,
+			StructuredContentValuesForm::setStructuredContentLocationForm
 		).addOptionalLinkedModel(
 			"document", MediaObjectIdentifier.class,
 			StructuredContentValuesForm::setDocument
@@ -53,20 +52,16 @@ public class StructuredContentValuesForm {
 		return _document;
 	}
 
-	public Double getLatitude() {
-		return _latitude;
-	}
-
-	public Double getLongitude() {
-		return _longitude;
-	}
-
 	public String getName() {
 		return _name;
 	}
 
 	public Long getStructuredContent() {
 		return _structuredContent;
+	}
+
+	public StructuredContentLocationForm getStructuredContentLocationForm() {
+		return _structuredContentLocationForm;
 	}
 
 	public String getValue() {
@@ -77,14 +72,6 @@ public class StructuredContentValuesForm {
 		_document = document;
 	}
 
-	public void setLatitude(Double latitude) {
-		_latitude = latitude;
-	}
-
-	public void setLongitude(Double longitude) {
-		_longitude = longitude;
-	}
-
 	public void setName(String name) {
 		_name = name;
 	}
@@ -93,15 +80,20 @@ public class StructuredContentValuesForm {
 		_structuredContent = structuredContent;
 	}
 
+	public void setStructuredContentLocationForm(
+		StructuredContentLocationForm structuredContentLocationForm) {
+
+		_structuredContentLocationForm = structuredContentLocationForm;
+	}
+
 	public void setValue(String value) {
 		_value = value;
 	}
 
 	private Long _document;
-	private Double _latitude;
-	private Double _longitude;
 	private String _name;
 	private Long _structuredContent;
+	private StructuredContentLocationForm _structuredContentLocationForm;
 	private String _value;
 
 }

@@ -137,16 +137,6 @@ public class FormInstanceNestedCollectionResource
 		).addNested(
 			"settings", FormInstanceRepresentorUtil::getSettings,
 			FormInstanceNestedCollectionResource::_buildSettings
-		).addNested(
-			"version", FormInstanceRepresentorUtil::getVersion,
-			nestedBuilder -> nestedBuilder.types(
-				"FormInstanceVersion"
-			).addLinkedModel(
-				"creator", PersonIdentifier.class,
-				DDMFormInstanceVersion::getUserId
-			).addString(
-				"name", DDMFormInstanceVersion::getVersion
-			).build()
 		).addLocalizedStringByLocale(
 			"description", DDMFormInstance::getDescription
 		).addLocalizedStringByLocale(
@@ -163,20 +153,13 @@ public class FormInstanceNestedCollectionResource
 		NestedRepresentor.Builder<DDMFormInstanceSettings> builder) {
 
 		return builder.types(
-			"FormInstanceSettings"
-		).addBoolean(
-			"isPublished", DDMFormInstanceSettings::published
-		).addBoolean(
-			"isRequireAuthentication",
-			DDMFormInstanceSettings::requireAuthentication
-		).addBoolean(
-			"isRequireCaptcha", DDMFormInstanceSettings::requireCaptcha
+			"FormSettings"
 		).addNested(
 			"emailNotification", identity(),
 			emailSettingsBuilder -> emailSettingsBuilder.types(
 				"EmailMessage"
 			).addBoolean(
-				"isEnabled", DDMFormInstanceSettings::sendEmailNotification
+				"enabled", DDMFormInstanceSettings::sendEmailNotification
 			).addNested(
 				"sender", identity(),
 				senderBuilder -> senderBuilder.types(
@@ -187,7 +170,7 @@ public class FormInstanceNestedCollectionResource
 					"name", DDMFormInstanceSettings::emailFromName
 				).build()
 			).addNested(
-				"toRecipient", identity(),
+				"recipient", identity(),
 				toRecipientBuilder -> toRecipientBuilder.types(
 					"ContactPoint"
 				).addString(
@@ -198,10 +181,6 @@ public class FormInstanceNestedCollectionResource
 			).build()
 		).addString(
 			"redirectURL", DDMFormInstanceSettings::redirectURL
-		).addString(
-			"storageType", DDMFormInstanceSettings::storageType
-		).addString(
-			"workflowDefinition", DDMFormInstanceSettings::workflowDefinition
 		).build();
 	}
 

@@ -20,6 +20,8 @@
 String redirect = ParamUtil.getString(request, "redirect");
 
 List<AssetRendererFactory<?>> classTypesAssetRendererFactories = new ArrayList<>();
+
+String portletResource = ParamUtil.getString(request, "portletResource");
 %>
 
 <liferay-portlet:actionURL portletConfiguration="<%= true %>" var="configurationActionURL" />
@@ -46,11 +48,21 @@ List<AssetRendererFactory<?>> classTypesAssetRendererFactories = new ArrayList<>
 	request.setAttribute("configuration.jsp-redirect", redirect);
 	%>
 
+	<liferay-ui:success key='<%= portletResource + "requestProcessed" %>' message="the-asset-list-was-created-successfully" />
+
 	<liferay-frontend:edit-form-body>
 		<liferay-frontend:form-navigator
 			id="<%= AssetPublisherConstants.FORM_NAVIGATOR_ID_CONFIGURATION %>"
 			showButtons="<%= false %>"
 		/>
+
+		<c:if test="<%= assetPublisherDisplayContext.isSelectionStyleDynamic() || assetPublisherDisplayContext.isSelectionStyleManual() %>">
+			<div class="mb-2">
+				<aui:a cssClass="create-asset-list-link" href="javascript:;">
+					<liferay-ui:message key="create-an-asset-list-from-this-configuration" />
+				</aui:a>
+			</div>
+		</c:if>
 	</liferay-frontend:edit-form-body>
 
 	<liferay-frontend:edit-form-footer>
@@ -83,4 +95,37 @@ List<AssetRendererFactory<?>> classTypesAssetRendererFactories = new ArrayList<>
 
 		submitForm(form);
 	}
+</aui:script>
+
+<aui:script require="metal-dom/src/all/dom as dom,frontend-js-web/liferay/modal/commands/OpenSimpleInputModal.es as modalCommands">
+		function handleCreateAssetListLinkClick(event) {
+			event.preventDefault();
+
+			modalCommands.openSimpleInputModal(
+				{
+					dialogTitle: '<liferay-ui:message key="asset-list-title" />',
+					formSubmitURL: '<liferay-portlet:actionURL name="/asset_publisher/add_asset_list" portletName="<%= portletResource %>"><portlet:param name="portletResource" value="<%= portletResource %>" /><portlet:param name="redirect" value="<%= currentURL %>" /></liferay-portlet:actionURL>',
+					mainFieldLabel: '<liferay-ui:message key="title" />',
+					mainFieldName: 'title',
+					mainFieldPlaceholder: '<liferay-ui:message key="title" />',
+					namespace: '<%= PortalUtil.getPortletNamespace(portletResource) %>',
+					spritemap: '<%= themeDisplay.getPathThemeImages() %>/lexicon/icons.svg'
+				}
+			);
+		}
+
+	var createAssetListLinkClickHandler = dom.delegate(
+		document.body,
+		'click',
+		'a.create-asset-list-link',
+		handleCreateAssetListLinkClick
+	);
+
+	function handleDestroyPortlet () {
+		createAssetListLinkClickHandler.removeListener();
+
+		Liferay.detach('destroyPortlet', handleDestroyPortlet);
+	}
+
+	Liferay.on('destroyPortlet', handleDestroyPortlet);
 </aui:script>

@@ -20,42 +20,16 @@ package com.liferay.jenkins.results.parser;
 public class PluginsWorkspaceGitRepository extends BaseWorkspaceGitRepository {
 
 	protected PluginsWorkspaceGitRepository(
-		PortalWorkspaceGitRepository portalWorkspaceGitRepository) {
+		PullRequest pullRequest, String upstreamBranchName) {
 
-		super(
-			_getGitHubURL(portalWorkspaceGitRepository),
-			_getUpstreamBranchName(portalWorkspaceGitRepository),
-			_getBranchSHA(portalWorkspaceGitRepository));
+		super(pullRequest, upstreamBranchName);
 	}
 
 	protected PluginsWorkspaceGitRepository(
-		String gitHubURL, String upstreamBranchName, String branchSHA) {
+		RemoteGitRef remoteGitRef, String upstreamBranchName,
+		String branchSHA) {
 
-		super(gitHubURL, upstreamBranchName, branchSHA);
-
-		String name = getName();
-
-		if (upstreamBranchName.startsWith("ee-") ||
-			upstreamBranchName.endsWith("-private")) {
-
-			if (!name.endsWith("-ee")) {
-				throw new IllegalArgumentException(
-					JenkinsResultsParserUtil.combine(
-						"The local Git repository, ", name,
-						" should not be used with upstream branch ",
-						upstreamBranchName, ". Use ", name, "-ee."));
-			}
-		}
-
-		if (upstreamBranchName.contains("master") ||
-			upstreamBranchName.equals("7.0.x-private") ||
-			upstreamBranchName.contains("7.1.x")) {
-
-			throw new IllegalArgumentException(
-				JenkinsResultsParserUtil.combine(
-					"The upstream branch, ", upstreamBranchName,
-					" should not be used with Git repository ", name, "."));
-		}
+		super(remoteGitRef, upstreamBranchName, branchSHA);
 	}
 
 	@Override
@@ -69,59 +43,6 @@ public class PluginsWorkspaceGitRepository extends BaseWorkspaceGitRepository {
 
 		return JenkinsResultsParserUtil.combine(
 			name.replace("-ee", ""), "-", upstreamBranchName);
-	}
-
-	private static String _getBranchSHA(
-		PortalWorkspaceGitRepository portalWorkspaceGitRepository) {
-
-		String gitCommitFileContent = _getGitCommitFileContent(
-			portalWorkspaceGitRepository);
-
-		if (gitCommitFileContent.matches("[0-9a-f]{7,40}")) {
-			return gitCommitFileContent;
-		}
-
-		return null;
-	}
-
-	private static String _getGitCommitFileContent(
-		PortalWorkspaceGitRepository portalWorkspaceGitRepository) {
-
-		return portalWorkspaceGitRepository.getFileContent(
-			"git-commit-plugins");
-	}
-
-	private static String _getGitHubURL(
-		PortalWorkspaceGitRepository portalWorkspaceGitRepository) {
-
-		String gitCommitFileContent = _getGitCommitFileContent(
-			portalWorkspaceGitRepository);
-
-		if (GitUtil.isValidGitHubRefURL(gitCommitFileContent) ||
-			PullRequest.isValidGitHubPullRequestURL(gitCommitFileContent)) {
-
-			return gitCommitFileContent;
-		}
-
-		return JenkinsResultsParserUtil.combine(
-			"https://github.com/liferay/liferay-plugins-ee/tree/",
-			_getUpstreamBranchName(portalWorkspaceGitRepository));
-	}
-
-	private static String _getUpstreamBranchName(
-		PortalWorkspaceGitRepository portalWorkspaceGitRepository) {
-
-		String portalUpstreamBranchName =
-			portalWorkspaceGitRepository.getUpstreamBranchName();
-
-		if (portalUpstreamBranchName.contains("7.0.x") ||
-			portalUpstreamBranchName.contains("7.1.x") ||
-			portalUpstreamBranchName.contains("master")) {
-
-			return "7.0.x";
-		}
-
-		return portalUpstreamBranchName;
 	}
 
 }

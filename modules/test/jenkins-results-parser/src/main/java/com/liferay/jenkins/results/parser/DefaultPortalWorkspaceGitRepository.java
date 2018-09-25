@@ -21,9 +21,16 @@ public class DefaultPortalWorkspaceGitRepository
 	extends BasePortalWorkspaceGitRepository {
 
 	protected DefaultPortalWorkspaceGitRepository(
-		String gitHubURL, String upstreamBranchName, String branchSHA) {
+		PullRequest pullRequest, String upstreamBranchName) {
 
-		super(gitHubURL, upstreamBranchName, branchSHA);
+		super(pullRequest, upstreamBranchName);
+	}
+
+	protected DefaultPortalWorkspaceGitRepository(
+		RemoteGitRef remoteGitRef, String upstreamBranchName,
+		String branchSHA) {
+
+		super(remoteGitRef, upstreamBranchName, branchSHA);
 	}
 
 }

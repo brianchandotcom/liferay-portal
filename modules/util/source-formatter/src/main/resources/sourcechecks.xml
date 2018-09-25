@@ -354,6 +354,7 @@
 		<check name="MarkdownStylingCheck" />
 		<check name="WhitespaceCheck">
 			<property name="allowLeadingSpaces" value="true" />
+			<property name="allowTrailingDoubleSpace" value="true" />
 		</check>
 	</source-processor>
 	<source-processor name="PackageinfoSourceProcessor">

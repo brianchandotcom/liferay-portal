@@ -37,6 +37,11 @@ public class WhitespaceCheck extends BaseFileCheck {
 		_allowLeadingSpaces = GetterUtil.getBoolean(allowLeadingSpaces);
 	}
 
+	public void setAllowTrailingDoubleSpace(String allowTrailingDoubleSpace) {
+		_allowTrailingDoubleSpace = GetterUtil.getBoolean(
+			allowTrailingDoubleSpace);
+	}
+
 	@Override
 	protected String doProcess(
 			String fileName, String absolutePath, String content)
@@ -267,7 +272,11 @@ public class WhitespaceCheck extends BaseFileCheck {
 			return StringPool.BLANK;
 		}
 
-		line = StringUtil.trimTrailing(line);
+		if (!_allowTrailingDoubleSpace ||
+			!line.endsWith(StringPool.DOUBLE_SPACE)) {
+
+			line = StringUtil.trimTrailing(line);
+		}
 
 		if (isAllowLeadingSpaces(fileName) || line.startsWith(" *")) {
 			return line;
@@ -316,5 +325,6 @@ public class WhitespaceCheck extends BaseFileCheck {
 	}
 
 	private boolean _allowLeadingSpaces;
+	private boolean _allowTrailingDoubleSpace;
 
 }

@@ -511,6 +511,9 @@ public class EntityResolver implements org.xml.sax.EntityResolver {
 			"http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd",
 			"portlet-app_2_0.xsd"),
 		new KeyValuePair(
+			"http://xmlns.jcp.org/xml/ns/portlet/portlet-app_3_0.xsd",
+			"portlet-app_3_0.xsd"),
+		new KeyValuePair(
 			"http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd",
 			"web-app_2_4.xsd"),
 		new KeyValuePair(

@@ -602,6 +602,9 @@ public class StringUtilTest {
 			StringUtil.shorten(
 				"HelloWorldHelloWorldHelloWorldHelloWorldHelloWorldHello", 20,
 				"... etc."));
+		Assert.assertEquals(
+			"abcdef\u00C1...",
+			StringUtil.shorten("abcdef\u0041\u0301vwxyz", 10));
 	}
 
 	@Test

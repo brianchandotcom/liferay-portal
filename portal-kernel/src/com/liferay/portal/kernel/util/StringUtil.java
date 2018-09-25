@@ -25,6 +25,8 @@ import java.io.InputStream;
 
 import java.net.URL;
 
+import java.text.Normalizer;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Enumeration;
@@ -3429,6 +3431,8 @@ public class StringUtil {
 		if (s.codePointCount(0, s.length()) <= length) {
 			return s;
 		}
+
+		s = Normalizer.normalize(s, Normalizer.Form.NFC);
 
 		if (length < suffix.length()) {
 			return s.substring(0, s.offsetByCodePoints(0, length));

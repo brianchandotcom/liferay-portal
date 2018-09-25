@@ -15,7 +15,7 @@
 </tr>
 <tr>
 	<td>PREVIEW_DATA_DEVICE_BUTTON</td>
-	<td>//div[contains(@class,'devices')]/button[@data-device='${key_deviceType}']</td>
+	<td>//div[contains(@class,'devices')]//button[@data-device='${key_deviceType}']</td>
 	<td></td>
 </tr>
 <tr>

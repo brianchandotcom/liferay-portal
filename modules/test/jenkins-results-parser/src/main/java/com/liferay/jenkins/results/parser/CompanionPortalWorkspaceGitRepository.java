@@ -14,11 +14,47 @@
 
 package com.liferay.jenkins.results.parser;
 
+import java.io.File;
+import java.io.IOException;
+
 /**
  * @author Michael Hashimoto
  */
 public class CompanionPortalWorkspaceGitRepository
 	extends BasePortalWorkspaceGitRepository {
+
+	@Override
+	public void setUp() {
+		super.setUp();
+
+		String parentUpstreamBranchName =
+			_parentWorkspaceGitRepository.getUpstreamBranchName();
+
+		if (parentUpstreamBranchName.contains("-private")) {
+			AntUtil.callTarget(
+				_parentWorkspaceGitRepository.getDirectory(),
+				"build-working-dir.xml", "prepare-working-dir");
+
+			return;
+		}
+
+		File modulesPrivateDir = new File(getDirectory(), "modules/private");
+
+		if (!modulesPrivateDir.exists()) {
+			return;
+		}
+
+		File parentModulesPrivateDir = new File(
+			_parentWorkspaceGitRepository.getDirectory(), "modules/private");
+
+		try {
+			JenkinsResultsParserUtil.copy(
+				modulesPrivateDir, parentModulesPrivateDir);
+		}
+		catch (IOException ioe) {
+			throw new RuntimeException(ioe);
+		}
+	}
 
 	protected CompanionPortalWorkspaceGitRepository(
 		PullRequest pullRequest, String upstreamBranchName,

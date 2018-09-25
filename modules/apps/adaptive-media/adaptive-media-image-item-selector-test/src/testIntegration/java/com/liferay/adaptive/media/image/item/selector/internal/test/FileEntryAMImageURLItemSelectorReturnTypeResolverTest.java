@@ -642,7 +642,7 @@ public class FileEntryAMImageURLItemSelectorReturnTypeResolverTest {
 	private Group _group;
 
 	@Inject(
-		filter = "(objectClass=com.liferay.adaptive.media.image.item.selector.internal.FileEntryAMImageURLItemSelectorReturnTypeResolver)"
+		filter = "component.name=*.FileEntryAMImageURLItemSelectorReturnTypeResolver"
 	)
 	private ItemSelectorReturnTypeResolver _itemSelectorReturnTypeResolver;
 

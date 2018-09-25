@@ -95,7 +95,7 @@
 
 		<execute macro="NavItem#gotoPageTemplates" />
 
-		<execute macro="LayoutPageTemplates#addCollection">
+		<execute macro="PageTemplatesAdmin#addCollection">
 			<var name="collectionName" value="Page Template Collection" />
 		</execute>
 
@@ -103,11 +103,11 @@
 			<var name="navNested" value="Page Template Collection" />
 		</execute>
 
-		<execute macro="LayoutPageTemplates#add">
+		<execute macro="PageTemplatesAdmin#add">
 			<var name="pageTemplateName" value="Page Template Name" />
 		</execute>
 
-		<execute macro="LayoutPageTemplates#selectFragment">
+		<execute macro="PageEditor#addFragment">
 			<var name="collectionName" value="Collection Name" />
 			<var name="fragmentName" value="Fragment Name" />
 		</execute>

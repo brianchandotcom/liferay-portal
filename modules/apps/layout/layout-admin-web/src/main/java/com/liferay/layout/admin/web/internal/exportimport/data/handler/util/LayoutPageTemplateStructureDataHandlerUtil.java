@@ -47,7 +47,7 @@ public class LayoutPageTemplateStructureDataHandlerUtil {
 		StagedModelDataHandlerUtil.importStagedModel(
 			portletDataContext, layoutPageTemplateStructureElement);
 
-		Map<Long, Long> layoutPageTemplateStructureEntries =
+		Map<Long, Long> layoutPageTemplateStructureIds =
 			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
 				LayoutPageTemplateStructure.class);
 
@@ -58,7 +58,7 @@ public class LayoutPageTemplateStructureDataHandlerUtil {
 				path);
 
 		long layoutPageTemplateStructureId = MapUtil.getLong(
-			layoutPageTemplateStructureEntries,
+			layoutPageTemplateStructureIds,
 			layoutPageTemplateStructure.getLayoutPageTemplateStructureId(),
 			layoutPageTemplateStructure.getLayoutPageTemplateStructureId());
 
@@ -69,10 +69,6 @@ public class LayoutPageTemplateStructureDataHandlerUtil {
 		if (existingLayoutPageTemplateStructure == null) {
 			return;
 		}
-
-		Map<Long, Long> fragmentEntryLinkPrimaryKeysMap =
-			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
-				FragmentEntryLink.class);
 
 		String data = layoutPageTemplateStructure.getData();
 
@@ -90,9 +86,13 @@ public class LayoutPageTemplateStructureDataHandlerUtil {
 
 		JSONArray newStructureJSONArray = JSONFactoryUtil.createJSONArray();
 
+		Map<Long, Long> fragmentEntryLinkIds =
+			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
+				FragmentEntryLink.class);
+
 		for (int i = 0; i < structureJSONArray.length(); i++) {
 			long fragmentEntryLinkId = MapUtil.getLong(
-				fragmentEntryLinkPrimaryKeysMap, structureJSONArray.getLong(i),
+				fragmentEntryLinkIds, structureJSONArray.getLong(i),
 				structureJSONArray.getLong(i));
 
 			if (fragmentEntryLinkId == 0) {

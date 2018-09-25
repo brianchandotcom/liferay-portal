@@ -106,3 +106,4 @@ DragScroller.STATE = {
 };
 
 export {DragScroller};
+export default DragScroller;

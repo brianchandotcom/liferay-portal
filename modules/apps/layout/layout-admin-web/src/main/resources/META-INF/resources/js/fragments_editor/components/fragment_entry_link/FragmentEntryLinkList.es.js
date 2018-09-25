@@ -12,7 +12,7 @@ import {
 	UPDATE_LAST_SAVE_DATE,
 	UPDATE_SAVING_CHANGES_STATUS
 } from '../../actions/actions.es';
-import {DragScroller} from '../../utils/DragScroller.es';
+import DragScroller from '../../utils/DragScroller.es';
 import {DRAG_POSITIONS} from '../../reducers/placeholders.es';
 import templates from './FragmentEntryLinkList.soy';
 

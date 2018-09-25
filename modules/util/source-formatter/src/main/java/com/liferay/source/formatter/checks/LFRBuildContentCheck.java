@@ -15,10 +15,10 @@
 package com.liferay.source.formatter.checks;
 
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -27,8 +27,9 @@ import java.util.List;
 public class LFRBuildContentCheck extends BaseFileCheck {
 
 	public void setNonemptyMarkerFileNames(String nonemptyMarkerFileNames) {
-		_nonemptyMarkerFileNames = ListUtil.fromString(
-			nonemptyMarkerFileNames, StringPool.COMMA);
+		Collections.addAll(
+			_nonemptyMarkerFileNames,
+			StringUtil.split(nonemptyMarkerFileNames));
 	}
 
 	@Override
@@ -55,6 +56,6 @@ public class LFRBuildContentCheck extends BaseFileCheck {
 		return false;
 	}
 
-	private List<String> _nonemptyMarkerFileNames = new ArrayList<>();
+	private final List<String> _nonemptyMarkerFileNames = new ArrayList<>();
 
 }

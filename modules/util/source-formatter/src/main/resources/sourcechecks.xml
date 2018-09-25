@@ -345,6 +345,7 @@
 	<source-processor name="LFRBuildSourceProcessor">
 		<check name="LFRBuildContentCheck">
 			<property name="nonemptyMarkerFileNames" value=".lfrbuild-lowest-major-version" />
+			<property name="nonemptyMarkerFileNames" value=".lfrbuild-packageinfo" />
 		</check>
 		<check name="LFRBuildReadmeCheck" />
 	</source-processor>

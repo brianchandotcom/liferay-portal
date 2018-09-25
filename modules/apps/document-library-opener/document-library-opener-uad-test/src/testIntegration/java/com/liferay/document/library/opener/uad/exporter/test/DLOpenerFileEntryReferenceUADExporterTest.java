@@ -16,7 +16,6 @@ package com.liferay.document.library.opener.uad.exporter.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.document.library.opener.model.DLOpenerFileEntryReference;
-import com.liferay.document.library.opener.uad.test.DLOpenerFileEntryReferenceUADTestHelper;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.test.rule.Inject;
@@ -27,7 +26,7 @@ import com.liferay.user.associated.data.test.util.BaseUADExporterTestCase;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.After;
+import org.junit.AssumptionViolatedException;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.runner.RunWith;
@@ -44,23 +43,11 @@ public class DLOpenerFileEntryReferenceUADExporterTest
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
 
-	@After
-	public void tearDown() throws Exception {
-		_dlOpenerFileEntryReferenceUADTestHelper.cleanUpDependencies(
-			_dlOpenerFileEntryReferences);
-	}
-
 	@Override
 	protected DLOpenerFileEntryReference addBaseModel(long userId)
 		throws Exception {
 
-		DLOpenerFileEntryReference dlOpenerFileEntryReference =
-			_dlOpenerFileEntryReferenceUADTestHelper.
-				addDLOpenerFileEntryReference(userId);
-
-		_dlOpenerFileEntryReferences.add(dlOpenerFileEntryReference);
-
-		return dlOpenerFileEntryReference;
+		throw new AssumptionViolatedException("");
 	}
 
 	@Override
@@ -76,10 +63,6 @@ public class DLOpenerFileEntryReferenceUADExporterTest
 	@DeleteAfterTestRun
 	private final List<DLOpenerFileEntryReference>
 		_dlOpenerFileEntryReferences = new ArrayList<>();
-
-	@Inject
-	private DLOpenerFileEntryReferenceUADTestHelper
-		_dlOpenerFileEntryReferenceUADTestHelper;
 
 	@Inject(filter = "component.name=*.DLOpenerFileEntryReferenceUADExporter")
 	private UADExporter _uadExporter;

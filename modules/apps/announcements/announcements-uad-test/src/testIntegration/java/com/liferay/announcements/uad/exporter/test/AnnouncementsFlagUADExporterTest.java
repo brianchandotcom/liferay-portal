@@ -15,10 +15,12 @@
 package com.liferay.announcements.uad.exporter.test;
 
 import com.liferay.announcements.kernel.model.AnnouncementsFlag;
-import com.liferay.announcements.uad.test.AnnouncementsFlagUADTestHelper;
+import com.liferay.announcements.kernel.model.AnnouncementsFlagConstants;
+import com.liferay.announcements.kernel.service.AnnouncementsFlagLocalService;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.user.associated.data.exporter.UADExporter;
@@ -46,7 +48,9 @@ public class AnnouncementsFlagUADExporterTest
 	@Override
 	protected AnnouncementsFlag addBaseModel(long userId) throws Exception {
 		AnnouncementsFlag announcementsFlag =
-			_announcementsFlagUADTestHelper.addAnnouncementsFlag(userId);
+			_announcementsFlagLocalService.addFlag(
+				userId, RandomTestUtil.randomLong(),
+				AnnouncementsFlagConstants.UNREAD);
 
 		_announcementsFlags.add(announcementsFlag);
 
@@ -63,12 +67,12 @@ public class AnnouncementsFlagUADExporterTest
 		return _uadExporter;
 	}
 
+	@Inject
+	private AnnouncementsFlagLocalService _announcementsFlagLocalService;
+
 	@DeleteAfterTestRun
 	private final List<AnnouncementsFlag> _announcementsFlags =
 		new ArrayList<>();
-
-	@Inject
-	private AnnouncementsFlagUADTestHelper _announcementsFlagUADTestHelper;
 
 	@Inject(filter = "component.name=*.AnnouncementsFlagUADExporter")
 	private UADExporter _uadExporter;

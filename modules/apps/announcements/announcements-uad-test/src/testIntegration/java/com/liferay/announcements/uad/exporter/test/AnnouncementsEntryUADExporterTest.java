@@ -15,8 +15,10 @@
 package com.liferay.announcements.uad.exporter.test;
 
 import com.liferay.announcements.kernel.model.AnnouncementsEntry;
+import com.liferay.announcements.kernel.service.AnnouncementsEntryLocalService;
 import com.liferay.announcements.uad.test.AnnouncementsEntryUADTestHelper;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.test.rule.Inject;
@@ -46,7 +48,9 @@ public class AnnouncementsEntryUADExporterTest
 	@Override
 	protected AnnouncementsEntry addBaseModel(long userId) throws Exception {
 		AnnouncementsEntry announcementsEntry =
-			_announcementsEntryUADTestHelper.addAnnouncementsEntry(userId);
+			AnnouncementsEntryUADTestHelper.addAnnouncementsEntry(
+				_announcementsEntryLocalService, _classNameLocalService,
+				userId);
 
 		_announcementsEntries.add(announcementsEntry);
 
@@ -68,7 +72,10 @@ public class AnnouncementsEntryUADExporterTest
 		new ArrayList<>();
 
 	@Inject
-	private AnnouncementsEntryUADTestHelper _announcementsEntryUADTestHelper;
+	private AnnouncementsEntryLocalService _announcementsEntryLocalService;
+
+	@Inject
+	private ClassNameLocalService _classNameLocalService;
 
 	@Inject(filter = "component.name=*.AnnouncementsEntryUADExporter")
 	private UADExporter _uadExporter;

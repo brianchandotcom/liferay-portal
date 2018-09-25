@@ -17,10 +17,10 @@ package com.liferay.contacts.uad.anonymizer.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.contacts.model.Entry;
 import com.liferay.contacts.service.EntryLocalService;
-import com.liferay.contacts.uad.test.EntryUADTestHelper;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.user.associated.data.anonymizer.UADAnonymizer;
@@ -29,7 +29,6 @@ import com.liferay.user.associated.data.test.util.BaseUADAnonymizerTestCase;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.After;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.runner.RunWith;
@@ -45,11 +44,6 @@ public class EntryUADAnonymizerTest extends BaseUADAnonymizerTestCase<Entry> {
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
 
-	@After
-	public void tearDown() throws Exception {
-		_entryUADTestHelper.cleanUpDependencies(_entries);
-	}
-
 	@Override
 	protected Entry addBaseModel(long userId) throws Exception {
 		return addBaseModel(userId, true);
@@ -59,18 +53,16 @@ public class EntryUADAnonymizerTest extends BaseUADAnonymizerTestCase<Entry> {
 	protected Entry addBaseModel(long userId, boolean deleteAfterTestRun)
 		throws Exception {
 
-		Entry entry = _entryUADTestHelper.addEntry(userId);
+		Entry entry = _entryLocalService.addEntry(
+			userId, RandomTestUtil.randomString(),
+			RandomTestUtil.randomString() + "@liferay.com",
+			RandomTestUtil.randomString());
 
 		if (deleteAfterTestRun) {
 			_entries.add(entry);
 		}
 
 		return entry;
-	}
-
-	@Override
-	protected void deleteBaseModels(List<Entry> baseModels) throws Exception {
-		_entryUADTestHelper.cleanUpDependencies(baseModels);
 	}
 
 	@Override
@@ -109,9 +101,6 @@ public class EntryUADAnonymizerTest extends BaseUADAnonymizerTestCase<Entry> {
 
 	@Inject
 	private EntryLocalService _entryLocalService;
-
-	@Inject
-	private EntryUADTestHelper _entryUADTestHelper;
 
 	@Inject(filter = "component.name=*.EntryUADAnonymizer")
 	private UADAnonymizer _uadAnonymizer;

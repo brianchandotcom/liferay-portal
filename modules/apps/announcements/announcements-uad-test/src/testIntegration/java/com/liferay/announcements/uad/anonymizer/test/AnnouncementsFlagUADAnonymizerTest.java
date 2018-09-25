@@ -15,12 +15,13 @@
 package com.liferay.announcements.uad.anonymizer.test;
 
 import com.liferay.announcements.kernel.model.AnnouncementsFlag;
+import com.liferay.announcements.kernel.model.AnnouncementsFlagConstants;
 import com.liferay.announcements.kernel.service.AnnouncementsFlagLocalService;
-import com.liferay.announcements.uad.test.AnnouncementsFlagUADTestHelper;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.user.associated.data.anonymizer.UADAnonymizer;
@@ -52,11 +53,12 @@ public class AnnouncementsFlagUADAnonymizerTest
 
 	@Override
 	protected AnnouncementsFlag addBaseModel(
-			long userId, boolean deleteAfterTestRun)
-		throws Exception {
+		long userId, boolean deleteAfterTestRun) {
 
 		AnnouncementsFlag announcementsFlag =
-			_announcementsFlagUADTestHelper.addAnnouncementsFlag(userId);
+			_announcementsFlagLocalService.addFlag(
+				userId, RandomTestUtil.randomLong(),
+				AnnouncementsFlagConstants.UNREAD);
 
 		if (deleteAfterTestRun) {
 			_announcementsFlags.add(announcementsFlag);
@@ -101,9 +103,6 @@ public class AnnouncementsFlagUADAnonymizerTest
 	@DeleteAfterTestRun
 	private final List<AnnouncementsFlag> _announcementsFlags =
 		new ArrayList<>();
-
-	@Inject
-	private AnnouncementsFlagUADTestHelper _announcementsFlagUADTestHelper;
 
 	@Inject(filter = "component.name=*.AnnouncementsFlagUADAnonymizer")
 	private UADAnonymizer _uadAnonymizer;

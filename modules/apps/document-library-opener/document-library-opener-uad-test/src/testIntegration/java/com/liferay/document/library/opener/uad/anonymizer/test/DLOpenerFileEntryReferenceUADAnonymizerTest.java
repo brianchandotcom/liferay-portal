@@ -17,7 +17,6 @@ package com.liferay.document.library.opener.uad.anonymizer.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.document.library.opener.model.DLOpenerFileEntryReference;
 import com.liferay.document.library.opener.service.DLOpenerFileEntryReferenceLocalService;
-import com.liferay.document.library.opener.uad.test.DLOpenerFileEntryReferenceUADTestHelper;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -29,7 +28,7 @@ import com.liferay.user.associated.data.test.util.BaseUADAnonymizerTestCase;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.After;
+import org.junit.AssumptionViolatedException;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.runner.RunWith;
@@ -46,12 +45,6 @@ public class DLOpenerFileEntryReferenceUADAnonymizerTest
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
 
-	@After
-	public void tearDown() throws Exception {
-		_dlOpenerFileEntryReferenceUADTestHelper.cleanUpDependencies(
-			_dlOpenerFileEntryReferences);
-	}
-
 	@Override
 	protected DLOpenerFileEntryReference addBaseModel(long userId)
 		throws Exception {
@@ -64,23 +57,7 @@ public class DLOpenerFileEntryReferenceUADAnonymizerTest
 			long userId, boolean deleteAfterTestRun)
 		throws Exception {
 
-		DLOpenerFileEntryReference dlOpenerFileEntryReference =
-			_dlOpenerFileEntryReferenceUADTestHelper.
-				addDLOpenerFileEntryReference(userId);
-
-		if (deleteAfterTestRun) {
-			_dlOpenerFileEntryReferences.add(dlOpenerFileEntryReference);
-		}
-
-		return dlOpenerFileEntryReference;
-	}
-
-	@Override
-	protected void deleteBaseModels(List<DLOpenerFileEntryReference> baseModels)
-		throws Exception {
-
-		_dlOpenerFileEntryReferenceUADTestHelper.cleanUpDependencies(
-			baseModels);
+		throw new AssumptionViolatedException("");
 	}
 
 	@Override
@@ -125,10 +102,6 @@ public class DLOpenerFileEntryReferenceUADAnonymizerTest
 	@DeleteAfterTestRun
 	private final List<DLOpenerFileEntryReference>
 		_dlOpenerFileEntryReferences = new ArrayList<>();
-
-	@Inject
-	private DLOpenerFileEntryReferenceUADTestHelper
-		_dlOpenerFileEntryReferenceUADTestHelper;
 
 	@Inject(filter = "component.name=*.DLOpenerFileEntryReferenceUADAnonymizer")
 	private UADAnonymizer _uadAnonymizer;

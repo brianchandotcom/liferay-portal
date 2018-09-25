@@ -25,16 +25,14 @@ import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import java.util.Calendar;
 import java.util.Date;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Noah Sherrill
  */
-@Component(immediate = true, service = AnnouncementsEntryUADTestHelper.class)
 public class AnnouncementsEntryUADTestHelper {
 
-	public AnnouncementsEntry addAnnouncementsEntry(long userId)
+	public static AnnouncementsEntry addAnnouncementsEntry(
+			AnnouncementsEntryLocalService announcementsEntryLocalService,
+			ClassNameLocalService classNameLocalService, long userId)
 		throws Exception {
 
 		Calendar calendar = CalendarFactoryUtil.getCalendar();
@@ -45,17 +43,11 @@ public class AnnouncementsEntryUADTestHelper {
 
 		calendar.add(Calendar.DATE, 1);
 
-		return _announcementsEntryLocalService.addEntry(
-			userId, _classNameLocalService.getClassNameId(Group.class),
+		return announcementsEntryLocalService.addEntry(
+			userId, classNameLocalService.getClassNameId(Group.class),
 			TestPropsValues.getGroupId(), RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(), "http://localhost", "general",
 			displayDate, calendar.getTime(), 1, false);
 	}
-
-	@Reference
-	private AnnouncementsEntryLocalService _announcementsEntryLocalService;
-
-	@Reference
-	private ClassNameLocalService _classNameLocalService;
 
 }

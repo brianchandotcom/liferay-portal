@@ -30,7 +30,6 @@ import com.liferay.user.associated.data.test.util.WhenHasStatusByUserIdField;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.After;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.runner.RunWith;
@@ -54,17 +53,12 @@ public class BookmarksFolderUADAnonymizerTest
 		throws Exception {
 
 		BookmarksFolder bookmarksFolder =
-			_bookmarksFolderUADTestHelper.addBookmarksFolderWithStatusByUserId(
-				userId, statusByUserId);
+			BookmarksFolderUADTestHelper.addBookmarksFolderWithStatusByUserId(
+				_bookmarksFolderLocalService, userId, statusByUserId);
 
 		_bookmarksFolders.add(bookmarksFolder);
 
 		return bookmarksFolder;
-	}
-
-	@After
-	public void tearDown() throws Exception {
-		_bookmarksFolderUADTestHelper.cleanUpDependencies(_bookmarksFolders);
 	}
 
 	@Override
@@ -78,20 +72,14 @@ public class BookmarksFolderUADAnonymizerTest
 		throws Exception {
 
 		BookmarksFolder bookmarksFolder =
-			_bookmarksFolderUADTestHelper.addBookmarksFolder(userId);
+			BookmarksFolderUADTestHelper.addBookmarksFolder(
+				_bookmarksFolderLocalService, userId);
 
 		if (deleteAfterTestRun) {
 			_bookmarksFolders.add(bookmarksFolder);
 		}
 
 		return bookmarksFolder;
-	}
-
-	@Override
-	protected void deleteBaseModels(List<BookmarksFolder> baseModels)
-		throws Exception {
-
-		_bookmarksFolderUADTestHelper.cleanUpDependencies(baseModels);
 	}
 
 	@Override
@@ -136,9 +124,6 @@ public class BookmarksFolderUADAnonymizerTest
 
 	@DeleteAfterTestRun
 	private final List<BookmarksFolder> _bookmarksFolders = new ArrayList<>();
-
-	@Inject
-	private BookmarksFolderUADTestHelper _bookmarksFolderUADTestHelper;
 
 	@Inject(filter = "component.name=*.BookmarksFolderUADAnonymizer")
 	private UADAnonymizer _uadAnonymizer;

@@ -27,18 +27,16 @@ import java.io.Serializable;
 
 import java.util.Calendar;
 import java.util.HashMap;
-import java.util.List;
-
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author William Newbury
  */
-@Component(immediate = true, service = BlogsEntryUADTestHelper.class)
 public class BlogsEntryUADTestHelper {
 
-	public BlogsEntry addBlogsEntry(long userId) throws Exception {
+	public static BlogsEntry addBlogsEntry(
+			BlogsEntryLocalService blogsEntryLocalService, long userId)
+		throws Exception {
+
 		Calendar calendar = CalendarFactoryUtil.getCalendar();
 
 		calendar.add(Calendar.DATE, 1);
@@ -47,34 +45,28 @@ public class BlogsEntryUADTestHelper {
 			ServiceContextTestUtil.getServiceContext(
 				TestPropsValues.getGroupId());
 
-		return _blogsEntryLocalService.addEntry(
+		return blogsEntryLocalService.addEntry(
 			userId, RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(), calendar.getTime(), serviceContext);
 	}
 
-	public BlogsEntry addBlogsEntryWithStatusByUserId(
-			long userId, long statusByUserId)
+	public static BlogsEntry addBlogsEntryWithStatusByUserId(
+			BlogsEntryLocalService blogsEntryLocalService, long userId,
+			long statusByUserId)
 		throws Exception {
 
-		BlogsEntry blogsEntry = addBlogsEntry(userId);
+		BlogsEntry blogsEntry = addBlogsEntry(blogsEntryLocalService, userId);
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
 				TestPropsValues.getGroupId());
 
-		blogsEntry = _blogsEntryLocalService.updateStatus(
+		blogsEntry = blogsEntryLocalService.updateStatus(
 			statusByUserId, blogsEntry.getEntryId(),
 			WorkflowConstants.STATUS_APPROVED, serviceContext,
 			new HashMap<String, Serializable>());
 
 		return blogsEntry;
 	}
-
-	public void cleanUpDependencies(List<BlogsEntry> blogsEntries)
-		throws Exception {
-	}
-
-	@Reference
-	private BlogsEntryLocalService _blogsEntryLocalService;
 
 }

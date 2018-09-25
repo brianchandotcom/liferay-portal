@@ -17,6 +17,7 @@ package com.liferay.structured.content.apio.internal.architect.filter;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.structured.content.apio.architect.entity.EntityModel;
 import com.liferay.structured.content.apio.architect.filter.FilterParser;
 import com.liferay.structured.content.apio.architect.filter.InvalidFilterException;
 import com.liferay.structured.content.apio.architect.filter.expression.Expression;
@@ -72,27 +73,26 @@ public class FilterParserImpl implements FilterParser {
 		}
 	}
 
-	@Reference(unbind = "-")
-	public void setStructuredContentSingleEntitySchemaBasedEdmProvider(
-		StructuredContentSingleEntitySchemaBasedEdmProvider
-			structuredContentSingleEntitySchemaBasedEdmProvider) {
-
-		_structuredContentSingleEntitySchemaBasedEdmProvider =
-			structuredContentSingleEntitySchemaBasedEdmProvider;
+	@Reference(
+		target = "(entity.model.name=" + StructuredContentEntityModel.NAME + ")",
+		unbind = "-"
+	)
+	public void setEntityModel(EntityModel entityModel) {
+		_entityModel = entityModel;
 	}
 
 	@Activate
 	protected void activate() {
 		_parser = new Parser(
 			new EdmProviderImpl(
-				_structuredContentSingleEntitySchemaBasedEdmProvider),
+				new EntityModelSchemaBasedEdmProvider(_entityModel)),
 			OData.newInstance());
 	}
 
 	private UriInfo _getUriInfo(String filterString) {
 		try {
 			return _parser.parseUri(
-				_structuredContentSingleEntitySchemaBasedEdmProvider.getName(),
+				_entityModel.getName(),
 				"$filter=" + Encoder.encode(filterString), null, null);
 		}
 		catch (ODataException ode) {
@@ -107,8 +107,7 @@ public class FilterParserImpl implements FilterParser {
 	private static final Log _log = LogFactoryUtil.getLog(
 		FilterParserImpl.class);
 
+	private EntityModel _entityModel;
 	private Parser _parser;
-	private StructuredContentSingleEntitySchemaBasedEdmProvider
-		_structuredContentSingleEntitySchemaBasedEdmProvider;
 
 }

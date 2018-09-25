@@ -14,7 +14,12 @@
 
 package com.liferay.structured.content.apio.internal.architect.filter;
 
+import com.liferay.structured.content.apio.architect.entity.EntityField;
+import com.liferay.structured.content.apio.architect.entity.EntityModel;
+
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.olingo.commons.api.edm.EdmPrimitiveTypeKind;
 import org.apache.olingo.commons.api.edm.provider.CsdlEntityType;
@@ -28,27 +33,47 @@ import org.junit.Test;
 /**
  * @author David Arques
  */
-public class StructuredContentSingleEntitySchemaBasedEdmProviderTest {
+public class EntityModelSchemaBasedEdmProviderTest {
 
 	@Test
 	public void testGetName() {
-		StructuredContentSingleEntitySchemaBasedEdmProvider
-			structuredContentSingleEntitySchemaBasedEdmProvider =
-				new StructuredContentSingleEntitySchemaBasedEdmProvider();
+		EntityModel entityModel = new StructuredContentEntityModel();
 
-		Assert.assertEquals(
-			"StructuredContent",
-			structuredContentSingleEntitySchemaBasedEdmProvider.getName());
+		Assert.assertEquals("StructuredContent", entityModel.getName());
 	}
 
 	@Test
 	public void testGetSchemas() throws ODataException {
-		StructuredContentSingleEntitySchemaBasedEdmProvider
-			structuredContentSingleEntitySchemaBasedEdmProvider =
-				new StructuredContentSingleEntitySchemaBasedEdmProvider();
+		String fieldName = "title";
+
+		String entityName = "name";
+
+		EntityModelSchemaBasedEdmProvider entityModelSchemaBasedEdmProvider =
+			new EntityModelSchemaBasedEdmProvider(
+				new EntityModel() {
+
+					@Override
+					public Map<String, EntityField> getEntityFieldsMap() {
+						return new HashMap<String, EntityField>() {
+							{
+								put(
+									fieldName,
+									new EntityField(
+										fieldName, EntityField.Type.STRING,
+										locale -> fieldName));
+							}
+						};
+					}
+
+					@Override
+					public String getName() {
+						return entityName;
+					}
+
+				});
 
 		List<CsdlSchema> csdlSchemas =
-			structuredContentSingleEntitySchemaBasedEdmProvider.getSchemas();
+			entityModelSchemaBasedEdmProvider.getSchemas();
 
 		Assert.assertEquals(csdlSchemas.toString(), 1, csdlSchemas.size());
 
@@ -63,9 +88,9 @@ public class StructuredContentSingleEntitySchemaBasedEdmProviderTest {
 
 		CsdlEntityType csdlEntityType = csdlEntityTypes.get(0);
 
-		Assert.assertEquals("StructuredContent", csdlEntityType.getName());
+		Assert.assertEquals(entityName, csdlEntityType.getName());
 
-		CsdlProperty csdlProperty = csdlEntityType.getProperty("title");
+		CsdlProperty csdlProperty = csdlEntityType.getProperty(fieldName);
 
 		Assert.assertNotNull(csdlProperty);
 		Assert.assertEquals(

@@ -15,6 +15,7 @@
 package com.liferay.structured.content.apio.internal.architect.filter;
 
 import com.liferay.structured.content.apio.architect.entity.EntityField;
+import com.liferay.structured.content.apio.architect.entity.EntityModel;
 import com.liferay.structured.content.apio.architect.filter.InvalidFilterException;
 import com.liferay.structured.content.apio.architect.filter.expression.BinaryExpression;
 import com.liferay.structured.content.apio.architect.filter.expression.Expression;
@@ -41,9 +42,7 @@ public class FilterParserImplTest {
 	public void setUp() {
 		_filterParserImpl = new FilterParserImpl();
 
-		_filterParserImpl.
-			setStructuredContentSingleEntitySchemaBasedEdmProvider(
-				_structuredContentSingleEntitySchemaBasedEdmProvider);
+		_filterParserImpl.setEntityModel(_entityModel);
 
 		_filterParserImpl.activate();
 	}
@@ -218,31 +217,28 @@ public class FilterParserImplTest {
 		exception.hasMessage("Filter is null");
 	}
 
-	private static final StructuredContentSingleEntitySchemaBasedEdmProvider
-		_structuredContentSingleEntitySchemaBasedEdmProvider =
-			new StructuredContentSingleEntitySchemaBasedEdmProvider() {
+	private static final EntityModel _entityModel = new EntityModel() {
 
-				@Override
-				public Map<String, EntityField> getEntityFieldsMap() {
-					return Stream.of(
-						new EntityField(
-							"fieldExternal", EntityField.Type.STRING,
-							locale -> "fieldInternal"),
-						new EntityField(
-							"dateExternal", EntityField.Type.DATE,
-							locale -> "dateInternal")
-					).collect(
-						Collectors.toMap(
-							EntityField::getName, Function.identity())
-					);
-				}
+		@Override
+		public Map<String, EntityField> getEntityFieldsMap() {
+			return Stream.of(
+				new EntityField(
+					"fieldExternal", EntityField.Type.STRING,
+					locale -> "fieldInternal"),
+				new EntityField(
+					"dateExternal", EntityField.Type.DATE,
+					locale -> "dateInternal")
+			).collect(
+				Collectors.toMap(EntityField::getName, Function.identity())
+			);
+		}
 
-				@Override
-				public String getName() {
-					return "SomeEntityName";
-				}
+		@Override
+		public String getName() {
+			return "SomeEntityName";
+		}
 
-			};
+	};
 
 	private FilterParserImpl _filterParserImpl;
 

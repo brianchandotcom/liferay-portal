@@ -25,7 +25,9 @@ import javax.portlet.PortletConfig;
 
 /**
  * @author Brian Wing Shun Chan
+ * @deprecated As of Judson (7.1.x), with no direct replacement
  */
+@Deprecated
 public class PortletActionInvoker {
 
 	public static void processAction(

@@ -414,24 +414,6 @@ public class PortletRequestProcessor extends TilesRequestProcessor {
 	}
 
 	@Override
-	protected ActionForm processActionForm(
-		HttpServletRequest request, HttpServletResponse response,
-		ActionMapping actionMapping) {
-
-		ActionForm actionForm = super.processActionForm(
-			request, response, actionMapping);
-
-		if (actionForm instanceof InitializableActionForm) {
-			InitializableActionForm initializableActionForm =
-				(InitializableActionForm)actionForm;
-
-			initializableActionForm.init(request, response, actionMapping);
-		}
-
-		return actionForm;
-	}
-
-	@Override
 	protected ActionForward processActionPerform(
 			HttpServletRequest request, HttpServletResponse response,
 			Action action, ActionForm actionForm, ActionMapping actionMapping)

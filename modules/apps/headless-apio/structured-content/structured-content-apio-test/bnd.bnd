@@ -6,6 +6,8 @@ Import-Package:\
 	\
 	!com.jayway.jsonpath.*,\
 	\
+	!com.liferay.petra.json.web.service.client.internal.*,\
+	\
 	!javax.validation.*,\
 	\
 	!org.apache.aries.blueprint,\

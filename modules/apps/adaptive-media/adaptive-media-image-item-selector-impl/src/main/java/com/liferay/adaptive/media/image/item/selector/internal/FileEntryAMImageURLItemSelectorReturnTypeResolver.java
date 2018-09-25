@@ -39,10 +39,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true, property = "service.ranking:Integer=100",
-	service = {
-		FileEntryAMImageURLItemSelectorReturnTypeResolver.class,
-		ItemSelectorReturnTypeResolver.class
-	}
+	service = ItemSelectorReturnTypeResolver.class
 )
 public class FileEntryAMImageURLItemSelectorReturnTypeResolver
 	implements ItemSelectorReturnTypeResolver

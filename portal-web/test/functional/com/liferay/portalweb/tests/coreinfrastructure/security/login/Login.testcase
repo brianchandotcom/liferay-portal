@@ -205,6 +205,8 @@
 		<property name="dummy.socket.proxy.disabled" value="true" />
 		<property name="test.name.skip.portal.instance" value="Login#OpenIDConnectSmoke" />
 
+		<!-- LRQA-43729 -->
+
 		<var method="MathUtil#randomNumber('3')" name="googlePropertiesSet" />
 
 		<var method="PropsUtil#get('google.client.id.${googlePropertiesSet}')" name="openIDConnectClientID" />
@@ -288,6 +290,8 @@
 		<property name="dummy.socket.proxy.disabled" value="true" />
 		<property name="openam.enabled" value="true" />
 		<property name="test.name.skip.portal.instance" value="Login#OpenSSOSmoke" />
+
+		<!-- LRQA-40534 -->
 
 		<execute macro="Navigator#openSpecificURL">
 			<var name="url" value="http://test.able.com:8080/openam" />

@@ -128,7 +128,7 @@
 		<property name="solr.solrcloud.enabled" value="true" />
 		<property name="test.name.skip.portal.instance" value="Solr#SolrWithSolrCloudSmokeTest" />
 
-		<!-- LPS-83256 -->
+		<!-- LRQA-42649 -->
 
 		<execute macro="Solr#viewSolrwithSolrCloudEnabledInConsole" />
 

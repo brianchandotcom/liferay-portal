@@ -88,7 +88,7 @@ public class OrganizationScreenNavigationRegistrar {
 
 		_registerScreenNavigationEntry(
 			_createUpdateOnlyScreenNavigationEntry(
-				"reminder-queries", _CATEGORY_GENERAL,
+				"security-questions", _CATEGORY_GENERAL,
 				"/organization/reminder_queries.jsp",
 				"/users_admin/update_organization_reminder_queries"),
 			30);

@@ -84,18 +84,6 @@ public class LayoutPageTemplateEntryStagedModelDataHandler
 				PortletDataContext.REFERENCE_TYPE_PARENT);
 		}
 
-		List<FragmentEntryLink> fragmentEntryLinks =
-			_fragmentEntryLinkLocalService.getFragmentEntryLinks(
-				layoutPageTemplateEntry.getGroupId(),
-				_portal.getClassNameId(LayoutPageTemplateEntry.class),
-				layoutPageTemplateEntry.getLayoutPageTemplateEntryId());
-
-		for (FragmentEntryLink fragmentEntryLink : fragmentEntryLinks) {
-			StagedModelDataHandlerUtil.exportReferenceStagedModel(
-				portletDataContext, layoutPageTemplateEntry, fragmentEntryLink,
-				PortletDataContext.REFERENCE_TYPE_DEPENDENCY);
-		}
-
 		_exportAssetDisplayPages(portletDataContext, layoutPageTemplateEntry);
 
 		_exportLayoutPageTemplateStructure(
@@ -220,10 +208,6 @@ public class LayoutPageTemplateEntryStagedModelDataHandler
 					portletDataContext, importedLayoutPageTemplateEntry);
 		}
 
-		importFragmentEntryLinks(
-			portletDataContext, layoutPageTemplateEntry,
-			importedLayoutPageTemplateEntry);
-
 		_importAssetDisplayPages(
 			portletDataContext, layoutPageTemplateEntry,
 			importedLayoutPageTemplateEntry);
@@ -307,6 +291,18 @@ public class LayoutPageTemplateEntryStagedModelDataHandler
 			LayoutPageTemplateEntry layoutPageTemplateEntry)
 		throws PortletDataException {
 
+		List<FragmentEntryLink> fragmentEntryLinks =
+			_fragmentEntryLinkLocalService.getFragmentEntryLinks(
+				layoutPageTemplateEntry.getGroupId(),
+				_portal.getClassNameId(LayoutPageTemplateEntry.class),
+				layoutPageTemplateEntry.getLayoutPageTemplateEntryId());
+
+		for (FragmentEntryLink fragmentEntryLink : fragmentEntryLinks) {
+			StagedModelDataHandlerUtil.exportReferenceStagedModel(
+				portletDataContext, layoutPageTemplateEntry, fragmentEntryLink,
+				PortletDataContext.REFERENCE_TYPE_DEPENDENCY);
+		}
+
 		LayoutPageTemplateStructure layoutPageTemplateStructure =
 			_layoutPageTemplateStructureLocalService.
 				fetchLayoutPageTemplateStructure(
@@ -370,6 +366,10 @@ public class LayoutPageTemplateEntryStagedModelDataHandler
 			LayoutPageTemplateEntry layoutPageTemplateEntry,
 			LayoutPageTemplateEntry importedLayoutPageTemplateEntry)
 		throws Exception {
+
+		importFragmentEntryLinks(
+			portletDataContext, layoutPageTemplateEntry,
+			importedLayoutPageTemplateEntry);
 
 		List<Element> layoutPageTemplateStructureElements =
 			portletDataContext.getReferenceDataElements(

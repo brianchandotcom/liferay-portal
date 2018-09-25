@@ -3,6 +3,7 @@
 	<property name="portal.upstream" value="true" />
 	<property name="app.server.bundles.size" value="1" />
 	<property name="databases.size" value="1" />
+	<property name="dummy.socket.proxy.disabled" value="true" />
 	<property name="osgi.app.includes" value="saml" />
 	<property name="plugins.deployment.type" value="osgi" />
 	<property name="test.run.environment" value="EE" />

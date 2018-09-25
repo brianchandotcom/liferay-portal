@@ -20,6 +20,7 @@ import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapListener;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.configuration.ConfigurationFactoryUtil;
@@ -72,8 +73,10 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
 public class ReleaseManagerOSGiCommands {
 
 	@Descriptor("List pending or running upgrades")
-	public void check() {
+	public String check() {
 		Set<String> bundleSymbolicNames = _serviceTrackerMap.keySet();
+
+		StringBundler sb = new StringBundler(0);
 
 		for (String bundleSymbolicName : bundleSymbolicNames) {
 			String schemaVersionString = getSchemaVersionString(
@@ -88,17 +91,16 @@ public class ReleaseManagerOSGiCommands {
 			int size = upgradeInfosList.size();
 
 			if (size > 1) {
-				System.out.println(
-					StringBundler.concat(
-						"There are ", size, " possible end nodes for ",
-						schemaVersionString));
+				sb.append("There are ");
+				sb.append(size);
+				sb.append(" possible end nodes for ");
+				sb.append(schemaVersionString);
+				sb.append(StringPool.NEW_LINE);
 			}
 
 			if (size == 0) {
 				continue;
 			}
-
-			StringBundler sb = new StringBundler(6);
 
 			sb.append("There is an upgrade process available for ");
 			sb.append(bundleSymbolicName);
@@ -113,17 +115,22 @@ public class ReleaseManagerOSGiCommands {
 
 			sb.append(lastUpgradeInfo.getToSchemaVersionString());
 
-			System.out.println(sb.toString());
+			sb.append(StringPool.NEW_LINE);
 		}
+
+		if (sb.index() > 0) {
+			sb.setIndex(sb.index() - 1);
+
+			return sb.toString();
+		}
+
+		return null;
 	}
 
 	@Descriptor("Execute upgrade for a specific module")
-	public void execute(String bundleSymbolicName) {
+	public String execute(String bundleSymbolicName) {
 		if (_serviceTrackerMap.getService(bundleSymbolicName) == null) {
-			System.out.println(
-				"No upgrade processes registered for " + bundleSymbolicName);
-
-			return;
+			return "No upgrade processes registered for " + bundleSymbolicName;
 		}
 
 		try {
@@ -133,12 +140,21 @@ public class ReleaseManagerOSGiCommands {
 			_upgradeExecutor.execute(bundleSymbolicName, upgradeInfos);
 		}
 		catch (Throwable t) {
-			t.printStackTrace(System.out);
+			_logger.log(
+				Logger.LOG_ERROR,
+				"Failed upgrade process for module ".concat(bundleSymbolicName),
+				t);
 		}
+
+		return null;
 	}
 
 	@Descriptor("Execute upgrade for a specific module and final version")
-	public void execute(String bundleSymbolicName, String toVersionString) {
+	public String execute(String bundleSymbolicName, String toVersionString) {
+		if (_serviceTrackerMap.getService(bundleSymbolicName) == null) {
+			return "No upgrade processes registered for " + bundleSymbolicName;
+		}
+
 		String schemaVersionString = getSchemaVersionString(bundleSymbolicName);
 
 		ReleaseGraphManager releaseGraphManager = new ReleaseGraphManager(
@@ -148,59 +164,77 @@ public class ReleaseManagerOSGiCommands {
 			bundleSymbolicName,
 			releaseGraphManager.getUpgradeInfos(
 				schemaVersionString, toVersionString));
+
+		return null;
 	}
 
 	@Descriptor("Execute all pending upgrades")
-	public void executeAll() {
+	public String executeAll() {
 		Set<String> upgradeThrewExceptionBundleSymbolicNames = new HashSet<>();
 
 		executeAll(upgradeThrewExceptionBundleSymbolicNames);
 
 		if (upgradeThrewExceptionBundleSymbolicNames.isEmpty()) {
-			System.out.println("All modules were successfully upgraded");
-
-			return;
+			return "All modules were successfully upgraded";
 		}
 
 		StringBundler sb = new StringBundler(
 			(upgradeThrewExceptionBundleSymbolicNames.size() * 3) + 3);
 
-		sb.append("\nThe following modules had errors while upgrading:\n");
+		sb.append("The following modules had errors while upgrading:\n");
 
 		for (String upgradeThrewExceptionBundleSymbolicName :
 				upgradeThrewExceptionBundleSymbolicNames) {
 
-			sb.append("\t");
+			sb.append(StringPool.TAB);
 			sb.append(upgradeThrewExceptionBundleSymbolicName);
-			sb.append("\n");
+			sb.append(StringPool.NEW_LINE);
 		}
 
 		sb.append("Use the command upgrade:list <module name> to get more ");
 		sb.append("details about the status of a specific upgrade.");
 
-		System.out.println(sb.toString());
+		return sb.toString();
 	}
 
 	@Descriptor("List registered upgrade processes for all modules")
-	public void list() {
-		for (String bundleSymbolicName : _serviceTrackerMap.keySet()) {
-			list(bundleSymbolicName);
+	public String list() {
+		Set<String> keySet = _serviceTrackerMap.keySet();
+
+		StringBundler sb = new StringBundler(2 * keySet.size());
+
+		for (String bundleSymbolicName : keySet) {
+			sb.append(list(bundleSymbolicName));
+			sb.append(StringPool.NEW_LINE);
 		}
+
+		sb.setIndex(sb.index() - 1);
+
+		return sb.toString();
 	}
 
 	@Descriptor("List registered upgrade processes for a specific module")
-	public void list(String bundleSymbolicName) {
+	public String list(String bundleSymbolicName) {
 		List<UpgradeInfo> upgradeProcesses = _serviceTrackerMap.getService(
 			bundleSymbolicName);
 
-		System.out.println(
-			StringBundler.concat(
-				"Registered upgrade processes for ", bundleSymbolicName, " ",
-				getSchemaVersionString(bundleSymbolicName)));
+		StringBundler sb = new StringBundler(5 + (3 * upgradeProcesses.size()));
+
+		sb.append("Registered upgrade processes for ");
+		sb.append(bundleSymbolicName);
+		sb.append(StringPool.SPACE);
+		sb.append(getSchemaVersionString(bundleSymbolicName));
+		sb.append(StringPool.NEW_LINE);
 
 		for (UpgradeInfo upgradeProcess : upgradeProcesses) {
-			System.out.println("\t" + upgradeProcess);
+			sb.append(StringPool.TAB);
+			sb.append(upgradeProcess);
+			sb.append(StringPool.NEW_LINE);
 		}
+
+		sb.setIndex(sb.index() - 1);
+
+		return sb.toString();
 	}
 
 	@Activate
@@ -284,12 +318,11 @@ public class ReleaseManagerOSGiCommands {
 					upgradableBundleSymbolicName, upgradeInfos);
 			}
 			catch (Throwable t) {
-				System.out.println(
-					StringBundler.concat(
-						"\nFailed upgrade process for module ",
-						upgradableBundleSymbolicName, ":"));
-
-				t.printStackTrace(System.out);
+				_logger.log(
+					Logger.LOG_ERROR,
+					"Failed upgrade process for module ".concat(
+						upgradableBundleSymbolicName),
+					t);
 
 				upgradeThrewExceptionBundleSymbolicNames.add(
 					upgradableBundleSymbolicName);

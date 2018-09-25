@@ -1307,18 +1307,16 @@ public class LayoutStagedModelDataHandler
 			portletDataContext.getReferenceDataElements(
 				layout, LayoutPageTemplateStructure.class);
 
-		if (layoutPageTemplateStructureElements.size() != 1) {
-			return;
+		for (Element layoutPageTemplateStructureElement :
+				layoutPageTemplateStructureElements) {
+
+			_layoutPageTemplateStructureDataHandlerUtil.
+				importLayoutPageTemplateStructure(
+					portletDataContext,
+					_portal.getClassNameId(Layout.class.getName()),
+					importedLayout.getPlid(),
+					layoutPageTemplateStructureElement);
 		}
-
-		Element layoutPageTemplateStructureElement =
-			layoutPageTemplateStructureElements.get(0);
-
-		_layoutPageTemplateStructureDataHandlerUtil.
-			importLayoutPageTemplateStructure(
-				portletDataContext,
-				_portal.getClassNameId(Layout.class.getName()),
-				importedLayout.getPlid(), layoutPageTemplateStructureElement);
 	}
 
 	protected void importLayoutPortlets(

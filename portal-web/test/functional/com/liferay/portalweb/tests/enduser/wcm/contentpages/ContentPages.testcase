@@ -41,10 +41,6 @@
 	<command name="AddContentPage" priority="5">
 		<property name="portal.acceptance" value="true" />
 
-		<execute macro="Navigator#gotoNavNested">
-			<var name="navNested" value="Collection Name" />
-		</execute>
-
 		<execute macro="FragmentsAdmin#addFragment">
 			<var name="fragmentName" value="Fragment Name" />
 		</execute>
@@ -72,18 +68,12 @@
 
 		<execute macro="Button#clickPublish" />
 
-		<execute macro="SitePages#openPagesAdmin">
+		<execute macro="PageTemplatesAdmin#openPageTemplatesAdmin">
 			<var name="siteURLKey" value="test-site-name" />
 		</execute>
 
-		<execute macro="NavItem#gotoPageTemplates" />
-
 		<execute macro="PageTemplatesAdmin#addCollection">
 			<var name="collectionName" value="Page Template Collection" />
-		</execute>
-
-		<execute macro="Navigator#gotoNavNested">
-			<var name="navNested" value="Page Template Collection" />
 		</execute>
 
 		<execute macro="PageTemplatesAdmin#add">

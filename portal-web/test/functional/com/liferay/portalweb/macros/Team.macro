@@ -114,13 +114,9 @@
 				<execute function="AssertTextNotPresent" locator1="SiteTeamsAssignMembers#USER_GROUPS_TABLE_NAME" value1="${userGroupName}" />
 			</then>
 			<else>
-				<execute macro="LexiconEntry#changeDisplayStyle">
-					<var name="displayStyle" value="cards" />
+				<execute macro="LexiconEntry#selectEntry">
+					<var name="rowEntry" value="${userGroupName}" />
 				</execute>
-
-				<execute function="AssertTextEquals" locator1="Card#SPECIFIC_LARGE_TEXT" value1="${userGroupName}" />
-
-				<execute function="Check" locator1="Card#SPECIFIC_CHECKBOX" />
 
 				<execute function="SelectFrameTop" />
 

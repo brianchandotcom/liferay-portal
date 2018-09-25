@@ -393,8 +393,6 @@
 	</command>
 
 	<command name="assignUserGroupAsMemberCP">
-		<var name="key_cardText" value="${userGroupName}" />
-
 		<execute macro="Navigator#gotoNavItem">
 			<var name="navItem" value="User Groups" />
 		</execute>
@@ -405,9 +403,9 @@
 
 		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
 
-		<execute function="AssertTextEquals" locator1="Card#SPECIFIC_LARGE_TEXT" value1="${userGroupName}" />
-
-		<execute function="Check" locator1="Card#SPECIFIC_CHECKBOX" />
+		<execute macro="LexiconEntry#selectEntry">
+			<var name="rowEntry" value="${userGroupName}" />
+		</execute>
 
 		<execute function="SelectFrameTop" />
 
@@ -998,12 +996,8 @@
 				<execute function="AssertElementPresent" locator1="Message#EMPTY_INFO" />
 			</then>
 			<else>
-				<execute function="AssertElementPresent" locator1="Card#GENERIC_LARGE_TEXT" />
-
-				<var method="StringUtil#unquote('${searchValue}')" name="cardText" />
-
-				<execute function="AssertTextEquals" locator1="Card#SPECIFIC_LARGE_TEXT" value1="${cardText}">
-					<var name="key_cardText" value="${cardText}" />
+				<execute macro="LexiconEntry#viewEntryName">
+					<var method="StringUtil#unquote('${searchValue}')" name="rowEntry" />
 				</execute>
 			</else>
 		</if>

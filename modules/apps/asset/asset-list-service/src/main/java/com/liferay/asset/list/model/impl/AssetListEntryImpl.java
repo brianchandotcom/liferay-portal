@@ -63,6 +63,17 @@ public class AssetListEntryImpl extends AssetListEntryBaseImpl {
 		return _getDynamicAssetEntries(start, end);
 	}
 
+	public int getAssetEntriesCount() {
+		if (Objects.equals(
+				getType(), AssetListEntryTypeConstants.TYPE_MANUAL)) {
+
+			return AssetListEntryAssetEntryRelLocalServiceUtil.
+				getAssetListEntryAssetEntryRelsCount(getAssetListEntryId());
+		}
+
+		return AssetEntryLocalServiceUtil.getEntriesCount(getAssetEntryQuery());
+	}
+
 	public AssetEntryQuery getAssetEntryQuery() {
 		AssetEntryQuery assetEntryQuery = new AssetEntryQuery();
 

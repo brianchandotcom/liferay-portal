@@ -31,6 +31,7 @@ class SidebarAvailableFragments extends Component {
 
 	attached() {
 		this._initializeDragAndDrop();
+		this._initializeDragScroller();
 	}
 
 	/**
@@ -56,6 +57,11 @@ class SidebarAvailableFragments extends Component {
 		if (targetItem && 'fragmentEntryLinkId' in targetItem.dataset) {
 			const mouseY = event.target.mousePos_.y;
 			const targetItemRegion = position.getRegion(targetItem);
+
+			const documentHeight = document.body.offsetHeight;
+			let placeholderItemRegion = position.getRegion(data.placeholder);
+
+			this._dragScroller.scrollOnDrag(placeholderItemRegion, documentHeight);
 
 			let nearestBorder = DRAG_POSITIONS.bottom;
 
@@ -103,6 +109,7 @@ class SidebarAvailableFragments extends Component {
 			requestAnimationFrame(
 				() => {
 					this._initializeDragAndDrop();
+					this._initializeDragScroller();
 				}
 			);
 

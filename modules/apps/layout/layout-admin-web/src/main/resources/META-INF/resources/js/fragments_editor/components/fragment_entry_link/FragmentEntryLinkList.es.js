@@ -31,6 +31,7 @@ class FragmentEntryLinkList extends Component {
 
 	attached() {
 		this._initializeDragAndDrop();
+		this._initializeDragScroller();
 	}
 
 	/**
@@ -75,6 +76,11 @@ class FragmentEntryLinkList extends Component {
 		if (targetItem && 'fragmentEntryLinkId' in targetItem.dataset) {
 			const mouseY = event.target.mousePos_.y;
 			const targetItemRegion = position.getRegion(targetItem);
+
+			const documentHeight = document.body.offsetHeight;
+			let placeholderItemRegion = position.getRegion(data.placeholder);
+
+			this._dragScroller.scrollOnDrag(placeholderItemRegion, documentHeight);
 
 			this._targetBorder = DRAG_POSITIONS.bottom;
 
@@ -122,6 +128,7 @@ class FragmentEntryLinkList extends Component {
 			requestAnimationFrame(
 				() => {
 					this._initializeDragAndDrop();
+					this._initializeDragScroller();
 				}
 			);
 

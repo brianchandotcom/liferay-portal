@@ -65,8 +65,12 @@ public abstract class BaseTestClassGroup {
 			_testMethods.add(testMethod);
 		}
 
+		protected void addTestMethod(boolean methodIgnored, String methodName) {
+			addTestMethod(new BaseTestMethod(methodIgnored, methodName, this));
+		}
+
 		protected void addTestMethod(String methodName) {
-			addTestMethod(new BaseTestMethod(methodName, this));
+			addTestMethod(false, methodName);
 		}
 
 		private final File _file;
@@ -80,7 +84,14 @@ public abstract class BaseTestClassGroup {
 			return _name;
 		}
 
-		protected BaseTestMethod(String name, BaseTestClass testClass) {
+		public boolean isIgnored() {
+			return _ignored;
+		}
+
+		protected BaseTestMethod(
+			boolean ignored, String name, BaseTestClass testClass) {
+
+			_ignored = ignored;
 			_name = name;
 			_testClass = testClass;
 		}
@@ -89,6 +100,7 @@ public abstract class BaseTestClassGroup {
 			return _testClass;
 		}
 
+		private final boolean _ignored;
 		private final String _name;
 		private final BaseTestClass _testClass;
 

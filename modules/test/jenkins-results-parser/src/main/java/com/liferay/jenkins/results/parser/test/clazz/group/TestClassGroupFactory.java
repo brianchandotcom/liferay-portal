@@ -34,6 +34,7 @@ public class TestClassGroupFactory {
 			}
 
 			if (batchName.startsWith("integration-") ||
+				batchName.startsWith("junit-test-") ||
 				batchName.startsWith("unit-")) {
 
 				return new JUnitBatchTestClassGroup(

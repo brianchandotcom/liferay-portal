@@ -73,15 +73,18 @@ public abstract class PortalGitRepositoryJob
 	protected PortalGitRepositoryJob(String jobName) {
 		super(jobName);
 
-		gitWorkingDirectory =
-			JenkinsResultsParserUtil.getPortalGitWorkingDirectory(
-				getBranchName());
+		gitWorkingDirectory = getNewGitWorkingDirectory();
 
 		setGitRepositoryDir(gitWorkingDirectory.getWorkingDirectory());
 
 		checkGitRepositoryDir();
 
 		jobPropertiesFiles.add(new File(gitRepositoryDir, "test.properties"));
+	}
+
+	protected GitWorkingDirectory getNewGitWorkingDirectory() {
+		return JenkinsResultsParserUtil.getPortalGitWorkingDirectory(
+			getBranchName());
 	}
 
 }

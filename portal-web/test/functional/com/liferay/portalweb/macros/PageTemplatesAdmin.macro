@@ -1,6 +1,4 @@
 <definition>
-	<var name="pageURL" value="control_panel/manage?p_p_id=com_liferay_layout_admin_web_portlet_GroupPagesPortlet&amp;_com_liferay_layout_admin_web_portlet_GroupPagesPortlet_tabs1=page-templates" />
-
 	<command name="_gotoAddCollection">
 		<if>
 			<condition function="IsElementPresent" locator1="NavNested#NAV_NESTED_PLUS" />

@@ -23,7 +23,12 @@ import com.liferay.portal.search.spi.model.permission.SearchPermissionFilterCont
 import org.osgi.service.component.annotations.Component;
 
 /**
+ * Adds a new permission filter so the search results returns documents that
+ * has been shared to users based on the information indexed by
+ * {@link SharingEntrySearchPermissionDocumentContributor}.
+ *
  * @author Sergio González
+ * @review
  */
 @Component(immediate = true, service = SearchPermissionFilterContributor.class)
 public class SharingEntrySearchPermissionFilterContributor

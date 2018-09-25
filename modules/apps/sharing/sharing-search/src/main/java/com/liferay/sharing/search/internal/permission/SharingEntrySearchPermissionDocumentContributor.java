@@ -28,7 +28,17 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
+ * Index a new field in the search document to include all the users who have
+ * been shared the document. This information will be used to do permission
+ * checks when returning search results by
+ * {@link SharingEntrySearchPermissionFilterContributor}.
+ *
+ * Everytime a resource is shared the associated search document is reindexed
+ * and this {@link SearchPermissionFieldContributor} will make sure that the new
+ * user who has been shared the document is added to the search field.
+ *
  * @author Sergio González
+ * @review
  */
 @Component(immediate = true, service = SearchPermissionFieldContributor.class)
 public class SharingEntrySearchPermissionDocumentContributor

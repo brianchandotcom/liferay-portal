@@ -60,8 +60,9 @@ JSONSerializer jsonSerializer = JSONFactoryUtil.createJSONSerializer();
 			TranslationsReducerModule.translationStatusReducer
 		],
 		[
+			'<portlet:namespace />fragments',
 			'<portlet:namespace />sidebar',
-			'<portlet:namespace />fragments'
+			'<portlet:namespace />toolbar'
 		]
 	);
 </aui:script>

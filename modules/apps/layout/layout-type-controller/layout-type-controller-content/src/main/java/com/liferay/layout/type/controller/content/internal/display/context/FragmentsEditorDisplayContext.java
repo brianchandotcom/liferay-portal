@@ -211,6 +211,45 @@ public class FragmentsEditorDisplayContext {
 		return soyContext;
 	}
 
+	public SoyContext getFragmentsEditorToolbarContext() {
+		SoyContext soyContext = SoyContextFactoryUtil.createSoyContext();
+
+		SoyContext availableLanguagesSoyContext =
+			SoyContextFactoryUtil.createSoyContext();
+
+		String[] languageIds = LocaleUtil.toLanguageIds(
+			LanguageUtil.getAvailableLocales(_themeDisplay.getSiteGroupId()));
+
+		for (String languageId : languageIds) {
+			SoyContext languageSoyContext =
+				SoyContextFactoryUtil.createSoyContext();
+
+			String languageIcon = StringUtil.toLowerCase(
+				languageId.replace(StringPool.UNDERLINE, StringPool.DASH));
+
+			languageSoyContext.put("languageIcon", languageIcon);
+
+			String languageLabel = languageId.replace(
+				StringPool.UNDERLINE, StringPool.DASH);
+
+			languageSoyContext.put("languageLabel", languageLabel);
+
+			availableLanguagesSoyContext.put(languageId, languageSoyContext);
+		}
+
+		soyContext.put("availableLanguages", availableLanguagesSoyContext);
+
+		soyContext.put("classPK", _themeDisplay.getPlid());
+		soyContext.put("defaultLanguageId", _themeDisplay.getLanguageId());
+		soyContext.put("lastSaveDate", StringPool.BLANK);
+		soyContext.put("portletNamespace", _renderResponse.getNamespace());
+		soyContext.put(
+			"spritemap",
+			_themeDisplay.getPathThemeImages() + "/lexicon/icons.svg");
+
+		return soyContext;
+	}
+
 	private Map<String, Object> _getDefaultConfigurations() {
 		Map<String, Object> configurations = new HashMap<>();
 

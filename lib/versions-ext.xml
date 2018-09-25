@@ -2541,19 +2541,6 @@
 				</licenses>
 			</library>
 			<library>
-				<file-name>lib/portal/portals-bridges.jar</file-name>
-				<version>1.0</version>
-				<project-name>Portals Bridges</project-name>
-				<project-url>http://portals.apache.org/bridges</project-url>
-				<licenses>
-					<license>
-						<license-name>Apache License 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0</license-url>
-						<copyright-notice>Copyright (c) 2005-2007 The Apache Software Foundation</copyright-notice>
-					</license>
-				</licenses>
-			</library>
-			<library>
 				<file-name>lib/portal/rdffilter.jar</file-name>
 				<version>1.0</version>
 				<project-name>RDF Filter</project-name>

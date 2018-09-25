@@ -193,15 +193,13 @@ public class PortletInstanceFactoryImpl implements PortletInstanceFactory {
 		boolean facesPortlet = rootInvokerPortletInstance.isFacesPortlet();
 		boolean headerPortlet = rootInvokerPortletInstance.isHeaderPortlet();
 		boolean strutsPortlet = rootInvokerPortletInstance.isStrutsPortlet();
-		boolean strutsBridgePortlet =
-			rootInvokerPortletInstance.isStrutsBridgePortlet();
 
 		InvokerPortlet instanceInvokerPortletInstance =
 			_invokerPortletFactory.create(
 				portlet, portletInstance, portletConfig, portletContext,
 				(InvokerFilterContainer)rootInvokerPortletInstance,
 				checkAuthToken, facesPortlet, headerPortlet, strutsPortlet,
-				strutsBridgePortlet);
+				false);
 
 		if (deployed) {
 			portletInstances.put(

@@ -14,7 +14,6 @@
 
 package com.liferay.portal.deploy.hot;
 
-import com.liferay.portal.apache.bridges.struts.LiferayServletContextProvider;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.configuration.ConfigurationFactoryUtil;
 import com.liferay.portal.kernel.deploy.hot.BaseHotDeployListener;
@@ -31,8 +30,6 @@ import com.liferay.portal.kernel.model.PortletFilter;
 import com.liferay.portal.kernel.model.PortletURLListener;
 import com.liferay.portal.kernel.portlet.CustomUserAttributes;
 import com.liferay.portal.kernel.portlet.InvokerPortlet;
-import com.liferay.portal.kernel.portlet.PortletBag;
-import com.liferay.portal.kernel.portlet.PortletBagPool;
 import com.liferay.portal.kernel.portlet.PortletInstanceFactoryUtil;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.service.PortletLocalServiceUtil;
@@ -40,8 +37,6 @@ import com.liferay.portal.kernel.servlet.DirectServletRegistryUtil;
 import com.liferay.portal.kernel.servlet.FileTimestampUtil;
 import com.liferay.portal.kernel.servlet.PortletServlet;
 import com.liferay.portal.kernel.servlet.ServletContextPool;
-import com.liferay.portal.kernel.servlet.ServletContextProvider;
-import com.liferay.portal.kernel.util.ClassUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -82,8 +77,6 @@ import javax.portlet.filter.RenderFilter;
 import javax.portlet.filter.ResourceFilter;
 
 import javax.servlet.ServletContext;
-
-import org.apache.portals.bridges.struts.StrutsPortlet;
 
 /**
  * @author Brian Wing Shun Chan
@@ -223,8 +216,6 @@ public class PortletHotDeployListener extends BaseHotDeployListener {
 
 		boolean portletAppInitialized = false;
 
-		boolean strutsBridges = false;
-
 		ClassLoader classLoader = hotDeployEvent.getContextClassLoader();
 
 		Iterator<Portlet> itr = portlets.iterator();
@@ -232,37 +223,12 @@ public class PortletHotDeployListener extends BaseHotDeployListener {
 		while (itr.hasNext()) {
 			Portlet portlet = itr.next();
 
-			PortletBag portletBag = PortletBagPool.get(
-				portlet.getRootPortletId());
-
 			if (!portletAppInitialized) {
 				initPortletApp(
 					servletContextName, servletContext, classLoader, portlet);
 
 				portletAppInitialized = true;
 			}
-
-			javax.portlet.Portlet portletInstance =
-				portletBag.getPortletInstance();
-
-			if (ClassUtil.isSubclass(
-					portletInstance.getClass(),
-					StrutsPortlet.class.getName())) {
-
-				strutsBridges = true;
-			}
-		}
-
-		if (!strutsBridges) {
-			strutsBridges = GetterUtil.getBoolean(
-				servletContext.getInitParameter(
-					"struts-bridges-context-provider"));
-		}
-
-		if (strutsBridges) {
-			servletContext.setAttribute(
-				ServletContextProvider.STRUTS_BRIDGES_CONTEXT_PROVIDER,
-				new LiferayServletContextProvider());
 		}
 
 		String xml = HttpUtil.URLtoString(

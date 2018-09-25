@@ -827,7 +827,7 @@ if (group.isControlPanel()) {
 
 // Make sure the Tiles context is reset for the next portlet
 
-if ((invokerPortlet != null) && (invokerPortlet.isStrutsPortlet() || invokerPortlet.isStrutsBridgePortlet())) {
+if ((invokerPortlet != null) && invokerPortlet.isStrutsPortlet()) {
 	request.removeAttribute(PortalTilesPlugin.DEFINITION);
 }
 %>
@@ -880,7 +880,7 @@ if (portlet.isActive() && portlet.isInclude() && portlet.isReady() && supportsMi
 
 // Make sure the Tiles context is reset for the next portlet
 
-if ((invokerPortlet != null) && (invokerPortlet.isStrutsPortlet() || invokerPortlet.isStrutsBridgePortlet())) {
+if ((invokerPortlet != null) && invokerPortlet.isStrutsPortlet()) {
 	request.removeAttribute(PortalTilesPlugin.DEFINITION);
 }
 

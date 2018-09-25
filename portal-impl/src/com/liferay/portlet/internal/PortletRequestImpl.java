@@ -603,9 +603,7 @@ public abstract class PortletRequestImpl implements LiferayPortletRequest {
 			PublicRenderParametersPool.get(request, plid);
 
 		if (invokerPortlet != null) {
-			if (invokerPortlet.isStrutsPortlet() ||
-				invokerPortlet.isStrutsBridgePortlet()) {
-
+			if (invokerPortlet.isStrutsPortlet()) {
 				_strutsPortlet = true;
 			}
 		}

@@ -97,7 +97,8 @@ public class EditLayoutMVCActionCommand extends BaseMVCActionCommand {
 		Map<Locale, String> robotsMap = LocalizationUtil.getLocalizationMap(
 			actionRequest, "robots");
 		String type = ParamUtil.getString(uploadPortletRequest, "type");
-		boolean hidden = ParamUtil.getBoolean(uploadPortletRequest, "hidden");
+		boolean hidden = !ParamUtil.getBoolean(
+			uploadPortletRequest, "showInMenu");
 		Map<Locale, String> friendlyURLMap =
 			LocalizationUtil.getLocalizationMap(actionRequest, "friendlyURL");
 		boolean deleteLogo = ParamUtil.getBoolean(actionRequest, "deleteLogo");

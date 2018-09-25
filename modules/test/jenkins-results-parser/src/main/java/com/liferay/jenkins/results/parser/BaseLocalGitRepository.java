@@ -95,8 +95,10 @@ public abstract class BaseLocalGitRepository
 		catch (IOException ioe) {
 			throw new RuntimeException(
 				JenkinsResultsParserUtil.combine(
-					"Unable to find Git repository directory for ", getName(),
-					" at ", directory.toString()),
+					"Unable to find Git repository directory.\n",
+					"Please set this location in repository.dir[", getName(),
+					"][", getUpstreamBranchName(),
+					"] for in repository.properties."),
 				ioe);
 		}
 	}

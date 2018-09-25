@@ -127,16 +127,10 @@ public class WorkspaceUtil {
 		public String getRepositoryGitHubURL() {
 			String gitCommitFileContent = _getGitCommitFileContent();
 
-			if ((gitCommitFileContent != null) &&
+			if ((gitCommitFileContent == null) ||
 				gitCommitFileContent.matches("[0-9a-f]{7,40}")) {
 
-				String repositoryName = _getRepositoryName();
-
-				String upstreamBranchName = getUpstreamBranchName();
-
-				return JenkinsResultsParserUtil.combine(
-					"https://github.com/liferay/", repositoryName, "/tree/",
-					upstreamBranchName);
+				return _getUpstreamGitHubURL();
 			}
 
 			return gitCommitFileContent;
@@ -161,18 +155,18 @@ public class WorkspaceUtil {
 				return null;
 			}
 
-			String gitCommitFileName = _getGitCommitFileName();
+			String gitCommitFilePath = _getGitCommitFilePath();
 
-			if (gitCommitFileName == null) {
+			if (gitCommitFilePath == null) {
 				return null;
 			}
 
-			return _workspaceGitRepository.getFileContent(gitCommitFileName);
+			return _workspaceGitRepository.getFileContent(gitCommitFilePath);
 		}
 
-		private String _getGitCommitFileName() {
+		private String _getGitCommitFilePath() {
 			return JenkinsResultsParserUtil.getProperty(
-				_getWorkspaceProperties(), "git.commit.file.name",
+				_getWorkspaceProperties(), "git.commit.file.path",
 				_repositoryType, _getParentUpstreamBranchName());
 		}
 
@@ -188,6 +182,12 @@ public class WorkspaceUtil {
 			return JenkinsResultsParserUtil.getProperty(
 				_getWorkspaceProperties(), "repository.name", _repositoryType,
 				_getParentUpstreamBranchName());
+		}
+
+		private String _getUpstreamGitHubURL() {
+			return JenkinsResultsParserUtil.combine(
+				"https://github.com/liferay/", _getRepositoryName(), "/tree/",
+				getUpstreamBranchName());
 		}
 
 		private final String _repositoryType;

@@ -36,124 +36,114 @@ import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
-import org.junit.experimental.runners.Enclosed;
-import org.junit.runner.RunWith;
 
 /**
  * @author Manuel de la Peña
  */
-@RunWith(Enclosed.class)
 public class ResourcePermissionLocalServiceTest {
 
-	public static final class WhenCheckingIfRoleHasResourcePermissions {
+	@ClassRule
+	@Rule
+	public static final AggregateTestRule aggregateTestRule =
+		new LiferayIntegrationTestRule();
 
-		@ClassRule
-		@Rule
-		public static final AggregateTestRule aggregateTestRule =
-			new LiferayIntegrationTestRule();
-
-		@Before
-		public void setUp() throws Exception {
-			_group = GroupTestUtil.addGroup();
-		}
-
-		@Test
-		public void shouldFailIfFirstResourceIsNotIndividual()
-			throws Exception {
-
-			List<Resource> resources = new ArrayList<>();
-
-			Resource firstResource = new ResourceImpl();
-
-			firstResource.setScope(ResourceConstants.SCOPE_GROUP);
-
-			resources.add(firstResource);
-
-			Resource lastResource = new ResourceImpl();
-
-			lastResource.setScope(ResourceConstants.SCOPE_COMPANY);
-
-			resources.add(lastResource);
-
-			long[] roleIds = new long[1];
-
-			Role guestRole = RoleLocalServiceUtil.getRole(
-				_group.getCompanyId(), RoleConstants.GUEST);
-
-			roleIds[0] = guestRole.getRoleId();
-
-			try {
-				ResourcePermissionLocalServiceUtil.hasResourcePermission(
-					resources, roleIds, ActionKeys.VIEW);
-			}
-			catch (IllegalArgumentException iae) {
-				Assert.assertEquals(
-					"The first resource must be an individual scope",
-					iae.getMessage());
-			}
-		}
-
-		@Test
-		public void shouldFailIfLastResourceIsNotCompany() throws Exception {
-			List<Resource> resources = new ArrayList<>();
-
-			Resource firstResource = new ResourceImpl();
-
-			firstResource.setScope(ResourceConstants.SCOPE_INDIVIDUAL);
-
-			resources.add(firstResource);
-
-			Resource lastResource = new ResourceImpl();
-
-			lastResource.setScope(ResourceConstants.SCOPE_GROUP);
-
-			resources.add(lastResource);
-
-			long[] roleIds = new long[1];
-
-			Role guestRole = RoleLocalServiceUtil.getRole(
-				_group.getCompanyId(), RoleConstants.GUEST);
-
-			roleIds[0] = guestRole.getRoleId();
-
-			try {
-				ResourcePermissionLocalServiceUtil.hasResourcePermission(
-					resources, roleIds, ActionKeys.VIEW);
-			}
-			catch (IllegalArgumentException iae) {
-				Assert.assertEquals(
-					"The last resource must be a company scope",
-					iae.getMessage());
-			}
-		}
-
-		@Test
-		public void shouldFailIfResourcesIsLessThanTwo() throws Exception {
-			List<Resource> resources = new ArrayList<>();
-
-			resources.add(new ResourceImpl());
-
-			long[] roleIds = new long[1];
-
-			Role guestRole = RoleLocalServiceUtil.getRole(
-				_group.getCompanyId(), RoleConstants.GUEST);
-
-			roleIds[0] = guestRole.getRoleId();
-
-			try {
-				ResourcePermissionLocalServiceUtil.hasResourcePermission(
-					resources, roleIds, ActionKeys.VIEW);
-			}
-			catch (IllegalArgumentException iae) {
-				Assert.assertEquals(
-					"The list of resources must contain at least two values",
-					iae.getMessage());
-			}
-		}
-
-		@DeleteAfterTestRun
-		private Group _group;
-
+	@Before
+	public void setUp() throws Exception {
+		_group = GroupTestUtil.addGroup();
 	}
+
+	@Test
+	public void shouldFailIfFirstResourceIsNotIndividual() throws Exception {
+		List<Resource> resources = new ArrayList<>();
+
+		Resource firstResource = new ResourceImpl();
+
+		firstResource.setScope(ResourceConstants.SCOPE_GROUP);
+
+		resources.add(firstResource);
+
+		Resource lastResource = new ResourceImpl();
+
+		lastResource.setScope(ResourceConstants.SCOPE_COMPANY);
+
+		resources.add(lastResource);
+
+		long[] roleIds = new long[1];
+
+		Role guestRole = RoleLocalServiceUtil.getRole(
+			_group.getCompanyId(), RoleConstants.GUEST);
+
+		roleIds[0] = guestRole.getRoleId();
+
+		try {
+			ResourcePermissionLocalServiceUtil.hasResourcePermission(
+				resources, roleIds, ActionKeys.VIEW);
+		}
+		catch (IllegalArgumentException iae) {
+			Assert.assertEquals(
+				"The first resource must be an individual scope",
+				iae.getMessage());
+		}
+	}
+
+	@Test
+	public void shouldFailIfLastResourceIsNotCompany() throws Exception {
+		List<Resource> resources = new ArrayList<>();
+
+		Resource firstResource = new ResourceImpl();
+
+		firstResource.setScope(ResourceConstants.SCOPE_INDIVIDUAL);
+
+		resources.add(firstResource);
+
+		Resource lastResource = new ResourceImpl();
+
+		lastResource.setScope(ResourceConstants.SCOPE_GROUP);
+
+		resources.add(lastResource);
+
+		long[] roleIds = new long[1];
+
+		Role guestRole = RoleLocalServiceUtil.getRole(
+			_group.getCompanyId(), RoleConstants.GUEST);
+
+		roleIds[0] = guestRole.getRoleId();
+
+		try {
+			ResourcePermissionLocalServiceUtil.hasResourcePermission(
+				resources, roleIds, ActionKeys.VIEW);
+		}
+		catch (IllegalArgumentException iae) {
+			Assert.assertEquals(
+				"The last resource must be a company scope", iae.getMessage());
+		}
+	}
+
+	@Test
+	public void shouldFailIfResourcesIsLessThanTwo() throws Exception {
+		List<Resource> resources = new ArrayList<>();
+
+		resources.add(new ResourceImpl());
+
+		long[] roleIds = new long[1];
+
+		Role guestRole = RoleLocalServiceUtil.getRole(
+			_group.getCompanyId(), RoleConstants.GUEST);
+
+		roleIds[0] = guestRole.getRoleId();
+
+		try {
+			ResourcePermissionLocalServiceUtil.hasResourcePermission(
+				resources, roleIds, ActionKeys.VIEW);
+		}
+		catch (IllegalArgumentException iae) {
+			Assert.assertEquals(
+				"The list of resources must contain at least two values",
+				iae.getMessage());
+		}
+	}
+
+	@DeleteAfterTestRun
+	private Group _group;
 
 }

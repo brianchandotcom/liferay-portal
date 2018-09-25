@@ -443,7 +443,7 @@ String liferayAnalyticsEndpointURL = PrefsPropsUtil.getString(company.getCompany
 String[] liferayAnalyticsGroupIds = PrefsPropsUtil.getStringArray(company.getCompanyId(), "liferayAnalyticsGroupIds", StringPool.COMMA);
 %>
 
-<c:if test="<%= Validator.isNotNull(liferayAnalyticsKey) || (Validator.isNotNull(liferayAnalyticsDataSourceId) && Validator.isNotNull(liferayAnalyticsEndpointURL) && ArrayUtil.contains(liferayAnalyticsGroupIds, String.valueOf(gropup.getGroupId()))) %>">
+<c:if test="<%= Validator.isNotNull(liferayAnalyticsKey) || (Validator.isNotNull(liferayAnalyticsDataSourceId) && Validator.isNotNull(liferayAnalyticsEndpointURL) && ArrayUtil.contains(liferayAnalyticsGroupIds, String.valueOf(group.getGroupId()))) %>">
 	<script data-senna-track="permanent" id="liferayAnalyticsScript" type="text/javascript">
 		(function(u, c, a, m, o, l) {
 			o = 'script';

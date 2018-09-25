@@ -6955,6 +6955,7 @@ auto.deploy.dest.dir=C:/WINDOWS/system32/config/systemprofile/liferay/websphere-
 			test.case.available.property.names=${test.case.available.property.names}
 			test.console.log.file.name=${liferay.home}/logs/liferay.*.xml
 			test.console.shut.down.file.name=${project.dir}/console-shut-down
+			test.csv.report.property.names=${test.csv.report.property.names}
 			test.dependencies.dir.name=dependencies
 			test.poshi.warnings.file.name=${project.dir}/poshi-warnings.xml
 			test.retry.command.wait.time=${test.retry.command.wait.time}
@@ -9518,6 +9519,72 @@ if (ppstate.equals("normal")) {
 		<echo file="test.plugin.names.properties">${test.plugin.names.properties.content}</echo>
 
 		<print-file file.name="test.plugin.names.properties" />
+	</target>
+
+	<target name="record-test-poshi-csv-report">
+		<delete failonerror="false" file="${test.ext.properties.file}" />
+
+		<if>
+			<isset property="test.base.dir.name" />
+			<then>
+				<antcall inheritAll="false" target="prepare-poshi-runner-properties">
+					<param name="test.base.dir.name" value="${test.base.dir.name}" />
+				</antcall>
+			</then>
+			<else>
+				<antcall inheritAll="false" target="prepare-poshi-runner-properties" />
+			</else>
+		</if>
+
+		<poshi-execute task="validatePoshi" />
+
+		<setup-libs />
+
+		<delete failonerror="false" file="${test.ext.properties.file}" />
+
+		<if>
+			<isset property="test.base.dir.name" />
+			<then>
+				<antcall inheritAll="false" target="prepare-poshi-runner-properties">
+					<param name="test.base.dir.name" value="${test.base.dir.name}" />
+					<param name="test.batch.run.type" value="${test.batch.run.type}" />
+					<param name="test.portal.instance" value="${test.portal.instance}" />
+				</antcall>
+			</then>
+			<else>
+				<antcall inheritAll="false" target="prepare-poshi-runner-properties">
+					<param name="test.batch.run.type" value="${test.batch.run.type}" />
+					<param name="test.portal.instance" value="${test.portal.instance}" />
+				</antcall>
+			</else>
+		</if>
+
+		<poshi-execute task="writePoshiProperties" />
+
+		<local name="report.csv.file" />
+		<local name="report.csv.file.name" />
+
+		<first id="report.csv.file">
+			<fileset
+				dir="portal-web/"
+				includes="Report*.csv"
+			/>
+		</first>
+
+		<propertyregex
+			input="${toString:report.csv.file}"
+			override="true"
+			property="report.csv.file.name"
+			regexp=".*/([^/]+.csv)"
+			replace="\1"
+		/>
+
+		<move
+			file="portal-web/${report.csv.file.name}"
+			tofile="${report.csv.file.name}"
+		/>
+
+		<echo>Writing ${project.dir}/${report.csv.file.name}</echo>
 	</target>
 
 	<target name="remove-plugin">

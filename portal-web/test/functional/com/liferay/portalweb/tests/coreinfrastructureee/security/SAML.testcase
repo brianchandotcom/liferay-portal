@@ -1,4 +1,4 @@
-<definition component-name="portal-authentication-ee" ignore="true">
+<definition component-name="portal-authentication-ee">
 	<property name="portal.release" value="true" />
 	<property name="portal.upstream" value="true" />
 	<property name="app.server.bundles.size" value="1" />

@@ -12,6 +12,7 @@ import {
 	UPDATE_LAST_SAVE_DATE,
 	UPDATE_SAVING_CHANGES_STATUS
 } from '../../actions/actions.es';
+import DragScroller from '../../utils/DragScroller.es';
 import {DRAG_POSITIONS} from '../../reducers/placeholders.es';
 import {Store} from '../../store/store.es';
 import templates from './SidebarAvailableFragments.soy';
@@ -30,6 +31,7 @@ class SidebarAvailableFragments extends Component {
 
 	attached() {
 		this._initializeDragAndDrop();
+		this._initializeDragScroller();
 	}
 
 	/**
@@ -55,6 +57,11 @@ class SidebarAvailableFragments extends Component {
 		if (targetItem && 'fragmentEntryLinkId' in targetItem.dataset) {
 			const mouseY = event.target.mousePos_.y;
 			const targetItemRegion = position.getRegion(targetItem);
+
+			const documentHeight = document.body.offsetHeight;
+			let placeholderItemRegion = position.getRegion(data.placeholder);
+
+			this._dragScroller.scrollOnDrag(placeholderItemRegion, documentHeight);
 
 			let nearestBorder = DRAG_POSITIONS.bottom;
 
@@ -102,6 +109,7 @@ class SidebarAvailableFragments extends Component {
 			requestAnimationFrame(
 				() => {
 					this._initializeDragAndDrop();
+					this._initializeDragScroller();
 				}
 			);
 
@@ -209,6 +217,24 @@ class SidebarAvailableFragments extends Component {
 			this._handleDragEnd.bind(this)
 		);
 	}
+
+	/**
+	 * @private
+	 * @review
+	 */
+
+	_initializeDragScroller() {
+		const controlMenu = document.querySelector('.control-menu');
+		const controlMenuHeight = controlMenu ? controlMenu.offsetHeight : 0;
+		const managementBar = document.querySelector('.management-bar');
+		const managementBarHeight = managementBar ? managementBar.offsetHeight : 0;
+
+		this._dragScroller = new DragScroller(
+			{
+				upOffset: controlMenuHeight + managementBarHeight
+			}
+		);
+	}
 }
 
 /**
@@ -284,7 +310,29 @@ SidebarAvailableFragments.STATE = {
 	 * @type {Store}
 	 */
 
-	store: Config.instanceOf(Store)
+	store: Config.instanceOf(Store),
+
+	/**
+	 * Internal DragDrop instance.
+	 * @default null
+	 * @instance
+	 * @memberOf SidebarAvailableFragments
+	 * @review
+	 * @type {object|null}
+	 */
+
+	_dragDrop: Config.internal().value(null),
+
+	/**
+	 * Internal DragScroller instance
+	 * @default null
+	 * @instance
+	 * @memberOf SidebarAvailableFragments
+	 * @review
+	 * @type {object|null}
+	 */
+
+	_dragScroller: Config.internal().value(null)
 };
 
 Soy.register(SidebarAvailableFragments, templates);

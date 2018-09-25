@@ -24,7 +24,7 @@ class Sharing extends PortletBase {
 		const sharingDialog = Liferay.Util.getWindow(this._sharingDialogId);
 
 		if (sharingDialog && sharingDialog.hide) {
-			setTimeout(() => { sharingDialog.hide() }, 500);
+			sharingDialog.hide();
 		}
 	}
 
@@ -115,9 +115,10 @@ class Sharing extends PortletBase {
 
 				openToast({
 					message: json.successMessage,
+					events: {
+						'attached': this._closeDialog.bind(this)
+					}
 				});
-
-				this._closeDialog();
 			})
 			.catch(error => {
 				this.submitting = false;
@@ -125,10 +126,11 @@ class Sharing extends PortletBase {
 				openToast({
 					message: error.message,
 					title: Liferay.Language.get('error'),
-					type: 'danger'
+					type: 'danger',
+					events: {
+						'attached': this._closeDialog.bind(this)
+					}
 				});
-
-				this._closeDialog();
 			});
 	}
 

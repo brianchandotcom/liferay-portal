@@ -157,6 +157,11 @@ public class AssetListEntryWrapper implements AssetListEntry,
 	}
 
 	@Override
+	public int getAssetEntriesCount() {
+		return _assetListEntry.getAssetEntriesCount();
+	}
+
+	@Override
 	public com.liferay.asset.kernel.service.persistence.AssetEntryQuery getAssetEntryQuery() {
 		return _assetListEntry.getAssetEntryQuery();
 	}

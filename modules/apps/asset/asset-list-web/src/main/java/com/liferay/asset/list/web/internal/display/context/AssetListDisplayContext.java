@@ -14,6 +14,7 @@
 
 package com.liferay.asset.list.web.internal.display.context;
 
+import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.list.constants.AssetListActionKeys;
 import com.liferay.asset.list.constants.AssetListEntryTypeConstants;
 import com.liferay.asset.list.constants.AssetListPortletKeys;
@@ -22,7 +23,6 @@ import com.liferay.asset.list.service.AssetListEntryLocalServiceUtil;
 import com.liferay.asset.list.service.AssetListEntryServiceUtil;
 import com.liferay.asset.list.web.internal.security.permission.resource.AssetListPermission;
 import com.liferay.asset.list.web.util.AssetListPortletUtil;
-import com.liferay.asset.publisher.constants.AssetPublisherPortletKeys;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
@@ -43,7 +43,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 import java.util.List;
 import java.util.Objects;
 
-import javax.portlet.PortletPreferences;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
@@ -91,6 +90,30 @@ public class AssetListDisplayContext {
 					});
 			}
 		};
+	}
+
+	public SearchContainer<AssetEntry> getAssetListContentSearchContainer() {
+		if (_assetListContentSearchContainer != null) {
+			return _assetListContentSearchContainer;
+		}
+
+		SearchContainer searchContainer = new SearchContainer(
+			_renderRequest, _renderResponse.createRenderURL(), null,
+			"there-are-no-asset-entries");
+
+		AssetListEntry assetListEntry = getAssetListEntry();
+
+		List<AssetEntry> assetEntries = assetListEntry.getAssetEntries();
+
+		searchContainer.setResults(assetEntries);
+
+		int totalCount = assetListEntry.getAssetEntriesCount();
+
+		searchContainer.setTotal(totalCount);
+
+		_assetListContentSearchContainer = searchContainer;
+
+		return _assetListContentSearchContainer;
 	}
 
 	public int getAssetListEntriesCount() {
@@ -389,21 +412,6 @@ public class AssetListDisplayContext {
 		return sortingURL.toString();
 	}
 
-	public String getViewContentPreferences() throws Exception {
-		PortletPreferences portletPreferences =
-			PortletPreferencesFactoryUtil.getPortletPreferences(
-				_request, AssetPublisherPortletKeys.ASSET_PUBLISHER);
-
-		portletPreferences.setValue(
-			"assetListEntryId", String.valueOf(getAssetListEntryId()));
-		portletPreferences.setValue(
-			"emailAssetEntryAddedEnabled", Boolean.FALSE.toString());
-		portletPreferences.setValue("paginationType", "none");
-		portletPreferences.setValue("selectionStyle", "asset-list");
-
-		return PortletPreferencesFactoryUtil.toXML(portletPreferences);
-	}
-
 	public boolean isShowAddAssetListEntryAction() {
 		return AssetListPermission.contains(
 			_themeDisplay.getPermissionChecker(),
@@ -481,6 +489,7 @@ public class AssetListDisplayContext {
 		return false;
 	}
 
+	private SearchContainer _assetListContentSearchContainer;
 	private Integer _assetListEntriesCount;
 	private SearchContainer _assetListEntriesSearchContainer;
 	private AssetListEntry _assetListEntry;

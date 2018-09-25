@@ -17,11 +17,37 @@
 <%@ include file="/init.jsp" %>
 
 <div class="container-fluid-1280 pt-3">
-	<liferay-portlet:runtime
-		defaultPreferences="<%= assetListDisplayContext.getViewContentPreferences() %>"
-		instanceId="assetListPreview"
-		portletName="<%= AssetPublisherPortletKeys.ASSET_PUBLISHER %>"
-	/>
+	<liferay-ui:search-container
+		id="fragmentEntries"
+		searchContainer="<%= assetListDisplayContext.getAssetListContentSearchContainer() %>"
+	>
+		<liferay-ui:search-container-row
+			className="com.liferay.asset.kernel.model.AssetEntry"
+			keyProperty="entryId"
+			modelVar="assetEntry"
+		>
+
+			<%
+			AssetRenderer assetRenderer = assetEntry.getAssetRenderer();
+
+			AssetRendererFactory assetRendererFactory = assetRenderer.getAssetRendererFactory();
+			%>
+
+			<liferay-ui:search-container-column-text
+				name="title"
+				value="<%= assetRenderer.getTitle(locale) %>"
+			/>
+
+			<liferay-ui:search-container-column-text
+				name="type"
+				value="<%= assetRendererFactory.getTypeName(locale) %>"
+			/>
+		</liferay-ui:search-container-row>
+
+		<liferay-ui:search-iterator
+			markupView="lexicon"
+		/>
+	</liferay-ui:search-container>
 </div>
 
 <aui:button-row>

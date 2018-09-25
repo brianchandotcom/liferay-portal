@@ -535,7 +535,7 @@ public class EditAssetListDisplayContext {
 		return _referencedModelsGroupIds;
 	}
 
-	public SearchContainer getSearchContainer() throws PortalException {
+	public SearchContainer getSearchContainer() {
 		if (_searchContainer != null) {
 			return _searchContainer;
 		}
@@ -588,7 +588,7 @@ public class EditAssetListDisplayContext {
 		return null;
 	}
 
-	public String getVocabularyIds() throws Exception {
+	public String getVocabularyIds() {
 		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 

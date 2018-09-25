@@ -17,12 +17,12 @@ package com.liferay.portal.store.file.system;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.FileUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.File;
 import java.io.IOException;
 
 import java.nio.file.Files;
+import java.nio.file.Path;
 
 /**
  * @author Adolfo Pérez
@@ -34,40 +34,37 @@ public abstract class FileSystemHelper {
 	}
 
 	public static FileSystemHelper createHardLinkFileSystemHelper(
-		File rootDir) {
+		Path rootDirPath) {
 
-		File sourceFile = null;
-		File destinationFile = null;
+		Path sourceFilePath = null;
+		Path destinationFilePath = null;
 
 		try {
-			sourceFile = _getTemporaryFile(rootDir);
+			sourceFilePath = Files.createTempFile(rootDirPath, null, null);
 
-			if (sourceFile == null) {
-				return createBasicFileSystemHelper();
-			}
+			Path fileNamePath = sourceFilePath.getFileName();
 
-			FileUtil.touch(sourceFile);
+			destinationFilePath = sourceFilePath.resolveSibling(
+				fileNamePath.toString() + "-link");
 
-			destinationFile = _getTemporaryFile(rootDir);
-
-			if (destinationFile == null) {
-				return createBasicFileSystemHelper();
-			}
-
-			Files.createLink(destinationFile.toPath(), sourceFile.toPath());
+			Files.createLink(destinationFilePath, sourceFilePath);
 
 			return new HardLinkFileSystemHelper();
 		}
 		catch (IOException ioe) {
-			return createBasicFileSystemHelper();
+			return new BasicFileSystemHelper();
 		}
 		finally {
-			if (sourceFile != null) {
-				sourceFile.delete();
+			try {
+				Files.deleteIfExists(sourceFilePath);
+			}
+			catch (IOException ioe) {
 			}
 
-			if (destinationFile != null) {
-				destinationFile.delete();
+			try {
+				Files.deleteIfExists(destinationFilePath);
+			}
+			catch (IOException ioe) {
 			}
 		}
 	}
@@ -75,26 +72,6 @@ public abstract class FileSystemHelper {
 	public abstract void copy(File source, File destination) throws IOException;
 
 	public abstract void move(File source, File destination);
-
-	private static File _getTemporaryFile(File rootDir) {
-		File tempFile = new File(rootDir, StringUtil.randomString(5));
-
-		int tries = 0;
-
-		while ((tries < _MAX_TRIES) && tempFile.exists()) {
-			tempFile = new File(rootDir, StringUtil.randomString(5));
-
-			tries++;
-		}
-
-		if (tries >= _MAX_TRIES) {
-			return null;
-		}
-
-		return tempFile;
-	}
-
-	private static final int _MAX_TRIES = 10;
 
 	private static final class BasicFileSystemHelper extends FileSystemHelper {
 

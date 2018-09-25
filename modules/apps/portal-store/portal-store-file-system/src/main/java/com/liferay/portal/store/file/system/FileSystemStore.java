@@ -38,6 +38,7 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import java.nio.file.Files;
+import java.nio.file.Path;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -616,8 +617,8 @@ public class FileSystemStore extends BaseStore {
 		return repositoryDir;
 	}
 
-	protected File getRootDir() {
-		return _rootDir;
+	protected Path getRootDir() {
+		return _rootDir.toPath();
 	}
 
 	protected String getRootDirName() {

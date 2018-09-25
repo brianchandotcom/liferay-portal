@@ -7,6 +7,7 @@
 	{@param id: string}
 	{@param collaborators: ?}
 	{@param spritemap: string}
+	{@param? _handleChangePermission: any}
 	{@param? _handleDeleteCollaborator: any}
 	{@param? _handleCancelButtonClick: any}
 	{@param? _handleSaveButtonClick: any}
@@ -16,6 +17,7 @@
 			{foreach $user in $collaborators}
 				<li class="list-group-item list-group-item-flex" id="collaborator{$user.id}">
 					{call .collaborator}
+						{param _handleChangePermission: $_handleChangePermission /}
 						{param _handleDeleteCollaborator: $_handleDeleteCollaborator /}
 						{param spritemap: $spritemap /}
 						{param user: $user /}
@@ -41,7 +43,8 @@
 {/template}
 
 {template .collaborator}
-	{@param _handleDeleteCollaborator: any}
+	{@param? _handleChangePermission: any}
+	{@param? _handleDeleteCollaborator: any}
 	{@param spritemap: string}
 	{@param user: ?}
 		<div class="autofit-row autofit-row-center">
@@ -58,8 +61,11 @@
 				<h4>{$user.name}</h4>
 
 				{call ClaySelect.render}
-					{param id: 'sharingEntryPermission' + $user.id /}
+					{param name: $user.sharingEntryId /}
 					{param options: $user.sharingEntryPermissionDisplaySelectOptions /}
+					{param events: [
+						'change': $_handleChangePermission
+					] /}
 				{/call}
 
 			</div>
@@ -68,6 +74,7 @@
 				<button
 					class="btn"
 					data-collaborator-id="{$user.id}"
+					data-sharingentry-id="{$user.sharingEntryId}"
 					data-onclick="{$_handleDeleteCollaborator}"
 				>
 					<svg class="lexicon-icon">

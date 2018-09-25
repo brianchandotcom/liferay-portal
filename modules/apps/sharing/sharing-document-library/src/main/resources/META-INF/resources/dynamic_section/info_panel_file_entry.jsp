@@ -88,12 +88,13 @@ JSONArray collaboratorsJSONArray = JSONFactoryUtil.createJSONArray();
 />
 
 <%
-PortletURL manageCollaboratorsActionURL = PortletProviderUtil.getPortletURL(request, SharingEntry.class.getName(), PortletProvider.Action.MANAGE);
+PortletURL manageCollaboratorsRenderURL = PortletProviderUtil.getPortletURL(request, SharingEntry.class.getName(), PortletProvider.Action.MANAGE);
 
-manageCollaboratorsActionURL.setParameter("classNameId", String.valueOf(ClassNameLocalServiceUtil.getClassNameId(DLFileEntry.class.getName())));
-manageCollaboratorsActionURL.setParameter("classPK", String.valueOf(fileEntry.getFileEntryId()));
+manageCollaboratorsRenderURL.setParameter("classNameId", String.valueOf(ClassNameLocalServiceUtil.getClassNameId(DLFileEntry.class.getName())));
+manageCollaboratorsRenderURL.setParameter("classPK", String.valueOf(fileEntry.getFileEntryId()));
+manageCollaboratorsRenderURL.setParameter("manageCollaboratorDialogId", liferayPortletResponse.getNamespace() + "manageCollaboratorsDialog");
 
-manageCollaboratorsActionURL.setWindowState(LiferayWindowState.POP_UP);
+manageCollaboratorsRenderURL.setWindowState(LiferayWindowState.POP_UP);
 %>
 
 <aui:script>
@@ -110,7 +111,7 @@ manageCollaboratorsActionURL.setWindowState(LiferayWindowState.POP_UP);
 					},
 					id: '<portlet:namespace />manageCollaboratorsDialog',
 					title: '<%= LanguageUtil.get(resourceBundle, "collaborators") %>',
-					uri: '<%= manageCollaboratorsActionURL.toString() %>'
+					uri: '<%= manageCollaboratorsRenderURL.toString() %>'
 				}
 			);
 		}

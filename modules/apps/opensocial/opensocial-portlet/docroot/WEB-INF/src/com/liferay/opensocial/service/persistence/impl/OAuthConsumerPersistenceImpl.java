@@ -25,9 +25,7 @@ import com.liferay.opensocial.service.persistence.OAuthConsumerPersistence;
 import com.liferay.petra.string.StringBundler;
 
 import com.liferay.portal.kernel.bean.BeanReference;
-import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
-import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.Query;
@@ -203,7 +201,7 @@ public class OAuthConsumerPersistenceImpl extends BasePersistenceImpl<OAuthConsu
 		List<OAuthConsumer> list = null;
 
 		if (retrieveFromCache) {
-			list = (List<OAuthConsumer>)finderCache.getResult(finderPath,
+			list = (List<OAuthConsumer>)FinderCacheUtil.getResult(finderPath,
 					finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
@@ -283,10 +281,10 @@ public class OAuthConsumerPersistenceImpl extends BasePersistenceImpl<OAuthConsu
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				FinderCacheUtil.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -591,7 +589,8 @@ public class OAuthConsumerPersistenceImpl extends BasePersistenceImpl<OAuthConsu
 
 		Object[] finderArgs = new Object[] { gadgetKey };
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
+				this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(2);
@@ -629,10 +628,10 @@ public class OAuthConsumerPersistenceImpl extends BasePersistenceImpl<OAuthConsu
 
 				count = (Long)q.uniqueResult();
 
-				finderCache.putResult(finderPath, finderArgs, count);
+				FinderCacheUtil.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -722,7 +721,7 @@ public class OAuthConsumerPersistenceImpl extends BasePersistenceImpl<OAuthConsu
 		Object result = null;
 
 		if (retrieveFromCache) {
-			result = finderCache.getResult(FINDER_PATH_FETCH_BY_G_S,
+			result = FinderCacheUtil.getResult(FINDER_PATH_FETCH_BY_G_S,
 					finderArgs, this);
 		}
 
@@ -790,8 +789,8 @@ public class OAuthConsumerPersistenceImpl extends BasePersistenceImpl<OAuthConsu
 				List<OAuthConsumer> list = q.list();
 
 				if (list.isEmpty()) {
-					finderCache.putResult(FINDER_PATH_FETCH_BY_G_S, finderArgs,
-						list);
+					FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_S,
+						finderArgs, list);
 				}
 				else {
 					if (list.size() > 1) {
@@ -813,7 +812,8 @@ public class OAuthConsumerPersistenceImpl extends BasePersistenceImpl<OAuthConsu
 				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(FINDER_PATH_FETCH_BY_G_S, finderArgs);
+				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_G_S,
+					finderArgs);
 
 				throw processException(e);
 			}
@@ -858,7 +858,8 @@ public class OAuthConsumerPersistenceImpl extends BasePersistenceImpl<OAuthConsu
 
 		Object[] finderArgs = new Object[] { gadgetKey, serviceName };
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
+				this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(3);
@@ -914,10 +915,10 @@ public class OAuthConsumerPersistenceImpl extends BasePersistenceImpl<OAuthConsu
 
 				count = (Long)q.uniqueResult();
 
-				finderCache.putResult(finderPath, finderArgs, count);
+				FinderCacheUtil.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -947,11 +948,11 @@ public class OAuthConsumerPersistenceImpl extends BasePersistenceImpl<OAuthConsu
 	 */
 	@Override
 	public void cacheResult(OAuthConsumer oAuthConsumer) {
-		entityCache.putResult(OAuthConsumerModelImpl.ENTITY_CACHE_ENABLED,
+		EntityCacheUtil.putResult(OAuthConsumerModelImpl.ENTITY_CACHE_ENABLED,
 			OAuthConsumerImpl.class, oAuthConsumer.getPrimaryKey(),
 			oAuthConsumer);
 
-		finderCache.putResult(FINDER_PATH_FETCH_BY_G_S,
+		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_S,
 			new Object[] {
 				oAuthConsumer.getGadgetKey(), oAuthConsumer.getServiceName()
 			}, oAuthConsumer);
@@ -967,7 +968,7 @@ public class OAuthConsumerPersistenceImpl extends BasePersistenceImpl<OAuthConsu
 	@Override
 	public void cacheResult(List<OAuthConsumer> oAuthConsumers) {
 		for (OAuthConsumer oAuthConsumer : oAuthConsumers) {
-			if (entityCache.getResult(
+			if (EntityCacheUtil.getResult(
 						OAuthConsumerModelImpl.ENTITY_CACHE_ENABLED,
 						OAuthConsumerImpl.class, oAuthConsumer.getPrimaryKey()) == null) {
 				cacheResult(oAuthConsumer);
@@ -982,43 +983,43 @@ public class OAuthConsumerPersistenceImpl extends BasePersistenceImpl<OAuthConsu
 	 * Clears the cache for all o auth consumers.
 	 *
 	 * <p>
-	 * The {@link EntityCache} and {@link FinderCache} are both cleared by this method.
+	 * The {@link com.liferay.portal.kernel.dao.orm.EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
 	 * </p>
 	 */
 	@Override
 	public void clearCache() {
-		entityCache.clearCache(OAuthConsumerImpl.class);
+		EntityCacheUtil.clearCache(OAuthConsumerImpl.class);
 
-		finderCache.clearCache(FINDER_CLASS_NAME_ENTITY);
-		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_ENTITY);
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
 	/**
 	 * Clears the cache for the o auth consumer.
 	 *
 	 * <p>
-	 * The {@link EntityCache} and {@link FinderCache} are both cleared by this method.
+	 * The {@link com.liferay.portal.kernel.dao.orm.EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
 	 * </p>
 	 */
 	@Override
 	public void clearCache(OAuthConsumer oAuthConsumer) {
-		entityCache.removeResult(OAuthConsumerModelImpl.ENTITY_CACHE_ENABLED,
+		EntityCacheUtil.removeResult(OAuthConsumerModelImpl.ENTITY_CACHE_ENABLED,
 			OAuthConsumerImpl.class, oAuthConsumer.getPrimaryKey());
 
-		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
 		clearUniqueFindersCache((OAuthConsumerModelImpl)oAuthConsumer, true);
 	}
 
 	@Override
 	public void clearCache(List<OAuthConsumer> oAuthConsumers) {
-		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
 		for (OAuthConsumer oAuthConsumer : oAuthConsumers) {
-			entityCache.removeResult(OAuthConsumerModelImpl.ENTITY_CACHE_ENABLED,
+			EntityCacheUtil.removeResult(OAuthConsumerModelImpl.ENTITY_CACHE_ENABLED,
 				OAuthConsumerImpl.class, oAuthConsumer.getPrimaryKey());
 
 			clearUniqueFindersCache((OAuthConsumerModelImpl)oAuthConsumer, true);
@@ -1032,9 +1033,9 @@ public class OAuthConsumerPersistenceImpl extends BasePersistenceImpl<OAuthConsu
 				oAuthConsumerModelImpl.getServiceName()
 			};
 
-		finderCache.putResult(FINDER_PATH_COUNT_BY_G_S, args, Long.valueOf(1),
-			false);
-		finderCache.putResult(FINDER_PATH_FETCH_BY_G_S, args,
+		FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_G_S, args,
+			Long.valueOf(1), false);
+		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_S, args,
 			oAuthConsumerModelImpl, false);
 	}
 
@@ -1046,8 +1047,8 @@ public class OAuthConsumerPersistenceImpl extends BasePersistenceImpl<OAuthConsu
 					oAuthConsumerModelImpl.getServiceName()
 				};
 
-			finderCache.removeResult(FINDER_PATH_COUNT_BY_G_S, args);
-			finderCache.removeResult(FINDER_PATH_FETCH_BY_G_S, args);
+			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_S, args);
+			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_G_S, args);
 		}
 
 		if ((oAuthConsumerModelImpl.getColumnBitmask() &
@@ -1057,8 +1058,8 @@ public class OAuthConsumerPersistenceImpl extends BasePersistenceImpl<OAuthConsu
 					oAuthConsumerModelImpl.getOriginalServiceName()
 				};
 
-			finderCache.removeResult(FINDER_PATH_COUNT_BY_G_S, args);
-			finderCache.removeResult(FINDER_PATH_FETCH_BY_G_S, args);
+			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_S, args);
+			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_G_S, args);
 		}
 	}
 
@@ -1229,21 +1230,22 @@ public class OAuthConsumerPersistenceImpl extends BasePersistenceImpl<OAuthConsu
 			closeSession(session);
 		}
 
-		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 
 		if (!OAuthConsumerModelImpl.COLUMN_BITMASK_ENABLED) {
-			finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+			FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 		}
 		else
 		 if (isNew) {
 			Object[] args = new Object[] { oAuthConsumerModelImpl.getGadgetKey() };
 
-			finderCache.removeResult(FINDER_PATH_COUNT_BY_GADGETKEY, args);
-			finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GADGETKEY,
+			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_GADGETKEY, args);
+			FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GADGETKEY,
 				args);
 
-			finderCache.removeResult(FINDER_PATH_COUNT_ALL, FINDER_ARGS_EMPTY);
-			finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_ALL,
+			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_ALL,
+				FINDER_ARGS_EMPTY);
+			FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_ALL,
 				FINDER_ARGS_EMPTY);
 		}
 
@@ -1254,19 +1256,21 @@ public class OAuthConsumerPersistenceImpl extends BasePersistenceImpl<OAuthConsu
 						oAuthConsumerModelImpl.getOriginalGadgetKey()
 					};
 
-				finderCache.removeResult(FINDER_PATH_COUNT_BY_GADGETKEY, args);
-				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GADGETKEY,
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_GADGETKEY,
+					args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GADGETKEY,
 					args);
 
 				args = new Object[] { oAuthConsumerModelImpl.getGadgetKey() };
 
-				finderCache.removeResult(FINDER_PATH_COUNT_BY_GADGETKEY, args);
-				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GADGETKEY,
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_GADGETKEY,
+					args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GADGETKEY,
 					args);
 			}
 		}
 
-		entityCache.putResult(OAuthConsumerModelImpl.ENTITY_CACHE_ENABLED,
+		EntityCacheUtil.putResult(OAuthConsumerModelImpl.ENTITY_CACHE_ENABLED,
 			OAuthConsumerImpl.class, oAuthConsumer.getPrimaryKey(),
 			oAuthConsumer, false);
 
@@ -1323,7 +1327,7 @@ public class OAuthConsumerPersistenceImpl extends BasePersistenceImpl<OAuthConsu
 	 */
 	@Override
 	public OAuthConsumer fetchByPrimaryKey(Serializable primaryKey) {
-		Serializable serializable = entityCache.getResult(OAuthConsumerModelImpl.ENTITY_CACHE_ENABLED,
+		Serializable serializable = EntityCacheUtil.getResult(OAuthConsumerModelImpl.ENTITY_CACHE_ENABLED,
 				OAuthConsumerImpl.class, primaryKey);
 
 		if (serializable == nullModel) {
@@ -1345,12 +1349,12 @@ public class OAuthConsumerPersistenceImpl extends BasePersistenceImpl<OAuthConsu
 					cacheResult(oAuthConsumer);
 				}
 				else {
-					entityCache.putResult(OAuthConsumerModelImpl.ENTITY_CACHE_ENABLED,
+					EntityCacheUtil.putResult(OAuthConsumerModelImpl.ENTITY_CACHE_ENABLED,
 						OAuthConsumerImpl.class, primaryKey, nullModel);
 				}
 			}
 			catch (Exception e) {
-				entityCache.removeResult(OAuthConsumerModelImpl.ENTITY_CACHE_ENABLED,
+				EntityCacheUtil.removeResult(OAuthConsumerModelImpl.ENTITY_CACHE_ENABLED,
 					OAuthConsumerImpl.class, primaryKey);
 
 				throw processException(e);
@@ -1400,7 +1404,7 @@ public class OAuthConsumerPersistenceImpl extends BasePersistenceImpl<OAuthConsu
 		Set<Serializable> uncachedPrimaryKeys = null;
 
 		for (Serializable primaryKey : primaryKeys) {
-			Serializable serializable = entityCache.getResult(OAuthConsumerModelImpl.ENTITY_CACHE_ENABLED,
+			Serializable serializable = EntityCacheUtil.getResult(OAuthConsumerModelImpl.ENTITY_CACHE_ENABLED,
 					OAuthConsumerImpl.class, primaryKey);
 
 			if (serializable != nullModel) {
@@ -1454,7 +1458,7 @@ public class OAuthConsumerPersistenceImpl extends BasePersistenceImpl<OAuthConsu
 			}
 
 			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				entityCache.putResult(OAuthConsumerModelImpl.ENTITY_CACHE_ENABLED,
+				EntityCacheUtil.putResult(OAuthConsumerModelImpl.ENTITY_CACHE_ENABLED,
 					OAuthConsumerImpl.class, primaryKey, nullModel);
 			}
 		}
@@ -1547,7 +1551,7 @@ public class OAuthConsumerPersistenceImpl extends BasePersistenceImpl<OAuthConsu
 		List<OAuthConsumer> list = null;
 
 		if (retrieveFromCache) {
-			list = (List<OAuthConsumer>)finderCache.getResult(finderPath,
+			list = (List<OAuthConsumer>)FinderCacheUtil.getResult(finderPath,
 					finderArgs, this);
 		}
 
@@ -1596,10 +1600,10 @@ public class OAuthConsumerPersistenceImpl extends BasePersistenceImpl<OAuthConsu
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				FinderCacheUtil.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -1629,7 +1633,7 @@ public class OAuthConsumerPersistenceImpl extends BasePersistenceImpl<OAuthConsu
 	 */
 	@Override
 	public int countAll() {
-		Long count = (Long)finderCache.getResult(FINDER_PATH_COUNT_ALL,
+		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_COUNT_ALL,
 				FINDER_ARGS_EMPTY, this);
 
 		if (count == null) {
@@ -1642,11 +1646,11 @@ public class OAuthConsumerPersistenceImpl extends BasePersistenceImpl<OAuthConsu
 
 				count = (Long)q.uniqueResult();
 
-				finderCache.putResult(FINDER_PATH_COUNT_ALL, FINDER_ARGS_EMPTY,
-					count);
+				FinderCacheUtil.putResult(FINDER_PATH_COUNT_ALL,
+					FINDER_ARGS_EMPTY, count);
 			}
 			catch (Exception e) {
-				finderCache.removeResult(FINDER_PATH_COUNT_ALL,
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_ALL,
 					FINDER_ARGS_EMPTY);
 
 				throw processException(e);
@@ -1671,16 +1675,14 @@ public class OAuthConsumerPersistenceImpl extends BasePersistenceImpl<OAuthConsu
 	}
 
 	public void destroy() {
-		entityCache.removeCache(OAuthConsumerImpl.class.getName());
-		finderCache.removeCache(FINDER_CLASS_NAME_ENTITY);
-		finderCache.removeCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		finderCache.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		EntityCacheUtil.removeCache(OAuthConsumerImpl.class.getName());
+		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_ENTITY);
+		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
 	@BeanReference(type = CompanyProviderWrapper.class)
 	protected CompanyProvider companyProvider;
-	protected EntityCache entityCache = EntityCacheUtil.getEntityCache();
-	protected FinderCache finderCache = FinderCacheUtil.getFinderCache();
 	private static final String _SQL_SELECT_OAUTHCONSUMER = "SELECT oAuthConsumer FROM OAuthConsumer oAuthConsumer";
 	private static final String _SQL_SELECT_OAUTHCONSUMER_WHERE_PKS_IN = "SELECT oAuthConsumer FROM OAuthConsumer oAuthConsumer WHERE oAuthConsumerId IN (";
 	private static final String _SQL_SELECT_OAUTHCONSUMER_WHERE = "SELECT oAuthConsumer FROM OAuthConsumer oAuthConsumer WHERE ";

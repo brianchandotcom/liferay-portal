@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.layout.type.controller.test;
+package com.liferay.layout.type.controller.portlet.impl.test;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.Group;
@@ -30,16 +30,22 @@ import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.test.LayoutTestUtil;
 
-import org.junit.experimental.runners.Enclosed;
-import org.junit.runner.RunWith;
+import org.junit.After;
+import org.junit.Before;
 
 /**
  * @author Manuel de la Peña
  */
-@RunWith(Enclosed.class)
-public class LayoutTypePortletImplTest {
+public class LayoutTypePortletImplBaseTest {
 
-	private static PortletPreferences _addLayoutPortletPreferences(
+	@DeleteAfterTestRun
+	public static Group group;
+
+	public static Layout layout;
+	public static String[] layoutStaticPortletsAll;
+	public static LayoutTypePortlet layoutTypePortlet;
+
+	public static PortletPreferences addLayoutPortletPreferences(
 			Layout layout, Portlet portlet)
 		throws Exception {
 
@@ -49,31 +55,26 @@ public class LayoutTypePortletImplTest {
 			portlet.getPortletId(), portlet, null);
 	}
 
-	private static void _setUp() throws Exception {
-		_group = GroupTestUtil.addGroup();
+	@Before
+	public void setUp() throws Exception {
+		group = GroupTestUtil.addGroup();
 
-		_layout = LayoutTestUtil.addLayout(_group, false);
+		layout = LayoutTestUtil.addLayout(group, false);
 
-		_layoutTypePortlet = (LayoutTypePortlet)_layout.getLayoutType();
+		layoutTypePortlet = (LayoutTypePortlet)layout.getLayoutType();
 
-		_layoutStaticPortletsAll = PropsValues.LAYOUT_STATIC_PORTLETS_ALL;
+		layoutStaticPortletsAll = PropsValues.LAYOUT_STATIC_PORTLETS_ALL;
 	}
 
-	private static void _tearDown() {
-		StringBundler sb = new StringBundler(_layoutStaticPortletsAll.length);
+	@After
+	public void tearDown() {
+		StringBundler sb = new StringBundler(layoutStaticPortletsAll.length);
 
-		for (String layoutStaticPortlet : _layoutStaticPortletsAll) {
+		for (String layoutStaticPortlet : layoutStaticPortletsAll) {
 			sb.append(layoutStaticPortlet);
 		}
 
 		PropsUtil.set(PropsKeys.LAYOUT_STATIC_PORTLETS_ALL, sb.toString());
 	}
-
-	@DeleteAfterTestRun
-	private static Group _group;
-
-	private static Layout _layout;
-	private static String[] _layoutStaticPortletsAll;
-	private static LayoutTypePortlet _layoutTypePortlet;
 
 }

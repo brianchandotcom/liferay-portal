@@ -33,9 +33,7 @@ import com.liferay.portal.util.test.LayoutTestUtil;
 
 import java.util.HashMap;
 
-import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -45,7 +43,7 @@ import org.junit.runner.RunWith;
  * @author Manuel de la Peña
  */
 @RunWith(Arquillian.class)
-public class LayoutTypePortletImplIsCacheableWhenThereAreNoStaticPortletsAndNoEmbeddedPortletsTest {
+public class LayoutTypePortletImplIsCacheableWhenThereAreNoStaticPortletsAndNoEmbeddedPortletsTest extends LayoutTypePortletImplBaseTest {
 
 	@ClassRule
 	@Rule
@@ -54,20 +52,15 @@ public class LayoutTypePortletImplIsCacheableWhenThereAreNoStaticPortletsAndNoEm
 			new LiferayIntegrationTestRule(),
 			PermissionCheckerTestRule.INSTANCE);
 
-	@Before
-	public void setUp() throws Exception {
-		_setUp();
-	}
-
 	@Test
-	public void shouldReturnFalseIfANonlayoutCacheableRootPortletIsInstalled()
+	public void testShouldReturnFalseIfANonlayoutCacheableRootPortletIsInstalled()
 		throws Exception {
 
 		Portlet noncacheablePortlet = PortletLocalServiceUtil.getPortletById(
 			PortletKeys.LOGIN);
 
 		LayoutTestUtil.addPortletToLayout(
-			TestPropsValues.getUserId(), _layout,
+			TestPropsValues.getUserId(), layout,
 			noncacheablePortlet.getPortletId(), "column-1",
 			new HashMap<String, String[]>());
 
@@ -76,14 +69,14 @@ public class LayoutTypePortletImplIsCacheableWhenThereAreNoStaticPortletsAndNoEm
 			PortletProvider.Action.ADD);
 
 		LayoutTestUtil.addPortletToLayout(
-			TestPropsValues.getUserId(), _layout, cacheablePortletId,
-			"column-1", new HashMap<String, String[]>());
+			TestPropsValues.getUserId(), layout, cacheablePortletId, "column-1",
+			new HashMap<String, String[]>());
 
-		Assert.assertFalse(_layoutTypePortlet.isCacheable());
+		Assert.assertFalse(layoutTypePortlet.isCacheable());
 	}
 
 	@Test
-	public void shouldReturnTrueIfInstalledRootPortletsAreLayoutCacheable()
+	public void testShouldReturnTrueIfInstalledRootPortletsAreLayoutCacheable()
 		throws Exception {
 
 		String[] layoutStaticPortletsAll =
@@ -97,21 +90,16 @@ public class LayoutTypePortletImplIsCacheableWhenThereAreNoStaticPortletsAndNoEm
 				PortletProvider.Action.ADD);
 
 			LayoutTestUtil.addPortletToLayout(
-				TestPropsValues.getUserId(), _layout, cacheablePortletId,
+				TestPropsValues.getUserId(), layout, cacheablePortletId,
 				"column-1", new HashMap<String, String[]>());
 
-			Assert.assertTrue(_layoutTypePortlet.isCacheable());
+			Assert.assertTrue(layoutTypePortlet.isCacheable());
 		}
 		finally {
 			PropsUtil.set(
 				PropsKeys.LAYOUT_STATIC_PORTLETS_ALL,
 				StringUtil.merge(layoutStaticPortletsAll, StringPool.COMMA));
 		}
-	}
-
-	@After
-	public void tearDown() {
-		_tearDown();
 	}
 
 }

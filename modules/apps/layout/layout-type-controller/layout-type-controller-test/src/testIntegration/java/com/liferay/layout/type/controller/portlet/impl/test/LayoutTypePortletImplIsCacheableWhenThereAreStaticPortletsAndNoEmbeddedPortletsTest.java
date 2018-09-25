@@ -28,9 +28,7 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
 
-import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -40,20 +38,15 @@ import org.junit.runner.RunWith;
  * @author Manuel de la Peña
  */
 @RunWith(Arquillian.class)
-public class LayoutTypePortletImplIsCacheableWhenThereAreStaticPortletsAndNoEmbeddedPortletsTest {
+public class LayoutTypePortletImplIsCacheableWhenThereAreStaticPortletsAndNoEmbeddedPortletsTest extends LayoutTypePortletImplBaseTest {
 
 	@ClassRule
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
 
-	@Before
-	public void setUp() throws Exception {
-		_setUp();
-	}
-
 	@Test
-	public void shouldReturnFalseIfThereIsANonlayoutCacheableRootPortlet()
+	public void testShouldReturnFalseIfThereIsANonlayoutCacheableRootPortlet()
 		throws Exception {
 
 		String[] layoutStaticPortletsAll =
@@ -73,7 +66,7 @@ public class LayoutTypePortletImplIsCacheableWhenThereAreStaticPortletsAndNoEmbe
 				PropsKeys.LAYOUT_STATIC_PORTLETS_ALL,
 				noncacheablePortlet.getPortletId() + "," + cacheablePortletId);
 
-			Assert.assertFalse(_layoutTypePortlet.isCacheable());
+			Assert.assertFalse(layoutTypePortlet.isCacheable());
 		}
 		finally {
 			PropsValues.LAYOUT_STATIC_PORTLETS_ALL = layoutStaticPortletsAll;
@@ -81,7 +74,7 @@ public class LayoutTypePortletImplIsCacheableWhenThereAreStaticPortletsAndNoEmbe
 	}
 
 	@Test
-	public void shouldReturnTrueIfAllRootPortletsAreLayoutCacheable()
+	public void testShouldReturnTrueIfAllRootPortletsAreLayoutCacheable()
 		throws Exception {
 
 		String[] layoutStaticPortletsAll =
@@ -97,18 +90,13 @@ public class LayoutTypePortletImplIsCacheableWhenThereAreStaticPortletsAndNoEmbe
 			PropsUtil.set(
 				PropsKeys.LAYOUT_STATIC_PORTLETS_ALL, cacheablePortletId);
 
-			Assert.assertTrue(_layoutTypePortlet.isCacheable());
+			Assert.assertTrue(layoutTypePortlet.isCacheable());
 		}
 		finally {
 			PropsUtil.set(
 				PropsKeys.LAYOUT_STATIC_PORTLETS_ALL,
 				StringUtil.merge(layoutStaticPortletsAll, StringPool.COMMA));
 		}
-	}
-
-	@After
-	public void tearDown() {
-		_tearDown();
 	}
 
 }

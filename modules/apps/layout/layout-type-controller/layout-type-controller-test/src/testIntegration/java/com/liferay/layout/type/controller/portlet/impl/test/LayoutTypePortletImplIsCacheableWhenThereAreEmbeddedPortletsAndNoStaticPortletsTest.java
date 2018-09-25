@@ -30,9 +30,7 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
 
-import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -42,20 +40,15 @@ import org.junit.runner.RunWith;
  * @author Manuel de la Peña
  */
 @RunWith(Arquillian.class)
-public class LayoutTypePortletImplIsCacheableWhenThereAreEmbeddedPortletsAndNoStaticPortletsTest {
+public class LayoutTypePortletImplIsCacheableWhenThereAreEmbeddedPortletsAndNoStaticPortletsTest extends LayoutTypePortletImplBaseTest {
 
 	@ClassRule
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
 
-	@Before
-	public void setUp() throws Exception {
-		_setUp();
-	}
-
 	@Test
-	public void shouldReturnFalseIfThereIsANonlayoutCacheableRootPortlet()
+	public void testShouldReturnFalseIfThereIsANonlayoutCacheableRootPortlet()
 		throws Exception {
 
 		Portlet noncacheablePortlet = PortletLocalServiceUtil.getPortletById(
@@ -63,11 +56,11 @@ public class LayoutTypePortletImplIsCacheableWhenThereAreEmbeddedPortletsAndNoSt
 
 		PortletPreferencesLocalServiceUtil.addPortletPreferences(
 			TestPropsValues.getCompanyId(), PortletKeys.PREFS_OWNER_ID_DEFAULT,
-			PortletKeys.PREFS_OWNER_TYPE_LAYOUT, _layout.getPlid(),
+			PortletKeys.PREFS_OWNER_TYPE_LAYOUT, layout.getPlid(),
 			noncacheablePortlet.getPortletId(), noncacheablePortlet, null);
 
 		PortletPreferencesLocalServiceUtil.addPortletPreferences(
-			TestPropsValues.getCompanyId(), _layout.getGroupId(),
+			TestPropsValues.getCompanyId(), layout.getGroupId(),
 			PortletKeys.PREFS_OWNER_TYPE_LAYOUT, PortletKeys.PREFS_PLID_SHARED,
 			noncacheablePortlet.getPortletId(), noncacheablePortlet, null);
 
@@ -78,13 +71,13 @@ public class LayoutTypePortletImplIsCacheableWhenThereAreEmbeddedPortletsAndNoSt
 		Portlet cacheablePortlet = PortletLocalServiceUtil.getPortletById(
 			cacheablePortletId);
 
-		_addLayoutPortletPreferences(_layout, cacheablePortlet);
+		addLayoutPortletPreferences(layout, cacheablePortlet);
 
-		Assert.assertFalse(_layoutTypePortlet.isCacheable());
+		Assert.assertFalse(layoutTypePortlet.isCacheable());
 	}
 
 	@Test
-	public void shouldReturnTrueIfAllRootPortletsAreLayoutCacheable()
+	public void testShouldReturnTrueIfAllRootPortletsAreLayoutCacheable()
 		throws Exception {
 
 		String[] layoutStaticPortletsAll =
@@ -100,20 +93,15 @@ public class LayoutTypePortletImplIsCacheableWhenThereAreEmbeddedPortletsAndNoSt
 			Portlet cacheablePortlet = PortletLocalServiceUtil.getPortletById(
 				cacheablePortletId);
 
-			_addLayoutPortletPreferences(_layout, cacheablePortlet);
+			addLayoutPortletPreferences(layout, cacheablePortlet);
 
-			Assert.assertTrue(_layoutTypePortlet.isCacheable());
+			Assert.assertTrue(layoutTypePortlet.isCacheable());
 		}
 		finally {
 			PropsUtil.set(
 				PropsKeys.LAYOUT_STATIC_PORTLETS_ALL,
 				StringUtil.merge(layoutStaticPortletsAll, StringPool.COMMA));
 		}
-	}
-
-	@After
-	public void tearDown() {
-		_tearDown();
 	}
 
 }

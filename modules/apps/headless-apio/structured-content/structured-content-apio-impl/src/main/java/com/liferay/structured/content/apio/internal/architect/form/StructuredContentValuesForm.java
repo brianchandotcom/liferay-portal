@@ -32,15 +32,15 @@ public class StructuredContentValuesForm {
 			__ -> "This form is used to create the values of a structured form"
 		).constructor(
 			StructuredContentValuesForm::new
-		).addOptionalNestedModel(
-			"geo", StructuredContentLocationForm::buildValuesForm,
-			StructuredContentValuesForm::setStructuredContentLocationForm
 		).addOptionalLinkedModel(
 			"document", MediaObjectIdentifier.class,
 			StructuredContentValuesForm::setDocument
 		).addOptionalLinkedModel(
 			"structuredContent", StructuredContentIdentifier.class,
 			StructuredContentValuesForm::setStructuredContent
+		).addOptionalNestedModel(
+			"geo", StructuredContentLocationForm::buildValuesForm,
+			StructuredContentValuesForm::setStructuredContentLocationForm
 		).addOptionalString(
 			"name", StructuredContentValuesForm::setName
 		).addOptionalString(

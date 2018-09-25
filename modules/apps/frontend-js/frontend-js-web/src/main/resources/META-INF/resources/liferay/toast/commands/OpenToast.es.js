@@ -21,20 +21,17 @@ function openToast(
 		events = {}
 	}
 ) {
-	var parentWindowDocument = Liferay.Util.getOpener().document;
-
-	var alertContainer = parentWindowDocument.getElementById('alertContainer');
+	var alertContainer = document.getElementById('alertContainer');
 
 	if (!alertContainer) {
-		alertContainer = parentWindowDocument.createElement('div');
+		alertContainer = document.createElement('div');
 		alertContainer.id = 'alertContainer';
 
 		dom.addClasses(alertContainer, 'alert-notifications alert-notifications-fixed');
-
-		parentWindowDocument.body.appendChild(alertContainer);
+		dom.enterDocument(alertContainer);
 	}
 	else {
-		alertContainer.parentNode.removeChild(alertContainer);
+		dom.removeChildren(alertContainer);
 	}
 
 	const mergedEvents = Object.assign(

@@ -33,10 +33,6 @@ public abstract class FileSystemHelper {
 		return new BasicFileSystemHelper();
 	}
 
-	public static FileSystemHelper createHardLinkFileSystemHelper() {
-		return new HardLinkFileSystemHelper();
-	}
-
 	public static FileSystemHelper createHardLinkFileSystemHelper(
 		File rootDir) {
 
@@ -60,7 +56,7 @@ public abstract class FileSystemHelper {
 
 			Files.createLink(destinationFile.toPath(), sourceFile.toPath());
 
-			return createHardLinkFileSystemHelper();
+			return new HardLinkFileSystemHelper();
 		}
 		catch (IOException ioe) {
 			return createBasicFileSystemHelper();

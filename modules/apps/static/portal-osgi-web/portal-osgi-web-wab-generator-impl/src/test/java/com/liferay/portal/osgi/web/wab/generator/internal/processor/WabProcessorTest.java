@@ -290,8 +290,6 @@ public class WabProcessorTest {
 			// system bundle IS in the WAB
 
 			Assert.assertNotNull(resources.get("WEB-INF/lib/jfreechart.jar"));
-			Assert.assertNotNull(
-				resources.get("WEB-INF/lib/portals-bridges.jar"));
 			Assert.assertNotNull(resources.get("WEB-INF/lib/struts-core.jar"));
 
 			// Check that JSPs were parsed to add requirements for modular

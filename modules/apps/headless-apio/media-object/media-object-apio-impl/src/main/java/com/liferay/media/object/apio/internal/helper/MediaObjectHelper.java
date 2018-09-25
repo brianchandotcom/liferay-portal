@@ -20,8 +20,6 @@ import com.liferay.media.object.apio.internal.architect.form.MediaObjectCreatorF
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.ListUtil;
 
 import java.util.Optional;
 
@@ -54,11 +52,6 @@ public class MediaObjectHelper {
 
 		ServiceContext serviceContext =
 			mediaObjectCreatorForm.getServiceContext(repositoryId);
-
-		if (ListUtil.isNotEmpty(mediaObjectCreatorForm.getCategories())) {
-			serviceContext.setAssetCategoryIds(
-				ArrayUtil.toLongArray(mediaObjectCreatorForm.getCategories()));
-		}
 
 		BinaryFile binaryFile = mediaObjectCreatorForm.getBinaryFile();
 

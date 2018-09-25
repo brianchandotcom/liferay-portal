@@ -99,6 +99,11 @@ public class MediaObjectCreatorForm {
 		serviceContext.setAddGroupPermissions(true);
 		serviceContext.setAddGuestPermissions(true);
 
+		if (ListUtil.isNotEmpty(_categories)) {
+			serviceContext.setAssetCategoryIds(
+				ArrayUtil.toLongArray(_categories));
+		}
+
 		if (ListUtil.isNotEmpty(_keywords)) {
 			serviceContext.setAssetTagNames(ArrayUtil.toStringArray(_keywords));
 		}

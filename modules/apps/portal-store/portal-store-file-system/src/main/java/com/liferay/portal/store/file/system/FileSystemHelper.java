@@ -27,14 +27,16 @@ import java.nio.file.Path;
 /**
  * @author Adolfo Pérez
  */
-public abstract class FileSystemHelper {
+public class FileSystemHelper {
 
-	public static FileSystemHelper createBasicFileSystemHelper() {
-		return new BasicFileSystemHelper();
-	}
+	public FileSystemHelper(boolean useHardLink, Path rootDirPath) {
+		if (!useHardLink) {
+			_supportHardLink = false;
 
-	public static FileSystemHelper createHardLinkFileSystemHelper(
-		Path rootDirPath) {
+			return;
+		}
+
+		boolean supportHardLink = false;
 
 		Path sourceFilePath = null;
 		Path destinationFilePath = null;
@@ -49,10 +51,9 @@ public abstract class FileSystemHelper {
 
 			Files.createLink(destinationFilePath, sourceFilePath);
 
-			return new HardLinkFileSystemHelper();
+			supportHardLink = true;
 		}
 		catch (IOException ioe) {
-			return new BasicFileSystemHelper();
 		}
 		finally {
 			try {
@@ -67,45 +68,23 @@ public abstract class FileSystemHelper {
 			catch (IOException ioe) {
 			}
 		}
+
+		_supportHardLink = supportHardLink;
 	}
 
-	public abstract void copy(File source, File destination) throws IOException;
-
-	public abstract void move(File source, File destination);
-
-	private static final class BasicFileSystemHelper extends FileSystemHelper {
-
-		@Override
-		public void copy(File source, File destination) throws IOException {
+	public void copy(File source, File destination) throws IOException {
+		if (_supportHardLink) {
+			Files.createLink(source.toPath(), destination.toPath());
+		}
+		else {
 			destination.createNewFile();
 
 			FileUtil.copyFile(source, destination);
 		}
-
-		@Override
-		public void move(File source, File destination) {
-			boolean renamed = FileUtil.move(source, destination);
-
-			if (!renamed) {
-				throw new SystemException(
-					StringBundler.concat(
-						"File name was not renamed from ", source.getPath(),
-						" to ", destination.getPath()));
-			}
-		}
-
 	}
 
-	private static final class HardLinkFileSystemHelper
-		extends FileSystemHelper {
-
-		@Override
-		public void copy(File source, File destination) throws IOException {
-			Files.createLink(source.toPath(), destination.toPath());
-		}
-
-		@Override
-		public void move(File source, File destination) {
+	public void move(File source, File destination) {
+		if (_supportHardLink) {
 			try {
 				Files.move(source.toPath(), destination.toPath());
 			}
@@ -117,7 +96,18 @@ public abstract class FileSystemHelper {
 					ioe);
 			}
 		}
+		else {
+			boolean renamed = FileUtil.move(source, destination);
 
+			if (!renamed) {
+				throw new SystemException(
+					StringBundler.concat(
+						"File name was not renamed from ", source.getPath(),
+						" to ", destination.getPath()));
+			}
+		}
 	}
+
+	private final boolean _supportHardLink;
 
 }

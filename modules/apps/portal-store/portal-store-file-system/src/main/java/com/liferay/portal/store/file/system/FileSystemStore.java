@@ -476,10 +476,8 @@ public class FileSystemStore extends BaseStore {
 
 		initializeRootDir();
 
-		if (_fileSystemStoreConfiguration.useHardLinks()) {
-			_fileSystemHelper = FileSystemHelper.createHardLinkFileSystemHelper(
-				getRootDir());
-		}
+		_fileSystemHelper = new FileSystemHelper(
+			_fileSystemStoreConfiguration.useHardLinks(), getRootDirPath());
 	}
 
 	protected void deleteEmptyAncestors(File file) {
@@ -617,12 +615,12 @@ public class FileSystemStore extends BaseStore {
 		return repositoryDir;
 	}
 
-	protected Path getRootDir() {
-		return _rootDir.toPath();
-	}
-
 	protected String getRootDirName() {
 		return _fileSystemStoreConfiguration.rootDir();
+	}
+
+	protected Path getRootDirPath() {
+		return _rootDir.toPath();
 	}
 
 	protected void initializeRootDir() {
@@ -654,8 +652,7 @@ public class FileSystemStore extends BaseStore {
 	private static volatile FileSystemStoreConfiguration
 		_fileSystemStoreConfiguration;
 
-	private FileSystemHelper _fileSystemHelper =
-		FileSystemHelper.createBasicFileSystemHelper();
+	private FileSystemHelper _fileSystemHelper;
 	private final Map<RepositoryDirKey, File> _repositoryDirs =
 		new ConcurrentHashMap<>();
 	private File _rootDir;

@@ -113,10 +113,9 @@ public class AdvancedFileSystemStore extends FileSystemStore {
 
 		initializeRootDir();
 
-		if (_advancedFileSystemStoreConfiguration.useHardLinks()) {
-			_fileSystemHelper = FileSystemHelper.createHardLinkFileSystemHelper(
-				getRootDir());
-		}
+		_fileSystemHelper = new FileSystemHelper(
+			_advancedFileSystemStoreConfiguration.useHardLinks(),
+			getRootDirPath());
 	}
 
 	protected void buildPath(StringBundler sb, String fileNameFragment) {
@@ -358,7 +357,6 @@ public class AdvancedFileSystemStore extends FileSystemStore {
 	private static volatile AdvancedFileSystemStoreConfiguration
 		_advancedFileSystemStoreConfiguration;
 
-	private FileSystemHelper _fileSystemHelper =
-		FileSystemHelper.createBasicFileSystemHelper();
+	private FileSystemHelper _fileSystemHelper;
 
 }

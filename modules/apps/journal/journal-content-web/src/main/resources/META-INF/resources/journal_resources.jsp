@@ -22,7 +22,7 @@ String refererPortletName = ParamUtil.getString(request, "refererPortletName");
 JournalArticle article = journalContentDisplayContext.getArticle();
 %>
 
-<aui:input id='<%= refererPortletName + "ddmTemplateKey" %>' name='<%= refererPortletName + "preferences--ddmTemplateKey--" %>' type="hidden" useNamespace="<%= false %>" value="<%= journalContentDisplayContext.getDDMTemplateKey() %>" />
+<aui:input id='<%= refererPortletName + "ddmTemplateKey" %>' name='<%= refererPortletName + "preferences--ddmTemplateKey--" %>' type="hidden" useNamespace="<%= false %>" value="<%= journalContentDisplayContext.isDefaultTemplate() ? StringPool.BLANK : journalContentDisplayContext.getDDMTemplateKey() %>" />
 
 <div class="sheet-section">
 	<div class="sheet-subtitle">

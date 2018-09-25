@@ -59,10 +59,6 @@ public class StructuredContentUpdaterForm {
 		).addOptionalString(
 			"description", StructuredContentUpdaterForm::setDescription
 		).addOptionalString(
-			"template", StructuredContentUpdaterForm::setTemplate
-		).addOptionalString(
-			"text", StructuredContentUpdaterForm::setText
-		).addOptionalString(
 			"title", StructuredContentUpdaterForm::setTitle
 		).build();
 	}
@@ -144,26 +140,6 @@ public class StructuredContentUpdaterForm {
 	}
 
 	/**
-	 * Returns the structured content's template ID.
-	 *
-	 * @return the structured content's template ID
-	 * @review
-	 */
-	public String getTemplate() {
-		return _template;
-	}
-
-	/**
-	 * Returns the structured content's text.
-	 *
-	 * @return the structured content's text
-	 * @review
-	 */
-	public Optional<String> getTextOptional() {
-		return Optional.ofNullable(_text);
-	}
-
-	/**
 	 * Returns the structured content's title map.
 	 *
 	 * @return the structured content's title map
@@ -205,14 +181,6 @@ public class StructuredContentUpdaterForm {
 		_structuredContentValuesForms = structuredContentValuesForms;
 	}
 
-	public void setTemplate(String template) {
-		_template = template;
-	}
-
-	public void setText(String text) {
-		_text = text;
-	}
-
 	public void setTitle(String title) {
 		_title = title;
 	}
@@ -241,8 +209,6 @@ public class StructuredContentUpdaterForm {
 	private Integer _publishedDateYear;
 	private List<StructuredContentValuesForm> _structuredContentValuesForms =
 		new ArrayList<>();
-	private String _template;
-	private String _text;
 	private String _title;
 
 }

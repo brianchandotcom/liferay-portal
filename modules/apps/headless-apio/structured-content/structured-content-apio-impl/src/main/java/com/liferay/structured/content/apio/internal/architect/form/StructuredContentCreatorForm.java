@@ -54,25 +54,31 @@ public class StructuredContentCreatorForm {
 			__ -> "This form can be used to create a structured content"
 		).constructor(
 			StructuredContentCreatorForm::new
-		).addOptionalString(
-			"template", StructuredContentCreatorForm::setTemplate
-		).addOptionalString(
-			"text", StructuredContentCreatorForm::setText
+		).addOptionalNestedModelList(
+			"values", StructuredContentValuesForm::buildValuesForm,
+			StructuredContentCreatorForm::setStructuredContentValuesForms
 		).addOptionalStringList(
 			"keywords", StructuredContentCreatorForm::setKeywords
 		).addRequiredDate(
 			"datePublished", StructuredContentCreatorForm::setPublishedDate
 		).addRequiredLinkedModel(
-			"structure", ContentStructureIdentifier.class,
-			StructuredContentCreatorForm::setStructureId
-		).addOptionalNestedModelList(
-			"values", StructuredContentValuesForm::buildValuesForm,
-			StructuredContentCreatorForm::setStructuredContentValuesForms
+			"contentStructure", ContentStructureIdentifier.class,
+			StructuredContentCreatorForm::setContentStructureId
 		).addRequiredString(
 			"description", StructuredContentCreatorForm::setDescription
 		).addRequiredString(
 			"title", StructuredContentCreatorForm::setTitle
 		).build();
+	}
+
+	/**
+	 * Returns the structured content's structure ID.
+	 *
+	 * @return the structured content's structure ID
+	 * @review
+	 */
+	public Long getContentStructureId() {
+		return _contentStructureId;
 	}
 
 	/**
@@ -161,36 +167,6 @@ public class StructuredContentCreatorForm {
 	}
 
 	/**
-	 * Returns the structured content's structure ID.
-	 *
-	 * @return the structured content's structure ID
-	 * @review
-	 */
-	public Long getStructureId() {
-		return _structureId;
-	}
-
-	/**
-	 * Returns the structured content's template ID.
-	 *
-	 * @return the structured content's template ID
-	 * @review
-	 */
-	public String getTemplate() {
-		return _template;
-	}
-
-	/**
-	 * Returns the structured content's text.
-	 *
-	 * @return the structured content's text
-	 * @review
-	 */
-	public String getText() {
-		return _text;
-	}
-
-	/**
 	 * Returns the structured content's title map.
 	 *
 	 * @return the structured content's title map
@@ -208,10 +184,12 @@ public class StructuredContentCreatorForm {
 		return _structuredContentValuesForms;
 	}
 
-	public void setDescription(String description) {
-		_description = description;
+	public void setContentStructureId(Long contentStructureId) {
+		_contentStructureId = contentStructureId;
 	}
 
+	public void setDescription(String description) {
+		_description = description;
 	}
 
 	public void setKeywords(List<String> keywords) {
@@ -230,18 +208,17 @@ public class StructuredContentCreatorForm {
 		_publishedDateMinute = calendar.get(Calendar.MINUTE);
 	}
 
-	public void setTemplate(String template) {
-		_template = template;
-	}
+	public void setStructuredContentValuesForms(
+		List<StructuredContentValuesForm> structuredContentValuesForms) {
 
-	public void setText(String text) {
-		_text = text;
+		_structuredContentValuesForms = structuredContentValuesForms;
 	}
 
 	public void setTitle(String title) {
 		_title = title;
 	}
 
+	private Long _contentStructureId;
 	private String _description;
 	private List<String> _keywords;
 	private Integer _publishedDateDay;
@@ -251,9 +228,6 @@ public class StructuredContentCreatorForm {
 	private Integer _publishedDateYear;
 	private List<StructuredContentValuesForm> _structuredContentValuesForms =
 		new ArrayList<>();
-	private Long _structureId;
-	private String _template;
-	private String _text;
 	private String _title;
 
 }

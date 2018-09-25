@@ -203,6 +203,6 @@ You should have received a copy of the
 [GNU Lesser General Public License](http://www.gnu.org/licenses/lgpl-2.1.html)
 along with this library; if not, write to
 
-Free Software Foundation, Inc.<br/>
-51 Franklin Street, Fifth Floor<br/>
+Free Software Foundation, Inc.  
+51 Franklin Street, Fifth Floor  
 Boston, MA 02110-1301 USA

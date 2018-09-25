@@ -23,4 +23,8 @@ public class ContentLayoutPortletKeys {
 		"com_liferay_layout_type_controller_content_internal_portlet_" +
 			"ContentPageEditorPortlet";
 
+	public static final String CONTENT_PAGE_TOOLBAR_PORTLET =
+		"com_liferay_layout_type_controller_content_internal_portlet_" +
+			"ContentPageToolbarPortlet";
+
 }

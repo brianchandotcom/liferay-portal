@@ -25,9 +25,7 @@ import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMFormRule;
 import com.liferay.dynamic.data.mapping.model.DDMFormSuccessPageSettings;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
-import com.liferay.dynamic.data.mapping.model.DDMStructureVersion;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
-import com.liferay.person.apio.architect.identifier.PersonIdentifier;
 import com.liferay.structure.apio.architect.model.FormLayoutPage;
 import com.liferay.structure.apio.architect.util.StructureRepresentorBuilderHelper;
 
@@ -134,8 +132,8 @@ public class FormStructureRepresentorBuilderHelper {
 		return builder.types(
 			"FormSuccessPageSettings"
 		).addLocalizedStringByLocale(
-			"description", getLocalizedString(
-				DDMFormSuccessPageSettings::getBody)
+			"description",
+			getLocalizedString(DDMFormSuccessPageSettings::getBody)
 		).addLocalizedStringByLocale(
 			"headline", getLocalizedString(DDMFormSuccessPageSettings::getTitle)
 		).build();

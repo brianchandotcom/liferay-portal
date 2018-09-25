@@ -359,6 +359,16 @@
 				return itemSrc;
 			},
 
+			_isEmptySelection: function(editor) {
+				var selection = editor.getSelection();
+
+				var ranges = selection.getRanges();
+
+				var collapsedRange = ranges.length === 1 && ranges[0].collapsed;
+
+				return selection.getType() === CKEDITOR.SELECTION_NONE || collapsedRange;
+			},
+
 			_onSelectedAudioChange: function(editor, callback, event) {
 				var instance = this;
 
@@ -386,7 +396,7 @@
 				if (selectedItem) {
 					var eventName = editor.name + 'selectItem';
 					var imageSrc = instance._getItemSrc(editor, selectedItem);
-					var isSelectionEmpty = editor.isSelectionEmpty();
+					var isSelectionEmpty = instance._isEmptySelection(editor);
 
 					Liferay.Util.getWindow(eventName).onceAfter(
 						'destroy',

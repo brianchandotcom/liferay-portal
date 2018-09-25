@@ -104,10 +104,20 @@
 				return imgEl;
 			},
 
+			_isEmptySelection: function(editor) {
+				var selection = editor.getSelection();
+
+				var ranges = selection.getRanges();
+
+				var collapsedRange = ranges.length === 1 && ranges[0].collapsed;
+
+				return selection.getType() === CKEDITOR.SELECTION_NONE || collapsedRange;
+			},
+
 			_onSelectedImageChange: function(editor, imageSrc, selectedItem) {
 				var el;
 				var instance = this;
-				var isSelectionEmpty = editor.isSelectionEmpty();
+				var isSelectionEmpty = instance._isEmptySelection(editor);
 				var fileEntryAttributeName = editor.config.adaptiveMediaFileEntryAttributeName;
 
 				if (selectedItem.returnType === STR_ADAPTIVE_MEDIA_URL_RETURN_TYPE) {

@@ -38,6 +38,9 @@ import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.processor.PortletRegistry;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.layout.admin.constants.LayoutAdminConstants;
+import com.liferay.layout.admin.web.internal.exportimport.data.handler.util.LayoutPageTemplateStructureDataHandlerUtil;
+import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
+import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
@@ -297,17 +300,6 @@ public class LayoutStagedModelDataHandler
 				PortletDataContext.REFERENCE_TYPE_DEPENDENCY);
 		}
 
-		List<FragmentEntryLink> fragmentEntryLinks =
-			_fragmentEntryLinkLocalService.getFragmentEntryLinks(
-				layout.getGroupId(), _portal.getClassNameId(Layout.class),
-				layout.getPlid());
-
-		for (FragmentEntryLink fragmentEntryLink : fragmentEntryLinks) {
-			StagedModelDataHandlerUtil.exportReferenceStagedModel(
-				portletDataContext, layout, fragmentEntryLink,
-				PortletDataContext.REFERENCE_TYPE_DEPENDENCY);
-		}
-
 		if (layout.isIconImage()) {
 			exportLayoutIconImage(portletDataContext, layout, layoutElement);
 		}
@@ -327,6 +319,8 @@ public class LayoutStagedModelDataHandler
 		}
 
 		fixExportTypeSettings(layout);
+
+		_exportLayoutPageTemplateStructure(portletDataContext, layout);
 
 		exportTheme(portletDataContext, layout);
 
@@ -723,8 +717,6 @@ public class LayoutStagedModelDataHandler
 
 		layouts.put(oldLayoutId, importedLayout);
 
-		importFragmentEntryLinks(portletDataContext, layout, importedLayout);
-
 		if ((Objects.equals(layout.getType(), LayoutConstants.TYPE_PORTLET) &&
 			 Validator.isNotNull(layout.getTypeSettings())) ||
 			Objects.equals(
@@ -737,6 +729,9 @@ public class LayoutStagedModelDataHandler
 		importAssets(portletDataContext, layout, importedLayout);
 
 		importLayoutFriendlyURLs(portletDataContext, layout, importedLayout);
+
+		importLayoutPageTemplateStructures(
+			portletDataContext, layout, importedLayout);
 
 		portletDataContext.importClassedModel(layout, importedLayout);
 	}
@@ -1298,6 +1293,29 @@ public class LayoutStagedModelDataHandler
 
 			_imageLocalService.updateImage(
 				importedLayout.getIconImageId(), iconBytes);
+		}
+	}
+
+	protected void importLayoutPageTemplateStructures(
+			PortletDataContext portletDataContext, Layout layout,
+			Layout importedLayout)
+		throws Exception {
+
+		importFragmentEntryLinks(portletDataContext, layout, importedLayout);
+
+		List<Element> layoutPageTemplateStructureElements =
+			portletDataContext.getReferenceDataElements(
+				layout, LayoutPageTemplateStructure.class);
+
+		for (Element layoutPageTemplateStructureElement :
+				layoutPageTemplateStructureElements) {
+
+			_layoutPageTemplateStructureDataHandlerUtil.
+				importLayoutPageTemplateStructure(
+					portletDataContext,
+					_portal.getClassNameId(Layout.class.getName()),
+					importedLayout.getPlid(),
+					layoutPageTemplateStructureElement);
 		}
 	}
 
@@ -1897,6 +1915,35 @@ public class LayoutStagedModelDataHandler
 		}
 	}
 
+	private void _exportLayoutPageTemplateStructure(
+			PortletDataContext portletDataContext, Layout layout)
+		throws PortletDataException {
+
+		List<FragmentEntryLink> fragmentEntryLinks =
+			_fragmentEntryLinkLocalService.getFragmentEntryLinks(
+				layout.getGroupId(), _portal.getClassNameId(Layout.class),
+				layout.getPlid());
+
+		for (FragmentEntryLink fragmentEntryLink : fragmentEntryLinks) {
+			StagedModelDataHandlerUtil.exportReferenceStagedModel(
+				portletDataContext, layout, fragmentEntryLink,
+				PortletDataContext.REFERENCE_TYPE_DEPENDENCY);
+		}
+
+		LayoutPageTemplateStructure layoutPageTemplateStructure =
+			_layoutPageTemplateStructureLocalService.
+				fetchLayoutPageTemplateStructure(
+					layout.getGroupId(),
+					_portal.getClassNameId(Layout.class.getName()),
+					layout.getPlid());
+
+		if (layoutPageTemplateStructure != null) {
+			StagedModelDataHandlerUtil.exportReferenceStagedModel(
+				portletDataContext, layout, layoutPageTemplateStructure,
+				PortletDataContext.REFERENCE_TYPE_DEPENDENCY);
+		}
+	}
+
 	private String _getLayoutPrototypeUuid(
 		long companyId, Layout layout, Element layoutElement) {
 
@@ -1967,6 +2014,15 @@ public class LayoutStagedModelDataHandler
 	private LayoutFriendlyURLLocalService _layoutFriendlyURLLocalService;
 	private LayoutLocalService _layoutLocalService;
 	private LayoutLocalServiceHelper _layoutLocalServiceHelper;
+
+	@Reference
+	private LayoutPageTemplateStructureDataHandlerUtil
+		_layoutPageTemplateStructureDataHandlerUtil;
+
+	@Reference
+	private LayoutPageTemplateStructureLocalService
+		_layoutPageTemplateStructureLocalService;
+
 	private LayoutPrototypeLocalService _layoutPrototypeLocalService;
 	private LayoutSetLocalService _layoutSetLocalService;
 	private LayoutTemplateLocalService _layoutTemplateLocalService;

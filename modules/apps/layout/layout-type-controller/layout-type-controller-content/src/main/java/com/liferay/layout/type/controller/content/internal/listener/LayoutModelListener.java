@@ -14,10 +14,12 @@
 
 package com.liferay.layout.type.controller.content.internal.listener;
 
+import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
+import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
 import com.liferay.layout.type.controller.content.internal.constants.ContentLayoutTypeControllerConstants;
 import com.liferay.portal.kernel.exception.ModelListenerException;
@@ -53,6 +55,12 @@ public class LayoutModelListener extends BaseModelListener<Layout> {
 
 	@Override
 	public void onAfterCreate(Layout layout) throws ModelListenerException {
+		if (ExportImportThreadLocal.isImportInProcess() ||
+			ExportImportThreadLocal.isStagingInProcess()) {
+
+			return;
+		}
+
 		if (!Objects.equals(
 				layout.getType(),
 				ContentLayoutTypeControllerConstants.LAYOUT_TYPE_CONTENT)) {
@@ -65,6 +73,14 @@ public class LayoutModelListener extends BaseModelListener<Layout> {
 
 		long layoutPageTemplateEntryId = GetterUtil.getLong(
 			typeSettingsProperties.get("layoutPageTemplateEntryId"));
+
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			_layoutPageTemplateEntryLocalService.fetchLayoutPageTemplateEntry(
+				layoutPageTemplateEntryId);
+
+		if (layoutPageTemplateEntry == null) {
+			return;
+		}
 
 		try {
 			LayoutPageTemplateStructure layoutPageTemplateStructure =
@@ -161,6 +177,10 @@ public class LayoutModelListener extends BaseModelListener<Layout> {
 
 	@Reference
 	private FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;
+
+	@Reference
+	private LayoutPageTemplateEntryLocalService
+		_layoutPageTemplateEntryLocalService;
 
 	@Reference
 	private LayoutPageTemplateStructureLocalService

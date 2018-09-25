@@ -263,6 +263,10 @@ if (parentOrganization != null) {
 />
 
 <aui:script use="liferay-address,liferay-dynamic-select,liferay-search-container">
+	function <portlet:namespace />createURL(href, value, onclick) {
+		return '<a href="' + href + '"' + (onclick ? ' onclick="' + onclick + '" ' : '') + '>' + value + '</a>';
+	}
+
 	new Liferay.DynamicSelect(
 		[
 			{

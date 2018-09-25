@@ -37,3 +37,16 @@
 	top: 0;
 	width: 100%;
 }
+
+.fragments-editor-toolbar {
+	background-color: transparent;
+	left: 0;
+	margin: 0;
+	padding: 0;
+	position: static;
+	top: 0;
+
+	&__add-fragment-button {
+		display: none;
+	}
+}

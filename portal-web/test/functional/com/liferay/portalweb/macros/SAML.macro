@@ -148,7 +148,7 @@
 
 		<execute function="Pause" locator1="5000" />
 
-		<execute function="AssertLocation" value1="${spURL}" />
+		<execute function="AssertLocation#assertPartialLocation" value1="${spURL}" />
 	</command>
 
 	<command name="executeSPInitiatedSSO">

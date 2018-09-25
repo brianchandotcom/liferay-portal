@@ -17,10 +17,10 @@ package com.liferay.structured.content.apio.internal.architect.sort;
 import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.structured.content.apio.architect.entity.EntityField;
+import com.liferay.structured.content.apio.architect.entity.EntityModel;
 import com.liferay.structured.content.apio.architect.sort.InvalidSortException;
 import com.liferay.structured.content.apio.architect.sort.SortField;
 import com.liferay.structured.content.apio.architect.sort.SortParser;
-import com.liferay.structured.content.apio.internal.architect.filter.StructuredContentSingleEntitySchemaBasedEdmProvider;
 
 import java.util.Collections;
 import java.util.List;
@@ -83,12 +83,8 @@ public class SortParserImpl implements SortParser {
 	}
 
 	@Reference(unbind = "-")
-	public void setStructuredContentSingleEntitySchemaBasedEdmProvider(
-		StructuredContentSingleEntitySchemaBasedEdmProvider
-			structuredContentSingleEntitySchemaBasedEdmProvider) {
-
-		_structuredContentSingleEntitySchemaBasedEdmProvider =
-			structuredContentSingleEntitySchemaBasedEdmProvider;
+	public void setEntityModel(EntityModel entityModel) {
+		_entityModel = entityModel;
 	}
 
 	protected Optional<SortField> getSortFieldOptional(String sortString) {
@@ -112,8 +108,7 @@ public class SortParserImpl implements SortParser {
 		}
 
 		Map<String, EntityField> entityFieldsMap =
-			_structuredContentSingleEntitySchemaBasedEdmProvider.
-				getEntityFieldsMap();
+			_entityModel.getEntityFieldsMap();
 
 		EntityField entityField = entityFieldsMap.get(fieldName);
 
@@ -153,7 +148,6 @@ public class SortParserImpl implements SortParser {
 
 	private static final String _ORDER_BY_DESC = "desc";
 
-	private StructuredContentSingleEntitySchemaBasedEdmProvider
-		_structuredContentSingleEntitySchemaBasedEdmProvider;
+	private EntityModel _entityModel;
 
 }

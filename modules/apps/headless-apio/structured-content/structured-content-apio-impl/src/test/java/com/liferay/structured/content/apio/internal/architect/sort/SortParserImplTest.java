@@ -15,9 +15,9 @@
 package com.liferay.structured.content.apio.internal.architect.sort;
 
 import com.liferay.structured.content.apio.architect.entity.EntityField;
+import com.liferay.structured.content.apio.architect.entity.EntityModel;
 import com.liferay.structured.content.apio.architect.sort.InvalidSortException;
 import com.liferay.structured.content.apio.architect.sort.SortField;
-import com.liferay.structured.content.apio.internal.architect.filter.StructuredContentSingleEntitySchemaBasedEdmProvider;
 
 import java.util.List;
 import java.util.Locale;
@@ -43,8 +43,7 @@ public class SortParserImplTest {
 	public void setUp() {
 		_sortParserImpl = new SortParserImpl();
 
-		_sortParserImpl.setStructuredContentSingleEntitySchemaBasedEdmProvider(
-			_structuredContentSingleEntitySchemaBasedEdmProvider);
+		_sortParserImpl.setEntityModel(_entityModel);
 	}
 
 	@Test
@@ -271,34 +270,31 @@ public class SortParserImplTest {
 		Assert.assertTrue(!sortField2.isAscending());
 	}
 
-	private static final StructuredContentSingleEntitySchemaBasedEdmProvider
-		_structuredContentSingleEntitySchemaBasedEdmProvider =
-			new StructuredContentSingleEntitySchemaBasedEdmProvider() {
+	private static final EntityModel _entityModel = new EntityModel() {
 
-				@Override
-				public Map<String, EntityField> getEntityFieldsMap() {
-					return Stream.of(
-						new EntityField(
-							"fieldExternal", EntityField.Type.STRING,
-							locale -> "fieldInternal"),
-						new EntityField(
-							"fieldExternal1", EntityField.Type.STRING,
-							locale -> "fieldInternal1"),
-						new EntityField(
-							"fieldExternal2", EntityField.Type.STRING,
-							locale -> "fieldInternal2")
-					).collect(
-						Collectors.toMap(
-							EntityField::getName, Function.identity())
-					);
-				}
+		@Override
+		public Map<String, EntityField> getEntityFieldsMap() {
+			return Stream.of(
+				new EntityField(
+					"fieldExternal", EntityField.Type.STRING,
+					locale -> "fieldInternal"),
+				new EntityField(
+					"fieldExternal1", EntityField.Type.STRING,
+					locale -> "fieldInternal1"),
+				new EntityField(
+					"fieldExternal2", EntityField.Type.STRING,
+					locale -> "fieldInternal2")
+			).collect(
+				Collectors.toMap(EntityField::getName, Function.identity())
+			);
+		}
 
-				@Override
-				public String getName() {
-					return "SomeEntityName";
-				}
+		@Override
+		public String getName() {
+			return "SomeEntityName";
+		}
 
-			};
+	};
 
 	private SortParserImpl _sortParserImpl;
 

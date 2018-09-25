@@ -79,6 +79,7 @@ import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.structure.apio.architect.identifier.ContentStructureIdentifier;
+import com.liferay.structured.content.apio.architect.entity.EntityModel;
 import com.liferay.structured.content.apio.architect.filter.Filter;
 import com.liferay.structured.content.apio.architect.filter.InvalidFilterException;
 import com.liferay.structured.content.apio.architect.filter.expression.Expression;
@@ -88,7 +89,7 @@ import com.liferay.structured.content.apio.architect.sort.Sort;
 import com.liferay.structured.content.apio.architect.sort.SortField;
 import com.liferay.structured.content.apio.architect.util.StructuredContentUtil;
 import com.liferay.structured.content.apio.internal.architect.filter.ExpressionVisitorImpl;
-import com.liferay.structured.content.apio.internal.architect.filter.StructuredContentSingleEntitySchemaBasedEdmProvider;
+import com.liferay.structured.content.apio.internal.architect.filter.StructuredContentEntityModel;
 import com.liferay.structured.content.apio.internal.architect.form.StructuredContentCreatorForm;
 import com.liferay.structured.content.apio.internal.architect.form.StructuredContentUpdaterForm;
 import com.liferay.structured.content.apio.internal.model.JournalArticleWrapper;
@@ -627,9 +628,7 @@ public class StructuredContentNestedCollectionResource
 
 			return (com.liferay.portal.kernel.search.filter.Filter)
 				expression.accept(
-					new ExpressionVisitorImpl(
-						format, locale,
-						_structuredContentSingleEntitySchemaBasedEdmProvider));
+					new ExpressionVisitorImpl(format, locale, _entityModel));
 		}
 		catch (ExpressionVisitException eve) {
 			throw new InvalidFilterException(
@@ -742,6 +741,11 @@ public class StructuredContentNestedCollectionResource
 	private DLAppService _dlAppService;
 
 	@Reference(
+		target = "(entity.model.name=" + StructuredContentEntityModel.NAME + ")"
+	)
+	private EntityModel _entityModel;
+
+	@Reference(
 		target = "(model.class.name=com.liferay.journal.model.JournalArticle)"
 	)
 	private HasPermission<Long> _hasPermission;
@@ -767,9 +771,5 @@ public class StructuredContentNestedCollectionResource
 	@Reference
 	private SearchResultPermissionFilterFactory
 		_searchResultPermissionFilterFactory;
-
-	@Reference
-	private StructuredContentSingleEntitySchemaBasedEdmProvider
-		_structuredContentSingleEntitySchemaBasedEdmProvider;
 
 }

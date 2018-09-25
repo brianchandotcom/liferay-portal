@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.search.filter.RangeTermFilter;
 import com.liferay.portal.kernel.search.filter.TermFilter;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.structured.content.apio.architect.entity.EntityField;
+import com.liferay.structured.content.apio.architect.entity.EntityModel;
 import com.liferay.structured.content.apio.architect.filter.InvalidFilterException;
 import com.liferay.structured.content.apio.architect.filter.expression.BinaryExpression;
 import com.liferay.structured.content.apio.architect.filter.expression.ExpressionVisitor;
@@ -47,14 +48,11 @@ import java.util.Optional;
 public class ExpressionVisitorImpl implements ExpressionVisitor<Object> {
 
 	public ExpressionVisitorImpl(
-		Format format, Locale locale,
-		StructuredContentSingleEntitySchemaBasedEdmProvider
-			structuredContentSingleEntitySchemaBasedEdmProvider) {
+		Format format, Locale locale, EntityModel entityModel) {
 
 		_format = format;
 		_locale = locale;
-		_structuredContentSingleEntitySchemaBasedEdmProvider =
-			structuredContentSingleEntitySchemaBasedEdmProvider;
+		_entityModel = entityModel;
 	}
 
 	@Override
@@ -92,8 +90,7 @@ public class ExpressionVisitorImpl implements ExpressionVisitor<Object> {
 		List<String> resourcePath = memberExpression.getResourcePath();
 
 		Map<String, EntityField> entityFieldsMap =
-			_structuredContentSingleEntitySchemaBasedEdmProvider.
-				getEntityFieldsMap();
+			_entityModel.getEntityFieldsMap();
 
 		return entityFieldsMap.get(resourcePath.get(0));
 	}
@@ -204,9 +201,8 @@ public class ExpressionVisitorImpl implements ExpressionVisitor<Object> {
 			literal, StringPool.DOUBLE_APOSTROPHE, StringPool.APOSTROPHE);
 	}
 
+	private final EntityModel _entityModel;
 	private final Format _format;
 	private final Locale _locale;
-	private final StructuredContentSingleEntitySchemaBasedEdmProvider
-		_structuredContentSingleEntitySchemaBasedEdmProvider;
 
 }

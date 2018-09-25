@@ -140,7 +140,7 @@
 									function(assetEntry) {
 										var entityId = assetEntry.entityid;
 
-										if(searchContainerData.indexOf(entityId) == -1) {
+										if (searchContainerData.indexOf(entityId) == -1) {
 											var entryLink = '<a class="modify-link" data-rowId="' + entityId + '" href="javascript:;"><%= UnicodeFormatter.toString(removeLinkIcon) %></a>';
 
 											searchContainer.addRow([assetEntry.assettype, A.Escape.html(assetEntry.assettitle), A.Escape.html(assetEntry.groupdescriptivename), entryLink], entityId);

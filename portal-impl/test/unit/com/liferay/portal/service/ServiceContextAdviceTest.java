@@ -179,6 +179,10 @@ public class ServiceContextAdviceTest {
 			_removedMethodInterceptor = true;
 		}
 
+		private TestServiceBeanAopCacheManager() {
+			super(null);
+		}
+
 		private boolean _removedMethodInterceptor;
 
 	}

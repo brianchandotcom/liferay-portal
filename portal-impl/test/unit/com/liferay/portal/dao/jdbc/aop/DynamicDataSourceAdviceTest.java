@@ -89,7 +89,7 @@ public class DynamicDataSourceAdviceTest {
 			_dynamicDataSourceTargetSource);
 
 		ServiceBeanAopCacheManager serviceBeanAopCacheManager =
-			new ServiceBeanAopCacheManager();
+			new ServiceBeanAopCacheManager(null);
 
 		_dynamicDataSourceAdvice.setServiceBeanAopCacheManager(
 			serviceBeanAopCacheManager);
@@ -166,7 +166,7 @@ public class DynamicDataSourceAdviceTest {
 			serviceBeanMethodInvocation, annotations);
 
 		serviceBeanMethodInvocation.setMethodInterceptors(
-			Arrays.<MethodInterceptor>asList(_dynamicDataSourceAdvice));
+			new MethodInterceptor[] {_dynamicDataSourceAdvice});
 
 		return serviceBeanMethodInvocation;
 	}

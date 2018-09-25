@@ -262,17 +262,30 @@ public class StructuredContentNestedCollectionResource
 		ServiceContext serviceContext =
 			structuredContentCreatorForm.getServiceContext(contentSpaceId);
 
+		Date displayDate = new Date();
+
 		JournalArticle journalArticle = _journalArticleService.addArticle(
 			contentSpaceId, 0, 0, 0, null, true,
 			structuredContentCreatorForm.getTitleMap(locale),
 			structuredContentCreatorForm.getDescriptionMap(locale), content,
 			ddmStructureKey, ddmTemplateKey, null,
-			structuredContentCreatorForm.getPublishedDateMonth(),
-			structuredContentCreatorForm.getPublishedDateDay(),
-			structuredContentCreatorForm.getPublishedDateYear(),
-			structuredContentCreatorForm.getPublishedDateHour(),
-			structuredContentCreatorForm.getPublishedDateMinute(), 0, 0, 0, 0,
-			0, true, 0, 0, 0, 0, 0, true, true, null, serviceContext);
+			_getDefaultValue(
+				structuredContentCreatorForm.getPublishedDateMonthOptional(),
+				displayDate.getMonth()),
+			_getDefaultValue(
+				structuredContentCreatorForm.getPublishedDateDayOptional(),
+				displayDate.getDate()),
+			_getDefaultValue(
+				structuredContentCreatorForm.getPublishedDateYearOptional(),
+				displayDate.getYear()),
+			_getDefaultValue(
+				structuredContentCreatorForm.getPublishedDateHourOptional(),
+				displayDate.getHours()),
+			_getDefaultValue(
+				structuredContentCreatorForm.getPublishedDateMinuteOptional(),
+				displayDate.getMinutes()),
+			0, 0, 0, 0, 0, true, 0, 0, 0, 0, 0, true, true, null,
+			serviceContext);
 
 		return new JournalArticleWrapper(journalArticle, themeDisplay);
 	}
@@ -688,19 +701,21 @@ public class StructuredContentNestedCollectionResource
 				journalArticle.getDDMStructureKey(), ddmTemplateKey,
 				journalArticle.getLayoutUuid(),
 				_getDefaultValue(
-					structuredContentUpdaterForm.getDisplayDateMonthOptional(),
+					structuredContentUpdaterForm.
+						getPublishedDateMonthOptional(),
 					displayDate.getMonth()),
 				_getDefaultValue(
-					structuredContentUpdaterForm.getDisplayDateDayOptional(),
+					structuredContentUpdaterForm.getPublishedDateDayOptional(),
 					displayDate.getDate()),
 				_getDefaultValue(
-					structuredContentUpdaterForm.getDisplayDateYearOptional(),
+					structuredContentUpdaterForm.getPublishedDateYearOptional(),
 					displayDate.getYear()),
 				_getDefaultValue(
-					structuredContentUpdaterForm.getDisplayDateHourOptional(),
+					structuredContentUpdaterForm.getPublishedDateHourOptional(),
 					displayDate.getHours()),
 				_getDefaultValue(
-					structuredContentUpdaterForm.getDisplayDateMinuteOptional(),
+					structuredContentUpdaterForm.
+						getPublishedDateMinuteOptional(),
 					displayDate.getMinutes()),
 				0, 0, 0, 0, 0, true, 0, 0, 0, 0, 0, true, true, false, null,
 				null, null, null, serviceContext);

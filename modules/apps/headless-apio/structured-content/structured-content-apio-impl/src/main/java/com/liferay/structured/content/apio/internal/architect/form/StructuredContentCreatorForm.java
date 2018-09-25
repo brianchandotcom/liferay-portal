@@ -28,6 +28,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Optional;
 
 /**
  * Instances of this class represent the values extracted from a structured
@@ -55,6 +56,8 @@ public class StructuredContentCreatorForm {
 			__ -> "This form can be used to create a structured content"
 		).constructor(
 			StructuredContentCreatorForm::new
+		).addOptionalDate(
+			"datePublished", StructuredContentCreatorForm::setPublishedDate
 		).addOptionalLinkedModelList(
 			"category", CategoryIdentifier.class,
 			StructuredContentCreatorForm::setCategories
@@ -65,8 +68,6 @@ public class StructuredContentCreatorForm {
 			"description", StructuredContentCreatorForm::setDescription
 		).addOptionalStringList(
 			"keywords", StructuredContentCreatorForm::setKeywords
-		).addRequiredDate(
-			"datePublished", StructuredContentCreatorForm::setPublishedDate
 		).addRequiredLinkedModel(
 			"contentStructure", ContentStructureIdentifier.class,
 			StructuredContentCreatorForm::setContentStructureId
@@ -109,8 +110,8 @@ public class StructuredContentCreatorForm {
 	 * @return the structured content's published date day
 	 * @review
 	 */
-	public int getPublishedDateDay() {
-		return _publishedDateDay;
+	public Optional<Integer> getPublishedDateDayOptional() {
+		return Optional.ofNullable(_publishedDateDay);
 	}
 
 	/**
@@ -119,8 +120,8 @@ public class StructuredContentCreatorForm {
 	 * @return the structured content's published date hour
 	 * @review
 	 */
-	public int getPublishedDateHour() {
-		return _publishedDateHour;
+	public Optional<Integer> getPublishedDateHourOptional() {
+		return Optional.ofNullable(_publishedDateHour);
 	}
 
 	/**
@@ -129,8 +130,8 @@ public class StructuredContentCreatorForm {
 	 * @return the structured content's published date minute
 	 * @review
 	 */
-	public int getPublishedDateMinute() {
-		return _publishedDateMinute;
+	public Optional<Integer> getPublishedDateMinuteOptional() {
+		return Optional.ofNullable(_publishedDateMinute);
 	}
 
 	/**
@@ -139,8 +140,8 @@ public class StructuredContentCreatorForm {
 	 * @return the structured content's published date month
 	 * @review
 	 */
-	public int getPublishedDateMonth() {
-		return _publishedDateMonth;
+	public Optional<Integer> getPublishedDateMonthOptional() {
+		return Optional.ofNullable(_publishedDateMonth);
 	}
 
 	/**
@@ -149,8 +150,8 @@ public class StructuredContentCreatorForm {
 	 * @return the structured content's published date year
 	 * @review
 	 */
-	public int getPublishedDateYear() {
-		return _publishedDateYear;
+	public Optional<Integer> getPublishedDateYearOptional() {
+		return Optional.ofNullable(_publishedDateYear);
 	}
 
 	/**

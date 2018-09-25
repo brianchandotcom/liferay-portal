@@ -98,58 +98,58 @@ public class StructuredContentUpdaterForm {
 		return _getStringMapOptional(locale, _description);
 	}
 
+	public List<String> getKeywords() {
+		return _keywords;
+	}
+
 	/**
-	 * Returns the structured content's display date day.
+	 * Returns the structured content's published date day.
 	 *
-	 * @return the structured content's display date day
+	 * @return the structured content's published date day
 	 * @review
 	 */
-	public Optional<Integer> getDisplayDateDayOptional() {
+	public Optional<Integer> getPublishedDateDayOptional() {
 		return Optional.ofNullable(_publishedDateDay);
 	}
 
 	/**
-	 * Returns the structured content's display date hour.
+	 * Returns the structured content's published date hour.
 	 *
-	 * @return the structured content's display date hour
+	 * @return the structured content's published date hour
 	 * @review
 	 */
-	public Optional<Integer> getDisplayDateHourOptional() {
+	public Optional<Integer> getPublishedDateHourOptional() {
 		return Optional.ofNullable(_publishedDateHour);
 	}
 
 	/**
-	 * Returns the structured content's display date minute.
+	 * Returns the structured content's published date minute.
 	 *
-	 * @return the structured content's display date minute
+	 * @return the structured content's published date minute
 	 * @review
 	 */
-	public Optional<Integer> getDisplayDateMinuteOptional() {
+	public Optional<Integer> getPublishedDateMinuteOptional() {
 		return Optional.ofNullable(_publishedDateMinute);
 	}
 
 	/**
-	 * Returns the structured content's display date month.
+	 * Returns the structured content's published date month.
 	 *
-	 * @return the structured content's display date month
+	 * @return the structured content's published date month
 	 * @review
 	 */
-	public Optional<Integer> getDisplayDateMonthOptional() {
+	public Optional<Integer> getPublishedDateMonthOptional() {
 		return Optional.ofNullable(_publishedDateMonth);
 	}
 
 	/**
-	 * Returns the structured content's display date year.
+	 * Returns the structured content's published date year.
 	 *
-	 * @return the structured content's display date year
+	 * @return the structured content's published date year
 	 * @review
 	 */
-	public Optional<Integer> getDisplayDateYearOptional() {
+	public Optional<Integer> getPublishedDateYearOptional() {
 		return Optional.ofNullable(_publishedDateYear);
-	}
-
-	public List<String> getKeywords() {
-		return _keywords;
 	}
 
 	/**

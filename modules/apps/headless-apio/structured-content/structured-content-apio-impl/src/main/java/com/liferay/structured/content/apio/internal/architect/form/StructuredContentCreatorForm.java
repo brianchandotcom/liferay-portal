@@ -61,6 +61,8 @@ public class StructuredContentCreatorForm {
 		).addOptionalNestedModelList(
 			"values", StructuredContentValuesForm::buildValuesForm,
 			StructuredContentCreatorForm::setStructuredContentValuesForms
+		).addOptionalString(
+			"description", StructuredContentCreatorForm::setDescription
 		).addOptionalStringList(
 			"keywords", StructuredContentCreatorForm::setKeywords
 		).addRequiredDate(
@@ -68,8 +70,6 @@ public class StructuredContentCreatorForm {
 		).addRequiredLinkedModel(
 			"contentStructure", ContentStructureIdentifier.class,
 			StructuredContentCreatorForm::setContentStructureId
-		).addRequiredString(
-			"description", StructuredContentCreatorForm::setDescription
 		).addRequiredString(
 			"title", StructuredContentCreatorForm::setTitle
 		).build();

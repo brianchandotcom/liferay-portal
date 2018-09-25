@@ -108,6 +108,12 @@ the newer version do not match.
 [LPS-85677]: Display the file location for the jars in the log when semantic
 versioning is incorrect.
 
+## 1.3.4 - 2018-09-24
+
+### Changed
+[LPS-85678]: Check the content of the `.lfrbuild-packageinfo` file to ignore
+specified baseline warnings.
+
 [Bnd Builder Gradle Plugin]: https://github.com/bndtools/bnd/tree/master/biz.aQute.bnd.gradle
 [Liferay Ant BND]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/ant-bnd
 [LPS-69470]: https://issues.liferay.com/browse/LPS-69470
@@ -123,3 +129,4 @@ versioning is incorrect.
 [LPS-77441]: https://issues.liferay.com/browse/LPS-77441
 [LPS-83067]: https://issues.liferay.com/browse/LPS-83067
 [LPS-85677]: https://issues.liferay.com/browse/LPS-85677
+[LPS-85678]: https://issues.liferay.com/browse/LPS-85678

@@ -61,14 +61,11 @@ public class ManageCollaboratorsMVCActionCommand extends BaseMVCActionCommand {
 				sharingEntryId, serviceContext);
 		}
 
-		String[] sharingEntryIdActionIdPairs = ParamUtil.getStringValues(
-			actionRequest, "sharingEntryIdActionIdPairs");
+		String[] sharingEntryIdActionIdPairs = ParamUtil.getParameterValues(
+			actionRequest, "sharingEntryIdActionIdPairs", new String[0], false);
 
-		for (String sharingEntryIdSharingEntryPermissionDisplayActionIdPair :
-				sharingEntryIdActionIdPairs) {
-
-			String[] parts = StringUtil.split(
-				sharingEntryIdSharingEntryPermissionDisplayActionIdPair);
+		for (String sharingEntryIdActionIdPair : sharingEntryIdActionIdPairs) {
+			String[] parts = StringUtil.split(sharingEntryIdActionIdPair);
 
 			long sharingEntryId = Long.valueOf(parts[0]);
 

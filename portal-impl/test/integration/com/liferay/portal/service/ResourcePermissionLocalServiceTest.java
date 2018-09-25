@@ -53,7 +53,9 @@ public class ResourcePermissionLocalServiceTest {
 	}
 
 	@Test
-	public void shouldFailIfFirstResourceIsNotIndividual() throws Exception {
+	public void testShouldFailIfFirstResourceIsNotIndividual()
+		throws Exception {
+
 		List<Resource> resources = new ArrayList<>();
 
 		Resource firstResource = new ResourceImpl();
@@ -87,7 +89,7 @@ public class ResourcePermissionLocalServiceTest {
 	}
 
 	@Test
-	public void shouldFailIfLastResourceIsNotCompany() throws Exception {
+	public void testShouldFailIfLastResourceIsNotCompany() throws Exception {
 		List<Resource> resources = new ArrayList<>();
 
 		Resource firstResource = new ResourceImpl();
@@ -120,7 +122,7 @@ public class ResourcePermissionLocalServiceTest {
 	}
 
 	@Test
-	public void shouldFailIfResourcesIsLessThanTwo() throws Exception {
+	public void testShouldFailIfResourcesIsLessThanTwo() throws Exception {
 		List<Resource> resources = new ArrayList<>();
 
 		resources.add(new ResourceImpl());

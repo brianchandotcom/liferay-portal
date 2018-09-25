@@ -716,6 +716,16 @@ app.server.type=@{app.server.type}]]></echo>
 				</then>
 			</if>
 
+			<chmod
+				perm="a+x"
+				type="file"
+			>
+				<fileset
+					dir="bundles"
+					includes="**/*.sh"
+				/>
+			</chmod>
+
 			<tar
 				basedir="."
 				compression="gzip"
@@ -770,10 +780,14 @@ app.server.type=@{app.server.type}]]></echo>
 			/>
 
 			<chmod
-				dir="bundles"
-				includes="**/*.sh"
-				perm="u+x"
-			/>
+				perm="a+x"
+				type="file"
+			>
+				<fileset
+					dir="bundles"
+					includes="**/*.sh"
+				/>
+			</chmod>
 
 			<setup-libs />
 

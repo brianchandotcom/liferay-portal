@@ -14,9 +14,6 @@
 
 package com.liferay.jenkins.results.parser;
 
-import java.util.HashMap;
-import java.util.Map;
-
 /**
  * @author Peter Yoo
  */

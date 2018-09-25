@@ -19,9 +19,6 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
-import com.liferay.portal.kernel.portlet.PortletProvider;
-import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
@@ -43,7 +40,6 @@ import java.util.List;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.PortletException;
-import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
@@ -73,9 +69,14 @@ public class ManageCollaboratorsViewMVCRenderCommand
 		Template template = getTemplate(renderRequest);
 
 		template.put(
+			"actionUrl", _getManageCollaboratorsActionURL(renderResponse));
+		template.put(
 			"collaborators", _getCollaboratorsJSONArray(renderRequest));
+		template.put(
+			"dialogId",
+			ParamUtil.getString(renderRequest, "manageCollaboratorDialogId"));
+		template.put("portletNamespace", renderResponse.getNamespace());
 		template.put("spritemap", _getSpritemap(renderRequest));
-		template.put("uri", _getManageCollaboratorsActionURL(renderResponse));
 
 		return "ManageCollaborators";
 	}
@@ -156,20 +157,12 @@ public class ManageCollaboratorsViewMVCRenderCommand
 	private String _getManageCollaboratorsActionURL(
 		RenderResponse renderResponse) {
 
-		LiferayPortletResponse liferayPortletResponse =
-			_portal.getLiferayPortletResponse(renderResponse);
+		PortletURL manageCollaboratorURL = renderResponse.createActionURL();
 
-		PortletURL sharingEntryEditURL =
-			liferayPortletResponse.createLiferayPortletURL(
-				PortletProviderUtil.getPortletId(
-					SharingEntry.class.getName(),
-					PortletProvider.Action.MANAGE),
-				PortletRequest.ACTION_PHASE);
-
-		sharingEntryEditURL.setParameter(
+		manageCollaboratorURL.setParameter(
 			ActionRequest.ACTION_NAME, "/sharing/manage_collaborators");
 
-		return sharingEntryEditURL.toString();
+		return manageCollaboratorURL.toString();
 	}
 
 	private JSONArray _getSharingEntryPermissionDisplaySelectOptions(

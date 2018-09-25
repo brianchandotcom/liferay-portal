@@ -68,6 +68,9 @@ public class StructureRepresentorBuilderHelperImpl
 			"autocomplete",
 			getDDMFormFieldPropertyFunction(Boolean.class::cast, "autocomplete")
 		).addBoolean(
+			"inline",
+			getDDMFormFieldPropertyFunction(Boolean.class::cast, "inline")
+		).addBoolean(
 			"localizable", DDMFormField::isLocalizable
 		).addBoolean(
 			"multiple", DDMFormField::isMultiple

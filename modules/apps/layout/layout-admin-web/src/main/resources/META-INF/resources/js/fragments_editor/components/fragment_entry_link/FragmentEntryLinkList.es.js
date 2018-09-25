@@ -74,7 +74,7 @@ class FragmentEntryLinkList extends Component {
 		const targetItem = data.target;
 
 		if (targetItem && 'fragmentEntryLinkId' in targetItem.dataset) {
-			const mouseY = event.target.mousePos_.y;
+			const mouseY = data.originalEvent.clientY;
 			const targetItemRegion = position.getRegion(targetItem);
 
 			const documentHeight = document.body.offsetHeight;

@@ -5673,6 +5673,24 @@ to version 2.3.265.
 - [LPS-71117]: Update the [Liferay Source Formatter] dependency to version
 1.0.738.
 
+## 3.12.143 - 2018-09-24
+
+### Changed
+- [LPS-85609]: Remove deprecated API calls from IDE tasks.
+
+## 3.12.144 - 2018-09-24
+
+### Changed
+- [LPS-85678]: Update the [Liferay Ant BND] dependency to version 2.0.56.
+
+## 3.12.145 - 2018-09-24
+
+### Changed
+- [LPS-84119]: Update the [Liferay Gradle Plugins Source Formatter] dependency
+to version 2.3.266.
+- [LPS-84119]: Update the [Liferay Source Formatter] dependency to version
+1.0.739.
+
 [Gradle Bundle Plugin]: https://github.com/TomDmitriev/gradle-bundle-plugin
 [Liferay Alloy Taglib]: https://github.com/liferay/alloy-taglibs
 [Liferay Ant BND]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/ant-bnd
@@ -6115,4 +6133,6 @@ to version 2.3.265.
 [LPS-85035]: https://issues.liferay.com/browse/LPS-85035
 [LPS-85092]: https://issues.liferay.com/browse/LPS-85092
 [LPS-85296]: https://issues.liferay.com/browse/LPS-85296
+[LPS-85609]: https://issues.liferay.com/browse/LPS-85609
+[LPS-85678]: https://issues.liferay.com/browse/LPS-85678
 [LRDOCS-3023]: https://issues.liferay.com/browse/LRDOCS-3023

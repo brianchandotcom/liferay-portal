@@ -4604,6 +4604,32 @@ manifest header for the deployed JAR does not contain a period.
 - [LPS-71117]: Update the [Liferay Gradle Plugins] dependency to version
 3.12.142.
 
+## 5.5.54 - 2018-09-24
+
+### Changed
+- [LPS-85609]: Update the [Liferay Gradle Plugins] dependency to version
+3.12.143.
+
+## 5.5.55 - 2018-09-24
+
+### Changed
+- [LPS-85677]: Update the [Liferay Gradle Plugins Baseline] dependency to
+version 1.3.3.
+
+## 5.5.56 - 2018-09-24
+
+### Changed
+- [LPS-85678]: Update the [Liferay Gradle Plugins] dependency to version
+3.12.144.
+- [LPS-85678]: Update the [Liferay Gradle Plugins Baseline] dependency to
+version 1.3.4.
+
+## 5.5.57 - 2018-09-24
+
+### Changed
+- [LPS-84119]: Update the [Liferay Gradle Plugins] dependency to version
+3.12.145.
+
 [Find Security Bugs]: https://github.com/liferay/liferay-portal/tree/master/modules/third-party/com-h3xstream-findsecbugs
 [Gradle Dependency Management]: https://github.com/spring-gradle-plugins/dependency-management-plugin
 [Gradle License Report]: https://github.com/jk1/Gradle-License-Report
@@ -5077,6 +5103,9 @@ manifest header for the deployed JAR does not contain a period.
 [LPS-85035]: https://issues.liferay.com/browse/LPS-85035
 [LPS-85092]: https://issues.liferay.com/browse/LPS-85092
 [LPS-85296]: https://issues.liferay.com/browse/LPS-85296
+[LPS-85609]: https://issues.liferay.com/browse/LPS-85609
+[LPS-85677]: https://issues.liferay.com/browse/LPS-85677
+[LPS-85678]: https://issues.liferay.com/browse/LPS-85678
 [LRDOCS-2594]: https://issues.liferay.com/browse/LRDOCS-2594
 [LRDOCS-2841]: https://issues.liferay.com/browse/LRDOCS-2841
 [LRDOCS-2981]: https://issues.liferay.com/browse/LRDOCS-2981

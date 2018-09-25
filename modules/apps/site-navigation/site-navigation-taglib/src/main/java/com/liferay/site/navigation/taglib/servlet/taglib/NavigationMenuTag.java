@@ -82,7 +82,9 @@ public class NavigationMenuTag extends IncludeTag {
 			if (_siteNavigationMenuId > 0) {
 				branchNavItems = Collections.emptyList();
 
-				navItems = getMenuItems();
+				List<NavItem> branchMenuItems = getBranchMenuItems();
+
+				navItems = getMenuItems(branchMenuItems);
 			}
 			else {
 				branchNavItems = getBranchNavItems(request);
@@ -175,6 +177,41 @@ public class NavigationMenuTag extends IncludeTag {
 		_siteNavigationMenuId = 0;
 	}
 
+	protected List<NavItem> getBranchMenuItems() throws PortalException {
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		Layout layout = themeDisplay.getLayout();
+
+		long siteNavigationMenuItemId = _getRelativeSiteNavigationMenuItemId(
+			layout);
+
+		SiteNavigationMenuItem siteNavigationMenuItem =
+			SiteNavigationMenuItemLocalServiceUtil.getSiteNavigationMenuItem(
+				siteNavigationMenuItemId);
+
+		List<SiteNavigationMenuItem> ancestors =
+			siteNavigationMenuItem.getAncestors();
+
+		List<NavItem> navItems = new ArrayList<>(ancestors.size() + 1);
+
+		ListIterator<SiteNavigationMenuItem> listIterator =
+			ancestors.listIterator(ancestors.size());
+
+		while (listIterator.hasPrevious()) {
+			SiteNavigationMenuItem ancestor = listIterator.previous();
+
+			navItems.add(
+				new SiteNavigationMenuNavItem(request, themeDisplay, ancestor));
+		}
+
+		navItems.add(
+			new SiteNavigationMenuNavItem(
+				request, themeDisplay, siteNavigationMenuItem));
+
+		return navItems;
+	}
+
 	protected List<NavItem> getBranchNavItems(HttpServletRequest request)
 		throws PortalException {
 
@@ -228,46 +265,62 @@ public class NavigationMenuTag extends IncludeTag {
 	}
 
 	protected List<NavItem> getMenuItems() {
+		try {
+			return getMenuItems(new ArrayList<NavItem>());
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+		}
+
+		return new ArrayList<>();
+	}
+
+	protected List<NavItem> getMenuItems(List<NavItem> branchMenuItems)
+		throws Exception {
+
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
 		List<NavItem> navItems = new ArrayList<>();
 
+		NavItem rootMenuItem = null;
+
 		long parentSiteNavigationMenuItemId = GetterUtil.getLong(_rootItemId);
 
 		if (_rootItemType.equals("relative")) {
-			parentSiteNavigationMenuItemId =
-				_getRelativeSiteNavigationMenuItemId(themeDisplay.getLayout());
+			if ((_rootItemLevel >= 0) &&
+				(_rootItemLevel < branchMenuItems.size())) {
+
+				rootMenuItem = branchMenuItems.get(_rootItemLevel);
+			}
+		}
+		else if (_rootItemType.equals("absolute")) {
+			if (_rootItemLevel == 0) {
+				navItems = _getMenuItemsFromParentSiteNavigationMenuItem(
+					themeDisplay, 0);
+			}
+			else if (branchMenuItems.size() >= _rootItemLevel) {
+				rootMenuItem = branchMenuItems.get(_rootItemLevel - 1);
+			}
+		}
+		else if (_rootItemType.equals("select")) {
+			if (Validator.isNotNull(_rootItemId)) {
+				SiteNavigationMenuItem parentSiteNavigationMenuItem =
+					SiteNavigationMenuItemLocalServiceUtil.
+						getSiteNavigationMenuItem(
+							parentSiteNavigationMenuItemId);
+
+				rootMenuItem = new SiteNavigationMenuNavItem(
+					request, themeDisplay, parentSiteNavigationMenuItem);
+			}
+			else {
+				navItems = _getMenuItemsFromParentSiteNavigationMenuItem(
+					themeDisplay, parentSiteNavigationMenuItemId);
+			}
 		}
 
-		List<SiteNavigationMenuItem> siteNavigationMenuItems =
-			SiteNavigationMenuItemLocalServiceUtil.getSiteNavigationMenuItems(
-				_siteNavigationMenuId, parentSiteNavigationMenuItemId);
-
-		for (SiteNavigationMenuItem siteNavigationMenuItem :
-				siteNavigationMenuItems) {
-
-			SiteNavigationMenuItemType siteNavigationMenuItemType =
-				ServletContextUtil.getSiteNavigationMenuItemType(
-					siteNavigationMenuItem.getType());
-
-			try {
-				if (!siteNavigationMenuItemType.hasPermission(
-						themeDisplay.getPermissionChecker(),
-						siteNavigationMenuItem)) {
-
-					continue;
-				}
-
-				navItems.add(
-					new SiteNavigationMenuNavItem(
-						request, themeDisplay, siteNavigationMenuItem));
-			}
-			catch (PortalException pe) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(pe, pe);
-				}
-			}
+		if (rootMenuItem != null) {
+			navItems = rootMenuItem.getChildren();
 		}
 
 		return navItems;
@@ -329,6 +382,44 @@ public class NavigationMenuTag extends IncludeTag {
 
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
+	}
+
+	private List<NavItem> _getMenuItemsFromParentSiteNavigationMenuItem(
+		ThemeDisplay themeDisplay, long parentSiteNavigationMenuItemId) {
+
+		List<SiteNavigationMenuItem> siteNavigationMenuItems =
+			SiteNavigationMenuItemLocalServiceUtil.getSiteNavigationMenuItems(
+				_siteNavigationMenuId, parentSiteNavigationMenuItemId);
+
+		List<NavItem> navItems = new ArrayList<>();
+
+		for (SiteNavigationMenuItem siteNavigationMenuItem :
+				siteNavigationMenuItems) {
+
+			SiteNavigationMenuItemType siteNavigationMenuItemType =
+				ServletContextUtil.getSiteNavigationMenuItemType(
+					siteNavigationMenuItem.getType());
+
+			try {
+				if (!siteNavigationMenuItemType.hasPermission(
+						themeDisplay.getPermissionChecker(),
+						siteNavigationMenuItem)) {
+
+					continue;
+				}
+
+				navItems.add(
+					new SiteNavigationMenuNavItem(
+						request, themeDisplay, siteNavigationMenuItem));
+			}
+			catch (PortalException pe) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(pe, pe);
+				}
+			}
+		}
+
+		return navItems;
 	}
 
 	private long _getRelativeSiteNavigationMenuItemId(Layout layout) {

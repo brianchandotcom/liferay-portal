@@ -716,8 +716,14 @@ app.server.type=@{app.server.type}]]></echo>
 				</then>
 			</if>
 
-			<chmod perm="a+x" type="file">
-				<fileset dir="bundles" includes="**/*.sh" />
+			<chmod
+				perm="a+x"
+				type="file"
+			>
+				<fileset
+					dir="bundles"
+					includes="**/*.sh"
+				/>
 			</chmod>
 
 			<tar
@@ -773,8 +779,14 @@ app.server.type=@{app.server.type}]]></echo>
 				src="liferay-portal-bundle-@{app.server.type}.tar.gz"
 			/>
 
-			<chmod perm="a+x" type="file">
-				<fileset dir="bundles" includes="**/*.sh" />
+			<chmod
+				perm="a+x"
+				type="file"
+			>
+				<fileset
+					dir="bundles"
+					includes="**/*.sh"
+				/>
 			</chmod>
 
 			<setup-libs />

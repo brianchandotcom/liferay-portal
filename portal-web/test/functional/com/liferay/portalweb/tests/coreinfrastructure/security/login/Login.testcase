@@ -205,6 +205,8 @@
 		<property name="dummy.socket.proxy.disabled" value="true" />
 		<property name="test.name.skip.portal.instance" value="Login#OpenIDConnectSmoke" />
 
+		<!-- LRQA-43729 -->
+
 		<var method="MathUtil#randomNumber('3')" name="googlePropertiesSet" />
 
 		<var method="PropsUtil#get('google.client.id.${googlePropertiesSet}')" name="openIDConnectClientID" />

@@ -91,7 +91,6 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import javax.portlet.Event;
 import javax.portlet.PortletConfig;
@@ -649,13 +648,6 @@ public class PortletContainerImpl implements PortletContainer {
 						new HashMap<>(renderParameterMap));
 				}
 				else {
-					Map<String, String[]> publicRenderParameterMap =
-						PublicRenderParametersPool.get(
-							request, requestLayout.getPlid());
-
-					Map<String, String[]> privateRenderParameterMap =
-						new HashMap<>();
-
 					MutableRenderParametersImpl mutableRenderParametersImpl =
 						(MutableRenderParametersImpl)
 							liferayEventResponse.getRenderParameters();
@@ -663,19 +655,23 @@ public class PortletContainerImpl implements PortletContainer {
 					Map<String, String[]> mutableRenderParametersMap =
 						mutableRenderParametersImpl.getParameterMap();
 
-					Set<PublicRenderParameter> supportedPublicRenderParameters =
-						portlet.getPublicRenderParameters();
-
 					Map<String, QName> supportedPublicRenderParameterMap =
 						new HashMap<>();
 
 					for (PublicRenderParameter supportedPublicRenderParameter :
-							supportedPublicRenderParameters) {
+							portlet.getPublicRenderParameters()) {
 
 						supportedPublicRenderParameterMap.put(
 							supportedPublicRenderParameter.getIdentifier(),
 							supportedPublicRenderParameter.getQName());
 					}
+
+					Map<String, String[]> publicRenderParameterMap =
+						PublicRenderParametersPool.get(
+							request, requestLayout.getPlid());
+
+					Map<String, String[]> privateRenderParameterMap =
+						new HashMap<>();
 
 					for (Map.Entry<String, String[]> entry :
 							mutableRenderParametersMap.entrySet()) {

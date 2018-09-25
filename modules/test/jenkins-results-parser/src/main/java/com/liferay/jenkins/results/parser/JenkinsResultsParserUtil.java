@@ -987,14 +987,16 @@ public class JenkinsResultsParserUtil {
 	public static PortalGitWorkingDirectory getPortalGitWorkingDirectory(
 		String upstreamBranchName) {
 
+		String gitRepositoryDirName = "liferay-portal";
 		String gitRepositoryName = "liferay-portal";
 
 		if (!upstreamBranchName.equals("master")) {
+			gitRepositoryDirName += "-" + upstreamBranchName;
 			gitRepositoryName += "-ee";
 		}
 
 		File gitRepositoryDir = new File(
-			getBaseGitRepositoryDir(), gitRepositoryName);
+			getBaseGitRepositoryDir(), gitRepositoryDirName);
 
 		GitWorkingDirectory gitWorkingDirectory =
 			GitWorkingDirectoryFactory.newGitWorkingDirectory(

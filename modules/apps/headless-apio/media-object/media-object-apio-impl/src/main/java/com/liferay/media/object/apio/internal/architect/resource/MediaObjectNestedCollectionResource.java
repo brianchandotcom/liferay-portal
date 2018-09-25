@@ -128,7 +128,7 @@ public class MediaObjectNestedCollectionResource
 		).addString(
 			"encodingFormat", FileEntry::getMimeType
 		).addString(
-			"headline", FileEntry::getTitle
+			"fileExtension", FileEntry::getExtension
 		).addString(
 			"title", FileEntry::getTitle
 		).addStringList(

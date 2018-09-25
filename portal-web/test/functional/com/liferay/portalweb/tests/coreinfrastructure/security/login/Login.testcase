@@ -291,6 +291,8 @@
 		<property name="openam.enabled" value="true" />
 		<property name="test.name.skip.portal.instance" value="Login#OpenSSOSmoke" />
 
+		<!-- LRQA-40534 -->
+
 		<execute macro="Navigator#openSpecificURL">
 			<var name="url" value="http://test.able.com:8080/openam" />
 		</execute>

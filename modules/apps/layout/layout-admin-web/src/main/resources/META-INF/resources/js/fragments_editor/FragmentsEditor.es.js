@@ -10,7 +10,6 @@ import './components/toolbar/FragmentsEditorToolbar.es';
 import {INITIAL_STATE} from './store/state.es';
 import {Store} from './store/store.es';
 import templates from './FragmentsEditor.soy';
-import {UPDATE_TRANSLATION_STATUS} from './actions/actions.es';
 
 /**
  * FragmentsEditor
@@ -18,21 +17,6 @@ import {UPDATE_TRANSLATION_STATUS} from './actions/actions.es';
  */
 
 class FragmentsEditor extends Component {
-
-	/**
-	 * @inheritDoc
-	 */
-
-	created() {
-		this.once(
-			'storeChanged',
-			() => {
-				this.store.dispatchAction(
-					UPDATE_TRANSLATION_STATUS
-				);
-			}
-		);
-	}
 
 	/**
 	 * Focus a fragmentEntryLink for a given ID

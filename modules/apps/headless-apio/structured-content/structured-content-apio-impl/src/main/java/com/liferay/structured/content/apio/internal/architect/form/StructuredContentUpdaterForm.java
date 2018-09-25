@@ -15,6 +15,10 @@
 package com.liferay.structured.content.apio.internal.architect.form;
 
 import com.liferay.apio.architect.form.Form;
+import com.liferay.category.apio.architect.identifier.CategoryIdentifier;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -53,6 +57,9 @@ public class StructuredContentUpdaterForm {
 			StructuredContentUpdaterForm::new
 		).addOptionalDate(
 			"datePublished", StructuredContentUpdaterForm::setPublishedDate
+		).addOptionalLinkedModelList(
+			"category", CategoryIdentifier .class,
+			StructuredContentUpdaterForm::setCategories
 		).addOptionalNestedModelList(
 			"values", StructuredContentValuesForm::buildValuesForm,
 			StructuredContentUpdaterForm::setStructuredContentValuesForms
@@ -60,7 +67,13 @@ public class StructuredContentUpdaterForm {
 			"description", StructuredContentUpdaterForm::setDescription
 		).addOptionalString(
 			"title", StructuredContentUpdaterForm::setTitle
+		).addOptionalStringList(
+			"keywords", StructuredContentUpdaterForm::setKeywords
 		).build();
+	}
+
+	public List<Long> getCategories() {
+		return _categories;
 	}
 
 	/**
@@ -135,6 +148,36 @@ public class StructuredContentUpdaterForm {
 		return Optional.ofNullable(_publishedDateYear);
 	}
 
+	public List<String> getKeywords() {
+		return _keywords;
+	}
+
+	/**
+	 * Returns the service context related with this form
+	 *
+	 * @param  groupId the group ID
+	 * @return the service context
+	 * @review
+	 */
+	public ServiceContext getServiceContext(long groupId) {
+		ServiceContext serviceContext = new ServiceContext();
+
+		serviceContext.setAddGroupPermissions(true);
+		serviceContext.setAddGuestPermissions(true);
+		serviceContext.setScopeGroupId(groupId);
+
+		if (ListUtil.isNotEmpty(_keywords)) {
+			serviceContext.setAssetTagNames(ArrayUtil.toStringArray(_keywords));
+		}
+
+		if (ListUtil.isNotEmpty(_categories)) {
+			serviceContext.setAssetCategoryIds(
+				ArrayUtil.toLongArray(_categories));
+		}
+
+		return serviceContext;
+	}
+
 	public List<StructuredContentValuesForm> getStructuredContentValuesForms() {
 		return _structuredContentValuesForms;
 	}
@@ -159,8 +202,16 @@ public class StructuredContentUpdaterForm {
 		return _getStringMapOptional(locale, _title);
 	}
 
+	public void setCategories(List<Long> categories) {
+		_categories = categories;
+	}
+
 	public void setDescription(String description) {
 		_description = description;
+	}
+
+	public void setKeywords(List<String> keywords) {
+		_keywords = keywords;
 	}
 
 	public void setPublishedDate(Date publishedDate) {
@@ -201,7 +252,9 @@ public class StructuredContentUpdaterForm {
 		);
 	}
 
+	private List<Long> _categories;
 	private String _description;
+	private List<String> _keywords;
 	private Integer _publishedDateDay;
 	private Integer _publishedDateHour;
 	private Integer _publishedDateMinute;

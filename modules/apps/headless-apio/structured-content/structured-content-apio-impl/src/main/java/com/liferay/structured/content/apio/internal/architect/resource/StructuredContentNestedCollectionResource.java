@@ -656,11 +656,9 @@ public class StructuredContentNestedCollectionResource
 		JournalArticle journalArticle = _journalArticleService.getLatestArticle(
 			journalArticleId);
 
-		ServiceContext serviceContext = new ServiceContext();
-
-		serviceContext.setAddGroupPermissions(true);
-		serviceContext.setAddGuestPermissions(true);
-		serviceContext.setScopeGroupId(journalArticle.getGroupId());
+		ServiceContext serviceContext =
+			structuredContentUpdaterForm.getServiceContext(
+				journalArticle.getGroupId());
 
 		DDMStructure ddmStructure = journalArticle.getDDMStructure();
 

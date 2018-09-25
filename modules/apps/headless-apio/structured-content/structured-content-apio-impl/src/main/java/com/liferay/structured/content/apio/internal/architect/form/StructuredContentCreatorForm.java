@@ -15,6 +15,7 @@
 package com.liferay.structured.content.apio.internal.architect.form;
 
 import com.liferay.apio.architect.form.Form;
+import com.liferay.category.apio.architect.identifier.CategoryIdentifier;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -54,6 +55,9 @@ public class StructuredContentCreatorForm {
 			__ -> "This form can be used to create a structured content"
 		).constructor(
 			StructuredContentCreatorForm::new
+		).addOptionalLinkedModelList(
+			"category", CategoryIdentifier.class,
+			StructuredContentCreatorForm::setCategories
 		).addOptionalNestedModelList(
 			"values", StructuredContentValuesForm::buildValuesForm,
 			StructuredContentCreatorForm::setStructuredContentValuesForms
@@ -69,6 +73,10 @@ public class StructuredContentCreatorForm {
 		).addRequiredString(
 			"title", StructuredContentCreatorForm::setTitle
 		).build();
+	}
+
+	public List<Long> getCategories() {
+		return _categories;
 	}
 
 	/**
@@ -163,6 +171,11 @@ public class StructuredContentCreatorForm {
 			serviceContext.setAssetTagNames(ArrayUtil.toStringArray(_keywords));
 		}
 
+		if (ListUtil.isNotEmpty(_categories)) {
+			serviceContext.setAssetCategoryIds(
+				ArrayUtil.toLongArray(_categories));
+		}
+
 		return serviceContext;
 	}
 
@@ -182,6 +195,10 @@ public class StructuredContentCreatorForm {
 
 	public List<StructuredContentValuesForm> getValues() {
 		return _structuredContentValuesForms;
+	}
+
+	public void setCategories(List<Long> categories) {
+		_categories = categories;
 	}
 
 	public void setContentStructureId(Long contentStructureId) {
@@ -218,6 +235,7 @@ public class StructuredContentCreatorForm {
 		_title = title;
 	}
 
+	private List<Long> _categories;
 	private Long _contentStructureId;
 	private String _description;
 	private List<String> _keywords;

@@ -21,6 +21,8 @@ import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 
 import java.util.Date;
 import java.util.Locale;
@@ -59,6 +61,20 @@ public interface AssetRenderer<T> extends Renderer {
 	public String[] getAvailableLanguageIds() throws Exception;
 
 	public DDMFormValuesReader getDDMFormValuesReader();
+
+	public default String getDefaultLanguageId() throws Exception {
+		String[] availableLanguageIds = getAvailableLanguageIds();
+		String siteDefaultLanguageId = LocaleUtil.toLanguageId(
+			LocaleUtil.getSiteDefault());
+
+		if (ArrayUtil.isNotEmpty(availableLanguageIds) &&
+			!ArrayUtil.contains(availableLanguageIds, siteDefaultLanguageId)) {
+
+			return availableLanguageIds[0];
+		}
+
+		return siteDefaultLanguageId;
+	}
 
 	public String getDiscussionPath();
 

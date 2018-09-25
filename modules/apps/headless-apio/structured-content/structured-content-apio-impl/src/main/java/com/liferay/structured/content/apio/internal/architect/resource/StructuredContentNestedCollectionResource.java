@@ -39,7 +39,6 @@ import com.liferay.dynamic.data.mapping.kernel.DDMFormValues;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.service.DDMStructureService;
-import com.liferay.dynamic.data.mapping.service.DDMTemplateService;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalArticleConstants;
 import com.liferay.journal.model.JournalArticleDisplay;
@@ -53,7 +52,6 @@ import com.liferay.portal.apio.permission.HasPermission;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.model.ClassName;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.BooleanQuery;
@@ -71,7 +69,6 @@ import com.liferay.portal.kernel.search.SearchResultPermissionFilterFactory;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
-import com.liferay.portal.kernel.service.ClassNameService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -91,7 +88,6 @@ import com.liferay.structured.content.apio.internal.architect.filter.ExpressionV
 import com.liferay.structured.content.apio.internal.architect.filter.StructuredContentSingleEntitySchemaBasedEdmProvider;
 import com.liferay.structured.content.apio.internal.architect.form.StructuredContentCreatorForm;
 import com.liferay.structured.content.apio.internal.architect.form.StructuredContentUpdaterForm;
-import com.liferay.structured.content.apio.internal.architect.form.StructuredContentValuesForm;
 import com.liferay.structured.content.apio.internal.model.JournalArticleWrapper;
 import com.liferay.structured.content.apio.internal.model.RenderedJournalArticle;
 import com.liferay.structured.content.apio.internal.util.JournalArticleContentHelper;
@@ -101,7 +97,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
-import java.util.function.Supplier;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -200,7 +195,7 @@ public class StructuredContentNestedCollectionResource
 			fieldValuesBuilder -> fieldValuesBuilder.types(
 				"ContentFieldValue"
 			).addLinkedModel(
-				"mediaObject", MediaObjectIdentifier.class,
+				"document", MediaObjectIdentifier.class,
 				ddmFormFieldValue -> Try.fromFallible(
 					ddmFormFieldValue::getValue
 				).map(
@@ -249,37 +244,48 @@ public class StructuredContentNestedCollectionResource
 			ThemeDisplay themeDisplay)
 		throws PortalException {
 
-		Long structureId = structuredContentCreatorForm.getStructureId();
+		Long structureId = structuredContentCreatorForm.getContentStructureId();
 
 		DDMStructure ddmStructure = _ddmStructureService.getStructure(
 			structureId);
 
 		Locale locale = themeDisplay.getLocale();
 
-		String content = _getDefaultContent(
-			structuredContentCreatorForm.getValues(), ddmStructure, locale,
-			structuredContentCreatorForm::getText);
+		String content =
+			_journalArticleContentHelper.createJournalArticleContent(
+				structuredContentCreatorForm.getValues(), ddmStructure, locale);
 
 		String ddmStructureKey = ddmStructure.getStructureKey();
 
-		String ddmTemplateKey = _getDDMTemplateKey(
-			contentSpaceId, structuredContentCreatorForm.getTemplate(),
-			ddmStructure);
+		String ddmTemplateKey = _getDDMTemplateKey(ddmStructure);
 
 		ServiceContext serviceContext =
 			structuredContentCreatorForm.getServiceContext(contentSpaceId);
+
+		Date displayDate = new Date();
 
 		JournalArticle journalArticle = _journalArticleService.addArticle(
 			contentSpaceId, 0, 0, 0, null, true,
 			structuredContentCreatorForm.getTitleMap(locale),
 			structuredContentCreatorForm.getDescriptionMap(locale), content,
 			ddmStructureKey, ddmTemplateKey, null,
-			structuredContentCreatorForm.getDisplayDateMonth(),
-			structuredContentCreatorForm.getDisplayDateDay(),
-			structuredContentCreatorForm.getDisplayDateYear(),
-			structuredContentCreatorForm.getDisplayDateHour(),
-			structuredContentCreatorForm.getDisplayDateMinute(), 0, 0, 0, 0, 0,
-			true, 0, 0, 0, 0, 0, true, true, null, serviceContext);
+			_getDefaultValue(
+				structuredContentCreatorForm.getPublishedDateMonthOptional(),
+				displayDate.getMonth()),
+			_getDefaultValue(
+				structuredContentCreatorForm.getPublishedDateDayOptional(),
+				displayDate.getDate()),
+			_getDefaultValue(
+				structuredContentCreatorForm.getPublishedDateYearOptional(),
+				displayDate.getYear()),
+			_getDefaultValue(
+				structuredContentCreatorForm.getPublishedDateHourOptional(),
+				displayDate.getHours()),
+			_getDefaultValue(
+				structuredContentCreatorForm.getPublishedDateMinuteOptional(),
+				displayDate.getMinutes()),
+			0, 0, 0, 0, 0, true, 0, 0, 0, 0, 0, true, true, null,
+			serviceContext);
 
 		return new JournalArticleWrapper(journalArticle, themeDisplay);
 	}
@@ -338,39 +344,12 @@ public class StructuredContentNestedCollectionResource
 			journalArticle.getArticleResourceUuid(), new ServiceContext());
 	}
 
-	private String _getDDMTemplateKey(
-			long contentSpaceId, String ddmTemplateKey,
-			DDMStructure ddmStructure)
-		throws PortalException {
+	private String _getDDMTemplateKey(DDMStructure ddmStructure) {
+		List<DDMTemplate> ddmTemplates = ddmStructure.getTemplates();
 
-		if (ddmTemplateKey == null) {
-			List<DDMTemplate> ddmTemplates = ddmStructure.getTemplates();
-
-			DDMTemplate ddmTemplate = ddmTemplates.get(0);
-
-			return ddmTemplate.getTemplateKey();
-		}
-
-		ClassName className = _classNameService.fetchClassName(
-			JournalArticle.class.getName());
-
-		DDMTemplate ddmTemplate = _ddmTemplateService.getTemplate(
-			contentSpaceId, className.getClassNameId(), ddmTemplateKey);
+		DDMTemplate ddmTemplate = ddmTemplates.get(0);
 
 		return ddmTemplate.getTemplateKey();
-	}
-
-	private String _getDefaultContent(
-		List<StructuredContentValuesForm> structuredContentValuesForms,
-		DDMStructure ddmStructure, Locale preferredLocale,
-		Supplier<String> stringSupplier) {
-
-		if (!structuredContentValuesForms.isEmpty()) {
-			return _journalArticleContentHelper.createJournalArticleContent(
-				structuredContentValuesForms, ddmStructure, preferredLocale);
-		}
-
-		return stringSupplier.get();
 	}
 
 	private <T> T _getDefaultValue(Optional<T> optional, T defaultValue) {
@@ -690,26 +669,20 @@ public class StructuredContentNestedCollectionResource
 		JournalArticle journalArticle = _journalArticleService.getLatestArticle(
 			journalArticleId);
 
-		ServiceContext serviceContext = new ServiceContext();
-
-		serviceContext.setAddGroupPermissions(true);
-		serviceContext.setAddGuestPermissions(true);
-		serviceContext.setScopeGroupId(journalArticle.getGroupId());
+		ServiceContext serviceContext =
+			structuredContentUpdaterForm.getServiceContext(
+				journalArticle.getGroupId());
 
 		DDMStructure ddmStructure = journalArticle.getDDMStructure();
 
 		Locale locale = themeDisplay.getLocale();
 
-		String content = _getDefaultContent(
-			structuredContentUpdaterForm.getStructuredContentValuesForms(),
-			ddmStructure, locale,
-			() -> _getDefaultValue(
-				structuredContentUpdaterForm.getTextOptional(),
-				journalArticle.getContent()));
+		String content =
+			_journalArticleContentHelper.createJournalArticleContent(
+				structuredContentUpdaterForm.getStructuredContentValuesForms(),
+				ddmStructure, locale);
 
-		String ddmTemplateKey = _getDDMTemplateKey(
-			journalArticle.getGroupId(),
-			structuredContentUpdaterForm.getTemplate(), ddmStructure);
+		String ddmTemplateKey = _getDDMTemplateKey(ddmStructure);
 
 		Date displayDate = journalArticle.getDisplayDate();
 
@@ -728,19 +701,21 @@ public class StructuredContentNestedCollectionResource
 				journalArticle.getDDMStructureKey(), ddmTemplateKey,
 				journalArticle.getLayoutUuid(),
 				_getDefaultValue(
-					structuredContentUpdaterForm.getDisplayDateMonthOptional(),
+					structuredContentUpdaterForm.
+						getPublishedDateMonthOptional(),
 					displayDate.getMonth()),
 				_getDefaultValue(
-					structuredContentUpdaterForm.getDisplayDateDayOptional(),
+					structuredContentUpdaterForm.getPublishedDateDayOptional(),
 					displayDate.getDate()),
 				_getDefaultValue(
-					structuredContentUpdaterForm.getDisplayDateYearOptional(),
+					structuredContentUpdaterForm.getPublishedDateYearOptional(),
 					displayDate.getYear()),
 				_getDefaultValue(
-					structuredContentUpdaterForm.getDisplayDateHourOptional(),
+					structuredContentUpdaterForm.getPublishedDateHourOptional(),
 					displayDate.getHours()),
 				_getDefaultValue(
-					structuredContentUpdaterForm.getDisplayDateMinuteOptional(),
+					structuredContentUpdaterForm.
+						getPublishedDateMinuteOptional(),
 					displayDate.getMinutes()),
 				0, 0, 0, 0, 0, true, 0, 0, 0, 0, 0, true, true, false, null,
 				null, null, null, serviceContext);
@@ -752,13 +727,7 @@ public class StructuredContentNestedCollectionResource
 	private AssetTagLocalService _assetTagLocalService;
 
 	@Reference
-	private ClassNameService _classNameService;
-
-	@Reference
 	private DDMStructureService _ddmStructureService;
-
-	@Reference
-	private DDMTemplateService _ddmTemplateService;
 
 	@Reference
 	private DLAppService _dlAppService;

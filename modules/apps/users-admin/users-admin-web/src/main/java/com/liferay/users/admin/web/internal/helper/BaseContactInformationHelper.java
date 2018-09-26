@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.users.admin.web.internal.portlet.action;
+package com.liferay.users.admin.web.internal.helper;
 
 import java.util.List;
 

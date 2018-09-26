@@ -47,6 +47,10 @@ import com.liferay.users.admin.web.internal.constants.UsersAdminWebKeys;
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 
+import com.liferay.users.admin.web.internal.helper.ContactInformationHelper;
+import com.liferay.users.admin.web.internal.helper.EmailAddressContactInformationHelper;
+import com.liferay.users.admin.web.internal.helper.PhoneContactInformationHelper;
+import com.liferay.users.admin.web.internal.helper.WebsiteContactInformationHelper;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 

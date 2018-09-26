@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.users.admin.web.internal.portlet.action;
+package com.liferay.users.admin.web.internal.helper;
 
 import com.liferay.portal.kernel.model.Phone;
 import com.liferay.portal.kernel.service.PhoneLocalService;
@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.service.PhoneService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.users.admin.kernel.util.UsersAdmin;
+import com.liferay.users.admin.web.internal.helper.BaseContactInformationHelper;
 
 import java.util.List;
 

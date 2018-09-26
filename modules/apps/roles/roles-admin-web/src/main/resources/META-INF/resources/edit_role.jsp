@@ -196,7 +196,7 @@ renderResponse.setTitle((role == null) ? LanguageUtil.get(request, "new-role") :
 </aui:form>
 
 <c:if test="<%= role == null %>">
-	<aui:script sandbox="<%= true %>" require="metal-debounce/src/debounce">
+	<aui:script require="metal-debounce/src/debounce" sandbox="<%= true %>">
 		var form = $(document.<portlet:namespace />fm);
 
 		var nameInput = form.fm('name');

@@ -3,9 +3,15 @@
 }
 
 .trash-undo-button.btn-link {
+	font-weight: 600;
+	margin-left: 0.5rem;
+
 	&:hover {
-		color: inherit;
-		text-decoration: underline;
+		text-decoration: none;
+	}
+
+	&:focus {
+		background-color: transparent;
 	}
 
 	padding: 0;

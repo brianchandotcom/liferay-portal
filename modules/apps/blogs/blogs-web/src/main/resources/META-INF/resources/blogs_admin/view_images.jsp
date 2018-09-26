@@ -91,6 +91,14 @@ String displayStyle = blogImagesManagementToolbarDisplayContext.getDisplayStyle(
 					<portlet:param name="fileEntryId" value="<%= String.valueOf(fileEntry.getFileEntryId()) %>" />
 				</liferay-portlet:renderURL>
 
+				<%
+				Map<String, Object> rowData = new HashMap<>();
+
+				rowData.put("actions", String.join(StringPool.COMMA, blogImagesManagementToolbarDisplayContext.getAvailableActionDropdownItems(fileEntry)));
+
+				row.setData(rowData);
+				%>
+
 				<%@ include file="/blogs_admin/image_search_columns.jspf" %>
 			</liferay-ui:search-container-row>
 

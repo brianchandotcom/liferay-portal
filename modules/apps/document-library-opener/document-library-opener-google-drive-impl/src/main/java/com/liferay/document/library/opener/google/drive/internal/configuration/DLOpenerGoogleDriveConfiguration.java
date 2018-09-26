@@ -29,10 +29,16 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 )
 public interface DLOpenerGoogleDriveConfiguration {
 
-	@Meta.AD(description = "client-id-description", name = "client-id")
+	@Meta.AD(
+		description = "client-id-description", name = "client-id",
+		required = false
+	)
 	public String clientId();
 
-	@Meta.AD(description = "client-secret-description", name = "client-secret")
+	@Meta.AD(
+		description = "client-secret-description", name = "client-secret",
+		required = false
+	)
 	public String clientSecret();
 
 }

@@ -16,6 +16,7 @@ package com.liferay.document.library.opener.google.drive.web.internal.portlet.to
 
 import com.liferay.document.library.constants.DLPortletKeys;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
+import com.liferay.document.library.opener.google.drive.DLOpenerGoogleDriveManager;
 import com.liferay.document.library.opener.google.drive.constants.DLOpenerGoogleDriveMimeTypes;
 import com.liferay.document.library.opener.google.drive.web.internal.constants.DLOpenerGoogleDriveWebConstants;
 import com.liferay.document.library.portlet.toolbar.contributor.DLPortletToolbarContributorContext;
@@ -59,6 +60,10 @@ public class DLOpenerGoogleDriveDLPortletToolbarContributorContext
 	public void updatePortletTitleMenuItems(
 		List<MenuItem> menuItems, Folder folder, ThemeDisplay themeDisplay,
 		PortletRequest portletRequest, PortletResponse portletResponse) {
+
+		if (!_dlOpenerGoogleDriveManager.isConfigured()) {
+			return;
+		}
 
 		menuItems.add(
 			_createURLMenuItem(
@@ -116,6 +121,10 @@ public class DLOpenerGoogleDriveDLPortletToolbarContributorContext
 				"folderId", String.valueOf(folderId));
 
 			liferayPortletURL.setParameter("contentType", contentType);
+			liferayPortletURL.setParameter(
+				"googleDocsRedirect",
+				_portal.getCurrentCompleteURL(
+					_portal.getHttpServletRequest(portletRequest)));
 
 			return liferayPortletURL.toString();
 		}
@@ -131,6 +140,9 @@ public class DLOpenerGoogleDriveDLPortletToolbarContributorContext
 
 		return _language.get(resourceBundle, key);
 	}
+
+	@Reference
+	private DLOpenerGoogleDriveManager _dlOpenerGoogleDriveManager;
 
 	@Reference
 	private Language _language;

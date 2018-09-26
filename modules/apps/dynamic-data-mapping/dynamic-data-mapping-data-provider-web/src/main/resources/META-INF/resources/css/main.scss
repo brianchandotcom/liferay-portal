@@ -1,6 +1,15 @@
 @import "mixins";
 
+.lfr-ddm-edit-data-provider .has-success .form-control {
+	background-color: #F1F2F5;
+	border: 0.0625rem solid #E7E7ED;
+}
+
 .portlet-dynamic-data-mapping-data-provider {
+	.data-provider-instance-id, .data-provider-instance-modified-date {
+		margin-right: 20px;
+	}
+
 	.form {
 		.input-localized {
 			.help-block {
@@ -9,21 +18,12 @@
 		}
 	}
 
-	td.lfr-name-column,
-	.lfr-search-container-wrapper .list-group .list-group-item .autofit-col h4 {
-		font-weight: 600;
-	}
-
 	.required-warning {
 		margin: 0 0 20px;
 	}
 
-	.data-provider-instance-id, .data-provider-instance-modified-date {
-		margin-right: 20px;
+	td.lfr-name-column,
+	.lfr-search-container-wrapper .list-group .list-group-item .autofit-col h4 {
+		font-weight: 600;
 	}
-}
-
-.lfr-ddm-edit-data-provider .has-success .form-control {
-	background-color: #F1F2F5;
-	border: 0.0625rem solid #E7E7ED;
 }

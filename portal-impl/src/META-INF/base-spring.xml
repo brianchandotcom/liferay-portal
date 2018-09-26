@@ -70,13 +70,11 @@
 		<property name="nextMethodInterceptor" ref="accessControlAdvice" />
 	</bean>
 	<bean class="com.liferay.portal.spring.bean.BeanReferenceAnnotationBeanPostProcessor" />
-	<bean class="com.liferay.portal.spring.transaction.AnnotationTransactionAttributeSource" id="transactionAttributeSource" />
 	<bean class="com.liferay.portal.spring.transaction.TransactionExecutorFactory" factory-method="createTransactionExecutor" id="transactionExecutor">
 		<constructor-arg ref="liferayTransactionManager" />
 		<constructor-arg value="false" />
 	</bean>
 	<bean class="com.liferay.portal.spring.transaction.TransactionInterceptor" id="counterTransactionAdvice">
-		<property name="transactionAttributeSource" ref="transactionAttributeSource" />
 		<property name="transactionExecutor">
 			<bean class="com.liferay.portal.spring.transaction.TransactionExecutorFactory" factory-method="createTransactionExecutor">
 				<constructor-arg ref="counterTransactionManager" />
@@ -85,7 +83,6 @@
 		</property>
 	</bean>
 	<bean class="com.liferay.portal.spring.transaction.TransactionInterceptor" id="transactionAdvice">
-		<property name="transactionAttributeSource" ref="transactionAttributeSource" />
 		<property name="transactionExecutor" ref="transactionExecutor" />
 	</bean>
 	<bean class="com.liferay.portal.systemevent.SystemEventAdvice" id="systemEventAdvice">

@@ -42,15 +42,9 @@ public class TransactionInterceptor implements MethodInterceptor {
 	public TransactionAttribute getTransactionAttribute(
 		MethodInvocation methodInvocation) {
 
-		Method method = methodInvocation.getMethod();
-
-		Class<?> targetClass = null;
-
 		Object targetBean = methodInvocation.getThis();
 
-		if (targetBean != null) {
-			targetClass = targetBean.getClass();
-		}
+		Class<?> targetClass = targetBean.getClass();
 
 		Map<Method, TransactionAttribute> transactionAttributes =
 			_transactionAttributes.get(targetClass);
@@ -66,6 +60,8 @@ public class TransactionInterceptor implements MethodInterceptor {
 				transactionAttributes = previousTransactionAttributes;
 			}
 		}
+
+		Method method = methodInvocation.getMethod();
 
 		TransactionAttribute transactionAttribute = transactionAttributes.get(
 			method);

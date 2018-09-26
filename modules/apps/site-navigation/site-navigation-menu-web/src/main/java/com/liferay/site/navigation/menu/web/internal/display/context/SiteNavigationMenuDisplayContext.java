@@ -376,6 +376,12 @@ public class SiteNavigationMenuDisplayContext {
 		else if (type == SiteNavigationConstants.TYPE_SOCIAL) {
 			typeKey = "social-navigation";
 		}
+		else if (type == SiteNavigationConstants.TYPE_PRIVATE_PAGES_HIERARCHY) {
+			typeKey = "private-pages-hierarchy";
+		}
+		else if (type == SiteNavigationConstants.TYPE_PUBLIC_PAGES_HIERARCHY) {
+			typeKey = "public-pages-hierarchy";
+		}
 
 		return LanguageUtil.get(_request, typeKey);
 	}

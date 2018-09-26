@@ -44,7 +44,11 @@
 
 		<var name="key_assetTitle" value="${assetTitle}" />
 
-		<execute function="AssertClick" locator1="AssetRelatedAssets#ASSET_TABLE_CHOOSE" value1="${assetTitle}" />
+		<execute function="Click" locator1="AssetRelatedAssets#ASSET_TABLE_CHECKBOX">
+			<var name="key_assetTitle" value="${assetTitle}" />
+		</execute>
+
+		<execute function="AssertClick" locator1="Button#ADD" value1="Add" />
 
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>

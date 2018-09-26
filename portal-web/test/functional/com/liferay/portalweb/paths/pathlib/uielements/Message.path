@@ -290,7 +290,7 @@
 </tr>
 <tr>
 	<td>SUCCESS_DISMISSIBLE</td>
-	<td>//div[contains(@class,'alert-success')][contains(@class,'alert-dismissible')]</td>
+	<td>//div[contains(@class,'alert-success')][contains(@class,'alert-dismissible')] | //div[contains(@class,'alert-success')][contains(@class,'alert-dismissable')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -131,6 +131,11 @@
 </tr>
 <!--ASSET_TABLE-->
 <tr>
+	<td>ASSET_TABLE_CHECKBOX</td>
+	<td>//tr[contains(.,'${key_assetTitle}')]/td//input[@type='checkbox']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ASSET_TABLE_CHOOSE</td>
 	<td>//tr[contains(.,'${key_assetTitle}')]/td//a</td>
 	<td></td>

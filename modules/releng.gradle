@@ -346,6 +346,63 @@ portalArtifactsJar {
 	classifier = null
 	configurations = [project.configurations.portalArtifacts]
 	version = _getReleaseInfoVersion()
+
+	project.afterEvaluate {
+		File portalArtifactsDir = new File(buildDir, "portalArtifacts")
+
+		delete portalArtifactsDir
+
+		portalArtifactsDir.mkdirs()
+
+		Set<String> bundleSymbolicNames = new TreeSet<>()
+
+		projectDir.traverse(
+			preDir: {
+				if (it.name in [".gradle", ".github", "aspectj", "build", "classes", "node_modules", "project-templates", "sdk", "third-party"]) {
+					return FileVisitResult.SKIP_SUBTREE
+				}
+
+				File relengIgnoreMarkerFile = new File(it, ".lfrbuild-releng-ignore")
+
+				if (it.name.endsWith("-test") || it.name.endsWith("-test-api") || it.name.endsWith("-test-impl")|| it.name.endsWith("-test-service") || relengIgnoreMarkerFile.exists() || _isGitRepoReadOnly(it)) {
+					return FileVisitResult.SKIP_SUBTREE
+				}
+
+				String bundleSymbolicName = null
+
+				File bndBndFile = new File(it, "bnd.bnd")
+				File gulpfileJsFile = new File(it, "gulpfile.js")
+				File liferayPluginPackagePropertiesFile = new File(it, "docroot/WEB-INF/liferay-plugin-package.properties")
+
+				if (bndBndFile.exists()) {
+					Properties bndProperties = GUtil.loadProperties(bndBndFile)
+
+					String bundleVersion = bndProperties.getProperty("Bundle-Version")
+
+					if (!bundleVersion || bundleVersion.equals("1.0.0")) {
+						return FileVisitResult.CONTINUE
+					}
+
+					bundleSymbolicName = bndProperties.getProperty("Bundle-SymbolicName")
+				}
+				else if (gulpfileJsFile.exists() && gulpfileJsFile.text.contains("liferay-theme-tasks")) {
+					bundleSymbolicName = it.name
+				}
+				else if (liferayPluginPackagePropertiesFile.exists() && liferayPluginPackagePropertiesFile.text.contains("module-incremental-version")) {
+					bundleSymbolicName = it.name
+				}
+
+				if (!bundleSymbolicName || !it.name.endsWith("-api")) {
+					return FileVisitResult.CONTINUE
+				}
+
+				bundleSymbolicNames.add(bundleSymbolicName)
+
+				return FileVisitResult.SKIP_SUBTREE
+			},
+			type: FileType.DIRECTORIES
+		)
+	}
 }
 
 prepareMajorIncrement {

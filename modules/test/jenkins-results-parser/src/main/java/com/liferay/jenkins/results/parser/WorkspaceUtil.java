@@ -57,8 +57,11 @@ public class WorkspaceUtil {
 			throw new RuntimeException("Invalid repository GitHub URL");
 		}
 
-		dependencyWorkspaceGitRepository.setBranchSHA(
-			workspaceGitRepositoryData.getBranchSHA());
+		String branchSHA = workspaceGitRepositoryData.getBranchSHA();
+
+		if (branchSHA != null) {
+			dependencyWorkspaceGitRepository.setBranchSHA(branchSHA);
+		}
 
 		return dependencyWorkspaceGitRepository;
 	}
@@ -93,7 +96,9 @@ public class WorkspaceUtil {
 			throw new RuntimeException("Invalid repository GitHub URL");
 		}
 
-		workspaceGitRepository.setBranchSHA(branchSHA);
+		if (branchSHA != null) {
+			workspaceGitRepository.setBranchSHA(branchSHA);
+		}
 
 		return workspaceGitRepository;
 	}

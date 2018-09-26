@@ -72,7 +72,7 @@ public abstract class BaseWorkspaceGitRepository
 			}
 		}
 
-		put("branch_sha", branchSHA);
+		put("branch_sha", branchSHA, true);
 	}
 
 	@Override

@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.service.WebsiteLocalService;
 import com.liferay.portal.kernel.service.WebsiteService;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.users.admin.kernel.util.UsersAdmin;
-import com.liferay.users.admin.web.internal.helper.BaseContactInformationHelper;
 
 import java.util.List;
 

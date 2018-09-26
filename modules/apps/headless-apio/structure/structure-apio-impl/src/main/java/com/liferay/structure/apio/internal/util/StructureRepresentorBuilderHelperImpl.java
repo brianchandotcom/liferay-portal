@@ -96,7 +96,7 @@ public class StructureRepresentorBuilderHelperImpl
 		).addLocalizedStringByLocale(
 			"style", getLocalizedString(DDMFormField::getStyle)
 		).addLocalizedStringByLocale(
-			"tip", getLocalizedString(DDMFormField::getTip)
+			"tooltip", getLocalizedString(DDMFormField::getTip)
 		).addNested(
 			"validation", DDMFormField::getDDMFormFieldValidation,
 			StructureRepresentorBuilderHelperImpl::_buildValidationProperties
@@ -233,7 +233,7 @@ public class StructureRepresentorBuilderHelperImpl
 		return builder.types(
 			"FormFieldProperties"
 		).addString(
-			"error", DDMFormFieldValidation::getErrorMessage
+			"errorMessage", DDMFormFieldValidation::getErrorMessage
 		).addString(
 			"expression", DDMFormFieldValidation::getExpression
 		).build();

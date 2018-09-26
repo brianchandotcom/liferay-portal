@@ -38,26 +38,4 @@ public final class FormInstanceRepresentorUtil {
 		return availableLanguagesStream.collect(Collectors.toList());
 	}
 
-	public static DDMFormInstanceSettings getSettings(
-		DDMFormInstance ddmFormInstance) {
-
-		return Try.fromFallible(
-			ddmFormInstance::getSettingsModel
-		).orElse(
-			null
-		);
-	}
-
-	public static DDMFormInstanceVersion getVersion(
-		DDMFormInstance ddmFormInstance) {
-
-		return Try.fromFallible(
-			ddmFormInstance::getVersion
-		).map(
-			ddmFormInstance::getFormInstanceVersion
-		).orElse(
-			null
-		);
-	}
-
 }

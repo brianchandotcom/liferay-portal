@@ -29,7 +29,6 @@ import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecord;
-import com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecordVersion;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceRecordService;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceService;
@@ -41,7 +40,6 @@ import com.liferay.forms.apio.internal.architect.form.FormInstanceRecordForm;
 import com.liferay.forms.apio.internal.architect.locale.AcceptLocale;
 import com.liferay.forms.apio.internal.helper.UploadFileHelper;
 import com.liferay.forms.apio.internal.model.ServiceContextWrapper;
-import com.liferay.forms.apio.internal.util.FormInstanceRecordResourceUtil;
 import com.liferay.media.object.apio.architect.identifier.MediaObjectIdentifier;
 import com.liferay.person.apio.architect.identifier.PersonIdentifier;
 import com.liferay.portal.apio.permission.HasPermission;
@@ -87,7 +85,7 @@ public class FormInstanceRecordNestedCollectionResource
 
 	@Override
 	public String getName() {
-		return "form-instance-record";
+		return "form-record";
 	}
 
 	@Override
@@ -108,11 +106,11 @@ public class FormInstanceRecordNestedCollectionResource
 		Representor.Builder<DDMFormInstanceRecord, Long> builder) {
 
 		return builder.types(
-			"FormInstanceRecord"
+			"FormRecord"
 		).identifier(
 			DDMFormInstanceRecord::getFormInstanceRecordId
 		).addBidirectionalModel(
-			"formInstance", "formInstanceRecords", FormInstanceIdentifier.class,
+			"form", "formRecords", FormInstanceIdentifier.class,
 			DDMFormInstanceRecord::getFormInstanceId
 		).addBoolean(
 			"draft", this::_isDraft
@@ -124,16 +122,6 @@ public class FormInstanceRecordNestedCollectionResource
 			"datePublished", DDMFormInstanceRecord::getLastPublishDate
 		).addLinkedModel(
 			"creator", PersonIdentifier.class, DDMFormInstanceRecord::getUserId
-		).addNested(
-			"version", FormInstanceRecordResourceUtil::getVersion,
-			versionBuilder -> versionBuilder.types(
-				"FormInstanceRecordVersion"
-			).addLinkedModel(
-				"creator", PersonIdentifier.class,
-				DDMFormInstanceRecordVersion::getUserId
-			).addString(
-				"name", DDMFormInstanceRecordVersion::getVersion
-			).build()
 		).addNestedList(
 			"fieldValues", this::_getDDMFormFieldValues,
 			fieldValuesBuilder -> fieldValuesBuilder.types(

@@ -88,7 +88,7 @@ public class FormInstanceNestedCollectionResource
 
 	@Override
 	public String getName() {
-		return "form-instance";
+		return "form";
 	}
 
 	@Override
@@ -118,11 +118,11 @@ public class FormInstanceNestedCollectionResource
 		Representor.Builder<DDMFormInstance, Long> builder) {
 
 		return builder.types(
-			"FormInstance"
+			"Form"
 		).identifier(
 			DDMFormInstance::getFormInstanceId
 		).addBidirectionalModel(
-			"contentSpace", "formInstances", ContentSpaceIdentifier.class,
+			"contentSpace", "forms", ContentSpaceIdentifier.class,
 			DDMFormInstance::getGroupId
 		).addDate(
 			"dateCreated", DDMFormInstance::getCreateDate
@@ -134,19 +134,6 @@ public class FormInstanceNestedCollectionResource
 			"creator", PersonIdentifier.class, DDMFormInstance::getUserId
 		).addLinkedModel(
 			"structure", StructureIdentifier.class, this::_getStructureId
-		).addNested(
-			"settings", FormInstanceRepresentorUtil::getSettings,
-			FormInstanceNestedCollectionResource::_buildSettings
-		).addNested(
-			"version", FormInstanceRepresentorUtil::getVersion,
-			nestedBuilder -> nestedBuilder.types(
-				"FormInstanceVersion"
-			).addLinkedModel(
-				"creator", PersonIdentifier.class,
-				DDMFormInstanceVersion::getUserId
-			).addString(
-				"name", DDMFormInstanceVersion::getVersion
-			).build()
 		).addLocalizedStringByLocale(
 			"description", DDMFormInstance::getDescription
 		).addLocalizedStringByLocale(
@@ -156,52 +143,6 @@ public class FormInstanceNestedCollectionResource
 		).addStringList(
 			"availableLanguages",
 			FormInstanceRepresentorUtil::getAvailableLanguages
-		).build();
-	}
-
-	private static NestedRepresentor<DDMFormInstanceSettings> _buildSettings(
-		NestedRepresentor.Builder<DDMFormInstanceSettings> builder) {
-
-		return builder.types(
-			"FormInstanceSettings"
-		).addBoolean(
-			"isPublished", DDMFormInstanceSettings::published
-		).addBoolean(
-			"isRequireAuthentication",
-			DDMFormInstanceSettings::requireAuthentication
-		).addBoolean(
-			"isRequireCaptcha", DDMFormInstanceSettings::requireCaptcha
-		).addNested(
-			"emailNotification", identity(),
-			emailSettingsBuilder -> emailSettingsBuilder.types(
-				"EmailMessage"
-			).addBoolean(
-				"isEnabled", DDMFormInstanceSettings::sendEmailNotification
-			).addNested(
-				"sender", identity(),
-				senderBuilder -> senderBuilder.types(
-					"ContactPoint"
-				).addString(
-					"email", DDMFormInstanceSettings::emailFromAddress
-				).addString(
-					"name", DDMFormInstanceSettings::emailFromName
-				).build()
-			).addNested(
-				"toRecipient", identity(),
-				toRecipientBuilder -> toRecipientBuilder.types(
-					"ContactPoint"
-				).addString(
-					"email", DDMFormInstanceSettings::emailToAddress
-				).build()
-			).addString(
-				"about", DDMFormInstanceSettings::emailSubject
-			).build()
-		).addString(
-			"redirectURL", DDMFormInstanceSettings::redirectURL
-		).addString(
-			"storageType", DDMFormInstanceSettings::storageType
-		).addString(
-			"workflowDefinition", DDMFormInstanceSettings::workflowDefinition
 		).build();
 	}
 

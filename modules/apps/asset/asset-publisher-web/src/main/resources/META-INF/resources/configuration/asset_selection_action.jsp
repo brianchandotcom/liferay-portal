@@ -31,7 +31,7 @@ int assetEntryOrder = searchContainer.getStart() + row.getPos();
 </liferay-portlet:actionURL>
 
 <liferay-ui:icon
-	icon="times"
+	icon="times-circle"
 	markupView="lexicon"
 	url="<%= deleteURL %>"
 />

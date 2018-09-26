@@ -1,0 +1,137 @@
+<definition component-name="portal-wcm">
+	<property name="portal.release" value="true" />
+	<property name="portal.upstream" value="true" />
+	<property name="testray.main.component.name" value="Site Pages Administration" />
+
+	<set-up>
+		<execute macro="TestCase#setUpPortalInstance" />
+
+		<execute macro="User#firstLoginPG" />
+	</set-up>
+
+	<tear-down>
+		<var method="PropsUtil#get('test.portal.instance')" name="testPortalInstance" />
+
+		<if>
+			<equals arg1="${testPortalInstance}" arg2="true" />
+			<then>
+				<execute macro="PortalInstances#tearDownCP" />
+			</then>
+			<else>
+				<execute macro="BlogsEntry#tearDownCP" />
+				<execute macro="Page#tearDownCP" />
+				<execute macro="Site#tearDownCP" />
+				<execute macro="User#tearDownCP" />
+			</else>
+		</if>
+	</tear-down>
+
+	<command name="AddPageMultiplePagesToSite" priority="3">
+		<property name="testray.component.names" value="Site Pages Administration" />
+
+		<execute macro="TestCase#getSiteName">
+			<return name="siteName" />
+			<var name="siteName" value="${siteName}" />
+		</execute>
+
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Build" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Pages" />
+		</execute>
+
+		<execute macro="SitePages#addPublicPage">
+			<var name="pageName" value="Site Page 1" />
+		</execute>
+
+		<execute macro="SitePages#addPublicPage">
+			<var name="pageName" value="Site Page 2" />
+		</execute>
+
+		<execute macro="SitePages#addPublicPage">
+			<var name="pageName" value="Site Page 3" />
+		</execute>
+
+		<execute macro="Page#tearDownCP" />
+	</command>
+
+	<command name="AddSitePrivatePage" priority="4">
+		<property name="testray.component.names" value="Site Pages Administration" />
+
+		<var method="PropsUtil#get('portal.url')" name="portalURL" />
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Sites" />
+			<var name="panel" value="Control Panel" />
+			<var name="portlet" value="Sites" />
+		</execute>
+
+		<execute macro="Site#addBlankCP">
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Build" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Pages" />
+		</execute>
+
+		<execute macro="SitePages#addPrivatePage">
+			<var name="pageName" value="Site Page" />
+		</execute>
+
+		<execute macro="Navigator#gotoSpecificURLPage">
+			<var name="pageName" value="Site Page" />
+			<var name="url" value="${portalURL}/group/site-name/site-page" />
+		</execute>
+
+		<execute macro="Page#view">
+			<var name="pageName" value="Site Page" />
+			<var name="privacy" value="Private Pages" />
+		</execute>
+	</command>
+
+	<command name="AddSitePublicChildPage" priority="5">
+		<property name="testray.component.names" value="Site Pages Administration" />
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Sites" />
+			<var name="panel" value="Control Panel" />
+			<var name="portlet" value="Sites" />
+		</execute>
+
+		<execute macro="Site#addBlankCP">
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Build" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Pages" />
+		</execute>
+
+		<execute macro="SitePages#addPublicPage">
+			<var name="pageName" value="Site Page" />
+		</execute>
+
+		<execute macro="SitePages#addPublicChildPage">
+			<var name="childPageName" value="Site Child Page" />
+			<var name="parentPageName" value="Site Page" />
+		</execute>
+
+		<var method="PropsUtil#get('portal.url')" name="portalURL" />
+
+		<execute macro="Navigator#gotoSpecificURLPage">
+			<var name="pageName" value="Site Page" />
+			<var name="url" value="${portalURL}/web/site-name/site-child-page" />
+		</execute>
+
+		<execute macro="Page#view">
+			<var name="depth" value="2" />
+			<var name="pageName" value="Site Child Page" />
+			<var name="privacy" value="Public Pages" />
+		</execute>
+	</command>
+</definition>

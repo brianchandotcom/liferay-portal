@@ -7,6 +7,14 @@
 		<execute macro="TestCase#setUpPortalInstance" />
 
 		<execute macro="User#firstLoginPG" />
+
+		<execute macro="JSONGroup#addGroup">
+			<var name="groupName" value="Site Name" />
+		</execute>
+
+		<execute macro="Navigator#openWithAppendToBaseURL">
+			<var name="urlAppend" value="web/site-name/" />
+		</execute>
 	</set-up>
 
 	<tear-down>
@@ -25,37 +33,6 @@
 			</else>
 		</if>
 	</tear-down>
-
-	<command name="AddPageMultiplePagesToSite" priority="3">
-		<property name="testray.component.names" value="Site Pages Administration" />
-
-		<execute macro="TestCase#getSiteName">
-			<return name="siteName" />
-			<var name="siteName" value="${siteName}" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Site Page 1" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Site Page 2" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Site Page 3" />
-		</execute>
-
-		<execute macro="Page#tearDownCP" />
-	</command>
 
 	<command name="AddPagesFullPageApplication" priority="4">
 		<property name="testray.component.names" value="Site Pages Administration" />
@@ -109,30 +86,22 @@
 		<property name="testray.component.names" value="Site Pages Administration" />
 
 		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Sites" />
-		</execute>
-
-		<execute macro="Site#addBlankCP">
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Build" />
 			<var name="panel" value="Site Administration" />
 			<var name="portlet" value="Pages" />
 		</execute>
 
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Site Page" />
+		<execute macro="JSONLayout#addLayoutByGroupName">
+			<var name="groupName" value="Site Name" />
+			<var name="layoutName" value="Site Page" />
 		</execute>
 
 		<for list="Site Child Page 1,Site Child Page 2,Site Child Page 3" param="childPageName">
-			<execute macro="SitePages#addPublicChildPage">
-				<var name="childPageName" value="${childPageName}" />
-				<var name="parentPageName" value="Site Page" />
-			</execute>
+		<execute macro="JSONLayout#addLayoutByGroupName">
+			<var name="groupName" value="Site Name" />
+			<var name="layoutName" value="${childPageName}" />
+			<var name="parentLayoutName" value="Site Page" />
+		</execute>
 		</for>
 
 		<for list="Site Child Page 1,Site Child Page 2,Site Child Page 3" param="childPageName">
@@ -149,29 +118,17 @@
 
 		<var method="PropsUtil#get('portal.url')" name="portalURL" />
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Sites" />
+		<execute macro="JSONLayout#addLayoutByGroupName">
+			<var name="groupName" value="Site Name" />
+			<var name="layoutName" value="Site Page" />
+			<var name="privateLayout" value="true" />
 		</execute>
 
-		<execute macro="Site#addBlankCP">
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#addPrivatePage">
-			<var name="pageName" value="Site Page" />
-		</execute>
-
-		<execute macro="SitePages#addPrivateChildPage">
-			<var name="childPageName" value="Site Child Page" />
-			<var name="parentPageName" value="Site Page" />
+		<execute macro="JSONLayout#addLayoutByGroupName">
+			<var name="groupName" value="Site Name" />
+			<var name="layoutName" value="Site Child Page" />
+			<var name="parentLayoutName" value="Site Page" />
+			<var name="privateLayout" value="true" />
 		</execute>
 
 		<execute macro="Navigator#gotoSpecificURLPage">
@@ -186,65 +143,21 @@
 		</execute>
 	</command>
 
-	<command name="AddSitePrivatePage" priority="4">
-		<property name="testray.component.names" value="Site Pages Administration" />
-
-		<var method="PropsUtil#get('portal.url')" name="portalURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Sites" />
-		</execute>
-
-		<execute macro="Site#addBlankCP">
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#addPrivatePage">
-			<var name="pageName" value="Site Page" />
-		</execute>
-
-		<execute macro="Navigator#gotoSpecificURLPage">
-			<var name="pageName" value="Site Page" />
-			<var name="url" value="${portalURL}/group/site-name/site-page" />
-		</execute>
-
-		<execute macro="Page#view">
-			<var name="pageName" value="Site Page" />
-			<var name="privacy" value="Private Pages" />
-		</execute>
-	</command>
-
 	<command name="AddSitePrivatePagePortlet" priority="4">
 		<property name="testray.component.names" value="Site Pages Administration" />
 
 		<var method="PropsUtil#get('portal.url')" name="portalURL" />
 
 		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Sites" />
-		</execute>
-
-		<execute macro="Site#addBlankCP">
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Build" />
 			<var name="panel" value="Site Administration" />
 			<var name="portlet" value="Pages" />
 		</execute>
 
-		<execute macro="SitePages#addPrivatePage">
-			<var name="pageName" value="Blogs Page" />
+		<execute macro="JSONLayout#addLayoutByGroupName">
+			<var name="groupName" value="Site Name" />
+			<var name="layoutName" value="Blogs Page" />
+			<var name="privateLayout" value="true" />
 		</execute>
 
 		<execute macro="Navigator#gotoSpecificURLPage">
@@ -261,72 +174,15 @@
 		</execute>
 	</command>
 
-	<command name="AddSitePublicChildPage" priority="5">
-		<property name="testray.component.names" value="Site Pages Administration" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Sites" />
-		</execute>
-
-		<execute macro="Site#addBlankCP">
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Site Page" />
-		</execute>
-
-		<execute macro="SitePages#addPublicChildPage">
-			<var name="childPageName" value="Site Child Page" />
-			<var name="parentPageName" value="Site Page" />
-		</execute>
-
-		<var method="PropsUtil#get('portal.url')" name="portalURL" />
-
-		<execute macro="Navigator#gotoSpecificURLPage">
-			<var name="pageName" value="Site Page" />
-			<var name="url" value="${portalURL}/web/site-name/site-child-page" />
-		</execute>
-
-		<execute macro="Page#view">
-			<var name="depth" value="2" />
-			<var name="pageName" value="Site Child Page" />
-			<var name="privacy" value="Public Pages" />
-		</execute>
-	</command>
-
 	<command name="AddSitePublicPage" priority="4">
 		<property name="testray.component.names" value="Site Pages Administration" />
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Sites" />
-		</execute>
-
-		<execute macro="Site#addBlankCP">
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Site Page" />
-		</execute>
-
 		<var method="PropsUtil#get('portal.url')" name="portalURL" />
+
+		<execute macro="JSONLayout#addLayoutByGroupName">
+			<var name="groupName" value="Site Name" />
+			<var name="layoutName" value="Site Page" />
+		</execute>
 
 		<execute macro="Navigator#gotoSpecificURLPage">
 			<var name="pageName" value="Site Page" />
@@ -342,24 +198,9 @@
 	<command name="AddSitePublicPagePortlet" priority="4">
 		<property name="testray.component.names" value="Site Pages Administration" />
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Sites" />
-		</execute>
-
-		<execute macro="Site#addBlankCP">
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Blogs Page" />
+		<execute macro="JSONLayout#addLayoutByGroupName">
+			<var name="groupName" value="Site Name" />
+			<var name="layoutName" value="Blogs Page" />
 		</execute>
 
 		<execute macro="Navigator#gotoSitePage">
@@ -375,14 +216,9 @@
 	<command name="ChangePageLayout" priority="5">
 		<property name="testray.component.names" value="Site Pages Administration,Training" />
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Site Page Name" />
+		<execute macro="JSONLayout#addLayoutByGroupName">
+			<var name="groupName" value="Site Name" />
+			<var name="layoutName" value="Site Page Name" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
@@ -684,25 +520,16 @@
 		<property name="testray.component.names" value="Site Pages Administration" />
 
 		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Sites" />
-		</execute>
-
-		<execute macro="Site#addBlankCP">
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Build" />
 			<var name="panel" value="Site Administration" />
 			<var name="portlet" value="Pages" />
 		</execute>
 
 		<for list="Site Page 1,Site Page 2,Site Page 3" param="pageName">
-			<execute macro="SitePages#addPublicPage">
-				<var name="pageName" value="${pageName}" />
-			</execute>
+		<execute macro="JSONLayout#addLayoutByGroupName">
+			<var name="groupName" value="Site Name" />
+			<var name="layoutName" value="${pageName}" />
+		</execute>
 		</for>
 
 		<execute macro="SitePages#deletePage">
@@ -714,14 +541,9 @@
 		<property name="portal.acceptance" value="true" />
 		<property name="testray.component.names" value="Site Pages Administration,Training" />
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Site Page" />
+		<execute macro="JSONLayout#addLayoutByGroupName">
+			<var name="groupName" value="Site Name" />
+			<var name="layoutName" value="Site Page" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoPortlet">
@@ -779,16 +601,6 @@
 		<var method="PropsUtil#get('portal.url')" name="portalURL" />
 
 		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Sites" />
-		</execute>
-
-		<execute macro="Site#addBlankCP">
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Build" />
 			<var name="panel" value="Site Administration" />
 			<var name="portlet" value="Pages" />
@@ -828,16 +640,6 @@
 
 	<command name="SavePortletPageType" priority="4">
 		<property name="testray.component.names" value="Site Pages Administration" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Sites" />
-		</execute>
-
-		<execute macro="Site#addBlankCP">
-			<var name="siteName" value="Site Name" />
-		</execute>
 
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Build" />

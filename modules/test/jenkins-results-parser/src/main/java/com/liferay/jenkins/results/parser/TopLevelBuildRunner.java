@@ -63,7 +63,7 @@ public abstract class TopLevelBuildRunner<T extends TopLevelBuildData>
 	}
 
 	protected String[] getDistFileNames() {
-		return new String[] {BuildData.JENKINS_BUILD_DATA_FILE_NAME};
+		return new String[] {BuildDatabase.BUILD_DATABASE_FILE_NAME};
 	}
 
 	protected void invokeBatchJob(String batchName) {
@@ -147,8 +147,6 @@ public abstract class TopLevelBuildRunner<T extends TopLevelBuildData>
 		if (!JenkinsResultsParserUtil.isCINode()) {
 			return;
 		}
-
-		writeJenkinsJSONObjectToFile();
 
 		BuildData buildData = getBuildData();
 

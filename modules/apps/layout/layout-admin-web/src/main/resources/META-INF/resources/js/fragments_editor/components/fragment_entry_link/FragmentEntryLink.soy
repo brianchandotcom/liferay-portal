@@ -10,18 +10,14 @@
 	{@param? _handleFragmentMoveDownButtonClick: any}
 	{@param? _handleFragmentMoveUpButtonClick: any}
 	{@param? _handleFragmentRemoveButtonClick: any}
-	{@param? dropTargetClass: string}
 	{@param? styleModifier: string}
 	{@param? name: string}
 	{@param? showControlBar: bool}
 
 	{let $wrapperClasses kind="text"}
 		drag-fragment
+		fragment-entry-link-drop-target
 		fragment-entry-link-wrapper
-
-		{if $dropTargetClass}
-			{sp}{$dropTargetClass}
-		{/if}
 
 		{if $styleModifier}
 			{sp}{$styleModifier}

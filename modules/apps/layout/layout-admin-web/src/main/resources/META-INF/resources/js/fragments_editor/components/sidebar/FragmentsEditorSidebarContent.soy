@@ -16,7 +16,6 @@
 	{@param fragmentEntryLinks: ?}
 	{@param sidebarTabs: list<[enabled:bool, id:string, label:string]>}
 	{@param spritemap: string}
-	{@param? dropTargetClass: string}
 	{@param? layoutData: ?}
 	{@param? selectedMappingTypes: [
 		subtype: [
@@ -56,7 +55,6 @@
 
 		{if $_selectedTab == 'available'}
 			{call com.liferay.layout.admin.web.SidebarAvailableFragments.render}
-				{param dropTargetClass: $dropTargetClass /}
 				{param fragmentCollections: $fragmentCollections /}
 				{param ref: 'sidebarTab' /}
 				{param spritemap: $spritemap /}

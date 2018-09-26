@@ -308,18 +308,7 @@ FragmentsEditor.STATE = Object.assign(
 		 * @type {!string}
 		 */
 
-		updateLayoutPageTemplateEntryAssetTypeURL: Config.string(),
-
-		/**
-		 * CSS class for the fragments drop target.
-		 * @default undefined
-		 * @instance
-		 * @memberOf FragmentsEditor
-		 * @review
-		 * @type {!string}
-		 */
-
-		_dropTargetClass: Config.string().internal().value('dropTarget')
+		updateLayoutPageTemplateEntryAssetTypeURL: Config.string()
 	},
 
 	INITIAL_STATE

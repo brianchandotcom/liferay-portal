@@ -12,7 +12,6 @@
 	{@param layoutData: ?}
 	{@param portletNamespace: string}
 	{@param spritemap: string}
-	{@param? dropTargetClass: string}
 	{@param? highlightMapping: bool}
 	{@param? hoveredFragmentEntryLinkBorder: string}
 	{@param? hoveredFragmentEntryLinkId: string}
@@ -31,11 +30,8 @@
 	{@param? store: ?}
 
 	{let $entryLinksClasses kind="text"}
+		fragment-entry-link-drop-target
 		fragment-entry-link-list
-
-		{if $dropTargetClass}
-			{sp}{$dropTargetClass}
-		{/if}
 
 		{if $highlightMapping}
 			{sp}mapping
@@ -63,7 +59,6 @@
 							{param content: $fragmentEntryLink.content /}
 							{param defaultEditorConfigurations: $defaultEditorConfigurations /}
 							{param defaultLanguageId: $defaultLanguageId /}
-							{param dropTargetClass: $dropTargetClass /}
 							{param editableValues: $fragmentEntryLink.editableValues /}
 							{param events: [
 								'move': $_handleFragmentMove

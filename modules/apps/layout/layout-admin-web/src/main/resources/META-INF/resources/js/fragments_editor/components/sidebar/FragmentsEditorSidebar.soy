@@ -17,7 +17,6 @@
 	{@param layoutData: ?}
 	{@param sidebarTabs: list<[enabled:bool, id:string, label:string]>}
 	{@param spritemap: string}
-	{@param? dropTargetClass: string}
 	{@param? highlightMapping: bool}
 	{@param? _handleHide: any}
 	{@param? _handleHideSidebarButtonClick: any}
@@ -37,7 +36,6 @@
 	{call liferay.frontend.ContextualSidebar.render}
 		{param body kind="html"}
 			{call com.liferay.layout.admin.web.FragmentsEditorSidebarContent.render}
-				{param dropTargetClass: $dropTargetClass /}
 				{param fragmentCollections: $fragmentCollections /}
 				{param fragmentEntryLinks: $fragmentEntryLinks /}
 				{param highlightMapping: $highlightMapping ?: false /}

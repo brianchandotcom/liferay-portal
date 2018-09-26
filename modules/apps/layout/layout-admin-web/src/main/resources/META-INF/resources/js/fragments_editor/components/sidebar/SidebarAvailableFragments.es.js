@@ -199,7 +199,7 @@ class SidebarAvailableFragments extends Component {
 				dragPlaceholder: Drag.Placeholder.CLONE,
 				handles: '.drag-handler',
 				sources: '.drag-card',
-				targets: `.${this.dropTargetClass}`
+				targets: '.fragment-entry-link-drop-target'
 			}
 		);
 
@@ -245,17 +245,6 @@ class SidebarAvailableFragments extends Component {
  */
 
 SidebarAvailableFragments.STATE = {
-
-	/**
-	 * CSS class for the fragments drop target.
-	 * @default undefined
-	 * @instance
-	 * @memberOf FragmentsEditor
-	 * @review
-	 * @type {!string}
-	 */
-
-	dropTargetClass: Config.string(),
 
 	/**
 	 * Available entries that can be dragged inside the existing Page Template,

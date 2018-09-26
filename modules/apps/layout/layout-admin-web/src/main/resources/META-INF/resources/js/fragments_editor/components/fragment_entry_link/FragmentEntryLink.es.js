@@ -438,17 +438,6 @@ FragmentEntryLink.STATE = {
 	defaultLanguageId: Config.string().required(),
 
 	/**
-	 * CSS class for the fragments drop target.
-	 * @default undefined
-	 * @instance
-	 * @memberOf FragmentEntryLink
-	 * @review
-	 * @type {!string}
-	 */
-
-	dropTargetClass: Config.string(),
-
-	/**
 	 * Editable values that should be used instead of the default ones
 	 * inside editable fields.
 	 * @default undefined

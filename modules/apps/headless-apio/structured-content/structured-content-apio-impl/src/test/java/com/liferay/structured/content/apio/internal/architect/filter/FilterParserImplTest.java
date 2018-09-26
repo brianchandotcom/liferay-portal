@@ -76,6 +76,38 @@ public class FilterParserImplTest {
 	}
 
 	@Test
+	public void testParseWithEqBinaryExpressionWithDate() {
+		AbstractThrowableAssert exception = Assertions.assertThatThrownBy(
+			() -> _filterParserImpl.parse("dateExternal ge 2012-05-29")
+		).isInstanceOf(
+			InvalidFilterException.class
+		);
+
+		exception.hasMessageContaining("Incompatible types");
+	}
+
+	@Test
+	public void testParseWithEqBinaryExpressionWithDateTimeOffset()
+		throws ExpressionVisitException {
+
+		Expression expression = _filterParserImpl.parse(
+			"dateExternal ge 2012-05-29T09:13:28Z");
+
+		Assert.assertNotNull(expression);
+
+		BinaryExpression binaryExpression = (BinaryExpression)expression;
+
+		Assert.assertEquals(
+			BinaryExpression.Operation.GE, binaryExpression.getOperation());
+		Assert.assertEquals(
+			"[dateExternal]",
+			binaryExpression.getLeftOperationExpression().toString());
+		Assert.assertEquals(
+			"2012-05-29T09:13:28Z",
+			binaryExpression.getRightOperationExpression().toString());
+	}
+
+	@Test
 	public void testParseWithEqBinaryExpressionWithNoSingleQuotes() {
 		String filterString = "(fieldExternal eq value)";
 
@@ -195,7 +227,10 @@ public class FilterParserImplTest {
 					return Stream.of(
 						new EntityField(
 							"fieldExternal", EntityField.Type.STRING,
-							locale -> "fieldInternal")
+							locale -> "fieldInternal"),
+						new EntityField(
+							"dateExternal", EntityField.Type.DATE,
+							locale -> "dateInternal")
 					).collect(
 						Collectors.toMap(
 							EntityField::getName, Function.identity())

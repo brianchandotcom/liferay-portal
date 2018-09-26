@@ -26,6 +26,8 @@ import com.liferay.structured.content.apio.architect.filter.expression.BinaryExp
 import com.liferay.structured.content.apio.architect.filter.expression.LiteralExpression;
 import com.liferay.structured.content.apio.internal.architect.filter.expression.LiteralExpressionImpl;
 
+import java.text.SimpleDateFormat;
+
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
@@ -172,7 +174,37 @@ public class ExpressionVisitorImplTest {
 	}
 
 	@Test
-	public void testVisitLiteralExpressionWithDoubleSingleQuotes() {
+	public void testVisitDateISO8601LiteralExpression() {
+		LiteralExpression literalExpression = new LiteralExpressionImpl(
+			"2012-05-29T09:13:28Z", LiteralExpression.Type.DATE);
+
+		Assert.assertEquals(
+			"20120529091328",
+			_expressionVisitorImpl.visitLiteralExpression(literalExpression));
+	}
+
+	@Test
+	public void testVisitDateISOLiteralExpression() {
+		LiteralExpression literalExpression = new LiteralExpressionImpl(
+			"2012-05-29T11:58:16+00:00", LiteralExpression.Type.DATE);
+
+		Assert.assertEquals(
+			"20120529115816",
+			_expressionVisitorImpl.visitLiteralExpression(literalExpression));
+	}
+
+	@Test
+	public void testVisitDateUTCLiteralExpression() {
+		LiteralExpression literalExpression = new LiteralExpressionImpl(
+			"2012-05-29", LiteralExpression.Type.DATE);
+
+		Assert.assertEquals(
+			"20120529000000",
+			_expressionVisitorImpl.visitLiteralExpression(literalExpression));
+	}
+
+	@Test
+	public void testVisitStringLiteralExpressionWithDoubleSingleQuotes() {
 		LiteralExpression literalExpression = new LiteralExpressionImpl(
 			"'L''Oreal'", LiteralExpression.Type.STRING);
 
@@ -182,7 +214,7 @@ public class ExpressionVisitorImplTest {
 	}
 
 	@Test
-	public void testVisitLiteralExpressionWithMultipleDoubleSingleQuotes() {
+	public void testVisitStringLiteralExpressionWithMultipleDoubleSingleQuotes() {
 		LiteralExpression literalExpression = new LiteralExpressionImpl(
 			"'L''Oreal and L''Oreal'", LiteralExpression.Type.STRING);
 
@@ -192,7 +224,7 @@ public class ExpressionVisitorImplTest {
 	}
 
 	@Test
-	public void testVisitLiteralExpressionWithOneSingleQuote() {
+	public void testVisitStringLiteralExpressionWithOneSingleQuote() {
 		LiteralExpression literalExpression = new LiteralExpressionImpl(
 			"'L'Oreal'", LiteralExpression.Type.STRING);
 
@@ -202,7 +234,7 @@ public class ExpressionVisitorImplTest {
 	}
 
 	@Test
-	public void testVisitLiteralExpressionWithSurroundingSingleQuotes() {
+	public void testVisitStringLiteralExpressionWithSurroundingSingleQuotes() {
 		LiteralExpression literalExpression = new LiteralExpressionImpl(
 			"'LOreal'", LiteralExpression.Type.STRING);
 
@@ -211,8 +243,11 @@ public class ExpressionVisitorImplTest {
 			_expressionVisitorImpl.visitLiteralExpression(literalExpression));
 	}
 
+	private static final String _INDEX_DATE_FORMAT_PATTERN = "yyyyMMddHHmmss";
+
 	private static final ExpressionVisitorImpl _expressionVisitorImpl =
 		new ExpressionVisitorImpl(
+			new SimpleDateFormat(_INDEX_DATE_FORMAT_PATTERN),
 			LocaleUtil.getDefault(),
 			ExpressionVisitorImplTest.
 				_structuredContentSingleEntitySchemaBasedEdmProvider);

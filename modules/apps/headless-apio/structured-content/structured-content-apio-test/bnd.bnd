@@ -20,4 +20,5 @@ Import-Package:\
 -includeresource:\
 	test-classes/integration,\
 	@lib/assertj-core.jar,\
-	@lib/cxf-rt-frontend-jaxrs.jar
+	@lib/cxf-rt-frontend-jaxrs.jar,\
+	@lib/jackson-databind.jar

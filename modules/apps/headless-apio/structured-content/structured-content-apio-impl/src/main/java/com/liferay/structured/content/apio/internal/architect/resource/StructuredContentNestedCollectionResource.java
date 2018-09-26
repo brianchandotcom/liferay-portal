@@ -72,8 +72,11 @@ import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.structure.apio.architect.identifier.ContentStructureIdentifier;
 import com.liferay.structured.content.apio.architect.filter.Filter;
@@ -91,6 +94,8 @@ import com.liferay.structured.content.apio.internal.architect.form.StructuredCon
 import com.liferay.structured.content.apio.internal.model.JournalArticleWrapper;
 import com.liferay.structured.content.apio.internal.model.RenderedJournalArticle;
 import com.liferay.structured.content.apio.internal.util.JournalArticleContentHelper;
+
+import java.text.Format;
 
 import java.util.Arrays;
 import java.util.Date;
@@ -616,10 +621,16 @@ public class StructuredContentNestedCollectionResource
 		try {
 			Expression expression = filter.getExpression();
 
+			String formatPattern = PropsUtil.get(
+				PropsKeys.INDEX_DATE_FORMAT_PATTERN);
+
+			Format format = FastDateFormatFactoryUtil.getSimpleDateFormat(
+				formatPattern);
+
 			return (com.liferay.portal.kernel.search.filter.Filter)
 				expression.accept(
 					new ExpressionVisitorImpl(
-						locale,
+						format, locale,
 						_structuredContentSingleEntitySchemaBasedEdmProvider));
 		}
 		catch (ExpressionVisitException eve) {

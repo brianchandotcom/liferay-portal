@@ -130,7 +130,7 @@ public abstract class BaseSingleEntitySchemaBasedEdmProvider
 
 		if (Objects.equals(entityField.getType(), EntityField.Type.DATE)) {
 			fullQualifiedName =
-				EdmPrimitiveTypeKind.Date.getFullQualifiedName();
+				EdmPrimitiveTypeKind.DateTimeOffset.getFullQualifiedName();
 		}
 		else if (Objects.equals(
 					entityField.getType(), EntityField.Type.STRING)) {

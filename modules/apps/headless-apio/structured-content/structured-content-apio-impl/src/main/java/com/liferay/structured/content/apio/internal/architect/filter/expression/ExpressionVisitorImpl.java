@@ -25,6 +25,8 @@ import java.util.stream.Stream;
 
 import org.apache.olingo.commons.api.edm.EdmEnumType;
 import org.apache.olingo.commons.api.edm.EdmType;
+import org.apache.olingo.commons.core.edm.primitivetype.EdmDate;
+import org.apache.olingo.commons.core.edm.primitivetype.EdmDateTimeOffset;
 import org.apache.olingo.commons.core.edm.primitivetype.EdmString;
 import org.apache.olingo.server.api.uri.UriInfoResource;
 import org.apache.olingo.server.api.uri.UriResource;
@@ -91,7 +93,13 @@ public class ExpressionVisitorImpl implements ExpressionVisitor<Expression> {
 	public Expression visitLiteral(Literal literal) {
 		EdmType edmType = literal.getType();
 
-		if (edmType instanceof EdmString) {
+		if (edmType instanceof EdmDate ||
+			edmType instanceof EdmDateTimeOffset) {
+
+			return new LiteralExpressionImpl(
+				literal.getText(), LiteralExpression.Type.DATE);
+		}
+		else if (edmType instanceof EdmString) {
 			return new LiteralExpressionImpl(
 				literal.getText(), LiteralExpression.Type.STRING);
 		}

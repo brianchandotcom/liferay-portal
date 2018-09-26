@@ -90,7 +90,7 @@ public class FilterParserImplTest {
 		AbstractThrowableAssert exception = Assertions.assertThatThrownBy(
 			() -> _filterParserImpl.parse("dateExternal ge 2012-05-29")
 		).isInstanceOf(
-			InvalidFilterException.class
+			ExpressionVisitException.class
 		);
 
 		exception.hasMessageContaining("Incompatible types");

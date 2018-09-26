@@ -3405,6 +3405,7 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 
 		_configureTaskTestIgnoreFailures(test);
 		_configureTaskTestJvmArgs(test, "junit.java.unit.gc");
+		_configureTaskTestOutputs(test);
 
 		test.setEnableAssertions(false);
 	}
@@ -3419,6 +3420,7 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 
 		_configureTaskTestIgnoreFailures(test);
 		_configureTaskTestJvmArgs(test, "junit.java.integration.gc");
+		_configureTaskTestOutputs(test);
 
 		test.systemProperty("org.apache.maven.offline", Boolean.TRUE);
 
@@ -3440,6 +3442,20 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		if (Validator.isNotNull(jvmArgs)) {
 			test.jvmArgs((Object[])jvmArgs.split("\\s+"));
 		}
+	}
+
+	private void _configureTaskTestOutputs(Test test) {
+		TaskOutputs taskOutputs = test.getOutputs();
+
+		taskOutputs.upToDateWhen(
+			new Spec<Task>() {
+
+				@Override
+				public boolean isSatisfiedBy(Task task) {
+					return false;
+				}
+
+			});
 	}
 
 	private void _configureTaskTlddoc(Project project, File portalRootDir) {

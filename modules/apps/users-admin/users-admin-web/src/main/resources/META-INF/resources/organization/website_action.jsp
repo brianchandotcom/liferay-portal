@@ -23,9 +23,9 @@ long organizationId = organizationScreenNavigationDisplayContext.getOrganization
 
 ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 
-EmailAddress emailAddress = (EmailAddress)row.getObject();
+Website website = (Website)row.getObject();
 
-long emailAddressId = emailAddress.getEmailAddressId();
+long websiteId = website.getWebsiteId();
 %>
 
 <liferay-ui:icon-menu
@@ -39,12 +39,12 @@ long emailAddressId = emailAddress.getEmailAddressId();
 	<%
 	Map<String, Object> data = new HashMap<String, Object>();
 
-	data.put("email-address-id", String.valueOf(emailAddressId));
+	data.put("website-id", String.valueOf(websiteId));
 	%>
 
 	<liferay-ui:icon
 		data="<%= data %>"
-		linkCssClass="edit-email-address"
+		linkCssClass="edit-website"
 		message="edit"
 		url="javascript:;"
 	/>
@@ -52,8 +52,8 @@ long emailAddressId = emailAddress.getEmailAddressId();
 	<portlet:actionURL name="/users_admin/update_organization_contact_information" var="makePrimaryURL">
 		<portlet:param name="<%= Constants.CMD %>" value="<%= UsersAdminWebKeys.CMD_MAKE_PRIMARY %>" />
 		<portlet:param name="redirect" value="<%= currentURL %>" />
-		<portlet:param name="entryId" value="<%= String.valueOf(emailAddressId) %>" />
-		<portlet:param name="listType" value="<%= ListTypeConstants.EMAIL_ADDRESS %>" />
+		<portlet:param name="entryId" value="<%= String.valueOf(websiteId) %>" />
+		<portlet:param name="listType" value="<%= ListTypeConstants.WEBSITE %>" />
 		<portlet:param name="organizationId" value="<%= String.valueOf(organizationId) %>" />
 	</portlet:actionURL>
 
@@ -62,16 +62,16 @@ long emailAddressId = emailAddress.getEmailAddressId();
 		url="<%= makePrimaryURL %>"
 	/>
 
-	<portlet:actionURL name="/users_admin/update_organization_contact_information" var="removeEmailAddressURL">
+	<portlet:actionURL name="/users_admin/update_organization_contact_information" var="removeWebsiteURL">
 		<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE %>" />
 		<portlet:param name="redirect" value="<%= currentURL %>" />
-		<portlet:param name="entryId" value="<%= String.valueOf(emailAddressId) %>" />
-		<portlet:param name="listType" value="<%= ListTypeConstants.EMAIL_ADDRESS %>" />
+		<portlet:param name="entryId" value="<%= String.valueOf(websiteId) %>" />
+		<portlet:param name="listType" value="<%= ListTypeConstants.WEBSITE %>" />
 		<portlet:param name="organizationId" value="<%= String.valueOf(organizationId) %>" />
 	</portlet:actionURL>
 
 	<liferay-ui:icon
 		message="remove"
-		url="<%= removeEmailAddressURL %>"
+		url="<%= removeWebsiteURL %>"
 	/>
 </liferay-ui:icon-menu>

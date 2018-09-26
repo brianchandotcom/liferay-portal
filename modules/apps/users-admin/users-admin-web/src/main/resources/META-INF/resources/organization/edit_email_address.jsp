@@ -29,10 +29,6 @@ if (emailAddressId > 0L) {
 
 <div class="card-horizontal main-content-card">
 	<aui:form action="<%= redirect %>" cssClass="container-fluid container-fluid-max-xl container-form-lg" method="post" name="emailAddressFm">
-		<div class="alert alert-info">
-			<liferay-ui:message key="email-address-and-type-are-required-fields" />
-		</div>
-
 		<aui:model-context bean="<%= emailAddress %>" model="<%= EmailAddress.class %>" />
 
 		<aui:input name="emailAddressId" type="hidden" value="<%= emailAddressId %>" />

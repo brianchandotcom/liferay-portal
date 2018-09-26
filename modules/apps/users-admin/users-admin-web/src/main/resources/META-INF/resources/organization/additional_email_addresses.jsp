@@ -21,8 +21,6 @@ OrganizationScreenNavigationDisplayContext organizationScreenNavigationDisplayCo
 
 long organizationId = organizationScreenNavigationDisplayContext.getOrganizationId();
 
-Organization organization = organizationScreenNavigationDisplayContext.getOrganization();
-
 List<EmailAddress> emailAddresses = EmailAddressServiceUtil.getEmailAddresses(Organization.class.getName(), organizationId);
 %>
 
@@ -59,7 +57,7 @@ List<EmailAddress> emailAddresses = EmailAddressServiceUtil.getEmailAddresses(Or
 	compactEmptyResultsMessage="<%= true %>"
 	cssClass="lfr-search-container-wrapper"
 	emptyResultsMessage="this-organization-does-not-have-any-additional-email-addresses"
-	headerNames="email-address,type,extension,"
+	headerNames="email-address,type,"
 	id="emailAddressesSearchContainer"
 	iteratorURL="<%= currentURLObj %>"
 	total="<%= emailAddresses.size() %>"
@@ -156,7 +154,7 @@ List<EmailAddress> emailAddresses = EmailAddressServiceUtil.getEmailAddresses(Or
 						},
 						{
 							cssClass: 'btn-primary',
-							id: 'addButton',
+							id: 'saveButton',
 							label: '<%= LanguageUtil.get(request, "save") %>',
 							on: {
 								click: function(event) {

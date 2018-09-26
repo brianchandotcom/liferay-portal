@@ -29,10 +29,6 @@ if (phoneId > 0L) {
 
 <div class="card-horizontal main-content-card">
 	<aui:form action="<%= redirect %>" cssClass="container-fluid container-fluid-max-xl container-form-lg" method="post" name="phoneNumberFm">
-		<div class="alert alert-info">
-			<liferay-ui:message key="extension-must-be-numeric" />
-		</div>
-
 		<aui:model-context bean="<%= phone %>" model="<%= Phone.class %>" />
 
 		<aui:input name="phoneId" type="hidden" value="<%= phoneId %>" />

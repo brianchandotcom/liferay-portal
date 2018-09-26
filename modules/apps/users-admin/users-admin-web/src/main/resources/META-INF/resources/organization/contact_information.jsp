@@ -24,6 +24,6 @@
 	<liferay-util:include page="/organization/additional_email_addresses.jsp" servletContext="<%= application %>" />
 </div>
 
-<%--<div class="sheet-section">--%>
-	<%--<liferay-util:include page="/organization/websites.jsp" servletContext="<%= application %>" />--%>
-<%--</div>--%>
+<div class="sheet-section">
+	<liferay-util:include page="/organization/websites.jsp" servletContext="<%= application %>" />
+</div>

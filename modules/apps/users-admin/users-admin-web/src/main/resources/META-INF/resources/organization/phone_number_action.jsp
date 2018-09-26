@@ -21,8 +21,6 @@ OrganizationScreenNavigationDisplayContext organizationScreenNavigationDisplayCo
 
 long organizationId = organizationScreenNavigationDisplayContext.getOrganizationId();
 
-Organization organization = organizationScreenNavigationDisplayContext.getOrganization();
-
 ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 
 Phone phone = (Phone)row.getObject();

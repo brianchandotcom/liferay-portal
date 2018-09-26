@@ -21,8 +21,6 @@ OrganizationScreenNavigationDisplayContext organizationScreenNavigationDisplayCo
 
 long organizationId = organizationScreenNavigationDisplayContext.getOrganizationId();
 
-Organization organization = organizationScreenNavigationDisplayContext.getOrganization();
-
 List<Phone> phones = PhoneServiceUtil.getPhones(Organization.class.getName(), organizationId);
 %>
 
@@ -163,7 +161,7 @@ List<Phone> phones = PhoneServiceUtil.getPhones(Organization.class.getName(), or
 						},
 						{
 							cssClass: 'btn-primary',
-							id: 'addButton',
+							id: 'saveButton',
 							label: '<%= LanguageUtil.get(request, "save") %>',
 							on: {
 								click: function(event) {

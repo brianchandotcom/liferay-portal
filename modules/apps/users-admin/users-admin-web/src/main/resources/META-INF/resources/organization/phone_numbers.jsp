@@ -167,24 +167,30 @@ List<Phone> phones = PhoneServiceUtil.getPhones(Organization.class.getName(), or
 							label: '<%= LanguageUtil.get(request, "save") %>',
 							on: {
 								click: function(event) {
-									var windowDocument = document.getElementById('<portlet:namespace />editPhoneModal_iframe_').contentWindow.document;
+									var contentWindow = document.getElementById('<portlet:namespace />editPhoneModal_iframe_').contentWindow;
 
-									var editPhoneActionURL = Liferay.PortletURL.createURL('<%= editPhoneActionURL.toString() %>');
+									var formValidator = contentWindow.Liferay.Form.get('<portlet:namespace />phoneNumberFm').formValidator;
 
-									editPhoneActionURL.setParameter('entryId', phoneId);
+									formValidator.validate();
 
-									editPhoneActionURL.setParameter('phoneExtension', windowDocument.getElementById('<portlet:namespace />phoneExtension').value);
-									editPhoneActionURL.setParameter('phoneNumber', windowDocument.getElementById('<portlet:namespace />phoneNumber').value);
-									editPhoneActionURL.setParameter('phonePrimary', windowDocument.getElementById('<portlet:namespace />phonePrimary').checked);
-									editPhoneActionURL.setParameter('phoneTypeId', windowDocument.getElementById('<portlet:namespace />phoneTypeId').value);
+									if (!formValidator.hasErrors()) {
+										var editPhoneActionURL = Liferay.PortletURL.createURL('<%= editPhoneActionURL.toString() %>');
 
-									var organizationFm = document.getElementById('<portlet:namespace />fm');
+										editPhoneActionURL.setParameter('entryId', phoneId);
 
-									submitForm(organizationFm, editPhoneActionURL.toString());
+										editPhoneActionURL.setParameter('phoneExtension', windowDocument.getElementById('<portlet:namespace />phoneExtension').value);
+										editPhoneActionURL.setParameter('phoneNumber', windowDocument.getElementById('<portlet:namespace />phoneNumber').value);
+										editPhoneActionURL.setParameter('phonePrimary', windowDocument.getElementById('<portlet:namespace />phonePrimary').checked);
+										editPhoneActionURL.setParameter('phoneTypeId', windowDocument.getElementById('<portlet:namespace />phoneTypeId').value);
 
-									organizationFm.submit();
+										var organizationFm = document.getElementById('<portlet:namespace />fm');
 
-									Liferay.Util.getWindow('<portlet:namespace />editPhoneModal').hide();
+										submitForm(organizationFm, editPhoneActionURL.toString());
+
+										organizationFm.submit();
+
+										Liferay.Util.getWindow('<portlet:namespace />editPhoneModal').hide();
+									}
 								}
 							}
 						}

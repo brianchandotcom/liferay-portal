@@ -43,6 +43,8 @@ if (phoneId > 0L) {
 
 		<aui:input fieldParam="phoneNumber" id="phoneNumber" name="number" required="<%= true %>" />
 
-		<aui:input fieldParam="phoneExtension" id="phoneExtension" name="extension" />
+		<aui:input fieldParam="phoneExtension" id="phoneExtension" name="extension" >
+			<aui:validator name="digits" />
+		</aui:input>
 	</aui:form>
 </div>

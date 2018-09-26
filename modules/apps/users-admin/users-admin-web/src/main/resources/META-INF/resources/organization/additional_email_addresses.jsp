@@ -160,23 +160,31 @@ List<EmailAddress> emailAddresses = EmailAddressServiceUtil.getEmailAddresses(Or
 							label: '<%= LanguageUtil.get(request, "save") %>',
 							on: {
 								click: function(event) {
-									var windowDocument = document.getElementById('<portlet:namespace />editEmailAddressModal_iframe_').contentWindow.document;
+									var contentWindow = document.getElementById('<portlet:namespace />editEmailAddressModal_iframe_').contentWindow;
 
-									var editEmailAddressActionURL = Liferay.PortletURL.createURL('<%= editEmailAddressActionURL.toString() %>');
+									var formValidator = contentWindow.Liferay.Form.get('<portlet:namespace />emailAddressFm').formValidator;
 
-									editEmailAddressActionURL.setParameter('entryId', emailAddressId);
+									formValidator.validate();
 
-									editEmailAddressActionURL.setParameter('emailAddressAddress', windowDocument.getElementById('<portlet:namespace />emailAddressAddress').value);
-									editEmailAddressActionURL.setParameter('emailAddressPrimary', windowDocument.getElementById('<portlet:namespace />emailAddressPrimary').checked);
-									editEmailAddressActionURL.setParameter('emailAddressTypeId', windowDocument.getElementById('<portlet:namespace />emailAddressTypeId').value);
+									if (!formValidator.hasErrors()) {
+										var windowDocument = contentWindow.document;
 
-									var organizationFm = document.getElementById('<portlet:namespace />fm');
+										var editEmailAddressActionURL = Liferay.PortletURL.createURL('<%= editEmailAddressActionURL.toString() %>');
 
-									submitForm(organizationFm, editEmailAddressActionURL.toString());
+										editEmailAddressActionURL.setParameter('entryId', emailAddressId);
 
-									organizationFm.submit();
+										editEmailAddressActionURL.setParameter('emailAddressAddress', windowDocument.getElementById('<portlet:namespace />emailAddressAddress').value);
+										editEmailAddressActionURL.setParameter('emailAddressPrimary', windowDocument.getElementById('<portlet:namespace />emailAddressPrimary').checked);
+										editEmailAddressActionURL.setParameter('emailAddressTypeId', windowDocument.getElementById('<portlet:namespace />emailAddressTypeId').value);
 
-									Liferay.Util.getWindow('<portlet:namespace />editEmailAddressModal').hide();
+										var organizationFm = document.getElementById('<portlet:namespace />fm');
+
+										submitForm(organizationFm, editEmailAddressActionURL.toString());
+
+										organizationFm.submit();
+
+										Liferay.Util.getWindow('<portlet:namespace />editEmailAddressModal').hide();
+									}
 								}
 							}
 						}

@@ -17,6 +17,8 @@ package com.liferay.frontend.taglib.clay.sample.web.internal.display.context;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItem;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItemList;
 
@@ -153,6 +155,24 @@ public class ManagementToolbarsDisplayContext {
 		};
 
 		return _filterDropdownItems;
+	}
+
+	public List<LabelItem> getFilterLabelItems() {
+		return new LabelItemList() {
+			{
+				add(
+					labelItem -> {
+						labelItem.setLabel("Filter 1");
+					}
+				);
+
+				add(
+					labelItem -> {
+						labelItem.setLabel("Filter 2");
+					}
+				);
+			}
+		};
 	}
 
 	public List<ViewTypeItem> getViewTypeItems() {

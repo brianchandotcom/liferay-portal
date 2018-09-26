@@ -39,3 +39,19 @@
 	selectable="<%= true %>"
 	selectedItems="<%= 14 %>"
 />
+
+<h3>WITH RESULTS BAR</h3>
+
+<clay:management-toolbar
+	creationMenu="<%= managementToolbarsDisplayContext.getCreationMenu() %>"
+	filterLabelItems="<%= managementToolbarsDisplayContext.getFilterLabelItems() %>"
+	filterDropdownItems="<%= managementToolbarsDisplayContext.getFilterDropdownItems() %>"
+	itemsTotal="<%= 42 %>"
+	searchActionURL="mySearchActionURL?key1=val1&key2=val2&key3=val3"
+	searchFormName="mySearchName"
+	searchInputName="mySearchInputName"
+	searchValue="my search"
+	selectable="<%= true %>"
+	sortingOrder="desc"
+	viewTypeItems="<%= managementToolbarsDisplayContext.getViewTypeItems() %>"
+/>

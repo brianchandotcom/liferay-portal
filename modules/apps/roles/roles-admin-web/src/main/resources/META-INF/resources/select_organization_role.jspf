@@ -201,6 +201,7 @@ SearchContainer roleSearchContainer = SelectRoleManagementToolbarDisplayContext.
 					modelVar="role"
 				>
 					<liferay-ui:search-container-column-text
+						cssClass="table-cell-expand table-cell-minw-200"
 						name="title"
 					>
 						<liferay-ui:icon

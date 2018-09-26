@@ -89,7 +89,7 @@ public abstract class BaseLocalGitRepository
 					"Unable to find Git repository directory.\n",
 					"Please set this location in repository.dir[", getName(),
 					"][", getUpstreamBranchName(),
-					"] for in repository.properties."),
+					"] in repository.properties."),
 				ioe);
 		}
 	}

@@ -55,6 +55,7 @@ task cleanReleng
 task cleanVersionOverride
 task lockDependencyVersion
 task lockPrivateDependencyVersions
+task portalArtifactsJar
 task prepareMajorIncrement
 task syncGitRepoReleases
 task tagAppReleases

@@ -46,12 +46,13 @@ class SidebarAvailableFragments extends Component {
 
 	/**
 	 * Callback that is executed when an item is being dragged.
-	 * @param {!MouseEvent} event
+	 * @param {object} data
+	 * @param {MouseEvent} data.originalEvent
 	 * @private
 	 * @review
 	 */
 
-	_handleDrag(data, event) {
+	_handleDrag(data) {
 		const targetItem = data.target;
 
 		if (targetItem && 'fragmentEntryLinkId' in targetItem.dataset) {
@@ -81,12 +82,11 @@ class SidebarAvailableFragments extends Component {
 
 	/**
 	 * Callback that is executed when we leave a drag target.
-	 * @param {!MouseEvent} event
 	 * @private
 	 * @review
 	 */
 
-	_handleDragEnd(data, event) {
+	_handleDragEnd() {
 		this.store.dispatchAction(
 			CLEAR_DRAG_TARGET
 		);
@@ -94,6 +94,7 @@ class SidebarAvailableFragments extends Component {
 
 	/**
 	 * Callback that is executed when an item is dropped.
+	 * @param {!object} data
 	 * @param {!MouseEvent} event
 	 * @private
 	 * @review

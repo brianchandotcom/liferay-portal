@@ -31,6 +31,8 @@ import com.liferay.document.library.web.internal.util.DLTrashUtil;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItem;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.SafeConsumer;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItemList;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
@@ -330,6 +332,62 @@ public class DLAdminManagementToolbarDisplayContext {
 								_getOrderByDropdownItems());
 							dropdownGroupItem.setLabel(
 								LanguageUtil.get(_request, "order-by"));
+						});
+				}
+			}
+		};
+	}
+
+	public List<LabelItem> getFilterLabelItems() {
+		return new LabelItemList() {
+			{
+				long fileEntryTypeId = _getFileEntryTypeId();
+
+				if (fileEntryTypeId != -1) {
+					add(
+						SafeConsumer.ignore(
+							labelItem -> {
+								labelItem.setCloseable(false);
+
+								String label = LanguageUtil.get(
+									_request, "document-types");
+
+								String fileEntryTypeName = LanguageUtil.get(
+									_request, "basic-document");
+
+								if (fileEntryTypeId !=
+										DLFileEntryTypeConstants.
+											FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT) {
+
+									DLFileEntryType fileEntryType =
+										DLFileEntryTypeLocalServiceUtil.
+											getFileEntryType(fileEntryTypeId);
+
+									fileEntryTypeName = fileEntryType.getName(
+										_request.getLocale());
+								}
+
+								label = String.format(
+									"%s: %s", label, fileEntryTypeName);
+
+								labelItem.setLabel(label);
+							}));
+				}
+
+				String navigation = _getNavigation();
+
+				if (navigation.equals("mine")) {
+					add(
+						labelItem -> {
+							labelItem.setCloseable(false);
+
+							String label = LanguageUtil.get(_request, "owner");
+
+							label = String.format(
+								"%s: %s", label,
+								_themeDisplay.getUser().getFullName());
+
+							labelItem.setLabel(label);
 						});
 				}
 			}

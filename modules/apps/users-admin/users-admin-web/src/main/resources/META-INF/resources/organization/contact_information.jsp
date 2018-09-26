@@ -16,35 +16,14 @@
 
 <%@ include file="/init.jsp" %>
 
-<%
-OrganizationScreenNavigationDisplayContext organizationScreenNavigationDisplayContext = (OrganizationScreenNavigationDisplayContext)request.getAttribute(UsersAdminWebKeys.ORGANIZATION_SCREEN_NAVIGATION_DISPLAY_CONTEXT);
-
-long organizationId = organizationScreenNavigationDisplayContext.getOrganizationId();
-
-Organization organization = organizationScreenNavigationDisplayContext.getOrganization();
-
-request.setAttribute("emailAddresses.className", Organization.class.getName());
-request.setAttribute("emailAddresses.classPK", organizationId);
-request.setAttribute("phones.className", Organization.class.getName());
-request.setAttribute("phones.classPK", organizationId);
-request.setAttribute("websites.className", Organization.class.getName());
-request.setAttribute("websites.classPK", organizationId);
-%>
-
 <div class="sheet-section">
-	<h3 class="sheet-subtitle"><liferay-ui:message key="phone-numbers" /></h3>
-
-	<liferay-util:include page="/common/phone_numbers.jsp" servletContext="<%= application %>" />
+	<liferay-util:include page="/organization/phone_numbers.jsp" servletContext="<%= application %>" />
 </div>
 
 <div class="sheet-section">
-	<h3 class="sheet-subtitle"><liferay-ui:message key="additional-email-addresses" /></h3>
-
-	<liferay-util:include page="/common/additional_email_addresses.jsp" servletContext="<%= application %>" />
+	<liferay-util:include page="/organization/additional_email_addresses.jsp" servletContext="<%= application %>" />
 </div>
 
-<div class="sheet-section">
-	<h3 class="sheet-subtitle"><liferay-ui:message key="websites" /></h3>
-
-	<liferay-util:include page="/common/websites.jsp" servletContext="<%= application %>" />
-</div>
+<%--<div class="sheet-section">--%>
+	<%--<liferay-util:include page="/organization/websites.jsp" servletContext="<%= application %>" />--%>
+<%--</div>--%>

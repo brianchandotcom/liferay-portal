@@ -53,6 +53,10 @@ public class OrganizationScreenNavigationDisplayContext {
 		return _screenNavigationEntryKey;
 	}
 
+	public boolean isShowControls() {
+		return _showControls;
+	}
+
 	public void setActionCommandName(String actionCommandName) {
 		_actionCommandName = actionCommandName;
 	}
@@ -87,6 +91,10 @@ public class OrganizationScreenNavigationDisplayContext {
 		_screenNavigationEntryKey = screenNavigationEntryKey;
 	}
 
+	public void setShowControls(boolean showControls) {
+		_showControls = showControls;
+	}
+
 	private String _actionCommandName;
 	private String _backURL;
 	private String _formLabel;
@@ -95,5 +103,6 @@ public class OrganizationScreenNavigationDisplayContext {
 	private long _organizationId;
 	private String _screenNavigationCategoryKey;
 	private String _screenNavigationEntryKey;
+	private boolean _showControls;
 
 }

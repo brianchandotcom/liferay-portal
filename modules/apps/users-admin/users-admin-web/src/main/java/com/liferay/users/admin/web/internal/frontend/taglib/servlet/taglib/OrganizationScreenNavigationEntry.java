@@ -46,7 +46,7 @@ public class OrganizationScreenNavigationEntry
 	public OrganizationScreenNavigationEntry(
 		JSPRenderer jspRenderer, OrganizationService organizationService,
 		String entryKey, String categoryKey, String jspPath,
-		String mvcActionCommandName,
+		String mvcActionCommandName, boolean showControls,
 		BiFunction<User, Organization, Boolean> isVisibleBiFunction) {
 
 		_jspRenderer = jspRenderer;
@@ -55,6 +55,7 @@ public class OrganizationScreenNavigationEntry
 		_categoryKey = categoryKey;
 		_jspPath = jspPath;
 		_mvcActionCommandName = mvcActionCommandName;
+		_showControls = showControls;
 		_isVisibleBiFunction = isVisibleBiFunction;
 	}
 
@@ -129,6 +130,8 @@ public class OrganizationScreenNavigationEntry
 			setScreenNavigationCategoryKey(_categoryKey);
 		organizationScreenNavigationDisplayContext.setScreenNavigationEntryKey(
 			_entryKey);
+		organizationScreenNavigationDisplayContext.setShowControls(
+			_showControls);
 
 		request.setAttribute(
 			UsersAdminWebKeys.ORGANIZATION_SCREEN_NAVIGATION_DISPLAY_CONTEXT,
@@ -148,5 +151,6 @@ public class OrganizationScreenNavigationEntry
 	private final JSPRenderer _jspRenderer;
 	private final String _mvcActionCommandName;
 	private final OrganizationService _organizationService;
+	private final boolean _showControls;
 
 }

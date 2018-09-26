@@ -103,7 +103,7 @@ public class OrganizationScreenNavigationRegistrar {
 			_createUpdateOnlyScreenNavigationEntry(
 				"contact-information", _CATEGORY_CONTACT,
 				"/organization/contact_information.jsp",
-				"/users_admin/update_organization_contact_information"),
+				"/users_admin/update_organization_contact_information", false),
 			20);
 
 		_registerScreenNavigationEntry(
@@ -119,18 +119,18 @@ public class OrganizationScreenNavigationRegistrar {
 		String mvcActionCommandName) {
 
 		return _createScreenNavigationEntry(
-			entryKey, categoryKey, jspPath, mvcActionCommandName,
+			entryKey, categoryKey, jspPath, mvcActionCommandName, true,
 			(user, organization) -> true);
 	}
 
 	private ScreenNavigationEntry<Organization> _createScreenNavigationEntry(
 		String entryKey, String categoryKey, String jspPath,
-		String mvcActionCommandName,
+		String mvcActionCommandName, boolean showControls,
 		BiFunction<User, Organization, Boolean> isVisibleBiFunction) {
 
 		return new OrganizationScreenNavigationEntry(
 			_jspRenderer, _organizationService, entryKey, categoryKey, jspPath,
-			mvcActionCommandName, isVisibleBiFunction);
+			mvcActionCommandName, showControls, isVisibleBiFunction);
 	}
 
 	private ScreenNavigationEntry<Organization>
@@ -138,8 +138,17 @@ public class OrganizationScreenNavigationRegistrar {
 			String entryKey, String categoryKey, String jspPath,
 			String mvcActionCommandName) {
 
+		return _createUpdateOnlyScreenNavigationEntry(
+			entryKey, categoryKey, jspPath, mvcActionCommandName, true);
+	}
+
+	private ScreenNavigationEntry<Organization>
+		_createUpdateOnlyScreenNavigationEntry(
+			String entryKey, String categoryKey, String jspPath,
+			String mvcActionCommandName, boolean showControls) {
+
 		return _createScreenNavigationEntry(
-			entryKey, categoryKey, jspPath, mvcActionCommandName,
+			entryKey, categoryKey, jspPath, mvcActionCommandName, showControls,
 			(user, organization) -> {
 				if (organization == null) {
 					return false;

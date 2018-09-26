@@ -45,11 +45,13 @@ OrganizationScreenNavigationDisplayContext organizationScreenNavigationDisplayCo
 				<liferay-util:include page="<%= organizationScreenNavigationDisplayContext.getJspPath() %>" servletContext="<%= application %>" />
 			</div>
 
-			<div class="sheet-footer">
-				<aui:button primary="<%= true %>" type="submit" />
+			<c:if test="<%= organizationScreenNavigationDisplayContext.isShowControls() %>">
+				<div class="sheet-footer">
+					<aui:button primary="<%= true %>" type="submit" />
 
-				<aui:button href="<%= organizationScreenNavigationDisplayContext.getBackURL() %>" type="cancel" />
-			</div>
+					<aui:button href="<%= organizationScreenNavigationDisplayContext.getBackURL() %>" type="cancel" />
+				</div>
+			</c:if>
 		</div>
 	</aui:fieldset-group>
 </aui:form>

@@ -160,6 +160,13 @@ public class LayoutPageTemplateEntryServiceWrapper
 
 	@Override
 	public java.util.List<com.liferay.layout.page.template.model.LayoutPageTemplateEntry> getLayoutPageTemplateEntries(
+		long groupId, long classNameId, int type, boolean defaultTemplate) {
+		return _layoutPageTemplateEntryService.getLayoutPageTemplateEntries(groupId,
+			classNameId, type, defaultTemplate);
+	}
+
+	@Override
+	public java.util.List<com.liferay.layout.page.template.model.LayoutPageTemplateEntry> getLayoutPageTemplateEntries(
 		long groupId, long layoutPageTemplateCollectionId, int start, int end) {
 		return _layoutPageTemplateEntryService.getLayoutPageTemplateEntries(groupId,
 			layoutPageTemplateCollectionId, start, end);

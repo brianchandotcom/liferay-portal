@@ -139,12 +139,7 @@ public class AMImageScalerTrackerImplTest {
 		AMImageScaler amImageScaler = _amImageScalerTracker.getAMImageScaler(
 			"*");
 
-		Registry registry = RegistryUtil.getRegistry();
-
-		AMImageScaler amDefaultImageScaler = registry.getService(
-			_CLASS_NAME_ADAPTIVE_MEDIA_DEFAULT_IMAGE_SCALER);
-
-		Assert.assertEquals(amDefaultImageScaler, amImageScaler);
+		Assert.assertEquals(_amDefaultImageScaler, amImageScaler);
 	}
 
 	@Test
@@ -154,12 +149,7 @@ public class AMImageScalerTrackerImplTest {
 		AMImageScaler amImageScaler = _amImageScalerTracker.getAMImageScaler(
 			RandomTestUtil.randomString());
 
-		Registry registry = RegistryUtil.getRegistry();
-
-		AMImageScaler amDefaultImageScaler = registry.getService(
-			_CLASS_NAME_ADAPTIVE_MEDIA_DEFAULT_IMAGE_SCALER);
-
-		Assert.assertEquals(amDefaultImageScaler, amImageScaler);
+		Assert.assertEquals(_amDefaultImageScaler, amImageScaler);
 	}
 
 	@Test
@@ -178,12 +168,7 @@ public class AMImageScalerTrackerImplTest {
 			AMImageScaler amImageScaler =
 				_amImageScalerTracker.getAMImageScaler("image/test");
 
-			Registry registry = RegistryUtil.getRegistry();
-
-			AMImageScaler amDefaultImageScaler = registry.getService(
-				_CLASS_NAME_ADAPTIVE_MEDIA_DEFAULT_IMAGE_SCALER);
-
-			Assert.assertEquals(amDefaultImageScaler, amImageScaler);
+			Assert.assertEquals(_amDefaultImageScaler, amImageScaler);
 		}
 		finally {
 			_unregisterAMImageScaler(amImageScalerServiceRegistration);
@@ -401,6 +386,9 @@ public class AMImageScalerTrackerImplTest {
 		_CLASS_NAME_ADAPTIVE_MEDIA_IMAGE_SCALER_TRACKER_IMPL =
 			"com.liferay.adaptive.media.image.internal.scaler." +
 				"AMImageScalerTrackerImpl";
+
+	@Inject (filter = "component.name=*.AMDefaultImageScaler")
+	private AMImageScaler _amDefaultImageScaler;
 
 	@Inject
 	private AMImageScalerTracker _amImageScalerTracker;

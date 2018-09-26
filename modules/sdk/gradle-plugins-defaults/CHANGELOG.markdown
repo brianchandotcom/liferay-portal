@@ -4648,6 +4648,12 @@ version 1.3.4.
 - [LPS-84119]: Update the [Liferay Gradle Plugins] dependency to version
 3.12.148.
 
+## 5.5.61 - 2018-09-26
+
+### Fixed
+- [LPS-85771]: Set `test.outputs.upToDateWhen`to `false` to always run `test`
+and `testIntegration` for OSGi modules.
+
 [Find Security Bugs]: https://github.com/liferay/liferay-portal/tree/master/modules/third-party/com-h3xstream-findsecbugs
 [Gradle Dependency Management]: https://github.com/spring-gradle-plugins/dependency-management-plugin
 [Gradle License Report]: https://github.com/jk1/Gradle-License-Report
@@ -5125,6 +5131,7 @@ version 1.3.4.
 [LPS-85609]: https://issues.liferay.com/browse/LPS-85609
 [LPS-85677]: https://issues.liferay.com/browse/LPS-85677
 [LPS-85678]: https://issues.liferay.com/browse/LPS-85678
+[LPS-85771]: https://issues.liferay.com/browse/LPS-85771
 [LRDOCS-2594]: https://issues.liferay.com/browse/LRDOCS-2594
 [LRDOCS-2841]: https://issues.liferay.com/browse/LRDOCS-2841
 [LRDOCS-2981]: https://issues.liferay.com/browse/LRDOCS-2981

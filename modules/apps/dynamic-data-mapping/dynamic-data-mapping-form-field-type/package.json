@@ -59,7 +59,7 @@
 		"babel-plugin-transform-class-properties": "^6.24.1",
 		"babel-plugin-transform-object-rest-spread": "^6.26.0",
 		"babel-preset-env": "^1.7.0",
-		"check-source-formatting": "^2.0.4",
+		"check-source-formatting": "^2.0.12",
 		"eslint": "^4.10.0",
 		"eslint-config-liferay": "^2.0.8",
 		"eslint-plugin-react": "^7.4.0",

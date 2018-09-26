@@ -124,7 +124,7 @@ class PortletInit {
 									resolve(updatedIds);
 								}
 							)
-							.catch (
+							.catch(
 								err => {
 									reject(err);
 								}
@@ -492,7 +492,7 @@ class PortletInit {
 					this._updatePortletStates(updatedIds);
 				}
 			)
-			.catch (
+			.catch(
 				err => {
 					busy = false;
 					this._reportError(this._portletId, err);
@@ -616,7 +616,7 @@ class PortletInit {
 					Promise.resolve(val);
 				}
 			)
-			.catch (
+			.catch(
 				err => {
 					Promise.reject(err);
 				}

@@ -106,7 +106,7 @@ class Flags extends PortletBase {
 					this._showConfirmationMessage = true;
 				}
 			}
-		).catch (
+		).catch(
 			() => {
 				this._showErrorMessage = true;
 			}

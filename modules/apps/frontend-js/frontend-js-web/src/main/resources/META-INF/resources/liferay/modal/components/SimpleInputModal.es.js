@@ -56,7 +56,7 @@ class SimpleInputModal extends PortletBase {
 					}
 				}
 			)
-			.catch (
+			.catch(
 				response => {
 					this._handleFormError(response);
 				}

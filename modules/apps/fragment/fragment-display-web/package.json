@@ -20,7 +20,7 @@
 		"metal-state": "^2.13.2"
 	},
 	"devDependencies": {
-		"check-source-formatting": "^2.0.4",
+		"check-source-formatting": "^2.0.12",
 		"liferay-module-config-generator": "^1.1.10",
 		"metal-cli": "^4.3.3"
 	},

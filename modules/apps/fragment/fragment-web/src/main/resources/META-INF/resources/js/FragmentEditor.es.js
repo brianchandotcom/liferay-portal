@@ -155,7 +155,7 @@ class FragmentEditor extends PortletBase {
 					Liferay.Util.navigate(redirectURL);
 				}
 			)
-			.catch (
+			.catch(
 				(error) => {
 					this._saving = false;
 

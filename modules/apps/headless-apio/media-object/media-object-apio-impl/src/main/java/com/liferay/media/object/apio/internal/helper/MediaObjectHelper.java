@@ -55,15 +55,16 @@ public class MediaObjectHelper {
 
 		BinaryFile binaryFile = mediaObjectCreatorForm.getBinaryFile();
 
+		String binaryFileName = binaryFile.getName();
+
 		Optional<String> titleOptional =
 			mediaObjectCreatorForm.getTitleOptional();
 
-		String title = titleOptional.orElse(binaryFile.getName());
+		String title = titleOptional.orElse(binaryFileName);
 
 		return _dlAppService.addFileEntry(
-			repositoryId, folderId, binaryFile.getName(),
-			binaryFile.getMimeType(), title,
-			mediaObjectCreatorForm.getDescription(), null,
+			repositoryId, folderId, binaryFileName, binaryFile.getMimeType(),
+			title, mediaObjectCreatorForm.getDescription(), null,
 			binaryFile.getInputStream(), binaryFile.getSize(), serviceContext);
 	}
 

@@ -57,9 +57,24 @@ String fieldsJSONArrayString = fieldsJSONArray.toString();
 	function <portlet:namespace />setFieldsHiddenAttributes(formBuilder, mode, item, index) {
 		var hiddenAttributesMap = formBuilder.MAP_HIDDEN_FIELD_ATTRS;
 		var hiddenAttributes = hiddenAttributesMap[item.get('type')] || hiddenAttributesMap.DEFAULT;
+		var without = function(array) {
+			var elems = Array.from(arguments).slice(1);
+
+				elems.forEach(
+					function(value) {
+						array = array.filter(
+							function(elem) {
+								return elem != value;
+							}
+						);
+					}
+				);
+
+			return array;
+		}
 
 		if (mode === '<%= DDMTemplateConstants.TEMPLATE_MODE_EDIT %>') {
-			hiddenAttributes = AUI._.without(hiddenAttributes, 'readOnly');
+			hiddenAttributes = without(hiddenAttributes, 'readOnly');
 		}
 
 		item.set('hiddenAttributes', hiddenAttributes);

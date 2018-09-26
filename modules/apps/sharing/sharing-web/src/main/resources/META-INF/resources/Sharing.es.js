@@ -1,6 +1,5 @@
 import Soy from 'metal-soy';
 import {Config} from 'metal-state';
-import {openToast} from 'frontend-js-web/liferay/toast/commands/OpenToast.es';
 import PortletBase from 'frontend-js-web/liferay/PortletBase.es';
 
 import templates from './Sharing.soy';
@@ -26,6 +25,32 @@ class Sharing extends PortletBase {
 		if (sharingDialog && sharingDialog.hide) {
 			sharingDialog.hide();
 		}
+	}
+
+	/**
+	 * Show notification in the opener and closes dialog
+	 * after is rendered
+	 * @param {string} message message for notification
+	 * @param {boolean} error Flag indicating if is an error or not
+	 * @private
+	 * @review
+	 */
+	_showNotification(message, error) {
+		const parentOpenToast = Liferay.Util.getOpener().Liferay.Util.openToast;
+
+		const openToastParams = {
+			message,
+			events: {
+				'attached': this._closeDialog.bind(this)
+			}
+		};
+
+		if (error) {
+			openToastParams.title = Liferay.Language.get('error');
+			openToastParams.type = 'danger';
+		}
+
+		parentOpenToast(openToastParams);
 	}
 
 	/**
@@ -126,24 +151,12 @@ class Sharing extends PortletBase {
 			.then(json => {
 				parent.Liferay.Portlet.refresh(`#p_p_id${this._refererPortletNamespace}`);
 
-				openToast({
-					message: json.successMessage,
-					events: {
-						'attached': this._closeDialog.bind(this)
-					}
-				});
+				this._showNotification(json.successMessage);
 			})
 			.catch(error => {
 				this.submitting = false;
 
-				openToast({
-					message: error.message,
-					title: Liferay.Language.get('error'),
-					type: 'danger',
-					events: {
-						'attached': this._closeDialog.bind(this)
-					}
-				});
+				this._showNotification(error.message, true);
 			});
 	}
 

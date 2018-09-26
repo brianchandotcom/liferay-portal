@@ -28,6 +28,17 @@ public class ExpressionVisitException extends Exception {
 	 * cause
 	 *
 	 * @param  msg - message of the Exception
+	 * @review
+	 */
+	public ExpressionVisitException(String msg) {
+		super(msg);
+	}
+
+	/**
+	 * Creates a new <code>ExpressionVisitException</code> with a message and a
+	 * cause
+	 *
+	 * @param  msg - message of the Exception
 	 * @param  cause - cause of the Exception
 	 * @review
 	 */

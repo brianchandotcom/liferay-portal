@@ -304,6 +304,12 @@
 		</execute>
 	</command>
 
+	<command name="openCategoryAdmin">
+		<execute macro="Navigator#openWithAppendToBaseURL">
+			<var name="urlAppend" value="group/${siteURLKey}/~/control_panel/manage/-/categories_admin/" />
+		</execute>
+	</command>
+
 	<command name="searchCP">
 		<var name="key_vocabularyName" value="${vocabularyName}" />
 

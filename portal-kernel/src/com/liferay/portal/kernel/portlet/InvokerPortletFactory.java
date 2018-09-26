@@ -28,11 +28,19 @@ import javax.portlet.PortletException;
 @ProviderType
 public interface InvokerPortletFactory {
 
+	public InvokerPortlet create(
+			com.liferay.portal.kernel.model.Portlet portletModel,
+			Portlet portlet, PortletConfig portletConfig,
+			PortletContext portletContext,
+			InvokerFilterContainer invokerFilterContainer,
+			boolean checkAuthToken, boolean facesPortlet, boolean headerPortlet)
+		throws PortletException;
+
 	/**
 	 * @deprecated As of Judson (7.1.x), replaced by {@link
 	 *             #create(com.liferay.portal.kernel.model.Portlet, Portlet,
 	 *             PortletConfig, PortletContext, InvokerFilterContainer,
-	 *             boolean, boolean, boolean, boolean, boolean)}
+	 *             boolean, boolean, boolean)}
 	 */
 	@Deprecated
 	public InvokerPortlet create(
@@ -44,6 +52,13 @@ public interface InvokerPortletFactory {
 			boolean strutsBridgePortlet)
 		throws PortletException;
 
+	/**
+	 * @deprecated As of Judson (7.1.x), replaced by {@link
+	 *             #create(com.liferay.portal.kernel.model.Portlet, Portlet,
+	 *             PortletConfig, PortletContext, InvokerFilterContainer,
+	 *             boolean, boolean, boolean)}
+	 */
+	@Deprecated
 	public InvokerPortlet create(
 			com.liferay.portal.kernel.model.Portlet portletModel,
 			Portlet portlet, PortletConfig portletConfig,

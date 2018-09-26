@@ -37,24 +37,7 @@ public class InvokerPortletFactoryImpl implements InvokerPortletFactory {
 			Portlet portlet, PortletConfig portletConfig,
 			PortletContext portletContext,
 			InvokerFilterContainer invokerFilterContainer,
-			boolean checkAuthToken, boolean facesPortlet, boolean strutsPortlet,
-			boolean strutsBridgePortlet)
-		throws PortletException {
-
-		return create(
-			portletModel, portlet, portletConfig, portletContext,
-			invokerFilterContainer, checkAuthToken, facesPortlet, false,
-			strutsPortlet, strutsBridgePortlet);
-	}
-
-	@Override
-	public InvokerPortlet create(
-			com.liferay.portal.kernel.model.Portlet portletModel,
-			Portlet portlet, PortletConfig portletConfig,
-			PortletContext portletContext,
-			InvokerFilterContainer invokerFilterContainer,
-			boolean checkAuthToken, boolean facesPortlet, boolean headerPortlet,
-			boolean strutsPortlet, boolean strutsBridgePortlet)
+			boolean checkAuthToken, boolean facesPortlet, boolean headerPortlet)
 		throws PortletException {
 
 		try {
@@ -66,6 +49,51 @@ public class InvokerPortletFactoryImpl implements InvokerPortletFactory {
 		catch (Exception e) {
 			throw new PortletException(e);
 		}
+	}
+
+	/**
+	 * @deprecated As of Judson (7.1.x), replaced by {@link
+	 *             #create(com.liferay.portal.kernel.model.Portlet, Portlet,
+	 *             PortletConfig, PortletContext, InvokerFilterContainer,
+	 *             boolean, boolean, boolean)}
+	 */
+	@Deprecated
+	@Override
+	public InvokerPortlet create(
+			com.liferay.portal.kernel.model.Portlet portletModel,
+			Portlet portlet, PortletConfig portletConfig,
+			PortletContext portletContext,
+			InvokerFilterContainer invokerFilterContainer,
+			boolean checkAuthToken, boolean facesPortlet, boolean strutsPortlet,
+			boolean strutsBridgePortlet)
+		throws PortletException {
+
+		return create(
+			portletModel, portlet, portletConfig, portletContext,
+			invokerFilterContainer, checkAuthToken, facesPortlet, false);
+	}
+
+	/**
+	 * @deprecated As of Judson (7.1.x), replaced by {@link
+	 *             #create(com.liferay.portal.kernel.model.Portlet, Portlet,
+	 *             PortletConfig, PortletContext, InvokerFilterContainer,
+	 *             boolean, boolean, boolean)}
+	 */
+	@Deprecated
+	@Override
+	public InvokerPortlet create(
+			com.liferay.portal.kernel.model.Portlet portletModel,
+			Portlet portlet, PortletConfig portletConfig,
+			PortletContext portletContext,
+			InvokerFilterContainer invokerFilterContainer,
+			boolean checkAuthToken, boolean facesPortlet, boolean headerPortlet,
+			boolean strutsPortlet, boolean strutsBridgePortlet)
+		throws PortletException {
+
+		return create(
+			portletModel, portlet, portletConfig, portletContext,
+			invokerFilterContainer, checkAuthToken, facesPortlet,
+			headerPortlet);
 	}
 
 	@Override

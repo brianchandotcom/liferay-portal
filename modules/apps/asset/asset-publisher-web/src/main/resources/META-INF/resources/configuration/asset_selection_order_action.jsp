@@ -32,17 +32,6 @@ boolean last = (assetEntryOrder == (searchContainer.getTotal() - 1));
 	<c:when test="<%= (assetEntryOrder > 0) && !last %>">
 
 		<%
-		String taglibDownURL = "javascript:" + renderResponse.getNamespace() + "moveSelectionDown('" + assetEntryOrder + "')";
-		%>
-
-		<liferay-ui:icon
-			icon="angle-down"
-			markupView="lexicon"
-			message="down"
-			url="<%= taglibDownURL %>"
-		/>
-
-		<%
 		String taglibUpURL = "javascript:" + renderResponse.getNamespace() + "moveSelectionUp('" + assetEntryOrder + "')";
 		%>
 
@@ -51,6 +40,17 @@ boolean last = (assetEntryOrder == (searchContainer.getTotal() - 1));
 			markupView="lexicon"
 			message="up"
 			url="<%= taglibUpURL %>"
+		/>
+
+		<%
+		String taglibDownURL = "javascript:" + renderResponse.getNamespace() + "moveSelectionDown('" + assetEntryOrder + "')";
+		%>
+
+		<liferay-ui:icon
+			icon="angle-down"
+			markupView="lexicon"
+			message="down"
+			url="<%= taglibDownURL %>"
 		/>
 	</c:when>
 	<c:when test="<%= assetEntryOrder == 0 %>">

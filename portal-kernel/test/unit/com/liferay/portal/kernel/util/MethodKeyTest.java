@@ -81,7 +81,8 @@ public class MethodKeyTest {
 		}
 		catch (RuntimeException re) {
 			Assert.assertTrue(
-				"The cause is not ClassNotFoundException",
+				"ClassNotFoundException is expected when creating MethodKey " +
+					"with invalid class name",
 				re.getCause() instanceof ClassNotFoundException);
 		}
 	}
@@ -135,7 +136,7 @@ public class MethodKeyTest {
 
 		Assert.assertEquals(expectedMethod, actualMethod1);
 		Assert.assertTrue(
-			"The method obtained from MethodKey is not accessible",
+			"The method obtained from MethodKey should be accessible",
 			actualMethod1.isAccessible());
 
 		Assert.assertEquals(methods.toString(), 1, methods.size());
@@ -148,7 +149,7 @@ public class MethodKeyTest {
 
 		Assert.assertSame(actualMethod2, actualMethod1);
 		Assert.assertTrue(
-			"The method obtained from MethodKey is not accessible",
+			"The method obtained from MethodKey should be accessible",
 			actualMethod2.isAccessible());
 
 		Assert.assertEquals(methods.toString(), 1, methods.size());

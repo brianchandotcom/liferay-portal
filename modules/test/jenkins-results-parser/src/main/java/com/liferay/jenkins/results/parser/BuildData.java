@@ -46,12 +46,12 @@ public interface BuildData {
 
 	public String getJobName();
 
+	public JSONObject getJSONObject();
+
 	public String getMasterHostname();
 
 	public String getRunID();
 
 	public File getWorkspaceDir();
-
-	public JSONObject toJSONObject();
 
 }

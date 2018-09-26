@@ -28,7 +28,7 @@ import org.json.JSONObject;
 /**
  * @author Michael Hashimoto
  */
-public abstract class BaseBuildData extends JSONObject implements BuildData {
+public abstract class BaseBuildData implements BuildData {
 
 	public static String getJobName(String buildURL) {
 		if (buildURL == null) {
@@ -87,6 +87,11 @@ public abstract class BaseBuildData extends JSONObject implements BuildData {
 	}
 
 	@Override
+	public JSONObject getJSONObject() {
+		return _jsonObject;
+	}
+
+	@Override
 	public String getMasterHostname() {
 		return getString("master_hostname");
 	}
@@ -119,11 +124,6 @@ public abstract class BaseBuildData extends JSONObject implements BuildData {
 		return false;
 	}
 
-	@Override
-	public JSONObject toJSONObject() {
-		return this;
-	}
-
 	protected BaseBuildData(
 		Map<String, String> buildParameters,
 		JenkinsJSONObject jenkinsJSONObject) {
@@ -135,7 +135,8 @@ public abstract class BaseBuildData extends JSONObject implements BuildData {
 		Map<String, String> buildParameters,
 		JenkinsJSONObject jenkinsJSONObject, String runID) {
 
-		super(_getBuildDataSource(jenkinsJSONObject, runID));
+		_jsonObject = new JSONObject(
+			_getBuildDataSource(jenkinsJSONObject, runID));
 
 		if (runID == null) {
 			runID = _DEFAULT_RUN_ID;
@@ -169,7 +170,31 @@ public abstract class BaseBuildData extends JSONObject implements BuildData {
 		validateKeys(_REQUIRED_KEYS);
 	}
 
+	protected Integer getInt(String key) {
+		return _jsonObject.getInt(key);
+	}
+
+	protected String getString(String key) {
+		return _jsonObject.getString(key);
+	}
+
 	protected abstract String getType();
+
+	protected boolean has(String key) {
+		return _jsonObject.has(key);
+	}
+
+	protected String optString(String key, String defaultValue) {
+		return _jsonObject.optString(key, defaultValue);
+	}
+
+	protected void put(String key, Object value) {
+		_jsonObject.put(key, value);
+
+		BuildDatabase buildDatabase = BuildDatabaseUtil.getBuildDatabase();
+
+		buildDatabase.putBuildData(getRunID(), this);
+	}
 
 	protected void validateKeys(String[] requiredKeys) {
 		for (String requiredKey : requiredKeys) {
@@ -244,6 +269,7 @@ public abstract class BaseBuildData extends JSONObject implements BuildData {
 			"(\\.liferay\\.com)?/job/(?<jobName>[^/]+)/(.*/)?",
 			"(?<buildNumber>\\d+)/?"));
 
+	private final JSONObject _jsonObject;
 	private final String _runID;
 
 }

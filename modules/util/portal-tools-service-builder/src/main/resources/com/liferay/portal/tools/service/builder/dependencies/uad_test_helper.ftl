@@ -6,15 +6,9 @@ import java.util.List;
 
 import org.junit.Assume;
 
-import org.osgi.service.component.annotations.Component;
-
 /**
  * @author ${author}
  */
-@Component(
-	immediate = true,
-	service = ${entity.name}UADTestHelper.class
-)
 public class ${entity.name}UADTestHelper {
 
 	/**

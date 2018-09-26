@@ -41,7 +41,8 @@ public class PortalBatchBuildData
 		TopLevelBuildData topLevelBuildData = getTopLevelBuildData();
 
 		if (!(topLevelBuildData instanceof PortalTopLevelBuildData)) {
-			return null;
+			throw new RuntimeException(
+				"Invalid build data " + topLevelBuildData.toString());
 		}
 
 		_portalTopLevelBuildData = (PortalTopLevelBuildData)topLevelBuildData;

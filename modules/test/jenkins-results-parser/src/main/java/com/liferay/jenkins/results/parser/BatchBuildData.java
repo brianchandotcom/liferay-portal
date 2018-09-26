@@ -28,6 +28,21 @@ public abstract class BatchBuildData extends BaseBuildData {
 	}
 
 	public TopLevelBuildData getTopLevelBuildData() {
+		if (_topLevelBuildData != null) {
+			return _topLevelBuildData;
+		}
+
+		BuildDatabase buildDatabase = BuildDatabaseUtil.getBuildDatabase();
+
+		BuildData buildData = buildDatabase.getBuildData(getTopLevelRunID());
+
+		if (!(buildData instanceof TopLevelBuildData)) {
+			throw new RuntimeException(
+				"Invalid build data " + buildData.toString());
+		}
+
+		_topLevelBuildData = (TopLevelBuildData)buildData;
+
 		return _topLevelBuildData;
 	}
 

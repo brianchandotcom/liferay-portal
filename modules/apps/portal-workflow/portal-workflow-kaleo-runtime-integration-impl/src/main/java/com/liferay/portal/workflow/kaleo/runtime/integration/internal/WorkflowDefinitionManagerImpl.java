@@ -37,6 +37,7 @@ import com.liferay.portal.workflow.kaleo.service.KaleoDefinitionLocalService;
 import com.liferay.portal.workflow.kaleo.service.KaleoDefinitionVersionLocalService;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
@@ -150,7 +151,8 @@ public class WorkflowDefinitionManagerImpl
 			int size = kaleoDefinitions.size();
 
 			return toWorkflowDefinitions(
-				kaleoDefinitions.toArray(new KaleoDefinition[size]));
+				kaleoDefinitions.toArray(new KaleoDefinition[size]),
+				orderByComparator);
 		}
 		catch (Exception e) {
 			throw new WorkflowException(e);
@@ -181,7 +183,8 @@ public class WorkflowDefinitionManagerImpl
 			int size = kaleoDefinitions.size();
 
 			return toWorkflowDefinitions(
-				kaleoDefinitions.toArray(new KaleoDefinition[size]));
+				kaleoDefinitions.toArray(new KaleoDefinition[size]),
+				orderByComparator);
 		}
 		catch (Exception e) {
 			throw new WorkflowException(e);
@@ -244,7 +247,8 @@ public class WorkflowDefinitionManagerImpl
 			int size = kaleoDefinitions.size();
 
 			return toWorkflowDefinitions(
-				kaleoDefinitions.toArray(new KaleoDefinition[size]));
+				kaleoDefinitions.toArray(new KaleoDefinition[size]),
+				orderByComparator);
 		}
 		catch (Exception e) {
 			throw new WorkflowException(e);
@@ -317,7 +321,8 @@ public class WorkflowDefinitionManagerImpl
 
 			return toWorkflowDefinitions(
 				kaleoDefinitionVersions.toArray(
-					new KaleoDefinitionVersion[size]));
+					new KaleoDefinitionVersion[size]),
+				orderByComparator);
 		}
 		catch (Exception e) {
 			throw new WorkflowException(e);
@@ -339,7 +344,8 @@ public class WorkflowDefinitionManagerImpl
 
 			return toWorkflowDefinitions(
 				kaleoDefinitionVersions.toArray(
-					new KaleoDefinitionVersion[size]));
+					new KaleoDefinitionVersion[size]),
+				orderByComparator);
 		}
 		catch (Exception e) {
 			throw new WorkflowException(e);
@@ -453,7 +459,8 @@ public class WorkflowDefinitionManagerImpl
 	}
 
 	protected List<WorkflowDefinition> toWorkflowDefinitions(
-		KaleoDefinition[] kaleoDefinitions) {
+		KaleoDefinition[] kaleoDefinitions,
+		OrderByComparator<WorkflowDefinition> orderByComparator) {
 
 		List<WorkflowDefinition> workflowDefinitions = new ArrayList<>(
 			kaleoDefinitions.length);
@@ -466,11 +473,16 @@ public class WorkflowDefinitionManagerImpl
 			workflowDefinitions.add(workflowDefinition);
 		}
 
+		if (orderByComparator != null) {
+			Collections.sort(workflowDefinitions, orderByComparator);
+		}
+
 		return workflowDefinitions;
 	}
 
 	protected List<WorkflowDefinition> toWorkflowDefinitions(
-			KaleoDefinitionVersion[] kaleoDefinitionVersions)
+			KaleoDefinitionVersion[] kaleoDefinitionVersions,
+			OrderByComparator<WorkflowDefinition> orderByComparator)
 		throws PortalException {
 
 		List<WorkflowDefinition> workflowDefinitions = new ArrayList<>(
@@ -484,6 +496,10 @@ public class WorkflowDefinitionManagerImpl
 					kaleoDefinitionVersion);
 
 			workflowDefinitions.add(workflowDefinition);
+		}
+
+		if (orderByComparator != null) {
+			Collections.sort(workflowDefinitions, orderByComparator);
 		}
 
 		return workflowDefinitions;

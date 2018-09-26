@@ -440,6 +440,27 @@ portalArtifactsJar {
 
 			downloadPortalArtifact("com.liferay.portal", bundleSymbolicName, xmlSlurper)
 		}
+
+		FileTree jarFileTree = fileTree(dir: portalArtifactsDir, include: "*.jar")
+
+		jarFileTree.each {
+			File jarFile ->
+
+			copy {
+				from zipTree(jarFile)
+				into new File(portalArtifactsDir, jarFile.name[0 .. -5])
+			}
+		}
+
+		delete jarFileTree
+
+		portalArtifactsDir.listFiles().each {
+			File portalArtifactFile ->
+
+			if (portalArtifactFile.isDirectory()) {
+				dependencies.portalArtifacts files(portalArtifactFile)
+			}
+		}
 	}
 }
 

@@ -38,18 +38,9 @@ public abstract class BaseLocalGitRepository
 			return _gitWorkingDirectory;
 		}
 
-		File directory = getDirectory();
-
-		File dotGitFile = new File(directory, ".git");
-
-		if (!dotGitFile.exists()) {
-			throw new IllegalArgumentException(
-				directory + " is not a valid Git repository");
-		}
-
 		_gitWorkingDirectory =
 			GitWorkingDirectoryFactory.newGitWorkingDirectory(
-				getUpstreamBranchName(), directory, getName());
+				getUpstreamBranchName(), getDirectory(), getName());
 
 		return _gitWorkingDirectory;
 	}

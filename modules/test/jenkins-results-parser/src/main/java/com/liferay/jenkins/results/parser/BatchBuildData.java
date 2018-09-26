@@ -19,7 +19,7 @@ import java.util.Map;
 /**
  * @author Michael Hashimoto
  */
-public class BatchBuildData extends BaseBuildData {
+public abstract class BatchBuildData extends BaseBuildData {
 
 	public String getBatchName() {
 		return getString("batch_name");
@@ -39,54 +39,49 @@ public class BatchBuildData extends BaseBuildData {
 
 		super(buildParameters, jenkinsJSONObject, runID);
 
-		if (!has("batch_name")) {
-			if (!buildParameters.containsKey("BATCH_NAME")) {
-				throw new RuntimeException("Please set BATCH_NAME");
-			}
+		put("batch_name", _getBatchName(buildParameters));
+		put("dist_nodes", _getDistNodes(buildParameters));
+		put("dist_path", _getDistPath(buildParameters));
+		put("top_level_run_id", _getTopLevelRunID(buildParameters));
 
-			put("batch_name", buildParameters.get("BATCH_NAME"));
-		}
-
-		if (!has("dist_nodes")) {
-			if (!buildParameters.containsKey("DIST_NODES")) {
-				throw new RuntimeException("Please set DIST_NODES");
-			}
-
-			put("dist_nodes", buildParameters.get("DIST_NODES"));
-		}
-
-		if (!has("dist_path")) {
-			if (!buildParameters.containsKey("DIST_PATH")) {
-				throw new RuntimeException("Please set DIST_PATH");
-			}
-
-			put("dist_nodes", buildParameters.get("DIST_PATH"));
-		}
-
-		if (!has("top_level_run_id") &&
-			buildParameters.containsKey("TOP_LEVEL_RUN_ID")) {
-
-			put("top_level_run_id", buildParameters.get("TOP_LEVEL_RUN_ID"));
-		}
-
-		_topLevelBuildData = _getTopLevelBuildData(
-			buildParameters, jenkinsJSONObject);
+		validateKeys(_REQUIRED_KEYS);
 	}
 
-	private TopLevelBuildData _getTopLevelBuildData(
-		Map<String, String> buildParameters,
-		JenkinsJSONObject jenkinsJSONObject) {
-
-		String topLevelRunID = getTopLevelRunID();
-
-		if (topLevelRunID == null) {
-			return null;
+	private String _getBatchName(Map<String, String> buildParameters) {
+		if (!buildParameters.containsKey("BATCH_NAME")) {
+			throw new RuntimeException("Please set BATCH_NAME");
 		}
 
-		return BuildDataFactory.newTopLevelBuildData(
-			buildParameters, jenkinsJSONObject, topLevelRunID);
+		return buildParameters.get("BATCH_NAME");
 	}
 
-	private final TopLevelBuildData _topLevelBuildData;
+	private String _getDistNodes(Map<String, String> buildParameters) {
+		if (!buildParameters.containsKey("DIST_NODES")) {
+			throw new RuntimeException("Please set DIST_NODES");
+		}
+
+		return buildParameters.get("DIST_NODES");
+	}
+
+	private String _getDistPath(Map<String, String> buildParameters) {
+		if (!buildParameters.containsKey("DIST_PATH")) {
+			throw new RuntimeException("Please set DIST_PATH");
+		}
+
+		return buildParameters.get("DIST_PATH");
+	}
+
+	private String _getTopLevelRunID(Map<String, String> buildParameters) {
+		if (!buildParameters.containsKey("TOP_LEVEL_RUN_ID")) {
+			throw new RuntimeException("Please set TOP_LEVEL_RUN_ID");
+		}
+
+		return buildParameters.get("TOP_LEVEL_RUN_ID");
+	}
+
+	private static final String[] _REQUIRED_KEYS =
+		{"batch_name", "dist_nodes", "dist_path", "top_level_run_id"};
+
+	private TopLevelBuildData _topLevelBuildData;
 
 }

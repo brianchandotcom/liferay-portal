@@ -57,15 +57,12 @@ public class PortalBatchBuildData
 		_portalTopLevelBuildData =
 			(PortalTopLevelBuildData)getTopLevelBuildData();
 
-		if (!has("portal_github_url")) {
-			put("portal_github_url", _getPortalGitHubURL(buildParameters));
-		}
+		put("portal_github_url", _getPortalGitHubURL(buildParameters));
+		put(
+			"portal_upstream_branch_name",
+			_getPortalUpstreamBranchName(buildParameters));
 
-		if (!has("portal_upstream_branch_name")) {
-			put(
-				"portal_upstream_branch_name",
-				_getPortalUpstreamBranchName(buildParameters));
-		}
+		validateKeys(_REQUIRED_KEYS);
 	}
 
 	private String _getPortalGitHubURL(Map<String, String> buildParameters) {
@@ -100,6 +97,9 @@ public class PortalBatchBuildData
 
 		return buildParameters.get("PORTAL_UPSTREAM_BRANCH_NAME");
 	}
+
+	private static final String[] _REQUIRED_KEYS =
+		{"portal_github_url", "portal_upstream_branch_name"};
 
 	private PortalTopLevelBuildData _portalTopLevelBuildData;
 

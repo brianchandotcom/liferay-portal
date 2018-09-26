@@ -654,6 +654,31 @@ portalArtifactsJar {
 				dependencies.portalArtifacts files(portalArtifactFile)
 			}
 		}
+
+		manifest {
+			FileTree portalArtifactsManifestFileTree = fileTree(portalArtifactsDir).matching {
+				include "**/META-INF/MANIFEST.MF"
+			}
+
+			portalArtifactsManifestFileTree.files.each {
+				File portalArtifactsManifestFile ->
+
+				from (portalArtifactsManifestFile) {
+					eachEntry {
+						ManifestMergeDetails manifestMergeDetails ->
+
+						if (manifestMergeDetails.key == "Export-Package") {
+							if (manifestMergeDetails.baseValue != null) {
+								manifestMergeDetails.value = manifestMergeDetails.baseValue + "," + manifestMergeDetails.mergeValue
+							}
+						}
+						else {
+							manifestMergeDetails.exclude()
+						}
+					}
+				}
+			}
+		}
 	}
 }
 

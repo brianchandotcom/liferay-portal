@@ -196,13 +196,14 @@ renderResponse.setTitle((role == null) ? LanguageUtil.get(request, "new-role") :
 </aui:form>
 
 <c:if test="<%= role == null %>">
-	<aui:script sandbox="<%= true %>">
+	<aui:script require="metal-debounce/src/debounce" sandbox="<%= true %>">
 		var form = $(document.<portlet:namespace />fm);
 
 		var nameInput = form.fm('name');
 		var titleInput = form.fm('title');
 
-		var onTitleInput = _.debounce(
+		var debounce = metalDebounceSrcDebounce.default;
+		var onTitleInput = debounce(
 			function(event) {
 				nameInput.val(titleInput.val().substring(0, nameInput.attr('maxlength')));
 			},

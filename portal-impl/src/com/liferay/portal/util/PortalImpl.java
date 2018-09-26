@@ -6607,6 +6607,12 @@ public class PortalImpl implements Portal {
 		return false;
 	}
 
+	/**
+	 * @deprecated As of Judson (7.1.x), replaced by {@link
+	 *             #isSkipPortletContentRendering(Group, LayoutTypePortlet,
+	 *             PortletDisplay, String)}
+	 */
+	@Deprecated
 	@Override
 	public boolean isSkipPortletContentProcessing(
 			Group group, HttpServletRequest httpServletRequest,
@@ -6614,26 +6620,8 @@ public class PortalImpl implements Portal {
 			String portletName)
 		throws Exception {
 
-		boolean skipPortletContentRendering = isSkipPortletContentRendering(
+		return isSkipPortletContentRendering(
 			group, layoutTypePortlet, portletDisplay, portletName);
-
-		if (!skipPortletContentRendering) {
-			return false;
-		}
-
-		Portlet portlet = PortletLocalServiceUtil.getPortletById(
-			group.getCompanyId(), portletDisplay.getId());
-		ServletContext servletContext =
-			(ServletContext)httpServletRequest.getAttribute(WebKeys.CTX);
-
-		InvokerPortlet invokerPortlet = PortletInstanceFactoryUtil.create(
-			portlet, servletContext);
-
-		if (invokerPortlet.isStrutsPortlet()) {
-			return false;
-		}
-
-		return true;
 	}
 
 	@Override

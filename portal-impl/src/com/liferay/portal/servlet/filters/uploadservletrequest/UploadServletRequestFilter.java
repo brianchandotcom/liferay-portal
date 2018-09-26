@@ -86,8 +86,7 @@ public class UploadServletRequestFilter extends BasePortalFilter {
 				LiferayPortletConfig liferayPortletConfig =
 					(LiferayPortletConfig)invokerPortlet.getPortletConfig();
 
-				if (invokerPortlet.isStrutsPortlet() ||
-					liferayPortletConfig.isCopyRequestParameters() ||
+				if (liferayPortletConfig.isCopyRequestParameters() ||
 					!liferayPortletConfig.isWARFile()) {
 
 					request.setAttribute(

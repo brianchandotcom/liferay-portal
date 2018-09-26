@@ -59,6 +59,10 @@ public interface InvokerPortlet
 	@Deprecated
 	public boolean isStrutsBridgePortlet();
 
+	/**
+	 * @deprecated As of Judson (7.1.x), with no direct replacement
+	 */
+	@Deprecated
 	public boolean isStrutsPortlet();
 
 	public void setPortletFilters() throws PortletException;

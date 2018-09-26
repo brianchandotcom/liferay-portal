@@ -17,6 +17,7 @@ package com.liferay.portlet;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.portlet.PortletContextFactory;
 import com.liferay.portal.kernel.portlet.PortletContextFactoryUtil;
+import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.model.impl.PortletAppImpl;
 import com.liferay.portal.model.impl.PortletImpl;
@@ -89,7 +90,7 @@ public class InvokerFilterContainerImplTest {
 		Portlet portlet = new PortletImpl();
 
 		portlet.setPortletApp(portletAppImpl);
-		portlet.setPortletClass("com.liferay.portlet.StrutsPortlet");
+		portlet.setPortletClass(MVCPortlet.class.getName());
 		portlet.setPortletId("InvokerFilterContainerImplTest");
 
 		PortletContext portletContext = PortletContextFactoryUtil.create(

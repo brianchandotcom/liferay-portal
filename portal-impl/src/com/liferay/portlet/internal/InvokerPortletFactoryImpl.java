@@ -61,7 +61,7 @@ public class InvokerPortletFactoryImpl implements InvokerPortletFactory {
 			return new InvokerPortletImpl(
 				portletModel, portlet, portletConfig, portletContext,
 				invokerFilterContainer, checkAuthToken, facesPortlet,
-				headerPortlet, strutsPortlet, strutsBridgePortlet);
+				headerPortlet);
 		}
 		catch (Exception e) {
 			throw new PortletException(e);

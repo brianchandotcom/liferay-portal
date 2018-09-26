@@ -27,10 +27,9 @@ public class DefaultPortalWorkspaceGitRepository
 	}
 
 	protected DefaultPortalWorkspaceGitRepository(
-		RemoteGitRef remoteGitRef, String upstreamBranchName,
-		String branchSHA) {
+		RemoteGitRef remoteGitRef, String upstreamBranchName) {
 
-		super(remoteGitRef, upstreamBranchName, branchSHA);
+		super(remoteGitRef, upstreamBranchName);
 	}
 
 }

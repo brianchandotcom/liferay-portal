@@ -18,6 +18,7 @@ import java.io.File;
 import java.io.IOException;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
@@ -47,6 +48,34 @@ public abstract class BaseWorkspaceGitRepository
 	}
 
 	@Override
+	public void setBranchSHA(String branchSHA) {
+		if (branchSHA == null) {
+			throw new RuntimeException("Branch SHA is null");
+		}
+
+		if (!branchSHA.matches(_SHA_REGEX)) {
+			throw new RuntimeException("Branch SHA is invalid");
+		}
+
+		GitWorkingDirectory gitWorkingDirectory = getGitWorkingDirectory();
+
+		List<String> branchNamesContainingSHA =
+			gitWorkingDirectory.getBranchNamesContainingSHA(branchSHA);
+
+		if (!branchSHA.equals(_getBranchHeadSHA()) &&
+			!branchSHA.equals(_getBranchSHA())) {
+
+			if (!branchNamesContainingSHA.contains(_getBranchName())) {
+				throw new IllegalArgumentException(
+					JenkinsResultsParserUtil.combine(
+						branchSHA, " does not exist in ", _getBranchName()));
+			}
+		}
+
+		put("branch_sha", branchSHA);
+	}
+
+	@Override
 	public void setUp() {
 		System.out.println();
 		System.out.println("##");
@@ -59,7 +88,7 @@ public abstract class BaseWorkspaceGitRepository
 
 		LocalGitBranch localGitBranch =
 			gitWorkingDirectory.createLocalGitBranch(
-				_getBranchSHA(), true, _getBranchSHA());
+				_getBranchName(), true, _getBranchSHA());
 
 		gitWorkingDirectory.createLocalGitBranch(localGitBranch, true);
 
@@ -126,7 +155,8 @@ public abstract class BaseWorkspaceGitRepository
 
 		_setBranchHeadSHA(localGitBranch.getSHA());
 		_setBranchName(localGitBranch.getName());
-		_setBranchSHA(localGitBranch.getSHA());
+
+		setBranchSHA(localGitBranch.getSHA());
 
 		validateKeys(_REQUIRED_KEYS);
 
@@ -139,8 +169,7 @@ public abstract class BaseWorkspaceGitRepository
 	}
 
 	protected BaseWorkspaceGitRepository(
-		RemoteGitRef remoteGitRef, String upstreamBranchName,
-		String branchSHA) {
+		RemoteGitRef remoteGitRef, String upstreamBranchName) {
 
 		super(remoteGitRef.getRepositoryName(), upstreamBranchName);
 
@@ -157,12 +186,7 @@ public abstract class BaseWorkspaceGitRepository
 		_setBranchHeadSHA(localGitBranch.getSHA());
 		_setBranchName(localGitBranch.getName());
 
-		if ((branchSHA != null) && branchSHA.matches(_SHA_REGEX)) {
-			_setBranchSHA(branchSHA);
-		}
-		else {
-			_setBranchSHA(localGitBranch.getSHA());
-		}
+		setBranchSHA(localGitBranch.getSHA());
 
 		validateKeys(_REQUIRED_KEYS);
 
@@ -186,8 +210,16 @@ public abstract class BaseWorkspaceGitRepository
 		_propertiesFilesMap.put(filePath, fileProperties);
 	}
 
+	private String _getBranchHeadSHA() {
+		return getString("branch_head_sha");
+	}
+
+	private String _getBranchName() {
+		return getString("branch_name");
+	}
+
 	private String _getBranchSHA() {
-		return getString("branch_sha");
+		return optString("branch_sha");
 	}
 
 	private String _getGitHubURL() {
@@ -212,18 +244,6 @@ public abstract class BaseWorkspaceGitRepository
 		}
 
 		put("branch_name", branchName);
-	}
-
-	private void _setBranchSHA(String branchSHA) {
-		if (branchSHA == null) {
-			throw new RuntimeException("Branch SHA is null");
-		}
-
-		if (!branchSHA.matches(_SHA_REGEX)) {
-			throw new RuntimeException("Branch SHA is invalid");
-		}
-
-		put("branch_sha", branchSHA);
 	}
 
 	private void _setGitHubDevBranchName(String gitHubDevBranchName) {

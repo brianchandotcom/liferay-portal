@@ -66,10 +66,10 @@ public class CompanionPortalWorkspaceGitRepository
 	}
 
 	protected CompanionPortalWorkspaceGitRepository(
-		RemoteGitRef remoteGitRef, String upstreamBranchName, String branchSHA,
+		RemoteGitRef remoteGitRef, String upstreamBranchName,
 		WorkspaceGitRepository parentWorkspaceGitRepository) {
 
-		super(remoteGitRef, upstreamBranchName, branchSHA);
+		super(remoteGitRef, upstreamBranchName);
 
 		_parentWorkspaceGitRepository = parentWorkspaceGitRepository;
 	}

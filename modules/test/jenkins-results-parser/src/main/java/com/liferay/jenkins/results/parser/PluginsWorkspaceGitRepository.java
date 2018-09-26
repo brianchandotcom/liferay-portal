@@ -26,10 +26,9 @@ public class PluginsWorkspaceGitRepository extends BaseWorkspaceGitRepository {
 	}
 
 	protected PluginsWorkspaceGitRepository(
-		RemoteGitRef remoteGitRef, String upstreamBranchName,
-		String branchSHA) {
+		RemoteGitRef remoteGitRef, String upstreamBranchName) {
 
-		super(remoteGitRef, upstreamBranchName, branchSHA);
+		super(remoteGitRef, upstreamBranchName);
 	}
 
 	@Override

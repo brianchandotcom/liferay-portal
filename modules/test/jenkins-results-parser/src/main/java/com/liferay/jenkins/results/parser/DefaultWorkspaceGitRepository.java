@@ -26,10 +26,9 @@ public class DefaultWorkspaceGitRepository extends BaseWorkspaceGitRepository {
 	}
 
 	protected DefaultWorkspaceGitRepository(
-		RemoteGitRef remoteGitRef, String upstreamBranchName,
-		String branchSHA) {
+		RemoteGitRef remoteGitRef, String upstreamBranchName) {
 
-		super(remoteGitRef, upstreamBranchName, branchSHA);
+		super(remoteGitRef, upstreamBranchName);
 	}
 
 }

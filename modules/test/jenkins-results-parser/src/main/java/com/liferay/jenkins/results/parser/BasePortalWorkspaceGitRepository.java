@@ -77,10 +77,9 @@ public abstract class BasePortalWorkspaceGitRepository
 	}
 
 	protected BasePortalWorkspaceGitRepository(
-		RemoteGitRef remoteGitRef, String upstreamBranchName,
-		String branchSHA) {
+		RemoteGitRef remoteGitRef, String upstreamBranchName) {
 
-		super(remoteGitRef, upstreamBranchName, branchSHA);
+		super(remoteGitRef, upstreamBranchName);
 
 		_setBasePortalAppServerProperties();
 		_setBasePortalBuildProperties();

@@ -34,23 +34,33 @@ public class WorkspaceUtil {
 
 		String gitHubURL = workspaceGitRepositoryData.getRepositoryGitHubURL();
 
+		WorkspaceGitRepository dependencyWorkspaceGitRepository = null;
+
 		if (PullRequest.isValidGitHubPullRequestURL(gitHubURL)) {
 			PullRequest pullRequest = new PullRequest(gitHubURL);
 
-			return GitRepositoryFactory.getDependencyWorkspaceGitRepository(
-				repositoryType, workspaceGitRepository, pullRequest,
-				workspaceGitRepositoryData.getUpstreamBranchName());
+			dependencyWorkspaceGitRepository =
+				GitRepositoryFactory.getDependencyWorkspaceGitRepository(
+					repositoryType, workspaceGitRepository, pullRequest,
+					workspaceGitRepositoryData.getUpstreamBranchName());
 		}
 		else if (GitUtil.isValidGitHubRefURL(gitHubURL)) {
 			RemoteGitRef remoteGitRef = GitUtil.getRemoteGitRef(gitHubURL);
 
-			return GitRepositoryFactory.getDependencyWorkspaceGitRepository(
-				repositoryType, workspaceGitRepository, remoteGitRef,
-				workspaceGitRepositoryData.getUpstreamBranchName(),
-				workspaceGitRepositoryData.getBranchSHA());
+			dependencyWorkspaceGitRepository =
+				GitRepositoryFactory.getDependencyWorkspaceGitRepository(
+					repositoryType, workspaceGitRepository, remoteGitRef,
+					workspaceGitRepositoryData.getUpstreamBranchName());
 		}
 
-		throw new RuntimeException("Invalid repository GitHub URL");
+		if (dependencyWorkspaceGitRepository == null) {
+			throw new RuntimeException("Invalid repository GitHub URL");
+		}
+
+		dependencyWorkspaceGitRepository.setBranchSHA(
+			workspaceGitRepositoryData.getBranchSHA());
+
+		return dependencyWorkspaceGitRepository;
 	}
 
 	public static WorkspaceGitRepository getWorkspaceGitRepository(
@@ -60,22 +70,32 @@ public class WorkspaceUtil {
 	}
 
 	public static WorkspaceGitRepository getWorkspaceGitRepository(
-		String gitHubURL, String upstreamBranchName, String branchSha) {
+		String gitHubURL, String upstreamBranchName, String branchSHA) {
+
+		WorkspaceGitRepository workspaceGitRepository = null;
 
 		if (PullRequest.isValidGitHubPullRequestURL(gitHubURL)) {
 			PullRequest pullRequest = new PullRequest(gitHubURL);
 
-			return GitRepositoryFactory.getWorkspaceGitRepository(
-				gitHubURL, pullRequest, upstreamBranchName);
+			workspaceGitRepository =
+				GitRepositoryFactory.getWorkspaceGitRepository(
+					gitHubURL, pullRequest, upstreamBranchName);
 		}
 		else if (GitUtil.isValidGitHubRefURL(gitHubURL)) {
 			RemoteGitRef remoteGitRef = GitUtil.getRemoteGitRef(gitHubURL);
 
-			return GitRepositoryFactory.getWorkspaceGitRepository(
-				gitHubURL, remoteGitRef, upstreamBranchName, branchSha);
+			workspaceGitRepository =
+				GitRepositoryFactory.getWorkspaceGitRepository(
+					gitHubURL, remoteGitRef, upstreamBranchName);
 		}
 
-		throw new RuntimeException("Invalid repository GitHub URL");
+		if (workspaceGitRepository == null) {
+			throw new RuntimeException("Invalid repository GitHub URL");
+		}
+
+		workspaceGitRepository.setBranchSHA(branchSHA);
+
+		return workspaceGitRepository;
 	}
 
 	private static Properties _getWorkspaceProperties() {

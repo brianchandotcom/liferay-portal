@@ -1,0 +1,276 @@
+<definition component-name="portal-security">
+	<property name="portal.release" value="true" />
+	<property name="testray.main.component.name" value="OAuth 2" />
+
+	<set-up>
+		<execute macro="TestCase#setUpPortalInstance" />
+
+		<execute macro="User#firstLoginPG" />
+	</set-up>
+
+	<tear-down>
+		<var method="PropsUtil#get('test.portal.instance')" name="testPortalInstance" />
+
+		<if>
+			<equals arg1="${testPortalInstance}" arg2="true" />
+			<then>
+				<execute macro="PortalInstances#tearDownCP" />
+			</then>
+			<else>
+				<execute macro="Page#tearDownCP" />
+			</else>
+		</if>
+	</tear-down>
+
+	<command name="addAndEditApplication">
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Configuration" />
+			<var name="panel" value="Control Panel" />
+			<var name="portlet" value="OAuth2 Administration" />
+		</execute>
+
+		<execute macro="OAuth2#addApplication">
+			<var name="applicationName" value="OAuth Application" />
+			<var name="callbackURI" value="http://www.liferay.com" />
+			<var name="clientProfile" value="Web Application" />
+			<var name="websiteURL" value="http://www.liferay.com" />
+		</execute>
+
+		<var method="selenium#getElementValue(OAuth2#ADMIN_INPUT_FORM_CLIENT_ID)" name="generatedClientId" />
+		<var method="selenium#getElementValue(OAuth2#ADMIN_INPUT_FORM_CLIENT_SECRET)" name="generatedClientSecret" />
+
+		<execute macro="OAuth2#inputApplicationValues">
+			<var name="description" value="Registering a new application" />
+			<var name="privacyPolicyURL" value="http://www.liferay.com" />
+		</execute>
+
+		<execute macro="Navigator#gotoBack" />
+
+		<execute macro="OAuth2#viewApplicationInTable">
+			<var name="applicationName" value="OAuth Application" />
+			<var name="clientId" value="${generatedClientId}" />
+			<var name="description" value="Registering a new application" />
+		</execute>
+
+		<execute macro="OAuth2#viewApplication">
+			<var name="applicationName" value="OAuth Application" />
+			<var name="callbackURI" value="http://www.liferay.com" />
+			<var name="checkboxCheckList" value="Authorization Code,Client Credentials,Refresh Token,Resource Owner Password Credentials" />
+			<var name="clientId" value="${generatedClientId}" />
+			<var name="clientProfile" value="Web Application" />
+			<var name="clientSecret" value="${generatedClientSecret}" />
+			<var name="description" value="Registering a new application" />
+			<var name="privacyPolicyURL" value="http://www.liferay.com" />
+			<var name="websiteURL" value="http://www.liferay.com" />
+		</execute>
+
+		<execute macro="OAuth2#editApplication">
+			<var name="applicationName" value="OAuth Application" />
+			<var name="callbackURI" value="http://www.liferay.com/callback" />
+			<var name="checkboxCheckList" value="Token Introspection" />
+			<var name="checkboxUncheckList" value="Refresh Token,Resource Owner Password Credentials" />
+			<var name="clientId" value="abcd1234" />
+			<var name="clientProfile" value="Native Application" />
+			<var name="clientSecret" value="abcd1234" />
+			<var name="description" value="Editing a new application" />
+			<var name="newApplicationName" value="OAuth Application Edited" />
+			<var name="privacyPolicyURL" value="http://www.google.com" />
+			<var name="websiteURL" value="http://www.google.com" />
+		</execute>
+
+		<execute macro="Navigator#gotoBack" />
+
+		<execute macro="OAuth2#viewApplicationInTable">
+			<var name="applicationName" value="OAuth Application Edited" />
+			<var name="clientId" value="abcd1234" />
+			<var name="description" value="Editing a new application" />
+		</execute>
+
+		<execute macro="OAuth2#viewApplication">
+			<var name="applicationName" value="OAuth Application Edited" />
+			<var name="callbackURI" value="http://www.liferay.com/callback" />
+			<var name="checkboxCheckList" value="Token Introspection" />
+			<var name="clientId" value="abcd1234" />
+			<var name="clientProfile" value="Native Application" />
+			<var name="clientSecret" value="abcd1234" />
+			<var name="description" value="Editing a new application" />
+			<var name="privacyPolicyURL" value="http://www.google.com" />
+			<var name="websiteURL" value="http://www.google.com" />
+		</execute>
+
+		<execute macro="OAuth2#editApplication">
+			<return name="newGeneratedClientSecret" />
+			<var name="applicationName" value="OAuth Application Edited" />
+			<var name="generateNewSecret" value="true" />
+		</execute>
+
+		<execute macro="Navigator#gotoBack" />
+
+		<execute macro="OAuth2#viewApplication">
+			<var name="applicationName" value="OAuth Application Edited" />
+			<var name="clientSecret" value="${newGeneratedClientSecret}" />
+		</execute>
+
+		<execute macro="OAuth2#deleteApplication">
+			<var name="applicationName" value="OAuth Application Edited" />
+		</execute>
+	</command>
+
+	<command name="editApplicationScopes">
+		<property name="prepare.oauth2.global.scopes" value="true" />
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Configuration" />
+			<var name="panel" value="Control Panel" />
+			<var name="portlet" value="OAuth2 Administration" />
+		</execute>
+
+		<execute macro="OAuth2#addApplication">
+			<var name="applicationName" value="OAuth Application" />
+			<var name="checkboxUncheckList" value="Authorization Code" />
+		</execute>
+
+		<execute macro="Navigator#gotoBack" />
+
+		<execute macro="OAuth2#editScopes">
+			<var name="applicationName" value="OAuth Application" />
+			<var name="resourceCheckList" value="everything.write,everything.read.userprofile" />
+			<var name="resourcePanels" value="Portal Services" />
+		</execute>
+
+		<execute function="AssertTextEquals#assertPartialText" locator1="OAuth2#ADMIN_TABLE_APP_SCOPES_COUNT" value1="2">
+			<var name="key_tableName" value="OAuth Application" />
+		</execute>
+
+		<execute macro="OAuth2#viewScopes">
+			<var name="applicationName" value="OAuth Application" />
+			<var name="resourceCheckedList" value="everything.write,everything.read.userprofile" />
+			<var name="resourcePanels" value="Portal Services" />
+		</execute>
+
+		<execute macro="OAuth2#editScopes">
+			<var name="applicationName" value="OAuth Application" />
+			<var name="checkGlobalScope" value="Everything" />
+		</execute>
+
+		<execute function="AssertTextEquals#assertPartialText" locator1="OAuth2#ADMIN_TABLE_APP_SCOPES_COUNT" value1="7">
+			<var name="key_tableName" value="OAuth Application" />
+		</execute>
+
+		<execute macro="OAuth2#viewScopes">
+			<var name="applicationName" value="OAuth Application" />
+			<var name="checkedGlobalScope" value="Everything" />
+			<var name="resourceCheckedList" value="example-scope-1,example-scope-2,everything.read,everything.write,everything.read.userprofile" />
+			<var name="resourcePanels" value="Portal Services,Sample QA app" />
+		</execute>
+
+		<execute macro="OAuth2#editScopes">
+			<var name="applicationName" value="OAuth Application" />
+			<var name="resourcePanels" value="Portal Services,Sample QA app" />
+			<var name="uncheckAllResourceScopes" value="true" />
+			<var name="uncheckGlobalScope" value="Everything" />
+		</execute>
+
+		<execute function="AssertTextEquals#assertPartialText" locator1="OAuth2#ADMIN_TABLE_APP_SCOPES_COUNT" value1="0">
+			<var name="key_tableName" value="OAuth Application" />
+		</execute>
+
+		<execute macro="OAuth2#viewScopes">
+			<var name="allResourceScopesUnchecked" value="true" />
+			<var name="applicationName" value="OAuth Application" />
+			<var name="resourcePanels" value="Portal Services,Sample QA app" />
+			<var name="uncheckedGlobalScope" value="Everything" />
+		</execute>
+	</command>
+
+	<command name="viewAndRevokeGrantedAuthorizations">
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Configuration" />
+			<var name="panel" value="Control Panel" />
+			<var name="portlet" value="OAuth2 Administration" />
+		</execute>
+
+		<execute macro="OAuth2#addApplication">
+			<var name="applicationName" value="OAuth Application" />
+			<var name="checkboxUncheckList" value="Authorization Code" />
+		</execute>
+
+		<var method="selenium#getElementValue(OAuth2#ADMIN_INPUT_FORM_CLIENT_ID)" name="generatedClientId" />
+
+		<var method="selenium#getElementValue(OAuth2#ADMIN_INPUT_FORM_CLIENT_SECRET)" name="generatedClientSecret" />
+
+		<var method="PropsUtil#get('portal.url')" name="portalURL" />
+
+		<var name="curl"><![CDATA[
+			${portalURL}/o/oauth2/token \
+				--data grant_type=client_credentials&client_id=${generatedClientId}&client_secret=${generatedClientSecret}
+		]]></var>
+
+		<execute class="com.liferay.poshi.runner.util.JSONCurlUtil" method="post">
+			<arg value="${curl}" />
+		</execute>
+
+		<execute macro="Navigator#gotoBack" />
+
+		<execute macro="OAuth2#viewGrantedAuthViaAdmin">
+			<var name="applicationName" value="OAuth Application" />
+			<var name="userName" value="Test Test" />
+		</execute>
+
+		<execute macro="OAuth2#revokeGrantedAuthViaAdmin">
+			<var name="applicationName" value="OAuth Application" />
+			<var name="userName" value="Test Test" />
+		</execute>
+
+		<execute macro="OAuth2#viewGrantedAuthViaAdmin">
+			<var name="applicationName" value="OAuth Application" />
+			<var name="noAuthorizations" value="true" />
+		</execute>
+
+		<execute class="com.liferay.poshi.runner.util.JSONCurlUtil" method="post">
+			<arg value="${curl}" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="My Account" />
+			<var name="panel" value="User" />
+			<var name="portlet" value="OAuth2 Connected Applications" />
+		</execute>
+
+		<execute function="AssertElementPresent" locator1="OAuth2#USER_CONNECTED_APP_TABLE_NAME">
+			<var name="key_appName" value="OAuth Application" />
+		</execute>
+
+		<execute macro="LexiconEntry#gotoEntryMenuItem">
+			<var name="menuItem" value="View" />
+			<var name="rowEntry" value="OAuth Application" />
+		</execute>
+
+		<execute function="AssertTextEquals" locator1="OAuth2#USER_CONNECTED_APP_VIEW_NAME" value1="OAuth Application" />
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="My Account" />
+			<var name="panel" value="User" />
+			<var name="portlet" value="OAuth2 Connected Applications" />
+		</execute>
+
+		<execute macro="LexiconEntry#gotoEntryMenuItem">
+			<var name="menuItem" value="View" />
+			<var name="rowEntry" value="OAuth Application" />
+		</execute>
+
+		<execute function="AssertClickNoError" locator1="OAuth2#USER_CONNECTED_APP_REMOVE_ACCESS_BUTTON" value1="Remove Access" />
+
+		<execute function="AssertConfirm#waitForConfirmation" value1="OAuth Application will no longer have access to your account. Removed access cannot be recovered." />
+
+		<execute macro="Alert#viewSuccessMessage" />
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="My Account" />
+			<var name="panel" value="User" />
+			<var name="portlet" value="OAuth2 Connected Applications" />
+		</execute>
+
+		<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="No connected applications were found." />
+	</command>
+</definition>

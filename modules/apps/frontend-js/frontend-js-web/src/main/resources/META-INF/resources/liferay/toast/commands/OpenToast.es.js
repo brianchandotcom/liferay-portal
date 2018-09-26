@@ -19,7 +19,7 @@ function openToast(
 		title = Liferay.Language.get('success'),
 		type = 'success',
 		events = {}
-	}
+	} = {}
 ) {
 	var alertContainer = document.getElementById('alertContainer');
 

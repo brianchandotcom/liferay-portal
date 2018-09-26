@@ -70,24 +70,25 @@ public class TransactionInterceptor implements MethodInterceptor {
 		TransactionAttribute transactionAttribute = transactionAttributes.get(
 			method);
 
-		if (transactionAttribute != null) {
-			if (transactionAttribute == _nullTransactionAttribute) {
-				return null;
+		if (transactionAttribute == null) {
+			Transactional transactional = AnnotationLocator.locate(
+				method, targetClass, Transactional.class);
+
+			transactionAttribute = TransactionAttributeBuilder.build(
+				transactional);
+
+			if (transactionAttribute == null) {
+				transactionAttributes.put(method, _nullTransactionAttribute);
+			}
+			else {
+				transactionAttributes.put(method, transactionAttribute);
 			}
 
 			return transactionAttribute;
 		}
 
-		Transactional transactional = AnnotationLocator.locate(
-			method, targetClass, Transactional.class);
-
-		transactionAttribute = TransactionAttributeBuilder.build(transactional);
-
-		if (transactionAttribute == null) {
-			transactionAttributes.put(method, _nullTransactionAttribute);
-		}
-		else {
-			transactionAttributes.put(method, transactionAttribute);
+		if (transactionAttribute == _nullTransactionAttribute) {
+			return null;
 		}
 
 		return transactionAttribute;

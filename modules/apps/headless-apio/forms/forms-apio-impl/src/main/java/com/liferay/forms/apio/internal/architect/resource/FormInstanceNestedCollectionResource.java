@@ -134,9 +134,6 @@ public class FormInstanceNestedCollectionResource
 			"creator", PersonIdentifier.class, DDMFormInstance::getUserId
 		).addLinkedModel(
 			"structure", StructureIdentifier.class, this::_getStructureId
-		).addNested(
-			"settings", FormInstanceRepresentorUtil::getSettings,
-			FormInstanceNestedCollectionResource::_buildSettings
 		).addLocalizedStringByLocale(
 			"description", DDMFormInstance::getDescription
 		).addLocalizedStringByLocale(
@@ -146,41 +143,6 @@ public class FormInstanceNestedCollectionResource
 		).addStringList(
 			"availableLanguages",
 			FormInstanceRepresentorUtil::getAvailableLanguages
-		).build();
-	}
-
-	private static NestedRepresentor<DDMFormInstanceSettings> _buildSettings(
-		NestedRepresentor.Builder<DDMFormInstanceSettings> builder) {
-
-		return builder.types(
-			"FormSettings"
-		).addNested(
-			"emailNotification", identity(),
-			emailSettingsBuilder -> emailSettingsBuilder.types(
-				"EmailMessage"
-			).addBoolean(
-				"enabled", DDMFormInstanceSettings::sendEmailNotification
-			).addNested(
-				"sender", identity(),
-				senderBuilder -> senderBuilder.types(
-					"ContactPoint"
-				).addString(
-					"email", DDMFormInstanceSettings::emailFromAddress
-				).addString(
-					"name", DDMFormInstanceSettings::emailFromName
-				).build()
-			).addNested(
-				"recipient", identity(),
-				toRecipientBuilder -> toRecipientBuilder.types(
-					"ContactPoint"
-				).addString(
-					"email", DDMFormInstanceSettings::emailToAddress
-				).build()
-			).addString(
-				"about", DDMFormInstanceSettings::emailSubject
-			).build()
-		).addString(
-			"redirectURL", DDMFormInstanceSettings::redirectURL
 		).build();
 	}
 

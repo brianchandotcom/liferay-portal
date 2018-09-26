@@ -95,7 +95,7 @@ dependencies {
 	projectTemplates group: "com.liferay", name: "com.liferay.project.templates.portlet.toolbar.contributor", version: "1.0.15"
 	projectTemplates group: "com.liferay", name: "com.liferay.project.templates.rest", version: "1.0.15"
 	projectTemplates group: "com.liferay", name: "com.liferay.project.templates.service", version: "1.0.15"
-	projectTemplates group: "com.liferay", name: "com.liferay.project.templates.service.builder", version: "1.0.16"
+	projectTemplates group: "com.liferay", name: "com.liferay.project.templates.service.builder", version: "1.0.17"
 	projectTemplates group: "com.liferay", name: "com.liferay.project.templates.service.wrapper", version: "1.0.15"
 	projectTemplates group: "com.liferay", name: "com.liferay.project.templates.simulation.panel.entry", version: "1.0.15"
 	projectTemplates group: "com.liferay", name: "com.liferay.project.templates.social.bookmark", version: "1.0.8"

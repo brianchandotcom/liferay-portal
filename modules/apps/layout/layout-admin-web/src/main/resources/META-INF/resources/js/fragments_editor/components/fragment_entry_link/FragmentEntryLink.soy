@@ -10,24 +10,21 @@
 	{@param? _handleFragmentMoveDownButtonClick: any}
 	{@param? _handleFragmentMoveUpButtonClick: any}
 	{@param? _handleFragmentRemoveButtonClick: any}
-	{@param? defaultLanguageId: string}
 	{@param? dropTargetClass: string}
 	{@param? styleModifier: string}
-	{@param? languageId: string}
 	{@param? name: string}
 	{@param? showControlBar: bool}
 
 	{let $wrapperClasses kind="text"}
 		drag-fragment
 		fragment-entry-link-wrapper
-		{sp}{$dropTargetClass}
+
+		{if $dropTargetClass}
+			{sp}{$dropTargetClass}
+		{/if}
 
 		{if $styleModifier}
 			{sp}{$styleModifier}
-		{/if}
-
-		{if $languageId != $defaultLanguageId}
-			{sp}translating
 		{/if}
 	{/let}
 

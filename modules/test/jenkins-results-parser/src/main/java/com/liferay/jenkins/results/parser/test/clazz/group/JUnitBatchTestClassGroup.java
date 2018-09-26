@@ -313,7 +313,7 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 			if (classHeaderMatcher.find()) {
 				String annotations = classHeaderMatcher.group("annotations");
 
-				if (annotations.contains("@Ignore")) {
+				if ((annotations != null) && annotations.contains("@Ignore")) {
 					classIgnored = true;
 				}
 			}
@@ -359,7 +359,7 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 
 		private static Pattern _classHeaderPattern = Pattern.compile(
 			JenkinsResultsParserUtil.combine(
-				"\\t(?<annotations>(@[\\s\\S]+?))?public\\s+class\\s+",
+				"(?<annotations>(@[\\s\\S]+?))?public\\s+class\\s+",
 				"(?<className>[^\\(\\s]+)"));
 		private static final Map<File, JunitBatchTestClass> _junitTestClasses =
 			new HashMap<>();

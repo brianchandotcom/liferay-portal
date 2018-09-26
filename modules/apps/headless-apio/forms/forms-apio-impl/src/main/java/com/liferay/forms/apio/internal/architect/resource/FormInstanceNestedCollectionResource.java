@@ -32,7 +32,9 @@ import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecord;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstanceSettings;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstanceVersion;
+import com.liferay.dynamic.data.mapping.model.DDMStructureVersion;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceService;
+import com.liferay.dynamic.data.mapping.service.DDMFormInstanceVersionService;
 import com.liferay.forms.apio.architect.identifier.FormContextIdentifier;
 import com.liferay.forms.apio.architect.identifier.FormInstanceIdentifier;
 import com.liferay.forms.apio.architect.identifier.FormInstanceRecordIdentifier;
@@ -54,6 +56,8 @@ import com.liferay.portal.apio.permission.HasPermission;
 import com.liferay.portal.apio.user.CurrentUser;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.List;
 
@@ -95,9 +99,9 @@ public class FormInstanceNestedCollectionResource
 			_ddmFormInstanceService::getFormInstance
 		).addCustomRoute(
 			new EvaluateContextRoute(), this::_evaluateContext,
-			DDMFormRenderingContext.class, AcceptLanguage.class,
-			FormContextIdentifier.class, this::_hasPermission,
-			FormContextForm::buildForm
+			AcceptLanguage.class, DDMFormRenderingContext.class,
+			ThemeDisplay.class, FormContextIdentifier.class,
+			this::_hasPermission, FormContextForm::buildForm
 		).addCustomRoute(
 			new FetchLatestDraftRoute(), this::_fetchDDMFormInstanceRecord,
 			CurrentUser.class, FormInstanceRecordIdentifier.class,
@@ -129,8 +133,7 @@ public class FormInstanceNestedCollectionResource
 		).addLinkedModel(
 			"creator", PersonIdentifier.class, DDMFormInstance::getUserId
 		).addLinkedModel(
-			"structure", StructureIdentifier.class,
-			DDMFormInstance::getStructureId
+			"structure", StructureIdentifier.class, this::_getStructureId
 		).addNested(
 			"settings", FormInstanceRepresentorUtil::getSettings,
 			FormInstanceNestedCollectionResource::_buildSettings
@@ -204,8 +207,9 @@ public class FormInstanceNestedCollectionResource
 
 	private FormContextWrapper _evaluateContext(
 		Long ddmFormInstanceId, FormContextForm formContextForm,
+		AcceptLanguage language,
 		DDMFormRenderingContext ddmFormRenderingContext,
-		AcceptLanguage language) {
+		ThemeDisplay themeDisplay) {
 
 		return Try.fromFallible(
 			() -> _ddmFormInstanceService.getFormInstance(ddmFormInstanceId)
@@ -248,6 +252,20 @@ public class FormInstanceNestedCollectionResource
 		return new PageItems<>(ddmFormInstances, count);
 	}
 
+	private Long _getStructureId(DDMFormInstance formInstance) {
+		return Try.fromFallible(
+			() -> _ddmFormInstanceVersionService.getLatestFormInstanceVersion(
+				formInstance.getFormInstanceId(),
+				WorkflowConstants.STATUS_APPROVED)
+		).map(
+			DDMFormInstanceVersion::getStructureVersion
+		).map(
+			DDMStructureVersion::getStructureId
+		).orElse(
+			null
+		);
+	}
+
 	private Boolean _hasPermission(
 		Credentials credentials, Long formInstanceId) {
 
@@ -277,6 +295,9 @@ public class FormInstanceNestedCollectionResource
 
 	@Reference
 	private DDMFormInstanceService _ddmFormInstanceService;
+
+	@Reference
+	private DDMFormInstanceVersionService _ddmFormInstanceVersionService;
 
 	@Reference
 	private EvaluateContextHelper _evaluateContextHelper;

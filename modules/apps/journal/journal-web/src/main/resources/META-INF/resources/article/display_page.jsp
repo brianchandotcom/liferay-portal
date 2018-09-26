@@ -54,7 +54,7 @@ Group group = GroupLocalServiceUtil.fetchGroup(groupId);
 			String taglibLabelTypeDefault = LanguageUtil.format(request, "use-default-display-page-for-x-x", new Object[] {journalDisplayContext.getDDMStructureName(), Validator.isNotNull(defaultAssetDisplayPageName) ? defaultAssetDisplayPageName : LanguageUtil.get(request, "none")}, false);
 
 			if (Validator.isNull(defaultAssetDisplayPageName)) {
-				taglibLabelTypeDefault += " <span class=\"small text-muted\">" + LanguageUtil.get(request, "this-content-will-not-be-referenceable-with-an-url") + "</span>";
+				taglibLabelTypeDefault += " <span class=\"text-muted\">" + LanguageUtil.get(request, "this-content-will-not-be-referenceable-with-an-url") + "</span>";
 			}
 			%>
 
@@ -98,7 +98,7 @@ Group group = GroupLocalServiceUtil.fetchGroup(groupId);
 			</div>
 
 			<%
-			String taglibLabelTypeNone = LanguageUtil.get(request, "none") + " <span class=\"small text-muted\">" + LanguageUtil.get(request, "this-content-will-not-be-referenceable-with-an-url") + "</span>";
+			String taglibLabelTypeNone = LanguageUtil.get(request, "none") + " <span class=\"text-muted\">" + LanguageUtil.get(request, "this-content-will-not-be-referenceable-with-an-url") + "</span>";
 			%>
 
 			<aui:input checked="<%= editArticleDisplayPageDisplayContext.isAssetDisplayPageTypeNone() %>" label="<%= taglibLabelTypeNone %>" name="displayPageType" type="radio" value="<%= AssetDisplayPageConstants.TYPE_NONE %>" />

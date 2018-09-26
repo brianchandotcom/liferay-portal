@@ -542,6 +542,10 @@ portalArtifactsJar {
 		resource = "content/Language_zh_TW.properties"
 	}
 
+	doLast {
+		println "Created jar " + archivePath
+	}
+
 	project.afterEvaluate {
 		File portalArtifactsDir = new File(buildDir, "portalArtifacts")
 

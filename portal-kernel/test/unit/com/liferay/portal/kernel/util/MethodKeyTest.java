@@ -94,9 +94,7 @@ public class MethodKeyTest {
 
 		Assert.assertEquals(methodKey, methodKey);
 
-		Object object = new Object();
-
-		Assert.assertNotEquals(methodKey, object);
+		Assert.assertNotEquals(methodKey, new Object());
 
 		MethodKey anotherMethodKey = new MethodKey(
 			TestClass.class, "testMethod", String.class);
@@ -129,12 +127,11 @@ public class MethodKeyTest {
 
 		// Test 1, MethodKey.getMethod returns and caches the method
 
-		Method expectedMethod = TestClass.class.getMethod(
-			"testMethod", String.class);
-
 		Method actualMethod1 = methodKey.getMethod();
 
-		Assert.assertEquals(expectedMethod, actualMethod1);
+		Assert.assertEquals(
+			TestClass.class.getMethod("testMethod", String.class),
+			actualMethod1);
 		Assert.assertTrue(
 			"The method obtained from MethodKey should be accessible",
 			actualMethod1.isAccessible());

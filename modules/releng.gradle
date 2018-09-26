@@ -432,6 +432,14 @@ portalArtifactsJar {
 
 			downloadPortalArtifact("com.liferay", bundleSymbolicName, xmlSlurper)
 		}
+
+		List<String> portalBundleSymbolicNames = ["com.liferay.portal.impl", "com.liferay.portal.kernel", "com.liferay.util.bridges", "com.liferay.util.java", "com.liferay.util.taglib"]
+
+		portalBundleSymbolicNames.each {
+			String bundleSymbolicName ->
+
+			downloadPortalArtifact("com.liferay.portal", bundleSymbolicName, xmlSlurper)
+		}
 	}
 }
 

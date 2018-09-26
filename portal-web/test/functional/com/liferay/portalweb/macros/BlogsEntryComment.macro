@@ -98,6 +98,6 @@
 	</command>
 
 	<command name="viewSubscribedPG">
-		<execute function="AssertElementPresent" locator1="Button#UNSUBSCRIBE" value1="Unsubscribe" />
+		<execute function="AssertTextEquals" locator1="Button#UNSUBSCRIBE" value1="Unsubscribe" />
 	</command>
 </definition>

@@ -1478,7 +1478,7 @@
 	</command>
 
 	<command name="viewDocumentNoCommentsCmdPG">
-		<execute function="AssertElementPresent" locator1="Button#SUBSCRIBE" value1="Subscribe" />
+		<execute function="AssertTextEquals" locator1="Button#SUBSCRIBE" value1="Subscribe" />
 	</command>
 
 	<command name="viewDocumentTitleCmdPG">

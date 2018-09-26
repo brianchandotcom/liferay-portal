@@ -19,6 +19,7 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import java.net.URL;
+import java.net.URLClassLoader;
 
 import java.nio.charset.StandardCharsets;
 import java.nio.file.DirectoryStream;
@@ -236,13 +237,74 @@ public class FileUtil {
 	}
 
 	public static File getJarFile(Class<?> clazz) throws Exception {
-		ProtectionDomain protectionDomain = clazz.getProtectionDomain();
+		if (clazz == null) {
+			return null;
+		}
 
-		CodeSource codeSource = protectionDomain.getCodeSource();
+		try {
+			ProtectionDomain protectionDomain = clazz.getProtectionDomain();
 
-		URL url = codeSource.getLocation();
+			CodeSource codeSource = protectionDomain.getCodeSource();
 
-		return new File(url.toURI());
+			URL url = codeSource.getLocation();
+
+			return new File(url.toURI());
+		}
+		catch (SecurityException se) {
+		}
+		catch (NullPointerException npe) {
+		}
+
+		ClassLoader loader = clazz.getClassLoader();
+
+		if (loader instanceof URLClassLoader) {
+			URL[] urls = ((URLClassLoader)loader).getURLs();
+
+			for (URL url : urls) {
+				File file = new File(url.toURI());
+
+				if (file.isFile()) {
+					String fileName = file.getName();
+
+					if (fileName.startsWith("com.liferay.project.templates-")) {
+						return new File(url.toURI());
+					}
+				}
+			}
+		}
+
+		URL classResource = clazz.getResource(clazz.getSimpleName() + ".class");
+
+		if (classResource == null) {
+			return null;
+		}
+
+		String url = classResource.toString();
+
+		String canonicalName = clazz.getCanonicalName();
+
+		canonicalName = canonicalName.replace('.', '/');
+
+		String suffix = canonicalName + ".class";
+
+		if (!url.endsWith(suffix)) {
+			return null;
+		}
+
+		String base = url.substring(0, url.length() - suffix.length());
+
+		String path = base;
+
+		if (path.startsWith("jar:")) {
+			path = path.substring(4, path.length() - 2);
+		}
+
+		try {
+			return new File(new URL(path).toURI());
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
 	}
 
 	public static String getManifestProperty(File file, String name)

@@ -98,6 +98,10 @@ public class ProjectTemplates {
 				}
 			}
 			else {
+				ClassLoader classLoader =
+					ProjectTemplates.class.getClassLoader();
+				Collection<String> templateJarNames = new HashSet<>();
+
 				try (JarFile jarFile = new JarFile(templatesFile)) {
 					Enumeration<JarEntry> enumeration = jarFile.entries();
 
@@ -114,12 +118,18 @@ public class ProjectTemplates {
 							continue;
 						}
 
-						template = ProjectTemplatesUtil.getTemplateName(
-							template);
+						templateJarNames.add(template);
+					}
 
-						if (!template.startsWith(WorkspaceUtil.WORKSPACE)) {
+					for (String templateJarName : templateJarNames) {
+						String templateName =
+							ProjectTemplatesUtil.getTemplateName(
+								templateJarName);
+
+						if (!templateName.startsWith(WorkspaceUtil.WORKSPACE)) {
 							try (InputStream inputStream =
-									jarFile.getInputStream(jarEntry);
+									classLoader.getResourceAsStream(
+										templateJarName);
 								JarInputStream jarInputStream =
 									new JarInputStream(inputStream)) {
 
@@ -132,10 +142,11 @@ public class ProjectTemplates {
 								String bundleDescription = attributes.getValue(
 									"Bundle-Description");
 
-								templates.put(template, bundleDescription);
+								templates.put(templateName, bundleDescription);
 							}
 						}
 					}
+
 				}
 			}
 		}

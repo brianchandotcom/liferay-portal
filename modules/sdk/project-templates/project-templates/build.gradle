@@ -2,9 +2,11 @@ import com.liferay.gradle.util.FileUtil
 import com.liferay.gradle.util.copy.StripPathSegmentsAction
 
 import org.gradle.execution.ProjectConfigurer
+import org.gradle.internal.os.OperatingSystem
 import org.gradle.util.GUtil
 
 task cleanProjectTemplatesTests(type: Delete)
+task projectTemplateJarVersions
 task uploadProjectTemplateArchives
 task writeProjectTemplateVersions
 
@@ -118,6 +120,7 @@ liferayOSGi {
 
 processResources {
 	from configurations.projectTemplates
+	from projectTemplateJarVersions
 }
 
 processTestResources {
@@ -168,6 +171,26 @@ test {
 uploadProjectTemplateArchives {
 	dependsOn projectTemplateProjects.collect {
 		"${it.path}:uploadArchives"
+	}
+}
+
+projectTemplateJarVersions {
+	File projectTemplateVersionsFile = new File(buildDir, "project-template-jar-versions.properties")
+
+	Properties properties = new Properties()
+
+	outputs.file(projectTemplateVersionsFile)
+
+	doFirst {
+
+		configurations.projectTemplates.dependencies.each {
+			properties.setProperty(it.name, it.version)
+		}
+
+	}
+
+	doLast {
+		properties.store(projectTemplateVersionsFile.newWriter(), null)
 	}
 }
 

@@ -190,14 +190,13 @@ public class ProjectGenerator {
 			}
 		}
 
-		File archetypesFile = FileUtil.getJarFile(ProjectTemplates.class);
-
 		String artifactId =
 			ProjectTemplates.TEMPLATE_BUNDLE_PREFIX +
 				template.replace('-', '.');
 
-		return ProjectTemplatesUtil.getArchetypeFile(
-			artifactId, archetypesFile);
+		File archetypesFile = ProjectTemplatesUtil.getArchetypeFile(artifactId);
+
+		return archetypesFile;
 	}
 
 	private static boolean _isInVersionRange(

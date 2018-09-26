@@ -347,6 +347,8 @@ public class ClusterSchedulerEngine
 							_clusterMasterExecutor.executeOnMaster(
 								methodHandler);
 
+						String fullName = getFullName(jobName, groupName);
+
 						try {
 							SchedulerResponse schedulerResponse = future.get(
 								_callMasterTimeout, TimeUnit.SECONDS);
@@ -356,8 +358,8 @@ public class ClusterSchedulerEngine
 
 								if (_log.isInfoEnabled()) {
 									_log.info(
-										"Memory clustered job is not yet " +
-											"deployed on master");
+										"Memory clustered job " + fullName +
+											" is not yet deployed on master");
 								}
 							}
 							else {
@@ -366,7 +368,9 @@ public class ClusterSchedulerEngine
 						}
 						catch (Exception e) {
 							_log.error(
-								"Unable to get a response from master", e);
+								"Unable to get a response from master for " +
+									"memory clustered job " + fullName,
+								e);
 						}
 					}
 				}

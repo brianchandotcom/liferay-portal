@@ -114,6 +114,9 @@ public class StructureRepresentorBuilderHelperImpl
 		).addString(
 			"dataType", DDMFormField::getDataType
 		).addString(
+			"displayStyle",
+			getDDMFormFieldPropertyFunction(String.class::cast, "displayStyle")
+		).addString(
 			"name", DDMFormField::getName
 		).addString(
 			"text", getDDMFormFieldPropertyFunction(String.class::cast, "text")

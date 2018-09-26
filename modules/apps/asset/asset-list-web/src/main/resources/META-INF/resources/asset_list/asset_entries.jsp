@@ -25,7 +25,7 @@
 >
 	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 	<aui:input name="assetListEntryId" type="hidden" value="<%= assetListDisplayContext.getAssetListEntryId() %>" />
-	<aui:input name="assetEntryId" type="hidden" />
+	<aui:input name="assetEntryIds" type="hidden" />
 
 	<liferay-frontend:edit-form-body>
 		<h3 class="sheet-subtitle">
@@ -131,7 +131,7 @@
 	</liferay-frontend:edit-form-footer>
 </liferay-frontend:edit-form>
 
-<aui:script sandbox="<%= true %>">
+<aui:script use="liferay-item-selector-dialog">
 	$('body').on(
 		'click',
 		'.asset-selector a',
@@ -140,24 +140,35 @@
 
 			var currentTarget = $(event.currentTarget);
 
-			Liferay.Util.selectEntity(
+			var itemSelectorDialog = new A.LiferayItemSelectorDialog(
 				{
-					dialog: {
-						constrain: true,
-						destroyOnHide: true,
-						modal: true
-					},
 					eventName: '<portlet:namespace />selectAsset',
 					id: '<portlet:namespace />selectAsset' + currentTarget.attr('id'),
-					title: currentTarget.data('title'),
-					uri: currentTarget.data('href')
-				},
-				function(event) {
-					<portlet:namespace />fm.<portlet:namespace />assetEntryId.value = event.entityid;
+					on: {
+						selectedItemChange: function(event) {
+							var selectedItems = event.newVal;
 
-					submitForm(document.<portlet:namespace />fm);
+							if (selectedItems) {
+								var assetEntryIds = [];
+
+								selectedItems.forEach(
+									function(assetEntry) {
+										assetEntryIds.push(assetEntry.entityid);
+									}
+								);
+
+								<portlet:namespace />fm.<portlet:namespace />assetEntryIds.value = assetEntryIds.join(',');
+
+								submitForm(document.<portlet:namespace />fm);
+							}
+						}
+					},
+					title: currentTarget.data('title'),
+					url: currentTarget.data('href')
 				}
 			);
+
+			itemSelectorDialog.open();
 		}
 	);
 </aui:script>

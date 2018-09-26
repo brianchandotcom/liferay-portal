@@ -38,7 +38,7 @@ List<AssetRendererFactory<?>> classTypesAssetRendererFactories = new ArrayList<>
 	<aui:input name="redirect" type="hidden" value="<%= configurationRenderURL.toString() %>" />
 	<aui:input name="groupId" type="hidden" />
 	<aui:input name="typeSelection" type="hidden" />
-	<aui:input name="assetEntryId" type="hidden" />
+	<aui:input name="assetEntryIds" type="hidden" />
 	<aui:input name="assetEntryOrder" type="hidden" value="-1" />
 	<aui:input name="assetEntryType" type="hidden" />
 

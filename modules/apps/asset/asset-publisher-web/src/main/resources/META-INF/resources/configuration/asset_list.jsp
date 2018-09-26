@@ -44,8 +44,8 @@ AssetListEntry assetListEntry = assetPublisherDisplayContext.fetchAssetListEntry
 <aui:button name="selectAssetList" value="select" />
 
 <aui:script use="liferay-item-selector-dialog">
-	var assetListRemove = A.one('#<portlet:namespace />assetListRemove');
 	var assetListEntryId = A.one('#<portlet:namespace />assetListEntryId');
+	var assetListRemove = A.one('#<portlet:namespace />assetListRemove');
 	var assetListTitle = A.one('#<portlet:namespace />assetListTitle');
 
 	A.one('#<portlet:namespace />selectAssetList').on(

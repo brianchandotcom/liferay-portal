@@ -30,7 +30,6 @@ import com.liferay.asset.list.constants.AssetListPortletKeys;
 import com.liferay.asset.list.service.AssetListEntryAssetEntryRelLocalServiceUtil;
 import com.liferay.asset.util.comparator.AssetRendererFactoryTypeNameComparator;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -536,7 +535,7 @@ public class EditAssetListDisplayContext {
 		return _referencedModelsGroupIds;
 	}
 
-	public SearchContainer getSearchContainer() throws PortalException {
+	public SearchContainer getSearchContainer() {
 		if (_searchContainer != null) {
 			return _searchContainer;
 		}
@@ -545,8 +544,6 @@ public class EditAssetListDisplayContext {
 			_portletRequest, _getPortletURL(), null,
 			"there-are-no-asset-entries");
 
-		searchContainer.setRowChecker(
-			new EmptyOnClickRowChecker(_portletResponse));
 		searchContainer.setTotal(
 			AssetListEntryAssetEntryRelLocalServiceUtil.
 				getAssetListEntryAssetEntryRelsCount(getAssetListEntryId()));
@@ -591,7 +588,7 @@ public class EditAssetListDisplayContext {
 		return null;
 	}
 
-	public String getVocabularyIds() throws Exception {
+	public String getVocabularyIds() {
 		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 

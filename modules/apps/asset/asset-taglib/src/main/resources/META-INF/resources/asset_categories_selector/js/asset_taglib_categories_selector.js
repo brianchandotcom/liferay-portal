@@ -188,7 +188,7 @@ AUI.add(
 												click: function(event) {
 													event.data = event.data ? event.data : {};
 
-													instance._showSelectPopup.call(instance, event);
+													instance._showSelectPopup(event);
 												}
 											},
 											title: instance.get('title')

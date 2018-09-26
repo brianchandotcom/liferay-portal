@@ -228,18 +228,29 @@ for (long groupId : groupIds) {
 
 		submitForm(form);
 	}
+</aui:script>
 
-	function selectAsset(assetEntryId, assetClassName, assetType, assetEntryTitle, groupName) {
+<aui:script use="liferay-item-selector-dialog">
+	function selectAssets(assetEntryList) {
+		var assetClassName;
+		var assetEntryIds = [];
+
+		assetEntryList.forEach(
+			function(assetEntry) {
+				assetEntryIds.push(assetEntry.entityid);
+
+				assetClassName = assetEntry.assetclassname;
+			}
+		);
+
 		document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = 'add-selection';
 		document.<portlet:namespace />fm.<portlet:namespace />redirect.value = '<%= HtmlUtil.escapeJS(currentURL) %>';
-		document.<portlet:namespace />fm.<portlet:namespace />assetEntryId.value = assetEntryId;
+		document.<portlet:namespace />fm.<portlet:namespace />assetEntryIds.value = assetEntryIds.join(',');
 		document.<portlet:namespace />fm.<portlet:namespace />assetEntryType.value = assetClassName;
 
 		submitForm(document.<portlet:namespace />fm);
 	}
-</aui:script>
 
-<aui:script sandbox="<%= true %>">
 	$('body').on(
 		'click',
 		'.asset-selector a',
@@ -248,22 +259,25 @@ for (long groupId : groupIds) {
 
 			var currentTarget = $(event.currentTarget);
 
-			Liferay.Util.selectEntity(
+			var itemSelectorDialog = new A.LiferayItemSelectorDialog(
 				{
-					dialog: {
-						constrain: true,
-						destroyOnHide: true,
-						modal: true
-					},
 					eventName: '<%= eventName %>',
 					id: '<%= eventName %>' + currentTarget.attr('id'),
+					on: {
+						selectedItemChange: function(event) {
+							var selectedItems = event.newVal;
+
+							if (selectedItems) {
+								selectAssets(selectedItems);
+							}
+						}
+					},
 					title: currentTarget.data('title'),
-					uri: currentTarget.data('href')
-				},
-				function(event) {
-					selectAsset(event.entityid, event.assetclassname, event.assettype, event.assettitle, event.groupdescriptivename);
+					url: currentTarget.data('href')
 				}
 			);
+
+			itemSelectorDialog.open();
 		}
 	);
 </aui:script>

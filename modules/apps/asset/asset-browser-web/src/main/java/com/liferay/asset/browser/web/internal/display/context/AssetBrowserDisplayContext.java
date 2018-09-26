@@ -16,6 +16,7 @@ package com.liferay.asset.browser.web.internal.display.context;
 
 import com.liferay.asset.browser.web.internal.configuration.AssetBrowserWebConfigurationValues;
 import com.liferay.asset.browser.web.internal.constants.AssetBrowserPortletKeys;
+import com.liferay.asset.browser.web.internal.search.AddAssetEntryChecker;
 import com.liferay.asset.browser.web.internal.search.AssetBrowserSearch;
 import com.liferay.asset.constants.AssetWebKeys;
 import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
@@ -137,6 +138,10 @@ public class AssetBrowserDisplayContext {
 
 		AssetBrowserSearch assetBrowserSearch = new AssetBrowserSearch(
 			_renderRequest, getPortletURL());
+
+		assetBrowserSearch.setRowChecker(
+			new AddAssetEntryChecker(
+				_renderResponse, getRefererAssetEntryId()));
 
 		AssetRendererFactory assetRendererFactory = getAssetRendererFactory();
 

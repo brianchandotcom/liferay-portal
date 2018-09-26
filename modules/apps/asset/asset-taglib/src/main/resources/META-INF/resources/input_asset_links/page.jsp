@@ -127,28 +127,38 @@
 				searchContainerData = [];
 			}
 
-			Liferay.Util.selectEntity(
+			var itemSelectorDialog = new A.LiferayItemSelectorDialog(
 				{
-					dialog: {
-						constrain: true,
-						modal: true
-					},
 					eventName: '<%= inputAssetLinksDisplayContext.getEventName() %>',
 					id: '<%= inputAssetLinksDisplayContext.getEventName() %>' + event.currentTarget.attr('id'),
+					on: {
+						selectedItemChange: function(event) {
+							var assetEntryIds = event.newVal;
+
+							if (assetEntryIds) {
+								assetEntryIds.forEach(
+									function(assetEntry) {
+										var entityId = assetEntry.entityid;
+
+										if (searchContainerData.indexOf(entityId) == -1) {
+											var entryLink = '<a class="modify-link" data-rowId="' + entityId + '" href="javascript:;"><%= UnicodeFormatter.toString(removeLinkIcon) %></a>';
+
+											searchContainer.addRow([assetEntry.assettype, A.Escape.html(assetEntry.assettitle), A.Escape.html(assetEntry.groupdescriptivename), entryLink], entityId);
+
+											searchContainer.updateDataStore();
+										}
+									}
+								);
+							}
+						}
+					},
 					selectedData: searchContainerData,
 					title: event.currentTarget.attr('data-title'),
-					uri: event.currentTarget.attr('data-href')
-				},
-				function(event) {
-					var entityId = event.entityid;
-
-					var entryLink = '<a class="modify-link" data-rowId="' + entityId + '" href="javascript:;"><%= UnicodeFormatter.toString(removeLinkIcon) %></a>';
-
-					searchContainer.addRow([event.assettype, A.Escape.html(event.assettitle), A.Escape.html(event.groupdescriptivename), entryLink], entityId);
-
-					searchContainer.updateDataStore();
+					url: event.currentTarget.attr('data-href')
 				}
 			);
+
+			itemSelectorDialog.open();
 		},
 		'.asset-selector a'
 	);

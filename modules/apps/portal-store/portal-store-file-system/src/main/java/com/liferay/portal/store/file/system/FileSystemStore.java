@@ -132,7 +132,7 @@ public class FileSystemStore extends BaseStore {
 		}
 
 		try {
-			_fileSystemHelper.copy(
+			fileSystemHelper.copy(
 				fromFileNameVersionFile, toFileNameVersionFile);
 		}
 		catch (IOException ioe) {
@@ -379,7 +379,7 @@ public class FileSystemStore extends BaseStore {
 
 		File parentFile = fileNameDir.getParentFile();
 
-		_fileSystemHelper.move(fileNameDir, newFileNameDir);
+		fileSystemHelper.move(fileNameDir, newFileNameDir);
 
 		deleteEmptyAncestors(companyId, repositoryId, parentFile);
 	}
@@ -411,7 +411,7 @@ public class FileSystemStore extends BaseStore {
 
 		File parentFile = fileNameDir.getParentFile();
 
-		_fileSystemHelper.move(fileNameDir, newFileNameDir);
+		fileSystemHelper.move(fileNameDir, newFileNameDir);
 
 		deleteEmptyAncestors(companyId, repositoryId, parentFile);
 	}
@@ -460,7 +460,7 @@ public class FileSystemStore extends BaseStore {
 				companyId, repositoryId, fileName, toVersionLabel);
 		}
 
-		_fileSystemHelper.move(fromFileNameVersionFile, toFileNameVersionFile);
+		fileSystemHelper.move(fromFileNameVersionFile, toFileNameVersionFile);
 	}
 
 	@Activate
@@ -476,7 +476,7 @@ public class FileSystemStore extends BaseStore {
 
 		initializeRootDir();
 
-		_fileSystemHelper = new FileSystemHelper(
+		fileSystemHelper = new FileSystemHelper(
 			_fileSystemStoreConfiguration.useHardLinks(), getRootDirPath());
 	}
 
@@ -648,11 +648,11 @@ public class FileSystemStore extends BaseStore {
 	}
 
 	protected ConfigurationAdmin configurationAdmin;
+	protected FileSystemHelper fileSystemHelper;
 
 	private static volatile FileSystemStoreConfiguration
 		_fileSystemStoreConfiguration;
 
-	private FileSystemHelper _fileSystemHelper;
 	private final Map<RepositoryDirKey, File> _repositoryDirs =
 		new ConcurrentHashMap<>();
 	private File _rootDir;

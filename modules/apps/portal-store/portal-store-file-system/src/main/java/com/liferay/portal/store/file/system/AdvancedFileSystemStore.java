@@ -92,7 +92,7 @@ public class AdvancedFileSystemStore extends FileSystemStore {
 			File newFileNameVersionFile = new File(
 				newFileNameDir + StringPool.SLASH + newFileNameVersion);
 
-			_fileSystemHelper.move(fileNameVersionFile, newFileNameVersionFile);
+			fileSystemHelper.move(fileNameVersionFile, newFileNameVersionFile);
 		}
 	}
 
@@ -113,7 +113,7 @@ public class AdvancedFileSystemStore extends FileSystemStore {
 
 		initializeRootDir();
 
-		_fileSystemHelper = new FileSystemHelper(
+		fileSystemHelper = new FileSystemHelper(
 			_advancedFileSystemStoreConfiguration.useHardLinks(),
 			getRootDirPath());
 	}
@@ -356,7 +356,5 @@ public class AdvancedFileSystemStore extends FileSystemStore {
 
 	private static volatile AdvancedFileSystemStoreConfiguration
 		_advancedFileSystemStoreConfiguration;
-
-	private FileSystemHelper _fileSystemHelper;
 
 }

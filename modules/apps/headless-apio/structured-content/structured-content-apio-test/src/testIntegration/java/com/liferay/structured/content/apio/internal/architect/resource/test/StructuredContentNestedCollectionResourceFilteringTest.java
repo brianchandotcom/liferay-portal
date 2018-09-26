@@ -79,7 +79,7 @@ public class StructuredContentNestedCollectionResourceFilteringTest
 	public void testGetPageItemsFilterByDateCreatedEquals() throws Exception {
 		Map<Locale, String> stringMap1 = new HashMap<>();
 
-		stringMap1.put(LocaleUtil.getDefault(), "title1");
+		stringMap1.put(LocaleUtil.getDefault(), RandomTestUtil.randomString());
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
@@ -116,7 +116,7 @@ public class StructuredContentNestedCollectionResourceFilteringTest
 
 		Map<Locale, String> stringMap1 = new HashMap<>();
 
-		stringMap1.put(LocaleUtil.getDefault(), "title1");
+		stringMap1.put(LocaleUtil.getDefault(), RandomTestUtil.randomString());
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
@@ -169,7 +169,7 @@ public class StructuredContentNestedCollectionResourceFilteringTest
 
 		Map<Locale, String> stringMap1 = new HashMap<>();
 
-		stringMap1.put(LocaleUtil.getDefault(), "title1");
+		stringMap1.put(LocaleUtil.getDefault(), RandomTestUtil.randomString());
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
@@ -220,7 +220,7 @@ public class StructuredContentNestedCollectionResourceFilteringTest
 	public void testGetPageItemsFilterByDateModifiedEquals() throws Exception {
 		Map<Locale, String> stringMap1 = new HashMap<>();
 
-		stringMap1.put(LocaleUtil.getDefault(), "title1");
+		stringMap1.put(LocaleUtil.getDefault(), RandomTestUtil.randomString());
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
@@ -257,7 +257,7 @@ public class StructuredContentNestedCollectionResourceFilteringTest
 
 		Map<Locale, String> stringMap1 = new HashMap<>();
 
-		stringMap1.put(LocaleUtil.getDefault(), "title1");
+		stringMap1.put(LocaleUtil.getDefault(), RandomTestUtil.randomString());
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
@@ -310,7 +310,7 @@ public class StructuredContentNestedCollectionResourceFilteringTest
 
 		Map<Locale, String> stringMap1 = new HashMap<>();
 
-		stringMap1.put(LocaleUtil.getDefault(), "title1");
+		stringMap1.put(LocaleUtil.getDefault(), RandomTestUtil.randomString());
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
@@ -361,7 +361,7 @@ public class StructuredContentNestedCollectionResourceFilteringTest
 	public void testGetPageItemsFilterByDatePublishedEquals() throws Exception {
 		Map<Locale, String> stringMap1 = new HashMap<>();
 
-		stringMap1.put(LocaleUtil.getDefault(), "title1");
+		stringMap1.put(LocaleUtil.getDefault(), RandomTestUtil.randomString());
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
@@ -404,7 +404,7 @@ public class StructuredContentNestedCollectionResourceFilteringTest
 
 		Map<Locale, String> stringMap1 = new HashMap<>();
 
-		stringMap1.put(LocaleUtil.getDefault(), "title1");
+		stringMap1.put(LocaleUtil.getDefault(), RandomTestUtil.randomString());
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
@@ -471,7 +471,7 @@ public class StructuredContentNestedCollectionResourceFilteringTest
 
 		Map<Locale, String> stringMap1 = new HashMap<>();
 
-		stringMap1.put(LocaleUtil.getDefault(), "title1");
+		stringMap1.put(LocaleUtil.getDefault(), RandomTestUtil.randomString());
 
 		LocalDate localDate1 = LocalDate.of(2018, 02, 20);
 

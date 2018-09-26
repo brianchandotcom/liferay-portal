@@ -1,3 +1,5 @@
+import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
+
 import com.liferay.gradle.plugins.change.log.builder.BuildChangeLogTask
 import com.liferay.gradle.plugins.defaults.internal.util.GradleUtil
 import com.liferay.gradle.util.FileUtil
@@ -37,6 +39,7 @@ buildscript {
 	apply from: file("build-buildscript.gradle"), to: buildscript
 
 	dependencies {
+		classpath group: "com.github.jengelman.gradle.plugins", name: "shadow", version: "2.0.4"
 		classpath group: "org.ajoberstar", name: "gradle-git", version: "1.6.0"
 	}
 
@@ -47,6 +50,8 @@ buildscript {
 	}
 }
 
+apply plugin: "com.github.johnrengelman.shadow"
+apply plugin: "java"
 apply plugin: "org.ajoberstar.grgit"
 
 task buildFixPackChangeLog(type: BuildChangeLogTask)
@@ -55,7 +60,7 @@ task cleanReleng
 task cleanVersionOverride
 task lockDependencyVersion
 task lockPrivateDependencyVersions
-task portalArtifactsJar
+task portalArtifactsJar(type: ShadowJar)
 task prepareMajorIncrement
 task syncGitRepoReleases
 task tagAppReleases

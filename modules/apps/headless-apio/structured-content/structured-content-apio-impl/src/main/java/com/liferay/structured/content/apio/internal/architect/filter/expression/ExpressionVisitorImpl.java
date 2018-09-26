@@ -15,6 +15,7 @@
 package com.liferay.structured.content.apio.internal.architect.filter.expression;
 
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.structured.content.apio.architect.filter.expression.BinaryExpression;
 import com.liferay.structured.content.apio.architect.filter.expression.Expression;
 import com.liferay.structured.content.apio.architect.filter.expression.LiteralExpression;
@@ -46,8 +47,10 @@ public class ExpressionVisitorImpl implements ExpressionVisitor<Expression> {
 	@Override
 	public Expression visitAlias(String alias) {
 		throw new UnsupportedOperationException(
-			"alias are not supported yet, please, avoid using the 'as' " +
-				"keyword");
+			StringUtil.appendParentheticalSuffix(
+				"alias are not supported yet, please, avoid using the 'as' " +
+					"keyword",
+				alias));
 	}
 
 	@Override
@@ -74,8 +77,9 @@ public class ExpressionVisitorImpl implements ExpressionVisitor<Expression> {
 	@Override
 	public Expression visitEnum(EdmEnumType edmEnumType, List<String> list) {
 		throw new UnsupportedOperationException(
-			"enums are not supported yet, please avoid using expression like " +
-				"ReportFormat'CSV' as field values");
+			StringUtil.appendParentheticalSuffix(
+				"enums are not supported yet, please avoid using them",
+				StringUtil.merge(edmEnumType.getMemberNames())));
 	}
 
 	@Override
@@ -85,16 +89,19 @@ public class ExpressionVisitorImpl implements ExpressionVisitor<Expression> {
 			expression) {
 
 		throw new UnsupportedOperationException(
-			StringBundler.concat(
-				"lambda expression '", lambdaFunction,
-				"' is not supported yet, please, avoid using it"));
+			StringUtil.appendParentheticalSuffix(
+				"lambda expressions are not supported yet, please, avoid " +
+					"using them ",
+				lambdaFunction));
 	}
 
 	@Override
 	public Expression visitLambdaReference(String lambdaReference) {
 		throw new UnsupportedOperationException(
-			"lambda references are not supported yet, please, avoid using " +
-				"them");
+			StringUtil.appendParentheticalSuffix(
+				"lambda references are not supported yet, please, avoid " +
+					"using them",
+				lambdaReference));
 	}
 
 	@Override
@@ -159,7 +166,7 @@ public class ExpressionVisitorImpl implements ExpressionVisitor<Expression> {
 
 		throw new UnsupportedOperationException(
 			StringBundler.concat(
-				"unary operation '", unaryOperatorKind,
+				"operation '", unaryOperatorKind,
 				"' is not supported yet, please, avoid using it"));
 	}
 

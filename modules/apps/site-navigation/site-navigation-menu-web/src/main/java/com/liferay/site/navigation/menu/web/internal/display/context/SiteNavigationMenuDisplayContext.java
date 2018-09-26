@@ -411,17 +411,10 @@ public class SiteNavigationMenuDisplayContext {
 		Layout layout = themeDisplay.getLayout();
 
 		if (layout.isPrivateLayout()) {
-			SiteNavigationMenu siteNavigationMenu =
-				SiteNavigationMenuLocalServiceUtil.fetchSiteNavigationMenu(
-					themeDisplay.getScopeGroupId(),
-					SiteNavigationConstants.TYPE_PRIVATE);
-
-			if (siteNavigationMenu != null) {
-				return SiteNavigationConstants.TYPE_PRIVATE;
-			}
+			return SiteNavigationConstants.TYPE_PRIVATE_PAGES_HIERARCHY;
 		}
 
-		return SiteNavigationConstants.TYPE_PRIMARY;
+		return SiteNavigationConstants.TYPE_PUBLIC_PAGES_HIERARCHY;
 	}
 
 	private String _ddmTemplateKey;

@@ -4458,6 +4458,55 @@ ${output.content}</echo>
 		</run-batch-test>
 	</target>
 
+	<target name="pmd-jdk8">
+		<local name="count" />
+
+		<antcall inheritAll="false" target="setup-sdk" />
+
+		<antcall inheritAll="false" target="run-pmd" />
+
+		<var name="pmd.violations" value="" />
+
+		<xmltask source="pmd-reports/pmd-report.xml">
+			<call path="/pmd/file/violation">
+				<param name="beginline" path="@beginline" />
+				<param default="" name="externalInfoURL" path="@externalInfoUrl" />
+				<param name="fileName" path="../@name" />
+				<param name="message" path="text()" />
+				<param name="rule" path="@rule" />
+				<actions>
+					<antelope:stringutil property="message" string="@{message}">
+						<antelope:trim />
+					</antelope:stringutil>
+
+					<var name="pmd.violations" value="${pmd.violations}${line.separator}PMD VIOLATION: ${basedir}/@{fileName}:@{beginline} > ${message} (PMD Rule: @{rule})${line.separator}" />
+
+					<if>
+						<not>
+							<equals arg1="@{externalInfoURL}" arg2="" />
+						</not>
+						<then>
+							<var name="pmd.violations" value="${pmd.violations}For more information, please see @{externalInfoURL}.${line.separator}" />
+						</then>
+					</if>
+				</actions>
+			</call>
+			<copy path="count(/pmd/file/violation)" property="count" />
+		</xmltask>
+
+		<if>
+			<and>
+				<isset property="count" />
+				<not>
+					<equals arg1="${count}" arg2="0" />
+				</not>
+			</and>
+			<then>
+				<fail message="${count} PMD violation(s) were found.${line.separator}${pmd.violations}" />
+			</then>
+		</if>
+	</target>
+
 	<target name="portal-frontend-js-jdk8">
 		<run-batch-test>
 			<test-action>

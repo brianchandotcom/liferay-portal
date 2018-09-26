@@ -57,11 +57,14 @@ public interface SettingsLocatorHelper {
 		String portletId, String configurationPid, Settings parentSettings);
 
 	public Settings getPortletInstancePortletPreferencesSettings(
-		long companyId, long ownerId, int ownerType, long plid,
-		String portletId, Settings parentSettings);
+			long companyId, long ownerId, int ownerType, long plid,
+			String portletId, Settings parentSettings)
+		throws Exception;
 
 	public Settings getPortletInstancePortletPreferencesSettings(
-		long companyId, long plid, String portletId, Settings parentSettings);
+			long companyId, long plid, String portletId,
+			Settings parentSettings)
+		throws Exception;
 
 	public Settings getServerSettings(String settingsId);
 

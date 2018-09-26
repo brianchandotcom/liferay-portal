@@ -95,7 +95,9 @@ public class SettingsLocatorHelperUtil {
 	}
 
 	public Settings getPortletInstancePortletPreferencesSettings(
-		long companyId, long plid, String portletId, Settings parentSettings) {
+			long companyId, long plid, String portletId,
+			Settings parentSettings)
+		throws Exception {
 
 		return getSettingsLocatorHelper().
 			getPortletInstancePortletPreferencesSettings(

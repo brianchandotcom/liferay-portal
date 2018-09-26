@@ -19,7 +19,10 @@ import com.liferay.jenkins.results.parser.PortalTestClassJob;
 import java.io.File;
 import java.io.IOException;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.regex.Pattern;
 
 /**
  * @author Michael Hashimoto
@@ -41,6 +44,10 @@ public class NPMTestBatchTestClassGroup extends BatchTestClassGroup {
 		return new AxisTestClassGroup(this, axisId);
 	}
 
+	public Map<File, NPMTestBatchTestClass> getNPMTestBatchTestClasses() {
+		return NPMTestBatchTestClass.getNPMTestBatchTestClasses();
+	}
+
 	public static class NPMTestBatchTestClass extends BaseTestClass {
 
 		protected static NPMTestBatchTestClass getInstance(
@@ -49,11 +56,22 @@ public class NPMTestBatchTestClassGroup extends BatchTestClassGroup {
 			return new NPMTestBatchTestClass(batchName, moduleDir);
 		}
 
+		protected static Map<File, NPMTestBatchTestClass>
+			getNPMTestBatchTestClasses() {
+
+			return _npmTestBatchTestClasses;
+		}
+
 		protected NPMTestBatchTestClass(String batchName, File file) {
 			super(file);
 
 			addTestMethod(batchName);
 		}
+
+		private static final Pattern _itPattern = Pattern.compile(
+			"\\s+(?<xit>x)?it\\s*\\(\\s*\\'(?<description>[\\s\\S]*?)\\'");
+		private static final Map<File, NPMTestBatchTestClass>
+			_npmTestBatchTestClasses = new HashMap<>();
 
 	}
 

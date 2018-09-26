@@ -36,7 +36,7 @@ boolean last = (position == (searchContainer.getTotal() - 1));
 			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="assetListEntryId" value="<%= String.valueOf(assetListEntryAssetEntryRel.getAssetListEntryId()) %>" />
 			<portlet:param name="position" value="<%= String.valueOf(position) %>" />
-			<portlet:param name="newPosition" value="<%= String.valueOf(position - 1) %>" />
+			<portlet:param name="newPosition" value="<%= String.valueOf(position + 1) %>" />
 		</portlet:actionURL>
 
 		<liferay-ui:icon
@@ -50,7 +50,7 @@ boolean last = (position == (searchContainer.getTotal() - 1));
 			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="assetListEntryId" value="<%= String.valueOf(assetListEntryAssetEntryRel.getAssetListEntryId()) %>" />
 			<portlet:param name="position" value="<%= String.valueOf(position) %>" />
-			<portlet:param name="newPosition" value="<%= String.valueOf(position + 1) %>" />
+			<portlet:param name="newPosition" value="<%= String.valueOf(position - 1) %>" />
 		</portlet:actionURL>
 
 		<liferay-ui:icon

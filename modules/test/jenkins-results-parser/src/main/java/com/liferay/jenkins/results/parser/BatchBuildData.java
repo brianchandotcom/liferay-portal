@@ -16,6 +16,8 @@ package com.liferay.jenkins.results.parser;
 
 import java.util.Map;
 
+import org.json.JSONObject;
+
 /**
  * @author Michael Hashimoto
  */
@@ -33,11 +35,14 @@ public abstract class BatchBuildData extends BaseBuildData {
 		return optString("top_level_run_id", null);
 	}
 
-	protected BatchBuildData(
-		Map<String, String> buildParameters,
-		JenkinsJSONObject jenkinsJSONObject, String runID) {
+	protected BatchBuildData(JSONObject jsonObject) {
+		super(jsonObject);
 
-		super(buildParameters, jenkinsJSONObject, runID);
+		validateKeys(_REQUIRED_KEYS);
+	}
+
+	protected BatchBuildData(Map<String, String> buildParameters) {
+		super(buildParameters);
 
 		put("batch_name", _getBatchName(buildParameters));
 		put("dist_nodes", _getDistNodes(buildParameters));

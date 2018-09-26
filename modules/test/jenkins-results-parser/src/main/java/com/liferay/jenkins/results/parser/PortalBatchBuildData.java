@@ -54,11 +54,14 @@ public class PortalBatchBuildData
 		return getString("portal_upstream_branch_name");
 	}
 
-	protected PortalBatchBuildData(
-		Map<String, String> buildParameters,
-		JenkinsJSONObject jenkinsJSONObject, String runID) {
+	protected PortalBatchBuildData(JSONObject jsonObject) {
+		super(jsonObject);
 
-		super(buildParameters, jenkinsJSONObject, runID);
+		validateKeys(_REQUIRED_KEYS);
+	}
+
+	protected PortalBatchBuildData(Map<String, String> buildParameters) {
+		super(buildParameters);
 
 		_portalTopLevelBuildData =
 			(PortalTopLevelBuildData)getTopLevelBuildData();

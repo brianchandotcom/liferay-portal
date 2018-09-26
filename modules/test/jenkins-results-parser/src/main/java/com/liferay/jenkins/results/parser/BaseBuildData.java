@@ -124,29 +124,17 @@ public abstract class BaseBuildData implements BuildData {
 		return false;
 	}
 
-	protected BaseBuildData(
-		Map<String, String> buildParameters,
-		JenkinsJSONObject jenkinsJSONObject) {
+	protected BaseBuildData(JSONObject jsonObject) {
+		_jsonObject = jsonObject;
 
-		this(buildParameters, jenkinsJSONObject, _DEFAULT_RUN_ID);
+		_runID = getString("run_id");
+
+		validateKeys(_REQUIRED_KEYS);
 	}
 
-	protected BaseBuildData(
-		Map<String, String> buildParameters,
-		JenkinsJSONObject jenkinsJSONObject, String runID) {
-
-		_jsonObject = new JSONObject(
-			_getBuildDataSource(jenkinsJSONObject, runID));
-
-		if (runID == null) {
-			runID = _DEFAULT_RUN_ID;
-		}
-
-		_runID = runID;
-
-		if (!jenkinsJSONObject.has(runID)) {
-			jenkinsJSONObject.put(runID, this);
-		}
+	protected BaseBuildData(Map<String, String> buildParameters) {
+		_jsonObject = new JSONObject();
+		_runID = _getRunID(buildParameters);
 
 		String buildURL = _getBuildURL(buildParameters);
 
@@ -204,22 +192,6 @@ public abstract class BaseBuildData implements BuildData {
 		}
 	}
 
-	private static String _getBuildDataSource(
-		JenkinsJSONObject jenkinsJSONObject, String runID) {
-
-		if (runID == null) {
-			return "{}";
-		}
-
-		JSONObject jsonObject = jenkinsJSONObject.optJSONObject(runID);
-
-		if (jsonObject != null) {
-			return jsonObject.toString();
-		}
-
-		return "{}";
-	}
-
 	private String _getBuildURL(Map<String, String> buildParameters) {
 		if (!buildParameters.containsKey("BUILD_URL")) {
 			throw new RuntimeException("Please set BUILD_URL");
@@ -236,6 +208,16 @@ public abstract class BaseBuildData implements BuildData {
 		}
 
 		return jenkinsGitHubURL;
+	}
+
+	private String _getRunID(Map<String, String> buildParameters) {
+		String runID = buildParameters.get("RUN_ID");
+
+		if ((runID == null) || runID.equals("")) {
+			return _DEFAULT_RUN_ID;
+		}
+
+		return runID;
 	}
 
 	private String _getWorkspaceDir(Map<String, String> buildParameters) {

@@ -22,16 +22,21 @@ import java.util.Properties;
 
 import org.apache.commons.lang.StringUtils;
 
+import org.json.JSONObject;
+
 /**
  * @author Michael Hashimoto
  */
 public abstract class TopLevelBuildData extends BaseBuildData {
 
-	protected TopLevelBuildData(
-		Map<String, String> buildParameters,
-		JenkinsJSONObject jenkinsJSONObject, String runID) {
+	protected TopLevelBuildData(JSONObject jsonObject) {
+		super(jsonObject);
 
-		super(buildParameters, jenkinsJSONObject, runID);
+		validateKeys(_REQUIRED_KEYS);
+	}
+
+	protected TopLevelBuildData(Map<String, String> buildParameters) {
+		super(buildParameters);
 
 		put("dist_nodes", _getDistNodes());
 		put("dist_path", _getDistPath());

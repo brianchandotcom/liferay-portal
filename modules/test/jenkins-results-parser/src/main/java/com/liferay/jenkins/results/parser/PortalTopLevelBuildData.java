@@ -38,11 +38,14 @@ public class PortalTopLevelBuildData
 		return getString("portal_upstream_branch_name");
 	}
 
-	protected PortalTopLevelBuildData(
-		Map<String, String> buildParameters,
-		JenkinsJSONObject jenkinsJSONObject, String runID) {
+	protected PortalTopLevelBuildData(JSONObject jsonObject) {
+		super(jsonObject);
 
-		super(buildParameters, jenkinsJSONObject, runID);
+		validateKeys(_REQUIRED_KEYS);
+	}
+
+	protected PortalTopLevelBuildData(Map<String, String> buildParameters) {
+		super(buildParameters);
 
 		put("portal_github_url", _getPortalGitHubURL(buildParameters));
 		put(

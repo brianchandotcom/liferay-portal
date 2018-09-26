@@ -2126,6 +2126,66 @@ public class ProjectTemplatesTest {
 	}
 
 	@Test
+	public void testBuildTemplateServiceBuilderTargetPlatformEnabled70()
+		throws Exception {
+
+		File workspaceProjectDir = _buildTemplateWithGradle(
+			WorkspaceUtil.WORKSPACE, "workspace");
+
+		File gradleProperties = new File(
+			workspaceProjectDir, "gradle.properties");
+
+		Files.write(
+			gradleProperties.toPath(),
+			"\nliferay.workspace.target.platform.version=7.0.6".getBytes(),
+			StandardOpenOption.APPEND);
+
+		File modulesDir = new File(workspaceProjectDir, "modules");
+
+		_buildTemplateWithGradle(
+			modulesDir, "service-builder", "foo", "--package-name", "test",
+			"--liferayVersion", "7.0", "--dependency-management-enabled");
+
+		_executeGradle(
+			workspaceProjectDir,
+			":modules:foo:foo-service" + _GRADLE_TASK_PATH_BUILD_SERVICE);
+
+		_executeGradle(workspaceProjectDir, ":modules:foo:foo-api:build");
+
+		_executeGradle(workspaceProjectDir, ":modules:foo:foo-service:build");
+	}
+
+	@Test
+	public void testBuildTemplateServiceBuilderTargetPlatformEnabled71()
+		throws Exception {
+
+		File workspaceProjectDir = _buildTemplateWithGradle(
+			WorkspaceUtil.WORKSPACE, "workspace");
+
+		File gradleProperties = new File(
+			workspaceProjectDir, "gradle.properties");
+
+		Files.write(
+			gradleProperties.toPath(),
+			"\nliferay.workspace.target.platform.version=7.1.0".getBytes(),
+			StandardOpenOption.APPEND);
+
+		File modulesDir = new File(workspaceProjectDir, "modules");
+
+		_buildTemplateWithGradle(
+			modulesDir, "service-builder", "foo", "--package-name", "test",
+			"--liferayVersion", "7.1", "--dependency-management-enabled");
+
+		_executeGradle(
+			workspaceProjectDir,
+			":modules:foo:foo-service" + _GRADLE_TASK_PATH_BUILD_SERVICE);
+
+		_executeGradle(workspaceProjectDir, ":modules:foo:foo-api:build");
+
+		_executeGradle(workspaceProjectDir, ":modules:foo:foo-service:build");
+	}
+
+	@Test
 	public void testBuildTemplateServiceBuilderWithDashes70() throws Exception {
 		String name = "backend-integration";
 		String packageName = "com.liferay.docs.guestbook";
@@ -3983,17 +4043,19 @@ public class ProjectTemplatesTest {
 
 			String content = FileUtil.read(buildFilePath);
 
-			StringBuilder sb = new StringBuilder();
+			if (!content.contains("allprojects")) {
+				StringBuilder sb = new StringBuilder();
 
-			sb.append(content);
-			sb.append("allprojects {\n");
-			sb.append("repositories {");
-			sb.append("mavenLocal()}}");
+				sb.append(content);
+				sb.append("allprojects {\n");
+				sb.append("repositories {");
+				sb.append("mavenLocal()}}");
 
-			content = sb.toString();
+				content = sb.toString();
 
-			Files.write(
-				buildFilePath, content.getBytes(StandardCharsets.UTF_8));
+				Files.write(
+					buildFilePath, content.getBytes(StandardCharsets.UTF_8));
+			}
 		}
 
 		Files.walkFileTree(

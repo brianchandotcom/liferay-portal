@@ -16,11 +16,17 @@ package com.liferay.jenkins.results.parser;
 
 import java.util.Map;
 
+import org.json.JSONObject;
+
 /**
  * @author Michael Hashimoto
  */
 public class PortalTopLevelBuildData
 	extends TopLevelBuildData implements PortalBuildData {
+
+	public static boolean isValidJSONObject(JSONObject jsonObject) {
+		return isValidJSONObject(jsonObject, _TYPE);
+	}
 
 	@Override
 	public String getPortalGitHubURL() {
@@ -46,6 +52,11 @@ public class PortalTopLevelBuildData
 		validateKeys(_REQUIRED_KEYS);
 	}
 
+	@Override
+	protected String getType() {
+		return _TYPE;
+	}
+
 	private String _getPortalGitHubURL(Map<String, String> buildParameters) {
 		if (!buildParameters.containsKey("PORTAL_GITHUB_URL")) {
 			throw new RuntimeException("Please set PORTAL_GITHUB_URL");
@@ -67,5 +78,7 @@ public class PortalTopLevelBuildData
 
 	private static final String[] _REQUIRED_KEYS =
 		{"portal_github_url", "portal_upstream_branch_name"};
+
+	private static final String _TYPE = "portal_top_level";
 
 }

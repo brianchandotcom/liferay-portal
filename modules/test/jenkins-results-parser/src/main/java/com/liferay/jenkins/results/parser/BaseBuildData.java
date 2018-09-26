@@ -101,6 +101,24 @@ public abstract class BaseBuildData extends JSONObject implements BuildData {
 		return new File(getString("workspace_dir"));
 	}
 
+	protected static boolean isValidJSONObject(
+		JSONObject jsonObject, String type) {
+
+		System.out.println("* " + type);
+
+		if (type == null) {
+			return false;
+		}
+
+		if (jsonObject.has("type")) {
+			if (type.equals(jsonObject.getString("type"))) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
 	@Override
 	public JSONObject toJSONObject() {
 		return this;
@@ -145,10 +163,13 @@ public abstract class BaseBuildData extends JSONObject implements BuildData {
 		put("job_name", matcher.group("jobName"));
 		put("master_hostname", matcher.group("masterHostname"));
 		put("run_id", _runID);
+		put("type", getType());
 		put("workspace_dir", _getWorkspaceDir(buildParameters));
 
 		validateKeys(_REQUIRED_KEYS);
 	}
+
+	protected abstract String getType();
 
 	protected void validateKeys(String[] requiredKeys) {
 		for (String requiredKey : requiredKeys) {

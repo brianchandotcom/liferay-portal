@@ -16,11 +16,17 @@ package com.liferay.jenkins.results.parser;
 
 import java.util.Map;
 
+import org.json.JSONObject;
+
 /**
  * @author Michael Hashimoto
  */
 public class PortalBatchBuildData
 	extends BatchBuildData implements PortalBuildData {
+
+	public static boolean isValidJSONObject(JSONObject jsonObject) {
+		return isValidJSONObject(jsonObject, _TYPE);
+	}
 
 	@Override
 	public String getPortalGitHubURL() {
@@ -65,6 +71,11 @@ public class PortalBatchBuildData
 		validateKeys(_REQUIRED_KEYS);
 	}
 
+	@Override
+	protected String getType() {
+		return _TYPE;
+	}
+
 	private String _getPortalGitHubURL(Map<String, String> buildParameters) {
 		PortalTopLevelBuildData portalTopLevelBuildData =
 			getPortalTopLevelBuildData();
@@ -100,6 +111,8 @@ public class PortalBatchBuildData
 
 	private static final String[] _REQUIRED_KEYS =
 		{"portal_github_url", "portal_upstream_branch_name"};
+
+	private static final String _TYPE = "portal_batch";
 
 	private PortalTopLevelBuildData _portalTopLevelBuildData;
 

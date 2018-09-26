@@ -32,14 +32,37 @@ public class EntityField {
 	 *
 	 * @param  name - the name of the EntityField
 	 * @param  type - the {@link Type}
+	 * @param  filterableAndSortableFieldNameFunction - the {@link Function} to
+	 *         convert the entity field name to a filterable/sortable field name
+	 *         given a locale
+	 * @review
+	 */
+	public EntityField(
+		String name, Type type,
+		Function<Locale, String> filterableAndSortableFieldNameFunction) {
+
+		this(
+			name, type, filterableAndSortableFieldNameFunction,
+			filterableAndSortableFieldNameFunction);
+	}
+
+	/**
+	 * Creates a new <code>EntityField</code>
+	 *
+	 * @param  name - the name of the EntityField
+	 * @param  type - the {@link Type}
 	 * @param  sortableFieldNameFunction - the {@link Function} to convert the
-	 *         entity field name to a searchable/sortable field name given a
+	 *         entity field name to a sortable field name given a
+	 *         locale
+	 * @param  filterableFieldNameFunction - the {@link Function} to convert the
+	 *         entity field name to a filterable field name given a
 	 *         locale
 	 * @review
 	 */
 	public EntityField(
 		String name, Type type,
-		Function<Locale, String> sortableFieldNameFunction) {
+		Function<Locale, String> sortableFieldNameFunction,
+		Function<Locale, String> filterableFieldNameFunction) {
 
 		if (Validator.isNull(name)) {
 			throw new IllegalArgumentException("Name is null");
@@ -54,9 +77,26 @@ public class EntityField {
 				"Sortable field name function is null");
 		}
 
+		if (filterableFieldNameFunction == null) {
+			throw new IllegalArgumentException(
+				"Filterable field name function is null");
+		}
+
 		_name = name;
 		_type = type;
 		_sortableNameFunction = sortableFieldNameFunction;
+		_filterableFieldNameFunction = filterableFieldNameFunction;
+	}
+
+	/**
+	 * Returns the filterable name of the <code>EntityField</code>
+	 *
+	 * @param  locale
+	 * @return the filterable name of the <code>EntityField</code>
+	 * @review
+	 */
+	public String getFilterableName(Locale locale) {
+		return _filterableFieldNameFunction.apply(locale);
 	}
 
 	/**
@@ -94,6 +134,7 @@ public class EntityField {
 
 	}
 
+	private final Function<Locale, String> _filterableFieldNameFunction;
 	private final String _name;
 	private final Function<Locale, String> _sortableNameFunction;
 	private final Type _type;

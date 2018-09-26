@@ -111,7 +111,7 @@ public class ExpressionVisitorImpl implements ExpressionVisitor<Object> {
 		EntityField entityField, Object fieldValue, Locale locale) {
 
 		return new TermFilter(
-			entityField.getSortableName(locale), String.valueOf(fieldValue));
+			entityField.getFilterableName(locale), String.valueOf(fieldValue));
 	}
 
 	private Optional<Filter> _getFilterOptional(
@@ -149,7 +149,7 @@ public class ExpressionVisitorImpl implements ExpressionVisitor<Object> {
 			Objects.equals(entityField.getType(), EntityField.Type.STRING)) {
 
 			return new RangeTermFilter(
-				entityField.getSortableName(locale), true, true,
+				entityField.getFilterableName(locale), true, true,
 				String.valueOf(fieldValue), null);
 		}
 
@@ -165,7 +165,7 @@ public class ExpressionVisitorImpl implements ExpressionVisitor<Object> {
 			Objects.equals(entityField.getType(), EntityField.Type.STRING)) {
 
 			return new RangeTermFilter(
-				entityField.getSortableName(locale), false, true, null,
+				entityField.getFilterableName(locale), false, true, null,
 				String.valueOf(fieldValue));
 		}
 

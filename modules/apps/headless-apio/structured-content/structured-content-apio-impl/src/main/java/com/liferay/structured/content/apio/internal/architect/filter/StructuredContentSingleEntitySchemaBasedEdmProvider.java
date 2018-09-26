@@ -50,12 +50,16 @@ public class StructuredContentSingleEntitySchemaBasedEdmProvider
 
 	private static final Map<String, EntityField> _entityFieldsMap = Stream.of(
 		new EntityField(
-			"dateCreated", EntityField.Type.DATE, locale -> Field.CREATE_DATE),
+			"dateCreated", EntityField.Type.DATE,
+			locale -> Field.getSortableFieldName(Field.CREATE_DATE),
+			locale -> Field.CREATE_DATE),
 		new EntityField(
 			"dateModified", EntityField.Type.DATE,
+			locale -> Field.getSortableFieldName(Field.MODIFIED_DATE),
 			locale -> Field.MODIFIED_DATE),
 		new EntityField(
 			"datePublished", EntityField.Type.DATE,
+			locale -> Field.getSortableFieldName(Field.DISPLAY_DATE),
 			locale -> Field.DISPLAY_DATE),
 		new EntityField(
 			"title", EntityField.Type.STRING,

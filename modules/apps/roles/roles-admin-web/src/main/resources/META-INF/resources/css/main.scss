@@ -208,6 +208,12 @@
 				overflow: hidden;
 				text-overflow: ellipsis;
 				white-space: nowrap;
+
+				:hover {
+					background-color: rgba(0, 0, 0, 0.04);
+					border-radius: 4px;
+					font-weight: bold;
+				}
 			}
 
 			.permission-navigation-item-summary {

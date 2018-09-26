@@ -23,18 +23,28 @@ import com.liferay.calendar.recurrence.Recurrence;
 import com.liferay.calendar.service.CalendarBookingLocalService;
 import com.liferay.calendar.service.CalendarBookingService;
 import com.liferay.calendar.service.CalendarLocalService;
+import com.liferay.calendar.service.CalendarResourceLocalService;
 import com.liferay.calendar.service.CalendarService;
 import com.liferay.calendar.util.RecurrenceUtil;
+import com.liferay.calendar.web.internal.search.CalendarResourceDisplayTerms;
+import com.liferay.calendar.web.internal.search.CalendarResourceSearch;
 import com.liferay.calendar.web.internal.security.permission.resource.CalendarPermission;
+import com.liferay.calendar.web.internal.security.permission.resource.CalendarPortletPermission;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemList;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.GroupLocalService;
@@ -42,11 +52,14 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.portlet.PortletException;
+import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
@@ -63,6 +76,7 @@ public class CalendarDisplayContext {
 		CalendarBookingLocalService calendarBookingLocalService,
 		CalendarBookingService calendarBookingService,
 		CalendarLocalService calendarLocalService,
+		CalendarResourceLocalService calendarResourceLocalService,
 		CalendarService calendarService) {
 
 		_renderRequest = renderRequest;
@@ -71,6 +85,7 @@ public class CalendarDisplayContext {
 		_calendarBookingLocalService = calendarBookingLocalService;
 		_calendarBookingService = calendarBookingService;
 		_calendarLocalService = calendarLocalService;
+		_calendarResourceLocalService = calendarResourceLocalService;
 		_calendarService = calendarService;
 		_themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -84,6 +99,39 @@ public class CalendarDisplayContext {
 
 		return _calendarBookingService.getChildCalendarBookings(
 			calendarBooking.getCalendarBookingId(), group.isStagingGroup());
+	}
+
+	public String getClearResultsURL() throws PortletException {
+		PortletURL clearResultsURL = PortletURLUtil.clone(
+			getPortletURL(), _renderResponse);
+
+		clearResultsURL.setParameter("keywords", StringPool.BLANK);
+
+		return clearResultsURL.toString();
+	}
+
+	public CreationMenu getCreationMenu() {
+		if (!isShowAddResourceButton()) {
+			return null;
+		}
+
+		return new CreationMenu() {
+			{
+				HttpServletRequest request = PortalUtil.getHttpServletRequest(
+					_renderRequest);
+
+				addPrimaryDropdownItem(
+					dropdownItem -> {
+						dropdownItem.setHref(
+							_renderResponse.createRenderURL(), "mvcPath",
+							"/edit_calendar_resource.jsp", "redirect",
+							PortalUtil.getCurrentURL(request));
+
+						dropdownItem.setLabel(
+							LanguageUtil.get(request, "add-calendar-resource"));
+					});
+			}
+		};
 	}
 
 	public Calendar getDefaultCalendar(
@@ -150,6 +198,34 @@ public class CalendarDisplayContext {
 		return ParamUtil.getString(request, "redirect", defaultURL);
 	}
 
+	public List<DropdownItem> getFilterItemsDropdownItems() {
+		HttpServletRequest request = _themeDisplay.getRequest();
+
+		return new DropdownItemList() {
+			{
+				addGroup(
+					dropdownGroupItem -> {
+						dropdownGroupItem.setDropdownItems(
+							getFilterActiveDropdownItems());
+						dropdownGroupItem.setLabel(
+							LanguageUtil.get(request, "active"));
+					});
+
+				addGroup(
+					dropdownGroupItem -> {
+						dropdownGroupItem.setDropdownItems(
+							getScopeDropdownItems());
+						dropdownGroupItem.setLabel(
+							LanguageUtil.get(request, "scope"));
+					});
+			}
+		};
+	}
+
+	public String getKeywords() {
+		return ParamUtil.getString(_renderRequest, "keywords");
+	}
+
 	public Recurrence getLastRecurrence(CalendarBooking calendarBooking)
 		throws PortalException {
 
@@ -167,6 +243,11 @@ public class CalendarDisplayContext {
 		HttpServletRequest request = PortalUtil.getHttpServletRequest(
 			_renderRequest);
 
+		String active = ParamUtil.getString(
+			_renderRequest, "active", Boolean.TRUE.toString());
+		String scope = ParamUtil.getString(
+			_renderRequest, "scope",
+			String.valueOf(_themeDisplay.getScopeGroupId()));
 		String tabs1 = ParamUtil.getString(request, "tabs1", "calendar");
 
 		return new NavigationItemList() {
@@ -185,8 +266,8 @@ public class CalendarDisplayContext {
 					navigationItem -> {
 						navigationItem.setActive(tabs1.equals("resources"));
 						navigationItem.setHref(
-							_renderResponse.createRenderURL(), "tabs1",
-							"resources");
+							_renderResponse.createRenderURL(), "active", active,
+							"scope", scope, "tabs1", "resources");
 						navigationItem.setLabel(
 							LanguageUtil.get(request, "resources"));
 					});
@@ -272,12 +353,194 @@ public class CalendarDisplayContext {
 		return otherCalendars;
 	}
 
+	public PortletURL getPortletURL() {
+		PortletURL portletURL = _renderResponse.createRenderURL();
+
+		portletURL.setParameter("mvcPath", "/view.jsp");
+		portletURL.setParameter("tabs1", "resources");
+
+		String keywords = getKeywords();
+
+		if (Validator.isNotNull(keywords)) {
+			portletURL.setParameter("keywords", keywords);
+		}
+
+		portletURL.setParameter(
+			"active", ParamUtil.getString(_renderRequest, "active"));
+
+		portletURL.setParameter(
+			"scope", ParamUtil.getString(_renderRequest, "scope"));
+
+		return portletURL;
+	}
+
+	public SearchContainer<?> getSearch() {
+		CalendarResourceSearch calendarResourceSearch =
+			new CalendarResourceSearch(
+				_renderRequest, CalendarResourceSearch.DEFAULT_CUR_PARAM,
+				getPortletURL());
+
+		setDDMFormInstanceSearchResults(calendarResourceSearch);
+		setDDMFormInstanceSearchTotal(calendarResourceSearch);
+
+		return calendarResourceSearch;
+	}
+
+	public String getSearchActionURL() {
+		PortletURL portletURL = getPortletURL();
+
+		return portletURL.toString();
+	}
+
+	public String getSearchContainerId() {
+		return "resource";
+	}
+
+	public int getTotalItems() {
+		SearchContainer<?> searchContainer = getSearch();
+
+		return searchContainer.getTotal();
+	}
+
+	public boolean isDisabledManagementBar() {
+		if (hasResults()) {
+			return false;
+		}
+
+		if (isSearch()) {
+			return false;
+		}
+
+		return true;
+	}
+
+	protected List<DropdownItem> getFilterActiveDropdownItems() {
+		CalendarResourceDisplayTerms displayTerms =
+			new CalendarResourceDisplayTerms(_renderRequest);
+
+		return new DropdownItemList() {
+			{
+				add(
+					dropdownItem -> {
+						dropdownItem.setActive(displayTerms.isActive());
+						dropdownItem.setHref(getPortletURL(), "active", "true");
+						dropdownItem.setLabel(
+							LanguageUtil.get(
+								_themeDisplay.getRequest(), "yes"));
+					});
+
+				add(
+					dropdownItem -> {
+						dropdownItem.setActive(!displayTerms.isActive());
+						dropdownItem.setHref(
+							getPortletURL(), "active", "false");
+						dropdownItem.setLabel(
+							LanguageUtil.get(_themeDisplay.getRequest(), "no"));
+					});
+			}
+		};
+	}
+
+	protected List<DropdownItem> getScopeDropdownItems() {
+		CalendarResourceDisplayTerms displayTerms =
+			new CalendarResourceDisplayTerms(_renderRequest);
+
+		return new DropdownItemList() {
+			{
+				add(
+					dropdownItem -> {
+						dropdownItem.setActive(
+							displayTerms.getScope() ==
+								_themeDisplay.getScopeGroupId());
+						dropdownItem.setHref(
+							getPortletURL(), "scope",
+							_themeDisplay.getScopeGroupId());
+						dropdownItem.setLabel(
+							LanguageUtil.get(
+								_themeDisplay.getRequest(), "current"));
+					});
+
+				add(
+					dropdownItem -> {
+						dropdownItem.setActive(
+							displayTerms.getScope() ==
+								_themeDisplay.getCompanyGroupId());
+						dropdownItem.setHref(
+							getPortletURL(), "scope",
+							_themeDisplay.getCompanyGroupId());
+						dropdownItem.setLabel(
+							LanguageUtil.get(
+								_themeDisplay.getRequest(), "global"));
+					});
+			}
+		};
+	}
+
+	protected boolean hasResults() {
+		if (getTotalItems() > 0) {
+			return true;
+		}
+
+		return false;
+	}
+
+	protected boolean isSearch() {
+		if (Validator.isNotNull(getKeywords())) {
+			return true;
+		}
+
+		return false;
+	}
+
+	protected boolean isShowAddResourceButton() {
+		return CalendarPortletPermission.contains(
+			_themeDisplay.getPermissionChecker(),
+			_themeDisplay.getScopeGroupId(), CalendarActionKeys.ADD_RESOURCE);
+	}
+
+	protected void setDDMFormInstanceSearchResults(
+		CalendarResourceSearch calendarResourceSearch) {
+
+		long[] groupIds = {_themeDisplay.getScopeGroupId()};
+		long[] classNameIds =
+			{PortalUtil.getClassNameId(CalendarResource.class.getName())};
+		CalendarResourceDisplayTerms displayTerms =
+			new CalendarResourceDisplayTerms(_renderRequest);
+
+		List<CalendarResource> results =
+			_calendarResourceLocalService.searchByKeywords(
+				_themeDisplay.getCompanyId(), groupIds, classNameIds,
+				getKeywords(), displayTerms.isActive(),
+				displayTerms.isAndOperator(), calendarResourceSearch.getStart(),
+				calendarResourceSearch.getEnd(),
+				calendarResourceSearch.getOrderByComparator());
+
+		calendarResourceSearch.setResults(results);
+	}
+
+	protected void setDDMFormInstanceSearchTotal(
+		CalendarResourceSearch calendarResourceSearch) {
+
+		long[] groupIds = {_themeDisplay.getScopeGroupId()};
+		long[] classNameIds =
+			{PortalUtil.getClassNameId(CalendarResource.class.getName())};
+		CalendarResourceDisplayTerms displayTerms =
+			new CalendarResourceDisplayTerms(_renderRequest);
+
+		int total = _calendarResourceLocalService.searchCount(
+			_themeDisplay.getCompanyId(), groupIds, classNameIds, getKeywords(),
+			displayTerms.isActive());
+
+		calendarResourceSearch.setTotal(total);
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		CalendarDisplayContext.class.getName());
 
 	private final CalendarBookingLocalService _calendarBookingLocalService;
 	private final CalendarBookingService _calendarBookingService;
 	private final CalendarLocalService _calendarLocalService;
+	private final CalendarResourceLocalService _calendarResourceLocalService;
 	private final CalendarService _calendarService;
 	private final GroupLocalService _groupLocalService;
 	private final RenderRequest _renderRequest;

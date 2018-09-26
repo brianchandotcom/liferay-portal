@@ -20,16 +20,18 @@
 CalendarResourceDisplayTerms displayTerms = new CalendarResourceDisplayTerms(renderRequest);
 %>
 
-<c:if test="<%= CalendarPortletPermission.contains(permissionChecker, scopeGroupId, CalendarActionKeys.ADD_RESOURCE) %>">
-	<aui:button-row>
-		<liferay-portlet:renderURL var="editCalendarResourceURL">
-			<liferay-portlet:param name="mvcPath" value="/edit_calendar_resource.jsp" />
-			<liferay-portlet:param name="redirect" value="<%= currentURL %>" />
-		</liferay-portlet:renderURL>
-
-		<aui:button href="<%= editCalendarResourceURL %>" primary="<%= true %>" value="add-calendar-resource" />
-	</aui:button-row>
-</c:if>
+<clay:management-toolbar
+	clearResultsURL="<%= calendarDisplayContext.getClearResultsURL() %>"
+	creationMenu="<%= calendarDisplayContext.getCreationMenu() %>"
+	disabled="<%= calendarDisplayContext.isDisabledManagementBar() %>"
+	filterDropdownItems="<%= calendarDisplayContext.getFilterItemsDropdownItems() %>"
+	itemsTotal="<%= calendarDisplayContext.getTotalItems() %>"
+	namespace="<%= renderResponse.getNamespace() %>"
+	searchActionURL="<%= calendarDisplayContext.getSearchActionURL() %>"
+	searchContainerId="<%= calendarDisplayContext.getSearchContainerId() %>"
+	searchFormName="fm"
+	selectable="false"
+/>
 
 <liferay-portlet:renderURL varImpl="iteratorURL">
 	<portlet:param name="mvcPath" value="/view.jsp" />

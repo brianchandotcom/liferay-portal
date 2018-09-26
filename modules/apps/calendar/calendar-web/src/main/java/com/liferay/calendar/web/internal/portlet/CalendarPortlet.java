@@ -45,6 +45,7 @@ import com.liferay.calendar.service.CalendarBookingLocalService;
 import com.liferay.calendar.service.CalendarBookingService;
 import com.liferay.calendar.service.CalendarLocalService;
 import com.liferay.calendar.service.CalendarNotificationTemplateService;
+import com.liferay.calendar.service.CalendarResourceLocalService;
 import com.liferay.calendar.service.CalendarResourceService;
 import com.liferay.calendar.service.CalendarService;
 import com.liferay.calendar.util.JCalendarUtil;
@@ -1699,7 +1700,8 @@ public class CalendarPortlet extends MVCPortlet {
 			new CalendarDisplayContext(
 				renderRequest, renderResponse, _groupLocalService,
 				_calendarBookingLocalService, _calendarBookingService,
-				_calendarLocalService, _calendarService);
+				_calendarLocalService, _calendarResourceLocalServiceService,
+				_calendarService);
 
 		renderRequest.setAttribute(
 			CalendarWebKeys.CALENDAR_DISPLAY_CONTEXT, calendarDisplayContext);
@@ -1849,6 +1851,10 @@ public class CalendarPortlet extends MVCPortlet {
 
 	private CalendarNotificationTemplateService
 		_calendarNotificationTemplateService;
+
+	@Reference
+	private CalendarResourceLocalService _calendarResourceLocalServiceService;
+
 	private CalendarResourceService _calendarResourceService;
 	private CalendarService _calendarService;
 

@@ -36,13 +36,6 @@ import org.junit.Test;
 public class EntityModelSchemaBasedEdmProviderTest {
 
 	@Test
-	public void testGetName() {
-		EntityModel entityModel = new StructuredContentEntityModel();
-
-		Assert.assertEquals("StructuredContent", entityModel.getName());
-	}
-
-	@Test
 	public void testGetSchemas() throws ODataException {
 		String fieldName = "title";
 

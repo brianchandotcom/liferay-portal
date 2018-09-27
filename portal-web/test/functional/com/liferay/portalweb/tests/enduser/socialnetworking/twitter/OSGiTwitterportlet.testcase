@@ -1,4 +1,5 @@
-<definition component-name="portal-plugins-osgi" ignore="true">
+<definition component-name="portal-plugins-osgi">
+	<property name="dummy.socket.proxy.disabled" value="true" />
 	<property name="osgi.app.includes" value="twitter" />
 	<property name="portal.release" value="true" />
 	<property name="portal.upstream" value="true" />

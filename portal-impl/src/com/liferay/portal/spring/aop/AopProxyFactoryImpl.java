@@ -48,14 +48,9 @@ public class AopProxyFactoryImpl implements AopProxyFactory, BeanFactoryAware {
 
 		_serviceBeanAopCacheManager = new ServiceBeanAopCacheManager(
 			_methodInterceptor);
-
-		ServiceBeanAopCacheManagerUtil.registerServiceBeanAopCacheManager(
-			_serviceBeanAopCacheManager);
 	}
 
 	public void destroy() {
-		ServiceBeanAopCacheManagerUtil.unregisterServiceBeanAopCacheManager(
-			_serviceBeanAopCacheManager);
 	}
 
 	@Override

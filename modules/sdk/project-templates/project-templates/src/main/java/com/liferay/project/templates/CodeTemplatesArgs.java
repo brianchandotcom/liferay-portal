@@ -89,7 +89,8 @@ public class CodeTemplatesArgs {
 	}
 
 	@DynamicParameter(
-		description = "Addtional parameters to generate the code.", names = "-D"
+		description = "Addtional parameters to use when generating from code template.",
+		names = {"-D", "--define"}
 	)
 	private Map<String, String> _additionalParameters = new HashMap<>();
 

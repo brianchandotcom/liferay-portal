@@ -19,11 +19,12 @@ import com.liferay.project.templates.internal.util.FileUtil;
 import java.io.File;
 import java.io.IOException;
 
-import java.util.ArrayList;
+import java.util.AbstractMap;
 import java.util.Collections;
-import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.junit.Assert;
 import org.junit.Rule;
@@ -57,32 +58,29 @@ public class CodeTemplatesTest {
 
 		File projectDir = new File(destinationDir, "foo");
 
-		List<String> completeArgs = new ArrayList<>();
-
-		completeArgs.add("--archetypes-dir");
+		CodeTemplatesArgs codeTemplatesArgs = new CodeTemplatesArgs();
 
 		archetypesDir = FileUtil.getJarFile(CodeTemplatesTest.class);
 
-		completeArgs.add(archetypesDir.getPath());
+		codeTemplatesArgs.setAddtionalParameters(
+			Collections.unmodifiableMap(
+				Stream.of(
+					new AbstractMap.SimpleEntry<>(
+						"portletName", "ActionCommand")
+				).collect(
+					Collectors.toMap(
+						AbstractMap.SimpleEntry::getKey,
+						AbstractMap.SimpleEntry::getValue)
+				)));
+		codeTemplatesArgs.setArchetypesDirs(
+			Collections.singletonList(archetypesDir));
+		codeTemplatesArgs.setAuthor("fred");
+		codeTemplatesArgs.setClassName("Foo");
+		codeTemplatesArgs.setDestinationDir(projectDir);
+		codeTemplatesArgs.setPackageName("com.liferay");
+		codeTemplatesArgs.setTemplate("actioncommand");
 
-		completeArgs.add("--author");
-		completeArgs.add("fred");
-
-		completeArgs.add("--class-name");
-		completeArgs.add("Foo");
-
-		completeArgs.add("--destination");
-		completeArgs.add(projectDir.getPath());
-
-		completeArgs.add("--package-name");
-		completeArgs.add("com.liferay");
-
-		completeArgs.add("--template");
-		completeArgs.add("actioncommand");
-
-		completeArgs.add("-DportletName=ActionCommand");
-
-		CodeTemplates.main(completeArgs.toArray(new String[0]));
+		new CodeTemplates(codeTemplatesArgs);
 
 		File actionCommandFile = new File(
 			projectDir,
@@ -126,32 +124,29 @@ public class CodeTemplatesTest {
 
 		File projectDir = new File(destinationDir, "foo");
 
-		List<String> completeArgs = new ArrayList<>();
-
-		completeArgs.add("--archetypes-dir");
+		CodeTemplatesArgs codeTemplatesArgs = new CodeTemplatesArgs();
 
 		archetypesDir = FileUtil.getJarFile(CodeTemplatesTest.class);
 
-		completeArgs.add(archetypesDir.getPath());
+		codeTemplatesArgs.setAddtionalParameters(
+			Collections.unmodifiableMap(
+				Stream.of(
+					new AbstractMap.SimpleEntry<>(
+						"portletName", "Configurationaction")
+				).collect(
+					Collectors.toMap(
+						AbstractMap.SimpleEntry::getKey,
+						AbstractMap.SimpleEntry::getValue)
+				)));
+		codeTemplatesArgs.setArchetypesDirs(
+			Collections.singletonList(archetypesDir));
+		codeTemplatesArgs.setAuthor("fred");
+		codeTemplatesArgs.setClassName("Foo");
+		codeTemplatesArgs.setDestinationDir(projectDir);
+		codeTemplatesArgs.setPackageName("com.liferay");
+		codeTemplatesArgs.setTemplate("configurationaction");
 
-		completeArgs.add("--author");
-		completeArgs.add("fred");
-
-		completeArgs.add("--class-name");
-		completeArgs.add("Foo");
-
-		completeArgs.add("--destination");
-		completeArgs.add(projectDir.getPath());
-
-		completeArgs.add("--package-name");
-		completeArgs.add("com.liferay");
-
-		completeArgs.add("--template");
-		completeArgs.add("configurationaction");
-		
-		completeArgs.add("-DportletName=Configurationaction");
-
-		CodeTemplates.main(completeArgs.toArray(new String[0]));
+		new CodeTemplates(codeTemplatesArgs);
 
 		File portletKeysFile = new File(
 			projectDir,
@@ -163,7 +158,8 @@ public class CodeTemplatesTest {
 		_testContainsOrNot(
 			projectDir,
 			"src/main/java/com/liferay/configurationaction/FooPortlet.java",
-			false, true, "javax.portlet.display-name=Configurationaction Portlet");
+			false, true,
+			"javax.portlet.display-name=Configurationaction Portlet");
 
 		File restDir = new File(projectDir, "src/main/java/com/liferay/rest");
 
@@ -191,30 +187,20 @@ public class CodeTemplatesTest {
 
 		File projectDir = new File(destinationDir, "foo");
 
-		List<String> completeArgs = new ArrayList<>();
-
-		completeArgs.add("--archetypes-dir");
+		CodeTemplatesArgs codeTemplatesArgs = new CodeTemplatesArgs();
 
 		archetypesDir = FileUtil.getJarFile(CodeTemplatesTest.class);
 
-		completeArgs.add(archetypesDir.getPath());
+		codeTemplatesArgs.setArchetypesDirs(
+			Collections.singletonList(archetypesDir));
 
-		completeArgs.add("--author");
-		completeArgs.add("fred");
+		codeTemplatesArgs.setAuthor("fred");
+		codeTemplatesArgs.setClassName("Foo");
+		codeTemplatesArgs.setDestinationDir(projectDir);
+		codeTemplatesArgs.setPackageName("com.liferay");
+		codeTemplatesArgs.setTemplate("lifecycleaction");
 
-		completeArgs.add("--class-name");
-		completeArgs.add("Foo");
-
-		completeArgs.add("--destination");
-		completeArgs.add(projectDir.getPath());
-
-		completeArgs.add("--package-name");
-		completeArgs.add("com.liferay");
-
-		completeArgs.add("--template");
-		completeArgs.add("lifecycleaction");
-
-		CodeTemplates.main(completeArgs.toArray(new String[0]));
+		new CodeTemplates(codeTemplatesArgs);
 
 		File lifecycelactionFile = new File(
 			projectDir,
@@ -253,33 +239,30 @@ public class CodeTemplatesTest {
 
 		File projectDir = new File(destinationDir, "foo");
 
-		List<String> completeArgs = new ArrayList<>();
-
-		completeArgs.add("--archetypes-dir");
-
 		archetypesDir = FileUtil.getJarFile(CodeTemplatesTest.class);
 
-		completeArgs.add(archetypesDir.getPath());
+		CodeTemplatesArgs codeTemplatesArgs = new CodeTemplatesArgs();
 
-		completeArgs.add("--author");
-		completeArgs.add("fred");
+		codeTemplatesArgs.setAddtionalParameters(
+			Collections.unmodifiableMap(
+				Stream.of(
+					new AbstractMap.SimpleEntry<>(
+						"modelClassPackage", "com.liferay.portal.kernel.model"),
+					new AbstractMap.SimpleEntry<>("modelClassName", "Layout")
+				).collect(
+					Collectors.toMap(
+						AbstractMap.SimpleEntry::getKey,
+						AbstractMap.SimpleEntry::getValue)
+				)));
+		codeTemplatesArgs.setArchetypesDirs(
+			Collections.singletonList(archetypesDir));
+		codeTemplatesArgs.setAuthor("fred");
+		codeTemplatesArgs.setClassName("Foo");
+		codeTemplatesArgs.setDestinationDir(projectDir);
+		codeTemplatesArgs.setPackageName("com.liferay");
+		codeTemplatesArgs.setTemplate("modellistener");
 
-		completeArgs.add("--class-name");
-		completeArgs.add("Foo");
-
-		completeArgs.add("--destination");
-		completeArgs.add(projectDir.getPath());
-
-		completeArgs.add("-DmodelClassPackage=com.liferay.portal.kernel.model");
-		completeArgs.add("-DmodelClassName=Layout");
-
-		completeArgs.add("--package-name");
-		completeArgs.add("com.liferay");
-
-		completeArgs.add("--template");
-		completeArgs.add("modellistener");
-
-		CodeTemplates.main(completeArgs.toArray(new String[0]));
+		new CodeTemplates(codeTemplatesArgs);
 
 		File modellistenerFile = new File(
 			projectDir,
@@ -318,32 +301,28 @@ public class CodeTemplatesTest {
 
 		File projectDir = new File(destinationDir, "foo");
 
-		List<String> completeArgs = new ArrayList<>();
-
-		completeArgs.add("--archetypes-dir");
-
 		archetypesDir = FileUtil.getJarFile(CodeTemplatesTest.class);
 
-		completeArgs.add(archetypesDir.getPath());
+		CodeTemplatesArgs codeTemplatesArgs = new CodeTemplatesArgs();
 
-		completeArgs.add("--author");
-		completeArgs.add("fred");
+		codeTemplatesArgs.setAddtionalParameters(
+			Collections.unmodifiableMap(
+				Stream.of(
+					new AbstractMap.SimpleEntry<>("portletName", "MVC")
+				).collect(
+					Collectors.toMap(
+						AbstractMap.SimpleEntry::getKey,
+						AbstractMap.SimpleEntry::getValue)
+				)));
+		codeTemplatesArgs.setArchetypesDirs(
+			Collections.singletonList(archetypesDir));
+		codeTemplatesArgs.setAuthor("fred");
+		codeTemplatesArgs.setClassName("Foo");
+		codeTemplatesArgs.setDestinationDir(projectDir);
+		codeTemplatesArgs.setPackageName("com.liferay");
+		codeTemplatesArgs.setTemplate("mvcportlet");
 
-		completeArgs.add("--class-name");
-		completeArgs.add("Foo");
-
-		completeArgs.add("--destination");
-		completeArgs.add(projectDir.getPath());
-
-		completeArgs.add("--package-name");
-		completeArgs.add("com.liferay");
-
-		completeArgs.add("--template");
-		completeArgs.add("mvcportlet");
-
-		completeArgs.add("-DportletName=MVC");
-
-		CodeTemplates.main(completeArgs.toArray(new String[0]));
+		new CodeTemplates(codeTemplatesArgs);
 
 		File mvcportletFile = new File(
 			projectDir, "src/main/java/com/liferay/mvcportlet/FooPortlet.java");
@@ -380,32 +359,27 @@ public class CodeTemplatesTest {
 
 		File projectDir = new File(destinationDir, "foo");
 
-		List<String> completeArgs = new ArrayList<>();
+		CodeTemplatesArgs codeTemplatesArgs = new CodeTemplatesArgs();
 
-		completeArgs.add("--archetypes-dir");
+		codeTemplatesArgs.setAddtionalParameters(
+			Collections.unmodifiableMap(
+				Stream.of(
+					new AbstractMap.SimpleEntry<>(
+						"portletName", "RenderCommand")
+				).collect(
+					Collectors.toMap(
+						AbstractMap.SimpleEntry::getKey,
+						AbstractMap.SimpleEntry::getValue)
+				)));
+		codeTemplatesArgs.setArchetypesDirs(
+			Collections.singletonList(archetypesDir));
+		codeTemplatesArgs.setAuthor("fred");
+		codeTemplatesArgs.setClassName("Foo");
+		codeTemplatesArgs.setDestinationDir(projectDir);
+		codeTemplatesArgs.setPackageName("com.liferay");
+		codeTemplatesArgs.setTemplate("rendercommand");
 
-		archetypesDir = FileUtil.getJarFile(CodeTemplatesTest.class);
-
-		completeArgs.add(archetypesDir.getPath());
-
-		completeArgs.add("--author");
-		completeArgs.add("fred");
-
-		completeArgs.add("--class-name");
-		completeArgs.add("Foo");
-
-		completeArgs.add("--destination");
-		completeArgs.add(projectDir.getPath());
-
-		completeArgs.add("--package-name");
-		completeArgs.add("com.liferay");
-
-		completeArgs.add("--template");
-		completeArgs.add("rendercommand");
-		
-		completeArgs.add("-DportletName=RenderCommand");
-
-		CodeTemplates.main(completeArgs.toArray(new String[0]));
+		new CodeTemplates(codeTemplatesArgs);
 
 		File renderCommandFile = new File(
 			projectDir,
@@ -455,32 +429,27 @@ public class CodeTemplatesTest {
 
 		File projectDir = new File(destinationDir, "foo");
 
-		List<String> completeArgs = new ArrayList<>();
+		CodeTemplatesArgs codeTemplatesArgs = new CodeTemplatesArgs();
 
-		completeArgs.add("--archetypes-dir");
+		codeTemplatesArgs.setAddtionalParameters(
+			Collections.unmodifiableMap(
+				Stream.of(
+					new AbstractMap.SimpleEntry<>(
+						"portletName", "ResourceCommand")
+				).collect(
+					Collectors.toMap(
+						AbstractMap.SimpleEntry::getKey,
+						AbstractMap.SimpleEntry::getValue)
+				)));
+		codeTemplatesArgs.setArchetypesDirs(
+			Collections.singletonList(archetypesDir));
+		codeTemplatesArgs.setAuthor("fred");
+		codeTemplatesArgs.setClassName("Foo");
+		codeTemplatesArgs.setDestinationDir(projectDir);
+		codeTemplatesArgs.setPackageName("com.liferay");
+		codeTemplatesArgs.setTemplate("resourcecommand");
 
-		archetypesDir = FileUtil.getJarFile(CodeTemplatesTest.class);
-
-		completeArgs.add(archetypesDir.getPath());
-
-		completeArgs.add("--author");
-		completeArgs.add("fred");
-
-		completeArgs.add("--class-name");
-		completeArgs.add("Foo");
-
-		completeArgs.add("--destination");
-		completeArgs.add(projectDir.getPath());
-
-		completeArgs.add("--package-name");
-		completeArgs.add("com.liferay");
-
-		completeArgs.add("--template");
-		completeArgs.add("resourcecommand");
-		
-		completeArgs.add("-DportletName=ResourceCommand");
-
-		CodeTemplates.main(completeArgs.toArray(new String[0]));
+		new CodeTemplates(codeTemplatesArgs);
 
 		File resourceCommandFile = new File(
 			projectDir,
@@ -531,40 +500,25 @@ public class CodeTemplatesTest {
 
 		File projectDir = new File(destinationDir, "foo");
 
-		List<String> completeArgs = new ArrayList<>();
+		CodeTemplatesArgs codeTemplatesArgs = new CodeTemplatesArgs();
 
-		completeArgs.add("--archetypes-dir");
+		codeTemplatesArgs.setArchetypesDirs(
+			Collections.singletonList(archetypesDir));
+		codeTemplatesArgs.setAuthor("fred");
+		codeTemplatesArgs.setClassName("Foo");
+		codeTemplatesArgs.setDestinationDir(projectDir);
+		codeTemplatesArgs.setPackageName("com.liferay");
+		codeTemplatesArgs.setTemplate("rest");
 
-		archetypesDir = FileUtil.getJarFile(CodeTemplatesTest.class);
-
-		completeArgs.add(archetypesDir.getPath());
-
-		completeArgs.add("--author");
-		completeArgs.add("fred");
-
-		completeArgs.add("--class-name");
-		completeArgs.add("Foo");
-
-		completeArgs.add("--destination");
-		completeArgs.add(projectDir.getPath());
-
-		completeArgs.add("--package-name");
-		completeArgs.add("com.liferay");
-
-		completeArgs.add("--template");
-		completeArgs.add("rest");
-
-		CodeTemplates.main(completeArgs.toArray(new String[0]));
+		new CodeTemplates(codeTemplatesArgs);
 
 		File restFile = new File(
-			projectDir,
-			"src/main/java/com/liferay/rest/FooApplication.java");
+			projectDir, "src/main/java/com/liferay/rest/FooApplication.java");
 
 		Assert.assertTrue(restFile.exists());
 
 		_testContainsOrNot(
-			projectDir,
-			"src/main/java/com/liferay/rest/FooApplication.java",
+			projectDir, "src/main/java/com/liferay/rest/FooApplication.java",
 			false, true, "fred");
 
 		File modellistenerDir = new File(
@@ -596,30 +550,17 @@ public class CodeTemplatesTest {
 
 		File projectDir = new File(destinationDir, "foo");
 
-		List<String> completeArgs = new ArrayList<>();
+		CodeTemplatesArgs codeTemplatesArgs = new CodeTemplatesArgs();
 
-		completeArgs.add("--archetypes-dir");
+		codeTemplatesArgs.setArchetypesDirs(
+			Collections.singletonList(archetypesDir));
+		codeTemplatesArgs.setAuthor("fred");
+		codeTemplatesArgs.setClassName("Foo");
+		codeTemplatesArgs.setDestinationDir(projectDir);
+		codeTemplatesArgs.setPackageName("com.liferay");
+		codeTemplatesArgs.setTemplate("searchkeywordquerycontributor");
 
-		archetypesDir = FileUtil.getJarFile(CodeTemplatesTest.class);
-
-		completeArgs.add(archetypesDir.getPath());
-
-		completeArgs.add("--author");
-		completeArgs.add("fred");
-
-		completeArgs.add("--class-name");
-		completeArgs.add("Foo");
-
-		completeArgs.add("--destination");
-		completeArgs.add(projectDir.getPath());
-
-		completeArgs.add("--package-name");
-		completeArgs.add("com.liferay");
-
-		completeArgs.add("--template");
-		completeArgs.add("searchkeywordquerycontributor");
-
-		CodeTemplates.main(completeArgs.toArray(new String[0]));
+		new CodeTemplates(codeTemplatesArgs);
 
 		File searchKeywordFile = new File(
 			projectDir,
@@ -656,30 +597,17 @@ public class CodeTemplatesTest {
 
 		File projectDir = new File(destinationDir, "foo");
 
-		List<String> completeArgs = new ArrayList<>();
+		CodeTemplatesArgs codeTemplatesArgs = new CodeTemplatesArgs();
 
-		completeArgs.add("--archetypes-dir");
+		codeTemplatesArgs.setArchetypesDirs(
+			Collections.singletonList(archetypesDir));
+		codeTemplatesArgs.setAuthor("fred");
+		codeTemplatesArgs.setClassName("Foo");
+		codeTemplatesArgs.setDestinationDir(projectDir);
+		codeTemplatesArgs.setPackageName("com.liferay");
+		codeTemplatesArgs.setTemplate("searchmodelprefiltercontributor");
 
-		archetypesDir = FileUtil.getJarFile(CodeTemplatesTest.class);
-
-		completeArgs.add(archetypesDir.getPath());
-
-		completeArgs.add("--author");
-		completeArgs.add("fred");
-
-		completeArgs.add("--class-name");
-		completeArgs.add("Foo");
-
-		completeArgs.add("--destination");
-		completeArgs.add(projectDir.getPath());
-
-		completeArgs.add("--package-name");
-		completeArgs.add("com.liferay");
-
-		completeArgs.add("--template");
-		completeArgs.add("searchmodelprefiltercontributor");
-
-		CodeTemplates.main(completeArgs.toArray(new String[0]));
+		new CodeTemplates(codeTemplatesArgs);
 
 		File searchKeywordModelPreFilterContributorFile = new File(
 			projectDir,
@@ -714,34 +642,30 @@ public class CodeTemplatesTest {
 
 		File projectDir = new File(destinationDir, "foo");
 
-		List<String> completeArgs = new ArrayList<>();
+		CodeTemplatesArgs codeTemplatesArgs = new CodeTemplatesArgs();
 
-		completeArgs.add("--archetypes-dir");
+		codeTemplatesArgs.setAddtionalParameters(
+			Collections.unmodifiableMap(
+				Stream.of(
+					new AbstractMap.SimpleEntry<>(
+						"serviceWrapperClassName", "UserLocalServiceWrapper"),
+					new AbstractMap.SimpleEntry<>(
+						"serviceWrapperClassPackage",
+						"com.liferay.portal.kernel.service")
+				).collect(
+					Collectors.toMap(
+						AbstractMap.SimpleEntry::getKey,
+						AbstractMap.SimpleEntry::getValue)
+				)));
+		codeTemplatesArgs.setArchetypesDirs(
+			Collections.singletonList(archetypesDir));
+		codeTemplatesArgs.setAuthor("fred");
+		codeTemplatesArgs.setClassName("Foo");
+		codeTemplatesArgs.setDestinationDir(projectDir);
+		codeTemplatesArgs.setPackageName("com.liferay");
+		codeTemplatesArgs.setTemplate("servicewrapper");
 
-		archetypesDir = FileUtil.getJarFile(CodeTemplatesTest.class);
-
-		completeArgs.add(archetypesDir.getPath());
-
-		completeArgs.add("--author");
-		completeArgs.add("fred");
-
-		completeArgs.add("--class-name");
-		completeArgs.add("Foo");
-
-		completeArgs.add("--destination");
-		completeArgs.add(projectDir.getPath());
-
-		completeArgs.add("-DserviceWrapperClassName=UserLocalServiceWrapper");
-		completeArgs.add(
-			"-DserviceWrapperClassPackage=com.liferay.portal.kernel.service");
-
-		completeArgs.add("--package-name");
-		completeArgs.add("com.liferay");
-
-		completeArgs.add("--template");
-		completeArgs.add("servicewrapper");
-
-		CodeTemplates.main(completeArgs.toArray(new String[0]));
+		new CodeTemplates(codeTemplatesArgs);
 
 		File serviceWrapperFile = new File(
 			projectDir,

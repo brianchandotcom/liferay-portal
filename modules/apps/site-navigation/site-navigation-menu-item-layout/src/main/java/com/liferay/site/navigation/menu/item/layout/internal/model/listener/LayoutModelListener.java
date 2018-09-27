@@ -15,6 +15,7 @@
 package com.liferay.site.navigation.menu.item.layout.internal.model.listener;
 
 import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
+import com.liferay.petra.string.CharPool;
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.BaseModelListener;
@@ -25,6 +26,7 @@ import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.site.navigation.menu.item.layout.constants.SiteNavigationMenuItemTypeConstants;
 import com.liferay.site.navigation.model.SiteNavigationMenu;
@@ -55,22 +57,20 @@ public class LayoutModelListener extends BaseModelListener<Layout> {
 		UnicodeProperties typeSettingsProperties =
 			layout.getTypeSettingsProperties();
 
-		boolean addToAutoMenus = GetterUtil.getBoolean(
-			typeSettingsProperties.getProperty("addToAutoMenus"),
-			ExportImportThreadLocal.isLayoutImportInProcess());
 		boolean visible = GetterUtil.getBoolean(
 			typeSettingsProperties.getProperty("visible"), true);
 
-		if (layout.isHidden() || !addToAutoMenus || !visible) {
+		if (layout.isHidden() || !visible) {
 			return;
 		}
 
-		List<SiteNavigationMenu> siteNavigationMenus =
-			_siteNavigationMenuLocalService.getAutoSiteNavigationMenus(
-				layout.getGroupId());
+		long[] siteNavigationMenuIds = GetterUtil.getLongValues(
+			StringUtil.split(
+				layout.getTypeSettingsProperty("siteNavigationMenuId"),
+				CharPool.COMMA));
 
-		for (SiteNavigationMenu siteNavigationMenu : siteNavigationMenus) {
-			_addSiteNavigationMenuItem(siteNavigationMenu, layout);
+		for (long siteNavigationMenuId : siteNavigationMenuIds) {
+			_addSiteNavigationMenuItem(siteNavigationMenuId, layout);
 		}
 	}
 
@@ -86,11 +86,11 @@ public class LayoutModelListener extends BaseModelListener<Layout> {
 	}
 
 	private void _addSiteNavigationMenuItem(
-		SiteNavigationMenu siteNavigationMenu, Layout layout) {
+		long siteNavigationMenuId, Layout layout) {
 
 		if (ExportImportThreadLocal.isImportInProcess() ||
 			ExportImportThreadLocal.isStagingInProcess() ||
-			_menuItemExists(siteNavigationMenu, layout)) {
+			_menuItemExists(siteNavigationMenuId, layout)) {
 
 			return;
 		}
@@ -105,12 +105,10 @@ public class LayoutModelListener extends BaseModelListener<Layout> {
 		try {
 			long parentSiteNavigationMenuItemId =
 				_getParentSiteNavigationMenuItemId(
-					layout.getParentPlid(),
-					siteNavigationMenu.getSiteNavigationMenuId());
+					layout.getParentPlid(), siteNavigationMenuId);
 
 			_siteNavigationMenuItemLocalService.addSiteNavigationMenuItem(
-				layout.getUserId(), layout.getGroupId(),
-				siteNavigationMenu.getSiteNavigationMenuId(),
+				layout.getUserId(), layout.getGroupId(), siteNavigationMenuId,
 				parentSiteNavigationMenuItemId,
 				SiteNavigationMenuItemTypeConstants.LAYOUT,
 				siteNavigationMenuItemType.getTypeSettingsFromLayout(layout),
@@ -176,12 +174,10 @@ public class LayoutModelListener extends BaseModelListener<Layout> {
 		return 0;
 	}
 
-	private boolean _menuItemExists(
-		SiteNavigationMenu siteNavigationMenu, Layout layout) {
-
+	private boolean _menuItemExists(long siteNavigationMenuId, Layout layout) {
 		List<SiteNavigationMenuItem> siteNavigationMenuItems =
 			_siteNavigationMenuItemLocalService.getSiteNavigationMenuItems(
-				siteNavigationMenu.getSiteNavigationMenuId());
+				siteNavigationMenuId);
 
 		for (SiteNavigationMenuItem siteNavigationMenuItem :
 				siteNavigationMenuItems) {

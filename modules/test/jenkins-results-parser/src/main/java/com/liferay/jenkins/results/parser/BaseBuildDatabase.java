@@ -84,6 +84,23 @@ public abstract class BaseBuildDatabase implements BuildDatabase {
 	}
 
 	@Override
+	public WorkspaceGitRepository getWorkspaceGitRepository(String key) {
+		if (!hasWorkspaceGitRepository(key)) {
+			throw new RuntimeException(
+				"Unable to find workspace repository for " + key);
+		}
+
+		JSONObject workspaceGitRepositoriesJSONObject =
+			_jsonObject.getJSONObject("workspace_git_repositories");
+
+		JSONObject workspaceGitRepositoryJSONObject =
+			workspaceGitRepositoriesJSONObject.getJSONObject(key);
+
+		return GitRepositoryFactory.getWorkspaceGitRepository(
+			workspaceGitRepositoryJSONObject);
+	}
+
+	@Override
 	public boolean hasBuildData(String key) {
 		JSONObject buildsJSONObject = _jsonObject.getJSONObject("builds");
 
@@ -95,6 +112,14 @@ public abstract class BaseBuildDatabase implements BuildDatabase {
 		JSONObject buildsJSONObject = _jsonObject.getJSONObject("properties");
 
 		return buildsJSONObject.has(key);
+	}
+
+	@Override
+	public boolean hasWorkspaceGitRepository(String key) {
+		JSONObject workspaceGitRepositoriesJSONObject =
+			_jsonObject.getJSONObject("workspace_git_repositories");
+
+		return workspaceGitRepositoriesJSONObject.has(key);
 	}
 
 	@Override
@@ -122,6 +147,22 @@ public abstract class BaseBuildDatabase implements BuildDatabase {
 		propertiesJSONObject.put(key, _toJSONArray(properties));
 
 		_jsonObject.put("properties", propertiesJSONObject);
+
+		_writeJSONObjectFile();
+	}
+
+	@Override
+	public void putWorkspaceGitRepository(
+		String key, WorkspaceGitRepository workspaceGitRepository) {
+
+		JSONObject workspaceGitRepositoriesJSONObject =
+			_jsonObject.getJSONObject("workspace_git_repositories");
+
+		workspaceGitRepositoriesJSONObject.put(
+			key, workspaceGitRepository.getJSONObject());
+
+		_jsonObject.put(
+			"workspace_git_repositories", workspaceGitRepositoriesJSONObject);
 
 		_writeJSONObjectFile();
 	}
@@ -166,6 +207,10 @@ public abstract class BaseBuildDatabase implements BuildDatabase {
 
 		if (!_jsonObject.has("properties")) {
 			_jsonObject.put("properties", new JSONObject());
+		}
+
+		if (!_jsonObject.has("workspace_git_repositories")) {
+			_jsonObject.put("workspace_git_repositories", new JSONObject());
 		}
 
 		_writeJSONObjectFile();

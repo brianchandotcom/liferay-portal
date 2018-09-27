@@ -52,11 +52,9 @@ public class EntityField {
 	 * @param  name - the name of the EntityField
 	 * @param  type - the {@link Type}
 	 * @param  sortableFieldNameFunction - the {@link Function} to convert the
-	 *         entity field name to a sortable field name given a
-	 *         locale
+	 *         entity field name to a sortable field name given a locale
 	 * @param  filterableFieldNameFunction - the {@link Function} to convert the
-	 *         entity field name to a filterable field name given a
-	 *         locale
+	 *         entity field name to a filterable field name given a locale
 	 * @review
 	 */
 	public EntityField(

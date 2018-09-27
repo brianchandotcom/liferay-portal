@@ -304,6 +304,8 @@ public class LayoutStagedModelDataHandler
 			exportLayoutIconImage(portletDataContext, layout, layoutElement);
 		}
 
+		exportLayoutPageTemplateStructure(portletDataContext, layout);
+
 		if (Objects.equals(
 				layout.getType(), LayoutConstants.TYPE_LINK_TO_LAYOUT)) {
 
@@ -319,8 +321,6 @@ public class LayoutStagedModelDataHandler
 		}
 
 		fixExportTypeSettings(layout);
-
-		_exportLayoutPageTemplateStructure(portletDataContext, layout);
 
 		exportTheme(portletDataContext, layout);
 
@@ -768,6 +768,35 @@ public class LayoutStagedModelDataHandler
 			}
 
 			layout.setIconImageId(0);
+		}
+	}
+
+	protected void exportLayoutPageTemplateStructure(
+			PortletDataContext portletDataContext, Layout layout)
+		throws PortletDataException {
+
+		List<FragmentEntryLink> fragmentEntryLinks =
+			_fragmentEntryLinkLocalService.getFragmentEntryLinks(
+				layout.getGroupId(), _portal.getClassNameId(Layout.class),
+				layout.getPlid());
+
+		for (FragmentEntryLink fragmentEntryLink : fragmentEntryLinks) {
+			StagedModelDataHandlerUtil.exportReferenceStagedModel(
+				portletDataContext, layout, fragmentEntryLink,
+				PortletDataContext.REFERENCE_TYPE_DEPENDENCY);
+		}
+
+		LayoutPageTemplateStructure layoutPageTemplateStructure =
+			_layoutPageTemplateStructureLocalService.
+				fetchLayoutPageTemplateStructure(
+					layout.getGroupId(),
+					_portal.getClassNameId(Layout.class.getName()),
+					layout.getPlid());
+
+		if (layoutPageTemplateStructure != null) {
+			StagedModelDataHandlerUtil.exportReferenceStagedModel(
+				portletDataContext, layout, layoutPageTemplateStructure,
+				PortletDataContext.REFERENCE_TYPE_DEPENDENCY);
 		}
 	}
 
@@ -1912,35 +1941,6 @@ public class LayoutStagedModelDataHandler
 		}
 		finally {
 			layout.setGroupId(groupId);
-		}
-	}
-
-	private void _exportLayoutPageTemplateStructure(
-			PortletDataContext portletDataContext, Layout layout)
-		throws PortletDataException {
-
-		List<FragmentEntryLink> fragmentEntryLinks =
-			_fragmentEntryLinkLocalService.getFragmentEntryLinks(
-				layout.getGroupId(), _portal.getClassNameId(Layout.class),
-				layout.getPlid());
-
-		for (FragmentEntryLink fragmentEntryLink : fragmentEntryLinks) {
-			StagedModelDataHandlerUtil.exportReferenceStagedModel(
-				portletDataContext, layout, fragmentEntryLink,
-				PortletDataContext.REFERENCE_TYPE_DEPENDENCY);
-		}
-
-		LayoutPageTemplateStructure layoutPageTemplateStructure =
-			_layoutPageTemplateStructureLocalService.
-				fetchLayoutPageTemplateStructure(
-					layout.getGroupId(),
-					_portal.getClassNameId(Layout.class.getName()),
-					layout.getPlid());
-
-		if (layoutPageTemplateStructure != null) {
-			StagedModelDataHandlerUtil.exportReferenceStagedModel(
-				portletDataContext, layout, layoutPageTemplateStructure,
-				PortletDataContext.REFERENCE_TYPE_DEPENDENCY);
 		}
 	}
 

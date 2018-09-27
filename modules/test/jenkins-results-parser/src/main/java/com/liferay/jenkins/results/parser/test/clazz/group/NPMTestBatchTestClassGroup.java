@@ -53,6 +53,10 @@ public class NPMTestBatchTestClassGroup extends BatchTestClassGroup {
 
 	public static class NPMTestBatchTestClass extends BaseTestClass {
 
+		public List<BaseTestMethod> getJSTestMethods() {
+			return _jsTestMethods;
+		}
+
 		protected static NPMTestBatchTestClass getInstance(
 			String batchName, File moduleDir) {
 

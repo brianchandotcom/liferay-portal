@@ -20,9 +20,15 @@ package com.liferay.jenkins.results.parser;
 public class DefaultWorkspaceGitRepository extends BaseWorkspaceGitRepository {
 
 	protected DefaultWorkspaceGitRepository(
-		String gitHubURL, String upstreamBranchName, String branchSHA) {
+		PullRequest pullRequest, String upstreamBranchName) {
 
-		super(gitHubURL, upstreamBranchName, branchSHA);
+		super(pullRequest, upstreamBranchName);
+	}
+
+	protected DefaultWorkspaceGitRepository(
+		RemoteGitRef remoteGitRef, String upstreamBranchName) {
+
+		super(remoteGitRef, upstreamBranchName);
 	}
 
 }

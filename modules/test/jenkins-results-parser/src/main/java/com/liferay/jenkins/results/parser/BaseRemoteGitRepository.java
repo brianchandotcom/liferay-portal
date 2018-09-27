@@ -58,7 +58,7 @@ public abstract class BaseRemoteGitRepository
 		put("hostname", hostname);
 		put("username", username);
 
-		validateJSONObject(_REQUIRED_KEYS);
+		validateKeys(_REQUIRED_KEYS);
 	}
 
 	private static final String[] _REQUIRED_KEYS = {"hostname", "username"};

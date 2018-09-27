@@ -68,23 +68,18 @@ public abstract class BasePortalWorkspaceGitRepository
 	}
 
 	protected BasePortalWorkspaceGitRepository(
-		String gitHubURL, String upstreamBranchName, String branchSHA) {
+		PullRequest pullRequest, String upstreamBranchName) {
 
-		super(gitHubURL, upstreamBranchName, branchSHA);
+		super(pullRequest, upstreamBranchName);
 
-		if (upstreamBranchName.startsWith("ee-") ||
-			upstreamBranchName.endsWith("-private")) {
+		_setBasePortalAppServerProperties();
+		_setBasePortalBuildProperties();
+	}
 
-			String name = getName();
+	protected BasePortalWorkspaceGitRepository(
+		RemoteGitRef remoteGitRef, String upstreamBranchName) {
 
-			if (!name.endsWith("-ee")) {
-				throw new IllegalArgumentException(
-					JenkinsResultsParserUtil.combine(
-						"The local Git repository, ", name,
-						" should not be used with upstream branch ",
-						upstreamBranchName, ". Use ", name, "-ee."));
-			}
-		}
+		super(remoteGitRef, upstreamBranchName);
 
 		_setBasePortalAppServerProperties();
 		_setBasePortalBuildProperties();

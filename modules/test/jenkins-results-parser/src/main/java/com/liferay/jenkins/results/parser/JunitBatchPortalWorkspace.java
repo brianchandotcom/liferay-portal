@@ -30,7 +30,7 @@ public class JunitBatchPortalWorkspace extends BatchPortalWorkspace {
 	}
 
 	private void _setPortalBuildProperties() {
-		OtherPortalWorkspaceGitRepository otherPortalWorkspaceGitRepository =
+		WorkspaceGitRepository otherPortalWorkspaceGitRepository =
 			getOtherPortalWorkspaceGitRepository();
 
 		if (otherPortalWorkspaceGitRepository == null) {

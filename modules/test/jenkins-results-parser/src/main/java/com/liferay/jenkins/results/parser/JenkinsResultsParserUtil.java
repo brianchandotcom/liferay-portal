@@ -1033,11 +1033,41 @@ public class JenkinsResultsParserUtil {
 		String newValue = value;
 
 		while (matcher.find()) {
-			newValue = newValue.replace(
-				matcher.group(0), getProperty(properties, matcher.group(1)));
+			if (properties.containsKey(matcher.group(1))) {
+				newValue = newValue.replace(
+					matcher.group(0),
+					getProperty(properties, matcher.group(1)));
+			}
 		}
 
 		return newValue;
+	}
+
+	public static String getProperty(
+		Properties properties, String name, String... opts) {
+
+		StringBuilder sb = new StringBuilder();
+
+		sb.append(name);
+
+		if (opts != null) {
+			for (String opt : opts) {
+				sb.append("[");
+				sb.append(opt);
+				sb.append("]");
+			}
+		}
+
+		if (properties.containsKey(sb.toString())) {
+			return getProperty(properties, sb.toString());
+		}
+
+		if ((opts != null) && (opts.length > 0)) {
+			return getProperty(
+				properties, name, Arrays.copyOf(opts, opts.length - 1));
+		}
+
+		return null;
 	}
 
 	public static List<String> getRandomList(List<String> list, int size) {
@@ -2021,6 +2051,11 @@ public class JenkinsResultsParserUtil {
 				"Unable to load properties file " +
 					basePropertiesFile.getPath(),
 				ioe);
+		}
+
+		for (String propertyName : properties.stringPropertyNames()) {
+			properties.setProperty(
+				propertyName, getProperty(properties, propertyName));
 		}
 
 		return properties;

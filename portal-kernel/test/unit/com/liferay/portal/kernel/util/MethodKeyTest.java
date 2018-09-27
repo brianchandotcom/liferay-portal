@@ -49,7 +49,7 @@ public class MethodKeyTest {
 		MethodKey methodKey = new MethodKey(
 			TestClass.class, "testMethod", String.class);
 
-		Assert.assertEquals(TestClass.class, methodKey.getDeclaringClass());
+		Assert.assertSame(TestClass.class, methodKey.getDeclaringClass());
 		Assert.assertEquals("testMethod", methodKey.getMethodName());
 		Assert.assertEquals(String.class, methodKey.getParameterTypes()[0]);
 
@@ -63,14 +63,14 @@ public class MethodKeyTest {
 
 		methodKey = new MethodKey(method);
 
-		Assert.assertEquals(TestClass.class, methodKey.getDeclaringClass());
+		Assert.assertSame(TestClass.class, methodKey.getDeclaringClass());
 		Assert.assertEquals("testMethod", methodKey.getMethodName());
 		Assert.assertEquals(String.class, methodKey.getParameterTypes()[0]);
 
 		methodKey = new MethodKey(
 			TestClass.class.getName(), "testMethod", String.class);
 
-		Assert.assertEquals(TestClass.class, methodKey.getDeclaringClass());
+		Assert.assertSame(TestClass.class, methodKey.getDeclaringClass());
 		Assert.assertEquals("testMethod", methodKey.getMethodName());
 		Assert.assertEquals(String.class, methodKey.getParameterTypes()[0]);
 

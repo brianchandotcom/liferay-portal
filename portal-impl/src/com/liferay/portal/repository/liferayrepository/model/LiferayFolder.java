@@ -19,6 +19,10 @@ import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.repository.Repository;
+import com.liferay.portal.kernel.repository.RepositoryProviderUtil;
+import com.liferay.portal.kernel.repository.capabilities.Capability;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.repository.model.RepositoryModelOperation;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
@@ -203,6 +207,15 @@ public class LiferayFolder extends LiferayModel implements Folder {
 	}
 
 	@Override
+	public <T extends Capability> T getRepositoryCapability(
+		Class<T> capabilityClass) {
+
+		Repository repository = _getRepository();
+
+		return repository.getCapability(capabilityClass);
+	}
+
+	@Override
 	public long getRepositoryId() {
 		return _dlFolder.getRepositoryId();
 	}
@@ -269,6 +282,15 @@ public class LiferayFolder extends LiferayModel implements Folder {
 	@Override
 	public boolean isMountPoint() {
 		return _dlFolder.isMountPoint();
+	}
+
+	@Override
+	public <T extends Capability> boolean isRepositoryCapabilityProvided(
+		Class<T> capabilityClass) {
+
+		Repository repository = _getRepository();
+
+		return repository.isCapabilityProvided(capabilityClass);
 	}
 
 	@Override
@@ -405,6 +427,16 @@ public class LiferayFolder extends LiferayModel implements Folder {
 		}
 
 		return this;
+	}
+
+	private Repository _getRepository() {
+		try {
+			return RepositoryProviderUtil.getRepository(getRepositoryId());
+		}
+		catch (PortalException pe) {
+			throw new SystemException(
+				"Unable to get repository for folder " + getFolderId(), pe);
+		}
 	}
 
 	private static volatile ModelResourcePermission<DLFolder>

@@ -856,7 +856,8 @@ public class BeanPortletExtension implements Extension {
 
 			URLGenerationListener urlGenerationListener =
 				new URLGenerationListener(
-					portletListener.ordinal(), portletListenerClass.getName());
+					portletListener.listenerName(), portletListener.ordinal(),
+					portletListenerClass.getName());
 
 			urlGenerationListeners.add(urlGenerationListener);
 		}

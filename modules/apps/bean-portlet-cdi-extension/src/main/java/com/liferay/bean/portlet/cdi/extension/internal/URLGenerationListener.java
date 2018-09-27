@@ -14,29 +14,63 @@
 
 package com.liferay.bean.portlet.cdi.extension.internal;
 
-import com.liferay.petra.string.StringPool;
+import java.util.Objects;
 
 /**
  * @author Neil Griffin
  */
 public class URLGenerationListener {
 
-	public URLGenerationListener(int ordinal, String listenerClassName) {
+	public URLGenerationListener(
+		String listenerName, int ordinal, String listenerClassName) {
+
+		if (listenerName == null) {
+			_listenerName = listenerClassName;
+		}
+		else {
+			_listenerName = listenerName;
+		}
+
 		_ordinal = ordinal;
 		_listenerClassName = listenerClassName;
 	}
 
 	@Override
-	public String toString() {
-		if (_listenerClassName == null) {
-			return null;
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
 		}
 
-		return _listenerClassName.concat(
-			StringPool.SEMICOLON).concat(String.valueOf(_ordinal));
+		if (!(obj instanceof URLGenerationListener)) {
+			return false;
+		}
+
+		URLGenerationListener urlGenerationListener =
+			(URLGenerationListener)obj;
+
+		return Objects.equals(
+			_listenerName, urlGenerationListener.getListenerName());
+	}
+
+	public String getListenerClassName() {
+		return _listenerClassName;
+	}
+
+	public String getListenerName() {
+		return _listenerName;
+	}
+
+	public int getOrdinal() {
+		return _ordinal;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(_listenerName);
 	}
 
 	private final String _listenerClassName;
+	private final String _listenerName;
 	private final int _ordinal;
 
 }

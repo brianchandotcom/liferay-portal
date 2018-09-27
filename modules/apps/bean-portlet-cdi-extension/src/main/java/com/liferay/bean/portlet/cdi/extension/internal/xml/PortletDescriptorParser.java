@@ -203,13 +203,15 @@ public class PortletDescriptorParser {
 		List<URLGenerationListener> urlGenerationListeners = new ArrayList<>();
 
 		for (Element listenerElement : rootElement.elements("listener")) {
+			String listenerName = listenerElement.elementText("listener-name");
 			String listenerClassName = listenerElement.elementText(
 				"listener-class");
 			int ordinal = GetterUtil.getInteger(
 				listenerElement.elementText("ordinal"));
 
 			urlGenerationListeners.add(
-				new URLGenerationListener(ordinal, listenerClassName));
+				new URLGenerationListener(
+					listenerName, ordinal, listenerClassName));
 		}
 
 		return new BeanAppDescriptorImpl(

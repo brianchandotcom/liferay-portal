@@ -529,11 +529,14 @@ public abstract class BaseBeanPortletImpl implements BeanPortlet {
 		for (URLGenerationListener urlGenerationListener :
 				beanApp.getURLGenerationListeners()) {
 
-			String toString = urlGenerationListener.toString();
+			String listenerClassName =
+				urlGenerationListener.getListenerClassName();
 
-			if (toString != null) {
-				urlGenerationListeners.add(toString);
-			}
+			String listener = listenerClassName.concat(
+				StringPool.SEMICOLON).concat(
+					String.valueOf(urlGenerationListener.getOrdinal()));
+
+			urlGenerationListeners.add(listener);
 		}
 
 		if (!urlGenerationListeners.isEmpty()) {

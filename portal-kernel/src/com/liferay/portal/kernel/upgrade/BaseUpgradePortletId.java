@@ -208,6 +208,7 @@ public abstract class BaseUpgradePortletId extends UpgradeProcess {
 
 			while (rs.next()) {
 				long groupId = rs.getLong("groupId");
+
 				String typeSettings = rs.getString("typeSettings");
 
 				String newTypeSettings = getNewTypeSettings(
@@ -331,6 +332,7 @@ public abstract class BaseUpgradePortletId extends UpgradeProcess {
 
 			while (rs.next()) {
 				long layoutRevisionId = rs.getLong("layoutRevisionId");
+
 				String typeSettings = rs.getString("typeSettings");
 
 				String newTypeSettings = getNewTypeSettings(
@@ -366,6 +368,7 @@ public abstract class BaseUpgradePortletId extends UpgradeProcess {
 
 			while (rs.next()) {
 				long plid = rs.getLong("plid");
+
 				String typeSettings = rs.getString("typeSettings");
 
 				String newTypeSettings = getNewTypeSettings(

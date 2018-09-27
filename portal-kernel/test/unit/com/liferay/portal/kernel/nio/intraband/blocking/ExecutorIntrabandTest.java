@@ -465,11 +465,12 @@ public class ExecutorIntrabandTest {
 		// Submitted callback
 
 		Pipe readPipe = Pipe.open();
+
+		ScatteringByteChannel scatteringByteChannel = readPipe.source();
+
 		Pipe writePipe = Pipe.open();
 
 		GatheringByteChannel gatheringByteChannel = writePipe.sink();
-
-		ScatteringByteChannel scatteringByteChannel = readPipe.source();
 
 		FutureRegistrationReference futureRegistrationReference =
 			(FutureRegistrationReference)_executorIntraband.registerChannel(

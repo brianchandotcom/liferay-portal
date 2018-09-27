@@ -110,6 +110,7 @@ public class RenderURLParamsTag extends TagSupport {
 
 				if (ArrayUtil.isNotEmpty(kvp)) {
 					String key = kvp[0];
+
 					String value = StringPool.BLANK;
 
 					if (kvp.length > 1) {

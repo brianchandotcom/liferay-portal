@@ -86,6 +86,7 @@ public class WrapPortletTag
 				WebKeys.THEME_DISPLAY);
 
 			Theme theme = themeDisplay.getTheme();
+
 			PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
 			// Portlet content

@@ -388,7 +388,8 @@ public class UpgradeClient {
 	}
 
 	private boolean _processGogoShellCommand(
-		GogoShellClient gogoShellClient, String command) throws IOException {
+			GogoShellClient gogoShellClient, String command)
+		throws IOException {
 
 		if (command.equals("exit") || command.equals("quit")) {
 			return false;

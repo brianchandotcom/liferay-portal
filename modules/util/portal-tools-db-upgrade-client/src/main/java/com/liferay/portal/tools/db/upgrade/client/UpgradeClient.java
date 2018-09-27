@@ -224,7 +224,9 @@ public class UpgradeClient {
 		}
 
 		try (GogoShellClient gogoShellClient = new GogoShellClient()) {
-			if (_shell || !_isFinished(gogoShellClient)) {
+			boolean finished = _isFinished(gogoShellClient);
+
+			if (!finished || _shell) {
 				System.out.println("Connecting to Gogo shell...");
 
 				_printHelp();

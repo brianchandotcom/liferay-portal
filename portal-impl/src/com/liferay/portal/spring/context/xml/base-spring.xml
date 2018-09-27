@@ -17,7 +17,6 @@
 	<bean class="com.liferay.portal.dao.jdbc.aop.DynamicDataSourceAdviceFactoryUtil" factory-method="createDynamicDataSourceAdvice" id="transactionAdvice">
 		<constructor-arg>
 			<bean class="com.liferay.portal.spring.transaction.TransactionInterceptor">
-				<property name="transactionAttributeSource" ref="transactionAttributeSource" />
 				<property name="transactionExecutor" ref="transactionExecutor" />
 			</bean>
 		</constructor-arg>
@@ -64,7 +63,6 @@
 	<bean class="com.liferay.portal.spring.bean.BeanReferenceAnnotationBeanPostProcessor" />
 	<bean class="com.liferay.portal.spring.context.PortletBeanFactoryCleaner" />
 	<bean class="com.liferay.portal.spring.context.ServiceBeanPublisher" />
-	<bean class="com.liferay.portal.spring.transaction.AnnotationTransactionAttributeSource" id="transactionAttributeSource" />
 	<bean class="com.liferay.portal.spring.transaction.TransactionExecutorFactory" factory-method="createTransactionExecutor" id="transactionExecutor">
 		<constructor-arg ref="liferayTransactionManager" />
 		<constructor-arg value="false" />

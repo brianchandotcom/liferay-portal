@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.dao.jdbc.aop.MasterDataSource;
 import com.liferay.portal.kernel.dao.jdbc.aop.Operation;
 import com.liferay.portal.spring.aop.ChainableMethodAdvice;
 import com.liferay.portal.spring.aop.ServiceBeanAopCacheManager;
+import com.liferay.portal.spring.transaction.TransactionInterceptor;
 
 import java.lang.reflect.Method;
 
@@ -51,8 +52,8 @@ public class DynamicDataSourceAdvice extends ChainableMethodAdvice {
 
 		if (masterDataSource == _nullMasterDataSource) {
 			TransactionAttribute transactionAttribute =
-				_transactionAttributeSource.getTransactionAttribute(
-					targetMethod, targetClass);
+				_transactionInterceptor.getTransactionAttribute(
+					methodInvocation);
 
 			if ((transactionAttribute != null) &&
 				transactionAttribute.isReadOnly()) {
@@ -83,10 +84,20 @@ public class DynamicDataSourceAdvice extends ChainableMethodAdvice {
 		_dynamicDataSourceTargetSource = dynamicDataSourceTargetSource;
 	}
 
+	/**
+	 * @deprecated As of Judson (7.1.x), with no direct replacement
+	 */
+	@Deprecated
 	public void setTransactionAttributeSource(
 		TransactionAttributeSource transactionAttributeSource) {
+	}
 
-		_transactionAttributeSource = transactionAttributeSource;
+	public void setTransactionInterceptor(
+		TransactionInterceptor transactionInterceptor) {
+
+		setNextMethodInterceptor(transactionInterceptor);
+
+		_transactionInterceptor = transactionInterceptor;
 	}
 
 	@Override
@@ -114,6 +125,6 @@ public class DynamicDataSourceAdvice extends ChainableMethodAdvice {
 		};
 
 	private DynamicDataSourceTargetSource _dynamicDataSourceTargetSource;
-	private TransactionAttributeSource _transactionAttributeSource;
+	private TransactionInterceptor _transactionInterceptor;
 
 }

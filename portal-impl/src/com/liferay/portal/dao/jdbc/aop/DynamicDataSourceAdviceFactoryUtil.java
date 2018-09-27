@@ -40,10 +40,8 @@ public class DynamicDataSourceAdviceFactoryUtil {
 
 		dynamicDataSourceAdvice.setDynamicDataSourceTargetSource(
 			dynamicDataSourceTargetSource);
-		dynamicDataSourceAdvice.setNextMethodInterceptor(
+		dynamicDataSourceAdvice.setTransactionInterceptor(
 			transactionInterceptor);
-		dynamicDataSourceAdvice.setTransactionAttributeSource(
-			transactionInterceptor.getTransactionAttributeSource());
 
 		return dynamicDataSourceAdvice;
 	}

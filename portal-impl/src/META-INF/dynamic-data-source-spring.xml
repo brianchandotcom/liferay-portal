@@ -9,7 +9,7 @@
 >
 	<bean class="com.liferay.portal.dao.jdbc.aop.DynamicDataSourceAdvice" id="dynamicDataSourceAdvice">
 		<property name="dynamicDataSourceTargetSource" ref="dynamicDataSourceTargetSource" />
-		<property name="transactionAttributeSource" ref="transactionAttributeSource" />
+		<property name="nextMethodInterceptor" ref="transactionAdvice" />
 	</bean>
 	<bean class="com.liferay.portal.spring.aop.ChainableMethodAdviceInjector" id="chainableMethodAdviceInjector.dynamicDataSourceAdvice">
 		<property name="childMethodInterceptor" ref="transactionAdvice" />

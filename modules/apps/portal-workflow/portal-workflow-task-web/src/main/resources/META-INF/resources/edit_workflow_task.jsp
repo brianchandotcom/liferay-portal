@@ -41,7 +41,7 @@ AssetRendererFactory<?> assetRendererFactory = assetRenderer.getAssetRendererFac
 
 AssetEntry assetEntry = assetRendererFactory.getAssetEntry(workflowHandler.getClassName(), assetRenderer.getClassPK());
 
-String languageId = LanguageUtil.getLanguageId(request);
+String languageId = ParamUtil.getString(request, "languageId", assetRenderer.getDefaultLanguageId());
 
 String[] availableLanguageIds = assetRenderer.getAvailableLanguageIds();
 

@@ -47,25 +47,25 @@ public class MethodKeyTest {
 	@Test
 	public void testConstructors() throws NoSuchMethodException {
 		_assertMethodKey(
-			TestClass.class, "testMethod", new Class<?>[0],
-			new MethodKey(TestClass.class, "testMethod"));
+			_TEST_CLASS, _TEST_METHOD_NAME, new Class<?>[0],
+			new MethodKey(_TEST_CLASS, _TEST_METHOD_NAME));
 		_assertMethodKey(
-			TestClass.class, "testMethod", new Class<?>[] {String.class},
-			new MethodKey(TestClass.class, "testMethod", String.class));
+			_TEST_CLASS, _TEST_METHOD_NAME, new Class<?>[] {String.class},
+			new MethodKey(_TEST_CLASS, _TEST_METHOD_NAME, String.class));
 		_assertMethodKey(
-			TestClass.class, "testMethod",
+			_TEST_CLASS, _TEST_METHOD_NAME,
 			new Class<?>[] {String.class, String.class},
 			new MethodKey(
-				TestClass.class, "testMethod", String.class, String.class));
+				_TEST_CLASS, _TEST_METHOD_NAME, String.class, String.class));
 		_assertMethodKey(
-			TestClass.class, "testMethod", new Class<?>[0],
-			new MethodKey(TestClass.class.getMethod("testMethod")));
+			_TEST_CLASS, _TEST_METHOD_NAME, new Class<?>[0],
+			new MethodKey(_TEST_CLASS.getMethod(_TEST_METHOD_NAME)));
 		_assertMethodKey(
-			TestClass.class, "testMethod", new Class<?>[0],
-			new MethodKey(TestClass.class.getName(), "testMethod"));
+			_TEST_CLASS, _TEST_METHOD_NAME, new Class<?>[0],
+			new MethodKey(_TEST_CLASS_NAME, _TEST_METHOD_NAME));
 
 		try {
-			new MethodKey("ClassNotFound", "testMethod");
+			new MethodKey("ClassNotFound", _TEST_METHOD_NAME);
 
 			Assert.fail("No RuntimeException thrown!");
 		}
@@ -80,24 +80,26 @@ public class MethodKeyTest {
 	@Test
 	public void testEquals() {
 		MethodKey methodKey = new MethodKey(
-			TestClass.class, "testMethod", String.class);
+			_TEST_CLASS, _TEST_METHOD_NAME, String.class);
 
 		Assert.assertEquals(methodKey, methodKey);
 		Assert.assertNotEquals(methodKey, new Object());
 		Assert.assertEquals(
 			methodKey,
-			new MethodKey(TestClass.class, "testMethod", String.class));
+			new MethodKey(_TEST_CLASS, _TEST_METHOD_NAME, String.class));
 		Assert.assertNotEquals(
 			methodKey,
 			new MethodKey(
-				TestClass.class, "testMethod", String.class, String.class));
-		Assert.assertNotEquals(
-			methodKey, new MethodKey(TestClass.class, "testMethod", int.class));
+				_TEST_CLASS, _TEST_METHOD_NAME, String.class, String.class));
 		Assert.assertNotEquals(
 			methodKey,
-			new MethodKey(TestClass.class, "testMethodAnother", String.class));
+			new MethodKey(_TEST_CLASS, _TEST_METHOD_NAME, int.class));
 		Assert.assertNotEquals(
-			methodKey, new MethodKey(Object.class, "testMethod", String.class));
+			methodKey,
+			new MethodKey(_TEST_CLASS, "testMethodAnother", String.class));
+		Assert.assertNotEquals(
+			methodKey,
+			new MethodKey(Object.class, _TEST_METHOD_NAME, String.class));
 	}
 
 	@Test
@@ -106,14 +108,14 @@ public class MethodKeyTest {
 			MethodKey.class, "_methods");
 
 		MethodKey methodKey = new MethodKey(
-			TestClass.class, "testMethod", String.class);
+			_TEST_CLASS, _TEST_METHOD_NAME, String.class);
 
 		// Test 1, MethodKey.getMethod returns and caches the method
 
 		Method actualMethod1 = methodKey.getMethod();
 
 		Assert.assertEquals(
-			TestClass.class.getMethod("testMethod", String.class),
+			_TEST_CLASS.getMethod(_TEST_METHOD_NAME, String.class),
 			actualMethod1);
 		Assert.assertTrue(
 			"The method obtained from MethodKey should be accessible",
@@ -143,37 +145,35 @@ public class MethodKeyTest {
 
 	@Test
 	public void testHashCode() throws NoSuchMethodException {
-		Method method = TestClass.class.getMethod("testMethod", String.class);
+		Method method = _TEST_CLASS.getMethod(_TEST_METHOD_NAME, String.class);
 
 		MethodKey methodKey = new MethodKey(
-			TestClass.class, "testMethod", String.class);
+			_TEST_CLASS, _TEST_METHOD_NAME, String.class);
 
 		Assert.assertEquals(method.hashCode(), methodKey.hashCode());
 	}
 
 	@Test
 	public void testToString() {
-		MethodKey methodKey = new MethodKey(TestClass.class, "testMethod");
+		MethodKey methodKey = new MethodKey(_TEST_CLASS, _TEST_METHOD_NAME);
 
 		Assert.assertEquals(
-			TestClass.class.getName() + ".testMethod()", methodKey.toString());
+			_TEST_CLASS_NAME + ".testMethod()", methodKey.toString());
 
-		methodKey = new MethodKey(TestClass.class, "testMethod", String.class);
+		methodKey = new MethodKey(_TEST_CLASS, _TEST_METHOD_NAME, String.class);
 
 		Assert.assertEquals(
-			TestClass.class.getName() + ".testMethod(java.lang.String)",
+			_TEST_CLASS_NAME + ".testMethod(java.lang.String)",
 			methodKey.toString());
 
 		methodKey = new MethodKey(
-			TestClass.class, "testMethod", String.class, String.class);
+			_TEST_CLASS, _TEST_METHOD_NAME, String.class, String.class);
 
 		Assert.assertEquals(
-			TestClass.class.getName() +
-				".testMethod(java.lang.String,java.lang.String)",
+			_TEST_CLASS_NAME + ".testMethod(java.lang.String,java.lang.String)",
 			methodKey.toString());
 		Assert.assertEquals(
-			TestClass.class.getName() +
-				".testMethod(java.lang.String,java.lang.String)",
+			_TEST_CLASS_NAME + ".testMethod(java.lang.String,java.lang.String)",
 			ReflectionTestUtil.getFieldValue(methodKey, "_toString"));
 
 		ReflectionTestUtil.setFieldValue(methodKey, "_toString", "testString");
@@ -184,7 +184,7 @@ public class MethodKeyTest {
 	@Test
 	public void testTransform() throws Exception {
 		MethodKey methodKey = new MethodKey(
-			TestClass.class, "testMethod", String.class);
+			_TEST_CLASS, _TEST_METHOD_NAME, String.class);
 
 		MethodKey transformedMethodKey = methodKey.transform(
 			new URLClassLoader(
@@ -228,7 +228,7 @@ public class MethodKeyTest {
 		throws ClassNotFoundException, IOException {
 
 		MethodKey originalMethodKey = new MethodKey(
-			TestClass.class, "testMethod", String.class);
+			_TEST_CLASS, _TEST_METHOD_NAME, String.class);
 
 		MethodKey deserializedMethodKey = new MethodKey();
 
@@ -264,6 +264,12 @@ public class MethodKeyTest {
 		Assert.assertArrayEquals(
 			expectedParameters, methodKey.getParameterTypes());
 	}
+
+	private static final Class<?> _TEST_CLASS = TestClass.class;
+
+	private static final String _TEST_CLASS_NAME = _TEST_CLASS.getName();
+
+	private static final String _TEST_METHOD_NAME = "testMethod";
 
 	private static class TestClass {
 

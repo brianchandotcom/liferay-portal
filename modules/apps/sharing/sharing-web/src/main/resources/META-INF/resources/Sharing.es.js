@@ -51,8 +51,9 @@ class Sharing extends PortletBase {
 	 */
 	_handleInputChange(event) {
 		const target = event.target;
-		const value = target.type === 'checkbox' ? target.checked : target.value;
+
 		const name = target.name;
+		const value = target.type === 'checkbox' ? target.checked : target.value;
 
 		this[name] = value;
 	}
@@ -66,7 +67,9 @@ class Sharing extends PortletBase {
 	_handleSubmit(event) {
 		event.preventDefault();
 
-		if (this.submitting || !this._validateEmail(this.userEmailAddress)) return;
+		if (this.submitting || !this._validateEmail(this.userEmailAddress)) {
+			return;
+		}
 
 		this.submitting = true;
 
@@ -80,28 +83,37 @@ class Sharing extends PortletBase {
 				userEmailAddress: this._getEmailAdress(this.userEmailAddress)
 			}
 		)
-			.then(response => {
-				this.submitting = false;
+			.then(
+				response => {
+					this.submitting = false;
 
-				if (response.ok) {
-					return response.json();
+					const jsonResponse = response.json();
+
+					return response.ok ?
+						jsonResponse :
+						jsonResponse.then(
+							json => {
+								const error = new Error(json.errorMessage || response.statusText);
+								throw Object.assign(error, {response});
+							}
+						)
+					;
 				}
+			)
+			.then(
+				json => {
+					parent.Liferay.Portlet.refresh(`#p_p_id${this._refererPortletNamespace}`);
 
-				return response.json().then(json => {
-					const error = new Error(json.errorMessage || response.statusText);
-					throw Object.assign(error, { response });
-				});
-			})
-			.then(json => {
-				parent.Liferay.Portlet.refresh(`#p_p_id${this._refererPortletNamespace}`);
+					this._showNotification(json.successMessage);
+				}
+			)
+			.catch(
+				error => {
+					this.submitting = false;
 
-				this._showNotification(json.successMessage);
-			})
-			.catch(error => {
-				this.submitting = false;
-
-				this._showNotification(error.message, true);
-			});
+					this._showNotification(error.message, true);
+				}
+			);
 	}
 
 	/**
@@ -149,27 +161,30 @@ class Sharing extends PortletBase {
 	 * @review
 	 */
 	_validateEmail(value) {
-		const empty = value && value.trim
-			? !value.trim()
-			: !value
+		const empty = value && value.trim ?
+			!value.trim() :
+			!value
 		;
 
-		this.emailErrorMessage = empty
-			? Liferay.Language.get('this-field-is-required')
-			: ''
+		this.emailErrorMessage = empty ?
+			Liferay.Language.get('this-field-is-required') :
+			''
 		;
 
-		if (empty) return false;
+		let valid = false;
 
-		const emailRegex = /.+@.+\..+/i;
-		const valid = this._getEmailAdress(value).every(
-			email => emailRegex.test(email)
-		);
+		if (!empty) {
+			const emailRegex = /.+@.+\..+/i;
 
-		this.emailErrorMessage = valid
-			? ''
-			: Liferay.Language.get('please-enter-a-valid-email-address')
-		;
+			valid = this._getEmailAdress(value).every(
+				email => emailRegex.test(email)
+			);
+
+			this.emailErrorMessage = valid ?
+				'' :
+				Liferay.Language.get('please-enter-a-valid-email-address')
+			;
+		}
 
 		return valid;
 	}
@@ -186,7 +201,7 @@ Sharing.STATE = {
 	shareable: Config.bool().value(true),
 	shareActionURL: Config.string().required(),
 	sharingEntryPermissionDisplayActionId: Config.string().required(),
-	submitting: Config.bool().value(false),
+	submitting: Config.bool().value(false)
 };
 
 Soy.register(Sharing, templates);

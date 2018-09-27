@@ -1848,7 +1848,7 @@
 				var redirect = event.redirect;
 
 				if (redirect) {
-					openingWindow.location = redirect;
+					openingWindow.Liferay.Util.navigate(redirect);
 				}
 				else {
 					var refresh = event.refresh;

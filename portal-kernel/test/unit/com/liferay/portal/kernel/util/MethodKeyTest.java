@@ -181,30 +181,31 @@ public class MethodKeyTest {
 
 	@Test
 	public void testTransform() throws Exception {
-		ClassLoader newClassLoader = new URLClassLoader(
-			ClassPathUtil.getClassPathURLs(ClassPathUtil.getJVMClassPath(true)),
-			null);
-
-		Class<?> methodKeyTestClazz = newClassLoader.loadClass(
-			"com.liferay.portal.kernel.util.MethodKeyTest");
-		Class<?> testClassClazz = newClassLoader.loadClass(
-			"com.liferay.portal.kernel.util.MethodKeyTest$TestClass");
-
-		Constructor constructor = testClassClazz.getDeclaredConstructor(
-			methodKeyTestClazz);
-
-		constructor.setAccessible(true);
-
-		Object testClassInstance = constructor.newInstance(
-			methodKeyTestClazz.newInstance());
-
-		MethodKey originalMethodKey = new MethodKey(
+		MethodKey methodKey = new MethodKey(
 			TestClass.class, "testMethod", String.class);
 
-		Method method = originalMethodKey.getMethod();
+		MethodKey transformedMethodKey = methodKey.transform(
+			new URLClassLoader(
+				ClassPathUtil.getClassPathURLs(
+					ClassPathUtil.getJVMClassPath(true)),
+				null));
+
+		Assert.assertNotEquals(methodKey, transformedMethodKey);
+
+		Class<?> transformedClass = transformedMethodKey.getDeclaringClass();
+
+		Constructor<?> transformedClassConstructor =
+			transformedClass.getDeclaredConstructor();
+
+		transformedClassConstructor.setAccessible(true);
+
+		Object transformedClassInstance =
+			transformedClassConstructor.newInstance();
+
+		Method method = methodKey.getMethod();
 
 		try {
-			method.invoke(testClassInstance, "test");
+			method.invoke(transformedClassInstance, "test");
 
 			Assert.fail("No IllegalArgumentException thrown!");
 		}
@@ -214,12 +215,10 @@ public class MethodKeyTest {
 				iae.getMessage());
 		}
 
-		MethodKey transformedMethodKey = originalMethodKey.transform(
-			newClassLoader);
+		Method transformedMethod = transformedMethodKey.getMethod();
 
-		method = transformedMethodKey.getMethod();
-
-		Assert.assertEquals("test", method.invoke(testClassInstance, "test"));
+		Assert.assertEquals(
+			"test", transformedMethod.invoke(transformedClassInstance, "test"));
 	}
 
 	@Test
@@ -254,7 +253,7 @@ public class MethodKeyTest {
 		Assert.assertEquals(originalMethodKey, deserializedMethodKey);
 	}
 
-	private class TestClass {
+	private static class TestClass {
 
 		public void anotherTestMethod(String parameter) {
 		}

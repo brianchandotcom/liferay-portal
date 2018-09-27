@@ -20,14 +20,13 @@ DB_UPGRADE_PID=db_upgrade.pid
 
 if [ -f "$DB_UPGRADE_PID" ]; then
 	if [ -s "$DB_UPGRADE_PID" ]; then
-		echo "Existing PID file found during start."
 		if [ -r "$DB_UPGRADE_PID" ]; then
 			PID=`cat "$DB_UPGRADE_PID"`
 			ps -p $PID >/dev/null 2>&1
 			if [ $? -eq 0 ] ; then
-				echo "Upgrade client appears to still be running with PID $PID. Start aborted."
+				echo "Database upgrade client appears to still be running with PID $PID. Start aborted."
 				echo ""
-				echo "If the following process is not the upgrade client process, remove the PID file and try again:"
+				echo "If the following process is not the database upgrade client process, remove the $DB_UPGRADE_PID file and try again:"
 				ps -f -p $PID
 				exit 1
 			else

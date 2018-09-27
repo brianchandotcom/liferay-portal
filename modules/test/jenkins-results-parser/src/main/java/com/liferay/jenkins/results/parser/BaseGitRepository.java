@@ -25,16 +25,26 @@ import org.json.JSONObject;
 /**
  * @author Peter Yoo
  */
-public abstract class BaseGitRepository
-	extends JSONObject implements GitRepository {
+public abstract class BaseGitRepository implements GitRepository {
+
+	@Override
+	public JSONObject getJSONObject() {
+		return _jsonObject;
+	}
 
 	@Override
 	public String getName() {
 		return getString("name");
 	}
 
+	protected BaseGitRepository(JSONObject jsonObject) {
+		_jsonObject = jsonObject;
+
+		validateKeys(_REQUIRED_KEYS);
+	}
+
 	protected BaseGitRepository(String name) {
-		super("{}");
+		_jsonObject = new JSONObject();
 
 		_setName(name);
 
@@ -70,6 +80,22 @@ public abstract class BaseGitRepository
 		return _repositoryProperties;
 	}
 
+	protected String getString(String key) {
+		return _jsonObject.getString(key);
+	}
+
+	protected boolean has(String key) {
+		return _jsonObject.has(key);
+	}
+
+	protected String optString(String key) {
+		return _jsonObject.optString(key);
+	}
+
+	protected void put(String key, Object value) {
+		_jsonObject.put(key, value);
+	}
+
 	protected void validateKeys(String[] requiredKeys) {
 		for (String requiredKey : requiredKeys) {
 			if (!has(requiredKey)) {
@@ -93,5 +119,7 @@ public abstract class BaseGitRepository
 	private static final String[] _REQUIRED_KEYS = {"name"};
 
 	private static Properties _repositoryProperties;
+
+	private final JSONObject _jsonObject;
 
 }

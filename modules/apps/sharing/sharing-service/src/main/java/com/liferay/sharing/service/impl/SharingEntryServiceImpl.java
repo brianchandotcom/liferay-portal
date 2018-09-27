@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceMode;
 import com.liferay.portal.kernel.model.ClassName;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -145,6 +146,23 @@ public class SharingEntryServiceImpl extends SharingEntryServiceBaseImpl {
 						(String)serviceReference.getProperty(
 							"model.class.name")));
 			});
+	}
+
+	@Override
+	public SharingEntry deleteSharingEntry(
+			long sharingEntryId, ServiceContext serviceContext)
+		throws PortalException {
+
+		SharingEntry sharingEntry = sharingEntryLocalService.getSharingEntry(
+			sharingEntryId);
+
+		if (getUserId() != sharingEntry.getFromUserId()) {
+			throw new PrincipalException.MustHavePermission(
+				getUserId(), sharingEntry.getModelClassName(), sharingEntryId,
+				ActionKeys.DELETE);
+		}
+
+		return sharingEntryLocalService.deleteSharingEntry(sharingEntry);
 	}
 
 	@JSONWebService(mode = JSONWebServiceMode.IGNORE)

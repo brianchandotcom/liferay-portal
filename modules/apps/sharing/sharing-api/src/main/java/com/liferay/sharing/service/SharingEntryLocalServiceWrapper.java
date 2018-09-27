@@ -215,13 +215,6 @@ public class SharingEntryLocalServiceWrapper implements SharingEntryLocalService
 		return _sharingEntryLocalService.deleteSharingEntry(sharingEntryId);
 	}
 
-	/**
-	* Deletes the sharing entry of a user to another user for a resource.
-	*
-	* @param classNameId the class name ID of the resource
-	* @param classPK the primary key of the resource
-	* @return the deleted sharing entry
-	*/
 	@Override
 	public com.liferay.sharing.model.SharingEntry deleteSharingEntry(
 		long fromUserId, long toUserId, long classNameId, long classPK)

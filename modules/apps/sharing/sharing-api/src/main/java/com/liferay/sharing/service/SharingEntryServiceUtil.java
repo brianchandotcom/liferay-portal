@@ -109,6 +109,13 @@ public class SharingEntryServiceUtil {
 			shareable, sharingEntryActions, expirationDate, serviceContext);
 	}
 
+	public static com.liferay.sharing.model.SharingEntry deleteSharingEntry(
+		long sharingEntryId,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().deleteSharingEntry(sharingEntryId, serviceContext);
+	}
+
 	/**
 	* Returns the OSGi service identifier.
 	*

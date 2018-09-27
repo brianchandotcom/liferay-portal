@@ -79,26 +79,24 @@ public abstract class BaseCategoryNestedCollectionRouter
 			nestedCategoryForm.getDescriptions(locale),
 			assetVocabulary.getVocabularyId(), null, new ServiceContext());
 
-		long resourcePrimKey = getResourcePrimKey(classPK);
-
 		AssetEntry assetEntry = assetEntryLocalService.getEntry(
-			getClassName(), resourcePrimKey);
+			getClassName(), classPK);
 
 		long[] categoryIds = ArrayUtil.append(
 			assetEntry.getCategoryIds(), assetCategory.getCategoryId());
 
 		assetEntryService.updateEntry(
 			assetEntry.getGroupId(), assetEntry.getCreateDate(), null,
-			assetEntry.getClassName(), resourcePrimKey,
-			assetEntry.getClassUuid(), assetEntry.getClassTypeId(), categoryIds,
-			assetEntry.getTagNames(), assetEntry.isListable(),
-			assetEntry.isVisible(), assetEntry.getStartDate(),
-			assetEntry.getEndDate(), assetEntry.getPublishDate(),
-			assetEntry.getExpirationDate(), assetEntry.getMimeType(),
-			assetEntry.getTitle(), assetEntry.getDescription(),
-			assetEntry.getSummary(), assetEntry.getUrl(),
-			assetEntry.getLayoutUuid(), assetEntry.getHeight(),
-			assetEntry.getWidth(), assetEntry.getPriority());
+			assetEntry.getClassName(), classPK, assetEntry.getClassUuid(),
+			assetEntry.getClassTypeId(), categoryIds, assetEntry.getTagNames(),
+			assetEntry.isListable(), assetEntry.isVisible(),
+			assetEntry.getStartDate(), assetEntry.getEndDate(),
+			assetEntry.getPublishDate(), assetEntry.getExpirationDate(),
+			assetEntry.getMimeType(), assetEntry.getTitle(),
+			assetEntry.getDescription(), assetEntry.getSummary(),
+			assetEntry.getUrl(), assetEntry.getLayoutUuid(),
+			assetEntry.getHeight(), assetEntry.getWidth(),
+			assetEntry.getPriority());
 
 		return assetCategory;
 	}
@@ -106,25 +104,18 @@ public abstract class BaseCategoryNestedCollectionRouter
 	protected abstract String getClassName();
 
 	protected PageItems<AssetCategory> getPageItems(
-			Pagination pagination, long classPK)
-		throws PortalException {
-
-		long resourcePrimKey = getResourcePrimKey(classPK);
+		Pagination pagination, long classPK) {
 
 		long classNameId = classNameLocalService.getClassNameId(getClassName());
 
 		List<AssetCategory> assetCategories =
 			assetCategoryService.getCategories(
-				classNameId, resourcePrimKey, pagination.getStartPosition(),
+				classNameId, classPK, pagination.getStartPosition(),
 				pagination.getEndPosition());
 		int count = assetCategoryService.getCategoriesCount(
-			classNameId, resourcePrimKey);
+			classNameId, classPK);
 
 		return new PageItems<>(assetCategories, count);
-	}
-
-	protected long getResourcePrimKey(long classPK) throws PortalException {
-		return classPK;
 	}
 
 	/**
@@ -139,10 +130,8 @@ public abstract class BaseCategoryNestedCollectionRouter
 			long classPK, LinkedCategoryForm linkedCategoryForm)
 		throws PortalException {
 
-		long resourcePrimKey = getResourcePrimKey(classPK);
-
 		AssetEntry assetEntry = assetEntryLocalService.getEntry(
-			getClassName(), resourcePrimKey);
+			getClassName(), classPK);
 
 		long categoryId = linkedCategoryForm.getCategoryId();
 
@@ -154,16 +143,16 @@ public abstract class BaseCategoryNestedCollectionRouter
 
 		assetEntryService.updateEntry(
 			assetEntry.getGroupId(), assetEntry.getCreateDate(), null,
-			assetEntry.getClassName(), resourcePrimKey,
-			assetEntry.getClassUuid(), assetEntry.getClassTypeId(), categoryIds,
-			assetEntry.getTagNames(), assetEntry.isListable(),
-			assetEntry.isVisible(), assetEntry.getStartDate(),
-			assetEntry.getEndDate(), assetEntry.getPublishDate(),
-			assetEntry.getExpirationDate(), assetEntry.getMimeType(),
-			assetEntry.getTitle(), assetEntry.getDescription(),
-			assetEntry.getSummary(), assetEntry.getUrl(),
-			assetEntry.getLayoutUuid(), assetEntry.getHeight(),
-			assetEntry.getWidth(), assetEntry.getPriority());
+			assetEntry.getClassName(), classPK, assetEntry.getClassUuid(),
+			assetEntry.getClassTypeId(), categoryIds, assetEntry.getTagNames(),
+			assetEntry.isListable(), assetEntry.isVisible(),
+			assetEntry.getStartDate(), assetEntry.getEndDate(),
+			assetEntry.getPublishDate(), assetEntry.getExpirationDate(),
+			assetEntry.getMimeType(), assetEntry.getTitle(),
+			assetEntry.getDescription(), assetEntry.getSummary(),
+			assetEntry.getUrl(), assetEntry.getLayoutUuid(),
+			assetEntry.getHeight(), assetEntry.getWidth(),
+			assetEntry.getPriority());
 
 		return assetCategory;
 	}

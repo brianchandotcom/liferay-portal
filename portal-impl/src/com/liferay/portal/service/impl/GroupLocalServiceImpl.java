@@ -1720,6 +1720,10 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 		long companyId, long parentGroupId, String name, boolean site,
 		int start, int end) {
 
+		if (Validator.isNull(name)) {
+			name = "%";
+		}
+
 		return groupPersistence.findByC_P_LikeN_S(
 			companyId, parentGroupId, name, site, start, end);
 	}
@@ -1816,6 +1820,10 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	@Override
 	public int getGroupsCount(
 		long companyId, long parentGroupId, String name, boolean site) {
+
+		if (Validator.isNull(name)) {
+			name = "%";
+		}
 
 		return groupPersistence.countByC_P_LikeN_S(
 			companyId, parentGroupId, name, site);

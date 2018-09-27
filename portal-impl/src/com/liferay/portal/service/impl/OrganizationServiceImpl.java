@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.service.permission.OrganizationPermissionUtil;
 import com.liferay.portal.kernel.service.permission.PasswordPolicyPermissionUtil;
 import com.liferay.portal.kernel.service.permission.PortalPermissionUtil;
 import com.liferay.portal.kernel.service.permission.UserPermissionUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.comparator.OrganizationIdComparator;
 import com.liferay.portal.service.base.OrganizationServiceBaseImpl;
 import com.liferay.users.admin.kernel.util.UsersAdminUtil;
@@ -391,6 +392,10 @@ public class OrganizationServiceImpl extends OrganizationServiceBaseImpl {
 		long companyId, long parentOrganizationId, String name, int start,
 		int end) {
 
+		if (Validator.isNull(name)) {
+			name = "%";
+		}
+
 		return organizationPersistence.filterFindByC_P_LikeN(
 			companyId, parentOrganizationId, name, start, end);
 	}
@@ -421,6 +426,10 @@ public class OrganizationServiceImpl extends OrganizationServiceBaseImpl {
 	public int getOrganizationsCount(
 			long companyId, long parentOrganizationId, String name)
 		throws PortalException {
+
+		if (Validator.isNull(name)) {
+			name = "%";
+		}
 
 		return organizationPersistence.filterCountByC_P_LikeN(
 			companyId, parentOrganizationId, name);

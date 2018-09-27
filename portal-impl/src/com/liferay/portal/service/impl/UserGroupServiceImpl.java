@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.service.permission.PortalPermissionUtil;
 import com.liferay.portal.kernel.service.permission.TeamPermissionUtil;
 import com.liferay.portal.kernel.service.permission.UserGroupPermissionUtil;
 import com.liferay.portal.kernel.service.permission.UserPermissionUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.comparator.UserGroupIdComparator;
 import com.liferay.portal.service.base.UserGroupServiceBaseImpl;
 
@@ -217,12 +218,20 @@ public class UserGroupServiceImpl extends UserGroupServiceBaseImpl {
 	public List<UserGroup> getUserGroups(
 		long companyId, String name, int start, int end) {
 
+		if (Validator.isNull(name)) {
+			name = "%";
+		}
+
 		return userGroupPersistence.filterFindByC_LikeN(
 			companyId, name, start, end);
 	}
 
 	@Override
 	public int getUserGroupsCount(long companyId, String name) {
+		if (Validator.isNull(name)) {
+			name = "%";
+		}
+
 		return userGroupPersistence.filterCountByC_LikeN(companyId, name);
 	}
 

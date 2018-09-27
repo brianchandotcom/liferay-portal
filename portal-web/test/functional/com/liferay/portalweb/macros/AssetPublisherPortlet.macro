@@ -1089,7 +1089,7 @@
 		<execute function="AssertElementPresent" locator1="Icon#FLAG" />
 		<execute function="AssertElementPresent" locator1="Ratings#YOUR_RATING_LABEL" />
 		<execute function="AssertElementPresent" locator1="Ratings#AVERAGE_LABEL" />
-		<execute function="AssertElementPresent" locator1="Comments#SUBSCRIBE_TO_COMMENTS_LINK" />
+		<execute function="AssertElementPresent" locator1="Button#SUBSCRIBE" />
 		<execute function="AssertElementPresent" locator1="Icon#CUSTOM_EDIT" />
 
 		<execute function="Click" locator1="AP#ASSET_RICH_SUMMARY_TITLE" value1="${assetTitle}" />

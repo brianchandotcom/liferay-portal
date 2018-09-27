@@ -84,16 +84,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>SUBSCRIBE_TO_COMMENTS_LINK</td>
-	<td>link=Subscribe to Comments</td>
-	<td></td>
-</tr>
-<tr>
-	<td>UNSUBSCRIBE_FROM_COMMENTS_LINK</td>
-	<td>link=Unsubscribe from Comments</td>
-	<td></td>
-</tr>
-<tr>
 	<td>POST_REPLY_BODY</td>
 	<td>//textarea[@class='field']</td>
 	<td></td>

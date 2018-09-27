@@ -32,10 +32,6 @@ import org.apache.olingo.server.api.uri.UriInfo;
 import org.apache.olingo.server.api.uri.queryoption.FilterOption;
 import org.apache.olingo.server.core.uri.parser.Parser;
 
-import org.osgi.service.component.annotations.Activate;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * <code>FilterParserImpl</code> transforms a String containing an oData filter
  * in a manageable expression {@link Expression}.
@@ -43,8 +39,16 @@ import org.osgi.service.component.annotations.Reference;
  * @author David Arques
  * @review
  */
-@Component(immediate = true, service = FilterParser.class)
 public class FilterParserImpl implements FilterParser {
+
+	public FilterParserImpl(EntityModel entityModel) {
+		_path = entityModel.getName();
+
+		_parser = new Parser(
+			new EdmProviderImpl(
+				new EntityModelSchemaBasedEdmProvider(entityModel)),
+			OData.newInstance());
+	}
 
 	@Override
 	public Expression parse(String filterString)
@@ -73,27 +77,10 @@ public class FilterParserImpl implements FilterParser {
 		}
 	}
 
-	@Reference(
-		target = "(entity.model.name=" + StructuredContentEntityModel.NAME + ")",
-		unbind = "-"
-	)
-	public void setEntityModel(EntityModel entityModel) {
-		_entityModel = entityModel;
-	}
-
-	@Activate
-	protected void activate() {
-		_parser = new Parser(
-			new EdmProviderImpl(
-				new EntityModelSchemaBasedEdmProvider(_entityModel)),
-			OData.newInstance());
-	}
-
 	private UriInfo _getUriInfo(String filterString) {
 		try {
 			return _parser.parseUri(
-				_entityModel.getName(),
-				"$filter=" + Encoder.encode(filterString), null, null);
+				_path, "$filter=" + Encoder.encode(filterString), null, null);
 		}
 		catch (ODataException ode) {
 			throw new InvalidFilterException(
@@ -107,7 +94,7 @@ public class FilterParserImpl implements FilterParser {
 	private static final Log _log = LogFactoryUtil.getLog(
 		FilterParserImpl.class);
 
-	private EntityModel _entityModel;
-	private Parser _parser;
+	private final Parser _parser;
+	private final String _path;
 
 }

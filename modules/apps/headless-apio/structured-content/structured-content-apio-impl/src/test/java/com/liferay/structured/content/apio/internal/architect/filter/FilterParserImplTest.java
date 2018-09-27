@@ -30,22 +30,12 @@ import org.assertj.core.api.AbstractThrowableAssert;
 import org.assertj.core.api.Assertions;
 
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 
 /**
  * @author David Arques
  */
 public class FilterParserImplTest {
-
-	@Before
-	public void setUp() {
-		_filterParserImpl = new FilterParserImpl();
-
-		_filterParserImpl.setEntityModel(_entityModel);
-
-		_filterParserImpl.activate();
-	}
 
 	@Test
 	public void testParseNonexistingField() {
@@ -217,29 +207,30 @@ public class FilterParserImplTest {
 		exception.hasMessage("Filter is null");
 	}
 
-	private static final EntityModel _entityModel = new EntityModel() {
+	private static final FilterParserImpl _filterParserImpl =
+		new FilterParserImpl(
+			new EntityModel() {
 
-		@Override
-		public Map<String, EntityField> getEntityFieldsMap() {
-			return Stream.of(
-				new EntityField(
-					"fieldExternal", EntityField.Type.STRING,
-					locale -> "fieldInternal"),
-				new EntityField(
-					"dateExternal", EntityField.Type.DATE,
-					locale -> "dateInternal")
-			).collect(
-				Collectors.toMap(EntityField::getName, Function.identity())
-			);
-		}
+				@Override
+				public Map<String, EntityField> getEntityFieldsMap() {
+					return Stream.of(
+						new EntityField(
+							"fieldExternal", EntityField.Type.STRING,
+							locale -> "fieldInternal"),
+						new EntityField(
+							"dateExternal", EntityField.Type.DATE,
+							locale -> "dateInternal")
+					).collect(
+						Collectors.toMap(
+							EntityField::getName, Function.identity())
+					);
+				}
 
-		@Override
-		public String getName() {
-			return "SomeEntityName";
-		}
+				@Override
+				public String getName() {
+					return "SomeEntityName";
+				}
 
-	};
-
-	private FilterParserImpl _filterParserImpl;
+			});
 
 }

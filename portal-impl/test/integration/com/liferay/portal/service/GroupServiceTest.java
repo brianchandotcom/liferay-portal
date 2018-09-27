@@ -16,7 +16,6 @@ package com.liferay.portal.service;
 
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.GroupServiceUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -24,6 +23,7 @@ import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerTestRule;
 
@@ -49,42 +49,49 @@ public class GroupServiceTest {
 
 	@Test
 	public void testGetGroupsLikeName() throws Exception {
-		String name = RandomTestUtil.randomString(10);
+		List<Group> allChildGroups = new ArrayList<>();
+		Group parentGroup = GroupTestUtil.addGroup();
 
-		List<Group> expectedGroups = new ArrayList<>();
+		try {
+			String name = RandomTestUtil.randomString(10);
 
-		for (int i = 0; i < 10; i++) {
-			Group group = GroupTestUtil.addGroup(
-				GroupConstants.DEFAULT_PARENT_GROUP_ID);
+			long parentGroupId = parentGroup.getGroupId();
 
-			group.setName(name + i);
+			List<Group> likeNameChildGroups = new ArrayList<>();
 
-			group = GroupLocalServiceUtil.updateGroup(group);
+			for (int i = 0; i < 10; i++) {
+				Group group = GroupTestUtil.addGroup(parentGroupId);
 
-			expectedGroups.add(group);
+				group.setName(name + i);
+
+				group = GroupLocalServiceUtil.updateGroup(group);
+
+				likeNameChildGroups.add(group);
+			}
+
+			allChildGroups.addAll(likeNameChildGroups);
+			allChildGroups.add(GroupTestUtil.addGroup(parentGroupId));
+			allChildGroups.add(GroupTestUtil.addGroup(parentGroupId));
+			allChildGroups.add(GroupTestUtil.addGroup(parentGroupId));
+
+			assertExpectedGroups(
+				likeNameChildGroups, parentGroupId, name + "%");
+			assertExpectedGroups(
+				likeNameChildGroups, parentGroupId,
+				StringUtil.toLowerCase(name) + "%");
+			assertExpectedGroups(
+				likeNameChildGroups, parentGroupId,
+				StringUtil.toUpperCase(name) + "%");
+			assertExpectedGroups(allChildGroups, parentGroupId, null);
+			assertExpectedGroups(allChildGroups, parentGroupId, "");
 		}
+		finally {
+			for (Group childGroup : allChildGroups) {
+				GroupTestUtil.deleteGroup(childGroup);
+			}
 
-		_groups.addAll(expectedGroups);
-		_groups.add(GroupTestUtil.addGroup());
-		_groups.add(GroupTestUtil.addGroup());
-		_groups.add(GroupTestUtil.addGroup());
-
-		List<Group> actualGroups = GroupServiceUtil.getGroups(
-			TestPropsValues.getCompanyId(),
-			GroupConstants.DEFAULT_PARENT_GROUP_ID, name + "%", true,
-			QueryUtil.ALL_POS, QueryUtil.ALL_POS);
-
-		Assert.assertEquals(
-			actualGroups.toString(), expectedGroups.size(),
-			actualGroups.size());
-		Assert.assertTrue(
-			actualGroups.toString(), actualGroups.containsAll(expectedGroups));
-
-		Assert.assertEquals(
-			expectedGroups.size(),
-			GroupServiceUtil.getGroupsCount(
-				TestPropsValues.getCompanyId(),
-				GroupConstants.DEFAULT_PARENT_GROUP_ID, name + "%", true));
+			GroupTestUtil.deleteGroup(parentGroup);
+		}
 	}
 
 	@Test
@@ -121,6 +128,27 @@ public class GroupServiceTest {
 
 			previousGroupId = groupId;
 		}
+	}
+
+	protected void assertExpectedGroups(
+			List<Group> expectedGroups, long parentGroupId, String nameSearch)
+		throws Exception {
+
+		List<Group> actualGroups = GroupServiceUtil.getGroups(
+			TestPropsValues.getCompanyId(), parentGroupId, nameSearch, true,
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+
+		Assert.assertEquals(
+			actualGroups.toString(), expectedGroups.size(),
+			actualGroups.size());
+		Assert.assertTrue(
+			actualGroups.toString(), actualGroups.containsAll(expectedGroups));
+
+		Assert.assertEquals(
+			expectedGroups.size(),
+			GroupServiceUtil.getGroupsCount(
+				TestPropsValues.getCompanyId(), parentGroupId, nameSearch,
+				true));
 	}
 
 	@DeleteAfterTestRun

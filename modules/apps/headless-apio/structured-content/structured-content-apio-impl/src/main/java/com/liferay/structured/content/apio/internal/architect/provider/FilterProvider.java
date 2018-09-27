@@ -20,6 +20,7 @@ import com.liferay.structured.content.apio.architect.filter.Filter;
 import com.liferay.structured.content.apio.architect.filter.FilterParser;
 import com.liferay.structured.content.apio.architect.filter.InvalidFilterException;
 import com.liferay.structured.content.apio.architect.filter.expression.ExpressionVisitException;
+import com.liferay.structured.content.apio.internal.architect.filter.StructuredContentEntityModel;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -48,7 +49,9 @@ public class FilterProvider implements Provider<Filter> {
 		}
 	}
 
-	@Reference
+	@Reference(
+		target = "(entity.model.name=" + StructuredContentEntityModel.NAME + ")"
+	)
 	private FilterParser _filterParser;
 
 }

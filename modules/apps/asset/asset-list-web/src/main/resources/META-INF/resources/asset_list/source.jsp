@@ -496,7 +496,7 @@ List<AssetRendererFactory<?>> classTypesAssetRendererFactories = new ArrayList()
 		$('#<portlet:namespace />ddmStructureFieldValue').val(value);
 		$('#<portlet:namespace />ddmStructureDisplayFieldValue').val(displayValue);
 
-		$('#<portlet:namespace />' + className + 'ddmStructureFieldMessage').html(_.escape(message));
+		$('#<portlet:namespace />' + className + 'ddmStructureFieldMessage').html(Liferay.Util.escape(message));
 	}
 
 	Liferay.Util.toggleSelectBox('<portlet:namespace />anyAssetType', 'false', '<portlet:namespace />classNamesBoxes');

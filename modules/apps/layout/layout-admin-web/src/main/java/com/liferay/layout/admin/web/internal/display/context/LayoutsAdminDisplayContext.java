@@ -148,6 +148,48 @@ public class LayoutsAdminDisplayContext {
 		};
 	}
 
+	public String getAddLayoutURL() {
+		PortletURL portletURL = _liferayPortletResponse.createActionURL();
+
+		portletURL.setParameter(
+			"mvcPath", "/select_layout_page_template_entry.jsp");
+		portletURL.setParameter("portletResource", getPortletResource());
+		portletURL.setParameter("groupId", String.valueOf(getGroupId()));
+		portletURL.setParameter(
+			"liveGroupId", String.valueOf(getLiveGroupId()));
+		portletURL.setParameter(
+			"stagingGroupId", String.valueOf(getStagingGroupId()));
+		portletURL.setParameter(
+			"parentLayoutId", String.valueOf(getParentLayoutId()));
+		portletURL.setParameter(
+			"privateLayout", String.valueOf(isPrivateLayout()));
+		portletURL.setParameter("explicitCreation", Boolean.TRUE.toString());
+
+		String type = ParamUtil.getString(_request, "type");
+
+		if (Validator.isNotNull(type)) {
+			portletURL.setParameter("type", type);
+		}
+
+		long layoutPageTemplateEntryId = ParamUtil.getLong(
+			_request, "layoutPageTemplateEntryId");
+
+		if (layoutPageTemplateEntryId > 0) {
+			portletURL.setParameter(
+				"layoutPageTemplateEntryId",
+				String.valueOf(layoutPageTemplateEntryId));
+
+			portletURL.setParameter(
+				ActionRequest.ACTION_NAME, "/layout/add_content_layout");
+		}
+		else {
+			portletURL.setParameter(
+				ActionRequest.ACTION_NAME, "/layout/add_simple_layout");
+		}
+
+		return portletURL.toString();
+	}
+
 	public String getAutoSiteNavigationMenuNames() {
 		List<SiteNavigationMenu> siteNavigationMenus =
 			SiteNavigationMenuLocalServiceUtil.getAutoSiteNavigationMenus(

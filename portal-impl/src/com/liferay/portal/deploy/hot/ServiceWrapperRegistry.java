@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.ServiceWrapper;
 import com.liferay.portal.kernel.spring.aop.AdvisedSupport;
 import com.liferay.portal.kernel.util.ProxyUtil;
-import com.liferay.portal.spring.aop.ServiceBeanAopCacheManagerUtil;
 import com.liferay.portal.spring.aop.ServiceBeanAopProxy;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
@@ -77,9 +76,6 @@ public class ServiceWrapperRegistry {
 						serviceWrapper.getClass(),
 					t);
 			}
-			finally {
-				ServiceBeanAopCacheManagerUtil.reset();
-			}
 
 			return null;
 		}
@@ -101,8 +97,6 @@ public class ServiceWrapperRegistry {
 
 			try {
 				serviceBag.replace();
-
-				ServiceBeanAopCacheManagerUtil.reset();
 			}
 			catch (Exception e) {
 				_log.error(e, e);

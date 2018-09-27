@@ -31,20 +31,12 @@ import org.assertj.core.api.AbstractThrowableAssert;
 import org.assertj.core.api.Assertions;
 
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 
 /**
  * @author Cristina González
  */
 public class SortParserImplTest {
-
-	@Before
-	public void setUp() {
-		_sortParserImpl = new SortParserImpl();
-
-		_sortParserImpl.setEntityModel(_entityModel);
-	}
 
 	@Test
 	public void testGetSortFieldOptionalAsc() {
@@ -270,32 +262,31 @@ public class SortParserImplTest {
 		Assert.assertTrue(!sortField2.isAscending());
 	}
 
-	private static final EntityModel _entityModel = new EntityModel() {
+	private SortParserImpl _sortParserImpl = new SortParserImpl(
+		new EntityModel() {
 
-		@Override
-		public Map<String, EntityField> getEntityFieldsMap() {
-			return Stream.of(
-				new EntityField(
-					"fieldExternal", EntityField.Type.STRING,
-					locale -> "fieldInternal"),
-				new EntityField(
-					"fieldExternal1", EntityField.Type.STRING,
-					locale -> "fieldInternal1"),
-				new EntityField(
-					"fieldExternal2", EntityField.Type.STRING,
-					locale -> "fieldInternal2")
-			).collect(
-				Collectors.toMap(EntityField::getName, Function.identity())
-			);
-		}
+			@Override
+			public Map<String, EntityField> getEntityFieldsMap() {
+				return Stream.of(
+					new EntityField(
+						"fieldExternal", EntityField.Type.STRING,
+						locale -> "fieldInternal"),
+					new EntityField(
+						"fieldExternal1", EntityField.Type.STRING,
+						locale -> "fieldInternal1"),
+					new EntityField(
+						"fieldExternal2", EntityField.Type.STRING,
+						locale -> "fieldInternal2")
+				).collect(
+					Collectors.toMap(EntityField::getName, Function.identity())
+				);
+			}
 
-		@Override
-		public String getName() {
-			return "SomeEntityName";
-		}
+			@Override
+			public String getName() {
+				return "SomeEntityName";
+			}
 
-	};
-
-	private SortParserImpl _sortParserImpl;
+		});
 
 }

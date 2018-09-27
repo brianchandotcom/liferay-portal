@@ -69,10 +69,10 @@ public class MethodKeyTest {
 			Assert.fail("No RuntimeException thrown!");
 		}
 		catch (RuntimeException re) {
-			Assert.assertTrue(
-				"ClassNotFoundException is expected when creating MethodKey " +
-					"with invalid class name",
-				re.getCause() instanceof ClassNotFoundException);
+			Throwable throwable = re.getCause();
+
+			Assert.assertSame(
+				ClassNotFoundException.class, throwable.getClass());
 		}
 	}
 

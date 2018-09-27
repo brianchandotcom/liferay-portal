@@ -368,6 +368,9 @@ public class InputAssetLinksDisplayContext {
 		long groupId = _getAssetBrowserGroupId(assetRendererFactory);
 
 		portletURL.setParameter("groupId", String.valueOf(groupId));
+
+		portletURL.setParameter(
+			"multipleSelection", String.valueOf(Boolean.TRUE));
 		portletURL.setParameter("selectedGroupId", String.valueOf(groupId));
 
 		if (_assetEntryId > 0) {

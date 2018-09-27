@@ -380,6 +380,8 @@ public class EditAssetListDisplayContext {
 			assetBrowserURL.setParameter(
 				"groupId", String.valueOf(themeDisplay.getScopeGroupId()));
 			assetBrowserURL.setParameter(
+				"multipleSelection", String.valueOf(Boolean.TRUE));
+			assetBrowserURL.setParameter(
 				"selectedGroupIds",
 				String.valueOf(themeDisplay.getScopeGroupId()));
 			assetBrowserURL.setParameter(

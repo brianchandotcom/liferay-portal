@@ -139,9 +139,11 @@ public class AssetBrowserDisplayContext {
 		AssetBrowserSearch assetBrowserSearch = new AssetBrowserSearch(
 			_renderRequest, getPortletURL());
 
-		assetBrowserSearch.setRowChecker(
-			new AddAssetEntryChecker(
-				_renderResponse, getRefererAssetEntryId()));
+		if (isMultipleSelection()) {
+			assetBrowserSearch.setRowChecker(
+				new AddAssetEntryChecker(
+					_renderResponse, getRefererAssetEntryId()));
+		}
 
 		AssetRendererFactory assetRendererFactory = getAssetRendererFactory();
 
@@ -382,6 +384,17 @@ public class AssetBrowserDisplayContext {
 		}
 
 		return true;
+	}
+
+	public boolean isMultipleSelection() {
+		if (_multipleSelection != null) {
+			return _multipleSelection;
+		}
+
+		_multipleSelection = ParamUtil.getBoolean(
+			_request, "multipleSelection");
+
+		return _multipleSelection;
 	}
 
 	private String _getAddButtonLabel() {
@@ -651,6 +664,7 @@ public class AssetBrowserDisplayContext {
 	private String _eventName;
 	private Long _groupId;
 	private String _keywords;
+	private Boolean _multipleSelection;
 	private String _orderByCol;
 	private String _orderByType;
 	private Long _refererAssetEntryId;

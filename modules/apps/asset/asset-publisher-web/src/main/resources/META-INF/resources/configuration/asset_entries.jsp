@@ -135,6 +135,7 @@ for (long groupId : groupIds) {
 					}
 
 					assetBrowserURL.setParameter("groupId", String.valueOf(curGroupId));
+					assetBrowserURL.setParameter("multipleSelection", String.valueOf(Boolean.TRUE));
 					assetBrowserURL.setParameter("selectedGroupIds", String.valueOf(curGroupId));
 					assetBrowserURL.setParameter("typeSelection", curRendererFactory.getClassName());
 					assetBrowserURL.setParameter("showNonindexable", String.valueOf(Boolean.TRUE));

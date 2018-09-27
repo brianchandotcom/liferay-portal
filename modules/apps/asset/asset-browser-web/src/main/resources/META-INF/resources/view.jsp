@@ -30,6 +30,7 @@
 	searchActionURL="<%= assetBrowserDisplayContext.getSearchActionURL() %>"
 	searchContainerId="selectAssetEntries"
 	searchFormName="searchFm"
+	selectable="<%= assetBrowserDisplayContext.isMultipleSelection() %>"
 	sortingOrder="<%= assetBrowserDisplayContext.getOrderByType() %>"
 	sortingURL="<%= assetBrowserDisplayContext.getSortingURL() %>"
 	viewTypeItems="<%= assetBrowserDisplayContext.getViewTypeItems() %>"
@@ -68,7 +69,9 @@
 				data.put("entityid", assetEntry.getEntryId());
 				data.put("groupdescriptivename", group.getDescriptiveName(locale));
 
-				row.setData(data);
+				if (assetBrowserDisplayContext.isMultipleSelection()) {
+					row.setData(data);
+				}
 
 				cssClass = "selector-button";
 			}
@@ -98,8 +101,8 @@
 
 						<h5>
 							<c:choose>
-								<c:when test="<%= assetEntry.getEntryId() != assetBrowserDisplayContext.getRefererAssetEntryId() %>">
-									<aui:a cssClass="<%= cssClass %>" href="javascript:;">
+								<c:when test="<%= (assetEntry.getEntryId() != assetBrowserDisplayContext.getRefererAssetEntryId()) && !assetBrowserDisplayContext.isMultipleSelection() %>">
+									<aui:a cssClass="<%= cssClass %>" data="<%= data %>" href="javascript:;">
 										<%= HtmlUtil.escape(assetRenderer.getTitle(locale)) %>
 									</aui:a>
 								</c:when>
@@ -125,6 +128,7 @@
 							<c:when test="<%= Validator.isNotNull(assetRenderer.getThumbnailPath(renderRequest)) %>">
 								<liferay-frontend:vertical-card
 									cssClass="<%= cssClass %>"
+									data="<%= assetBrowserDisplayContext.isMultipleSelection() ? null : data %>"
 									imageUrl="<%= assetRenderer.getThumbnailPath(renderRequest) %>"
 									subtitle="<%= HtmlUtil.escape(group.getDescriptiveName(locale)) %>"
 									title="<%= assetRenderer.getTitle(locale) %>"
@@ -133,6 +137,7 @@
 							<c:otherwise>
 								<liferay-frontend:icon-vertical-card
 									cssClass="<%= cssClass %>"
+									data="<%= assetBrowserDisplayContext.isMultipleSelection() ? null : data %>"
 									icon="<%= assetRendererFactory.getIconCssClass() %>"
 									subtitle="<%= HtmlUtil.escape(group.getDescriptiveName(locale)) %>"
 									title="<%= assetRenderer.getTitle(locale) %>"
@@ -147,8 +152,8 @@
 						truncate="<%= true %>"
 					>
 						<c:choose>
-							<c:when test="<%= assetEntry.getEntryId() != assetBrowserDisplayContext.getRefererAssetEntryId() %>">
-								<aui:a cssClass="<%= cssClass %>" href="javascript:;">
+							<c:when test="<%= (assetEntry.getEntryId() != assetBrowserDisplayContext.getRefererAssetEntryId()) && !assetBrowserDisplayContext.isMultipleSelection() %>">
+								<aui:a cssClass="<%= cssClass %>" data="<%= data %>" href="javascript:;">
 									<%= HtmlUtil.escape(assetRenderer.getTitle(locale)) %>
 								</aui:a>
 							</c:when>
@@ -189,32 +194,41 @@
 	</liferay-ui:search-container>
 </aui:form>
 
-<aui:script use="liferay-search-container">
-	var searchContainer = Liferay.SearchContainer.get('<portlet:namespace />selectAssetEntries');
+<c:choose>
+	<c:when test="<%= assetBrowserDisplayContext.isMultipleSelection() %>">
+		<aui:script use="liferay-search-container">
+			var searchContainer = Liferay.SearchContainer.get('<portlet:namespace />selectAssetEntries');
 
-	searchContainer.on(
-		'rowToggled',
-		function(event) {
-			var selectedItems = event.elements.allSelectedElements;
+			searchContainer.on(
+				'rowToggled',
+				function(event) {
+					var selectedItems = event.elements.allSelectedElements;
 
-			var arr = [];
+					var arr = [];
 
-			selectedItems.each(
-				function() {
-					var row = this.ancestor('tr');
+					selectedItems.each(
+						function() {
+							var row = this.ancestor('tr');
 
-					var data = row.getDOM().dataset;
+							var data = row.getDOM().dataset;
 
-					arr.push(data);
+							arr.push(data);
+						}
+					);
+
+					Liferay.Util.getOpener().Liferay.fire(
+						'<%= HtmlUtil.escapeJS(assetBrowserDisplayContext.getEventName()) %>',
+						{
+							data: arr
+						}
+					);
 				}
 			);
-
-			Liferay.Util.getOpener().Liferay.fire(
-				'<%= HtmlUtil.escapeJS(assetBrowserDisplayContext.getEventName()) %>',
-				{
-					data: arr
-				}
-			);
-		}
-	);
-</aui:script>
+		</aui:script>
+	</c:when>
+	<c:otherwise>
+		<aui:script>
+			Liferay.Util.selectEntityHandler('#<portlet:namespace />selectAssetFm', '<%= HtmlUtil.escapeJS(assetBrowserDisplayContext.getEventName()) %>');
+		</aui:script>
+	</c:otherwise>
+</c:choose>

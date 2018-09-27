@@ -165,13 +165,8 @@ public class MethodKeyTest {
 		Assert.assertEquals(
 			_TEST_CLASS_NAME + ".testMethod(java.lang.String,java.lang.String)",
 			methodKey.toString());
-		Assert.assertEquals(
-			_TEST_CLASS_NAME + ".testMethod(java.lang.String,java.lang.String)",
-			ReflectionTestUtil.getFieldValue(methodKey, "_toString"));
 
-		ReflectionTestUtil.setFieldValue(methodKey, "_toString", "testString");
-
-		Assert.assertEquals("testString", methodKey.toString());
+		Assert.assertSame(methodKey.toString(), methodKey.toString());
 	}
 
 	@Test

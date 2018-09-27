@@ -37,7 +37,7 @@ public abstract class PortalWorkspace extends BaseWorkspace {
 
 		WorkspaceGitRepository workspaceGitRepository =
 			WorkspaceUtil.getWorkspaceGitRepository(
-				portalGitHubURL, portalUpstreamBranchName);
+				"portal", portalGitHubURL, portalUpstreamBranchName);
 
 		if (!(workspaceGitRepository instanceof
 				PortalWorkspaceGitRepository)) {

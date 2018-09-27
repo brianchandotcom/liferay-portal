@@ -30,7 +30,8 @@ public abstract class BaseWorkspace implements Workspace {
 		}
 
 		_jenkinsWorkspaceGitRepository =
-			WorkspaceUtil.getWorkspaceGitRepository(jenkinsGitHubURL, "master");
+			WorkspaceUtil.getWorkspaceGitRepository(
+				"jenkins", jenkinsGitHubURL, "master");
 	}
 
 	@Override

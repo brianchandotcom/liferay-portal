@@ -10,7 +10,7 @@
 		"metal-uri": "^2.3.0"
 	},
 	"devDependencies": {
-		"check-source-formatting": "^2.0.12",
+		"check-source-formatting": "^2.0.4",
 		"liferay-module-config-generator": "^1.1.10",
 		"metal-cli": "^4.3.3"
 	},

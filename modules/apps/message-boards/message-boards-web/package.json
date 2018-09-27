@@ -4,7 +4,7 @@
 		"metal-events": "^2.6.0"
 	},
 	"devDependencies": {
-		"check-source-formatting": "^2.0.12",
+		"check-source-formatting": "^2.0.4",
 		"liferay-module-config-generator": "^1.2.1",
 		"metal-cli": "^4.2.0"
 	},

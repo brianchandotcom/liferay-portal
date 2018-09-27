@@ -90,7 +90,7 @@ int trashedEntriesCount = GetterUtil.getInteger(request.getAttribute("liferay-tr
 		<aui:input name="redirect" type="hidden" value="<%= redirectURL %>" />
 		<aui:input name="restoreTrashEntryIds" type="hidden" value="<%= StringUtil.merge(restoreTrashEntryIds) %>" />
 
-		<aui:button cssClass="alert-link btn-link trash-undo-button" type="submit" value="undo" />
+		<aui:button cssClass="alert-link btn-link btn-sm btn-unstyled trash-undo-button" type="submit" value="undo" />
 	</aui:form>
 </liferay-util:buffer>
 

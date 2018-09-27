@@ -304,6 +304,8 @@ public class LayoutStagedModelDataHandler
 			exportLayoutIconImage(portletDataContext, layout, layoutElement);
 		}
 
+		_exportLayoutPageTemplateStructure(portletDataContext, layout);
+
 		if (Objects.equals(
 				layout.getType(), LayoutConstants.TYPE_LINK_TO_LAYOUT)) {
 
@@ -319,8 +321,6 @@ public class LayoutStagedModelDataHandler
 		}
 
 		fixExportTypeSettings(layout);
-
-		_exportLayoutPageTemplateStructure(portletDataContext, layout);
 
 		exportTheme(portletDataContext, layout);
 

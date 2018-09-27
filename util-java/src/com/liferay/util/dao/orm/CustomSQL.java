@@ -891,6 +891,7 @@ public class CustomSQL {
 				}
 				else {
 					String id = sqlElement.attributeValue("id");
+
 					String content = transform(sqlElement.getText());
 
 					content = replaceIsNull(content);

@@ -975,6 +975,7 @@ public abstract class BaseIndexer<T> implements Indexer<T> {
 				assetCategoryTitles.entrySet()) {
 
 			Locale locale = entry.getKey();
+
 			List<String> titles = entry.getValue();
 
 			String[] titlesArray = titles.toArray(new String[titles.size()]);

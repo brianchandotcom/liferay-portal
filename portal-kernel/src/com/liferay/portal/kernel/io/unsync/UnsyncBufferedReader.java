@@ -183,6 +183,7 @@ public class UnsyncBufferedReader extends Reader {
 			char lineEndChar = 0;
 
 			int x = index;
+
 			int y = index;
 
 			while (y < firstInvalidIndex) {

@@ -120,6 +120,7 @@ public class JSONWebServiceNaming {
 
 		for (int i = 0; i < parameterTypes.length; i++) {
 			Type type = types[i];
+
 			Class<?> parameterType = parameterTypes[i];
 
 			if (parameterType.isArray()) {

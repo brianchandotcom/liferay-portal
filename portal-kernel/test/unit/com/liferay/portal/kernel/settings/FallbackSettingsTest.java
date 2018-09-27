@@ -42,6 +42,7 @@ public class FallbackSettingsTest extends PowerMockito {
 	@Test
 	public void testGetValuesWhenConfigured() {
 		String[] defaultValues = {"default"};
+
 		String[] mockValues = {"value"};
 
 		when(

@@ -117,6 +117,16 @@ public class ShareEntryMVCActionCommand extends BaseMVCActionCommand {
 
 					return null;
 				});
+
+			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+
+			jsonObject.put(
+				"successMessage",
+				LanguageUtil.get(
+					resourceBundle, "the-item-was-shared-successfully"));
+
+			JSONPortletResponseUtil.writeJSON(
+				actionRequest, actionResponse, jsonObject);
 		}
 		catch (Throwable t) {
 			HttpServletResponse response = _portal.getHttpServletResponse(
@@ -141,16 +151,6 @@ public class ShareEntryMVCActionCommand extends BaseMVCActionCommand {
 
 			return;
 		}
-
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
-		jsonObject.put(
-			"successMessage",
-			LanguageUtil.get(
-				resourceBundle, "the-item-was-shared-successfully"));
-
-		JSONPortletResponseUtil.writeJSON(
-			actionRequest, actionResponse, jsonObject);
 	}
 
 	private static final TransactionConfig _transactionConfig =

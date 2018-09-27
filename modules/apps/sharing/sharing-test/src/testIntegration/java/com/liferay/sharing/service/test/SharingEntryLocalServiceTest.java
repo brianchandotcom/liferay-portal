@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
@@ -861,6 +862,47 @@ public class SharingEntryLocalServiceTest {
 		}
 		finally {
 			_groupLocalService.deleteGroup(group2);
+		}
+	}
+
+	@Test
+	public void testGetToUserIdSharingEntriesUnique() throws Exception {
+		long classNameId = _classNameLocalService.getClassNameId(
+			Group.class.getName());
+		long classPK = _group.getGroupId();
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
+
+		List<User> users = new ArrayList<>();
+
+		try {
+			for (int i = 0; i < 5; i++) {
+				User fromUser = UserTestUtil.addUser();
+
+				users.add(fromUser);
+
+				_sharingEntryLocalService.addSharingEntry(
+					fromUser.getUserId(), _toUser.getUserId(), classNameId,
+					classPK, _group.getGroupId(), true,
+					Arrays.asList(SharingEntryAction.VIEW),
+					Date.from(Instant.now().plus(2, ChronoUnit.DAYS)),
+					serviceContext);
+			}
+
+			List<SharingEntry> sharingEntries =
+				_sharingEntryLocalService.getToUserSharingEntriesUnique(
+					_toUser.getUserId(), 0,
+					_sharingEntryLocalService.countToUserSharingEntriesUnique(
+						_toUser.getUserId()));
+
+			Assert.assertEquals(
+				sharingEntries.toString(), 1, sharingEntries.size());
+		}
+		finally {
+			for (User user : users) {
+				UserLocalServiceUtil.deleteUser(user);
+			}
 		}
 	}
 

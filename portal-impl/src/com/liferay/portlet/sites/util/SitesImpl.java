@@ -1177,6 +1177,10 @@ public class SitesImpl implements Sites {
 				Layout layoutSetPrototypeLayout = getLayoutSetPrototypeLayout(
 					layout);
 
+				if (layoutSetPrototypeLayout == null) {
+					return true;
+				}
+
 				String layoutUpdateable =
 					layoutSetPrototypeLayout.getTypeSettingsProperty(
 						LAYOUT_UPDATEABLE);

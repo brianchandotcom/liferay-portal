@@ -225,21 +225,24 @@ public class UpgradeClient {
 
 		try (GogoShellClient gogoShellClient = new GogoShellClient()) {
 			if (_shell || !_isFinished(gogoShellClient)) {
-				System.out.println("You are connected to Gogo shell.");
+				System.out.println("Connecting to Gogo shell...");
 
 				_printHelp();
 
 				_consoleReader.setPrompt("g! ");
 
-				String line;
+				String line = _consoleReader.readLine();
 
-				while ((line = _consoleReader.readLine()) != null) {
-					if (line.equals("exit") || line.equals("quit")) {
+				if (line == null) {
+					System.out.println("Unable to open Gogo shell");
+				}
+
+				while (line != null) {
+					if (!_processGogoShellCommand(gogoShellClient, line)) {
 						break;
 					}
-					else {
-						System.out.println(gogoShellClient.send(line));
-					}
+
+					line = _consoleReader.readLine();
 				}
 			}
 		}
@@ -382,6 +385,19 @@ public class UpgradeClient {
 				"command. For example, \"help upgrade:list\".");
 
 		System.out.println("Enter \"exit\" or \"quit\" to exit.");
+	}
+
+	private boolean _processGogoShellCommand(
+		GogoShellClient gogoShellClient, String command) throws IOException {
+
+		if (command.equals("exit") || command.equals("quit")) {
+			return false;
+		}
+		else {
+			System.out.println(gogoShellClient.send(command));
+		}
+
+		return true;
 	}
 
 	private Properties _readProperties(File file) {

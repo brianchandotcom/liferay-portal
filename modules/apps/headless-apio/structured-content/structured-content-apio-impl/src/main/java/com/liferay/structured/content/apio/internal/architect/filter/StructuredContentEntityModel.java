@@ -24,7 +24,6 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 
 /**
@@ -41,11 +40,6 @@ import org.osgi.service.component.annotations.Component;
 public class StructuredContentEntityModel implements EntityModel {
 
 	public static final String NAME = "StructuredContent";
-
-	@Activate
-	public void activate() {
-		System.out.println("Activating " + NAME);
-	}
 
 	@Override
 	public Map<String, EntityField> getEntityFieldsMap() {

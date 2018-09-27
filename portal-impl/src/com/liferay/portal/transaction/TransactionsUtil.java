@@ -14,24 +14,15 @@
 
 package com.liferay.portal.transaction;
 
-import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.spring.aop.Skip;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.spring.aop.ServiceBeanAopCacheManager;
-import com.liferay.portal.spring.aop.ServiceBeanAopCacheManagerUtil;
+import com.liferay.portal.spring.aop.ServiceBeanAopProxy;
 import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
 
-import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
-
-import java.util.HashMap;
-import java.util.concurrent.ConcurrentHashMap;
-
-import org.aopalliance.intercept.MethodInvocation;
 
 /**
  * @author Miguel Pastor
@@ -46,32 +37,12 @@ public class TransactionsUtil {
 		PropsValues.SPRING_HIBERNATE_SESSION_DELEGATED = false;
 
 		try {
-			Field field = ReflectionUtil.getDeclaredField(
-				ServiceBeanAopCacheManager.class, "_annotations");
+			Field field = ServiceBeanAopProxy.class.getDeclaredField(
+				"_enabled");
 
-			field.set(
-				null,
-				new HashMap<MethodInvocation, Annotation[]>() {
+			field.setAccessible(true);
 
-					@Override
-					public Annotation[] get(Object key) {
-						return _annotations;
-					}
-
-					private final Annotation[] _annotations = {
-						new Skip() {
-
-							@Override
-							public Class<? extends Annotation>
-								annotationType() {
-
-								return Skip.class;
-							}
-
-						}
-					};
-
-				});
+			field.set(null, false);
 		}
 		catch (Exception e) {
 			throw new RuntimeException(
@@ -88,17 +59,16 @@ public class TransactionsUtil {
 			PropsUtil.get(PropsKeys.SPRING_HIBERNATE_SESSION_DELEGATED));
 
 		try {
-			Field field = ReflectionUtil.getDeclaredField(
-				ServiceBeanAopCacheManager.class, "_annotations");
+			Field field = ServiceBeanAopProxy.class.getDeclaredField(
+				"_enabled");
 
-			field.set(
-				null, new ConcurrentHashMap<MethodInvocation, Annotation[]>());
+			field.setAccessible(true);
 
-			ServiceBeanAopCacheManagerUtil.reset();
+			field.set(null, true);
 		}
 		catch (Exception e) {
 			throw new RuntimeException(
-				"Unexpected error disabling transactions", e);
+				"Unexpected error enabling transactions", e);
 		}
 	}
 

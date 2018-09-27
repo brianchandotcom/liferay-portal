@@ -54,12 +54,6 @@ public class MethodKeyTest {
 		Assert.assertArrayEquals(
 			new Class<?>[] {String.class}, methodKey.getParameterTypes());
 
-		methodKey = new MethodKey();
-
-		Assert.assertNull(methodKey.getDeclaringClass());
-		Assert.assertNull(methodKey.getMethodName());
-		Assert.assertNull(methodKey.getParameterTypes());
-
 		Method method = TestClass.class.getMethod("testMethod", String.class);
 
 		methodKey = new MethodKey(method);

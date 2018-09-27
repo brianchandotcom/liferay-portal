@@ -3,14 +3,19 @@
 dependencies {
 #if (${dependencyManagementEnabled} == "true")
 	compileOnly group: "biz.aQute.bnd", name: "biz.aQute.bndlib"
+#if (${liferayVersion.startsWith("7.0")})
 	compileOnly group: "com.liferay", name: "com.liferay.portal.spring.extender"
+#elseif (${liferayVersion.startsWith("7.1")})
+	compileOnly group: "com.liferay", name: "com.liferay.portal.spring.extender.api"
+#end
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel"
 #else
 	compileOnly group: "biz.aQute.bnd", name: "biz.aQute.bndlib", version: "3.5.0"
-	compileOnly group: "com.liferay", name: "com.liferay.portal.spring.extender", version: "2.0.0"
 #if (${liferayVersion.startsWith("7.0")})
+	compileOnly group: "com.liferay", name: "com.liferay.portal.spring.extender", version: "2.0.0"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "2.6.0"
 #elseif (${liferayVersion.startsWith("7.1")})
+	compileOnly group: "com.liferay", name: "com.liferay.portal.spring.extender.api", version: "3.0.0"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "3.0.0"
 #end
 #end

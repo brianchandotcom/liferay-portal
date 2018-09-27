@@ -130,8 +130,8 @@
 
 	<command name="AssignImportedUserGroupToSuborganizationSites" priority="5">
 		<property name="liferay.training.dependency.jars" value="02-content-management/exercise-src/01-engaging-users-with-content/com.liferay.training.contentloader.jar" />
-		<property name="portal.release" value="true" />
-		<property name="portal.upstream" value="true" />
+		<property name="portal.release" value="false" />
+		<property name="portal.upstream" value="false" />
 		<property name="testray.component.names" value="Training" />
 
 		<execute macro="ProductMenu#gotoPortlet">

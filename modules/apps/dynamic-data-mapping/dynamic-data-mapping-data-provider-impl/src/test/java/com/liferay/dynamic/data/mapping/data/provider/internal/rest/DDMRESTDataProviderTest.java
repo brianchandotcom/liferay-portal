@@ -17,6 +17,7 @@ package com.liferay.dynamic.data.mapping.data.provider.internal.rest;
 import com.jayway.jsonpath.DocumentContext;
 
 import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderException;
+import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderInputParametersSettings;
 import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderInstanceSettings;
 import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderRequest;
 import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderResponse;
@@ -756,6 +757,12 @@ public class DDMRESTDataProviderTest extends PowerMockito {
 		);
 
 		when(
+			ddmRESTDataProviderSettings.inputParameters()
+		).thenReturn(
+			new DDMDataProviderInputParametersSettings[0]
+		);
+
+		when(
 			ddmRESTDataProviderSettings.pagination()
 		).thenReturn(
 			true
@@ -903,11 +910,11 @@ public class DDMRESTDataProviderTest extends PowerMockito {
 
 		inputParameters.addNestedDDMFormFieldValue(
 			DDMFormValuesTestUtil.createUnlocalizedDDMFormFieldValue(
-				"inputParameterName", "Country Id"));
+				"inputParameterLabel", "Country Id"));
 
 		inputParameters.addNestedDDMFormFieldValue(
 			DDMFormValuesTestUtil.createUnlocalizedDDMFormFieldValue(
-				"inputParameterPath", "countryId"));
+				"inputParameterName", "countryId"));
 
 		inputParameters.addNestedDDMFormFieldValue(
 			DDMFormValuesTestUtil.createUnlocalizedDDMFormFieldValue(
@@ -921,11 +928,11 @@ public class DDMRESTDataProviderTest extends PowerMockito {
 
 		inputParameters.addNestedDDMFormFieldValue(
 			DDMFormValuesTestUtil.createUnlocalizedDDMFormFieldValue(
-				"inputParameterName", "Region Name"));
+				"inputParameterLabel", "Region Name"));
 
 		inputParameters.addNestedDDMFormFieldValue(
 			DDMFormValuesTestUtil.createUnlocalizedDDMFormFieldValue(
-				"inputParameterPath", "regionName"));
+				"inputParameterName", "regionName"));
 
 		inputParameters.addNestedDDMFormFieldValue(
 			DDMFormValuesTestUtil.createUnlocalizedDDMFormFieldValue(

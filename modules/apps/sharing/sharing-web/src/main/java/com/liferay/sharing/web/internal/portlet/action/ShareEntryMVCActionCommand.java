@@ -88,12 +88,12 @@ public class ShareEntryMVCActionCommand extends BaseMVCActionCommand {
 		ResourceBundle resourceBundle =
 			_resourceBundleLoader.loadResourceBundle(themeDisplay.getLocale());
 
-		String[] userEmailAddresses = StringUtil.split(userEmailAddress);
-
 		SharingEntryPermissionDisplayAction
 			sharingEntryPermissionDisplayAction =
 				SharingEntryPermissionDisplayAction.parseFromActionId(
 					sharingEntryPermissionDisplayActionId);
+
+		String[] userEmailAddresses = StringUtil.split(userEmailAddress);
 
 		try {
 			TransactionInvokerUtil.invoke(
@@ -148,20 +148,6 @@ public class ShareEntryMVCActionCommand extends BaseMVCActionCommand {
 			"successMessage",
 			LanguageUtil.get(
 				resourceBundle, "the-item-was-shared-successfully"));
-
-		for (String curUserEmailAddresses : userEmailAddresses) {
-			User user = _userLocalService.fetchUserByEmailAddress(
-				themeDisplay.getCompanyId(), curUserEmailAddresses);
-
-			if (user != null) {
-				_sharingEntryService.addOrUpdateSharingEntry(
-					user.getUserId(), classNameId, classPK,
-					themeDisplay.getScopeGroupId(), shareable,
-					sharingEntryPermissionDisplayAction.
-						getSharingEntryActions(),
-					expirationDate, serviceContext);
-			}
-		}
 
 		JSONPortletResponseUtil.writeJSON(
 			actionRequest, actionResponse, jsonObject);

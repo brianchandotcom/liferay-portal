@@ -19,6 +19,7 @@ import com.liferay.jenkins.results.parser.PortalTestClassJob;
 import java.io.File;
 import java.io.IOException;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -66,12 +67,17 @@ public class NPMTestBatchTestClassGroup extends BatchTestClassGroup {
 			super(file);
 
 			addTestMethod(batchName);
+
+			_moduleFile = file;
 		}
 
 		private static final Pattern _itPattern = Pattern.compile(
 			"\\s+(?<xit>x)?it\\s*\\(\\s*\\'(?<description>[\\s\\S]*?)\\'");
 		private static final Map<File, NPMTestBatchTestClass>
 			_npmTestBatchTestClasses = new HashMap<>();
+
+		private final List<BaseTestMethod> _jsTestMethods = new ArrayList<>();
+		private final File _moduleFile;
 
 	}
 

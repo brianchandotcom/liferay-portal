@@ -140,6 +140,11 @@ public class JournalArticleAssetRenderer
 	}
 
 	@Override
+	public String getDefaultLanguageId() throws Exception {
+		return _article.getDefaultLanguageId();
+	}
+
+	@Override
 	public String getDiscussionPath() {
 		if (_journalServiceConfiguration == null) {
 			try {

@@ -17,7 +17,6 @@ package com.liferay.comment.apio.internal.architect.router;
 import com.liferay.apio.architect.router.NestedCollectionRouter;
 import com.liferay.comment.apio.architect.identifier.CommentIdentifier;
 import com.liferay.comment.apio.internal.architect.router.base.BaseCommentNestedCollectionRouter;
-import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleService;
 import com.liferay.portal.kernel.comment.Comment;
 import com.liferay.portal.kernel.comment.CommentManager;
@@ -51,15 +50,7 @@ public class StructuredContentCommentNestedCollectionRouter
 	protected GroupedModel getGroupedModel(long journalArticleId)
 		throws PortalException {
 
-		return _journalArticleService.getArticle(journalArticleId);
-	}
-
-	@Override
-	protected long getResourcePrimKey(long classPK) throws PortalException {
-		JournalArticle journalArticle = _journalArticleService.getArticle(
-			classPK);
-
-		return journalArticle.getResourcePrimKey();
+		return _journalArticleService.getLatestArticle(journalArticleId);
 	}
 
 	@Reference

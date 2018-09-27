@@ -64,7 +64,7 @@ public class JavaImportsFormatter extends BaseImportsFormatter {
 		}
 
 		String newImports = stripUnusedImports(
-			imports, content, packagePath, className, "\\*");
+			imports, content, packagePath, className, "\\*|\\$");
 
 		newImports = sortAndGroupImports(newImports);
 

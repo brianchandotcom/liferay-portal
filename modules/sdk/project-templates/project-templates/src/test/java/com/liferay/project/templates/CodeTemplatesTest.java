@@ -91,11 +91,6 @@ public class CodeTemplatesTest {
 		_testContainsOrNot(
 			projectDir,
 			"src/main/java/com/liferay/actioncommand/FooActionCommand.java",
-			false, true, "ActionCommand Portlet");
-
-		_testContainsOrNot(
-			projectDir,
-			"src/main/java/com/liferay/actioncommand/FooActionCommand.java",
 			false, true, "mvc.command.name=foo");
 
 		File restDir = new File(projectDir, "src/main/java/com/liferay/rest");

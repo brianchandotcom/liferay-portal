@@ -563,7 +563,7 @@ public class SharingEntryServiceTest {
 	public void testDeleteSharingEntry() throws Exception {
 		_registerSharingPermissionChecker(
 			new TestSharingPermissionChecker(
-				Arrays.asList(SharingEntryActionKey.VIEW)));
+				Arrays.asList(SharingEntryAction.VIEW)));
 
 		long classNameId = _classNameLocalService.getClassNameId(
 			Group.class.getName());
@@ -574,8 +574,8 @@ public class SharingEntryServiceTest {
 
 		SharingEntry sharingEntry = _sharingEntryLocalService.addSharingEntry(
 			_fromUser.getUserId(), _toUser.getUserId(), classNameId, classPK,
-			_group.getGroupId(), false,
-			Arrays.asList(SharingEntryActionKey.VIEW), null, serviceContext);
+			_group.getGroupId(), false, Arrays.asList(SharingEntryAction.VIEW),
+			null, serviceContext);
 
 		_sharingEntryService.deleteSharingEntry(
 			sharingEntry.getSharingEntryId(), serviceContext);
@@ -591,7 +591,7 @@ public class SharingEntryServiceTest {
 
 		_registerSharingPermissionChecker(
 			new TestSharingPermissionChecker(
-				Arrays.asList(SharingEntryActionKey.VIEW)));
+				Arrays.asList(SharingEntryAction.VIEW)));
 
 		long classNameId = _classNameLocalService.getClassNameId(
 			Group.class.getName());
@@ -602,8 +602,8 @@ public class SharingEntryServiceTest {
 
 		SharingEntry sharingEntry = _sharingEntryLocalService.addSharingEntry(
 			_fromUser.getUserId(), _toUser.getUserId(), classNameId, classPK,
-			_group.getGroupId(), false,
-			Arrays.asList(SharingEntryActionKey.VIEW), null, serviceContext);
+			_group.getGroupId(), false, Arrays.asList(SharingEntryAction.VIEW),
+			null, serviceContext);
 
 		PrincipalThreadLocal.setName(_toUser.getUserId());
 

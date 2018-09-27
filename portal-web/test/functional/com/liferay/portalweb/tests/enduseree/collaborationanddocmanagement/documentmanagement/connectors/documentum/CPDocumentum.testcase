@@ -608,7 +608,7 @@
 		</execute>
 	</command>
 
-	<command ignore="true" name="MoveCheckedoutDocumentToFolder" priority="5">
+	<command name="MoveCheckedoutDocumentToFolder" priority="5">
 		<property name="test.name.skip.portal.instance" value="CPDocumentum#MoveCheckedoutDocumentToFolder" />
 
 		<execute macro="Navigator#openURL" />
@@ -791,7 +791,7 @@
 		</execute>
 	</command>
 
-	<command ignore="true" name="ViewEditedCheckedoutDocument" priority="5">
+	<command name="ViewEditedCheckedoutDocument" priority="5">
 		<property name="test.name.skip.portal.instance" value="CPDocumentum#ViewEditedCheckedoutDocument" />
 
 		<execute macro="DMRepository#gotoCP">

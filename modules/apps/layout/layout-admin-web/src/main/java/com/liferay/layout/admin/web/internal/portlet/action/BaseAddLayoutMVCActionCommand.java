@@ -17,12 +17,14 @@ package com.liferay.layout.admin.web.internal.portlet.action;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
+import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletURL;
+import javax.portlet.WindowState;
 
 /**
  * @author Pavel Savinov
@@ -42,7 +44,10 @@ public abstract class BaseAddLayoutMVCActionCommand
 
 		PortletURL redirectURL = liferayPortletResponse.createRenderURL();
 
-		editLayoutURL.setParameter("redirect", redirectURL.toString());
+		String redirect = HttpUtil.setParameter(
+			redirectURL.toString(), "p_p_state", WindowState.NORMAL.toString());
+
+		editLayoutURL.setParameter("redirect", redirect);
 
 		editLayoutURL.setParameter(
 			"groupId", String.valueOf(layout.getGroupId()));
@@ -66,7 +71,10 @@ public abstract class BaseAddLayoutMVCActionCommand
 
 		PortletURL redirectURL = liferayPortletResponse.createRenderURL();
 
-		configureLayoutURL.setParameter("redirect", redirectURL.toString());
+		String redirect = HttpUtil.setParameter(
+			redirectURL.toString(), "p_p_state", WindowState.NORMAL.toString());
+
+		configureLayoutURL.setParameter("redirect", redirect);
 
 		String portletResource = ParamUtil.getString(
 			actionRequest, "portletResource");

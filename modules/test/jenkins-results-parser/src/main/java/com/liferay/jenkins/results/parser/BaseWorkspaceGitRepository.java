@@ -230,6 +230,20 @@ public abstract class BaseWorkspaceGitRepository
 		}
 	}
 
+	@Override
+	protected void put(String key, Object value) {
+		put(key, value, false);
+	}
+
+	@Override
+	protected void put(String key, Object value, boolean force) {
+		super.put(key, value, force);
+
+		BuildDatabase buildDatabase = BuildDatabaseUtil.getBuildDatabase();
+
+		buildDatabase.putWorkspaceGitRepository(getType(), this);
+	}
+
 	protected void setProperties(String filePath, Properties properties) {
 		if (!_propertiesFilesMap.containsKey(filePath)) {
 			_propertiesFilesMap.put(filePath, new Properties());

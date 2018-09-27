@@ -178,7 +178,7 @@
 		</execute>
 	</command>
 
-	<command name="OpenIDSmoke" priority="4">
+	<command ignore="true" name="OpenIDSmoke" priority="4">
 		<property name="dummy.socket.proxy.disabled" value="true" />
 		<property name="test.name.skip.portal.instance" value="Login#OpenIDSmoke" />
 

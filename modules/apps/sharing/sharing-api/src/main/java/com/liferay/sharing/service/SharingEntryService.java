@@ -110,6 +110,9 @@ public interface SharingEntryService extends BaseService {
 		Date expirationDate, ServiceContext serviceContext)
 		throws PortalException;
 
+	public SharingEntry deleteSharingEntry(long sharingEntryId,
+		ServiceContext serviceContext) throws PortalException;
+
 	/**
 	* Returns the OSGi service identifier.
 	*

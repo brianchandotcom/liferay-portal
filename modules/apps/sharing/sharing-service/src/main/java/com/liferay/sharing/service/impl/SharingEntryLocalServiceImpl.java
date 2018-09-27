@@ -240,7 +240,7 @@ public class SharingEntryLocalServiceImpl
 			sharingEntryPersistence.findByGroupId(groupId);
 
 		for (SharingEntry sharingEntry : sharingEntries) {
-			_deleteSharingEntry(sharingEntry);
+			deleteSharingEntry(sharingEntry);
 		}
 	}
 
@@ -256,8 +256,23 @@ public class SharingEntryLocalServiceImpl
 			classNameId, classPK);
 
 		for (SharingEntry sharingEntry : sharingEntries) {
-			_deleteSharingEntry(sharingEntry);
+			deleteSharingEntry(sharingEntry);
 		}
+	}
+
+	/**
+	 * Deletes the sharing entry.
+	 *
+	 * @param  sharingEntryId the sharing entry id
+	 * @return the deleted sharing entry
+	 */
+	@Override
+	public SharingEntry deleteSharingEntry(long sharingEntryId)
+		throws PortalException {
+
+		SharingEntry sharingEntry = getSharingEntry(sharingEntryId);
+
+		return deleteSharingEntry(sharingEntry);
 	}
 
 	/**
@@ -275,7 +290,42 @@ public class SharingEntryLocalServiceImpl
 		SharingEntry sharingEntry = sharingEntryPersistence.findByFU_TU_C_C(
 			fromUserId, toUserId, classNameId, classPK);
 
-		return _deleteSharingEntry(sharingEntry);
+		return deleteSharingEntry(sharingEntry);
+	}
+
+	/**
+	 * Deletes the sharing entry.
+	 *
+	 * @param  sharingEntry the sharing entry to delete
+	 * @return the deleted sharing entry
+	 */
+	@Override
+	public SharingEntry deleteSharingEntry(SharingEntry sharingEntry) {
+		String className = sharingEntry.getClassName();
+		long classPK = sharingEntry.getClassPK();
+
+		SharingEntry deletedSharingEntry = sharingEntryPersistence.remove(
+			sharingEntry);
+
+		Indexer<Object> indexer = _indexerRegistry.getIndexer(className);
+
+		if (indexer != null) {
+			try {
+				indexer.reindex(className, classPK);
+			}
+			catch (SearchException se) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(
+						StringBundler.concat(
+							"Unable to index sharing entry for class name ",
+							className, " and primary key ",
+							String.valueOf(classPK)),
+						se);
+				}
+			}
+		}
+
+		return deletedSharingEntry;
 	}
 
 	/**
@@ -289,7 +339,7 @@ public class SharingEntryLocalServiceImpl
 			sharingEntryPersistence.findByToUserId(toUserId);
 
 		for (SharingEntry sharingEntry : sharingEntries) {
-			_deleteSharingEntry(sharingEntry);
+			deleteSharingEntry(sharingEntry);
 		}
 	}
 
@@ -553,34 +603,6 @@ public class SharingEntryLocalServiceImpl
 		);
 
 		return sharingEntryPersistence.update(sharingEntry);
-	}
-
-	private SharingEntry _deleteSharingEntry(SharingEntry sharingEntry) {
-		String className = sharingEntry.getClassName();
-		long classPK = sharingEntry.getClassPK();
-
-		SharingEntry deletedSharingEntry = sharingEntryPersistence.remove(
-			sharingEntry);
-
-		Indexer<Object> indexer = _indexerRegistry.getIndexer(className);
-
-		if (indexer != null) {
-			try {
-				indexer.reindex(className, classPK);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(
-						StringBundler.concat(
-							"Unable to index sharing entry for class name ",
-							className, " and primary key ",
-							String.valueOf(classPK)),
-						se);
-				}
-			}
-		}
-
-		return deletedSharingEntry;
 	}
 
 	private void _validateExpirationDate(Date expirationDate)

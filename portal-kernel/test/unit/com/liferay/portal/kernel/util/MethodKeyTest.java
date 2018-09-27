@@ -177,7 +177,7 @@ public class MethodKeyTest {
 		MethodKey transformedMethodKey = methodKey.transform(
 			new URLClassLoader(
 				ClassPathUtil.getClassPathURLs(
-					ClassPathUtil.getJVMClassPath(true)),
+					ClassPathUtil.getJVMClassPath(false)),
 				null));
 
 		Assert.assertNotEquals(methodKey, transformedMethodKey);

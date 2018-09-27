@@ -36,7 +36,6 @@ import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.service.util.test.PortletPreferencesImplTestUtil;
 import com.liferay.portal.service.util.test.PortletPreferencesTestUtil;
-import com.liferay.portal.spring.aop.ServiceBeanAopCacheManagerUtil;
 import com.liferay.portal.spring.aop.ServiceBeanAopProxy;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.util.test.LayoutTestUtil;
@@ -1509,14 +1508,10 @@ public class PortletPreferencesLocalServiceTest {
 		_serviceBag = new ServiceBag<>(
 			ClassLoaderUtil.getPortalClassLoader(), advisedSupport,
 			PortletPreferencesLocalService.class, serviceWrapper);
-
-		ServiceBeanAopCacheManagerUtil.reset();
 	}
 
 	protected void resetService() throws Exception {
 		_serviceBag.replace();
-
-		ServiceBeanAopCacheManagerUtil.reset();
 	}
 
 	private static final String[] _MULTIPLE_VALUES = {"value1", "value2"};

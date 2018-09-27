@@ -67,7 +67,33 @@ public class ServiceBeanAopProxy
 
 	@Override
 	public AdvisedSupport getAdvisedSupport() {
-		return _advisedSupport;
+		return new AdvisedSupport() {
+
+			@Override
+			public Class<?>[] getProxiedInterfaces() {
+				return _advisedSupport.getProxiedInterfaces();
+			}
+
+			@Override
+			public Object getTarget() throws Exception {
+				return _advisedSupport.getTarget();
+			}
+
+			@Override
+			public void setTarget(Object target) {
+				_advisedSupport.setTarget(target);
+
+				_serviceBeanAopCacheManager.reset();
+			}
+
+			@Override
+			public void setTarget(Object target, Class<?> targetClass) {
+				_advisedSupport.setTarget(target, targetClass);
+
+				_serviceBeanAopCacheManager.reset();
+			}
+
+		};
 	}
 
 	@Override

@@ -70,7 +70,10 @@ public class CompanionPortalWorkspaceGitRepository
 	protected CompanionPortalWorkspaceGitRepository(JSONObject jsonObject) {
 		super(jsonObject);
 
-		_parentWorkspaceGitRepository = null;
+		BuildDatabase buildDatabase = BuildDatabaseUtil.getBuildDatabase();
+
+		_parentWorkspaceGitRepository = buildDatabase.getWorkspaceGitRepository(
+			"portal");
 	}
 
 	protected CompanionPortalWorkspaceGitRepository(

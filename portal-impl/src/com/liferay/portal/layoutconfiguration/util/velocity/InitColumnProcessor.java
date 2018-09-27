@@ -14,34 +14,62 @@
 
 package com.liferay.portal.layoutconfiguration.util.velocity;
 
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.portlet.PortletProvider;
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Ivica Cardic
  * @author Brian Wing Shun Chan
  */
-public class InitColumnProcessor {
-
-	public InitColumnProcessor() {
-		_columns = new ArrayList<>();
-	}
+public class InitColumnProcessor implements ColumnProcessor {
 
 	public List<String> getColumns() {
 		return _columns;
 	}
 
-	public void processColumn(String columnId) {
+	@Override
+	public String processColumn(String columnId) {
 		_columns.add(columnId);
+
+		return StringPool.BLANK;
 	}
 
-	public void processColumn(String columnId, String classNames) {
+	@Override
+	public String processColumn(String columnId, String classNames) {
 		_columns.add(columnId);
+
+		return StringPool.BLANK;
 	}
 
-	public void processMax() {
+	@Override
+	public String processMax() {
+		return StringPool.BLANK;
 	}
 
-	private final List<String> _columns;
+	@Override
+	public String processPortlet(String portletId) {
+		return StringPool.BLANK;
+	}
+
+	@Override
+	public String processPortlet(
+		String portletId, Map<String, ?> defaultSettingsMap) {
+
+		return StringPool.BLANK;
+	}
+
+	@Override
+	public String processPortlet(
+		String portletProviderClassName,
+		PortletProvider.Action portletProviderAction) {
+
+		return StringPool.BLANK;
+	}
+
+	private final List<String> _columns = new ArrayList<>();
 
 }

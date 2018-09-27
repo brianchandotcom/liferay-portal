@@ -83,6 +83,10 @@ public class NPMTestBatchTestClassGroup extends BatchTestClassGroup {
 
 			_moduleFile = file;
 
+			initJSTestMethods();
+		}
+
+		protected void initJSTestMethods() {
 			List<File> jsFiles = JenkinsResultsParserUtil.findFiles(
 				_moduleFile, ".*\\.js");
 

@@ -20,7 +20,6 @@ import com.liferay.petra.process.ClassPathUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
 
-import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
@@ -78,15 +77,16 @@ public class MethodKeyTest {
 	}
 
 	@Test
-	public void testEquals() {
+	public void testEquals() throws Exception {
 		MethodKey methodKey = new MethodKey(
 			_TEST_CLASS, _TEST_METHOD_NAME, String.class);
 
 		Assert.assertEquals(methodKey, methodKey);
-		Assert.assertNotEquals(methodKey, new Object());
+		Assert.assertEquals(methodKey, _cloneBySerialization(methodKey));
 		Assert.assertEquals(
 			methodKey,
 			new MethodKey(_TEST_CLASS, _TEST_METHOD_NAME, String.class));
+		Assert.assertNotEquals(methodKey, new Object());
 		Assert.assertNotEquals(
 			methodKey,
 			new MethodKey(
@@ -144,13 +144,17 @@ public class MethodKeyTest {
 	}
 
 	@Test
-	public void testHashCode() throws NoSuchMethodException {
+	public void testHashCode() throws Exception {
 		Method method = _TEST_CLASS.getMethod(_TEST_METHOD_NAME, String.class);
 
 		MethodKey methodKey = new MethodKey(
 			_TEST_CLASS, _TEST_METHOD_NAME, String.class);
 
 		Assert.assertEquals(method.hashCode(), methodKey.hashCode());
+
+		MethodKey serializedMethodKey = _cloneBySerialization(methodKey);
+
+		Assert.assertEquals(method.hashCode(), serializedMethodKey.hashCode());
 	}
 
 	@Test
@@ -223,38 +227,6 @@ public class MethodKeyTest {
 			"test", transformedMethod.invoke(transformedClassInstance, "test"));
 	}
 
-	@Test
-	public void testWriteAndReadExternal()
-		throws ClassNotFoundException, IOException {
-
-		MethodKey originalMethodKey = new MethodKey(
-			_TEST_CLASS, _TEST_METHOD_NAME, String.class);
-
-		MethodKey deserializedMethodKey = new MethodKey();
-
-		try (UnsyncByteArrayOutputStream unsyncByteArrayOutputStream =
-				new UnsyncByteArrayOutputStream()) {
-
-			try (ObjectOutputStream objectOutputStream = new ObjectOutputStream(
-					unsyncByteArrayOutputStream)) {
-
-				originalMethodKey.writeExternal(objectOutputStream);
-			}
-
-			try (UnsyncByteArrayInputStream unsyncByteArrayInputStream =
-					new UnsyncByteArrayInputStream(
-						unsyncByteArrayOutputStream.unsafeGetByteArray(), 0,
-						unsyncByteArrayOutputStream.size());
-				ObjectInputStream objectInputStream = new ObjectInputStream(
-					unsyncByteArrayInputStream)) {
-
-				deserializedMethodKey.readExternal(objectInputStream);
-			}
-		}
-
-		Assert.assertEquals(originalMethodKey, deserializedMethodKey);
-	}
-
 	private void _assertMethodKey(
 		Class<?> expectedClass, String expectedMethodName,
 		Class<?>[] expectedParameters, MethodKey methodKey) {
@@ -263,6 +235,26 @@ public class MethodKeyTest {
 		Assert.assertEquals(expectedMethodName, methodKey.getMethodName());
 		Assert.assertArrayEquals(
 			expectedParameters, methodKey.getParameterTypes());
+	}
+
+	private MethodKey _cloneBySerialization(MethodKey methodKey)
+		throws Exception {
+
+		try (UnsyncByteArrayOutputStream ubaos =
+				new UnsyncByteArrayOutputStream()) {
+
+			try (ObjectOutputStream oos = new ObjectOutputStream(ubaos)) {
+				oos.writeObject(methodKey);
+			}
+
+			try (UnsyncByteArrayInputStream ubais =
+					new UnsyncByteArrayInputStream(
+						ubaos.unsafeGetByteArray(), 0, ubaos.size());
+				ObjectInputStream ois = new ObjectInputStream(ubais)) {
+
+				return (MethodKey)ois.readObject();
+			}
+		}
 	}
 
 	private static final Class<?> _TEST_CLASS = TestClass.class;

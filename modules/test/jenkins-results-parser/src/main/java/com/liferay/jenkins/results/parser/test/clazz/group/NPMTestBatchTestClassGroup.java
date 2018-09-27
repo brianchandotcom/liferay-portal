@@ -14,6 +14,7 @@
 
 package com.liferay.jenkins.results.parser.test.clazz.group;
 
+import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 import com.liferay.jenkins.results.parser.PortalTestClassJob;
 
 import java.io.File;
@@ -23,6 +24,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
@@ -54,7 +56,14 @@ public class NPMTestBatchTestClassGroup extends BatchTestClassGroup {
 		protected static NPMTestBatchTestClass getInstance(
 			String batchName, File moduleDir) {
 
-			return new NPMTestBatchTestClass(batchName, moduleDir);
+			if (_npmTestBatchTestClasses.containsKey(moduleDir)) {
+				return _npmTestBatchTestClasses.get(moduleDir);
+			}
+
+			_npmTestBatchTestClasses.put(
+				moduleDir, new NPMTestBatchTestClass(batchName, moduleDir));
+
+			return _npmTestBatchTestClasses.get(moduleDir);
 		}
 
 		protected static Map<File, NPMTestBatchTestClass>
@@ -69,6 +78,39 @@ public class NPMTestBatchTestClassGroup extends BatchTestClassGroup {
 			addTestMethod(batchName);
 
 			_moduleFile = file;
+
+			List<File> jsFiles = JenkinsResultsParserUtil.findFiles(
+				_moduleFile, ".*\\.js");
+
+			for (File jsFile : jsFiles) {
+				try {
+					String jsFileContent = JenkinsResultsParserUtil.read(
+						jsFile);
+
+					Matcher matcher = _itPattern.matcher(jsFileContent);
+
+					while (matcher.find()) {
+						String methodName = matcher.group("description");
+
+						String xit = matcher.group("xit");
+
+						boolean methodIgnored = false;
+
+						if (xit != null) {
+							methodIgnored = true;
+						}
+
+						_jsTestMethods.add(
+							new BaseTestMethod(
+								methodIgnored,
+								jsFile.getAbsolutePath() + "::" + methodName,
+								this));
+					}
+				}
+				catch (IOException ioe) {
+					throw new RuntimeException(ioe);
+				}
+			}
 		}
 
 		private static final Pattern _itPattern = Pattern.compile(

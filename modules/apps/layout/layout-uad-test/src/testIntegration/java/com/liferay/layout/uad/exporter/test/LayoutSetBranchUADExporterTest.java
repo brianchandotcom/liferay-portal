@@ -15,10 +15,14 @@
 package com.liferay.layout.uad.exporter.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.layout.uad.test.LayoutSetBranchUADTestHelper;
 import com.liferay.portal.kernel.model.LayoutSetBranch;
+import com.liferay.portal.kernel.model.LayoutSetBranchConstants;
+import com.liferay.portal.kernel.service.LayoutSetBranchLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.user.associated.data.exporter.UADExporter;
@@ -27,7 +31,6 @@ import com.liferay.user.associated.data.test.util.BaseUADExporterTestCase;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.After;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.runner.RunWith;
@@ -44,15 +47,14 @@ public class LayoutSetBranchUADExporterTest
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
 
-	@After
-	public void tearDown() throws Exception {
-		_layoutSetBranchUADTestHelper.cleanUpDependencies(_layoutSetBranchs);
-	}
-
 	@Override
 	protected LayoutSetBranch addBaseModel(long userId) throws Exception {
 		LayoutSetBranch layoutSetBranch =
-			_layoutSetBranchUADTestHelper.addLayoutSetBranch(userId);
+			_layoutSetBranchLocalService.addLayoutSetBranch(
+				userId, TestPropsValues.getGroupId(), false,
+				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+				false, LayoutSetBranchConstants.ALL_BRANCHES,
+				ServiceContextTestUtil.getServiceContext());
 
 		_layoutSetBranchs.add(layoutSetBranch);
 
@@ -69,11 +71,11 @@ public class LayoutSetBranchUADExporterTest
 		return _uadExporter;
 	}
 
+	@Inject
+	private LayoutSetBranchLocalService _layoutSetBranchLocalService;
+
 	@DeleteAfterTestRun
 	private final List<LayoutSetBranch> _layoutSetBranchs = new ArrayList<>();
-
-	@Inject
-	private LayoutSetBranchUADTestHelper _layoutSetBranchUADTestHelper;
 
 	@Inject(filter = "component.name=*.LayoutSetBranchUADExporter")
 	private UADExporter _uadExporter;

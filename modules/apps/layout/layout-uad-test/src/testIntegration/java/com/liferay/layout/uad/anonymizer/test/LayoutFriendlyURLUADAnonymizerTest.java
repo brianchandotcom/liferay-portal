@@ -19,6 +19,7 @@ import com.liferay.layout.uad.test.LayoutFriendlyURLUADTestHelper;
 import com.liferay.portal.kernel.model.LayoutFriendlyURL;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.LayoutFriendlyURLLocalService;
+import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.test.rule.Inject;
@@ -48,8 +49,8 @@ public class LayoutFriendlyURLUADAnonymizerTest
 
 	@After
 	public void tearDown() throws Exception {
-		_layoutFriendlyURLUADTestHelper.cleanUpDependencies(
-			_layoutFriendlyURLs);
+		LayoutFriendlyURLUADTestHelper.cleanUpDependencies(
+			_layoutLocalService, _layoutFriendlyURLs);
 	}
 
 	@Override
@@ -63,7 +64,8 @@ public class LayoutFriendlyURLUADAnonymizerTest
 		throws Exception {
 
 		LayoutFriendlyURL layoutFriendlyURL =
-			_layoutFriendlyURLUADTestHelper.addLayoutFriendlyURL(userId);
+			LayoutFriendlyURLUADTestHelper.addLayoutFriendlyURL(
+				_layoutFriendlyURLLocalService, _layoutLocalService, userId);
 
 		if (deleteAfterTestRun) {
 			_layoutFriendlyURLs.add(layoutFriendlyURL);
@@ -76,7 +78,8 @@ public class LayoutFriendlyURLUADAnonymizerTest
 	protected void deleteBaseModels(List<LayoutFriendlyURL> baseModels)
 		throws Exception {
 
-		_layoutFriendlyURLUADTestHelper.cleanUpDependencies(baseModels);
+		LayoutFriendlyURLUADTestHelper.cleanUpDependencies(
+			_layoutLocalService, baseModels);
 	}
 
 	@Override
@@ -121,7 +124,7 @@ public class LayoutFriendlyURLUADAnonymizerTest
 		new ArrayList<>();
 
 	@Inject
-	private LayoutFriendlyURLUADTestHelper _layoutFriendlyURLUADTestHelper;
+	private LayoutLocalService _layoutLocalService;
 
 	@Inject(filter = "component.name=*.LayoutFriendlyURLUADAnonymizer")
 	private UADAnonymizer _uadAnonymizer;

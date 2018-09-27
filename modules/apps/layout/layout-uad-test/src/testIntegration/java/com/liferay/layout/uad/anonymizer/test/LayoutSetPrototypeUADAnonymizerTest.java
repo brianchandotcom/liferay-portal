@@ -15,12 +15,14 @@
 package com.liferay.layout.uad.anonymizer.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.layout.uad.test.LayoutSetPrototypeUADTestHelper;
 import com.liferay.portal.kernel.model.LayoutSetPrototype;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.LayoutSetPrototypeLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.user.associated.data.anonymizer.UADAnonymizer;
@@ -29,7 +31,6 @@ import com.liferay.user.associated.data.test.util.BaseUADAnonymizerTestCase;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.After;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.runner.RunWith;
@@ -46,12 +47,6 @@ public class LayoutSetPrototypeUADAnonymizerTest
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
 
-	@After
-	public void tearDown() throws Exception {
-		_layoutSetPrototypeUADTestHelper.cleanUpDependencies(
-			_layoutSetPrototypes);
-	}
-
 	@Override
 	protected LayoutSetPrototype addBaseModel(long userId) throws Exception {
 		return addBaseModel(userId, true);
@@ -63,20 +58,17 @@ public class LayoutSetPrototypeUADAnonymizerTest
 		throws Exception {
 
 		LayoutSetPrototype layoutSetPrototype =
-			_layoutSetPrototypeUADTestHelper.addLayoutSetPrototype(userId);
+			_layoutSetPrototypeLocalService.addLayoutSetPrototype(
+				userId, TestPropsValues.getCompanyId(),
+				RandomTestUtil.randomLocaleStringMap(),
+				RandomTestUtil.randomLocaleStringMap(), true, true,
+				ServiceContextTestUtil.getServiceContext());
 
 		if (deleteAfterTestRun) {
 			_layoutSetPrototypes.add(layoutSetPrototype);
 		}
 
 		return layoutSetPrototype;
-	}
-
-	@Override
-	protected void deleteBaseModels(List<LayoutSetPrototype> baseModels)
-		throws Exception {
-
-		_layoutSetPrototypeUADTestHelper.cleanUpDependencies(baseModels);
 	}
 
 	@Override
@@ -119,9 +111,6 @@ public class LayoutSetPrototypeUADAnonymizerTest
 	@DeleteAfterTestRun
 	private final List<LayoutSetPrototype> _layoutSetPrototypes =
 		new ArrayList<>();
-
-	@Inject
-	private LayoutSetPrototypeUADTestHelper _layoutSetPrototypeUADTestHelper;
 
 	@Inject(filter = "component.name=*.LayoutSetPrototypeUADAnonymizer")
 	private UADAnonymizer _uadAnonymizer;

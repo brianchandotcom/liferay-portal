@@ -16,6 +16,7 @@ package com.liferay.document.library.uad.exporter.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.document.library.kernel.model.DLFolder;
+import com.liferay.document.library.kernel.service.DLFolderLocalService;
 import com.liferay.document.library.uad.test.DLFolderUADTestHelper;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -28,7 +29,6 @@ import com.liferay.user.associated.data.test.util.WhenHasStatusByUserIdField;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.After;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.runner.RunWith;
@@ -51,23 +51,18 @@ public class DLFolderUADExporterTest
 			long userId, long statusByUserId)
 		throws Exception {
 
-		DLFolder dlFolder =
-			_dlFolderUADTestHelper.addDLFolderWithStatusByUserId(
-				userId, statusByUserId);
+		DLFolder dlFolder = DLFolderUADTestHelper.addDLFolderWithStatusByUserId(
+			_dlFolderLocalService, userId, statusByUserId);
 
 		_dlFolders.add(dlFolder);
 
 		return dlFolder;
 	}
 
-	@After
-	public void tearDown() throws Exception {
-		_dlFolderUADTestHelper.cleanUpDependencies(_dlFolders);
-	}
-
 	@Override
 	protected DLFolder addBaseModel(long userId) throws Exception {
-		DLFolder dlFolder = _dlFolderUADTestHelper.addDLFolder(userId);
+		DLFolder dlFolder = DLFolderUADTestHelper.addDLFolder(
+			_dlFolderLocalService, userId);
 
 		_dlFolders.add(dlFolder);
 
@@ -84,11 +79,11 @@ public class DLFolderUADExporterTest
 		return _uadExporter;
 	}
 
+	@Inject
+	private DLFolderLocalService _dlFolderLocalService;
+
 	@DeleteAfterTestRun
 	private final List<DLFolder> _dlFolders = new ArrayList<>();
-
-	@Inject
-	private DLFolderUADTestHelper _dlFolderUADTestHelper;
 
 	@Inject(filter = "component.name=*.DLFolderUADExporter")
 	private UADExporter _uadExporter;

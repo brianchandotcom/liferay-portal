@@ -19,6 +19,8 @@ import com.liferay.layout.uad.test.LayoutRevisionUADTestHelper;
 import com.liferay.portal.kernel.model.LayoutRevision;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.LayoutRevisionLocalService;
+import com.liferay.portal.kernel.service.LayoutSetBranchLocalService;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.test.rule.Inject;
@@ -54,8 +56,9 @@ public class LayoutRevisionUADAnonymizerTest
 		throws Exception {
 
 		LayoutRevision layoutRevision =
-			_layoutRevisionUADTestHelper.addLayoutRevisionWithStatusByUserId(
-				userId, statusByUserId);
+			LayoutRevisionUADTestHelper.addLayoutRevisionWithStatusByUserId(
+				_layoutRevisionLocalService, _layoutSetBranchLocalService,
+				_userLocalService, userId, statusByUserId);
 
 		_layoutRevisions.add(layoutRevision);
 
@@ -64,7 +67,8 @@ public class LayoutRevisionUADAnonymizerTest
 
 	@After
 	public void tearDown() throws Exception {
-		_layoutRevisionUADTestHelper.cleanUpDependencies(_layoutRevisions);
+		LayoutRevisionUADTestHelper.cleanUpDependencies(
+			_layoutSetBranchLocalService, _layoutRevisions);
 	}
 
 	@Override
@@ -78,7 +82,9 @@ public class LayoutRevisionUADAnonymizerTest
 		throws Exception {
 
 		LayoutRevision layoutRevision =
-			_layoutRevisionUADTestHelper.addLayoutRevision(userId);
+			LayoutRevisionUADTestHelper.addLayoutRevision(
+				_layoutRevisionLocalService, _layoutSetBranchLocalService,
+				userId);
 
 		if (deleteAfterTestRun) {
 			_layoutRevisions.add(layoutRevision);
@@ -91,7 +97,8 @@ public class LayoutRevisionUADAnonymizerTest
 	protected void deleteBaseModels(List<LayoutRevision> baseModels)
 		throws Exception {
 
-		_layoutRevisionUADTestHelper.cleanUpDependencies(baseModels);
+		LayoutRevisionUADTestHelper.cleanUpDependencies(
+			_layoutSetBranchLocalService, baseModels);
 	}
 
 	@Override
@@ -138,9 +145,12 @@ public class LayoutRevisionUADAnonymizerTest
 	private final List<LayoutRevision> _layoutRevisions = new ArrayList<>();
 
 	@Inject
-	private LayoutRevisionUADTestHelper _layoutRevisionUADTestHelper;
+	private LayoutSetBranchLocalService _layoutSetBranchLocalService;
 
 	@Inject(filter = "component.name=*.LayoutRevisionUADAnonymizer")
 	private UADAnonymizer _uadAnonymizer;
+
+	@Inject
+	private UserLocalService _userLocalService;
 
 }

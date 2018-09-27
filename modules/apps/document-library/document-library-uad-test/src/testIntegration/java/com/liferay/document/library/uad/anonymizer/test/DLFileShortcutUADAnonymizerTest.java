@@ -16,7 +16,9 @@ package com.liferay.document.library.uad.anonymizer.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.document.library.kernel.model.DLFileShortcut;
+import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
 import com.liferay.document.library.kernel.service.DLFileShortcutLocalService;
+import com.liferay.document.library.kernel.service.DLFolderLocalService;
 import com.liferay.document.library.uad.test.DLFileShortcutUADTestHelper;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -54,8 +56,9 @@ public class DLFileShortcutUADAnonymizerTest
 		throws Exception {
 
 		DLFileShortcut dlFileShortcut =
-			_dlFileShortcutUADTestHelper.addDLFileShortcutWithStatusByUserId(
-				userId, statusByUserId);
+			DLFileShortcutUADTestHelper.addDLFileShortcutWithStatusByUserId(
+				_dlFileEntryLocalService, _dlFileShortcutLocalService,
+				_dlFolderLocalService, userId, statusByUserId);
 
 		_dlFileShortcuts.add(dlFileShortcut);
 
@@ -64,7 +67,8 @@ public class DLFileShortcutUADAnonymizerTest
 
 	@After
 	public void tearDown() throws Exception {
-		_dlFileShortcutUADTestHelper.cleanUpDependencies(_dlFileShortcuts);
+		DLFileShortcutUADTestHelper.cleanUpDependencies(
+			_dlFileEntryLocalService, _dlFolderLocalService, _dlFileShortcuts);
 	}
 
 	@Override
@@ -78,7 +82,9 @@ public class DLFileShortcutUADAnonymizerTest
 		throws Exception {
 
 		DLFileShortcut dlFileShortcut =
-			_dlFileShortcutUADTestHelper.addDLFileShortcut(userId);
+			DLFileShortcutUADTestHelper.addDLFileShortcut(
+				_dlFileEntryLocalService, _dlFileShortcutLocalService,
+				_dlFolderLocalService, userId);
 
 		if (deleteAfterTestRun) {
 			_dlFileShortcuts.add(dlFileShortcut);
@@ -91,7 +97,8 @@ public class DLFileShortcutUADAnonymizerTest
 	protected void deleteBaseModels(List<DLFileShortcut> baseModels)
 		throws Exception {
 
-		_dlFileShortcutUADTestHelper.cleanUpDependencies(baseModels);
+		DLFileShortcutUADTestHelper.cleanUpDependencies(
+			_dlFileEntryLocalService, _dlFolderLocalService, baseModels);
 	}
 
 	@Override
@@ -132,13 +139,16 @@ public class DLFileShortcutUADAnonymizerTest
 	}
 
 	@Inject
+	private DLFileEntryLocalService _dlFileEntryLocalService;
+
+	@Inject
 	private DLFileShortcutLocalService _dlFileShortcutLocalService;
 
 	@DeleteAfterTestRun
 	private final List<DLFileShortcut> _dlFileShortcuts = new ArrayList<>();
 
 	@Inject
-	private DLFileShortcutUADTestHelper _dlFileShortcutUADTestHelper;
+	private DLFolderLocalService _dlFolderLocalService;
 
 	@Inject(filter = "component.name=*.DLFileShortcutUADAnonymizer")
 	private UADAnonymizer _uadAnonymizer;

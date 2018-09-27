@@ -23,36 +23,38 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.List;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author William Newbury
  */
-@Component(immediate = true, service = DLFolderUADTestHelper.class)
 public class DLFolderUADTestHelper {
 
-	public DLFolder addDLFolder(long userId) throws Exception {
-		return addDLFolder(userId, 0L);
-	}
-
-	public DLFolder addDLFolder(long userId, long parentFolderId)
+	public static DLFolder addDLFolder(
+			DLFolderLocalService dlFolderLocalService, long userId)
 		throws Exception {
 
-		return _dlFolderLocalService.addFolder(
+		return addDLFolder(dlFolderLocalService, userId, 0L);
+	}
+
+	public static DLFolder addDLFolder(
+			DLFolderLocalService dlFolderLocalService, long userId,
+			long parentFolderId)
+		throws Exception {
+
+		return dlFolderLocalService.addFolder(
 			userId, TestPropsValues.getGroupId(), TestPropsValues.getGroupId(),
 			false, parentFolderId, RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(), false,
 			ServiceContextTestUtil.getServiceContext());
 	}
 
-	public DLFolder addDLFolderWithStatusByUserId(
-			long userId, long statusByUserId)
+	public static DLFolder addDLFolderWithStatusByUserId(
+			DLFolderLocalService dlFolderLocalService, long userId,
+			long statusByUserId)
 		throws Exception {
 
-		DLFolder dlFolder = addDLFolder(userId);
+		DLFolder dlFolder = addDLFolder(dlFolderLocalService, userId);
 
-		return _dlFolderLocalService.updateStatus(
+		return dlFolderLocalService.updateStatus(
 			statusByUserId, dlFolder.getFolderId(),
 			WorkflowConstants.STATUS_DRAFT, null,
 			ServiceContextTestUtil.getServiceContext());
@@ -60,8 +62,5 @@ public class DLFolderUADTestHelper {
 
 	public void cleanUpDependencies(List<DLFolder> dlFolders) throws Exception {
 	}
-
-	@Reference
-	private DLFolderLocalService _dlFolderLocalService;
 
 }

@@ -17,6 +17,9 @@ package com.liferay.layout.uad.exporter.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.layout.uad.test.LayoutRevisionUADTestHelper;
 import com.liferay.portal.kernel.model.LayoutRevision;
+import com.liferay.portal.kernel.service.LayoutRevisionLocalService;
+import com.liferay.portal.kernel.service.LayoutSetBranchLocalService;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.test.rule.Inject;
@@ -52,8 +55,9 @@ public class LayoutRevisionUADExporterTest
 		throws Exception {
 
 		LayoutRevision layoutRevision =
-			_layoutRevisionUADTestHelper.addLayoutRevisionWithStatusByUserId(
-				userId, statusByUserId);
+			LayoutRevisionUADTestHelper.addLayoutRevisionWithStatusByUserId(
+				_layoutRevisionLocalService, _layoutSetBranchLocalService,
+				_userLocalService, userId, statusByUserId);
 
 		_layoutRevisions.add(layoutRevision);
 
@@ -62,13 +66,16 @@ public class LayoutRevisionUADExporterTest
 
 	@After
 	public void tearDown() throws Exception {
-		_layoutRevisionUADTestHelper.cleanUpDependencies(_layoutRevisions);
+		LayoutRevisionUADTestHelper.cleanUpDependencies(
+			_layoutSetBranchLocalService, _layoutRevisions);
 	}
 
 	@Override
 	protected LayoutRevision addBaseModel(long userId) throws Exception {
 		LayoutRevision layoutRevision =
-			_layoutRevisionUADTestHelper.addLayoutRevision(userId);
+			LayoutRevisionUADTestHelper.addLayoutRevision(
+				_layoutRevisionLocalService, _layoutSetBranchLocalService,
+				userId);
 
 		_layoutRevisions.add(layoutRevision);
 
@@ -85,13 +92,19 @@ public class LayoutRevisionUADExporterTest
 		return _uadExporter;
 	}
 
+	@Inject
+	private LayoutRevisionLocalService _layoutRevisionLocalService;
+
 	@DeleteAfterTestRun
 	private final List<LayoutRevision> _layoutRevisions = new ArrayList<>();
 
 	@Inject
-	private LayoutRevisionUADTestHelper _layoutRevisionUADTestHelper;
+	private LayoutSetBranchLocalService _layoutSetBranchLocalService;
 
 	@Inject(filter = "component.name=*.LayoutRevisionUADExporter")
 	private UADExporter _uadExporter;
+
+	@Inject
+	private UserLocalService _userLocalService;
 
 }

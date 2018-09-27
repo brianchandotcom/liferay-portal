@@ -29,7 +29,6 @@ import com.liferay.user.associated.data.test.util.BaseUADAnonymizerTestCase;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.After;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.runner.RunWith;
@@ -45,11 +44,6 @@ public class LayoutUADAnonymizerTest extends BaseUADAnonymizerTestCase<Layout> {
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
 
-	@After
-	public void tearDown() throws Exception {
-		_layoutUADTestHelper.cleanUpDependencies(_layouts);
-	}
-
 	@Override
 	protected Layout addBaseModel(long userId) throws Exception {
 		return addBaseModel(userId, true);
@@ -59,18 +53,14 @@ public class LayoutUADAnonymizerTest extends BaseUADAnonymizerTestCase<Layout> {
 	protected Layout addBaseModel(long userId, boolean deleteAfterTestRun)
 		throws Exception {
 
-		Layout layout = _layoutUADTestHelper.addLayout(userId);
+		Layout layout = LayoutUADTestHelper.addLayout(
+			_layoutLocalService, userId);
 
 		if (deleteAfterTestRun) {
 			_layouts.add(layout);
 		}
 
 		return layout;
-	}
-
-	@Override
-	protected void deleteBaseModels(List<Layout> baseModels) throws Exception {
-		_layoutUADTestHelper.cleanUpDependencies(baseModels);
 	}
 
 	@Override
@@ -109,9 +99,6 @@ public class LayoutUADAnonymizerTest extends BaseUADAnonymizerTestCase<Layout> {
 
 	@DeleteAfterTestRun
 	private final List<Layout> _layouts = new ArrayList<>();
-
-	@Inject
-	private LayoutUADTestHelper _layoutUADTestHelper;
 
 	@Inject(filter = "component.name=*.LayoutUADAnonymizer")
 	private UADAnonymizer _uadAnonymizer;

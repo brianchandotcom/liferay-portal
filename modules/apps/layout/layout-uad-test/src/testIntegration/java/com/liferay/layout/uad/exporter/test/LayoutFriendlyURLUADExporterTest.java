@@ -17,6 +17,8 @@ package com.liferay.layout.uad.exporter.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.layout.uad.test.LayoutFriendlyURLUADTestHelper;
 import com.liferay.portal.kernel.model.LayoutFriendlyURL;
+import com.liferay.portal.kernel.service.LayoutFriendlyURLLocalService;
+import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.test.rule.Inject;
@@ -46,14 +48,15 @@ public class LayoutFriendlyURLUADExporterTest
 
 	@After
 	public void tearDown() throws Exception {
-		_layoutFriendlyURLUADTestHelper.cleanUpDependencies(
-			_layoutFriendlyURLs);
+		LayoutFriendlyURLUADTestHelper.cleanUpDependencies(
+			_layoutLocalService, _layoutFriendlyURLs);
 	}
 
 	@Override
 	protected LayoutFriendlyURL addBaseModel(long userId) throws Exception {
 		LayoutFriendlyURL layoutFriendlyURL =
-			_layoutFriendlyURLUADTestHelper.addLayoutFriendlyURL(userId);
+			LayoutFriendlyURLUADTestHelper.addLayoutFriendlyURL(
+				_layoutFriendlyURLLocalService, _layoutLocalService, userId);
 
 		_layoutFriendlyURLs.add(layoutFriendlyURL);
 
@@ -70,12 +73,15 @@ public class LayoutFriendlyURLUADExporterTest
 		return _uadExporter;
 	}
 
+	@Inject
+	private LayoutFriendlyURLLocalService _layoutFriendlyURLLocalService;
+
 	@DeleteAfterTestRun
 	private final List<LayoutFriendlyURL> _layoutFriendlyURLs =
 		new ArrayList<>();
 
 	@Inject
-	private LayoutFriendlyURLUADTestHelper _layoutFriendlyURLUADTestHelper;
+	private LayoutLocalService _layoutLocalService;
 
 	@Inject(filter = "component.name=*.LayoutFriendlyURLUADExporter")
 	private UADExporter _uadExporter;

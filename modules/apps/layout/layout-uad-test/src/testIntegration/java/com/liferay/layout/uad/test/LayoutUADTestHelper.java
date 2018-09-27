@@ -26,18 +26,14 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
 import com.liferay.portal.test.randomizerbumpers.FriendlyURLRandomizerBumper;
 
-import java.util.List;
-
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Brian Wing Shun Chan
  */
-@Component(immediate = true, service = LayoutUADTestHelper.class)
 public class LayoutUADTestHelper {
 
-	public Layout addLayout(long userId) throws Exception {
+	public static Layout addLayout(
+		LayoutLocalService layoutLocalService, long userId) throws Exception {
+
 		String name = RandomTestUtil.randomString(
 			FriendlyURLRandomizerBumper.INSTANCE,
 			NumericStringRandomizerBumper.INSTANCE,
@@ -46,18 +42,12 @@ public class LayoutUADTestHelper {
 		String friendlyURL =
 			StringPool.SLASH + FriendlyURLNormalizerUtil.normalize(name);
 
-		return _layoutLocalService.addLayout(
+		return layoutLocalService.addLayout(
 			userId, TestPropsValues.getGroupId(), false,
 			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, name,
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			LayoutConstants.TYPE_PORTLET, false, friendlyURL,
 			ServiceContextTestUtil.getServiceContext());
 	}
-
-	public void cleanUpDependencies(List<Layout> layouts) throws Exception {
-	}
-
-	@Reference
-	private LayoutLocalService _layoutLocalService;
 
 }

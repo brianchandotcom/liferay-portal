@@ -32,7 +32,8 @@ import com.liferay.portal.test.randomizerbumpers.FriendlyURLRandomizerBumper;
 public class LayoutUADTestHelper {
 
 	public static Layout addLayout(
-		LayoutLocalService layoutLocalService, long userId) throws Exception {
+			LayoutLocalService layoutLocalService, long userId)
+		throws Exception {
 
 		String name = RandomTestUtil.randomString(
 			FriendlyURLRandomizerBumper.INSTANCE,

@@ -199,6 +199,8 @@
 	</command>
 
 	<command name="ExportImportDDLViaGlobal" priority="5">
+		<property name="test.name.skip.portal.instance" value="ExportImport#ExportImportDDLViaGlobal" />
+
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Sites" />
 			<var name="panel" value="Control Panel" />
@@ -331,6 +333,8 @@
 	</command>
 
 	<command name="ExportImportDeletions" priority="4">
+		<property name="test.name.skip.portal.instance" value="ExportImport#ExportImportDeletions" />
+
 		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoPortlet">
@@ -592,6 +596,7 @@
 	<command name="ExportImportSampleLARPortlet" priority="5">
 		<property name="portal.acceptance" value="false" />
 		<property name="portlet.plugins.includes" value="sample-lar-portlet" />
+		<property name="test.name.skip.portal.instance" value="ExportImport#ExportImportSampleLARPortlet" />
 
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Build" />

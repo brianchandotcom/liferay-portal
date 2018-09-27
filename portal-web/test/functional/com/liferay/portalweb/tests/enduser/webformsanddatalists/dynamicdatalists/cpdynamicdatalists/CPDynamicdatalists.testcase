@@ -4162,6 +4162,7 @@
 
 	<command name="ImportLAR" priority="5">
 		<property name="portal.acceptance" value="false" />
+		<property name="test.name.skip.portal.instance" value="CPDynamicdatalists#ImportLAR" />
 
 		<execute macro="Navigator#openURL" />
 

@@ -233,6 +233,14 @@ public class LayoutPageTemplateEntryServiceImpl
 
 	@Override
 	public List<LayoutPageTemplateEntry> getLayoutPageTemplateEntries(
+		long groupId, long classNameId, int type, boolean defaultTemplate) {
+
+		return layoutPageTemplateEntryLocalService.getLayoutPageTemplateEntries(
+			groupId, classNameId, type, defaultTemplate);
+	}
+
+	@Override
+	public List<LayoutPageTemplateEntry> getLayoutPageTemplateEntries(
 		long groupId, long layoutPageTemplateCollectionId, int start, int end) {
 
 		return getLayoutPageTemplateEntries(

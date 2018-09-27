@@ -19,8 +19,7 @@ import org.json.JSONObject;
 /**
  * @author Michael Hashimoto
  */
-public class DefaultPortalWorkspaceGitRepository
-	extends BasePortalWorkspaceGitRepository {
+public class JenkinsWorkspaceGitRepository extends BaseWorkspaceGitRepository {
 
 	public static boolean isValidJSONObject(JSONObject jsonObject) {
 		return isValidJSONObject(jsonObject, _TYPE);
@@ -31,22 +30,22 @@ public class DefaultPortalWorkspaceGitRepository
 		return _TYPE;
 	}
 
-	protected DefaultPortalWorkspaceGitRepository(JSONObject jsonObject) {
+	protected JenkinsWorkspaceGitRepository(JSONObject jsonObject) {
 		super(jsonObject);
 	}
 
-	protected DefaultPortalWorkspaceGitRepository(
+	protected JenkinsWorkspaceGitRepository(
 		PullRequest pullRequest, String upstreamBranchName) {
 
 		super(pullRequest, upstreamBranchName);
 	}
 
-	protected DefaultPortalWorkspaceGitRepository(
+	protected JenkinsWorkspaceGitRepository(
 		RemoteGitRef remoteGitRef, String upstreamBranchName) {
 
 		super(remoteGitRef, upstreamBranchName);
 	}
 
-	private static final String _TYPE = "portal";
+	private static final String _TYPE = "jenkins";
 
 }

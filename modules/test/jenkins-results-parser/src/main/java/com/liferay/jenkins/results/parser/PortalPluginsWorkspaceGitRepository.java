@@ -14,28 +14,39 @@
 
 package com.liferay.jenkins.results.parser;
 
+import org.json.JSONObject;
+
 /**
  * @author Michael Hashimoto
  */
-public class DefaultWorkspaceGitRepository extends BaseWorkspaceGitRepository {
+public class PortalPluginsWorkspaceGitRepository
+	extends PluginsWorkspaceGitRepository {
+
+	public static boolean isValidJSONObject(JSONObject jsonObject) {
+		return isValidJSONObject(jsonObject, _TYPE);
+	}
 
 	@Override
 	public String getType() {
 		return _TYPE;
 	}
 
-	protected DefaultWorkspaceGitRepository(
+	protected PortalPluginsWorkspaceGitRepository(JSONObject jsonObject) {
+		super(jsonObject);
+	}
+
+	protected PortalPluginsWorkspaceGitRepository(
 		PullRequest pullRequest, String upstreamBranchName) {
 
 		super(pullRequest, upstreamBranchName);
 	}
 
-	protected DefaultWorkspaceGitRepository(
+	protected PortalPluginsWorkspaceGitRepository(
 		RemoteGitRef remoteGitRef, String upstreamBranchName) {
 
 		super(remoteGitRef, upstreamBranchName);
 	}
 
-	private static final String _TYPE = "default";
+	private static final String _TYPE = "portal.plugins";
 
 }

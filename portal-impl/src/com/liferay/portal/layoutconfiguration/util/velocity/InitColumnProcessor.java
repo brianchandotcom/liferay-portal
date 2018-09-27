@@ -27,10 +27,6 @@ import java.util.Map;
  */
 public class InitColumnProcessor implements ColumnProcessor {
 
-	public InitColumnProcessor() {
-		_columns = new ArrayList<>();
-	}
-
 	public List<String> getColumns() {
 		return _columns;
 	}
@@ -55,27 +51,25 @@ public class InitColumnProcessor implements ColumnProcessor {
 	}
 
 	@Override
-	public String processPortlet(String portletId) throws Exception {
+	public String processPortlet(String portletId) {
 		return StringPool.BLANK;
 	}
 
 	@Override
 	public String processPortlet(
-			String portletId, Map<String, ?> defaultSettingsMap)
-		throws Exception {
+		String portletId, Map<String, ?> defaultSettingsMap) {
 
 		return StringPool.BLANK;
 	}
 
 	@Override
 	public String processPortlet(
-			String portletProviderClassName,
-			PortletProvider.Action portletProviderAction)
-		throws Exception {
+		String portletProviderClassName,
+		PortletProvider.Action portletProviderAction) {
 
 		return StringPool.BLANK;
 	}
 
-	private final List<String> _columns;
+	private final List<String> _columns = new ArrayList<>();
 
 }

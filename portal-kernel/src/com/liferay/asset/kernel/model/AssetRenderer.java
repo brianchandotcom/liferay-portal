@@ -64,6 +64,7 @@ public interface AssetRenderer<T> extends Renderer {
 
 	public default String getDefaultLanguageId() throws Exception {
 		String[] availableLanguageIds = getAvailableLanguageIds();
+
 		String siteDefaultLanguageId = LocaleUtil.toLanguageId(
 			LocaleUtil.getSiteDefault());
 

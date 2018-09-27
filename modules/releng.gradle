@@ -1,3 +1,6 @@
+import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
+import com.github.jengelman.gradle.plugins.shadow.transformers.AppendingTransformer
+
 import com.liferay.gradle.plugins.change.log.builder.BuildChangeLogTask
 import com.liferay.gradle.plugins.defaults.internal.util.GradleUtil
 import com.liferay.gradle.util.FileUtil
@@ -37,6 +40,8 @@ buildscript {
 	apply from: file("build-buildscript.gradle"), to: buildscript
 
 	dependencies {
+		classpath group: "com.github.jengelman.gradle.plugins", name: "shadow", version: "2.0.4"
+		classpath group: "de.undercouch", name: "gradle-download-task", version: "3.4.3"
 		classpath group: "org.ajoberstar", name: "gradle-git", version: "1.6.0"
 	}
 
@@ -47,6 +52,9 @@ buildscript {
 	}
 }
 
+apply plugin: "com.github.johnrengelman.shadow"
+apply plugin: "de.undercouch.download"
+apply plugin: "java"
 apply plugin: "org.ajoberstar.grgit"
 
 task buildFixPackChangeLog(type: BuildChangeLogTask)
@@ -55,6 +63,7 @@ task cleanReleng
 task cleanVersionOverride
 task lockDependencyVersion
 task lockPrivateDependencyVersions
+task portalArtifactsJar(type: ShadowJar)
 task prepareMajorIncrement
 task syncGitRepoReleases
 task tagAppReleases
@@ -150,6 +159,10 @@ cleanVersionOverride {
 	}
 
 	group = "releng"
+}
+
+configurations {
+	portalArtifacts
 }
 
 lockDependencyVersion {
@@ -329,6 +342,366 @@ lockPrivateDependencyVersions {
 	}
 
 	group = "releng"
+}
+
+portalArtifactsJar {
+	baseName = "portal-artifacts"
+	classifier = null
+	configurations = [project.configurations.portalArtifacts]
+	version = _getReleaseInfoVersion()
+
+	transform(AppendingTransformer.class) {
+		resource = "content/Language.properties"
+	}
+
+	transform(AppendingTransformer.class) {
+		resource = "content/Language_ar.properties"
+	}
+
+	transform(AppendingTransformer.class) {
+		resource = "content/Language_bg.properties"
+	}
+
+	transform(AppendingTransformer.class) {
+		resource = "content/Language_ca.properties"
+	}
+
+	transform(AppendingTransformer.class) {
+		resource = "content/Language_cs.properties"
+	}
+
+	transform(AppendingTransformer.class) {
+		resource = "content/Language_da.properties"
+	}
+
+	transform(AppendingTransformer.class) {
+		resource = "content/Language_de.properties"
+	}
+
+	transform(AppendingTransformer.class) {
+		resource = "content/Language_el.properties"
+	}
+
+	transform(AppendingTransformer.class) {
+		resource = "content/Language_en.properties"
+	}
+
+	transform(AppendingTransformer.class) {
+		resource = "content/Language_en_AU.properties"
+	}
+
+	transform(AppendingTransformer.class) {
+		resource = "content/Language_en_GB.properties"
+	}
+
+	transform(AppendingTransformer.class) {
+		resource = "content/Language_es.properties"
+	}
+
+	transform(AppendingTransformer.class) {
+		resource = "content/Language_et.properties"
+	}
+
+	transform(AppendingTransformer.class) {
+		resource = "content/Language_eu.properties"
+	}
+
+	transform(AppendingTransformer.class) {
+		resource = "content/Language_fa.properties"
+	}
+
+	transform(AppendingTransformer.class) {
+		resource = "content/Language_fi.properties"
+	}
+
+	transform(AppendingTransformer.class) {
+		resource = "content/Language_fr.properties"
+	}
+
+	transform(AppendingTransformer.class) {
+		resource = "content/Language_fr_CA.properties"
+	}
+
+	transform(AppendingTransformer.class) {
+		resource = "content/Language_gl.properties"
+	}
+
+	transform(AppendingTransformer.class) {
+		resource = "content/Language_hi_IN.properties"
+	}
+
+	transform(AppendingTransformer.class) {
+		resource = "content/Language_hr.properties"
+	}
+
+	transform(AppendingTransformer.class) {
+		resource = "content/Language_hu.properties"
+	}
+
+	transform(AppendingTransformer.class) {
+		resource = "content/Language_in.properties"
+	}
+
+	transform(AppendingTransformer.class) {
+		resource = "content/Language_it.properties"
+	}
+
+	transform(AppendingTransformer.class) {
+		resource = "content/Language_iw.properties"
+	}
+
+	transform(AppendingTransformer.class) {
+		resource = "content/Language_ja.properties"
+	}
+
+	transform(AppendingTransformer.class) {
+		resource = "content/Language_ko.properties"
+	}
+
+	transform(AppendingTransformer.class) {
+		resource = "content/Language_lo.properties"
+	}
+
+	transform(AppendingTransformer.class) {
+		resource = "content/Language_lt.properties"
+	}
+
+	transform(AppendingTransformer.class) {
+		resource = "content/Language_nb.properties"
+	}
+
+	transform(AppendingTransformer.class) {
+		resource = "content/Language_nl.properties"
+	}
+
+	transform(AppendingTransformer.class) {
+		resource = "content/Language_nl_BE.properties"
+	}
+
+	transform(AppendingTransformer.class) {
+		resource = "content/Language_pl.properties"
+	}
+
+	transform(AppendingTransformer.class) {
+		resource = "content/Language_pt_BR.properties"
+	}
+
+	transform(AppendingTransformer.class) {
+		resource = "content/Language_pt_PT.properties"
+	}
+
+	transform(AppendingTransformer.class) {
+		resource = "content/Language_ro.properties"
+	}
+
+	transform(AppendingTransformer.class) {
+		resource = "content/Language_ru.properties"
+	}
+
+	transform(AppendingTransformer.class) {
+		resource = "content/Language_sk.properties"
+	}
+
+	transform(AppendingTransformer.class) {
+		resource = "content/Language_sl.properties"
+	}
+
+	transform(AppendingTransformer.class) {
+		resource = "content/Language_sr_RS.properties"
+	}
+
+	transform(AppendingTransformer.class) {
+		resource = "content/Language_sr_RS_latin.properties"
+	}
+
+	transform(AppendingTransformer.class) {
+		resource = "content/Language_sv.properties"
+	}
+
+	transform(AppendingTransformer.class) {
+		resource = "content/Language_th.properties"
+	}
+
+	transform(AppendingTransformer.class) {
+		resource = "content/Language_tr.properties"
+	}
+
+	transform(AppendingTransformer.class) {
+		resource = "content/Language_uk.properties"
+	}
+
+	transform(AppendingTransformer.class) {
+		resource = "content/Language_vi.properties"
+	}
+
+	transform(AppendingTransformer.class) {
+		resource = "content/Language_zh_CN.properties"
+	}
+
+	transform(AppendingTransformer.class) {
+		resource = "content/Language_zh_TW.properties"
+	}
+
+	doLast {
+		println "Created jar " + archivePath
+	}
+
+	project.afterEvaluate {
+		File portalArtifactsDir = new File(buildDir, "portalArtifacts")
+
+		delete portalArtifactsDir
+
+		portalArtifactsDir.mkdirs()
+
+		Set<String> bundleSymbolicNames = new TreeSet<>()
+
+		projectDir.traverse(
+			preDir: {
+				if (it.name in [".gradle", ".github", "aspectj", "build", "classes", "node_modules", "project-templates", "sdk", "third-party"]) {
+					return FileVisitResult.SKIP_SUBTREE
+				}
+
+				File relengIgnoreMarkerFile = new File(it, ".lfrbuild-releng-ignore")
+
+				if (it.name.endsWith("-test") || it.name.endsWith("-test-api") || it.name.endsWith("-test-impl")|| it.name.endsWith("-test-service") || relengIgnoreMarkerFile.exists() || _isGitRepoReadOnly(it)) {
+					return FileVisitResult.SKIP_SUBTREE
+				}
+
+				String bundleSymbolicName = null
+
+				File bndBndFile = new File(it, "bnd.bnd")
+				File gulpfileJsFile = new File(it, "gulpfile.js")
+				File liferayPluginPackagePropertiesFile = new File(it, "docroot/WEB-INF/liferay-plugin-package.properties")
+
+				if (bndBndFile.exists()) {
+					Properties bndProperties = GUtil.loadProperties(bndBndFile)
+
+					String bundleVersion = bndProperties.getProperty("Bundle-Version")
+
+					if (!bundleVersion || bundleVersion.equals("1.0.0")) {
+						return FileVisitResult.CONTINUE
+					}
+
+					bundleSymbolicName = bndProperties.getProperty("Bundle-SymbolicName")
+				}
+				else if (gulpfileJsFile.exists() && gulpfileJsFile.text.contains("liferay-theme-tasks")) {
+					bundleSymbolicName = it.name
+				}
+				else if (liferayPluginPackagePropertiesFile.exists() && liferayPluginPackagePropertiesFile.text.contains("module-incremental-version")) {
+					bundleSymbolicName = it.name
+				}
+
+				if (!bundleSymbolicName || !it.name.endsWith("-api")) {
+					return FileVisitResult.CONTINUE
+				}
+
+				bundleSymbolicNames.add(bundleSymbolicName)
+
+				return FileVisitResult.SKIP_SUBTREE
+			},
+			type: FileType.DIRECTORIES
+		)
+
+		Closure<Void> downloadPortalArtifact = {
+			String groupId, String artifactId, XmlSlurper xmlSlurper ->
+
+			try {
+				def artifactResolutionNode = xmlSlurper.parse("https://repository.liferay.com/nexus/service/local/artifact/maven/resolve?g=${groupId}&a=${artifactId}&v=RELEASE&r=liferay-public-releases")
+
+				VersionNumber versionNumber = VersionNumber.parse(artifactResolutionNode.data.version.text())
+
+				String groupPath = groupId.replace('.' as char, '/' as char)
+
+				project.download {
+					dest portalArtifactsDir
+					src "https://repository-cdn.liferay.com/nexus/service/local/repositories/liferay-public-releases/content/${groupPath}/${artifactId}/${versionNumber}/${artifactId}-${versionNumber}.jar"
+				}
+			}
+			catch (FileNotFoundException fnfe) {
+				println "Not Found " + fnfe.message
+			}
+		}
+
+		XmlSlurper xmlSlurper = new XmlSlurper()
+
+		bundleSymbolicNames.each {
+			String bundleSymbolicName ->
+
+			downloadPortalArtifact("com.liferay", bundleSymbolicName, xmlSlurper)
+		}
+
+		List<String> portalBundleSymbolicNames = ["com.liferay.portal.impl", "com.liferay.portal.kernel", "com.liferay.util.bridges", "com.liferay.util.java", "com.liferay.util.taglib"]
+
+		portalBundleSymbolicNames.each {
+			String bundleSymbolicName ->
+
+			downloadPortalArtifact("com.liferay.portal", bundleSymbolicName, xmlSlurper)
+		}
+
+		FileTree jarFileTree = fileTree(dir: portalArtifactsDir, include: "*.jar")
+
+		jarFileTree.each {
+			File jarFile ->
+
+			copy {
+				from zipTree(jarFile)
+				into new File(portalArtifactsDir, jarFile.name[0 .. -5])
+			}
+		}
+
+		delete jarFileTree
+
+		portalArtifactsDir.listFiles().each {
+			File portalArtifactFile ->
+
+			if (portalArtifactFile.isDirectory()) {
+				dependencies.portalArtifacts files(portalArtifactFile)
+			}
+		}
+
+		manifest {
+			FileTree portalArtifactsManifestFileTree = fileTree(portalArtifactsDir).matching {
+				include "**/META-INF/MANIFEST.MF"
+			}
+
+			portalArtifactsManifestFileTree.files.each {
+				File portalArtifactsManifestFile ->
+
+				from (portalArtifactsManifestFile) {
+					eachEntry {
+						ManifestMergeDetails manifestMergeDetails ->
+
+						if (manifestMergeDetails.key == "Manifest-Version") {
+							manifestMergeDetails.value = "1.0"
+						}
+						else if (manifestMergeDetails.key == "Bundle-ManifestVersion") {
+							manifestMergeDetails.value = "2"
+						}
+						else if (manifestMergeDetails.key == "Bundle-Name") {
+							manifestMergeDetails.value = "Liferay Portal Artifacts"
+						}
+						else if (manifestMergeDetails.key == "Bundle-SymbolicName") {
+							manifestMergeDetails.value = "com.liferay.portal.artifacts"
+						}
+						else if (manifestMergeDetails.key == "Bundle-Vendor") {
+							manifestMergeDetails.value = "Liferay, Inc."
+						}
+						else if (manifestMergeDetails.key == "Bundle-Version") {
+							manifestMergeDetails.value = "1.0.0"
+						}
+						else if (manifestMergeDetails.key == "Export-Package") {
+							if (manifestMergeDetails.baseValue != null) {
+								manifestMergeDetails.value = manifestMergeDetails.baseValue + "," + manifestMergeDetails.mergeValue
+							}
+						}
+						else {
+							manifestMergeDetails.exclude()
+						}
+					}
+				}
+			}
+		}
+	}
 }
 
 prepareMajorIncrement {
@@ -1098,6 +1471,14 @@ private String _getModuleTaskPrefix(File moduleDir) {
 	String moduleTaskPrefix = relativePath(moduleDir)
 
 	":" + moduleTaskPrefix.replace(File.separatorChar, ':' as char) + ":"
+}
+
+private String _getReleaseInfoVersion() {
+	File releaseInfoFile = file("../portal-kernel/src/com/liferay/portal/kernel/util/ReleaseInfo.java")
+
+	Matcher matcher = (releaseInfoFile.text =~ /private static final String _VERSION = "(.+)";/)
+
+	return matcher[0][1]
 }
 
 private RevCommit _getRevCommit(String commitId) {

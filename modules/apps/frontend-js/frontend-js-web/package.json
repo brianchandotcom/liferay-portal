@@ -38,7 +38,7 @@
 		"babel-cli": "6.26.0",
 		"babel-loader": "^7.1.4",
 		"babel-preset-env": "^1.6.1",
-		"check-source-formatting": "^2.0.12",
+		"check-source-formatting": "^2.0.4",
 		"jest": "23.2.0",
 		"liferay-jest-junit-reporter": "0.0.4",
 		"liferay-npm-bridge-generator": "^2.0.0",

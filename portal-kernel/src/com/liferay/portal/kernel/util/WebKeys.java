@@ -443,10 +443,22 @@ public interface WebKeys {
 
 	public static final String PORTLET_SESSION_ATTRIBUTES = "PORTLET_SESSION_ATTRIBUTES_";
 
+	/**
+	 * @deprecated As of Judson (7.1.x), with no direct replacement
+	 */
+	@Deprecated
 	public static final String PORTLET_STRUTS_ACTION = "PORTLET_STRUTS_ACTION";
 
+	/**
+	 * @deprecated As of Judson (7.1.x), with no direct replacement
+	 */
+	@Deprecated
 	public static final String PORTLET_STRUTS_ATTRIBUTES = "PORTLET_STRUTS_ATTRIBUTES";
 
+	/**
+	 * @deprecated As of Judson (7.1.x), with no direct replacement
+	 */
+	@Deprecated
 	public static final String PORTLET_STRUTS_EXCEPTION = "PORTLET_STRUTS_EXCEPTION";
 
 	public static final String PORTLET_STRUTS_EXECUTE = "PORTLET_STRUTS_EXECUTE";
@@ -454,6 +466,10 @@ public interface WebKeys {
 	@Distributed(direction = Direction.DUPLEX, matchType = MatchType.POSTFIX)
 	public static final String PORTLET_STRUTS_FORWARD = "PORTLET_STRUTS_FORWARD";
 
+	/**
+	 * @deprecated As of Judson (7.1.x), with no direct replacement
+	 */
+	@Deprecated
 	public static final String PORTLET_STRUTS_PROCESSOR = "PORTLET_STRUTS_PROCESSOR";
 
 	public static final String PREVIOUS_LAYOUT_PLID = "PREVIOUS_LAYOUT_PLID";

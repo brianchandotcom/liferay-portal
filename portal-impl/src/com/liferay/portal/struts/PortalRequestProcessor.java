@@ -47,7 +47,6 @@ import com.liferay.portal.kernel.service.PortletLocalServiceUtil;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalServiceUtil;
 import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
 import com.liferay.portal.kernel.service.persistence.UserTrackerPathUtil;
-import com.liferay.portal.kernel.servlet.DynamicServletRequest;
 import com.liferay.portal.kernel.servlet.HttpMethods;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.struts.LastPath;
@@ -73,11 +72,8 @@ import java.io.IOException;
 
 import java.util.Date;
 import java.util.HashSet;
-import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import javax.portlet.PortletConfig;
 import javax.portlet.PortletContext;
@@ -858,32 +854,6 @@ public class PortalRequestProcessor extends TilesRequestProcessor {
 			return;
 		}
 
-		boolean hasIgnoredParameter = false;
-
-		Map<String, String[]> oldParameterMap = request.getParameterMap();
-
-		Map<String, String[]> newParameterMap = new LinkedHashMap<>(
-			oldParameterMap.size());
-
-		for (Map.Entry<String, String[]> entry : oldParameterMap.entrySet()) {
-			String name = entry.getKey();
-
-			Matcher matcher = _strutsPortletIgnoredParamtersPattern.matcher(
-				name);
-
-			if (matcher.matches()) {
-				hasIgnoredParameter = true;
-			}
-			else {
-				newParameterMap.put(name, entry.getValue());
-			}
-		}
-
-		if (hasIgnoredParameter) {
-			request = new DynamicServletRequest(
-				request, newParameterMap, false);
-		}
-
 		super.processPopulate(request, response, actionForm, actionMapping);
 	}
 
@@ -1059,9 +1029,6 @@ public class PortalRequestProcessor extends TilesRequestProcessor {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		PortalRequestProcessor.class);
-
-	private static final Pattern _strutsPortletIgnoredParamtersPattern =
-		Pattern.compile(PropsValues.STRUTS_PORTLET_IGNORED_PARAMETERS_REGEXP);
 
 	private final Set<String> _lastPaths;
 	private final Set<String> _publicPaths;

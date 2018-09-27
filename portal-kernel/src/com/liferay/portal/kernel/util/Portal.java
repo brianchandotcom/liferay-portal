@@ -1368,6 +1368,12 @@ public interface Portal {
 
 	public boolean isSecure(HttpServletRequest request);
 
+	/**
+	 * @deprecated As of Judson (7.1.x), replaced by {@link
+	 *             #isSkipPortletContentRendering(Group, LayoutTypePortlet,
+	 *             PortletDisplay, String)}
+	 */
+	@Deprecated
 	public boolean isSkipPortletContentProcessing(
 			Group group, HttpServletRequest httpServletRequest,
 			LayoutTypePortlet layoutTypePortlet, PortletDisplay portletDisplay,

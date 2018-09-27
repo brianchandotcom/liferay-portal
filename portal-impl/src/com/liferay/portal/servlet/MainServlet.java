@@ -81,7 +81,6 @@ import com.liferay.portal.service.impl.LayoutTemplateLocalServiceImpl;
 import com.liferay.portal.servlet.filters.absoluteredirects.AbsoluteRedirectsResponse;
 import com.liferay.portal.servlet.filters.i18n.I18nFilter;
 import com.liferay.portal.setup.SetupWizardSampleDataUtil;
-import com.liferay.portal.struts.PortletRequestProcessor;
 import com.liferay.portal.struts.StrutsUtil;
 import com.liferay.portal.util.ExtRegistry;
 import com.liferay.portal.util.MaintenanceUtil;
@@ -485,7 +484,6 @@ public class MainServlet extends ActionServlet {
 		}
 
 		checkServletContext(request);
-		checkPortletRequestProcessor(request);
 
 		if (_log.isDebugEnabled()) {
 			_log.debug("Handle non-serializable request");
@@ -592,24 +590,12 @@ public class MainServlet extends ActionServlet {
 		super.service(request, response);
 	}
 
+	/**
+	 * @deprecated As of Judson (7.1.x), with no direct replacement
+	 */
+	@Deprecated
 	protected void checkPortletRequestProcessor(HttpServletRequest request)
 		throws ServletException {
-
-		ServletContext servletContext = getServletContext();
-
-		PortletRequestProcessor portletReqProcessor =
-			(PortletRequestProcessor)servletContext.getAttribute(
-				WebKeys.PORTLET_STRUTS_PROCESSOR);
-
-		if (portletReqProcessor == null) {
-			ModuleConfig moduleConfig = getModuleConfig(request);
-
-			portletReqProcessor = PortletRequestProcessor.getInstance(
-				this, moduleConfig);
-
-			servletContext.setAttribute(
-				WebKeys.PORTLET_STRUTS_PROCESSOR, portletReqProcessor);
-		}
 	}
 
 	protected void checkServletContext(HttpServletRequest request) {

@@ -14,7 +14,7 @@
 
 package com.liferay.layout.type.controller;
 
-import com.liferay.portlet.StrutsPortlet;
+import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portlet.util.test.PortletKeys;
 
 import javax.portlet.Portlet;
@@ -37,5 +37,5 @@ import org.osgi.service.component.annotations.Component;
 	},
 	service = Portlet.class
 )
-public class TestPortlet extends StrutsPortlet {
+public class TestPortlet extends MVCPortlet {
 }

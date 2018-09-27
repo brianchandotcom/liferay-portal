@@ -19,6 +19,7 @@ import aQute.bnd.header.Parameters;
 import aQute.bnd.version.Version;
 
 import com.liferay.petra.reflect.ReflectionUtil;
+import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.concurrent.DefaultNoticeableFuture;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -907,7 +908,9 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 				}
 
 				if (!overrideStaticFileNames.isEmpty()) {
-					String fileName = _extractFileName(name) + ".jar";
+					String fileName = _extractFileName(name);
+
+					fileName = fileName.concat(".jar");
 
 					if (overrideStaticFileNames.contains(fileName)) {
 						if (_log.isInfoEnabled()) {
@@ -969,17 +972,17 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 	}
 
 	private String _extractFileName(String string) {
-		int endIndex = string.indexOf(StringPool.DASH);
+		int endIndex = string.indexOf(CharPool.DASH);
 
 		if (endIndex == -1) {
-			endIndex = string.indexOf(StringPool.QUESTION);
+			endIndex = string.indexOf(CharPool.QUESTION);
 
 			if (endIndex == -1) {
 				endIndex = string.length();
 			}
 		}
 
-		int beginIndex = string.lastIndexOf(StringPool.SLASH, endIndex) + 1;
+		int beginIndex = string.lastIndexOf(CharPool.SLASH, endIndex) + 1;
 
 		return string.substring(beginIndex, endIndex);
 	}
@@ -1188,7 +1191,7 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 	}
 
 	private boolean _isValid(String string) {
-		int index = string.lastIndexOf(StringPool.DASH);
+		int index = string.lastIndexOf(CharPool.DASH);
 
 		if (index == -1) {
 			return true;
@@ -1196,7 +1199,7 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 
 		String version = string.substring(index + 1, string.length() - 4);
 
-		int count = StringUtil.count(version, StringPool.PERIOD);
+		int count = StringUtil.count(version, CharPool.PERIOD);
 
 		if ((count == 2) || (count == 3)) {
 			return false;
@@ -1439,7 +1442,7 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 
 					overrideStaticFileNames.add(
 						uriString.substring(
-							uriString.lastIndexOf(StringPool.SLASH) + 1));
+							uriString.lastIndexOf(CharPool.SLASH) + 1));
 				}
 			}
 		}

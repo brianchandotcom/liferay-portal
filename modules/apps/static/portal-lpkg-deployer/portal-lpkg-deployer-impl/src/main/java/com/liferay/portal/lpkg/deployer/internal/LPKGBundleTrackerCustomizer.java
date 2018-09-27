@@ -127,7 +127,7 @@ public class LPKGBundleTrackerCustomizer
 			if (supersedesRemoteAppIds != null) {
 				Collections.addAll(
 					_outdatedRemoteAppIds,
-					StringUtil.split(supersedesRemoteAppIds, StringPool.COMMA));
+					StringUtil.split(supersedesRemoteAppIds, CharPool.COMMA));
 
 				for (Bundle installedBundle : _bundleContext.getBundles()) {
 					properties = _readMarketplaceProperties(installedBundle);
@@ -391,9 +391,9 @@ public class LPKGBundleTrackerCustomizer
 	}
 
 	private String _extractFileName(String string) {
-		int endIndex = string.lastIndexOf(StringPool.DASH);
+		int endIndex = string.lastIndexOf(CharPool.DASH);
 
-		int beginIndex = string.lastIndexOf(StringPool.SLASH, endIndex) + 1;
+		int beginIndex = string.lastIndexOf(CharPool.SLASH, endIndex) + 1;
 
 		String name = string.substring(beginIndex, endIndex);
 

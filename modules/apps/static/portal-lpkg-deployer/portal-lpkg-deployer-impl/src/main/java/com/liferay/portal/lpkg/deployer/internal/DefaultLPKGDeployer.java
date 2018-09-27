@@ -15,7 +15,7 @@
 package com.liferay.portal.lpkg.deployer.internal;
 
 import com.liferay.osgi.util.bundle.BundleStartLevelUtil;
-import com.liferay.petra.string.StringPool;
+import com.liferay.petra.string.CharPool;
 import com.liferay.portal.kernel.concurrent.DefaultNoticeableFuture;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
@@ -478,7 +478,7 @@ public class DefaultLPKGDeployer implements LPKGDeployer {
 	}
 
 	private boolean _isValid(String string) {
-		int index = string.lastIndexOf(StringPool.DASH);
+		int index = string.lastIndexOf(CharPool.DASH);
 
 		if (index == -1) {
 			return true;
@@ -486,7 +486,7 @@ public class DefaultLPKGDeployer implements LPKGDeployer {
 
 		String version = string.substring(index + 1, string.length() - 4);
 
-		int count = StringUtil.count(version, StringPool.PERIOD);
+		int count = StringUtil.count(version, CharPool.PERIOD);
 
 		if ((count == 2) || (count == 3)) {
 			return false;

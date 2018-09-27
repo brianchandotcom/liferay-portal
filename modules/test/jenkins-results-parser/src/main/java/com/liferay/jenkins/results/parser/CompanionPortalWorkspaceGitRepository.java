@@ -69,6 +69,8 @@ public class CompanionPortalWorkspaceGitRepository
 
 	protected CompanionPortalWorkspaceGitRepository(JSONObject jsonObject) {
 		super(jsonObject);
+
+		_parentWorkspaceGitRepository = null;
 	}
 
 	protected CompanionPortalWorkspaceGitRepository(

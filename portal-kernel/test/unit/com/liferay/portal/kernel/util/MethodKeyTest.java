@@ -104,43 +104,32 @@ public class MethodKeyTest {
 
 	@Test
 	public void testGetMethodAndResetCache() throws NoSuchMethodException {
-		Map<MethodKey, Method> methods = ReflectionTestUtil.getFieldValue(
-			MethodKey.class, "_methods");
-
 		MethodKey methodKey = new MethodKey(
 			_TEST_CLASS, _TEST_METHOD_NAME, String.class);
 
-		// Test 1, MethodKey.getMethod returns and caches the method
+		Method method = methodKey.getMethod();
 
-		Method actualMethod1 = methodKey.getMethod();
-
-		Assert.assertEquals(
-			_TEST_CLASS.getMethod(_TEST_METHOD_NAME, String.class),
-			actualMethod1);
+		Assert.assertSame(method, methodKey.getMethod());
 		Assert.assertTrue(
-			"The method obtained from MethodKey should be accessible",
-			actualMethod1.isAccessible());
+			"The method should be accessible", method.isAccessible());
+
+		method.setAccessible(false);
+
+		Assert.assertFalse(
+			"The method should not be accessiable", method.isAccessible());
+		Assert.assertSame(method, methodKey.getMethod());
+		Assert.assertTrue(
+			"The method should be accessible", method.isAccessible());
+
+		Map<MethodKey, Method> methods = ReflectionTestUtil.getFieldValue(
+			MethodKey.class, "_methods");
 
 		Assert.assertEquals(methods.toString(), 1, methods.size());
-
-		// Test 2, method is retrieved from cache and set accessible
-
-		actualMethod1.setAccessible(false);
-
-		Method actualMethod2 = methodKey.getMethod();
-
-		Assert.assertSame(actualMethod2, actualMethod1);
-		Assert.assertTrue(
-			"The method obtained from MethodKey should be accessible",
-			actualMethod2.isAccessible());
-
-		Assert.assertEquals(methods.toString(), 1, methods.size());
-
-		// Test 3, resetCache() clears the method cache
+		Assert.assertEquals(method, methods.get(methodKey));
 
 		MethodKey.resetCache();
 
-		Assert.assertEquals(methods.toString(), 0, methods.size());
+		Assert.assertTrue(methods.toString(), methods.isEmpty());
 	}
 
 	@Test

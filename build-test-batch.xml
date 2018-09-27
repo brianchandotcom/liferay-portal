@@ -4491,7 +4491,10 @@ ${output.content}</echo>
 					</if>
 				</actions>
 			</call>
-			<copy path="count(/pmd/file/violation)" property="count" />
+			<copy
+				path="count(/pmd/file/violation)"
+				property="count"
+			/>
 		</xmltask>
 
 		<if>

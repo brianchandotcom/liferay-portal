@@ -20,12 +20,17 @@ import com.liferay.jenkins.results.parser.PortalTestClassJob;
 import java.io.File;
 import java.io.IOException;
 
+import java.text.SimpleDateFormat;
+
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import org.apache.commons.lang.StringEscapeUtils;
 
 /**
  * @author Michael Hashimoto
@@ -49,6 +54,85 @@ public class NPMTestBatchTestClassGroup extends BatchTestClassGroup {
 
 	public Map<File, NPMTestBatchTestClass> getNPMTestBatchTestClasses() {
 		return NPMTestBatchTestClass.getNPMTestBatchTestClasses();
+	}
+
+	public void writeTestCSVReportFile() throws Exception {
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("Module Name");
+		sb.append(",");
+		sb.append("Class Name");
+		sb.append(",");
+		sb.append("Method Name");
+		sb.append(",");
+		sb.append("Ignored");
+		sb.append(",");
+		sb.append("File Path");
+		sb.append("\n");
+
+		Map<File, NPMTestBatchTestClass> npmTestBatchTestClasses =
+			getNPMTestBatchTestClasses();
+
+		for (Map.Entry<File, NPMTestBatchTestClassGroup.NPMTestBatchTestClass>
+				entry : npmTestBatchTestClasses.entrySet()) {
+
+			NPMTestBatchTestClassGroup.NPMTestBatchTestClass
+				npmTestBatchTestClass = entry.getValue();
+
+			File moduleFile = npmTestBatchTestClass.getFile();
+
+			String moduleName = moduleFile.getName();
+
+			List<BaseTestClassGroup.BaseTestMethod> jsTestMethods =
+				npmTestBatchTestClass.getJSTestMethods();
+
+			for (BaseTestClassGroup.BaseTestMethod jsTestMethod :
+					jsTestMethods) {
+
+				String classMethodName = jsTestMethod.getName();
+
+				int colonIndex = classMethodName.indexOf("::");
+
+				String filePath = classMethodName.substring(0, colonIndex);
+
+				String className = filePath.substring(
+					filePath.lastIndexOf("/") + 1);
+
+				String methodName = classMethodName.substring(
+					colonIndex + "::".length());
+
+				sb.append(moduleName);
+				sb.append(",");
+				sb.append(className);
+				sb.append(",");
+				sb.append(StringEscapeUtils.escapeCsv(methodName));
+				sb.append(",");
+
+				if (jsTestMethod.isIgnored()) {
+					sb.append("TRUE");
+				}
+				else {
+					sb.append("");
+				}
+
+				sb.append(",");
+				sb.append(filePath);
+				sb.append("\n");
+			}
+		}
+
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM-dd-yyyy");
+
+		File reportCSVFile = new File(
+			JenkinsResultsParserUtil.combine(
+				"Report_", simpleDateFormat.format(new Date()), ".csv"));
+
+		try {
+			JenkinsResultsParserUtil.write(reportCSVFile, sb.toString());
+		}
+		catch (IOException ioe) {
+			throw new RuntimeException(ioe);
+		}
 	}
 
 	public static class NPMTestBatchTestClass extends BaseTestClass {

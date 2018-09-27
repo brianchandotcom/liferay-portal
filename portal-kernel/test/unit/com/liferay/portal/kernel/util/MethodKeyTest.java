@@ -53,6 +53,11 @@ public class MethodKeyTest {
 			TestClass.class, "testMethod", new Class<?>[] {String.class},
 			new MethodKey(TestClass.class, "testMethod", String.class));
 		_assertMethodKey(
+			TestClass.class, "testMethod",
+			new Class<?>[] {String.class, String.class},
+			new MethodKey(
+				TestClass.class, "testMethod", String.class, String.class));
+		_assertMethodKey(
 			TestClass.class, "testMethod", new Class<?>[0],
 			new MethodKey(TestClass.class.getMethod("testMethod")));
 		_assertMethodKey(
@@ -82,6 +87,10 @@ public class MethodKeyTest {
 		Assert.assertEquals(
 			methodKey,
 			new MethodKey(TestClass.class, "testMethod", String.class));
+		Assert.assertNotEquals(
+			methodKey,
+			new MethodKey(
+				TestClass.class, "testMethod", String.class, String.class));
 		Assert.assertNotEquals(
 			methodKey, new MethodKey(TestClass.class, "testMethod", int.class));
 		Assert.assertNotEquals(
@@ -144,16 +153,27 @@ public class MethodKeyTest {
 
 	@Test
 	public void testToString() {
-		MethodKey methodKey = new MethodKey(
-			TestClass.class, "testMethod", String.class);
+		MethodKey methodKey = new MethodKey(TestClass.class, "testMethod");
 
-		String expectedToString = StringBundler.concat(
-			TestClass.class.getName(), ".testMethod(", String.class.getName(),
-			")");
-
-		Assert.assertEquals(expectedToString, methodKey.toString());
 		Assert.assertEquals(
-			expectedToString,
+			TestClass.class.getName() + ".testMethod()", methodKey.toString());
+
+		methodKey = new MethodKey(TestClass.class, "testMethod", String.class);
+
+		Assert.assertEquals(
+			TestClass.class.getName() + ".testMethod(java.lang.String)",
+			methodKey.toString());
+
+		methodKey = new MethodKey(
+			TestClass.class, "testMethod", String.class, String.class);
+
+		Assert.assertEquals(
+			TestClass.class.getName() +
+				".testMethod(java.lang.String,java.lang.String)",
+			methodKey.toString());
+		Assert.assertEquals(
+			TestClass.class.getName() +
+				".testMethod(java.lang.String,java.lang.String)",
 			ReflectionTestUtil.getFieldValue(methodKey, "_toString"));
 
 		ReflectionTestUtil.setFieldValue(methodKey, "_toString", "testString");
@@ -258,6 +278,9 @@ public class MethodKeyTest {
 
 		public String testMethod(String parameter) {
 			return parameter;
+		}
+
+		public void testMethod(String parameter1, String parameter2) {
 		}
 
 	}

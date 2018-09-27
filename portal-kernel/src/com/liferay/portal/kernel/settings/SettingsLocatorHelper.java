@@ -16,6 +16,8 @@ package com.liferay.portal.kernel.settings;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.exception.NoSuchPortletPreferencesException;
+
 /**
  * @author Iván Zaera
  */
@@ -59,12 +61,12 @@ public interface SettingsLocatorHelper {
 	public Settings getPortletInstancePortletPreferencesSettings(
 			long companyId, long ownerId, int ownerType, long plid,
 			String portletId, Settings parentSettings)
-		throws Exception;
+		throws NoSuchPortletPreferencesException;
 
 	public Settings getPortletInstancePortletPreferencesSettings(
 			long companyId, long plid, String portletId,
 			Settings parentSettings)
-		throws Exception;
+		throws NoSuchPortletPreferencesException;
 
 	public Settings getServerSettings(String settingsId);
 

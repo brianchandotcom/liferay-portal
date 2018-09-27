@@ -38,14 +38,29 @@ import org.junit.Before;
  */
 public class LayoutTypePortletImplBaseTest {
 
-	@DeleteAfterTestRun
-	public static Group group;
+	@Before
+	public void setUp() throws Exception {
+		_group = GroupTestUtil.addGroup();
 
-	public static Layout layout;
-	public static String[] layoutStaticPortletsAll;
-	public static LayoutTypePortlet layoutTypePortlet;
+		layout = LayoutTestUtil.addLayout(_group, false);
 
-	public static PortletPreferences addLayoutPortletPreferences(
+		layoutTypePortlet = (LayoutTypePortlet)layout.getLayoutType();
+
+		_layoutStaticPortletsAll = PropsValues.LAYOUT_STATIC_PORTLETS_ALL;
+	}
+
+	@After
+	public void tearDown() {
+		StringBundler sb = new StringBundler(_layoutStaticPortletsAll.length);
+
+		for (String layoutStaticPortlet : _layoutStaticPortletsAll) {
+			sb.append(layoutStaticPortlet);
+		}
+
+		PropsUtil.set(PropsKeys.LAYOUT_STATIC_PORTLETS_ALL, sb.toString());
+	}
+
+	protected static PortletPreferences addLayoutPortletPreferences(
 			Layout layout, Portlet portlet)
 		throws Exception {
 
@@ -55,26 +70,12 @@ public class LayoutTypePortletImplBaseTest {
 			portlet.getPortletId(), portlet, null);
 	}
 
-	@Before
-	public void setUp() throws Exception {
-		group = GroupTestUtil.addGroup();
+	protected Layout layout;
+	protected LayoutTypePortlet layoutTypePortlet;
 
-		layout = LayoutTestUtil.addLayout(group, false);
+	@DeleteAfterTestRun
+	private Group _group;
 
-		layoutTypePortlet = (LayoutTypePortlet)layout.getLayoutType();
-
-		layoutStaticPortletsAll = PropsValues.LAYOUT_STATIC_PORTLETS_ALL;
-	}
-
-	@After
-	public void tearDown() {
-		StringBundler sb = new StringBundler(layoutStaticPortletsAll.length);
-
-		for (String layoutStaticPortlet : layoutStaticPortletsAll) {
-			sb.append(layoutStaticPortlet);
-		}
-
-		PropsUtil.set(PropsKeys.LAYOUT_STATIC_PORTLETS_ALL, sb.toString());
-	}
+	private String[] _layoutStaticPortletsAll;
 
 }

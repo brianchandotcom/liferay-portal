@@ -22,6 +22,10 @@ import org.json.JSONObject;
 public class DefaultPortalWorkspaceGitRepository
 	extends BasePortalWorkspaceGitRepository {
 
+	public static boolean isValidJSONObject(JSONObject jsonObject) {
+		return isValidJSONObject(jsonObject, _TYPE);
+	}
+
 	@Override
 	public String getType() {
 		return _TYPE;

@@ -25,6 +25,10 @@ import org.json.JSONObject;
 public class CompanionPortalWorkspaceGitRepository
 	extends BasePortalWorkspaceGitRepository {
 
+	public static boolean isValidJSONObject(JSONObject jsonObject) {
+		return isValidJSONObject(jsonObject, _TYPE);
+	}
+
 	@Override
 	public String getType() {
 		return _TYPE;

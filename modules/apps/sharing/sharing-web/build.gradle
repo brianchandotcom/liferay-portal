@@ -14,6 +14,7 @@ dependencies {
 	compileOnly project(":apps:frontend-taglib:frontend-taglib")
 	compileOnly project(":apps:portal-portlet-bridge:portal-portlet-bridge-soy-api")
 	compileOnly project(":apps:sharing:sharing-api")
+	compileOnly project(":apps:sharing:sharing-web-api")
 	compileOnly project(":core:osgi-service-tracker-collections")
 	compileOnly project(":core:petra:petra-lang")
 	compileOnly project(":core:petra:petra-string")

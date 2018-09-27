@@ -12,16 +12,22 @@
  * details.
  */
 
-package com.liferay.sharing.interpreter;
+package com.liferay.sharing.web.renderer;
 
-import com.liferay.sharing.model.SharingEntry;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
+import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+
+import javax.portlet.PortletURL;
 
 /**
- * @author Alejandro Tardín
+ * @author Sergio González
  */
-public interface SharingEntryInterpreterProvider<T> {
+public interface SharingEntryEditRenderer<T> {
 
-	public SharingEntryInterpreter<T> getSharingEntryInterpreter(
-		SharingEntry sharingEntry);
+	public PortletURL getURLEdit(
+			T entry, LiferayPortletRequest liferayPortletRequest,
+			LiferayPortletResponse liferayPortletResponse)
+		throws PortalException;
 
 }

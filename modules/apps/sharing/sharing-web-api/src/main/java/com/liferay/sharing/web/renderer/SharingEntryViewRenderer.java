@@ -12,22 +12,20 @@
  * details.
  */
 
-package com.liferay.sharing.renderer;
+package com.liferay.sharing.web.renderer;
 
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
-import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import java.io.IOException;
 
-import javax.portlet.PortletURL;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * @author Sergio González
  */
-public interface SharingEntryEditRenderer<T> {
+public interface SharingEntryViewRenderer<T> {
 
-	public PortletURL getURLEdit(
-			T entry, LiferayPortletRequest liferayPortletRequest,
-			LiferayPortletResponse liferayPortletResponse)
-		throws PortalException;
+	public void render(
+			T entry, HttpServletRequest request, HttpServletResponse response)
+		throws IOException;
 
 }

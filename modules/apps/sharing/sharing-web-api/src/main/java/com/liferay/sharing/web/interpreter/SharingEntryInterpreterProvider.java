@@ -12,20 +12,16 @@
  * details.
  */
 
-package com.liferay.sharing.renderer;
+package com.liferay.sharing.web.interpreter;
 
-import java.io.IOException;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import com.liferay.sharing.model.SharingEntry;
 
 /**
- * @author Sergio González
+ * @author Alejandro Tardín
  */
-public interface SharingEntryViewRenderer<T> {
+public interface SharingEntryInterpreterProvider<T> {
 
-	public void render(
-			T entry, HttpServletRequest request, HttpServletResponse response)
-		throws IOException;
+	public SharingEntryInterpreter<T> getSharingEntryInterpreter(
+		SharingEntry sharingEntry);
 
 }

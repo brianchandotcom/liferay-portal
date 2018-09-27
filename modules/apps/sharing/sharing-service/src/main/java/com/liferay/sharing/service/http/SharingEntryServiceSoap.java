@@ -148,6 +148,23 @@ public class SharingEntryServiceSoap {
 		}
 	}
 
+	public static com.liferay.sharing.model.SharingEntrySoap deleteSharingEntry(
+		long sharingEntryId,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws RemoteException {
+		try {
+			com.liferay.sharing.model.SharingEntry returnValue = SharingEntryServiceUtil.deleteSharingEntry(sharingEntryId,
+					serviceContext);
+
+			return com.liferay.sharing.model.SharingEntrySoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	/**
 	* Updates a sharing entry in the database.
 	*

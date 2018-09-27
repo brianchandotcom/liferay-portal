@@ -225,4 +225,16 @@ else {
 			url="<%= publishArticleURL %>"
 		/>
 	</c:if>
+
+	<%
+	String viewContentURL = journalDisplayContext.getViewContentURL(article);
+	%>
+
+	<c:if test="<%= JournalArticlePermission.contains(permissionChecker, article, ActionKeys.VIEW) && journalDisplayContext.isShowViewContentURL(article) && Validator.isNotNull(viewContentURL) %>">
+		<liferay-ui:icon
+			message="view-content"
+			target="_blank"
+			url="<%= viewContentURL %>"
+		/>
+	</c:if>
 </liferay-ui:icon-menu>

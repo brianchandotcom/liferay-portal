@@ -14,6 +14,11 @@
 
 package com.liferay.journal.web.internal.display.context;
 
+import com.liferay.asset.display.page.constants.AssetDisplayPageConstants;
+import com.liferay.asset.display.page.model.AssetDisplayPageEntry;
+import com.liferay.asset.display.page.service.AssetDisplayPageEntryLocalServiceUtil;
+import com.liferay.asset.kernel.model.AssetEntry;
+import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
@@ -52,6 +57,9 @@ import com.liferay.journal.web.internal.search.EntriesMover;
 import com.liferay.journal.web.internal.search.JournalSearcher;
 import com.liferay.journal.web.internal.security.permission.resource.JournalFolderPermission;
 import com.liferay.journal.web.util.JournalPortletUtil;
+import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
+import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
+import com.liferay.layout.page.template.service.LayoutPageTemplateEntryServiceUtil;
 import com.liferay.message.boards.model.MBMessage;
 import com.liferay.message.boards.service.MBMessageLocalServiceUtil;
 import com.liferay.petra.string.StringBundler;
@@ -1307,6 +1315,22 @@ public class JournalDisplayContext {
 		return articleSearch.getTotal();
 	}
 
+	public String getViewContentURL(JournalArticle journalArticle)
+		throws PortalException {
+
+		Locale locale = _themeDisplay.getSiteDefaultLocale();
+
+		Map<Locale, String> friendlyURLMap = journalArticle.getFriendlyURLMap();
+
+		String friendlyURL = friendlyURLMap.get(locale);
+
+		if (Validator.isNull(friendlyURL)) {
+			return StringPool.BLANK;
+		}
+
+		return getFriendlyURLBase() + friendlyURL;
+	}
+
 	public List<ViewTypeItem> getViewTypeItems() {
 		return new ViewTypeItemList(getPortletURL(), getDisplayStyle()) {
 			{
@@ -1512,6 +1536,84 @@ public class JournalDisplayContext {
 		return false;
 	}
 
+	public boolean isShowViewContentURL(JournalArticle journalArticle) {
+		if (journalArticle == null) {
+			return false;
+		}
+
+		if (!journalArticle.hasApprovedVersion()) {
+			return false;
+		}
+
+		try {
+			AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchEntry(
+				journalArticle.getGroupId(),
+				journalArticle.getArticleResourceUuid());
+
+			if (assetEntry == null) {
+				return false;
+			}
+
+			AssetDisplayPageEntry assetDisplayPageEntry =
+				AssetDisplayPageEntryLocalServiceUtil.
+					fetchAssetDisplayPageEntry(
+						assetEntry.getGroupId(), assetEntry.getClassNameId(),
+						assetEntry.getClassPK());
+
+			if ((assetDisplayPageEntry == null) ||
+				(assetDisplayPageEntry.getType() ==
+					AssetDisplayPageConstants.TYPE_NONE)) {
+
+				return false;
+			}
+
+			if (assetDisplayPageEntry.getType() ==
+					AssetDisplayPageConstants.TYPE_SPECIFIC) {
+
+				return true;
+			}
+
+			Map<Long, LayoutPageTemplateEntry>
+				defaultLayoutPageTemplateEntriesMap =
+					_getDefaultLayoutPageTemplateEntriesMap();
+
+			LayoutPageTemplateEntry defaultLayoutPageTemplateEntry =
+				defaultLayoutPageTemplateEntriesMap.get(
+					assetEntry.getClassTypeId());
+
+			if (defaultLayoutPageTemplateEntry != null) {
+				return true;
+			}
+
+			String ddmStructureKey = journalArticle.getDDMStructureKey();
+
+			DDMStructure ddmStructure =
+				DDMStructureLocalServiceUtil.fetchStructure(
+					_themeDisplay.getSiteGroupId(),
+					PortalUtil.getClassNameId(JournalArticle.class),
+					ddmStructureKey, true);
+
+			if (ddmStructure == null) {
+				return false;
+			}
+
+			defaultLayoutPageTemplateEntry =
+				defaultLayoutPageTemplateEntriesMap.get(
+					ddmStructure.getStructureId());
+
+			if (defaultLayoutPageTemplateEntry != null) {
+				return true;
+			}
+		}
+		catch (PortalException pe) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(pe, pe);
+			}
+		}
+
+		return false;
+	}
+
 	protected SearchContext buildSearchContext(
 		long companyId, long groupId, List<Long> folderIds, long classNameId,
 		String ddmStructureKey, String ddmTemplateKey, String keywords,
@@ -1595,6 +1697,33 @@ public class JournalDisplayContext {
 		searchContext.setStart(start);
 
 		return searchContext;
+	}
+
+	private Map<Long, LayoutPageTemplateEntry>
+		_getDefaultLayoutPageTemplateEntriesMap() {
+
+		if (_defaultLayoutPageTemplateEntriesMap != null) {
+			return _defaultLayoutPageTemplateEntriesMap;
+		}
+
+		Map<Long, LayoutPageTemplateEntry> layoutPageTemplateEntriesMap =
+			new HashMap<>();
+
+		List<LayoutPageTemplateEntry> layoutPageTemplateEntries =
+			LayoutPageTemplateEntryServiceUtil.getLayoutPageTemplateEntries(
+				_themeDisplay.getScopeGroupId(),
+				PortalUtil.getClassNameId(JournalArticle.class.getName()),
+				LayoutPageTemplateEntryTypeConstants.TYPE_DISPLAY_PAGE, true);
+
+		for (LayoutPageTemplateEntry layoutPageTemplateEntry :
+				layoutPageTemplateEntries) {
+
+			layoutPageTemplateEntriesMap.put(
+				layoutPageTemplateEntry.getClassTypeId(),
+				layoutPageTemplateEntry);
+		}
+
+		return layoutPageTemplateEntriesMap;
 	}
 
 	private String _getFeedsURL() {
@@ -1801,6 +1930,8 @@ public class JournalDisplayContext {
 	private String _ddmStructureName;
 	private List<DDMStructure> _ddmStructures;
 	private String _ddmTemplateKey;
+	private Map<Long, LayoutPageTemplateEntry>
+		_defaultLayoutPageTemplateEntriesMap;
 	private String _displayStyle;
 	private String[] _displayViews;
 	private JournalFolder _folder;

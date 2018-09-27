@@ -16,9 +16,9 @@ package com.liferay.portal.security.permission;
 
 import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.cache.MultiVMPoolUtil;
 import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.cache.PortalCacheHelperUtil;
+import com.liferay.portal.kernel.cache.PortalCacheManagerNames;
 import com.liferay.portal.kernel.cache.index.IndexEncoder;
 import com.liferay.portal.kernel.cache.index.PortalCacheIndexer;
 import com.liferay.portal.kernel.cluster.ClusterExecutorUtil;
@@ -335,8 +335,8 @@ public class PermissionCacheUtil {
 			PermissionCacheUtil.class, "clearResourcePermissionCache",
 			int.class, String.class, String.class);
 	private static final PortalCache<PermissionKey, Boolean>
-		_permissionPortalCache = MultiVMPoolUtil.getPortalCache(
-			PERMISSION_CACHE_NAME,
+		_permissionPortalCache = PortalCacheHelperUtil.getPortalCache(
+			PortalCacheManagerNames.MULTI_VM, PERMISSION_CACHE_NAME,
 			PropsValues.PERMISSIONS_OBJECT_BLOCKING_CACHE);
 	private static final PortalCacheIndexer<Long, PermissionKey, Boolean>
 		_permissionPortalCacheGroupIdIndexer = new PortalCacheIndexer<>(
@@ -345,19 +345,20 @@ public class PermissionCacheUtil {
 		_permissionPortalCacheNamePrimKeyIndexer = new PortalCacheIndexer<>(
 			new PermissionKeyNamePrimKeyIndexEncoder(), _permissionPortalCache);
 	private static final PortalCache<Long, UserBag> _userBagPortalCache =
-		MultiVMPoolUtil.getPortalCache(
-			USER_BAG_CACHE_NAME, PropsValues.PERMISSIONS_OBJECT_BLOCKING_CACHE);
+		PortalCacheHelperUtil.getPortalCache(
+			PortalCacheManagerNames.MULTI_VM, USER_BAG_CACHE_NAME,
+			PropsValues.PERMISSIONS_OBJECT_BLOCKING_CACHE);
 	private static final PortalCache<UserGroupRoleIdsKey, long[]>
-		_userGroupRoleIdsPortalCache = MultiVMPoolUtil.getPortalCache(
-			PERMISSION_CHECKER_BAG_CACHE_NAME,
+		_userGroupRoleIdsPortalCache = PortalCacheHelperUtil.getPortalCache(
+			PortalCacheManagerNames.MULTI_VM, PERMISSION_CHECKER_BAG_CACHE_NAME,
 			PropsValues.PERMISSIONS_OBJECT_BLOCKING_CACHE);
 	private static final PortalCacheIndexer<Long, UserGroupRoleIdsKey, long[]>
 		_userGroupRoleIdsPortalCacheIndexer = new PortalCacheIndexer<>(
 			new UserGroupRoleIdsKeyIndexEncoder(),
 			_userGroupRoleIdsPortalCache);
 	private static final PortalCache<UserPrimaryKeyRoleKey, Boolean>
-		_userPrimaryKeyRolePortalCache = MultiVMPoolUtil.getPortalCache(
-			USER_PRIMARY_KEY_ROLE_CACHE_NAME,
+		_userPrimaryKeyRolePortalCache = PortalCacheHelperUtil.getPortalCache(
+			PortalCacheManagerNames.MULTI_VM, USER_PRIMARY_KEY_ROLE_CACHE_NAME,
 			PropsValues.PERMISSIONS_OBJECT_BLOCKING_CACHE);
 	private static final PortalCacheIndexer
 		<Long, UserPrimaryKeyRoleKey, Boolean>
@@ -366,8 +367,8 @@ public class PermissionCacheUtil {
 					new UserGroupRoleKeyUserIdEncoder(),
 					_userPrimaryKeyRolePortalCache);
 	private static final PortalCache<UserRoleKey, Boolean>
-		_userRolePortalCache = MultiVMPoolUtil.getPortalCache(
-			USER_ROLE_CACHE_NAME,
+		_userRolePortalCache = PortalCacheHelperUtil.getPortalCache(
+			PortalCacheManagerNames.MULTI_VM, USER_ROLE_CACHE_NAME,
 			PropsValues.PERMISSIONS_OBJECT_BLOCKING_CACHE);
 	private static final PortalCacheIndexer<Long, UserRoleKey, Boolean>
 		_userRolePortalCacheIndexer = new PortalCacheIndexer<>(

@@ -35,18 +35,26 @@ public class PortalCacheManagerProvider {
 	public static PortalCacheManager<? extends Serializable, ?>
 		getPortalCacheManager(String portalCacheManagerName) {
 
-		return _instance._getPortalCacheManager(portalCacheManagerName);
+		return _dynamicPortalCacheManagers.computeIfAbsent(
+			portalCacheManagerName,
+			key -> new DynamicPortalCacheManager<>(key));
 	}
 
 	public static Collection<PortalCacheManager<? extends Serializable, ?>>
 		getPortalCacheManagers() {
 
-		return _instance._getPortalCacheManagers();
+		return Collections.unmodifiableCollection(
+			_dynamicPortalCacheManagers.values());
 	}
 
-	private PortalCacheManagerProvider() {
-		_portalCacheManagers = new ConcurrentHashMap<>();
+	private static final Map
+		<String, DynamicPortalCacheManager<? extends Serializable, ?>>
+			_dynamicPortalCacheManagers = new ConcurrentHashMap<>();
+	private static final ServiceTracker
+		<PortalCacheManager<? extends Serializable, ?>,
+		 DynamicPortalCacheManager<? extends Serializable, ?>> _serviceTracker;
 
+	static {
 		Registry registry = RegistryUtil.getRegistry();
 
 		_serviceTracker = registry.trackServices(
@@ -57,67 +65,53 @@ public class PortalCacheManagerProvider {
 		_serviceTracker.open();
 	}
 
-	private PortalCacheManager<? extends Serializable, ?>
-		_getPortalCacheManager(String portalCacheManagerName) {
-
-		return _portalCacheManagers.get(portalCacheManagerName);
-	}
-
-	private Collection<PortalCacheManager<? extends Serializable, ?>>
-		_getPortalCacheManagers() {
-
-		return Collections.unmodifiableCollection(
-			_portalCacheManagers.values());
-	}
-
-	private static final PortalCacheManagerProvider _instance =
-		new PortalCacheManagerProvider();
-
-	private final
-		Map<String, PortalCacheManager<? extends Serializable, ?>>
-			_portalCacheManagers;
-	private final
-		ServiceTracker
-			<PortalCacheManager<? extends Serializable, ?>,
-			 PortalCacheManager<? extends Serializable, ?>> _serviceTracker;
-
-	private class PortalCacheProviderServiceTrackerCustomizer
+	private static class PortalCacheProviderServiceTrackerCustomizer
 		implements ServiceTrackerCustomizer
 			<PortalCacheManager<? extends Serializable, ?>,
-			 PortalCacheManager<? extends Serializable, ?>> {
+			 DynamicPortalCacheManager<? extends Serializable, ?>> {
 
 		@Override
-		public PortalCacheManager<? extends Serializable, ?> addingService(
-			ServiceReference<PortalCacheManager<? extends Serializable, ?>>
-				serviceReference) {
+		public DynamicPortalCacheManager<? extends Serializable, ?>
+			addingService(
+				ServiceReference<PortalCacheManager<? extends Serializable, ?>>
+					serviceReference) {
 
 			Registry registry = RegistryUtil.getRegistry();
 
-			PortalCacheManager<?, ?> portalCacheManager = registry.getService(
-				serviceReference);
+			PortalCacheManager<? extends Serializable, ?> portalCacheManager =
+				registry.getService(serviceReference);
 
-			_portalCacheManagers.put(
-				portalCacheManager.getPortalCacheManagerName(),
-				portalCacheManager);
+			DynamicPortalCacheManager<? extends Serializable, ?>
+				dynamicPortalCacheManager =
+					_dynamicPortalCacheManagers.computeIfAbsent(
+						portalCacheManager.getPortalCacheManagerName(),
+						key -> new DynamicPortalCacheManager<>(key));
 
-			return portalCacheManager;
+			dynamicPortalCacheManager.setPortalCacheManager(portalCacheManager);
+
+			return dynamicPortalCacheManager;
 		}
 
 		@Override
 		public void modifiedService(
 			ServiceReference<PortalCacheManager<? extends Serializable, ?>>
 				serviceReference,
-			PortalCacheManager<? extends Serializable, ?> portalCacheManager) {
+			DynamicPortalCacheManager<? extends Serializable, ?>
+				dynamicPortalCacheManager) {
 		}
 
 		@Override
 		public void removedService(
 			ServiceReference<PortalCacheManager<? extends Serializable, ?>>
 				serviceReference,
-			PortalCacheManager<? extends Serializable, ?> portalCacheManager) {
+			DynamicPortalCacheManager<? extends Serializable, ?>
+				dynamicPortalCacheManager) {
 
-			_portalCacheManagers.remove(
-				portalCacheManager.getPortalCacheManagerName());
+			Registry registry = RegistryUtil.getRegistry();
+
+			registry.ungetService(serviceReference);
+
+			dynamicPortalCacheManager.setPortalCacheManager(null);
 		}
 
 	}

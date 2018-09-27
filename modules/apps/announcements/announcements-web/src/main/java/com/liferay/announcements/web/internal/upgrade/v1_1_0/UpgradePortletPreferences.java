@@ -34,12 +34,10 @@ public class UpgradePortletPreferences extends UpgradeProcess {
 		try (LoggingTimer loggingTimer = new LoggingTimer();
 			PreparedStatement ps1 = connection.prepareStatement(
 				StringBundler.concat(
-					"select PP1.portletPreferencesId, PP1.preferences from ",
-					"PortletPreferences as PP1 inner join PortletPreferences ",
-					"as PP2 on PP1.companyId = PP2.ownerId where ",
-					"PP1.portletId = '", _PORTLET_ID, "' AND PP2.portletId = '",
-					_PORTLET_ID, "' AND PP1.ownerType = ",
-					PortletKeys.PREFS_OWNER_TYPE_COMPANY, ";"));
+					"select portletPreferencesId, preferences from ",
+					"PortletPreferences where portletId = '", _PORTLET_ID, "' ",
+					"AND ownerType = ", PortletKeys.PREFS_OWNER_TYPE_COMPANY,
+					";"));
 			PreparedStatement ps2 = AutoBatchPreparedStatementUtil.autoBatch(
 				connection.prepareStatement(
 					"update PortletPreferences set preferences = ? where " +

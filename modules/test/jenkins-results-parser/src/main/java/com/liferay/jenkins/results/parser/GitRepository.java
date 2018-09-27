@@ -14,10 +14,14 @@
 
 package com.liferay.jenkins.results.parser;
 
+import org.json.JSONObject;
+
 /**
  * @author Peter Yoo
  */
 public interface GitRepository {
+
+	public JSONObject getJSONObject();
 
 	public String getName();
 

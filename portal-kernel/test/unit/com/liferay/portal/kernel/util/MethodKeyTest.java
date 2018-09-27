@@ -93,28 +93,17 @@ public class MethodKeyTest {
 			TestClass.class, "testMethod", String.class);
 
 		Assert.assertEquals(methodKey, methodKey);
-
 		Assert.assertNotEquals(methodKey, new Object());
-
-		MethodKey anotherMethodKey = new MethodKey(
-			TestClass.class, "testMethod", String.class);
-
-		Assert.assertEquals(methodKey, anotherMethodKey);
-
-		anotherMethodKey = new MethodKey(
-			TestClass.class, "testMethod", int.class);
-
-		Assert.assertNotEquals(methodKey, anotherMethodKey);
-
-		anotherMethodKey = new MethodKey(
-			TestClass.class, "anotherTestMethod", String.class);
-
-		Assert.assertNotEquals(methodKey, anotherMethodKey);
-
-		anotherMethodKey = new MethodKey(
-			Object.class, "testMethod", String.class);
-
-		Assert.assertNotEquals(methodKey, anotherMethodKey);
+		Assert.assertEquals(
+			methodKey,
+			new MethodKey(TestClass.class, "testMethod", String.class));
+		Assert.assertNotEquals(
+			methodKey, new MethodKey(TestClass.class, "testMethod", int.class));
+		Assert.assertNotEquals(
+			methodKey,
+			new MethodKey(TestClass.class, "anotherTestMethod", String.class));
+		Assert.assertNotEquals(
+			methodKey, new MethodKey(Object.class, "testMethod", String.class));
 	}
 
 	@Test

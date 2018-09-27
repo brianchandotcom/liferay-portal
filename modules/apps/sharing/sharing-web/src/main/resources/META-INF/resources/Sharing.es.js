@@ -28,32 +28,6 @@ class Sharing extends PortletBase {
 	}
 
 	/**
-	 * Show notification in the opener and closes dialog
-	 * after is rendered
-	 * @param {string} message message for notification
-	 * @param {boolean} error Flag indicating if is an error or not
-	 * @private
-	 * @review
-	 */
-	_showNotification(message, error) {
-		const parentOpenToast = Liferay.Util.getOpener().Liferay.Util.openToast;
-
-		const openToastParams = {
-			message,
-			events: {
-				'attached': this._closeDialog.bind(this)
-			}
-		};
-
-		if (error) {
-			openToastParams.title = Liferay.Language.get('error');
-			openToastParams.type = 'danger';
-		}
-
-		parentOpenToast(openToastParams);
-	}
-
-	/**
 	 * Returns af tokens that should be emails.
 	 * Does not validate emails to see if they are well formed.
 	 * @param {string} emailAddress a single paramater which is one or
@@ -70,47 +44,17 @@ class Sharing extends PortletBase {
 	}
 
 	/**
-	 * Event handler executed on userEmailAddress blur
+	 * Sync the inputs with the state
 	 * @param {!Event} event
-	 * @private
-	 */
-	_handleValidateEmail(event) {
-		const value = event.delegateTarget.value;
-
-		this._validateEmail(value);
-	}
-
-	/**
-	 * Validates if is email isn't emtpy
-	 * @param {string} emails value
-	 * @return {Boolean} value isn't emtpy
 	 * @private
 	 * @review
 	 */
-	_validateEmail(value) {
-		const empty = value && value.trim
-			? !value.trim()
-			: !value
-		;
+	_handleInputChange(event) {
+		const target = event.target;
+		const value = target.type === 'checkbox' ? target.checked : target.value;
+		const name = target.name;
 
-		this.emailErrorMessage = empty
-			? Liferay.Language.get('this-field-is-required')
-			: ''
-		;
-
-		if (empty) return false;
-
-		const emailRegex = /.+@.+\..+/i;
-		const valid = this._getEmailAdress(value).every(
-			email => emailRegex.test(email)
-		);
-
-		this.emailErrorMessage = valid
-			? ''
-			: Liferay.Language.get('please-enter-a-valid-email-address')
-		;
-
-		return valid;
+		this[name] = value;
 	}
 
 	/**
@@ -161,18 +105,73 @@ class Sharing extends PortletBase {
 	}
 
 	/**
-	 * Sync the inputs with the state
+	 * Event handler executed on userEmailAddress blur
 	 * @param {!Event} event
+	 * @private
+	 */
+	_handleValidateEmail(event) {
+		const value = event.delegateTarget.value;
+
+		this._validateEmail(value);
+	}
+
+	/**
+	 * Show notification in the opener and closes dialog
+	 * after is rendered
+	 * @param {string} message message for notification
+	 * @param {boolean} error Flag indicating if is an error or not
 	 * @private
 	 * @review
 	 */
-	_handleInputChange(event) {
-		const target = event.target;
+	_showNotification(message, error) {
+		const parentOpenToast = Liferay.Util.getOpener().Liferay.Util.openToast;
 
-		const name = target.name;
-		const value = target.type === 'checkbox' ? target.checked : target.value;
+		const openToastParams = {
+			events: {
+				'attached': this._closeDialog.bind(this)
+			},
+			message
+		};
 
-		this[name] = value;
+		if (error) {
+			openToastParams.title = Liferay.Language.get('error');
+			openToastParams.type = 'danger';
+		}
+
+		parentOpenToast(openToastParams);
+	}
+
+	/**
+	 * Validates if is email isn't emtpy
+	 * @param {string} emails value
+	 * @return {Boolean} value isn't emtpy
+	 * @private
+	 * @review
+	 */
+	_validateEmail(value) {
+		const empty = value && value.trim
+			? !value.trim()
+			: !value
+		;
+
+		this.emailErrorMessage = empty
+			? Liferay.Language.get('this-field-is-required')
+			: ''
+		;
+
+		if (empty) return false;
+
+		const emailRegex = /.+@.+\..+/i;
+		const valid = this._getEmailAdress(value).every(
+			email => emailRegex.test(email)
+		);
+
+		this.emailErrorMessage = valid
+			? ''
+			: Liferay.Language.get('please-enter-a-valid-email-address')
+		;
+
+		return valid;
 	}
 }
 
@@ -183,10 +182,10 @@ class Sharing extends PortletBase {
  * @type {!Object}
  */
 Sharing.STATE = {
+	emailErrorMessage: Config.string().value(''),
 	shareable: Config.bool().value(true),
 	shareActionURL: Config.string().required(),
 	sharingEntryPermissionDisplayActionId: Config.string().required(),
-	emailErrorMessage: Config.string().value(''),
 	submitting: Config.bool().value(false),
 };
 

@@ -13,7 +13,7 @@ Liferay.Util.openToast = (...args) => {
 	Liferay.Loader.require(
 		'frontend-js-web/liferay/toast/commands/OpenToast.es',
 		commands => {
-			commands.openToast(...args)
+			commands.openToast(...args);
 		}
 	);
 };

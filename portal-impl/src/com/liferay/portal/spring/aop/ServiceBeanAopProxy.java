@@ -84,9 +84,15 @@ public class ServiceBeanAopProxy
 			new ServiceBeanMethodInvocation(
 				_advisedSupport.getTarget(), method, arguments);
 
-		serviceBeanMethodInvocation.setMethodInterceptors(
-			_serviceBeanAopCacheManager.getMethodInterceptors(
-				serviceBeanMethodInvocation));
+		if (_enabled) {
+			serviceBeanMethodInvocation.setMethodInterceptors(
+				_serviceBeanAopCacheManager.getMethodInterceptors(
+					serviceBeanMethodInvocation));
+		}
+		else {
+			serviceBeanMethodInvocation.setMethodInterceptors(
+				_emptyMethodInterceptors);
+		}
 
 		return serviceBeanMethodInvocation.proceed();
 	}
@@ -107,6 +113,10 @@ public class ServiceBeanAopProxy
 			InvocationHandler invocationHandler, AdvisedSupport advisedSupport);
 
 	}
+
+	private static final MethodInterceptor[] _emptyMethodInterceptors =
+		new MethodInterceptor[0];
+	private static boolean _enabled = true;
 
 	private final AdvisedSupport _advisedSupport;
 	private volatile ServiceBeanAopCacheManager _serviceBeanAopCacheManager;

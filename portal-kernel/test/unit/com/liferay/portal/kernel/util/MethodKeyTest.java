@@ -95,7 +95,7 @@ public class MethodKeyTest {
 			methodKey, new MethodKey(TestClass.class, "testMethod", int.class));
 		Assert.assertNotEquals(
 			methodKey,
-			new MethodKey(TestClass.class, "anotherTestMethod", String.class));
+			new MethodKey(TestClass.class, "testMethodAnother", String.class));
 		Assert.assertNotEquals(
 			methodKey, new MethodKey(Object.class, "testMethod", String.class));
 	}
@@ -267,9 +267,6 @@ public class MethodKeyTest {
 
 	private static class TestClass {
 
-		public void anotherTestMethod(String parameter) {
-		}
-
 		public void testMethod() {
 		}
 
@@ -281,6 +278,9 @@ public class MethodKeyTest {
 		}
 
 		public void testMethod(String parameter1, String parameter2) {
+		}
+
+		public void testMethodAnother(String parameter) {
 		}
 
 	}

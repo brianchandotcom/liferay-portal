@@ -14,6 +14,7 @@
 
 package com.liferay.jenkins.results.parser.test.clazz.group;
 
+import com.liferay.jenkins.results.parser.GitWorkingDirectory;
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 import com.liferay.jenkins.results.parser.PortalTestClassJob;
 
@@ -143,14 +144,17 @@ public class NPMTestBatchTestClassGroup extends BatchTestClassGroup {
 		}
 
 		protected static NPMTestBatchTestClass getInstance(
-			String batchName, File moduleDir) {
+			String batchName, GitWorkingDirectory gitWorkingDirectory,
+			File moduleDir) {
 
 			if (_npmTestBatchTestClasses.containsKey(moduleDir)) {
 				return _npmTestBatchTestClasses.get(moduleDir);
 			}
 
 			_npmTestBatchTestClasses.put(
-				moduleDir, new NPMTestBatchTestClass(batchName, moduleDir));
+				moduleDir,
+				new NPMTestBatchTestClass(
+					batchName, gitWorkingDirectory, moduleDir));
 
 			return _npmTestBatchTestClasses.get(moduleDir);
 		}
@@ -161,10 +165,15 @@ public class NPMTestBatchTestClassGroup extends BatchTestClassGroup {
 			return _npmTestBatchTestClasses;
 		}
 
-		protected NPMTestBatchTestClass(String batchName, File file) {
+		protected NPMTestBatchTestClass(
+			String batchName, GitWorkingDirectory gitWorkingDirectory,
+			File file) {
+
 			super(file);
 
 			addTestMethod(batchName);
+
+			_gitWorkingDirectory = gitWorkingDirectory;
 
 			_moduleFile = file;
 
@@ -175,8 +184,17 @@ public class NPMTestBatchTestClassGroup extends BatchTestClassGroup {
 			List<File> jsFiles = JenkinsResultsParserUtil.findFiles(
 				_moduleFile, ".*\\.js");
 
+			File workingDirectory = _gitWorkingDirectory.getWorkingDirectory();
+
+			String workingDirectoryPath = workingDirectory.getAbsolutePath();
+
 			for (File jsFile : jsFiles) {
 				try {
+					String jsFileRelativePath = jsFile.getAbsolutePath();
+
+					jsFileRelativePath = jsFileRelativePath.replace(
+						workingDirectoryPath, "");
+
 					String jsFileContent = JenkinsResultsParserUtil.read(
 						jsFile);
 
@@ -196,7 +214,7 @@ public class NPMTestBatchTestClassGroup extends BatchTestClassGroup {
 						_jsTestMethods.add(
 							new BaseTestMethod(
 								methodIgnored,
-								jsFile.getAbsolutePath() +
+								jsFileRelativePath +
 									_CLASS_METHOD_SEPARATOR_TOKEN + methodName,
 								this));
 					}
@@ -212,6 +230,7 @@ public class NPMTestBatchTestClassGroup extends BatchTestClassGroup {
 		private static final Map<File, NPMTestBatchTestClass>
 			_npmTestBatchTestClasses = new HashMap<>();
 
+		private final GitWorkingDirectory _gitWorkingDirectory;
 		private final List<BaseTestMethod> _jsTestMethods = new ArrayList<>();
 		private final File _moduleFile;
 
@@ -247,7 +266,8 @@ public class NPMTestBatchTestClassGroup extends BatchTestClassGroup {
 
 		for (File moduleDir : moduleDirs) {
 			NPMTestBatchTestClass npmTestBatchTestClass =
-				NPMTestBatchTestClass.getInstance(batchName, moduleDir);
+				NPMTestBatchTestClass.getInstance(
+					batchName, portalGitWorkingDirectory, moduleDir);
 
 			testClasses.add(npmTestBatchTestClass);
 

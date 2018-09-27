@@ -160,6 +160,8 @@
 	</command>
 
 	<command name="ImportOldSchemaVerion" priority="4">
+		<property name="test.name.skip.portal.instance" value="SitetemplatesUsecase#ImportOldSchemaVerion" />
+
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Sites" />
 			<var name="panel" value="Control Panel" />

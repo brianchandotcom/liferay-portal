@@ -91,7 +91,8 @@ public class NPMTestBatchTestClassGroup extends BatchTestClassGroup {
 
 				String classMethodName = jsTestMethod.getName();
 
-				int colonIndex = classMethodName.indexOf("::");
+				int colonIndex = classMethodName.indexOf(
+					_CLASS_METHOD_SEPARATOR_TOKEN);
 
 				String filePath = classMethodName.substring(0, colonIndex);
 
@@ -99,7 +100,7 @@ public class NPMTestBatchTestClassGroup extends BatchTestClassGroup {
 					filePath.lastIndexOf("/") + 1);
 
 				String methodName = classMethodName.substring(
-					colonIndex + "::".length());
+					colonIndex + _CLASS_METHOD_SEPARATOR_TOKEN.length());
 
 				sb.append(moduleName);
 				sb.append(",");
@@ -195,7 +196,8 @@ public class NPMTestBatchTestClassGroup extends BatchTestClassGroup {
 						_jsTestMethods.add(
 							new BaseTestMethod(
 								methodIgnored,
-								jsFile.getAbsolutePath() + "::" + methodName,
+								jsFile.getAbsolutePath() +
+									_CLASS_METHOD_SEPARATOR_TOKEN + methodName,
 								this));
 					}
 				}
@@ -254,5 +256,7 @@ public class NPMTestBatchTestClassGroup extends BatchTestClassGroup {
 
 		axisTestClassGroups.put(0, axisTestClassGroup);
 	}
+
+	private static final String _CLASS_METHOD_SEPARATOR_TOKEN = "::";
 
 }

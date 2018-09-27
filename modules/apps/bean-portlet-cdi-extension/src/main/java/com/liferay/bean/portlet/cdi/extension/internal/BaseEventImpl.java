@@ -21,8 +21,9 @@ import javax.xml.namespace.QName;
  */
 public abstract class BaseEventImpl implements Event {
 
-	public BaseEventImpl(QName qName) {
+	public BaseEventImpl(QName qName, String valueType) {
 		_qName = qName;
+		_valueType = valueType;
 	}
 
 	@Override
@@ -30,6 +31,12 @@ public abstract class BaseEventImpl implements Event {
 		return _qName;
 	}
 
+	@Override
+	public String getValueType() {
+		return _valueType;
+	}
+
 	private final QName _qName;
+	private final String _valueType;
 
 }

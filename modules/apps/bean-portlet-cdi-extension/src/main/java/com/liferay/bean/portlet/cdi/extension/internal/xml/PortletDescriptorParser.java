@@ -125,6 +125,7 @@ public class PortletDescriptorParser {
 
 			Element qNameElement = eventDefinitionElement.element("qname");
 			Element nameElement = eventDefinitionElement.element("name");
+			String valueType = eventDefinitionElement.elementText("value-type");
 
 			QName qName = PortletQNameUtil.getQName(
 				qNameElement, nameElement, defaultNamespace);
@@ -138,7 +139,7 @@ public class PortletDescriptorParser {
 				aliasQNames.add(qName);
 			}
 
-			events.add(new EventDescriptorImpl(qName, aliasQNames));
+			events.add(new EventDescriptorImpl(qName, valueType, aliasQNames));
 		}
 
 		Map<String, PublicRenderParameter> publicRenderParameters =

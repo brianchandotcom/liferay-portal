@@ -27,4 +27,6 @@ public interface Event {
 
 	public QName getQName();
 
+	public String getValueType();
+
 }

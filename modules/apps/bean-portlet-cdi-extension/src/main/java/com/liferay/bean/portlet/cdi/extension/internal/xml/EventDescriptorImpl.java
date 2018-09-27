@@ -27,13 +27,14 @@ import javax.xml.namespace.QName;
 public class EventDescriptorImpl extends BaseEventImpl {
 
 	public EventDescriptorImpl(
-		com.liferay.portal.kernel.xml.QName qName,
+		com.liferay.portal.kernel.xml.QName qName, String valueType,
 		List<com.liferay.portal.kernel.xml.QName> aliasQNames) {
 
 		super(
 			new QName(
 				qName.getNamespaceURI(), qName.getLocalPart(),
-				qName.getNamespacePrefix()));
+				qName.getNamespacePrefix()),
+			valueType);
 
 		_aliasQNames = new ArrayList<>();
 

@@ -30,7 +30,7 @@ import javax.xml.namespace.QName;
 public class EventAnnotationImpl extends BaseEventImpl {
 
 	public EventAnnotationImpl(EventDefinition eventDefinition) {
-		this(eventDefinition.qname());
+		this(eventDefinition.qname(), eventDefinition.payloadType());
 
 		for (PortletQName portletQName : eventDefinition.alias()) {
 			_aliasQNames.add(
@@ -39,13 +39,23 @@ public class EventAnnotationImpl extends BaseEventImpl {
 		}
 	}
 
-	public EventAnnotationImpl(PortletQName portletQName) {
-		super(new QName(portletQName.namespaceURI(), portletQName.localPart()));
+	public EventAnnotationImpl(PortletQName portletQName, Class<?> valueType) {
+		super(
+			new QName(portletQName.namespaceURI(), portletQName.localPart()),
+			_getClassName(valueType));
 	}
 
 	@Override
 	public List<QName> getAliasQNames() {
 		return _aliasQNames;
+	}
+
+	private static String _getClassName(Class<?> valueType) {
+		if (valueType == null) {
+			return null;
+		}
+
+		return valueType.getName();
 	}
 
 	private final List<QName> _aliasQNames = new ArrayList<>();

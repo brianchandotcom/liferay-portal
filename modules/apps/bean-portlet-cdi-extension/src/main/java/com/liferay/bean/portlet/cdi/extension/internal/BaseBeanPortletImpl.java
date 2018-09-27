@@ -212,6 +212,41 @@ public abstract class BaseBeanPortletImpl implements BeanPortlet {
 				"javax.portlet.dependency", tokenizedPortletDependencies);
 		}
 
+		// javax.portlet.event-definition
+
+		List<Event> events = beanApp.getEvents();
+
+		List<String> eventDefinitions = new ArrayList<>();
+
+		for (Event event : events) {
+			QName eventQName = event.getQName();
+
+			StringBundler eventDefinitionSB = new StringBundler(
+				_toNameValuePair(
+					eventQName.getLocalPart(), eventQName.getNamespaceURI()));
+
+			String valueType = event.getValueType();
+
+			if (valueType != null) {
+				eventDefinitionSB.append(";");
+				eventDefinitionSB.append(valueType);
+			}
+
+			for (QName aliasQName : event.getAliasQNames()) {
+				eventDefinitionSB.append(",");
+				eventDefinitionSB.append(
+					_toNameValuePair(
+						aliasQName.getLocalPart(),
+						aliasQName.getNamespaceURI()));
+			}
+
+			eventDefinitions.add(eventDefinitionSB.toString());
+		}
+
+		if (!eventDefinitions.isEmpty()) {
+			dictionary.put("javax.portlet.event-definition", eventDefinitions);
+		}
+
 		// javax.portlet.expiration-cache
 
 		dictionary.put("javax.portlet.expiration-cache", getExpirationCache());

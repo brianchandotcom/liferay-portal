@@ -14,26 +14,63 @@
 
 package com.liferay.bean.portlet.cdi.extension.internal.annotated;
 
-import com.liferay.bean.portlet.cdi.extension.internal.BeanFilter;
-import com.liferay.portal.kernel.util.HashMapDictionary;
+import com.liferay.bean.portlet.cdi.extension.internal.xml.BaseBeanFilterImpl;
 
 import java.util.Arrays;
-import java.util.Dictionary;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedHashSet;
+import java.util.Map;
 import java.util.Set;
 
+import javax.portlet.PortletRequest;
 import javax.portlet.annotations.InitParameter;
 import javax.portlet.annotations.PortletLifecycleFilter;
+import javax.portlet.filter.ActionFilter;
+import javax.portlet.filter.EventFilter;
+import javax.portlet.filter.HeaderFilter;
+import javax.portlet.filter.RenderFilter;
+import javax.portlet.filter.ResourceFilter;
 
 /**
  * @author Neil Griffin
  */
-public class BeanFilterAnnotationImpl implements BeanFilter {
+public class BeanFilterAnnotationImpl extends BaseBeanFilterImpl {
 
-	public BeanFilterAnnotationImpl(Class<?> filterClass) {
+	public BeanFilterAnnotationImpl(
+		Class<?> filterClass, PortletLifecycleFilter portletLifecycleFilter) {
+
 		_filterClass = filterClass;
-		_portletLifecycleFilter = filterClass.getAnnotation(
-			PortletLifecycleFilter.class);
+		_portletLifecycleFilter = portletLifecycleFilter;
+		_initParams = new HashMap<>();
+
+		for (InitParameter initParameter :
+				_portletLifecycleFilter.initParams()) {
+
+			_initParams.put(initParameter.name(), initParameter.value());
+		}
+
+		_lifecycles = new LinkedHashSet<>();
+
+		if (ActionFilter.class.isAssignableFrom(filterClass)) {
+			_lifecycles.add(PortletRequest.ACTION_PHASE);
+		}
+
+		if (EventFilter.class.isAssignableFrom(filterClass)) {
+			_lifecycles.add(PortletRequest.EVENT_PHASE);
+		}
+
+		if (HeaderFilter.class.isAssignableFrom(filterClass)) {
+			_lifecycles.add(PortletRequest.HEADER_PHASE);
+		}
+
+		if (RenderFilter.class.isAssignableFrom(filterClass)) {
+			_lifecycles.add(PortletRequest.RENDER_PHASE);
+		}
+
+		if (ResourceFilter.class.isAssignableFrom(filterClass)) {
+			_lifecycles.add(PortletRequest.RESOURCE_PHASE);
+		}
 
 		_portletNames = new HashSet<>(
 			Arrays.asList(_portletLifecycleFilter.portletNames()));
@@ -50,33 +87,28 @@ public class BeanFilterAnnotationImpl implements BeanFilter {
 	}
 
 	@Override
+	public Map<String, String> getInitParams() {
+		return _initParams;
+	}
+
+	@Override
+	public Set<String> getLifecycles() {
+		return _lifecycles;
+	}
+
+	@Override
+	public int getOrdinal() {
+		return _portletLifecycleFilter.ordinal();
+	}
+
+	@Override
 	public Set<String> getPortletNames() {
 		return _portletNames;
 	}
 
-	@Override
-	public Dictionary<String, Object> toDictionary() {
-		Dictionary<String, Object> dictionary = new HashMapDictionary<>();
-
-		dictionary.put(
-			"service.ranking:Integer", _portletLifecycleFilter.ordinal());
-
-		for (InitParameter initParameter :
-				_portletLifecycleFilter.initParams()) {
-
-			String value = initParameter.value();
-
-			if (value != null) {
-				dictionary.put(
-					"javax.portlet.init-param.".concat(initParameter.name()),
-					value);
-			}
-		}
-
-		return dictionary;
-	}
-
 	private final Class<?> _filterClass;
+	private final Map<String, String> _initParams;
+	private final Set<String> _lifecycles;
 	private final PortletLifecycleFilter _portletLifecycleFilter;
 	private final Set<String> _portletNames;
 

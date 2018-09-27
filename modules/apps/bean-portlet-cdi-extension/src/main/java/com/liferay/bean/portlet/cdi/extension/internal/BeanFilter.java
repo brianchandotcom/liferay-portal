@@ -15,6 +15,7 @@
 package com.liferay.bean.portlet.cdi.extension.internal;
 
 import java.util.Dictionary;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -25,6 +26,12 @@ public interface BeanFilter {
 	public Class<?> getFilterClass();
 
 	public String getFilterName();
+
+	public Map<String, String> getInitParams();
+
+	public Set<String> getLifecycles();
+
+	public int getOrdinal();
 
 	public Set<String> getPortletNames();
 

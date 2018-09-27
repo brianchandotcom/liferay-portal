@@ -208,7 +208,7 @@ public class RegistrationUtil {
 			bundleContext.registerService(
 				PortletFilter.class,
 				new BeanFilterInvoker(beanFilter.getFilterClass(), beanManager),
-				beanFilter.toDictionary()));
+				dictionary));
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

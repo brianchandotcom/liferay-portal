@@ -14,25 +14,38 @@
 
 package com.liferay.bean.portlet.cdi.extension.internal.xml;
 
+import com.liferay.bean.portlet.cdi.extension.internal.BeanFilter;
+
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
 
 /**
  * @author Neil Griffin
  */
-public class BeanFilterDescriptorImpl extends BaseBeanFilterImpl {
+public class BeanFilterMergedImpl extends BaseBeanFilterImpl {
 
-	public BeanFilterDescriptorImpl(
-		String filterName, Class<?> filterClass, int ordinal,
-		Set<String> portletNames, Set<String> lifecycles,
-		Map<String, String> initParams) {
+	public BeanFilterMergedImpl(
+		BeanFilter annotatedBeanFilter, BeanFilter descriptorBeanFilter) {
 
-		_filterName = filterName;
-		_filterClass = filterClass;
-		_ordinal = ordinal;
-		_portletNames = portletNames;
-		_lifecycles = lifecycles;
-		_initParams = initParams;
+		_filterClass = descriptorBeanFilter.getFilterClass();
+		_filterName = descriptorBeanFilter.getFilterName();
+
+		_initParams = new HashMap<>(annotatedBeanFilter.getInitParams());
+
+		_initParams.putAll(descriptorBeanFilter.getInitParams());
+
+		_lifecycles = new LinkedHashSet<>(annotatedBeanFilter.getLifecycles());
+
+		_lifecycles.addAll(descriptorBeanFilter.getLifecycles());
+
+		_ordinal = descriptorBeanFilter.getOrdinal();
+
+		_portletNames = new HashSet<>(annotatedBeanFilter.getPortletNames());
+
+		_portletNames.addAll(descriptorBeanFilter.getPortletNames());
 	}
 
 	@Override

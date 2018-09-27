@@ -253,7 +253,7 @@ public class PortletDescriptorParser {
 
 		return new BeanFilterDescriptorImpl(
 			filterName, filterClass, ordinal, filterMappings.get(filterName),
-			initParams);
+			lifecycles, initParams);
 	}
 
 	private static List<BeanFilter> _readBeanFilters(Element rootElement) {

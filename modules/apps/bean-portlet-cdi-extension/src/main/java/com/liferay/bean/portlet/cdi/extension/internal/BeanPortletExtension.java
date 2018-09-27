@@ -28,6 +28,7 @@ import com.liferay.bean.portlet.cdi.extension.internal.scope.PortletRequestBeanC
 import com.liferay.bean.portlet.cdi.extension.internal.scope.PortletSessionBeanContext;
 import com.liferay.bean.portlet.cdi.extension.internal.scope.RenderStateBeanContext;
 import com.liferay.bean.portlet.cdi.extension.internal.scope.ScopedBean;
+import com.liferay.bean.portlet.cdi.extension.internal.xml.BeanFilterMergedImpl;
 import com.liferay.bean.portlet.cdi.extension.internal.xml.DisplayDescriptorParser;
 import com.liferay.bean.portlet.cdi.extension.internal.xml.LiferayDescriptorParser;
 import com.liferay.bean.portlet.cdi.extension.internal.xml.PortletDescriptor;
@@ -394,7 +395,7 @@ public class BeanPortletExtension implements Extension {
 			}
 		}
 
-		for (BeanFilter beanFilter : _beanFilters) {
+		for (BeanFilter beanFilter : _beanFilters.values()) {
 			for (String portletName : beanFilter.getPortletNames()) {
 				_filterRegistrations.addAll(
 					RegistrationUtil.registerBeanFilter(
@@ -536,7 +537,25 @@ public class BeanPortletExtension implements Extension {
 
 	private void _addBeanFiltersFromAnnotatedClasses() {
 		for (Class<?> annotatedClass : _portletLifecycleFilterClasses) {
-			_beanFilters.add(new BeanFilterAnnotationImpl(annotatedClass));
+			PortletLifecycleFilter portletLifecycleFilter =
+				annotatedClass.getAnnotation(PortletLifecycleFilter.class);
+
+			BeanFilter annotatedBeanFilter = new BeanFilterAnnotationImpl(
+				annotatedClass, portletLifecycleFilter);
+
+			BeanFilter descriptorBeanFilter = _beanFilters.get(
+				portletLifecycleFilter.filterName());
+
+			if (descriptorBeanFilter == null) {
+				_beanFilters.put(
+					portletLifecycleFilter.filterName(), annotatedBeanFilter);
+			}
+			else {
+				_beanFilters.put(
+					portletLifecycleFilter.filterName(),
+					new BeanFilterMergedImpl(
+						annotatedBeanFilter, descriptorBeanFilter));
+			}
 		}
 	}
 
@@ -619,7 +638,11 @@ public class BeanPortletExtension implements Extension {
 
 				_beanApp = portletDescriptor.getBeanApp();
 
-				_beanFilters.addAll(portletDescriptor.getBeanFilters());
+				for (BeanFilter beanFilter :
+						portletDescriptor.getBeanFilters()) {
+
+					_beanFilters.put(beanFilter.getFilterName(), beanFilter);
+				}
 
 				for (BeanPortlet beanPortlet :
 						portletDescriptor.getBeanPortlets()) {
@@ -927,7 +950,7 @@ public class BeanPortletExtension implements Extension {
 		};
 
 	private BeanApp _beanApp;
-	private final List<BeanFilter> _beanFilters = new ArrayList<>();
+	private final Map<String, BeanFilter> _beanFilters = new HashMap<>();
 	private final Map<String, BeanPortlet> _beanPortlets = new HashMap<>();
 	private final List<ServiceRegistration<PortletFilter>>
 		_filterRegistrations = new ArrayList<>();

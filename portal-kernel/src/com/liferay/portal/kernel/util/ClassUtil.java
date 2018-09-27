@@ -76,6 +76,7 @@ public class ClassUtil {
 					st.ordinaryChar(' ');
 					st.wordChars('=', '=');
 					st.wordChars('+', '+');
+					st.wordChars('-', '-');
 
 					String[] annotationClasses = _processAnnotation(
 						st.sval, st);
@@ -293,7 +294,7 @@ public class ClassUtil {
 		else if (annotationParametersMatcher.matches()) {
 			tokens.add(annotationParametersMatcher.group(1));
 
-			String annotationParameters = StringPool.BLANK;
+			String annotationParameters = null;
 
 			String trimmedString = s.trim();
 
@@ -301,11 +302,7 @@ public class ClassUtil {
 				annotationParameters = annotationParametersMatcher.group(3);
 			}
 			else {
-				int pos = s.indexOf('{');
-
-				if (pos != -1) {
-					annotationParameters += s.substring(pos + 1);
-				}
+				annotationParameters = s.substring(s.indexOf('('));
 
 				while (st.nextToken() != StreamTokenizer.TT_EOF) {
 					if (st.ttype != StreamTokenizer.TT_WORD) {
@@ -325,7 +322,7 @@ public class ClassUtil {
 					int openParenthesesCount = StringUtil.count(
 						annotationParameters, '(');
 
-					if (closeParenthesesCount > openParenthesesCount) {
+					if (closeParenthesesCount == openParenthesesCount) {
 						break;
 					}
 				}

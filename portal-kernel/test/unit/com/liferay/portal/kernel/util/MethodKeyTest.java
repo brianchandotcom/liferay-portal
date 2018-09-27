@@ -46,39 +46,21 @@ public class MethodKeyTest {
 
 	@Test
 	public void testConstructors() throws NoSuchMethodException {
-		MethodKey methodKey = new MethodKey(TestClass.class, "testMethod");
-
-		Assert.assertSame(TestClass.class, methodKey.getDeclaringClass());
-		Assert.assertEquals("testMethod", methodKey.getMethodName());
-		Assert.assertArrayEquals(
-			new Class<?>[0], methodKey.getParameterTypes());
-
-		methodKey = new MethodKey(TestClass.class, "testMethod", String.class);
-
-		Assert.assertSame(TestClass.class, methodKey.getDeclaringClass());
-		Assert.assertEquals("testMethod", methodKey.getMethodName());
-		Assert.assertArrayEquals(
-			new Class<?>[] {String.class}, methodKey.getParameterTypes());
-
-		Method method = TestClass.class.getMethod("testMethod", String.class);
-
-		methodKey = new MethodKey(method);
-
-		Assert.assertSame(TestClass.class, methodKey.getDeclaringClass());
-		Assert.assertEquals("testMethod", methodKey.getMethodName());
-		Assert.assertArrayEquals(
-			new Class<?>[] {String.class}, methodKey.getParameterTypes());
-
-		methodKey = new MethodKey(
-			TestClass.class.getName(), "testMethod", String.class);
-
-		Assert.assertSame(TestClass.class, methodKey.getDeclaringClass());
-		Assert.assertEquals("testMethod", methodKey.getMethodName());
-		Assert.assertArrayEquals(
-			new Class<?>[] {String.class}, methodKey.getParameterTypes());
+		_assertMethodKey(
+			TestClass.class, "testMethod", new Class<?>[0],
+			new MethodKey(TestClass.class, "testMethod"));
+		_assertMethodKey(
+			TestClass.class, "testMethod", new Class<?>[] {String.class},
+			new MethodKey(TestClass.class, "testMethod", String.class));
+		_assertMethodKey(
+			TestClass.class, "testMethod", new Class<?>[0],
+			new MethodKey(TestClass.class.getMethod("testMethod")));
+		_assertMethodKey(
+			TestClass.class, "testMethod", new Class<?>[0],
+			new MethodKey(TestClass.class.getName(), "testMethod"));
 
 		try {
-			new MethodKey("ClassNotFound", "testMethod", String.class);
+			new MethodKey("ClassNotFound", "testMethod");
 
 			Assert.fail("No RuntimeException thrown!");
 		}
@@ -251,6 +233,16 @@ public class MethodKeyTest {
 		}
 
 		Assert.assertEquals(originalMethodKey, deserializedMethodKey);
+	}
+
+	private void _assertMethodKey(
+		Class<?> expectedClass, String expectedMethodName,
+		Class<?>[] expectedParameters, MethodKey methodKey) {
+
+		Assert.assertSame(expectedClass, methodKey.getDeclaringClass());
+		Assert.assertEquals(expectedMethodName, methodKey.getMethodName());
+		Assert.assertArrayEquals(
+			expectedParameters, methodKey.getParameterTypes());
 	}
 
 	private static class TestClass {

@@ -14,6 +14,7 @@
 
 package com.liferay.portal.spring.aop;
 
+import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.portal.kernel.spring.aop.AdvisedSupport;
 
 import org.springframework.aop.TargetSource;
@@ -37,10 +38,15 @@ public class AdvisedSupportAdapter implements AdvisedSupport {
 	}
 
 	@Override
-	public Object getTarget() throws Exception {
+	public Object getTarget() {
 		TargetSource targetSource = _advisedSupport.getTargetSource();
 
-		return targetSource.getTarget();
+		try {
+			return targetSource.getTarget();
+		}
+		catch (Exception e) {
+			return ReflectionUtil.throwException(e);
+		}
 	}
 
 	@Override

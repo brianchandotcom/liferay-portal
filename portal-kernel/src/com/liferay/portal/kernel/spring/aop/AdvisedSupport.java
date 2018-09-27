@@ -21,7 +21,7 @@ public interface AdvisedSupport {
 
 	public Class<?>[] getProxiedInterfaces();
 
-	public Object getTarget() throws Exception;
+	public Object getTarget();
 
 	public void setTarget(Object target);
 

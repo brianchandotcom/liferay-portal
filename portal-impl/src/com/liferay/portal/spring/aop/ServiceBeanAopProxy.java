@@ -75,7 +75,7 @@ public class ServiceBeanAopProxy
 			}
 
 			@Override
-			public Object getTarget() throws Exception {
+			public Object getTarget() {
 				return _advisedSupport.getTarget();
 			}
 

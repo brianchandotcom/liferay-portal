@@ -63,7 +63,7 @@ public class DefaultDynamicDataSourceTargetSource
 	}
 
 	@Override
-	public Object getTarget() throws Exception {
+	public Object getTarget() {
 		Operation operationType = getOperation();
 
 		if (operationType == Operation.READ) {

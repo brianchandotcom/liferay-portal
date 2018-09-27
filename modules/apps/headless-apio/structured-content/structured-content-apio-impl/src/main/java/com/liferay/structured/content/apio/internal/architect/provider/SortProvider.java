@@ -18,6 +18,7 @@ import com.liferay.apio.architect.provider.Provider;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.structured.content.apio.architect.sort.Sort;
 import com.liferay.structured.content.apio.architect.sort.SortParser;
+import com.liferay.structured.content.apio.internal.architect.filter.StructuredContentEntityModel;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -41,7 +42,9 @@ public class SortProvider implements Provider<Sort> {
 		return new Sort(_sortParser.parse(sortString));
 	}
 
-	@Reference
+	@Reference(
+		target = "(entity.model.name=" + StructuredContentEntityModel.NAME + ")"
+	)
 	private SortParser _sortParser;
 
 }

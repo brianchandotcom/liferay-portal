@@ -29,9 +29,6 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * Utility for parsing Sort strings. It uses a model to create a list of {@link
  * SortField}.
@@ -39,8 +36,11 @@ import org.osgi.service.component.annotations.Reference;
  * @author Cristina González
  * @review
  */
-@Component(immediate = true, service = SortParser.class)
 public class SortParserImpl implements SortParser {
+
+	public SortParserImpl(EntityModel entityModel) {
+		_entityModel = entityModel;
+	}
 
 	/**
 	 * Returns a List of {@link SortField} obtained from a comma-separated list
@@ -80,11 +80,6 @@ public class SortParserImpl implements SortParser {
 		).collect(
 			Collectors.toList()
 		);
-	}
-
-	@Reference(unbind = "-")
-	public void setEntityModel(EntityModel entityModel) {
-		_entityModel = entityModel;
 	}
 
 	protected Optional<SortField> getSortFieldOptional(String sortString) {
@@ -148,6 +143,6 @@ public class SortParserImpl implements SortParser {
 
 	private static final String _ORDER_BY_DESC = "desc";
 
-	private EntityModel _entityModel;
+	private final EntityModel _entityModel;
 
 }

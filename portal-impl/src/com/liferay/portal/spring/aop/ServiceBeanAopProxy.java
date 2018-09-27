@@ -67,7 +67,33 @@ public class ServiceBeanAopProxy
 
 	@Override
 	public AdvisedSupport getAdvisedSupport() {
-		return _advisedSupport;
+		return new AdvisedSupport() {
+
+			@Override
+			public Class<?>[] getProxiedInterfaces() {
+				return _advisedSupport.getProxiedInterfaces();
+			}
+
+			@Override
+			public Object getTarget() throws Exception {
+				return _advisedSupport.getTarget();
+			}
+
+			@Override
+			public void setTarget(Object target) {
+				_advisedSupport.setTarget(target);
+
+				_serviceBeanAopCacheManager.reset();
+			}
+
+			@Override
+			public void setTarget(Object target, Class<?> targetClass) {
+				_advisedSupport.setTarget(target, targetClass);
+
+				_serviceBeanAopCacheManager.reset();
+			}
+
+		};
 	}
 
 	@Override
@@ -84,9 +110,15 @@ public class ServiceBeanAopProxy
 			new ServiceBeanMethodInvocation(
 				_advisedSupport.getTarget(), method, arguments);
 
-		serviceBeanMethodInvocation.setMethodInterceptors(
-			_serviceBeanAopCacheManager.getMethodInterceptors(
-				serviceBeanMethodInvocation));
+		if (_enabled) {
+			serviceBeanMethodInvocation.setMethodInterceptors(
+				_serviceBeanAopCacheManager.getMethodInterceptors(
+					serviceBeanMethodInvocation));
+		}
+		else {
+			serviceBeanMethodInvocation.setMethodInterceptors(
+				_emptyMethodInterceptors);
+		}
 
 		return serviceBeanMethodInvocation.proceed();
 	}
@@ -107,6 +139,10 @@ public class ServiceBeanAopProxy
 			InvocationHandler invocationHandler, AdvisedSupport advisedSupport);
 
 	}
+
+	private static final MethodInterceptor[] _emptyMethodInterceptors =
+		new MethodInterceptor[0];
+	private static boolean _enabled = true;
 
 	private final AdvisedSupport _advisedSupport;
 	private volatile ServiceBeanAopCacheManager _serviceBeanAopCacheManager;

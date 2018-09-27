@@ -1509,14 +1509,10 @@ public class PortletPreferencesLocalServiceTest {
 		_serviceBag = new ServiceBag<>(
 			ClassLoaderUtil.getPortalClassLoader(), advisedSupport,
 			PortletPreferencesLocalService.class, serviceWrapper);
-
-		ServiceBeanAopCacheManagerUtil.reset();
 	}
 
 	protected void resetService() throws Exception {
 		_serviceBag.replace();
-
-		ServiceBeanAopCacheManagerUtil.reset();
 	}
 
 	private static final String[] _MULTIPLE_VALUES = {"value1", "value2"};

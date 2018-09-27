@@ -4,6 +4,7 @@ import Soy from 'metal-soy';
 
 import './LayoutBreadcrumbs.es';
 import './LayoutColumn.es';
+import LayoutDragDrop from './utils/LayoutDragDrop.es';
 import templates from './Layout.soy';
 
 /**
@@ -53,12 +54,25 @@ class Layout extends Component {
 	 * @inheritDoc
 	 */
 
-	rendered() {
+	rendered(firstRendered) {
 		requestAnimationFrame(
 			() => {
 				this.refs.layoutColumns.scrollLeft = this.refs.layoutColumns.scrollWidth;
 			}
 		);
+
+		if (firstRendered) {
+			this._initializeLayoutDragDrop();
+		}
+	}
+
+	/**
+	 * @inheritDoc
+	 * @review
+	 */
+
+	_initializeLayoutDragDrop() {
+		this._layoutDragDrop = new LayoutDragDrop();
 	}
 }
 
@@ -135,8 +149,18 @@ Layout.STATE = {
 	 * @type {!string}
 	 */
 
-	siteNavigationMenuNames: Config.string().required()
+	siteNavigationMenuNames: Config.string().required(),
 
+	/**
+	 * Internal LayoutDragDrop instance
+	 * @default null
+	 * @instance
+	 * @memberOf Layout
+	 * @review
+	 * @type {object|null}
+	 */
+
+	_layoutDragDrop: Config.internal().value(null)
 };
 
 Soy.register(Layout, templates);

@@ -244,7 +244,7 @@ AUI.add(
 							}
 						);
 
-						return _.groupBy(types, 'group');
+						return Liferay.Util.groupBy(types, 'group');
 					},
 
 					_onClickDocument: function(event) {

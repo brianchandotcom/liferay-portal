@@ -20,6 +20,11 @@ package com.liferay.jenkins.results.parser;
 public class DefaultPortalWorkspaceGitRepository
 	extends BasePortalWorkspaceGitRepository {
 
+	@Override
+	public String getType() {
+		return _TYPE;
+	}
+
 	protected DefaultPortalWorkspaceGitRepository(
 		PullRequest pullRequest, String upstreamBranchName) {
 
@@ -31,5 +36,7 @@ public class DefaultPortalWorkspaceGitRepository
 
 		super(remoteGitRef, upstreamBranchName);
 	}
+
+	private static final String _TYPE = "portal";
 
 }

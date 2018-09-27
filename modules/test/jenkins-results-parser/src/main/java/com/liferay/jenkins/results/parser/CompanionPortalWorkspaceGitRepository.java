@@ -24,6 +24,11 @@ public class CompanionPortalWorkspaceGitRepository
 	extends BasePortalWorkspaceGitRepository {
 
 	@Override
+	public String getType() {
+		return _TYPE;
+	}
+
+	@Override
 	public void setUp() {
 		super.setUp();
 
@@ -73,6 +78,8 @@ public class CompanionPortalWorkspaceGitRepository
 
 		_parentWorkspaceGitRepository = parentWorkspaceGitRepository;
 	}
+
+	private static final String _TYPE = "portal.companion";
 
 	private final WorkspaceGitRepository _parentWorkspaceGitRepository;
 

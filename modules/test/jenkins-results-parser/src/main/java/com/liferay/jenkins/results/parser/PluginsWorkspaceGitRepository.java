@@ -19,6 +19,11 @@ package com.liferay.jenkins.results.parser;
  */
 public class PluginsWorkspaceGitRepository extends BaseWorkspaceGitRepository {
 
+	@Override
+	public String getType() {
+		return _TYPE;
+	}
+
 	protected PluginsWorkspaceGitRepository(
 		PullRequest pullRequest, String upstreamBranchName) {
 
@@ -44,5 +49,7 @@ public class PluginsWorkspaceGitRepository extends BaseWorkspaceGitRepository {
 		return JenkinsResultsParserUtil.combine(
 			name.replace("-ee", ""), "-", upstreamBranchName);
 	}
+
+	private static final String _TYPE = "plugins";
 
 }

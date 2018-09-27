@@ -19,6 +19,11 @@ package com.liferay.jenkins.results.parser;
  */
 public class DefaultWorkspaceGitRepository extends BaseWorkspaceGitRepository {
 
+	@Override
+	public String getType() {
+		return _TYPE;
+	}
+
 	protected DefaultWorkspaceGitRepository(
 		PullRequest pullRequest, String upstreamBranchName) {
 
@@ -30,5 +35,7 @@ public class DefaultWorkspaceGitRepository extends BaseWorkspaceGitRepository {
 
 		super(remoteGitRef, upstreamBranchName);
 	}
+
+	private static final String _TYPE = "default";
 
 }

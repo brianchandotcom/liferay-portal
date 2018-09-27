@@ -158,6 +158,8 @@ public abstract class BaseWorkspaceGitRepository
 
 		setBranchSHA(localGitBranch.getSHA());
 
+		_setType();
+
 		validateKeys(_REQUIRED_KEYS);
 
 		if (JenkinsResultsParserUtil.isCINode()) {
@@ -187,6 +189,8 @@ public abstract class BaseWorkspaceGitRepository
 		_setBranchName(localGitBranch.getName());
 
 		setBranchSHA(localGitBranch.getSHA());
+
+		_setType();
 
 		validateKeys(_REQUIRED_KEYS);
 
@@ -262,11 +266,15 @@ public abstract class BaseWorkspaceGitRepository
 		put("git_hub_url", gitHubURL);
 	}
 
+	private void _setType() {
+		put("type", getType());
+	}
+
 	private static final String[] _REQUIRED_CI_KEYS =
 		{"git_hub_dev_branch_name"};
 
 	private static final String[] _REQUIRED_KEYS =
-		{"branch_head_sha", "branch_name", "branch_sha", "git_hub_url"};
+		{"branch_head_sha", "branch_name", "branch_sha", "git_hub_url", "type"};
 
 	private static final String _SHA_REGEX = "[0-9a-f]{7,40}";
 

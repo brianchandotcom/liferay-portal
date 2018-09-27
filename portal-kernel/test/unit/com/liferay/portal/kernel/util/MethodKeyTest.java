@@ -46,8 +46,14 @@ public class MethodKeyTest {
 
 	@Test
 	public void testConstructors() throws NoSuchMethodException {
-		MethodKey methodKey = new MethodKey(
-			TestClass.class, "testMethod", String.class);
+		MethodKey methodKey = new MethodKey(TestClass.class, "testMethod");
+
+		Assert.assertSame(TestClass.class, methodKey.getDeclaringClass());
+		Assert.assertEquals("testMethod", methodKey.getMethodName());
+		Assert.assertArrayEquals(
+			new Class<?>[0], methodKey.getParameterTypes());
+
+		methodKey = new MethodKey(TestClass.class, "testMethod", String.class);
 
 		Assert.assertSame(TestClass.class, methodKey.getDeclaringClass());
 		Assert.assertEquals("testMethod", methodKey.getMethodName());
@@ -251,6 +257,9 @@ public class MethodKeyTest {
 	private class TestClass {
 
 		public void anotherTestMethod(String parameter) {
+		}
+
+		public void testMethod() {
 		}
 
 		public void testMethod(int parameter) {

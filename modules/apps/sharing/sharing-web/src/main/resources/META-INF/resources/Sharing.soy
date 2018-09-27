@@ -66,7 +66,7 @@
 						<div class="custom-control custom-radio">
 							<label>
 								<input
-									{if $sharingEntryPermissionDisplayActionKeyActionId == $sharingEntryPermissionDisplay.sharingEntryPermissionDisplayActionKeyActionId}
+									{if $sharingEntryPermissionDisplayActionId == $sharingEntryPermissionDisplay.sharingEntryPermissionDisplayActionId}
 										checked="checked"
 									{/if}
 									{if not $sharingEntryPermissionDisplay.enabled}
@@ -74,9 +74,9 @@
 									{/if}
 									class="custom-control-input"
 									data-onchange="{$_handleInputChange}"
-									name="sharingEntryPermissionDisplayActionKeyActionId"
+									name="sharingEntryPermissionDisplayActionId"
 									type="radio"
-									value="{$sharingEntryPermissionDisplay.sharingEntryPermissionDisplayActionKeyActionId}"
+									value="{$sharingEntryPermissionDisplay.sharingEntryPermissionDisplayActionId}"
 								/>
 
 								<span class="custom-control-label">

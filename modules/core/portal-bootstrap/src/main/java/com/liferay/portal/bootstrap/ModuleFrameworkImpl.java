@@ -19,6 +19,7 @@ import aQute.bnd.header.Parameters;
 import aQute.bnd.version.Version;
 
 import com.liferay.petra.reflect.ReflectionUtil;
+import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.concurrent.DefaultNoticeableFuture;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -96,8 +97,6 @@ import java.util.concurrent.Future;
 import java.util.jar.Attributes;
 import java.util.jar.JarInputStream;
 import java.util.jar.Manifest;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
@@ -908,17 +907,17 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 					continue;
 				}
 
-				Matcher matcher = _pattern.matcher(name);
+				if (!overrideStaticFileNames.isEmpty()) {
+					String fileName = _extractFileName(name);
 
-				if (matcher.matches()) {
-					String fileName = matcher.group(1) + ".jar";
+					fileName = fileName.concat(".jar");
 
 					if (overrideStaticFileNames.contains(fileName)) {
 						if (_log.isInfoEnabled()) {
 							StringBundler sb = new StringBundler(7);
 
 							sb.append(zipFile);
-							sb.append(":");
+							sb.append(StringPool.COLON);
 							sb.append(zipEntry);
 							sb.append(" is overridden by ");
 							sb.append(PropsValues.MODULE_FRAMEWORK_BASE_DIR);
@@ -970,6 +969,22 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 		}
 
 		return bundles;
+	}
+
+	private String _extractFileName(String string) {
+		int endIndex = string.indexOf(CharPool.DASH);
+
+		if (endIndex == -1) {
+			endIndex = string.indexOf(CharPool.QUESTION);
+
+			if (endIndex == -1) {
+				endIndex = string.length();
+			}
+		}
+
+		int beginIndex = string.lastIndexOf(CharPool.SLASH, endIndex) + 1;
+
+		return string.substring(beginIndex, endIndex);
 	}
 
 	private Attributes _getExtraManifestAttributes() {
@@ -1175,6 +1190,24 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 		return true;
 	}
 
+	private boolean _isValid(String string) {
+		int index = string.lastIndexOf(CharPool.DASH);
+
+		if (index == -1) {
+			return true;
+		}
+
+		String version = string.substring(index + 1, string.length() - 4);
+
+		int count = StringUtil.count(version, CharPool.PERIOD);
+
+		if ((count == 2) || (count == 3)) {
+			return false;
+		}
+
+		return true;
+	}
+
 	private void _refreshBundles(List<Bundle> refreshBundles) {
 		FrameworkWiring frameworkWiring = _framework.adapt(
 			FrameworkWiring.class);
@@ -1325,9 +1358,7 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 						return FileVisitResult.CONTINUE;
 					}
 
-					Matcher matcher = _pattern.matcher(fileName);
-
-					if (!matcher.matches()) {
+					if (_isValid(fileName)) {
 						jarPaths.add(filePath.toAbsolutePath());
 
 						return FileVisitResult.CONTINUE;
@@ -1411,7 +1442,7 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 
 					overrideStaticFileNames.add(
 						uriString.substring(
-							uriString.lastIndexOf(StringPool.SLASH) + 1));
+							uriString.lastIndexOf(CharPool.SLASH) + 1));
 				}
 			}
 		}
@@ -1446,17 +1477,19 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 			}
 		}
 
-		for (Bundle bundle : bundleContext.getBundles()) {
-			String location = bundle.getLocation();
+		if (!overrideLPKGFileNames.isEmpty()) {
+			for (Bundle bundle : bundleContext.getBundles()) {
+				if (bundle.getBundleId() == 0) {
+					continue;
+				}
 
-			Matcher matcher = _pattern.matcher(location);
+				String location = bundle.getLocation();
 
-			if (matcher.find()) {
-				location = matcher.group(1) + "*.jar";
-			}
+				location = _extractFileName(location);
 
-			if (overrideLPKGFileNames.contains(location)) {
-				bundle.uninstall();
+				if (overrideLPKGFileNames.contains(location)) {
+					bundle.uninstall();
+				}
 			}
 		}
 
@@ -1739,9 +1772,6 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		ModuleFrameworkImpl.class);
-
-	private static final Pattern _pattern = Pattern.compile(
-		"(.*?)-\\d+\\.\\d+\\.\\d+(\\..+)?\\.jar");
 
 	private Framework _framework;
 	private final Map<ApplicationContext, List<ServiceRegistration<?>>>

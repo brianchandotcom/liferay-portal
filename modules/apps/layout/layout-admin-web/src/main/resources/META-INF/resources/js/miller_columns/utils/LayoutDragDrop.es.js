@@ -1,5 +1,11 @@
-import State, {Config} from 'metal-state';
 import {Drag, DragDrop} from 'metal-drag-drop';
+import position from 'metal-position';
+import State, {Config} from 'metal-state';
+
+const DRAG_BORDERS = {
+	bottom: 'layout-column-item-drag-bottom',
+	top: 'layout-column-item-drag-top'
+};
 
 /**
  * LayoutDragDrop
@@ -19,6 +25,72 @@ class LayoutDragDrop extends State {
 	}
 
 	/**
+	 * Callback that is executed when an item is being dragged.
+	 * @param {!MouseEvent} event
+	 * @private
+	 * @review
+	 */
+
+	_handleDrag(data, event) {
+		const targetItem = data.target;
+
+		if (targetItem) {
+			const mouseY = data.originalEvent.clientY;
+			const sourceItemPlid = data.source.dataset.layoutColumnItemPlid;
+			const targetItemPlid = targetItem.dataset.layoutColumnItemPlid;
+			const targetItemRegion = position.getRegion(targetItem);
+
+			this._targetBorder = DRAG_BORDERS.bottom;
+
+			if (Math.abs(mouseY - targetItemRegion.top) <= Math.abs(mouseY - targetItemRegion.bottom)) {
+				this._targetBorder = DRAG_BORDERS.top;
+			}
+
+			this.emit(
+				'dragLayoutColumnItem',
+				{
+					border: this._targetBorder,
+					sourceItemPlid,
+					targetItemPlid
+				}
+			);
+		}
+	}
+
+	/**
+	 * Callback that is executed when a target is leaved.
+	 * @param {!MouseEvent} event
+	 * @private
+	 * @review
+	 */
+
+	_handleDragEnd(data, event) {
+		this.emit('leaveLayoutColumnItem');
+	}
+
+	/**
+	 * Callback that is executed when an item is dropped.
+	 * @param {!MouseEvent} event
+	 * @private
+	 * @review
+	 */
+
+	_handleDrop(data, event) {
+		event.preventDefault();
+
+		if (data.target) {
+			const sourceItemPlid = data.source.dataset.layoutColumnItemPlid;
+
+			this.emit(
+				'moveLayoutColumnItem',
+				{
+					sourceItemPlid
+				}
+			);
+		}
+	}
+
+	/**
 	 * @private
 	 * @review
 	 */
@@ -35,6 +107,21 @@ class LayoutDragDrop extends State {
 				sources: '.drag-layout-column-item',
 				targets: '.layout-drop-target'
 			}
+		);
+
+		this._dragDrop.on(
+			DragDrop.Events.DRAG,
+			this._handleDrag.bind(this)
+		);
+
+		this._dragDrop.on(
+			DragDrop.Events.END,
+			this._handleDrop.bind(this)
+		);
+
+		this._dragDrop.on(
+			DragDrop.Events.TARGET_LEAVE,
+			this._handleDragEnd.bind(this)
 		);
 	}
 }
@@ -56,8 +143,22 @@ LayoutDragDrop.STATE = {
 	 * @type {object|null}
 	 */
 
-	_dragDrop: Config.internal().value(null)
+	_dragDrop: Config.internal().value(null),
+
+	/**
+	 * Nearest border of the hovered item while dragging
+	 * @default undefined
+	 * @instance
+	 * @memberOf LayoutDragDrop
+	 * @review
+	 * @type {!string}
+	 */
+
+	_targetBorder: Config.internal().string()
 };
 
-export {LayoutDragDrop};
+export {
+	DRAG_BORDERS,
+	LayoutDragDrop
+};
 export default LayoutDragDrop;

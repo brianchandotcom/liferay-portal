@@ -370,7 +370,7 @@
 </tr>
 <tr>
 	<td>REGULAR_EXPRESSION</td>
-	<td>//div[label[contains(.,'Regular Expression')]]//input[@type='text']</td>
+	<td>//div[label[contains(.,'Regular Expression')]]//textarea</td>
 	<td></td>
 </tr>
 <tr>

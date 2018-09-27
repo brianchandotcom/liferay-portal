@@ -25,7 +25,7 @@ portletDisplay.setURLBack(String.valueOf(layoutsAdminDisplayContext.getPortletUR
 renderResponse.setTitle(LanguageUtil.get(request, "select-template"));
 %>
 
-<div class="container-fluid container-fluid-max-xl container-view">
+<div class="container-fluid container-fluid-max-xl container-view" id="<portlet:namespace />layoutPageTemplateEntries">
 	<div class="row">
 		<div class="col-lg-3">
 			<nav class="menubar menubar-transparent menubar-vertical-expand-lg">
@@ -124,12 +124,17 @@ renderResponse.setTitle(LanguageUtil.get(request, "select-template"));
 								row.setCssClass("entry-card lfr-asset-item " + row.getCssClass());
 								%>
 
+								<portlet:renderURL var="addLayoutURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+									<portlet:param name="mvcRenderCommandName" value="/layout/add_layout" />
+									<portlet:param name="layoutPageTemplateEntryId" value="<%= String.valueOf(layoutPageTemplateEntry.getLayoutPageTemplateEntryId()) %>" />
+								</portlet:renderURL>
+
 								<liferay-ui:search-container-column-text>
 
 									<%
 									Map<String, Object> addLayoutData = new HashMap<>();
 
-									addLayoutData.put("layout-page-template-entry-id", layoutPageTemplateEntry.getLayoutPageTemplateEntryId());
+									addLayoutData.put("add-layout-url", addLayoutURL);
 
 									String imagePreviewURL = layoutPageTemplateEntry.getImagePreviewURL(themeDisplay);
 									%>
@@ -137,7 +142,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "select-template"));
 									<c:choose>
 										<c:when test="<%= Validator.isNotNull(imagePreviewURL) %>">
 											<liferay-frontend:vertical-card
-												cssClass='<%= renderResponse.getNamespace() + "add-layout-action-option" %>'
+												cssClass="add-layout-action-option"
 												data="<%= addLayoutData %>"
 												imageCSSClass="aspect-ratio-bg-contain"
 												imageUrl="<%= imagePreviewURL %>"
@@ -151,7 +156,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "select-template"));
 										</c:when>
 										<c:otherwise>
 											<liferay-frontend:icon-vertical-card
-												cssClass='<%= renderResponse.getNamespace() + "add-layout-action-option" %>'
+												cssClass="add-layout-action-option"
 												data="<%= addLayoutData %>"
 												icon='<%= Objects.equals(layoutPageTemplateEntry.getType(), LayoutPageTemplateEntryTypeConstants.TYPE_WIDGET_PAGE) ? "page-template" : "page" %>'
 												title="<%= layoutPageTemplateEntry.getName() %>"
@@ -173,50 +178,32 @@ renderResponse.setTitle(LanguageUtil.get(request, "select-template"));
 							/>
 						</liferay-ui:search-container>
 
-						<portlet:actionURL name="/layout/add_content_layout" var="addLayoutURL">
-							<portlet:param name="mvcPath" value="/select_layout_page_template_entry.jsp" />
-							<portlet:param name="groupId" value="<%= String.valueOf(layoutsAdminDisplayContext.getGroupId()) %>" />
-							<portlet:param name="portletResource" value="<%= layoutsAdminDisplayContext.getPortletResource() %>" />
-							<portlet:param name="parentLayoutId" value="<%= String.valueOf(layoutsAdminDisplayContext.getParentLayoutId()) %>" />
-							<portlet:param name="privateLayout" value="<%= String.valueOf(layoutsAdminDisplayContext.isPrivateLayout()) %>" />
-							<portlet:param name="explicitCreation" value="<%= Boolean.TRUE.toString() %>" />
-						</portlet:actionURL>
-
-						<%
-						String autoSiteNavigationMenuNames = layoutsAdminDisplayContext.getAutoSiteNavigationMenuNames();
-						%>
-
-						<aui:script require="metal-dom/src/all/dom as dom,frontend-js-web/liferay/modal/commands/OpenSimpleInputModal.es as modalCommands">
-							var addLayoutActionOptionQueryClickHandler = dom.delegate(
-								document.body,
+						<aui:script use="aui-base">
+							var addLayoutActionOptionQueryClickHandler = A.one('#<portlet:namespace />layoutPageTemplateEntries').delegate(
 								'click',
-								'.<portlet:namespace />add-layout-action-option',
 								function(event) {
-									var actionElement = event.delegateTarget;
+									var actionElement = event.currentTarget;
 
-									modalCommands.openSimpleInputModal(
+									Liferay.Util.openWindow(
 										{
-											<c:if test="<%= Validator.isNotNull(autoSiteNavigationMenuNames) %>">
-												checkboxFieldLabel: '<liferay-ui:message arguments="<%= autoSiteNavigationMenuNames %>" key="add-this-page-to-the-following-menus-x" />',
-												checkboxFieldName: 'TypeSettingsProperties--addToAutoMenus--',
-												checkboxFieldValue: true,
-											</c:if>
-
-											dialogTitle: '<liferay-ui:message key="add-page" />',
-											formSubmitURL: '<%= addLayoutURL %>',
-											idFieldName: 'TypeSettingsProperties--layoutPageTemplateEntryId--',
-											idFieldValue: actionElement.dataset.layoutPageTemplateEntryId,
-											mainFieldLabel: '<liferay-ui:message key="name" />',
-											mainFieldName: 'name',
-											namespace: '<portlet:namespace />',
-											spritemap: '<%= themeDisplay.getPathThemeImages() %>/lexicon/icons.svg'
+											dialog: {
+												destroyOnHide: true,
+												resizable: false
+											},
+											dialogIframe: {
+												bodyCssClass: 'dialog-with-footer'
+											},
+											id: '<portlet:namespace />addLayoutDialog',
+											title: '<liferay-ui:message key="add-page" />',
+											uri: actionElement.getData('add-layout-url')
 										}
 									);
-								}
+								},
+								'.add-layout-action-option'
 							);
 
-							function handleDestroyPortlet() {
-								addLayoutActionOptionQueryClickHandler.removeListener();
+							function handleDestroyPortlet () {
+								addLayoutActionOptionQueryClickHandler.detach();
 
 								Liferay.detach('destroyPortlet', handleDestroyPortlet);
 							}

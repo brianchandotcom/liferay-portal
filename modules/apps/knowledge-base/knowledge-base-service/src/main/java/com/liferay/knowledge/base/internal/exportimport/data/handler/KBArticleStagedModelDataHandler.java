@@ -33,7 +33,6 @@ import com.liferay.knowledge.base.model.KBFolder;
 import com.liferay.knowledge.base.service.KBArticleLocalService;
 import com.liferay.knowledge.base.service.KBFolderLocalService;
 import com.liferay.knowledge.base.util.AdminHelper;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -220,14 +219,6 @@ public class KBArticleStagedModelDataHandler
 			parentResourcePrimKey = MapUtil.getLong(
 				kbFolderResourcePrimKeys, kbArticle.getParentResourcePrimKey(),
 				KBFolderConstants.DEFAULT_PARENT_FOLDER_ID);
-		}
-
-		String urlTitle = kbArticle.getUrlTitle();
-
-		if (Validator.isNotNull(urlTitle) &&
-			!urlTitle.startsWith(StringPool.SLASH)) {
-
-			kbArticle.setUrlTitle(StringPool.SLASH + urlTitle);
 		}
 
 		String[] sections = _adminHelper.unescapeSections(

@@ -160,6 +160,11 @@ public class LayoutsAdminDisplayContext {
 			StringPool.COMMA_AND_SPACE);
 	}
 
+	public List<SiteNavigationMenu> getAutoSiteNavigationMenus() {
+		return SiteNavigationMenuLocalServiceUtil.getAutoSiteNavigationMenus(
+			_themeDisplay.getScopeGroupId());
+	}
+
 	public JSONArray getBreadcrumbEntriesJSONArray() throws PortalException {
 		JSONArray breadcrumbEntriesJSONArray =
 			JSONFactoryUtil.createJSONArray();

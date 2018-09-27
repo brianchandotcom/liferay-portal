@@ -14,6 +14,8 @@
 
 package com.liferay.jenkins.results.parser;
 
+import org.json.JSONObject;
+
 /**
  * @author Michael Hashimoto
  */
@@ -22,6 +24,10 @@ public class PluginsWorkspaceGitRepository extends BaseWorkspaceGitRepository {
 	@Override
 	public String getType() {
 		return _TYPE;
+	}
+
+	protected PluginsWorkspaceGitRepository(JSONObject jsonObject) {
+		super(jsonObject);
 	}
 
 	protected PluginsWorkspaceGitRepository(

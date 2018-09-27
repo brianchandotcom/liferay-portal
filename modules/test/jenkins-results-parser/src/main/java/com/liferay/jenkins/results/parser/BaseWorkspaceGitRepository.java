@@ -22,6 +22,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
+import org.json.JSONObject;
+
 /**
  * @author Michael Hashimoto
  */
@@ -138,6 +140,16 @@ public abstract class BaseWorkspaceGitRepository
 			JenkinsResultsParserUtil.writePropertiesFile(
 				new File(getDirectory(), entry.getKey()), entry.getValue(),
 				true);
+		}
+	}
+
+	protected BaseWorkspaceGitRepository(JSONObject jsonObject) {
+		super(jsonObject);
+
+		validateKeys(_REQUIRED_KEYS);
+
+		if (JenkinsResultsParserUtil.isCINode()) {
+			validateKeys(_REQUIRED_CI_KEYS);
 		}
 	}
 

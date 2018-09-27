@@ -18,6 +18,8 @@ import java.util.Properties;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.json.JSONObject;
+
 /**
  * @author Michael Hashimoto
  */
@@ -65,6 +67,13 @@ public abstract class BasePortalWorkspaceGitRepository
 	@Override
 	public void setPortalTestProperties(Properties properties) {
 		setProperties(_FILE_PATH_TEST_PROPERTIES, properties);
+	}
+
+	protected BasePortalWorkspaceGitRepository(JSONObject jsonObject) {
+		super(jsonObject);
+
+		_setBasePortalAppServerProperties();
+		_setBasePortalBuildProperties();
 	}
 
 	protected BasePortalWorkspaceGitRepository(

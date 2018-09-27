@@ -17,6 +17,8 @@ package com.liferay.jenkins.results.parser;
 import java.io.File;
 import java.io.IOException;
 
+import org.json.JSONObject;
+
 /**
  * @author Michael Hashimoto
  */
@@ -59,6 +61,10 @@ public class CompanionPortalWorkspaceGitRepository
 		catch (IOException ioe) {
 			throw new RuntimeException(ioe);
 		}
+	}
+
+	protected CompanionPortalWorkspaceGitRepository(JSONObject jsonObject) {
+		super(jsonObject);
 	}
 
 	protected CompanionPortalWorkspaceGitRepository(

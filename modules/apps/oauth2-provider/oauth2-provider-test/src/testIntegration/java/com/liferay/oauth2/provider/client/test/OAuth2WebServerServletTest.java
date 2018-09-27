@@ -45,7 +45,6 @@ import org.jboss.arquillian.test.api.ArquillianResource;
 import org.jboss.shrinkwrap.api.Archive;
 
 import org.junit.Assert;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -54,7 +53,6 @@ import org.osgi.framework.ServiceReference;
 /**
  * @author Víctor Galán Grande
  */
-@Ignore
 @RunAsClient
 @RunWith(Arquillian.class)
 public class OAuth2WebServerServletTest extends BaseClientTestCase {
@@ -153,9 +151,7 @@ public class OAuth2WebServerServletTest extends BaseClientTestCase {
 	private WebTarget _getRootWebTarget(String path) throws URISyntaxException {
 		Client client = getClient();
 
-		WebTarget webTarget = client.target(_url.toURI());
-
-		return webTarget.path(path);
+		return client.target(_url.toURI() + path);
 	}
 
 	private static final String _TEST_FILE_CONTENT = "Test File Content";

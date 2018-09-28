@@ -194,6 +194,48 @@ public class LPKGBundleTrackerCustomizer
 					continue;
 				}
 
+				String servletContextName = null;
+
+				String lpkgURL = null;
+
+				if (name.endsWith(".war")) {
+					sb = new StringBundler(10);
+
+					sb.append("lpkg:/");
+					sb.append(URLCodec.encodeURL(bundle.getSymbolicName()));
+					sb.append(StringPool.DASH);
+					sb.append(bundle.getVersion());
+					sb.append(StringPool.SLASH);
+
+					String[] servletContextNameAndPortalProfileNames =
+						_readServletContextNameAndPortalProfileNames(url);
+
+					servletContextName =
+						servletContextNameAndPortalProfileNames[0];
+
+					sb.append(servletContextName);
+
+					sb.append(".war");
+
+					String portalProfileNames =
+						servletContextNameAndPortalProfileNames[1];
+
+					if (Validator.isNotNull(portalProfileNames)) {
+						sb.append(StringPool.QUESTION);
+						sb.append("liferay-portal-profile-names=");
+						sb.append(portalProfileNames);
+					}
+
+					lpkgURL = sb.toString();
+
+					// The bundle URL changes after a reboot. To ensure we do
+					// not install the same bundle multiple times over reboots,
+					// we must map the ever changing bundle URL to a fixed LPKG
+					// URL.
+
+					_urls.put(lpkgURL, url);
+				}
+
 				Bundle newBundle = _bundleContext.getBundle(location);
 
 				if (newBundle != null) {
@@ -223,7 +265,9 @@ public class LPKGBundleTrackerCustomizer
 						// wrapped WAR bundle will also be unintalled.
 
 						newBundle = _bundleContext.installBundle(
-							location, _toWARWrapperBundle(bundle, url));
+							location,
+							_toWARWrapperBundle(
+								bundle, url, servletContextName, lpkgURL));
 					}
 				}
 
@@ -542,41 +586,9 @@ public class LPKGBundleTrackerCustomizer
 		return new String[] {servletContextName, portalProfileNames};
 	}
 
-	private InputStream _toWARWrapperBundle(Bundle bundle, URL url)
+	private InputStream _toWARWrapperBundle(
+			Bundle bundle, URL url, String servletContextName, String lpkgURL)
 		throws IOException {
-
-		StringBundler sb = new StringBundler(10);
-
-		sb.append("lpkg:/");
-		sb.append(URLCodec.encodeURL(bundle.getSymbolicName()));
-		sb.append(StringPool.DASH);
-		sb.append(bundle.getVersion());
-		sb.append(StringPool.SLASH);
-
-		String[] servletContextNameAndPortalProfileNames =
-			_readServletContextNameAndPortalProfileNames(url);
-
-		String servletContextName = servletContextNameAndPortalProfileNames[0];
-
-		sb.append(servletContextName);
-
-		sb.append(".war");
-
-		String portalProfileNames = servletContextNameAndPortalProfileNames[1];
-
-		if (Validator.isNotNull(portalProfileNames)) {
-			sb.append(StringPool.QUESTION);
-			sb.append("liferay-portal-profile-names=");
-			sb.append(portalProfileNames);
-		}
-
-		String lpkgURL = sb.toString();
-
-		// The bundle URL changes after a reboot. To ensure we do not install
-		// the same bundle multiple times over reboots, we must map the ever
-		// changing bundle URL to a fixed LPKG URL.
-
-		_urls.put(lpkgURL, url);
 
 		String pathString = url.getPath();
 

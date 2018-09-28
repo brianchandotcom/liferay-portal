@@ -19,7 +19,6 @@ import com.liferay.project.templates.internal.util.Validator;
 
 import java.io.File;
 import java.io.IOException;
-
 import java.util.AbstractMap;
 import java.util.Collections;
 import java.util.regex.Matcher;
@@ -157,11 +156,14 @@ public class CodeTemplatesTest {
 		_testContainsOrNot(
 			projectDir,
 			"src/main/java/com/liferay/lifecycleaction/FooAction.java", false,
-			true, "Foo Action");
+			true, "FooAction login.events.pre=");
 
-		File restDir = new File(projectDir, "src/main/java/com/liferay/rest");
+		if (Validator.isNotNull(ProjectTemplatesTest.BUILD_PROJECTS) &&
+			ProjectTemplatesTest.BUILD_PROJECTS.equals("true")) {
 
-		Assert.assertFalse(restDir.exists());
+			ProjectTemplatesTest.executeGradle(
+				projectDir, _GRADLE_TASK_PATH_BUILD);
+		}
 	}
 
 	@Test

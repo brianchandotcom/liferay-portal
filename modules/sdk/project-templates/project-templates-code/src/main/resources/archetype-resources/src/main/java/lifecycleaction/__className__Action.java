@@ -21,9 +21,9 @@ public class ${className}Action implements LifecycleAction {
 	public void processLifecycleEvent(LifecycleEvent lifecycleEvent)
 		throws ActionException {
 
-		System.out.println("login.event.pre=" + lifecycleEvent);
-
-		_log.log(LogService.LOG_INFO, "$className Action");
+		_log.log(
+			LogService.LOG_INFO,
+			"${className}Action login.events.pre=" + lifecycleEvent);
 	}
 
 	@Reference

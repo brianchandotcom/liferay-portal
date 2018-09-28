@@ -15,6 +15,7 @@
 package com.liferay.project.templates;
 
 import com.liferay.project.templates.internal.util.FileUtil;
+import com.liferay.project.templates.internal.util.Validator;
 
 import java.io.File;
 import java.io.IOException;
@@ -27,6 +28,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import org.junit.Assert;
+import org.junit.BeforeClass;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
@@ -37,13 +39,18 @@ import org.junit.rules.TemporaryFolder;
  */
 public class CodeTemplatesTest {
 
+	@BeforeClass
+	public static void setUpClass() throws Exception {
+		ProjectTemplatesTest.setUpClass();
+	}
+
 	@Test
 	public void testGenerateCodeTemplateActionCommand() throws Exception {
 		File destinationDir = temporaryFolder.newFolder("code");
 
 		ProjectTemplatesArgs projectTemplatesArgs = new ProjectTemplatesArgs();
 
-		File archetypesDir = FileUtil.getJarFile(ProjectTemplatesTest.class);
+		File archetypesDir = FileUtil.getJarFile(CodeTemplatesTest.class);
 
 		projectTemplatesArgs.setArchetypesDirs(
 			Collections.singletonList(archetypesDir));
@@ -96,6 +103,13 @@ public class CodeTemplatesTest {
 		File restDir = new File(projectDir, "src/main/java/com/liferay/rest");
 
 		Assert.assertFalse(restDir.exists());
+
+		if (Validator.isNotNull(ProjectTemplatesTest.BUILD_PROJECTS) &&
+			ProjectTemplatesTest.BUILD_PROJECTS.equals("true")) {
+
+			ProjectTemplatesTest.executeGradle(
+				projectDir, _GRADLE_TASK_PATH_BUILD);
+		}
 	}
 
 	@Test
@@ -167,7 +181,7 @@ public class CodeTemplatesTest {
 
 		ProjectTemplatesArgs projectTemplatesArgs = new ProjectTemplatesArgs();
 
-		File archetypesDir = FileUtil.getJarFile(ProjectTemplatesTest.class);
+		File archetypesDir = FileUtil.getJarFile(CodeTemplatesTest.class);
 
 		projectTemplatesArgs.setArchetypesDirs(
 			Collections.singletonList(archetypesDir));
@@ -219,7 +233,7 @@ public class CodeTemplatesTest {
 
 		ProjectTemplatesArgs projectTemplatesArgs = new ProjectTemplatesArgs();
 
-		File archetypesDir = FileUtil.getJarFile(ProjectTemplatesTest.class);
+		File archetypesDir = FileUtil.getJarFile(CodeTemplatesTest.class);
 
 		projectTemplatesArgs.setArchetypesDirs(
 			Collections.singletonList(archetypesDir));
@@ -281,7 +295,7 @@ public class CodeTemplatesTest {
 
 		ProjectTemplatesArgs projectTemplatesArgs = new ProjectTemplatesArgs();
 
-		File archetypesDir = FileUtil.getJarFile(ProjectTemplatesTest.class);
+		File archetypesDir = FileUtil.getJarFile(CodeTemplatesTest.class);
 
 		projectTemplatesArgs.setArchetypesDirs(
 			Collections.singletonList(archetypesDir));
@@ -339,7 +353,7 @@ public class CodeTemplatesTest {
 
 		ProjectTemplatesArgs projectTemplatesArgs = new ProjectTemplatesArgs();
 
-		File archetypesDir = FileUtil.getJarFile(ProjectTemplatesTest.class);
+		File archetypesDir = FileUtil.getJarFile(CodeTemplatesTest.class);
 
 		projectTemplatesArgs.setArchetypesDirs(
 			Collections.singletonList(archetypesDir));
@@ -409,7 +423,7 @@ public class CodeTemplatesTest {
 
 		ProjectTemplatesArgs projectTemplatesArgs = new ProjectTemplatesArgs();
 
-		File archetypesDir = FileUtil.getJarFile(ProjectTemplatesTest.class);
+		File archetypesDir = FileUtil.getJarFile(CodeTemplatesTest.class);
 
 		projectTemplatesArgs.setArchetypesDirs(
 			Collections.singletonList(archetypesDir));
@@ -480,7 +494,7 @@ public class CodeTemplatesTest {
 
 		ProjectTemplatesArgs projectTemplatesArgs = new ProjectTemplatesArgs();
 
-		File archetypesDir = FileUtil.getJarFile(ProjectTemplatesTest.class);
+		File archetypesDir = FileUtil.getJarFile(CodeTemplatesTest.class);
 
 		projectTemplatesArgs.setArchetypesDirs(
 			Collections.singletonList(archetypesDir));
@@ -530,7 +544,7 @@ public class CodeTemplatesTest {
 
 		ProjectTemplatesArgs projectTemplatesArgs = new ProjectTemplatesArgs();
 
-		File archetypesDir = FileUtil.getJarFile(ProjectTemplatesTest.class);
+		File archetypesDir = FileUtil.getJarFile(CodeTemplatesTest.class);
 
 		projectTemplatesArgs.setArchetypesDirs(
 			Collections.singletonList(archetypesDir));
@@ -577,7 +591,7 @@ public class CodeTemplatesTest {
 
 		ProjectTemplatesArgs projectTemplatesArgs = new ProjectTemplatesArgs();
 
-		File archetypesDir = FileUtil.getJarFile(ProjectTemplatesTest.class);
+		File archetypesDir = FileUtil.getJarFile(CodeTemplatesTest.class);
 
 		projectTemplatesArgs.setArchetypesDirs(
 			Collections.singletonList(archetypesDir));
@@ -622,7 +636,7 @@ public class CodeTemplatesTest {
 
 		ProjectTemplatesArgs projectTemplatesArgs = new ProjectTemplatesArgs();
 
-		File archetypesDir = FileUtil.getJarFile(ProjectTemplatesTest.class);
+		File archetypesDir = FileUtil.getJarFile(CodeTemplatesTest.class);
 
 		projectTemplatesArgs.setArchetypesDirs(
 			Collections.singletonList(archetypesDir));
@@ -723,5 +737,7 @@ public class CodeTemplatesTest {
 
 		return file;
 	}
+
+	private static final String _GRADLE_TASK_PATH_BUILD = ":build";
 
 }

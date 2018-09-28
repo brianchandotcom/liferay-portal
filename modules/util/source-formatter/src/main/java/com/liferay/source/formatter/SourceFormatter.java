@@ -236,13 +236,15 @@ public class SourceFormatter {
 
 			sourceFormatter.format();
 		}
-		catch (GitException ge) {
-			System.out.println(ge.getMessage());
-
-			System.exit(0);
-		}
 		catch (Exception e) {
-			ArgumentsUtil.processMainException(arguments, e);
+			if (e instanceof GitException) {
+				System.out.println(e.getMessage());
+			}
+			else {
+				e.printStackTrace();
+			}
+
+			System.exit(1);
 		}
 	}
 

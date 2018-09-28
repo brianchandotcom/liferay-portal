@@ -158,6 +158,17 @@ public class SharingEntryLocalServiceUtil {
 	}
 
 	/**
+	* Returns the number of sharing entries of a resource that have been shared
+	* by to user returning at most one per shared model.
+	*
+	* @param toUserId the user id*
+	* @return the number of sharing entries
+	*/
+	public static int countToUserSharingEntriesUnique(long toUserId) {
+		return getService().countToUserSharingEntriesUnique(toUserId);
+	}
+
+	/**
 	* Creates a new sharing entry with the primary key. Does not add the sharing entry to the database.
 	*
 	* @param sharingEntryId the primary key for the new sharing entry
@@ -570,6 +581,18 @@ public class SharingEntryLocalServiceUtil {
 	public static java.util.List<com.liferay.sharing.model.SharingEntry> getToUserSharingEntries(
 		long toUserId, long classNameId) {
 		return getService().getToUserSharingEntries(toUserId, classNameId);
+	}
+
+	/**
+	* Returns a list of all the sharing entries of a resource that has been
+	* shared to a user returning at most one per shared model
+	*
+	* @param toUserId the user id*
+	* @return the list of sharing entries
+	*/
+	public static java.util.List<com.liferay.sharing.model.SharingEntry> getToUserSharingEntriesUnique(
+		long toUserId, int start, int end) {
+		return getService().getToUserSharingEntriesUnique(toUserId, start, end);
 	}
 
 	/**

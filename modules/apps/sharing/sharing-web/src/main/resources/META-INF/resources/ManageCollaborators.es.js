@@ -11,6 +11,7 @@ import PortletBase from 'frontend-js-web/liferay/PortletBase.es';
  * collaborators for a file entry.
  */
 class ManageCollaborators extends PortletBase {
+
 	/**
 	 * @inheritDoc
 	 */
@@ -47,7 +48,7 @@ class ManageCollaborators extends PortletBase {
 	 * @protected
 	 */
 	_handleChangePermission(event) {
-		let sharingEntryId = event.target.getAttribute("name");
+		let sharingEntryId = event.target.getAttribute('name');
 		let sharingEntryPermissionKey = event.target.value;
 
 		this._sharingEntryIdsAndPermissions.set(sharingEntryId, sharingEntryPermissionKey);
@@ -78,7 +79,7 @@ class ManageCollaborators extends PortletBase {
 	 * @protected
 	 */
 	_handleSaveButtonClick() {
-		let permissions = Array.from(this._sharingEntryIdsAndPermissions, (id, key) => id + "," + key );
+		let permissions = Array.from(this._sharingEntryIdsAndPermissions, (id, key) => id + ',' + key);
 
 		this.fetch(
 			this.actionUrl,
@@ -87,11 +88,11 @@ class ManageCollaborators extends PortletBase {
 				sharingEntryIdActionIdPairs: permissions
 			}
 		)
-		.then(
-			(xhr) => {
-				this._closeDialog();
-			}
-		)
+			.then(
+				(xhr) => {
+					this._closeDialog();
+				}
+			);
 	}
 }
 
@@ -102,6 +103,7 @@ class ManageCollaborators extends PortletBase {
  * @type {!Object}
  */
 ManageCollaborators.STATE = {
+
 	/**
 	 * Uri to send the manage collaborators fetch request.
 	 * @instance
@@ -128,8 +130,8 @@ ManageCollaborators.STATE = {
 	 * @memberof ManageCollaborators
 	 * @type {String}
 	 */
-	spritemap: Config.string().required(),
-}
+	spritemap: Config.string().required()
+};
 
 // Register component
 

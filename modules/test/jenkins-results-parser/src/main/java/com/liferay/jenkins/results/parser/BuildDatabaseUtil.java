@@ -93,8 +93,6 @@ public class BuildDatabaseUtil {
 					baseDir.getCanonicalPath(), "/",
 					BuildDatabase.BUILD_DATABASE_FILE_NAME);
 
-				JenkinsResultsParserUtil.executeBashCommands(command);
-
 				process = JenkinsResultsParserUtil.executeBashCommands(command);
 
 				String standardOut = JenkinsResultsParserUtil.readInputStream(

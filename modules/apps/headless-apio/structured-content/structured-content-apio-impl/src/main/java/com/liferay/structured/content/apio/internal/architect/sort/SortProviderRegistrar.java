@@ -14,10 +14,12 @@
 
 package com.liferay.structured.content.apio.internal.architect.sort;
 
+import com.liferay.apio.architect.provider.Provider;
 import com.liferay.osgi.util.ServiceTrackerFactory;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.structured.content.apio.architect.entity.EntityModel;
-import com.liferay.structured.content.apio.architect.sort.SortParser;
+import com.liferay.structured.content.apio.architect.sort.Sort;
+import com.liferay.structured.content.apio.internal.architect.provider.SortProvider;
 
 import java.util.Objects;
 
@@ -38,7 +40,7 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
  * @review
  */
 @Component(immediate = true, service = {})
-public class SortParserRegistry {
+public class SortProviderRegistrar {
 
 	@Activate
 	public void activate(BundleContext bundleContext) {
@@ -52,25 +54,25 @@ public class SortParserRegistry {
 		_serviceTracker.close();
 	}
 
-	private ServiceTracker
-		<EntityModel, ServiceRegistration<SortParser>> _serviceTracker;
+	private ServiceTracker<EntityModel, ServiceRegistration<Provider>>
+		_serviceTracker;
 
 	private static class EntityModelTrackerCustomizer
 		implements ServiceTrackerCustomizer
-			<EntityModel, ServiceRegistration<SortParser>> {
+			<EntityModel, ServiceRegistration<Provider>> {
 
 		@Override
-		public ServiceRegistration<SortParser> addingService(
+		public ServiceRegistration<Provider> addingService(
 			ServiceReference<EntityModel> serviceReference) {
 
 			EntityModel entityModel = _bundleContext.getService(
 				serviceReference);
 
-			SortParser sortParser = new SortParserImpl(entityModel);
+			Provider<Sort> sortProvider = new SortProvider(entityModel);
 
 			try {
 				return _bundleContext.registerService(
-					SortParser.class, sortParser,
+					Provider.class, sortProvider,
 					new HashMapDictionary<String, Object>() {
 						{
 							put(
@@ -90,9 +92,9 @@ public class SortParserRegistry {
 		@Override
 		public void modifiedService(
 			ServiceReference<EntityModel> serviceReference,
-			ServiceRegistration<SortParser> serviceRegistration) {
+			ServiceRegistration<Provider> serviceRegistration) {
 
-			ServiceReference<SortParser> sortParserServiceReference =
+			ServiceReference<Provider> sortParserServiceReference =
 				serviceRegistration.getReference();
 
 			if (!Objects.equals(
@@ -109,7 +111,7 @@ public class SortParserRegistry {
 		@Override
 		public void removedService(
 			ServiceReference<EntityModel> serviceReference,
-			ServiceRegistration<SortParser> serviceRegistration) {
+			ServiceRegistration<Provider> serviceRegistration) {
 
 			_bundleContext.ungetService(serviceReference);
 

@@ -20,8 +20,10 @@ import java.util.List;
  * Models a Parser from String to Sort Fields.
  *
  * @author Cristina González
+ * @deprecated As of Judson (7.1.x), with no direct replacement
  * @review
  */
+@Deprecated
 public interface SortParser {
 
 	/**

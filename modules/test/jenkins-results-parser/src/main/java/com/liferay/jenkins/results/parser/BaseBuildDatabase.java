@@ -33,7 +33,7 @@ public abstract class BaseBuildDatabase implements BuildDatabase {
 	@Override
 	public BuildData getBuildData(String key) {
 		if (!hasBuildData(key)) {
-			throw new RuntimeException("Unable to find build for " + key);
+			throw new RuntimeException("Unable to find build data for " + key);
 		}
 
 		JSONObject buildsJSONObject = _jsonObject.getJSONObject("builds");

@@ -13,6 +13,9 @@ import FormRenderer, {FormSupport} from '../Form/index.es.js';
 import WithEvaluator from '../Form/Evaluator.es';
 import {ClayActionsDropdown} from 'clay-dropdown';
 
+const EVALUATOR_URL = '/o/dynamic-data-mapping-form-context-provider/';
+const FormWithEvaluator = WithEvaluator(FormRenderer);
+
 /**
  * Sidebar is a tooling to mount forms.
  */
@@ -239,10 +242,31 @@ class Sidebar extends Component {
 
 	/**
 	 * Continues the propagation of event.
+	 * @param {array} data
+	 * @protected
+	 */
+	@autobind
+	_handleEvaluatorChanged(pages) {
+		const {focusedField} = this.props;
+
+		this.emit(
+			'focusedFieldUpdated',
+			{
+				...focusedField,
+				settingsContext: {
+					...focusedField.settingsContext,
+					pages
+				}
+			}
+		);
+	}
+
+	/**
+	 * Continues the propagation of event.
 	 * @param {Object} data
 	 * @protected
 	 */
-
+	@autobind
 	_handleFieldEdited(data) {
 		this.emit('fieldEdited', data);
 	}
@@ -505,17 +529,14 @@ class Sidebar extends Component {
 			spritemap
 		} = this.props;
 
-		let settingsContext;
+		const {settingsContext} = focusedField;
 
 		const layoutRenderEvents = {
-			fieldEdited: this._handleFieldEdited.bind(this)
+			evaluated: this._handleEvaluatorChanged,
+			fieldEdited: this._handleFieldEdited
 		};
 
 		const editMode = this._isEditMode();
-
-		if (editMode) {
-			settingsContext = focusedField.settingsContext;
-		}
 
 		const styles = classnames('sidebar-container', {open});
 
@@ -559,16 +580,19 @@ class Sidebar extends Component {
 							this._groupFieldTypes()
 						}
 						{editMode && (
-							<div class="sidebar-body">
+							<div class="sidebar-body ddm-field-settings">
 								<div class="tab-content">
-									<FormRenderer
+									<FormWithEvaluator
 										activePage={activeTab}
 										editable={true}
 										events={layoutRenderEvents}
+										fieldType={focusedField.type}
+										formContext={settingsContext}
 										modeRenderer="list"
 										pages={settingsContext.pages}
 										ref="FormRenderer"
 										spritemap={spritemap}
+										url={EVALUATOR_URL}
 									/>
 								</div>
 							</div>

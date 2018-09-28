@@ -2,7 +2,7 @@ const identity = value => value;
 
 class PagesVisitor {
 	constructor(pages) {
-		this._pages = pages;
+		this._pages = [...pages];
 	}
 
 	_map(pageMapper, rowMapper, columnMapper, fieldMapper) {
@@ -72,6 +72,43 @@ class PagesVisitor {
 
 	mapColumns(mapper) {
 		return this._map(identity, identity, mapper, identity);
+	}
+	formatPageSettings(namespace, fieldType, newFieldName) {
+		const translationManager = Liferay.component(`${namespace}translationManager`);
+
+		return this.mapFields(
+			field => {
+				const {fieldName} = field;
+
+				if (fieldName === 'name') {
+					field = {
+						...field,
+						value: newFieldName,
+						visible: true
+					};
+				}
+				else if (fieldName === 'label') {
+					field = {
+						...field,
+						localizedValue: {
+							...field.localizedValue,
+							[translationManager.get('editingLocale')]: fieldType.label
+						},
+						type: 'text',
+						value: fieldType.label
+					};
+				}
+				else if (fieldName === 'type') {
+					field = {
+						...field,
+						value: fieldType.name
+					};
+				}
+				return {
+					...field
+				};
+			}
+		);
 	}
 }
 

@@ -231,16 +231,17 @@ class LayoutProvider extends Component {
 	_handleFieldDuplicated({rowIndex, pageIndex, columnIndex}) {
 		const {pages} = this.state;
 		const field = FormSupport.getField(pages, pageIndex, rowIndex, columnIndex);
+		const label = sub(
+			Liferay.Language.get('copy-of-x'),
+			[field.label]
+		);
 		const newFieldName = FormSupport.generateFieldName(field.type);
 		const visitor = new PagesVisitor(field.settingsContext.pages);
 
 		const duplicatedField = {
 			...field,
 			fieldName: newFieldName,
-			label: sub(
-				Liferay.Language.get('copy-of-x'),
-				[field.label]
-			),
+			label,
 			name: newFieldName,
 			settingsContext: {
 				...field.settingsContext,
@@ -251,14 +252,20 @@ class LayoutProvider extends Component {
 								...field,
 								value: newFieldName
 							};
-
 						}
-						return field;
+						else if (field.fieldName === 'label') {
+							field = {
+								...field,
+								value: label
+							};
+						}
+						return {
+							...field
+						};
 					}
 				)
 			}
 		};
-
 		const newRowIndex = rowIndex + 1;
 
 		const newPages = FormSupport.addRow(pages, newRowIndex, pageIndex);

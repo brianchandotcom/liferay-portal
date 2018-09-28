@@ -166,10 +166,10 @@ class Builder extends Component {
 	 */
 
 	_handleFieldAdded(event) {
+		const {fieldType} = event;
 		const {namespace} = this.props;
-		const newFieldName = FormSupport.generateFieldName(event.fieldType.name);
-		const settingsContext = event.fieldType.settingsContext;
-		const translationManager = Liferay.component(`${namespace}translationManager`);
+		const newFieldName = FormSupport.generateFieldName(fieldType.name);
+		const settingsContext = fieldType.settingsContext;
 		const visitor = new PagesVisitor(settingsContext.pages);
 
 		this.emit(
@@ -177,43 +177,13 @@ class Builder extends Component {
 			{
 				...event,
 				fieldType: {
-					...event.fieldType,
+					...fieldType,
 					fieldName: newFieldName,
 					settingsContext: {
 						...settingsContext,
-						pages: visitor.mapFields(
-							field => {
-								const {fieldName} = field;
-
-								if (fieldName === 'name') {
-									field = {
-										...field,
-										value: newFieldName,
-										visible: true
-									};
-								}
-								else if (fieldName === 'label') {
-									field = {
-										...field,
-										localizedValue: {
-											...field.localizedValue,
-											[translationManager.get('editingLocale')]: event.fieldType.label
-										},
-										type: 'text',
-										value: event.fieldType.label
-									};
-								}
-								else if (fieldName === 'type') {
-									field = {
-										...field,
-										value: event.fieldType.name
-									};
-								}
-								return field;
-							}
-						)
+						pages: visitor.formatPageSettings(namespace, fieldType, newFieldName)
 					},
-					type: event.fieldType.name
+					type: fieldType.name
 				}
 			}
 		);

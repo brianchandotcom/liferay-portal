@@ -4,4 +4,85 @@
 <service-builder auto-namespace-tables="false" package-path="com.liferay.segments">
 	<author>Eduardo Garcia</author>
 	<namespace>Segments</namespace>
+	<entity local-service="true" name="SegmentsEntry" remote-service="true">
+
+		<!-- PK fields -->
+
+		<column name="segmentsEntryId" primary="true" type="long" />
+
+		<!-- Group instance -->
+
+		<column name="groupId" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column localized="true" name="name" type="String" />
+		<column localized="true" name="description" type="String" />
+		<column name="key" type="String" />
+		<column name="active" type="boolean" />
+		<column name="type" type="String" />
+		<column name="criteria" type="String" />
+
+		<!-- Order -->
+
+		<order by="desc">
+			<order-column name="modifiedDate" />
+		</order>
+
+		<!-- Finder methods -->
+
+		<finder name="GroupId" return-type="Collection">
+			<finder-column name="groupId" />
+		</finder>
+		<finder name="G_K" return-type="SegmentsEntry" unique="true">
+			<finder-column name="groupId" />
+			<finder-column name="key" />
+		</finder>
+		<finder name="G_A" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="active" />
+		</finder>
+	</entity>
+	<entity local-service="true" name="SegmentsEntryRel" remote-service="false">
+
+		<!-- PK fields -->
+
+		<column name="segmentsEntryRelId" primary="true" type="long" />
+
+		<!-- Group instance -->
+
+		<column name="groupId" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column name="segmentsEntryId" type="long" />
+		<column name="classNameId" type="long" />
+		<column name="classPK" type="long" />
+
+		<!-- Finder methods -->
+
+		<finder name="SegmentsEntryId" return-type="Collection">
+			<finder-column name="segmentsEntryId" />
+		</finder>
+		<finder name="CN_CPK" return-type="Collection">
+			<finder-column name="classNameId" />
+			<finder-column name="classPK" />
+		</finder>
+	</entity>
 </service-builder>

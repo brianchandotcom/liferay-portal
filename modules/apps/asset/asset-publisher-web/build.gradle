@@ -16,7 +16,6 @@ dependencies {
 	compileOnly project(":apps:asset:asset-display-api")
 	compileOnly project(":apps:asset:asset-display-page-api")
 	compileOnly project(":apps:asset:asset-list-api")
-	compileOnly project(":apps:asset:asset-list-item-selector-api")
 	compileOnly project(":apps:asset:asset-publisher-api")
 	compileOnly project(":apps:asset:asset-tag-stats-api")
 	compileOnly project(":apps:asset:asset-taglib")

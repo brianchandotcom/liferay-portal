@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+
+<custom-sql>
+	<sql id="com.liferay.sharing.service.persistence.SharingEntryFinder.countByToUserIdUnique">
+		<![CDATA[
+			SELECT
+				COUNT(*) AS COUNT_VALUE
+			FROM
+				SharingEntry
+			WHERE
+				SharingEntry.sharingEntryId IN
+					(
+						SELECT
+							min(SharingEntry.sharingEntryId)
+						FROM
+							SharingEntry
+						WHERE
+							SharingEntry.toUserId = ?
+						GROUP BY
+							SharingEntry.classNameId, SharingEntry.classPK
+					)
+		]]>
+	</sql>
+	<sql id="com.liferay.sharing.service.persistence.SharingEntryFinder.findByToUserIdUnique">
+		<![CDATA[
+			SELECT
+				{SharingEntry.*}
+			FROM
+				SharingEntry
+			WHERE
+				SharingEntry.sharingEntryId IN
+					(
+						SELECT
+							min(SharingEntry.sharingEntryId)
+						FROM
+							SharingEntry
+						WHERE
+							SharingEntry.toUserId = ?
+						GROUP BY
+							SharingEntry.classNameId, SharingEntry.classPK
+					)
+			ORDER BY
+				SharingEntry.modifiedDate DESC
+		]]>
+	</sql>
+</custom-sql>

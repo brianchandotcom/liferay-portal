@@ -58,18 +58,10 @@ public class NPMTestBatchTestClassGroup extends BatchTestClassGroup {
 	}
 
 	public void writeTestCSVReportFile() throws Exception {
-		StringBuilder sb = new StringBuilder();
-
-		sb.append("Module Name");
-		sb.append(",");
-		sb.append("Class Name");
-		sb.append(",");
-		sb.append("Method Name");
-		sb.append(",");
-		sb.append("Ignored");
-		sb.append(",");
-		sb.append("File Path");
-		sb.append("\n");
+		CSVReport csvReport = new CSVReport(
+			new CSVReport.Row(
+				"Module Name", "Class Name", "Method Name", "Ignored",
+				"File Path"));
 
 		Map<File, NPMTestBatchTestClass> npmTestBatchTestClasses =
 			getNPMTestBatchTestClasses();
@@ -100,34 +92,33 @@ public class NPMTestBatchTestClassGroup extends BatchTestClassGroup {
 				String methodName = classMethodName.substring(
 					colonIndex + _CLASS_METHOD_SEPARATOR_TOKEN.length());
 
-				sb.append(moduleName);
-				sb.append(",");
-				sb.append(className);
-				sb.append(",");
-				sb.append(StringEscapeUtils.escapeCsv(methodName));
-				sb.append(",");
+				CSVReport.Row csvReportRow = new CSVReport.Row();
+
+				csvReportRow.add(moduleName);
+				csvReportRow.add(className);
+				csvReportRow.add(StringEscapeUtils.escapeCsv(methodName));
 
 				if (jsTestMethod.isIgnored()) {
-					sb.append("TRUE");
+					csvReportRow.add("TRUE");
 				}
 				else {
-					sb.append("");
+					csvReportRow.add("");
 				}
 
-				sb.append(",");
-				sb.append(filePath);
-				sb.append("\n");
+				csvReportRow.add(filePath);
+
+				csvReport.addRow(csvReportRow);
 			}
 		}
 
 		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM-dd-yyyy");
 
-		File reportCSVFile = new File(
+		File csvReportFile = new File(
 			JenkinsResultsParserUtil.combine(
 				"Report_", simpleDateFormat.format(new Date()), ".csv"));
 
 		try {
-			JenkinsResultsParserUtil.write(reportCSVFile, sb.toString());
+			JenkinsResultsParserUtil.write(csvReportFile, csvReport.toString());
 		}
 		catch (IOException ioe) {
 			throw new RuntimeException(ioe);

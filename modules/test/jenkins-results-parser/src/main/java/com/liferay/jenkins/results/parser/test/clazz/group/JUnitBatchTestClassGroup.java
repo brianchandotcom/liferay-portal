@@ -63,16 +63,9 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 	}
 
 	public void writeTestCSVReportFile() throws Exception {
-		StringBuilder sb = new StringBuilder();
-
-		sb.append("Class Name");
-		sb.append(",");
-		sb.append("Method Name");
-		sb.append(",");
-		sb.append("Ignored");
-		sb.append(",");
-		sb.append("File Path");
-		sb.append("\n");
+		CSVReport csvReport = new CSVReport(
+			new CSVReport.Row(
+				"Class Name", "Method Name", "Ignored", "File Path"));
 
 		Map<File, JunitBatchTestClass> junitTestClasses = getJunitTestClasses();
 
@@ -94,32 +87,32 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 				junitBatchTestClass.getTestMethods();
 
 			for (BaseTestClassGroup.BaseTestMethod testMethod : testMethods) {
-				sb.append(className);
-				sb.append(",");
-				sb.append(testMethod.getName());
-				sb.append(",");
+				CSVReport.Row csvReportRow = new CSVReport.Row();
+
+				csvReportRow.add(className);
+				csvReportRow.add(testMethod.getName());
 
 				if (testMethod.isIgnored()) {
-					sb.append("TRUE");
+					csvReportRow.add("TRUE");
 				}
 				else {
-					sb.append("");
+					csvReportRow.add("");
 				}
 
-				sb.append(",");
-				sb.append(testFileAbsolutePath);
-				sb.append("\n");
+				csvReportRow.add(testFileAbsolutePath);
+
+				csvReport.addRow(csvReportRow);
 			}
 		}
 
 		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM-dd-yyyy");
 
-		File reportCSVFile = new File(
+		File csvReportFile = new File(
 			JenkinsResultsParserUtil.combine(
 				"Report_", simpleDateFormat.format(new Date()), ".csv"));
 
 		try {
-			JenkinsResultsParserUtil.write(reportCSVFile, sb.toString());
+			JenkinsResultsParserUtil.write(csvReportFile, csvReport.toString());
 		}
 		catch (IOException ioe) {
 			throw new RuntimeException(ioe);

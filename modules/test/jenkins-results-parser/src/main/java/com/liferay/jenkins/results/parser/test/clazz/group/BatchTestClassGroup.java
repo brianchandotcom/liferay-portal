@@ -35,6 +35,8 @@ import java.util.Properties;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.apache.commons.lang.StringUtils;
+
 /**
  * @author Michael Hashimoto
  */
@@ -278,6 +280,67 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 	protected boolean testReleaseBundle;
 	protected boolean testRelevantChanges;
 	protected final String testSuiteName;
+
+	protected static final class CSVReport {
+
+		public CSVReport(Row headerRow) {
+			if (headerRow == null) {
+				throw new IllegalArgumentException("headerRow is null");
+			}
+
+			addRow(headerRow);
+		}
+
+		public void addRow(Row csvReportRow) {
+			Row headerRow = _csvReportRows.get(0);
+
+			if (csvReportRow.size() != headerRow.size()) {
+				throw new IllegalArgumentException(
+					"Row length does not match headers length");
+			}
+
+			_csvReportRows.add(csvReportRow);
+		}
+
+		@Override
+		public String toString() {
+			StringBuilder sb = null;
+
+			for (Row csvReportRow : _csvReportRows) {
+				if (sb == null) {
+					sb = new StringBuilder();
+				}
+				else {
+					sb.append("\n");
+				}
+
+				sb.append(csvReportRow.toString());
+			}
+
+			return sb.toString();
+		}
+
+		protected static final class Row extends ArrayList<String> {
+
+			public Row() {
+			}
+
+			public Row(String... strings) {
+				for (String string : strings) {
+					add(string);
+				}
+			}
+
+			@Override
+			public String toString() {
+				return StringUtils.join(iterator(), ",");
+			}
+
+		}
+
+		private List<Row> _csvReportRows;
+
+	}
 
 	private void _setTestReleaseBundle() {
 		String propertyValue = getFirstPropertyValue("test.release.bundle");

@@ -1,6 +1,19 @@
 .manage-collaborators {
+	background-color: #FFF;
+
 	.list-group-item {
 		border: 0;
+	}
+
+	.modal-body.inline-scroller {
+		padding: 10px;
+	}
+
+	.modal-footer {
+		position: absolute;
+		bottom: 0;
+		rigth: 0;
+		width: 100%;
 	}
 
 	select.form-control:not([multiple]):not([size]) {

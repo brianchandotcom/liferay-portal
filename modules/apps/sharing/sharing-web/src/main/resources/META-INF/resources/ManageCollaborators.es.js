@@ -6,13 +6,23 @@ import {Config} from 'metal-state';
 import templates from './ManageCollaborators.soy';
 import PortletBase from 'frontend-js-web/liferay/PortletBase.es';
 
-
+/**
+ * Handles actions to delete or change permissions of the
+ * collaborators for a file entry.
+ */
 class ManageCollaborators extends PortletBase {
+	/**
+	 * @inheritDoc
+	 */
 	attached() {
 		this._sharingEntryIdsToDelete = [];
 		this._sharingEntryIdsAndPermissions = new Map();
 	}
 
+	/**
+	 * Closes the dialog.
+	 * @protected
+	 */
 	_closeDialog() {
 		const collaboratorsDialog = Liferay.Util.getWindow(this._dialogId);
 
@@ -21,10 +31,21 @@ class ManageCollaborators extends PortletBase {
 		}
 	}
 
+	/**
+	 * Closes the dialog.
+	 * @protected
+	 */
 	_handleCancelButtonClick() {
 		this._closeDialog();
 	}
 
+	/**
+	 * Gets the new permission key for the selected
+	 * collaborator.
+	 *
+	 * @param {Event} event
+	 * @protected
+	 */
 	_handleChangePermission(event) {
 		let sharingEntryId = event.target.getAttribute("name");
 		let sharingEntryPermissionKey = event.target.value;
@@ -32,6 +53,12 @@ class ManageCollaborators extends PortletBase {
 		this._sharingEntryIdsAndPermissions.set(sharingEntryId, sharingEntryPermissionKey);
 	}
 
+	/**
+	 * Deletes the collaborator.
+	 *
+	 * @param {Event} event
+	 * @protected
+	 */
 	_handleDeleteCollaborator(event) {
 		let collaboratorId = event.delegateTarget.dataset.collaboratorId;
 		let sharingEntryId = event.delegateTarget.dataset.sharingentryId;
@@ -44,6 +71,12 @@ class ManageCollaborators extends PortletBase {
 		}
 	}
 
+	/**
+	 * Sends a request to the server to update permissions
+	 * or delete collaborators.
+	 *
+	 * @protected
+	 */
 	_handleSaveButtonClick() {
 		let permissions = Array.from(this._sharingEntryIdsAndPermissions, (id, key) => id + "," + key );
 
@@ -57,18 +90,17 @@ class ManageCollaborators extends PortletBase {
 		.then(
 			(xhr) => {
 				this._closeDialog();
-
-				//TODO success message
-
-				//TODO refresh portlet
 			}
-		)
-		.catch(
-			(err) => {debugger} //TODO error message
 		)
 	}
 }
 
+/**
+ * State definition.
+ * @ignore
+ * @static
+ * @type {!Object}
+ */
 ManageCollaborators.STATE = {
 	/**
 	 * Uri to send the manage collaborators fetch request.
@@ -76,7 +108,7 @@ ManageCollaborators.STATE = {
 	 * @memberof ManageCollaborators
 	 * @type {String}
 	 */
-	actionUrl: Config.string().required()
+	actionUrl: Config.string().required(),
 
 	/**
 	 * List of collaborators
@@ -85,8 +117,8 @@ ManageCollaborators.STATE = {
 	collaborators: Config.array().required(),
 
 	/**
-	 * [dialogId description]
-	 * @type {[type]}
+	 * Id of the dialog
+	 * @type {String}
 	 */
 	dialogId: Config.string().required,
 

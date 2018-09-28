@@ -105,7 +105,7 @@ popular ones used in Liferay Portal's JavaScript files:
 
 An example method description is provided below:
 
-`JS
+```JS
 /**
  * Dispatches a client event.
  *

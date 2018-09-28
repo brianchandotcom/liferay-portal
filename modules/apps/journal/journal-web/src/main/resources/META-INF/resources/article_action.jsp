@@ -94,7 +94,7 @@ else {
 		String viewContentURL = journalDisplayContext.getViewContentURL(article);
 		%>
 
-		<c:if test="<%= journalDisplayContext.isShowViewContentURL(article) && Validator.isNotNull(viewContentURL) %>">
+		<c:if test="<%= Validator.isNotNull(viewContentURL) %>">
 			<liferay-ui:icon
 				message="view-content"
 				target="_blank"

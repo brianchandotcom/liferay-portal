@@ -50,6 +50,7 @@ import com.liferay.journal.util.comparator.FolderArticleArticleIdComparator;
 import com.liferay.journal.util.comparator.FolderArticleDisplayDateComparator;
 import com.liferay.journal.util.comparator.FolderArticleModifiedDateComparator;
 import com.liferay.journal.util.comparator.FolderArticleTitleComparator;
+import com.liferay.journal.web.asset.JournalArticleAssetRenderer;
 import com.liferay.journal.web.configuration.JournalWebConfiguration;
 import com.liferay.journal.web.internal.portlet.action.ActionUtil;
 import com.liferay.journal.web.internal.search.EntriesChecker;
@@ -1315,14 +1316,17 @@ public class JournalDisplayContext {
 		return articleSearch.getTotal();
 	}
 
-	public String getViewContentURL(JournalArticle journalArticle)
+	public String getViewContentURL(JournalArticle article)
 		throws PortalException {
 
-		Locale locale = _themeDisplay.getSiteDefaultLocale();
+		if (!isShowViewContentURL(article)) {
+			return StringPool.BLANK;
+		}
 
-		Map<Locale, String> friendlyURLMap = journalArticle.getFriendlyURLMap();
+		Map<Locale, String> friendlyURLMap = article.getFriendlyURLMap();
 
-		String friendlyURL = friendlyURLMap.get(locale);
+		String friendlyURL = friendlyURLMap.get(
+			_themeDisplay.getSiteDefaultLocale());
 
 		if (Validator.isNull(friendlyURL)) {
 			return StringPool.BLANK;
@@ -1536,79 +1540,68 @@ public class JournalDisplayContext {
 		return false;
 	}
 
-	public boolean isShowViewContentURL(JournalArticle journalArticle) {
-		if (journalArticle == null) {
+	public boolean isShowViewContentURL(JournalArticle article) {
+		if (article == null) {
 			return false;
 		}
 
-		if (!journalArticle.hasApprovedVersion()) {
+		if (!article.hasApprovedVersion()) {
 			return false;
 		}
 
-		try {
-			AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchEntry(
-				journalArticle.getGroupId(),
-				journalArticle.getArticleResourceUuid());
+		long classPK = JournalArticleAssetRenderer.getClassPK(article);
 
-			if (assetEntry == null) {
-				return false;
-			}
+		AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchEntry(
+			JournalArticle.class.getName(), classPK);
 
-			AssetDisplayPageEntry assetDisplayPageEntry =
-				AssetDisplayPageEntryLocalServiceUtil.
-					fetchAssetDisplayPageEntry(
-						assetEntry.getGroupId(), assetEntry.getClassNameId(),
-						assetEntry.getClassPK());
-
-			if ((assetDisplayPageEntry == null) ||
-				(assetDisplayPageEntry.getType() ==
-					AssetDisplayPageConstants.TYPE_NONE)) {
-
-				return false;
-			}
-
-			if (assetDisplayPageEntry.getType() ==
-					AssetDisplayPageConstants.TYPE_SPECIFIC) {
-
-				return true;
-			}
-
-			Map<Long, LayoutPageTemplateEntry>
-				defaultLayoutPageTemplateEntriesMap =
-					_getDefaultLayoutPageTemplateEntriesMap();
-
-			LayoutPageTemplateEntry defaultLayoutPageTemplateEntry =
-				defaultLayoutPageTemplateEntriesMap.get(
-					assetEntry.getClassTypeId());
-
-			if (defaultLayoutPageTemplateEntry != null) {
-				return true;
-			}
-
-			String ddmStructureKey = journalArticle.getDDMStructureKey();
-
-			DDMStructure ddmStructure =
-				DDMStructureLocalServiceUtil.fetchStructure(
-					_themeDisplay.getSiteGroupId(),
-					PortalUtil.getClassNameId(JournalArticle.class),
-					ddmStructureKey, true);
-
-			if (ddmStructure == null) {
-				return false;
-			}
-
-			defaultLayoutPageTemplateEntry =
-				defaultLayoutPageTemplateEntriesMap.get(
-					ddmStructure.getStructureId());
-
-			if (defaultLayoutPageTemplateEntry != null) {
-				return true;
-			}
+		if (assetEntry == null) {
+			return false;
 		}
-		catch (PortalException pe) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(pe, pe);
-			}
+
+		AssetDisplayPageEntry assetDisplayPageEntry =
+			AssetDisplayPageEntryLocalServiceUtil.fetchAssetDisplayPageEntry(
+				assetEntry.getGroupId(), assetEntry.getClassNameId(),
+				assetEntry.getClassPK());
+
+		if ((assetDisplayPageEntry == null) ||
+			(assetDisplayPageEntry.getType() ==
+				AssetDisplayPageConstants.TYPE_NONE)) {
+
+			return false;
+		}
+
+		if (assetDisplayPageEntry.getType() ==
+				AssetDisplayPageConstants.TYPE_SPECIFIC) {
+
+			return true;
+		}
+
+		Map<Long, LayoutPageTemplateEntry> defaultLayoutPageTemplateEntriesMap =
+			_getDefaultLayoutPageTemplateEntriesMap();
+
+		LayoutPageTemplateEntry defaultLayoutPageTemplateEntry =
+			defaultLayoutPageTemplateEntriesMap.get(
+				assetEntry.getClassTypeId());
+
+		if (defaultLayoutPageTemplateEntry != null) {
+			return true;
+		}
+
+		DDMStructure ddmStructure = DDMStructureLocalServiceUtil.fetchStructure(
+			_themeDisplay.getSiteGroupId(),
+			PortalUtil.getClassNameId(JournalArticle.class),
+			article.getDDMStructureKey(), true);
+
+		if (ddmStructure == null) {
+			return false;
+		}
+
+		defaultLayoutPageTemplateEntry =
+			defaultLayoutPageTemplateEntriesMap.get(
+				ddmStructure.getStructureId());
+
+		if (defaultLayoutPageTemplateEntry != null) {
+			return true;
 		}
 
 		return false;

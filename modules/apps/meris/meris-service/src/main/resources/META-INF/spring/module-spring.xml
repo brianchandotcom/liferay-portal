@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+
+<beans
+	default-destroy-method="destroy"
+	default-init-method="afterPropertiesSet"
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd"
+>
+	<bean class="com.liferay.meris.service.impl.MerisSegmentLocalServiceImpl" id="com.liferay.meris.service.MerisSegmentLocalService" />
+	<bean class="com.liferay.meris.service.impl.MerisSegmentServiceImpl" id="com.liferay.meris.service.MerisSegmentService" />
+	<bean class="com.liferay.meris.service.persistence.impl.MerisSegmentPersistenceImpl" id="com.liferay.meris.service.persistence.MerisSegmentPersistence" parent="basePersistence" />
+	<bean class="com.liferay.meris.service.impl.MerisSegmentRelLocalServiceImpl" id="com.liferay.meris.service.MerisSegmentRelLocalService" />
+	<bean class="com.liferay.meris.service.persistence.impl.MerisSegmentRelPersistenceImpl" id="com.liferay.meris.service.persistence.MerisSegmentRelPersistence" parent="basePersistence" />
+</beans>

@@ -106,8 +106,14 @@ manageCollaboratorsRenderURL.setWindowState(LiferayWindowState.POP_UP);
 			Liferay.Util.openWindow(
 				{
 					dialog: {
-						height: 450,
-						width: 320
+						width: 320,
+						on: {
+							visibleChange: function(event) {
+								if (!event.newVal) {
+									Liferay.fire('refreshInfoPanel');
+								}
+							}
+						}
 					},
 					id: '<portlet:namespace />manageCollaboratorsDialog',
 					title: '<%= LanguageUtil.get(resourceBundle, "collaborators") %>',

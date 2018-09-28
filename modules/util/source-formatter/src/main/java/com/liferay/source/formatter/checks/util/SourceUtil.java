@@ -38,6 +38,22 @@ import org.dom4j.io.SAXReader;
  */
 public class SourceUtil {
 
+	public static boolean containsUnquoted(String s, String text) {
+		int x = -1;
+
+		while (true) {
+			x = s.indexOf(text, x + 1);
+
+			if (x == -1) {
+				return false;
+			}
+
+			if (!ToolsUtil.isInsideQuotes(s, x)) {
+				return true;
+			}
+		}
+	}
+
 	public static String getAbsolutePath(File file) {
 		return getAbsolutePath(file.toPath());
 	}

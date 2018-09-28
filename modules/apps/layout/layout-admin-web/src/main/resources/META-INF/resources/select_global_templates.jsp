@@ -20,55 +20,54 @@
 SelectLayoutPageTemplateEntryDisplayContext selectLayoutPageTemplateEntryDisplayContext = new SelectLayoutPageTemplateEntryDisplayContext(request);
 %>
 
-<div id="<portlet:namespace />layoutPageTemplateEntries">
-	<liferay-ui:search-container
-		total="<%= selectLayoutPageTemplateEntryDisplayContext.getGlobalLayoutPageTemplateEntriesCount() %>"
-	>
-		<liferay-ui:search-container-results
-			results="<%= selectLayoutPageTemplateEntryDisplayContext.getGlobalLayoutPageTemplateEntries() %>"
-		/>
+<liferay-ui:search-container
+	id="layoutPageTemplateEntries"
+	total="<%= selectLayoutPageTemplateEntryDisplayContext.getGlobalLayoutPageTemplateEntriesCount() %>"
+>
+	<liferay-ui:search-container-results
+		results="<%= selectLayoutPageTemplateEntryDisplayContext.getGlobalLayoutPageTemplateEntries() %>"
+	/>
 
-		<liferay-ui:search-container-row
-			className="com.liferay.layout.page.template.model.LayoutPageTemplateEntry"
-			modelVar="layoutPageTemplateEntry"
-		>
+	<liferay-ui:search-container-row
+		className="com.liferay.layout.page.template.model.LayoutPageTemplateEntry"
+		modelVar="layoutPageTemplateEntry"
+	>
+
+		<%
+		row.setCssClass("entry-card lfr-asset-item " + row.getCssClass());
+		%>
+
+		<portlet:renderURL var="addLayoutURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+			<portlet:param name="mvcRenderCommandName" value="/layout/add_layout" />
+			<portlet:param name="layoutPageTemplateEntryId" value="<%= String.valueOf(layoutPageTemplateEntry.getLayoutPageTemplateEntryId()) %>" />
+		</portlet:renderURL>
+
+		<liferay-ui:search-container-column-text>
 
 			<%
-			row.setCssClass("entry-card lfr-asset-item " + row.getCssClass());
+			Map<String, Object> addLayoutPrototypeData = new HashMap<>();
+
+			addLayoutPrototypeData.put("add-layout-url", addLayoutURL);
 			%>
 
-			<portlet:renderURL var="addLayoutURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-				<portlet:param name="mvcRenderCommandName" value="/layout/add_layout" />
-				<portlet:param name="layoutPageTemplateEntryId" value="<%= String.valueOf(layoutPageTemplateEntry.getLayoutPageTemplateEntryId()) %>" />
-			</portlet:renderURL>
+			<liferay-frontend:icon-vertical-card
+				actionJspServletContext="<%= application %>"
+				cssClass="add-layout-prototype-action-option"
+				data="<%= addLayoutPrototypeData %>"
+				icon="page-template"
+				resultRow="<%= row %>"
+				rowChecker="<%= searchContainer.getRowChecker() %>"
+				title="<%= HtmlUtil.escape(layoutPageTemplateEntry.getName()) %>"
+				url="javascript:;"
+			/>
+		</liferay-ui:search-container-column-text>
+	</liferay-ui:search-container-row>
 
-			<liferay-ui:search-container-column-text>
-
-				<%
-				Map<String, Object> addLayoutPrototypeData = new HashMap<>();
-
-				addLayoutPrototypeData.put("add-layout-url", addLayoutURL);
-				%>
-
-				<liferay-frontend:icon-vertical-card
-					actionJspServletContext="<%= application %>"
-					cssClass="add-layout-prototype-action-option"
-					data="<%= addLayoutPrototypeData %>"
-					icon="page-template"
-					resultRow="<%= row %>"
-					rowChecker="<%= searchContainer.getRowChecker() %>"
-					title="<%= HtmlUtil.escape(layoutPageTemplateEntry.getName()) %>"
-					url="javascript:;"
-				/>
-			</liferay-ui:search-container-column-text>
-		</liferay-ui:search-container-row>
-
-		<liferay-ui:search-iterator
-			displayStyle="icon"
-			markupView="lexicon"
-		/>
-	</liferay-ui:search-container>
-</div>
+	<liferay-ui:search-iterator
+		displayStyle="icon"
+		markupView="lexicon"
+	/>
+</liferay-ui:search-container>
 
 <aui:script use="aui-base">
 	var addLayoutActionOptionQueryClickHandler = A.one('#<portlet:namespace />layoutPageTemplateEntries').delegate(

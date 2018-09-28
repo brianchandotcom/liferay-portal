@@ -25,7 +25,7 @@ portletDisplay.setURLBack(String.valueOf(layoutsAdminDisplayContext.getPortletUR
 renderResponse.setTitle(LanguageUtil.get(request, "select-template"));
 %>
 
-<div class="container-fluid container-fluid-max-xl container-view" id="<portlet:namespace />layoutPageTemplateEntries">
+<div class="container-fluid container-fluid-max-xl container-view">
 	<div class="row">
 		<div class="col-lg-3">
 			<nav class="menubar menubar-transparent menubar-vertical-expand-lg">
@@ -108,6 +108,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "select-template"));
 				<c:choose>
 					<c:when test="<%= selectLayoutPageTemplateEntryDisplayContext.isContentPages() %>">
 						<liferay-ui:search-container
+							id="layoutPageTemplateEntries"
 							total="<%= selectLayoutPageTemplateEntryDisplayContext.getLayoutPageTemplateEntriesCount() %>"
 						>
 							<liferay-ui:search-container-results

@@ -91,9 +91,20 @@ public class SharedWithMeViewDisplayContext {
 			liferayPortletRequest, liferayPortletResponse);
 	}
 
-	public boolean hasEditPermission(SharingEntry sharingEntry) {
-		return _sharingEntryLocalService.hasSharingPermission(
-			sharingEntry, SharingEntryAction.UPDATE);
+	public boolean hasEditPermission(long classNameId, long classPK) {
+		List<SharingEntry> toUserSharingEntries =
+			_sharingEntryLocalService.getToUserClassPKSharingEntries(
+				_themeDisplay.getUserId(), classNameId, classPK);
+
+		for (SharingEntry sharingEntry : toUserSharingEntries) {
+			if (_sharingEntryLocalService.hasSharingPermission(
+					sharingEntry, SharingEntryAction.UPDATE)) {
+
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	public void populateResults(SearchContainer<SharingEntry> searchContainer) {

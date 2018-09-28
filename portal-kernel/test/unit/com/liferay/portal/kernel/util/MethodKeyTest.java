@@ -1,0 +1,270 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
+package com.liferay.portal.kernel.util;
+
+import com.liferay.petra.io.unsync.UnsyncByteArrayInputStream;
+import com.liferay.petra.io.unsync.UnsyncByteArrayOutputStream;
+import com.liferay.petra.process.ClassPathUtil;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
+import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
+
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Method;
+
+import java.net.URLClassLoader;
+
+import java.util.Map;
+
+import org.junit.Assert;
+import org.junit.ClassRule;
+import org.junit.Test;
+
+/**
+ * @author Leon Chi
+ */
+public class MethodKeyTest {
+
+	@ClassRule
+	public static final CodeCoverageAssertor codeCoverageAssertor =
+		CodeCoverageAssertor.INSTANCE;
+
+	@Test
+	public void testConstructors() throws NoSuchMethodException {
+		_assertMethodKey(
+			_TEST_CLASS, _TEST_METHOD_NAME, new Class<?>[0],
+			new MethodKey(_TEST_CLASS, _TEST_METHOD_NAME));
+		_assertMethodKey(
+			_TEST_CLASS, _TEST_METHOD_NAME, new Class<?>[] {String.class},
+			new MethodKey(_TEST_CLASS, _TEST_METHOD_NAME, String.class));
+		_assertMethodKey(
+			_TEST_CLASS, _TEST_METHOD_NAME,
+			new Class<?>[] {String.class, String.class},
+			new MethodKey(
+				_TEST_CLASS, _TEST_METHOD_NAME, String.class, String.class));
+		_assertMethodKey(
+			_TEST_CLASS, _TEST_METHOD_NAME, new Class<?>[0],
+			new MethodKey(_TEST_CLASS.getMethod(_TEST_METHOD_NAME)));
+		_assertMethodKey(
+			_TEST_CLASS, _TEST_METHOD_NAME, new Class<?>[0],
+			new MethodKey(_TEST_CLASS_NAME, _TEST_METHOD_NAME));
+
+		try {
+			new MethodKey("ClassNotFound", _TEST_METHOD_NAME);
+
+			Assert.fail("No RuntimeException thrown!");
+		}
+		catch (RuntimeException re) {
+			Throwable throwable = re.getCause();
+
+			Assert.assertSame(
+				ClassNotFoundException.class, throwable.getClass());
+		}
+	}
+
+	@Test
+	public void testEquals() throws Exception {
+		MethodKey methodKey = new MethodKey(
+			_TEST_CLASS, _TEST_METHOD_NAME, String.class);
+
+		Assert.assertEquals(methodKey, methodKey);
+		Assert.assertEquals(methodKey, _cloneBySerialization(methodKey));
+		Assert.assertEquals(
+			methodKey,
+			new MethodKey(_TEST_CLASS, _TEST_METHOD_NAME, String.class));
+		Assert.assertNotEquals(methodKey, new Object());
+		Assert.assertNotEquals(
+			methodKey,
+			new MethodKey(
+				_TEST_CLASS, _TEST_METHOD_NAME, String.class, String.class));
+		Assert.assertNotEquals(
+			methodKey,
+			new MethodKey(_TEST_CLASS, _TEST_METHOD_NAME, int.class));
+		Assert.assertNotEquals(
+			methodKey,
+			new MethodKey(_TEST_CLASS, "testMethodAnother", String.class));
+		Assert.assertNotEquals(
+			methodKey,
+			new MethodKey(Object.class, _TEST_METHOD_NAME, String.class));
+	}
+
+	@Test
+	public void testGetMethodAndResetCache() throws NoSuchMethodException {
+		MethodKey methodKey = new MethodKey(
+			_TEST_CLASS, _TEST_METHOD_NAME, String.class);
+
+		Method method = methodKey.getMethod();
+
+		Assert.assertSame(method, methodKey.getMethod());
+		Assert.assertTrue(
+			"The method should be accessible", method.isAccessible());
+
+		method.setAccessible(false);
+
+		Assert.assertFalse(
+			"The method should not be accessiable", method.isAccessible());
+		Assert.assertSame(method, methodKey.getMethod());
+		Assert.assertTrue(
+			"The method should be accessible", method.isAccessible());
+
+		Map<MethodKey, Method> methods = ReflectionTestUtil.getFieldValue(
+			MethodKey.class, "_methods");
+
+		Assert.assertEquals(methods.toString(), 1, methods.size());
+		Assert.assertEquals(method, methods.get(methodKey));
+
+		MethodKey.resetCache();
+
+		Assert.assertTrue(methods.toString(), methods.isEmpty());
+	}
+
+	@Test
+	public void testHashCode() throws Exception {
+		Method method = _TEST_CLASS.getMethod(_TEST_METHOD_NAME, String.class);
+
+		MethodKey methodKey = new MethodKey(
+			_TEST_CLASS, _TEST_METHOD_NAME, String.class);
+
+		Assert.assertEquals(method.hashCode(), methodKey.hashCode());
+
+		MethodKey serializedMethodKey = _cloneBySerialization(methodKey);
+
+		Assert.assertEquals(method.hashCode(), serializedMethodKey.hashCode());
+	}
+
+	@Test
+	public void testToString() {
+		MethodKey methodKey = new MethodKey(_TEST_CLASS, _TEST_METHOD_NAME);
+
+		Assert.assertEquals(
+			_TEST_CLASS_NAME + ".testMethod()", methodKey.toString());
+
+		methodKey = new MethodKey(_TEST_CLASS, _TEST_METHOD_NAME, String.class);
+
+		Assert.assertEquals(
+			_TEST_CLASS_NAME + ".testMethod(java.lang.String)",
+			methodKey.toString());
+
+		methodKey = new MethodKey(
+			_TEST_CLASS, _TEST_METHOD_NAME, String.class, String.class);
+
+		Assert.assertEquals(
+			_TEST_CLASS_NAME + ".testMethod(java.lang.String,java.lang.String)",
+			methodKey.toString());
+
+		Assert.assertSame(methodKey.toString(), methodKey.toString());
+	}
+
+	@Test
+	public void testTransform() throws Exception {
+		MethodKey methodKey = new MethodKey(
+			_TEST_CLASS, _TEST_METHOD_NAME, String.class);
+
+		MethodKey transformedMethodKey = methodKey.transform(
+			new URLClassLoader(
+				ClassPathUtil.getClassPathURLs(
+					ClassPathUtil.getJVMClassPath(false)),
+				null));
+
+		Assert.assertNotEquals(methodKey, transformedMethodKey);
+
+		Class<?> transformedClass = transformedMethodKey.getDeclaringClass();
+
+		Constructor<?> transformedClassConstructor =
+			transformedClass.getDeclaredConstructor();
+
+		transformedClassConstructor.setAccessible(true);
+
+		Object transformedClassInstance =
+			transformedClassConstructor.newInstance();
+
+		Method method = methodKey.getMethod();
+
+		try {
+			method.invoke(transformedClassInstance, "test");
+
+			Assert.fail("No IllegalArgumentException thrown!");
+		}
+		catch (IllegalArgumentException iae) {
+			Assert.assertEquals(
+				"object is not an instance of declaring class",
+				iae.getMessage());
+		}
+
+		Method transformedMethod = transformedMethodKey.getMethod();
+
+		Assert.assertEquals(
+			"test", transformedMethod.invoke(transformedClassInstance, "test"));
+	}
+
+	private void _assertMethodKey(
+		Class<?> expectedClass, String expectedMethodName,
+		Class<?>[] expectedParameters, MethodKey methodKey) {
+
+		Assert.assertSame(expectedClass, methodKey.getDeclaringClass());
+		Assert.assertEquals(expectedMethodName, methodKey.getMethodName());
+		Assert.assertArrayEquals(
+			expectedParameters, methodKey.getParameterTypes());
+	}
+
+	private MethodKey _cloneBySerialization(MethodKey methodKey)
+		throws Exception {
+
+		try (UnsyncByteArrayOutputStream ubaos =
+				new UnsyncByteArrayOutputStream()) {
+
+			try (ObjectOutputStream oos = new ObjectOutputStream(ubaos)) {
+				oos.writeObject(methodKey);
+			}
+
+			try (UnsyncByteArrayInputStream ubais =
+					new UnsyncByteArrayInputStream(
+						ubaos.unsafeGetByteArray(), 0, ubaos.size());
+				ObjectInputStream ois = new ObjectInputStream(ubais)) {
+
+				return (MethodKey)ois.readObject();
+			}
+		}
+	}
+
+	private static final Class<?> _TEST_CLASS = TestClass.class;
+
+	private static final String _TEST_CLASS_NAME = _TEST_CLASS.getName();
+
+	private static final String _TEST_METHOD_NAME = "testMethod";
+
+	private static class TestClass {
+
+		public void testMethod() {
+		}
+
+		public void testMethod(int parameter) {
+		}
+
+		public String testMethod(String parameter) {
+			return parameter;
+		}
+
+		public void testMethod(String parameter1, String parameter2) {
+		}
+
+		public void testMethodAnother(String parameter) {
+		}
+
+	}
+
+}

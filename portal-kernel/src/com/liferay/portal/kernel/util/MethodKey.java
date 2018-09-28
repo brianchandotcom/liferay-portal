@@ -199,7 +199,9 @@ public class MethodKey implements Externalizable {
 			sb.append(StringPool.COMMA);
 		}
 
-		sb.setIndex(sb.index() - 1);
+		if (_parameterTypes.length != 0) {
+			sb.setIndex(sb.index() - 1);
+		}
 
 		sb.append(StringPool.CLOSE_PARENTHESIS);
 

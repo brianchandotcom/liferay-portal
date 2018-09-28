@@ -133,12 +133,12 @@ public class MediaWikiImporter implements WikiImporter {
 
 			List<String> specialNamespaces = readSpecialNamespaces(rootElement);
 
+			processImages(userId, node, imagesInputStream);
+
 			processSpecialPages(userId, node, rootElement, specialNamespaces);
 			processRegularPages(
 				userId, node, rootElement, specialNamespaces, usersMap,
 				imagesInputStream, options);
-
-			processImages(userId, node, imagesInputStream);
 
 			moveFrontPage(userId, node, options);
 		}

@@ -1649,7 +1649,9 @@ public class JournalDisplayContext {
 				layoutPageTemplateEntry);
 		}
 
-		return layoutPageTemplateEntriesMap;
+		_defaultLayoutPageTemplateEntriesMap = layoutPageTemplateEntriesMap;
+
+		return _defaultLayoutPageTemplateEntriesMap;
 	}
 
 	private String _getFeedsURL() {

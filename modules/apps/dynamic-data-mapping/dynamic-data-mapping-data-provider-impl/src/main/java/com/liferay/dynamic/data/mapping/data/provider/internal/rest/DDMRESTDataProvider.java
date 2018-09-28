@@ -19,6 +19,7 @@ import com.jayway.jsonpath.JsonPath;
 
 import com.liferay.dynamic.data.mapping.data.provider.DDMDataProvider;
 import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderException;
+import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderInputParametersSettings;
 import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderInstanceSettings;
 import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderOutputParametersSettings;
 import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderRequest;
@@ -48,6 +49,7 @@ import com.liferay.portal.kernel.util.Validator;
 import java.net.ConnectException;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -56,6 +58,7 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import javax.servlet.http.HttpServletRequest;
@@ -317,11 +320,33 @@ public class DDMRESTDataProvider implements DDMDataProvider {
 		return httpRequest.url();
 	}
 
-	protected Map<String, String> getPathParameters(
+	protected Map<String, Object> getParameters(
 		DDMDataProviderRequest ddmDataProviderRequest,
 		DDMRESTDataProviderSettings ddmRESTDataProviderSettings) {
 
 		Map<String, Object> parameters = ddmDataProviderRequest.getParameters();
+
+		Stream<DDMDataProviderInputParametersSettings> stream = Arrays.stream(
+			ddmRESTDataProviderSettings.inputParameters());
+
+		return stream.filter(
+			inputParameter -> {
+				return parameters.containsKey(
+					inputParameter.inputParameterName());
+			}
+		).collect(
+			Collectors.toMap(
+				DDMDataProviderInputParametersSettings::inputParameterName,
+				value -> parameters.get(value.inputParameterName()))
+		);
+	}
+
+	protected Map<String, String> getPathParameters(
+		DDMDataProviderRequest ddmDataProviderRequest,
+		DDMRESTDataProviderSettings ddmRESTDataProviderSettings) {
+
+		Map<String, Object> parameters = getParameters(
+			ddmDataProviderRequest, ddmRESTDataProviderSettings);
 
 		Map<String, String> pathParameters = new HashMap<>();
 
@@ -348,8 +373,8 @@ public class DDMRESTDataProvider implements DDMDataProvider {
 		Map<String, String> pathParameters = getPathParameters(
 			ddmDataProviderRequest, ddmRESTDataProviderSettings);
 
-		Map<String, Object> parametersMap =
-			ddmDataProviderRequest.getParameters();
+		Map<String, Object> parametersMap = getParameters(
+			ddmDataProviderRequest, ddmRESTDataProviderSettings);
 
 		Set<Map.Entry<String, Object>> entrySet = parametersMap.entrySet();
 

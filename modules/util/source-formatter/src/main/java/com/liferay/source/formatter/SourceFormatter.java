@@ -37,6 +37,8 @@ import com.liferay.source.formatter.util.DebugUtil;
 import com.liferay.source.formatter.util.FileUtil;
 import com.liferay.source.formatter.util.SourceFormatterUtil;
 
+import com.puppycrawl.tools.checkstyle.api.CheckstyleException;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -241,7 +243,15 @@ public class SourceFormatter {
 				System.out.println(e.getMessage());
 			}
 			else {
-				e.printStackTrace();
+				CheckstyleException checkstyleException =
+					_getNestedCheckstyleException(e);
+
+				if (checkstyleException != null) {
+					checkstyleException.printStackTrace();
+				}
+				else {
+					e.printStackTrace();
+				}
 			}
 
 			System.exit(1);
@@ -415,6 +425,24 @@ public class SourceFormatter {
 
 	public List<SourceMismatchException> getSourceMismatchExceptions() {
 		return _sourceMismatchExceptions;
+	}
+
+	private static CheckstyleException _getNestedCheckstyleException(
+		Exception e) {
+
+		Throwable cause = e;
+
+		while (true) {
+			if (cause == null) {
+				return null;
+			}
+
+			if (cause instanceof CheckstyleException) {
+				return (CheckstyleException)cause;
+			}
+
+			cause = cause.getCause();
+		}
 	}
 
 	private void _addDependentFileNames() {

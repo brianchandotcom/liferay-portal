@@ -113,69 +113,6 @@ public class CodeTemplatesTest {
 	}
 
 	@Test
-	public void testGenerateCodeTemplateConfigurationaction() throws Exception {
-		File destinationDir = temporaryFolder.newFolder("code");
-
-		ProjectTemplatesArgs projectTemplatesArgs = new ProjectTemplatesArgs();
-
-		File archetypesDir = FileUtil.getJarFile(ProjectTemplatesTest.class);
-
-		projectTemplatesArgs.setArchetypesDirs(
-			Collections.singletonList(archetypesDir));
-
-		projectTemplatesArgs.setDestinationDir(destinationDir);
-		projectTemplatesArgs.setLiferayVersion("7.1");
-		projectTemplatesArgs.setName("foo");
-		projectTemplatesArgs.setMaven(true);
-		projectTemplatesArgs.setTemplate("mvc-portlet");
-
-		new ProjectTemplates(projectTemplatesArgs);
-
-		File projectDir = new File(destinationDir, "foo");
-
-		CodeTemplatesArgs codeTemplatesArgs = new CodeTemplatesArgs();
-
-		archetypesDir = FileUtil.getJarFile(CodeTemplatesTest.class);
-
-		codeTemplatesArgs.setAddtionalParameters(
-			Collections.unmodifiableMap(
-				Stream.of(
-					new AbstractMap.SimpleEntry<>(
-						"portletName", "Configurationaction")
-				).collect(
-					Collectors.toMap(
-						AbstractMap.SimpleEntry::getKey,
-						AbstractMap.SimpleEntry::getValue)
-				)));
-		codeTemplatesArgs.setArchetypesDirs(
-			Collections.singletonList(archetypesDir));
-		codeTemplatesArgs.setAuthor("fred");
-		codeTemplatesArgs.setClassName("Foo");
-		codeTemplatesArgs.setDestinationDir(projectDir);
-		codeTemplatesArgs.setPackageName("com.liferay");
-		codeTemplatesArgs.setTemplate("configurationaction");
-
-		new CodeTemplates(codeTemplatesArgs);
-
-		File portletKeysFile = new File(
-			projectDir,
-			"src/main/java/com/liferay/configurationaction/constants" +
-				"/FooPortletKeys.java");
-
-		Assert.assertTrue(portletKeysFile.exists());
-
-		_testContainsOrNot(
-			projectDir,
-			"src/main/java/com/liferay/configurationaction/FooPortlet.java",
-			false, true,
-			"javax.portlet.display-name=Configurationaction Portlet");
-
-		File restDir = new File(projectDir, "src/main/java/com/liferay/rest");
-
-		Assert.assertFalse(restDir.exists());
-	}
-
-	@Test
 	public void testGenerateCodeTemplateLifecycleAction() throws Exception {
 		File destinationDir = temporaryFolder.newFolder("code");
 

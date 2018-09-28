@@ -14,11 +14,100 @@
 
 package com.liferay.sharing.service.persistence.impl;
 
-import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.portal.dao.orm.custom.sql.CustomSQL;
+import com.liferay.portal.kernel.dao.orm.QueryPos;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.dao.orm.SQLQuery;
+import com.liferay.portal.kernel.dao.orm.Session;
+import com.liferay.portal.kernel.dao.orm.Type;
+import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.sharing.model.SharingEntry;
+import com.liferay.sharing.model.impl.SharingEntryImpl;
+import com.liferay.sharing.service.persistence.SharingEntryFinder;
+
+import java.util.Iterator;
+import java.util.List;
 
 /**
  * @author Alejandro Tardín
  */
-public class SharingEntryFinderImpl extends SharingEntryFinderBaseImpl {
+public class SharingEntryFinderImpl
+	extends SharingEntryFinderBaseImpl implements SharingEntryFinder {
+
+	public static final String COUNT_BY_TO_USER_ID_UNIQUE =
+		SharingEntryFinder.class.getName() + ".countByToUserIdUnique";
+
+	public static final String FIND_BY_TO_USER_ID_UNIQUE =
+		SharingEntryFinder.class.getName() + ".findByToUserIdUnique";
+
+	public int countByToUserIdUnique(long toUserId) {
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			String sql = _customSQL.get(getClass(), COUNT_BY_TO_USER_ID_UNIQUE);
+
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+			q.addScalar(COUNT_COLUMN_NAME, Type.LONG);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(toUserId);
+
+			Iterator<Long> itr = q.iterate();
+
+			if (itr.hasNext()) {
+				Long count = itr.next();
+
+				if (count != null) {
+					return count.intValue();
+				}
+			}
+
+			return 0;
+		}
+		catch (Exception e) {
+			throw new SystemException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	public List<SharingEntry> findByToUserIdUnique(
+		long toUserId, int begin, int end) {
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			String sql = _customSQL.get(getClass(), FIND_BY_TO_USER_ID_UNIQUE);
+
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+			q.setCacheable(false);
+			q.addEntity("SharingEntry", SharingEntryImpl.class);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(toUserId);
+
+			return (List<SharingEntry>)QueryUtil.list(
+				q, getDialect(), begin, end);
+		}
+		catch (Exception e) {
+			throw new SystemException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	@ServiceReference(type = CustomSQL.class)
+	private CustomSQL _customSQL;
+
 }

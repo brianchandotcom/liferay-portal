@@ -5078,7 +5078,6 @@ information. Make sure to commit in all build services results.
 					<property name="format.current.branch" value="${format.current.branch}" />
 					<property name="show.documentation" value="false" />
 					<property name="source.auto.fix" value="false" />
-					<property name="source.fail.on.error" value="true" />
 					<property name="source.print.errors" value="false" />
 					<property name="source.throw.exception" value="true" />
 					<property name="source.use.properties" value="false" />
@@ -5108,7 +5107,6 @@ information. Make sure to commit in all build services results.
 				<ant dir="portal-impl" target="format-source-all">
 					<property name="show.documentation" value="false" />
 					<property name="source.auto.fix" value="false" />
-					<property name="source.fail.on.error" value="true" />
 					<property if:true="${liferay.releng.public}" name="source.formatter.excludes" value="modules/private/**" />
 					<property name="source.print.errors" value="false" />
 					<property name="source.throw.exception" value="true" />

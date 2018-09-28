@@ -665,7 +665,7 @@ Please run the following command from ${source.formatter.modules.dir.absolute.pa
 			classname="com.liferay.source.formatter.SourceFormatter"
 			classpathref="source.formatter.classpath"
 			dir="${source.formatter.dir}"
-			failonerror="${source.fail.on.error}"
+			failonerror="true"
 			fork="true"
 			newenvironment="true"
 		>

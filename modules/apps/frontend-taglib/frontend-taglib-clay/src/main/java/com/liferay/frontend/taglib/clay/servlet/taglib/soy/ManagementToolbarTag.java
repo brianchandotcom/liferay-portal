@@ -172,9 +172,7 @@ public class ManagementToolbarTag extends BaseClayTag {
 	}
 
 	public void setFilterLabelItems(List<LabelItem> filterLabelItems) {
-		if (filterLabelItems.size() > 0) {
-			putValue("filterLabels", filterLabelItems);
-		}
+		putValue("filterLabels", filterLabelItems);
 	}
 
 	public void setInfoPanelId(String infoPanelId) {

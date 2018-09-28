@@ -75,8 +75,9 @@ public abstract class BaseGitRepository
 				"Skipped downloading " + _REPOSITORY_PROPERTIES_URL);
 		}
 
-		_repositoryProperties = JenkinsResultsParserUtil.getProperties(
-			new File("repository.properties"));
+		_repositoryProperties.putAll(
+			JenkinsResultsParserUtil.getProperties(
+				new File("repository.properties")));
 
 		return _repositoryProperties;
 	}

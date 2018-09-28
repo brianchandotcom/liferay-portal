@@ -73,6 +73,29 @@ class PagesVisitor {
 	mapColumns(mapper) {
 		return this._map(identity, identity, mapper, identity);
 	}
+
+	mergeFields(pages) {
+		return this.mapFields(
+			(field, fieldIndex, columnIndex, rowIndex, pageIndex) => {
+				const currentField = pages[pageIndex].rows[rowIndex].columns[columnIndex].fields[fieldIndex];
+
+				if (currentField.fieldName === 'name') {
+					currentField.visible = true;
+				}
+
+				return {
+					...field,
+					errorMessage: currentField.errorMessage,
+					options: currentField.options,
+					readOnly: currentField.readOnly,
+					required: currentField.required,
+					valid: currentField.valid,
+					visible: currentField.visible
+				};
+			}
+		);
+	}
+
 	formatPageSettings(namespace, fieldType, newFieldName) {
 		const translationManager = Liferay.component(`${namespace}translationManager`);
 

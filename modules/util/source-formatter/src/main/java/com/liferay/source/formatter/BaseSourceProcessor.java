@@ -424,8 +424,8 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	}
 
 	protected boolean hasGeneratedTag(String content) {
-		if (_containsUnquoted(content, "@generated") ||
-			_containsUnquoted(content, "$ANTLR")) {
+		if (SourceUtil.containsUnquoted(content, "@generated") ||
+			SourceUtil.containsUnquoted(content, "$ANTLR")) {
 
 			return true;
 		}
@@ -601,22 +601,6 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		}
 
 		return false;
-	}
-
-	private boolean _containsUnquoted(String s, String text) {
-		int x = -1;
-
-		while (true) {
-			x = s.indexOf(text, x + 1);
-
-			if (x == -1) {
-				return false;
-			}
-
-			if (!ToolsUtil.isInsideQuotes(s, x)) {
-				return true;
-			}
-		}
 	}
 
 	private void _format(String fileName) throws Exception {

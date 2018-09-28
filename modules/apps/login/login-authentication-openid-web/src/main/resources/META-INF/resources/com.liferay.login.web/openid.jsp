@@ -32,7 +32,9 @@ String openId = ParamUtil.getString(request, "openId");
 	<liferay-ui:error exception="<%= OpenIdServiceException.ConsumerException.class %>" message="an-error-occurred-while-initializing-the-openid-consumer" />
 	<liferay-ui:error exception="<%= OpenIdServiceException.DiscoveryException.class %>" message="an-error-occurred-while-discovering-the-openid-provider" />
 	<liferay-ui:error exception="<%= OpenIdServiceException.MessageException.class %>" message="an-error-occurred-while-communicating-with-the-openid-provider" />
+	<liferay-ui:error exception="<%= StrangersNotAllowedException.class %>" message="only-known-users-are-allowed-to-sign-in-using-an-openid" />
 	<liferay-ui:error exception="<%= UserEmailAddressException.MustNotBeDuplicate.class %>" message="the-email-address-associated-with-your-openid-account-is-already-being-used" />
+	<liferay-ui:error exception="<%= UserEmailAddressException.MustNotUseCompanyMx.class %>" message="the-email-address-associated-with-your-openid-cannot-be-used-to-register-a-new-user-because-its-email-domain-is-reserved" />
 
 	<aui:fieldset>
 		<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" cssClass="openid-login" label="openid" name="openId" title="openid" type="text" value="<%= openId %>" />

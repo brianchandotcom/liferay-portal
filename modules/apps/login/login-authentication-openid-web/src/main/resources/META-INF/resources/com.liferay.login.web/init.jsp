@@ -24,7 +24,8 @@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 <%@ page import="com.liferay.portal.kernel.exception.DuplicateOpenIdException" %><%@
 page import="com.liferay.portal.kernel.exception.UserEmailAddressException" %><%@
 page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
-page import="com.liferay.portal.security.sso.openid.OpenIdServiceException" %>
+page import="com.liferay.portal.security.sso.openid.OpenIdServiceException" %><%@
+page import="com.liferay.portal.security.sso.openid.StrangersNotAllowedException" %>
 
 <%@ page import="javax.portlet.ActionRequest" %><%@
 page import="javax.portlet.WindowState" %>

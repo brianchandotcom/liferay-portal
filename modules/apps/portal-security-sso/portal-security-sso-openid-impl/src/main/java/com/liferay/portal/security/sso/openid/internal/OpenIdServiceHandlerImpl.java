@@ -18,10 +18,13 @@ import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.exception.UserEmailAddressException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.servlet.SessionMessages;
@@ -38,6 +41,7 @@ import com.liferay.portal.security.sso.openid.OpenIdProvider;
 import com.liferay.portal.security.sso.openid.OpenIdProviderRegistry;
 import com.liferay.portal.security.sso.openid.OpenIdServiceException;
 import com.liferay.portal.security.sso.openid.OpenIdServiceHandler;
+import com.liferay.portal.security.sso.openid.StrangersNotAllowedException;
 import com.liferay.portal.security.sso.openid.internal.constants.OpenIdWebKeys;
 
 import java.io.IOException;
@@ -300,6 +304,8 @@ public class OpenIdServiceHandlerImpl implements OpenIdServiceHandler {
 
 		ServiceContext serviceContext = new ServiceContext();
 
+		_checkAllowUserCreation(companyId, emailAddress);
+
 		user = _userLocalService.addUser(
 			creatorUserId, companyId, autoPassword, password1, password2,
 			autoScreenName, screenName, emailAddress, facebookId, openId,
@@ -498,6 +504,23 @@ public class OpenIdServiceHandlerImpl implements OpenIdServiceHandler {
 		return null;
 	}
 
+	private void _checkAllowUserCreation(long companyId, String emailAddress)
+		throws PortalException {
+
+		Company company = _companyLocalService.getCompany(companyId);
+
+		if (!company.isStrangers()) {
+			throw new StrangersNotAllowedException(companyId);
+		}
+
+		if (company.hasCompanyMx(emailAddress)) {
+			if (!company.isStrangersWithMx()) {
+				throw new UserEmailAddressException.MustNotUseCompanyMx(
+					emailAddress);
+			}
+		}
+	}
+
 	private static final String _OPEN_ID_AX_ATTR_EMAIL = "email";
 
 	private static final String _OPEN_ID_AX_ATTR_FIRST_NAME = "firstname";
@@ -512,6 +535,9 @@ public class OpenIdServiceHandlerImpl implements OpenIdServiceHandler {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		OpenIdServiceHandlerImpl.class);
+
+	@Reference
+	private CompanyLocalService _companyLocalService;
 
 	private ConsumerManager _consumerManager;
 

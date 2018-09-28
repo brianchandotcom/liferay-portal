@@ -41,8 +41,14 @@
 }
 
 .fragments-editor-toolbar {
+	transition: padding ease 0.5s;
+
 	&__add-fragment-button {
 		display: none;
+	}
+
+	body.open-admin-panel & {
+		padding-right: $contextualSidebarContentPadding;
 	}
 }
 

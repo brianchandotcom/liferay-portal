@@ -26,6 +26,7 @@ import com.google.api.services.drive.DriveScopes;
 
 import com.liferay.document.library.opener.google.drive.internal.configuration.DLOpenerGoogleDriveConfiguration;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.io.IOException;
@@ -117,8 +118,10 @@ public class OAuth2Manager {
 			new GoogleAuthorizationCodeFlow.Builder(
 				GoogleNetHttpTransport.newTrustedTransport(),
 				JacksonFactory.getDefaultInstance(),
-				dlOpenerGoogleDriveConfiguration.clientId(),
-				dlOpenerGoogleDriveConfiguration.clientSecret(),
+				GetterUtil.getString(
+					dlOpenerGoogleDriveConfiguration.clientId()),
+				GetterUtil.getString(
+					dlOpenerGoogleDriveConfiguration.clientSecret()),
 				Collections.singleton(DriveScopes.DRIVE_FILE));
 
 		googleAuthorizationCodeFlowBuilder =

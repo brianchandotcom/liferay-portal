@@ -14,11 +14,13 @@
 
 package com.liferay.portal.kernel.repository.capabilities;
 
+import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 
 /**
  * @author Iván Zaera
  */
+@ProviderType
 public interface RelatedModelCapability extends Capability {
 
 	public String getClassName(FileEntry fileEntry);

@@ -14,12 +14,14 @@
 
 package com.liferay.portal.kernel.repository.capabilities;
 
+import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.repository.DocumentRepository;
 import com.liferay.portal.kernel.repository.event.RepositoryEventTrigger;
 
 /**
  * @author Adolfo Pérez
  */
+@ProviderType
 public interface PortalCapabilityLocator {
 
 	public BulkOperationCapability getBulkOperationCapability(

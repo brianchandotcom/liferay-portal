@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.repository.capabilities;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileShortcut;
@@ -23,6 +25,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 /**
  * @author Adolfo Pérez
  */
+@ProviderType
 public interface TrashCapability extends Capability {
 
 	public void deleteFileEntry(FileEntry fileEntry) throws PortalException;

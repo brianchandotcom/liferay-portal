@@ -14,6 +14,7 @@
 
 package com.liferay.portal.kernel.repository.capabilities;
 
+import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.RepositoryModelOperation;
 
@@ -22,6 +23,7 @@ import java.util.Date;
 /**
  * @author Adolfo Pérez
  */
+@ProviderType
 public interface BulkOperationCapability extends Capability {
 
 	public void execute(

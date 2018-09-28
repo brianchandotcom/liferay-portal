@@ -14,6 +14,7 @@
 
 package com.liferay.portal.kernel.repository.capabilities;
 
+import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
@@ -21,6 +22,7 @@ import com.liferay.portal.kernel.repository.model.FileVersion;
 /**
  * @author Adolfo Pérez
  */
+@ProviderType
 public interface ProcessorCapability extends Capability {
 
 	public void cleanUp(FileEntry fileEntry) throws PortalException;

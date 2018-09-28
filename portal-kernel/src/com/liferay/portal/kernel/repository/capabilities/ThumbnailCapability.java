@@ -14,12 +14,14 @@
 
 package com.liferay.portal.kernel.repository.capabilities;
 
+import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 
 /**
  * @author Iván Zaera
  */
+@ProviderType
 public interface ThumbnailCapability extends Capability {
 
 	public FileEntry fetchImageFileEntry(long imageId);

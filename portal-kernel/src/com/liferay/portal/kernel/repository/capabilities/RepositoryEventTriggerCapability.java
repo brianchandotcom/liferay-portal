@@ -14,11 +14,13 @@
 
 package com.liferay.portal.kernel.repository.capabilities;
 
+import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.repository.event.RepositoryEventTrigger;
 
 /**
  * @author Adolfo Pérez
  */
+@ProviderType
 public interface RepositoryEventTriggerCapability
 	extends Capability, RepositoryEventTrigger {
 }

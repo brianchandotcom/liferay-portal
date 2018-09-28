@@ -274,22 +274,17 @@ public class NavigationMenuTag extends IncludeTag {
 
 		List<NavItem> navItems = new ArrayList<>();
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
 		SiteNavigationMenuUtil siteNavigationMenuUtil =
 			SiteNavigationMenuUtil.getInstance();
 
-		NavItem rootMenuItem = null;
-
 		long parentSiteNavigationMenuItemId = GetterUtil.getLong(_rootItemId);
 
-		if (_rootItemType.equals("relative")) {
-			if ((_rootItemLevel >= 0) &&
-				(_rootItemLevel < branchMenuItems.size())) {
+		if (_rootItemType.equals("relative") && (_rootItemLevel >= 0) &&
+			(_rootItemLevel < branchMenuItems.size())) {
 
-				rootMenuItem = branchMenuItems.get(_rootItemLevel);
-			}
+			NavItem rootMenuItem = branchMenuItems.get(_rootItemLevel);
+
+			navItems = rootMenuItem.getChildren();
 		}
 		else if (_rootItemType.equals("absolute")) {
 			if (_rootItemLevel == 0) {
@@ -299,30 +294,17 @@ public class NavigationMenuTag extends IncludeTag {
 							request, _siteNavigationMenuId, 0);
 			}
 			else if (branchMenuItems.size() >= _rootItemLevel) {
-				rootMenuItem = branchMenuItems.get(_rootItemLevel - 1);
+				NavItem rootMenuItem = branchMenuItems.get(_rootItemLevel - 1);
+
+				navItems = rootMenuItem.getChildren();
 			}
 		}
 		else if (_rootItemType.equals("select")) {
-			if (Validator.isNotNull(_rootItemId)) {
-				SiteNavigationMenuItem parentSiteNavigationMenuItem =
-					SiteNavigationMenuItemLocalServiceUtil.
-						getSiteNavigationMenuItem(
-							parentSiteNavigationMenuItemId);
-
-				rootMenuItem = new SiteNavigationMenuNavItem(
-					request, themeDisplay, parentSiteNavigationMenuItem);
-			}
-			else {
-				navItems =
-					siteNavigationMenuUtil.
-						getNavItemsByParentSiteNavigationMenuItem(
-							request, _siteNavigationMenuId,
-							parentSiteNavigationMenuItemId);
-			}
-		}
-
-		if (rootMenuItem != null) {
-			navItems = rootMenuItem.getChildren();
+			navItems =
+				siteNavigationMenuUtil.
+					getNavItemsByParentSiteNavigationMenuItem(
+						request, _siteNavigationMenuId,
+						parentSiteNavigationMenuItemId);
 		}
 
 		return navItems;

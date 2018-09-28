@@ -313,6 +313,23 @@ public class LayoutPageTemplateEntryServiceSoap {
 	}
 
 	public static com.liferay.layout.page.template.model.LayoutPageTemplateEntrySoap[] getLayoutPageTemplateEntries(
+		long groupId, long classNameId, int type, boolean defaultTemplate)
+		throws RemoteException {
+		try {
+			java.util.List<com.liferay.layout.page.template.model.LayoutPageTemplateEntry> returnValue =
+				LayoutPageTemplateEntryServiceUtil.getLayoutPageTemplateEntries(groupId,
+					classNameId, type, defaultTemplate);
+
+			return com.liferay.layout.page.template.model.LayoutPageTemplateEntrySoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.layout.page.template.model.LayoutPageTemplateEntrySoap[] getLayoutPageTemplateEntries(
 		long groupId, long layoutPageTemplateCollectionId, int start, int end)
 		throws RemoteException {
 		try {

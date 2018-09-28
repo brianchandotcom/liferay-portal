@@ -5,6 +5,8 @@ import {PagesVisitor} from '../../util/visitors.es';
 import {setLocalizedValue} from '../../util/i18n.es';
 import {sub} from '../../util/strings.es';
 import Component from 'metal-jsx';
+import autobind from 'autobind-decorator';
+import {generateInstanceId} from '../../util/fieldSupport.es';
 
 /**
  * LayoutProvider listens to your children's events to

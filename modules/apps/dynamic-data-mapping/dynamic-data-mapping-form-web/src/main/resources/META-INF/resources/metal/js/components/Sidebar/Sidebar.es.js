@@ -8,7 +8,10 @@ import ClayButton from 'clay-button';
 import Component, {Fragment} from 'metal-jsx';
 import dom from 'metal-dom';
 import FieldTypeBox from '../FieldTypeBox/FieldTypeBox.es.js';
+import autobind from 'autobind-decorator';
 import FormRenderer, {FormSupport} from '../Form/index.es.js';
+import WithEvaluator from '../Form/Evaluator.es';
+import {ClayActionsDropdown} from 'clay-dropdown';
 
 /**
  * Sidebar is a tooling to mount forms.

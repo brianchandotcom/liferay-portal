@@ -80,6 +80,7 @@
 		"clay-modal": "^2.3.2",
 		"clay-radio": "^2.3.2",
 		"isomorphic-fetch": "^2.2.1",
+		"metal-debounce": "^2.0.0",
 		"metal-dom": "^2.16.5",
 		"metal-drag-drop": "^3.1.0",
 		"metal-events": "^2.16.5",

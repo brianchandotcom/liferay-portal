@@ -42,7 +42,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
-import java.util.ListIterator;
 import java.util.Map;
 import java.util.Objects;
 
@@ -189,21 +188,22 @@ public class NavigationMenuTag extends IncludeTag {
 			layout);
 
 		SiteNavigationMenuItem siteNavigationMenuItem =
-			SiteNavigationMenuItemLocalServiceUtil.getSiteNavigationMenuItem(
+			SiteNavigationMenuItemLocalServiceUtil.fetchSiteNavigationMenuItem(
 				siteNavigationMenuItemId);
+
+		if (siteNavigationMenuItem == null) {
+			return navItems;
+		}
 
 		List<SiteNavigationMenuItem> ancestors =
 			siteNavigationMenuItem.getAncestors();
 
-		ListIterator<SiteNavigationMenuItem> listIterator =
-			ancestors.listIterator(ancestors.size());
+		Collections.reverse(ancestors);
 
-		while (listIterator.hasPrevious()) {
-			SiteNavigationMenuItem ancestor = listIterator.previous();
-
-			navItems.add(
-				new SiteNavigationMenuNavItem(request, themeDisplay, ancestor));
-		}
+		ancestors.forEach(
+			ancestor -> navItems.add(
+				new SiteNavigationMenuNavItem(
+					request, themeDisplay, ancestor)));
 
 		navItems.add(
 			new SiteNavigationMenuNavItem(
@@ -229,17 +229,11 @@ public class NavigationMenuTag extends IncludeTag {
 
 		List<Layout> ancestorLayouts = layout.getAncestors();
 
-		ListIterator<Layout> listIterator = ancestorLayouts.listIterator(
-			ancestorLayouts.size());
+		Collections.reverse(ancestorLayouts);
 
-		while (listIterator.hasPrevious()) {
-			Layout ancestorLayout = listIterator.previous();
-
-			navItems.add(
-				new NavItem(request, themeDisplay, ancestorLayout, null));
-		}
-
-		navItems.add(new NavItem(request, themeDisplay, layout, null));
+		ancestorLayouts.forEach(
+			ancestorLayout -> navItems.add(
+				new NavItem(request, themeDisplay, ancestorLayout, null)));
 
 		return navItems;
 	}

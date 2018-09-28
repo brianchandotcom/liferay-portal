@@ -36,12 +36,12 @@ public class UpgradePortletPreferences extends UpgradeProcess {
 				StringBundler.concat(
 					"select companyId, preferences from PortletPreferences ",
 					"where portletId = '", _PORTLET_ID, "' AND ownerType = ",
-					PortletKeys.PREFS_OWNER_TYPE_COMPANY, ";"));
+					PortletKeys.PREFS_OWNER_TYPE_COMPANY));
 			PreparedStatement ps2 = connection.prepareStatement(
 				StringBundler.concat(
 					"select portletPreferencesId, preferences from ",
 					"PortletPreferences where companyId = ? AND portletId = ",
-					"'?' AND ownerType = ?;"));
+					"? AND ownerType = ?"));
 			PreparedStatement ps3 = AutoBatchPreparedStatementUtil.autoBatch(
 				connection.prepareStatement(
 					"update PortletPreferences set preferences = ? where " +

@@ -19,6 +19,8 @@ import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.structured.content.apio.architect.entity.EntityModel;
 import com.liferay.structured.content.apio.architect.filter.FilterParser;
 
+import java.util.Objects;
+
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
 import org.osgi.framework.ServiceRegistration;
@@ -90,9 +92,18 @@ public class FilterParserRegistry {
 			ServiceReference<EntityModel> serviceReference,
 			ServiceRegistration<FilterParser> serviceRegistration) {
 
-			removedService(serviceReference, serviceRegistration);
+			ServiceReference<FilterParser> filterParserServiceReference =
+				serviceRegistration.getReference();
 
-			addingService(serviceReference);
+			if (!Objects.equals(
+					serviceReference.getProperty("entity.model.name"),
+					filterParserServiceReference.getProperty(
+						"entity.model.name"))) {
+
+				removedService(serviceReference, serviceRegistration);
+
+				addingService(serviceReference);
+			}
 		}
 
 		@Override

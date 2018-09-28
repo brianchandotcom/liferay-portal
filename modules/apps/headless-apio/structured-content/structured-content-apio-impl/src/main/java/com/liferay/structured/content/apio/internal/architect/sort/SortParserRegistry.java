@@ -19,6 +19,8 @@ import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.structured.content.apio.architect.entity.EntityModel;
 import com.liferay.structured.content.apio.architect.sort.SortParser;
 
+import java.util.Objects;
+
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
 import org.osgi.framework.ServiceRegistration;
@@ -90,9 +92,18 @@ public class SortParserRegistry {
 			ServiceReference<EntityModel> serviceReference,
 			ServiceRegistration<SortParser> serviceRegistration) {
 
-			removedService(serviceReference, serviceRegistration);
+			ServiceReference<SortParser> sortParserServiceReference =
+				serviceRegistration.getReference();
 
-			addingService(serviceReference);
+			if (!Objects.equals(
+					serviceReference.getProperty("entity.model.name"),
+					sortParserServiceReference.getProperty(
+						"entity.model.name"))) {
+
+				removedService(serviceReference, serviceRegistration);
+
+				addingService(serviceReference);
+			}
 		}
 
 		@Override

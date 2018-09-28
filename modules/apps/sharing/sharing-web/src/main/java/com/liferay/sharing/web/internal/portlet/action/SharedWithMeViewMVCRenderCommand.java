@@ -14,7 +14,12 @@
 
 package com.liferay.sharing.web.internal.portlet.action;
 
+import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
+import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
+import com.liferay.osgi.service.tracker.collections.map.PropertyServiceReferenceComparator;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
+import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderConstants;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
@@ -24,19 +29,28 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.sharing.model.SharingEntry;
 import com.liferay.sharing.service.SharingEntryLocalService;
+import com.liferay.sharing.web.filter.SharedWithMeFilterItem;
 import com.liferay.sharing.web.internal.constants.SharingPortletKeys;
 import com.liferay.sharing.web.internal.display.context.SharedWithMeViewDisplayContext;
 import com.liferay.sharing.web.interpreter.SharingEntryInterpreter;
 import com.liferay.sharing.web.interpreter.SharingEntryInterpreterProvider;
 import com.liferay.sharing.web.renderer.SharingEntryViewRenderer;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Objects;
 
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
+import javax.servlet.http.HttpServletRequest;
+
+import org.osgi.framework.BundleContext;
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -46,7 +60,9 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + SharingPortletKeys.SHARED_WITH_ME,
-		"mvc.command.name=/", "mvc.command.name=/shared_with_me/view",
+		"mvc.command.name=/",
+		"mvc.command.name=/shared_with_me/select_asset_type",
+		"mvc.command.name=/shared_with_me/view",
 		"mvc.command.name=/shared_with_me/view_sharing_entry"
 	},
 	service = MVCRenderCommand.class
@@ -105,20 +121,60 @@ public class SharedWithMeViewMVCRenderCommand implements MVCRenderCommand {
 			}
 		}
 
+		List<SharedWithMeFilterItem> sharedWithMeFilterItems =
+			new ArrayList<>();
+
+		_serviceTrackerList.forEach(sharedWithMeFilterItems::add);
+
+		LiferayPortletRequest liferayPortletRequest =
+			_portal.getLiferayPortletRequest(renderRequest);
+
+		LiferayPortletResponse liferayPortletResponse =
+			_portal.getLiferayPortletResponse(renderResponse);
+
+		HttpServletRequest request = _portal.getHttpServletRequest(
+			renderRequest);
+
 		SharedWithMeViewDisplayContext sharedWithMeViewDisplayContext =
 			new SharedWithMeViewDisplayContext(
-				themeDisplay, _sharingEntryLocalService,
-				_sharingEntryInterpreterProvider::getSharingEntryInterpreter);
+				liferayPortletRequest, liferayPortletResponse, request,
+				_sharingEntryLocalService,
+				_sharingEntryInterpreterProvider::getSharingEntryInterpreter,
+				sharedWithMeFilterItems);
 
 		renderRequest.setAttribute(
 			SharedWithMeViewDisplayContext.class.getName(),
 			sharedWithMeViewDisplayContext);
 
+		if (Objects.equals(
+				renderRequest.getParameter("mvcRenderCommandName"),
+				"/shared_with_me/select_asset_type")) {
+
+			return "/shared_with_me/select_asset_type.jsp";
+		}
+
 		return "/shared_with_me/view.jsp";
+	}
+
+	@Activate
+	protected void activate(final BundleContext bundleContext) {
+		_serviceTrackerList = ServiceTrackerListFactory.open(
+			bundleContext, SharedWithMeFilterItem.class,
+			Collections.reverseOrder(
+				new PropertyServiceReferenceComparator(
+					"navigation.item.order")));
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		_serviceTrackerList.close();
 	}
 
 	@Reference
 	private Portal _portal;
+
+	private ServiceTrackerList<SharedWithMeFilterItem, SharedWithMeFilterItem>
+		_serviceTrackerList;
 
 	@Reference
 	private SharingEntryInterpreterProvider _sharingEntryInterpreterProvider;

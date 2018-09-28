@@ -9,4 +9,5 @@ Export-Package:\
 	com.liferay.sharing.renderer,\
 	com.liferay.sharing.security.permission,\
 	com.liferay.sharing.service,\
-	com.liferay.sharing.service.persistence
+	com.liferay.sharing.service.persistence,\
+	com.liferay.sharing.util.comparator

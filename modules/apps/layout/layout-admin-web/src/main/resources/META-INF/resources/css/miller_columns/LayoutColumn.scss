@@ -42,3 +42,13 @@
 		}
 	}
 }
+
+.layout-drag-handler {
+	cursor: move;
+}
+
+.select-item-checkbox-label {
+	&:after, &:before {
+		top: 0;
+	}
+}

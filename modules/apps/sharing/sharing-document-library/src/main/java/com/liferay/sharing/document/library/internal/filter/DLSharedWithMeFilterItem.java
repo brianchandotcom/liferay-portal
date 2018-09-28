@@ -38,7 +38,7 @@ public class DLSharedWithMeFilterItem implements SharedWithMeFilterItem {
 
 	@Override
 	public String getLabel(Locale locale) {
-		return LanguageUtil.get(locale, "documents-and-media");
+		return LanguageUtil.get(locale, "documents");
 	}
 
 }

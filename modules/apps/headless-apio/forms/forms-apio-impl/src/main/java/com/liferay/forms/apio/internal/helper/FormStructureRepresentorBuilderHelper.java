@@ -25,9 +25,7 @@ import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMFormRule;
 import com.liferay.dynamic.data.mapping.model.DDMFormSuccessPageSettings;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
-import com.liferay.dynamic.data.mapping.model.DDMStructureVersion;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
-import com.liferay.person.apio.architect.identifier.PersonIdentifier;
 import com.liferay.structure.apio.architect.model.FormLayoutPage;
 import com.liferay.structure.apio.architect.util.StructureRepresentorBuilderHelper;
 
@@ -65,9 +63,6 @@ public class FormStructureRepresentorBuilderHelper {
 				DDMStructure::getGroupId);
 
 		bidirectionalModelStepBuilder.addNested(
-			"version", this::_getDDMStructureVersion,
-			this::_buildDDMStructureVersion
-		).addNested(
 			"successPage", this::_getDDMFormSuccessPageSettings,
 			this::_buildDDMFormSuccessPageSettings
 		).addNestedList(
@@ -137,21 +132,10 @@ public class FormStructureRepresentorBuilderHelper {
 		return builder.types(
 			"FormSuccessPageSettings"
 		).addLocalizedStringByLocale(
-			"headline", getLocalizedString(DDMFormSuccessPageSettings::getTitle)
+			"description",
+			getLocalizedString(DDMFormSuccessPageSettings::getBody)
 		).addLocalizedStringByLocale(
-			"text", getLocalizedString(DDMFormSuccessPageSettings::getBody)
-		).build();
-	}
-
-	private NestedRepresentor<DDMStructureVersion> _buildDDMStructureVersion(
-		NestedRepresentor.Builder<DDMStructureVersion> nestedBuilder) {
-
-		return nestedBuilder.types(
-			"StructureVersion"
-		).addLinkedModel(
-			"creator", PersonIdentifier.class, DDMStructureVersion::getUserId
-		).addString(
-			"name", DDMStructureVersion::getVersion
+			"headline", getLocalizedString(DDMFormSuccessPageSettings::getTitle)
 		).build();
 	}
 
@@ -193,16 +177,6 @@ public class FormStructureRepresentorBuilderHelper {
 			DDMForm::getDDMFormSuccessPageSettings
 		).filter(
 			DDMFormSuccessPageSettings::isEnabled
-		).orElse(
-			null
-		);
-	}
-
-	private DDMStructureVersion _getDDMStructureVersion(
-		DDMStructure ddmStructure) {
-
-		return Try.fromFallible(
-			ddmStructure::getStructureVersion
 		).orElse(
 			null
 		);

@@ -71,7 +71,7 @@ public class SortParserRegistry {
 			EntityModel entityModel = _bundleContext.getService(
 				serviceReference);
 
-			SortParserImpl sortParser = new SortParserImpl(entityModel);
+			SortParser sortParser = new SortParserImpl(entityModel);
 
 			try {
 				return _bundleContext.registerService(

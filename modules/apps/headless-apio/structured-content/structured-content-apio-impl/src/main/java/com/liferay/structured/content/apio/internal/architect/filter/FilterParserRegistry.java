@@ -71,7 +71,7 @@ public class FilterParserRegistry {
 			EntityModel entityModel = _bundleContext.getService(
 				serviceReference);
 
-			FilterParserImpl filterParser = new FilterParserImpl(entityModel);
+			FilterParser filterParser = new FilterParserImpl(entityModel);
 
 			try {
 				return _bundleContext.registerService(

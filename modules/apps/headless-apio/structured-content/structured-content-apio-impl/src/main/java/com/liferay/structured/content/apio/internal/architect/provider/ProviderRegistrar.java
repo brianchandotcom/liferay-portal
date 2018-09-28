@@ -70,9 +70,9 @@ public class ProviderRegistrar {
 
 			try {
 				providerServiceRegistrations.register(
-					_bundleContext, new FilterProvider(entityModel));
+					_bundleContext, new FilterProvider(entityModel), "filter");
 				providerServiceRegistrations.register(
-					_bundleContext, new SortProvider(entityModel));
+					_bundleContext, new SortProvider(entityModel), "sort");
 			}
 			catch (Throwable t) {
 				providerServiceRegistrations.unregister();
@@ -121,7 +121,7 @@ public class ProviderRegistrar {
 	private static class ProviderServiceRegistrations {
 
 		public void register(
-			BundleContext bundleContext, Provider<?> provider) {
+			BundleContext bundleContext, Provider<?> provider, String type) {
 
 			ServiceRegistration<?> serviceRegistration =
 				bundleContext.registerService(
@@ -129,6 +129,7 @@ public class ProviderRegistrar {
 					new HashMapDictionary<String, Object>() {
 						{
 							put("entity.model.name", _entityModelName);
+							put("provider.type", type);
 						}
 					});
 

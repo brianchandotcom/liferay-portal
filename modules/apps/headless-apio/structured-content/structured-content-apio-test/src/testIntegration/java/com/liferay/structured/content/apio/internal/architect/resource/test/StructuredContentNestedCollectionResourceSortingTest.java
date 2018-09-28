@@ -15,6 +15,7 @@
 package com.liferay.structured.content.apio.internal.architect.resource.test;
 
 import com.liferay.apio.architect.pagination.PageItems;
+import com.liferay.apio.architect.provider.Provider;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalArticleConstants;
@@ -33,7 +34,6 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerTestRule;
 import com.liferay.structured.content.apio.architect.filter.Filter;
 import com.liferay.structured.content.apio.architect.sort.Sort;
-import com.liferay.structured.content.apio.architect.sort.SortParser;
 import com.liferay.structured.content.apio.architect.util.test.PaginationTestUtil;
 
 import java.time.LocalDate;
@@ -52,6 +52,8 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import org.springframework.mock.web.MockHttpServletRequest;
 
 /**
  * @author Julio Camarero
@@ -106,8 +108,7 @@ public class StructuredContentNestedCollectionResourceSortingTest
 		PageItems<JournalArticle> pageItems = getPageItems(
 			PaginationTestUtil.of(10, 1), _group.getGroupId(),
 			getThemeDisplay(_group, LocaleUtil.getDefault()),
-			Filter.emptyFilter(),
-			new Sort(_sortParser.parse("dateCreated:asc")));
+			Filter.emptyFilter(), _getSort("dateCreated:asc"));
 
 		Assert.assertEquals(2, pageItems.getTotalCount());
 
@@ -152,8 +153,7 @@ public class StructuredContentNestedCollectionResourceSortingTest
 		PageItems<JournalArticle> pageItems = getPageItems(
 			PaginationTestUtil.of(10, 1), _group.getGroupId(),
 			getThemeDisplay(_group, LocaleUtil.getDefault()),
-			Filter.emptyFilter(),
-			new Sort(_sortParser.parse("dateCreated:desc")));
+			Filter.emptyFilter(), _getSort("dateCreated:desc"));
 
 		Assert.assertEquals(2, pageItems.getTotalCount());
 
@@ -198,8 +198,7 @@ public class StructuredContentNestedCollectionResourceSortingTest
 		PageItems<JournalArticle> pageItems = getPageItems(
 			PaginationTestUtil.of(10, 1), _group.getGroupId(),
 			getThemeDisplay(_group, LocaleUtil.getDefault()),
-			Filter.emptyFilter(),
-			new Sort(_sortParser.parse("dateModified:asc")));
+			Filter.emptyFilter(), _getSort("dateModified:asc"));
 
 		Assert.assertEquals(2, pageItems.getTotalCount());
 
@@ -244,8 +243,7 @@ public class StructuredContentNestedCollectionResourceSortingTest
 		PageItems<JournalArticle> pageItems = getPageItems(
 			PaginationTestUtil.of(10, 1), _group.getGroupId(),
 			getThemeDisplay(_group, LocaleUtil.getDefault()),
-			Filter.emptyFilter(),
-			new Sort(_sortParser.parse("dateModified:desc")));
+			Filter.emptyFilter(), _getSort("dateModified:desc"));
 
 		Assert.assertEquals(2, pageItems.getTotalCount());
 
@@ -300,8 +298,7 @@ public class StructuredContentNestedCollectionResourceSortingTest
 		PageItems<JournalArticle> pageItems = getPageItems(
 			PaginationTestUtil.of(10, 1), _group.getGroupId(),
 			getThemeDisplay(_group, LocaleUtil.getDefault()),
-			Filter.emptyFilter(),
-			new Sort(_sortParser.parse("datePublished:asc")));
+			Filter.emptyFilter(), _getSort("datePublished:asc"));
 
 		Assert.assertEquals(2, pageItems.getTotalCount());
 
@@ -356,8 +353,7 @@ public class StructuredContentNestedCollectionResourceSortingTest
 		PageItems<JournalArticle> pageItems = getPageItems(
 			PaginationTestUtil.of(10, 1), _group.getGroupId(),
 			getThemeDisplay(_group, LocaleUtil.getDefault()),
-			Filter.emptyFilter(),
-			new Sort(_sortParser.parse("datePublished:desc")));
+			Filter.emptyFilter(), _getSort("datePublished:desc"));
 
 		Assert.assertEquals(2, pageItems.getTotalCount());
 
@@ -400,7 +396,7 @@ public class StructuredContentNestedCollectionResourceSortingTest
 		PageItems<JournalArticle> pageItems = getPageItems(
 			PaginationTestUtil.of(10, 1), _group.getGroupId(),
 			getThemeDisplay(_group, LocaleUtil.getDefault()),
-			Filter.emptyFilter(), new Sort(_sortParser.parse("title:asc")));
+			Filter.emptyFilter(), _getSort("title:asc"));
 
 		Assert.assertEquals(2, pageItems.getTotalCount());
 
@@ -446,7 +442,7 @@ public class StructuredContentNestedCollectionResourceSortingTest
 		PageItems<JournalArticle> pageItems = getPageItems(
 			PaginationTestUtil.of(10, 1), _group.getGroupId(),
 			getThemeDisplay(_group, LocaleUtil.getDefault()),
-			Filter.emptyFilter(), new Sort(_sortParser.parse("title:asc")));
+			Filter.emptyFilter(), _getSort("title:asc"));
 
 		Assert.assertEquals(2, pageItems.getTotalCount());
 
@@ -493,7 +489,7 @@ public class StructuredContentNestedCollectionResourceSortingTest
 		PageItems<JournalArticle> pageItems = getPageItems(
 			PaginationTestUtil.of(10, 1), _group.getGroupId(),
 			getThemeDisplay(_group, LocaleUtil.SPAIN), Filter.emptyFilter(),
-			new Sort(_sortParser.parse("title:asc")));
+			_getSort("title:asc"));
 
 		Assert.assertEquals(2, pageItems.getTotalCount());
 
@@ -536,7 +532,7 @@ public class StructuredContentNestedCollectionResourceSortingTest
 		PageItems<JournalArticle> pageItems = getPageItems(
 			PaginationTestUtil.of(10, 1), _group.getGroupId(),
 			getThemeDisplay(_group, LocaleUtil.getDefault()),
-			Filter.emptyFilter(), new Sort(_sortParser.parse("title")));
+			Filter.emptyFilter(), _getSort("title"));
 
 		Assert.assertEquals(2, pageItems.getTotalCount());
 
@@ -579,7 +575,7 @@ public class StructuredContentNestedCollectionResourceSortingTest
 		PageItems<JournalArticle> pageItems = getPageItems(
 			PaginationTestUtil.of(10, 1), _group.getGroupId(),
 			getThemeDisplay(_group, LocaleUtil.getDefault()),
-			Filter.emptyFilter(), new Sort(_sortParser.parse("title:desc")));
+			Filter.emptyFilter(), _getSort("title:desc"));
 
 		Assert.assertEquals(2, pageItems.getTotalCount());
 
@@ -590,10 +586,21 @@ public class StructuredContentNestedCollectionResourceSortingTest
 		Assert.assertEquals(journalArticle1, journalArticles.get(1));
 	}
 
+	private Sort _getSort(String sort) {
+		MockHttpServletRequest mockHttpServletRequest =
+			new MockHttpServletRequest();
+
+		mockHttpServletRequest.setParameter("sort", sort);
+
+		return _sortProvider.createContext(mockHttpServletRequest);
+	}
+
 	@DeleteAfterTestRun
 	private Group _group;
 
-	@Inject
-	private SortParser _sortParser;
+	@Inject(
+		filter = "(&(entity.model.name=StructuredContent)(provider.type=sort))"
+	)
+	private Provider<Sort> _sortProvider;
 
 }

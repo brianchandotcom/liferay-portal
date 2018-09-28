@@ -56,7 +56,7 @@ public class ConcurrentMapperHashMapTest {
 	@Test
 	public void testClear() {
 		Assert.assertTrue(_concurrentMap.isEmpty());
-		Assert.assertNull(_concurrentMap.put(_testKey, _testValue));
+		Assert.assertNull(_concurrentMap.put(_testKey, _testValue1));
 
 		_assertEventQueue(Event.MAP_KEY, Event.MAP_VALUE);
 
@@ -65,6 +65,149 @@ public class ConcurrentMapperHashMapTest {
 		_concurrentMap.clear();
 
 		Assert.assertTrue(_concurrentMap.isEmpty());
+	}
+
+	@Test
+	public void testCompute() {
+		try {
+			_concurrentMap.compute(null, null);
+
+			Assert.fail("Should throw NullPointerException");
+		}
+		catch (NullPointerException npe) {
+			Assert.assertEquals("Key is null", npe.getMessage());
+		}
+
+		try {
+			_concurrentMap.compute(_testKey, null);
+
+			Assert.fail("Should throw NullPointerException");
+		}
+		catch (NullPointerException npe) {
+			Assert.assertEquals("Remapping function is null", npe.getMessage());
+		}
+
+		Assert.assertNull(
+			_concurrentMap.compute(_testKey, (key, value) -> null));
+
+		_assertEventQueue(Event.MAP_KEY, Event.UNMAP_KEY);
+
+		Assert.assertSame(
+			_testValue1,
+			_concurrentMap.compute(_testKey, (key, value) -> _testValue1));
+
+		_assertEventQueue(
+			Event.MAP_KEY, Event.MAP_VALUE, Event.UNMAP_VALUE_FOR_QUERY);
+
+		Assert.assertSame(
+			_testValue2,
+			_concurrentMap.compute(_testKey, (key, value) -> _testValue2));
+
+		_assertEventQueue(
+			Event.MAP_KEY, Event.UNMAP_VALUE, Event.MAP_VALUE, Event.UNMAP_KEY,
+			Event.UNMAP_VALUE_FOR_QUERY);
+
+		Assert.assertSame(_testValue2, _concurrentMap.get(_testKey));
+
+		_assertEventQueue(Event.MAP_KEY_FOR_QUERY, Event.UNMAP_VALUE_FOR_QUERY);
+	}
+
+	@Test
+	public void testComputeIfAbsent() {
+		try {
+			_concurrentMap.computeIfAbsent(null, null);
+
+			Assert.fail("Should throw NullPointerException");
+		}
+		catch (NullPointerException npe) {
+			Assert.assertEquals("Key is null", npe.getMessage());
+		}
+
+		try {
+			_concurrentMap.computeIfAbsent(_testKey, null);
+
+			Assert.fail("Should throw NullPointerException");
+		}
+		catch (NullPointerException npe) {
+			Assert.assertEquals("Mapping function is null", npe.getMessage());
+		}
+
+		Assert.assertNull(
+			_concurrentMap.computeIfAbsent(_testKey, key -> null));
+
+		_assertEventQueue(Event.MAP_KEY, Event.UNMAP_KEY);
+
+		Assert.assertSame(
+			_testValue1,
+			_concurrentMap.computeIfAbsent(_testKey, key -> _testValue1));
+
+		_assertEventQueue(
+			Event.MAP_KEY, Event.MAP_VALUE, Event.UNMAP_VALUE_FOR_QUERY);
+
+		Assert.assertSame(
+			_testValue1,
+			_concurrentMap.computeIfAbsent(_testKey, key -> _testValue2));
+
+		_assertEventQueue(
+			Event.MAP_KEY, Event.UNMAP_KEY, Event.UNMAP_VALUE_FOR_QUERY);
+
+		Assert.assertSame(_testValue1, _concurrentMap.get(_testKey));
+
+		_assertEventQueue(Event.MAP_KEY_FOR_QUERY, Event.UNMAP_VALUE_FOR_QUERY);
+	}
+
+	@Test
+	public void testComputeIfPresent() {
+		try {
+			_concurrentMap.computeIfPresent(null, null);
+
+			Assert.fail("Should throw NullPointerException");
+		}
+		catch (NullPointerException npe) {
+			Assert.assertEquals("Key is null", npe.getMessage());
+		}
+
+		try {
+			_concurrentMap.computeIfPresent(_testKey, null);
+
+			Assert.fail("Should throw NullPointerException");
+		}
+		catch (NullPointerException npe) {
+			Assert.assertEquals("Remapping function is null", npe.getMessage());
+		}
+
+		Assert.assertNull(
+			_concurrentMap.computeIfPresent(_testKey, (key, value) -> null));
+
+		_assertEventQueue(Event.MAP_KEY_FOR_QUERY);
+
+		Assert.assertNull(
+			_concurrentMap.computeIfPresent(
+				_testKey, (key, value) -> _testValue1));
+
+		_assertEventQueue(Event.MAP_KEY_FOR_QUERY);
+
+		Assert.assertNull(_concurrentMap.put(_testKey, _testValue1));
+
+		_assertEventQueue(Event.MAP_KEY, Event.MAP_VALUE);
+
+		Assert.assertSame(
+			_testValue2,
+			_concurrentMap.computeIfPresent(
+				_testKey, (key, value) -> _testValue2));
+
+		_assertEventQueue(
+			Event.MAP_KEY_FOR_QUERY, Event.UNMAP_VALUE, Event.MAP_VALUE,
+			Event.UNMAP_VALUE_FOR_QUERY);
+
+		Assert.assertNull(
+			_concurrentMap.computeIfPresent(_testKey, (key, value) -> null));
+
+		_assertEventQueue(Event.MAP_KEY_FOR_QUERY, Event.UNMAP_VALUE);
+
+		Assert.assertNull(_concurrentMap.get(_testKey));
+
+		_assertEventQueue(Event.MAP_KEY_FOR_QUERY);
 	}
 
 	@Test
@@ -82,7 +225,7 @@ public class ConcurrentMapperHashMapTest {
 
 		_assertEventQueue(Event.MAP_KEY_FOR_QUERY);
 
-		Assert.assertNull(_concurrentMap.put(_testKey, _testValue));
+		Assert.assertNull(_concurrentMap.put(_testKey, _testValue1));
 
 		_assertEventQueue(Event.MAP_KEY, Event.MAP_VALUE);
 
@@ -102,15 +245,15 @@ public class ConcurrentMapperHashMapTest {
 			Assert.assertEquals("Value is null", npe.getMessage());
 		}
 
-		Assert.assertFalse(_concurrentMap.containsValue(_testValue));
+		Assert.assertFalse(_concurrentMap.containsValue(_testValue1));
 
 		_assertEventQueue(Event.MAP_VALUE_FOR_QUERY);
 
-		Assert.assertNull(_concurrentMap.put(_testKey, _testValue));
+		Assert.assertNull(_concurrentMap.put(_testKey, _testValue1));
 
 		_assertEventQueue(Event.MAP_KEY, Event.MAP_VALUE);
 
-		Assert.assertTrue(_concurrentMap.containsValue(_testValue));
+		Assert.assertTrue(_concurrentMap.containsValue(_testValue1));
 
 		_assertEventQueue(Event.MAP_VALUE_FOR_QUERY);
 	}
@@ -125,7 +268,7 @@ public class ConcurrentMapperHashMapTest {
 			entrySet.toString(), entrySet.contains(new Object()));
 		Assert.assertFalse(entrySet.remove(new Object()));
 
-		Assert.assertNull(_concurrentMap.put(_testKey, _testValue));
+		Assert.assertNull(_concurrentMap.put(_testKey, _testValue1));
 
 		_assertEventQueue(Event.MAP_KEY, Event.MAP_VALUE);
 
@@ -133,7 +276,8 @@ public class ConcurrentMapperHashMapTest {
 		Assert.assertTrue(
 			entrySet.toString(),
 			entrySet.contains(
-				new AbstractMap.SimpleEntry<Key, Value>(_testKey, _testValue)));
+				new AbstractMap.SimpleEntry<Key, Value>(
+					_testKey, _testValue1)));
 
 		_assertEventQueue(Event.MAP_KEY_FOR_QUERY, Event.UNMAP_VALUE_FOR_QUERY);
 
@@ -154,13 +298,14 @@ public class ConcurrentMapperHashMapTest {
 
 		Assert.assertTrue(
 			entrySet.remove(
-				new AbstractMap.SimpleEntry<Key, Value>(_testKey, _testValue)));
+				new AbstractMap.SimpleEntry<Key, Value>(
+					_testKey, _testValue1)));
 
 		_assertEventQueue(
 			Event.MAP_KEY_FOR_QUERY, Event.MAP_VALUE_FOR_QUERY,
 			Event.UNMAP_VALUE);
 
-		Assert.assertNull(_concurrentMap.put(_testKey, _testValue));
+		Assert.assertNull(_concurrentMap.put(_testKey, _testValue1));
 
 		_assertEventQueue(Event.MAP_KEY, Event.MAP_VALUE);
 
@@ -175,7 +320,7 @@ public class ConcurrentMapperHashMapTest {
 		Assert.assertNotEquals(
 			entry,
 			new AbstractMap.SimpleEntry<Key, Value>(
-				new Key("someKey"), _testValue));
+				new Key("someKey"), _testValue1));
 
 		_assertEventQueue(Event.UNMAP_KEY_FOR_QUERY);
 
@@ -188,19 +333,19 @@ public class ConcurrentMapperHashMapTest {
 
 		Assert.assertEquals(
 			entry,
-			new AbstractMap.SimpleEntry<Key, Value>(_testKey, _testValue));
+			new AbstractMap.SimpleEntry<Key, Value>(_testKey, _testValue1));
 
 		_assertEventQueue(
 			Event.UNMAP_KEY_FOR_QUERY, Event.UNMAP_VALUE_FOR_QUERY);
 
 		Assert.assertEquals(
-			_testKey.hashCode() ^ _testValue.hashCode(), entry.hashCode());
+			_testKey.hashCode() ^ _testValue1.hashCode(), entry.hashCode());
 		Assert.assertFalse(iterator.hasNext());
 		Assert.assertSame(_testKey, entry.getKey());
 
 		_assertEventQueue(Event.UNMAP_KEY_FOR_QUERY);
 
-		Assert.assertSame(_testValue, entry.getValue());
+		Assert.assertSame(_testValue1, entry.getValue());
 
 		_assertEventQueue(Event.UNMAP_VALUE_FOR_QUERY);
 
@@ -228,7 +373,7 @@ public class ConcurrentMapperHashMapTest {
 
 		_assertEventQueue(Event.UNMAP_KEY_FOR_QUERY, Event.MAP_KEY_FOR_QUERY);
 
-		Assert.assertNull(_concurrentMap.put(_testKey, _testValue));
+		Assert.assertNull(_concurrentMap.put(_testKey, _testValue1));
 
 		_assertEventQueue(Event.MAP_KEY, Event.MAP_VALUE);
 
@@ -254,11 +399,11 @@ public class ConcurrentMapperHashMapTest {
 
 		_assertEventQueue(Event.MAP_KEY_FOR_QUERY);
 
-		Assert.assertNull(_concurrentMap.put(_testKey, _testValue));
+		Assert.assertNull(_concurrentMap.put(_testKey, _testValue1));
 
 		_assertEventQueue(Event.MAP_KEY, Event.MAP_VALUE);
 
-		Assert.assertSame(_testValue, _concurrentMap.get(_testKey));
+		Assert.assertSame(_testValue1, _concurrentMap.get(_testKey));
 
 		_assertEventQueue(Event.MAP_KEY_FOR_QUERY, Event.UNMAP_VALUE_FOR_QUERY);
 	}
@@ -277,7 +422,7 @@ public class ConcurrentMapperHashMapTest {
 
 		_assertEventQueue(Event.MAP_KEY_FOR_QUERY);
 
-		Assert.assertNull(_concurrentMap.put(_testKey, _testValue));
+		Assert.assertNull(_concurrentMap.put(_testKey, _testValue1));
 
 		_assertEventQueue(Event.MAP_KEY, Event.MAP_VALUE);
 
@@ -294,7 +439,7 @@ public class ConcurrentMapperHashMapTest {
 
 		_assertEventQueue(Event.MAP_KEY_FOR_QUERY, Event.UNMAP_VALUE);
 
-		Assert.assertNull(_concurrentMap.put(_testKey, _testValue));
+		Assert.assertNull(_concurrentMap.put(_testKey, _testValue1));
 
 		_assertEventQueue(Event.MAP_KEY, Event.MAP_VALUE);
 
@@ -332,7 +477,7 @@ public class ConcurrentMapperHashMapTest {
 
 		_assertEventQueue(Event.MAP_KEY_FOR_QUERY);
 
-		Assert.assertNull(_concurrentMap.put(_testKey, _testValue));
+		Assert.assertNull(_concurrentMap.put(_testKey, _testValue1));
 
 		_assertEventQueue(Event.MAP_KEY, Event.MAP_VALUE);
 
@@ -363,17 +508,18 @@ public class ConcurrentMapperHashMapTest {
 			Assert.assertEquals("Value is null", npe.getMessage());
 		}
 
-		Assert.assertNull(_concurrentMap.put(_testKey, _testValue));
+		Assert.assertNull(_concurrentMap.put(_testKey, _testValue1));
 
 		_assertEventQueue(Event.MAP_KEY, Event.MAP_VALUE);
 
-		Assert.assertSame(_testValue, _concurrentMap.put(_testKey, _testValue));
+		Assert.assertSame(
+			_testValue1, _concurrentMap.put(_testKey, _testValue1));
 
 		_assertEventQueue(
 			Event.MAP_KEY, Event.MAP_VALUE, Event.UNMAP_KEY, Event.UNMAP_VALUE);
 
 		Assert.assertSame(
-			_testValue, _concurrentMap.put(_testKey, _testValue2));
+			_testValue1, _concurrentMap.put(_testKey, _testValue2));
 
 		_assertEventQueue(
 			Event.MAP_KEY, Event.MAP_VALUE, Event.UNMAP_KEY, Event.UNMAP_VALUE);
@@ -418,32 +564,32 @@ public class ConcurrentMapperHashMapTest {
 			Assert.assertEquals("Value is null", npe.getMessage());
 		}
 
-		Assert.assertNull(_concurrentMap.putIfAbsent(_testKey, _testValue));
+		Assert.assertNull(_concurrentMap.putIfAbsent(_testKey, _testValue1));
 
 		_assertEventQueue(Event.MAP_KEY, Event.MAP_VALUE);
 
 		Assert.assertSame(
-			_testValue, _concurrentMap.putIfAbsent(_testKey, _testValue));
+			_testValue1, _concurrentMap.putIfAbsent(_testKey, _testValue1));
 
 		_assertEventQueue(
 			Event.MAP_KEY, Event.MAP_VALUE, Event.UNMAP_KEY, Event.UNMAP_VALUE,
 			Event.UNMAP_VALUE_FOR_QUERY);
 
 		Assert.assertSame(
-			_testValue, _concurrentMap.putIfAbsent(_testKey, _testValue2));
+			_testValue1, _concurrentMap.putIfAbsent(_testKey, _testValue2));
 
 		_assertEventQueue(
 			Event.MAP_KEY, Event.MAP_VALUE, Event.UNMAP_KEY, Event.UNMAP_VALUE,
 			Event.UNMAP_VALUE_FOR_QUERY);
 
 		Assert.assertSame(
-			_testValue, _concurrentMap.putIfAbsent(_testKey, _testValue2));
+			_testValue1, _concurrentMap.putIfAbsent(_testKey, _testValue2));
 
 		_assertEventQueue(
 			Event.MAP_KEY, Event.MAP_VALUE, Event.UNMAP_KEY, Event.UNMAP_VALUE,
 			Event.UNMAP_VALUE_FOR_QUERY);
 
-		Assert.assertSame(_testValue, _concurrentMap.get(_testKey));
+		Assert.assertSame(_testValue1, _concurrentMap.get(_testKey));
 
 		_assertEventQueue(Event.MAP_KEY_FOR_QUERY, Event.UNMAP_VALUE_FOR_QUERY);
 	}
@@ -463,11 +609,11 @@ public class ConcurrentMapperHashMapTest {
 
 		_assertEventQueue(Event.MAP_KEY_FOR_QUERY);
 
-		Assert.assertNull(_concurrentMap.put(_testKey, _testValue));
+		Assert.assertNull(_concurrentMap.put(_testKey, _testValue1));
 
 		_assertEventQueue(Event.MAP_KEY, Event.MAP_VALUE);
 
-		Assert.assertSame(_testValue, _concurrentMap.remove(_testKey));
+		Assert.assertSame(_testValue1, _concurrentMap.remove(_testKey));
 
 		_assertEventQueue(Event.MAP_KEY_FOR_QUERY, Event.UNMAP_VALUE);
 
@@ -500,11 +646,11 @@ public class ConcurrentMapperHashMapTest {
 			Assert.assertEquals("Value is null", npe.getMessage());
 		}
 
-		Assert.assertFalse(_concurrentMap.remove(_testKey, _testValue));
+		Assert.assertFalse(_concurrentMap.remove(_testKey, _testValue1));
 
 		_assertEventQueue(Event.MAP_KEY_FOR_QUERY, Event.MAP_VALUE_FOR_QUERY);
 
-		Assert.assertNull(_concurrentMap.put(_testKey, _testValue));
+		Assert.assertNull(_concurrentMap.put(_testKey, _testValue1));
 
 		_assertEventQueue(Event.MAP_KEY, Event.MAP_VALUE);
 
@@ -512,13 +658,13 @@ public class ConcurrentMapperHashMapTest {
 
 		_assertEventQueue(Event.MAP_KEY_FOR_QUERY, Event.MAP_VALUE_FOR_QUERY);
 
-		Assert.assertTrue(_concurrentMap.remove(_testKey, _testValue));
+		Assert.assertTrue(_concurrentMap.remove(_testKey, _testValue1));
 
 		_assertEventQueue(
 			Event.MAP_KEY_FOR_QUERY, Event.MAP_VALUE_FOR_QUERY,
 			Event.UNMAP_VALUE);
 
-		Assert.assertFalse(_concurrentMap.remove(_testKey, _testValue));
+		Assert.assertFalse(_concurrentMap.remove(_testKey, _testValue1));
 
 		_assertEventQueue(Event.MAP_KEY_FOR_QUERY, Event.MAP_VALUE_FOR_QUERY);
 
@@ -550,11 +696,11 @@ public class ConcurrentMapperHashMapTest {
 
 				});
 
-		Assert.assertNull(concurrentMap.put(_testKey, _testValue));
+		Assert.assertNull(concurrentMap.put(_testKey, _testValue1));
 
 		_assertEventQueue(Event.MAP_KEY, Event.MAP_VALUE);
 
-		Assert.assertFalse(concurrentMap.remove(_testKey, _testValue));
+		Assert.assertFalse(concurrentMap.remove(_testKey, _testValue1));
 
 		_assertEventQueue(Event.MAP_KEY_FOR_QUERY, Event.MAP_VALUE_FOR_QUERY);
 	}
@@ -579,17 +725,17 @@ public class ConcurrentMapperHashMapTest {
 			Assert.assertEquals("Value is null", npe.getMessage());
 		}
 
-		Assert.assertNull(_concurrentMap.replace(_testKey, _testValue));
+		Assert.assertNull(_concurrentMap.replace(_testKey, _testValue1));
 
 		_assertEventQueue(
 			Event.MAP_VALUE, Event.MAP_KEY_FOR_QUERY, Event.UNMAP_VALUE);
 
-		Assert.assertNull(_concurrentMap.put(_testKey, _testValue));
+		Assert.assertNull(_concurrentMap.put(_testKey, _testValue1));
 
 		_assertEventQueue(Event.MAP_KEY, Event.MAP_VALUE);
 
 		Assert.assertSame(
-			_testValue, _concurrentMap.replace(_testKey, _testValue2));
+			_testValue1, _concurrentMap.replace(_testKey, _testValue2));
 
 		_assertEventQueue(
 			Event.MAP_VALUE, Event.MAP_KEY_FOR_QUERY, Event.UNMAP_VALUE);
@@ -620,7 +766,7 @@ public class ConcurrentMapperHashMapTest {
 		}
 
 		try {
-			_concurrentMap.replace(_testKey, _testValue, null);
+			_concurrentMap.replace(_testKey, _testValue1, null);
 
 			Assert.fail();
 		}
@@ -629,17 +775,17 @@ public class ConcurrentMapperHashMapTest {
 		}
 
 		Assert.assertFalse(
-			_concurrentMap.replace(_testKey, _testValue, _testValue2));
+			_concurrentMap.replace(_testKey, _testValue1, _testValue2));
 
 		_assertEventQueue(
 			Event.MAP_KEY_FOR_QUERY, Event.MAP_VALUE, Event.UNMAP_VALUE);
 
-		Assert.assertNull(_concurrentMap.put(_testKey, _testValue));
+		Assert.assertNull(_concurrentMap.put(_testKey, _testValue1));
 
 		_assertEventQueue(Event.MAP_KEY, Event.MAP_VALUE);
 
 		Assert.assertTrue(
-			_concurrentMap.replace(_testKey, _testValue, _testValue2));
+			_concurrentMap.replace(_testKey, _testValue1, _testValue2));
 
 		_assertEventQueue(
 			Event.MAP_KEY_FOR_QUERY, Event.MAP_VALUE,
@@ -650,7 +796,7 @@ public class ConcurrentMapperHashMapTest {
 		_assertEventQueue(Event.MAP_KEY_FOR_QUERY, Event.UNMAP_VALUE_FOR_QUERY);
 
 		Assert.assertFalse(
-			_concurrentMap.replace(_testKey, _testValue, _testValue2));
+			_concurrentMap.replace(_testKey, _testValue1, _testValue2));
 
 		_assertEventQueue(
 			Event.MAP_KEY_FOR_QUERY, Event.MAP_VALUE,
@@ -680,12 +826,12 @@ public class ConcurrentMapperHashMapTest {
 
 				});
 
-		Assert.assertNull(concurrentMap.put(_testKey, _testValue));
+		Assert.assertNull(concurrentMap.put(_testKey, _testValue1));
 
 		_assertEventQueue(Event.MAP_KEY, Event.MAP_VALUE);
 
 		Assert.assertFalse(
-			concurrentMap.replace(_testKey, _testValue, _testValue2));
+			concurrentMap.replace(_testKey, _testValue1, _testValue2));
 
 		_assertEventQueue(
 			Event.MAP_KEY_FOR_QUERY, Event.MAP_VALUE,
@@ -726,7 +872,7 @@ public class ConcurrentMapperHashMapTest {
 		_assertEventQueue(Event.MAP_VALUE_FOR_QUERY);
 
 		Assert.assertFalse(values.remove(new Value("")));
-		Assert.assertNull(_concurrentMap.put(_testKey, _testValue));
+		Assert.assertNull(_concurrentMap.put(_testKey, _testValue1));
 
 		_assertEventQueue(Event.MAP_KEY, Event.MAP_VALUE);
 
@@ -735,7 +881,7 @@ public class ConcurrentMapperHashMapTest {
 		_assertEventQueue(Event.UNMAP_VALUE_FOR_QUERY);
 
 		Assert.assertEquals(valuesString, 1, values.size());
-		Assert.assertTrue(valuesString, values.contains(_testValue));
+		Assert.assertTrue(valuesString, values.contains(_testValue1));
 
 		_assertEventQueue(Event.MAP_VALUE_FOR_QUERY);
 
@@ -747,11 +893,11 @@ public class ConcurrentMapperHashMapTest {
 
 		_assertEventQueue(Event.UNMAP_VALUE_FOR_QUERY);
 
-		Assert.assertTrue(values.remove(_testValue));
+		Assert.assertTrue(values.remove(_testValue1));
 
 		_assertEventQueue(Event.UNMAP_VALUE_FOR_QUERY);
 
-		Assert.assertNull(_concurrentMap.put(_testKey, _testValue));
+		Assert.assertNull(_concurrentMap.put(_testKey, _testValue1));
 
 		_assertEventQueue(Event.MAP_KEY, Event.MAP_VALUE);
 
@@ -767,7 +913,7 @@ public class ConcurrentMapperHashMapTest {
 
 		_assertEventQueue(Event.UNMAP_VALUE_FOR_QUERY);
 
-		Assert.assertSame(_testValue, value);
+		Assert.assertSame(_testValue1, value);
 		Assert.assertFalse(iterator.hasNext());
 		Assert.assertTrue(valuesString, values.contains(value));
 
@@ -780,7 +926,7 @@ public class ConcurrentMapperHashMapTest {
 
 		_assertEventQueue(Event.MAP_VALUE_FOR_QUERY);
 
-		Assert.assertNull(_concurrentMap.put(_testKey, _testValue));
+		Assert.assertNull(_concurrentMap.put(_testKey, _testValue1));
 
 		_assertEventQueue(Event.MAP_KEY, Event.MAP_VALUE);
 
@@ -922,7 +1068,7 @@ public class ConcurrentMapperHashMapTest {
 	protected Map<Key, Value> createDataMap() {
 		Map<Key, Value> map = new HashMap<>();
 
-		map.put(_testKey, _testValue);
+		map.put(new Key("testKey1"), _testValue1);
 		map.put(new Key("testKey2"), _testValue2);
 		map.put(new Key("testKey3"), new Value("testValue3"));
 
@@ -942,7 +1088,7 @@ public class ConcurrentMapperHashMapTest {
 	private final ConcurrentMap<Key, Value> _concurrentMap =
 		new ConcurrentTypeReferenceHashMap();
 	private final Key _testKey = new Key("testKey");
-	private final Value _testValue = new Value("testValue");
+	private final Value _testValue1 = new Value("testValue1");
 	private final Value _testValue2 = new Value("testValue2");
 
 	private static class ConcurrentTypeReferenceHashMap

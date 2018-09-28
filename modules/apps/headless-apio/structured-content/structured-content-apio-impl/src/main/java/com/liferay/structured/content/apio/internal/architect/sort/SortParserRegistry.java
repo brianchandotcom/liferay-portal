@@ -102,7 +102,7 @@ public class SortParserRegistry {
 
 			_bundleContext.ungetService(serviceReference);
 
-			_bundleContext.ungetService(serviceRegistration.getReference());
+			serviceRegistration.unregister();
 		}
 
 		private EntityModelTrackerCustomizer(BundleContext bundleContext) {

@@ -15,14 +15,9 @@
 package com.liferay.announcements.web.internal.upgrade.v1_1_0;
 
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
-import com.liferay.portal.kernel.model.PortletConstants;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.PortletKeys;
-
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 
 /**
  * @author Roberto Díaz
@@ -31,35 +26,12 @@ public class UpgradePortletPreferences extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		try (LoggingTimer loggingTimer = new LoggingTimer();
-			PreparedStatement ps1 = connection.prepareStatement(
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+			runSQL(
 				StringBundler.concat(
-					"select portletPreferencesId, preferences from ",
-					"PortletPreferences where portletId = '", _PORTLET_ID, "' ",
-					"AND ownerType = ", PortletKeys.PREFS_OWNER_TYPE_COMPANY,
-					";"));
-			PreparedStatement ps2 = AutoBatchPreparedStatementUtil.autoBatch(
-				connection.prepareStatement(
-					"update PortletPreferences set preferences = ? where " +
-						"portletPreferencesId = ?"));
-			ResultSet rs1 = ps1.executeQuery()) {
-
-			while (rs1.next()) {
-				String preferences = rs1.getString("preferences");
-
-				if (preferences.equals(PortletConstants.DEFAULT_PREFERENCES)) {
-					continue;
-				}
-
-				long portletPreferencesId = rs1.getLong("portletPreferencesId");
-
-				ps2.setString(1, PortletConstants.DEFAULT_PREFERENCES);
-				ps2.setLong(2, portletPreferencesId);
-
-				ps2.addBatch();
-			}
-
-			ps2.executeBatch();
+					"delete from PortletPreferences where portletId = '",
+					_PORTLET_ID, "' AND ownerType = ",
+					PortletKeys.PREFS_OWNER_TYPE_COMPANY));
 		}
 	}
 

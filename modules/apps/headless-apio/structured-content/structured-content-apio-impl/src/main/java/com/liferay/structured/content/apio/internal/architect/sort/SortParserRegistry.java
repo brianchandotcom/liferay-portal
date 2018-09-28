@@ -40,11 +40,9 @@ public class SortParserRegistry {
 
 	@Activate
 	public void activate(BundleContext bundleContext) {
-		_bundleContext = bundleContext;
-
 		_serviceTracker = ServiceTrackerFactory.open(
 			bundleContext, EntityModel.class,
-			new EntityModelTrackerCustomizer(_bundleContext));
+			new EntityModelTrackerCustomizer(bundleContext));
 	}
 
 	@Deactivate
@@ -52,17 +50,12 @@ public class SortParserRegistry {
 		_serviceTracker.close();
 	}
 
-	private BundleContext _bundleContext;
 	private ServiceTracker
 		<EntityModel, ServiceRegistration<SortParser>> _serviceTracker;
 
-	private class EntityModelTrackerCustomizer
+	private static class EntityModelTrackerCustomizer
 		implements ServiceTrackerCustomizer
 			<EntityModel, ServiceRegistration<SortParser>> {
-
-		public EntityModelTrackerCustomizer(BundleContext bundleContext) {
-			_bundleContext = bundleContext;
-		}
 
 		@Override
 		public ServiceRegistration<SortParser> addingService(
@@ -112,7 +105,11 @@ public class SortParserRegistry {
 			_bundleContext.ungetService(serviceRegistration.getReference());
 		}
 
-		private BundleContext _bundleContext;
+		private EntityModelTrackerCustomizer(BundleContext bundleContext) {
+			_bundleContext = bundleContext;
+		}
+
+		private final BundleContext _bundleContext;
 
 	}
 

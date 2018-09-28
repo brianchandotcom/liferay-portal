@@ -141,7 +141,6 @@ class Sidebar extends Component {
 	 * @return {string|boolean} The name of the transitionend event or false
 	 * if not supported
 	 */
-
 	_getTransitionEndEvent() {
 		const el = document.createElement('metalClayTransitionEnd');
 
@@ -163,6 +162,34 @@ class Sidebar extends Component {
 		}
 
 		return eventName;
+	}
+
+	_checkSettingsActionsVisibility(target) {
+		const {fieldSettingsActions} = this.refs;
+		let dropdownPortal;
+
+		if (fieldSettingsActions) {
+			const {dropdown} = fieldSettingsActions.refs;
+			const {portal} = dropdown.refs;
+
+			dropdownPortal = portal.element.contains(target);
+		}
+
+		return dropdownPortal;
+	}
+
+	_deleteField(indexes) {
+		this.emit(
+			'fieldDeleted',
+			indexes
+		);
+	}
+
+	_duplicateField(indexes) {
+		this.emit(
+			'fieldDuplicated',
+			indexes
+		);
 	}
 
 	_openValueFn() {
@@ -245,6 +272,28 @@ class Sidebar extends Component {
 				target: indexes
 			}
 		);
+	}
+
+	/**
+	 * Handle click on the field settings dropdown
+	 * @protected
+	 */
+	@autobind
+	_handleFieldSettingsClicked({data: {item}}) {
+		const {columnIndex, pageIndex, rowIndex} = this.props.focusedField;
+		const {settingsItem} = item;
+		const indexes = {
+			columnIndex,
+			pageIndex,
+			rowIndex
+		};
+
+		if (settingsItem === 'duplicate-field') {
+			this._duplicateField(indexes);
+		}
+		else if (settingsItem === 'delete-field') {
+			this._deleteField(indexes);
+		}
 	}
 
 	/**
@@ -585,6 +634,16 @@ class Sidebar extends Component {
 	_renderTopBar() {
 		const {fieldTypes, focusedField, spritemap} = this.props;
 		const editMode = this._isEditMode();
+		const fieldActions = [
+			{
+				label: Liferay.Language.get('duplicate-field'),
+				settingsItem: 'duplicate-field'
+			},
+			{
+				label: Liferay.Language.get('remove-field'),
+				settingsItem: 'delete-field'
+			}
+		];
 		const focusedFieldType = fieldTypes.find(({name}) => name === focusedField.type);
 		const previousButtonEvents = {
 			click: this._handlePreviousButtonClicked.bind(this)
@@ -625,6 +684,17 @@ class Sidebar extends Component {
 									style="secondary"
 								/>
 							</div>
+						</li>
+						<li class="tbar-item">
+							<ClayActionsDropdown
+								events={{
+									itemClicked: this._handleFieldSettingsClicked
+								}}
+								items={fieldActions}
+								ref="fieldSettingsActions"
+								spritemap={spritemap}
+								triggerClasses={'component-action'}
+							/>
 						</li>
 					</Fragment>
 				)}

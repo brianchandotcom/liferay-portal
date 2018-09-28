@@ -60,6 +60,8 @@ public interface BeanPortlet {
 
 	public Map<String, Preference> getPreferences();
 
+	public String getPreferencesValidator();
+
 	public String getResourceBundle();
 
 	public Map<String, String> getSecurityRoleRefs();

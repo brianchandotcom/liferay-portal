@@ -23,6 +23,7 @@ import com.liferay.bean.portlet.cdi.extension.internal.PortletDependency;
 import com.liferay.bean.portlet.cdi.extension.internal.Preference;
 import com.liferay.bean.portlet.cdi.extension.internal.PublicRenderParameter;
 import com.liferay.bean.portlet.cdi.extension.internal.URLGenerationListener;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
@@ -64,12 +65,13 @@ import javax.portlet.WindowState;
 public class PortletDescriptorParser {
 
 	public static PortletDescriptor parse(
-			URL portletDescriptorURL,
-			Map<String, String> displayDescriptorCategories,
-			Map<String, Map<String, String>> liferayConfigurations,
-			BeanManager beanManager,
+			URL portletDescriptorURL, BeanManager beanManager,
 			Map<String, Set<BeanMethod>> portletBeanMethods,
-			Set<BeanMethod> wildcardBeanMethods)
+			Set<BeanMethod> wildcardBeanMethods,
+			Map<String, String> preferencesValidators,
+			Set<String> wildcardPreferencesValidators,
+			Map<String, String> displayDescriptorCategories,
+			Map<String, Map<String, String>> liferayConfigurations)
 		throws DocumentException, IOException {
 
 		String xml = HttpUtil.URLtoString(portletDescriptorURL);
@@ -85,7 +87,8 @@ public class PortletDescriptorParser {
 
 		List<BeanPortlet> beanPortlets = _readBeanPortlets(
 			rootElement, beanApp, beanManager, portletBeanMethods,
-			wildcardBeanMethods, displayDescriptorCategories,
+			wildcardBeanMethods, preferencesValidators,
+			wildcardPreferencesValidators, displayDescriptorCategories,
 			liferayConfigurations);
 
 		return new PortletDescriptor(beanApp, beanFilters, beanPortlets);
@@ -291,6 +294,8 @@ public class PortletDescriptorParser {
 		Element portletElement, BeanApp beanApp, BeanManager beanManager,
 		Map<String, Set<BeanMethod>> portletBeanMethods,
 		Set<BeanMethod> wildcardBeanMethods,
+		Map<String, String> preferencesValidators,
+		Set<String> wildcardPreferencesValidators,
 		Map<String, String> displayDescriptorCategories,
 		Map<String, Map<String, String>> liferayConfigurations) {
 
@@ -441,6 +446,8 @@ public class PortletDescriptorParser {
 		Element portletPreferencesElement = portletElement.element(
 			"portlet-preferences");
 
+		String preferencesValidator = null;
+
 		if (portletPreferencesElement != null) {
 			for (Element preferenceElement :
 					portletPreferencesElement.elements("preference")) {
@@ -464,6 +471,29 @@ public class PortletDescriptorParser {
 						values,
 						GetterUtil.getBoolean(
 							preferenceElement.elementText("read-only"))));
+			}
+
+			preferencesValidator = portletPreferencesElement.elementText(
+				"preferences-validator");
+		}
+
+		if (preferencesValidator == null) {
+			preferencesValidator = preferencesValidators.get(portletName);
+
+			for (String wildcardPreferencesValidator :
+					wildcardPreferencesValidators) {
+
+				if (preferencesValidator == null) {
+					preferencesValidator = wildcardPreferencesValidator;
+				}
+				else {
+					_log.error(
+						StringBundler.concat(
+							"Unable to associate @PortletPreferencesValidator ",
+							wildcardPreferencesValidator, " to portletName \"",
+							portletName, "\" since is already associated with ",
+							preferencesValidator));
+				}
 			}
 		}
 
@@ -631,11 +661,12 @@ public class PortletDescriptorParser {
 			portletClassName, initParams, expirationCache,
 			supportedPortletModes, supportedWindowStates, supportedLocales,
 			resourceBundle, titles, shortTitles, keywords, descriptions,
-			preferences, securityRoleRefs, supportedProcessingEvents,
-			supportedPublishingEvents, supportedPublicRenderParameters,
-			containerRuntimeOptions, portletDependencies, asyncSupported,
-			multiPartSupported, multiPartFileSizeThreshold, multiPartLocation,
-			multiPartMaxFileSize, multiPartMaxRequestSize,
+			preferences, preferencesValidator, securityRoleRefs,
+			supportedProcessingEvents, supportedPublishingEvents,
+			supportedPublicRenderParameters, containerRuntimeOptions,
+			portletDependencies, asyncSupported, multiPartSupported,
+			multiPartFileSizeThreshold, multiPartLocation, multiPartMaxFileSize,
+			multiPartMaxRequestSize,
 			displayDescriptorCategories.get(portletName),
 			liferayConfigurations.get(portletName));
 	}
@@ -644,6 +675,8 @@ public class PortletDescriptorParser {
 		Element rootElement, BeanApp beanApp, BeanManager beanManager,
 		Map<String, Set<BeanMethod>> portletBeanMethods,
 		Set<BeanMethod> wildcardBeanMethods,
+		Map<String, String> preferencesValidators,
+		Set<String> wildcardPreferencesValidators,
 		Map<String, String> displayDescriptorCategories,
 		Map<String, Map<String, String>> liferayConfigurations) {
 
@@ -653,7 +686,8 @@ public class PortletDescriptorParser {
 			beanPortlets.add(
 				_readBeanPortlet(
 					portletElement, beanApp, beanManager, portletBeanMethods,
-					wildcardBeanMethods, displayDescriptorCategories,
+					wildcardBeanMethods, preferencesValidators,
+					wildcardPreferencesValidators, displayDescriptorCategories,
 					liferayConfigurations));
 		}
 

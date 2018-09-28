@@ -394,6 +394,15 @@ public abstract class BaseBeanPortletImpl implements BeanPortlet {
 		dictionary.put(
 			"javax.portlet.preferences", portletPreferencesSB.toString());
 
+		// javax.portlet.preferences-validator
+
+		String preferencesValidator = getPreferencesValidator();
+
+		if (preferencesValidator != null) {
+			dictionary.put(
+				"javax.portlet.preferences-validator", preferencesValidator);
+		}
+
 		// javax.portlet.resource-bundle
 
 		if (Validator.isNotNull(getResourceBundle())) {

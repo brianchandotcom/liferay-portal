@@ -194,6 +194,15 @@ public class BeanPortletMergedImpl extends BaseBeanPortletImpl {
 
 		_preferences.putAll(descriptorBeanPortlet.getPreferences());
 
+		if (Validator.isNull(descriptorBeanPortlet.getPreferencesValidator())) {
+			_preferencesValidator =
+				annotatedBeanPortlet.getPreferencesValidator();
+		}
+		else {
+			_preferencesValidator =
+				descriptorBeanPortlet.getPreferencesValidator();
+		}
+
 		if (Validator.isNull(descriptorBeanPortlet.getResourceBundle())) {
 			_resourceBundle = annotatedBeanPortlet.getResourceBundle();
 		}
@@ -331,6 +340,11 @@ public class BeanPortletMergedImpl extends BaseBeanPortletImpl {
 	}
 
 	@Override
+	public String getPreferencesValidator() {
+		return _preferencesValidator;
+	}
+
+	@Override
 	public String getResourceBundle() {
 		return _resourceBundle;
 	}
@@ -429,6 +443,7 @@ public class BeanPortletMergedImpl extends BaseBeanPortletImpl {
 	private final Set<PortletDependency> _portletDependencies;
 	private final String _portletName;
 	private final Map<String, Preference> _preferences;
+	private final String _preferencesValidator;
 	private final String _resourceBundle;
 	private final Map<String, String> _securityRoleRefs;
 	private final Map<String, String> _shortTitles;

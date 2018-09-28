@@ -40,7 +40,7 @@ public class BeanPortletDescriptorImpl extends BaseBeanPortletImpl {
 		Set<String> supportedLocales, String resourceBundle,
 		Map<String, String> titles, Map<String, String> shortTitles,
 		Map<String, String> keywords, Map<String, String> descriptions,
-		Map<String, Preference> preferences,
+		Map<String, Preference> preferences, String preferencesValidator,
 		Map<String, String> securityRoleRefs,
 		Set<QName> supportedProcessingEvents,
 		Set<QName> supportedPublishingEvents,
@@ -68,6 +68,7 @@ public class BeanPortletDescriptorImpl extends BaseBeanPortletImpl {
 		_keywords = keywords;
 		_descriptions = descriptions;
 		_preferences = preferences;
+		_preferencesValidator = preferencesValidator;
 		_securityRoleRefs = securityRoleRefs;
 
 		_supportedProcessingEvents = new LinkedHashSet<>(
@@ -174,6 +175,11 @@ public class BeanPortletDescriptorImpl extends BaseBeanPortletImpl {
 	}
 
 	@Override
+	public String getPreferencesValidator() {
+		return _preferencesValidator;
+	}
+
+	@Override
 	public String getResourceBundle() {
 		return _resourceBundle;
 	}
@@ -251,6 +257,7 @@ public class BeanPortletDescriptorImpl extends BaseBeanPortletImpl {
 	private final Set<PortletDependency> _portletDependencies;
 	private final String _portletName;
 	private final Map<String, Preference> _preferences;
+	private final String _preferencesValidator;
 	private final String _resourceBundle;
 	private final Map<String, String> _securityRoleRefs;
 	private final Map<String, String> _shortTitles;

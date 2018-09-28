@@ -46,9 +46,9 @@ import javax.portlet.annotations.Supports;
 public class BeanPortletAnnotationImpl extends BaseBeanPortletImpl {
 
 	public BeanPortletAnnotationImpl(
-		String portletClassName, Set<BeanMethod> beanMethods,
-		Set<BeanMethod> wildcardBeanMethods,
-		PortletConfiguration portletConfiguration,
+		Set<BeanMethod> beanMethods, Set<BeanMethod> wildcardBeanMethods,
+		String portletClassName, PortletConfiguration portletConfiguration,
+		String preferencesValidator,
 		LiferayPortletConfiguration liferayPortletConfiguration,
 		Map<String, String> descriptorLiferayConfiguration,
 		String descriptorDisplayCategory) {
@@ -57,6 +57,7 @@ public class BeanPortletAnnotationImpl extends BaseBeanPortletImpl {
 
 		_portletClassName = portletClassName;
 		_portletConfiguration = portletConfiguration;
+		_preferencesValidator = preferencesValidator;
 
 		String displayCategory = descriptorDisplayCategory;
 
@@ -295,6 +296,11 @@ public class BeanPortletAnnotationImpl extends BaseBeanPortletImpl {
 	}
 
 	@Override
+	public String getPreferencesValidator() {
+		return _preferencesValidator;
+	}
+
+	@Override
 	public String getResourceBundle() {
 		return _portletConfiguration.resourceBundle();
 	}
@@ -360,6 +366,7 @@ public class BeanPortletAnnotationImpl extends BaseBeanPortletImpl {
 	private final PortletConfiguration _portletConfiguration;
 	private final Set<PortletDependency> _portletDependencies;
 	private final Map<String, Preference> _preferences;
+	private final String _preferencesValidator;
 	private final Map<String, String> _securityRoleRefs;
 	private final Map<String, String> _shortTitles;
 	private final Set<String> _supportedLocales;

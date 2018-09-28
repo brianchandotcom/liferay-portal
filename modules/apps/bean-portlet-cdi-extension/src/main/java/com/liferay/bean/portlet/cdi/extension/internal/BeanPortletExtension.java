@@ -88,6 +88,7 @@ import javax.portlet.annotations.PortletConfigurations;
 import javax.portlet.annotations.PortletLifecycleFilter;
 import javax.portlet.annotations.PortletListener;
 import javax.portlet.annotations.PortletName;
+import javax.portlet.annotations.PortletPreferencesValidator;
 import javax.portlet.annotations.PortletRequestScoped;
 import javax.portlet.annotations.PortletSerializable;
 import javax.portlet.annotations.PortletSessionScoped;
@@ -246,6 +247,10 @@ public class BeanPortletExtension implements Extension {
 			_portletListenerClasses.add(annotatedClass);
 		}
 
+		if (annotationClasses.contains(PortletPreferencesValidator.class)) {
+			_preferencesValidatorClasses.add(annotatedClass);
+		}
+
 		if (annotationClasses.contains(LiferayPortletConfigurations.class)) {
 			_liferayPortletConfigurationsClasses.add(annotatedClass);
 		}
@@ -349,17 +354,25 @@ public class BeanPortletExtension implements Extension {
 		Set<BeanMethod> wildcardBeanMethods = _collectWildcardBeanMethods(
 			beanManager);
 
+		Map<String, String> preferencesValidators =
+			_collectPreferencesValidators();
+
+		Set<String> wildcardPreferencesValidators =
+			_collectWildcardPreferencesValidators();
+
 		_addBeanPortletsAndFiltersFromPortletDescriptor(
 			bundle, beanManager, portletBeanMethods, wildcardBeanMethods,
+			preferencesValidators, wildcardPreferencesValidators,
 			descriptorDisplayCategories, descriptorLiferayConfigurations);
 
 		_addBeanFiltersFromAnnotatedClasses();
 
 		List<URLGenerationListener> urlGenerationListeners =
-			_getListenersFromAnnotatedClasses();
+			_collectURLGenerationListeners();
 
 		_addBeanPortletsFromAnnotatedClasses(
 			beanManager, portletBeanMethods, wildcardBeanMethods,
+			preferencesValidators, wildcardPreferencesValidators,
 			descriptorDisplayCategories, descriptorLiferayConfigurations,
 			urlGenerationListeners);
 
@@ -563,6 +576,8 @@ public class BeanPortletExtension implements Extension {
 		Class<?> beanPortletClass, Set<BeanMethod> beanMethods,
 		Set<BeanMethod> wildcardBeanMethods,
 		PortletConfiguration portletConfiguration,
+		Map<String, String> preferencesValidators,
+		Set<String> wildcardPreferencesValidators,
 		Map<String, String> descriptorDisplayCategories,
 		Map<String, Map<String, String>> descriptorLiferayConfigurations,
 		List<URLGenerationListener> urlGenerationListeners) {
@@ -598,9 +613,29 @@ public class BeanPortletExtension implements Extension {
 			_beanApp = new BeanAppMergedImpl(annotatedBeanApp, _beanApp);
 		}
 
+		String preferencesValidator = preferencesValidators.get(
+			configuredPortletName);
+
+		for (String wildcardPreferencesValidator :
+				wildcardPreferencesValidators) {
+
+			if (preferencesValidator == null) {
+				preferencesValidator = wildcardPreferencesValidator;
+			}
+			else {
+				_log.error(
+					StringBundler.concat(
+						"Unable to associate @PortletPreferencesValidator ",
+						wildcardPreferencesValidator, " to portletName \"",
+						configuredPortletName,
+						"\" since is already associated with ",
+						preferencesValidator));
+			}
+		}
+
 		BeanPortlet annotatedBeanPortlet = new BeanPortletAnnotationImpl(
-			beanPortletClass.getName(), beanMethods, wildcardBeanMethods,
-			portletConfiguration,
+			beanMethods, wildcardBeanMethods, beanPortletClass.getName(),
+			portletConfiguration, preferencesValidator,
 			_getAnnotatedLiferayConfiguration(configuredPortletName),
 			descriptorLiferayConfigurations.get(configuredPortletName),
 			descriptorDisplayCategories.get(configuredPortletName));
@@ -623,6 +658,8 @@ public class BeanPortletExtension implements Extension {
 		Bundle bundle, BeanManager beanManager,
 		Map<String, Set<BeanMethod>> portletBeanMethods,
 		Set<BeanMethod> wildcardBeanMethods,
+		Map<String, String> preferencesValidators,
+		Set<String> wildcardPreferencesValidators,
 		Map<String, String> descriptorDisplayCategories,
 		Map<String, Map<String, String>> descriptorLiferayConfigurations) {
 
@@ -632,9 +669,11 @@ public class BeanPortletExtension implements Extension {
 			try {
 				PortletDescriptor portletDescriptor =
 					PortletDescriptorParser.parse(
-						portletDescriptorURL, descriptorDisplayCategories,
-						descriptorLiferayConfigurations, beanManager,
-						portletBeanMethods, wildcardBeanMethods);
+						portletDescriptorURL, beanManager, portletBeanMethods,
+						wildcardBeanMethods, preferencesValidators,
+						wildcardPreferencesValidators,
+						descriptorDisplayCategories,
+						descriptorLiferayConfigurations);
 
 				_beanApp = portletDescriptor.getBeanApp();
 
@@ -661,6 +700,8 @@ public class BeanPortletExtension implements Extension {
 		BeanManager beanManager,
 		Map<String, Set<BeanMethod>> portletBeanMethods,
 		Set<BeanMethod> wildcardBeanMethods,
+		Map<String, String> preferencesValidators,
+		Set<String> wildcardPreferencesValidators,
 		Map<String, String> descriptorDisplayCategories,
 		Map<String, Map<String, String>> descriptorLiferayConfigurations,
 		List<URLGenerationListener> urlGenerationListeners) {
@@ -688,7 +729,8 @@ public class BeanPortletExtension implements Extension {
 
 				_addBeanPortlet(
 					clazz, beanMethods, wildcardBeanMethods,
-					portletConfiguration, descriptorDisplayCategories,
+					portletConfiguration, preferencesValidators,
+					wildcardPreferencesValidators, descriptorDisplayCategories,
 					descriptorLiferayConfigurations, urlGenerationListeners);
 			}
 		}
@@ -713,6 +755,7 @@ public class BeanPortletExtension implements Extension {
 
 			_addBeanPortlet(
 				clazz, beanMethods, wildcardBeanMethods, portletConfiguration,
+				preferencesValidators, wildcardPreferencesValidators,
 				descriptorDisplayCategories, descriptorLiferayConfigurations,
 				urlGenerationListeners);
 		}
@@ -774,23 +817,73 @@ public class BeanPortletExtension implements Extension {
 				beanManager, scannedMethod.getMethodType(), clazz, method,
 				ordinal);
 
-			if (portletNames != null) {
-				for (String portletName : portletNames) {
-					Set<BeanMethod> beanMethods = portletBeanMethods.get(
-						portletName);
+			for (String portletName : portletNames) {
+				Set<BeanMethod> beanMethods = portletBeanMethods.get(
+					portletName);
 
-					if (beanMethods == null) {
-						beanMethods = new HashSet<>();
-					}
-
-					beanMethods.add(beanMethod);
-
-					portletBeanMethods.put(portletName, beanMethods);
+				if (beanMethods == null) {
+					beanMethods = new HashSet<>();
 				}
+
+				beanMethods.add(beanMethod);
+
+				portletBeanMethods.put(portletName, beanMethods);
 			}
 		}
 
 		return portletBeanMethods;
+	}
+
+	private Map<String, String> _collectPreferencesValidators() {
+		Map<String, String> preferencesValidators = new HashMap<>();
+
+		for (Class<?> preferencesValidatorClass :
+				_preferencesValidatorClasses) {
+
+			PortletPreferencesValidator portletPreferencesValidator =
+				preferencesValidatorClass.getAnnotation(
+					PortletPreferencesValidator.class);
+
+			String[] portletNames = portletPreferencesValidator.portletNames();
+
+			for (String portletName : portletNames) {
+				if (Objects.equals(portletName, "*")) {
+					continue;
+				}
+
+				if (preferencesValidators.containsKey(portletName)) {
+					_log.error(
+						StringBundler.concat(
+							"Only one @PortletPreferencesValidator annotation ",
+							"may be associated with portletName \"",
+							portletName, "\""));
+				}
+				else {
+					preferencesValidators.put(
+						portletName, preferencesValidatorClass.getName());
+				}
+			}
+		}
+
+		return preferencesValidators;
+	}
+
+	private List<URLGenerationListener> _collectURLGenerationListeners() {
+		List<URLGenerationListener> urlGenerationListeners = new ArrayList<>();
+
+		for (Class<?> portletListenerClass : _portletListenerClasses) {
+			PortletListener portletListener =
+				portletListenerClass.getAnnotation(PortletListener.class);
+
+			URLGenerationListener urlGenerationListener =
+				new URLGenerationListener(
+					portletListener.listenerName(), portletListener.ordinal(),
+					portletListenerClass.getName());
+
+			urlGenerationListeners.add(urlGenerationListener);
+		}
+
+		return urlGenerationListeners;
 	}
 
 	private Set<BeanMethod> _collectWildcardBeanMethods(
@@ -815,6 +908,29 @@ public class BeanPortletExtension implements Extension {
 		}
 
 		return wildcardBeanMethods;
+	}
+
+	private Set<String> _collectWildcardPreferencesValidators() {
+		Set<String> wildcardPreferencesValidators = new HashSet<>();
+
+		for (Class<?> preferencesValidatorClass :
+				_preferencesValidatorClasses) {
+
+			PortletPreferencesValidator portletPreferencesValidator =
+				preferencesValidatorClass.getAnnotation(
+					PortletPreferencesValidator.class);
+
+			String[] portletNames = portletPreferencesValidator.portletNames();
+
+			for (String portletName : portletNames) {
+				if (Objects.equals(portletName, "*")) {
+					wildcardPreferencesValidators.add(
+						preferencesValidatorClass.getName());
+				}
+			}
+		}
+
+		return wildcardPreferencesValidators;
 	}
 
 	private LiferayPortletConfiguration _getAnnotatedLiferayConfiguration(
@@ -845,24 +961,6 @@ public class BeanPortletExtension implements Extension {
 		}
 
 		return null;
-	}
-
-	private List<URLGenerationListener> _getListenersFromAnnotatedClasses() {
-		List<URLGenerationListener> urlGenerationListeners = new ArrayList<>();
-
-		for (Class<?> portletListenerClass : _portletListenerClasses) {
-			PortletListener portletListener =
-				portletListenerClass.getAnnotation(PortletListener.class);
-
-			URLGenerationListener urlGenerationListener =
-				new URLGenerationListener(
-					portletListener.listenerName(), portletListener.ordinal(),
-					portletListenerClass.getName());
-
-			urlGenerationListeners.add(urlGenerationListener);
-		}
-
-		return urlGenerationListeners;
 	}
 
 	private List<ScannedMethod> _scanMethods(
@@ -968,6 +1066,8 @@ public class BeanPortletExtension implements Extension {
 		new ArrayList<>();
 	private final List<Class<?>> _portletListenerClasses = new ArrayList<>();
 	private final List<ServiceRegistration<Portlet>> _portletRegistrations =
+		new ArrayList<>();
+	private final List<Class<?>> _preferencesValidatorClasses =
 		new ArrayList<>();
 	private final List<ServiceRegistration<ResourceBundleLoader>>
 		_resourceBundleLoaderRegistrations = new ArrayList<>();

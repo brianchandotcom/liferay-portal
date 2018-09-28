@@ -121,6 +121,11 @@ public class BeanPortletDefaultImpl extends BaseBeanPortletImpl {
 	}
 
 	@Override
+	public String getPreferencesValidator() {
+		return null;
+	}
+
+	@Override
 	public String getResourceBundle() {
 		return null;
 	}

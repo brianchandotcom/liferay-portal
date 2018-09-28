@@ -205,11 +205,13 @@ class Sidebar extends Component {
 	 * @protected
 	 */
 
-	_handleDocumentMouseDown(event) {
+	_handleDocumentMouseDown({target}) {
 		const {open} = this.state;
 		const {transitionEnd} = this;
+		const fieldColumnNode = dom.closest(target, '.col-ddm');
+		const modalNode = dom.closest(target, '.modal-dialog');
 
-		if (!open || this.element.contains(event.target)) {
+		if (!open || this.element.contains(target) || fieldColumnNode || this._checkSettingsActionsVisibility(target)) {
 			return;
 		}
 
@@ -220,6 +222,10 @@ class Sidebar extends Component {
 			transitionEnd,
 			() => this.emit('fieldBlurred')
 		);
+
+		if (!modalNode) {
+			setTimeout(() => this.emit('fieldBlurred'), 500);
+		}
 	}
 
 	/**

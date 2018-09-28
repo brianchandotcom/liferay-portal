@@ -26,13 +26,17 @@ import com.google.api.services.oauth2.Oauth2;
 import com.google.api.services.oauth2.model.Userinfoplus;
 
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.exception.UserEmailAddressException;
+import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Contact;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserGroupRole;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.settings.CompanyServiceSettingsLocator;
@@ -46,6 +50,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.security.sso.google.GoogleAuthorization;
+import com.liferay.portal.security.sso.google.StrangersNotAllowedException;
 import com.liferay.portal.security.sso.google.configuration.GoogleAuthorizationConfiguration;
 import com.liferay.portal.security.sso.google.constants.GoogleConstants;
 import com.liferay.portal.security.sso.google.internal.constants.GoogleWebKeys;
@@ -105,7 +110,12 @@ public class GoogleAuthorizationImpl implements GoogleAuthorization {
 				() -> doAddOrUpdateUser(session, companyId, userinfoplus));
 		}
 		catch (Throwable t) {
-			throw new Exception(t);
+			if (t instanceof PortalException) {
+				throw (PortalException)t;
+			}
+			else {
+				throw new Exception(t);
+			}
 		}
 	}
 
@@ -241,6 +251,7 @@ public class GoogleAuthorizationImpl implements GoogleAuthorization {
 			user = updateUser(user, userinfoplus);
 		}
 		else {
+			_checkAllowUserCreation(companyId, userinfoplus);
 			user = addUser(companyId, userinfoplus);
 
 			session.setAttribute(
@@ -373,11 +384,34 @@ public class GoogleAuthorizationImpl implements GoogleAuthorization {
 			userGroupRoles, userGroupIds, serviceContext);
 	}
 
+	private void _checkAllowUserCreation(
+			long companyId, Userinfoplus userinfoplus)
+		throws PortalException {
+
+		Company company = _companyLocalService.getCompany(companyId);
+
+		if (!company.isStrangers()) {
+			throw new StrangersNotAllowedException(companyId);
+		}
+
+		String emailAddress = userinfoplus.getEmail();
+
+		if (company.hasCompanyMx(emailAddress)) {
+			if (!company.isStrangersWithMx()) {
+				throw new UserEmailAddressException.MustNotUseCompanyMx(
+					emailAddress);
+			}
+		}
+	}
+
 	private static final String _ONLINE_ACCESS_TYPE = "online";
 
 	private static final TransactionConfig _transactionConfig =
 		TransactionConfig.Factory.create(
 			Propagation.REQUIRED, new Class<?>[] {Exception.class});
+
+	@Reference
+	private CompanyLocalService _companyLocalService;
 
 	@Reference
 	private ConfigurationProvider _configurationProvider;

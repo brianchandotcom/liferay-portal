@@ -636,6 +636,10 @@
 			<var name="vocabularyName" value="Vocabulary Name 1" />
 		</execute>
 
+		<execute macro="Category#openCategoryAdmin">
+			<var name="siteURLKey" value="test-site-name" />
+		</execute>
+
 		<execute macro="Vocabulary#viewWithAssociatedAssetTypeCP">
 			<var name="vocabularyAssociatedAssetType" value="Blogs Entry" />
 			<var name="vocabularyName" value="Vocabulary Name 1" />

@@ -28,10 +28,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
-import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.GroupLocalService;
-import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
 import com.liferay.site.apio.architect.identifier.WebSiteIdentifier;
 
 import java.util.Arrays;
@@ -55,7 +52,7 @@ public class ContentSpaceCollectionResource
 		CollectionRoutes.Builder<Group, Long> builder) {
 
 		return builder.addGetter(
-			this::_getPageItems, Company.class, PermissionChecker.class
+			this::_getPageItems, Company.class
 		).build();
 	}
 
@@ -104,11 +101,7 @@ public class ContentSpaceCollectionResource
 	}
 
 	private PageItems<Group> _getPageItems(
-			Pagination pagination, Company company,
-			PermissionChecker permissionChecker)
-		throws PortalException {
-
-		GroupPermissionUtil.check(permissionChecker, ActionKeys.VIEW);
+		Pagination pagination, Company company) {
 
 		List<Group> groups = _groupLocalService.getGroups(
 			company.getCompanyId(), GroupConstants.ANY_PARENT_GROUP_ID, true,

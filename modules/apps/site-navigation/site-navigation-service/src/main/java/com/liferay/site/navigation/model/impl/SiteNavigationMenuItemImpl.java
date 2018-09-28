@@ -21,7 +21,6 @@ import com.liferay.site.navigation.model.SiteNavigationMenuItem;
 import com.liferay.site.navigation.service.SiteNavigationMenuItemLocalServiceUtil;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -45,7 +44,7 @@ public class SiteNavigationMenuItemImpl extends SiteNavigationMenuItemBaseImpl {
 	@Override
 	public List<SiteNavigationMenuItem> getAncestors() throws PortalException {
 		List<SiteNavigationMenuItem> siteNavigationMenuItems =
-			Collections.emptyList();
+			new ArrayList<>();
 
 		SiteNavigationMenuItem siteNavigationMenuItem = this;
 
@@ -55,10 +54,6 @@ public class SiteNavigationMenuItemImpl extends SiteNavigationMenuItemBaseImpl {
 					getSiteNavigationMenuItem(
 						siteNavigationMenuItem.
 							getParentSiteNavigationMenuItemId());
-
-			if (siteNavigationMenuItems.isEmpty()) {
-				siteNavigationMenuItems = new ArrayList<>();
-			}
 
 			siteNavigationMenuItems.add(siteNavigationMenuItem);
 		}

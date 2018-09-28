@@ -95,6 +95,7 @@
 
 	<command name="PublishContentPage" priority="5">
 		<description message="Content pages only appear in live view after being published and should appear properly." />
+		<property name="portal.acceptance" value="true" />
 
 		<execute macro="Navigator#openWithAppendToBaseURL">
 			<var name="urlAppend" value="web/test-site-name-staging/test-content-page-name" />
@@ -143,6 +144,7 @@
 
 	<command name="PublishEditedContentPage" priority="5">
 		<description message="Edits made to existing content pages should not appear in the live site until after published." />
+		<property name="portal.acceptance" value="true" />
 
 		<execute macro="Staging#openStagingAdmin">
 			<var name="siteURLKey" value="test-site-name-staging" />

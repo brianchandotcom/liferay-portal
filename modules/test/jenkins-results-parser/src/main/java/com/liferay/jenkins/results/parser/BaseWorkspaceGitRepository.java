@@ -232,12 +232,7 @@ public abstract class BaseWorkspaceGitRepository
 
 	@Override
 	protected void put(String key, Object value) {
-		put(key, value, false);
-	}
-
-	@Override
-	protected void put(String key, Object value, boolean force) {
-		super.put(key, value, force);
+		super.put(key, value);
 
 		BuildDatabase buildDatabase = BuildDatabaseUtil.getBuildDatabase();
 

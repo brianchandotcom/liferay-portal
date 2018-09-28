@@ -178,6 +178,8 @@ public class NavigationMenuTag extends IncludeTag {
 	}
 
 	protected List<NavItem> getBranchMenuItems() throws PortalException {
+		List<NavItem> navItems = new ArrayList<>();
+
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
@@ -192,8 +194,6 @@ public class NavigationMenuTag extends IncludeTag {
 
 		List<SiteNavigationMenuItem> ancestors =
 			siteNavigationMenuItem.getAncestors();
-
-		List<NavItem> navItems = new ArrayList<>(ancestors.size() + 1);
 
 		ListIterator<SiteNavigationMenuItem> listIterator =
 			ancestors.listIterator(ancestors.size());
@@ -215,6 +215,8 @@ public class NavigationMenuTag extends IncludeTag {
 	protected List<NavItem> getBranchNavItems(HttpServletRequest request)
 		throws PortalException {
 
+		List<NavItem> navItems = new ArrayList<>();
+
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
@@ -226,8 +228,6 @@ public class NavigationMenuTag extends IncludeTag {
 		}
 
 		List<Layout> ancestorLayouts = layout.getAncestors();
-
-		List<NavItem> navItems = new ArrayList<>(ancestorLayouts.size() + 1);
 
 		ListIterator<Layout> listIterator = ancestorLayouts.listIterator(
 			ancestorLayouts.size());
@@ -278,10 +278,10 @@ public class NavigationMenuTag extends IncludeTag {
 	protected List<NavItem> getMenuItems(List<NavItem> branchMenuItems)
 		throws Exception {
 
+		List<NavItem> navItems = new ArrayList<>();
+
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
-
-		List<NavItem> navItems = new ArrayList<>();
 
 		NavItem rootMenuItem = null;
 
@@ -329,10 +329,10 @@ public class NavigationMenuTag extends IncludeTag {
 	protected List<NavItem> getNavItems(List<NavItem> branchNavItems)
 		throws Exception {
 
+		List<NavItem> navItems = new ArrayList<>();
+
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
-
-		List<NavItem> navItems = new ArrayList<>();
 
 		NavItem rootNavItem = null;
 
@@ -387,11 +387,11 @@ public class NavigationMenuTag extends IncludeTag {
 	private List<NavItem> _getMenuItemsFromParentSiteNavigationMenuItem(
 		ThemeDisplay themeDisplay, long parentSiteNavigationMenuItemId) {
 
+		List<NavItem> navItems = new ArrayList<>();
+
 		List<SiteNavigationMenuItem> siteNavigationMenuItems =
 			SiteNavigationMenuItemLocalServiceUtil.getSiteNavigationMenuItems(
 				_siteNavigationMenuId, parentSiteNavigationMenuItemId);
-
-		List<NavItem> navItems = new ArrayList<>();
 
 		for (SiteNavigationMenuItem siteNavigationMenuItem :
 				siteNavigationMenuItems) {

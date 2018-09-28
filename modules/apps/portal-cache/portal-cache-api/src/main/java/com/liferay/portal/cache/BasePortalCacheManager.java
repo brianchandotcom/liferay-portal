@@ -105,7 +105,7 @@ public abstract class BasePortalCacheManager<K extends Serializable, V>
 		if (isTransactionalPortalCacheEnabled() &&
 			isTransactionalPortalCache(portalCacheName)) {
 
-			portalCache = new TransactionalPortalCache<>(portalCache);
+			portalCache = new TransactionalPortalCache<>(portalCache, mvcc);
 		}
 
 		if (isBlockingPortalCacheAllowed() && blocking) {

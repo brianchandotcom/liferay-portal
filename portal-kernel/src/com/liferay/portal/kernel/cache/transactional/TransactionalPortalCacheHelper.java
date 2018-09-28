@@ -182,16 +182,33 @@ public class TransactionalPortalCacheHelper {
 		return !portalCacheMaps.isEmpty();
 	}
 
+	/**
+	 * @deprecated As of Judson (7.1.x), replaced by {@link
+	 * 			#put(PortalCache, Serializable, Object, int, boolean)}
+	 */
+	@Deprecated
 	public static <K extends Serializable, V> void put(
 		PortalCache<K, V> portalCache, K key, V value, int ttl) {
+
+		put(portalCache, key, value, ttl, false);
+	}
+
+	public static <K extends Serializable, V> void put(
+		PortalCache<K, V> portalCache, K key, V value, int ttl, boolean mvcc) {
 
 		PortalCacheMap portalCacheMap = _peekPortalCacheMap();
 
 		UncommittedBuffer uncommittedBuffer = portalCacheMap.get(portalCache);
 
 		if (uncommittedBuffer == null) {
-			uncommittedBuffer = new UncommittedBuffer(
-				(PortalCache<Serializable, Object>)portalCache);
+			if (mvcc) {
+				uncommittedBuffer = new UncommittedBuffer(
+					(PortalCache<Serializable, Object>)portalCache);
+			}
+			else {
+				uncommittedBuffer = new MVCCUncommittedBuffer(
+					(PortalCache<Serializable, Object>)portalCache);
+			}
 
 			portalCacheMap.put(portalCache, uncommittedBuffer);
 		}
@@ -201,16 +218,33 @@ public class TransactionalPortalCacheHelper {
 			new ValueEntry(value, ttl, SkipReplicationThreadLocal.isEnabled()));
 	}
 
+	/**
+	 * @deprecated As of Judson (7.1.x), replaced by {@link
+	 * 			#removeAll(PortalCache, boolean)}
+	 */
+	@Deprecated
 	public static <K extends Serializable, V> void removeAll(
 		PortalCache<K, V> portalCache) {
+
+		removeAll(portalCache, false);
+	}
+
+	public static <K extends Serializable, V> void removeAll(
+		PortalCache<K, V> portalCache, boolean mvcc) {
 
 		PortalCacheMap portalCacheMap = _peekPortalCacheMap();
 
 		UncommittedBuffer uncommittedBuffer = portalCacheMap.get(portalCache);
 
 		if (uncommittedBuffer == null) {
-			uncommittedBuffer = new UncommittedBuffer(
-				(PortalCache<Serializable, Object>)portalCache);
+			if (mvcc) {
+				uncommittedBuffer = new UncommittedBuffer(
+					(PortalCache<Serializable, Object>)portalCache);
+			}
+			else {
+				uncommittedBuffer = new MVCCUncommittedBuffer(
+					(PortalCache<Serializable, Object>)portalCache);
+			}
 
 			portalCacheMap.put(portalCache, uncommittedBuffer);
 		}

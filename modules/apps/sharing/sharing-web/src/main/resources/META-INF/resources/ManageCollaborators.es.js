@@ -15,7 +15,7 @@ class ManageCollaborators extends PortletBase {
 	 * @inheritDoc
 	 */
 	attached() {
-		this._sharingEntryIdsToDelete = [];
+		this._deleteSharingEntryIds = [];
 		this._sharingEntryIdsAndPermissions = new Map();
 	}
 
@@ -67,7 +67,7 @@ class ManageCollaborators extends PortletBase {
 
 		if (collaboratorElement) {
 			collaboratorElement.remove();
-			this._sharingEntryIdsToDelete.push(sharingEntryId);
+			this._deleteSharingEntryIds.push(sharingEntryId);
 		}
 	}
 
@@ -83,8 +83,8 @@ class ManageCollaborators extends PortletBase {
 		this.fetch(
 			this.actionUrl,
 			{
-				sharingEntryIdsToDelete: this._sharingEntryIdsToDelete,
-				sharingEntryIdSharingEntryPermissionDisplayActionIdPairs: permissions
+				deleteSharingEntryIds: this._deleteSharingEntryIds,
+				sharingEntryIdActionIdPairs: permissions
 			}
 		)
 		.then(

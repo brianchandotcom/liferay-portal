@@ -102,16 +102,14 @@ public abstract class BaseLocalGitRepository
 		String upstreamBranchNamesString = JenkinsResultsParserUtil.getProperty(
 			getRepositoryProperties(), "upstream.branch.names", getName());
 
-		if (upstreamBranchNamesString == null) {
-			upstreamBranchNamesString = "master";
-		}
+		if (upstreamBranchNamesString != null) {
+			List<String> upstreamBranchNames = Arrays.asList(
+				upstreamBranchNamesString.split(","));
 
-		List<String> upstreamBranchNames = Arrays.asList(
-			upstreamBranchNamesString.split(","));
-
-		if (!upstreamBranchNames.contains(upstreamBranchName)) {
-			throw new IllegalArgumentException(
-				"Invalid upstream branch name: " + upstreamBranchName);
+			if (!upstreamBranchNames.contains(upstreamBranchName)) {
+				throw new IllegalArgumentException(
+					"Invalid upstream branch name: " + upstreamBranchName);
+			}
 		}
 
 		put("upstream_branch_name", upstreamBranchName);

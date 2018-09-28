@@ -579,6 +579,22 @@ public class SharingEntryLocalServiceWrapper implements SharingEntryLocalService
 	}
 
 	/**
+	* Returns a list of sharing entries of a specific class name id and class
+	* pk that has been shared to a user.
+	*
+	* @param toUserId the user id that has been shared the resource
+	* @param classNameId the class name ID of the shared resource
+	* @param classPK the class pk of the shared resource
+	* @return the list of sharing entries
+	*/
+	@Override
+	public java.util.List<com.liferay.sharing.model.SharingEntry> getToUserClassPKSharingEntries(
+		long toUserId, long classNameId, long classPK) {
+		return _sharingEntryLocalService.getToUserClassPKSharingEntries(toUserId,
+			classNameId, classPK);
+	}
+
+	/**
 	* Returns a list of all the sharing entries that has been shared to a user.
 	*
 	* @param toUserId the user id that has been shared the resource

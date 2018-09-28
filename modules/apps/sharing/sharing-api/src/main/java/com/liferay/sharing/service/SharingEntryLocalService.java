@@ -476,6 +476,19 @@ public interface SharingEntryLocalService extends BaseLocalService,
 		long groupId) throws PortalException;
 
 	/**
+	* Returns a list of sharing entries of a specific class name id and class
+	* pk that has been shared to a user.
+	*
+	* @param toUserId the user id that has been shared the resource
+	* @param classNameId the class name ID of the shared resource
+	* @param classPK the class pk of the shared resource
+	* @return the list of sharing entries
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<SharingEntry> getToUserClassPKSharingEntries(long toUserId,
+		long classNameId, long classPK);
+
+	/**
 	* Returns a list of all the sharing entries that has been shared to a user.
 	*
 	* @param toUserId the user id that has been shared the resource

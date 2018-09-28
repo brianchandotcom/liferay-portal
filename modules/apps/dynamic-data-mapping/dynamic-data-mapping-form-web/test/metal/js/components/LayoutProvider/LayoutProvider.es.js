@@ -296,7 +296,6 @@ describe.only(
 
 								jest.runAllTimers();
 
-								expect(provider.state.pages).toMatchSnapshot();
 								expect(child.props.pages).toEqual(provider.state.pages);
 							}
 						);
@@ -322,7 +321,6 @@ describe.only(
 
 								jest.runAllTimers();
 
-								expect(provider.state.pages).toMatchSnapshot();
 								expect(child.props.pages).toEqual(provider.state.pages);
 							}
 						);
@@ -428,7 +426,6 @@ describe.only(
 								const {child, provider} = component.refs;
 								const mockEvent = {
 									columnIndex: 0,
-									mode: 'edit',
 									pageIndex: 0,
 									rowIndex: 0
 								};
@@ -441,6 +438,257 @@ describe.only(
 									}
 								);
 								expect(provider.state.focusedField).toEqual(mockEvent);
+							}
+						);
+					}
+				);
+
+				describe(
+					'fieldBlurred',
+					() => {
+						it(
+							'should listen the fieldBlurred event and change the state of the focusedField to the data receive',
+							() => {
+								component = new Parent();
+
+								const {child, provider} = component.refs;
+
+								child.emit('fieldBlurred');
+
+								expect(provider.props.children[0].props.events).toMatchObject(
+									{
+										fieldBlurred: expect.any(Function)
+									}
+								);
+								expect(provider.state.focusedField).toMatchSnapshot();
+							}
+						);
+					}
+				);
+
+				describe(
+					'fieldEdited',
+					() => {
+						it(
+							'should listen the fieldEdited event and change the state of the focusedField and pages for the data wich was received',
+							() => {
+								component = new Parent();
+
+								const {child, provider} = component.refs;
+								const mockEvent = {
+									columnIndex: 0,
+									pageIndex: 0,
+									rowIndex: 0
+								};
+
+								child.emit('fieldEdited', mockEvent);
+
+								expect(provider.props.children[0].props.events).toMatchObject(
+									{
+										fieldEdited: expect.any(Function)
+									}
+								);
+								expect(provider.state.focusedField).toEqual(mockEvent);
+								expect(provider.state.pages).toMatchSnapshot();
+							}
+						);
+					}
+				);
+
+				describe(
+					'focusedFieldUpdated',
+					() => {
+						it(
+							'should listen the focusedFieldUpdated event and change the state of the focusedField and pages for the data wich was received',
+							() => {
+								component = new Parent();
+
+								const {child, provider} = component.refs;
+								const mockEvent = {
+									columnIndex: 0,
+									pageIndex: 0,
+									rowIndex: 0
+								};
+
+								child.emit('focusedFieldUpdated', mockEvent);
+
+								expect(provider.props.children[0].props.events).toMatchObject(
+									{
+										focusedFieldUpdated: expect.any(Function)
+									}
+								);
+								expect(provider.state.focusedField).toEqual(mockEvent);
+								expect(provider.state.pages).toMatchSnapshot();
+							}
+						);
+					}
+				);
+
+				describe(
+					'pageDeleted',
+					() => {
+						it(
+							'should listen the pageDeleted event and change the state of pages for the data wich was received',
+							() => {
+								component = new Parent();
+
+								const {child, provider} = component.refs;
+								const pageIndex = 0;
+
+								child.emit('pageDeleted', pageIndex);
+
+								expect(provider.props.children[pageIndex].props.events).toMatchObject(
+									{
+										pageDeleted: expect.any(Function)
+									}
+								);
+								expect(provider.state.pages).toMatchSnapshot();
+							}
+						);
+					}
+				);
+
+				describe(
+					'pageAdded',
+					() => {
+						it(
+							'should listen the pageAdded event and change the state of pages for the data wich was received',
+							() => {
+								component = new Parent();
+
+								const {child, provider} = component.refs;
+
+								child.emit('pageAdded');
+
+								expect(provider.props.children[0].props.events).toMatchObject(
+									{
+										pageAdded: expect.any(Function)
+									}
+								);
+								expect(provider.state.pages).toMatchSnapshot();
+							}
+						);
+					}
+				);
+
+				describe(
+					'pageReset',
+					() => {
+						it(
+							'should listen the pageReset event and change the state of pages for the data wich was received',
+							() => {
+								component = new Parent();
+
+								const {child, provider} = component.refs;
+
+								child.emit('pageReset');
+
+								expect(provider.props.children[0].props.events).toMatchObject(
+									{
+										pageReset: expect.any(Function)
+									}
+								);
+								expect(provider.state.pages).toMatchSnapshot();
+							}
+						);
+					}
+				);
+
+				describe(
+					'paginationModeUpdated',
+					() => {
+						it(
+							'should listen the paginationModeUpdated event and change the state of pagination mode for the data wich was received',
+							() => {
+								component = new Parent();
+
+								const {child, provider} = component.refs;
+
+								child.emit('paginationModeUpdated');
+
+								expect(provider.props.children[0].props.events).toMatchObject(
+									{
+										paginationModeUpdated: expect.any(Function)
+									}
+								);
+								expect(provider.state.pages).toMatchSnapshot();
+							}
+						);
+
+						it(
+							'should listen the paginationModeUpdated event and change the state of pagination mode from pagination to wizard',
+							() => {
+								component = new Parent();
+
+								const {child, provider} = component.refs;
+
+								provider.setState(
+									{
+										paginationMode: 'pagination'
+									}
+								);
+
+								jest.runAllTimers();
+
+								child.emit('paginationModeUpdated');
+
+								expect(provider.props.children[0].props.events).toMatchObject(
+									{
+										paginationModeUpdated: expect.any(Function)
+									}
+								);
+								expect(provider.state.pages).toMatchSnapshot();
+							}
+						);
+					}
+				);
+
+				describe(
+					'successPageChanged',
+					() => {
+						it(
+							'should listen the successPageChanged event and change the state of success page for the data wich was received',
+							() => {
+								component = new Parent();
+
+								const {child, provider} = component.refs;
+
+								child.emit(
+									'successPageChanged',
+									{
+										enabled: true
+									}
+								);
+
+								expect(provider.props.children[0].props.events).toMatchObject(
+									{
+										successPageChanged: expect.any(Function)
+									}
+								);
+								expect(provider.state.pages).toMatchSnapshot();
+							}
+						);
+					}
+				);
+
+				describe(
+					'activePageUpdated',
+					() => {
+						it(
+							'should listen the activePageUpdated event and change the state of the active page for the data wich was received',
+							() => {
+								component = new Parent();
+
+								const {child, provider} = component.refs;
+
+								child.emit('activePageUpdated', 1);
+
+								expect(provider.props.children[0].props.events).toMatchObject(
+									{
+										activePageUpdated: expect.any(Function)
+									}
+								);
+								expect(provider.state.pages).toMatchSnapshot();
 							}
 						);
 					}

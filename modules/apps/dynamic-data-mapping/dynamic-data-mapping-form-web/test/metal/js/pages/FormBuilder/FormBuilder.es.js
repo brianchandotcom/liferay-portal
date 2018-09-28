@@ -15,6 +15,9 @@ let successPageSettings;
 const mockFieldType = {
 	description: 'Single line or multiline text area.',
 	icon: 'text',
+	initialConfig_: {
+		locale: 'en_US'
+	},
 	label: 'Text Field',
 	name: 'text',
 	settingsContext: {
@@ -188,11 +191,18 @@ describe(
 				const {FormRenderer} = component.refs;
 				const spy = jest.spyOn(component, 'emit');
 
-				FormRenderer.emit('fieldClicked', 1);
+				FormRenderer.emit(
+					'fieldClicked',
+					{
+						columnIndex: 0,
+						pageIndex: 0,
+						rowIndex: 0
+					},
+				);
 
 				jest.runAllTimers();
 
-				expect(spy).toHaveBeenCalledWith('fieldClicked', 1);
+				expect(spy).toHaveBeenCalled();
 			}
 		);
 
@@ -280,6 +290,30 @@ describe(
 						fieldInstance: {
 							...mockFieldType,
 							fieldName: 'label'
+						}
+					}
+				);
+
+				jest.runAllTimers();
+
+				expect(spy).toHaveBeenCalledWith('fieldEdited', expect.anything());
+			}
+		);
+
+		it(
+			'should continue to propagate the fieldEdited event when the edited field is predefined value',
+			() => {
+				const {sidebar} = component.refs;
+				const spy = jest.spyOn(component, 'emit');
+
+				component.props.focusedField = mockFieldType;
+
+				sidebar.emit(
+					'fieldEdited',
+					{
+						fieldInstance: {
+							...mockFieldType,
+							fieldName: 'predefinedValue'
 						}
 					}
 				);
@@ -392,6 +426,22 @@ describe(
 
 				expect(spy).toHaveBeenCalled();
 				expect(spy).toHaveBeenCalledWith('fieldDeleted', expect.anything());
+			}
+		);
+
+		it(
+			'should propagate successPageChanged event',
+			() => {
+				const spy = jest.spyOn(component, 'emit');
+				const {FormRenderer} = component.refs;
+				const mockEvent = jest.fn();
+
+				FormRenderer.emit('successPageChanged', mockEvent);
+
+				jest.runAllTimers();
+
+				expect(spy).toHaveBeenCalled();
+				expect(spy).toHaveBeenCalledWith('successPageChanged', expect.anything());
 			}
 		);
 

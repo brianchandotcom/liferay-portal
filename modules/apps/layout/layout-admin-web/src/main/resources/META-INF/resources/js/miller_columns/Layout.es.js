@@ -4,7 +4,7 @@ import Soy from 'metal-soy';
 
 import './LayoutBreadcrumbs.es';
 import './LayoutColumn.es';
-import LayoutDragDrop from './utils/LayoutDragDrop.es';
+import {DRAG_BORDERS, LayoutDragDrop} from './utils/LayoutDragDrop.es';
 import templates from './Layout.soy';
 
 /**
@@ -67,12 +67,119 @@ class Layout extends Component {
 	}
 
 	/**
+	 * @param {Array} layoutColumns
+	 * @param {string} plid
+	 * @private
+	 * @review
+	 */
+
+	_getLayoutColumnItemByPlid(layoutColumns, plid) {
+		let item;
+
+		for (let i = 0; i < layoutColumns.length; i++) {
+			for (let j = 0; j < layoutColumns[i].length; j++) {
+				if (layoutColumns[i][j].plid === plid) {
+					item = layoutColumns[i][j];
+				}
+			}
+		}
+
+		return item;
+	}
+
+	/**
+	 * @param {Array} layoutColumns
+	 * @param {string} plid
+	 * @private
+	 * @review
+	 */
+
+	_getParentColumnByPlid(layoutColumns, plid) {
+		let column;
+
+		for (let i = 0; i < layoutColumns.length; i++) {
+			for (let j = 0; j < layoutColumns[i].length; j++) {
+				if (layoutColumns[i][j].plid === plid) {
+					column = layoutColumns[i];
+				}
+			}
+		}
+
+		return column;
+	}
+
+	/**
+	 * @inheritDoc
+	 * @review
+	 */
+
+	_handleDragLayoutColumnItem(data) {
+		const sourceColumn = this._getParentColumnByPlid(this.layoutColumns, data.sourceItemPlid);
+		const targetColumn = this._getParentColumnByPlid(this.layoutColumns, data.targetItemPlid);
+
+		if (sourceColumn === targetColumn) {
+			this._hoveredLayoutColumnItemBorder = data.border;
+			this._hoveredLayoutColumnItemPlid = data.targetItemPlid;
+		}
+	}
+
+	/**
+	 * @inheritDoc
+	 * @review
+	 */
+
+	_handleLeaveLayoutColumnItem(data) {
+		this._hoveredLayoutColumnItemBorder = undefined;
+		this._hoveredLayoutColumnItemPlid = undefined;
+	}
+
+	/**
+	 * @inheritDoc
+	 * @review
+	 */
+
+	_handleMoveLayoutColumnItem(data) {
+		const sourceItemPlid = data.sourceItemPlid;
+
+		let layoutColumns = this.layoutColumns.map(
+			layoutColumn => [...layoutColumn]
+		);
+
+		const sourceItem = this._getLayoutColumnItemByPlid(layoutColumns, sourceItemPlid);
+		const targetItem = this._getLayoutColumnItemByPlid(layoutColumns, this._hoveredLayoutColumnItemPlid);
+
+		const sourceColumn = this._getParentColumnByPlid(layoutColumns, sourceItemPlid);
+		const targetColumn = this._getParentColumnByPlid(layoutColumns, this._hoveredLayoutColumnItemPlid);
+
+		if ((sourceItem != targetItem) && (sourceColumn === targetColumn)) {
+			sourceColumn.splice(sourceColumn.indexOf(sourceItem), 1);
+
+			let position = sourceColumn.indexOf(targetItem);
+
+			if (this._hoveredLayoutColumnItemBorder === DRAG_BORDERS.bottom) {
+				position = sourceColumn.indexOf(targetItem) + 1;
+			}
+
+			sourceColumn.splice(position, 0, sourceItem);
+
+			this.layoutColumns = layoutColumns;
+		}
+
+		this._hoveredLayoutColumnItemBorder = undefined;
+		this._hoveredLayoutColumnItemPlid = undefined;
+	}
+
+	/**
 	 * @inheritDoc
 	 * @review
 	 */
 
 	_initializeLayoutDragDrop() {
 		this._layoutDragDrop = new LayoutDragDrop();
+
+		this._layoutDragDrop.on('dragLayoutColumnItem', this._handleDragLayoutColumnItem.bind(this));
+		this._layoutDragDrop.on('leaveLayoutColumnItem', this._handleLeaveLayoutColumnItem.bind(this));
+		this._layoutDragDrop.on('moveLayoutColumnItem', this._handleMoveLayoutColumnItem.bind(this));
 	}
 }
 
@@ -150,6 +257,27 @@ Layout.STATE = {
 	 */
 
 	siteNavigationMenuNames: Config.string().required(),
+
+	/**
+	 * Nearest border of the hovered layout column item when dragging.
+	 * @default undefined
+	 * @instance
+	 * @review
+	 * @type {!string}
+	 */
+
+	_hoveredLayoutColumnItemBorder: Config.string().internal(),
+
+	/**
+	 * Id of the hovered layout column item when dragging.
+	 * @default undefined
+	 * @instance
+	 * @review
+	 * @type {!string}
+	 */
+
+	_hoveredLayoutColumnItemPlid: Config.string().internal(),
+
 
 	/**
 	 * Internal LayoutDragDrop instance

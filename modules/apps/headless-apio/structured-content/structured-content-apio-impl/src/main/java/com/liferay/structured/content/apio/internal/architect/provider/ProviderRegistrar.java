@@ -12,15 +12,15 @@
  * details.
  */
 
-package com.liferay.structured.content.apio.internal.architect.filter;
+package com.liferay.structured.content.apio.internal.architect.provider;
 
 import com.liferay.apio.architect.provider.Provider;
 import com.liferay.osgi.util.ServiceTrackerFactory;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.structured.content.apio.architect.entity.EntityModel;
-import com.liferay.structured.content.apio.architect.filter.Filter;
-import com.liferay.structured.content.apio.internal.architect.provider.FilterProvider;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 import org.osgi.framework.BundleContext;
@@ -33,14 +33,11 @@ import org.osgi.util.tracker.ServiceTracker;
 import org.osgi.util.tracker.ServiceTrackerCustomizer;
 
 /**
- * <code>FilterParserRegistry</code> registry of FilterParsers. This class
- * register a new FilterParser for every EntityModel registered.
- *
  * @author Cristina González
- * @review
+ * @author Preston Crary
  */
 @Component(immediate = true, service = {})
-public class FilterProviderRegistrar {
+public class ProviderRegistrar {
 
 	@Activate
 	public void activate(BundleContext bundleContext) {
@@ -54,55 +51,50 @@ public class FilterProviderRegistrar {
 		_serviceTracker.close();
 	}
 
-	private ServiceTracker<EntityModel, ServiceRegistration<Provider>>
-		_serviceTracker;
+	private ServiceTracker<?, ?> _serviceTracker;
 
 	private static class EntityModelTrackerCustomizer
 		implements ServiceTrackerCustomizer
-			<EntityModel, ServiceRegistration<Provider>> {
+			<EntityModel, ProviderServiceRegistrations> {
 
 		@Override
-		public ServiceRegistration<Provider> addingService(
+		public ProviderServiceRegistrations addingService(
 			ServiceReference<EntityModel> serviceReference) {
 
 			EntityModel entityModel = _bundleContext.getService(
 				serviceReference);
 
-			Provider<Filter> filterParser = new FilterProvider(entityModel);
+			ProviderServiceRegistrations providerServiceRegistrations =
+				new ProviderServiceRegistrations(
+					serviceReference.getProperty("entity.model.name"));
 
 			try {
-				return _bundleContext.registerService(
-					Provider.class, filterParser,
-					new HashMapDictionary<String, Object>() {
-						{
-							put(
-								"entity.model.name",
-								serviceReference.getProperty(
-									"entity.model.name"));
-						}
-					});
+				providerServiceRegistrations.register(
+					_bundleContext, new FilterProvider(entityModel));
+				providerServiceRegistrations.register(
+					_bundleContext, new SortProvider(entityModel));
 			}
 			catch (Throwable t) {
+				providerServiceRegistrations.unregister();
+
 				_bundleContext.ungetService(serviceReference);
 
 				throw t;
 			}
+
+			return providerServiceRegistrations;
 		}
 
 		@Override
 		public void modifiedService(
 			ServiceReference<EntityModel> serviceReference,
-			ServiceRegistration<Provider> serviceRegistration) {
-
-			ServiceReference<Provider> filterParserServiceReference =
-				serviceRegistration.getReference();
+			ProviderServiceRegistrations providerServiceRegistrations) {
 
 			if (!Objects.equals(
 					serviceReference.getProperty("entity.model.name"),
-					filterParserServiceReference.getProperty(
-						"entity.model.name"))) {
+					providerServiceRegistrations._entityModelName)) {
 
-				removedService(serviceReference, serviceRegistration);
+				removedService(serviceReference, providerServiceRegistrations);
 
 				addingService(serviceReference);
 			}
@@ -111,11 +103,11 @@ public class FilterProviderRegistrar {
 		@Override
 		public void removedService(
 			ServiceReference<EntityModel> serviceReference,
-			ServiceRegistration<Provider> serviceRegistration) {
+			ProviderServiceRegistrations providerServiceRegistrations) {
 
 			_bundleContext.ungetService(serviceReference);
 
-			serviceRegistration.unregister();
+			providerServiceRegistrations.unregister();
 		}
 
 		private EntityModelTrackerCustomizer(BundleContext bundleContext) {
@@ -123,6 +115,41 @@ public class FilterProviderRegistrar {
 		}
 
 		private final BundleContext _bundleContext;
+
+	}
+
+	private static class ProviderServiceRegistrations {
+
+		public void register(
+			BundleContext bundleContext, Provider<?> provider) {
+
+			ServiceRegistration<?> serviceRegistration =
+				bundleContext.registerService(
+					Provider.class, provider,
+					new HashMapDictionary<String, Object>() {
+						{
+							put("entity.model.name", _entityModelName);
+						}
+					});
+
+			_serviceRegistrations.add(serviceRegistration);
+		}
+
+		public void unregister() {
+			for (ServiceRegistration<?> serviceRegistration :
+					_serviceRegistrations) {
+
+				serviceRegistration.unregister();
+			}
+		}
+
+		private ProviderServiceRegistrations(Object entityModelName) {
+			_entityModelName = entityModelName;
+		}
+
+		private final Object _entityModelName;
+		private final List<ServiceRegistration<?>> _serviceRegistrations =
+			new ArrayList<>();
 
 	}
 

@@ -61,12 +61,11 @@ public abstract class ConcurrentMapperHashMap<K, IK, V, IV>
 			(iKey, iValue) -> {
 				V value = null;
 
-				if (iValue == null) {
-					value = remappingFunction.apply(key, null);
+				if (iValue != null) {
+					value = unmapValue(iValue);
 				}
-				else {
-					value = remappingFunction.apply(key, unmapValue(iValue));
-				}
+
+				value = remappingFunction.apply(key, value);
 
 				if (value == null) {
 					return null;

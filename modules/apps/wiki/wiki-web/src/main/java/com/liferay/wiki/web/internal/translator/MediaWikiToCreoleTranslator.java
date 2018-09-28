@@ -315,7 +315,7 @@ public class MediaWikiToCreoleTranslator extends BaseTranslator {
 	private static final Pattern _imagePattern = Pattern.compile(
 		"(\\[{2})(Image|File)(:)", Pattern.DOTALL);
 	private static final Pattern _linkPattern = Pattern.compile(
-		"\\[{2}([^\\]]*)\\]{2}", Pattern.DOTALL);
+		"\\[{2}(?!Image|File|Media:)([^\\]]*)\\]{2}", Pattern.DOTALL);
 	private static final Pattern _mediaWikiTablePattern1 = Pattern.compile(
 		"class=(.*?)[|\n\r]");
 	private static final Pattern _mediaWikiTablePattern2 = Pattern.compile(

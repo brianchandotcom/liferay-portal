@@ -18,6 +18,15 @@ class Radio extends Component {
 		/**
 		 * @default undefined
 		 * @instance
+		 * @memberof FieldBase
+		 * @type {?bool}
+		 */
+
+		evaluable: Config.bool().value(false),
+
+		/**
+		 * @default undefined
+		 * @instance
 		 * @memberof Radio
 		 * @type {?(string|undefined)}
 		 */

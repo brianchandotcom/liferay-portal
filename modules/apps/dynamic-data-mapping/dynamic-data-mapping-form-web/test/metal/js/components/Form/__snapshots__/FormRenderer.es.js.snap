@@ -165,6 +165,45 @@ exports[`FormRenderer PagesSettings should add a new page on the layout render 1
 </div>
 `;
 
+exports[`FormRenderer PagesSettings should add a success page 1`] = `
+<div class="position-relative">
+  <div class="ddm-form-pagination position-absolute">
+    <div class="ddm-page-settings" role="group">
+      <div class="dropdown dropdown-action">
+        <button aria-expanded="false" aria-haspopup="true" aria-label="toggle" class="dropdown-toggle btn component-action btn-unstyled" title="actions" type="button">
+          <svg aria-hidden="true" class="lexicon-icon lexicon-icon-ellipsis-v" focusable="false">
+            <title>ellipsis-v</title>
+            <use xlink:href="icons.svg#ellipsis-v"></use>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="ddm-page-success-layout">
+    <div class="form-builder-success-page pb-3 pt-2">
+      <label class="control-label">title</label>
+      <input class="form-builder-success-page-title form-control" data-setting="title" type="text" value="">
+      <br>
+      <label class="control-label">content</label>
+      <input class="form-builder-success-page-content form-control" data-setting="body" type="text" value="">
+    </div>
+  </div>
+</div>
+<div class="dropdown-menu" ref="menu">
+  <ul class="list-unstyled">
+    <li>
+      <button class="btn dropdown-item btn-sm btn-link" aria-label="add-new-page" type="button">add-new-page</button>
+    </li>
+    <li>
+      <button class="btn dropdown-item btn-sm btn-link" aria-label="delete-current-page" type="button">delete-current-page</button>
+    </li>
+    <li>
+      <button class="btn dropdown-item btn-sm btn-link" aria-label="add-success-page" type="button">add-success-page</button>
+    </li>
+  </ul>
+</div>
+`;
+
 exports[`FormRenderer PagesSettings should delete the current page on layout render 1`] = `
 <div class="position-relative">
   <div class="ddm-form-pagination position-relative wizard-mode">
@@ -197,7 +236,7 @@ exports[`FormRenderer PagesSettings should delete the current page on layout ren
   </div>
   <div class="ddm-page-container-layout">
     <div class="ddm-form-page pl-4 pr-4">
-      <textarea class="form-builder-page-header-title form-control p-0" data-page-id="0" maxlength="120" value="Untitled name" placeholder="untitled-page-x-of-x"></textarea>
+      <textarea class="form-builder-page-header-title form-control p-0" data-page-id="0" maxlength="120" value="Untitled name"></textarea>
       <textarea class="form-builder-page-header-description form-control p-0" data-page-id="0" maxlength="120" placeholder="add-a-short-description-for-this-page"></textarea>
       <div class="form-builder-layout">
         <div class="layout-page">
@@ -345,6 +384,171 @@ exports[`FormRenderer PagesSettings should delete the current page on layout ren
     </li>
     <li>
       <button class="btn dropdown-item btn-sm btn-link" aria-label="switch-pagination-to-bottom" type="button">switch-pagination-to-bottom</button>
+    </li>
+  </ul>
+</div>
+`;
+
+exports[`FormRenderer PagesSettings should delete the success page 1`] = `
+<div class="position-relative">
+  <div class="ddm-form-pagination position-absolute">
+    <div class="ddm-page-settings" role="group">
+      <div class="dropdown dropdown-action">
+        <button aria-expanded="false" aria-haspopup="true" aria-label="toggle" class="dropdown-toggle btn component-action btn-unstyled" title="actions" type="button">
+          <svg aria-hidden="true" class="lexicon-icon lexicon-icon-ellipsis-v" focusable="false">
+            <title>ellipsis-v</title>
+            <use xlink:href="icons.svg#ellipsis-v"></use>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="ddm-page-container-layout">
+    <div class="ddm-form-page pl-4 pr-4">
+      <textarea class="form-builder-page-header-title form-control p-0" data-page-id="0" maxlength="120" value="Untitled name" placeholder="untitled-page-x-of-x"></textarea>
+      <textarea class="form-builder-page-header-description form-control p-0" data-page-id="0" maxlength="120" placeholder="add-a-short-description-for-this-page"></textarea>
+      <div class="form-builder-layout">
+        <div class="layout-page">
+          <div class="row">
+            <div class="col col-empty col-md-12" data-ddm-field-row="0" data-ddm-field-page="0">
+              <div class="ddm-target"></div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-3 col-ddm" data-ddm-field-row="0" data-ddm-field-page="0" data-ddm-field-column="0">
+              <div class="ddm-field-container">
+                <div class="ddm-resize-handle-left"></div>
+                <div class="ddm-drag">
+                  <div class="ddm-field-not-found">Field doesn't exist.</div>
+                </div>
+                <div class="ddm-field-actions-container">
+                  <button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button">
+                    <svg aria-hidden="true" class="lexicon-icon lexicon-icon-paste" focusable="false">
+                      <title>paste</title>
+                      <use xlink:href="icons.svg#paste"></use>
+                    </svg>
+                  </button>
+                  <button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button">
+                    <svg aria-hidden="true" class="lexicon-icon lexicon-icon-trash" focusable="false">
+                      <title>trash</title>
+                      <use xlink:href="icons.svg#trash"></use>
+                    </svg>
+                  </button>
+                </div>
+                <div class="ddm-resize-handle-right"></div>
+              </div>
+            </div>
+            <div class="col col-empty col-md-9" data-ddm-field-row="0" data-ddm-field-page="0" data-ddm-field-column="1">
+              <div class="ddm-target"></div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col col-empty col-md-12" data-ddm-field-row="1" data-ddm-field-page="0">
+              <div class="ddm-target"></div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-4 col-ddm" data-ddm-field-row="1" data-ddm-field-page="0" data-ddm-field-column="0">
+              <div class="ddm-field-container">
+                <div class="ddm-resize-handle-left"></div>
+                <div class="ddm-drag">
+                  <div class="ddm-field-not-found">Field doesn't exist.</div>
+                  <div class="ddm-field-not-found">Field doesn't exist.</div>
+                </div>
+                <div class="ddm-field-actions-container">
+                  <button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button">
+                    <svg aria-hidden="true" class="lexicon-icon lexicon-icon-paste" focusable="false">
+                      <title>paste</title>
+                      <use xlink:href="icons.svg#paste"></use>
+                    </svg>
+                  </button>
+                  <button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button">
+                    <svg aria-hidden="true" class="lexicon-icon lexicon-icon-trash" focusable="false">
+                      <title>trash</title>
+                      <use xlink:href="icons.svg#trash"></use>
+                    </svg>
+                  </button>
+                </div>
+                <div class="ddm-resize-handle-right"></div>
+              </div>
+            </div>
+            <div class="col-md-6 col-ddm" data-ddm-field-row="1" data-ddm-field-page="0" data-ddm-field-column="1">
+              <div class="ddm-field-container">
+                <div class="ddm-resize-handle-left"></div>
+                <div class="ddm-drag">
+                  <div class="ddm-field-not-found">Field doesn't exist.</div>
+                </div>
+                <div class="ddm-field-actions-container">
+                  <button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button">
+                    <svg aria-hidden="true" class="lexicon-icon lexicon-icon-paste" focusable="false">
+                      <title>paste</title>
+                      <use xlink:href="icons.svg#paste"></use>
+                    </svg>
+                  </button>
+                  <button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button">
+                    <svg aria-hidden="true" class="lexicon-icon lexicon-icon-trash" focusable="false">
+                      <title>trash</title>
+                      <use xlink:href="icons.svg#trash"></use>
+                    </svg>
+                  </button>
+                </div>
+                <div class="ddm-resize-handle-right"></div>
+              </div>
+            </div>
+            <div class="col col-empty col-md-2" data-ddm-field-row="1" data-ddm-field-page="0" data-ddm-field-column="2">
+              <div class="ddm-target"></div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col col-empty col-md-12" data-ddm-field-row="2" data-ddm-field-page="0">
+              <div class="ddm-target"></div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12 col-ddm" data-ddm-field-row="2" data-ddm-field-page="0" data-ddm-field-column="0">
+              <div class="ddm-field-container">
+                <div class="ddm-resize-handle-left"></div>
+                <div class="ddm-drag">
+                  <div class="ddm-field-not-found">Field doesn't exist.</div>
+                </div>
+                <div class="ddm-field-actions-container">
+                  <button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button">
+                    <svg aria-hidden="true" class="lexicon-icon lexicon-icon-paste" focusable="false">
+                      <title>paste</title>
+                      <use xlink:href="icons.svg#paste"></use>
+                    </svg>
+                  </button>
+                  <button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button">
+                    <svg aria-hidden="true" class="lexicon-icon lexicon-icon-trash" focusable="false">
+                      <title>trash</title>
+                      <use xlink:href="icons.svg#trash"></use>
+                    </svg>
+                  </button>
+                </div>
+                <div class="ddm-resize-handle-right"></div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col col-empty col-md-12" data-ddm-field-row="3" data-ddm-field-page="0">
+              <div class="ddm-target"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="dropdown-menu" ref="menu">
+  <ul class="list-unstyled">
+    <li>
+      <button class="btn dropdown-item btn-sm btn-link" aria-label="add-new-page" type="button">add-new-page</button>
+    </li>
+    <li>
+      <button class="btn dropdown-item btn-sm btn-link" aria-label="reset-page" type="button">reset-page</button>
+    </li>
+    <li>
+      <button class="btn dropdown-item btn-sm btn-link" aria-label="add-success-page" type="button">add-success-page</button>
     </li>
   </ul>
 </div>
@@ -547,7 +751,7 @@ exports[`FormRenderer PagesSettings should show delete-field option, when the fo
   </div>
   <div class="ddm-page-container-layout">
     <div class="ddm-form-page pl-4 pr-4">
-      <textarea class="form-builder-page-header-title form-control p-0" data-page-id="0" maxlength="120" value="Untitled name" placeholder="untitled-page-x-of-x"></textarea>
+      <textarea class="form-builder-page-header-title form-control p-0" data-page-id="0" maxlength="120" value="Untitled name"></textarea>
       <textarea class="form-builder-page-header-description form-control p-0" data-page-id="0" maxlength="120" placeholder="add-a-short-description-for-this-page"></textarea>
       <div class="form-builder-layout">
         <div class="layout-page">
@@ -897,7 +1101,7 @@ exports[`FormRenderer should back the pagination mode to wizard mode when user c
   </div>
   <div class="ddm-page-container-layout">
     <div class="ddm-form-page pl-4 pr-4">
-      <textarea class="form-builder-page-header-title form-control p-0" data-page-id="0" maxlength="120" value="Untitled name" placeholder="untitled-page-x-of-x"></textarea>
+      <textarea class="form-builder-page-header-title form-control p-0" data-page-id="0" maxlength="120" value="Untitled name"></textarea>
       <textarea class="form-builder-page-header-description form-control p-0" data-page-id="0" maxlength="120" placeholder="add-a-short-description-for-this-page"></textarea>
       <div class="form-builder-layout">
         <div class="layout-page">
@@ -1269,7 +1473,7 @@ exports[`FormRenderer should change the active page 1`] = `
   </div>
   <div class="ddm-page-container-layout">
     <div class="ddm-form-page pl-4 pr-4">
-      <textarea class="form-builder-page-header-title form-control p-0" data-page-id="0" maxlength="120" value="Untitled name" placeholder="untitled-page-x-of-x"></textarea>
+      <textarea class="form-builder-page-header-title form-control p-0" data-page-id="0" maxlength="120" value="Untitled name"></textarea>
       <textarea class="form-builder-page-header-description form-control p-0" data-page-id="0" maxlength="120" placeholder="add-a-short-description-for-this-page"></textarea>
       <div class="form-builder-layout">
         <div class="layout-page">
@@ -1454,7 +1658,7 @@ exports[`FormRenderer should change the active page for a empty page 1`] = `
   </div>
   <div class="ddm-page-container-layout">
     <div class="ddm-form-page pl-4 pr-4">
-      <textarea class="form-builder-page-header-title form-control p-0" data-page-id="0" maxlength="120" value="Untitled name" placeholder="untitled-page-x-of-x"></textarea>
+      <textarea class="form-builder-page-header-title form-control p-0" data-page-id="0" maxlength="120" value="Untitled name"></textarea>
       <textarea class="form-builder-page-header-description form-control p-0" data-page-id="0" maxlength="120" placeholder="add-a-short-description-for-this-page"></textarea>
       <div class="form-builder-layout">
         <div class="layout-page">
@@ -1849,7 +2053,7 @@ exports[`FormRenderer should change the pagination mode when switch pagination m
   </div>
   <div class="ddm-page-container-layout">
     <div class="ddm-form-page pl-4 pr-4">
-      <textarea class="form-builder-page-header-title form-control p-0" data-page-id="0" maxlength="120" value="Untitled name" placeholder="untitled-page-x-of-x"></textarea>
+      <textarea class="form-builder-page-header-title form-control p-0" data-page-id="0" maxlength="120" value="Untitled name"></textarea>
       <textarea class="form-builder-page-header-description form-control p-0" data-page-id="0" maxlength="120" placeholder="add-a-short-description-for-this-page"></textarea>
       <div class="form-builder-layout">
         <div class="layout-page">
@@ -2999,16 +3203,18 @@ exports[`FormRenderer should render a layout with an empty field only in editabl
 `;
 
 exports[`FormRenderer should render a layout with pages in mode of list 1`] = `
-<div aria-labelledby="sidebarLightFormsFieldTab" class="fade tab-pane active show" id="sidebarLightDetails" role="tabpanel">
-  <div class="row">
-    <div class="col-md-3"></div>
-  </div>
-  <div class="row">
-    <div class="col-md-4"></div>
-    <div class="col-md-6"></div>
-  </div>
-  <div class="row">
-    <div class="col-md-12"></div>
+<div class="ddm-page-list-container">
+  <div aria-labelledby="sidebarLightFormsFieldTab" class="fade tab-pane active show" id="sidebarLightDetails" role="tabpanel">
+    <div class="row">
+      <div class="col-md-3"></div>
+    </div>
+    <div class="row">
+      <div class="col-md-4"></div>
+      <div class="col-md-6"></div>
+    </div>
+    <div class="row">
+      <div class="col-md-12"></div>
+    </div>
   </div>
 </div>
 `;

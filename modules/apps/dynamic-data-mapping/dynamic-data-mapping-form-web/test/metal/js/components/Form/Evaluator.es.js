@@ -1,5 +1,5 @@
-import WithEvaluator from '../Evaluator.es';
-import mockPages from './__mock__/mockPages.es';
+import WithEvaluator from 'source/components/Form/Evaluator.es';
+import mockPages from 'mock/mockPages.es';
 
 const fieldType = 'text';
 let component;

@@ -76,11 +76,8 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 
 		Map<File, JunitBatchTestClass> junitTestClasses = getJunitTestClasses();
 
-		for (Map.Entry<File, JUnitBatchTestClassGroup.JunitBatchTestClass>
-				entry : junitTestClasses.entrySet()) {
-
-			JUnitBatchTestClassGroup.JunitBatchTestClass junitBatchTestClass =
-				entry.getValue();
+		for (JUnitBatchTestClassGroup.JunitBatchTestClass junitBatchTestClass :
+				junitTestClasses.values()) {
 
 			File testFile = junitBatchTestClass.getFile();
 

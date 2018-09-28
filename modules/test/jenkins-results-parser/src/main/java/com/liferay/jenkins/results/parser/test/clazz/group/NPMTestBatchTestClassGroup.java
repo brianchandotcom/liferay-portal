@@ -74,11 +74,8 @@ public class NPMTestBatchTestClassGroup extends BatchTestClassGroup {
 		Map<File, NPMTestBatchTestClass> npmTestBatchTestClasses =
 			getNPMTestBatchTestClasses();
 
-		for (Map.Entry<File, NPMTestBatchTestClassGroup.NPMTestBatchTestClass>
-				entry : npmTestBatchTestClasses.entrySet()) {
-
-			NPMTestBatchTestClassGroup.NPMTestBatchTestClass
-				npmTestBatchTestClass = entry.getValue();
+		for (NPMTestBatchTestClassGroup.NPMTestBatchTestClass
+				npmTestBatchTestClass : npmTestBatchTestClasses.values()) {
 
 			File moduleFile = npmTestBatchTestClass.getFile();
 

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.announcements.web.internal.upgrade.v1_1_0;
+package com.liferay.announcements.web.internal.upgrade.v2_0_0;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;

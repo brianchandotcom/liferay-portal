@@ -100,8 +100,8 @@ public class AnnouncementsWebUpgrade implements UpgradeStepRegistrator {
 		registry.register("1.0.3", "1.0.4", new UpgradePortletPreferences());
 
 		registry.register(
-			"1.0.4", "1.1.0",
-			new com.liferay.announcements.web.internal.upgrade.v1_1_0.
+			"1.0.4", "2.0.0",
+			new com.liferay.announcements.web.internal.upgrade.v2_0_0.
 				UpgradePortletPreferences());
 	}
 

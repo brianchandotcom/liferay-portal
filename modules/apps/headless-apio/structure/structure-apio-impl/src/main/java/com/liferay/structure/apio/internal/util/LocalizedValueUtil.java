@@ -31,6 +31,7 @@ public final class LocalizedValueUtil {
 
 		return (value, locale) -> Try.fromFallible(
 			() -> function.apply(value)
+		).toOptional(
 		).map(
 			localizedValue -> localizedValue.getString(locale)
 		).orElse(

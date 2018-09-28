@@ -17,10 +17,12 @@ package com.liferay.forms.apio.internal.helper;
 import com.google.gson.Gson;
 
 import com.liferay.apio.architect.file.BinaryFile;
+import com.liferay.apio.architect.function.throwable.ThrowableFunction;
 import com.liferay.apio.architect.functional.Try;
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
+import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.model.UnlocalizedValue;
 import com.liferay.dynamic.data.mapping.model.Value;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
@@ -90,6 +92,23 @@ public class UploadFileHelper {
 		);
 	}
 
+	private ThrowableFunction<String, Value> _calculateDDMFormFieldValue(
+		DDMFormField ddmFormField) {
+
+		return jsonValue -> {
+			if (ddmFormField.isLocalizable()) {
+				LocalizedValue localizedValue = new LocalizedValue();
+
+				localizedValue.addString(
+					localizedValue.getDefaultLocale(), jsonValue);
+
+				return localizedValue;
+			}
+
+			return new UnlocalizedValue(jsonValue);
+		};
+	}
+
 	private Long _extractFileEntryId(DDMFormFieldValue ddmFormFieldValue) {
 		return Try.fromFallible(
 			ddmFormFieldValue::getValue
@@ -139,7 +158,7 @@ public class UploadFileHelper {
 		).map(
 			gson::toJson
 		).map(
-			UnlocalizedValue::new
+			_calculateDDMFormFieldValue(ddmFormFieldValue.getDDMFormField())
 		).ifSuccess(
 			ddmFormFieldValue::setValue
 		);

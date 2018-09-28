@@ -372,31 +372,6 @@ public class TransactionalPortalCacheHelper {
 			doCommit();
 		}
 
-		protected void doCommit() {
-			if (_removeAll) {
-				if (_skipReplicator) {
-					PortalCacheHelperUtil.removeAllWithoutReplicator(
-						_portalCache);
-				}
-				else {
-					_portalCache.removeAll();
-				}
-			}
-
-			for (Map.Entry<? extends Serializable, ValueEntry> entry :
-					_uncommittedMap.entrySet()) {
-
-				ValueEntry valueEntry = entry.getValue();
-
-				if (commitByRemove) {
-					valueEntry.commitToByRemove(_portalCache, entry.getKey());
-				}
-				else {
-					valueEntry.commitTo(_portalCache, entry.getKey());
-				}
-			}
-		}
-
 		public ValueEntry get(Serializable key) {
 			ValueEntry valueEntry = _uncommittedMap.get(key);
 
@@ -422,6 +397,31 @@ public class TransactionalPortalCacheHelper {
 
 			if (_skipReplicator) {
 				_skipReplicator = skipReplicator;
+			}
+		}
+
+		protected void doCommit() {
+			if (_removeAll) {
+				if (_skipReplicator) {
+					PortalCacheHelperUtil.removeAllWithoutReplicator(
+						_portalCache);
+				}
+				else {
+					_portalCache.removeAll();
+				}
+			}
+
+			for (Map.Entry<? extends Serializable, ValueEntry> entry :
+					_uncommittedMap.entrySet()) {
+
+				ValueEntry valueEntry = entry.getValue();
+
+				if (commitByRemove) {
+					valueEntry.commitToByRemove(_portalCache, entry.getKey());
+				}
+				else {
+					valueEntry.commitTo(_portalCache, entry.getKey());
+				}
 			}
 		}
 

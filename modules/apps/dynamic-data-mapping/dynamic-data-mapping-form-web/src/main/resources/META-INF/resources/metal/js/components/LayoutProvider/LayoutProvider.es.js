@@ -155,6 +155,7 @@ class LayoutProvider extends Component {
 
 		const fieldProperties = {
 			...fieldType,
+			instanceId: generateInstanceId(8),
 			name: fieldType.name,
 			spritemap,
 			type: fieldType.name
@@ -274,6 +275,12 @@ class LayoutProvider extends Component {
 
 		this.setState(
 			{
+				focusedField: {
+					...duplicatedField,
+					columnIndex,
+					pageIndex,
+					rowIndex: newRowIndex
+				},
 				pages: newPages
 			}
 		);
@@ -344,6 +351,21 @@ class LayoutProvider extends Component {
 		);
 	}
 
+	@autobind
+	_handleFocusedFieldChanged(focusedField) {
+		const {columnIndex, pageIndex, rowIndex} = focusedField;
+		let {pages} = this.state;
+
+		pages = this._setColumnFields(pages, {columnIndex, pageIndex, rowIndex}, [focusedField]);
+
+		this.setState(
+			{
+				focusedField,
+				pages
+			}
+		);
+	}
+
 	/**
 	 * @param {!Number} pageIndex
 	 * @private
@@ -389,19 +411,6 @@ class LayoutProvider extends Component {
 		this.setState(
 			{
 				pages: [this.createNewPage()]
-			}
-		);
-	}
-
-	/**
-	 * @param {!Array} pages
-	 * @private
-	 */
-
-	_handlePagesUpdated(pages) {
-		this.setState(
-			{
-				pages
 			}
 		);
 	}
@@ -502,11 +511,12 @@ class LayoutProvider extends Component {
 				activePageUpdated: this._handleActivePageUpdated.bind(this),
 				fieldAdded: this._handleFieldAdded.bind(this),
 				fieldBlurred: this._handleFieldBlurred.bind(this),
-				fieldClicked: this._handleClickedField.bind(this),
+				fieldClicked: this._handleFieldClicked.bind(this),
 				fieldDeleted: this._handleFieldDeleted.bind(this),
 				fieldDuplicated: this._handleFieldDuplicated.bind(this),
 				fieldEdited: this._handleFieldEdited.bind(this),
 				fieldMoved: this._handleFieldMoved.bind(this),
+				focusedFieldUpdated: this._handleFocusedFieldChanged,
 				pageAdded: this._handlePageAdded.bind(this),
 				pageDeleted: this._handlePageDeleted.bind(this),
 				pageReset: this._handlePageReset.bind(this),

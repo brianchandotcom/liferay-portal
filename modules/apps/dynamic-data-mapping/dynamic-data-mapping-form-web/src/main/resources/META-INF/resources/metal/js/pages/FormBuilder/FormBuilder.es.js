@@ -9,6 +9,7 @@ import dom from 'metal-dom';
 import FormRenderer from '../../components/Form/index.es';
 import FormSupport from '../../components/Form/FormSupport.es';
 import Sidebar from '../../components/Sidebar/index.es';
+import {formatFieldName} from '../../util/fieldSupport.es';
 
 /**
  * Builder.
@@ -207,13 +208,19 @@ class Builder extends Component {
 	 * @private
 	 */
 
-	_handleFieldEdited({fieldInstance, property, value}) {
+	_handleFieldEdited({fieldInstance, value}) {
 		const {focusedField, namespace} = this.props;
-		const {settingsContext} = focusedField;
-		const {columnIndex, pageIndex, rowIndex} = focusedField;
+		const {columnIndex, instanceId, pageIndex, rowIndex, settingsContext} = focusedField;
 		const properties = {columnIndex, pageIndex, rowIndex};
+		const {fieldName, initialConfig_: {locale}} = fieldInstance;
 
-		properties[property || fieldInstance.fieldName] = value;
+		if (fieldName === 'name') {
+			properties[fieldName] = formatFieldName(instanceId, locale, value);
+			properties.fieldName = value;
+		}
+		else {
+			properties[fieldName] = value;
+		}
 
 		const visitor = new PagesVisitor(settingsContext.pages);
 
@@ -221,9 +228,11 @@ class Builder extends Component {
 
 		properties.settingsContext = {
 			...settingsContext,
+			columnIndex,
+			pageIndex,
 			pages: visitor.mapFields(
 				field => {
-					if (field.fieldName === fieldInstance.fieldName) {
+					if (field.fieldName === fieldName) {
 						field = {
 							...field,
 							value
@@ -235,10 +244,16 @@ class Builder extends Component {
 							};
 						}
 					}
+
 					return field;
 				}
-			)
+			),
+			rowIndex
 		};
+
+		if (fieldName === 'predefinedValue') {
+			properties.value = value;
+		}
 
 		this.emit('fieldEdited', properties);
 	}
@@ -262,9 +277,19 @@ class Builder extends Component {
 	 * @param {!Object}
 	 * @private
 	 */
-
+	@autobind
 	_handleFieldDuplicated(indexes) {
 		this.emit('fieldDuplicated', indexes);
+	}
+
+	/**
+	 * Continues the propagation of event.
+	 * @param {!Object}
+	 * @private
+	 */
+	@autobind
+	_handleFocusedFieldChanged(focusedField) {
+		this.emit('focusedFieldUpdated', focusedField);
 	}
 
 	willReceiveProps(changes) {
@@ -422,7 +447,10 @@ class Builder extends Component {
 	 */
 
 	render() {
-		const {_handleModalButtonClicked, props} = this;
+		const {
+			_handleModalButtonClicked,
+			props
+		} = this;
 		const {
 			activePage,
 			fieldTypes,
@@ -438,7 +466,7 @@ class Builder extends Component {
 			activePageUpdated: this._handleActivePageUpdated.bind(this),
 			fieldClicked: this._handleFieldClicked.bind(this),
 			fieldDeleted: this._handleDeleteFieldClicked.bind(this),
-			fieldDuplicated: this._handleFieldDuplicated.bind(this),
+			fieldDuplicated: this._handleFieldDuplicated,
 			fieldMoved: this._handleFieldMoved.bind(this),
 			pageAdded: this._handlePageAdded.bind(this),
 			pageDeleted: this._handlePageDeleted.bind(this),
@@ -451,7 +479,10 @@ class Builder extends Component {
 		const sidebarEvents = {
 			fieldAdded: this._handleFieldAdded.bind(this),
 			fieldBlurred: this._handleFieldBlurred.bind(this),
-			fieldEdited: this._handleFieldEdited.bind(this)
+			fieldDeleted: this._handleDeleteFieldClicked.bind(this),
+			fieldDuplicated: this._handleFieldDuplicated,
+			fieldEdited: this._handleFieldEdited.bind(this),
+			focusedFieldUpdated: this._handleFocusedFieldChanged
 		};
 
 		return (

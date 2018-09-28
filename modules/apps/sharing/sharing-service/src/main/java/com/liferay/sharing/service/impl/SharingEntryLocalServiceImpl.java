@@ -223,6 +223,18 @@ public class SharingEntryLocalServiceImpl
 	}
 
 	/**
+	 * Returns the number of sharing entries of a resource that have been shared
+	 * by to user returning at most one per shared model.
+	 *
+	 * @param  toUserId the user id*
+	 * @return the number of sharing entries
+	 */
+	@Override
+	public int countToUserSharingEntriesUnique(long toUserId) {
+		return sharingEntryFinder.countByToUserIdUnique(toUserId);
+	}
+
+	/**
 	 * Deletes all sharing entries whose expiration date is before the current
 	 * date.
 	 */
@@ -470,6 +482,20 @@ public class SharingEntryLocalServiceImpl
 		long toUserId, long classNameId) {
 
 		return sharingEntryPersistence.findByTU_C(toUserId, classNameId);
+	}
+
+	/**
+	 * Returns a list of all the sharing entries of a resource that has been
+	 * shared to a user returning at most one per shared model
+	 *
+	 * @param  toUserId the user id*
+	 * @return the list of sharing entries
+	 */
+	@Override
+	public List<SharingEntry> getToUserSharingEntriesUnique(
+		long toUserId, int start, int end) {
+
+		return sharingEntryFinder.findByToUserIdUnique(toUserId, start, end);
 	}
 
 	/**

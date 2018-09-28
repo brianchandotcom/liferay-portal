@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.search.filter.RangeTermFilter;
 import com.liferay.portal.kernel.search.filter.TermFilter;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.structured.content.apio.architect.entity.EntityField;
+import com.liferay.structured.content.apio.architect.entity.EntityModel;
 import com.liferay.structured.content.apio.architect.filter.expression.BinaryExpression;
 import com.liferay.structured.content.apio.architect.filter.expression.LiteralExpression;
 import com.liferay.structured.content.apio.internal.architect.filter.expression.LiteralExpressionImpl;
@@ -81,8 +82,7 @@ public class ExpressionVisitorImplTest {
 	@Test
 	public void testVisitBinaryExpressionOperationWithEqualOperation() {
 		Map<String, EntityField> entityFieldsMap =
-			_structuredContentSingleEntitySchemaBasedEdmProvider.
-				getEntityFieldsMap();
+			_entityModel.getEntityFieldsMap();
 
 		EntityField entityField = entityFieldsMap.get("title");
 
@@ -100,8 +100,7 @@ public class ExpressionVisitorImplTest {
 	@Test
 	public void testVisitBinaryExpressionOperationWithGreaterEqualOperation() {
 		Map<String, EntityField> entityFieldsMap =
-			_structuredContentSingleEntitySchemaBasedEdmProvider.
-				getEntityFieldsMap();
+			_entityModel.getEntityFieldsMap();
 
 		EntityField entityField = entityFieldsMap.get("title");
 
@@ -121,8 +120,7 @@ public class ExpressionVisitorImplTest {
 	@Test
 	public void testVisitBinaryExpressionOperationWithLowerEqualOperation() {
 		Map<String, EntityField> entityFieldsMap =
-			_structuredContentSingleEntitySchemaBasedEdmProvider.
-				getEntityFieldsMap();
+			_entityModel.getEntityFieldsMap();
 
 		EntityField entityField = entityFieldsMap.get("title");
 
@@ -243,32 +241,28 @@ public class ExpressionVisitorImplTest {
 			_expressionVisitorImpl.visitLiteralExpression(literalExpression));
 	}
 
+	private static final EntityModel _entityModel = new EntityModel() {
+
+		@Override
+		public Map<String, EntityField> getEntityFieldsMap() {
+			return Stream.of(
+				new EntityField(
+					"title", EntityField.Type.STRING, locale -> "title")
+			).collect(
+				Collectors.toMap(EntityField::getName, Function.identity())
+			);
+		}
+
+		@Override
+		public String getName() {
+			return "SomeEntityName";
+		}
+
+	};
+
 	private static final ExpressionVisitorImpl _expressionVisitorImpl =
 		new ExpressionVisitorImpl(
 			new SimpleDateFormat("yyyyMMddHHmmss"), LocaleUtil.getDefault(),
-			ExpressionVisitorImplTest.
-				_structuredContentSingleEntitySchemaBasedEdmProvider);
-
-	private static final StructuredContentSingleEntitySchemaBasedEdmProvider
-		_structuredContentSingleEntitySchemaBasedEdmProvider =
-			new StructuredContentSingleEntitySchemaBasedEdmProvider() {
-
-				@Override
-				public Map<String, EntityField> getEntityFieldsMap() {
-					return Stream.of(
-						new EntityField(
-							"title", EntityField.Type.STRING, locale -> "title")
-					).collect(
-						Collectors.toMap(
-							EntityField::getName, Function.identity())
-					);
-				}
-
-				@Override
-				public String getName() {
-					return "SomeEntityName";
-				}
-
-			};
+			_entityModel);
 
 }

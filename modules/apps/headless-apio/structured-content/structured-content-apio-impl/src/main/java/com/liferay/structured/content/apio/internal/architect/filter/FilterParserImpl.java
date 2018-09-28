@@ -17,6 +17,7 @@ package com.liferay.structured.content.apio.internal.architect.filter;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.structured.content.apio.architect.entity.EntityModel;
 import com.liferay.structured.content.apio.architect.filter.FilterParser;
 import com.liferay.structured.content.apio.architect.filter.InvalidFilterException;
 import com.liferay.structured.content.apio.architect.filter.expression.Expression;
@@ -31,10 +32,6 @@ import org.apache.olingo.server.api.uri.UriInfo;
 import org.apache.olingo.server.api.uri.queryoption.FilterOption;
 import org.apache.olingo.server.core.uri.parser.Parser;
 
-import org.osgi.service.component.annotations.Activate;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * <code>FilterParserImpl</code> transforms a String containing an oData filter
  * in a manageable expression {@link Expression}.
@@ -42,8 +39,16 @@ import org.osgi.service.component.annotations.Reference;
  * @author David Arques
  * @review
  */
-@Component(immediate = true, service = FilterParser.class)
 public class FilterParserImpl implements FilterParser {
+
+	public FilterParserImpl(EntityModel entityModel) {
+		_path = entityModel.getName();
+
+		_parser = new Parser(
+			new EdmProviderImpl(
+				new EntityModelSchemaBasedEdmProvider(entityModel)),
+			OData.newInstance());
+	}
 
 	@Override
 	public Expression parse(String filterString)
@@ -72,28 +77,10 @@ public class FilterParserImpl implements FilterParser {
 		}
 	}
 
-	@Reference(unbind = "-")
-	public void setStructuredContentSingleEntitySchemaBasedEdmProvider(
-		StructuredContentSingleEntitySchemaBasedEdmProvider
-			structuredContentSingleEntitySchemaBasedEdmProvider) {
-
-		_structuredContentSingleEntitySchemaBasedEdmProvider =
-			structuredContentSingleEntitySchemaBasedEdmProvider;
-	}
-
-	@Activate
-	protected void activate() {
-		_parser = new Parser(
-			new EdmProviderImpl(
-				_structuredContentSingleEntitySchemaBasedEdmProvider),
-			OData.newInstance());
-	}
-
 	private UriInfo _getUriInfo(String filterString) {
 		try {
 			return _parser.parseUri(
-				_structuredContentSingleEntitySchemaBasedEdmProvider.getName(),
-				"$filter=" + Encoder.encode(filterString), null, null);
+				_path, "$filter=" + Encoder.encode(filterString), null, null);
 		}
 		catch (ODataException ode) {
 			throw new InvalidFilterException(
@@ -107,8 +94,7 @@ public class FilterParserImpl implements FilterParser {
 	private static final Log _log = LogFactoryUtil.getLog(
 		FilterParserImpl.class);
 
-	private Parser _parser;
-	private StructuredContentSingleEntitySchemaBasedEdmProvider
-		_structuredContentSingleEntitySchemaBasedEdmProvider;
+	private final Parser _parser;
+	private final String _path;
 
 }

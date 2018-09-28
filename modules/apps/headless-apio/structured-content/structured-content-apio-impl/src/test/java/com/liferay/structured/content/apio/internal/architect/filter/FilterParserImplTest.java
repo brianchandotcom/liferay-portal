@@ -15,6 +15,7 @@
 package com.liferay.structured.content.apio.internal.architect.filter;
 
 import com.liferay.structured.content.apio.architect.entity.EntityField;
+import com.liferay.structured.content.apio.architect.entity.EntityModel;
 import com.liferay.structured.content.apio.architect.filter.InvalidFilterException;
 import com.liferay.structured.content.apio.architect.filter.expression.BinaryExpression;
 import com.liferay.structured.content.apio.architect.filter.expression.Expression;
@@ -29,24 +30,12 @@ import org.assertj.core.api.AbstractThrowableAssert;
 import org.assertj.core.api.Assertions;
 
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 
 /**
  * @author David Arques
  */
 public class FilterParserImplTest {
-
-	@Before
-	public void setUp() {
-		_filterParserImpl = new FilterParserImpl();
-
-		_filterParserImpl.
-			setStructuredContentSingleEntitySchemaBasedEdmProvider(
-				_structuredContentSingleEntitySchemaBasedEdmProvider);
-
-		_filterParserImpl.activate();
-	}
 
 	@Test
 	public void testParseNonexistingField() {
@@ -218,9 +207,9 @@ public class FilterParserImplTest {
 		exception.hasMessage("Filter is null");
 	}
 
-	private static final StructuredContentSingleEntitySchemaBasedEdmProvider
-		_structuredContentSingleEntitySchemaBasedEdmProvider =
-			new StructuredContentSingleEntitySchemaBasedEdmProvider() {
+	private static final FilterParserImpl _filterParserImpl =
+		new FilterParserImpl(
+			new EntityModel() {
 
 				@Override
 				public Map<String, EntityField> getEntityFieldsMap() {
@@ -242,8 +231,6 @@ public class FilterParserImplTest {
 					return "SomeEntityName";
 				}
 
-			};
-
-	private FilterParserImpl _filterParserImpl;
+			});
 
 }

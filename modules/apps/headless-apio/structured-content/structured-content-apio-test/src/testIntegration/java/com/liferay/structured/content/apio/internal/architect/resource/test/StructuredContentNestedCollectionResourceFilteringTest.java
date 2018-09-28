@@ -1107,7 +1107,7 @@ public class StructuredContentNestedCollectionResourceFilteringTest
 		Assert.assertEquals("title value", termQuery.getValue());
 	}
 
-	@Inject
+	@Inject(filter = "entity.model.name=StructuredContent")
 	private FilterParser _filterParser;
 
 	@DeleteAfterTestRun

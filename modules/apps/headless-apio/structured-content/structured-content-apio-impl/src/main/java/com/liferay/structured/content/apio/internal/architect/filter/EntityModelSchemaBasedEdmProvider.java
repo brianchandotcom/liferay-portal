@@ -15,6 +15,7 @@
 package com.liferay.structured.content.apio.internal.architect.filter;
 
 import com.liferay.structured.content.apio.architect.entity.EntityField;
+import com.liferay.structured.content.apio.architect.entity.EntityModel;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -47,31 +48,14 @@ import org.apache.olingo.server.core.SchemaBasedEdmProvider;
  * @author David Arques
  * @review
  */
-public abstract class BaseSingleEntitySchemaBasedEdmProvider
-	extends SchemaBasedEdmProvider {
+public class EntityModelSchemaBasedEdmProvider extends SchemaBasedEdmProvider {
 
-	public BaseSingleEntitySchemaBasedEdmProvider() {
+	public EntityModelSchemaBasedEdmProvider(EntityModel entityModel) {
 		addSchema(
 			_createCsdlSchema(
-				"HypermediaRestApis", getName(),
-				_createCsdlProperties(getEntityFieldsMap())));
+				"HypermediaRestApis", entityModel.getName(),
+				_createCsdlProperties(entityModel.getEntityFieldsMap())));
 	}
-
-	/**
-	 * Returns a Map with all the entity fields used to create the EDM.
-	 *
-	 * @return the entity field map
-	 * @review
-	 */
-	public abstract Map<String, EntityField> getEntityFieldsMap();
-
-	/**
-	 * Returns the name of the single entity type used to create the EDM.
-	 *
-	 * @return the entity type name
-	 * @review
-	 */
-	public abstract String getName();
 
 	private CsdlEntityContainer _createCsdlEntityContainer(
 		String namespace, String name) {

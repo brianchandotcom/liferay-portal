@@ -208,7 +208,7 @@ public class PropertiesLiferayPluginPackageLiferayVersionsCheck
 
 	private static final Pattern _liferayVersionsPattern = Pattern.compile(
 		"\nliferay-versions=(.*)\n");
-	private final Pattern _portalKernelReleaseInfoVersionPattern =
+	private static final Pattern _portalKernelReleaseInfoVersionPattern =
 		Pattern.compile("private static final String _VERSION = \"(.*)\";");
 	private static final Pattern _portalVersionPattern = Pattern.compile(
 		"(\\w+\\.\\w+)\\.\\w+");

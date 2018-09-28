@@ -6,6 +6,7 @@
 	{@param? _handleDeleteButtonClicked: any}
 	{@param? _handleDuplicateButtonClicked: any}
 	{@param? _handleExpandedChanged: any}
+	{@param? _handleFieldClicked: any}
 	{@param? _handleFieldEdited: any}
 	{@param? _handlePaginationLeftClicked: any}
 	{@param? _handlePaginationRightClicked: any}
@@ -31,6 +32,7 @@
 		{param _handleDeleteButtonClicked: $_handleDeleteButtonClicked /}
 		{param _handleDuplicateButtonClicked: $_handleDuplicateButtonClicked /}
 		{param _handleExpandedChanged: $_handleExpandedChanged /}
+		{param _handleFieldClicked: $_handleFieldClicked /}
 		{param _handleFieldEdited: $_handleFieldEdited /}
 		{param _handlePaginationLeftClicked: $_handlePaginationLeftClicked /}
 		{param _handlePaginationRightClicked: $_handlePaginationRightClicked /}
@@ -58,6 +60,7 @@
 	{@param? _handleDeleteButtonClicked: any}
 	{@param? _handleDuplicateButtonClicked: any}
 	{@param? _handleExpandedChanged: any}
+	{@param? _handleFieldClicked: any}
 	{@param? _handleFieldEdited: any}
 	{@param? _handlePaginationLeftClicked: any}
 	{@param? _handlePaginationRightClicked: any}
@@ -102,6 +105,7 @@
 				{param events: [
 					'successPageChanged': $_handleSuccesPageChanged
 				] /}
+				{param ref: 'successPage' /}
 			{/call}
 		{else}
 			{for $page in $pages}
@@ -112,11 +116,13 @@
 					{param events: [
 						'deleteFieldClicked': $_handleDeleteButtonClicked,
 						'duplicateButtonClicked': $_handleDuplicateButtonClicked,
+						'fieldClicked': $_handleFieldClicked,
 						'fieldEdited': $_handleFieldEdited,
 						'updatePage': $_handleUpdatePage
 					] /}
 					{param page: $page /}
 					{param pageId: index($page) /}
+					{param ref: 'pageRenderer' /}
 					{param spritemap: $spritemap /}
 					{param total: $total /}
 				{/call}
@@ -354,21 +360,23 @@
 	{@param? pages: ?}
 	{@param? total: int}
 
-	{for $page in $pages}
-		{call PageRenderer.render}
-			{param activePage: $activePage /}
-			{param contentRenderer: $contentRenderer /}
-			{param editable: $editable /}
-			{param events: [
-				'deleteFieldClicked': $_handleDeleteButtonClicked,
-				'duplicateButtonClicked': $_handleDuplicateButtonClicked,
-				'fieldEdited': $_handleFieldEdited,
-				'updatePage': $_handleUpdatePage
-			] /}
-			{param page: $page /}
-			{param pageId: index($page) /}
-			{param spritemap: $spritemap /}
-			{param total: $total /}
-		{/call}
-	{/for}
+	<div class="ddm-page-list-container">
+		{for $page in $pages}
+			{call PageRenderer.render}
+				{param activePage: $activePage /}
+				{param contentRenderer: $contentRenderer /}
+				{param editable: $editable /}
+				{param events: [
+					'deleteFieldClicked': $_handleDeleteButtonClicked,
+					'duplicateButtonClicked': $_handleDuplicateButtonClicked,
+					'fieldEdited': $_handleFieldEdited,
+					'updatePage': $_handleUpdatePage
+				] /}
+				{param page: $page /}
+				{param pageId: index($page) /}
+				{param spritemap: $spritemap /}
+				{param total: $total /}
+			{/call}
+		{/for}
+	</div>
 {/deltemplate}

@@ -125,6 +125,9 @@ class FormRenderer extends Component {
 		}
 	}
 
+	/**
+	 * @inheritDoc
+	 */
 	disposeInternal() {
 		super.disposeInternal();
 		this.disposeDragAndDrop();
@@ -148,6 +151,10 @@ class FormRenderer extends Component {
 			}
 		}
 		return nextState;
+	}
+
+	_handleFieldClicked(index) {
+		this.emit('fieldClicked', index);
 	}
 
 	/**
@@ -453,7 +460,8 @@ class FormRenderer extends Component {
 		this._dragAndDrop = new DragDrop(
 			{
 				sources: '.ddm-drag',
-				targets: '.ddm-target'
+				targets: '.ddm-target',
+				useShim: false
 			}
 		);
 

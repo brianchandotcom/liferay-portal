@@ -133,24 +133,6 @@ class PageRenderer extends Component {
 	}
 
 	/**
-	 * @param {!Event} event
-	 * @param {!String} mode
-	 * @private
-	 */
-
-	_emitFieldClicked(event, mode) {
-		const index = FormSupport.getIndexes(event);
-
-		this.emit(
-			'fieldClicked',
-			{
-				...index,
-				mode
-			}
-		);
-	}
-
-	/**
 	 * @param {number} pageId
 	 * @private
 	 */
@@ -260,10 +242,15 @@ class PageRenderer extends Component {
 	 * @private
 	 */
 
-	_handleSelectFieldFocused(event) {
-		this._emitFieldClicked(
-			event.delegateTarget.parentElement.parentElement,
-			'edit'
+	_handleSelectFieldFocused({delegateTarget}) {
+		const fieldNode = delegateTarget.parentElement.parentElement;
+		const index = FormSupport.getIndexes(fieldNode);
+
+		this.emit(
+			'fieldClicked',
+			{
+				...index
+			}
 		);
 	}
 

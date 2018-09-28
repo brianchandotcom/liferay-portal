@@ -81,12 +81,46 @@ class Builder extends Component {
 
 	/**
 	 * Continues the propagation of event.
-	 * @param {!Object} indexAllocateField
+	 * @param {!Object} index
 	 * @private
 	 */
 
-	_handleFieldClicked(indexAllocateField) {
-		this.emit('fieldClicked', indexAllocateField);
+	_handleFieldClicked({pageIndex, rowIndex, columnIndex}) {
+		const {pages} = this.props;
+		const fieldProperties = FormSupport.getField(pages, pageIndex, rowIndex, columnIndex);
+		const {spritemap} = this.props;
+		const {settingsContext} = fieldProperties;
+		const visitor = new PagesVisitor(settingsContext.pages);
+
+		this.openSidebar();
+
+		this.emit(
+			'fieldClicked',
+			{
+				...fieldProperties,
+				columnIndex,
+				pageIndex,
+				rowIndex,
+				settingsContext: {
+					...settingsContext,
+					pages: visitor.mapFields(
+						field => {
+							const {fieldName} = field;
+
+							if (fieldName === 'name') {
+								field.visible = true;
+							}
+							else if (fieldName === 'label') {
+								field.type = 'text';
+							}
+
+							return field;
+						}
+					)
+				},
+				spritemap
+			}
+		);
 	}
 
 	_handleDeleteFieldClicked(indexes) {

@@ -134,10 +134,10 @@ class LayoutProvider extends Component {
 	 * @private
 	 */
 
-	_handleClickedField(data) {
+	_handleFieldClicked(focusedField) {
 		this.setState(
 			{
-				focusedField: data
+				focusedField
 			}
 		);
 	}

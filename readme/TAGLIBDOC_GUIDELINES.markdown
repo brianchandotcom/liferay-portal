@@ -56,8 +56,7 @@ Write tag descriptions like a champ, by following these rules!
 
 Example:
 
-    <description>Provides the Liferay UI component tags, prefixed with
-    <![CDATA[<code>liferay-ui:</code>]]>.</description>
+    <description>Provides the Liferay UI component tags, prefixed with <![CDATA[<code>liferay-ui:</code>]]>.</description>
 
     <short-name>liferay-ui</short-name>
 
@@ -65,8 +64,7 @@ Example:
 
 Example:
 
-    <description>Creates a flag icon that lets users report inappropriate
-    content.</description>
+    <description>Creates a flag icon that lets users report inappropriate content.</description>
 
     <name>flags</name>
 
@@ -86,15 +84,11 @@ render the UI element
 
 Liferay Portal Repo Example:
 
-    <description>Creates a tabbed UI of section dividers that each house their own
-    content.<![CDATA[<br /><br />Example:<br />
-    <img src="../images/liferay-ui/tabs.png"/>]]>
-    </description>
+    <description>Creates a tabbed UI of section dividers that each house their own content.<![CDATA[<br /><br />Example:<br /> <img src="../images/liferay-ui/tabs.png"/>]]></description>
 
 Module Example:
 
-    <description>Hello World <![CDATA[<img src="../images/breadcrumb.png"]]>
-    </description>
+    <description>Hello World <![CDATA[<img src="../images/breadcrumb.png"]]></description>
 
 ### Punctuate every attribute description (sentence or fragment) with a period [](id=punctuate-every-attribute-description-sentence-or-fragment-with-a-period)
 
@@ -102,8 +96,7 @@ Example:
 
     <attribute>
 
-        <description>The Java class name for any categories added to the
-        entry.</description>
+        <description>The Java class name for any categories added to the entry.</description>
 
         <name>assetCategoryClassName</name>
 
@@ -115,8 +108,7 @@ Example:
 
     <attribute>
 
-        <description>Can hold miscellaneous data. This data is not shared with
-        the browser.</description>
+        <description>Can hold miscellaneous data. This data is not shared with the browser.</description>
 
         <name>data</name>
 
@@ -225,8 +217,7 @@ Example:
 
 Follow this pattern:
 
-    <description>A variable name for the component.
-    [Any additional details]</description>
+    <description>A variable name for the component. [Any additional details]</description>
 
 Example:
 
@@ -238,13 +229,11 @@ Example:
 
 Follow this pattern:
 
-    <description>A function to be called on the user clicking the component.
-    [Any additional details]</description>
+    <description>A function to be called on the user clicking the component. [Any additional details]</description>
 
 Example:
 
-    <description>A function to be called on the user clicking the component.
-    </description>
+    <description>A function to be called on the user clicking the component.</description>
 
     <name>onClick</name>
 
@@ -316,8 +305,7 @@ replaced it.
 
 Example:
 
-    <description>Deprecated as of 7.0.0, replaced by
-    <![CDATA[<code>liferay-aui:nav-item</code>]]></description>
+    <description>Deprecated as of 7.0.0, replaced by <![CDATA[<code>liferay-aui:nav-item</code>]]></description>
 
 ### Deprecated tags with no direct replacement [](id=deprecated-tags-with-no-direct-replacement)
 

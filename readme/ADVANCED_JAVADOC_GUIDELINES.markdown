@@ -224,8 +224,7 @@ The preferred format for common `@deprecated` messages are listed below.
 you're providing a class/method link in the same module it resides in.
 Therefore, if you need to refer to a class in your `@deprecated` tag, you'll
 need to follow a slightly different pattern. See the
-[Javadoc Linking](JAVADOC_GUIDELINES.markdown#javadoc-linking) section for
-more details.
+[Javadoc Linking](#javadoc-linking) section for more details.
 
 ## Method Descriptions
 
@@ -1327,15 +1326,11 @@ Example,
 /**
  * ...
  * @param male whether the user is male
- * ...
  * @param sendEmail whether to send the user an email notification about
  *        their new account
  * ...
  */
-public User addUser(
-			..., boolean male,
-			..., boolean sendEmail,
-			...)
+public User addUser(..., boolean male, boolean sendEmail, ...)
 ```
 
 For a working example, see
@@ -1430,9 +1425,9 @@ describe it properly.
 /**
  * ...
  * @param  andSearch whether every field must match its keywords, or just
- *         one field. For example, &quot;users with the first name 'bob' and
- *         last name 'smith'&quot; vs &quot;users with the first name 'bob'
- *         or the last name 'smith'&quot;.
+ *         one field. For example, "users with the first name 'bob' and last
+ *         name 'smith'" vs "users with the first name 'bob' or the last name
+ *         'smith'".
  * ...
  */
 public List<User> search( ... , String firstName, String middleName, … , boolean andSearch, ... )

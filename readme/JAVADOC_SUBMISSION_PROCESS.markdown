@@ -94,7 +94,7 @@ to complete to ensure Javadoc is properly formatted and ready for submission:
   this, run Source Formatter on your local changes. The steps below
   can be used when reviewing a submission in `liferay-portal`:
     1. Navigate to `liferay-portal/portal-impl` using a command line tool.
-    2. Run `ant format-source-local-changes`.
+    2. Run `ant format-source-current-branch`.
 - Ensure all commit descriptions start with a ticket number (e.g., *LPS-12345
   Javadoc*). If the Javadoc is also associated with an LRDOCS ticket, include
   that in the commit description too (e.g., *LPS-12345 LRDOCS-9876 Javadoc*).

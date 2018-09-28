@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.repository.LocalRepository;
 import com.liferay.portal.kernel.repository.RepositoryProviderUtil;
 import com.liferay.portal.kernel.repository.capabilities.TemporaryFileEntriesCapability;
+import com.liferay.portal.kernel.repository.capabilities.TrashCapability;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -113,10 +114,13 @@ public class EditFolderMVCActionCommand extends BaseMVCActionCommand {
 
 		for (long deleteFolderId : deleteFolderIds) {
 			if (moveToTrash) {
-				Folder folder = _dlTrashService.moveFolderToTrash(
-					deleteFolderId);
+				Folder folder = _dlAppService.getFolder(deleteFolderId);
 
-				if (folder.getModel() instanceof DLFolder) {
+				if (folder.isRepositoryCapabilityProvided(
+						TrashCapability.class)) {
+
+					_dlTrashService.moveFolderToTrash(deleteFolderId);
+
 					trashedModels.add((DLFolder)folder.getModel());
 				}
 			}

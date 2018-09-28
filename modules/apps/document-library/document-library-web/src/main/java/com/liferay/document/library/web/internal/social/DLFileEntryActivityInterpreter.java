@@ -23,6 +23,7 @@ import com.liferay.document.library.kernel.model.DLFolder;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.repository.capabilities.TrashCapability;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
@@ -67,10 +68,11 @@ public class DLFileEntryActivityInterpreter
 		FileEntry fileEntry = _dlAppLocalService.getFileEntry(
 			activity.getClassPK());
 
-		if (fileEntry.getModel() instanceof DLFileEntry) {
-			DLFileEntry dlFileEntry = (DLFileEntry)fileEntry.getModel();
+		if (fileEntry.isRepositoryCapabilityProvided(TrashCapability.class)) {
+			TrashCapability trashCapability = fileEntry.getRepositoryCapability(
+				TrashCapability.class);
 
-			if (dlFileEntry.isInTrash()) {
+			if (trashCapability.isInTrash(fileEntry)) {
 				return StringPool.BLANK;
 			}
 		}

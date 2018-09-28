@@ -14,6 +14,7 @@
 
 package com.liferay.portal.kernel.repository.capabilities;
 
+import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 
@@ -24,6 +25,7 @@ import java.util.List;
 /**
  * @author Iván Zaera
  */
+@ProviderType
 public interface TemporaryFileEntriesCapability extends Capability {
 
 	public FileEntry addTemporaryFileEntry(

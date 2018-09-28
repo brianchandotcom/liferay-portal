@@ -20,8 +20,12 @@ import com.liferay.document.library.repository.external.ExtRepositoryAdapter;
 import com.liferay.document.library.repository.external.ExtRepositoryFolder;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.repository.Repository;
+import com.liferay.portal.kernel.repository.RepositoryProviderUtil;
+import com.liferay.portal.kernel.repository.capabilities.Capability;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.repository.model.RepositoryModelOperation;
 
@@ -106,6 +110,15 @@ public class ExtRepositoryFolderAdapter
 	}
 
 	@Override
+	public <T extends Capability> T getRepositoryCapability(
+		Class<T> capabilityClass) {
+
+		Repository repository = _getRepository();
+
+		return repository.getCapability(capabilityClass);
+	}
+
+	@Override
 	public StagedModelType getStagedModelType() {
 		return new StagedModelType(DLFolderConstants.getClassName());
 	}
@@ -131,6 +144,15 @@ public class ExtRepositoryFolderAdapter
 	}
 
 	@Override
+	public <T extends Capability> boolean isRepositoryCapabilityProvided(
+		Class<T> capabilityClass) {
+
+		Repository repository = _getRepository();
+
+		return repository.isCapabilityProvided(capabilityClass);
+	}
+
+	@Override
 	public boolean isRoot() {
 		return _extRepositoryFolder.isRoot();
 	}
@@ -153,6 +175,16 @@ public class ExtRepositoryFolderAdapter
 	@Override
 	public boolean isSupportsSubscribing() {
 		return false;
+	}
+
+	private Repository _getRepository() {
+		try {
+			return RepositoryProviderUtil.getRepository(getRepositoryId());
+		}
+		catch (PortalException pe) {
+			throw new SystemException(
+				"Unable to get repository for folder " + getFolderId(), pe);
+		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

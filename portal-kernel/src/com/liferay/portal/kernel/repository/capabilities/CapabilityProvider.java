@@ -14,9 +14,12 @@
 
 package com.liferay.portal.kernel.repository.capabilities;
 
+import aQute.bnd.annotation.ProviderType;
+
 /**
  * @author Adolfo Pérez
  */
+@ProviderType
 public interface CapabilityProvider {
 
 	public <T extends Capability> T getCapability(Class<T> capabilityClass);

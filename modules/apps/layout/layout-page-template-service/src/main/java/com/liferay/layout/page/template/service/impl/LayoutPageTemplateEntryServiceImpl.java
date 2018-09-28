@@ -235,7 +235,7 @@ public class LayoutPageTemplateEntryServiceImpl
 	public List<LayoutPageTemplateEntry> getLayoutPageTemplateEntries(
 		long groupId, long classNameId, int type, boolean defaultTemplate) {
 
-		return layoutPageTemplateEntryLocalService.getLayoutPageTemplateEntries(
+		return layoutPageTemplateEntryPersistence.filterFindByG_C_T_D(
 			groupId, classNameId, type, defaultTemplate);
 	}
 

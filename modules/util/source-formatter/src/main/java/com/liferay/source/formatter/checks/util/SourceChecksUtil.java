@@ -107,44 +107,54 @@ public class SourceChecksUtil {
 
 			long startTime = System.currentTimeMillis();
 
-			if (sourceCheck instanceof FileCheck) {
-				sourceChecksResult = _processFileCheck(
-					sourceChecksResult, (FileCheck)sourceCheck, fileName,
-					absolutePath);
-			}
-			else if (sourceCheck instanceof GradleFileCheck) {
-				if (gradleFile == null) {
-					gradleFile = GradleFileParser.parse(
-						fileName, sourceChecksResult.getContent());
+			String newContent = sourceChecksResult.getContent();
+
+			while (true) {
+				if (sourceCheck instanceof FileCheck) {
+					sourceChecksResult = _processFileCheck(
+						sourceChecksResult, (FileCheck)sourceCheck, fileName,
+						absolutePath);
+				}
+				else if (sourceCheck instanceof GradleFileCheck) {
+					if (gradleFile == null) {
+						gradleFile = GradleFileParser.parse(
+							fileName, newContent);
+					}
+
+					sourceChecksResult = _processGradleFileCheck(
+						sourceChecksResult, (GradleFileCheck)sourceCheck,
+						gradleFile, fileName, absolutePath);
+				}
+				else {
+					if (javaClass == null) {
+						try {
+							anonymousClasses =
+								JavaClassParser.parseAnonymousClasses(
+									newContent);
+							javaClass = JavaClassParser.parseJavaClass(
+								fileName, newContent);
+						}
+						catch (ParseException pe) {
+							sourceChecksResult.addSourceFormatterMessage(
+								new SourceFormatterMessage(
+									fileName, pe.getMessage(),
+									CheckType.SOURCE_CHECK,
+									clazz.getSimpleName(), null, -1));
+
+							continue;
+						}
+					}
+
+					sourceChecksResult = _processJavaTermCheck(
+						sourceChecksResult, (JavaTermCheck)sourceCheck,
+						javaClass, anonymousClasses, fileName, absolutePath);
 				}
 
-				sourceChecksResult = _processGradleFileCheck(
-					sourceChecksResult, (GradleFileCheck)sourceCheck,
-					gradleFile, fileName, absolutePath);
-			}
-			else {
-				if (javaClass == null) {
-					try {
-						anonymousClasses =
-							JavaClassParser.parseAnonymousClasses(
-								sourceChecksResult.getContent());
-						javaClass = JavaClassParser.parseJavaClass(
-							fileName, sourceChecksResult.getContent());
-					}
-					catch (ParseException pe) {
-						sourceChecksResult.addSourceFormatterMessage(
-							new SourceFormatterMessage(
-								fileName, pe.getMessage(),
-								CheckType.SOURCE_CHECK, clazz.getSimpleName(),
-								null, -1));
-
-						continue;
-					}
+				if (newContent.equals(sourceChecksResult.getContent())) {
+					break;
 				}
 
-				sourceChecksResult = _processJavaTermCheck(
-					sourceChecksResult, (JavaTermCheck)sourceCheck, javaClass,
-					anonymousClasses, fileName, absolutePath);
+				newContent = sourceChecksResult.getContent();
 			}
 
 			if (showDebugInformation) {

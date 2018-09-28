@@ -56,8 +56,7 @@ Write tag descriptions like a champ, by following these rules!
 
 Example:
 
-    <description>Provides the Liferay UI component tags, prefixed with
-    <![CDATA[<code>liferay-ui:</code>]]>.</description>
+    <description>Provides the Liferay UI component tags, prefixed with <![CDATA[<code>liferay-ui:</code>]]>.</description>
 
     <short-name>liferay-ui</short-name>
 
@@ -218,8 +217,7 @@ Example:
 
 Follow this pattern:
 
-    <description>A variable name for the component.
-    [Any additional details]</description>
+    <description>A variable name for the component. [Any additional details]</description>
 
 Example:
 

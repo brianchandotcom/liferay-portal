@@ -75,8 +75,6 @@ public class BuildDatabaseUtil {
 			return;
 		}
 
-		Process process;
-
 		int maxRetries = 3;
 		int retries = 0;
 
@@ -93,7 +91,8 @@ public class BuildDatabaseUtil {
 					baseDir.getCanonicalPath(), "/",
 					BuildDatabase.BUILD_DATABASE_FILE_NAME);
 
-				process = JenkinsResultsParserUtil.executeBashCommands(command);
+				Process process = JenkinsResultsParserUtil.executeBashCommands(
+					command);
 
 				String standardOut = JenkinsResultsParserUtil.readInputStream(
 					process.getInputStream());

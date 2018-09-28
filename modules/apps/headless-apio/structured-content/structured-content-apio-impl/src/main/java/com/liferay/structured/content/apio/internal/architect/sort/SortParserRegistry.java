@@ -35,7 +35,7 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
  * @author Cristina González
  * @review
  */
-@Component(immediate = true, service = SortParserRegistry.class)
+@Component(immediate = true, service = {})
 public class SortParserRegistry {
 
 	@Activate

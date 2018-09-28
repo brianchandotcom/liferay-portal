@@ -223,17 +223,20 @@ public class JavaClassParser {
 			}
 		}
 
-		boolean isAbstract = startLine.contains(" abstract ");
-		boolean isEnum = startLine.contains(" enum ");
-		boolean isInterface = startLine.contains(" interface ");
-		boolean isStatic = startLine.contains(" static ");
+		boolean isAbstract = SourceUtil.containsUnquoted(
+			startLine, " abstract ");
+		boolean isEnum = SourceUtil.containsUnquoted(startLine, " enum ");
+		boolean isInterface = SourceUtil.containsUnquoted(
+			startLine, " interface ");
+		boolean isStatic = SourceUtil.containsUnquoted(startLine, " static ");
 
 		int x = startLine.indexOf(CharPool.EQUAL);
 		int y = startLine.indexOf(CharPool.OPEN_PARENTHESIS);
 
-		if (startLine.contains(" @interface ") ||
-			startLine.contains(" class ") || startLine.contains(" enum ") ||
-			startLine.contains(" interface ")) {
+		if (SourceUtil.containsUnquoted(startLine, " @interface ") ||
+			SourceUtil.containsUnquoted(startLine, " class ") ||
+			SourceUtil.containsUnquoted(startLine, " enum ") ||
+			SourceUtil.containsUnquoted(startLine, " interface ")) {
 
 			return _parseJavaClass(
 				_getClassName(startLine), javaTermContent, lineNumber,

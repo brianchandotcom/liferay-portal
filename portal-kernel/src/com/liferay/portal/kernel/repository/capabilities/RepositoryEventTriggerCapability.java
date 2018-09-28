@@ -15,6 +15,7 @@
 package com.liferay.portal.kernel.repository.capabilities;
 
 import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.repository.event.RepositoryEventTrigger;
 
 /**

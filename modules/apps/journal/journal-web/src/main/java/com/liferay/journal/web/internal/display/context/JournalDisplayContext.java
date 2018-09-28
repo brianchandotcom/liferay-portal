@@ -17,7 +17,10 @@ package com.liferay.journal.web.internal.display.context;
 import com.liferay.asset.display.page.constants.AssetDisplayPageConstants;
 import com.liferay.asset.display.page.model.AssetDisplayPageEntry;
 import com.liferay.asset.display.page.service.AssetDisplayPageEntryLocalServiceUtil;
+import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.model.AssetEntry;
+import com.liferay.asset.kernel.model.AssetRenderer;
+import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalServiceUtil;
@@ -1319,20 +1322,27 @@ public class JournalDisplayContext {
 	public String getViewContentURL(JournalArticle article)
 		throws PortalException {
 
-		if (!_isShowViewContentURL(article)) {
-			return StringPool.BLANK;
+		AssetRendererFactory<JournalArticle> assetRendererFactory =
+			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClass(
+				JournalArticle.class);
+
+		AssetRenderer<JournalArticle> assetRenderer =
+			assetRendererFactory.getAssetRenderer(article.getResourcePrimKey());
+
+		String viewContentURL = StringPool.BLANK;
+
+		try {
+			viewContentURL = assetRenderer.getURLViewInContext(
+				_liferayPortletRequest, _liferayPortletResponse,
+				_themeDisplay.getURLCurrent());
+		}
+		catch (Exception e) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(e, e);
+			}
 		}
 
-		Map<Locale, String> friendlyURLMap = article.getFriendlyURLMap();
-
-		String friendlyURL = friendlyURLMap.get(
-			_themeDisplay.getSiteDefaultLocale());
-
-		if (Validator.isNull(friendlyURL)) {
-			return StringPool.BLANK;
-		}
-
-		return getFriendlyURLBase() + friendlyURL;
+		return viewContentURL;
 	}
 
 	public List<ViewTypeItem> getViewTypeItems() {

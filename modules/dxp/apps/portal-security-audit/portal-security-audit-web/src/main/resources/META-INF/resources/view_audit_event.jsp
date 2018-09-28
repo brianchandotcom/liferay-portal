@@ -65,15 +65,15 @@ if (auditEventId > 0) {
 				</aui:field-wrapper>
 
 				<aui:field-wrapper label="resource-name">
-					<%= (String)PortalClassInvoker.invoke(false, new MethodKey(ClassResolverUtil.resolve("com.liferay.portal.kernel.security.permission.ResourceActionsUtil", PortalClassLoaderUtil.getClassLoader()), "getModelResource", HttpServletRequest.class, String.class), request, auditEvent.getClassName()) %>
+					<%= auditEvent.getClassName() %>
 
-					(<%= auditEvent.getClassName() %>)
+					(<%= (String)PortalClassInvoker.invoke(false, new MethodKey(ClassResolverUtil.resolve("com.liferay.portal.kernel.security.permission.ResourceActionsUtil", PortalClassLoaderUtil.getClassLoader()), "getModelResource", HttpServletRequest.class, String.class), request, auditEvent.getClassName()) %>)
 				</aui:field-wrapper>
 
 				<aui:field-wrapper label="resource-action">
-					<%= eventTypeAction %>
+					<%= auditEvent.getEventType() %>
 
-					(<%= auditEvent.getEventType() %>)
+					(<%= eventTypeAction %>)
 				</aui:field-wrapper>
 			</aui:col>
 

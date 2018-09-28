@@ -12,13 +12,14 @@
  * details.
  */
 
-package com.liferay.sharing.service.persistence.impl;
+package com.liferay.sharing.service.persistence;
 
-import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
-import com.liferay.sharing.model.SharingEntry;
+import aQute.bnd.annotation.ProviderType;
 
 /**
- * @author Alejandro Tardín
+ * @author Brian Wing Shun Chan
+ * @generated
  */
-public class SharingEntryFinderImpl extends SharingEntryFinderBaseImpl {
+@ProviderType
+public interface SharingEntryFinder {
 }

@@ -13,18 +13,20 @@
 	{@param? _handleSaveButtonClick: any}
 
 	<div id="{$id}">
-		<ul class="list-group">
-			{foreach $user in $collaborators}
-				<li class="list-group-item list-group-item-flex" id="collaborator{$user.id}">
-					{call .collaborator}
-						{param _handleChangePermission: $_handleChangePermission /}
-						{param _handleDeleteCollaborator: $_handleDeleteCollaborator /}
-						{param spritemap: $spritemap /}
-						{param user: $user /}
-					{/call}
-				</li>
-			{/foreach}
-		</ul>
+		<div class="modal-body inline-scroller">
+			<ul class="list-group">
+				{foreach $user in $collaborators}
+					<li class="list-group-item list-group-item-flex" id="collaborator{$user.id}">
+						{call .collaborator}
+							{param _handleChangePermission: $_handleChangePermission /}
+							{param _handleDeleteCollaborator: $_handleDeleteCollaborator /}
+							{param spritemap: $spritemap /}
+							{param user: $user /}
+						{/call}
+					</li>
+				{/foreach}
+			</ul>
+		</div>
 
 		<div class="modal-footer">
 			<div class="modal-item-last">

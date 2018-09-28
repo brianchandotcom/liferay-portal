@@ -89,6 +89,19 @@ else {
 	</c:if>
 
 	<c:if test="<%= JournalArticlePermission.contains(permissionChecker, article, ActionKeys.VIEW) %>">
+
+		<%
+		String viewContentURL = journalDisplayContext.getViewContentURL(article);
+		%>
+
+		<c:if test="<%= journalDisplayContext.isShowViewContentURL(article) && Validator.isNotNull(viewContentURL) %>">
+			<liferay-ui:icon
+				message="view-content"
+				target="_blank"
+				url="<%= viewContentURL %>"
+			/>
+		</c:if>
+
 		<liferay-portlet:renderURL plid="<%= JournalUtil.getPreviewPlid(article, themeDisplay) %>" var="previewArticleContentURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
 			<portlet:param name="mvcPath" value="/preview_article_content.jsp" />
 			<portlet:param name="groupId" value="<%= String.valueOf(article.getGroupId()) %>" />
@@ -223,18 +236,6 @@ else {
 			confirmation="are-you-sure-you-want-to-publish-the-selected-web-content"
 			message="publish-to-live"
 			url="<%= publishArticleURL %>"
-		/>
-	</c:if>
-
-	<%
-	String viewContentURL = journalDisplayContext.getViewContentURL(article);
-	%>
-
-	<c:if test="<%= JournalArticlePermission.contains(permissionChecker, article, ActionKeys.VIEW) && journalDisplayContext.isShowViewContentURL(article) && Validator.isNotNull(viewContentURL) %>">
-		<liferay-ui:icon
-			message="view-content"
-			target="_blank"
-			url="<%= viewContentURL %>"
 		/>
 	</c:if>
 </liferay-ui:icon-menu>

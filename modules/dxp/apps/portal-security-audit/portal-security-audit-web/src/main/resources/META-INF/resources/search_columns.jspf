@@ -35,13 +35,15 @@
 <liferay-ui:search-container-column-text
 	href="<%= rowURL %>"
 	name="resource-name"
-	value='<%= (String)PortalClassInvoker.invoke(false, new MethodKey(ClassResolverUtil.resolve("com.liferay.portal.kernel.security.permission.ResourceActionsUtil", PortalClassLoaderUtil.getClassLoader()), "getModelResource", HttpServletRequest.class, String.class), request, event.getClassName()) %>'
+	title='<%= (String)PortalClassInvoker.invoke(false, new MethodKey(ClassResolverUtil.resolve("com.liferay.portal.kernel.security.permission.ResourceActionsUtil", PortalClassLoaderUtil.getClassLoader()), "getModelResource", HttpServletRequest.class, String.class), request, event.getClassName()) %>'
+	value="<%= event.getClassName() %>"
 />
 
 <liferay-ui:search-container-column-text
 	href="<%= rowURL %>"
 	name="resource-action"
-	value='<%= (String)PortalClassInvoker.invoke(false, new MethodKey(ClassResolverUtil.resolve("com.liferay.portal.kernel.security.permission.ResourceActionsUtil", PortalClassLoaderUtil.getClassLoader()), "getAction", HttpServletRequest.class, String.class), request, event.getEventType()) %>'
+	title='<%= (String)PortalClassInvoker.invoke(false, new MethodKey(ClassResolverUtil.resolve("com.liferay.portal.kernel.security.permission.ResourceActionsUtil", PortalClassLoaderUtil.getClassLoader()), "getAction", HttpServletRequest.class, String.class), request, event.getEventType()) %>'
+	value="<%= event.getEventType() %>"
 />
 
 <liferay-ui:search-container-column-text

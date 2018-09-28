@@ -88,7 +88,7 @@
 		</execute>
 
 		<execute macro="SocialBookmarks#viewBookmarkMenuItems">
-			<var name="socialBookmarks" value="Twitter,Facebook,LinkedIn,Google+,AddThis,Delicious,Digg,Evernote,Reddit,Slashdot,StumbleUpon" />
+			<var name="socialBookmarks" value="Twitter,Facebook,LinkedIn,Google+,AddThis,Delicious,Digg,Evernote,Reddit,Slashdot" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
@@ -101,7 +101,7 @@
 		</execute>
 
 		<execute macro="KBArticle#configureKBSocialBookmarkSites">
-			<var name="disableSocialBookmarkSites" value="Twitter,Reddit,Slashdot,StumbleUpon" />
+			<var name="disableSocialBookmarkSites" value="Twitter,Reddit,Slashdot" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
@@ -113,7 +113,7 @@
 		</execute>
 
 		<execute macro="SocialBookmarks#viewBookmarksNotPresent">
-			<var name="socialBookmarks" value="Twitter,Reddit,Slashdot,StumbleUpon" />
+			<var name="socialBookmarks" value="Twitter,Reddit,Slashdot" />
 		</execute>
 	</command>
 
@@ -169,7 +169,7 @@
 		<execute macro="SocialBookmarks#viewDefaultSharableBookmarks" />
 
 		<execute macro="Blogs#disableSocialBookmarkSites">
-			<var name="disableSocialBookmarkSites" value="Google+,AddThis,Delicious,Digg,Evernote,Reddit,Slashdot,StumbleUpon" />
+			<var name="disableSocialBookmarkSites" value="Google+,AddThis,Delicious,Digg,Evernote,Reddit,Slashdot" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
@@ -179,7 +179,7 @@
 		<execute macro="SocialBookmarks#viewShareIconNotPresent" />
 
 		<execute macro="Blogs#enableSocialBookmarkSites">
-			<var name="enableSocialBookmarkSites" value="Google+,AddThis,Delicious,Digg,Evernote,Reddit,Slashdot,StumbleUpon" />
+			<var name="enableSocialBookmarkSites" value="Google+,AddThis,Delicious,Digg,Evernote,Reddit,Slashdot" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
@@ -192,7 +192,7 @@
 		</execute>
 
 		<execute macro="SocialBookmarks#viewBookmarkMenuItems">
-			<var name="socialBookmarks" value="Google+,AddThis,Delicious,Digg,Evernote,Reddit,Slashdot,StumbleUpon" />
+			<var name="socialBookmarks" value="Google+,AddThis,Delicious,Digg,Evernote,Reddit,Slashdot" />
 		</execute>
 	</command>
 
@@ -252,7 +252,7 @@
 		</execute>
 
 		<execute macro="SocialBookmarks#viewBookmarkMenuItems">
-			<var name="socialBookmarks" value="Twitter,Facebook,LinkedIn,Google+,AddThis,Delicious,Digg,Evernote,Reddit,Slashdot,StumbleUpon" />
+			<var name="socialBookmarks" value="Twitter,Facebook,LinkedIn,Google+,AddThis,Delicious,Digg,Evernote,Reddit,Slashdot" />
 		</execute>
 	</command>
 </definition>

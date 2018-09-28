@@ -55,14 +55,6 @@ List<AssetRendererFactory<?>> classTypesAssetRendererFactories = new ArrayList<>
 			id="<%= AssetPublisherConstants.FORM_NAVIGATOR_ID_CONFIGURATION %>"
 			showButtons="<%= false %>"
 		/>
-
-		<c:if test="<%= !assetPublisherDisplayContext.isSelectionStyleAssetList() %>">
-			<div class="mb-2">
-				<aui:a cssClass="create-asset-list-link" href="javascript:;">
-					<liferay-ui:message key="create-an-asset-list-from-this-configuration" />
-				</aui:a>
-			</div>
-		</c:if>
 	</liferay-frontend:edit-form-body>
 
 	<liferay-frontend:edit-form-footer>

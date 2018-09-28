@@ -1,0 +1,8 @@
+Bundle-Name: Liferay Segments API
+Bundle-SymbolicName: com.liferay.segments.api
+Bundle-Version: 1.0.0
+Export-Package:\
+	com.liferay.segments.exception,\
+	com.liferay.segments.model,\
+	com.liferay.segments.service,\
+	com.liferay.segments.service.persistence

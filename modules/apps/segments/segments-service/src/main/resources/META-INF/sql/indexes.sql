@@ -1,0 +1,5 @@
+create index IX_2E0C3F77 on SegmentsEntry (groupId, active_);
+create unique index IX_E72E3826 on SegmentsEntry (groupId, key_[$COLUMN_LENGTH:75$]);
+
+create index IX_E1165342 on SegmentsEntryRel (classNameId, classPK);
+create index IX_AB286250 on SegmentsEntryRel (segmentsEntryId);

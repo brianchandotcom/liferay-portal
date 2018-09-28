@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+
+<beans
+	default-destroy-method="destroy"
+	default-init-method="afterPropertiesSet"
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd"
+>
+	<bean class="com.liferay.segments.service.impl.SegmentsEntryLocalServiceImpl" id="com.liferay.segments.service.SegmentsEntryLocalService" />
+	<bean class="com.liferay.segments.service.impl.SegmentsEntryServiceImpl" id="com.liferay.segments.service.SegmentsEntryService" />
+	<bean class="com.liferay.segments.service.persistence.impl.SegmentsEntryPersistenceImpl" id="com.liferay.segments.service.persistence.SegmentsEntryPersistence" parent="basePersistence" />
+	<bean class="com.liferay.segments.service.impl.SegmentsEntryRelLocalServiceImpl" id="com.liferay.segments.service.SegmentsEntryRelLocalService" />
+	<bean class="com.liferay.segments.service.persistence.impl.SegmentsEntryRelPersistenceImpl" id="com.liferay.segments.service.persistence.SegmentsEntryRelPersistence" parent="basePersistence" />
+</beans>

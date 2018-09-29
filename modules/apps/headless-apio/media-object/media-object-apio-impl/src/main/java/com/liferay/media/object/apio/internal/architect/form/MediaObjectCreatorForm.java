@@ -48,7 +48,7 @@ public class MediaObjectCreatorForm {
 		).constructor(
 			MediaObjectCreatorForm::new
 		).addOptionalLinkedModelList(
-			"categories", CategoryIdentifier.class,
+			"category", CategoryIdentifier.class,
 			MediaObjectCreatorForm::setCategories
 		).addOptionalString(
 			"description", MediaObjectCreatorForm::setDescription

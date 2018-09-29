@@ -16,4 +16,4 @@
  */
 --%>
 
-render page
+${className}MVCRenderCommand page

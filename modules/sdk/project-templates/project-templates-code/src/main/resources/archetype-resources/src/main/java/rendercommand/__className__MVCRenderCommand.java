@@ -14,8 +14,8 @@ import org.osgi.service.component.annotations.Component;
 @Component(
 	immediate = true,
 	property = {
-		"javax.portlet.name=${portletName} RenderPortlet",
-		"mvc.command.name=/$className.toLowerCase()/render"
+		"javax.portlet.name=${portletName}",
+		"mvc.command.name=/${portletName.toLowerCase()}/${className.toLowerCase()}"
 	},
 	service = MVCRenderCommand.class
 )

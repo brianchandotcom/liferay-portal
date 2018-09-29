@@ -17,19 +17,19 @@ import org.osgi.service.log.LogService;
 @Component(
 	immediate = true,
 	property = {
-		"javax.portlet.name=${portletName} Portlet",
-		"mvc.command.name=/$className.toLowerCase()/captcha"
+		"javax.portlet.name=${portletName}",
+		"mvc.command.name=/${portletName.toLowerCase()}/${className.toLowerCase()}"
 	},
 	service = MVCResourceCommand.class
 )
-public class ${className}ResourceCommand implements MVCResourceCommand {
+public class ${className}MVCResourceCommand implements MVCResourceCommand {
 
 	@Override
 	public boolean serveResource(
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws PortletException {
 
-		_log.log(LogService.LOG_INFO, "get captcha resource ");
+		_log.log(LogService.LOG_INFO, "${className} serviceResource");
 
 		try {
 			CaptchaUtil.serveImage(resourceRequest, resourceResponse);

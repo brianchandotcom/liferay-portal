@@ -20,6 +20,8 @@ import com.liferay.project.templates.internal.util.Validator;
 import java.io.File;
 import java.io.IOException;
 
+import java.nio.file.Files;
+
 import java.util.AbstractMap;
 import java.util.Collections;
 import java.util.regex.Matcher;
@@ -233,64 +235,6 @@ public class CodeTemplatesTest {
 	}
 
 	@Test
-	public void testGenerateCodeTemplateMVCPortlet() throws Exception {
-		File destinationDir = temporaryFolder.newFolder("code");
-
-		ProjectTemplatesArgs projectTemplatesArgs = new ProjectTemplatesArgs();
-
-		File archetypesDir = FileUtil.getJarFile(CodeTemplatesTest.class);
-
-		projectTemplatesArgs.setArchetypesDirs(
-			Collections.singletonList(archetypesDir));
-
-		projectTemplatesArgs.setDestinationDir(destinationDir);
-		projectTemplatesArgs.setLiferayVersion("7.1");
-		projectTemplatesArgs.setName("foo");
-		projectTemplatesArgs.setMaven(true);
-		projectTemplatesArgs.setTemplate("mvc-portlet");
-
-		new ProjectTemplates(projectTemplatesArgs);
-
-		File projectDir = new File(destinationDir, "foo");
-
-		archetypesDir = FileUtil.getJarFile(CodeTemplatesTest.class);
-
-		CodeTemplatesArgs codeTemplatesArgs = new CodeTemplatesArgs();
-
-		codeTemplatesArgs.setAddtionalParameters(
-			Collections.unmodifiableMap(
-				Stream.of(
-					new AbstractMap.SimpleEntry<>("portletName", "MVC")
-				).collect(
-					Collectors.toMap(
-						AbstractMap.SimpleEntry::getKey,
-						AbstractMap.SimpleEntry::getValue)
-				)));
-		codeTemplatesArgs.setArchetypesDirs(
-			Collections.singletonList(archetypesDir));
-		codeTemplatesArgs.setAuthor("fred");
-		codeTemplatesArgs.setClassName("Foo");
-		codeTemplatesArgs.setDestinationDir(projectDir);
-		codeTemplatesArgs.setPackageName("com.liferay");
-		codeTemplatesArgs.setTemplate("mvcportlet");
-
-		new CodeTemplates(codeTemplatesArgs);
-
-		File mvcportletFile = new File(
-			projectDir, "src/main/java/com/liferay/mvcportlet/FooPortlet.java");
-
-		Assert.assertTrue(mvcportletFile.exists());
-
-		_testContainsOrNot(
-			projectDir, "src/main/java/com/liferay/mvcportlet/FooPortlet.java",
-			false, true, "MVC Portlet");
-
-		File restDir = new File(projectDir, "src/main/java/com/liferay/rest");
-
-		Assert.assertFalse(restDir.exists());
-	}
-
-	@Test
 	public void testGenerateCodeTemplateRenderCommand() throws Exception {
 		File destinationDir = temporaryFolder.newFolder("code");
 
@@ -342,22 +286,14 @@ public class CodeTemplatesTest {
 		_testContainsOrNot(
 			projectDir,
 			"src/main/java/com/liferay/rendercommand/FooMVCRenderCommand.java",
-			false, true, "mvc.command.name=/foo/render");
+			false, true, "mvc.command.name=/rendercommand/foo");
 
-		File renderPortletFile = new File(
-			projectDir,
-			"src/main/java/com/liferay/rendercommand/FooRenderPortlet.java");
+		if (Validator.isNotNull(ProjectTemplatesTest.BUILD_PROJECTS) &&
+			ProjectTemplatesTest.BUILD_PROJECTS.equals("true")) {
 
-		Assert.assertTrue(renderPortletFile.exists());
-
-		_testContainsOrNot(
-			projectDir,
-			"src/main/java/com/liferay/rendercommand/FooRenderPortlet.java",
-			false, true, "RenderCommand Render Portlet");
-
-		File restDir = new File(projectDir, "src/main/java/com/liferay/rest");
-
-		Assert.assertFalse(restDir.exists());
+			ProjectTemplatesTest.executeGradle(
+				projectDir, _GRADLE_TASK_PATH_BUILD);
+		}
 	}
 
 	@Test
@@ -403,32 +339,38 @@ public class CodeTemplatesTest {
 
 		new CodeTemplates(codeTemplatesArgs);
 
-		File resourceCommandFile = new File(
-			projectDir,
-			"src/main/java/com/liferay/resourcecommand" +
-				"/FooResourceCommand.java");
+		File javaDir = new File(projectDir, "src/main/java");
 
-		Assert.assertTrue(resourceCommandFile.exists());
+		File mvcResourceCommandFile = new File(
+			javaDir, "com/liferay/resourcecommand/FooMVCResourceCommand.java");
 
-		_testContainsOrNot(
-			projectDir,
-			"src/main/java/com/liferay/resourcecommand/FooResourceCommand.java",
-			false, true, "mvc.command.name=/foo/captcha");
-
-		File portletFile = new File(
-			projectDir,
-			"src/main/java/com/liferay/resourcecommand/FooPortlet.java");
-
-		Assert.assertTrue(portletFile.exists());
+		Assert.assertTrue(mvcResourceCommandFile.exists());
 
 		_testContainsOrNot(
-			projectDir,
-			"src/main/java/com/liferay/resourcecommand/FooPortlet.java", false,
-			true, "ResourceCommand Portlet");
+			javaDir, "com/liferay/resourcecommand/FooMVCResourceCommand.java",
+			false, true, "mvc.command.name=/resourcecommand/foo");
 
-		File restDir = new File(projectDir, "src/main/java/com/liferay/rest");
+		if (Validator.isNotNull(ProjectTemplatesTest.BUILD_PROJECTS) &&
+			ProjectTemplatesTest.BUILD_PROJECTS.equals("true")) {
 
-		Assert.assertFalse(restDir.exists());
+			File buildGradle = new File(projectDir, "build.gradle");
+
+			String content = new String(
+				Files.readAllBytes(buildGradle.toPath()));
+
+			String deps =
+				"compileOnly group: \"com.liferay\", name: " +
+					"\"com.liferay.captcha.api\", version: \"1.1.0\"\n" +
+						"compileOnly group: \"org.osgi\", name: " +
+							"\"osgi.core\", version: \"6.0.0\"\ncompileOnly";
+
+			content = content.replaceFirst("compileOnly", deps);
+
+			Files.write(buildGradle.toPath(), content.getBytes());
+
+			ProjectTemplatesTest.executeGradle(
+				projectDir, _GRADLE_TASK_PATH_BUILD);
+		}
 	}
 
 	@Test

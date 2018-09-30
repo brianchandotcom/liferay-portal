@@ -409,27 +409,27 @@ public class AssetListDisplayContext {
 			AssetListActionKeys.ADD_ASSET_LIST_ENTRY);
 	}
 
-	private String _addAssetListEntryURL(int type) {
-		PortletURL addAssetListEntry = _renderResponse.createActionURL();
-
-		addAssetListEntry.setParameter(
-			ActionRequest.ACTION_NAME, "/asset_list/add_asset_list_entry");
-		addAssetListEntry.setParameter("type", String.valueOf(type));
-
-		return addAssetListEntry.toString();
-	}
-
 	private Consumer<DropdownItem> _getAddAssetListEntryDropdownItem(
 		String title, String label, int type) {
 
 		return dropdownItem -> {
 			dropdownItem.putData("action", "addAssetListEntry");
 			dropdownItem.putData(
-				"addAssetListEntryURL", _addAssetListEntryURL(type));
+				"addAssetListEntryURL", _getAddAssetListEntryURL(type));
 			dropdownItem.putData("title", _getAddAssetListTitle(title));
 			dropdownItem.setHref("#");
 			dropdownItem.setLabel(LanguageUtil.get(_request, label));
 		};
+	}
+
+	private String _getAddAssetListEntryURL(int type) {
+		PortletURL addAssetListEntryURL = _renderResponse.createActionURL();
+
+		addAssetListEntryURL.setParameter(
+			ActionRequest.ACTION_NAME, "/asset_list/add_asset_list_entry");
+		addAssetListEntryURL.setParameter("type", String.valueOf(type));
+
+		return addAssetListEntryURL.toString();
 	}
 
 	private String _getAddAssetListTitle(String type) {

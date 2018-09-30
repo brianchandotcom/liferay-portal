@@ -59,6 +59,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.xml.QName;
 import com.liferay.portal.kernel.xml.SAXReader;
+import com.liferay.portal.model.impl.EventDefinitionImpl;
 import com.liferay.portal.model.impl.PortletURLListenerImpl;
 import com.liferay.portal.model.impl.PublicRenderParameterImpl;
 import com.liferay.portal.osgi.web.servlet.context.helper.ServletContextHelperFactory;
@@ -468,6 +469,58 @@ public class PortletTracker
 		}
 	}
 
+	protected void collectEventDefinitions(
+		ServiceReference<Portlet> serviceReference,
+		com.liferay.portal.kernel.model.Portlet portletModel) {
+
+		PortletApp portletApp = portletModel.getPortletApp();
+
+		List<String> definitions = StringPlus.asList(
+			serviceReference.getProperty("javax.portlet.event-definition"));
+
+		for (String definition : definitions) {
+			EventDefinition eventDefinition = null;
+
+			String[] definitionParts = StringUtil.split(definition);
+
+			for (int i = 0; i < definitionParts.length; i++) {
+				String event = definitionParts[i];
+
+				String name = event;
+
+				String qname = null;
+
+				String[] parts = StringUtil.split(event, CharPool.SEMICOLON);
+
+				if (parts.length >= 2) {
+					name = parts[0];
+					qname = parts[1];
+				}
+
+				QName qName = getQName(
+					name, qname, portletApp.getDefaultNamespace());
+
+				if (i == 0) {
+					String valueType = null;
+
+					if (parts.length == 3) {
+						valueType = parts[2];
+					}
+
+					eventDefinition = new EventDefinitionImpl(
+						qName, valueType, portletApp);
+				}
+				else {
+					eventDefinition.addAliasQName(qName);
+				}
+			}
+
+			if (eventDefinition != null) {
+				portletApp.addEventDefinition(eventDefinition);
+			}
+		}
+	}
+
 	protected void collectExpirationCache(
 		ServiceReference<Portlet> serviceReference,
 		com.liferay.portal.kernel.model.Portlet portletModel) {
@@ -509,6 +562,7 @@ public class PortletTracker
 		collectAsyncSupported(serviceReference, portletModel);
 		collectCacheScope(serviceReference, portletModel);
 		collectContainerRuntimeOptions(serviceReference, portletModel);
+		collectEventDefinitions(serviceReference, portletModel);
 		collectExpirationCache(serviceReference, portletModel);
 		collectInitParams(serviceReference, portletModel);
 		collectListeners(serviceReference, portletModel);

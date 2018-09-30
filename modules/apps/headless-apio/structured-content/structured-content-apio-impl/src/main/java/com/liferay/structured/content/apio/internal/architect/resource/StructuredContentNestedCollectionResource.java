@@ -237,7 +237,8 @@ public class StructuredContentNestedCollectionResource
 		).addStringList(
 			"availableLanguages",
 			journalArticle -> Arrays.asList(
-				journalArticle.getAvailableLanguageIds())
+				LocaleUtil.toW3cLanguageIds(
+					journalArticle.getAvailableLanguageIds()))
 		).addStringList(
 			"keywords", this::_getJournalArticleAssetTags
 		).build();

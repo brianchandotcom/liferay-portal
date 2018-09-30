@@ -45,7 +45,6 @@ import com.liferay.forms.apio.internal.helper.EvaluateContextHelper;
 import com.liferay.forms.apio.internal.helper.FetchLatestRecordHelper;
 import com.liferay.forms.apio.internal.helper.UploadFileHelper;
 import com.liferay.forms.apio.internal.model.FormContextWrapper;
-import com.liferay.forms.apio.internal.util.FormInstanceRepresentorUtil;
 import com.liferay.media.object.apio.architect.identifier.MediaObjectIdentifier;
 import com.liferay.person.apio.architect.identifier.PersonIdentifier;
 import com.liferay.portal.apio.permission.HasPermission;
@@ -53,8 +52,10 @@ import com.liferay.portal.apio.user.CurrentUser;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
+import java.util.Arrays;
 import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
@@ -138,7 +139,9 @@ public class FormInstanceNestedCollectionResource
 			"defaultLanguage", DDMFormInstance::getDefaultLanguageId
 		).addStringList(
 			"availableLanguages",
-			FormInstanceRepresentorUtil::getAvailableLanguages
+			formInstance -> Arrays.asList(
+				LocaleUtil.toW3cLanguageIds(
+					formInstance.getAvailableLanguageIds()))
 		).build();
 	}
 

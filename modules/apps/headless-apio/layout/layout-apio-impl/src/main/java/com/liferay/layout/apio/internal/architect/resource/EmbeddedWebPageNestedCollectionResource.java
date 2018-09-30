@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutService;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.site.apio.architect.identifier.WebSiteIdentifier;
 
 import java.util.Arrays;
@@ -105,7 +106,8 @@ public class EmbeddedWebPageNestedCollectionResource
 			"image", LayoutResourceCollectionUtil::getImageURL
 		).addStringList(
 			"availableLanguages",
-			layout -> Arrays.asList(layout.getAvailableLanguageIds())
+			layout -> Arrays.asList(
+				LocaleUtil.toW3cLanguageIds(layout.getAvailableLanguageIds()))
 		).build();
 	}
 

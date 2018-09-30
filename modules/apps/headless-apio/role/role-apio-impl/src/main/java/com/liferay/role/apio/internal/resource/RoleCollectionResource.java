@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.RoleConstants;
 import com.liferay.portal.kernel.service.RoleService;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.role.apio.identifier.RoleIdentifier;
 import com.liferay.workflow.apio.architect.identifier.WorkflowTaskIdentifier;
 
@@ -92,7 +93,8 @@ public class RoleCollectionResource
 			"roleType", Role::getTypeLabel
 		).addStringList(
 			"availableLanguages",
-			role -> Arrays.asList(role.getAvailableLanguageIds())
+			role -> Arrays.asList(
+				LocaleUtil.toW3cLanguageIds(role.getAvailableLanguageIds()))
 		).build();
 	}
 

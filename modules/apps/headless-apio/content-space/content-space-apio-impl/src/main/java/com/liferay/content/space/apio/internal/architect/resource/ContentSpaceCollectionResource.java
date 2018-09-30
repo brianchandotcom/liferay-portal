@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.site.apio.architect.identifier.WebSiteIdentifier;
 
 import java.util.Arrays;
@@ -95,7 +96,8 @@ public class ContentSpaceCollectionResource
 			"name", ContentSpaceUtil::getName
 		).addStringList(
 			"availableLanguages",
-			group -> Arrays.asList(group.getAvailableLanguageIds())
+			group -> Arrays.asList(
+				LocaleUtil.toW3cLanguageIds(group.getAvailableLanguageIds()))
 		).build();
 	}
 

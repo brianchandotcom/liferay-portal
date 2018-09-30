@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.GroupService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.site.apio.architect.identifier.WebSiteIdentifier;
 import com.liferay.site.apio.internal.model.GroupWrapper;
 
@@ -104,7 +105,8 @@ public class WebSiteCollectionResource
 			"publicUrl", GroupWrapper::getPublicURL
 		).addStringList(
 			"availableLanguages",
-			group -> Arrays.asList(group.getAvailableLanguageIds())
+			group -> Arrays.asList(
+				LocaleUtil.toW3cLanguageIds(group.getAvailableLanguageIds()))
 		).build();
 	}
 

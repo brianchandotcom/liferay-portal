@@ -113,7 +113,9 @@ public class VocabularyNestedCollectionResource
 			"name", AssetVocabulary::getTitle
 		).addStringList(
 			"availableLanguages",
-			vocabulary -> Arrays.asList(vocabulary.getAvailableLanguageIds())
+			vocabulary -> Arrays.asList(
+				LocaleUtil.toW3cLanguageIds(
+					vocabulary.getAvailableLanguageIds()))
 		).build();
 	}
 

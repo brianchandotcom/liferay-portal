@@ -99,6 +99,7 @@
 		<c:otherwise>
 			<liferay-frontend:empty-result-message
 				actionDropdownItems="<%= assetListDisplayContext.isShowAddAssetListEntryAction() ? assetListDisplayContext.getAddAssetListEntryDropdownItems() : null %>"
+				componentId="emptyResultMessageComponent"
 				description="<%= assetListDisplayContext.getEmptyResultMessageDescription() %>"
 				elementType='<%= LanguageUtil.get(request, "asset-lists") %>'
 			/>
@@ -148,6 +149,21 @@
 						}
 					}
 				);
+		}
+	);
+
+	Liferay.componentReady('emptyResultMessageComponent').then(
+		function(emptyResultMessageComponent) {
+			emptyResultMessageComponent.on(
+				'itemClicked',
+				function(event) {
+					var itemData = event.data.item.data;
+
+					if (itemData && itemData.action && ACTIONS[itemData.action]) {
+						ACTIONS[itemData.action](event);
+					}
+				}
+			);
 		}
 	);
 </aui:script>

@@ -15,13 +15,15 @@
 package com.liferay.asset.list.web.internal.portlet.action;
 
 import com.liferay.asset.list.constants.AssetListPortletKeys;
-import com.liferay.asset.list.model.AssetListEntry;
 import com.liferay.asset.list.service.AssetListEntryService;
+import com.liferay.asset.list.web.internal.handler.AssetListEntryExceptionRequestHandler;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
-import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -40,11 +42,11 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + AssetListPortletKeys.ASSET_LIST,
-		"mvc.command.name=/asset_list/edit_asset_list_entry"
+		"mvc.command.name=/asset_list/update_asset_list_entry"
 	},
 	service = MVCActionCommand.class
 )
-public class EditAssetListEntryMVCActionCommand extends BaseMVCActionCommand {
+public class UpdateAssetListEntryMVCActionCommand extends BaseMVCActionCommand {
 
 	@Override
 	protected void doProcessAction(
@@ -55,53 +57,42 @@ public class EditAssetListEntryMVCActionCommand extends BaseMVCActionCommand {
 			actionRequest, "assetListEntryId");
 
 		String title = ParamUtil.getString(actionRequest, "title");
-		int type = ParamUtil.getInteger(actionRequest, "type");
-
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			actionRequest);
-
-		AssetListEntry assetListEntry = null;
 
 		try {
-			if (assetListEntryId <= 0) {
-				assetListEntry = _assetListEntryService.addAssetListEntry(
-					serviceContext.getScopeGroupId(), title, type,
-					serviceContext);
+			_assetListEntryService.updateAssetListEntry(
+				assetListEntryId, title);
+
+			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+
+			LiferayPortletResponse liferayPortletResponse =
+				_portal.getLiferayPortletResponse(actionResponse);
+
+			PortletURL portletURL = liferayPortletResponse.createRenderURL();
+
+			jsonObject.put("redirectURL", portletURL.toString());
+
+			if (SessionErrors.contains(
+					actionRequest, "assetListEntryNameInvalid")) {
+
+				addSuccessMessage(actionRequest, actionResponse);
 			}
-			else {
-				assetListEntry = _assetListEntryService.updateAssetListEntry(
-					assetListEntryId, title);
-			}
+
+			JSONPortletResponseUtil.writeJSON(
+				actionRequest, actionResponse, jsonObject);
 		}
-		catch (Exception e) {
-			SessionErrors.add(actionRequest, e.getClass());
+		catch (PortalException pe) {
+			SessionErrors.add(actionRequest, "assetListEntryNameInvalid");
 
 			hideDefaultErrorMessage(actionRequest);
+
+			_assetListEntryExceptionRequestHandler.handlePortalException(
+				actionRequest, actionResponse, pe);
 		}
-
-		String redirect = _getRedirectURL(actionResponse, assetListEntry);
-
-		sendRedirect(actionRequest, actionResponse, redirect);
 	}
 
-	private String _getRedirectURL(
-		ActionResponse actionResponse, AssetListEntry assetListEntry) {
-
-		LiferayPortletResponse liferayPortletResponse =
-			_portal.getLiferayPortletResponse(actionResponse);
-
-		PortletURL portletURL = liferayPortletResponse.createRenderURL();
-
-		portletURL.setParameter("mvcPath", "/edit_asset_list_entry.jsp");
-
-		if (assetListEntry != null) {
-			portletURL.setParameter(
-				"assetListEntryId",
-				String.valueOf(assetListEntry.getAssetListEntryId()));
-		}
-
-		return portletURL.toString();
-	}
+	@Reference
+	private AssetListEntryExceptionRequestHandler
+		_assetListEntryExceptionRequestHandler;
 
 	@Reference
 	private AssetListEntryService _assetListEntryService;

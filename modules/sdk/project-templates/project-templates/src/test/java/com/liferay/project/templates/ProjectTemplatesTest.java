@@ -1992,7 +1992,6 @@ public class ProjectTemplatesTest {
 			packageName, "");
 	}
 
-	@Ignore
 	@Test
 	public void testBuildTemplateServiceBuilder71() throws Exception {
 		String name = "guestbook";
@@ -2099,7 +2098,6 @@ public class ProjectTemplatesTest {
 			"com.test.sample", ":modules:nested:path:sample");
 	}
 
-	@Ignore
 	@Test
 	public void testBuildTemplateServiceBuilderNestedPath71() throws Exception {
 		File workspaceProjectDir = _buildTemplateWithGradle(
@@ -2212,7 +2210,6 @@ public class ProjectTemplatesTest {
 			packageName, "");
 	}
 
-	@Ignore
 	@Test
 	public void testBuildTemplateServiceBuilderWithDashes71() throws Exception {
 		String name = "backend-integration";

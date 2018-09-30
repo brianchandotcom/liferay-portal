@@ -124,6 +124,10 @@ public abstract class BaseModelUserNotificationHandler
 
 		String entryURL = jsonObject.getString("entryURL");
 
+		if (Validator.isNull(entryURL)) {
+			return StringPool.BLANK;
+		}
+
 		String entryURLDomain = HttpUtil.getDomain(entryURL);
 
 		String portalURL = serviceContext.getPortalURL();

@@ -44,12 +44,13 @@ JSONArray collaboratorsJSONArray = JSONFactoryUtil.createJSONArray();
 			List<User> sharingEntryToUsers = (List<User>)request.getAttribute("info_panel_file_entry.jsp-sharingEntryToUsers");
 
 			for (User sharingEntryToUser : sharingEntryToUsers) {
-				JSONObject userJSONObject = JSONFactoryUtil.createJSONObject();
+				JSONObject collaboratorJSONObject = JSONFactoryUtil.createJSONObject();
 
-				userJSONObject.put("id", sharingEntryToUser.getUserId());
-				userJSONObject.put("imageSrc", sharingEntryToUser.getPortraitURL(themeDisplay));
-				userJSONObject.put("name", sharingEntryToUser.getFullName());
-				collaboratorsJSONArray.put(userJSONObject);
+				collaboratorJSONObject.put("id", sharingEntryToUser.getUserId());
+				collaboratorJSONObject.put("imageSrc", sharingEntryToUser.getPortraitURL(themeDisplay));
+				collaboratorJSONObject.put("name", sharingEntryToUser.getFullName());
+
+				collaboratorsJSONArray.put(collaboratorJSONObject);
 			%>
 
 				<div class="autofit-col">

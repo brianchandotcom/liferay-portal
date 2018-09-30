@@ -34,15 +34,14 @@ import com.liferay.site.navigation.service.SiteNavigationMenuItemLocalServiceUti
 import com.liferay.site.navigation.taglib.internal.portlet.display.template.PortletDisplayTemplateUtil;
 import com.liferay.site.navigation.taglib.internal.servlet.NavItemClassNameIdUtil;
 import com.liferay.site.navigation.taglib.internal.servlet.ServletContextUtil;
+import com.liferay.site.navigation.taglib.internal.servlet.SiteNavigationMenuUtil;
 import com.liferay.site.navigation.taglib.internal.util.SiteNavigationMenuNavItem;
-import com.liferay.site.navigation.type.SiteNavigationMenuItemType;
 import com.liferay.taglib.util.IncludeTag;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
-import java.util.ListIterator;
 import java.util.Map;
 import java.util.Objects;
 
@@ -82,7 +81,9 @@ public class NavigationMenuTag extends IncludeTag {
 			if (_siteNavigationMenuId > 0) {
 				branchNavItems = Collections.emptyList();
 
-				navItems = getMenuItems();
+				List<NavItem> branchMenuItems = getBranchMenuItems();
+
+				navItems = getMenuItems(branchMenuItems);
 			}
 			else {
 				branchNavItems = getBranchNavItems(request);
@@ -175,8 +176,46 @@ public class NavigationMenuTag extends IncludeTag {
 		_siteNavigationMenuId = 0;
 	}
 
+	protected List<NavItem> getBranchMenuItems() throws PortalException {
+		List<NavItem> navItems = new ArrayList<>();
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		Layout layout = themeDisplay.getLayout();
+
+		long siteNavigationMenuItemId = _getRelativeSiteNavigationMenuItemId(
+			layout);
+
+		SiteNavigationMenuItem siteNavigationMenuItem =
+			SiteNavigationMenuItemLocalServiceUtil.fetchSiteNavigationMenuItem(
+				siteNavigationMenuItemId);
+
+		if (siteNavigationMenuItem == null) {
+			return navItems;
+		}
+
+		List<SiteNavigationMenuItem> ancestors =
+			siteNavigationMenuItem.getAncestors();
+
+		Collections.reverse(ancestors);
+
+		ancestors.forEach(
+			ancestor -> navItems.add(
+				new SiteNavigationMenuNavItem(
+					request, themeDisplay, ancestor)));
+
+		navItems.add(
+			new SiteNavigationMenuNavItem(
+				request, themeDisplay, siteNavigationMenuItem));
+
+		return navItems;
+	}
+
 	protected List<NavItem> getBranchNavItems(HttpServletRequest request)
 		throws PortalException {
+
+		List<NavItem> navItems = new ArrayList<>();
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -190,19 +229,11 @@ public class NavigationMenuTag extends IncludeTag {
 
 		List<Layout> ancestorLayouts = layout.getAncestors();
 
-		List<NavItem> navItems = new ArrayList<>(ancestorLayouts.size() + 1);
+		Collections.reverse(ancestorLayouts);
 
-		ListIterator<Layout> listIterator = ancestorLayouts.listIterator(
-			ancestorLayouts.size());
-
-		while (listIterator.hasPrevious()) {
-			Layout ancestorLayout = listIterator.previous();
-
-			navItems.add(
-				new NavItem(request, themeDisplay, ancestorLayout, null));
-		}
-
-		navItems.add(new NavItem(request, themeDisplay, layout, null));
+		ancestorLayouts.forEach(
+			ancestorLayout -> navItems.add(
+				new NavItem(request, themeDisplay, ancestorLayout, null)));
 
 		return navItems;
 	}
@@ -228,46 +259,52 @@ public class NavigationMenuTag extends IncludeTag {
 	}
 
 	protected List<NavItem> getMenuItems() {
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		try {
+			return getMenuItems(new ArrayList<NavItem>());
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+		}
+
+		return new ArrayList<>();
+	}
+
+	protected List<NavItem> getMenuItems(List<NavItem> branchMenuItems)
+		throws Exception {
 
 		List<NavItem> navItems = new ArrayList<>();
 
+		SiteNavigationMenuUtil siteNavigationMenuUtil =
+			SiteNavigationMenuUtil.getInstance();
+
 		long parentSiteNavigationMenuItemId = GetterUtil.getLong(_rootItemId);
 
-		if (_rootItemType.equals("relative")) {
-			parentSiteNavigationMenuItemId =
-				_getRelativeSiteNavigationMenuItemId(themeDisplay.getLayout());
+		if (_rootItemType.equals("relative") && (_rootItemLevel >= 0) &&
+			(_rootItemLevel < branchMenuItems.size())) {
+
+			NavItem rootMenuItem = branchMenuItems.get(_rootItemLevel);
+
+			navItems = rootMenuItem.getChildren();
 		}
-
-		List<SiteNavigationMenuItem> siteNavigationMenuItems =
-			SiteNavigationMenuItemLocalServiceUtil.getSiteNavigationMenuItems(
-				_siteNavigationMenuId, parentSiteNavigationMenuItemId);
-
-		for (SiteNavigationMenuItem siteNavigationMenuItem :
-				siteNavigationMenuItems) {
-
-			SiteNavigationMenuItemType siteNavigationMenuItemType =
-				ServletContextUtil.getSiteNavigationMenuItemType(
-					siteNavigationMenuItem.getType());
-
-			try {
-				if (!siteNavigationMenuItemType.hasPermission(
-						themeDisplay.getPermissionChecker(),
-						siteNavigationMenuItem)) {
-
-					continue;
-				}
-
-				navItems.add(
-					new SiteNavigationMenuNavItem(
-						request, themeDisplay, siteNavigationMenuItem));
+		else if (_rootItemType.equals("absolute")) {
+			if (_rootItemLevel == 0) {
+				navItems =
+					siteNavigationMenuUtil.
+						getNavItemsByParentSiteNavigationMenuItem(
+							request, _siteNavigationMenuId, 0);
 			}
-			catch (PortalException pe) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(pe, pe);
-				}
+			else if (branchMenuItems.size() >= _rootItemLevel) {
+				NavItem rootMenuItem = branchMenuItems.get(_rootItemLevel - 1);
+
+				navItems = rootMenuItem.getChildren();
 			}
+		}
+		else if (_rootItemType.equals("select")) {
+			navItems =
+				siteNavigationMenuUtil.
+					getNavItemsByParentSiteNavigationMenuItem(
+						request, _siteNavigationMenuId,
+						parentSiteNavigationMenuItemId);
 		}
 
 		return navItems;
@@ -276,10 +313,10 @@ public class NavigationMenuTag extends IncludeTag {
 	protected List<NavItem> getNavItems(List<NavItem> branchNavItems)
 		throws Exception {
 
+		List<NavItem> navItems = new ArrayList<>();
+
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
-
-		List<NavItem> navItems = new ArrayList<>();
 
 		NavItem rootNavItem = null;
 

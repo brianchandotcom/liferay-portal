@@ -107,7 +107,7 @@
 	</c:choose>
 </aui:form>
 
-<aui:script require="frontend-js-web/liferay/modal/commands/OpenSimpleInputModal.es as modalCommands">
+<aui:script require="metal-dom/src/all/dom as dom,frontend-js-web/liferay/modal/commands/OpenSimpleInputModal.es as modalCommands">
 	var addAssetListEntry = function(event) {
 		event.preventDefault();
 
@@ -131,6 +131,38 @@
 			submitForm(document.querySelector('#<portlet:namespace />fm'));
 		}
 	};
+
+	var updateAssetListEntryMenuItemClickHandler = dom.delegate(
+		document.body,
+		'click',
+		'.<portlet:namespace />update-asset-list-entry-action-option > a',
+		function(event) {
+			var data = event.delegateTarget.dataset;
+
+			event.preventDefault();
+
+			modalCommands.openSimpleInputModal(
+				{
+					dialogTitle: '<liferay-ui:message key="rename-asset-list" />',
+					formSubmitURL: data.formSubmitUrl,
+					idFieldName: 'id',
+					idFieldValue: data.idFieldValue,
+					mainFieldLabel: '<liferay-ui:message key="title" />',
+					mainFieldName: 'title',
+					mainFieldPlaceholder: '<liferay-ui:message key="title" />',
+					mainFieldValue: data.mainFieldValue,
+					namespace: '<portlet:namespace />',
+					spritemap: '<%= themeDisplay.getPathThemeImages() %>/lexicon/icons.svg'
+				}
+			);
+		}
+	);
+
+	function handleDestroyPortlet() {
+		updateAssetListEntryMenuItemClickHandler.removeListener();
+
+		Liferay.detach('destroyPortlet', handleDestroyPortlet);
+	}
 
 	var ACTIONS = {
 		'addAssetListEntry': addAssetListEntry,
@@ -166,4 +198,6 @@
 			);
 		}
 	);
+
+	Liferay.on('destroyPortlet', handleDestroyPortlet);
 </aui:script>

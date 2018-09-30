@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
+import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
@@ -271,6 +272,28 @@ public class JSONWebServiceTest extends BaseJSONWebServiceTestCase {
 
 		Assert.assertEquals(
 			ServiceContext.class.getName(), jsonWebServiceAction.invoke());
+	}
+
+	@Test
+	public void testEnumParameter() throws Exception {
+		MockHttpServletRequest mockHttpServletRequest = createHttpRequest(
+			"/camelfoo/add-isolation/isolation/DEFAULT");
+
+		JSONWebServiceAction jsonWebServiceAction = lookupJSONWebServiceAction(
+			mockHttpServletRequest);
+
+		jsonWebServiceAction.invoke();
+	}
+
+	@Test
+	public void testEnumReturnValue() throws Exception {
+		MockHttpServletRequest mockHttpServletRequest = createHttpRequest(
+			"/camelfoo/get-isolation");
+
+		JSONWebServiceAction jsonWebServiceAction = lookupJSONWebServiceAction(
+			mockHttpServletRequest);
+
+		Assert.assertEquals(Isolation.DEFAULT, jsonWebServiceAction.invoke());
 	}
 
 	@Test

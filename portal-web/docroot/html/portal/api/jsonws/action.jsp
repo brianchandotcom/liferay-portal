@@ -350,7 +350,7 @@ String signature = ParamUtil.getString(request, "signature");
 
 					<%
 					}
-					else if (methodParameterTypeClass.isArray() ||methodParameterTypeClass.isPrimitive() ||methodParameterTypeClass.equals(Byte.class) ||methodParameterTypeClass.equals(Character.class) ||methodParameterTypeClass.equals(Date.class) ||methodParameterTypeClass.equals(Double.class) ||methodParameterTypeClass.equals(Float.class) ||methodParameterTypeClass.equals(Integer.class) ||methodParameterTypeClass.equals(List.class) ||methodParameterTypeClass.equals(Long.class) ||methodParameterTypeClass.equals(Map.class) ||methodParameterTypeClass.equals(Short.class) ||methodParameterTypeClass.equals(String.class) ||methodParameterTypeClass.equals(Void.class)) {
+					else if (methodParameterTypeClass.isArray() || methodParameterTypeClass.isEnum() || methodParameterTypeClass.isPrimitive() || methodParameterTypeClass.equals(Byte.class) || methodParameterTypeClass.equals(Character.class) || methodParameterTypeClass.equals(Date.class) || methodParameterTypeClass.equals(Double.class) || methodParameterTypeClass.equals(Float.class) || methodParameterTypeClass.equals(Integer.class) || methodParameterTypeClass.equals(List.class) || methodParameterTypeClass.equals(Long.class) || methodParameterTypeClass.equals(Map.class) || methodParameterTypeClass.equals(Short.class) || methodParameterTypeClass.equals(String.class) || methodParameterTypeClass.equals(Void.class)) {
 						int size = 10;
 
 						if (methodParameterTypeClass.equals(String.class)) {

@@ -16,6 +16,7 @@ package com.liferay.asset.list.web.internal.frontend.taglib.servlet.taglib;
 
 import com.liferay.asset.list.constants.AssetListFormConstants;
 import com.liferay.asset.list.model.AssetListEntry;
+import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationCategory;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -37,7 +38,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Pavel Savinov
  */
 public abstract class BaseAssetListScreenNavigationEntry
-	implements ScreenNavigationEntry<AssetListEntry> {
+	implements ScreenNavigationCategory, ScreenNavigationEntry<AssetListEntry> {
 
 	public abstract String getJspPath();
 

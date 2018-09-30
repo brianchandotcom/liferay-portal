@@ -17,6 +17,7 @@ package com.liferay.asset.list.web.internal.frontend.taglib.servlet.taglib;
 import com.liferay.asset.list.constants.AssetListEntryTypeConstants;
 import com.liferay.asset.list.constants.AssetListFormConstants;
 import com.liferay.asset.list.model.AssetListEntry;
+import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationCategory;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
 import com.liferay.portal.kernel.model.User;
 
@@ -26,15 +27,18 @@ import org.osgi.service.component.annotations.Component;
  * @author Pavel Savinov
  */
 @Component(
-	property = "screen.navigation.entry.order:Integer=20",
-	service = ScreenNavigationEntry.class
+	property = {
+		"screen.navigation.category.order:Integer=20",
+		"screen.navigation.entry.order:Integer=20"
+	},
+	service = {ScreenNavigationCategory.class, ScreenNavigationEntry.class}
 )
 public class AssetListFilterScreenNavigationEntry
 	extends BaseAssetListScreenNavigationEntry {
 
 	@Override
 	public String getCategoryKey() {
-		return AssetListFormConstants.CATEGORY_KEY_GENERAL;
+		return AssetListFormConstants.ENTRY_KEY_FILTER;
 	}
 
 	@Override

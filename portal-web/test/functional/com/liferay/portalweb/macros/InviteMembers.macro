@@ -6,7 +6,7 @@
 	</command>
 
 	<command name="inviteMembers">
-		<execute function="AssertClick" locator1="Button#INVITE_MEMBERS" value1="Invite members to this site." />
+		<execute function="AssertClick" locator1="Button#INVITE_MEMBERS" value1="Invite members." />
 
 		<execute function="SelectFrame" locator1="IFrame#INVITE_MEMBERS" />
 

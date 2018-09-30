@@ -5407,6 +5407,13 @@ go]]></replacevalue>
 											select="\1"
 										/>
 
+										<move
+											failonerror="false"
+											file="@{app.dir}/settings.gradle"
+											tofile="@{app.dir}/settings.gradle.temp"
+											verbose="true"
+										/>
+
 										<gradle-execute dir="@{app.dir}" task="deploy">
 											<arg value="clean" />
 										</gradle-execute>
@@ -5465,6 +5472,12 @@ go]]></replacevalue>
 										</ant>
 
 										<gradle-execute dir="@{app.dir}" task="clean" />
+
+										<move
+											failonerror="false"
+											file="@{app.dir}/settings.gradle.temp"
+											tofile="@{app.dir}/settings.gradle"
+										/>
 									</else>
 								</if>
 							</sequential>

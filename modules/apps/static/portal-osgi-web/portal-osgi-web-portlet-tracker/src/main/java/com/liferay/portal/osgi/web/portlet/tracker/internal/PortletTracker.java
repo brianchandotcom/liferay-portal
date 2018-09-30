@@ -888,6 +888,14 @@ public class PortletTracker
 		}
 
 		portletModel.setDefaultPreferences(defaultPreferences);
+
+		String preferencesValidator = GetterUtil.getString(
+			serviceReference.getProperty(
+				"javax.portlet.preferences-validator"));
+
+		if (Validator.isNotNull(preferencesValidator)) {
+			portletModel.setPreferencesValidator(preferencesValidator);
+		}
 	}
 
 	protected void collectResourceBundle(

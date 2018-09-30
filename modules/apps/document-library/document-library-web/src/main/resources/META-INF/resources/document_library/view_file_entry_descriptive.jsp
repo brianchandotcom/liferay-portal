@@ -19,14 +19,30 @@
 <%
 ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 
+Object result = row.getObject();
+
 FileEntry fileEntry = null;
 FileShortcut fileShortcut = null;
 
-if (row.getObject() instanceof FileEntry) {
-	fileEntry = (FileEntry)row.getObject();
+if (result instanceof AssetEntry) {
+	AssetEntry assetEntry = (AssetEntry)result;
+
+	if (assetEntry.getClassName().equals(DLFileEntryConstants.getClassName())) {
+		fileEntry = DLAppLocalServiceUtil.getFileEntry(assetEntry.getClassPK());
+
+		fileEntry = fileEntry.toEscapedModel();
+	}
+	else {
+		fileShortcut = DLAppLocalServiceUtil.getFileShortcut(assetEntry.getClassPK());
+
+		fileShortcut = fileShortcut.toEscapedModel();
+	}
 }
-else if (row.getObject() instanceof FileShortcut) {
-	fileShortcut = (FileShortcut)row.getObject();
+else if (result instanceof FileEntry) {
+	fileEntry = (FileEntry)result;
+}
+else if (result instanceof FileShortcut) {
+	fileShortcut = (FileShortcut)result;
 
 	fileShortcut = fileShortcut.toEscapedModel();
 

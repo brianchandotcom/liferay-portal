@@ -209,6 +209,73 @@
 		<execute function="AssertTextEquals#assertPartialText" locator1="Home#PAGE_2" value1="Liferay Page" />
 	</command>
 
+	<command name="AddRolesWithGroovyScript" priority="5">
+		<property name="test.name.skip.portal.instance" value="BulkCreationAssets#AddRolesWithGroovyScript" />
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Configuration" />
+			<var name="panel" value="Control Panel" />
+			<var name="portlet" value="Server Administration" />
+		</execute>
+
+		<execute macro="Navigator#gotoNavItem">
+			<var name="navItem" value="Script" />
+		</execute>
+
+		<execute function="Select" locator1="ServerAdministrationScript#LANGUAGE_SELECT" value1="Groovy" />
+
+		<var name="script"><![CDATA[
+int numberToAdd = 10;
+
+String namePrefix = "TestRole";
+String namePostfix = "";
+
+// Regular roles set this to 1, site roles set to 2, organization role set to 3.
+int roleType = 1;
+
+//
+// End Configuration
+//
+
+import com.liferay.portal.kernel.model.Role;
+import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
+
+userId = PortalUtil.getUserId(actionRequest);
+
+for (int i = 1; i <= numberToAdd; i++) {
+	String name = namePrefix + i + namePostfix;
+	int type = roleType
+
+	RoleLocalServiceUtil.addRole(userId, null, 0, name, null, null, type, null, null);
+
+}]]></var>
+
+		<execute function="Type" locator1="ServerAdministrationScript#SCRIPT_TEXT" value1="${script}" />
+
+		<execute function="AssertClick" locator1="ServerAdministrationScript#EXECUTE_BUTTON" value1="Execute" />
+
+		<execute macro="Alert#viewSuccessMessage" />
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Users" />
+			<var name="panel" value="Control Panel" />
+			<var name="portlet" value="Roles" />
+		</execute>
+
+		<execute macro="Navigator#gotoNavItem">
+			<var name="navItem" value="Organization Roles" />
+		</execute>
+
+		<execute macro="LexiconEntry#changeDisplayStyle">
+			<var name="displayStyle" value="table" />
+		</execute>
+
+		<execute function="AssertTextEquals#assertPartialText" locator1="Roles#ROLE_TABLE_TITLE" value1="TestRole">
+			<var name="key_roleTitle" value="TestRole" />
+		</execute>
+	</command>
+
 	<command name="AddSitesWithDummyFactory" priority="5">
 		<property name="test.name.skip.portal.instance" value="BulkCreationAssets#AddSitesWithDummyFactory" />
 		<property name="testray.component.names" value="Training" />

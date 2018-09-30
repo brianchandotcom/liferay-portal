@@ -47,7 +47,7 @@ long formInstanceId = ddmFormDisplayContext.getFormInstanceId();
 				%>
 
 				<div class="portlet-forms">
-					<div class="ddm-form-basic-info">
+					<div class="ddm-form-basic-info ddm-form-success-page">
 						<div class="container-fluid-1280">
 							<h1 class="ddm-form-name"><%= HtmlUtil.escape(GetterUtil.getString(title.getString(displayLocale), title.getString(title.getDefaultLocale()))) %></h1>
 

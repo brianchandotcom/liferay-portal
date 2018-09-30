@@ -27,20 +27,13 @@
 	<aui:input name="assetListEntryId" type="hidden" value="<%= assetListDisplayContext.getAssetListEntryId() %>" />
 	<aui:input name="assetEntryIds" type="hidden" />
 
-	<liferay-frontend:edit-form-body>
-		<h3 class="sheet-subtitle">
-			<span class="autofit-padded-no-gutters autofit-row">
-				<span class="autofit-col autofit-col-expand">
-					<span class="heading-text">
-						<liferay-ui:message key="asset-entries" />
-					</span>
-				</span>
-			</span>
-		</h3>
+	<label for="<portlet:namespace />assetEntriesSearchContainer"><liferay-ui:message key="asset-entries" /></label>
 
+	<liferay-frontend:edit-form-body>
 		<liferay-ui:search-container
 			compactEmptyResultsMessage="<%= true %>"
-			emptyResultsMessage="none"
+			emptyResultsMessage="no-assets-selected"
+			id="assetEntriesSearchContainer"
 			searchContainer="<%= editAssetListDisplayContext.getSearchContainer() %>"
 		>
 			<liferay-ui:search-container-row

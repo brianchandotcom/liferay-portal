@@ -28,9 +28,7 @@
 
 	<liferay-frontend:edit-form-body>
 		<liferay-frontend:fieldset-group>
-			<liferay-frontend:fieldset
-				label="ordering"
-			>
+			<liferay-frontend:fieldset>
 				<aui:row id="ordering">
 					<aui:col width="<%= 50 %>">
 						<aui:select label="order-by" name="TypeSettingsProperties--orderByColumn1--" wrapperCssClass="field-inline w80">

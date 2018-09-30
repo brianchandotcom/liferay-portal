@@ -28,9 +28,7 @@
 
 	<liferay-frontend:edit-form-body>
 		<liferay-frontend:fieldset-group>
-			<liferay-frontend:fieldset
-				label="filter"
-			>
+			<liferay-frontend:fieldset>
 				<liferay-asset:asset-tags-error />
 
 				<liferay-ui:error exception="<%= DuplicateQueryRuleException.class %>">

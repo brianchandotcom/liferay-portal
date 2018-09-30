@@ -16,11 +16,17 @@ package com.liferay.jenkins.results.parser;
 
 import java.util.Map;
 
+import org.json.JSONObject;
+
 /**
  * @author Michael Hashimoto
  */
 public class PortalTopLevelBuildData
 	extends TopLevelBuildData implements PortalBuildData {
+
+	public static boolean isValidJSONObject(JSONObject jsonObject) {
+		return isValidJSONObject(jsonObject, _TYPE);
+	}
 
 	@Override
 	public String getPortalGitHubURL() {
@@ -32,21 +38,26 @@ public class PortalTopLevelBuildData
 		return getString("portal_upstream_branch_name");
 	}
 
-	protected PortalTopLevelBuildData(
-		Map<String, String> buildParameters,
-		JenkinsJSONObject jenkinsJSONObject, String runID) {
+	protected PortalTopLevelBuildData(JSONObject jsonObject) {
+		super(jsonObject);
 
-		super(buildParameters, jenkinsJSONObject, runID);
+		validateKeys(_REQUIRED_KEYS);
+	}
 
-		if (!has("portal_github_url")) {
-			put("portal_github_url", _getPortalGitHubURL(buildParameters));
-		}
+	protected PortalTopLevelBuildData(Map<String, String> buildParameters) {
+		super(buildParameters);
 
-		if (!has("portal_upstream_branch_name")) {
-			put(
-				"portal_upstream_branch_name",
-				_getPortalUpstreamBranchName(buildParameters));
-		}
+		put("portal_github_url", _getPortalGitHubURL(buildParameters));
+		put(
+			"portal_upstream_branch_name",
+			_getPortalUpstreamBranchName(buildParameters));
+
+		validateKeys(_REQUIRED_KEYS);
+	}
+
+	@Override
+	protected String getType() {
+		return _TYPE;
 	}
 
 	private String _getPortalGitHubURL(Map<String, String> buildParameters) {
@@ -67,5 +78,10 @@ public class PortalTopLevelBuildData
 
 		return buildParameters.get("PORTAL_UPSTREAM_BRANCH_NAME");
 	}
+
+	private static final String[] _REQUIRED_KEYS =
+		{"portal_github_url", "portal_upstream_branch_name"};
+
+	private static final String _TYPE = "portal_top_level";
 
 }

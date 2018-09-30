@@ -16,39 +16,13 @@ package com.liferay.jenkins.results.parser;
 
 import java.io.File;
 
-import java.util.List;
-
-import org.json.JSONObject;
-
 /**
  * @author Michael Hashimoto
  */
-public interface BuildData {
+public class DefaultBuildDatabase extends BaseBuildDatabase {
 
-	public static final String DIST_ROOT_PATH = "/tmp/dist";
-
-	public Integer getBuildNumber();
-
-	public String getBuildURL();
-
-	public String getCohortName();
-
-	public List<String> getDistNodes();
-
-	public String getDistPath();
-
-	public String getHostname();
-
-	public String getJenkinsGitHubURL();
-
-	public String getJobName();
-
-	public JSONObject getJSONObject();
-
-	public String getMasterHostname();
-
-	public String getRunID();
-
-	public File getWorkspaceDir();
+	public DefaultBuildDatabase(File basedir) {
+		super(basedir);
+	}
 
 }

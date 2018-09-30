@@ -36,13 +36,7 @@ public abstract class BaseGitRepository
 
 	@Override
 	public JSONObject put(String key, Object value) throws JSONException {
-		if (has(key)) {
-			throw new RuntimeException("Already contains " + key);
-		}
-
-		super.put(key, value);
-
-		return this;
+		return put(key, value);
 	}
 
 	protected BaseGitRepository(String name) {

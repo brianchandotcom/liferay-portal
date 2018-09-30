@@ -14,9 +14,6 @@
 
 package com.liferay.jenkins.results.parser;
 
-import java.io.File;
-import java.io.IOException;
-
 /**
  * @author Michael Hashimoto
  */
@@ -36,7 +33,6 @@ public abstract class BaseBuildRunner<T extends BuildData>
 
 	@Override
 	public void setUp() {
-		writeJenkinsJSONObjectToFile();
 	}
 
 	@Override
@@ -48,14 +44,6 @@ public abstract class BaseBuildRunner<T extends BuildData>
 
 	protected BaseBuildRunner(T buildData) {
 		_buildData = buildData;
-
-		_jenkinsJSONObjectFile = new File(
-			buildData.getWorkspaceDir(),
-			BuildData.JENKINS_BUILD_DATA_FILE_NAME);
-
-		_jenkinsJSONObject = _getJenkinsJSONObjectFromFile();
-
-		_jenkinsJSONObject.addBuildData(_buildData);
 
 		_job = JobFactory.newJob(_buildData);
 
@@ -84,35 +72,9 @@ public abstract class BaseBuildRunner<T extends BuildData>
 		workspace.tearDown();
 	}
 
-	protected void writeJenkinsJSONObjectToFile() {
-		try {
-			JenkinsResultsParserUtil.write(
-				_jenkinsJSONObjectFile, _jenkinsJSONObject.toString());
-		}
-		catch (IOException ioe) {
-			throw new RuntimeException(ioe);
-		}
-	}
-
 	protected Workspace workspace;
 
-	private JenkinsJSONObject _getJenkinsJSONObjectFromFile() {
-		if (!_jenkinsJSONObjectFile.exists()) {
-			return new JenkinsJSONObject();
-		}
-
-		try {
-			return new JenkinsJSONObject(
-				JenkinsResultsParserUtil.read(_jenkinsJSONObjectFile));
-		}
-		catch (IOException ioe) {
-			throw new RuntimeException(ioe);
-		}
-	}
-
 	private final T _buildData;
-	private final JenkinsJSONObject _jenkinsJSONObject;
-	private final File _jenkinsJSONObjectFile;
 	private final Job _job;
 
 }

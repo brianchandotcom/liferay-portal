@@ -32,9 +32,10 @@ public class PluginsWorkspaceGitRepository extends BaseWorkspaceGitRepository {
 	}
 
 	@Override
-	protected String getDefaultRelativeGitRepositoryDirPath() {
+	protected String getDefaultRelativeGitRepositoryDirPath(
+		String upstreamBranchName) {
+
 		String name = getName();
-		String upstreamBranchName = getUpstreamBranchName();
 
 		if (upstreamBranchName.equals("master")) {
 			return name.replace("-ee", "");

@@ -28,7 +28,7 @@ import org.json.JSONObject;
 /**
  * @author Michael Hashimoto
  */
-public abstract class BaseBuildData extends JSONObject implements BuildData {
+public abstract class BaseBuildData implements BuildData {
 
 	public static String getJobName(String buildURL) {
 		if (buildURL == null) {
@@ -87,6 +87,11 @@ public abstract class BaseBuildData extends JSONObject implements BuildData {
 	}
 
 	@Override
+	public JSONObject getJSONObject() {
+		return _jsonObject;
+	}
+
+	@Override
 	public String getMasterHostname() {
 		return getString("master_hostname");
 	}
@@ -101,46 +106,37 @@ public abstract class BaseBuildData extends JSONObject implements BuildData {
 		return new File(getString("workspace_dir"));
 	}
 
-	@Override
-	public JSONObject toJSONObject() {
-		return this;
-	}
+	protected static boolean isValidJSONObject(
+		JSONObject jsonObject, String type) {
 
-	protected BaseBuildData(
-		Map<String, String> buildParameters,
-		JenkinsJSONObject jenkinsJSONObject) {
+		System.out.println("* " + type);
 
-		this(buildParameters, jenkinsJSONObject, _DEFAULT_RUN_ID);
-	}
-
-	protected BaseBuildData(
-		Map<String, String> buildParameters,
-		JenkinsJSONObject jenkinsJSONObject, String runID) {
-
-		super(_getBuildDataSource(jenkinsJSONObject, runID));
-
-		if (runID == null) {
-			runID = _DEFAULT_RUN_ID;
+		if (type == null) {
+			return false;
 		}
 
-		_runID = runID;
-
-		if (!jenkinsJSONObject.has(runID)) {
-			jenkinsJSONObject.put(runID, this);
-		}
-
-		String buildURL;
-
-		if (has("build_url")) {
-			buildURL = getString("build_url");
-		}
-		else {
-			if (!buildParameters.containsKey("BUILD_URL")) {
-				throw new RuntimeException("Please set BUILD_URL");
+		if (jsonObject.has("type")) {
+			if (type.equals(jsonObject.getString("type"))) {
+				return true;
 			}
-
-			buildURL = buildParameters.get("BUILD_URL");
 		}
+
+		return false;
+	}
+
+	protected BaseBuildData(JSONObject jsonObject) {
+		_jsonObject = jsonObject;
+
+		_runID = getString("run_id");
+
+		validateKeys(_REQUIRED_KEYS);
+	}
+
+	protected BaseBuildData(Map<String, String> buildParameters) {
+		_jsonObject = new JSONObject();
+		_runID = _getRunID(buildParameters);
+
+		String buildURL = _getBuildURL(buildParameters);
 
 		Matcher matcher = _buildURLPattern.matcher(buildURL);
 
@@ -148,59 +144,80 @@ public abstract class BaseBuildData extends JSONObject implements BuildData {
 			throw new RuntimeException("Invalid Build URL " + buildURL);
 		}
 
-		if (!has("build_number")) {
-			put("build_number", Integer.valueOf(matcher.group("buildNumber")));
-		}
+		put("build_number", Integer.valueOf(matcher.group("buildNumber")));
+		put("build_url", buildURL);
+		put("cohort_name", matcher.group("cohortName"));
+		put("hostname", JenkinsResultsParserUtil.getHostName("default"));
+		put("jenkins_github_url", _getJenkinsGitHubURL(buildParameters));
+		put("job_name", matcher.group("jobName"));
+		put("master_hostname", matcher.group("masterHostname"));
+		put("run_id", _runID);
+		put("type", getType());
+		put("workspace_dir", _getWorkspaceDir(buildParameters));
 
-		if (!has("build_url")) {
-			put("build_url", buildURL);
-		}
+		validateKeys(_REQUIRED_KEYS);
+	}
 
-		if (!has("cohort_name")) {
-			put("cohort_name", matcher.group("cohortName"));
-		}
+	protected Integer getInt(String key) {
+		return _jsonObject.getInt(key);
+	}
 
-		if (!has("hostname")) {
-			put("hostname", JenkinsResultsParserUtil.getHostName("default"));
-		}
+	protected String getString(String key) {
+		return _jsonObject.getString(key);
+	}
 
-		if (!has("jenkins_github_url")) {
-			String jenkinsGithubURL = buildParameters.get("JENKINS_GITHUB_URL");
+	protected abstract String getType();
 
-			if ((jenkinsGithubURL == null) || jenkinsGithubURL.equals("")) {
-				jenkinsGithubURL = _DEFAULT_JENKINS_GITHUB_URL;
+	protected boolean has(String key) {
+		return _jsonObject.has(key);
+	}
+
+	protected String optString(String key, String defaultValue) {
+		return _jsonObject.optString(key, defaultValue);
+	}
+
+	protected void put(String key, Object value) {
+		_jsonObject.put(key, value);
+
+		BuildDatabase buildDatabase = BuildDatabaseUtil.getBuildDatabase();
+
+		buildDatabase.putBuildData(getRunID(), this);
+	}
+
+	protected void validateKeys(String[] requiredKeys) {
+		for (String requiredKey : requiredKeys) {
+			if (!has(requiredKey)) {
+				throw new RuntimeException("Missing " + requiredKey);
 			}
-
-			put("jenkins_github_url", jenkinsGithubURL);
-		}
-
-		if (!has("job_name")) {
-			put("job_name", matcher.group("jobName"));
-		}
-
-		if (!has("master_hostname")) {
-			put("master_hostname", matcher.group("masterHostname"));
-		}
-
-		if (!has("workspace_dir")) {
-			put("workspace_dir", _getWorkspaceDir(buildParameters));
 		}
 	}
 
-	private static String _getBuildDataSource(
-		JenkinsJSONObject jenkinsJSONObject, String runID) {
-
-		if (runID == null) {
-			return "{}";
+	private String _getBuildURL(Map<String, String> buildParameters) {
+		if (!buildParameters.containsKey("BUILD_URL")) {
+			throw new RuntimeException("Please set BUILD_URL");
 		}
 
-		JSONObject jsonObject = jenkinsJSONObject.optJSONObject(runID);
+		return buildParameters.get("BUILD_URL");
+	}
 
-		if (jsonObject != null) {
-			return jsonObject.toString();
+	private String _getJenkinsGitHubURL(Map<String, String> buildParameters) {
+		String jenkinsGitHubURL = buildParameters.get("JENKINS_GITHUB_URL");
+
+		if ((jenkinsGitHubURL == null) || jenkinsGitHubURL.equals("")) {
+			return _DEFAULT_JENKINS_GITHUB_URL;
 		}
 
-		return "{}";
+		return jenkinsGitHubURL;
+	}
+
+	private String _getRunID(Map<String, String> buildParameters) {
+		String runID = buildParameters.get("RUN_ID");
+
+		if ((runID == null) || runID.equals("")) {
+			return _DEFAULT_RUN_ID;
+		}
+
+		return runID;
 	}
 
 	private String _getWorkspaceDir(Map<String, String> buildParameters) {
@@ -222,12 +239,19 @@ public abstract class BaseBuildData extends JSONObject implements BuildData {
 
 	private static final String _DEFAULT_WORKSPACE = ".";
 
+	private static final String[] _REQUIRED_KEYS = {
+		"build_url", "build_number", "cohort_name", "hostname",
+		"jenkins_github_url", "job_name", "master_hostname", "run_id",
+		"workspace_dir"
+	};
+
 	private static final Pattern _buildURLPattern = Pattern.compile(
 		JenkinsResultsParserUtil.combine(
 			"https?://(?<masterHostname>(?<cohortName>test-\\d+)-\\d+)",
 			"(\\.liferay\\.com)?/job/(?<jobName>[^/]+)/(.*/)?",
 			"(?<buildNumber>\\d+)/?"));
 
+	private final JSONObject _jsonObject;
 	private final String _runID;
 
 }

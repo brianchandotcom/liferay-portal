@@ -59,7 +59,9 @@ public abstract class BaseLocalGitRepository
 		validateKeys(_REQUIRED_KEYS);
 	}
 
-	protected String getDefaultRelativeGitRepositoryDirPath() {
+	protected String getDefaultRelativeGitRepositoryDirPath(
+		String upstreamBranchName) {
+
 		return getName();
 	}
 
@@ -77,7 +79,7 @@ public abstract class BaseLocalGitRepository
 		if ((directory == null) || !directory.exists()) {
 			directory = new File(
 				JenkinsResultsParserUtil.getBaseGitRepositoryDir(),
-				getDefaultRelativeGitRepositoryDirPath());
+				getDefaultRelativeGitRepositoryDirPath(upstreamBranchName));
 		}
 
 		try {

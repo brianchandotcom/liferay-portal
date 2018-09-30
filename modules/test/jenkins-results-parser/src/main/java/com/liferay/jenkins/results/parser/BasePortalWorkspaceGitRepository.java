@@ -86,9 +86,10 @@ public abstract class BasePortalWorkspaceGitRepository
 	}
 
 	@Override
-	protected String getDefaultRelativeGitRepositoryDirPath() {
+	protected String getDefaultRelativeGitRepositoryDirPath(
+		String upstreamBranchName) {
+
 		String name = getName();
-		String upstreamBranchName = getUpstreamBranchName();
 
 		if (upstreamBranchName.equals("master")) {
 			return name.replace("-ee", "");

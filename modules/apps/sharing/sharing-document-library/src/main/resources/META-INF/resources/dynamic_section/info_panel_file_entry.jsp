@@ -94,7 +94,6 @@ PortletURL manageCollaboratorsRenderURL = PortletProviderUtil.getPortletURL(requ
 manageCollaboratorsRenderURL.setParameter("classNameId", String.valueOf(ClassNameLocalServiceUtil.getClassNameId(DLFileEntry.class.getName())));
 manageCollaboratorsRenderURL.setParameter("classPK", String.valueOf(fileEntry.getFileEntryId()));
 manageCollaboratorsRenderURL.setParameter("manageCollaboratorDialogId", liferayPortletResponse.getNamespace() + "manageCollaboratorsDialog");
-
 manageCollaboratorsRenderURL.setWindowState(LiferayWindowState.POP_UP);
 %>
 

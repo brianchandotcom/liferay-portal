@@ -43,6 +43,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 import java.util.List;
 import java.util.Objects;
 
+import javax.portlet.ActionRequest;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
@@ -302,18 +303,33 @@ public class AssetListDisplayContext {
 			{
 				addPrimaryDropdownItem(
 					dropdownItem -> {
-						dropdownItem.setHref(
+						dropdownItem.putData("action", "addAssetListEntry");
+						dropdownItem.putData(
+							"addAssetListEntryURL",
 							_addAssetListEntryURL(
 								AssetListEntryTypeConstants.TYPE_MANUAL));
+						dropdownItem.putData(
+							"title",
+							_getAddAssetListTitle(
+								AssetListEntryTypeConstants.TYPE_MANUAL_LABEL));
+						dropdownItem.setHref("#");
 						dropdownItem.setLabel(
 							LanguageUtil.get(_request, "manual-selection"));
 					});
 
 				addPrimaryDropdownItem(
 					dropdownItem -> {
-						dropdownItem.setHref(
+						dropdownItem.putData("action", "addAssetListEntry");
+						dropdownItem.putData(
+							"addAssetListEntryURL",
 							_addAssetListEntryURL(
 								AssetListEntryTypeConstants.TYPE_DYNAMIC));
+						dropdownItem.putData(
+							"title",
+							_getAddAssetListTitle(
+								AssetListEntryTypeConstants.
+									TYPE_DYNAMIC_LABEL));
+						dropdownItem.setHref("#");
 						dropdownItem.setLabel(
 							LanguageUtil.get(_request, "dynamic-selection"));
 					});
@@ -420,18 +436,17 @@ public class AssetListDisplayContext {
 	}
 
 	private String _addAssetListEntryURL(int type) {
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		PortletURL addAssetListEntry = _renderResponse.createActionURL();
 
-		PortletURL addAssetListEntry = _renderResponse.createRenderURL();
-
-		addAssetListEntry.setParameter("mvcPath", "/edit_asset_list_entry.jsp");
 		addAssetListEntry.setParameter(
-			"redirect", themeDisplay.getURLCurrent());
-		addAssetListEntry.setParameter(
-			"assetListEntryType", String.valueOf(type));
+			ActionRequest.ACTION_NAME, "/asset_list/add_asset_list_entry");
+		addAssetListEntry.setParameter("type", String.valueOf(type));
 
 		return addAssetListEntry.toString();
+	}
+
+	private String _getAddAssetListTitle(String type) {
+		return LanguageUtil.format(_request, "add-x-asset-list", type, true);
 	}
 
 	private List<DropdownItem> _getAssetListEntryOrderByDropdownItems() {

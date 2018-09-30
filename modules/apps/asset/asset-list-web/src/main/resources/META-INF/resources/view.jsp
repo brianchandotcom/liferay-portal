@@ -106,7 +106,25 @@
 	</c:choose>
 </aui:form>
 
-<aui:script>
+<aui:script require="frontend-js-web/liferay/modal/commands/OpenSimpleInputModal.es as modalCommands">
+	var addAssetListEntry = function(event) {
+		event.preventDefault();
+
+		var itemData = event.data.item.data;
+
+		modalCommands.openSimpleInputModal(
+			{
+				dialogTitle: itemData.title,
+				formSubmitURL: itemData.addAssetListEntryURL,
+				mainFieldLabel: '<liferay-ui:message key="title" />',
+				mainFieldName: 'title',
+				mainFieldPlaceholder: '<liferay-ui:message key="title" />',
+				namespace: '<portlet:namespace />',
+				spritemap: '<%= themeDisplay.getPathThemeImages() %>/lexicon/icons.svg'
+			}
+		);
+	};
+
 	var deleteSelectedAssetListEntries = function() {
 		if (confirm('<liferay-ui:message key="are-you-sure-you-want-to-delete-this" />')) {
 			submitForm(document.querySelector('#<portlet:namespace />fm'));
@@ -114,18 +132,19 @@
 	};
 
 	var ACTIONS = {
+		'addAssetListEntry': addAssetListEntry,
 		'deleteSelectedAssetListEntries': deleteSelectedAssetListEntries
 	};
 
 	Liferay.componentReady('assetListEntriesEntriesManagementToolbar').then(
 		function(managementToolbar) {
 			managementToolbar.on(
-				'actionItemClicked',
+				['actionItemClicked', 'creationMenuItemClicked'],
 					function(event) {
 						var itemData = event.data.item.data;
 
 						if (itemData && itemData.action && ACTIONS[itemData.action]) {
-							ACTIONS[itemData.action]();
+							ACTIONS[itemData.action](event);
 						}
 					}
 				);

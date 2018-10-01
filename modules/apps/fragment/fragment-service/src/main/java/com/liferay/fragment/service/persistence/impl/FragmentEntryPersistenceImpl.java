@@ -5527,8 +5527,11 @@ public class FragmentEntryPersistenceImpl extends BasePersistenceImpl<FragmentEn
 				fragmentEntry.setModifiedDate(now);
 			}
 			else {
-				fragmentEntry.setModifiedDate(serviceContext.getModifiedDate(
-						now));
+				Date newModifiedDate = serviceContext.getModifiedDate(now);
+
+				if (!newModifiedDate.equals(fragmentEntry.getModifiedDate())) {
+					fragmentEntry.setModifiedDate(newModifiedDate);
+				}
 			}
 		}
 

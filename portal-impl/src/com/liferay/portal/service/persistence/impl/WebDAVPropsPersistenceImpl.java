@@ -573,7 +573,11 @@ public class WebDAVPropsPersistenceImpl extends BasePersistenceImpl<WebDAVProps>
 				webDAVProps.setModifiedDate(now);
 			}
 			else {
-				webDAVProps.setModifiedDate(serviceContext.getModifiedDate(now));
+				Date newModifiedDate = serviceContext.getModifiedDate(now);
+
+				if (!newModifiedDate.equals(webDAVProps.getModifiedDate())) {
+					webDAVProps.setModifiedDate(newModifiedDate);
+				}
 			}
 		}
 

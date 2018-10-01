@@ -3232,7 +3232,11 @@ public class RatingsEntryPersistenceImpl extends BasePersistenceImpl<RatingsEntr
 				ratingsEntry.setModifiedDate(now);
 			}
 			else {
-				ratingsEntry.setModifiedDate(serviceContext.getModifiedDate(now));
+				Date newModifiedDate = serviceContext.getModifiedDate(now);
+
+				if (!newModifiedDate.equals(ratingsEntry.getModifiedDate())) {
+					ratingsEntry.setModifiedDate(newModifiedDate);
+				}
 			}
 		}
 

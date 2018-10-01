@@ -7173,8 +7173,12 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 				announcementsEntry.setModifiedDate(now);
 			}
 			else {
-				announcementsEntry.setModifiedDate(serviceContext.getModifiedDate(
-						now));
+				Date newModifiedDate = serviceContext.getModifiedDate(now);
+
+				if (!newModifiedDate.equals(
+							announcementsEntry.getModifiedDate())) {
+					announcementsEntry.setModifiedDate(newModifiedDate);
+				}
 			}
 		}
 

@@ -12210,8 +12210,11 @@ public class AssetCategoryPersistenceImpl extends BasePersistenceImpl<AssetCateg
 				assetCategory.setModifiedDate(now);
 			}
 			else {
-				assetCategory.setModifiedDate(serviceContext.getModifiedDate(
-						now));
+				Date newModifiedDate = serviceContext.getModifiedDate(now);
+
+				if (!newModifiedDate.equals(assetCategory.getModifiedDate())) {
+					assetCategory.setModifiedDate(newModifiedDate);
+				}
 			}
 		}
 

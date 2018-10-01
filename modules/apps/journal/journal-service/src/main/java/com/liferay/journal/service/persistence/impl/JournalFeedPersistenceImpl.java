@@ -2908,7 +2908,11 @@ public class JournalFeedPersistenceImpl extends BasePersistenceImpl<JournalFeed>
 				journalFeed.setModifiedDate(now);
 			}
 			else {
-				journalFeed.setModifiedDate(serviceContext.getModifiedDate(now));
+				Date newModifiedDate = serviceContext.getModifiedDate(now);
+
+				if (!newModifiedDate.equals(journalFeed.getModifiedDate())) {
+					journalFeed.setModifiedDate(newModifiedDate);
+				}
 			}
 		}
 

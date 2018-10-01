@@ -953,8 +953,12 @@ public class WorkflowInstanceLinkPersistenceImpl extends BasePersistenceImpl<Wor
 				workflowInstanceLink.setModifiedDate(now);
 			}
 			else {
-				workflowInstanceLink.setModifiedDate(serviceContext.getModifiedDate(
-						now));
+				Date newModifiedDate = serviceContext.getModifiedDate(now);
+
+				if (!newModifiedDate.equals(
+							workflowInstanceLink.getModifiedDate())) {
+					workflowInstanceLink.setModifiedDate(newModifiedDate);
+				}
 			}
 		}
 

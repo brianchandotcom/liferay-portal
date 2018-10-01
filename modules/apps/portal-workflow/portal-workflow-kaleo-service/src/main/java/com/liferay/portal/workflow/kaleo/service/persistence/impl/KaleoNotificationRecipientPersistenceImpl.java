@@ -1899,8 +1899,12 @@ public class KaleoNotificationRecipientPersistenceImpl
 				kaleoNotificationRecipient.setModifiedDate(now);
 			}
 			else {
-				kaleoNotificationRecipient.setModifiedDate(serviceContext.getModifiedDate(
-						now));
+				Date newModifiedDate = serviceContext.getModifiedDate(now);
+
+				if (!newModifiedDate.equals(
+							kaleoNotificationRecipient.getModifiedDate())) {
+					kaleoNotificationRecipient.setModifiedDate(newModifiedDate);
+				}
 			}
 		}
 

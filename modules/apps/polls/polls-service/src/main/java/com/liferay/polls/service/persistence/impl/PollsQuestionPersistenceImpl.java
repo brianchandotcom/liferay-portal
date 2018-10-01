@@ -2637,8 +2637,11 @@ public class PollsQuestionPersistenceImpl extends BasePersistenceImpl<PollsQuest
 				pollsQuestion.setModifiedDate(now);
 			}
 			else {
-				pollsQuestion.setModifiedDate(serviceContext.getModifiedDate(
-						now));
+				Date newModifiedDate = serviceContext.getModifiedDate(now);
+
+				if (!newModifiedDate.equals(pollsQuestion.getModifiedDate())) {
+					pollsQuestion.setModifiedDate(newModifiedDate);
+				}
 			}
 		}
 

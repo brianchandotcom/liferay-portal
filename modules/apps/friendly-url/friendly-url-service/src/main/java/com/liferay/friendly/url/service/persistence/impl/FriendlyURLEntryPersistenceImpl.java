@@ -2365,8 +2365,11 @@ public class FriendlyURLEntryPersistenceImpl extends BasePersistenceImpl<Friendl
 				friendlyURLEntry.setModifiedDate(now);
 			}
 			else {
-				friendlyURLEntry.setModifiedDate(serviceContext.getModifiedDate(
-						now));
+				Date newModifiedDate = serviceContext.getModifiedDate(now);
+
+				if (!newModifiedDate.equals(friendlyURLEntry.getModifiedDate())) {
+					friendlyURLEntry.setModifiedDate(newModifiedDate);
+				}
 			}
 		}
 

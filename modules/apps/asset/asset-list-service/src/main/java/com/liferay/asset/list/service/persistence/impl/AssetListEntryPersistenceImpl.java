@@ -3406,8 +3406,11 @@ public class AssetListEntryPersistenceImpl extends BasePersistenceImpl<AssetList
 				assetListEntry.setModifiedDate(now);
 			}
 			else {
-				assetListEntry.setModifiedDate(serviceContext.getModifiedDate(
-						now));
+				Date newModifiedDate = serviceContext.getModifiedDate(now);
+
+				if (!newModifiedDate.equals(assetListEntry.getModifiedDate())) {
+					assetListEntry.setModifiedDate(newModifiedDate);
+				}
 			}
 		}
 

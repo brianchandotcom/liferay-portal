@@ -3484,7 +3484,11 @@ public class MBBanPersistenceImpl extends BasePersistenceImpl<MBBan>
 				mbBan.setModifiedDate(now);
 			}
 			else {
-				mbBan.setModifiedDate(serviceContext.getModifiedDate(now));
+				Date newModifiedDate = serviceContext.getModifiedDate(now);
+
+				if (!newModifiedDate.equals(mbBan.getModifiedDate())) {
+					mbBan.setModifiedDate(newModifiedDate);
+				}
 			}
 		}
 

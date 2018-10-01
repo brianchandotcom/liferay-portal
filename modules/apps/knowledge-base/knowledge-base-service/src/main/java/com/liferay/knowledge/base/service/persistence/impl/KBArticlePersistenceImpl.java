@@ -32152,7 +32152,11 @@ public class KBArticlePersistenceImpl extends BasePersistenceImpl<KBArticle>
 				kbArticle.setModifiedDate(now);
 			}
 			else {
-				kbArticle.setModifiedDate(serviceContext.getModifiedDate(now));
+				Date newModifiedDate = serviceContext.getModifiedDate(now);
+
+				if (!newModifiedDate.equals(kbArticle.getModifiedDate())) {
+					kbArticle.setModifiedDate(newModifiedDate);
+				}
 			}
 		}
 

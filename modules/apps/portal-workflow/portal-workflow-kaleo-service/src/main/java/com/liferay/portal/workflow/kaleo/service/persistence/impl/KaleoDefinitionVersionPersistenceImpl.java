@@ -1785,8 +1785,12 @@ public class KaleoDefinitionVersionPersistenceImpl extends BasePersistenceImpl<K
 				kaleoDefinitionVersion.setModifiedDate(now);
 			}
 			else {
-				kaleoDefinitionVersion.setModifiedDate(serviceContext.getModifiedDate(
-						now));
+				Date newModifiedDate = serviceContext.getModifiedDate(now);
+
+				if (!newModifiedDate.equals(
+							kaleoDefinitionVersion.getModifiedDate())) {
+					kaleoDefinitionVersion.setModifiedDate(newModifiedDate);
+				}
 			}
 		}
 

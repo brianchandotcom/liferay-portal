@@ -600,7 +600,11 @@ public class ReleasePersistenceImpl extends BasePersistenceImpl<Release>
 				release.setModifiedDate(now);
 			}
 			else {
-				release.setModifiedDate(serviceContext.getModifiedDate(now));
+				Date newModifiedDate = serviceContext.getModifiedDate(now);
+
+				if (!newModifiedDate.equals(release.getModifiedDate())) {
+					release.setModifiedDate(newModifiedDate);
+				}
 			}
 		}
 

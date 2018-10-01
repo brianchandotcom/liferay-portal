@@ -3095,7 +3095,11 @@ public class MDRRuleGroupPersistenceImpl extends BasePersistenceImpl<MDRRuleGrou
 				mdrRuleGroup.setModifiedDate(now);
 			}
 			else {
-				mdrRuleGroup.setModifiedDate(serviceContext.getModifiedDate(now));
+				Date newModifiedDate = serviceContext.getModifiedDate(now);
+
+				if (!newModifiedDate.equals(mdrRuleGroup.getModifiedDate())) {
+					mdrRuleGroup.setModifiedDate(newModifiedDate);
+				}
 			}
 		}
 

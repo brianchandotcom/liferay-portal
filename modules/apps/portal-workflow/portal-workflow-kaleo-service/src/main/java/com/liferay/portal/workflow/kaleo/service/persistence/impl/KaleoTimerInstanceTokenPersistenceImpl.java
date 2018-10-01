@@ -2293,8 +2293,12 @@ public class KaleoTimerInstanceTokenPersistenceImpl extends BasePersistenceImpl<
 				kaleoTimerInstanceToken.setModifiedDate(now);
 			}
 			else {
-				kaleoTimerInstanceToken.setModifiedDate(serviceContext.getModifiedDate(
-						now));
+				Date newModifiedDate = serviceContext.getModifiedDate(now);
+
+				if (!newModifiedDate.equals(
+							kaleoTimerInstanceToken.getModifiedDate())) {
+					kaleoTimerInstanceToken.setModifiedDate(newModifiedDate);
+				}
 			}
 		}
 

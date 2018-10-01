@@ -3269,8 +3269,11 @@ public class SiteFriendlyURLPersistenceImpl extends BasePersistenceImpl<SiteFrie
 				siteFriendlyURL.setModifiedDate(now);
 			}
 			else {
-				siteFriendlyURL.setModifiedDate(serviceContext.getModifiedDate(
-						now));
+				Date newModifiedDate = serviceContext.getModifiedDate(now);
+
+				if (!newModifiedDate.equals(siteFriendlyURL.getModifiedDate())) {
+					siteFriendlyURL.setModifiedDate(newModifiedDate);
+				}
 			}
 		}
 

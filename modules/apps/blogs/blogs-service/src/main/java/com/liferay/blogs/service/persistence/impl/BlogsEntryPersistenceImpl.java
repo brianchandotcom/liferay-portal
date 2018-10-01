@@ -21159,7 +21159,11 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 				blogsEntry.setModifiedDate(now);
 			}
 			else {
-				blogsEntry.setModifiedDate(serviceContext.getModifiedDate(now));
+				Date newModifiedDate = serviceContext.getModifiedDate(now);
+
+				if (!newModifiedDate.equals(blogsEntry.getModifiedDate())) {
+					blogsEntry.setModifiedDate(newModifiedDate);
+				}
 			}
 		}
 

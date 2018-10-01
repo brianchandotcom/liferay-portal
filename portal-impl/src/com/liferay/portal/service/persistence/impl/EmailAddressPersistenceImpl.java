@@ -4245,7 +4245,11 @@ public class EmailAddressPersistenceImpl extends BasePersistenceImpl<EmailAddres
 				emailAddress.setModifiedDate(now);
 			}
 			else {
-				emailAddress.setModifiedDate(serviceContext.getModifiedDate(now));
+				Date newModifiedDate = serviceContext.getModifiedDate(now);
+
+				if (!newModifiedDate.equals(emailAddress.getModifiedDate())) {
+					emailAddress.setModifiedDate(newModifiedDate);
+				}
 			}
 		}
 

@@ -12219,7 +12219,11 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 				ddmTemplate.setModifiedDate(now);
 			}
 			else {
-				ddmTemplate.setModifiedDate(serviceContext.getModifiedDate(now));
+				Date newModifiedDate = serviceContext.getModifiedDate(now);
+
+				if (!newModifiedDate.equals(ddmTemplate.getModifiedDate())) {
+					ddmTemplate.setModifiedDate(newModifiedDate);
+				}
 			}
 		}
 

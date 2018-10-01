@@ -8174,8 +8174,11 @@ public class LayoutRevisionPersistenceImpl extends BasePersistenceImpl<LayoutRev
 				layoutRevision.setModifiedDate(now);
 			}
 			else {
-				layoutRevision.setModifiedDate(serviceContext.getModifiedDate(
-						now));
+				Date newModifiedDate = serviceContext.getModifiedDate(now);
+
+				if (!newModifiedDate.equals(layoutRevision.getModifiedDate())) {
+					layoutRevision.setModifiedDate(newModifiedDate);
+				}
 			}
 		}
 

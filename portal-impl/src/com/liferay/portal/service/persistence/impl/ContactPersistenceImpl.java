@@ -1853,7 +1853,11 @@ public class ContactPersistenceImpl extends BasePersistenceImpl<Contact>
 				contact.setModifiedDate(now);
 			}
 			else {
-				contact.setModifiedDate(serviceContext.getModifiedDate(now));
+				Date newModifiedDate = serviceContext.getModifiedDate(now);
+
+				if (!newModifiedDate.equals(contact.getModifiedDate())) {
+					contact.setModifiedDate(newModifiedDate);
+				}
 			}
 		}
 

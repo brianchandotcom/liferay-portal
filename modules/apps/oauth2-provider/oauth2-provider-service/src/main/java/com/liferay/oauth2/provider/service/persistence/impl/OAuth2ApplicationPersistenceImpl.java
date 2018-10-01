@@ -1513,8 +1513,11 @@ public class OAuth2ApplicationPersistenceImpl extends BasePersistenceImpl<OAuth2
 				oAuth2Application.setModifiedDate(now);
 			}
 			else {
-				oAuth2Application.setModifiedDate(serviceContext.getModifiedDate(
-						now));
+				Date newModifiedDate = serviceContext.getModifiedDate(now);
+
+				if (!newModifiedDate.equals(oAuth2Application.getModifiedDate())) {
+					oAuth2Application.setModifiedDate(newModifiedDate);
+				}
 			}
 		}
 

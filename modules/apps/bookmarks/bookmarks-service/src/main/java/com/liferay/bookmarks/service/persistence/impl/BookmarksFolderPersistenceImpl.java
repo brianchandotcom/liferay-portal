@@ -7028,8 +7028,11 @@ public class BookmarksFolderPersistenceImpl extends BasePersistenceImpl<Bookmark
 				bookmarksFolder.setModifiedDate(now);
 			}
 			else {
-				bookmarksFolder.setModifiedDate(serviceContext.getModifiedDate(
-						now));
+				Date newModifiedDate = serviceContext.getModifiedDate(now);
+
+				if (!newModifiedDate.equals(bookmarksFolder.getModifiedDate())) {
+					bookmarksFolder.setModifiedDate(newModifiedDate);
+				}
 			}
 		}
 

@@ -4848,7 +4848,11 @@ public class WikiNodePersistenceImpl extends BasePersistenceImpl<WikiNode>
 				wikiNode.setModifiedDate(now);
 			}
 			else {
-				wikiNode.setModifiedDate(serviceContext.getModifiedDate(now));
+				Date newModifiedDate = serviceContext.getModifiedDate(now);
+
+				if (!newModifiedDate.equals(wikiNode.getModifiedDate())) {
+					wikiNode.setModifiedDate(newModifiedDate);
+				}
 			}
 		}
 

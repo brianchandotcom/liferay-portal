@@ -4532,7 +4532,11 @@ public class AssetTagPersistenceImpl extends BasePersistenceImpl<AssetTag>
 				assetTag.setModifiedDate(now);
 			}
 			else {
-				assetTag.setModifiedDate(serviceContext.getModifiedDate(now));
+				Date newModifiedDate = serviceContext.getModifiedDate(now);
+
+				if (!newModifiedDate.equals(assetTag.getModifiedDate())) {
+					assetTag.setModifiedDate(newModifiedDate);
+				}
 			}
 		}
 

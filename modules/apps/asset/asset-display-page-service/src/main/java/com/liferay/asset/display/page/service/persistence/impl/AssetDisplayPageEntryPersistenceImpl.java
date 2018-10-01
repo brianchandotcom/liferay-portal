@@ -3124,8 +3124,12 @@ public class AssetDisplayPageEntryPersistenceImpl extends BasePersistenceImpl<As
 				assetDisplayPageEntry.setModifiedDate(now);
 			}
 			else {
-				assetDisplayPageEntry.setModifiedDate(serviceContext.getModifiedDate(
-						now));
+				Date newModifiedDate = serviceContext.getModifiedDate(now);
+
+				if (!newModifiedDate.equals(
+							assetDisplayPageEntry.getModifiedDate())) {
+					assetDisplayPageEntry.setModifiedDate(newModifiedDate);
+				}
 			}
 		}
 

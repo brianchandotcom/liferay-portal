@@ -12561,7 +12561,11 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 				dlFolder.setModifiedDate(now);
 			}
 			else {
-				dlFolder.setModifiedDate(serviceContext.getModifiedDate(now));
+				Date newModifiedDate = serviceContext.getModifiedDate(now);
+
+				if (!newModifiedDate.equals(dlFolder.getModifiedDate())) {
+					dlFolder.setModifiedDate(newModifiedDate);
+				}
 			}
 		}
 

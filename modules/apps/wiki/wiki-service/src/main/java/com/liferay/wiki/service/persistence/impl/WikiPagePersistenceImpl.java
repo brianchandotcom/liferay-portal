@@ -22231,7 +22231,11 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 				wikiPage.setModifiedDate(now);
 			}
 			else {
-				wikiPage.setModifiedDate(serviceContext.getModifiedDate(now));
+				Date newModifiedDate = serviceContext.getModifiedDate(now);
+
+				if (!newModifiedDate.equals(wikiPage.getModifiedDate())) {
+					wikiPage.setModifiedDate(newModifiedDate);
+				}
 			}
 		}
 

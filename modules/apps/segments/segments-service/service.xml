@@ -42,13 +42,13 @@
 		<finder name="GroupId" return-type="Collection">
 			<finder-column name="groupId" />
 		</finder>
-		<finder name="G_K" return-type="SegmentsEntry" unique="true">
-			<finder-column name="groupId" />
-			<finder-column name="key" />
-		</finder>
 		<finder name="G_A" return-type="Collection">
 			<finder-column name="groupId" />
 			<finder-column name="active" />
+		</finder>
+		<finder name="G_K" return-type="SegmentsEntry" unique="true">
+			<finder-column name="groupId" />
+			<finder-column name="key" />
 		</finder>
 	</entity>
 	<entity local-service="true" name="SegmentsEntryRel" remote-service="false">

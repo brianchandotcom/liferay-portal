@@ -23,7 +23,6 @@ import com.liferay.site.navigation.taglib.internal.servlet.ServletContextUtil;
 import com.liferay.site.navigation.taglib.internal.servlet.SiteNavigationMenuUtil;
 import com.liferay.site.navigation.type.SiteNavigationMenuItemType;
 
-import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -37,9 +36,7 @@ public class SiteNavigationMenuNavItem extends NavItem {
 		HttpServletRequest request, ThemeDisplay themeDisplay,
 		SiteNavigationMenuItem siteNavigationMenuItem) {
 
-		super(
-			request, themeDisplay, themeDisplay.getLayout(),
-			new HashMap<String, Object>());
+		super(request, themeDisplay, themeDisplay.getLayout(), null);
 
 		SiteNavigationMenuItemType siteNavigationMenuItemType =
 			ServletContextUtil.getSiteNavigationMenuItemType(

@@ -92,8 +92,10 @@ public class DisplayPageFriendlyURLResolver implements FriendlyURLResolver {
 		String urlTitle = friendlyURL.substring(
 			JournalArticleConstants.CANONICAL_URL_SEPARATOR.length());
 
+		String decodedUrlTitle = _http.decodePath(urlTitle);
+
 		String normalizedUrlTitle =
-			FriendlyURLNormalizerUtil.normalizeWithEncoding(urlTitle);
+			FriendlyURLNormalizerUtil.normalizeWithEncoding(decodedUrlTitle);
 
 		JournalArticle journalArticle =
 			_journalArticleLocalService.getLatestArticleByUrlTitle(
@@ -149,8 +151,10 @@ public class DisplayPageFriendlyURLResolver implements FriendlyURLResolver {
 		String urlTitle = friendlyURL.substring(
 			JournalArticleConstants.CANONICAL_URL_SEPARATOR.length());
 
+		String decodedUrlTitle = _http.decodePath(urlTitle);
+
 		String normalizedUrlTitle =
-			FriendlyURLNormalizerUtil.normalizeWithEncoding(urlTitle);
+			FriendlyURLNormalizerUtil.normalizeWithEncoding(decodedUrlTitle);
 
 		JournalArticle journalArticle =
 			_journalArticleLocalService.getLatestArticleByUrlTitle(

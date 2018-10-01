@@ -6646,7 +6646,10 @@ custom.sql.function.isnotnull=CONVERT(VARCHAR,?) IS NOT NULL</echo>
 						<property name="oracle.instance.name" value="xe" />
 					</then>
 					<elseif>
-						<equals arg1="${database.version}" arg2="12.2.0.1" />
+						<and>
+							<equals arg1="${database.version}" arg2="12.2.0.1" />
+							<os family="windows" />
+						</and>
 						<then>
 							<property name="oracle.instance.name" value="orcl" />
 						</then>

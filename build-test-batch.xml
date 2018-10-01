@@ -2974,6 +2974,22 @@ log.sanitizer.enabled=false</echo>
 		/>
 	</target>
 
+	<target name="functional-bundle-jboss-db2111-jdk8">
+		<run-functional-test
+			app.server.type="jboss"
+			database.type="db2"
+			test.build.fix.pack.zip.url="${test.build.fix.pack.zip.url}"
+			test.fix.pack.base.url="${test.fix.pack.base.url}"
+			test.license.xml.url="${test.license.xml.url}"
+			test.plugin.zip.url="${test.plugin.zip.url}"
+			test.plugins.war.zip.url="${test.plugins.war.zip.url}"
+			test.portal.bundle.version="${test.portal.bundle.version}"
+			test.portal.bundle.zip.url="${test.portal.bundle.zip.url}"
+			test.portal.lpkg.name="${test.portal.lpkg.name}"
+			test.sql.zip.url="${test.sql.zip.url}"
+		/>
+	</target>
+
 	<target name="functional-bundle-jboss-mysql56-jdk8">
 		<run-functional-test
 			app.server.type="jboss"
@@ -3093,6 +3109,25 @@ log.sanitizer.enabled=false</echo>
 		/>
 	</target>
 
+	<target name="functional-bundle-tomcat-db2111-jdk8">
+		<set-tomcat-version-number liferay.portal.bundle="${test.portal.bundle.version}" />
+
+		<run-functional-test
+			app.server.type="tomcat"
+			database.type="db2"
+			setup.proxy="false"
+			test.build.fix.pack.zip.url="${test.build.fix.pack.zip.url}"
+			test.fix.pack.base.url="${test.fix.pack.base.url}"
+			test.license.xml.url="${test.license.xml.url}"
+			test.plugin.zip.url="${test.plugin.zip.url}"
+			test.plugins.war.zip.url="${test.plugins.war.zip.url}"
+			test.portal.bundle.version="${test.portal.bundle.version}"
+			test.portal.bundle.zip.url="${test.portal.bundle.zip.url}"
+			test.portal.lpkg.name="${test.portal.lpkg.name}"
+			test.sql.zip.url="${test.sql.zip.url}"
+		/>
+	</target>
+
 	<target name="functional-bundle-tomcat-hypersonic20-jdk8">
 		<set-tomcat-version-number liferay.portal.bundle="${test.portal.bundle.version}" />
 
@@ -3113,6 +3148,25 @@ log.sanitizer.enabled=false</echo>
 	</target>
 
 	<target name="functional-bundle-tomcat-mariadb100-jdk8">
+		<set-tomcat-version-number liferay.portal.bundle="${test.portal.bundle.version}" />
+
+		<run-functional-test
+			app.server.type="tomcat"
+			database.type="mariadb"
+			setup.proxy="false"
+			test.build.fix.pack.zip.url="${test.build.fix.pack.zip.url}"
+			test.fix.pack.base.url="${test.fix.pack.base.url}"
+			test.license.xml.url="${test.license.xml.url}"
+			test.plugin.zip.url="${test.plugin.zip.url}"
+			test.plugins.war.zip.url="${test.plugins.war.zip.url}"
+			test.portal.bundle.version="${test.portal.bundle.version}"
+			test.portal.bundle.zip.url="${test.portal.bundle.zip.url}"
+			test.portal.lpkg.name="${test.portal.lpkg.name}"
+			test.sql.zip.url="${test.sql.zip.url}"
+		/>
+	</target>
+
+	<target name="functional-bundle-tomcat-mariadb102-jdk8">
 		<set-tomcat-version-number liferay.portal.bundle="${test.portal.bundle.version}" />
 
 		<run-functional-test
@@ -3195,6 +3249,44 @@ log.sanitizer.enabled=false</echo>
 		<run-functional-test
 			app.server.type="tomcat"
 			database.type="oracle"
+			setup.proxy="false"
+			test.build.fix.pack.zip.url="${test.build.fix.pack.zip.url}"
+			test.fix.pack.base.url="${test.fix.pack.base.url}"
+			test.license.xml.url="${test.license.xml.url}"
+			test.plugin.zip.url="${test.plugin.zip.url}"
+			test.plugins.war.zip.url="${test.plugins.war.zip.url}"
+			test.portal.bundle.version="${test.portal.bundle.version}"
+			test.portal.bundle.zip.url="${test.portal.bundle.zip.url}"
+			test.portal.lpkg.name="${test.portal.lpkg.name}"
+			test.sql.zip.url="${test.sql.zip.url}"
+		/>
+	</target>
+
+	<target name="functional-bundle-tomcat-oracle122-jdk8">
+		<set-tomcat-version-number liferay.portal.bundle="${test.portal.bundle.version}" />
+
+		<run-functional-test
+			app.server.type="tomcat"
+			database.type="oracle"
+			setup.proxy="false"
+			test.build.fix.pack.zip.url="${test.build.fix.pack.zip.url}"
+			test.fix.pack.base.url="${test.fix.pack.base.url}"
+			test.license.xml.url="${test.license.xml.url}"
+			test.plugin.zip.url="${test.plugin.zip.url}"
+			test.plugins.war.zip.url="${test.plugins.war.zip.url}"
+			test.portal.bundle.version="${test.portal.bundle.version}"
+			test.portal.bundle.zip.url="${test.portal.bundle.zip.url}"
+			test.portal.lpkg.name="${test.portal.lpkg.name}"
+			test.sql.zip.url="${test.sql.zip.url}"
+		/>
+	</target>
+
+	<target name="functional-bundle-tomcat-postgresql10-jdk8">
+		<set-tomcat-version-number liferay.portal.bundle="${test.portal.bundle.version}" />
+
+		<run-functional-test
+			app.server.type="tomcat"
+			database.type="postgresql"
 			setup.proxy="false"
 			test.build.fix.pack.zip.url="${test.build.fix.pack.zip.url}"
 			test.fix.pack.base.url="${test.fix.pack.base.url}"
@@ -3316,6 +3408,21 @@ log.sanitizer.enabled=false</echo>
 		/>
 	</target>
 
+	<target name="functional-bundle-wildfly-mariadb102-jdk8">
+		<run-functional-test
+			app.server.type="wildfly"
+			database.type="mariadb"
+			test.build.fix.pack.zip.url="${test.build.fix.pack.zip.url}"
+			test.fix.pack.base.url="${test.fix.pack.base.url}"
+			test.license.xml.url="${test.license.xml.url}"
+			test.plugin.zip.url="${test.plugin.zip.url}"
+			test.plugins.war.zip.url="${test.plugins.war.zip.url}"
+			test.portal.bundle.zip.url="${test.portal.bundle.zip.url}"
+			test.portal.lpkg.name="${test.portal.lpkg.name}"
+			test.sql.zip.url="${test.sql.zip.url}"
+		/>
+	</target>
+
 	<target name="functional-bundle-wildfly-mysql56-jdk8">
 		<run-functional-test
 			app.server.type="wildfly"
@@ -3351,6 +3458,10 @@ log.sanitizer.enabled=false</echo>
 		<run-functional-test app.server.type="jboss" database.type="db2" />
 	</target>
 
+	<target name="functional-jboss70-db2111-jdk8">
+		<run-functional-test app.server.type="jboss" database.type="db2" />
+	</target>
+
 	<target name="functional-smoke-bundle-tomcat-mysql56-jdk8">
 		<antcall target="functional-bundle-tomcat-mysql56-jdk8" />
 	</target>
@@ -3375,7 +3486,7 @@ log.sanitizer.enabled=false</echo>
 		<run-functional-test app.server.type="tcserver" database.type="mysql" database.version="5.7" test.portal.log.assert="true" />
 	</target>
 
-	<target name="functional-smoke-tomcat80-db2105-jdk8">
+	<target name="functional-smoke-tomcat80-db2111-jdk8">
 		<run-functional-test app.server.type="tomcat" database.type="db2" test.portal.log.assert="true" />
 	</target>
 
@@ -3403,11 +3514,11 @@ log.sanitizer.enabled=false</echo>
 		<run-functional-test app.server.type="tomcat" database.type="sybase" test.portal.log.assert="true" />
 	</target>
 
-	<target name="functional-smoke-tomcat90-db2105-jdk8">
+	<target name="functional-smoke-tomcat90-db2111-jdk8">
 		<run-functional-test app.server.type="tomcat" database.type="db2" test.portal.log.assert="true" />
 	</target>
 
-	<target name="functional-smoke-tomcat90-mariadb100-jdk8">
+	<target name="functional-smoke-tomcat90-mariadb102-jdk8">
 		<run-functional-test app.server.type="tomcat" database.type="mariadb" test.portal.log.assert="true" />
 	</target>
 
@@ -3415,11 +3526,11 @@ log.sanitizer.enabled=false</echo>
 		<run-functional-test app.server.type="tomcat" database.type="mysql" database.version="5.7" test.portal.log.assert="true" />
 	</target>
 
-	<target name="functional-smoke-tomcat90-oracle121-jdk8">
+	<target name="functional-smoke-tomcat90-oracle122-jdk8">
 		<run-functional-test app.server.type="tomcat" database.type="oracle" test.portal.log.assert="true" />
 	</target>
 
-	<target name="functional-smoke-tomcat90-postgresql94-jdk8">
+	<target name="functional-smoke-tomcat90-postgresql10-jdk8">
 		<run-functional-test app.server.type="tomcat" database.type="postgresql" test.portal.log.assert="true" />
 	</target>
 
@@ -3447,11 +3558,11 @@ log.sanitizer.enabled=false</echo>
 		<run-functional-test app.server.type="wildfly" database.type="mariadb" test.portal.log.assert="true" />
 	</target>
 
-	<target name="functional-smoke-wildfly110-mariadb100-jdk8">
+	<target name="functional-smoke-wildfly110-mariadb102-jdk8">
 		<run-functional-test app.server.type="wildfly" database.type="mariadb" test.portal.log.assert="true" />
 	</target>
 
-	<target name="functional-tomcat80-db2105-jdk8">
+	<target name="functional-tomcat80-db2111-jdk8">
 		<run-functional-test app.server.type="tomcat" database.type="db2" />
 	</target>
 
@@ -3487,7 +3598,7 @@ log.sanitizer.enabled=false</echo>
 		<run-functional-test app.server.type="tomcat" database.type="sybase" />
 	</target>
 
-	<target name="functional-tomcat90-db2105-jdk8">
+	<target name="functional-tomcat90-db2111-jdk8">
 		<run-functional-test app.server.type="tomcat" database.type="db2" />
 	</target>
 
@@ -3495,7 +3606,7 @@ log.sanitizer.enabled=false</echo>
 		<run-functional-test app.server.type="tomcat" database.type="hypersonic" />
 	</target>
 
-	<target name="functional-tomcat90-mariadb100-jdk8">
+	<target name="functional-tomcat90-mariadb102-jdk8">
 		<run-functional-test app.server.type="tomcat" database.type="mariadb" />
 	</target>
 
@@ -3507,11 +3618,11 @@ log.sanitizer.enabled=false</echo>
 		<antcall target="functional-tomcat90-mysql57-jdk8" />
 	</target>
 
-	<target name="functional-tomcat90-oracle121-jdk8">
+	<target name="functional-tomcat90-oracle122-jdk8">
 		<run-functional-test app.server.type="tomcat" database.type="oracle" />
 	</target>
 
-	<target name="functional-tomcat90-postgresql94-jdk8">
+	<target name="functional-tomcat90-postgresql10-jdk8">
 		<run-functional-test app.server.type="tomcat" database.type="postgresql" />
 	</target>
 
@@ -3559,11 +3670,11 @@ log.sanitizer.enabled=false</echo>
 		<run-functional-test app.server.type="tomcat" database.type="sybase" />
 	</target>
 
-	<target name="functional-upgrade-tomcat90-db2105-jdk8">
+	<target name="functional-upgrade-tomcat90-db2111-jdk8">
 		<run-functional-test app.server.type="tomcat" database.type="db2" />
 	</target>
 
-	<target name="functional-upgrade-tomcat90-mariadb100-jdk8">
+	<target name="functional-upgrade-tomcat90-mariadb102-jdk8">
 		<run-functional-test app.server.type="tomcat" database.type="mariadb" />
 	</target>
 
@@ -3571,16 +3682,16 @@ log.sanitizer.enabled=false</echo>
 		<run-functional-test app.server.type="tomcat" database.type="mysql" database.version="5.7" />
 	</target>
 
-	<target name="functional-upgrade-tomcat90-oracle121-jdk8">
+	<target name="functional-upgrade-tomcat90-oracle122-jdk8">
 		<run-functional-test app.server.type="tomcat" database.type="oracle" />
 	</target>
 
-	<target name="functional-upgrade-tomcat90-postgresql94-jdk8">
+	<target name="functional-upgrade-tomcat90-postgresql10-jdk8">
 		<run-functional-test app.server.type="tomcat" database.type="postgresql" />
 	</target>
 
-	<target name="functional-upgrade-tomcat90-postgresql94-jdk8-quarantine">
-		<antcall target="functional-upgrade-tomcat90-postgresql94-jdk8" />
+	<target name="functional-upgrade-tomcat90-postgresql10-jdk8-quarantine">
+		<antcall target="functional-upgrade-tomcat90-postgresql10-jdk8" />
 	</target>
 
 	<target name="functional-upgrade-tomcat90-sybase160-jdk8">
@@ -3599,7 +3710,7 @@ log.sanitizer.enabled=false</echo>
 		<run-functional-test app.server.type="wildfly" database.type="mariadb" />
 	</target>
 
-	<target name="functional-upgrade-wildfly110-mariadb100-jdk8">
+	<target name="functional-upgrade-wildfly110-mariadb102-jdk8">
 		<run-functional-test app.server.type="wildfly" database.type="mariadb" />
 	</target>
 
@@ -3607,11 +3718,15 @@ log.sanitizer.enabled=false</echo>
 		<run-functional-test app.server.type="weblogic" database.type="oracle" />
 	</target>
 
+	<target name="functional-weblogic122-oracle122-jdk8">
+		<run-functional-test app.server.type="weblogic" database.type="oracle" />
+	</target>
+
 	<target name="functional-wildfly100-mariadb100-jdk8">
 		<run-functional-test app.server.type="wildfly" database.type="mariadb" />
 	</target>
 
-	<target name="functional-wildfly110-mariadb100-jdk8">
+	<target name="functional-wildfly110-mariadb102-jdk8">
 		<run-functional-test app.server.type="wildfly" database.type="mariadb" />
 	</target>
 
@@ -3646,11 +3761,15 @@ log.sanitizer.enabled=false</echo>
 		<run-integration-test database.type="db2" />
 	</target>
 
+	<target name="integration-db2111-jdk8">
+		<run-integration-test database.type="db2" />
+	</target>
+
 	<target name="integration-hypersonic20-jdk8">
 		<run-integration-test database.type="hypersonic" />
 	</target>
 
-	<target name="integration-mariadb100-jdk8">
+	<target name="integration-mariadb102-jdk8">
 		<run-integration-test database.type="mariadb" />
 	</target>
 
@@ -3664,6 +3783,14 @@ log.sanitizer.enabled=false</echo>
 
 	<target name="integration-oracle121-jdk8">
 		<run-integration-test database.type="oracle" />
+	</target>
+
+	<target name="integration-oracle122-jdk8">
+		<run-integration-test database.type="oracle" />
+	</target>
+
+	<target name="integration-postgresql10-jdk8">
+		<run-integration-test database.type="postgresql" />
 	</target>
 
 	<target name="integration-postgresql94-jdk8">
@@ -4144,11 +4271,15 @@ log.sanitizer.enabled=false</echo>
 		<run-modules-integration-test database.type="db2" />
 	</target>
 
+	<target name="modules-integration-db2111-jdk8">
+		<run-modules-integration-test database.type="db2" />
+	</target>
+
 	<target name="modules-integration-hypersonic20-jdk8">
 		<run-modules-integration-test database.type="hypersonic" />
 	</target>
 
-	<target name="modules-integration-mariadb100-jdk8">
+	<target name="modules-integration-mariadb102-jdk8">
 		<run-modules-integration-test database.type="mariadb" />
 	</target>
 
@@ -4162,6 +4293,14 @@ log.sanitizer.enabled=false</echo>
 
 	<target name="modules-integration-oracle121-jdk8">
 		<run-modules-integration-test database.type="oracle" />
+	</target>
+
+	<target name="modules-integration-oracle122-jdk8">
+		<run-modules-integration-test database.type="oracle" />
+	</target>
+
+	<target name="modules-integration-postgresql10-jdk8">
+		<run-modules-integration-test database.type="postgresql" />
 	</target>
 
 	<target name="modules-integration-postgresql94-jdk8">

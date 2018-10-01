@@ -19,7 +19,7 @@
 
 					<@displayPages
 						depth=1
-						pages=entry.getChildren()
+						pages=entry.getChildren(permissionChecker)
 					/>
 				</@liferay_aui.col>
 			</#if>
@@ -47,7 +47,7 @@
 
 					<@displayPages
 						depth=depth + 1
-						pages=page.getChildren()
+						pages=page.getChildren(permissionChecker)
 					/>
 				</li>
 			</#list>

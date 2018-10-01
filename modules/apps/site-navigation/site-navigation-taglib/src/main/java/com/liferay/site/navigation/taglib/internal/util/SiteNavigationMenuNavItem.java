@@ -48,8 +48,15 @@ public class SiteNavigationMenuNavItem extends NavItem {
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		return _siteNavigationMenuItem.equals(obj);
+	public boolean equals(Object object) {
+		if (object instanceof SiteNavigationMenuNavItem) {
+			SiteNavigationMenuNavItem siteNavigationMenuNavItem =
+				(SiteNavigationMenuNavItem)object;
+
+			return _siteNavigationMenuItem.equals(siteNavigationMenuNavItem);
+		}
+
+		return false;
 	}
 
 	@Override

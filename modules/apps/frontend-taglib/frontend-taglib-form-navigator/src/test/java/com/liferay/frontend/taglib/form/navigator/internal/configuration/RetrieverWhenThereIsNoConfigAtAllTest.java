@@ -14,12 +14,25 @@
 
 package com.liferay.frontend.taglib.form.navigator.internal.configuration;
 
-import org.junit.experimental.runners.Enclosed;
-import org.junit.runner.RunWith;
+import java.util.List;
+import java.util.Optional;
+
+import org.junit.Assert;
+import org.junit.Test;
 
 /**
  * @author Alejandro Tardín
  */
-@RunWith(Enclosed.class)
-public class FormNavigatorEntryConfigurationRetrieverTest {
+public class RetrieverWhenThereIsNoConfigAtAllTest
+	extends BaseFormNavigatorEntryConfigurationRetrieverTestCase {
+
+	@Test
+	public void testReturnsEmptyOptional() {
+		Optional<List<String>> formNavigatorEntryKeys =
+			formNavigatorEntryConfigurationRetriever.getFormNavigatorEntryKeys(
+				"form1", "general", "add");
+
+		Assert.assertFalse(formNavigatorEntryKeys.isPresent());
+	}
+
 }

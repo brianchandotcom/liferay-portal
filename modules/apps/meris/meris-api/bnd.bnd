@@ -1,4 +1,8 @@
 Bundle-Name: Liferay Meris API
 Bundle-SymbolicName: com.liferay.meris.api
-Bundle-Version: 2.0.0
-Export-Package: com.liferay.meris
+Bundle-Version: 1.0.0
+Export-Package:\
+	com.liferay.meris.exception,\
+	com.liferay.meris.model,\
+	com.liferay.meris.service,\
+	com.liferay.meris.service.persistence

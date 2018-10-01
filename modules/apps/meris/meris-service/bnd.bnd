@@ -1,0 +1,5 @@
+Bundle-Name: Liferay Meris Service
+Bundle-SymbolicName: com.liferay.meris.service
+Bundle-Version: 1.0.0
+Liferay-Require-SchemaVersion: 1.0.0
+Liferay-Service: true

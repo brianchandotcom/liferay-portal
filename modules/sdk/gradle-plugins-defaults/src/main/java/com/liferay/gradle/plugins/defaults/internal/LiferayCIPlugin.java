@@ -275,11 +275,23 @@ public class LiferayCIPlugin implements Plugin<Project> {
 
 					File lfrBuildCIFile = dependencyProject.file(
 						".lfrbuild-ci");
+					File lfrBuildCISkipTestIntegrationCheckFile =
+						dependencyProject.file(
+							".lfrbuild-ci-skip-test-integration-check");
 					File lfrBuildPortalFile = dependencyProject.file(
 						".lfrbuild-portal");
 
-					if (!lfrBuildCIFile.exists() &&
-						!lfrBuildPortalFile.exists()) {
+					if (lfrBuildCISkipTestIntegrationCheckFile.exists()) {
+						if (lfrBuildCIFile.exists() ||
+							lfrBuildPortalFile.exists()) {
+
+							throw new GradleException(
+								"Please delete marker file " +
+									lfrBuildCISkipTestIntegrationCheckFile);
+						}
+					}
+					else if (!lfrBuildCIFile.exists() &&
+							 !lfrBuildPortalFile.exists()) {
 
 						throw new GradleException(
 							"Please create marker file " + lfrBuildPortalFile);

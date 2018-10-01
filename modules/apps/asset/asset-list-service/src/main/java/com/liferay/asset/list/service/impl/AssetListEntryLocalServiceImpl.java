@@ -95,6 +95,24 @@ public class AssetListEntryLocalServiceImpl
 	}
 
 	@Override
+	public AssetListEntry addManualAssetListEntry(
+			long userId, long groupId, String title, long[] assetEntryIds,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		AssetListEntry assetListEntry = addAssetListEntry(
+			userId, groupId, title, AssetListEntryTypeConstants.TYPE_MANUAL,
+			serviceContext);
+
+		for (long assetEntryId : assetEntryIds) {
+			addAssetEntrySelection(
+				assetListEntry.getAssetListEntryId(), assetEntryId);
+		}
+
+		return assetListEntry;
+	}
+
+	@Override
 	public void deleteAssetEntrySelection(long assetListEntryId, int position)
 		throws PortalException {
 

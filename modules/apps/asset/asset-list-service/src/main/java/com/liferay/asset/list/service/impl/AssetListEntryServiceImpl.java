@@ -65,6 +65,20 @@ public class AssetListEntryServiceImpl extends AssetListEntryServiceBaseImpl {
 	}
 
 	@Override
+	public AssetListEntry addManualAssetListEntry(
+			long userId, long groupId, String title, long[] assetEntryIds,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		_portletResourcePermission.check(
+			getPermissionChecker(), groupId,
+			AssetListActionKeys.ADD_ASSET_LIST_ENTRY);
+
+		return assetListEntryLocalService.addManualAssetListEntry(
+			getUserId(), groupId, title, assetEntryIds, serviceContext);
+	}
+
+	@Override
 	public void deleteAssetEntrySelection(long assetListEntryId, int position)
 		throws PortalException {
 

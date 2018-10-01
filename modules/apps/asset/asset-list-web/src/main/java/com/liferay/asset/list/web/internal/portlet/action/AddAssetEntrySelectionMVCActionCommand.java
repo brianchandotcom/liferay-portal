@@ -18,6 +18,8 @@ import com.liferay.asset.list.constants.AssetListPortletKeys;
 import com.liferay.asset.list.service.AssetListEntryService;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.util.ParamUtil;
 
 import javax.portlet.ActionRequest;
@@ -45,6 +47,9 @@ public class AddAssetEntrySelectionMVCActionCommand
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
+		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+			actionRequest);
+
 		long assetListEntryId = ParamUtil.getLong(
 			actionRequest, "assetListEntryId");
 
@@ -53,7 +58,7 @@ public class AddAssetEntrySelectionMVCActionCommand
 
 		for (long assetEntryId : assetEntryIds) {
 			_assetListEntryService.addAssetEntrySelection(
-				assetListEntryId, assetEntryId);
+				assetListEntryId, assetEntryId, serviceContext);
 		}
 	}
 

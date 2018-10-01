@@ -14,10 +14,120 @@
 
 package com.liferay.segments.service.impl;
 
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.search.BaseModelSearchResult;
+import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionFactory;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermissionFactory;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.segments.constants.SegmentsActionKeys;
+import com.liferay.segments.constants.SegmentsConstants;
+import com.liferay.segments.model.SegmentsEntry;
 import com.liferay.segments.service.base.SegmentsEntryServiceBaseImpl;
+
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 /**
  * @author Eduardo Garcia
  */
 public class SegmentsEntryServiceImpl extends SegmentsEntryServiceBaseImpl {
+
+	@Override
+	public SegmentsEntry addEntry(
+			Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
+			String key, String type, boolean active, String criteria,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		_portletResourcePermission.check(
+			getPermissionChecker(), serviceContext.getScopeGroupId(),
+			SegmentsActionKeys.MANAGE_SEGMENTS_ENTRIES);
+
+		return segmentsEntryLocalService.addEntry(
+			nameMap, descriptionMap, key, type, active, criteria,
+			serviceContext);
+	}
+
+	@Override
+	public SegmentsEntry deleteEntry(long entryId) throws PortalException {
+		_segmentsEntryResourcePermission.check(
+			getPermissionChecker(), entryId, ActionKeys.DELETE);
+
+		return segmentsEntryLocalService.deleteEntry(entryId);
+	}
+
+	@Override
+	public List<SegmentsEntry> getEntries(
+			long groupId, int start, int end,
+			OrderByComparator<SegmentsEntry> orderByComparator)
+		throws PortalException {
+
+		_portletResourcePermission.check(
+			getPermissionChecker(), groupId, ActionKeys.VIEW);
+
+		return segmentsEntryLocalService.getEntries(
+			groupId, start, end, orderByComparator);
+	}
+
+	@Override
+	public int getEntriesCount(long groupId) throws PortalException {
+		_portletResourcePermission.check(
+			getPermissionChecker(), groupId, ActionKeys.VIEW);
+
+		return segmentsEntryLocalService.getEntriesCount(groupId);
+	}
+
+	@Override
+	public SegmentsEntry getEntry(long entryId) throws PortalException {
+		_segmentsEntryResourcePermission.check(
+			getPermissionChecker(), entryId, ActionKeys.VIEW);
+
+		return segmentsEntryLocalService.getSegmentsEntry(entryId);
+	}
+
+	@Override
+	public BaseModelSearchResult<SegmentsEntry> searchEntries(
+			long companyId, long groupId, String keywords, int start, int end,
+			Sort sort)
+		throws PortalException {
+
+		_portletResourcePermission.check(
+			getPermissionChecker(), groupId, ActionKeys.VIEW);
+
+		return segmentsEntryLocalService.searchEntries(
+			companyId, groupId, keywords, start, end, sort);
+	}
+
+	@Override
+	public SegmentsEntry updateSegmentsEntry(
+			long entryId, Map<Locale, String> nameMap,
+			Map<Locale, String> descriptionMap, String key, boolean active,
+			String criteria, ServiceContext serviceContext)
+		throws PortalException {
+
+		_segmentsEntryResourcePermission.check(
+			getPermissionChecker(), entryId, ActionKeys.UPDATE);
+
+		return segmentsEntryLocalService.updateEntry(
+			entryId, nameMap, descriptionMap, key, active, criteria,
+			serviceContext);
+	}
+
+	private static volatile PortletResourcePermission
+		_portletResourcePermission =
+			PortletResourcePermissionFactory.getInstance(
+				SegmentsEntryServiceImpl.class, "_portletResourcePermission",
+				SegmentsConstants.RESOURCE_NAME);
+	private static volatile ModelResourcePermission<SegmentsEntry>
+		_segmentsEntryResourcePermission =
+			ModelResourcePermissionFactory.getInstance(
+				SegmentsEntryServiceImpl.class,
+				"_segmentsEntryResourcePermission", SegmentsEntry.class);
+
 }

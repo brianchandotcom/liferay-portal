@@ -29,12 +29,12 @@ import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.SubscriptionSender;
-import com.liferay.sharing.constants.SharingPortletKeys;
 import com.liferay.sharing.model.SharingEntry;
 import com.liferay.sharing.notifications.internal.util.SharingNotificationUtil;
 import com.liferay.sharing.security.permission.SharingEntryAction;
 import com.liferay.sharing.service.SharingEntryLocalService;
 import com.liferay.sharing.service.SharingEntryLocalServiceWrapper;
+import com.liferay.sharing.web.constants.SharingPortletKeys;
 
 import java.util.Collection;
 import java.util.Date;

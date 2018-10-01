@@ -405,6 +405,31 @@ public interface GroupLocalService extends BaseLocalService,
 	public List<Group> getActiveGroups(long companyId, boolean active);
 
 	/**
+	* Returns the active or inactive groups associated with the company.
+	*
+	* @param companyId the primary key of the company
+	* @param active whether to return only active groups, or only inactive
+	groups
+	* @return the active or inactive groups associated with the company
+	* @review
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<Group> getActiveGroups(long companyId, boolean active,
+		int start, int end, OrderByComparator<Group> obc);
+
+	/**
+	* Returns the number of active or inactive groups associated with the company.
+	*
+	* @param companyId the primary key of the company
+	* @param active whether to return only active groups, or only inactive
+	groups
+	* @return the number of active or inactive groups associated with the company
+	* @review
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getActiveGroupsCount(long companyId, boolean active);
+
+	/**
 	* Returns the company group.
 	*
 	* @param companyId the primary key of the company

@@ -1459,6 +1459,37 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	}
 
 	/**
+	 * Returns the active or inactive groups associated with the company.
+	 *
+	 * @param  companyId the primary key of the company
+	 * @param  active whether to return only active groups, or only inactive
+	 *         groups
+	 * @return the active or inactive groups associated with the company
+	 * @review
+	 */
+	@Override
+	public List<Group> getActiveGroups(
+		long companyId, boolean active, int start, int end,
+		OrderByComparator<Group> obc) {
+
+		return groupPersistence.findByC_A(companyId, active, start, end, obc);
+	}
+
+	/**
+	 * Returns the number of active or inactive groups associated with the company.
+	 *
+	 * @param  companyId the primary key of the company
+	 * @param  active whether to count only active groups, or only inactive
+	 *         groups
+	 * @return the number of active or inactive groups associated with the company
+	 * @review
+	 */
+	@Override
+	public int getActiveGroupsCount(long companyId, boolean active) {
+		return groupPersistence.countByC_A(companyId, active);
+	}
+
+	/**
 	 * Returns the company group.
 	 *
 	 * @param  companyId the primary key of the company

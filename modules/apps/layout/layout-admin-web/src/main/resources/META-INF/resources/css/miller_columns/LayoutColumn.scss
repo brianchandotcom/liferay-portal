@@ -43,6 +43,20 @@
 	}
 }
 
+.layout-column-item-drag-bottom {
+	border-bottom: 2px solid #80ACFF;
+	margin-bottom: 0;
+}
+
+.layout-column-item-drag-bottom + .layout-drop-target {
+	border-top: 0;
+}
+
+.layout-column-item-drag-top,
+.layout-column .list-group-item.layout-column-item-drag-top:first-child {
+	border-top: 2px solid #80ACFF;
+}
+
 .layout-drag-handler {
 	cursor: move;
 }

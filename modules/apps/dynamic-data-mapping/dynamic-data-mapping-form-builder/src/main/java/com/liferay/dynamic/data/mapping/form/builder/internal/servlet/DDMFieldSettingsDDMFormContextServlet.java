@@ -100,12 +100,12 @@ public class DDMFieldSettingsDDMFormContextServlet
 
 			ddmFormRenderingContext.setDDMFormValues(ddmFormValues);
 
-			ddmFormRenderingContext.setReturnFullContext(true);
 			ddmFormRenderingContext.setHttpServletRequest(request);
 			ddmFormRenderingContext.setHttpServletResponse(response);
 			ddmFormRenderingContext.setContainerId("settings");
 			ddmFormRenderingContext.setLocale(locale);
 			ddmFormRenderingContext.setPortletNamespace(portletNamespace);
+			ddmFormRenderingContext.setReturnFullContext(true);
 
 			return _ddmFormTemplateContextFactory.create(
 				ddmFormFieldTypeSettingsDDMForm,

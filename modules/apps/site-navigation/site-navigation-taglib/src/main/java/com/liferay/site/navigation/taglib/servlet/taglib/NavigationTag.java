@@ -216,9 +216,8 @@ public class NavigationTag extends IncludeTag {
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		List<NavItem> navItems = new ArrayList<>();
-
 		NavItem rootNavItem = null;
+		List<NavItem> navItems = null;
 
 		if (_rootLayoutType.equals("relative")) {
 			if ((_rootLayoutLevel >= 0) &&
@@ -252,11 +251,15 @@ public class NavigationTag extends IncludeTag {
 			}
 		}
 
-		if (rootNavItem != null) {
-			navItems = rootNavItem.getChildren();
+		if (rootNavItem == null) {
+			if (navItems == null) {
+				return new ArrayList<>();
+			}
+
+			return navItems;
 		}
 
-		return navItems;
+		return rootNavItem.getChildren();
 	}
 
 	@Override

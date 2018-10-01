@@ -50,14 +50,15 @@ public class SiteNavigationMenuUtil {
 		HttpServletRequest request, long siteNavigationMenuId,
 		long parentSiteNavigationMenuItemId) {
 
-		List<NavItem> navItems = new ArrayList<>();
-
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
 		List<SiteNavigationMenuItem> siteNavigationMenuItems =
 			_siteNavigationMenuItemLocalService.getSiteNavigationMenuItems(
 				siteNavigationMenuId, parentSiteNavigationMenuItemId);
+
+		List<NavItem> navItems = new ArrayList<>(
+			siteNavigationMenuItems.size());
 
 		for (SiteNavigationMenuItem siteNavigationMenuItem :
 				siteNavigationMenuItems) {

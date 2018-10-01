@@ -258,6 +258,10 @@ public class NavigationMenuTag extends IncludeTag {
 		return themeDisplay.getScopeGroupId();
 	}
 
+	/**
+	 * @deprecated As of Judson (7.1.x), with no direct replacement
+	 */
+	@Deprecated
 	protected List<NavItem> getMenuItems() {
 		try {
 			return getMenuItems(new ArrayList<NavItem>());
@@ -272,8 +276,6 @@ public class NavigationMenuTag extends IncludeTag {
 	protected List<NavItem> getMenuItems(List<NavItem> branchMenuItems)
 		throws Exception {
 
-		List<NavItem> navItems = new ArrayList<>();
-
 		SiteNavigationMenuUtil siteNavigationMenuUtil =
 			SiteNavigationMenuUtil.getInstance();
 
@@ -284,36 +286,35 @@ public class NavigationMenuTag extends IncludeTag {
 
 			NavItem rootMenuItem = branchMenuItems.get(_rootItemLevel);
 
-			navItems = rootMenuItem.getChildren();
+			return rootMenuItem.getChildren();
 		}
 		else if (_rootItemType.equals("absolute")) {
 			if (_rootItemLevel == 0) {
-				navItems = siteNavigationMenuUtil.getChildNavItems(
+				return siteNavigationMenuUtil.getChildNavItems(
 					request, _siteNavigationMenuId, 0);
 			}
 			else if (branchMenuItems.size() >= _rootItemLevel) {
 				NavItem rootMenuItem = branchMenuItems.get(_rootItemLevel - 1);
 
-				navItems = rootMenuItem.getChildren();
+				return rootMenuItem.getChildren();
 			}
 		}
 		else if (_rootItemType.equals("select")) {
-			navItems = siteNavigationMenuUtil.getChildNavItems(
+			return siteNavigationMenuUtil.getChildNavItems(
 				request, _siteNavigationMenuId, parentSiteNavigationMenuItemId);
 		}
 
-		return navItems;
+		return new ArrayList<>();
 	}
 
 	protected List<NavItem> getNavItems(List<NavItem> branchNavItems)
 		throws Exception {
 
-		List<NavItem> navItems = new ArrayList<>();
-
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
 		NavItem rootNavItem = null;
+		List<NavItem> navItems = null;
 
 		if (_rootItemType.equals("relative")) {
 			if ((_rootItemLevel >= 0) &&
@@ -347,11 +348,15 @@ public class NavigationMenuTag extends IncludeTag {
 			}
 		}
 
-		if (rootNavItem != null) {
-			navItems = rootNavItem.getChildren();
+		if (rootNavItem == null) {
+			if (navItems == null) {
+				return new ArrayList<>();
+			}
+
+			return navItems;
 		}
 
-		return navItems;
+		return rootNavItem.getChildren();
 	}
 
 	@Override

@@ -153,27 +153,6 @@ PortletURL portletURL = renderResponse.createRenderURL();
 			onClick="<%= taglibOnClickSocial %>"
 			url="javascript:;"
 		/>
-
-		<liferay-portlet:actionURL name="/navigation_menu/edit_site_navigation_menu_settings" var="markAsPrivteURL">
-			<liferay-portlet:param name="redirect" value="<%= portletURL.toString() %>" />
-			<liferay-portlet:param name="siteNavigationMenuId" value="<%= String.valueOf(siteNavigationMenu.getSiteNavigationMenuId()) %>" />
-			<liferay-portlet:param name="auto" value="<%= String.valueOf(siteNavigationMenu.isAuto()) %>" />
-			<liferay-portlet:param name="type" value="<%= String.valueOf(SiteNavigationConstants.TYPE_PRIVATE) %>" />
-		</liferay-portlet:actionURL>
-
-		<%
-		String taglibOnClickPrivate = "submitForm(document.hrefFm, '" + markAsPrivteURL + "');";
-		%>
-
-		<liferay-ui:icon
-			cssClass="border-bottom mb-1"
-			icon='<%= (siteNavigationMenu.getType() == SiteNavigationConstants.TYPE_PRIVATE) ? "check" : StringPool.BLANK %>'
-			iconCssClass="pull-right"
-			markupView="lexicon"
-			message="private-navigation"
-			onClick="<%= taglibOnClickPrivate %>"
-			url="javascript:;"
-		/>
 	</c:if>
 
 	<c:if test="<%= SiteNavigationMenuPermission.contains(permissionChecker, siteNavigationMenu, ActionKeys.DELETE) %>">

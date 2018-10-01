@@ -99,6 +99,10 @@ public class OpenIdConnectLoginRequestMVCActionCommand
 				httpServletResponse);
 		}
 		catch (Exception e) {
+			actionResponse.setRenderParameter(
+				"mvcRenderCommandName",
+				OpenIdConnectWebKeys.OPEN_ID_CONNECT_REQUEST_ACTION_NAME);
+
 			if (e instanceof OpenIdConnectServiceException) {
 				if (_log.isInfoEnabled()) {
 					_log.info(

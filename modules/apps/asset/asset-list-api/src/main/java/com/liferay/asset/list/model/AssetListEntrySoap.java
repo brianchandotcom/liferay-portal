@@ -34,6 +34,7 @@ public class AssetListEntrySoap implements Serializable {
 	public static AssetListEntrySoap toSoapModel(AssetListEntry model) {
 		AssetListEntrySoap soapModel = new AssetListEntrySoap();
 
+		soapModel.setUuid(model.getUuid());
 		soapModel.setAssetListEntryId(model.getAssetListEntryId());
 		soapModel.setGroupId(model.getGroupId());
 		soapModel.setCompanyId(model.getCompanyId());
@@ -44,6 +45,7 @@ public class AssetListEntrySoap implements Serializable {
 		soapModel.setTypeSettings(model.getTypeSettings());
 		soapModel.setTitle(model.getTitle());
 		soapModel.setType(model.getType());
+		soapModel.setLastPublishDate(model.getLastPublishDate());
 
 		return soapModel;
 	}
@@ -94,6 +96,14 @@ public class AssetListEntrySoap implements Serializable {
 
 	public void setPrimaryKey(long pk) {
 		setAssetListEntryId(pk);
+	}
+
+	public String getUuid() {
+		return _uuid;
+	}
+
+	public void setUuid(String uuid) {
+		_uuid = uuid;
 	}
 
 	public long getAssetListEntryId() {
@@ -176,6 +186,15 @@ public class AssetListEntrySoap implements Serializable {
 		_type = type;
 	}
 
+	public Date getLastPublishDate() {
+		return _lastPublishDate;
+	}
+
+	public void setLastPublishDate(Date lastPublishDate) {
+		_lastPublishDate = lastPublishDate;
+	}
+
+	private String _uuid;
 	private long _assetListEntryId;
 	private long _groupId;
 	private long _companyId;
@@ -186,4 +205,5 @@ public class AssetListEntrySoap implements Serializable {
 	private String _typeSettings;
 	private String _title;
 	private int _type;
+	private Date _lastPublishDate;
 }

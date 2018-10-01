@@ -18,17 +18,23 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.asset.list.model.AssetListEntryAssetEntryRel;
 
+import com.liferay.exportimport.kernel.lar.PortletDataContext;
+
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.model.PersistedModel;
+import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -72,7 +78,8 @@ public interface AssetListEntryAssetEntryRelLocalService
 		AssetListEntryAssetEntryRel assetListEntryAssetEntryRel);
 
 	public AssetListEntryAssetEntryRel addAssetListEntryAssetEntryRel(
-		long assetListEntryId, long assetEntryId);
+		long assetListEntryId, long assetEntryId, ServiceContext serviceContext)
+		throws PortalException;
 
 	/**
 	* Creates a new asset list entry asset entry rel with the primary key. Does not add the asset list entry asset entry rel to the database.
@@ -105,6 +112,7 @@ public interface AssetListEntryAssetEntryRelLocalService
 	public AssetListEntryAssetEntryRel deleteAssetListEntryAssetEntryRel(
 		long assetListEntryAssetEntryRelId) throws PortalException;
 
+	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
 	public AssetListEntryAssetEntryRel deleteAssetListEntryAssetEntryRel(
 		long assetListEntryId, int position) throws PortalException;
 
@@ -178,6 +186,17 @@ public interface AssetListEntryAssetEntryRelLocalService
 	public AssetListEntryAssetEntryRel fetchAssetListEntryAssetEntryRel(
 		long assetListEntryAssetEntryRelId);
 
+	/**
+	* Returns the asset list entry asset entry rel matching the UUID and group.
+	*
+	* @param uuid the asset list entry asset entry rel's UUID
+	* @param groupId the primary key of the group
+	* @return the matching asset list entry asset entry rel, or <code>null</code> if a matching asset list entry asset entry rel could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public AssetListEntryAssetEntryRel fetchAssetListEntryAssetEntryRelByUuidAndGroupId(
+		String uuid, long groupId);
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
 
@@ -191,6 +210,18 @@ public interface AssetListEntryAssetEntryRelLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public AssetListEntryAssetEntryRel getAssetListEntryAssetEntryRel(
 		long assetListEntryAssetEntryRelId) throws PortalException;
+
+	/**
+	* Returns the asset list entry asset entry rel matching the UUID and group.
+	*
+	* @param uuid the asset list entry asset entry rel's UUID
+	* @param groupId the primary key of the group
+	* @return the matching asset list entry asset entry rel
+	* @throws PortalException if a matching asset list entry asset entry rel could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public AssetListEntryAssetEntryRel getAssetListEntryAssetEntryRelByUuidAndGroupId(
+		String uuid, long groupId) throws PortalException;
 
 	/**
 	* Returns a range of all the asset list entry asset entry rels.
@@ -212,6 +243,32 @@ public interface AssetListEntryAssetEntryRelLocalService
 		long assetListEntryId, int start, int end);
 
 	/**
+	* Returns all the asset list entry asset entry rels matching the UUID and company.
+	*
+	* @param uuid the UUID of the asset list entry asset entry rels
+	* @param companyId the primary key of the company
+	* @return the matching asset list entry asset entry rels, or an empty list if no matches were found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<AssetListEntryAssetEntryRel> getAssetListEntryAssetEntryRelsByUuidAndCompanyId(
+		String uuid, long companyId);
+
+	/**
+	* Returns a range of asset list entry asset entry rels matching the UUID and company.
+	*
+	* @param uuid the UUID of the asset list entry asset entry rels
+	* @param companyId the primary key of the company
+	* @param start the lower bound of the range of asset list entry asset entry rels
+	* @param end the upper bound of the range of asset list entry asset entry rels (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the range of matching asset list entry asset entry rels, or an empty list if no matches were found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<AssetListEntryAssetEntryRel> getAssetListEntryAssetEntryRelsByUuidAndCompanyId(
+		String uuid, long companyId, int start, int end,
+		OrderByComparator<AssetListEntryAssetEntryRel> orderByComparator);
+
+	/**
 	* Returns the number of asset list entry asset entry rels.
 	*
 	* @return the number of asset list entry asset entry rels
@@ -221,6 +278,10 @@ public interface AssetListEntryAssetEntryRelLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getAssetListEntryAssetEntryRelsCount(long assetListEntryId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		PortletDataContext portletDataContext);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();

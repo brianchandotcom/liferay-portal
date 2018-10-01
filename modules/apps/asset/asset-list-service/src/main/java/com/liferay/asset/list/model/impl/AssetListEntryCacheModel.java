@@ -66,9 +66,11 @@ public class AssetListEntryCacheModel implements CacheModel<AssetListEntry>,
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(21);
+		StringBundler sb = new StringBundler(25);
 
-		sb.append("{assetListEntryId=");
+		sb.append("{uuid=");
+		sb.append(uuid);
+		sb.append(", assetListEntryId=");
 		sb.append(assetListEntryId);
 		sb.append(", groupId=");
 		sb.append(groupId);
@@ -88,6 +90,8 @@ public class AssetListEntryCacheModel implements CacheModel<AssetListEntry>,
 		sb.append(title);
 		sb.append(", type=");
 		sb.append(type);
+		sb.append(", lastPublishDate=");
+		sb.append(lastPublishDate);
 		sb.append("}");
 
 		return sb.toString();
@@ -96,6 +100,13 @@ public class AssetListEntryCacheModel implements CacheModel<AssetListEntry>,
 	@Override
 	public AssetListEntry toEntityModel() {
 		AssetListEntryImpl assetListEntryImpl = new AssetListEntryImpl();
+
+		if (uuid == null) {
+			assetListEntryImpl.setUuid("");
+		}
+		else {
+			assetListEntryImpl.setUuid(uuid);
+		}
 
 		assetListEntryImpl.setAssetListEntryId(assetListEntryId);
 		assetListEntryImpl.setGroupId(groupId);
@@ -139,6 +150,13 @@ public class AssetListEntryCacheModel implements CacheModel<AssetListEntry>,
 
 		assetListEntryImpl.setType(type);
 
+		if (lastPublishDate == Long.MIN_VALUE) {
+			assetListEntryImpl.setLastPublishDate(null);
+		}
+		else {
+			assetListEntryImpl.setLastPublishDate(new Date(lastPublishDate));
+		}
+
 		assetListEntryImpl.resetOriginalValues();
 
 		return assetListEntryImpl;
@@ -146,6 +164,8 @@ public class AssetListEntryCacheModel implements CacheModel<AssetListEntry>,
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
+		uuid = objectInput.readUTF();
+
 		assetListEntryId = objectInput.readLong();
 
 		groupId = objectInput.readLong();
@@ -160,11 +180,19 @@ public class AssetListEntryCacheModel implements CacheModel<AssetListEntry>,
 		title = objectInput.readUTF();
 
 		type = objectInput.readInt();
+		lastPublishDate = objectInput.readLong();
 	}
 
 	@Override
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
+		if (uuid == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(uuid);
+		}
+
 		objectOutput.writeLong(assetListEntryId);
 
 		objectOutput.writeLong(groupId);
@@ -198,8 +226,10 @@ public class AssetListEntryCacheModel implements CacheModel<AssetListEntry>,
 		}
 
 		objectOutput.writeInt(type);
+		objectOutput.writeLong(lastPublishDate);
 	}
 
+	public String uuid;
 	public long assetListEntryId;
 	public long groupId;
 	public long companyId;
@@ -210,4 +240,5 @@ public class AssetListEntryCacheModel implements CacheModel<AssetListEntry>,
 	public String typeSettings;
 	public String title;
 	public int type;
+	public long lastPublishDate;
 }

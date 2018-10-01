@@ -1,4 +1,0 @@
-Bundle-Name: Liferay Meris API
-Bundle-SymbolicName: com.liferay.meris.api
-Bundle-Version: 2.0.0
-Export-Package: com.liferay.meris

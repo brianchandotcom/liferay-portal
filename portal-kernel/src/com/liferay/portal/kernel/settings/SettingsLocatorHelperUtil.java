@@ -14,7 +14,6 @@
 
 package com.liferay.portal.kernel.settings;
 
-import com.liferay.portal.kernel.exception.NoSuchPortletPreferencesException;
 import com.liferay.registry.collections.ServiceTrackerCollections;
 import com.liferay.registry.collections.ServiceTrackerList;
 
@@ -98,7 +97,7 @@ public class SettingsLocatorHelperUtil {
 	public Settings getPortletInstancePortletPreferencesSettings(
 			long companyId, long plid, String portletId,
 			Settings parentSettings)
-		throws NoSuchPortletPreferencesException {
+		throws Exception {
 
 		return getSettingsLocatorHelper().
 			getPortletInstancePortletPreferencesSettings(

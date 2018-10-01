@@ -288,10 +288,8 @@ public class NavigationMenuTag extends IncludeTag {
 		}
 		else if (_rootItemType.equals("absolute")) {
 			if (_rootItemLevel == 0) {
-				navItems =
-					siteNavigationMenuUtil.
-						getChildNavItems(
-							request, _siteNavigationMenuId, 0);
+				navItems = siteNavigationMenuUtil.getChildNavItems(
+					request, _siteNavigationMenuId, 0);
 			}
 			else if (branchMenuItems.size() >= _rootItemLevel) {
 				NavItem rootMenuItem = branchMenuItems.get(_rootItemLevel - 1);
@@ -300,11 +298,8 @@ public class NavigationMenuTag extends IncludeTag {
 			}
 		}
 		else if (_rootItemType.equals("select")) {
-			navItems =
-				siteNavigationMenuUtil.
-					getChildNavItems(
-						request, _siteNavigationMenuId,
-						parentSiteNavigationMenuItemId);
+			navItems = siteNavigationMenuUtil.getChildNavItems(
+				request, _siteNavigationMenuId, parentSiteNavigationMenuItemId);
 		}
 
 		return navItems;

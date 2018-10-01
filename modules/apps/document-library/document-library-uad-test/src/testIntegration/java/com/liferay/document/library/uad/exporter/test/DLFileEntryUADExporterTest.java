@@ -19,7 +19,7 @@ import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
 import com.liferay.document.library.kernel.service.DLFolderLocalService;
-import com.liferay.document.library.uad.test.DLFileEntryUADTestHelper;
+import com.liferay.document.library.uad.test.DLFileEntryUADTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.zip.ZipReader;
@@ -55,7 +55,7 @@ public class DLFileEntryUADExporterTest
 
 	@After
 	public void tearDown() throws Exception {
-		DLFileEntryUADTestHelper.cleanUpDependencies(
+		DLFileEntryUADTestUtil.cleanUpDependencies(
 			_dlAppLocalService, _dlFileEntryLocalService, _dlFolderLocalService,
 			_dlFileEntries);
 	}
@@ -76,7 +76,7 @@ public class DLFileEntryUADExporterTest
 
 	@Override
 	protected DLFileEntry addBaseModel(long userId) throws Exception {
-		DLFileEntry dlFileEntry = DLFileEntryUADTestHelper.addDLFileEntry(
+		DLFileEntry dlFileEntry = DLFileEntryUADTestUtil.addDLFileEntry(
 			_dlAppLocalService, _dlFileEntryLocalService, _dlFolderLocalService,
 			userId);
 

@@ -36,7 +36,7 @@ import java.util.List;
 /**
  * @author William Newbury
  */
-public class DLFileEntryUADTestHelper {
+public class DLFileEntryUADTestUtil {
 
 	public static DLFileEntry addDLFileEntry(
 			DLAppLocalService dlAppLocalService,

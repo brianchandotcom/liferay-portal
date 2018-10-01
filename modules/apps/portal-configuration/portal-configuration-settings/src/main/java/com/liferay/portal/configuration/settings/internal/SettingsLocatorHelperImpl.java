@@ -183,8 +183,9 @@ public class SettingsLocatorHelperImpl implements SettingsLocatorHelper {
 	}
 
 	public PortletPreferences getPortletInstancePortletPreferences(
-		long companyId, long ownerId, int ownerType, long plid,
-		String portletId) {
+			long companyId, long ownerId, int ownerType, long plid,
+			String portletId)
+		throws PortalException {
 
 		if (plid != LayoutConstants.DEFAULT_PLID) {
 			Layout layout = _layoutLocalService.fetchLayout(plid);
@@ -205,7 +206,8 @@ public class SettingsLocatorHelperImpl implements SettingsLocatorHelper {
 	}
 
 	public PortletPreferences getPortletInstancePortletPreferences(
-		long companyId, long plid, String portletId) {
+			long companyId, long plid, String portletId)
+		throws PortalException {
 
 		return getPortletInstancePortletPreferences(
 			companyId, PortletKeys.PREFS_OWNER_ID_DEFAULT,
@@ -214,8 +216,9 @@ public class SettingsLocatorHelperImpl implements SettingsLocatorHelper {
 
 	@Override
 	public Settings getPortletInstancePortletPreferencesSettings(
-		long companyId, long ownerId, int ownerType, long plid,
-		String portletId, Settings parentSettings) {
+			long companyId, long ownerId, int ownerType, long plid,
+			String portletId, Settings parentSettings)
+		throws PortalException {
 
 		return new PortletPreferencesSettings(
 			getPortletInstancePortletPreferences(
@@ -225,7 +228,9 @@ public class SettingsLocatorHelperImpl implements SettingsLocatorHelper {
 
 	@Override
 	public Settings getPortletInstancePortletPreferencesSettings(
-		long companyId, long plid, String portletId, Settings parentSettings) {
+			long companyId, long plid, String portletId,
+			Settings parentSettings)
+		throws PortalException {
 
 		return new PortletPreferencesSettings(
 			getPortletInstancePortletPreferences(companyId, plid, portletId),

@@ -16,6 +16,7 @@ package com.liferay.portal.kernel.portlet;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.exception.NoSuchPortletPreferencesException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.Portlet;
@@ -109,11 +110,13 @@ public interface PortletPreferencesFactory {
 		throws PortalException;
 
 	public PortletPreferences getPortletSetup(
-		Layout layout, String portletId, String defaultPreferences);
+			Layout layout, String portletId, String defaultPreferences)
+		throws NoSuchPortletPreferencesException;
 
 	public PortletPreferences getPortletSetup(
-		long scopeGroupId, Layout layout, String portletId,
-		String defaultPreferences);
+			long scopeGroupId, Layout layout, String portletId,
+			String defaultPreferences)
+		throws NoSuchPortletPreferencesException;
 
 	public PortletPreferences getPortletSetup(PortletRequest portletRequest)
 		throws PortalException;
@@ -134,10 +137,12 @@ public interface PortletPreferencesFactory {
 		Layout layout, String portletId);
 
 	public PortletPreferences getStrictPortletSetup(
-		Layout layout, String portletId);
+			Layout layout, String portletId)
+		throws NoSuchPortletPreferencesException;
 
 	public PortletPreferences getStrictPortletSetup(
-		long companyId, long groupId, String portletId);
+			long companyId, long groupId, String portletId)
+		throws NoSuchPortletPreferencesException;
 
 	public PortletPreferences strictFromXML(
 		long companyId, long ownerId, int ownerType, long plid,

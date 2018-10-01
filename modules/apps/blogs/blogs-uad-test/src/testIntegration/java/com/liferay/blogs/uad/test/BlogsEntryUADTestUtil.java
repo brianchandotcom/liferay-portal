@@ -31,7 +31,7 @@ import java.util.HashMap;
 /**
  * @author William Newbury
  */
-public class BlogsEntryUADTestHelper {
+public class BlogsEntryUADTestUtil {
 
 	public static BlogsEntry addBlogsEntry(
 			BlogsEntryLocalService blogsEntryLocalService, long userId)

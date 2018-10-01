@@ -17,7 +17,7 @@ package com.liferay.blogs.uad.exporter.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.blogs.service.BlogsEntryLocalService;
-import com.liferay.blogs.uad.test.BlogsEntryUADTestHelper;
+import com.liferay.blogs.uad.test.BlogsEntryUADTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.test.rule.Inject;
@@ -52,7 +52,7 @@ public class BlogsEntryUADExporterTest
 		throws Exception {
 
 		BlogsEntry blogsEntry =
-			BlogsEntryUADTestHelper.addBlogsEntryWithStatusByUserId(
+			BlogsEntryUADTestUtil.addBlogsEntryWithStatusByUserId(
 				_blogsEntryLocalService, userId, statusByUserId);
 
 		_blogsEntries.add(blogsEntry);
@@ -62,7 +62,7 @@ public class BlogsEntryUADExporterTest
 
 	@Override
 	protected BlogsEntry addBaseModel(long userId) throws Exception {
-		BlogsEntry blogsEntry = BlogsEntryUADTestHelper.addBlogsEntry(
+		BlogsEntry blogsEntry = BlogsEntryUADTestUtil.addBlogsEntry(
 			_blogsEntryLocalService, userId);
 
 		_blogsEntries.add(blogsEntry);

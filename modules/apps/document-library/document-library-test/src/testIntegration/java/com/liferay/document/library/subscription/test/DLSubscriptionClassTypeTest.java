@@ -18,6 +18,7 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.document.library.kernel.model.DLFileEntryMetadata;
 import com.liferay.document.library.kernel.model.DLFileEntryType;
 import com.liferay.document.library.kernel.model.DLFileEntryTypeConstants;
+import com.liferay.document.library.kernel.model.DLVersionNumberIncrease;
 import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
 import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.kernel.DDMStructure;
@@ -134,7 +135,7 @@ public class DLSubscriptionClassTypeTest
 		DLAppLocalServiceUtil.updateFileEntry(
 			userId, baseModelId, RandomTestUtil.randomString(),
 			ContentTypes.TEXT_PLAIN, RandomTestUtil.randomString(),
-			StringPool.BLANK, StringPool.BLANK, false,
+			StringPool.BLANK, StringPool.BLANK, DLVersionNumberIncrease.MINOR,
 			TestDataConstants.TEST_BYTE_ARRAY, serviceContext);
 	}
 

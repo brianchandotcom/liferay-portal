@@ -17,6 +17,7 @@ package com.liferay.document.library.service.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.model.DLProcessorConstants;
+import com.liferay.document.library.kernel.model.DLVersionNumberIncrease;
 import com.liferay.document.library.kernel.service.DLAppServiceUtil;
 import com.liferay.document.library.kernel.util.DLProcessor;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
@@ -162,7 +163,8 @@ public class PDFProcessorTest {
 		DLAppServiceUtil.updateFileEntry(
 			fileEntry.getFileEntryId(), StringUtil.randomString() + ".pdf",
 			ContentTypes.APPLICATION_PDF, StringUtil.randomString(),
-			StringUtil.randomString(), StringUtil.randomString(), true,
+			StringUtil.randomString(), StringUtil.randomString(),
+			DLVersionNumberIncrease.MAJOR,
 			FileUtil.getBytes(getClass(), "dependencies/test.pdf"),
 			_serviceContext);
 
@@ -191,8 +193,9 @@ public class PDFProcessorTest {
 		DLAppServiceUtil.updateFileEntryAndCheckIn(
 			fileEntry.getFileEntryId(), StringUtil.randomString() + ".pdf",
 			ContentTypes.APPLICATION_PDF, StringUtil.randomString(),
-			StringUtil.randomString(), StringUtil.randomString(), true,
-			inputStream, bytes.length, _serviceContext);
+			StringUtil.randomString(), StringUtil.randomString(),
+			DLVersionNumberIncrease.MAJOR, inputStream, bytes.length,
+			_serviceContext);
 
 		Assert.assertTrue(cleanUp.get());
 	}
@@ -212,8 +215,8 @@ public class PDFProcessorTest {
 			_serviceContext);
 
 		DLAppServiceUtil.checkInFileEntry(
-			fileEntry.getFileEntryId(), true, StringUtil.randomString(),
-			_serviceContext);
+			fileEntry.getFileEntryId(), DLVersionNumberIncrease.MAJOR,
+			StringUtil.randomString(), _serviceContext);
 
 		Assert.assertEquals(1, count.get());
 	}
@@ -257,7 +260,8 @@ public class PDFProcessorTest {
 		fileEntry = DLAppServiceUtil.updateFileEntry(
 			fileEntry.getFileEntryId(), StringUtil.randomString() + ".pdf",
 			ContentTypes.APPLICATION_PDF, StringUtil.randomString(),
-			StringUtil.randomString(), StringUtil.randomString(), true,
+			StringUtil.randomString(), StringUtil.randomString(),
+			DLVersionNumberIncrease.MAJOR,
 			FileUtil.getBytes(getClass(), "dependencies/test.pdf"),
 			_serviceContext);
 
@@ -288,8 +292,8 @@ public class PDFProcessorTest {
 		DLAppServiceUtil.updateFileEntryAndCheckIn(
 			fileEntry.getFileEntryId(), StringUtil.randomString() + ".pdf",
 			ContentTypes.APPLICATION_PDF, StringUtil.randomString(),
-			StringUtil.randomString(), StringUtil.randomString(), true, null, 0,
-			_serviceContext);
+			StringUtil.randomString(), StringUtil.randomString(),
+			DLVersionNumberIncrease.MAJOR, null, 0, _serviceContext);
 
 		Assert.assertEquals(2, count.get());
 	}
@@ -313,8 +317,8 @@ public class PDFProcessorTest {
 		DLAppServiceUtil.updateFileEntry(
 			fileEntry.getFileEntryId(), StringUtil.randomString() + ".pdf",
 			ContentTypes.APPLICATION_PDF, StringUtil.randomString(),
-			StringUtil.randomString(), StringUtil.randomString(), true,
-			new byte[0], _serviceContext);
+			StringUtil.randomString(), StringUtil.randomString(),
+			DLVersionNumberIncrease.MAJOR, new byte[0], _serviceContext);
 
 		Assert.assertEquals(1, count.get());
 	}
@@ -381,8 +385,9 @@ public class PDFProcessorTest {
 		DLAppServiceUtil.updateFileEntryAndCheckIn(
 			fileEntry.getFileEntryId(), StringUtil.randomString() + ".pdf",
 			ContentTypes.APPLICATION_PDF, StringUtil.randomString(),
-			StringUtil.randomString(), StringUtil.randomString(), true,
-			inputStream, bytes.length, _serviceContext);
+			StringUtil.randomString(), StringUtil.randomString(),
+			DLVersionNumberIncrease.MAJOR, inputStream, bytes.length,
+			_serviceContext);
 
 		Assert.assertEquals(2, count.get());
 	}
@@ -406,7 +411,8 @@ public class PDFProcessorTest {
 		DLAppServiceUtil.updateFileEntry(
 			fileEntry.getFileEntryId(), StringUtil.randomString() + ".pdf",
 			ContentTypes.APPLICATION_PDF, StringUtil.randomString(),
-			StringUtil.randomString(), StringUtil.randomString(), true,
+			StringUtil.randomString(), StringUtil.randomString(),
+			DLVersionNumberIncrease.MAJOR,
 			FileUtil.getBytes(getClass(), "dependencies/test.pdf"),
 			_serviceContext);
 

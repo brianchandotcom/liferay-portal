@@ -15,6 +15,7 @@
 package com.liferay.document.library.subscription.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.document.library.kernel.model.DLVersionNumberIncrease;
 import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -104,7 +105,7 @@ public class DLSubscriptionAuthorTest extends BaseSubscriptionAuthorTestCase {
 		DLAppLocalServiceUtil.updateFileEntry(
 			userId, baseModelId, RandomTestUtil.randomString(),
 			ContentTypes.TEXT_PLAIN, RandomTestUtil.randomString(),
-			StringPool.BLANK, StringPool.BLANK, false,
+			StringPool.BLANK, StringPool.BLANK, DLVersionNumberIncrease.MINOR,
 			TestDataConstants.TEST_BYTE_ARRAY, serviceContext);
 	}
 

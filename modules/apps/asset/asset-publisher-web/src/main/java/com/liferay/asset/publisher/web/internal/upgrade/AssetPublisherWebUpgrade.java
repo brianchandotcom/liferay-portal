@@ -47,6 +47,11 @@ public class AssetPublisherWebUpgrade implements UpgradeStepRegistrator {
 				UpgradePortletPreferences(_saxReader));
 
 		registry.register(
+			"1.0.1", "1.0.2",
+			new com.liferay.asset.publisher.web.upgrade.v1_0_2.
+				UpgradePortletPreferences());
+
+		registry.register(
 			"1.1.1", "1.2.0",
 			new com.liferay.asset.publisher.web.upgrade.v1_2_0.
 				UpgradePortletPreferences());

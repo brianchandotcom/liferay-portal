@@ -2,7 +2,6 @@ import {dom} from 'metal-dom';
 import {Drag, DragDrop} from 'metal-drag-drop';
 import position from 'metal-position';
 import State, {Config} from 'metal-state';
-import throttle from 'metal-throttle';
 
 import {
 	getNearestMenuItem,
@@ -28,13 +27,6 @@ import {
 } from './SiteNavigationMenuItemDOMHandler.es';
 
 /**
- * Document height.
- * @review
- */
-
-const DOCUMENT_HEIGHT = document.body.offsetHeight;
-
-/**
  * List of keys used for moving elements with keyboard.
  * @review
  */
@@ -47,27 +39,6 @@ const KEYS = {
 	ENTER: 'Enter',
 	SPACEBAR: ' '
 };
-
-/**
- * Distance the window moves on scroll.
- * @review
- */
-
-const SCROLL_DISPLACEMENT = 100;
-
-/**
- * Window height
- * @review
- */
-
-const WINDOW_HEIGHT = window.innerHeight;
-
-/**
- * Margin on window top and bottom in which scroll starts.
- * @review
- */
-
-const SCROLL_MARGIN = WINDOW_HEIGHT * 0.2;
 
 /**
  * SiteNavigationMenuEditor
@@ -90,13 +61,11 @@ class SiteNavigationMenuEditor extends State {
 		const managementBar = document.querySelector('.management-bar');
 		this._managementBarHeight = managementBar ? managementBar.offsetHeight : 0;
 
-		this._scrollOnDrag = throttle(this._scrollOnDrag.bind(this), 250);
-		this._scrollOnDragLoop = this._scrollOnDragLoop.bind(this);
-
 		this.setState(config);
 
 		this._dragDrop = new DragDrop(
 			{
+				autoScroll: true,
 				dragPlaceholder: Drag.Placeholder.CLONE,
 				handles: `.${MENU_ITEM_DRAG_ICON_CLASSNAME}`,
 				sources: `.${MENU_ITEM_CLASSNAME}`,
@@ -162,51 +131,6 @@ class SiteNavigationMenuEditor extends State {
 	}
 
 	/**
-	 * Scrolls up or down when an item is being dragged.
-	 * @private
-	 * @review
-	 */
-
-	_scrollOnDrag() {
-		if (
-			this._currentYPosition < this._draggedItemRegion.top &&
-			this._draggedItemRegion.top > (WINDOW_HEIGHT - SCROLL_MARGIN) &&
-			(this._draggedItemRegion.bottom + window.scrollY) < (DOCUMENT_HEIGHT + this._draggedItemRegion.height)
-		) {
-			window.scrollTo(
-				{
-					behavior: 'smooth',
-					top: window.scrollY + SCROLL_DISPLACEMENT
-				}
-			);
-		}
-		else if (
-			this._currentYPosition > this._draggedItemRegion.top &&
-			this._draggedItemRegion.top < (this._controlMenuHeight + this._managementBarHeight + SCROLL_MARGIN)
-		) {
-			window.scrollTo(
-				{
-					behavior: 'smooth',
-					top: window.scrollY - SCROLL_DISPLACEMENT
-				}
-			);
-		}
-
-		this._currentYPosition = this._draggedItemRegion.top;
-	}
-
-	/**
-	 * Animates the scroll when an item is being dragged.
-	 * @private
-	 * @review
-	 */
-
-	_scrollOnDragLoop() {
-		this._scrollOnDrag(this._draggedItemRegion);
-		this._scrollAnimationId = requestAnimationFrame(this._scrollOnDragLoop);
-	}
-
-	/**
 	 * This is called when user drags the item across the container.
 	 * @param {!object} data Drag event data
 	 * @param {!Event} event Drag event
@@ -225,7 +149,6 @@ class SiteNavigationMenuEditor extends State {
 
 		if (!this._draggedItemRegion) {
 			this._draggedItemRegion = position.getRegion(placeholderMenuItem);
-			this._scrollOnDragLoop();
 		}
 
 		this._draggedItemRegion = position.getRegion(placeholderMenuItem);
@@ -305,8 +228,6 @@ class SiteNavigationMenuEditor extends State {
 			getParent(menuItem)
 		);
 
-		cancelAnimationFrame(this._scrollAnimationId);
-		this._scrollAnimationId = -1;
 		this._draggedItemRegion = null;
 
 		this._updateParentAndOrder(
@@ -589,18 +510,7 @@ SiteNavigationMenuEditor.STATE = {
 	 * @type {number}
 	 */
 
-	_managementBarHeight: Config.number().internal().value(0),
-
-	/**
-	 * @default -1
-	 * @instance
-	 * @memberOf SiteNavigationMenuEditor
-	 * @private
-	 * @review
-	 * @type {number}
-	 */
-
-	_scrollAnimationId: Config.number().internal().value(-1)
+	_managementBarHeight: Config.number().internal().value(0)
 
 };
 

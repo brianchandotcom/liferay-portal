@@ -43,9 +43,12 @@ public class AssetListEntryLocalServiceUtil {
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.asset.list.service.impl.AssetListEntryLocalServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static void addAssetEntrySelection(long assetListEntryId,
-		long assetEntryId)
+		long assetEntryId,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().addAssetEntrySelection(assetListEntryId, assetEntryId);
+		getService()
+			.addAssetEntrySelection(assetListEntryId, assetEntryId,
+			serviceContext);
 	}
 
 	/**
@@ -221,6 +224,18 @@ public class AssetListEntryLocalServiceUtil {
 		return getService().fetchAssetListEntry(assetListEntryId);
 	}
 
+	/**
+	* Returns the asset list entry matching the UUID and group.
+	*
+	* @param uuid the asset list entry's UUID
+	* @param groupId the primary key of the group
+	* @return the matching asset list entry, or <code>null</code> if a matching asset list entry could not be found
+	*/
+	public static com.liferay.asset.list.model.AssetListEntry fetchAssetListEntryByUuidAndGroupId(
+		String uuid, long groupId) {
+		return getService().fetchAssetListEntryByUuidAndGroupId(uuid, groupId);
+	}
+
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
 		return getService().getActionableDynamicQuery();
 	}
@@ -239,6 +254,37 @@ public class AssetListEntryLocalServiceUtil {
 	public static java.util.List<com.liferay.asset.list.model.AssetListEntry> getAssetListEntries(
 		int start, int end) {
 		return getService().getAssetListEntries(start, end);
+	}
+
+	/**
+	* Returns all the asset list entries matching the UUID and company.
+	*
+	* @param uuid the UUID of the asset list entries
+	* @param companyId the primary key of the company
+	* @return the matching asset list entries, or an empty list if no matches were found
+	*/
+	public static java.util.List<com.liferay.asset.list.model.AssetListEntry> getAssetListEntriesByUuidAndCompanyId(
+		String uuid, long companyId) {
+		return getService()
+				   .getAssetListEntriesByUuidAndCompanyId(uuid, companyId);
+	}
+
+	/**
+	* Returns a range of asset list entries matching the UUID and company.
+	*
+	* @param uuid the UUID of the asset list entries
+	* @param companyId the primary key of the company
+	* @param start the lower bound of the range of asset list entries
+	* @param end the upper bound of the range of asset list entries (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the range of matching asset list entries, or an empty list if no matches were found
+	*/
+	public static java.util.List<com.liferay.asset.list.model.AssetListEntry> getAssetListEntriesByUuidAndCompanyId(
+		String uuid, long companyId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.asset.list.model.AssetListEntry> orderByComparator) {
+		return getService()
+				   .getAssetListEntriesByUuidAndCompanyId(uuid, companyId,
+			start, end, orderByComparator);
 	}
 
 	/**
@@ -261,6 +307,25 @@ public class AssetListEntryLocalServiceUtil {
 		long assetListEntryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getAssetListEntry(assetListEntryId);
+	}
+
+	/**
+	* Returns the asset list entry matching the UUID and group.
+	*
+	* @param uuid the asset list entry's UUID
+	* @param groupId the primary key of the group
+	* @return the matching asset list entry
+	* @throws PortalException if a matching asset list entry could not be found
+	*/
+	public static com.liferay.asset.list.model.AssetListEntry getAssetListEntryByUuidAndGroupId(
+		String uuid, long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getAssetListEntryByUuidAndGroupId(uuid, groupId);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		com.liferay.exportimport.kernel.lar.PortletDataContext portletDataContext) {
+		return getService().getExportActionableDynamicQuery(portletDataContext);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {

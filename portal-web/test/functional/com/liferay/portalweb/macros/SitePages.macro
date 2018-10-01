@@ -11,13 +11,6 @@
 			<var name="name" value="${pageName}" />
 		</execute>
 
-		<if>
-			<equals arg1="${hideFromNavMenu}" arg2="true" />
-			<then>
-				<execute function="Uncheck" locator1="Checkbox#ADD_TO_NAVIGATION_MENU" />
-			</then>
-		</if>
-
 		<execute macro="Button#click">
 			<var name="button" value="Save" />
 		</execute>
@@ -124,7 +117,6 @@
 		</execute>
 
 		<execute macro="SitePages#_addPage">
-			<var name="hideFromNavMenu" value="${hideFromNavMenu}" />
 			<var name="pageName" value="${childPageName}" />
 			<var name="pageTemplateName" value="${pageTemplateName}" />
 			<var name="sitePageType" value="${sitePageType}" />
@@ -158,7 +150,6 @@
 		</if>
 
 		<execute macro="SitePages#_addPage">
-			<var name="hideFromNavMenu" value="${hideFromNavMenu}" />
 			<var name="pageName" value="${pageName}" />
 			<var name="pageTemplateName" value="${pageTemplateName}" />
 			<var name="sitePageType" value="${sitePageType}" />
@@ -184,7 +175,6 @@
 		</execute>
 
 		<execute macro="SitePages#_addPage">
-			<var name="hideFromNavMenu" value="${hideFromNavMenu}" />
 			<var name="inheritChanges" value="${inheritChanges}" />
 			<var name="pageName" value="${pageName}" />
 			<var name="pageTemplateName" value="${pageTemplateName}" />

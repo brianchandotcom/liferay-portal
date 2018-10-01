@@ -4654,6 +4654,14 @@ version 1.3.4.
 - [LPS-85771]: Set `test.outputs.upToDateWhen`to `false` to always run `test`
 and `testIntegration` for OSGi modules.
 
+## 5.5.62 - 2018-10-01
+
+### Added
+- [LPS-85905]: When on Jenkins, fail the `testIntegration` task if any dependent
+projects defined in the `testIntegrationCompile` configuration do not have a
+`.lfrbuild-portal`, `lfrbuild-ci` or a `lfrbuild-ci-skip-test-integration-check`
+marker file.
+
 [Find Security Bugs]: https://github.com/liferay/liferay-portal/tree/master/modules/third-party/com-h3xstream-findsecbugs
 [Gradle Dependency Management]: https://github.com/spring-gradle-plugins/dependency-management-plugin
 [Gradle License Report]: https://github.com/jk1/Gradle-License-Report

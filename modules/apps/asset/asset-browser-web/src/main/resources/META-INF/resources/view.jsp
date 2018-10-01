@@ -16,10 +16,6 @@
 
 <%@ include file="/init.jsp" %>
 
-<clay:navigation-bar
-	navigationItems="<%= assetBrowserDisplayContext.getNavigationItems() %>"
-/>
-
 <clay:management-toolbar
 	clearResultsURL="<%= assetBrowserDisplayContext.getClearResultsURL() %>"
 	componentId="assetBrowserManagementToolbar"

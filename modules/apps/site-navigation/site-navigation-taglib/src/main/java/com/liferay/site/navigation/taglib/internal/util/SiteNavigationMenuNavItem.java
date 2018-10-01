@@ -61,7 +61,7 @@ public class SiteNavigationMenuNavItem extends NavItem {
 		SiteNavigationMenuUtil siteNavigationMenuUtil =
 			SiteNavigationMenuUtil.getInstance();
 
-		return siteNavigationMenuUtil.getNavItemsByParentSiteNavigationMenuItem(
+		return siteNavigationMenuUtil.getChildNavItems(
 			_request, _siteNavigationMenuItem.getSiteNavigationMenuId(),
 			_siteNavigationMenuItem.getSiteNavigationMenuItemId());
 	}

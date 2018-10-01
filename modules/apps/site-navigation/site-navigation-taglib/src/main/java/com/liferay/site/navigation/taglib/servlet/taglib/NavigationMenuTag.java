@@ -290,7 +290,7 @@ public class NavigationMenuTag extends IncludeTag {
 			if (_rootItemLevel == 0) {
 				navItems =
 					siteNavigationMenuUtil.
-						getNavItemsByParentSiteNavigationMenuItem(
+						getChildNavItems(
 							request, _siteNavigationMenuId, 0);
 			}
 			else if (branchMenuItems.size() >= _rootItemLevel) {
@@ -302,7 +302,7 @@ public class NavigationMenuTag extends IncludeTag {
 		else if (_rootItemType.equals("select")) {
 			navItems =
 				siteNavigationMenuUtil.
-					getNavItemsByParentSiteNavigationMenuItem(
+					getChildNavItems(
 						request, _siteNavigationMenuId,
 						parentSiteNavigationMenuItemId);
 		}

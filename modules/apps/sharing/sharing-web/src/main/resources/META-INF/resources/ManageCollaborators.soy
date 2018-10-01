@@ -1,0 +1,88 @@
+{namespace ManageCollaborators}
+
+/**
+ *
+ */
+{template .render}
+	{@param id: string}
+	{@param collaborators: ?}
+	{@param spritemap: string}
+	{@param? _handleChangePermission: any}
+	{@param? _handleDeleteCollaborator: any}
+	{@param? _handleCancelButtonClick: any}
+	{@param? _handleSaveButtonClick: any}
+
+	<div id="{$id}">
+		<div class="modal-body inline-scroller">
+			<ul class="list-group">
+				{foreach $user in $collaborators}
+					<li class="list-group-item list-group-item-flex" id="collaborator{$user.id}">
+						{call .collaborator}
+							{param _handleChangePermission: $_handleChangePermission /}
+							{param _handleDeleteCollaborator: $_handleDeleteCollaborator /}
+							{param spritemap: $spritemap /}
+							{param user: $user /}
+						{/call}
+					</li>
+				{/foreach}
+			</ul>
+		</div>
+
+		<div class="modal-footer">
+			<div class="modal-item-last">
+				<div class="btn-group">
+					<div class="btn-group-item">
+						<button class="btn btn-default" data-onclick="{$_handleCancelButtonClick}" type="button">{msg desc=""}cancel{/msg}</button>
+					</div>
+
+					<div class="btn-group-item">
+						<button class="btn btn-primary" data-onclick="{$_handleSaveButtonClick}" type="button">{msg desc=""}save{/msg}</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+{/template}
+
+{template .collaborator}
+	{@param? _handleChangePermission: any}
+	{@param? _handleDeleteCollaborator: any}
+	{@param spritemap: string}
+	{@param user: ?}
+		<div class="autofit-row autofit-row-center">
+
+			<div class="autofit-col">
+				{call ClaySticker.render}
+					{param size: 'xl' /}
+					{param imageSrc: $user.imageSrc /}
+					{param shape: 'circle' /}
+				{/call}
+			</div>
+
+			<div class="autofit-col autofit-col-expand">
+				<h4>{$user.name}</h4>
+
+				{call ClaySelect.render}
+					{param name: $user.sharingEntryId /}
+					{param options: $user.sharingEntryPermissionDisplaySelectOptions /}
+					{param events: [
+						'change': $_handleChangePermission
+					] /}
+				{/call}
+
+			</div>
+
+			<div class="autofit-col">
+				<button
+					class="btn btn-link text-muted"
+					data-collaborator-id="{$user.id}"
+					data-sharingentry-id="{$user.sharingEntryId}"
+					data-onclick="{$_handleDeleteCollaborator}"
+				>
+					<svg class="lexicon-icon">
+						<use xlink:href="{$spritemap}#times-circle"></use>
+					</svg>
+				</button>
+			</div>
+	</div>
+{/template}

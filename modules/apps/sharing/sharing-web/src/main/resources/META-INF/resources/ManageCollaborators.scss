@@ -1,0 +1,25 @@
+.manage-collaborators-dialog {
+	background-color: #FFF;
+
+	.list-group-item {
+		border: 0;
+	}
+
+	.modal-body.inline-scroller {
+		padding: 10px;
+	}
+
+	.modal-footer {
+		bottom: 0;
+		position: absolute;
+		rigth: 0;
+		width: 100%;
+	}
+
+	select.form-control:not([multiple]):not([size]) {
+		background-color: transparent;
+		font-size: .875rem;
+		height: 2rem;
+		padding-top: .25em;
+	}
+}

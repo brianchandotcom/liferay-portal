@@ -16,6 +16,10 @@
 
 <%@ include file="/dynamic_section/init.jsp" %>
 
+<%
+JSONArray collaboratorsJSONArray = JSONFactoryUtil.createJSONArray();
+%>
+
 <div class="autofit-row sidebar-panel widget-metadata">
 	<div class="autofit-col inline-item-before">
 
@@ -40,6 +44,13 @@
 			List<User> sharingEntryToUsers = (List<User>)request.getAttribute("info_panel_file_entry.jsp-sharingEntryToUsers");
 
 			for (User sharingEntryToUser : sharingEntryToUsers) {
+				JSONObject collaboratorJSONObject = JSONFactoryUtil.createJSONObject();
+
+				collaboratorJSONObject.put("id", sharingEntryToUser.getUserId());
+				collaboratorJSONObject.put("imageSrc", sharingEntryToUser.getPortraitURL(themeDisplay));
+				collaboratorJSONObject.put("name", sharingEntryToUser.getFullName());
+
+				collaboratorsJSONArray.put(collaboratorJSONObject);
 			%>
 
 				<div class="autofit-col">
@@ -70,3 +81,47 @@
 		</div>
 	</div>
 </div>
+
+<clay:button
+	id='<%= liferayPortletResponse.getNamespace() + "manageCollaboratorsButton" %>'
+	label='<%= LanguageUtil.get(resourceBundle, "manage-collaborators") %>'
+	style="link"
+/>
+
+<%
+PortletURL manageCollaboratorsRenderURL = PortletProviderUtil.getPortletURL(request, SharingEntry.class.getName(), PortletProvider.Action.MANAGE);
+
+manageCollaboratorsRenderURL.setParameter("classNameId", String.valueOf(ClassNameLocalServiceUtil.getClassNameId(DLFileEntry.class.getName())));
+manageCollaboratorsRenderURL.setParameter("classPK", String.valueOf(fileEntry.getFileEntryId()));
+manageCollaboratorsRenderURL.setParameter("manageCollaboratorDialogId", liferayPortletResponse.getNamespace() + "manageCollaboratorsDialog");
+manageCollaboratorsRenderURL.setWindowState(LiferayWindowState.POP_UP);
+%>
+
+<aui:script>
+	var button = document.getElementById('<portlet:namespace/>manageCollaboratorsButton');
+
+	button.addEventListener(
+		'click',
+		function() {
+			Liferay.Util.openWindow(
+				{
+					dialog: {
+						destroyOnHide: true,
+						height: 470,
+						width: 350,
+						on: {
+							visibleChange: function(event) {
+								if (!event.newVal) {
+									Liferay.fire('refreshInfoPanel');
+								}
+							}
+						}
+					},
+					id: '<portlet:namespace />manageCollaboratorsDialog',
+					title: '<%= LanguageUtil.get(resourceBundle, "collaborators") %>',
+					uri: '<%= manageCollaboratorsRenderURL.toString() %>'
+				}
+			);
+		}
+	);
+</aui:script>

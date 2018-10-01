@@ -1550,7 +1550,11 @@ public class KaleoTimerPersistenceImpl extends BasePersistenceImpl<KaleoTimer>
 				kaleoTimer.setModifiedDate(now);
 			}
 			else {
-				kaleoTimer.setModifiedDate(serviceContext.getModifiedDate(now));
+				Date newModifiedDate = serviceContext.getModifiedDate(now);
+
+				if (!newModifiedDate.equals(kaleoTimer.getModifiedDate())) {
+					kaleoTimer.setModifiedDate(newModifiedDate);
+				}
 			}
 		}
 

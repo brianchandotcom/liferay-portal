@@ -6374,7 +6374,11 @@ public class SharingEntryPersistenceImpl extends BasePersistenceImpl<SharingEntr
 				sharingEntry.setModifiedDate(now);
 			}
 			else {
-				sharingEntry.setModifiedDate(serviceContext.getModifiedDate(now));
+				Date newModifiedDate = serviceContext.getModifiedDate(now);
+
+				if (!newModifiedDate.equals(sharingEntry.getModifiedDate())) {
+					sharingEntry.setModifiedDate(newModifiedDate);
+				}
 			}
 		}
 

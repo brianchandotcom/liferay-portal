@@ -5364,7 +5364,11 @@ public class KBCommentPersistenceImpl extends BasePersistenceImpl<KBComment>
 				kbComment.setModifiedDate(now);
 			}
 			else {
-				kbComment.setModifiedDate(serviceContext.getModifiedDate(now));
+				Date newModifiedDate = serviceContext.getModifiedDate(now);
+
+				if (!newModifiedDate.equals(kbComment.getModifiedDate())) {
+					kbComment.setModifiedDate(newModifiedDate);
+				}
 			}
 		}
 

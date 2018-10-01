@@ -2439,8 +2439,11 @@ public class KaleoTransitionPersistenceImpl extends BasePersistenceImpl<KaleoTra
 				kaleoTransition.setModifiedDate(now);
 			}
 			else {
-				kaleoTransition.setModifiedDate(serviceContext.getModifiedDate(
-						now));
+				Date newModifiedDate = serviceContext.getModifiedDate(now);
+
+				if (!newModifiedDate.equals(kaleoTransition.getModifiedDate())) {
+					kaleoTransition.setModifiedDate(newModifiedDate);
+				}
 			}
 		}
 

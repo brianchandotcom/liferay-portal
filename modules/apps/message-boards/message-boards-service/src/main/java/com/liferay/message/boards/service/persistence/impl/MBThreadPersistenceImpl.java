@@ -13229,7 +13229,11 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 				mbThread.setModifiedDate(now);
 			}
 			else {
-				mbThread.setModifiedDate(serviceContext.getModifiedDate(now));
+				Date newModifiedDate = serviceContext.getModifiedDate(now);
+
+				if (!newModifiedDate.equals(mbThread.getModifiedDate())) {
+					mbThread.setModifiedDate(newModifiedDate);
+				}
 			}
 		}
 

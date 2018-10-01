@@ -1601,8 +1601,11 @@ public class KaleoConditionPersistenceImpl extends BasePersistenceImpl<KaleoCond
 				kaleoCondition.setModifiedDate(now);
 			}
 			else {
-				kaleoCondition.setModifiedDate(serviceContext.getModifiedDate(
-						now));
+				Date newModifiedDate = serviceContext.getModifiedDate(now);
+
+				if (!newModifiedDate.equals(kaleoCondition.getModifiedDate())) {
+					kaleoCondition.setModifiedDate(newModifiedDate);
+				}
 			}
 		}
 

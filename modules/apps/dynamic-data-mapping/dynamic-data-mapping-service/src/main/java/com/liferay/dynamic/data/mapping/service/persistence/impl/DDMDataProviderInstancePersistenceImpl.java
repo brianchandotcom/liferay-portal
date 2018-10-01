@@ -3666,8 +3666,12 @@ public class DDMDataProviderInstancePersistenceImpl extends BasePersistenceImpl<
 				ddmDataProviderInstance.setModifiedDate(now);
 			}
 			else {
-				ddmDataProviderInstance.setModifiedDate(serviceContext.getModifiedDate(
-						now));
+				Date newModifiedDate = serviceContext.getModifiedDate(now);
+
+				if (!newModifiedDate.equals(
+							ddmDataProviderInstance.getModifiedDate())) {
+					ddmDataProviderInstance.setModifiedDate(newModifiedDate);
+				}
 			}
 		}
 

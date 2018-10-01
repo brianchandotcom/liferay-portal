@@ -10941,7 +10941,11 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 				ddmStructure.setModifiedDate(now);
 			}
 			else {
-				ddmStructure.setModifiedDate(serviceContext.getModifiedDate(now));
+				Date newModifiedDate = serviceContext.getModifiedDate(now);
+
+				if (!newModifiedDate.equals(ddmStructure.getModifiedDate())) {
+					ddmStructure.setModifiedDate(newModifiedDate);
+				}
 			}
 		}
 

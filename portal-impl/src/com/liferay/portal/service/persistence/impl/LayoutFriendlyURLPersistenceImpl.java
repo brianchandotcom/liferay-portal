@@ -5618,8 +5618,11 @@ public class LayoutFriendlyURLPersistenceImpl extends BasePersistenceImpl<Layout
 				layoutFriendlyURL.setModifiedDate(now);
 			}
 			else {
-				layoutFriendlyURL.setModifiedDate(serviceContext.getModifiedDate(
-						now));
+				Date newModifiedDate = serviceContext.getModifiedDate(now);
+
+				if (!newModifiedDate.equals(layoutFriendlyURL.getModifiedDate())) {
+					layoutFriendlyURL.setModifiedDate(newModifiedDate);
+				}
 			}
 		}
 

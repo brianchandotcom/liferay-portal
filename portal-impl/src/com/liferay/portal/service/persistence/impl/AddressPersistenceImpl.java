@@ -4855,7 +4855,11 @@ public class AddressPersistenceImpl extends BasePersistenceImpl<Address>
 				address.setModifiedDate(now);
 			}
 			else {
-				address.setModifiedDate(serviceContext.getModifiedDate(now));
+				Date newModifiedDate = serviceContext.getModifiedDate(now);
+
+				if (!newModifiedDate.equals(address.getModifiedDate())) {
+					address.setModifiedDate(newModifiedDate);
+				}
 			}
 		}
 

@@ -8255,7 +8255,11 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 				organization.setModifiedDate(now);
 			}
 			else {
-				organization.setModifiedDate(serviceContext.getModifiedDate(now));
+				Date newModifiedDate = serviceContext.getModifiedDate(now);
+
+				if (!newModifiedDate.equals(organization.getModifiedDate())) {
+					organization.setModifiedDate(newModifiedDate);
+				}
 			}
 		}
 

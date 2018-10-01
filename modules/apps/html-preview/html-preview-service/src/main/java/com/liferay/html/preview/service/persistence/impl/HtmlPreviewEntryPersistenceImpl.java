@@ -623,8 +623,11 @@ public class HtmlPreviewEntryPersistenceImpl extends BasePersistenceImpl<HtmlPre
 				htmlPreviewEntry.setModifiedDate(now);
 			}
 			else {
-				htmlPreviewEntry.setModifiedDate(serviceContext.getModifiedDate(
-						now));
+				Date newModifiedDate = serviceContext.getModifiedDate(now);
+
+				if (!newModifiedDate.equals(htmlPreviewEntry.getModifiedDate())) {
+					htmlPreviewEntry.setModifiedDate(newModifiedDate);
+				}
 			}
 		}
 

@@ -2728,7 +2728,11 @@ public class AppPersistenceImpl extends BasePersistenceImpl<App>
 				app.setModifiedDate(now);
 			}
 			else {
-				app.setModifiedDate(serviceContext.getModifiedDate(now));
+				Date newModifiedDate = serviceContext.getModifiedDate(now);
+
+				if (!newModifiedDate.equals(app.getModifiedDate())) {
+					app.setModifiedDate(newModifiedDate);
+				}
 			}
 		}
 

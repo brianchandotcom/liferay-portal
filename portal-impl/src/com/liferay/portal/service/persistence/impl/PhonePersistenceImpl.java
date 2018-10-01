@@ -4204,7 +4204,11 @@ public class PhonePersistenceImpl extends BasePersistenceImpl<Phone>
 				phone.setModifiedDate(now);
 			}
 			else {
-				phone.setModifiedDate(serviceContext.getModifiedDate(now));
+				Date newModifiedDate = serviceContext.getModifiedDate(now);
+
+				if (!newModifiedDate.equals(phone.getModifiedDate())) {
+					phone.setModifiedDate(newModifiedDate);
+				}
 			}
 		}
 

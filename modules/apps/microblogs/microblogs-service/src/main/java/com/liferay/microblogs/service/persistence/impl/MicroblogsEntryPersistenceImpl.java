@@ -7923,8 +7923,11 @@ public class MicroblogsEntryPersistenceImpl extends BasePersistenceImpl<Microblo
 				microblogsEntry.setModifiedDate(now);
 			}
 			else {
-				microblogsEntry.setModifiedDate(serviceContext.getModifiedDate(
-						now));
+				Date newModifiedDate = serviceContext.getModifiedDate(now);
+
+				if (!newModifiedDate.equals(microblogsEntry.getModifiedDate())) {
+					microblogsEntry.setModifiedDate(newModifiedDate);
+				}
 			}
 		}
 

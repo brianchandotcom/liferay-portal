@@ -6271,7 +6271,11 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 				userGroup.setModifiedDate(now);
 			}
 			else {
-				userGroup.setModifiedDate(serviceContext.getModifiedDate(now));
+				Date newModifiedDate = serviceContext.getModifiedDate(now);
+
+				if (!newModifiedDate.equals(userGroup.getModifiedDate())) {
+					userGroup.setModifiedDate(newModifiedDate);
+				}
 			}
 		}
 

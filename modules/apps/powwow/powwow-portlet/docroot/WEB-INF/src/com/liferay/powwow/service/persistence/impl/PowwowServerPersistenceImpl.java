@@ -920,7 +920,11 @@ public class PowwowServerPersistenceImpl extends BasePersistenceImpl<PowwowServe
 				powwowServer.setModifiedDate(now);
 			}
 			else {
-				powwowServer.setModifiedDate(serviceContext.getModifiedDate(now));
+				Date newModifiedDate = serviceContext.getModifiedDate(now);
+
+				if (!newModifiedDate.equals(powwowServer.getModifiedDate())) {
+					powwowServer.setModifiedDate(newModifiedDate);
+				}
 			}
 		}
 

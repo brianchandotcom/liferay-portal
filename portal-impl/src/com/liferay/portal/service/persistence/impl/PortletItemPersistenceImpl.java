@@ -1876,7 +1876,11 @@ public class PortletItemPersistenceImpl extends BasePersistenceImpl<PortletItem>
 				portletItem.setModifiedDate(now);
 			}
 			else {
-				portletItem.setModifiedDate(serviceContext.getModifiedDate(now));
+				Date newModifiedDate = serviceContext.getModifiedDate(now);
+
+				if (!newModifiedDate.equals(portletItem.getModifiedDate())) {
+					portletItem.setModifiedDate(newModifiedDate);
+				}
 			}
 		}
 

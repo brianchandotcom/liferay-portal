@@ -1110,7 +1110,11 @@ public class FolderPersistenceImpl extends BasePersistenceImpl<Folder>
 				folder.setModifiedDate(now);
 			}
 			else {
-				folder.setModifiedDate(serviceContext.getModifiedDate(now));
+				Date newModifiedDate = serviceContext.getModifiedDate(now);
+
+				if (!newModifiedDate.equals(folder.getModifiedDate())) {
+					folder.setModifiedDate(newModifiedDate);
+				}
 			}
 		}
 

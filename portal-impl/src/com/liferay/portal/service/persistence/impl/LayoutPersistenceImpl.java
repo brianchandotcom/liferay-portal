@@ -11950,7 +11950,11 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 				layout.setModifiedDate(now);
 			}
 			else {
-				layout.setModifiedDate(serviceContext.getModifiedDate(now));
+				Date newModifiedDate = serviceContext.getModifiedDate(now);
+
+				if (!newModifiedDate.equals(layout.getModifiedDate())) {
+					layout.setModifiedDate(newModifiedDate);
+				}
 			}
 		}
 

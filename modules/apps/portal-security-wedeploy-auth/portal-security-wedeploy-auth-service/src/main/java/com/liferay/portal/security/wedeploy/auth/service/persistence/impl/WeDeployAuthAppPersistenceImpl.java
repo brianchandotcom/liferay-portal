@@ -977,8 +977,11 @@ public class WeDeployAuthAppPersistenceImpl extends BasePersistenceImpl<WeDeploy
 				weDeployAuthApp.setModifiedDate(now);
 			}
 			else {
-				weDeployAuthApp.setModifiedDate(serviceContext.getModifiedDate(
-						now));
+				Date newModifiedDate = serviceContext.getModifiedDate(now);
+
+				if (!newModifiedDate.equals(weDeployAuthApp.getModifiedDate())) {
+					weDeployAuthApp.setModifiedDate(newModifiedDate);
+				}
 			}
 		}
 

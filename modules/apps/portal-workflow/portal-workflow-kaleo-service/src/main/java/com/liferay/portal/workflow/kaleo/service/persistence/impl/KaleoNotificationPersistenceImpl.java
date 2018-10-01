@@ -2649,8 +2649,11 @@ public class KaleoNotificationPersistenceImpl extends BasePersistenceImpl<KaleoN
 				kaleoNotification.setModifiedDate(now);
 			}
 			else {
-				kaleoNotification.setModifiedDate(serviceContext.getModifiedDate(
-						now));
+				Date newModifiedDate = serviceContext.getModifiedDate(now);
+
+				if (!newModifiedDate.equals(kaleoNotification.getModifiedDate())) {
+					kaleoNotification.setModifiedDate(newModifiedDate);
+				}
 			}
 		}
 

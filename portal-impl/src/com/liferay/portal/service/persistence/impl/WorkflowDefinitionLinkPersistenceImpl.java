@@ -2456,8 +2456,12 @@ public class WorkflowDefinitionLinkPersistenceImpl extends BasePersistenceImpl<W
 				workflowDefinitionLink.setModifiedDate(now);
 			}
 			else {
-				workflowDefinitionLink.setModifiedDate(serviceContext.getModifiedDate(
-						now));
+				Date newModifiedDate = serviceContext.getModifiedDate(now);
+
+				if (!newModifiedDate.equals(
+							workflowDefinitionLink.getModifiedDate())) {
+					workflowDefinitionLink.setModifiedDate(newModifiedDate);
+				}
 			}
 		}
 

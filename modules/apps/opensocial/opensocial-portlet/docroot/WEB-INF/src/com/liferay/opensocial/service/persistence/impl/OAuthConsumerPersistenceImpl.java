@@ -1204,8 +1204,11 @@ public class OAuthConsumerPersistenceImpl extends BasePersistenceImpl<OAuthConsu
 				oAuthConsumer.setModifiedDate(now);
 			}
 			else {
-				oAuthConsumer.setModifiedDate(serviceContext.getModifiedDate(
-						now));
+				Date newModifiedDate = serviceContext.getModifiedDate(now);
+
+				if (!newModifiedDate.equals(oAuthConsumer.getModifiedDate())) {
+					oAuthConsumer.setModifiedDate(newModifiedDate);
+				}
 			}
 		}
 

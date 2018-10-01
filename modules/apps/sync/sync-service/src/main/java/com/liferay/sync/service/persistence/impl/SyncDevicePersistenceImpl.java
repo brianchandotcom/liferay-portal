@@ -2547,7 +2547,11 @@ public class SyncDevicePersistenceImpl extends BasePersistenceImpl<SyncDevice>
 				syncDevice.setModifiedDate(now);
 			}
 			else {
-				syncDevice.setModifiedDate(serviceContext.getModifiedDate(now));
+				Date newModifiedDate = serviceContext.getModifiedDate(now);
+
+				if (!newModifiedDate.equals(syncDevice.getModifiedDate())) {
+					syncDevice.setModifiedDate(newModifiedDate);
+				}
 			}
 		}
 

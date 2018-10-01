@@ -2630,7 +2630,11 @@ public class KaleoActionPersistenceImpl extends BasePersistenceImpl<KaleoAction>
 				kaleoAction.setModifiedDate(now);
 			}
 			else {
-				kaleoAction.setModifiedDate(serviceContext.getModifiedDate(now));
+				Date newModifiedDate = serviceContext.getModifiedDate(now);
+
+				if (!newModifiedDate.equals(kaleoAction.getModifiedDate())) {
+					kaleoAction.setModifiedDate(newModifiedDate);
+				}
 			}
 		}
 

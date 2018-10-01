@@ -1398,7 +1398,11 @@ public class OAuthTokenPersistenceImpl extends BasePersistenceImpl<OAuthToken>
 				oAuthToken.setModifiedDate(now);
 			}
 			else {
-				oAuthToken.setModifiedDate(serviceContext.getModifiedDate(now));
+				Date newModifiedDate = serviceContext.getModifiedDate(now);
+
+				if (!newModifiedDate.equals(oAuthToken.getModifiedDate())) {
+					oAuthToken.setModifiedDate(newModifiedDate);
+				}
 			}
 		}
 

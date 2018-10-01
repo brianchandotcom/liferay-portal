@@ -3021,7 +3021,11 @@ public class MBThreadFlagPersistenceImpl extends BasePersistenceImpl<MBThreadFla
 				mbThreadFlag.setModifiedDate(now);
 			}
 			else {
-				mbThreadFlag.setModifiedDate(serviceContext.getModifiedDate(now));
+				Date newModifiedDate = serviceContext.getModifiedDate(now);
+
+				if (!newModifiedDate.equals(mbThreadFlag.getModifiedDate())) {
+					mbThreadFlag.setModifiedDate(newModifiedDate);
+				}
 			}
 		}
 

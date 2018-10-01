@@ -8499,7 +8499,11 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 				user.setModifiedDate(now);
 			}
 			else {
-				user.setModifiedDate(serviceContext.getModifiedDate(now));
+				Date newModifiedDate = serviceContext.getModifiedDate(now);
+
+				if (!newModifiedDate.equals(user.getModifiedDate())) {
+					user.setModifiedDate(newModifiedDate);
+				}
 			}
 		}
 

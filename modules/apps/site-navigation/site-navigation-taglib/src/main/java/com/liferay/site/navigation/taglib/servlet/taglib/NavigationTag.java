@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portletdisplaytemplate.PortletDisplayTemplateManagerUtil;
-import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.theme.NavItem;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Validator;
@@ -30,13 +29,13 @@ import com.liferay.portlet.display.template.PortletDisplayTemplate;
 import com.liferay.site.navigation.taglib.internal.portlet.display.template.PortletDisplayTemplateUtil;
 import com.liferay.site.navigation.taglib.internal.servlet.NavItemClassNameIdUtil;
 import com.liferay.site.navigation.taglib.internal.servlet.ServletContextUtil;
+import com.liferay.site.navigation.taglib.internal.util.NavItemUtil;
 import com.liferay.taglib.util.IncludeTag;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
-import java.util.ListIterator;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -76,7 +75,9 @@ public class NavigationTag extends IncludeTag {
 		try {
 			branchNavItems = getBranchNavItems(request);
 
-			navItems = getNavItems(branchNavItems);
+			navItems = NavItemUtil.getNavItems(
+				request, _rootLayoutType, _rootLayoutLevel, _rootLayoutUuid,
+				branchNavItems);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -175,11 +176,8 @@ public class NavigationTag extends IncludeTag {
 
 		List<NavItem> navItems = new ArrayList<>(ancestorLayouts.size() + 1);
 
-		ListIterator<Layout> listIterator = ancestorLayouts.listIterator(
-			ancestorLayouts.size());
-
-		while (listIterator.hasPrevious()) {
-			Layout ancestorLayout = listIterator.previous();
+		for (int i = ancestorLayouts.size() - 1; i >= 0; i--) {
+			Layout ancestorLayout = ancestorLayouts.get(i);
 
 			navItems.add(
 				new NavItem(request, themeDisplay, ancestorLayout, null));
@@ -210,53 +208,16 @@ public class NavigationTag extends IncludeTag {
 		return themeDisplay.getScopeGroupId();
 	}
 
+	/**
+	 * @deprecated As of Judson (7.1.x), with no direct replacement
+	 */
+	@Deprecated
 	protected List<NavItem> getNavItems(List<NavItem> branchNavItems)
 		throws Exception {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		List<NavItem> navItems = new ArrayList<>();
-
-		NavItem rootNavItem = null;
-
-		if (_rootLayoutType.equals("relative")) {
-			if ((_rootLayoutLevel >= 0) &&
-				(_rootLayoutLevel < branchNavItems.size())) {
-
-				rootNavItem = branchNavItems.get(_rootLayoutLevel);
-			}
-		}
-		else if (_rootLayoutType.equals("absolute")) {
-			if (_rootLayoutLevel == 0) {
-				navItems = NavItem.fromLayouts(request, themeDisplay, null);
-			}
-			else if (branchNavItems.size() >= _rootLayoutLevel) {
-				rootNavItem = branchNavItems.get(_rootLayoutLevel - 1);
-			}
-		}
-		else if (_rootLayoutType.equals("select")) {
-			Layout layout = themeDisplay.getLayout();
-
-			if (Validator.isNotNull(_rootLayoutUuid)) {
-				Layout rootLayout =
-					LayoutLocalServiceUtil.getLayoutByUuidAndGroupId(
-						_rootLayoutUuid, layout.getGroupId(),
-						layout.isPrivateLayout());
-
-				rootNavItem = new NavItem(
-					request, themeDisplay, rootLayout, null);
-			}
-			else {
-				navItems = NavItem.fromLayouts(request, themeDisplay, null);
-			}
-		}
-
-		if (rootNavItem != null) {
-			navItems = rootNavItem.getChildren();
-		}
-
-		return navItems;
+		return NavItemUtil.getNavItems(
+			request, _rootLayoutType, _rootLayoutLevel, _rootLayoutUuid,
+			branchNavItems);
 	}
 
 	@Override

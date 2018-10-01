@@ -15,18 +15,13 @@
 package com.liferay.site.navigation.taglib.internal.util;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.theme.NavItem;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.site.navigation.model.SiteNavigationMenuItem;
-import com.liferay.site.navigation.service.SiteNavigationMenuItemLocalServiceUtil;
 import com.liferay.site.navigation.taglib.internal.servlet.ServletContextUtil;
 import com.liferay.site.navigation.type.SiteNavigationMenuItemType;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -40,9 +35,7 @@ public class SiteNavigationMenuNavItem extends NavItem {
 		HttpServletRequest request, ThemeDisplay themeDisplay,
 		SiteNavigationMenuItem siteNavigationMenuItem) {
 
-		super(
-			request, themeDisplay, themeDisplay.getLayout(),
-			new HashMap<String, Object>());
+		super(request, themeDisplay, themeDisplay.getLayout(), null);
 
 		SiteNavigationMenuItemType siteNavigationMenuItemType =
 			ServletContextUtil.getSiteNavigationMenuItemType(
@@ -55,46 +48,22 @@ public class SiteNavigationMenuNavItem extends NavItem {
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		return _siteNavigationMenuItem.equals(obj);
+	public boolean equals(Object object) {
+		if (object instanceof SiteNavigationMenuNavItem) {
+			SiteNavigationMenuNavItem siteNavigationMenuNavItem =
+				(SiteNavigationMenuNavItem)object;
+
+			return _siteNavigationMenuItem.equals(siteNavigationMenuNavItem);
+		}
+
+		return false;
 	}
 
 	@Override
 	public List<NavItem> getChildren() {
-		List<NavItem> navItems = new ArrayList<>();
-
-		List<SiteNavigationMenuItem> siteNavigationMenuItems =
-			SiteNavigationMenuItemLocalServiceUtil.getSiteNavigationMenuItems(
-				_siteNavigationMenuItem.getSiteNavigationMenuId(),
-				_siteNavigationMenuItem.getSiteNavigationMenuItemId());
-
-		for (SiteNavigationMenuItem siteNavigationMenuItem :
-				siteNavigationMenuItems) {
-
-			SiteNavigationMenuItemType siteNavigationMenuItemType =
-				ServletContextUtil.getSiteNavigationMenuItemType(
-					siteNavigationMenuItem.getType());
-
-			try {
-				if (!siteNavigationMenuItemType.hasPermission(
-						_themeDisplay.getPermissionChecker(),
-						siteNavigationMenuItem)) {
-
-					continue;
-				}
-
-				navItems.add(
-					new SiteNavigationMenuNavItem(
-						_request, _themeDisplay, siteNavigationMenuItem));
-			}
-			catch (PortalException pe) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(pe, pe);
-				}
-			}
-		}
-
-		return navItems;
+		return NavItemUtil.getChildNavItems(
+			_request, _siteNavigationMenuItem.getSiteNavigationMenuId(),
+			_siteNavigationMenuItem.getSiteNavigationMenuItemId());
 	}
 
 	@Override
@@ -171,9 +140,6 @@ public class SiteNavigationMenuNavItem extends NavItem {
 			_themeDisplay.isTilesSelectable(), _siteNavigationMenuItem,
 			_themeDisplay.getLayout());
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		SiteNavigationMenuNavItem.class);
 
 	private final HttpServletRequest _request;
 	private final SiteNavigationMenuItem _siteNavigationMenuItem;

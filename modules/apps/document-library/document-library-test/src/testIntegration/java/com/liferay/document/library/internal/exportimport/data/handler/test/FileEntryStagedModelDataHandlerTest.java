@@ -22,6 +22,7 @@ import com.liferay.document.library.kernel.model.DLFileEntryMetadata;
 import com.liferay.document.library.kernel.model.DLFileEntryType;
 import com.liferay.document.library.kernel.model.DLFolder;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
+import com.liferay.document.library.kernel.model.DLVersionNumberIncrease;
 import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
 import com.liferay.document.library.kernel.service.DLAppServiceUtil;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalServiceUtil;
@@ -163,7 +164,7 @@ public class FileEntryStagedModelDataHandlerTest
 		DLAppServiceUtil.updateFileEntry(
 			fileEntry.getFileEntryId(), StringPool.BLANK,
 			ContentTypes.TEXT_PLAIN, title, StringPool.BLANK, StringPool.BLANK,
-			false, (byte[])null, serviceContext);
+			DLVersionNumberIncrease.MINOR, (byte[])null, serviceContext);
 
 		exportImportStagedModel(fileEntry);
 
@@ -452,8 +453,8 @@ public class FileEntryStagedModelDataHandlerTest
 		return DLAppServiceUtil.updateFileEntry(
 			fileEntry.getFileEntryId(), StringPool.BLANK,
 			ContentTypes.TEXT_PLAIN, RandomTestUtil.randomString(),
-			StringPool.BLANK, StringPool.BLANK, false, (byte[])null,
-			ServiceContextThreadLocal.getServiceContext());
+			StringPool.BLANK, StringPool.BLANK, DLVersionNumberIncrease.MINOR,
+			(byte[])null, ServiceContextThreadLocal.getServiceContext());
 	}
 
 	@Override

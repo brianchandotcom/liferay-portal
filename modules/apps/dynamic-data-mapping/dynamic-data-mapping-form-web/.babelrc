@@ -11,7 +11,9 @@
                 ["module-resolver", {
                     "alias": {
                         "dynamic-data-mapping-form-field-type/*": "../dynamic-data-mapping-form-field-type/src/main/resources/META-INF/resources",
-                        "frontend-js-web/*": "../../frontend-js/frontend-js-web/src/main/resources/META-INF/resources"
+                        "frontend-js-web/*": "../../frontend-js/frontend-js-web/src/main/resources/META-INF/resources",
+                        "mock/*": "./test/metal/js/__mock__",
+                        "source/*": "./src/main/resources/META-INF/resources/metal/js"
                     }
                 }]
             ]

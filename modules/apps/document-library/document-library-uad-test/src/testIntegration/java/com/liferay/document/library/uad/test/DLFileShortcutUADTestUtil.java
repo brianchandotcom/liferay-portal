@@ -38,7 +38,7 @@ import java.util.List;
 /**
  * @author Brian Wing Shun Chan
  */
-public class DLFileShortcutUADTestHelper {
+public class DLFileShortcutUADTestUtil {
 
 	public static DLFileShortcut addDLFileShortcut(
 			DLFileEntryLocalService dlFileEntryLocalService,

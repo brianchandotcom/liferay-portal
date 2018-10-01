@@ -19,7 +19,7 @@ import com.liferay.document.library.kernel.model.DLFileShortcut;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
 import com.liferay.document.library.kernel.service.DLFileShortcutLocalService;
 import com.liferay.document.library.kernel.service.DLFolderLocalService;
-import com.liferay.document.library.uad.test.DLFileShortcutUADTestHelper;
+import com.liferay.document.library.uad.test.DLFileShortcutUADTestUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -56,7 +56,7 @@ public class DLFileShortcutUADAnonymizerTest
 		throws Exception {
 
 		DLFileShortcut dlFileShortcut =
-			DLFileShortcutUADTestHelper.addDLFileShortcutWithStatusByUserId(
+			DLFileShortcutUADTestUtil.addDLFileShortcutWithStatusByUserId(
 				_dlFileEntryLocalService, _dlFileShortcutLocalService,
 				_dlFolderLocalService, userId, statusByUserId);
 
@@ -67,7 +67,7 @@ public class DLFileShortcutUADAnonymizerTest
 
 	@After
 	public void tearDown() throws Exception {
-		DLFileShortcutUADTestHelper.cleanUpDependencies(
+		DLFileShortcutUADTestUtil.cleanUpDependencies(
 			_dlFileEntryLocalService, _dlFolderLocalService, _dlFileShortcuts);
 	}
 
@@ -82,7 +82,7 @@ public class DLFileShortcutUADAnonymizerTest
 		throws Exception {
 
 		DLFileShortcut dlFileShortcut =
-			DLFileShortcutUADTestHelper.addDLFileShortcut(
+			DLFileShortcutUADTestUtil.addDLFileShortcut(
 				_dlFileEntryLocalService, _dlFileShortcutLocalService,
 				_dlFolderLocalService, userId);
 
@@ -97,7 +97,7 @@ public class DLFileShortcutUADAnonymizerTest
 	protected void deleteBaseModels(List<DLFileShortcut> baseModels)
 		throws Exception {
 
-		DLFileShortcutUADTestHelper.cleanUpDependencies(
+		DLFileShortcutUADTestUtil.cleanUpDependencies(
 			_dlFileEntryLocalService, _dlFolderLocalService, baseModels);
 	}
 

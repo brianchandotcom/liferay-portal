@@ -598,7 +598,11 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 					${entity.varName}.setModifiedDate(now);
 				}
 				else {
-					${entity.varName}.setModifiedDate(serviceContext.getModifiedDate(now));
+					Date newModifiedDate = serviceContext.getModifiedDate(now);
+
+					if (!newModifiedDate.equals(${entity.varName}.getModifiedDate())) {
+						${entity.varName}.setModifiedDate(newModifiedDate);
+					}
 				}
 			}
 		</#if>

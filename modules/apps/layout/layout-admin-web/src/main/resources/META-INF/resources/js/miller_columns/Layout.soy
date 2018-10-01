@@ -12,6 +12,8 @@
 	{@param pathThemeImages: string}
 	{@param portletNamespace: string}
 	{@param siteNavigationMenuNames: string}
+	{@param? _hoveredLayoutColumnItemBorder: string}
+	{@param? _hoveredLayoutColumnItemPlid: string}
 
 	<div ref="layout">
 		{call com.liferay.layout.admin.web.LayoutBreadcrumbs.render}
@@ -21,6 +23,8 @@
 		<div class="bg-white flex-nowrap layout-columns row" ref="layoutColumns">
 			{foreach $layoutColumn in $layoutColumns}
 				{call com.liferay.layout.admin.web.LayoutColumn.render}
+					{param hoveredLayoutColumnItemBorder: $_hoveredLayoutColumnItemBorder /}
+					{param hoveredLayoutColumnItemPlid: $_hoveredLayoutColumnItemPlid /}
 					{param layoutColumn: $layoutColumn /}
 					{param pathThemeImages: $pathThemeImages /}
 					{param portletNamespace: $portletNamespace /}

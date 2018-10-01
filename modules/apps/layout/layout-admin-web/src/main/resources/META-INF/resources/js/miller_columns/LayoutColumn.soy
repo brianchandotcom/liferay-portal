@@ -17,6 +17,8 @@
 	]>}
 	{@param pathThemeImages: string}
 	{@param portletNamespace: string}
+	{@param? hoveredLayoutColumnItemBorder: string}
+	{@param? hoveredLayoutColumnItemPlid: string}
 
 	{let $layoutColumnClasses kind="text"}
 		col-11
@@ -32,10 +34,16 @@
 
 	<ul class="{$layoutColumnClasses}" ref="layoutItemsWrapper">
 		{foreach $layoutColumnItem in $layoutColumn}
+			{let $styleModifier kind="text"}
+				{if $hoveredLayoutColumnItemPlid == $layoutColumnItem.plid}
+					{$hoveredLayoutColumnItemBorder}
+				{/if}
+			{/let}
 			{call .layoutColumnItem}
 				{param layoutColumnItem: $layoutColumnItem /}
 				{param pathThemeImages: $pathThemeImages /}
 				{param portletNamespace: $portletNamespace /}
+				{param styleModifier: $styleModifier /}
 			{/call}
 		{/foreach}
 	</ul>
@@ -70,12 +78,14 @@
 	]}
 	{@param pathThemeImages: string}
 	{@param portletNamespace: string}
+	{@param? styleModifier: string}
 
 	{let $listGroupItemClasses kind="text"}
 		list-group-item
 		{sp}list-group-item-flex
 		{sp}drag-layout-column-item
 		{sp}layout-drop-target
+		{sp}{$styleModifier}
 
 		{if $layoutColumnItem.active}
 			{sp}active-item

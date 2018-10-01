@@ -187,6 +187,21 @@ public class SiteNavigationMenuItemWrapper implements SiteNavigationMenuItem,
 	}
 
 	/**
+	* Returns all parent site navigation menu items of the current site
+	* navigation menu item. The list is retrieved recursively with the direct
+	* parent site navigation menu item listed first, and most distant parent
+	* listed last.
+	*
+	* @return the current site navigation menu item's list of parent site
+	navigation menu items
+	*/
+	@Override
+	public java.util.List<SiteNavigationMenuItem> getAncestors()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _siteNavigationMenuItem.getAncestors();
+	}
+
+	/**
 	* Returns the company ID of this site navigation menu item.
 	*
 	* @return the company ID of this site navigation menu item
@@ -384,6 +399,19 @@ public class SiteNavigationMenuItemWrapper implements SiteNavigationMenuItem,
 	@Override
 	public boolean isNew() {
 		return _siteNavigationMenuItem.isNew();
+	}
+
+	/**
+	* Returns <code>true</code> if the current site navigation menu item is
+	* the root site navigation menu item.
+	*
+	* @return <code>true</code> if the current site navigation menu item is
+	the root site navigation menu item;
+	<code>false</code> otherwise
+	*/
+	@Override
+	public boolean isRootSiteNavigationMenuItem() {
+		return _siteNavigationMenuItem.isRootSiteNavigationMenuItem();
 	}
 
 	@Override

@@ -55,4 +55,26 @@ public interface SiteNavigationMenuItem extends SiteNavigationMenuItemModel,
 				return SiteNavigationMenuItem.class;
 			}
 		};
+
+	/**
+	* Returns all parent site navigation menu items of the current site
+	* navigation menu item. The list is retrieved recursively with the direct
+	* parent site navigation menu item listed first, and most distant parent
+	* listed last.
+	*
+	* @return the current site navigation menu item's list of parent site
+	navigation menu items
+	*/
+	public java.util.List<SiteNavigationMenuItem> getAncestors()
+		throws com.liferay.portal.kernel.exception.PortalException;
+
+	/**
+	* Returns <code>true</code> if the current site navigation menu item is
+	* the root site navigation menu item.
+	*
+	* @return <code>true</code> if the current site navigation menu item is
+	the root site navigation menu item;
+	<code>false</code> otherwise
+	*/
+	public boolean isRootSiteNavigationMenuItem();
 }

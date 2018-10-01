@@ -38,6 +38,8 @@ public interface DLOpenerGoogleDriveManager {
 
 	public boolean hasValidCredential(long userId) throws IOException;
 
+	public boolean isConfigured();
+
 	public boolean isGoogleDriveFile(FileEntry fileEntry);
 
 	public void requestAuthorizationToken(

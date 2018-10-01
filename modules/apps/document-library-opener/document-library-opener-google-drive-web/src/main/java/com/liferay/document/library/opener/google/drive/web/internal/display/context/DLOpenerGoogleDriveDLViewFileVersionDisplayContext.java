@@ -33,13 +33,13 @@ import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.servlet.HttpMethods;
-import com.liferay.portal.kernel.servlet.taglib.ui.JavaScriptMenuItem;
 import com.liferay.portal.kernel.servlet.taglib.ui.JavaScriptUIItem;
 import com.liferay.portal.kernel.servlet.taglib.ui.Menu;
 import com.liferay.portal.kernel.servlet.taglib.ui.MenuItem;
 import com.liferay.portal.kernel.servlet.taglib.ui.URLMenuItem;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.JavaConstants;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
 
 import java.util.Collection;
@@ -66,7 +66,7 @@ public class DLOpenerGoogleDriveDLViewFileVersionDisplayContext
 		FileVersion fileVersion, ResourceBundle resourceBundle,
 		DLOpenerFileEntryReferenceLocalService
 			dlOpenerFileEntryReferenceLocalService,
-		DLOpenerGoogleDriveManager dlOpenerGoogleDriveManager) {
+		DLOpenerGoogleDriveManager dlOpenerGoogleDriveManager, Portal portal) {
 
 		super(_UUID, parentDLDisplayContext, request, response, fileVersion);
 
@@ -74,12 +74,14 @@ public class DLOpenerGoogleDriveDLViewFileVersionDisplayContext
 		_dlOpenerFileEntryReferenceLocalService =
 			dlOpenerFileEntryReferenceLocalService;
 		_dlOpenerGoogleDriveManager = dlOpenerGoogleDriveManager;
+		_portal = portal;
 	}
 
 	@Override
 	public Menu getMenu() throws PortalException {
 		if (!DLOpenerGoogleDriveMimeTypes.isMimeTypeSupported(
-				fileVersion.getMimeType())) {
+				fileVersion.getMimeType()) ||
+			!_dlOpenerGoogleDriveManager.isConfigured()) {
 
 			return super.getMenu();
 		}
@@ -91,46 +93,31 @@ public class DLOpenerGoogleDriveDLViewFileVersionDisplayContext
 
 			_updateCancelCheckoutAndCheckinMenuItems(menuItems);
 
-			menuItems.add(_createEditInGoogleDocsMenuItem());
+			menuItems.add(
+				_createEditInGoogleDocsMenuItem(
+					DLOpenerGoogleDriveWebConstants.GOOGLE_DRIVE_EDIT));
 
 			return menu;
 		}
 
 		List<MenuItem> menuItems = menu.getMenuItems();
 
-		menuItems.add(_createCheckoutInGoogleDocsMenuItem());
+		menuItems.add(
+			_createEditInGoogleDocsMenuItem(
+				DLOpenerGoogleDriveWebConstants.GOOGLE_DRIVE_CHECKOUT));
 
 		return menu;
 	}
 
-	private MenuItem _createCheckoutInGoogleDocsMenuItem() {
-		JavaScriptMenuItem javaScriptMenuItem = new JavaScriptMenuItem();
+	private MenuItem _createEditInGoogleDocsMenuItem(String cmd) {
+		URLMenuItem menuItem = new URLMenuItem();
 
-		javaScriptMenuItem.setLabel(
-			LanguageUtil.get(_resourceBundle, "checkout-to-google-docs"));
-		javaScriptMenuItem.setOnClick(
-			StringBundler.concat(
-				_getNamespace(), "redirectNotification('",
-				_getActionURL(
-					DLOpenerGoogleDriveWebConstants.GOOGLE_DRIVE_CHECKOUT),
-				"')"));
-
-		return javaScriptMenuItem;
-	}
-
-	private MenuItem _createEditInGoogleDocsMenuItem() {
-		JavaScriptMenuItem javaScriptMenuItem = new JavaScriptMenuItem();
-
-		javaScriptMenuItem.setLabel(
+		menuItem.setLabel(
 			LanguageUtil.get(_resourceBundle, "edit-in-google-docs"));
-		javaScriptMenuItem.setOnClick(
-			StringBundler.concat(
-				_getNamespace(), "redirectNotification('",
-				_getActionURL(
-					DLOpenerGoogleDriveWebConstants.GOOGLE_DRIVE_EDIT),
-				"')"));
+		menuItem.setMethod(HttpMethods.POST);
+		menuItem.setURL(_getActionURL(cmd));
 
-		return javaScriptMenuItem;
+		return menuItem;
 	}
 
 	private String _getActionURL(String cmd) {
@@ -143,6 +130,8 @@ public class DLOpenerGoogleDriveDLViewFileVersionDisplayContext
 		liferayPortletURL.setParameter(Constants.CMD, cmd);
 		liferayPortletURL.setParameter(
 			"fileEntryId", String.valueOf(fileVersion.getFileEntryId()));
+		liferayPortletURL.setParameter(
+			"googleDocsRedirect", _portal.getCurrentCompleteURL(request));
 
 		return liferayPortletURL.toString();
 	}
@@ -164,7 +153,7 @@ public class DLOpenerGoogleDriveDLViewFileVersionDisplayContext
 	private boolean _isCheckedOutInGoogleDrive() throws PortalException {
 		FileEntry fileEntry = fileVersion.getFileEntry();
 
-		if (fileEntry.isCheckedOut() ||
+		if (fileEntry.isCheckedOut() &&
 			_dlOpenerGoogleDriveManager.isGoogleDriveFile(fileEntry)) {
 
 			return true;
@@ -237,6 +226,7 @@ public class DLOpenerGoogleDriveDLViewFileVersionDisplayContext
 	private final DLOpenerFileEntryReferenceLocalService
 		_dlOpenerFileEntryReferenceLocalService;
 	private final DLOpenerGoogleDriveManager _dlOpenerGoogleDriveManager;
+	private final Portal _portal;
 	private final ResourceBundle _resourceBundle;
 
 }

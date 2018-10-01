@@ -109,13 +109,11 @@ public interface PortletPreferencesFactory {
 		throws PortalException;
 
 	public PortletPreferences getPortletSetup(
-			Layout layout, String portletId, String defaultPreferences)
-		throws PortalException;
+		Layout layout, String portletId, String defaultPreferences);
 
 	public PortletPreferences getPortletSetup(
-			long scopeGroupId, Layout layout, String portletId,
-			String defaultPreferences)
-		throws PortalException;
+		long scopeGroupId, Layout layout, String portletId,
+		String defaultPreferences);
 
 	public PortletPreferences getPortletSetup(PortletRequest portletRequest)
 		throws PortalException;
@@ -136,12 +134,10 @@ public interface PortletPreferencesFactory {
 		Layout layout, String portletId);
 
 	public PortletPreferences getStrictPortletSetup(
-			Layout layout, String portletId)
-		throws PortalException;
+		Layout layout, String portletId);
 
 	public PortletPreferences getStrictPortletSetup(
-			long companyId, long groupId, String portletId)
-		throws PortalException;
+		long companyId, long groupId, String portletId);
 
 	public PortletPreferences strictFromXML(
 		long companyId, long ownerId, int ownerType, long plid,

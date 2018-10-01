@@ -14,7 +14,6 @@
 
 package com.liferay.portal.kernel.settings;
 
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.registry.collections.ServiceTrackerCollections;
 import com.liferay.registry.collections.ServiceTrackerList;
 
@@ -96,9 +95,7 @@ public class SettingsLocatorHelperUtil {
 	}
 
 	public Settings getPortletInstancePortletPreferencesSettings(
-			long companyId, long plid, String portletId,
-			Settings parentSettings)
-		throws PortalException {
+		long companyId, long plid, String portletId, Settings parentSettings) {
 
 		return getSettingsLocatorHelper().
 			getPortletInstancePortletPreferencesSettings(

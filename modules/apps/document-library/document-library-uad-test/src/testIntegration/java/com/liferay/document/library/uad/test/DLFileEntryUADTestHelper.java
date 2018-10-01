@@ -33,20 +33,21 @@ import java.io.InputStream;
 
 import java.util.List;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author William Newbury
  */
-@Component(immediate = true, service = DLFileEntryUADTestHelper.class)
 public class DLFileEntryUADTestHelper {
 
-	public DLFileEntry addDLFileEntry(long userId) throws Exception {
+	public static DLFileEntry addDLFileEntry(
+			DLAppLocalService dlAppLocalService,
+			DLFileEntryLocalService dlFileEntryLocalService,
+			DLFolderLocalService dlFolderLocalService, long userId)
+		throws Exception {
+
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext();
 
-		DLFolder dlFolder = _dlFolderLocalService.addFolder(
+		DLFolder dlFolder = dlFolderLocalService.addFolder(
 			userId, TestPropsValues.getGroupId(), TestPropsValues.getGroupId(),
 			false, 0L, RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(), false, serviceContext);
@@ -55,38 +56,31 @@ public class DLFileEntryUADTestHelper {
 
 		InputStream is = new ByteArrayInputStream(bytes);
 
-		FileEntry fileEntry = _dlAppLocalService.addFileEntry(
+		FileEntry fileEntry = dlAppLocalService.addFileEntry(
 			userId, dlFolder.getRepositoryId(), dlFolder.getFolderId(),
 			RandomTestUtil.randomString(), ContentTypes.TEXT_PLAIN,
 			RandomTestUtil.randomString(), StringPool.BLANK, StringPool.BLANK,
 			is, bytes.length, serviceContext);
 
-		return _dlFileEntryLocalService.getFileEntry(
-			fileEntry.getFileEntryId());
+		return dlFileEntryLocalService.getFileEntry(fileEntry.getFileEntryId());
 	}
 
-	public void cleanUpDependencies(List<DLFileEntry> dlFileEntries)
+	public static void cleanUpDependencies(
+			DLAppLocalService dlAppLocalService,
+			DLFileEntryLocalService dlFileEntryLocalService,
+			DLFolderLocalService dlFolderLocalService,
+			List<DLFileEntry> dlFileEntries)
 		throws Exception {
 
 		for (DLFileEntry dlFileEntry : dlFileEntries) {
-			if (_dlFileEntryLocalService.fetchDLFileEntry(
+			if (dlFileEntryLocalService.fetchDLFileEntry(
 					dlFileEntry.getFileEntryId()) != null) {
 
-				_dlAppLocalService.deleteFileEntry(
-					dlFileEntry.getFileEntryId());
+				dlAppLocalService.deleteFileEntry(dlFileEntry.getFileEntryId());
 			}
 
-			_dlFolderLocalService.deleteFolder(dlFileEntry.getFolderId());
+			dlFolderLocalService.deleteFolder(dlFileEntry.getFolderId());
 		}
 	}
-
-	@Reference
-	private DLAppLocalService _dlAppLocalService;
-
-	@Reference
-	private DLFileEntryLocalService _dlFileEntryLocalService;
-
-	@Reference
-	private DLFolderLocalService _dlFolderLocalService;
 
 }

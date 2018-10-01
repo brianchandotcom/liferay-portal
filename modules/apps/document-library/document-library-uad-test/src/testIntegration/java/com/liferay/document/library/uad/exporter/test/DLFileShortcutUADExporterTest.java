@@ -16,6 +16,9 @@ package com.liferay.document.library.uad.exporter.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.document.library.kernel.model.DLFileShortcut;
+import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
+import com.liferay.document.library.kernel.service.DLFileShortcutLocalService;
+import com.liferay.document.library.kernel.service.DLFolderLocalService;
 import com.liferay.document.library.uad.test.DLFileShortcutUADTestHelper;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -46,14 +49,18 @@ public class DLFileShortcutUADExporterTest
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
 
+	public DLFileShortcutUADExporterTest() {
+	}
+
 	@Override
 	public DLFileShortcut addBaseModelWithStatusByUserId(
 			long userId, long statusByUserId)
 		throws Exception {
 
 		DLFileShortcut dlFileShortcut =
-			_dlFileShortcutUADTestHelper.addDLFileShortcutWithStatusByUserId(
-				userId, statusByUserId);
+			DLFileShortcutUADTestHelper.addDLFileShortcutWithStatusByUserId(
+				_dlFileEntryLocalService, _dlFileShortcutLocalService,
+				_dlFolderLocalService, userId, statusByUserId);
 
 		_dlFileShortcuts.add(dlFileShortcut);
 
@@ -62,13 +69,16 @@ public class DLFileShortcutUADExporterTest
 
 	@After
 	public void tearDown() throws Exception {
-		_dlFileShortcutUADTestHelper.cleanUpDependencies(_dlFileShortcuts);
+		DLFileShortcutUADTestHelper.cleanUpDependencies(
+			_dlFileEntryLocalService, _dlFolderLocalService, _dlFileShortcuts);
 	}
 
 	@Override
 	protected DLFileShortcut addBaseModel(long userId) throws Exception {
 		DLFileShortcut dlFileShortcut =
-			_dlFileShortcutUADTestHelper.addDLFileShortcut(userId);
+			DLFileShortcutUADTestHelper.addDLFileShortcut(
+				_dlFileEntryLocalService, _dlFileShortcutLocalService,
+				_dlFolderLocalService, userId);
 
 		_dlFileShortcuts.add(dlFileShortcut);
 
@@ -85,11 +95,17 @@ public class DLFileShortcutUADExporterTest
 		return _uadExporter;
 	}
 
+	@Inject
+	private DLFileEntryLocalService _dlFileEntryLocalService;
+
+	@Inject
+	private DLFileShortcutLocalService _dlFileShortcutLocalService;
+
 	@DeleteAfterTestRun
 	private final List<DLFileShortcut> _dlFileShortcuts = new ArrayList<>();
 
 	@Inject
-	private DLFileShortcutUADTestHelper _dlFileShortcutUADTestHelper;
+	private DLFolderLocalService _dlFolderLocalService;
 
 	@Inject(filter = "component.name=*.DLFileShortcutUADExporter")
 	private UADExporter _uadExporter;

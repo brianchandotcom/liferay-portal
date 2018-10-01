@@ -61,6 +61,29 @@
 	cursor: move;
 }
 
+.list-group-item.drag-layout-column-item.dragging {
+	background-color: #F0F5FF;
+	border: none;
+	border-radius: 4px;
+	box-shadow: 2px 3px 6px 0 rgba(39, 40, 51, 0.15);
+	height: 48px;
+	width: 240px;
+
+	.flex-col {
+		.btn-link,
+		.custom-checkbox,
+		.dropdown,
+		.list-group-subtitle,
+		.quick-action-menu {
+			display: none;
+		}
+
+		.list-group-title {
+			margin-top: 0;
+		}
+	}
+}
+
 .list-group-item:last-child {
 	border-radius: 0;
 }

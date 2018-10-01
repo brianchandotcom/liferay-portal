@@ -23,9 +23,12 @@ import com.amazonaws.services.ec2.model.DeleteVolumeRequest;
 import com.amazonaws.services.ec2.model.DescribeInstancesRequest;
 import com.amazonaws.services.ec2.model.DescribeInstancesResult;
 import com.amazonaws.services.ec2.model.EbsInstanceBlockDevice;
+import com.amazonaws.services.ec2.model.EbsInstanceBlockDeviceSpecification;
 import com.amazonaws.services.ec2.model.Instance;
 import com.amazonaws.services.ec2.model.InstanceBlockDeviceMapping;
+import com.amazonaws.services.ec2.model.InstanceBlockDeviceMappingSpecification;
 import com.amazonaws.services.ec2.model.InstanceState;
+import com.amazonaws.services.ec2.model.ModifyInstanceAttributeRequest;
 import com.amazonaws.services.ec2.model.Reservation;
 import com.amazonaws.services.ec2.model.RunInstancesRequest;
 import com.amazonaws.services.ec2.model.RunInstancesResult;
@@ -79,6 +82,30 @@ public abstract class AmazonVM extends VM {
 		}
 
 		_waitForInstanceState("running");
+
+		EbsInstanceBlockDeviceSpecification
+			ebsInstanceBlockDeviceSpecification =
+				new EbsInstanceBlockDeviceSpecification();
+
+		ebsInstanceBlockDeviceSpecification.withDeleteOnTermination(true);
+
+		InstanceBlockDeviceMappingSpecification
+			instanceBlockDeviceMappingSpecification =
+				new InstanceBlockDeviceMappingSpecification();
+
+		instanceBlockDeviceMappingSpecification.withDeviceName(
+			_getDeviceName());
+		instanceBlockDeviceMappingSpecification.withEbs(
+			ebsInstanceBlockDeviceSpecification);
+
+		ModifyInstanceAttributeRequest modifyInstanceAttributeRequest =
+			new ModifyInstanceAttributeRequest();
+
+		modifyInstanceAttributeRequest.withInstanceId(_instanceId);
+		modifyInstanceAttributeRequest.withBlockDeviceMappings(
+			instanceBlockDeviceMappingSpecification);
+
+		_amazonEC2.modifyInstanceAttribute(modifyInstanceAttributeRequest);
 	}
 
 	public void delete() {
@@ -147,6 +174,18 @@ public abstract class AmazonVM extends VM {
 		amazonEC2ClientBuilder.withRegion(Regions.US_WEST_1);
 
 		_amazonEC2 = amazonEC2ClientBuilder.build();
+	}
+
+	private String _getDeviceName() {
+		Instance instance = _getInstance();
+
+		List<InstanceBlockDeviceMapping> instanceBlockDeviceMappings =
+			instance.getBlockDeviceMappings();
+
+		InstanceBlockDeviceMapping instanceBlockDeviceMapping =
+			instanceBlockDeviceMappings.get(0);
+
+		return instanceBlockDeviceMapping.getDeviceName();
 	}
 
 	private Instance _getInstance() {

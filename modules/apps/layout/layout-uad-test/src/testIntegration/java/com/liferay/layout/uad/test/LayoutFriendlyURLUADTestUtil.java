@@ -33,7 +33,7 @@ import java.util.List;
 /**
  * @author Brian Wing Shun Chan
  */
-public class LayoutFriendlyURLUADTestHelper {
+public class LayoutFriendlyURLUADTestUtil {
 
 	public static LayoutFriendlyURL addLayoutFriendlyURL(
 			LayoutFriendlyURLLocalService layoutFriendlyURLLocalService,

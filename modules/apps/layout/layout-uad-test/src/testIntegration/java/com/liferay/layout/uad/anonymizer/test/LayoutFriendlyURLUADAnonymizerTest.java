@@ -15,7 +15,7 @@
 package com.liferay.layout.uad.anonymizer.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.layout.uad.test.LayoutFriendlyURLUADTestHelper;
+import com.liferay.layout.uad.test.LayoutFriendlyURLUADTestUtil;
 import com.liferay.portal.kernel.model.LayoutFriendlyURL;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.LayoutFriendlyURLLocalService;
@@ -49,7 +49,7 @@ public class LayoutFriendlyURLUADAnonymizerTest
 
 	@After
 	public void tearDown() throws Exception {
-		LayoutFriendlyURLUADTestHelper.cleanUpDependencies(
+		LayoutFriendlyURLUADTestUtil.cleanUpDependencies(
 			_layoutLocalService, _layoutFriendlyURLs);
 	}
 
@@ -64,7 +64,7 @@ public class LayoutFriendlyURLUADAnonymizerTest
 		throws Exception {
 
 		LayoutFriendlyURL layoutFriendlyURL =
-			LayoutFriendlyURLUADTestHelper.addLayoutFriendlyURL(
+			LayoutFriendlyURLUADTestUtil.addLayoutFriendlyURL(
 				_layoutFriendlyURLLocalService, _layoutLocalService, userId);
 
 		if (deleteAfterTestRun) {
@@ -78,7 +78,7 @@ public class LayoutFriendlyURLUADAnonymizerTest
 	protected void deleteBaseModels(List<LayoutFriendlyURL> baseModels)
 		throws Exception {
 
-		LayoutFriendlyURLUADTestHelper.cleanUpDependencies(
+		LayoutFriendlyURLUADTestUtil.cleanUpDependencies(
 			_layoutLocalService, baseModels);
 	}
 

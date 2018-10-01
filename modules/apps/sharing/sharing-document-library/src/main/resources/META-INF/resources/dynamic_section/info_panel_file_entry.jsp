@@ -106,8 +106,9 @@ manageCollaboratorsRenderURL.setWindowState(LiferayWindowState.POP_UP);
 			Liferay.Util.openWindow(
 				{
 					dialog: {
+						destroyOnHide: true,
 						height: 470,
-						width: 320,
+						width: 350,
 						on: {
 							visibleChange: function(event) {
 								if (!event.newVal) {

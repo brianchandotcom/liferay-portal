@@ -34,11 +34,6 @@ public abstract class BaseGitRepository
 		return getString("name");
 	}
 
-	@Override
-	public JSONObject put(String key, Object value) throws JSONException {
-		return put(key, value);
-	}
-
 	protected BaseGitRepository(String name) {
 		super("{}");
 

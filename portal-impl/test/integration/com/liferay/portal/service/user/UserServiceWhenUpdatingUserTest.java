@@ -51,7 +51,7 @@ public class UserServiceWhenUpdatingUserTest {
 		new LiferayIntegrationTestRule();
 
 	@Test
-	public void shouldNotRemoveChildGroupAssociation() throws Exception {
+	public void testShouldNotRemoveChildGroupAssociation() throws Exception {
 		User user = UserTestUtil.addUser(true);
 
 		List<Group> groups = new ArrayList<>();

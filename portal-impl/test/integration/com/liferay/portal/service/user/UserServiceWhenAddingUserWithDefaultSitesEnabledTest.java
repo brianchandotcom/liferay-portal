@@ -89,7 +89,7 @@ public class UserServiceWhenAddingUserWithDefaultSitesEnabledTest {
 	}
 
 	@Test
-	public void shouldInheritDefaultOrganizationSiteMembership() {
+	public void testShouldInheritDefaultOrganizationSiteMembership() {
 		Group organizationGroup = _organization.getGroup();
 
 		long organizationGroupId = organizationGroup.getGroupId();
@@ -99,7 +99,7 @@ public class UserServiceWhenAddingUserWithDefaultSitesEnabledTest {
 	}
 
 	@Test
-	public void shouldInheritDefaultSiteRolesFromDefaultSite()
+	public void testShouldInheritDefaultSiteRolesFromDefaultSite()
 		throws Exception {
 
 		Assert.assertTrue(

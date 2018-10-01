@@ -53,7 +53,7 @@ public class UserServiceOrganizationAdminUnsetsUsersForSiteOrganizationTest {
 	}
 
 	@Test
-	public void shouldUnsetSiteAdmin() throws Exception {
+	public void testShouldUnsetSiteAdmin() throws Exception {
 		User groupAdminUser = UserTestUtil.addGroupAdminUser(_group);
 
 		try {
@@ -70,7 +70,7 @@ public class UserServiceOrganizationAdminUnsetsUsersForSiteOrganizationTest {
 	}
 
 	@Test
-	public void shouldUnsetSiteOwner() throws Exception {
+	public void testShouldUnsetSiteOwner() throws Exception {
 		User groupOwnerUser = UserTestUtil.addGroupOwnerUser(_group);
 
 		try {

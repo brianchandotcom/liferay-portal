@@ -44,7 +44,7 @@ public class UserServiceWhenCompanySecurityStrangersWithMXDisabledTest {
 		new LiferayIntegrationTestRule();
 
 	@Test(expected = UserEmailAddressException.MustNotUseCompanyMx.class)
-	public void shouldNotAddUser() throws Exception {
+	public void testShouldNotAddUser() throws Exception {
 		String name = PrincipalThreadLocal.getName();
 
 		try {
@@ -62,7 +62,7 @@ public class UserServiceWhenCompanySecurityStrangersWithMXDisabledTest {
 	}
 
 	@Test(expected = UserEmailAddressException.MustNotUseCompanyMx.class)
-	public void shouldNotUpdateEmailAddress() throws Exception {
+	public void testShouldNotUpdateEmailAddress() throws Exception {
 		String name = PrincipalThreadLocal.getName();
 
 		try {
@@ -87,7 +87,7 @@ public class UserServiceWhenCompanySecurityStrangersWithMXDisabledTest {
 	}
 
 	@Test(expected = UserEmailAddressException.MustNotUseCompanyMx.class)
-	public void shouldNotUpdateUser() throws Exception {
+	public void testShouldNotUpdateUser() throws Exception {
 		String name = PrincipalThreadLocal.getName();
 
 		User user = UserTestUtil.addUser(false);

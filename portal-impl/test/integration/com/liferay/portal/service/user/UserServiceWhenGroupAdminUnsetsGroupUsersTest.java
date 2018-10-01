@@ -53,7 +53,7 @@ public class UserServiceWhenGroupAdminUnsetsGroupUsersTest {
 	}
 
 	@Test
-	public void shouldUnsetGroupAdmin() throws Exception {
+	public void testShouldUnsetGroupAdmin() throws Exception {
 		User groupAdminUser = UserTestUtil.addGroupAdminUser(_group);
 
 		try {
@@ -70,7 +70,7 @@ public class UserServiceWhenGroupAdminUnsetsGroupUsersTest {
 	}
 
 	@Test
-	public void shouldUnsetGroupOwner() throws Exception {
+	public void testShouldUnsetGroupOwner() throws Exception {
 		User groupOwnerUser = UserTestUtil.addGroupOwnerUser(_group);
 
 		try {
@@ -87,7 +87,7 @@ public class UserServiceWhenGroupAdminUnsetsGroupUsersTest {
 	}
 
 	@Test
-	public void shouldUnsetOrganizationAdmin() throws Exception {
+	public void testShouldUnsetOrganizationAdmin() throws Exception {
 		User organizationAdminUser = UserTestUtil.addOrganizationAdminUser(
 			_organization);
 
@@ -107,7 +107,7 @@ public class UserServiceWhenGroupAdminUnsetsGroupUsersTest {
 	}
 
 	@Test
-	public void shouldUnsetOrganizationOwner() throws Exception {
+	public void testShouldUnsetOrganizationOwner() throws Exception {
 		User organizationOwnerUser = UserTestUtil.addOrganizationOwnerUser(
 			_organization);
 

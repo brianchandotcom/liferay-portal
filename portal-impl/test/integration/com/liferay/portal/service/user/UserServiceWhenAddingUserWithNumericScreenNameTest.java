@@ -46,8 +46,14 @@ public class UserServiceWhenAddingUserWithNumericScreenNameTest {
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
 
+	@After
+	public void tearDown() throws Exception {
+		PropsValues.USERS_SCREEN_NAME_ALLOW_NUMERIC = GetterUtil.getBoolean(
+			PropsUtil.get(PropsKeys.USERS_SCREEN_NAME_ALLOW_NUMERIC));
+	}
+
 	@Test
-	public void shouldAddUser() throws Exception {
+	public void testShouldAddUser() throws Exception {
 		long numericScreenName = RandomTestUtil.nextLong();
 
 		_user = UserTestUtil.addUser(String.valueOf(numericScreenName));
@@ -57,7 +63,7 @@ public class UserServiceWhenAddingUserWithNumericScreenNameTest {
 	}
 
 	@Test
-	public void shouldAddUserWhenScreenNameMatchesExistingGroupId()
+	public void testShouldAddUserWhenScreenNameMatchesExistingGroupId()
 		throws Exception {
 
 		_group = GroupTestUtil.addGroup();
@@ -69,16 +75,10 @@ public class UserServiceWhenAddingUserWithNumericScreenNameTest {
 	}
 
 	@Test(expected = UserScreenNameException.MustNotBeNumeric.class)
-	public void shouldThrowException() throws Exception {
+	public void testShouldThrowException() throws Exception {
 		PropsValues.USERS_SCREEN_NAME_ALLOW_NUMERIC = false;
 
 		UserTestUtil.addUser(String.valueOf(RandomTestUtil.nextLong()));
-	}
-
-	@After
-	public void tearDown() throws Exception {
-		PropsValues.USERS_SCREEN_NAME_ALLOW_NUMERIC = GetterUtil.getBoolean(
-			PropsUtil.get(PropsKeys.USERS_SCREEN_NAME_ALLOW_NUMERIC));
 	}
 
 	@DeleteAfterTestRun

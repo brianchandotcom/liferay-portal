@@ -60,8 +60,16 @@ public class UserServiceWhenAddingUserWithSpecialCharactersScreenNameTest {
 		}
 	}
 
+	@After
+	public void tearDown() throws Exception {
+		if (_screenNameValidator instanceof DefaultScreenNameValidator) {
+			ReflectionTestUtil.setFieldValue(
+				_screenNameValidator, _FIELD_KEY, _originalSpecialCharacters);
+		}
+	}
+
 	@Test
-	public void shouldNormalizeTheFriendlyURL() throws Exception {
+	public void testShouldNormalizeTheFriendlyURL() throws Exception {
 		User user1 = UserTestUtil.addUser("contains-hyphens");
 
 		_users.add(user1);
@@ -91,14 +99,6 @@ public class UserServiceWhenAddingUserWithSpecialCharactersScreenNameTest {
 		_users.add(user5);
 
 		Assert.assertEquals("/contains-pounds", _getFriendlyURL(user5));
-	}
-
-	@After
-	public void tearDown() throws Exception {
-		if (_screenNameValidator instanceof DefaultScreenNameValidator) {
-			ReflectionTestUtil.setFieldValue(
-				_screenNameValidator, _FIELD_KEY, _originalSpecialCharacters);
-		}
 	}
 
 	private String _getFriendlyURL(User user) {

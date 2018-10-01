@@ -41,7 +41,7 @@ public class UserServiceWhenGettingUserByEmailAddressTest {
 		new LiferayIntegrationTestRule();
 
 	@Test(expected = NoSuchUserException.class)
-	public void shouldFailIfUserDeleted() throws Exception {
+	public void testShouldFailIfUserDeleted() throws Exception {
 		User user = UserTestUtil.addUser(true);
 
 		UserServiceUtil.deleteUser(user.getUserId());
@@ -51,7 +51,7 @@ public class UserServiceWhenGettingUserByEmailAddressTest {
 	}
 
 	@Test
-	public void shouldReturnUserIfPresent() throws Exception {
+	public void testShouldReturnUserIfPresent() throws Exception {
 		User user = UserTestUtil.addUser(true);
 
 		try {

@@ -52,7 +52,9 @@ public class UserServiceWhenPortalSendsPasswordEmailTest {
 	}
 
 	@Test
-	public void shouldSendNewPasswordEmailByEmailAddress() throws Exception {
+	public void testShouldSendNewPasswordEmailByEmailAddress()
+		throws Exception {
+
 		PortletPreferences portletPreferences =
 			givenThatCompanySendsNewPassword();
 
@@ -76,7 +78,7 @@ public class UserServiceWhenPortalSendsPasswordEmailTest {
 	}
 
 	@Test
-	public void shouldSendNewPasswordEmailByScreenName() throws Exception {
+	public void testShouldSendNewPasswordEmailByScreenName() throws Exception {
 		PortletPreferences portletPreferences =
 			givenThatCompanySendsNewPassword();
 
@@ -100,7 +102,7 @@ public class UserServiceWhenPortalSendsPasswordEmailTest {
 	}
 
 	@Test
-	public void shouldSendNewPasswordEmailByUserId() throws Exception {
+	public void testShouldSendNewPasswordEmailByUserId() throws Exception {
 		PortletPreferences portletPreferences =
 			givenThatCompanySendsNewPassword();
 
@@ -124,7 +126,7 @@ public class UserServiceWhenPortalSendsPasswordEmailTest {
 	}
 
 	@Test
-	public void shouldSendResetLinkEmailByEmailAddress() throws Exception {
+	public void testShouldSendResetLinkEmailByEmailAddress() throws Exception {
 		PortletPreferences portletPreferences =
 			givenThatCompanySendsResetPasswordLink();
 
@@ -148,7 +150,7 @@ public class UserServiceWhenPortalSendsPasswordEmailTest {
 	}
 
 	@Test
-	public void shouldSendResetLinkEmailByScreenName() throws Exception {
+	public void testShouldSendResetLinkEmailByScreenName() throws Exception {
 		PortletPreferences portletPreferences =
 			givenThatCompanySendsResetPasswordLink();
 
@@ -172,7 +174,7 @@ public class UserServiceWhenPortalSendsPasswordEmailTest {
 	}
 
 	@Test
-	public void shouldSendResetLinkEmailByUserId() throws Exception {
+	public void testShouldSendResetLinkEmailByUserId() throws Exception {
 		PortletPreferences portletPreferences =
 			givenThatCompanySendsResetPasswordLink();
 

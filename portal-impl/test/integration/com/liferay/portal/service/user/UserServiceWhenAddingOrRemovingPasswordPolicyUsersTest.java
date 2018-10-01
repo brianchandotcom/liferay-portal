@@ -72,8 +72,16 @@ public class UserServiceWhenAddingOrRemovingPasswordPolicyUsersTest {
 				_testPasswordPolicy);
 	}
 
+	@After
+	public void tearDown() throws Exception {
+		_defaultPasswordPolicy.setDefaultPolicy(false);
+
+		PasswordPolicyLocalServiceUtil.updatePasswordPolicy(
+			_defaultPasswordPolicy);
+	}
+
 	@Test
-	public void shouldRemovePasswordResetIfPolicyDoesNotAllowChanging()
+	public void testShouldRemovePasswordResetIfPolicyDoesNotAllowChanging()
 		throws Exception {
 
 		_user = UserTestUtil.addUser();
@@ -90,14 +98,6 @@ public class UserServiceWhenAddingOrRemovingPasswordPolicyUsersTest {
 		_user = UserLocalServiceUtil.getUser(_user.getUserId());
 
 		Assert.assertFalse(_user.isPasswordReset());
-	}
-
-	@After
-	public void tearDown() throws Exception {
-		_defaultPasswordPolicy.setDefaultPolicy(false);
-
-		PasswordPolicyLocalServiceUtil.updatePasswordPolicy(
-			_defaultPasswordPolicy);
 	}
 
 	@DeleteAfterTestRun

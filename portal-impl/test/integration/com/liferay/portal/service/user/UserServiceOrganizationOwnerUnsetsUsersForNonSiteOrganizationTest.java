@@ -50,7 +50,7 @@ public class UserServiceOrganizationOwnerUnsetsUsersForNonSiteOrganizationTest {
 	}
 
 	@Test
-	public void shouldUnsetOrganizationAdmin() throws Exception {
+	public void testShouldUnsetOrganizationAdmin() throws Exception {
 		User organizationAdminUser = UserTestUtil.addOrganizationAdminUser(
 			_organization);
 
@@ -70,7 +70,7 @@ public class UserServiceOrganizationOwnerUnsetsUsersForNonSiteOrganizationTest {
 	}
 
 	@Test
-	public void shouldUnsetOrganizationOwner() throws Exception {
+	public void testShouldUnsetOrganizationOwner() throws Exception {
 		User otherOrganizationOwnerUser = UserTestUtil.addOrganizationOwnerUser(
 			_organization);
 

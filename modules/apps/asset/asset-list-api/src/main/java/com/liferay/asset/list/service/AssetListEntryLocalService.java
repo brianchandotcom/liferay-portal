@@ -79,6 +79,14 @@ public interface AssetListEntryLocalService extends BaseLocalService,
 		String title, int type, ServiceContext serviceContext)
 		throws PortalException;
 
+	public AssetListEntry addDynamicAssetListEntry(long userId, long groupId,
+		String title, String typeSettings, ServiceContext serviceContext)
+		throws PortalException;
+
+	public AssetListEntry addManualAssetListEntry(long userId, long groupId,
+		String title, long[] assetEntryIds, ServiceContext serviceContext)
+		throws PortalException;
+
 	/**
 	* Creates a new asset list entry with the primary key. Does not add the asset list entry to the database.
 	*

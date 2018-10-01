@@ -50,6 +50,24 @@ public class AssetListEntryServiceWrapper implements AssetListEntryService,
 	}
 
 	@Override
+	public com.liferay.asset.list.model.AssetListEntry addDynamicAssetListEntry(
+		long userId, long groupId, String title, String typeSettings,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _assetListEntryService.addDynamicAssetListEntry(userId, groupId,
+			title, typeSettings, serviceContext);
+	}
+
+	@Override
+	public com.liferay.asset.list.model.AssetListEntry addManualAssetListEntry(
+		long userId, long groupId, String title, long[] assetEntryIds,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _assetListEntryService.addManualAssetListEntry(userId, groupId,
+			title, assetEntryIds, serviceContext);
+	}
+
+	@Override
 	public void deleteAssetEntrySelection(long assetListEntryId, int position)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_assetListEntryService.deleteAssetEntrySelection(assetListEntryId,

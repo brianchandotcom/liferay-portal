@@ -36,38 +36,28 @@ import org.aopalliance.intercept.MethodInvocation;
  */
 public class ServiceBeanAopCacheManager {
 
+	/**
+	 * @deprecated As of Judson (7.1.x), replaced by {@link
+	 *             #findAnnotation(MethodInvocation, Class, Object)}
+	 */
+	@Deprecated
 	public static <T> T getAnnotation(
 		MethodInvocation methodInvocation,
 		Class<? extends Annotation> annotationType, T defaultValue) {
 
-		Annotation[] annotations = _annotations.get(
-			methodInvocation.getMethod());
-
-		if (annotations == _nullAnnotations) {
-			return defaultValue;
-		}
-
-		if (annotations == null) {
-			return null;
-		}
-
-		for (Annotation annotation : annotations) {
-			if (annotation.annotationType() == annotationType) {
-				return (T)annotation;
-			}
-		}
-
-		return defaultValue;
+		return _findAnnotation(
+			_annotations, methodInvocation, annotationType, defaultValue);
 	}
 
+	/**
+	 * @deprecated As of Judson (7.1.x), replaced by {@link
+	 *             #setAnnotations(MethodInvocation, Annotation[])}
+	 */
+	@Deprecated
 	public static void putAnnotations(
 		MethodInvocation methodInvocation, Annotation[] annotations) {
 
-		if (ArrayUtil.isEmpty(annotations)) {
-			annotations = _nullAnnotations;
-		}
-
-		_annotations.put(methodInvocation.getMethod(), annotations);
+		_setAnnotations(_annotations, methodInvocation, annotations);
 	}
 
 	/**
@@ -134,6 +124,14 @@ public class ServiceBeanAopCacheManager {
 			new MethodInterceptor[classLevelMethodInterceptors.size()]);
 		_fullMethodInterceptors = fullMethodInterceptors.toArray(
 			new MethodInterceptor[fullMethodInterceptors.size()]);
+	}
+
+	public <T> T findAnnotation(
+		MethodInvocation methodInvocation,
+		Class<? extends Annotation> annotationType, T defaultValue) {
+
+		return _findAnnotation(
+			_methodAnnotations, methodInvocation, annotationType, defaultValue);
 	}
 
 	public MethodInterceptor[] getMethodInterceptors(
@@ -288,6 +286,46 @@ public class ServiceBeanAopCacheManager {
 		_methodInterceptors.clear();
 	}
 
+	public void setAnnotations(
+		MethodInvocation methodInvocation, Annotation[] annotations) {
+
+		_setAnnotations(_methodAnnotations, methodInvocation, annotations);
+	}
+
+	private static <T> T _findAnnotation(
+		Map<Method, Annotation[]> map, MethodInvocation methodInvocation,
+		Class<? extends Annotation> annotationType, T defaultValue) {
+
+		Annotation[] annotations = map.get(methodInvocation.getMethod());
+
+		if (annotations == _nullAnnotations) {
+			return defaultValue;
+		}
+
+		if (annotations == null) {
+			return null;
+		}
+
+		for (Annotation annotation : annotations) {
+			if (annotation.annotationType() == annotationType) {
+				return (T)annotation;
+			}
+		}
+
+		return defaultValue;
+	}
+
+	private static void _setAnnotations(
+		Map<Method, Annotation[]> map, MethodInvocation methodInvocation,
+		Annotation[] annotations) {
+
+		if (ArrayUtil.isEmpty(annotations)) {
+			annotations = _nullAnnotations;
+		}
+
+		map.put(methodInvocation.getMethod(), annotations);
+	}
+
 	private static final Map<Method, Annotation[]> _annotations =
 		new ConcurrentHashMap<>();
 	private static final Annotation[] _nullAnnotations = new Annotation[0];
@@ -297,6 +335,8 @@ public class ServiceBeanAopCacheManager {
 			_annotationChainableMethodAdvices = new HashMap<>();
 	private final MethodInterceptor[] _classLevelMethodInterceptors;
 	private final MethodInterceptor[] _fullMethodInterceptors;
+	private final Map<Method, Annotation[]> _methodAnnotations =
+		new ConcurrentHashMap<>();
 	private final Map<Method, MethodInterceptor[]> _methodInterceptors =
 		new ConcurrentHashMap<>();
 

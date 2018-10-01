@@ -12,11 +12,10 @@
 	{@param layoutData: ?}
 	{@param portletNamespace: string}
 	{@param spritemap: string}
-	{@param? dropTargetClass: string}
+	{@param? highlightMapping: bool}
 	{@param? hoveredFragmentEntryLinkBorder: string}
 	{@param? hoveredFragmentEntryLinkId: string}
 	{@param? _handleFragmentMove: any}
-	{@param? mapping: bool}
 	{@param? mappingFieldsURL: string}
 	{@param? selectedMappingTypes: [
 		subtype: [
@@ -29,18 +28,17 @@
 		]
 	]}
 	{@param? store: ?}
-	{@param? translating: bool}
 
 	{let $entryLinksClasses kind="text"}
+		fragment-entry-link-drop-target
 		fragment-entry-link-list
-		{sp}{$dropTargetClass}
 
-		{if $translating}
-			{sp}translating
+		{if $highlightMapping}
+			{sp}mapping
 		{/if}
 
-		{if $mapping}
-			{sp}mapping
+		{if $languageId != $defaultLanguageId}
+			{sp}translating
 		{/if}
 	{/let}
 
@@ -61,7 +59,6 @@
 							{param content: $fragmentEntryLink.content /}
 							{param defaultEditorConfigurations: $defaultEditorConfigurations /}
 							{param defaultLanguageId: $defaultLanguageId /}
-							{param dropTargetClass: $dropTargetClass /}
 							{param editableValues: $fragmentEntryLink.editableValues /}
 							{param events: [
 								'move': $_handleFragmentMove

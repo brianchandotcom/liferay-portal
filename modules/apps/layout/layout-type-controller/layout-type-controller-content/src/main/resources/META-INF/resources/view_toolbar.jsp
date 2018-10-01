@@ -1,3 +1,4 @@
+<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -11,20 +12,17 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
+--%>
 
-package com.liferay.layout.type.controller.content.internal.constants;
+<%@ include file="/init.jsp" %>
 
-/**
- * @author Eudaldo Alonso
- */
-public class ContentLayoutPortletKeys {
+<%
+FragmentsEditorDisplayContext fragmentsEditorDisplayContext = new FragmentsEditorDisplayContext(request, renderResponse);
+%>
 
-	public static final String CONTENT_PAGE_EDITOR_PORTLET =
-		"com_liferay_layout_type_controller_content_internal_portlet_" +
-			"ContentPageEditorPortlet";
-
-	public static final String CONTENT_PAGE_TOOLBAR_PORTLET =
-		"com_liferay_layout_type_controller_content_internal_portlet_" +
-			"ContentPageToolbarPortlet";
-
-}
+<soy:component-renderer
+	componentId='<%= PortalUtil.getPortletNamespace(ContentLayoutPortletKeys.CONTENT_PAGE_EDITOR_PORTLET) + "toolbar" %>'
+	context="<%= fragmentsEditorDisplayContext.getFragmentsEditorToolbarContext() %>"
+	module="layout-admin-web/js/fragments_editor/components/toolbar/FragmentsEditorToolbar.es"
+	templateNamespace="com.liferay.layout.admin.web.FragmentsEditorToolbar.render"
+/>

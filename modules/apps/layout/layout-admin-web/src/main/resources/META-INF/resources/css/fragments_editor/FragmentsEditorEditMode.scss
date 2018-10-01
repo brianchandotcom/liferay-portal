@@ -1,12 +1,14 @@
-@import "./fragments_editor/FragmentEntryLink";
+@import "./FragmentEntryLink";
 
-@import "./fragments_editor/FragmentEntryLinkEditables";
+@import "./FragmentEntryLinkEditables";
 
-@import "./fragments_editor/FragmentsEditorToolbar";
+@import "./FragmentsEditorToolbar";
 
-@import "./fragments_editor/FragmentsEditorSidebar";
+@import "./FragmentsEditorSidebar";
 
-@import "./fragments_editor/SelectMappingDialog";
+@import "./SelectMappingDialog";
+
+@import "./variables";
 
 .lfr-admin-panel .sidebar-body {
 	padding: 0 1.5rem;
@@ -36,4 +38,26 @@
 	position: absolute;
 	top: 0;
 	width: 100%;
+}
+
+.fragments-editor-toolbar {
+	transition: padding ease 0.5s;
+
+	&__add-fragment-button {
+		display: none;
+	}
+
+	body.open-admin-panel & {
+		padding-right: $contextualSidebarContentPadding;
+	}
+}
+
+.has-control-menu.has-edit-mode-menu #wrapper {
+	margin-top: $controlMenuHeight + $managementBarHeight;
+
+	@media (min-width: 768px) {
+		& {
+			margin-top: $desktopControlMenuHeight + $managementBarHeight;
+		}
+	}
 }

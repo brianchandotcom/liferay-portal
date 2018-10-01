@@ -57,11 +57,13 @@ JSONSerializer jsonSerializer = JSONFactoryUtil.createJSONSerializer();
 			PlaceholdersReducerModule.updateHighlightMappingReducer,
 			SidebarReducerModule.hideFragmentsEditorSidebarReducer,
 			SidebarReducerModule.toggleFragmentsEditorSidebarReducer,
+			TranslationsReducerModule.languageIdReducer,
 			TranslationsReducerModule.translationStatusReducer
 		],
 		[
+			'<portlet:namespace />fragments',
 			'<portlet:namespace />sidebar',
-			'<portlet:namespace />fragments'
+			'<portlet:namespace />toolbar'
 		]
 	);
 </aui:script>

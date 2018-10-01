@@ -231,7 +231,7 @@ class FragmentEntryLinkList extends Component {
 				dragPlaceholder: Drag.Placeholder.CLONE,
 				handles: '.drag-handler',
 				sources: '.drag-fragment',
-				targets: `.${this.dropTargetClass}`
+				targets: '.fragment-entry-link-drop-target'
 			}
 		);
 
@@ -278,17 +278,6 @@ class FragmentEntryLinkList extends Component {
  */
 
 FragmentEntryLinkList.STATE = {
-
-	/**
-	 * CSS class for the fragments drop target.
-	 * @default undefined
-	 * @instance
-	 * @memberOf FragmentsEditor
-	 * @review
-	 * @type {!string}
-	 */
-
-	dropTargetClass: Config.string(),
 
 	/**
 	 * Nearest border of the hovered fragment entry link when dragging.

@@ -28,7 +28,6 @@ import com.liferay.product.navigation.control.menu.BaseJSPProductNavigationContr
 import com.liferay.product.navigation.control.menu.ProductNavigationControlMenuEntry;
 import com.liferay.product.navigation.control.menu.constants.ProductNavigationControlMenuCategoryKeys;
 
-import java.util.Locale;
 import java.util.Objects;
 
 import javax.servlet.ServletContext;
@@ -43,33 +42,18 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {
-		"product.navigation.control.menu.category.key=" + ProductNavigationControlMenuCategoryKeys.USER,
-		"product.navigation.control.menu.entry.order:Integer=150"
+		"product.navigation.control.menu.category.key=" + ProductNavigationControlMenuCategoryKeys.TOOLS,
+		"product.navigation.control.menu.entry.order:Integer=100"
 	},
 	service = ProductNavigationControlMenuEntry.class
 )
-public class AddLayoutModeProductNavigationControlMenuEntry
+public class LayoutEditorToolbarProductNavigationControlMenuEntry
 	extends BaseJSPProductNavigationControlMenuEntry
 	implements ProductNavigationControlMenuEntry {
 
 	@Override
-	public String getBodyJspPath() {
-		return "/add_content_layout/body.jsp";
-	}
-
-	@Override
 	public String getIconJspPath() {
-		return "/add_content_layout/icon.jsp";
-	}
-
-	@Override
-	public String getLabel(Locale locale) {
-		return null;
-	}
-
-	@Override
-	public String getURL(HttpServletRequest request) {
-		return null;
+		return "/layout_editor_toolbar/entry.jsp";
 	}
 
 	@Override

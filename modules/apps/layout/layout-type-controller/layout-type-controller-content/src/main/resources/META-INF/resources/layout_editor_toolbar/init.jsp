@@ -1,3 +1,4 @@
+<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -11,20 +12,8 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
+--%>
 
-package com.liferay.layout.type.controller.content.internal.constants;
+<%@ taglib uri="http://liferay.com/tld/portlet" prefix="liferay-portlet" %>
 
-/**
- * @author Eudaldo Alonso
- */
-public class ContentLayoutPortletKeys {
-
-	public static final String CONTENT_PAGE_EDITOR_PORTLET =
-		"com_liferay_layout_type_controller_content_internal_portlet_" +
-			"ContentPageEditorPortlet";
-
-	public static final String CONTENT_PAGE_TOOLBAR_PORTLET =
-		"com_liferay_layout_type_controller_content_internal_portlet_" +
-			"ContentPageToolbarPortlet";
-
-}
+<%@ page import="com.liferay.layout.type.controller.content.internal.constants.ContentLayoutPortletKeys" %>

@@ -27,7 +27,6 @@
 	{@param redirectURL: string}
 	{@param sidebarTabs: list<[enabled:bool, id:string, label:string]>}
 	{@param spritemap: string}
-	{@param? _dropTargetClass: string}
 	{@param? contextualSidebarVisible: bool}
 	{@param? highlightMapping: bool}
 	{@param? getAssetClassTypesURL: any}
@@ -81,7 +80,6 @@
 		{/call}
 
 		{call com.liferay.layout.admin.web.FragmentsEditorSidebar.render}
-			{param dropTargetClass: $_dropTargetClass /}
 			{param fragmentCollections: $fragmentCollections /}
 			{param fragmentEntryLinks: $fragmentEntryLinks /}
 			{param highlightMapping: $highlightMapping ?: false /}
@@ -98,14 +96,13 @@
 			{call com.liferay.layout.admin.web.FragmentEntryLinkList.render}
 				{param defaultEditorConfigurations: $defaultEditorConfigurations /}
 				{param defaultLanguageId: $defaultLanguageId /}
-				{param dropTargetClass: $_dropTargetClass ?: '' /}
 				{param fragmentEntryLinks: $fragmentEntryLinks /}
 				{param hoveredFragmentEntryLinkBorder: $hoveredFragmentEntryLinkBorder /}
 				{param hoveredFragmentEntryLinkId: $hoveredFragmentEntryLinkId /}
 				{param imageSelectorURL: $imageSelectorURL /}
 				{param languageId: $languageId /}
 				{param layoutData: $layoutData /}
-				{param mapping: $highlightMapping ?: false /}
+				{param highlightMapping: $highlightMapping /}
 				{param mappingFieldsURL: $mappingFieldsURL /}
 				{param portletNamespace: $portletNamespace /}
 				{param ref: 'fragmentsEditorRender' /}

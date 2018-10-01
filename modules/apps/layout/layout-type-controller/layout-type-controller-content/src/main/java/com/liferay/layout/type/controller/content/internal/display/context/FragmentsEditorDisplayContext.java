@@ -28,6 +28,7 @@ import com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType;
 import com.liferay.item.selector.criteria.URLItemSelectorReturnType;
 import com.liferay.item.selector.criteria.image.criterion.ImageItemSelectorCriterion;
 import com.liferay.item.selector.criteria.url.criterion.URLItemSelectorCriterion;
+import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalServiceUtil;
 import com.liferay.layout.type.controller.content.internal.constants.ContentLayoutTypeControllerWebKeys;
@@ -39,9 +40,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
-import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -211,14 +210,51 @@ public class FragmentsEditorDisplayContext {
 		return soyContext;
 	}
 
+	public SoyContext getFragmentsEditorToolbarContext() {
+		SoyContext soyContext = SoyContextFactoryUtil.createSoyContext();
+
+		SoyContext availableLanguagesSoyContext =
+			SoyContextFactoryUtil.createSoyContext();
+
+		String[] languageIds = LocaleUtil.toLanguageIds(
+			LanguageUtil.getAvailableLocales(_themeDisplay.getSiteGroupId()));
+
+		for (String languageId : languageIds) {
+			SoyContext languageSoyContext =
+				SoyContextFactoryUtil.createSoyContext();
+
+			String languageIcon = StringUtil.toLowerCase(
+				languageId.replace(StringPool.UNDERLINE, StringPool.DASH));
+
+			languageSoyContext.put("languageIcon", languageIcon);
+
+			String languageLabel = languageId.replace(
+				StringPool.UNDERLINE, StringPool.DASH);
+
+			languageSoyContext.put("languageLabel", languageLabel);
+
+			availableLanguagesSoyContext.put(languageId, languageSoyContext);
+		}
+
+		soyContext.put("availableLanguages", availableLanguagesSoyContext);
+
+		soyContext.put("classPK", _themeDisplay.getPlid());
+		soyContext.put("defaultLanguageId", _themeDisplay.getLanguageId());
+		soyContext.put("lastSaveDate", StringPool.BLANK);
+		soyContext.put("portletNamespace", _renderResponse.getNamespace());
+		soyContext.put(
+			"spritemap",
+			_themeDisplay.getPathThemeImages() + "/lexicon/icons.svg");
+
+		return soyContext;
+	}
+
 	private Map<String, Object> _getDefaultConfigurations() {
 		Map<String, Object> configurations = new HashMap<>();
 
-		PortletDisplay portletDisplay = _themeDisplay.getPortletDisplay();
-
 		EditorConfiguration richTextEditorConfiguration =
 			EditorConfigurationFactoryUtil.getEditorConfiguration(
-				PortletIdCodec.decodePortletName(portletDisplay.getId()),
+				LayoutAdminPortletKeys.GROUP_PAGES,
 				"fragmenEntryLinkRichTextEditor", StringPool.BLANK,
 				Collections.emptyMap(), _themeDisplay,
 				RequestBackedPortletURLFactoryUtil.create(_request));
@@ -227,9 +263,8 @@ public class FragmentsEditorDisplayContext {
 
 		EditorConfiguration editorConfiguration =
 			EditorConfigurationFactoryUtil.getEditorConfiguration(
-				PortletIdCodec.decodePortletName(portletDisplay.getId()),
-				"fragmenEntryLinkEditor", StringPool.BLANK,
-				Collections.emptyMap(), _themeDisplay,
+				LayoutAdminPortletKeys.GROUP_PAGES, "fragmenEntryLinkEditor",
+				StringPool.BLANK, Collections.emptyMap(), _themeDisplay,
 				RequestBackedPortletURLFactoryUtil.create(_request));
 
 		configurations.put("text", editorConfiguration.getData());

@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.structured.content.apio.architect.entity.EntityModel;
 import com.liferay.structured.content.apio.architect.filter.Filter;
+import com.liferay.structured.content.apio.architect.filter.FilterParser;
 import com.liferay.structured.content.apio.architect.filter.InvalidFilterException;
 import com.liferay.structured.content.apio.architect.filter.expression.Expression;
 import com.liferay.structured.content.apio.architect.filter.expression.ExpressionVisitException;
@@ -39,7 +40,7 @@ import org.apache.olingo.server.core.uri.parser.Parser;
 /**
  * @author Cristina González
  */
-public class FilterProvider implements Provider<Filter> {
+public class FilterProvider implements Provider<Filter>, FilterParser {
 
 	public FilterProvider(EntityModel entityModel) {
 		_path = entityModel.getName();
@@ -66,6 +67,7 @@ public class FilterProvider implements Provider<Filter> {
 		}
 	}
 
+	@Override
 	public Expression parse(String filterString)
 		throws ExpressionVisitException {
 

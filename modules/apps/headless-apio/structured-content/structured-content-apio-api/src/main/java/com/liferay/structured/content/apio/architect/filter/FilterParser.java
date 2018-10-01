@@ -22,10 +22,8 @@ import com.liferay.structured.content.apio.architect.filter.expression.Expressio
  * manageable expression {@link Expression}.
  *
  * @author David Arques
- * @deprecated As of Judson (7.1.x), with no direct replacement
  * @review
  */
-@Deprecated
 public interface FilterParser {
 
 	/**

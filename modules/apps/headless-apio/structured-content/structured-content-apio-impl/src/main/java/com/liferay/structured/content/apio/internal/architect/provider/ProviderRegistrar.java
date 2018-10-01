@@ -18,6 +18,8 @@ import com.liferay.apio.architect.provider.Provider;
 import com.liferay.osgi.util.ServiceTrackerFactory;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.structured.content.apio.architect.entity.EntityModel;
+import com.liferay.structured.content.apio.architect.filter.FilterParser;
+import com.liferay.structured.content.apio.architect.sort.SortParser;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -70,9 +72,17 @@ public class ProviderRegistrar {
 
 			try {
 				providerServiceRegistrations.register(
-					_bundleContext, new FilterProvider(entityModel), "filter");
+					_bundleContext,
+					new String[] {
+						Provider.class.getName(), FilterParser.class.getName()
+					},
+					new FilterProvider(entityModel), "filter");
 				providerServiceRegistrations.register(
-					_bundleContext, new SortProvider(entityModel), "sort");
+					_bundleContext,
+					new String[] {
+						Provider.class.getName(), SortParser.class.getName()
+					},
+					new SortProvider(entityModel), "sort");
 			}
 			catch (Throwable t) {
 				providerServiceRegistrations.unregister();
@@ -121,11 +131,12 @@ public class ProviderRegistrar {
 	private static class ProviderServiceRegistrations {
 
 		public void register(
-			BundleContext bundleContext, Provider<?> provider, String type) {
+			BundleContext bundleContext, String[] classNames,
+			Provider<?> provider, String type) {
 
 			ServiceRegistration<?> serviceRegistration =
 				bundleContext.registerService(
-					Provider.class, provider,
+					classNames, provider,
 					new HashMapDictionary<String, Object>() {
 						{
 							put("entity.model.name", _entityModelName);

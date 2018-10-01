@@ -93,6 +93,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.portlet.Event;
+import javax.portlet.MimeResponse;
 import javax.portlet.PortletConfig;
 import javax.portlet.PortletContext;
 import javax.portlet.PortletMode;
@@ -504,20 +505,31 @@ public class PortletContainerImpl implements PortletContainer {
 			if (Validator.isNull(redirectLocation) &&
 				portlet.isActionURLRedirect()) {
 
-				PortletURL portletURL = PortletURLFactoryUtil.create(
-					liferayActionRequest, portlet, layout,
-					PortletRequest.RENDER_PHASE);
+				PortletApp portletApp = portlet.getPortletApp();
 
-				Map<String, String[]> renderParameters =
-					liferayActionResponse.getRenderParameterMap();
+				PortletURL portletURL = null;
 
-				for (Map.Entry<String, String[]> entry :
-						renderParameters.entrySet()) {
+				if (portletApp.getSpecMajorVersion() < 3) {
+					portletURL = PortletURLFactoryUtil.create(
+						liferayActionRequest, portlet, layout,
+						PortletRequest.RENDER_PHASE);
 
-					String key = entry.getKey();
-					String[] value = entry.getValue();
+					Map<String, String[]> renderParameters =
+						liferayActionResponse.getRenderParameterMap();
 
-					portletURL.setParameter(key, value);
+					for (Map.Entry<String, String[]> entry :
+							renderParameters.entrySet()) {
+
+						String key = entry.getKey();
+						String[] value = entry.getValue();
+
+						portletURL.setParameter(key, value);
+					}
+				}
+				else {
+					portletURL = PortletURLFactoryUtil.create(
+						liferayActionRequest, portlet, layout.getPlid(),
+						PortletRequest.RENDER_PHASE, MimeResponse.Copy.ALL);
 				}
 
 				redirectLocation = portletURL.toString();

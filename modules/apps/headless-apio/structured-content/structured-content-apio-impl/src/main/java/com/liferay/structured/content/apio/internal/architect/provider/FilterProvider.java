@@ -15,40 +15,23 @@
 package com.liferay.structured.content.apio.internal.architect.provider;
 
 import com.liferay.apio.architect.provider.Provider;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.structured.content.apio.architect.entity.EntityModel;
 import com.liferay.structured.content.apio.architect.filter.Filter;
+import com.liferay.structured.content.apio.architect.filter.FilterParser;
 import com.liferay.structured.content.apio.architect.filter.InvalidFilterException;
-import com.liferay.structured.content.apio.architect.filter.expression.Expression;
 import com.liferay.structured.content.apio.architect.filter.expression.ExpressionVisitException;
-import com.liferay.structured.content.apio.internal.architect.filter.EntityModelSchemaBasedEdmProvider;
-import com.liferay.structured.content.apio.internal.architect.filter.expression.ExpressionVisitorImpl;
+import com.liferay.structured.content.apio.internal.architect.filter.StructuredContentEntityModel;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.olingo.commons.api.ex.ODataException;
-import org.apache.olingo.commons.core.Encoder;
-import org.apache.olingo.commons.core.edm.EdmProviderImpl;
-import org.apache.olingo.server.api.OData;
-import org.apache.olingo.server.api.uri.UriInfo;
-import org.apache.olingo.server.api.uri.queryoption.FilterOption;
-import org.apache.olingo.server.core.uri.parser.Parser;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Cristina González
  */
+@Component(service = Provider.class)
 public class FilterProvider implements Provider<Filter> {
-
-	public FilterProvider(EntityModel entityModel) {
-		_path = entityModel.getName();
-
-		_parser = new Parser(
-			new EdmProviderImpl(
-				new EntityModelSchemaBasedEdmProvider(entityModel)),
-			OData.newInstance());
-	}
 
 	@Override
 	public Filter createContext(HttpServletRequest httpServletRequest) {
@@ -59,56 +42,16 @@ public class FilterProvider implements Provider<Filter> {
 		}
 
 		try {
-			return new Filter(parse(filterString));
+			return new Filter(_filterParser.parse(filterString));
 		}
 		catch (ExpressionVisitException eve) {
 			throw new InvalidFilterException(eve.getMessage(), eve);
 		}
 	}
 
-	public Expression parse(String filterString)
-		throws ExpressionVisitException {
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("Parsing filter: " + filterString);
-		}
-
-		if (Validator.isNull(filterString)) {
-			throw new InvalidFilterException("Filter is null");
-		}
-
-		UriInfo uriInfo = _getUriInfo(filterString);
-
-		FilterOption filterOption = uriInfo.getFilterOption();
-
-		org.apache.olingo.server.api.uri.queryoption.expression.Expression
-			expression = filterOption.getExpression();
-
-		try {
-			return expression.accept(new ExpressionVisitorImpl());
-		}
-		catch (Exception e) {
-			throw new ExpressionVisitException(e.getMessage(), e);
-		}
-	}
-
-	private UriInfo _getUriInfo(String filterString) {
-		try {
-			return _parser.parseUri(
-				_path, "$filter=" + Encoder.encode(filterString), null, null);
-		}
-		catch (ODataException ode) {
-			throw new InvalidFilterException(
-				String.format(
-					"Invalid query computed from filter '%s': '%s'",
-					filterString, ode.getMessage()),
-				ode);
-		}
-	}
-
-	private static final Log _log = LogFactoryUtil.getLog(FilterProvider.class);
-
-	private final Parser _parser;
-	private final String _path;
+	@Reference(
+		target = "(entity.model.name=" + StructuredContentEntityModel.NAME + ")"
+	)
+	private FilterParser _filterParser;
 
 }

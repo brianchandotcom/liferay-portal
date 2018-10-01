@@ -14,12 +14,10 @@
 
 package com.liferay.structured.content.apio.internal.architect.filter;
 
-import com.liferay.apio.architect.provider.Provider;
 import com.liferay.osgi.util.ServiceTrackerFactory;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.structured.content.apio.architect.entity.EntityModel;
-import com.liferay.structured.content.apio.architect.filter.Filter;
-import com.liferay.structured.content.apio.internal.architect.provider.FilterProvider;
+import com.liferay.structured.content.apio.architect.filter.FilterParser;
 
 import java.util.Objects;
 
@@ -40,7 +38,7 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
  * @review
  */
 @Component(immediate = true, service = {})
-public class FilterProviderRegistrar {
+public class FilterParserRegistry {
 
 	@Activate
 	public void activate(BundleContext bundleContext) {
@@ -54,25 +52,25 @@ public class FilterProviderRegistrar {
 		_serviceTracker.close();
 	}
 
-	private ServiceTracker<EntityModel, ServiceRegistration<Provider>>
-		_serviceTracker;
+	private ServiceTracker
+		<EntityModel, ServiceRegistration<FilterParser>> _serviceTracker;
 
 	private static class EntityModelTrackerCustomizer
 		implements ServiceTrackerCustomizer
-			<EntityModel, ServiceRegistration<Provider>> {
+			<EntityModel, ServiceRegistration<FilterParser>> {
 
 		@Override
-		public ServiceRegistration<Provider> addingService(
+		public ServiceRegistration<FilterParser> addingService(
 			ServiceReference<EntityModel> serviceReference) {
 
 			EntityModel entityModel = _bundleContext.getService(
 				serviceReference);
 
-			Provider<Filter> filterParser = new FilterProvider(entityModel);
+			FilterParser filterParser = new FilterParserImpl(entityModel);
 
 			try {
 				return _bundleContext.registerService(
-					Provider.class, filterParser,
+					FilterParser.class, filterParser,
 					new HashMapDictionary<String, Object>() {
 						{
 							put(
@@ -92,9 +90,9 @@ public class FilterProviderRegistrar {
 		@Override
 		public void modifiedService(
 			ServiceReference<EntityModel> serviceReference,
-			ServiceRegistration<Provider> serviceRegistration) {
+			ServiceRegistration<FilterParser> serviceRegistration) {
 
-			ServiceReference<Provider> filterParserServiceReference =
+			ServiceReference<FilterParser> filterParserServiceReference =
 				serviceRegistration.getReference();
 
 			if (!Objects.equals(
@@ -111,7 +109,7 @@ public class FilterProviderRegistrar {
 		@Override
 		public void removedService(
 			ServiceReference<EntityModel> serviceReference,
-			ServiceRegistration<Provider> serviceRegistration) {
+			ServiceRegistration<FilterParser> serviceRegistration) {
 
 			_bundleContext.ungetService(serviceReference);
 

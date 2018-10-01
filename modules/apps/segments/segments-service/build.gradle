@@ -15,4 +15,5 @@ dependencies {
 	compileOnly project(":apps:portal:portal-upgrade-api")
 	compileOnly project(":apps:segments:segments-api")
 	compileOnly project(":core:petra:petra-string")
+	compileOnly project(":core:registry-api")
 }

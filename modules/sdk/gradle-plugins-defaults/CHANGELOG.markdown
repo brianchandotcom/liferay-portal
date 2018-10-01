@@ -4648,7 +4648,7 @@ version 1.3.4.
 - [LPS-84119]: Update the [Liferay Gradle Plugins] dependency to version
 3.12.148.
 
-## 5.5.61 - 2018-09-26
+## 5.5.61 - 2018-09-27
 
 ### Fixed
 - [LPS-85771]: Set `test.outputs.upToDateWhen`to `false` to always run `test`

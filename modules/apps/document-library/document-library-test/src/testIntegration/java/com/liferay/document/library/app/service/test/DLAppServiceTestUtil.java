@@ -41,6 +41,7 @@ import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.security.permission.DoAsUserThread;
+import com.liferay.portlet.documentlibrary.service.test.BaseDLAppTestCase;
 
 import java.util.Dictionary;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -77,8 +78,8 @@ public class DLAppServiceTestUtil {
 
 		return DLAppServiceUtil.addFileEntry(
 			groupId, folderId, fileName, ContentTypes.TEXT_PLAIN, title,
-			StringPool.BLANK, StringPool.BLANK, CONTENT.getBytes(),
-			serviceContext);
+			StringPool.BLANK, StringPool.BLANK,
+			BaseDLAppTestCase.CONTENT.getBytes(), serviceContext);
 	}
 
 	protected static AtomicInteger registerDLSyncEventProcessorMessageListener(

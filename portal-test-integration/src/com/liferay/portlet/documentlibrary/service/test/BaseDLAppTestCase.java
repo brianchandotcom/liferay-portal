@@ -45,6 +45,9 @@ import org.junit.Rule;
  */
 public abstract class BaseDLAppTestCase {
 
+	public static final String CONTENT =
+		"Content: Enterprise. Open Source. For Life.";
+
 	@ClassRule
 	@Rule
 	public static final PermissionCheckerTestRule permissionCheckerTestRule =
@@ -92,9 +95,6 @@ public abstract class BaseDLAppTestCase {
 			ResourceConstants.SCOPE_GROUP, String.valueOf(group.getGroupId()),
 			ActionKeys.VIEW);
 	}
-
-	protected static final String CONTENT =
-		"Content: Enterprise. Open Source. For Life.";
 
 	@DeleteAfterTestRun
 	protected Group group;

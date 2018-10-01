@@ -29,7 +29,7 @@ import java.util.List;
 /**
  * @author Brian Wing Shun Chan
  */
-public class LayoutBranchUADTestHelper {
+public class LayoutBranchUADTestUtil {
 
 	public static LayoutBranch addLayoutBranch(
 			LayoutBranchLocalService layoutBranchLocalService,

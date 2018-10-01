@@ -15,7 +15,7 @@
 package com.liferay.layout.uad.exporter.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.layout.uad.test.LayoutBranchUADTestHelper;
+import com.liferay.layout.uad.test.LayoutBranchUADTestUtil;
 import com.liferay.portal.kernel.model.LayoutBranch;
 import com.liferay.portal.kernel.service.LayoutBranchLocalService;
 import com.liferay.portal.kernel.service.LayoutSetBranchLocalService;
@@ -48,13 +48,13 @@ public class LayoutBranchUADExporterTest
 
 	@After
 	public void tearDown() throws Exception {
-		LayoutBranchUADTestHelper.cleanUpDependencies(
+		LayoutBranchUADTestUtil.cleanUpDependencies(
 			_layoutSetBranchLocalService, _layoutBranchs);
 	}
 
 	@Override
 	protected LayoutBranch addBaseModel(long userId) throws Exception {
-		LayoutBranch layoutBranch = LayoutBranchUADTestHelper.addLayoutBranch(
+		LayoutBranch layoutBranch = LayoutBranchUADTestUtil.addLayoutBranch(
 			_layoutBranchLocalService, _layoutSetBranchLocalService, userId);
 
 		_layoutBranchs.add(layoutBranch);

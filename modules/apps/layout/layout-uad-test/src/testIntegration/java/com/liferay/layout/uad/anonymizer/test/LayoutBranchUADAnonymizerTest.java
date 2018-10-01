@@ -15,7 +15,7 @@
 package com.liferay.layout.uad.anonymizer.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.layout.uad.test.LayoutBranchUADTestHelper;
+import com.liferay.layout.uad.test.LayoutBranchUADTestUtil;
 import com.liferay.portal.kernel.model.LayoutBranch;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.LayoutBranchLocalService;
@@ -49,7 +49,7 @@ public class LayoutBranchUADAnonymizerTest
 
 	@After
 	public void tearDown() throws Exception {
-		LayoutBranchUADTestHelper.cleanUpDependencies(
+		LayoutBranchUADTestUtil.cleanUpDependencies(
 			_layoutSetBranchLocalService, _layoutBranchs);
 	}
 
@@ -62,7 +62,7 @@ public class LayoutBranchUADAnonymizerTest
 	protected LayoutBranch addBaseModel(long userId, boolean deleteAfterTestRun)
 		throws Exception {
 
-		LayoutBranch layoutBranch = LayoutBranchUADTestHelper.addLayoutBranch(
+		LayoutBranch layoutBranch = LayoutBranchUADTestUtil.addLayoutBranch(
 			_layoutBranchLocalService, _layoutSetBranchLocalService, userId);
 
 		if (deleteAfterTestRun) {
@@ -76,7 +76,7 @@ public class LayoutBranchUADAnonymizerTest
 	protected void deleteBaseModels(List<LayoutBranch> baseModels)
 		throws Exception {
 
-		LayoutBranchUADTestHelper.cleanUpDependencies(
+		LayoutBranchUADTestUtil.cleanUpDependencies(
 			_layoutSetBranchLocalService, baseModels);
 	}
 

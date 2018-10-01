@@ -3,6 +3,7 @@ targetCompatibility = "1.8"
 
 buildService {
 	apiDir = "../segments-api/src/main/java"
+	testDir = "../segments-test/src/testIntegration/java"
 }
 
 dependencies {

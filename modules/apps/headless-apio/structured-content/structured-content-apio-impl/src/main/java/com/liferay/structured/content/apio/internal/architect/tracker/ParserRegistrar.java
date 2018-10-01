@@ -59,8 +59,7 @@ public class ParserRegistrar {
 		_serviceTracker.close();
 	}
 
-	private ServiceTracker<EntityModel, ParserServiceRegistrations>
-		_serviceTracker;
+	private ServiceTracker<?, ?> _serviceTracker;
 
 	private static class EntityModelTrackerCustomizer
 		implements ServiceTrackerCustomizer
@@ -132,8 +131,8 @@ public class ParserRegistrar {
 
 	private static class ParserServiceRegistrations {
 
-		public void register(
-			BundleContext bundleContext, Class clazz, Object parser) {
+		public <T> void register(
+			BundleContext bundleContext, Class<T> clazz, T parser) {
 
 			ServiceRegistration<?> serviceRegistration =
 				bundleContext.registerService(

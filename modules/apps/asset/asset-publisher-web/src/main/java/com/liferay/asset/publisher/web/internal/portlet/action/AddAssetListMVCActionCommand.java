@@ -33,8 +33,12 @@ import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.MultiSessionMessages;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
+import java.util.Enumeration;
 import java.util.List;
 import java.util.Objects;
 
@@ -84,6 +88,9 @@ public class AddAssetListMVCActionCommand extends BaseMVCActionCommand {
 			if (Objects.equals(selectionStyle, "manual")) {
 				_saveManualAssetList(actionRequest, title, portletPreferences);
 			}
+			else if (Objects.equals(selectionStyle, "dynamic")) {
+				_saveDynamicAssetList(actionRequest, title, portletPreferences);
+			}
 
 			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
@@ -103,6 +110,43 @@ public class AddAssetListMVCActionCommand extends BaseMVCActionCommand {
 			_assetListExceptionRequestHandler.handlePortalException(
 				actionRequest, actionResponse, pe);
 		}
+	}
+
+	private void _saveDynamicAssetList(
+			ActionRequest actionRequest, String title,
+			PortletPreferences portletPreferences)
+		throws Exception {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+			actionRequest);
+
+		AssetListEntry assetListEntry =
+			_assetListEntryService.addAssetListEntry(
+				themeDisplay.getScopeGroupId(), title,
+				AssetListEntryTypeConstants.TYPE_DYNAMIC, serviceContext);
+
+		UnicodeProperties properties = new UnicodeProperties(true);
+
+		Enumeration<String> names = portletPreferences.getNames();
+
+		while (names.hasMoreElements()) {
+			String name = names.nextElement();
+
+			String value = StringUtil.merge(
+				portletPreferences.getValues(name, null));
+
+			if (Validator.isNull(value)) {
+				continue;
+			}
+
+			properties.put(name, value);
+		}
+
+		_assetListEntryService.updateAssetListEntrySettings(
+			assetListEntry.getAssetListEntryId(), properties.toString());
 	}
 
 	private void _saveManualAssetList(

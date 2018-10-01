@@ -12,13 +12,18 @@
  * details.
  */
 
-package com.liferay.structured.content.apio.internal.architect.filter;
+package com.liferay.structured.content.apio.internal.architect.tracker;
 
 import com.liferay.osgi.util.ServiceTrackerFactory;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.structured.content.apio.architect.entity.EntityModel;
 import com.liferay.structured.content.apio.architect.filter.FilterParser;
+import com.liferay.structured.content.apio.architect.sort.SortParser;
+import com.liferay.structured.content.apio.internal.architect.filter.FilterParserImpl;
+import com.liferay.structured.content.apio.internal.architect.sort.SortParserImpl;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 import org.osgi.framework.BundleContext;
@@ -31,14 +36,16 @@ import org.osgi.util.tracker.ServiceTracker;
 import org.osgi.util.tracker.ServiceTrackerCustomizer;
 
 /**
- * <code>FilterParserRegistry</code> registry of FilterParsers. This class
- * register a new FilterParser for every EntityModel registered.
+ * <code>ParserRegistrar</code> registry of FilterParsers and SortParsers.
+ * This class register a new FilterParser and FilterPaser for every EntityModel
+ * registered.
  *
  * @author Cristina González
+ * @author Preston Crary
  * @review
  */
 @Component(immediate = true, service = {})
-public class FilterParserRegistry {
+public class ParserRegistrar {
 
 	@Activate
 	public void activate(BundleContext bundleContext) {
@@ -52,55 +59,54 @@ public class FilterParserRegistry {
 		_serviceTracker.close();
 	}
 
-	private ServiceTracker
-		<EntityModel, ServiceRegistration<FilterParser>> _serviceTracker;
+	private ServiceTracker<EntityModel, ParserServiceRegistrations>
+		_serviceTracker;
 
 	private static class EntityModelTrackerCustomizer
 		implements ServiceTrackerCustomizer
-			<EntityModel, ServiceRegistration<FilterParser>> {
+			<EntityModel, ParserServiceRegistrations> {
 
 		@Override
-		public ServiceRegistration<FilterParser> addingService(
+		public ParserServiceRegistrations addingService(
 			ServiceReference<EntityModel> serviceReference) {
 
 			EntityModel entityModel = _bundleContext.getService(
 				serviceReference);
 
-			FilterParser filterParser = new FilterParserImpl(entityModel);
+			ParserServiceRegistrations parserServiceRegistrations =
+				new ParserServiceRegistrations(
+					serviceReference.getProperty("entity.model.name"));
 
 			try {
-				return _bundleContext.registerService(
-					FilterParser.class, filterParser,
-					new HashMapDictionary<String, Object>() {
-						{
-							put(
-								"entity.model.name",
-								serviceReference.getProperty(
-									"entity.model.name"));
-						}
-					});
+				parserServiceRegistrations.register(
+					_bundleContext, FilterParser.class,
+					new FilterParserImpl(entityModel));
+
+				parserServiceRegistrations.register(
+					_bundleContext, SortParser.class,
+					new SortParserImpl(entityModel));
 			}
 			catch (Throwable t) {
+				parserServiceRegistrations.unregister();
+
 				_bundleContext.ungetService(serviceReference);
 
 				throw t;
 			}
+
+			return parserServiceRegistrations;
 		}
 
 		@Override
 		public void modifiedService(
 			ServiceReference<EntityModel> serviceReference,
-			ServiceRegistration<FilterParser> serviceRegistration) {
-
-			ServiceReference<FilterParser> filterParserServiceReference =
-				serviceRegistration.getReference();
+			ParserServiceRegistrations parserServiceRegistrations) {
 
 			if (!Objects.equals(
 					serviceReference.getProperty("entity.model.name"),
-					filterParserServiceReference.getProperty(
-						"entity.model.name"))) {
+					parserServiceRegistrations._entityModelName)) {
 
-				removedService(serviceReference, serviceRegistration);
+				removedService(serviceReference, parserServiceRegistrations);
 
 				addingService(serviceReference);
 			}
@@ -109,11 +115,11 @@ public class FilterParserRegistry {
 		@Override
 		public void removedService(
 			ServiceReference<EntityModel> serviceReference,
-			ServiceRegistration<FilterParser> serviceRegistration) {
+			ParserServiceRegistrations parserServiceRegistrations) {
 
 			_bundleContext.ungetService(serviceReference);
 
-			serviceRegistration.unregister();
+			parserServiceRegistrations.unregister();
 		}
 
 		private EntityModelTrackerCustomizer(BundleContext bundleContext) {
@@ -121,6 +127,41 @@ public class FilterParserRegistry {
 		}
 
 		private final BundleContext _bundleContext;
+
+	}
+
+	private static class ParserServiceRegistrations {
+
+		public void register(
+			BundleContext bundleContext, Class clazz, Object parser) {
+
+			ServiceRegistration<?> serviceRegistration =
+				bundleContext.registerService(
+					clazz, parser,
+					new HashMapDictionary<String, Object>() {
+						{
+							put("entity.model.name", _entityModelName);
+						}
+					});
+
+			_serviceRegistrations.add(serviceRegistration);
+		}
+
+		public void unregister() {
+			for (ServiceRegistration<?> serviceRegistration :
+					_serviceRegistrations) {
+
+				serviceRegistration.unregister();
+			}
+		}
+
+		private ParserServiceRegistrations(Object entityModelName) {
+			_entityModelName = entityModelName;
+		}
+
+		private final Object _entityModelName;
+		private final List<ServiceRegistration<?>> _serviceRegistrations =
+			new ArrayList<>();
 
 	}
 

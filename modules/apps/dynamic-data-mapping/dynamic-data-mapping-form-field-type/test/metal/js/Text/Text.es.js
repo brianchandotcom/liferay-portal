@@ -1,4 +1,4 @@
-import Text from '../Text.es';
+import Text from 'source/Text/Text.es';
 import {dom as MetalTestUtil} from 'metal-dom';
 
 let component;

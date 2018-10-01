@@ -1,11 +1,11 @@
-import Options from '../Options.es';
+import Select from 'source/Select/Select.es';
 import {dom as MetalTestUtil} from 'metal-dom';
 
 let component;
 const spritemap = 'icons.svg';
 
 describe(
-	'Options',
+	'Select',
 	() => {
 		afterEach(
 			() => {
@@ -18,7 +18,7 @@ describe(
 		it(
 			'should be not edidable',
 			() => {
-				component = new Options(
+				component = new Select(
 					{
 						readOnly: false,
 						spritemap
@@ -32,7 +32,7 @@ describe(
 		it(
 			'should have a helptext',
 			() => {
-				component = new Options(
+				component = new Select(
 					{
 						spritemap,
 						tip: 'Type something'
@@ -44,11 +44,25 @@ describe(
 		);
 
 		it(
-			'should render items',
+			'should have an id',
 			() => {
-				component = new Options(
+				component = new Select(
 					{
-						items: [
+						id: 'ID',
+						spritemap
+					}
+				);
+
+				expect(component).toMatchSnapshot();
+			}
+		);
+
+		it(
+			'should render options',
+			() => {
+				component = new Select(
+					{
+						options: [
 							{
 								checked: false,
 								disabled: false,
@@ -69,25 +83,11 @@ describe(
 		);
 
 		it(
-			'should render no items when items is empty',
+			'should render no options when options come empty',
 			() => {
-				component = new Options(
+				component = new Select(
 					{
-						items: [],
-						spritemap
-					}
-				);
-
-				expect(component).toMatchSnapshot();
-			}
-		);
-
-		it(
-			'should have an id',
-			() => {
-				component = new Options(
-					{
-						id: 'ID',
+						options: [],
 						spritemap
 					}
 				);
@@ -99,7 +99,7 @@ describe(
 		it(
 			'should have a label',
 			() => {
-				component = new Options(
+				component = new Select(
 					{
 						label: 'label',
 						spritemap
@@ -111,9 +111,65 @@ describe(
 		);
 
 		it(
+			'should be closed by default',
+			() => {
+				component = new Select(
+					{
+						open: false,
+						spritemap
+					}
+				);
+
+				expect(component).toMatchSnapshot();
+			}
+		);
+
+		it(
+			'should have class dropdown-opened when it\'s opened',
+			() => {
+				component = new Select(
+					{
+						open: true,
+						spritemap
+					}
+				);
+
+				expect(component).toMatchSnapshot();
+			}
+		);
+
+		it(
+			'should have a placeholder',
+			() => {
+				component = new Select(
+					{
+						placeholder: 'Placeholder',
+						spritemap
+					}
+				);
+
+				expect(component).toMatchSnapshot();
+			}
+		);
+
+		it(
+			'should have a predefinedValue',
+			() => {
+				component = new Select(
+					{
+						predefinedValue: ['Select'],
+						spritemap
+					}
+				);
+
+				expect(component).toMatchSnapshot();
+			}
+		);
+
+		it(
 			'should not be required',
 			() => {
-				component = new Options(
+				component = new Select(
 					{
 						required: false,
 						spritemap
@@ -127,7 +183,7 @@ describe(
 		it(
 			'should render Label if showLabel is true',
 			() => {
-				component = new Options(
+				component = new Select(
 					{
 						label: 'text',
 						showLabel: true,
@@ -142,7 +198,7 @@ describe(
 		it(
 			'should have a spritemap',
 			() => {
-				component = new Options(
+				component = new Select(
 					{
 						spritemap
 					}
@@ -153,9 +209,23 @@ describe(
 		);
 
 		it(
+			'should have a value',
+			() => {
+				component = new Select(
+					{
+						spritemap,
+						value: ['value']
+					}
+				);
+
+				expect(component).toMatchSnapshot();
+			}
+		);
+
+		it(
 			'should have a key',
 			() => {
-				component = new Options(
+				component = new Select(
 					{
 						key: 'key',
 						spritemap
@@ -167,30 +237,16 @@ describe(
 		);
 
 		it(
-			'should have a placeholder',
-			() => {
-				component = new Options(
-					{
-						placeholder: 'Placeholder',
-						spritemap
-					}
-				);
-
-				expect(component).toMatchSnapshot();
-			}
-		);
-
-		it(
-			'should emit a field edit event on any item value change',
+			'should emit a field edit event when an item is selected',
 			() => {
 				const handleFieldEdited = jest.fn();
 
 				const events = {fieldEdited: handleFieldEdited};
 
-				component = new Options(
+				component = new Select(
 					{
 						events,
-						items: [
+						options: [
 							{
 								checked: false,
 								disabled: false,
@@ -207,8 +263,8 @@ describe(
 				);
 
 				MetalTestUtil.triggerEvent(
-					component.element.querySelector('input'),
-					'input',
+					component.element.querySelector('.dropdown-menu'),
+					'click',
 					{}
 				);
 
@@ -217,16 +273,11 @@ describe(
 		);
 
 		it(
-			'should add a new item when add a content in the last option',
+			'should open dropdown when select is clicked',
 			() => {
-				const handleFieldEdited = jest.fn();
-
-				const events = {fieldEdited: handleFieldEdited};
-
-				component = new Options(
+				component = new Select(
 					{
-						events,
-						items: [
+						options: [
 							{
 								checked: false,
 								disabled: false,
@@ -241,25 +292,22 @@ describe(
 						spritemap
 					}
 				);
-				const initialSize = component.items.length;
 
 				MetalTestUtil.triggerEvent(
-					component.element.querySelector('.field-options .form-group:last-child input'),
-					'input',
+					component.element.querySelector('.select-field-trigger'),
+					'click',
 					{}
 				);
-				const finalSize = component.items.length;
-
-				expect(finalSize > initialSize).toBe(true);
+				expect(component.getState().open).toBe(true);
 			}
 		);
 
 		it(
-			'should propagate the field edit event when any item value change',
+			'should propagate the field edit event',
 			() => {
-				component = new Options(
+				component = new Select(
 					{
-						items: [
+						options: [
 							{
 								checked: false,
 								disabled: false,
@@ -278,8 +326,8 @@ describe(
 				const spy = jest.spyOn(component, 'emit');
 
 				MetalTestUtil.triggerEvent(
-					component.element.querySelector('input'),
-					'input',
+					component.element.querySelector('.dropdown-menu'),
+					'click',
 					{}
 				);
 

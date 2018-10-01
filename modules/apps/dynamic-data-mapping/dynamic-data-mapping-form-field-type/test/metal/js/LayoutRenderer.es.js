@@ -1,11 +1,11 @@
 import PageRenderer from './__fixtures__/PageRenderer.es';
-import '../Checkbox/index.es';
-import '../Date/index.es';
-import '../Grid/index.es';
-import '../Radio/index.es';
-import '../Select/index.es';
-import '../Text/index.es';
-import '../Options/index.es';
+import 'source/Checkbox/index.es';
+import 'source/Date/index.es';
+import 'source/Grid/index.es';
+import 'source/Radio/index.es';
+import 'source/Select/index.es';
+import 'source/Text/index.es';
+import 'source/Options/index.es';
 
 let component;
 

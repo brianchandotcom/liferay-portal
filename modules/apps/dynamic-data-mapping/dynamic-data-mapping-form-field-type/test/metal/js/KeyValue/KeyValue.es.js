@@ -1,4 +1,4 @@
-import KeyValue from '../KeyValue.es';
+import KeyValue from 'source/KeyValue/KeyValue.es';
 import {dom as MetalTestUtil} from 'metal-dom';
 
 let component;

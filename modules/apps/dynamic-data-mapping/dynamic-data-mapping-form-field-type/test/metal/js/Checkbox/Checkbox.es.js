@@ -1,4 +1,4 @@
-import Checkbox from '../Checkbox.es';
+import Checkbox from 'source/Checkbox/Checkbox.es';
 import {dom as MetalTestUtil} from 'metal-dom';
 
 let component;

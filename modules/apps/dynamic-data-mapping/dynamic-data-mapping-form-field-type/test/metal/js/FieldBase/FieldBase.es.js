@@ -1,4 +1,4 @@
-import FieldBase from '../FieldBase.es';
+import FieldBase from 'source/FieldBase/FieldBase.es';
 
 let component;
 const spritemap = 'icons.svg';

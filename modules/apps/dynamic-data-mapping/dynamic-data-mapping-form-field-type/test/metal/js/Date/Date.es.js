@@ -1,10 +1,10 @@
-import Grid from '../Grid.es';
+import Date from 'source/Date/Date.es';
 
 let component;
 const spritemap = 'icons.svg';
 
 describe(
-	'Grid',
+	'Field Date',
 	() => {
 		afterEach(
 			() => {
@@ -15,46 +15,9 @@ describe(
 		);
 
 		it(
-			'should render columns',
-			() => {
-				component = new Grid(
-					{
-						columns: [
-							{
-								label: 'col1',
-								value: 'fieldId'
-							},
-							{
-								label: 'col2',
-								value: 'fieldId'
-							}
-						],
-						spritemap
-					}
-				);
-
-				expect(component).toMatchSnapshot();
-			}
-		);
-
-		it(
-			'should render no columns when columns comes empty',
-			() => {
-				component = new Grid(
-					{
-						columns: [],
-						spritemap
-					}
-				);
-
-				expect(component).toMatchSnapshot();
-			}
-		);
-
-		it(
 			'should be not edidable',
 			() => {
-				component = new Grid(
+				component = new Date(
 					{
 						readOnly: false,
 						spritemap
@@ -68,7 +31,7 @@ describe(
 		it(
 			'should have a tip',
 			() => {
-				component = new Grid(
+				component = new Date(
 					{
 						spritemap,
 						tip: 'Type something'
@@ -82,7 +45,7 @@ describe(
 		it(
 			'should have an id',
 			() => {
-				component = new Grid(
+				component = new Date(
 					{
 						id: 'ID',
 						spritemap
@@ -96,7 +59,7 @@ describe(
 		it(
 			'should have a label',
 			() => {
-				component = new Grid(
+				component = new Date(
 					{
 						label: 'label',
 						spritemap
@@ -108,9 +71,23 @@ describe(
 		);
 
 		it(
+			'should have a placeholder',
+			() => {
+				component = new Date(
+					{
+						placeholder: '__/__/____',
+						spritemap
+					}
+				);
+
+				expect(component).toMatchSnapshot();
+			}
+		);
+
+		it(
 			'should not be required',
 			() => {
-				component = new Grid(
+				component = new Date(
 					{
 						required: false,
 						spritemap
@@ -122,46 +99,9 @@ describe(
 		);
 
 		it(
-			'should render rows',
-			() => {
-				component = new Grid(
-					{
-						rows: [
-							{
-								label: 'row1',
-								value: 'fieldId'
-							},
-							{
-								label: 'row2',
-								value: 'fieldId'
-							}
-						],
-						spritemap
-					}
-				);
-
-				expect(component).toMatchSnapshot();
-			}
-		);
-
-		it(
-			'should render no rows when row comes empty',
-			() => {
-				component = new Grid(
-					{
-						rows: [],
-						spritemap
-					}
-				);
-
-				expect(component).toMatchSnapshot();
-			}
-		);
-
-		it(
 			'should render Label if showLabel is true',
 			() => {
-				component = new Grid(
+				component = new Date(
 					{
 						label: 'text',
 						showLabel: true,
@@ -176,9 +116,23 @@ describe(
 		it(
 			'should have a spritemap',
 			() => {
-				component = new Grid(
+				component = new Date(
 					{
 						spritemap
+					}
+				);
+
+				expect(component).toMatchSnapshot();
+			}
+		);
+
+		it(
+			'should have a value',
+			() => {
+				component = new Date(
+					{
+						spritemap,
+						value: 'value'
 					}
 				);
 

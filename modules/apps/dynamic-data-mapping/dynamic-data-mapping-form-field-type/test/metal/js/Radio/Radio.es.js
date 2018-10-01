@@ -1,4 +1,4 @@
-import Radio from '../Radio.es';
+import Radio from 'source/Radio/Radio.es';
 
 let component;
 const spritemap = 'icons.svg';

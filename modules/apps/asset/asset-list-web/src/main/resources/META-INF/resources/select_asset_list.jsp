@@ -20,6 +20,17 @@
 SelectAssetListDisplayContext selectAssetListDisplayContext = new SelectAssetListDisplayContext(request, renderResponse);
 %>
 
+<clay:management-toolbar
+	clearResultsURL="<%= selectAssetListDisplayContext.getAssetListEntryClearResultsURL() %>"
+	componentId="assetListEntriesEntriesManagementToolbar"
+	filterDropdownItems="<%= selectAssetListDisplayContext.getAssetListEntryFilterItemsDropdownItems() %>"
+	itemsTotal="<%= selectAssetListDisplayContext.getAssetListEntryTotalItems() %>"
+	searchActionURL="<%= selectAssetListDisplayContext.getAssetListEntrySearchActionURL() %>"
+	searchContainerId="assetListEntries"
+	sortingOrder="<%= selectAssetListDisplayContext.getOrderByType() %>"
+	sortingURL="<%= selectAssetListDisplayContext.getSortingURL() %>"
+/>
+
 <div class="container-fluid-1280" id="<portlet:namespace />assetLists">
 	<liferay-ui:search-container
 		emptyResultsMessage="there-are-no-asset-lists"

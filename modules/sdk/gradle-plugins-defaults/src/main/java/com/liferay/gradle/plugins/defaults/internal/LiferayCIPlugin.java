@@ -26,7 +26,9 @@ import com.liferay.gradle.util.Validator;
 
 import java.io.File;
 
+import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -300,6 +302,9 @@ public class LiferayCIPlugin implements Plugin<Project> {
 	private static final String _SASS_BINARY_SITE_ARG = "--sass-binary-site=";
 
 	private static final Set<String> _lfrbuildPortalIgnoredProjectPaths =
-		Collections.singleton(":test:arquillian-extension-junit-bridge");
+		new HashSet<>(
+			Arrays.asList(
+				":apps:oauth2-provider:oauth2-provider-test-util",
+				":test:arquillian-extension-junit-bridge"));
 
 }

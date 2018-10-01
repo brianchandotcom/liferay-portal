@@ -46,11 +46,6 @@ public class NotAllowedExceptionMapper
 	}
 
 	@Override
-	protected String getTitle() {
-		return "HTTP method not supported";
-	}
-
-	@Override
 	protected String getType() {
 		return "not-allowed";
 	}

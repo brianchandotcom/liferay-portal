@@ -31,10 +31,9 @@ public class FallbackExceptionMapper implements ExceptionMapper<Exception> {
 
 	@Override
 	public APIError map(Exception exception) {
-		int statusCode = INTERNAL_SERVER_ERROR.getStatusCode();
-
 		return new APIError(
-			exception, "General server error", "server-error", statusCode);
+			exception, INTERNAL_SERVER_ERROR.getReasonPhrase(), "server-error",
+			INTERNAL_SERVER_ERROR.getStatusCode());
 	}
 
 }

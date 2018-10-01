@@ -46,11 +46,6 @@ public class BadRequestExceptionMapper
 	}
 
 	@Override
-	protected String getTitle() {
-		return "Malformed request message";
-	}
-
-	@Override
 	protected String getType() {
 		return "bad-request";
 	}

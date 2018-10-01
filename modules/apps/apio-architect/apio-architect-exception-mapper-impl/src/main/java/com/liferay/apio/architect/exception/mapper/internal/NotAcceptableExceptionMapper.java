@@ -46,11 +46,6 @@ public class NotAcceptableExceptionMapper
 	}
 
 	@Override
-	protected String getTitle() {
-		return "Client media type requested not supported";
-	}
-
-	@Override
 	protected String getType() {
 		return "not-acceptable";
 	}

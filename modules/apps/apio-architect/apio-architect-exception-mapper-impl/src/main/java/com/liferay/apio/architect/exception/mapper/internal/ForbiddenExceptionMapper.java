@@ -45,11 +45,6 @@ public class ForbiddenExceptionMapper
 	}
 
 	@Override
-	protected String getTitle() {
-		return "Not permitted to access";
-	}
-
-	@Override
 	protected String getType() {
 		return "forbidden";
 	}

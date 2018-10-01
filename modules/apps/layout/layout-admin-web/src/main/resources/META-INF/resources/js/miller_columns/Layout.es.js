@@ -278,7 +278,6 @@ Layout.STATE = {
 
 	_hoveredLayoutColumnItemPlid: Config.string().internal(),
 
-
 	/**
 	 * Internal LayoutDragDrop instance
 	 * @default null

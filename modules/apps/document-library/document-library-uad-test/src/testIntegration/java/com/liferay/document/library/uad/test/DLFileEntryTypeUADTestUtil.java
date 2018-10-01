@@ -38,7 +38,7 @@ import java.util.Map;
 /**
  * @author William Newbury
  */
-public class DLFileEntryTypeUADTestHelper {
+public class DLFileEntryTypeUADTestUtil {
 
 	public static DLFileEntryType addDLFileEntryType(
 			DLFileEntryTypeLocalService dlFileEntryTypeLocalService,

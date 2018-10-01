@@ -17,7 +17,7 @@ package com.liferay.document.library.uad.exporter.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.document.library.kernel.model.DLFileEntryType;
 import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalService;
-import com.liferay.document.library.uad.test.DLFileEntryTypeUADTestHelper;
+import com.liferay.document.library.uad.test.DLFileEntryTypeUADTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.util.Portal;
@@ -48,14 +48,14 @@ public class DLFileEntryTypeUADExporterTest
 
 	@After
 	public void tearDown() throws Exception {
-		DLFileEntryTypeUADTestHelper.cleanUpDependencies(
+		DLFileEntryTypeUADTestUtil.cleanUpDependencies(
 			_dlFileEntryTypeLocalService, _portal, _dlFileEntryTypes);
 	}
 
 	@Override
 	protected DLFileEntryType addBaseModel(long userId) throws Exception {
 		DLFileEntryType dlFileEntryType =
-			DLFileEntryTypeUADTestHelper.addDLFileEntryType(
+			DLFileEntryTypeUADTestUtil.addDLFileEntryType(
 				_dlFileEntryTypeLocalService, _portal, userId);
 
 		_dlFileEntryTypes.add(dlFileEntryType);

@@ -17,7 +17,7 @@ package com.liferay.document.library.uad.anonymizer.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.document.library.kernel.model.DLFileEntryType;
 import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalService;
-import com.liferay.document.library.uad.test.DLFileEntryTypeUADTestHelper;
+import com.liferay.document.library.uad.test.DLFileEntryTypeUADTestUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -49,7 +49,7 @@ public class DLFileEntryTypeUADAnonymizerTest
 
 	@After
 	public void tearDown() throws Exception {
-		DLFileEntryTypeUADTestHelper.cleanUpDependencies(
+		DLFileEntryTypeUADTestUtil.cleanUpDependencies(
 			_dlFileEntryTypeLocalService, _portal, _dlFileEntryTypes);
 	}
 
@@ -64,7 +64,7 @@ public class DLFileEntryTypeUADAnonymizerTest
 		throws Exception {
 
 		DLFileEntryType dlFileEntryType =
-			DLFileEntryTypeUADTestHelper.addDLFileEntryType(
+			DLFileEntryTypeUADTestUtil.addDLFileEntryType(
 				_dlFileEntryTypeLocalService, _portal, userId);
 
 		if (deleteAfterTestRun) {
@@ -78,7 +78,7 @@ public class DLFileEntryTypeUADAnonymizerTest
 	protected void deleteBaseModels(List<DLFileEntryType> baseModels)
 		throws Exception {
 
-		DLFileEntryTypeUADTestHelper.cleanUpDependencies(
+		DLFileEntryTypeUADTestUtil.cleanUpDependencies(
 			_dlFileEntryTypeLocalService, _portal, baseModels);
 	}
 

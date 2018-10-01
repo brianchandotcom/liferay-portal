@@ -10,9 +10,13 @@
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
 		<field localized="true" name="name" type="String" />
-		<field localized="true" name="description" type="String" />
+		<field localized="true" name="description" type="String">
+			<hint-collection name="TEXTAREA" />
+		</field>
 		<field name="active" type="boolean" />
-		<field name="criteria" type="String" />
+		<field name="criteria" type="String">
+			<hint-collection name="CLOB" />
+		</field>
 		<field name="key" type="String" />
 		<field name="type" type="String" />
 	</model>

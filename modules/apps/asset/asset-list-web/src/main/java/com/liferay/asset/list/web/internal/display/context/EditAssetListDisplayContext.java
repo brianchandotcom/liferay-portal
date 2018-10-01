@@ -184,6 +184,15 @@ public class EditAssetListDisplayContext {
 			rulesJSONArray.put(ruleJSONObject);
 		}
 
+		if (rulesJSONArray.length() == 0) {
+			JSONObject defaultRule = JSONFactoryUtil.createJSONObject();
+
+			defaultRule.put("queryContains", true);
+			defaultRule.put("type", "assetTags");
+
+			rulesJSONArray.put(defaultRule);
+		}
+
 		return rulesJSONArray;
 	}
 

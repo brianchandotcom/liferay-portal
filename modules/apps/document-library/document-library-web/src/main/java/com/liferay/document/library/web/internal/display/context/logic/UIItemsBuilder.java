@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
+import com.liferay.portal.kernel.repository.capabilities.TrashCapability;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileShortcut;
 import com.liferay.portal.kernel.repository.model.FileVersion;
@@ -1223,7 +1224,7 @@ public class UIItemsBuilder {
 	}
 
 	private boolean _isFileEntryTrashable() throws PortalException {
-		if (_fileEntryDisplayContextHelper.isDLFileEntry() &&
+		if (_fileEntry.isRepositoryCapabilityProvided(TrashCapability.class) &&
 			_isTrashEnabled()) {
 
 			return true;

@@ -15,6 +15,7 @@
 package com.liferay.portal.kernel.repository.model;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.repository.capabilities.Capability;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.util.Accessor;
 
@@ -79,6 +80,15 @@ public interface Folder extends RepositoryEntry, RepositoryModel<Folder> {
 
 	public long getParentFolderId();
 
+	public default <T extends Capability> T getRepositoryCapability(
+		Class<T> capabilityClass) {
+
+		throw new IllegalArgumentException(
+			String.format(
+				"Capability %s is not exported by repository %d",
+				capabilityClass.getName(), getRepositoryId()));
+	}
+
 	public long getRepositoryId();
 
 	@Override
@@ -102,6 +112,12 @@ public interface Folder extends RepositoryEntry, RepositoryModel<Folder> {
 	public boolean isLocked();
 
 	public boolean isMountPoint();
+
+	public default <T extends Capability> boolean
+		isRepositoryCapabilityProvided(Class<T> capabilityClass) {
+
+		return false;
+	}
 
 	public boolean isRoot();
 

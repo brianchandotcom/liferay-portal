@@ -14,8 +14,11 @@
 
 package com.liferay.portal.kernel.repository.capabilities;
 
+import aQute.bnd.annotation.ProviderType;
+
 /**
  * @author Adolfo Pérez
  */
+@ProviderType
 public interface CommentCapability extends Capability {
 }

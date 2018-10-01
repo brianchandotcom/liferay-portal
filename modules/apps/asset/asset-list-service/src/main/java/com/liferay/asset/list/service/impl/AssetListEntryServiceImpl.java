@@ -38,7 +38,9 @@ import java.util.List;
 public class AssetListEntryServiceImpl extends AssetListEntryServiceBaseImpl {
 
 	@Override
-	public void addAssetEntrySelection(long assetListEntryId, long assetEntryId)
+	public void addAssetEntrySelection(
+			long assetListEntryId, long assetEntryId,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		AssetListEntry assetListEntry =
@@ -48,7 +50,7 @@ public class AssetListEntryServiceImpl extends AssetListEntryServiceBaseImpl {
 			getPermissionChecker(), assetListEntry, ActionKeys.UPDATE);
 
 		assetListEntryLocalService.addAssetEntrySelection(
-			assetListEntryId, assetEntryId);
+			assetListEntryId, assetEntryId, serviceContext);
 	}
 
 	@Override

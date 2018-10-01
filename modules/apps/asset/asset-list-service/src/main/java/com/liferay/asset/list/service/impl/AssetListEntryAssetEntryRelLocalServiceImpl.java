@@ -17,6 +17,7 @@ package com.liferay.asset.list.service.impl;
 import com.liferay.asset.list.model.AssetListEntryAssetEntryRel;
 import com.liferay.asset.list.service.base.AssetListEntryAssetEntryRelLocalServiceBaseImpl;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
 
 import java.util.List;
@@ -29,7 +30,8 @@ public class AssetListEntryAssetEntryRelLocalServiceImpl
 
 	@Override
 	public AssetListEntryAssetEntryRel addAssetListEntryAssetEntryRel(
-		long assetListEntryId, long assetEntryId) {
+		long assetListEntryId, long assetEntryId,
+		ServiceContext serviceContext) {
 
 		long assetListEntryAssetEntryRelId = counterLocalService.increment();
 

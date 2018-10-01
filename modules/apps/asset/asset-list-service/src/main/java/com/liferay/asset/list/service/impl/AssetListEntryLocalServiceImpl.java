@@ -38,7 +38,9 @@ public class AssetListEntryLocalServiceImpl
 	extends AssetListEntryLocalServiceBaseImpl {
 
 	@Override
-	public void addAssetEntrySelection(long assetListEntryId, long assetEntryId)
+	public void addAssetEntrySelection(
+			long assetListEntryId, long assetEntryId,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		AssetListEntry assetListEntry =
@@ -52,7 +54,7 @@ public class AssetListEntryLocalServiceImpl
 		}
 
 		assetListEntryAssetEntryRelLocalService.addAssetListEntryAssetEntryRel(
-			assetListEntryId, assetEntryId);
+			assetListEntryId, assetEntryId, serviceContext);
 	}
 
 	@Override

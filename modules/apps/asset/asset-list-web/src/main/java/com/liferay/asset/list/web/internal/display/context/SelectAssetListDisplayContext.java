@@ -19,7 +19,6 @@ import com.liferay.asset.list.service.AssetListEntryServiceUtil;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.RowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -100,10 +99,14 @@ public class SelectAssetListDisplayContext {
 		return _searchContainer;
 	}
 
-	public AssetListEntry getSelectedAssetListEntry() throws PortalException {
-		long assetListEntryId = ParamUtil.getLong(_request, "assetListEntryId");
+	public long getSelectedAssetListEntryId() {
+		if (Validator.isNotNull(_assetListEntryId)) {
+			return _assetListEntryId;
+		}
 
-		return AssetListEntryServiceUtil.fetchAssetListEntry(assetListEntryId);
+		_assetListEntryId = ParamUtil.getLong(_request, "assetListEntryId");
+
+		return _assetListEntryId;
 	}
 
 	private PortletURL _getPortletURL() {
@@ -112,6 +115,7 @@ public class SelectAssetListDisplayContext {
 		return portletURL;
 	}
 
+	private Long _assetListEntryId;
 	private String _eventName;
 	private final RenderResponse _renderResponse;
 	private final HttpServletRequest _request;

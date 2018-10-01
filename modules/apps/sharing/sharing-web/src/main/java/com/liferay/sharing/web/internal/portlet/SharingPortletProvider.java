@@ -16,7 +16,7 @@ package com.liferay.sharing.web.internal.portlet;
 
 import com.liferay.portal.kernel.portlet.BasePortletProvider;
 import com.liferay.portal.kernel.portlet.EditPortletProvider;
-import com.liferay.sharing.constants.SharingPortletKeys;
+import com.liferay.sharing.web.constants.SharingPortletKeys;
 
 import org.osgi.service.component.annotations.Component;
 

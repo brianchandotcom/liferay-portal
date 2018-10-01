@@ -2,6 +2,7 @@ Bundle-Name: Liferay Sharing Web API
 Bundle-SymbolicName: com.liferay.sharing.web.api
 Bundle-Version: 1.0.0
 Export-Package:\
+	com.liferay.sharing.web.constants,\
 	com.liferay.sharing.web.filter,\
 	com.liferay.sharing.web.interpreter,\
 	com.liferay.sharing.web.renderer

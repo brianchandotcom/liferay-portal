@@ -26,7 +26,7 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 /**
  * @author Brian Wing Shun Chan
  */
-public class BookmarksFolderUADTestHelper {
+public class BookmarksFolderUADTestUtil {
 
 	public static BookmarksFolder addBookmarksFolder(
 			BookmarksFolderLocalService bookmarksFolderLocalService,

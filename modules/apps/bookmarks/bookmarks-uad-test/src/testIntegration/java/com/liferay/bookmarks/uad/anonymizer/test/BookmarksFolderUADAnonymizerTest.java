@@ -17,7 +17,7 @@ package com.liferay.bookmarks.uad.anonymizer.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.bookmarks.model.BookmarksFolder;
 import com.liferay.bookmarks.service.BookmarksFolderLocalService;
-import com.liferay.bookmarks.uad.test.BookmarksFolderUADTestHelper;
+import com.liferay.bookmarks.uad.test.BookmarksFolderUADTestUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -53,7 +53,7 @@ public class BookmarksFolderUADAnonymizerTest
 		throws Exception {
 
 		BookmarksFolder bookmarksFolder =
-			BookmarksFolderUADTestHelper.addBookmarksFolderWithStatusByUserId(
+			BookmarksFolderUADTestUtil.addBookmarksFolderWithStatusByUserId(
 				_bookmarksFolderLocalService, userId, statusByUserId);
 
 		_bookmarksFolders.add(bookmarksFolder);
@@ -72,7 +72,7 @@ public class BookmarksFolderUADAnonymizerTest
 		throws Exception {
 
 		BookmarksFolder bookmarksFolder =
-			BookmarksFolderUADTestHelper.addBookmarksFolder(
+			BookmarksFolderUADTestUtil.addBookmarksFolder(
 				_bookmarksFolderLocalService, userId);
 
 		if (deleteAfterTestRun) {

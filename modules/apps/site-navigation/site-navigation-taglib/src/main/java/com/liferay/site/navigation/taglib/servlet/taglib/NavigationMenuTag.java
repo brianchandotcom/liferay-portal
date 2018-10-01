@@ -177,8 +177,6 @@ public class NavigationMenuTag extends IncludeTag {
 	}
 
 	protected List<NavItem> getBranchMenuItems() throws PortalException {
-		List<NavItem> navItems = new ArrayList<>();
-
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
@@ -192,18 +190,20 @@ public class NavigationMenuTag extends IncludeTag {
 				siteNavigationMenuItemId);
 
 		if (siteNavigationMenuItem == null) {
-			return navItems;
+			return new ArrayList<>();
 		}
 
 		List<SiteNavigationMenuItem> ancestors =
 			siteNavigationMenuItem.getAncestors();
 
-		Collections.reverse(ancestors);
+		List<NavItem> navItems = new ArrayList<>(ancestors.size() + 1);
 
-		ancestors.forEach(
-			ancestor -> navItems.add(
-				new SiteNavigationMenuNavItem(
-					request, themeDisplay, ancestor)));
+		for (int i = ancestors.size() - 1; i >= 0; i--) {
+			SiteNavigationMenuItem ancestor = ancestors.get(i);
+
+			navItems.add(
+				new SiteNavigationMenuNavItem(request, themeDisplay, ancestor));
+		}
 
 		navItems.add(
 			new SiteNavigationMenuNavItem(
@@ -214,8 +214,6 @@ public class NavigationMenuTag extends IncludeTag {
 
 	protected List<NavItem> getBranchNavItems(HttpServletRequest request)
 		throws PortalException {
-
-		List<NavItem> navItems = new ArrayList<>();
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -229,11 +227,14 @@ public class NavigationMenuTag extends IncludeTag {
 
 		List<Layout> ancestorLayouts = layout.getAncestors();
 
-		Collections.reverse(ancestorLayouts);
+		List<NavItem> navItems = new ArrayList<>(ancestorLayouts.size());
 
-		ancestorLayouts.forEach(
-			ancestorLayout -> navItems.add(
-				new NavItem(request, themeDisplay, ancestorLayout, null)));
+		for (int i = ancestorLayouts.size() - 1; i >= 0; i--) {
+			Layout ancestorLayout = ancestorLayouts.get(i);
+
+			navItems.add(
+				new NavItem(request, themeDisplay, ancestorLayout, null));
+		}
 
 		return navItems;
 	}

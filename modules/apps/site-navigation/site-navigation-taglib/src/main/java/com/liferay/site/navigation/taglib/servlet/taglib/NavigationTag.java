@@ -36,7 +36,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
-import java.util.ListIterator;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -175,11 +174,8 @@ public class NavigationTag extends IncludeTag {
 
 		List<NavItem> navItems = new ArrayList<>(ancestorLayouts.size() + 1);
 
-		ListIterator<Layout> listIterator = ancestorLayouts.listIterator(
-			ancestorLayouts.size());
-
-		while (listIterator.hasPrevious()) {
-			Layout ancestorLayout = listIterator.previous();
+		for (int i = ancestorLayouts.size() - 1; i >= 0; i--) {
+			Layout ancestorLayout = ancestorLayouts.get(i);
 
 			navItems.add(
 				new NavItem(request, themeDisplay, ancestorLayout, null));

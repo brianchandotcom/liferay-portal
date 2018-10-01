@@ -58,7 +58,7 @@ public class UserServiceOrganizationAdminUnsetsUsersForNonSiteOrganizationTest {
 			_organization);
 
 		try {
-			_unsetOrganizationUsers(
+			UserServiceTestUtil.unsetOrganizationUsers(
 				_organization.getOrganizationId(), _organizationAdminUser,
 				otherOrganizationAdminUser);
 
@@ -74,7 +74,7 @@ public class UserServiceOrganizationAdminUnsetsUsersForNonSiteOrganizationTest {
 
 	@Test
 	public void shouldUnsetOrganizationOwner() throws Exception {
-		_unsetOrganizationUsers(
+		UserServiceTestUtil.unsetOrganizationUsers(
 			_organization.getOrganizationId(), _organizationAdminUser,
 			_organizationOwnerUser);
 

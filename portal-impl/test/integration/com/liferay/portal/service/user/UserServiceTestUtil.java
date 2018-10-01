@@ -21,18 +21,14 @@ import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserServiceUtil;
 
-import org.junit.experimental.runners.Enclosed;
-import org.junit.runner.RunWith;
-
 /**
  * @author Brian Wing Shun Chan
  * @author José Manuel Navarro
  * @author Drew Brokke
  */
-@RunWith(Enclosed.class)
 public class UserServiceTestUtil {
 
-	private static void _unsetGroupUsers(
+	protected static void unsetGroupUsers(
 			long groupId, User subjectUser, User objectUser)
 		throws Exception {
 
@@ -47,7 +43,7 @@ public class UserServiceTestUtil {
 			groupId, new long[] {objectUser.getUserId()}, serviceContext);
 	}
 
-	private static void _unsetOrganizationUsers(
+	protected static void unsetOrganizationUsers(
 			long organizationId, User subjectUser, User objectUser)
 		throws Exception {
 

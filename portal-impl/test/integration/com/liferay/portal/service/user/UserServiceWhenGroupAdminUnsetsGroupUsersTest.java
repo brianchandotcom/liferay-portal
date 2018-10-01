@@ -57,7 +57,7 @@ public class UserServiceWhenGroupAdminUnsetsGroupUsersTest {
 		User groupAdminUser = UserTestUtil.addGroupAdminUser(_group);
 
 		try {
-			_unsetGroupUsers(
+			UserServiceTestUtil.unsetGroupUsers(
 				_group.getGroupId(), _groupAdminUser, groupAdminUser);
 
 			Assert.assertTrue(
@@ -74,7 +74,7 @@ public class UserServiceWhenGroupAdminUnsetsGroupUsersTest {
 		User groupOwnerUser = UserTestUtil.addGroupOwnerUser(_group);
 
 		try {
-			_unsetGroupUsers(
+			UserServiceTestUtil.unsetGroupUsers(
 				_group.getGroupId(), _groupAdminUser, groupOwnerUser);
 
 			Assert.assertTrue(
@@ -92,7 +92,7 @@ public class UserServiceWhenGroupAdminUnsetsGroupUsersTest {
 			_organization);
 
 		try {
-			_unsetOrganizationUsers(
+			UserServiceTestUtil.unsetOrganizationUsers(
 				_organization.getOrganizationId(), _groupAdminUser,
 				organizationAdminUser);
 
@@ -112,7 +112,7 @@ public class UserServiceWhenGroupAdminUnsetsGroupUsersTest {
 			_organization);
 
 		try {
-			_unsetOrganizationUsers(
+			UserServiceTestUtil.unsetOrganizationUsers(
 				_organization.getOrganizationId(), _groupAdminUser,
 				organizationOwnerUser);
 

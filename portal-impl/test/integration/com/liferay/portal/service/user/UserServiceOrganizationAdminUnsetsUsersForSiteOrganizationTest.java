@@ -57,7 +57,7 @@ public class UserServiceOrganizationAdminUnsetsUsersForSiteOrganizationTest {
 		User groupAdminUser = UserTestUtil.addGroupAdminUser(_group);
 
 		try {
-			_unsetGroupUsers(
+			UserServiceTestUtil.unsetGroupUsers(
 				_group.getGroupId(), _organizationAdminUser, groupAdminUser);
 
 			Assert.assertTrue(
@@ -74,7 +74,7 @@ public class UserServiceOrganizationAdminUnsetsUsersForSiteOrganizationTest {
 		User groupOwnerUser = UserTestUtil.addGroupOwnerUser(_group);
 
 		try {
-			_unsetGroupUsers(
+			UserServiceTestUtil.unsetGroupUsers(
 				_group.getGroupId(), _organizationAdminUser, groupOwnerUser);
 
 			Assert.assertTrue(

@@ -47,6 +47,10 @@
 	cursor: move;
 }
 
+.list-group-item:last-child {
+	border-radius: 0;
+}
+
 .select-item-checkbox-label {
 	&:after, &:before {
 		top: 0;

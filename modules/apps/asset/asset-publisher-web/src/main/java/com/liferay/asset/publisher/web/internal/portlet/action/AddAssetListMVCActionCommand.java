@@ -15,8 +15,6 @@
 package com.liferay.asset.publisher.web.internal.portlet.action;
 
 import com.liferay.asset.kernel.model.AssetEntry;
-import com.liferay.asset.list.constants.AssetListEntryTypeConstants;
-import com.liferay.asset.list.model.AssetListEntry;
 import com.liferay.asset.list.service.AssetListEntryService;
 import com.liferay.asset.publisher.constants.AssetPublisherPortletKeys;
 import com.liferay.asset.publisher.util.AssetPublisherHelper;
@@ -32,6 +30,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.MultiSessionMessages;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
@@ -123,11 +122,6 @@ public class AddAssetListMVCActionCommand extends BaseMVCActionCommand {
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			actionRequest);
 
-		AssetListEntry assetListEntry =
-			_assetListEntryService.addAssetListEntry(
-				themeDisplay.getScopeGroupId(), title,
-				AssetListEntryTypeConstants.TYPE_DYNAMIC, serviceContext);
-
 		UnicodeProperties properties = new UnicodeProperties(true);
 
 		Enumeration<String> names = portletPreferences.getNames();
@@ -145,8 +139,9 @@ public class AddAssetListMVCActionCommand extends BaseMVCActionCommand {
 			properties.put(name, value);
 		}
 
-		_assetListEntryService.updateAssetListEntrySettings(
-			assetListEntry.getAssetListEntryId(), properties.toString());
+		_assetListEntryService.addDynamicAssetListEntry(
+			themeDisplay.getUserId(), themeDisplay.getScopeGroupId(), title,
+			properties.toString(), serviceContext);
 	}
 
 	private void _saveManualAssetList(
@@ -160,11 +155,6 @@ public class AddAssetListMVCActionCommand extends BaseMVCActionCommand {
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			actionRequest);
 
-		AssetListEntry assetListEntry =
-			_assetListEntryService.addAssetListEntry(
-				themeDisplay.getScopeGroupId(), title,
-				AssetListEntryTypeConstants.TYPE_MANUAL, serviceContext);
-
 		long[] groupIds = _assetPublisherHelper.getGroupIds(
 			portletPreferences, themeDisplay.getScopeGroupId(),
 			themeDisplay.getLayout());
@@ -173,10 +163,12 @@ public class AddAssetListMVCActionCommand extends BaseMVCActionCommand {
 			actionRequest, portletPreferences,
 			themeDisplay.getPermissionChecker(), groupIds, true, true);
 
-		for (AssetEntry assetEntry : assetEntries) {
-			_assetListEntryService.addAssetEntrySelection(
-				assetListEntry.getAssetListEntryId(), assetEntry.getEntryId());
-		}
+		long[] assetEntryIds = ListUtil.toLongArray(
+			assetEntries, AssetEntry::getEntryId);
+
+		_assetListEntryService.addManualAssetListEntry(
+			themeDisplay.getUserId(), themeDisplay.getScopeGroupId(), title,
+			assetEntryIds, serviceContext);
 	}
 
 	@Reference

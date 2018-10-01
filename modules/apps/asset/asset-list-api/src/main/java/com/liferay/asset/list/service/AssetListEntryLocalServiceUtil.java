@@ -68,6 +68,24 @@ public class AssetListEntryLocalServiceUtil {
 			serviceContext);
 	}
 
+	public static com.liferay.asset.list.model.AssetListEntry addDynamicAssetListEntry(
+		long userId, long groupId, String title, String typeSettings,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .addDynamicAssetListEntry(userId, groupId, title,
+			typeSettings, serviceContext);
+	}
+
+	public static com.liferay.asset.list.model.AssetListEntry addManualAssetListEntry(
+		long userId, long groupId, String title, long[] assetEntryIds,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .addManualAssetListEntry(userId, groupId, title,
+			assetEntryIds, serviceContext);
+	}
+
 	/**
 	* Creates a new asset list entry with the primary key. Does not add the asset list entry to the database.
 	*

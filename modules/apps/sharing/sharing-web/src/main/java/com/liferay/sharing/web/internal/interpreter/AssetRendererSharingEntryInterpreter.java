@@ -22,12 +22,12 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.sharing.interpreter.SharingEntryInterpreter;
 import com.liferay.sharing.model.SharingEntry;
-import com.liferay.sharing.renderer.SharingEntryEditRenderer;
-import com.liferay.sharing.renderer.SharingEntryViewRenderer;
 import com.liferay.sharing.web.internal.renderer.AssetRendererSharingEntryEditRenderer;
 import com.liferay.sharing.web.internal.renderer.AssetRendererSharingEntryViewRenderer;
+import com.liferay.sharing.web.interpreter.SharingEntryInterpreter;
+import com.liferay.sharing.web.renderer.SharingEntryEditRenderer;
+import com.liferay.sharing.web.renderer.SharingEntryViewRenderer;
 
 import java.util.Locale;
 

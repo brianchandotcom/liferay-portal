@@ -12,28 +12,22 @@
  * details.
  */
 
-package com.liferay.sharing.web.internal.portlet;
+package com.liferay.sharing.web.renderer;
 
-import com.liferay.portal.kernel.portlet.BasePortletProvider;
-import com.liferay.portal.kernel.portlet.EditPortletProvider;
-import com.liferay.sharing.web.constants.SharingPortletKeys;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
+import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 
-import org.osgi.service.component.annotations.Component;
+import javax.portlet.PortletURL;
 
 /**
  * @author Sergio González
  */
-@Component(
-	immediate = true,
-	property = "model.class.name=com.liferay.sharing.model.SharingEntry",
-	service = EditPortletProvider.class
-)
-public class SharingPortletProvider
-	extends BasePortletProvider implements EditPortletProvider {
+public interface SharingEntryEditRenderer<T> {
 
-	@Override
-	public String getPortletName() {
-		return SharingPortletKeys.SHARING;
-	}
+	public PortletURL getURLEdit(
+			T entry, LiferayPortletRequest liferayPortletRequest,
+			LiferayPortletResponse liferayPortletResponse)
+		throws PortalException;
 
 }

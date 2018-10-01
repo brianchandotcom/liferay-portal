@@ -246,39 +246,32 @@ public class ModulesJUnitBatchTestClassGroup extends JUnitBatchTestClassGroup {
 	private Set<File> _getReleaseModuleAppDirs() {
 		Set<String> bundledAppNames = _getBundledAppNames();
 
-		try {
-			Set<File> releaseModuleAppDirs = new HashSet<>();
+		Set<File> releaseModuleAppDirs = new HashSet<>();
 
-			for (File moduleAppDir :
-					portalGitWorkingDirectory.getModuleAppDirs()) {
+		for (File moduleAppDir : portalGitWorkingDirectory.getModuleAppDirs()) {
+			File appBndFile = new File(moduleAppDir, "app.bnd");
 
-				File appBndFile = new File(moduleAppDir, "app.bnd");
+			String appTitle = _getAppTitle(appBndFile);
+			String appSuiteTitle = _getAppSuiteTitle(appBndFile);
 
-				String appTitle = _getAppTitle(appBndFile);
-				String appSuiteTitle = _getAppSuiteTitle(appBndFile);
+			for (String bundledAppName : bundledAppNames) {
+				if (bundledAppName.contains(appSuiteTitle + " -") &&
+					bundledAppName.contains(appTitle + " -")) {
 
-				for (String bundledAppName : bundledAppNames) {
-					if (bundledAppName.contains(appSuiteTitle + " -") &&
-						bundledAppName.contains(appTitle + " -")) {
+					releaseModuleAppDirs.add(moduleAppDir);
 
-						releaseModuleAppDirs.add(moduleAppDir);
+					continue;
+				}
 
-						continue;
-					}
+				if (bundledAppName.contains(appTitle + ".lpkg")) {
+					releaseModuleAppDirs.add(moduleAppDir);
 
-					if (bundledAppName.contains(appTitle + ".lpkg")) {
-						releaseModuleAppDirs.add(moduleAppDir);
-
-						continue;
-					}
+					continue;
 				}
 			}
+		}
 
-			return releaseModuleAppDirs;
-		}
-		catch (IOException ioe) {
-			throw new RuntimeException(ioe);
-		}
+		return releaseModuleAppDirs;
 	}
 
 	private static final Pattern _singleModuleBatchNamePattern =

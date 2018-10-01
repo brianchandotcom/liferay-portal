@@ -15,7 +15,6 @@
 package com.liferay.jenkins.results.parser;
 
 import java.io.File;
-import java.io.FileFilter;
 import java.io.IOException;
 
 import java.nio.file.FileVisitResult;
@@ -26,7 +25,6 @@ import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -50,74 +48,27 @@ public class PortalGitWorkingDirectory extends GitWorkingDirectory {
 			List<PathMatcher> includesPathMatchers)
 		throws IOException {
 
-		List<File> modifiedModuleDirsList = new ArrayList<>();
-
-		List<File> modifiedFilesList = getModifiedFilesList();
-
-		for (File moduleDir :
-				getModuleDirsList(excludesPathMatchers, includesPathMatchers)) {
-
-			for (File modifiedFile : modifiedFilesList) {
-				if (JenkinsResultsParserUtil.isFileInDirectory(
-						moduleDir, modifiedFile)) {
-
-					modifiedModuleDirsList.add(moduleDir);
-
-					break;
-				}
-			}
-		}
-
-		return modifiedModuleDirsList;
-	}
-
-	public List<File> getModifiedNonmoduleDirsList() {
-		List<File> modifiedNonmoduleDirs = new ArrayList<>();
-
-		List<File> modifiedNonmoduleFiles = getModifiedFilesList(
-			"-v 'modules/'");
-
-		File workingDirectory = getWorkingDirectory();
-
-		List<File> nonmoduleDirList = Arrays.asList(
-			workingDirectory.listFiles(
-				new FileFilter() {
-
-					@Override
-					public boolean accept(File file) {
-						return file.isDirectory();
-					}
-
-				}));
-
-		for (File nonmoduleDir : nonmoduleDirList) {
-			for (File modifiedNonmoduleFile : modifiedNonmoduleFiles) {
-				if (JenkinsResultsParserUtil.isFileInDirectory(
-						nonmoduleDir, modifiedNonmoduleFile)) {
-
-					modifiedNonmoduleDirs.add(nonmoduleDir);
-
-					break;
-				}
-			}
-		}
-
-		return modifiedNonmoduleDirs;
+		return JenkinsResultsParserUtil.getDirectoriesContainingFiles(
+			getModuleDirsList(excludesPathMatchers, includesPathMatchers),
+			getModifiedFilesList());
 	}
 
 	public List<File> getModifiedNPMTestModuleDirsList() throws IOException {
-		List<File> modifiedModuleDirsList = new ArrayList<>();
+		List<File> modifiedModuleDirsList = getModifiedModuleDirsList();
 
-		for (File modifiedModuleDir : getModifiedModuleDirsList()) {
+		List<File> modifiedNPMTestModuleDirsList = new ArrayList<>(
+			modifiedModuleDirsList.size());
+
+		for (File modifiedModuleDir : modifiedModuleDirsList) {
 			if (_isNPMTestModuleDir(modifiedModuleDir)) {
-				modifiedModuleDirsList.add(modifiedModuleDir);
+				modifiedNPMTestModuleDirsList.add(modifiedModuleDir);
 			}
 		}
 
-		return modifiedModuleDirsList;
+		return modifiedNPMTestModuleDirsList;
 	}
 
-	public List<File> getModuleAppDirs() throws IOException {
+	public List<File> getModuleAppDirs() {
 		List<File> moduleAppDirs = new ArrayList<>();
 
 		List<File> moduleAppBndFiles = JenkinsResultsParserUtil.findFiles(
@@ -185,7 +136,10 @@ public class PortalGitWorkingDirectory extends GitWorkingDirectory {
 				public FileVisitResult preVisitDirectory(
 					Path filePath, BasicFileAttributes attrs) {
 
-					if (_pathExcluded(filePath) || !_pathIncluded(filePath)) {
+					if (!JenkinsResultsParserUtil.isFileIncluded(
+							excludedModulesPathMatchers,
+							includedModulesPathMatchers, filePath)) {
+
 						return FileVisitResult.CONTINUE;
 					}
 
@@ -208,38 +162,6 @@ public class PortalGitWorkingDirectory extends GitWorkingDirectory {
 					}
 
 					return FileVisitResult.CONTINUE;
-				}
-
-				private boolean _pathExcluded(Path path) {
-					if ((excludedModulesPathMatchers == null) ||
-						excludedModulesPathMatchers.isEmpty()) {
-
-						return false;
-					}
-
-					return _pathMatches(path, excludedModulesPathMatchers);
-				}
-
-				private boolean _pathIncluded(Path path) {
-					if ((includedModulesPathMatchers == null) ||
-						includedModulesPathMatchers.isEmpty()) {
-
-						return true;
-					}
-
-					return _pathMatches(path, includedModulesPathMatchers);
-				}
-
-				private boolean _pathMatches(
-					Path path, List<PathMatcher> pathMatchers) {
-
-					for (PathMatcher pathMatcher : pathMatchers) {
-						if (pathMatcher.matches(path)) {
-							return true;
-						}
-					}
-
-					return false;
 				}
 
 				private Module _module;

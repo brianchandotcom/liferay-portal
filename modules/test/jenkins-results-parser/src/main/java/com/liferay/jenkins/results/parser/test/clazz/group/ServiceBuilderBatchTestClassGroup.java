@@ -170,7 +170,10 @@ public class ServiceBuilderBatchTestClassGroup
 		if (testRelevantChanges) {
 			List<File> modifiedPortalToolsServiceBuilderFiles =
 				portalGitWorkingDirectory.getModifiedFilesList(
-					"portal-tools-service-builder");
+					null,
+					getPathMatchers(
+						"portal-tools-service-builder/**",
+						portalModulesBaseDir));
 
 			if (!modifiedPortalToolsServiceBuilderFiles.isEmpty()) {
 				_buildType = BuildType.FULL;
@@ -179,7 +182,11 @@ public class ServiceBuilderBatchTestClassGroup
 			}
 
 			List<File> modifiedPortalImplFiles =
-				portalGitWorkingDirectory.getModifiedFilesList("portal-impl/");
+				portalGitWorkingDirectory.getModifiedFilesList(
+					null,
+					getPathMatchers(
+						"portal-impl/**",
+						portalGitWorkingDirectory.getWorkingDirectory()));
 
 			if (!modifiedPortalImplFiles.isEmpty()) {
 				_buildType = BuildType.CORE;
@@ -187,7 +194,10 @@ public class ServiceBuilderBatchTestClassGroup
 			else {
 				List<File> modifiedPortalKernelFiles =
 					portalGitWorkingDirectory.getModifiedFilesList(
-						"portal-kernel/");
+						null,
+						getPathMatchers(
+							"portal-kernel/**",
+							portalGitWorkingDirectory.getWorkingDirectory()));
 
 				if (!modifiedPortalKernelFiles.isEmpty()) {
 					_buildType = BuildType.CORE;

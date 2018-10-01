@@ -664,6 +664,35 @@ public class JenkinsResultsParserUtil {
 		}
 	}
 
+	public static List<File> getDirectoriesContainingFiles(
+		List<File> directories, List<File> files) {
+
+		List<File> directoriesContainingFiles = new ArrayList<>(
+			directories.size());
+
+		for (File directory : directories) {
+			if (!directory.isDirectory()) {
+				continue;
+			}
+
+			boolean containsFile = false;
+
+			for (File file : files) {
+				if (isFileInDirectory(directory, file)) {
+					containsFile = true;
+
+					break;
+				}
+			}
+
+			if (containsFile) {
+				directoriesContainingFiles.add(directory);
+			}
+		}
+
+		return directoriesContainingFiles;
+	}
+
 	public static String getDistinctTimeStamp() {
 		while (true) {
 			String timeStamp = String.valueOf(System.currentTimeMillis());
@@ -676,6 +705,20 @@ public class JenkinsResultsParserUtil {
 
 			return timeStamp;
 		}
+	}
+
+	public static List<File> getExcludedFiles(
+		List<PathMatcher> excludesPathMatchers, List<File> files) {
+
+		List<File> excludedFiles = new ArrayList<>(files.size());
+
+		for (File file : files) {
+			if (isFileExcluded(excludesPathMatchers, file)) {
+				excludedFiles.add(file);
+			}
+		}
+
+		return excludedFiles;
 	}
 
 	public static String getGitHubApiUrl(
@@ -697,23 +740,30 @@ public class JenkinsResultsParserUtil {
 		}
 	}
 
+	public static List<File> getIncludedFiles(
+		List<PathMatcher> excludesPathMatchers,
+		List<PathMatcher> includesPathMatchers, List<File> files) {
+
+		List<File> includedFiles = new ArrayList<>(files.size());
+
+		for (File file : files) {
+			if (isFileIncluded(
+					excludesPathMatchers, includesPathMatchers, file)) {
+
+				includedFiles.add(file);
+			}
+		}
+
+		return includedFiles;
+	}
+
 	public static List<URL> getIncludedResourceURLs(
 			String[] resourceIncludesRelativeGlobs, File rootDir)
 		throws IOException {
 
-		final List<PathMatcher> pathMatchers = new ArrayList<>();
-
-		FileSystem fileSystem = FileSystems.getDefault();
-
-		for (String resourceIncludesRelativeGlob :
-				resourceIncludesRelativeGlobs) {
-
-			pathMatchers.add(
-				fileSystem.getPathMatcher(
-					combine(
-						"glob:", rootDir.getAbsolutePath(), File.separator,
-						resourceIncludesRelativeGlob)));
-		}
+		final List<PathMatcher> pathMatchers = toPathMatchers(
+			rootDir.getAbsolutePath() + File.separator,
+			resourceIncludesRelativeGlobs);
 
 		final List<URL> includedResourceURLs = new ArrayList<>();
 
@@ -1158,6 +1208,29 @@ public class JenkinsResultsParserUtil {
 		return getSlaves(getBuildProperties(), jenkinsMasterPatternString);
 	}
 
+	public static List<File> getSubdirectories(int depth, File rootDirectory) {
+		if (!rootDirectory.isDirectory()) {
+			return Collections.emptyList();
+		}
+
+		List<File> subdirectories = new ArrayList<>();
+
+		if (depth == 0) {
+			subdirectories.add(rootDirectory);
+		}
+		else {
+			for (File file : rootDirectory.listFiles()) {
+				if (!file.isDirectory()) {
+					continue;
+				}
+
+				subdirectories.addAll(getSubdirectories(depth - 1, file));
+			}
+		}
+
+		return subdirectories;
+	}
+
 	public static boolean isCINode() {
 		String hostName = getHostName("");
 
@@ -1168,6 +1241,55 @@ public class JenkinsResultsParserUtil {
 		}
 
 		return false;
+	}
+
+	public static boolean isFileExcluded(
+		List<PathMatcher> excludesPathMatchers, File file) {
+
+		return isFileExcluded(excludesPathMatchers, file.toPath());
+	}
+
+	public static boolean isFileExcluded(
+		List<PathMatcher> excludesPathMatchers, Path path) {
+
+		if (excludesPathMatchers != null) {
+			for (PathMatcher excludesPathMatcher : excludesPathMatchers) {
+				if (excludesPathMatcher.matches(path)) {
+					return true;
+				}
+			}
+		}
+
+		return false;
+	}
+
+	public static boolean isFileIncluded(
+		List<PathMatcher> excludesPathMatchers,
+		List<PathMatcher> includesPathMatchers, File file) {
+
+		return isFileIncluded(
+			excludesPathMatchers, includesPathMatchers, file.toPath());
+	}
+
+	public static boolean isFileIncluded(
+		List<PathMatcher> excludesPathMatchers,
+		List<PathMatcher> includesPathMatchers, Path path) {
+
+		if (isFileExcluded(excludesPathMatchers, path)) {
+			return false;
+		}
+
+		if (includesPathMatchers != null) {
+			for (PathMatcher includesPathMatcher : includesPathMatchers) {
+				if (includesPathMatcher.matches(path)) {
+					return true;
+				}
+			}
+
+			return false;
+		}
+
+		return true;
 	}
 
 	public static boolean isFileInDirectory(File directory, File file) {
@@ -1292,6 +1414,17 @@ public class JenkinsResultsParserUtil {
 		}
 
 		return string;
+	}
+
+	public static List<File> removeExcludedFiles(
+		List<PathMatcher> excludesPathMatchers, List<File> files) {
+
+		List<File> excludedFiles = getExcludedFiles(
+			excludesPathMatchers, files);
+
+		files.removeAll(excludedFiles);
+
+		return files;
 	}
 
 	public static void saveToCacheFile(String key, String text) {
@@ -1534,6 +1667,26 @@ public class JenkinsResultsParserUtil {
 		return toJSONObject(
 			url, false, _MAX_RETRIES_DEFAULT, postContent,
 			_RETRY_PERIOD_DEFAULT, _TIMEOUT_DEFAULT, httpAuthorization);
+	}
+
+	public static List<PathMatcher> toPathMatchers(
+		String prefix, String... globPatterns) {
+
+		if (prefix == null) {
+			prefix = "";
+		}
+
+		FileSystem fileSystem = FileSystems.getDefault();
+
+		List<PathMatcher> pathMatchers = new ArrayList<>(globPatterns.length);
+
+		for (String globPattern : globPatterns) {
+			pathMatchers.add(
+				fileSystem.getPathMatcher(
+					combine("glob:", prefix, globPattern)));
+		}
+
+		return pathMatchers;
 	}
 
 	public static Properties toProperties(String url) throws IOException {

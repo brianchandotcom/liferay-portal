@@ -80,8 +80,15 @@ public class FunctionalBatchTestClassGroup extends BatchTestClassGroup {
 				ioe);
 		}
 
+		File modulesDir = new File(
+			portalGitWorkingDirectory.getWorkingDirectory(), "modules");
+
 		modifiedDirsList.addAll(
-			portalGitWorkingDirectory.getModifiedNonmoduleDirsList());
+			portalGitWorkingDirectory.getModifiedDirsList(
+				false,
+				JenkinsResultsParserUtil.toPathMatchers(
+					null, modulesDir.getAbsolutePath()),
+				null));
 
 		StringBuilder sb = new StringBuilder();
 

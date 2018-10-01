@@ -20,6 +20,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
+import java.nio.file.PathMatcher;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -1055,20 +1057,38 @@ public class GitWorkingDirectory {
 		return executionResult.getStandardOut();
 	}
 
+	public List<File> getModifiedDirsList(
+		boolean checkUnstagedFiles, List<PathMatcher> excludesPathMatchers,
+		List<PathMatcher> includesPathMatchers) {
+
+		return getModifiedDirsList(
+			checkUnstagedFiles, excludesPathMatchers, includesPathMatchers,
+			getWorkingDirectory());
+	}
+
+	public List<File> getModifiedDirsList(
+		boolean checkUnstagedFiles, List<PathMatcher> excludesPathMatchers,
+		List<PathMatcher> includesPathMatchers, File rootDirectory) {
+
+		List<File> subdirectories = getSubdirectoriesContainingFiles(
+			1, getModifiedFilesList(checkUnstagedFiles, null, null),
+			rootDirectory);
+
+		return JenkinsResultsParserUtil.getIncludedFiles(
+			excludesPathMatchers, includesPathMatchers, subdirectories);
+	}
+
 	public List<File> getModifiedFilesList() {
-		return getModifiedFilesList(null, false);
+		return getModifiedFilesList(false, null, null);
 	}
 
 	public List<File> getModifiedFilesList(boolean checkUnstagedFiles) {
-		return getModifiedFilesList(null, checkUnstagedFiles);
-	}
-
-	public List<File> getModifiedFilesList(String grepPredicateString) {
-		return getModifiedFilesList(grepPredicateString, false);
+		return getModifiedFilesList(checkUnstagedFiles, null, null);
 	}
 
 	public List<File> getModifiedFilesList(
-		String grepPredicateString, boolean checkUnstagedFiles) {
+		boolean checkUnstagedFiles, List<PathMatcher> excludesPathMatchers,
+		List<PathMatcher> includesPathMatchers) {
 
 		List<File> modifiedFiles = new ArrayList<>();
 
@@ -1093,17 +1113,12 @@ public class GitWorkingDirectory {
 			sb.append(currentLocalGitBranch.getSHA());
 		}
 
-		if ((grepPredicateString != null) && !grepPredicateString.isEmpty()) {
-			sb.append(" | grep ");
-			sb.append(grepPredicateString);
-		}
-
 		GitUtil.ExecutionResult executionResult = executeBashCommands(
 			GitUtil.MAX_RETRIES, GitUtil.RETRY_DELAY, GitUtil.TIMEOUT,
 			sb.toString());
 
 		if (executionResult.getExitValue() == 1) {
-			return modifiedFiles;
+			return Collections.emptyList();
 		}
 
 		if (executionResult.getExitValue() != 0) {
@@ -1118,7 +1133,16 @@ public class GitWorkingDirectory {
 			modifiedFiles.add(new File(_workingDirectory, line));
 		}
 
-		return modifiedFiles;
+		return JenkinsResultsParserUtil.getIncludedFiles(
+			excludesPathMatchers, includesPathMatchers, modifiedFiles);
+	}
+
+	public List<File> getModifiedFilesList(
+		List<PathMatcher> excludesPathMatchers,
+		List<PathMatcher> includesPathMatchers) {
+
+		return getModifiedFilesList(
+			false, excludesPathMatchers, includesPathMatchers);
 	}
 
 	public LocalGitBranch getRebasedLocalGitBranch(PullRequest pullRequest) {
@@ -1782,6 +1806,16 @@ public class GitWorkingDirectory {
 
 		throw new IllegalArgumentException(
 			"Real Git directory could not be found in " + gitFile.getPath());
+	}
+
+	protected List<File> getSubdirectoriesContainingFiles(
+		int depth, List<File> files, File rootDirectory) {
+
+		List<File> subdirectories = JenkinsResultsParserUtil.getSubdirectories(
+			depth, rootDirectory);
+
+		return JenkinsResultsParserUtil.getDirectoriesContainingFiles(
+			subdirectories, files);
 	}
 
 	protected GitRemote getUpstreamGitRemote() {

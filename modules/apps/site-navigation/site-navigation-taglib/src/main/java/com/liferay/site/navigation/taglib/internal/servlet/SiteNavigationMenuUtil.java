@@ -17,8 +17,11 @@ package com.liferay.site.navigation.taglib.internal.servlet;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.theme.NavItem;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.site.navigation.model.SiteNavigationMenuItem;
 import com.liferay.site.navigation.service.SiteNavigationMenuItemLocalService;
@@ -84,6 +87,68 @@ public class SiteNavigationMenuUtil {
 		return navItems;
 	}
 
+	public static List<NavItem> getNavItems(
+			HttpServletRequest request, String rootLayoutType,
+			int rootLayoutLevel, String rootLayoutUuid,
+			List<NavItem> branchNavItems)
+		throws Exception {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		NavItem rootNavItem = null;
+		List<NavItem> navItems = null;
+
+		if (rootLayoutType.equals("relative")) {
+			if ((rootLayoutLevel >= 0) &&
+				(rootLayoutLevel < branchNavItems.size())) {
+
+				rootNavItem = branchNavItems.get(rootLayoutLevel);
+			}
+		}
+		else if (rootLayoutType.equals("absolute")) {
+			if (rootLayoutLevel == 0) {
+				navItems = NavItem.fromLayouts(request, themeDisplay, null);
+			}
+			else if (branchNavItems.size() >= rootLayoutLevel) {
+				rootNavItem = branchNavItems.get(rootLayoutLevel - 1);
+			}
+		}
+		else if (rootLayoutType.equals("select")) {
+			Layout layout = themeDisplay.getLayout();
+
+			if (Validator.isNotNull(rootLayoutUuid)) {
+				Layout rootLayout =
+					_layoutLocalService.getLayoutByUuidAndGroupId(
+						rootLayoutUuid, layout.getGroupId(),
+						layout.isPrivateLayout());
+
+				rootNavItem = new NavItem(
+					request, themeDisplay, rootLayout, null);
+			}
+			else {
+				navItems = NavItem.fromLayouts(request, themeDisplay, null);
+			}
+		}
+
+		if (rootNavItem == null) {
+			if (navItems == null) {
+				return new ArrayList<>();
+			}
+
+			return navItems;
+		}
+
+		return rootNavItem.getChildren();
+	}
+
+	@Reference(unbind = "-")
+	protected void setLayoutLocalService(
+		LayoutLocalService layoutLocalService) {
+
+		_layoutLocalService = layoutLocalService;
+	}
+
 	@Reference(unbind = "-")
 	protected void setSiteNavigationMenuItemLocalService(
 		SiteNavigationMenuItemLocalService siteNavigationMenuItemLocalService) {
@@ -103,6 +168,7 @@ public class SiteNavigationMenuUtil {
 	private static final Log _log = LogFactoryUtil.getLog(
 		SiteNavigationMenuUtil.class);
 
+	private static LayoutLocalService _layoutLocalService;
 	private static SiteNavigationMenuItemLocalService
 		_siteNavigationMenuItemLocalService;
 	private static SiteNavigationMenuItemTypeRegistry

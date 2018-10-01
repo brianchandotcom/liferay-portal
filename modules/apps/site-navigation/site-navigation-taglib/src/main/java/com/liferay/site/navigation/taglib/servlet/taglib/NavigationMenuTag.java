@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portletdisplaytemplate.PortletDisplayTemplateManagerUtil;
-import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.theme.NavItem;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -88,7 +87,9 @@ public class NavigationMenuTag extends IncludeTag {
 			else {
 				branchNavItems = getBranchNavItems(request);
 
-				navItems = getNavItems(branchNavItems);
+				navItems = SiteNavigationMenuUtil.getNavItems(
+					request, _rootItemType, _rootItemLevel, _rootItemId,
+					branchNavItems);
 			}
 		}
 		catch (Exception e) {
@@ -316,56 +317,16 @@ public class NavigationMenuTag extends IncludeTag {
 		return new ArrayList<>();
 	}
 
+	/**
+	 * @deprecated As of Judson (7.1.x), with no direct replacement
+	 */
+	@Deprecated
 	protected List<NavItem> getNavItems(List<NavItem> branchNavItems)
 		throws Exception {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		NavItem rootNavItem = null;
-		List<NavItem> navItems = null;
-
-		if (_rootItemType.equals("relative")) {
-			if ((_rootItemLevel >= 0) &&
-				(_rootItemLevel < branchNavItems.size())) {
-
-				rootNavItem = branchNavItems.get(_rootItemLevel);
-			}
-		}
-		else if (_rootItemType.equals("absolute")) {
-			if (_rootItemLevel == 0) {
-				navItems = NavItem.fromLayouts(request, themeDisplay, null);
-			}
-			else if (branchNavItems.size() >= _rootItemLevel) {
-				rootNavItem = branchNavItems.get(_rootItemLevel - 1);
-			}
-		}
-		else if (_rootItemType.equals("select")) {
-			Layout layout = themeDisplay.getLayout();
-
-			if (Validator.isNotNull(_rootItemId)) {
-				Layout rootLayout =
-					LayoutLocalServiceUtil.getLayoutByUuidAndGroupId(
-						_rootItemId, layout.getGroupId(),
-						layout.isPrivateLayout());
-
-				rootNavItem = new NavItem(
-					request, themeDisplay, rootLayout, null);
-			}
-			else {
-				navItems = NavItem.fromLayouts(request, themeDisplay, null);
-			}
-		}
-
-		if (rootNavItem == null) {
-			if (navItems == null) {
-				return new ArrayList<>();
-			}
-
-			return navItems;
-		}
-
-		return rootNavItem.getChildren();
+		return SiteNavigationMenuUtil.getNavItems(
+			request, _rootItemType, _rootItemLevel, _rootItemId,
+			branchNavItems);
 	}
 
 	@Override

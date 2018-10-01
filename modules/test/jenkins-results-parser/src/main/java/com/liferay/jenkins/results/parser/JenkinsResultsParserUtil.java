@@ -1033,10 +1033,16 @@ public class JenkinsResultsParserUtil {
 		String newValue = value;
 
 		while (matcher.find()) {
-			if (properties.containsKey(matcher.group(1))) {
+			String propertyGroup = matcher.group(0);
+			String propertyName = matcher.group(1);
+
+			if (propertyGroup.equals("${" + propertyName + "}")) {
+				continue;
+			}
+
+			if (properties.containsKey(propertyName)) {
 				newValue = newValue.replace(
-					matcher.group(0),
-					getProperty(properties, matcher.group(1)));
+					propertyGroup, getProperty(properties, propertyName));
 			}
 		}
 

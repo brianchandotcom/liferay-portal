@@ -76,6 +76,7 @@ import com.liferay.portal.kernel.search.IndexWriterHelper;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistry;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.systemevent.SystemEventHierarchyEntryThreadLocal;
@@ -1387,6 +1388,11 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 
 		kbArticle.setViewCount(viewCount);
 
+		ServiceContext serviceContext =
+			ServiceContextThreadLocal.getServiceContext();
+
+		serviceContext.setModifiedDate(kbArticle.getModifiedDate());
+
 		kbArticlePersistence.update(kbArticle);
 
 		if (kbArticle.isApproved() || kbArticle.isFirstVersion()) {
@@ -1397,6 +1403,8 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 			resourcePrimKey, WorkflowConstants.STATUS_APPROVED);
 
 		kbArticle.setViewCount(viewCount);
+
+		serviceContext.setModifiedDate(kbArticle.getModifiedDate());
 
 		kbArticlePersistence.update(kbArticle);
 	}

@@ -17,7 +17,7 @@ package com.liferay.sharing.web.internal.renderer;
 import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.sharing.renderer.SharingEntryViewRenderer;
+import com.liferay.sharing.web.renderer.SharingEntryViewRenderer;
 
 import java.io.IOException;
 

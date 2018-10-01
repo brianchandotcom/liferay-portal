@@ -432,8 +432,8 @@ public class AssetListDisplayContext {
 		return addAssetListEntryURL.toString();
 	}
 
-	private String _getAddAssetListTitle(String type) {
-		return LanguageUtil.format(_request, "add-x-asset-list", type, true);
+	private String _getAddAssetListTitle(String title) {
+		return LanguageUtil.format(_request, "add-x-asset-list", title, true);
 	}
 
 	private List<DropdownItem> _getAssetListEntryOrderByDropdownItems() {

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.document.library.service.test;
+package com.liferay.document.library.app.service.test;
 
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryConstants;
@@ -41,20 +41,16 @@ import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.security.permission.DoAsUserThread;
-import com.liferay.portlet.documentlibrary.service.test.BaseDLAppTestCase;
 
 import java.util.Dictionary;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import org.junit.Assert;
-import org.junit.experimental.runners.Enclosed;
-import org.junit.runner.RunWith;
 
 /**
  * @author Alexander Chow
  */
-@RunWith(Enclosed.class)
-public class DLAppServiceTest extends BaseDLAppTestCase {
+public class DLAppServiceTestUtil {
 
 	protected static FileEntry addFileEntry(long groupId, long folderId)
 		throws Exception {
@@ -214,6 +210,6 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 	private static final String _STRIPPED_FILE_NAME = "Title";
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		DLAppServiceTest.class);
+		DLAppServiceTestUtil.class);
 
 }

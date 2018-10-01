@@ -126,6 +126,21 @@ class FragmentEntryLink extends Component {
 	}
 
 	/**
+	 * Propagate store to editables when it's loaded
+	 * @review
+	 */
+
+	syncStore() {
+		if (this._editables) {
+			this._editables.forEach(
+				editable => {
+					editable.store = this.store;
+				}
+			);
+		}
+	}
+
+	/**
 	 * Create instances of FragmentEditableField for each editable.
 	 */
 

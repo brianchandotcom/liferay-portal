@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.asset.list.web.util;
+package com.liferay.asset.list.util;
 
 import com.liferay.asset.list.model.AssetListEntry;
 import com.liferay.asset.list.util.comparator.AssetListEntryCreateDateComparator;

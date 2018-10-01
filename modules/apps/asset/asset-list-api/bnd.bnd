@@ -7,4 +7,5 @@ Export-Package:\
 	com.liferay.asset.list.model,\
 	com.liferay.asset.list.service,\
 	com.liferay.asset.list.service.persistence,\
+	com.liferay.asset.list.util,\
 	com.liferay.asset.list.util.comparator

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.site.navigation.taglib.internal.servlet;
+package com.liferay.site.navigation.taglib.internal.util;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.site.navigation.model.SiteNavigationMenuItem;
 import com.liferay.site.navigation.service.SiteNavigationMenuItemLocalService;
-import com.liferay.site.navigation.taglib.internal.util.SiteNavigationMenuNavItem;
 import com.liferay.site.navigation.type.SiteNavigationMenuItemType;
 import com.liferay.site.navigation.type.SiteNavigationMenuItemTypeRegistry;
 
@@ -41,7 +40,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Pavel Savinov
  */
 @Component(immediate = true, service = {})
-public class SiteNavigationMenuUtil {
+public class NavItemUtil {
 
 	public static List<NavItem> getChildNavItems(
 		HttpServletRequest request, long siteNavigationMenuId,
@@ -165,8 +164,7 @@ public class SiteNavigationMenuUtil {
 			siteNavigationMenuItemTypeRegistry;
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(
-		SiteNavigationMenuUtil.class);
+	private static final Log _log = LogFactoryUtil.getLog(NavItemUtil.class);
 
 	private static LayoutLocalService _layoutLocalService;
 	private static SiteNavigationMenuItemLocalService

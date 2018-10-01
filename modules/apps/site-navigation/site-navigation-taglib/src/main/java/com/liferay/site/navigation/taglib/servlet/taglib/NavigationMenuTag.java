@@ -33,7 +33,7 @@ import com.liferay.site.navigation.service.SiteNavigationMenuItemLocalServiceUti
 import com.liferay.site.navigation.taglib.internal.portlet.display.template.PortletDisplayTemplateUtil;
 import com.liferay.site.navigation.taglib.internal.servlet.NavItemClassNameIdUtil;
 import com.liferay.site.navigation.taglib.internal.servlet.ServletContextUtil;
-import com.liferay.site.navigation.taglib.internal.servlet.SiteNavigationMenuUtil;
+import com.liferay.site.navigation.taglib.internal.util.NavItemUtil;
 import com.liferay.site.navigation.taglib.internal.util.SiteNavigationMenuNavItem;
 import com.liferay.taglib.util.IncludeTag;
 
@@ -87,7 +87,7 @@ public class NavigationMenuTag extends IncludeTag {
 			else {
 				branchNavItems = getBranchNavItems(request);
 
-				navItems = SiteNavigationMenuUtil.getNavItems(
+				navItems = NavItemUtil.getNavItems(
 					request, _rootItemType, _rootItemLevel, _rootItemId,
 					branchNavItems);
 			}
@@ -246,7 +246,7 @@ public class NavigationMenuTag extends IncludeTag {
 	protected List<NavItem> getNavItems(List<NavItem> branchNavItems)
 		throws Exception {
 
-		return SiteNavigationMenuUtil.getNavItems(
+		return NavItemUtil.getNavItems(
 			request, _rootItemType, _rootItemLevel, _rootItemId,
 			branchNavItems);
 	}
@@ -321,7 +321,7 @@ public class NavigationMenuTag extends IncludeTag {
 		}
 		else if (_rootItemType.equals("absolute")) {
 			if (_rootItemLevel == 0) {
-				return SiteNavigationMenuUtil.getChildNavItems(
+				return NavItemUtil.getChildNavItems(
 					request, _siteNavigationMenuId, 0);
 			}
 			else if (branchMenuItems.size() >= _rootItemLevel) {
@@ -331,7 +331,7 @@ public class NavigationMenuTag extends IncludeTag {
 			}
 		}
 		else if (_rootItemType.equals("select")) {
-			return SiteNavigationMenuUtil.getChildNavItems(
+			return NavItemUtil.getChildNavItems(
 				request, _siteNavigationMenuId, parentSiteNavigationMenuItemId);
 		}
 

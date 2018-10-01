@@ -29,7 +29,7 @@ import com.liferay.portlet.display.template.PortletDisplayTemplate;
 import com.liferay.site.navigation.taglib.internal.portlet.display.template.PortletDisplayTemplateUtil;
 import com.liferay.site.navigation.taglib.internal.servlet.NavItemClassNameIdUtil;
 import com.liferay.site.navigation.taglib.internal.servlet.ServletContextUtil;
-import com.liferay.site.navigation.taglib.internal.servlet.SiteNavigationMenuUtil;
+import com.liferay.site.navigation.taglib.internal.util.NavItemUtil;
 import com.liferay.taglib.util.IncludeTag;
 
 import java.util.ArrayList;
@@ -75,7 +75,7 @@ public class NavigationTag extends IncludeTag {
 		try {
 			branchNavItems = getBranchNavItems(request);
 
-			navItems = SiteNavigationMenuUtil.getNavItems(
+			navItems = NavItemUtil.getNavItems(
 				request, _rootLayoutType, _rootLayoutLevel, _rootLayoutUuid,
 				branchNavItems);
 		}
@@ -215,7 +215,7 @@ public class NavigationTag extends IncludeTag {
 	protected List<NavItem> getNavItems(List<NavItem> branchNavItems)
 		throws Exception {
 
-		return SiteNavigationMenuUtil.getNavItems(
+		return NavItemUtil.getNavItems(
 			request, _rootLayoutType, _rootLayoutLevel, _rootLayoutUuid,
 			branchNavItems);
 	}

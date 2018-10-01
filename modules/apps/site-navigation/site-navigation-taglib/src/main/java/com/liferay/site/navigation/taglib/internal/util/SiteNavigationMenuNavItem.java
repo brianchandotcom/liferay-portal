@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.theme.NavItem;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.site.navigation.model.SiteNavigationMenuItem;
 import com.liferay.site.navigation.taglib.internal.servlet.ServletContextUtil;
-import com.liferay.site.navigation.taglib.internal.servlet.SiteNavigationMenuUtil;
 import com.liferay.site.navigation.type.SiteNavigationMenuItemType;
 
 import java.util.List;
@@ -55,7 +54,7 @@ public class SiteNavigationMenuNavItem extends NavItem {
 
 	@Override
 	public List<NavItem> getChildren() {
-		return SiteNavigationMenuUtil.getChildNavItems(
+		return NavItemUtil.getChildNavItems(
 			_request, _siteNavigationMenuItem.getSiteNavigationMenuId(),
 			_siteNavigationMenuItem.getSiteNavigationMenuItemId());
 	}

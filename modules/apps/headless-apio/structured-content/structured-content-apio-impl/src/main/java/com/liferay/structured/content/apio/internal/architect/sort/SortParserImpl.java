@@ -17,10 +17,10 @@ package com.liferay.structured.content.apio.internal.architect.sort;
 import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.structured.content.apio.architect.entity.EntityField;
+import com.liferay.structured.content.apio.architect.entity.EntityModel;
 import com.liferay.structured.content.apio.architect.sort.InvalidSortException;
 import com.liferay.structured.content.apio.architect.sort.SortField;
 import com.liferay.structured.content.apio.architect.sort.SortParser;
-import com.liferay.structured.content.apio.internal.architect.filter.StructuredContentSingleEntitySchemaBasedEdmProvider;
 
 import java.util.Collections;
 import java.util.List;
@@ -29,9 +29,6 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * Utility for parsing Sort strings. It uses a model to create a list of {@link
  * SortField}.
@@ -39,8 +36,11 @@ import org.osgi.service.component.annotations.Reference;
  * @author Cristina González
  * @review
  */
-@Component(immediate = true, service = SortParser.class)
 public class SortParserImpl implements SortParser {
+
+	public SortParserImpl(EntityModel entityModel) {
+		_entityModel = entityModel;
+	}
 
 	/**
 	 * Returns a List of {@link SortField} obtained from a comma-separated list
@@ -82,15 +82,6 @@ public class SortParserImpl implements SortParser {
 		);
 	}
 
-	@Reference(unbind = "-")
-	public void setStructuredContentSingleEntitySchemaBasedEdmProvider(
-		StructuredContentSingleEntitySchemaBasedEdmProvider
-			structuredContentSingleEntitySchemaBasedEdmProvider) {
-
-		_structuredContentSingleEntitySchemaBasedEdmProvider =
-			structuredContentSingleEntitySchemaBasedEdmProvider;
-	}
-
 	protected Optional<SortField> getSortFieldOptional(String sortString) {
 		List<String> list = StringUtil.split(sortString, ':');
 
@@ -112,8 +103,7 @@ public class SortParserImpl implements SortParser {
 		}
 
 		Map<String, EntityField> entityFieldsMap =
-			_structuredContentSingleEntitySchemaBasedEdmProvider.
-				getEntityFieldsMap();
+			_entityModel.getEntityFieldsMap();
 
 		EntityField entityField = entityFieldsMap.get(fieldName);
 
@@ -153,7 +143,6 @@ public class SortParserImpl implements SortParser {
 
 	private static final String _ORDER_BY_DESC = "desc";
 
-	private StructuredContentSingleEntitySchemaBasedEdmProvider
-		_structuredContentSingleEntitySchemaBasedEdmProvider;
+	private final EntityModel _entityModel;
 
 }

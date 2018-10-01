@@ -22,7 +22,6 @@ import com.liferay.structured.content.apio.architect.entity.EntityModel;
 import com.liferay.structured.content.apio.architect.sort.InvalidSortException;
 import com.liferay.structured.content.apio.architect.sort.Sort;
 import com.liferay.structured.content.apio.architect.sort.SortField;
-import com.liferay.structured.content.apio.architect.sort.SortParser;
 
 import java.util.Collections;
 import java.util.List;
@@ -36,7 +35,7 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Cristina González
  */
-public class SortProvider implements Provider<Sort>, SortParser {
+public class SortProvider implements Provider<Sort> {
 
 	public SortProvider(EntityModel entityModel) {
 		_entityModel = entityModel;
@@ -71,7 +70,6 @@ public class SortProvider implements Provider<Sort>, SortParser {
 	 * @return a  {@link List <SortField>}
 	 * @review
 	 */
-	@Override
 	public List<SortField> parse(String sortString) {
 		if (Validator.isNull(sortString)) {
 			return Collections.emptyList();

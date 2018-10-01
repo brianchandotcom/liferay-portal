@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.cache.PortalCacheHelperUtil;
 import com.liferay.portal.kernel.cache.PortalCacheManagerNames;
 import com.liferay.portal.kernel.cache.key.CacheKeyGenerator;
 import com.liferay.portal.kernel.cache.key.CacheKeyGeneratorUtil;
-import com.liferay.portal.kernel.exception.NoSuchPortletPreferencesException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
@@ -478,17 +477,15 @@ public class PortletPreferencesFactoryImpl
 
 	@Override
 	public PortletPreferences getPortletSetup(
-			HttpServletRequest request, String portletId)
-		throws NoSuchPortletPreferencesException {
+		HttpServletRequest request, String portletId) {
 
 		return getPortletSetup(request, portletId, null);
 	}
 
 	@Override
 	public PortletPreferences getPortletSetup(
-			HttpServletRequest request, String portletId,
-			String defaultPreferences)
-		throws NoSuchPortletPreferencesException {
+		HttpServletRequest request, String portletId,
+		String defaultPreferences) {
 
 		PortletRequest portletRequest = (PortletRequest)request.getAttribute(
 			JavaConstants.JAVAX_PORTLET_REQUEST);
@@ -510,8 +507,7 @@ public class PortletPreferencesFactoryImpl
 
 	@Override
 	public PortletPreferences getPortletSetup(
-			Layout layout, String portletId, String defaultPreferences)
-		throws NoSuchPortletPreferencesException {
+		Layout layout, String portletId, String defaultPreferences) {
 
 		return getPortletSetup(
 			LayoutConstants.DEFAULT_PLID, layout, portletId,
@@ -520,9 +516,8 @@ public class PortletPreferencesFactoryImpl
 
 	@Override
 	public PortletPreferences getPortletSetup(
-			long siteGroupId, Layout layout, String portletId,
-			String defaultPreferences)
-		throws NoSuchPortletPreferencesException {
+		long siteGroupId, Layout layout, String portletId,
+		String defaultPreferences) {
 
 		return getPortletSetup(
 			layout.getCompanyId(), siteGroupId, layout.getGroupId(),
@@ -530,9 +525,7 @@ public class PortletPreferencesFactoryImpl
 	}
 
 	@Override
-	public PortletPreferences getPortletSetup(PortletRequest portletRequest)
-		throws NoSuchPortletPreferencesException {
-
+	public PortletPreferences getPortletSetup(PortletRequest portletRequest) {
 		String portletId = PortalUtil.getPortletId(portletRequest);
 
 		return getPortletSetup(portletRequest, portletId);
@@ -540,8 +533,7 @@ public class PortletPreferencesFactoryImpl
 
 	@Override
 	public PortletPreferences getPortletSetup(
-			PortletRequest portletRequest, String portletId)
-		throws NoSuchPortletPreferencesException {
+		PortletRequest portletRequest, String portletId) {
 
 		if (portletRequest instanceof ConfigurationPortletRequest) {
 			PortletRequestWrapper portletRequestWrapper =
@@ -625,8 +617,7 @@ public class PortletPreferencesFactoryImpl
 
 	@Override
 	public PortletPreferences getStrictPortletSetup(
-			Layout layout, String portletId)
-		throws NoSuchPortletPreferencesException {
+		Layout layout, String portletId) {
 
 		return getPortletSetup(
 			layout.getCompanyId(), LayoutConstants.DEFAULT_PLID,
@@ -636,8 +627,7 @@ public class PortletPreferencesFactoryImpl
 
 	@Override
 	public PortletPreferences getStrictPortletSetup(
-			long companyId, long groupId, String portletId)
-		throws NoSuchPortletPreferencesException {
+		long companyId, long groupId, String portletId) {
 
 		return getPortletSetup(
 			companyId, LayoutConstants.DEFAULT_PLID, groupId,
@@ -741,9 +731,8 @@ public class PortletPreferencesFactoryImpl
 	}
 
 	protected PortletPreferences getPortletSetup(
-			long companyId, long siteGroupId, long layoutGroupId, long plid,
-			String portletId, String defaultPreferences, boolean strictMode)
-		throws NoSuchPortletPreferencesException {
+		long companyId, long siteGroupId, long layoutGroupId, long plid,
+		String portletId, String defaultPreferences, boolean strictMode) {
 
 		String originalPortletId = portletId;
 
@@ -793,15 +782,8 @@ public class PortletPreferencesFactoryImpl
 			ownerType = PortletKeys.PREFS_OWNER_TYPE_COMPANY;
 		}
 
-		if (ownerType == 0) {
-			throw new NoSuchPortletPreferencesException(
-				"No PortletPreferences exists with the key {ownerType=0}");
-		}
-
-		if ((ownerId == 0) && (plid == 0)) {
-			throw new NoSuchPortletPreferencesException(
-				"No PortletPreferences exists with the key {ownerId=0, " +
-					"plid=0}");
+		if ((ownerType == 0) || ((ownerId == 0) && (plid == 0))) {
+			return null;
 		}
 
 		if (strictMode) {

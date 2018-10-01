@@ -16,7 +16,6 @@ package com.liferay.portal.kernel.portlet;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.kernel.exception.NoSuchPortletPreferencesException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.Portlet;
@@ -192,17 +191,15 @@ public class PortletPreferencesFactoryUtil {
 	}
 
 	public static PortletPreferences getPortletSetup(
-			Layout layout, String portletId, String defaultPreferences)
-		throws NoSuchPortletPreferencesException {
+		Layout layout, String portletId, String defaultPreferences) {
 
 		return getPortletPreferencesFactory().getPortletSetup(
 			layout, portletId, defaultPreferences);
 	}
 
 	public static PortletPreferences getPortletSetup(
-			long siteGroupId, Layout layout, String portletId,
-			String defaultPreferences)
-		throws NoSuchPortletPreferencesException {
+		long siteGroupId, Layout layout, String portletId,
+		String defaultPreferences) {
 
 		return getPortletPreferencesFactory().getPortletSetup(
 			siteGroupId, layout, portletId, defaultPreferences);
@@ -251,16 +248,14 @@ public class PortletPreferencesFactoryUtil {
 	}
 
 	public static PortletPreferences getStrictPortletSetup(
-			Layout layout, String portletId)
-		throws NoSuchPortletPreferencesException {
+		Layout layout, String portletId) {
 
 		return getPortletPreferencesFactory().getStrictPortletSetup(
 			layout, portletId);
 	}
 
 	public static PortletPreferences getStrictPortletSetup(
-			long companyId, long groupId, String portletId)
-		throws NoSuchPortletPreferencesException {
+		long companyId, long groupId, String portletId) {
 
 		return getPortletPreferencesFactory().getStrictPortletSetup(
 			companyId, groupId, portletId);

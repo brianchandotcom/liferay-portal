@@ -99,7 +99,6 @@ public class SharedWithMeViewDisplayContext {
 								LanguageUtil.get(
 									_request, "filter-by-navigation"));
 						}));
-
 				addGroup(
 					dropdownGroupItem -> {
 						dropdownGroupItem.setDropdownItems(
@@ -213,16 +212,13 @@ public class SharedWithMeViewDisplayContext {
 							dropdownItem.setLabel(
 								LanguageUtil.get(_request, "all"));
 						}));
-
 				add(
 					SafeConsumer.ignore(
 						dropdownItem -> {
-							dropdownItem.setActive(
-								Validator.isNotNull(className));
-
 							dropdownItem.putData(
 								"action", "openAssetTypesSelector");
-
+							dropdownItem.setActive(
+								Validator.isNotNull(className));
 							dropdownItem.setLabel(
 								_getClassNameLabel(className));
 						}));

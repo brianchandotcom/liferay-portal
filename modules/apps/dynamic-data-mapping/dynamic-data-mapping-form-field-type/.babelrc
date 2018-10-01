@@ -1,18 +1,24 @@
 {
-    "presets": ["env"],
-    "plugins": [
-        "transform-class-properties",
-        "transform-object-rest-spread"
-    ],
     "env": {
         "test": {
             "plugins": [
                 ["module-resolver", {
                     "alias": {
-                        "dynamic-data-mapping-form-field-type/*": "./src/main/resources/META-INF/resources"
+                        "dynamic-data-mapping-form-field-type/*": "./src/main/resources/META-INF/resources",
+                        "source/*": "./src/main/resources/META-INF/resources/metal"
                     }
                 }]
             ]
         }
-    }
+    },
+    "ignore": [
+        "config.js",
+        "**/*_field.js",
+        "**/*_support.js"
+    ],
+    "plugins": [
+        "transform-class-properties",
+        "transform-object-rest-spread"
+    ],
+    "presets": ["env"]
 }

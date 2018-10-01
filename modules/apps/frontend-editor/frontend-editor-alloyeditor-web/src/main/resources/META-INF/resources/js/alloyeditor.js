@@ -79,6 +79,8 @@ AUI.add(
 							srcNode = A.one('#' + srcNode);
 						}
 
+						editorConfig.pasteFilter = "plain-text";
+
 						instance._alloyEditor = AlloyEditor.editable(srcNode.attr('id'), editorConfig);
 						instance._srcNode = srcNode;
 					},

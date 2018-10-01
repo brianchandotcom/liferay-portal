@@ -42,7 +42,9 @@ import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.function.Consumer;
 
+import javax.portlet.ActionRequest;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
@@ -72,22 +74,16 @@ public class AssetListDisplayContext {
 		return new DropdownItemList() {
 			{
 				add(
-					dropdownItem -> {
-						dropdownItem.setHref(
-							_addAssetListEntryURL(
-								AssetListEntryTypeConstants.TYPE_MANUAL));
-						dropdownItem.setLabel(
-							LanguageUtil.get(_request, "manual-selection"));
-					});
+					_getAddAssetListEntryDropdownItem(
+						AssetListEntryTypeConstants.TYPE_MANUAL_LABEL,
+						"manual-selection",
+						AssetListEntryTypeConstants.TYPE_MANUAL));
 
 				add(
-					dropdownItem -> {
-						dropdownItem.setHref(
-							_addAssetListEntryURL(
-								AssetListEntryTypeConstants.TYPE_DYNAMIC));
-						dropdownItem.setLabel(
-							LanguageUtil.get(_request, "dynamic-selection"));
-					});
+					_getAddAssetListEntryDropdownItem(
+						AssetListEntryTypeConstants.TYPE_DYNAMIC_LABEL,
+						"dynamic-selection",
+						AssetListEntryTypeConstants.TYPE_DYNAMIC));
 			}
 		};
 	}
@@ -301,22 +297,16 @@ public class AssetListDisplayContext {
 		return new CreationMenu() {
 			{
 				addPrimaryDropdownItem(
-					dropdownItem -> {
-						dropdownItem.setHref(
-							_addAssetListEntryURL(
-								AssetListEntryTypeConstants.TYPE_MANUAL));
-						dropdownItem.setLabel(
-							LanguageUtil.get(_request, "manual-selection"));
-					});
+					_getAddAssetListEntryDropdownItem(
+						AssetListEntryTypeConstants.TYPE_MANUAL_LABEL,
+						"manual-selection",
+						AssetListEntryTypeConstants.TYPE_MANUAL));
 
 				addPrimaryDropdownItem(
-					dropdownItem -> {
-						dropdownItem.setHref(
-							_addAssetListEntryURL(
-								AssetListEntryTypeConstants.TYPE_DYNAMIC));
-						dropdownItem.setLabel(
-							LanguageUtil.get(_request, "dynamic-selection"));
-					});
+					_getAddAssetListEntryDropdownItem(
+						AssetListEntryTypeConstants.TYPE_DYNAMIC_LABEL,
+						"dynamic-selection",
+						AssetListEntryTypeConstants.TYPE_DYNAMIC));
 			}
 		};
 	}
@@ -419,19 +409,31 @@ public class AssetListDisplayContext {
 			AssetListActionKeys.ADD_ASSET_LIST_ENTRY);
 	}
 
-	private String _addAssetListEntryURL(int type) {
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+	private Consumer<DropdownItem> _getAddAssetListEntryDropdownItem(
+		String title, String label, int type) {
 
-		PortletURL addAssetListEntry = _renderResponse.createRenderURL();
+		return dropdownItem -> {
+			dropdownItem.putData("action", "addAssetListEntry");
+			dropdownItem.putData(
+				"addAssetListEntryURL", _getAddAssetListEntryURL(type));
+			dropdownItem.putData("title", _getAddAssetListTitle(title));
+			dropdownItem.setHref("#");
+			dropdownItem.setLabel(LanguageUtil.get(_request, label));
+		};
+	}
 
-		addAssetListEntry.setParameter("mvcPath", "/edit_asset_list_entry.jsp");
-		addAssetListEntry.setParameter(
-			"redirect", themeDisplay.getURLCurrent());
-		addAssetListEntry.setParameter(
-			"assetListEntryType", String.valueOf(type));
+	private String _getAddAssetListEntryURL(int type) {
+		PortletURL addAssetListEntryURL = _renderResponse.createActionURL();
 
-		return addAssetListEntry.toString();
+		addAssetListEntryURL.setParameter(
+			ActionRequest.ACTION_NAME, "/asset_list/add_asset_list_entry");
+		addAssetListEntryURL.setParameter("type", String.valueOf(type));
+
+		return addAssetListEntryURL.toString();
+	}
+
+	private String _getAddAssetListTitle(String title) {
+		return LanguageUtil.format(_request, "add-x-asset-list", title, true);
 	}
 
 	private List<DropdownItem> _getAssetListEntryOrderByDropdownItems() {

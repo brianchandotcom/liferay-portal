@@ -34,9 +34,7 @@ List<AssetRendererFactory<?>> classTypesAssetRendererFactories = new ArrayList()
 		<liferay-frontend:fieldset-group>
 			<liferay-frontend:fieldset
 				cssClass="source-container"
-				label="source"
 			>
-				<p><liferay-ui:message key="asset-entry-type" /></p>
 
 				<%
 				Set<Long> availableClassNameIdsSet = SetUtil.fromArray(editAssetListDisplayContext.getAvailableClassNameIds());
@@ -60,7 +58,7 @@ List<AssetRendererFactory<?>> classTypesAssetRendererFactories = new ArrayList()
 				Arrays.sort(classNameIds);
 				%>
 
-				<aui:select label="" name="TypeSettingsProperties--anyAssetType--" title="asset-type">
+				<aui:select label="asset-entry-type" name="TypeSettingsProperties--anyAssetType--" title="asset-type">
 					<aui:option label="any" selected="<%= editAssetListDisplayContext.isAnyAssetType() %>" value="<%= true %>" />
 					<aui:option label='<%= LanguageUtil.get(request, "select-more-than-one") + StringPool.TRIPLE_PERIOD %>' selected="<%= !editAssetListDisplayContext.isAnyAssetType() && (classNameIds.length > 1) %>" value="<%= false %>" />
 

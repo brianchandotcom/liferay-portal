@@ -23,11 +23,6 @@ public class AssetListFormConstants {
 
 	public static final String ENTRY_KEY_ASSET_ENTRIES = "asset_entries";
 
-	public static final String ENTRY_KEY_CUSTOM_ATTRIBUTES =
-		"custom_attributes";
-
-	public static final String ENTRY_KEY_DETAILS = "details";
-
 	public static final String ENTRY_KEY_FILTER = "filter";
 
 	public static final String ENTRY_KEY_ORDERING = "ordering";

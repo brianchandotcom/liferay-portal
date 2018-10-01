@@ -40,6 +40,25 @@ AssetListEntry assetListEntry = (AssetListEntry)row.getObject();
 			message="edit"
 			url="<%= editAssetListEntryURL %>"
 		/>
+
+		<portlet:actionURL name="/asset_list/update_asset_list_entry" var="updateAssetListEntryURL">
+			<portlet:param name="assetListEntryId" value="<%= String.valueOf(assetListEntry.getAssetListEntryId()) %>" />
+		</portlet:actionURL>
+
+		<%
+		Map<String, Object> updateAssetListEntryData = new HashMap<>();
+
+		updateAssetListEntryData.put("form-submit-url", updateAssetListEntryURL.toString());
+		updateAssetListEntryData.put("id-field-value", assetListEntry.getAssetListEntryId());
+		updateAssetListEntryData.put("main-field-value", assetListEntry.getTitle());
+		%>
+
+		<liferay-ui:icon
+			cssClass='<%= renderResponse.getNamespace() + "update-asset-list-entry-action-option" %>'
+			data="<%= updateAssetListEntryData %>"
+			message="rename"
+			url="javascript:;"
+		/>
 	</c:if>
 
 	<c:if test="<%= AssetListEntryPermission.contains(permissionChecker, assetListEntry, ActionKeys.PERMISSIONS) %>">

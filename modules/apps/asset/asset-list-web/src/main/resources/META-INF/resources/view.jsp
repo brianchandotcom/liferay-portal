@@ -99,6 +99,7 @@
 		<c:otherwise>
 			<liferay-frontend:empty-result-message
 				actionDropdownItems="<%= assetListDisplayContext.isShowAddAssetListEntryAction() ? assetListDisplayContext.getAddAssetListEntryDropdownItems() : null %>"
+				componentId="emptyResultMessageComponent"
 				description="<%= assetListDisplayContext.getEmptyResultMessageDescription() %>"
 				elementType='<%= LanguageUtil.get(request, "asset-lists") %>'
 			/>
@@ -106,29 +107,97 @@
 	</c:choose>
 </aui:form>
 
-<aui:script>
+<aui:script require="metal-dom/src/all/dom as dom,frontend-js-web/liferay/modal/commands/OpenSimpleInputModal.es as modalCommands">
+	var addAssetListEntry = function(event) {
+		event.preventDefault();
+
+		var itemData = event.data.item.data;
+
+		modalCommands.openSimpleInputModal(
+			{
+				dialogTitle: itemData.title,
+				formSubmitURL: itemData.addAssetListEntryURL,
+				mainFieldLabel: '<liferay-ui:message key="title" />',
+				mainFieldName: 'title',
+				mainFieldPlaceholder: '<liferay-ui:message key="title" />',
+				namespace: '<portlet:namespace />',
+				spritemap: '<%= themeDisplay.getPathThemeImages() %>/lexicon/icons.svg'
+			}
+		);
+	};
+
 	var deleteSelectedAssetListEntries = function() {
 		if (confirm('<liferay-ui:message key="are-you-sure-you-want-to-delete-this" />')) {
 			submitForm(document.querySelector('#<portlet:namespace />fm'));
 		}
 	};
 
+	var updateAssetListEntryMenuItemClickHandler = dom.delegate(
+		document.body,
+		'click',
+		'.<portlet:namespace />update-asset-list-entry-action-option > a',
+		function(event) {
+			var data = event.delegateTarget.dataset;
+
+			event.preventDefault();
+
+			modalCommands.openSimpleInputModal(
+				{
+					dialogTitle: '<liferay-ui:message key="rename-asset-list" />',
+					formSubmitURL: data.formSubmitUrl,
+					idFieldName: 'id',
+					idFieldValue: data.idFieldValue,
+					mainFieldLabel: '<liferay-ui:message key="title" />',
+					mainFieldName: 'title',
+					mainFieldPlaceholder: '<liferay-ui:message key="title" />',
+					mainFieldValue: data.mainFieldValue,
+					namespace: '<portlet:namespace />',
+					spritemap: '<%= themeDisplay.getPathThemeImages() %>/lexicon/icons.svg'
+				}
+			);
+		}
+	);
+
+	function handleDestroyPortlet() {
+		updateAssetListEntryMenuItemClickHandler.removeListener();
+
+		Liferay.detach('destroyPortlet', handleDestroyPortlet);
+	}
+
 	var ACTIONS = {
+		'addAssetListEntry': addAssetListEntry,
 		'deleteSelectedAssetListEntries': deleteSelectedAssetListEntries
 	};
 
 	Liferay.componentReady('assetListEntriesEntriesManagementToolbar').then(
 		function(managementToolbar) {
 			managementToolbar.on(
-				'actionItemClicked',
+				['actionItemClicked', 'creationMenuItemClicked'],
 					function(event) {
 						var itemData = event.data.item.data;
 
 						if (itemData && itemData.action && ACTIONS[itemData.action]) {
-							ACTIONS[itemData.action]();
+							ACTIONS[itemData.action](event);
 						}
 					}
 				);
 		}
 	);
+
+	Liferay.componentReady('emptyResultMessageComponent').then(
+		function(emptyResultMessageComponent) {
+			emptyResultMessageComponent.on(
+				'itemClicked',
+				function(event) {
+					var itemData = event.data.item.data;
+
+					if (itemData && itemData.action && ACTIONS[itemData.action]) {
+						ACTIONS[itemData.action](event);
+					}
+				}
+			);
+		}
+	);
+
+	Liferay.on('destroyPortlet', handleDestroyPortlet);
 </aui:script>

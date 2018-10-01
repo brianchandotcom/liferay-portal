@@ -1,6 +1,5 @@
 import Component from 'metal-component';
 import Soy from 'metal-soy';
-
 import templates from './paragraph.soy';
 
 /**
@@ -11,7 +10,7 @@ class Paragraph extends Component {}
 
 Paragraph.STATE = {
 	text: {
-		isHtml: true,
+		'isHtml': true,
 		value: ''
 	}
 };

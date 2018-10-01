@@ -19,7 +19,9 @@
             ]
         }
     },
-    "only": ["*.es.js", "*.soy.js"],
+    "ignore": [
+        "**/admin/**/*.js"
+    ],
     "plugins": [
         "transform-class-properties",
         "transform-decorators-legacy",

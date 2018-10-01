@@ -5,7 +5,7 @@ import {pageStructure} from './util/config.es';
 import {sub} from './util/strings.es';
 import autobind from 'autobind-decorator';
 import AutoSave from './util/AutoSave.es';
-import Builder from './pages/builder/index.es';
+import Builder from './pages/FormBuilder/index.es';
 import ClayModal from 'clay-modal';
 import Component from 'metal-jsx';
 import dom from 'metal-dom';

@@ -1,3 +1,3 @@
-import Builder from './Builder.es';
+import Builder from './FormBuilder.es';
 
 export default Builder;

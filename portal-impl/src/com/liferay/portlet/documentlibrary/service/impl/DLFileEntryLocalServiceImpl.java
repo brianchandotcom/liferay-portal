@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.documentlibrary.service.impl;
 
+import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.document.library.kernel.exception.DuplicateFileEntryException;
 import com.liferay.document.library.kernel.exception.DuplicateFolderNameException;
 import com.liferay.document.library.kernel.exception.FileExtensionException;
@@ -341,6 +342,20 @@ public class DLFileEntryLocalServiceImpl
 
 		DLFileVersion latestDLFileVersion =
 			dlFileVersionLocalService.getLatestFileVersion(fileEntryId, false);
+
+		if (dlVersionNumberIncrease == DLVersionNumberIncrease.NONE) {
+			DLFileVersion lastDLFileVersion =
+				dlFileVersionLocalService.getFileVersion(
+					dlFileEntry.getFileEntryId(), dlFileEntry.getVersion());
+
+			_overwritePreviousFileVersion(
+				user, dlFileEntry, latestDLFileVersion, lastDLFileVersion,
+				serviceContext);
+
+			unlockFileEntry(fileEntryId);
+
+			return;
+		}
 
 		// File version
 
@@ -2833,6 +2848,101 @@ public class DLFileEntryLocalServiceImpl
 
 	@BeanReference(type = DLFileVersionPolicy.class)
 	protected DLFileVersionPolicy dlFileVersionPolicy;
+
+	private void _overwritePreviousFileVersion(
+			User user, DLFileEntry dlFileEntry,
+			DLFileVersion latestDLFileVersion, DLFileVersion lastDLFileVersion,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		// File entry
+
+		dlFileEntry.setModifiedDate(latestDLFileVersion.getModifiedDate());
+		dlFileEntry.setFileName(latestDLFileVersion.getFileName());
+		dlFileEntry.setExtension(latestDLFileVersion.getExtension());
+		dlFileEntry.setMimeType(latestDLFileVersion.getMimeType());
+		dlFileEntry.setTitle(latestDLFileVersion.getTitle());
+		dlFileEntry.setDescription(latestDLFileVersion.getDescription());
+		dlFileEntry.setExtraSettings(latestDLFileVersion.getExtraSettings());
+		dlFileEntry.setFileEntryTypeId(
+			latestDLFileVersion.getFileEntryTypeId());
+		dlFileEntry.setSize(latestDLFileVersion.getSize());
+
+		dlFileEntryPersistence.update(dlFileEntry);
+
+		// File version
+
+		lastDLFileVersion.setUserId(latestDLFileVersion.getUserId());
+		lastDLFileVersion.setUserName(latestDLFileVersion.getUserName());
+		lastDLFileVersion.setModifiedDate(
+			latestDLFileVersion.getModifiedDate());
+		lastDLFileVersion.setFileName(latestDLFileVersion.getFileName());
+		lastDLFileVersion.setExtension(latestDLFileVersion.getExtension());
+		lastDLFileVersion.setMimeType(latestDLFileVersion.getMimeType());
+		lastDLFileVersion.setTitle(latestDLFileVersion.getTitle());
+		lastDLFileVersion.setDescription(latestDLFileVersion.getDescription());
+		lastDLFileVersion.setChangeLog(latestDLFileVersion.getChangeLog());
+		lastDLFileVersion.setExtraSettings(
+			latestDLFileVersion.getExtraSettings());
+		lastDLFileVersion.setFileEntryTypeId(
+			latestDLFileVersion.getFileEntryTypeId());
+		lastDLFileVersion.setSize(latestDLFileVersion.getSize());
+
+		ExpandoBridgeUtil.copyExpandoBridgeAttributes(
+			lastDLFileVersion.getExpandoBridge(),
+			latestDLFileVersion.getExpandoBridge());
+
+		dlFileVersionPersistence.update(lastDLFileVersion);
+
+		// Metadata
+
+		Serializable validateDDMFormValues = serviceContext.getAttribute(
+			"validateDDMFormValues");
+
+		try {
+			serviceContext.setAttribute("validateDDMFormValues", Boolean.FALSE);
+
+			copyFileEntryMetadata(
+				dlFileEntry.getCompanyId(), dlFileEntry.getFileEntryTypeId(),
+				dlFileEntry.getFileEntryId(),
+				latestDLFileVersion.getFileVersionId(),
+				lastDLFileVersion.getFileVersionId(), serviceContext);
+		}
+		finally {
+			serviceContext.setAttribute(
+				"validateDDMFormValues", validateDDMFormValues);
+		}
+
+		// Asset
+
+		AssetEntry latestDLFileVersionAssetEntry =
+			assetEntryLocalService.getEntry(
+				DLFileEntryConstants.getClassName(),
+				latestDLFileVersion.getPrimaryKey());
+
+		assetEntryLocalService.updateEntry(
+			lastDLFileVersion.getUserId(), lastDLFileVersion.getGroupId(),
+			DLFileEntryConstants.getClassName(),
+			lastDLFileVersion.getPrimaryKey(),
+			latestDLFileVersionAssetEntry.getCategoryIds(),
+			latestDLFileVersionAssetEntry.getTagNames());
+
+		// File
+
+		DLStoreUtil.deleteFile(
+			user.getCompanyId(), dlFileEntry.getDataRepositoryId(),
+			dlFileEntry.getName(), lastDLFileVersion.getVersion());
+
+		DLStoreUtil.copyFileVersion(
+			user.getCompanyId(), dlFileEntry.getDataRepositoryId(),
+			dlFileEntry.getName(),
+			DLFileEntryConstants.PRIVATE_WORKING_COPY_VERSION,
+			lastDLFileVersion.getVersion());
+
+		// Latest file version
+
+		removeFileVersion(dlFileEntry, latestDLFileVersion);
+	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		DLFileEntryLocalServiceImpl.class);

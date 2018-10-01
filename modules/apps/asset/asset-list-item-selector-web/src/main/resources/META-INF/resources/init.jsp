@@ -24,7 +24,7 @@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
 <%@ page import="com.liferay.asset.list.item.selector.web.internal.constants.AssetListItemSelectorWebKeys" %><%@
-page import="com.liferay.asset.list.item.selector.web.internal.display.context.AssetListItemSelectorViewDisplayContext" %><%@
+page import="com.liferay.asset.publisher.web.display.context.AssetListItemSelectorViewDisplayContext" %><%@
 page import="com.liferay.asset.list.model.AssetListEntry" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %>
 

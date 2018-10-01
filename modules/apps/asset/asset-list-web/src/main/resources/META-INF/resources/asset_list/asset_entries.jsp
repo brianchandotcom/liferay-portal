@@ -28,41 +28,48 @@
 	<aui:input name="assetEntryIds" type="hidden" />
 
 	<liferay-frontend:edit-form-body>
-		<aui:row>
-			<aui:col width="<%= 80 %>">
-				<label for="<portlet:namespace />assetEntriesSearchContainer"><liferay-ui:message key="asset-entries" /></label>
-			</aui:col>
+		<h2 class="sheet-title">
+			<liferay-ui:message key="asset-entries" />
+		</h2>
 
-			<aui:col cssClass="asset-selector-icon-menu mb-3" width="<%= 20 %>">
-				<liferay-ui:icon-menu
-					cssClass="pull-right"
-					direction="right"
-					message="select"
-					showArrow="<%= false %>"
-					showWhenSingleIcon="<%= true %>"
-				>
+		<h3 class="sheet-subtitle">
+			<span class="autofit-padded-no-gutters autofit-row">
+				<span class="autofit-col autofit-col-expand">
+					<span class="heading-text">
+						<liferay-ui:message key="asset-entries" />
+					</span>
+				</span>
+				<span class="autofit-col">
+					<liferay-ui:icon-menu
+						direction="right"
+						message="select"
+						showArrow="<%= false %>"
+						showWhenSingleIcon="<%= true %>"
+						triggerCssClass="btn-sm"
+					>
 
-					<%
-					Map<String, Map<String, Object>> manualAddIconDataMap = editAssetListDisplayContext.getManualAddIconDataMap();
+						<%
+						Map<String, Map<String, Object>> manualAddIconDataMap = editAssetListDisplayContext.getManualAddIconDataMap();
 
-					for (Map.Entry<String, Map<String, Object>> entry : manualAddIconDataMap.entrySet()) {
-					%>
+						for (Map.Entry<String, Map<String, Object>> entry : manualAddIconDataMap.entrySet()) {
+						%>
 
-					<liferay-ui:icon
-						cssClass="asset-selector"
-						data="<%= entry.getValue() %>"
-						id="<%= themeDisplay.getScopeGroupId() + FriendlyURLNormalizerUtil.normalize(entry.getKey()) %>"
-						message="<%= HtmlUtil.escape(entry.getKey()) %>"
-						url="javascript:;"
-					/>
+							<liferay-ui:icon
+								cssClass="asset-selector"
+								data="<%= entry.getValue() %>"
+								id="<%= themeDisplay.getScopeGroupId() + FriendlyURLNormalizerUtil.normalize(entry.getKey()) %>"
+								message="<%= HtmlUtil.escape(entry.getKey()) %>"
+								url="javascript:;"
+							/>
 
-					<%
-					}
-					%>
+						<%
+						}
+						%>
 
-				</liferay-ui:icon-menu>
-			</aui:col>
-		</aui:row>
+					</liferay-ui:icon-menu>
+				</span>
+			</span>
+		</h3>
 
 		<liferay-ui:search-container
 			compactEmptyResultsMessage="<%= true %>"

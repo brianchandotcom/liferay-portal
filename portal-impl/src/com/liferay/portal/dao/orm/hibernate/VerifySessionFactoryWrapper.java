@@ -58,6 +58,10 @@ public class VerifySessionFactoryWrapper implements SessionFactory {
 
 	@Override
 	public void closeSession(Session session) throws ORMException {
+		if (session == null) {
+			return;
+		}
+
 		if (PropsValues.SPRING_HIBERNATE_SESSION_DELEGATED &&
 			ProxyUtil.isProxyClass(session.getClass())) {
 

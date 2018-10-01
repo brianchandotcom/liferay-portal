@@ -44,8 +44,8 @@
 
 <clay:management-toolbar
 	creationMenu="<%= managementToolbarsDisplayContext.getCreationMenu() %>"
-	filterLabelItems="<%= managementToolbarsDisplayContext.getFilterLabelItems() %>"
 	filterDropdownItems="<%= managementToolbarsDisplayContext.getFilterDropdownItems() %>"
+	filterLabelItems="<%= managementToolbarsDisplayContext.getFilterLabelItems() %>"
 	itemsTotal="<%= 42 %>"
 	searchActionURL="mySearchActionURL?key1=val1&key2=val2&key3=val3"
 	searchFormName="mySearchName"

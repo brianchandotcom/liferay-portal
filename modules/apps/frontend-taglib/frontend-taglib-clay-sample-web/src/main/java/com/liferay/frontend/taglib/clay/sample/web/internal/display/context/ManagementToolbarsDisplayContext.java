@@ -163,14 +163,12 @@ public class ManagementToolbarsDisplayContext {
 				add(
 					labelItem -> {
 						labelItem.setLabel("Filter 1");
-					}
-				);
+					});
 
 				add(
 					labelItem -> {
 						labelItem.setLabel("Filter 2");
-					}
-				);
+					});
 			}
 		};
 	}

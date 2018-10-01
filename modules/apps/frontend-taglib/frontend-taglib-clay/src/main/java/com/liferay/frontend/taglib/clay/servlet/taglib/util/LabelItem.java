@@ -22,8 +22,6 @@ import java.util.HashMap;
 public class LabelItem extends HashMap<String, Object> {
 
 	public LabelItem() {
-		super();
-
 		put("closeable", false);
 	}
 

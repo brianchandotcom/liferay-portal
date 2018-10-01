@@ -33,7 +33,7 @@ import java.util.List;
 /**
  * @author Brian Wing Shun Chan
  */
-public class LayoutRevisionUADTestHelper {
+public class LayoutRevisionUADTestUtil {
 
 	public static LayoutRevision addLayoutRevision(
 			LayoutRevisionLocalService layoutRevisionLocalService,

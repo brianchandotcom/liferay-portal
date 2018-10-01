@@ -15,7 +15,7 @@
 package com.liferay.layout.uad.exporter.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.layout.uad.test.LayoutRevisionUADTestHelper;
+import com.liferay.layout.uad.test.LayoutRevisionUADTestUtil;
 import com.liferay.portal.kernel.model.LayoutRevision;
 import com.liferay.portal.kernel.service.LayoutRevisionLocalService;
 import com.liferay.portal.kernel.service.LayoutSetBranchLocalService;
@@ -55,7 +55,7 @@ public class LayoutRevisionUADExporterTest
 		throws Exception {
 
 		LayoutRevision layoutRevision =
-			LayoutRevisionUADTestHelper.addLayoutRevisionWithStatusByUserId(
+			LayoutRevisionUADTestUtil.addLayoutRevisionWithStatusByUserId(
 				_layoutRevisionLocalService, _layoutSetBranchLocalService,
 				_userLocalService, userId, statusByUserId);
 
@@ -66,14 +66,14 @@ public class LayoutRevisionUADExporterTest
 
 	@After
 	public void tearDown() throws Exception {
-		LayoutRevisionUADTestHelper.cleanUpDependencies(
+		LayoutRevisionUADTestUtil.cleanUpDependencies(
 			_layoutSetBranchLocalService, _layoutRevisions);
 	}
 
 	@Override
 	protected LayoutRevision addBaseModel(long userId) throws Exception {
 		LayoutRevision layoutRevision =
-			LayoutRevisionUADTestHelper.addLayoutRevision(
+			LayoutRevisionUADTestUtil.addLayoutRevision(
 				_layoutRevisionLocalService, _layoutSetBranchLocalService,
 				userId);
 

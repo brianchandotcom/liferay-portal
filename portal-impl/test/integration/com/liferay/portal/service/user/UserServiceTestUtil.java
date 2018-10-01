@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.service;
+package com.liferay.portal.service.user;
 
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
@@ -30,7 +30,7 @@ import org.junit.runner.RunWith;
  * @author Drew Brokke
  */
 @RunWith(Enclosed.class)
-public class UserServiceTest {
+public class UserServiceTestUtil {
 
 	private static void _unsetGroupUsers(
 			long groupId, User subjectUser, User objectUser)

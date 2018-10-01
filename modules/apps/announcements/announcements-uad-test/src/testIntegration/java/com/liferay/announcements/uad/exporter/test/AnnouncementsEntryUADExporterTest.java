@@ -16,7 +16,7 @@ package com.liferay.announcements.uad.exporter.test;
 
 import com.liferay.announcements.kernel.model.AnnouncementsEntry;
 import com.liferay.announcements.kernel.service.AnnouncementsEntryLocalService;
-import com.liferay.announcements.uad.test.AnnouncementsEntryUADTestHelper;
+import com.liferay.announcements.uad.test.AnnouncementsEntryUADTestUtil;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -48,7 +48,7 @@ public class AnnouncementsEntryUADExporterTest
 	@Override
 	protected AnnouncementsEntry addBaseModel(long userId) throws Exception {
 		AnnouncementsEntry announcementsEntry =
-			AnnouncementsEntryUADTestHelper.addAnnouncementsEntry(
+			AnnouncementsEntryUADTestUtil.addAnnouncementsEntry(
 				_announcementsEntryLocalService, _classNameLocalService,
 				userId);
 

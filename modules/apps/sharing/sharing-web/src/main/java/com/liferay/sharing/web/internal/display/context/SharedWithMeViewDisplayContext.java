@@ -39,6 +39,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.function.Function;
 
+import javax.portlet.PortletException;
 import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
@@ -118,7 +119,7 @@ public class SharedWithMeViewDisplayContext {
 		return ParamUtil.getString(_request, "orderByType", "asc");
 	}
 
-	public PortletURL getSortingURL() {
+	public PortletURL getSortingURL() throws PortletException {
 		String orderByType = getSortingOrder();
 
 		PortletURL sortingURL = _getCurrentSortingURL();
@@ -180,14 +181,9 @@ public class SharedWithMeViewDisplayContext {
 		searchContainer.setResults(sharingEntries);
 	}
 
-	private PortletURL _getCurrentSortingURL() {
-		PortletURL sortingURL = _liferayPortletResponse.createRenderURL();
-
-		sortingURL.setParameter("mvcRenderCommandName", "/shared_with_me/view");
-
-		String className = ParamUtil.getString(_request, "className");
-
-		sortingURL.setParameter("className", className);
+	private PortletURL _getCurrentSortingURL() throws PortletException {
+		PortletURL sortingURL = PortletURLUtil.clone(
+			_currentURLObj, _liferayPortletResponse);
 
 		return sortingURL;
 	}

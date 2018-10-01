@@ -15,13 +15,18 @@
 package com.liferay.portal.security.ldap.internal.model.listener;
 
 import com.liferay.portal.kernel.exception.ModelListenerException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Contact;
 import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.ldap.LDAPSettings;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
 import com.liferay.portal.security.exportimport.UserExporter;
 import com.liferay.portal.security.ldap.internal.UserImportTransactionThreadLocal;
+
+import java.util.concurrent.Callable;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -62,15 +67,35 @@ public class ContactModelListener extends BaseLDAPExportModelListener<Contact> {
 		}
 	}
 
-	protected void exportToLDAP(Contact contact) throws Exception {
+	protected void exportToLDAP(final Contact contact) {
 		if (UserImportTransactionThreadLocal.isOriginatesFromImport()) {
 			return;
 		}
 
-		User user = _userLocalService.fetchUser(contact.getClassPK());
+		User user = _userLocalService.fetchUser(contact.getUserId());
 
-		exportToLDAP(user, _userExporter, _ldapSettings);
+		if ((user == null) || user.isDefaultUser()) {
+			return;
+		}
+
+		Callable<Void> callable = CallableUtil.getCallable(
+			expandoBridgeAttributes -> {
+				try {
+					_userExporter.exportUser(contact, expandoBridgeAttributes);
+				}
+				catch (Exception e) {
+					_log.error(
+						"Unable to export contact with user ID " +
+							contact.getUserId() + " to LDAP on after create",
+						e);
+				}
+			});
+
+		TransactionCommitCallbackUtil.registerCallback(callable);
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		ContactModelListener.class);
 
 	@Reference(
 		policy = ReferencePolicy.DYNAMIC,

@@ -109,7 +109,7 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 
 		File csvReportFile = new File(
 			JenkinsResultsParserUtil.combine(
-				"Report_", simpleDateFormat.format(new Date()), ".csv"));
+				"Report_junit_", simpleDateFormat.format(new Date()), ".csv"));
 
 		try {
 			JenkinsResultsParserUtil.write(csvReportFile, csvReport.toString());

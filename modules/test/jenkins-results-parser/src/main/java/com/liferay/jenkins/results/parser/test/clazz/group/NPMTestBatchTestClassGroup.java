@@ -115,7 +115,7 @@ public class NPMTestBatchTestClassGroup extends BatchTestClassGroup {
 
 		File csvReportFile = new File(
 			JenkinsResultsParserUtil.combine(
-				"Report_", simpleDateFormat.format(new Date()), ".csv"));
+				"Report_js_", simpleDateFormat.format(new Date()), ".csv"));
 
 		try {
 			JenkinsResultsParserUtil.write(csvReportFile, csvReport.toString());

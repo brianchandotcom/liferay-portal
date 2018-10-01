@@ -46,7 +46,7 @@ public class SiteNavigationMenuUtil {
 		return _instance;
 	}
 
-	public List<NavItem> getNavItemsByParentSiteNavigationMenuItem(
+	public List<NavItem> getChildNavItems(
 		HttpServletRequest request, long siteNavigationMenuId,
 		long parentSiteNavigationMenuItemId) {
 

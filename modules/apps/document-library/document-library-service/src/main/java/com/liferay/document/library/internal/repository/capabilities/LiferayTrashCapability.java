@@ -101,6 +101,13 @@ public class LiferayTrashCapability
 	}
 
 	@Override
+	public boolean isInTrash(FileEntry fileEntry) throws PortalException {
+		DLFileEntry dlFileEntry = (DLFileEntry)fileEntry.getModel();
+
+		return dlFileEntry.isInTrash();
+	}
+
+	@Override
 	public boolean isInTrash(Folder folder) {
 		DLFolder dlFolder = (DLFolder)folder.getModel();
 

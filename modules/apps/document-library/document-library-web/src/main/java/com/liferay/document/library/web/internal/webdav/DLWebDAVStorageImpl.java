@@ -31,7 +31,6 @@ import com.liferay.document.library.kernel.model.DLFileEntryConstants;
 import com.liferay.document.library.kernel.model.DLFileEntryMetadata;
 import com.liferay.document.library.kernel.model.DLFileEntryType;
 import com.liferay.document.library.kernel.model.DLFileVersion;
-import com.liferay.document.library.kernel.model.DLFolder;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.document.library.kernel.service.DLFileEntryMetadataLocalService;
@@ -53,6 +52,7 @@ import com.liferay.portal.kernel.lock.Lock;
 import com.liferay.portal.kernel.lock.NoSuchLockException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.repository.capabilities.TrashCapability;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
@@ -309,7 +309,8 @@ public class DLWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 
 				long folderId = folder.getFolderId();
 
-				if ((folder.getModel() instanceof DLFolder) &&
+				if (folder.isRepositoryCapabilityProvided(
+						TrashCapability.class) &&
 					_dlTrashUtil.isTrashEnabled(
 						folder.getGroupId(), folder.getRepositoryId())) {
 
@@ -330,7 +331,8 @@ public class DLWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 
 				long fileEntryId = fileEntry.getFileEntryId();
 
-				if ((fileEntry.getModel() instanceof DLFileEntry) &&
+				if (fileEntry.isRepositoryCapabilityProvided(
+						TrashCapability.class) &&
 					_dlTrashUtil.isTrashEnabled(
 						fileEntry.getGroupId(), fileEntry.getRepositoryId())) {
 

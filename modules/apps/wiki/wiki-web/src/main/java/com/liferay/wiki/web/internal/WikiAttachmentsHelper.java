@@ -14,11 +14,11 @@
 
 package com.liferay.wiki.web.internal;
 
-import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.util.DLUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.TrashedModel;
+import com.liferay.portal.kernel.repository.capabilities.TrashCapability;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
@@ -140,8 +140,10 @@ public class WikiAttachmentsHelper {
 			FileEntry fileEntry = _wikiPageService.movePageAttachmentToTrash(
 				nodeId, title, attachment);
 
-			if (fileEntry.getModel() instanceof DLFileEntry) {
-				trashedModel = (DLFileEntry)fileEntry.getModel();
+			if (fileEntry.isRepositoryCapabilityProvided(
+					TrashCapability.class)) {
+
+				trashedModel = (TrashedModel)fileEntry.getModel();
 			}
 		}
 		else {

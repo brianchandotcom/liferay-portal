@@ -42,6 +42,14 @@ public class SegmentsEntryRelLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.segments.service.impl.SegmentsEntryRelLocalServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static com.liferay.segments.model.SegmentsEntryRel addSegmentsEntryRel(
+		long segmentsEntryId, long classNameId, long classPK,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .addSegmentsEntryRel(segmentsEntryId, classNameId, classPK,
+			serviceContext);
+	}
 
 	/**
 	* Adds the segments entry rel to the database. Also notifies the appropriate model listeners.
@@ -96,6 +104,14 @@ public class SegmentsEntryRelLocalServiceUtil {
 	public static com.liferay.segments.model.SegmentsEntryRel deleteSegmentsEntryRel(
 		com.liferay.segments.model.SegmentsEntryRel segmentsEntryRel) {
 		return getService().deleteSegmentsEntryRel(segmentsEntryRel);
+	}
+
+	public static void deleteSegmentsEntryRels(long segmentsEntryId) {
+		getService().deleteSegmentsEntryRels(segmentsEntryId);
+	}
+
+	public static void deleteSegmentsEntryRels(long classNameId, long classPK) {
+		getService().deleteSegmentsEntryRels(classNameId, classPK);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
@@ -202,6 +218,16 @@ public class SegmentsEntryRelLocalServiceUtil {
 		java.io.Serializable primaryKeyObj)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getPersistedModel(primaryKeyObj);
+	}
+
+	public static java.util.List<com.liferay.segments.model.SegmentsEntryRel> getSegmentEntryRels(
+		long segmentEntryId) {
+		return getService().getSegmentEntryRels(segmentEntryId);
+	}
+
+	public static java.util.List<com.liferay.segments.model.SegmentsEntryRel> getSegmentEntryRels(
+		long classNameId, long classPK) {
+		return getService().getSegmentEntryRels(classNameId, classPK);
 	}
 
 	/**

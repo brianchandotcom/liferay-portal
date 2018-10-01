@@ -26,7 +26,7 @@ import java.util.List;
 /**
  * @author William Newbury
  */
-public class DLFolderUADTestHelper {
+public class DLFolderUADTestUtil {
 
 	public static DLFolder addDLFolder(
 			DLFolderLocalService dlFolderLocalService, long userId)

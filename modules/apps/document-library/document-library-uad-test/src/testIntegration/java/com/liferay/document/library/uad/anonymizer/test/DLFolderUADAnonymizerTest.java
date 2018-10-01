@@ -17,7 +17,7 @@ package com.liferay.document.library.uad.anonymizer.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.document.library.kernel.model.DLFolder;
 import com.liferay.document.library.kernel.service.DLFolderLocalService;
-import com.liferay.document.library.uad.test.DLFolderUADTestHelper;
+import com.liferay.document.library.uad.test.DLFolderUADTestUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -53,7 +53,7 @@ public class DLFolderUADAnonymizerTest
 			long userId, long statusByUserId)
 		throws Exception {
 
-		DLFolder dlFolder = DLFolderUADTestHelper.addDLFolderWithStatusByUserId(
+		DLFolder dlFolder = DLFolderUADTestUtil.addDLFolderWithStatusByUserId(
 			_dlFolderLocalService, userId, statusByUserId);
 
 		_dlFolders.add(dlFolder);
@@ -63,12 +63,12 @@ public class DLFolderUADAnonymizerTest
 
 	@Test
 	public void testDeleteDependentFolders() throws Exception {
-		DLFolder parentDLFolder = DLFolderUADTestHelper.addDLFolder(
+		DLFolder parentDLFolder = DLFolderUADTestUtil.addDLFolder(
 			_dlFolderLocalService, user.getUserId());
 
 		_dlFolders.add(parentDLFolder);
 
-		DLFolder childDLFolder = DLFolderUADTestHelper.addDLFolder(
+		DLFolder childDLFolder = DLFolderUADTestUtil.addDLFolder(
 			_dlFolderLocalService, user.getUserId(),
 			parentDLFolder.getFolderId());
 
@@ -88,7 +88,7 @@ public class DLFolderUADAnonymizerTest
 	protected DLFolder addBaseModel(long userId, boolean deleteAfterTestRun)
 		throws Exception {
 
-		DLFolder dlFolder = DLFolderUADTestHelper.addDLFolder(
+		DLFolder dlFolder = DLFolderUADTestUtil.addDLFolder(
 			_dlFolderLocalService, userId);
 
 		if (deleteAfterTestRun) {

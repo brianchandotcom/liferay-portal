@@ -2,7 +2,6 @@ Bundle-Name: Liferay Sharing API
 Bundle-SymbolicName: com.liferay.sharing.api
 Bundle-Version: 1.0.0
 Export-Package:\
-	com.liferay.sharing.constants,\
 	com.liferay.sharing.exception,\
 	com.liferay.sharing.interpreter,\
 	com.liferay.sharing.model,\

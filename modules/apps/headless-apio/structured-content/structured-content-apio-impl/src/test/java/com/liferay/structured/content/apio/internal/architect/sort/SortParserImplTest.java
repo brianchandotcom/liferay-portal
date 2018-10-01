@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.structured.content.apio.internal.architect.provider;
+package com.liferay.structured.content.apio.internal.architect.sort;
 
 import com.liferay.structured.content.apio.architect.entity.EntityField;
 import com.liferay.structured.content.apio.architect.entity.EntityModel;
@@ -36,12 +36,12 @@ import org.junit.Test;
 /**
  * @author Cristina González
  */
-public class SortProviderTest {
+public class SortParserImplTest {
 
 	@Test
 	public void testGetSortFieldOptionalAsc() {
 		Optional<SortField> sortFieldOptional =
-			_sortProvider.getSortFieldOptional("fieldExternal:asc");
+			_sortParserImpl.getSortFieldOptional("fieldExternal:asc");
 
 		Assert.assertTrue(sortFieldOptional.isPresent());
 
@@ -57,7 +57,7 @@ public class SortProviderTest {
 	@Test
 	public void testGetSortFieldOptionalDefault() {
 		Optional<SortField> sortFieldOptional =
-			_sortProvider.getSortFieldOptional("fieldExternal");
+			_sortParserImpl.getSortFieldOptional("fieldExternal");
 
 		Assert.assertTrue(sortFieldOptional.isPresent());
 
@@ -73,7 +73,7 @@ public class SortProviderTest {
 	@Test
 	public void testGetSortFieldOptionalDesc() {
 		Optional<SortField> sortFieldOptional =
-			_sortProvider.getSortFieldOptional("fieldExternal:desc");
+			_sortParserImpl.getSortFieldOptional("fieldExternal:desc");
 
 		Assert.assertTrue(sortFieldOptional.isPresent());
 
@@ -89,7 +89,7 @@ public class SortProviderTest {
 	@Test
 	public void testGetSortFieldOptionalInvalidSyntax() {
 		AbstractThrowableAssert exception = Assertions.assertThatThrownBy(
-			() -> _sortProvider.getSortFieldOptional(
+			() -> _sortParserImpl.getSortFieldOptional(
 				"fieldExternal:desc:another")
 		).isInstanceOf(
 			InvalidSortException.class
@@ -101,59 +101,59 @@ public class SortProviderTest {
 	@Test
 	public void testGetSortFieldOptionalNull() {
 		Optional<SortField> sortFieldOptional =
-			_sortProvider.getSortFieldOptional(null);
+			_sortParserImpl.getSortFieldOptional(null);
 
 		Assert.assertTrue(!sortFieldOptional.isPresent());
 	}
 
 	@Test
 	public void testIsAscendingAnotherValue() {
-		Assert.assertTrue(_sortProvider.isAscending("reverse"));
+		Assert.assertTrue(_sortParserImpl.isAscending("reverse"));
 	}
 
 	@Test
 	public void testIsAscendingAscLower() {
-		Assert.assertTrue(_sortProvider.isAscending("asc"));
+		Assert.assertTrue(_sortParserImpl.isAscending("asc"));
 	}
 
 	@Test
 	public void testIsAscendingAscLowerAndUpper() {
-		Assert.assertTrue(_sortProvider.isAscending("aSC"));
+		Assert.assertTrue(_sortParserImpl.isAscending("aSC"));
 	}
 
 	@Test
 	public void testIsAscendingAscUpper() {
-		Assert.assertTrue(_sortProvider.isAscending("ASC"));
+		Assert.assertTrue(_sortParserImpl.isAscending("ASC"));
 	}
 
 	@Test
 	public void testIsAscendingDescLower() {
-		Assert.assertTrue(!_sortProvider.isAscending("desc"));
+		Assert.assertTrue(!_sortParserImpl.isAscending("desc"));
 	}
 
 	@Test
 	public void testIsAscendingDescLowerAndUpper() {
-		Assert.assertTrue(!_sortProvider.isAscending("dESC"));
+		Assert.assertTrue(!_sortParserImpl.isAscending("dESC"));
 	}
 
 	@Test
 	public void testIsAscendingDescUpper() {
-		Assert.assertTrue(!_sortProvider.isAscending("DESC"));
+		Assert.assertTrue(!_sortParserImpl.isAscending("DESC"));
 	}
 
 	@Test
 	public void testIsAscendingEmpty() {
-		Assert.assertTrue(_sortProvider.isAscending(""));
+		Assert.assertTrue(_sortParserImpl.isAscending(""));
 	}
 
 	@Test
 	public void testIsAscendingNull() {
-		Assert.assertTrue(_sortProvider.isAscending(null));
+		Assert.assertTrue(_sortParserImpl.isAscending(null));
 	}
 
 	@Test
 	public void testParseEmpty() {
-		List<SortField> sortFields = _sortProvider.parse("");
+		List<SortField> sortFields = _sortParserImpl.parse("");
 
 		Assert.assertEquals(
 			"No sort keys should be obtained: " + sortFields, 0,
@@ -162,7 +162,7 @@ public class SortProviderTest {
 
 	@Test
 	public void testParseOneField() {
-		List<SortField> sortFields = _sortProvider.parse("fieldExternal1");
+		List<SortField> sortFields = _sortParserImpl.parse("fieldExternal1");
 
 		Assert.assertEquals(
 			"One sort field should be obtained: " + sortFields, 1,
@@ -177,7 +177,7 @@ public class SortProviderTest {
 
 	@Test
 	public void testParseOnlyComma() {
-		List<SortField> sortFields = _sortProvider.parse(",");
+		List<SortField> sortFields = _sortParserImpl.parse(",");
 
 		Assert.assertEquals(
 			"No sort fields should be obtained: " + sortFields, 0,
@@ -186,7 +186,7 @@ public class SortProviderTest {
 
 	@Test
 	public void testParseTwoFields() {
-		List<SortField> sortFields = _sortProvider.parse(
+		List<SortField> sortFields = _sortParserImpl.parse(
 			"fieldExternal1,fieldExternal2");
 
 		Assert.assertEquals(
@@ -212,7 +212,7 @@ public class SortProviderTest {
 
 	@Test
 	public void testParseTwoFieldsAscAndDesc() {
-		List<SortField> sortFields = _sortProvider.parse(
+		List<SortField> sortFields = _sortParserImpl.parse(
 			"fieldExternal1:asc,fieldExternal2:desc");
 
 		Assert.assertEquals(
@@ -238,7 +238,7 @@ public class SortProviderTest {
 
 	@Test
 	public void testParseTwoFieldsDefaultAndDesc() {
-		List<SortField> sortFields = _sortProvider.parse(
+		List<SortField> sortFields = _sortParserImpl.parse(
 			"fieldExternal1,fieldExternal2:desc");
 
 		Assert.assertEquals(
@@ -262,7 +262,7 @@ public class SortProviderTest {
 		Assert.assertTrue(!sortField2.isAscending());
 	}
 
-	private SortProvider _sortProvider = new SortProvider(
+	private SortParserImpl _sortParserImpl = new SortParserImpl(
 		new EntityModel() {
 
 			@Override

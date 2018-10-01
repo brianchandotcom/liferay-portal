@@ -17,7 +17,6 @@ package com.liferay.structured.content.apio.internal.architect.resource.test;
 import com.fasterxml.jackson.databind.util.ISO8601Utils;
 
 import com.liferay.apio.architect.pagination.PageItems;
-import com.liferay.apio.architect.provider.Provider;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalArticleConstants;
@@ -36,6 +35,7 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerTestRule;
 import com.liferay.structured.content.apio.architect.filter.Filter;
+import com.liferay.structured.content.apio.architect.filter.FilterParser;
 import com.liferay.structured.content.apio.architect.sort.Sort;
 import com.liferay.structured.content.apio.architect.util.test.PaginationTestUtil;
 
@@ -55,8 +55,6 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
-import org.springframework.mock.web.MockHttpServletRequest;
 
 /**
  * @author Julio Camarero
@@ -97,10 +95,11 @@ public class StructuredContentNestedCollectionResourceFilteringTest
 		PageItems<JournalArticle> pageItems = getPageItems(
 			PaginationTestUtil.of(10, 1), _group.getGroupId(),
 			getThemeDisplay(_group, LocaleUtil.getDefault()),
-			_getFilter(
-				String.format(
-					"(dateCreated eq %s)",
-					ISO8601Utils.format(journalArticle.getCreateDate()))),
+			new Filter(
+				_filterParser.parse(
+					String.format(
+						"(dateCreated eq %s)",
+						ISO8601Utils.format(journalArticle.getCreateDate())))),
 			Sort.emptySort());
 
 		Assert.assertEquals(1, pageItems.getTotalCount());
@@ -149,9 +148,11 @@ public class StructuredContentNestedCollectionResourceFilteringTest
 		PageItems<JournalArticle> pageItems = getPageItems(
 			PaginationTestUtil.of(10, 1), _group.getGroupId(),
 			getThemeDisplay(_group, LocaleUtil.getDefault()),
-			_getFilter(
-				String.format(
-					"(dateCreated ge %s)", ISO8601Utils.format(inBetween))),
+			new Filter(
+				_filterParser.parse(
+					String.format(
+						"(dateCreated ge %s)",
+						ISO8601Utils.format(inBetween)))),
 			Sort.emptySort());
 
 		Assert.assertEquals(1, pageItems.getTotalCount());
@@ -200,9 +201,11 @@ public class StructuredContentNestedCollectionResourceFilteringTest
 		PageItems<JournalArticle> pageItems = getPageItems(
 			PaginationTestUtil.of(10, 1), _group.getGroupId(),
 			getThemeDisplay(_group, LocaleUtil.getDefault()),
-			_getFilter(
-				String.format(
-					"(dateCreated le %s)", ISO8601Utils.format(inBetween))),
+			new Filter(
+				_filterParser.parse(
+					String.format(
+						"(dateCreated le %s)",
+						ISO8601Utils.format(inBetween)))),
 			Sort.emptySort());
 
 		Assert.assertEquals(1, pageItems.getTotalCount());
@@ -233,10 +236,11 @@ public class StructuredContentNestedCollectionResourceFilteringTest
 		PageItems<JournalArticle> pageItems = getPageItems(
 			PaginationTestUtil.of(10, 1), _group.getGroupId(),
 			getThemeDisplay(_group, LocaleUtil.getDefault()),
-			_getFilter(
-				String.format(
-					"(dateModified eq %s)",
-					ISO8601Utils.format(journalArticle.getCreateDate()))),
+			new Filter(
+				_filterParser.parse(
+					String.format(
+						"(dateModified eq %s)",
+						ISO8601Utils.format(journalArticle.getCreateDate())))),
 			Sort.emptySort());
 
 		Assert.assertEquals(1, pageItems.getTotalCount());
@@ -285,9 +289,11 @@ public class StructuredContentNestedCollectionResourceFilteringTest
 		PageItems<JournalArticle> pageItems = getPageItems(
 			PaginationTestUtil.of(10, 1), _group.getGroupId(),
 			getThemeDisplay(_group, LocaleUtil.getDefault()),
-			_getFilter(
-				String.format(
-					"(dateModified ge %s)", ISO8601Utils.format(inBetween))),
+			new Filter(
+				_filterParser.parse(
+					String.format(
+						"(dateModified ge %s)",
+						ISO8601Utils.format(inBetween)))),
 			Sort.emptySort());
 
 		Assert.assertEquals(1, pageItems.getTotalCount());
@@ -336,9 +342,11 @@ public class StructuredContentNestedCollectionResourceFilteringTest
 		PageItems<JournalArticle> pageItems = getPageItems(
 			PaginationTestUtil.of(10, 1), _group.getGroupId(),
 			getThemeDisplay(_group, LocaleUtil.getDefault()),
-			_getFilter(
-				String.format(
-					"(dateModified le %s)", ISO8601Utils.format(inBetween))),
+			new Filter(
+				_filterParser.parse(
+					String.format(
+						"(dateModified le %s)",
+						ISO8601Utils.format(inBetween)))),
 			Sort.emptySort());
 
 		Assert.assertEquals(1, pageItems.getTotalCount());
@@ -375,10 +383,11 @@ public class StructuredContentNestedCollectionResourceFilteringTest
 		PageItems<JournalArticle> pageItems = getPageItems(
 			PaginationTestUtil.of(10, 1), _group.getGroupId(),
 			getThemeDisplay(_group, LocaleUtil.getDefault()),
-			_getFilter(
-				String.format(
-					"(datePublished eq %s)",
-					ISO8601Utils.format(journalArticle.getDisplayDate()))),
+			new Filter(
+				_filterParser.parse(
+					String.format(
+						"(datePublished eq %s)",
+						ISO8601Utils.format(journalArticle.getDisplayDate())))),
 			Sort.emptySort());
 
 		Assert.assertEquals(1, pageItems.getTotalCount());
@@ -440,11 +449,12 @@ public class StructuredContentNestedCollectionResourceFilteringTest
 		PageItems<JournalArticle> pageItems = getPageItems(
 			PaginationTestUtil.of(10, 1), _group.getGroupId(),
 			getThemeDisplay(_group, LocaleUtil.getDefault()),
-			_getFilter(
-				String.format(
-					"(datePublished ge %s)",
-					ISO8601Utils.format(
-						Date.from(zonedDateTimeInBetween.toInstant())))),
+			new Filter(
+				_filterParser.parse(
+					String.format(
+						"(datePublished ge %s)",
+						ISO8601Utils.format(
+							Date.from(zonedDateTimeInBetween.toInstant()))))),
 			Sort.emptySort());
 
 		Assert.assertEquals(1, pageItems.getTotalCount());
@@ -506,11 +516,12 @@ public class StructuredContentNestedCollectionResourceFilteringTest
 		PageItems<JournalArticle> pageItems = getPageItems(
 			PaginationTestUtil.of(10, 1), _group.getGroupId(),
 			getThemeDisplay(_group, LocaleUtil.getDefault()),
-			_getFilter(
-				String.format(
-					"(datePublished le %s)",
-					ISO8601Utils.format(
-						Date.from(zonedDateTimeInBetween.toInstant())))),
+			new Filter(
+				_filterParser.parse(
+					String.format(
+						"(datePublished le %s)",
+						ISO8601Utils.format(
+							Date.from(zonedDateTimeInBetween.toInstant()))))),
 			Sort.emptySort());
 
 		Assert.assertEquals(1, pageItems.getTotalCount());
@@ -541,7 +552,8 @@ public class StructuredContentNestedCollectionResourceFilteringTest
 		PageItems<JournalArticle> pageItems = getPageItems(
 			PaginationTestUtil.of(10, 1), _group.getGroupId(),
 			getThemeDisplay(_group, LocaleUtil.getDefault()),
-			_getFilter("(title eq 'hello')"), Sort.emptySort());
+			new Filter(_filterParser.parse("(title eq 'hello')")),
+			Sort.emptySort());
 
 		Assert.assertEquals(0, pageItems.getTotalCount());
 	}
@@ -580,7 +592,8 @@ public class StructuredContentNestedCollectionResourceFilteringTest
 		PageItems<JournalArticle> pageItems = getPageItems(
 			PaginationTestUtil.of(10, 1), _group.getGroupId(),
 			getThemeDisplay(_group, LocaleUtil.getDefault()),
-			_getFilter("(title eq 'hello world')"), Sort.emptySort());
+			new Filter(_filterParser.parse("(title eq 'hello world')")),
+			Sort.emptySort());
 
 		Assert.assertEquals(1, pageItems.getTotalCount());
 
@@ -612,7 +625,8 @@ public class StructuredContentNestedCollectionResourceFilteringTest
 		PageItems<JournalArticle> pageItems = getPageItems(
 			PaginationTestUtil.of(10, 1), _group.getGroupId(),
 			getThemeDisplay(_group, LocaleUtil.getDefault()),
-			_getFilter("(title eq 'hel')"), Sort.emptySort());
+			new Filter(_filterParser.parse("(title eq 'hel')")),
+			Sort.emptySort());
 
 		Assert.assertEquals(0, pageItems.getTotalCount());
 	}
@@ -649,7 +663,8 @@ public class StructuredContentNestedCollectionResourceFilteringTest
 		PageItems<JournalArticle> pageItems = getPageItems(
 			PaginationTestUtil.of(10, 1), _group.getGroupId(),
 			getThemeDisplay(_group, LocaleUtil.getDefault()),
-			_getFilter("(title eq 'title1')"), Sort.emptySort());
+			new Filter(_filterParser.parse("(title eq 'title1')")),
+			Sort.emptySort());
 
 		Assert.assertEquals(1, pageItems.getTotalCount());
 
@@ -703,7 +718,8 @@ public class StructuredContentNestedCollectionResourceFilteringTest
 		PageItems<JournalArticle> pageItems = getPageItems(
 			PaginationTestUtil.of(10, 1), _group.getGroupId(),
 			getThemeDisplay(_group, LocaleUtil.getDefault()),
-			_getFilter("(title ge 'title2')"), Sort.emptySort());
+			new Filter(_filterParser.parse("(title ge 'title2')")),
+			Sort.emptySort());
 
 		Assert.assertEquals(2, pageItems.getTotalCount());
 
@@ -738,7 +754,8 @@ public class StructuredContentNestedCollectionResourceFilteringTest
 		PageItems<JournalArticle> pageItems = getPageItems(
 			PaginationTestUtil.of(10, 1), _group.getGroupId(),
 			getThemeDisplay(_group, LocaleUtil.getDefault()),
-			_getFilter("(title eq 'titulo1')"), Sort.emptySort());
+			new Filter(_filterParser.parse("(title eq 'titulo1')")),
+			Sort.emptySort());
 
 		Assert.assertEquals(1, pageItems.getTotalCount());
 
@@ -771,7 +788,8 @@ public class StructuredContentNestedCollectionResourceFilteringTest
 		PageItems<JournalArticle> pageItems = getPageItems(
 			PaginationTestUtil.of(10, 1), _group.getGroupId(),
 			getThemeDisplay(_group, LocaleUtil.getDefault()),
-			_getFilter("(title eq 'titulo1')"), Sort.emptySort());
+			new Filter(_filterParser.parse("(title eq 'titulo1')")),
+			Sort.emptySort());
 
 		Assert.assertEquals(0, pageItems.getTotalCount());
 	}
@@ -799,7 +817,8 @@ public class StructuredContentNestedCollectionResourceFilteringTest
 		PageItems<JournalArticle> pageItems = getPageItems(
 			PaginationTestUtil.of(10, 1), _group.getGroupId(),
 			getThemeDisplay(_group, LocaleUtil.SPAIN),
-			_getFilter("(title eq 'titulo1')"), Sort.emptySort());
+			new Filter(_filterParser.parse("(title eq 'titulo1')")),
+			Sort.emptySort());
 
 		Assert.assertEquals(1, pageItems.getTotalCount());
 
@@ -853,7 +872,8 @@ public class StructuredContentNestedCollectionResourceFilteringTest
 		PageItems<JournalArticle> pageItems = getPageItems(
 			PaginationTestUtil.of(10, 1), _group.getGroupId(),
 			getThemeDisplay(_group, LocaleUtil.getDefault()),
-			_getFilter("(title le 'title2')"), Sort.emptySort());
+			new Filter(_filterParser.parse("(title le 'title2')")),
+			Sort.emptySort());
 
 		Assert.assertEquals(2, pageItems.getTotalCount());
 
@@ -910,7 +930,9 @@ public class StructuredContentNestedCollectionResourceFilteringTest
 		PageItems<JournalArticle> pageItems = getPageItems(
 			PaginationTestUtil.of(10, 1), _group.getGroupId(),
 			getThemeDisplay(_group, LocaleUtil.getDefault()),
-			_getFilter("(title le 'title2') and (title ge 'title2')"),
+			new Filter(
+				_filterParser.parse(
+					"(title le 'title2') and (title ge 'title2')")),
 			Sort.emptySort());
 
 		Assert.assertEquals(1, pageItems.getTotalCount());
@@ -967,7 +989,9 @@ public class StructuredContentNestedCollectionResourceFilteringTest
 		PageItems<JournalArticle> pageItems = getPageItems(
 			PaginationTestUtil.of(10, 1), _group.getGroupId(),
 			getThemeDisplay(_group, LocaleUtil.getDefault()),
-			_getFilter("(title le 'title2') or (title ge 'title2')"),
+			new Filter(
+				_filterParser.parse(
+					"(title le 'title2') or (title ge 'title2')")),
 			Sort.emptySort());
 
 		Assert.assertEquals(3, pageItems.getTotalCount());
@@ -1014,7 +1038,8 @@ public class StructuredContentNestedCollectionResourceFilteringTest
 		PageItems<JournalArticle> pageItems = getPageItems(
 			PaginationTestUtil.of(10, 1), _group.getGroupId(),
 			getThemeDisplay(_group, LocaleUtil.getDefault()),
-			_getFilter("(title eq 'great title')"), Sort.emptySort());
+			new Filter(_filterParser.parse("(title eq 'great title')")),
+			Sort.emptySort());
 
 		Assert.assertEquals(2, pageItems.getTotalCount());
 
@@ -1059,7 +1084,8 @@ public class StructuredContentNestedCollectionResourceFilteringTest
 		PageItems<JournalArticle> pageItems = getPageItems(
 			PaginationTestUtil.of(10, 1), _group.getGroupId(),
 			getThemeDisplay(_group, LocaleUtil.getDefault()),
-			_getFilter("(title eq 'Great Title')"), Sort.emptySort());
+			new Filter(_filterParser.parse("(title eq 'Great Title')")),
+			Sort.emptySort());
 
 		Assert.assertEquals(2, pageItems.getTotalCount());
 
@@ -1073,26 +1099,16 @@ public class StructuredContentNestedCollectionResourceFilteringTest
 	@Test
 	public void testGetSearchFilterWithExistingProperty() throws Exception {
 		TermFilter termQuery = (TermFilter)getSearchFilter(
-			_getFilter("title eq 'Title Value'"), LocaleUtil.US);
+			new Filter(_filterParser.parse("title eq 'Title Value'")),
+			LocaleUtil.US);
 
 		Assert.assertEquals(
 			"localized_title_en_US_sortable", termQuery.getField());
 		Assert.assertEquals("title value", termQuery.getValue());
 	}
 
-	private Filter _getFilter(String filter) {
-		MockHttpServletRequest mockHttpServletRequest =
-			new MockHttpServletRequest();
-
-		mockHttpServletRequest.setParameter("filter", filter);
-
-		return _filterProvider.createContext(mockHttpServletRequest);
-	}
-
-	@Inject(
-		filter = "(&(entity.model.name=StructuredContent)(provider.type=filter))"
-	)
-	private Provider<Filter> _filterProvider;
+	@Inject(filter = "entity.model.name=StructuredContent")
+	private FilterParser _filterParser;
 
 	@DeleteAfterTestRun
 	private Group _group;

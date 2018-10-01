@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.structured.content.apio.internal.architect.provider;
+package com.liferay.structured.content.apio.internal.architect.filter;
 
 import com.liferay.structured.content.apio.architect.entity.EntityField;
 import com.liferay.structured.content.apio.architect.entity.EntityModel;
@@ -35,7 +35,7 @@ import org.junit.Test;
 /**
  * @author David Arques
  */
-public class FilterProviderTest {
+public class FilterParserImplTest {
 
 	@Test
 	public void testParseNonexistingField() {
@@ -207,28 +207,30 @@ public class FilterProviderTest {
 		exception.hasMessage("Filter is null");
 	}
 
-	private static final FilterProvider _filterParserImpl = new FilterProvider(
-		new EntityModel() {
+	private static final FilterParserImpl _filterParserImpl =
+		new FilterParserImpl(
+			new EntityModel() {
 
-			@Override
-			public Map<String, EntityField> getEntityFieldsMap() {
-				return Stream.of(
-					new EntityField(
-						"fieldExternal", EntityField.Type.STRING,
-						locale -> "fieldInternal"),
-					new EntityField(
-						"dateExternal", EntityField.Type.DATE,
-						locale -> "dateInternal")
-				).collect(
-					Collectors.toMap(EntityField::getName, Function.identity())
-				);
-			}
+				@Override
+				public Map<String, EntityField> getEntityFieldsMap() {
+					return Stream.of(
+						new EntityField(
+							"fieldExternal", EntityField.Type.STRING,
+							locale -> "fieldInternal"),
+						new EntityField(
+							"dateExternal", EntityField.Type.DATE,
+							locale -> "dateInternal")
+					).collect(
+						Collectors.toMap(
+							EntityField::getName, Function.identity())
+					);
+				}
 
-			@Override
-			public String getName() {
-				return "SomeEntityName";
-			}
+				@Override
+				public String getName() {
+					return "SomeEntityName";
+				}
 
-		});
+			});
 
 }

@@ -85,4 +85,7 @@
 			<finder-column name="classPK" />
 		</finder>
 	</entity>
+	<exceptions>
+		<exception>SegmentsEntryKey</exception>
+	</exceptions>
 </service-builder>

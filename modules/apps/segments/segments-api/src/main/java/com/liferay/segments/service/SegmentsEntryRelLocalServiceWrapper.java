@@ -34,6 +34,15 @@ public class SegmentsEntryRelLocalServiceWrapper
 		_segmentsEntryRelLocalService = segmentsEntryRelLocalService;
 	}
 
+	@Override
+	public com.liferay.segments.model.SegmentsEntryRel addSegmentsEntryRel(
+		long segmentsEntryId, long classNameId, long classPK,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _segmentsEntryRelLocalService.addSegmentsEntryRel(segmentsEntryId,
+			classNameId, classPK, serviceContext);
+	}
+
 	/**
 	* Adds the segments entry rel to the database. Also notifies the appropriate model listeners.
 	*
@@ -92,6 +101,17 @@ public class SegmentsEntryRelLocalServiceWrapper
 	public com.liferay.segments.model.SegmentsEntryRel deleteSegmentsEntryRel(
 		com.liferay.segments.model.SegmentsEntryRel segmentsEntryRel) {
 		return _segmentsEntryRelLocalService.deleteSegmentsEntryRel(segmentsEntryRel);
+	}
+
+	@Override
+	public void deleteSegmentsEntryRels(long segmentsEntryId) {
+		_segmentsEntryRelLocalService.deleteSegmentsEntryRels(segmentsEntryId);
+	}
+
+	@Override
+	public void deleteSegmentsEntryRels(long classNameId, long classPK) {
+		_segmentsEntryRelLocalService.deleteSegmentsEntryRels(classNameId,
+			classPK);
 	}
 
 	@Override
@@ -211,6 +231,19 @@ public class SegmentsEntryRelLocalServiceWrapper
 		java.io.Serializable primaryKeyObj)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _segmentsEntryRelLocalService.getPersistedModel(primaryKeyObj);
+	}
+
+	@Override
+	public java.util.List<com.liferay.segments.model.SegmentsEntryRel> getSegmentEntryRels(
+		long segmentEntryId) {
+		return _segmentsEntryRelLocalService.getSegmentEntryRels(segmentEntryId);
+	}
+
+	@Override
+	public java.util.List<com.liferay.segments.model.SegmentsEntryRel> getSegmentEntryRels(
+		long classNameId, long classPK) {
+		return _segmentsEntryRelLocalService.getSegmentEntryRels(classNameId,
+			classPK);
 	}
 
 	/**

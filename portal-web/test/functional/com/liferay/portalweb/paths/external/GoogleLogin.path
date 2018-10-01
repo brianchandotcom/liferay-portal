@@ -36,12 +36,12 @@
 <!--LOGIN-->
 <tr>
 	<td>LOGIN_EMAIL_FIELD</td>
-	<td>//input[contains(@type,'email')]</td>
+	<td>//input[@id='identifierId']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>LOGIN_PASSWORD_FIELD</td>
-	<td>//input[contains(@type,'password')]</td>
+	<td>//input[@name='password']</td>
 	<td></td>
 </tr>
 <tr>

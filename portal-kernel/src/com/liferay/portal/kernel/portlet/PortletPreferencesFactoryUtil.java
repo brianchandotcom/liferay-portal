@@ -191,15 +191,17 @@ public class PortletPreferencesFactoryUtil {
 	}
 
 	public static PortletPreferences getPortletSetup(
-		Layout layout, String portletId, String defaultPreferences) {
+			Layout layout, String portletId, String defaultPreferences)
+		throws PortalException {
 
 		return getPortletPreferencesFactory().getPortletSetup(
 			layout, portletId, defaultPreferences);
 	}
 
 	public static PortletPreferences getPortletSetup(
-		long siteGroupId, Layout layout, String portletId,
-		String defaultPreferences) {
+			long siteGroupId, Layout layout, String portletId,
+			String defaultPreferences)
+		throws PortalException {
 
 		return getPortletPreferencesFactory().getPortletSetup(
 			siteGroupId, layout, portletId, defaultPreferences);
@@ -248,14 +250,16 @@ public class PortletPreferencesFactoryUtil {
 	}
 
 	public static PortletPreferences getStrictPortletSetup(
-		Layout layout, String portletId) {
+			Layout layout, String portletId)
+		throws PortalException {
 
 		return getPortletPreferencesFactory().getStrictPortletSetup(
 			layout, portletId);
 	}
 
 	public static PortletPreferences getStrictPortletSetup(
-		long companyId, long groupId, String portletId) {
+			long companyId, long groupId, String portletId)
+		throws PortalException {
 
 		return getPortletPreferencesFactory().getStrictPortletSetup(
 			companyId, groupId, portletId);

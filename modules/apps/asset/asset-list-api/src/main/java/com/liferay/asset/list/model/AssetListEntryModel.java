@@ -21,8 +21,8 @@ import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.CacheModel;
-import com.liferay.portal.kernel.model.GroupedModel;
 import com.liferay.portal.kernel.model.ShardedModel;
+import com.liferay.portal.kernel.model.StagedGroupedModel;
 import com.liferay.portal.kernel.service.ServiceContext;
 
 import java.io.Serializable;
@@ -44,7 +44,7 @@ import java.util.Date;
  */
 @ProviderType
 public interface AssetListEntryModel extends BaseModel<AssetListEntry>,
-	GroupedModel, ShardedModel {
+	ShardedModel, StagedGroupedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -64,6 +64,23 @@ public interface AssetListEntryModel extends BaseModel<AssetListEntry>,
 	 * @param primaryKey the primary key of this asset list entry
 	 */
 	public void setPrimaryKey(long primaryKey);
+
+	/**
+	 * Returns the uuid of this asset list entry.
+	 *
+	 * @return the uuid of this asset list entry
+	 */
+	@AutoEscape
+	@Override
+	public String getUuid();
+
+	/**
+	 * Sets the uuid of this asset list entry.
+	 *
+	 * @param uuid the uuid of this asset list entry
+	 */
+	@Override
+	public void setUuid(String uuid);
 
 	/**
 	 * Returns the asset list entry ID of this asset list entry.
@@ -235,6 +252,22 @@ public interface AssetListEntryModel extends BaseModel<AssetListEntry>,
 	 * @param type the type of this asset list entry
 	 */
 	public void setType(int type);
+
+	/**
+	 * Returns the last publish date of this asset list entry.
+	 *
+	 * @return the last publish date of this asset list entry
+	 */
+	@Override
+	public Date getLastPublishDate();
+
+	/**
+	 * Sets the last publish date of this asset list entry.
+	 *
+	 * @param lastPublishDate the last publish date of this asset list entry
+	 */
+	@Override
+	public void setLastPublishDate(Date lastPublishDate);
 
 	@Override
 	public boolean isNew();

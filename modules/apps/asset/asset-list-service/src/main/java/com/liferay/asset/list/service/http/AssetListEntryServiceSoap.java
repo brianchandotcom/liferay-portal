@@ -66,10 +66,12 @@ import java.rmi.RemoteException;
 @ProviderType
 public class AssetListEntryServiceSoap {
 	public static void addAssetEntrySelection(long assetListEntryId,
-		long assetEntryId) throws RemoteException {
+		long assetEntryId,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws RemoteException {
 		try {
 			AssetListEntryServiceUtil.addAssetEntrySelection(assetListEntryId,
-				assetEntryId);
+				assetEntryId, serviceContext);
 		}
 		catch (Exception e) {
 			_log.error(e, e);

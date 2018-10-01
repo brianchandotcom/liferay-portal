@@ -19,6 +19,7 @@ import aQute.bnd.annotation.ProviderType;
 import java.io.Serializable;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -33,10 +34,18 @@ public class AssetListEntryAssetEntryRelSoap implements Serializable {
 		AssetListEntryAssetEntryRel model) {
 		AssetListEntryAssetEntryRelSoap soapModel = new AssetListEntryAssetEntryRelSoap();
 
+		soapModel.setUuid(model.getUuid());
 		soapModel.setAssetListEntryAssetEntryRelId(model.getAssetListEntryAssetEntryRelId());
+		soapModel.setGroupId(model.getGroupId());
+		soapModel.setCompanyId(model.getCompanyId());
+		soapModel.setUserId(model.getUserId());
+		soapModel.setUserName(model.getUserName());
+		soapModel.setCreateDate(model.getCreateDate());
+		soapModel.setModifiedDate(model.getModifiedDate());
 		soapModel.setAssetListEntryId(model.getAssetListEntryId());
 		soapModel.setAssetEntryId(model.getAssetEntryId());
 		soapModel.setPosition(model.getPosition());
+		soapModel.setLastPublishDate(model.getLastPublishDate());
 
 		return soapModel;
 	}
@@ -92,6 +101,14 @@ public class AssetListEntryAssetEntryRelSoap implements Serializable {
 		setAssetListEntryAssetEntryRelId(pk);
 	}
 
+	public String getUuid() {
+		return _uuid;
+	}
+
+	public void setUuid(String uuid) {
+		_uuid = uuid;
+	}
+
 	public long getAssetListEntryAssetEntryRelId() {
 		return _assetListEntryAssetEntryRelId;
 	}
@@ -99,6 +116,54 @@ public class AssetListEntryAssetEntryRelSoap implements Serializable {
 	public void setAssetListEntryAssetEntryRelId(
 		long assetListEntryAssetEntryRelId) {
 		_assetListEntryAssetEntryRelId = assetListEntryAssetEntryRelId;
+	}
+
+	public long getGroupId() {
+		return _groupId;
+	}
+
+	public void setGroupId(long groupId) {
+		_groupId = groupId;
+	}
+
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
+	}
+
+	public long getUserId() {
+		return _userId;
+	}
+
+	public void setUserId(long userId) {
+		_userId = userId;
+	}
+
+	public String getUserName() {
+		return _userName;
+	}
+
+	public void setUserName(String userName) {
+		_userName = userName;
+	}
+
+	public Date getCreateDate() {
+		return _createDate;
+	}
+
+	public void setCreateDate(Date createDate) {
+		_createDate = createDate;
+	}
+
+	public Date getModifiedDate() {
+		return _modifiedDate;
+	}
+
+	public void setModifiedDate(Date modifiedDate) {
+		_modifiedDate = modifiedDate;
 	}
 
 	public long getAssetListEntryId() {
@@ -125,8 +190,24 @@ public class AssetListEntryAssetEntryRelSoap implements Serializable {
 		_position = position;
 	}
 
+	public Date getLastPublishDate() {
+		return _lastPublishDate;
+	}
+
+	public void setLastPublishDate(Date lastPublishDate) {
+		_lastPublishDate = lastPublishDate;
+	}
+
+	private String _uuid;
 	private long _assetListEntryAssetEntryRelId;
+	private long _groupId;
+	private long _companyId;
+	private long _userId;
+	private String _userName;
+	private Date _createDate;
+	private Date _modifiedDate;
 	private long _assetListEntryId;
 	private long _assetEntryId;
 	private int _position;
+	private Date _lastPublishDate;
 }

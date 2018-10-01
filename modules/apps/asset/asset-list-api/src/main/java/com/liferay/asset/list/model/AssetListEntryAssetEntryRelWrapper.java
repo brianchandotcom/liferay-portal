@@ -18,11 +18,14 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.expando.kernel.model.ExpandoBridge;
 
+import com.liferay.exportimport.kernel.lar.StagedModelType;
+
 import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.service.ServiceContext;
 
 import java.io.Serializable;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -59,22 +62,72 @@ public class AssetListEntryAssetEntryRelWrapper
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("uuid", getUuid());
 		attributes.put("assetListEntryAssetEntryRelId",
 			getAssetListEntryAssetEntryRelId());
+		attributes.put("groupId", getGroupId());
+		attributes.put("companyId", getCompanyId());
+		attributes.put("userId", getUserId());
+		attributes.put("userName", getUserName());
+		attributes.put("createDate", getCreateDate());
+		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("assetListEntryId", getAssetListEntryId());
 		attributes.put("assetEntryId", getAssetEntryId());
 		attributes.put("position", getPosition());
+		attributes.put("lastPublishDate", getLastPublishDate());
 
 		return attributes;
 	}
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		String uuid = (String)attributes.get("uuid");
+
+		if (uuid != null) {
+			setUuid(uuid);
+		}
+
 		Long assetListEntryAssetEntryRelId = (Long)attributes.get(
 				"assetListEntryAssetEntryRelId");
 
 		if (assetListEntryAssetEntryRelId != null) {
 			setAssetListEntryAssetEntryRelId(assetListEntryAssetEntryRelId);
+		}
+
+		Long groupId = (Long)attributes.get("groupId");
+
+		if (groupId != null) {
+			setGroupId(groupId);
+		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
+		}
+
+		Long userId = (Long)attributes.get("userId");
+
+		if (userId != null) {
+			setUserId(userId);
+		}
+
+		String userName = (String)attributes.get("userName");
+
+		if (userName != null) {
+			setUserName(userName);
+		}
+
+		Date createDate = (Date)attributes.get("createDate");
+
+		if (createDate != null) {
+			setCreateDate(createDate);
+		}
+
+		Date modifiedDate = (Date)attributes.get("modifiedDate");
+
+		if (modifiedDate != null) {
+			setModifiedDate(modifiedDate);
 		}
 
 		Long assetListEntryId = (Long)attributes.get("assetListEntryId");
@@ -93,6 +146,12 @@ public class AssetListEntryAssetEntryRelWrapper
 
 		if (position != null) {
 			setPosition(position);
+		}
+
+		Date lastPublishDate = (Date)attributes.get("lastPublishDate");
+
+		if (lastPublishDate != null) {
+			setLastPublishDate(lastPublishDate);
 		}
 	}
 
@@ -137,9 +196,59 @@ public class AssetListEntryAssetEntryRelWrapper
 		return _assetListEntryAssetEntryRel.getAssetListEntryId();
 	}
 
+	/**
+	* Returns the company ID of this asset list entry asset entry rel.
+	*
+	* @return the company ID of this asset list entry asset entry rel
+	*/
+	@Override
+	public long getCompanyId() {
+		return _assetListEntryAssetEntryRel.getCompanyId();
+	}
+
+	/**
+	* Returns the create date of this asset list entry asset entry rel.
+	*
+	* @return the create date of this asset list entry asset entry rel
+	*/
+	@Override
+	public Date getCreateDate() {
+		return _assetListEntryAssetEntryRel.getCreateDate();
+	}
+
 	@Override
 	public ExpandoBridge getExpandoBridge() {
 		return _assetListEntryAssetEntryRel.getExpandoBridge();
+	}
+
+	/**
+	* Returns the group ID of this asset list entry asset entry rel.
+	*
+	* @return the group ID of this asset list entry asset entry rel
+	*/
+	@Override
+	public long getGroupId() {
+		return _assetListEntryAssetEntryRel.getGroupId();
+	}
+
+	/**
+	* Returns the last publish date of this asset list entry asset entry rel.
+	*
+	* @return the last publish date of this asset list entry asset entry rel
+	*/
+	@Override
+	public Date getLastPublishDate() {
+		return _assetListEntryAssetEntryRel.getLastPublishDate();
+	}
+
+	/**
+	* Returns the modified date of this asset list entry asset entry rel.
+	*
+	* @return the modified date of this asset list entry asset entry rel
+	*/
+	@Override
+	public Date getModifiedDate() {
+		return _assetListEntryAssetEntryRel.getModifiedDate();
 	}
 
 	/**
@@ -165,6 +274,46 @@ public class AssetListEntryAssetEntryRelWrapper
 	@Override
 	public Serializable getPrimaryKeyObj() {
 		return _assetListEntryAssetEntryRel.getPrimaryKeyObj();
+	}
+
+	/**
+	* Returns the user ID of this asset list entry asset entry rel.
+	*
+	* @return the user ID of this asset list entry asset entry rel
+	*/
+	@Override
+	public long getUserId() {
+		return _assetListEntryAssetEntryRel.getUserId();
+	}
+
+	/**
+	* Returns the user name of this asset list entry asset entry rel.
+	*
+	* @return the user name of this asset list entry asset entry rel
+	*/
+	@Override
+	public String getUserName() {
+		return _assetListEntryAssetEntryRel.getUserName();
+	}
+
+	/**
+	* Returns the user uuid of this asset list entry asset entry rel.
+	*
+	* @return the user uuid of this asset list entry asset entry rel
+	*/
+	@Override
+	public String getUserUuid() {
+		return _assetListEntryAssetEntryRel.getUserUuid();
+	}
+
+	/**
+	* Returns the uuid of this asset list entry asset entry rel.
+	*
+	* @return the uuid of this asset list entry asset entry rel
+	*/
+	@Override
+	public String getUuid() {
+		return _assetListEntryAssetEntryRel.getUuid();
 	}
 
 	@Override
@@ -228,6 +377,26 @@ public class AssetListEntryAssetEntryRelWrapper
 		_assetListEntryAssetEntryRel.setCachedModel(cachedModel);
 	}
 
+	/**
+	* Sets the company ID of this asset list entry asset entry rel.
+	*
+	* @param companyId the company ID of this asset list entry asset entry rel
+	*/
+	@Override
+	public void setCompanyId(long companyId) {
+		_assetListEntryAssetEntryRel.setCompanyId(companyId);
+	}
+
+	/**
+	* Sets the create date of this asset list entry asset entry rel.
+	*
+	* @param createDate the create date of this asset list entry asset entry rel
+	*/
+	@Override
+	public void setCreateDate(Date createDate) {
+		_assetListEntryAssetEntryRel.setCreateDate(createDate);
+	}
+
 	@Override
 	public void setExpandoBridgeAttributes(
 		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
@@ -242,6 +411,36 @@ public class AssetListEntryAssetEntryRelWrapper
 	@Override
 	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
 		_assetListEntryAssetEntryRel.setExpandoBridgeAttributes(serviceContext);
+	}
+
+	/**
+	* Sets the group ID of this asset list entry asset entry rel.
+	*
+	* @param groupId the group ID of this asset list entry asset entry rel
+	*/
+	@Override
+	public void setGroupId(long groupId) {
+		_assetListEntryAssetEntryRel.setGroupId(groupId);
+	}
+
+	/**
+	* Sets the last publish date of this asset list entry asset entry rel.
+	*
+	* @param lastPublishDate the last publish date of this asset list entry asset entry rel
+	*/
+	@Override
+	public void setLastPublishDate(Date lastPublishDate) {
+		_assetListEntryAssetEntryRel.setLastPublishDate(lastPublishDate);
+	}
+
+	/**
+	* Sets the modified date of this asset list entry asset entry rel.
+	*
+	* @param modifiedDate the modified date of this asset list entry asset entry rel
+	*/
+	@Override
+	public void setModifiedDate(Date modifiedDate) {
+		_assetListEntryAssetEntryRel.setModifiedDate(modifiedDate);
 	}
 
 	@Override
@@ -272,6 +471,46 @@ public class AssetListEntryAssetEntryRelWrapper
 	@Override
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
 		_assetListEntryAssetEntryRel.setPrimaryKeyObj(primaryKeyObj);
+	}
+
+	/**
+	* Sets the user ID of this asset list entry asset entry rel.
+	*
+	* @param userId the user ID of this asset list entry asset entry rel
+	*/
+	@Override
+	public void setUserId(long userId) {
+		_assetListEntryAssetEntryRel.setUserId(userId);
+	}
+
+	/**
+	* Sets the user name of this asset list entry asset entry rel.
+	*
+	* @param userName the user name of this asset list entry asset entry rel
+	*/
+	@Override
+	public void setUserName(String userName) {
+		_assetListEntryAssetEntryRel.setUserName(userName);
+	}
+
+	/**
+	* Sets the user uuid of this asset list entry asset entry rel.
+	*
+	* @param userUuid the user uuid of this asset list entry asset entry rel
+	*/
+	@Override
+	public void setUserUuid(String userUuid) {
+		_assetListEntryAssetEntryRel.setUserUuid(userUuid);
+	}
+
+	/**
+	* Sets the uuid of this asset list entry asset entry rel.
+	*
+	* @param uuid the uuid of this asset list entry asset entry rel
+	*/
+	@Override
+	public void setUuid(String uuid) {
+		_assetListEntryAssetEntryRel.setUuid(uuid);
 	}
 
 	@Override
@@ -317,6 +556,11 @@ public class AssetListEntryAssetEntryRelWrapper
 		}
 
 		return false;
+	}
+
+	@Override
+	public StagedModelType getStagedModelType() {
+		return _assetListEntryAssetEntryRel.getStagedModelType();
 	}
 
 	@Override

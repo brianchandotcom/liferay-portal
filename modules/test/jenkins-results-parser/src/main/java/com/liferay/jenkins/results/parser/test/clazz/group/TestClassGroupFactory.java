@@ -63,7 +63,7 @@ public class TestClassGroupFactory {
 					batchName, portalTestClassJob);
 			}
 
-			if (batchName.startsWith("jsp-test-") ||
+			if (batchName.startsWith("js-test-") ||
 				batchName.startsWith("portal-frontend-js-")) {
 
 				return new NPMTestBatchTestClassGroup(

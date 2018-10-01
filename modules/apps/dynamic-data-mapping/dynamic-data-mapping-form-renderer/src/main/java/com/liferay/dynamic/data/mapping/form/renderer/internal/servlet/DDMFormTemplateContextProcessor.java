@@ -109,6 +109,9 @@ public class DDMFormTemplateContextProcessor {
 			jsonObject.getString("ddmDataProviderInstanceOutput"),
 			ddmFormField);
 		setDDMFormFieldDataType(jsonObject.getString("dataType"), ddmFormField);
+		setDDMFormFieldFieldName(
+			jsonObject.getString("fieldName"), ddmFormField);
+		setDDMFormFieldLabel(jsonObject.getString("label"), ddmFormField);
 		setDDMFormFieldLocalizable(
 			jsonObject.getBoolean("localizable", false), ddmFormField);
 		setDDMFormFieldMultiple(
@@ -117,12 +120,19 @@ public class DDMFormTemplateContextProcessor {
 			jsonObject.getJSONArray("options"), ddmFormField);
 		setDDMFormFieldOptionsProperty(jsonObject, ddmFormField, "columns");
 		setDDMFormFieldOptionsProperty(jsonObject, ddmFormField, "rows");
+		setDDMFormFieldPlaceholder(
+			jsonObject.getString("placeholder"), ddmFormField);
 		setDDMFormFieldReadOnly(
 			jsonObject.getBoolean("readOnly", false), ddmFormField);
 		setDDMFormFieldRepeatable(
 			jsonObject.getBoolean("repeatable", false), ddmFormField);
 		setDDMFormFieldRequired(
 			jsonObject.getBoolean("required", false), ddmFormField);
+		setDDMFormFieldShowAsSwitcher(
+			jsonObject.getBoolean("showAsSwitcher"), ddmFormField);
+		setDDMFormFieldTooltip(jsonObject.getString("tooltip"), ddmFormField);
+		setDDMFormFieldValid(
+			jsonObject.getBoolean("valid", true), ddmFormField);
 		setDDMFormFieldValidation(
 			jsonObject.getJSONObject("validation"), ddmFormField);
 		setDDMFormFieldVisibilityExpression(
@@ -206,6 +216,7 @@ public class DDMFormTemplateContextProcessor {
 	protected void initModels() {
 		setDDMFormRules();
 
+		setDDMFormDefaultLocale();
 		setDDMFormValuesDefaultLocale();
 		setDDMFormValuesAvailableLocales();
 
@@ -214,6 +225,10 @@ public class DDMFormTemplateContextProcessor {
 
 	protected void process() {
 		traversePages(_jsonObject.getJSONArray("pages"));
+	}
+
+	protected void setDDMFormDefaultLocale() {
+		_ddmForm.setDefaultLocale(_locale);
 	}
 
 	protected void setDDMFormFieldDataProviderSettings(
@@ -230,6 +245,18 @@ public class DDMFormTemplateContextProcessor {
 		String dataType, DDMFormField ddmFormField) {
 
 		ddmFormField.setDataType(GetterUtil.getString(dataType));
+	}
+
+	protected void setDDMFormFieldFieldName(
+		String fieldName, DDMFormField ddmFormField) {
+
+		ddmFormField.setName(GetterUtil.getString(fieldName));
+	}
+
+	protected void setDDMFormFieldLabel(
+		String label, DDMFormField ddmFormField) {
+
+		ddmFormField.setLabel(getLocalizedValue(GetterUtil.getString(label)));
 	}
 
 	protected void setDDMFormFieldLocalizable(
@@ -287,6 +314,14 @@ public class DDMFormTemplateContextProcessor {
 		ddmFormField.setProperty(property, ddmFormFieldOptions);
 	}
 
+	protected void setDDMFormFieldPlaceholder(
+		String placeholder, DDMFormField ddmFormField) {
+
+		ddmFormField.setProperty(
+			"placeholder",
+			getLocalizedValue(GetterUtil.getString(placeholder)));
+	}
+
 	protected void setDDMFormFieldReadOnly(
 		boolean readOnly, DDMFormField ddmFormField) {
 
@@ -303,6 +338,25 @@ public class DDMFormTemplateContextProcessor {
 		boolean required, DDMFormField ddmFormField) {
 
 		ddmFormField.setRequired(required);
+	}
+
+	protected void setDDMFormFieldShowAsSwitcher(
+		boolean showAsSwitcher, DDMFormField ddmFormField) {
+
+		ddmFormField.setProperty("showAsSwitcher", showAsSwitcher);
+	}
+
+	protected void setDDMFormFieldTooltip(
+		String tooltip, DDMFormField ddmFormField) {
+
+		ddmFormField.setProperty(
+			"tooltip", getLocalizedValue(GetterUtil.getString(tooltip)));
+	}
+
+	protected void setDDMFormFieldValid(
+		boolean valid, DDMFormField ddmFormField) {
+
+		ddmFormField.setProperty("valid", valid);
 	}
 
 	protected void setDDMFormFieldValidation(

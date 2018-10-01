@@ -14,9 +14,12 @@
 
 package com.liferay.dynamic.data.mapping.form.evaluator.internal.functions;
 
+import com.liferay.dynamic.data.mapping.constants.DDMConstants;
 import com.liferay.dynamic.data.mapping.expression.DDMExpressionFunction;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
+
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -24,31 +27,26 @@ import org.osgi.service.component.annotations.Component;
  * @author Leonardo Barros
  */
 @Component(
-	immediate = true, property = "ddm.form.evaluator.function.name=concat",
-	service = DDMExpressionFunction.class
+	factory = DDMConstants.EXPRESSION_FUNCTION_FACTORY_NAME,
+	service = DDMExpressionFunction.Function1.class
 )
-public class ConcatFunction implements DDMExpressionFunction {
+public class ConcatFunction
+	implements DDMExpressionFunction.Function1<String[], String> {
 
 	@Override
-	public Object evaluate(Object... parameters) {
-		if (parameters.length < 2) {
-			throw new IllegalArgumentException(
-				"Two or more parameters are expected");
-		}
+	public String apply(String[] values) {
+		return Stream.of(
+			values
+		).filter(
+			Validator::isNotNull
+		).collect(
+			Collectors.joining()
+		);
+	}
 
-		StringBundler sb = new StringBundler(parameters.length);
-
-		for (Object parameter : parameters) {
-			String string = (String)parameter;
-
-			if (Validator.isNull(string)) {
-				continue;
-			}
-
-			sb.append(string);
-		}
-
-		return sb.toString();
+	@Override
+	public String getName() {
+		return "concat";
 	}
 
 }

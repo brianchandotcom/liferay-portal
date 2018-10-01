@@ -19,6 +19,7 @@ import com.liferay.dynamic.data.mapping.model.Value;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 
 import java.util.Locale;
+import java.util.function.IntFunction;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -33,6 +34,11 @@ import org.osgi.service.component.annotations.Component;
 )
 public class CheckboxDDMFormFieldValueAccessor
 	implements DDMFormFieldValueAccessor<Boolean> {
+
+	@Override
+	public IntFunction<Boolean[]> getArrayGeneratorFunction() {
+		return Boolean[]::new;
+	}
 
 	@Override
 	public Boolean getValue(

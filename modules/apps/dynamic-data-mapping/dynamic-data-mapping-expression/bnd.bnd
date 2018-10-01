@@ -8,4 +8,6 @@ Import-Package:\
 	\
 	!javax.swing.*,\
 	\
+	!net.sf.cglib.proxy.*,\
+	\
 	*

@@ -24,11 +24,6 @@ import com.liferay.dynamic.data.mapping.test.util.DDMFormTestUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.SetUtil;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 import org.junit.Assert;
@@ -50,92 +45,6 @@ public class DDMFormTemplateContextFactoryHelperTest extends PowerMockito {
 	@BeforeClass
 	public static void setUpClass() throws Exception {
 		setUpDDMFormTemplateContextFactoryHelper();
-	}
-
-	@Test
-	public void testGetDataProviderSettingsFromAutoFillActions()
-		throws Exception {
-
-		DDMForm ddmForm = DDMFormTestUtil.createDDMForm();
-
-		List<DDMFormRule> ddmFormRules = new ArrayList<>();
-
-		ddmFormRules.add(createAutoFillDDMFormRule());
-
-		ddmForm.setDDMFormRules(ddmFormRules);
-
-		DDMFormField ddmFormField1 = DDMFormTestUtil.createDDMFormField(
-			"Field1", "Field1", "select", "string", false, false, false);
-
-		ddmForm.addDDMFormField(ddmFormField1);
-
-		DDMFormField ddmFormField2 = DDMFormTestUtil.createDDMFormField(
-			"Field2", "Field2", "select", "string", false, false, false);
-
-		ddmForm.addDDMFormField(ddmFormField2);
-
-		Map<String, Map<String, Object>> dataProviderSettings =
-			_ddmFormTemplateContextFactoryHelper.getDataProviderSettings(
-				ddmForm);
-
-		Assert.assertNotNull(dataProviderSettings);
-
-		Map<String, Object> fieldDataProviderSettingsMap =
-			dataProviderSettings.get(ddmFormField2.getName());
-
-		Assert.assertNotNull(fieldDataProviderSettingsMap);
-
-		Assert.assertEquals(
-			_DATA_PROVIDER_INSTANCE_UUID,
-			fieldDataProviderSettingsMap.get("dataProviderInstanceUUID"));
-
-		Assert.assertEquals(
-			"output", fieldDataProviderSettingsMap.get("outputParameterName"));
-
-		Map<String, String> inputParametersMap = new HashMap<>();
-
-		inputParametersMap.put("input", ddmFormField1.getName());
-
-		Assert.assertEquals(
-			inputParametersMap,
-			fieldDataProviderSettingsMap.get("inputParameters"));
-	}
-
-	@Test
-	public void testGetDataProviderSettingsFromFieldSettings()
-		throws Exception {
-
-		DDMForm ddmForm = DDMFormTestUtil.createDDMForm();
-
-		DDMFormField ddmFormField = DDMFormTestUtil.createDDMFormField(
-			"Field1", "Field1", "select", "string", false, false, false);
-
-		ddmFormField.setProperty("ddmDataProviderInstanceId", 1);
-		ddmFormField.setProperty("ddmDataProviderInstanceOutput", "output");
-
-		ddmForm.addDDMFormField(ddmFormField);
-
-		Map<String, Map<String, Object>> dataProviderSettings =
-			_ddmFormTemplateContextFactoryHelper.getDataProviderSettings(
-				ddmForm);
-
-		Assert.assertNotNull(dataProviderSettings);
-
-		Map<String, Object> fieldDataProviderSettingsMap =
-			dataProviderSettings.get(ddmFormField.getName());
-
-		Assert.assertNotNull(fieldDataProviderSettingsMap);
-
-		Assert.assertEquals(
-			_DATA_PROVIDER_INSTANCE_UUID,
-			fieldDataProviderSettingsMap.get("dataProviderInstanceUUID"));
-
-		Assert.assertEquals(
-			"output", fieldDataProviderSettingsMap.get("outputParameterName"));
-
-		Assert.assertEquals(
-			Collections.emptyMap(),
-			fieldDataProviderSettingsMap.get("inputParameters"));
 	}
 
 	@Test
@@ -205,8 +114,7 @@ public class DDMFormTemplateContextFactoryHelperTest extends PowerMockito {
 		);
 
 		_ddmFormTemplateContextFactoryHelper =
-			new DDMFormTemplateContextFactoryHelper(
-				ddmDataProviderInstanceService);
+			new DDMFormTemplateContextFactoryHelper();
 	}
 
 	protected DDMFormRule createAutoFillDDMFormRule() {

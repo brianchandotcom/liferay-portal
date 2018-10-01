@@ -19,6 +19,10 @@ package com.liferay.dynamic.data.mapping.constants;
  */
 public class DDMConstants {
 
+	public static final String EXPRESSION_FUNCTION_FACTORY_NAME =
+		"com.liferay.dynamic.data.mapping.expression." +
+			"DDMExpressionFunctionFactory";
+
 	public static final String RESOURCE_NAME =
 		"com.liferay.dynamic.data.mapping";
 

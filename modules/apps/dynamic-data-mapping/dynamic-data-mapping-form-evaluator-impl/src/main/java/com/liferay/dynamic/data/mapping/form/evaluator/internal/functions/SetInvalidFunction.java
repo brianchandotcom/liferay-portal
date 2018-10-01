@@ -14,43 +14,59 @@
 
 package com.liferay.dynamic.data.mapping.form.evaluator.internal.functions;
 
-import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormFieldEvaluationResult;
+import com.liferay.dynamic.data.mapping.constants.DDMConstants;
+import com.liferay.dynamic.data.mapping.expression.DDMExpressionFunction;
+import com.liferay.dynamic.data.mapping.expression.DDMExpressionObserver;
+import com.liferay.dynamic.data.mapping.expression.DDMExpressionObserverAware;
+import com.liferay.dynamic.data.mapping.expression.UpdateFieldPropertyRequest;
 
-import java.util.List;
-import java.util.Map;
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Leonardo Barros
  */
-public class SetInvalidFunction extends BaseDDMFormRuleFunction {
-
-	public SetInvalidFunction(
-		Map<String, List<DDMFormFieldEvaluationResult>>
-			ddmFormFieldEvaluationResults) {
-
-		super(ddmFormFieldEvaluationResults);
+@Component(
+	factory = DDMConstants.EXPRESSION_FUNCTION_FACTORY_NAME,
+	service = {
+		DDMExpressionFunction.Function2.class, DDMExpressionObserverAware.class
 	}
+)
+public class SetInvalidFunction
+	implements DDMExpressionFunction.Function2<String, String, Boolean>,
+			   DDMExpressionObserverAware {
 
 	@Override
-	public Object evaluate(Object... parameters) {
-		if (parameters.length != 2) {
-			throw new IllegalArgumentException("Two parameters are expected");
+	public Boolean apply(String field, String errorMessage) {
+		if (_ddmExpressionObserver == null) {
+			return false;
 		}
 
-		String fieldName = parameters[0].toString();
-		String errorMessage = parameters[1].toString();
+		UpdateFieldPropertyRequest.Builder builder =
+			UpdateFieldPropertyRequest.Builder.newBuilder(
+				field, "valid", false);
 
-		List<DDMFormFieldEvaluationResult> ddmFormFieldEvaluationResults =
-			getDDMFormFieldEvaluationResults(fieldName);
+		UpdateFieldPropertyRequest updateFieldPropertyRequest =
+			builder.withParameter(
+				"errorMessage", errorMessage
+			).build();
 
-		for (DDMFormFieldEvaluationResult ddmFormFieldEvaluationResult :
-				ddmFormFieldEvaluationResults) {
-
-			ddmFormFieldEvaluationResult.setErrorMessage(errorMessage);
-			ddmFormFieldEvaluationResult.setValid(false);
-		}
+		_ddmExpressionObserver.updateFieldProperty(updateFieldPropertyRequest);
 
 		return true;
 	}
+
+	@Override
+	public String getName() {
+		return "setInvalid";
+	}
+
+	@Override
+	public void setDDMExpressionObserver(
+		DDMExpressionObserver ddmExpressionObserver) {
+
+		_ddmExpressionObserver = ddmExpressionObserver;
+	}
+
+	private DDMExpressionObserver _ddmExpressionObserver;
 
 }

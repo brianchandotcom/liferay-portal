@@ -31,7 +31,7 @@ import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 @DDMForm(
 	rules = {
 		@DDMFormRule(
-			actions = "call('getDataProviderInstanceOutputParameters', concat('dataProviderInstanceId=', getValue('ddmDataProviderInstanceId')), 'ddmDataProviderInstanceOutput=outputParameterNames')",
+			actions = "call('getDataProviderInstanceOutputParameters', 'dataProviderInstanceId=ddmDataProviderInstanceId', 'ddmDataProviderInstanceOutput=outputParameterNames')",
 			condition = "not(equals(getValue('ddmDataProviderInstanceId'), ''))"
 		),
 		@DDMFormRule(

@@ -19,12 +19,18 @@ import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.petra.string.StringPool;
 
 import java.util.Locale;
+import java.util.function.IntFunction;
 
 /**
  * @author Marcellus Tavares
  */
 public class DefaultDDMFormFieldValueAccessor
 	implements DDMFormFieldValueAccessor<String> {
+
+	@Override
+	public IntFunction<String[]> getArrayGeneratorFunction() {
+		return String[]::new;
+	}
 
 	@Override
 	public String getValue(DDMFormFieldValue ddmFormFieldValue, Locale locale) {

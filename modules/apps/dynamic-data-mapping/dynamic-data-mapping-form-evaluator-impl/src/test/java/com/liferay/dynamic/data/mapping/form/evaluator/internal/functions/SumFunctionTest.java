@@ -14,6 +14,8 @@
 
 package com.liferay.dynamic.data.mapping.form.evaluator.internal.functions;
 
+import java.math.BigDecimal;
+
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -23,35 +25,23 @@ import org.junit.Test;
 public class SumFunctionTest {
 
 	@Test
-	public void testEvaluateArray1() throws Exception {
+	public void testApply() {
 		SumFunction sumFunction = new SumFunction();
 
-		Object parameters = new Integer[] {1, 2, 4};
+		BigDecimal result = sumFunction.apply(new BigDecimal[] {
+			new BigDecimal(1), new BigDecimal(2), new BigDecimal(3)
+		});
 
-		Assert.assertEquals(7, sumFunction.evaluate(parameters));
+		Assert.assertEquals(new BigDecimal(6), result);
 	}
 
 	@Test
-	public void testEvaluateArray2() throws Exception {
+	public void testEmptyArray() {
 		SumFunction sumFunction = new SumFunction();
 
-		Object parameters = new Double[] {3.8, 5D, 7D};
+		BigDecimal result = sumFunction.apply(new BigDecimal[0]);
 
-		Assert.assertEquals(15.8, sumFunction.evaluate(parameters));
-	}
-
-	@Test
-	public void testEvaluateEquals1() throws Exception {
-		SumFunction sumFunction = new SumFunction();
-
-		Assert.assertEquals(5, sumFunction.evaluate(2, 3));
-	}
-
-	@Test
-	public void testEvaluateEquals2() throws Exception {
-		SumFunction sumFunction = new SumFunction();
-
-		Assert.assertEquals(21.4D, sumFunction.evaluate(1, 13.4, 7));
+		Assert.assertEquals(BigDecimal.ZERO, result);
 	}
 
 }

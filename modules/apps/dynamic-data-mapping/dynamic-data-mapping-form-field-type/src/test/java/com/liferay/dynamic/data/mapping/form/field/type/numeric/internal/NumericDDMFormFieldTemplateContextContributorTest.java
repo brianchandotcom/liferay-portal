@@ -14,7 +14,6 @@
 
 package com.liferay.dynamic.data.mapping.form.field.type.numeric.internal;
 
-import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormFieldEvaluationResult;
 import com.liferay.dynamic.data.mapping.form.field.type.BaseDDMFormFieldTypeSettingsTestCase;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.render.DDMFormFieldRenderingContext;
@@ -22,6 +21,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import org.junit.Assert;
@@ -50,8 +50,7 @@ public class NumericDDMFormFieldTemplateContextContributorTest
 		DDMFormFieldRenderingContext ddmFormFieldRenderingContext =
 			new DDMFormFieldRenderingContext();
 
-		ddmFormFieldRenderingContext.setProperty(
-			"ddmFormFieldEvaluationResult", null);
+		ddmFormFieldRenderingContext.setProperty("changedProperties", null);
 
 		Assert.assertEquals(
 			"double",
@@ -61,21 +60,15 @@ public class NumericDDMFormFieldTemplateContextContributorTest
 
 	@Test
 	public void testGetDataType2() {
-		String fieldName = "field";
-		String fieldInstance = "field_instance";
-
-		DDMFormField ddmFormField = new DDMFormField(fieldName, "numeric");
+		DDMFormField ddmFormField = new DDMFormField("field", "numeric");
 
 		ddmFormField.setProperty("dataType", "integer");
-
-		DDMFormFieldEvaluationResult ddmFormFieldEvaluationResult =
-			new DDMFormFieldEvaluationResult(fieldName, fieldInstance);
 
 		DDMFormFieldRenderingContext ddmFormFieldRenderingContext =
 			new DDMFormFieldRenderingContext();
 
 		ddmFormFieldRenderingContext.setProperty(
-			"ddmFormFieldEvaluationResult", ddmFormFieldEvaluationResult);
+			"changedProperties", new HashMap<String, Object>());
 
 		Assert.assertEquals(
 			"integer",
@@ -85,23 +78,19 @@ public class NumericDDMFormFieldTemplateContextContributorTest
 
 	@Test
 	public void testGetDataType3() {
-		String fieldName = "field";
-		String fieldInstance = "field_instance";
-
-		DDMFormField ddmFormField = new DDMFormField(fieldName, "numeric");
+		DDMFormField ddmFormField = new DDMFormField("field", "numeric");
 
 		ddmFormField.setProperty("dataType", "integer");
-
-		DDMFormFieldEvaluationResult ddmFormFieldEvaluationResult =
-			new DDMFormFieldEvaluationResult(fieldName, fieldInstance);
-
-		ddmFormFieldEvaluationResult.setProperty("dataType", "double");
 
 		DDMFormFieldRenderingContext ddmFormFieldRenderingContext =
 			new DDMFormFieldRenderingContext();
 
+		Map<String, Object> changedProperties = new HashMap<>();
+
+		changedProperties.put("dataType", "double");
+
 		ddmFormFieldRenderingContext.setProperty(
-			"ddmFormFieldEvaluationResult", ddmFormFieldEvaluationResult);
+			"changedProperties", changedProperties);
 
 		Assert.assertEquals(
 			"double",

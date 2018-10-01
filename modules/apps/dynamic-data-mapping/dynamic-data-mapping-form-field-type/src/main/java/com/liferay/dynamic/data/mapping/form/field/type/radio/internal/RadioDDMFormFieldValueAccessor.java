@@ -19,6 +19,7 @@ import com.liferay.dynamic.data.mapping.model.Value;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 
 import java.util.Locale;
+import java.util.function.IntFunction;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -32,6 +33,11 @@ import org.osgi.service.component.annotations.Component;
 )
 public class RadioDDMFormFieldValueAccessor
 	implements DDMFormFieldValueAccessor<String> {
+
+	@Override
+	public IntFunction<String[]> getArrayGeneratorFunction() {
+		return String[]::new;
+	}
 
 	@Override
 	public String getValue(DDMFormFieldValue ddmFormFieldValue, Locale locale) {

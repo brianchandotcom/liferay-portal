@@ -26,7 +26,9 @@ import java.util.Objects;
 
 /**
  * @author Marcellus Tavares
+ * @deprecated As of Judson (7.1.x)
  */
+@Deprecated
 public class DDMFormFieldEvaluationResult {
 
 	public DDMFormFieldEvaluationResult(String name, String instanceId) {

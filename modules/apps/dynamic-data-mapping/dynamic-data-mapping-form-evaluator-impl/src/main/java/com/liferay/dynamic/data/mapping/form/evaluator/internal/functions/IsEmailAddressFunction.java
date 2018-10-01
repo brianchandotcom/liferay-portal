@@ -14,6 +14,7 @@
 
 package com.liferay.dynamic.data.mapping.form.evaluator.internal.functions;
 
+import com.liferay.dynamic.data.mapping.constants.DDMConstants;
 import com.liferay.dynamic.data.mapping.expression.DDMExpressionFunction;
 import com.liferay.petra.string.CharPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -27,25 +28,26 @@ import org.osgi.service.component.annotations.Component;
  * @author Leonardo Barros
  */
 @Component(
-	immediate = true,
-	property = "ddm.form.evaluator.function.name=isEmailAddress",
-	service = DDMExpressionFunction.class
+	factory = DDMConstants.EXPRESSION_FUNCTION_FACTORY_NAME,
+	service = DDMExpressionFunction.Function1.class
 )
-public class IsEmailAddressFunction implements DDMExpressionFunction {
+public class IsEmailAddressFunction
+	implements DDMExpressionFunction.Function1<String, Boolean> {
 
 	@Override
-	public Object evaluate(Object... parameters) {
-		if (parameters.length != 1) {
-			throw new IllegalArgumentException("One parameter is expected");
-		}
-
+	public Boolean apply(String parameter) {
 		return Stream.of(
-			StringUtil.split(parameters[0].toString(), CharPool.COMMA)
+			StringUtil.split(parameter, CharPool.COMMA)
 		).map(
 			String::trim
 		).allMatch(
 			Validator::isEmailAddress
 		);
+	}
+
+	@Override
+	public String getName() {
+		return "isEmailAddress";
 	}
 
 }

@@ -42,6 +42,10 @@ public class GridDDMFormFieldContextHelper {
 
 		List<Object> options = new ArrayList<>();
 
+		if (_ddmFormFieldOptions == null) {
+			return options;
+		}
+
 		for (String optionValue : _ddmFormFieldOptions.getOptionsValues()) {
 			Map<String, String> optionMap = new HashMap<>();
 

@@ -14,6 +14,7 @@
 
 package com.liferay.dynamic.data.mapping.form.evaluator.internal.functions;
 
+import com.liferay.dynamic.data.mapping.constants.DDMConstants;
 import com.liferay.dynamic.data.mapping.expression.DDMExpressionFunction;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -25,32 +26,34 @@ import org.osgi.service.component.annotations.Component;
  * @author Leonardo Barros
  */
 @Component(
-	immediate = true, property = "ddm.form.evaluator.function.name=isEmpty",
-	service = DDMExpressionFunction.class
+	factory = DDMConstants.EXPRESSION_FUNCTION_FACTORY_NAME,
+	service = DDMExpressionFunction.Function1.class
 )
-public class IsEmptyFunction implements DDMExpressionFunction {
+public class IsEmptyFunction
+	implements DDMExpressionFunction.Function1<Object, Boolean> {
 
 	@Override
-	public Object evaluate(Object... parameters) {
-		if (parameters == null) {
+	public Boolean apply(Object parameter) {
+		if (parameter == null) {
 			return true;
 		}
 
-		if ((parameters.length == 1) && isArray(parameters[0])) {
-			Object[] values = (Object[])parameters[0];
+		if (isArray(parameter)) {
+			Object[] values = (Object[])parameter;
 
-			if (values.length == 0) {
-				return true;
-			}
-
-			return !Stream.of(
+			return Stream.of(
 				values
-			).anyMatch(
-				Validator::isNotNull
+			).allMatch(
+				Validator::isNull
 			);
 		}
 
-		return Validator.isNull(parameters[0]);
+		return Validator.isNull(parameter);
+	}
+
+	@Override
+	public String getName() {
+		return "isEmpty";
 	}
 
 	protected boolean isArray(Object parameter) {

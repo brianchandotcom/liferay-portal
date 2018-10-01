@@ -23,26 +23,30 @@ import org.junit.Test;
 public class IsDecimalFunctionTest {
 
 	@Test
-	public void testEvaluateFalse() throws Exception {
+	public void testApplyFalse() {
 		IsDecimalFunction isDecimalFunction = new IsDecimalFunction();
 
-		Assert.assertFalse((Boolean)isDecimalFunction.evaluate("simple text"));
-	}
+		Boolean result = isDecimalFunction.apply("NUMBER");
 
-	@Test(expected = IllegalArgumentException.class)
-	public void testEvaluateInvalid() throws Exception {
-		IsDecimalFunction isDecimalFunction = new IsDecimalFunction();
-
-		isDecimalFunction.evaluate("test", "test2");
+		Assert.assertFalse(result);
 	}
 
 	@Test
-	public void testEvaluateTrue() throws Exception {
+	public void testApplyTrue1() {
 		IsDecimalFunction isDecimalFunction = new IsDecimalFunction();
 
-		Assert.assertTrue((Boolean)isDecimalFunction.evaluate("3"));
-		Assert.assertTrue((Boolean)isDecimalFunction.evaluate("4.76"));
-		Assert.assertTrue((Boolean)isDecimalFunction.evaluate("-50.67"));
+		Boolean result = isDecimalFunction.apply("1.2");
+
+		Assert.assertTrue(result);
+	}
+
+	@Test
+	public void testApplyTrue2() {
+		IsDecimalFunction isDecimalFunction = new IsDecimalFunction();
+
+		Boolean result = isDecimalFunction.apply("3");
+
+		Assert.assertTrue(result);
 	}
 
 }

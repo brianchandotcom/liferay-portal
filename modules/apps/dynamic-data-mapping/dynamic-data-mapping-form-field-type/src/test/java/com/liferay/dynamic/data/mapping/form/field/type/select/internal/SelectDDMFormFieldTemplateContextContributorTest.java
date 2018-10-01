@@ -14,7 +14,6 @@
 
 package com.liferay.dynamic.data.mapping.form.field.type.select.internal;
 
-import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormFieldEvaluationResult;
 import com.liferay.dynamic.data.mapping.form.field.type.BaseDDMFormFieldTypeSettingsTestCase;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldOptionsFactory;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
@@ -79,8 +78,7 @@ public class SelectDDMFormFieldTemplateContextContributorTest
 		DDMFormFieldRenderingContext ddmFormFieldRenderingContext =
 			new DDMFormFieldRenderingContext();
 
-		ddmFormFieldRenderingContext.setProperty(
-			"ddmFormFieldEvaluationResult", null);
+		ddmFormFieldRenderingContext.setProperty("changedProperties", null);
 
 		Assert.assertEquals(
 			true,
@@ -90,21 +88,17 @@ public class SelectDDMFormFieldTemplateContextContributorTest
 
 	@Test
 	public void testGetMultiple2() {
-		String fieldName = "field";
-		String fieldInstance = "field_instance";
-
-		DDMFormField ddmFormField = new DDMFormField(fieldName, "select");
+		DDMFormField ddmFormField = new DDMFormField("field", "select");
 
 		ddmFormField.setProperty("multiple", "true");
-
-		DDMFormFieldEvaluationResult ddmFormFieldEvaluationResult =
-			new DDMFormFieldEvaluationResult(fieldName, fieldInstance);
 
 		DDMFormFieldRenderingContext ddmFormFieldRenderingContext =
 			new DDMFormFieldRenderingContext();
 
+		Map<String, Object> changedProperties = new HashMap<>();
+
 		ddmFormFieldRenderingContext.setProperty(
-			"ddmFormFieldEvaluationResult", ddmFormFieldEvaluationResult);
+			"changedProperties", changedProperties);
 
 		Assert.assertEquals(
 			true,
@@ -114,23 +108,19 @@ public class SelectDDMFormFieldTemplateContextContributorTest
 
 	@Test
 	public void testGetMultiple3() {
-		String fieldName = "field";
-		String fieldInstance = "field_instance";
-
-		DDMFormField ddmFormField = new DDMFormField(fieldName, "select");
+		DDMFormField ddmFormField = new DDMFormField("field", "select");
 
 		ddmFormField.setProperty("multiple", "false");
-
-		DDMFormFieldEvaluationResult ddmFormFieldEvaluationResult =
-			new DDMFormFieldEvaluationResult(fieldName, fieldInstance);
-
-		ddmFormFieldEvaluationResult.setProperty("multiple", true);
 
 		DDMFormFieldRenderingContext ddmFormFieldRenderingContext =
 			new DDMFormFieldRenderingContext();
 
+		Map<String, Object> changedProperties = new HashMap<>();
+
+		changedProperties.put("multiple", true);
+
 		ddmFormFieldRenderingContext.setProperty(
-			"ddmFormFieldEvaluationResult", ddmFormFieldEvaluationResult);
+			"changedProperties", changedProperties);
 
 		Assert.assertEquals(
 			true,

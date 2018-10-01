@@ -14,6 +14,8 @@
 
 package com.liferay.dynamic.data.mapping.form.evaluator.internal.functions;
 
+import java.math.BigDecimal;
+
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -23,56 +25,31 @@ import org.junit.Test;
 public class EqualsFunctionTest {
 
 	@Test
-	public void testEvaluateFalse1() throws Exception {
+	public void testApplyFalse1() {
 		EqualsFunction equalsFunction = new EqualsFunction();
 
-		Boolean result = (Boolean)equalsFunction.evaluate(null, "not equals");
-
-		Assert.assertFalse(result);
+		Assert.assertFalse(equalsFunction.apply("FORMS", "forms"));
 	}
 
 	@Test
-	public void testEvaluateFalse2() throws Exception {
+	public void testApplyFalse2() {
 		EqualsFunction equalsFunction = new EqualsFunction();
 
-		Boolean result = (Boolean)equalsFunction.evaluate("text", null);
-
-		Assert.assertFalse(result);
-	}
-
-	@Test(expected = IllegalArgumentException.class)
-	public void testEvaluateInvalid() throws Exception {
-		EqualsFunction equalsFunction = new EqualsFunction();
-
-		equalsFunction.evaluate("test");
+		Assert.assertFalse(equalsFunction.apply(null, "forms"));
 	}
 
 	@Test
-	public void testEvaluateTrue1() throws Exception {
+	public void testApplyFalse3() {
 		EqualsFunction equalsFunction = new EqualsFunction();
 
-		Boolean result = (Boolean)equalsFunction.evaluate(
-			"simple text", "simple text");
-
-		Assert.assertTrue(result);
+		Assert.assertFalse(equalsFunction.apply("1", new BigDecimal(1)));
 	}
 
 	@Test
-	public void testEvaluateTrue2() throws Exception {
+	public void testApplyTrue() {
 		EqualsFunction equalsFunction = new EqualsFunction();
 
-		Boolean result = (Boolean)equalsFunction.evaluate(2, 2);
-
-		Assert.assertTrue(result);
-	}
-
-	@Test
-	public void testEvaluateTrue3() throws Exception {
-		EqualsFunction equalsFunction = new EqualsFunction();
-
-		Boolean result = (Boolean)equalsFunction.evaluate(1, "1");
-
-		Assert.assertTrue(result);
+		Assert.assertTrue(equalsFunction.apply("forms", "forms"));
 	}
 
 }

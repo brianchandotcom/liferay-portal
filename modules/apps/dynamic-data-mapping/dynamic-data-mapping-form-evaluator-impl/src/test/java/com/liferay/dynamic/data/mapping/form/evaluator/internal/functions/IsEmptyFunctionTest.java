@@ -23,74 +23,31 @@ import org.junit.Test;
 public class IsEmptyFunctionTest {
 
 	@Test
-	public void testEvaluateFalse1() throws Exception {
+	public void testArray() {
 		IsEmptyFunction isEmptyFunction = new IsEmptyFunction();
 
-		Assert.assertFalse((Boolean)isEmptyFunction.evaluate("test"));
+		Boolean result = isEmptyFunction.apply(
+			new String[] {"  ", "not empty "});
+
+		Assert.assertFalse(result);
 	}
 
 	@Test
-	public void testEvaluateFalse2() throws Exception {
+	public void testEmptyParameter() {
 		IsEmptyFunction isEmptyFunction = new IsEmptyFunction();
 
-		Assert.assertFalse((Boolean)isEmptyFunction.evaluate(0));
+		Boolean result = isEmptyFunction.apply(" ");
+
+		Assert.assertTrue(result);
 	}
 
 	@Test
-	public void testEvaluateFalse3() throws Exception {
+	public void testNullParameter() {
 		IsEmptyFunction isEmptyFunction = new IsEmptyFunction();
 
-		Assert.assertFalse((Boolean)isEmptyFunction.evaluate(false));
-	}
+		Boolean result = isEmptyFunction.apply(null);
 
-	@Test
-	public void testEvaluateFalse4() throws Exception {
-		Object parameters = new Integer[] {1, 2};
-
-		IsEmptyFunction isEmptyFunction = new IsEmptyFunction();
-
-		Assert.assertFalse((Boolean)isEmptyFunction.evaluate(parameters));
-	}
-
-	@Test
-	public void testEvaluateFalse5() throws Exception {
-		Object parameters = new Double[] {3.0};
-
-		IsEmptyFunction isEmptyFunction = new IsEmptyFunction();
-
-		Assert.assertFalse((Boolean)isEmptyFunction.evaluate(parameters));
-	}
-
-	@Test
-	public void testEvaluateFalse6() throws Exception {
-		Object parameters = new String[] {"", "test"};
-
-		IsEmptyFunction isEmptyFunction = new IsEmptyFunction();
-
-		Assert.assertFalse((Boolean)isEmptyFunction.evaluate(parameters));
-	}
-
-	@Test
-	public void testEvaluateTrue1() throws Exception {
-		IsEmptyFunction isEmptyFunction = new IsEmptyFunction();
-
-		Assert.assertTrue((Boolean)isEmptyFunction.evaluate(""));
-	}
-
-	@Test
-	public void testEvaluateTrue2() throws Exception {
-		IsEmptyFunction isEmptyFunction = new IsEmptyFunction();
-
-		Assert.assertTrue((Boolean)isEmptyFunction.evaluate(null));
-	}
-
-	@Test
-	public void testEvaluateTrue3() throws Exception {
-		Object parameters = new String[] {"", ""};
-
-		IsEmptyFunction isEmptyFunction = new IsEmptyFunction();
-
-		Assert.assertTrue((Boolean)isEmptyFunction.evaluate(parameters));
+		Assert.assertTrue(result);
 	}
 
 }

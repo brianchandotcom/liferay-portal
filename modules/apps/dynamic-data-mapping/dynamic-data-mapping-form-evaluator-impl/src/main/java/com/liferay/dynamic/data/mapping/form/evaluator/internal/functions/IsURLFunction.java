@@ -14,6 +14,7 @@
 
 package com.liferay.dynamic.data.mapping.form.evaluator.internal.functions;
 
+import com.liferay.dynamic.data.mapping.constants.DDMConstants;
 import com.liferay.dynamic.data.mapping.expression.DDMExpressionFunction;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -23,18 +24,24 @@ import org.osgi.service.component.annotations.Component;
  * @author Leonardo Barros
  */
 @Component(
-	immediate = true, property = "ddm.form.evaluator.function.name=isURL",
-	service = DDMExpressionFunction.class
+	factory = DDMConstants.EXPRESSION_FUNCTION_FACTORY_NAME,
+	service = DDMExpressionFunction.Function1.class
 )
-public class IsURLFunction implements DDMExpressionFunction {
+public class IsURLFunction
+	implements DDMExpressionFunction.Function1<Object, Boolean> {
 
 	@Override
-	public Object evaluate(Object... parameters) {
-		if (parameters.length != 1) {
-			throw new IllegalArgumentException("One parameter is expected");
+	public Boolean apply(Object parameter) {
+		if (parameter == null) {
+			return false;
 		}
 
-		return Validator.isUrl(parameters[0].toString());
+		return Validator.isUrl(parameter.toString());
+	}
+
+	@Override
+	public String getName() {
+		return "isURL";
 	}
 
 }

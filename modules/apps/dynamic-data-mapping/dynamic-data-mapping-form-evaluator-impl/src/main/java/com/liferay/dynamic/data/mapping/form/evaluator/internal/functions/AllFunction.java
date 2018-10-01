@@ -14,57 +14,47 @@
 
 package com.liferay.dynamic.data.mapping.form.evaluator.internal.functions;
 
+import com.liferay.dynamic.data.mapping.constants.DDMConstants;
+import com.liferay.dynamic.data.mapping.expression.CreateExpressionRequest;
 import com.liferay.dynamic.data.mapping.expression.DDMExpression;
 import com.liferay.dynamic.data.mapping.expression.DDMExpressionException;
 import com.liferay.dynamic.data.mapping.expression.DDMExpressionFactory;
 import com.liferay.dynamic.data.mapping.expression.DDMExpressionFunction;
-import com.liferay.dynamic.data.mapping.form.evaluator.internal.DDMExpressionFunctionRegistry;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 
 import java.util.stream.Stream;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Leonardo Barros
  */
-public class AllFunction implements DDMExpressionFunction {
-
-	public AllFunction(
-		DDMExpressionFactory ddmExpressionFactory,
-		DDMExpressionFunctionRegistry ddmExpressionFunctionRegistry) {
-
-		_ddmExpressionFactory = ddmExpressionFactory;
-		_ddmExpressionFunctionRegistry = ddmExpressionFunctionRegistry;
-	}
+@Component(
+	factory = DDMConstants.EXPRESSION_FUNCTION_FACTORY_NAME,
+	service = DDMExpressionFunction.Function2.class
+)
+public class AllFunction
+	implements DDMExpressionFunction.Function2<String, Object, Boolean> {
 
 	@Override
-	public Object evaluate(Object... parameters) {
-		if ((parameters == null) || (parameters.length < 1)) {
-			throw new IllegalArgumentException(
-				"At least one parameter is expected");
-		}
-
-		if (parameters.length == 1) {
-			return false;
-		}
-
-		String expression = String.valueOf(parameters[0]);
-
+	public Boolean apply(String expression, Object parameter) {
 		if (!expression.contains("#value#")) {
 			return false;
 		}
 
 		Object[] values = null;
 
-		if (isArray(parameters[1])) {
-			values = (Object[])parameters[1];
+		if (isArray(parameter)) {
+			values = (Object[])parameter;
 
 			if (values.length == 0) {
 				return false;
 			}
 		}
 		else {
-			values = new Object[] {parameters[1]};
+			values = new Object[] {parameter};
 		}
 
 		return Stream.of(
@@ -74,15 +64,22 @@ public class AllFunction implements DDMExpressionFunction {
 		);
 	}
 
+	@Override
+	public String getName() {
+		return "all";
+	}
+
 	protected boolean accept(String expression, Object value) {
 		expression = expression.replace("#value#", String.valueOf(value));
 
 		try {
-			DDMExpression<Boolean> ddmExpression =
-				_ddmExpressionFactory.createBooleanDDMExpression(expression);
+			CreateExpressionRequest createExpressionRequest =
+				CreateExpressionRequest.Builder.newBuilder(
+					expression
+				).build();
 
-			_ddmExpressionFunctionRegistry.applyDDMExpressionFunctions(
-				ddmExpression);
+			DDMExpression<Boolean> ddmExpression =
+				ddmExpressionFactory.createExpression(createExpressionRequest);
 
 			return ddmExpression.evaluate();
 		}
@@ -101,9 +98,9 @@ public class AllFunction implements DDMExpressionFunction {
 		return clazz.isArray();
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(AllFunction.class);
+	@Reference
+	protected DDMExpressionFactory ddmExpressionFactory;
 
-	private final DDMExpressionFactory _ddmExpressionFactory;
-	private final DDMExpressionFunctionRegistry _ddmExpressionFunctionRegistry;
+	private static final Log _log = LogFactoryUtil.getLog(AllFunction.class);
 
 }

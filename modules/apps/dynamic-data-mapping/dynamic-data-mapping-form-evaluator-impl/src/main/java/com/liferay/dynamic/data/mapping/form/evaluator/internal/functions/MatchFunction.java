@@ -14,6 +14,7 @@
 
 package com.liferay.dynamic.data.mapping.form.evaluator.internal.functions;
 
+import com.liferay.dynamic.data.mapping.constants.DDMConstants;
 import com.liferay.dynamic.data.mapping.expression.DDMExpressionFunction;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -27,20 +28,14 @@ import org.osgi.service.component.annotations.Component;
  * @author Leonardo Barros
  */
 @Component(
-	immediate = true, property = "ddm.form.evaluator.function.name=match",
-	service = DDMExpressionFunction.class
+	factory = DDMConstants.EXPRESSION_FUNCTION_FACTORY_NAME,
+	service = DDMExpressionFunction.Function2.class
 )
-public class MatchFunction implements DDMExpressionFunction {
+public class MatchFunction
+	implements DDMExpressionFunction.Function2<String, String, Boolean> {
 
 	@Override
-	public Object evaluate(Object... parameters) {
-		if (parameters.length != 2) {
-			throw new IllegalArgumentException("Two parameters are expected");
-		}
-
-		String value = String.valueOf(parameters[0]);
-		String regex = String.valueOf(parameters[1]);
-
+	public Boolean apply(String value, String regex) {
 		try {
 			Pattern pattern = Pattern.compile(regex);
 
@@ -55,6 +50,11 @@ public class MatchFunction implements DDMExpressionFunction {
 		}
 
 		return false;
+	}
+
+	@Override
+	public String getName() {
+		return "match";
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(MatchFunction.class);

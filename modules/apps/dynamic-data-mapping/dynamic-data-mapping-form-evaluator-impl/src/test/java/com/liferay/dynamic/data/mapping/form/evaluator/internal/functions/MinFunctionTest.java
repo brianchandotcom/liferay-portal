@@ -14,6 +14,8 @@
 
 package com.liferay.dynamic.data.mapping.form.evaluator.internal.functions;
 
+import java.math.BigDecimal;
+
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -23,38 +25,24 @@ import org.junit.Test;
 public class MinFunctionTest {
 
 	@Test
-	public void testEvaluateMin1() throws Exception {
+	public void testEmptyArray() {
 		MinFunction minFunction = new MinFunction();
 
-		Assert.assertEquals(2.0, minFunction.evaluate(3, 2, 5, 6));
+		BigDecimal result = minFunction.apply(new BigDecimal[0]);
+
+		Assert.assertEquals(BigDecimal.ZERO, result);
 	}
 
 	@Test
-	public void testEvaluateMin2() throws Exception {
+	public void testMax() {
 		MinFunction minFunction = new MinFunction();
 
-		Assert.assertEquals(1.0, minFunction.evaluate(4, 3, 2, 1));
-	}
+		BigDecimal result = minFunction.apply(new BigDecimal[] {
+			new BigDecimal(1), new BigDecimal(10), new BigDecimal(3),
+			new BigDecimal(19), new BigDecimal(17)
+		});
 
-	@Test
-	public void testEvaluateMin3() throws Exception {
-		MinFunction minFunction = new MinFunction();
-
-		Assert.assertEquals(5.0, minFunction.evaluate(5, 6, 7, 8));
-	}
-
-	@Test(expected = IllegalArgumentException.class)
-	public void testInvalidNumber() throws Exception {
-		MinFunction minFunction = new MinFunction();
-
-		minFunction.evaluate(1, "invalid", 3);
-	}
-
-	@Test(expected = IllegalArgumentException.class)
-	public void testInvalidNumberOfParameters() throws Exception {
-		MinFunction minFunction = new MinFunction();
-
-		minFunction.evaluate(1);
+		Assert.assertEquals(BigDecimal.ONE, result);
 	}
 
 }

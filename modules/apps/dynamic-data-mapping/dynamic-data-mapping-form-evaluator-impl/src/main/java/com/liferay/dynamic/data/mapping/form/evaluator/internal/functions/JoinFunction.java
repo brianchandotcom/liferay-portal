@@ -14,6 +14,7 @@
 
 package com.liferay.dynamic.data.mapping.form.evaluator.internal.functions;
 
+import com.liferay.dynamic.data.mapping.constants.DDMConstants;
 import com.liferay.dynamic.data.mapping.expression.DDMExpressionFunction;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
@@ -26,23 +27,14 @@ import org.osgi.service.component.annotations.Component;
  * @author Leonardo Barros
  */
 @Component(
-	immediate = true, property = "ddm.form.evaluator.function.name=join",
-	service = DDMExpressionFunction.class
+	factory = DDMConstants.EXPRESSION_FUNCTION_FACTORY_NAME,
+	service = DDMExpressionFunction.Function1.class
 )
-public class JoinFunction implements DDMExpressionFunction {
+public class JoinFunction
+	implements DDMExpressionFunction.Function1<JSONArray, String> {
 
 	@Override
-	public Object evaluate(Object... parameters) {
-		if (parameters.length != 2) {
-			throw new IllegalArgumentException("Two parameters are expected");
-		}
-
-		if (!(parameters[0] instanceof JSONArray)) {
-			throw new IllegalArgumentException("JSONArray is expected");
-		}
-
-		JSONArray jsonArray = (JSONArray)parameters[0];
-
+	public String apply(JSONArray jsonArray) {
 		StringBundler sb = new StringBundler(jsonArray.length() * 2 - 1);
 
 		for (int i = 0; i < jsonArray.length(); i++) {
@@ -54,6 +46,11 @@ public class JoinFunction implements DDMExpressionFunction {
 		}
 
 		return sb.toString();
+	}
+
+	@Override
+	public String getName() {
+		return "join";
 	}
 
 }

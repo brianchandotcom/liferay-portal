@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 
 import java.util.HashMap;
 import java.util.List;
@@ -91,7 +92,7 @@ public class RadioDDMFormFieldTemplateContextContributor
 				(List<Map<String, String>>)
 					ddmFormFieldRenderingContext.getProperty("options");
 
-			if (keyValuePairs.isEmpty()) {
+			if (ListUtil.isEmpty(keyValuePairs)) {
 				return ddmFormField.getDDMFormFieldOptions();
 			}
 

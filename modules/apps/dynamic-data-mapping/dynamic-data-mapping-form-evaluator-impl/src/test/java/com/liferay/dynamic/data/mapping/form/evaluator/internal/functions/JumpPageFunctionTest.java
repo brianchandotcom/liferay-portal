@@ -14,35 +14,64 @@
 
 package com.liferay.dynamic.data.mapping.form.evaluator.internal.functions;
 
-import java.util.HashMap;
-import java.util.Map;
+import com.liferay.dynamic.data.mapping.expression.ExecuteActionRequest;
 
 import org.junit.Assert;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+
+import org.mockito.ArgumentCaptor;
+import org.mockito.Mockito;
+import org.mockito.runners.MockitoJUnitRunner;
+
+import org.powermock.api.mockito.PowerMockito;
 
 /**
  * @author Inácio Nery
+ * @author Leonardo Barros
  */
-public class JumpPageFunctionTest {
+@RunWith(MockitoJUnitRunner.class)
+public class JumpPageFunctionTest extends PowerMockito {
 
 	@Test
-	public void testEvaluate() {
-		Map<Integer, Integer> pageFlow = new HashMap<>();
+	public void testExecuteAction() {
+		DefaultDDMExpressionActionHandler defaultDDMExpressionActionHandler =
+			new DefaultDDMExpressionActionHandler();
 
-		JumpPageFunction jumpPageFunction = new JumpPageFunction(pageFlow);
+		DefaultDDMExpressionActionHandler spy = spy(
+			defaultDDMExpressionActionHandler);
 
-		Object result = jumpPageFunction.evaluate(1.0, 4.0);
+		JumpPageFunction jumpPageFunction = new JumpPageFunction();
 
-		Assert.assertEquals(true, result);
+		jumpPageFunction.setDDMExpressionActionHandler(spy);
 
-		Assert.assertEquals(4, (int)pageFlow.get(1));
+		Boolean result = jumpPageFunction.apply(1, 3);
+
+		ArgumentCaptor<ExecuteActionRequest> argumentCaptor =
+			ArgumentCaptor.forClass(ExecuteActionRequest.class);
+
+		Mockito.verify(
+			spy, Mockito.times(1)
+		).executeAction(
+			argumentCaptor.capture()
+		);
+
+		ExecuteActionRequest executeActionRequest = argumentCaptor.getValue();
+
+		Assert.assertEquals("jumpPage", executeActionRequest.getAction());
+		Assert.assertEquals(1, executeActionRequest.getParameter("from").get());
+		Assert.assertEquals(3, executeActionRequest.getParameter("to").get());
+
+		Assert.assertTrue(result);
 	}
 
-	@Test(expected = IllegalArgumentException.class)
-	public void testIllegalArgument() throws Exception {
-		JumpPageFunction jumpPageFunction = new JumpPageFunction(null);
+	@Test
+	public void testNullActionHandler() {
+		JumpPageFunction jumpPageFunction = new JumpPageFunction();
 
-		jumpPageFunction.evaluate();
+		Boolean result = jumpPageFunction.apply(1, 3);
+
+		Assert.assertFalse(result);
 	}
 
 }

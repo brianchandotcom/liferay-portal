@@ -14,9 +14,10 @@
 
 package com.liferay.dynamic.data.mapping.form.evaluator.internal.functions;
 
+import com.liferay.dynamic.data.mapping.constants.DDMConstants;
 import com.liferay.dynamic.data.mapping.expression.DDMExpressionFunction;
 
-import org.apache.commons.lang.math.NumberUtils;
+import java.math.BigDecimal;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -24,21 +25,27 @@ import org.osgi.service.component.annotations.Component;
  * @author Leonardo Barros
  */
 @Component(
-	immediate = true, property = "ddm.form.evaluator.function.name=isDecimal",
-	service = DDMExpressionFunction.class
+	factory = DDMConstants.EXPRESSION_FUNCTION_FACTORY_NAME,
+	service = DDMExpressionFunction.Function1.class
 )
-public class IsDecimalFunction implements DDMExpressionFunction {
+public class IsDecimalFunction
+	implements DDMExpressionFunction.Function1<Object, Boolean> {
 
 	@Override
-	public Object evaluate(Object... parameters) {
-		if (parameters.length != 1) {
-			throw new IllegalArgumentException("One parameter is expected");
+	public Boolean apply(Object value) {
+		try {
+			new BigDecimal(value.toString());
+
+			return true;
 		}
+		catch (NumberFormatException nfe) {
+			return false;
+		}
+	}
 
-		Double value = NumberUtils.toDouble(
-			parameters[0].toString(), Double.NaN);
-
-		return !value.isNaN();
+	@Override
+	public String getName() {
+		return "isDecimal";
 	}
 
 }

@@ -33,6 +33,7 @@ public class NumericDDMFormFieldUtil {
 
 			formatter.setGroupingUsed(false);
 			formatter.setMaximumFractionDigits(Integer.MAX_VALUE);
+			formatter.setParseBigDecimal(true);
 
 			_decimalFormattersMap.put(locale, formatter);
 		}

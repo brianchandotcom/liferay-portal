@@ -14,7 +14,13 @@
 
 package com.liferay.dynamic.data.mapping.form.evaluator.internal.functions;
 
+import com.liferay.dynamic.data.mapping.constants.DDMConstants;
 import com.liferay.dynamic.data.mapping.expression.DDMExpressionFunction;
+
+import java.math.BigDecimal;
+
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -22,34 +28,26 @@ import org.osgi.service.component.annotations.Component;
  * @author Leonardo Barros
  */
 @Component(
-	immediate = true, property = "ddm.form.evaluator.function.name=max",
-	service = DDMExpressionFunction.class
+	factory = DDMConstants.EXPRESSION_FUNCTION_FACTORY_NAME,
+	service = DDMExpressionFunction.Function1.class
 )
-public class MaxFunction implements DDMExpressionFunction {
+public class MaxFunction
+	implements DDMExpressionFunction.Function1<BigDecimal[], BigDecimal> {
 
 	@Override
-	public Object evaluate(Object... parameters) {
-		if (parameters.length < 2) {
-			throw new IllegalArgumentException(
-				"Two or more parameters are expected");
-		}
+	public BigDecimal apply(BigDecimal[] values) {
+		return Stream.of(
+			values
+		).collect(
+			Collectors.maxBy((num1, num2) -> num1.compareTo(num2))
+		).orElse(
+			BigDecimal.ZERO
+		);
+	}
 
-		double max = Double.MIN_VALUE;
-
-		for (Object parameter : parameters) {
-			if (!Number.class.isInstance(parameter)) {
-				throw new IllegalArgumentException(
-					"The parameters should be numbers");
-			}
-
-			double parameterDouble = ((Number)parameter).doubleValue();
-
-			if (parameterDouble > max) {
-				max = parameterDouble;
-			}
-		}
-
-		return max;
+	@Override
+	public String getName() {
+		return "max";
 	}
 
 }

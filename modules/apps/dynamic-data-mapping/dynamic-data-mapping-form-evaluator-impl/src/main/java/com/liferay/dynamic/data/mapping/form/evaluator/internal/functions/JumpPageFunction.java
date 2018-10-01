@@ -14,33 +14,61 @@
 
 package com.liferay.dynamic.data.mapping.form.evaluator.internal.functions;
 
+import com.liferay.dynamic.data.mapping.constants.DDMConstants;
+import com.liferay.dynamic.data.mapping.expression.DDMExpressionActionHandler;
+import com.liferay.dynamic.data.mapping.expression.DDMExpressionActionHandlerAware;
 import com.liferay.dynamic.data.mapping.expression.DDMExpressionFunction;
+import com.liferay.dynamic.data.mapping.expression.ExecuteActionRequest;
 
-import java.util.Map;
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Inácio Nery
+ * @author Leonardo Barros
  */
-public class JumpPageFunction implements DDMExpressionFunction {
-
-	public JumpPageFunction(Map<Integer, Integer> pageFlow) {
-		_pageFlow = pageFlow;
+@Component(
+	factory = DDMConstants.EXPRESSION_FUNCTION_FACTORY_NAME,
+	service = {
+		DDMExpressionActionHandlerAware.class,
+		DDMExpressionFunction.Function2.class
 	}
+)
+public class JumpPageFunction
+	implements DDMExpressionFunction.Function2<Number, Number, Boolean>,
+			   DDMExpressionActionHandlerAware {
 
 	@Override
-	public Object evaluate(Object... parameters) {
-		if (parameters.length != 2) {
-			throw new IllegalArgumentException("Two parameters are expected");
+	public Boolean apply(Number fromPage, Number toPage) {
+		if (_ddmExpressionActionHandler == null) {
+			return false;
 		}
 
-		Double fromPageIndex = (Double)parameters[0];
-		Double toPageIndex = (Double)parameters[1];
+		ExecuteActionRequest.Builder builder =
+			ExecuteActionRequest.Builder.newBuilder("jumpPage");
 
-		_pageFlow.put(fromPageIndex.intValue(), toPageIndex.intValue());
+		ExecuteActionRequest executeActionRequest = builder.withParameter(
+			"from", fromPage.intValue()
+		).withParameter(
+			"to", toPage.intValue()
+		).build();
+
+		_ddmExpressionActionHandler.executeAction(executeActionRequest);
 
 		return true;
 	}
 
-	private final Map<Integer, Integer> _pageFlow;
+	@Override
+	public String getName() {
+		return "jumpPage";
+	}
+
+	@Override
+	public void setDDMExpressionActionHandler(
+		DDMExpressionActionHandler ddmExpressionActionHandler) {
+
+		_ddmExpressionActionHandler = ddmExpressionActionHandler;
+	}
+
+	private DDMExpressionActionHandler _ddmExpressionActionHandler;
 
 }

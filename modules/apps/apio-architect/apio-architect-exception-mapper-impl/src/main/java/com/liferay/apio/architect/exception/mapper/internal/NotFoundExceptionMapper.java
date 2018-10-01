@@ -45,11 +45,6 @@ public class NotFoundExceptionMapper
 	}
 
 	@Override
-	protected String getTitle() {
-		return "Resource not found";
-	}
-
-	@Override
 	protected String getType() {
 		return "not-found";
 	}

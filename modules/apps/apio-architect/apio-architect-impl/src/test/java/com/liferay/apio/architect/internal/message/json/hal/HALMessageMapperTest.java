@@ -61,6 +61,8 @@ public class HALMessageMapperTest implements RepresentableManager {
 			"application/hal+json"
 		).validateEntryPointMessageMapper(
 			new HALEntryPointMessageMapper()
+		).validateErrorMessageMapper(
+			new HALErrorMessageMapper()
 		).validatePageMessageMapper(
 			pageMessageMapper
 		).validateSingleModelMessageMapper(

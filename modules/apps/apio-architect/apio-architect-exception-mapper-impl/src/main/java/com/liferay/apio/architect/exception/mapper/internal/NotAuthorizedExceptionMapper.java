@@ -46,11 +46,6 @@ public class NotAuthorizedExceptionMapper
 	}
 
 	@Override
-	protected String getTitle() {
-		return "Authentication failure";
-	}
-
-	@Override
 	protected String getType() {
 		return "not-authorized";
 	}

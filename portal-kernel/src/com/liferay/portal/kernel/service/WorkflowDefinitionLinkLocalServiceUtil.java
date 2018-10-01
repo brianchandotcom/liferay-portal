@@ -221,6 +221,13 @@ public class WorkflowDefinitionLinkLocalServiceUtil {
 			classPK, typePK, strict);
 	}
 
+	public static java.util.List<com.liferay.portal.kernel.model.WorkflowDefinitionLink> fetchWorkflowDefinitionLinks(
+		long companyId, long groupId, String className, long classPK) {
+		return getService()
+				   .fetchWorkflowDefinitionLinks(companyId, groupId, className,
+			classPK);
+	}
+
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
 		return getService().getActionableDynamicQuery();
 	}
@@ -296,6 +303,14 @@ public class WorkflowDefinitionLinkLocalServiceUtil {
 	public static java.util.List<com.liferay.portal.kernel.model.WorkflowDefinitionLink> getWorkflowDefinitionLinks(
 		int start, int end) {
 		return getService().getWorkflowDefinitionLinks(start, end);
+	}
+
+	public static java.util.List<com.liferay.portal.kernel.model.WorkflowDefinitionLink> getWorkflowDefinitionLinks(
+		long companyId, long groupId, String className, long classPK)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .getWorkflowDefinitionLinks(companyId, groupId, className,
+			classPK);
 	}
 
 	public static java.util.List<com.liferay.portal.kernel.model.WorkflowDefinitionLink> getWorkflowDefinitionLinks(

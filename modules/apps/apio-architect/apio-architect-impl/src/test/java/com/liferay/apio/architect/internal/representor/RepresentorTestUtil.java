@@ -16,6 +16,7 @@ package com.liferay.apio.architect.internal.representor;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
+import static org.hamcrest.core.IsEqual.equalTo;
 
 import com.liferay.apio.architect.alias.representor.FieldFunction;
 import com.liferay.apio.architect.identifier.Identifier;
@@ -102,7 +103,8 @@ public class RepresentorTestUtil {
 		Class<? extends Identifier> identifierClass, Integer value) {
 
 		assertThat(relatedModel.getKey(), is(key));
-		assertThat(relatedModel.getIdentifierClass(), is(identifierClass));
+		assertThat(
+			relatedModel.getIdentifierClass(), is(equalTo(identifierClass)));
 
 		Function<Dummy, ?> modelToIdentifierFunction =
 			relatedModel.getModelToIdentifierFunction();

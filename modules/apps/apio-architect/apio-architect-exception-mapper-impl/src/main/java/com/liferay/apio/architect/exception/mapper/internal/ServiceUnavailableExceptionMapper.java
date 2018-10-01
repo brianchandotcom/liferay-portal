@@ -46,11 +46,6 @@ public class ServiceUnavailableExceptionMapper
 	}
 
 	@Override
-	protected String getTitle() {
-		return "Server is temporarily unavailable or busy";
-	}
-
-	@Override
 	protected String getType() {
 		return "unavailable";
 	}

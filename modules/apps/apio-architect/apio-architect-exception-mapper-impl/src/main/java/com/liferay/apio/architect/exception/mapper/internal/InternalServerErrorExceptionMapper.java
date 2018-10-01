@@ -46,11 +46,6 @@ public class InternalServerErrorExceptionMapper
 	}
 
 	@Override
-	protected String getTitle() {
-		return "General server error";
-	}
-
-	@Override
 	protected String getType() {
 		return "server-error";
 	}

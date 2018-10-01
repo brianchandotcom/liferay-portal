@@ -21,6 +21,7 @@ import com.liferay.asset.kernel.model.AssetLink;
 import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
 import com.liferay.asset.kernel.service.AssetLinkLocalServiceUtil;
 import com.liferay.asset.kernel.service.AssetTagLocalServiceUtil;
+import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.model.ExpandoColumn;
 import com.liferay.expando.kernel.model.adapter.StagedExpandoColumn;
@@ -2969,14 +2970,15 @@ public class PortletDataContextImpl implements PortletDataContext {
 			long classPK = ExportImportClassedModelUtil.getClassPK(
 				stagedGroupedModel);
 
-			WorkflowDefinitionLink workflowDefinitionLink =
+			List<WorkflowDefinitionLink> workflowDefinitionLinks =
 				WorkflowDefinitionLinkLocalServiceUtil.
-					fetchWorkflowDefinitionLink(
+					fetchWorkflowDefinitionLinks(
 						stagedGroupedModel.getCompanyId(),
-						stagedGroupedModel.getGroupId(), className, classPK,
-						-1);
+						stagedGroupedModel.getGroupId(), className, classPK);
 
-			if (workflowDefinitionLink != null) {
+			for (WorkflowDefinitionLink workflowDefinitionLink :
+					workflowDefinitionLinks) {
+
 				StagedGroupedWorkflowDefinitionLink
 					stagedGroupedWorkflowDefinitionLink =
 						ModelAdapterUtil.adapt(
@@ -3081,16 +3083,32 @@ public class PortletDataContextImpl implements PortletDataContext {
 				return;
 			}
 
-			WorkflowDefinitionLink workflowDefinitionLink =
-				WorkflowDefinitionLinkLocalServiceUtil.
-					fetchWorkflowDefinitionLink(
-						getCompanyId(), getScopeGroupId(), className,
-						newPrimaryKey, -1);
-
 			if ((workflowDefinition != null) &&
-				(workflowDefinitionLink == null)) {
+				(!WorkflowDefinitionLinkLocalServiceUtil.
+					hasWorkflowDefinitionLink(
+						getCompanyId(), getScopeGroupId(), className,
+						newPrimaryKey))) {
 
 				try {
+					String referrerUuid =
+						stagedGroupedWorkflowDefinitionLinkElement.
+							attributeValue("uuid");
+
+					WorkflowDefinitionLink referrerWorkflowDefinitionLink =
+						WorkflowDefinitionLinkLocalServiceUtil.
+							getWorkflowDefinitionLink(
+								Long.valueOf(referrerUuid));
+
+					long typePK = referrerWorkflowDefinitionLink.getTypePK();
+
+					if (typePK != -1) {
+						Map<Long, Long> ddmPrimaryKeys =
+							(Map<Long, Long>)getNewPrimaryKeysMap(
+								DDMStructure.class.getName());
+
+						typePK = ddmPrimaryKeys.getOrDefault(typePK, typePK);
+					}
+
 					long importedClassPK = GetterUtil.getLong(
 						classedModel.getPrimaryKeyObj());
 
@@ -3100,8 +3118,8 @@ public class PortletDataContextImpl implements PortletDataContext {
 					WorkflowDefinitionLinkLocalServiceUtil.
 						addWorkflowDefinitionLink(
 							permissionChecker.getUserId(), getCompanyId(),
-							getScopeGroupId(), className, importedClassPK, -1,
-							workflowDefinition.getName(),
+							getScopeGroupId(), className, importedClassPK,
+							typePK, workflowDefinition.getName(),
 							workflowDefinition.getVersion());
 				}
 				catch (PortalException pe) {

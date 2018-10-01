@@ -276,9 +276,6 @@ public class NavigationMenuTag extends IncludeTag {
 	protected List<NavItem> getMenuItems(List<NavItem> branchMenuItems)
 		throws Exception {
 
-		SiteNavigationMenuUtil siteNavigationMenuUtil =
-			SiteNavigationMenuUtil.getInstance();
-
 		long parentSiteNavigationMenuItemId = GetterUtil.getLong(_rootItemId);
 
 		if (_rootItemType.equals("relative") && (_rootItemLevel >= 0) &&
@@ -290,7 +287,7 @@ public class NavigationMenuTag extends IncludeTag {
 		}
 		else if (_rootItemType.equals("absolute")) {
 			if (_rootItemLevel == 0) {
-				return siteNavigationMenuUtil.getChildNavItems(
+				return SiteNavigationMenuUtil.getChildNavItems(
 					request, _siteNavigationMenuId, 0);
 			}
 			else if (branchMenuItems.size() >= _rootItemLevel) {
@@ -300,7 +297,7 @@ public class NavigationMenuTag extends IncludeTag {
 			}
 		}
 		else if (_rootItemType.equals("select")) {
-			return siteNavigationMenuUtil.getChildNavItems(
+			return SiteNavigationMenuUtil.getChildNavItems(
 				request, _siteNavigationMenuId, parentSiteNavigationMenuItemId);
 		}
 

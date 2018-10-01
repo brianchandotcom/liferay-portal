@@ -31,9 +31,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -42,11 +40,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(immediate = true, service = {})
 public class SiteNavigationMenuUtil {
 
-	public static SiteNavigationMenuUtil getInstance() {
-		return _instance;
-	}
-
-	public List<NavItem> getChildNavItems(
+	public static List<NavItem> getChildNavItems(
 		HttpServletRequest request, long siteNavigationMenuId,
 		long parentSiteNavigationMenuItemId) {
 
@@ -90,27 +84,28 @@ public class SiteNavigationMenuUtil {
 		return navItems;
 	}
 
-	@Activate
-	protected void activate() {
-		_instance = this;
+	@Reference(unbind = "-")
+	protected void setSiteNavigationMenuItemLocalService(
+		SiteNavigationMenuItemLocalService siteNavigationMenuItemLocalService) {
+
+		_siteNavigationMenuItemLocalService =
+			siteNavigationMenuItemLocalService;
 	}
 
-	@Deactivate
-	protected void deactivate() {
-		_instance = null;
+	@Reference(unbind = "-")
+	protected void setSiteNavigationMenuItemTypeRegistry(
+		SiteNavigationMenuItemTypeRegistry siteNavigationMenuItemTypeRegistry) {
+
+		_siteNavigationMenuItemTypeRegistry =
+			siteNavigationMenuItemTypeRegistry;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		SiteNavigationMenuUtil.class);
 
-	private static SiteNavigationMenuUtil _instance;
-
-	@Reference
-	private SiteNavigationMenuItemLocalService
+	private static SiteNavigationMenuItemLocalService
 		_siteNavigationMenuItemLocalService;
-
-	@Reference
-	private SiteNavigationMenuItemTypeRegistry
+	private static SiteNavigationMenuItemTypeRegistry
 		_siteNavigationMenuItemTypeRegistry;
 
 }

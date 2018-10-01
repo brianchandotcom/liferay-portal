@@ -58,10 +58,7 @@ public class SiteNavigationMenuNavItem extends NavItem {
 
 	@Override
 	public List<NavItem> getChildren() {
-		SiteNavigationMenuUtil siteNavigationMenuUtil =
-			SiteNavigationMenuUtil.getInstance();
-
-		return siteNavigationMenuUtil.getChildNavItems(
+		return SiteNavigationMenuUtil.getChildNavItems(
 			_request, _siteNavigationMenuItem.getSiteNavigationMenuId(),
 			_siteNavigationMenuItem.getSiteNavigationMenuItemId());
 	}

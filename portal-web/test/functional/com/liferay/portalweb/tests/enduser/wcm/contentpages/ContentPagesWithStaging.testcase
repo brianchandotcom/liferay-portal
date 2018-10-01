@@ -153,10 +153,8 @@
 		<execute macro="Staging#publishCustomPublication" />
 
 		<execute macro="Navigator#openWithAppendToBaseURL">
-			<var name="urlAppend" value="web/test-site-name-staging/test-content-page-name" />
+			<var name="urlAppend" value="web/test-site-name-staging/test-content-page-name?p_l_mode=edit" />
 		</execute>
-
-		<execute macro="ContentPages#gotoEdit" />
 
 		<execute macro="PageEditor#addFragment">
 			<var name="collectionName" value="Collection Name" />

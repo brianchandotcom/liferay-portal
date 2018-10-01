@@ -38,8 +38,6 @@
 		<execute macro="Button#click">
 			<var name="button" value="Save" />
 		</execute>
-
-		<execute function="AssertElementPresent" locator1="Message#SUCCESS" />
 	</command>
 
 	<command name="gotoEdit">

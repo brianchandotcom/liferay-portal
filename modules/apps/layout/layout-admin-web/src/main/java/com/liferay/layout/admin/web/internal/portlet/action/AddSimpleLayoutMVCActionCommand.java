@@ -124,7 +124,7 @@ public class AddSimpleLayoutMVCActionCommand
 				actionRequest, actionResponse, layout);
 
 			if (Objects.equals(type, "content")) {
-				redirectURL = getContentRedirectURL(actionResponse, layout);
+				redirectURL = getContentRedirectURL(themeDisplay, layout);
 			}
 
 			jsonObject.put("redirectURL", redirectURL);

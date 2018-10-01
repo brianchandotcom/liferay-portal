@@ -376,15 +376,7 @@ AUI.add(
 					dragConfig: {
 						clickPixelThresh: 0,
 						clickTimeThresh: 250,
-						plugins: [
-							{
-								cfg: {
-									horizontal: false,
-									scrollDelay: 30
-								},
-								fn: A.Plugin.DDWinScroll
-							}
-						]
+						plugins: []
 					},
 					handles: options.handles,
 					invalid: options.invalid
@@ -453,6 +445,17 @@ AUI.add(
 							}
 
 							Layout.getLayoutHandler().destroy();
+						}
+					);
+
+					Layout.getLayoutHandler().delegate.dd.plug(
+						{
+							cfg: {
+								horizontal: false,
+								scrollDelay: 30,
+								vertical: true
+							},
+							fn: A.Plugin.DDWinScroll
 						}
 					);
 

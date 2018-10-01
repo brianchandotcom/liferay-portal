@@ -479,7 +479,7 @@ public class PortletPreferencesFactoryImpl
 	@Override
 	public PortletPreferences getPortletSetup(
 			HttpServletRequest request, String portletId)
-		throws PortalException {
+		throws NoSuchPortletPreferencesException {
 
 		return getPortletSetup(request, portletId, null);
 	}
@@ -488,7 +488,7 @@ public class PortletPreferencesFactoryImpl
 	public PortletPreferences getPortletSetup(
 			HttpServletRequest request, String portletId,
 			String defaultPreferences)
-		throws PortalException {
+		throws NoSuchPortletPreferencesException {
 
 		PortletRequest portletRequest = (PortletRequest)request.getAttribute(
 			JavaConstants.JAVAX_PORTLET_REQUEST);
@@ -511,7 +511,7 @@ public class PortletPreferencesFactoryImpl
 	@Override
 	public PortletPreferences getPortletSetup(
 			Layout layout, String portletId, String defaultPreferences)
-		throws PortalException {
+		throws NoSuchPortletPreferencesException {
 
 		return getPortletSetup(
 			LayoutConstants.DEFAULT_PLID, layout, portletId,
@@ -522,7 +522,7 @@ public class PortletPreferencesFactoryImpl
 	public PortletPreferences getPortletSetup(
 			long siteGroupId, Layout layout, String portletId,
 			String defaultPreferences)
-		throws PortalException {
+		throws NoSuchPortletPreferencesException {
 
 		return getPortletSetup(
 			layout.getCompanyId(), siteGroupId, layout.getGroupId(),
@@ -531,7 +531,7 @@ public class PortletPreferencesFactoryImpl
 
 	@Override
 	public PortletPreferences getPortletSetup(PortletRequest portletRequest)
-		throws PortalException {
+		throws NoSuchPortletPreferencesException {
 
 		String portletId = PortalUtil.getPortletId(portletRequest);
 
@@ -541,7 +541,7 @@ public class PortletPreferencesFactoryImpl
 	@Override
 	public PortletPreferences getPortletSetup(
 			PortletRequest portletRequest, String portletId)
-		throws PortalException {
+		throws NoSuchPortletPreferencesException {
 
 		if (portletRequest instanceof ConfigurationPortletRequest) {
 			PortletRequestWrapper portletRequestWrapper =
@@ -626,7 +626,7 @@ public class PortletPreferencesFactoryImpl
 	@Override
 	public PortletPreferences getStrictPortletSetup(
 			Layout layout, String portletId)
-		throws PortalException {
+		throws NoSuchPortletPreferencesException {
 
 		return getPortletSetup(
 			layout.getCompanyId(), LayoutConstants.DEFAULT_PLID,
@@ -637,7 +637,7 @@ public class PortletPreferencesFactoryImpl
 	@Override
 	public PortletPreferences getStrictPortletSetup(
 			long companyId, long groupId, String portletId)
-		throws PortalException {
+		throws NoSuchPortletPreferencesException {
 
 		return getPortletSetup(
 			companyId, LayoutConstants.DEFAULT_PLID, groupId,
@@ -743,7 +743,7 @@ public class PortletPreferencesFactoryImpl
 	protected PortletPreferences getPortletSetup(
 			long companyId, long siteGroupId, long layoutGroupId, long plid,
 			String portletId, String defaultPreferences, boolean strictMode)
-		throws PortalException {
+		throws NoSuchPortletPreferencesException {
 
 		String originalPortletId = portletId;
 

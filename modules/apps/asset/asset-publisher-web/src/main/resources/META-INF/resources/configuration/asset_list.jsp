@@ -51,29 +51,25 @@ AssetListEntry assetListEntry = assetPublisherDisplayContext.fetchAssetListEntry
 	A.one('#<portlet:namespace />selectAssetList').on(
 		'click',
 		function(event) {
-			var itemSelectorDialog = new A.LiferayItemSelectorDialog(
+			Liferay.Util.selectEntity(
 				{
-					eventName: '<%= assetPublisherDisplayContext.getAssetListItemSelectorEventName() %>',
-					on: {
-						selectedItemChange: function(event) {
-							var selectedItem = event.newVal;
-
-							if (selectedItem) {
-								assetListEntryId.val(selectedItem.assetListEntryId);
-
-								assetListTitle.html(selectedItem.assetListEntryTitle);
-
-								assetListRemove.removeClass('hide');
-							}
-						}
+					dialog: {
+						constrain: true,
+						destroyOnHide: true
 					},
-					'strings.add': '<liferay-ui:message key="done" />',
-					title: '<liferay-ui:message key="select-layout" />',
-					url: '<%= assetPublisherDisplayContext.getAssetListItemSelectorURL() %>'
+					eventName: '<%= assetPublisherDisplayContext.getSelectAssetListEventName() %>',
+					id: '<portlet:namespace />selectAssetList',
+					title: '<liferay-ui:message key="select-asset-list" />',
+					uri: '<%= assetPublisherDisplayContext.getAssetListSelectorURL() %>'
+				},
+				function(event) {
+					assetListEntryId.val(event.assetlistentryid);
+
+					assetListTitle.html(event.assetlistentrytitle);
+
+					assetListRemove.removeClass('hide');
 				}
 			);
-
-			itemSelectorDialog.open();
 		}
 	);
 

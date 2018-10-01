@@ -14,9 +14,7 @@
 
 package com.liferay.oauth2.provider.client.test;
 
-import aQute.bnd.osgi.Analyzer;
-import aQute.bnd.osgi.Jar;
-
+import com.liferay.oauth2.provider.test.util.OAuth2ProviderTestUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.CookieKeys;
@@ -27,22 +25,14 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.DigesterImpl;
 import com.liferay.portal.util.HttpImpl;
-import com.liferay.shrinkwrap.osgi.api.BndProjectBuilder;
-
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.InputStream;
 
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 
 import java.util.Map;
-import java.util.Properties;
 import java.util.function.BiFunction;
 import java.util.function.Function;
-import java.util.jar.Attributes;
-import java.util.jar.Manifest;
 
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
@@ -62,12 +52,6 @@ import org.codehaus.jettison.json.JSONObject;
 
 import org.jboss.arquillian.test.api.ArquillianResource;
 import org.jboss.shrinkwrap.api.Archive;
-import org.jboss.shrinkwrap.api.Node;
-import org.jboss.shrinkwrap.api.ShrinkWrap;
-import org.jboss.shrinkwrap.api.asset.Asset;
-import org.jboss.shrinkwrap.api.asset.ByteArrayAsset;
-import org.jboss.shrinkwrap.api.exporter.ZipExporter;
-import org.jboss.shrinkwrap.api.spec.JavaArchive;
 
 import org.junit.BeforeClass;
 
@@ -82,75 +66,7 @@ public abstract class BaseClientTestCase {
 			Class<? extends BundleActivator> bundleActivatorClass)
 		throws Exception {
 
-		String javaClassPathString = System.getProperty("java.class.path");
-
-		String[] javaClassPaths = StringUtil.split(
-			javaClassPathString, File.pathSeparator);
-
-		BndProjectBuilder bndProjectBuilder = ShrinkWrap.create(
-			BndProjectBuilder.class);
-
-		for (String javaClassPath : javaClassPaths) {
-			File file = new File(javaClassPath);
-
-			if (file.isDirectory() ||
-				StringUtil.endsWith(javaClassPath, ".zip") ||
-				StringUtil.endsWith(javaClassPath, ".jar")) {
-
-				bndProjectBuilder.addClassPath(file);
-			}
-		}
-
-		File bndFile = new File("bnd.bnd");
-
-		bndProjectBuilder = bndProjectBuilder.setBndFile(bndFile);
-
-		JavaArchive javaArchive = bndProjectBuilder.as(JavaArchive.class);
-
-		javaArchive.addClass(bundleActivatorClass);
-
-		ZipExporter zipExporter = javaArchive.as(ZipExporter.class);
-
-		Jar jar = new Jar(
-			javaArchive.getName(), zipExporter.exportAsInputStream());
-
-		Analyzer analyzer = new Analyzer();
-		Properties analyzerProperties = new Properties();
-
-		analyzerProperties.putAll(analyzer.loadProperties(bndFile));
-
-		analyzer.setJar(jar);
-
-		Node node = javaArchive.get("META-INF/MANIFEST.MF");
-
-		Asset asset = node.getAsset();
-
-		try (InputStream inputStream = asset.openStream()) {
-			Manifest manifest = new Manifest(inputStream);
-
-			Attributes attributes = manifest.getMainAttributes();
-
-			attributes.remove(new Attributes.Name("Import-Package"));
-
-			attributes.putValue(
-				"Bundle-Activator", bundleActivatorClass.getName());
-
-			analyzer.mergeManifest(manifest);
-		}
-
-		Manifest manifest = analyzer.calcManifest();
-
-		ByteArrayOutputStream baos = new ByteArrayOutputStream();
-
-		manifest.write(baos);
-
-		Asset byteArrayAsset = new ByteArrayAsset(baos.toByteArray());
-
-		javaArchive.delete("META-INF/MANIFEST.MF");
-
-		javaArchive.add(byteArrayAsset, "META-INF/MANIFEST.MF");
-
-		return javaArchive;
+		return OAuth2ProviderTestUtil.getDeployment(bundleActivatorClass);
 	}
 
 	@BeforeClass

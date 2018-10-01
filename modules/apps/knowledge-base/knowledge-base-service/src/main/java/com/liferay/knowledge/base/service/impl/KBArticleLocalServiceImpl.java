@@ -1385,7 +1385,6 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 		KBArticle kbArticle = getLatestKBArticle(
 			resourcePrimKey, WorkflowConstants.STATUS_ANY);
 
-		kbArticle.setModifiedDate(kbArticle.getModifiedDate());
 		kbArticle.setViewCount(viewCount);
 
 		kbArticlePersistence.update(kbArticle);
@@ -1397,7 +1396,6 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 		kbArticle = getLatestKBArticle(
 			resourcePrimKey, WorkflowConstants.STATUS_APPROVED);
 
-		kbArticle.setModifiedDate(kbArticle.getModifiedDate());
 		kbArticle.setViewCount(viewCount);
 
 		kbArticlePersistence.update(kbArticle);

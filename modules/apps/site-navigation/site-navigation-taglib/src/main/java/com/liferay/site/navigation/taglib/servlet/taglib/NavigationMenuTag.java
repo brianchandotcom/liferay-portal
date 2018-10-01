@@ -177,53 +177,6 @@ public class NavigationMenuTag extends IncludeTag {
 		_siteNavigationMenuId = 0;
 	}
 
-	private List<NavItem> _getBranchMenuItems() throws PortalException {
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		Layout layout = themeDisplay.getLayout();
-
-		long siteNavigationMenuItemId = _getRelativeSiteNavigationMenuItemId(
-			layout);
-
-		SiteNavigationMenuItem siteNavigationMenuItem =
-			SiteNavigationMenuItemLocalServiceUtil.fetchSiteNavigationMenuItem(
-				siteNavigationMenuItemId);
-
-		if (siteNavigationMenuItem == null) {
-			return new ArrayList<>();
-		}
-
-		List<SiteNavigationMenuItem> ancestors = new ArrayList<>();
-
-		while (siteNavigationMenuItem.getParentSiteNavigationMenuItemId() !=
-					0) {
-
-			siteNavigationMenuItem =
-				SiteNavigationMenuItemLocalServiceUtil.
-					getSiteNavigationMenuItem(
-						siteNavigationMenuItem.
-							getParentSiteNavigationMenuItemId());
-
-			ancestors.add(siteNavigationMenuItem);
-		}
-
-		List<NavItem> navItems = new ArrayList<>(ancestors.size() + 1);
-
-		for (int i = ancestors.size() - 1; i >= 0; i--) {
-			SiteNavigationMenuItem ancestor = ancestors.get(i);
-
-			navItems.add(
-				new SiteNavigationMenuNavItem(request, themeDisplay, ancestor));
-		}
-
-		navItems.add(
-			new SiteNavigationMenuNavItem(
-				request, themeDisplay, siteNavigationMenuItem));
-
-		return navItems;
-	}
-
 	protected List<NavItem> getBranchNavItems(HttpServletRequest request)
 		throws PortalException {
 
@@ -286,6 +239,74 @@ public class NavigationMenuTag extends IncludeTag {
 		return new ArrayList<>();
 	}
 
+	/**
+	 * @deprecated As of Judson (7.1.x), with no direct replacement
+	 */
+	@Deprecated
+	protected List<NavItem> getNavItems(List<NavItem> branchNavItems)
+		throws Exception {
+
+		return SiteNavigationMenuUtil.getNavItems(
+			request, _rootItemType, _rootItemLevel, _rootItemId,
+			branchNavItems);
+	}
+
+	@Override
+	protected String getPage() {
+		return _PAGE;
+	}
+
+	@Override
+	protected void setAttributes(HttpServletRequest request) {
+	}
+
+	private List<NavItem> _getBranchMenuItems() throws PortalException {
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		Layout layout = themeDisplay.getLayout();
+
+		long siteNavigationMenuItemId = _getRelativeSiteNavigationMenuItemId(
+			layout);
+
+		SiteNavigationMenuItem siteNavigationMenuItem =
+			SiteNavigationMenuItemLocalServiceUtil.fetchSiteNavigationMenuItem(
+				siteNavigationMenuItemId);
+
+		if (siteNavigationMenuItem == null) {
+			return new ArrayList<>();
+		}
+
+		List<SiteNavigationMenuItem> ancestors = new ArrayList<>();
+
+		while (siteNavigationMenuItem.getParentSiteNavigationMenuItemId() !=
+					0) {
+
+			siteNavigationMenuItem =
+				SiteNavigationMenuItemLocalServiceUtil.
+					getSiteNavigationMenuItem(
+						siteNavigationMenuItem.
+							getParentSiteNavigationMenuItemId());
+
+			ancestors.add(siteNavigationMenuItem);
+		}
+
+		List<NavItem> navItems = new ArrayList<>(ancestors.size() + 1);
+
+		for (int i = ancestors.size() - 1; i >= 0; i--) {
+			SiteNavigationMenuItem ancestor = ancestors.get(i);
+
+			navItems.add(
+				new SiteNavigationMenuNavItem(request, themeDisplay, ancestor));
+		}
+
+		navItems.add(
+			new SiteNavigationMenuNavItem(
+				request, themeDisplay, siteNavigationMenuItem));
+
+		return navItems;
+	}
+
 	private List<NavItem> _getMenuItems(List<NavItem> branchMenuItems)
 		throws Exception {
 
@@ -315,27 +336,6 @@ public class NavigationMenuTag extends IncludeTag {
 		}
 
 		return new ArrayList<>();
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	protected List<NavItem> getNavItems(List<NavItem> branchNavItems)
-		throws Exception {
-
-		return SiteNavigationMenuUtil.getNavItems(
-			request, _rootItemType, _rootItemLevel, _rootItemId,
-			branchNavItems);
-	}
-
-	@Override
-	protected String getPage() {
-		return _PAGE;
-	}
-
-	@Override
-	protected void setAttributes(HttpServletRequest request) {
 	}
 
 	private long _getRelativeSiteNavigationMenuItemId(Layout layout) {

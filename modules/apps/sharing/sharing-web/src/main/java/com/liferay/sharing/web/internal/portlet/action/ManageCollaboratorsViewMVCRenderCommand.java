@@ -130,21 +130,24 @@ public class ManageCollaboratorsViewMVCRenderCommand
 				SharingEntry sharingEntry = sharingEntryToUserOVP.getKey();
 				User sharingEntryToUser = sharingEntryToUserOVP.getValue();
 
-				JSONObject userJSONObject = JSONFactoryUtil.createJSONObject();
+				JSONObject collaboratorJSONObject =
+					JSONFactoryUtil.createJSONObject();
 
-				userJSONObject.put("id", sharingEntryToUser.getUserId());
-				userJSONObject.put(
+				collaboratorJSONObject.put(
+					"id", sharingEntryToUser.getUserId());
+				collaboratorJSONObject.put(
 					"imageSrc",
 					sharingEntryToUser.getPortraitURL(themeDisplay));
-				userJSONObject.put("name", sharingEntryToUser.getFullName());
-				userJSONObject.put(
+				collaboratorJSONObject.put(
+					"name", sharingEntryToUser.getFullName());
+				collaboratorJSONObject.put(
 					"sharingEntryId", sharingEntry.getSharingEntryId());
-				userJSONObject.put(
+				collaboratorJSONObject.put(
 					"sharingEntryPermissionDisplaySelectOptions",
 					_getSharingEntryPermissionDisplaySelectOptions(
 						sharingEntry, renderRequest));
 
-				collaboratorsJSONArray.put(userJSONObject);
+				collaboratorsJSONArray.put(collaboratorJSONObject);
 			}
 
 			return collaboratorsJSONArray;

@@ -130,6 +130,9 @@
 									cssClass="<%= cssClass %>"
 									data="<%= assetBrowserDisplayContext.isMultipleSelection() ? null : data %>"
 									imageUrl="<%= assetRenderer.getThumbnailPath(renderRequest) %>"
+									resultRow="<%= row %>"
+									rowChecker="<%= assetEntriesSearchContainer.getRowChecker() %>"
+									showCheckbox="<%= assetBrowserDisplayContext.isMultipleSelection() %>"
 									subtitle="<%= HtmlUtil.escape(group.getDescriptiveName(locale)) %>"
 									title="<%= assetRenderer.getTitle(locale) %>"
 								/>
@@ -139,6 +142,9 @@
 									cssClass="<%= cssClass %>"
 									data="<%= assetBrowserDisplayContext.isMultipleSelection() ? null : data %>"
 									icon="<%= assetRendererFactory.getIconCssClass() %>"
+									resultRow="<%= row %>"
+									rowChecker="<%= assetEntriesSearchContainer.getRowChecker() %>"
+									showCheckbox="<%= assetBrowserDisplayContext.isMultipleSelection() %>"
 									subtitle="<%= HtmlUtil.escape(group.getDescriptiveName(locale)) %>"
 									title="<%= assetRenderer.getTitle(locale) %>"
 								/>
@@ -208,11 +214,17 @@
 
 					selectedItems.each(
 						function() {
-							var row = this.ancestor('tr');
+							var domElement = this.ancestor('tr');
 
-							var data = row.getDOM().dataset;
+							if (domElement == null) {
+								domElement = this.ancestor('li');
+							}
 
-							arr.push(data);
+							if (domElement != null) {
+								var data = domElement.getDOM().dataset;
+
+								arr.push(data);
+							}
 						}
 					);
 

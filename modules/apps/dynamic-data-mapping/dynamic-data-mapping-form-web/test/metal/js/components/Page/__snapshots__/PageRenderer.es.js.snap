@@ -1,0 +1,430 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`PageRenderer should change the page title 1`] = `
+<div class="ddm-page-container-layout">
+  <div class="ddm-form-page pl-4 pr-4">
+    <textarea class="form-builder-page-header-title form-control p-0" data-page-id="0" maxlength="120" value="Untitled name" placeholder="untitled-page-x-of-x"></textarea>
+    <textarea class="form-builder-page-header-description form-control p-0" data-page-id="0" maxlength="120" placeholder="add-a-short-description-for-this-page"></textarea>
+    <div class="form-builder-layout">
+      <div class="layout-page">
+        <div class="row">
+          <div class="col col-empty col-md-12" data-ddm-field-row="0" data-ddm-field-page="0">
+            <div class="ddm-target"></div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-3 col-ddm" data-ddm-field-row="0" data-ddm-field-page="0" data-ddm-field-column="0">
+            <div class="ddm-field-container">
+              <div class="ddm-resize-handle-left"></div>
+              <div class="ddm-drag">
+                <div class="ddm-field-not-found">Field doesn't exist.</div>
+              </div>
+              <div class="ddm-field-actions-container">
+                <button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button">
+                  <svg aria-hidden="true" class="lexicon-icon lexicon-icon-paste" focusable="false">
+                    <title>paste</title>
+                    <use xlink:href="icons.svg#paste"></use>
+                  </svg>
+                </button>
+                <button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button">
+                  <svg aria-hidden="true" class="lexicon-icon lexicon-icon-trash" focusable="false">
+                    <title>trash</title>
+                    <use xlink:href="icons.svg#trash"></use>
+                  </svg>
+                </button>
+              </div>
+              <div class="ddm-resize-handle-right"></div>
+            </div>
+          </div>
+          <div class="col col-empty col-md-9" data-ddm-field-row="0" data-ddm-field-page="0" data-ddm-field-column="1">
+            <div class="ddm-target"></div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col col-empty col-md-12" data-ddm-field-row="1" data-ddm-field-page="0">
+            <div class="ddm-target"></div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-4 col-ddm" data-ddm-field-row="1" data-ddm-field-page="0" data-ddm-field-column="0">
+            <div class="ddm-field-container">
+              <div class="ddm-resize-handle-left"></div>
+              <div class="ddm-drag">
+                <div class="ddm-field-not-found">Field doesn't exist.</div>
+              </div>
+              <div class="ddm-field-actions-container">
+                <button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button">
+                  <svg aria-hidden="true" class="lexicon-icon lexicon-icon-paste" focusable="false">
+                    <title>paste</title>
+                    <use xlink:href="icons.svg#paste"></use>
+                  </svg>
+                </button>
+                <button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button">
+                  <svg aria-hidden="true" class="lexicon-icon lexicon-icon-trash" focusable="false">
+                    <title>trash</title>
+                    <use xlink:href="icons.svg#trash"></use>
+                  </svg>
+                </button>
+              </div>
+              <div class="ddm-resize-handle-right"></div>
+            </div>
+          </div>
+          <div class="col-md-6 col-ddm" data-ddm-field-row="1" data-ddm-field-page="0" data-ddm-field-column="1">
+            <div class="ddm-field-container">
+              <div class="ddm-resize-handle-left"></div>
+              <div class="ddm-drag">
+                <div class="ddm-field-not-found">Field doesn't exist.</div>
+              </div>
+              <div class="ddm-field-actions-container">
+                <button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button">
+                  <svg aria-hidden="true" class="lexicon-icon lexicon-icon-paste" focusable="false">
+                    <title>paste</title>
+                    <use xlink:href="icons.svg#paste"></use>
+                  </svg>
+                </button>
+                <button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button">
+                  <svg aria-hidden="true" class="lexicon-icon lexicon-icon-trash" focusable="false">
+                    <title>trash</title>
+                    <use xlink:href="icons.svg#trash"></use>
+                  </svg>
+                </button>
+              </div>
+              <div class="ddm-resize-handle-right"></div>
+            </div>
+          </div>
+          <div class="col col-empty col-md-2" data-ddm-field-row="1" data-ddm-field-page="0" data-ddm-field-column="2">
+            <div class="ddm-target"></div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col col-empty col-md-12" data-ddm-field-row="2" data-ddm-field-page="0">
+            <div class="ddm-target"></div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12 col-ddm" data-ddm-field-row="2" data-ddm-field-page="0" data-ddm-field-column="0">
+            <div class="ddm-field-container">
+              <div class="ddm-resize-handle-left"></div>
+              <div class="ddm-drag">
+                <div class="ddm-field-not-found">Field doesn't exist.</div>
+              </div>
+              <div class="ddm-field-actions-container">
+                <button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button">
+                  <svg aria-hidden="true" class="lexicon-icon lexicon-icon-paste" focusable="false">
+                    <title>paste</title>
+                    <use xlink:href="icons.svg#paste"></use>
+                  </svg>
+                </button>
+                <button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button">
+                  <svg aria-hidden="true" class="lexicon-icon lexicon-icon-trash" focusable="false">
+                    <title>trash</title>
+                    <use xlink:href="icons.svg#trash"></use>
+                  </svg>
+                </button>
+              </div>
+              <div class="ddm-resize-handle-right"></div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col col-empty col-md-12" data-ddm-field-row="3" data-ddm-field-page="0">
+            <div class="ddm-target"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`PageRenderer should change the page title 2`] = `
+<div class="ddm-page-container-layout">
+  <div class="ddm-form-page pl-4 pr-4">
+    <textarea class="form-builder-page-header-title form-control p-0" data-page-id="0" maxlength="120" value="Untitled name" placeholder="untitled-page-x-of-x"></textarea>
+    <textarea class="form-builder-page-header-description form-control p-0" data-page-id="0" maxlength="120" placeholder="add-a-short-description-for-this-page"></textarea>
+    <div class="form-builder-layout">
+      <div class="layout-page">
+        <div class="row">
+          <div class="col col-empty col-md-12" data-ddm-field-row="0" data-ddm-field-page="0">
+            <div class="ddm-target"></div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-3 col-ddm" data-ddm-field-row="0" data-ddm-field-page="0" data-ddm-field-column="0">
+            <div class="ddm-field-container">
+              <div class="ddm-resize-handle-left"></div>
+              <div class="ddm-drag">
+                <div class="ddm-field-not-found">Field doesn't exist.</div>
+              </div>
+              <div class="ddm-field-actions-container">
+                <button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button">
+                  <svg aria-hidden="true" class="lexicon-icon lexicon-icon-paste" focusable="false">
+                    <title>paste</title>
+                    <use xlink:href="icons.svg#paste"></use>
+                  </svg>
+                </button>
+                <button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button">
+                  <svg aria-hidden="true" class="lexicon-icon lexicon-icon-trash" focusable="false">
+                    <title>trash</title>
+                    <use xlink:href="icons.svg#trash"></use>
+                  </svg>
+                </button>
+              </div>
+              <div class="ddm-resize-handle-right"></div>
+            </div>
+          </div>
+          <div class="col col-empty col-md-9" data-ddm-field-row="0" data-ddm-field-page="0" data-ddm-field-column="1">
+            <div class="ddm-target"></div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col col-empty col-md-12" data-ddm-field-row="1" data-ddm-field-page="0">
+            <div class="ddm-target"></div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-4 col-ddm" data-ddm-field-row="1" data-ddm-field-page="0" data-ddm-field-column="0">
+            <div class="ddm-field-container">
+              <div class="ddm-resize-handle-left"></div>
+              <div class="ddm-drag">
+                <div class="ddm-field-not-found">Field doesn't exist.</div>
+              </div>
+              <div class="ddm-field-actions-container">
+                <button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button">
+                  <svg aria-hidden="true" class="lexicon-icon lexicon-icon-paste" focusable="false">
+                    <title>paste</title>
+                    <use xlink:href="icons.svg#paste"></use>
+                  </svg>
+                </button>
+                <button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button">
+                  <svg aria-hidden="true" class="lexicon-icon lexicon-icon-trash" focusable="false">
+                    <title>trash</title>
+                    <use xlink:href="icons.svg#trash"></use>
+                  </svg>
+                </button>
+              </div>
+              <div class="ddm-resize-handle-right"></div>
+            </div>
+          </div>
+          <div class="col-md-6 col-ddm" data-ddm-field-row="1" data-ddm-field-page="0" data-ddm-field-column="1">
+            <div class="ddm-field-container">
+              <div class="ddm-resize-handle-left"></div>
+              <div class="ddm-drag">
+                <div class="ddm-field-not-found">Field doesn't exist.</div>
+              </div>
+              <div class="ddm-field-actions-container">
+                <button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button">
+                  <svg aria-hidden="true" class="lexicon-icon lexicon-icon-paste" focusable="false">
+                    <title>paste</title>
+                    <use xlink:href="icons.svg#paste"></use>
+                  </svg>
+                </button>
+                <button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button">
+                  <svg aria-hidden="true" class="lexicon-icon lexicon-icon-trash" focusable="false">
+                    <title>trash</title>
+                    <use xlink:href="icons.svg#trash"></use>
+                  </svg>
+                </button>
+              </div>
+              <div class="ddm-resize-handle-right"></div>
+            </div>
+          </div>
+          <div class="col col-empty col-md-2" data-ddm-field-row="1" data-ddm-field-page="0" data-ddm-field-column="2">
+            <div class="ddm-target"></div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col col-empty col-md-12" data-ddm-field-row="2" data-ddm-field-page="0">
+            <div class="ddm-target"></div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12 col-ddm" data-ddm-field-row="2" data-ddm-field-page="0" data-ddm-field-column="0">
+            <div class="ddm-field-container">
+              <div class="ddm-resize-handle-left"></div>
+              <div class="ddm-drag">
+                <div class="ddm-field-not-found">Field doesn't exist.</div>
+              </div>
+              <div class="ddm-field-actions-container">
+                <button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button">
+                  <svg aria-hidden="true" class="lexicon-icon lexicon-icon-paste" focusable="false">
+                    <title>paste</title>
+                    <use xlink:href="icons.svg#paste"></use>
+                  </svg>
+                </button>
+                <button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button">
+                  <svg aria-hidden="true" class="lexicon-icon lexicon-icon-trash" focusable="false">
+                    <title>trash</title>
+                    <use xlink:href="icons.svg#trash"></use>
+                  </svg>
+                </button>
+              </div>
+              <div class="ddm-resize-handle-right"></div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col col-empty col-md-12" data-ddm-field-row="3" data-ddm-field-page="0">
+            <div class="ddm-target"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`PageRenderer should display empty drag message when there are rows with no columns specified 1`] = `
+<div class="ddm-page-container-layout">
+  <div class="ddm-form-page pl-4 pr-4">
+    <textarea class="form-builder-page-header-title form-control p-0" data-page-id="0" maxlength="120"></textarea>
+    <textarea class="form-builder-page-header-description form-control p-0" data-page-id="0" maxlength="120" placeholder="add-a-short-description-for-this-page"></textarea>
+    <div class="form-builder-layout">
+      <div class="layout-page">
+        <div class="row">
+          <div class="col col-empty col-md-12 last-col lfr-initial-col mt-5 mb-4" data-ddm-field-column="0" data-ddm-field-page="0" data-ddm-field-row="0">
+            <div class="ddm-target" id="lfr-initial-col-message">drag-from-sidebar-and-drop-here</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`PageRenderer should resize a specific column on the drag and drop layout 1`] = `
+<div class="ddm-page-container-layout">
+  <div class="ddm-form-page pl-4 pr-4">
+    <textarea class="form-builder-page-header-title form-control p-0" data-page-id="0" maxlength="120" value="Untitled name"></textarea>
+    <textarea class="form-builder-page-header-description form-control p-0" data-page-id="0" maxlength="120" placeholder="add-a-short-description-for-this-page"></textarea>
+    <div class="form-builder-layout">
+      <div class="layout-page">
+        <div class="row">
+          <div class="col col-empty col-md-12" data-ddm-field-row="0" data-ddm-field-page="0">
+            <div class="ddm-target"></div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-3 col-ddm" data-ddm-field-row="0" data-ddm-field-page="0" data-ddm-field-column="0">
+            <div class="ddm-field-container">
+              <div class="ddm-resize-handle-left"></div>
+              <div class="ddm-drag">
+                <div class="ddm-field-not-found">Field doesn't exist.</div>
+              </div>
+              <div class="ddm-field-actions-container">
+                <button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button">
+                  <svg aria-hidden="true" class="lexicon-icon lexicon-icon-paste" focusable="false">
+                    <title>paste</title>
+                    <use xlink:href="icons.svg#paste"></use>
+                  </svg>
+                </button>
+                <button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button">
+                  <svg aria-hidden="true" class="lexicon-icon lexicon-icon-trash" focusable="false">
+                    <title>trash</title>
+                    <use xlink:href="icons.svg#trash"></use>
+                  </svg>
+                </button>
+              </div>
+              <div class="ddm-resize-handle-right"></div>
+            </div>
+          </div>
+          <div class="col col-empty col-md-9" data-ddm-field-row="0" data-ddm-field-page="0" data-ddm-field-column="1">
+            <div class="ddm-target"></div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col col-empty col-md-12" data-ddm-field-row="1" data-ddm-field-page="0">
+            <div class="ddm-target"></div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-4 col-ddm" data-ddm-field-row="1" data-ddm-field-page="0" data-ddm-field-column="0">
+            <div class="ddm-field-container">
+              <div class="ddm-resize-handle-left"></div>
+              <div class="ddm-drag">
+                <div class="ddm-field-not-found">Field doesn't exist.</div>
+              </div>
+              <div class="ddm-field-actions-container">
+                <button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button">
+                  <svg aria-hidden="true" class="lexicon-icon lexicon-icon-paste" focusable="false">
+                    <title>paste</title>
+                    <use xlink:href="icons.svg#paste"></use>
+                  </svg>
+                </button>
+                <button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button">
+                  <svg aria-hidden="true" class="lexicon-icon lexicon-icon-trash" focusable="false">
+                    <title>trash</title>
+                    <use xlink:href="icons.svg#trash"></use>
+                  </svg>
+                </button>
+              </div>
+              <div class="ddm-resize-handle-right"></div>
+            </div>
+          </div>
+          <div class="col-md-6 col-ddm" data-ddm-field-row="1" data-ddm-field-page="0" data-ddm-field-column="1">
+            <div class="ddm-field-container">
+              <div class="ddm-resize-handle-left"></div>
+              <div class="ddm-drag">
+                <div class="ddm-field-not-found">Field doesn't exist.</div>
+              </div>
+              <div class="ddm-field-actions-container">
+                <button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button">
+                  <svg aria-hidden="true" class="lexicon-icon lexicon-icon-paste" focusable="false">
+                    <title>paste</title>
+                    <use xlink:href="icons.svg#paste"></use>
+                  </svg>
+                </button>
+                <button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button">
+                  <svg aria-hidden="true" class="lexicon-icon lexicon-icon-trash" focusable="false">
+                    <title>trash</title>
+                    <use xlink:href="icons.svg#trash"></use>
+                  </svg>
+                </button>
+              </div>
+              <div class="ddm-resize-handle-right"></div>
+            </div>
+          </div>
+          <div class="col col-empty col-md-2" data-ddm-field-row="1" data-ddm-field-page="0" data-ddm-field-column="2">
+            <div class="ddm-target"></div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col col-empty col-md-12" data-ddm-field-row="2" data-ddm-field-page="0">
+            <div class="ddm-target"></div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12 col-ddm" data-ddm-field-row="2" data-ddm-field-page="0" data-ddm-field-column="0">
+            <div class="ddm-field-container">
+              <div class="ddm-resize-handle-left"></div>
+              <div class="ddm-drag">
+                <div class="ddm-field-not-found">Field doesn't exist.</div>
+              </div>
+              <div class="ddm-field-actions-container">
+                <button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button">
+                  <svg aria-hidden="true" class="lexicon-icon lexicon-icon-paste" focusable="false">
+                    <title>paste</title>
+                    <use xlink:href="icons.svg#paste"></use>
+                  </svg>
+                </button>
+                <button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button">
+                  <svg aria-hidden="true" class="lexicon-icon lexicon-icon-trash" focusable="false">
+                    <title>trash</title>
+                    <use xlink:href="icons.svg#trash"></use>
+                  </svg>
+                </button>
+              </div>
+              <div class="ddm-resize-handle-right"></div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col col-empty col-md-12" data-ddm-field-row="3" data-ddm-field-page="0">
+            <div class="ddm-target"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;

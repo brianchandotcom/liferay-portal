@@ -8,6 +8,14 @@ import {Config} from 'metal-state';
 import templates from './SelectCategory.soy';
 
 /**
+ * KeyBoardEvent enter key
+ * @review
+ * @type {!string}
+ */
+
+const ENTER_KEY = 'Enter';
+
+/**
  * SelectCategory
  *
  * This component shows a list of available categories to move content in and
@@ -45,14 +53,16 @@ class SelectCategory extends PortletBase {
 	/**
 	 * When the search form is submitted, nothing should happend,
 	 * as filtering is performed on keypress.
-	 * @param {Event} event
+	 * @param {KeyboardEvent} event
 	 * @private
 	 * @review
 	 */
 
-	_handleSearchFormSubmit(event) {
-		event.preventDefault();
-		event.stopImmediatePropagation();
+	_handleSearchFormKeyDown(event) {
+		if (event.key === ENTER_KEY) {
+			event.preventDefault();
+			event.stopImmediatePropagation();
+		}
 	}
 
 	/**

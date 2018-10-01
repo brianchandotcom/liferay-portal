@@ -6,7 +6,7 @@
 {template .render}
 	{@param nodes: list<?>}
 	{@param pathThemeImages: string}
-	{@param? _handleSearchFormSubmit: any}
+	{@param? _handleSearchFormKeyDown: any}
 	{@param? _searchNodes: any}
 	{@param? _selectedNodeChange: any}
 	{@param? multiSelection: bool}
@@ -18,7 +18,7 @@
 			<div class="container">
 				<div class="navbar-form navbar-form-autofit navbar-overlay navbar-overlay-sm-down">
 					<div class="container">
-						<form role="search" data-onsubmit="{$_handleSearchFormSubmit}">
+						<form data-onkeydown="{$_handleSearchFormKeyDown}" role="search">
 							<div class="input-group">
 								<div class="input-group-item">
 									<input

@@ -7,7 +7,7 @@
 	{@param multiSelection: bool}
 	{@param nodes: list<?>}
 	{@param pathThemeImages: string}
-	{@param? _handleSearchFormSubmit: any}
+	{@param? _handleSearchFormKeyDown: any}
 	{@param? _selectedNodeChange: any}
 	{@param? namespace: string}
 	{@param? viewType: string}
@@ -16,7 +16,7 @@
 		<nav class="management-bar navbar navbar-light">
 			<div class="navbar-form navbar-form-autofit">
 				<div class="container-fluid">
-					<form role="search" data-onsubmit="{$_handleSearchFormSubmit}">
+					<form data-onkeydown="{$_handleSearchFormKeyDown}" role="search">
 						<div class="input-group input-group-inset">
 							<div class="input-group-input">
 								<input

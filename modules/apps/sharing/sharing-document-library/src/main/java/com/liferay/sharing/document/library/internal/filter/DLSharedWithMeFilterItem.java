@@ -12,11 +12,13 @@
  * details.
  */
 
-package com.liferay.sharing.web.internal.portlet;
+package com.liferay.sharing.document.library.internal.filter;
 
-import com.liferay.portal.kernel.portlet.BasePortletProvider;
-import com.liferay.portal.kernel.portlet.EditPortletProvider;
-import com.liferay.sharing.web.constants.SharingPortletKeys;
+import com.liferay.document.library.kernel.model.DLFileEntry;
+import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.sharing.web.filter.SharedWithMeFilterItem;
+
+import java.util.Locale;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -24,16 +26,19 @@ import org.osgi.service.component.annotations.Component;
  * @author Sergio González
  */
 @Component(
-	immediate = true,
-	property = "model.class.name=com.liferay.sharing.model.SharingEntry",
-	service = EditPortletProvider.class
+	immediate = true, property = "navigation.item.order:Integer=1000",
+	service = SharedWithMeFilterItem.class
 )
-public class SharingPortletProvider
-	extends BasePortletProvider implements EditPortletProvider {
+public class DLSharedWithMeFilterItem implements SharedWithMeFilterItem {
 
 	@Override
-	public String getPortletName() {
-		return SharingPortletKeys.SHARING;
+	public String getClassName() {
+		return DLFileEntry.class.getName();
+	}
+
+	@Override
+	public String getLabel(Locale locale) {
+		return LanguageUtil.get(locale, "documents");
 	}
 
 }

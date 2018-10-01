@@ -17,54 +17,99 @@
 <%@ include file="/shared_with_me/init.jsp" %>
 
 <%
+SharedWithMeViewDisplayContext sharedWithMeViewDisplayContext = (SharedWithMeViewDisplayContext)renderRequest.getAttribute(SharedWithMeViewDisplayContext.class.getName());
+%>
+
+<clay:management-toolbar
+	actionHandler='<%= renderResponse.getNamespace() + "SharedWithMe" %>'
+	filterDropdownItems="<%= sharedWithMeViewDisplayContext.getFilterDropdownItems() %>"
+	selectable="<%= false %>"
+	showSearch="<%= false %>"
+	sortingOrder="<%= sharedWithMeViewDisplayContext.getSortingOrder() %>"
+	sortingURL="<%= String.valueOf(sharedWithMeViewDisplayContext.getSortingURL()) %>"
+/>
+
+<%
 PortletURL portletURL = renderResponse.createRenderURL();
 
 portletURL.setParameter("mvcRenderCommandName", "/blogs/view");
 
 SearchContainer sharingEntriesSearchContainer = new SearchContainer(renderRequest, PortletURLUtil.clone(portletURL, liferayPortletResponse), null, "no-entries-were-found");
 
-SharedWithMeViewDisplayContext sharedWithMeViewDisplayContext = (SharedWithMeViewDisplayContext)renderRequest.getAttribute(SharedWithMeViewDisplayContext.class.getName());
-
 sharedWithMeViewDisplayContext.populateResults(sharingEntriesSearchContainer);
 %>
 
-<liferay-ui:search-container
-	id="sharingEntries"
-	searchContainer="<%= sharingEntriesSearchContainer %>"
->
-	<liferay-ui:search-container-row
-		className="com.liferay.sharing.model.SharingEntry"
-		escapedModel="<%= true %>"
-		keyProperty="sharingEntryId"
-		modelVar="sharingEntry"
+<div class="container-fluid-1280 main-content-body">
+	<liferay-ui:search-container
+		id="sharingEntries"
+		searchContainer="<%= sharingEntriesSearchContainer %>"
 	>
-		<liferay-portlet:renderURL varImpl="rowURL">
-			<portlet:param name="mvcRenderCommandName" value="/shared_with_me/view_sharing_entry" />
-			<portlet:param name="redirect" value="<%= sharingEntriesSearchContainer.getIteratorURL().toString() %>" />
-			<portlet:param name="sharingEntryId" value="<%= String.valueOf(sharingEntry.getSharingEntryId()) %>" />
-		</liferay-portlet:renderURL>
+		<liferay-ui:search-container-row
+			className="com.liferay.sharing.model.SharingEntry"
+			escapedModel="<%= true %>"
+			keyProperty="sharingEntryId"
+			modelVar="sharingEntry"
+		>
+			<liferay-portlet:renderURL varImpl="rowURL">
+				<portlet:param name="mvcRenderCommandName" value="/shared_with_me/view_sharing_entry" />
+				<portlet:param name="redirect" value="<%= sharingEntriesSearchContainer.getIteratorURL().toString() %>" />
+				<portlet:param name="sharingEntryId" value="<%= String.valueOf(sharingEntry.getSharingEntryId()) %>" />
+			</liferay-portlet:renderURL>
 
-		<liferay-ui:search-container-column-text
-			cssClass="table-cell-content"
-			href="<%= rowURL %>"
-			name="title"
-			orderable="<%= false %>"
-			value="<%= sharedWithMeViewDisplayContext.getTitle(sharingEntry) %>"
+			<liferay-ui:search-container-column-text
+				cssClass="table-cell-content"
+				href="<%= rowURL %>"
+				name="title"
+				orderable="<%= false %>"
+				value="<%= sharedWithMeViewDisplayContext.getTitle(sharingEntry) %>"
+			/>
+
+			<liferay-ui:search-container-column-text
+				name="asset-type"
+				orderable="<%= false %>"
+				value="<%= sharedWithMeViewDisplayContext.getAssetTypeTitle(sharingEntry) %>"
+			/>
+
+			<%
+			Date modifiedDate = sharingEntry.getModifiedDate();
+
+			String modifiedDateDescription = LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - modifiedDate.getTime(), true);
+			%>
+
+			<liferay-ui:search-container-column-text
+				name="shared-date"
+				orderable="<%= false %>"
+				value="<%= modifiedDateDescription %>"
+			/>
+
+			<liferay-ui:search-container-column-jsp
+				path="/shared_with_me/sharing_entry_action.jsp"
+			/>
+		</liferay-ui:search-container-row>
+
+		<liferay-ui:search-iterator
+			displayStyle="list"
+			markupView="lexicon"
 		/>
+	</liferay-ui:search-container>
+</div>
 
-		<liferay-ui:search-container-column-text
-			name="asset-type"
-			orderable="<%= false %>"
-			value="<%= sharedWithMeViewDisplayContext.getAssetTypeTitle(sharingEntry) %>"
-		/>
+<aui:script require="sharing-web/SharedWithMe.es">
 
-		<liferay-ui:search-container-column-jsp
-			path="/shared_with_me/sharing_entry_action.jsp"
-		/>
-	</liferay-ui:search-container-row>
+	<%
+	PortletURL viewAssetTypeURL = PortletURLUtil.clone(currentURLObj, liferayPortletResponse);
 
-	<liferay-ui:search-iterator
-		displayStyle="list"
-		markupView="lexicon"
-	/>
-</liferay-ui:search-container>
+	viewAssetTypeURL.setParameter("className", (String)null);
+	%>
+
+	var component = Liferay.component(
+		'<portlet:namespace />SharedWithMe',
+		new sharingWebSharedWithMeEs.default(
+			{
+				namespace: '<portlet:namespace />',
+				selectAssetTypeURL: '<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcRenderCommandName" value="/shared_with_me/select_asset_type" /><portlet:param name="className" value="<%= sharedWithMeViewDisplayContext.getClassName() %>" /></portlet:renderURL>',
+				viewAssetTypeURL: '<%= viewAssetTypeURL %>'
+			}
+		)
+	);
+</aui:script>

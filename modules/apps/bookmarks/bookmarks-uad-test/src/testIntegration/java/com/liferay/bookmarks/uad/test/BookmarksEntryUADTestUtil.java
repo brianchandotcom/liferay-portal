@@ -26,7 +26,7 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 /**
  * @author Noah Sherrill
  */
-public class BookmarksEntryUADTestHelper {
+public class BookmarksEntryUADTestUtil {
 
 	public static BookmarksEntry addBookmarksEntry(
 			BookmarksEntryLocalService bookmarksEntryLocalService, long userId)

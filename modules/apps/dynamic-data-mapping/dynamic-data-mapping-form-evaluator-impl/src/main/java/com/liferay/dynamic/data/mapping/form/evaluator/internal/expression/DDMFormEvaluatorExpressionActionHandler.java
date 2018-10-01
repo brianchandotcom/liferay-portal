@@ -53,11 +53,12 @@ public class DDMFormEvaluatorExpressionActionHandler
 	protected ExecuteActionResponse jumpPage(
 		ExecuteActionRequest executeActionRequest) {
 
-		Optional<Integer> from = executeActionRequest.getParameter("from");
-		Optional<Integer> to = executeActionRequest.getParameter("to");
+		Optional<Integer> fromOptional = executeActionRequest.getParameter(
+			"from");
+		Optional<Integer> toOptional = executeActionRequest.getParameter("to");
 
-		if (from.isPresent() && to.isPresent()) {
-			_pageFlow.put(from.get(), to.get());
+		if (fromOptional.isPresent() && toOptional.isPresent()) {
+			_pageFlow.put(fromOptional.get(), toOptional.get());
 		}
 
 		ExecuteActionResponse.Builder builder =

@@ -6,7 +6,3 @@ Export-Package:\
 	com.liferay.document.library.repository.external.cache,\
 	com.liferay.document.library.repository.external.model,\
 	com.liferay.document.library.repository.external.search
-Import-Package:\
-	com.liferay.portal.kernel.repository.model;version="[7.2.0,7.3.0)",\
-	\
-	*

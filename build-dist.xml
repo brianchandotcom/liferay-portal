@@ -3598,14 +3598,8 @@ plugins.includes=</echo>
 				<if>
 					<equals arg1="${zip.executable.file}" arg2="liferay-portal-tomcat" />
 					<then>
-						<move
-							file="dist/${tstamp.value}/liferay-portal-${lp.version}/tomcat-${app.server.tomcat.version}"
-							preservelastmodified="true"
-							tofile="dist/${tstamp.value}/liferay-portal-${lp.version}/tomcat"
-						/>
-
 						<parallel>
-							<exec dir="dist/${tstamp.value}/liferay-portal-${lp.version}/tomcat/bin" executable="sh">
+							<exec dir="dist/${tstamp.value}/liferay-portal-${lp.version}/tomcat-${app.server.tomcat.version}/bin" executable="sh">
 								<arg value="catalina.sh" />
 								<arg value="run" />
 								<env key="LIFERAY_CLEAN_OSGI_STATE" value="true" />
@@ -3618,7 +3612,7 @@ plugins.includes=</echo>
 
 								<sleep seconds="5" />
 
-								<exec dir="dist/${tstamp.value}/liferay-portal-${lp.version}/tomcat/bin" executable="sh">
+								<exec dir="dist/${tstamp.value}/liferay-portal-${lp.version}/tomcat-${app.server.tomcat.version}/bin" executable="sh">
 									<arg value="shutdown.sh" />
 								</exec>
 

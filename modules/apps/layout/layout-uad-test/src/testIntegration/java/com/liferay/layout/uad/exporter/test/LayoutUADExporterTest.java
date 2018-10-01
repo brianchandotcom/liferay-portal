@@ -15,7 +15,7 @@
 package com.liferay.layout.uad.exporter.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.layout.uad.test.LayoutUADTestHelper;
+import com.liferay.layout.uad.test.LayoutUADTestUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -45,7 +45,7 @@ public class LayoutUADExporterTest extends BaseUADExporterTestCase<Layout> {
 
 	@Override
 	protected Layout addBaseModel(long userId) throws Exception {
-		Layout layout = LayoutUADTestHelper.addLayout(
+		Layout layout = LayoutUADTestUtil.addLayout(
 			_layoutLocalService, userId);
 
 		_layouts.add(layout);

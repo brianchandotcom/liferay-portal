@@ -74,6 +74,7 @@ public class AssetListEntryLocalServiceImpl
 		AssetListEntry assetListEntry = assetListEntryPersistence.create(
 			assetListEntryId);
 
+		assetListEntry.setUuid(serviceContext.getUuid());
 		assetListEntry.setGroupId(groupId);
 		assetListEntry.setCompanyId(user.getCompanyId());
 		assetListEntry.setUserId(user.getUserId());
@@ -123,7 +124,8 @@ public class AssetListEntryLocalServiceImpl
 
 		for (long assetEntryId : assetEntryIds) {
 			addAssetEntrySelection(
-				assetListEntry.getAssetListEntryId(), assetEntryId);
+				assetListEntry.getAssetListEntryId(), assetEntryId,
+				serviceContext);
 		}
 
 		return assetListEntry;

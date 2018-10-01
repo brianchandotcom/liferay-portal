@@ -17,9 +17,11 @@ package com.liferay.asset.list.service.impl;
 import com.liferay.asset.list.model.AssetListEntryAssetEntryRel;
 import com.liferay.asset.list.service.base.AssetListEntryAssetEntryRelLocalServiceBaseImpl;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -30,8 +32,11 @@ public class AssetListEntryAssetEntryRelLocalServiceImpl
 
 	@Override
 	public AssetListEntryAssetEntryRel addAssetListEntryAssetEntryRel(
-		long assetListEntryId, long assetEntryId,
-		ServiceContext serviceContext) {
+			long assetListEntryId, long assetEntryId,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		User user = userLocalService.getUser(serviceContext.getUserId());
 
 		long assetListEntryAssetEntryRelId = counterLocalService.increment();
 
@@ -39,6 +44,16 @@ public class AssetListEntryAssetEntryRelLocalServiceImpl
 			assetListEntryAssetEntryRelPersistence.create(
 				assetListEntryAssetEntryRelId);
 
+		assetListEntryAssetEntryRel.setUuid(serviceContext.getUuid());
+		assetListEntryAssetEntryRel.setGroupId(
+			serviceContext.getScopeGroupId());
+		assetListEntryAssetEntryRel.setCompanyId(serviceContext.getCompanyId());
+		assetListEntryAssetEntryRel.setUserId(serviceContext.getUserId());
+		assetListEntryAssetEntryRel.setUserName(user.getFullName());
+		assetListEntryAssetEntryRel.setCreateDate(
+			serviceContext.getCreateDate(new Date()));
+		assetListEntryAssetEntryRel.setModifiedDate(
+			serviceContext.getModifiedDate(new Date()));
 		assetListEntryAssetEntryRel.setAssetListEntryId(assetListEntryId);
 		assetListEntryAssetEntryRel.setAssetEntryId(assetEntryId);
 		assetListEntryAssetEntryRel.setPosition(

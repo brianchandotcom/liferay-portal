@@ -165,7 +165,7 @@
 		"csf": "csf src/**/*.es.js src/**/*.soy src/**/*.jsp test/**/*.es.js --fail-on-errors",
 		"format": "npm run csf -- -i",
 		"start": "node watch.js",
-		"test": "npm run build-soy-tests && cross-env NODE_ENV=test jest --coverage",
+		"test": "npm run build-soy-tests && cross-env NODE_ENV=test jest --coverage && npm run clean",
 		"test:coverage:open": "opn build/coverage/lcov-report/index.html",
 		"test:snapshots": "npm run build-soy && NODE_ENV=test jest --coverage -u && npm run clean"
 	},

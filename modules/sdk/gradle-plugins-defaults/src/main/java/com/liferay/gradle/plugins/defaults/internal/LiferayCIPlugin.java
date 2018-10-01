@@ -29,7 +29,6 @@ import java.io.File;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import org.gradle.api.Action;
 import org.gradle.api.GradleException;
@@ -265,24 +264,28 @@ public class LiferayCIPlugin implements Plugin<Project> {
 					Project dependencyProject =
 						projectDependency.getDependencyProject();
 
-					if (_lfrbuildPortalIgnoredProjectPaths.contains(
-							dependencyProject.getPath())) {
-
-						continue;
-					}
-
+					File lfrBuildCIFile = dependencyProject.file(
+						".lfrbuild-ci");
+					File lfrBuildCISkipTestIntegrationCheckFile =
+						dependencyProject.file(
+							".lfrbuild-ci-skip-test-integration-check");
 					File lfrBuildPortalFile = dependencyProject.file(
 						".lfrbuild-portal");
 
-					if (!lfrBuildPortalFile.exists()) {
-						File lfrBuildCIFile = dependencyProject.file(
-							".lfrbuild-ci");
+					if (lfrBuildCISkipTestIntegrationCheckFile.exists()) {
+						if (lfrBuildCIFile.exists() ||
+							lfrBuildPortalFile.exists()) {
 
-						if (!lfrBuildCIFile.exists()) {
 							throw new GradleException(
-								"Please create marker file " +
-									lfrBuildPortalFile);
+								"Please delete marker file " +
+									lfrBuildCISkipTestIntegrationCheckFile);
 						}
+					}
+					else if (!lfrBuildCIFile.exists() &&
+							 !lfrBuildPortalFile.exists()) {
+
+						throw new GradleException(
+							"Please create marker file " + lfrBuildPortalFile);
 					}
 				}
 			}
@@ -298,8 +301,5 @@ public class LiferayCIPlugin implements Plugin<Project> {
 	private static final int _NPM_INSTALL_RETRIES = 3;
 
 	private static final String _SASS_BINARY_SITE_ARG = "--sass-binary-site=";
-
-	private static final Set<String> _lfrbuildPortalIgnoredProjectPaths =
-		Collections.singleton(":test:arquillian-extension-junit-bridge");
 
 }

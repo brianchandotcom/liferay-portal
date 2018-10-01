@@ -244,7 +244,8 @@ public class DLAdminManagementToolbarDisplayContext {
 		}
 
 		if (DLFolderPermission.contains(
-				permissionChecker, folder, ActionKeys.UPDATE)) {
+				permissionChecker, folder, ActionKeys.UPDATE) &&
+			!folder.isMountPoint()) {
 
 			availableActionDropdownItems.add("move");
 		}

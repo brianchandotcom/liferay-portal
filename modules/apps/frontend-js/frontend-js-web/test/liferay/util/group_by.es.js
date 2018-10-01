@@ -1,18 +1,19 @@
 'use strict';
 
-import groupBy from '../../../src/main/resources/META-INF/resources/liferay/util/groupBy.es';
+import groupBy from '../../../src/main/resources/META-INF/resources/liferay/util/group_by.es';
 
 describe(
-
 	'Liferay.Util.groupBy',
 	()	=>	{
 		it(
 			'should group by a function',
 			()	=>	{
-				var example = [6.1, 4.2, 6.3];
-				var result = {
+				const example = [6.1, 4.2, 6.3];
+
+				const result = {
 					'4': [4.2],
-					'6': [6.1, 6.3]};
+					'6': [6.1, 6.3]
+				};
 
 				expect(groupBy(example, Math.floor)).toEqual(result);
 			}
@@ -21,10 +22,12 @@ describe(
 		it(
 			'should group by a iteratee property',
 			()	=>	{
-				var example = ['one', 'two', 'three'];
-				var result = {
+				const example = ['one', 'two', 'three'];
+
+				const result = {
 					'3': ['one', 'two'],
-					'5': ['three']};
+					'5': ['three']
+				};
 
 				expect(groupBy(example, 'length')).toEqual(result);
 			}
@@ -33,7 +36,7 @@ describe(
 		it(
 			'should group by a object property',
 			()	=>	{
-				var list = [
+				const list = [
 					{
 						age: 33,
 						name: 'Alex'
@@ -60,7 +63,7 @@ describe(
 					}
 				];
 
-				var result = {
+				const result = {
 					'25': [
 						{
 							'age': 25,
@@ -94,7 +97,8 @@ describe(
 							'age': 44,
 							'name': 'Kurt'
 						}
-					]};
+					]
+				};
 
 				expect(groupBy(list, 'age')).toEqual(result);
 			}
@@ -103,7 +107,7 @@ describe(
 		it(
 			'should group by a object property if at least one of the objet does not have the property',
 			()	=>	{
-				var list = [
+				const list = [
 					{
 						age: 40,
 						country: 'USA',
@@ -120,22 +124,25 @@ describe(
 					}
 				];
 
-				var result = {
+				const result = {
 					'USA': [
 						{
 							'age': 40,
 							'country': 'USA',
-							'name': 'Dave'},
+							'name': 'Dave'
+						},
 						{
 							'age': 35,
 							'country': 'USA',
-							'name': 'Dan'}
+							'name': 'Dan'
+						}
 					],
 					'undefined': [
 						{'age': 44,
 							'name': 'Kurt'
 						}
-					]};
+					]
+				};
 
 				expect(groupBy(list, 'country')).toEqual(result);
 			}

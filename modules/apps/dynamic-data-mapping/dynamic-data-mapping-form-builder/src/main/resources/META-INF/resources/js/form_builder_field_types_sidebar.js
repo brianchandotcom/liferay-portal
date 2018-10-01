@@ -193,8 +193,6 @@ AUI.add(
 					},
 
 					_getFieldTypes: function(fieldTypes) {
-						var instance = this;
-
 						var types = [];
 
 						fieldTypes.forEach(

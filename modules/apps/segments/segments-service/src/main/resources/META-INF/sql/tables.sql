@@ -9,7 +9,7 @@ create table SegmentsEntry (
 	name STRING null,
 	description STRING null,
 	active_ BOOLEAN,
-	criteria VARCHAR(75) null,
+	criteria TEXT null,
 	key_ VARCHAR(75) null,
 	type_ VARCHAR(75) null
 );

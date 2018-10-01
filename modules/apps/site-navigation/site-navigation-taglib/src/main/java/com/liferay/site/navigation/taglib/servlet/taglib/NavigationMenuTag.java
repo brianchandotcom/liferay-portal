@@ -193,8 +193,19 @@ public class NavigationMenuTag extends IncludeTag {
 			return new ArrayList<>();
 		}
 
-		List<SiteNavigationMenuItem> ancestors =
-			siteNavigationMenuItem.getAncestors();
+		List<SiteNavigationMenuItem> ancestors = new ArrayList<>();
+
+		while (siteNavigationMenuItem.getParentSiteNavigationMenuItemId() !=
+					0) {
+
+			siteNavigationMenuItem =
+				SiteNavigationMenuItemLocalServiceUtil.
+					getSiteNavigationMenuItem(
+						siteNavigationMenuItem.
+							getParentSiteNavigationMenuItemId());
+
+			ancestors.add(siteNavigationMenuItem);
+		}
 
 		List<NavItem> navItems = new ArrayList<>(ancestors.size() + 1);
 

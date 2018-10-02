@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.util.IntegerWrapper;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
+import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
 import com.liferay.portal.test.rule.TransactionalTestRule;
@@ -55,6 +56,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -122,25 +124,90 @@ public class AssetListEntryAssetEntryRelPersistenceTest {
 
 		AssetListEntryAssetEntryRel newAssetListEntryAssetEntryRel = _persistence.create(pk);
 
+		newAssetListEntryAssetEntryRel.setUuid(RandomTestUtil.randomString());
+
+		newAssetListEntryAssetEntryRel.setGroupId(RandomTestUtil.nextLong());
+
+		newAssetListEntryAssetEntryRel.setCompanyId(RandomTestUtil.nextLong());
+
+		newAssetListEntryAssetEntryRel.setUserId(RandomTestUtil.nextLong());
+
+		newAssetListEntryAssetEntryRel.setUserName(RandomTestUtil.randomString());
+
+		newAssetListEntryAssetEntryRel.setCreateDate(RandomTestUtil.nextDate());
+
+		newAssetListEntryAssetEntryRel.setModifiedDate(RandomTestUtil.nextDate());
+
 		newAssetListEntryAssetEntryRel.setAssetListEntryId(RandomTestUtil.nextLong());
 
 		newAssetListEntryAssetEntryRel.setAssetEntryId(RandomTestUtil.nextLong());
 
 		newAssetListEntryAssetEntryRel.setPosition(RandomTestUtil.nextInt());
 
+		newAssetListEntryAssetEntryRel.setLastPublishDate(RandomTestUtil.nextDate());
+
 		_assetListEntryAssetEntryRels.add(_persistence.update(
 				newAssetListEntryAssetEntryRel));
 
 		AssetListEntryAssetEntryRel existingAssetListEntryAssetEntryRel = _persistence.findByPrimaryKey(newAssetListEntryAssetEntryRel.getPrimaryKey());
 
+		Assert.assertEquals(existingAssetListEntryAssetEntryRel.getUuid(),
+			newAssetListEntryAssetEntryRel.getUuid());
 		Assert.assertEquals(existingAssetListEntryAssetEntryRel.getAssetListEntryAssetEntryRelId(),
 			newAssetListEntryAssetEntryRel.getAssetListEntryAssetEntryRelId());
+		Assert.assertEquals(existingAssetListEntryAssetEntryRel.getGroupId(),
+			newAssetListEntryAssetEntryRel.getGroupId());
+		Assert.assertEquals(existingAssetListEntryAssetEntryRel.getCompanyId(),
+			newAssetListEntryAssetEntryRel.getCompanyId());
+		Assert.assertEquals(existingAssetListEntryAssetEntryRel.getUserId(),
+			newAssetListEntryAssetEntryRel.getUserId());
+		Assert.assertEquals(existingAssetListEntryAssetEntryRel.getUserName(),
+			newAssetListEntryAssetEntryRel.getUserName());
+		Assert.assertEquals(Time.getShortTimestamp(
+				existingAssetListEntryAssetEntryRel.getCreateDate()),
+			Time.getShortTimestamp(
+				newAssetListEntryAssetEntryRel.getCreateDate()));
+		Assert.assertEquals(Time.getShortTimestamp(
+				existingAssetListEntryAssetEntryRel.getModifiedDate()),
+			Time.getShortTimestamp(
+				newAssetListEntryAssetEntryRel.getModifiedDate()));
 		Assert.assertEquals(existingAssetListEntryAssetEntryRel.getAssetListEntryId(),
 			newAssetListEntryAssetEntryRel.getAssetListEntryId());
 		Assert.assertEquals(existingAssetListEntryAssetEntryRel.getAssetEntryId(),
 			newAssetListEntryAssetEntryRel.getAssetEntryId());
 		Assert.assertEquals(existingAssetListEntryAssetEntryRel.getPosition(),
 			newAssetListEntryAssetEntryRel.getPosition());
+		Assert.assertEquals(Time.getShortTimestamp(
+				existingAssetListEntryAssetEntryRel.getLastPublishDate()),
+			Time.getShortTimestamp(
+				newAssetListEntryAssetEntryRel.getLastPublishDate()));
+	}
+
+	@Test
+	public void testCountByUuid() throws Exception {
+		_persistence.countByUuid("");
+
+		_persistence.countByUuid("null");
+
+		_persistence.countByUuid((String)null);
+	}
+
+	@Test
+	public void testCountByUUID_G() throws Exception {
+		_persistence.countByUUID_G("", RandomTestUtil.nextLong());
+
+		_persistence.countByUUID_G("null", 0L);
+
+		_persistence.countByUUID_G((String)null, 0L);
+	}
+
+	@Test
+	public void testCountByUuid_C() throws Exception {
+		_persistence.countByUuid_C("", RandomTestUtil.nextLong());
+
+		_persistence.countByUuid_C("null", 0L);
+
+		_persistence.countByUuid_C((String)null, 0L);
 	}
 
 	@Test
@@ -191,8 +258,10 @@ public class AssetListEntryAssetEntryRelPersistenceTest {
 
 	protected OrderByComparator<AssetListEntryAssetEntryRel> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("AssetListEntryAssetEntryRel",
-			"assetListEntryAssetEntryRelId", true, "assetListEntryId", true,
-			"assetEntryId", true, "position", true);
+			"uuid", true, "assetListEntryAssetEntryRelId", true, "groupId",
+			true, "companyId", true, "userId", true, "userName", true,
+			"createDate", true, "modifiedDate", true, "assetListEntryId", true,
+			"assetEntryId", true, "position", true, "lastPublishDate", true);
 	}
 
 	@Test
@@ -413,6 +482,16 @@ public class AssetListEntryAssetEntryRelPersistenceTest {
 
 		AssetListEntryAssetEntryRel existingAssetListEntryAssetEntryRel = _persistence.findByPrimaryKey(newAssetListEntryAssetEntryRel.getPrimaryKey());
 
+		Assert.assertTrue(Objects.equals(
+				existingAssetListEntryAssetEntryRel.getUuid(),
+				ReflectionTestUtil.invoke(existingAssetListEntryAssetEntryRel,
+					"getOriginalUuid", new Class<?>[0])));
+		Assert.assertEquals(Long.valueOf(
+				existingAssetListEntryAssetEntryRel.getGroupId()),
+			ReflectionTestUtil.<Long>invoke(
+				existingAssetListEntryAssetEntryRel, "getOriginalGroupId",
+				new Class<?>[0]));
+
 		Assert.assertEquals(Long.valueOf(
 				existingAssetListEntryAssetEntryRel.getAssetListEntryId()),
 			ReflectionTestUtil.<Long>invoke(
@@ -431,11 +510,27 @@ public class AssetListEntryAssetEntryRelPersistenceTest {
 
 		AssetListEntryAssetEntryRel assetListEntryAssetEntryRel = _persistence.create(pk);
 
+		assetListEntryAssetEntryRel.setUuid(RandomTestUtil.randomString());
+
+		assetListEntryAssetEntryRel.setGroupId(RandomTestUtil.nextLong());
+
+		assetListEntryAssetEntryRel.setCompanyId(RandomTestUtil.nextLong());
+
+		assetListEntryAssetEntryRel.setUserId(RandomTestUtil.nextLong());
+
+		assetListEntryAssetEntryRel.setUserName(RandomTestUtil.randomString());
+
+		assetListEntryAssetEntryRel.setCreateDate(RandomTestUtil.nextDate());
+
+		assetListEntryAssetEntryRel.setModifiedDate(RandomTestUtil.nextDate());
+
 		assetListEntryAssetEntryRel.setAssetListEntryId(RandomTestUtil.nextLong());
 
 		assetListEntryAssetEntryRel.setAssetEntryId(RandomTestUtil.nextLong());
 
 		assetListEntryAssetEntryRel.setPosition(RandomTestUtil.nextInt());
+
+		assetListEntryAssetEntryRel.setLastPublishDate(RandomTestUtil.nextDate());
 
 		_assetListEntryAssetEntryRels.add(_persistence.update(
 				assetListEntryAssetEntryRel));

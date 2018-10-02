@@ -69,13 +69,15 @@ AUI.add(
 
 						var pages = builder.get('pages');
 
-						var descriptions = pages.get('localizedDescriptions');
-						var titles = pages.get('localizedTitles');
+						var localizedDescriptions = pages.get('localizedDescriptions');
+						var localizedTitles = pages.get('localizedTitles');
 
 						return {
-							description: descriptions[index] || '',
+							description: localizedDescriptions[index] || '',
+							localizedDescription: localizedDescriptions[index] || '',
+							localizedTitle: localizedTitles[index] || '',
 							rows: instance._visitRows(page.get('rows')),
-							title: titles[index] || ''
+							title: localizedTitles[index] || ''
 						};
 					},
 

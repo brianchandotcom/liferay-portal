@@ -67,6 +67,25 @@ class Layout extends Component {
 	}
 
 	/**
+	 * @param {Array} layoutColumn
+	 * @private
+	 * @return {string}
+	 * @review
+	 */
+
+	_getLayoutColumnActiveItem(layoutColumn) {
+		let activeItemPlid = null;
+
+		for (let i = 0; i < layoutColumn.length; i++) {
+			if (layoutColumn[i].active) {
+				activeItemPlid = layoutColumn[i].plid;
+			}
+		}
+
+		return activeItemPlid;
+	}
+
+	/**
 	 * @param {Array} layoutColumns
 	 * @param {string} plid
 	 * @private
@@ -162,11 +181,50 @@ class Layout extends Component {
 
 			sourceColumn.splice(position, 0, sourceItem);
 
-			this.layoutColumns = layoutColumns;
+			const targetColumnIndex = layoutColumns.indexOf(targetColumn);
+
+			const parentPlid = this._getLayoutColumnActiveItem(layoutColumns[targetColumnIndex - 1]);
+
+			this._moveLayoutColumnItem(parentPlid, sourceItemPlid, position)
+				.then(
+					() => {
+						this.layoutColumns = layoutColumns;
+					}
+				);
 		}
 
 		this._hoveredLayoutColumnItemBorder = undefined;
 		this._hoveredLayoutColumnItemPlid = undefined;
+	}
+
+	/**
+	 * Sends the movement of an item to the server.
+	 * @param {string} parentPlid
+	 * @param {string} plid
+	 * @param {string} position
+	 * @private
+	 * @review
+	 */
+
+	_moveLayoutColumnItem(parentPlid, plid, position) {
+		const formData = new FormData();
+
+		formData.append(`${this.portletNamespace}parentPlid`, parentPlid);
+		formData.append(`${this.portletNamespace}plid`, plid);
+		formData.append(`${this.portletNamespace}position`, position);
+
+		return fetch(
+			this.moveLayoutColumnItemURL,
+			{
+				body: formData,
+				credentials: 'include',
+				method: 'POST'
+			}
+		).catch(
+			() => {
+				this._resetHoveredData();
+			}
+		);
 	}
 
 	/**
@@ -230,6 +288,16 @@ Layout.STATE = {
 			)
 		)
 	).required(),
+
+	/**
+	 * URL for moving a layout column item through its column.
+	 * @default undefined
+	 * @instance
+	 * @review
+	 * @type {!string}
+	 */
+
+	moveLayoutColumnItemURL: Config.string().required(),
 
 	/**
 	 * URL for using icons

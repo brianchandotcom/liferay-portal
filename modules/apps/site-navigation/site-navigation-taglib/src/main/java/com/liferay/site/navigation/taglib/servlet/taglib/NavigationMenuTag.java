@@ -78,9 +78,9 @@ public class NavigationMenuTag extends IncludeTag {
 
 		try {
 			if (_siteNavigationMenuId > 0) {
-				branchNavItems = Collections.emptyList();
+				branchNavItems = _getBranchNavItems();
 
-				navItems = _getMenuNavItems(_getBranchNavItems());
+				navItems = _getMenuNavItems(branchNavItems);
 			}
 			else {
 				branchNavItems = getBranchNavItems(request);

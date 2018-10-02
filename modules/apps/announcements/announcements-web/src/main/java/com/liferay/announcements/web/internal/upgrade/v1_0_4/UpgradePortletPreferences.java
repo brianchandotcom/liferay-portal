@@ -40,8 +40,8 @@ public class UpgradePortletPreferences extends UpgradeProcess {
 			PreparedStatement ps2 = connection.prepareStatement(
 				StringBundler.concat(
 					"select portletPreferencesId, preferences from ",
-					"PortletPreferences where companyId = ? AND portletId = ",
-					"? AND ownerType = ?"));
+					"PortletPreferences where companyId = ? AND portletId = ? ",
+					"AND ownerType = ?"));
 			PreparedStatement ps3 = AutoBatchPreparedStatementUtil.autoBatch(
 				connection.prepareStatement(
 					"update PortletPreferences set preferences = ? where " +

@@ -23,7 +23,7 @@ import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portal.uad.test.RepositoryEntryUADTestHelper;
+import com.liferay.portal.uad.test.RepositoryEntryUADTestUtil;
 import com.liferay.user.associated.data.exporter.UADExporter;
 import com.liferay.user.associated.data.test.util.BaseUADExporterTestCase;
 
@@ -49,14 +49,14 @@ public class RepositoryEntryUADExporterTest
 
 	@After
 	public void tearDown() throws Exception {
-		RepositoryEntryUADTestHelper.cleanUpDependencies(
+		RepositoryEntryUADTestUtil.cleanUpDependencies(
 			_repositoryLocalService, _repositoryEntries);
 	}
 
 	@Override
 	protected RepositoryEntry addBaseModel(long userId) throws Exception {
 		RepositoryEntry repositoryEntry =
-			RepositoryEntryUADTestHelper.addRepositoryEntry(
+			RepositoryEntryUADTestUtil.addRepositoryEntry(
 				_portal, _repositoryEntryLocalService, _repositoryLocalService,
 				userId);
 

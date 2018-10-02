@@ -32,7 +32,7 @@ import java.util.List;
 /**
  * @author Brian Wing Shun Chan
  */
-public class RepositoryEntryUADTestHelper {
+public class RepositoryEntryUADTestUtil {
 
 	public static RepositoryEntry addRepositoryEntry(
 			Portal portal,

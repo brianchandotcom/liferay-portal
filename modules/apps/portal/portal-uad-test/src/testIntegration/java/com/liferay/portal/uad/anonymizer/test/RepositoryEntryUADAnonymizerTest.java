@@ -24,7 +24,7 @@ import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portal.uad.test.RepositoryEntryUADTestHelper;
+import com.liferay.portal.uad.test.RepositoryEntryUADTestUtil;
 import com.liferay.user.associated.data.anonymizer.UADAnonymizer;
 import com.liferay.user.associated.data.test.util.BaseUADAnonymizerTestCase;
 
@@ -50,7 +50,7 @@ public class RepositoryEntryUADAnonymizerTest
 
 	@After
 	public void tearDown() throws Exception {
-		RepositoryEntryUADTestHelper.cleanUpDependencies(
+		RepositoryEntryUADTestUtil.cleanUpDependencies(
 			_repositoryLocalService, _repositoryEntries);
 	}
 
@@ -64,7 +64,7 @@ public class RepositoryEntryUADAnonymizerTest
 		long userId, boolean deleteAfterTestRun) throws Exception {
 
 		RepositoryEntry repositoryEntry =
-			RepositoryEntryUADTestHelper.addRepositoryEntry(
+			RepositoryEntryUADTestUtil.addRepositoryEntry(
 				_portal, _repositoryEntryLocalService, _repositoryLocalService,
 				userId);
 
@@ -79,7 +79,7 @@ public class RepositoryEntryUADAnonymizerTest
 	protected void deleteBaseModels(List<RepositoryEntry> baseModels)
 		throws Exception {
 
-		RepositoryEntryUADTestHelper.cleanUpDependencies(
+		RepositoryEntryUADTestUtil.cleanUpDependencies(
 			_repositoryLocalService, baseModels);
 	}
 

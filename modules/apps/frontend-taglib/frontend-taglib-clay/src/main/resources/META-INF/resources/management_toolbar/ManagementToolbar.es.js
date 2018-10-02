@@ -326,7 +326,7 @@ ManagementToolbar.STATE = {
 	 * List of filter label items.
 	 * @default undefined
 	 * @instance
-	 * @memberof ClayManagementToolbar
+	 * @memberof ManagementToolbar
 	 * @type {?(array|undefined)}
 	 */
 

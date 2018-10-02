@@ -20,7 +20,6 @@ import java.io.StringReader;
 
 import java.util.Properties;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
 /**
@@ -32,11 +31,6 @@ public abstract class BaseGitRepository
 	@Override
 	public String getName() {
 		return getString("name");
-	}
-
-	@Override
-	public JSONObject put(String key, Object value) throws JSONException {
-		return put(key, value);
 	}
 
 	protected BaseGitRepository(String name) {

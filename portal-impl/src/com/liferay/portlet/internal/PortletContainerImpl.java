@@ -517,8 +517,6 @@ public class PortletContainerImpl implements PortletContainer {
 			if (Validator.isNull(redirectLocation) &&
 				portlet.isActionURLRedirect()) {
 
-				PortletApp portletApp = portlet.getPortletApp();
-
 				PortletURL portletURL = null;
 
 				if (portletApp.getSpecMajorVersion() < 3) {

@@ -239,6 +239,13 @@ public class PortletRequestDispatcherImpl
 			}
 
 			if (servletPath == null) {
+				if (!include &&
+					!(pathNoQueryString.endsWith(".jsp") ||
+					  pathNoQueryString.endsWith(".jspx"))) {
+
+					pathInfo = pathNoQueryString;
+				}
+
 				servletPath = pathNoQueryString;
 			}
 

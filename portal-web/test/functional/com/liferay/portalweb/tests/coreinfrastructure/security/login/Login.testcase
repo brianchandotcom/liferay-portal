@@ -7,77 +7,6 @@
 		<execute macro="TestCase#setUpPortalInstance" />
 	</set-up>
 
-	<command name="CASSmoke" priority="4">
-		<property name="test.name.skip.portal.instance" value="Login#CASSmoke" />
-		<property name="web.plugins.includes" value="cas-web" />
-
-		<var method="PropsUtil#get('portal.url')" name="portalURL" />
-
-		<var name="userEmailAddress" value="userea@liferay.com" />
-		<var name="userFirstName" value="userfn" />
-		<var name="userLastName" value="userln" />
-		<var name="userScreenName" value="usersn" />
-
-		<execute macro="User#firstLoginPG" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="User#addCP">
-			<var name="userEmailAddress" value="${userEmailAddress}" />
-			<var name="userFirstName" value="${userFirstName}" />
-			<var name="userLastName" value="${userLastName}" />
-			<var name="userScreenName" value="${userScreenName}" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="User#editPasswordCP">
-			<var name="userEmailAddress" value="${userEmailAddress}" />
-			<var name="userScreenName" value="${userScreenName}" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Instance Settings" />
-		</execute>
-
-		<execute macro="PortalSettings#editConfigurationAuthenticationGeneral">
-			<var name="authenticationMethod" value="By Screen Name" />
-		</execute>
-
-		<execute macro="PortalSettingsNavigator#gotoCAS" />
-
-		<execute macro="PortalSettings#editConfigurationAuthenticationCAS">
-			<var name="casLoginURL" value="${portalURL}/cas-web/login" />
-			<var name="casLogoutURL" value="${portalURL}/cas-web/logout" />
-			<var name="casServerURL" value="${portalURL}/cas-web" />
-			<var name="casServiceURL" value="${portalURL}/c/portal/login" />
-		</execute>
-
-		<execute macro="User#logoutPG" />
-
-		<execute macro="User#viewLoggedOutWithCASEnabledPG" />
-
-		<execute macro="User#loginUserWithCASEnabledPG">
-			<var name="userScreenName" value="${userScreenName}" />
-		</execute>
-
-		<execute macro="User#logoutPG" />
-
-		<execute macro="User#loginUserWithCASEnabledPG">
-			<var name="userScreenName" value="test" />
-		</execute>
-	</command>
-
 	<command name="FacebookSSOSmoke" priority="4">
 		<property name="dummy.socket.proxy.disabled" value="true" />
 		<property name="test.name.skip.portal.instance" value="Login#FacebookSSOSmoke" />
@@ -201,7 +130,7 @@
 		</execute>
 	</command>
 
-	<command ignore="true" name="OpenIDConnectSmoke" priority="4">
+	<command name="OpenIDConnectSmoke" priority="4">
 		<property name="dummy.socket.proxy.disabled" value="true" />
 		<property name="test.name.skip.portal.instance" value="Login#OpenIDConnectSmoke" />
 
@@ -231,7 +160,10 @@
 
 		<execute macro="PortalSettings#enableOpenIDConnectCP" />
 
-		<execute macro="OpenIDConnect#addProviderInSystemSettings" />
+		<execute macro="OpenIDConnect#addProviderInSystemSettings">
+			<var name="openIDConnectClientID" value="${openIDConnectClientID}" />
+			<var name="openIDConnectClientSecret" value="${openIDConnectClientSecret}" />
+		</execute>
 
 		<execute macro="User#logoutPG" />
 
@@ -249,12 +181,12 @@
 		</execute>
 	</command>
 
-	<command name="OpenIDSmoke" priority="4">
+	<command ignore="true" name="OpenIDSmoke" priority="4">
 		<property name="dummy.socket.proxy.disabled" value="true" />
 		<property name="test.name.skip.portal.instance" value="Login#OpenIDSmoke" />
 
-		<var method="PropsUtil#get('openid.password')" name="openIDPassword" />
-		<var method="PropsUtil#get('openid.username')" name="openIDUsername" />
+		<var method="PropsUtil#get('email.password.1')" name="openIDPassword" />
+		<var method="PropsUtil#get('email.address.1')" name="openIDUsername" />
 
 		<execute macro="User#firstLoginPG" />
 
@@ -270,19 +202,37 @@
 
 		<execute macro="User#logoutPG" />
 
-		<execute macro="User#loginUserWithOpenIDEnabledPG">
+		<execute macro="User#createUserViaOpenID">
 			<var name="openIDPassword" value="${openIDPassword}" />
+			<var name="openIDURL" value="https://me.yahoo.com/liferayqa" />
 			<var name="openIDUsername" value="${openIDUsername}" />
-			<var name="password" value="test" />
-			<var name="userEmailAddress" value="userea2@liferay.com" />
-			<var name="userName" value="userfn2" />
+			<var name="userEmailAddress" value="userea@liferay.com" />
+			<var name="userFirstName" value="userfn" />
+			<var name="userLastName" value="userln" />
+			<var name="userScreenName" value="usersn" />
 		</execute>
-
-		<execute macro="User#logoutPG" />
 
 		<execute macro="User#loginUserPG">
 			<var name="password" value="test" />
 			<var name="userEmailAddress" value="test@liferay.com" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Users" />
+			<var name="panel" value="Control Panel" />
+			<var name="portlet" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#editPasswordCP">
+			<var name="userEmailAddress" value="userea@liferay.com" />
+			<var name="userScreenName" value="usersn" />
+		</execute>
+
+		<execute macro="User#logoutPG" />
+
+		<execute macro="User#loginUserWithOpenIDEnabledPG">
+			<var name="openIDURL" value="https://me.yahoo.com/liferayqa" />
+			<var name="userFirstName" value="userfn" />
 		</execute>
 	</command>
 

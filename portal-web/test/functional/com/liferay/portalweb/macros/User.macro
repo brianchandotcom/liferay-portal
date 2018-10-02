@@ -733,6 +733,35 @@
 		<execute macro="Button#clickSave" />
 	</command>
 
+	<command name="createUserViaOpenID">
+		<description message="Create a new Portal user named ${userFirstName} that is associated with the OpenID ${openIDURL}." />
+
+		<execute macro="Navigator#openURL" />
+
+		<execute function="AssertClick" locator1="UserBar#USER_SIGN_IN" value1="Sign In" />
+
+		<execute function="AssertClick" locator1="Link#OPENID" value1="OpenID" />
+
+		<execute function="Type" locator1="SignInOpenID#OPENID_FIELD" value1="${openIDURL}" />
+
+		<execute function="Click" locator1="Button#SIGN_IN" />
+
+		<execute function="Type" locator1="OpenIDLogin#YAHOO_LOGIN_USERNAME_FIELD" value1="${openIDUsername}" />
+
+		<execute function="KeyPress" locator1="OpenIDLogin#YAHOO_LOGIN_USERNAME_FIELD" value1="\RETURN" />
+
+		<execute function="Type" locator1="OpenIDLogin#YAHOO_LOGIN_PASSWORD_FIELD" value1="${openIDPassword}" />
+
+		<execute function="KeyPress" locator1="OpenIDLogin#YAHOO_LOGIN_PASSWORD_FIELD" value1="\RETURN" />
+
+		<execute function="Type" locator1="TextInput#FIRST_NAME" value1="${userFirstName}" />
+		<execute function="Type" locator1="TextInput#LAST_NAME" value1="${userLastName}" />
+		<execute function="Type" locator1="TextInput#SCREEN_NAME" value1="${userScreenName}" />
+		<execute function="Type" locator1="TextInput#EMAIL_ADDRESS" value1="${userEmailAddress}" />
+
+		<execute macro="Button#clickSave" />
+	</command>
+
 	<command name="deactivateCP">
 		<execute macro="Search#searchCP">
 			<var name="searchTerm" value="${userFirstName}" />
@@ -1481,7 +1510,7 @@
 	</command>
 
 	<command name="loginUserWithOpenIDEnabledPG">
-		<description message="Log into Liferay Portal as ${userEmailAddress} using the password ${password} with OpenID authentication enabled." />
+		<description message="Log into Portal as ${userFirstName} via OpenID ${openIDURL}." />
 
 		<execute macro="Navigator#openURL" />
 
@@ -1489,25 +1518,9 @@
 
 		<execute function="AssertClick" locator1="Link#OPENID" value1="OpenID" />
 
-		<execute function="Type" locator1="SignInOpenID#OPENID_FIELD" value1="http://${openIDUsername}.openid.org.cn" />
+		<execute function="Type" locator1="SignInOpenID#OPENID_FIELD" value1="${openIDURL}" />
 
 		<execute function="Click" locator1="Button#SIGN_IN" />
-
-		<execute function="Type" locator1="OpenIDLogin#LOGIN_OPENID_FIELD" value1="${openIDUsername}" />
-		<execute function="Type" locator1="OpenIDLogin#LOGIN_PASSWORD_FIELD" value1="${openIDPassword}" />
-
-		<execute function="AssertClick" locator1="OpenIDLogin#LOGIN_BUTTON" value1="Login" />
-
-		<if>
-			<condition function="IsElementPresent" locator1="OpenIDLogin#LOGIN_ALLOW_ONCE_BUTTON" />
-			<then>
-				<var name="key_userName" value="${userName}" />
-
-				<execute function="Click" locator1="OpenIDLogin#LOGIN_PERSONA" />
-
-				<execute function="AssertClick" locator1="OpenIDLogin#LOGIN_ALLOW_ONCE_BUTTON" value1="Allow Once" />
-			</then>
-		</if>
 
 		<if>
 			<condition function="IsElementPresent#pauseIsElementPresent" locator1="Button#I_AGREE" value1="I Agree" />
@@ -1519,20 +1532,8 @@
 		<if>
 			<condition function="IsElementPresent#pauseIsElementPresent" locator1="TextInput#PASSWORD" />
 			<then>
-				<if>
-					<and>
-						<isset var="syntaxCheckingEnabled" />
-						<equals arg1="${syntaxCheckingEnabled}" arg2="true" />
-					</and>
-					<then>
-						<execute function="Type" locator1="TextInput#PASSWORD" value1="${resetPassword}" />
-						<execute function="Type" locator1="TextInput#ENTER_AGAIN" value1="${resetPassword}" />
-					</then>
-					<else>
-						<execute function="Type" locator1="TextInput#PASSWORD" value1="test" />
-						<execute function="Type" locator1="TextInput#ENTER_AGAIN" value1="test" />
-					</else>
-				</if>
+				<execute function="Type" locator1="TextInput#PASSWORD" value1="test" />
+				<execute function="Type" locator1="TextInput#ENTER_AGAIN" value1="test" />
 
 				<execute macro="Button#clickSave" />
 			</then>

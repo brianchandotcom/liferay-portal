@@ -31,7 +31,7 @@
 
 		<execute function="Click" locator1="Icon#OPENID_CONNECT" />
 
-		<execute function="Click" locator1="Button#SUBMIT" />
+		<execute function="Click" locator1="Button#SIGN_IN" />
 
 		<execute function="Type" locator1="GoogleLogin#LOGIN_EMAIL_FIELD" value1="${userEmailAddress}" />
 

@@ -101,7 +101,6 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
-import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -117,7 +116,6 @@ import com.liferay.trash.TrashHelper;
 import java.io.Serializable;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -272,22 +270,6 @@ public class JournalDisplayContext {
 			_themeDisplay);
 
 		return _articleDisplay;
-	}
-
-	public List<Locale> getAvailableArticleLocales() throws PortalException {
-		JournalArticle article = getArticle();
-
-		if (article == null) {
-			return Collections.emptyList();
-		}
-
-		List<Locale> availableLocales = new ArrayList<>();
-
-		for (String languageId : article.getAvailableLanguageIds()) {
-			availableLocales.add(LocaleUtil.fromLanguageId(languageId));
-		}
-
-		return availableLocales;
 	}
 
 	public String[] getCharactersBlacklist() throws PortalException {
@@ -495,25 +477,6 @@ public class JournalDisplayContext {
 		}
 
 		return _ddmStructureName;
-	}
-
-	public long getDDMStructurePrimaryKey() {
-		String ddmStructureKey = getDDMStructureKey();
-
-		if (Validator.isNull(ddmStructureKey)) {
-			return 0;
-		}
-
-		DDMStructure ddmStructure = DDMStructureLocalServiceUtil.fetchStructure(
-			_themeDisplay.getSiteGroupId(),
-			PortalUtil.getClassNameId(JournalArticle.class),
-			getDDMStructureKey(), true);
-
-		if (ddmStructure == null) {
-			return 0;
-		}
-
-		return ddmStructure.getPrimaryKey();
 	}
 
 	public List<DDMStructure> getDDMStructures() throws PortalException {
@@ -742,16 +705,6 @@ public class JournalDisplayContext {
 		_keywords = ParamUtil.getString(_request, "keywords");
 
 		return _keywords;
-	}
-
-	public int getMaxAddMenuItems() {
-		if (_maxAddMenuItems != null) {
-			return _maxAddMenuItems;
-		}
-
-		_maxAddMenuItems = _journalWebConfiguration.maxAddMenuItems();
-
-		return _maxAddMenuItems;
 	}
 
 	public String getNavigation() {
@@ -1949,7 +1902,6 @@ public class JournalDisplayContext {
 	private String _keywords;
 	private final LiferayPortletRequest _liferayPortletRequest;
 	private final LiferayPortletResponse _liferayPortletResponse;
-	private Integer _maxAddMenuItems;
 	private String _navigation;
 	private String _orderByCol;
 	private String _orderByType;

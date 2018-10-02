@@ -23,7 +23,7 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.user.associated.data.exporter.UADExporter;
 import com.liferay.user.associated.data.test.util.BaseUADExporterTestCase;
-import com.liferay.users.admin.uad.test.UserTrackerUADTestHelper;
+import com.liferay.users.admin.uad.test.UserTrackerUADTestUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,7 +46,7 @@ public class UserTrackerUADExporterTest
 
 	@Override
 	protected UserTracker addBaseModel(long userId) throws Exception {
-		UserTracker userTracker = UserTrackerUADTestHelper.addUserTracker(
+		UserTracker userTracker = UserTrackerUADTestUtil.addUserTracker(
 			_userTrackerLocalService, userId);
 
 		_userTrackers.add(userTracker);

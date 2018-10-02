@@ -22,7 +22,7 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 /**
  * @author Brian Wing Shun Chan
  */
-public class UserTrackerUADTestHelper {
+public class UserTrackerUADTestUtil {
 
 	public static UserTracker addUserTracker(
 			UserTrackerLocalService userTrackerLocalService, long userId)

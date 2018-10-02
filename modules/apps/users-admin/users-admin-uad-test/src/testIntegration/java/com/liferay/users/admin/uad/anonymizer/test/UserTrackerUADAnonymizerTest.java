@@ -24,7 +24,7 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.user.associated.data.anonymizer.UADAnonymizer;
 import com.liferay.user.associated.data.test.util.BaseUADAnonymizerTestCase;
-import com.liferay.users.admin.uad.test.UserTrackerUADTestHelper;
+import com.liferay.users.admin.uad.test.UserTrackerUADTestUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -54,7 +54,7 @@ public class UserTrackerUADAnonymizerTest
 	protected UserTracker addBaseModel(long userId, boolean deleteAfterTestRun)
 		throws Exception {
 
-		UserTracker userTracker = UserTrackerUADTestHelper.addUserTracker(
+		UserTracker userTracker = UserTrackerUADTestUtil.addUserTracker(
 			_userTrackerLocalService, userId);
 
 		if (deleteAfterTestRun) {

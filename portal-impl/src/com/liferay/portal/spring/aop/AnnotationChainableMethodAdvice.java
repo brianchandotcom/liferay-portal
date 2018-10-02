@@ -17,7 +17,6 @@ package com.liferay.portal.spring.aop;
 import com.liferay.petra.reflect.AnnotationLocator;
 
 import java.lang.annotation.Annotation;
-import java.lang.reflect.Method;
 
 import java.util.HashSet;
 import java.util.Iterator;
@@ -54,15 +53,10 @@ public abstract class AnnotationChainableMethodAdvice<T extends Annotation>
 			return (T)annotation;
 		}
 
-		Method method = methodInvocation.getMethod();
-
-		ServiceBeanMethodInvocation serviceBeanMethodInvocation =
-			(ServiceBeanMethodInvocation)methodInvocation;
-
-		Class<?> targetClass = serviceBeanMethodInvocation.getTargetClass();
+		Object target = methodInvocation.getThis();
 
 		List<Annotation> annotations = AnnotationLocator.locate(
-			method, targetClass);
+			methodInvocation.getMethod(), target.getClass());
 
 		Iterator<Annotation> iterator = annotations.iterator();
 

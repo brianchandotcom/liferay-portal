@@ -2044,13 +2044,28 @@ public class JenkinsResultsParserUtil {
 	}
 
 	private static String _getProperty(
-		Properties properties, List<String> referencedNames, String name) {
+		Properties properties, List<String> previousNames, String name) {
 
-		if (referencedNames.contains(name)) {
-			return "${" + name + "}";
+		if (previousNames.contains(name)) {
+			if (previousNames.size() > 1) {
+				StringBuilder sb = new StringBuilder();
+
+				sb.append("Circular property reference chain found\n");
+
+				for (String previousName : previousNames) {
+					sb.append(previousName);
+					sb.append(" -> ");
+				}
+
+				sb.append(name);
+
+				throw new IllegalStateException(sb.toString());
+			}
+
+			return combine("${", name, "}");
 		}
 
-		referencedNames.add(name);
+		previousNames.add(name);
 
 		if (!properties.containsKey(name)) {
 			return null;
@@ -2069,7 +2084,7 @@ public class JenkinsResultsParserUtil {
 			if (properties.containsKey(propertyName)) {
 				newValue = newValue.replace(
 					propertyGroup,
-					_getProperty(properties, referencedNames, propertyName));
+					_getProperty(properties, previousNames, propertyName));
 			}
 		}
 

@@ -20,7 +20,7 @@
 			webDavURL,
 			null,
 			function(exception) {
-				var errorMessage = _.sub(
+				var errorMessage = Liferay.Util.sub(
 					'<%= UnicodeLanguageUtil.get(request, "cannot-open-the-requested-document-due-to-the-following-reason") %>',
 					exception.message
 				);

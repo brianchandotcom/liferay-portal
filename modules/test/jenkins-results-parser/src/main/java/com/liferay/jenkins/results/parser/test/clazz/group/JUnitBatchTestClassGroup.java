@@ -152,6 +152,20 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 		protected static JunitBatchTestClass getInstance(
 			String fullClassName, GitWorkingDirectory gitWorkingDirectory) {
 
+			String filePath = fullClassName.substring(
+				0, fullClassName.lastIndexOf("."));
+
+			filePath = filePath.replace(".", "/");
+
+			String simpleClassName = fullClassName.substring(
+				fullClassName.lastIndexOf(".") + 1);
+
+			File file = new File(filePath, simpleClassName + ".class");
+
+			if (_junitTestClasses.containsKey(file)) {
+				return _junitTestClasses.get(file);
+			}
+
 			File javaFile = gitWorkingDirectory.getJavaFileFromFullClassName(
 				fullClassName);
 
@@ -161,15 +175,6 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 
 				return null;
 			}
-
-			File workingDirectory = gitWorkingDirectory.getWorkingDirectory();
-
-			String relativeFilePath = javaFile.getAbsolutePath();
-
-			relativeFilePath = relativeFilePath.replace(
-				workingDirectory.getAbsolutePath(), "");
-
-			File file = new File(relativeFilePath.replace(".java", ".class"));
 
 			return getInstance(file, gitWorkingDirectory, javaFile);
 		}
@@ -514,8 +519,7 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 	}
 
 	protected void setTestClasses() {
-		final File workingDirectory =
-			portalGitWorkingDirectory.getWorkingDirectory();
+		File workingDirectory = portalGitWorkingDirectory.getWorkingDirectory();
 
 		try {
 			Files.walkFileTree(
@@ -559,13 +563,8 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 							packagePath = packagePath.replace(
 								".java", ".class");
 
-							String parentPath = matcher.group("parentPath");
-
-							parentPath = parentPath.replace(
-								workingDirectory.getAbsolutePath(), "");
-
 							return JunitBatchTestClass.getInstance(
-								new File(parentPath, packagePath),
+								new File(packagePath),
 								portalGitWorkingDirectory, path.toFile());
 						}
 
@@ -759,7 +758,7 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 	private static final boolean _DEFAULT_INCLUDE_AUTO_BALANCE_TESTS = false;
 
 	private static final Pattern _packagePathPattern = Pattern.compile(
-		"(?<parentPath>.*/)(?<packagePath>com/.*)");
+		".*/(?<packagePath>com/.*)");
 
 	private final List<File> _autoBalanceTestFiles = new ArrayList<>();
 	private boolean _includeAutoBalanceTests;

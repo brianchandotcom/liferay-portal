@@ -159,8 +159,14 @@ public class ExpressionVisitorImpl implements ExpressionVisitor<Expression> {
 		else if (binaryOperatorKind == BinaryOperatorKind.GE) {
 			return Optional.of(BinaryExpression.Operation.GE);
 		}
+		else if (binaryOperatorKind == BinaryOperatorKind.GT) {
+			return Optional.of(BinaryExpression.Operation.GT);
+		}
 		else if (binaryOperatorKind == BinaryOperatorKind.LE) {
 			return Optional.of(BinaryExpression.Operation.LE);
+		}
+		else if (binaryOperatorKind == BinaryOperatorKind.LT) {
+			return Optional.of(BinaryExpression.Operation.LT);
 		}
 		else if (binaryOperatorKind == BinaryOperatorKind.OR) {
 			return Optional.of(BinaryExpression.Operation.OR);

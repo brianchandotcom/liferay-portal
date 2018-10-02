@@ -33,7 +33,7 @@ import java.util.Map;
 /**
  * @author William Newbury
  */
-public class WikiPageUADTestHelper {
+public class WikiPageUADTestUtil {
 
 	public static WikiPage addWikiPage(
 			WikiNodeLocalService wikiNodeLocalService,

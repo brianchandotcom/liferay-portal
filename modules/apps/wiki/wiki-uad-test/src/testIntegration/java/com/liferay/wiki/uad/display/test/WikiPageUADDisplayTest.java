@@ -24,7 +24,7 @@ import com.liferay.user.associated.data.test.util.BaseUADDisplayTestCase;
 import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.service.WikiNodeLocalService;
 import com.liferay.wiki.service.WikiPageLocalService;
-import com.liferay.wiki.uad.test.WikiPageUADTestHelper;
+import com.liferay.wiki.uad.test.WikiPageUADTestUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,13 +47,13 @@ public class WikiPageUADDisplayTest extends BaseUADDisplayTestCase<WikiPage> {
 
 	@After
 	public void tearDown() throws Exception {
-		WikiPageUADTestHelper.cleanUpDependencies(
+		WikiPageUADTestUtil.cleanUpDependencies(
 			_wikiNodeLocalService, _wikiPages);
 	}
 
 	@Override
 	protected WikiPage addBaseModel(long userId) throws Exception {
-		WikiPage wikiPage = WikiPageUADTestHelper.addWikiPage(
+		WikiPage wikiPage = WikiPageUADTestUtil.addWikiPage(
 			_wikiNodeLocalService, _wikiPageLocalService, userId);
 
 		_wikiPages.add(wikiPage);

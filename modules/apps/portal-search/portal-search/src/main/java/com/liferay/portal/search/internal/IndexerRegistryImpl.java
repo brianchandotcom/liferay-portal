@@ -117,11 +117,10 @@ public class IndexerRegistryImpl implements IndexerRegistry {
 		synchronized (_queuedIndexerPostProcessors) {
 			List<IndexerPostProcessor> indexerPostProcessors =
 				_queuedIndexerPostProcessors.getOrDefault(
-					indexer.getClassName(),
-					new ArrayList<IndexerPostProcessor>());
+					clazz.getName(), new ArrayList<IndexerPostProcessor>());
 
 			indexerPostProcessors.addAll(
-				_queuedIndexerPostProcessors.get(clazz.getName()));
+				_queuedIndexerPostProcessors.get(indexer.getClassName()));
 
 			indexerPostProcessors.forEach(
 				indexerPostProcessor -> indexer.registerIndexerPostProcessor(

@@ -15,11 +15,11 @@
 package com.liferay.announcements.web.internal.upgrade;
 
 import com.liferay.announcements.web.internal.upgrade.v1_0_2.UpgradePermission;
+import com.liferay.announcements.web.internal.upgrade.v1_0_4.UpgradePortletPreferences;
 import com.liferay.portal.kernel.upgrade.BaseReplacePortletId;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.kernel.upgrade.UpgradeException;
 import com.liferay.portal.kernel.upgrade.UpgradeStep;
-import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 import com.liferay.portal.upgrade.release.BaseUpgradeWebModuleRelease;
 
@@ -27,6 +27,7 @@ import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Adolfo Pérez
+ * @author Roberto Díaz
  */
 @Component(immediate = true, service = UpgradeStepRegistrator.class)
 public class AnnouncementsWebUpgrade implements UpgradeStepRegistrator {
@@ -66,10 +67,18 @@ public class AnnouncementsWebUpgrade implements UpgradeStepRegistrator {
 				return new String[][] {
 					{
 						"1_WAR_soannouncementsportlet",
-						PortletKeys.ANNOUNCEMENTS
+						"com_liferay_announcements_web_portlet_" +
+							"AnnouncementsPortlet"
 					},
-					{"83", PortletKeys.ALERTS},
-					{"84", PortletKeys.ANNOUNCEMENTS}
+					{
+						"83",
+						"com_liferay_announcements_web_portlet_AlertsPortlet"
+					},
+					{
+						"84",
+						"com_liferay_announcements_web_portlet_" +
+							"AnnouncementsPortlet"
+					}
 				};
 			}
 
@@ -87,6 +96,13 @@ public class AnnouncementsWebUpgrade implements UpgradeStepRegistrator {
 
 		registry.register(
 			"1.0.2", "1.0.3", upgradePortletId, new UpgradePermission(true));
+
+		registry.register("1.0.3", "1.0.4", new UpgradePortletPreferences());
+
+		registry.register(
+			"1.0.4", "2.0.0",
+			new com.liferay.announcements.web.internal.upgrade.v2_0_0.
+				UpgradePortletPreferences());
 	}
 
 }

@@ -2084,7 +2084,9 @@ public class JenkinsResultsParserUtil {
 			if (properties.containsKey(propertyName)) {
 				newValue = newValue.replace(
 					propertyGroup,
-					_getProperty(properties, previousNames, propertyName));
+					_getProperty(
+						properties, new ArrayList<>(previousNames),
+						propertyName));
 			}
 		}
 

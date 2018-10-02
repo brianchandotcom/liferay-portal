@@ -4654,9 +4654,9 @@ version 1.3.4.
 - [LPS-85771]: Set `test.outputs.upToDateWhen`to `false` to always run `test`
 and `testIntegration` for OSGi modules.
 
-## 5.5.62 - 2018-10-01
+## 5.5.63 - 2018-10-01
 
-### Added
+### Changed
 - [LPS-85905]: When on Jenkins, fail the `testIntegration` task if any dependent
 projects defined in the `testIntegrationCompile` configuration do not have a
 `lfrbuild-ci`, `lfrbuild-ci-skip-test-integration-check`, or a
@@ -5140,6 +5140,7 @@ projects defined in the `testIntegrationCompile` configuration do not have a
 [LPS-85677]: https://issues.liferay.com/browse/LPS-85677
 [LPS-85678]: https://issues.liferay.com/browse/LPS-85678
 [LPS-85771]: https://issues.liferay.com/browse/LPS-85771
+[LPS-85905]: https://issues.liferay.com/browse/LPS-85905
 [LRDOCS-2594]: https://issues.liferay.com/browse/LRDOCS-2594
 [LRDOCS-2841]: https://issues.liferay.com/browse/LRDOCS-2841
 [LRDOCS-2981]: https://issues.liferay.com/browse/LRDOCS-2981

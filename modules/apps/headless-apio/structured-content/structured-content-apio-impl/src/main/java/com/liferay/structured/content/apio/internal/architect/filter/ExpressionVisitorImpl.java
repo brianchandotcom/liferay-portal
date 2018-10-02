@@ -126,8 +126,14 @@ public class ExpressionVisitorImpl implements ExpressionVisitor<Object> {
 		else if (Objects.equals(BinaryExpression.Operation.GE, operation)) {
 			filter = _getGEFilter((EntityField)left, right, locale);
 		}
+		else if (Objects.equals(BinaryExpression.Operation.GT, operation)) {
+			filter = _getGTFilter((EntityField)left, right, locale);
+		}
 		else if (Objects.equals(BinaryExpression.Operation.LE, operation)) {
 			filter = _getLEFilter((EntityField)left, right, locale);
+		}
+		else if (Objects.equals(BinaryExpression.Operation.LT, operation)) {
+			filter = _getLTFilter((EntityField)left, right, locale);
 		}
 		else if (Objects.equals(BinaryExpression.Operation.OR, operation)) {
 			filter = _getORFilter((Filter)left, (Filter)right);
@@ -151,7 +157,23 @@ public class ExpressionVisitorImpl implements ExpressionVisitor<Object> {
 		}
 
 		throw new UnsupportedOperationException(
-			"Unsupported method _getGEQuery with entity field type " +
+			"Unsupported method _getGEFilter with entity field type " +
+				entityField.getType());
+	}
+
+	private Filter _getGTFilter(
+		EntityField entityField, Object fieldValue, Locale locale) {
+
+		if (Objects.equals(entityField.getType(), EntityField.Type.DATE) ||
+			Objects.equals(entityField.getType(), EntityField.Type.STRING)) {
+
+			return new RangeTermFilter(
+				entityField.getFilterableName(locale), false, true,
+				String.valueOf(fieldValue), null);
+		}
+
+		throw new UnsupportedOperationException(
+			"Unsupported method _getGTFilter with entity field type " +
 				entityField.getType());
 	}
 
@@ -167,7 +189,23 @@ public class ExpressionVisitorImpl implements ExpressionVisitor<Object> {
 		}
 
 		throw new UnsupportedOperationException(
-			"Unsupported method _getGEQuery with entity field type " +
+			"Unsupported method _getLEFilter with entity field type " +
+				entityField.getType());
+	}
+
+	private Filter _getLTFilter(
+		EntityField entityField, Object fieldValue, Locale locale) {
+
+		if (Objects.equals(entityField.getType(), EntityField.Type.DATE) ||
+			Objects.equals(entityField.getType(), EntityField.Type.STRING)) {
+
+			return new RangeTermFilter(
+				entityField.getFilterableName(locale), false, false, null,
+				String.valueOf(fieldValue));
+		}
+
+		throw new UnsupportedOperationException(
+			"Unsupported method _getLTFilter with entity field type " +
 				entityField.getType());
 	}
 

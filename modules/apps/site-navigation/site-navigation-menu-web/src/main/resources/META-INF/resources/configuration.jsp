@@ -139,10 +139,7 @@ else {
 									<aui:select id="rootMenuItemType" label="start-with-menu-items-in" name="preferences--rootMenuItemType--" value="<%= rootMenuItemType %>">
 										<aui:option label="level" value="absolute" />
 										<aui:option label="level-relative-to-the-current-menu-item" value="relative" />
-
-										<c:if test="<%= siteNavigationMenu != null %>">
-											<aui:option label="select" value="select" />
-										</c:if>
+										<aui:option label="select" value="select" />
 									</aui:select>
 								</aui:col>
 

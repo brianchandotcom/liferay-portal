@@ -33,7 +33,7 @@ import java.util.Map;
 /**
  * @author Brian Wing Shun Chan
  */
-public class MBMessageUADTestHelper {
+public class MBMessageUADTestUtil {
 
 	public static MBMessage addMBMessage(
 			MBCategoryLocalService mbCategoryLocalService,

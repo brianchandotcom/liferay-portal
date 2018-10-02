@@ -18,7 +18,7 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.message.boards.model.MBMessage;
 import com.liferay.message.boards.service.MBCategoryLocalService;
 import com.liferay.message.boards.service.MBMessageLocalService;
-import com.liferay.message.boards.uad.test.MBMessageUADTestHelper;
+import com.liferay.message.boards.uad.test.MBMessageUADTestUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -55,7 +55,7 @@ public class MBMessageUADAnonymizerTest
 		throws Exception {
 
 		MBMessage mbMessage =
-			MBMessageUADTestHelper.addMBMessageWithStatusByUserId(
+			MBMessageUADTestUtil.addMBMessageWithStatusByUserId(
 				_mbCategoryLocalService, _mbMessageLocalService, userId,
 				statusByUserId);
 
@@ -66,7 +66,7 @@ public class MBMessageUADAnonymizerTest
 
 	@After
 	public void tearDown() throws Exception {
-		MBMessageUADTestHelper.cleanUpDependencies(
+		MBMessageUADTestUtil.cleanUpDependencies(
 			_mbCategoryLocalService, _mbMessages);
 	}
 
@@ -79,7 +79,7 @@ public class MBMessageUADAnonymizerTest
 	protected MBMessage addBaseModel(long userId, boolean deleteAfterTestRun)
 		throws Exception {
 
-		MBMessage mbMessage = MBMessageUADTestHelper.addMBMessage(
+		MBMessage mbMessage = MBMessageUADTestUtil.addMBMessage(
 			_mbCategoryLocalService, _mbMessageLocalService, userId);
 
 		if (deleteAfterTestRun) {
@@ -93,7 +93,7 @@ public class MBMessageUADAnonymizerTest
 	protected void deleteBaseModels(List<MBMessage> baseModels)
 		throws Exception {
 
-		MBMessageUADTestHelper.cleanUpDependencies(
+		MBMessageUADTestUtil.cleanUpDependencies(
 			_mbCategoryLocalService, baseModels);
 	}
 

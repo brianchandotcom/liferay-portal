@@ -458,37 +458,6 @@ public class KBArticleStagedModelDataHandler
 		}
 	}
 
-	@Reference(unbind = "-")
-	protected void setAdminUtilHelper(AdminHelper adminHelper) {
-		_adminHelper = adminHelper;
-	}
-
-	@Reference(unbind = "-")
-	protected void setKBArticleLocalService(
-		KBArticleLocalService kbArticleLocalService) {
-
-		_kbArticleLocalService = kbArticleLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setKBFolderLocalService(
-		KBFolderLocalService kbFolderLocalService) {
-
-		_kbFolderLocalService = kbFolderLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setPortal(Portal portal) {
-		_portal = portal;
-	}
-
-	@Reference(unbind = "-")
-	protected void setPortletFileRepository(
-		PortletFileRepository portletFileRepository) {
-
-		_portletFileRepository = portletFileRepository;
-	}
-
 	private InputStream _getKBArticalAttachmentInputStream(
 			String binPath, PortletDataContext portletDataContext,
 			FileEntry fileEntry)
@@ -518,15 +487,23 @@ public class KBArticleStagedModelDataHandler
 	private static final Log _log = LogFactoryUtil.getLog(
 		KBArticleStagedModelDataHandler.class);
 
+	@Reference
 	private AdminHelper _adminHelper;
 
 	@Reference
 	private KBArticleExportImportContentProcessor
 		_kbArticleExportImportContentProcessor;
 
+	@Reference
 	private KBArticleLocalService _kbArticleLocalService;
+
+	@Reference
 	private KBFolderLocalService _kbFolderLocalService;
+
+	@Reference
 	private Portal _portal;
+
+	@Reference
 	private PortletFileRepository _portletFileRepository;
 
 }

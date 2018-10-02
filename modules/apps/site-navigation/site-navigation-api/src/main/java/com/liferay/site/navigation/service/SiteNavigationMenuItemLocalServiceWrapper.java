@@ -370,6 +370,11 @@ public class SiteNavigationMenuItemLocalServiceWrapper
 	}
 
 	@Override
+	public int getSiteNavigationMenuItemsCount(long siteNavigationMenuId) {
+		return _siteNavigationMenuItemLocalService.getSiteNavigationMenuItemsCount(siteNavigationMenuId);
+	}
+
+	@Override
 	public com.liferay.site.navigation.model.SiteNavigationMenuItem updateSiteNavigationMenuItem(
 		long siteNavigationMenuItemId, long parentSiteNavigationMenuItemId,
 		int order) throws com.liferay.portal.kernel.exception.PortalException {

@@ -350,6 +350,10 @@ public class SiteNavigationMenuItemLocalServiceUtil {
 		return getService().getSiteNavigationMenuItemsCount();
 	}
 
+	public static int getSiteNavigationMenuItemsCount(long siteNavigationMenuId) {
+		return getService().getSiteNavigationMenuItemsCount(siteNavigationMenuId);
+	}
+
 	public static com.liferay.site.navigation.model.SiteNavigationMenuItem updateSiteNavigationMenuItem(
 		long siteNavigationMenuItemId, long parentSiteNavigationMenuItemId,
 		int order) throws com.liferay.portal.kernel.exception.PortalException {

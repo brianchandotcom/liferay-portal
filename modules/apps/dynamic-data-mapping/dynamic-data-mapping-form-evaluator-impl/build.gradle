@@ -18,6 +18,7 @@ dependencies {
 	testCompile group: "org.jodd", name: "jodd-json", version: "3.6.4"
 	testCompile group: "org.slf4j", name: "slf4j-api", version: "1.7.22"
 	testCompile project(":apps:dynamic-data-mapping:dynamic-data-mapping-expression")
+	testCompile project(":apps:dynamic-data-mapping:dynamic-data-mapping-form-field-type")
 	testCompile project(":apps:dynamic-data-mapping:dynamic-data-mapping-test-util")
 	testCompile project(":core:petra:petra-concurrent")
 	testCompile project(":core:petra:petra-lang")

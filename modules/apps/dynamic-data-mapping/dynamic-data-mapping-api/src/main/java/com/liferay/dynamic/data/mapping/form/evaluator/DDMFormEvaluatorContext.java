@@ -23,7 +23,9 @@ import java.util.Map;
 
 /**
  * @author Leonardo Barros
+ * @deprecated As of Judson (7.1.x)
  */
+@Deprecated
 public class DDMFormEvaluatorContext {
 
 	public DDMFormEvaluatorContext(

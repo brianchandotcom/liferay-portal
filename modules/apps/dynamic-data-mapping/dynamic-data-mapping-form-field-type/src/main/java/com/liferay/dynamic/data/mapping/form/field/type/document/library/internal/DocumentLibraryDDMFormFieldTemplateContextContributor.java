@@ -113,10 +113,14 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributor
 		stringsMap.put("select", LanguageUtil.get(resourceBundle, "select"));
 
 		parameters.put("strings", stringsMap);
-		parameters.put(
-			"value",
-			jsonFactory.looseDeserialize(
-				ddmFormFieldRenderingContext.getValue()));
+
+		String value = ddmFormFieldRenderingContext.getValue();
+
+		if (Validator.isNull(value)) {
+			value = "{}";
+		}
+
+		parameters.put("value", jsonFactory.looseDeserialize(value));
 
 		return parameters;
 	}

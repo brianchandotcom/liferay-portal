@@ -14,10 +14,10 @@
 
 package com.liferay.dynamic.data.mapping.form.web.internal.portlet.action;
 
-import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormEvaluationResult;
 import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormEvaluator;
-import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormEvaluatorContext;
-import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormFieldEvaluationResult;
+import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormEvaluatorEvaluateRequest;
+import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormEvaluatorEvaluateResponse;
+import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormEvaluatorFieldContextKey;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
@@ -32,13 +32,14 @@ import com.liferay.dynamic.data.mapping.test.util.DDMFormValuesTestUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.util.PropsImpl;
 
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
@@ -80,12 +81,13 @@ public class AddFormInstanceRecordMVCCommandHelperTest extends PowerMockito {
 
 	@Test
 	public void testNotRequiredAndInvisibleField() throws Exception {
-		DDMFormFieldEvaluationResult ddmFormFieldEvaluationResult =
-			setUpDDMFormFieldEvaluation();
+		Map<String, Object> changedProperties = new HashMap<>();
+
+		changedProperties.put("visible", false);
+
+		mockDDMFormEvaluator(changedProperties);
 
 		_ddmFormField.setRequired(false);
-
-		ddmFormFieldEvaluationResult.setVisible(false);
 
 		_addRecordMVCCommandHelper.updateRequiredFieldsAccordingToVisibility(
 			_actionRequest, _ddmForm, _ddmFormValues, LocaleUtil.US);
@@ -95,12 +97,13 @@ public class AddFormInstanceRecordMVCCommandHelperTest extends PowerMockito {
 
 	@Test
 	public void testNotRequiredAndVisibleField() throws Exception {
-		DDMFormFieldEvaluationResult ddmFormFieldEvaluationResult =
-			setUpDDMFormFieldEvaluation();
+		Map<String, Object> changedProperties = new HashMap<>();
+
+		changedProperties.put("visible", true);
+
+		mockDDMFormEvaluator(changedProperties);
 
 		_ddmFormField.setRequired(false);
-
-		ddmFormFieldEvaluationResult.setVisible(true);
 
 		_addRecordMVCCommandHelper.updateRequiredFieldsAccordingToVisibility(
 			_actionRequest, _ddmForm, _ddmFormValues, LocaleUtil.US);
@@ -110,10 +113,11 @@ public class AddFormInstanceRecordMVCCommandHelperTest extends PowerMockito {
 
 	@Test
 	public void testRequiredAndInvisibleField() throws Exception {
-		DDMFormFieldEvaluationResult ddmFormFieldEvaluationResult =
-			setUpDDMFormFieldEvaluation();
+		Map<String, Object> changedProperties = new HashMap<>();
 
-		ddmFormFieldEvaluationResult.setVisible(false);
+		changedProperties.put("visible", false);
+
+		mockDDMFormEvaluator(changedProperties);
 
 		mockGetDDMFormLayout();
 
@@ -125,10 +129,11 @@ public class AddFormInstanceRecordMVCCommandHelperTest extends PowerMockito {
 
 	@Test
 	public void testRequiredAndVisibleField() throws Exception {
-		DDMFormFieldEvaluationResult ddmFormFieldEvaluationResult =
-			setUpDDMFormFieldEvaluation();
+		Map<String, Object> changedProperties = new HashMap<>();
 
-		ddmFormFieldEvaluationResult.setVisible(true);
+		changedProperties.put("visible", true);
+
+		mockDDMFormEvaluator(changedProperties);
 
 		mockGetDDMFormLayout();
 
@@ -136,6 +141,49 @@ public class AddFormInstanceRecordMVCCommandHelperTest extends PowerMockito {
 			_actionRequest, _ddmForm, _ddmFormValues, LocaleUtil.US);
 
 		Assert.assertTrue(_ddmFormField.isRequired());
+	}
+
+	protected void mockDDMFormEvaluator(
+			Map<String, Object> fieldChangesProperties)
+		throws Exception {
+
+		_ddmForm = DDMFormTestUtil.createDDMForm("field0");
+
+		Map<String, DDMFormField> ddmFormFields = _ddmForm.getDDMFormFieldsMap(
+			true);
+
+		_ddmFormField = ddmFormFields.get("field0");
+
+		_ddmFormField.setRequired(true);
+
+		_ddmFormValues = DDMFormValuesTestUtil.createDDMFormValues(_ddmForm);
+
+		DDMFormFieldValue ddmFormFieldValue =
+			DDMFormValuesTestUtil.createUnlocalizedDDMFormFieldValue(
+				"field0", StringPool.BLANK);
+
+		_ddmFormValues.addDDMFormFieldValue(ddmFormFieldValue);
+
+		Map<DDMFormEvaluatorFieldContextKey, Map<String, Object>>
+			ddmFormFieldsPropertyChanges = new HashMap<>();
+
+		ddmFormFieldsPropertyChanges.put(
+			new DDMFormEvaluatorFieldContextKey(
+				"field0", ddmFormFieldValue.getInstanceId()),
+			fieldChangesProperties);
+
+		DDMFormEvaluatorEvaluateResponse.Builder builder =
+			DDMFormEvaluatorEvaluateResponse.Builder.newBuilder(
+				ddmFormFieldsPropertyChanges);
+
+		builder.withDisabledPagesIndexes(Collections.emptySet());
+
+		when(
+			_ddmFormEvaluator.evaluate(
+				Matchers.any(DDMFormEvaluatorEvaluateRequest.class))
+		).thenReturn(
+			builder.build()
+		);
 	}
 
 	protected void mockGetDDMFormLayout() throws Exception {
@@ -197,49 +245,6 @@ public class AddFormInstanceRecordMVCCommandHelperTest extends PowerMockito {
 		).thenReturn(
 			_request
 		);
-	}
-
-	protected DDMFormFieldEvaluationResult setUpDDMFormFieldEvaluation()
-		throws Exception {
-
-		_ddmForm = DDMFormTestUtil.createDDMForm("field0");
-
-		Map<String, DDMFormField> ddmFormFields = _ddmForm.getDDMFormFieldsMap(
-			true);
-
-		_ddmFormField = ddmFormFields.get("field0");
-
-		_ddmFormField.setRequired(true);
-
-		_ddmFormValues = DDMFormValuesTestUtil.createDDMFormValues(_ddmForm);
-
-		DDMFormFieldValue ddmFormFieldValue =
-			DDMFormValuesTestUtil.createUnlocalizedDDMFormFieldValue(
-				"field0", StringPool.BLANK);
-
-		_ddmFormValues.addDDMFormFieldValue(ddmFormFieldValue);
-
-		DDMFormEvaluationResult ddmFormEvaluationResult =
-			new DDMFormEvaluationResult();
-
-		DDMFormFieldEvaluationResult ddmFormFieldEvaluationResult =
-			new DDMFormFieldEvaluationResult(
-				"field0", ddmFormFieldValue.getInstanceId());
-
-		ddmFormEvaluationResult.setDDMFormFieldEvaluationResults(
-			ListUtil.fromArray(
-				new DDMFormFieldEvaluationResult[] {
-					ddmFormFieldEvaluationResult
-				}));
-
-		when(
-			_ddmFormEvaluator, "evaluate",
-			Matchers.any(DDMFormEvaluatorContext.class)
-		).thenReturn(
-			ddmFormEvaluationResult
-		);
-
-		return ddmFormFieldEvaluationResult;
 	}
 
 	protected void setUpLanguageUtil() {

@@ -40,6 +40,9 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
+
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
@@ -266,6 +269,12 @@ public class SoyTemplateRecord extends SoyAbstractValue implements SoyRecord {
 		}
 		else if (object instanceof Float) {
 			return FloatData.forValue((Float)object);
+		}
+		else if (object instanceof BigDecimal) {
+			return StringData.forValue(object.toString());
+		}
+		else if (object instanceof BigInteger) {
+			return StringData.forValue(object.toString());
 		}
 
 		SoyMapData soyMapData = new SoyMapData();

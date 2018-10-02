@@ -27,6 +27,10 @@ public abstract class ExpressionVisitor<T> {
 		return null;
 	}
 
+	public T visit(ArrayExpression arrayExpression) {
+		return null;
+	}
+
 	public T visit(ComparisonExpression comparisonExpression) {
 		return null;
 	}

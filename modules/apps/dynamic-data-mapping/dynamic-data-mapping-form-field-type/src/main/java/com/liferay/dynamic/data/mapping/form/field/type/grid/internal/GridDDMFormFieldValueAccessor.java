@@ -29,6 +29,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Locale;
 import java.util.Set;
+import java.util.function.IntFunction;
 import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
@@ -44,6 +45,11 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class GridDDMFormFieldValueAccessor
 	implements DDMFormFieldValueAccessor<JSONObject> {
+
+	@Override
+	public IntFunction<JSONObject[]> getArrayGeneratorFunction() {
+		return JSONObject[]::new;
+	}
 
 	@Override
 	public JSONObject getValue(

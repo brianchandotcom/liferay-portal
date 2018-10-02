@@ -15,6 +15,7 @@
 package com.liferay.dynamic.data.mapping.form.builder.internal.converter.visitor;
 
 import com.liferay.dynamic.data.mapping.expression.model.AndExpression;
+import com.liferay.dynamic.data.mapping.expression.model.ArrayExpression;
 import com.liferay.dynamic.data.mapping.expression.model.BinaryExpression;
 import com.liferay.dynamic.data.mapping.expression.model.ComparisonExpression;
 import com.liferay.dynamic.data.mapping.expression.model.Expression;
@@ -35,8 +36,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Stack;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 /**
  * @author Rafael Praxedes
@@ -60,6 +59,14 @@ public class ConditionExpressionVisitor extends ExpressionVisitor<Object> {
 		_andOperator = true;
 
 		return doVisitLogicalExpression(andExpression);
+	}
+
+	@Override
+	public Object visit(ArrayExpression arrayExpression) {
+		String value = arrayExpression.getValue();
+
+		return new DDMFormRuleCondition.Operand(
+			"list", value.replaceAll("\\[|\\]|'", StringPool.BLANK));
 	}
 
 	@Override
@@ -143,36 +150,11 @@ public class ConditionExpressionVisitor extends ExpressionVisitor<Object> {
 			"string", stringLiteral.getValue());
 	}
 
-	protected DDMFormRuleCondition createBelongsToCondition(
-		String belongsToFunctionName,
-		List<DDMFormRuleCondition.Operand> operands) {
-
-		List<DDMFormRuleCondition.Operand> belongsToOperands =
-			new ArrayList<>();
-
-		Stream<DDMFormRuleCondition.Operand> operandsStream = operands.stream();
-
-		Stream<String> valuesStream = operandsStream.map(
-			operand -> operand.getValue());
-
-		belongsToOperands.add(
-			new DDMFormRuleCondition.Operand(
-				"list",
-				valuesStream.collect(Collectors.joining(StringPool.COMMA))));
-
-		return new DDMFormRuleCondition(
-			belongsToFunctionName, belongsToOperands);
-	}
-
 	protected DDMFormRuleCondition createDDMFormRuleCondition(
 		String functionName, List<DDMFormRuleCondition.Operand> operands) {
 
 		String functionNameOperator = _functionNameOperatorMap.get(
 			functionName);
-
-		if (Objects.equals(functionNameOperator, "belongs-to")) {
-			return createBelongsToCondition(functionNameOperator, operands);
-		}
 
 		return new DDMFormRuleCondition(functionNameOperator, operands);
 	}

@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Locale;
+import java.util.function.IntFunction;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -44,6 +45,11 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class CheckboxMultipleDDMFormFieldValueAccessor
 	implements DDMFormFieldValueAccessor<JSONArray> {
+
+	@Override
+	public IntFunction<JSONArray[]> getArrayGeneratorFunction() {
+		return JSONArray[]::new;
+	}
 
 	@Override
 	public JSONArray getValue(

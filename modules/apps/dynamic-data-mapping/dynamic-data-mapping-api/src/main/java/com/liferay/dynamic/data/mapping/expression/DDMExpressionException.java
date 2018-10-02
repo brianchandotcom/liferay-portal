@@ -39,28 +39,6 @@ public class DDMExpressionException extends PortalException {
 		super(cause);
 	}
 
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	public static class FunctionNotAllowed extends DDMExpressionException {
-
-		public FunctionNotAllowed(String functionName) {
-			super(
-				String.format(
-					"The function name \"%s\" is not allowed", functionName));
-
-			_functionName = functionName;
-		}
-
-		public String getFunctionName() {
-			return _functionName;
-		}
-
-		private final String _functionName;
-
-	}
-
 	public static class FunctionNotDefined extends DDMExpressionException {
 
 		public FunctionNotDefined(Set<String> undefinedFunctionNames) {

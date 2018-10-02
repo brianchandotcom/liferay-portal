@@ -25,7 +25,7 @@ import java.util.Optional;
  */
 public final class DDMDataProviderResponse implements Serializable {
 
-	public <T> Optional<T> getOutput(String name, Class<?> clazz) {
+	public <T> Optional<T> getOutputOptional(String name, Class<?> clazz) {
 		Object value = _ddmDataProviderResponseOutputs.get(name);
 
 		if (value == null) {

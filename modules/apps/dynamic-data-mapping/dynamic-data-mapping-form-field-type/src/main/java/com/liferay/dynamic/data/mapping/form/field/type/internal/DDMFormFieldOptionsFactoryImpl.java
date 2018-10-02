@@ -142,7 +142,7 @@ public class DDMFormFieldOptionsFactoryImpl
 					"Default-Output"));
 
 			Optional<List<KeyValuePair>> keyValuesPairsOptional =
-				ddmDataProviderResponse.getOutput(
+				ddmDataProviderResponse.getOutputOptional(
 					ddmDataProviderInstanceOutput, List.class);
 
 			if (!keyValuesPairsOptional.isPresent()) {

@@ -15,244 +15,446 @@
 package com.liferay.dynamic.data.mapping.expression.internal;
 
 import com.liferay.dynamic.data.mapping.expression.DDMExpressionException;
-import com.liferay.portal.kernel.test.util.RandomTestUtil;
-import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.dynamic.data.mapping.expression.DDMExpressionFunction;
+import com.liferay.dynamic.data.mapping.expression.DDMExpressionFunctionTracker;
+import com.liferay.dynamic.data.mapping.expression.internal.functions.AbsFunction;
+import com.liferay.dynamic.data.mapping.expression.internal.functions.AddFunction;
+import com.liferay.dynamic.data.mapping.expression.internal.functions.MaxFunction;
+import com.liferay.dynamic.data.mapping.expression.internal.functions.MultiplyFunction;
+import com.liferay.dynamic.data.mapping.expression.internal.functions.SquareFunction;
+import com.liferay.dynamic.data.mapping.expression.internal.functions.ZeroFunction;
 
-import java.util.Arrays;
+import java.math.BigDecimal;
+
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 import org.junit.Assert;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+
+import org.powermock.api.mockito.PowerMockito;
+import org.powermock.modules.junit4.PowerMockRunner;
 
 /**
  * @author Marcellus Tavares
+ * @author Leonardo Barros
  */
-public class DDMExpressionImplTest {
+@RunWith(PowerMockRunner.class)
+public class DDMExpressionImplTest extends PowerMockito {
+
+	@Test
+	public void testAddition() throws Exception {
+		DDMExpressionImpl<BigDecimal> ddmExpression = createDDMExpression(
+			"1 + 3 + 6");
+
+		Assert.assertEquals(new BigDecimal("10"), ddmExpression.evaluate());
+	}
+
+	@Test
+	public void testAndExpression1() throws Exception {
+		DDMExpressionImpl<Boolean> ddmExpression = createDDMExpression(
+			"3 > 1 && 1 < 2");
+
+		Assert.assertTrue(ddmExpression.evaluate());
+	}
+
+	@Test
+	public void testAndExpression2() throws Exception {
+		DDMExpressionImpl<Boolean> ddmExpression = createDDMExpression(
+			"4 > 2 && 1 < 0");
+
+		Assert.assertFalse(ddmExpression.evaluate());
+	}
+
+	@Test
+	public void testAndExpression3() throws Exception {
+		DDMExpressionImpl<Boolean> ddmExpression = createDDMExpression(
+			"3 >= 4 and 2 <= 4");
+
+		Assert.assertFalse(ddmExpression.evaluate());
+	}
+
+	@Test
+	public void testDivision1() throws Exception {
+		DDMExpressionImpl<BigDecimal> ddmExpression = createDDMExpression(
+			"6 / 3");
+
+		Assert.assertEquals(new BigDecimal(2), ddmExpression.evaluate());
+	}
+
+	@Test
+	public void testDivision2() throws Exception {
+		DDMExpressionImpl<BigDecimal> ddmExpression = createDDMExpression(
+			"15 / 2");
+
+		Assert.assertEquals(new BigDecimal(7.5), ddmExpression.evaluate());
+	}
 
 	@Test(expected = IllegalArgumentException.class)
-	public void testEmptyExpressionString() throws Exception {
-		new DDMExpressionImpl<>(null, Number.class);
+	public void testEmptyExpression() throws Exception {
+		createDDMExpression("");
 	}
 
 	@Test
-	public void testGetFunctionNames() throws Exception {
-		DDMExpressionImpl ddmExpressionImpl = new DDMExpressionImpl<>(
-			"pow(pow(log(y))) + sum(3, 4)", Number.class);
+	public void testEquals1() throws Exception {
+		DDMExpressionImpl<Boolean> ddmExpression = createDDMExpression(
+			"3 == '3'");
 
-		Set<String> expectedFunctionNames = new HashSet<>(
-			Arrays.asList("pow", "log", "sum"));
+		Assert.assertFalse(ddmExpression.evaluate());
+	}
+
+	@Test
+	public void testExpressionVariableNames() throws Exception {
+		DDMExpressionImpl<BigDecimal> ddmExpression = createDDMExpression(
+			"a - b");
+
+		Set<String> variables = new HashSet() {
+			{
+				add("a");
+				add("b");
+			}
+		};
 
 		Assert.assertEquals(
-			expectedFunctionNames,
-			ddmExpressionImpl.getExpressionFunctionNames());
+			variables, ddmExpression.getExpressionVariableNames());
 	}
 
 	@Test
-	public void testGetVariableNames1() throws Exception {
-		DDMExpressionImpl ddmExpressionImpl = new DDMExpressionImpl<>(
-			"(var1 + var2_) * __var3", Number.class);
+	public void testFunction0() throws Exception {
+		DDMExpressionImpl<BigDecimal> ddmExpression = spy(
+			createDDMExpression("zero()"));
 
-		Set<String> expectedVariableNames = new HashSet<>(
-			Arrays.asList("var1", "var2_", "__var3"));
+		Map<String, DDMExpressionFunction> functions = new HashMap() {
+			{
+				put("zero", new ZeroFunction());
+			}
+		};
 
-		Assert.assertEquals(
-			expectedVariableNames,
-			ddmExpressionImpl.getExpressionVariableNames());
+		when(
+			ddmExpression.getDDMExpressionFunctions()
+		).thenReturn(
+			functions
+		);
+
+		Assert.assertEquals(BigDecimal.ZERO, ddmExpression.evaluate());
 	}
 
 	@Test
-	public void testGetVariableNames2() throws Exception {
-		DDMExpressionImpl ddmExpressionImpl = new DDMExpressionImpl<>(
-			"(((1 + 2) * (1 - 2 / x)) + log(1 * 6 - y))", Number.class);
+	public void testFunction1() throws Exception {
+		DDMExpressionImpl<BigDecimal> ddmExpression = spy(
+			createDDMExpression("multiply([1,2,3])"));
 
-		Set<String> expectedVariableNames = new HashSet<>(
-			Arrays.asList("x", "y"));
+		Map<String, DDMExpressionFunction> functions = new HashMap() {
+			{
+				put("multiply", new MultiplyFunction());
+			}
+		};
 
-		Assert.assertEquals(
-			expectedVariableNames,
-			ddmExpressionImpl.getExpressionVariableNames());
+		when(
+			ddmExpression.getDDMExpressionFunctions()
+		).thenReturn(
+			functions
+		);
+
+		BigDecimal actual = ddmExpression.evaluate();
+
+		Assert.assertEquals(0, actual.compareTo(new BigDecimal("6")));
+	}
+
+	@Test
+	public void testFunction2() throws Exception {
+		DDMExpressionImpl<BigDecimal> ddmExpression = spy(
+			createDDMExpression("max([1,2,3,4])"));
+
+		Map<String, DDMExpressionFunction> functions = new HashMap() {
+			{
+				put("max", new MaxFunction());
+			}
+		};
+
+		when(
+			ddmExpression.getDDMExpressionFunctions()
+		).thenReturn(
+			functions
+		);
+
+		BigDecimal actual = ddmExpression.evaluate();
+
+		Assert.assertEquals(0, actual.compareTo(new BigDecimal("4")));
+	}
+
+	@Test
+	public void testFunctions() throws Exception {
+		DDMExpressionImpl<BigDecimal> ddmExpression = spy(
+			createDDMExpression("square(a) + add(3, abs(b))"));
+
+		ddmExpression.setVariable("a", 2);
+		ddmExpression.setVariable("b", -3);
+
+		Map<String, DDMExpressionFunction> functions = new HashMap() {
+			{
+				put("abs", new AbsFunction());
+				put("add", new AddFunction());
+				put("square", new SquareFunction());
+			}
+		};
+
+		when(
+			ddmExpression.getDDMExpressionFunctions()
+		).thenReturn(
+			functions
+		);
+
+		BigDecimal actual = ddmExpression.evaluate();
+
+		Assert.assertEquals(0, actual.compareTo(new BigDecimal("10")));
+	}
+
+	@Test
+	public void testGreaterThan1() throws Exception {
+		DDMExpressionImpl<Boolean> ddmExpression = createDDMExpression(
+			"3 > 2.0");
+
+		Assert.assertTrue(ddmExpression.evaluate());
+	}
+
+	@Test
+	public void testGreaterThan2() throws Exception {
+		DDMExpressionImpl<Boolean> ddmExpression = createDDMExpression("4 > 5");
+
+		Assert.assertFalse(ddmExpression.evaluate());
+	}
+
+	@Test
+	public void testGreaterThanOrEquals1() throws Exception {
+		DDMExpressionImpl<Boolean> ddmExpression = createDDMExpression(
+			"-2 >= -3");
+
+		Assert.assertTrue(ddmExpression.evaluate());
+	}
+
+	@Test
+	public void testGreaterThanOrEquals2() throws Exception {
+		DDMExpressionImpl<Boolean> ddmExpression = createDDMExpression(
+			"1 >= 2");
+
+		Assert.assertFalse(ddmExpression.evaluate());
 	}
 
 	@Test(expected = DDMExpressionException.InvalidSyntax.class)
-	public void testInvalidExpressionSyntax1() throws Exception {
-		new DDMExpressionImpl<>("((", Number.class);
+	public void testInvalidSyntax1() throws Exception {
+		DDMExpressionImpl<BigDecimal> ddmExpression = createDDMExpression(
+			"1 ++ 2");
+
+		ddmExpression.evaluate();
 	}
 
 	@Test(expected = DDMExpressionException.InvalidSyntax.class)
-	public void testInvalidExpressionSyntax2() throws Exception {
-		new DDMExpressionImpl<>("(())", Number.class);
-	}
+	public void testInvalidSyntax2() throws Exception {
+		DDMExpressionImpl<BigDecimal> ddmExpression = createDDMExpression(
+			"(1 * 2");
 
-	@Test(expected = DDMExpressionException.InvalidSyntax.class)
-	public void testInvalidExpressionSyntax3() throws Exception {
-		new DDMExpressionImpl<>(")", Number.class);
-	}
-
-	@Test(expected = DDMExpressionException.InvalidSyntax.class)
-	public void testInvalidExpressionSyntax4() throws Exception {
-		new DDMExpressionImpl<>("+-/i", Number.class);
-	}
-
-	@Test(expected = DDMExpressionException.InvalidSyntax.class)
-	public void testInvalidExpressionSyntax5() throws Exception {
-		new DDMExpressionImpl<>("-----(", Number.class);
+		ddmExpression.evaluate();
 	}
 
 	@Test
-	public void testReturnTypeBooleanWithBoolean() throws Exception {
-		DDMExpressionImpl ddmExpression = new DDMExpressionImpl<>(
-			"true", Boolean.class);
+	public void testLessThan1() throws Exception {
+		DDMExpressionImpl<Boolean> ddmExpression = createDDMExpression("0 < 4");
 
-		Object result = ddmExpression.toRetunType(true);
-
-		Assert.assertTrue(result instanceof Boolean);
-		Assert.assertEquals(true, result);
-	}
-
-	@Test(expected = DDMExpressionException.IncompatipleReturnType.class)
-	public void testReturnTypeBooleanWithNumber() throws Exception {
-		DDMExpressionImpl ddmExpression = new DDMExpressionImpl<>(
-			"true", Boolean.class);
-
-		ddmExpression.toRetunType(RandomTestUtil.randomDouble());
-	}
-
-	@Test(expected = DDMExpressionException.IncompatipleReturnType.class)
-	public void testReturnTypeBooleanWithString() throws Exception {
-		DDMExpressionImpl ddmExpression = new DDMExpressionImpl<>(
-			"true", Boolean.class);
-
-		ddmExpression.toRetunType(StringUtil.randomString());
+		Assert.assertTrue(ddmExpression.evaluate());
 	}
 
 	@Test
-	public void testReturnTypeDoubleWithDouble() throws Exception {
-		DDMExpressionImpl ddmExpression = new DDMExpressionImpl<>(
-			"true", Double.class);
+	public void testLessThan2() throws Exception {
+		DDMExpressionImpl<Boolean> ddmExpression = createDDMExpression(
+			"0 < -1.5");
 
-		double result = (double)ddmExpression.toRetunType(1.5D);
-
-		Assert.assertEquals(1.5D, result, 0.1);
+		Assert.assertFalse(ddmExpression.evaluate());
 	}
 
 	@Test
-	public void testReturnTypeFloatWithDouble() throws Exception {
-		DDMExpressionImpl ddmExpression = new DDMExpressionImpl<>(
-			"true", Float.class);
+	public void testLessThanOrEquals1() throws Exception {
+		DDMExpressionImpl<Boolean> ddmExpression = createDDMExpression(
+			"1.6 <= 1.7");
 
-		float result = (float)ddmExpression.toRetunType(1.5D);
-
-		Assert.assertEquals(1.5F, result, 0.1);
+		Assert.assertTrue(ddmExpression.evaluate());
 	}
 
 	@Test
-	public void testReturnTypeIntegerWithDouble() throws Exception {
-		DDMExpressionImpl ddmExpression = new DDMExpressionImpl<>(
-			"true", Integer.class);
+	public void testLessThanOrEquals2() throws Exception {
+		DDMExpressionImpl<Boolean> ddmExpression = createDDMExpression(
+			"1.9 <= 1.89");
 
-		int result = (int)ddmExpression.toRetunType(1.2);
-
-		Assert.assertEquals(1, result);
+		Assert.assertFalse(ddmExpression.evaluate());
 	}
 
 	@Test
-	public void testReturnTypeLongWithDouble() throws Exception {
-		DDMExpressionImpl ddmExpression = new DDMExpressionImpl<>(
-			"true", Long.class);
+	public void testLogicalConstant() throws Exception {
+		DDMExpressionImpl<Boolean> ddmExpression = createDDMExpression(
+			"TRUE || false");
 
-		long result = (long)ddmExpression.toRetunType(1.2);
-
-		Assert.assertEquals(1L, result);
-	}
-
-	@Test(expected = DDMExpressionException.IncompatipleReturnType.class)
-	public void testReturnTypeNumberWithBoolean() throws Exception {
-		DDMExpressionImpl ddmExpression = new DDMExpressionImpl<>(
-			"true", Number.class);
-
-		ddmExpression.toRetunType(false);
+		Assert.assertTrue(ddmExpression.evaluate());
 	}
 
 	@Test
-	public void testReturnTypeNumberWithDouble() throws Exception {
-		DDMExpressionImpl ddmExpression = new DDMExpressionImpl<>(
-			"true", Number.class);
+	public void testMultiplication1() throws Exception {
+		DDMExpressionImpl<BigDecimal> ddmExpression = createDDMExpression(
+			"2.45 * 2");
 
-		Object result = ddmExpression.toRetunType(1.2);
+		BigDecimal actual = ddmExpression.evaluate();
 
-		Assert.assertTrue(result instanceof Number);
-	}
-
-	@Test(expected = DDMExpressionException.IncompatipleReturnType.class)
-	public void testReturnTypeNumberWithString() throws Exception {
-		DDMExpressionImpl ddmExpression = new DDMExpressionImpl<>(
-			"true", Number.class);
-
-		ddmExpression.toRetunType(StringUtil.randomString());
+		Assert.assertEquals(0, actual.compareTo(new BigDecimal("4.9")));
 	}
 
 	@Test
-	public void testReturnTypeObjectWithBoolean() throws Exception {
-		DDMExpressionImpl ddmExpression = new DDMExpressionImpl<>(
-			"true", Object.class);
+	public void testMultiplication2() throws Exception {
+		DDMExpressionImpl<BigDecimal> ddmExpression = createDDMExpression(
+			"-2 * -3.55");
 
-		Object result = ddmExpression.toRetunType(true);
+		BigDecimal actual = ddmExpression.evaluate();
 
-		Assert.assertEquals(true, result);
+		Assert.assertEquals(0, actual.compareTo(new BigDecimal("7.10")));
 	}
 
 	@Test
-	public void testReturnTypeObjectWithDouble() throws Exception {
-		DDMExpressionImpl ddmExpression = new DDMExpressionImpl<>(
-			"true", Object.class);
+	public void testNot() throws Exception {
+		DDMExpressionImpl<Boolean> ddmExpression = createDDMExpression(
+			"not(-1 != 1.0)");
 
-		Object result = ddmExpression.toRetunType(1.0);
-
-		Assert.assertEquals(1.0, result);
+		Assert.assertFalse(ddmExpression.evaluate());
 	}
 
 	@Test
-	public void testReturnTypeObjectWithString() throws Exception {
-		DDMExpressionImpl ddmExpression = new DDMExpressionImpl<>(
-			"true", Object.class);
+	public void testNotEquals() throws Exception {
+		DDMExpressionImpl<Boolean> ddmExpression = createDDMExpression(
+			"1.6 != 1.66");
 
-		Object result = ddmExpression.toRetunType("Joe");
-
-		Assert.assertEquals("Joe", result);
+		Assert.assertTrue(ddmExpression.evaluate());
 	}
 
 	@Test
-	public void testReturnTypeStringWithBoolean() throws Exception {
-		DDMExpressionImpl ddmExpression = new DDMExpressionImpl<>(
-			"true", String.class);
+	public void testNotEquals2() throws Exception {
+		DDMExpressionImpl<Boolean> ddmExpression = createDDMExpression(
+			"2 != 2.0");
 
-		Object result = ddmExpression.toRetunType(false);
+		Assert.assertTrue(ddmExpression.evaluate());
+	}
 
-		Assert.assertTrue(result instanceof String);
-		Assert.assertEquals("false", result);
+	@Test(expected = IllegalArgumentException.class)
+	public void testNullExpression() throws Exception {
+		createDDMExpression(null);
 	}
 
 	@Test
-	public void testReturnTypeStringWithNumber() throws Exception {
-		DDMExpressionImpl ddmExpression = new DDMExpressionImpl<>(
-			"true", String.class);
+	public void testOr1() throws Exception {
+		DDMExpressionImpl<Boolean> ddmExpression = createDDMExpression(
+			"2 >= 1 || 1 < 0");
 
-		Object result = ddmExpression.toRetunType(42.0);
-
-		Assert.assertTrue(result instanceof String);
-		Assert.assertEquals("42.0", result);
+		Assert.assertTrue(ddmExpression.evaluate());
 	}
 
 	@Test
-	public void testReturnTypeStringWithString() throws Exception {
-		DDMExpressionImpl ddmExpression = new DDMExpressionImpl<>(
-			"true", String.class);
+	public void testOr2() throws Exception {
+		DDMExpressionImpl<Boolean> ddmExpression = createDDMExpression(
+			"4 == 3 or -1 >= -2");
 
-		Object result = ddmExpression.toRetunType("Joe");
+		Assert.assertTrue(ddmExpression.evaluate());
+	}
 
-		Assert.assertTrue(result instanceof String);
-		Assert.assertEquals("Joe", result);
+	@Test
+	public void testOr3() throws Exception {
+		DDMExpressionImpl<Boolean> ddmExpression = createDDMExpression(
+			"2 < 2 or 0 > 1");
+
+		Assert.assertFalse(ddmExpression.evaluate());
+	}
+
+	@Test
+	public void testParenthesis() throws Exception {
+		DDMExpressionImpl<BigDecimal> ddmExpression = createDDMExpression(
+			"(8 + 2) / 2.5");
+
+		Assert.assertEquals(new BigDecimal(4), ddmExpression.evaluate());
+	}
+
+	@Test
+	public void testPrecedence() throws Exception {
+		DDMExpressionImpl<BigDecimal> ddmExpression = createDDMExpression(
+			"4 - 2 * 6");
+
+		BigDecimal expected = new BigDecimal("-8");
+
+		BigDecimal actual = ddmExpression.evaluate();
+
+		Assert.assertEquals(0, actual.compareTo(expected));
+	}
+
+	@Test
+	public void testSubtraction1() throws Exception {
+		DDMExpressionImpl<BigDecimal> ddmExpression = createDDMExpression(
+			"-2 -3.55");
+
+		BigDecimal actual = ddmExpression.evaluate();
+
+		Assert.assertEquals(0, actual.compareTo(new BigDecimal("-5.55")));
+	}
+
+	@Test
+	public void testSubtraction2() throws Exception {
+		DDMExpressionImpl<BigDecimal> ddmExpression = createDDMExpression(
+			"4 - 2 - 1");
+
+		BigDecimal actual = ddmExpression.evaluate();
+
+		Assert.assertEquals(0, actual.compareTo(new BigDecimal("1")));
+	}
+
+	@Test(expected = DDMExpressionException.class)
+	public void testUnavailableLogicalVariable() throws Exception {
+		DDMExpressionImpl<Boolean> ddmExpression = createDDMExpression("a > 5");
+
+		ddmExpression.evaluate();
+	}
+
+	@Test(expected = DDMExpressionException.class)
+	public void testUnavailableNumericVariable() throws Exception {
+		DDMExpressionImpl<Boolean> ddmExpression = createDDMExpression("b + 1");
+
+		ddmExpression.evaluate();
+	}
+
+	@Test(expected = DDMExpressionException.FunctionNotDefined.class)
+	public void testUndefinedFunction() throws Exception {
+		DDMExpressionImpl<BigDecimal> ddmExpression = createDDMExpression(
+			"sum(1,b)");
+
+		ddmExpression.evaluate();
+	}
+
+	@Test
+	public void testVariableExpression() throws Exception {
+		DDMExpressionImpl<BigDecimal> ddmExpression = createDDMExpression(
+			"a + b");
+
+		ddmExpression.setVariable("a", 2);
+		ddmExpression.setVariable("b", 3);
+
+		Assert.assertEquals(new BigDecimal(5), ddmExpression.evaluate());
+	}
+
+	protected <T> DDMExpressionImpl<T> createDDMExpression(String expression)
+		throws DDMExpressionException {
+
+		DDMExpressionImpl<T> ddmExpression = new DDMExpressionImpl<>(
+			expression);
+
+		ddmExpression.setDDMExpressionFunctionTracker(
+			mock(DDMExpressionFunctionTracker.class));
+
+		return ddmExpression;
 	}
 
 }

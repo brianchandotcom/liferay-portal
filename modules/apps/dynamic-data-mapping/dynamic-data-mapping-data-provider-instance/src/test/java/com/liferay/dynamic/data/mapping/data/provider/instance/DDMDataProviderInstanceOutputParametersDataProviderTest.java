@@ -179,11 +179,11 @@ public class DDMDataProviderInstanceOutputParametersDataProviderTest
 			_ddmDataProviderInstanceOutputParametersDataProvider.getData(
 				ddmDataProviderRequest);
 
-		Optional<List<KeyValuePair>> outputParameterNames =
-			ddmDataProviderResponse.getOutput(
+		Optional<List<KeyValuePair>> outputParameterNamesOptional =
+			ddmDataProviderResponse.getOutputOptional(
 				"outputParameterNames", List.class);
 
-		Assert.assertTrue(outputParameterNames.isPresent());
+		Assert.assertTrue(outputParameterNamesOptional.isPresent());
 
 		List<KeyValuePair> keyValuePairs = new ArrayList() {
 			{
@@ -194,7 +194,7 @@ public class DDMDataProviderInstanceOutputParametersDataProviderTest
 
 		Assert.assertEquals(
 			keyValuePairs.toString(), keyValuePairs,
-			outputParameterNames.get());
+			outputParameterNamesOptional.get());
 	}
 
 	@Test(expected = UnsupportedOperationException.class)
@@ -222,7 +222,7 @@ public class DDMDataProviderInstanceOutputParametersDataProviderTest
 				ddmDataProviderRequest);
 
 		Optional<List<KeyValuePair>> optional =
-			ddmDataProviderResponse.getOutput(
+			ddmDataProviderResponse.getOutputOptional(
 				"outputParameterNames", List.class);
 
 		Assert.assertTrue(optional.isPresent());
@@ -270,7 +270,7 @@ public class DDMDataProviderInstanceOutputParametersDataProviderTest
 				ddmDataProviderRequest);
 
 		Optional<List<KeyValuePair>> outputParameterNamesOptional =
-			ddmDataProviderResponse.getOutput(
+			ddmDataProviderResponse.getOutputOptional(
 				"outputParameterNames", List.class);
 
 		Assert.assertTrue(outputParameterNamesOptional.isPresent());

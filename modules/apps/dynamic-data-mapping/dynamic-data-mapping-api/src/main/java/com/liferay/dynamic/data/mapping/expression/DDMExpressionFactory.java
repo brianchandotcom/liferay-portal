@@ -22,32 +22,127 @@ import aQute.bnd.annotation.ProviderType;
 @ProviderType
 public interface DDMExpressionFactory {
 
-	public DDMExpression<Boolean> createBooleanDDMExpression(
+	/**
+	 * @deprecated As of Judson (7.1.x), replaced by {@link
+	 * DDMExpressionFactory#createExpression(CreateExpressionRequest)}
+	 */
+	@Deprecated
+	public default DDMExpression<Boolean> createBooleanDDMExpression(
 			String ddmExpressionString)
+		throws DDMExpressionException {
+
+		CreateExpressionRequest createExpressionRequest =
+			CreateExpressionRequest.Builder.newBuilder(
+				ddmExpressionString
+			).build();
+
+		return createExpression(createExpressionRequest);
+	}
+
+	/**
+	 * @deprecated As of Judson (7.1.x), replaced by {@link
+	 * DDMExpressionFactory#createExpression(CreateExpressionRequest)}
+	 */
+	@Deprecated
+	public default DDMExpression<Double> createDoubleDDMExpression(
+			String ddmExpressionString)
+		throws DDMExpressionException {
+
+		CreateExpressionRequest createExpressionRequest =
+			CreateExpressionRequest.Builder.newBuilder(
+				ddmExpressionString
+			).build();
+
+		return createExpression(createExpressionRequest);
+	}
+
+	public <T> DDMExpression<T> createExpression(
+			CreateExpressionRequest createExpressionRequest)
 		throws DDMExpressionException;
 
-	public DDMExpression<Double> createDoubleDDMExpression(
+	/**
+	 * @deprecated As of Judson (7.1.x), replaced by {@link
+	 * DDMExpressionFactory#createExpression(CreateExpressionRequest)}
+	 */
+	@Deprecated
+	public default DDMExpression<Float> createFloatDDMExpression(
 			String ddmExpressionString)
-		throws DDMExpressionException;
+		throws DDMExpressionException {
 
-	public DDMExpression<Float> createFloatDDMExpression(
-			String ddmExpressionString)
-		throws DDMExpressionException;
+		CreateExpressionRequest createExpressionRequest =
+			CreateExpressionRequest.Builder.newBuilder(
+				ddmExpressionString
+			).build();
 
-	public DDMExpression<Integer> createIntegerDDMExpression(
-			String ddmExpressionString)
-		throws DDMExpressionException;
+		return createExpression(createExpressionRequest);
+	}
 
-	public DDMExpression<Long> createLongDDMExpression(
+	/**
+	 * @deprecated As of Judson (7.1.x), replaced by {@link
+	 * DDMExpressionFactory#createExpression(CreateExpressionRequest)}
+	 */
+	@Deprecated
+	public default DDMExpression<Integer> createIntegerDDMExpression(
 			String ddmExpressionString)
-		throws DDMExpressionException;
+		throws DDMExpressionException {
 
-	public DDMExpression<Number> createNumberDDMExpression(
-			String ddmExpressionString)
-		throws DDMExpressionException;
+		CreateExpressionRequest createExpressionRequest =
+			CreateExpressionRequest.Builder.newBuilder(
+				ddmExpressionString
+			).build();
 
-	public DDMExpression<String> createStringDDMExpression(
+		return createExpression(createExpressionRequest);
+	}
+
+	/**
+	 * @deprecated As of Judson (7.1.x), replaced by {@link
+	 * DDMExpressionFactory#createExpression(CreateExpressionRequest)}
+	 */
+	@Deprecated
+	public default DDMExpression<Long> createLongDDMExpression(
 			String ddmExpressionString)
-		throws DDMExpressionException;
+		throws DDMExpressionException {
+
+		CreateExpressionRequest createExpressionRequest =
+			CreateExpressionRequest.Builder.newBuilder(
+				ddmExpressionString
+			).build();
+
+		return createExpression(createExpressionRequest);
+	}
+
+	/**
+	 * @deprecated As of Judson (7.1.x), replaced by {@link
+	 * DDMExpressionFactory#createExpression(CreateExpressionRequest)}
+	 */
+	@Deprecated
+	public default DDMExpression<Number> createNumberDDMExpression(
+			String ddmExpressionString)
+		throws DDMExpressionException {
+
+		CreateExpressionRequest createExpressionRequest =
+			CreateExpressionRequest.Builder.newBuilder(
+				ddmExpressionString
+			).build();
+
+		return createExpression(createExpressionRequest);
+	}
+
+	/**
+	 * @deprecated As of Judson (7.1.x), replaced by {@link
+	 * DDMExpressionFactory#createExpression(CreateExpressionRequest)}
+	 */
+	@Deprecated
+	public default DDMExpression<String> createStringDDMExpression(
+			String ddmExpressionString)
+		throws DDMExpressionException {
+
+		CreateExpressionRequest createExpressionRequest =
+			CreateExpressionRequest.Builder.newBuilder(
+				ddmExpressionString
+			).build();
+
+		return createExpression(createExpressionRequest);
+	}
 
 }

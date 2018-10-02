@@ -25,6 +25,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -55,14 +56,20 @@ public class TextDDMFormFieldTemplateContextContributor
 
 		Map<String, Object> parameters = new HashMap<>();
 
-		parameters.put(
-			"autocompleteEnabled", isAutocompleteEnabled(ddmFormField));
-		parameters.put("displayStyle", getDisplayStyle(ddmFormField));
+		if (ddmFormFieldRenderingContext.isReturnFullContext()) {
+			parameters.put(
+				"autocompleteEnabled", isAutocompleteEnabled(ddmFormField));
+			parameters.put("displayStyle", getDisplayStyle(ddmFormField));
+			parameters.put(
+				"placeholder",
+				getPlaceholder(ddmFormField, ddmFormFieldRenderingContext));
+			parameters.put(
+				"tooltip",
+				getTooltip(ddmFormField, ddmFormFieldRenderingContext));
+		}
+
 		parameters.put(
 			"options", getOptions(ddmFormField, ddmFormFieldRenderingContext));
-		parameters.put(
-			"placeholder",
-			getPlaceholder(ddmFormField, ddmFormFieldRenderingContext));
 
 		String predefinedValue = getPredefinedValue(
 			ddmFormField, ddmFormFieldRenderingContext);
@@ -73,12 +80,9 @@ public class TextDDMFormFieldTemplateContextContributor
 
 		String value = getValue(ddmFormFieldRenderingContext);
 
-		if (value != null) {
+		if (Validator.isNotNull(value)) {
 			parameters.put("value", value);
 		}
-
-		parameters.put(
-			"tooltip", getTooltip(ddmFormField, ddmFormFieldRenderingContext));
 
 		return parameters;
 	}

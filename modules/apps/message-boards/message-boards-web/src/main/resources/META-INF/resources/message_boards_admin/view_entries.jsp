@@ -204,7 +204,8 @@ SearchContainer entriesSearchContainer = (SearchContainer)request.getAttribute("
 									String messageUserName = "anonymous";
 
 									if (thread.getLastPostByUserId() != 0) {
-										messageUserName = HtmlUtil.escape(PortalUtil.getUserName(thread.getLastPostByUserId(), StringPool.BLANK));
+										MBMessage lastMessage = MBMessageLocalServiceUtil.getLastThreadMessage(thread.getThreadId(), WorkflowConstants.STATUS_APPROVED);
+										messageUserName = HtmlUtil.escape(lastMessage.getUserName());
 									}
 
 									Date lastPostDate = thread.getLastPostDate();

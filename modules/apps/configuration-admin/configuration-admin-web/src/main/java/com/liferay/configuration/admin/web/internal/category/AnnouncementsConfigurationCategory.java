@@ -21,7 +21,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Roberto Díaz
  */
-@Component
+@Component(service = ConfigurationCategory.class)
 public class AnnouncementsConfigurationCategory
 	implements ConfigurationCategory {
 

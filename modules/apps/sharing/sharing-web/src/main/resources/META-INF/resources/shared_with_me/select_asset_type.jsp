@@ -36,7 +36,7 @@ SharedWithMeViewDisplayContext sharedWithMeViewDisplayContext = (SharedWithMeVie
 		/>
 
 		<liferay-ui:search-container-row
-			className="com.liferay.sharing.web.filter.SharedWithMeFilterItem"
+			className="com.liferay.sharing.filter.SharedWithMeFilterItem"
 			cssClass="select-action"
 			modelVar="sharedWithMeFilterItem"
 		>

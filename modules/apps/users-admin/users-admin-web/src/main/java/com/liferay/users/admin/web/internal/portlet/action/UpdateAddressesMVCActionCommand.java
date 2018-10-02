@@ -27,9 +27,13 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.service.permission.UserPermissionUtil;
 import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.users.admin.constants.UsersAdminPortletKeys;
 import com.liferay.users.admin.kernel.util.UsersAdmin;
 
@@ -62,7 +66,13 @@ public class UpdateAddressesMVCActionCommand extends BaseMVCActionCommand {
 		throws Exception {
 
 		try {
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
 			User user = _portal.getSelectedUser(actionRequest);
+
+			UserPermissionUtil.check(
+				themeDisplay.getPermissionChecker(), user.getUserId(),
+				ActionKeys.UPDATE);
 
 			List<Address> addresses = _usersAdmin.getAddresses(
 				actionRequest, user.getAddresses());

@@ -26,8 +26,10 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.auth.session.AuthenticatedSessionManager;
 import com.liferay.portal.kernel.security.ldap.LDAPSettingsUtil;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.UserService;
+import com.liferay.portal.kernel.service.permission.UserPermissionUtil;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -63,7 +65,13 @@ public class UpdatePasswordMVCActionCommand extends BaseMVCActionCommand {
 		throws Exception {
 
 		try {
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
 			User user = _portal.getSelectedUser(actionRequest);
+
+			UserPermissionUtil.check(
+				themeDisplay.getPermissionChecker(), user.getUserId(),
+				ActionKeys.UPDATE);
 
 			String newPassword1 = actionRequest.getParameter("password1");
 			String newPassword2 = actionRequest.getParameter("password2");
@@ -117,9 +125,6 @@ public class UpdatePasswordMVCActionCommand extends BaseMVCActionCommand {
 					user.getUserId(), reminderQueryQuestion,
 					reminderQueryAnswer);
 			}
-
-			ThemeDisplay themeDisplay =
-				(ThemeDisplay)actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
 
 			if ((user.getUserId() == themeDisplay.getUserId()) &&
 				passwordModified) {

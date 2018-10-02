@@ -2019,8 +2019,12 @@ public class DDMStructureLayoutPersistenceImpl extends BasePersistenceImpl<DDMSt
 				ddmStructureLayout.setModifiedDate(now);
 			}
 			else {
-				ddmStructureLayout.setModifiedDate(serviceContext.getModifiedDate(
-						now));
+				Date newModifiedDate = serviceContext.getModifiedDate(now);
+
+				if (!newModifiedDate.equals(
+							ddmStructureLayout.getModifiedDate())) {
+					ddmStructureLayout.setModifiedDate(newModifiedDate);
+				}
 			}
 		}
 

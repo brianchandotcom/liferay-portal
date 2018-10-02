@@ -45,7 +45,7 @@ public class PluginSettingImpl extends PluginSettingBaseImpl {
 	 */
 	@Override
 	public void addRole(String role) {
-		setRolesArray(ArrayUtil.append(_rolesArray, role));
+		setRolesArray(ArrayUtil.append(getRolesArray(), role));
 	}
 
 	/**
@@ -55,6 +55,10 @@ public class PluginSettingImpl extends PluginSettingBaseImpl {
 	 */
 	@Override
 	public String[] getRolesArray() {
+		if (_rolesArray == null) {
+			_rolesArray = StringUtil.split(getRoles());
+		}
+
 		return _rolesArray;
 	}
 
@@ -67,12 +71,14 @@ public class PluginSettingImpl extends PluginSettingBaseImpl {
 	@Override
 	public boolean hasPermission(long userId) {
 		try {
-			if (_rolesArray.length == 0) {
+			String[] rolesArray = getRolesArray();
+
+			if (rolesArray.length == 0) {
 				return true;
 			}
 
 			if (RoleLocalServiceUtil.hasUserRoles(
-					userId, getCompanyId(), _rolesArray, true)) {
+					userId, getCompanyId(), rolesArray, true)) {
 
 				return true;
 			}
@@ -108,7 +114,7 @@ public class PluginSettingImpl extends PluginSettingBaseImpl {
 	 */
 	@Override
 	public boolean hasRoleWithName(String roleName) {
-		for (String curRoleName : _rolesArray) {
+		for (String curRoleName : getRolesArray()) {
 			if (StringUtil.equalsIgnoreCase(curRoleName, roleName)) {
 				return true;
 			}

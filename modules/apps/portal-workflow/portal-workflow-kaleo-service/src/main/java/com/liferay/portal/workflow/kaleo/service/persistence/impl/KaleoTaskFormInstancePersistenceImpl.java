@@ -3192,8 +3192,12 @@ public class KaleoTaskFormInstancePersistenceImpl extends BasePersistenceImpl<Ka
 				kaleoTaskFormInstance.setModifiedDate(now);
 			}
 			else {
-				kaleoTaskFormInstance.setModifiedDate(serviceContext.getModifiedDate(
-						now));
+				Date newModifiedDate = serviceContext.getModifiedDate(now);
+
+				if (!newModifiedDate.equals(
+							kaleoTaskFormInstance.getModifiedDate())) {
+					kaleoTaskFormInstance.setModifiedDate(newModifiedDate);
+				}
 			}
 		}
 

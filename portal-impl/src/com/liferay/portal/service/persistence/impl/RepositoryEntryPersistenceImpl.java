@@ -2581,8 +2581,11 @@ public class RepositoryEntryPersistenceImpl extends BasePersistenceImpl<Reposito
 				repositoryEntry.setModifiedDate(now);
 			}
 			else {
-				repositoryEntry.setModifiedDate(serviceContext.getModifiedDate(
-						now));
+				Date newModifiedDate = serviceContext.getModifiedDate(now);
+
+				if (!newModifiedDate.equals(repositoryEntry.getModifiedDate())) {
+					repositoryEntry.setModifiedDate(newModifiedDate);
+				}
 			}
 		}
 

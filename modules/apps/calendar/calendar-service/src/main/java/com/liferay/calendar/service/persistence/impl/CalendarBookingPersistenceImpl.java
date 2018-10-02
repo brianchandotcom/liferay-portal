@@ -5809,8 +5809,11 @@ public class CalendarBookingPersistenceImpl extends BasePersistenceImpl<Calendar
 				calendarBooking.setModifiedDate(now);
 			}
 			else {
-				calendarBooking.setModifiedDate(serviceContext.getModifiedDate(
-						now));
+				Date newModifiedDate = serviceContext.getModifiedDate(now);
+
+				if (!newModifiedDate.equals(calendarBooking.getModifiedDate())) {
+					calendarBooking.setModifiedDate(newModifiedDate);
+				}
 			}
 		}
 

@@ -6534,8 +6534,11 @@ public class CalendarResourcePersistenceImpl extends BasePersistenceImpl<Calenda
 				calendarResource.setModifiedDate(now);
 			}
 			else {
-				calendarResource.setModifiedDate(serviceContext.getModifiedDate(
-						now));
+				Date newModifiedDate = serviceContext.getModifiedDate(now);
+
+				if (!newModifiedDate.equals(calendarResource.getModifiedDate())) {
+					calendarResource.setModifiedDate(newModifiedDate);
+				}
 			}
 		}
 

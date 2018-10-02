@@ -3247,8 +3247,11 @@ public class ChangesetEntryPersistenceImpl extends BasePersistenceImpl<Changeset
 				changesetEntry.setModifiedDate(now);
 			}
 			else {
-				changesetEntry.setModifiedDate(serviceContext.getModifiedDate(
-						now));
+				Date newModifiedDate = serviceContext.getModifiedDate(now);
+
+				if (!newModifiedDate.equals(changesetEntry.getModifiedDate())) {
+					changesetEntry.setModifiedDate(newModifiedDate);
+				}
 			}
 		}
 

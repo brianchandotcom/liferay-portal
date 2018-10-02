@@ -3772,8 +3772,11 @@ public class KaleoInstancePersistenceImpl extends BasePersistenceImpl<KaleoInsta
 				kaleoInstance.setModifiedDate(now);
 			}
 			else {
-				kaleoInstance.setModifiedDate(serviceContext.getModifiedDate(
-						now));
+				Date newModifiedDate = serviceContext.getModifiedDate(now);
+
+				if (!newModifiedDate.equals(kaleoInstance.getModifiedDate())) {
+					kaleoInstance.setModifiedDate(newModifiedDate);
+				}
 			}
 		}
 

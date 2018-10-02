@@ -1933,7 +1933,11 @@ public class LayoutSetPersistenceImpl extends BasePersistenceImpl<LayoutSet>
 				layoutSet.setModifiedDate(now);
 			}
 			else {
-				layoutSet.setModifiedDate(serviceContext.getModifiedDate(now));
+				Date newModifiedDate = serviceContext.getModifiedDate(now);
+
+				if (!newModifiedDate.equals(layoutSet.getModifiedDate())) {
+					layoutSet.setModifiedDate(newModifiedDate);
+				}
 			}
 		}
 

@@ -4011,8 +4011,12 @@ public class LayoutPageTemplateCollectionPersistenceImpl
 				layoutPageTemplateCollection.setModifiedDate(now);
 			}
 			else {
-				layoutPageTemplateCollection.setModifiedDate(serviceContext.getModifiedDate(
-						now));
+				Date newModifiedDate = serviceContext.getModifiedDate(now);
+
+				if (!newModifiedDate.equals(
+							layoutPageTemplateCollection.getModifiedDate())) {
+					layoutPageTemplateCollection.setModifiedDate(newModifiedDate);
+				}
 			}
 		}
 

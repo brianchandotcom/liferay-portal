@@ -3740,8 +3740,11 @@ public class PasswordPolicyPersistenceImpl extends BasePersistenceImpl<PasswordP
 				passwordPolicy.setModifiedDate(now);
 			}
 			else {
-				passwordPolicy.setModifiedDate(serviceContext.getModifiedDate(
-						now));
+				Date newModifiedDate = serviceContext.getModifiedDate(now);
+
+				if (!newModifiedDate.equals(passwordPolicy.getModifiedDate())) {
+					passwordPolicy.setModifiedDate(newModifiedDate);
+				}
 			}
 		}
 

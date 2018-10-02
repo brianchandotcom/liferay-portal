@@ -3165,7 +3165,11 @@ public class SubscriptionPersistenceImpl extends BasePersistenceImpl<Subscriptio
 				subscription.setModifiedDate(now);
 			}
 			else {
-				subscription.setModifiedDate(serviceContext.getModifiedDate(now));
+				Date newModifiedDate = serviceContext.getModifiedDate(now);
+
+				if (!newModifiedDate.equals(subscription.getModifiedDate())) {
+					subscription.setModifiedDate(newModifiedDate);
+				}
 			}
 		}
 

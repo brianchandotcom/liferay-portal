@@ -9055,8 +9055,11 @@ public class BackgroundTaskPersistenceImpl extends BasePersistenceImpl<Backgroun
 				backgroundTask.setModifiedDate(now);
 			}
 			else {
-				backgroundTask.setModifiedDate(serviceContext.getModifiedDate(
-						now));
+				Date newModifiedDate = serviceContext.getModifiedDate(now);
+
+				if (!newModifiedDate.equals(backgroundTask.getModifiedDate())) {
+					backgroundTask.setModifiedDate(newModifiedDate);
+				}
 			}
 		}
 

@@ -2527,8 +2527,11 @@ public class MBMailingListPersistenceImpl extends BasePersistenceImpl<MBMailingL
 				mbMailingList.setModifiedDate(now);
 			}
 			else {
-				mbMailingList.setModifiedDate(serviceContext.getModifiedDate(
-						now));
+				Date newModifiedDate = serviceContext.getModifiedDate(now);
+
+				if (!newModifiedDate.equals(mbMailingList.getModifiedDate())) {
+					mbMailingList.setModifiedDate(newModifiedDate);
+				}
 			}
 		}
 

@@ -3112,8 +3112,11 @@ public class DDMFormInstancePersistenceImpl extends BasePersistenceImpl<DDMFormI
 				ddmFormInstance.setModifiedDate(now);
 			}
 			else {
-				ddmFormInstance.setModifiedDate(serviceContext.getModifiedDate(
-						now));
+				Date newModifiedDate = serviceContext.getModifiedDate(now);
+
+				if (!newModifiedDate.equals(ddmFormInstance.getModifiedDate())) {
+					ddmFormInstance.setModifiedDate(newModifiedDate);
+				}
 			}
 		}
 

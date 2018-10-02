@@ -7616,8 +7616,11 @@ public class JournalFolderPersistenceImpl extends BasePersistenceImpl<JournalFol
 				journalFolder.setModifiedDate(now);
 			}
 			else {
-				journalFolder.setModifiedDate(serviceContext.getModifiedDate(
-						now));
+				Date newModifiedDate = serviceContext.getModifiedDate(now);
+
+				if (!newModifiedDate.equals(journalFolder.getModifiedDate())) {
+					journalFolder.setModifiedDate(newModifiedDate);
+				}
 			}
 		}
 

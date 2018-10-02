@@ -1000,8 +1000,11 @@ public class WeDeployAuthTokenPersistenceImpl extends BasePersistenceImpl<WeDepl
 				weDeployAuthToken.setModifiedDate(now);
 			}
 			else {
-				weDeployAuthToken.setModifiedDate(serviceContext.getModifiedDate(
-						now));
+				Date newModifiedDate = serviceContext.getModifiedDate(now);
+
+				if (!newModifiedDate.equals(weDeployAuthToken.getModifiedDate())) {
+					weDeployAuthToken.setModifiedDate(newModifiedDate);
+				}
 			}
 		}
 

@@ -2657,8 +2657,12 @@ public class KaleoTaskAssignmentPersistenceImpl extends BasePersistenceImpl<Kale
 				kaleoTaskAssignment.setModifiedDate(now);
 			}
 			else {
-				kaleoTaskAssignment.setModifiedDate(serviceContext.getModifiedDate(
-						now));
+				Date newModifiedDate = serviceContext.getModifiedDate(now);
+
+				if (!newModifiedDate.equals(
+							kaleoTaskAssignment.getModifiedDate())) {
+					kaleoTaskAssignment.setModifiedDate(newModifiedDate);
+				}
 			}
 		}
 

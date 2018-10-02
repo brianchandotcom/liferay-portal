@@ -3073,8 +3073,12 @@ public class ExportImportConfigurationPersistenceImpl
 				exportImportConfiguration.setModifiedDate(now);
 			}
 			else {
-				exportImportConfiguration.setModifiedDate(serviceContext.getModifiedDate(
-						now));
+				Date newModifiedDate = serviceContext.getModifiedDate(now);
+
+				if (!newModifiedDate.equals(
+							exportImportConfiguration.getModifiedDate())) {
+					exportImportConfiguration.setModifiedDate(newModifiedDate);
+				}
 			}
 		}
 

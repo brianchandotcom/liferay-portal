@@ -11604,7 +11604,11 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 				mbCategory.setModifiedDate(now);
 			}
 			else {
-				mbCategory.setModifiedDate(serviceContext.getModifiedDate(now));
+				Date newModifiedDate = serviceContext.getModifiedDate(now);
+
+				if (!newModifiedDate.equals(mbCategory.getModifiedDate())) {
+					mbCategory.setModifiedDate(newModifiedDate);
+				}
 			}
 		}
 

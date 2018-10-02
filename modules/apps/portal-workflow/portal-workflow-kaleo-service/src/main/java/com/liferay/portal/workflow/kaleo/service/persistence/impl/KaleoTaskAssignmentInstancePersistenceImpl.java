@@ -4177,8 +4177,12 @@ public class KaleoTaskAssignmentInstancePersistenceImpl
 				kaleoTaskAssignmentInstance.setModifiedDate(now);
 			}
 			else {
-				kaleoTaskAssignmentInstance.setModifiedDate(serviceContext.getModifiedDate(
-						now));
+				Date newModifiedDate = serviceContext.getModifiedDate(now);
+
+				if (!newModifiedDate.equals(
+							kaleoTaskAssignmentInstance.getModifiedDate())) {
+					kaleoTaskAssignmentInstance.setModifiedDate(newModifiedDate);
+				}
 			}
 		}
 

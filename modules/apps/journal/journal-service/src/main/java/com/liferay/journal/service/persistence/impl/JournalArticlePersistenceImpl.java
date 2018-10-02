@@ -32490,8 +32490,11 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 				journalArticle.setModifiedDate(now);
 			}
 			else {
-				journalArticle.setModifiedDate(serviceContext.getModifiedDate(
-						now));
+				Date newModifiedDate = serviceContext.getModifiedDate(now);
+
+				if (!newModifiedDate.equals(journalArticle.getModifiedDate())) {
+					journalArticle.setModifiedDate(newModifiedDate);
+				}
 			}
 		}
 

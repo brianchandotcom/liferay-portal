@@ -5208,8 +5208,11 @@ public class AssetVocabularyPersistenceImpl extends BasePersistenceImpl<AssetVoc
 				assetVocabulary.setModifiedDate(now);
 			}
 			else {
-				assetVocabulary.setModifiedDate(serviceContext.getModifiedDate(
-						now));
+				Date newModifiedDate = serviceContext.getModifiedDate(now);
+
+				if (!newModifiedDate.equals(assetVocabulary.getModifiedDate())) {
+					assetVocabulary.setModifiedDate(newModifiedDate);
+				}
 			}
 		}
 

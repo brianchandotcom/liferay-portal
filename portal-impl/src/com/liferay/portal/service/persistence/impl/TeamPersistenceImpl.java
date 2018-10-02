@@ -2890,7 +2890,11 @@ public class TeamPersistenceImpl extends BasePersistenceImpl<Team>
 				team.setModifiedDate(now);
 			}
 			else {
-				team.setModifiedDate(serviceContext.getModifiedDate(now));
+				Date newModifiedDate = serviceContext.getModifiedDate(now);
+
+				if (!newModifiedDate.equals(team.getModifiedDate())) {
+					team.setModifiedDate(newModifiedDate);
+				}
 			}
 		}
 

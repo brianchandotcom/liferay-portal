@@ -4227,7 +4227,11 @@ public class WebsitePersistenceImpl extends BasePersistenceImpl<Website>
 				website.setModifiedDate(now);
 			}
 			else {
-				website.setModifiedDate(serviceContext.getModifiedDate(now));
+				Date newModifiedDate = serviceContext.getModifiedDate(now);
+
+				if (!newModifiedDate.equals(website.getModifiedDate())) {
+					website.setModifiedDate(newModifiedDate);
+				}
 			}
 		}
 

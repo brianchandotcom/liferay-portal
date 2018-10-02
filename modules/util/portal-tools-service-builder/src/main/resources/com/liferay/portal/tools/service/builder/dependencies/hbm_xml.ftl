@@ -15,10 +15,10 @@
 				<#list entity.PKEntityColumns as entityColumn>
 					<key-property
 
-					<#if serviceBuilder.isHBMCamelCasePropertyAccessor(entityColumn.name)>
-						access="com.liferay.portal.dao.orm.hibernate.CamelCasePropertyAccessor"
-					<#elseif serviceBuilder.isVersionGTE_7_1_0()>
+					<#if serviceBuilder.isVersionGTE_7_1_0() || !serviceBuilder.isHBMCamelCasePropertyAccessor(entityColumn.name)>
 						access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor"
+					<#else>
+						access="com.liferay.portal.dao.orm.hibernate.CamelCasePropertyAccessor"
 					</#if>
 
 					<#if entityColumn.name != entityColumn.DBName>
@@ -42,10 +42,10 @@
 			<#assign entityColumn = entity.PKEntityColumns?first />
 
 			<id
-				<#if serviceBuilder.isHBMCamelCasePropertyAccessor(entityColumn.name)>
-					access="com.liferay.portal.dao.orm.hibernate.CamelCasePropertyAccessor"
-				<#elseif serviceBuilder.isVersionGTE_7_1_0()>
+				<#if serviceBuilder.isVersionGTE_7_1_0() || !serviceBuilder.isHBMCamelCasePropertyAccessor(entityColumn.name)>
 					access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor"
+				<#else>
+					access="com.liferay.portal.dao.orm.hibernate.CamelCasePropertyAccessor"
 				</#if>
 
 				<#if entityColumn.name != entityColumn.DBName>
@@ -87,10 +87,10 @@
 			<#if !entityColumn.isPrimary() && !entityColumn.isCollection() && !entityColumn.entityName?? && (!stringUtil.equals(entityColumn.type, "Blob") || (stringUtil.equals(entityColumn.type, "Blob") && !entityColumn.lazy)) && !stringUtil.equals(entityColumn.name, "mvccVersion")>
 				<property
 
-				<#if serviceBuilder.isHBMCamelCasePropertyAccessor(entityColumn.name)>
-					access="com.liferay.portal.dao.orm.hibernate.CamelCasePropertyAccessor"
-				<#elseif serviceBuilder.isVersionGTE_7_1_0()>
+				<#if serviceBuilder.isVersionGTE_7_1_0() || !serviceBuilder.isHBMCamelCasePropertyAccessor(entityColumn.name)>
 					access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor"
+				<#else>
+					access="com.liferay.portal.dao.orm.hibernate.CamelCasePropertyAccessor"
 				</#if>
 
 				<#if entityColumn.name != entityColumn.DBName>

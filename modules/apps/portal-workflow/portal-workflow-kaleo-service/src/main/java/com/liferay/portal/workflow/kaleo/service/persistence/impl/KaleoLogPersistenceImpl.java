@@ -3707,7 +3707,11 @@ public class KaleoLogPersistenceImpl extends BasePersistenceImpl<KaleoLog>
 				kaleoLog.setModifiedDate(now);
 			}
 			else {
-				kaleoLog.setModifiedDate(serviceContext.getModifiedDate(now));
+				Date newModifiedDate = serviceContext.getModifiedDate(now);
+
+				if (!newModifiedDate.equals(kaleoLog.getModifiedDate())) {
+					kaleoLog.setModifiedDate(newModifiedDate);
+				}
 			}
 		}
 

@@ -1104,7 +1104,11 @@ public class EntryPersistenceImpl extends BasePersistenceImpl<Entry>
 				entry.setModifiedDate(now);
 			}
 			else {
-				entry.setModifiedDate(serviceContext.getModifiedDate(now));
+				Date newModifiedDate = serviceContext.getModifiedDate(now);
+
+				if (!newModifiedDate.equals(entry.getModifiedDate())) {
+					entry.setModifiedDate(newModifiedDate);
+				}
 			}
 		}
 

@@ -2774,8 +2774,12 @@ public class KaleoTaskInstanceTokenPersistenceImpl extends BasePersistenceImpl<K
 				kaleoTaskInstanceToken.setModifiedDate(now);
 			}
 			else {
-				kaleoTaskInstanceToken.setModifiedDate(serviceContext.getModifiedDate(
-						now));
+				Date newModifiedDate = serviceContext.getModifiedDate(now);
+
+				if (!newModifiedDate.equals(
+							kaleoTaskInstanceToken.getModifiedDate())) {
+					kaleoTaskInstanceToken.setModifiedDate(newModifiedDate);
+				}
 			}
 		}
 

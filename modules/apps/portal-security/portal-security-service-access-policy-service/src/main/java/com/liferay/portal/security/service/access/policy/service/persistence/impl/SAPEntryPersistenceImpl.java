@@ -4358,7 +4358,11 @@ public class SAPEntryPersistenceImpl extends BasePersistenceImpl<SAPEntry>
 				sapEntry.setModifiedDate(now);
 			}
 			else {
-				sapEntry.setModifiedDate(serviceContext.getModifiedDate(now));
+				Date newModifiedDate = serviceContext.getModifiedDate(now);
+
+				if (!newModifiedDate.equals(sapEntry.getModifiedDate())) {
+					sapEntry.setModifiedDate(newModifiedDate);
+				}
 			}
 		}
 

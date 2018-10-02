@@ -2631,7 +2631,11 @@ public class KBTemplatePersistenceImpl extends BasePersistenceImpl<KBTemplate>
 				kbTemplate.setModifiedDate(now);
 			}
 			else {
-				kbTemplate.setModifiedDate(serviceContext.getModifiedDate(now));
+				Date newModifiedDate = serviceContext.getModifiedDate(now);
+
+				if (!newModifiedDate.equals(kbTemplate.getModifiedDate())) {
+					kbTemplate.setModifiedDate(newModifiedDate);
+				}
 			}
 		}
 

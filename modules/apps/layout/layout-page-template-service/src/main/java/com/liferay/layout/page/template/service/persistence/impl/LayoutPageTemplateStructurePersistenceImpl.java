@@ -2622,8 +2622,12 @@ public class LayoutPageTemplateStructurePersistenceImpl
 				layoutPageTemplateStructure.setModifiedDate(now);
 			}
 			else {
-				layoutPageTemplateStructure.setModifiedDate(serviceContext.getModifiedDate(
-						now));
+				Date newModifiedDate = serviceContext.getModifiedDate(now);
+
+				if (!newModifiedDate.equals(
+							layoutPageTemplateStructure.getModifiedDate())) {
+					layoutPageTemplateStructure.setModifiedDate(newModifiedDate);
+				}
 			}
 		}
 

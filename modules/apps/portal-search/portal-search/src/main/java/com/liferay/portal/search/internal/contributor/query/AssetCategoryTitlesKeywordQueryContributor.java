@@ -17,6 +17,9 @@ package com.liferay.portal.search.internal.contributor.query;
 import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.Localization;
+import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.search.query.QueryHelper;
 import com.liferay.portal.search.spi.model.query.contributor.KeywordQueryContributor;
 import com.liferay.portal.search.spi.model.query.contributor.helper.KeywordQueryContributorHelper;
@@ -39,10 +42,28 @@ public class AssetCategoryTitlesKeywordQueryContributor
 		SearchContext searchContext =
 			keywordQueryContributorHelper.getSearchContext();
 
-		queryHelper.addSearchLocalizedTerm(
-			booleanQuery, searchContext, Field.ASSET_CATEGORY_TITLES,
-			searchContext.isLike());
+		Localization localization = getLocalization();
+
+		queryHelper.addSearchTerm(
+			booleanQuery, searchContext,
+			localization.getLocalizedName(
+				Field.ASSET_CATEGORY_TITLES,
+				LocaleUtil.toLanguageId(searchContext.getLocale())),
+			false);
 	}
+
+	protected Localization getLocalization() {
+
+		// See LPS-72507 and LPS-76500
+
+		if (localization != null) {
+			return localization;
+		}
+
+		return LocalizationUtil.getLocalization();
+	}
+
+	protected Localization localization;
 
 	@Reference
 	protected QueryHelper queryHelper;

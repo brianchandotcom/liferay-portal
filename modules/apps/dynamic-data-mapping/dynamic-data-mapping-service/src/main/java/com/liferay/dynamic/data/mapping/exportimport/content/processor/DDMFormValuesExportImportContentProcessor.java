@@ -25,6 +25,8 @@ import com.liferay.dynamic.data.mapping.util.DDMFormValuesTransformer;
 import com.liferay.exportimport.content.processor.ExportImportContentProcessor;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
+import com.liferay.journal.model.JournalArticle;
+import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -72,7 +74,10 @@ public class DDMFormValuesExportImportContentProcessor
 
 		ddmFormValuesTransformer.addTransformer(
 			new FileEntryExportDDMFormFieldValueTransformer(
-				exportReferencedContent, portletDataContext, stagedModel));
+				portletDataContext, stagedModel, exportReferencedContent));
+		ddmFormValuesTransformer.addTransformer(
+			new JournalArticleExportDDMFormFieldValueTransformer(
+				portletDataContext, stagedModel, exportReferencedContent));
 		ddmFormValuesTransformer.addTransformer(
 			new LayoutExportDDMFormFieldValueTransformer(
 				portletDataContext, stagedModel));
@@ -93,6 +98,9 @@ public class DDMFormValuesExportImportContentProcessor
 
 		ddmFormValuesTransformer.addTransformer(
 			new FileEntryImportDDMFormFieldValueTransformer(
+				portletDataContext));
+		ddmFormValuesTransformer.addTransformer(
+			new JournalArticleImportDDMFormFieldValueTransformer(
 				portletDataContext));
 		ddmFormValuesTransformer.addTransformer(
 			new LayoutImportDDMFormFieldValueTransformer(portletDataContext));
@@ -123,6 +131,10 @@ public class DDMFormValuesExportImportContentProcessor
 		DDMFormValuesExportImportContentProcessor.class);
 
 	private DLAppService _dlAppService;
+
+	@Reference
+	private JournalArticleLocalService _journalArticleLocalService;
+
 	private LayoutLocalService _layoutLocalService;
 
 	private static class LayoutImportDDMFormFieldValueTransformer
@@ -200,12 +212,12 @@ public class DDMFormValuesExportImportContentProcessor
 		implements DDMFormFieldValueTransformer {
 
 		public FileEntryExportDDMFormFieldValueTransformer(
-			boolean exportReferencedContent,
-			PortletDataContext portletDataContext, StagedModel stagedModel) {
+			PortletDataContext portletDataContext, StagedModel stagedModel,
+			boolean exportReferencedContent) {
 
-			_exportReferencedContent = exportReferencedContent;
 			_portletDataContext = portletDataContext;
 			_stagedModel = stagedModel;
+			_exportReferencedContent = exportReferencedContent;
 		}
 
 		@Override
@@ -337,6 +349,128 @@ public class DDMFormValuesExportImportContentProcessor
 			jsonObject.put("uuid", fileEntry.getUuid());
 
 			return jsonObject.toString();
+		}
+
+		private final PortletDataContext _portletDataContext;
+
+	}
+
+	private class JournalArticleExportDDMFormFieldValueTransformer
+		implements DDMFormFieldValueTransformer {
+
+		public JournalArticleExportDDMFormFieldValueTransformer(
+			PortletDataContext portletDataContext, StagedModel stagedModel,
+			boolean exportReferencedContent) {
+
+			_portletDataContext = portletDataContext;
+			_stagedModel = stagedModel;
+			_exportReferencedContent = exportReferencedContent;
+		}
+
+		@Override
+		public String getFieldType() {
+			return DDMFormFieldType.JOURNAL_ARTICLE;
+		}
+
+		@Override
+		public void transform(DDMFormFieldValue ddmFormFieldValue)
+			throws PortalException {
+
+			Value value = ddmFormFieldValue.getValue();
+
+			for (Locale locale : value.getAvailableLocales()) {
+				String valueString = value.getString(locale);
+
+				JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+					valueString);
+
+				long classPK = GetterUtil.getLong(jsonObject.get("classPK"));
+				String className = GetterUtil.getString(
+					jsonObject.get("className"));
+
+				if ((classPK == 0) ||
+					!className.equals(JournalArticle.class.getName())) {
+
+					continue;
+				}
+
+				JournalArticle journalArticle =
+					_journalArticleLocalService.fetchLatestArticle(classPK);
+
+				jsonObject.put("groupId", journalArticle.getGroupId());
+				jsonObject.put("uuid", journalArticle.getUuid());
+
+				value.addString(locale, jsonObject.toString());
+
+				if (_exportReferencedContent) {
+					StagedModelDataHandlerUtil.exportReferenceStagedModel(
+						_portletDataContext, _stagedModel, journalArticle,
+						_portletDataContext.REFERENCE_TYPE_DEPENDENCY);
+				}
+				else {
+					Element entityElement =
+						_portletDataContext.getExportDataElement(_stagedModel);
+
+					_portletDataContext.addReferenceElement(
+						_stagedModel, entityElement, journalArticle,
+						PortletDataContext.REFERENCE_TYPE_DEPENDENCY, true);
+				}
+			}
+		}
+
+		private final boolean _exportReferencedContent;
+		private final PortletDataContext _portletDataContext;
+		private final StagedModel _stagedModel;
+
+	}
+
+	private class JournalArticleImportDDMFormFieldValueTransformer
+		implements DDMFormFieldValueTransformer {
+
+		public JournalArticleImportDDMFormFieldValueTransformer(
+			PortletDataContext portletDataContext) {
+
+			_portletDataContext = portletDataContext;
+		}
+
+		@Override
+		public String getFieldType() {
+			return DDMFormFieldType.JOURNAL_ARTICLE;
+		}
+
+		@Override
+		public void transform(DDMFormFieldValue ddmFormFieldValue)
+			throws PortalException {
+
+			Value value = ddmFormFieldValue.getValue();
+
+			for (Locale locale : value.getAvailableLocales()) {
+				String valueString = value.getString(locale);
+
+				JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+					valueString);
+
+				String uuid = jsonObject.getString("uuid");
+				long groupId = jsonObject.getLong("groupId");
+
+				Map<Long, Long> groupIds =
+					(Map<Long, Long>)_portletDataContext.getNewPrimaryKeysMap(
+						Group.class);
+
+				groupId = MapUtil.getLong(groupIds, groupId);
+
+				JournalArticle journalArticle =
+					_journalArticleLocalService.
+						fetchJournalArticleByUuidAndGroupId(uuid, groupId);
+
+				if (journalArticle == null) {
+					continue;
+				}
+
+				jsonObject.put("classPK", journalArticle.getResourcePrimKey());
+
+				value.addString(locale, jsonObject.toString());
+			}
 		}
 
 		private final PortletDataContext _portletDataContext;

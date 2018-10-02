@@ -3915,25 +3915,36 @@ log.sanitizer.enabled=false</echo>
 							Faces Test Selenium version since the Alloy Showcase tests may depend on a different version
 							of the JSF Showcase tests.
 						-->
+
 						<xmltask source="${liferay.faces.showcase.dir}/pom.xml">
-							<copy path="/*[local-name()='project']/*[local-name()='version']/text()"
-								property="liferay.faces.showcase.version"/>
+							<copy
+								path="/*[local-name()='project']/*[local-name()='version']/text()"
+								property="liferay.faces.showcase.version"
+							/>
 						</xmltask>
 
-						<xmltask source="${liferay.faces.alloy.dir}/pom.xml" dest="${liferay.faces.alloy.dir}/pom.xml">
-							<replace path="//*[local-name()='liferay.faces.showcase.version']/text()"
-								withText="${liferay.faces.showcase.version}"/>
+						<xmltask dest="${liferay.faces.alloy.dir}/pom.xml" source="${liferay.faces.alloy.dir}/pom.xml">
+							<replace
+								path="//*[local-name()='liferay.faces.showcase.version']/text()"
+								withText="${liferay.faces.showcase.version}"
+							/>
 						</xmltask>
 
 						<xmltask source="${liferay.faces.showcase.dir}/jsf-showcase-webapp/pom.xml">
-							<copy path="//*[local-name()='artifactId'][text()='com.liferay.faces.test.selenium']/../*[local-name()='version']/text()"
-								property="liferay.faces.test.selenium.version"/>
+							<copy
+								path="//*[local-name()='artifactId'][text()='com.liferay.faces.test.selenium']/../*[local-name()='version']/text()"
+								property="liferay.faces.test.selenium.version"
+							/>
 						</xmltask>
 
-						<xmltask source="${liferay.faces.alloy.dir}/demo/alloy-showcase-webapp/pom.xml"
-							dest="${liferay.faces.alloy.dir}/demo/alloy-showcase-webapp/pom.xml">
-							<replace path="//*[local-name()='artifactId'][text()='com.liferay.faces.test.selenium']/../*[local-name()='version']/text()"
-								withText="${liferay.faces.test.selenium.version}"/>
+						<xmltask
+							dest="${liferay.faces.alloy.dir}/demo/alloy-showcase-webapp/pom.xml"
+							source="${liferay.faces.alloy.dir}/demo/alloy-showcase-webapp/pom.xml"
+						>
+							<replace
+								path="//*[local-name()='artifactId'][text()='com.liferay.faces.test.selenium']/../*[local-name()='version']/text()"
+								withText="${liferay.faces.test.selenium.version}"
+							/>
 						</xmltask>
 
 						<execute dir="${liferay.faces.alloy.dir}/demo/alloy-showcase-webapp">
@@ -3960,8 +3971,11 @@ log.sanitizer.enabled=false</echo>
 							Move the JSF Showcase results to a different folder so that they are not overwritten by the
 							Bridge Impl test results.
 						-->
-						<move file="${liferay.faces.bridge.impl.dir}/test/integration/target/failsafe-reports"
-							  tofile="${liferay.faces.bridge.impl.dir}/test/integration/target/selenium-jsf-showcase-failsafe-reports"/>
+
+						<move
+							file="${liferay.faces.bridge.impl.dir}/test/integration/target/failsafe-reports"
+							tofile="${liferay.faces.bridge.impl.dir}/test/integration/target/selenium-jsf-showcase-failsafe-reports"
+						/>
 
 						<execute dir="${liferay.faces.bridge.impl.dir}/test/integration" failonerror="false">
 							mvn verify -P selenium-alloy-showcase,firefox -Dwebdriver.firefox.bin=${browser.firefox.bin.file} -Dintegration.browser.driver.wait.time.out=300
@@ -3971,8 +3985,11 @@ log.sanitizer.enabled=false</echo>
 							Move the Alloy Showcase results to a different folder so that they are not overwritten by
 							the Bridge Impl test results.
 						-->
-						<move file="${liferay.faces.bridge.impl.dir}/test/integration/target/failsafe-reports"
-							  tofile="${liferay.faces.bridge.impl.dir}/test/integration/target/selenium-alloy-showcase-failsafe-reports"/>
+
+						<move
+							file="${liferay.faces.bridge.impl.dir}/test/integration/target/failsafe-reports"
+							tofile="${liferay.faces.bridge.impl.dir}/test/integration/target/selenium-alloy-showcase-failsafe-reports"
+						/>
 
 						<echo file="${liferay.faces.bridge.impl.dir}/test/integration/bridge-impl-excluded-tests">
 							**/showcase/**

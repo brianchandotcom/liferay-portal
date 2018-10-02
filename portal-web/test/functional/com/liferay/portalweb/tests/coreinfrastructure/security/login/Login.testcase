@@ -130,7 +130,7 @@
 		</execute>
 	</command>
 
-	<command ignore="true" name="OpenIDConnectSmoke" priority="4">
+	<command name="OpenIDConnectSmoke" priority="4">
 		<property name="dummy.socket.proxy.disabled" value="true" />
 		<property name="test.name.skip.portal.instance" value="Login#OpenIDConnectSmoke" />
 

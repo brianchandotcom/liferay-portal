@@ -15,9 +15,19 @@
 package com.liferay.asset.publisher.web.servlet.taglib.ui;
 
 import com.liferay.asset.publisher.constants.AssetPublisherConstants;
+import com.liferay.asset.publisher.web.util.AssetPublisherCustomizer;
+import com.liferay.asset.publisher.web.util.AssetPublisherCustomizerRegistry;
+import com.liferay.portal.kernel.model.Portlet;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.PortletLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorEntry;
+import com.liferay.portal.kernel.theme.PortletDisplay;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 
 import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -43,6 +53,31 @@ public class SelectionStyleFormNavigatorEntry
 	}
 
 	@Override
+	public boolean isVisible(User user, Object object) {
+		ServiceContext serviceContext =
+			ServiceContextThreadLocal.getServiceContext();
+
+		HttpServletRequest request = serviceContext.getRequest();
+
+		ThemeDisplay themeDisplay = serviceContext.getThemeDisplay();
+
+		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
+
+		Portlet portlet = _portletLocalService.getPortletById(
+			themeDisplay.getCompanyId(), portletDisplay.getPortletResource());
+
+		AssetPublisherCustomizer assetPublisherCustomizer =
+			_assetPublisherCustomizerRegistry.getAssetPublisherCustomizer(
+				portlet.getRootPortletId());
+
+		if (assetPublisherCustomizer.isSelectionStyleEnabled(request)) {
+			return true;
+		}
+
+		return false;
+	}
+
+	@Override
 	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.asset.publisher.web)",
 		unbind = "-"
@@ -55,5 +90,11 @@ public class SelectionStyleFormNavigatorEntry
 	protected String getJspPath() {
 		return "/configuration/selection_style.jsp";
 	}
+
+	@Reference
+	private AssetPublisherCustomizerRegistry _assetPublisherCustomizerRegistry;
+
+	@Reference
+	private PortletLocalService _portletLocalService;
 
 }

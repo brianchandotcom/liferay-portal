@@ -30,6 +30,13 @@ import com.liferay.portal.kernel.util.WebKeys;
  */
 public class UserPortraitTag extends StickerTag {
 
+	public int doStartTag() {
+		putValue("shape", "circle");
+		putValue("style", "unstyled");
+
+		return super.doStartTag();
+	}
+
 	public void setUser(User user) {
 		putValue("title", user.getFullName());
 		putValue("imageSrc", _getPortraitURL(user));

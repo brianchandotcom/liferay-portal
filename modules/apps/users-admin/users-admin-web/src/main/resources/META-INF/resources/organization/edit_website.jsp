@@ -17,26 +17,25 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String redirect = ParamUtil.getString(request, "redirect");
-long websiteId = ParamUtil.getLong(request, "websiteId", 0L);
+long entryId = ParamUtil.getLong(request, "entryId", 0L);
 
 Website website = null;
 
-if (websiteId > 0L) {
-	website = WebsiteServiceUtil.getWebsite(websiteId);
+if (entryId > 0L) {
+	website = WebsiteServiceUtil.getWebsite(entryId);
 }
 %>
 
-<div class="card-horizontal main-content-card">
-	<aui:form action="<%= redirect %>" cssClass="container-fluid container-fluid-max-xl container-form-lg" method="post" name="websiteFm">
-		<aui:model-context bean="<%= website %>" model="<%= Website.class %>" />
+<aui:form cssClass="modal-body" name="fm">
+	<aui:model-context bean="<%= website %>" model="<%= Website.class %>" />
 
-		<aui:input name="websiteId" type="hidden" value="<%= websiteId %>" />
+	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.EDIT %>" />
+	<aui:input name="entryId" type="hidden" value="<%= entryId %>" />
+	<aui:input name="listType" type="hidden" value="<%= ListTypeConstants.WEBSITE %>" />
 
-		<aui:input checked="<%= (website != null)? website.isPrimary() : false %>" id="websitePrimary" label="make-primary" name="websitePrimary" type="checkbox" />
+	<aui:input checked="<%= (website != null)? website.isPrimary() : false %>" id="websitePrimary" label="make-primary" name="websitePrimary" type="checkbox" />
 
-		<aui:select inlineField="<%= true %>" label="type" listType="<%= Organization.class.getName() + ListTypeConstants.WEBSITE %>" name="websiteTypeId" />
+	<aui:select inlineField="<%= true %>" label="type" listType="<%= Organization.class.getName() + ListTypeConstants.WEBSITE %>" name="websiteTypeId" />
 
-		<aui:input fieldParam="websiteUrl" id="websiteUrl" name="url" required="<%= true %>" />
-	</aui:form>
-</div>
+	<aui:input fieldParam="websiteUrl" id="websiteUrl" name="url" required="<%= true %>" />
+</aui:form>

@@ -35,16 +35,16 @@ long websiteId = website.getWebsiteId();
 	message="<%= StringPool.BLANK %>"
 	showWhenSingleIcon="<%= true %>"
 >
-
-	<%
-	Map<String, Object> data = new HashMap<String, Object>();
-
-	data.put("website-id", String.valueOf(websiteId));
-	%>
-
 	<liferay-ui:icon
-		data="<%= data %>"
-		linkCssClass="edit-website"
+		cssClass="modify-website-link"
+		data="<%=
+			new HashMap<String, Object>() {
+				{
+					put("title", LanguageUtil.get(request, "edit-website"));
+					put("entry-id", String.valueOf(websiteId));
+				}
+			}
+		%>"
 		message="edit"
 		url="javascript:;"
 	/>

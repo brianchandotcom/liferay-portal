@@ -41,12 +41,17 @@ List<Website> websites = WebsiteServiceUtil.getWebsites(Organization.class.getNa
 		</span>
 		<span class="autofit-col">
 			<liferay-ui:icon
-				cssClass="modify-link"
-				id="addWebsiteLink"
+				cssClass="modify-website-link"
+				data="<%=
+					new HashMap<String, Object>() {
+						{
+							put("title", LanguageUtil.get(request, "add-website"));
+						}
+					}
+				%>"
 				label="<%= true %>"
 				linkCssClass="btn btn-secondary btn-sm"
 				message="add"
-				method="get"
 				url="javascript:;"
 			/>
 		</span>
@@ -111,107 +116,14 @@ List<Website> websites = WebsiteServiceUtil.getWebsites(Organization.class.getNa
 	/>
 </liferay-ui:search-container>
 
-<portlet:actionURL name="/users_admin/update_organization_contact_information" var="editWebsiteActionURL">
-	<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.EDIT %>" />
-	<portlet:param name="redirect" value="<%= currentURL %>" />
-	<portlet:param name="listType" value="<%= ListTypeConstants.WEBSITE %>" />
-	<portlet:param name="organizationId" value="<%= String.valueOf(organizationId) %>" />
-</portlet:actionURL>
-
 <portlet:renderURL var="editWebsiteRenderURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
 	<portlet:param name="mvcPath" value="/organization/edit_website.jsp" />
 </portlet:renderURL>
 
-<aui:script use="liferay-portlet-url">
-	function <portlet:namespace />openEditWebsiteWindow(cmd, websiteId) {
-		var editWebsiteRenderURL = Liferay.PortletURL.createURL('<%= editWebsiteRenderURL.toString() %>');
-
-		editWebsiteRenderURL.setParameter('websiteId', websiteId);
-
-		var title = '<%= UnicodeLanguageUtil.get(request, "edit-website") %>';
-
-		if (cmd === '<%= Constants.ADD %>') {
-			var title = '<%= UnicodeLanguageUtil.get(request, "add-website") %>';
-		}
-
-		Liferay.Util.openWindow(
-			{
-				dialog: {
-					destroyOnHide: true,
-					height: 520,
-					modal: true,
-					resizable: false,
-					'toolbars.footer': [
-						{
-							cssClass: 'btn-link close-modal',
-							id: 'cancelButton',
-							label: '<%= UnicodeLanguageUtil.get(request, "cancel") %>',
-							on: {
-								click: function() {
-									Liferay.Util.getWindow('<portlet:namespace />editWebsiteModal').hide();
-								}
-							}
-						},
-						{
-							cssClass: 'btn-primary',
-							id: 'addButton',
-							label: '<%= LanguageUtil.get(request, "save") %>',
-							on: {
-								click: function(event) {
-									var contentWindow = document.getElementById('<portlet:namespace />editWebsiteModal_iframe_').contentWindow;
-
-									var formValidator = contentWindow.Liferay.Form.get('<portlet:namespace />websiteFm').formValidator;
-
-									formValidator.validate();
-
-									if (!formValidator.hasErrors()) {
-										var windowDocument = contentWindow.document;
-
-										var editWebsiteActionURL = Liferay.PortletURL.createURL('<%= editWebsiteActionURL.toString() %>');
-
-										editWebsiteActionURL.setParameter('entryId', websiteId);
-
-										editWebsiteActionURL.setParameter('websitePrimary', windowDocument.getElementById('<portlet:namespace />websitePrimary').checked);
-										editWebsiteActionURL.setParameter('websiteTypeId', windowDocument.getElementById('<portlet:namespace />websiteTypeId').value);
-										editWebsiteActionURL.setParameter('websiteUrl', windowDocument.getElementById('<portlet:namespace />websiteUrl').value);
-
-										var organizationFm = document.getElementById('<portlet:namespace />fm');
-
-										submitForm(organizationFm, editWebsiteActionURL.toString());
-
-										organizationFm.submit();
-
-										Liferay.Util.getWindow('<portlet:namespace />editWebsiteModal').hide();
-									}
-								}
-							}
-						}
-					],
-					width: '600'
-				},
-				id: '<portlet:namespace />editWebsiteModal',
-				title: title,
-				uri: editWebsiteRenderURL.toString()
-			}
-		);
-	}
-
-	$('#<portlet:namespace />addWebsiteLink').on(
-		'click',
-		function(event) {
-			<portlet:namespace />openEditWebsiteWindow('<%= Constants.ADD %>', '');
-		}
-	);
-
-	$('body').on(
-		'click',
-		'.edit-website',
-		function(event) {
-			event.preventDefault();
-
-			var currentTarget = $(event.currentTarget);
-
-			<portlet:namespace />openEditWebsiteWindow('<%= Constants.EDIT %>', currentTarget.data('website-id'));
-		}
+<aui:script require="users-admin-web/js/contact-information.es as ContactInformation">
+	ContactInformation.registerContactInformationListener(
+		'.modify-website-link a',
+		'<%= editWebsiteRenderURL.toString() %>',
+		390
 	);
 </aui:script>

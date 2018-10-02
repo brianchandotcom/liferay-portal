@@ -49,7 +49,9 @@
 
 				<execute macro="Role#removeStagingAdminRole" />
 
-				<execute macro="Site#tearDownCP" />
+				<execute macro="JSONGroup#deleteGroupByName">
+					<var name="groupName" value="Site Name" />
+				</execute>
 			</else>
 		</if>
 	</tear-down>

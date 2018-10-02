@@ -26,7 +26,9 @@
 				<execute macro="PortalInstances#tearDownCP" />
 			</then>
 			<else>
-				<execute macro="Site#tearDownCP" />
+				<execute macro="JSONGroup#deleteGroupByName">
+					<var name="groupName" value="Site Name" />
+				</execute>
 			</else>
 		</if>
 	</tear-down>

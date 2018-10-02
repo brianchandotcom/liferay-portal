@@ -4654,13 +4654,25 @@ version 1.3.4.
 - [LPS-85771]: Set `test.outputs.upToDateWhen`to `false` to always run `test`
 and `testIntegration` for OSGi modules.
 
-## 5.5.62 - 2018-10-01
+## 5.5.62 - 2018-09-30
 
-### Added
+### Changed
+- [LPS-84119]: Update the [Liferay Gradle Plugins] dependency to version
+3.12.149.
+
+## 5.5.63 - 2018-10-01
+
+### Changed
 - [LPS-85905]: When on Jenkins, fail the `testIntegration` task if any dependent
 projects defined in the `testIntegrationCompile` configuration do not have a
 `lfrbuild-ci`, `lfrbuild-ci-skip-test-integration-check`, or a
 `.lfrbuild-portal` marker file.
+
+## 5.5.64 - 2018-10-01
+
+### Changed
+- [LPS-84138]: Update the [Liferay Gradle Plugins] dependency to version
+3.12.150.
 
 [Find Security Bugs]: https://github.com/liferay/liferay-portal/tree/master/modules/third-party/com-h3xstream-findsecbugs
 [Gradle Dependency Management]: https://github.com/spring-gradle-plugins/dependency-management-plugin
@@ -5122,6 +5134,7 @@ projects defined in the `testIntegrationCompile` configuration do not have a
 [LPS-84055]: https://issues.liferay.com/browse/LPS-84055
 [LPS-84094]: https://issues.liferay.com/browse/LPS-84094
 [LPS-84119]: https://issues.liferay.com/browse/LPS-84119
+[LPS-84138]: https://issues.liferay.com/browse/LPS-84138
 [LPS-84213]: https://issues.liferay.com/browse/LPS-84213
 [LPS-84218]: https://issues.liferay.com/browse/LPS-84218
 [LPS-84307]: https://issues.liferay.com/browse/LPS-84307
@@ -5140,6 +5153,7 @@ projects defined in the `testIntegrationCompile` configuration do not have a
 [LPS-85677]: https://issues.liferay.com/browse/LPS-85677
 [LPS-85678]: https://issues.liferay.com/browse/LPS-85678
 [LPS-85771]: https://issues.liferay.com/browse/LPS-85771
+[LPS-85905]: https://issues.liferay.com/browse/LPS-85905
 [LRDOCS-2594]: https://issues.liferay.com/browse/LRDOCS-2594
 [LRDOCS-2841]: https://issues.liferay.com/browse/LRDOCS-2841
 [LRDOCS-2981]: https://issues.liferay.com/browse/LRDOCS-2981

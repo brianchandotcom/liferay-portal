@@ -213,7 +213,7 @@ public abstract class LiferayRepositoryBase implements CapabilityProvider {
 	protected ResourceLocalService resourceLocalService;
 
 	private final long _dlFolderId;
-	private long _groupId;
+	private final long _groupId;
 	private final long _repositoryId;
 
 }

@@ -14,6 +14,7 @@
 
 package com.liferay.portal.repository.liferayrepository;
 
+import com.liferay.document.library.kernel.model.DLVersionNumberIncrease;
 import com.liferay.document.library.kernel.service.DLAppHelperLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.LocalRepository;
@@ -85,17 +86,19 @@ public class LiferayWorkflowLocalRepositoryWrapper
 
 	@Override
 	public void checkInFileEntry(
-			long userId, long fileEntryId, boolean majorVersion,
-			String changeLog, ServiceContext serviceContext)
+			long userId, long fileEntryId,
+			DLVersionNumberIncrease dlVersionNumberIncrease, String changeLog,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		super.checkInFileEntry(
-			userId, fileEntryId, majorVersion, changeLog, serviceContext);
+			userId, fileEntryId, dlVersionNumberIncrease, changeLog,
+			serviceContext);
 
 		FileEntry fileEntry = super.getFileEntry(fileEntryId);
 
 		_workflowSupport.checkInFileEntry(
-			userId, fileEntry, majorVersion, serviceContext);
+			userId, fileEntry, dlVersionNumberIncrease, serviceContext);
 	}
 
 	@Override
@@ -109,7 +112,7 @@ public class LiferayWorkflowLocalRepositoryWrapper
 		FileEntry fileEntry = super.getFileEntry(fileEntryId);
 
 		_workflowSupport.checkInFileEntry(
-			userId, fileEntry, false, serviceContext);
+			userId, fileEntry, DLVersionNumberIncrease.MINOR, serviceContext);
 	}
 
 	@Override
@@ -149,15 +152,16 @@ public class LiferayWorkflowLocalRepositoryWrapper
 	public FileEntry updateFileEntry(
 			long userId, long fileEntryId, String sourceFileName,
 			String mimeType, String title, String description, String changeLog,
-			boolean majorVersion, File file, ServiceContext serviceContext)
+			DLVersionNumberIncrease dlVersionNumberIncrease, File file,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		FileEntry fileEntry = super.updateFileEntry(
 			userId, fileEntryId, sourceFileName, mimeType, title, description,
-			changeLog, majorVersion, file, serviceContext);
+			changeLog, dlVersionNumberIncrease, file, serviceContext);
 
 		_workflowSupport.updateFileEntry(
-			userId, fileEntry, majorVersion, serviceContext);
+			userId, fileEntry, dlVersionNumberIncrease, serviceContext);
 
 		return super.getFileEntry(fileEntryId);
 	}
@@ -166,16 +170,16 @@ public class LiferayWorkflowLocalRepositoryWrapper
 	public FileEntry updateFileEntry(
 			long userId, long fileEntryId, String sourceFileName,
 			String mimeType, String title, String description, String changeLog,
-			boolean majorVersion, InputStream is, long size,
-			ServiceContext serviceContext)
+			DLVersionNumberIncrease dlVersionNumberIncrease, InputStream is,
+			long size, ServiceContext serviceContext)
 		throws PortalException {
 
 		FileEntry fileEntry = super.updateFileEntry(
 			userId, fileEntryId, sourceFileName, mimeType, title, description,
-			changeLog, majorVersion, is, size, serviceContext);
+			changeLog, dlVersionNumberIncrease, is, size, serviceContext);
 
 		_workflowSupport.updateFileEntry(
-			userId, fileEntry, majorVersion, serviceContext);
+			userId, fileEntry, dlVersionNumberIncrease, serviceContext);
 
 		return super.getFileEntry(fileEntryId);
 	}

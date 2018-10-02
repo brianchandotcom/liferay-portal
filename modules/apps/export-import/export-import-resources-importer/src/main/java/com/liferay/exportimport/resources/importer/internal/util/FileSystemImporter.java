@@ -20,6 +20,7 @@ import com.liferay.document.library.kernel.exception.DuplicateFileEntryException
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFolder;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
+import com.liferay.document.library.kernel.model.DLVersionNumberIncrease;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
 import com.liferay.document.library.kernel.service.DLFolderLocalService;
@@ -813,8 +814,9 @@ public class FileSystemImporter extends BaseImporter {
 				fileEntry = dlAppLocalService.updateFileEntry(
 					userId, fileEntry.getFileEntryId(), fileName,
 					mimeTypes.getContentType(fileName), fileName,
-					StringPool.BLANK, StringPool.BLANK, true, inputStream,
-					length, serviceContext);
+					StringPool.BLANK, StringPool.BLANK,
+					DLVersionNumberIncrease.MAJOR, inputStream, length,
+					serviceContext);
 
 				dlFileEntryLocalService.deleteFileVersion(
 					fileEntry.getUserId(), fileEntry.getFileEntryId(),

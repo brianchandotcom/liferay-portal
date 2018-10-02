@@ -80,6 +80,10 @@ public class DLFileEntryServiceSoap {
 		}
 	}
 
+	/**
+	* @deprecated As of Judson (7.1.x), replaced by {@link #checkInFileEntry(long, DLVersionNumberIncrease, String, ServiceContext)}
+	*/
+	@Deprecated
 	public static void checkInFileEntry(long fileEntryId, boolean major,
 		String changeLog,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
@@ -87,6 +91,22 @@ public class DLFileEntryServiceSoap {
 		try {
 			DLFileEntryServiceUtil.checkInFileEntry(fileEntryId, major,
 				changeLog, serviceContext);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static void checkInFileEntry(long fileEntryId,
+		com.liferay.document.library.kernel.model.DLVersionNumberIncrease dlVersionNumberIncrease,
+		String changeLog,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws RemoteException {
+		try {
+			DLFileEntryServiceUtil.checkInFileEntry(fileEntryId,
+				dlVersionNumberIncrease, changeLog, serviceContext);
 		}
 		catch (Exception e) {
 			_log.error(e, e);

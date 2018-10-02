@@ -358,7 +358,7 @@ public class LiferayFileVersion extends LiferayModel implements FileVersion {
 
 	@Override
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		setPrimaryKey(((Long)primaryKeyObj).longValue());
+		setPrimaryKey((Long)primaryKeyObj);
 	}
 
 	@Override

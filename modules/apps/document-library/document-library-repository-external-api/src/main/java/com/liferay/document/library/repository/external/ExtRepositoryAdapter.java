@@ -19,6 +19,7 @@ import com.liferay.document.library.kernel.exception.NoSuchFileVersionException;
 import com.liferay.document.library.kernel.exception.NoSuchFolderException;
 import com.liferay.document.library.kernel.model.DLFileEntryTypeConstants;
 import com.liferay.document.library.kernel.model.DLFolder;
+import com.liferay.document.library.kernel.model.DLVersionNumberIncrease;
 import com.liferay.document.library.kernel.service.DLFolderLocalServiceUtil;
 import com.liferay.document.library.repository.external.model.ExtRepositoryFileEntryAdapter;
 import com.liferay.document.library.repository.external.model.ExtRepositoryFileVersionAdapter;
@@ -151,11 +152,33 @@ public class ExtRepositoryAdapter extends BaseRepositoryImpl {
 		return null;
 	}
 
+	/**
+	 * @deprecated As of Judson (7.1.x), replaced by {@link #checkInFileEntry(long, long, DLVersionNumberIncrease, String, ServiceContext)}
+	 */
+	@Deprecated
 	@Override
 	public void checkInFileEntry(
 			long userId, long fileEntryId, boolean major, String changeLog,
 			ServiceContext serviceContext)
 		throws PortalException {
+
+		checkInFileEntry(
+			userId, fileEntryId, DLVersionNumberIncrease.fromBoolean(major),
+			changeLog, serviceContext);
+	}
+
+	@Override
+	public void checkInFileEntry(
+			long userId, long fileEntryId,
+			DLVersionNumberIncrease dlVersionNumberIncrease, String changeLog,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		boolean major = false;
+
+		if (dlVersionNumberIncrease == DLVersionNumberIncrease.MAJOR) {
+			major = true;
+		}
 
 		String extRepositoryFileEntryKey = getExtRepositoryObjectKey(
 			fileEntryId);
@@ -171,7 +194,8 @@ public class ExtRepositoryAdapter extends BaseRepositoryImpl {
 		throws PortalException {
 
 		checkInFileEntry(
-			userId, fileEntryId, false, StringPool.BLANK, serviceContext);
+			userId, fileEntryId, DLVersionNumberIncrease.MINOR,
+			StringPool.BLANK, serviceContext);
 	}
 
 	@Override
@@ -998,12 +1022,30 @@ public class ExtRepositoryAdapter extends BaseRepositoryImpl {
 		throw new UnsupportedOperationException();
 	}
 
+	/**
+	 * @deprecated As of Judson (7.1.x), replaced by {@link #updateFileEntry(long, long, String, String, String, String, String, DLVersionNumberIncrease, InputStream, long, ServiceContext)}
+	 */
+	@Deprecated
 	@Override
 	public FileEntry updateFileEntry(
 			long userId, long fileEntryId, String sourceFileName,
 			String mimeType, String title, String description, String changeLog,
-			boolean majorVersion, InputStream inputStream, long size,
+			boolean major, InputStream inputStream, long size,
 			ServiceContext serviceContext)
+		throws PortalException {
+
+		return updateFileEntry(
+			userId, fileEntryId, sourceFileName, mimeType, title, description,
+			changeLog, DLVersionNumberIncrease.fromBoolean(major), inputStream,
+			size, serviceContext);
+	}
+
+	@Override
+	public FileEntry updateFileEntry(
+			long userId, long fileEntryId, String sourceFileName,
+			String mimeType, String title, String description, String changeLog,
+			DLVersionNumberIncrease dlVersionNumberIncrease,
+			InputStream inputStream, long size, ServiceContext serviceContext)
 		throws PortalException {
 
 		boolean needsCheckIn = false;
@@ -1049,6 +1091,12 @@ public class ExtRepositoryAdapter extends BaseRepositoryImpl {
 			}
 
 			if (needsCheckIn) {
+				boolean majorVersion = false;
+
+				if (dlVersionNumberIncrease == DLVersionNumberIncrease.MAJOR) {
+					majorVersion = true;
+				}
+
 				_extRepository.checkInExtRepositoryFileEntry(
 					extRepositoryFileEntry.getExtRepositoryModelKey(),
 					majorVersion, changeLog);

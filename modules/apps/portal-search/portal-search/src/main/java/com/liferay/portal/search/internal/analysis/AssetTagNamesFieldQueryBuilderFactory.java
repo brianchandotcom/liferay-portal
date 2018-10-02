@@ -30,7 +30,7 @@ public class AssetTagNamesFieldQueryBuilderFactory
 
 	@Override
 	public FieldQueryBuilder getQueryBuilder(String field) {
-		if (field.equals(Field.ASSET_TAG_NAMES)) {
+		if (field.startsWith(Field.ASSET_TAG_NAMES)) {
 			return titleQueryBuilder;
 		}
 

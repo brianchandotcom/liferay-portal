@@ -184,20 +184,22 @@
 		}
 	);
 
-	Liferay.componentReady('emptyResultMessageComponent').then(
-		function(emptyResultMessageComponent) {
-			emptyResultMessageComponent.on(
-				'itemClicked',
-				function(event) {
-					var itemData = event.data.item.data;
+	<c:if test="<%= assetListDisplayContext.getAssetListEntriesCount() == 0 %>">
+		Liferay.componentReady('emptyResultMessageComponent').then(
+			function(emptyResultMessageComponent) {
+				emptyResultMessageComponent.on(
+					'itemClicked',
+					function(event) {
+						var itemData = event.data.item.data;
 
-					if (itemData && itemData.action && ACTIONS[itemData.action]) {
-						ACTIONS[itemData.action](event);
+						if (itemData && itemData.action && ACTIONS[itemData.action]) {
+							ACTIONS[itemData.action](event);
+						}
 					}
-				}
-			);
-		}
-	);
+				);
+			}
+		);
+	</c:if>
 
 	Liferay.on('destroyPortlet', handleDestroyPortlet);
 </aui:script>

@@ -75,6 +75,7 @@ BlogsEntry entry = (BlogsEntry)request.getAttribute("view_entry_content.jsp-entr
 					%>
 
 					<liferay-frontend:user-portrait
+						size="lg"
 						user="<%= entryUser %>"
 					/>
 				</div>

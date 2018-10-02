@@ -113,7 +113,9 @@ public class ExpressionVisitorImplTest {
 
 		Assert.assertEquals(entityField.getName(), rangeTermFilter.getField());
 		Assert.assertEquals(value, rangeTermFilter.getLowerBound());
+		Assert.assertTrue(rangeTermFilter.isIncludesLower());
 		Assert.assertNull(rangeTermFilter.getUpperBound());
+		Assert.assertTrue(rangeTermFilter.isIncludesUpper());
 	}
 
 	@SuppressWarnings("unchecked")
@@ -154,8 +156,10 @@ public class ExpressionVisitorImplTest {
 					BinaryExpression.Operation.LE, entityField, value);
 
 		Assert.assertEquals(entityField.getName(), rangeTermFilter.getField());
-		Assert.assertEquals(value, rangeTermFilter.getUpperBound());
 		Assert.assertNull(rangeTermFilter.getLowerBound());
+		Assert.assertFalse(rangeTermFilter.isIncludesLower());
+		Assert.assertEquals(value, rangeTermFilter.getUpperBound());
+		Assert.assertTrue(rangeTermFilter.isIncludesUpper());
 	}
 
 	@SuppressWarnings("unchecked")

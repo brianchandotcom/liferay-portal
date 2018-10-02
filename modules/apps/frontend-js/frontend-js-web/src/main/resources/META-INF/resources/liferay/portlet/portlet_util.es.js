@@ -227,7 +227,7 @@ const generateParameterString = function(pageRenderState, portletId, name, type,
 					str += encodeParameter(group, values);
 				}
 				else if (type === RENDER_PARAM_KEY) {
-					str += encodeParameter(RENDER_PARAM_KEY + name, values);
+					str += encodeParameter(portletId + RENDER_PARAM_KEY + name, values);
 				}
 				else {
 					str += encodeParameter(portletId + name, values);

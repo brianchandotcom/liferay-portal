@@ -18,11 +18,16 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.expando.kernel.model.ExpandoBridge;
 
+import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.CacheModel;
+import com.liferay.portal.kernel.model.ShardedModel;
+import com.liferay.portal.kernel.model.StagedGroupedModel;
 import com.liferay.portal.kernel.service.ServiceContext;
 
 import java.io.Serializable;
+
+import java.util.Date;
 
 /**
  * The base model interface for the AssetListEntryAssetEntryRel service. Represents a row in the &quot;AssetListEntryAssetEntryRel&quot; database table, with each column mapped to a property of this class.
@@ -38,7 +43,8 @@ import java.io.Serializable;
  * @generated
  */
 @ProviderType
-public interface AssetListEntryAssetEntryRelModel extends BaseModel<AssetListEntryAssetEntryRel> {
+public interface AssetListEntryAssetEntryRelModel extends BaseModel<AssetListEntryAssetEntryRel>,
+	ShardedModel, StagedGroupedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -60,6 +66,23 @@ public interface AssetListEntryAssetEntryRelModel extends BaseModel<AssetListEnt
 	public void setPrimaryKey(long primaryKey);
 
 	/**
+	 * Returns the uuid of this asset list entry asset entry rel.
+	 *
+	 * @return the uuid of this asset list entry asset entry rel
+	 */
+	@AutoEscape
+	@Override
+	public String getUuid();
+
+	/**
+	 * Sets the uuid of this asset list entry asset entry rel.
+	 *
+	 * @param uuid the uuid of this asset list entry asset entry rel
+	 */
+	@Override
+	public void setUuid(String uuid);
+
+	/**
 	 * Returns the asset list entry asset entry rel ID of this asset list entry asset entry rel.
 	 *
 	 * @return the asset list entry asset entry rel ID of this asset list entry asset entry rel
@@ -73,6 +96,119 @@ public interface AssetListEntryAssetEntryRelModel extends BaseModel<AssetListEnt
 	 */
 	public void setAssetListEntryAssetEntryRelId(
 		long assetListEntryAssetEntryRelId);
+
+	/**
+	 * Returns the group ID of this asset list entry asset entry rel.
+	 *
+	 * @return the group ID of this asset list entry asset entry rel
+	 */
+	@Override
+	public long getGroupId();
+
+	/**
+	 * Sets the group ID of this asset list entry asset entry rel.
+	 *
+	 * @param groupId the group ID of this asset list entry asset entry rel
+	 */
+	@Override
+	public void setGroupId(long groupId);
+
+	/**
+	 * Returns the company ID of this asset list entry asset entry rel.
+	 *
+	 * @return the company ID of this asset list entry asset entry rel
+	 */
+	@Override
+	public long getCompanyId();
+
+	/**
+	 * Sets the company ID of this asset list entry asset entry rel.
+	 *
+	 * @param companyId the company ID of this asset list entry asset entry rel
+	 */
+	@Override
+	public void setCompanyId(long companyId);
+
+	/**
+	 * Returns the user ID of this asset list entry asset entry rel.
+	 *
+	 * @return the user ID of this asset list entry asset entry rel
+	 */
+	@Override
+	public long getUserId();
+
+	/**
+	 * Sets the user ID of this asset list entry asset entry rel.
+	 *
+	 * @param userId the user ID of this asset list entry asset entry rel
+	 */
+	@Override
+	public void setUserId(long userId);
+
+	/**
+	 * Returns the user uuid of this asset list entry asset entry rel.
+	 *
+	 * @return the user uuid of this asset list entry asset entry rel
+	 */
+	@Override
+	public String getUserUuid();
+
+	/**
+	 * Sets the user uuid of this asset list entry asset entry rel.
+	 *
+	 * @param userUuid the user uuid of this asset list entry asset entry rel
+	 */
+	@Override
+	public void setUserUuid(String userUuid);
+
+	/**
+	 * Returns the user name of this asset list entry asset entry rel.
+	 *
+	 * @return the user name of this asset list entry asset entry rel
+	 */
+	@AutoEscape
+	@Override
+	public String getUserName();
+
+	/**
+	 * Sets the user name of this asset list entry asset entry rel.
+	 *
+	 * @param userName the user name of this asset list entry asset entry rel
+	 */
+	@Override
+	public void setUserName(String userName);
+
+	/**
+	 * Returns the create date of this asset list entry asset entry rel.
+	 *
+	 * @return the create date of this asset list entry asset entry rel
+	 */
+	@Override
+	public Date getCreateDate();
+
+	/**
+	 * Sets the create date of this asset list entry asset entry rel.
+	 *
+	 * @param createDate the create date of this asset list entry asset entry rel
+	 */
+	@Override
+	public void setCreateDate(Date createDate);
+
+	/**
+	 * Returns the modified date of this asset list entry asset entry rel.
+	 *
+	 * @return the modified date of this asset list entry asset entry rel
+	 */
+	@Override
+	public Date getModifiedDate();
+
+	/**
+	 * Sets the modified date of this asset list entry asset entry rel.
+	 *
+	 * @param modifiedDate the modified date of this asset list entry asset entry rel
+	 */
+	@Override
+	public void setModifiedDate(Date modifiedDate);
 
 	/**
 	 * Returns the asset list entry ID of this asset list entry asset entry rel.
@@ -115,6 +251,22 @@ public interface AssetListEntryAssetEntryRelModel extends BaseModel<AssetListEnt
 	 * @param position the position of this asset list entry asset entry rel
 	 */
 	public void setPosition(int position);
+
+	/**
+	 * Returns the last publish date of this asset list entry asset entry rel.
+	 *
+	 * @return the last publish date of this asset list entry asset entry rel
+	 */
+	@Override
+	public Date getLastPublishDate();
+
+	/**
+	 * Sets the last publish date of this asset list entry asset entry rel.
+	 *
+	 * @param lastPublishDate the last publish date of this asset list entry asset entry rel
+	 */
+	@Override
+	public void setLastPublishDate(Date lastPublishDate);
 
 	@Override
 	public boolean isNew();

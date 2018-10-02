@@ -22,20 +22,27 @@ import com.liferay.asset.list.model.AssetListEntryAssetEntryRelModel;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 
+import com.liferay.exportimport.kernel.lar.StagedModelType;
+
 import com.liferay.petra.string.StringBundler;
 
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.ModelWrapper;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.impl.BaseModelImpl;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 
 import java.io.Serializable;
 
 import java.sql.Types;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -62,21 +69,37 @@ public class AssetListEntryAssetEntryRelModelImpl extends BaseModelImpl<AssetLis
 	 */
 	public static final String TABLE_NAME = "AssetListEntryAssetEntryRel";
 	public static final Object[][] TABLE_COLUMNS = {
+			{ "uuid_", Types.VARCHAR },
 			{ "assetListEntryAssetEntryRelId", Types.BIGINT },
+			{ "groupId", Types.BIGINT },
+			{ "companyId", Types.BIGINT },
+			{ "userId", Types.BIGINT },
+			{ "userName", Types.VARCHAR },
+			{ "createDate", Types.TIMESTAMP },
+			{ "modifiedDate", Types.TIMESTAMP },
 			{ "assetListEntryId", Types.BIGINT },
 			{ "assetEntryId", Types.BIGINT },
-			{ "position", Types.INTEGER }
+			{ "position", Types.INTEGER },
+			{ "lastPublishDate", Types.TIMESTAMP }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
 	static {
+		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("assetListEntryAssetEntryRelId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("userName", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
+		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("assetListEntryId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("assetEntryId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("position", Types.INTEGER);
+		TABLE_COLUMNS_MAP.put("lastPublishDate", Types.TIMESTAMP);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table AssetListEntryAssetEntryRel (assetListEntryAssetEntryRelId LONG not null primary key,assetListEntryId LONG,assetEntryId LONG,position INTEGER)";
+	public static final String TABLE_SQL_CREATE = "create table AssetListEntryAssetEntryRel (uuid_ VARCHAR(75) null,assetListEntryAssetEntryRelId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,assetListEntryId LONG,assetEntryId LONG,position INTEGER,lastPublishDate DATE null)";
 	public static final String TABLE_SQL_DROP = "drop table AssetListEntryAssetEntryRel";
 	public static final String ORDER_BY_JPQL = " ORDER BY assetListEntryAssetEntryRel.position ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY AssetListEntryAssetEntryRel.position ASC";
@@ -93,7 +116,10 @@ public class AssetListEntryAssetEntryRelModelImpl extends BaseModelImpl<AssetLis
 				"value.object.column.bitmask.enabled.com.liferay.asset.list.model.AssetListEntryAssetEntryRel"),
 			true);
 	public static final long ASSETLISTENTRYID_COLUMN_BITMASK = 1L;
-	public static final long POSITION_COLUMN_BITMASK = 2L;
+	public static final long COMPANYID_COLUMN_BITMASK = 2L;
+	public static final long GROUPID_COLUMN_BITMASK = 4L;
+	public static final long POSITION_COLUMN_BITMASK = 8L;
+	public static final long UUID_COLUMN_BITMASK = 16L;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.asset.list.service.util.ServiceProps.get(
 				"lock.expiration.time.com.liferay.asset.list.model.AssetListEntryAssetEntryRel"));
 
@@ -134,11 +160,19 @@ public class AssetListEntryAssetEntryRelModelImpl extends BaseModelImpl<AssetLis
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("uuid", getUuid());
 		attributes.put("assetListEntryAssetEntryRelId",
 			getAssetListEntryAssetEntryRelId());
+		attributes.put("groupId", getGroupId());
+		attributes.put("companyId", getCompanyId());
+		attributes.put("userId", getUserId());
+		attributes.put("userName", getUserName());
+		attributes.put("createDate", getCreateDate());
+		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("assetListEntryId", getAssetListEntryId());
 		attributes.put("assetEntryId", getAssetEntryId());
 		attributes.put("position", getPosition());
+		attributes.put("lastPublishDate", getLastPublishDate());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -148,11 +182,53 @@ public class AssetListEntryAssetEntryRelModelImpl extends BaseModelImpl<AssetLis
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		String uuid = (String)attributes.get("uuid");
+
+		if (uuid != null) {
+			setUuid(uuid);
+		}
+
 		Long assetListEntryAssetEntryRelId = (Long)attributes.get(
 				"assetListEntryAssetEntryRelId");
 
 		if (assetListEntryAssetEntryRelId != null) {
 			setAssetListEntryAssetEntryRelId(assetListEntryAssetEntryRelId);
+		}
+
+		Long groupId = (Long)attributes.get("groupId");
+
+		if (groupId != null) {
+			setGroupId(groupId);
+		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
+		}
+
+		Long userId = (Long)attributes.get("userId");
+
+		if (userId != null) {
+			setUserId(userId);
+		}
+
+		String userName = (String)attributes.get("userName");
+
+		if (userName != null) {
+			setUserName(userName);
+		}
+
+		Date createDate = (Date)attributes.get("createDate");
+
+		if (createDate != null) {
+			setCreateDate(createDate);
+		}
+
+		Date modifiedDate = (Date)attributes.get("modifiedDate");
+
+		if (modifiedDate != null) {
+			setModifiedDate(modifiedDate);
 		}
 
 		Long assetListEntryId = (Long)attributes.get("assetListEntryId");
@@ -172,6 +248,35 @@ public class AssetListEntryAssetEntryRelModelImpl extends BaseModelImpl<AssetLis
 		if (position != null) {
 			setPosition(position);
 		}
+
+		Date lastPublishDate = (Date)attributes.get("lastPublishDate");
+
+		if (lastPublishDate != null) {
+			setLastPublishDate(lastPublishDate);
+		}
+	}
+
+	@Override
+	public String getUuid() {
+		if (_uuid == null) {
+			return "";
+		}
+		else {
+			return _uuid;
+		}
+	}
+
+	@Override
+	public void setUuid(String uuid) {
+		if (_originalUuid == null) {
+			_originalUuid = _uuid;
+		}
+
+		_uuid = uuid;
+	}
+
+	public String getOriginalUuid() {
+		return GetterUtil.getString(_originalUuid);
 	}
 
 	@Override
@@ -183,6 +288,117 @@ public class AssetListEntryAssetEntryRelModelImpl extends BaseModelImpl<AssetLis
 	public void setAssetListEntryAssetEntryRelId(
 		long assetListEntryAssetEntryRelId) {
 		_assetListEntryAssetEntryRelId = assetListEntryAssetEntryRelId;
+	}
+
+	@Override
+	public long getGroupId() {
+		return _groupId;
+	}
+
+	@Override
+	public void setGroupId(long groupId) {
+		_columnBitmask |= GROUPID_COLUMN_BITMASK;
+
+		if (!_setOriginalGroupId) {
+			_setOriginalGroupId = true;
+
+			_originalGroupId = _groupId;
+		}
+
+		_groupId = groupId;
+	}
+
+	public long getOriginalGroupId() {
+		return _originalGroupId;
+	}
+
+	@Override
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	@Override
+	public void setCompanyId(long companyId) {
+		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
+
+		if (!_setOriginalCompanyId) {
+			_setOriginalCompanyId = true;
+
+			_originalCompanyId = _companyId;
+		}
+
+		_companyId = companyId;
+	}
+
+	public long getOriginalCompanyId() {
+		return _originalCompanyId;
+	}
+
+	@Override
+	public long getUserId() {
+		return _userId;
+	}
+
+	@Override
+	public void setUserId(long userId) {
+		_userId = userId;
+	}
+
+	@Override
+	public String getUserUuid() {
+		try {
+			User user = UserLocalServiceUtil.getUserById(getUserId());
+
+			return user.getUuid();
+		}
+		catch (PortalException pe) {
+			return "";
+		}
+	}
+
+	@Override
+	public void setUserUuid(String userUuid) {
+	}
+
+	@Override
+	public String getUserName() {
+		if (_userName == null) {
+			return "";
+		}
+		else {
+			return _userName;
+		}
+	}
+
+	@Override
+	public void setUserName(String userName) {
+		_userName = userName;
+	}
+
+	@Override
+	public Date getCreateDate() {
+		return _createDate;
+	}
+
+	@Override
+	public void setCreateDate(Date createDate) {
+		_createDate = createDate;
+	}
+
+	@Override
+	public Date getModifiedDate() {
+		return _modifiedDate;
+	}
+
+	public boolean hasSetModifiedDate() {
+		return _setModifiedDate;
+	}
+
+	@Override
+	public void setModifiedDate(Date modifiedDate) {
+		_setModifiedDate = true;
+
+		_modifiedDate = modifiedDate;
 	}
 
 	@Override
@@ -239,13 +455,29 @@ public class AssetListEntryAssetEntryRelModelImpl extends BaseModelImpl<AssetLis
 		return _originalPosition;
 	}
 
+	@Override
+	public Date getLastPublishDate() {
+		return _lastPublishDate;
+	}
+
+	@Override
+	public void setLastPublishDate(Date lastPublishDate) {
+		_lastPublishDate = lastPublishDate;
+	}
+
+	@Override
+	public StagedModelType getStagedModelType() {
+		return new StagedModelType(PortalUtil.getClassNameId(
+				AssetListEntryAssetEntryRel.class.getName()));
+	}
+
 	public long getColumnBitmask() {
 		return _columnBitmask;
 	}
 
 	@Override
 	public ExpandoBridge getExpandoBridge() {
-		return ExpandoBridgeFactoryUtil.getExpandoBridge(0,
+		return ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
 			AssetListEntryAssetEntryRel.class.getName(), getPrimaryKey());
 	}
 
@@ -270,10 +502,18 @@ public class AssetListEntryAssetEntryRelModelImpl extends BaseModelImpl<AssetLis
 	public Object clone() {
 		AssetListEntryAssetEntryRelImpl assetListEntryAssetEntryRelImpl = new AssetListEntryAssetEntryRelImpl();
 
+		assetListEntryAssetEntryRelImpl.setUuid(getUuid());
 		assetListEntryAssetEntryRelImpl.setAssetListEntryAssetEntryRelId(getAssetListEntryAssetEntryRelId());
+		assetListEntryAssetEntryRelImpl.setGroupId(getGroupId());
+		assetListEntryAssetEntryRelImpl.setCompanyId(getCompanyId());
+		assetListEntryAssetEntryRelImpl.setUserId(getUserId());
+		assetListEntryAssetEntryRelImpl.setUserName(getUserName());
+		assetListEntryAssetEntryRelImpl.setCreateDate(getCreateDate());
+		assetListEntryAssetEntryRelImpl.setModifiedDate(getModifiedDate());
 		assetListEntryAssetEntryRelImpl.setAssetListEntryId(getAssetListEntryId());
 		assetListEntryAssetEntryRelImpl.setAssetEntryId(getAssetEntryId());
 		assetListEntryAssetEntryRelImpl.setPosition(getPosition());
+		assetListEntryAssetEntryRelImpl.setLastPublishDate(getLastPublishDate());
 
 		assetListEntryAssetEntryRelImpl.resetOriginalValues();
 
@@ -344,6 +584,18 @@ public class AssetListEntryAssetEntryRelModelImpl extends BaseModelImpl<AssetLis
 		AssetListEntryAssetEntryRelModelImpl assetListEntryAssetEntryRelModelImpl =
 			this;
 
+		assetListEntryAssetEntryRelModelImpl._originalUuid = assetListEntryAssetEntryRelModelImpl._uuid;
+
+		assetListEntryAssetEntryRelModelImpl._originalGroupId = assetListEntryAssetEntryRelModelImpl._groupId;
+
+		assetListEntryAssetEntryRelModelImpl._setOriginalGroupId = false;
+
+		assetListEntryAssetEntryRelModelImpl._originalCompanyId = assetListEntryAssetEntryRelModelImpl._companyId;
+
+		assetListEntryAssetEntryRelModelImpl._setOriginalCompanyId = false;
+
+		assetListEntryAssetEntryRelModelImpl._setModifiedDate = false;
+
 		assetListEntryAssetEntryRelModelImpl._originalAssetListEntryId = assetListEntryAssetEntryRelModelImpl._assetListEntryId;
 
 		assetListEntryAssetEntryRelModelImpl._setOriginalAssetListEntryId = false;
@@ -360,7 +612,47 @@ public class AssetListEntryAssetEntryRelModelImpl extends BaseModelImpl<AssetLis
 		AssetListEntryAssetEntryRelCacheModel assetListEntryAssetEntryRelCacheModel =
 			new AssetListEntryAssetEntryRelCacheModel();
 
+		assetListEntryAssetEntryRelCacheModel.uuid = getUuid();
+
+		String uuid = assetListEntryAssetEntryRelCacheModel.uuid;
+
+		if ((uuid != null) && (uuid.length() == 0)) {
+			assetListEntryAssetEntryRelCacheModel.uuid = null;
+		}
+
 		assetListEntryAssetEntryRelCacheModel.assetListEntryAssetEntryRelId = getAssetListEntryAssetEntryRelId();
+
+		assetListEntryAssetEntryRelCacheModel.groupId = getGroupId();
+
+		assetListEntryAssetEntryRelCacheModel.companyId = getCompanyId();
+
+		assetListEntryAssetEntryRelCacheModel.userId = getUserId();
+
+		assetListEntryAssetEntryRelCacheModel.userName = getUserName();
+
+		String userName = assetListEntryAssetEntryRelCacheModel.userName;
+
+		if ((userName != null) && (userName.length() == 0)) {
+			assetListEntryAssetEntryRelCacheModel.userName = null;
+		}
+
+		Date createDate = getCreateDate();
+
+		if (createDate != null) {
+			assetListEntryAssetEntryRelCacheModel.createDate = createDate.getTime();
+		}
+		else {
+			assetListEntryAssetEntryRelCacheModel.createDate = Long.MIN_VALUE;
+		}
+
+		Date modifiedDate = getModifiedDate();
+
+		if (modifiedDate != null) {
+			assetListEntryAssetEntryRelCacheModel.modifiedDate = modifiedDate.getTime();
+		}
+		else {
+			assetListEntryAssetEntryRelCacheModel.modifiedDate = Long.MIN_VALUE;
+		}
 
 		assetListEntryAssetEntryRelCacheModel.assetListEntryId = getAssetListEntryId();
 
@@ -368,21 +660,46 @@ public class AssetListEntryAssetEntryRelModelImpl extends BaseModelImpl<AssetLis
 
 		assetListEntryAssetEntryRelCacheModel.position = getPosition();
 
+		Date lastPublishDate = getLastPublishDate();
+
+		if (lastPublishDate != null) {
+			assetListEntryAssetEntryRelCacheModel.lastPublishDate = lastPublishDate.getTime();
+		}
+		else {
+			assetListEntryAssetEntryRelCacheModel.lastPublishDate = Long.MIN_VALUE;
+		}
+
 		return assetListEntryAssetEntryRelCacheModel;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(9);
+		StringBundler sb = new StringBundler(25);
 
-		sb.append("{assetListEntryAssetEntryRelId=");
+		sb.append("{uuid=");
+		sb.append(getUuid());
+		sb.append(", assetListEntryAssetEntryRelId=");
 		sb.append(getAssetListEntryAssetEntryRelId());
+		sb.append(", groupId=");
+		sb.append(getGroupId());
+		sb.append(", companyId=");
+		sb.append(getCompanyId());
+		sb.append(", userId=");
+		sb.append(getUserId());
+		sb.append(", userName=");
+		sb.append(getUserName());
+		sb.append(", createDate=");
+		sb.append(getCreateDate());
+		sb.append(", modifiedDate=");
+		sb.append(getModifiedDate());
 		sb.append(", assetListEntryId=");
 		sb.append(getAssetListEntryId());
 		sb.append(", assetEntryId=");
 		sb.append(getAssetEntryId());
 		sb.append(", position=");
 		sb.append(getPosition());
+		sb.append(", lastPublishDate=");
+		sb.append(getLastPublishDate());
 		sb.append("}");
 
 		return sb.toString();
@@ -390,15 +707,43 @@ public class AssetListEntryAssetEntryRelModelImpl extends BaseModelImpl<AssetLis
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(16);
+		StringBundler sb = new StringBundler(40);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.asset.list.model.AssetListEntryAssetEntryRel");
 		sb.append("</model-name>");
 
 		sb.append(
+			"<column><column-name>uuid</column-name><column-value><![CDATA[");
+		sb.append(getUuid());
+		sb.append("]]></column-value></column>");
+		sb.append(
 			"<column><column-name>assetListEntryAssetEntryRelId</column-name><column-value><![CDATA[");
 		sb.append(getAssetListEntryAssetEntryRelId());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>groupId</column-name><column-value><![CDATA[");
+		sb.append(getGroupId());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>companyId</column-name><column-value><![CDATA[");
+		sb.append(getCompanyId());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>userId</column-name><column-value><![CDATA[");
+		sb.append(getUserId());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>userName</column-name><column-value><![CDATA[");
+		sb.append(getUserName());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>createDate</column-name><column-value><![CDATA[");
+		sb.append(getCreateDate());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>modifiedDate</column-name><column-value><![CDATA[");
+		sb.append(getModifiedDate());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>assetListEntryId</column-name><column-value><![CDATA[");
@@ -412,6 +757,10 @@ public class AssetListEntryAssetEntryRelModelImpl extends BaseModelImpl<AssetLis
 			"<column><column-name>position</column-name><column-value><![CDATA[");
 		sb.append(getPosition());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>lastPublishDate</column-name><column-value><![CDATA[");
+		sb.append(getLastPublishDate());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -422,7 +771,20 @@ public class AssetListEntryAssetEntryRelModelImpl extends BaseModelImpl<AssetLis
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
 			AssetListEntryAssetEntryRel.class, ModelWrapper.class
 		};
+	private String _uuid;
+	private String _originalUuid;
 	private long _assetListEntryAssetEntryRelId;
+	private long _groupId;
+	private long _originalGroupId;
+	private boolean _setOriginalGroupId;
+	private long _companyId;
+	private long _originalCompanyId;
+	private boolean _setOriginalCompanyId;
+	private long _userId;
+	private String _userName;
+	private Date _createDate;
+	private Date _modifiedDate;
+	private boolean _setModifiedDate;
 	private long _assetListEntryId;
 	private long _originalAssetListEntryId;
 	private boolean _setOriginalAssetListEntryId;
@@ -430,6 +792,7 @@ public class AssetListEntryAssetEntryRelModelImpl extends BaseModelImpl<AssetLis
 	private int _position;
 	private int _originalPosition;
 	private boolean _setOriginalPosition;
+	private Date _lastPublishDate;
 	private long _columnBitmask;
 	private AssetListEntryAssetEntryRel _escapedModel;
 }

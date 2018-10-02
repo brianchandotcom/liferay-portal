@@ -34,10 +34,12 @@ public class AssetListEntryServiceWrapper implements AssetListEntryService,
 	}
 
 	@Override
-	public void addAssetEntrySelection(long assetListEntryId, long assetEntryId)
+	public void addAssetEntrySelection(long assetListEntryId,
+		long assetEntryId,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_assetListEntryService.addAssetEntrySelection(assetListEntryId,
-			assetEntryId);
+			assetEntryId, serviceContext);
 	}
 
 	@Override

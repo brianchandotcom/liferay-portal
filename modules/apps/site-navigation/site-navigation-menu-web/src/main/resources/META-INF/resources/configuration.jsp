@@ -392,7 +392,7 @@ else {
 		'<portlet:namespace />rootMenuItemLevel'
 	);
 
-	var selectSiteNavigationMenuType = $('#<portlet:namespace />selectSiteNavigationMenuType')
+	var selectSiteNavigationMenuType = $('#<portlet:namespace />selectSiteNavigationMenuType');
 
 	selectSiteNavigationMenuType.on(
 		'change',

@@ -18,7 +18,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.jdbc.aop.DynamicDataSourceTargetSource;
 import com.liferay.portal.kernel.dao.jdbc.aop.MasterDataSource;
 import com.liferay.portal.kernel.dao.jdbc.aop.Operation;
-import com.liferay.portal.spring.aop.ChainableMethodAdvice;
+import com.liferay.portal.spring.aop.AnnotationChainableMethodAdvice;
 import com.liferay.portal.spring.aop.ServiceBeanAopCacheManager;
 import com.liferay.portal.spring.transaction.TransactionInterceptor;
 
@@ -33,7 +33,8 @@ import org.springframework.transaction.interceptor.TransactionAttributeSource;
  * @author Shuyang Zhou
  * @author László Csontos
  */
-public class DynamicDataSourceAdvice extends ChainableMethodAdvice {
+public class DynamicDataSourceAdvice
+	extends AnnotationChainableMethodAdvice<MasterDataSource> {
 
 	@Override
 	public Object before(MethodInvocation methodInvocation) throws Throwable {
@@ -45,10 +46,7 @@ public class DynamicDataSourceAdvice extends ChainableMethodAdvice {
 
 		Method targetMethod = methodInvocation.getMethod();
 
-		MasterDataSource masterDataSource =
-			serviceBeanAopCacheManager.findAnnotation(
-				methodInvocation, MasterDataSource.class,
-				_nullMasterDataSource);
+		MasterDataSource masterDataSource = findAnnotation(methodInvocation);
 
 		if (masterDataSource == _nullMasterDataSource) {
 			TransactionAttribute transactionAttribute =
@@ -78,6 +76,11 @@ public class DynamicDataSourceAdvice extends ChainableMethodAdvice {
 		_dynamicDataSourceTargetSource.popMethod();
 	}
 
+	@Override
+	public MasterDataSource getNullAnnotation() {
+		return _nullMasterDataSource;
+	}
+
 	public void setDynamicDataSourceTargetSource(
 		DynamicDataSourceTargetSource dynamicDataSourceTargetSource) {
 
@@ -101,17 +104,18 @@ public class DynamicDataSourceAdvice extends ChainableMethodAdvice {
 	}
 
 	@Override
+	protected MasterDataSource findAnnotation(
+		MethodInvocation methodInvocation) {
+
+		return serviceBeanAopCacheManager.findAnnotation(
+			methodInvocation, MasterDataSource.class, _nullMasterDataSource);
+	}
+
+	@Override
 	protected void setServiceBeanAopCacheManager(
 		ServiceBeanAopCacheManager serviceBeanAopCacheManager) {
 
-		if (this.serviceBeanAopCacheManager != null) {
-			return;
-		}
-
-		this.serviceBeanAopCacheManager = serviceBeanAopCacheManager;
-
-		serviceBeanAopCacheManager.registerAnnotationChainableMethodAdvice(
-			MasterDataSource.class, null);
+		super.setServiceBeanAopCacheManager(serviceBeanAopCacheManager);
 	}
 
 	private static final MasterDataSource _nullMasterDataSource =

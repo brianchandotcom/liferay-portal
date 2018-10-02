@@ -111,6 +111,9 @@ public class ServiceBeanAopCacheManager {
 						}
 					}
 				}
+
+				_registerAnnotationChainableMethodAdvice(
+					annotationClass, annotationChainableMethodAdvice);
 			}
 			else {
 				classLevelMethodInterceptors.add(methodInterceptor);
@@ -243,28 +246,16 @@ public class ServiceBeanAopCacheManager {
 				new MethodInterceptor[methodInterceptors.size()]));
 	}
 
+	/**
+	 * @deprecated As of Judson (7.1.x), with no direct replacement
+	 */
+	@Deprecated
 	public void registerAnnotationChainableMethodAdvice(
 		Class<? extends Annotation> annotationClass,
 		AnnotationChainableMethodAdvice<?> annotationChainableMethodAdvice) {
 
-		AnnotationChainableMethodAdvice<?>[] annotationChainableMethodAdvices =
-			_annotationChainableMethodAdvices.get(annotationClass);
-
-		if (annotationChainableMethodAdvices == null) {
-			annotationChainableMethodAdvices =
-				new AnnotationChainableMethodAdvice<?>[1];
-
-			annotationChainableMethodAdvices[0] =
-				annotationChainableMethodAdvice;
-		}
-		else {
-			annotationChainableMethodAdvices = ArrayUtil.append(
-				annotationChainableMethodAdvices,
-				annotationChainableMethodAdvice);
-		}
-
-		_annotationChainableMethodAdvices.put(
-			annotationClass, annotationChainableMethodAdvices);
+		_registerAnnotationChainableMethodAdvice(
+			annotationClass, annotationChainableMethodAdvice);
 	}
 
 	public void removeMethodInterceptor(
@@ -368,6 +359,30 @@ public class ServiceBeanAopCacheManager {
 		}
 
 		methodAnnotations.put(methodInvocation.getMethod(), annotations);
+	}
+
+	private void _registerAnnotationChainableMethodAdvice(
+		Class<? extends Annotation> annotationClass,
+		AnnotationChainableMethodAdvice<?> annotationChainableMethodAdvice) {
+
+		AnnotationChainableMethodAdvice<?>[] annotationChainableMethodAdvices =
+			_annotationChainableMethodAdvices.get(annotationClass);
+
+		if (annotationChainableMethodAdvices == null) {
+			annotationChainableMethodAdvices =
+				new AnnotationChainableMethodAdvice<?>[1];
+
+			annotationChainableMethodAdvices[0] =
+				annotationChainableMethodAdvice;
+		}
+		else {
+			annotationChainableMethodAdvices = ArrayUtil.append(
+				annotationChainableMethodAdvices,
+				annotationChainableMethodAdvice);
+		}
+
+		_annotationChainableMethodAdvices.put(
+			annotationClass, annotationChainableMethodAdvices);
 	}
 
 	private static final Map<Method, Annotation[]> _annotations =

@@ -49,20 +49,6 @@ public abstract class AnnotationChainableMethodAdvice<T extends Annotation>
 		return annotation;
 	}
 
-	@Override
-	protected void setServiceBeanAopCacheManager(
-		ServiceBeanAopCacheManager serviceBeanAopCacheManager) {
-
-		if (this.serviceBeanAopCacheManager != null) {
-			return;
-		}
-
-		this.serviceBeanAopCacheManager = serviceBeanAopCacheManager;
-
-		serviceBeanAopCacheManager.registerAnnotationChainableMethodAdvice(
-			_annotationClass, this);
-	}
-
 	private final Class<? extends Annotation> _annotationClass;
 	private final T _nullAnnotation;
 

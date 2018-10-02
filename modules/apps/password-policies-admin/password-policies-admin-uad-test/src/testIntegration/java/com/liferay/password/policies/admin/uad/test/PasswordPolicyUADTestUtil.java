@@ -23,7 +23,7 @@ import com.liferay.portlet.passwordpoliciesadmin.util.test.PasswordPolicyTestUti
 /**
  * @author Brian Wing Shun Chan
  */
-public class PasswordPolicyUADTestHelper {
+public class PasswordPolicyUADTestUtil {
 
 	public static PasswordPolicy addPasswordPolicy(long userId)
 		throws Exception {

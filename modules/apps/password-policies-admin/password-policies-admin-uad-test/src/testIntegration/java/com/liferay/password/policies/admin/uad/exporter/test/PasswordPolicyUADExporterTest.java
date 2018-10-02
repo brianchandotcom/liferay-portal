@@ -15,7 +15,7 @@
 package com.liferay.password.policies.admin.uad.exporter.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.password.policies.admin.uad.test.PasswordPolicyUADTestHelper;
+import com.liferay.password.policies.admin.uad.test.PasswordPolicyUADTestUtil;
 import com.liferay.portal.kernel.model.PasswordPolicy;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -46,7 +46,7 @@ public class PasswordPolicyUADExporterTest
 	@Override
 	protected PasswordPolicy addBaseModel(long userId) throws Exception {
 		PasswordPolicy passwordPolicy =
-			PasswordPolicyUADTestHelper.addPasswordPolicy(userId);
+			PasswordPolicyUADTestUtil.addPasswordPolicy(userId);
 
 		_passwordPolicies.add(passwordPolicy);
 

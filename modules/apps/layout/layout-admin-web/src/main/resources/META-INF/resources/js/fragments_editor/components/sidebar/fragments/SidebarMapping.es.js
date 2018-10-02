@@ -3,10 +3,10 @@ import {Config} from 'metal-state';
 import Soy from 'metal-soy';
 
 import 'frontend-js-web/liferay/compat/modal/Modal.es';
-import {OPEN_ASSET_TYPE_DIALOG} from '../../actions/actions.es';
-import {Store} from '../../store/store.es';
+import {OPEN_ASSET_TYPE_DIALOG} from '../../../actions/actions.es';
+import {Store} from '../../../store/store.es';
 import templates from './SidebarMapping.soy';
-import {UPDATE_HIGHLIGHT_MAPPING_STATUS} from '../../actions/actions.es';
+import {UPDATE_HIGHLIGHT_MAPPING_STATUS} from '../../../actions/actions.es';
 
 /**
  * SidebarMapping

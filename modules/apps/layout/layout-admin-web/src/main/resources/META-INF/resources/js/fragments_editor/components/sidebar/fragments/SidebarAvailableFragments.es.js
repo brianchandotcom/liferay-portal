@@ -11,9 +11,9 @@ import {
 	UPDATE_DRAG_TARGET,
 	UPDATE_LAST_SAVE_DATE,
 	UPDATE_SAVING_CHANGES_STATUS
-} from '../../actions/actions.es';
-import {DRAG_POSITIONS} from '../../reducers/placeholders.es';
-import {Store} from '../../store/store.es';
+} from '../../../actions/actions.es';
+import {DRAG_POSITIONS} from '../../../reducers/placeholders.es';
+import {Store} from '../../../store/store.es';
 import templates from './SidebarAvailableFragments.soy';
 
 /**

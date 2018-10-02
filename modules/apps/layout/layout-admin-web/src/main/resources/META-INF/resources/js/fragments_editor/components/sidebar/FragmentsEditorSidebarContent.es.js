@@ -3,9 +3,9 @@ import {Config} from 'metal-state';
 import {EventEmitterProxy} from 'metal-events';
 import Soy from 'metal-soy';
 
-import './SidebarAddedFragments.es';
-import './SidebarAvailableFragments.es';
-import './SidebarMapping.es';
+import './fragments/SidebarAddedFragments.es';
+import './fragments/SidebarAvailableFragments.es';
+import './fragments/SidebarMapping.es';
 import templates from './FragmentsEditorSidebarContent.soy';
 
 /**

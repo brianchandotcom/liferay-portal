@@ -160,6 +160,15 @@ public interface SharingEntryLocalService extends BaseLocalService,
 	public int countToUserSharingEntries(long toUserId);
 
 	/**
+	* Returns the number of sharing entries of a resource that have been shared
+	* by to user returning at most one per shared model.
+	*
+	* @param toUserId the user id*
+	* @return the number of sharing entries
+	*/
+	public int countUniqueToUserSharingEntries(long toUserId);
+
+	/**
 	* Creates a new sharing entry with the primary key. Does not add the sharing entry to the database.
 	*
 	* @param sharingEntryId the primary key for the new sharing entry
@@ -467,6 +476,19 @@ public interface SharingEntryLocalService extends BaseLocalService,
 		long groupId) throws PortalException;
 
 	/**
+	* Returns a list of sharing entries of a specific class name id and class
+	* pk that has been shared to a user.
+	*
+	* @param toUserId the user id that has been shared the resource
+	* @param classNameId the class name ID of the shared resource
+	* @param classPK the class pk of the shared resource
+	* @return the list of sharing entries
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<SharingEntry> getToUserClassPKSharingEntries(long toUserId,
+		long classNameId, long classPK);
+
+	/**
 	* Returns a list of all the sharing entries that has been shared to a user.
 	*
 	* @param toUserId the user id that has been shared the resource
@@ -497,6 +519,17 @@ public interface SharingEntryLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<SharingEntry> getToUserSharingEntries(long toUserId,
 		long classNameId);
+
+	/**
+	* Returns a list of all the sharing entries of a resource that has been
+	* shared to a user returning at most one per shared model
+	*
+	* @param toUserId the user id*
+	* @return the list of sharing entries
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<SharingEntry> getUniqueToUserSharingEntries(long toUserId,
+		int start, int end);
 
 	/**
 	* Returns <code>true</code> if the to user id has been shared a resource

@@ -45,7 +45,7 @@ data.put("id", HtmlUtil.escape(renderResponse.getNamespace()) + "editAsset");
 data.put("title", LanguageUtil.format(request, "edit-x", HtmlUtil.escape(sharedWithMeViewDisplayContext.getTitle(sharingEntry)), false));
 %>
 
-<c:if test="<%= sharedWithMeViewDisplayContext.hasEditPermission(sharingEntry) %>">
+<c:if test="<%= sharedWithMeViewDisplayContext.hasEditPermission(sharingEntry.getClassNameId(), sharingEntry.getClassPK()) %>">
 	<liferay-ui:icon-menu
 		direction="left-side"
 		icon="<%= StringPool.BLANK %>"

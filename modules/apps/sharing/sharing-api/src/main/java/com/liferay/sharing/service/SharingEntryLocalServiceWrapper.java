@@ -152,6 +152,18 @@ public class SharingEntryLocalServiceWrapper implements SharingEntryLocalService
 	}
 
 	/**
+	* Returns the number of sharing entries of a resource that have been shared
+	* by to user returning at most one per shared model.
+	*
+	* @param toUserId the user id*
+	* @return the number of sharing entries
+	*/
+	@Override
+	public int countUniqueToUserSharingEntries(long toUserId) {
+		return _sharingEntryLocalService.countUniqueToUserSharingEntries(toUserId);
+	}
+
+	/**
 	* Creates a new sharing entry with the primary key. Does not add the sharing entry to the database.
 	*
 	* @param sharingEntryId the primary key for the new sharing entry
@@ -567,6 +579,22 @@ public class SharingEntryLocalServiceWrapper implements SharingEntryLocalService
 	}
 
 	/**
+	* Returns a list of sharing entries of a specific class name id and class
+	* pk that has been shared to a user.
+	*
+	* @param toUserId the user id that has been shared the resource
+	* @param classNameId the class name ID of the shared resource
+	* @param classPK the class pk of the shared resource
+	* @return the list of sharing entries
+	*/
+	@Override
+	public java.util.List<com.liferay.sharing.model.SharingEntry> getToUserClassPKSharingEntries(
+		long toUserId, long classNameId, long classPK) {
+		return _sharingEntryLocalService.getToUserClassPKSharingEntries(toUserId,
+			classNameId, classPK);
+	}
+
+	/**
 	* Returns a list of all the sharing entries that has been shared to a user.
 	*
 	* @param toUserId the user id that has been shared the resource
@@ -605,6 +633,20 @@ public class SharingEntryLocalServiceWrapper implements SharingEntryLocalService
 		long toUserId, long classNameId) {
 		return _sharingEntryLocalService.getToUserSharingEntries(toUserId,
 			classNameId);
+	}
+
+	/**
+	* Returns a list of all the sharing entries of a resource that has been
+	* shared to a user returning at most one per shared model
+	*
+	* @param toUserId the user id*
+	* @return the list of sharing entries
+	*/
+	@Override
+	public java.util.List<com.liferay.sharing.model.SharingEntry> getUniqueToUserSharingEntries(
+		long toUserId, int start, int end) {
+		return _sharingEntryLocalService.getUniqueToUserSharingEntries(toUserId,
+			start, end);
 	}
 
 	/**

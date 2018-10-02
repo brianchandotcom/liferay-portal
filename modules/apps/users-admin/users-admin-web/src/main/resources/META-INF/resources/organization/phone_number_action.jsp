@@ -35,16 +35,16 @@ long phoneId = phone.getPhoneId();
 	message="<%= StringPool.BLANK %>"
 	showWhenSingleIcon="<%= true %>"
 >
-
-	<%
-	Map<String, Object> data = new HashMap<String, Object>();
-
-	data.put("phone-id", String.valueOf(phoneId));
-	%>
-
 	<liferay-ui:icon
-		data="<%= data %>"
-		linkCssClass="edit-phone"
+		cssClass="modify-phone-number-link"
+		data="<%=
+			new HashMap<String, Object>() {
+				{
+					put("title", LanguageUtil.get(request, "edit-phone-number"));
+					put("entry-id", String.valueOf(phoneId));
+				}
+			}
+		%>"
 		message="edit"
 		url="javascript:;"
 	/>

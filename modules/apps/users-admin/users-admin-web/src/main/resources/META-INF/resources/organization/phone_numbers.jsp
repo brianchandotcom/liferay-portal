@@ -42,12 +42,17 @@ List<Phone> phones = PhoneServiceUtil.getPhones(Organization.class.getName(), or
 		</span>
 		<span class="autofit-col">
 			<liferay-ui:icon
-				cssClass="modify-link"
-				id="addPhoneNumberLink"
+				cssClass="modify-phone-number-link"
+				data="<%=
+					new HashMap<String, Object>() {
+						{
+							put("title", LanguageUtil.get(request, "add-phone-number"));
+						}
+					}
+				%>"
 				label="<%= true %>"
 				linkCssClass="btn btn-secondary btn-sm"
 				message="add"
-				method="get"
 				url="javascript:;"
 			/>
 		</span>
@@ -118,106 +123,14 @@ List<Phone> phones = PhoneServiceUtil.getPhones(Organization.class.getName(), or
 	/>
 </liferay-ui:search-container>
 
-<portlet:actionURL name="/users_admin/update_organization_contact_information" var="editPhoneActionURL">
-	<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.EDIT %>" />
-	<portlet:param name="redirect" value="<%= currentURL %>" />
-	<portlet:param name="listType" value="<%= ListTypeConstants.PHONE %>" />
-	<portlet:param name="organizationId" value="<%= String.valueOf(organizationId) %>" />
-</portlet:actionURL>
-
 <portlet:renderURL var="editPhoneRenderURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
 	<portlet:param name="mvcPath" value="/organization/edit_phone_number.jsp" />
 </portlet:renderURL>
 
-<aui:script use="liferay-portlet-url">
-	function <portlet:namespace />openEditPhoneWindow(cmd, phoneId) {
-		var editPhoneRenderURL = Liferay.PortletURL.createURL('<%= editPhoneRenderURL.toString() %>');
-
-		editPhoneRenderURL.setParameter('phoneId', phoneId);
-
-		var title = '<%= UnicodeLanguageUtil.get(request, "edit-phone-number") %>';
-
-		if (cmd === '<%= Constants.ADD %>') {
-			var title = '<%= UnicodeLanguageUtil.get(request, "add-phone-number") %>';
-		}
-
-		Liferay.Util.openWindow(
-			{
-				dialog: {
-					destroyOnHide: true,
-					height: 520,
-					modal: true,
-					resizable: false,
-					'toolbars.footer': [
-						{
-							cssClass: 'btn-link close-modal',
-							id: 'cancelButton',
-							label: '<%= UnicodeLanguageUtil.get(request, "cancel") %>',
-							on: {
-								click: function() {
-									Liferay.Util.getWindow('<portlet:namespace />editPhoneModal').hide();
-								}
-							}
-						},
-						{
-							cssClass: 'btn-primary',
-							id: 'saveButton',
-							label: '<%= LanguageUtil.get(request, "save") %>',
-							on: {
-								click: function(event) {
-									var contentWindow = document.getElementById('<portlet:namespace />editPhoneModal_iframe_').contentWindow;
-
-									var formValidator = contentWindow.Liferay.Form.get('<portlet:namespace />phoneNumberFm').formValidator;
-
-									formValidator.validate();
-
-									if (!formValidator.hasErrors()) {
-										var editPhoneActionURL = Liferay.PortletURL.createURL('<%= editPhoneActionURL.toString() %>');
-
-										editPhoneActionURL.setParameter('entryId', phoneId);
-
-										editPhoneActionURL.setParameter('phoneExtension', windowDocument.getElementById('<portlet:namespace />phoneExtension').value);
-										editPhoneActionURL.setParameter('phoneNumber', windowDocument.getElementById('<portlet:namespace />phoneNumber').value);
-										editPhoneActionURL.setParameter('phonePrimary', windowDocument.getElementById('<portlet:namespace />phonePrimary').checked);
-										editPhoneActionURL.setParameter('phoneTypeId', windowDocument.getElementById('<portlet:namespace />phoneTypeId').value);
-
-										var organizationFm = document.getElementById('<portlet:namespace />fm');
-
-										submitForm(organizationFm, editPhoneActionURL.toString());
-
-										organizationFm.submit();
-
-										Liferay.Util.getWindow('<portlet:namespace />editPhoneModal').hide();
-									}
-								}
-							}
-						}
-					],
-					width: '600'
-				},
-				id: '<portlet:namespace />editPhoneModal',
-				title: title,
-				uri: editPhoneRenderURL.toString()
-			}
-		);
-	}
-
-	$('#<portlet:namespace />addPhoneNumberLink').on(
-		'click',
-		function(event) {
-			<portlet:namespace />openEditPhoneWindow('<%= Constants.ADD %>', '');
-		}
-	);
-
-	$('body').on(
-		'click',
-		'.edit-phone',
-		function(event) {
-			event.preventDefault();
-
-			var currentTarget = $(event.currentTarget);
-
-			<portlet:namespace />openEditPhoneWindow('<%= Constants.EDIT %>', currentTarget.data('phone-id'));
-		}
+<aui:script require="users-admin-web/js/contact-information.es as ContactInformation">
+	ContactInformation.registerContactInformationListener(
+		'.modify-phone-number-link a',
+		'<%= editPhoneRenderURL.toString() %>',
+		470
 	);
 </aui:script>

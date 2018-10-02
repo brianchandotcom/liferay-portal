@@ -17,30 +17,29 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String redirect = ParamUtil.getString(request, "redirect");
-long phoneId = ParamUtil.getLong(request, "phoneId", 0L);
+long entryId = ParamUtil.getLong(request, "entryId", 0L);
 
 Phone phone = null;
 
-if (phoneId > 0L) {
-	phone = PhoneServiceUtil.getPhone(phoneId);
+if (entryId > 0L) {
+	phone = PhoneServiceUtil.getPhone(entryId);
 }
 %>
 
-<div class="card-horizontal main-content-card">
-	<aui:form action="<%= redirect %>" cssClass="container-fluid container-fluid-max-xl container-form-lg" method="post" name="phoneNumberFm">
-		<aui:model-context bean="<%= phone %>" model="<%= Phone.class %>" />
+<aui:form cssClass="modal-body" name="fm">
+	<aui:model-context bean="<%= phone %>" model="<%= Phone.class %>" />
 
-		<aui:input name="phoneId" type="hidden" value="<%= phoneId %>" />
+	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.EDIT %>" />
+	<aui:input name="entryId" type="hidden" value="<%= entryId %>" />
+	<aui:input name="listType" type="hidden" value="<%= ListTypeConstants.PHONE %>" />
 
-		<aui:input checked="<%= (phone != null)? phone.isPrimary() : false %>" id="phonePrimary" label="make-primary" name="phonePrimary" type="checkbox" />
+	<aui:input checked="<%= (phone != null)? phone.isPrimary() : false %>" id="phonePrimary" label="make-primary" name="phonePrimary" type="checkbox" />
 
-		<aui:select inlineField="<%= true %>" label="type" listType="<%= Organization.class.getName() + ListTypeConstants.PHONE %>" name="phoneTypeId" />
+	<aui:select inlineField="<%= true %>" label="type" listType="<%= Organization.class.getName() + ListTypeConstants.PHONE %>" name="phoneTypeId" />
 
-		<aui:input fieldParam="phoneNumber" id="phoneNumber" name="number" required="<%= true %>" />
+	<aui:input fieldParam="phoneNumber" id="phoneNumber" name="number" required="<%= true %>" />
 
-		<aui:input fieldParam="phoneExtension" id="phoneExtension" name="extension">
-			<aui:validator name="digits" />
-		</aui:input>
-	</aui:form>
-</div>
+	<aui:input fieldParam="phoneExtension" id="phoneExtension" name="extension">
+		<aui:validator name="digits" />
+	</aui:input>
+</aui:form>

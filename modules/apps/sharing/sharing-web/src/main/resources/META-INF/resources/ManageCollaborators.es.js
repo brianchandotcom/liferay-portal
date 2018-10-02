@@ -90,9 +90,12 @@ class ManageCollaborators extends PortletBase {
 		)
 			.then(
 				(xhr) => {
+					this._loadingResponse = false;
 					this._closeDialog();
 				}
 			);
+
+		this._loadingResponse = true;
 	}
 }
 

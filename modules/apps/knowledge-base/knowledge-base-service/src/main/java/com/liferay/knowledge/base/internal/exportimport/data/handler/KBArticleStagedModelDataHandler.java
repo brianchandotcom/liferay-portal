@@ -235,7 +235,7 @@ public class KBArticleStagedModelDataHandler
 		ServiceContext serviceContext = portletDataContext.createServiceContext(
 			kbArticle);
 
-		KBArticle importedKBArticle = null;
+		KBArticle importedKBArticle;
 
 		if (portletDataContext.isDataStrategyMirror()) {
 			KBArticle existingKBArticle = _kbArticleLocalService.fetchKBArticle(

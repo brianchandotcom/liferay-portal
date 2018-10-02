@@ -1675,15 +1675,17 @@ public abstract class BaseBuild implements Build {
 		return "";
 	}
 
-	protected JSONArray getBuildsJSONArray() throws IOException {
+	protected JSONArray getBuildsJSONArray(int page) throws IOException {
 		JSONObject jsonObject = JenkinsResultsParserUtil.toJSONObject(
 			JenkinsResultsParserUtil.getLocalURL(
 				JenkinsResultsParserUtil.combine(
-					getJobURL(), "/api/json?tree=builds[actions[parameters",
-					"[name,type,value]],building,duration,number,result,url]")),
+					getJobURL(), "/api/json?tree=allBuilds[actions[parameters",
+					"[name,type,value]],building,duration,number,result,url]{",
+					String.valueOf(page * 100), ",",
+					String.valueOf((page + 1) * 100), "}")),
 			false);
 
-		return jsonObject.getJSONArray("builds");
+		return jsonObject.getJSONArray("allBuilds");
 	}
 
 	protected Element getBuildTimeElement() {
@@ -2011,18 +2013,29 @@ public abstract class BaseBuild implements Build {
 	}
 
 	protected JSONObject getRunningBuildJSONObject() throws IOException {
-		JSONArray buildsJSONArray = getBuildsJSONArray();
+		int page = 0;
 
-		for (int i = 0; i < buildsJSONArray.length(); i++) {
-			JSONObject buildJSONObject = buildsJSONArray.getJSONObject(i);
+		while (true) {
+			JSONArray buildsJSONArray = getBuildsJSONArray(page);
 
-			Map<String, String> parameters = getParameters();
-
-			if (parameters.equals(getParameters(buildJSONObject)) &&
-				!badBuildNumbers.contains(buildJSONObject.getInt("number"))) {
-
-				return buildJSONObject;
+			if (buildsJSONArray.length() == 0) {
+				break;
 			}
+
+			for (int i = 0; i < buildsJSONArray.length(); i++) {
+				JSONObject buildJSONObject = buildsJSONArray.getJSONObject(i);
+
+				Map<String, String> parameters = getParameters();
+
+				if (parameters.equals(getParameters(buildJSONObject)) &&
+					!badBuildNumbers.contains(
+						buildJSONObject.getInt("number"))) {
+
+					return buildJSONObject;
+				}
+			}
+
+			page++;
 		}
 
 		return null;

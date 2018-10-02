@@ -23,7 +23,7 @@ Folder folder = (Folder)row.getObject();
 
 folder = folder.toEscapedModel();
 
-Date modifiedDate = folder.getModifiedDate();
+Date modifiedDate = folder.getLastPostDate();
 
 String modifiedDateDescription = LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - modifiedDate.getTime(), true);
 

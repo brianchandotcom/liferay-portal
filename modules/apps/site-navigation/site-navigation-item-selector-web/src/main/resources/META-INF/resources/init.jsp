@@ -48,6 +48,3 @@ page import="java.util.Map" %>
 <portlet:defineObjects />
 
 <portlet:defineObjects />
-
-<%
-%>

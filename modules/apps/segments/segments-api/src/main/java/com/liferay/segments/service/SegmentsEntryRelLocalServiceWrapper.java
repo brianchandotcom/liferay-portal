@@ -277,6 +277,13 @@ public class SegmentsEntryRelLocalServiceWrapper
 			classPK);
 	}
 
+	@Override
+	public java.util.List<com.liferay.segments.model.SegmentsEntryRel> getSegmentsEntryRels(
+		long groupId, long classNameId, long classPK) {
+		return _segmentsEntryRelLocalService.getSegmentsEntryRels(groupId,
+			classNameId, classPK);
+	}
+
 	/**
 	* Returns the number of segments entry rels.
 	*

@@ -51,7 +51,7 @@
 			<finder-column name="key" />
 		</finder>
 	</entity>
-	<entity local-service="true" name="SegmentsEntryRel" remote-service="false">
+	<entity local-service="true" name="SegmentsEntryRel" remote-service="true">
 
 		<!-- PK fields -->
 
@@ -81,6 +81,11 @@
 			<finder-column name="segmentsEntryId" />
 		</finder>
 		<finder name="CN_CPK" return-type="Collection">
+			<finder-column name="classNameId" />
+			<finder-column name="classPK" />
+		</finder>
+		<finder name="G_CN_CPK" return-type="Collection">
+			<finder-column name="groupId" />
 			<finder-column name="classNameId" />
 			<finder-column name="classPK" />
 		</finder>

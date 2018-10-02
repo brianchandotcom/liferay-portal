@@ -10,7 +10,7 @@
 <tbody>
 <tr>
 	<td>ANY_MENU_ITEM</td>
-	<td>xpath=(//div | //li)[contains(@class,'open') or contains(@class,'show')]//*[self::a or self::span][normalize-space(text())='${key_menuItem}']</td>
+	<td>xpath=(//div | //li)[(contains(@class,'open') or contains(@class,'show')) and (contains(@class,'dropdown-menu') or contains(.//*/@class,'dropdown-menu'))]//*[self::a or self::span][normalize-space(text())='${key_menuItem}']</td>
 	<td></td>
 </tr>
 <tr>

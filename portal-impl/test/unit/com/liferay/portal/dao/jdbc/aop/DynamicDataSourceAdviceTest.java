@@ -93,8 +93,9 @@ public class DynamicDataSourceAdviceTest {
 
 		Map<Class<? extends Annotation>, AnnotationChainableMethodAdvice<?>[]>
 			registeredAnnotationChainableMethodAdvices =
-				_serviceBeanAopCacheManager.
-					getRegisteredAnnotationChainableMethodAdvices();
+				ReflectionTestUtil.getFieldValue(
+					_serviceBeanAopCacheManager,
+					"_annotationChainableMethodAdvices");
 
 		AnnotationChainableMethodAdvice<?>[] annotationChainableMethodAdvices =
 			registeredAnnotationChainableMethodAdvices.get(

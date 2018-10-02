@@ -27,6 +27,8 @@ public class AssetListFormConstants {
 
 	public static final String ENTRY_KEY_ORDERING = "ordering";
 
+	public static final String ENTRY_KEY_SCOPE = "scope";
+
 	public static final String ENTRY_KEY_SOURCE = "source";
 
 	public static final String SCREEN_NAVIGATION_KEY_ASSET_LIST =

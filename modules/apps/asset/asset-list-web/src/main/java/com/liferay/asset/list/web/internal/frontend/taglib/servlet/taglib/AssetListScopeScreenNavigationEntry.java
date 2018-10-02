@@ -16,47 +16,39 @@ package com.liferay.asset.list.web.internal.frontend.taglib.servlet.taglib;
 
 import com.liferay.asset.list.constants.AssetListEntryTypeConstants;
 import com.liferay.asset.list.constants.AssetListFormConstants;
-import com.liferay.asset.list.constants.AssetListWebKeys;
 import com.liferay.asset.list.model.AssetListEntry;
-import com.liferay.dynamic.data.mapping.util.DDMIndexer;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationCategory;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
 import com.liferay.portal.kernel.model.User;
 
-import java.io.IOException;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Pavel Savinov
  */
 @Component(
 	property = {
-		"screen.navigation.category.order:Integer=10",
-		"screen.navigation.entry.order:Integer=10"
+		"screen.navigation.category.order:Integer=15",
+		"screen.navigation.entry.order:Integer=15"
 	},
 	service = {ScreenNavigationCategory.class, ScreenNavigationEntry.class}
 )
-public class AssetListSourceScreenNavigationEntry
+public class AssetListScopeScreenNavigationEntry
 	extends BaseAssetListScreenNavigationEntry {
 
 	@Override
 	public String getCategoryKey() {
-		return AssetListFormConstants.ENTRY_KEY_SOURCE;
+		return AssetListFormConstants.ENTRY_KEY_SCOPE;
 	}
 
 	@Override
 	public String getEntryKey() {
-		return AssetListFormConstants.ENTRY_KEY_SOURCE;
+		return AssetListFormConstants.ENTRY_KEY_SCOPE;
 	}
 
 	@Override
 	public String getJspPath() {
-		return "/asset_list/source.jsp";
+		return "/asset_list/scope.jsp";
 	}
 
 	@Override
@@ -73,17 +65,5 @@ public class AssetListSourceScreenNavigationEntry
 
 		return false;
 	}
-
-	@Override
-	public void render(HttpServletRequest request, HttpServletResponse response)
-		throws IOException {
-
-		request.setAttribute(AssetListWebKeys.DDM_INDEXER, _ddmIndexer);
-
-		super.render(request, response);
-	}
-
-	@Reference
-	private DDMIndexer _ddmIndexer;
 
 }

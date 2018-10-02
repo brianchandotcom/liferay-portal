@@ -101,6 +101,8 @@ else {
 								</div>
 							</c:when>
 							<c:otherwise>
+								<aui:input name="selectSiteNavigationMenuType" type="hidden" value="<%= siteNavigationMenuDisplayContext.getSelectSiteNavigationMenuType() %>" />
+
 								<div class="card card-horizontal taglib-horizontal-card">
 									<div class="card-row card-row-padded ">
 										<div class="card-col-field">
@@ -297,10 +299,12 @@ else {
 			event.preventDefault();
 
 			var siteNavigationMenuId = $('#<portlet:namespace />siteNavigationMenuId').val();
+			var selectSiteNavigationMenuType = $('#<portlet:namespace />selectSiteNavigationMenuType').val();
 
 			var uri = '<%= siteNavigationMenuDisplayContext.getRootMenuItemSelectorURL() %>';
 
 			uri = Liferay.Util.addParams('<%= PortalUtil.getPortletNamespace(ItemSelectorPortletKeys.ITEM_SELECTOR) %>siteNavigationMenuId=' + siteNavigationMenuId, uri);
+			uri = Liferay.Util.addParams('<%= PortalUtil.getPortletNamespace(ItemSelectorPortletKeys.ITEM_SELECTOR) %>siteNavigationMenuType=' + selectSiteNavigationMenuType, uri);
 
 			var itemSelectorDialog = new A.LiferayItemSelectorDialog(
 				{

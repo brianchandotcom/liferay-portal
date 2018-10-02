@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.site.navigation.constants.SiteNavigationConstants;
 import com.liferay.site.navigation.model.SiteNavigationMenu;
 import com.liferay.site.navigation.model.SiteNavigationMenuItem;
 import com.liferay.site.navigation.service.SiteNavigationMenuItemLocalServiceUtil;
@@ -58,9 +59,30 @@ public class SiteNavigationMenuItemItemSelectorViewDisplayContext {
 		long siteNavigationMenuId = ParamUtil.getLong(
 			_request, "siteNavigationMenuId");
 
+		if (siteNavigationMenuId > 0) {
+			_siteNavigationMenu =
+				SiteNavigationMenuLocalServiceUtil.fetchSiteNavigationMenu(
+					siteNavigationMenuId);
+
+			return _siteNavigationMenu;
+		}
+
+		int siteNavigationMenuType = _getSiteNavigationMenuType();
+
+		if ((siteNavigationMenuType != SiteNavigationConstants.TYPE_PRIMARY) &&
+			(siteNavigationMenuType !=
+				SiteNavigationConstants.TYPE_SECONDARY) &&
+			(siteNavigationMenuType != SiteNavigationConstants.TYPE_SOCIAL)) {
+
+			return _siteNavigationMenu;
+		}
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
 		_siteNavigationMenu =
 			SiteNavigationMenuLocalServiceUtil.fetchSiteNavigationMenu(
-				siteNavigationMenuId);
+				themeDisplay.getScopeGroupId(), siteNavigationMenuType);
 
 		return _siteNavigationMenu;
 	}
@@ -152,11 +174,23 @@ public class SiteNavigationMenuItemItemSelectorViewDisplayContext {
 		return jsonArray;
 	}
 
+	private int _getSiteNavigationMenuType() {
+		if (_siteNavigationMenuType != null) {
+			return _siteNavigationMenuType;
+		}
+
+		_siteNavigationMenuType = ParamUtil.getInteger(
+			_request, "siteNavigationMenuType");
+
+		return _siteNavigationMenuType;
+	}
+
 	private final String _itemSelectedEventName;
 	private final HttpServletRequest _request;
 	private SiteNavigationMenu _siteNavigationMenu;
 	private Long _siteNavigationMenuItemId;
 	private final SiteNavigationMenuItemTypeRegistry
 		_siteNavigationMenuItemTypeRegistry;
+	private Integer _siteNavigationMenuType;
 
 }

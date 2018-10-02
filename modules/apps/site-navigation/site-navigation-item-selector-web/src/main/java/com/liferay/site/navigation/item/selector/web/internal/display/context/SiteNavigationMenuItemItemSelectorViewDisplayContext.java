@@ -50,29 +50,37 @@ public class SiteNavigationMenuItemItemSelectorViewDisplayContext {
 		return _itemSelectedEventName;
 	}
 
+	public SiteNavigationMenu getSiteNavigationMenu() {
+		if (_siteNavigationMenu != null) {
+			return _siteNavigationMenu;
+		}
+
+		long siteNavigationMenuId = ParamUtil.getLong(
+			_request, "siteNavigationMenuId");
+
+		_siteNavigationMenu =
+			SiteNavigationMenuLocalServiceUtil.fetchSiteNavigationMenu(
+				siteNavigationMenuId);
+
+		return _siteNavigationMenu;
+	}
+
 	public JSONArray getSiteNavigationMenuItemsJSONArray() throws Exception {
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
-		long siteNavigationMenuId = ParamUtil.getLong(
-			_request, "siteNavigationMenuId");
+		SiteNavigationMenu siteNavigationMenu = getSiteNavigationMenu();
 
 		jsonObject.put(
 			"children",
-			_getSiteNavigationMenuItemsJSONArray(siteNavigationMenuId, 0));
+			_getSiteNavigationMenuItemsJSONArray(
+				siteNavigationMenu.getSiteNavigationMenuId(), 0));
 
 		jsonObject.put("disabled", true);
 		jsonObject.put("icon", "blogs");
 		jsonObject.put("id", "0");
-
-		SiteNavigationMenu siteNavigationMenu =
-			SiteNavigationMenuLocalServiceUtil.fetchSiteNavigationMenu(
-				siteNavigationMenuId);
-
-		if (siteNavigationMenu != null) {
-			jsonObject.put("name", siteNavigationMenu.getName());
-		}
+		jsonObject.put("name", siteNavigationMenu.getName());
 
 		jsonArray.put(jsonObject);
 
@@ -147,6 +155,7 @@ public class SiteNavigationMenuItemItemSelectorViewDisplayContext {
 
 	private final String _itemSelectedEventName;
 	private final HttpServletRequest _request;
+	private SiteNavigationMenu _siteNavigationMenu;
 	private Long _siteNavigationMenuItemId;
 	private final SiteNavigationMenuItemTypeRegistry
 		_siteNavigationMenuItemTypeRegistry;

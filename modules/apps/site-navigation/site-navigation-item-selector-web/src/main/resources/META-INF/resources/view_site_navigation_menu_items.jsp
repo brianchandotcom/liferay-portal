@@ -19,24 +19,38 @@
 <%
 SiteNavigationMenuItemItemSelectorViewDisplayContext siteNavigationMenuItemItemSelectorViewDisplayContext = (SiteNavigationMenuItemItemSelectorViewDisplayContext)request.getAttribute(SiteNavigationItemSelectorWebKeys.SITE_NAVIGATION_MENU_ITEM_ITEM_SELECTOR_DISPLAY_CONTEXT);
 
-Portlet portlet = PortletLocalServiceUtil.getPortletById(company.getCompanyId(), portletDisplay.getId());
+SiteNavigationMenu siteNavigationMenu = siteNavigationMenuItemItemSelectorViewDisplayContext.getSiteNavigationMenu();
 %>
 
-<liferay-util:html-top>
-	<link href="<%= PortalUtil.getStaticResourceURL(request, application.getContextPath() + "/css/main.css", portlet.getTimestamp()) %>" rel="stylesheet" type="text/css" />
-</liferay-util:html-top>
+<c:choose>
+	<c:when test="<%= (siteNavigationMenu != null) && (SiteNavigationMenuItemLocalServiceUtil.getSiteNavigationMenuItemsCount(siteNavigationMenu.getSiteNavigationMenuId()) > 0) %>">
 
-<%
-Map<String, Object> context = new HashMap<>();
+		<%
+		Portlet portlet = PortletLocalServiceUtil.getPortletById(company.getCompanyId(), portletDisplay.getId());
+		%>
 
-context.put("itemSelectorSaveEvent", siteNavigationMenuItemItemSelectorViewDisplayContext.getItemSelectedEventName());
-context.put("namespace", liferayPortletResponse.getNamespace());
-context.put("nodes", siteNavigationMenuItemItemSelectorViewDisplayContext.getSiteNavigationMenuItemsJSONArray());
-context.put("pathThemeImages", themeDisplay.getPathThemeImages());
-%>
+		<liferay-util:html-top>
+			<link href="<%= PortalUtil.getStaticResourceURL(request, application.getContextPath() + "/css/main.css", portlet.getTimestamp()) %>" rel="stylesheet" type="text/css" />
+		</liferay-util:html-top>
 
-<soy:component-renderer
-	context="<%= context %>"
-	module="site-navigation-item-selector-web/js/SelectSiteNavigationMenuItem.es"
-	templateNamespace="com.liferay.site.navigation.item.selector.web.SelectSiteNavigationMenuItem.render"
-/>
+		<%
+		Map<String, Object> context = new HashMap<>();
+
+		context.put("itemSelectorSaveEvent", siteNavigationMenuItemItemSelectorViewDisplayContext.getItemSelectedEventName());
+		context.put("namespace", liferayPortletResponse.getNamespace());
+		context.put("nodes", siteNavigationMenuItemItemSelectorViewDisplayContext.getSiteNavigationMenuItemsJSONArray());
+		context.put("pathThemeImages", themeDisplay.getPathThemeImages());
+		%>
+
+		<soy:component-renderer
+			context="<%= context %>"
+			module="site-navigation-item-selector-web/js/SelectSiteNavigationMenuItem.es"
+			templateNamespace="com.liferay.site.navigation.item.selector.web.SelectSiteNavigationMenuItem.render"
+		/>
+	</c:when>
+	<c:otherwise>
+		<liferay-frontend:empty-result-message
+			elementType='<%= LanguageUtil.get(resourceBundle, "navigation-menu-items") %>'
+		/>
+	</c:otherwise>
+</c:choose>

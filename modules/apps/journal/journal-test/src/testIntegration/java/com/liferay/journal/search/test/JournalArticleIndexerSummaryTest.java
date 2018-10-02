@@ -16,9 +16,11 @@ package com.liferay.journal.search.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.journal.model.JournalArticle;
-import com.liferay.journal.test.util.JournalArticleBuilder;
-import com.liferay.journal.test.util.JournalArticleContent;
-import com.liferay.journal.test.util.JournalArticleTitle;
+import com.liferay.journal.service.JournalArticleLocalService;
+import com.liferay.journal.test.util.search.JournalArticleBlueprint;
+import com.liferay.journal.test.util.search.JournalArticleContent;
+import com.liferay.journal.test.util.search.JournalArticleSearchFixture;
+import com.liferay.journal.test.util.search.JournalArticleTitle;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Group;
@@ -45,9 +47,11 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.TimeZoneUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.service.test.ServiceTestUtil;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.util.test.LayoutTestUtil;
 
+import java.util.List;
 import java.util.Locale;
 
 import javax.portlet.PortletRequest;
@@ -56,6 +60,7 @@ import javax.portlet.PortletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -86,15 +91,23 @@ public class JournalArticleIndexerSummaryTest {
 
 		_user = UserTestUtil.addUser();
 
-		_journalArticleBuilder = new JournalArticleBuilder();
+		_journalArticleSearchFixture = new JournalArticleSearchFixture(
+			_journalArticleLocalService);
 
-		_journalArticleBuilder.setGroupId(_group.getGroupId());
+		_journalArticleSearchFixture.setUp();
+
+		_journalArticles = _journalArticleSearchFixture.getJournalArticles();
 
 		ServiceTestUtil.setUser(TestPropsValues.getUser());
 
 		CompanyThreadLocal.setCompanyId(TestPropsValues.getCompanyId());
 
 		_indexer = IndexerRegistryUtil.getIndexer(JournalArticle.class);
+	}
+
+	@After
+	public void tearDown() throws Exception {
+		_journalArticleSearchFixture.tearDown();
 	}
 
 	@Test
@@ -162,10 +175,6 @@ public class JournalArticleIndexerSummaryTest {
 			HighlightUtil.HIGHLIGHT_TAG_CLOSE, " content");
 
 		assertSummary(staleHighlightedTitle, highlightedContent, document);
-	}
-
-	protected JournalArticle addArticle() throws Exception {
-		return _journalArticleBuilder.addArticle();
 	}
 
 	protected void assertSummary(
@@ -245,26 +254,26 @@ public class JournalArticleIndexerSummaryTest {
 	protected Document getDocument(String title, String content)
 		throws Exception {
 
-		setTitle(
-			new JournalArticleTitle() {
-				{
-					put(LocaleUtil.US, title);
-				}
-			});
+		return _indexer.getDocument(
+			_journalArticleSearchFixture.addArticle(
+				new JournalArticleBlueprint() {
+					{
+						groupId = _group.getGroupId();
+						journalArticleContent = new JournalArticleContent() {
+							{
+								name = "content";
+								defaultLocale = LocaleUtil.US;
 
-		setContent(
-			new JournalArticleContent() {
-				{
-					name = "content";
-					defaultLocale = LocaleUtil.US;
-
-					put(LocaleUtil.US, content);
-				}
-			});
-
-		JournalArticle journalArticle = addArticle();
-
-		return _indexer.getDocument(journalArticle);
+								put(LocaleUtil.US, content);
+							}
+						};
+						journalArticleTitle = new JournalArticleTitle() {
+							{
+								put(LocaleUtil.US, title);
+							}
+						};
+					}
+				}));
 	}
 
 	protected String getFieldName(String field) {
@@ -283,10 +292,6 @@ public class JournalArticleIndexerSummaryTest {
 			document, null, createPortletRequest(), createPortletResponse());
 	}
 
-	protected void setContent(JournalArticleContent journalArticleContent) {
-		_journalArticleBuilder.setContent(journalArticleContent);
-	}
-
 	protected void setFields(String title, String content, Document document) {
 		document.addText(getFieldName(Field.CONTENT), content);
 		document.addText(getFieldName(Field.TITLE), title);
@@ -300,15 +305,18 @@ public class JournalArticleIndexerSummaryTest {
 		document.addText(getSnippetFieldName(Field.TITLE), highlightedTitle);
 	}
 
-	protected void setTitle(JournalArticleTitle journalArticleTitle) {
-		_journalArticleBuilder.setTitle(journalArticleTitle);
-	}
+	@Inject
+	private static JournalArticleLocalService _journalArticleLocalService;
 
 	@DeleteAfterTestRun
 	private Group _group;
 
 	private Indexer<JournalArticle> _indexer;
-	private JournalArticleBuilder _journalArticleBuilder;
+
+	@DeleteAfterTestRun
+	private List<JournalArticle> _journalArticles;
+
+	private JournalArticleSearchFixture _journalArticleSearchFixture;
 
 	@DeleteAfterTestRun
 	private User _user;

@@ -351,7 +351,7 @@ else {
 
 						$('#<portlet:namespace />rootMenuItemId').val('0');
 
-						$('#<portlet:namespace />rootMenuItemName').text('');
+						$('#<portlet:namespace />rootMenuItemName').text(selectedItem.name);
 
 						$('#<portlet:namespace />removeSiteNavigationMenu').toggleClass('hide');
 
@@ -395,6 +395,10 @@ else {
 		'change',
 		function() {
 			var siteNavigationMenuType = $('#<portlet:namespace />siteNavigationMenuType');
+
+			var selectedSelectSiteNavigationMenuType = $('#<portlet:namespace />selectSiteNavigationMenuType option:selected');
+
+			$('#<portlet:namespace />rootMenuItemName').text(selectedSelectSiteNavigationMenuType.text());
 
 			siteNavigationMenuType.val(selectSiteNavigationMenuType.val());
 		}

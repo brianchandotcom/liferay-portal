@@ -27,7 +27,7 @@ import com.liferay.portal.repository.liferayrepository.LiferayRepository;
 /**
  * @author Brian Wing Shun Chan
  */
-public class RepositoryUADTestHelper {
+public class RepositoryUADTestUtil {
 
 	public static Repository addRepository(
 			Portal portal, RepositoryLocalService repositoryLocalService,

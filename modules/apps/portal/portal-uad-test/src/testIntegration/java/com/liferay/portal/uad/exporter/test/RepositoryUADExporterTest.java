@@ -22,7 +22,7 @@ import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portal.uad.test.RepositoryUADTestHelper;
+import com.liferay.portal.uad.test.RepositoryUADTestUtil;
 import com.liferay.user.associated.data.exporter.UADExporter;
 import com.liferay.user.associated.data.test.util.BaseUADExporterTestCase;
 
@@ -47,7 +47,7 @@ public class RepositoryUADExporterTest
 
 	@Override
 	protected Repository addBaseModel(long userId) throws Exception {
-		Repository repository = RepositoryUADTestHelper.addRepository(
+		Repository repository = RepositoryUADTestUtil.addRepository(
 			_portal, _repositoryLocalService, userId);
 
 		_repositories.add(repository);

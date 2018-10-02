@@ -65,7 +65,7 @@ public class SiteNavigationMenuItemItemSelectorViewDisplayContext {
 		return _siteNavigationMenu;
 	}
 
-	public JSONArray getSiteNavigationMenuItemsJSONArray() throws Exception {
+	public JSONArray getSiteNavigationMenuItemsJSONArray() {
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
@@ -99,8 +99,7 @@ public class SiteNavigationMenuItemItemSelectorViewDisplayContext {
 	}
 
 	private JSONArray _getSiteNavigationMenuItemsJSONArray(
-			long siteNavigationMenuId, long parentSiteNavigationMenuItemId)
-		throws Exception {
+		long siteNavigationMenuId, long parentSiteNavigationMenuItemId) {
 
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 

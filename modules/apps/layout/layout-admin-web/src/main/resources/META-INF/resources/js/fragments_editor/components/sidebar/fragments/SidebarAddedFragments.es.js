@@ -7,8 +7,8 @@ import {
 	REMOVE_FRAGMENT_ENTRY_LINK,
 	UPDATE_LAST_SAVE_DATE,
 	UPDATE_SAVING_CHANGES_STATUS
-} from '../../actions/actions.es';
-import {Store} from '../../store/store.es';
+} from '../../../actions/actions.es';
+import {Store} from '../../../store/store.es';
 import templates from './SidebarAddedFragments.soy';
 
 /**

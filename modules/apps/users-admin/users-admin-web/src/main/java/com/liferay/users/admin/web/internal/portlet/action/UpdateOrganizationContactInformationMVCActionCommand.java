@@ -16,6 +16,7 @@ package com.liferay.users.admin.web.internal.portlet.action;
 
 import com.liferay.portal.kernel.exception.EmailAddressException;
 import com.liferay.portal.kernel.exception.NoSuchListTypeException;
+import com.liferay.portal.kernel.exception.NoSuchOrgLaborException;
 import com.liferay.portal.kernel.exception.NoSuchOrganizationException;
 import com.liferay.portal.kernel.exception.PhoneNumberException;
 import com.liferay.portal.kernel.exception.PhoneNumberExtensionException;
@@ -28,6 +29,8 @@ import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.EmailAddressLocalService;
 import com.liferay.portal.kernel.service.EmailAddressService;
+import com.liferay.portal.kernel.service.OrgLaborLocalService;
+import com.liferay.portal.kernel.service.OrgLaborService;
 import com.liferay.portal.kernel.service.OrganizationService;
 import com.liferay.portal.kernel.service.PhoneLocalService;
 import com.liferay.portal.kernel.service.PhoneService;
@@ -44,6 +47,7 @@ import com.liferay.users.admin.constants.UsersAdminPortletKeys;
 import com.liferay.users.admin.kernel.util.UsersAdmin;
 import com.liferay.users.admin.web.internal.helper.ContactInformationHelper;
 import com.liferay.users.admin.web.internal.helper.EmailAddressContactInformationHelper;
+import com.liferay.users.admin.web.internal.helper.OrgLaborContactInformationHelper;
 import com.liferay.users.admin.web.internal.helper.PhoneContactInformationHelper;
 import com.liferay.users.admin.web.internal.helper.WebsiteContactInformationHelper;
 
@@ -86,6 +90,7 @@ public class UpdateOrganizationContactInformationMVCActionCommand
 			}
 			else if (e instanceof EmailAddressException ||
 					 e instanceof NoSuchListTypeException ||
+					 e instanceof NoSuchOrgLaborException ||
 					 e instanceof PhoneNumberException ||
 					 e instanceof PhoneNumberExtensionException ||
 					 e instanceof WebsiteURLException) {
@@ -117,6 +122,10 @@ public class UpdateOrganizationContactInformationMVCActionCommand
 			return new PhoneContactInformationHelper(
 				Organization.class, organizationId, _phoneService,
 				_phoneLocalService, _usersAdmin);
+		}
+		else if (listType.equals(ListTypeConstants.ORGANIZATION_SERVICE)) {
+			return new OrgLaborContactInformationHelper(
+				organizationId, _orgLaborLocalService, _orgLaborService);
 		}
 		else if (listType.equals(ListTypeConstants.WEBSITE)) {
 			return new WebsiteContactInformationHelper(
@@ -173,6 +182,12 @@ public class UpdateOrganizationContactInformationMVCActionCommand
 
 	@Reference
 	private OrganizationService _organizationService;
+
+	@Reference
+	private OrgLaborLocalService _orgLaborLocalService;
+
+	@Reference
+	private OrgLaborService _orgLaborService;
 
 	@Reference
 	private PhoneLocalService _phoneLocalService;

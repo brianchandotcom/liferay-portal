@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <custom-sql>
-	<sql id="com.liferay.sharing.service.persistence.SharingEntryFinder.countUniqueByToUserId">
+	<sql id="com.liferay.sharing.service.persistence.SharingEntryFinder.countByToUserId">
 		<![CDATA[
 			SELECT
 				COUNT(*) AS COUNT_VALUE
@@ -21,7 +21,7 @@
 					)
 		]]>
 	</sql>
-	<sql id="com.liferay.sharing.service.persistence.SharingEntryFinder.findUniqueByToUserId">
+	<sql id="com.liferay.sharing.service.persistence.SharingEntryFinder.findByToUserId">
 		<![CDATA[
 			SELECT
 				{SharingEntry.*}

@@ -231,7 +231,7 @@ public class SharingEntryLocalServiceImpl
 	 */
 	@Override
 	public int countUniqueToUserSharingEntries(long toUserId) {
-		return sharingEntryFinder.countUniqueByToUserId(toUserId);
+		return sharingEntryFinder.countByToUserId(toUserId);
 	}
 
 	/**
@@ -512,7 +512,7 @@ public class SharingEntryLocalServiceImpl
 	public List<SharingEntry> getUniqueToUserSharingEntries(
 		long toUserId, int start, int end) {
 
-		return sharingEntryFinder.findUniqueByToUserId(toUserId, start, end);
+		return sharingEntryFinder.findByToUserId(toUserId, start, end);
 	}
 
 	/**

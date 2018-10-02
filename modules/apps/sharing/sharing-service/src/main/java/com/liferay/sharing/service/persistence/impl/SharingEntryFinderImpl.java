@@ -35,19 +35,19 @@ import java.util.List;
 public class SharingEntryFinderImpl
 	extends SharingEntryFinderBaseImpl implements SharingEntryFinder {
 
-	public static final String COUNT_BY_TO_USER_ID_UNIQUE =
-		SharingEntryFinder.class.getName() + ".countUniqueByToUserId";
+	public static final String COUNT_BY_TO_USER_ID =
+		SharingEntryFinder.class.getName() + ".countByToUserId";
 
-	public static final String FIND_BY_TO_USER_ID_UNIQUE =
-		SharingEntryFinder.class.getName() + ".findUniqueByToUserId";
+	public static final String FIND_BY_TO_USER_ID =
+		SharingEntryFinder.class.getName() + ".findByToUserId";
 
-	public int countUniqueByToUserId(long toUserId) {
+	public int countByToUserId(long toUserId) {
 		Session session = null;
 
 		try {
 			session = openSession();
 
-			String sql = _customSQL.get(getClass(), COUNT_BY_TO_USER_ID_UNIQUE);
+			String sql = _customSQL.get(getClass(), COUNT_BY_TO_USER_ID);
 
 			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
@@ -77,7 +77,7 @@ public class SharingEntryFinderImpl
 		}
 	}
 
-	public List<SharingEntry> findUniqueByToUserId(
+	public List<SharingEntry> findByToUserId(
 		long toUserId, int begin, int end) {
 
 		Session session = null;
@@ -85,7 +85,7 @@ public class SharingEntryFinderImpl
 		try {
 			session = openSession();
 
-			String sql = _customSQL.get(getClass(), FIND_BY_TO_USER_ID_UNIQUE);
+			String sql = _customSQL.get(getClass(), FIND_BY_TO_USER_ID);
 
 			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 

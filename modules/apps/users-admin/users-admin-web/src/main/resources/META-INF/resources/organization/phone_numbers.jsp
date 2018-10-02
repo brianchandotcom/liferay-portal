@@ -62,6 +62,8 @@ List<Phone> phones = PhoneServiceUtil.getPhones(Organization.class.getName(), or
 <liferay-ui:search-container
 	compactEmptyResultsMessage="<%= true %>"
 	cssClass="lfr-search-container-wrapper"
+	curParam="phoneNumberCur"
+	deltaParam="phoneNumbersDelta"
 	emptyResultsMessage="this-organization-does-not-have-any-phone-numbers"
 	headerNames="phone-number,type,extension,"
 	id="phonesSearchContainer"

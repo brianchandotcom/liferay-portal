@@ -62,6 +62,8 @@ List<EmailAddress> emailAddresses = EmailAddressServiceUtil.getEmailAddresses(Or
 <liferay-ui:search-container
 	compactEmptyResultsMessage="<%= true %>"
 	cssClass="lfr-search-container-wrapper"
+	curParam="emailAddressesCur"
+	deltaParam="emailAddressesDelta"
 	emptyResultsMessage="this-organization-does-not-have-any-additional-email-addresses"
 	headerNames="email-address,type,"
 	id="emailAddressesSearchContainer"

@@ -61,6 +61,8 @@ List<Website> websites = WebsiteServiceUtil.getWebsites(Organization.class.getNa
 <liferay-ui:search-container
 	compactEmptyResultsMessage="<%= true %>"
 	cssClass="lfr-search-container-wrapper"
+	curParam="websitesCur"
+	deltaParam="websitesDelta"
 	emptyResultsMessage="this-organization-does-not-have-any-websites"
 	headerNames="website,type,"
 	id="websitesSearchContainer"

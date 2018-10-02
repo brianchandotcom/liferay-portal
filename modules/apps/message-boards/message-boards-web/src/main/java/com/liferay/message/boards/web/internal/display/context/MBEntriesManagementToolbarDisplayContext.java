@@ -22,6 +22,7 @@ import com.liferay.message.boards.constants.MBCategoryConstants;
 import com.liferay.message.boards.constants.MBPortletKeys;
 import com.liferay.message.boards.model.MBCategory;
 import com.liferay.message.boards.model.MBMessage;
+import com.liferay.message.boards.model.MBThread;
 import com.liferay.message.boards.util.comparator.CategoryModifiedDateComparator;
 import com.liferay.message.boards.util.comparator.CategoryTitleComparator;
 import com.liferay.message.boards.util.comparator.MBObjectsModifiedDateComparator;
@@ -167,8 +168,14 @@ public class MBEntriesManagementToolbarDisplayContext {
 				permissionChecker, message.getGroupId(),
 				message.getCategoryId(), ActionKeys.LOCK_THREAD)) {
 
-			availableActionDropdownItems.add("lockEntries");
-			availableActionDropdownItems.add("unlockEntries");
+			MBThread thread = message.getThread();
+
+			if ((thread != null) && thread.isLocked()) {
+				availableActionDropdownItems.add("unlockEntries");
+			}
+			else {
+				availableActionDropdownItems.add("lockEntries");
+			}
 		}
 
 		return availableActionDropdownItems;

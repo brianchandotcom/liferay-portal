@@ -82,4 +82,12 @@ public class SegmentsEntryRelLocalServiceImpl
 		return segmentsEntryRelPersistence.findByCN_CPK(classNameId, classPK);
 	}
 
+	@Override
+	public List<SegmentsEntryRel> getSegmentsEntryRels(
+		long groupId, long classNameId, long classPK) {
+
+		return segmentsEntryRelPersistence.findByG_CN_CPK(
+			groupId, classNameId, classPK);
+	}
+
 }

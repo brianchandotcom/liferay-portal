@@ -259,6 +259,11 @@ public class SegmentsEntryRelLocalServiceUtil {
 		return getService().getSegmentsEntryRels(classNameId, classPK);
 	}
 
+	public static java.util.List<com.liferay.segments.model.SegmentsEntryRel> getSegmentsEntryRels(
+		long groupId, long classNameId, long classPK) {
+		return getService().getSegmentsEntryRels(groupId, classNameId, classPK);
+	}
+
 	/**
 	* Returns the number of segments entry rels.
 	*

@@ -195,7 +195,7 @@ gradle.beforeProject {
 
 			if (gradle.hasProperty("testClassGroupIndex")) {
 				configure([test, testIntegration]) {
-					include gradle.testClasses
+					include _getTestClasses(it)
 
 					jvmArgs "-Dtest.class.group.index=" + gradle.testClassGroupIndex
 					jvmArgs "-Dtest.class.groups=" + gradle.testClassGroups
@@ -299,12 +299,12 @@ gradle.taskGraph.useFilter {
 		}
 	}
 	else if (task.name == "test") {
-		if (!_hasTestClasses(task.project, "src/test/java")) {
+		if (!_hasTestClasses(task, "src/test/java")) {
 			return false
 		}
 	}
 	else if (task.name == "testIntegration") {
-		if (!_hasTestClasses(task.project, "src/testIntegration/java")) {
+		if (!_hasTestClasses(task, "src/testIntegration/java")) {
 			return false
 		}
 	}
@@ -328,7 +328,29 @@ private File _getRootDir(File dir, String markerFileName) {
 	}
 }
 
-private boolean _hasTestClasses(Project project, String testClassesDirName) {
+private List<String> _getTestClasses(Task task) {
+	List<String> testClasses = task.project.gradle.testClasses.collect {
+		String testClass ->
+
+		if (testClass.startsWith("/modules/")) {
+			String projectPath = task.project.path.replace(':' as char, '/' as char)
+
+			String javaPath = "/modules" + projectPath + "/src/" + task.name + "/java/"
+
+			if (testClass.startsWith(javaPath)) {
+				testClass = testClass.replace(javaPath, "")
+			}
+		}
+
+		return testClass
+	}
+
+	return testClasses
+}
+
+private boolean _hasTestClasses(Task task, String testClassesDirName) {
+	Project project = task.project
+
 	File testClassesDir = project.file(testClassesDirName)
 
 	if (!testClassesDir.exists()) {
@@ -336,8 +358,10 @@ private boolean _hasTestClasses(Project project, String testClassesDirName) {
 	}
 
 	if (project.gradle.hasProperty("testClassGroupIndex")) {
-		List<String> testJavaClasses = project.gradle.testClasses.collect {
-			it.replace ".class", ".java"
+		List<String> testJavaClasses = _getTestClasses(task).collect {
+			String testClass ->
+
+			return testClass.replace(".class", ".java")
 		}
 
 		FileTree testJavaClassesFileTree = project.fileTree(dir: testClassesDir, includes: testJavaClasses)

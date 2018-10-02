@@ -4604,51 +4604,101 @@ ${output.content}</echo>
 	<target name="pmd-jdk8">
 		<local name="count" />
 
-		<antcall inheritAll="false" target="setup-sdk" />
+		<delete dir="pmd-reports" />
 
-		<antcall inheritAll="false" target="run-pmd" />
+		<antcall inheritAll="false" target="compile" />
 
-		<var name="pmd.violations" value="" />
-
-		<xmltask source="pmd-reports/pmd-report.xml">
-			<call path="/pmd/file/violation">
-				<param name="beginline" path="@beginline" />
-				<param default="" name="externalInfoURL" path="@externalInfoUrl" />
-				<param name="fileName" path="../@name" />
-				<param name="message" path="text()" />
-				<param name="rule" path="@rule" />
-				<actions>
-					<antelope:stringutil property="message" string="@{message}">
-						<antelope:trim />
-					</antelope:stringutil>
-
-					<var name="pmd.violations" value="${pmd.violations}${line.separator}PMD VIOLATION: ${basedir}/@{fileName}:@{beginline} > ${message} (PMD Rule: @{rule})${line.separator}" />
-
-					<if>
-						<not>
-							<equals arg1="@{externalInfoURL}" arg2="" />
-						</not>
-						<then>
-							<var name="pmd.violations" value="${pmd.violations}For more information, please see @{externalInfoURL}.${line.separator}" />
-						</then>
-					</if>
-				</actions>
-			</call>
-			<copy
-				path="count(/pmd/file/violation)"
-				property="count"
-			/>
-		</xmltask>
+		<java
+			classname="com.liferay.portal.tools.GitUtil"
+			classpathref="project.classpath"
+			dir="${project.dir}"
+			fork="true"
+			newenvironment="true"
+			outputProperty="baseline.current.branch.file.names"
+			resultproperty="baseline.current.branch.result"
+		>
+			<arg value="git.type=current-branch" />
+			<arg value="git.working.branch.name=${git.working.branch.name}" />
+		</java>
 
 		<if>
-			<and>
-				<isset property="count" />
-				<not>
-					<equals arg1="${count}" arg2="0" />
-				</not>
-			</and>
+			<equals arg1="${baseline.current.branch.file.names}" arg2="" />
 			<then>
-				<fail message="${count} PMD violation(s) were found.${line.separator}${pmd.violations}" />
+				<antcall inheritAll="false" target="run-pmd" />
+			</then>
+			<else>
+				<loadresource property="modified.java.files">
+					<filterchain>
+						<linecontainsregexp>
+							<regexp pattern=".*\.java$" />
+						</linecontainsregexp>
+						<tokenfilter delimOutput="," />
+					</filterchain>
+					<propertyresource name="baseline.current.branch.file.names" />
+				</loadresource>
+
+				<if>
+					<isset property="modified.java.files" />
+					<then>
+						<echo>Running PMD on the following files: ${modified.java.files}</echo>
+
+						<antcall inheritAll="false" target="run-pmd">
+							<param name="pmd.java.includes" value="${modified.java.files}" />
+						</antcall>
+					</then>
+					<else>
+						<echo message="No modified Java files. Skipping PMD check." />
+					</else>
+				</if>
+			</else>
+		</if>
+
+		<if>
+			<available file="pmd-reports" />
+			<then>
+				<var name="pmd.violations" value="" />
+
+				<xmltask source="pmd-reports/pmd-report.xml">
+					<call path="/pmd/file/violation">
+						<param name="beginline" path="@beginline" />
+						<param default="" name="externalInfoURL" path="@externalInfoUrl" />
+						<param name="fileName" path="../@name" />
+						<param name="message" path="text()" />
+						<param name="rule" path="@rule" />
+						<actions>
+							<antelope:stringutil property="message" string="@{message}">
+								<antelope:trim />
+							</antelope:stringutil>
+
+							<var name="pmd.violations" value="${pmd.violations}${line.separator}PMD VIOLATION: ${basedir}/@{fileName}:@{beginline} > ${message} (PMD Rule: @{rule})${line.separator}" />
+
+							<if>
+								<not>
+									<equals arg1="@{externalInfoURL}" arg2="" />
+								</not>
+								<then>
+									<var name="pmd.violations" value="${pmd.violations}For more information, please see @{externalInfoURL}.${line.separator}" />
+								</then>
+							</if>
+						</actions>
+					</call>
+					<copy
+						path="count(/pmd/file/violation)"
+						property="count"
+					/>
+				</xmltask>
+
+				<if>
+					<and>
+						<isset property="count" />
+						<not>
+							<equals arg1="${count}" arg2="0" />
+						</not>
+					</and>
+					<then>
+						<fail message="${count} PMD violation(s) were found.${line.separator}${pmd.violations}" />
+					</then>
+				</if>
 			</then>
 		</if>
 	</target>

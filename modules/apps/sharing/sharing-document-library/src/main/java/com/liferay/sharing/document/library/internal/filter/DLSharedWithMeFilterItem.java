@@ -16,7 +16,7 @@ package com.liferay.sharing.document.library.internal.filter;
 
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.sharing.web.filter.SharedWithMeFilterItem;
+import com.liferay.sharing.filter.SharedWithMeFilterItem;
 
 import java.util.Locale;
 

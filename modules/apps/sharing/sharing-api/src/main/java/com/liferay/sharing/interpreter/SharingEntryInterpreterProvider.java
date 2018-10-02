@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.sharing.web.interpreter;
+package com.liferay.sharing.interpreter;
 
 import com.liferay.sharing.model.SharingEntry;
 

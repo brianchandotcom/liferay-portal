@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.portlet.LiferayEventResponse;
 import com.liferay.portal.kernel.portlet.LiferayPortletMode;
 import com.liferay.portal.kernel.portlet.LiferayResourceRequest;
 import com.liferay.portal.kernel.portlet.LiferayResourceResponse;
+import com.liferay.portal.kernel.portlet.LiferayStateAwareResponse;
 import com.liferay.portal.kernel.portlet.PortletConfigFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletContainer;
 import com.liferay.portal.kernel.portlet.PortletContainerException;
@@ -492,9 +493,20 @@ public class PortletContainerImpl implements PortletContainer {
 			RenderParametersPool.clear(
 				request, layout.getPlid(), portlet.getPortletId());
 
-			RenderParametersPool.put(
-				request, layout.getPlid(), portlet.getPortletId(),
-				liferayActionResponse.getRenderParameterMap());
+			PortletApp portletApp = portlet.getPortletApp();
+
+			if (portletApp.getSpecMajorVersion() < 3) {
+				RenderParametersPool.put(
+					request, layout.getPlid(), portlet.getPortletId(),
+					liferayActionResponse.getRenderParameterMap());
+			}
+			else {
+				Layout requestLayout = (Layout)request.getAttribute(
+					WebKeys.LAYOUT);
+
+				_setAllRenderParametersV3(
+					request, liferayActionResponse, portlet, requestLayout);
+			}
 
 			List<Event> events = liferayActionResponse.getEvents();
 
@@ -648,58 +660,8 @@ public class PortletContainerImpl implements PortletContainer {
 						new HashMap<>(renderParameterMap));
 				}
 				else {
-					MutableRenderParametersImpl mutableRenderParametersImpl =
-						(MutableRenderParametersImpl)
-							liferayEventResponse.getRenderParameters();
-
-					Map<String, String[]> mutableRenderParametersMap =
-						mutableRenderParametersImpl.getParameterMap();
-
-					Map<String, QName> supportedPublicRenderParameterMap =
-						new HashMap<>();
-
-					for (PublicRenderParameter supportedPublicRenderParameter :
-							portlet.getPublicRenderParameters()) {
-
-						supportedPublicRenderParameterMap.put(
-							supportedPublicRenderParameter.getIdentifier(),
-							supportedPublicRenderParameter.getQName());
-					}
-
-					Map<String, String[]> publicRenderParameterMap =
-						PublicRenderParametersPool.get(
-							request, requestLayout.getPlid());
-
-					Map<String, String[]> privateRenderParameterMap =
-						new HashMap<>();
-
-					for (Map.Entry<String, String[]> entry :
-							mutableRenderParametersMap.entrySet()) {
-
-						String key = entry.getKey();
-
-						QName qName = supportedPublicRenderParameterMap.get(
-							key);
-
-						if (qName != null) {
-							String publicRenderParameterName =
-								PortletQNameUtil.getPublicRenderParameterName(
-									qName);
-
-							publicRenderParameterMap.put(
-								publicRenderParameterName, entry.getValue());
-
-							continue;
-						}
-
-						privateRenderParameterMap.put(key, entry.getValue());
-					}
-
-					if (!privateRenderParameterMap.isEmpty()) {
-						RenderParametersPool.put(
-							request, requestLayout.getPlid(),
-							portlet.getPortletId(), privateRenderParameterMap);
-					}
+					_setAllRenderParametersV3(
+						request, liferayEventResponse, portlet, requestLayout);
 				}
 			}
 
@@ -1058,6 +1020,60 @@ public class PortletContainerImpl implements PortletContainer {
 
 				portletAsyncContextImpl.setReturnedToContainer();
 			}
+		}
+	}
+
+	private void _setAllRenderParametersV3(
+		HttpServletRequest request,
+		LiferayStateAwareResponse liferayStateAwareResponse, Portlet portlet,
+		Layout requestLayout) {
+
+		MutableRenderParametersImpl mutableRenderParametersImpl =
+			(MutableRenderParametersImpl)
+				liferayStateAwareResponse.getRenderParameters();
+
+		Map<String, String[]> mutableRenderParametersMap =
+			mutableRenderParametersImpl.getParameterMap();
+
+		Map<String, QName> supportedPublicRenderParameterMap = new HashMap<>();
+
+		for (PublicRenderParameter supportedPublicRenderParameter :
+				portlet.getPublicRenderParameters()) {
+
+			supportedPublicRenderParameterMap.put(
+				supportedPublicRenderParameter.getIdentifier(),
+				supportedPublicRenderParameter.getQName());
+		}
+
+		Map<String, String[]> publicRenderParameterMap =
+			PublicRenderParametersPool.get(request, requestLayout.getPlid());
+
+		Map<String, String[]> privateRenderParameterMap = new HashMap<>();
+
+		for (Map.Entry<String, String[]> entry :
+				mutableRenderParametersMap.entrySet()) {
+
+			String key = entry.getKey();
+
+			QName qName = supportedPublicRenderParameterMap.get(key);
+
+			if (qName != null) {
+				String publicRenderParameterName =
+					PortletQNameUtil.getPublicRenderParameterName(qName);
+
+				publicRenderParameterMap.put(
+					publicRenderParameterName, entry.getValue());
+
+				continue;
+			}
+
+			privateRenderParameterMap.put(key, entry.getValue());
+		}
+
+		if (!privateRenderParameterMap.isEmpty()) {
+			RenderParametersPool.put(
+				request, requestLayout.getPlid(), portlet.getPortletId(),
+				privateRenderParameterMap);
 		}
 	}
 

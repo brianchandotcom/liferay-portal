@@ -127,12 +127,11 @@ public class TextDDMFormFieldTypeSettingsTest
 
 		Assert.assertEquals(actions.toString(), 1, actions.size());
 
-		StringBundler sb = new StringBundler(4);
+		StringBundler sb = new StringBundler(3);
 
-		sb.append("call('getDataProviderInstanceOutputParameters', concat('");
-		sb.append("dataProviderInstanceId=', getValue('ddmDataProvider");
-		sb.append("InstanceId')), 'ddmDataProviderInstanceOutput=output");
-		sb.append("ParameterNames')");
+		sb.append("call('getDataProviderInstanceOutputParameters', '");
+		sb.append("dataProviderInstanceId=ddmDataProviderInstanceId', '");
+		sb.append("ddmDataProviderInstanceOutput=outputParameterNames')");
 
 		Assert.assertEquals(sb.toString(), actions.get(0));
 

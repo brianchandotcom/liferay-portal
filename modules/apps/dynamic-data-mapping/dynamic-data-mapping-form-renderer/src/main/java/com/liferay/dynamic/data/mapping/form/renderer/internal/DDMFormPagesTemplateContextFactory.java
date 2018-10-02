@@ -14,10 +14,9 @@
 
 package com.liferay.dynamic.data.mapping.form.renderer.internal;
 
-import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormEvaluationException;
-import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormEvaluationResult;
 import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormEvaluator;
-import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormEvaluatorContext;
+import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormEvaluatorEvaluateRequest;
+import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormEvaluatorEvaluateResponse;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesTracker;
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderingContext;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
@@ -29,12 +28,12 @@ import com.liferay.dynamic.data.mapping.model.DDMFormLayoutRow;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
-import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -83,7 +82,7 @@ public class DDMFormPagesTemplateContextFactory {
 	}
 
 	public List<Object> create() {
-		_ddmFormEvaluationResult = _createDDMFormEvaluationResult();
+		_evaluate();
 
 		return createPagesTemplateContext(
 			_ddmFormLayout.getDDMFormLayoutPages());
@@ -97,10 +96,6 @@ public class DDMFormPagesTemplateContextFactory {
 		DDMFormFieldTypeServicesTracker ddmFormFieldTypeServicesTracker) {
 
 		_ddmFormFieldTypeServicesTracker = ddmFormFieldTypeServicesTracker;
-	}
-
-	public void setJSONFactory(JSONFactory jsonFactory) {
-		_jsonFactory = jsonFactory;
 	}
 
 	protected boolean containsRequiredField(List<String> ddmFormFieldNames) {
@@ -148,8 +143,12 @@ public class DDMFormPagesTemplateContextFactory {
 		List<Object> fieldsTemplateContext = new ArrayList<>();
 
 		for (String ddmFormFieldName : ddmFormFieldNames) {
-			fieldsTemplateContext.addAll(
-				createFieldTemplateContext(ddmFormFieldName));
+			List<Object> fieldTemplateContexts = createFieldTemplateContext(
+				ddmFormFieldName);
+
+			if (ListUtil.isNotEmpty(fieldTemplateContexts)) {
+				fieldsTemplateContext.addAll(fieldTemplateContexts);
+			}
 		}
 
 		return fieldsTemplateContext;
@@ -158,9 +157,11 @@ public class DDMFormPagesTemplateContextFactory {
 	protected List<Object> createFieldTemplateContext(String ddmFormFieldName) {
 		DDMFormFieldTemplateContextFactory ddmFormFieldTemplateContextFactory =
 			new DDMFormFieldTemplateContextFactory(
-				_ddmFormFieldsMap, _ddmFormEvaluationResult,
+				_ddmFormFieldsMap,
+				_ddmFormEvaluatorEvaluateResponse.
+					getDDMFormFieldsPropertyChanges(),
 				_ddmFormFieldValuesMap.get(ddmFormFieldName),
-				_ddmFormRenderingContext, _jsonFactory, _pageEnabled);
+				_ddmFormRenderingContext, _pageEnabled);
 
 		ddmFormFieldTemplateContextFactory.setDDMFormFieldTypeServicesTracker(
 			_ddmFormFieldTypeServicesTracker);
@@ -283,7 +284,7 @@ public class DDMFormPagesTemplateContextFactory {
 
 	protected boolean isPageEnabled(int pageIndex) {
 		Set<Integer> disabledPagesIndexes =
-			_ddmFormEvaluationResult.getDisabledPagesIndexes();
+			_ddmFormEvaluatorEvaluateResponse.getDisabledPagesIndexes();
 
 		if (disabledPagesIndexes.contains(pageIndex)) {
 			return false;
@@ -333,23 +334,30 @@ public class DDMFormPagesTemplateContextFactory {
 		}
 	}
 
-	private DDMFormEvaluationResult _createDDMFormEvaluationResult() {
+	private void _evaluate() {
 		try {
-			DDMFormEvaluatorContext ddmFormEvaluatorContext =
-				new DDMFormEvaluatorContext(_ddmForm, _ddmFormValues, _locale);
+			DDMFormEvaluatorEvaluateRequest.Builder
+				formEvaluatorEvaluateRequestBuilder =
+					DDMFormEvaluatorEvaluateRequest.Builder.newBuilder(
+						_ddmForm, _ddmFormValues, _locale);
 
-			ddmFormEvaluatorContext.addProperty(
-				"groupId", _ddmFormRenderingContext.getGroupId());
-			ddmFormEvaluatorContext.addProperty(
-				"request", _ddmFormRenderingContext.getHttpServletRequest());
+			formEvaluatorEvaluateRequestBuilder.withCompanyId(
+				PortalUtil.getCompanyId(
+					_ddmFormRenderingContext.getHttpServletRequest()));
+			formEvaluatorEvaluateRequestBuilder.withGroupId(
+				_ddmFormRenderingContext.getGroupId());
+			formEvaluatorEvaluateRequestBuilder.withUserId(
+				PortalUtil.getUserId(
+					_ddmFormRenderingContext.getHttpServletRequest()));
 
-			return _ddmFormEvaluator.evaluate(ddmFormEvaluatorContext);
+			_ddmFormEvaluatorEvaluateResponse = _ddmFormEvaluator.evaluate(
+				formEvaluatorEvaluateRequestBuilder.build());
 		}
-		catch (DDMFormEvaluationException ddmfee) {
-			_log.error("Unable to evaluate the form", ddmfee);
+		catch (Exception e) {
+			_log.error("Unable to evaluate the form", e);
 
 			throw new IllegalStateException(
-				"Unexpected error occurred during form evaluation", ddmfee);
+				"Unexpected error occurred during form evaluation", e);
 		}
 	}
 
@@ -357,15 +365,14 @@ public class DDMFormPagesTemplateContextFactory {
 		DDMFormPagesTemplateContextFactory.class);
 
 	private final DDMForm _ddmForm;
-	private DDMFormEvaluationResult _ddmFormEvaluationResult;
 	private DDMFormEvaluator _ddmFormEvaluator;
+	private DDMFormEvaluatorEvaluateResponse _ddmFormEvaluatorEvaluateResponse;
 	private final Map<String, DDMFormField> _ddmFormFieldsMap;
 	private DDMFormFieldTypeServicesTracker _ddmFormFieldTypeServicesTracker;
 	private final Map<String, List<DDMFormFieldValue>> _ddmFormFieldValuesMap;
 	private final DDMFormLayout _ddmFormLayout;
 	private final DDMFormRenderingContext _ddmFormRenderingContext;
 	private final DDMFormValues _ddmFormValues;
-	private JSONFactory _jsonFactory;
 	private final Locale _locale;
 	private boolean _pageEnabled;
 

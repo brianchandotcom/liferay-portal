@@ -132,7 +132,6 @@ public class DDMFormContextProviderServlet extends HttpServlet {
 			ddmFormPagesTemplateContextFactory.
 				setDDMFormFieldTypeServicesTracker(
 					_ddmFormFieldTypeServicesTracker);
-			ddmFormPagesTemplateContextFactory.setJSONFactory(_jsonFactory);
 
 			return ddmFormPagesTemplateContextFactory.create();
 		}
@@ -156,6 +155,8 @@ public class DDMFormContextProviderServlet extends HttpServlet {
 		ddmFormRenderingContext.setHttpServletResponse(response);
 		ddmFormRenderingContext.setLocale(locale);
 		ddmFormRenderingContext.setPortletNamespace(portletNamespace);
+		ddmFormRenderingContext.setReturnFullContext(
+			ParamUtil.getBoolean(request, "returnFullContext"));
 
 		return ddmFormRenderingContext;
 	}

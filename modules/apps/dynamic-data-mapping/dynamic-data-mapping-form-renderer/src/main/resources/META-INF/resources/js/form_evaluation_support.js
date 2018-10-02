@@ -89,22 +89,18 @@ AUI.add(
 								}
 							}
 
-							if (fieldContext.valid) {
-								fieldContext.errorMessage = '';
-							}
+							delete fieldContext.value;
 
 							fieldContext = field.processEvaluationContext(fieldContext, result);
 
+							var currentContext = field.get('context');
+
+							currentContext.errorMessage = '';
+							currentContext.valid = true;
+
 							fieldContext = A.merge(
-								field.get('context'),
-								{
-									errorMessage: fieldContext.errorMessage,
-									options: fieldContext.options,
-									readOnly: fieldContext.readOnly,
-									required: fieldContext.required,
-									valid: fieldContext.valid,
-									visible: fieldContext.visible
-								},
+								currentContext,
+								fieldContext,
 								field.getEvaluationContext(fieldContext)
 							);
 

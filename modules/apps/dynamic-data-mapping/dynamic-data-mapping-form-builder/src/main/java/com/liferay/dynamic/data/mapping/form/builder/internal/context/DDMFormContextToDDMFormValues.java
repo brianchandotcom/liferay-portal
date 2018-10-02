@@ -164,7 +164,7 @@ public class DDMFormContextToDDMFormValues
 		JSONObject fieldJSONObject, DDMFormField ddmFormField,
 		DDMFormFieldValue ddmFormFieldValue) {
 
-		if (ddmFormField.isTransient()) {
+		if ((ddmFormField == null) || ddmFormField.isTransient()) {
 			return;
 		}
 

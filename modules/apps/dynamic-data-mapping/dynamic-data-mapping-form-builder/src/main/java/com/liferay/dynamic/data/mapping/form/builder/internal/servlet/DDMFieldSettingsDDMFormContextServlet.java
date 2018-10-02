@@ -105,6 +105,7 @@ public class DDMFieldSettingsDDMFormContextServlet
 			ddmFormRenderingContext.setContainerId("settings");
 			ddmFormRenderingContext.setLocale(locale);
 			ddmFormRenderingContext.setPortletNamespace(portletNamespace);
+			ddmFormRenderingContext.setReturnFullContext(true);
 
 			return _ddmFormTemplateContextFactory.create(
 				ddmFormFieldTypeSettingsDDMForm,

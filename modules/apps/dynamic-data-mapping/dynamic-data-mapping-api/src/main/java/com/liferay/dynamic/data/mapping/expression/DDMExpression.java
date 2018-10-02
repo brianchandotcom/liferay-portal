@@ -18,8 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.dynamic.data.mapping.expression.model.Expression;
 
-import java.math.MathContext;
-
+import java.util.Collections;
 import java.util.Map;
 
 /**
@@ -32,42 +31,116 @@ public interface DDMExpression<T> {
 
 	public Expression getModel();
 
-	public Map<String, VariableDependencies> getVariableDependenciesMap()
-		throws DDMExpressionException;
+	/**
+	 * @deprecated As of Judson (7.1.x), with no direct replacement
+	 */
+	@Deprecated
+	public default Map<String, VariableDependencies>
+			getVariableDependenciesMap()
+		throws DDMExpressionException {
 
-	public void setBooleanVariableValue(
-		String variableName, Boolean variableValue);
-
-	public void setDDMExpressionFunction(
-		String functionName, DDMExpressionFunction ddmExpressionFunction);
-
-	public void setDoubleVariableValue(
-		String variableName, Double variableValue);
-
-	public void setExpressionStringVariableValue(
-		String variableName, String variableValue);
-
-	public void setFloatVariableValue(String variableName, Float variableValue);
-
-	public void setIntegerVariableValue(
-		String variableName, Integer variableValue);
-
-	public void setLongVariableValue(String variableName, Long variableValue);
+		return Collections.emptyMap();
+	}
 
 	/**
 	 * @deprecated As of Judson (7.1.x), with no direct replacement
 	 */
 	@Deprecated
-	public void setMathContext(MathContext mathContext);
+	public default void setBooleanVariableValue(
+		String variableName, Boolean variableValue) {
 
-	public void setNumberVariableValue(
-		String variableName, Number variableValue);
+		setVariable(variableName, variableValue);
+	}
 
-	public void setObjectVariableValue(
-		String variableName, Object variableValue);
+	/**
+	 * @deprecated As of Judson (7.1.x), with no direct replacement
+	 */
+	@Deprecated
+	public default void setDDMExpressionFunction(
+		String functionName, DDMExpressionFunction ddmExpressionFunction) {
+	}
 
-	public void setStringVariableValue(
+	/**
+	 * @deprecated As of Judson (7.1.x), with no direct replacement
+	 */
+	@Deprecated
+	public default void setDoubleVariableValue(
+		String variableName, Double variableValue) {
+
+		setVariable(variableName, variableValue);
+	}
+
+	/**
+	 * @deprecated As of Judson (7.1.x), with no direct replacement
+	 */
+	@Deprecated
+	public default void setExpressionStringVariableValue(
+		String variableName, String variableValue) {
+
+		setVariable(variableName, variableValue);
+	}
+
+	/**
+	 * @deprecated As of Judson (7.1.x), with no direct replacement
+	 */
+	@Deprecated
+	public default void setFloatVariableValue(
+		String variableName, Float variableValue) {
+
+		setVariable(variableName, variableValue);
+	}
+
+	/**
+	 * @deprecated As of Judson (7.1.x), with no direct replacement
+	 */
+	@Deprecated
+	public default void setIntegerVariableValue(
+		String variableName, Integer variableValue) {
+
+		setVariable(variableName, variableValue);
+	}
+
+	/**
+	 * @deprecated As of Judson (7.1.x), with no direct replacement
+	 */
+	@Deprecated
+	public default void setLongVariableValue(
+		String variableName, Long variableValue) {
+
+		setVariable(variableName, variableValue);
+	}
+
+	/**
+	 * @deprecated As of Judson (7.1.x), with no direct replacement
+	 */
+	@Deprecated
+	public default void setNumberVariableValue(
+		String variableName, Number variableValue) {
+
+		setVariable(variableName, variableValue);
+	}
+
+	/**
+	 * @deprecated As of Judson (7.1.x), with no direct replacement
+	 */
+	@Deprecated
+	public default void setObjectVariableValue(
+		String variableName, Object variableValue) {
+
+		setVariable(variableName, variableValue);
+	}
+
+	/**
+	 * @deprecated As of Judson (7.1.x), with no direct replacement
+	 */
+	@Deprecated
+	public default void setStringVariableValue(
 			String variableName, String variableValue)
-		throws DDMExpressionException;
+		throws DDMExpressionException {
+
+		setVariable(variableName, variableValue);
+	}
+
+	public void setVariable(String name, Object value);
 
 }

@@ -18,6 +18,7 @@ import com.liferay.dynamic.data.mapping.expression.internal.parser.DDMExpression
 import com.liferay.dynamic.data.mapping.expression.internal.parser.DDMExpressionParser;
 import com.liferay.dynamic.data.mapping.expression.model.AndExpression;
 import com.liferay.dynamic.data.mapping.expression.model.ArithmeticExpression;
+import com.liferay.dynamic.data.mapping.expression.model.ArrayExpression;
 import com.liferay.dynamic.data.mapping.expression.model.ComparisonExpression;
 import com.liferay.dynamic.data.mapping.expression.model.Expression;
 import com.liferay.dynamic.data.mapping.expression.model.FloatingPointLiteral;
@@ -64,6 +65,13 @@ public class DDMExpressionModelVisitor
 		Expression r = visitChild(context, 2);
 
 		return new AndExpression(l, r);
+	}
+
+	@Override
+	public Expression visitArray(
+		@NotNull DDMExpressionParser.ArrayContext context) {
+
+		return new ArrayExpression(context.getText());
 	}
 
 	@Override

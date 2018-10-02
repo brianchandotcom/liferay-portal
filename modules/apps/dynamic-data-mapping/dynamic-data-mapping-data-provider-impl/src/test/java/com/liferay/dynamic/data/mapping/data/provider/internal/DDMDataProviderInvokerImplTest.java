@@ -70,7 +70,7 @@ public class DDMDataProviderInvokerImplTest extends PowerMockito {
 
 		DDMDataProviderResponse ddmDataProviderResponse = command.run();
 
-		Optional<String> optional = ddmDataProviderResponse.getOutput(
+		Optional<String> optional = ddmDataProviderResponse.getOutputOptional(
 			"output", String.class);
 
 		Assert.assertEquals("value", optional.get());
@@ -92,7 +92,7 @@ public class DDMDataProviderInvokerImplTest extends PowerMockito {
 		Optional<DDMDataProviderInstance> optional = Optional.empty();
 
 		when(
-			ddmDataProviderInvoker.fetchDDMDataProviderInstance("2")
+			ddmDataProviderInvoker.fetchDDMDataProviderInstanceOptional("2")
 		).thenReturn(
 			optional
 		);
@@ -126,8 +126,8 @@ public class DDMDataProviderInvokerImplTest extends PowerMockito {
 		DDMDataProviderResponse ddmDataProviderResponse =
 			ddmDataProviderInvoker.doInvoke(ddmDataProviderRequest);
 
-		Optional<Number> outputOptional = ddmDataProviderResponse.getOutput(
-			"output", Number.class);
+		Optional<Number> outputOptional =
+			ddmDataProviderResponse.getOutputOptional("output", Number.class);
 
 		Assert.assertEquals(2, outputOptional.get());
 	}
@@ -152,7 +152,7 @@ public class DDMDataProviderInvokerImplTest extends PowerMockito {
 			ddmDataProviderInstance);
 
 		when(
-			ddmDataProviderInvoker.fetchDDMDataProviderInstance("1")
+			ddmDataProviderInvoker.fetchDDMDataProviderInstanceOptional("1")
 		).thenReturn(
 			optional
 		);
@@ -188,8 +188,8 @@ public class DDMDataProviderInvokerImplTest extends PowerMockito {
 		DDMDataProviderResponse ddmDataProviderResponse =
 			ddmDataProviderInvoker.doInvoke(ddmDataProviderRequest);
 
-		Optional<String> outputOptional = ddmDataProviderResponse.getOutput(
-			"test", String.class);
+		Optional<String> outputOptional =
+			ddmDataProviderResponse.getOutputOptional("test", String.class);
 
 		Assert.assertEquals("value", outputOptional.get());
 	}
@@ -213,7 +213,7 @@ public class DDMDataProviderInvokerImplTest extends PowerMockito {
 		);
 
 		Optional<DDMDataProviderInstance> optional =
-			ddmDataProviderInvoker.fetchDDMDataProviderInstance("test");
+			ddmDataProviderInvoker.fetchDDMDataProviderInstanceOptional("test");
 
 		Assert.assertFalse(optional.isPresent());
 	}
@@ -230,7 +230,7 @@ public class DDMDataProviderInvokerImplTest extends PowerMockito {
 			ddmDataProviderInstanceService;
 
 		Optional<DDMDataProviderInstance> optional =
-			ddmDataProviderInvoker.fetchDDMDataProviderInstance("1");
+			ddmDataProviderInvoker.fetchDDMDataProviderInstanceOptional("1");
 
 		Assert.assertFalse(optional.isPresent());
 
@@ -268,7 +268,7 @@ public class DDMDataProviderInvokerImplTest extends PowerMockito {
 		);
 
 		Optional<DDMDataProviderInstance> optional =
-			ddmDataProviderInvoker.fetchDDMDataProviderInstance("1");
+			ddmDataProviderInvoker.fetchDDMDataProviderInstanceOptional("1");
 
 		Assert.assertTrue(optional.isPresent());
 

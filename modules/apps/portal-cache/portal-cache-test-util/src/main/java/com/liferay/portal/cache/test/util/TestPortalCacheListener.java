@@ -18,11 +18,12 @@ import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.cache.PortalCacheException;
 import com.liferay.portal.kernel.cache.PortalCacheListener;
 import com.liferay.portal.kernel.util.HashUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 
 import java.io.Serializable;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import org.junit.Assert;
 
@@ -33,7 +34,7 @@ public class TestPortalCacheListener<K extends Serializable, V>
 	implements PortalCacheListener<K, V> {
 
 	public void assertActionsCount(int count) {
-		Assert.assertEquals(_actions.toString(), count, _actions.size());
+		Assert.assertEquals(_allActions(), count, _actions.size());
 	}
 
 	public void assertEvicted(K key, V value, int timeToLive) {
@@ -135,15 +136,30 @@ public class TestPortalCacheListener<K extends Serializable, V>
 		_actions.clear();
 	}
 
+	private String _allActions() {
+		StringBundler sb = new StringBundler(2 + 2 * _actions.size());
+
+		sb.append("All actions{");
+
+		for (Action action : _actions) {
+			sb.append(action.toString());
+			sb.append(",");
+		}
+
+		sb.setStringAt("}", sb.index() - 1);
+
+		return sb.toString();
+	}
+
 	private void _assertAction(
 		ActionType actionType, K key, V value, int timeToLive) {
 
 		Action action = new Action(actionType, key, value, timeToLive);
 
-		Assert.assertTrue(_actions.contains(action));
+		Assert.assertTrue(_allActions(), _actions.contains(action));
 	}
 
-	private final List<Action> _actions = new ArrayList<>();
+	private final List<Action> _actions = new CopyOnWriteArrayList<>();
 
 	private static class Action {
 
@@ -215,6 +231,23 @@ public class TestPortalCacheListener<K extends Serializable, V>
 			hash = HashUtil.hash(hash, _value);
 
 			return HashUtil.hash(hash, _timeToLive);
+		}
+
+		@Override
+		public String toString() {
+			StringBundler sb = new StringBundler(9);
+
+			sb.append("{ActionType: ");
+			sb.append(_actionType);
+			sb.append(", Key: ");
+			sb.append(_key);
+			sb.append(", Value: ");
+			sb.append(_value);
+			sb.append(", TimeToLive: ");
+			sb.append(_timeToLive);
+			sb.append("}");
+
+			return sb.toString();
 		}
 
 		private static final Object _NULL_OBJECT = new Object();

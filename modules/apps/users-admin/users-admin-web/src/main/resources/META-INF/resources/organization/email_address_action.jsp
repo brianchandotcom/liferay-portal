@@ -35,15 +35,16 @@ long emailAddressId = emailAddress.getEmailAddressId();
 	message="<%= StringPool.BLANK %>"
 	showWhenSingleIcon="<%= true %>"
 >
-
-	<%
-	Map<String, Object> data = new HashMap<String, Object>();
-
-	data.put("email-address-id", String.valueOf(emailAddressId));
-	%>
-
 	<liferay-ui:icon
-		data="<%= data %>"
+		cssClass="modify-email-address-link"
+		data="<%=
+			new HashMap<String, Object>() {
+				{
+					put("title", LanguageUtil.get(request, "edit-email-address"));
+					put("entry-id", String.valueOf(emailAddressId));
+				}
+			}
+		%>"
 		linkCssClass="edit-email-address"
 		message="edit"
 		url="javascript:;"

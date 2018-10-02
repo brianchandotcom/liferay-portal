@@ -17,26 +17,25 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String redirect = ParamUtil.getString(request, "redirect");
-long emailAddressId = ParamUtil.getLong(request, "emailAddressId", 0L);
+long entryId = ParamUtil.getLong(request, "entryId", 0L);
 
 EmailAddress emailAddress = null;
 
-if (emailAddressId > 0L) {
-	emailAddress = EmailAddressServiceUtil.getEmailAddress(emailAddressId);
+if (entryId > 0L) {
+	emailAddress = EmailAddressServiceUtil.getEmailAddress(entryId);
 }
 %>
 
-<div class="card-horizontal main-content-card">
-	<aui:form action="<%= redirect %>" cssClass="container-fluid container-fluid-max-xl container-form-lg" method="post" name="emailAddressFm">
-		<aui:model-context bean="<%= emailAddress %>" model="<%= EmailAddress.class %>" />
+<aui:form cssClass="modal-body" name="fm">
+	<aui:model-context bean="<%= emailAddress %>" model="<%= EmailAddress.class %>" />
 
-		<aui:input name="emailAddressId" type="hidden" value="<%= emailAddressId %>" />
+	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.EDIT %>" />
+	<aui:input name="entryId" type="hidden" value="<%= entryId %>" />
+	<aui:input name="listType" type="hidden" value="<%= ListTypeConstants.EMAIL_ADDRESS %>" />
 
-		<aui:input checked="<%= (emailAddress != null)? emailAddress.isPrimary() : false %>" id="emailAddressPrimary" label="make-primary" name="emailAddressPrimary" type="checkbox" />
+	<aui:input checked="<%= (emailAddress != null)? emailAddress.isPrimary() : false %>" id="emailAddressPrimary" label="make-primary" name="emailAddressPrimary" type="checkbox" />
 
-		<aui:select inlineField="<%= true %>" label="type" listType="<%= Organization.class.getName() + ListTypeConstants.EMAIL_ADDRESS %>" name="emailAddressTypeId" />
+	<aui:select inlineField="<%= true %>" label="type" listType="<%= Organization.class.getName() + ListTypeConstants.EMAIL_ADDRESS %>" name="emailAddressTypeId" />
 
-		<aui:input fieldParam="emailAddressAddress" id="emailAddressAddress" name="address" required="<%= true %>" />
-	</aui:form>
-</div>
+	<aui:input fieldParam="emailAddressAddress" id="emailAddressAddress" name="address" required="<%= true %>" />
+</aui:form>

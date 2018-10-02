@@ -41,12 +41,18 @@ List<EmailAddress> emailAddresses = EmailAddressServiceUtil.getEmailAddresses(Or
 		</span>
 		<span class="autofit-col">
 			<liferay-ui:icon
-				cssClass="modify-link"
+				cssClass="modify-email-address-link"
+				data="<%=
+					new HashMap<String, Object>() {
+						{
+							put("title", LanguageUtil.get(request, "add-email-address"));
+						}
+					}
+				%>"
 				id="addEmailAddressLink"
 				label="<%= true %>"
 				linkCssClass="btn btn-secondary btn-sm"
 				message="add"
-				method="get"
 				url="javascript:;"
 			/>
 		</span>
@@ -111,107 +117,14 @@ List<EmailAddress> emailAddresses = EmailAddressServiceUtil.getEmailAddresses(Or
 	/>
 </liferay-ui:search-container>
 
-<portlet:actionURL name="/users_admin/update_organization_contact_information" var="editEmailAddressActionURL">
-	<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.EDIT %>" />
-	<portlet:param name="redirect" value="<%= currentURL %>" />
-	<portlet:param name="listType" value="<%= ListTypeConstants.EMAIL_ADDRESS %>" />
-	<portlet:param name="organizationId" value="<%= String.valueOf(organizationId) %>" />
-</portlet:actionURL>
-
 <portlet:renderURL var="editEmailAddressRenderURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
 	<portlet:param name="mvcPath" value="/organization/edit_email_address.jsp" />
 </portlet:renderURL>
 
-<aui:script use="liferay-portlet-url">
-	function <portlet:namespace />openEditEmailAddressWindow(cmd, emailAddressId) {
-		var editEmailAddressRenderURL = Liferay.PortletURL.createURL('<%= editEmailAddressRenderURL.toString() %>');
-
-		editEmailAddressRenderURL.setParameter('emailAddressId', emailAddressId);
-
-		var title = '<%= UnicodeLanguageUtil.get(request, "edit-email-address") %>';
-
-		if (cmd === '<%= Constants.ADD %>') {
-			var title = '<%= UnicodeLanguageUtil.get(request, "add-email-address") %>';
-		}
-
-		Liferay.Util.openWindow(
-			{
-				dialog: {
-					destroyOnHide: true,
-					height: 520,
-					modal: true,
-					resizable: false,
-					'toolbars.footer': [
-						{
-							cssClass: 'btn-link close-modal',
-							id: 'cancelButton',
-							label: '<%= UnicodeLanguageUtil.get(request, "cancel") %>',
-							on: {
-								click: function() {
-									Liferay.Util.getWindow('<portlet:namespace />editEmailAddressModal').hide();
-								}
-							}
-						},
-						{
-							cssClass: 'btn-primary',
-							id: 'saveButton',
-							label: '<%= LanguageUtil.get(request, "save") %>',
-							on: {
-								click: function(event) {
-									var contentWindow = document.getElementById('<portlet:namespace />editEmailAddressModal_iframe_').contentWindow;
-
-									var formValidator = contentWindow.Liferay.Form.get('<portlet:namespace />emailAddressFm').formValidator;
-
-									formValidator.validate();
-
-									if (!formValidator.hasErrors()) {
-										var windowDocument = contentWindow.document;
-
-										var editEmailAddressActionURL = Liferay.PortletURL.createURL('<%= editEmailAddressActionURL.toString() %>');
-
-										editEmailAddressActionURL.setParameter('entryId', emailAddressId);
-
-										editEmailAddressActionURL.setParameter('emailAddressAddress', windowDocument.getElementById('<portlet:namespace />emailAddressAddress').value);
-										editEmailAddressActionURL.setParameter('emailAddressPrimary', windowDocument.getElementById('<portlet:namespace />emailAddressPrimary').checked);
-										editEmailAddressActionURL.setParameter('emailAddressTypeId', windowDocument.getElementById('<portlet:namespace />emailAddressTypeId').value);
-
-										var organizationFm = document.getElementById('<portlet:namespace />fm');
-
-										submitForm(organizationFm, editEmailAddressActionURL.toString());
-
-										organizationFm.submit();
-
-										Liferay.Util.getWindow('<portlet:namespace />editEmailAddressModal').hide();
-									}
-								}
-							}
-						}
-					],
-					width: '600'
-				},
-				id: '<portlet:namespace />editEmailAddressModal',
-				title: title,
-				uri: editEmailAddressRenderURL.toString()
-			}
-		);
-	}
-
-	$('#<portlet:namespace />addEmailAddressLink').on(
-		'click',
-		function(event) {
-			<portlet:namespace />openEditEmailAddressWindow('<%= Constants.ADD %>', '');
-		}
-	);
-
-	$('body').on(
-		'click',
-		'.edit-email-address',
-		function(event) {
-			event.preventDefault();
-
-			var currentTarget = $(event.currentTarget);
-
-			<portlet:namespace />openEditEmailAddressWindow('<%= Constants.EDIT %>', currentTarget.data('email-address-id'));
-		}
+<aui:script require="users-admin-web/js/contact-information.es as ContactInformation">
+	ContactInformation.registerContactInformationListener(
+		'.modify-email-address-link a',
+		'<%= editEmailAddressRenderURL.toString() %>',
+		390
 	);
 </aui:script>

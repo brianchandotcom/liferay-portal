@@ -19,7 +19,7 @@ import com.liferay.dynamic.data.mapping.expression.DDMExpressionFunctionTracker;
 import com.liferay.dynamic.data.mapping.expression.internal.DDMExpressionFactoryImpl;
 import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormEvaluator;
 import com.liferay.dynamic.data.mapping.form.evaluator.internal.DDMFormEvaluatorImpl;
-import com.liferay.dynamic.data.mapping.form.evaluator.internal.functions.JumpPageFunction;
+import com.liferay.dynamic.data.mapping.form.evaluator.internal.function.JumpPageFunction;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTemplateContextContributor;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesTracker;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldValueAccessor;
@@ -893,11 +893,11 @@ public class DDMFormPagesTemplateContextFactoryTest extends PowerMockito {
 			new DDMFormRenderingContext();
 
 		ddmFormRenderingContext.setDDMFormValues(ddmFormValues);
-		ddmFormRenderingContext.setReturnFullContext(true);
 		ddmFormRenderingContext.setHttpServletRequest(_request);
 		ddmFormRenderingContext.setLocale(_LOCALE);
 		ddmFormRenderingContext.setPortletNamespace(_PORTLET_NAMESPACE);
 		ddmFormRenderingContext.setReadOnly(ddmFormReadOnly);
+		ddmFormRenderingContext.setReturnFullContext(true);
 		ddmFormRenderingContext.setShowRequiredFieldsWarning(
 			showRequiredFieldsWarning);
 		ddmFormRenderingContext.setViewMode(viewMode);

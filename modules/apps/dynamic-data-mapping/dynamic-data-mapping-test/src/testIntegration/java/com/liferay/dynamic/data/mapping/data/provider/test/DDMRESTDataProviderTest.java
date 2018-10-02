@@ -149,7 +149,7 @@ public class DDMRESTDataProviderTest {
 		Assert.assertNotNull(ddmDataProviderResponse);
 
 		Optional<List<KeyValuePair>> optionalKeyValuePairs =
-			ddmDataProviderResponse.getOutput("output", List.class);
+			ddmDataProviderResponse.getOutputOptional("output", List.class);
 
 		Assert.assertTrue(optionalKeyValuePairs.isPresent());
 
@@ -307,7 +307,7 @@ public class DDMRESTDataProviderTest {
 		Assert.assertNotNull(ddmDataProviderResponse);
 
 		Optional<List<KeyValuePair>> optionalKeyValuePairs =
-			ddmDataProviderResponse.getOutput("output", List.class);
+			ddmDataProviderResponse.getOutputOptional("output", List.class);
 
 		Assert.assertTrue(optionalKeyValuePairs.isPresent());
 
@@ -401,7 +401,7 @@ public class DDMRESTDataProviderTest {
 		Assert.assertNotNull(ddmDataProviderResponse);
 
 		Optional<List<KeyValuePair>> optionalKeyValuePairs =
-			ddmDataProviderResponse.getOutput("output", List.class);
+			ddmDataProviderResponse.getOutputOptional("output", List.class);
 
 		Assert.assertTrue(optionalKeyValuePairs.isPresent());
 

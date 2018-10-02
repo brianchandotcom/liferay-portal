@@ -30,7 +30,7 @@ public class DefaultDDMExpressionFieldAccessor
 	public GetFieldPropertyResponse getFieldProperty(
 		GetFieldPropertyRequest getFieldPropertyRequest) {
 
-		return _getFieldPropertyResponseSupplier.apply(getFieldPropertyRequest);
+		return _getFieldPropertyResponseFunction.apply(getFieldPropertyRequest);
 	}
 
 	@Override
@@ -40,12 +40,12 @@ public class DefaultDDMExpressionFieldAccessor
 
 	public void setGetFieldPropertyResponseFunction(
 		Function<GetFieldPropertyRequest, GetFieldPropertyResponse>
-			getFieldPropertyResponseSupplier) {
+			getFieldPropertyResponseFunction) {
 
-		_getFieldPropertyResponseSupplier = getFieldPropertyResponseSupplier;
+		_getFieldPropertyResponseFunction = getFieldPropertyResponseFunction;
 	}
 
 	private Function<GetFieldPropertyRequest, GetFieldPropertyResponse>
-		_getFieldPropertyResponseSupplier;
+		_getFieldPropertyResponseFunction;
 
 }

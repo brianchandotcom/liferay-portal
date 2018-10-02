@@ -92,8 +92,6 @@ public class DDMFormFieldTemplateContextFactory {
 		DDMFormFieldRenderingContext ddmFormFieldRenderingContext =
 			new DDMFormFieldRenderingContext();
 
-		ddmFormFieldRenderingContext.setReturnFullContext(
-			_ddmFormRenderingContext.isReturnFullContext());
 		ddmFormFieldRenderingContext.setHttpServletRequest(
 			_ddmFormRenderingContext.getHttpServletRequest());
 		ddmFormFieldRenderingContext.setHttpServletResponse(
@@ -106,6 +104,8 @@ public class DDMFormFieldTemplateContextFactory {
 			"changedProperties", changedProperties);
 		ddmFormFieldRenderingContext.setProperty(
 			"groupId", _ddmFormRenderingContext.getGroupId());
+		ddmFormFieldRenderingContext.setReturnFullContext(
+			_ddmFormRenderingContext.isReturnFullContext());
 		ddmFormFieldRenderingContext.setViewMode(
 			_ddmFormRenderingContext.isViewMode());
 

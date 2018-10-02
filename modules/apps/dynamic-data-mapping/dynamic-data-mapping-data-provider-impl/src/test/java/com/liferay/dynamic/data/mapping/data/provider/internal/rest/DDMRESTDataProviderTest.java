@@ -281,7 +281,7 @@ public class DDMRESTDataProviderTest extends PowerMockito {
 		DDMDataProviderResponse ddmDataProviderResponse =
 			_ddmRESTDataProvider.doGetData(ddmDataProviderRequest);
 
-		Optional<String> optional = ddmDataProviderResponse.getOutput(
+		Optional<String> optional = ddmDataProviderResponse.getOutputOptional(
 			"output", String.class);
 
 		Assert.assertTrue(optional.isPresent());
@@ -588,7 +588,8 @@ public class DDMRESTDataProviderTest extends PowerMockito {
 				ddmRESTDataProviderSettings);
 
 		Optional<List<KeyValuePair>> optional =
-			ddmDataProviderResponse.getOutput("list output", List.class);
+			ddmDataProviderResponse.getOutputOptional(
+				"list output", List.class);
 
 		List<KeyValuePair> keyValuePairs = new ArrayList() {
 			{
@@ -653,7 +654,8 @@ public class DDMRESTDataProviderTest extends PowerMockito {
 				ddmRESTDataProviderSettings);
 
 		Optional<List<KeyValuePair>> optional =
-			ddmDataProviderResponse.getOutput("list output", List.class);
+			ddmDataProviderResponse.getOutputOptional(
+				"list output", List.class);
 
 		List<KeyValuePair> keyValuePairs = new ArrayList() {
 			{
@@ -712,7 +714,7 @@ public class DDMRESTDataProviderTest extends PowerMockito {
 				documentContext, ddmDataProviderRequest,
 				ddmRESTDataProviderSettings);
 
-		Optional<Number> optional = ddmDataProviderResponse.getOutput(
+		Optional<Number> optional = ddmDataProviderResponse.getOutputOptional(
 			"number output", Number.class);
 
 		Assert.assertEquals(1, optional.get());
@@ -858,7 +860,7 @@ public class DDMRESTDataProviderTest extends PowerMockito {
 				documentContext, ddmDataProviderRequest,
 				ddmRESTDataProviderSettings);
 
-		Optional<String> optional = ddmDataProviderResponse.getOutput(
+		Optional<String> optional = ddmDataProviderResponse.getOutputOptional(
 			"text output", String.class);
 
 		Assert.assertEquals("brazil", optional.get());

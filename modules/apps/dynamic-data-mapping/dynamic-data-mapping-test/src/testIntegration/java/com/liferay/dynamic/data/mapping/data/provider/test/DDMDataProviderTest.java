@@ -84,7 +84,8 @@ public class DDMDataProviderTest {
 			testDataProvider.getData(ddmDataProviderRequest);
 
 		Optional<List<KeyValuePair>> keyValuePairsOptional =
-			ddmDataProviderResponse.getOutput("Default-Output", List.class);
+			ddmDataProviderResponse.getOutputOptional(
+				"Default-Output", List.class);
 
 		Assert.assertTrue(keyValuePairsOptional.isPresent());
 

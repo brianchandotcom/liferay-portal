@@ -110,7 +110,7 @@ public class DDMDataProviderInvokerImpl implements DDMDataProviderInvoker {
 			ddmDataProviderRequest.getDDMDataProviderId();
 
 		Optional<DDMDataProviderInstance> ddmDataProviderInstanceOptional =
-			fetchDDMDataProviderInstance(ddmDataProviderId);
+			fetchDDMDataProviderInstanceOptional(ddmDataProviderId);
 
 		DDMDataProvider ddmDataProvider = getDDMDataProvider(
 			ddmDataProviderId, ddmDataProviderInstanceOptional);
@@ -140,8 +140,9 @@ public class DDMDataProviderInvokerImpl implements DDMDataProviderInvoker {
 		return ddmDataProviderInvokeCommand.execute();
 	}
 
-	protected Optional<DDMDataProviderInstance> fetchDDMDataProviderInstance(
-			String ddmDataProviderInstanceId)
+	protected Optional<DDMDataProviderInstance>
+			fetchDDMDataProviderInstanceOptional(
+				String ddmDataProviderInstanceId)
 		throws PortalException {
 
 		DDMDataProviderInstance ddmDataProviderInstance =

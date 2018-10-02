@@ -59,7 +59,7 @@ public class DDMDataProviderInstanceOutputParametersDataProvider
 		DDMDataProviderRequest ddmDataProviderRequest) {
 
 		Optional<Long> dataProviderInstanceIdOptional =
-			ddmDataProviderRequest.getParameter(
+			ddmDataProviderRequest.getParameterOptional(
 				"dataProviderInstanceId", String.class);
 
 		long dataProviderInstanceId = 0;

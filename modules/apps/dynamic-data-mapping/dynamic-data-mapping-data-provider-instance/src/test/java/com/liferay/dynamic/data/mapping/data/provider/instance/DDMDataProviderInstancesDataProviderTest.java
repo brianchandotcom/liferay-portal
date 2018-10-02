@@ -96,7 +96,8 @@ public class DDMDataProviderInstancesDataProviderTest extends PowerMockito {
 		Assert.assertTrue(ddmDataProviderResponse.hasOutput("Default-Output"));
 
 		Optional<List<KeyValuePair>> optional =
-			ddmDataProviderResponse.getOutput("Default-Output", List.class);
+			ddmDataProviderResponse.getOutputOptional(
+				"Default-Output", List.class);
 
 		Assert.assertTrue(optional.isPresent());
 
@@ -137,7 +138,8 @@ public class DDMDataProviderInstancesDataProviderTest extends PowerMockito {
 		Assert.assertTrue(ddmDataProviderResponse.hasOutput("Default-Output"));
 
 		Optional<List<KeyValuePair>> optional =
-			ddmDataProviderResponse.getOutput("Default-Output", List.class);
+			ddmDataProviderResponse.getOutputOptional(
+				"Default-Output", List.class);
 
 		Assert.assertTrue(optional.isPresent());
 

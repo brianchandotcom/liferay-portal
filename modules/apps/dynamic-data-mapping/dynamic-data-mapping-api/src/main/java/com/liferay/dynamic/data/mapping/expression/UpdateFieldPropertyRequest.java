@@ -36,7 +36,7 @@ public final class UpdateFieldPropertyRequest {
 		return Collections.unmodifiableMap(_properties);
 	}
 
-	public <T> Optional<T> getProperty(String name) {
+	public <T> Optional<T> getPropertyOptional(String name) {
 		if (!_properties.containsKey(name)) {
 			return Optional.empty();
 		}

@@ -193,14 +193,14 @@ public class DDMRESTDataProvider implements DDMDataProvider {
 
 				if (ddmRESTDataProviderSettings.pagination()) {
 					Optional<String> paginationStartOptional =
-						ddmDataProviderRequest.getParameter(
+						ddmDataProviderRequest.getParameterOptional(
 							"paginationStart", String.class);
 
 					int start = Integer.valueOf(
 						paginationStartOptional.orElse("1"));
 
 					Optional<String> paginationEndOptional =
-						ddmDataProviderRequest.getParameter(
+						ddmDataProviderRequest.getParameterOptional(
 							"paginationEnd", String.class);
 
 					int end = Integer.valueOf(
@@ -408,7 +408,7 @@ public class DDMRESTDataProvider implements DDMDataProvider {
 
 		if (ddmRESTDataProviderSettings.filterable()) {
 			Optional<String> filterParameterValue =
-				ddmDataProviderRequest.getParameter(
+				ddmDataProviderRequest.getParameterOptional(
 					"filterParameterValue", String.class);
 
 			if (filterParameterValue.isPresent()) {
@@ -420,7 +420,7 @@ public class DDMRESTDataProvider implements DDMDataProvider {
 
 		if (ddmRESTDataProviderSettings.pagination()) {
 			Optional<String> paginationStart =
-				ddmDataProviderRequest.getParameter(
+				ddmDataProviderRequest.getParameterOptional(
 					"paginationStart", String.class);
 
 			if (paginationStart.isPresent()) {
@@ -430,7 +430,7 @@ public class DDMRESTDataProvider implements DDMDataProvider {
 			}
 
 			Optional<String> paginationEnd =
-				ddmDataProviderRequest.getParameter(
+				ddmDataProviderRequest.getParameterOptional(
 					"paginationEnd", String.class);
 
 			if (paginationEnd.isPresent()) {

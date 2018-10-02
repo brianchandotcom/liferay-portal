@@ -27,7 +27,7 @@ public final class ExecuteActionRequest {
 		return _action;
 	}
 
-	public <T> Optional<T> getParameter(String name) {
+	public <T> Optional<T> getParameterOptional(String name) {
 		if (!_parameters.containsKey(name)) {
 			return Optional.empty();
 		}

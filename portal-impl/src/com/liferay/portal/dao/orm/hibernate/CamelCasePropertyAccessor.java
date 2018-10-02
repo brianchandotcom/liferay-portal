@@ -20,8 +20,9 @@ import org.hibernate.property.Setter;
 
 /**
  * @author Brian Wing Shun Chan
+ * @deprecated As of Judson (7.1.x), with no direct replacement
  */
-@SuppressWarnings("rawtypes")
+@Deprecated
 public class CamelCasePropertyAccessor extends LiferayPropertyAccessor {
 
 	@Override

@@ -4127,8 +4127,12 @@ public class LayoutSetPrototypePersistenceImpl extends BasePersistenceImpl<Layou
 				layoutSetPrototype.setModifiedDate(now);
 			}
 			else {
-				layoutSetPrototype.setModifiedDate(serviceContext.getModifiedDate(
-						now));
+				Date newModifiedDate = serviceContext.getModifiedDate(now);
+
+				if (!newModifiedDate.equals(
+							layoutSetPrototype.getModifiedDate())) {
+					layoutSetPrototype.setModifiedDate(newModifiedDate);
+				}
 			}
 		}
 

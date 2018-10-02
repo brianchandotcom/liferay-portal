@@ -3410,8 +3410,11 @@ public class DLFileEntryTypePersistenceImpl extends BasePersistenceImpl<DLFileEn
 				dlFileEntryType.setModifiedDate(now);
 			}
 			else {
-				dlFileEntryType.setModifiedDate(serviceContext.getModifiedDate(
-						now));
+				Date newModifiedDate = serviceContext.getModifiedDate(now);
+
+				if (!newModifiedDate.equals(dlFileEntryType.getModifiedDate())) {
+					dlFileEntryType.setModifiedDate(newModifiedDate);
+				}
 			}
 		}
 

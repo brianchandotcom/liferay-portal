@@ -2067,8 +2067,11 @@ public class ReadingTimeEntryPersistenceImpl extends BasePersistenceImpl<Reading
 				readingTimeEntry.setModifiedDate(now);
 			}
 			else {
-				readingTimeEntry.setModifiedDate(serviceContext.getModifiedDate(
-						now));
+				Date newModifiedDate = serviceContext.getModifiedDate(now);
+
+				if (!newModifiedDate.equals(readingTimeEntry.getModifiedDate())) {
+					readingTimeEntry.setModifiedDate(newModifiedDate);
+				}
 			}
 		}
 

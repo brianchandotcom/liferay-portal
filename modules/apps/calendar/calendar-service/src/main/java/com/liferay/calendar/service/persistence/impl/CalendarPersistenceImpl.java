@@ -3673,7 +3673,11 @@ public class CalendarPersistenceImpl extends BasePersistenceImpl<Calendar>
 				calendar.setModifiedDate(now);
 			}
 			else {
-				calendar.setModifiedDate(serviceContext.getModifiedDate(now));
+				Date newModifiedDate = serviceContext.getModifiedDate(now);
+
+				if (!newModifiedDate.equals(calendar.getModifiedDate())) {
+					calendar.setModifiedDate(newModifiedDate);
+				}
 			}
 		}
 

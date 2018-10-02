@@ -6020,8 +6020,11 @@ public class DLFileVersionPersistenceImpl extends BasePersistenceImpl<DLFileVers
 				dlFileVersion.setModifiedDate(now);
 			}
 			else {
-				dlFileVersion.setModifiedDate(serviceContext.getModifiedDate(
-						now));
+				Date newModifiedDate = serviceContext.getModifiedDate(now);
+
+				if (!newModifiedDate.equals(dlFileVersion.getModifiedDate())) {
+					dlFileVersion.setModifiedDate(newModifiedDate);
+				}
 			}
 		}
 

@@ -2555,7 +2555,11 @@ public class PollsChoicePersistenceImpl extends BasePersistenceImpl<PollsChoice>
 				pollsChoice.setModifiedDate(now);
 			}
 			else {
-				pollsChoice.setModifiedDate(serviceContext.getModifiedDate(now));
+				Date newModifiedDate = serviceContext.getModifiedDate(now);
+
+				if (!newModifiedDate.equals(pollsChoice.getModifiedDate())) {
+					pollsChoice.setModifiedDate(newModifiedDate);
+				}
 			}
 		}
 

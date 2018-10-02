@@ -18,9 +18,9 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.TextFormatter;
+import com.liferay.portal.kernel.model.impl.BaseModelImpl;
 
-import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Field;
 import java.lang.reflect.Member;
 import java.lang.reflect.Method;
 
@@ -44,23 +44,18 @@ public class LiferayPropertyAccessor extends BasicPropertyAccessor {
 	public Getter getGetter(Class clazz, String propertyName)
 		throws PropertyNotFoundException {
 
-		String methodNameSuffix = TextFormatter.format(
-			propertyName, TextFormatter.G);
-
-		String getterMethodName = "get".concat(methodNameSuffix);
-
 		try {
-			Method getterMethod = clazz.getMethod(getterMethodName);
+			Field field = _findField(clazz, propertyName);
 
-			return new LiferayPropertyGetter(getterMethod, propertyName);
+			return new LiferayPropertyGetter(field, propertyName);
 		}
-		catch (NoSuchMethodException nsme) {
+		catch (NoSuchFieldException nsfe) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
 					StringBundler.concat(
-						"Getter not found for ", clazz.getName(),
+						"Field not found for ", clazz.getName(),
 						StringPool.POUND, propertyName),
-					nsme);
+					nsfe);
 			}
 
 			return super.getGetter(clazz, propertyName);
@@ -72,31 +67,54 @@ public class LiferayPropertyAccessor extends BasicPropertyAccessor {
 	public Setter getSetter(Class clazz, String propertyName)
 		throws PropertyNotFoundException {
 
-		String methodNameSuffix = TextFormatter.format(
-			propertyName, TextFormatter.G);
-
-		String getterMethodName = "get".concat(methodNameSuffix);
-		String setterMethodName = "set".concat(methodNameSuffix);
-
 		try {
-			Method getterMethod = clazz.getMethod(getterMethodName);
+			Field field = _findField(clazz, propertyName);
 
-			Method setterMethod = clazz.getMethod(
-				setterMethodName, getterMethod.getReturnType());
-
-			return new LiferayPropertySetter(setterMethod, propertyName);
+			return new LiferayPropertySetter(field, propertyName);
 		}
-		catch (NoSuchMethodException nsme) {
+		catch (NoSuchFieldException nsfe) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
 					StringBundler.concat(
 						"Setter not found for ", clazz.getName(),
 						StringPool.POUND, propertyName),
-					nsme);
+					nsfe);
 			}
 
 			return super.getSetter(clazz, propertyName);
 		}
+	}
+
+	private Field _findField(Class<?> clazz, String propertyName)
+		throws NoSuchFieldException {
+
+		boolean baseModelImpl = false;
+
+		while (true) {
+			Class<?> superClass = clazz.getSuperclass();
+
+			if (superClass == BaseModelImpl.class) {
+				baseModelImpl = true;
+
+				break;
+			}
+
+			if (superClass == Object.class) {
+				break;
+			}
+
+			clazz = superClass;
+		}
+
+		if (baseModelImpl) {
+			Field field = clazz.getDeclaredField("_".concat(propertyName));
+
+			field.setAccessible(true);
+
+			return field;
+		}
+
+		return clazz.getField(propertyName);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
@@ -107,13 +125,11 @@ public class LiferayPropertyAccessor extends BasicPropertyAccessor {
 		@Override
 		public Object get(Object target) throws PropertyAccessException {
 			try {
-				return _method.invoke(target);
+				return _field.get(target);
 			}
-			catch (IllegalAccessException | IllegalArgumentException |
-				   InvocationTargetException e) {
-
+			catch (IllegalAccessException | IllegalArgumentException e) {
 				throw new PropertyAccessException(
-					e, e.getMessage(), false, _method.getDeclaringClass(),
+					e, e.getMessage(), false, _field.getDeclaringClass(),
 					_propertyName);
 			}
 		}
@@ -129,30 +145,30 @@ public class LiferayPropertyAccessor extends BasicPropertyAccessor {
 
 		@Override
 		public Member getMember() {
-			return _method;
+			return _field;
 		}
 
 		@Override
 		public Method getMethod() {
-			return _method;
+			return null;
 		}
 
 		@Override
 		public String getMethodName() {
-			return _method.getName();
+			return null;
 		}
 
 		@Override
 		public Class getReturnType() {
-			return _method.getReturnType();
+			return _field.getType();
 		}
 
-		private LiferayPropertyGetter(Method method, String propertyName) {
-			_method = method;
+		private LiferayPropertyGetter(Field field, String propertyName) {
+			_field = field;
 			_propertyName = propertyName;
 		}
 
-		private final Method _method;
+		private final Field _field;
 		private final String _propertyName;
 
 	}
@@ -161,12 +177,12 @@ public class LiferayPropertyAccessor extends BasicPropertyAccessor {
 
 		@Override
 		public Method getMethod() {
-			return _method;
+			return null;
 		}
 
 		@Override
 		public String getMethodName() {
-			return _method.getName();
+			return null;
 		}
 
 		@Override
@@ -176,23 +192,21 @@ public class LiferayPropertyAccessor extends BasicPropertyAccessor {
 			throws PropertyAccessException {
 
 			try {
-				_method.invoke(target, value);
+				_field.set(target, value);
 			}
-			catch (IllegalAccessException | IllegalArgumentException |
-				   InvocationTargetException | NullPointerException e) {
-
+			catch (IllegalAccessException | IllegalArgumentException e) {
 				throw new PropertyAccessException(
-					e, e.getMessage(), true, _method.getDeclaringClass(),
+					e, e.getMessage(), true, _field.getDeclaringClass(),
 					_propertyName);
 			}
 		}
 
-		private LiferayPropertySetter(Method method, String propertyName) {
-			_method = method;
+		private LiferayPropertySetter(Field field, String propertyName) {
+			_field = field;
 			_propertyName = propertyName;
 		}
 
-		private final Method _method;
+		private final Field _field;
 		private final String _propertyName;
 
 	}

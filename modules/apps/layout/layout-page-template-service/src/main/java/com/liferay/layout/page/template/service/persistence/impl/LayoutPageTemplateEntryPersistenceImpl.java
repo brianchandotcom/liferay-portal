@@ -20677,8 +20677,12 @@ public class LayoutPageTemplateEntryPersistenceImpl extends BasePersistenceImpl<
 				layoutPageTemplateEntry.setModifiedDate(now);
 			}
 			else {
-				layoutPageTemplateEntry.setModifiedDate(serviceContext.getModifiedDate(
-						now));
+				Date newModifiedDate = serviceContext.getModifiedDate(now);
+
+				if (!newModifiedDate.equals(
+							layoutPageTemplateEntry.getModifiedDate())) {
+					layoutPageTemplateEntry.setModifiedDate(newModifiedDate);
+				}
 			}
 		}
 

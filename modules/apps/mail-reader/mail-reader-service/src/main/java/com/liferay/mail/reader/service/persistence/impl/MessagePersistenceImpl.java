@@ -1604,7 +1604,11 @@ public class MessagePersistenceImpl extends BasePersistenceImpl<Message>
 				message.setModifiedDate(now);
 			}
 			else {
-				message.setModifiedDate(serviceContext.getModifiedDate(now));
+				Date newModifiedDate = serviceContext.getModifiedDate(now);
+
+				if (!newModifiedDate.equals(message.getModifiedDate())) {
+					message.setModifiedDate(newModifiedDate);
+				}
 			}
 		}
 

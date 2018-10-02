@@ -2714,8 +2714,12 @@ public class CalendarNotificationTemplatePersistenceImpl
 				calendarNotificationTemplate.setModifiedDate(now);
 			}
 			else {
-				calendarNotificationTemplate.setModifiedDate(serviceContext.getModifiedDate(
-						now));
+				Date newModifiedDate = serviceContext.getModifiedDate(now);
+
+				if (!newModifiedDate.equals(
+							calendarNotificationTemplate.getModifiedDate())) {
+					calendarNotificationTemplate.setModifiedDate(newModifiedDate);
+				}
 			}
 		}
 

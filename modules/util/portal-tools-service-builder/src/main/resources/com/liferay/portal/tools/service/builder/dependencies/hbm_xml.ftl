@@ -13,13 +13,7 @@
 		<#if entity.hasCompoundPK()>
 			<composite-id class="${apiPackagePath}.service.persistence.${entity.name}PK" name="primaryKey">
 				<#list entity.PKEntityColumns as entityColumn>
-					<key-property
-
-					<#if serviceBuilder.isHBMCamelCasePropertyAccessor(entityColumn.name)>
-						access="com.liferay.portal.dao.orm.hibernate.CamelCasePropertyAccessor"
-					<#elseif serviceBuilder.isVersionGTE_7_1_0()>
-						access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor"
-					</#if>
+					<key-property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor"
 
 					<#if entityColumn.name != entityColumn.DBName>
 						column="${entityColumn.DBName}"
@@ -41,12 +35,7 @@
 		<#else>
 			<#assign entityColumn = entity.PKEntityColumns?first />
 
-			<id
-				<#if serviceBuilder.isHBMCamelCasePropertyAccessor(entityColumn.name)>
-					access="com.liferay.portal.dao.orm.hibernate.CamelCasePropertyAccessor"
-				<#elseif serviceBuilder.isVersionGTE_7_1_0()>
-					access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor"
-				</#if>
+			<id	access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor"
 
 				<#if entityColumn.name != entityColumn.DBName>
 					column="${entityColumn.DBName}"
@@ -85,13 +74,7 @@
 
 		<#list entity.entityColumns as entityColumn>
 			<#if !entityColumn.isPrimary() && !entityColumn.isCollection() && !entityColumn.entityName?? && (!stringUtil.equals(entityColumn.type, "Blob") || (stringUtil.equals(entityColumn.type, "Blob") && !entityColumn.lazy)) && !stringUtil.equals(entityColumn.name, "mvccVersion")>
-				<property
-
-				<#if serviceBuilder.isHBMCamelCasePropertyAccessor(entityColumn.name)>
-					access="com.liferay.portal.dao.orm.hibernate.CamelCasePropertyAccessor"
-				<#elseif serviceBuilder.isVersionGTE_7_1_0()>
-					access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor"
-				</#if>
+				<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor"
 
 				<#if entityColumn.name != entityColumn.DBName>
 					column="${entityColumn.DBName}"

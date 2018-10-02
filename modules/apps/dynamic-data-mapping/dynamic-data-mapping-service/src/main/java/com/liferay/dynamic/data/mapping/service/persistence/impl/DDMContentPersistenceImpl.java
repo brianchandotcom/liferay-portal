@@ -2767,7 +2767,11 @@ public class DDMContentPersistenceImpl extends BasePersistenceImpl<DDMContent>
 				ddmContent.setModifiedDate(now);
 			}
 			else {
-				ddmContent.setModifiedDate(serviceContext.getModifiedDate(now));
+				Date newModifiedDate = serviceContext.getModifiedDate(now);
+
+				if (!newModifiedDate.equals(ddmContent.getModifiedDate())) {
+					ddmContent.setModifiedDate(newModifiedDate);
+				}
 			}
 		}
 

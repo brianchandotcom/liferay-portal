@@ -1621,8 +1621,12 @@ public class AssetAutoTaggerEntryPersistenceImpl extends BasePersistenceImpl<Ass
 				assetAutoTaggerEntry.setModifiedDate(now);
 			}
 			else {
-				assetAutoTaggerEntry.setModifiedDate(serviceContext.getModifiedDate(
-						now));
+				Date newModifiedDate = serviceContext.getModifiedDate(now);
+
+				if (!newModifiedDate.equals(
+							assetAutoTaggerEntry.getModifiedDate())) {
+					assetAutoTaggerEntry.setModifiedDate(newModifiedDate);
+				}
 			}
 		}
 

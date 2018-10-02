@@ -327,7 +327,11 @@ public class AccountPersistenceImpl extends BasePersistenceImpl<Account>
 				account.setModifiedDate(now);
 			}
 			else {
-				account.setModifiedDate(serviceContext.getModifiedDate(now));
+				Date newModifiedDate = serviceContext.getModifiedDate(now);
+
+				if (!newModifiedDate.equals(account.getModifiedDate())) {
+					account.setModifiedDate(newModifiedDate);
+				}
 			}
 		}
 

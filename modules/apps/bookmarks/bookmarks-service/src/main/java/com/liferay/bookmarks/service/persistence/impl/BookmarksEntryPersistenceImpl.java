@@ -12673,8 +12673,11 @@ public class BookmarksEntryPersistenceImpl extends BasePersistenceImpl<Bookmarks
 				bookmarksEntry.setModifiedDate(now);
 			}
 			else {
-				bookmarksEntry.setModifiedDate(serviceContext.getModifiedDate(
-						now));
+				Date newModifiedDate = serviceContext.getModifiedDate(now);
+
+				if (!newModifiedDate.equals(bookmarksEntry.getModifiedDate())) {
+					bookmarksEntry.setModifiedDate(newModifiedDate);
+				}
 			}
 		}
 

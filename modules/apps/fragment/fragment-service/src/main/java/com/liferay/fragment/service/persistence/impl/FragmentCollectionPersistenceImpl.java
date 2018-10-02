@@ -3160,8 +3160,12 @@ public class FragmentCollectionPersistenceImpl extends BasePersistenceImpl<Fragm
 				fragmentCollection.setModifiedDate(now);
 			}
 			else {
-				fragmentCollection.setModifiedDate(serviceContext.getModifiedDate(
-						now));
+				Date newModifiedDate = serviceContext.getModifiedDate(now);
+
+				if (!newModifiedDate.equals(
+							fragmentCollection.getModifiedDate())) {
+					fragmentCollection.setModifiedDate(newModifiedDate);
+				}
 			}
 		}
 

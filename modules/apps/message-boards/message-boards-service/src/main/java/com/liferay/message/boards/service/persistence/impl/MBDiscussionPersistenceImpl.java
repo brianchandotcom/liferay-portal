@@ -2749,7 +2749,11 @@ public class MBDiscussionPersistenceImpl extends BasePersistenceImpl<MBDiscussio
 				mbDiscussion.setModifiedDate(now);
 			}
 			else {
-				mbDiscussion.setModifiedDate(serviceContext.getModifiedDate(now));
+				Date newModifiedDate = serviceContext.getModifiedDate(now);
+
+				if (!newModifiedDate.equals(mbDiscussion.getModifiedDate())) {
+					mbDiscussion.setModifiedDate(newModifiedDate);
+				}
 			}
 		}
 

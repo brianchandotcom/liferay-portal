@@ -3376,7 +3376,11 @@ public class DDLRecordSetPersistenceImpl extends BasePersistenceImpl<DDLRecordSe
 				ddlRecordSet.setModifiedDate(now);
 			}
 			else {
-				ddlRecordSet.setModifiedDate(serviceContext.getModifiedDate(now));
+				Date newModifiedDate = serviceContext.getModifiedDate(now);
+
+				if (!newModifiedDate.equals(ddlRecordSet.getModifiedDate())) {
+					ddlRecordSet.setModifiedDate(newModifiedDate);
+				}
 			}
 		}
 

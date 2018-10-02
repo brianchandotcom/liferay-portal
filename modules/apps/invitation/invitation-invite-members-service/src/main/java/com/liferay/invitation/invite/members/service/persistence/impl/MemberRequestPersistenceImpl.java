@@ -1963,8 +1963,11 @@ public class MemberRequestPersistenceImpl extends BasePersistenceImpl<MemberRequ
 				memberRequest.setModifiedDate(now);
 			}
 			else {
-				memberRequest.setModifiedDate(serviceContext.getModifiedDate(
-						now));
+				Date newModifiedDate = serviceContext.getModifiedDate(now);
+
+				if (!newModifiedDate.equals(memberRequest.getModifiedDate())) {
+					memberRequest.setModifiedDate(newModifiedDate);
+				}
 			}
 		}
 

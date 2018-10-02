@@ -1677,8 +1677,11 @@ public class SegmentsEntryPersistenceImpl extends BasePersistenceImpl<SegmentsEn
 				segmentsEntry.setModifiedDate(now);
 			}
 			else {
-				segmentsEntry.setModifiedDate(serviceContext.getModifiedDate(
-						now));
+				Date newModifiedDate = serviceContext.getModifiedDate(now);
+
+				if (!newModifiedDate.equals(segmentsEntry.getModifiedDate())) {
+					segmentsEntry.setModifiedDate(newModifiedDate);
+				}
 			}
 		}
 

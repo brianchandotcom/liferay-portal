@@ -590,8 +590,12 @@ public class DLOpenerFileEntryReferencePersistenceImpl
 				dlOpenerFileEntryReference.setModifiedDate(now);
 			}
 			else {
-				dlOpenerFileEntryReference.setModifiedDate(serviceContext.getModifiedDate(
-						now));
+				Date newModifiedDate = serviceContext.getModifiedDate(now);
+
+				if (!newModifiedDate.equals(
+							dlOpenerFileEntryReference.getModifiedDate())) {
+					dlOpenerFileEntryReference.setModifiedDate(newModifiedDate);
+				}
 			}
 		}
 

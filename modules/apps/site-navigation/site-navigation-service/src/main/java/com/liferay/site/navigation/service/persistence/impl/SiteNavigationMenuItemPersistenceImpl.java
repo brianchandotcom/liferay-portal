@@ -4019,8 +4019,12 @@ public class SiteNavigationMenuItemPersistenceImpl extends BasePersistenceImpl<S
 				siteNavigationMenuItem.setModifiedDate(now);
 			}
 			else {
-				siteNavigationMenuItem.setModifiedDate(serviceContext.getModifiedDate(
-						now));
+				Date newModifiedDate = serviceContext.getModifiedDate(now);
+
+				if (!newModifiedDate.equals(
+							siteNavigationMenuItem.getModifiedDate())) {
+					siteNavigationMenuItem.setModifiedDate(newModifiedDate);
+				}
 			}
 		}
 

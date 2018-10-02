@@ -2770,8 +2770,12 @@ public class ChangesetCollectionPersistenceImpl extends BasePersistenceImpl<Chan
 				changesetCollection.setModifiedDate(now);
 			}
 			else {
-				changesetCollection.setModifiedDate(serviceContext.getModifiedDate(
-						now));
+				Date newModifiedDate = serviceContext.getModifiedDate(now);
+
+				if (!newModifiedDate.equals(
+							changesetCollection.getModifiedDate())) {
+					changesetCollection.setModifiedDate(newModifiedDate);
+				}
 			}
 		}
 

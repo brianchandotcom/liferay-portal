@@ -3326,7 +3326,11 @@ public class KBFolderPersistenceImpl extends BasePersistenceImpl<KBFolder>
 				kbFolder.setModifiedDate(now);
 			}
 			else {
-				kbFolder.setModifiedDate(serviceContext.getModifiedDate(now));
+				Date newModifiedDate = serviceContext.getModifiedDate(now);
+
+				if (!newModifiedDate.equals(kbFolder.getModifiedDate())) {
+					kbFolder.setModifiedDate(newModifiedDate);
+				}
 			}
 		}
 

@@ -3431,7 +3431,11 @@ public class GadgetPersistenceImpl extends BasePersistenceImpl<Gadget>
 				gadget.setModifiedDate(now);
 			}
 			else {
-				gadget.setModifiedDate(serviceContext.getModifiedDate(now));
+				Date newModifiedDate = serviceContext.getModifiedDate(now);
+
+				if (!newModifiedDate.equals(gadget.getModifiedDate())) {
+					gadget.setModifiedDate(newModifiedDate);
+				}
 			}
 		}
 

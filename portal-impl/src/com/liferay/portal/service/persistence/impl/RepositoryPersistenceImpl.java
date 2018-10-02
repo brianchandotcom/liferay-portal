@@ -2610,7 +2610,11 @@ public class RepositoryPersistenceImpl extends BasePersistenceImpl<Repository>
 				repository.setModifiedDate(now);
 			}
 			else {
-				repository.setModifiedDate(serviceContext.getModifiedDate(now));
+				Date newModifiedDate = serviceContext.getModifiedDate(now);
+
+				if (!newModifiedDate.equals(repository.getModifiedDate())) {
+					repository.setModifiedDate(newModifiedDate);
+				}
 			}
 		}
 

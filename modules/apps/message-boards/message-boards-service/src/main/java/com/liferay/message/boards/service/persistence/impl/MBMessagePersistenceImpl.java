@@ -20247,7 +20247,11 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 				mbMessage.setModifiedDate(now);
 			}
 			else {
-				mbMessage.setModifiedDate(serviceContext.getModifiedDate(now));
+				Date newModifiedDate = serviceContext.getModifiedDate(now);
+
+				if (!newModifiedDate.equals(mbMessage.getModifiedDate())) {
+					mbMessage.setModifiedDate(newModifiedDate);
+				}
 			}
 		}
 

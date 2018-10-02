@@ -463,6 +463,204 @@ public class SegmentsEntryRelUtil {
 	}
 
 	/**
+	* Returns all the segments entry rels where groupId = &#63; and classNameId = &#63; and classPK = &#63;.
+	*
+	* @param groupId the group ID
+	* @param classNameId the class name ID
+	* @param classPK the class pk
+	* @return the matching segments entry rels
+	*/
+	public static List<SegmentsEntryRel> findByG_CN_CPK(long groupId,
+		long classNameId, long classPK) {
+		return getPersistence().findByG_CN_CPK(groupId, classNameId, classPK);
+	}
+
+	/**
+	* Returns a range of all the segments entry rels where groupId = &#63; and classNameId = &#63; and classPK = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link SegmentsEntryRelModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param classNameId the class name ID
+	* @param classPK the class pk
+	* @param start the lower bound of the range of segments entry rels
+	* @param end the upper bound of the range of segments entry rels (not inclusive)
+	* @return the range of matching segments entry rels
+	*/
+	public static List<SegmentsEntryRel> findByG_CN_CPK(long groupId,
+		long classNameId, long classPK, int start, int end) {
+		return getPersistence()
+				   .findByG_CN_CPK(groupId, classNameId, classPK, start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the segments entry rels where groupId = &#63; and classNameId = &#63; and classPK = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link SegmentsEntryRelModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param classNameId the class name ID
+	* @param classPK the class pk
+	* @param start the lower bound of the range of segments entry rels
+	* @param end the upper bound of the range of segments entry rels (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching segments entry rels
+	*/
+	public static List<SegmentsEntryRel> findByG_CN_CPK(long groupId,
+		long classNameId, long classPK, int start, int end,
+		OrderByComparator<SegmentsEntryRel> orderByComparator) {
+		return getPersistence()
+				   .findByG_CN_CPK(groupId, classNameId, classPK, start, end,
+			orderByComparator);
+	}
+
+	/**
+	* Returns an ordered range of all the segments entry rels where groupId = &#63; and classNameId = &#63; and classPK = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link SegmentsEntryRelModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param classNameId the class name ID
+	* @param classPK the class pk
+	* @param start the lower bound of the range of segments entry rels
+	* @param end the upper bound of the range of segments entry rels (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the ordered range of matching segments entry rels
+	*/
+	public static List<SegmentsEntryRel> findByG_CN_CPK(long groupId,
+		long classNameId, long classPK, int start, int end,
+		OrderByComparator<SegmentsEntryRel> orderByComparator,
+		boolean retrieveFromCache) {
+		return getPersistence()
+				   .findByG_CN_CPK(groupId, classNameId, classPK, start, end,
+			orderByComparator, retrieveFromCache);
+	}
+
+	/**
+	* Returns the first segments entry rel in the ordered set where groupId = &#63; and classNameId = &#63; and classPK = &#63;.
+	*
+	* @param groupId the group ID
+	* @param classNameId the class name ID
+	* @param classPK the class pk
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching segments entry rel
+	* @throws NoSuchEntryRelException if a matching segments entry rel could not be found
+	*/
+	public static SegmentsEntryRel findByG_CN_CPK_First(long groupId,
+		long classNameId, long classPK,
+		OrderByComparator<SegmentsEntryRel> orderByComparator)
+		throws com.liferay.segments.exception.NoSuchEntryRelException {
+		return getPersistence()
+				   .findByG_CN_CPK_First(groupId, classNameId, classPK,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the first segments entry rel in the ordered set where groupId = &#63; and classNameId = &#63; and classPK = &#63;.
+	*
+	* @param groupId the group ID
+	* @param classNameId the class name ID
+	* @param classPK the class pk
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching segments entry rel, or <code>null</code> if a matching segments entry rel could not be found
+	*/
+	public static SegmentsEntryRel fetchByG_CN_CPK_First(long groupId,
+		long classNameId, long classPK,
+		OrderByComparator<SegmentsEntryRel> orderByComparator) {
+		return getPersistence()
+				   .fetchByG_CN_CPK_First(groupId, classNameId, classPK,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the last segments entry rel in the ordered set where groupId = &#63; and classNameId = &#63; and classPK = &#63;.
+	*
+	* @param groupId the group ID
+	* @param classNameId the class name ID
+	* @param classPK the class pk
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching segments entry rel
+	* @throws NoSuchEntryRelException if a matching segments entry rel could not be found
+	*/
+	public static SegmentsEntryRel findByG_CN_CPK_Last(long groupId,
+		long classNameId, long classPK,
+		OrderByComparator<SegmentsEntryRel> orderByComparator)
+		throws com.liferay.segments.exception.NoSuchEntryRelException {
+		return getPersistence()
+				   .findByG_CN_CPK_Last(groupId, classNameId, classPK,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the last segments entry rel in the ordered set where groupId = &#63; and classNameId = &#63; and classPK = &#63;.
+	*
+	* @param groupId the group ID
+	* @param classNameId the class name ID
+	* @param classPK the class pk
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching segments entry rel, or <code>null</code> if a matching segments entry rel could not be found
+	*/
+	public static SegmentsEntryRel fetchByG_CN_CPK_Last(long groupId,
+		long classNameId, long classPK,
+		OrderByComparator<SegmentsEntryRel> orderByComparator) {
+		return getPersistence()
+				   .fetchByG_CN_CPK_Last(groupId, classNameId, classPK,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the segments entry rels before and after the current segments entry rel in the ordered set where groupId = &#63; and classNameId = &#63; and classPK = &#63;.
+	*
+	* @param segmentsEntryRelId the primary key of the current segments entry rel
+	* @param groupId the group ID
+	* @param classNameId the class name ID
+	* @param classPK the class pk
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next segments entry rel
+	* @throws NoSuchEntryRelException if a segments entry rel with the primary key could not be found
+	*/
+	public static SegmentsEntryRel[] findByG_CN_CPK_PrevAndNext(
+		long segmentsEntryRelId, long groupId, long classNameId, long classPK,
+		OrderByComparator<SegmentsEntryRel> orderByComparator)
+		throws com.liferay.segments.exception.NoSuchEntryRelException {
+		return getPersistence()
+				   .findByG_CN_CPK_PrevAndNext(segmentsEntryRelId, groupId,
+			classNameId, classPK, orderByComparator);
+	}
+
+	/**
+	* Removes all the segments entry rels where groupId = &#63; and classNameId = &#63; and classPK = &#63; from the database.
+	*
+	* @param groupId the group ID
+	* @param classNameId the class name ID
+	* @param classPK the class pk
+	*/
+	public static void removeByG_CN_CPK(long groupId, long classNameId,
+		long classPK) {
+		getPersistence().removeByG_CN_CPK(groupId, classNameId, classPK);
+	}
+
+	/**
+	* Returns the number of segments entry rels where groupId = &#63; and classNameId = &#63; and classPK = &#63;.
+	*
+	* @param groupId the group ID
+	* @param classNameId the class name ID
+	* @param classPK the class pk
+	* @return the number of matching segments entry rels
+	*/
+	public static int countByG_CN_CPK(long groupId, long classNameId,
+		long classPK) {
+		return getPersistence().countByG_CN_CPK(groupId, classNameId, classPK);
+	}
+
+	/**
 	* Caches the segments entry rel in the entity cache if it is enabled.
 	*
 	* @param segmentsEntryRel the segments entry rel

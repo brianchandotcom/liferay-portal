@@ -22,6 +22,8 @@
 
 	var REGEX_PORTLET_ID = /^(?:p_p_id)?_(.*)_.*$/;
 
+	var REGEX_SUB = /\{\s*([^|}]+?)\s*(?:\|([^}]*))?\s*\}/g;
+
 	var SRC_HIDE_LINK = {
 		src: 'hideLink'
 	};
@@ -458,7 +460,7 @@
 		getLexiconIconTpl: function(icon, cssClass) {
 			var instance = this;
 
-			return _.sub(TPL_LEXICON_ICON, icon, cssClass || '');
+			return Liferay.Util.sub(TPL_LEXICON_ICON, icon, cssClass || '');
 		},
 
 		getOpener: function() {
@@ -994,6 +996,19 @@
 			}
 
 			return 0;
+		},
+
+		sub: function(string, data) {
+			if (arguments.length > 2 || (typeof data !== 'object' && typeof data !== 'function')) {
+				data = Array.prototype.slice.call(arguments, 1);
+			}
+
+			return string.replace ? string.replace(
+				REGEX_SUB,
+				function (match, key) {
+					return data[key] === undefined ? match : data[key];
+				}
+			) : string;
 		},
 
 		submitForm: function(form) {

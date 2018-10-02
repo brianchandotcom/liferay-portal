@@ -21,6 +21,7 @@
 						{call .collaborator}
 							{param _handleChangePermission: $_handleChangePermission /}
 							{param _handleDeleteCollaborator: $_handleDeleteCollaborator /}
+							{param _loadingResponse: $_loadingResponse /}
 							{param spritemap: $spritemap /}
 							{param user: $user /}
 						{/call}
@@ -70,6 +71,7 @@
 {template .collaborator}
 	{@param? _handleChangePermission: any}
 	{@param? _handleDeleteCollaborator: any}
+	{@param? _loadingResponse: bool}
 	{@param spritemap: string}
 	{@param user: ?}
 		<div class="autofit-row autofit-row-center">
@@ -101,6 +103,7 @@
 					data-collaborator-id="{$user.id}"
 					data-sharingentry-id="{$user.sharingEntryId}"
 					data-onclick="{$_handleDeleteCollaborator}"
+					{if $_loadingResponse}disabled{/if}
 				>
 					<svg class="lexicon-icon">
 						<use xlink:href="{$spritemap}#times-circle"></use>

@@ -28,7 +28,7 @@ import java.util.Date;
 /**
  * @author Noah Sherrill
  */
-public class AnnouncementsEntryUADTestHelper {
+public class AnnouncementsEntryUADTestUtil {
 
 	public static AnnouncementsEntry addAnnouncementsEntry(
 			AnnouncementsEntryLocalService announcementsEntryLocalService,

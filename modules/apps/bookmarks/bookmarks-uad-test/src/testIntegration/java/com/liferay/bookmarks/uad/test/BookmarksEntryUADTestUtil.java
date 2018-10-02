@@ -14,9 +14,9 @@
 
 package com.liferay.bookmarks.uad.test;
 
-import com.liferay.bookmarks.model.BookmarksFolder;
+import com.liferay.bookmarks.model.BookmarksEntry;
 import com.liferay.bookmarks.model.BookmarksFolderConstants;
-import com.liferay.bookmarks.service.BookmarksFolderLocalService;
+import com.liferay.bookmarks.service.BookmarksEntryLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
@@ -24,37 +24,37 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 /**
- * @author Brian Wing Shun Chan
+ * @author Noah Sherrill
  */
-public class BookmarksFolderUADTestHelper {
+public class BookmarksEntryUADTestUtil {
 
-	public static BookmarksFolder addBookmarksFolder(
-			BookmarksFolderLocalService bookmarksFolderLocalService,
-			long userId)
+	public static BookmarksEntry addBookmarksEntry(
+			BookmarksEntryLocalService bookmarksEntryLocalService, long userId)
 		throws Exception {
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
 				TestPropsValues.getGroupId());
 
-		return bookmarksFolderLocalService.addFolder(
-			userId, BookmarksFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-			serviceContext);
+		return bookmarksEntryLocalService.addEntry(
+			userId, serviceContext.getScopeGroupId(),
+			BookmarksFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			RandomTestUtil.randomString(), "http://www.liferay.com",
+			RandomTestUtil.randomString(), serviceContext);
 	}
 
-	public static BookmarksFolder addBookmarksFolderWithStatusByUserId(
-			BookmarksFolderLocalService bookmarksFolderLocalService,
-			long userId, long statusByUserId)
+	public static BookmarksEntry addBookmarksEntryWithStatusByUserId(
+			BookmarksEntryLocalService bookmarksEntryLocalService, long userId,
+			long statusByUserId)
 		throws Exception {
 
-		BookmarksFolder bookmarksFolder = addBookmarksFolder(
-			bookmarksFolderLocalService, userId);
+		BookmarksEntry bookmarksEntry = addBookmarksEntry(
+			bookmarksEntryLocalService, userId);
 
-		bookmarksFolder = bookmarksFolderLocalService.updateStatus(
-			statusByUserId, bookmarksFolder, WorkflowConstants.STATUS_APPROVED);
+		bookmarksEntryLocalService.updateStatus(
+			statusByUserId, bookmarksEntry, WorkflowConstants.STATUS_APPROVED);
 
-		return bookmarksFolder;
+		return bookmarksEntry;
 	}
 
 }

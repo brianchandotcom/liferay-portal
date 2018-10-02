@@ -17,7 +17,7 @@ package com.liferay.bookmarks.uad.exporter.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.bookmarks.model.BookmarksFolder;
 import com.liferay.bookmarks.service.BookmarksFolderLocalService;
-import com.liferay.bookmarks.uad.test.BookmarksFolderUADTestHelper;
+import com.liferay.bookmarks.uad.test.BookmarksFolderUADTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.test.rule.Inject;
@@ -52,7 +52,7 @@ public class BookmarksFolderUADExporterTest
 		throws Exception {
 
 		BookmarksFolder bookmarksFolder =
-			BookmarksFolderUADTestHelper.addBookmarksFolderWithStatusByUserId(
+			BookmarksFolderUADTestUtil.addBookmarksFolderWithStatusByUserId(
 				_bookmarksFolderLocalService, userId, statusByUserId);
 
 		_bookmarksFolders.add(bookmarksFolder);
@@ -63,7 +63,7 @@ public class BookmarksFolderUADExporterTest
 	@Override
 	protected BookmarksFolder addBaseModel(long userId) throws Exception {
 		BookmarksFolder bookmarksFolder =
-			BookmarksFolderUADTestHelper.addBookmarksFolder(
+			BookmarksFolderUADTestUtil.addBookmarksFolder(
 				_bookmarksFolderLocalService, userId);
 
 		_bookmarksFolders.add(bookmarksFolder);

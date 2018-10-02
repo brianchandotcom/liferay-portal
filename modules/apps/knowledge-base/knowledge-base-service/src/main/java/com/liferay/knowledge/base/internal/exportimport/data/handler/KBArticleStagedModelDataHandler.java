@@ -154,8 +154,7 @@ public class KBArticleStagedModelDataHandler
 		Element kbArticleElement = portletDataContext.getExportDataElement(
 			kbArticle);
 
-		exportKBArticleAttachments(
-			portletDataContext, kbArticleElement, kbArticle);
+		exportKBArticleAttachments(portletDataContext, kbArticle);
 
 		String content =
 			_kbArticleExportImportContentProcessor.
@@ -347,8 +346,7 @@ public class KBArticleStagedModelDataHandler
 	}
 
 	protected void exportKBArticleAttachments(
-			PortletDataContext portletDataContext, Element kbArticleElement,
-			KBArticle kbArticle)
+			PortletDataContext portletDataContext, KBArticle kbArticle)
 		throws Exception {
 
 		List<FileEntry> attachmentsFileEntries =

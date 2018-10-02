@@ -23,7 +23,7 @@ import com.liferay.user.associated.data.display.UADDisplay;
 import com.liferay.user.associated.data.test.util.BaseUADDisplayTestCase;
 import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.service.WikiNodeLocalService;
-import com.liferay.wiki.uad.test.WikiNodeUADTestHelper;
+import com.liferay.wiki.uad.test.WikiNodeUADTestUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,7 +45,7 @@ public class WikiNodeUADDisplayTest extends BaseUADDisplayTestCase<WikiNode> {
 
 	@Override
 	protected WikiNode addBaseModel(long userId) throws Exception {
-		WikiNode wikiNode = WikiNodeUADTestHelper.addWikiNode(
+		WikiNode wikiNode = WikiNodeUADTestUtil.addWikiNode(
 			_wikiNodeLocalService, userId);
 
 		_wikiNodes.add(wikiNode);

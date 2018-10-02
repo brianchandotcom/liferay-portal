@@ -25,7 +25,7 @@ import com.liferay.wiki.service.WikiNodeLocalService;
 /**
  * @author William Newbury
  */
-public class WikiNodeUADTestHelper {
+public class WikiNodeUADTestUtil {
 
 	public static WikiNode addWikiNode(
 			WikiNodeLocalService wikiNodeLocalService, long userId)

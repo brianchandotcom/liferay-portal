@@ -24,7 +24,7 @@ import com.liferay.user.associated.data.test.util.BaseUADExporterTestCase;
 import com.liferay.user.associated.data.test.util.WhenHasStatusByUserIdField;
 import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.service.WikiNodeLocalService;
-import com.liferay.wiki.uad.test.WikiNodeUADTestHelper;
+import com.liferay.wiki.uad.test.WikiNodeUADTestUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,7 +51,7 @@ public class WikiNodeUADExporterTest
 			long userId, long statusByUserId)
 		throws Exception {
 
-		WikiNode wikiNode = WikiNodeUADTestHelper.addWikiNodeWithStatusByUserId(
+		WikiNode wikiNode = WikiNodeUADTestUtil.addWikiNodeWithStatusByUserId(
 			_wikiNodeLocalService, userId, statusByUserId);
 
 		_wikiNodes.add(wikiNode);
@@ -61,7 +61,7 @@ public class WikiNodeUADExporterTest
 
 	@Override
 	protected WikiNode addBaseModel(long userId) throws Exception {
-		WikiNode wikiNode = WikiNodeUADTestHelper.addWikiNode(
+		WikiNode wikiNode = WikiNodeUADTestUtil.addWikiNode(
 			_wikiNodeLocalService, userId);
 
 		_wikiNodes.add(wikiNode);

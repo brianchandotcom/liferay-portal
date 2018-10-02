@@ -293,10 +293,12 @@ public class ServiceBeanAopCacheManager {
 	}
 
 	private static <T> T _findAnnotation(
-		Map<Method, Annotation[]> map, MethodInvocation methodInvocation,
+		Map<Method, Annotation[]> methodAnnotations,
+		MethodInvocation methodInvocation,
 		Class<? extends Annotation> annotationType, T defaultValue) {
 
-		Annotation[] annotations = map.get(methodInvocation.getMethod());
+		Annotation[] annotations = methodAnnotations.get(
+			methodInvocation.getMethod());
 
 		if (annotations == _nullAnnotations) {
 			return defaultValue;
@@ -316,14 +318,14 @@ public class ServiceBeanAopCacheManager {
 	}
 
 	private static void _setAnnotations(
-		Map<Method, Annotation[]> map, MethodInvocation methodInvocation,
-		Annotation[] annotations) {
+		Map<Method, Annotation[]> methodAnnotations,
+		MethodInvocation methodInvocation, Annotation[] annotations) {
 
 		if (ArrayUtil.isEmpty(annotations)) {
 			annotations = _nullAnnotations;
 		}
 
-		map.put(methodInvocation.getMethod(), annotations);
+		methodAnnotations.put(methodInvocation.getMethod(), annotations);
 	}
 
 	private static final Map<Method, Annotation[]> _annotations =

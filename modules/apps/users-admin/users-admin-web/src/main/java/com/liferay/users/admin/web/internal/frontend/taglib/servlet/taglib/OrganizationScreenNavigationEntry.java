@@ -22,8 +22,10 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.portlet.PortletURLFactory;
 import com.liferay.portal.kernel.service.OrganizationService;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.users.admin.constants.UserFormConstants;
 import com.liferay.users.admin.web.internal.constants.UsersAdminWebKeys;
@@ -33,6 +35,10 @@ import java.io.IOException;
 
 import java.util.Locale;
 import java.util.function.BiFunction;
+
+import javax.portlet.ActionRequest;
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -45,12 +51,15 @@ public class OrganizationScreenNavigationEntry
 
 	public OrganizationScreenNavigationEntry(
 		JSPRenderer jspRenderer, OrganizationService organizationService,
-		String entryKey, String categoryKey, String jspPath,
-		String mvcActionCommandName, boolean showControls,
+		Portal portal, PortletURLFactory portletURLFactory, String entryKey,
+		String categoryKey, String jspPath, String mvcActionCommandName,
+		boolean showControls,
 		BiFunction<User, Organization, Boolean> isVisibleBiFunction) {
 
 		_jspRenderer = jspRenderer;
 		_organizationService = organizationService;
+		_portal = portal;
+		_portletURLFactory = portletURLFactory;
 		_entryKey = entryKey;
 		_categoryKey = categoryKey;
 		_jspPath = jspPath;
@@ -95,9 +104,6 @@ public class OrganizationScreenNavigationEntry
 			organizationScreenNavigationDisplayContext =
 				new OrganizationScreenNavigationDisplayContext();
 
-		organizationScreenNavigationDisplayContext.setActionCommandName(
-			_mvcActionCommandName);
-
 		String redirect = ParamUtil.getString(request, "redirect");
 
 		String backURL = ParamUtil.getString(request, "backURL", redirect);
@@ -126,12 +132,43 @@ public class OrganizationScreenNavigationEntry
 			organization);
 		organizationScreenNavigationDisplayContext.setOrganizationId(
 			organizationId);
-		organizationScreenNavigationDisplayContext.
-			setScreenNavigationCategoryKey(_categoryKey);
-		organizationScreenNavigationDisplayContext.setScreenNavigationEntryKey(
-			_entryKey);
 		organizationScreenNavigationDisplayContext.setShowControls(
 			_showControls);
+
+		String portletId = _portal.getPortletId(request);
+
+		PortletURL editOrganizationActionURL = _portletURLFactory.create(
+			request, portletId, PortletRequest.ACTION_PHASE);
+
+		editOrganizationActionURL.setParameter(
+			ActionRequest.ACTION_NAME, _mvcActionCommandName);
+
+		PortletURL editOrganizationRenderURL = _portletURLFactory.create(
+			request, portletId, PortletRequest.RENDER_PHASE);
+
+		editOrganizationRenderURL.setParameter(
+			"mvcRenderCommandName", "/users_admin/edit_organization");
+		editOrganizationRenderURL.setParameter("backURL", backURL);
+		editOrganizationRenderURL.setParameter(
+			"organizationId", String.valueOf(organizationId));
+		editOrganizationRenderURL.setParameter(
+			"screenNavigationCategoryKey", _categoryKey);
+		editOrganizationRenderURL.setParameter(
+			"screenNavigationEntryKey", _entryKey);
+
+		editOrganizationActionURL.setParameter(
+			"redirect", editOrganizationRenderURL.toString());
+
+		editOrganizationActionURL.setParameter("backURL", backURL);
+		editOrganizationActionURL.setParameter(
+			"organizationId", String.valueOf(organizationId));
+		editOrganizationActionURL.setParameter(
+			"screenNavigationCategoryKey", _categoryKey);
+		editOrganizationActionURL.setParameter(
+			"screenNavigationEntryKey", _entryKey);
+
+		organizationScreenNavigationDisplayContext.setEditOrganizationActionURL(
+			editOrganizationActionURL.toString());
 
 		request.setAttribute(
 			UsersAdminWebKeys.ORGANIZATION_SCREEN_NAVIGATION_DISPLAY_CONTEXT,
@@ -151,6 +188,8 @@ public class OrganizationScreenNavigationEntry
 	private final JSPRenderer _jspRenderer;
 	private final String _mvcActionCommandName;
 	private final OrganizationService _organizationService;
+	private final Portal _portal;
+	private final PortletURLFactory _portletURLFactory;
 	private final boolean _showControls;
 
 }

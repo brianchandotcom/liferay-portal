@@ -20,23 +20,7 @@
 OrganizationScreenNavigationDisplayContext organizationScreenNavigationDisplayContext = (OrganizationScreenNavigationDisplayContext)request.getAttribute(UsersAdminWebKeys.ORGANIZATION_SCREEN_NAVIGATION_DISPLAY_CONTEXT);
 %>
 
-<portlet:actionURL name="<%= organizationScreenNavigationDisplayContext.getActionCommandName() %>" var="editOrganizationActionURL" />
-
-<portlet:renderURL var="editOrganizationRenderURL">
-	<portlet:param name="mvcRenderCommandName" value="/users_admin/edit_organization" />
-	<portlet:param name="backURL" value="<%= organizationScreenNavigationDisplayContext.getBackURL() %>" />
-	<portlet:param name="organizationId" value="<%= String.valueOf(organizationScreenNavigationDisplayContext.getOrganizationId()) %>" />
-	<portlet:param name="screenNavigationCategoryKey" value="<%= organizationScreenNavigationDisplayContext.getScreenNavigationCategoryKey() %>" />
-	<portlet:param name="screenNavigationEntryKey" value="<%= organizationScreenNavigationDisplayContext.getScreenNavigationEntryKey() %>" />
-</portlet:renderURL>
-
-<aui:form action="<%= editOrganizationActionURL %>" cssClass="container-fluid container-fluid-max-xl" data-senna-off="true" method="post" name="fm">
-	<aui:input name="redirect" type="hidden" value="<%= editOrganizationRenderURL %>" />
-	<aui:input name="backURL" type="hidden" value="<%= organizationScreenNavigationDisplayContext.getBackURL() %>" />
-	<aui:input name="organizationId" type="hidden" value="<%= organizationScreenNavigationDisplayContext.getOrganizationId() %>" />
-	<aui:input name="screenNavigationCategoryKey" type="hidden" value="<%= organizationScreenNavigationDisplayContext.getScreenNavigationCategoryKey() %>" />
-	<aui:input name="screenNavigationEntryKey" type="hidden" value="<%= organizationScreenNavigationDisplayContext.getScreenNavigationEntryKey() %>" />
-
+<aui:form action="<%= organizationScreenNavigationDisplayContext.getEditOrganizationActionURL() %>" cssClass="container-fluid container-fluid-max-xl" data-senna-off="true" method="post" name="fm">
 	<aui:fieldset-group markupView="lexicon">
 		<div class="sheet">
 			<h2 class="sheet-title"><%= organizationScreenNavigationDisplayContext.getFormLabel() %></h2>

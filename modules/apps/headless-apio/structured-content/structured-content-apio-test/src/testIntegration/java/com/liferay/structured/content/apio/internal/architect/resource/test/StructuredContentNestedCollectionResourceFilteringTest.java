@@ -524,7 +524,7 @@ public class StructuredContentNestedCollectionResourceFilteringTest
 
 		Map<Locale, String> stringMap2 = new HashMap<>();
 
-		stringMap2.put(LocaleUtil.getDefault(), "title2");
+		stringMap2.put(LocaleUtil.getDefault(), RandomTestUtil.randomString());
 
 		LocalDate localDate2 = localDate1.plusDays(2);
 
@@ -591,7 +591,7 @@ public class StructuredContentNestedCollectionResourceFilteringTest
 
 		Map<Locale, String> stringMap2 = new HashMap<>();
 
-		stringMap2.put(LocaleUtil.getDefault(), "title2");
+		stringMap2.put(LocaleUtil.getDefault(), RandomTestUtil.randomString());
 
 		LocalDate localDate2 = localDate1.plusDays(2);
 

@@ -31,6 +31,8 @@
 			</else>
 		</if>
 
+		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
+
 		<execute macro="PortletEntry#inputName">
 			<var name="name" value="${pageName}" />
 		</execute>
@@ -38,6 +40,8 @@
 		<execute macro="Button#click">
 			<var name="button" value="Save" />
 		</execute>
+
+		<execute function="SelectFrame#selectFrameTop" />
 	</command>
 
 	<command name="gotoEdit">

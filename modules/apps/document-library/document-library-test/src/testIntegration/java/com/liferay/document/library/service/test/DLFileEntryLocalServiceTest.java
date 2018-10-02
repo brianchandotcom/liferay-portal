@@ -28,6 +28,7 @@ import com.liferay.document.library.kernel.model.DLFileEntryTypeConstants;
 import com.liferay.document.library.kernel.model.DLFileVersion;
 import com.liferay.document.library.kernel.model.DLFolder;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
+import com.liferay.document.library.kernel.model.DLVersionNumberIncrease;
 import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
 import com.liferay.document.library.kernel.service.DLAppServiceUtil;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalServiceUtil;
@@ -371,7 +372,7 @@ public class DLFileEntryLocalServiceTest {
 		fileEntry = DLAppLocalServiceUtil.updateFileEntry(
 			TestPropsValues.getUserId(), fileEntry.getFileEntryId(), "FE2.txt",
 			ContentTypes.TEXT_PLAIN, "FE1.exe", fileEntry.getDescription(),
-			RandomTestUtil.randomString(), false,
+			RandomTestUtil.randomString(), DLVersionNumberIncrease.MINOR,
 			TestDataConstants.TEST_BYTE_ARRAY, serviceContext);
 
 		Assert.assertEquals("FE1.exe.txt", fileEntry.getFileName());
@@ -689,7 +690,8 @@ public class DLFileEntryLocalServiceTest {
 		dlFileEntry = DLFileEntryLocalServiceUtil.updateFileEntry(
 			TestPropsValues.getUserId(), dlFileEntry.getFileEntryId(),
 			StringUtil.randomString(), ContentTypes.TEXT_PLAIN,
-			StringUtil.randomString(), StringPool.BLANK, StringPool.BLANK, true,
+			StringUtil.randomString(), StringPool.BLANK, StringPool.BLANK,
+			DLVersionNumberIncrease.MAJOR,
 			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT,
 			ddmFormValuesMap, null, inputStream, 0, serviceContext);
 

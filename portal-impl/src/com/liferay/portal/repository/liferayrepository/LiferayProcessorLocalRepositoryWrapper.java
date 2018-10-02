@@ -14,6 +14,7 @@
 
 package com.liferay.portal.repository.liferayrepository;
 
+import com.liferay.document.library.kernel.model.DLVersionNumberIncrease;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.LocalRepository;
 import com.liferay.portal.kernel.repository.capabilities.ProcessorCapability;
@@ -74,8 +75,9 @@ public class LiferayProcessorLocalRepositoryWrapper
 
 	@Override
 	public void checkInFileEntry(
-			long userId, long fileEntryId, boolean majorVersion,
-			String changeLog, ServiceContext serviceContext)
+			long userId, long fileEntryId,
+			DLVersionNumberIncrease dlVersionNumberIncrease, String changeLog,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		FileEntry fileEntry = getFileEntry(fileEntryId);
@@ -83,7 +85,8 @@ public class LiferayProcessorLocalRepositoryWrapper
 		_processorCapability.cleanUp(fileEntry.getLatestFileVersion(true));
 
 		super.checkInFileEntry(
-			userId, fileEntryId, majorVersion, changeLog, serviceContext);
+			userId, fileEntryId, dlVersionNumberIncrease, changeLog,
+			serviceContext);
 
 		_processorCapability.copy(fileEntry, fileEntry.getFileVersion());
 	}
@@ -120,12 +123,13 @@ public class LiferayProcessorLocalRepositoryWrapper
 	public FileEntry updateFileEntry(
 			long userId, long fileEntryId, String sourceFileName,
 			String mimeType, String title, String description, String changeLog,
-			boolean majorVersion, File file, ServiceContext serviceContext)
+			DLVersionNumberIncrease dlVersionNumberIncrease, File file,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		FileEntry fileEntry = super.updateFileEntry(
 			userId, fileEntryId, sourceFileName, mimeType, title, description,
-			changeLog, majorVersion, file, serviceContext);
+			changeLog, dlVersionNumberIncrease, file, serviceContext);
 
 		_processorCapability.cleanUp(fileEntry.getLatestFileVersion(true));
 		_processorCapability.generateNew(fileEntry);
@@ -137,22 +141,21 @@ public class LiferayProcessorLocalRepositoryWrapper
 	public FileEntry updateFileEntry(
 			long userId, long fileEntryId, String sourceFileName,
 			String mimeType, String title, String description, String changeLog,
-			boolean majorVersion, InputStream is, long size,
-			ServiceContext serviceContext)
+			DLVersionNumberIncrease dlVersionNumberIncrease, InputStream is,
+			long size, ServiceContext serviceContext)
 		throws PortalException {
 
-		FileEntry oldFileEntry = null;
 		FileVersion oldFileVersion = null;
 
 		if (is == null) {
-			oldFileEntry = getFileEntry(fileEntryId);
+			FileEntry oldFileEntry = getFileEntry(fileEntryId);
 
 			oldFileVersion = oldFileEntry.getLatestFileVersion(true);
 		}
 
 		FileEntry fileEntry = super.updateFileEntry(
 			userId, fileEntryId, sourceFileName, mimeType, title, description,
-			changeLog, majorVersion, is, size, serviceContext);
+			changeLog, dlVersionNumberIncrease, is, size, serviceContext);
 
 		if (is == null) {
 			_processorCapability.copy(fileEntry, oldFileVersion);

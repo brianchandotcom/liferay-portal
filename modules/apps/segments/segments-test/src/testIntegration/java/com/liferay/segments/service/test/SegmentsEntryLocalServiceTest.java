@@ -178,7 +178,6 @@ public class SegmentsEntryLocalServiceTest {
 
 		String criteria = RandomTestUtil.randomString();
 		String key = RandomTestUtil.randomString();
-		String type = RandomTestUtil.randomString();
 
 		SegmentsEntry updatedSegmentsEntry =
 			_segmentsEntryLocalService.updateSegmentsEntry(
@@ -201,7 +200,6 @@ public class SegmentsEntryLocalServiceTest {
 		Assert.assertEquals(
 			FriendlyURLNormalizerUtil.normalize(key),
 			updatedSegmentsEntry.getKey());
-		Assert.assertEquals(type, updatedSegmentsEntry.getType());
 	}
 
 	@Test(expected = SegmentsEntryKeyException.class)

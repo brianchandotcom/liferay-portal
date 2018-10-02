@@ -362,7 +362,7 @@
 		</execute>
 
 		<execute macro="ServerAdministration#addCategoryLogLevels">
-			<var name="catagoryName" value="com.liferay.saml.opensaml.integration" />
+			<var name="categoryName" value="com.liferay.saml.opensaml.integration" />
 			<var name="categoryPriority" value="DEBUG" />
 		</execute>
 
@@ -440,9 +440,6 @@
 			<var name="url" value="${maliciousURL}" />
 		</execute>
 
-		<execute function="AssertConsoleTextNotPresent" value1="java.lang.OutOfMemoryError" />
-		<execute function="AssertConsoleTextNotPresent" value1="GC overhead limit exceeded" />
-
 		<execute macro="WebContent#addCP">
 			<var name="webContentContent" value="Web Content Content" />
 			<var name="webContentTitle" value="Web Content Title" />
@@ -472,9 +469,6 @@
 		<execute macro="Navigator#openSpecificURL">
 			<var name="url" value="${maliciousURL}" />
 		</execute>
-
-		<execute function="AssertConsoleTextNotPresent" value1="java.lang.OutOfMemoryError" />
-		<execute function="AssertConsoleTextNotPresent" value1="GC overhead limit exceeded" />
 
 		<execute macro="WebContent#addCP">
 			<var name="webContentContent" value="Web Content Content 2" />
@@ -626,7 +620,7 @@
 		</execute>
 
 		<execute macro="ServerAdministration#addCategoryLogLevels">
-			<var name="catagoryName" value="com.liferay.saml" />
+			<var name="categoryName" value="com.liferay.saml" />
 			<var name="categoryPriority" value="DEBUG" />
 		</execute>
 

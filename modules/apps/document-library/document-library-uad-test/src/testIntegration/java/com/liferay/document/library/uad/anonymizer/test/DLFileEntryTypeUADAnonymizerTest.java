@@ -17,10 +17,11 @@ package com.liferay.document.library.uad.anonymizer.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.document.library.kernel.model.DLFileEntryType;
 import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalService;
-import com.liferay.document.library.uad.test.DLFileEntryTypeUADTestHelper;
+import com.liferay.document.library.uad.test.DLFileEntryTypeUADTestUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.user.associated.data.anonymizer.UADAnonymizer;
@@ -48,7 +49,8 @@ public class DLFileEntryTypeUADAnonymizerTest
 
 	@After
 	public void tearDown() throws Exception {
-		_dlFileEntryTypeUADTestHelper.cleanUpDependencies(_dlFileEntryTypes);
+		DLFileEntryTypeUADTestUtil.cleanUpDependencies(
+			_dlFileEntryTypeLocalService, _portal, _dlFileEntryTypes);
 	}
 
 	@Override
@@ -62,7 +64,8 @@ public class DLFileEntryTypeUADAnonymizerTest
 		throws Exception {
 
 		DLFileEntryType dlFileEntryType =
-			_dlFileEntryTypeUADTestHelper.addDLFileEntryType(userId);
+			DLFileEntryTypeUADTestUtil.addDLFileEntryType(
+				_dlFileEntryTypeLocalService, _portal, userId);
 
 		if (deleteAfterTestRun) {
 			_dlFileEntryTypes.add(dlFileEntryType);
@@ -75,7 +78,8 @@ public class DLFileEntryTypeUADAnonymizerTest
 	protected void deleteBaseModels(List<DLFileEntryType> baseModels)
 		throws Exception {
 
-		_dlFileEntryTypeUADTestHelper.cleanUpDependencies(baseModels);
+		DLFileEntryTypeUADTestUtil.cleanUpDependencies(
+			_dlFileEntryTypeLocalService, _portal, baseModels);
 	}
 
 	@Override
@@ -119,7 +123,7 @@ public class DLFileEntryTypeUADAnonymizerTest
 	private final List<DLFileEntryType> _dlFileEntryTypes = new ArrayList<>();
 
 	@Inject
-	private DLFileEntryTypeUADTestHelper _dlFileEntryTypeUADTestHelper;
+	private Portal _portal;
 
 	@Inject(filter = "component.name=*.DLFileEntryTypeUADAnonymizer")
 	private UADAnonymizer _uadAnonymizer;

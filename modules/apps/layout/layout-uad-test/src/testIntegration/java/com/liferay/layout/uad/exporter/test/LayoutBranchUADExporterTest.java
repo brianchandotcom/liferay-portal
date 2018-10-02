@@ -15,8 +15,10 @@
 package com.liferay.layout.uad.exporter.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.layout.uad.test.LayoutBranchUADTestHelper;
+import com.liferay.layout.uad.test.LayoutBranchUADTestUtil;
 import com.liferay.portal.kernel.model.LayoutBranch;
+import com.liferay.portal.kernel.service.LayoutBranchLocalService;
+import com.liferay.portal.kernel.service.LayoutSetBranchLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.test.rule.Inject;
@@ -46,13 +48,14 @@ public class LayoutBranchUADExporterTest
 
 	@After
 	public void tearDown() throws Exception {
-		_layoutBranchUADTestHelper.cleanUpDependencies(_layoutBranchs);
+		LayoutBranchUADTestUtil.cleanUpDependencies(
+			_layoutSetBranchLocalService, _layoutBranchs);
 	}
 
 	@Override
 	protected LayoutBranch addBaseModel(long userId) throws Exception {
-		LayoutBranch layoutBranch = _layoutBranchUADTestHelper.addLayoutBranch(
-			userId);
+		LayoutBranch layoutBranch = LayoutBranchUADTestUtil.addLayoutBranch(
+			_layoutBranchLocalService, _layoutSetBranchLocalService, userId);
 
 		_layoutBranchs.add(layoutBranch);
 
@@ -69,11 +72,14 @@ public class LayoutBranchUADExporterTest
 		return _uadExporter;
 	}
 
+	@Inject
+	private LayoutBranchLocalService _layoutBranchLocalService;
+
 	@DeleteAfterTestRun
 	private final List<LayoutBranch> _layoutBranchs = new ArrayList<>();
 
 	@Inject
-	private LayoutBranchUADTestHelper _layoutBranchUADTestHelper;
+	private LayoutSetBranchLocalService _layoutSetBranchLocalService;
 
 	@Inject(filter = "component.name=*.LayoutBranchUADExporter")
 	private UADExporter _uadExporter;

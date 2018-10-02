@@ -303,6 +303,9 @@ public interface SiteNavigationMenuItemLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getSiteNavigationMenuItemsCount();
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getSiteNavigationMenuItemsCount(long siteNavigationMenuId);
+
 	public SiteNavigationMenuItem updateSiteNavigationMenuItem(
 		long siteNavigationMenuItemId, long parentSiteNavigationMenuItemId,
 		int order) throws PortalException;

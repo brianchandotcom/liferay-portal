@@ -159,8 +159,8 @@ public class SharingEntryLocalServiceWrapper implements SharingEntryLocalService
 	* @return the number of sharing entries
 	*/
 	@Override
-	public int countToUserSharingEntriesUnique(long toUserId) {
-		return _sharingEntryLocalService.countToUserSharingEntriesUnique(toUserId);
+	public int countUniqueToUserSharingEntries(long toUserId) {
+		return _sharingEntryLocalService.countUniqueToUserSharingEntries(toUserId);
 	}
 
 	/**
@@ -643,9 +643,9 @@ public class SharingEntryLocalServiceWrapper implements SharingEntryLocalService
 	* @return the list of sharing entries
 	*/
 	@Override
-	public java.util.List<com.liferay.sharing.model.SharingEntry> getToUserSharingEntriesUnique(
+	public java.util.List<com.liferay.sharing.model.SharingEntry> getUniqueToUserSharingEntries(
 		long toUserId, int start, int end) {
-		return _sharingEntryLocalService.getToUserSharingEntriesUnique(toUserId,
+		return _sharingEntryLocalService.getUniqueToUserSharingEntries(toUserId,
 			start, end);
 	}
 

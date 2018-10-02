@@ -22,8 +22,8 @@ import aQute.bnd.annotation.ProviderType;
  */
 @ProviderType
 public interface SharingEntryFinder {
-	public int countByToUserIdUnique(long toUserId);
+	public int countUniqueByToUserId(long toUserId);
 
-	public java.util.List<com.liferay.sharing.model.SharingEntry> findByToUserIdUnique(
+	public java.util.List<com.liferay.sharing.model.SharingEntry> findUniqueByToUserId(
 		long toUserId, int begin, int end);
 }

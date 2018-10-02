@@ -166,7 +166,7 @@ public interface SharingEntryLocalService extends BaseLocalService,
 	* @param toUserId the user id*
 	* @return the number of sharing entries
 	*/
-	public int countToUserSharingEntriesUnique(long toUserId);
+	public int countUniqueToUserSharingEntries(long toUserId);
 
 	/**
 	* Creates a new sharing entry with the primary key. Does not add the sharing entry to the database.
@@ -528,7 +528,7 @@ public interface SharingEntryLocalService extends BaseLocalService,
 	* @return the list of sharing entries
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<SharingEntry> getToUserSharingEntriesUnique(long toUserId,
+	public List<SharingEntry> getUniqueToUserSharingEntries(long toUserId,
 		int start, int end);
 
 	/**

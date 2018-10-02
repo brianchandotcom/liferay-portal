@@ -866,7 +866,7 @@ public class SharingEntryLocalServiceTest {
 	}
 
 	@Test
-	public void testGetToUserIdSharingEntriesUnique() throws Exception {
+	public void testGetUniqueToUserIdSharingEntries() throws Exception {
 		long classNameId = _classNameLocalService.getClassNameId(
 			Group.class.getName());
 		long classPK = _group.getGroupId();
@@ -891,9 +891,9 @@ public class SharingEntryLocalServiceTest {
 			}
 
 			List<SharingEntry> sharingEntries =
-				_sharingEntryLocalService.getToUserSharingEntriesUnique(
+				_sharingEntryLocalService.getUniqueToUserSharingEntries(
 					_toUser.getUserId(), 0,
-					_sharingEntryLocalService.countToUserSharingEntriesUnique(
+					_sharingEntryLocalService.countUniqueToUserSharingEntries(
 						_toUser.getUserId()));
 
 			Assert.assertEquals(

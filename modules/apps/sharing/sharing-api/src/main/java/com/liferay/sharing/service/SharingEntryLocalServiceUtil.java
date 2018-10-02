@@ -164,8 +164,8 @@ public class SharingEntryLocalServiceUtil {
 	* @param toUserId the user id*
 	* @return the number of sharing entries
 	*/
-	public static int countToUserSharingEntriesUnique(long toUserId) {
-		return getService().countToUserSharingEntriesUnique(toUserId);
+	public static int countUniqueToUserSharingEntries(long toUserId) {
+		return getService().countUniqueToUserSharingEntries(toUserId);
 	}
 
 	/**
@@ -606,9 +606,9 @@ public class SharingEntryLocalServiceUtil {
 	* @param toUserId the user id*
 	* @return the list of sharing entries
 	*/
-	public static java.util.List<com.liferay.sharing.model.SharingEntry> getToUserSharingEntriesUnique(
+	public static java.util.List<com.liferay.sharing.model.SharingEntry> getUniqueToUserSharingEntries(
 		long toUserId, int start, int end) {
-		return getService().getToUserSharingEntriesUnique(toUserId, start, end);
+		return getService().getUniqueToUserSharingEntries(toUserId, start, end);
 	}
 
 	/**

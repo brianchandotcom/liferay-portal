@@ -108,13 +108,13 @@ public class SharedWithMeViewDisplayContext {
 	}
 
 	public void populateResults(SearchContainer<SharingEntry> searchContainer) {
-		int total = _sharingEntryLocalService.countToUserSharingEntriesUnique(
+		int total = _sharingEntryLocalService.countUniqueToUserSharingEntries(
 			_themeDisplay.getUserId());
 
 		searchContainer.setTotal(total);
 
 		List<SharingEntry> sharingEntries =
-			_sharingEntryLocalService.getToUserSharingEntriesUnique(
+			_sharingEntryLocalService.getUniqueToUserSharingEntries(
 				_themeDisplay.getUserId(), searchContainer.getStart(),
 				searchContainer.getEnd());
 

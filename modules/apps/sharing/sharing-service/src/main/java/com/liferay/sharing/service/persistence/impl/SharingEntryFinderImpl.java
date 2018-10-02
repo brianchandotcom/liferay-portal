@@ -36,12 +36,12 @@ public class SharingEntryFinderImpl
 	extends SharingEntryFinderBaseImpl implements SharingEntryFinder {
 
 	public static final String COUNT_BY_TO_USER_ID_UNIQUE =
-		SharingEntryFinder.class.getName() + ".countByToUserIdUnique";
+		SharingEntryFinder.class.getName() + ".countUniqueByToUserId";
 
 	public static final String FIND_BY_TO_USER_ID_UNIQUE =
-		SharingEntryFinder.class.getName() + ".findByToUserIdUnique";
+		SharingEntryFinder.class.getName() + ".findUniqueByToUserId";
 
-	public int countByToUserIdUnique(long toUserId) {
+	public int countUniqueByToUserId(long toUserId) {
 		Session session = null;
 
 		try {
@@ -77,7 +77,7 @@ public class SharingEntryFinderImpl
 		}
 	}
 
-	public List<SharingEntry> findByToUserIdUnique(
+	public List<SharingEntry> findUniqueByToUserId(
 		long toUserId, int begin, int end) {
 
 		Session session = null;

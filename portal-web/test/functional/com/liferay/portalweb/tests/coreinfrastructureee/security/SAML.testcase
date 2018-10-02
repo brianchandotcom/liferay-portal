@@ -440,9 +440,6 @@
 			<var name="url" value="${maliciousURL}" />
 		</execute>
 
-		<execute function="AssertConsoleTextNotPresent" value1="java.lang.OutOfMemoryError" />
-		<execute function="AssertConsoleTextNotPresent" value1="GC overhead limit exceeded" />
-
 		<execute macro="WebContent#addCP">
 			<var name="webContentContent" value="Web Content Content" />
 			<var name="webContentTitle" value="Web Content Title" />
@@ -472,9 +469,6 @@
 		<execute macro="Navigator#openSpecificURL">
 			<var name="url" value="${maliciousURL}" />
 		</execute>
-
-		<execute function="AssertConsoleTextNotPresent" value1="java.lang.OutOfMemoryError" />
-		<execute function="AssertConsoleTextNotPresent" value1="GC overhead limit exceeded" />
 
 		<execute macro="WebContent#addCP">
 			<var name="webContentContent" value="Web Content Content 2" />

@@ -56,10 +56,12 @@ public class AssetListEntryAssetEntryRelLocalServiceUtil {
 	}
 
 	public static com.liferay.asset.list.model.AssetListEntryAssetEntryRel addAssetListEntryAssetEntryRel(
-		long assetListEntryId, long assetEntryId) {
+		long assetListEntryId, long assetEntryId,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .addAssetListEntryAssetEntryRel(assetListEntryId,
-			assetEntryId);
+			assetEntryId, serviceContext);
 	}
 
 	/**
@@ -200,6 +202,20 @@ public class AssetListEntryAssetEntryRelLocalServiceUtil {
 				   .fetchAssetListEntryAssetEntryRel(assetListEntryAssetEntryRelId);
 	}
 
+	/**
+	* Returns the asset list entry asset entry rel matching the UUID and group.
+	*
+	* @param uuid the asset list entry asset entry rel's UUID
+	* @param groupId the primary key of the group
+	* @return the matching asset list entry asset entry rel, or <code>null</code> if a matching asset list entry asset entry rel could not be found
+	*/
+	public static com.liferay.asset.list.model.AssetListEntryAssetEntryRel fetchAssetListEntryAssetEntryRelByUuidAndGroupId(
+		String uuid, long groupId) {
+		return getService()
+				   .fetchAssetListEntryAssetEntryRelByUuidAndGroupId(uuid,
+			groupId);
+	}
+
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
 		return getService().getActionableDynamicQuery();
 	}
@@ -216,6 +232,21 @@ public class AssetListEntryAssetEntryRelLocalServiceUtil {
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .getAssetListEntryAssetEntryRel(assetListEntryAssetEntryRelId);
+	}
+
+	/**
+	* Returns the asset list entry asset entry rel matching the UUID and group.
+	*
+	* @param uuid the asset list entry asset entry rel's UUID
+	* @param groupId the primary key of the group
+	* @return the matching asset list entry asset entry rel
+	* @throws PortalException if a matching asset list entry asset entry rel could not be found
+	*/
+	public static com.liferay.asset.list.model.AssetListEntryAssetEntryRel getAssetListEntryAssetEntryRelByUuidAndGroupId(
+		String uuid, long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .getAssetListEntryAssetEntryRelByUuidAndGroupId(uuid, groupId);
 	}
 
 	/**
@@ -241,6 +272,38 @@ public class AssetListEntryAssetEntryRelLocalServiceUtil {
 	}
 
 	/**
+	* Returns all the asset list entry asset entry rels matching the UUID and company.
+	*
+	* @param uuid the UUID of the asset list entry asset entry rels
+	* @param companyId the primary key of the company
+	* @return the matching asset list entry asset entry rels, or an empty list if no matches were found
+	*/
+	public static java.util.List<com.liferay.asset.list.model.AssetListEntryAssetEntryRel> getAssetListEntryAssetEntryRelsByUuidAndCompanyId(
+		String uuid, long companyId) {
+		return getService()
+				   .getAssetListEntryAssetEntryRelsByUuidAndCompanyId(uuid,
+			companyId);
+	}
+
+	/**
+	* Returns a range of asset list entry asset entry rels matching the UUID and company.
+	*
+	* @param uuid the UUID of the asset list entry asset entry rels
+	* @param companyId the primary key of the company
+	* @param start the lower bound of the range of asset list entry asset entry rels
+	* @param end the upper bound of the range of asset list entry asset entry rels (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the range of matching asset list entry asset entry rels, or an empty list if no matches were found
+	*/
+	public static java.util.List<com.liferay.asset.list.model.AssetListEntryAssetEntryRel> getAssetListEntryAssetEntryRelsByUuidAndCompanyId(
+		String uuid, long companyId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.asset.list.model.AssetListEntryAssetEntryRel> orderByComparator) {
+		return getService()
+				   .getAssetListEntryAssetEntryRelsByUuidAndCompanyId(uuid,
+			companyId, start, end, orderByComparator);
+	}
+
+	/**
 	* Returns the number of asset list entry asset entry rels.
 	*
 	* @return the number of asset list entry asset entry rels
@@ -253,6 +316,11 @@ public class AssetListEntryAssetEntryRelLocalServiceUtil {
 		long assetListEntryId) {
 		return getService()
 				   .getAssetListEntryAssetEntryRelsCount(assetListEntryId);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		com.liferay.exportimport.kernel.lar.PortletDataContext portletDataContext) {
+		return getService().getExportActionableDynamicQuery(portletDataContext);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {

@@ -43,9 +43,12 @@ public class AssetListEntryServiceUtil {
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.asset.list.service.impl.AssetListEntryServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static void addAssetEntrySelection(long assetListEntryId,
-		long assetEntryId)
+		long assetEntryId,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().addAssetEntrySelection(assetListEntryId, assetEntryId);
+		getService()
+			.addAssetEntrySelection(assetListEntryId, assetEntryId,
+			serviceContext);
 	}
 
 	public static com.liferay.asset.list.model.AssetListEntry addAssetListEntry(

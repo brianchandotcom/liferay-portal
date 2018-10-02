@@ -3,7 +3,7 @@
 
 <service-builder auto-import-default-references="false" auto-namespace-tables="false" package-path="com.liferay.asset.list">
 	<namespace>AssetList</namespace>
-	<entity local-service="true" name="AssetListEntry" remote-service="true">
+	<entity local-service="true" name="AssetListEntry" remote-service="true" uuid="true">
 
 		<!-- PK fields -->
 
@@ -26,6 +26,7 @@
 
 		<column name="title" type="String" />
 		<column name="type" type="int" />
+		<column name="lastPublishDate" type="Date" />
 
 		<!-- Finder methods -->
 
@@ -51,17 +52,30 @@
 		<reference entity="Resource" package-path="com.liferay.portal" />
 		<reference entity="User" package-path="com.liferay.portal" />
 	</entity>
-	<entity local-service="true" name="AssetListEntryAssetEntryRel" remote-service="false">
+	<entity local-service="true" name="AssetListEntryAssetEntryRel" remote-service="false" uuid="true">
 
 		<!-- PK fields -->
 
 		<column name="assetListEntryAssetEntryRelId" primary="true" type="long" />
+
+		<!-- Group instance -->
+
+		<column name="groupId" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
 
 		<!-- Other fields -->
 
 		<column name="assetListEntryId" type="long" />
 		<column name="assetEntryId" type="long" />
 		<column name="position" type="int" />
+		<column name="lastPublishDate" type="Date" />
 
 		<!-- Order -->
 
@@ -82,6 +96,10 @@
 			<finder-column name="assetListEntryId" />
 			<finder-column comparator="&gt;" name="position" />
 		</finder>
+
+		<!-- References -->
+
+		<reference entity="User" package-path="com.liferay.portal" />
 	</entity>
 	<exceptions>
 		<exception>AssetListEntryTitle</exception>

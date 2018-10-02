@@ -67,14 +67,14 @@ public class SegmentsEntryLocalServiceTest {
 
 	@Test
 	public void testAddSegmentsEntry() throws PortalException {
+		String name = RandomTestUtil.randomString();
+		String description = RandomTestUtil.randomString();
 		String criteria = RandomTestUtil.randomString();
 		String key = RandomTestUtil.randomString();
 		String type = RandomTestUtil.randomString();
-		String name = RandomTestUtil.randomString();
-		String description = RandomTestUtil.randomString();
 
 		SegmentsEntry segmentsEntry = _addSegmentsEntry(
-			key, name, description, criteria, type);
+			name, description, criteria, key, type);
 
 		Assert.assertEquals(
 			1,
@@ -209,11 +209,11 @@ public class SegmentsEntryLocalServiceTest {
 		throws PortalException {
 
 		String key1 = RandomTestUtil.randomString();
-		String key2 = RandomTestUtil.randomString();
 
 		_addSegmentsEntry(key1);
 
-		SegmentsEntry segmentsEntry = _addSegmentsEntry(key2);
+		SegmentsEntry segmentsEntry = _addSegmentsEntry(
+			RandomTestUtil.randomString());
 
 		_segmentsEntryLocalService.updateSegmentsEntry(
 			segmentsEntry.getSegmentsEntryId(), segmentsEntry.getNameMap(),
@@ -228,27 +228,25 @@ public class SegmentsEntryLocalServiceTest {
 
 	private SegmentsEntry _addSegmentsEntry(String key) throws PortalException {
 		return _addSegmentsEntry(
-			key, RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(), RandomTestUtil.randomString());
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), key, RandomTestUtil.randomString());
 	}
 
 	private SegmentsEntry _addSegmentsEntry(
-			String key, final String name, final String description,
-			String criteria, String type)
+			final String name, final String description, String criteria,
+			String key, String type)
 		throws PortalException {
 
+		Map<Locale, String> nameMap = new HashMap<>();
+
+		nameMap.put(LocaleUtil.getDefault(), name);
+
+		Map<Locale, String> descriptionMap = new HashMap<>();
+
+		descriptionMap.put(LocaleUtil.getDefault(), description);
+
 		return _segmentsEntryLocalService.addSegmentsEntry(
-			new HashMap<Locale, String>() {
-				{
-					put(LocaleUtil.getDefault(), name);
-				}
-			},
-			new HashMap<Locale, String>() {
-				{
-					put(LocaleUtil.getDefault(), description);
-				}
-			},
-			true, criteria, key, type,
+			nameMap, descriptionMap, true, criteria, key, type,
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 	}
 

@@ -19,7 +19,7 @@ import com.liferay.message.boards.model.MBThread;
 import com.liferay.message.boards.service.MBCategoryLocalService;
 import com.liferay.message.boards.service.MBMessageLocalService;
 import com.liferay.message.boards.service.MBThreadLocalService;
-import com.liferay.message.boards.uad.test.MBThreadUADTestHelper;
+import com.liferay.message.boards.uad.test.MBThreadUADTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.test.rule.Inject;
@@ -54,7 +54,7 @@ public class MBThreadUADExporterTest
 			long userId, long statusByUserId)
 		throws Exception {
 
-		MBThread mbThread = MBThreadUADTestHelper.addMBThreadWithStatusByUserId(
+		MBThread mbThread = MBThreadUADTestUtil.addMBThreadWithStatusByUserId(
 			_mbCategoryLocalService, _mbMessageLocalService,
 			_mbThreadLocalService, userId, statusByUserId);
 
@@ -65,13 +65,13 @@ public class MBThreadUADExporterTest
 
 	@After
 	public void tearDown() throws Exception {
-		MBThreadUADTestHelper.cleanUpDependencies(
+		MBThreadUADTestUtil.cleanUpDependencies(
 			_mbCategoryLocalService, _mbThreads);
 	}
 
 	@Override
 	protected MBThread addBaseModel(long userId) throws Exception {
-		MBThread mbThread = MBThreadUADTestHelper.addMBThread(
+		MBThread mbThread = MBThreadUADTestUtil.addMBThread(
 			_mbCategoryLocalService, _mbMessageLocalService,
 			_mbThreadLocalService, userId);
 

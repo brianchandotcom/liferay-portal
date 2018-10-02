@@ -31,7 +31,7 @@ import java.util.List;
 /**
  * @author Brian Wing Shun Chan
  */
-public class MBThreadUADTestHelper {
+public class MBThreadUADTestUtil {
 
 	public static MBThread addMBThread(
 			MBCategoryLocalService mbCategoryLocalService,

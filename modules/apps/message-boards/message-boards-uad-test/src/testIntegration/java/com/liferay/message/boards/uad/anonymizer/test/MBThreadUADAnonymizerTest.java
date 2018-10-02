@@ -19,7 +19,7 @@ import com.liferay.message.boards.model.MBThread;
 import com.liferay.message.boards.service.MBCategoryLocalService;
 import com.liferay.message.boards.service.MBMessageLocalService;
 import com.liferay.message.boards.service.MBThreadLocalService;
-import com.liferay.message.boards.uad.test.MBThreadUADTestHelper;
+import com.liferay.message.boards.uad.test.MBThreadUADTestUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -55,7 +55,7 @@ public class MBThreadUADAnonymizerTest
 			long userId, long statusByUserId)
 		throws Exception {
 
-		MBThread mbThread = MBThreadUADTestHelper.addMBThreadWithStatusByUserId(
+		MBThread mbThread = MBThreadUADTestUtil.addMBThreadWithStatusByUserId(
 			_mbCategoryLocalService, _mbMessageLocalService,
 			_mbThreadLocalService, userId, statusByUserId);
 
@@ -66,7 +66,7 @@ public class MBThreadUADAnonymizerTest
 
 	@After
 	public void tearDown() throws Exception {
-		MBThreadUADTestHelper.cleanUpDependencies(
+		MBThreadUADTestUtil.cleanUpDependencies(
 			_mbCategoryLocalService, _mbThreads);
 	}
 
@@ -79,7 +79,7 @@ public class MBThreadUADAnonymizerTest
 	protected MBThread addBaseModel(long userId, boolean deleteAfterTestRun)
 		throws Exception {
 
-		MBThread mbThread = MBThreadUADTestHelper.addMBThread(
+		MBThread mbThread = MBThreadUADTestUtil.addMBThread(
 			_mbCategoryLocalService, _mbMessageLocalService,
 			_mbThreadLocalService, userId);
 
@@ -94,7 +94,7 @@ public class MBThreadUADAnonymizerTest
 	protected void deleteBaseModels(List<MBThread> baseModels)
 		throws Exception {
 
-		MBThreadUADTestHelper.cleanUpDependencies(
+		MBThreadUADTestUtil.cleanUpDependencies(
 			_mbCategoryLocalService, baseModels);
 	}
 

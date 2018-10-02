@@ -113,7 +113,31 @@ public class ExpressionVisitorImplTest {
 
 		Assert.assertEquals(entityField.getName(), rangeTermFilter.getField());
 		Assert.assertEquals(value, rangeTermFilter.getLowerBound());
+		Assert.assertTrue(rangeTermFilter.isIncludesLower());
 		Assert.assertNull(rangeTermFilter.getUpperBound());
+		Assert.assertTrue(rangeTermFilter.isIncludesUpper());
+	}
+
+	@SuppressWarnings("unchecked")
+	@Test
+	public void testVisitBinaryExpressionOperationWithGreaterOperation() {
+		Map<String, EntityField> entityFieldsMap =
+			_entityModel.getEntityFieldsMap();
+
+		EntityField entityField = entityFieldsMap.get("title");
+
+		String value = "title1";
+
+		RangeTermFilter rangeTermFilter =
+			(RangeTermFilter)_expressionVisitorImpl.
+				visitBinaryExpressionOperation(
+					BinaryExpression.Operation.GT, entityField, value);
+
+		Assert.assertEquals(entityField.getName(), rangeTermFilter.getField());
+		Assert.assertEquals(value, rangeTermFilter.getLowerBound());
+		Assert.assertFalse(rangeTermFilter.isIncludesLower());
+		Assert.assertNull(rangeTermFilter.getUpperBound());
+		Assert.assertTrue(rangeTermFilter.isIncludesUpper());
 	}
 
 	@SuppressWarnings("unchecked")
@@ -130,6 +154,28 @@ public class ExpressionVisitorImplTest {
 			(RangeTermFilter)_expressionVisitorImpl.
 				visitBinaryExpressionOperation(
 					BinaryExpression.Operation.LE, entityField, value);
+
+		Assert.assertEquals(entityField.getName(), rangeTermFilter.getField());
+		Assert.assertNull(rangeTermFilter.getLowerBound());
+		Assert.assertFalse(rangeTermFilter.isIncludesLower());
+		Assert.assertEquals(value, rangeTermFilter.getUpperBound());
+		Assert.assertTrue(rangeTermFilter.isIncludesUpper());
+	}
+
+	@SuppressWarnings("unchecked")
+	@Test
+	public void testVisitBinaryExpressionOperationWithLowerOperation() {
+		Map<String, EntityField> entityFieldsMap =
+			_entityModel.getEntityFieldsMap();
+
+		EntityField entityField = entityFieldsMap.get("title");
+
+		String value = "title1";
+
+		RangeTermFilter rangeTermFilter =
+			(RangeTermFilter)_expressionVisitorImpl.
+				visitBinaryExpressionOperation(
+					BinaryExpression.Operation.LT, entityField, value);
 
 		Assert.assertEquals(entityField.getName(), rangeTermFilter.getField());
 		Assert.assertEquals(value, rangeTermFilter.getUpperBound());

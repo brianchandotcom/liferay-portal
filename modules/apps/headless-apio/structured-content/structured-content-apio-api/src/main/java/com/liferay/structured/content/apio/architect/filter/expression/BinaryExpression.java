@@ -48,7 +48,7 @@ public interface BinaryExpression extends Expression {
 
 	public static enum Operation {
 
-		AND, EQ, GE, LE, OR
+		AND, EQ, GE, GT, LE, LT, OR
 
 	}
 

@@ -116,26 +116,18 @@ public class IndexerRegistryImpl implements IndexerRegistry {
 
 		synchronized (_queuedIndexerPostProcessors) {
 			List<IndexerPostProcessor> indexerPostProcessors =
-				_queuedIndexerPostProcessors.get(indexer.getClassName());
+				_queuedIndexerPostProcessors.getOrDefault(
+					indexer.getClassName(),
+					new ArrayList<IndexerPostProcessor>());
 
-			if (indexerPostProcessors == null) {
-				indexerPostProcessors = _queuedIndexerPostProcessors.get(
-					clazz.getName());
-			}
-			else {
-				indexerPostProcessors.addAll(
-					_queuedIndexerPostProcessors.get(clazz.getName()));
-			}
+			indexerPostProcessors.addAll(
+				_queuedIndexerPostProcessors.get(clazz.getName()));
 
-			if (indexerPostProcessors != null) {
-				for (IndexerPostProcessor indexerPostProcessor :
-						indexerPostProcessors) {
+			indexerPostProcessors.forEach(
+				indexerPostProcessor -> indexer.registerIndexerPostProcessor(
+					indexerPostProcessor));
 
-					indexer.registerIndexerPostProcessor(indexerPostProcessor);
-				}
-
-				_queuedIndexerPostProcessors.remove(indexer.getClassName());
-			}
+			_queuedIndexerPostProcessors.remove(indexer.getClassName());
 		}
 	}
 

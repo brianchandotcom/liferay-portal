@@ -15,6 +15,7 @@
 package com.liferay.structured.content.apio.internal.architect.resource.test;
 
 import com.liferay.apio.architect.pagination.PageItems;
+import com.liferay.apio.architect.test.util.pagination.PaginationRequest;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalArticleConstants;
@@ -43,7 +44,6 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerTestRule;
 import com.liferay.structured.content.apio.architect.filter.Filter;
 import com.liferay.structured.content.apio.architect.sort.Sort;
-import com.liferay.structured.content.apio.architect.util.test.PaginationTestUtil;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -169,7 +169,7 @@ public class StructuredContentNestedCollectionResourceTest
 			serviceContext);
 
 		PageItems<JournalArticle> pageItems = getPageItems(
-			PaginationTestUtil.of(10, 1), _group.getGroupId(),
+			PaginationRequest.of(10, 1), _group.getGroupId(),
 			getThemeDisplay(_group, LocaleUtil.getDefault()),
 			Filter.emptyFilter(), Sort.emptySort());
 
@@ -212,7 +212,7 @@ public class StructuredContentNestedCollectionResourceTest
 				new ContextUserReplace(user, permissionChecker)) {
 
 			PageItems<JournalArticle> pageItems = getPageItems(
-				PaginationTestUtil.of(10, 1), _group.getGroupId(),
+				PaginationRequest.of(10, 1), _group.getGroupId(),
 				getThemeDisplay(_group, LocaleUtil.getDefault()),
 				Filter.emptyFilter(), Sort.emptySort());
 
@@ -260,7 +260,7 @@ public class StructuredContentNestedCollectionResourceTest
 		Assert.assertEquals(2, journalArticlesCount);
 
 		PageItems<JournalArticle> pageItems = getPageItems(
-			PaginationTestUtil.of(10, 1), _group.getGroupId(),
+			PaginationRequest.of(10, 1), _group.getGroupId(),
 			getThemeDisplay(_group, LocaleUtil.getDefault()),
 			Filter.emptyFilter(), Sort.emptySort());
 
@@ -312,7 +312,7 @@ public class StructuredContentNestedCollectionResourceTest
 		Assert.assertEquals(2, journalArticlesCount);
 
 		PageItems<JournalArticle> pageItems = getPageItems(
-			PaginationTestUtil.of(10, 1), _group.getGroupId(),
+			PaginationRequest.of(10, 1), _group.getGroupId(),
 			getThemeDisplay(_group, LocaleUtil.getDefault()),
 			Filter.emptyFilter(), Sort.emptySort());
 
@@ -360,7 +360,7 @@ public class StructuredContentNestedCollectionResourceTest
 		Assert.assertEquals(2, journalArticlesCount);
 
 		PageItems<JournalArticle> pageItems = getPageItems(
-			PaginationTestUtil.of(10, 1), _group.getGroupId(),
+			PaginationRequest.of(10, 1), _group.getGroupId(),
 			getThemeDisplay(_group, LocaleUtil.getDefault()),
 			Filter.emptyFilter(), Sort.emptySort());
 
@@ -404,7 +404,7 @@ public class StructuredContentNestedCollectionResourceTest
 		Assert.assertEquals(1, journalArticlesCount);
 
 		PageItems<JournalArticle> pageItems = getPageItems(
-			PaginationTestUtil.of(10, 1), _group.getGroupId(),
+			PaginationRequest.of(10, 1), _group.getGroupId(),
 			getThemeDisplay(_group, LocaleUtil.getDefault()),
 			Filter.emptyFilter(), Sort.emptySort());
 
@@ -441,7 +441,7 @@ public class StructuredContentNestedCollectionResourceTest
 		Assert.assertEquals(1, journalArticlesCount);
 
 		PageItems<JournalArticle> pageItems = getPageItems(
-			PaginationTestUtil.of(10, 1), _group.getGroupId(),
+			PaginationRequest.of(10, 1), _group.getGroupId(),
 			getThemeDisplay(_group, LocaleUtil.getDefault()),
 			Filter.emptyFilter(), Sort.emptySort());
 
@@ -476,7 +476,7 @@ public class StructuredContentNestedCollectionResourceTest
 		Assert.assertEquals(1, journalArticlesCount);
 
 		PageItems<JournalArticle> pageItems = getPageItems(
-			PaginationTestUtil.of(10, 1), _group.getGroupId(),
+			PaginationRequest.of(10, 1), _group.getGroupId(),
 			getThemeDisplay(_group, LocaleUtil.getDefault()),
 			Filter.emptyFilter(), Sort.emptySort());
 

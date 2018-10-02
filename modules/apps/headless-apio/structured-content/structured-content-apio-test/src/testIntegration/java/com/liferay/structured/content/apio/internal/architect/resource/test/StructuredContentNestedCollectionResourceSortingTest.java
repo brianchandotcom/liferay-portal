@@ -15,6 +15,7 @@
 package com.liferay.structured.content.apio.internal.architect.resource.test;
 
 import com.liferay.apio.architect.pagination.PageItems;
+import com.liferay.apio.architect.test.util.pagination.PaginationRequest;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalArticleConstants;
@@ -34,7 +35,6 @@ import com.liferay.portal.test.rule.PermissionCheckerTestRule;
 import com.liferay.structured.content.apio.architect.filter.Filter;
 import com.liferay.structured.content.apio.architect.sort.Sort;
 import com.liferay.structured.content.apio.architect.sort.SortParser;
-import com.liferay.structured.content.apio.architect.util.test.PaginationTestUtil;
 
 import java.time.LocalDate;
 import java.time.ZoneId;
@@ -104,7 +104,7 @@ public class StructuredContentNestedCollectionResourceSortingTest
 			serviceContext);
 
 		PageItems<JournalArticle> pageItems = getPageItems(
-			PaginationTestUtil.of(10, 1), _group.getGroupId(),
+			PaginationRequest.of(10, 1), _group.getGroupId(),
 			getThemeDisplay(_group, LocaleUtil.getDefault()),
 			Filter.emptyFilter(),
 			new Sort(_sortParser.parse("dateCreated:asc")));
@@ -150,7 +150,7 @@ public class StructuredContentNestedCollectionResourceSortingTest
 			serviceContext);
 
 		PageItems<JournalArticle> pageItems = getPageItems(
-			PaginationTestUtil.of(10, 1), _group.getGroupId(),
+			PaginationRequest.of(10, 1), _group.getGroupId(),
 			getThemeDisplay(_group, LocaleUtil.getDefault()),
 			Filter.emptyFilter(),
 			new Sort(_sortParser.parse("dateCreated:desc")));
@@ -196,7 +196,7 @@ public class StructuredContentNestedCollectionResourceSortingTest
 			serviceContext);
 
 		PageItems<JournalArticle> pageItems = getPageItems(
-			PaginationTestUtil.of(10, 1), _group.getGroupId(),
+			PaginationRequest.of(10, 1), _group.getGroupId(),
 			getThemeDisplay(_group, LocaleUtil.getDefault()),
 			Filter.emptyFilter(),
 			new Sort(_sortParser.parse("dateModified:asc")));
@@ -242,7 +242,7 @@ public class StructuredContentNestedCollectionResourceSortingTest
 			serviceContext);
 
 		PageItems<JournalArticle> pageItems = getPageItems(
-			PaginationTestUtil.of(10, 1), _group.getGroupId(),
+			PaginationRequest.of(10, 1), _group.getGroupId(),
 			getThemeDisplay(_group, LocaleUtil.getDefault()),
 			Filter.emptyFilter(),
 			new Sort(_sortParser.parse("dateModified:desc")));
@@ -298,7 +298,7 @@ public class StructuredContentNestedCollectionResourceSortingTest
 			serviceContext);
 
 		PageItems<JournalArticle> pageItems = getPageItems(
-			PaginationTestUtil.of(10, 1), _group.getGroupId(),
+			PaginationRequest.of(10, 1), _group.getGroupId(),
 			getThemeDisplay(_group, LocaleUtil.getDefault()),
 			Filter.emptyFilter(),
 			new Sort(_sortParser.parse("datePublished:asc")));
@@ -354,7 +354,7 @@ public class StructuredContentNestedCollectionResourceSortingTest
 			serviceContext);
 
 		PageItems<JournalArticle> pageItems = getPageItems(
-			PaginationTestUtil.of(10, 1), _group.getGroupId(),
+			PaginationRequest.of(10, 1), _group.getGroupId(),
 			getThemeDisplay(_group, LocaleUtil.getDefault()),
 			Filter.emptyFilter(),
 			new Sort(_sortParser.parse("datePublished:desc")));
@@ -398,7 +398,7 @@ public class StructuredContentNestedCollectionResourceSortingTest
 			serviceContext);
 
 		PageItems<JournalArticle> pageItems = getPageItems(
-			PaginationTestUtil.of(10, 1), _group.getGroupId(),
+			PaginationRequest.of(10, 1), _group.getGroupId(),
 			getThemeDisplay(_group, LocaleUtil.getDefault()),
 			Filter.emptyFilter(), new Sort(_sortParser.parse("title:asc")));
 
@@ -444,7 +444,7 @@ public class StructuredContentNestedCollectionResourceSortingTest
 			serviceContext);
 
 		PageItems<JournalArticle> pageItems = getPageItems(
-			PaginationTestUtil.of(10, 1), _group.getGroupId(),
+			PaginationRequest.of(10, 1), _group.getGroupId(),
 			getThemeDisplay(_group, LocaleUtil.getDefault()),
 			Filter.emptyFilter(), new Sort(_sortParser.parse("title:asc")));
 
@@ -491,7 +491,7 @@ public class StructuredContentNestedCollectionResourceSortingTest
 			serviceContext);
 
 		PageItems<JournalArticle> pageItems = getPageItems(
-			PaginationTestUtil.of(10, 1), _group.getGroupId(),
+			PaginationRequest.of(10, 1), _group.getGroupId(),
 			getThemeDisplay(_group, LocaleUtil.SPAIN), Filter.emptyFilter(),
 			new Sort(_sortParser.parse("title:asc")));
 
@@ -534,7 +534,7 @@ public class StructuredContentNestedCollectionResourceSortingTest
 			serviceContext);
 
 		PageItems<JournalArticle> pageItems = getPageItems(
-			PaginationTestUtil.of(10, 1), _group.getGroupId(),
+			PaginationRequest.of(10, 1), _group.getGroupId(),
 			getThemeDisplay(_group, LocaleUtil.getDefault()),
 			Filter.emptyFilter(), new Sort(_sortParser.parse("title")));
 
@@ -577,7 +577,7 @@ public class StructuredContentNestedCollectionResourceSortingTest
 			serviceContext);
 
 		PageItems<JournalArticle> pageItems = getPageItems(
-			PaginationTestUtil.of(10, 1), _group.getGroupId(),
+			PaginationRequest.of(10, 1), _group.getGroupId(),
 			getThemeDisplay(_group, LocaleUtil.getDefault()),
 			Filter.emptyFilter(), new Sort(_sortParser.parse("title:desc")));
 

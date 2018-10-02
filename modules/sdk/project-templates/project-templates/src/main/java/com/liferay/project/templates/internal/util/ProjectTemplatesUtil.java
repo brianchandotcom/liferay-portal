@@ -41,7 +41,7 @@ public class ProjectTemplatesUtil {
 
 		InputStream archetypesList =
 			ProjectTemplatesUtil.class.getResourceAsStream(
-				"/current-project-template-versions.properties");
+				"/project-template-jar-versions.properties");
 
 		Properties archetypesListProperties = new Properties();
 

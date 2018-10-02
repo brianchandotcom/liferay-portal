@@ -14,9 +14,11 @@
 
 package com.liferay.project.templates.internal.util;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 
 import java.net.URL;
 import java.net.URLClassLoader;
@@ -26,6 +28,7 @@ import java.nio.file.DirectoryStream;
 import java.nio.file.FileVisitResult;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.nio.file.SimpleFileVisitor;
 import java.nio.file.StandardCopyOption;
 import java.nio.file.attribute.BasicFileAttributes;
@@ -34,14 +37,19 @@ import java.nio.file.attribute.PosixFilePermission;
 import java.security.CodeSource;
 import java.security.ProtectionDomain;
 
-import java.util.Enumeration;
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 import java.util.jar.Attributes;
-import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 import java.util.jar.Manifest;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipFile;
 
 /**
  * @author Andrea Di Giorgi
@@ -129,71 +137,21 @@ public class FileUtil {
 			String dirName, final Path destinationDirPath)
 		throws Exception {
 
-		File file = getJarFile(FileUtil.class);
+		Map<URL, String> resources = getResources(dirName);
 
-		if (file.isDirectory()) {
-			Path jarDirPath = file.toPath();
+		for (Map.Entry<URL, String> entry : resources.entrySet()) {
+			URL suburl = entry.getKey();
+			String substring = entry.getValue();
 
-			final Path rootDirPath = jarDirPath.resolve(dirName);
+			Path subpath = Paths.get(
+				substring.replaceFirst(dirName + File.separator, ""));
 
-			Files.walkFileTree(
-				rootDirPath,
-				new SimpleFileVisitor<Path>() {
+			Path destination = destinationDirPath.resolve(subpath);
 
-					@Override
-					public FileVisitResult visitFile(
-							Path path, BasicFileAttributes basicFileAttributes)
-						throws IOException {
-
-						Path relativePath = rootDirPath.relativize(path);
-
-						String fileName = relativePath.toString();
-
-						Path destinationPath = destinationDirPath.resolve(
-							fileName);
-
-						Files.createDirectories(destinationPath.getParent());
-
-						Files.copy(
-							path, destinationPath,
-							StandardCopyOption.REPLACE_EXISTING);
-
-						return FileVisitResult.CONTINUE;
-					}
-
-				});
-		}
-		else {
-			try (JarFile jarFile = new JarFile(file)) {
-				Enumeration<JarEntry> enumeration = jarFile.entries();
-
-				while (enumeration.hasMoreElements()) {
-					JarEntry jarEntry = enumeration.nextElement();
-
-					if (jarEntry.isDirectory()) {
-						continue;
-					}
-
-					String name = jarEntry.getName();
-
-					if (!name.startsWith(dirName + "/")) {
-						continue;
-					}
-
-					String fileName = name.substring(dirName.length() + 1);
-
-					Path destinationPath = destinationDirPath.resolve(fileName);
-
-					Files.createDirectories(destinationPath.getParent());
-
-					try (InputStream inputStream = jarFile.getInputStream(
-							jarEntry)) {
-
-						Files.copy(
-							inputStream, destinationPath,
-							StandardCopyOption.REPLACE_EXISTING);
-					}
-				}
+			try (InputStream is = suburl.openStream()) {
+				Files.createDirectories(destination.getParent());
+				Files.copy(
+					is, destination, StandardCopyOption.REPLACE_EXISTING);
 			}
 		}
 	}
@@ -319,6 +277,60 @@ public class FileUtil {
 		}
 	}
 
+	public static Map<URL, String> getResources(final String path)
+		throws IOException {
+
+		Map<URL, String> urlListToReturn = new HashMap<>();
+
+		Thread currentThread = Thread.currentThread();
+
+		final ClassLoader loader = currentThread.getContextClassLoader();
+
+		try (final InputStream inputStream = loader.getResourceAsStream(path);
+			final InputStreamReader inputStreamReader = new InputStreamReader(
+				inputStream, StandardCharsets.UTF_8);
+			final BufferedReader bufferedReader =
+			new BufferedReader(inputStreamReader)) {
+
+			List<URL> urls;
+
+			try (Stream<String> lines = bufferedReader.lines()) {
+				urls = lines.map(
+					l -> path + "/" + l
+				).map(
+					r -> loader.getResource(r)
+				).collect(
+					Collectors.toList()
+				);
+			}
+
+			if ((urls != null) && !urls.isEmpty()) {
+				for (URL url : urls) {
+					if (url != null) {
+						String urlString = url.toString();
+
+						String[] urlSplit = urlString.split(File.separator);
+
+						String name =
+							path + File.separator + urlSplit[urlSplit.length -
+								1];
+
+						if (_isDirectory(url)) {
+							urlListToReturn.putAll(getResources(name));
+						}
+						else {
+							urlListToReturn.put(url, name);
+						}
+					}
+				}
+			}
+		}
+		catch (Throwable e) {
+		}
+
+		return urlListToReturn;
+	}
+
 	public static Path getRootDir(Path dirPath, String markerFileName) {
 		while (true) {
 			if (Files.exists(dirPath.resolve(markerFileName))) {
@@ -359,6 +371,50 @@ public class FileUtil {
 		}
 		catch (UnsupportedOperationException uoe) {
 		}
+	}
+
+	private static boolean _isDirectory(URL url) throws IOException {
+		boolean directory = false;
+
+		String protocol = url.getProtocol();
+
+		String fileString = null;
+
+		if (protocol.equals("file")) {
+			fileString = url.getFile();
+
+			File file = new File(fileString);
+
+			return file.isDirectory();
+		}
+		else if (protocol.equals("jar")) {
+			fileString = url.getFile();
+
+			int exclamationIndex = fileString.indexOf('!');
+
+			String jarPathString = fileString.substring(exclamationIndex + 2);
+
+			URL fileUrl = new URL(fileString.substring(0, exclamationIndex));
+
+			fileString = fileUrl.getFile();
+
+			try (ZipFile zipFile = new ZipFile(fileString)) {
+				ZipEntry zipEntry = zipFile.getEntry(jarPathString);
+
+				directory = zipEntry.isDirectory();
+
+				if (!directory) {
+					try (InputStream input = zipFile.getInputStream(zipEntry)) {
+						directory = input == null;
+					}
+				}
+			}
+		}
+		else {
+			throw new RuntimeException("Unrecognized protocol: " + protocol);
+		}
+
+		return directory;
 	}
 
 }

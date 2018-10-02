@@ -3756,11 +3756,11 @@ public class ProjectTemplatesTest {
 
 		List<String> completeArgs = new ArrayList<>(args.length + 6);
 
-		completeArgs.add("--archetypes-dir");
+		/*completeArgs.add("--archetypes-dir");
 
 		File archetypesDir = FileUtil.getJarFile(ProjectTemplatesTest.class);
 
-		completeArgs.add(archetypesDir.getPath());
+		completeArgs.add(archetypesDir.getPath());*/
 
 		completeArgs.add("--destination");
 		completeArgs.add(destinationDir.getPath());
@@ -4284,8 +4284,6 @@ public class ProjectTemplatesTest {
 
 		ProjectTemplatesArgs projectTemplatesArgs = new ProjectTemplatesArgs();
 
-		projectTemplatesArgs.setArchetypesDirs(
-			Arrays.asList(FileUtil.getJarFile(ProjectTemplatesTest.class)));
 		projectTemplatesArgs.setAuthor(author);
 		projectTemplatesArgs.setClassName(className);
 		projectTemplatesArgs.setContributorType(contributorType);

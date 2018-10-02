@@ -17,7 +17,7 @@ package com.liferay.message.boards.uad.exporter.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.message.boards.model.MBCategory;
 import com.liferay.message.boards.service.MBCategoryLocalService;
-import com.liferay.message.boards.uad.test.MBCategoryUADTestHelper;
+import com.liferay.message.boards.uad.test.MBCategoryUADTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.test.rule.Inject;
@@ -52,7 +52,7 @@ public class MBCategoryUADExporterTest
 		throws Exception {
 
 		MBCategory mbCategory =
-			MBCategoryUADTestHelper.addMBCategoryWithStatusByUserId(
+			MBCategoryUADTestUtil.addMBCategoryWithStatusByUserId(
 				_mbCategoryLocalService, userId, statusByUserId);
 
 		_mbCategories.add(mbCategory);
@@ -62,7 +62,7 @@ public class MBCategoryUADExporterTest
 
 	@Override
 	protected MBCategory addBaseModel(long userId) throws Exception {
-		MBCategory mbCategory = MBCategoryUADTestHelper.addMBCategory(
+		MBCategory mbCategory = MBCategoryUADTestUtil.addMBCategory(
 			_mbCategoryLocalService, userId);
 
 		_mbCategories.add(mbCategory);

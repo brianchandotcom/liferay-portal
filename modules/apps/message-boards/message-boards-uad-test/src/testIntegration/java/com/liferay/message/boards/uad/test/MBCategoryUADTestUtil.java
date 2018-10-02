@@ -25,7 +25,7 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 /**
  * @author Brian Wing Shun Chan
  */
-public class MBCategoryUADTestHelper {
+public class MBCategoryUADTestUtil {
 
 	public static MBCategory addMBCategory(
 			MBCategoryLocalService mbCategoryLocalService, long userId)

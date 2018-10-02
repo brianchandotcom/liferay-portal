@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.roles.uad.test.RoleUADTestHelper;
+import com.liferay.roles.uad.test.RoleUADTestUtil;
 import com.liferay.user.associated.data.exporter.UADExporter;
 import com.liferay.user.associated.data.test.util.BaseUADExporterTestCase;
 
@@ -45,7 +45,7 @@ public class RoleUADExporterTest extends BaseUADExporterTestCase<Role> {
 
 	@Override
 	protected Role addBaseModel(long userId) throws Exception {
-		Role role = RoleUADTestHelper.addRole(_roleLocalService, userId);
+		Role role = RoleUADTestUtil.addRole(_roleLocalService, userId);
 
 		_roles.add(role);
 

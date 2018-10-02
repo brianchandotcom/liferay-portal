@@ -22,7 +22,7 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.roles.uad.test.RoleUADTestHelper;
+import com.liferay.roles.uad.test.RoleUADTestUtil;
 import com.liferay.user.associated.data.anonymizer.UADAnonymizer;
 import com.liferay.user.associated.data.test.util.BaseUADAnonymizerTestCase;
 
@@ -53,7 +53,7 @@ public class RoleUADAnonymizerTest extends BaseUADAnonymizerTestCase<Role> {
 	protected Role addBaseModel(long userId, boolean deleteAfterTestRun)
 		throws Exception {
 
-		Role role = RoleUADTestHelper.addRole(_roleLocalService, userId);
+		Role role = RoleUADTestUtil.addRole(_roleLocalService, userId);
 
 		if (deleteAfterTestRun) {
 			_roles.add(role);

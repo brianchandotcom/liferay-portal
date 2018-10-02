@@ -24,7 +24,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 /**
  * @author Brian Wing Shun Chan
  */
-public class RoleUADTestHelper {
+public class RoleUADTestUtil {
 
 	public static Role addRole(RoleLocalService roleLocalService, long userId)
 		throws Exception {

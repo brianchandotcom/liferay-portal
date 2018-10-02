@@ -127,6 +127,8 @@ public class IndexerRegistryImpl implements IndexerRegistry {
 				indexerPostProcessor -> indexer.registerIndexerPostProcessor(
 					indexerPostProcessor));
 
+			_queuedIndexerPostProcessors.remove(clazz.getName());
+
 			_queuedIndexerPostProcessors.remove(indexer.getClassName());
 		}
 	}

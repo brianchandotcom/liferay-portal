@@ -1,0 +1,4 @@
+Bundle-Name: Liferay Document Library Test Utilities
+Bundle-SymbolicName: com.liferay.document.library.test.util
+Bundle-Version: 1.0.0
+Export-Package: com.liferay.document.library.test.util.search

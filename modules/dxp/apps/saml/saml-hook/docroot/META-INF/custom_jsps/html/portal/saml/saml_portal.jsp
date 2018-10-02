@@ -14,32 +14,16 @@
  */
 --%>
 
-<%@ taglib uri="http://struts.apache.org/tags-tiles" prefix="tiles" %>
-
 <%@ include file="/html/portal/init.jsp" %>
 
 <%
-String tilesContent = (String)request.getAttribute("tilesContent");
-String tilesPopUp = (String)request.getAttribute("tilesPopUp");
-String tilesTitle = (String)request.getAttribute("tilesTitle");
+Map<String, String> attributes = new HashMap<>();
+
+attributes.put("content", (String)request.getAttribute("tilesContent"));
+attributes.put("pop_up", (String)request.getAttribute("tilesPopUp"));
+attributes.put("title", (String)request.getAttribute("tilesTitle"));
+
+request.setAttribute(PortalTilesPlugin.DEFINITION, new Definition(StringPool.BLANK, attributes));
 %>
 
-<tiles:insert
-	flush="false"
-	template="/html/common/themes/portal.jsp"
->
-	<tiles:put
-		name="content"
-		value="<%= tilesContent %>"
-	/>
-
-	<tiles:put
-		name="pop_up"
-		value="<%= tilesPopUp %>"
-	/>
-
-	<tiles:put
-		name="title"
-		value="<%= tilesTitle %>"
-	/>
-</tiles:insert>
+<liferay-util:include page="/html/common/themes/portal.jsp" />

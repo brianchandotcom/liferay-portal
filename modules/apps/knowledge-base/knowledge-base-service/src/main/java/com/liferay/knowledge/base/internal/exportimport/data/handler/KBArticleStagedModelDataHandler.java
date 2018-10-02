@@ -48,6 +48,7 @@ import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portlet.documentlibrary.lar.FileEntryUtil;
 
 import java.io.InputStream;
+import java.io.Serializable;
 
 import java.util.List;
 import java.util.Map;
@@ -113,7 +114,8 @@ public class KBArticleStagedModelDataHandler
 		PortletDataContext portletDataContext, KBArticle kbArticle) {
 
 		return !portletDataContext.isModelCounted(
-			KBArticle.class.getName(), kbArticle.getResourcePrimKey());
+			KBArticle.class.getName(),
+			(Serializable)kbArticle.getResourcePrimKey());
 	}
 
 	@Override

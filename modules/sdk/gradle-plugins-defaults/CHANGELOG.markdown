@@ -4654,6 +4654,12 @@ version 1.3.4.
 - [LPS-85771]: Set `test.outputs.upToDateWhen`to `false` to always run `test`
 and `testIntegration` for OSGi modules.
 
+## 5.5.62 - 2018-09-30
+
+### Changed
+- [LPS-84119]: Update the [Liferay Gradle Plugins] dependency to version
+3.12.149.
+
 ## 5.5.63 - 2018-10-01
 
 ### Changed

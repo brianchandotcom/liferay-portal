@@ -35,7 +35,7 @@ public class SourceFormatFailureMessageGenerator
 
 		int start = consoleText.lastIndexOf(_TOKEN_SOURCE_FORMAT);
 
-		start = consoleText.lastIndexOf(_TOKEN_EXCEPTION_IN_MAIN, start);
+		start = consoleText.lastIndexOf(_TOKEN_FORMATTING_ISSUES, start);
 
 		start = consoleText.lastIndexOf("\n", start);
 
@@ -48,8 +48,7 @@ public class SourceFormatFailureMessageGenerator
 
 	private static final int _CHARACTER_LIMIT = 2500;
 
-	private static final String _TOKEN_EXCEPTION_IN_MAIN =
-		"Exception in thread \"main\"";
+	private static final String _TOKEN_FORMATTING_ISSUES = "formatting issues:";
 
 	private static final String _TOKEN_SOURCE_FORMAT =
 		"at com.liferay.source.formatter";

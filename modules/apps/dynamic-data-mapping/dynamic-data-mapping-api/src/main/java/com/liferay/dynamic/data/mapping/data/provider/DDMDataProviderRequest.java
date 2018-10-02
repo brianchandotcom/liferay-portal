@@ -41,7 +41,7 @@ public final class DDMDataProviderRequest {
 		return _locale;
 	}
 
-	public <T> Optional<T> getParameter(String name, Class<?> clazz) {
+	public <T> Optional<T> getParameterOptional(String name, Class<?> clazz) {
 		Object value = _parameters.get(name);
 
 		if (value == null) {

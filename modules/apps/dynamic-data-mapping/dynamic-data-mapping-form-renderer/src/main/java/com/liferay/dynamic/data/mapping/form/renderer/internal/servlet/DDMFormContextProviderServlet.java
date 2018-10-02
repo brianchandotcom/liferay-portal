@@ -151,12 +151,12 @@ public class DDMFormContextProviderServlet extends HttpServlet {
 		DDMFormRenderingContext ddmFormRenderingContext =
 			new DDMFormRenderingContext();
 
-		ddmFormRenderingContext.setReturnFullContext(
-			ParamUtil.getBoolean(request, "returnFullContext"));
 		ddmFormRenderingContext.setHttpServletRequest(request);
 		ddmFormRenderingContext.setHttpServletResponse(response);
 		ddmFormRenderingContext.setLocale(locale);
 		ddmFormRenderingContext.setPortletNamespace(portletNamespace);
+		ddmFormRenderingContext.setReturnFullContext(
+			ParamUtil.getBoolean(request, "returnFullContext"));
 
 		return ddmFormRenderingContext;
 	}

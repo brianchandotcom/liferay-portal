@@ -27,7 +27,7 @@ import java.util.function.IntFunction;
  */
 public interface DDMFormFieldValueAccessor<T> {
 
-	public default IntFunction<T[]> getArrayGeneratorFunction() {
+	public default IntFunction<T[]> getArrayGeneratorIntFunction() {
 		throw new UnsupportedOperationException(
 			"Cannot create an array of a generic type");
 	}

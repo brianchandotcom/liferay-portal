@@ -36,7 +36,7 @@ public class CheckboxDDMFormFieldValueAccessor
 	implements DDMFormFieldValueAccessor<Boolean> {
 
 	@Override
-	public IntFunction<Boolean[]> getArrayGeneratorFunction() {
+	public IntFunction<Boolean[]> getArrayGeneratorIntFunction() {
 		return Boolean[]::new;
 	}
 

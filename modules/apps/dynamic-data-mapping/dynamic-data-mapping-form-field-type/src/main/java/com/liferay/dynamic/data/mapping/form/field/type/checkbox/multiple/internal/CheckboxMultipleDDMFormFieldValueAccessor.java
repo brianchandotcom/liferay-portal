@@ -47,7 +47,7 @@ public class CheckboxMultipleDDMFormFieldValueAccessor
 	implements DDMFormFieldValueAccessor<JSONArray> {
 
 	@Override
-	public IntFunction<JSONArray[]> getArrayGeneratorFunction() {
+	public IntFunction<JSONArray[]> getArrayGeneratorIntFunction() {
 		return JSONArray[]::new;
 	}
 

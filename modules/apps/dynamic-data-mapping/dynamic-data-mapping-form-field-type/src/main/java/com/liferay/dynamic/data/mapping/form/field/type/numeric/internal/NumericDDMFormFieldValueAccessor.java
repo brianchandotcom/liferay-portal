@@ -43,7 +43,7 @@ public class NumericDDMFormFieldValueAccessor
 	implements DDMFormFieldValueAccessor<BigDecimal> {
 
 	@Override
-	public IntFunction<BigDecimal[]> getArrayGeneratorFunction() {
+	public IntFunction<BigDecimal[]> getArrayGeneratorIntFunction() {
 		return BigDecimal[]::new;
 	}
 

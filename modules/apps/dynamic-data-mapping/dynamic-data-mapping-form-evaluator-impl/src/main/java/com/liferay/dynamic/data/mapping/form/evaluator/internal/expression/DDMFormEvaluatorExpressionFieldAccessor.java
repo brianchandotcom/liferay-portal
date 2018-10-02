@@ -210,7 +210,7 @@ public class DDMFormEvaluatorExpressionFieldAccessor
 		Object[] values = stream.map(
 			this::getFieldValue
 		).toArray(
-			ddmFormFieldValueAccessor.getArrayGeneratorFunction()
+			ddmFormFieldValueAccessor.getArrayGeneratorIntFunction()
 		);
 
 		if (ArrayUtil.isNotEmpty(values) && (values.length == 1)) {

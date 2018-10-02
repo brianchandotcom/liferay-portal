@@ -23,7 +23,7 @@ import java.util.Optional;
  */
 public final class ExecuteActionResponse {
 
-	public <T> Optional<T> getOutput(String name) {
+	public <T> Optional<T> getOutputOptional(String name) {
 		if (!_output.containsKey(name)) {
 			return Optional.empty();
 		}

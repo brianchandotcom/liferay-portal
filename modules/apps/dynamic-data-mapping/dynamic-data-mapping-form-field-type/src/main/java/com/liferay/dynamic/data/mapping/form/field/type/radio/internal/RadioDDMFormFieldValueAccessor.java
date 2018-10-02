@@ -35,7 +35,7 @@ public class RadioDDMFormFieldValueAccessor
 	implements DDMFormFieldValueAccessor<String> {
 
 	@Override
-	public IntFunction<String[]> getArrayGeneratorFunction() {
+	public IntFunction<String[]> getArrayGeneratorIntFunction() {
 		return String[]::new;
 	}
 

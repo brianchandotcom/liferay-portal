@@ -47,7 +47,7 @@ public class GridDDMFormFieldValueAccessor
 	implements DDMFormFieldValueAccessor<JSONObject> {
 
 	@Override
-	public IntFunction<JSONObject[]> getArrayGeneratorFunction() {
+	public IntFunction<JSONObject[]> getArrayGeneratorIntFunction() {
 		return JSONObject[]::new;
 	}
 

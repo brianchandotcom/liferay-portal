@@ -1,4 +1,5 @@
 <definition component-name="portal-authentication-ee">
+	<property name="portal.acceptance" value="saml" />
 	<property name="portal.release" value="true" />
 	<property name="portal.upstream" value="true" />
 	<property name="app.server.bundles.size" value="1" />

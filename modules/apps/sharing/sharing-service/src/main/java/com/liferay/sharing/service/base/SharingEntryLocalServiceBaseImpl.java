@@ -51,6 +51,7 @@ import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import com.liferay.sharing.model.SharingEntry;
 import com.liferay.sharing.service.SharingEntryLocalService;
+import com.liferay.sharing.service.persistence.SharingEntryFinder;
 import com.liferay.sharing.service.persistence.SharingEntryPersistence;
 
 import java.io.Serializable;
@@ -488,6 +489,24 @@ public abstract class SharingEntryLocalServiceBaseImpl
 	}
 
 	/**
+	 * Returns the sharing entry finder.
+	 *
+	 * @return the sharing entry finder
+	 */
+	public SharingEntryFinder getSharingEntryFinder() {
+		return sharingEntryFinder;
+	}
+
+	/**
+	 * Sets the sharing entry finder.
+	 *
+	 * @param sharingEntryFinder the sharing entry finder
+	 */
+	public void setSharingEntryFinder(SharingEntryFinder sharingEntryFinder) {
+		this.sharingEntryFinder = sharingEntryFinder;
+	}
+
+	/**
 	 * Returns the counter local service.
 	 *
 	 * @return the counter local service
@@ -562,6 +581,8 @@ public abstract class SharingEntryLocalServiceBaseImpl
 	protected SharingEntryLocalService sharingEntryLocalService;
 	@BeanReference(type = SharingEntryPersistence.class)
 	protected SharingEntryPersistence sharingEntryPersistence;
+	@BeanReference(type = SharingEntryFinder.class)
+	protected SharingEntryFinder sharingEntryFinder;
 	@ServiceReference(type = com.liferay.counter.kernel.service.CounterLocalService.class)
 	protected com.liferay.counter.kernel.service.CounterLocalService counterLocalService;
 	@ServiceReference(type = PersistedModelLocalServiceRegistry.class)

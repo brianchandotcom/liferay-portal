@@ -106,14 +106,16 @@ public class OrganizationScreenNavigationRegistrar {
 			_createUpdateOnlyScreenNavigationEntry(
 				"contact-information", _CATEGORY_CONTACT,
 				"/organization/contact_information.jsp",
-				"/users_admin/update_organization_contact_information", false),
+				"/users_admin/update_organization_contact_information", false,
+				true),
 			20);
 
 		_registerScreenNavigationEntry(
 			_createUpdateOnlyScreenNavigationEntry(
 				"opening-hours", _CATEGORY_CONTACT,
-				"/organization/services.jsp",
-				"/users_admin/update_organization_opening_hours"),
+				"/organization/opening_hours.jsp",
+				"/users_admin/update_organization_contact_information", false,
+				false),
 			30);
 	}
 
@@ -122,19 +124,19 @@ public class OrganizationScreenNavigationRegistrar {
 		String mvcActionCommandName) {
 
 		return _createScreenNavigationEntry(
-			entryKey, categoryKey, jspPath, mvcActionCommandName, true,
+			entryKey, categoryKey, jspPath, mvcActionCommandName, true, true,
 			(user, organization) -> true);
 	}
 
 	private ScreenNavigationEntry<Organization> _createScreenNavigationEntry(
 		String entryKey, String categoryKey, String jspPath,
-		String mvcActionCommandName, boolean showControls,
+		String mvcActionCommandName, boolean showControls, boolean showTitle,
 		BiFunction<User, Organization, Boolean> isVisibleBiFunction) {
 
 		return new OrganizationScreenNavigationEntry(
 			_jspRenderer, _npmResolver, _organizationService, _portal,
 			_portletURLFactory, entryKey, categoryKey, jspPath,
-			mvcActionCommandName, showControls, isVisibleBiFunction);
+			mvcActionCommandName, showControls, showTitle, isVisibleBiFunction);
 	}
 
 	private ScreenNavigationEntry<Organization>
@@ -143,16 +145,18 @@ public class OrganizationScreenNavigationRegistrar {
 			String mvcActionCommandName) {
 
 		return _createUpdateOnlyScreenNavigationEntry(
-			entryKey, categoryKey, jspPath, mvcActionCommandName, true);
+			entryKey, categoryKey, jspPath, mvcActionCommandName, true, true);
 	}
 
 	private ScreenNavigationEntry<Organization>
 		_createUpdateOnlyScreenNavigationEntry(
 			String entryKey, String categoryKey, String jspPath,
-			String mvcActionCommandName, boolean showControls) {
+			String mvcActionCommandName, boolean showControls,
+			boolean showTitle) {
 
 		return _createScreenNavigationEntry(
 			entryKey, categoryKey, jspPath, mvcActionCommandName, showControls,
+			showTitle,
 			(user, organization) -> {
 				if (organization == null) {
 					return false;

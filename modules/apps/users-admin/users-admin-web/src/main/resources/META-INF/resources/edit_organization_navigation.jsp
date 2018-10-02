@@ -23,7 +23,9 @@ OrganizationScreenNavigationDisplayContext organizationScreenNavigationDisplayCo
 <aui:form action="<%= organizationScreenNavigationDisplayContext.getEditOrganizationActionURL() %>" cssClass="container-fluid container-fluid-max-xl" data-senna-off="true" method="post" name="fm">
 	<aui:fieldset-group markupView="lexicon">
 		<div class="sheet">
-			<h2 class="sheet-title"><%= organizationScreenNavigationDisplayContext.getFormLabel() %></h2>
+			<c:if test="<%= organizationScreenNavigationDisplayContext.isShowTitle() %>">
+				<h2 class="sheet-title"><%= organizationScreenNavigationDisplayContext.getFormLabel() %></h2>
+			</c:if>
 
 			<div class="sheet-section">
 				<liferay-util:include page="<%= organizationScreenNavigationDisplayContext.getJspPath() %>" servletContext="<%= application %>" />

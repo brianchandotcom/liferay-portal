@@ -95,7 +95,7 @@ public class KBArticleStagedModelDataHandler
 
 		return _kbArticleLocalService.getKBArticlesByUuidAndCompanyId(
 			uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			new StagedModelModifiedDateComparator<KBArticle>());
+			new StagedModelModifiedDateComparator<>());
 	}
 
 	@Override

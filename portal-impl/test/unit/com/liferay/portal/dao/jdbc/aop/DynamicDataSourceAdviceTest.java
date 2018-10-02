@@ -88,17 +88,16 @@ public class DynamicDataSourceAdviceTest {
 		_dynamicDataSourceAdvice.setDynamicDataSourceTargetSource(
 			_dynamicDataSourceTargetSource);
 
-		ServiceBeanAopCacheManager serviceBeanAopCacheManager =
-			new ServiceBeanAopCacheManager(null);
+		_serviceBeanAopCacheManager = new ServiceBeanAopCacheManager(null);
 
 		_dynamicDataSourceAdvice.setServiceBeanAopCacheManager(
-			serviceBeanAopCacheManager);
+			_serviceBeanAopCacheManager);
 		_dynamicDataSourceAdvice.setServiceBeanAopCacheManager(
-			serviceBeanAopCacheManager);
+			_serviceBeanAopCacheManager);
 
 		Map<Class<? extends Annotation>, AnnotationChainableMethodAdvice<?>[]>
 			registeredAnnotationChainableMethodAdvices =
-				serviceBeanAopCacheManager.
+				_serviceBeanAopCacheManager.
 					getRegisteredAnnotationChainableMethodAdvices();
 
 		AnnotationChainableMethodAdvice<?>[] annotationChainableMethodAdvices =
@@ -167,7 +166,7 @@ public class DynamicDataSourceAdviceTest {
 			annotations = new Annotation[] {masterDataSource};
 		}
 
-		ServiceBeanAopCacheManager.putAnnotations(
+		_serviceBeanAopCacheManager.setAnnotations(
 			serviceBeanMethodInvocation, annotations);
 
 		serviceBeanMethodInvocation.setMethodInterceptors(
@@ -179,6 +178,7 @@ public class DynamicDataSourceAdviceTest {
 	private DynamicDataSourceAdvice _dynamicDataSourceAdvice;
 	private DynamicDataSourceTargetSource _dynamicDataSourceTargetSource;
 	private DataSource _readDataSource;
+	private ServiceBeanAopCacheManager _serviceBeanAopCacheManager;
 	private DataSource _writeDataSource;
 
 	private class TestClass {

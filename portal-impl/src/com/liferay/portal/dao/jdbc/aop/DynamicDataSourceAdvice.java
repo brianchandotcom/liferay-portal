@@ -46,7 +46,7 @@ public class DynamicDataSourceAdvice extends ChainableMethodAdvice {
 		Method targetMethod = methodInvocation.getMethod();
 
 		MasterDataSource masterDataSource =
-			ServiceBeanAopCacheManager.getAnnotation(
+			serviceBeanAopCacheManager.findAnnotation(
 				methodInvocation, MasterDataSource.class,
 				_nullMasterDataSource);
 

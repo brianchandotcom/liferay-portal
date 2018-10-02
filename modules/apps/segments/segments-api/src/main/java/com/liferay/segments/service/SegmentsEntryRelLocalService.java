@@ -228,6 +228,10 @@ public interface SegmentsEntryRelLocalService extends BaseLocalService,
 	public List<SegmentsEntryRel> getSegmentsEntryRels(long classNameId,
 		long classPK);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<SegmentsEntryRel> getSegmentsEntryRels(long groupId,
+		long classNameId, long classPK);
+
 	/**
 	* Returns the number of segments entry rels.
 	*

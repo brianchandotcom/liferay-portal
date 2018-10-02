@@ -128,6 +128,11 @@ public class SegmentsEntryLocalServiceImpl
 	public SegmentsEntry deleteSegmentsEntry(SegmentsEntry segmentsEntry)
 		throws PortalException {
 
+		// Segment rels
+
+		segmentsEntryRelLocalService.deleteSegmentsEntryRels(
+			segmentsEntry.getSegmentsEntryId());
+
 		// Segments entry
 
 		segmentsEntryPersistence.remove(segmentsEntry);

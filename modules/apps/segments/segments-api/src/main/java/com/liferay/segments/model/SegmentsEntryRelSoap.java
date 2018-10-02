@@ -23,9 +23,10 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * This class is used by SOAP remote services.
+ * This class is used by SOAP remote services, specifically {@link com.liferay.segments.service.http.SegmentsEntryRelServiceSoap}.
  *
  * @author Eduardo Garcia
+ * @see com.liferay.segments.service.http.SegmentsEntryRelServiceSoap
  * @generated
  */
 @ProviderType

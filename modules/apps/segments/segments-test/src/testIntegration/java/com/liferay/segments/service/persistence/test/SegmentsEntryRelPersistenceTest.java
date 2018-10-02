@@ -184,6 +184,14 @@ public class SegmentsEntryRelPersistenceTest {
 	}
 
 	@Test
+	public void testCountByG_CN_CPK() throws Exception {
+		_persistence.countByG_CN_CPK(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
+
+		_persistence.countByG_CN_CPK(0L, 0L, 0L);
+	}
+
+	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		SegmentsEntryRel newSegmentsEntryRel = addSegmentsEntryRel();
 

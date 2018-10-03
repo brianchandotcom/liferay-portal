@@ -14,7 +14,6 @@
 
 package com.liferay.structured.content.apio.internal.architect.filter.expression;
 
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.structured.content.apio.architect.filter.expression.BinaryExpression;
 import com.liferay.structured.content.apio.architect.filter.expression.Expression;

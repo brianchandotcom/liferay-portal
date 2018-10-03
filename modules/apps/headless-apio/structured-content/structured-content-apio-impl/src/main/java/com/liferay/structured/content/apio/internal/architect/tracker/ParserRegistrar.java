@@ -36,8 +36,8 @@ import org.osgi.util.tracker.ServiceTracker;
 import org.osgi.util.tracker.ServiceTrackerCustomizer;
 
 /**
- * <code>ParserRegistrar</code> registry of FilterParsers and SortParsers.
- * This class register a new FilterParser and FilterPaser for every EntityModel
+ * <code>ParserRegistrar</code> registry of FilterParsers and SortParsers. This
+ * class register a new FilterParser and FilterPaser for every EntityModel
  * registered.
  *
  * @author Cristina González

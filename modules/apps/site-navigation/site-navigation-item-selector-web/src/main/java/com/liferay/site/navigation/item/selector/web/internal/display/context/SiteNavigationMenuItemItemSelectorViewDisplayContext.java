@@ -160,6 +160,26 @@ public class SiteNavigationMenuItemItemSelectorViewDisplayContext {
 		return jsonArray;
 	}
 
+	public boolean isShowSelectSiteNavigationMenuItem() {
+		SiteNavigationMenu siteNavigationMenu = getSiteNavigationMenu();
+
+		if (siteNavigationMenu != null) {
+			return true;
+		}
+
+		int siteNavigationMenuType = _getSiteNavigationMenuType();
+
+		if ((siteNavigationMenuType ==
+				SiteNavigationConstants.TYPE_PRIVATE_PAGES_HIERARCHY) ||
+			(siteNavigationMenuType ==
+				SiteNavigationConstants.TYPE_PUBLIC_PAGES_HIERARCHY)) {
+
+			return true;
+		}
+
+		return false;
+	}
+
 	private JSONArray _getLayoutItemsJSONArray(
 		boolean privateLayout, long parentLayoutId) {
 

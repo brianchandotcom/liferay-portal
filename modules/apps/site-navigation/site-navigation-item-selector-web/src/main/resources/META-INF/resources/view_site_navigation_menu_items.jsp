@@ -18,12 +18,10 @@
 
 <%
 SiteNavigationMenuItemItemSelectorViewDisplayContext siteNavigationMenuItemItemSelectorViewDisplayContext = (SiteNavigationMenuItemItemSelectorViewDisplayContext)request.getAttribute(SiteNavigationItemSelectorWebKeys.SITE_NAVIGATION_MENU_ITEM_ITEM_SELECTOR_DISPLAY_CONTEXT);
-
-SiteNavigationMenu siteNavigationMenu = siteNavigationMenuItemItemSelectorViewDisplayContext.getSiteNavigationMenu();
 %>
 
 <c:choose>
-	<c:when test="<%= (siteNavigationMenu != null) && (SiteNavigationMenuItemLocalServiceUtil.getSiteNavigationMenuItemsCount(siteNavigationMenu.getSiteNavigationMenuId()) > 0) %>">
+	<c:when test="<%= siteNavigationMenuItemItemSelectorViewDisplayContext.isShowSelectSiteNavigationMenuItem() %>">
 
 		<%
 		Portlet portlet = PortletLocalServiceUtil.getPortletById(company.getCompanyId(), portletDisplay.getId());

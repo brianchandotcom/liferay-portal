@@ -1545,7 +1545,7 @@
 						FROM
 							Users_Orgs
 						WHERE
-							organizationId IN ([$ORGANIZATION_ID$])
+							Users_Orgs.organizationId IN ([$ORGANIZATION_ID$])
 					) UNION
 					(
 						SELECT
@@ -1553,7 +1553,7 @@
 						FROM
 							Users_UserGroups
 						WHERE
-							userGroupId IN ([$USER_GROUP_ID$])
+							Users_UserGroups.userGroupId IN ([$USER_GROUP_ID$])
 					)
 				) USER_IDS
 		]]>

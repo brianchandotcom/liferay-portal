@@ -1,0 +1,11 @@
+{
+	"dependencies": {
+		"liferay-module-config-generator": "^1.3.3",
+		"metal-dom": "^2.16.6"
+	},
+	"devDependencies": {
+		"metal-cli": "^4.4.0"
+	},
+	"name": "users-admin-web",
+	"version": "4.0.0"
+}

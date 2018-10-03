@@ -21,6 +21,8 @@ public class UsersAdminWebKeys {
 
 	public static final String ACTION_COMMAND_NAME = "ACTION_COMMAND_NAME";
 
+	public static final String CMD_MAKE_PRIMARY = "CMD_MAKE_PRIMARY";
+
 	public static final String EDITABLE = "EDITABLE";
 
 	public static final String FORM_LABEL = "FORM_LABEL";

@@ -21,12 +21,12 @@ import com.liferay.portal.kernel.model.Organization;
  */
 public class OrganizationScreenNavigationDisplayContext {
 
-	public String getActionCommandName() {
-		return _actionCommandName;
-	}
-
 	public String getBackURL() {
 		return _backURL;
+	}
+
+	public String getEditOrganizationActionURL() {
+		return _editOrganizationActionURL;
 	}
 
 	public String getFormLabel() {
@@ -45,20 +45,16 @@ public class OrganizationScreenNavigationDisplayContext {
 		return _organizationId;
 	}
 
-	public String getScreenNavigationCategoryKey() {
-		return _screenNavigationCategoryKey;
-	}
-
-	public String getScreenNavigationEntryKey() {
-		return _screenNavigationEntryKey;
-	}
-
-	public void setActionCommandName(String actionCommandName) {
-		_actionCommandName = actionCommandName;
+	public boolean isShowControls() {
+		return _showControls;
 	}
 
 	public void setBackURL(String backURL) {
 		_backURL = backURL;
+	}
+
+	public void setEditOrganizationActionURL(String editOrganizationActionURL) {
+		_editOrganizationActionURL = editOrganizationActionURL;
 	}
 
 	public void setFormLabel(String formLabel) {
@@ -77,23 +73,16 @@ public class OrganizationScreenNavigationDisplayContext {
 		_organizationId = organizationId;
 	}
 
-	public void setScreenNavigationCategoryKey(
-		String screenNavigationCategoryKey) {
-
-		_screenNavigationCategoryKey = screenNavigationCategoryKey;
+	public void setShowControls(boolean showControls) {
+		_showControls = showControls;
 	}
 
-	public void setScreenNavigationEntryKey(String screenNavigationEntryKey) {
-		_screenNavigationEntryKey = screenNavigationEntryKey;
-	}
-
-	private String _actionCommandName;
 	private String _backURL;
+	private String _editOrganizationActionURL;
 	private String _formLabel;
 	private String _jspPath;
 	private Organization _organization;
 	private long _organizationId;
-	private String _screenNavigationCategoryKey;
-	private String _screenNavigationEntryKey;
+	private boolean _showControls;
 
 }

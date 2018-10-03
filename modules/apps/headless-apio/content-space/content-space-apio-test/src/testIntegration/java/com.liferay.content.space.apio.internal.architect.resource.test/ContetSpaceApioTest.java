@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.structured.content.apio.client.test;
+package com.liferay.content.space.apio.internal.architect.resource.test;
 
 import com.jayway.jsonpath.JsonPath;
 
@@ -25,7 +25,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 import java.util.Collections;
-import java.util.List;
+import java.util.Map;
 
 import org.jboss.arquillian.container.test.api.RunAsClient;
 import org.jboss.arquillian.junit.Arquillian;
@@ -37,11 +37,11 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
- * @author Ruben Pulido
+ * @author Cristina González
  */
 @RunAsClient
 @RunWith(Arquillian.class)
-public class StructuredContentApioTest {
+public class ContetSpaceApioTest {
 
 	@Before
 	public void setUp() throws MalformedURLException {
@@ -58,41 +58,19 @@ public class StructuredContentApioTest {
 	}
 
 	@Test
-	public void testStructuredContentsExistsInContentSpaceEndpoint()
-		throws Exception {
-
-		List<String> hrefs = JsonPath.read(
-			_get(
-				JsonPath.read(
-					_get(_rootEndpointURL.toExternalForm()),
-					"$._links.content-space.href")),
-			"$._embedded.ContentSpace[?(@.name == 'Liferay')]._links." +
-				"structuredContents.href");
-
-		Assert.assertNotNull(hrefs.get(0));
+	public void testContentSpaceLinkExistsInRootEndpoint() throws Exception {
+		Assert.assertNotNull(
+			JsonPath.read(
+				_get(_rootEndpointURL.toExternalForm(), Collections.emptyMap()),
+				"$._links.content-space.href"));
 	}
 
-	@Test
-	public void testStructuredContentsMatchesSelfLink() throws Exception {
-		List<String> hrefs = JsonPath.read(
-			_get(
-				JsonPath.read(
-					_get(_rootEndpointURL.toExternalForm()),
-					"$._links.content-space.href")),
-			"$._embedded.ContentSpace[?(@.name == 'Liferay')]._links." +
-				"structuredContents.href");
-
-		String href = JsonPath.read(_get(hrefs.get(0)), "$._links.self.href");
-
-		Assert.assertTrue(href.startsWith(hrefs.get(0)));
-	}
-
-	private String _get(String url)
+	private String _get(String url, Map<String, String> parameters)
 		throws JSONWebServiceInvocationException,
 			   JSONWebServiceTransportException {
 
 		return _jsonWebServiceClient.doGet(
-			url, Collections.emptyMap(),
+			url, parameters,
 			Collections.singletonMap("Accept", "application/hal+json"));
 	}
 

@@ -14,6 +14,7 @@
 
 package com.liferay.content.space.apio.internal.architect.resource;
 
+import com.liferay.apio.architect.language.AcceptLanguage;
 import com.liferay.apio.architect.pagination.PageItems;
 import com.liferay.apio.architect.pagination.Pagination;
 import com.liferay.apio.architect.representor.Representor;
@@ -34,7 +35,6 @@ import com.liferay.site.apio.architect.identifier.WebSiteIdentifier;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Locale;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -54,7 +54,7 @@ public class ContentSpaceCollectionResource
 		CollectionRoutes.Builder<Group, Long> builder) {
 
 		return builder.addGetter(
-			this::_getPageItems, Company.class, Locale.class
+			this::_getPageItems, Company.class, AcceptLanguage.class
 		).build();
 	}
 
@@ -102,11 +102,12 @@ public class ContentSpaceCollectionResource
 	}
 
 	private PageItems<Group> _getPageItems(
-		Pagination pagination, Company company, Locale locale) {
+		Pagination pagination, Company company, AcceptLanguage acceptLanguage) {
 
 		List<Group> groups = _groupLocalService.getActiveGroups(
 			company.getCompanyId(), true, pagination.getStartPosition(),
-			pagination.getEndPosition(), new GroupNameComparator(true, locale));
+			pagination.getEndPosition(),
+			new GroupNameComparator(true, acceptLanguage.getPreferredLocale()));
 		int count = _groupLocalService.getActiveGroupsCount(
 			company.getCompanyId(), true);
 

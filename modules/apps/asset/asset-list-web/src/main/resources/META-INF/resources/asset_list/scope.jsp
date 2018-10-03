@@ -24,9 +24,19 @@ List<Group> selectedGroups = editAssetListDisplayContext.getSelectedGroups();
 PortletURL portletURL = editAssetListDisplayContext.getPortletURL();
 %>
 
+<portlet:actionURL name="/asset_list/add_scope_group" var="addGroupURL">
+	<portlet:param name="redirect" value="<%= portletURL.toString() %>" />
+	<portlet:param name="assetListEntryId" value="<%= String.valueOf(editAssetListDisplayContext.getAssetListEntryId()) %>" />
+</portlet:actionURL>
+
 <liferay-frontend:edit-form
+	action="<%= addGroupURL %>"
+	method="post"
 	name="fm"
 >
+	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
+	<aui:input name="groupId" type="hidden" value="" />
+
 	<liferay-frontend:edit-form-body>
 		<liferay-ui:search-container
 			compactEmptyResultsMessage="<%= true %>"
@@ -107,6 +117,57 @@ PortletURL portletURL = editAssetListDisplayContext.getPortletURL();
 			}
 			%>
 
+			<liferay-ui:icon
+				cssClass="highlited scope-selector"
+				id="selectManageableGroup"
+				message='<%= LanguageUtil.get(request, "other-site") + StringPool.TRIPLE_PERIOD %>'
+				method="get"
+				url="javascript:;"
+			/>
 		</liferay-ui:icon-menu>
 	</liferay-frontend:edit-form-body>
 </liferay-frontend:edit-form>
+
+<aui:script>
+	var form = document.<portlet:namespace />fm;
+
+	$('#<portlet:namespace />selectManageableGroup').on(
+		'click',
+		function(event) {
+			event.preventDefault();
+
+			var currentTarget = $(event.currentTarget);
+
+			var searchContainerName = '<portlet:namespace />groupsSearchContainer';
+
+			var searchContainer = Liferay.SearchContainer.get(searchContainerName);
+
+			var searchContainerData = searchContainer.getData();
+
+			if (!searchContainerData.length) {
+				searchContainerData = [];
+			}
+			else {
+				searchContainerData = searchContainerData.split(',');
+			}
+
+			Liferay.Util.selectEntity(
+				{
+					dialog: {
+						destroyOnHide: true
+					},
+					eventName: '<%= editAssetListDisplayContext.getSelectGroupEventName() %>',
+					id: '<%= editAssetListDisplayContext.getSelectGroupEventName() %>' + currentTarget.attr('id'),
+					selectedData: searchContainerData,
+					title: '<liferay-ui:message key="scopes" />',
+					uri: '<%= editAssetListDisplayContext.getGroupItemSelectorURL() %>'
+				},
+				function(event) {
+					form.<portlet:namespace />groupId.value = event.groupid;
+
+					submitForm(form);
+				}
+			);
+		}
+	);
+</aui:script>

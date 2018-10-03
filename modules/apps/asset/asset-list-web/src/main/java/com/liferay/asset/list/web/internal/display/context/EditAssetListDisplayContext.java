@@ -27,8 +27,11 @@ import com.liferay.asset.kernel.service.AssetTagLocalServiceUtil;
 import com.liferay.asset.kernel.service.AssetVocabularyServiceUtil;
 import com.liferay.asset.list.constants.AssetListFormConstants;
 import com.liferay.asset.list.constants.AssetListPortletKeys;
+import com.liferay.asset.list.constants.AssetListWebKeys;
 import com.liferay.asset.list.service.AssetListEntryAssetEntryRelLocalServiceUtil;
 import com.liferay.asset.util.comparator.AssetRendererFactoryTypeNameComparator;
+import com.liferay.item.selector.ItemSelector;
+import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -43,6 +46,7 @@ import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
+import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -55,6 +59,8 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.site.item.selector.criteria.SiteItemSelectorReturnType;
+import com.liferay.site.item.selector.criterion.SiteItemSelectorCriterion;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -378,6 +384,31 @@ public class EditAssetListDisplayContext {
 		return _ddmStructureFieldValue;
 	}
 
+	public String getGroupItemSelectorURL() {
+		ItemSelector itemSelector = (ItemSelector)_request.getAttribute(
+			AssetListWebKeys.ITEM_SELECTOR);
+
+		SiteItemSelectorCriterion siteItemSelectorCriterion =
+			new SiteItemSelectorCriterion();
+
+		List<ItemSelectorReturnType> desiredItemSelectorReturnTypes =
+			new ArrayList<>();
+
+		desiredItemSelectorReturnTypes.add(new SiteItemSelectorReturnType());
+
+		siteItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
+			desiredItemSelectorReturnTypes);
+
+		PortletURL itemSelectorURL = itemSelector.getItemSelectorURL(
+			RequestBackedPortletURLFactoryUtil.create(_request),
+			getSelectGroupEventName(), siteItemSelectorCriterion);
+
+		itemSelectorURL.setParameter(
+			"portletResource", AssetListPortletKeys.ASSET_LIST);
+
+		return itemSelectorURL.toString();
+	}
+
 	public Map<String, Map<String, Object>> getManualAddIconDataMap()
 		throws Exception {
 
@@ -631,6 +662,10 @@ public class EditAssetListDisplayContext {
 		}
 
 		return GroupLocalServiceUtil.getGroups(groupIds);
+	}
+
+	public String getSelectGroupEventName() {
+		return _portletResponse.getNamespace() + "_selectSite";
 	}
 
 	public String getTagSelectorURL() {

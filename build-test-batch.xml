@@ -4671,7 +4671,7 @@ ${output.content}</echo>
 	</target>
 
 	<target name="pmd-jdk8">
-		<local name="count" />
+		<local name="pmd.violations.count" />
 
 		<delete dir="pmd-reports" />
 
@@ -4696,7 +4696,7 @@ ${output.content}</echo>
 				<antcall inheritAll="false" target="run-pmd" />
 			</then>
 			<else>
-				<loadresource property="modified.java.files">
+				<loadresource property="pmd.modified.java.files">
 					<filterchain>
 						<linecontainsregexp>
 							<regexp pattern=".*\.java$" />
@@ -4707,12 +4707,12 @@ ${output.content}</echo>
 				</loadresource>
 
 				<if>
-					<isset property="modified.java.files" />
+					<isset property="pmd.modified.java.files" />
 					<then>
-						<echo>Running PMD on the following files: ${modified.java.files}</echo>
+						<echo>Running PMD on the following files: ${pmd.modified.java.files}</echo>
 
 						<antcall inheritAll="false" target="run-pmd">
-							<param name="pmd.java.includes" value="${modified.java.files}" />
+							<param name="pmd.java.includes" value="${pmd.modified.java.files}" />
 						</antcall>
 					</then>
 					<else>
@@ -4753,19 +4753,19 @@ ${output.content}</echo>
 					</call>
 					<copy
 						path="count(/pmd/file/violation)"
-						property="count"
+						property="pmd.violations.count"
 					/>
 				</xmltask>
 
 				<if>
 					<and>
-						<isset property="count" />
+						<isset property="pmd.violations.count" />
 						<not>
-							<equals arg1="${count}" arg2="0" />
+							<equals arg1="${pmd.violations.count}" arg2="0" />
 						</not>
 					</and>
 					<then>
-						<fail message="${count} PMD violation(s) were found.${line.separator}${pmd.violations}" />
+						<fail message="${pmd.violations.count} PMD violation(s) were found.${line.separator}${pmd.violations}" />
 					</then>
 				</if>
 			</then>

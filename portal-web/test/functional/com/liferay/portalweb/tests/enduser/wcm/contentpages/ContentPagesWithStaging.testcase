@@ -36,6 +36,8 @@
 			<var name="pageName" value="Test Content Page Name" />
 		</execute>
 
+		<execute macro="PageEditor#expandContentPageFragmentSidebar" />
+
 		<execute macro="PageEditor#addFragment">
 			<var name="collectionName" value="Collection Name" />
 			<var name="fragmentName" value="Title" />
@@ -155,6 +157,8 @@
 		<execute macro="Navigator#openWithAppendToBaseURL">
 			<var name="urlAppend" value="web/test-site-name-staging/test-content-page-name?p_l_mode=edit" />
 		</execute>
+
+		<execute macro="PageEditor#expandContentPageFragmentSidebar" />
 
 		<execute macro="PageEditor#addFragment">
 			<var name="collectionName" value="Collection Name" />

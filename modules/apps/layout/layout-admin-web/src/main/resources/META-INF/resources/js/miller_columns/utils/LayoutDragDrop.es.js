@@ -2,6 +2,11 @@ import {Drag, DragDrop} from 'metal-drag-drop';
 import position from 'metal-position';
 import State, {Config} from 'metal-state';
 
+/**
+ * Borders where elements can be dragged to
+ * @review
+ */
+
 const DRAG_BORDERS = {
 	bottom: 'layout-column-item-drag-bottom',
 	top: 'layout-column-item-drag-top'
@@ -26,12 +31,14 @@ class LayoutDragDrop extends State {
 
 	/**
 	 * Callback that is executed when an item is being dragged.
-	 * @param {!MouseEvent} event
+	 * @param {!object} data
+	 * @param {!MouseEvent} data.originalEvent
+	 * @param {!HTMLElement} data.target
 	 * @private
 	 * @review
 	 */
 
-	_handleDrag(data, event) {
+	_handleDrag(data) {
 		const targetItem = data.target;
 
 		if (targetItem) {
@@ -59,17 +66,19 @@ class LayoutDragDrop extends State {
 
 	/**
 	 * Callback that is executed when a target is leaved.
-	 * @param {!MouseEvent} event
 	 * @private
 	 * @review
 	 */
 
-	_handleDragEnd(data, event) {
+	_handleDragEnd() {
 		this.emit('leaveLayoutColumnItem');
 	}
 
 	/**
 	 * Callback that is executed when an item is dropped.
+	 * @param {!object} data
+	 * @param {!HTMLElement} data.source
+	 * @param {HTMLElement} data.target
 	 * @param {!MouseEvent} event
 	 * @private
 	 * @review

@@ -39,6 +39,7 @@
 					{$hoveredLayoutColumnItemBorder}
 				{/if}
 			{/let}
+
 			{call .layoutColumnItem}
 				{param layoutColumnItem: $layoutColumnItem /}
 				{param pathThemeImages: $pathThemeImages /}
@@ -85,7 +86,10 @@
 		{sp}list-group-item-flex
 		{sp}drag-layout-column-item
 		{sp}layout-drop-target
-		{sp}{$styleModifier}
+
+		{if $styleModifier}
+			{sp}{$styleModifier}
+		{/if}
 
 		{if $layoutColumnItem.active}
 			{sp}active-item

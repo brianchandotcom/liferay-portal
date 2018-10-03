@@ -73,7 +73,7 @@
 
 		<liferay-ui:search-container
 			compactEmptyResultsMessage="<%= true %>"
-			emptyResultsMessage="no-assets-selected"
+			emptyResultsMessage="no-assets-are-selected"
 			id="assetEntriesSearchContainer"
 			searchContainer="<%= editAssetListDisplayContext.getSearchContainer() %>"
 		>

@@ -28,7 +28,7 @@
 	</c:when>
 	<c:otherwise>
 		<div class="aspect-ratio aspect-ratio-bg-center aspect-ratio-bg-cover <%= colorCssClass %>">
-			<span class="icon-xl user-vertical-card-initials"><%= userInitials %></span>
+			<span class="h1 user-vertical-card-initials"><%= userInitials %></span>
 		</div>
 	</c:otherwise>
 </c:choose>

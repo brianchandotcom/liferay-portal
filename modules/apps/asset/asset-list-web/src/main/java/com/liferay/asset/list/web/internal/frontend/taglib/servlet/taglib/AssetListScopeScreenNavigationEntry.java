@@ -16,12 +16,20 @@ package com.liferay.asset.list.web.internal.frontend.taglib.servlet.taglib;
 
 import com.liferay.asset.list.constants.AssetListEntryTypeConstants;
 import com.liferay.asset.list.constants.AssetListFormConstants;
+import com.liferay.asset.list.constants.AssetListWebKeys;
 import com.liferay.asset.list.model.AssetListEntry;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationCategory;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
+import com.liferay.item.selector.ItemSelector;
 import com.liferay.portal.kernel.model.User;
 
+import java.io.IOException;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Pavel Savinov
@@ -65,5 +73,17 @@ public class AssetListScopeScreenNavigationEntry
 
 		return false;
 	}
+
+	@Override
+	public void render(HttpServletRequest request, HttpServletResponse response)
+		throws IOException {
+
+		request.setAttribute(AssetListWebKeys.ITEM_SELECTOR, _itemSelector);
+
+		super.render(request, response);
+	}
+
+	@Reference
+	private ItemSelector _itemSelector;
 
 }

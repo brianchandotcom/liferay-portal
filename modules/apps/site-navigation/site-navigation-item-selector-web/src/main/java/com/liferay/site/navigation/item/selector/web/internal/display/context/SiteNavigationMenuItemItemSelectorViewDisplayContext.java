@@ -14,11 +14,16 @@
 
 package com.liferay.site.navigation.item.selector.web.internal.display.context;
 
+import com.liferay.exportimport.kernel.staging.StagingUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.site.navigation.constants.SiteNavigationConstants;
 import com.liferay.site.navigation.model.SiteNavigationMenu;
@@ -29,6 +34,7 @@ import com.liferay.site.navigation.type.SiteNavigationMenuItemType;
 import com.liferay.site.navigation.type.SiteNavigationMenuItemTypeRegistry;
 
 import java.util.List;
+import java.util.ResourceBundle;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -88,23 +94,104 @@ public class SiteNavigationMenuItemItemSelectorViewDisplayContext {
 	}
 
 	public JSONArray getSiteNavigationMenuItemsJSONArray() {
+		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
 		SiteNavigationMenu siteNavigationMenu = getSiteNavigationMenu();
 
-		jsonObject.put(
-			"children",
-			_getSiteNavigationMenuItemsJSONArray(
-				siteNavigationMenu.getSiteNavigationMenuId(), 0));
+		if (siteNavigationMenu != null) {
+			jsonObject.put(
+				"children",
+				_getSiteNavigationMenuItemsJSONArray(
+					siteNavigationMenu.getSiteNavigationMenuId(), 0));
+
+			jsonObject.put("disabled", true);
+			jsonObject.put("icon", "blogs");
+			jsonObject.put("id", "0");
+			jsonObject.put("name", siteNavigationMenu.getName());
+
+			jsonArray.put(jsonObject);
+
+			return jsonArray;
+		}
+
+		int siteNavigationMenuType = _getSiteNavigationMenuType();
+
+		if ((siteNavigationMenuType !=
+				SiteNavigationConstants.TYPE_PRIVATE_PAGES_HIERARCHY) &&
+			(siteNavigationMenuType !=
+				SiteNavigationConstants.TYPE_PUBLIC_PAGES_HIERARCHY)) {
+
+			return jsonArray;
+		}
+
+		String name = "private-pages-hierarchy";
+		boolean privateLayout = true;
+
+		if (siteNavigationMenuType ==
+				SiteNavigationConstants.TYPE_PUBLIC_PAGES_HIERARCHY) {
+
+			name = "public-pages-hierarchy";
+			privateLayout = false;
+		}
+
+		jsonObject.put("children", _getLayoutItemsJSONArray(privateLayout, 0));
 
 		jsonObject.put("disabled", true);
-		jsonObject.put("icon", "blogs");
+		jsonObject.put("icon", "page");
 		jsonObject.put("id", "0");
-		jsonObject.put("name", siteNavigationMenu.getName());
+
+		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+			themeDisplay.getLocale(),
+			SiteNavigationMenuItemItemSelectorViewDisplayContext.class);
+
+		jsonObject.put(
+			"name",
+			LanguageUtil.get(
+				resourceBundle,
+				ResourceBundleUtil.getString(resourceBundle, name)));
 
 		jsonArray.put(jsonObject);
+
+		return jsonArray;
+	}
+
+	private JSONArray _getLayoutItemsJSONArray(
+		boolean privateLayout, long parentLayoutId) {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
+
+		List<Layout> layouts = LayoutLocalServiceUtil.getLayouts(
+			themeDisplay.getScopeGroupId(), privateLayout, parentLayoutId);
+
+		for (Layout layout : layouts) {
+			if (layout.isHidden() || StagingUtil.isIncomplete(layout)) {
+				continue;
+			}
+
+			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+
+			JSONArray childrenJSONArray = _getLayoutItemsJSONArray(
+				privateLayout, layout.getLayoutId());
+
+			if (childrenJSONArray.length() > 0) {
+				jsonObject.put("children", childrenJSONArray);
+			}
+
+			jsonObject.put("icon", "page");
+			jsonObject.put("id", layout.getUuid());
+			jsonObject.put("name", layout.getName(themeDisplay.getLocale()));
+			jsonObject.put("selected", false);
+
+			jsonArray.put(jsonObject);
+		}
 
 		return jsonArray;
 	}

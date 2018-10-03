@@ -1,5 +1,7 @@
 <definition>
 	<command name="addFragment">
+		<execute macro="PageEditor#expandFragmentSidebar" />
+
 		<execute macro="PageEditor#gotoTab">
 			<var name="tabName" value="Available" />
 		</execute>
@@ -80,6 +82,19 @@
 		<execute function="AssertElementPresent" locator1="Fragment#FRAGMENT_SIDEBAR_COLLECTION_PANEL_EXPANDED">
 			<var name="key_collectionName" value="${collectionName}" />
 		</execute>
+	</command>
+
+	<command name="expandFragmentSidebar">
+		<if>
+			<not>
+				<condition function="IsElementPresent" locator1="Fragment#FRAGMENT_SIDEBAR" />
+			</not>
+			<then>
+				<execute function="Click#clickAt" locator1="ControlMenu#ADD" />
+			</then>
+		</if>
+
+		<execute function="AssertVisible" locator1="Fragment#FRAGMENT_SIDEBAR" />
 	</command>
 
 	<command name="gotoTab">

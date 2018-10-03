@@ -30,6 +30,11 @@
 </tr>
 <!--FRAGMENT_SIDEBAR-->
 <tr>
+	<td>FRAGMENT_SIDEBAR</td>
+	<td>//div[contains(@class,'open-admin-panel') and not(contains(@class,'transition'))]//div[contains(@id,'ContentPageEditorPortlet_sidebar')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>FRAGMENT_SIDEBAR_COLLECTION_PANEL</td>
 	<td>//div[contains(@class,'sidebar-body')]//a[contains(@href,'fragment-collection')][normalize-space()='${key_collectionName}']</td>
 	<td></td>
@@ -124,12 +129,12 @@
 	<td>LIST_GROUP_ITEM</td>
 	<td>//div[contains(@class,'list-group')]//a[contains(.,'${key_itemName}')]</td>
 	<td></td>
-</tr><tr>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>
 </tr>
-
 <!--CONTENT PAGES-->
 <tr>
 	<td>CONTENT_PAGE_FRAGMENT</td>

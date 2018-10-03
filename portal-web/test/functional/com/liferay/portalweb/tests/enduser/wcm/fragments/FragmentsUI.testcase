@@ -15,6 +15,14 @@
 		<execute macro="FragmentsAdmin#openFragmentsAdmin">
 			<var name="siteURLKey" value="test-site-name" />
 		</execute>
+
+		<execute macro="FragmentsAdmin#addCollection">
+			<var name="collectionName" value="Collection Name" />
+		</execute>
+
+		<execute macro="Navigator#gotoNavNested">
+			<var name="navNested" value="Collection Name" />
+		</execute>
 	</set-up>
 
 	<tear-down>
@@ -36,14 +44,6 @@
 	<command name="AddFragmentToContentPage" priority="5">
 		<property name="portal.acceptance" value="true" />
 		<description message="Add a fragment in the UI and then assert that it displays properly when added to a content page." />
-
-		<execute macro="FragmentsAdmin#addCollection">
-			<var name="collectionName" value="Collection Name" />
-		</execute>
-
-		<execute macro="Navigator#gotoNavNested">
-			<var name="navNested" value="Collection Name" />
-		</execute>
 
 		<execute macro="FragmentsAdmin#addFragment">
 			<var name="fragmentName" value="Fragment Name" />

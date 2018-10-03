@@ -124,7 +124,7 @@
 
 		<echo message="## * Organization Name: ${organizationName}" />
 
-		<var method="JSONCurlUtil#post('${curl}', '$['organizationId']')" name="organizationId" />
+		<var method="JSONCurlUtil#post('${curl}', '$[\'organizationId\']')" name="organizationId" />
 	</command>
 
 	<command name="addOrganization">

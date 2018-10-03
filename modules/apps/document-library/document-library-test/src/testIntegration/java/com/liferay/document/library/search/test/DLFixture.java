@@ -14,26 +14,13 @@
 
 package com.liferay.document.library.search.test;
 
-import com.liferay.document.library.kernel.model.DLFolder;
-import com.liferay.document.library.kernel.model.DLFolderConstants;
-import com.liferay.document.library.kernel.service.DLAppLocalService;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.repository.model.FileEntry;
-import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
-import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
-import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
-import com.liferay.portal.kernel.util.FileUtil;
-import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.service.test.ServiceTestUtil;
-
-import java.io.File;
-import java.io.InputStream;
 
 import java.util.List;
 import java.util.Locale;
@@ -43,48 +30,9 @@ import java.util.Locale;
  */
 public class DLFixture {
 
-	public DLFixture(
-		DLAppLocalService dlAppLocalService, List<Group> groups,
-		List<User> users) {
-
-		_dlAppLocalService = dlAppLocalService;
+	public DLFixture(List<Group> groups, List<User> users) {
 		_groups = groups;
 		_users = users;
-	}
-
-	public FileEntry addFileEntry(
-			String fileName, ServiceContext serviceContext)
-		throws Exception {
-
-		try (InputStream inputStream = DLFixture.class.getResourceAsStream(
-				"dependencies/" + fileName)) {
-
-			File file = FileUtil.createTempFile(inputStream);
-
-			try {
-				return _dlAppLocalService.addFileEntry(
-					serviceContext.getUserId(),
-					serviceContext.getScopeGroupId(),
-					DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, fileName,
-					getContentType(fileName), fileName, StringPool.BLANK,
-					StringPool.BLANK, file, serviceContext);
-			}
-			finally {
-				FileUtil.delete(file);
-			}
-		}
-	}
-
-	public DLFolder addFolder(
-			long parentFolderId, String name, String description,
-			ServiceContext serviceContext)
-		throws Exception {
-
-		Folder folder = _dlAppLocalService.addFolder(
-			serviceContext.getUserId(), serviceContext.getScopeGroupId(),
-			parentFolderId, name, description, serviceContext);
-
-		return (DLFolder)folder.getModel();
 	}
 
 	public Group addGroup() throws Exception {
@@ -103,9 +51,17 @@ public class DLFixture {
 		return user;
 	}
 
-	public ServiceContext getServiceContext() throws Exception {
-		return ServiceContextTestUtil.getServiceContext(
-			_group.getGroupId(), getUserId());
+	public long getUserId() {
+		if (_user != null) {
+			return _user.getUserId();
+		}
+
+		try {
+			return TestPropsValues.getUserId();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
 	}
 
 	public void setGroup(Group group) {
@@ -129,19 +85,10 @@ public class DLFixture {
 		_group.setModelAttributes(group.getModelAttributes());
 	}
 
-	protected String getContentType(String fileName) {
-		return MimeTypesUtil.getContentType((File)null, fileName);
+	protected long getGroupId() {
+		return _group.getGroupId();
 	}
 
-	protected long getUserId() throws Exception {
-		if (_user != null) {
-			return _user.getUserId();
-		}
-
-		return TestPropsValues.getUserId();
-	}
-
-	private final DLAppLocalService _dlAppLocalService;
 	private Group _group;
 	private final List<Group> _groups;
 	private User _user;

@@ -16,8 +16,9 @@ package com.liferay.document.library.search.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.document.library.kernel.model.DLFileEntryConstants;
-import com.liferay.document.library.kernel.model.DLFolderConstants;
-import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
+import com.liferay.document.library.kernel.service.DLAppLocalService;
+import com.liferay.document.library.test.util.search.FileEntryBlueprint;
+import com.liferay.document.library.test.util.search.FileEntrySearchFixture;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -25,25 +26,22 @@ import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.Indexer;
-import com.liferay.portal.kernel.search.IndexerRegistryUtil;
+import com.liferay.portal.kernel.search.IndexerRegistry;
 import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
-import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
-import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.SearchContextTestUtil;
-import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
-import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.service.test.ServiceTestUtil;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
-import java.io.File;
+import java.io.IOException;
 import java.io.InputStream;
 
 import java.util.ArrayList;
@@ -73,6 +71,10 @@ public class DLFileEntryIndexerLocalizedContentTest {
 
 	@Before
 	public void setUp() throws Exception {
+		fileEntrySearchFixture = new FileEntrySearchFixture(dlAppLocalService);
+
+		fileEntrySearchFixture.setUp();
+
 		_group = GroupTestUtil.addGroup();
 
 		ServiceTestUtil.setUser(TestPropsValues.getUser());
@@ -161,7 +163,7 @@ public class DLFileEntryIndexerLocalizedContentTest {
 			assertLocalization(englishContentStrings, englishDocument);
 		}
 		finally {
-			GroupLocalServiceUtil.deleteGroup(testGroup);
+			groupLocalService.deleteGroup(testGroup);
 		}
 	}
 
@@ -169,34 +171,24 @@ public class DLFileEntryIndexerLocalizedContentTest {
 		return addFileEntry(fileName, _group.getGroupId());
 	}
 
-	protected FileEntry addFileEntry(String fileName, long groupId)
-		throws Exception {
+	protected FileEntry addFileEntry(String fileName1, long groupId1)
+		throws IOException {
 
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(groupId);
+		Class<?> clazz = getClass();
 
-		File file = null;
-		FileEntry fileEntry = null;
+		try (InputStream inputStream1 = clazz.getResourceAsStream(
+				"dependencies/" + fileName1)) {
 
-		try (InputStream inputStream =
-				DLFileEntrySearchTest.class.getResourceAsStream(
-					"dependencies/" + fileName)) {
-
-			String mimeType = MimeTypesUtil.getContentType(file, fileName);
-
-			file = FileUtil.createTempFile(inputStream);
-
-			fileEntry = DLAppLocalServiceUtil.addFileEntry(
-				serviceContext.getUserId(), serviceContext.getScopeGroupId(),
-				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, fileName, mimeType,
-				fileName, StringPool.BLANK, StringPool.BLANK, file,
-				serviceContext);
+			return fileEntrySearchFixture.addFileEntry(
+				new FileEntryBlueprint() {
+					{
+						fileName = fileName1;
+						groupId = groupId1;
+						inputStream = inputStream1;
+						title = fileName1;
+					}
+				});
 		}
-		finally {
-			FileUtil.delete(file);
-		}
-
-		return fileEntry;
 	}
 
 	protected void assertLocalization(
@@ -206,6 +198,17 @@ public class DLFileEntryIndexerLocalizedContentTest {
 
 		Assert.assertEquals(contentStrings.toString(), fields.toString());
 	}
+
+	@Inject
+	protected DLAppLocalService dlAppLocalService;
+
+	protected FileEntrySearchFixture fileEntrySearchFixture;
+
+	@Inject
+	protected GroupLocalService groupLocalService;
+
+	@Inject
+	protected IndexerRegistry indexerRegistry;
 
 	private static List<String> _getFieldValues(
 		String prefix, Document document) {
@@ -259,7 +262,7 @@ public class DLFileEntryIndexerLocalizedContentTest {
 			SearchContext searchContext = _getSearchContext(
 				searchTerm, locale, groupId);
 
-			Indexer indexer = IndexerRegistryUtil.getIndexer(
+			Indexer indexer = indexerRegistry.getIndexer(
 				DLFileEntryConstants.getClassName());
 
 			Hits hits = indexer.search(searchContext);

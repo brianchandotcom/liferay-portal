@@ -19,10 +19,13 @@ import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.blogs.service.BlogsEntryLocalService;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
+import com.liferay.document.library.test.util.search.FileEntryBlueprint;
+import com.liferay.document.library.test.util.search.FileEntrySearchFixture;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.test.util.search.JournalArticleBlueprint;
 import com.liferay.journal.test.util.search.JournalArticleContent;
 import com.liferay.journal.test.util.search.JournalArticleTitle;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Field;
@@ -41,7 +44,6 @@ import com.liferay.portal.search.facet.site.SiteFacetFactory;
 import com.liferay.portal.search.facet.type.AssetEntriesFacetFactory;
 import com.liferay.portal.search.facet.user.UserFacetFactory;
 import com.liferay.portal.search.test.blogs.util.BlogsEntrySearchFixture;
-import com.liferay.portal.search.test.documentlibrary.util.FileEntrySearchFixture;
 import com.liferay.portal.search.test.util.SearchMapUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -267,10 +269,17 @@ public class AggregationFilteringTest extends BaseFacetedSearcherTestCase {
 		blogsEntrySearchFixture.addBlogsEntry(group, user, keyword);
 	}
 
-	protected void addFileEntry(Group group, User user, String keyword)
-		throws Exception {
-
-		fileEntrySearchFixture.addFileEntry(group, user, keyword);
+	protected void addFileEntry(Group group, User user, String keyword) {
+		fileEntrySearchFixture.addFileEntry(
+			new FileEntryBlueprint() {
+				{
+					groupId = group.getGroupId();
+					title =
+						keyword + StringPool.SPACE +
+							RandomTestUtil.randomString();
+					userId = user.getUserId();
+				}
+			});
 	}
 
 	protected Group addGroup() throws Exception {
@@ -281,11 +290,8 @@ public class AggregationFilteringTest extends BaseFacetedSearcherTestCase {
 		return group;
 	}
 
-	protected JournalArticle addJournalArticle(
-			Group group, User user, String keyword)
-		throws Exception {
-
-		return journalArticleSearchFixture.addArticle(
+	protected void addJournalArticle(Group group, User user, String keyword) {
+		journalArticleSearchFixture.addArticle(
 			new JournalArticleBlueprint() {
 				{
 					groupId = group.getGroupId();

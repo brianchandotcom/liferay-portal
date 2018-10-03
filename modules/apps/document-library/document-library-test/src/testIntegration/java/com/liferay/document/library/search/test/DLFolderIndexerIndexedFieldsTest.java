@@ -17,7 +17,9 @@ package com.liferay.document.library.search.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.document.library.kernel.model.DLFolder;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
+import com.liferay.document.library.test.util.search.DLFolderSearchFixture;
 import com.liferay.petra.string.CharPool;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
@@ -26,9 +28,9 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.test.util.FieldValuesAssert;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerTestRule;
@@ -40,6 +42,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -67,23 +70,34 @@ public class DLFolderIndexerIndexedFieldsTest extends BaseDLIndexerTestCase {
 	public void setUp() throws Exception {
 		super.setUp();
 
+		dlFolderSearchFixture = new DLFolderSearchFixture(
+			dlFolderLocalService, dlFileEntryLocalService, dlAppLocalService);
+
 		setGroup(dlFixture.addGroup());
 		setIndexerClass(DLFolder.class);
 		setUser(dlFixture.addUser());
 	}
 
+	@After
+	@Override
+	public void tearDown() throws Exception {
+		super.tearDown();
+
+		dlFolderSearchFixture.tearDown();
+	}
+
 	@Test
 	public void testIndexedFields() throws Exception {
-		ServiceContext serviceContext = dlFixture.getServiceContext();
+		ServiceContext serviceContext = getServiceContext();
 
-		DLFolder parentFolder = dlFixture.addFolder(
+		DLFolder parentFolder = dlFolderSearchFixture.addFolder(
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			RandomTestUtil.randomString(_FOLDER_NAME_MAX_LENGTH),
 			RandomTestUtil.randomString(), serviceContext);
 
 		String folderName = RandomTestUtil.randomString();
 
-		DLFolder childFolder = dlFixture.addFolder(
+		DLFolder childFolder = dlFolderSearchFixture.addFolder(
 			parentFolder.getFolderId(), folderName,
 			RandomTestUtil.randomString(), serviceContext);
 
@@ -97,6 +111,16 @@ public class DLFolderIndexerIndexedFieldsTest extends BaseDLIndexerTestCase {
 		populateExpectedFieldValues(childFolder, map);
 
 		FieldValuesAssert.assertFieldValues(map, document, folderName);
+	}
+
+	protected ServiceContext getServiceContext() {
+		try {
+			return ServiceContextTestUtil.getServiceContext(
+				dlFixture.getGroupId(), dlFixture.getUserId());
+		}
+		catch (PortalException pe) {
+			throw new RuntimeException(pe);
+		}
 	}
 
 	protected void populateDates(DLFolder dlFolder, Map<String, String> map) {
@@ -157,15 +181,11 @@ public class DLFolderIndexerIndexedFieldsTest extends BaseDLIndexerTestCase {
 		for (Locale availableLocale :
 				LanguageUtil.getAvailableLocales(dlFolder.getGroupId())) {
 
-			if (!map.containsKey(availableLocale) ||
-				Validator.isNull(map.get(availableLocale))) {
+			String key = "localized_title_".concat(
+				String.valueOf(availableLocale));
 
-				String key =
-					"localized_title_" + String.valueOf(availableLocale);
-
-				map.put(key, title);
-				map.put(key.concat("_sortable"), title);
-			}
+			map.put(key, title);
+			map.put(key.concat("_sortable"), title);
 		}
 	}
 
@@ -183,6 +203,8 @@ public class DLFolderIndexerIndexedFieldsTest extends BaseDLIndexerTestCase {
 			map.put(Field.TREE_PATH, treePathValues.toString());
 		}
 	}
+
+	protected DLFolderSearchFixture dlFolderSearchFixture;
 
 	private static final int _FOLDER_NAME_MAX_LENGTH = 100;
 

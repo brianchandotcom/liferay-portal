@@ -17,8 +17,10 @@ package com.liferay.portal.search.facet.faceted.searcher.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFolder;
+import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
 import com.liferay.document.library.kernel.service.DLFolderLocalService;
+import com.liferay.document.library.test.util.search.DLFolderSearchFixture;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
@@ -37,7 +39,6 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.search.facet.Facet;
 import com.liferay.portal.search.facet.custom.CustomFacetFactory;
 import com.liferay.portal.search.facet.folder.FolderFacetFactory;
-import com.liferay.portal.search.test.documentlibrary.util.DLFolderSearchFixture;
 import com.liferay.portal.search.test.util.DocumentsAssert;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -222,7 +223,7 @@ public class FolderFacetTest extends BaseFacetedSearcherTestCase {
 
 	protected void setUpDLFolderSearchFixture() {
 		dlFolderSearchFixture = new DLFolderSearchFixture(
-			dlFolderLocalService, dlFileEntryLocalService);
+			dlFolderLocalService, dlFileEntryLocalService, dlAppLocalService);
 
 		dlFolderSearchFixture.setUp();
 
@@ -237,6 +238,9 @@ public class FolderFacetTest extends BaseFacetedSearcherTestCase {
 
 	@Inject
 	protected CustomFacetFactory customFacetFactory;
+
+	@Inject
+	protected DLAppLocalService dlAppLocalService;
 
 	@Inject
 	protected DLFileEntryLocalService dlFileEntryLocalService;

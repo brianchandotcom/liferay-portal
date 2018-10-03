@@ -12,16 +12,18 @@
  * details.
  */
 
-package com.liferay.portal.search.test.documentlibrary.util;
+package com.liferay.document.library.test.util.search;
 
 import com.liferay.document.library.kernel.model.DLFileEntryTypeConstants;
 import com.liferay.document.library.kernel.model.DLFolder;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
+import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
 import com.liferay.document.library.kernel.service.DLFolderLocalService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 
@@ -37,10 +39,12 @@ public class DLFolderSearchFixture {
 
 	public DLFolderSearchFixture(
 		DLFolderLocalService dlFolderLocalService1,
-		DLFileEntryLocalService dlFileEntryLocalService1) {
+		DLFileEntryLocalService dlFileEntryLocalService1,
+		DLAppLocalService dlAppLocalService1) {
 
 		dlFolderLocalService = dlFolderLocalService1;
 		dlFileEntryLocalService = dlFileEntryLocalService1;
+		dlAppLocalService = dlAppLocalService1;
 	}
 
 	public DLFolder addDLFolderAndDLFileEntry(
@@ -66,6 +70,22 @@ public class DLFolderSearchFixture {
 		return dlFolder;
 	}
 
+	public DLFolder addFolder(
+			long parentFolderId, String name, String description,
+			ServiceContext serviceContext)
+		throws Exception {
+
+		Folder folder = dlAppLocalService.addFolder(
+			serviceContext.getUserId(), serviceContext.getScopeGroupId(),
+			parentFolderId, name, description, serviceContext);
+
+		DLFolder dlFolder = (DLFolder)folder.getModel();
+
+		_dlFolders.add(dlFolder);
+
+		return dlFolder;
+	}
+
 	public List<DLFolder> getDLFolders() {
 		return _dlFolders;
 	}
@@ -80,6 +100,7 @@ public class DLFolderSearchFixture {
 		}
 	}
 
+	protected DLAppLocalService dlAppLocalService;
 	protected DLFileEntryLocalService dlFileEntryLocalService;
 	protected DLFolderLocalService dlFolderLocalService;
 

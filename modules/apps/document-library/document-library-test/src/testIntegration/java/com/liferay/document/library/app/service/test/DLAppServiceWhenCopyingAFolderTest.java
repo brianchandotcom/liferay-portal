@@ -52,20 +52,20 @@ public class DLAppServiceWhenCopyingAFolderTest extends BaseDLAppTestCase {
 	@Test
 	public void shouldCallWorkflowHandler() throws Exception {
 		try (WorkflowHandlerInvocationCounter<DLFileEntry>
-				 workflowHandlerInvocationCounter =
-				 new WorkflowHandlerInvocationCounter<>(
-					 DLFileEntryConstants.getClassName())) {
+				workflowHandlerInvocationCounter =
+					new WorkflowHandlerInvocationCounter<>(
+						DLFileEntryConstants.getClassName())) {
 
 			ServiceContext serviceContext =
-				ServiceContextTestUtil.getServiceContext(
-					group.getGroupId());
+				ServiceContextTestUtil.getServiceContext(group.getGroupId());
 
 			Folder folder = DLAppServiceUtil.addFolder(
 				group.getGroupId(), parentFolder.getFolderId(),
 				RandomTestUtil.randomString(), StringPool.BLANK,
 				serviceContext);
 
-			addFileEntry(group.getGroupId(), folder.getFolderId());
+			DLAppServiceTestUtil.addFileEntry(
+				group.getGroupId(), folder.getFolderId());
 
 			Assert.assertEquals(
 				1,
@@ -86,21 +86,20 @@ public class DLAppServiceWhenCopyingAFolderTest extends BaseDLAppTestCase {
 
 	@Test
 	public void shouldFireSyncEvent() throws Exception {
-		AtomicInteger counter = registerDLSyncEventProcessorMessageListener(
-			DLSyncConstants.EVENT_ADD);
+		AtomicInteger counter =
+			DLAppServiceTestUtil.registerDLSyncEventProcessorMessageListener(
+				DLSyncConstants.EVENT_ADD);
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(group.getGroupId());
 
 		Folder folder = DLAppServiceUtil.addFolder(
 			group.getGroupId(), parentFolder.getFolderId(),
-			RandomTestUtil.randomString(), StringPool.BLANK,
-			serviceContext);
+			RandomTestUtil.randomString(), StringPool.BLANK, serviceContext);
 
 		DLAppServiceUtil.addFolder(
 			group.getGroupId(), folder.getFolderId(),
-			RandomTestUtil.randomString(), StringPool.BLANK,
-			serviceContext);
+			RandomTestUtil.randomString(), StringPool.BLANK, serviceContext);
 
 		DLAppServiceUtil.copyFolder(
 			folder.getRepositoryId(), folder.getFolderId(),

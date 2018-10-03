@@ -46,9 +46,7 @@ public class DLAppServiceWhenDeletingAFolderTest extends BaseDLAppTestCase {
 		new LiferayIntegrationTestRule();
 
 	@Test
-	public void shouldDeleteImplicitlyTrashedChildFolder()
-		throws Exception {
-
+	public void shouldDeleteImplicitlyTrashedChildFolder() throws Exception {
 		int initialFoldersCount = DLAppServiceUtil.getFoldersCount(
 			group.getGroupId(), parentFolder.getFolderId());
 
@@ -77,8 +75,9 @@ public class DLAppServiceWhenDeletingAFolderTest extends BaseDLAppTestCase {
 
 	@Test
 	public void shouldFireSyncEvent() throws Exception {
-		AtomicInteger counter = registerDLSyncEventProcessorMessageListener(
-			DLSyncConstants.EVENT_DELETE);
+		AtomicInteger counter =
+			DLAppServiceTestUtil.registerDLSyncEventProcessorMessageListener(
+				DLSyncConstants.EVENT_DELETE);
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(group.getGroupId());

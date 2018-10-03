@@ -67,11 +67,11 @@ public class DLAppServiceWhenCheckingInAFileEntryTest
 	@Test
 	public void shouldCallWorkflowHandler() throws Exception {
 		try (WorkflowHandlerInvocationCounter<FileEntry>
-				 workflowHandlerInvocationCounter =
-				 new WorkflowHandlerInvocationCounter<>(
-					 DLFileEntryConstants.getClassName())) {
+				workflowHandlerInvocationCounter =
+					new WorkflowHandlerInvocationCounter<>(
+						DLFileEntryConstants.getClassName())) {
 
-			FileEntry fileEntry = addFileEntry(
+			FileEntry fileEntry = DLAppServiceTestUtil.addFileEntry(
 				group.getGroupId(), parentFolder.getFolderId());
 
 			Assert.assertEquals(
@@ -80,8 +80,7 @@ public class DLAppServiceWhenCheckingInAFileEntryTest
 					"updateStatus", int.class, Map.class));
 
 			ServiceContext serviceContext =
-				ServiceContextTestUtil.getServiceContext(
-					group.getGroupId());
+				ServiceContextTestUtil.getServiceContext(group.getGroupId());
 
 			DLAppServiceUtil.checkOutFileEntry(
 				fileEntry.getFileEntryId(), serviceContext);
@@ -91,7 +90,7 @@ public class DLAppServiceWhenCheckingInAFileEntryTest
 				workflowHandlerInvocationCounter.getCount(
 					"updateStatus", int.class, Map.class));
 
-			updateFileEntry(
+			DLAppServiceTestUtil.updateFileEntry(
 				group.getGroupId(), fileEntry.getFileEntryId(),
 				RandomTestUtil.randomString(), true);
 
@@ -113,10 +112,11 @@ public class DLAppServiceWhenCheckingInAFileEntryTest
 
 	@Test
 	public void shouldFireSyncEvent() throws Exception {
-		AtomicInteger counter = registerDLSyncEventProcessorMessageListener(
-			DLSyncConstants.EVENT_UPDATE);
+		AtomicInteger counter =
+			DLAppServiceTestUtil.registerDLSyncEventProcessorMessageListener(
+				DLSyncConstants.EVENT_UPDATE);
 
-		FileEntry fileEntry = addFileEntry(
+		FileEntry fileEntry = DLAppServiceTestUtil.addFileEntry(
 			group.getGroupId(), parentFolder.getFolderId());
 
 		ServiceContext serviceContext =
@@ -142,8 +142,7 @@ public class DLAppServiceWhenCheckingInAFileEntryTest
 
 		FileEntry fileEntry = DLAppServiceUtil.addFileEntry(
 			group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-			StringUtil.randomString(),
-			ContentTypes.APPLICATION_OCTET_STREAM,
+			StringUtil.randomString(), ContentTypes.APPLICATION_OCTET_STREAM,
 			StringUtil.randomString(), StringUtil.randomString(),
 			StringUtil.randomString(), null, 0, serviceContext);
 
@@ -165,8 +164,7 @@ public class DLAppServiceWhenCheckingInAFileEntryTest
 		FileEntry updatedFileEntry = DLAppServiceUtil.updateFileEntry(
 			checkedOutFileEntry.getFileEntryId(),
 			checkedOutFileEntry.getFileName(),
-			checkedOutFileEntry.getMimeType(),
-			checkedOutFileEntry.getTitle(),
+			checkedOutFileEntry.getMimeType(), checkedOutFileEntry.getTitle(),
 			checkedOutFileEntry.getDescription(), StringUtil.randomString(),
 			DLVersionNumberIncrease.NONE, null, 0, serviceContext);
 
@@ -186,10 +184,8 @@ public class DLAppServiceWhenCheckingInAFileEntryTest
 	}
 
 	@Test
-	public void shouldUpdateTagNamesWithNoVersionIncrement()
-		throws Exception {
-
-		FileEntry fileEntry = addFileEntry(
+	public void shouldUpdateTagNamesWithNoVersionIncrement() throws Exception {
+		FileEntry fileEntry = DLAppServiceTestUtil.addFileEntry(
 			group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			StringUtil.randomString(), StringUtil.randomString(),
 			new String[] {"tag1", "tag2"});
@@ -221,8 +217,7 @@ public class DLAppServiceWhenCheckingInAFileEntryTest
 		FileEntry updatedFileEntry = DLAppServiceUtil.updateFileEntry(
 			checkedOutFileEntry.getFileEntryId(),
 			checkedOutFileEntry.getFileName(),
-			checkedOutFileEntry.getMimeType(),
-			checkedOutFileEntry.getTitle(),
+			checkedOutFileEntry.getMimeType(), checkedOutFileEntry.getTitle(),
 			checkedOutFileEntry.getDescription(), StringUtil.randomString(),
 			DLVersionNumberIncrease.NONE, null, 0, serviceContext);
 
@@ -255,8 +250,8 @@ public class DLAppServiceWhenCheckingInAFileEntryTest
 			String fileEntryTypeKey = dlFileEntryType.getFileEntryTypeKey();
 
 			if (fileEntryTypeKey.equals(
-				DLFileEntryTypeConstants.
-					FILE_ENTRY_TYPE_KEY_MARKETING_BANNER)) {
+					DLFileEntryTypeConstants.
+						FILE_ENTRY_TYPE_KEY_MARKETING_BANNER)) {
 
 				return dlFileEntryType.getFileEntryTypeId();
 			}
@@ -265,8 +260,7 @@ public class DLAppServiceWhenCheckingInAFileEntryTest
 		throw new NoSuchFileEntryTypeException(
 			StringBundler.concat(
 				"FileEntryType ",
-				DLFileEntryTypeConstants.
-					FILE_ENTRY_TYPE_KEY_MARKETING_BANNER,
+				DLFileEntryTypeConstants.FILE_ENTRY_TYPE_KEY_MARKETING_BANNER,
 				" not found in group ", group.getGroupId()));
 	}
 

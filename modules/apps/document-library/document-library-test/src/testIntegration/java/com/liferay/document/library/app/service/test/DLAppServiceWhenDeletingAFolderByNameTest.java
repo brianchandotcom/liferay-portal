@@ -44,9 +44,7 @@ public class DLAppServiceWhenDeletingAFolderByNameTest
 		new LiferayIntegrationTestRule();
 
 	@Test
-	public void shouldDeleteImplicitlyTrashedChildFolder()
-		throws Exception {
-
+	public void shouldDeleteImplicitlyTrashedChildFolder() throws Exception {
 		int initialFoldersCount = DLAppServiceUtil.getFoldersCount(
 			group.getGroupId(), parentFolder.getFolderId());
 

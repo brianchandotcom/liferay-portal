@@ -25,11 +25,12 @@ import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryConstants;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppServiceUtil;
-import com.liferay.document.library.service.test.DLAppServiceTest;
 import com.liferay.document.library.sync.constants.DLSyncConstants;
 import com.liferay.document.library.workflow.WorkflowHandlerInvocationCounter;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.test.util.ConfigurationTemporarySwapper;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.proxy.ProxyModeThreadLocal;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -53,10 +54,12 @@ import com.liferay.portlet.documentlibrary.service.test.BaseDLAppTestCase;
 
 import java.io.File;
 import java.io.InputStream;
+
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import org.hibernate.util.JDBCExceptionReporter;
+
 import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Ignore;
@@ -79,12 +82,11 @@ public class DLAppServiceWhenAddingAFileEntryTest extends BaseDLAppTestCase {
 	public void assetEntryShouldHavePublishDate() throws Exception {
 		String fileName = RandomTestUtil.randomString();
 
-		FileEntry fileEntry = addFileEntry(
+		FileEntry fileEntry = DLAppServiceTestUtil.addFileEntry(
 			group.getGroupId(), parentFolder.getFolderId(), fileName);
 
 		AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchEntry(
-			DLFileEntryConstants.getClassName(),
-			fileEntry.getFileEntryId());
+			DLFileEntryConstants.getClassName(), fileEntry.getFileEntryId());
 
 		Assert.assertEquals(
 			assetEntry.getCreateDate(), assetEntry.getPublishDate());
@@ -96,26 +98,25 @@ public class DLAppServiceWhenAddingAFileEntryTest extends BaseDLAppTestCase {
 
 		String[] assetTagNames = {"hello", "world"};
 
-		FileEntry fileEntry = addFileEntry(
-			group.getGroupId(), parentFolder.getFolderId(), fileName,
-			fileName, assetTagNames);
+		FileEntry fileEntry = DLAppServiceTestUtil.addFileEntry(
+			group.getGroupId(), parentFolder.getFolderId(), fileName, fileName,
+			assetTagNames);
 
 		AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchEntry(
-			DLFileEntryConstants.getClassName(),
-			fileEntry.getFileEntryId());
+			DLFileEntryConstants.getClassName(), fileEntry.getFileEntryId());
 
-		AssertUtils.assertEqualsSorted(
-			assetTagNames, assetEntry.getTagNames());
+		AssertUtils.assertEqualsSorted(assetTagNames, assetEntry.getTagNames());
 	}
 
 	@Test
 	public void shouldCallWorkflowHandler() throws Exception {
 		try (WorkflowHandlerInvocationCounter<DLFileEntry>
-				 workflowHandlerInvocationCounter =
-				 new WorkflowHandlerInvocationCounter<>(
-					 DLFileEntryConstants.getClassName())) {
+				workflowHandlerInvocationCounter =
+					new WorkflowHandlerInvocationCounter<>(
+						DLFileEntryConstants.getClassName())) {
 
-			addFileEntry(group.getGroupId(), parentFolder.getFolderId());
+			DLAppServiceTestUtil.addFileEntry(
+				group.getGroupId(), parentFolder.getFolderId());
 
 			Assert.assertEquals(
 				1,
@@ -128,52 +129,61 @@ public class DLAppServiceWhenAddingAFileEntryTest extends BaseDLAppTestCase {
 	public void shouldFailIfDuplicateNameAndExtensionInFolder1()
 		throws Exception {
 
-		addFileEntry(
-			group.getGroupId(), parentFolder.getFolderId(), _FILE_NAME,
-			_STRIPPED_FILE_NAME, null);
-		addFileEntry(
-			group.getGroupId(), parentFolder.getFolderId(), _FILE_NAME,
-			_FILE_NAME, null);
+		DLAppServiceTestUtil.addFileEntry(
+			group.getGroupId(), parentFolder.getFolderId(),
+			DLAppServiceTestUtil.FILE_NAME,
+			DLAppServiceTestUtil.STRIPPED_FILE_NAME, null);
+		DLAppServiceTestUtil.addFileEntry(
+			group.getGroupId(), parentFolder.getFolderId(),
+			DLAppServiceTestUtil.FILE_NAME, DLAppServiceTestUtil.FILE_NAME,
+			null);
 	}
 
 	@Test(expected = DuplicateFileEntryException.class)
 	public void shouldFailIfDuplicateNameAndExtensionInFolder2()
 		throws Exception {
 
-		addFileEntry(
-			group.getGroupId(), parentFolder.getFolderId(), _FILE_NAME,
-			_FILE_NAME, null);
-		addFileEntry(
-			group.getGroupId(), parentFolder.getFolderId(), _FILE_NAME,
-			_STRIPPED_FILE_NAME, null);
+		DLAppServiceTestUtil.addFileEntry(
+			group.getGroupId(), parentFolder.getFolderId(),
+			DLAppServiceTestUtil.FILE_NAME, DLAppServiceTestUtil.FILE_NAME,
+			null);
+		DLAppServiceTestUtil.addFileEntry(
+			group.getGroupId(), parentFolder.getFolderId(),
+			DLAppServiceTestUtil.FILE_NAME,
+			DLAppServiceTestUtil.STRIPPED_FILE_NAME, null);
 	}
 
 	@Test(expected = DuplicateFileEntryException.class)
 	public void shouldFailIfDuplicateNameAndExtensionInFolder3()
 		throws Exception {
 
-		addFileEntry(
-			group.getGroupId(), parentFolder.getFolderId(), _FILE_NAME,
-			_STRIPPED_FILE_NAME, null);
-		addFileEntry(
+		DLAppServiceTestUtil.addFileEntry(
 			group.getGroupId(), parentFolder.getFolderId(),
-			_STRIPPED_FILE_NAME, _FILE_NAME, null);
+			DLAppServiceTestUtil.FILE_NAME,
+			DLAppServiceTestUtil.STRIPPED_FILE_NAME, null);
+		DLAppServiceTestUtil.addFileEntry(
+			group.getGroupId(), parentFolder.getFolderId(),
+			DLAppServiceTestUtil.STRIPPED_FILE_NAME,
+			DLAppServiceTestUtil.FILE_NAME, null);
 	}
 
 	@Test(expected = DuplicateFileEntryException.class)
 	public void shouldFailIfDuplicateNameInFolder() throws Exception {
-		addFileEntry(group.getGroupId(), parentFolder.getFolderId());
-		addFileEntry(group.getGroupId(), parentFolder.getFolderId());
+		DLAppServiceTestUtil.addFileEntry(
+			group.getGroupId(), parentFolder.getFolderId());
+		DLAppServiceTestUtil.addFileEntry(
+			group.getGroupId(), parentFolder.getFolderId());
 	}
 
 	@Test(expected = FileSizeException.class)
 	public void shouldFailIfSizeLimitExceeded() throws Exception {
 		try (ConfigurationTemporarySwapper configurationTemporarySwapper =
-				 _getConfigurationTemporarySwapper("fileMaxSize", 1L)) {
+				DLAppServiceTestUtil.getConfigurationTemporarySwapper(
+					"fileMaxSize", 1L)) {
 
 			String fileName = RandomTestUtil.randomString();
 
-			addFileEntry(
+			DLAppServiceTestUtil.addFileEntry(
 				group.getGroupId(), parentFolder.getFolderId(), fileName);
 		}
 	}
@@ -183,8 +193,7 @@ public class DLAppServiceWhenAddingAFileEntryTest extends BaseDLAppTestCase {
 		throws Exception {
 
 		int i =
-			RandomTestUtil.randomInt() %
-				PropsValues.DL_CHAR_BLACKLIST.length;
+			RandomTestUtil.randomInt() % PropsValues.DL_CHAR_BLACKLIST.length;
 
 		String blackListedChar = PropsValues.DL_CHAR_BLACKLIST[i];
 
@@ -192,7 +201,7 @@ public class DLAppServiceWhenAddingAFileEntryTest extends BaseDLAppTestCase {
 			RandomTestUtil.randomString() + blackListedChar +
 				RandomTestUtil.randomString();
 
-		addFileEntry(
+		DLAppServiceTestUtil.addFileEntry(
 			group.getGroupId(), parentFolder.getFolderId(), sourceFileName);
 	}
 
@@ -206,10 +215,9 @@ public class DLAppServiceWhenAddingAFileEntryTest extends BaseDLAppTestCase {
 
 		String blackListedChar = PropsValues.DL_CHAR_LAST_BLACKLIST[i];
 
-		String sourceFileName =
-			RandomTestUtil.randomString() + blackListedChar;
+		String sourceFileName = RandomTestUtil.randomString() + blackListedChar;
 
-		addFileEntry(
+		DLAppServiceTestUtil.addFileEntry(
 			group.getGroupId(), parentFolder.getFolderId(), sourceFileName);
 	}
 
@@ -218,36 +226,35 @@ public class DLAppServiceWhenAddingAFileEntryTest extends BaseDLAppTestCase {
 		throws Exception {
 
 		try (ConfigurationTemporarySwapper configurationTemporarySwapper =
-				 _getConfigurationTemporarySwapper(
-					 "fileExtensions", new String[0])) {
+				DLAppServiceTestUtil.getConfigurationTemporarySwapper(
+					"fileExtensions", new String[0])) {
 
 			String sourceFileName = "file.jpg";
 
-			addFileEntry(
-				group.getGroupId(), parentFolder.getFolderId(),
-				sourceFileName);
+			DLAppServiceTestUtil.addFileEntry(
+				group.getGroupId(), parentFolder.getFolderId(), sourceFileName);
 		}
 	}
 
 	@Test(expected = FileNameException.class)
 	public void shouldFailIfSourceFileNameIsBlacklisted() throws Exception {
 		int i =
-			RandomTestUtil.randomInt() %
-				PropsValues.DL_NAME_BLACKLIST.length;
+			RandomTestUtil.randomInt() % PropsValues.DL_NAME_BLACKLIST.length;
 
 		String blackListedName = PropsValues.DL_NAME_BLACKLIST[i];
 
-		addFileEntry(
-			group.getGroupId(), parentFolder.getFolderId(),
-			blackListedName);
+		DLAppServiceTestUtil.addFileEntry(
+			group.getGroupId(), parentFolder.getFolderId(), blackListedName);
 	}
 
 	@Test
 	public void shouldFireSyncEvent() throws Exception {
-		AtomicInteger counter = registerDLSyncEventProcessorMessageListener(
-			DLSyncConstants.EVENT_ADD);
+		AtomicInteger counter =
+			DLAppServiceTestUtil.registerDLSyncEventProcessorMessageListener(
+				DLSyncConstants.EVENT_ADD);
 
-		addFileEntry(group.getGroupId(), parentFolder.getFolderId());
+		DLAppServiceTestUtil.addFileEntry(
+			group.getGroupId(), parentFolder.getFolderId());
 
 		Assert.assertEquals(1, counter.get());
 	}
@@ -256,12 +263,11 @@ public class DLAppServiceWhenAddingAFileEntryTest extends BaseDLAppTestCase {
 	public void shouldHaveDefaultVersion() throws Exception {
 		String fileName = RandomTestUtil.randomString();
 
-		FileEntry fileEntry = addFileEntry(
+		FileEntry fileEntry = DLAppServiceTestUtil.addFileEntry(
 			group.getGroupId(), parentFolder.getFolderId(), fileName);
 
 		Assert.assertEquals(
-			"Version label incorrect after add", "1.0",
-			fileEntry.getVersion());
+			"Version label incorrect after add", "1.0", fileEntry.getVersion());
 	}
 
 	@Test
@@ -273,20 +279,17 @@ public class DLAppServiceWhenAddingAFileEntryTest extends BaseDLAppTestCase {
 
 		FileEntry fileEntry = DLAppServiceUtil.addFileEntry(
 			group.getGroupId(), parentFolder.getFolderId(), fileName,
-			ContentTypes.APPLICATION_OCTET_STREAM, fileName,
-			StringPool.BLANK, StringPool.BLANK, CONTENT.getBytes(),
-			serviceContext);
+			ContentTypes.APPLICATION_OCTET_STREAM, fileName, StringPool.BLANK,
+			StringPool.BLANK, CONTENT.getBytes(), serviceContext);
 
-		Assert.assertEquals(
-			ContentTypes.TEXT_PLAIN, fileEntry.getMimeType());
+		Assert.assertEquals(ContentTypes.TEXT_PLAIN, fileEntry.getMimeType());
 	}
 
 	@Test
-	public void shouldSucceedIfDuplicateNameInOtherFolder()
-		throws Exception {
-
-		addFileEntry(group.getGroupId(), parentFolder.getFolderId());
-		addFileEntry(
+	public void shouldSucceedIfDuplicateNameInOtherFolder() throws Exception {
+		DLAppServiceTestUtil.addFileEntry(
+			group.getGroupId(), parentFolder.getFolderId());
+		DLAppServiceTestUtil.addFileEntry(
 			group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 	}
 
@@ -315,8 +318,7 @@ public class DLAppServiceWhenAddingAFileEntryTest extends BaseDLAppTestCase {
 			_users[i] = user;
 		}
 
-		DoAsUserThread[] doAsUserThreads =
-			new DoAsUserThread[_users.length];
+		DoAsUserThread[] doAsUserThreads = new DoAsUserThread[_users.length];
 
 		_fileEntryIds = new long[_users.length];
 
@@ -327,7 +329,7 @@ public class DLAppServiceWhenAddingAFileEntryTest extends BaseDLAppTestCase {
 				_users[i].getUserId(), i);
 		}
 
-		successCount = runUserThreads(doAsUserThreads);
+		successCount = DLAppServiceTestUtil.runUserThreads(doAsUserThreads);
 
 		Assert.assertEquals(
 			"Only " + successCount + " out of " + _users.length +
@@ -339,7 +341,7 @@ public class DLAppServiceWhenAddingAFileEntryTest extends BaseDLAppTestCase {
 				_users[i].getUserId(), i);
 		}
 
-		successCount = runUserThreads(doAsUserThreads);
+		successCount = DLAppServiceTestUtil.runUserThreads(doAsUserThreads);
 
 		Assert.assertEquals(
 			"Only " + successCount + " out of " + _users.length +
@@ -387,6 +389,9 @@ public class DLAppServiceWhenAddingAFileEntryTest extends BaseDLAppTestCase {
 			StringPool.BLANK, null, 0, serviceContext);
 	}
 
+	private static final Log _log = LogFactoryUtil.getLog(
+		DLAppServiceWhenAddingAFileEntryTest.class);
+
 	private long[] _fileEntryIds;
 
 	@DeleteAfterTestRun
@@ -410,7 +415,7 @@ public class DLAppServiceWhenAddingAFileEntryTest extends BaseDLAppTestCase {
 			ProxyModeThreadLocal.setForceSync(true);
 
 			try {
-				FileEntry fileEntry = addFileEntry(
+				FileEntry fileEntry = DLAppServiceTestUtil.addFileEntry(
 					group.getGroupId(), parentFolder.getFolderId(),
 					"Test-" + _index + ".txt");
 

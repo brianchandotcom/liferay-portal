@@ -45,7 +45,7 @@ public class DLAppServiceWhenDeletingAFileEntryTest extends BaseDLAppTestCase {
 
 	@Test
 	public void shouldDeleteDiscussion() throws Exception {
-		FileEntry fileEntry = addFileEntry(
+		FileEntry fileEntry = DLAppServiceTestUtil.addFileEntry(
 			group.getGroupId(), parentFolder.getFolderId());
 
 		DLAppServiceUtil.deleteFileEntry(fileEntry.getFileEntryId());
@@ -58,10 +58,11 @@ public class DLAppServiceWhenDeletingAFileEntryTest extends BaseDLAppTestCase {
 
 	@Test
 	public void shouldFireSyncEvent() throws Exception {
-		AtomicInteger counter = registerDLSyncEventProcessorMessageListener(
-			DLSyncConstants.EVENT_DELETE);
+		AtomicInteger counter =
+			DLAppServiceTestUtil.registerDLSyncEventProcessorMessageListener(
+				DLSyncConstants.EVENT_DELETE);
 
-		FileEntry fileEntry = addFileEntry(
+		FileEntry fileEntry = DLAppServiceTestUtil.addFileEntry(
 			group.getGroupId(), parentFolder.getFolderId());
 
 		DLAppServiceUtil.deleteFileEntry(fileEntry.getFileEntryId());

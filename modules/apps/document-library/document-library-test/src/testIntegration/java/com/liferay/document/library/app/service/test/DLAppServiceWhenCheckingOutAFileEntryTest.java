@@ -46,10 +46,11 @@ public class DLAppServiceWhenCheckingOutAFileEntryTest
 
 	@Test
 	public void shouldFireSyncEvent() throws Exception {
-		AtomicInteger counter = registerDLSyncEventProcessorMessageListener(
-			DLSyncConstants.EVENT_UPDATE);
+		AtomicInteger counter =
+			DLAppServiceTestUtil.registerDLSyncEventProcessorMessageListener(
+				DLSyncConstants.EVENT_UPDATE);
 
-		FileEntry fileEntry = addFileEntry(
+		FileEntry fileEntry = DLAppServiceTestUtil.addFileEntry(
 			group.getGroupId(), parentFolder.getFolderId());
 
 		ServiceContext serviceContext =

@@ -51,7 +51,7 @@ public class DLAppServiceWhenMovingAFileEntryToTrashTest
 	public void setUp() throws Exception {
 		super.setUp();
 
-		_fileEntry = addFileEntry(
+		_fileEntry = DLAppServiceTestUtil.addFileEntry(
 			group.getGroupId(), parentFolder.getFolderId());
 	}
 
@@ -63,11 +63,9 @@ public class DLAppServiceWhenMovingAFileEntryToTrashTest
 
 		Assert.assertTrue(_fileEntry.isCheckedOut());
 
-		DLTrashServiceUtil.moveFileEntryToTrash(
-			_fileEntry.getFileEntryId());
+		DLTrashServiceUtil.moveFileEntryToTrash(_fileEntry.getFileEntryId());
 
-		_fileEntry = DLAppServiceUtil.getFileEntry(
-			_fileEntry.getFileEntryId());
+		_fileEntry = DLAppServiceUtil.getFileEntry(_fileEntry.getFileEntryId());
 
 		Assert.assertFalse(_fileEntry.isCheckedOut());
 	}
@@ -85,8 +83,7 @@ public class DLAppServiceWhenMovingAFileEntryToTrashTest
 				DLFileEntryConstants.getClassName(),
 				fileVersion.getFileVersionId()));
 
-		DLTrashServiceUtil.moveFileEntryToTrash(
-			_fileEntry.getFileEntryId());
+		DLTrashServiceUtil.moveFileEntryToTrash(_fileEntry.getFileEntryId());
 
 		Assert.assertNull(
 			AssetEntryLocalServiceUtil.fetchEntry(

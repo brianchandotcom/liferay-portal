@@ -50,11 +50,11 @@ public class DLAppServiceWhenRevertingAFileEntryTest extends BaseDLAppTestCase {
 	@Test
 	public void shouldCallWorkflowHandler() throws Exception {
 		try (WorkflowHandlerInvocationCounter<FileEntry>
-				 workflowHandlerInvocationCounter =
-				 new WorkflowHandlerInvocationCounter<>(
-					 DLFileEntryConstants.getClassName())) {
+				workflowHandlerInvocationCounter =
+					new WorkflowHandlerInvocationCounter<>(
+						DLFileEntryConstants.getClassName())) {
 
-			FileEntry fileEntry = addFileEntry(
+			FileEntry fileEntry = DLAppServiceTestUtil.addFileEntry(
 				group.getGroupId(), parentFolder.getFolderId());
 
 			Assert.assertEquals(
@@ -64,7 +64,7 @@ public class DLAppServiceWhenRevertingAFileEntryTest extends BaseDLAppTestCase {
 
 			String version = fileEntry.getVersion();
 
-			updateFileEntry(
+			DLAppServiceTestUtil.updateFileEntry(
 				group.getGroupId(), fileEntry.getFileEntryId(),
 				RandomTestUtil.randomString(), true);
 
@@ -74,8 +74,7 @@ public class DLAppServiceWhenRevertingAFileEntryTest extends BaseDLAppTestCase {
 					"updateStatus", int.class, Map.class));
 
 			ServiceContext serviceContext =
-				ServiceContextTestUtil.getServiceContext(
-					group.getGroupId());
+				ServiceContextTestUtil.getServiceContext(group.getGroupId());
 
 			DLAppServiceUtil.revertFileEntry(
 				fileEntry.getFileEntryId(), version, serviceContext);
@@ -90,17 +89,17 @@ public class DLAppServiceWhenRevertingAFileEntryTest extends BaseDLAppTestCase {
 	@Test
 	public void shouldFireSyncEvent() throws Exception {
 		AtomicInteger updateCounter =
-			registerDLSyncEventProcessorMessageListener(
+			DLAppServiceTestUtil.registerDLSyncEventProcessorMessageListener(
 				DLSyncConstants.EVENT_UPDATE);
 
-		FileEntry fileEntry = addFileEntry(
+		FileEntry fileEntry = DLAppServiceTestUtil.addFileEntry(
 			group.getGroupId(), parentFolder.getFolderId());
 
 		String version = fileEntry.getVersion();
 
 		Assert.assertEquals(0, updateCounter.get());
 
-		updateFileEntry(
+		DLAppServiceTestUtil.updateFileEntry(
 			group.getGroupId(), fileEntry.getFileEntryId(),
 			RandomTestUtil.randomString(), true);
 

@@ -48,10 +48,10 @@ public class DLAppServiceWhenMovingAFileEntryTest extends BaseDLAppTestCase {
 	@Test
 	public void shouldFireSyncEvent() throws Exception {
 		AtomicInteger moveCounter =
-			registerDLSyncEventProcessorMessageListener(
+			DLAppServiceTestUtil.registerDLSyncEventProcessorMessageListener(
 				DLSyncConstants.EVENT_MOVE);
 
-		FileEntry fileEntry = addFileEntry(
+		FileEntry fileEntry = DLAppServiceTestUtil.addFileEntry(
 			group.getGroupId(), parentFolder.getFolderId(),
 			RandomTestUtil.randomString());
 
@@ -67,13 +67,13 @@ public class DLAppServiceWhenMovingAFileEntryTest extends BaseDLAppTestCase {
 
 	@Test
 	public void shouldHaveSameFileExtension() throws Exception {
-		FileEntry fileEntry = addFileEntry(
-			group.getGroupId(), parentFolder.getFolderId(), _FILE_NAME,
-			_STRIPPED_FILE_NAME, null);
+		FileEntry fileEntry = DLAppServiceTestUtil.addFileEntry(
+			group.getGroupId(), parentFolder.getFolderId(),
+			DLAppServiceTestUtil.FILE_NAME,
+			DLAppServiceTestUtil.STRIPPED_FILE_NAME, null);
 
 		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				targetGroup.getGroupId());
+			ServiceContextTestUtil.getServiceContext(targetGroup.getGroupId());
 
 		FileEntry copiedFileEntry = DLAppServiceUtil.moveFileEntry(
 			fileEntry.getFileEntryId(),

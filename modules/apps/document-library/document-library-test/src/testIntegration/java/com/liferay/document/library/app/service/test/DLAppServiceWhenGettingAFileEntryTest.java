@@ -50,7 +50,7 @@ public class DLAppServiceWhenGettingAFileEntryTest extends BaseDLAppTestCase {
 
 	@Test
 	public void shouldReturnItIfExistsInRootFolder() throws Exception {
-		FileEntry fileEntry1 = addFileEntry(
+		FileEntry fileEntry1 = DLAppServiceTestUtil.addFileEntry(
 			group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 
 		FileEntry fileEntry2 = DLAppServiceUtil.getFileEntry(

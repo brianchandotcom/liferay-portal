@@ -56,8 +56,7 @@ public class DLAppServiceWhenAddingAFolderTest extends BaseDLAppTestCase {
 
 		Folder folder = DLAppServiceUtil.addFolder(
 			group.getGroupId(), parentFolder.getFolderId(),
-			RandomTestUtil.randomString(), StringPool.BLANK,
-			serviceContext);
+			RandomTestUtil.randomString(), StringPool.BLANK, serviceContext);
 
 		AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchEntry(
 			DLFolderConstants.getClassName(), folder.getFolderId());
@@ -67,8 +66,9 @@ public class DLAppServiceWhenAddingAFolderTest extends BaseDLAppTestCase {
 
 	@Test
 	public void shouldFireSyncEvent() throws Exception {
-		AtomicInteger counter = registerDLSyncEventProcessorMessageListener(
-			DLSyncConstants.EVENT_ADD);
+		AtomicInteger counter =
+			DLAppServiceTestUtil.registerDLSyncEventProcessorMessageListener(
+				DLSyncConstants.EVENT_ADD);
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(group.getGroupId());

@@ -48,7 +48,7 @@ public class DLAppServiceWhenMovingAFolderTest extends BaseDLAppTestCase {
 	@Test
 	public void shouldFireSyncEvent() throws Exception {
 		AtomicInteger moveCounter =
-			registerDLSyncEventProcessorMessageListener(
+			DLAppServiceTestUtil.registerDLSyncEventProcessorMessageListener(
 				DLSyncConstants.EVENT_MOVE);
 
 		ServiceContext serviceContext =
@@ -60,8 +60,8 @@ public class DLAppServiceWhenMovingAFolderTest extends BaseDLAppTestCase {
 			serviceContext);
 
 		DLAppServiceUtil.moveFolder(
-			folder.getFolderId(),
-			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, serviceContext);
+			folder.getFolderId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			serviceContext);
 
 		Assert.assertEquals(1, moveCounter.get());
 	}

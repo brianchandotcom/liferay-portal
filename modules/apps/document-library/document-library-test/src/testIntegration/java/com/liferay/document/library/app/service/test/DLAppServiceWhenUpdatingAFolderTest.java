@@ -48,8 +48,9 @@ public class DLAppServiceWhenUpdatingAFolderTest extends BaseDLAppTestCase {
 
 	@Test
 	public void shouldFireSyncEvent() throws Exception {
-		AtomicInteger counter = registerDLSyncEventProcessorMessageListener(
-			DLSyncConstants.EVENT_UPDATE);
+		AtomicInteger counter =
+			DLAppServiceTestUtil.registerDLSyncEventProcessorMessageListener(
+				DLSyncConstants.EVENT_UPDATE);
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(group.getGroupId());
@@ -73,8 +74,7 @@ public class DLAppServiceWhenUpdatingAFolderTest extends BaseDLAppTestCase {
 
 		DLAppServiceUtil.updateFolder(
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-			RandomTestUtil.randomString(), StringPool.BLANK,
-			serviceContext);
+			RandomTestUtil.randomString(), StringPool.BLANK, serviceContext);
 	}
 
 }

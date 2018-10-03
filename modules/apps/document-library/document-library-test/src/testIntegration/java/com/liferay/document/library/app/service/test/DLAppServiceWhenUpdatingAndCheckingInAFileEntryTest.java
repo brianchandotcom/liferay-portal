@@ -51,7 +51,7 @@ public class DLAppServiceWhenUpdatingAndCheckingInAFileEntryTest
 
 	@Test
 	public void shouldHaveSameModifiedDate() throws Exception {
-		FileEntry fileEntry = addFileEntry(
+		FileEntry fileEntry = DLAppServiceTestUtil.addFileEntry(
 			group.getGroupId(), parentFolder.getFolderId());
 
 		ServiceContext serviceContext =
@@ -64,8 +64,7 @@ public class DLAppServiceWhenUpdatingAndCheckingInAFileEntryTest
 			DLVersionNumberIncrease.MINOR, null, serviceContext);
 
 		AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchEntry(
-			DLFileEntryConstants.getClassName(),
-			fileEntry.getFileEntryId());
+			DLFileEntryConstants.getClassName(), fileEntry.getFileEntryId());
 
 		Date assetEntryModifiedDate = assetEntry.getModifiedDate();
 

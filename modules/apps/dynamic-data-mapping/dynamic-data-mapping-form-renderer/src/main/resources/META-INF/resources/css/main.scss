@@ -503,3 +503,19 @@ body .ddm-user-view-content {
 		margin-right: 11px;
 	}
 }
+
+.ddm-tooltip {
+	display: inline-block;
+	padding-left: 8px;
+}
+
+div.ddm-tooltip-container {
+	position: absolute;
+	visibility: visible;
+	opacity: 1;
+	width: 230px;
+
+	&.clay-tooltip-bottom {
+		margin-left: 108px;
+	}
+}

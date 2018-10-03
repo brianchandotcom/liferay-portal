@@ -691,14 +691,14 @@ public class GitWorkingDirectory {
 		List<String> branchNamesList = new ArrayList<>(lines.length - 1);
 
 		for (String line : lines) {
-			if (branchNamesList.size() == (lines.length - 1)) {
-				break;
-			}
-
 			String branchName = line.trim();
 
 			if (branchName.startsWith("* ")) {
 				branchName = branchName.substring(2);
+			}
+
+			if (branchName.isEmpty()) {
+				continue;
 			}
 
 			branchNamesList.add(branchName);

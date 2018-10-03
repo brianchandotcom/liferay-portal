@@ -35,6 +35,17 @@ AUI.add(
 
 				layoutHandler.on('drag:end', A.bind('_onPortletDragEnd', Layout));
 				layoutHandler.on('drag:start', A.bind('_onPortletDragStart', Layout));
+
+				layoutHandler.dd.plug(
+					{
+						cfg: {
+							horizontal: false,
+							scrollDelay: 30,
+							vertical: true
+						},
+						fn: A.Plugin.DDWinScroll
+					}
+				);
 			},
 
 			closeNestedPortlets: function(portlet) {
@@ -444,17 +455,6 @@ AUI.add(
 							}
 
 							Layout.getLayoutHandler().destroy();
-						}
-					);
-
-					Layout.getLayoutHandler().delegate.dd.plug(
-						{
-							cfg: {
-								horizontal: false,
-								scrollDelay: 30,
-								vertical: true
-							},
-							fn: A.Plugin.DDWinScroll
 						}
 					);
 

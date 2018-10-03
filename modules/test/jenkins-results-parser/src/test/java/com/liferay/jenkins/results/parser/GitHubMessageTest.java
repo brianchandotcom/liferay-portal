@@ -59,8 +59,8 @@ public class GitHubMessageTest extends BuildTest {
 				"_semantic_versioning_failure",
 			"2003", "test-portal-acceptance-pullrequest(master)", "test-1-3");
 		downloadSample(
-			"test-portal-acceptance-pullrequest(master)_source-format-failure",
-			"2209", "test-portal-acceptance-pullrequest(master)", "test-1-2");
+			"test-portal-source-format_source-format-failure", "587",
+			"test-portal-source-format", "test-1-22");
 	}
 
 	@Test

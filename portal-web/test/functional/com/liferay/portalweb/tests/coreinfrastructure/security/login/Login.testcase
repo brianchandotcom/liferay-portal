@@ -183,6 +183,8 @@
 
 	<command ignore="true" name="OpenIDSmoke" priority="4">
 		<property name="dummy.socket.proxy.disabled" value="true" />
+		<property name="osgi.module.configuration.file.names" value="com.liferay.captcha.configuration.CaptchaConfiguration.config" />
+		<property name="osgi.module.configurations" value="createAccountCaptchaEnabled=&quot;false&quot;" />
 		<property name="test.name.skip.portal.instance" value="Login#OpenIDSmoke" />
 
 		<var method="PropsUtil#get('email.password.1')" name="openIDPassword" />

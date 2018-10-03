@@ -41,7 +41,7 @@ class LayoutColumn extends Component {
 		};
 
 		if (this.siteNavigationMenuNames !== '') {
-			config.checkboxFieldLabel = _.sub(Liferay.Language.get('add-this-page-to-the-following-menus-x'), this.siteNavigationMenuNames);
+			config.checkboxFieldLabel = Liferay.Util.sub(Liferay.Language.get('add-this-page-to-the-following-menus-x'), this.siteNavigationMenuNames);
 			config.checkboxFieldName = 'TypeSettingsProperties--addToAutoMenus--';
 			config.checkboxFieldValue = true;
 		}
@@ -57,7 +57,7 @@ class LayoutColumn extends Component {
 	 */
 
 	_handleMarkAsHomePageLayoutClick(event) {
-		let confirmMessage = _.sub(
+		let confirmMessage = Liferay.Util.sub(
 			Liferay.Language.get('do-you-want-to-replace-x-for-x-as-the-home-page'),
 			event.delegateTarget.dataset.homePageTitle,
 			event.delegateTarget.dataset.title

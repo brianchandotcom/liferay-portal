@@ -224,7 +224,7 @@ else {
 												selectedFilesText = '<%= UnicodeLanguageUtil.get(request, "all-files-selected") %>';
 											}
 											else {
-												selectedFilesText = _.sub('<%= UnicodeLanguageUtil.get(request, "x-files-selected") %>', selectedFilesCount);
+												selectedFilesText = Liferay.Util.sub('<%= UnicodeLanguageUtil.get(request, "x-files-selected") %>', selectedFilesCount);
 											}
 										}
 

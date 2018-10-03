@@ -71,7 +71,7 @@ class WikiPortlet extends PortletBase {
 
 		let newFormat = formatSelect.options[formatSelect.selectedIndex].text.trim();
 
-		let confirmMessage = _.sub(
+		let confirmMessage = Liferay.Util.sub(
 			this.strings.confirmLoseFormatting,
 			this.currentFormatLabel,
 			newFormat

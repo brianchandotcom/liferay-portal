@@ -132,7 +132,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "merge-tags"));
 
 			tag = String(tag.html()).trim();
 
-			mergeText = _.sub(mergeText, mergeTagNamesArray, tag);
+			mergeText = Liferay.Util.sub(mergeText, mergeTagNamesArray, tag);
 
 			if (confirm(mergeText)) {
 				submitForm(form, form.attr('action'));

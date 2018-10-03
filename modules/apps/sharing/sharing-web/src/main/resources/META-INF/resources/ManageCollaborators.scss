@@ -1,6 +1,14 @@
 .manage-collaborators-dialog {
 	background-color: #FFF;
 
+	.autofit-col > div.form-group {
+		margin: 0;
+	}
+
+	.btn-remove {
+		margin-top: 5px;
+	}
+
 	.list-group-item {
 		border: 0;
 	}

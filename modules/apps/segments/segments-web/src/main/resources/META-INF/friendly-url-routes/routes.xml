@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!DOCTYPE routes PUBLIC "-//Liferay//DTD Friendly URL Routes 7.0.0//EN" "http://www.liferay.com/dtd/liferay-friendly-url-routes_7_0_0.dtd">
+
+<routes>
+	<route>
+		<pattern>/entry/{segmentsEntryId:\d+}/edit</pattern>
+		<implicit-parameter name="mvcRenderCommandName">editSegmentsEntry</implicit-parameter>
+		<implicit-parameter name="p_p_state">maximized</implicit-parameter>
+	</route>
+	<route>
+		<pattern>/entries/new</pattern>
+		<implicit-parameter name="mvcRenderCommandName">editSegmentsEntry</implicit-parameter>
+		<implicit-parameter name="p_p_state">maximized</implicit-parameter>
+	</route>
+	<route>
+		<pattern>/entries</pattern>
+		<ignored-parameter name="mvcPath" />
+		<ignored-parameter name="p_v_l_s_g_id" />
+		<implicit-parameter name="p_p_state">maximized</implicit-parameter>
+	</route>
+	<route>
+		<pattern></pattern>
+		<ignored-parameter name="mvcPath" />
+		<ignored-parameter name="p_v_l_s_g_id" />
+		<implicit-parameter name="p_p_state">maximized</implicit-parameter>
+	</route>
+</routes>

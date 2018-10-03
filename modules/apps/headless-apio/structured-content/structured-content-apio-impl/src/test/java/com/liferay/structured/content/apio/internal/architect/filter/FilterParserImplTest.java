@@ -59,8 +59,7 @@ public class FilterParserImplTest {
 			ExpressionVisitException.class
 		);
 
-		exception.hasMessageStartingWith(
-			"method 'contains' is not supported yet, please, avoid using it");
+		exception.hasMessageStartingWith("Method call: contains");
 	}
 
 	@Test

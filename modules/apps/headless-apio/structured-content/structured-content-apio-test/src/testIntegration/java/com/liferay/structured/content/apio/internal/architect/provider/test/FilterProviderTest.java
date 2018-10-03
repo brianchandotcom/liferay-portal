@@ -59,7 +59,7 @@ public class FilterProviderTest {
 
 		exception.hasMessage(
 			String.format(
-				"Invalid query computed from filter '%s': 'Unknown property.'",
+				"Invalid query computed from filter '%s': Unknown property.",
 				filterString));
 	}
 
@@ -80,8 +80,8 @@ public class FilterProviderTest {
 
 		exception.hasMessage(
 			String.format(
-				"Invalid query computed from filter '%s': 'method 'contains' " +
-					"is not supported yet, please, avoid using it'",
+				"Invalid query computed from filter '%s': Method call: " +
+					"contains",
 				filterString));
 	}
 

@@ -88,9 +88,16 @@ public abstract class BaseWorkspaceGitRepository
 
 		GitWorkingDirectory gitWorkingDirectory = getGitWorkingDirectory();
 
+		String branchSHA = _getBranchSHA();
+
+		if (!gitWorkingDirectory.localSHAExists(branchSHA)) {
+			GitHubDevSyncUtil.fetchCachedBranchFromGitHubDev(
+				gitWorkingDirectory, getGitHubDevBranchName());
+		}
+
 		LocalGitBranch localGitBranch =
 			gitWorkingDirectory.createLocalGitBranch(
-				_getBranchName(), true, _getBranchSHA());
+				_getBranchName(), true, branchSHA);
 
 		gitWorkingDirectory.createLocalGitBranch(localGitBranch, true);
 

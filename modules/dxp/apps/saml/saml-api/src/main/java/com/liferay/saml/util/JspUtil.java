@@ -14,6 +14,13 @@
 
 package com.liferay.saml.util;
 
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.struts.Definition;
+import com.liferay.portal.struts.PortalTilesPlugin;
+
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -44,17 +51,23 @@ public class JspUtil {
 			String path, String title, boolean popUp)
 		throws Exception {
 
-		request.setAttribute("tilesContent", path);
-		request.setAttribute("tilesPopUp", String.valueOf(popUp));
-		request.setAttribute("tilesTitle", title);
+		Map<String, String> attributes = new HashMap<>();
+
+		attributes.put("content", path);
+		attributes.put("pop_up", String.valueOf(popUp));
+		attributes.put("title", title);
+
+		request.setAttribute(
+			PortalTilesPlugin.DEFINITION,
+			new Definition(StringPool.BLANK, attributes));
 
 		RequestDispatcher requestDispatcher = request.getRequestDispatcher(
-			_PATH_HTML_PORTAL_SAML_SAML_PORTAL);
+			_PATH_HTML_COMMON_THEMES_PORTAL);
 
 		requestDispatcher.include(request, response);
 	}
 
-	private static final String _PATH_HTML_PORTAL_SAML_SAML_PORTAL =
-		"/html/portal/saml/saml_portal.jsp";
+	private static final String _PATH_HTML_COMMON_THEMES_PORTAL =
+		"/html/common/themes/portal.jsp";
 
 }

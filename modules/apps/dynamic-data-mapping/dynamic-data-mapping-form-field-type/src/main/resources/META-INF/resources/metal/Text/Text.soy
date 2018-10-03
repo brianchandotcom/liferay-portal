@@ -8,10 +8,12 @@
 	{@param? label: string}
 	{@param? placeholder: string}
 	{@param? readOnly: bool}
+	{@param? repeatable: bool}
 	{@param? required: bool}
 	{@param? showLabel: bool}
 	{@param? spritemap: string}
 	{@param? tip: string}
+	{@param? tooltip: string}
 	{@param? value: string}
 
 	{call FieldBase.render}
@@ -26,13 +28,14 @@
 				{param value: $value /}
 			{/call}
 		{/param}
-
-		{param tip: $tip /}
 		{param id: $id /}
 		{param label: $label /}
+		{param repeatable: $repeatable /}
 		{param required: $required /}
 		{param showLabel: $showLabel /}
 		{param spritemap: $spritemap /}
+		{param tip: $tip /}
+		{param tooltip: $tooltip /}
 	{/call}
 {/template}
 

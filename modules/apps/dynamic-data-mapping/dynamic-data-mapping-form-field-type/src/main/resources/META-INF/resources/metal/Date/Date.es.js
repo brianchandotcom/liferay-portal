@@ -60,6 +60,15 @@ class Date extends Component {
 		placeholder: Config.string().value('__/__/____'),
 
 		/**
+		 * @default undefined
+		 * @instance
+		 * @memberof FieldBase
+		 * @type {?(bool|undefined)}
+		 */
+
+		repeatable: Config.bool(),
+
+		/**
 		 * @default false
 		 * @instance
 		 * @memberof Date

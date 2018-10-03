@@ -2,10 +2,11 @@
 
 exports[`Field Checkbox should be not edidable 1`] = `
 <div class="form-group">
-  <label class="toggle-switch">
+  <label class="ddm-toggle-switch toggle-switch">
     <input checked="" class="toggle-switch-check" type="checkbox">
     <span aria-hidden="true" class="toggle-switch-bar">
       <span class="toggle-switch-handle"></span>
+      <span class="toggle-switch-text toggle-switch-text-right"></span>
     </span>
   </label>
 </div>
@@ -13,10 +14,11 @@ exports[`Field Checkbox should be not edidable 1`] = `
 
 exports[`Field Checkbox should be shown as a switcher 1`] = `
 <div class="form-group">
-  <label class="toggle-switch">
+  <label class="ddm-toggle-switch toggle-switch">
     <input checked="" class="toggle-switch-check" type="checkbox">
     <span aria-hidden="true" class="toggle-switch-bar">
       <span class="toggle-switch-handle"></span>
+      <span class="toggle-switch-text toggle-switch-text-right"></span>
     </span>
   </label>
 </div>
@@ -35,10 +37,11 @@ exports[`Field Checkbox should be shown as checkbox 1`] = `
 
 exports[`Field Checkbox should have a helptext 1`] = `
 <div class="form-group">
-  <label class="toggle-switch">
+  <label class="ddm-toggle-switch toggle-switch">
     <input checked="" class="toggle-switch-check" type="checkbox">
     <span aria-hidden="true" class="toggle-switch-bar">
       <span class="toggle-switch-handle"></span>
+      <span class="toggle-switch-text toggle-switch-text-right"></span>
     </span>
   </label>
   <span class="form-text">Type something</span>
@@ -47,10 +50,11 @@ exports[`Field Checkbox should have a helptext 1`] = `
 
 exports[`Field Checkbox should have a key 1`] = `
 <div class="form-group">
-  <label class="toggle-switch">
+  <label class="ddm-toggle-switch toggle-switch">
     <input checked="" class="toggle-switch-check" type="checkbox">
     <span aria-hidden="true" class="toggle-switch-bar">
       <span class="toggle-switch-handle"></span>
+      <span class="toggle-switch-text toggle-switch-text-right"></span>
     </span>
   </label>
 </div>
@@ -59,10 +63,11 @@ exports[`Field Checkbox should have a key 1`] = `
 exports[`Field Checkbox should have a label 1`] = `
 <div class="form-group">
   <label></label>
-  <label class="toggle-switch">
+  <label class="ddm-toggle-switch toggle-switch">
     <input checked="" class="toggle-switch-check" type="checkbox">
     <span aria-hidden="true" class="toggle-switch-bar">
-      <span class="toggle-switch-handle" data-label-off="label" data-label-on="label"></span>
+      <span class="toggle-switch-handle"></span>
+      <span class="toggle-switch-text toggle-switch-text-right">label</span>
     </span>
   </label>
 </div>
@@ -70,10 +75,11 @@ exports[`Field Checkbox should have a label 1`] = `
 
 exports[`Field Checkbox should have a predefined Value 1`] = `
 <div class="form-group">
-  <label class="toggle-switch">
+  <label class="ddm-toggle-switch toggle-switch">
     <input checked="" class="toggle-switch-check" type="checkbox">
     <span aria-hidden="true" class="toggle-switch-bar">
       <span class="toggle-switch-handle"></span>
+      <span class="toggle-switch-text toggle-switch-text-right"></span>
     </span>
   </label>
 </div>
@@ -81,10 +87,11 @@ exports[`Field Checkbox should have a predefined Value 1`] = `
 
 exports[`Field Checkbox should have a spritemap 1`] = `
 <div class="form-group">
-  <label class="toggle-switch">
+  <label class="ddm-toggle-switch toggle-switch">
     <input checked="" class="toggle-switch-check" type="checkbox">
     <span aria-hidden="true" class="toggle-switch-bar">
       <span class="toggle-switch-handle"></span>
+      <span class="toggle-switch-text toggle-switch-text-right"></span>
     </span>
   </label>
 </div>
@@ -92,10 +99,11 @@ exports[`Field Checkbox should have a spritemap 1`] = `
 
 exports[`Field Checkbox should have a value 1`] = `
 <div class="form-group">
-  <label class="toggle-switch">
+  <label class="ddm-toggle-switch toggle-switch">
     <input checked="" class="toggle-switch-check" type="checkbox">
     <span aria-hidden="true" class="toggle-switch-bar">
       <span class="toggle-switch-handle"></span>
+      <span class="toggle-switch-text toggle-switch-text-right"></span>
     </span>
   </label>
 </div>
@@ -103,10 +111,11 @@ exports[`Field Checkbox should have a value 1`] = `
 
 exports[`Field Checkbox should have an id 1`] = `
 <div class="form-group">
-  <label class="toggle-switch">
+  <label class="ddm-toggle-switch toggle-switch">
     <input checked="" class="toggle-switch-check" type="checkbox">
     <span aria-hidden="true" class="toggle-switch-bar">
       <span class="toggle-switch-handle"></span>
+      <span class="toggle-switch-text toggle-switch-text-right"></span>
     </span>
   </label>
 </div>
@@ -114,10 +123,11 @@ exports[`Field Checkbox should have an id 1`] = `
 
 exports[`Field Checkbox should not be required 1`] = `
 <div class="form-group">
-  <label class="toggle-switch">
+  <label class="ddm-toggle-switch toggle-switch">
     <input checked="" class="toggle-switch-check" type="checkbox">
     <span aria-hidden="true" class="toggle-switch-bar">
       <span class="toggle-switch-handle"></span>
+      <span class="toggle-switch-text toggle-switch-text-right"></span>
     </span>
   </label>
 </div>
@@ -126,10 +136,11 @@ exports[`Field Checkbox should not be required 1`] = `
 exports[`Field Checkbox should render Label if showLabel is true 1`] = `
 <div class="form-group">
   <label></label>
-  <label class="toggle-switch">
+  <label class="ddm-toggle-switch toggle-switch">
     <input checked="" class="toggle-switch-check" type="checkbox">
     <span aria-hidden="true" class="toggle-switch-bar">
-      <span class="toggle-switch-handle" data-label-off="text" data-label-on="text"></span>
+      <span class="toggle-switch-handle"></span>
+      <span class="toggle-switch-text toggle-switch-text-right">text</span>
     </span>
   </label>
 </div>

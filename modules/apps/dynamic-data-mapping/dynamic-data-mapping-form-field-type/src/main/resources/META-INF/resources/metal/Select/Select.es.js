@@ -127,6 +127,15 @@ class Select extends Component {
 		required: Config.bool().value(false),
 
 		/**
+		 * @default undefined
+		 * @instance
+		 * @memberof FieldBase
+		 * @type {?(bool|undefined)}
+		 */
+
+		repeatable: Config.bool(),
+
+		/**
 		 * @default false
 		 * @instance
 		 * @memberof Select

@@ -3,10 +3,11 @@
 exports[`Layout Render should render fields 1`] = `
 <div class="container">
   <div class="form-group">
-    <label class="toggle-switch">
+    <label class="ddm-toggle-switch toggle-switch">
       <input checked="" class="toggle-switch-check" type="checkbox">
       <span aria-hidden="true" class="toggle-switch-bar">
         <span class="toggle-switch-handle"></span>
+        <span class="toggle-switch-text toggle-switch-text-right"></span>
       </span>
     </label>
   </div>

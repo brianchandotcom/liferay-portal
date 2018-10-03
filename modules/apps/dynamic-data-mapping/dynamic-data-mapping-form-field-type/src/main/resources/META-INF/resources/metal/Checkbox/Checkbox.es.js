@@ -79,6 +79,15 @@ class Checkbox extends Component {
 		predefinedValue: Config.bool(),
 
 		/**
+		 * @default undefined
+		 * @instance
+		 * @memberof FieldBase
+		 * @type {?(bool|undefined)}
+		 */
+
+		repeatable: Config.bool(),
+
+		/**
 		 * @default false
 		 * @instance
 		 * @memberof Checkbox

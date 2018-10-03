@@ -42,15 +42,6 @@ class Text extends Component {
 		 * @type {?(string|undefined)}
 		 */
 
-		tip: Config.string(),
-
-		/**
-		 * @default undefined
-		 * @instance
-		 * @memberof Text
-		 * @type {?(string|undefined)}
-		 */
-
 		id: Config.string(),
 
 		/**
@@ -90,6 +81,15 @@ class Text extends Component {
 		required: Config.bool().value(false),
 
 		/**
+		 * @default undefined
+		 * @instance
+		 * @memberof FieldBase
+		 * @type {?(bool|undefined)}
+		 */
+
+		repeatable: Config.bool(),
+
+		/**
 		 * @default true
 		 * @instance
 		 * @memberof Text
@@ -114,7 +114,25 @@ class Text extends Component {
 		 * @type {?(string|undefined)}
 		 */
 
-		value: Config.string()
+		value: Config.string(),
+
+		/**
+		 * @default undefined
+		 * @instance
+		 * @memberof Text
+		 * @type {?(string|undefined)}
+		 */
+
+		tip: Config.string(),
+
+		/**
+		 * @default undefined
+		 * @instance
+		 * @memberof FieldBase
+		 * @type {?(string|undefined)}
+		 */
+
+		tooltip: Config.string()
 	};
 
 	_handleFieldChanged(event) {

@@ -1,0 +1,30 @@
+<mediawiki version="0.10" xml:lang="en" xmlns="http://www.mediawiki.org/xml/export-0.10/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mediawiki.org/xml/export-0.10/ http://www.mediawiki.org/xml/export-0.10.xsd">
+	<siteinfo>
+		<sitename>Wikipedia</sitename>
+		<dbname>enwiki</dbname>
+		<base>https://en.wikipedia.org/wiki/Main_Page</base>
+		<generator>MediaWiki 1.26wmf21</generator>
+		<case>first-letter</case>
+		<namespaces>
+			<namespace case="first-letter" key="0" />
+		</namespaces>
+	</siteinfo>
+	<page>
+		<title>Media link migration test</title>
+		<ns>0</ns>
+		<id>0</id>
+		<revision>
+			<id>0</id>
+			<parentid>0</parentid>
+			<timestamp>2018-10-02T00:00:00Z</timestamp>
+			<contributor>
+				<username>Test</username>
+				<id>0</id>
+			</contributor>
+			<comment>test</comment>
+			<model>wikitext</model>
+			<format>text/x-wiki</format>
+			<text bytes="44" xml:space="preserve">[[Media:media_link_test.docx|Download link]]</text>
+		</revision>
+	</page>
+</mediawiki>

@@ -35,6 +35,17 @@ AUI.add(
 
 				layoutHandler.on('drag:end', A.bind('_onPortletDragEnd', Layout));
 				layoutHandler.on('drag:start', A.bind('_onPortletDragStart', Layout));
+
+				layoutHandler.dd.plug(
+					{
+						cfg: {
+							horizontal: false,
+							scrollDelay: 30,
+							vertical: true
+						},
+						fn: A.Plugin.DDWinScroll
+					}
+				);
 			},
 
 			closeNestedPortlets: function(portlet) {
@@ -375,16 +386,7 @@ AUI.add(
 					container: layoutContainer,
 					dragConfig: {
 						clickPixelThresh: 0,
-						clickTimeThresh: 250,
-						plugins: [
-							{
-								cfg: {
-									horizontal: false,
-									scrollDelay: 30
-								},
-								fn: A.Plugin.DDWinScroll
-							}
-						]
+						clickTimeThresh: 250
 					},
 					handles: options.handles,
 					invalid: options.invalid
@@ -410,7 +412,8 @@ AUI.add(
 
 			if (A.UA.ie || A.UA.edge) {
 				eventHandles.push(
-					BODY.delegate('mouseenter',
+					BODY.delegate(
+						'mouseenter',
 						function(event) {
 							event.currentTarget.addClass('focus');
 						},
@@ -419,7 +422,8 @@ AUI.add(
 				);
 
 				eventHandles.push(
-					BODY.delegate('mouseleave',
+					BODY.delegate(
+						'mouseleave',
 						function(event) {
 							event.currentTarget.removeClass('focus');
 						},

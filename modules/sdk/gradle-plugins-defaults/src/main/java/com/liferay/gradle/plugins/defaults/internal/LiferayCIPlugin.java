@@ -16,6 +16,7 @@ package com.liferay.gradle.plugins.defaults.internal;
 
 import com.liferay.gradle.plugins.cache.CachePlugin;
 import com.liferay.gradle.plugins.defaults.internal.util.GradleUtil;
+import com.liferay.gradle.plugins.node.NodePlugin;
 import com.liferay.gradle.plugins.node.tasks.DownloadNodeTask;
 import com.liferay.gradle.plugins.node.tasks.ExecuteNodeTask;
 import com.liferay.gradle.plugins.node.tasks.ExecuteNpmTask;
@@ -24,22 +25,31 @@ import com.liferay.gradle.plugins.test.integration.TestIntegrationBasePlugin;
 import com.liferay.gradle.plugins.test.integration.TestIntegrationPlugin;
 import com.liferay.gradle.util.Validator;
 
+import groovy.json.JsonSlurper;
+
 import java.io.File;
+import java.io.IOException;
+
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
 
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 
 import org.gradle.api.Action;
 import org.gradle.api.GradleException;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.gradle.api.Task;
+import org.gradle.api.UncheckedIOException;
 import org.gradle.api.artifacts.Configuration;
 import org.gradle.api.artifacts.DependencySet;
 import org.gradle.api.artifacts.ProjectDependency;
 import org.gradle.api.tasks.SourceSet;
 import org.gradle.api.tasks.TaskContainer;
+import org.gradle.util.GUtil;
 
 /**
  * @author Andrea Di Giorgi
@@ -54,6 +64,7 @@ public class LiferayCIPlugin implements Plugin<Project> {
 		_configureTasksExecuteNode(project);
 		_configureTasksExecuteNpm(project);
 		_configureTasksNpmInstall(project);
+		_configureTasksNpmRunBuild(project);
 
 		GradleUtil.withPlugin(
 			project, TestIntegrationPlugin.class,
@@ -234,6 +245,168 @@ public class LiferayCIPlugin implements Plugin<Project> {
 						npmInstallTask,
 						Collections.singletonMap(
 							_SASS_BINARY_SITE_ARG, ciSassBinarySite));
+				}
+
+			});
+	}
+
+	private void _configureTasksNpmRunBuild(Project project) {
+		TaskContainer taskContainer = project.getTasks();
+
+		ExecuteNpmTask executeNpmTask =
+			(ExecuteNpmTask)taskContainer.findByName(
+				NodePlugin.NPM_RUN_BUILD_TASK_NAME);
+
+		executeNpmTask.doFirst(
+			new Action<Task>() {
+
+				@Override
+				public void execute(Task task) {
+					Project project = task.getProject();
+
+					String[] fileNames =
+						{"bnd.bnd", "package.json", "package-lock.json"};
+
+					for (String fileName : fileNames) {
+						File file = project.file(fileName);
+
+						if (!file.exists()) {
+							continue;
+						}
+
+						String version = null;
+
+						if (fileName.endsWith(".bnd")) {
+							Properties properties = GUtil.loadProperties(file);
+
+							version = properties.getProperty("Bundle-Version");
+						}
+						else if (fileName.endsWith(".json")) {
+							JsonSlurper jsonSlurper = new JsonSlurper();
+
+							Map<String, Object> map =
+								(Map<String, Object>)jsonSlurper.parse(file);
+
+							version = (String)map.get("version");
+						}
+
+						if (version == null) {
+							continue;
+						}
+
+						String newVersion = _fixHotfixVersion(version);
+
+						if (version.equals(newVersion)) {
+							continue;
+						}
+
+						try {
+							String content = new String(
+								Files.readAllBytes(file.toPath()),
+								StandardCharsets.UTF_8);
+
+							String newContent = content.replace(
+								"\"" + version + "\"",
+								"\"" + newVersion + "\"");
+
+							Files.write(
+								file.toPath(),
+								newContent.getBytes(StandardCharsets.UTF_8));
+						}
+						catch (IOException ioe) {
+							throw new UncheckedIOException(ioe);
+						}
+					}
+				}
+
+				private String _fixHotfixVersion(String version) {
+					int index = version.indexOf(".hotfix");
+
+					if (index == -1) {
+						return version;
+					}
+
+					String prefix = version.substring(0, index);
+					String suffix = version.substring(index + 7);
+
+					return prefix + "-hotfix" + suffix.replace('-', '.');
+				}
+
+			});
+
+		executeNpmTask.doLast(
+			new Action<Task>() {
+
+				@Override
+				public void execute(Task task) {
+					Project project = task.getProject();
+
+					String[] fileNames =
+						{"bnd.bnd", "package.json", "package-lock.json"};
+
+					for (String fileName : fileNames) {
+						File file = project.file(fileName);
+
+						if (!file.exists()) {
+							continue;
+						}
+
+						String version = null;
+
+						if (fileName.endsWith(".bnd")) {
+							Properties properties = GUtil.loadProperties(file);
+
+							version = properties.getProperty("Bundle-Version");
+						}
+						else if (fileName.endsWith(".json")) {
+							JsonSlurper jsonSlurper = new JsonSlurper();
+
+							Map<String, Object> map =
+								(Map<String, Object>)jsonSlurper.parse(file);
+
+							version = (String)map.get("version");
+						}
+
+						if (version == null) {
+							continue;
+						}
+
+						String newVersion = _fixHotfixVersion(version);
+
+						if (version.equals(newVersion)) {
+							continue;
+						}
+
+						try {
+							String content = new String(
+								Files.readAllBytes(file.toPath()),
+								StandardCharsets.UTF_8);
+
+							String newContent = content.replace(
+								"\"" + version + "\"",
+								"\"" + newVersion + "\"");
+
+							Files.write(
+								file.toPath(),
+								newContent.getBytes(StandardCharsets.UTF_8));
+						}
+						catch (IOException ioe) {
+							throw new UncheckedIOException(ioe);
+						}
+					}
+				}
+
+				private String _fixHotfixVersion(String version) {
+					int index = version.indexOf("-hotfix");
+
+					if (index == -1) {
+						return version;
+					}
+
+					String prefix = version.substring(0, index);
+					String suffix = version.substring(index + 7);
+
+					return prefix + ".hotfix" + suffix.replace('.', '-');
 				}
 
 			});

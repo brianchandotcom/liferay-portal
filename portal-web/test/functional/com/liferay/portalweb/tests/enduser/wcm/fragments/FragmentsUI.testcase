@@ -85,30 +85,6 @@
 
 		<execute macro="PortletEntry#publish" />
 
-		<execute macro="FragmentsAdmin#openFragmentsAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="Navigator#gotoNavNested">
-			<var name="navNested" value="Collection Name" />
-		</execute>
-
-		<execute macro="LexiconEntry#gotoEntryMenuItem">
-			<var name="menuItem" value="Edit" />
-			<var name="rowEntry" value="Fragment Name" />
-		</execute>
-
-		<execute function="SelectFrame" locator1="Fragment#PREVIEW_IFRAME" />
-
-		<execute function="AssertElementPresent" locator1="Button#SUBMIT" />
-		<execute function="AssertElementPresent" locator1="Button#CANCEL" />
-
-		<execute function="AssertClickNoError" locator1="Button#SUBMIT" value1="Submit" />
-
-		<execute function="AssertConfirm" value1="Form submitted" />
-
-		<execute function="SelectFrameTop" />
-
 		<execute macro="SitePages#openPagesAdmin">
 			<var name="siteURLKey" value="test-site-name" />
 		</execute>
@@ -145,4 +121,44 @@
 
 		<execute function="AssertConfirm" value1="Form submitted" />
 	</command>
+
+	<command name="ViewFragmentEditorPreview" priority="5">
+		<property name="portal.acceptance" value="true" />
+		<description message="Fragment editor should show an accurate preview of the fragment." />
+
+		<execute macro="FragmentsAdmin#addFragment">
+			<var name="fragmentName" value="Fragment Name" />
+		</execute>
+
+		<execute macro="TestCase#getFileContent">
+			<return name="htmlSnippet" />
+			<var name="fileName" value="fragment_button.html" />
+		</execute>
+
+		<execute function="Type#typeAceEditorNoError" locator1="Fragment#HTML_EDITOR" value1="${htmlSnippet}" />
+
+		<execute macro="TestCase#getFileContent">
+			<return name="cssSnippet" />
+			<var name="fileName" value="fragment_button.css" />
+		</execute>
+
+		<execute function="Type#typeAceEditorNoError" locator1="Fragment#CSS_EDITOR" value1="${cssSnippet}" />
+
+		<execute macro="TestCase#getFileContent">
+			<return name="javascriptSnippet" />
+			<var name="fileName" value="fragment_button.js" />
+		</execute>
+
+		<execute function="Type#typeAceEditorNoError" locator1="Fragment#JAVASCRIPT_EDITOR" value1="${javascriptSnippet}" />
+
+		<execute function="SelectFrame" locator1="Fragment#PREVIEW_IFRAME" />
+
+		<execute function="AssertElementPresent" locator1="Button#SUBMIT" />
+		<execute function="AssertElementPresent" locator1="Button#CANCEL" />
+
+		<execute function="AssertClickNoError" locator1="Button#SUBMIT" value1="Submit" />
+
+		<execute function="AssertConfirm" value1="Form submitted" />
+
+		<execute function="SelectFrameTop" />
 </definition>

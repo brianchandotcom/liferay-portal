@@ -74,7 +74,7 @@
 	{@param? _loadingResponse: bool}
 	{@param spritemap: string}
 	{@param user: ?}
-		<div class="autofit-row autofit-row-center">
+		<div class="autofit-row">
 
 			<div class="autofit-col">
 				{call ClaySticker.render}
@@ -85,7 +85,7 @@
 			</div>
 
 			<div class="autofit-col autofit-col-expand">
-				<h4>{$user.name}</h4>
+				<h5>{$user.name}</h5>
 
 				{call ClaySelect.render}
 					{param name: $user.sharingEntryId /}
@@ -99,7 +99,7 @@
 
 			<div class="autofit-col">
 				<button
-					class="btn btn-link text-muted"
+					class="btn btn-link btn-monospaced btn-remove text-muted"
 					data-collaborator-id="{$user.id}"
 					data-sharingentry-id="{$user.sharingEntryId}"
 					data-onclick="{$_handleDeleteCollaborator}"

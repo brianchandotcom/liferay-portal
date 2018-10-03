@@ -11,6 +11,7 @@ import templates from './Layout.soy';
  * Component that allows to show layouts tree in form of three dependent
  * columns. It integrates three <LayoutColumn /> components for N-th, N-th + 2
  * and N-th + 3 levels of layouts tree.
+ * @review
  */
 
 class Layout extends Component {
@@ -89,11 +90,12 @@ class Layout extends Component {
 	 * @param {Array} layoutColumns
 	 * @param {string} plid
 	 * @private
+	 * @return {object|null}
 	 * @review
 	 */
 
 	_getLayoutColumnItemByPlid(layoutColumns, plid) {
-		let item;
+		let item = null;
 
 		for (let i = 0; i < layoutColumns.length; i++) {
 			for (let j = 0; j < layoutColumns[i].length; j++) {
@@ -110,11 +112,12 @@ class Layout extends Component {
 	 * @param {Array} layoutColumns
 	 * @param {string} plid
 	 * @private
+	 * @return {object|null}
 	 * @review
 	 */
 
 	_getParentColumnByPlid(layoutColumns, plid) {
-		let column;
+		let column = null;
 
 		for (let i = 0; i < layoutColumns.length; i++) {
 			for (let j = 0; j < layoutColumns[i].length; j++) {
@@ -128,37 +131,42 @@ class Layout extends Component {
 	}
 
 	/**
-	 * @inheritDoc
+	 * Handle dragLayoutColumnItem event
+	 * @param {!object} eventData
+	 * @param {!string} eventData.border
+	 * @param {!string} eventData.targetItemPlid
+	 * @private
 	 * @review
 	 */
 
-	_handleDragLayoutColumnItem(data) {
-		const sourceColumn = this._getParentColumnByPlid(this.layoutColumns, data.sourceItemPlid);
-		const targetColumn = this._getParentColumnByPlid(this.layoutColumns, data.targetItemPlid);
+	_handleDragLayoutColumnItem(eventData) {
+		const sourceColumn = this._getParentColumnByPlid(this.layoutColumns, eventData.sourceItemPlid);
+		const targetColumn = this._getParentColumnByPlid(this.layoutColumns, eventData.targetItemPlid);
 
 		if (sourceColumn === targetColumn) {
-			this._hoveredLayoutColumnItemBorder = data.border;
-			this._hoveredLayoutColumnItemPlid = data.targetItemPlid;
+			this._hoveredLayoutColumnItemBorder = eventData.border;
+			this._hoveredLayoutColumnItemPlid = eventData.targetItemPlid;
 		}
 	}
 
 	/**
-	 * @inheritDoc
+	 * @private
 	 * @review
 	 */
 
-	_handleLeaveLayoutColumnItem(data) {
-		this._hoveredLayoutColumnItemBorder = undefined;
-		this._hoveredLayoutColumnItemPlid = undefined;
+	_handleLeaveLayoutColumnItem() {
+		this._resetHoveredData();
 	}
 
 	/**
-	 * @inheritDoc
+	 * @param {!object} eventData
+	 * @param {!string} eventData.sourceItemPlid
+	 * @private
 	 * @review
 	 */
 
-	_handleMoveLayoutColumnItem(data) {
-		const sourceItemPlid = data.sourceItemPlid;
+	_handleMoveLayoutColumnItem(eventData) {
+		const sourceItemPlid = eventData.sourceItemPlid;
 
 		let layoutColumns = this.layoutColumns.map(
 			layoutColumn => [...layoutColumn]
@@ -193,8 +201,31 @@ class Layout extends Component {
 				);
 		}
 
-		this._hoveredLayoutColumnItemBorder = undefined;
-		this._hoveredLayoutColumnItemPlid = undefined;
+		this._resetHoveredData();
+	}
+
+	/**
+	 * @private
+	 * @review
+	 */
+
+	_initializeLayoutDragDrop() {
+		this._layoutDragDrop = new LayoutDragDrop();
+
+		this._layoutDragDrop.on(
+			'dragLayoutColumnItem',
+			this._handleDragLayoutColumnItem.bind(this)
+		);
+
+		this._layoutDragDrop.on(
+			'leaveLayoutColumnItem',
+			this._handleLeaveLayoutColumnItem.bind(this)
+		);
+
+		this._layoutDragDrop.on(
+			'moveLayoutColumnItem',
+			this._handleMoveLayoutColumnItem.bind(this)
+		);
 	}
 
 	/**
@@ -228,23 +259,21 @@ class Layout extends Component {
 	}
 
 	/**
-	 * @inheritDoc
-	 * @review
+	 * Resets hovered information to null
+	 * @private
 	 */
 
-	_initializeLayoutDragDrop() {
-		this._layoutDragDrop = new LayoutDragDrop();
-
-		this._layoutDragDrop.on('dragLayoutColumnItem', this._handleDragLayoutColumnItem.bind(this));
-		this._layoutDragDrop.on('leaveLayoutColumnItem', this._handleLeaveLayoutColumnItem.bind(this));
-		this._layoutDragDrop.on('moveLayoutColumnItem', this._handleMoveLayoutColumnItem.bind(this));
+	_resetHoveredData() {
+		this._hoveredLayoutColumnItemBorder = null;
+		this._hoveredLayoutColumnItemPlid = null;
 	}
 }
 
 /**
  * State definition.
- * @type {!Object}
+ * @review
  * @static
+ * @type {!Object}
  */
 
 Layout.STATE = {

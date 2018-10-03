@@ -1,4 +1,5 @@
 import Sidebar from 'source/components/Sidebar/Sidebar.es';
+import {dom as MetalTestUtil} from 'metal-dom';
 
 let component;
 const focusedField = {
@@ -56,6 +57,45 @@ const fieldTypes = [
 		name: 'checkbox'
 	}
 ];
+const mockFieldType = {
+	description: 'Single line or multiline text area.',
+	icon: 'text',
+	initialConfig_: {
+		locale: 'en_US'
+	},
+	label: 'Text Field',
+	name: 'text',
+	settingsContext: {
+		pages: [
+			{
+				rows: [
+					{
+						columns: [
+							{
+								fields: [
+									{
+										fieldName: 'label',
+										localizable: true
+									},
+									{
+										fieldName: 'name'
+									},
+									{
+										fieldName: 'required'
+									},
+									{
+										fieldName: 'type'
+									}
+								]
+							}
+						]
+					}
+				]
+			}
+		]
+	},
+	type: 'text'
+};
 
 describe(
 	'Sidebar',
@@ -270,6 +310,113 @@ describe(
 				jest.runAllTimers();
 
 				expect(component).toMatchSnapshot();
+			}
+		);
+
+		it(
+			'should close the sidebar in edition mode',
+			() => {
+				const focusedField = mockFieldType;
+
+				component = new Sidebar(
+					{
+						fieldTypes,
+						focusedField,
+						spritemap
+					}
+				);
+
+				component.open();
+
+				jest.runAllTimers();
+
+				expect(component).toMatchSnapshot();
+			}
+		);
+
+		it(
+			'should close the sidebar in edition mode',
+			() => {
+				const focusedField = mockFieldType;
+
+				component = new Sidebar(
+					{
+						fieldTypes,
+						focusedField,
+						spritemap
+					}
+				);
+
+				component.open();
+
+				jest.runAllTimers();
+
+				MetalTestUtil.triggerEvent(component.refs.previousButton.element, 'click', {});
+
+				jest.runAllTimers();
+
+				expect(component.state.open).toBeFalsy();
+				expect(component).toMatchSnapshot();
+			}
+		);
+
+		it(
+			'should propagates evaluator changed event',
+			() => {
+				const focusedField = mockFieldType;
+
+				component = new Sidebar(
+					{
+						fieldTypes,
+						focusedField,
+						spritemap
+					}
+				);
+
+				component.open();
+
+				jest.runAllTimers();
+
+				const {FormRenderer} = component.refs;
+				const spy = jest.spyOn(component, 'emit');
+
+				FormRenderer.emit(
+					'evaluated',
+					{
+						focusedField
+					},
+				);
+
+				expect(spy).toHaveBeenCalled();
+			}
+		);
+
+		it(
+			'should propagates field edited event',
+			() => {
+				const focusedField = mockFieldType;
+
+				component = new Sidebar(
+					{
+						fieldTypes,
+						focusedField,
+						spritemap
+					}
+				);
+
+				component.open();
+
+				jest.runAllTimers();
+
+				const {FormRenderer} = component.refs;
+				const spy = jest.spyOn(component, 'emit');
+
+				FormRenderer.emit(
+					'fieldEdited',
+					{},
+				);
+
+				expect(spy).toHaveBeenCalled();
 			}
 		);
 

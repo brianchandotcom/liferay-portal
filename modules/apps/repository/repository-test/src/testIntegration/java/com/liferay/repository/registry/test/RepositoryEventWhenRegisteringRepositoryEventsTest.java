@@ -38,7 +38,7 @@ public class RepositoryEventWhenRegisteringRepositoryEventsTest {
 		new LiferayIntegrationTestRule();
 
 	@Test
-	public void shouldAcceptAnyNonnullListener() {
+	public void testShouldAcceptAnyNonnullListener() {
 		_repositoryEventRegistry.registerRepositoryEventListener(
 			RepositoryEventType.Add.class, FileEntry.class,
 			new RepositoryEventTestUtil.NoOpRepositoryEventListener
@@ -46,7 +46,7 @@ public class RepositoryEventWhenRegisteringRepositoryEventsTest {
 	}
 
 	@Test(expected = NullPointerException.class)
-	public void shouldFailOnNullListener() {
+	public void testShouldFailOnNullListener() {
 		_repositoryEventRegistry.registerRepositoryEventListener(
 			RepositoryEventType.Add.class, FileEntry.class, null);
 	}

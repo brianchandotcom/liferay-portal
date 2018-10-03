@@ -41,7 +41,7 @@ public class RepositoryEventWhenTriggeringEventsTest {
 		new LiferayIntegrationTestRule();
 
 	@Test
-	public void shouldExecuteAllMatchingListeners() throws Exception {
+	public void testShouldExecuteAllMatchingListeners() throws Exception {
 		AtomicInteger count = new AtomicInteger();
 
 		for (int i = 0; i < 3; i++) {
@@ -57,7 +57,9 @@ public class RepositoryEventWhenTriggeringEventsTest {
 	}
 
 	@Test
-	public void shouldExecuteListenerExactlyOncePerEvent() throws Exception {
+	public void testShouldExecuteListenerExactlyOncePerEvent()
+		throws Exception {
+
 		AtomicInteger count =
 			RepositoryEventTestUtil.registerCounterRepositoryEventListener(
 				_defaultRepositoryEventRegistry, RepositoryEventType.Add.class,
@@ -74,7 +76,7 @@ public class RepositoryEventWhenTriggeringEventsTest {
 	}
 
 	@Test
-	public void shouldExecuteOnlyMatchingListeners() throws Exception {
+	public void testShouldExecuteOnlyMatchingListeners() throws Exception {
 		AtomicInteger count =
 			RepositoryEventTestUtil.registerCounterRepositoryEventListener(
 				_defaultRepositoryEventRegistry, RepositoryEventType.Add.class,

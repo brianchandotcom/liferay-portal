@@ -23,27 +23,6 @@
 		<execute macro="Navigator#gotoNavNested">
 			<var name="navNested" value="Collection Name" />
 		</execute>
-	</set-up>
-
-	<tear-down>
-		<var method="PropsUtil#get('test.portal.instance')" name="testPortalInstance" />
-
-		<if>
-			<equals arg1="${testPortalInstance}" arg2="true" />
-			<then>
-				<execute macro="PortalInstances#tearDownCP" />
-			</then>
-			<else>
-				<execute macro="JSONGroup#deleteGroupByName">
-					<var name="groupName" value="Test Site Name" />
-				</execute>
-			</else>
-		</if>
-	</tear-down>
-
-	<command name="AddFragmentToContentPage" priority="5">
-		<property name="portal.acceptance" value="true" />
-		<description message="Add a fragment in the UI and then assert that it displays properly when added to a content page." />
 
 		<execute macro="FragmentsAdmin#addFragment">
 			<var name="fragmentName" value="Fragment Name" />
@@ -69,6 +48,27 @@
 		</execute>
 
 		<execute function="Type#typeAceEditorNoError" locator1="Fragment#JAVASCRIPT_EDITOR" value1="${javascriptSnippet}" />
+	</set-up>
+
+	<tear-down>
+		<var method="PropsUtil#get('test.portal.instance')" name="testPortalInstance" />
+
+		<if>
+			<equals arg1="${testPortalInstance}" arg2="true" />
+			<then>
+				<execute macro="PortalInstances#tearDownCP" />
+			</then>
+			<else>
+				<execute macro="JSONGroup#deleteGroupByName">
+					<var name="groupName" value="Test Site Name" />
+				</execute>
+			</else>
+		</if>
+	</tear-down>
+
+	<command name="AddFragmentToContentPage" priority="5">
+		<property name="portal.acceptance" value="true" />
+		<description message="Add a fragment in the UI and then assert that it displays properly when added to a content page." />
 
 		<execute macro="PortletEntry#publish" />
 
@@ -112,31 +112,6 @@
 	<command name="EditFragment" priority="5">
 		<property name="portal.acceptance" value="true" />
 		<description message="Edit a fragment and assert the edits persist." />
-
-		<execute macro="FragmentsAdmin#addFragment">
-			<var name="fragmentName" value="Fragment Name" />
-		</execute>
-
-		<execute macro="TestCase#getFileContent">
-			<return name="htmlSnippet" />
-			<var name="fileName" value="fragment_button.html" />
-		</execute>
-
-		<execute function="Type#typeAceEditorNoError" locator1="Fragment#HTML_EDITOR" value1="${htmlSnippet}" />
-
-		<execute macro="TestCase#getFileContent">
-			<return name="cssSnippet" />
-			<var name="fileName" value="fragment_button.css" />
-		</execute>
-
-		<execute function="Type#typeAceEditorNoError" locator1="Fragment#CSS_EDITOR" value1="${cssSnippet}" />
-
-		<execute macro="TestCase#getFileContent">
-			<return name="javascriptSnippet" />
-			<var name="fileName" value="fragment_button.js" />
-		</execute>
-
-		<execute function="Type#typeAceEditorNoError" locator1="Fragment#JAVASCRIPT_EDITOR" value1="${javascriptSnippet}" />
 
 		<execute macro="PortletEntry#publish" />
 
@@ -184,31 +159,6 @@
 	<command name="ViewFragmentEditorPreview" priority="5">
 		<property name="portal.acceptance" value="true" />
 		<description message="Fragment editor should show an accurate preview of the fragment." />
-
-		<execute macro="FragmentsAdmin#addFragment">
-			<var name="fragmentName" value="Fragment Name" />
-		</execute>
-
-		<execute macro="TestCase#getFileContent">
-			<return name="htmlSnippet" />
-			<var name="fileName" value="fragment_button.html" />
-		</execute>
-
-		<execute function="Type#typeAceEditorNoError" locator1="Fragment#HTML_EDITOR" value1="${htmlSnippet}" />
-
-		<execute macro="TestCase#getFileContent">
-			<return name="cssSnippet" />
-			<var name="fileName" value="fragment_button.css" />
-		</execute>
-
-		<execute function="Type#typeAceEditorNoError" locator1="Fragment#CSS_EDITOR" value1="${cssSnippet}" />
-
-		<execute macro="TestCase#getFileContent">
-			<return name="javascriptSnippet" />
-			<var name="fileName" value="fragment_button.js" />
-		</execute>
-
-		<execute function="Type#typeAceEditorNoError" locator1="Fragment#JAVASCRIPT_EDITOR" value1="${javascriptSnippet}" />
 
 		<execute function="SelectFrame" locator1="Fragment#PREVIEW_IFRAME" />
 

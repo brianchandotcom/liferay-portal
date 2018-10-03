@@ -391,7 +391,6 @@ public class JSLoaderModulesServlet extends HttpServlet {
 
 	private void _writePaths(PrintWriter printWriter) {
 		printWriter.write("var O=\"");
-		printWriter.write(_portal.getPathProxy());
 		printWriter.write(_portal.getPathModule());
 		printWriter.write("/js/resolved-module/");
 		printWriter.write("\";\n");

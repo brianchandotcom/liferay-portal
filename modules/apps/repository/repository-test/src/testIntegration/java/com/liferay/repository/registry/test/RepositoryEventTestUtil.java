@@ -20,14 +20,10 @@ import com.liferay.portal.kernel.repository.registry.RepositoryEventRegistry;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
-import org.junit.experimental.runners.Enclosed;
-import org.junit.runner.RunWith;
-
 /**
  * @author Adolfo Pérez
  */
-@RunWith(Enclosed.class)
-public class RepositoryEventTest {
+public class RepositoryEventTestUtil {
 
 	protected static <S extends RepositoryEventType, T>
 		AtomicInteger registerCounterRepositoryEventListener(

@@ -112,7 +112,7 @@ manageCollaboratorsRenderURL.setWindowState(LiferayWindowState.POP_UP);
 						on: {
 							visibleChange: function(event) {
 								if (!event.newVal) {
-									Liferay.fire('refreshInfoPanel');
+									Liferay.Util.getOpener().Liferay.fire('refreshInfoPanel');
 								}
 							}
 						}

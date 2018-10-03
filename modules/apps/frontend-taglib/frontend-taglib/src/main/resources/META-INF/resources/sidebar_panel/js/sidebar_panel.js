@@ -49,7 +49,14 @@ AUI.add(
 								A.debounce(instance._getSidebarContent, 50, instance),
 								instance
 							),
-							Liferay.on('refreshInfoPanel', instance._getSidebarContent, instance)
+							Liferay.after(
+								'refreshInfoPanel',
+								function() {
+									setTimeout(function() {
+										instance._getSidebarContent()
+									}, 0);
+								}
+							)
 						];
 					},
 

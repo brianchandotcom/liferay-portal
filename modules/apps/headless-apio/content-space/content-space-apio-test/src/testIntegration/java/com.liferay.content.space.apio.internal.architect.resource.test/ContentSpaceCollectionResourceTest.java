@@ -14,6 +14,7 @@
 
 package com.liferay.content.space.apio.internal.architect.resource.test;
 
+import com.liferay.apio.architect.language.AcceptLanguage;
 import com.liferay.apio.architect.pagination.PageItems;
 import com.liferay.apio.architect.pagination.Pagination;
 import com.liferay.apio.architect.resource.CollectionResource;
@@ -35,7 +36,6 @@ import com.liferay.portal.test.rule.PermissionCheckerTestRule;
 import java.lang.reflect.Method;
 
 import java.util.List;
-import java.util.Locale;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -65,7 +65,7 @@ public class ContentSpaceCollectionResourceTest {
 				group.getCompanyId());
 
 			PageItems<Group> groupPageItems = _getPageItems(
-				PaginationRequest.of(10, 1), company, LocaleUtil.getDefault());
+				PaginationRequest.of(10, 1), company, _acceptLanguage);
 
 			List<Group> groups = (List<Group>)groupPageItems.getItems();
 
@@ -87,7 +87,7 @@ public class ContentSpaceCollectionResourceTest {
 				group.getCompanyId());
 
 			PageItems<Group> groupPageItems = _getPageItems(
-				PaginationRequest.of(10, 1), company, LocaleUtil.getDefault());
+				PaginationRequest.of(10, 1), company, _acceptLanguage);
 
 			List<Group> groups = (List<Group>)groupPageItems.getItems();
 
@@ -108,20 +108,25 @@ public class ContentSpaceCollectionResourceTest {
 	}
 
 	private PageItems<Group> _getPageItems(
-			Pagination pagination, Company company, Locale locale)
+			Pagination pagination, Company company,
+			AcceptLanguage acceptLanguage)
 		throws Exception {
 
 		Class<? extends CollectionResource> clazz =
 			_collectionResource.getClass();
 
 		Method method = clazz.getDeclaredMethod(
-			"_getPageItems", Pagination.class, Company.class, Locale.class);
+			"_getPageItems", Pagination.class, Company.class,
+			AcceptLanguage.class);
 
 		method.setAccessible(true);
 
 		return (PageItems)method.invoke(
-			_collectionResource, pagination, company, locale);
+			_collectionResource, pagination, company, acceptLanguage);
 	}
+
+	private static final AcceptLanguage _acceptLanguage =
+		() -> LocaleUtil.getDefault();
 
 	@Inject(
 		filter = "component.name=com.liferay.content.space.apio.internal.architect.resource.ContentSpaceCollectionResource"

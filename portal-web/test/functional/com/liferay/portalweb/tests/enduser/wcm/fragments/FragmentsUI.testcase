@@ -107,5 +107,41 @@
 		<execute function="AssertConfirm" value1="Form submitted" />
 
 		<execute function="SelectFrameTop" />
+
+		<execute macro="SitePages#openPagesAdmin">
+			<var name="siteURLKey" value="test-site-name" />
+		</execute>
+
+		<execute macro="ContentPages#addPage">
+			<var name="pageName" value="Test Content Page Name" />
+		</execute>
+
+		<execute macro="PageEditor#addFragment">
+			<var name="collectionName" value="Collection Name" />
+			<var name="fragmentName" value="Fragment Name" />
+		</execute>
+
+		<execute macro="Navigator#openWithAppendToBaseURL">
+			<var name="urlAppend" value="web/test-site-name/test-content-page-name" />
+		</execute>
+
+		<execute function="AssertVisible" locator1="Fragment#CONTENT_PAGE_FRAGMENT">
+			<var name="key_content" value="Submit" />
+			<var name="key_fragmentClass" value="footer" />
+			<var name="key_position" value="3" />
+		</execute>
+
+		<execute function="AssertVisible" locator1="Fragment#CONTENT_PAGE_FRAGMENT">
+			<var name="key_content" value="Cancel" />
+			<var name="key_fragmentClass" value="footer" />
+			<var name="key_position" value="3" />
+		</execute>
+
+		<execute function="AssertElementPresent" locator1="Button#SUBMIT" />
+		<execute function="AssertElementPresent" locator1="Button#CANCEL" />
+
+		<execute function="AssertClickNoError" locator1="Button#SUBMIT" value1="Submit" />
+
+		<execute function="AssertConfirm" value1="Form submitted" />
 	</command>
 </definition>

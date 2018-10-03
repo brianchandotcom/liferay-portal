@@ -16,9 +16,8 @@
 			<var name="siteURLKey" value="test-site-name" />
 		</execute>
 
-		<execute macro="FragmentsAdmin#addCollection">
-			<var name="collectionDescription" value="Collection Description" />
-			<var name="collectionName" value="Collection Name" />
+		<execute macro="FragmentsAdmin#importCollectionFromDependenciesFolder">
+			<var name="collectionZipFile" value="fragment-collection.zip" />
 		</execute>
 	</set-up>
 
@@ -41,33 +40,6 @@
 	<command name="AddContentPage" priority="5">
 		<property name="portal.acceptance" value="true" />
 
-		<execute macro="FragmentsAdmin#addFragment">
-			<var name="fragmentName" value="Fragment Name" />
-		</execute>
-
-		<execute macro="TestCase#getFileContent">
-			<return name="htmlSnippet" />
-			<var name="fileName" value="fragment_button.html" />
-		</execute>
-
-		<execute function="Type#typeAceEditorNoError" locator1="Fragment#HTML_EDITOR" value1="${htmlSnippet}" />
-
-		<execute macro="TestCase#getFileContent">
-			<return name="cssSnippet" />
-			<var name="fileName" value="fragment_button.css" />
-		</execute>
-
-		<execute function="Type#typeAceEditorNoError" locator1="Fragment#CSS_EDITOR" value1="${cssSnippet}" />
-
-		<execute macro="TestCase#getFileContent">
-			<return name="javascriptSnippet" />
-			<var name="fileName" value="fragment_button.js" />
-		</execute>
-
-		<execute function="Type#typeAceEditorNoError" locator1="Fragment#JAVASCRIPT_EDITOR" value1="${javascriptSnippet}" />
-
-		<execute macro="Button#clickPublish" />
-
 		<execute macro="PageTemplatesAdmin#openPageTemplatesAdmin">
 			<var name="siteURLKey" value="test-site-name" />
 		</execute>
@@ -82,7 +54,7 @@
 
 		<execute macro="PageEditor#addFragment">
 			<var name="collectionName" value="Collection Name" />
-			<var name="fragmentName" value="Fragment Name" />
+			<var name="fragmentName" value="Button" />
 		</execute>
 
 		<execute macro="Button#clickPublish" />

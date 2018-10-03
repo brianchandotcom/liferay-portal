@@ -534,12 +534,20 @@ public class EditAssetListDisplayContext {
 		portletURL.setParameter("mvcPath", "/edit_asset_list_entry.jsp");
 		portletURL.setParameter(
 			"assetListEntryId", String.valueOf(getAssetListEntryId()));
-		portletURL.setParameter(
-			"screenNavigationCategoryKey",
+
+		String screenNavigationCategoryKey = ParamUtil.getString(
+			_request, "screenNavigationCategoryKey",
 			AssetListFormConstants.CATEGORY_KEY_GENERAL);
+
 		portletURL.setParameter(
-			"screenNavigationEntryKey",
+			"screenNavigationCategoryKey", screenNavigationCategoryKey);
+
+		String screenNavigationEntryKey = ParamUtil.getString(
+			_request, "screenNavigationCategoryKey",
 			AssetListFormConstants.ENTRY_KEY_ASSET_ENTRIES);
+
+		portletURL.setParameter(
+			"screenNavigationEntryKey", screenNavigationEntryKey);
 
 		return portletURL;
 	}

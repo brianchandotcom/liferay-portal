@@ -73,7 +73,7 @@
 				<c:choose>
 					<c:when test='<%= SessionMessages.contains(request, "passwordSent") %>'>
 						<div class="alert alert-success">
-							<liferay-ui:message key="your-password-was-sent-to-the-provided-email-address" />
+							<liferay-ui:message key="An-email-has-been-sent-to-the-provided-email-address" />
 						</div>
 					</c:when>
 					<c:when test='<%= SessionMessages.contains(request, "userAdded") %>'>

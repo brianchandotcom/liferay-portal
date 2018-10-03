@@ -55,6 +55,14 @@ class Layout extends Component {
 	 * @inheritDoc
 	 */
 
+	dispose() {
+		this._layoutDragDrop.dispose();
+	}
+
+	/**
+	 * @inheritDoc
+	 */
+
 	rendered(firstRendered) {
 		requestAnimationFrame(
 			() => {

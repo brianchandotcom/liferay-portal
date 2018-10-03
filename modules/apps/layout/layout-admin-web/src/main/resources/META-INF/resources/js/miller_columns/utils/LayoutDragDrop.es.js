@@ -30,6 +30,15 @@ class LayoutDragDrop extends State {
 	}
 
 	/**
+	 * @inheritDoc
+	 * @review
+	 */
+
+	dispose() {
+		this._dragDrop.dispose();
+	}
+
+	/**
 	 * Callback that is executed when an item is being dragged.
 	 * @param {!object} data
 	 * @param {!MouseEvent} data.originalEvent

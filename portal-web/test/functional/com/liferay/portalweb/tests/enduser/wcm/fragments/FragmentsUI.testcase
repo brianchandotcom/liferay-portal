@@ -49,19 +49,6 @@
 			<var name="fragmentName" value="Fragment Name" />
 		</execute>
 
-		<execute macro="FragmentsAdmin#openFragmentsAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="Navigator#gotoNavNested">
-			<var name="navNested" value="Collection Name" />
-		</execute>
-
-		<execute macro="LexiconEntry#gotoEntryMenuItem">
-			<var name="menuItem" value="Edit" />
-			<var name="rowEntry" value="Fragment Name" />
-		</execute>
-
 		<execute macro="TestCase#getFileContent">
 			<return name="htmlSnippet" />
 			<var name="fileName" value="fragment_button.html" />

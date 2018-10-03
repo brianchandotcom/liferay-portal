@@ -99,7 +99,8 @@ public class OrganizationScreenNavigationRegistrar {
 		_registerScreenNavigationEntry(
 			_createUpdateOnlyScreenNavigationEntry(
 				"addresses", _CATEGORY_CONTACT, "/organization/addresses.jsp",
-				"/users_admin/update_organization_addresses"),
+				"/users_admin/update_organization_contact_information", false,
+				false),
 			10);
 
 		_registerScreenNavigationEntry(

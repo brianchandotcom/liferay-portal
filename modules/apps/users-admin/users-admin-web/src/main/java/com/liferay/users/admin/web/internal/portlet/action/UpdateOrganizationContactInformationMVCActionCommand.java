@@ -14,10 +14,15 @@
 
 package com.liferay.users.admin.web.internal.portlet.action;
 
+import com.liferay.portal.kernel.exception.AddressCityException;
+import com.liferay.portal.kernel.exception.AddressStreetException;
+import com.liferay.portal.kernel.exception.AddressZipException;
 import com.liferay.portal.kernel.exception.EmailAddressException;
+import com.liferay.portal.kernel.exception.NoSuchCountryException;
 import com.liferay.portal.kernel.exception.NoSuchListTypeException;
 import com.liferay.portal.kernel.exception.NoSuchOrgLaborException;
 import com.liferay.portal.kernel.exception.NoSuchOrganizationException;
+import com.liferay.portal.kernel.exception.NoSuchRegionException;
 import com.liferay.portal.kernel.exception.PhoneNumberException;
 import com.liferay.portal.kernel.exception.PhoneNumberExtensionException;
 import com.liferay.portal.kernel.exception.WebsiteURLException;
@@ -27,6 +32,8 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.service.AddressLocalService;
+import com.liferay.portal.kernel.service.AddressService;
 import com.liferay.portal.kernel.service.EmailAddressLocalService;
 import com.liferay.portal.kernel.service.EmailAddressService;
 import com.liferay.portal.kernel.service.OrgLaborLocalService;
@@ -45,6 +52,7 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.users.admin.constants.UsersAdminPortletKeys;
 import com.liferay.users.admin.kernel.util.UsersAdmin;
+import com.liferay.users.admin.web.internal.helper.AddressContactInformationHelper;
 import com.liferay.users.admin.web.internal.helper.ContactInformationHelper;
 import com.liferay.users.admin.web.internal.helper.EmailAddressContactInformationHelper;
 import com.liferay.users.admin.web.internal.helper.OrgLaborContactInformationHelper;
@@ -88,9 +96,14 @@ public class UpdateOrganizationContactInformationMVCActionCommand
 
 				actionResponse.setRenderParameter("mvcPath", "/error.jsp");
 			}
-			else if (e instanceof EmailAddressException ||
+			else if (e instanceof AddressCityException ||
+					 e instanceof AddressStreetException ||
+					 e instanceof AddressZipException ||
+					 e instanceof EmailAddressException ||
+					 e instanceof NoSuchCountryException ||
 					 e instanceof NoSuchListTypeException ||
 					 e instanceof NoSuchOrgLaborException ||
+					 e instanceof NoSuchRegionException ||
 					 e instanceof PhoneNumberException ||
 					 e instanceof PhoneNumberExtensionException ||
 					 e instanceof WebsiteURLException) {
@@ -113,7 +126,12 @@ public class UpdateOrganizationContactInformationMVCActionCommand
 		long organizationId = ParamUtil.getLong(
 			actionRequest, "organizationId");
 
-		if (listType.equals(ListTypeConstants.EMAIL_ADDRESS)) {
+		if (listType.equals(ListTypeConstants.ADDRESS)) {
+			return new AddressContactInformationHelper(
+				Organization.class, organizationId, _addressLocalService,
+				_addressService);
+		}
+		else if (listType.equals(ListTypeConstants.EMAIL_ADDRESS)) {
 			return new EmailAddressContactInformationHelper(
 				Organization.class, organizationId, _emailAddressService,
 				_emailAddressLocalService, _usersAdmin);
@@ -173,6 +191,12 @@ public class UpdateOrganizationContactInformationMVCActionCommand
 			contactInformationHelper.makePrimary(entryId);
 		}
 	}
+
+	@Reference
+	private AddressLocalService _addressLocalService;
+
+	@Reference
+	private AddressService _addressService;
 
 	@Reference
 	private EmailAddressLocalService _emailAddressLocalService;

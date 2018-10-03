@@ -14,6 +14,8 @@
 
 package com.liferay.structured.content.apio.internal.architect.filter.expression;
 
+import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.structured.content.apio.architect.filter.expression.BinaryExpression;
 import com.liferay.structured.content.apio.architect.filter.expression.Expression;
 import com.liferay.structured.content.apio.architect.filter.expression.LiteralExpression;
@@ -44,8 +46,7 @@ public class ExpressionVisitorImpl implements ExpressionVisitor<Expression> {
 
 	@Override
 	public Expression visitAlias(String alias) {
-		throw new UnsupportedOperationException(
-			"Unsupported method visitAlias");
+		throw new UnsupportedOperationException("Alias: " + alias);
 	}
 
 	@Override
@@ -63,14 +64,14 @@ public class ExpressionVisitorImpl implements ExpressionVisitor<Expression> {
 				rightBinaryOperationExpression)
 		).orElseThrow(
 			() -> new UnsupportedOperationException(
-				"Unsupported method visitBinaryOperator with operation " +
-					binaryOperatorKind)
+				"Binary operator: " + binaryOperatorKind)
 		);
 	}
 
 	@Override
 	public Expression visitEnum(EdmEnumType edmEnumType, List<String> list) {
-		throw new UnsupportedOperationException("Unsupported method visitEnum");
+		throw new UnsupportedOperationException(
+			"Enum: " + StringUtil.merge(edmEnumType.getMemberNames()));
 	}
 
 	@Override
@@ -80,13 +81,13 @@ public class ExpressionVisitorImpl implements ExpressionVisitor<Expression> {
 			expression) {
 
 		throw new UnsupportedOperationException(
-			"Unsupported method visitLambdaExpression");
+			"Lambda expression: " + lambdaFunction);
 	}
 
 	@Override
 	public Expression visitLambdaReference(String lambdaReference) {
 		throw new UnsupportedOperationException(
-			"Unsupported method visitLambdaReference");
+			"Lambda reference: " + lambdaReference);
 	}
 
 	@Override
@@ -105,7 +106,7 @@ public class ExpressionVisitorImpl implements ExpressionVisitor<Expression> {
 		}
 
 		throw new UnsupportedOperationException(
-			"Unsupported method visitLiteral");
+			"Liferal: " + edmType.getKind());
 	}
 
 	@Override
@@ -129,14 +130,13 @@ public class ExpressionVisitorImpl implements ExpressionVisitor<Expression> {
 	public Expression visitMethodCall(
 		MethodKind methodKind, List<Expression> expressions) {
 
-		throw new UnsupportedOperationException(
-			"Unsupported method visitMethodCall");
+		throw new UnsupportedOperationException("Method call: " + methodKind);
 	}
 
 	@Override
 	public Expression visitTypeLiteral(EdmType edmType) {
 		throw new UnsupportedOperationException(
-			"Unsupported method visitTypeLiteral");
+			"Type literal: " + edmType.getKind());
 	}
 
 	@Override
@@ -144,7 +144,7 @@ public class ExpressionVisitorImpl implements ExpressionVisitor<Expression> {
 		UnaryOperatorKind unaryOperatorKind, Expression expression) {
 
 		throw new UnsupportedOperationException(
-			"Unsupported method visitUnaryOperator");
+			"Unary operator: " + unaryOperatorKind);
 	}
 
 	private Optional<BinaryExpression.Operation> _getOperationOptional(

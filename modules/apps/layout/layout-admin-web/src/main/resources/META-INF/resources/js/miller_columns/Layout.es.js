@@ -150,6 +150,18 @@ class Layout extends Component {
 	}
 
 	/**
+	 * Handle layout column item check event
+	 * @param {!object} eventData
+	 * @param {string} eventData.delegateTarget.value
+	 * @private
+	 * @review
+	 */
+
+	_handleLayoutColumnItemCheck(eventData) {
+		this._setLayoutColumnItemChecked(eventData.delegateTarget.value);
+	}
+
+	/**
 	 * @private
 	 * @review
 	 */
@@ -267,6 +279,23 @@ class Layout extends Component {
 		this._hoveredLayoutColumnItemBorder = null;
 		this._hoveredLayoutColumnItemPlid = null;
 	}
+
+	/** Set an item active property to true
+	 * @param {string} plid
+	 * @private
+	 * @return {object|null}
+	 * @review
+	 */
+
+	_setLayoutColumnItemChecked(plid) {
+		for (let i = 0; i < this.layoutColumns.length; i++) {
+			for (let j = 0; j < this.layoutColumns[i].length; j++) {
+				if (this.layoutColumns[i][j].plid === plid) {
+					this.layoutColumns[i][j].checked = true;
+				}
+			}
+		}
+	}
 }
 
 /**
@@ -307,6 +336,7 @@ Layout.STATE = {
 				{
 					actionURLs: Config.object().required(),
 					active: Config.bool().required(),
+					checked: Config.bool().required(),
 					hasChild: Config.bool().required(),
 					homePage: Config.bool().required(),
 					homePageTitle: Config.string().required(),

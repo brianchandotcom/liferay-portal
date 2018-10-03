@@ -33,9 +33,7 @@ page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
 page import="com.liferay.portal.kernel.util.PortalUtil" %><%@
 page import="com.liferay.site.navigation.item.selector.web.internal.constants.SiteNavigationItemSelectorWebKeys" %><%@
 page import="com.liferay.site.navigation.item.selector.web.internal.display.context.SiteNavigationMenuItemItemSelectorViewDisplayContext" %><%@
-page import="com.liferay.site.navigation.item.selector.web.internal.display.context.SiteNavigationMenuItemSelectorViewDisplayContext" %><%@
-page import="com.liferay.site.navigation.model.SiteNavigationMenu" %><%@
-page import="com.liferay.site.navigation.service.SiteNavigationMenuItemLocalServiceUtil" %>
+page import="com.liferay.site.navigation.item.selector.web.internal.display.context.SiteNavigationMenuItemSelectorViewDisplayContext" %>
 
 <%@ page import="java.util.Date" %><%@
 page import="java.util.HashMap" %><%@

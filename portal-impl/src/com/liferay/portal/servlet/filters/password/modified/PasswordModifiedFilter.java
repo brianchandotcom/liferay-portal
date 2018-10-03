@@ -65,6 +65,10 @@ public class PasswordModifiedFilter extends BasePortalFilter {
 			return false;
 		}
 
+		if (!request.isRequestedSessionIdValid()) {
+			return false;
+		}
+
 		try {
 			User user = PortalUtil.getUser(request);
 
@@ -78,8 +82,8 @@ public class PasswordModifiedFilter extends BasePortalFilter {
 				return false;
 			}
 
-			if (session.getCreationTime() <
-					passwordModifiedDate.getTime()) {
+			if (!request.isRequestedSessionIdValid() || (session == null) ||
+				(session.getCreationTime() < passwordModifiedDate.getTime())) {
 
 				return true;
 			}

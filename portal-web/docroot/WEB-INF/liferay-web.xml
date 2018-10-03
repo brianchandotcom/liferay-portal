@@ -764,6 +764,8 @@
 	<filter-mapping>
 		<filter-name>Password Modified Filter</filter-name>
 		<url-pattern>/*</url-pattern>
+		<dispatcher>FORWARD</dispatcher>
+		<dispatcher>REQUEST</dispatcher>
 	</filter-mapping>
 	<filter-mapping>
 		<filter-name>I18n Filter</filter-name>

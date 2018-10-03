@@ -1,4 +1,4 @@
-import Tooltip from '../Tooltip.es';
+import Tooltip from 'source/components/Tooltip/Tooltip.es';
 import {dom as MetalTestUtil} from 'metal-dom';
 
 let component;

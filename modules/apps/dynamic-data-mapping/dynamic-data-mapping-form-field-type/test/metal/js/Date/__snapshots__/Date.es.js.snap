@@ -2,6 +2,7 @@
 
 exports[`Field Date should be not edidable 1`] = `
 <div class="form-group">
+  <label></label>
   <div class="input-group">
     <div class="input-group-item input-group-prepend">
       <input class="form-control" placeholder="__/__/____" type="text" disabled="">
@@ -39,6 +40,7 @@ exports[`Field Date should have a label 1`] = `
 
 exports[`Field Date should have a placeholder 1`] = `
 <div class="form-group">
+  <label></label>
   <div class="input-group">
     <div class="input-group-item input-group-prepend">
       <input class="form-control" placeholder="__/__/____" type="text" disabled="">
@@ -57,6 +59,7 @@ exports[`Field Date should have a placeholder 1`] = `
 
 exports[`Field Date should have a spritemap 1`] = `
 <div class="form-group">
+  <label></label>
   <div class="input-group">
     <div class="input-group-item input-group-prepend">
       <input class="form-control" placeholder="__/__/____" type="text" disabled="">
@@ -75,6 +78,7 @@ exports[`Field Date should have a spritemap 1`] = `
 
 exports[`Field Date should have a tip 1`] = `
 <div class="form-group">
+  <label></label>
   <div class="input-group">
     <div class="input-group-item input-group-prepend">
       <input class="form-control" placeholder="__/__/____" type="text" disabled="">
@@ -93,6 +97,7 @@ exports[`Field Date should have a tip 1`] = `
 
 exports[`Field Date should have a value 1`] = `
 <div class="form-group">
+  <label></label>
   <div class="input-group">
     <div class="input-group-item input-group-prepend">
       <input class="form-control" placeholder="__/__/____" value="value" type="text" disabled="">
@@ -111,6 +116,7 @@ exports[`Field Date should have a value 1`] = `
 
 exports[`Field Date should have an id 1`] = `
 <div class="form-group">
+  <label for="ID"></label>
   <div class="input-group">
     <div class="input-group-item input-group-prepend">
       <input class="form-control" placeholder="__/__/____" type="text" disabled="">
@@ -129,6 +135,7 @@ exports[`Field Date should have an id 1`] = `
 
 exports[`Field Date should not be required 1`] = `
 <div class="form-group">
+  <label></label>
   <div class="input-group">
     <div class="input-group-item input-group-prepend">
       <input class="form-control" placeholder="__/__/____" type="text" disabled="">

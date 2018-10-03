@@ -1,8 +1,8 @@
 import {Config} from 'metal-state';
-import ClayButton from 'clay-button';
-import Notifications from '../../util/Notifications.es';
 import {convertToSearchParams, makeFetch} from '../../util/fetch.es';
+import ClayButton from 'clay-button';
 import Component from 'metal-jsx';
+import Notifications from '../../util/Notifications.es';
 
 class PublishButton extends Component {
 	static PROPS = {

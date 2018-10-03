@@ -1,8 +1,9 @@
 import {Config} from 'metal-state';
 import {debounce} from 'metal-debounce';
-import autobind from 'autobind-decorator';
-import URLEncodedFetcher from '../../util/URLEncodedFetcher.es';
+import {makeFetch} from '../../util/fetch.es';
 import {PagesVisitor} from '../../util/visitors.es';
+import autobind from 'autobind-decorator';
+import Component from 'metal-jsx';
 
 const WithEvaluator = ChildComponent => {
 
@@ -10,7 +11,8 @@ const WithEvaluator = ChildComponent => {
 	 * FormRenderer.
 	 * @extends Component
 	 */
-	class Evaluator extends URLEncodedFetcher {
+
+	class Evaluator extends Component {
 		static PROPS = {
 
 			/**
@@ -19,6 +21,7 @@ const WithEvaluator = ChildComponent => {
 			 * @type {string}
 			 * @required
 			 */
+
 			fieldType: Config.string().required(),
 
 			/**
@@ -27,7 +30,10 @@ const WithEvaluator = ChildComponent => {
 			 * @type {object}
 			 * @required
 			 */
-			formContext: Config.object().required()
+
+			formContext: Config.object().required(),
+
+			url: Config.string()
 		}
 
 		static STATE = {
@@ -79,19 +85,23 @@ const WithEvaluator = ChildComponent => {
 		 * @private
 		 */
 		_processEvaluation({fieldName}) {
-			const {fieldType, formContext} = this.props;
+			const {fieldType, formContext, url} = this.props;
 			const {pages} = this.state;
-			const data = {
-				languageId: themeDisplay.getLanguageId(),
-				newField: '',
-				p_auth: Liferay.authToken,
-				portletNamespace: '',
-				serializedFormContext: JSON.stringify(formContext),
-				trigger: fieldName,
-				type: fieldType
-			};
 
-			this.fetch(data).then(
+			makeFetch(
+				{
+					body: {
+						languageId: themeDisplay.getLanguageId(),
+						newField: '',
+						p_auth: Liferay.authToken,
+						portletNamespace: '',
+						serializedFormContext: JSON.stringify(formContext),
+						trigger: fieldName,
+						type: fieldType
+					},
+					url
+				}
+			).then(
 				newPages => {
 					const visitor = new PagesVisitor(pages);
 

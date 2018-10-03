@@ -80,6 +80,8 @@
 			<var name="pageName" value="Test Content Page Name" />
 		</execute>
 
+		<execute macro="PageEditor#expandContentPageFragmentSidebar" />
+
 		<execute macro="PageEditor#addFragment">
 			<var name="collectionName" value="Collection Name" />
 			<var name="fragmentName" value="Fragment Name" />
@@ -92,13 +94,13 @@
 		<execute function="AssertVisible" locator1="Fragment#CONTENT_PAGE_FRAGMENT">
 			<var name="key_content" value="Submit" />
 			<var name="key_fragmentClass" value="footer" />
-			<var name="key_position" value="3" />
+			<var name="key_position" value="1" />
 		</execute>
 
 		<execute function="AssertVisible" locator1="Fragment#CONTENT_PAGE_FRAGMENT">
 			<var name="key_content" value="Cancel" />
 			<var name="key_fragmentClass" value="footer" />
-			<var name="key_position" value="3" />
+			<var name="key_position" value="1" />
 		</execute>
 
 		<execute function="AssertElementPresent" locator1="Button#SUBMIT" />
@@ -138,7 +140,7 @@
 
 		<execute function="SelectFrame" locator1="Fragment#PREVIEW_IFRAME" />
 
-		<execute function="AssertTextEquals" locator1="//div[@class='fragment-header']/h1[@class='title']" value1="Lorem ipsum dolor sit amet" />
+		<execute function="AssertTextEquals" locator1="//div[@class='fragment-header']/h1[@class='title']" value1="LOREM IPSUM DOLOR SIT AMET." />
 
 		<execute function="SelectFrameTop" />
 
@@ -151,7 +153,7 @@
 
 		<execute function="SelectFrame" locator1="Fragment#PREVIEW_IFRAME" />
 
-		<execute function="AssertTextEquals" locator1="//div[@class='fragment-header']/h1[@class='title']" value1="Lorem ipsum dolor sit amet" />
+		<execute function="AssertTextEquals" locator1="//div[@class='fragment-header']/h1[@class='title']" value1="LOREM IPSUM DOLOR SIT AMET." />
 
 		<execute function="SelectFrameTop" />
 	</command>

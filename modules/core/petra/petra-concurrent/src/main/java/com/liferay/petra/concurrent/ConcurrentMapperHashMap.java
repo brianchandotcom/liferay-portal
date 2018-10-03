@@ -56,7 +56,9 @@ public abstract class ConcurrentMapperHashMap<K, IK, V, IV>
 
 		boolean[] added = {false};
 
-		IV innerValue = innerConcurrentMap.compute(
+		Object[] valueHolder = new Object[1];
+
+		innerConcurrentMap.compute(
 			innerKey,
 			(iKey, iValue) -> {
 				V value = null;
@@ -75,6 +77,8 @@ public abstract class ConcurrentMapperHashMap<K, IK, V, IV>
 					added[0] = true;
 				}
 
+				valueHolder[0] = value;
+
 				return mapValue(key, value);
 			});
 
@@ -82,11 +86,7 @@ public abstract class ConcurrentMapperHashMap<K, IK, V, IV>
 			unmapKey(innerKey);
 		}
 
-		if (innerValue == null) {
-			return null;
-		}
-
-		return unmapValueForQuery(innerValue);
+		return (V)valueHolder[0];
 	}
 
 	@Override
@@ -101,33 +101,50 @@ public abstract class ConcurrentMapperHashMap<K, IK, V, IV>
 			throw new NullPointerException("Mapping function is null");
 		}
 
-		IK innerKey = mapKey(key);
+		while (true) {
+			IK innerKey = mapKey(key);
 
-		boolean[] added = {false};
+			boolean[] added = {false};
 
-		IV innerValue = innerConcurrentMap.computeIfAbsent(
-			innerKey,
-			iKey -> {
-				V value = mappingFunction.apply(key);
+			Object[] valueHolder = new Object[1];
 
-				if (value == null) {
-					return null;
-				}
+			IV innerValue = innerConcurrentMap.computeIfAbsent(
+				innerKey,
+				iKey -> {
+					V value = mappingFunction.apply(key);
 
-				added[0] = true;
+					if (value == null) {
+						return null;
+					}
 
-				return mapValue(key, value);
-			});
+					added[0] = true;
 
-		if (!added[0]) {
-			unmapKey(innerKey);
+					valueHolder[0] = value;
+
+					return mapValue(key, value);
+				});
+
+			if (!added[0]) {
+				unmapKey(innerKey);
+			}
+
+			if (innerValue == null) {
+				return null;
+			}
+
+			if (valueHolder[0] != null) {
+				return (V)valueHolder[0];
+			}
+
+			V value = unmapValueForQuery(innerValue);
+
+			if (value == null) {
+				innerConcurrentMap.remove(innerKey, innerValue);
+			}
+			else {
+				return value;
+			}
 		}
-
-		if (innerValue == null) {
-			return null;
-		}
-
-		return unmapValueForQuery(innerValue);
 	}
 
 	@Override
@@ -145,7 +162,9 @@ public abstract class ConcurrentMapperHashMap<K, IK, V, IV>
 
 		IK innerKey = mapKeyForQuery(key);
 
-		IV innerValue = innerConcurrentMap.computeIfPresent(
+		Object[] valueHolder = new Object[1];
+
+		innerConcurrentMap.computeIfPresent(
 			innerKey,
 			(iKey, iValue) -> {
 				V value = remappingFunction.apply(key, unmapValue(iValue));
@@ -154,14 +173,12 @@ public abstract class ConcurrentMapperHashMap<K, IK, V, IV>
 					return null;
 				}
 
+				valueHolder[0] = value;
+
 				return mapValue(key, value);
 			});
 
-		if (innerValue == null) {
-			return null;
-		}
-
-		return unmapValueForQuery(innerValue);
+		return (V)valueHolder[0];
 	}
 
 	@Override

@@ -14,6 +14,8 @@
 
 package com.liferay.portal.security.auth.verifier.internal.basic.auth.header;
 
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.AccessControlContext;
 import com.liferay.portal.kernel.security.auth.AuthException;
 import com.liferay.portal.kernel.security.auth.http.HttpAuthManagerUtil;
@@ -69,6 +71,10 @@ public class BasicAuthHeaderAuthVerifier implements AuthVerifier {
 		}
 		catch (AutoLoginException ale) {
 			if (isForcedBasicAuth(accessControlContext, properties)) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(ale, ale);
+				}
+
 				return generateChallenge(accessControlContext);
 			}
 
@@ -107,6 +113,9 @@ public class BasicAuthHeaderAuthVerifier implements AuthVerifier {
 
 		return forcedBasicAuth;
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		BasicAuthHeaderAuthVerifier.class);
 
 	private final AutoLogin _autoLogin;
 

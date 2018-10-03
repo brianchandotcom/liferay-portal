@@ -375,8 +375,7 @@ AUI.add(
 					container: layoutContainer,
 					dragConfig: {
 						clickPixelThresh: 0,
-						clickTimeThresh: 250,
-						plugins: []
+						clickTimeThresh: 250
 					},
 					handles: options.handles,
 					invalid: options.invalid

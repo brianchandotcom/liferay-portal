@@ -412,7 +412,8 @@ AUI.add(
 
 			if (A.UA.ie || A.UA.edge) {
 				eventHandles.push(
-					BODY.delegate('mouseenter',
+					BODY.delegate(
+						'mouseenter',
 						function(event) {
 							event.currentTarget.addClass('focus');
 						},
@@ -421,7 +422,8 @@ AUI.add(
 				);
 
 				eventHandles.push(
-					BODY.delegate('mouseleave',
+					BODY.delegate(
+						'mouseleave',
 						function(event) {
 							event.currentTarget.removeClass('focus');
 						},

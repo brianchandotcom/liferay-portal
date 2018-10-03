@@ -64,7 +64,6 @@ public class LiferayCIPlugin implements Plugin<Project> {
 		_configureTasksExecuteNode(project);
 		_configureTasksExecuteNpm(project);
 		_configureTasksNpmInstall(project);
-		_configureTasksNpmRunBuild(project);
 
 		GradleUtil.withPlugin(
 			project, TestIntegrationPlugin.class,
@@ -204,6 +203,12 @@ public class LiferayCIPlugin implements Plugin<Project> {
 
 				@Override
 				public void execute(ExecuteNpmTask executeNpmTask) {
+					String name = executeNpmTask.getName();
+
+					if (name.equals(NodePlugin.NPM_RUN_BUILD_TASK_NAME)) {
+						_configureTaskNpmRunBuild(executeNpmTask);
+					}
+
 					_configureTaskExecuteNpm(executeNpmTask, ciRegistry);
 				}
 
@@ -250,13 +255,7 @@ public class LiferayCIPlugin implements Plugin<Project> {
 			});
 	}
 
-	private void _configureTasksNpmRunBuild(Project project) {
-		TaskContainer taskContainer = project.getTasks();
-
-		ExecuteNpmTask executeNpmTask =
-			(ExecuteNpmTask)taskContainer.findByName(
-				NodePlugin.NPM_RUN_BUILD_TASK_NAME);
-
+	private void _configureTaskNpmRunBuild(ExecuteNpmTask executeNpmTask) {
 		executeNpmTask.doFirst(
 			new Action<Task>() {
 

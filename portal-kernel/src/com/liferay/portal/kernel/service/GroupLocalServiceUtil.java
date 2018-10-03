@@ -557,6 +557,33 @@ public class GroupLocalServiceUtil {
 	* @param companyId the primary key of the company
 	* @param active whether to return only active groups, or only inactive
 	groups
+	* @param site whether the group is to be associated with a main site
+	* @param start the lower bound of the range of groups to return
+	* @param end the upper bound of the range of groups to return (not
+	inclusive)
+	* @param obc the comparator to order the groups (optionally
+	<code>null</code>)
+	* @return the active or inactive groups associated with the company
+	* @review
+	*/
+	public static java.util.List<com.liferay.portal.kernel.model.Group> getActiveGroups(
+		long companyId, boolean active, boolean site, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.kernel.model.Group> obc) {
+		return getService()
+				   .getActiveGroups(companyId, active, site, start, end, obc);
+	}
+
+	/**
+	* Returns the active or inactive groups associated with the company.
+	*
+	* @param companyId the primary key of the company
+	* @param active whether to return only active groups, or only inactive
+	groups
+	* @param start the lower bound of the range of groups to return
+	* @param end the upper bound of the range of groups to return (not
+	inclusive)
+	* @param obc the comparator to order the groups (optionally
+	<code>null</code>)
 	* @return the active or inactive groups associated with the company
 	* @review
 	*/
@@ -577,6 +604,21 @@ public class GroupLocalServiceUtil {
 	*/
 	public static int getActiveGroupsCount(long companyId, boolean active) {
 		return getService().getActiveGroupsCount(companyId, active);
+	}
+
+	/**
+	* Returns the number of active or inactive groups associated with the company.
+	*
+	* @param companyId the primary key of the company
+	* @param active whether to count only active groups, or only inactive
+	groups
+	* @param site whether the group is to be associated with a main site
+	* @return the number of active or inactive groups associated with the company
+	* @review
+	*/
+	public static int getActiveGroupsCount(long companyId, boolean active,
+		boolean site) {
+		return getService().getActiveGroupsCount(companyId, active, site);
 	}
 
 	/**

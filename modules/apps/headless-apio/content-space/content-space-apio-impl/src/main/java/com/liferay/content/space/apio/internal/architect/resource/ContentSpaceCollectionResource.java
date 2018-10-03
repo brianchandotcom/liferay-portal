@@ -30,7 +30,7 @@ import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.comparator.GroupNameComparator;
+import com.liferay.portal.kernel.util.comparator.GroupIdComparator;
 import com.liferay.site.apio.architect.identifier.WebSiteIdentifier;
 
 import java.util.Arrays;
@@ -105,11 +105,10 @@ public class ContentSpaceCollectionResource
 		Pagination pagination, Company company, AcceptLanguage acceptLanguage) {
 
 		List<Group> groups = _groupLocalService.getActiveGroups(
-			company.getCompanyId(), true, pagination.getStartPosition(),
-			pagination.getEndPosition(),
-			new GroupNameComparator(true, acceptLanguage.getPreferredLocale()));
+			company.getCompanyId(), true, true, pagination.getStartPosition(),
+			pagination.getEndPosition(), new GroupIdComparator(true));
 		int count = _groupLocalService.getActiveGroupsCount(
-			company.getCompanyId(), true);
+			company.getCompanyId(), true, true);
 
 		return new PageItems<>(groups, count);
 	}

@@ -49,7 +49,7 @@
 <liferay-ui:search-container-column-text
 	href="<%= rowURL %>"
 	name="client-ip"
-	value='<%= Validator.isNotNull(event.getClientIP()) ? event.getClientIP() : StringPool.BLANK %>'
+	value="<%= Validator.isNotNull(event.getClientIP()) ? event.getClientIP() : StringPool.BLANK %>"
 />
 
 <liferay-ui:search-container-column-date

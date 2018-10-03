@@ -28,6 +28,11 @@
 	<td>//iframe[@class='fragment-preview__content']</td>
 	<td></td>
 </tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--FRAGMENT_SIDEBAR-->
 <tr>
 	<td>FRAGMENT_SIDEBAR</td>
@@ -62,6 +67,11 @@
 <tr>
 	<td>FRAGMENT_SIDEBAR_TAB_ACTIVE</td>
 	<td>//ul[contains(@class,'nav')]//li[contains(@class,'nav-item')]//a[contains(.,'${key_tabName}')][contains(@class,'active')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
 	<td></td>
 </tr>
 <!--PAGE_TEMPLATE-->

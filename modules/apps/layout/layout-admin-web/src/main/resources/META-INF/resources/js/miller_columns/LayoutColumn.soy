@@ -7,6 +7,7 @@
 	{@param layoutColumn: list<[
 		actionURLs: map<string, string>,
 		active: bool,
+		checked: bool,
 		description: string,
 		hasChild: bool,
 		homePage: bool,
@@ -15,6 +16,7 @@
 		title: string,
 		url: string
 	]>}
+	{@param handleLayoutColumnItemCheck: any}
 	{@param pathThemeImages: string}
 	{@param portletNamespace: string}
 	{@param? hoveredLayoutColumnItemBorder: string}
@@ -41,7 +43,9 @@
 			{/let}
 
 			{call .layoutColumnItem}
+				{param key: $layoutColumnItem.plid /}
 				{param layoutColumnItem: $layoutColumnItem /}
+				{param handleLayoutColumnItemCheck: $handleLayoutColumnItemCheck /}
 				{param pathThemeImages: $pathThemeImages /}
 				{param portletNamespace: $portletNamespace /}
 				{param styleModifier: $styleModifier /}
@@ -69,6 +73,7 @@
 	{@param layoutColumnItem: [
 		actionURLs: map<string, string>,
 		active: bool,
+		checked: bool,
 		description: string,
 		hasChild: bool,
 		homePage: bool,
@@ -77,6 +82,7 @@
 		title: string,
 		url: string
 	]}
+	{@param handleLayoutColumnItemCheck: any}
 	{@param pathThemeImages: string}
 	{@param portletNamespace: string}
 	{@param? styleModifier: string}
@@ -119,10 +125,21 @@
 					</span>
 				</div>
 
+				{let $layoutColumnItemAttributes kind="attributes"}
+					{if $layoutColumnItem.checked}
+						checked
+					{/if}
+					class="custom-control-input"
+					name="{$portletNamespace}rowIds"
+					type="checkbox"
+					value="{$layoutColumnItem.plid}"
+					data-onchange="{$handleLayoutColumnItemCheck}"
+				{/let}
+
 				<div class="autofit-col flex-col">
 					<div class="custom-checkbox custom-control">
 						<label>
-							<input class="custom-control-input" name="{$portletNamespace}rowIds" type="checkbox" value="{$layoutColumnItem.plid}"/>
+							<input {$layoutColumnItemAttributes} />
 
 							<span class="custom-control-indicator custom-control-label select-item-checkbox-label"></span>
 						</label>

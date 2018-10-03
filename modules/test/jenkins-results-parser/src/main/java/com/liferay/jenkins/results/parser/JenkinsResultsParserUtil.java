@@ -1316,6 +1316,14 @@ public class JenkinsResultsParserUtil {
 		return false;
 	}
 
+	public static boolean isWindows() {
+		if (File.pathSeparator.equals(";")) {
+			return true;
+		}
+
+		return false;
+	}
+
 	public static String join(String delimiter, String... strings) {
 		StringBuilder sb = new StringBuilder();
 

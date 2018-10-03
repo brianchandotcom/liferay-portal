@@ -64,6 +64,42 @@ public class SegmentsEntryRelServiceImpl
 	}
 
 	@Override
+	public void deleteSegmentsEntryRel(
+			long segmentsEntryId, long classNameId, long classPK)
+		throws PortalException {
+
+		_segmentsEntryResourcePermission.check(
+			getPermissionChecker(), segmentsEntryId, ActionKeys.UPDATE);
+
+		segmentsEntryRelLocalService.deleteSegmentsEntryRel(
+			segmentsEntryId, classNameId, classPK);
+	}
+
+	@Override
+	public int getSegmentsEntryRelCount(long segmentsEntryId)
+		throws PortalException {
+
+		_segmentsEntryResourcePermission.check(
+			getPermissionChecker(), segmentsEntryId, ActionKeys.VIEW);
+
+		return segmentsEntryRelLocalService.getSegmentsEntryRelCount(
+			segmentsEntryId);
+	}
+
+	@Override
+	public int getSegmentsEntryRelCount(
+			long groupId, long classNameId, long classPK)
+		throws PortalException {
+
+		_portletResourcePermission.check(
+			getPermissionChecker(), groupId,
+			SegmentsActionKeys.MANAGE_SEGMENTS_ENTRIES);
+
+		return segmentsEntryRelLocalService.getSegmentsEntryRelCount(
+			groupId, classNameId, classPK);
+	}
+
+	@Override
 	public List<SegmentsEntryRel> getSegmentsEntryRels(long segmentsEntryId)
 		throws PortalException {
 
@@ -85,6 +121,14 @@ public class SegmentsEntryRelServiceImpl
 
 		return segmentsEntryRelLocalService.getSegmentsEntryRels(
 			groupId, classNameId, classPK);
+	}
+
+	@Override
+	public boolean hasSegmentsEntryRel(
+		long segmentsEntryId, long classNameId, long classPK) {
+
+		return segmentsEntryRelLocalService.hasSegmentsEntryRel(
+			segmentsEntryId, classNameId, classPK);
 	}
 
 	private static volatile PortletResourcePermission

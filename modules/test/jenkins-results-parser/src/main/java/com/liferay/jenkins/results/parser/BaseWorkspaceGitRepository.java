@@ -61,11 +61,11 @@ public abstract class BaseWorkspaceGitRepository
 
 		GitWorkingDirectory gitWorkingDirectory = getGitWorkingDirectory();
 
-		List<String> branchNamesContainingSHA =
-			gitWorkingDirectory.getBranchNamesContainingSHA(branchSHA);
-
 		if (!branchSHA.equals(_getBranchHeadSHA()) &&
 			!branchSHA.equals(_getBranchSHA())) {
+
+			List<String> branchNamesContainingSHA =
+				gitWorkingDirectory.getBranchNamesContainingSHA(branchSHA);
 
 			if (!branchNamesContainingSHA.contains(_getBranchName())) {
 				throw new IllegalArgumentException(

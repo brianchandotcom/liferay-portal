@@ -744,9 +744,7 @@ public class GitHubDevSyncUtil {
 			String remoteGitBranchName = entry.getKey();
 
 			if (remoteGitBranchName.matches(_cachedBranchPattern.pattern())) {
-				if (hasTimestampBranch(
-						remoteGitBranchName, remoteGitBranches)) {
-
+				if (hasTimestampBranch(remoteGitBranches)) {
 					cachedRemoteGitBranches.add(entry.getValue());
 				}
 				else {
@@ -805,7 +803,6 @@ public class GitHubDevSyncUtil {
 	}
 
 	protected static boolean hasTimestampBranch(
-		String cachedBranchName,
 		Map<String, RemoteGitBranch> remoteGitBranches) {
 
 		for (String remoteGitBranchName : remoteGitBranches.keySet()) {

@@ -325,6 +325,20 @@ public class UserFinderImpl extends UserFinderBaseImpl implements UserFinder {
 	public int countByOrganizationsAndUserGroups(
 		long[] organizationIds, long[] userGroupIds) {
 
+		if (ArrayUtil.isEmpty(organizationIds) &&
+			ArrayUtil.isEmpty(userGroupIds)) {
+
+			return 0;
+		}
+
+		if (ArrayUtil.isEmpty(organizationIds)) {
+			organizationIds = new long[] {0L};
+		}
+
+		if (ArrayUtil.isEmpty(userGroupIds)) {
+			userGroupIds = new long[] {0L};
+		}
+
 		Long count = null;
 
 		Session session = openSession();

@@ -3,6 +3,7 @@ import {Config} from 'metal-state';
 import Component from 'metal-component';
 import Soy from 'metal-soy';
 
+import '../components/Tooltip/index.es';
 import templates from './FieldBase.soy.js';
 
 class FieldBase extends Component {
@@ -16,15 +17,6 @@ class FieldBase extends Component {
 		 */
 
 		contentRenderer: Config.any(),
-
-		/**
-		 * @default undefined
-		 * @instance
-		 * @memberof FieldBase
-		 * @type {?(string|undefined)}
-		 */
-
-		tip: Config.string(),
 
 		/**
 		 * @default undefined
@@ -54,6 +46,15 @@ class FieldBase extends Component {
 		required: Config.bool(),
 
 		/**
+		 * @default undefined
+		 * @instance
+		 * @memberof FieldBase
+		 * @type {?(bool|undefined)}
+		 */
+
+		repeatable: Config.bool(),
+
+		/**
 		 * @default true
 		 * @instance
 		 * @memberof FieldBase
@@ -69,7 +70,25 @@ class FieldBase extends Component {
 		 * @type {?(string|undefined)}
 		 */
 
-		spritemap: Config.string().required()
+		spritemap: Config.string().required(),
+
+		/**
+		 * @default undefined
+		 * @instance
+		 * @memberof FieldBase
+		 * @type {?(string|undefined)}
+		 */
+
+		tip: Config.string(),
+
+		/**
+		 * @default undefined
+		 * @instance
+		 * @memberof FieldBase
+		 * @type {?(string|undefined)}
+		 */
+
+		tooltip: Config.string()
 	};
 }
 

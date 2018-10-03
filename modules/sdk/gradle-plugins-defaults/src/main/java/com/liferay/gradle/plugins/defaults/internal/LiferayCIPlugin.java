@@ -157,104 +157,6 @@ public class LiferayCIPlugin implements Plugin<Project> {
 		npmInstallTask.setUseNpmCI(Boolean.FALSE);
 	}
 
-	private void _configureTasksDownloadNode(Project project) {
-		TaskContainer taskContainer = project.getTasks();
-
-		taskContainer.withType(
-			DownloadNodeTask.class,
-			new Action<DownloadNodeTask>() {
-
-				@Override
-				public void execute(DownloadNodeTask downloadNodeTask) {
-					_configureTaskDownloadNode(downloadNodeTask);
-				}
-
-			});
-	}
-
-	private void _configureTasksExecuteNode(Project project) {
-		TaskContainer taskContainer = project.getTasks();
-
-		taskContainer.withType(
-			ExecuteNodeTask.class,
-			new Action<ExecuteNodeTask>() {
-
-				@Override
-				public void execute(ExecuteNodeTask executeNodeTask) {
-					_configureTaskExecuteNode(executeNodeTask);
-				}
-
-			});
-	}
-
-	private void _configureTasksExecuteNpm(Project project) {
-		final String ciRegistry = GradleUtil.getProperty(
-			project, "nodejs.npm.ci.registry", (String)null);
-
-		if (Validator.isNull(ciRegistry)) {
-			return;
-		}
-
-		TaskContainer taskContainer = project.getTasks();
-
-		taskContainer.withType(
-			ExecuteNpmTask.class,
-			new Action<ExecuteNpmTask>() {
-
-				@Override
-				public void execute(ExecuteNpmTask executeNpmTask) {
-					String name = executeNpmTask.getName();
-
-					if (name.equals(NodePlugin.NPM_RUN_BUILD_TASK_NAME)) {
-						_configureTaskNpmRunBuild(executeNpmTask);
-					}
-
-					_configureTaskExecuteNpm(executeNpmTask, ciRegistry);
-				}
-
-			});
-	}
-
-	private void _configureTasksNpmInstall(Project project) {
-		TaskContainer taskContainer = project.getTasks();
-
-		taskContainer.withType(
-			NpmInstallTask.class,
-			new Action<NpmInstallTask>() {
-
-				@Override
-				public void execute(NpmInstallTask npmInstallTask) {
-					_configureTaskNpmInstall(npmInstallTask);
-				}
-
-			});
-	}
-
-	private void _configureTasksNpmInstallArgs(Project project) {
-		final String ciSassBinarySite = GradleUtil.getProperty(
-			project, "nodejs.npm.ci.sass.binary.site", (String)null);
-
-		if (Validator.isNull(ciSassBinarySite)) {
-			return;
-		}
-
-		TaskContainer taskContainer = project.getTasks();
-
-		taskContainer.withType(
-			NpmInstallTask.class,
-			new Action<NpmInstallTask>() {
-
-				@Override
-				public void execute(NpmInstallTask npmInstallTask) {
-					_configureTaskExecuteNodeArgs(
-						npmInstallTask,
-						Collections.singletonMap(
-							_SASS_BINARY_SITE_ARG, ciSassBinarySite));
-				}
-
-			});
-	}
-
 	private void _configureTaskNpmRunBuild(ExecuteNpmTask executeNpmTask) {
 		executeNpmTask.doFirst(
 			new Action<Task>() {
@@ -406,6 +308,104 @@ public class LiferayCIPlugin implements Plugin<Project> {
 					String suffix = version.substring(index + 7);
 
 					return prefix + ".hotfix" + suffix.replace('.', '-');
+				}
+
+			});
+	}
+
+	private void _configureTasksDownloadNode(Project project) {
+		TaskContainer taskContainer = project.getTasks();
+
+		taskContainer.withType(
+			DownloadNodeTask.class,
+			new Action<DownloadNodeTask>() {
+
+				@Override
+				public void execute(DownloadNodeTask downloadNodeTask) {
+					_configureTaskDownloadNode(downloadNodeTask);
+				}
+
+			});
+	}
+
+	private void _configureTasksExecuteNode(Project project) {
+		TaskContainer taskContainer = project.getTasks();
+
+		taskContainer.withType(
+			ExecuteNodeTask.class,
+			new Action<ExecuteNodeTask>() {
+
+				@Override
+				public void execute(ExecuteNodeTask executeNodeTask) {
+					_configureTaskExecuteNode(executeNodeTask);
+				}
+
+			});
+	}
+
+	private void _configureTasksExecuteNpm(Project project) {
+		final String ciRegistry = GradleUtil.getProperty(
+			project, "nodejs.npm.ci.registry", (String)null);
+
+		if (Validator.isNull(ciRegistry)) {
+			return;
+		}
+
+		TaskContainer taskContainer = project.getTasks();
+
+		taskContainer.withType(
+			ExecuteNpmTask.class,
+			new Action<ExecuteNpmTask>() {
+
+				@Override
+				public void execute(ExecuteNpmTask executeNpmTask) {
+					String name = executeNpmTask.getName();
+
+					if (name.equals(NodePlugin.NPM_RUN_BUILD_TASK_NAME)) {
+						_configureTaskNpmRunBuild(executeNpmTask);
+					}
+
+					_configureTaskExecuteNpm(executeNpmTask, ciRegistry);
+				}
+
+			});
+	}
+
+	private void _configureTasksNpmInstall(Project project) {
+		TaskContainer taskContainer = project.getTasks();
+
+		taskContainer.withType(
+			NpmInstallTask.class,
+			new Action<NpmInstallTask>() {
+
+				@Override
+				public void execute(NpmInstallTask npmInstallTask) {
+					_configureTaskNpmInstall(npmInstallTask);
+				}
+
+			});
+	}
+
+	private void _configureTasksNpmInstallArgs(Project project) {
+		final String ciSassBinarySite = GradleUtil.getProperty(
+			project, "nodejs.npm.ci.sass.binary.site", (String)null);
+
+		if (Validator.isNull(ciSassBinarySite)) {
+			return;
+		}
+
+		TaskContainer taskContainer = project.getTasks();
+
+		taskContainer.withType(
+			NpmInstallTask.class,
+			new Action<NpmInstallTask>() {
+
+				@Override
+				public void execute(NpmInstallTask npmInstallTask) {
+					_configureTaskExecuteNodeArgs(
+						npmInstallTask,
+						Collections.singletonMap(
+							_SASS_BINARY_SITE_ARG, ciSassBinarySite));
 				}
 
 			});

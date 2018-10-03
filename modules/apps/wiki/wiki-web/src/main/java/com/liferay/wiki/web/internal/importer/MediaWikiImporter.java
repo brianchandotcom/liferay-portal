@@ -17,6 +17,7 @@ package com.liferay.wiki.web.internal.importer;
 import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.asset.util.AssetHelper;
+import com.liferay.document.library.kernel.exception.NoSuchFileEntryException;
 import com.liferay.document.library.kernel.store.DLStoreUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
@@ -28,9 +29,12 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.ObjectValuePair;
@@ -218,6 +222,8 @@ public class MediaWikiImporter implements WikiImporter {
 			}
 			else {
 				content = translateMediaWikiToCreole(content, strictImportMode);
+				content = translateMediaLinks(node, content);
+
 				format = FORMAT_CREOLE;
 			}
 
@@ -752,6 +758,91 @@ public class MediaWikiImporter implements WikiImporter {
 		_wikiPageTitleValidator = wikiPageTitleValidator;
 	}
 
+	protected String translateMediaLinks(WikiNode node, String content) {
+		try {
+			ThemeDisplay themeDisplay = new ThemeDisplay();
+
+			Company company = _companyLocalService.getCompany(
+				node.getCompanyId());
+
+			String portalURL = company.getPortalURL(node.getGroupId());
+
+			themeDisplay.setPortalURL(portalURL);
+
+			WikiPage sharedImagesPage = _wikiPageLocalService.getPage(
+				node.getNodeId(), SHARED_IMAGES_TITLE);
+
+			long sharedImagesPageAttachmentsFolderId =
+				sharedImagesPage.getAttachmentsFolderId();
+
+			Matcher matcher = _mediaLinkPattern.matcher(content);
+
+			StringBuffer sb = new StringBuffer(content);
+
+			FileEntry attachmentFileEntry = null;
+
+			String attachmentFileEntryURL = null;
+
+			String fileName = null;
+
+			String linkLabel = null;
+
+			String linkTag = null;
+
+			String mediaLinkTag = null;
+
+			int offset = 0;
+			int originalLength = 0;
+
+			while (matcher.find()) {
+				mediaLinkTag = sb.substring(
+					matcher.start(0) + offset, matcher.end(0) + offset);
+
+				originalLength = mediaLinkTag.length();
+
+				fileName = matcher.group(2);
+
+				try {
+					attachmentFileEntry =
+						PortletFileRepositoryUtil.getPortletFileEntry(
+							node.getGroupId(),
+							sharedImagesPageAttachmentsFolderId, fileName);
+				}
+				catch (NoSuchFileEntryException nsfee) {
+					continue;
+				}
+
+				attachmentFileEntryURL =
+					PortletFileRepositoryUtil.getPortletFileEntryURL(
+						themeDisplay, attachmentFileEntry, StringPool.BLANK);
+
+				linkLabel = matcher.group(3);
+
+				if (linkLabel == null) {
+					linkLabel = StringPool.PIPE + fileName;
+				}
+
+				linkTag = StringBundler.concat(
+					"[[", attachmentFileEntryURL, linkLabel, "]]");
+
+				sb.replace(
+					matcher.start(0) + offset,
+					matcher.start(0) + originalLength + offset, linkTag);
+
+				offset += linkTag.length() - originalLength;
+			}
+
+			content = sb.toString();
+		}
+		catch (PortalException pe) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(pe, pe);
+			}
+		}
+
+		return content;
+	}
+
 	protected String translateMediaWikiImagePaths(String content) {
 		return content.replaceAll(
 			_imagesPattern.pattern(),
@@ -800,6 +891,8 @@ public class MediaWikiImporter implements WikiImporter {
 		"\\[\\[[Cc]ategory:([^\\]]*)\\]\\][\\n]*");
 	private static final Pattern _imagesPattern = Pattern.compile(
 		"(\\[\\[Image|File)(:)([^\\]]*)(\\]\\])", Pattern.DOTALL);
+	private static final Pattern _mediaLinkPattern = Pattern.compile(
+		"\\[\\[(Media:)([^\\]\\|]*)(\\|[^\\]]*)?\\]\\]", Pattern.DOTALL);
 	private static final Pattern _parentPattern = Pattern.compile(
 		"\\{{2}OtherTopics\\|([^\\}]*)\\}{2}");
 	private static final Pattern _redirectPattern = Pattern.compile(

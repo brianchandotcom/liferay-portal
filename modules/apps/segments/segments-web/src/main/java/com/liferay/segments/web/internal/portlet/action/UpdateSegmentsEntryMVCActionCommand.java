@@ -16,12 +16,16 @@ package com.liferay.segments.web.internal.portlet.action;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
+import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.segments.constants.SegmentsPortletKeys;
+import com.liferay.segments.exception.NoSuchEntryException;
+import com.liferay.segments.exception.SegmentsEntryKeyException;
 import com.liferay.segments.model.SegmentsEntry;
 import com.liferay.segments.service.SegmentsEntryService;
 
@@ -70,15 +74,35 @@ public class UpdateSegmentsEntryMVCActionCommand extends BaseMVCActionCommand {
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			SegmentsEntry.class.getName(), actionRequest);
 
-		if (segmentsEntryId <= 0) {
-			_segmentsEntryService.addSegmentsEntry(
-				nameMap, descriptionMap, active, criteria, key, type,
-				serviceContext);
+		try {
+			if (segmentsEntryId <= 0) {
+				_segmentsEntryService.addSegmentsEntry(
+					nameMap, descriptionMap, active, criteria, key, type,
+					serviceContext);
+			}
+			else {
+				_segmentsEntryService.updateSegmentsEntry(
+					segmentsEntryId, nameMap, descriptionMap, active, criteria,
+					key, serviceContext);
+			}
 		}
-		else {
-			_segmentsEntryService.updateSegmentsEntry(
-				segmentsEntryId, nameMap, descriptionMap, active, criteria, key,
-				serviceContext);
+		catch (Exception e) {
+			if (e instanceof NoSuchEntryException ||
+				e instanceof PrincipalException) {
+
+				SessionErrors.add(actionRequest, e.getClass());
+
+				actionResponse.setRenderParameter("mvcPath", "/error.jsp");
+			}
+			else if (e instanceof SegmentsEntryKeyException) {
+				SessionErrors.add(actionRequest, e.getClass(), e);
+
+				actionResponse.setRenderParameter(
+					"mvcRenderCommandName", "editSegmentsEntry");
+			}
+			else {
+				throw e;
+			}
 		}
 	}
 

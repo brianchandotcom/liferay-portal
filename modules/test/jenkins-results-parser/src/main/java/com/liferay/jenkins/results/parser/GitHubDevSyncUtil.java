@@ -75,6 +75,23 @@ public class GitHubDevSyncUtil {
 			synchronize);
 	}
 
+	public static RemoteGitBranch fetchCachedBranchFromGitHubDev(
+		GitWorkingDirectory gitWorkingDirectory, String cachedBranchName) {
+
+		List<GitRemote> gitHubDevGitRemotes = getGitHubDevGitRemotes(
+			gitWorkingDirectory);
+
+		GitRemote gitHubDevGitRemote = getRandomGitRemote(gitHubDevGitRemotes);
+
+		RemoteGitBranch cachedRemoteGitBranch =
+			gitWorkingDirectory.getRemoteGitBranch(
+				cachedBranchName, gitHubDevGitRemote, true);
+
+		gitWorkingDirectory.fetch(cachedRemoteGitBranch);
+
+		return cachedRemoteGitBranch;
+	}
+
 	public static String getCachedBranchName(PullRequest pullRequest) {
 		return getCachedBranchName(
 			pullRequest.getReceiverUsername(), pullRequest.getSenderUsername(),
@@ -953,14 +970,9 @@ public class GitHubDevSyncUtil {
 							"Cache branch ", cachedBranchName,
 							" already exists"));
 
-					GitRemote gitHubDevGitRemote = getRandomGitRemote(
-						gitHubDevGitRemotes);
-
 					RemoteGitBranch cachedRemoteGitBranch =
-						gitWorkingDirectory.getRemoteGitBranch(
-							cachedBranchName, gitHubDevGitRemote, true);
-
-					gitWorkingDirectory.fetch(cachedRemoteGitBranch);
+						fetchCachedBranchFromGitHubDev(
+							gitWorkingDirectory, cachedBranchName);
 
 					gitWorkingDirectory.deleteLocalGitBranch(cachedBranchName);
 

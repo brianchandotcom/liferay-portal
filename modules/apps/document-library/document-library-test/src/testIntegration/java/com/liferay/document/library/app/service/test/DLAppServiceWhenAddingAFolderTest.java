@@ -50,7 +50,7 @@ public class DLAppServiceWhenAddingAFolderTest extends BaseDLAppTestCase {
 		new LiferayIntegrationTestRule();
 
 	@Test
-	public void shouldAddAssetEntry() throws PortalException {
+	public void testShouldAddAssetEntry() throws PortalException {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(group.getGroupId());
 
@@ -65,7 +65,7 @@ public class DLAppServiceWhenAddingAFolderTest extends BaseDLAppTestCase {
 	}
 
 	@Test
-	public void shouldFireSyncEvent() throws Exception {
+	public void testShouldFireSyncEvent() throws Exception {
 		AtomicInteger counter =
 			DLAppServiceTestUtil.registerDLSyncEventProcessorMessageListener(
 				DLSyncConstants.EVENT_ADD);

@@ -64,7 +64,7 @@ public class DLAppServiceWhenUpdatingAFileEntryTest extends BaseDLAppTestCase {
 		new LiferayIntegrationTestRule();
 
 	@Test
-	public void assetEntryShouldBeAddedWhenDraft() throws Exception {
+	public void testAssetEntryShouldBeAddedWhenDraft() throws Exception {
 		String fileName = RandomTestUtil.randomString();
 		byte[] bytes = CONTENT.getBytes();
 		String[] assetTagNames = {"hello"};
@@ -109,7 +109,7 @@ public class DLAppServiceWhenUpdatingAFileEntryTest extends BaseDLAppTestCase {
 	}
 
 	@Test
-	public void assetEntryShouldBeAddedWithNullBytesWhenDraft()
+	public void testAssetEntryShouldBeAddedWithNullBytesWhenDraft()
 		throws Exception {
 
 		String fileName = RandomTestUtil.randomString();
@@ -155,7 +155,7 @@ public class DLAppServiceWhenUpdatingAFileEntryTest extends BaseDLAppTestCase {
 	}
 
 	@Test
-	public void assetTagsShouldBeOrdered() throws Exception {
+	public void testAssetTagsShouldBeOrdered() throws Exception {
 		String fileName = RandomTestUtil.randomString();
 		byte[] bytes = CONTENT.getBytes();
 
@@ -181,7 +181,7 @@ public class DLAppServiceWhenUpdatingAFileEntryTest extends BaseDLAppTestCase {
 	}
 
 	@Test
-	public void shouldCallWorkflowHandler() throws Exception {
+	public void testShouldCallWorkflowHandler() throws Exception {
 		try (WorkflowHandlerInvocationCounter<DLFileEntry>
 				workflowHandlerInvocationCounter =
 					new WorkflowHandlerInvocationCounter<>(
@@ -207,7 +207,7 @@ public class DLAppServiceWhenUpdatingAFileEntryTest extends BaseDLAppTestCase {
 	}
 
 	@Test(expected = FileSizeException.class)
-	public void shouldFailIfSizeLimitExceeded() throws Exception {
+	public void testShouldFailIfSizeLimitExceeded() throws Exception {
 		String fileName = RandomTestUtil.randomString();
 
 		ServiceContext serviceContext =
@@ -232,7 +232,7 @@ public class DLAppServiceWhenUpdatingAFileEntryTest extends BaseDLAppTestCase {
 	}
 
 	@Test
-	public void shouldFireSyncEvent() throws Exception {
+	public void testShouldFireSyncEvent() throws Exception {
 		AtomicInteger counter =
 			DLAppServiceTestUtil.registerDLSyncEventProcessorMessageListener(
 				DLSyncConstants.EVENT_UPDATE);
@@ -248,7 +248,7 @@ public class DLAppServiceWhenUpdatingAFileEntryTest extends BaseDLAppTestCase {
 	}
 
 	@Test
-	public void shouldIncrementMajorVersion() throws Exception {
+	public void testShouldIncrementMajorVersion() throws Exception {
 		String fileName = "TestVersion.txt";
 
 		FileEntry fileEntry = DLAppServiceTestUtil.addFileEntry(
@@ -266,7 +266,7 @@ public class DLAppServiceWhenUpdatingAFileEntryTest extends BaseDLAppTestCase {
 	}
 
 	@Test
-	public void shouldIncrementMinorVersion() throws Exception {
+	public void testShouldIncrementMinorVersion() throws Exception {
 		String fileName = "TestVersion.txt";
 
 		FileEntry fileEntry = DLAppServiceTestUtil.addFileEntry(
@@ -290,7 +290,7 @@ public class DLAppServiceWhenUpdatingAFileEntryTest extends BaseDLAppTestCase {
 	}
 
 	@Test
-	public void shouldNotChangeMimeTypeIfNullContent() throws Exception {
+	public void testShouldNotChangeMimeTypeIfNullContent() throws Exception {
 		String fileName = RandomTestUtil.randomString();
 
 		FileEntry fileEntry = DLAppServiceTestUtil.addFileEntry(
@@ -310,7 +310,7 @@ public class DLAppServiceWhenUpdatingAFileEntryTest extends BaseDLAppTestCase {
 	}
 
 	@Test
-	public void shouldSucceedForRootFolder() throws Exception {
+	public void testShouldSucceedForRootFolder() throws Exception {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(group.getGroupId());
 
@@ -320,7 +320,7 @@ public class DLAppServiceWhenUpdatingAFileEntryTest extends BaseDLAppTestCase {
 	}
 
 	@Test
-	public void shouldSucceedWithNullBytes() throws Exception {
+	public void testShouldSucceedWithNullBytes() throws Exception {
 		String fileName = RandomTestUtil.randomString();
 
 		ServiceContext serviceContext =
@@ -336,7 +336,7 @@ public class DLAppServiceWhenUpdatingAFileEntryTest extends BaseDLAppTestCase {
 	}
 
 	@Test
-	public void shouldSucceedWithNullFile() throws Exception {
+	public void testShouldSucceedWithNullFile() throws Exception {
 		String fileName = RandomTestUtil.randomString();
 
 		ServiceContext serviceContext =
@@ -352,7 +352,7 @@ public class DLAppServiceWhenUpdatingAFileEntryTest extends BaseDLAppTestCase {
 	}
 
 	@Test
-	public void shouldSucceedWithNullInputStream() throws Exception {
+	public void testShouldSucceedWithNullInputStream() throws Exception {
 		String fileName = RandomTestUtil.randomString();
 
 		ServiceContext serviceContext =

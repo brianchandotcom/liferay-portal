@@ -79,7 +79,7 @@ public class DLAppServiceWhenAddingAFileEntryTest extends BaseDLAppTestCase {
 		new LiferayIntegrationTestRule();
 
 	@Test
-	public void assetEntryShouldHavePublishDate() throws Exception {
+	public void testAssetEntryShouldHavePublishDate() throws Exception {
 		String fileName = RandomTestUtil.randomString();
 
 		FileEntry fileEntry = DLAppServiceTestUtil.addFileEntry(
@@ -93,7 +93,7 @@ public class DLAppServiceWhenAddingAFileEntryTest extends BaseDLAppTestCase {
 	}
 
 	@Test
-	public void assetTagsShouldBeOrdered() throws Exception {
+	public void testAssetTagsShouldBeOrdered() throws Exception {
 		String fileName = RandomTestUtil.randomString();
 
 		String[] assetTagNames = {"hello", "world"};
@@ -109,7 +109,7 @@ public class DLAppServiceWhenAddingAFileEntryTest extends BaseDLAppTestCase {
 	}
 
 	@Test
-	public void shouldCallWorkflowHandler() throws Exception {
+	public void testShouldCallWorkflowHandler() throws Exception {
 		try (WorkflowHandlerInvocationCounter<DLFileEntry>
 				workflowHandlerInvocationCounter =
 					new WorkflowHandlerInvocationCounter<>(
@@ -126,7 +126,7 @@ public class DLAppServiceWhenAddingAFileEntryTest extends BaseDLAppTestCase {
 	}
 
 	@Test(expected = DuplicateFileEntryException.class)
-	public void shouldFailIfDuplicateNameAndExtensionInFolder1()
+	public void testShouldFailIfDuplicateNameAndExtensionInFolder1()
 		throws Exception {
 
 		DLAppServiceTestUtil.addFileEntry(
@@ -140,7 +140,7 @@ public class DLAppServiceWhenAddingAFileEntryTest extends BaseDLAppTestCase {
 	}
 
 	@Test(expected = DuplicateFileEntryException.class)
-	public void shouldFailIfDuplicateNameAndExtensionInFolder2()
+	public void testShouldFailIfDuplicateNameAndExtensionInFolder2()
 		throws Exception {
 
 		DLAppServiceTestUtil.addFileEntry(
@@ -154,7 +154,7 @@ public class DLAppServiceWhenAddingAFileEntryTest extends BaseDLAppTestCase {
 	}
 
 	@Test(expected = DuplicateFileEntryException.class)
-	public void shouldFailIfDuplicateNameAndExtensionInFolder3()
+	public void testShouldFailIfDuplicateNameAndExtensionInFolder3()
 		throws Exception {
 
 		DLAppServiceTestUtil.addFileEntry(
@@ -168,7 +168,7 @@ public class DLAppServiceWhenAddingAFileEntryTest extends BaseDLAppTestCase {
 	}
 
 	@Test(expected = DuplicateFileEntryException.class)
-	public void shouldFailIfDuplicateNameInFolder() throws Exception {
+	public void testShouldFailIfDuplicateNameInFolder() throws Exception {
 		DLAppServiceTestUtil.addFileEntry(
 			group.getGroupId(), parentFolder.getFolderId());
 		DLAppServiceTestUtil.addFileEntry(
@@ -176,7 +176,7 @@ public class DLAppServiceWhenAddingAFileEntryTest extends BaseDLAppTestCase {
 	}
 
 	@Test(expected = FileSizeException.class)
-	public void shouldFailIfSizeLimitExceeded() throws Exception {
+	public void testShouldFailIfSizeLimitExceeded() throws Exception {
 		try (ConfigurationTemporarySwapper configurationTemporarySwapper =
 				DLAppServiceTestUtil.getConfigurationTemporarySwapper(
 					"fileMaxSize", 1L)) {
@@ -189,7 +189,7 @@ public class DLAppServiceWhenAddingAFileEntryTest extends BaseDLAppTestCase {
 	}
 
 	@Test(expected = FileNameException.class)
-	public void shouldFailIfSourceFileNameContainsBlacklistedChar()
+	public void testShouldFailIfSourceFileNameContainsBlacklistedChar()
 		throws Exception {
 
 		int i =
@@ -206,7 +206,7 @@ public class DLAppServiceWhenAddingAFileEntryTest extends BaseDLAppTestCase {
 	}
 
 	@Test(expected = FileNameException.class)
-	public void shouldFailIfSourceFileNameEndsWithBlacklistedChar()
+	public void testShouldFailIfSourceFileNameEndsWithBlacklistedChar()
 		throws Exception {
 
 		int i =
@@ -222,7 +222,7 @@ public class DLAppServiceWhenAddingAFileEntryTest extends BaseDLAppTestCase {
 	}
 
 	@Test(expected = FileExtensionException.class)
-	public void shouldFailIfSourceFileNameExtensionNotSupported()
+	public void testShouldFailIfSourceFileNameExtensionNotSupported()
 		throws Exception {
 
 		try (ConfigurationTemporarySwapper configurationTemporarySwapper =
@@ -237,7 +237,7 @@ public class DLAppServiceWhenAddingAFileEntryTest extends BaseDLAppTestCase {
 	}
 
 	@Test(expected = FileNameException.class)
-	public void shouldFailIfSourceFileNameIsBlacklisted() throws Exception {
+	public void testShouldFailIfSourceFileNameIsBlacklisted() throws Exception {
 		int i =
 			RandomTestUtil.randomInt() % PropsValues.DL_NAME_BLACKLIST.length;
 
@@ -248,7 +248,7 @@ public class DLAppServiceWhenAddingAFileEntryTest extends BaseDLAppTestCase {
 	}
 
 	@Test
-	public void shouldFireSyncEvent() throws Exception {
+	public void testShouldFireSyncEvent() throws Exception {
 		AtomicInteger counter =
 			DLAppServiceTestUtil.registerDLSyncEventProcessorMessageListener(
 				DLSyncConstants.EVENT_ADD);
@@ -260,7 +260,7 @@ public class DLAppServiceWhenAddingAFileEntryTest extends BaseDLAppTestCase {
 	}
 
 	@Test
-	public void shouldHaveDefaultVersion() throws Exception {
+	public void testShouldHaveDefaultVersion() throws Exception {
 		String fileName = RandomTestUtil.randomString();
 
 		FileEntry fileEntry = DLAppServiceTestUtil.addFileEntry(
@@ -271,7 +271,7 @@ public class DLAppServiceWhenAddingAFileEntryTest extends BaseDLAppTestCase {
 	}
 
 	@Test
-	public void shouldInferValidMimeType() throws Exception {
+	public void testShouldInferValidMimeType() throws Exception {
 		String fileName = RandomTestUtil.randomString();
 
 		ServiceContext serviceContext =
@@ -286,7 +286,9 @@ public class DLAppServiceWhenAddingAFileEntryTest extends BaseDLAppTestCase {
 	}
 
 	@Test
-	public void shouldSucceedIfDuplicateNameInOtherFolder() throws Exception {
+	public void testShouldSucceedIfDuplicateNameInOtherFolder()
+		throws Exception {
+
 		DLAppServiceTestUtil.addFileEntry(
 			group.getGroupId(), parentFolder.getFolderId());
 		DLAppServiceTestUtil.addFileEntry(
@@ -308,7 +310,7 @@ public class DLAppServiceWhenAddingAFileEntryTest extends BaseDLAppTestCase {
 	)
 	@Ignore
 	@Test
-	public void shouldSucceedWithConcurrentAccess() throws Exception {
+	public void testShouldSucceedWithConcurrentAccess() throws Exception {
 		_users = new User[ServiceTestUtil.THREAD_COUNT];
 
 		for (int i = 0; i < ServiceTestUtil.THREAD_COUNT; i++) {
@@ -351,7 +353,7 @@ public class DLAppServiceWhenAddingAFileEntryTest extends BaseDLAppTestCase {
 
 	@Ignore
 	@Test
-	public void shouldSucceedWithNullBytes() throws Exception {
+	public void testShouldSucceedWithNullBytes() throws Exception {
 		String fileName = RandomTestUtil.randomString();
 
 		ServiceContext serviceContext =
@@ -364,7 +366,7 @@ public class DLAppServiceWhenAddingAFileEntryTest extends BaseDLAppTestCase {
 	}
 
 	@Test
-	public void shouldSucceedWithNullFile() throws Exception {
+	public void testShouldSucceedWithNullFile() throws Exception {
 		String fileName = RandomTestUtil.randomString();
 
 		ServiceContext serviceContext =
@@ -377,7 +379,7 @@ public class DLAppServiceWhenAddingAFileEntryTest extends BaseDLAppTestCase {
 	}
 
 	@Test
-	public void shouldSucceedWithNullInputStream() throws Exception {
+	public void testShouldSucceedWithNullInputStream() throws Exception {
 		String fileName = RandomTestUtil.randomString();
 
 		ServiceContext serviceContext =

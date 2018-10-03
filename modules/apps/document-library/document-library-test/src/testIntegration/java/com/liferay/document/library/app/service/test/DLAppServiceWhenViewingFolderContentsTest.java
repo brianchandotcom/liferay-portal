@@ -53,7 +53,7 @@ public class DLAppServiceWhenViewingFolderContentsTest
 		new LiferayIntegrationTestRule();
 
 	@Test
-	public void shouldCountDraftsIfOwner() throws Exception {
+	public void testShouldCountDraftsIfOwner() throws Exception {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(group.getGroupId());
 
@@ -80,7 +80,7 @@ public class DLAppServiceWhenViewingFolderContentsTest
 	}
 
 	@Test
-	public void shouldNotCountDraftsIfNotOwner() throws Exception {
+	public void testShouldNotCountDraftsIfNotOwner() throws Exception {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(group.getGroupId());
 
@@ -116,7 +116,7 @@ public class DLAppServiceWhenViewingFolderContentsTest
 	}
 
 	@Test
-	public void shouldNotReturnDraftsIfNotOwner() throws Exception {
+	public void testShouldNotReturnDraftsIfNotOwner() throws Exception {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(group.getGroupId());
 
@@ -155,7 +155,7 @@ public class DLAppServiceWhenViewingFolderContentsTest
 	}
 
 	@Test
-	public void shouldReturnDraftsIfOwner() throws Exception {
+	public void testShouldReturnDraftsIfOwner() throws Exception {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(group.getGroupId());
 

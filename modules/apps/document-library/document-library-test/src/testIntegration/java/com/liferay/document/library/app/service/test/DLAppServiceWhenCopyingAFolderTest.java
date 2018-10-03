@@ -50,7 +50,7 @@ public class DLAppServiceWhenCopyingAFolderTest extends BaseDLAppTestCase {
 		new LiferayIntegrationTestRule();
 
 	@Test
-	public void shouldCallWorkflowHandler() throws Exception {
+	public void testShouldCallWorkflowHandler() throws Exception {
 		try (WorkflowHandlerInvocationCounter<DLFileEntry>
 				workflowHandlerInvocationCounter =
 					new WorkflowHandlerInvocationCounter<>(
@@ -85,7 +85,7 @@ public class DLAppServiceWhenCopyingAFolderTest extends BaseDLAppTestCase {
 	}
 
 	@Test
-	public void shouldFireSyncEvent() throws Exception {
+	public void testShouldFireSyncEvent() throws Exception {
 		AtomicInteger counter =
 			DLAppServiceTestUtil.registerDLSyncEventProcessorMessageListener(
 				DLSyncConstants.EVENT_ADD);

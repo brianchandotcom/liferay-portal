@@ -50,7 +50,7 @@ public class DLAppServiceWhenUpdatingAndCheckingInAFileEntryTest
 		new LiferayIntegrationTestRule();
 
 	@Test
-	public void shouldHaveSameModifiedDate() throws Exception {
+	public void testShouldHaveSameModifiedDate() throws Exception {
 		FileEntry fileEntry = DLAppServiceTestUtil.addFileEntry(
 			group.getGroupId(), parentFolder.getFolderId());
 

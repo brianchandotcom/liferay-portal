@@ -47,7 +47,7 @@ public class DLAppServiceWhenUpdatingAFolderTest extends BaseDLAppTestCase {
 		new LiferayIntegrationTestRule();
 
 	@Test
-	public void shouldFireSyncEvent() throws Exception {
+	public void testShouldFireSyncEvent() throws Exception {
 		AtomicInteger counter =
 			DLAppServiceTestUtil.registerDLSyncEventProcessorMessageListener(
 				DLSyncConstants.EVENT_UPDATE);
@@ -68,7 +68,7 @@ public class DLAppServiceWhenUpdatingAFolderTest extends BaseDLAppTestCase {
 	}
 
 	@Test
-	public void shouldSucceedForDefaultParentFolder() throws Exception {
+	public void testShouldSucceedForDefaultParentFolder() throws Exception {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(group.getGroupId());
 

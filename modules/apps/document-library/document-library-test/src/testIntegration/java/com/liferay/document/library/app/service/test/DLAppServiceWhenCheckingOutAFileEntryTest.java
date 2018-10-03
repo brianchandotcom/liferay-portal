@@ -45,7 +45,7 @@ public class DLAppServiceWhenCheckingOutAFileEntryTest
 		new LiferayIntegrationTestRule();
 
 	@Test
-	public void shouldFireSyncEvent() throws Exception {
+	public void testShouldFireSyncEvent() throws Exception {
 		AtomicInteger counter =
 			DLAppServiceTestUtil.registerDLSyncEventProcessorMessageListener(
 				DLSyncConstants.EVENT_UPDATE);

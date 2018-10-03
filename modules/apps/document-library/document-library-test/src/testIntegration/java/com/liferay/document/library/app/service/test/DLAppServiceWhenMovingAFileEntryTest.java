@@ -46,7 +46,7 @@ public class DLAppServiceWhenMovingAFileEntryTest extends BaseDLAppTestCase {
 		new LiferayIntegrationTestRule();
 
 	@Test
-	public void shouldFireSyncEvent() throws Exception {
+	public void testShouldFireSyncEvent() throws Exception {
 		AtomicInteger moveCounter =
 			DLAppServiceTestUtil.registerDLSyncEventProcessorMessageListener(
 				DLSyncConstants.EVENT_MOVE);
@@ -66,7 +66,7 @@ public class DLAppServiceWhenMovingAFileEntryTest extends BaseDLAppTestCase {
 	}
 
 	@Test
-	public void shouldHaveSameFileExtension() throws Exception {
+	public void testShouldHaveSameFileExtension() throws Exception {
 		FileEntry fileEntry = DLAppServiceTestUtil.addFileEntry(
 			group.getGroupId(), parentFolder.getFolderId(),
 			DLAppServiceTestUtil.FILE_NAME,

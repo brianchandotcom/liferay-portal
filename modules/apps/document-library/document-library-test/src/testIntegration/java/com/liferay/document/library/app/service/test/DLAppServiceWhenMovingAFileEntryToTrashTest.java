@@ -55,8 +55,16 @@ public class DLAppServiceWhenMovingAFileEntryToTrashTest
 			group.getGroupId(), parentFolder.getFolderId());
 	}
 
+	@After
+	@Override
+	public void tearDown() throws Exception {
+		DLAppServiceUtil.deleteFileEntry(_fileEntry.getFileEntryId());
+
+		super.tearDown();
+	}
+
 	@Test
-	public void shouldCancelCheckout() throws Exception {
+	public void testShouldCancelCheckout() throws Exception {
 		DLAppServiceUtil.checkOutFileEntry(
 			_fileEntry.getFileEntryId(),
 			ServiceContextTestUtil.getServiceContext(group.getGroupId()));
@@ -71,7 +79,7 @@ public class DLAppServiceWhenMovingAFileEntryToTrashTest
 	}
 
 	@Test
-	public void shouldDeletePWCAssetEntry() throws Exception {
+	public void testShouldDeletePWCAssetEntry() throws Exception {
 		DLAppServiceUtil.checkOutFileEntry(
 			_fileEntry.getFileEntryId(),
 			ServiceContextTestUtil.getServiceContext(group.getGroupId()));
@@ -89,14 +97,6 @@ public class DLAppServiceWhenMovingAFileEntryToTrashTest
 			AssetEntryLocalServiceUtil.fetchEntry(
 				DLFileEntryConstants.getClassName(),
 				fileVersion.getFileVersionId()));
-	}
-
-	@After
-	@Override
-	public void tearDown() throws Exception {
-		DLAppServiceUtil.deleteFileEntry(_fileEntry.getFileEntryId());
-
-		super.tearDown();
 	}
 
 	private FileEntry _fileEntry;

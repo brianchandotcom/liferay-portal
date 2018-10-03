@@ -44,7 +44,7 @@ public class DLAppServiceWhenDeletingAFileEntryTest extends BaseDLAppTestCase {
 		new LiferayIntegrationTestRule();
 
 	@Test
-	public void shouldDeleteDiscussion() throws Exception {
+	public void testShouldDeleteDiscussion() throws Exception {
 		FileEntry fileEntry = DLAppServiceTestUtil.addFileEntry(
 			group.getGroupId(), parentFolder.getFolderId());
 
@@ -57,7 +57,7 @@ public class DLAppServiceWhenDeletingAFileEntryTest extends BaseDLAppTestCase {
 	}
 
 	@Test
-	public void shouldFireSyncEvent() throws Exception {
+	public void testShouldFireSyncEvent() throws Exception {
 		AtomicInteger counter =
 			DLAppServiceTestUtil.registerDLSyncEventProcessorMessageListener(
 				DLSyncConstants.EVENT_DELETE);

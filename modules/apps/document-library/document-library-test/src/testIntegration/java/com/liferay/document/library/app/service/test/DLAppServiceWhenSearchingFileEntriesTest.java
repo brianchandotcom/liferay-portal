@@ -47,7 +47,7 @@ public class DLAppServiceWhenSearchingFileEntriesTest
 		new LiferayIntegrationTestRule();
 
 	@Test
-	public void shouldFindFileEntryByAssetTagName() throws Exception {
+	public void testShouldFindFileEntryByAssetTagName() throws Exception {
 		String fileName = RandomTestUtil.randomString();
 
 		String[] assetTagNames = {"hello", "world"};
@@ -63,7 +63,7 @@ public class DLAppServiceWhenSearchingFileEntriesTest
 
 	@Ignore
 	@Test
-	public void shouldFindFileEntryByAssetTagNameAfterUpdate()
+	public void testShouldFindFileEntryByAssetTagNameAfterUpdate()
 		throws Exception {
 
 		String fileName = RandomTestUtil.randomString();
@@ -96,14 +96,14 @@ public class DLAppServiceWhenSearchingFileEntriesTest
 
 	@Ignore
 	@Test
-	public void shouldFindFileEntryInRootFolder() throws Exception {
+	public void testShouldFindFileEntryInRootFolder() throws Exception {
 		DLAppServiceTestUtil.searchFile(
 			group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 	}
 
 	@Ignore
 	@Test
-	public void shouldFindFileEntryInSubfolder() throws Exception {
+	public void testShouldFindFileEntryInSubfolder() throws Exception {
 		DLAppServiceTestUtil.searchFile(
 			group.getGroupId(), parentFolder.getFolderId());
 	}

@@ -48,7 +48,7 @@ public class DLAppServiceWhenRevertingAFileEntryTest extends BaseDLAppTestCase {
 		new LiferayIntegrationTestRule();
 
 	@Test
-	public void shouldCallWorkflowHandler() throws Exception {
+	public void testShouldCallWorkflowHandler() throws Exception {
 		try (WorkflowHandlerInvocationCounter<FileEntry>
 				workflowHandlerInvocationCounter =
 					new WorkflowHandlerInvocationCounter<>(
@@ -87,7 +87,7 @@ public class DLAppServiceWhenRevertingAFileEntryTest extends BaseDLAppTestCase {
 	}
 
 	@Test
-	public void shouldFireSyncEvent() throws Exception {
+	public void testShouldFireSyncEvent() throws Exception {
 		AtomicInteger updateCounter =
 			DLAppServiceTestUtil.registerDLSyncEventProcessorMessageListener(
 				DLSyncConstants.EVENT_UPDATE);

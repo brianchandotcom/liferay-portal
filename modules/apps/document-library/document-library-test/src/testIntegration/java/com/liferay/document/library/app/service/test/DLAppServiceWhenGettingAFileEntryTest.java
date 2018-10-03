@@ -42,14 +42,14 @@ public class DLAppServiceWhenGettingAFileEntryTest extends BaseDLAppTestCase {
 		new LiferayIntegrationTestRule();
 
 	@Test(expected = NoSuchFileEntryException.class)
-	public void shouldFailIfNotPresentInRootFolder() throws Exception {
+	public void testShouldFailIfNotPresentInRootFolder() throws Exception {
 		DLAppServiceUtil.getFileEntry(
 			group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			StringUtil.randomString());
 	}
 
 	@Test
-	public void shouldReturnItIfExistsInRootFolder() throws Exception {
+	public void testShouldReturnItIfExistsInRootFolder() throws Exception {
 		FileEntry fileEntry1 = DLAppServiceTestUtil.addFileEntry(
 			group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 

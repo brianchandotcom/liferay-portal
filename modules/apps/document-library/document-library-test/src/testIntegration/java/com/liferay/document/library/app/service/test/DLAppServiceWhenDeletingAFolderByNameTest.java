@@ -44,7 +44,9 @@ public class DLAppServiceWhenDeletingAFolderByNameTest
 		new LiferayIntegrationTestRule();
 
 	@Test
-	public void shouldDeleteImplicitlyTrashedChildFolder() throws Exception {
+	public void testShouldDeleteImplicitlyTrashedChildFolder()
+		throws Exception {
+
 		int initialFoldersCount = DLAppServiceUtil.getFoldersCount(
 			group.getGroupId(), parentFolder.getFolderId());
 
@@ -76,7 +78,7 @@ public class DLAppServiceWhenDeletingAFolderByNameTest
 	}
 
 	@Test
-	public void shouldSkipExplicitlyTrashedChildFolder() throws Exception {
+	public void testShouldSkipExplicitlyTrashedChildFolder() throws Exception {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(group.getGroupId());
 

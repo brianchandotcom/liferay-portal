@@ -14,6 +14,7 @@
 
 package com.liferay.jenkins.results.parser.test.clazz.group;
 
+import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 import com.liferay.jenkins.results.parser.PortalGitWorkingDirectory;
 import com.liferay.jenkins.results.parser.PortalTestClassJob;
 
@@ -167,13 +168,17 @@ public class ServiceBuilderBatchTestClassGroup
 		File portalModulesBaseDir = new File(
 			portalGitWorkingDirectory.getWorkingDirectory(), "modules");
 
+		List<File> modifiedFiles =
+			portalGitWorkingDirectory.getModifiedFilesList();
+
 		if (testRelevantChanges) {
 			List<File> modifiedPortalToolsServiceBuilderFiles =
-				portalGitWorkingDirectory.getModifiedFilesList(
+				JenkinsResultsParserUtil.getIncludedFiles(
 					null,
 					getPathMatchers(
 						"portal-tools-service-builder/**",
-						portalModulesBaseDir));
+						portalModulesBaseDir),
+					modifiedFiles);
 
 			if (!modifiedPortalToolsServiceBuilderFiles.isEmpty()) {
 				_buildType = BuildType.FULL;
@@ -182,22 +187,24 @@ public class ServiceBuilderBatchTestClassGroup
 			}
 
 			List<File> modifiedPortalImplFiles =
-				portalGitWorkingDirectory.getModifiedFilesList(
+				JenkinsResultsParserUtil.getIncludedFiles(
 					null,
 					getPathMatchers(
 						"portal-impl/**",
-						portalGitWorkingDirectory.getWorkingDirectory()));
+						portalGitWorkingDirectory.getWorkingDirectory()),
+					modifiedFiles);
 
 			if (!modifiedPortalImplFiles.isEmpty()) {
 				_buildType = BuildType.CORE;
 			}
 			else {
 				List<File> modifiedPortalKernelFiles =
-					portalGitWorkingDirectory.getModifiedFilesList(
+					JenkinsResultsParserUtil.getIncludedFiles(
 						null,
 						getPathMatchers(
 							"portal-kernel/**",
-							portalGitWorkingDirectory.getWorkingDirectory()));
+							portalGitWorkingDirectory.getWorkingDirectory()),
+						modifiedFiles);
 
 				if (!modifiedPortalKernelFiles.isEmpty()) {
 					_buildType = BuildType.CORE;

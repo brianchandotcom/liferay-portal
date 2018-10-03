@@ -18,6 +18,8 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryMetadata;
 import com.liferay.document.library.kernel.model.DLFileVersion;
+import com.liferay.document.library.test.util.search.FileEntryBlueprint;
+import com.liferay.document.library.test.util.search.FileEntrySearchFixture;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -33,11 +35,15 @@ import com.liferay.portal.search.test.util.FieldValuesAssert;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerTestRule;
 
+import java.io.IOException;
+import java.io.InputStream;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -60,14 +66,45 @@ public class DLFileEntryIndexerIndexedFieldsTest extends BaseDLIndexerTestCase {
 			PermissionCheckerTestRule.INSTANCE,
 			SynchronousDestinationTestRule.INSTANCE);
 
+	public FileEntry addFileEntry(String fileName1) throws IOException {
+		Class<?> clazz = getClass();
+
+		try (InputStream inputStream1 = clazz.getResourceAsStream(
+				"dependencies/" + fileName1)) {
+
+			return fileEntrySearchFixture.addFileEntry(
+				new FileEntryBlueprint() {
+					{
+						fileName = fileName1;
+						groupId = dlFixture.getGroupId();
+						inputStream = inputStream1;
+						title = fileName1;
+						userId = dlFixture.getUserId();
+					}
+				});
+		}
+	}
+
 	@Before
 	@Override
 	public void setUp() throws Exception {
 		super.setUp();
 
+		fileEntrySearchFixture = new FileEntrySearchFixture(dlAppLocalService);
+
+		fileEntrySearchFixture.setUp();
+
 		setGroup(dlFixture.addGroup());
 		setIndexerClass(DLFileEntry.class);
 		setUser(dlFixture.addUser());
+	}
+
+	@After
+	@Override
+	public void tearDown() throws Exception {
+		super.tearDown();
+
+		fileEntrySearchFixture.tearDown();
 	}
 
 	@Test
@@ -78,8 +115,7 @@ public class DLFileEntryIndexerIndexedFieldsTest extends BaseDLIndexerTestCase {
 
 		String searchTerm = "新規";
 
-		FileEntry fileEntry = dlFixture.addFileEntry(
-			fileName_jp, dlFixture.getServiceContext());
+		FileEntry fileEntry = addFileEntry(fileName_jp);
 
 		Document document = dlSearchFixture.searchOnlyOne(
 			searchTerm, LocaleUtil.JAPAN);
@@ -227,5 +263,7 @@ public class DLFileEntryIndexerIndexedFieldsTest extends BaseDLIndexerTestCase {
 			map.put(key.concat("_sortable"), title);
 		}
 	}
+
+	protected FileEntrySearchFixture fileEntrySearchFixture;
 
 }

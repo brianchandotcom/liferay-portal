@@ -15,7 +15,9 @@
 package com.liferay.document.library.search.test;
 
 import com.liferay.document.library.kernel.service.DLAppLocalService;
+import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
 import com.liferay.document.library.kernel.service.DLFileEntryMetadataLocalService;
+import com.liferay.document.library.kernel.service.DLFolderLocalService;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.IndexerRegistry;
@@ -40,11 +42,15 @@ public abstract class BaseDLIndexerTestCase {
 		dlFixture.setUp();
 
 		dlSearchFixture = createDLSearchFixture();
+
 		indexedFieldsFixture = createIndexedFieldsFixture();
 	}
 
+	public void tearDown() throws Exception {
+	}
+
 	protected DLFixture createDLFixture() {
-		return new DLFixture(dlAppLocalService, _groups, _users);
+		return new DLFixture(_groups, _users);
 	}
 
 	protected DLSearchFixture createDLSearchFixture() {
@@ -74,9 +80,16 @@ public abstract class BaseDLIndexerTestCase {
 	protected DLAppLocalService dlAppLocalService;
 
 	@Inject
+	protected DLFileEntryLocalService dlFileEntryLocalService;
+
+	@Inject
 	protected DLFileEntryMetadataLocalService dlFileEntryMetadataLocalService;
 
 	protected DLFixture dlFixture;
+
+	@Inject
+	protected DLFolderLocalService dlFolderLocalService;
+
 	protected DLSearchFixture dlSearchFixture;
 	protected IndexedFieldsFixture indexedFieldsFixture;
 

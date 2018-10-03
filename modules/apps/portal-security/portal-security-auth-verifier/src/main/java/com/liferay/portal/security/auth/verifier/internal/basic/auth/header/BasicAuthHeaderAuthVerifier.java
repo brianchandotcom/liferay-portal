@@ -50,13 +50,8 @@ public class BasicAuthHeaderAuthVerifier implements AuthVerifier {
 
 		AuthVerifierResult authVerifierResult = new AuthVerifierResult();
 
-		boolean forcedBasicAuth = MapUtil.getBoolean(
-			accessControlContext.getSettings(), "basic_auth");
-
-		if (!forcedBasicAuth) {
-			forcedBasicAuth = GetterUtil.getBoolean(
-				properties.getProperty("basic_auth"));
-		}
+		boolean forcedBasicAuth = isForcedBasicAuth(
+			accessControlContext, properties);
 
 		try {
 			String[] credentials = _autoLogin.login(
@@ -69,43 +64,51 @@ public class BasicAuthHeaderAuthVerifier implements AuthVerifier {
 				authVerifierResult.setState(AuthVerifierResult.State.SUCCESS);
 				authVerifierResult.setUserId(Long.valueOf(credentials[0]));
 			}
-			else {
-				if (forcedBasicAuth) {
-					HttpAuthorizationHeader httpAuthorizationHeader =
-						new HttpAuthorizationHeader(
-							HttpAuthorizationHeader.SCHEME_BASIC);
-
-					HttpAuthManagerUtil.generateChallenge(
-						accessControlContext.getRequest(),
-						accessControlContext.getResponse(),
-						httpAuthorizationHeader);
-
-					authVerifierResult.setState(
-						AuthVerifierResult.State.INVALID_CREDENTIALS);
-				}
+			else if (forcedBasicAuth) {
+				return generateChallenge(accessControlContext);
 			}
 
 			return authVerifierResult;
 		}
 		catch (AutoLoginException ale) {
 			if (forcedBasicAuth) {
-				HttpAuthorizationHeader httpAuthorizationHeader =
-					new HttpAuthorizationHeader(
-						HttpAuthorizationHeader.SCHEME_BASIC);
-
-				HttpAuthManagerUtil.generateChallenge(
-					accessControlContext.getRequest(),
-					accessControlContext.getResponse(),
-					httpAuthorizationHeader);
-
-				authVerifierResult.setState(
-					AuthVerifierResult.State.INVALID_CREDENTIALS);
-
-				return authVerifierResult;
+				return generateChallenge(accessControlContext);
 			}
 
 			throw new AuthException(ale);
 		}
+	}
+
+	protected AuthVerifierResult generateChallenge(
+		AccessControlContext accessControlContext) {
+
+		HttpAuthorizationHeader httpAuthorizationHeader =
+			new HttpAuthorizationHeader(HttpAuthorizationHeader.SCHEME_BASIC);
+
+		HttpAuthManagerUtil.generateChallenge(
+			accessControlContext.getRequest(),
+			accessControlContext.getResponse(), httpAuthorizationHeader);
+
+		AuthVerifierResult authVerifierResult = new AuthVerifierResult();
+
+		authVerifierResult.setState(
+			AuthVerifierResult.State.INVALID_CREDENTIALS);
+
+		return authVerifierResult;
+	}
+
+	protected boolean isForcedBasicAuth(
+		AccessControlContext accessControlContext, Properties properties) {
+
+		boolean forcedBasicAuth = MapUtil.getBoolean(
+			accessControlContext.getSettings(), "basic_auth");
+
+		if (!forcedBasicAuth) {
+			forcedBasicAuth = GetterUtil.getBoolean(
+				properties.getProperty("basic_auth"));
+		}
+
+		return forcedBasicAuth;
 	}
 
 	private final AutoLogin _autoLogin;

@@ -39,6 +39,7 @@
 
 	<command name="AddContentPageFromPageTemplate" priority="5">
 		<property name="portal.acceptance" value="true" />
+		<description message="Create a content page from a page template with fragments." />
 
 		<execute macro="PageTemplatesAdmin#openPageTemplatesAdmin">
 			<var name="siteURLKey" value="test-site-name" />

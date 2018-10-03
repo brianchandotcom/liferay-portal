@@ -1001,7 +1001,7 @@
 
 		<execute function="SelectFrame" locator1="IFrame#METADATA_SETS_IFRAME" />
 
-		<var method="selenium#getText(Staging#HISTORY_VERSION)" name="historyVersion" />
+		<var method="selenium#getText('Staging#HISTORY_VERSION')" name="historyVersion" />
 
 		<execute macro="Navigator#gotoStagedSitePage">
 			<var name="pageName" value="Staging Test Page" />

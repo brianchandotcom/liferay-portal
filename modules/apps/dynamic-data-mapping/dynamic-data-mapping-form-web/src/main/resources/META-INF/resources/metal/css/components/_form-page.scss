@@ -6,9 +6,12 @@ $c: '.ddm-form-page';
 	.ddm-drag {
 		background-color: #FFF;
 		height: 100%;
-		min-height: 95px;
-		padding: 0 15px;
+		padding: 1rem 15px;
 		width: 100%;
+
+		.form-group {
+			margin-bottom: 0;
+		}
 	}
 
 	.ddm-drag .form-control {

@@ -1,0 +1,33 @@
+$c: '.sidebar-container';
+
+#{$c} {
+	bottom: 0;
+	position: fixed;
+	right: 0;
+	top: 56px;
+	transform: translateX(100%);
+	transition: transform 0.3s ease-in-out;
+	width: 380px;
+	z-index: 12;
+
+	&.open {
+		transform: translateX(0%);
+	}
+
+	.sidebar-body {
+		overflow: visible;
+	}
+
+	.list-group-item:hover {
+		background-color: #F0F5FF;
+	}
+
+	.ddm-sidebar-body {
+		height: calc(100vh - 160px);
+		overflow: auto;
+	}
+
+	.ddm-empty {
+		display: none;
+	}
+}

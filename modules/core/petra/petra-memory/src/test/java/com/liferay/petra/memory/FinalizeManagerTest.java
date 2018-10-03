@@ -14,7 +14,6 @@
 
 package com.liferay.petra.memory;
 
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.test.GCUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -30,7 +29,6 @@ import java.util.Map;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingDeque;
 
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -48,47 +46,6 @@ public class FinalizeManagerTest {
 		new AggregateTestRule(
 			CodeCoverageAssertor.INSTANCE, NewEnvTestRule.INSTANCE);
 
-	@After
-	public void tearDown() {
-		System.clearProperty(_THREAD_ENABLED_KEY);
-	}
-
-	@NewEnv(type = NewEnv.Type.NONE)
-	@Test
-	public void testBadFinalizeAction() {
-		final RuntimeException runtimeException = new RuntimeException();
-
-		Reference<Object> reference = FinalizeManager.register(
-			new Object(),
-			new FinalizeAction() {
-
-				@Override
-				public void doFinalize(Reference<?> reference) {
-					Assert.assertNotNull(_getReferent(reference));
-
-					throw runtimeException;
-				}
-
-			},
-			FinalizeManager.PHANTOM_REFERENCE_FACTORY);
-
-		Assert.assertNotNull(_getReferent(reference));
-
-		reference.enqueue();
-
-		try {
-			ReflectionTestUtil.invoke(
-				FinalizeManager.class, "_pollingCleanup", new Class<?>[0]);
-
-			Assert.fail();
-		}
-		catch (Exception e) {
-			Assert.assertSame(runtimeException, e);
-		}
-
-		Assert.assertNull(_getReferent(reference));
-	}
-
 	@NewEnv(type = NewEnv.Type.NONE)
 	@Test
 	public void testConstructor() {
@@ -97,47 +54,53 @@ public class FinalizeManagerTest {
 
 	@Test
 	public void testManualClear() throws Exception {
-		System.setProperty(_THREAD_ENABLED_KEY, StringPool.FALSE);
+		Object object1 = new Object();
 
-		Object object = new Object();
+		MarkFinalizeAction markFinalizeAction1 = new MarkFinalizeAction();
 
-		MarkFinalizeAction markFinalizeAction = new MarkFinalizeAction();
-
-		Reference<Object> reference = FinalizeManager.register(
-			object, markFinalizeAction, FinalizeManager.WEAK_REFERENCE_FACTORY);
+		Reference<Object> reference1 = FinalizeManager.register(
+			object1, markFinalizeAction1,
+			FinalizeManager.WEAK_REFERENCE_FACTORY);
 
 		Map<Object, FinalizeAction> finalizeActions =
 			ReflectionTestUtil.getFieldValue(
 				FinalizeManager.class, "_finalizeActions");
 
 		Assert.assertEquals(
-			markFinalizeAction,
-			finalizeActions.get(_newIdentityKey(reference)));
+			markFinalizeAction1,
+			finalizeActions.get(_newIdentityKey(reference1)));
 
-		reference.clear();
+		reference1.clear();
 
-		Assert.assertNull(finalizeActions.get(_newIdentityKey(reference)));
+		Assert.assertNull(finalizeActions.get(_newIdentityKey(reference1)));
 
-		object = null;
+		object1 = null;
+
+		Object object2 = new Object();
+
+		MarkFinalizeAction markFinalizeAction2 = new MarkFinalizeAction();
+
+		Reference<Object> reference2 = FinalizeManager.register(
+			object2, markFinalizeAction2,
+			FinalizeManager.WEAK_REFERENCE_FACTORY);
+
+		Assert.assertEquals(
+			markFinalizeAction2,
+			finalizeActions.get(_newIdentityKey(reference2)));
+
+		reference1.enqueue();
+
+		object2 = null;
 
 		GCUtil.gc(true);
 
-		ReflectionTestUtil.invoke(
-			FinalizeManager.class, "_pollingCleanup", new Class<?>[0]);
+		_waitUntilMarked(markFinalizeAction2);
 
-		Assert.assertFalse(markFinalizeAction.isMarked());
-
-		ReflectionTestUtil.invoke(
-			FinalizeManager.class, "_finalizeReference",
-			new Class<?>[] {Reference.class}, reference);
-
-		Assert.assertFalse(markFinalizeAction.isMarked());
+		Assert.assertFalse(markFinalizeAction1.isMarked());
 	}
 
 	@Test
 	public void testRegisterationIdentity() throws Exception {
-		System.setProperty(_THREAD_ENABLED_KEY, StringPool.FALSE);
-
 		String testString = new String("testString");
 
 		MarkFinalizeAction markFinalizeAction = new MarkFinalizeAction();
@@ -201,41 +164,22 @@ public class FinalizeManagerTest {
 	}
 
 	@Test
-	public void testRegisterPhantomWithoutThread() throws InterruptedException {
-		doTestRegister(false, ReferenceType.PHANTOM);
+	public void testRegisterPhantom() throws InterruptedException {
+		doTestRegister(ReferenceType.PHANTOM);
 	}
 
 	@Test
-	public void testRegisterPhantomWithThread() throws InterruptedException {
-		doTestRegister(true, ReferenceType.PHANTOM);
+	public void testRegisterSoft() throws InterruptedException {
+		doTestRegister(ReferenceType.SOFT);
 	}
 
 	@Test
-	public void testRegisterSoftWithoutThread() throws InterruptedException {
-		doTestRegister(false, ReferenceType.SOFT);
+	public void testRegisterWeak() throws InterruptedException {
+		doTestRegister(ReferenceType.WEAK);
 	}
 
-	@Test
-	public void testRegisterSoftWithThread() throws InterruptedException {
-		doTestRegister(true, ReferenceType.SOFT);
-	}
-
-	@Test
-	public void testRegisterWeakWithoutThread() throws InterruptedException {
-		doTestRegister(false, ReferenceType.WEAK);
-	}
-
-	@Test
-	public void testRegisterWeakWithThread() throws InterruptedException {
-		doTestRegister(true, ReferenceType.WEAK);
-	}
-
-	protected void doTestRegister(
-			boolean threadEnabled, ReferenceType referenceType)
+	protected void doTestRegister(ReferenceType referenceType)
 		throws InterruptedException {
-
-		System.setProperty(
-			_THREAD_ENABLED_KEY, Boolean.toString(threadEnabled));
 
 		String id = "testObject";
 
@@ -282,13 +226,7 @@ public class FinalizeManagerTest {
 			GCUtil.gc(false);
 		}
 
-		if (threadEnabled) {
-			_waitUntilMarked(markFinalizeAction);
-		}
-		else {
-			ReflectionTestUtil.invoke(
-				FinalizeManager.class, "_pollingCleanup", new Class<?>[0]);
-		}
+		_waitUntilMarked(markFinalizeAction);
 
 		Assert.assertTrue(markFinalizeAction.isMarked());
 
@@ -299,13 +237,11 @@ public class FinalizeManagerTest {
 			Assert.assertNull(markFinalizeAction.getId());
 		}
 
-		if (!threadEnabled || (referenceType != ReferenceType.PHANTOM)) {
+		if (referenceType != ReferenceType.PHANTOM) {
 			Assert.assertNull(_getReferent(reference));
 		}
 
-		if (threadEnabled) {
-			_checkThreadState();
-		}
+		_checkThreadState();
 	}
 
 	private static Object _newIdentityKey(Reference<?> reference)
@@ -379,9 +315,6 @@ public class FinalizeManagerTest {
 
 		Assert.assertTrue(markFinalizeAction.isMarked());
 	}
-
-	private static final String _THREAD_ENABLED_KEY =
-		FinalizeManager.class.getName() + ".thread.enabled";
 
 	private final BlockingQueue<String> _finalizedIds =
 		new LinkedBlockingDeque<>();

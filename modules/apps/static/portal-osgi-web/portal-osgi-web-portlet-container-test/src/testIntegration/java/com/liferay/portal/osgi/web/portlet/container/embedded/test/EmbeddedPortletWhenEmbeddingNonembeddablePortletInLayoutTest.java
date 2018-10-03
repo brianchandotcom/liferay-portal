@@ -72,8 +72,22 @@ public class EmbeddedPortletWhenEmbeddingNonembeddablePortletInLayoutTest
 			_testNonembeddedPortlet.getPortletId(), false);
 	}
 
+	@After
+	@Override
+	public void tearDown() throws Exception {
+		StringBundler sb = new StringBundler(_layoutStaticPortletsAll.length);
+
+		for (String portletId : _layoutStaticPortletsAll) {
+			sb.append(portletId);
+		}
+
+		PropsUtil.set(PropsKeys.LAYOUT_STATIC_PORTLETS_ALL, sb.toString());
+
+		super.tearDown();
+	}
+
 	@Test
-	public void shouldNotReturnItFromAllPortlets() throws Exception {
+	public void testShouldNotReturnItFromAllPortlets() throws Exception {
 		PortletPreferencesLocalServiceUtil.addPortletPreferences(
 			TestPropsValues.getCompanyId(), PortletKeys.PREFS_OWNER_ID_DEFAULT,
 			PortletKeys.PREFS_OWNER_TYPE_LAYOUT, layout.getPlid(),
@@ -88,7 +102,7 @@ public class EmbeddedPortletWhenEmbeddingNonembeddablePortletInLayoutTest
 	}
 
 	@Test
-	public void shouldNotReturnItFromEmbeddedPortlets() throws Exception {
+	public void testShouldNotReturnItFromEmbeddedPortlets() throws Exception {
 		PortletPreferencesLocalServiceUtil.addPortletPreferences(
 			TestPropsValues.getCompanyId(), PortletKeys.PREFS_OWNER_ID_DEFAULT,
 			PortletKeys.PREFS_OWNER_TYPE_LAYOUT, layout.getPlid(),
@@ -104,7 +118,7 @@ public class EmbeddedPortletWhenEmbeddingNonembeddablePortletInLayoutTest
 	}
 
 	@Test
-	public void shouldNotReturnItFromExplicitlyAddedPortlets()
+	public void testShouldNotReturnItFromExplicitlyAddedPortlets()
 		throws Exception {
 
 		PortletPreferencesLocalServiceUtil.addPortletPreferences(
@@ -122,7 +136,7 @@ public class EmbeddedPortletWhenEmbeddingNonembeddablePortletInLayoutTest
 	}
 
 	@Test
-	public void shouldReturnItsConfiguration() throws Exception {
+	public void testShouldReturnItsConfiguration() throws Exception {
 		String defaultPreferences = RandomTestUtil.randomString();
 
 		PortletPreferencesLocalServiceUtil.addPortletPreferences(
@@ -143,20 +157,6 @@ public class EmbeddedPortletWhenEmbeddingNonembeddablePortletInLayoutTest
 
 		Assert.assertEquals(
 			defaultPreferences, embeddedPortletPreference.getPreferences());
-	}
-
-	@After
-	@Override
-	public void tearDown() throws Exception {
-		StringBundler sb = new StringBundler(_layoutStaticPortletsAll.length);
-
-		for (String portletId : _layoutStaticPortletsAll) {
-			sb.append(portletId);
-		}
-
-		PropsUtil.set(PropsKeys.LAYOUT_STATIC_PORTLETS_ALL, sb.toString());
-
-		super.tearDown();
 	}
 
 	private static String[] _layoutStaticPortletsAll;

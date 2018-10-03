@@ -71,7 +71,7 @@ public class
 	}
 
 	@Test
-	public void shouldRenderApplicationDisplayTemplateAndRuntimePortlets()
+	public void testShouldRenderApplicationDisplayTemplateAndRuntimePortlets()
 		throws Exception {
 
 		TestPortlet testPortlet = new TestPortlet() {

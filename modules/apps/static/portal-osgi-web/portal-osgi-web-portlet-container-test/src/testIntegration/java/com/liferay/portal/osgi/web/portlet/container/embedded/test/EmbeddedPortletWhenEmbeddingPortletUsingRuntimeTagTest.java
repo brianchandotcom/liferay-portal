@@ -72,7 +72,7 @@ public class EmbeddedPortletWhenEmbeddingPortletUsingRuntimeTagTest
 	}
 
 	@Test
-	public void shouldRenderEmbeddedAndRuntimePortlets() throws Exception {
+	public void testShouldRenderEmbeddedAndRuntimePortlets() throws Exception {
 		TestPortlet testPortlet = new TestPortlet() {
 
 			@Override

@@ -67,8 +67,19 @@ public class EmbeddedPortletWhenEmbeddingEmbeddablePortletInLayoutTest {
 		_layoutStaticPortletsAll = PropsValues.LAYOUT_STATIC_PORTLETS_ALL;
 	}
 
+	@After
+	public void tearDown() {
+		StringBundler sb = new StringBundler(_layoutStaticPortletsAll.length);
+
+		for (String portletId : _layoutStaticPortletsAll) {
+			sb.append(portletId);
+		}
+
+		PropsUtil.set(PropsKeys.LAYOUT_STATIC_PORTLETS_ALL, sb.toString());
+	}
+
 	@Test
-	public void shouldNotReturnItFromExplicitlyAddedPortlets()
+	public void testShouldNotReturnItFromExplicitlyAddedPortlets()
 		throws Exception {
 
 		Portlet portlet = PortletLocalServiceUtil.getPortletById(
@@ -88,7 +99,7 @@ public class EmbeddedPortletWhenEmbeddingEmbeddablePortletInLayoutTest {
 	}
 
 	@Test
-	public void shouldReturnItFromAllPortlets() throws Exception {
+	public void testShouldReturnItFromAllPortlets() throws Exception {
 		Portlet portlet = PortletLocalServiceUtil.getPortletById(
 			PortletKeys.LOGIN);
 
@@ -109,7 +120,7 @@ public class EmbeddedPortletWhenEmbeddingEmbeddablePortletInLayoutTest {
 	}
 
 	@Test
-	public void shouldReturnItFromEmbeddedPortlets() throws Exception {
+	public void testShouldReturnItFromEmbeddedPortlets() throws Exception {
 		Portlet portlet = PortletLocalServiceUtil.getPortletById(
 			PortletKeys.LOGIN);
 
@@ -131,7 +142,7 @@ public class EmbeddedPortletWhenEmbeddingEmbeddablePortletInLayoutTest {
 	}
 
 	@Test
-	public void shouldReturnItsConfiguration() throws Exception {
+	public void testShouldReturnItsConfiguration() throws Exception {
 		Portlet portlet = PortletLocalServiceUtil.getPortletById(
 			PortletKeys.LOGIN);
 
@@ -154,17 +165,6 @@ public class EmbeddedPortletWhenEmbeddingEmbeddablePortletInLayoutTest {
 
 		Assert.assertEquals(
 			defaultPreferences, embeddedPortletPreference.getPreferences());
-	}
-
-	@After
-	public void tearDown() {
-		StringBundler sb = new StringBundler(_layoutStaticPortletsAll.length);
-
-		for (String portletId : _layoutStaticPortletsAll) {
-			sb.append(portletId);
-		}
-
-		PropsUtil.set(PropsKeys.LAYOUT_STATIC_PORTLETS_ALL, sb.toString());
 	}
 
 	@DeleteAfterTestRun

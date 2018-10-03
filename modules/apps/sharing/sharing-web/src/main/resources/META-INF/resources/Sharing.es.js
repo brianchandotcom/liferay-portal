@@ -67,7 +67,7 @@ class Sharing extends PortletBase {
 	_handleSubmit(event) {
 		event.preventDefault();
 
-		if (!this.submitting && this._validateEmail(this.userEmailAddress)) {
+		if (!this.submitting && this._validateEmail(this.userEmailAddress)) {
 			this.submitting = true;
 
 			this.fetch(
@@ -80,37 +80,37 @@ class Sharing extends PortletBase {
 					userEmailAddress: this._getEmailAdress(this.userEmailAddress)
 				}
 			)
-			.then(
-				response => {
-					this.submitting = false;
+				.then(
+					response => {
+						this.submitting = false;
 
-					const jsonResponse = response.json();
+						const jsonResponse = response.json();
 
-					return response.ok ?
-						jsonResponse :
-						jsonResponse.then(
-							json => {
-								const error = new Error(json.errorMessage || response.statusText);
-								throw Object.assign(error, {response});
-							}
-						)
-					;
-				}
-			)
-			.then(
-				json => {
-					parent.Liferay.Portlet.refresh(`#p_p_id${this._refererPortletNamespace}`);
+						return response.ok ?
+							jsonResponse :
+							jsonResponse.then(
+								json => {
+									const error = new Error(json.errorMessage || response.statusText);
+									throw Object.assign(error, {response});
+								}
+							)
+						;
+					}
+				)
+				.then(
+					json => {
+						parent.Liferay.Portlet.refresh(`#p_p_id${this._refererPortletNamespace}`);
 
-					this._showNotification(json.successMessage);
-				}
-			)
-			.catch(
-				error => {
-					this.submitting = false;
+						this._showNotification(json.successMessage);
+					}
+				)
+				.catch(
+					error => {
+						this.submitting = false;
 
-					this._showNotification(error.message, true);
-				}
-			);
+						this._showNotification(error.message, true);
+					}
+				);
 		}
 	}
 

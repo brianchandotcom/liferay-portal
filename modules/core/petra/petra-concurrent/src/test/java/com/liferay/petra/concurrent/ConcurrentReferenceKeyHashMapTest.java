@@ -15,11 +15,7 @@
 package com.liferay.petra.concurrent;
 
 import com.liferay.petra.memory.FinalizeManager;
-import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
-import com.liferay.portal.kernel.test.rule.NewEnv;
-import com.liferay.portal.kernel.test.rule.NewEnvTestRule;
 
 import java.lang.ref.Reference;
 
@@ -40,17 +36,11 @@ public class ConcurrentReferenceKeyHashMapTest
 
 	@ClassRule
 	@Rule
-	public static final AggregateTestRule aggregateTestRule =
-		new AggregateTestRule(
-			CodeCoverageAssertor.INSTANCE, NewEnvTestRule.INSTANCE);
+	public static final CodeCoverageAssertor codeCoverageAssertor =
+		CodeCoverageAssertor.INSTANCE;
 
-	@NewEnv(type = NewEnv.Type.CLASSLOADER)
 	@Test
 	public void testAutoRemove() throws InterruptedException {
-		System.setProperty(
-			FinalizeManager.class.getName() + ".thread.enabled",
-			StringPool.FALSE);
-
 		testAutoRemove(
 			new ConcurrentReferenceKeyHashMap<String, Object>(
 				FinalizeManager.SOFT_REFERENCE_FACTORY),

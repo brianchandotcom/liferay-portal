@@ -15,32 +15,23 @@
 package com.liferay.petra.concurrent;
 
 import com.liferay.petra.memory.FinalizeManager;
-import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.test.FinalizeManagerUtil;
 import com.liferay.portal.kernel.test.GCUtil;
-import com.liferay.portal.kernel.test.ReflectionTestUtil;
-import com.liferay.portal.kernel.test.rule.NewEnv;
-import com.liferay.portal.kernel.test.rule.NewEnvTestRule;
 
 import java.lang.ref.Reference;
 
 import java.util.concurrent.ConcurrentMap;
 
 import org.junit.Assert;
-import org.junit.Rule;
 import org.junit.Test;
 
 /**
  * @author Shuyang Zhou
  */
-@NewEnv(type = NewEnv.Type.CLASSLOADER)
 public class ConcurrentMapperHashMapCombinationTest {
 
 	@Test
 	public void testIdentityKeyWeakValue() throws InterruptedException {
-		System.setProperty(
-			FinalizeManager.class.getName() + ".thread.enabled",
-			StringPool.FALSE);
-
 		String testKey1 = "testKey1";
 
 		String testKey2 = new String(testKey1);
@@ -68,8 +59,7 @@ public class ConcurrentMapperHashMapCombinationTest {
 
 		GCUtil.gc(true);
 
-		ReflectionTestUtil.invoke(
-			FinalizeManager.class, "_pollingCleanup", new Class<?>[0]);
+		FinalizeManagerUtil.drainPendingFinalizeActions();
 
 		Assert.assertEquals(concurrentMap.toString(), 1, concurrentMap.size());
 		Assert.assertTrue(concurrentMap.containsKey(testKey2));
@@ -78,18 +68,13 @@ public class ConcurrentMapperHashMapCombinationTest {
 
 		GCUtil.gc(true);
 
-		ReflectionTestUtil.invoke(
-			FinalizeManager.class, "_pollingCleanup", new Class<?>[0]);
+		FinalizeManagerUtil.drainPendingFinalizeActions();
 
 		Assert.assertTrue(concurrentMap.toString(), concurrentMap.isEmpty());
 	}
 
 	@Test
 	public void testSoftKeyWeakValue() throws InterruptedException {
-		System.setProperty(
-			FinalizeManager.class.getName() + ".thread.enabled",
-			StringPool.FALSE);
-
 		String testKey1 = new String("testKey1");
 		String testKey2 = new String("testKey2");
 		Object testValue1 = new Object();
@@ -117,8 +102,7 @@ public class ConcurrentMapperHashMapCombinationTest {
 
 		GCUtil.gc(true);
 
-		ReflectionTestUtil.invoke(
-			FinalizeManager.class, "_pollingCleanup", new Class<?>[0]);
+		FinalizeManagerUtil.drainPendingFinalizeActions();
 
 		Assert.assertEquals(
 			concurrentReferenceMap.toString(), 2,
@@ -130,8 +114,7 @@ public class ConcurrentMapperHashMapCombinationTest {
 
 		GCUtil.fullGC(true);
 
-		ReflectionTestUtil.invoke(
-			FinalizeManager.class, "_pollingCleanup", new Class<?>[0]);
+		FinalizeManagerUtil.drainPendingFinalizeActions();
 
 		Assert.assertEquals(
 			concurrentReferenceMap.toString(), 1,
@@ -144,15 +127,11 @@ public class ConcurrentMapperHashMapCombinationTest {
 
 		GCUtil.gc(true);
 
-		ReflectionTestUtil.invoke(
-			FinalizeManager.class, "_pollingCleanup", new Class<?>[0]);
+		FinalizeManagerUtil.drainPendingFinalizeActions();
 
 		Assert.assertTrue(
 			concurrentReferenceMap.toString(),
 			concurrentReferenceMap.isEmpty());
 	}
-
-	@Rule
-	public final NewEnvTestRule newEnvTestRule = NewEnvTestRule.INSTANCE;
 
 }

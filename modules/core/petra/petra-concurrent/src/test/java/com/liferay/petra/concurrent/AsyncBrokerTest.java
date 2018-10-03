@@ -14,21 +14,16 @@
 
 package com.liferay.petra.concurrent;
 
-import com.liferay.petra.memory.FinalizeManager;
-import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.test.FinalizeManagerUtil;
 import com.liferay.portal.kernel.test.GCUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
-import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
-import com.liferay.portal.kernel.test.rule.NewEnv;
-import com.liferay.portal.kernel.test.rule.NewEnvTestRule;
 
 import java.util.Arrays;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -41,14 +36,8 @@ public class AsyncBrokerTest {
 
 	@ClassRule
 	@Rule
-	public static final AggregateTestRule aggregateTestRule =
-		new AggregateTestRule(
-			CodeCoverageAssertor.INSTANCE, NewEnvTestRule.INSTANCE);
-
-	@After
-	public void tearDown() {
-		System.clearProperty(_THREAD_ENABLED_KEY);
-	}
+	public static final CodeCoverageAssertor codeCoverageAssertor =
+		CodeCoverageAssertor.INSTANCE;
 
 	@Test
 	public void testGetOpenBids() {
@@ -76,11 +65,8 @@ public class AsyncBrokerTest {
 		Assert.assertTrue(map.toString(), map.isEmpty());
 	}
 
-	@NewEnv(type = NewEnv.Type.CLASSLOADER)
 	@Test
 	public void testOrphanCancellation() throws InterruptedException {
-		System.setProperty(_THREAD_ENABLED_KEY, StringPool.FALSE);
-
 		AsyncBroker<String, String> asyncBroker = new AsyncBroker<>();
 
 		NoticeableFuture<String> noticeableFuture = asyncBroker.post(_KEY);
@@ -93,8 +79,7 @@ public class AsyncBrokerTest {
 
 		GCUtil.gc(true);
 
-		ReflectionTestUtil.invoke(
-			FinalizeManager.class, "_pollingCleanup", new Class<?>[0]);
+		FinalizeManagerUtil.drainPendingFinalizeActions();
 
 		Assert.assertTrue(completedMarker.get());
 	}
@@ -233,9 +218,6 @@ public class AsyncBrokerTest {
 	}
 
 	private static final String _KEY = "testKey";
-
-	private static final String _THREAD_ENABLED_KEY =
-		FinalizeManager.class.getName() + ".thread.enabled";
 
 	private static final String _VALUE = "testValue";
 

@@ -4,7 +4,7 @@
 	</command>
 
 	<command name="installPatchOnSpecificServer" summary="Install the following patch onto Liferay Portal server with port ${nodePort}: ${patchFileZipURL}">
-		<var method="StringUtil#replace('${nodePort}', '080','')" name="leadingPortNumber" />
+		<var method="StringUtil#replace('${nodePort}', '080', '')" name="leadingPortNumber" />
 
 		<var method="MathUtil#difference('${leadingPortNumber}', '8')" name="bundleIndex" />
 

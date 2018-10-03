@@ -517,7 +517,7 @@
 			</not>
 			<then>
 				<var name="key_fieldName" value="${fieldTitle}" />
-				<var method="StringUtil#replace('${fieldTitle}',' ','')" name="key_fieldName" />
+				<var method="StringUtil#replace('${fieldTitle}', ' ', '')" name="key_fieldName" />
 			</then>
 			<else>
 				<var name="key_fieldName" value="${fieldName}" />

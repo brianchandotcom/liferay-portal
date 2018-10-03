@@ -33,8 +33,9 @@
 		</if>
 	</tear-down>
 
-	<command name="AddCollectionFragmentWithSnippets" priority="5">
+	<command name="AddFragmentToContentPage" priority="5">
 		<property name="portal.acceptance" value="true" />
+		<description message="Add a fragment in the UI and then assert that it displays properly when added to a content page." />
 
 		<execute macro="FragmentsAdmin#addCollection">
 			<var name="collectionName" value="Collection Name" />

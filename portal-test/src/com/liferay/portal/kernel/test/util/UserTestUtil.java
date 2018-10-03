@@ -223,6 +223,21 @@ public class UserTestUtil {
 			ServiceContext serviceContext)
 		throws Exception {
 
+		String emailAddress =
+			RandomTestUtil.randomString() + RandomTestUtil.nextLong() +
+				"@liferay.com";
+
+		return addUser(
+			companyId, userId, emailAddress, StringPool.BLANK, screenName,
+			locale, firstName, lastName, groupIds, serviceContext);
+	}
+
+	public static User addUser(
+			long companyId, long userId, String emailAddress, String password,
+			String screenName, Locale locale, String firstName, String lastName,
+			long[] groupIds, ServiceContext serviceContext)
+		throws Exception {
+
 		User user = UserLocalServiceUtil.fetchUserByScreenName(
 			companyId, screenName);
 
@@ -231,11 +246,8 @@ public class UserTestUtil {
 		}
 
 		boolean autoPassword = true;
-		String password1 = StringPool.BLANK;
-		String password2 = StringPool.BLANK;
-		String emailAddress =
-			RandomTestUtil.randomString() + RandomTestUtil.nextLong() +
-				"@liferay.com";
+		String password1 = password;
+		String password2 = password;
 		long facebookId = 0;
 		String openId = StringPool.BLANK;
 		String middleName = StringPool.BLANK;

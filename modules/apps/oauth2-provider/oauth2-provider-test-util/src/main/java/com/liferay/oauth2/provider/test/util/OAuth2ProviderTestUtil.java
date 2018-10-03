@@ -47,6 +47,13 @@ public class OAuth2ProviderTestUtil {
 			Class<? extends BundleActivator> bundleActivatorClass)
 		throws Exception {
 
+		return getArchive(bundleActivatorClass, new File("bnd.bnd"));
+	}
+
+	public static Archive<?> getArchive(
+			Class<? extends BundleActivator> bundleActivatorClass, File bndFile)
+		throws Exception {
+
 		String javaClassPathString = System.getProperty("java.class.path");
 
 		String[] javaClassPaths = StringUtil.split(
@@ -65,8 +72,6 @@ public class OAuth2ProviderTestUtil {
 				bndProjectBuilder.addClassPath(file);
 			}
 		}
-
-		File bndFile = new File("bnd.bnd");
 
 		bndProjectBuilder = bndProjectBuilder.setBndFile(bndFile);
 

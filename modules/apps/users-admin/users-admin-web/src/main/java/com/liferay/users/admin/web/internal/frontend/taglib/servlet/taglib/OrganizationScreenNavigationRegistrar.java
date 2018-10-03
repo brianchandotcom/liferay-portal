@@ -14,13 +14,16 @@
 
 package com.liferay.users.admin.web.internal.frontend.taglib.servlet.taglib;
 
+import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationCategory;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.portlet.PortletURLFactory;
 import com.liferay.portal.kernel.service.OrganizationService;
 import com.liferay.portal.kernel.util.HashMapDictionary;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.users.admin.constants.UserFormConstants;
 
 import java.util.ArrayList;
@@ -103,7 +106,7 @@ public class OrganizationScreenNavigationRegistrar {
 			_createUpdateOnlyScreenNavigationEntry(
 				"contact-information", _CATEGORY_CONTACT,
 				"/organization/contact_information.jsp",
-				"/users_admin/update_organization_contact_information"),
+				"/users_admin/update_organization_contact_information", false),
 			20);
 
 		_registerScreenNavigationEntry(
@@ -119,18 +122,19 @@ public class OrganizationScreenNavigationRegistrar {
 		String mvcActionCommandName) {
 
 		return _createScreenNavigationEntry(
-			entryKey, categoryKey, jspPath, mvcActionCommandName,
+			entryKey, categoryKey, jspPath, mvcActionCommandName, true,
 			(user, organization) -> true);
 	}
 
 	private ScreenNavigationEntry<Organization> _createScreenNavigationEntry(
 		String entryKey, String categoryKey, String jspPath,
-		String mvcActionCommandName,
+		String mvcActionCommandName, boolean showControls,
 		BiFunction<User, Organization, Boolean> isVisibleBiFunction) {
 
 		return new OrganizationScreenNavigationEntry(
-			_jspRenderer, _organizationService, entryKey, categoryKey, jspPath,
-			mvcActionCommandName, isVisibleBiFunction);
+			_jspRenderer, _npmResolver, _organizationService, _portal,
+			_portletURLFactory, entryKey, categoryKey, jspPath,
+			mvcActionCommandName, showControls, isVisibleBiFunction);
 	}
 
 	private ScreenNavigationEntry<Organization>
@@ -138,8 +142,17 @@ public class OrganizationScreenNavigationRegistrar {
 			String entryKey, String categoryKey, String jspPath,
 			String mvcActionCommandName) {
 
+		return _createUpdateOnlyScreenNavigationEntry(
+			entryKey, categoryKey, jspPath, mvcActionCommandName, true);
+	}
+
+	private ScreenNavigationEntry<Organization>
+		_createUpdateOnlyScreenNavigationEntry(
+			String entryKey, String categoryKey, String jspPath,
+			String mvcActionCommandName, boolean showControls) {
+
 		return _createScreenNavigationEntry(
-			entryKey, categoryKey, jspPath, mvcActionCommandName,
+			entryKey, categoryKey, jspPath, mvcActionCommandName, showControls,
 			(user, organization) -> {
 				if (organization == null) {
 					return false;
@@ -207,7 +220,16 @@ public class OrganizationScreenNavigationRegistrar {
 	private JSPRenderer _jspRenderer;
 
 	@Reference
+	private NPMResolver _npmResolver;
+
+	@Reference
 	private OrganizationService _organizationService;
+
+	@Reference
+	private Portal _portal;
+
+	@Reference
+	private PortletURLFactory _portletURLFactory;
 
 	private final List<ServiceRegistration<ScreenNavigationCategory>>
 		_screenNavigationCategoryServiceRegistrations = new ArrayList<>();

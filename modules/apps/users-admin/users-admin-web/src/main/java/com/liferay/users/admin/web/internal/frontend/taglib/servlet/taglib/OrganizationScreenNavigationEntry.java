@@ -14,6 +14,7 @@
 
 package com.liferay.users.admin.web.internal.frontend.taglib.servlet.taglib;
 
+import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -22,8 +23,10 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.portlet.PortletURLFactory;
 import com.liferay.portal.kernel.service.OrganizationService;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.users.admin.constants.UserFormConstants;
 import com.liferay.users.admin.web.internal.constants.UsersAdminWebKeys;
@@ -33,6 +36,10 @@ import java.io.IOException;
 
 import java.util.Locale;
 import java.util.function.BiFunction;
+
+import javax.portlet.ActionRequest;
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -44,17 +51,23 @@ public class OrganizationScreenNavigationEntry
 	implements ScreenNavigationEntry<Organization> {
 
 	public OrganizationScreenNavigationEntry(
-		JSPRenderer jspRenderer, OrganizationService organizationService,
-		String entryKey, String categoryKey, String jspPath,
-		String mvcActionCommandName,
+		JSPRenderer jspRenderer, NPMResolver npmResolver,
+		OrganizationService organizationService, Portal portal,
+		PortletURLFactory portletURLFactory, String entryKey,
+		String categoryKey, String jspPath, String mvcActionCommandName,
+		boolean showControls,
 		BiFunction<User, Organization, Boolean> isVisibleBiFunction) {
 
 		_jspRenderer = jspRenderer;
+		_npmResolver = npmResolver;
 		_organizationService = organizationService;
+		_portal = portal;
+		_portletURLFactory = portletURLFactory;
 		_entryKey = entryKey;
 		_categoryKey = categoryKey;
 		_jspPath = jspPath;
 		_mvcActionCommandName = mvcActionCommandName;
+		_showControls = showControls;
 		_isVisibleBiFunction = isVisibleBiFunction;
 	}
 
@@ -94,9 +107,6 @@ public class OrganizationScreenNavigationEntry
 			organizationScreenNavigationDisplayContext =
 				new OrganizationScreenNavigationDisplayContext();
 
-		organizationScreenNavigationDisplayContext.setActionCommandName(
-			_mvcActionCommandName);
-
 		String redirect = ParamUtil.getString(request, "redirect");
 
 		String backURL = ParamUtil.getString(request, "backURL", redirect);
@@ -125,10 +135,50 @@ public class OrganizationScreenNavigationEntry
 			organization);
 		organizationScreenNavigationDisplayContext.setOrganizationId(
 			organizationId);
+		organizationScreenNavigationDisplayContext.setShowControls(
+			_showControls);
+
+		String portletId = _portal.getPortletId(request);
+
+		PortletURL editOrganizationActionURL = _portletURLFactory.create(
+			request, portletId, PortletRequest.ACTION_PHASE);
+
+		editOrganizationActionURL.setParameter(
+			ActionRequest.ACTION_NAME, _mvcActionCommandName);
+
+		PortletURL editOrganizationRenderURL = _portletURLFactory.create(
+			request, portletId, PortletRequest.RENDER_PHASE);
+
+		editOrganizationRenderURL.setParameter(
+			"mvcRenderCommandName", "/users_admin/edit_organization");
+		editOrganizationRenderURL.setParameter("backURL", backURL);
+		editOrganizationRenderURL.setParameter(
+			"organizationId", String.valueOf(organizationId));
+		editOrganizationRenderURL.setParameter(
+			"screenNavigationCategoryKey", _categoryKey);
+		editOrganizationRenderURL.setParameter(
+			"screenNavigationEntryKey", _entryKey);
+
+		editOrganizationActionURL.setParameter(
+			"redirect", editOrganizationRenderURL.toString());
+
+		editOrganizationActionURL.setParameter("backURL", backURL);
+		editOrganizationActionURL.setParameter(
+			"organizationId", String.valueOf(organizationId));
+		editOrganizationActionURL.setParameter(
+			"screenNavigationCategoryKey", _categoryKey);
+		editOrganizationActionURL.setParameter(
+			"screenNavigationEntryKey", _entryKey);
+
+		organizationScreenNavigationDisplayContext.setEditOrganizationActionURL(
+			editOrganizationActionURL.toString());
+
+		String jsModuleName = _npmResolver.resolveModuleName(
+			"users-admin-web/js/contact-information.es");
+
 		organizationScreenNavigationDisplayContext.
-			setScreenNavigationCategoryKey(_categoryKey);
-		organizationScreenNavigationDisplayContext.setScreenNavigationEntryKey(
-			_entryKey);
+			setContactInformationJSRequire(
+				jsModuleName + " as ContactInformation");
 
 		request.setAttribute(
 			UsersAdminWebKeys.ORGANIZATION_SCREEN_NAVIGATION_DISPLAY_CONTEXT,
@@ -147,6 +197,10 @@ public class OrganizationScreenNavigationEntry
 	private final String _jspPath;
 	private final JSPRenderer _jspRenderer;
 	private final String _mvcActionCommandName;
+	private final NPMResolver _npmResolver;
 	private final OrganizationService _organizationService;
+	private final Portal _portal;
+	private final PortletURLFactory _portletURLFactory;
+	private final boolean _showControls;
 
 }

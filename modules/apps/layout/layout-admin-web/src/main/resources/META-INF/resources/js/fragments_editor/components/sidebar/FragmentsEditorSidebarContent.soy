@@ -16,17 +16,57 @@
 	{@param? highlightMapping: bool}
 	{@param? selectedMappingTypes: ?}
 	{@param? store: ?}
+	{@param? _handleSectionButtonClick: any}
+	{@param? _sectionId: string}
+	{@param? _sections: list<[
+		icon: string,
+		label: string,
+		sectionId: string
+	]>}
 
 	<div class="fragments-editor-sidebar-content">
-		{call com.liferay.layout.admin.web.SidebarFragmentsSection.render}
-			{param fragmentCollections: $fragmentCollections /}
-			{param fragmentEntryLinks: $fragmentEntryLinks /}
-			{param layoutData: $layoutData /}
-			{param sidebarTabs: $sidebarTabs /}
-			{param spritemap: $spritemap /}
-			{param highlightMapping: $highlightMapping /}
-			{param selectedMappingTypes: $selectedMappingTypes /}
-			{param store: $store /}
-		{/call}
+		<div class="fragments-editor-sidebar-section">
+			{if $_sectionId == 'fragments'}
+				{call com.liferay.layout.admin.web.SidebarFragmentsSection.render}
+					{param fragmentCollections: $fragmentCollections /}
+					{param fragmentEntryLinks: $fragmentEntryLinks /}
+					{param layoutData: $layoutData /}
+					{param sidebarTabs: $sidebarTabs /}
+					{param spritemap: $spritemap /}
+					{param highlightMapping: $highlightMapping /}
+					{param selectedMappingTypes: $selectedMappingTypes /}
+					{param store: $store /}
+				{/call}
+			{/if}
+		</div>
+
+		<div class="btn-group fragments-editor-sidebar-sections-buttons" role="group">
+			{if $_sections}
+				{foreach $section in $_sections}
+					{let $sectionButtonClasses kind="text"}
+						btn
+						{sp}btn-outline-borderless
+
+						{if $section.sectionId == $_sectionId}
+							{sp}btn-outline-primary
+						{else}
+							{sp}btn-outline-secondary
+						{/if}
+					{/let}
+
+					<button
+						class="{$sectionButtonClasses}"
+						data-onclick="{$_handleSectionButtonClick}"
+						data-section-id="{$section.sectionId}"
+						title="{$section.label}"
+						type="button"
+					>
+						<svg class="lexicon-icon">
+							<use xlink:href="{$spritemap}#{$section.icon}"></use>
+						</svg>
+					</button>
+				{/foreach}
+			{/if}
+		</div>
 	</div>
 {/template}

@@ -58,14 +58,6 @@ public class StructuredContentApioTest {
 	}
 
 	@Test
-	public void testContentSpaceLinkExistsInRootEndpoint() throws Exception {
-		Assert.assertNotNull(
-			JsonPath.read(
-				_get(_rootEndpointURL.toExternalForm()),
-				"$._links.content-space.href"));
-	}
-
-	@Test
 	public void testStructuredContentsExistsInContentSpaceEndpoint()
 		throws Exception {
 

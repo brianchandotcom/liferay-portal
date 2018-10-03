@@ -380,8 +380,8 @@ public class CalendarDisplayContext {
 				_renderRequest, CalendarResourceSearch.DEFAULT_CUR_PARAM,
 				getPortletURL());
 
-		setDDMFormInstanceSearchResults(calendarResourceSearch);
-		setDDMFormInstanceSearchTotal(calendarResourceSearch);
+		setCalendarResourceSearchResults(calendarResourceSearch);
+		setCalendarResourceSearchTotal(calendarResourceSearch);
 
 		return calendarResourceSearch;
 	}
@@ -498,7 +498,7 @@ public class CalendarDisplayContext {
 			_themeDisplay.getScopeGroupId(), CalendarActionKeys.ADD_RESOURCE);
 	}
 
-	protected void setDDMFormInstanceSearchResults(
+	protected void setCalendarResourceSearchResults(
 		CalendarResourceSearch calendarResourceSearch) {
 
 		long[] groupIds = {_themeDisplay.getScopeGroupId()};
@@ -518,7 +518,7 @@ public class CalendarDisplayContext {
 		calendarResourceSearch.setResults(results);
 	}
 
-	protected void setDDMFormInstanceSearchTotal(
+	protected void setCalendarResourceSearchTotal(
 		CalendarResourceSearch calendarResourceSearch) {
 
 		long[] groupIds = {_themeDisplay.getScopeGroupId()};

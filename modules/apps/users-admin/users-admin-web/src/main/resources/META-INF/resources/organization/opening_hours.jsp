@@ -77,8 +77,6 @@ List<OrgLabor> orgLabors = OrgLaborServiceUtil.getOrgLabors(organizationId);
 		<liferay-ui:search-container-column-text>
 
 			<%
-			Format timeFormat = FastDateFormatFactoryUtil.getSimpleDateFormat("HH:mm", locale);
-
 			String[] days = CalendarUtil.getDays(locale);
 			String[] paramPrefixes = {"sun", "mon", "tue", "wed", "thu", "fri", "sat"};
 
@@ -102,55 +100,9 @@ List<OrgLabor> orgLabors = OrgLaborServiceUtil.getOrgLabors(organizationId);
 
 				<%
 				for (int j = 0; j < days.length; j++) {
-					String closeDisplay = "";
-					String closeValue = String.valueOf(closeArray[j]);
+					String closeDisplay = UsersAdminDateDisplayUtil.formatTimeInt(locale, closeArray[j]);
 					String day = days[j];
-					String openDisplay = "";
-					String openValue = String.valueOf(openArray[j]);
-
-					Calendar closeCal = CalendarFactoryUtil.getCalendar();
-
-					closeCal.set(Calendar.SECOND, 0);
-					closeCal.set(Calendar.MILLISECOND, 0);
-
-					if (closeValue.equals("0")) {
-						closeCal.set(Calendar.HOUR_OF_DAY, 0);
-						closeCal.set(Calendar.MINUTE, 0);
-					}
-					else if (closeValue.length() == 4) {
-						closeCal.set(Calendar.HOUR_OF_DAY, Integer.valueOf(closeValue.substring(0, 2)));
-						closeCal.set(Calendar.MINUTE, Integer.valueOf(closeValue.substring(2)));
-					}
-					else if (closeValue.length() == 3) {
-						closeCal.set(Calendar.HOUR_OF_DAY, Integer.valueOf(closeValue.charAt(0)));
-						closeCal.set(Calendar.MINUTE, Integer.valueOf(closeValue.substring(1)));
-					}
-
-					if (!closeValue.equals("-1")) {
-						closeDisplay = timeFormat.format(closeCal.getTime());
-					}
-
-					Calendar openCal = CalendarFactoryUtil.getCalendar();
-
-					openCal.set(Calendar.SECOND, 0);
-					openCal.set(Calendar.MILLISECOND, 0);
-
-					if (openValue.equals("0")) {
-						openCal.set(Calendar.HOUR_OF_DAY, 0);
-						openCal.set(Calendar.MINUTE, 0);
-					}
-					else if (openValue.length() == 4) {
-						openCal.set(Calendar.HOUR_OF_DAY, Integer.valueOf(openValue.substring(0, 2)));
-						openCal.set(Calendar.MINUTE, Integer.valueOf(openValue.substring(2)));
-					}
-					else if (openValue.length() == 3) {
-						openCal.set(Calendar.HOUR_OF_DAY, Integer.valueOf(openValue.charAt(0)));
-						openCal.set(Calendar.MINUTE, Integer.valueOf(openValue.substring(1)));
-					}
-
-					if (!openValue.equals("-1")) {
-						openDisplay = timeFormat.format(openCal.getTime());
-					}
+					String openDisplay = UsersAdminDateDisplayUtil.formatTimeInt(locale, openArray[j]);
 				%>
 
 					<tr>

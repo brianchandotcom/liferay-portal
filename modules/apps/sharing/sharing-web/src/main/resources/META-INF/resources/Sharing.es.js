@@ -67,22 +67,19 @@ class Sharing extends PortletBase {
 	_handleSubmit(event) {
 		event.preventDefault();
 
-		if (this.submitting || !this._validateEmail(this.userEmailAddress)) {
-			return;
-		}
+		if (!this.submitting && this._validateEmail(this.userEmailAddress)) {
+			this.submitting = true;
 
-		this.submitting = true;
-
-		this.fetch(
-			this.shareActionURL,
-			{
-				classNameId: this._classNameId,
-				classPK: this._classPK,
-				shareable: this.shareable,
-				sharingEntryPermissionDisplayActionId: this.sharingEntryPermissionDisplayActionId,
-				userEmailAddress: this._getEmailAdress(this.userEmailAddress)
-			}
-		)
+			this.fetch(
+				this.shareActionURL,
+				{
+					classNameId: this._classNameId,
+					classPK: this._classPK,
+					shareable: this.shareable,
+					sharingEntryPermissionDisplayActionId: this.sharingEntryPermissionDisplayActionId,
+					userEmailAddress: this._getEmailAdress(this.userEmailAddress)
+				}
+			)
 			.then(
 				response => {
 					this.submitting = false;
@@ -114,6 +111,7 @@ class Sharing extends PortletBase {
 					this._showNotification(error.message, true);
 				}
 			);
+		}
 	}
 
 	/**

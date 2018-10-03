@@ -66,7 +66,7 @@ String kaleoNamespace = PortalUtil.getPortletNamespace(KaleoDesignerPortletKeys.
 	</c:choose>
 
 	<liferay-ui:icon
-		id='<%= "duplicate" + kaleoDefinition.getName() %>'
+		id='<%= "duplicate" + kaleoDefinition.getKaleoDefinitionId() %>'
 		message="duplicate"
 		url="javascript:;"
 	/>
@@ -148,5 +148,5 @@ String kaleoNamespace = PortalUtil.getPortletNamespace(KaleoDesignerPortletKeys.
 
 	var confirmBeforeDuplicateDialog = A.rbind('confirmBeforeDuplicateDialog', Liferay.KaleoDesignerDialogs, '<%= duplicateWorkflowDefinition %>', title, '<%= randomNamespace %>', "<%= kaleoNamespace %>");
 
-	Liferay.delegateClick('<portlet:namespace />duplicate<%= kaleoDefinition.getName() %>', confirmBeforeDuplicateDialog);
+	Liferay.delegateClick('<portlet:namespace />duplicate<%= kaleoDefinition.getKaleoDefinitionId() %>', confirmBeforeDuplicateDialog);
 </aui:script>

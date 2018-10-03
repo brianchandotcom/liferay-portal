@@ -37,6 +37,68 @@
 		</if>
 	</tear-down>
 
+	<command name="AddContentPage" priority="5">
+		<property name="portal.acceptance" value="true" />
+		<description message="Add a content page with fragments." />
+
+		<execute macro="SitePages#openPagesAdmin">
+			<var name="siteURLKey" value="test-site-name" />
+		</execute>
+
+		<execute macro="ContentPages#addPage">
+			<var name="pageName" value="Test Content Page Name" />
+		</execute>
+
+		<execute macro="PageEditor#addFragment">
+			<var name="collectionName" value="Collection Name" />
+			<var name="fragmentName" value="Title" />
+		</execute>
+
+		<execute macro="PageEditor#addFragment">
+			<var name="collectionName" value="Collection Name" />
+			<var name="fragmentName" value="Rich Text" />
+		</execute>
+
+		<execute macro="PageEditor#addFragment">
+			<var name="collectionName" value="Collection Name" />
+			<var name="fragmentName" value="Button" />
+		</execute>
+
+		<execute macro="Navigator#openWithAppendToBaseURL">
+			<var name="urlAppend" value="web/test-site-name/test-content-page-name" />
+		</execute>
+
+		<execute function="AssertVisible" locator1="Fragment#CONTENT_PAGE_FRAGMENT">
+			<var name="key_content" value="Lorem ipsum dolor sit amet" />
+			<var name="key_fragmentClass" value="header" />
+			<var name="key_position" value="1" />
+		</execute>
+
+		<execute function="AssertVisible" locator1="Fragment#CONTENT_PAGE_FRAGMENT">
+			<var name="key_content" value="Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum." />
+			<var name="key_fragmentClass" value="rich-text" />
+			<var name="key_position" value="2" />
+		</execute>
+
+		<execute function="AssertVisible" locator1="Fragment#CONTENT_PAGE_FRAGMENT">
+			<var name="key_content" value="Submit" />
+			<var name="key_fragmentClass" value="footer" />
+			<var name="key_position" value="3" />
+		</execute>
+
+		<execute function="AssertVisible" locator1="Fragment#CONTENT_PAGE_FRAGMENT">
+			<var name="key_content" value="Cancel" />
+			<var name="key_fragmentClass" value="footer" />
+			<var name="key_position" value="3" />
+		</execute>
+
+		<for list="Submit,Cancel" param="button">
+			<execute macro="Button#viewPresent">
+				<var name="button" value="${button}" />
+			</execute>
+		</for>
+	</command>
+
 	<command name="AddContentPageFromPageTemplate" priority="5">
 		<property name="portal.acceptance" value="true" />
 		<description message="Create a content page from a page template with fragments." />

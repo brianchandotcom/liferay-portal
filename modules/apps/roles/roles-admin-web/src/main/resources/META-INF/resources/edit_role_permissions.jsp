@@ -314,6 +314,10 @@ if (!portletName.equals(PortletKeys.SERVER_ADMIN)) {
 							var checkedNodes = permissionContentContainerNode.all(':checked');
 
 							originalSelectedValues = checkedNodes.val();
+
+							A.all('.permission-navigation-link').removeClass('active')
+
+							event.currentTarget.addClass('active');
 						}
 					}
 				);

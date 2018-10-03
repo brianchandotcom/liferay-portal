@@ -14,15 +14,6 @@
 
 package com.liferay.portal.configuration.metatype.util;
 
-import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.module.configuration.ConfigurationException;
-
-import java.util.HashMap;
-import java.util.Map;
-
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
 import org.junit.experimental.runners.Enclosed;
 import org.junit.runner.RunWith;
 
@@ -41,86 +32,6 @@ public class ParameterMapUtilTest {
 
 	public static final String[] TEST_BEAN_STRING_ARRAY =
 		{"TEST_BEAN1", "TEST_BEAN2"};
-
-	public static class WhenSettingAParameterMap {
-
-		@Before
-		public void setUp() throws ConfigurationException {
-			TestBean testBean = _getTestBean();
-
-			Map<String, String[]> parameterMap = new HashMap<>();
-
-			parameterMap.put("testBoolean1", new String[] {"false"});
-			parameterMap.put(
-				"testString1", new String[] {PARAMETER_MAP_STRING});
-			parameterMap.put("testStringArray1", PARAMETER_MAP_STRING_ARRAY);
-
-			_testBean = ParameterMapUtil.setParameterMap(
-				TestBean.class, testBean, parameterMap);
-		}
-
-		@Test
-		public void valuesInTheParameterMapAreReadFirst() throws Exception {
-			Assert.assertEquals(false, _testBean.testBoolean1());
-			Assert.assertEquals(PARAMETER_MAP_STRING, _testBean.testString1());
-			Assert.assertArrayEquals(
-				PARAMETER_MAP_STRING_ARRAY, _testBean.testStringArray1());
-		}
-
-		@Test
-		public void valuesNotInTheParameterMapAreReadFromBean()
-			throws Exception {
-
-			Assert.assertEquals(true, _testBean.testBoolean2());
-			Assert.assertEquals(TEST_BEAN_STRING, _testBean.testString2());
-			Assert.assertArrayEquals(
-				TEST_BEAN_STRING_ARRAY, _testBean.testStringArray2());
-		}
-
-		private TestBean _testBean;
-
-	}
-
-	public static class WhenSettingAParameterMapWithPrefixes {
-
-		@Before
-		public void setUp() throws ConfigurationException {
-			TestBean testBean = _getTestBean();
-
-			Map<String, String[]> parameterMap = new HashMap<>();
-
-			parameterMap.put("prefix--testBoolean1--", new String[] {"false"});
-			parameterMap.put(
-				"prefix--testString1--", new String[] {PARAMETER_MAP_STRING});
-			parameterMap.put(
-				"prefix--testStringArray1--", PARAMETER_MAP_STRING_ARRAY);
-
-			_testBean = ParameterMapUtil.setParameterMap(
-				TestBean.class, testBean, parameterMap, "prefix--",
-				StringPool.DOUBLE_DASH);
-		}
-
-		@Test
-		public void valuesInTheParameterMapAreReadFirst() throws Exception {
-			Assert.assertEquals(false, _testBean.testBoolean1());
-			Assert.assertEquals(PARAMETER_MAP_STRING, _testBean.testString1());
-			Assert.assertArrayEquals(
-				PARAMETER_MAP_STRING_ARRAY, _testBean.testStringArray1());
-		}
-
-		@Test
-		public void valuesNotInTheParameterMapAreReadFromBean()
-			throws Exception {
-
-			Assert.assertEquals(true, _testBean.testBoolean2());
-			Assert.assertEquals(TEST_BEAN_STRING, _testBean.testString2());
-			Assert.assertArrayEquals(
-				TEST_BEAN_STRING_ARRAY, _testBean.testStringArray2());
-		}
-
-		private TestBean _testBean;
-
-	}
 
 	private static TestBean _getTestBean() {
 		return new TestBean() {

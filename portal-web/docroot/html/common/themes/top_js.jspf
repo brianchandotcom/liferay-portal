@@ -489,18 +489,20 @@ String[] liferayAnalyticsGroupIds = PrefsPropsUtil.getStringArray(company.getCom
 					function(event) {
 						Analytics.dispose();
 
-						Analytics.create(config);
+						if (!themeDisplay.isControlPanel()) {
+							Analytics.create(config);
 
-						if (themeDisplay.isSignedIn()) {
-							Analytics.setIdentity(
-								{
-									email: '<%= HtmlUtil.escapeJS(user.getEmailAddress()) %>',
-									name: '<%= HtmlUtil.escapeJS(user.getFullName()) %>'
-								}
-							);
+							if (themeDisplay.isSignedIn()) {
+								Analytics.setIdentity(
+									{
+										email: '<%= HtmlUtil.escapeJS(user.getEmailAddress()) %>',
+										name: '<%= HtmlUtil.escapeJS(user.getFullName()) %>'
+									}
+								);
+							}
+
+							Analytics.send('pageViewed', 'Page', {'page': event.path});
 						}
-
-						Analytics.send('pageViewed', 'Page', {'page': event.path});
 					}
 				);
 			</c:if>

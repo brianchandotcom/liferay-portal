@@ -402,6 +402,12 @@ describe.only(
 								expect(
 									visitor.mapFields(
 										(field, fieldIndex, columnIndex, rowIndex, pageIndex) => {
+											const {pages} = field.settingsContext;
+
+											if(pages.length){
+												pages[0].rows[0].columns[0].fields[1].value = 'Liferay';
+											}
+
 											return {
 												...field,
 												fieldName: `name${fieldIndex}${columnIndex}${rowIndex}${pageIndex}`,

@@ -334,6 +334,7 @@ Array [
                                 },
                                 Object {
                                   "fieldName": "name",
+                                  "value": "Liferay",
                                 },
                                 Object {
                                   "fieldName": "required",
@@ -405,7 +406,7 @@ Array [
                                 },
                                 Object {
                                   "fieldName": "name",
-                                  "value": "radio1539276632194",
+                                  "value": "Liferay",
                                 },
                                 Object {
                                   "fieldName": "required",

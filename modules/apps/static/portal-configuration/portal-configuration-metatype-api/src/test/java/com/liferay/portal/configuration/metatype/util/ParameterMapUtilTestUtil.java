@@ -14,14 +14,10 @@
 
 package com.liferay.portal.configuration.metatype.util;
 
-import org.junit.experimental.runners.Enclosed;
-import org.junit.runner.RunWith;
-
 /**
  * @author Jorge Ferrer
  */
-@RunWith(Enclosed.class)
-public class ParameterMapUtilTest {
+public class ParameterMapUtilTestUtil {
 
 	public static final String PARAMETER_MAP_STRING = "PARAMETER_MAP";
 

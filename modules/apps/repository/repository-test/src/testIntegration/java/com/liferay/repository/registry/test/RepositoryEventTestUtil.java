@@ -55,7 +55,7 @@ public class RepositoryEventTestUtil {
 		return count;
 	}
 
-	private static class AlwaysFailingRepositoryEventListener
+	protected static class AlwaysFailingRepositoryEventListener
 		<S extends RepositoryEventType, T>
 			implements RepositoryEventListener<S, T> {
 
@@ -66,7 +66,7 @@ public class RepositoryEventTestUtil {
 
 	}
 
-	private static class CounterRepositoryEventListener
+	protected static class CounterRepositoryEventListener
 		<S extends RepositoryEventType, T>
 			implements RepositoryEventListener<S, T> {
 
@@ -83,7 +83,7 @@ public class RepositoryEventTestUtil {
 
 	}
 
-	private static class NoOpRepositoryEventListener
+	protected static class NoOpRepositoryEventListener
 		<S extends RepositoryEventType, T>
 			implements RepositoryEventListener<S, T> {
 

@@ -34,14 +34,15 @@ public class RepositoryEventWhenRegisteringRepositoryEventsTest {
 
 	@ClassRule
 	@Rule
-	public static final LiferayIntegrationTestRule
-		liferayIntegrationTestRule = new LiferayIntegrationTestRule();
+	public static final LiferayIntegrationTestRule liferayIntegrationTestRule =
+		new LiferayIntegrationTestRule();
 
 	@Test
 	public void shouldAcceptAnyNonnullListener() {
 		_repositoryEventRegistry.registerRepositoryEventListener(
 			RepositoryEventType.Add.class, FileEntry.class,
-			new RepositoryEventTest.NoOpRepositoryEventListener<RepositoryEventType.Add, FileEntry>());
+			new RepositoryEventTestUtil.NoOpRepositoryEventListener
+				<RepositoryEventType.Add, FileEntry>());
 	}
 
 	@Test(expected = NullPointerException.class)

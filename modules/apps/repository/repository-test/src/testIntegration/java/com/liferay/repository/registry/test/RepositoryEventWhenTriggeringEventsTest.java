@@ -37,17 +37,17 @@ public class RepositoryEventWhenTriggeringEventsTest {
 
 	@ClassRule
 	@Rule
-	public static final LiferayIntegrationTestRule
-		liferayIntegrationTestRule = new LiferayIntegrationTestRule();
+	public static final LiferayIntegrationTestRule liferayIntegrationTestRule =
+		new LiferayIntegrationTestRule();
 
 	@Test
 	public void shouldExecuteAllMatchingListeners() throws Exception {
 		AtomicInteger count = new AtomicInteger();
 
 		for (int i = 0; i < 3; i++) {
-			registerCounterRepositoryEventListener(
-				_defaultRepositoryEventRegistry,
-				RepositoryEventType.Add.class, FileEntry.class, count);
+			RepositoryEventTestUtil.registerCounterRepositoryEventListener(
+				_defaultRepositoryEventRegistry, RepositoryEventType.Add.class,
+				FileEntry.class, count);
 		}
 
 		_defaultRepositoryEventRegistry.trigger(
@@ -57,12 +57,11 @@ public class RepositoryEventWhenTriggeringEventsTest {
 	}
 
 	@Test
-	public void shouldExecuteListenerExactlyOncePerEvent()
-		throws Exception {
-
-		AtomicInteger count = registerCounterRepositoryEventListener(
-			_defaultRepositoryEventRegistry, RepositoryEventType.Add.class,
-			FileEntry.class);
+	public void shouldExecuteListenerExactlyOncePerEvent() throws Exception {
+		AtomicInteger count =
+			RepositoryEventTestUtil.registerCounterRepositoryEventListener(
+				_defaultRepositoryEventRegistry, RepositoryEventType.Add.class,
+				FileEntry.class);
 
 		int randomInt = Math.abs(RandomTestUtil.nextInt());
 
@@ -76,13 +75,15 @@ public class RepositoryEventWhenTriggeringEventsTest {
 
 	@Test
 	public void shouldExecuteOnlyMatchingListeners() throws Exception {
-		AtomicInteger count = registerCounterRepositoryEventListener(
-			_defaultRepositoryEventRegistry, RepositoryEventType.Add.class,
-			FileEntry.class);
+		AtomicInteger count =
+			RepositoryEventTestUtil.registerCounterRepositoryEventListener(
+				_defaultRepositoryEventRegistry, RepositoryEventType.Add.class,
+				FileEntry.class);
 
 		_defaultRepositoryEventRegistry.registerRepositoryEventListener(
 			RepositoryEventType.Update.class, FileEntry.class,
-			new RepositoryEventTest.AlwaysFailingRepositoryEventListener<RepositoryEventType.Update, FileEntry>());
+			new RepositoryEventTestUtil.AlwaysFailingRepositoryEventListener
+				<RepositoryEventType.Update, FileEntry>());
 
 		_defaultRepositoryEventRegistry.trigger(
 			RepositoryEventType.Add.class, FileEntry.class, null);
@@ -91,7 +92,7 @@ public class RepositoryEventWhenTriggeringEventsTest {
 	}
 
 	private final DefaultRepositoryEventRegistry
-		_defaultRepositoryEventRegistry =
-		new DefaultRepositoryEventRegistry(null);
+		_defaultRepositoryEventRegistry = new DefaultRepositoryEventRegistry(
+			null);
 
 }

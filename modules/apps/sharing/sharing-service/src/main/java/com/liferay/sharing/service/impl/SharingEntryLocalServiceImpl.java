@@ -519,7 +519,7 @@ public class SharingEntryLocalServiceImpl
 	public int getUniqueToUserSharingEntriesCount(
 		long toUserId, long classNameId) {
 
-		return sharingEntryFinder.countByToUserId(toUserId);
+		return sharingEntryFinder.countByToUserId(toUserId, classNameId);
 	}
 
 	/**

@@ -28,8 +28,8 @@ import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.ListIterator;
+import java.util.Collections;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -65,14 +65,9 @@ public class StructuredContentApioTestBundleActivator
 	}
 
 	private void _cleanUp() {
-		ListIterator<AutoCloseable> listIterator = _autoCloseables.listIterator(
-			_autoCloseables.size());
-
-		while (listIterator.hasPrevious()) {
-			AutoCloseable previousAutoCloseable = listIterator.previous();
-
+		for (AutoCloseable autoCloseable : _autoCloseables) {
 			try {
-				previousAutoCloseable.close();
+				autoCloseable.close();
 			}
 			catch (Exception e) {
 				_log.error(e, e);
@@ -83,11 +78,8 @@ public class StructuredContentApioTestBundleActivator
 	private void _prepareTest() throws Exception {
 		User user = UserTestUtil.getAdminUser(TestPropsValues.getCompanyId());
 
-		Map<Locale, String> nameMap = new HashMap<Locale, String>() {
-			{
-				put(LocaleUtil.getDefault(), SITE_NAME);
-			}
-		};
+		Map<Locale, String> nameMap = Collections.singletonMap(
+			LocaleUtil.getDefault(), SITE_NAME);
 
 		Group group = GroupLocalServiceUtil.addGroup(
 			user.getUserId(), GroupConstants.DEFAULT_PARENT_GROUP_ID, null, 0,
@@ -103,6 +95,6 @@ public class StructuredContentApioTestBundleActivator
 	private static final Log _log = LogFactoryUtil.getLog(
 		StructuredContentApioTestBundleActivator.class);
 
-	private ArrayList<AutoCloseable> _autoCloseables;
+	private List<AutoCloseable> _autoCloseables;
 
 }

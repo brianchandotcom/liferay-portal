@@ -58,6 +58,7 @@ public class StopTestableTomcatTask
 
 	private void _deleteTestModules() {
 		Logger logger = getLogger();
+
 		File moduleFrameworkBaseDir = getModuleFrameworkBaseDir();
 
 		File modulesDir = new File(moduleFrameworkBaseDir, "modules");

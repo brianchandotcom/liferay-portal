@@ -138,12 +138,13 @@ public class NpmShrinkwrapTask extends ExecuteNpmTask {
 		Map<String, Object> map, Iterable<String> excludedDependencies) {
 
 		for (Map.Entry<String, Object> entry : map.entrySet()) {
-			String key = entry.getKey();
 			Object value = entry.getValue();
 
 			if (!(value instanceof Map<?, ?>)) {
 				continue;
 			}
+
+			String key = entry.getKey();
 
 			Map<String, Object> valueMap = (Map<String, Object>)value;
 

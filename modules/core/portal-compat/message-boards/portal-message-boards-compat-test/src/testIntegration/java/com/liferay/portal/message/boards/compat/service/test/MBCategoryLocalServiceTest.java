@@ -379,6 +379,7 @@ public class MBCategoryLocalServiceTest {
 		addCategory();
 
 		MBCategory excludedCategory = addCategory();
+
 		MBCategory draftCategory = addCategory();
 
 		MBCategoryLocalServiceUtil.updateStatus(

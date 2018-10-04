@@ -167,7 +167,17 @@ LayoutColumn.STATE = {
 	 * @type {!string}
 	 */
 
-	siteNavigationMenuNames: Config.string().required()
+	siteNavigationMenuNames: Config.string().required(),
+
+	/**
+	 * CSS class to modify style
+	 * @default undefined
+	 * @instance
+	 * @review
+	 * @type {!string}
+	 */
+
+	styleModifier: Config.string()
 
 };
 

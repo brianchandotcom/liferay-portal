@@ -54,7 +54,7 @@ body:not(.has-contextual-sidebar) .contextual-sidebar-content {
 	flex-grow: 2;
 	max-height: 100%;
 	overflow: scroll;
-	padding: 0 1.5rem 1.5rem 1.5rem;
+	padding: 0 1.5rem 1.5rem;
 
 	.btn-link {
 		z-index: $sidebarCardPlusButtonZIndex;

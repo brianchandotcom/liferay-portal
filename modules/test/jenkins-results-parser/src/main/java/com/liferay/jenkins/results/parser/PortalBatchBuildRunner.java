@@ -15,6 +15,7 @@
 package com.liferay.jenkins.results.parser;
 
 import java.io.File;
+import java.io.IOException;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -27,15 +28,41 @@ public class PortalBatchBuildRunner
 
 	@Override
 	public void run() {
-		super.run();
+		setUpWorkspace();
 
-		runBatch();
+		runTestBatch();
+
+		copyTestResults();
 	}
 
 	protected PortalBatchBuildRunner(
 		PortalBatchBuildData portalBatchBuildData) {
 
 		super(portalBatchBuildData);
+	}
+
+	protected void copyTestResults() {
+		AntUtil.callTarget(
+			_getPrimaryPortalDirectory(), "build-test.xml",
+			"merge-test-results");
+
+		BuildData buildData = getBuildData();
+
+		File source = new File(
+			_getPrimaryPortalDirectory(), "test-results/TESTS-TestSuites.xml");
+		File target = new File(
+			buildData.getWorkspaceDir(), "test-results/TESTS-TestSuites.xml");
+
+		if (!source.exists()) {
+			return;
+		}
+
+		try {
+			JenkinsResultsParserUtil.copy(source, target);
+		}
+		catch (IOException ioe) {
+			throw new RuntimeException(ioe);
+		}
 	}
 
 	@Override
@@ -53,10 +80,10 @@ public class PortalBatchBuildRunner
 		_batchPortalWorkspace = (BatchPortalWorkspace)workspace;
 	}
 
-	protected void runBatch() {
+	protected void runTestBatch() {
 		Map<String, String> parameters = new HashMap<>();
 
-		parameters.put("test.class", "PortalSmoke#Smoke");
+		parameters.put("axis.variable", "PortalSmoke#Smoke");
 
 		AntUtil.callTarget(
 			_getPrimaryPortalDirectory(), "build-test-batch.xml",

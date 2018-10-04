@@ -535,8 +535,8 @@ public interface SharingEntryLocalService extends BaseLocalService,
 	* @return the number of sharing entries
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getUniqueToUserSharingEntriesCount(long classNameId,
-		long toUserId);
+	public int getUniqueToUserSharingEntriesCount(long toUserId,
+		long classNameId);
 
 	/**
 	* Returns <code>true</code> if the to user id has been shared a resource

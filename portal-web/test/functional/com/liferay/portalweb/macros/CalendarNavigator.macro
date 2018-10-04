@@ -75,7 +75,7 @@
 	<command name="gotoAddResource">
 		<execute macro="CalendarNavigator#gotoResources" />
 
-		<execute function="AssertClick" locator1="CalendarResources#ADD_RESOURCE_BUTTON" value1="Add Resource" />
+		<execute macro="LexiconEntry#gotoAdd" />
 
 		<execute function="AssertTextEquals" locator1="CalendarEditResource#HEADER_TITLE" value1="New Resource" />
 	</command>

@@ -20,20 +20,13 @@
 >
 
 	<%
-	if (displayTerms.isAdvancedSearch()) {
-		total = UserLocalServiceUtil.searchCount(themeDisplay.getCompanyId(), displayTerms.getName(), displayTerms.getDescription(), displayTerms.getDescription(), displayTerms.getCode(), null, WorkflowConstants.STATUS_ANY, null, displayTerms.isAndOperator());
+	String keywords = calendarDisplayContext.getKeywords();
 
-		searchContainer.setTotal(total);
+	total = UserLocalServiceUtil.searchCount(themeDisplay.getCompanyId(), keywords, WorkflowConstants.STATUS_ANY, null);
 
-		searchContainer.setResults(UserLocalServiceUtil.search(themeDisplay.getCompanyId(), displayTerms.getName(), displayTerms.getDescription(), displayTerms.getDescription(), displayTerms.getCode(), null, WorkflowConstants.STATUS_ANY, null, displayTerms.isAndOperator(), searchContainer.getStart(), searchContainer.getEnd(), new UserScreenNameComparator()));
-	}
-	else {
-		total = UserLocalServiceUtil.searchCount(themeDisplay.getCompanyId(), displayTerms.getKeywords(), WorkflowConstants.STATUS_ANY, null);
+	searchContainer.setTotal(total);
 
-		searchContainer.setTotal(total);
-
-		searchContainer.setResults(UserLocalServiceUtil.search(themeDisplay.getCompanyId(), displayTerms.getKeywords(), WorkflowConstants.STATUS_ANY, null, searchContainer.getStart(), searchContainer.getEnd(), new UserScreenNameComparator()));
-	}
+	searchContainer.setResults(UserLocalServiceUtil.search(themeDisplay.getCompanyId(), keywords, WorkflowConstants.STATUS_ANY, null, searchContainer.getStart(), searchContainer.getEnd(), new UserScreenNameComparator()));
 	%>
 
 	<liferay-ui:search-container-row

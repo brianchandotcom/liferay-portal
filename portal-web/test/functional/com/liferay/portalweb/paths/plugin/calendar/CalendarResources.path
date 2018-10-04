@@ -8,16 +8,6 @@
 <tr><td rowspan="1" colspan="3">CalendarResources</td></tr>
 </thead>
 <tbody>
-<tr>
-	<td>ADD_RESOURCE_BUTTON</td>
-	<td>//a[contains(@class,'btn') and contains (.,'Add Resource')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--RESOURCE_TABLE-->
 <tr>
 	<td>RESOURCE_TABLE_NAME</td>

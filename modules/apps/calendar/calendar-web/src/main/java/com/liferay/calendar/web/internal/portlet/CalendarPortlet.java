@@ -45,6 +45,7 @@ import com.liferay.calendar.service.CalendarBookingLocalService;
 import com.liferay.calendar.service.CalendarBookingService;
 import com.liferay.calendar.service.CalendarLocalService;
 import com.liferay.calendar.service.CalendarNotificationTemplateService;
+import com.liferay.calendar.service.CalendarResourceLocalService;
 import com.liferay.calendar.service.CalendarResourceService;
 import com.liferay.calendar.service.CalendarService;
 import com.liferay.calendar.util.JCalendarUtil;
@@ -303,7 +304,7 @@ public class CalendarPortlet extends MVCPortlet {
 			getCalendar(renderRequest);
 			getCalendarBooking(renderRequest);
 			getCalendarResource(renderRequest);
-			setRenderRequestAttributes(renderRequest);
+			setRenderRequestAttributes(renderRequest, renderResponse);
 		}
 		catch (Exception e) {
 			if (e instanceof NoSuchResourceException ||
@@ -1692,15 +1693,15 @@ public class CalendarPortlet extends MVCPortlet {
 		_groupLocalService = groupLocalService;
 	}
 
-	protected void setRenderRequestAttributes(RenderRequest renderRequest) {
-		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
+	protected void setRenderRequestAttributes(
+		RenderRequest renderRequest, RenderResponse renderResponse) {
 
 		CalendarDisplayContext calendarDisplayContext =
 			new CalendarDisplayContext(
-				_groupLocalService, _calendarBookingLocalService,
-				_calendarBookingService, _calendarLocalService,
-				_calendarService, themeDisplay);
+				renderRequest, renderResponse, _groupLocalService,
+				_calendarBookingLocalService, _calendarBookingService,
+				_calendarLocalService, _calendarResourceLocalServiceService,
+				_calendarService);
 
 		renderRequest.setAttribute(
 			CalendarWebKeys.CALENDAR_DISPLAY_CONTEXT, calendarDisplayContext);
@@ -1850,6 +1851,10 @@ public class CalendarPortlet extends MVCPortlet {
 
 	private CalendarNotificationTemplateService
 		_calendarNotificationTemplateService;
+
+	@Reference
+	private CalendarResourceLocalService _calendarResourceLocalServiceService;
+
 	private CalendarResourceService _calendarResourceService;
 	private CalendarService _calendarService;
 

@@ -26,12 +26,12 @@
 <!--DETAILS-->
 <tr>
 	<td>DETAILS_PANEL_COLLAPSED</td>
-	<td>//div[contains(@class,'toggler-header-collapsed') and @data-persist-id='calendarResourceDetailsPanel']</td>
+	<td>//a[@aria-expanded='false' and contains(@aria-controls,'calendarResourceDetailsPanelContent')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>DETAILS_PANEL_EXPANDED</td>
-	<td>//div[contains(@class,'toggler-header-expanded') and @data-persist-id='calendarResourceDetailsPanel']</td>
+	<td>//a[@aria-expanded='true' and contains(@aria-controls,'calendarResourceDetailsPanelContent')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -42,6 +42,7 @@ import com.liferay.sharing.exception.NoSuchEntryException;
 import com.liferay.sharing.model.SharingEntry;
 import com.liferay.sharing.security.permission.SharingEntryAction;
 import com.liferay.sharing.service.SharingEntryLocalService;
+import com.liferay.sharing.util.comparator.SharingEntryModifiedDateComparator;
 
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
@@ -892,10 +893,11 @@ public class SharingEntryLocalServiceTest {
 
 			List<SharingEntry> sharingEntries =
 				_sharingEntryLocalService.getUniqueToUserSharingEntries(
-					_toUser.getUserId(), 0,
+					_toUser.getUserId(), classNameId, 0,
 					_sharingEntryLocalService.
 						getUniqueToUserSharingEntriesCount(
-							_toUser.getUserId()));
+							classNameId, _toUser.getUserId()),
+					new SharingEntryModifiedDateComparator());
 
 			Assert.assertEquals(
 				sharingEntries.toString(), 1, sharingEntries.size());

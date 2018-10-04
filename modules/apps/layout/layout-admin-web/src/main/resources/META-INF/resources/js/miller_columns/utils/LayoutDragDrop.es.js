@@ -53,14 +53,21 @@ class LayoutDragDrop extends State {
 
 		if (targetItem) {
 			const mouseY = data.originalEvent.clientY;
+			const placeholderItem = data.placeholder;
+			const placeholderItemRegion = position.getRegion(placeholderItem);
 			const sourceItemPlid = data.source.dataset.layoutColumnItemPlid;
 			const targetItemPlid = targetItem.dataset.layoutColumnItemPlid;
 			const targetItemRegion = position.getRegion(targetItem);
 
-			this._draggingItemPosition = DRAG_POSITIONS.bottom;
-
-			if (Math.abs(mouseY - targetItemRegion.top) <= Math.abs(mouseY - targetItemRegion.bottom)) {
+			if (placeholderItemRegion.top > targetItemRegion.top &&
+				placeholderItemRegion.bottom < targetItemRegion.bottom) {
+				this._draggingItemPosition = DRAG_POSITIONS.inside;
+			}
+			else if (Math.abs(mouseY - targetItemRegion.top) <= Math.abs(mouseY - targetItemRegion.bottom)) {
 				this._draggingItemPosition = DRAG_POSITIONS.top;
+			}
+			else {
+			this._draggingItemPosition = DRAG_POSITIONS.bottom;
 			}
 
 			this.emit(

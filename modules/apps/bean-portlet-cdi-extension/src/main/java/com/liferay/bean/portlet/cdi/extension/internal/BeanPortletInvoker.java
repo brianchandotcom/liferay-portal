@@ -96,7 +96,7 @@ public class BeanPortletInvoker
 
 		List<BeanMethod> beanMethods = _beanMethods.get(MethodType.EVENT);
 
-		if (beanMethods == null) {
+		if ((beanMethods == null) || beanMethods.isEmpty()) {
 			return;
 		}
 
@@ -110,9 +110,7 @@ public class BeanPortletInvoker
 			}
 		}
 
-		if (!eventMethods.isEmpty()) {
-			_invokeBeanMethods(eventRequest, eventResponse, eventMethods);
-		}
+		_invokeBeanMethods(eventRequest, eventResponse, eventMethods);
 	}
 
 	@Override
@@ -229,7 +227,7 @@ public class BeanPortletInvoker
 			List<BeanMethod> beanMethods, Object... args)
 		throws PortletException {
 
-		if (beanMethods == null) {
+		if ((beanMethods == null) || beanMethods.isEmpty()) {
 			return;
 		}
 
@@ -260,7 +258,7 @@ public class BeanPortletInvoker
 			List<BeanMethod> beanMethods)
 		throws PortletException {
 
-		if (beanMethods == null) {
+		if ((beanMethods == null) || beanMethods.isEmpty()) {
 			return;
 		}
 

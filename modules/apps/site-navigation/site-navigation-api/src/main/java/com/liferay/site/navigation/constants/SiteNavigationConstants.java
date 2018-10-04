@@ -27,9 +27,15 @@ public class SiteNavigationConstants {
 
 	public static final int TYPE_PRIMARY = 1;
 
-	public static final int TYPE_PRIVATE_PAGES_HIERARCHY = 4;
+	/**
+	 * @deprecated As of Wilberforce (7.0.x), with no direct replacement
+	 */
+	@Deprecated
+	public static final int TYPE_PRIVATE = 4;
 
-	public static final int TYPE_PUBLIC_PAGES_HIERARCHY = 5;
+	public static final int TYPE_PRIVATE_PAGES_HIERARCHY = 5;
+
+	public static final int TYPE_PUBLIC_PAGES_HIERARCHY = 6;
 
 	public static final int TYPE_SECONDARY = 2;
 

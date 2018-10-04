@@ -14,6 +14,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>YAHOO_LOGIN_SKIP_SECURE_BUTTON</td>
+	<td>//a[contains(.,'secure my account')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>YAHOO_LOGIN_USERNAME_FIELD</td>
 	<td>//input[contains(@id,'username')]</td>
 	<td></td>

@@ -61,7 +61,7 @@ public class AntUtil {
 
 		String[] bashCommands = new String[3];
 
-		if (_isWindows()) {
+		if (JenkinsResultsParserUtil.isWindows()) {
 			bashCommands[0] = "cmd";
 			bashCommands[1] = "/c";
 		}
@@ -148,14 +148,6 @@ public class AntUtil {
 
 			throw new RuntimeException(e);
 		}
-	}
-
-	private static boolean _isWindows() {
-		if (File.pathSeparator.equals(";")) {
-			return true;
-		}
-
-		return false;
 	}
 
 }

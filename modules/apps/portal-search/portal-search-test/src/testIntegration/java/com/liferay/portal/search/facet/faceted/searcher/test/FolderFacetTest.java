@@ -109,7 +109,7 @@ public class FolderFacetTest extends BaseFacetedSearcherTestCase {
 			DLFolder.class.getName(), DLFileEntry.class.getName(),
 			User.class.getName());
 
-		assertEntryClassNames(entryClassNames, hits, keyword, facet);
+		assertEntryClassNames(entryClassNames, hits, facet, searchContext);
 
 		List<String> dlFolderIds = Arrays.asList(
 			ArrayUtil.append(getFolderIds(_dlFolders), "0"));
@@ -137,7 +137,8 @@ public class FolderFacetTest extends BaseFacetedSearcherTestCase {
 		Assert.assertEquals(hits.toString(), 1, hits.getLength());
 
 		assertEntryClassNames(
-			Arrays.asList(DLFileEntry.class.getName()), hits, keyword, facet);
+			Arrays.asList(DLFileEntry.class.getName()), hits, facet,
+			searchContext);
 
 		List<String> dlFolderIds = Arrays.asList(
 			ArrayUtil.append(getFolderIds(_dlFolders), "0"));
@@ -169,7 +170,7 @@ public class FolderFacetTest extends BaseFacetedSearcherTestCase {
 		assertEntryClassNames(
 			Arrays.asList(
 				DLFolder.class.getName(), DLFileEntry.class.getName()),
-			hits, keyword, facet);
+			hits, facet, searchContext);
 
 		List<String> dlFolderIds = Arrays.asList(
 			ArrayUtil.append(getFolderIds(_dlFolders), StringPool.BLANK));
@@ -179,10 +180,12 @@ public class FolderFacetTest extends BaseFacetedSearcherTestCase {
 	}
 
 	protected void assertEntryClassNames(
-		List<String> entryClassNames, Hits hits, String keyword, Facet facet) {
+		List<String> entryClassNames, Hits hits, Facet facet,
+		SearchContext searchContext) {
 
 		DocumentsAssert.assertValuesIgnoreRelevance(
-			keyword, hits.getDocs(), Field.ENTRY_CLASS_NAME, entryClassNames);
+			(String)searchContext.getAttribute("queryString"), hits.getDocs(),
+			Field.ENTRY_CLASS_NAME, entryClassNames);
 	}
 
 	protected String[] getFolderIds(Collection<DLFolder> dlFolders) {

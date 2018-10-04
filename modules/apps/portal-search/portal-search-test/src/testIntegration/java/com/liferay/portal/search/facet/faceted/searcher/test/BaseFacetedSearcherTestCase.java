@@ -82,7 +82,9 @@ public abstract class BaseFacetedSearcherTestCase {
 		return userSearchFixture.addUser(screenName, group, assetTagNames);
 	}
 
-	protected void assertAllHitsAreUsers(String keywords, Hits hits) {
+	protected void assertAllHitsAreUsers(
+		String keywords, Hits hits, SearchContext searchContext) {
+
 		List<Document> documents = Stream.of(
 			hits.getDocs()
 		).filter(
@@ -92,7 +94,9 @@ public abstract class BaseFacetedSearcherTestCase {
 		);
 
 		Assert.assertTrue(
-			keywords + "->" + documents.toString(), documents.isEmpty());
+			(String)searchContext.getAttribute("queryString") + "->" +
+				documents.toString(),
+			documents.isEmpty());
 	}
 
 	protected void assertFrequencies(
@@ -106,17 +110,19 @@ public abstract class BaseFacetedSearcherTestCase {
 		FacetCollector facetCollector = facet.getFacetCollector();
 
 		AssertUtils.assertEquals(
-			searchContext.getKeywords(), expected,
+			(String)searchContext.getAttribute("queryString"), expected,
 			TermCollectorUtil.toMap(facetCollector.getTermCollectors()));
 	}
 
 	protected void assertTags(
-		String keywords, Hits hits, Map<String, String> expected) {
+		String keywords, Hits hits, Map<String, String> expected,
+		SearchContext searchContext) {
 
-		assertAllHitsAreUsers(keywords, hits);
+		assertAllHitsAreUsers(keywords, hits, searchContext);
 
 		AssertUtils.assertEquals(
-			keywords, expected, userSearchFixture.toMap(hits.toList()));
+			(String)searchContext.getAttribute("queryString"), expected,
+			userSearchFixture.toMap(hits.toList()));
 	}
 
 	protected FacetedSearcher createFacetedSearcher() {

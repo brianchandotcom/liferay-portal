@@ -120,8 +120,8 @@ public class SharingEntryLocalServiceWrapper implements SharingEntryLocalService
 	* @return the number of sharing entries
 	*/
 	@Override
-	public int countFromUserSharingEntries(long fromUserId) {
-		return _sharingEntryLocalService.countFromUserSharingEntries(fromUserId);
+	public int getFromUserSharingEntriesCount(long fromUserId) {
+		return _sharingEntryLocalService.getFromUserSharingEntriesCount(fromUserId);
 	}
 
 	/**
@@ -134,9 +134,9 @@ public class SharingEntryLocalServiceWrapper implements SharingEntryLocalService
 	* @return the number of sharing entries
 	*/
 	@Override
-	public int countFromUserSharingEntries(long fromUserId, long classNameId,
-		long classPK) {
-		return _sharingEntryLocalService.countFromUserSharingEntries(fromUserId,
+	public int getFromUserSharingEntriesCount(long fromUserId, long classNameId,
+											  long classPK) {
+		return _sharingEntryLocalService.getFromUserSharingEntriesCount(fromUserId,
 			classNameId, classPK);
 	}
 
@@ -147,8 +147,8 @@ public class SharingEntryLocalServiceWrapper implements SharingEntryLocalService
 	* @return the number of sharing entries
 	*/
 	@Override
-	public int countToUserSharingEntries(long toUserId) {
-		return _sharingEntryLocalService.countToUserSharingEntries(toUserId);
+	public int getToUserSharingEntriesCount(long toUserId) {
+		return _sharingEntryLocalService.getToUserSharingEntriesCount(toUserId);
 	}
 
 	/**
@@ -159,8 +159,8 @@ public class SharingEntryLocalServiceWrapper implements SharingEntryLocalService
 	* @return the number of sharing entries
 	*/
 	@Override
-	public int countUniqueToUserSharingEntries(long toUserId) {
-		return _sharingEntryLocalService.countUniqueToUserSharingEntries(toUserId);
+	public int getUniqueToUserSharingEntriesCount(long toUserId) {
+		return _sharingEntryLocalService.getUniqueToUserSharingEntriesCount(toUserId);
 	}
 
 	/**

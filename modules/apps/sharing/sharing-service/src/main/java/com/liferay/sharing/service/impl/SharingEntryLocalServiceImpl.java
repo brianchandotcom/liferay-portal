@@ -502,7 +502,8 @@ public class SharingEntryLocalServiceImpl
 		long toUserId, long classNameId, int start, int end,
 		OrderByComparator<SharingEntry> orderByComparator) {
 
-		return sharingEntryFinder.findByToUserId(toUserId, start, end);
+		return sharingEntryFinder.findByToUserId(
+			toUserId, start, end, orderByComparator);
 	}
 
 	/**

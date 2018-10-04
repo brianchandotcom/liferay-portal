@@ -1,0 +1,37 @@
+$layoutPreviewBackgroundColor: #FFF;
+$layoutPreviewBorderColor: #AAA;
+$layoutPreviewColumnColor: #DDD;
+$layoutPreviewHeight: 3em;
+$layoutPreviewSpacing: 4px;
+
+.sidebar-layouts-section {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
+
+	&__layout-preview {
+		background: $layoutPreviewBackgroundColor;
+		border-radius: $layoutPreviewSpacing;
+		flex-basis: calc(50% - #{$layoutPreviewSpacing});
+		height: $layoutPreviewHeight;
+		margin: $layoutPreviewSpacing 0;
+		padding: 0;
+
+		&__row {
+			border: solid $layoutPreviewBorderColor thin;
+			border-radius: $layoutPreviewSpacing;
+			flex-wrap: nowrap;
+			height: 100%;
+			margin: 0;
+			padding: $layoutPreviewSpacing / 2;
+		}
+
+		&__column {
+			background-color: $layoutPreviewColumnColor;
+			border: solid ($layoutPreviewSpacing / 2) $layoutPreviewBackgroundColor;
+			border-radius: $layoutPreviewSpacing;
+			margin: 0;
+			padding: 0;
+		}
+	}
+}

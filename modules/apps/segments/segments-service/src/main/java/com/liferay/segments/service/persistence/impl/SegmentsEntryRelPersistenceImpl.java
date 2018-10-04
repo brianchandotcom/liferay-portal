@@ -1744,6 +1744,252 @@ public class SegmentsEntryRelPersistenceImpl extends BasePersistenceImpl<Segment
 	private static final String _FINDER_COLUMN_G_CN_CPK_GROUPID_2 = "segmentsEntryRel.groupId = ? AND ";
 	private static final String _FINDER_COLUMN_G_CN_CPK_CLASSNAMEID_2 = "segmentsEntryRel.classNameId = ? AND ";
 	private static final String _FINDER_COLUMN_G_CN_CPK_CLASSPK_2 = "segmentsEntryRel.classPK = ?";
+	public static final FinderPath FINDER_PATH_FETCH_BY_S_CN_CPK = new FinderPath(SegmentsEntryRelModelImpl.ENTITY_CACHE_ENABLED,
+			SegmentsEntryRelModelImpl.FINDER_CACHE_ENABLED,
+			SegmentsEntryRelImpl.class, FINDER_CLASS_NAME_ENTITY,
+			"fetchByS_CN_CPK",
+			new String[] {
+				Long.class.getName(), Long.class.getName(), Long.class.getName()
+			},
+			SegmentsEntryRelModelImpl.SEGMENTSENTRYID_COLUMN_BITMASK |
+			SegmentsEntryRelModelImpl.CLASSNAMEID_COLUMN_BITMASK |
+			SegmentsEntryRelModelImpl.CLASSPK_COLUMN_BITMASK);
+	public static final FinderPath FINDER_PATH_COUNT_BY_S_CN_CPK = new FinderPath(SegmentsEntryRelModelImpl.ENTITY_CACHE_ENABLED,
+			SegmentsEntryRelModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByS_CN_CPK",
+			new String[] {
+				Long.class.getName(), Long.class.getName(), Long.class.getName()
+			});
+
+	/**
+	 * Returns the segments entry rel where segmentsEntryId = &#63; and classNameId = &#63; and classPK = &#63; or throws a {@link NoSuchEntryRelException} if it could not be found.
+	 *
+	 * @param segmentsEntryId the segments entry ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @return the matching segments entry rel
+	 * @throws NoSuchEntryRelException if a matching segments entry rel could not be found
+	 */
+	@Override
+	public SegmentsEntryRel findByS_CN_CPK(long segmentsEntryId,
+		long classNameId, long classPK) throws NoSuchEntryRelException {
+		SegmentsEntryRel segmentsEntryRel = fetchByS_CN_CPK(segmentsEntryId,
+				classNameId, classPK);
+
+		if (segmentsEntryRel == null) {
+			StringBundler msg = new StringBundler(8);
+
+			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+			msg.append("segmentsEntryId=");
+			msg.append(segmentsEntryId);
+
+			msg.append(", classNameId=");
+			msg.append(classNameId);
+
+			msg.append(", classPK=");
+			msg.append(classPK);
+
+			msg.append("}");
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(msg.toString());
+			}
+
+			throw new NoSuchEntryRelException(msg.toString());
+		}
+
+		return segmentsEntryRel;
+	}
+
+	/**
+	 * Returns the segments entry rel where segmentsEntryId = &#63; and classNameId = &#63; and classPK = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param segmentsEntryId the segments entry ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @return the matching segments entry rel, or <code>null</code> if a matching segments entry rel could not be found
+	 */
+	@Override
+	public SegmentsEntryRel fetchByS_CN_CPK(long segmentsEntryId,
+		long classNameId, long classPK) {
+		return fetchByS_CN_CPK(segmentsEntryId, classNameId, classPK, true);
+	}
+
+	/**
+	 * Returns the segments entry rel where segmentsEntryId = &#63; and classNameId = &#63; and classPK = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param segmentsEntryId the segments entry ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the matching segments entry rel, or <code>null</code> if a matching segments entry rel could not be found
+	 */
+	@Override
+	public SegmentsEntryRel fetchByS_CN_CPK(long segmentsEntryId,
+		long classNameId, long classPK, boolean retrieveFromCache) {
+		Object[] finderArgs = new Object[] { segmentsEntryId, classNameId, classPK };
+
+		Object result = null;
+
+		if (retrieveFromCache) {
+			result = finderCache.getResult(FINDER_PATH_FETCH_BY_S_CN_CPK,
+					finderArgs, this);
+		}
+
+		if (result instanceof SegmentsEntryRel) {
+			SegmentsEntryRel segmentsEntryRel = (SegmentsEntryRel)result;
+
+			if ((segmentsEntryId != segmentsEntryRel.getSegmentsEntryId()) ||
+					(classNameId != segmentsEntryRel.getClassNameId()) ||
+					(classPK != segmentsEntryRel.getClassPK())) {
+				result = null;
+			}
+		}
+
+		if (result == null) {
+			StringBundler query = new StringBundler(5);
+
+			query.append(_SQL_SELECT_SEGMENTSENTRYREL_WHERE);
+
+			query.append(_FINDER_COLUMN_S_CN_CPK_SEGMENTSENTRYID_2);
+
+			query.append(_FINDER_COLUMN_S_CN_CPK_CLASSNAMEID_2);
+
+			query.append(_FINDER_COLUMN_S_CN_CPK_CLASSPK_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(segmentsEntryId);
+
+				qPos.add(classNameId);
+
+				qPos.add(classPK);
+
+				List<SegmentsEntryRel> list = q.list();
+
+				if (list.isEmpty()) {
+					finderCache.putResult(FINDER_PATH_FETCH_BY_S_CN_CPK,
+						finderArgs, list);
+				}
+				else {
+					SegmentsEntryRel segmentsEntryRel = list.get(0);
+
+					result = segmentsEntryRel;
+
+					cacheResult(segmentsEntryRel);
+				}
+			}
+			catch (Exception e) {
+				finderCache.removeResult(FINDER_PATH_FETCH_BY_S_CN_CPK,
+					finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		if (result instanceof List<?>) {
+			return null;
+		}
+		else {
+			return (SegmentsEntryRel)result;
+		}
+	}
+
+	/**
+	 * Removes the segments entry rel where segmentsEntryId = &#63; and classNameId = &#63; and classPK = &#63; from the database.
+	 *
+	 * @param segmentsEntryId the segments entry ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @return the segments entry rel that was removed
+	 */
+	@Override
+	public SegmentsEntryRel removeByS_CN_CPK(long segmentsEntryId,
+		long classNameId, long classPK) throws NoSuchEntryRelException {
+		SegmentsEntryRel segmentsEntryRel = findByS_CN_CPK(segmentsEntryId,
+				classNameId, classPK);
+
+		return remove(segmentsEntryRel);
+	}
+
+	/**
+	 * Returns the number of segments entry rels where segmentsEntryId = &#63; and classNameId = &#63; and classPK = &#63;.
+	 *
+	 * @param segmentsEntryId the segments entry ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @return the number of matching segments entry rels
+	 */
+	@Override
+	public int countByS_CN_CPK(long segmentsEntryId, long classNameId,
+		long classPK) {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_S_CN_CPK;
+
+		Object[] finderArgs = new Object[] { segmentsEntryId, classNameId, classPK };
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(4);
+
+			query.append(_SQL_COUNT_SEGMENTSENTRYREL_WHERE);
+
+			query.append(_FINDER_COLUMN_S_CN_CPK_SEGMENTSENTRYID_2);
+
+			query.append(_FINDER_COLUMN_S_CN_CPK_CLASSNAMEID_2);
+
+			query.append(_FINDER_COLUMN_S_CN_CPK_CLASSPK_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(segmentsEntryId);
+
+				qPos.add(classNameId);
+
+				qPos.add(classPK);
+
+				count = (Long)q.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_S_CN_CPK_SEGMENTSENTRYID_2 = "segmentsEntryRel.segmentsEntryId = ? AND ";
+	private static final String _FINDER_COLUMN_S_CN_CPK_CLASSNAMEID_2 = "segmentsEntryRel.classNameId = ? AND ";
+	private static final String _FINDER_COLUMN_S_CN_CPK_CLASSPK_2 = "segmentsEntryRel.classPK = ?";
 
 	public SegmentsEntryRelPersistenceImpl() {
 		setModelClass(SegmentsEntryRel.class);
@@ -1759,6 +2005,12 @@ public class SegmentsEntryRelPersistenceImpl extends BasePersistenceImpl<Segment
 		entityCache.putResult(SegmentsEntryRelModelImpl.ENTITY_CACHE_ENABLED,
 			SegmentsEntryRelImpl.class, segmentsEntryRel.getPrimaryKey(),
 			segmentsEntryRel);
+
+		finderCache.putResult(FINDER_PATH_FETCH_BY_S_CN_CPK,
+			new Object[] {
+				segmentsEntryRel.getSegmentsEntryId(),
+				segmentsEntryRel.getClassNameId(), segmentsEntryRel.getClassPK()
+			}, segmentsEntryRel);
 
 		segmentsEntryRel.resetOriginalValues();
 	}
@@ -1813,6 +2065,9 @@ public class SegmentsEntryRelPersistenceImpl extends BasePersistenceImpl<Segment
 
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+
+		clearUniqueFindersCache((SegmentsEntryRelModelImpl)segmentsEntryRel,
+			true);
 	}
 
 	@Override
@@ -1823,6 +2078,50 @@ public class SegmentsEntryRelPersistenceImpl extends BasePersistenceImpl<Segment
 		for (SegmentsEntryRel segmentsEntryRel : segmentsEntryRels) {
 			entityCache.removeResult(SegmentsEntryRelModelImpl.ENTITY_CACHE_ENABLED,
 				SegmentsEntryRelImpl.class, segmentsEntryRel.getPrimaryKey());
+
+			clearUniqueFindersCache((SegmentsEntryRelModelImpl)segmentsEntryRel,
+				true);
+		}
+	}
+
+	protected void cacheUniqueFindersCache(
+		SegmentsEntryRelModelImpl segmentsEntryRelModelImpl) {
+		Object[] args = new Object[] {
+				segmentsEntryRelModelImpl.getSegmentsEntryId(),
+				segmentsEntryRelModelImpl.getClassNameId(),
+				segmentsEntryRelModelImpl.getClassPK()
+			};
+
+		finderCache.putResult(FINDER_PATH_COUNT_BY_S_CN_CPK, args,
+			Long.valueOf(1), false);
+		finderCache.putResult(FINDER_PATH_FETCH_BY_S_CN_CPK, args,
+			segmentsEntryRelModelImpl, false);
+	}
+
+	protected void clearUniqueFindersCache(
+		SegmentsEntryRelModelImpl segmentsEntryRelModelImpl,
+		boolean clearCurrent) {
+		if (clearCurrent) {
+			Object[] args = new Object[] {
+					segmentsEntryRelModelImpl.getSegmentsEntryId(),
+					segmentsEntryRelModelImpl.getClassNameId(),
+					segmentsEntryRelModelImpl.getClassPK()
+				};
+
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_S_CN_CPK, args);
+			finderCache.removeResult(FINDER_PATH_FETCH_BY_S_CN_CPK, args);
+		}
+
+		if ((segmentsEntryRelModelImpl.getColumnBitmask() &
+				FINDER_PATH_FETCH_BY_S_CN_CPK.getColumnBitmask()) != 0) {
+			Object[] args = new Object[] {
+					segmentsEntryRelModelImpl.getOriginalSegmentsEntryId(),
+					segmentsEntryRelModelImpl.getOriginalClassNameId(),
+					segmentsEntryRelModelImpl.getOriginalClassPK()
+				};
+
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_S_CN_CPK, args);
+			finderCache.removeResult(FINDER_PATH_FETCH_BY_S_CN_CPK, args);
 		}
 	}
 
@@ -2102,6 +2401,9 @@ public class SegmentsEntryRelPersistenceImpl extends BasePersistenceImpl<Segment
 		entityCache.putResult(SegmentsEntryRelModelImpl.ENTITY_CACHE_ENABLED,
 			SegmentsEntryRelImpl.class, segmentsEntryRel.getPrimaryKey(),
 			segmentsEntryRel, false);
+
+		clearUniqueFindersCache(segmentsEntryRelModelImpl, false);
+		cacheUniqueFindersCache(segmentsEntryRelModelImpl);
 
 		segmentsEntryRel.resetOriginalValues();
 

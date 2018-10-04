@@ -102,6 +102,9 @@ public interface SegmentsEntryRelLocalService extends BaseLocalService,
 	public SegmentsEntryRel deleteSegmentsEntryRel(long segmentsEntryRelId)
 		throws PortalException;
 
+	public void deleteSegmentsEntryRel(long segmentsEntryId, long classNameId,
+		long classPK) throws PortalException;
+
 	/**
 	* Deletes the segments entry rel from the database. Also notifies the appropriate model listeners.
 	*
@@ -207,6 +210,16 @@ public interface SegmentsEntryRelLocalService extends BaseLocalService,
 	public SegmentsEntryRel getSegmentsEntryRel(long segmentsEntryRelId)
 		throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getSegmentsEntryRelCount(long segmentsEntryId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getSegmentsEntryRelCount(long classNameId, long classPK);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getSegmentsEntryRelCount(long groupId, long classNameId,
+		long classPK);
+
 	/**
 	* Returns a range of all the segments entry rels.
 	*
@@ -239,6 +252,10 @@ public interface SegmentsEntryRelLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getSegmentsEntryRelsCount();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public boolean hasSegmentsEntryRel(long segmentsEntryId, long classNameId,
+		long classPK);
 
 	/**
 	* Updates the segments entry rel in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.

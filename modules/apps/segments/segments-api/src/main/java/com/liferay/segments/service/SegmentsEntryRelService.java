@@ -62,6 +62,9 @@ public interface SegmentsEntryRelService extends BaseService {
 	public void deleteSegmentsEntryRel(long segmentsEntryRelId)
 		throws PortalException;
 
+	public void deleteSegmentsEntryRel(long segmentsEntryId, long classNameId,
+		long classPK) throws PortalException;
+
 	/**
 	* Returns the OSGi service identifier.
 	*
@@ -70,10 +73,22 @@ public interface SegmentsEntryRelService extends BaseService {
 	public String getOSGiServiceIdentifier();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getSegmentsEntryRelCount(long segmentsEntryId)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getSegmentsEntryRelCount(long groupId, long classNameId,
+		long classPK) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<SegmentsEntryRel> getSegmentsEntryRels(long segmentsEntryId)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<SegmentsEntryRel> getSegmentsEntryRels(long groupId,
 		long classNameId, long classPK) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public boolean hasSegmentsEntryRel(long segmentsEntryId, long classNameId,
+		long classPK);
 }

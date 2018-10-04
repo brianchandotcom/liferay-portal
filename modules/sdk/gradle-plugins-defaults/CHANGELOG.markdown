@@ -4674,7 +4674,7 @@ projects defined in the `testIntegrationCompile` configuration do not have a
 - [LPS-84138]: Update the [Liferay Gradle Plugins] dependency to version
 3.12.150.
 
-## 5.5.65 - 2018-10-01
+## 5.5.66 - 2018-10-03
 
 ### Added
 - [LPS-85987]: When running the `npmRunBuild` task on Jenkins, check the version
@@ -5162,6 +5162,7 @@ qualifier before the task runs and change it back after it completes.
 [LPS-85678]: https://issues.liferay.com/browse/LPS-85678
 [LPS-85771]: https://issues.liferay.com/browse/LPS-85771
 [LPS-85905]: https://issues.liferay.com/browse/LPS-85905
+[LPS-85987]: https://issues.liferay.com/browse/LPS-85987
 [LRDOCS-2594]: https://issues.liferay.com/browse/LRDOCS-2594
 [LRDOCS-2841]: https://issues.liferay.com/browse/LRDOCS-2841
 [LRDOCS-2981]: https://issues.liferay.com/browse/LRDOCS-2981

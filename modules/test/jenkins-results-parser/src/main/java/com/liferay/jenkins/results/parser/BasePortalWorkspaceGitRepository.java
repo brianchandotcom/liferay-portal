@@ -17,8 +17,7 @@ package com.liferay.jenkins.results.parser;
 import java.util.HashSet;
 import java.util.Properties;
 import java.util.Set;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import java.util.Stack;
 
 import org.json.JSONObject;
 
@@ -113,49 +112,91 @@ public abstract class BasePortalWorkspaceGitRepository
 	private Properties _getPortalJobProperties(String propertyType, Job job) {
 		Properties jobProperties = job.getJobProperties();
 
-		Pattern pattern = Pattern.compile(
-			propertyType + "\\[(?<propertyName>[^\\]]+)\\]");
-
-		Set<String> propertyNames = new HashSet<>();
+		Set<String> portalPropertyNames = new HashSet<>();
 
 		for (String jobPropertyName : jobProperties.stringPropertyNames()) {
-			Matcher matcher = pattern.matcher(jobPropertyName);
-
-			if (!matcher.find()) {
+			if (!jobPropertyName.startsWith(propertyType)) {
 				continue;
 			}
 
-			propertyNames.add(matcher.group("propertyName"));
+			String portalPropertyName = _getPortalPropertyName(jobPropertyName);
+
+			if (portalPropertyName == null) {
+				continue;
+			}
+
+			portalPropertyNames.add(portalPropertyName);
 		}
 
-		Properties properties = new Properties();
+		Properties portalProperties = new Properties();
 
-		for (String propertyName : propertyNames) {
-			String propertyValue = JenkinsResultsParserUtil.getProperty(
-				jobProperties, propertyType, propertyName,
+		for (String portalPropertyName : portalPropertyNames) {
+			String portalPropertyValue = JenkinsResultsParserUtil.getProperty(
+				jobProperties, propertyType, portalPropertyName,
 				getUpstreamBranchName());
 
-			if ((propertyValue == null) && (job instanceof TestSuiteJob)) {
+			if ((portalPropertyValue == null) &&
+				(job instanceof TestSuiteJob)) {
+
 				TestSuiteJob testSuiteJob = (TestSuiteJob)job;
 
-				propertyValue = JenkinsResultsParserUtil.getProperty(
-					jobProperties, propertyType, propertyName,
+				portalPropertyValue = JenkinsResultsParserUtil.getProperty(
+					jobProperties, propertyType, portalPropertyName,
 					testSuiteJob.getTestSuiteName());
 			}
 
-			if ((propertyValue == null) &&
+			if ((portalPropertyValue == null) &&
 				JenkinsResultsParserUtil.isWindows()) {
 
-				propertyValue = JenkinsResultsParserUtil.getProperty(
-					jobProperties, propertyType, propertyName, "windows");
+				portalPropertyValue = JenkinsResultsParserUtil.getProperty(
+					jobProperties, propertyType, portalPropertyName, "windows");
 			}
 
-			if (propertyValue != null) {
-				properties.put(propertyName, propertyValue);
+			if (portalPropertyValue != null) {
+				portalProperties.put(portalPropertyName, portalPropertyValue);
 			}
 		}
 
-		return properties;
+		return portalProperties;
+	}
+
+	private String _getPortalPropertyName(String jobPropertyName) {
+		Stack<Integer> stack = new Stack<>();
+
+		Integer start = null;
+		Integer end = null;
+
+		for (int i = 0; i < jobPropertyName.length(); i++) {
+			char c = jobPropertyName.charAt(i);
+
+			if (c == '[') {
+				stack.push(i);
+
+				if (start == null) {
+					start = i;
+				}
+			}
+
+			if (c == ']') {
+				if (start == null) {
+					continue;
+				}
+
+				stack.pop();
+
+				if (stack.isEmpty()) {
+					end = i;
+
+					break;
+				}
+			}
+		}
+
+		if ((start != null) && (end != null)) {
+			return jobPropertyName.substring(start + 1, end);
+		}
+
+		return null;
 	}
 
 	private void _setBasePortalAppServerProperties() {

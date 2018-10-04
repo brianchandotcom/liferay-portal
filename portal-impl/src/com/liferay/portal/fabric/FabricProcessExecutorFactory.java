@@ -14,10 +14,10 @@
 
 package com.liferay.portal.fabric;
 
+import com.liferay.petra.process.ProcessExecutor;
 import com.liferay.portal.fabric.agent.FabricAgentRegistry;
 import com.liferay.portal.fabric.agent.PortalClassPathWarmupFabricAgentListener;
 import com.liferay.portal.fabric.agent.selectors.FabricAgentSelector;
-import com.liferay.portal.kernel.process.ProcessExecutor;
 import com.liferay.portal.util.PropsValues;
 
 /**

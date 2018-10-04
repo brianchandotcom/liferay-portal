@@ -14,20 +14,20 @@
 
 package com.liferay.portal.fabric.netty.repository;
 
+import com.liferay.petra.concurrent.AsyncBroker;
+import com.liferay.petra.concurrent.BaseFutureListener;
+import com.liferay.petra.concurrent.DefaultNoticeableFuture;
+import com.liferay.petra.concurrent.NoticeableFuture;
+import com.liferay.petra.concurrent.NoticeableFutureConverter;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.fabric.netty.fileserver.FileHelperUtil;
 import com.liferay.portal.fabric.netty.fileserver.FileRequest;
 import com.liferay.portal.fabric.netty.fileserver.FileResponse;
 import com.liferay.portal.fabric.netty.util.NettyUtil;
 import com.liferay.portal.fabric.repository.Repository;
 import com.liferay.portal.fabric.repository.RepositoryHelperUtil;
-import com.liferay.portal.kernel.concurrent.AsyncBroker;
-import com.liferay.portal.kernel.concurrent.BaseFutureListener;
-import com.liferay.portal.kernel.concurrent.DefaultNoticeableFuture;
-import com.liferay.portal.kernel.concurrent.NoticeableFuture;
-import com.liferay.portal.kernel.concurrent.NoticeableFutureConverter;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelFuture;
@@ -260,9 +260,9 @@ public class NettyRepository implements Repository<Channel> {
 					if (_log.isDebugEnabled()) {
 						_log.debug(
 							StringBundler.concat(
-								"Remote file ", String.valueOf(remoteFilePath),
+								"Remote file ", remoteFilePath,
 								" is not modified, use cached local file ",
-								String.valueOf(cachedLocalFilePath)));
+								cachedLocalFilePath));
 					}
 
 					return cachedLocalFilePath;
@@ -301,9 +301,8 @@ public class NettyRepository implements Repository<Channel> {
 				if (_log.isDebugEnabled()) {
 					_log.debug(
 						StringBundler.concat(
-							"Fetched remote file ",
-							String.valueOf(remoteFilePath), " to ",
-							String.valueOf(targetLocalFilePath)));
+							"Fetched remote file ", remoteFilePath, " to ",
+							targetLocalFilePath));
 				}
 
 				return targetLocalFilePath;

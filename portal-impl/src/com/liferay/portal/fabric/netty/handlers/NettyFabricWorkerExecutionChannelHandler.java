@@ -14,7 +14,17 @@
 
 package com.liferay.portal.fabric.netty.handlers;
 
+import com.liferay.petra.concurrent.BaseFutureListener;
+import com.liferay.petra.concurrent.FutureListener;
+import com.liferay.petra.concurrent.NoticeableFuture;
+import com.liferay.petra.concurrent.NoticeableFutureConverter;
 import com.liferay.petra.process.ClassPathUtil;
+import com.liferay.petra.process.PathHolder;
+import com.liferay.petra.process.ProcessCallable;
+import com.liferay.petra.process.ProcessConfig;
+import com.liferay.petra.process.ProcessException;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.fabric.agent.FabricAgent;
 import com.liferay.portal.fabric.netty.agent.NettyFabricAgentStub;
 import com.liferay.portal.fabric.netty.fileserver.FileHelperUtil;
@@ -26,19 +36,8 @@ import com.liferay.portal.fabric.netty.worker.NettyFabricWorkerConfig;
 import com.liferay.portal.fabric.netty.worker.NettyFabricWorkerStub;
 import com.liferay.portal.fabric.repository.Repository;
 import com.liferay.portal.fabric.worker.FabricWorker;
-import com.liferay.portal.kernel.concurrent.BaseFutureListener;
-import com.liferay.portal.kernel.concurrent.FutureListener;
-import com.liferay.portal.kernel.concurrent.NoticeableFuture;
-import com.liferay.portal.kernel.concurrent.NoticeableFutureConverter;
-import com.liferay.portal.kernel.io.PathHolder;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.process.ProcessCallable;
-import com.liferay.portal.kernel.process.ProcessConfig;
-import com.liferay.portal.kernel.process.ProcessException;
-import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringUtil;
 
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelFuture;
@@ -53,12 +52,14 @@ import java.io.IOException;
 import java.io.Serializable;
 
 import java.net.MalformedURLException;
+import java.net.URL;
 import java.net.URLClassLoader;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -323,9 +324,8 @@ public class NettyFabricWorkerExecutionChannelHandler
 			if (nettyStubFabricWorker == null) {
 				throw new ProcessException(
 					StringBundler.concat(
-						"Unable to locate fabric worker on channel ",
-						String.valueOf(channel), ", with fabric worker id ",
-						String.valueOf(_id)));
+						"Unable to locate fabric worker on channel ", channel,
+						", with fabric worker id ", _id));
 			}
 
 			if (_throwable != null) {
@@ -395,12 +395,16 @@ public class NettyFabricWorkerExecutionChannelHandler
 			builder.setRuntimeClassPath(_runtimeClassPath);
 
 			try {
+				List<URL> urls = new ArrayList<>();
+
+				Collections.addAll(
+					urls, ClassPathUtil.getClassPathURLs(_bootstrapClassPath));
+
+				Collections.addAll(
+					urls, ClassPathUtil.getClassPathURLs(_runtimeClassPath));
+
 				builder.setReactClassLoader(
-					new URLClassLoader(
-						ArrayUtil.append(
-							ClassPathUtil.getClassPathURLs(_bootstrapClassPath),
-							ClassPathUtil.getClassPathURLs(
-								_runtimeClassPath))));
+					new URLClassLoader(urls.toArray(new URL[urls.size()])));
 			}
 			catch (MalformedURLException murle) {
 				throw new ProcessException(murle);

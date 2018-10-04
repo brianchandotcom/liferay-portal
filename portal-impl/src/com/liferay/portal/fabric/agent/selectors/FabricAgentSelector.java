@@ -14,8 +14,8 @@
 
 package com.liferay.portal.fabric.agent.selectors;
 
+import com.liferay.petra.process.ProcessCallable;
 import com.liferay.portal.fabric.agent.FabricAgent;
-import com.liferay.portal.kernel.process.ProcessCallable;
 
 import java.util.Collection;
 

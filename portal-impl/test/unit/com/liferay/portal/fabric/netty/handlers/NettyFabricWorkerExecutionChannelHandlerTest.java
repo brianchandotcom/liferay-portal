@@ -14,7 +14,15 @@
 
 package com.liferay.portal.fabric.netty.handlers;
 
+import com.liferay.petra.concurrent.DefaultNoticeableFuture;
+import com.liferay.petra.concurrent.FutureListener;
+import com.liferay.petra.concurrent.NoticeableFuture;
+import com.liferay.petra.process.ProcessCallable;
+import com.liferay.petra.process.ProcessConfig;
+import com.liferay.petra.process.ProcessException;
+import com.liferay.petra.reflect.ObjectGraphUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.fabric.FabricPathMappingVisitor;
 import com.liferay.portal.fabric.InputResource;
@@ -40,20 +48,12 @@ import com.liferay.portal.fabric.netty.worker.NettyFabricWorkerConfig;
 import com.liferay.portal.fabric.netty.worker.NettyFabricWorkerStub;
 import com.liferay.portal.fabric.repository.MockRepository;
 import com.liferay.portal.fabric.worker.FabricWorker;
-import com.liferay.portal.kernel.concurrent.DefaultNoticeableFuture;
-import com.liferay.portal.kernel.concurrent.FutureListener;
-import com.liferay.portal.kernel.concurrent.NoticeableFuture;
-import com.liferay.portal.kernel.process.ProcessCallable;
-import com.liferay.portal.kernel.process.ProcessConfig;
-import com.liferay.portal.kernel.process.ProcessException;
 import com.liferay.portal.kernel.test.CaptureHandler;
 import com.liferay.portal.kernel.test.JDKLoggerTestUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
 import com.liferay.portal.kernel.test.rule.NewEnv;
-import com.liferay.portal.kernel.util.ObjectGraphUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.test.rule.AdviseWith;
 import com.liferay.portal.test.rule.AspectJNewEnvTestRule;
 
@@ -487,14 +487,12 @@ public class NettyFabricWorkerExecutionChannelHandlerTest {
 
 		builder.setBootstrapClassPath(
 			StringBundler.concat(
-				String.valueOf(bootstrapPath1), File.pathSeparator,
-				String.valueOf(bootstrapPath2), File.pathSeparator,
-				String.valueOf(bootstrapPath3)));
+				bootstrapPath1, File.pathSeparator, bootstrapPath2,
+				File.pathSeparator, bootstrapPath3));
 		builder.setRuntimeClassPath(
 			StringBundler.concat(
-				String.valueOf(runtimePath1), File.pathSeparator,
-				String.valueOf(runtimePath2), File.pathSeparator,
-				String.valueOf(runtimePath3)));
+				runtimePath1, File.pathSeparator, runtimePath2,
+				File.pathSeparator, runtimePath3));
 
 		ProcessConfig processConfig = builder.build();
 
@@ -529,15 +527,13 @@ public class NettyFabricWorkerExecutionChannelHandlerTest {
 
 		Assert.assertEquals(
 			StringBundler.concat(
-				String.valueOf(mappedBootstrapPath1), File.pathSeparator,
-				String.valueOf(mappedBootstrapPath2), File.pathSeparator,
-				String.valueOf(mappedBootstrapPath3)),
+				mappedBootstrapPath1, File.pathSeparator, mappedBootstrapPath2,
+				File.pathSeparator, mappedBootstrapPath3),
 			processConfig.getBootstrapClassPath());
 		Assert.assertEquals(
 			StringBundler.concat(
-				String.valueOf(mappedRuntimePath1), File.pathSeparator,
-				String.valueOf(mappedRuntimePath2), File.pathSeparator,
-				String.valueOf(mappedRuntimePath3)),
+				mappedRuntimePath1, File.pathSeparator, mappedRuntimePath2,
+				File.pathSeparator, mappedRuntimePath3),
 			processConfig.getRuntimeClassPath());
 	}
 
@@ -581,9 +577,8 @@ public class NettyFabricWorkerExecutionChannelHandlerTest {
 
 		builder.setBootstrapClassPath(
 			StringBundler.concat(
-				String.valueOf(bootstrapPath1), File.pathSeparator,
-				String.valueOf(bootstrapPath2), File.pathSeparator,
-				String.valueOf(bootstrapPath3)));
+				bootstrapPath1, File.pathSeparator, bootstrapPath2,
+				File.pathSeparator, bootstrapPath3));
 		builder.setRuntimeClassPath(StringPool.BLANK);
 
 		ProcessConfig processConfig = builder.build();
@@ -788,9 +783,8 @@ public class NettyFabricWorkerExecutionChannelHandlerTest {
 		builder.setBootstrapClassPath(StringPool.BLANK);
 		builder.setRuntimeClassPath(
 			StringBundler.concat(
-				String.valueOf(runtimePath1), File.pathSeparator,
-				String.valueOf(runtimePath2), File.pathSeparator,
-				String.valueOf(runtimePath3)));
+				runtimePath1, File.pathSeparator, runtimePath2,
+				File.pathSeparator, runtimePath3));
 
 		ProcessConfig processConfig = builder.build();
 

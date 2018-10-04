@@ -14,10 +14,10 @@
 
 package com.liferay.portal.fabric.netty.worker;
 
-import com.liferay.portal.kernel.io.PathHolder;
-import com.liferay.portal.kernel.process.ProcessCallable;
-import com.liferay.portal.kernel.process.ProcessConfig;
-import com.liferay.portal.kernel.process.ProcessException;
+import com.liferay.petra.process.PathHolder;
+import com.liferay.petra.process.ProcessCallable;
+import com.liferay.petra.process.ProcessConfig;
+import com.liferay.petra.process.ProcessException;
 import com.liferay.util.SerializableUtil;
 
 import java.io.Serializable;

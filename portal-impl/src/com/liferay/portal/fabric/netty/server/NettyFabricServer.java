@@ -14,6 +14,7 @@
 
 package com.liferay.portal.fabric.netty.server;
 
+import com.liferay.petra.concurrent.DefaultNoticeableFuture;
 import com.liferay.portal.fabric.agent.FabricAgentRegistry;
 import com.liferay.portal.fabric.netty.codec.serialization.AnnotatedObjectDecoder;
 import com.liferay.portal.fabric.netty.codec.serialization.AnnotatedObjectEncoder;
@@ -21,12 +22,11 @@ import com.liferay.portal.fabric.netty.fileserver.FileHelperUtil;
 import com.liferay.portal.fabric.netty.fileserver.handlers.FileRequestChannelHandler;
 import com.liferay.portal.fabric.netty.handlers.NettyFabricAgentRegistrationChannelHandler;
 import com.liferay.portal.fabric.netty.rpc.handlers.NettyRPCChannelHandler;
+import com.liferay.portal.fabric.netty.util.NamedThreadFactory;
 import com.liferay.portal.fabric.netty.util.NettyUtil;
 import com.liferay.portal.fabric.server.FabricServer;
-import com.liferay.portal.kernel.concurrent.DefaultNoticeableFuture;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.NamedThreadFactory;
 
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.Channel;
@@ -89,14 +89,12 @@ public class NettyFabricServer implements FabricServer {
 		EventLoopGroup bossEventLoopGroup = new NioEventLoopGroup(
 			_nettyFabricServerConfig.getBossGroupThreadCount(),
 			new NamedThreadFactory(
-				"Netty Fabric Server/Boss Event Loop Group",
-				Thread.NORM_PRIORITY, null));
+				"Netty Fabric Server/Boss Event Loop Group"));
 
 		EventLoopGroup workerEventLoopGroup = new NioEventLoopGroup(
 			_nettyFabricServerConfig.getWorkerGroupThreadCount(),
 			new NamedThreadFactory(
-				"Netty Fabric Server/Worker Event Loop Group",
-				Thread.NORM_PRIORITY, null));
+				"Netty Fabric Server/Worker Event Loop Group"));
 
 		NettyUtil.bindShutdown(
 			bossEventLoopGroup, workerEventLoopGroup,
@@ -154,8 +152,7 @@ public class NettyFabricServer implements FabricServer {
 		int threadCount, String threadPoolName) {
 
 		EventExecutorGroup eventExecutorGroup = new DefaultEventExecutorGroup(
-			threadCount,
-			new NamedThreadFactory(threadPoolName, Thread.NORM_PRIORITY, null));
+			threadCount, new NamedThreadFactory(threadPoolName));
 
 		EventLoop eventLoop = _serverChannel.eventLoop();
 

@@ -14,8 +14,8 @@
 
 package com.liferay.portal.fabric.netty.server;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.fabric.netty.fileserver.CompressionLevel;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.portal.util.PropsValues;
 

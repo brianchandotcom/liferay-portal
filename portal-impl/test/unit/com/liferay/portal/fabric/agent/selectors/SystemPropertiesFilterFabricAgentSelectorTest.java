@@ -14,16 +14,16 @@
 
 package com.liferay.portal.fabric.agent.selectors;
 
+import com.liferay.petra.process.ProcessCallable;
 import com.liferay.portal.fabric.agent.FabricAgent;
 import com.liferay.portal.fabric.status.AdvancedOperatingSystemMXBean;
 import com.liferay.portal.fabric.status.FabricStatus;
-import com.liferay.portal.kernel.process.ProcessCallable;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
-import com.liferay.portal.kernel.util.ProxyUtil;
 
 import java.lang.management.RuntimeMXBean;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
+import java.lang.reflect.Proxy;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -70,7 +70,7 @@ public class SystemPropertiesFilterFabricAgentSelectorTest {
 	protected FabricAgent createFabricAgent(
 		Map<String, String> systemProperties) {
 
-		return (FabricAgent)ProxyUtil.newProxyInstance(
+		return (FabricAgent)Proxy.newProxyInstance(
 			FabricAgent.class.getClassLoader(),
 			new Class<?>[] {FabricAgent.class},
 			new FabricAgentInvocationHandler(systemProperties));
@@ -90,7 +90,7 @@ public class SystemPropertiesFilterFabricAgentSelectorTest {
 			String methodName = method.getName();
 
 			if (methodName.equals("getFabricStatus")) {
-				return ProxyUtil.newProxyInstance(
+				return Proxy.newProxyInstance(
 					FabricStatus.class.getClassLoader(),
 					new Class<?>[] {FabricStatus.class},
 					new FabricStatusInvocationHandler(_systemProperties));
@@ -121,7 +121,7 @@ public class SystemPropertiesFilterFabricAgentSelectorTest {
 			String methodName = method.getName();
 
 			if (methodName.equals("getRuntimeMXBean")) {
-				return ProxyUtil.newProxyInstance(
+				return Proxy.newProxyInstance(
 					AdvancedOperatingSystemMXBean.class.getClassLoader(),
 					new Class<?>[] {RuntimeMXBean.class},
 					new RuntimeMXBeanInvocationHandler(_systemProperties));

@@ -12,29 +12,35 @@
  * details.
  */
 
-package com.liferay.portal.fabric;
+package com.liferay.portal.fabric.netty.util;
 
-import com.liferay.petra.process.ProcessCallable;
+import com.liferay.petra.string.StringPool;
 
-import java.io.Serializable;
+import java.util.concurrent.ThreadFactory;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * @author Shuyang Zhou
  */
-public class ReturnProcessCallable<T extends Serializable>
-	implements ProcessCallable<T> {
+public class NamedThreadFactory implements ThreadFactory {
 
-	public ReturnProcessCallable(T returnValue) {
-		_returnValue = returnValue;
+	public NamedThreadFactory(String name) {
+		_name = name;
 	}
 
 	@Override
-	public T call() {
-		return _returnValue;
+	public Thread newThread(Runnable runnable) {
+		Thread thread = new Thread(
+			runnable,
+			_name.concat(StringPool.MINUS).concat(
+				String.valueOf(_counter.incrementAndGet())));
+
+		thread.setDaemon(true);
+
+		return thread;
 	}
 
-	private static final long serialVersionUID = 1L;
-
-	private final T _returnValue;
+	private final AtomicInteger _counter = new AtomicInteger();
+	private final String _name;
 
 }

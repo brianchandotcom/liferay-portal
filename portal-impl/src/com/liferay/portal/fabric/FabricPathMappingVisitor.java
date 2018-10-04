@@ -14,9 +14,9 @@
 
 package com.liferay.portal.fabric;
 
+import com.liferay.petra.process.ProcessCallable;
+import com.liferay.petra.reflect.ObjectGraphUtil.AnnotatedFieldMappingVisitor;
 import com.liferay.portal.fabric.repository.RepositoryHelperUtil;
-import com.liferay.portal.kernel.process.ProcessCallable;
-import com.liferay.portal.kernel.util.ObjectGraphUtil.AnnotatedFieldMappingVisitor;
 
 import java.io.File;
 

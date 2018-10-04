@@ -14,14 +14,14 @@
 
 package com.liferay.portal.fabric.agent;
 
+import com.liferay.petra.concurrent.BaseFutureListener;
+import com.liferay.petra.concurrent.NoticeableFuture;
+import com.liferay.petra.process.ProcessCallable;
+import com.liferay.petra.process.ProcessException;
 import com.liferay.portal.fabric.worker.FabricWorker;
-import com.liferay.portal.kernel.concurrent.BaseFutureListener;
-import com.liferay.portal.kernel.concurrent.NoticeableFuture;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.process.ClassPathUtil;
-import com.liferay.portal.kernel.process.ProcessCallable;
-import com.liferay.portal.kernel.process.ProcessException;
+import com.liferay.portal.util.PortalClassPathUtil;
 
 import java.io.Serializable;
 
@@ -39,7 +39,8 @@ public class PortalClassPathWarmupFabricAgentListener
 			long startTime = System.currentTimeMillis();
 
 			FabricWorker<Serializable> fabricWorker = fabricAgent.execute(
-				ClassPathUtil.getPortalProcessConfig(), _warmupProcessCallable);
+				PortalClassPathUtil.getPortalProcessConfig(),
+				_warmupProcessCallable);
 
 			NoticeableFuture<Serializable> noticeableFuture =
 				fabricWorker.getProcessNoticeableFuture();

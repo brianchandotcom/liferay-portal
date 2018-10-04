@@ -12,11 +12,11 @@
  * details.
  */
 
-package com.liferay.portal.kernel.util;
+package com.liferay.petra.reflect;
 
-import com.liferay.petra.reflect.ReflectionUtil;
+import com.liferay.petra.reflect.ObjectGraphUtil.AnnotatedFieldMappingVisitor;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
-import com.liferay.portal.kernel.util.ObjectGraphUtil.AnnotatedFieldMappingVisitor;
+import com.liferay.portal.kernel.util.ObjectValuePair;
 
 import java.lang.annotation.Annotation;
 import java.lang.annotation.Documented;

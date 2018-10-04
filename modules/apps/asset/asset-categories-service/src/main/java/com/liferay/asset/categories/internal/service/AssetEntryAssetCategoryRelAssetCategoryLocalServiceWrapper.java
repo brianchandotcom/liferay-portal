@@ -17,6 +17,7 @@ package com.liferay.asset.categories.internal.service;
 import com.liferay.asset.entry.rel.model.AssetEntryAssetCategoryRel;
 import com.liferay.asset.entry.rel.service.AssetEntryAssetCategoryRelLocalService;
 import com.liferay.asset.kernel.model.AssetCategory;
+import com.liferay.asset.kernel.model.AssetCategoryModel;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.kernel.service.AssetCategoryLocalServiceWrapper;
@@ -25,6 +26,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.ModelHintsUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceWrapper;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 
 import java.util.ArrayList;
@@ -52,6 +54,36 @@ public class AssetEntryAssetCategoryRelAssetCategoryLocalServiceWrapper
 		AssetCategoryLocalService assetCategoryLocalService) {
 
 		super(assetCategoryLocalService);
+	}
+
+	@Override
+	public void addAssetEntryAssetCategories(
+		long entryId, List<AssetCategory> assetCategories) {
+
+		addAssetEntryAssetCategories(
+			entryId,
+			ListUtil.toLongArray(
+				assetCategories, AssetCategoryModel::getCategoryId));
+	}
+
+	@Override
+	public void addAssetEntryAssetCategories(long entryId, long[] categoryIds) {
+		for (long categoryId : categoryIds) {
+			addAssetEntryAssetCategory(entryId, categoryId);
+		}
+	}
+
+	@Override
+	public void addAssetEntryAssetCategory(
+		long entryId, AssetCategory assetCategory) {
+
+		addAssetEntryAssetCategory(entryId, assetCategory.getCategoryId());
+	}
+
+	@Override
+	public void addAssetEntryAssetCategory(long entryId, long categoryId) {
+		_assetEntryAssetCategoryRelLocalService.addAssetEntryAssetCategoryRel(
+			entryId, categoryId);
 	}
 
 	@Override

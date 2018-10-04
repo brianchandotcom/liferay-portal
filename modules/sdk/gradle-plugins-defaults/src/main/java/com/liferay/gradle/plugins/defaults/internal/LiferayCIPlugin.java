@@ -347,10 +347,6 @@ public class LiferayCIPlugin implements Plugin<Project> {
 		final String ciRegistry = GradleUtil.getProperty(
 			project, "nodejs.npm.ci.registry", (String)null);
 
-		if (Validator.isNull(ciRegistry)) {
-			return;
-		}
-
 		TaskContainer taskContainer = project.getTasks();
 
 		taskContainer.withType(
@@ -365,7 +361,9 @@ public class LiferayCIPlugin implements Plugin<Project> {
 						_configureTaskNpmRunBuild(executeNpmTask);
 					}
 
-					_configureTaskExecuteNpm(executeNpmTask, ciRegistry);
+					if (Validator.isNotNull(ciRegistry)) {
+						_configureTaskExecuteNpm(executeNpmTask, ciRegistry);
+					}
 				}
 
 			});

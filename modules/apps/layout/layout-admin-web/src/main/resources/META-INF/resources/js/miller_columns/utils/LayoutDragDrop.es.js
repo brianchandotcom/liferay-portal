@@ -67,7 +67,7 @@ class LayoutDragDrop extends State {
 				this._draggingItemPosition = DRAG_POSITIONS.top;
 			}
 			else {
-			this._draggingItemPosition = DRAG_POSITIONS.bottom;
+				this._draggingItemPosition = DRAG_POSITIONS.bottom;
 			}
 
 			this.emit(
@@ -106,11 +106,13 @@ class LayoutDragDrop extends State {
 
 		if (data.target) {
 			const sourceItemPlid = data.source.dataset.layoutColumnItemPlid;
+			const targetItemPlid = data.target.dataset.layoutColumnItemPlid;
 
 			this.emit(
 				'moveLayoutColumnItem',
 				{
-					sourceItemPlid
+					sourceItemPlid,
+					targetItemPlid
 				}
 			);
 		}

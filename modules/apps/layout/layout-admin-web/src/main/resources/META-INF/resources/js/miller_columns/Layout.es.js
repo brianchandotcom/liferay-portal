@@ -188,44 +188,60 @@ class Layout extends Component {
 	/**
 	 * @param {!object} eventData
 	 * @param {!string} eventData.sourceItemPlid
+	 * @param {!string} eventData.targetItemPlid
 	 * @private
 	 * @review
 	 */
 
 	_handleMoveLayoutColumnItem(eventData) {
-		const sourceItemPlid = eventData.sourceItemPlid;
-
-		let layoutColumns = this.layoutColumns.map(
+		const layoutColumns = this.layoutColumns.map(
 			layoutColumn => [...layoutColumn]
 		);
 
+		const sourceItemPlid = eventData.sourceItemPlid;
+		const targetItemPlid = eventData.targetItemPlid;
+
 		const sourceItem = this._getLayoutColumnItemByPlid(layoutColumns, sourceItemPlid);
-		const targetItem = this._getLayoutColumnItemByPlid(layoutColumns, this._hoveredLayoutColumnItemPlid);
+		const targetItem = this._getLayoutColumnItemByPlid(layoutColumns, targetItemPlid);
 
-		const sourceColumn = this._getParentColumnByPlid(layoutColumns, sourceItemPlid);
-		const targetColumn = this._getParentColumnByPlid(layoutColumns, this._hoveredLayoutColumnItemPlid);
+		if (this._draggingItemPosition) {
 
-		if ((sourceItem != targetItem) && (sourceColumn === targetColumn)) {
+			const sourceColumn = this._getParentColumnByPlid(layoutColumns, sourceItemPlid);
+			const targetColumn = this._getParentColumnByPlid(layoutColumns, targetItemPlid);
+
 			sourceColumn.splice(sourceColumn.indexOf(sourceItem), 1);
 
-			let priority = sourceColumn.indexOf(targetItem);
-
-			if (this._draggingItemPosition === DRAG_POSITIONS.bottom) {
-				priority = sourceColumn.indexOf(targetItem) + 1;
+			if (this._draggingItemPosition === DRAG_POSITIONS.inside) {
+				targetItem.hasChild = true;
+				this._moveLayoutColumnItem(targetItemPlid, sourceItemPlid)
+					.then(
+						() => {
+							this.layoutColumns = layoutColumns;
+							this._initializeLayoutDragDrop();
+						}
+					);
 			}
+			else {
+				let priority = targetColumn.indexOf(targetItem);
 
-			sourceColumn.splice(priority, 0, sourceItem);
+				if (this._draggingItemPosition === DRAG_POSITIONS.bottom) {
+					priority++;
+				}
 
-			const targetColumnIndex = layoutColumns.indexOf(targetColumn);
+				targetColumn.splice(priority, 0, sourceItem);
 
-			const parentPlid = this._getLayoutColumnActiveItem(layoutColumns[targetColumnIndex - 1]);
+				const targetColumnIndex = layoutColumns.indexOf(targetColumn);
 
-			this._moveLayoutColumnItem(parentPlid, sourceItemPlid, priority)
-				.then(
-					() => {
-						this.layoutColumns = layoutColumns;
-					}
-				);
+				const parentPlid = this._getLayoutColumnActiveItem(layoutColumns[targetColumnIndex - 1]);
+
+				this._moveLayoutColumnItem(parentPlid, sourceItemPlid, priority)
+					.then(
+						() => {
+							this.layoutColumns = layoutColumns;
+							this._initializeLayoutDragDrop();
+						}
+					);
+			}
 		}
 
 		this._resetHoveredData();
@@ -269,7 +285,10 @@ class Layout extends Component {
 
 		formData.append(`${this.portletNamespace}plid`, plid);
 		formData.append(`${this.portletNamespace}parentPlid`, parentPlid);
-		formData.append(`${this.portletNamespace}priority`, priority);
+
+		if (priority != null) {
+			formData.append(`${this.portletNamespace}priority`, priority);
+		}
 
 		return fetch(
 			this.moveLayoutColumnItemURL,

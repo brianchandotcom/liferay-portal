@@ -126,14 +126,15 @@
 				</div>
 
 				{let $layoutColumnItemAttributes kind="attributes"}
-					{if $layoutColumnItem.checked}
-						checked
-					{/if}
 					class="custom-control-input"
+					data-onchange="{$handleLayoutColumnItemCheck}"
 					name="{$portletNamespace}rowIds"
 					type="checkbox"
 					value="{$layoutColumnItem.plid}"
-					data-onchange="{$handleLayoutColumnItemCheck}"
+
+					{if $layoutColumnItem.checked}
+						checked
+					{/if}
 				{/let}
 
 				<div class="autofit-col flex-col">

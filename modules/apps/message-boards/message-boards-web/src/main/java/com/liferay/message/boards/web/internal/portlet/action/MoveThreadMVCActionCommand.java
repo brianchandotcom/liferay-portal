@@ -93,10 +93,11 @@ public class MoveThreadMVCActionCommand extends BaseMVCActionCommand {
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		long categoryId = ParamUtil.getLong(actionRequest, "mbCategoryId");
 		long threadId = ParamUtil.getLong(actionRequest, "threadId");
 
 		MBThread thread = _mbThreadLocalService.getThread(threadId);
+
+		long categoryId = ParamUtil.getLong(actionRequest, "mbCategoryId");
 
 		_mbThreadService.moveThread(categoryId, threadId);
 

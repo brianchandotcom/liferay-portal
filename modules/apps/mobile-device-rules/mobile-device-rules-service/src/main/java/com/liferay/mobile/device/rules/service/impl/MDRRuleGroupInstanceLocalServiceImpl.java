@@ -44,6 +44,7 @@ public class MDRRuleGroupInstanceLocalServiceImpl
 		// Rule group instance
 
 		User user = userLocalService.getUser(serviceContext.getUserId());
+
 		long classNameId = classNameLocalService.getClassNameId(className);
 
 		validate(classNameId, classPK, ruleGroupId);

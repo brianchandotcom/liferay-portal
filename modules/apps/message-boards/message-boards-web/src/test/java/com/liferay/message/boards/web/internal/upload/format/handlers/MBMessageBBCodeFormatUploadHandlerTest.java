@@ -53,6 +53,7 @@ public class MBMessageBBCodeFormatUploadHandlerTest {
 		long tempFileId = 1;
 
 		String originalContent = "[img]http://random[/img]";
+
 		String finalURL = "http://final";
 
 		Mockito.doReturn(
@@ -80,6 +81,7 @@ public class MBMessageBBCodeFormatUploadHandlerTest {
 			new ArrayList<>();
 
 		FileEntry fileEntry = Mockito.mock(FileEntry.class);
+
 		long tempFileId = 1;
 
 		String originalContent = String.format(

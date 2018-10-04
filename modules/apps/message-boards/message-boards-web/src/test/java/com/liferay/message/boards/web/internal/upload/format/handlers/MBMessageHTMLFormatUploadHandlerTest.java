@@ -53,6 +53,7 @@ public class MBMessageHTMLFormatUploadHandlerTest {
 		long tempFileId = 1;
 
 		String originalContent = "<img src=\"http://random\"/>";
+
 		String finalURL = "http://final";
 
 		Mockito.doReturn(
@@ -80,6 +81,7 @@ public class MBMessageHTMLFormatUploadHandlerTest {
 			new ArrayList<>();
 
 		FileEntry fileEntry = Mockito.mock(FileEntry.class);
+
 		long tempFileId = 1;
 
 		String originalContent = String.format(

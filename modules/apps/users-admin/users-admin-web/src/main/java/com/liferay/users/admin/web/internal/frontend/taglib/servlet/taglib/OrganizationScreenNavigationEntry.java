@@ -55,7 +55,7 @@ public class OrganizationScreenNavigationEntry
 		OrganizationService organizationService, Portal portal,
 		PortletURLFactory portletURLFactory, String entryKey,
 		String categoryKey, String jspPath, String mvcActionCommandName,
-		boolean showControls,
+		boolean showControls, boolean showTitle,
 		BiFunction<User, Organization, Boolean> isVisibleBiFunction) {
 
 		_jspRenderer = jspRenderer;
@@ -68,6 +68,7 @@ public class OrganizationScreenNavigationEntry
 		_jspPath = jspPath;
 		_mvcActionCommandName = mvcActionCommandName;
 		_showControls = showControls;
+		_showTitle = showTitle;
 		_isVisibleBiFunction = isVisibleBiFunction;
 	}
 
@@ -137,6 +138,7 @@ public class OrganizationScreenNavigationEntry
 			organizationId);
 		organizationScreenNavigationDisplayContext.setShowControls(
 			_showControls);
+		organizationScreenNavigationDisplayContext.setShowTitle(_showTitle);
 
 		String portletId = _portal.getPortletId(request);
 
@@ -202,5 +204,6 @@ public class OrganizationScreenNavigationEntry
 	private final Portal _portal;
 	private final PortletURLFactory _portletURLFactory;
 	private final boolean _showControls;
+	private final boolean _showTitle;
 
 }

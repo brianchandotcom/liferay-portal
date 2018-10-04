@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutTypePortlet;
 import com.liferay.portal.kernel.model.Portlet;
+import com.liferay.portal.kernel.model.PortletApp;
 import com.liferay.portal.kernel.model.PublicRenderParameter;
 import com.liferay.portal.kernel.portlet.LiferayPortletMode;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
@@ -29,6 +30,8 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.URLCodec;
+import com.liferay.portal.kernel.xml.QName;
+import com.liferay.portlet.PublicRenderParametersPool;
 import com.liferay.portlet.RenderParametersPool;
 
 import java.util.Collections;
@@ -148,16 +151,43 @@ public class RenderStateUtil {
 	private static Map<String, String[]> _getChangedPublicRenderParameters(
 		HttpServletRequest request, long plid, List<Portlet> portlets) {
 
-		Map<String, String[]> publicRenderParameterMap = new HashMap<>();
+		Map<String, String[]> changedPublicRenderParameters = new HashMap<>();
+
+		Map<String, String[]> currentPublicRenderParameters =
+			PublicRenderParametersPool.get(request, plid);
 
 		for (Portlet portlet : portlets) {
+			Set<PublicRenderParameter> publicRenderParameters =
+				portlet.getPublicRenderParameters();
+
+			PortletApp portletApp = portlet.getPortletApp();
+
+			if (portletApp.getSpecMajorVersion() >= 3) {
+				for (PublicRenderParameter publicRenderParameter :
+						publicRenderParameters) {
+
+					QName qName = publicRenderParameter.getQName();
+
+					String publicRenderParameterName =
+						PortletQNameUtil.getPublicRenderParameterName(qName);
+
+					String[] currentValue = currentPublicRenderParameters.get(
+						publicRenderParameterName);
+
+					if (currentValue != null) {
+						changedPublicRenderParameters.put(
+							publicRenderParameter.getIdentifier(),
+							currentValue);
+					}
+				}
+
+				continue;
+			}
+
 			Map<String, String[]> privateRenderParameterMap =
 				RenderParametersPool.get(request, plid, portlet.getPortletId());
 
 			if (privateRenderParameterMap != null) {
-				Set<PublicRenderParameter> publicRenderParameters =
-					portlet.getPublicRenderParameters();
-
 				for (PublicRenderParameter publicRenderParameter :
 						publicRenderParameters) {
 
@@ -165,14 +195,14 @@ public class RenderStateUtil {
 						publicRenderParameter.getIdentifier());
 
 					if (values != null) {
-						publicRenderParameterMap.put(
+						changedPublicRenderParameters.put(
 							publicRenderParameter.getIdentifier(), values);
 					}
 				}
 			}
 		}
 
-		return publicRenderParameterMap;
+		return changedPublicRenderParameters;
 	}
 
 	private static JSONObject _getPageStateJSONObject(

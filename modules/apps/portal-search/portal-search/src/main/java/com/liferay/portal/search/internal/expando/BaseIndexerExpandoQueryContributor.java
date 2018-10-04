@@ -14,14 +14,12 @@
 
 package com.liferay.portal.search.internal.expando;
 
-import com.liferay.expando.kernel.service.ExpandoColumnLocalService;
-import com.liferay.expando.kernel.util.ExpandoBridgeFactory;
-import com.liferay.expando.kernel.util.ExpandoBridgeIndexer;
 import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.ExpandoQueryContributor;
 import com.liferay.portal.kernel.search.SearchContext;
-import com.liferay.portal.kernel.util.Localization;
-import com.liferay.portal.kernel.util.LocalizationUtil;
+import com.liferay.portal.search.internal.indexer.KeywordQueryContributorsHolder;
+import com.liferay.portal.search.spi.model.query.contributor.KeywordQueryContributor;
+import com.liferay.portal.search.spi.model.query.contributor.helper.KeywordQueryContributorHelper;
 
 import java.util.stream.Stream;
 
@@ -40,43 +38,35 @@ public class BaseIndexerExpandoQueryContributor
 		String keywords, BooleanQuery booleanQuery, String[] classNames,
 		SearchContext searchContext) {
 
-		ExpandoQueryContributorHelper expandoQueryContributorHelper =
-			new ExpandoQueryContributorHelper(
-				expandoBridgeFactory, expandoBridgeIndexer,
-				expandoColumnLocalService, getLocalization());
+		Stream<KeywordQueryContributor> stream =
+			keywordQueryContributorsHolder.getAll();
 
-		expandoQueryContributorHelper.setAndSearch(searchContext.isAndSearch());
-		expandoQueryContributorHelper.setBooleanQuery(booleanQuery);
-		expandoQueryContributorHelper.setClassNamesStream(
-			Stream.of(classNames));
-		expandoQueryContributorHelper.setCompanyId(
-			searchContext.getCompanyId());
-		expandoQueryContributorHelper.setKeywords(keywords);
-		expandoQueryContributorHelper.setLocale(searchContext.getLocale());
+		stream.forEach(
+			keywordQueryContributor -> {
+				keywordQueryContributor.contribute(
+					searchContext.getKeywords(), booleanQuery,
+					new KeywordQueryContributorHelper() {
 
-		expandoQueryContributorHelper.contribute();
+						@Override
+						public String getClassName() {
+							return null;
+						}
+
+						@Override
+						public Stream<String> getSearchClassNamesStream() {
+							return Stream.of(classNames);
+						}
+
+						@Override
+						public SearchContext getSearchContext() {
+							return searchContext;
+						}
+
+					});
+			});
 	}
 
-	protected Localization getLocalization() {
-
-		// See LPS-72507
-
-		if (localization != null) {
-			return localization;
-		}
-
-		return LocalizationUtil.getLocalization();
-	}
-
 	@Reference
-	protected ExpandoBridgeFactory expandoBridgeFactory;
-
-	@Reference
-	protected ExpandoBridgeIndexer expandoBridgeIndexer;
-
-	@Reference
-	protected ExpandoColumnLocalService expandoColumnLocalService;
-
-	protected Localization localization;
+	protected KeywordQueryContributorsHolder keywordQueryContributorsHolder;
 
 }

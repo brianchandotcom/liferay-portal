@@ -557,6 +557,7 @@ public class DDMFormDisplayContext {
 
 	protected Locale getLocale(HttpServletRequest request, DDMForm ddmForm) {
 		Set<Locale> availableLocales = ddmForm.getAvailableLocales();
+
 		String languageId = LanguageUtil.getLanguageId(request);
 
 		Locale locale = LocaleUtil.fromLanguageId(languageId);

@@ -165,8 +165,6 @@ public class DDMDataProviderInstanceParameterSettingsServlet
 				ddmDataProviderInputParameterSetting :
 					ddmDataProviderInputParametersSettings) {
 
-			String label =
-				ddmDataProviderInputParameterSetting.inputParameterLabel();
 			String name =
 				ddmDataProviderInputParameterSetting.inputParameterName();
 			String type = getType(
@@ -175,6 +173,9 @@ public class DDMDataProviderInstanceParameterSettingsServlet
 			if (Validator.isNull(name) || Validator.isNull(type)) {
 				continue;
 			}
+
+			String label =
+				ddmDataProviderInputParameterSetting.inputParameterLabel();
 
 			JSONObject inputJSONObject = _jsonFactory.createJSONObject();
 
@@ -208,8 +209,6 @@ public class DDMDataProviderInstanceParameterSettingsServlet
 				ddmDataProviderOutputParameterSetting :
 					ddmDataProviderOutputParametersSettings) {
 
-			String name =
-				ddmDataProviderOutputParameterSetting.outputParameterName();
 			String path =
 				ddmDataProviderOutputParameterSetting.outputParameterPath();
 			String type = getType(
@@ -218,6 +217,9 @@ public class DDMDataProviderInstanceParameterSettingsServlet
 			if (Validator.isNull(path) || Validator.isNull(type)) {
 				continue;
 			}
+
+			String name =
+				ddmDataProviderOutputParameterSetting.outputParameterName();
 
 			JSONObject outputJSONObject = _jsonFactory.createJSONObject();
 

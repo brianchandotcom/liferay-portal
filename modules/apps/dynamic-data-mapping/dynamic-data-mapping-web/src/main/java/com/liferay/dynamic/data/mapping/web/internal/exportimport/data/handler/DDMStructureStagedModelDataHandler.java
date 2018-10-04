@@ -183,15 +183,16 @@ public class DDMStructureStagedModelDataHandler
 
 		groupId = MapUtil.getLong(groupIds, groupId);
 
-		long classNameId = _portal.getClassNameId(
-			referenceElement.attributeValue("referenced-class-name"));
-		String structureKey = referenceElement.attributeValue("structure-key");
 		boolean preloaded = GetterUtil.getBoolean(
 			referenceElement.attributeValue("preloaded"));
 
 		if (!preloaded) {
 			return super.validateMissingReference(uuid, groupId);
 		}
+
+		long classNameId = _portal.getClassNameId(
+			referenceElement.attributeValue("referenced-class-name"));
+		String structureKey = referenceElement.attributeValue("structure-key");
 
 		DDMStructure existingStructure = fetchExistingStructureWithParentGroups(
 			uuid, groupId, classNameId, structureKey, preloaded);

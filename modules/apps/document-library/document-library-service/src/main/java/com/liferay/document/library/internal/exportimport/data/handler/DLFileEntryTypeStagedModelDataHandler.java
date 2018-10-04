@@ -147,14 +147,15 @@ public class DLFileEntryTypeStagedModelDataHandler
 
 		groupId = MapUtil.getLong(groupIds, groupId);
 
-		String fileEntryTypeKey = referenceElement.attributeValue(
-			"file-entry-type-key");
 		boolean preloaded = GetterUtil.getBoolean(
 			referenceElement.attributeValue("preloaded"));
 
 		if (!preloaded) {
 			return super.validateMissingReference(uuid, groupId);
 		}
+
+		String fileEntryTypeKey = referenceElement.attributeValue(
+			"file-entry-type-key");
 
 		DLFileEntryType existingFileEntryType =
 			fetchExistingFileEntryTypeWithParentGroups(

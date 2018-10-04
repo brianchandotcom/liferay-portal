@@ -287,8 +287,8 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 			ResultSet rs = ps1.executeQuery()) {
 
 			while (rs.next()) {
-				long contentId = rs.getLong("contentId");
 				String data = rs.getString("data_");
+
 				long ddmStructureId = rs.getLong("structureId");
 
 				DDMForm ddmForm = getFullHierarchyDDMForm(ddmStructureId);
@@ -298,6 +298,8 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 				transformDDMFormFieldValues(ddmFormValues);
 
 				ps2.setString(1, serialize(ddmFormValues));
+
+				long contentId = rs.getLong("contentId");
 
 				ps2.setLong(2, contentId);
 

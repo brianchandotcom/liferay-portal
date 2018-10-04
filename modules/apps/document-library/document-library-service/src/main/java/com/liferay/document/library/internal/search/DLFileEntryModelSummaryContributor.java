@@ -42,7 +42,6 @@ public class DLFileEntryModelSummaryContributor
 
 		String prefix = Field.SNIPPET + StringPool.UNDERLINE;
 
-		String title = document.get(prefix + Field.TITLE, Field.TITLE);
 		String content = document.get(
 			locale, prefix + Field.CONTENT, Field.CONTENT);
 
@@ -50,6 +49,8 @@ public class DLFileEntryModelSummaryContributor
 			content = document.get(
 				prefix + Field.DESCRIPTION, Field.DESCRIPTION);
 		}
+
+		String title = document.get(prefix + Field.TITLE, Field.TITLE);
 
 		Summary summary = new Summary(title, content);
 

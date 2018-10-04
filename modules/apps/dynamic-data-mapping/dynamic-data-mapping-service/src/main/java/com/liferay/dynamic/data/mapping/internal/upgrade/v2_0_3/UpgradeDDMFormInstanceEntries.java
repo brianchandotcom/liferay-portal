@@ -51,10 +51,11 @@ public class UpgradeDDMFormInstanceEntries extends UpgradeProcess {
 			ResultSet rs = ps1.executeQuery()) {
 
 			while (rs.next()) {
-				long contentId = rs.getLong("contentId");
 				String data = rs.getString("data_");
 
 				ps2.setString(1, updateFieldValuesToLocalizable(data));
+
+				long contentId = rs.getLong("contentId");
 
 				ps2.setLong(2, contentId);
 

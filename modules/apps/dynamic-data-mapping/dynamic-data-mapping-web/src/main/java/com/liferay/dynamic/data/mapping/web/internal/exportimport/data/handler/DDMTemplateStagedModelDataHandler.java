@@ -163,15 +163,16 @@ public class DDMTemplateStagedModelDataHandler
 
 		groupId = MapUtil.getLong(groupIds, groupId);
 
-		long classNameId = _portal.getClassNameId(
-			referenceElement.attributeValue("referenced-class-name"));
-		String templateKey = referenceElement.attributeValue("template-key");
 		boolean preloaded = GetterUtil.getBoolean(
 			referenceElement.attributeValue("preloaded"));
 
 		if (!preloaded) {
 			return super.validateMissingReference(uuid, groupId);
 		}
+
+		long classNameId = _portal.getClassNameId(
+			referenceElement.attributeValue("referenced-class-name"));
+		String templateKey = referenceElement.attributeValue("template-key");
 
 		DDMTemplate existingTemplate = fetchExistingTemplateWithParentGroups(
 			uuid, groupId, classNameId, templateKey, preloaded);

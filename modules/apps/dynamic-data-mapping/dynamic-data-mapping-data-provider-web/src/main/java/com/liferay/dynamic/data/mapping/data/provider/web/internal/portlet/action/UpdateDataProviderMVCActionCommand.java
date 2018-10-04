@@ -92,13 +92,14 @@ public class UpdateDataProviderMVCActionCommand
 		long dataProviderInstanceId = ParamUtil.getLong(
 			actionRequest, "dataProviderInstanceId");
 
-		String name = ParamUtil.getString(actionRequest, "name");
-		String description = ParamUtil.getString(actionRequest, "description");
 		DDMFormValues ddmFormValues = getDDMFormValues(
 			actionRequest, actionResponse);
 
 		restorePasswordDDMFormFieldValues(
 			dataProviderInstanceId, ddmFormValues);
+
+		String name = ParamUtil.getString(actionRequest, "name");
+		String description = ParamUtil.getString(actionRequest, "description");
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			DDMDataProviderInstance.class.getName(), actionRequest);

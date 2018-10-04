@@ -259,12 +259,13 @@ public class CallFunction
 		Map<String, String> resultMap) {
 
 		for (Map.Entry<String, String> entry : resultMap.entrySet()) {
-			String ddmFormFieldName = entry.getKey();
 			String outputName = entry.getValue();
 
 			if (!ddmDataProviderResponse.hasOutput(outputName)) {
 				continue;
 			}
+
+			String ddmFormFieldName = entry.getKey();
 
 			Optional<List<KeyValuePair>> optionsOptional =
 				ddmDataProviderResponse.getOutputOptional(

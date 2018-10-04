@@ -245,7 +245,6 @@ public class UpgradePermission extends UpgradeProcess {
 				return;
 			}
 
-			long resourceActionId = rs1.getLong("resourceActionId");
 			long bitwiseValue = rs1.getLong("bitwiseValue");
 
 			try (PreparedStatement ps2 = connection.prepareStatement(
@@ -253,6 +252,12 @@ public class UpgradePermission extends UpgradeProcess {
 				ResultSet rs = ps2.executeQuery()) {
 
 				while (rs.next()) {
+					long actionIds = rs.getLong("actionIds");
+
+					if ((bitwiseValue & actionIds) == 0) {
+						continue;
+					}
+
 					long resourcePermissionId = rs.getLong(
 						"resourcePermissionId");
 					long companyId = rs.getLong("companyId");
@@ -260,11 +265,6 @@ public class UpgradePermission extends UpgradeProcess {
 					String primKey = rs.getString("primKey");
 					long primKeyId = rs.getLong("primKeyId");
 					long roleId = rs.getLong("roleId");
-					long actionIds = rs.getLong("actionIds");
-
-					if ((bitwiseValue & actionIds) == 0) {
-						continue;
-					}
 
 					updateResourcePermission(
 						resourcePermissionId, actionIds - bitwiseValue);
@@ -284,6 +284,8 @@ public class UpgradePermission extends UpgradeProcess {
 						companyId, scope, primKey, primKeyId, roleId);
 				}
 			}
+
+			long resourceActionId = rs1.getLong("resourceActionId");
 
 			deleteResourceAction(resourceActionId);
 		}

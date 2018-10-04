@@ -92,7 +92,6 @@ public class BlogsEntryServiceImpl extends BlogsEntryServiceBaseImpl {
 			getPermissionChecker(), serviceContext.getScopeGroupId(),
 			ActionKeys.ADD_ENTRY);
 
-		ImageSelector coverImageImageSelector = null;
 		ImageSelector smallImageImageSelector = null;
 
 		if (smallImage) {
@@ -118,8 +117,8 @@ public class BlogsEntryServiceImpl extends BlogsEntryServiceBaseImpl {
 		return addEntry(
 			title, StringPool.BLANK, description, content, displayDateMonth,
 			displayDateDay, displayDateYear, displayDateHour, displayDateMinute,
-			allowPingbacks, allowTrackbacks, trackbacks, StringPool.BLANK,
-			coverImageImageSelector, smallImageImageSelector, serviceContext);
+			allowPingbacks, allowTrackbacks, trackbacks, StringPool.BLANK, null,
+			smallImageImageSelector, serviceContext);
 	}
 
 	@Override
@@ -601,7 +600,6 @@ public class BlogsEntryServiceImpl extends BlogsEntryServiceBaseImpl {
 		_blogsEntryModelResourcePermission.check(
 			getPermissionChecker(), entryId, ActionKeys.UPDATE);
 
-		ImageSelector coverImageImageSelector = null;
 		ImageSelector smallImageImageSelector = null;
 
 		if (smallImage) {
@@ -631,8 +629,7 @@ public class BlogsEntryServiceImpl extends BlogsEntryServiceBaseImpl {
 			entryId, title, StringPool.BLANK, description, content,
 			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
 			displayDateMinute, allowPingbacks, allowTrackbacks, trackbacks,
-			StringPool.BLANK, coverImageImageSelector, smallImageImageSelector,
-			serviceContext);
+			StringPool.BLANK, null, smallImageImageSelector, serviceContext);
 	}
 
 	@Override

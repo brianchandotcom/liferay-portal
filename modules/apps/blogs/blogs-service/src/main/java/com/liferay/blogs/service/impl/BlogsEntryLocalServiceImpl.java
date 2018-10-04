@@ -315,6 +315,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 
 		User user = userLocalService.getUser(userId);
 		long groupId = serviceContext.getScopeGroupId();
+
 		int status = WorkflowConstants.STATUS_DRAFT;
 
 		validate(title, urlTitle, content, status);

@@ -104,7 +104,6 @@ public class UpgradeClassNames extends UpgradeKernelPackage {
 
 	protected void deleteDuplicateResources() throws UpgradeException {
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
-			String oldName = _RESOURCE_NAMES[0][0];
 			String newName = _RESOURCE_NAMES[0][1];
 
 			String selectSQL =
@@ -113,6 +112,8 @@ public class UpgradeClassNames extends UpgradeKernelPackage {
 
 			try (PreparedStatement ps = connection.prepareStatement(selectSQL);
 				ResultSet rs = ps.executeQuery()) {
+
+				String oldName = _RESOURCE_NAMES[0][0];
 
 				while (rs.next()) {
 					runSQL(

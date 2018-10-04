@@ -30,37 +30,44 @@ public class ParameterMapUtilWhenSettingAParameterMapTest {
 
 	@Before
 	public void setUp() throws ConfigurationException {
-		ParameterMapUtilTest.TestBean testBean = _getTestBean();
+		ParameterMapUtilTestUtil.TestBean testBean =
+			ParameterMapUtilTestUtil.getTestBean();
 
 		Map<String, String[]> parameterMap = new HashMap<>();
 
 		parameterMap.put("testBoolean1", new String[] {"false"});
 		parameterMap.put(
-			"testString1", new String[] {PARAMETER_MAP_STRING});
-		parameterMap.put("testStringArray1", PARAMETER_MAP_STRING_ARRAY);
+			"testString1",
+			new String[] {ParameterMapUtilTestUtil.PARAMETER_MAP_STRING});
+		parameterMap.put(
+			"testStringArray1",
+			ParameterMapUtilTestUtil.PARAMETER_MAP_STRING_ARRAY);
 
 		_testBean = ParameterMapUtil.setParameterMap(
-			ParameterMapUtilTest.TestBean.class, testBean, parameterMap);
+			ParameterMapUtilTestUtil.TestBean.class, testBean, parameterMap);
 	}
 
 	@Test
 	public void valuesInTheParameterMapAreReadFirst() throws Exception {
 		Assert.assertEquals(false, _testBean.testBoolean1());
-		Assert.assertEquals(PARAMETER_MAP_STRING, _testBean.testString1());
+		Assert.assertEquals(
+			ParameterMapUtilTestUtil.PARAMETER_MAP_STRING,
+			_testBean.testString1());
 		Assert.assertArrayEquals(
-			PARAMETER_MAP_STRING_ARRAY, _testBean.testStringArray1());
+			ParameterMapUtilTestUtil.PARAMETER_MAP_STRING_ARRAY,
+			_testBean.testStringArray1());
 	}
 
 	@Test
-	public void valuesNotInTheParameterMapAreReadFromBean()
-		throws Exception {
-
+	public void valuesNotInTheParameterMapAreReadFromBean() throws Exception {
 		Assert.assertEquals(true, _testBean.testBoolean2());
-		Assert.assertEquals(TEST_BEAN_STRING, _testBean.testString2());
+		Assert.assertEquals(
+			ParameterMapUtilTestUtil.TEST_BEAN_STRING, _testBean.testString2());
 		Assert.assertArrayEquals(
-			TEST_BEAN_STRING_ARRAY, _testBean.testStringArray2());
+			ParameterMapUtilTestUtil.TEST_BEAN_STRING_ARRAY,
+			_testBean.testStringArray2());
 	}
 
-	private ParameterMapUtilTest.TestBean _testBean;
+	private ParameterMapUtilTestUtil.TestBean _testBean;
 
 }

@@ -29,7 +29,7 @@ public class ParameterMapUtilTestUtil {
 	public static final String[] TEST_BEAN_STRING_ARRAY =
 		{"TEST_BEAN1", "TEST_BEAN2"};
 
-	private static TestBean _getTestBean() {
+	protected static TestBean getTestBean() {
 		return new TestBean() {
 
 			@Override
@@ -65,7 +65,7 @@ public class ParameterMapUtilTestUtil {
 		};
 	}
 
-	private interface TestBean {
+	protected interface TestBean {
 
 		public boolean testBoolean1();
 

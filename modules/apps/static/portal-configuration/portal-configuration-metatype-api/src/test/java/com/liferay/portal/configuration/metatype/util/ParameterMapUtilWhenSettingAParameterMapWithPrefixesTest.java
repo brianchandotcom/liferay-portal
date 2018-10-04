@@ -50,7 +50,7 @@ public class ParameterMapUtilWhenSettingAParameterMapWithPrefixesTest {
 	}
 
 	@Test
-	public void valuesInTheParameterMapAreReadFirst() throws Exception {
+	public void testValuesInTheParameterMapAreReadFirst() throws Exception {
 		Assert.assertEquals(false, _testBean.testBoolean1());
 		Assert.assertEquals(
 			ParameterMapUtilTestUtil.PARAMETER_MAP_STRING,
@@ -61,7 +61,9 @@ public class ParameterMapUtilWhenSettingAParameterMapWithPrefixesTest {
 	}
 
 	@Test
-	public void valuesNotInTheParameterMapAreReadFromBean() throws Exception {
+	public void testValuesNotInTheParameterMapAreReadFromBean()
+		throws Exception {
+
 		Assert.assertEquals(true, _testBean.testBoolean2());
 		Assert.assertEquals(
 			ParameterMapUtilTestUtil.TEST_BEAN_STRING, _testBean.testString2());

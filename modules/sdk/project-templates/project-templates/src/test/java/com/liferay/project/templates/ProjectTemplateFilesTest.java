@@ -728,6 +728,7 @@ public class ProjectTemplateFilesTest {
 		for (int i = 0; i < buildGradleDependencies.size(); i++) {
 			BuildGradleDependency buildGradleDependency =
 				buildGradleDependencies.get(i);
+
 			Element dependencyElement = dependencyElements.get(i);
 
 			List<Element> dependencyChildElements =

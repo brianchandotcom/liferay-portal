@@ -313,6 +313,7 @@ public class BuildPluginDescriptorTask extends DefaultTask {
 		String configurationName, String scope) {
 
 		Logger logger = getLogger();
+
 		Project project = getProject();
 
 		ConfigurationContainer configurationContainer =
@@ -478,6 +479,7 @@ public class BuildPluginDescriptorTask extends DefaultTask {
 			});
 
 		File dir = new File(getClassesDir(), "META-INF/maven");
+
 		File outputDir = getOutputDir();
 
 		project.delete(outputDir);

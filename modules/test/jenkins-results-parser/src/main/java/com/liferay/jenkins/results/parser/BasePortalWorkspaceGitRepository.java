@@ -60,6 +60,11 @@ public abstract class BasePortalWorkspaceGitRepository
 	}
 
 	@Override
+	public void setPortalReleaseProperties(Properties properties) {
+		setProperties(_FILE_PATH_RELEASE_PROPERTIES, properties);
+	}
+
+	@Override
 	public void setPortalSQLProperties(Properties properties) {
 		setProperties(_FILE_PATH_SQL_PROPERTIES, properties);
 	}
@@ -133,6 +138,10 @@ public abstract class BasePortalWorkspaceGitRepository
 	private static final String _FILE_PATH_BUILD_PROPERTIES =
 		JenkinsResultsParserUtil.combine(
 			"build.", System.getenv("HOSTNAME"), ".properties");
+
+	private static final String _FILE_PATH_RELEASE_PROPERTIES =
+		JenkinsResultsParserUtil.combine(
+			"release.", System.getenv("HOSTNAME"), ".properties");
 
 	private static final String _FILE_PATH_SQL_PROPERTIES =
 		JenkinsResultsParserUtil.combine(

@@ -75,7 +75,7 @@ public class AddScopeGroupMVCActionCommand extends BaseMVCActionCommand {
 
 			properties.setProperty("groupIds", StringUtil.merge(groupIds));
 
-			_assetListEntryService.updateAssetListEntrySettings(
+			_assetListEntryService.updateAssetListEntryTypeSettings(
 				assetListEntryId, properties.toString());
 		}
 	}

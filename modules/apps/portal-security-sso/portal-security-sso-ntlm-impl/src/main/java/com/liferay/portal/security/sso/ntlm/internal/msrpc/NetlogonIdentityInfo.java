@@ -74,6 +74,7 @@ public class NetlogonIdentityInfo extends NdrObject {
 		ndrBuffer = ndrBuffer.deferred;
 
 		int stringBufferl = string.length / 2;
+
 		int stringBuffers = string.maximum_length / 2;
 
 		ndrBuffer.enc_ndr_long(stringBuffers);

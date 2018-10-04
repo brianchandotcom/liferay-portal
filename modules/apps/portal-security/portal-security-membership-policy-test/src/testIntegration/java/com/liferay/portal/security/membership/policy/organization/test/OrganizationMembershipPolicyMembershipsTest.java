@@ -131,6 +131,7 @@ public class OrganizationMembershipPolicyMembershipsTest
 	@Test
 	public void testAssignUserToRequiredOrganizations() throws Exception {
 		long[] userIds = addUsers();
+
 		long[] requiredOrganizationIds = addRequiredOrganizations();
 
 		int initialOrganizationUsersCount =

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.structured.content.apio.client.test;
+package com.liferay.structured.content.apio.client.test.activator;
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;

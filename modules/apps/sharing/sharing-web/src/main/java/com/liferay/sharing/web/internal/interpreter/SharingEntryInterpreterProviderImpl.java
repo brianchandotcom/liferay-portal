@@ -20,9 +20,9 @@ import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.sharing.interpreter.SharingEntryInterpreter;
-import com.liferay.sharing.interpreter.SharingEntryInterpreterProvider;
 import com.liferay.sharing.model.SharingEntry;
+import com.liferay.sharing.web.interpreter.SharingEntryInterpreter;
+import com.liferay.sharing.web.interpreter.SharingEntryInterpreterProvider;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;

@@ -17,7 +17,7 @@ package com.liferay.sharing.notifications.internal.notifications;
 import com.liferay.portal.kernel.model.UserNotificationDeliveryConstants;
 import com.liferay.portal.kernel.notifications.UserNotificationDefinition;
 import com.liferay.portal.kernel.notifications.UserNotificationDeliveryType;
-import com.liferay.sharing.constants.SharingPortletKeys;
+import com.liferay.sharing.web.constants.SharingPortletKeys;
 
 import org.osgi.service.component.annotations.Component;
 

@@ -4,6 +4,7 @@ targetCompatibility = "1.8"
 dependencies {
 	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	testIntegrationCompile project(":apps:sharing:sharing-api")
+	testIntegrationCompile project(":apps:sharing:sharing-web-api")
 	testIntegrationCompile project(":core:petra:petra-string")
 	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
 }

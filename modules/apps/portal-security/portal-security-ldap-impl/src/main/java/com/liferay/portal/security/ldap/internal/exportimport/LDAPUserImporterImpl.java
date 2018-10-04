@@ -48,6 +48,7 @@ import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.UserGroupLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -1517,6 +1518,17 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 
 		Date modifiedDate = null;
 
+		try {
+			modifiedDate = LDAPUtil.parseDate(modifyTimestamp);
+		}
+		catch (ParseException pe) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"Unable to parse LDAP modify timestamp " + modifyTimestamp,
+					pe);
+			}
+		}
+
 		LDAPImportConfiguration ldapImportConfiguration =
 			_ldapImportConfigurationProvider.getConfiguration(companyId);
 
@@ -1526,46 +1538,37 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 			passwordReset = user.isPasswordReset();
 		}
 
-		try {
-			if (Validator.isNotNull(modifyTimestamp)) {
-				modifiedDate = LDAPUtil.parseDate(modifyTimestamp);
+		if ((modifiedDate != null) &&
+			modifiedDate.equals(user.getModifiedDate())) {
 
-				if (modifiedDate.equals(user.getModifiedDate())) {
-					if (ldapUser.isUpdatePassword() ||
-						!ldapImportConfiguration.importUserPasswordEnabled()) {
+			if ((ldapUser.isUpdatePassword() ||
+				 !ldapImportConfiguration.importUserPasswordEnabled()) &&
+				!modifiedDate.equals(user.getPasswordModifiedDate())) {
 
-						updateUserPassword(
-							ldapImportConfiguration, user.getUserId(),
-							user.getScreenName(), password, passwordReset);
-					}
+				updateUserPassword(
+					ldapImportConfiguration, user.getUserId(),
+					user.getScreenName(), password, passwordReset,
+					modifiedDate);
 
-					if (_log.isDebugEnabled()) {
-						_log.debug(
-							StringBundler.concat(
-								"User ", user.getEmailAddress(),
-								" is already synchronized, but updated ",
-								"password to avoid a blank value"));
-					}
-
-					return user;
+				if (_log.isDebugEnabled()) {
+					_log.debug(
+						StringBundler.concat(
+							"Synchronizing password for ",
+							user.getEmailAddress(),
+							" because it might be out of date"));
 				}
 			}
-			else if (!isNew) {
-				if (_log.isInfoEnabled()) {
-					_log.info(
-						"Skipping user " + user.getEmailAddress() +
-							" because the LDAP entry was never modified");
-				}
 
-				return user;
-			}
+			return user;
 		}
-		catch (ParseException pe) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(
-					"Unable to parse LDAP modify timestamp " + modifyTimestamp,
-					pe);
+		else if ((modifiedDate == null) && !isNew) {
+			if (_log.isInfoEnabled()) {
+				_log.info(
+					"Skipping user " + user.getEmailAddress() +
+						" because the LDAP entry was never modified");
 			}
+
+			return user;
 		}
 
 		LDAPServerConfiguration ldapServerConfiguration =
@@ -1589,7 +1592,8 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 
 			password = updateUserPassword(
 				ldapImportConfiguration, user.getUserId(),
-				ldapUser.getScreenName(), password, passwordReset);
+				ldapUser.getScreenName(), password, passwordReset,
+				modifiedDate);
 		}
 
 		Contact ldapContact = ldapUser.getContact();
@@ -1606,6 +1610,12 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 		int birthdayMonth = birthdayCal.get(Calendar.MONTH);
 		int birthdayDay = birthdayCal.get(Calendar.DAY_OF_MONTH);
 		int birthdayYear = birthdayCal.get(Calendar.YEAR);
+
+		ServiceContext serviceContext = ldapUser.getServiceContext();
+
+		if (modifiedDate != null) {
+			serviceContext.setModifiedDate(modifiedDate);
+		}
 
 		user = _userLocalService.updateUser(
 			user.getUserId(), password, StringPool.BLANK, StringPool.BLANK,
@@ -1624,16 +1634,12 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 			ldapUser.getJobTitle(), ldapUser.getGroupIds(),
 			ldapUser.getOrganizationIds(), ldapUser.getRoleIds(),
 			ldapUser.getUserGroupRoles(), ldapUser.getUserGroupIds(),
-			ldapUser.getServiceContext());
+			serviceContext);
 
-		ServiceContext serviceContext = new ServiceContext();
-
-		if (modifiedDate != null) {
-			serviceContext.setModifiedDate(modifiedDate);
+		if (user.getStatus() != ldapUser.getStatus()) {
+			user = _userLocalService.updateStatus(
+				user.getUserId(), ldapUser.getStatus(), serviceContext);
 		}
-
-		user = _userLocalService.updateStatus(
-			user.getUserId(), ldapUser.getStatus(), serviceContext);
 
 		if (_log.isDebugEnabled()) {
 			_log.debug(
@@ -1647,10 +1653,15 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 
 	protected String updateUserPassword(
 			LDAPImportConfiguration ldapImportConfiguration, long userId,
-			String screenName, String password, boolean passwordReset)
+			String screenName, String password, boolean passwordReset,
+			Date modifiedDate)
 		throws PortalException {
 
+		boolean passwordGenerated = false;
+
 		if (!ldapImportConfiguration.importUserPasswordEnabled()) {
+			passwordGenerated = true;
+
 			if (ldapImportConfiguration.importUserPasswordAutogenerated()) {
 				password = PwdGenerator.getPassword();
 			}
@@ -1665,8 +1676,27 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 			}
 		}
 
-		_userLocalService.updatePassword(
-			userId, password, password, passwordReset, true);
+		ServiceContext serviceContext = new ServiceContext();
+
+		serviceContext.setModifiedDate(modifiedDate);
+
+		try {
+			ServiceContextThreadLocal.pushServiceContext(serviceContext);
+
+			User user = _userLocalService.updatePassword(
+				userId, password, password, passwordReset, true);
+
+			if (!passwordGenerated) {
+				user.setDigest(user.getDigest(password));
+			}
+
+			user.setPasswordModifiedDate(modifiedDate);
+
+			_userLocalService.updateUser(user);
+		}
+		finally {
+			ServiceContextThreadLocal.popServiceContext();
+		}
 
 		return password;
 	}

@@ -373,9 +373,7 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 		try {
 			ServiceContextThreadLocal.pushServiceContext(serviceContext);
 
-			update(model);
-
-			return model;
+			return update(model);
 		}
 		finally {
 			ServiceContextThreadLocal.popServiceContext();

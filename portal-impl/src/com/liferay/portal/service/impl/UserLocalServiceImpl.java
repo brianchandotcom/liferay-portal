@@ -5001,6 +5001,11 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			boolean passwordReset, boolean silentUpdate)
 		throws PortalException {
 
+		// Password hashing takes long, encrypt the password before we get user
+		// to avoid org.hibernate.StaleObjectStateException
+
+		String newEncPwd = PasswordEncryptorUtil.encrypt(password1);
+
 		User user = userPersistence.findByPrimaryKey(userId);
 
 		if (!silentUpdate) {
@@ -5008,8 +5013,6 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 			trackPassword(user);
 		}
-
-		String newEncPwd = PasswordEncryptorUtil.encrypt(password1);
 
 		if (user.hasCompanyMx()) {
 			mailService.updatePassword(user.getCompanyId(), userId, password1);
@@ -5264,7 +5267,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 		user.setStatus(status);
 
-		user = userPersistence.update(user);
+		user = userPersistence.update(user, serviceContext);
 
 		reindex(user);
 
@@ -5963,15 +5966,21 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 			// Update digest
 
+			user = userPersistence.fetchByPrimaryKey(user.getUserId());
+
+			String digest = user.getDigest();
+
 			if (skipLiferayCheck ||
 				!PropsValues.AUTH_PIPELINE_ENABLE_LIFERAY_CHECK ||
-				Validator.isNull(user.getDigest())) {
+				Validator.isNull(digest)) {
 
-				String digest = user.getDigest(password);
+				String newDigest = user.getDigest(password);
 
-				user.setDigest(digest);
+				if (!newDigest.equals(digest)) {
+					user.setDigest(newDigest);
 
-				user = userPersistence.update(user);
+					user = userPersistence.update(user);
+				}
 			}
 		}
 

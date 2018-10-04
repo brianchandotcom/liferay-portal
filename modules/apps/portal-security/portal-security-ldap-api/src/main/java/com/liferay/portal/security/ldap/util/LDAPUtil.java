@@ -202,6 +202,10 @@ public class LDAPUtil {
 	}
 
 	public static Date parseDate(String date) throws Exception {
+		if (Validator.isNull(date)) {
+			return null;
+		}
+
 		String format = "yyyyMMddHHmmss";
 
 		if (date.endsWith("Z")) {

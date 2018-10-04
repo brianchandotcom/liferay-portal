@@ -21,15 +21,11 @@ OrganizationScreenNavigationDisplayContext organizationScreenNavigationDisplayCo
 
 long organizationId = organizationScreenNavigationDisplayContext.getOrganizationId();
 
-ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
-
-OrgLabor orgLabor = (OrgLabor)row.getObject();
-
-long orgLaborId = orgLabor.getOrgLaborId();
+long orgLaborId = ParamUtil.getLong(request, "orgLaborId");
 %>
 
 <liferay-ui:icon-menu
-	direction="left-side"
+	direction="right-side"
 	icon="<%= StringPool.BLANK %>"
 	markupView="lexicon"
 	message="<%= StringPool.BLANK %>"

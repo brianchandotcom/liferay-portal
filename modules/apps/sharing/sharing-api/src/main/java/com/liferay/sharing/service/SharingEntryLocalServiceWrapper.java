@@ -114,56 +114,6 @@ public class SharingEntryLocalServiceWrapper implements SharingEntryLocalService
 	}
 
 	/**
-	* Returns the number of sharing entries that have been shared by a user.
-	*
-	* @param fromUserId the user id sharing the resource
-	* @return the number of sharing entries
-	*/
-	@Override
-	public int countFromUserSharingEntries(long fromUserId) {
-		return _sharingEntryLocalService.countFromUserSharingEntries(fromUserId);
-	}
-
-	/**
-	* Returns the number of sharing entries of a resource that have been shared
-	* by a user.
-	*
-	* @param fromUserId the user id sharing the resource
-	* @param classNameId the class name ID of the resource
-	* @param classPK the primary key of the resource
-	* @return the number of sharing entries
-	*/
-	@Override
-	public int countFromUserSharingEntries(long fromUserId, long classNameId,
-		long classPK) {
-		return _sharingEntryLocalService.countFromUserSharingEntries(fromUserId,
-			classNameId, classPK);
-	}
-
-	/**
-	* Returns the number of sharing entries that have been shared to a user.
-	*
-	* @param toUserId the user id who was shared the resource
-	* @return the number of sharing entries
-	*/
-	@Override
-	public int countToUserSharingEntries(long toUserId) {
-		return _sharingEntryLocalService.countToUserSharingEntries(toUserId);
-	}
-
-	/**
-	* Returns the number of sharing entries of a resource that have been shared
-	* by to user returning at most one per shared model.
-	*
-	* @param toUserId the user id*
-	* @return the number of sharing entries
-	*/
-	@Override
-	public int countUniqueToUserSharingEntries(long toUserId) {
-		return _sharingEntryLocalService.countUniqueToUserSharingEntries(toUserId);
-	}
-
-	/**
 	* Creates a new sharing entry with the primary key. Does not add the sharing entry to the database.
 	*
 	* @param sharingEntryId the primary key for the new sharing entry
@@ -427,6 +377,33 @@ public class SharingEntryLocalServiceWrapper implements SharingEntryLocalService
 	}
 
 	/**
+	* Returns the number of sharing entries that have been shared by a user.
+	*
+	* @param fromUserId the user id sharing the resource
+	* @return the number of sharing entries
+	*/
+	@Override
+	public int getFromUserSharingEntriesCount(long fromUserId) {
+		return _sharingEntryLocalService.getFromUserSharingEntriesCount(fromUserId);
+	}
+
+	/**
+	* Returns the number of sharing entries of a resource that have been shared
+	* by a user.
+	*
+	* @param fromUserId the user id sharing the resource
+	* @param classNameId the class name ID of the resource
+	* @param classPK the primary key of the resource
+	* @return the number of sharing entries
+	*/
+	@Override
+	public int getFromUserSharingEntriesCount(long fromUserId,
+		long classNameId, long classPK) {
+		return _sharingEntryLocalService.getFromUserSharingEntriesCount(fromUserId,
+			classNameId, classPK);
+	}
+
+	/**
 	* Returns a list of all the sharing entries of a group.
 	*
 	* @param groupId the primary key of the group
@@ -636,6 +613,17 @@ public class SharingEntryLocalServiceWrapper implements SharingEntryLocalService
 	}
 
 	/**
+	* Returns the number of sharing entries that have been shared to a user.
+	*
+	* @param toUserId the user id who was shared the resource
+	* @return the number of sharing entries
+	*/
+	@Override
+	public int getToUserSharingEntriesCount(long toUserId) {
+		return _sharingEntryLocalService.getToUserSharingEntriesCount(toUserId);
+	}
+
+	/**
 	* Returns a list of all the sharing entries of a resource that has been
 	* shared to a user returning at most one per shared model
 	*
@@ -647,6 +635,18 @@ public class SharingEntryLocalServiceWrapper implements SharingEntryLocalService
 		long toUserId, int start, int end) {
 		return _sharingEntryLocalService.getUniqueToUserSharingEntries(toUserId,
 			start, end);
+	}
+
+	/**
+	* Returns the number of sharing entries of a resource that have been shared
+	* by to user returning at most one per shared model.
+	*
+	* @param toUserId the user id*
+	* @return the number of sharing entries
+	*/
+	@Override
+	public int getUniqueToUserSharingEntriesCount(long toUserId) {
+		return _sharingEntryLocalService.getUniqueToUserSharingEntriesCount(toUserId);
 	}
 
 	/**

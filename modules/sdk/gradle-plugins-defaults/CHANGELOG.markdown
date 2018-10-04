@@ -4674,6 +4674,14 @@ projects defined in the `testIntegrationCompile` configuration do not have a
 - [LPS-84138]: Update the [Liferay Gradle Plugins] dependency to version
 3.12.150.
 
+## 5.5.65 - 2018-10-01
+
+### Added
+- [LPS-85987]: When running the `npmRunBuild` task on Jenkins, check the version
+in `bnd.bnd`, `package.json`, and `package-lock.json` for an invalid
+`.hotfix-xxx-xxx` qualifier. If it exists, temporarily change it to a valid
+qualifier before the task runs and change it back after it completes.
+
 [Find Security Bugs]: https://github.com/liferay/liferay-portal/tree/master/modules/third-party/com-h3xstream-findsecbugs
 [Gradle Dependency Management]: https://github.com/spring-gradle-plugins/dependency-management-plugin
 [Gradle License Report]: https://github.com/jk1/Gradle-License-Report

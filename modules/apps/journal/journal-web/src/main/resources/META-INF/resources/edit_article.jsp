@@ -297,6 +297,8 @@ if (classNameId > JournalArticleConstants.CLASSNAME_ID_DEFAULT) {
 				/>
 
 				<liferay-ui:message arguments="<%= defaultLocale.getDisplayName(locale) %>" key="default-language-x" />
+
+				<%@ include file="/change_default_language.jspf" %>
 			</div>
 		</c:if>
 

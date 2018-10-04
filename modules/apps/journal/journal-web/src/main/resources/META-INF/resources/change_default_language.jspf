@@ -1,0 +1,106 @@
+<%--
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+--%>
+
+<div class="d-inline d-inline dropdown lfr-icon-menu">
+	<a class="direction-left dropdown-toggle" href="javascript:;" id="<portlet:namespace />changeDefaultLanguage">
+		<liferay-ui:message key="change" />
+	</a>
+
+	<ul class="dropdown-menu dropdown-menu-left">
+		<div class="input-localized-palette-container palette-container">
+
+			<%
+			LinkedHashSet<String> uniqueLanguageIds = new LinkedHashSet<String>();
+
+			uniqueLanguageIds.add(journalDisplayContext.getDefaultLanguageId());
+
+			for (Locale availableLocale : LanguageUtil.getAvailableLocales(scopeGroupId)) {
+				String curLanguageId = LocaleUtil.toLanguageId(availableLocale);
+
+				uniqueLanguageIds.add(curLanguageId);
+			}
+
+			List<String> languageIds = new ArrayList<>();
+
+			for (Locale articleLocale : journalDisplayContext.getAvailableArticleLocales()) {
+				languageIds.add(LocaleUtil.toLanguageId(articleLocale));
+			}
+
+			request.setAttribute("liferay-ui:icon-menu:icon-count", new IntegerWrapper());
+
+			int index = 0;
+
+			for (String curLanguageId : uniqueLanguageIds) {
+				String linkCssClass = "dropdown-item palette-item";
+
+				Locale curLocale = LocaleUtil.fromLanguageId(curLanguageId);
+
+				String title = HtmlUtil.escapeAttribute(curLocale.getDisplayName(LocaleUtil.fromLanguageId(LanguageUtil.getLanguageId(request)))) + " " + LanguageUtil.get(LocaleUtil.getDefault(), "translation");
+
+				Map<String, Object> data = new HashMap<String, Object>();
+
+				data.put("languageid", curLanguageId);
+
+				Map<String, Object> iconData = new HashMap<>();
+				iconData.put("index", index++);
+				iconData.put("languageid", curLanguageId);
+				iconData.put("value", curLanguageId);
+
+				String translationStatus = LanguageUtil.get(request, "untranslated");
+				String translationStatusCssClass = "warning";
+
+				if (languageIds.contains(curLanguageId)) {
+					translationStatus = LanguageUtil.get(request, "translated");
+					translationStatusCssClass = "success";
+				}
+
+				if (defaultLanguageId.equals(curLanguageId)) {
+					translationStatus = LanguageUtil.get(request, "default");
+					translationStatusCssClass = "info";
+				}
+			%>
+
+				<liferay-util:buffer
+					var="linkContent"
+				>
+					<%= StringUtil.replace(curLanguageId, '_', '-') %>
+
+					<span class="label label-<%= translationStatusCssClass %>"><%= translationStatus %></span>
+				</liferay-util:buffer>
+
+				<liferay-ui:icon
+					alt="<%= title %>"
+					data="<%= iconData %>"
+					icon="<%= StringUtil.toLowerCase(StringUtil.replace(curLanguageId, '_', '-')) %>"
+					iconCssClass="inline-item inline-item-before"
+					linkCssClass="<%= linkCssClass %>"
+					markupView="lexicon"
+					message="<%= linkContent %>"
+					url="javascript:;"
+				>
+				</liferay-ui:icon>
+
+			<%
+			}
+			%>
+
+		</div>
+	</ul>
+</div>
+
+<aui:script use="liferay-menu">
+	Liferay.Menu.register('<portlet:namespace />changeDefaultLanguage');
+</aui:script>

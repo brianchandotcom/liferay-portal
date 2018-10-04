@@ -132,6 +132,7 @@ public class NestedPortletsConfigurationAction
 		Layout layout = themeDisplay.getLayout();
 		LayoutTypePortlet layoutTypePortlet =
 			themeDisplay.getLayoutTypePortlet();
+
 		Theme theme = themeDisplay.getTheme();
 
 		LayoutTemplate newLayoutTemplate =

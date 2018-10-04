@@ -90,12 +90,14 @@ public class OrganizationServiceVerifyProcess extends VerifyProcess {
 									"classPK = ? and classNameId = ?"))) {
 
 					while (rs.next()) {
-						long classPK = rs.getLong("classPK");
 						String uuid = rs.getString("uuid");
 
 						ps2.setString(1, uuid);
 
+						long classPK = rs.getLong("classPK");
+
 						ps2.setLong(2, classPK);
+
 						ps2.setLong(3, classNameId);
 
 						ps2.addBatch();

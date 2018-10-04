@@ -61,6 +61,7 @@ public class UpgradeUserNotificationEvent extends UpgradeProcess {
 				while (rs.next()) {
 					long userNotificationEventId = rs.getLong(
 						"userNotificationEventId");
+
 					String payload = rs.getString("payload");
 
 					JSONObject payloadJSONObject =

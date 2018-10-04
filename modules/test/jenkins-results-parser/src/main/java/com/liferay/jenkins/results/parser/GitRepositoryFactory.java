@@ -96,29 +96,29 @@ public class GitRepositoryFactory {
 	public static WorkspaceGitRepository getWorkspaceGitRepository(
 		JSONObject jsonObject) {
 
-		if (CompanionPortalWorkspaceGitRepository.isValidJSONObject(
-				jsonObject)) {
+		String jsonObjectType = _getType(jsonObject);
 
+		if (jsonObjectType.equals(CompanionPortalWorkspaceGitRepository.TYPE)) {
 			return new CompanionPortalWorkspaceGitRepository(jsonObject);
 		}
-		else if (PrimaryPortalWorkspaceGitRepository.isValidJSONObject(
-					jsonObject)) {
+		else if (jsonObjectType.equals(
+					PrimaryPortalWorkspaceGitRepository.TYPE)) {
 
 			return new PrimaryPortalWorkspaceGitRepository(jsonObject);
 		}
-		else if (JenkinsWorkspaceGitRepository.isValidJSONObject(jsonObject)) {
+		else if (jsonObjectType.equals(JenkinsWorkspaceGitRepository.TYPE)) {
 			return new JenkinsWorkspaceGitRepository(jsonObject);
 		}
-		else if (OtherPortalWorkspaceGitRepository.isValidJSONObject(
-					jsonObject)) {
+		else if (jsonObjectType.equals(
+					OtherPortalWorkspaceGitRepository.TYPE)) {
 
 			return new OtherPortalWorkspaceGitRepository(jsonObject);
 		}
-		else if (PluginsWorkspaceGitRepository.isValidJSONObject(jsonObject)) {
+		else if (jsonObjectType.equals(PluginsWorkspaceGitRepository.TYPE)) {
 			return new PluginsWorkspaceGitRepository(jsonObject);
 		}
-		else if (PortalPluginsWorkspaceGitRepository.isValidJSONObject(
-					jsonObject)) {
+		else if (jsonObjectType.equals(
+					PortalPluginsWorkspaceGitRepository.TYPE)) {
 
 			return new PortalPluginsWorkspaceGitRepository(jsonObject);
 		}
@@ -163,6 +163,16 @@ public class GitRepositoryFactory {
 		}
 
 		throw new RuntimeException("Unsupported workspace Git repository");
+	}
+
+	private static String _getType(JSONObject jsonObject) {
+		String type = jsonObject.optString("type");
+
+		if (type == null) {
+			return "";
+		}
+
+		return type;
 	}
 
 }

@@ -22,13 +22,11 @@ import org.json.JSONObject;
 public class OtherPortalWorkspaceGitRepository
 	extends BasePortalWorkspaceGitRepository {
 
-	public static boolean isValidJSONObject(JSONObject jsonObject) {
-		return isValidJSONObject(jsonObject, _TYPE);
-	}
+	public static final String TYPE = "portal.other";
 
 	@Override
 	public String getType() {
-		return _TYPE;
+		return TYPE;
 	}
 
 	protected OtherPortalWorkspaceGitRepository(JSONObject jsonObject) {
@@ -46,7 +44,5 @@ public class OtherPortalWorkspaceGitRepository
 
 		super(remoteGitRef, upstreamBranchName);
 	}
-
-	private static final String _TYPE = "portal.other";
 
 }

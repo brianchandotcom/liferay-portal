@@ -143,22 +143,6 @@ public abstract class BaseWorkspaceGitRepository
 		}
 	}
 
-	protected static boolean isValidJSONObject(
-		JSONObject jsonObject, String type) {
-
-		if (type == null) {
-			return false;
-		}
-
-		if (jsonObject.has("type")) {
-			if (type.equals(jsonObject.getString("type"))) {
-				return true;
-			}
-		}
-
-		return false;
-	}
-
 	protected BaseWorkspaceGitRepository(JSONObject jsonObject) {
 		super(jsonObject);
 

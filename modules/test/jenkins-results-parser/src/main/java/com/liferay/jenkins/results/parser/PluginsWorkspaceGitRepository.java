@@ -21,13 +21,11 @@ import org.json.JSONObject;
  */
 public class PluginsWorkspaceGitRepository extends BaseWorkspaceGitRepository {
 
-	public static boolean isValidJSONObject(JSONObject jsonObject) {
-		return isValidJSONObject(jsonObject, _TYPE);
-	}
+	public static final String TYPE = "plugins";
 
 	@Override
 	public String getType() {
-		return _TYPE;
+		return TYPE;
 	}
 
 	protected PluginsWorkspaceGitRepository(JSONObject jsonObject) {
@@ -59,7 +57,5 @@ public class PluginsWorkspaceGitRepository extends BaseWorkspaceGitRepository {
 		return JenkinsResultsParserUtil.combine(
 			name.replace("-ee", ""), "-", upstreamBranchName);
 	}
-
-	private static final String _TYPE = "plugins";
 
 }

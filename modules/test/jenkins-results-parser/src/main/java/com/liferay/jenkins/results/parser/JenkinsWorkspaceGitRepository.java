@@ -21,13 +21,11 @@ import org.json.JSONObject;
  */
 public class JenkinsWorkspaceGitRepository extends BaseWorkspaceGitRepository {
 
-	public static boolean isValidJSONObject(JSONObject jsonObject) {
-		return isValidJSONObject(jsonObject, _TYPE);
-	}
+	public static final String TYPE = "jenkins";
 
 	@Override
 	public String getType() {
-		return _TYPE;
+		return TYPE;
 	}
 
 	protected JenkinsWorkspaceGitRepository(JSONObject jsonObject) {
@@ -45,7 +43,5 @@ public class JenkinsWorkspaceGitRepository extends BaseWorkspaceGitRepository {
 
 		super(remoteGitRef, upstreamBranchName);
 	}
-
-	private static final String _TYPE = "jenkins";
 
 }

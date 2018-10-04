@@ -251,6 +251,38 @@
 	.lfr-asset-summary img.avatar {
 		max-width: 210px;
 	}
+
+	.opening-hours-entry {
+		margin-bottom: 50px;
+
+		.opening-hours-header {
+			align-items: flex-end;
+			margin-bottom: 10px;
+
+			span:first-child {
+				margin-right: 15px;
+			}
+		}
+
+		td {
+			border-width: 0;
+			padding: 0.3rem 0;
+
+			&:first-child {
+				padding-left: 0;
+			}
+		}
+
+		@media (min-width: $screen-desktop) {
+			table {
+				table-layout: fixed;
+			}
+
+			td:first-child {
+				width: 17%;
+			}
+		}
+	}
 }
 
 .lfr-floating-container {

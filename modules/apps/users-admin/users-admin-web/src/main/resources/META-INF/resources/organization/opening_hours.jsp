@@ -57,84 +57,52 @@ List<OrgLabor> orgLabors = OrgLaborServiceUtil.getOrgLabors(organizationId);
 
 <liferay-ui:error key="<%= NoSuchListTypeException.class.getName() + Organization.class.getName() + ListTypeConstants.ORGANIZATION_SERVICE %>" message="please-select-a-type" />
 
-<liferay-ui:search-container
-	compactEmptyResultsMessage="<%= true %>"
-	emptyResultsMessage="this-organization-does-not-have-any-opening-hours"
-	id="openingHoursSearchContainer"
-	iteratorURL="<%= currentURLObj %>"
-	total="<%= orgLabors.size() %>"
->
-	<liferay-ui:search-container-results
-		results="<%= orgLabors.subList(searchContainer.getStart(), searchContainer.getResultEnd()) %>"
-	/>
+<%
+for (OrgLabor orgLabor : orgLabors) {
+	OrgLaborDisplay orgLaborDisplay = new OrgLaborDisplay(locale, orgLabor);
+%>
 
-	<liferay-ui:search-container-row
-		className="com.liferay.portal.kernel.model.OrgLabor"
-		escapedModel="<%= true %>"
-		keyProperty="orgLaborId"
-		modelVar="orgLabor"
-	>
-		<liferay-ui:search-container-column-text>
+	<div class="opening-hours-entry">
+		<div class="autofit-row opening-hours-header">
+			<span class="autofit-col">
+				<h5><%= orgLaborDisplay.getTitle() %></h5>
+			</span>
+			<span class="autofit-col lfr-search-container-wrapper">
+				<liferay-util:include page="/organization/opening_hours_action.jsp" servletContext="<%= application %>">
+					<liferay-util:param name="orgLaborId" value="<%= String.valueOf(orgLabor.getOrgLaborId()) %>" />
+				</liferay-util:include>
+			</span>
+		</div>
 
-			<%
-			String[] days = CalendarUtil.getDays(locale);
-			String[] paramPrefixes = {"sun", "mon", "tue", "wed", "thu", "fri", "sat"};
+		<div class="table-responsive">
+			<table class="table table-autofit">
+				<tbody>
 
-			int[] openArray = new int[paramPrefixes.length];
+					<%
+					for (KeyValuePair dayKeyValuePair : orgLaborDisplay.getDayKeyValuePairs()) {
+					%>
 
-			for (int j = 0; j < paramPrefixes.length; j++) {
-				openArray[j] = ParamUtil.getInteger(request, paramPrefixes[j] + "Open", BeanPropertiesUtil.getInteger(orgLabor, paramPrefixes[j] + "Open", -1));
-			}
+						<tr>
+							<td class="table-cell-expand">
+								<span class="table-title"><%= dayKeyValuePair.getKey() %></span>
+							</td>
+							<td class="table-cell-expand">
+								<span><%= dayKeyValuePair.getValue() %></span>
+							</td>
+						</tr>
 
-			int[] closeArray = new int[paramPrefixes.length];
+					<%
+					}
+					%>
 
-			for (int j = 0; j < paramPrefixes.length; j++) {
-				closeArray[j] = ParamUtil.getInteger(request, paramPrefixes[j] + "Close", BeanPropertiesUtil.getInteger(orgLabor, paramPrefixes[j] + "Close", -1));
-			}
-			%>
-
-			<table>
-				<tr>
-					<th><%= StringUtil.toUpperCase(orgLabor.getType().getName()) %></th>
-				</tr>
-
-				<%
-				for (int j = 0; j < days.length; j++) {
-					String closeDisplay = UsersAdminDateDisplayUtil.formatTimeInt(locale, closeArray[j]);
-					String day = days[j];
-					String openDisplay = UsersAdminDateDisplayUtil.formatTimeInt(locale, openArray[j]);
-				%>
-
-					<tr>
-						<td><%= day %></td>
-
-						<c:choose>
-							<c:when test='<%= closeDisplay.equals("") && openDisplay.equals("") %>'>
-								<td><%= LanguageUtil.get(request, "closed") %></td>
-							</c:when>
-							<c:otherwise>
-								<td><%= openDisplay %> - <%= closeDisplay %></td>
-							</c:otherwise>
-						</c:choose>
-					</tr>
-
-				<%
-				}
-				%>
-
+				</tbody>
 			</table>
-		</liferay-ui:search-container-column-text>
+		</div>
+	</div>
 
-		<liferay-ui:search-container-column-jsp
-			cssClass="entry-action"
-			path="/organization/opening_hours_action.jsp"
-		/>
-	</liferay-ui:search-container-row>
-
-	<liferay-ui:search-iterator
-		markupView="lexicon"
-	/>
-</liferay-ui:search-container>
+<%
+}
+%>
 
 <portlet:renderURL var="editOpeningHoursRenderURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
 	<portlet:param name="mvcPath" value="/organization/edit_opening_hours.jsp" />

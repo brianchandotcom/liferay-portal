@@ -98,6 +98,7 @@ public class NGramQueryBuilderImpl implements NGramQueryBuilder {
 			Map.Entry<String, List<String>> entry = iterator.next();
 
 			String fieldName = entry.getKey();
+
 			List<String> fieldValues = entry.getValue();
 
 			Iterator<String> fieldValuesIterator = fieldValues.iterator();

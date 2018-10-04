@@ -33,6 +33,7 @@ public class UpgradeKaleoAction extends UpgradeProcess {
 
 			while (rs.next()) {
 				long kaleoActionId = rs.getLong(1);
+
 				String script = rs.getString(2);
 
 				script = script.replace(

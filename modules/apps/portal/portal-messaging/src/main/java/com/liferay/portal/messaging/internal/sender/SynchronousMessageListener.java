@@ -62,6 +62,7 @@ public class SynchronousMessageListener implements MessageListener {
 
 	public Object send() throws MessageBusException {
 		String destinationName = _message.getDestinationName();
+
 		String responseDestinationName = _message.getResponseDestinationName();
 
 		_messageBus.registerMessageListener(responseDestinationName, this);

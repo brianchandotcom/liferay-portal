@@ -190,7 +190,6 @@ public class DownloadEntriesMVCResourceCommand implements MVCResourceCommand {
 		ThemeDisplay themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		long repositoryId = ParamUtil.getLong(resourceRequest, "repositoryId");
 		long folderId = ParamUtil.getLong(resourceRequest, "folderId");
 
 		_checkFolder(folderId);
@@ -201,6 +200,9 @@ public class DownloadEntriesMVCResourceCommand implements MVCResourceCommand {
 			String zipFileName = getZipFileName(folderId, themeDisplay);
 
 			ZipWriter zipWriter = ZipWriterFactoryUtil.getZipWriter();
+
+			long repositoryId = ParamUtil.getLong(
+				resourceRequest, "repositoryId");
 
 			zipFolder(repositoryId, folderId, StringPool.SLASH, zipWriter);
 

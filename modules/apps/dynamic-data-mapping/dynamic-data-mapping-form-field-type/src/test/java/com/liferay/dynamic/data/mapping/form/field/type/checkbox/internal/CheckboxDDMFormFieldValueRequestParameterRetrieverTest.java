@@ -34,10 +34,11 @@ public class CheckboxDDMFormFieldValueRequestParameterRetrieverTest {
 	public void testGetRequestParameterValueFalse() {
 		MockHttpServletRequest request = new MockHttpServletRequest();
 
-		String defaultParameterValue = StringPool.TRUE;
 		String expectedParameterValue = StringPool.FALSE;
 
 		request.addParameter("ddmFormFieldCheckbox", expectedParameterValue);
+
+		String defaultParameterValue = StringPool.TRUE;
 
 		String actualParameterValue =
 			_checkboxDDMFormFieldValueRequestParameterRetriever.get(
@@ -50,10 +51,11 @@ public class CheckboxDDMFormFieldValueRequestParameterRetrieverTest {
 	public void testGetRequestParameterValueTrue() {
 		MockHttpServletRequest request = new MockHttpServletRequest();
 
-		String defaultParameterValue = StringPool.FALSE;
 		String expectedParameterValue = StringPool.TRUE;
 
 		request.addParameter("ddmFormFieldCheckbox", expectedParameterValue);
+
+		String defaultParameterValue = StringPool.FALSE;
 
 		String actualParameterValue =
 			_checkboxDDMFormFieldValueRequestParameterRetriever.get(

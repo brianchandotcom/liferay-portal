@@ -64,6 +64,7 @@ public abstract class BaseDDMFormMVCResourceCommand
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
+
 		Map<String, Object> response = new HashMap<>();
 
 		response.put("ddmStructureId", formInstance.getStructureId());

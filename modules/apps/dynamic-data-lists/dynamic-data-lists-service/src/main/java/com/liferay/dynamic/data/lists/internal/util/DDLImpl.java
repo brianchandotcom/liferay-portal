@@ -109,13 +109,14 @@ public class DDLImpl implements DDL {
 			ddmStructure, ddmFormValues);
 
 		for (Field field : fields) {
-			String fieldName = field.getName();
-			String fieldType = field.getType();
 			Object[] fieldValues = getFieldValues(field, locale);
 
 			if (fieldValues.length == 0) {
 				continue;
 			}
+
+			String fieldName = field.getName();
+			String fieldType = field.getType();
 
 			Stream<Object> fieldValuesStream = Arrays.stream(fieldValues);
 

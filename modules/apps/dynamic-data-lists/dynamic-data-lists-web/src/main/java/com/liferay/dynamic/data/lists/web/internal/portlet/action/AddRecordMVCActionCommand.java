@@ -96,13 +96,14 @@ public class AddRecordMVCActionCommand extends BaseMVCActionCommand {
 	protected DDMForm getDDMForm(ActionRequest actionRequest)
 		throws PortalException {
 
-		long recordSetId = ParamUtil.getLong(actionRequest, "recordSetId");
 		long formDDMTemplateId = ParamUtil.getLong(
 			actionRequest, "formDDMTemplateId");
 
 		if (formDDMTemplateId > 0) {
 			return getDDMFormTemplate(formDDMTemplateId);
 		}
+
+		long recordSetId = ParamUtil.getLong(actionRequest, "recordSetId");
 
 		DDLRecordSet recordSet = ddlRecordSetService.getRecordSet(recordSetId);
 

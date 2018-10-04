@@ -62,13 +62,14 @@ public class AssetAutoTaggerOSGiCommandsTest
 	public void testTagAllUntaggedTagsAllTheAssetsThatHaveNoTags()
 		throws Exception {
 
-		AssetEntry assetEntryWithNoPreviousTags = addFileEntryAssetEntry();
 		AssetEntry assetEntryWithPreviousTags = addFileEntryAssetEntry();
 
 		applyAssetTagName(assetEntryWithPreviousTags, ASSET_TAG_NAME_MANUAL);
 
 		assertContainsAssetTagName(
 			assetEntryWithPreviousTags, ASSET_TAG_NAME_MANUAL);
+
+		AssetEntry assetEntryWithNoPreviousTags = addFileEntryAssetEntry();
 
 		assertHasNoTags(assetEntryWithNoPreviousTags);
 

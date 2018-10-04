@@ -612,10 +612,10 @@ public class SharingEntryLocalServiceUtil {
 	* @param toUserId the user id*
 	* @return the number of sharing entries
 	*/
-	public static int getUniqueToUserSharingEntriesCount(long classNameId,
-		long toUserId) {
+	public static int getUniqueToUserSharingEntriesCount(long toUserId,
+		long classNameId) {
 		return getService()
-				   .getUniqueToUserSharingEntriesCount(classNameId, toUserId);
+				   .getUniqueToUserSharingEntriesCount(toUserId, classNameId);
 	}
 
 	/**

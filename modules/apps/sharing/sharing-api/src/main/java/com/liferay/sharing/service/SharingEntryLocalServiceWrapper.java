@@ -647,10 +647,10 @@ public class SharingEntryLocalServiceWrapper implements SharingEntryLocalService
 	* @return the number of sharing entries
 	*/
 	@Override
-	public int getUniqueToUserSharingEntriesCount(long classNameId,
-		long toUserId) {
-		return _sharingEntryLocalService.getUniqueToUserSharingEntriesCount(classNameId,
-			toUserId);
+	public int getUniqueToUserSharingEntriesCount(long toUserId,
+		long classNameId) {
+		return _sharingEntryLocalService.getUniqueToUserSharingEntriesCount(toUserId,
+			classNameId);
 	}
 
 	/**

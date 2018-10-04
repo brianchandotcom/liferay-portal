@@ -94,11 +94,25 @@ public class JavaClassParser {
 			throw new ParseException("Parsing error");
 		}
 
-		int x = content.lastIndexOf("\n\n", matcher.start() + 1);
+		int x = matcher.start() + 1;
 
-		int lineNumber = SourceUtil.getLineNumber(content, x + 2);
+		int y = x + 1;
 
-		String classContent = content.substring(x + 2);
+		while (true) {
+			y = content.lastIndexOf("\n\n", y - 1);
+
+			if (y == -1) {
+				throw new ParseException("Parsing error");
+			}
+
+			if (SourceUtil.getLevel(content.substring(y, x)) == 0) {
+				break;
+			}
+		}
+
+		int lineNumber = SourceUtil.getLineNumber(content, y + 2);
+
+		String classContent = content.substring(y + 2);
 
 		boolean isAbstract = false;
 

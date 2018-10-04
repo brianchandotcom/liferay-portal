@@ -20,6 +20,8 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
+import org.json.JSONObject;
+
 /**
  * @author Peter Yoo
  * @author Michael Hashimoto
@@ -48,6 +50,12 @@ public abstract class BaseLocalGitRepository
 	@Override
 	public String getUpstreamBranchName() {
 		return getString("upstream_branch_name");
+	}
+
+	protected BaseLocalGitRepository(JSONObject jsonObject) {
+		super(jsonObject);
+
+		validateKeys(_REQUIRED_KEYS);
 	}
 
 	protected BaseLocalGitRepository(String name, String upstreamBranchName) {

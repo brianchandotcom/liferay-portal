@@ -109,8 +109,6 @@ public abstract class BaseBuildData implements BuildData {
 	protected static boolean isValidJSONObject(
 		JSONObject jsonObject, String type) {
 
-		System.out.println("* " + type);
-
 		if (type == null) {
 			return false;
 		}

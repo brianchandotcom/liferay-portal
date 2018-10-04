@@ -36,7 +36,13 @@ public class WorkspaceUtil {
 
 		WorkspaceGitRepository dependencyWorkspaceGitRepository = null;
 
-		if (PullRequest.isValidGitHubPullRequestURL(gitHubURL)) {
+		BuildDatabase buildDatabase = BuildDatabaseUtil.getBuildDatabase();
+
+		if (buildDatabase.hasWorkspaceGitRepository(repositoryType)) {
+			dependencyWorkspaceGitRepository =
+				buildDatabase.getWorkspaceGitRepository(repositoryType);
+		}
+		else if (PullRequest.isValidGitHubPullRequestURL(gitHubURL)) {
 			PullRequest pullRequest = new PullRequest(gitHubURL);
 
 			dependencyWorkspaceGitRepository =
@@ -67,17 +73,25 @@ public class WorkspaceUtil {
 	}
 
 	public static WorkspaceGitRepository getWorkspaceGitRepository(
-		String gitHubURL, String upstreamBranchName) {
+		String repositoryType, String gitHubURL, String upstreamBranchName) {
 
-		return getWorkspaceGitRepository(gitHubURL, upstreamBranchName, null);
+		return getWorkspaceGitRepository(
+			repositoryType, gitHubURL, upstreamBranchName, null);
 	}
 
 	public static WorkspaceGitRepository getWorkspaceGitRepository(
-		String gitHubURL, String upstreamBranchName, String branchSHA) {
+		String repositoryType, String gitHubURL, String upstreamBranchName,
+		String branchSHA) {
 
 		WorkspaceGitRepository workspaceGitRepository = null;
 
-		if (PullRequest.isValidGitHubPullRequestURL(gitHubURL)) {
+		BuildDatabase buildDatabase = BuildDatabaseUtil.getBuildDatabase();
+
+		if (buildDatabase.hasWorkspaceGitRepository(repositoryType)) {
+			workspaceGitRepository = buildDatabase.getWorkspaceGitRepository(
+				repositoryType);
+		}
+		else if (PullRequest.isValidGitHubPullRequestURL(gitHubURL)) {
 			PullRequest pullRequest = new PullRequest(gitHubURL);
 
 			workspaceGitRepository =

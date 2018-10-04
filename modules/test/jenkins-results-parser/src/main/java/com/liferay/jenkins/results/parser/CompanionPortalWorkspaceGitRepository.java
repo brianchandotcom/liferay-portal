@@ -17,11 +17,20 @@ package com.liferay.jenkins.results.parser;
 import java.io.File;
 import java.io.IOException;
 
+import org.json.JSONObject;
+
 /**
  * @author Michael Hashimoto
  */
 public class CompanionPortalWorkspaceGitRepository
 	extends BasePortalWorkspaceGitRepository {
+
+	public static final String TYPE = "portal.companion";
+
+	@Override
+	public String getType() {
+		return TYPE;
+	}
 
 	@Override
 	public void setUp() {
@@ -54,6 +63,15 @@ public class CompanionPortalWorkspaceGitRepository
 		catch (IOException ioe) {
 			throw new RuntimeException(ioe);
 		}
+	}
+
+	protected CompanionPortalWorkspaceGitRepository(JSONObject jsonObject) {
+		super(jsonObject);
+
+		BuildDatabase buildDatabase = BuildDatabaseUtil.getBuildDatabase();
+
+		_parentWorkspaceGitRepository = buildDatabase.getWorkspaceGitRepository(
+			PrimaryPortalWorkspaceGitRepository.TYPE);
 	}
 
 	protected CompanionPortalWorkspaceGitRepository(

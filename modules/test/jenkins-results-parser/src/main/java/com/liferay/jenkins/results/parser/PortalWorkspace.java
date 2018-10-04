@@ -37,7 +37,7 @@ public abstract class PortalWorkspace extends BaseWorkspace {
 
 		WorkspaceGitRepository workspaceGitRepository =
 			WorkspaceUtil.getWorkspaceGitRepository(
-				portalGitHubURL, portalUpstreamBranchName);
+				"portal", portalGitHubURL, portalUpstreamBranchName);
 
 		if (!(workspaceGitRepository instanceof
 				PortalWorkspaceGitRepository)) {
@@ -52,17 +52,20 @@ public abstract class PortalWorkspace extends BaseWorkspace {
 
 		_companionPortalWorkspaceGitRepository =
 			WorkspaceUtil.getDependencyWorkspaceGitRepository(
-				"portal.companion", _primaryPortalWorkspaceGitRepository);
+				"CompanionPortalWorkspaceGitRepository.TYPE",
+				_primaryPortalWorkspaceGitRepository);
 
 		_companionPortalWorkspaceGitRepository.setUp();
 
 		_otherPortalWorkspaceGitRepository =
 			WorkspaceUtil.getDependencyWorkspaceGitRepository(
-				"portal.other", _primaryPortalWorkspaceGitRepository);
+				OtherPortalWorkspaceGitRepository.TYPE,
+				_primaryPortalWorkspaceGitRepository);
 
 		_pluginsWorkspaceGitRepository =
 			WorkspaceUtil.getDependencyWorkspaceGitRepository(
-				"portal.plugins", _primaryPortalWorkspaceGitRepository);
+				PortalPluginsWorkspaceGitRepository.TYPE,
+				_primaryPortalWorkspaceGitRepository);
 	}
 
 	protected WorkspaceGitRepository getOtherPortalWorkspaceGitRepository() {

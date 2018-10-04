@@ -17,12 +17,32 @@ package com.liferay.jenkins.results.parser;
 import org.json.JSONObject;
 
 /**
- * @author Peter Yoo
+ * @author Michael Hashimoto
  */
-public interface GitRepository {
+public class PortalPluginsWorkspaceGitRepository
+	extends PluginsWorkspaceGitRepository {
 
-	public JSONObject getJSONObject();
+	public static final String TYPE = "portal.plugins";
 
-	public String getName();
+	@Override
+	public String getType() {
+		return TYPE;
+	}
+
+	protected PortalPluginsWorkspaceGitRepository(JSONObject jsonObject) {
+		super(jsonObject);
+	}
+
+	protected PortalPluginsWorkspaceGitRepository(
+		PullRequest pullRequest, String upstreamBranchName) {
+
+		super(pullRequest, upstreamBranchName);
+	}
+
+	protected PortalPluginsWorkspaceGitRepository(
+		RemoteGitRef remoteGitRef, String upstreamBranchName) {
+
+		super(remoteGitRef, upstreamBranchName);
+	}
 
 }

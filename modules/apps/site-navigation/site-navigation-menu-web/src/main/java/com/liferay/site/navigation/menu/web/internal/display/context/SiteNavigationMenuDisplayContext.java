@@ -367,14 +367,17 @@ public class SiteNavigationMenuDisplayContext {
 		if (type == SiteNavigationConstants.TYPE_PRIMARY) {
 			typeKey = "primary-navigation";
 		}
-		else if (type == SiteNavigationConstants.TYPE_PRIVATE) {
-			typeKey = "private-navigation";
-		}
 		else if (type == SiteNavigationConstants.TYPE_SECONDARY) {
 			typeKey = "secondary-navigation";
 		}
 		else if (type == SiteNavigationConstants.TYPE_SOCIAL) {
 			typeKey = "social-navigation";
+		}
+		else if (type == SiteNavigationConstants.TYPE_PRIVATE_PAGES_HIERARCHY) {
+			typeKey = "private-pages-hierarchy";
+		}
+		else if (type == SiteNavigationConstants.TYPE_PUBLIC_PAGES_HIERARCHY) {
+			typeKey = "public-pages-hierarchy";
 		}
 
 		return LanguageUtil.get(_request, typeKey);
@@ -411,17 +414,10 @@ public class SiteNavigationMenuDisplayContext {
 		Layout layout = themeDisplay.getLayout();
 
 		if (layout.isPrivateLayout()) {
-			SiteNavigationMenu siteNavigationMenu =
-				SiteNavigationMenuLocalServiceUtil.fetchSiteNavigationMenu(
-					themeDisplay.getScopeGroupId(),
-					SiteNavigationConstants.TYPE_PRIVATE);
-
-			if (siteNavigationMenu != null) {
-				return SiteNavigationConstants.TYPE_PRIVATE;
-			}
+			return SiteNavigationConstants.TYPE_PRIVATE_PAGES_HIERARCHY;
 		}
 
-		return SiteNavigationConstants.TYPE_PRIMARY;
+		return SiteNavigationConstants.TYPE_PUBLIC_PAGES_HIERARCHY;
 	}
 
 	private String _ddmTemplateKey;

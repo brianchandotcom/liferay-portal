@@ -56,41 +56,22 @@ public class SiteNavigationMenuLocalServiceImpl
 
 		Group group = groupLocalService.fetchGroup(groupId);
 
-		SiteNavigationMenu privateSiteNavigationMenu = fetchSiteNavigationMenu(
-			groupId, SiteNavigationConstants.TYPE_PRIVATE);
-
 		SiteNavigationMenu publicSiteNavigationMenu = fetchSiteNavigationMenu(
 			groupId, SiteNavigationConstants.TYPE_PRIMARY);
 
-		if ((privateSiteNavigationMenu != null) &&
-			(publicSiteNavigationMenu != null)) {
+		if ((publicSiteNavigationMenu != null) &&
+			!layoutLocalService.hasLayouts(group, false)) {
 
 			return publicSiteNavigationMenu;
 		}
 
-		if ((privateSiteNavigationMenu == null) &&
-			layoutLocalService.hasLayouts(group, true)) {
+		publicSiteNavigationMenu = addSiteNavigationMenu(
+			userId, groupId, "Default", SiteNavigationConstants.TYPE_PRIMARY,
+			true, serviceContext);
 
-			privateSiteNavigationMenu = addSiteNavigationMenu(
-				userId, groupId, "Default Private",
-				SiteNavigationConstants.TYPE_PRIVATE, false, serviceContext);
-
-			_addSiteNavigationMenuItems(
-				privateSiteNavigationMenu, 0, true,
-				LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, serviceContext);
-		}
-
-		if ((publicSiteNavigationMenu == null) &&
-			layoutLocalService.hasLayouts(group, false)) {
-
-			publicSiteNavigationMenu = addSiteNavigationMenu(
-				userId, groupId, "Default",
-				SiteNavigationConstants.TYPE_PRIMARY, true, serviceContext);
-
-			_addSiteNavigationMenuItems(
-				publicSiteNavigationMenu, 0, false,
-				LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, serviceContext);
-		}
+		_addSiteNavigationMenuItems(
+			publicSiteNavigationMenu, 0, false,
+			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, serviceContext);
 
 		return publicSiteNavigationMenu;
 	}

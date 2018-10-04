@@ -21,10 +21,19 @@ String rootMenuItemType = siteNavigationMenuDisplayContext.getRootMenuItemType()
 
 SiteNavigationMenu siteNavigationMenu = siteNavigationMenuDisplayContext.getSiteNavigationMenu();
 
-String siteNavigationMenuName = LanguageUtil.get(request, "default");
+String siteNavigationMenuName = StringPool.BLANK;
 
 if (siteNavigationMenu != null) {
 	siteNavigationMenuName = siteNavigationMenu.getName();
+}
+else if (siteNavigationMenuDisplayContext.getSelectSiteNavigationMenuType() == SiteNavigationConstants.TYPE_PRIVATE_PAGES_HIERARCHY) {
+	siteNavigationMenuName = LanguageUtil.get(request, "private-pages-hierarchy");
+}
+else if (siteNavigationMenuDisplayContext.getSelectSiteNavigationMenuType() == SiteNavigationConstants.TYPE_PUBLIC_PAGES_HIERARCHY) {
+	siteNavigationMenuName = LanguageUtil.get(request, "public-pages-hierarchy");
+}
+else {
+	siteNavigationMenuName = LanguageUtil.get(request, layout.isPrivateLayout() ? "private-pages-hierarchy" : "public-pages-hierarchy");
 }
 %>
 
@@ -57,8 +66,20 @@ if (siteNavigationMenu != null) {
 									<aui:input checked="<%= !siteNavigationMenuDisplayContext.isSiteNavigationMenuSelected() %>" cssClass="select-navigation" label="select-navigation" name="selectNavigation" type="radio" value="0" />
 
 									<aui:select disabled="<%= siteNavigationMenuDisplayContext.isSiteNavigationMenuSelected() %>" label="" name="selectSiteNavigationMenuType" value="<%= siteNavigationMenuDisplayContext.getSelectSiteNavigationMenuType() %>">
+
+										<%
+										Group scopeGroup = themeDisplay.getScopeGroup();
+										%>
+
+										<c:if test="<%= scopeGroup.hasPublicLayouts() && layout.isPublicLayout() %>">
+											<aui:option label="public-pages-hierarchy" selected="<%= siteNavigationMenuDisplayContext.getSelectSiteNavigationMenuType() == SiteNavigationConstants.TYPE_PUBLIC_PAGES_HIERARCHY %>" value="<%= SiteNavigationConstants.TYPE_PUBLIC_PAGES_HIERARCHY %>" />
+										</c:if>
+
+										<c:if test="<%= scopeGroup.hasPrivateLayouts() && layout.isPrivateLayout() %>">
+											<aui:option label="private-pages-hierarchy" selected="<%= siteNavigationMenuDisplayContext.getSelectSiteNavigationMenuType() == SiteNavigationConstants.TYPE_PRIVATE_PAGES_HIERARCHY %>" value="<%= SiteNavigationConstants.TYPE_PRIVATE_PAGES_HIERARCHY %>" />
+										</c:if>
+
 										<aui:option label="primary-navigation" selected="<%= siteNavigationMenuDisplayContext.getSelectSiteNavigationMenuType() == SiteNavigationConstants.TYPE_PRIMARY %>" value="<%= SiteNavigationConstants.TYPE_PRIMARY %>" />
-										<aui:option label="private-navigation" selected="<%= siteNavigationMenuDisplayContext.getSelectSiteNavigationMenuType() == SiteNavigationConstants.TYPE_PRIVATE %>" value="<%= SiteNavigationConstants.TYPE_PRIVATE %>" />
 										<aui:option label="secondary-navigation" selected="<%= siteNavigationMenuDisplayContext.getSelectSiteNavigationMenuType() == SiteNavigationConstants.TYPE_SECONDARY %>" value="<%= SiteNavigationConstants.TYPE_SECONDARY %>" />
 										<aui:option label="social-navigation" selected="<%= siteNavigationMenuDisplayContext.getSelectSiteNavigationMenuType() == SiteNavigationConstants.TYPE_SOCIAL %>" value="<%= SiteNavigationConstants.TYPE_SOCIAL %>" />
 									</aui:select>
@@ -80,6 +101,8 @@ if (siteNavigationMenu != null) {
 								</div>
 							</c:when>
 							<c:otherwise>
+								<aui:input name="selectSiteNavigationMenuType" type="hidden" value="<%= siteNavigationMenuDisplayContext.getSelectSiteNavigationMenuType() %>" />
+
 								<div class="card card-horizontal taglib-horizontal-card">
 									<div class="card-row card-row-padded ">
 										<div class="card-col-field">
@@ -118,10 +141,7 @@ if (siteNavigationMenu != null) {
 									<aui:select id="rootMenuItemType" label="start-with-menu-items-in" name="preferences--rootMenuItemType--" value="<%= rootMenuItemType %>">
 										<aui:option label="level" value="absolute" />
 										<aui:option label="level-relative-to-the-current-menu-item" value="relative" />
-
-										<c:if test="<%= siteNavigationMenu != null %>">
-											<aui:option label="select" value="select" />
-										</c:if>
+										<aui:option label="select" value="select" />
 									</aui:select>
 								</aui:col>
 
@@ -279,10 +299,12 @@ if (siteNavigationMenu != null) {
 			event.preventDefault();
 
 			var siteNavigationMenuId = $('#<portlet:namespace />siteNavigationMenuId').val();
+			var selectSiteNavigationMenuType = $('#<portlet:namespace />selectSiteNavigationMenuType').val();
 
 			var uri = '<%= siteNavigationMenuDisplayContext.getRootMenuItemSelectorURL() %>';
 
 			uri = Liferay.Util.addParams('<%= PortalUtil.getPortletNamespace(ItemSelectorPortletKeys.ITEM_SELECTOR) %>siteNavigationMenuId=' + siteNavigationMenuId, uri);
+			uri = Liferay.Util.addParams('<%= PortalUtil.getPortletNamespace(ItemSelectorPortletKeys.ITEM_SELECTOR) %>siteNavigationMenuType=' + selectSiteNavigationMenuType, uri);
 
 			var itemSelectorDialog = new A.LiferayItemSelectorDialog(
 				{
@@ -333,7 +355,7 @@ if (siteNavigationMenu != null) {
 
 						$('#<portlet:namespace />rootMenuItemId').val('0');
 
-						$('#<portlet:namespace />rootMenuItemName').text('');
+						$('#<portlet:namespace />rootMenuItemName').text(selectedItem.name);
 
 						$('#<portlet:namespace />removeSiteNavigationMenu').toggleClass('hide');
 
@@ -371,12 +393,16 @@ if (siteNavigationMenu != null) {
 		'<portlet:namespace />rootMenuItemLevel'
 	);
 
-	var selectSiteNavigationMenuType = $('#<portlet:namespace />selectSiteNavigationMenuType')
+	var selectSiteNavigationMenuType = $('#<portlet:namespace />selectSiteNavigationMenuType');
 
 	selectSiteNavigationMenuType.on(
 		'change',
 		function() {
 			var siteNavigationMenuType = $('#<portlet:namespace />siteNavigationMenuType');
+
+			var selectedSelectSiteNavigationMenuType = $('#<portlet:namespace />selectSiteNavigationMenuType option:selected');
+
+			$('#<portlet:namespace />rootMenuItemName').text(selectedSelectSiteNavigationMenuType.text());
 
 			siteNavigationMenuType.val(selectSiteNavigationMenuType.val());
 		}

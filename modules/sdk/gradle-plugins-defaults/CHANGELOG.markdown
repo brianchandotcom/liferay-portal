@@ -4696,6 +4696,16 @@ qualifier before the task runs and change it back after it completes.
 - [LPS-85987]: Use the `TaskContainer` to find `npmRunBuild` tasks to avoid a
 `NullPointerException` during the configuration phase.
 
+## 5.5.68 - 2018-10-03
+
+### Changed
+- [LPS-85987]: Update the [Liferay Gradle Plugins] dependency to version
+3.12.152.
+
+### Fixed
+- [LPS-85987]: When running the `npmRunBuild` task on Jenkins, always check for
+an invalid `.hotfix-xxx-xxx` qualifier.
+
 [Find Security Bugs]: https://github.com/liferay/liferay-portal/tree/master/modules/third-party/com-h3xstream-findsecbugs
 [Gradle Dependency Management]: https://github.com/spring-gradle-plugins/dependency-management-plugin
 [Gradle License Report]: https://github.com/jk1/Gradle-License-Report

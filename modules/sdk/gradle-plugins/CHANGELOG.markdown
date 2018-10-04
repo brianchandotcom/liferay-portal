@@ -5743,6 +5743,14 @@ dependency to version 2.1.34.
 - [LPS-85959]: Update the [Liferay Gradle Plugins JS Transpiler] dependency to
 version 2.4.13.
 
+## 3.12.152 - 2018-10-03
+
+### Changed
+- [LPS-84119]: Update the [Liferay Gradle Plugins Source Formatter] dependency
+to version 2.3.270.
+- [LPS-84119]: Update the [Liferay Source Formatter] dependency to version
+1.0.744.
+
 [Gradle Bundle Plugin]: https://github.com/TomDmitriev/gradle-bundle-plugin
 [Liferay Alloy Taglib]: https://github.com/liferay/alloy-taglibs
 [Liferay Ant BND]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/ant-bnd

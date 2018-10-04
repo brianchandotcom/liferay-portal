@@ -16,10 +16,13 @@ package com.liferay.structured.content.apio.client.test;
 
 import com.jayway.jsonpath.JsonPath;
 
+import com.liferay.oauth2.provider.test.util.OAuth2ProviderTestUtil;
 import com.liferay.petra.json.web.service.client.JSONWebServiceClient;
 import com.liferay.petra.json.web.service.client.JSONWebServiceInvocationException;
 import com.liferay.petra.json.web.service.client.JSONWebServiceTransportException;
 import com.liferay.petra.json.web.service.client.internal.JSONWebServiceClientImpl;
+
+import java.io.File;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -27,9 +30,11 @@ import java.net.URL;
 import java.util.Collections;
 import java.util.List;
 
+import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.container.test.api.RunAsClient;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.arquillian.test.api.ArquillianResource;
+import org.jboss.shrinkwrap.api.Archive;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -42,6 +47,18 @@ import org.junit.runner.RunWith;
 @RunAsClient
 @RunWith(Arquillian.class)
 public class StructuredContentApioTest {
+
+	@Deployment
+	public static Archive<?> getDeployment() throws Exception {
+		ClassLoader classLoader =
+			StructuredContentApioTest.class.getClassLoader();
+
+		URL url = classLoader.getResource("bnd.bnd");
+
+		return OAuth2ProviderTestUtil.getArchive(
+			StructuredContentApioTestBundleActivator.class,
+			new File(url.toURI()));
+	}
 
 	@Before
 	public void setUp() throws MalformedURLException {
@@ -66,8 +83,9 @@ public class StructuredContentApioTest {
 				JsonPath.read(
 					_get(_rootEndpointURL.toExternalForm()),
 					"$._links.content-space.href")),
-			"$._embedded.ContentSpace[?(@.name == 'Liferay')]._links." +
-				"structuredContents.href");
+			"$._embedded.ContentSpace[?(@.name == '" +
+				StructuredContentApioTestBundleActivator.SITE_NAME +
+					"')]._links.structuredContents.href");
 
 		Assert.assertNotNull(hrefs.get(0));
 	}
@@ -79,8 +97,9 @@ public class StructuredContentApioTest {
 				JsonPath.read(
 					_get(_rootEndpointURL.toExternalForm()),
 					"$._links.content-space.href")),
-			"$._embedded.ContentSpace[?(@.name == 'Liferay')]._links." +
-				"structuredContents.href");
+			"$._embedded.ContentSpace[?(@.name == '" +
+				StructuredContentApioTestBundleActivator.SITE_NAME +
+					"')]._links.structuredContents.href");
 
 		String href = JsonPath.read(_get(hrefs.get(0)), "$._links.self.href");
 

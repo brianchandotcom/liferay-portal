@@ -16,8 +16,8 @@
 		}
 	},
 	"dependencies": {
-		"clay": "2.3.3",
-		"clay-alert": "2.3.3",
+		"clay": "2.3.4",
+		"clay-alert": "2.3.4",
 		"jquery": "^3.3.1",
 		"liferay-amd-loader": "3.1.2",
 		"lodash": "4.17.4",
@@ -44,7 +44,7 @@
 		"liferay-npm-bridge-generator": "^2.0.0",
 		"liferay-npm-bundler": "^2.1.0",
 		"metal-tools-soy": "^4.2.1",
-		"webpack": "^4.6.0",
+		"webpack": "4.17.2",
 		"webpack-cli": "^2.0.15",
 		"webpack-dev-server": "^3.1.3",
 		"webpack-merge": "^4.1.2"

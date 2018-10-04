@@ -184,10 +184,6 @@ public class ParentModuleApplicationContextExtender extends AbstractExtender {
 				finishRefresh();
 			}
 			catch (BeansException be) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(be, be);
-				}
-
 				destroyBeans();
 
 				cancelRefresh(be);
@@ -264,10 +260,6 @@ public class ParentModuleApplicationContextExtender extends AbstractExtender {
 				}
 			}
 			catch (ReflectiveOperationException roe) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(roe, roe);
-				}
-
 				throw new BeanCreationException(beanName, roe);
 			}
 		}

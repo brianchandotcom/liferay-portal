@@ -4690,6 +4690,12 @@ in `bnd.bnd`, `package.json`, and `package-lock.json` for an invalid
 `.hotfix-xxx-xxx` qualifier. If it exists, temporarily change it to a valid
 qualifier before the task runs and change it back after it completes.
 
+## 5.5.67 - 2018-10-03
+
+### Fixed
+- [LPS-85987]: Use the `TaskContainer` to find `npmRunBuild` tasks to avoid a
+`NullPointerException` during the configuration phase.
+
 [Find Security Bugs]: https://github.com/liferay/liferay-portal/tree/master/modules/third-party/com-h3xstream-findsecbugs
 [Gradle Dependency Management]: https://github.com/spring-gradle-plugins/dependency-management-plugin
 [Gradle License Report]: https://github.com/jk1/Gradle-License-Report

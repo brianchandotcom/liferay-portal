@@ -61,11 +61,11 @@ public abstract class BaseWorkspaceGitRepository
 
 		GitWorkingDirectory gitWorkingDirectory = getGitWorkingDirectory();
 
-		List<String> branchNamesContainingSHA =
-			gitWorkingDirectory.getBranchNamesContainingSHA(branchSHA);
-
 		if (!branchSHA.equals(_getBranchHeadSHA()) &&
 			!branchSHA.equals(_getBranchSHA())) {
+
+			List<String> branchNamesContainingSHA =
+				gitWorkingDirectory.getBranchNamesContainingSHA(branchSHA);
 
 			if (!branchNamesContainingSHA.contains(_getBranchName())) {
 				throw new IllegalArgumentException(
@@ -88,9 +88,16 @@ public abstract class BaseWorkspaceGitRepository
 
 		GitWorkingDirectory gitWorkingDirectory = getGitWorkingDirectory();
 
+		String branchSHA = _getBranchSHA();
+
+		if (!gitWorkingDirectory.localSHAExists(branchSHA)) {
+			GitHubDevSyncUtil.fetchCachedBranchFromGitHubDev(
+				gitWorkingDirectory, getGitHubDevBranchName());
+		}
+
 		LocalGitBranch localGitBranch =
 			gitWorkingDirectory.createLocalGitBranch(
-				_getBranchName(), true, _getBranchSHA());
+				_getBranchName(), true, branchSHA);
 
 		gitWorkingDirectory.createLocalGitBranch(localGitBranch, true);
 

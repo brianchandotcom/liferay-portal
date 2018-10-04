@@ -75,6 +75,56 @@ public class GitHubDevSyncUtil {
 			synchronize);
 	}
 
+	public static RemoteGitBranch fetchCachedBranchFromGitHubDev(
+		GitWorkingDirectory gitWorkingDirectory, String cachedBranchName) {
+
+		List<GitRemote> gitHubDevGitRemotes = getGitHubDevGitRemotes(
+			gitWorkingDirectory);
+
+		try {
+			int retries = 0;
+
+			while ((retries < 3) && !gitHubDevGitRemotes.isEmpty()) {
+				retries++;
+
+				GitRemote gitHubDevGitRemote = getRandomGitRemote(
+					gitHubDevGitRemotes);
+
+				gitHubDevGitRemotes.remove(gitHubDevGitRemote);
+
+				try {
+					RemoteGitBranch cachedRemoteGitBranch =
+						gitWorkingDirectory.getRemoteGitBranch(
+							cachedBranchName, gitHubDevGitRemote, true);
+
+					gitWorkingDirectory.fetch(cachedRemoteGitBranch);
+
+					return cachedRemoteGitBranch;
+				}
+				catch (Exception e) {
+					if (retries == 3) {
+						throw new RuntimeException(
+							JenkinsResultsParserUtil.combine(
+								"Unable to fetch ", cachedBranchName,
+								" from git@github-dev.com"),
+							e);
+					}
+				}
+				finally {
+					gitWorkingDirectory.removeGitRemote(gitHubDevGitRemote);
+				}
+			}
+
+			throw new RuntimeException(
+				JenkinsResultsParserUtil.combine(
+					"Unable to fetch ", cachedBranchName,
+					" from git@github-dev.com"));
+		}
+		finally {
+			gitWorkingDirectory.removeGitRemotes(gitHubDevGitRemotes);
+		}
+	}
+
 	public static String getCachedBranchName(PullRequest pullRequest) {
 		return getCachedBranchName(
 			pullRequest.getReceiverUsername(), pullRequest.getSenderUsername(),
@@ -727,9 +777,7 @@ public class GitHubDevSyncUtil {
 			String remoteGitBranchName = entry.getKey();
 
 			if (remoteGitBranchName.matches(_cachedBranchPattern.pattern())) {
-				if (hasTimestampBranch(
-						remoteGitBranchName, remoteGitBranches)) {
-
+				if (hasTimestampBranch(remoteGitBranches)) {
 					cachedRemoteGitBranches.add(entry.getValue());
 				}
 				else {
@@ -788,7 +836,6 @@ public class GitHubDevSyncUtil {
 	}
 
 	protected static boolean hasTimestampBranch(
-		String cachedBranchName,
 		Map<String, RemoteGitBranch> remoteGitBranches) {
 
 		for (String remoteGitBranchName : remoteGitBranches.keySet()) {
@@ -953,14 +1000,9 @@ public class GitHubDevSyncUtil {
 							"Cache branch ", cachedBranchName,
 							" already exists"));
 
-					GitRemote gitHubDevGitRemote = getRandomGitRemote(
-						gitHubDevGitRemotes);
-
 					RemoteGitBranch cachedRemoteGitBranch =
-						gitWorkingDirectory.getRemoteGitBranch(
-							cachedBranchName, gitHubDevGitRemote, true);
-
-					gitWorkingDirectory.fetch(cachedRemoteGitBranch);
+						fetchCachedBranchFromGitHubDev(
+							gitWorkingDirectory, cachedBranchName);
 
 					gitWorkingDirectory.deleteLocalGitBranch(cachedBranchName);
 

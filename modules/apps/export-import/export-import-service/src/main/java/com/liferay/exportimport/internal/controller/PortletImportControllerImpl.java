@@ -509,8 +509,6 @@ public class PortletImportControllerImpl implements PortletImportController {
 					throw eide;
 				}
 
-				long ownerId = GetterUtil.getLong(
-					element.attributeValue("owner-id"));
 				int ownerType = GetterUtil.getInteger(
 					element.attributeValue("owner-type"));
 
@@ -525,6 +523,9 @@ public class PortletImportControllerImpl implements PortletImportController {
 
 					continue;
 				}
+
+				long ownerId = GetterUtil.getLong(
+					element.attributeValue("owner-id"));
 
 				if ((ownerType == PortletKeys.PREFS_OWNER_TYPE_USER) &&
 					(ownerId != PortletKeys.PREFS_OWNER_ID_DEFAULT) &&
@@ -845,6 +846,7 @@ public class PortletImportControllerImpl implements PortletImportController {
 
 			String portletId = MapUtil.getString(settingsMap, "portletId");
 			long targetGroupId = MapUtil.getLong(settingsMap, "targetGroupId");
+
 			long targetPlid = MapUtil.getLong(settingsMap, "targetPlid");
 
 			Layout layout = _layoutLocalService.getLayout(targetPlid);

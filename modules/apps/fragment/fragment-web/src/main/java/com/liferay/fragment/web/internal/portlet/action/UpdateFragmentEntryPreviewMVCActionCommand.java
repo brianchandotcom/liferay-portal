@@ -58,8 +58,6 @@ public class UpdateFragmentEntryPreviewMVCActionCommand
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		long fragmentEntryId = ParamUtil.getLong(
-			actionRequest, "fragmentEntryId");
 		long fileEntryId = ParamUtil.getLong(actionRequest, "fileEntryId");
 
 		FileEntry fileEntry = _dlAppLocalService.getFileEntry(fileEntryId);
@@ -78,6 +76,9 @@ public class UpdateFragmentEntryPreviewMVCActionCommand
 				themeDisplay.getScopeGroupId(), FragmentPortletKeys.FRAGMENT,
 				serviceContext);
 		}
+
+		long fragmentEntryId = ParamUtil.getLong(
+			actionRequest, "fragmentEntryId");
 
 		String fileName =
 			fragmentEntryId + "_preview." + fileEntry.getExtension();

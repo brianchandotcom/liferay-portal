@@ -53,10 +53,11 @@ public class UpgradeJournalArticleDates extends UpgradeProcess {
 
 			try (ResultSet rs = s.executeQuery(sb.toString())) {
 				while (rs.next()) {
-					long resourcePrimKey = rs.getLong(1);
 					Timestamp createDate = rs.getTimestamp(2);
 
 					ps.setTimestamp(1, createDate);
+
+					long resourcePrimKey = rs.getLong(1);
 
 					ps.setLong(2, resourcePrimKey);
 
@@ -96,13 +97,15 @@ public class UpgradeJournalArticleDates extends UpgradeProcess {
 
 			try (ResultSet rs = ps1.executeQuery()) {
 				while (rs.next()) {
-					long resourcePrimKey = rs.getLong(1);
-					Double latestVersion = rs.getDouble(2);
 					Timestamp assetModifiedDate = rs.getTimestamp(3);
 
 					ps2.setTimestamp(1, assetModifiedDate);
 
+					long resourcePrimKey = rs.getLong(1);
+
 					ps2.setLong(2, resourcePrimKey);
+
+					Double latestVersion = rs.getDouble(2);
 
 					ps2.setDouble(3, latestVersion);
 

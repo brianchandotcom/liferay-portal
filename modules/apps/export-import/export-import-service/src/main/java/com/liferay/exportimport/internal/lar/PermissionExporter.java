@@ -111,6 +111,7 @@ public class PermissionExporter {
 		throws Exception {
 
 		String resourceName = PortletIdCodec.decodePortletName(portletId);
+
 		String resourcePrimKey = StringPool.BLANK;
 
 		if (layout != null) {

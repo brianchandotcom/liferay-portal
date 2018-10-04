@@ -91,6 +91,7 @@ public class UpgradeKBArticle extends UpgradeProcess {
 				count++;
 
 				long id = rs.getLong(1);
+
 				String urlTitle = rs.getString(2);
 
 				ps1.setString(1, _getUniqueUrlTitle(urlTitle, count));

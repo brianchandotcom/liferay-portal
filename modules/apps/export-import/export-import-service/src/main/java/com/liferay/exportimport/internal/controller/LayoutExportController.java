@@ -165,8 +165,6 @@ public class LayoutExportController implements ExportController {
 		Map<String, String[]> parameterMap =
 			portletDataContext.getParameterMap();
 
-		boolean ignoreLastPublishDate = MapUtil.getBoolean(
-			parameterMap, PortletDataHandlerKeys.IGNORE_LAST_PUBLISH_DATE);
 		boolean permissions = MapUtil.getBoolean(
 			parameterMap, PortletDataHandlerKeys.PERMISSIONS);
 
@@ -207,6 +205,9 @@ public class LayoutExportController implements ExportController {
 		serviceContext.setAttribute("layoutSetBranchId", layoutSetBranchId);
 
 		ServiceContextThreadLocal.pushServiceContext(serviceContext);
+
+		boolean ignoreLastPublishDate = MapUtil.getBoolean(
+			parameterMap, PortletDataHandlerKeys.IGNORE_LAST_PUBLISH_DATE);
 
 		if (ignoreLastPublishDate) {
 			portletDataContext.setEndDate(null);

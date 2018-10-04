@@ -484,16 +484,50 @@ public class AssetListEntryServiceHttp {
 		}
 	}
 
-	public static com.liferay.asset.list.model.AssetListEntry updateAssetListEntrySettings(
+	public static com.liferay.asset.list.model.AssetListEntry updateAssetListEntryTypeSettings(
 		HttpPrincipal httpPrincipal, long assetListEntryId, String typeSettings)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(AssetListEntryServiceUtil.class,
-					"updateAssetListEntrySettings",
-					_updateAssetListEntrySettingsParameterTypes14);
+					"updateAssetListEntryTypeSettings",
+					_updateAssetListEntryTypeSettingsParameterTypes14);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					assetListEntryId, typeSettings);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return (com.liferay.asset.list.model.AssetListEntry)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
+	public static com.liferay.asset.list.model.AssetListEntry updateAssetListEntryTypeSettingsProperties(
+		HttpPrincipal httpPrincipal, long assetListEntryId,
+		String typeSettingsProperties)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		try {
+			MethodKey methodKey = new MethodKey(AssetListEntryServiceUtil.class,
+					"updateAssetListEntryTypeSettingsProperties",
+					_updateAssetListEntryTypeSettingsPropertiesParameterTypes15);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey,
+					assetListEntryId, typeSettingsProperties);
 
 			Object returnObj = null;
 
@@ -566,6 +600,8 @@ public class AssetListEntryServiceHttp {
 	private static final Class<?>[] _updateAssetListEntryParameterTypes13 = new Class[] {
 			long.class, String.class
 		};
-	private static final Class<?>[] _updateAssetListEntrySettingsParameterTypes14 =
+	private static final Class<?>[] _updateAssetListEntryTypeSettingsParameterTypes14 =
+		new Class[] { long.class, String.class };
+	private static final Class<?>[] _updateAssetListEntryTypeSettingsPropertiesParameterTypes15 =
 		new Class[] { long.class, String.class };
 }

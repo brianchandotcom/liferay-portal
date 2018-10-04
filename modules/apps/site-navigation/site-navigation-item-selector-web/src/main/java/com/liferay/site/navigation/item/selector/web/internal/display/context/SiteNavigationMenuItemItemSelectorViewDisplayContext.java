@@ -14,12 +14,18 @@
 
 package com.liferay.site.navigation.item.selector.web.internal.display.context;
 
+import com.liferay.exportimport.kernel.staging.StagingUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.site.navigation.constants.SiteNavigationConstants;
 import com.liferay.site.navigation.model.SiteNavigationMenu;
 import com.liferay.site.navigation.model.SiteNavigationMenuItem;
 import com.liferay.site.navigation.service.SiteNavigationMenuItemLocalServiceUtil;
@@ -28,6 +34,7 @@ import com.liferay.site.navigation.type.SiteNavigationMenuItemType;
 import com.liferay.site.navigation.type.SiteNavigationMenuItemTypeRegistry;
 
 import java.util.List;
+import java.util.ResourceBundle;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -50,31 +57,161 @@ public class SiteNavigationMenuItemItemSelectorViewDisplayContext {
 		return _itemSelectedEventName;
 	}
 
-	public JSONArray getSiteNavigationMenuItemsJSONArray() throws Exception {
-		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
-
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+	public SiteNavigationMenu getSiteNavigationMenu() {
+		if (_siteNavigationMenu != null) {
+			return _siteNavigationMenu;
+		}
 
 		long siteNavigationMenuId = ParamUtil.getLong(
 			_request, "siteNavigationMenuId");
 
-		jsonObject.put(
-			"children",
-			_getSiteNavigationMenuItemsJSONArray(siteNavigationMenuId, 0));
+		if (siteNavigationMenuId > 0) {
+			_siteNavigationMenu =
+				SiteNavigationMenuLocalServiceUtil.fetchSiteNavigationMenu(
+					siteNavigationMenuId);
 
-		jsonObject.put("disabled", true);
-		jsonObject.put("icon", "blogs");
-		jsonObject.put("id", "0");
-
-		SiteNavigationMenu siteNavigationMenu =
-			SiteNavigationMenuLocalServiceUtil.fetchSiteNavigationMenu(
-				siteNavigationMenuId);
-
-		if (siteNavigationMenu != null) {
-			jsonObject.put("name", siteNavigationMenu.getName());
+			return _siteNavigationMenu;
 		}
 
+		int siteNavigationMenuType = _getSiteNavigationMenuType();
+
+		if ((siteNavigationMenuType != SiteNavigationConstants.TYPE_PRIMARY) &&
+			(siteNavigationMenuType !=
+				SiteNavigationConstants.TYPE_SECONDARY) &&
+			(siteNavigationMenuType != SiteNavigationConstants.TYPE_SOCIAL)) {
+
+			return _siteNavigationMenu;
+		}
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		_siteNavigationMenu =
+			SiteNavigationMenuLocalServiceUtil.fetchSiteNavigationMenu(
+				themeDisplay.getScopeGroupId(), siteNavigationMenuType);
+
+		return _siteNavigationMenu;
+	}
+
+	public JSONArray getSiteNavigationMenuItemsJSONArray() {
+		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+
+		SiteNavigationMenu siteNavigationMenu = getSiteNavigationMenu();
+
+		if (siteNavigationMenu != null) {
+			jsonObject.put(
+				"children",
+				_getSiteNavigationMenuItemsJSONArray(
+					siteNavigationMenu.getSiteNavigationMenuId(), 0));
+
+			jsonObject.put("disabled", true);
+			jsonObject.put("icon", "blogs");
+			jsonObject.put("id", "0");
+			jsonObject.put("name", siteNavigationMenu.getName());
+
+			jsonArray.put(jsonObject);
+
+			return jsonArray;
+		}
+
+		int siteNavigationMenuType = _getSiteNavigationMenuType();
+
+		if ((siteNavigationMenuType !=
+				SiteNavigationConstants.TYPE_PRIVATE_PAGES_HIERARCHY) &&
+			(siteNavigationMenuType !=
+				SiteNavigationConstants.TYPE_PUBLIC_PAGES_HIERARCHY)) {
+
+			return jsonArray;
+		}
+
+		String name = "private-pages-hierarchy";
+		boolean privateLayout = true;
+
+		if (siteNavigationMenuType ==
+				SiteNavigationConstants.TYPE_PUBLIC_PAGES_HIERARCHY) {
+
+			name = "public-pages-hierarchy";
+			privateLayout = false;
+		}
+
+		jsonObject.put("children", _getLayoutItemsJSONArray(privateLayout, 0));
+
+		jsonObject.put("disabled", true);
+		jsonObject.put("icon", "page");
+		jsonObject.put("id", "0");
+
+		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+			themeDisplay.getLocale(),
+			SiteNavigationMenuItemItemSelectorViewDisplayContext.class);
+
+		jsonObject.put(
+			"name",
+			LanguageUtil.get(
+				resourceBundle,
+				ResourceBundleUtil.getString(resourceBundle, name)));
+
 		jsonArray.put(jsonObject);
+
+		return jsonArray;
+	}
+
+	public boolean isShowSelectSiteNavigationMenuItem() {
+		SiteNavigationMenu siteNavigationMenu = getSiteNavigationMenu();
+
+		if (siteNavigationMenu != null) {
+			return true;
+		}
+
+		int siteNavigationMenuType = _getSiteNavigationMenuType();
+
+		if ((siteNavigationMenuType ==
+				SiteNavigationConstants.TYPE_PRIVATE_PAGES_HIERARCHY) ||
+			(siteNavigationMenuType ==
+				SiteNavigationConstants.TYPE_PUBLIC_PAGES_HIERARCHY)) {
+
+			return true;
+		}
+
+		return false;
+	}
+
+	private JSONArray _getLayoutItemsJSONArray(
+		boolean privateLayout, long parentLayoutId) {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
+
+		List<Layout> layouts = LayoutLocalServiceUtil.getLayouts(
+			themeDisplay.getScopeGroupId(), privateLayout, parentLayoutId);
+
+		for (Layout layout : layouts) {
+			if (layout.isHidden() || StagingUtil.isIncomplete(layout)) {
+				continue;
+			}
+
+			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+
+			JSONArray childrenJSONArray = _getLayoutItemsJSONArray(
+				privateLayout, layout.getLayoutId());
+
+			if (childrenJSONArray.length() > 0) {
+				jsonObject.put("children", childrenJSONArray);
+			}
+
+			jsonObject.put("icon", "page");
+			jsonObject.put("id", layout.getUuid());
+			jsonObject.put("name", layout.getName(themeDisplay.getLocale()));
+			jsonObject.put("selected", false);
+
+			jsonArray.put(jsonObject);
+		}
 
 		return jsonArray;
 	}
@@ -91,8 +228,7 @@ public class SiteNavigationMenuItemItemSelectorViewDisplayContext {
 	}
 
 	private JSONArray _getSiteNavigationMenuItemsJSONArray(
-			long siteNavigationMenuId, long parentSiteNavigationMenuItemId)
-		throws Exception {
+		long siteNavigationMenuId, long parentSiteNavigationMenuItemId) {
 
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
@@ -145,10 +281,23 @@ public class SiteNavigationMenuItemItemSelectorViewDisplayContext {
 		return jsonArray;
 	}
 
+	private int _getSiteNavigationMenuType() {
+		if (_siteNavigationMenuType != null) {
+			return _siteNavigationMenuType;
+		}
+
+		_siteNavigationMenuType = ParamUtil.getInteger(
+			_request, "siteNavigationMenuType");
+
+		return _siteNavigationMenuType;
+	}
+
 	private final String _itemSelectedEventName;
 	private final HttpServletRequest _request;
+	private SiteNavigationMenu _siteNavigationMenu;
 	private Long _siteNavigationMenuItemId;
 	private final SiteNavigationMenuItemTypeRegistry
 		_siteNavigationMenuItemTypeRegistry;
+	private Integer _siteNavigationMenuType;
 
 }

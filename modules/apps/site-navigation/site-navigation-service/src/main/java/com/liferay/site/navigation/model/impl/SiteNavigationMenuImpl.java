@@ -31,9 +31,6 @@ public class SiteNavigationMenuImpl extends SiteNavigationMenuBaseImpl {
 		if (getType() == SiteNavigationConstants.TYPE_PRIMARY) {
 			navigationTypeKey = "primary-navigation";
 		}
-		else if (getType() == SiteNavigationConstants.TYPE_PRIVATE) {
-			navigationTypeKey = "private-navigation";
-		}
 		else if (getType() == SiteNavigationConstants.TYPE_SECONDARY) {
 			navigationTypeKey = "secondary-navigation";
 		}

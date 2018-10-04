@@ -517,7 +517,7 @@ public class SharingEntryLocalServiceImpl
 	 */
 	@Override
 	public int getUniqueToUserSharingEntriesCount(
-		long classNameId, long toUserId) {
+		long toUserId, long classNameId) {
 
 		return sharingEntryFinder.countByToUserId(toUserId);
 	}

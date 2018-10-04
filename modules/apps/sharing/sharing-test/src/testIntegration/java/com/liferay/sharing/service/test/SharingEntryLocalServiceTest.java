@@ -900,7 +900,7 @@ public class SharingEntryLocalServiceTest {
 					_toUser.getUserId(), classNameId, 0,
 					_sharingEntryLocalService.
 						getUniqueToUserSharingEntriesCount(
-							classNameId, _toUser.getUserId()),
+							_toUser.getUserId(), classNameId),
 					new SharingEntryModifiedDateComparator());
 
 			Assert.assertEquals(
@@ -963,7 +963,7 @@ public class SharingEntryLocalServiceTest {
 					_toUser.getUserId(), classNameId, 0,
 					_sharingEntryLocalService.
 						getUniqueToUserSharingEntriesCount(
-							classNameId, _toUser.getUserId()),
+							_toUser.getUserId(), classNameId),
 					new SharingEntryModifiedDateComparator());
 
 			Assert.assertEquals(
@@ -975,7 +975,7 @@ public class SharingEntryLocalServiceTest {
 					_toUser.getUserId(), classNameId, 0,
 					_sharingEntryLocalService.
 						getUniqueToUserSharingEntriesCount(
-							classNameId2, _toUser.getUserId()),
+							_toUser.getUserId(), classNameId2),
 					new SharingEntryModifiedDateComparator());
 
 			Assert.assertEquals(
@@ -987,7 +987,7 @@ public class SharingEntryLocalServiceTest {
 					_toUser.getUserId(), -1, 0,
 					_sharingEntryLocalService.
 						getUniqueToUserSharingEntriesCount(
-							-1, _toUser.getUserId()),
+							_toUser.getUserId(), -1),
 					new SharingEntryModifiedDateComparator());
 
 			Assert.assertEquals(
@@ -1035,7 +1035,7 @@ public class SharingEntryLocalServiceTest {
 					_toUser.getUserId(), classNameId, 0,
 					_sharingEntryLocalService.
 						getUniqueToUserSharingEntriesCount(
-							classNameId, _toUser.getUserId()),
+							_toUser.getUserId(), classNameId),
 					new SharingEntryModifiedDateComparator(true));
 
 			Assert.assertEquals(sharingEntry, ascendingSharingEntries.get(0));
@@ -1046,7 +1046,7 @@ public class SharingEntryLocalServiceTest {
 					_toUser.getUserId(), classNameId, 0,
 					_sharingEntryLocalService.
 						getUniqueToUserSharingEntriesCount(
-							classNameId, _toUser.getUserId()),
+							_toUser.getUserId(), classNameId),
 					new SharingEntryModifiedDateComparator(false));
 
 			Assert.assertEquals(sharingEntry2, descendingSharingEntries.get(0));

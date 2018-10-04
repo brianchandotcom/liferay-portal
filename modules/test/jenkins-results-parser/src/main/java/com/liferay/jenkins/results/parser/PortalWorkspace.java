@@ -95,6 +95,7 @@ public abstract class PortalWorkspace extends BaseWorkspace {
 		_pluginsWorkspaceGitRepository.setUp();
 	}
 
+	@Override
 	protected void setWorkspaceGitRepositoryJobProperties(Job job) {
 		_primaryPortalWorkspaceGitRepository.setPortalJobProperties(job);
 	}

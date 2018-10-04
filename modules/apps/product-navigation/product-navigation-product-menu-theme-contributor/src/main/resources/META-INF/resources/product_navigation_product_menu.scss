@@ -52,6 +52,10 @@ body {
 			max-width: 32px;
 		}
 	}
+
+	.panel-header {
+		background-color: $product-menu-body-bg;
+	}
 }
 
 .product-menu {

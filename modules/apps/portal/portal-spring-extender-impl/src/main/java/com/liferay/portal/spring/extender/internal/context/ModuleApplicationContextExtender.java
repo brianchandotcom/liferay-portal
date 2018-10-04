@@ -15,6 +15,7 @@
 package com.liferay.portal.spring.extender.internal.context;
 
 import com.liferay.osgi.felix.util.AbstractExtender;
+import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.configuration.Configuration;
@@ -390,7 +391,7 @@ public class ModuleApplicationContextExtender extends AbstractExtender {
 
 					line = line.trim();
 
-					int index = line.indexOf(' ');
+					int index = line.indexOf(CharPool.SPACE);
 
 					String serviceClassName = line;
 

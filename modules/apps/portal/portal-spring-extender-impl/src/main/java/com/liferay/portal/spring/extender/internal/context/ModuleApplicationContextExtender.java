@@ -376,7 +376,8 @@ public class ModuleApplicationContextExtender extends AbstractExtender {
 				return;
 			}
 
-			try (Reader reader = new InputStreamReader(url.openStream());
+			try (InputStream inputStream = url.openStream();
+				Reader reader = new InputStreamReader(inputStream);
 				UnsyncBufferedReader unsyncBufferedReader =
 					new UnsyncBufferedReader(reader)) {
 

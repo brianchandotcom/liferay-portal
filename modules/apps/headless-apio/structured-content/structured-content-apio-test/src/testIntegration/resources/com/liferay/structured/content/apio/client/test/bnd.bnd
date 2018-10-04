@@ -1,4 +1,0 @@
-Bundle-Name: Liferay Structured Content Apio Client Test Internal Activator
-Bundle-SymbolicName: com.liferay.structured.content.apio.client.test
-Bundle-Version: 1.0.0
-Private-Package: com.liferay.structured.content.apio.client.test

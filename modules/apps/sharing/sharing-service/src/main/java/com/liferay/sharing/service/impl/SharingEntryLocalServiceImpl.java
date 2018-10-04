@@ -511,8 +511,8 @@ public class SharingEntryLocalServiceImpl
 	 * by to user returning at most one per shared model.
 	 *
 	 *
-	 * @param classNameId
-	 * @param  toUserId the user id*
+	 * @param toUserId the user id
+	 * @param classNameId the classNameId to filter by
 	 * @return the number of sharing entries
 	 */
 	@Override

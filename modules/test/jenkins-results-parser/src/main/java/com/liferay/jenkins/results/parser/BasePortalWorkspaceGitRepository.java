@@ -14,7 +14,9 @@
 
 package com.liferay.jenkins.results.parser;
 
+import java.util.HashSet;
 import java.util.Properties;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -38,25 +40,20 @@ public abstract class BasePortalWorkspaceGitRepository
 
 	@Override
 	public void setPortalJobProperties(Job job) {
-		Properties properties = new Properties();
+		setPortalAppServerProperties(
+			_getPortalJobProperties("portal.app.server.properties", job));
 
-		Properties jobProperties = job.getJobProperties();
+		setPortalBuildProperties(
+			_getPortalJobProperties("portal.build.properties", job));
 
-		for (String jobPropertyName : jobProperties.stringPropertyNames()) {
-			Matcher matcher = _pattern.matcher(jobPropertyName);
+		setPortalReleaseProperties(
+			_getPortalJobProperties("portal.release.properties", job));
 
-			if (matcher.find()) {
-				String portalBuildPropertyName = matcher.group(
-					"portalBuildPropertyName");
+		setPortalSQLProperties(
+			_getPortalJobProperties("portal.sql.properties", job));
 
-				properties.put(
-					portalBuildPropertyName,
-					JenkinsResultsParserUtil.getProperty(
-						jobProperties, jobPropertyName));
-			}
-		}
-
-		setPortalBuildProperties(properties);
+		setPortalTestProperties(
+			_getPortalJobProperties("portal.test.properties", job));
 	}
 
 	@Override
@@ -113,6 +110,54 @@ public abstract class BasePortalWorkspaceGitRepository
 			name.replace("-ee", ""), "-", upstreamBranchName);
 	}
 
+	private Properties _getPortalJobProperties(String propertyType, Job job) {
+		Properties jobProperties = job.getJobProperties();
+
+		Pattern pattern = Pattern.compile(
+			propertyType + "\\[(?<propertyName>[^\\]]+)\\]");
+
+		Set<String> propertyNames = new HashSet<>();
+
+		for (String jobPropertyName : jobProperties.stringPropertyNames()) {
+			Matcher matcher = pattern.matcher(jobPropertyName);
+
+			if (!matcher.find()) {
+				continue;
+			}
+
+			propertyNames.add(matcher.group("propertyName"));
+		}
+
+		Properties properties = new Properties();
+
+		for (String propertyName : propertyNames) {
+			String propertyValue = JenkinsResultsParserUtil.getProperty(
+				jobProperties, propertyType, propertyName,
+				getUpstreamBranchName());
+
+			if ((propertyValue == null) && (job instanceof TestSuiteJob)) {
+				TestSuiteJob testSuiteJob = (TestSuiteJob)job;
+
+				propertyValue = JenkinsResultsParserUtil.getProperty(
+					jobProperties, propertyType, propertyName,
+					testSuiteJob.getTestSuiteName());
+			}
+
+			if ((propertyValue == null) &&
+				JenkinsResultsParserUtil.isWindows()) {
+
+				propertyValue = JenkinsResultsParserUtil.getProperty(
+					jobProperties, propertyType, propertyName, "windows");
+			}
+
+			if (propertyValue != null) {
+				properties.put(propertyName, propertyValue);
+			}
+		}
+
+		return properties;
+	}
+
 	private void _setBasePortalAppServerProperties() {
 		Properties properties = new Properties();
 
@@ -150,8 +195,5 @@ public abstract class BasePortalWorkspaceGitRepository
 	private static final String _FILE_PATH_TEST_PROPERTIES =
 		JenkinsResultsParserUtil.combine(
 			"test.", System.getenv("HOSTNAME"), ".properties");
-
-	private static final Pattern _pattern = Pattern.compile(
-		"portal.build.properties\\[(?<portalBuildPropertyName>[^\\]]+)\\]");
 
 }

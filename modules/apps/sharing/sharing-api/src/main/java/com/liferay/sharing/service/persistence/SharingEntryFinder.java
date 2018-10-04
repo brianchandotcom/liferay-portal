@@ -22,7 +22,7 @@ import aQute.bnd.annotation.ProviderType;
  */
 @ProviderType
 public interface SharingEntryFinder {
-	public int countByToUserId(long toUserId);
+	public int countByToUserId(long toUserId, long classNameId);
 
 	public java.util.List<com.liferay.sharing.model.SharingEntry> findByToUserId(
 		long toUserId, long classNameId, int begin, int end,

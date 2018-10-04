@@ -19,14 +19,28 @@
 <%
 String redirect = ParamUtil.getString(request, "redirect");
 
-SegmentsEntry segmentsEntry = segmentsDisplayContext.getSegmentsEntry();
+String backURL = ParamUtil.getString(request, "backURL", redirect);
 
-long segmentsEntryId = segmentsDisplayContext.getSegmentsEntryId();
+EditSegmentsEntryDisplayContext
+	editSegmentsEntryDisplayContext = (EditSegmentsEntryDisplayContext)request.getAttribute(SegmentsWebKeys.EDIT_SEGMENTS_ENTRY_DISPLAY_CONTEXT);
+
+SegmentsEntry segmentsEntry = editSegmentsEntryDisplayContext.getSegmentsEntry();
+
+long segmentsEntryId = editSegmentsEntryDisplayContext.getSegmentsEntryId();
+
+if (Validator.isNotNull(backURL)) {
+	portletDisplay.setShowBackIcon(true);
+	portletDisplay.setURLBack(backURL);
+}
+
+renderResponse.setTitle(editSegmentsEntryDisplayContext.getSegmentsEntryName(locale));
 %>
 
-<portlet:actionURL name="updateSegmentsEntry" var="editSegmentsEntryActionURL" />
+<liferay-util:include page="/edit_segments_entry_tabs.jsp" servletContext="<%= application %>" />
 
-<aui:form action="<%= editSegmentsEntryActionURL %>" cssClass="container-fluid-1280" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveSegmentsEntry();" %>'>
+<portlet:actionURL name="updateSegmentsEntry" var="updateSegmentsEntryActionURL" />
+
+<aui:form action="<%= updateSegmentsEntryActionURL %>" cssClass="container-fluid-1280" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveSegmentsEntry();" %>'>
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 	<aui:input name="segmentsEntryId" type="hidden" value="<%= segmentsEntryId %>" />
 

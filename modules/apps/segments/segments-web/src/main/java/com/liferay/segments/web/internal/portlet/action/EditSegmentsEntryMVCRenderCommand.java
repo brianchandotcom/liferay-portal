@@ -15,13 +15,22 @@
 package com.liferay.segments.web.internal.portlet.action;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
+import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.segments.constants.SegmentsPortletKeys;
+import com.liferay.segments.service.SegmentsEntryRelService;
+import com.liferay.segments.service.SegmentsEntryService;
+import com.liferay.segments.web.internal.constants.SegmentsWebKeys;
+import com.liferay.segments.web.internal.display.context.EditSegmentsEntryDisplayContext;
 
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eduardo Garcia
@@ -41,7 +50,32 @@ public class EditSegmentsEntryMVCRenderCommand implements MVCRenderCommand {
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws PortletException {
 
+		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
+			renderRequest);
+
+		EditSegmentsEntryDisplayContext editSegmentsEntryDisplayContext =
+			new EditSegmentsEntryDisplayContext(
+				httpServletRequest, renderRequest, renderResponse,
+				_segmentsEntryService, _segmentsEntryRelService,
+				_userLocalService);
+
+		renderRequest.setAttribute(
+			SegmentsWebKeys.EDIT_SEGMENTS_ENTRY_DISPLAY_CONTEXT,
+			editSegmentsEntryDisplayContext);
+
 		return "/edit_segments_entry.jsp";
 	}
+
+	@Reference
+	private Portal _portal;
+
+	@Reference
+	private SegmentsEntryRelService _segmentsEntryRelService;
+
+	@Reference
+	private SegmentsEntryService _segmentsEntryService;
+
+	@Reference
+	private UserLocalService _userLocalService;
 
 }

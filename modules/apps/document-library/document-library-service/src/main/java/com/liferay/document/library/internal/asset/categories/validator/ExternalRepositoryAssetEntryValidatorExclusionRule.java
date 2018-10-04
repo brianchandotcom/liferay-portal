@@ -19,9 +19,6 @@ import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileVersion;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
 import com.liferay.document.library.kernel.service.DLFileVersionLocalService;
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -45,24 +42,7 @@ public class ExternalRepositoryAssetEntryValidatorExclusionRule
 		long groupId, String className, long classPK, long classTypePK,
 		long[] categoryIds, String[] tagNames) {
 
-		DLFileEntry dlFileEntry = _dlFileEntryLocalService.fetchDLFileEntry(
-			classPK);
-
-		if (dlFileEntry == null) {
-			try {
-				DLFileVersion dlFileVersion =
-					_dlFileVersionLocalService.fetchDLFileVersion(classPK);
-
-				if (dlFileVersion != null) {
-					dlFileEntry = dlFileVersion.getFileEntry();
-				}
-			}
-			catch (PortalException pe) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(pe, pe);
-				}
-			}
-		}
+		DLFileEntry dlFileEntry = _getDLFileEntry(classPK);
 
 		if ((dlFileEntry == null) ||
 			(dlFileEntry.getRepositoryId() != groupId)) {
@@ -73,8 +53,24 @@ public class ExternalRepositoryAssetEntryValidatorExclusionRule
 		return false;
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(
-		ExternalRepositoryAssetEntryValidatorExclusionRule.class);
+	private DLFileEntry _getDLFileEntry(long classPK) {
+		DLFileEntry dlFileEntry = _dlFileEntryLocalService.fetchDLFileEntry(
+			classPK);
+
+		if (dlFileEntry != null) {
+			return dlFileEntry;
+		}
+
+		DLFileVersion dlFileVersion =
+			_dlFileVersionLocalService.fetchDLFileVersion(classPK);
+
+		if (dlFileVersion == null) {
+			return null;
+		}
+
+		return _dlFileEntryLocalService.fetchDLFileEntry(
+			dlFileVersion.getFileEntryId());
+	}
 
 	@Reference(unbind = "-")
 	private DLFileEntryLocalService _dlFileEntryLocalService;

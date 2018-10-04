@@ -189,7 +189,7 @@ public class SharedWithMeViewDisplayContext {
 
 		int total =
 			_sharingEntryLocalService.getUniqueToUserSharingEntriesCount(
-				classNameId, _themeDisplay.getUserId());
+				_themeDisplay.getUserId(), classNameId);
 
 		searchContainer.setTotal(total);
 

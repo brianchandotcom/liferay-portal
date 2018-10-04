@@ -147,6 +147,8 @@ public class SourceChecksUtil {
 					anonymousClasses, fileName, absolutePath);
 			}
 
+			sourceChecksResult.setMostRecentProcessedSourceCheck(sourceCheck);
+
 			if (showDebugInformation) {
 				long endTime = System.currentTimeMillis();
 

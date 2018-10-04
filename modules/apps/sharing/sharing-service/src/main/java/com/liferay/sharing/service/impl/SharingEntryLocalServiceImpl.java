@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.DateUtil;
+import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.spring.extender.service.ServiceReference;
@@ -498,7 +499,8 @@ public class SharingEntryLocalServiceImpl
 	 */
 	@Override
 	public List<SharingEntry> getUniqueToUserSharingEntries(
-		long toUserId, int start, int end) {
+		long toUserId, long classNameId, int start, int end,
+		OrderByComparator<SharingEntry> orderByComparator) {
 
 		return sharingEntryFinder.findByToUserId(toUserId, start, end);
 	}
@@ -507,11 +509,15 @@ public class SharingEntryLocalServiceImpl
 	 * Returns the number of sharing entries of a resource that have been shared
 	 * by to user returning at most one per shared model.
 	 *
+	 *
+	 * @param classNameId
 	 * @param  toUserId the user id*
 	 * @return the number of sharing entries
 	 */
 	@Override
-	public int getUniqueToUserSharingEntriesCount(long toUserId) {
+	public int getUniqueToUserSharingEntriesCount(
+		long classNameId, long toUserId) {
+
 		return sharingEntryFinder.countByToUserId(toUserId);
 	}
 

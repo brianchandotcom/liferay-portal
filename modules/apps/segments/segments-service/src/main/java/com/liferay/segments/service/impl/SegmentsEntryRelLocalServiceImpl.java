@@ -17,7 +17,6 @@ package com.liferay.segments.service.impl;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.segments.exception.NoSuchEntryRelException;
 import com.liferay.segments.model.SegmentsEntryRel;
 import com.liferay.segments.service.base.SegmentsEntryRelLocalServiceBaseImpl;
 
@@ -63,7 +62,7 @@ public class SegmentsEntryRelLocalServiceImpl
 	@Override
 	public void deleteSegmentsEntryRel(
 			long segmentsEntryId, long classNameId, long classPK)
-		throws NoSuchEntryRelException {
+		throws PortalException {
 
 		segmentsEntryRelPersistence.removeByS_CN_CPK(
 			segmentsEntryId, classNameId, classPK);

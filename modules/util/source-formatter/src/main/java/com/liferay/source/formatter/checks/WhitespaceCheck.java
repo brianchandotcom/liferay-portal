@@ -71,7 +71,9 @@ public class WhitespaceCheck extends BaseFileCheck {
 			return line;
 		}
 
-		if (ToolsUtil.isInsideQuotes(line, matcher.start(1))) {
+		if ((line.length() == matcher.end(2)) ||
+			ToolsUtil.isInsideQuotes(line, matcher.start(1))) {
+
 			return line;
 		}
 
@@ -81,8 +83,7 @@ public class WhitespaceCheck extends BaseFileCheck {
 			return line;
 		}
 
-		return line.substring(0, matcher.start(2)) + StringPool.SPACE +
-			line.substring(matcher.start(2));
+		return StringUtil.insert(line, StringPool.SPACE, matcher.start(2));
 	}
 
 	protected String formatIncorrectSyntax(
@@ -135,6 +136,10 @@ public class WhitespaceCheck extends BaseFileCheck {
 			linePart = formatIncorrectSyntax(linePart, "( ", "(", false);
 			linePart = formatIncorrectSyntax(linePart, "){", ") {", false);
 			linePart = formatIncorrectSyntax(linePart, "]{", "] {", false);
+			linePart = formatIncorrectSyntax(linePart, "((\\s?)\\|\\|)");
+			linePart = formatIncorrectSyntax(linePart, "(\\|\\|(\\s?))");
+			linePart = formatIncorrectSyntax(linePart, "((\\s?)\\&\\&)");
+			linePart = formatIncorrectSyntax(linePart, "(\\&\\&(\\s?))");
 			linePart = formatIncorrectSyntax(linePart, "(\\.\\.\\.( ?))\\w");
 			linePart = formatIncorrectSyntax(linePart, "\\w(( ?)=)");
 			linePart = formatIncorrectSyntax(linePart, "(=( ?))\\w");

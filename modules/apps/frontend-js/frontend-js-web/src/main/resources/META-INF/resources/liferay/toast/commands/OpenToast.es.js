@@ -17,8 +17,9 @@ function openToast(
 	{
 		message = '',
 		title = Liferay.Language.get('success'),
-		type = 'success'
-	}
+		type = 'success',
+		events = {}
+	} = {}
 ) {
 	var alertContainer = document.getElementById('alertContainer');
 
@@ -33,17 +34,22 @@ function openToast(
 		dom.removeChildren(alertContainer);
 	}
 
+	const mergedEvents = Object.assign(
+		{
+			'disposed': function(event) {
+				if (!alertContainer.hasChildNodes()) {
+					dom.exitDocument(alertContainer);
+				}
+			}
+		},
+		events
+	);
+
 	const clayToast = new ClayToast(
 		{
 			autoClose: true,
 			destroyOnHide: true,
-			events: {
-				'disposed': function(event) {
-					if (!alertContainer.hasChildNodes()) {
-						dom.exitDocument(alertContainer);
-					}
-				}
-			},
+			events: mergedEvents,
 			message: message,
 			spritemap: themeDisplay.getPathThemeImages() + '/lexicon/icons.svg',
 			style: type,

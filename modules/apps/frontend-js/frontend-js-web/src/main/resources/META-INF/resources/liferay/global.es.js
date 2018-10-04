@@ -9,6 +9,14 @@ Liferay.Util.escape = escape;
 Liferay.Util.groupBy = groupBy;
 Liferay.Util.navigate = navigate;
 Liferay.Util.objectToFormData = objectToFormData;
+Liferay.Util.openToast = (...args) => {
+	Liferay.Loader.require(
+		'frontend-js-web/liferay/toast/commands/OpenToast.es',
+		commands => {
+			commands.openToast(...args);
+		}
+	);
+};
 Liferay.Util.unescape = unescape;
 
 export {portlet};

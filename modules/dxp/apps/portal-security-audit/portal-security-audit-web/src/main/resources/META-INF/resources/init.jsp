@@ -84,3 +84,23 @@ int startDateYear = ParamUtil.getInteger(request, "startDateYear", yesterday.get
 
 Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZone);
 %>
+
+<style>
+	.form-search {
+		margin: auto;
+		max-width: 1248px;
+	}
+
+	.lfr-search-container.lfr-search-container-wrapper {
+		margin: auto;
+		max-width: 1248px;
+		padding: 16px;
+	}
+
+	.taglib-search-toggle {
+		background: #FFF;
+		margin: auto;
+		padding: 16px;
+		width: 100%;
+	}
+</style>

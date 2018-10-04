@@ -101,8 +101,6 @@ public class AssetTagStagedModelDataHandler
 
 		ServiceContext serviceContext = new ServiceContext();
 
-		serviceContext.setAddGroupPermissions(true);
-		serviceContext.setAddGuestPermissions(true);
 		serviceContext.setCreateDate(assetTag.getCreateDate());
 		serviceContext.setModifiedDate(assetTag.getModifiedDate());
 		serviceContext.setScopeGroupId(portletDataContext.getScopeGroupId());

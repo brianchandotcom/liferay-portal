@@ -103,8 +103,7 @@ public class AssetAutoTaggerImpl implements AssetAutoTagger {
 						return null;
 					}
 
-					ServiceContext serviceContext = _getServiceContext(
-						assetEntry);
+					ServiceContext serviceContext = new ServiceContext();
 
 					for (String assetTagName : assetTagNames) {
 						try {
@@ -261,16 +260,6 @@ public class AssetAutoTaggerImpl implements AssetAutoTagger {
 		}
 
 		return assetTagNames;
-	}
-
-	private ServiceContext _getServiceContext(AssetEntry assetEntry) {
-		ServiceContext serviceContext = new ServiceContext();
-
-		serviceContext.setAddGroupPermissions(true);
-		serviceContext.setAddGuestPermissions(true);
-		serviceContext.setScopeGroupId(assetEntry.getGroupId());
-
-		return serviceContext;
 	}
 
 	private void _reindex(AssetEntry assetEntry) throws PortalException {

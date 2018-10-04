@@ -36,7 +36,6 @@ import javax.portlet.Portlet;
 import javax.portlet.filter.PortletFilter;
 
 import javax.servlet.ServletContext;
-import javax.servlet.ServletRegistration;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceRegistration;
@@ -73,6 +72,7 @@ public class RegistrationUtil {
 				beanFilter, beanManager, registrations);
 		}
 
+		@SuppressWarnings("unchecked")
 		List<String> beanFilterNames =
 			(List<String>)servletContext.getAttribute(
 				WebKeys.BEAN_FILTER_NAMES);
@@ -90,7 +90,7 @@ public class RegistrationUtil {
 
 	public static ServiceRegistration<Portlet> registerBeanPortlet(
 		BundleContext bundleContext, BeanApp beanApp, BeanPortlet beanPortlet,
-		ServletContext servletContext) {
+		ServletContext servletContext, List<String> beanPortletIds) {
 
 		try {
 			String portletId = _getPortletId(
@@ -112,25 +112,7 @@ public class RegistrationUtil {
 					new BeanPortletInvoker(beanPortlet.getBeanMethods()),
 					dictionary);
 
-			ServletRegistration.Dynamic servletRegistration =
-				servletContext.addServlet(
-					portletId + " Servlet",
-					"com.liferay.portal.kernel.servlet.PortletServlet");
-
-			servletRegistration.addMapping("/portlet-servlet/*");
-
-			List<String> beanPortletIds =
-				(List<String>)servletContext.getAttribute(
-					WebKeys.BEAN_PORTLET_IDS);
-
-			if (beanPortletIds == null) {
-				beanPortletIds = new ArrayList<>();
-			}
-
 			beanPortletIds.add(portletId);
-
-			servletContext.setAttribute(
-				WebKeys.BEAN_PORTLET_IDS, beanPortletIds);
 
 			return portletServiceRegistration;
 		}

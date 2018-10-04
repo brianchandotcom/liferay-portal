@@ -59,13 +59,15 @@ import javax.enterprise.inject.spi.BeanManager;
 import javax.portlet.PortletMode;
 import javax.portlet.WindowState;
 
+import org.osgi.framework.Bundle;
+
 /**
  * @author Neil Griffin
  */
 public class PortletDescriptorParser {
 
 	public static PortletDescriptor parse(
-			URL portletDescriptorURL, BeanManager beanManager,
+			Bundle bundle, URL portletDescriptorURL, BeanManager beanManager,
 			Map<String, Set<BeanMethod>> portletBeanMethods,
 			Set<BeanMethod> wildcardBeanMethods,
 			Map<String, String> preferencesValidators,
@@ -83,10 +85,10 @@ public class PortletDescriptorParser {
 
 		BeanApp beanApp = _readBeanApp(rootElement);
 
-		List<BeanFilter> beanFilters = _readBeanFilters(rootElement);
+		List<BeanFilter> beanFilters = _readBeanFilters(bundle, rootElement);
 
 		List<BeanPortlet> beanPortlets = _readBeanPortlets(
-			rootElement, beanApp, beanManager, portletBeanMethods,
+			bundle, rootElement, beanApp, beanManager, portletBeanMethods,
 			wildcardBeanMethods, preferencesValidators,
 			wildcardPreferencesValidators, displayDescriptorCategories,
 			liferayConfigurations);
@@ -224,7 +226,8 @@ public class PortletDescriptorParser {
 	}
 
 	private static BeanFilter _readBeanFilter(
-		Element filterElement, Map<String, Set<String>> filterMappings) {
+		Bundle bundle, Element filterElement,
+		Map<String, Set<String>> filterMappings) {
 
 		String filterName = filterElement.elementText("filter-name");
 		String filterClassName = filterElement.elementText("filter-class");
@@ -232,7 +235,7 @@ public class PortletDescriptorParser {
 		Class<?> filterClass = null;
 
 		try {
-			filterClass = Class.forName(filterClassName);
+			filterClass = bundle.loadClass(filterClassName);
 		}
 		catch (ClassNotFoundException cnfe) {
 			_log.error("Unable to load filter-class " + filterClassName);
@@ -262,7 +265,9 @@ public class PortletDescriptorParser {
 			lifecycles, initParams);
 	}
 
-	private static List<BeanFilter> _readBeanFilters(Element rootElement) {
+	private static List<BeanFilter> _readBeanFilters(
+		Bundle bundle, Element rootElement) {
+
 		List<BeanFilter> beanFilters = new ArrayList<>();
 
 		Map<String, Set<String>> filterMappings = new HashMap<>();
@@ -284,14 +289,16 @@ public class PortletDescriptorParser {
 		}
 
 		for (Element filterElement : rootElement.elements("filter")) {
-			beanFilters.add(_readBeanFilter(filterElement, filterMappings));
+			beanFilters.add(
+				_readBeanFilter(bundle, filterElement, filterMappings));
 		}
 
 		return beanFilters;
 	}
 
 	private static BeanPortlet _readBeanPortlet(
-		Element portletElement, BeanApp beanApp, BeanManager beanManager,
+		Bundle bundle, Element portletElement, BeanApp beanApp,
+		BeanManager beanManager,
 		Map<String, Set<BeanMethod>> portletBeanMethods,
 		Set<BeanMethod> wildcardBeanMethods,
 		Map<String, String> preferencesValidators,
@@ -644,7 +651,7 @@ public class PortletDescriptorParser {
 		Class<?> portletClass = null;
 
 		try {
-			portletClass = Class.forName(portletClassName);
+			portletClass = bundle.loadClass(portletClassName);
 		}
 		catch (ClassNotFoundException cnfe) {
 			_log.error("Unable to load portlet-class " + portletClassName);
@@ -672,7 +679,8 @@ public class PortletDescriptorParser {
 	}
 
 	private static List<BeanPortlet> _readBeanPortlets(
-		Element rootElement, BeanApp beanApp, BeanManager beanManager,
+		Bundle bundle, Element rootElement, BeanApp beanApp,
+		BeanManager beanManager,
 		Map<String, Set<BeanMethod>> portletBeanMethods,
 		Set<BeanMethod> wildcardBeanMethods,
 		Map<String, String> preferencesValidators,
@@ -685,10 +693,10 @@ public class PortletDescriptorParser {
 		for (Element portletElement : rootElement.elements("portlet")) {
 			beanPortlets.add(
 				_readBeanPortlet(
-					portletElement, beanApp, beanManager, portletBeanMethods,
-					wildcardBeanMethods, preferencesValidators,
-					wildcardPreferencesValidators, displayDescriptorCategories,
-					liferayConfigurations));
+					bundle, portletElement, beanApp, beanManager,
+					portletBeanMethods, wildcardBeanMethods,
+					preferencesValidators, wildcardPreferencesValidators,
+					displayDescriptorCategories, liferayConfigurations));
 		}
 
 		return beanPortlets;

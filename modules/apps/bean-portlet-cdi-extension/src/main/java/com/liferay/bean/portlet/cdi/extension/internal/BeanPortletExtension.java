@@ -37,8 +37,10 @@ import com.liferay.bean.portlet.cdi.extension.internal.xml.PortletScannerUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.servlet.PortletServlet;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
@@ -48,9 +50,11 @@ import java.net.URL;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Dictionary;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -101,13 +105,14 @@ import javax.portlet.annotations.UserAttribute;
 import javax.portlet.annotations.WindowId;
 import javax.portlet.filter.PortletFilter;
 
+import javax.servlet.Servlet;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpSession;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
-import org.osgi.framework.FrameworkUtil;
 import org.osgi.framework.ServiceRegistration;
+import org.osgi.service.http.whiteboard.HttpWhiteboardConstants;
 
 /**
  * @author Neil Griffin
@@ -303,12 +308,16 @@ public class BeanPortletExtension implements Extension {
 		afterBeanDiscovery.addContext(new RenderStateBeanContext());
 	}
 
+	@SuppressWarnings({"serial", "unchecked"})
 	public void step4ApplicationScopedInitialized(
 		@Initialized(ApplicationScoped.class)
 			@Observes ServletContext servletContext,
 		BeanManager beanManager) {
 
-		Bundle bundle = FrameworkUtil.getBundle(BeanPortletExtension.class);
+		BundleContext bundleContext =
+			(BundleContext)servletContext.getAttribute("osgi-bundlecontext");
+
+		Bundle bundle = bundleContext.getBundle();
 
 		URL displayDescriptorURL = bundle.getEntry(
 			"WEB-INF/liferay-display.xml");
@@ -387,12 +396,18 @@ public class BeanPortletExtension implements Extension {
 				descriptorDisplayCategories, descriptorLiferayConfigurations);
 		}
 
-		BundleContext bundleContext = bundle.getBundleContext();
+		List<String> beanPortletIds = (List<String>)servletContext.getAttribute(
+			WebKeys.BEAN_PORTLET_IDS);
+
+		if (beanPortletIds == null) {
+			beanPortletIds = new ArrayList<>();
+		}
 
 		for (BeanPortlet beanPortlet : _beanPortlets.values()) {
 			ServiceRegistration<Portlet> portletServiceRegistration =
 				RegistrationUtil.registerBeanPortlet(
-					bundleContext, _beanApp, beanPortlet, servletContext);
+					bundleContext, _beanApp, beanPortlet, servletContext,
+					beanPortletIds);
 
 			if (portletServiceRegistration != null) {
 				_portletRegistrations.add(portletServiceRegistration);
@@ -409,6 +424,8 @@ public class BeanPortletExtension implements Extension {
 			}
 		}
 
+		servletContext.setAttribute(WebKeys.BEAN_PORTLET_IDS, beanPortletIds);
+
 		for (BeanFilter beanFilter : _beanFilters.values()) {
 			for (String portletName : beanFilter.getPortletNames()) {
 				_filterRegistrations.addAll(
@@ -417,6 +434,21 @@ public class BeanPortletExtension implements Extension {
 						beanFilter, beanManager, servletContext));
 			}
 		}
+
+		Dictionary<String, Object> properties = new Hashtable<>();
+
+		properties.put(
+			HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_SELECT,
+			servletContext.getServletContextName());
+		properties.put(
+			HttpWhiteboardConstants.HTTP_WHITEBOARD_SERVLET_NAME,
+			PortletServlet.class.getName());
+		properties.put(
+			HttpWhiteboardConstants.HTTP_WHITEBOARD_SERVLET_PATTERN,
+			"/portlet-servlet/*");
+
+		_servletRegistration = bundleContext.registerService(
+			Servlet.class, new PortletServlet() {}, properties);
 
 		if (!descriptorLiferayConfigurations.isEmpty() &&
 			_log.isWarnEnabled()) {
@@ -488,6 +520,17 @@ public class BeanPortletExtension implements Extension {
 
 	public void step6ApplicationScopedBeforeDestroyed(
 		@Destroyed(ApplicationScoped.class) @Observes Object ignore) {
+
+		if (_servletRegistration != null) {
+			try {
+				_servletRegistration.unregister();
+			}
+			catch (IllegalStateException ise) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(ise, ise);
+				}
+			}
+		}
 
 		for (ServiceRegistration<PortletFilter> serviceRegistration :
 				_filterRegistrations) {
@@ -670,9 +713,9 @@ public class BeanPortletExtension implements Extension {
 			try {
 				PortletDescriptor portletDescriptor =
 					PortletDescriptorParser.parse(
-						portletDescriptorURL, beanManager, portletBeanMethods,
-						wildcardBeanMethods, preferencesValidators,
-						wildcardPreferencesValidators,
+						bundle, portletDescriptorURL, beanManager,
+						portletBeanMethods, wildcardBeanMethods,
+						preferencesValidators, wildcardPreferencesValidators,
 						descriptorDisplayCategories,
 						descriptorLiferayConfigurations);
 
@@ -1073,5 +1116,6 @@ public class BeanPortletExtension implements Extension {
 	private final List<ServiceRegistration<ResourceBundleLoader>>
 		_resourceBundleLoaderRegistrations = new ArrayList<>();
 	private final List<ScannedMethod> _scannedMethods = new ArrayList<>();
+	private ServiceRegistration<Servlet> _servletRegistration;
 
 }

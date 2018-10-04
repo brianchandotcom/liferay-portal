@@ -27,6 +27,11 @@
 		padding-bottom: 30px;
 	}
 
+	.license-table {
+		display: block;
+		overflow-x: auto;
+	}
+
 	.license-table td, .license-table th {
 		padding: 0 5px;
 		vertical-align: top;

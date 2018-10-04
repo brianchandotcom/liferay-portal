@@ -99,6 +99,7 @@ public class ArrayCheck extends BaseFileCheck {
 				matcher.start());
 
 			int level = 1;
+
 			int start = lineNumber + 1;
 
 			int count = start;

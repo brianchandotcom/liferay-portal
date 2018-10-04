@@ -394,6 +394,7 @@ public class JavaLineBreakCheck extends LineBreakCheck {
 
 		while (matcher.find()) {
 			String catchStatement = matcher.group(1);
+
 			String indent = matcher.group(2);
 
 			String singleLineCatchStatement = indent;

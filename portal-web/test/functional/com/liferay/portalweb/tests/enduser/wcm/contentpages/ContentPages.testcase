@@ -151,4 +151,107 @@
 
 		<execute function="AssertConfirm" value1="Form submitted" />
 	</command>
+
+	<command name="AddContentPageWithEditedFragmentText" priority="5">
+		<description message="Add a content page and edit its fragment immediately. This is a variation of the steps from LPS-85872." />
+
+		<execute macro="SitePages#openPagesAdmin">
+			<var name="siteURLKey" value="test-site-name" />
+		</execute>
+
+		<execute macro="ContentPages#addPage">
+			<var name="pageName" value="Test Content Page Name" />
+		</execute>
+
+		<execute macro="PageEditor#expandContentPageFragmentSidebar" />
+
+		<execute macro="PageEditor#addFragment">
+			<var name="collectionName" value="Collection Name" />
+			<var name="fragmentName" value="Content" />
+		</execute>
+
+		<execute macro="PageEditor#editFragmentText">
+			<var name="fragmentName" value="Content" />
+			<var name="id" value="content" />
+			<var name="text" value="New editable fragment text" />
+		</execute>
+
+		<execute macro="Navigator#openWithAppendToBaseURL">
+			<var name="urlAppend" value="web/test-site-name/test-content-page-name" />
+		</execute>
+
+		<execute function="AssertVisible" locator1="Fragment#CONTENT_PAGE_FRAGMENT">
+			<var name="key_content" value="New editable fragment text" />
+			<var name="key_fragmentClass" value="body" />
+			<var name="key_position" value="1" />
+		</execute>
+	</command>
+
+	<command name="EditContentPage" priority="5">
+		<description message="Edit an existing content page that has fragments. This testcase covers the bug found in LPS-85872." />
+
+		<execute macro="SitePages#openPagesAdmin">
+			<var name="siteURLKey" value="test-site-name" />
+		</execute>
+
+		<execute macro="ContentPages#addPage">
+			<var name="pageName" value="Test Content Page Name" />
+		</execute>
+
+		<execute macro="PageEditor#expandContentPageFragmentSidebar" />
+
+		<execute macro="PageEditor#addFragment">
+			<var name="collectionName" value="Collection Name" />
+			<var name="fragmentName" value="Title" />
+		</execute>
+
+		<execute macro="PageEditor#addFragment">
+			<var name="collectionName" value="Collection Name" />
+			<var name="fragmentName" value="Rich Text" />
+		</execute>
+
+		<execute macro="Navigator#openWithAppendToBaseURL">
+			<var name="urlAppend" value="web/test-site-name/test-content-page-name?p_l_mode=edit" />
+		</execute>
+
+		<execute macro="PageEditor#expandContentPageFragmentSidebar" />
+
+		<execute macro="PageEditor#addFragment">
+			<var name="collectionName" value="Collection Name" />
+			<var name="fragmentName" value="Content" />
+		</execute>
+
+		<execute macro="PageEditor#editFragmentText">
+			<var name="fragmentName" value="Rich Text" />
+			<var name="id" value="rich-text" />
+			<var name="text" value="New editable fragment text" />
+		</execute>
+
+		<execute macro="PageEditor#moveFragment">
+			<var name="direction" value="down" />
+			<var name="fragmentName" value="Title" />
+		</execute>
+
+		<execute macro="Navigator#openWithAppendToBaseURL">
+			<var name="urlAppend" value="web/test-site-name/test-content-page-name" />
+		</execute>
+
+		<execute function="AssertVisible" locator1="Fragment#CONTENT_PAGE_FRAGMENT">
+			<var name="key_content" value="New editable fragment text" />
+			<var name="key_fragmentClass" value="rich-text" />
+			<var name="key_position" value="1" />
+		</execute>
+
+		<execute function="AssertVisible" locator1="Fragment#CONTENT_PAGE_FRAGMENT">
+			<var name="key_content" value="Lorem ipsum dolor sit amet" />
+			<var name="key_fragmentClass" value="header" />
+			<var name="key_position" value="2" />
+		</execute>
+
+		<execute function="AssertVisible" locator1="Fragment#CONTENT_PAGE_FRAGMENT">
+			<var name="key_content" value="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean tempus eleifend lacus nec porttitor. Vestibulum pharetra ullamcorper felis volutpat commodo. Nam id ipsum placerat, hendrerit orci eu, congue nisi. Proin." />
+			<var name="key_fragmentClass" value="body" />
+			<var name="key_position" value="3" />
+		</execute>
+	</command>
 </definition>

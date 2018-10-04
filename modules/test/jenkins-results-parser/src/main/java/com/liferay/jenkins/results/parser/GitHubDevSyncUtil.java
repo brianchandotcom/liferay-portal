@@ -81,15 +81,48 @@ public class GitHubDevSyncUtil {
 		List<GitRemote> gitHubDevGitRemotes = getGitHubDevGitRemotes(
 			gitWorkingDirectory);
 
-		GitRemote gitHubDevGitRemote = getRandomGitRemote(gitHubDevGitRemotes);
+		try {
+			int retries = 0;
 
-		RemoteGitBranch cachedRemoteGitBranch =
-			gitWorkingDirectory.getRemoteGitBranch(
-				cachedBranchName, gitHubDevGitRemote, true);
+			while ((retries < 3) && !gitHubDevGitRemotes.isEmpty()) {
+				retries++;
 
-		gitWorkingDirectory.fetch(cachedRemoteGitBranch);
+				GitRemote gitHubDevGitRemote = getRandomGitRemote(
+					gitHubDevGitRemotes);
 
-		return cachedRemoteGitBranch;
+				gitHubDevGitRemotes.remove(gitHubDevGitRemote);
+
+				try {
+					RemoteGitBranch cachedRemoteGitBranch =
+						gitWorkingDirectory.getRemoteGitBranch(
+							cachedBranchName, gitHubDevGitRemote, true);
+
+					gitWorkingDirectory.fetch(cachedRemoteGitBranch);
+
+					return cachedRemoteGitBranch;
+				}
+				catch (Exception e) {
+					if (retries == 3) {
+						throw new RuntimeException(
+							JenkinsResultsParserUtil.combine(
+								"Unable to fetch ", cachedBranchName,
+								" from git@github-dev.com"),
+							e);
+					}
+				}
+				finally {
+					gitWorkingDirectory.removeGitRemote(gitHubDevGitRemote);
+				}
+			}
+
+			throw new RuntimeException(
+				JenkinsResultsParserUtil.combine(
+					"Unable to fetch ", cachedBranchName,
+					" from git@github-dev.com"));
+		}
+		finally {
+			gitWorkingDirectory.removeGitRemotes(gitHubDevGitRemotes);
+		}
 	}
 
 	public static String getCachedBranchName(PullRequest pullRequest) {

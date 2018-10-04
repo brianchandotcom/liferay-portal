@@ -87,6 +87,44 @@ public class AssetEntryAssetCategoryRelAssetCategoryLocalServiceWrapper
 	}
 
 	@Override
+	public void clearAssetEntryAssetCategories(long entryId) {
+		_assetEntryAssetCategoryRelLocalService.
+			deleteAssetEntryAssetCategoryRelByAssetEntryId(entryId);
+	}
+
+	@Override
+	public void deleteAssetEntryAssetCategories(
+		long entryId, List<AssetCategory> assetCategories) {
+
+		deleteAssetEntryAssetCategories(
+			entryId,
+			ListUtil.toLongArray(
+				assetCategories, AssetCategoryModel::getCategoryId));
+	}
+
+	@Override
+	public void deleteAssetEntryAssetCategories(
+		long entryId, long[] categoryIds) {
+
+		for (long categoryId : categoryIds) {
+			deleteAssetEntryAssetCategory(entryId, categoryId);
+		}
+	}
+
+	@Override
+	public void deleteAssetEntryAssetCategory(
+		long entryId, AssetCategory assetCategory) {
+
+		deleteAssetEntryAssetCategory(entryId, assetCategory.getCategoryId());
+	}
+
+	@Override
+	public void deleteAssetEntryAssetCategory(long entryId, long categoryId) {
+		_assetEntryAssetCategoryRelLocalService.
+			deleteAssetEntryAssetCategoryRel(entryId, categoryId);
+	}
+
+	@Override
 	public AssetCategory deleteCategory(
 			AssetCategory category, boolean skipRebuildTree)
 		throws PortalException {

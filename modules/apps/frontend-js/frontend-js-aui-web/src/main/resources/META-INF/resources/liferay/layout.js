@@ -36,7 +36,7 @@ AUI.add(
 				layoutHandler.on('drag:end', A.bind('_onPortletDragEnd', Layout));
 				layoutHandler.on('drag:start', A.bind('_onPortletDragStart', Layout));
 
-				layoutHandler.dd.plug(
+				layoutHandler.delegate.dd.plug(
 					{
 						cfg: {
 							horizontal: false,
@@ -412,8 +412,7 @@ AUI.add(
 
 			if (A.UA.ie || A.UA.edge) {
 				eventHandles.push(
-					BODY.delegate(
-						'mouseenter',
+					BODY.delegate('mouseenter',
 						function(event) {
 							event.currentTarget.addClass('focus');
 						},
@@ -422,8 +421,7 @@ AUI.add(
 				);
 
 				eventHandles.push(
-					BODY.delegate(
-						'mouseleave',
+					BODY.delegate('mouseleave',
 						function(event) {
 							event.currentTarget.removeClass('focus');
 						},

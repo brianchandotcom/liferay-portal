@@ -170,6 +170,7 @@ page import="com.liferay.users.admin.web.internal.CustomFieldsUtil" %><%@
 page import="com.liferay.users.admin.web.internal.constants.UsersAdminWebKeys" %><%@
 page import="com.liferay.users.admin.web.internal.display.context.InitDisplayContext" %><%@
 page import="com.liferay.users.admin.web.internal.display.context.OrgLaborDisplay" %><%@
+page import="com.liferay.users.admin.web.internal.display.context.OrgLaborFormDisplay" %><%@
 page import="com.liferay.users.admin.web.internal.display.context.OrganizationScreenNavigationDisplayContext" %><%@
 page import="com.liferay.users.admin.web.internal.display.context.SelectOrganizationManagementToolbarDisplayContext" %><%@
 page import="com.liferay.users.admin.web.internal.display.context.SelectOrganizationUsersManagementToolbarDisplayContext" %><%@

@@ -4674,6 +4674,14 @@ projects defined in the `testIntegrationCompile` configuration do not have a
 - [LPS-84138]: Update the [Liferay Gradle Plugins] dependency to version
 3.12.150.
 
+## 5.5.65 - 2018-10-03
+
+### Changed
+- [LPS-85959]: Update the [Liferay Gradle Plugins] dependency to version
+3.12.151.
+- [LPS-85959]: Update the [Liferay Gradle Plugins JSDoc] dependency to version
+2.0.9.
+
 ## 5.5.66 - 2018-10-03
 
 ### Added
@@ -5162,6 +5170,7 @@ qualifier before the task runs and change it back after it completes.
 [LPS-85678]: https://issues.liferay.com/browse/LPS-85678
 [LPS-85771]: https://issues.liferay.com/browse/LPS-85771
 [LPS-85905]: https://issues.liferay.com/browse/LPS-85905
+[LPS-85959]: https://issues.liferay.com/browse/LPS-85959
 [LPS-85987]: https://issues.liferay.com/browse/LPS-85987
 [LRDOCS-2594]: https://issues.liferay.com/browse/LRDOCS-2594
 [LRDOCS-2841]: https://issues.liferay.com/browse/LRDOCS-2841

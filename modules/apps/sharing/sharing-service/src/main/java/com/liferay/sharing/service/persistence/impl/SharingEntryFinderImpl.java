@@ -79,7 +79,7 @@ public class SharingEntryFinderImpl
 	}
 
 	public List<SharingEntry> findByToUserId(
-		long toUserId, int begin, int end,
+		long toUserId, long classNameId, int begin, int end,
 		OrderByComparator<SharingEntry> orderByComparator) {
 
 		Session session = null;

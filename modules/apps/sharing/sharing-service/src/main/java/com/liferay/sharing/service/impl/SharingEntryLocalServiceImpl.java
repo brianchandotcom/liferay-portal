@@ -503,7 +503,7 @@ public class SharingEntryLocalServiceImpl
 		OrderByComparator<SharingEntry> orderByComparator) {
 
 		return sharingEntryFinder.findByToUserId(
-			toUserId, start, end, orderByComparator);
+			toUserId, classNameId, start, end, orderByComparator);
 	}
 
 	/**

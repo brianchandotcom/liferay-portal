@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserGroupTestUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerTestRule;
 
@@ -103,8 +104,21 @@ public class UserGroupServiceTest {
 		_userGroups.add(UserGroupTestUtil.addUserGroup());
 		_userGroups.add(UserGroupTestUtil.addUserGroup());
 
+		assertExpectedUserGroups(expectedUserGroups, name + "%");
+		assertExpectedUserGroups(
+			expectedUserGroups, StringUtil.toLowerCase(name) + "%");
+		assertExpectedUserGroups(
+			expectedUserGroups, StringUtil.toUpperCase(name) + "%");
+		assertExpectedUserGroups(_userGroups, null);
+		assertExpectedUserGroups(_userGroups, "");
+	}
+
+	protected void assertExpectedUserGroups(
+			List<UserGroup> expectedUserGroups, String nameSearch)
+		throws Exception {
+
 		List<UserGroup> actualUserGroups = UserGroupServiceUtil.getUserGroups(
-			TestPropsValues.getCompanyId(), name + "%", QueryUtil.ALL_POS,
+			TestPropsValues.getCompanyId(), nameSearch, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS);
 
 		Assert.assertEquals(
@@ -117,7 +131,7 @@ public class UserGroupServiceTest {
 		Assert.assertEquals(
 			expectedUserGroups.size(),
 			UserGroupServiceUtil.getUserGroupsCount(
-				TestPropsValues.getCompanyId(), name + "%"));
+				TestPropsValues.getCompanyId(), nameSearch));
 	}
 
 	@DeleteAfterTestRun

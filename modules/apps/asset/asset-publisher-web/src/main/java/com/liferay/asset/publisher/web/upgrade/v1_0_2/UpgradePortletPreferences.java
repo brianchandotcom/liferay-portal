@@ -50,10 +50,10 @@ public class UpgradePortletPreferences extends BaseUpgradePortletPreferences {
 		int delta = GetterUtil.getInteger(
 			portletPreferences.getValue("delta", StringPool.BLANK));
 
-		if (delta == GetterUtil.DEFAULT_INTEGER) {
-			if (pageDelta != GetterUtil.DEFAULT_INTEGER) {
-				portletPreferences.setValue("delta", String.valueOf(pageDelta));
-			}
+		if ((delta == GetterUtil.DEFAULT_INTEGER) &&
+			(pageDelta != GetterUtil.DEFAULT_INTEGER)) {
+
+			portletPreferences.setValue("delta", String.valueOf(pageDelta));
 		}
 
 		return PortletPreferencesFactoryUtil.toXML(portletPreferences);

@@ -38,8 +38,8 @@
 	</tear-down>
 
 	<command name="AddContentPage" priority="5">
-		<property name="portal.acceptance" value="true" />
 		<description message="Add a content page with fragments." />
+		<property name="portal.acceptance" value="true" />
 
 		<execute macro="SitePages#openPagesAdmin">
 			<var name="siteURLKey" value="test-site-name" />
@@ -102,8 +102,8 @@
 	</command>
 
 	<command name="AddContentPageFromPageTemplate" priority="5">
-		<property name="portal.acceptance" value="true" />
 		<description message="Create a content page from a page template with fragments." />
+		<property name="portal.acceptance" value="true" />
 
 		<execute macro="PageTemplatesAdmin#openPageTemplatesAdmin">
 			<var name="siteURLKey" value="test-site-name" />

@@ -67,8 +67,8 @@
 	</tear-down>
 
 	<command name="AddFragmentToContentPage" priority="5">
-		<property name="portal.acceptance" value="true" />
 		<description message="Add a fragment in the UI and then assert that it displays properly when added to a content page." />
+		<property name="portal.acceptance" value="true" />
 
 		<execute macro="PortletEntry#publish" />
 
@@ -112,8 +112,8 @@
 	</command>
 
 	<command name="EditFragment" priority="5">
-		<property name="portal.acceptance" value="true" />
 		<description message="Edit a fragment and assert the edits persist." />
+		<property name="portal.acceptance" value="true" />
 
 		<execute macro="PortletEntry#publish" />
 
@@ -159,8 +159,8 @@
 	</command>
 
 	<command name="ViewFragmentEditorPreview" priority="5">
-		<property name="portal.acceptance" value="true" />
 		<description message="Fragment editor should show an accurate preview of the fragment." />
+		<property name="portal.acceptance" value="true" />
 
 		<execute function="SelectFrame" locator1="Fragment#PREVIEW_IFRAME" />
 

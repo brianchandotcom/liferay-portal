@@ -128,8 +128,8 @@ public class SharingEntryLocalServiceUtil {
 	* @param fromUserId the user id sharing the resource
 	* @return the number of sharing entries
 	*/
-	public static int countFromUserSharingEntries(long fromUserId) {
-		return getService().countFromUserSharingEntries(fromUserId);
+	public static int getFromUserSharingEntriesCount(long fromUserId) {
+		return getService().getFromUserSharingEntriesCount(fromUserId);
 	}
 
 	/**
@@ -141,10 +141,10 @@ public class SharingEntryLocalServiceUtil {
 	* @param classPK the primary key of the resource
 	* @return the number of sharing entries
 	*/
-	public static int countFromUserSharingEntries(long fromUserId,
+	public static int getFromUserSharingEntriesCount(long fromUserId,
 		long classNameId, long classPK) {
 		return getService()
-				   .countFromUserSharingEntries(fromUserId, classNameId, classPK);
+				   .getFromUserSharingEntriesCount(fromUserId, classNameId, classPK);
 	}
 
 	/**
@@ -153,8 +153,8 @@ public class SharingEntryLocalServiceUtil {
 	* @param toUserId the user id who was shared the resource
 	* @return the number of sharing entries
 	*/
-	public static int countToUserSharingEntries(long toUserId) {
-		return getService().countToUserSharingEntries(toUserId);
+	public static int getToUserSharingEntriesCount(long toUserId) {
+		return getService().getToUserSharingEntriesCount(toUserId);
 	}
 
 	/**
@@ -164,8 +164,8 @@ public class SharingEntryLocalServiceUtil {
 	* @param toUserId the user id*
 	* @return the number of sharing entries
 	*/
-	public static int countUniqueToUserSharingEntries(long toUserId) {
-		return getService().countUniqueToUserSharingEntries(toUserId);
+	public static int getUniqueToUserSharingEntriesCount(long toUserId) {
+		return getService().getUniqueToUserSharingEntriesCount(toUserId);
 	}
 
 	/**

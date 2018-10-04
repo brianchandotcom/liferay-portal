@@ -137,7 +137,7 @@ public interface SharingEntryLocalService extends BaseLocalService,
 	* @param fromUserId the user id sharing the resource
 	* @return the number of sharing entries
 	*/
-	public int countFromUserSharingEntries(long fromUserId);
+	public int getFromUserSharingEntriesCount(long fromUserId);
 
 	/**
 	* Returns the number of sharing entries of a resource that have been shared
@@ -148,8 +148,8 @@ public interface SharingEntryLocalService extends BaseLocalService,
 	* @param classPK the primary key of the resource
 	* @return the number of sharing entries
 	*/
-	public int countFromUserSharingEntries(long fromUserId, long classNameId,
-		long classPK);
+	public int getFromUserSharingEntriesCount(long fromUserId, long classNameId,
+											  long classPK);
 
 	/**
 	* Returns the number of sharing entries that have been shared to a user.
@@ -157,7 +157,7 @@ public interface SharingEntryLocalService extends BaseLocalService,
 	* @param toUserId the user id who was shared the resource
 	* @return the number of sharing entries
 	*/
-	public int countToUserSharingEntries(long toUserId);
+	public int getToUserSharingEntriesCount(long toUserId);
 
 	/**
 	* Returns the number of sharing entries of a resource that have been shared
@@ -166,7 +166,7 @@ public interface SharingEntryLocalService extends BaseLocalService,
 	* @param toUserId the user id*
 	* @return the number of sharing entries
 	*/
-	public int countUniqueToUserSharingEntries(long toUserId);
+	public int getUniqueToUserSharingEntriesCount(long toUserId);
 
 	/**
 	* Creates a new sharing entry with the primary key. Does not add the sharing entry to the database.

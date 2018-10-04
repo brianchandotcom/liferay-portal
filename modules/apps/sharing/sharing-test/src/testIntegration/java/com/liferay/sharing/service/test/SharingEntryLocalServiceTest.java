@@ -498,14 +498,14 @@ public class SharingEntryLocalServiceTest {
 
 			Assert.assertEquals(
 				2,
-				_sharingEntryLocalService.countFromUserSharingEntries(
+				_sharingEntryLocalService.getFromUserSharingEntriesCount(
 					_fromUser.getUserId()));
 
 			_sharingEntryLocalService.deleteExpiredEntries();
 
 			Assert.assertEquals(
 				1,
-				_sharingEntryLocalService.countFromUserSharingEntries(
+				_sharingEntryLocalService.getFromUserSharingEntriesCount(
 					_fromUser.getUserId()));
 		}
 		finally {
@@ -893,8 +893,9 @@ public class SharingEntryLocalServiceTest {
 			List<SharingEntry> sharingEntries =
 				_sharingEntryLocalService.getUniqueToUserSharingEntries(
 					_toUser.getUserId(), 0,
-					_sharingEntryLocalService.countUniqueToUserSharingEntries(
-						_toUser.getUserId()));
+					_sharingEntryLocalService.
+						getUniqueToUserSharingEntriesCount(
+							_toUser.getUserId()));
 
 			Assert.assertEquals(
 				sharingEntries.toString(), 1, sharingEntries.size());

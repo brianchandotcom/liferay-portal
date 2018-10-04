@@ -4,6 +4,33 @@
  * SidebarLayoutsSection
  */
 {template .render}
+	{@param? _layouts: list<[
+		columns: list<string>
+	]>}
+
 	<div class="sidebar-layouts-section sidebar-section">
+		{if $_layouts}
+			{foreach $layout in $_layouts}
+				{call .layoutPreview}
+					{param columns: $layout.columns /}
+				{/call}
+			{/foreach}
+		{/if}
 	</div>
+{/template}
+
+/**
+ * Layout preview
+ */
+{template .layoutPreview}
+	{@param columns: list<string>}
+
+	<button class="btn btn-unstyled container sidebar-layouts-section__layout-preview">
+		<div class="row sidebar-layouts-section__layout-preview__row" role="image">
+			{foreach $column in $columns}
+				<div class="col-{$column} sidebar-layouts-section__layout-preview__column">
+				</div>
+			{/foreach}
+		</div>
+	</button>
 {/template}

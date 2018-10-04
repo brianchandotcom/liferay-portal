@@ -122,7 +122,7 @@
 	<command name="openPublishURL">
 		<execute macro="FormsAdminNavigator#gotoPublishCopyURLLink" />
 
-		<var method="selenium#getElementValue('Form#PUBLISH_FORM_PUBLIC_URL')" name="publishFormURL" />
+		<var method="selenium#getElementValue(Form#PUBLISH_FORM_PUBLIC_URL)" name="publishFormURL" />
 
 		<execute macro="Navigator#openSpecificURL">
 			<var name="url" value="${publishFormURL}" />

@@ -206,7 +206,7 @@
 	</command>
 
 	<command name="getPublishedFormPublicURL">
-		<var method="selenium#getElementValue('Form#PUBLISH_FORM_PUBLIC_URL')" name="publicURL" />
+		<var method="selenium#getElementValue(Form#PUBLISH_FORM_PUBLIC_URL)" name="publicURL" />
 
 		<return value="${publicURL}" />
 	</command>
@@ -368,7 +368,7 @@
 	<command name="viewFormNotPublished">
 		<execute function="Click" locator1="Form#PUBLISH_ICON" />
 
-		<var method="selenium#getElementValue('Form#PUBLISH_FORM_PUBLIC_URL')" name="publishFormURL" />
+		<var method="selenium#getElementValue(Form#PUBLISH_FORM_PUBLIC_URL)" name="publishFormURL" />
 
 		<execute macro="Form#unpublishForm" />
 

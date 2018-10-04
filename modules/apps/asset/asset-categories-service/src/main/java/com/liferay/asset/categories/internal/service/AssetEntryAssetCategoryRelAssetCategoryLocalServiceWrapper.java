@@ -142,6 +142,17 @@ public class AssetEntryAssetCategoryRelAssetCategoryLocalServiceWrapper
 	}
 
 	@Override
+	public List<AssetCategory> getAssetEntryAssetCategories(long entryId) {
+		return _getAssetCategoriesByEntryId(entryId);
+	}
+
+	@Override
+	public int getAssetEntryAssetCategoriesCount(long entryId) {
+		return _assetEntryAssetCategoryRelLocalService.
+			getAssetEntryAssetCategoryRelsCount(entryId);
+	}
+
+	@Override
 	public List<AssetCategory> getCategories(long classNameId, long classPK) {
 		AssetEntry entry = _assetEntryLocalService.fetchEntry(
 			classNameId, classPK);

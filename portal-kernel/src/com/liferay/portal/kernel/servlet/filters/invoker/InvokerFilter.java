@@ -150,14 +150,18 @@ public class InvokerFilter extends BasePortalLifecycle implements Filter {
 
 			invokerFilterHelper.destroy();
 		}
+
+		if (_INVOKER_FILTER_CHAIN_ENABLED) {
+			PortalCacheHelperUtil.removePortalCache(
+				PortalCacheManagerNames.SINGLE_VM, _getPortalCacheName());
+		}
 	}
 
 	@Override
 	protected void doPortalInit() throws Exception {
 		if (_INVOKER_FILTER_CHAIN_ENABLED) {
 			_filterChains = PortalCacheHelperUtil.getPortalCache(
-				PortalCacheManagerNames.SINGLE_VM,
-				_filterConfig.getFilterName());
+				PortalCacheManagerNames.SINGLE_VM, _getPortalCacheName());
 		}
 
 		ServletContext servletContext = _filterConfig.getServletContext();
@@ -323,6 +327,19 @@ public class InvokerFilter extends BasePortalLifecycle implements Filter {
 
 		return SanitizedServletResponse.getSanitizedServletResponse(
 			request, response);
+	}
+
+	private String _getPortalCacheName() {
+		ServletContext servletContext = _filterConfig.getServletContext();
+
+		String servletContextName = servletContext.getContextPath();
+
+		if (Validator.isNull(servletContextName)) {
+			return _filterConfig.getFilterName();
+		}
+
+		return StringBundler.concat(
+			servletContextName, StringPool.DASH, _filterConfig.getFilterName());
 	}
 
 	private static final boolean _INVOKER_FILTER_CHAIN_ENABLED =

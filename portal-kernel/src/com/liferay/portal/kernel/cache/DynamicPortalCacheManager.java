@@ -14,8 +14,6 @@
 
 package com.liferay.portal.kernel.cache;
 
-import com.liferay.petra.concurrent.ConcurrentReferenceValueHashMap;
-import com.liferay.petra.memory.FinalizeManager;
 import com.liferay.portal.kernel.util.ProxyFactory;
 
 import java.io.Serializable;
@@ -25,6 +23,7 @@ import java.net.URL;
 import java.util.Collections;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArraySet;
 
 /**
@@ -188,10 +187,6 @@ public class DynamicPortalCacheManager<K extends Serializable, V>
 		for (DynamicPortalCache<K, V> dynamicPortalCache :
 				_dynamicPortalCaches.values()) {
 
-			if (dynamicPortalCache == null) {
-				continue;
-			}
-
 			dynamicPortalCache.setPortalCache(
 				_portalCacheManager.getPortalCache(
 					dynamicPortalCache.getPortalCacheName(),
@@ -205,8 +200,7 @@ public class DynamicPortalCacheManager<K extends Serializable, V>
 			PortalCacheManager.class);
 
 	private final Map<String, DynamicPortalCache<K, V>> _dynamicPortalCaches =
-		new ConcurrentReferenceValueHashMap<>(
-			FinalizeManager.WEAK_REFERENCE_FACTORY);
+		new ConcurrentHashMap<>();
 	private volatile PortalCacheManager<K, V> _portalCacheManager;
 	private final Set<PortalCacheManagerListener> _portalCacheManagerListeners =
 		new CopyOnWriteArraySet<>();

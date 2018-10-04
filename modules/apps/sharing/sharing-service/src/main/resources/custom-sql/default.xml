@@ -35,7 +35,7 @@
 						FROM
 							SharingEntry
 						WHERE
-							SharingEntry.toUserId = ?
+							(SharingEntry.toUserId = ?) [$CLASS_NAME_ID_WHERE$]
 						GROUP BY
 							SharingEntry.classNameId, SharingEntry.classPK
 					)

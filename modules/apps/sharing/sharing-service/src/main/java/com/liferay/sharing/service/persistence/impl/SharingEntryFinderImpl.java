@@ -14,6 +14,7 @@
 
 package com.liferay.sharing.service.persistence.impl;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.dao.orm.custom.sql.CustomSQL;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -22,6 +23,7 @@ import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.Type;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.sharing.model.SharingEntry;
 import com.liferay.sharing.model.impl.SharingEntryImpl;
@@ -93,6 +95,16 @@ public class SharingEntryFinderImpl
 				sql = _customSQL.replaceOrderBy(sql, orderByComparator);
 			}
 
+			if (classNameId > -1) {
+				sql = StringUtil.replace(
+					sql, "[$CLASS_NAME_ID_WHERE$]",
+					"AND SharingEntry.classNameId = ?");
+			}
+			else {
+				sql = StringUtil.replace(
+					sql, "[$CLASS_NAME_ID_WHERE$]", StringPool.BLANK);
+			}
+
 			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
 			q.addEntity("SharingEntry", SharingEntryImpl.class);
@@ -100,6 +112,10 @@ public class SharingEntryFinderImpl
 			QueryPos qPos = QueryPos.getInstance(q);
 
 			qPos.add(toUserId);
+
+			if (classNameId > -1) {
+				qPos.add(classNameId);
+			}
 
 			return (List<SharingEntry>)QueryUtil.list(
 				q, getDialect(), begin, end);

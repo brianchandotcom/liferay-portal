@@ -15,6 +15,7 @@
 package com.liferay.source.formatter.checks.configuration;
 
 import com.liferay.source.formatter.SourceFormatterMessage;
+import com.liferay.source.formatter.checks.SourceCheck;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -38,6 +39,10 @@ public class SourceChecksResult {
 		return _content;
 	}
 
+	public SourceCheck getMostRecentProcessedSourceCheck() {
+		return _mostRecentProcessedSourceCheck;
+	}
+
 	public Set<SourceFormatterMessage> getSourceFormatterMessages() {
 		return _sourceFormatterMessages;
 	}
@@ -46,7 +51,14 @@ public class SourceChecksResult {
 		_content = content;
 	}
 
+	public void setMostRecentProcessedSourceCheck(
+		SourceCheck mostRecentProcessedSourceCheck) {
+
+		_mostRecentProcessedSourceCheck = mostRecentProcessedSourceCheck;
+	}
+
 	private String _content;
+	private SourceCheck _mostRecentProcessedSourceCheck;
 	private final Set<SourceFormatterMessage> _sourceFormatterMessages =
 		new HashSet<>();
 

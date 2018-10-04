@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
+import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -34,6 +35,7 @@ import com.liferay.sharing.model.SharingEntry;
 import com.liferay.sharing.renderer.SharingEntryEditRenderer;
 import com.liferay.sharing.security.permission.SharingEntryAction;
 import com.liferay.sharing.service.SharingEntryLocalService;
+import com.liferay.sharing.util.comparator.SharingEntryModifiedDateComparator;
 
 import java.util.List;
 import java.util.Objects;
@@ -177,16 +179,26 @@ public class SharedWithMeViewDisplayContext {
 	}
 
 	public void populateResults(SearchContainer<SharingEntry> searchContainer) {
+		long classNameId = -1;
+
+		String className = ParamUtil.getString(_request, "className");
+
+		if (Validator.isNotNull(className)) {
+			classNameId = ClassNameLocalServiceUtil.getClassNameId(className);
+		}
+
 		int total =
 			_sharingEntryLocalService.getUniqueToUserSharingEntriesCount(
-				_themeDisplay.getUserId());
+				classNameId, _themeDisplay.getUserId());
 
 		searchContainer.setTotal(total);
 
 		List<SharingEntry> sharingEntries =
 			_sharingEntryLocalService.getUniqueToUserSharingEntries(
-				_themeDisplay.getUserId(), searchContainer.getStart(),
-				searchContainer.getEnd());
+				_themeDisplay.getUserId(), classNameId,
+				searchContainer.getStart(), searchContainer.getEnd(),
+				new SharingEntryModifiedDateComparator(
+					Objects.equals(getSortingOrder(), "asc")));
 
 		searchContainer.setResults(sharingEntries);
 	}

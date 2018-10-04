@@ -25,19 +25,21 @@ import java.io.IOException;
 import java.net.URL;
 
 import java.util.HashMap;
+import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 
 /**
  * @author Neil Griffin
  */
 public class LiferayDescriptorParser {
 
-	public static Map<String, Map<String, String>> parse(
+	public static Map<String, Map<String, Set<String>>> parse(
 			URL liferayDescriptorURL)
 		throws DocumentException, IOException {
 
-		Map<String, Map<String, String>> configurations = new HashMap<>();
+		Map<String, Map<String, Set<String>>> configurations = new HashMap<>();
 
 		String xml = HttpUtil.URLtoString(liferayDescriptorURL);
 
@@ -48,7 +50,7 @@ public class LiferayDescriptorParser {
 		for (Element portletElement : rootElement.elements("portlet")) {
 			String portletName = null;
 
-			Map<String, String> configuration = new HashMap<>();
+			Map<String, Set<String>> configuration = new HashMap<>();
 
 			for (Element element : portletElement.elements()) {
 				String elementName = element.getName();
@@ -57,9 +59,17 @@ public class LiferayDescriptorParser {
 					portletName = element.getText();
 				}
 				else {
-					configuration.put(
-						"com.liferay.portlet.".concat(elementName),
-						element.getText());
+					String key = "com.liferay.portlet.".concat(elementName);
+
+					Set<String> values = configuration.get(key);
+
+					if (values == null) {
+						values = new LinkedHashSet<>();
+					}
+
+					values.add(element.getText());
+
+					configuration.put(key, values);
 				}
 			}
 

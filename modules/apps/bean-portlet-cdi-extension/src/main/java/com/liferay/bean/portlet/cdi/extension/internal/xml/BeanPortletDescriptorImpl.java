@@ -50,7 +50,7 @@ public class BeanPortletDescriptorImpl extends BaseBeanPortletImpl {
 		boolean multiPartSupported, int multiPartFileSizeThreshold,
 		String multiPartLocation, long multiPartMaxFileSize,
 		long multiPartMaxRequestSize, String displayCategory,
-		Map<String, String> liferayConfiguration) {
+		Map<String, Set<String>> liferayConfiguration) {
 
 		super(beanMethods, wildcardBeanMethods);
 
@@ -130,7 +130,7 @@ public class BeanPortletDescriptorImpl extends BaseBeanPortletImpl {
 	}
 
 	@Override
-	public Map<String, String> getLiferayConfiguration() {
+	public Map<String, Set<String>> getLiferayConfiguration() {
 		return _liferayConfiguration;
 	}
 
@@ -247,7 +247,7 @@ public class BeanPortletDescriptorImpl extends BaseBeanPortletImpl {
 	private final int _expirationCache;
 	private final Map<String, String> _initParams;
 	private final Map<String, String> _keywords;
-	private final Map<String, String> _liferayConfiguration;
+	private final Map<String, Set<String>> _liferayConfiguration;
 	private final int _multiPartFileSizeThreshold;
 	private final String _multiPartLocation;
 	private final long _multiPartMaxFileSize;

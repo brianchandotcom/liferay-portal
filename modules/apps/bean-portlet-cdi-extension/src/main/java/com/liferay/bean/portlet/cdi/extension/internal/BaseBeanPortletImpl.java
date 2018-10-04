@@ -31,6 +31,7 @@ import java.util.Dictionary;
 import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -163,10 +164,25 @@ public abstract class BaseBeanPortletImpl implements BeanPortlet {
 				"com.liferay.portlet.display-category", displayCategory);
 		}
 
-		Map<String, String> liferayConfiguration = getLiferayConfiguration();
+		Map<String, Set<String>> liferayConfiguration =
+			getLiferayConfiguration();
 
 		if (liferayConfiguration != null) {
-			dictionary.putAll(liferayConfiguration);
+			for (Map.Entry<String, Set<String>> entry :
+					liferayConfiguration.entrySet()) {
+
+				Set<String> value = entry.getValue();
+
+				if (value.size() == 1) {
+					Iterator<String> iterator = value.iterator();
+
+					dictionary.put(entry.getKey(), iterator.next());
+
+					continue;
+				}
+
+				dictionary.put(entry.getKey(), value);
+			}
 		}
 
 		// javax.portlet.async-supported

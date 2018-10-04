@@ -112,7 +112,7 @@ public class BeanPortletMergedImpl extends BaseBeanPortletImpl {
 		_liferayConfiguration = new HashMap<>(
 			annotatedBeanPortlet.getLiferayConfiguration());
 
-		Map<String, String> descriptorLiferayConfiguration =
+		Map<String, Set<String>> descriptorLiferayConfiguration =
 			descriptorBeanPortlet.getLiferayConfiguration();
 
 		if (descriptorLiferayConfiguration != null) {
@@ -295,7 +295,7 @@ public class BeanPortletMergedImpl extends BaseBeanPortletImpl {
 	}
 
 	@Override
-	public Map<String, String> getLiferayConfiguration() {
+	public Map<String, Set<String>> getLiferayConfiguration() {
 		return _liferayConfiguration;
 	}
 
@@ -433,7 +433,7 @@ public class BeanPortletMergedImpl extends BaseBeanPortletImpl {
 	private final int _expirationCache;
 	private final Map<String, String> _initParams;
 	private final Map<String, String> _keywords;
-	private final Map<String, String> _liferayConfiguration;
+	private final Map<String, Set<String>> _liferayConfiguration;
 	private final int _multiPartFileSizeThreshold;
 	private final String _multiPartLocation;
 	private final long _multiPartMaxFileSize;

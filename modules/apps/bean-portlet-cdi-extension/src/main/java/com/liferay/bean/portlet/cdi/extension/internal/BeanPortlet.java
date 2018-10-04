@@ -42,7 +42,7 @@ public interface BeanPortlet {
 
 	public Map<String, String> getKeywords();
 
-	public Map<String, String> getLiferayConfiguration();
+	public Map<String, Set<String>> getLiferayConfiguration();
 
 	public int getMultiPartFileSizeThreshold();
 

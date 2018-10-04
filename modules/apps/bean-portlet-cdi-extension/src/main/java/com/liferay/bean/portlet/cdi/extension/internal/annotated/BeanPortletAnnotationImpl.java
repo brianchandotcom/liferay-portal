@@ -50,7 +50,7 @@ public class BeanPortletAnnotationImpl extends BaseBeanPortletImpl {
 		String portletClassName, PortletConfiguration portletConfiguration,
 		String preferencesValidator,
 		LiferayPortletConfiguration liferayPortletConfiguration,
-		Map<String, String> descriptorLiferayConfiguration,
+		Map<String, Set<String>> descriptorLiferayConfiguration,
 		String descriptorDisplayCategory) {
 
 		super(beanMethods, wildcardBeanMethods);
@@ -90,7 +90,15 @@ public class BeanPortletAnnotationImpl extends BaseBeanPortletImpl {
 					}
 				}
 
-				_liferayConfiguration.put(propertyName, propertyValue);
+				Set<String> values = _liferayConfiguration.get(propertyName);
+
+				if (values == null) {
+					values = new LinkedHashSet<>();
+				}
+
+				values.add(propertyValue);
+
+				_liferayConfiguration.put(propertyName, values);
 			}
 		}
 
@@ -251,7 +259,7 @@ public class BeanPortletAnnotationImpl extends BaseBeanPortletImpl {
 	}
 
 	@Override
-	public Map<String, String> getLiferayConfiguration() {
+	public Map<String, Set<String>> getLiferayConfiguration() {
 		return _liferayConfiguration;
 	}
 
@@ -356,7 +364,7 @@ public class BeanPortletAnnotationImpl extends BaseBeanPortletImpl {
 	private final Map<String, String> _displayNames;
 	private final Map<String, String> _initParams;
 	private final Map<String, String> _keywords;
-	private final Map<String, String> _liferayConfiguration;
+	private final Map<String, Set<String>> _liferayConfiguration;
 	private final int _multiPartFileSizeThreshold;
 	private final String _multiPartLocation;
 	private final long _multiPartMaxFileSize;

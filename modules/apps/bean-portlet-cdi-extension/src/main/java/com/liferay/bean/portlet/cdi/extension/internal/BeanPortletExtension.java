@@ -332,7 +332,8 @@ public class BeanPortletExtension implements Extension {
 		URL liferayDescriptorURL = bundle.getEntry(
 			"WEB-INF/liferay-portlet.xml");
 
-		Map<String, Map<String, String>> descriptorLiferayConfigurations = null;
+		Map<String, Map<String, Set<String>>> descriptorLiferayConfigurations =
+			null;
 
 		if (liferayDescriptorURL != null) {
 			try {
@@ -517,7 +518,7 @@ public class BeanPortletExtension implements Extension {
 		Map<String, Set<BeanMethod>> portletBeanMethods,
 		Set<BeanMethod> wildcardBeanMethods,
 		Map<String, String> descriptorDisplayCategories,
-		Map<String, Map<String, String>> descriptorLiferayConfigurations) {
+		Map<String, Map<String, Set<String>>> descriptorLiferayConfigurations) {
 
 		Set<String> portletNames = new HashSet<>();
 
@@ -579,7 +580,7 @@ public class BeanPortletExtension implements Extension {
 		Map<String, String> preferencesValidators,
 		Set<String> wildcardPreferencesValidators,
 		Map<String, String> descriptorDisplayCategories,
-		Map<String, Map<String, String>> descriptorLiferayConfigurations,
+		Map<String, Map<String, Set<String>>> descriptorLiferayConfigurations,
 		List<URLGenerationListener> urlGenerationListeners) {
 
 		String configuredPortletName = portletConfiguration.portletName();
@@ -661,7 +662,7 @@ public class BeanPortletExtension implements Extension {
 		Map<String, String> preferencesValidators,
 		Set<String> wildcardPreferencesValidators,
 		Map<String, String> descriptorDisplayCategories,
-		Map<String, Map<String, String>> descriptorLiferayConfigurations) {
+		Map<String, Map<String, Set<String>>> descriptorLiferayConfigurations) {
 
 		URL portletDescriptorURL = bundle.getEntry("/WEB-INF/portlet.xml");
 
@@ -703,7 +704,7 @@ public class BeanPortletExtension implements Extension {
 		Map<String, String> preferencesValidators,
 		Set<String> wildcardPreferencesValidators,
 		Map<String, String> descriptorDisplayCategories,
-		Map<String, Map<String, String>> descriptorLiferayConfigurations,
+		Map<String, Map<String, Set<String>>> descriptorLiferayConfigurations,
 		List<URLGenerationListener> urlGenerationListeners) {
 
 		for (Class<?> clazz : _portletConfigurationsClasses) {
@@ -765,13 +766,13 @@ public class BeanPortletExtension implements Extension {
 		Map<String, Set<BeanMethod>> portletBeanMethods,
 		Set<BeanMethod> wildcardBeanMethods,
 		Map<String, String> descriptorDisplayCategories,
-		Map<String, Map<String, String>> descriptorLiferayConfigurations) {
+		Map<String, Map<String, Set<String>>> descriptorLiferayConfigurations) {
 
 		if (_beanApp == null) {
 			_beanApp = new BeanAppDefaultImpl();
 		}
 
-		for (Map.Entry<String, Map<String, String>> entry :
+		for (Map.Entry<String, Map<String, Set<String>>> entry :
 				descriptorLiferayConfigurations.entrySet()) {
 
 			String portletName = entry.getKey();

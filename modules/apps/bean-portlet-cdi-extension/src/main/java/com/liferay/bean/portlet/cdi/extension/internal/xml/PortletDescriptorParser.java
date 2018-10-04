@@ -71,7 +71,7 @@ public class PortletDescriptorParser {
 			Map<String, String> preferencesValidators,
 			Set<String> wildcardPreferencesValidators,
 			Map<String, String> displayDescriptorCategories,
-			Map<String, Map<String, String>> liferayConfigurations)
+			Map<String, Map<String, Set<String>>> liferayConfigurations)
 		throws DocumentException, IOException {
 
 		String xml = HttpUtil.URLtoString(portletDescriptorURL);
@@ -297,7 +297,7 @@ public class PortletDescriptorParser {
 		Map<String, String> preferencesValidators,
 		Set<String> wildcardPreferencesValidators,
 		Map<String, String> displayDescriptorCategories,
-		Map<String, Map<String, String>> liferayConfigurations) {
+		Map<String, Map<String, Set<String>>> liferayConfigurations) {
 
 		String portletName = portletElement.elementText("portlet-name");
 
@@ -678,7 +678,7 @@ public class PortletDescriptorParser {
 		Map<String, String> preferencesValidators,
 		Set<String> wildcardPreferencesValidators,
 		Map<String, String> displayDescriptorCategories,
-		Map<String, Map<String, String>> liferayConfigurations) {
+		Map<String, Map<String, Set<String>>> liferayConfigurations) {
 
 		List<BeanPortlet> beanPortlets = new ArrayList<>();
 

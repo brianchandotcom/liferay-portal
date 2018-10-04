@@ -31,7 +31,7 @@ public class BeanPortletDefaultImpl extends BaseBeanPortletImpl {
 	public BeanPortletDefaultImpl(
 		String portletName, Set<BeanMethod> beanMethods,
 		Set<BeanMethod> wildcardBeanMethods, String displayCategory,
-		Map<String, String> liferayConfiguration) {
+		Map<String, Set<String>> liferayConfiguration) {
 
 		super(beanMethods, wildcardBeanMethods);
 
@@ -76,7 +76,7 @@ public class BeanPortletDefaultImpl extends BaseBeanPortletImpl {
 	}
 
 	@Override
-	public Map<String, String> getLiferayConfiguration() {
+	public Map<String, Set<String>> getLiferayConfiguration() {
 		return _liferayConfiguration;
 	}
 
@@ -209,7 +209,7 @@ public class BeanPortletDefaultImpl extends BaseBeanPortletImpl {
 		};
 
 	private final String _displayCategory;
-	private final Map<String, String> _liferayConfiguration;
+	private final Map<String, Set<String>> _liferayConfiguration;
 	private final String _portletName;
 
 }

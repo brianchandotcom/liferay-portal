@@ -89,6 +89,10 @@ public class SharingEntryFinderImpl
 
 			String sql = _customSQL.get(getClass(), FIND_BY_TO_USER_ID);
 
+			if (orderByComparator != null) {
+				sql = _customSQL.replaceOrderBy(sql, orderByComparator);
+			}
+
 			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
 			q.addEntity("SharingEntry", SharingEntryImpl.class);

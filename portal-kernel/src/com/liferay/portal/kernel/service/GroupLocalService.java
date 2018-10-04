@@ -410,6 +410,30 @@ public interface GroupLocalService extends BaseLocalService,
 	* @param companyId the primary key of the company
 	* @param active whether to return only active groups, or only inactive
 	groups
+	* @param site whether the group is to be associated with a main site
+	* @param start the lower bound of the range of groups to return
+	* @param end the upper bound of the range of groups to return (not
+	inclusive)
+	* @param obc the comparator to order the groups (optionally
+	<code>null</code>)
+	* @return the active or inactive groups associated with the company
+	* @review
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<Group> getActiveGroups(long companyId, boolean active,
+		boolean site, int start, int end, OrderByComparator<Group> obc);
+
+	/**
+	* Returns the active or inactive groups associated with the company.
+	*
+	* @param companyId the primary key of the company
+	* @param active whether to return only active groups, or only inactive
+	groups
+	* @param start the lower bound of the range of groups to return
+	* @param end the upper bound of the range of groups to return (not
+	inclusive)
+	* @param obc the comparator to order the groups (optionally
+	<code>null</code>)
 	* @return the active or inactive groups associated with the company
 	* @review
 	*/
@@ -428,6 +452,19 @@ public interface GroupLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getActiveGroupsCount(long companyId, boolean active);
+
+	/**
+	* Returns the number of active or inactive groups associated with the company.
+	*
+	* @param companyId the primary key of the company
+	* @param active whether to count only active groups, or only inactive
+	groups
+	* @param site whether the group is to be associated with a main site
+	* @return the number of active or inactive groups associated with the company
+	* @review
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getActiveGroupsCount(long companyId, boolean active, boolean site);
 
 	/**
 	* Returns the company group.

@@ -71,7 +71,7 @@ public class ContentSpaceCollectionResourceTest {
 
 			Assert.assertTrue(groups.contains(group));
 		}
-		catch (Exception e) {
+		finally {
 			_groupLocalService.deleteGroup(group);
 		}
 	}
@@ -93,7 +93,7 @@ public class ContentSpaceCollectionResourceTest {
 
 			Assert.assertFalse(groups.contains(group));
 		}
-		catch (Exception e) {
+		finally {
 			_groupLocalService.deleteGroup(group);
 		}
 	}

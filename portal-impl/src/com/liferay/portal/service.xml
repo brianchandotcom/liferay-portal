@@ -476,6 +476,11 @@
 			<finder-column comparator="LIKE" name="treePath" />
 			<finder-column name="site" />
 		</finder>
+		<finder name="C_S_A" return-type="Collection">
+			<finder-column name="companyId" />
+			<finder-column name="site" />
+			<finder-column name="active" />
+		</finder>
 		<finder db-index="false" name="G_C_C_P" return-type="Collection">
 			<finder-column comparator="&gt;" name="groupId" />
 			<finder-column name="companyId" />

@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.Type;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.sharing.model.SharingEntry;
 import com.liferay.sharing.model.impl.SharingEntryImpl;
@@ -78,7 +79,8 @@ public class SharingEntryFinderImpl
 	}
 
 	public List<SharingEntry> findByToUserId(
-		long toUserId, int begin, int end) {
+		long toUserId, int begin, int end,
+		OrderByComparator<SharingEntry> orderByComparator) {
 
 		Session session = null;
 

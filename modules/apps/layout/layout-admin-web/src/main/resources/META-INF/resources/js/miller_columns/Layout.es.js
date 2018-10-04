@@ -261,8 +261,8 @@ class Layout extends Component {
 	_moveLayoutColumnItem(parentPlid, plid, priority) {
 		const formData = new FormData();
 
-		formData.append(`${this.portletNamespace}parentPlid`, parentPlid);
 		formData.append(`${this.portletNamespace}plid`, plid);
+		formData.append(`${this.portletNamespace}parentPlid`, parentPlid);
 		formData.append(`${this.portletNamespace}priority`, priority);
 
 		return fetch(

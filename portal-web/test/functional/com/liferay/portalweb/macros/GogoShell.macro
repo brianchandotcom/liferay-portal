@@ -4,7 +4,7 @@
 			<var name="moduleName" value="${moduleName}" />
 		</execute>
 
-		<var method="selenium#getText('GogoShell#OUTPUT_FIELD')" name="moduleStatusOutput" />
+		<var method="selenium#getText(GogoShell#OUTPUT_FIELD)" name="moduleStatusOutput" />
 
 		<var method="StringUtil#stripBetween('${moduleStatusOutput}', 'START', 'Name   ')" name="partialModuleStatusOutput" />
 

@@ -94,8 +94,8 @@
 
 		<execute macro="CalendarNavigator#gotoAddEvent" />
 
-		<var method="selenium#getElementValue('CalendarEditEvent#END_DATE_TIME')" name="endDateTime" />
-		<var method="selenium#getElementValue('CalendarEditEvent#START_DATE_TIME')" name="startDateTime" />
+		<var method="selenium#getElementValue(CalendarEditEvent#END_DATE_TIME)" name="endDateTime" />
+		<var method="selenium#getElementValue(CalendarEditEvent#START_DATE_TIME)" name="startDateTime" />
 
 		<execute macro="CalendarEvent#viewTimes">
 			<var name="endDateTime" value="${endDateTime}" />

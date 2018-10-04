@@ -33,7 +33,7 @@
 		<while>
 			<condition function="IsElementPresent" locator1="SearchResults#FACET_PORTLET_CLEAR_GENERIC" />
 			<then>
-				<var method="selenium#getText('SearchResults#FACET_PORTLET_CLEAR_PANEL_TITLE')" name="facetClearClass" />
+				<var method="selenium#getText(SearchResults#FACET_PORTLET_CLEAR_PANEL_TITLE)" name="facetClearClass" />
 
 				<execute macro="SearchFacetPortlet#clearFacetAndViewURL">
 					<return name="searchURL" />

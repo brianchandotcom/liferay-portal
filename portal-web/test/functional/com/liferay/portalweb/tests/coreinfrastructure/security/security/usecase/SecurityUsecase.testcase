@@ -63,7 +63,7 @@
 			<var name="webContentTitle" value="WC WebContent Title" />
 		</execute>
 
-		<var method="selenium#getText('WCEditWebContent#ARTICLE_ID')" name="articleID" />
+		<var method="selenium#getText(WCEditWebContent#ARTICLE_ID)" name="articleID" />
 
 		<execute macro="User#logoutPG" />
 

@@ -296,7 +296,6 @@ public class UpgradeSyncDLObject extends UpgradeProcess {
 			ResultSet rs = ps1.executeQuery()) {
 
 			while (rs.next()) {
-				long folderId = rs.getLong("folderId");
 				String name = rs.getString("name");
 
 				String extension = FileUtil.getExtension(name);
@@ -315,6 +314,8 @@ public class UpgradeSyncDLObject extends UpgradeProcess {
 				extraSettingsJSONObject.put("macPackage", true);
 
 				ps2.setString(1, extraSettingsJSONObject.toString());
+
+				long folderId = rs.getLong("folderId");
 
 				ps2.setLong(2, folderId);
 

@@ -453,6 +453,7 @@ public class WikiPageDependentsTrashHandlerTest {
 
 		WikiPage page = WikiPageLocalServiceUtil.getPage(
 			relatedPages.getPageResourcePrimKey());
+
 		WikiPage childPage = WikiPageLocalServiceUtil.getPage(
 			relatedPages.getChildPageResourcePrimKey());
 
@@ -594,6 +595,7 @@ public class WikiPageDependentsTrashHandlerTest {
 
 		WikiPage page = WikiPageLocalServiceUtil.getPage(
 			relatedPages.getPageResourcePrimKey());
+
 		WikiPage childPage = WikiPageLocalServiceUtil.getPage(
 			relatedPages.getChildPageResourcePrimKey());
 
@@ -615,6 +617,7 @@ public class WikiPageDependentsTrashHandlerTest {
 
 		WikiPage page = WikiPageLocalServiceUtil.getPage(
 			relatedPages.getPageResourcePrimKey());
+
 		WikiPage redirectorPage = WikiPageLocalServiceUtil.getPage(
 			relatedPages.getRedirectorPageResourcePrimKey());
 
@@ -634,6 +637,7 @@ public class WikiPageDependentsTrashHandlerTest {
 
 		WikiPage page = WikiPageLocalServiceUtil.getPage(
 			relatedPages.getPageResourcePrimKey());
+
 		WikiPage childPage = WikiPageLocalServiceUtil.getPage(
 			relatedPages.getChildPageResourcePrimKey());
 
@@ -773,6 +777,7 @@ public class WikiPageDependentsTrashHandlerTest {
 
 		WikiPage page = WikiPageLocalServiceUtil.getPage(
 			relatedPages.getPageResourcePrimKey());
+
 		WikiPage redirectorPage = WikiPageLocalServiceUtil.getPage(
 			relatedPages.getRedirectorPageResourcePrimKey());
 

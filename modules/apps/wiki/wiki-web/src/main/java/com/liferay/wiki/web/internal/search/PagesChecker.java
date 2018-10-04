@@ -88,6 +88,7 @@ public class PagesChecker extends EmptyOnClickRowChecker {
 		}
 
 		String name = WikiPage.class.getSimpleName();
+
 		boolean showInput = false;
 
 		try {

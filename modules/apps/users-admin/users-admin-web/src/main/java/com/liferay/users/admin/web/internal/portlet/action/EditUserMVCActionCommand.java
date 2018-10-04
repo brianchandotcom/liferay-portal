@@ -522,6 +522,7 @@ public class EditUserMVCActionCommand extends BaseMVCActionCommand {
 				portal.getHttpServletRequest(actionRequest));
 			HttpServletResponse response = portal.getHttpServletResponse(
 				actionResponse);
+
 			HttpSession session = request.getSession();
 
 			session.removeAttribute(Globals.LOCALE_KEY);

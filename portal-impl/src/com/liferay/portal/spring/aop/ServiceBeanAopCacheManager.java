@@ -14,6 +14,7 @@
 
 package com.liferay.portal.spring.aop;
 
+import com.liferay.petra.reflect.AnnotationLocator;
 import com.liferay.portal.kernel.util.ArrayUtil;
 
 import java.lang.annotation.Annotation;
@@ -24,6 +25,7 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -50,8 +52,7 @@ public class ServiceBeanAopCacheManager {
 	}
 
 	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             #setAnnotations(MethodInvocation, Annotation[])}
+	 * @deprecated As of Judson (7.1.x), with no direct replacement
 	 */
 	@Deprecated
 	public static void putAnnotations(
@@ -110,6 +111,9 @@ public class ServiceBeanAopCacheManager {
 						}
 					}
 				}
+
+				_registerAnnotationChainableMethodAdvice(
+					annotationClass, annotationChainableMethodAdvice);
 			}
 			else {
 				classLevelMethodInterceptors.add(methodInterceptor);
@@ -130,8 +134,41 @@ public class ServiceBeanAopCacheManager {
 		MethodInvocation methodInvocation,
 		Class<? extends Annotation> annotationType, T defaultValue) {
 
-		return _findAnnotation(
+		T annotation = _findAnnotation(
 			_methodAnnotations, methodInvocation, annotationType, defaultValue);
+
+		if (annotation == null) {
+			annotation = defaultValue;
+
+			Object target = methodInvocation.getThis();
+
+			List<Annotation> annotations = AnnotationLocator.locate(
+				methodInvocation.getMethod(), target.getClass());
+
+			Iterator<Annotation> iterator = annotations.iterator();
+
+			while (iterator.hasNext()) {
+				Annotation curAnnotation = iterator.next();
+
+				Class<? extends Annotation> curAnnotationType =
+					curAnnotation.annotationType();
+
+				if (!_annotationChainableMethodAdvices.containsKey(
+						curAnnotationType)) {
+
+					iterator.remove();
+				}
+				else if (annotationType == curAnnotationType) {
+					annotation = (T)curAnnotation;
+				}
+			}
+
+			_setAnnotations(
+				_methodAnnotations, methodInvocation,
+				annotations.toArray(new Annotation[annotations.size()]));
+		}
+
+		return annotation;
 	}
 
 	public MethodInterceptor[] getMethodInterceptors(
@@ -166,6 +203,10 @@ public class ServiceBeanAopCacheManager {
 			Arrays.asList(methodInterceptors));
 	}
 
+	/**
+	 * @deprecated As of Judson (7.1.x), with no direct replacement
+	 */
+	@Deprecated
 	public Map
 		<Class<? extends Annotation>, AnnotationChainableMethodAdvice<?>[]>
 			getRegisteredAnnotationChainableMethodAdvices() {
@@ -173,6 +214,10 @@ public class ServiceBeanAopCacheManager {
 		return _annotationChainableMethodAdvices;
 	}
 
+	/**
+	 * @deprecated As of Judson (7.1.x), with no direct replacement
+	 */
+	@Deprecated
 	public boolean isRegisteredAnnotationClass(
 		Class<? extends Annotation> annotationClass) {
 
@@ -205,28 +250,16 @@ public class ServiceBeanAopCacheManager {
 				new MethodInterceptor[methodInterceptors.size()]));
 	}
 
+	/**
+	 * @deprecated As of Judson (7.1.x), with no direct replacement
+	 */
+	@Deprecated
 	public void registerAnnotationChainableMethodAdvice(
 		Class<? extends Annotation> annotationClass,
 		AnnotationChainableMethodAdvice<?> annotationChainableMethodAdvice) {
 
-		AnnotationChainableMethodAdvice<?>[] annotationChainableMethodAdvices =
-			_annotationChainableMethodAdvices.get(annotationClass);
-
-		if (annotationChainableMethodAdvices == null) {
-			annotationChainableMethodAdvices =
-				new AnnotationChainableMethodAdvice<?>[1];
-
-			annotationChainableMethodAdvices[0] =
-				annotationChainableMethodAdvice;
-		}
-		else {
-			annotationChainableMethodAdvices = ArrayUtil.append(
-				annotationChainableMethodAdvices,
-				annotationChainableMethodAdvice);
-		}
-
-		_annotationChainableMethodAdvices.put(
-			annotationClass, annotationChainableMethodAdvices);
+		_registerAnnotationChainableMethodAdvice(
+			annotationClass, annotationChainableMethodAdvice);
 	}
 
 	public void removeMethodInterceptor(
@@ -286,6 +319,10 @@ public class ServiceBeanAopCacheManager {
 		_methodInterceptors.clear();
 	}
 
+	/**
+	 * @deprecated As of Judson (7.1.x), with no direct replacement
+	 */
+	@Deprecated
 	public void setAnnotations(
 		MethodInvocation methodInvocation, Annotation[] annotations) {
 
@@ -326,6 +363,30 @@ public class ServiceBeanAopCacheManager {
 		}
 
 		methodAnnotations.put(methodInvocation.getMethod(), annotations);
+	}
+
+	private void _registerAnnotationChainableMethodAdvice(
+		Class<? extends Annotation> annotationClass,
+		AnnotationChainableMethodAdvice<?> annotationChainableMethodAdvice) {
+
+		AnnotationChainableMethodAdvice<?>[] annotationChainableMethodAdvices =
+			_annotationChainableMethodAdvices.get(annotationClass);
+
+		if (annotationChainableMethodAdvices == null) {
+			annotationChainableMethodAdvices =
+				new AnnotationChainableMethodAdvice<?>[1];
+
+			annotationChainableMethodAdvices[0] =
+				annotationChainableMethodAdvice;
+		}
+		else {
+			annotationChainableMethodAdvices = ArrayUtil.append(
+				annotationChainableMethodAdvices,
+				annotationChainableMethodAdvice);
+		}
+
+		_annotationChainableMethodAdvices.put(
+			annotationClass, annotationChainableMethodAdvices);
 	}
 
 	private static final Map<Method, Annotation[]> _annotations =

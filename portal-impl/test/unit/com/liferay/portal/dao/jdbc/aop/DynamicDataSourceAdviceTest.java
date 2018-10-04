@@ -88,17 +88,14 @@ public class DynamicDataSourceAdviceTest {
 		_dynamicDataSourceAdvice.setDynamicDataSourceTargetSource(
 			_dynamicDataSourceTargetSource);
 
-		_serviceBeanAopCacheManager = new ServiceBeanAopCacheManager(null);
-
-		_dynamicDataSourceAdvice.setServiceBeanAopCacheManager(
-			_serviceBeanAopCacheManager);
-		_dynamicDataSourceAdvice.setServiceBeanAopCacheManager(
-			_serviceBeanAopCacheManager);
+		_serviceBeanAopCacheManager = new ServiceBeanAopCacheManager(
+			_dynamicDataSourceAdvice);
 
 		Map<Class<? extends Annotation>, AnnotationChainableMethodAdvice<?>[]>
 			registeredAnnotationChainableMethodAdvices =
-				_serviceBeanAopCacheManager.
-					getRegisteredAnnotationChainableMethodAdvices();
+				ReflectionTestUtil.getFieldValue(
+					_serviceBeanAopCacheManager,
+					"_annotationChainableMethodAdvices");
 
 		AnnotationChainableMethodAdvice<?>[] annotationChainableMethodAdvices =
 			registeredAnnotationChainableMethodAdvices.get(
@@ -107,7 +104,8 @@ public class DynamicDataSourceAdviceTest {
 		Assert.assertEquals(
 			Arrays.toString(annotationChainableMethodAdvices), 1,
 			annotationChainableMethodAdvices.length);
-		Assert.assertNull(annotationChainableMethodAdvices[0]);
+		Assert.assertSame(
+			_dynamicDataSourceAdvice, annotationChainableMethodAdvices[0]);
 		Assert.assertSame(
 			annotationChainableMethodAdvices,
 			registeredAnnotationChainableMethodAdvices.get(
@@ -153,21 +151,6 @@ public class DynamicDataSourceAdviceTest {
 
 		ServiceBeanMethodInvocation serviceBeanMethodInvocation =
 			new ServiceBeanMethodInvocation(testClass, method, new Object[0]);
-
-		MasterDataSource masterDataSource = method.getAnnotation(
-			MasterDataSource.class);
-
-		Annotation[] annotations = null;
-
-		if (masterDataSource == null) {
-			annotations = new Annotation[0];
-		}
-		else {
-			annotations = new Annotation[] {masterDataSource};
-		}
-
-		_serviceBeanAopCacheManager.setAnnotations(
-			serviceBeanMethodInvocation, annotations);
 
 		serviceBeanMethodInvocation.setMethodInterceptors(
 			new MethodInterceptor[] {_dynamicDataSourceAdvice});

@@ -202,19 +202,19 @@ class Layout extends Component {
 		if ((sourceItem != targetItem) && (sourceColumn === targetColumn)) {
 			sourceColumn.splice(sourceColumn.indexOf(sourceItem), 1);
 
-			let position = sourceColumn.indexOf(targetItem);
+			let priority = sourceColumn.indexOf(targetItem);
 
 			if (this._hoveredLayoutColumnItemBorder === DRAG_BORDERS.bottom) {
-				position = sourceColumn.indexOf(targetItem) + 1;
+				priority = sourceColumn.indexOf(targetItem) + 1;
 			}
 
-			sourceColumn.splice(position, 0, sourceItem);
+			sourceColumn.splice(priority, 0, sourceItem);
 
 			const targetColumnIndex = layoutColumns.indexOf(targetColumn);
 
 			const parentPlid = this._getLayoutColumnActiveItem(layoutColumns[targetColumnIndex - 1]);
 
-			this._moveLayoutColumnItem(parentPlid, sourceItemPlid, position)
+			this._moveLayoutColumnItem(parentPlid, sourceItemPlid, priority)
 				.then(
 					() => {
 						this.layoutColumns = layoutColumns;
@@ -253,17 +253,17 @@ class Layout extends Component {
 	 * Sends the movement of an item to the server.
 	 * @param {string} parentPlid
 	 * @param {string} plid
-	 * @param {string} position
+	 * @param {string} priority
 	 * @private
 	 * @review
 	 */
 
-	_moveLayoutColumnItem(parentPlid, plid, position) {
+	_moveLayoutColumnItem(parentPlid, plid, priority) {
 		const formData = new FormData();
 
 		formData.append(`${this.portletNamespace}parentPlid`, parentPlid);
 		formData.append(`${this.portletNamespace}plid`, plid);
-		formData.append(`${this.portletNamespace}position`, position);
+		formData.append(`${this.portletNamespace}priority`, priority);
 
 		return fetch(
 			this.moveLayoutColumnItemURL,

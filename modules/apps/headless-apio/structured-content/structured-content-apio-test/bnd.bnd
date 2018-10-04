@@ -28,5 +28,6 @@ Import-Package:\
 	test-classes/integration,\
 	@lib/assertj-core.jar,\
 	@lib/com.liferay.apio.architect.test.util.jar,\
+	@lib/com.liferay.oauth2.provider.test.util.jar,\
 	@lib/cxf-rt-frontend-jaxrs.jar,\
 	@lib/jackson-databind.jar

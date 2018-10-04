@@ -23,6 +23,7 @@ dependencies {
 	testIntegrationCompile project(":apps:headless-apio:structured-content:structured-content-apio-api")
 	testIntegrationCompile project(":apps:journal:journal-api")
 	testIntegrationCompile project(":apps:journal:journal-test-util")
+	testIntegrationCompile project(":apps:oauth2-provider:oauth2-provider-test-util")
 	testIntegrationCompile project(":apps:petra:petra-json-web-service-client")
 	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
 }

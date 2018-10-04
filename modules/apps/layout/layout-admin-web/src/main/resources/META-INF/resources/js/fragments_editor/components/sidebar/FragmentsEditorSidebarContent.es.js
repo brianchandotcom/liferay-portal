@@ -3,6 +3,7 @@ import {Config} from 'metal-state';
 import Soy from 'metal-soy';
 
 import './fragments/SidebarFragmentsSection.es';
+import './layouts/SidebarLayoutsSection.es';
 import templates from './FragmentsEditorSidebarContent.soy';
 
 /**
@@ -59,6 +60,11 @@ FragmentsEditorSidebarContent.STATE = {
 					icon: 'cards',
 					label: 'Fragments',
 					sectionId: 'fragments'
+				},
+				{
+					icon: 'page-template',
+					label: 'layouts',
+					sectionId: 'layouts'
 				}
 			]
 		),

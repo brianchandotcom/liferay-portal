@@ -37,6 +37,9 @@
 					{param selectedMappingTypes: $selectedMappingTypes /}
 					{param store: $store /}
 				{/call}
+			{elseif $_sectionId == 'layouts'}
+				{call com.liferay.layout.admin.web.SidebarLayoutsSection.render}
+				{/call}
 			{/if}
 		</div>
 

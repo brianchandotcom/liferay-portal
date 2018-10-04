@@ -52,6 +52,16 @@ public class SharingEntryFinderImpl
 
 			String sql = _customSQL.get(getClass(), COUNT_BY_TO_USER_ID);
 
+			if (classNameId > -1) {
+				sql = StringUtil.replace(
+					sql, "[$CLASS_NAME_ID_WHERE$]",
+					"AND SharingEntry.classNameId = ?");
+			}
+			else {
+				sql = StringUtil.replace(
+					sql, "[$CLASS_NAME_ID_WHERE$]", StringPool.BLANK);
+			}
+
 			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
 			q.addScalar(COUNT_COLUMN_NAME, Type.LONG);
@@ -59,6 +69,10 @@ public class SharingEntryFinderImpl
 			QueryPos qPos = QueryPos.getInstance(q);
 
 			qPos.add(toUserId);
+
+			if (classNameId > -1) {
+				qPos.add(classNameId);
+			}
 
 			Iterator<Long> itr = q.iterate();
 

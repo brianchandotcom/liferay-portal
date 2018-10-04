@@ -53,7 +53,9 @@ public class ExternalRepositoryAssetEntryValidatorExclusionRule
 				DLFileVersion dlFileVersion =
 					_dlFileVersionLocalService.fetchDLFileVersion(classPK);
 
-				dlFileEntry = dlFileVersion.getFileEntry();
+				if (dlFileVersion != null) {
+					dlFileEntry = dlFileVersion.getFileEntry();
+				}
 			}
 			catch (PortalException pe) {
 				if (_log.isDebugEnabled()) {

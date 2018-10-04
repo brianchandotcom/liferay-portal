@@ -71,7 +71,7 @@ public class CompanionPortalWorkspaceGitRepository
 		BuildDatabase buildDatabase = BuildDatabaseUtil.getBuildDatabase();
 
 		_parentWorkspaceGitRepository = buildDatabase.getWorkspaceGitRepository(
-			"portal");
+			PrimaryPortalWorkspaceGitRepository.TYPE);
 	}
 
 	protected CompanionPortalWorkspaceGitRepository(

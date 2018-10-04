@@ -1,0 +1,47 @@
+buildscript {
+	dependencies {
+		classpath group: "com.liferay", name: "com.liferay.gradle.plugins", version: "3.12.152"
+		classpath group: "com.liferay", name: "com.liferay.gradle.plugins.theme.builder", version: "2.0.4"
+	}
+
+	repositories {
+		maven {
+			url "https://repository-cdn.liferay.com/nexus/content/groups/public"
+		}
+	}
+}
+
+apply plugin: "com.liferay.portal.tools.theme.builder"
+apply plugin: "com.liferay.target.platform"
+
+task runGradleTest
+
+dependencies {
+	parentThemes group: "com.liferay", name: "com.liferay.frontend.theme.styled"
+
+	portalCommonCSS group: "com.liferay", name: "com.liferay.frontend.css.common"
+
+	targetPlatformBoms group: "com.liferay", name: "com.liferay.ce.portal.bom", version: "7.0.4"
+}
+
+repositories {
+	maven {
+		url "https://repository-cdn.liferay.com/nexus/content/groups/public"
+	}
+}
+
+runGradleTest {
+	doLast {
+		ResolvedArtifact resolvedArtifact = configurations.parentThemes.resolvedConfiguration.resolvedArtifacts.find {
+			it.name == "com.liferay.frontend.theme.styled"
+		}
+
+		assert resolvedArtifact.file.name.contains("2.1.2")
+
+		resolvedArtifact = configurations.portalCommonCSS.resolvedConfiguration.resolvedArtifacts.find {
+			it.name == "com.liferay.frontend.css.common"
+		}
+
+		assert resolvedArtifact.file.name.contains("2.0.4")
+	}
+}

@@ -25,7 +25,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 import java.util.Collections;
-import java.util.Map;
+import java.util.List;
 
 import org.jboss.arquillian.container.test.api.RunAsClient;
 import org.jboss.arquillian.junit.Arquillian;
@@ -58,19 +58,31 @@ public class ContetSpaceApioTest {
 	}
 
 	@Test
+	public void testContentSpaceLiferayExists() throws Exception {
+		List<String> hrefs = JsonPath.read(
+			_get(
+				JsonPath.read(
+					_get(_rootEndpointURL.toExternalForm()),
+					"$._links.content-space.href")),
+			"$._embedded.ContentSpace[?(@.name == 'Liferay')]");
+
+		Assert.assertNotNull(hrefs.get(0));
+	}
+
+	@Test
 	public void testContentSpaceLinkExistsInRootEndpoint() throws Exception {
 		Assert.assertNotNull(
 			JsonPath.read(
-				_get(_rootEndpointURL.toExternalForm(), Collections.emptyMap()),
+				_get(_rootEndpointURL.toExternalForm()),
 				"$._links.content-space.href"));
 	}
 
-	private String _get(String url, Map<String, String> parameters)
+	private String _get(String url)
 		throws JSONWebServiceInvocationException,
 			   JSONWebServiceTransportException {
 
 		return _jsonWebServiceClient.doGet(
-			url, parameters,
+			url, Collections.emptyMap(),
 			Collections.singletonMap("Accept", "application/hal+json"));
 	}
 

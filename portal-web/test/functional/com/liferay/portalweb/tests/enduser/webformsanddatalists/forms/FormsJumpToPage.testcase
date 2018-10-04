@@ -57,7 +57,7 @@
 		<for list="1,2,3" param="option">
 			<execute macro="Form#addPage" />
 
-			<var method="MathUtil#sum('${option}', '1')" name="pageNumber" />
+			<var method="MathUtil#sum('${option}','1')" name="pageNumber" />
 
 			<execute macro="Form#editPageTitle">
 				<var name="formPageName" value="Page ${pageNumber}" />
@@ -180,7 +180,7 @@
 				<var name="radioOption" value="Destiny ${option}" />
 			</execute>
 
-			<var method="MathUtil#sum('${option}', '1')" name="pageNumber" />
+			<var method="MathUtil#sum('${option}','1')" name="pageNumber" />
 
 			<execute macro="FormPortlet#nextPage">
 				<var name="formPageCurrent" value="Page 1" />

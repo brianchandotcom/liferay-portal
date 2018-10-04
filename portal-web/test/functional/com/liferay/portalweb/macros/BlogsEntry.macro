@@ -217,7 +217,7 @@
 		<var method="selenium#getElementValue('TextInput#DISPLAY_DATE_MONTH')" name="displayDateMonth" />
 		<var method="DateUtil#getCurrentYear()" name="displayDateYear" />
 
-		<var method="MathUtil#sum('${displayDateYear}', '1')" name="displayDateYear" />
+		<var method="MathUtil#sum('${displayDateYear}','1')" name="displayDateYear" />
 
 		<var name="displayDate" value="${displayDateMonth}/${displayDateDay}/${displayDateYear}" />
 
@@ -470,7 +470,7 @@
 		<var method="selenium#getElementValue('TextInput#DISPLAY_DATE_DAY')" name="displayDateDay" />
 		<var method="selenium#getElementValue('TextInput#DISPLAY_DATE_MONTH')" name="displayDateMonth" />
 
-		<var method="MathUtil#sum('${displayDateMonth}', '1')" name="displayDateMonth" />
+		<var method="MathUtil#sum('${displayDateMonth}','1')" name="displayDateMonth" />
 
 		<var method="selenium#getElementValue('TextInput#DISPLAY_DATE_YEAR')" name="displayDateYear" />
 
@@ -491,7 +491,7 @@
 
 		<var method="selenium#getElementValue('TextInput#DISPLAY_DATE_MINUTE')" name="displayDateMinute" />
 
-		<var method="MathUtil#sum('${displayDateMinute}', '3')" name="displayDateMinuteFuture" />
+		<var method="MathUtil#sum('${displayDateMinute}','3')" name="displayDateMinuteFuture" />
 
 		<var method="StringUtil#length('${displayDateMinuteFuture}')" name="displayDateMinuteFutureLength" />
 
@@ -955,7 +955,7 @@
 
 		<var method="selenium#getText('BlogsEntry#ENTRY_VIEW_COUNT')" name="entryViewCount" />
 
-		<var method="StringUtil#extractLast('${entryViewCount}', '-')" name="entryViewCount" />
+		<var method="StringUtil#extractLast('${entryViewCount}','-')" name="entryViewCount" />
 		<var method="StringUtil#extractDigits('${entryViewCount}')" name="entryViewCount" />
 
 		<if>

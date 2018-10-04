@@ -104,7 +104,7 @@ SERVER_URL=http://test.able.com:8080</echo>
 			<java
 				failonerror="true"
 				fork="true"
-				jar="${openam.configurator.tools.dir}/openam-configurator-tool-12.0.0.jar"
+				jar="${openam.configurator.tools.dir}/openam-configurator-tool-${openam.version}.jar"
 			>
 				<arg line="--file ${openam.configurator.tools.dir}/config.properties" />
 			</java>

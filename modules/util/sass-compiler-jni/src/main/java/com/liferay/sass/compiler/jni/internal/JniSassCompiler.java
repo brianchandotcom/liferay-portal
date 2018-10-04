@@ -242,6 +242,7 @@ public class JniSassCompiler implements SassCompiler {
 			index += 1;
 
 			String dirName = inputFileName.substring(0, index);
+
 			String fileName = inputFileName.substring(index);
 
 			String outputFileName = getOutputFileName(fileName);

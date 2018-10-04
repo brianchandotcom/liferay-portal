@@ -316,6 +316,57 @@ public interface AssetEntryAssetCategoryRelPersistence extends BasePersistence<A
 	public int countByAssetCategoryId(long assetCategoryId);
 
 	/**
+	* Returns the asset entry asset category rel where assetEntryId = &#63; and assetCategoryId = &#63; or throws a {@link NoSuchEntryAssetCategoryRelException} if it could not be found.
+	*
+	* @param assetEntryId the asset entry ID
+	* @param assetCategoryId the asset category ID
+	* @return the matching asset entry asset category rel
+	* @throws NoSuchEntryAssetCategoryRelException if a matching asset entry asset category rel could not be found
+	*/
+	public AssetEntryAssetCategoryRel findByA_A(long assetEntryId,
+		long assetCategoryId) throws NoSuchEntryAssetCategoryRelException;
+
+	/**
+	* Returns the asset entry asset category rel where assetEntryId = &#63; and assetCategoryId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	*
+	* @param assetEntryId the asset entry ID
+	* @param assetCategoryId the asset category ID
+	* @return the matching asset entry asset category rel, or <code>null</code> if a matching asset entry asset category rel could not be found
+	*/
+	public AssetEntryAssetCategoryRel fetchByA_A(long assetEntryId,
+		long assetCategoryId);
+
+	/**
+	* Returns the asset entry asset category rel where assetEntryId = &#63; and assetCategoryId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	*
+	* @param assetEntryId the asset entry ID
+	* @param assetCategoryId the asset category ID
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the matching asset entry asset category rel, or <code>null</code> if a matching asset entry asset category rel could not be found
+	*/
+	public AssetEntryAssetCategoryRel fetchByA_A(long assetEntryId,
+		long assetCategoryId, boolean retrieveFromCache);
+
+	/**
+	* Removes the asset entry asset category rel where assetEntryId = &#63; and assetCategoryId = &#63; from the database.
+	*
+	* @param assetEntryId the asset entry ID
+	* @param assetCategoryId the asset category ID
+	* @return the asset entry asset category rel that was removed
+	*/
+	public AssetEntryAssetCategoryRel removeByA_A(long assetEntryId,
+		long assetCategoryId) throws NoSuchEntryAssetCategoryRelException;
+
+	/**
+	* Returns the number of asset entry asset category rels where assetEntryId = &#63; and assetCategoryId = &#63;.
+	*
+	* @param assetEntryId the asset entry ID
+	* @param assetCategoryId the asset category ID
+	* @return the number of matching asset entry asset category rels
+	*/
+	public int countByA_A(long assetEntryId, long assetCategoryId);
+
+	/**
 	* Caches the asset entry asset category rel in the entity cache if it is enabled.
 	*
 	* @param assetEntryAssetCategoryRel the asset entry asset category rel

@@ -47,7 +47,6 @@ import com.liferay.portal.search.indexer.IndexerSummaryBuilder;
 import com.liferay.portal.search.indexer.IndexerWriter;
 import com.liferay.portal.search.permission.SearchPermissionIndexWriter;
 import com.liferay.portal.search.spi.model.index.contributor.ModelDocumentContributor;
-import com.liferay.portal.search.spi.model.query.contributor.KeywordQueryContributor;
 import com.liferay.portal.search.spi.model.query.contributor.QueryConfigContributor;
 import com.liferay.portal.search.spi.model.query.contributor.SearchContextContributor;
 import com.liferay.portal.search.spi.model.registrar.ModelSearchConfigurator;
@@ -170,10 +169,6 @@ public class ModelSearchConfiguratorServiceTrackerCustomizer
 			_bundleContext, DocumentContributor.class,
 			"(!(indexer.class.name=*))");
 
-		_keywordQueryContributors = ServiceTrackerListFactory.open(
-			_bundleContext, KeywordQueryContributor.class,
-			"(!(indexer.class.name=*))");
-
 		_modelResourcePermissionServiceTrackerMap =
 			ServiceTrackerMapFactory.openSingleValueMap(
 				bundleContext, ModelResourcePermission.class,
@@ -223,9 +218,10 @@ public class ModelSearchConfiguratorServiceTrackerCustomizer
 			new IndexerQueryBuilderImpl<>(
 				indexerRegistry,
 				modelSearchConfigurator.getModelSearchSettings(),
-				modelSearchConfigurator.getKeywordQueryContributors(),
+				new ModelKeywordQueryContributorsHolderImpl(
+					modelSearchConfigurator.getKeywordQueryContributors()),
 				modelSearchConfigurator.getSearchContextContributors(),
-				_keywordQueryContributors, preFilterContributorHelper,
+				keywordQueryContributorsHolder, preFilterContributorHelper,
 				_searchContextContributors, indexerPostProcessorsHolder,
 				relatedEntryIndexerRegistry);
 
@@ -312,7 +308,6 @@ public class ModelSearchConfiguratorServiceTrackerCustomizer
 
 		_serviceTracker.close();
 		_documentContributors.close();
-		_keywordQueryContributors.close();
 		_queryConfigContributors.close();
 		_searchContextContributors.close();
 
@@ -343,6 +338,9 @@ public class ModelSearchConfiguratorServiceTrackerCustomizer
 	protected IndexWriterHelper indexWriterHelper;
 
 	@Reference
+	protected KeywordQueryContributorsHolder keywordQueryContributorsHolder;
+
+	@Reference
 	protected PreFilterContributorHelper preFilterContributorHelper;
 
 	@Reference
@@ -367,8 +365,6 @@ public class ModelSearchConfiguratorServiceTrackerCustomizer
 	private BundleContext _bundleContext;
 	private ServiceTrackerList<DocumentContributor, DocumentContributor>
 		_documentContributors;
-	private ServiceTrackerList<KeywordQueryContributor, KeywordQueryContributor>
-		_keywordQueryContributors;
 	private ServiceTrackerMap<String, ModelResourcePermission>
 		_modelResourcePermissionServiceTrackerMap;
 	private ServiceTrackerList<QueryConfigContributor, QueryConfigContributor>

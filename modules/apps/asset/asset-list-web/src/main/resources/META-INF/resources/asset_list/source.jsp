@@ -254,25 +254,6 @@ List<AssetRendererFactory<?>> classTypesAssetRendererFactories = new ArrayList()
 <aui:script>
 	var Util = Liferay.Util;
 
-	function <portlet:namespace />saveSelectBoxes() {
-		var form = $(document.<portlet:namespace />fm);
-
-		form.fm('classNameIds').val(Util.listSelect(form.fm('currentClassNameIds')));
-
-		<%
-		for (AssetRendererFactory<?> curRendererFactory : classTypesAssetRendererFactories) {
-			String className = editAssetListDisplayContext.getClassName(curRendererFactory);
-		%>
-
-			form.fm('classTypeIds<%= className %>').val(Util.listSelect(form.fm('<%= className %>currentClassTypeIds')));
-
-		<%
-		}
-		%>
-
-		submitForm(form);
-	}
-
 	var assetMultipleSelector = $('#<portlet:namespace />currentClassNameIds');
 	var assetSelector = $('#<portlet:namespace />anyAssetType');
 	var ddmStructureFieldName = $('#<portlet:namespace />ddmStructureFieldName');
@@ -443,4 +424,23 @@ List<AssetRendererFactory<?>> classTypesAssetRendererFactories = new ArrayList()
 	}
 
 	Liferay.Util.toggleSelectBox('<portlet:namespace />anyAssetType', 'false', '<portlet:namespace />classNamesBoxes');
+
+	function <portlet:namespace />saveSelectBoxes() {
+		var form = $(document.<portlet:namespace />fm);
+
+		form.fm('classNameIds').val(Util.listSelect(form.fm('currentClassNameIds')));
+
+		<%
+		for (AssetRendererFactory<?> curRendererFactory : classTypesAssetRendererFactories) {
+			String className = editAssetListDisplayContext.getClassName(curRendererFactory);
+		%>
+
+			form.fm('classTypeIds<%= className %>').val(Util.listSelect(form.fm('<%= className %>currentClassTypeIds')));
+
+		<%
+		}
+		%>
+
+		submitForm(form);
+	}
 </aui:script>

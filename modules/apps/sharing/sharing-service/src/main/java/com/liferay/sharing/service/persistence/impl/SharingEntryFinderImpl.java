@@ -52,15 +52,7 @@ public class SharingEntryFinderImpl
 
 			String sql = _customSQL.get(getClass(), COUNT_BY_TO_USER_ID);
 
-			if (classNameId > -1) {
-				sql = StringUtil.replace(
-					sql, "[$CLASS_NAME_ID_WHERE$]",
-					"AND SharingEntry.classNameId = ?");
-			}
-			else {
-				sql = StringUtil.replace(
-					sql, "[$CLASS_NAME_ID_WHERE$]", StringPool.BLANK);
-			}
+			sql = _replaceClassNameIdWhere(sql, classNameId);
 
 			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
@@ -109,15 +101,7 @@ public class SharingEntryFinderImpl
 				sql = _customSQL.replaceOrderBy(sql, orderByComparator);
 			}
 
-			if (classNameId > -1) {
-				sql = StringUtil.replace(
-					sql, "[$CLASS_NAME_ID_WHERE$]",
-					"AND SharingEntry.classNameId = ?");
-			}
-			else {
-				sql = StringUtil.replace(
-					sql, "[$CLASS_NAME_ID_WHERE$]", StringPool.BLANK);
-			}
+			sql = _replaceClassNameIdWhere(sql, classNameId);
 
 			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
@@ -140,6 +124,20 @@ public class SharingEntryFinderImpl
 		finally {
 			closeSession(session);
 		}
+	}
+
+	private String _replaceClassNameIdWhere(String sql, long classNameId) {
+		if (classNameId > -1) {
+			sql = StringUtil.replace(
+				sql, "[$CLASS_NAME_ID_WHERE$]",
+				"AND SharingEntry.classNameId = ?");
+		}
+		else {
+			sql = StringUtil.replace(
+				sql, "[$CLASS_NAME_ID_WHERE$]", StringPool.BLANK);
+		}
+
+		return sql;
 	}
 
 	@ServiceReference(type = CustomSQL.class)

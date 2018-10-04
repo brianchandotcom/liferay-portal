@@ -251,7 +251,7 @@ task's `useNpmCI` property is set to `true`.
 - [LPS-82568]: Add the property `environment` to all tasks that extend
 `ExecuteNodeTask`. This provides a way to set environment variables.
 
-## 4.4.1 - 2018-10-02
+## 4.4.1 - 2018-10-03
 
 ### Changed
 - [LPS-85959]: Delete the NPM cached data before retrying `npm install`.

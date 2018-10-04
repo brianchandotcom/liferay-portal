@@ -4674,13 +4674,37 @@ projects defined in the `testIntegrationCompile` configuration do not have a
 - [LPS-84138]: Update the [Liferay Gradle Plugins] dependency to version
 3.12.150.
 
-## 5.5.65 - 2018-10-01
+## 5.5.65 - 2018-10-03
+
+### Changed
+- [LPS-85959]: Update the [Liferay Gradle Plugins] dependency to version
+3.12.151.
+- [LPS-85959]: Update the [Liferay Gradle Plugins JSDoc] dependency to version
+2.0.9.
+
+## 5.5.66 - 2018-10-03
 
 ### Added
 - [LPS-85987]: When running the `npmRunBuild` task on Jenkins, check the version
 in `bnd.bnd`, `package.json`, and `package-lock.json` for an invalid
 `.hotfix-xxx-xxx` qualifier. If it exists, temporarily change it to a valid
 qualifier before the task runs and change it back after it completes.
+
+## 5.5.67 - 2018-10-03
+
+### Fixed
+- [LPS-85987]: Use the `TaskContainer` to find `npmRunBuild` tasks to avoid a
+`NullPointerException` during the configuration phase.
+
+## 5.5.68 - 2018-10-03
+
+### Changed
+- [LPS-85987]: Update the [Liferay Gradle Plugins] dependency to version
+3.12.152.
+
+### Fixed
+- [LPS-85987]: When running the `npmRunBuild` task on Jenkins, always check for
+an invalid `.hotfix-xxx-xxx` qualifier.
 
 [Find Security Bugs]: https://github.com/liferay/liferay-portal/tree/master/modules/third-party/com-h3xstream-findsecbugs
 [Gradle Dependency Management]: https://github.com/spring-gradle-plugins/dependency-management-plugin
@@ -5162,6 +5186,8 @@ qualifier before the task runs and change it back after it completes.
 [LPS-85678]: https://issues.liferay.com/browse/LPS-85678
 [LPS-85771]: https://issues.liferay.com/browse/LPS-85771
 [LPS-85905]: https://issues.liferay.com/browse/LPS-85905
+[LPS-85959]: https://issues.liferay.com/browse/LPS-85959
+[LPS-85987]: https://issues.liferay.com/browse/LPS-85987
 [LRDOCS-2594]: https://issues.liferay.com/browse/LRDOCS-2594
 [LRDOCS-2841]: https://issues.liferay.com/browse/LRDOCS-2841
 [LRDOCS-2981]: https://issues.liferay.com/browse/LRDOCS-2981

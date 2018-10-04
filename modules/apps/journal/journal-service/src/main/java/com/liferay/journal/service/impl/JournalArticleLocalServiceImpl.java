@@ -6378,6 +6378,7 @@ public class JournalArticleLocalServiceImpl
 		// Article
 
 		User user = userLocalService.getUser(userId);
+
 		Date now = new Date();
 
 		if ((status == WorkflowConstants.STATUS_APPROVED) &&
@@ -6683,13 +6684,14 @@ public class JournalArticleLocalServiceImpl
 
 			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(value);
 
-			String uuid = jsonObject.getString("uuid");
-			long groupId = jsonObject.getLong("groupId");
 			boolean tempFile = jsonObject.getBoolean("tempFile");
 
 			if (!tempFile) {
 				continue;
 			}
+
+			String uuid = jsonObject.getString("uuid");
+			long groupId = jsonObject.getLong("groupId");
 
 			FileEntry fileEntry =
 				dlAppLocalService.getFileEntryByUuidAndGroupId(uuid, groupId);
@@ -8577,6 +8579,7 @@ public class JournalArticleLocalServiceImpl
 
 		for (Locale locale : localeSet) {
 			String title = titleMap.get(locale);
+
 			String description = null;
 
 			if (descriptionMap != null) {

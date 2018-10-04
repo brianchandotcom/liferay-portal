@@ -183,6 +183,7 @@ public class KBArticleStagedModelDataHandler
 		long resourcePrimaryKey = MapUtil.getLong(
 			kbArticleResourcePrimKeys, kbArticle.getResourcePrimKey(),
 			kbArticle.getResourcePrimKey());
+
 		long parentResourcePrimKey = MapUtil.getLong(
 			kbArticleResourcePrimKeys, kbArticle.getParentResourcePrimKey(),
 			kbArticle.getParentResourcePrimKey());
@@ -426,6 +427,7 @@ public class KBArticleStagedModelDataHandler
 
 		long kbArticleClassNameId = _portal.getClassNameId(
 			KBArticleConstants.getClassName());
+
 		long kbFolderClassNameId = _portal.getClassNameId(
 			KBFolderConstants.getClassName());
 

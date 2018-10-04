@@ -173,7 +173,6 @@ public class UpgradeJournal extends UpgradeProcess {
 					Map<Long, List<Long>> ddmStructureIdsMap = new HashMap<>();
 
 					while (rs.next()) {
-						long structureId = rs.getLong("structureId");
 						long id = rs.getLong("id_");
 
 						List<Long> ddmStructureIds = ddmStructureIdsMap.get(id);
@@ -181,6 +180,8 @@ public class UpgradeJournal extends UpgradeProcess {
 						if (ddmStructureIds == null) {
 							ddmStructureIds = new ArrayList<>();
 						}
+
+						long structureId = rs.getLong("structureId");
 
 						ddmStructureIds.add(structureId);
 

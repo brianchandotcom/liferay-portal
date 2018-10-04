@@ -580,6 +580,25 @@ public class ClusterSchedulerEngine
 				List<SchedulerResponse> schedulerResponses = future.get(
 					_callMasterTimeout, TimeUnit.SECONDS);
 
+				if (schedulerResponses == null) {
+					if (_log.isWarnEnabled()) {
+						StringBundler sb = new StringBundler(8);
+
+						sb.append("Property \"");
+						sb.append(PropsKeys.SCHEDULER_ENABLED);
+						sb.append("\" is disabled in the master node. To ");
+						sb.append("ensure consistent behaviour this property ");
+						sb.append("must have the same value in all cluster's ");
+						sb.append("nodes. If scheduler needs to be enabled ");
+						sb.append("please stop all nodes and restart them in ");
+						sb.append("an ordered way.");
+
+						_log.warn(sb.toString());
+					}
+
+					return;
+				}
+
 				_memoryClusteredJobs.clear();
 
 				for (SchedulerResponse schedulerResponse : schedulerResponses) {

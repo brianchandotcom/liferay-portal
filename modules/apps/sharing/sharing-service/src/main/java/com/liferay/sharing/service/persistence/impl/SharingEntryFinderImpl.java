@@ -44,7 +44,7 @@ public class SharingEntryFinderImpl
 	public static final String FIND_BY_TO_USER_ID =
 		SharingEntryFinder.class.getName() + ".findByToUserId";
 
-	public int countByToUserId(long toUserId) {
+	public int countByToUserId(long toUserId, long classNameId) {
 		Session session = null;
 
 		try {

@@ -23,11 +23,10 @@ import com.liferay.jenkins.results.parser.TestSuiteJob;
 
 import java.io.File;
 
-import java.nio.file.FileSystem;
-import java.nio.file.FileSystems;
 import java.nio.file.PathMatcher;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -231,23 +230,13 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 	protected List<PathMatcher> getPathMatchers(
 		String relativeGlobs, File workingDirectory) {
 
-		List<PathMatcher> pathMatchers = new ArrayList<>();
-
 		if ((relativeGlobs == null) || relativeGlobs.isEmpty()) {
-			return pathMatchers;
+			return Collections.emptyList();
 		}
 
-		for (String relativeGlob : relativeGlobs.split(",")) {
-			FileSystem fileSystem = FileSystems.getDefault();
-
-			pathMatchers.add(
-				fileSystem.getPathMatcher(
-					JenkinsResultsParserUtil.combine(
-						"glob:", workingDirectory.getAbsolutePath(), "/",
-						relativeGlob)));
-		}
-
-		return pathMatchers;
+		return JenkinsResultsParserUtil.toPathMatchers(
+			workingDirectory.getAbsolutePath() + File.separator,
+			relativeGlobs.split(","));
 	}
 
 	protected void setAxisTestClassGroups() {

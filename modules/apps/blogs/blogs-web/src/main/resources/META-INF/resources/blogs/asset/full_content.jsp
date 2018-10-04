@@ -59,8 +59,8 @@ String viewEntryURL = assetRenderer.getURLView(liferayPortletResponse, WindowSta
 				}
 				%>
 
-				<liferay-ui:user-portrait
-					cssClass="user-icon-lg"
+				<liferay-frontend:user-portrait
+					size="lg"
 					user="<%= entryUser %>"
 				/>
 			</div>

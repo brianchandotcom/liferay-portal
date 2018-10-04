@@ -107,8 +107,8 @@ RatingsStats ratingsStats = (RatingsStats)request.getAttribute("view_entry_conte
 							}
 							%>
 
-							<liferay-ui:user-portrait
-								cssClass="user-icon-xxl"
+							<liferay-frontend:user-portrait
+								size="xl"
 								user="<%= entryUser %>"
 							/>
 						</div>

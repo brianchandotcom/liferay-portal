@@ -16,6 +16,7 @@ package com.liferay.petra.concurrent;
 
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
 import com.liferay.portal.kernel.util.SetUtil;
 
@@ -96,16 +97,14 @@ public class ConcurrentMapperHashMapTest {
 			_testValue1,
 			_concurrentMap.compute(_testKey, (key, value) -> _testValue1));
 
-		_assertEventQueue(
-			Event.MAP_KEY, Event.MAP_VALUE, Event.UNMAP_VALUE_FOR_QUERY);
+		_assertEventQueue(Event.MAP_KEY, Event.MAP_VALUE);
 
 		Assert.assertSame(
 			_testValue2,
 			_concurrentMap.compute(_testKey, (key, value) -> _testValue2));
 
 		_assertEventQueue(
-			Event.MAP_KEY, Event.UNMAP_VALUE, Event.MAP_VALUE, Event.UNMAP_KEY,
-			Event.UNMAP_VALUE_FOR_QUERY);
+			Event.MAP_KEY, Event.UNMAP_VALUE, Event.MAP_VALUE, Event.UNMAP_KEY);
 
 		Assert.assertSame(_testValue2, _concurrentMap.get(_testKey));
 
@@ -141,8 +140,7 @@ public class ConcurrentMapperHashMapTest {
 			_testValue1,
 			_concurrentMap.computeIfAbsent(_testKey, key -> _testValue1));
 
-		_assertEventQueue(
-			Event.MAP_KEY, Event.MAP_VALUE, Event.UNMAP_VALUE_FOR_QUERY);
+		_assertEventQueue(Event.MAP_KEY, Event.MAP_VALUE);
 
 		Assert.assertSame(
 			_testValue1,
@@ -154,6 +152,30 @@ public class ConcurrentMapperHashMapTest {
 		Assert.assertSame(_testValue1, _concurrentMap.get(_testKey));
 
 		_assertEventQueue(Event.MAP_KEY_FOR_QUERY, Event.UNMAP_VALUE_FOR_QUERY);
+
+		ConcurrentMap<KeyReference, ValueReference> innerConcurrentMap =
+			ReflectionTestUtil.getFieldValue(
+				_concurrentMap, "innerConcurrentMap");
+
+		Assert.assertEquals(
+			innerConcurrentMap.toString(), 1, innerConcurrentMap.size());
+
+		Collection<ValueReference> valueReferences =
+			innerConcurrentMap.values();
+
+		Iterator<ValueReference> iterator = valueReferences.iterator();
+
+		ValueReference valueReference = iterator.next();
+
+		ReflectionTestUtil.setFieldValue(valueReference, "_value", null);
+
+		Assert.assertSame(
+			_testValue2,
+			_concurrentMap.computeIfAbsent(_testKey, key -> _testValue2));
+
+		_assertEventQueue(
+			Event.MAP_KEY, Event.UNMAP_KEY, Event.UNMAP_VALUE_FOR_QUERY,
+			Event.MAP_KEY, Event.MAP_VALUE);
 	}
 
 	@Test
@@ -197,8 +219,7 @@ public class ConcurrentMapperHashMapTest {
 				_testKey, (key, value) -> _testValue2));
 
 		_assertEventQueue(
-			Event.MAP_KEY_FOR_QUERY, Event.UNMAP_VALUE, Event.MAP_VALUE,
-			Event.UNMAP_VALUE_FOR_QUERY);
+			Event.MAP_KEY_FOR_QUERY, Event.UNMAP_VALUE, Event.MAP_VALUE);
 
 		Assert.assertNull(
 			_concurrentMap.computeIfPresent(_testKey, (key, value) -> null));

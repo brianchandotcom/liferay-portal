@@ -264,10 +264,6 @@ public class VerifyProperties extends VerifyProcess {
 	private static final String[][] _MIGRATED_PORTAL_KEYS = {
 		{"cookie.http.only.names.excludes", "cookie.http.only.names.excludes"},
 		{
-			"finalize.manager.thread.enabled",
-			"com.liferay.portal.kernel.memory.FinalizeManager.thread.enabled"
-		},
-		{
 			"http.header.secure.x.content.type.options",
 			"http.header.secure.x.content.type.options"
 		},
@@ -1840,8 +1836,11 @@ public class VerifyProperties extends VerifyProcess {
 	};
 
 	private static final String[] _OBSOLETE_SYSTEM_KEYS = {
+		"com.liferay.petra.memory.FinalizeManager.thread.enabled",
+		"com.liferay.portal.kernel.memory.FinalizeManager.thread.enabled",
 		"com.liferay.util.Http.proxy.host", "com.liferay.util.Http.proxy.port",
-		"com.liferay.util.XSSUtil.regexp.pattern"
+		"com.liferay.util.XSSUtil.regexp.pattern",
+		"finalize.manager.thread.enabled"
 	};
 
 	private static final String[][] _RENAMED_PORTAL_KEYS = {

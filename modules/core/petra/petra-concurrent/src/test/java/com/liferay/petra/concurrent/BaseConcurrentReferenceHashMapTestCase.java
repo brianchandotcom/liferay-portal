@@ -16,6 +16,7 @@ package com.liferay.petra.concurrent;
 
 import com.liferay.petra.memory.FinalizeAction;
 import com.liferay.petra.memory.FinalizeManager;
+import com.liferay.portal.kernel.test.FinalizeManagerUtil;
 import com.liferay.portal.kernel.test.GCUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 
@@ -100,8 +101,7 @@ public abstract class BaseConcurrentReferenceHashMapTestCase {
 			GCUtil.gc(true);
 		}
 
-		ReflectionTestUtil.invoke(
-			FinalizeManager.class, "_pollingCleanup", new Class<?>[0]);
+		FinalizeManagerUtil.drainPendingFinalizeActions();
 
 		Assert.assertTrue(
 			finalizeActions.toString(), finalizeActions.isEmpty());

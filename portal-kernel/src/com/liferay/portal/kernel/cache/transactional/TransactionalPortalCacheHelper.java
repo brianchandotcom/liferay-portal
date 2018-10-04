@@ -338,7 +338,7 @@ public class TransactionalPortalCacheHelper {
 						return placeHolder;
 					}
 
-					return new Object();
+					return null;
 				});
 		}
 

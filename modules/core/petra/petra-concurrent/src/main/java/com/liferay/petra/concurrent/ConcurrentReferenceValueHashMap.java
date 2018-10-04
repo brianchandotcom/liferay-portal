@@ -84,8 +84,15 @@ public class ConcurrentReferenceValueHashMap<K, V>
 
 	@Override
 	protected Reference<V> mapValue(K key, V value) {
-		return FinalizeManager.register(
-			value, new RemoveEntryFinalizeAction(key), _referenceFactory);
+		RemoveEntryFinalizeAction removeEntryFinalizeAction =
+			new RemoveEntryFinalizeAction(key);
+
+		Reference<V> innerValue = FinalizeManager.register(
+			value, removeEntryFinalizeAction, _referenceFactory);
+
+		removeEntryFinalizeAction._innerValue = innerValue;
+
+		return innerValue;
 	}
 
 	@Override
@@ -121,15 +128,16 @@ public class ConcurrentReferenceValueHashMap<K, V>
 
 	private class RemoveEntryFinalizeAction implements FinalizeAction {
 
-		public RemoveEntryFinalizeAction(K key) {
+		@Override
+		public void doFinalize(Reference<?> reference) {
+			innerConcurrentMap.remove(_key, _innerValue);
+		}
+
+		private RemoveEntryFinalizeAction(K key) {
 			_key = key;
 		}
 
-		@Override
-		public void doFinalize(Reference<?> reference) {
-			remove(_key);
-		}
-
+		private Reference<V> _innerValue;
 		private final K _key;
 
 	}

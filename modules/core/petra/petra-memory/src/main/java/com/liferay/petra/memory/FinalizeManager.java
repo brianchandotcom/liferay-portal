@@ -68,8 +68,11 @@ public class FinalizeManager {
 
 		};
 
-	public static final boolean THREAD_ENABLED = Boolean.getBoolean(
-		FinalizeManager.class.getName() + ".thread.enabled");
+	/**
+	 * @deprecated As of Judson (7.1.x), with no direct replacement
+	 */
+	@Deprecated
+	public static final boolean THREAD_ENABLED = true;
 
 	public static final ReferenceFactory WEAK_REFERENCE_FACTORY =
 		new ReferenceFactory() {
@@ -101,10 +104,6 @@ public class FinalizeManager {
 
 		_finalizeActions.put(new IdentityKey(newReference), finalizeAction);
 
-		if (!THREAD_ENABLED) {
-			_pollingCleanup();
-		}
-
 		return newReference;
 	}
 
@@ -115,30 +114,6 @@ public class FinalizeManager {
 
 	}
 
-	private static void _finalizeReference(
-		Reference<? extends Object> reference) {
-
-		FinalizeAction finalizeAction = _finalizeActions.remove(
-			new IdentityKey(reference));
-
-		if (finalizeAction != null) {
-			try {
-				finalizeAction.doFinalize(reference);
-			}
-			finally {
-				reference.clear();
-			}
-		}
-	}
-
-	private static void _pollingCleanup() {
-		Reference<? extends Object> reference = null;
-
-		while ((reference = _referenceQueue.poll()) != null) {
-			_finalizeReference(reference);
-		}
-	}
-
 	private static final Map<IdentityKey, FinalizeAction> _finalizeActions =
 		new ConcurrentHashMap<>();
 	private static final ReferenceQueue<Object> _referenceQueue =
@@ -146,19 +121,32 @@ public class FinalizeManager {
 
 	private static class FinalizeThread extends Thread {
 
-		public FinalizeThread(String name) {
-			super(name);
-		}
-
 		@Override
 		public void run() {
 			while (true) {
 				try {
-					_finalizeReference(_referenceQueue.remove());
+					Reference<? extends Object> reference =
+						_referenceQueue.remove();
+
+					FinalizeAction finalizeAction = _finalizeActions.remove(
+						new IdentityKey(reference));
+
+					if (finalizeAction != null) {
+						try {
+							finalizeAction.doFinalize(reference);
+						}
+						finally {
+							reference.clear();
+						}
+					}
 				}
 				catch (InterruptedException ie) {
 				}
 			}
+		}
+
+		private FinalizeThread(String name) {
+			super(name);
 		}
 
 	}
@@ -190,16 +178,13 @@ public class FinalizeManager {
 	}
 
 	static {
-		if (THREAD_ENABLED) {
-			Thread thread = new FinalizeThread("Finalize Thread");
+		Thread thread = new FinalizeThread("Finalize Thread");
 
-			thread.setContextClassLoader(
-				FinalizeManager.class.getClassLoader());
+		thread.setContextClassLoader(FinalizeManager.class.getClassLoader());
 
-			thread.setDaemon(true);
+		thread.setDaemon(true);
 
-			thread.start();
-		}
+		thread.start();
 	}
 
 }

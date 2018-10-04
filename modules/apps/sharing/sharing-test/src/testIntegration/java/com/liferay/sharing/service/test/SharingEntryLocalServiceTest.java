@@ -972,7 +972,7 @@ public class SharingEntryLocalServiceTest {
 
 			List<SharingEntry> sharingEntriesForClassNameId2 =
 				_sharingEntryLocalService.getUniqueToUserSharingEntries(
-					_toUser.getUserId(), classNameId, 0,
+					_toUser.getUserId(), classNameId2, 0,
 					_sharingEntryLocalService.
 						getUniqueToUserSharingEntriesCount(
 							_toUser.getUserId(), classNameId2),

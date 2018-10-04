@@ -53,6 +53,7 @@ class Layout extends Component {
 
 	/**
 	 * @inheritDoc
+	 * @review
 	 */
 
 	dispose() {

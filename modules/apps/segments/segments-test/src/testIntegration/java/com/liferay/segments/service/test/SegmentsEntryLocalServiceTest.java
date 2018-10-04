@@ -135,7 +135,7 @@ public class SegmentsEntryLocalServiceTest {
 	}
 
 	@Test
-	public void testDeleteSegmentsEntryWithSegmentEntryRels()
+	public void testDeleteSegmentsEntryWithSegmentsEntryRels()
 		throws PortalException {
 
 		SegmentsEntry segmentsEntry = _addSegmentsEntry();

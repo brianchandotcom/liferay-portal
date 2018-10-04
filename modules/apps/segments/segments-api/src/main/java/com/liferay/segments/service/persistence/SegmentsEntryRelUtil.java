@@ -661,6 +661,81 @@ public class SegmentsEntryRelUtil {
 	}
 
 	/**
+	* Returns the segments entry rel where segmentsEntryId = &#63; and classNameId = &#63; and classPK = &#63; or throws a {@link NoSuchEntryRelException} if it could not be found.
+	*
+	* @param segmentsEntryId the segments entry ID
+	* @param classNameId the class name ID
+	* @param classPK the class pk
+	* @return the matching segments entry rel
+	* @throws NoSuchEntryRelException if a matching segments entry rel could not be found
+	*/
+	public static SegmentsEntryRel findByS_CN_CPK(long segmentsEntryId,
+		long classNameId, long classPK)
+		throws com.liferay.segments.exception.NoSuchEntryRelException {
+		return getPersistence()
+				   .findByS_CN_CPK(segmentsEntryId, classNameId, classPK);
+	}
+
+	/**
+	* Returns the segments entry rel where segmentsEntryId = &#63; and classNameId = &#63; and classPK = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	*
+	* @param segmentsEntryId the segments entry ID
+	* @param classNameId the class name ID
+	* @param classPK the class pk
+	* @return the matching segments entry rel, or <code>null</code> if a matching segments entry rel could not be found
+	*/
+	public static SegmentsEntryRel fetchByS_CN_CPK(long segmentsEntryId,
+		long classNameId, long classPK) {
+		return getPersistence()
+				   .fetchByS_CN_CPK(segmentsEntryId, classNameId, classPK);
+	}
+
+	/**
+	* Returns the segments entry rel where segmentsEntryId = &#63; and classNameId = &#63; and classPK = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	*
+	* @param segmentsEntryId the segments entry ID
+	* @param classNameId the class name ID
+	* @param classPK the class pk
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the matching segments entry rel, or <code>null</code> if a matching segments entry rel could not be found
+	*/
+	public static SegmentsEntryRel fetchByS_CN_CPK(long segmentsEntryId,
+		long classNameId, long classPK, boolean retrieveFromCache) {
+		return getPersistence()
+				   .fetchByS_CN_CPK(segmentsEntryId, classNameId, classPK,
+			retrieveFromCache);
+	}
+
+	/**
+	* Removes the segments entry rel where segmentsEntryId = &#63; and classNameId = &#63; and classPK = &#63; from the database.
+	*
+	* @param segmentsEntryId the segments entry ID
+	* @param classNameId the class name ID
+	* @param classPK the class pk
+	* @return the segments entry rel that was removed
+	*/
+	public static SegmentsEntryRel removeByS_CN_CPK(long segmentsEntryId,
+		long classNameId, long classPK)
+		throws com.liferay.segments.exception.NoSuchEntryRelException {
+		return getPersistence()
+				   .removeByS_CN_CPK(segmentsEntryId, classNameId, classPK);
+	}
+
+	/**
+	* Returns the number of segments entry rels where segmentsEntryId = &#63; and classNameId = &#63; and classPK = &#63;.
+	*
+	* @param segmentsEntryId the segments entry ID
+	* @param classNameId the class name ID
+	* @param classPK the class pk
+	* @return the number of matching segments entry rels
+	*/
+	public static int countByS_CN_CPK(long segmentsEntryId, long classNameId,
+		long classPK) {
+		return getPersistence()
+				   .countByS_CN_CPK(segmentsEntryId, classNameId, classPK);
+	}
+
+	/**
 	* Caches the segments entry rel in the entity cache if it is enabled.
 	*
 	* @param segmentsEntryRel the segments entry rel

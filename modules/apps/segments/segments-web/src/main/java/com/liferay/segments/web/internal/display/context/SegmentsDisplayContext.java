@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.segments.model.SegmentsEntry;
 import com.liferay.segments.service.SegmentsEntryService;
 
 import java.util.List;
@@ -127,31 +126,6 @@ public class SegmentsDisplayContext {
 		return _searchContainer;
 	}
 
-	public SegmentsEntry getSegmentsEntry() throws PortalException {
-		if (_segmentsEntry != null) {
-			return _segmentsEntry;
-		}
-
-		long segmentsEntryId = ParamUtil.getLong(_request, "segmentsEntryId");
-
-		if (segmentsEntryId > 0) {
-			_segmentsEntry = _segmentsEntryService.getSegmentsEntry(
-				segmentsEntryId);
-		}
-
-		return _segmentsEntry;
-	}
-
-	public long getSegmentsEntryId() throws PortalException {
-		SegmentsEntry segmentsEntry = getSegmentsEntry();
-
-		if (segmentsEntry == null) {
-			return 0;
-		}
-
-		return segmentsEntry.getSegmentsEntryId();
-	}
-
 	public int getTotalItems() throws PortalException {
 		SearchContainer<?> searchContainer = getSearchContainer();
 
@@ -177,7 +151,6 @@ public class SegmentsDisplayContext {
 	private final RenderResponse _renderResponse;
 	private final HttpServletRequest _request;
 	private SearchContainer _searchContainer;
-	private SegmentsEntry _segmentsEntry;
 	private final SegmentsEntryService _segmentsEntryService;
 	private final ThemeDisplay _themeDisplay;
 

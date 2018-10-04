@@ -89,6 +89,11 @@
 			<finder-column name="classNameId" />
 			<finder-column name="classPK" />
 		</finder>
+		<finder name="S_CN_CPK" return-type="SegmentsEntryRel" unique="true">
+			<finder-column name="segmentsEntryId" />
+			<finder-column name="classNameId" />
+			<finder-column name="classPK" />
+		</finder>
 	</entity>
 	<exceptions>
 		<exception>SegmentsEntryKey</exception>

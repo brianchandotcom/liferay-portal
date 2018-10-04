@@ -67,6 +67,7 @@ public class UpdatePasswordMVCActionCommand extends BaseMVCActionCommand {
 		try {
 			ThemeDisplay themeDisplay =
 				(ThemeDisplay)actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
+
 			User user = _portal.getSelectedUser(actionRequest);
 
 			UserPermissionUtil.check(

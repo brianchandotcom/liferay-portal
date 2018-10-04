@@ -616,6 +616,11 @@ http://www.w3.org/TR/html401/struct/global.html
 		<!-- Anchor and anchor related tags -->
 
 		<tag name="a" action="validate">
+			<attribute name="target">
+				<regexp-list>
+					<regexp name="htmlId"/>
+				</regexp-list>
+			</attribute>
 
 			<!--  onInvalid="filterTag" has been removed as per suggestion at OWASP SJ 2007 - just "name" is valid -->
 			<attribute name="href"/>

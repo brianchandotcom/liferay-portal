@@ -118,12 +118,107 @@ public class SegmentsEntryRelServiceHttp {
 		}
 	}
 
+	public static void deleteSegmentsEntryRel(HttpPrincipal httpPrincipal,
+		long segmentsEntryId, long classNameId, long classPK)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		try {
+			MethodKey methodKey = new MethodKey(SegmentsEntryRelServiceUtil.class,
+					"deleteSegmentsEntryRel",
+					_deleteSegmentsEntryRelParameterTypes2);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey,
+					segmentsEntryId, classNameId, classPK);
+
+			try {
+				TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
+	public static int getSegmentsEntryRelCount(HttpPrincipal httpPrincipal,
+		long segmentsEntryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		try {
+			MethodKey methodKey = new MethodKey(SegmentsEntryRelServiceUtil.class,
+					"getSegmentsEntryRelCount",
+					_getSegmentsEntryRelCountParameterTypes3);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey,
+					segmentsEntryId);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return ((Integer)returnObj).intValue();
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
+	public static int getSegmentsEntryRelCount(HttpPrincipal httpPrincipal,
+		long groupId, long classNameId, long classPK)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		try {
+			MethodKey methodKey = new MethodKey(SegmentsEntryRelServiceUtil.class,
+					"getSegmentsEntryRelCount",
+					_getSegmentsEntryRelCountParameterTypes4);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
+					classNameId, classPK);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return ((Integer)returnObj).intValue();
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
 	public static java.util.List<com.liferay.segments.model.SegmentsEntryRel> getSegmentsEntryRels(
 		HttpPrincipal httpPrincipal, long segmentsEntryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(SegmentsEntryRelServiceUtil.class,
-					"getSegmentsEntryRels", _getSegmentsEntryRelsParameterTypes2);
+					"getSegmentsEntryRels", _getSegmentsEntryRelsParameterTypes5);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					segmentsEntryId);
@@ -156,7 +251,7 @@ public class SegmentsEntryRelServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(SegmentsEntryRelServiceUtil.class,
-					"getSegmentsEntryRels", _getSegmentsEntryRelsParameterTypes3);
+					"getSegmentsEntryRels", _getSegmentsEntryRelsParameterTypes6);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
 					classNameId, classPK);
@@ -183,6 +278,33 @@ public class SegmentsEntryRelServiceHttp {
 		}
 	}
 
+	public static boolean hasSegmentsEntryRel(HttpPrincipal httpPrincipal,
+		long segmentsEntryId, long classNameId, long classPK) {
+		try {
+			MethodKey methodKey = new MethodKey(SegmentsEntryRelServiceUtil.class,
+					"hasSegmentsEntryRel", _hasSegmentsEntryRelParameterTypes7);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey,
+					segmentsEntryId, classNameId, classPK);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return ((Boolean)returnObj).booleanValue();
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
 	private static Log _log = LogFactoryUtil.getLog(SegmentsEntryRelServiceHttp.class);
 	private static final Class<?>[] _addSegmentsEntryRelParameterTypes0 = new Class[] {
 			long.class, long.class, long.class,
@@ -191,10 +313,22 @@ public class SegmentsEntryRelServiceHttp {
 	private static final Class<?>[] _deleteSegmentsEntryRelParameterTypes1 = new Class[] {
 			long.class
 		};
-	private static final Class<?>[] _getSegmentsEntryRelsParameterTypes2 = new Class[] {
+	private static final Class<?>[] _deleteSegmentsEntryRelParameterTypes2 = new Class[] {
+			long.class, long.class, long.class
+		};
+	private static final Class<?>[] _getSegmentsEntryRelCountParameterTypes3 = new Class[] {
 			long.class
 		};
-	private static final Class<?>[] _getSegmentsEntryRelsParameterTypes3 = new Class[] {
+	private static final Class<?>[] _getSegmentsEntryRelCountParameterTypes4 = new Class[] {
+			long.class, long.class, long.class
+		};
+	private static final Class<?>[] _getSegmentsEntryRelsParameterTypes5 = new Class[] {
+			long.class
+		};
+	private static final Class<?>[] _getSegmentsEntryRelsParameterTypes6 = new Class[] {
+			long.class, long.class, long.class
+		};
+	private static final Class<?>[] _hasSegmentsEntryRelParameterTypes7 = new Class[] {
 			long.class, long.class, long.class
 		};
 }

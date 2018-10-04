@@ -68,7 +68,7 @@ public class ServiceBag<V> {
 			},
 			new ClassLoaderBeanHandler(serviceWrapper, classLoader));
 
-		_advisedSupport.setTarget(nextTarget, serviceWrapper.getClass());
+		_advisedSupport.setTarget(nextTarget);
 
 		_serviceWrapper = (ServiceWrapper<?>)nextTarget;
 	}

@@ -86,11 +86,13 @@ public class ServiceBeanAopProxy
 				_serviceBeanAopCacheManager.reset();
 			}
 
+			/**
+			 * @deprecated As of Judson (7.1.x), with no direct replacement
+			 */
+			@Deprecated
 			@Override
 			public void setTarget(Object target, Class<?> targetClass) {
-				_advisedSupport.setTarget(target, targetClass);
-
-				_serviceBeanAopCacheManager.reset();
+				setTarget(target);
 			}
 
 		};

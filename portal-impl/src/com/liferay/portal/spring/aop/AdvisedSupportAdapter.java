@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.spring.aop.AdvisedSupport;
 
 import org.springframework.aop.TargetSource;
 import org.springframework.aop.framework.AopProxyUtils;
-import org.springframework.aop.target.SingletonTargetSource;
 
 /**
  * @author Tina Tian
@@ -54,17 +53,13 @@ public class AdvisedSupportAdapter implements AdvisedSupport {
 		_advisedSupport.setTarget(target);
 	}
 
+	/**
+	 * @deprecated As of Judson (7.1.x), with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public void setTarget(Object target, final Class<?> targetClass) {
-		_advisedSupport.setTargetSource(
-			new SingletonTargetSource(target) {
-
-				@Override
-				public Class<?> getTargetClass() {
-					return targetClass;
-				}
-
-			});
+		setTarget(target);
 	}
 
 	private final org.springframework.aop.framework.AdvisedSupport

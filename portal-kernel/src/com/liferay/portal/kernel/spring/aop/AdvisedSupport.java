@@ -25,6 +25,10 @@ public interface AdvisedSupport {
 
 	public void setTarget(Object target);
 
+	/**
+	 * @deprecated As of Judson (7.1.x), with no direct replacement
+	 */
+	@Deprecated
 	public void setTarget(Object target, Class<?> targetClass);
 
 }

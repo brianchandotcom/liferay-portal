@@ -67,22 +67,15 @@ public class WhitespaceCheck extends BaseFileCheck {
 
 		Matcher matcher = pattern.matcher(line);
 
-		if (!matcher.find()) {
-			return line;
+		while (matcher.find()) {
+			int x = matcher.start(1);
+
+			if (!ToolsUtil.isInsideQuotes(line, x)) {
+				return StringUtil.insert(line, StringPool.SPACE, x);
+			}
 		}
 
-		if (ToolsUtil.isInsideQuotes(line, matcher.start(1))) {
-			return line;
-		}
-
-		String whitespace = matcher.group(2);
-
-		if (whitespace.length() > 0) {
-			return line;
-		}
-
-		return line.substring(0, matcher.start(2)) + StringPool.SPACE +
-			line.substring(matcher.start(2));
+		return line;
 	}
 
 	protected String formatIncorrectSyntax(
@@ -135,11 +128,13 @@ public class WhitespaceCheck extends BaseFileCheck {
 			linePart = formatIncorrectSyntax(linePart, "( ", "(", false);
 			linePart = formatIncorrectSyntax(linePart, "){", ") {", false);
 			linePart = formatIncorrectSyntax(linePart, "]{", "] {", false);
-			linePart = formatIncorrectSyntax(linePart, "(\\.\\.\\.( ?))\\w");
-			linePart = formatIncorrectSyntax(linePart, "\\w(( ?)=)");
-			linePart = formatIncorrectSyntax(linePart, "(=( ?))\\w");
-			linePart = formatIncorrectSyntax(linePart, "for \\([^:]*(( ?):)");
-			linePart = formatIncorrectSyntax(linePart, "for \\([^:]*(:( ?)).+");
+			linePart = formatIncorrectSyntax(linePart, "\\.\\.\\.(\\w)");
+			linePart = formatIncorrectSyntax(linePart, "\\w(=)");
+			linePart = formatIncorrectSyntax(linePart, "=(\\w)");
+			linePart = formatIncorrectSyntax(
+				linePart, "for \\([^:]*[^:\"'\\s](:)");
+			linePart = formatIncorrectSyntax(
+				linePart, "for \\([^:]*:([^:\"'\\s])");
 		}
 
 		if (!linePart.startsWith("##")) {

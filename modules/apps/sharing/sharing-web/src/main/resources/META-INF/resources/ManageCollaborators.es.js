@@ -1,6 +1,5 @@
 import 'clay-sticker';
 import 'clay-select';
-import dom from 'metal-dom';
 import Soy from 'metal-soy';
 import {Config} from 'metal-state';
 import templates from './ManageCollaborators.soy';
@@ -64,12 +63,10 @@ class ManageCollaborators extends PortletBase {
 		let collaboratorId = event.delegateTarget.dataset.collaboratorId;
 		let sharingEntryId = event.delegateTarget.dataset.sharingentryId;
 
-		let collaboratorElement = dom.toElement('#collaborator' + collaboratorId);
+		this.collaborators = this.collaborators.filter(
+			collaborator => collaborator.id != collaboratorId);
 
-		if (collaboratorElement) {
-			collaboratorElement.remove();
-			this._deleteSharingEntryIds.push(sharingEntryId);
-		}
+		this._deleteSharingEntryIds.push(sharingEntryId);
 	}
 
 	/**

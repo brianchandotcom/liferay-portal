@@ -101,25 +101,24 @@ public class GitRepositoryFactory {
 		if (jsonObjectType.equals(CompanionPortalWorkspaceGitRepository.TYPE)) {
 			return new CompanionPortalWorkspaceGitRepository(jsonObject);
 		}
-		else if (jsonObjectType.equals(
-					PrimaryPortalWorkspaceGitRepository.TYPE)) {
 
+		if (jsonObjectType.equals(PrimaryPortalWorkspaceGitRepository.TYPE)) {
 			return new PrimaryPortalWorkspaceGitRepository(jsonObject);
 		}
-		else if (jsonObjectType.equals(JenkinsWorkspaceGitRepository.TYPE)) {
+
+		if (jsonObjectType.equals(JenkinsWorkspaceGitRepository.TYPE)) {
 			return new JenkinsWorkspaceGitRepository(jsonObject);
 		}
-		else if (jsonObjectType.equals(
-					OtherPortalWorkspaceGitRepository.TYPE)) {
 
+		if (jsonObjectType.equals(OtherPortalWorkspaceGitRepository.TYPE)) {
 			return new OtherPortalWorkspaceGitRepository(jsonObject);
 		}
-		else if (jsonObjectType.equals(PluginsWorkspaceGitRepository.TYPE)) {
+
+		if (jsonObjectType.equals(PluginsWorkspaceGitRepository.TYPE)) {
 			return new PluginsWorkspaceGitRepository(jsonObject);
 		}
-		else if (jsonObjectType.equals(
-					PortalPluginsWorkspaceGitRepository.TYPE)) {
 
+		if (jsonObjectType.equals(PortalPluginsWorkspaceGitRepository.TYPE)) {
 			return new PortalPluginsWorkspaceGitRepository(jsonObject);
 		}
 

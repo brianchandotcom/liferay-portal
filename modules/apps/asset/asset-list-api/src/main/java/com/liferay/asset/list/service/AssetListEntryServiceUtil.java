@@ -145,11 +145,20 @@ public class AssetListEntryServiceUtil {
 		return getService().updateAssetListEntry(assetListEntryId, title);
 	}
 
-	public static com.liferay.asset.list.model.AssetListEntry updateAssetListEntrySettings(
+	public static com.liferay.asset.list.model.AssetListEntry updateAssetListEntryTypeSettings(
 		long assetListEntryId, String typeSettings)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
-				   .updateAssetListEntrySettings(assetListEntryId, typeSettings);
+				   .updateAssetListEntryTypeSettings(assetListEntryId,
+			typeSettings);
+	}
+
+	public static com.liferay.asset.list.model.AssetListEntry updateAssetListEntryTypeSettingsProperties(
+		long assetListEntryId, String typeSettingsProperties)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .updateAssetListEntryTypeSettingsProperties(assetListEntryId,
+			typeSettingsProperties);
 	}
 
 	public static AssetListEntryService getService() {

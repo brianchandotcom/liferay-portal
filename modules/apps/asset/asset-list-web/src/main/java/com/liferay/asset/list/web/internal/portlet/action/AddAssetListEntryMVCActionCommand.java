@@ -14,6 +14,7 @@
 
 package com.liferay.asset.list.web.internal.portlet.action;
 
+import com.liferay.asset.list.constants.AssetListEntryTypeConstants;
 import com.liferay.asset.list.constants.AssetListPortletKeys;
 import com.liferay.asset.list.model.AssetListEntry;
 import com.liferay.asset.list.service.AssetListEntryService;
@@ -28,8 +29,11 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -63,10 +67,29 @@ public class AddAssetListEntryMVCActionCommand extends BaseMVCActionCommand {
 			actionRequest);
 
 		try {
-			AssetListEntry assetListEntry =
-				_assetListEntryService.addAssetListEntry(
+			AssetListEntry assetListEntry = null;
+
+			if (type == AssetListEntryTypeConstants.TYPE_DYNAMIC) {
+				ThemeDisplay themeDisplay =
+					(ThemeDisplay)actionRequest.getAttribute(
+						WebKeys.THEME_DISPLAY);
+
+				UnicodeProperties properties = new UnicodeProperties(true);
+
+				properties.setProperty(
+					"groupIds", String.valueOf(themeDisplay.getScopeGroupId()));
+
+				assetListEntry =
+					_assetListEntryService.addDynamicAssetListEntry(
+						serviceContext.getUserId(),
+						serviceContext.getScopeGroupId(), title,
+						properties.toString(), serviceContext);
+			}
+			else {
+				assetListEntry = _assetListEntryService.addAssetListEntry(
 					serviceContext.getScopeGroupId(), title, type,
 					serviceContext);
+			}
 
 			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 

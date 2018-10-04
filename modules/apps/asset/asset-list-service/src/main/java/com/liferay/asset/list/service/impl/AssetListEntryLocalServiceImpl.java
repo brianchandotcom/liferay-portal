@@ -215,8 +215,22 @@ public class AssetListEntryLocalServiceImpl
 	}
 
 	@Override
-	public AssetListEntry updateAssetListEntrySettings(
+	public AssetListEntry updateAssetListEntryTypeSettings(
 			long assetListEntryId, String typeSettings)
+		throws PortalException {
+
+		AssetListEntry assetListEntry =
+			assetListEntryPersistence.findByPrimaryKey(assetListEntryId);
+
+		assetListEntry.setModifiedDate(new Date());
+		assetListEntry.setTypeSettings(typeSettings);
+
+		return assetListEntryPersistence.update(assetListEntry);
+	}
+
+	@Override
+	public AssetListEntry updateAssetListEntryTypeSettingsProperties(
+			long assetListEntryId, String typeSettingsProperties)
 		throws PortalException {
 
 		AssetListEntry assetListEntry =
@@ -228,7 +242,7 @@ public class AssetListEntryLocalServiceImpl
 
 		UnicodeProperties newProperties = new UnicodeProperties();
 
-		newProperties.fastLoad(typeSettings);
+		newProperties.fastLoad(typeSettingsProperties);
 
 		existingProperties.putAll(newProperties);
 

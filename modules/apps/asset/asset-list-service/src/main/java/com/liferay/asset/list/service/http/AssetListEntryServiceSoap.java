@@ -277,11 +277,27 @@ public class AssetListEntryServiceSoap {
 		}
 	}
 
-	public static com.liferay.asset.list.model.AssetListEntrySoap updateAssetListEntrySettings(
+	public static com.liferay.asset.list.model.AssetListEntrySoap updateAssetListEntryTypeSettings(
 		long assetListEntryId, String typeSettings) throws RemoteException {
 		try {
-			com.liferay.asset.list.model.AssetListEntry returnValue = AssetListEntryServiceUtil.updateAssetListEntrySettings(assetListEntryId,
+			com.liferay.asset.list.model.AssetListEntry returnValue = AssetListEntryServiceUtil.updateAssetListEntryTypeSettings(assetListEntryId,
 					typeSettings);
+
+			return com.liferay.asset.list.model.AssetListEntrySoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.asset.list.model.AssetListEntrySoap updateAssetListEntryTypeSettingsProperties(
+		long assetListEntryId, String typeSettingsProperties)
+		throws RemoteException {
+		try {
+			com.liferay.asset.list.model.AssetListEntry returnValue = AssetListEntryServiceUtil.updateAssetListEntryTypeSettingsProperties(assetListEntryId,
+					typeSettingsProperties);
 
 			return com.liferay.asset.list.model.AssetListEntrySoap.toSoapModel(returnValue);
 		}

@@ -65,7 +65,7 @@ public class EditAssetListEntrySettingsMVCActionCommand
 
 		updateQueryLogic(actionRequest, typeSettingsProperties);
 
-		_assetListEntryService.updateAssetListEntrySettings(
+		_assetListEntryService.updateAssetListEntryTypeSettingsProperties(
 			assetListEntryId, typeSettingsProperties.toString());
 	}
 

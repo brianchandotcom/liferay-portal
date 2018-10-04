@@ -395,11 +395,19 @@ public class AssetListEntryLocalServiceWrapper
 	}
 
 	@Override
-	public com.liferay.asset.list.model.AssetListEntry updateAssetListEntrySettings(
+	public com.liferay.asset.list.model.AssetListEntry updateAssetListEntryTypeSettings(
 		long assetListEntryId, String typeSettings)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _assetListEntryLocalService.updateAssetListEntrySettings(assetListEntryId,
+		return _assetListEntryLocalService.updateAssetListEntryTypeSettings(assetListEntryId,
 			typeSettings);
+	}
+
+	@Override
+	public com.liferay.asset.list.model.AssetListEntry updateAssetListEntryTypeSettingsProperties(
+		long assetListEntryId, String typeSettingsProperties)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _assetListEntryLocalService.updateAssetListEntryTypeSettingsProperties(assetListEntryId,
+			typeSettingsProperties);
 	}
 
 	@Override

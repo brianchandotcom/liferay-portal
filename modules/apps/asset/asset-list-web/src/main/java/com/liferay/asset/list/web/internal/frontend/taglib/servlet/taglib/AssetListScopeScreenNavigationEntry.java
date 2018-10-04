@@ -18,9 +18,9 @@ import com.liferay.asset.list.constants.AssetListEntryTypeConstants;
 import com.liferay.asset.list.constants.AssetListFormConstants;
 import com.liferay.asset.list.constants.AssetListWebKeys;
 import com.liferay.asset.list.model.AssetListEntry;
-import com.liferay.dynamic.data.mapping.util.DDMIndexer;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationCategory;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
+import com.liferay.item.selector.ItemSelector;
 import com.liferay.portal.kernel.model.User;
 
 import java.io.IOException;
@@ -36,27 +36,27 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	property = {
-		"screen.navigation.category.order:Integer=10",
-		"screen.navigation.entry.order:Integer=10"
+		"screen.navigation.category.order:Integer=15",
+		"screen.navigation.entry.order:Integer=15"
 	},
 	service = {ScreenNavigationCategory.class, ScreenNavigationEntry.class}
 )
-public class AssetListSourceScreenNavigationEntry
+public class AssetListScopeScreenNavigationEntry
 	extends BaseAssetListScreenNavigationEntry {
 
 	@Override
 	public String getCategoryKey() {
-		return AssetListFormConstants.ENTRY_KEY_SOURCE;
+		return AssetListFormConstants.ENTRY_KEY_SCOPE;
 	}
 
 	@Override
 	public String getEntryKey() {
-		return AssetListFormConstants.ENTRY_KEY_SOURCE;
+		return AssetListFormConstants.ENTRY_KEY_SCOPE;
 	}
 
 	@Override
 	public String getJspPath() {
-		return "/asset_list/source.jsp";
+		return "/asset_list/scope.jsp";
 	}
 
 	@Override
@@ -78,12 +78,12 @@ public class AssetListSourceScreenNavigationEntry
 	public void render(HttpServletRequest request, HttpServletResponse response)
 		throws IOException {
 
-		request.setAttribute(AssetListWebKeys.DDM_INDEXER, _ddmIndexer);
+		request.setAttribute(AssetListWebKeys.ITEM_SELECTOR, _itemSelector);
 
 		super.render(request, response);
 	}
 
 	@Reference
-	private DDMIndexer _ddmIndexer;
+	private ItemSelector _itemSelector;
 
 }

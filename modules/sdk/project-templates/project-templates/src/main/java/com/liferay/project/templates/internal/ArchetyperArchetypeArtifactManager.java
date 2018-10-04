@@ -84,7 +84,7 @@ public class ArchetyperArchetypeArtifactManager
 				}
 				else {
 					archetypeFile = ProjectTemplatesUtil.getArchetypeFile(
-						artifactId, archetypesFile);
+						artifactId);
 
 					if (archetypeFile != null) {
 						break;

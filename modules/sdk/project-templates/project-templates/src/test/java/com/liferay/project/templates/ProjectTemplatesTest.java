@@ -19,6 +19,7 @@ import aQute.bnd.main.bnd;
 import com.liferay.maven.executor.MavenExecutor;
 import com.liferay.project.templates.internal.ProjectGenerator;
 import com.liferay.project.templates.internal.util.FileUtil;
+import com.liferay.project.templates.internal.util.ProjectTemplatesUtil;
 import com.liferay.project.templates.internal.util.Validator;
 import com.liferay.project.templates.util.DirectoryComparator;
 import com.liferay.project.templates.util.FileTestUtil;
@@ -3865,8 +3866,8 @@ public class ProjectTemplatesTest {
 
 		completeArgs.add("-DarchetypeArtifactId=" + archetypeArtifactId);
 
-		String projectTemplateVersion = _projectTemplateVersions.getProperty(
-			archetypeArtifactId);
+		String projectTemplateVersion =
+			ProjectTemplatesUtil.getArchetypeVersion(archetypeArtifactId);
 
 		Assert.assertTrue(
 			"Unable to get project template version",

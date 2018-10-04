@@ -25,15 +25,19 @@ public class GitRepositoryFactory {
 		String repositoryType, WorkspaceGitRepository workspaceGitRepository,
 		PullRequest pullRequest, String upstreamBranchName) {
 
-		if (repositoryType.equals("portal.companion")) {
+		if (repositoryType.equals(CompanionPortalWorkspaceGitRepository.TYPE)) {
 			return new CompanionPortalWorkspaceGitRepository(
 				pullRequest, upstreamBranchName, workspaceGitRepository);
 		}
-		else if (repositoryType.equals("portal.other")) {
+		else if (repositoryType.equals(
+					OtherPortalWorkspaceGitRepository.TYPE)) {
+
 			return new OtherPortalWorkspaceGitRepository(
 				pullRequest, upstreamBranchName);
 		}
-		else if (repositoryType.equals("portal.plugins")) {
+		else if (repositoryType.equals(
+					PortalPluginsWorkspaceGitRepository.TYPE)) {
+
 			return new PortalPluginsWorkspaceGitRepository(
 				pullRequest, upstreamBranchName);
 		}
@@ -46,15 +50,19 @@ public class GitRepositoryFactory {
 		String repositoryType, WorkspaceGitRepository workspaceGitRepository,
 		RemoteGitRef remoteGitRef, String upstreamBranchName) {
 
-		if (repositoryType.equals("portal.companion")) {
+		if (repositoryType.equals(CompanionPortalWorkspaceGitRepository.TYPE)) {
 			return new CompanionPortalWorkspaceGitRepository(
 				remoteGitRef, upstreamBranchName, workspaceGitRepository);
 		}
-		else if (repositoryType.equals("portal.other")) {
+		else if (repositoryType.equals(
+					OtherPortalWorkspaceGitRepository.TYPE)) {
+
 			return new OtherPortalWorkspaceGitRepository(
 				remoteGitRef, upstreamBranchName);
 		}
-		else if (repositoryType.equals("portal.plugins")) {
+		else if (repositoryType.equals(
+					PortalPluginsWorkspaceGitRepository.TYPE)) {
+
 			return new PortalPluginsWorkspaceGitRepository(
 				remoteGitRef, upstreamBranchName);
 		}

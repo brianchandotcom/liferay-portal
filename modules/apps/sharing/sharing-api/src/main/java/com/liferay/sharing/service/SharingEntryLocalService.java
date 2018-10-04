@@ -518,7 +518,9 @@ public interface SharingEntryLocalService extends BaseLocalService,
 	* Returns a list of all the sharing entries of a resource that has been
 	* shared to a user returning at most one per shared model
 	*
-	* @param toUserId the user id*
+	* @param toUserId the user id
+	* @param classNameId the classNameId to filter by
+	* @param orderByComparator the comparator to order the sharing entries
 	* @return the list of sharing entries
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -530,8 +532,8 @@ public interface SharingEntryLocalService extends BaseLocalService,
 	* Returns the number of sharing entries of a resource that have been shared
 	* by to user returning at most one per shared model.
 	*
-	* @param classNameId
-	* @param toUserId the user id*
+	* @param toUserId the user id
+	* @param classNameId the classNameId to filter by
 	* @return the number of sharing entries
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

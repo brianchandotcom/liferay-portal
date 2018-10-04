@@ -19,7 +19,7 @@
 	{@param handleLayoutColumnItemCheck: any}
 	{@param pathThemeImages: string}
 	{@param portletNamespace: string}
-	{@param? hoveredLayoutColumnItemBorder: string}
+	{@param? draggingItemPosition: string}
 	{@param? hoveredLayoutColumnItemPlid: string}
 
 	{let $layoutColumnClasses kind="text"}
@@ -38,7 +38,7 @@
 		{foreach $layoutColumnItem in $layoutColumn}
 			{let $styleModifier kind="text"}
 				{if $hoveredLayoutColumnItemPlid == $layoutColumnItem.plid}
-					{$hoveredLayoutColumnItemBorder}
+					{$draggingItemPosition}
 				{/if}
 			{/let}
 

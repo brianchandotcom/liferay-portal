@@ -3,12 +3,13 @@ import position from 'metal-position';
 import State, {Config} from 'metal-state';
 
 /**
- * Borders where elements can be dragged to
+ * Positions where elements can be dragged to
  * @review
  */
 
-const DRAG_BORDERS = {
+const DRAG_POSITIONS = {
 	bottom: 'layout-column-item-drag-bottom',
+	inside: 'layout-column-item-drag-inside',
 	top: 'layout-column-item-drag-top'
 };
 
@@ -56,16 +57,16 @@ class LayoutDragDrop extends State {
 			const targetItemPlid = targetItem.dataset.layoutColumnItemPlid;
 			const targetItemRegion = position.getRegion(targetItem);
 
-			this._targetBorder = DRAG_BORDERS.bottom;
+			this._draggingItemPosition = DRAG_POSITIONS.bottom;
 
 			if (Math.abs(mouseY - targetItemRegion.top) <= Math.abs(mouseY - targetItemRegion.bottom)) {
-				this._targetBorder = DRAG_BORDERS.top;
+				this._draggingItemPosition = DRAG_POSITIONS.top;
 			}
 
 			this.emit(
 				'dragLayoutColumnItem',
 				{
-					border: this._targetBorder,
+					position: this._draggingItemPosition,
 					sourceItemPlid,
 					targetItemPlid
 				}
@@ -164,7 +165,7 @@ LayoutDragDrop.STATE = {
 	_dragDrop: Config.internal().value(null),
 
 	/**
-	 * Nearest border of the hovered item while dragging
+	 * Position of the dragging card
 	 * @default undefined
 	 * @instance
 	 * @memberOf LayoutDragDrop
@@ -172,11 +173,11 @@ LayoutDragDrop.STATE = {
 	 * @type {!string}
 	 */
 
-	_targetBorder: Config.internal().string()
+	_draggingItemPosition: Config.internal().string()
 };
 
 export {
-	DRAG_BORDERS,
+	DRAG_POSITIONS,
 	LayoutDragDrop
 };
 export default LayoutDragDrop;

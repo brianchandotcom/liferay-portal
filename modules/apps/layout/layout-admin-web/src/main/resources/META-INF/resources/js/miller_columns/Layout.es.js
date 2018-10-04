@@ -4,7 +4,7 @@ import Soy from 'metal-soy';
 
 import './LayoutBreadcrumbs.es';
 import './LayoutColumn.es';
-import {DRAG_BORDERS, LayoutDragDrop} from './utils/LayoutDragDrop.es';
+import {DRAG_POSITIONS, LayoutDragDrop} from './utils/LayoutDragDrop.es';
 import templates from './Layout.soy';
 
 /**
@@ -142,7 +142,7 @@ class Layout extends Component {
 	/**
 	 * Handle dragLayoutColumnItem event
 	 * @param {!object} eventData
-	 * @param {!string} eventData.border
+	 * @param {!string} eventData.position
 	 * @param {!string} eventData.targetItemPlid
 	 * @private
 	 * @review
@@ -153,7 +153,7 @@ class Layout extends Component {
 		const targetColumn = this._getParentColumnByPlid(this.layoutColumns, eventData.targetItemPlid);
 
 		if (sourceColumn === targetColumn) {
-			this._hoveredLayoutColumnItemBorder = eventData.border;
+			this._draggingItemPosition = eventData.position;
 			this._hoveredLayoutColumnItemPlid = eventData.targetItemPlid;
 		}
 	}
@@ -204,7 +204,7 @@ class Layout extends Component {
 
 			let priority = sourceColumn.indexOf(targetItem);
 
-			if (this._hoveredLayoutColumnItemBorder === DRAG_BORDERS.bottom) {
+			if (this._draggingItemPosition === DRAG_POSITIONS.bottom) {
 				priority = sourceColumn.indexOf(targetItem) + 1;
 			}
 
@@ -285,7 +285,7 @@ class Layout extends Component {
 	 */
 
 	_resetHoveredData() {
-		this._hoveredLayoutColumnItemBorder = null;
+		this._draggingItemPosition = null;
 		this._hoveredLayoutColumnItemPlid = null;
 	}
 
@@ -402,7 +402,7 @@ Layout.STATE = {
 	 * @type {!string}
 	 */
 
-	_hoveredLayoutColumnItemBorder: Config.string().internal(),
+	_draggingItemPosition: Config.string().internal(),
 
 	/**
 	 * Id of the hovered layout column item when dragging.

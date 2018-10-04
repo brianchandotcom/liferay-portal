@@ -13,7 +13,7 @@
 	{@param portletNamespace: string}
 	{@param siteNavigationMenuNames: string}
 	{@param _handleLayoutColumnItemCheck: any}
-	{@param? _hoveredLayoutColumnItemBorder: string}
+	{@param? _draggingItemPosition: string}
 	{@param? _hoveredLayoutColumnItemPlid: string}
 
 	<div ref="layout">
@@ -24,7 +24,7 @@
 		<div class="bg-white flex-nowrap layout-columns row" ref="layoutColumns">
 			{foreach $layoutColumn in $layoutColumns}
 				{call com.liferay.layout.admin.web.LayoutColumn.render}
-					{param hoveredLayoutColumnItemBorder: $_hoveredLayoutColumnItemBorder /}
+					{param draggingItemPosition: $_draggingItemPosition /}
 					{param hoveredLayoutColumnItemPlid: $_hoveredLayoutColumnItemPlid /}
 					{param layoutColumn: $layoutColumn /}
 					{param handleLayoutColumnItemCheck: $_handleLayoutColumnItemCheck /}

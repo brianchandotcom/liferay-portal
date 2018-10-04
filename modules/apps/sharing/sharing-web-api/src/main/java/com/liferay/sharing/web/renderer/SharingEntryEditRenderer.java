@@ -12,17 +12,22 @@
  * details.
  */
 
-package com.liferay.sharing.filter;
+package com.liferay.sharing.web.renderer;
 
-import java.util.Locale;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
+import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+
+import javax.portlet.PortletURL;
 
 /**
  * @author Sergio González
  */
-public interface SharedWithMeFilterItem {
+public interface SharingEntryEditRenderer<T> {
 
-	public String getClassName();
-
-	public String getLabel(Locale locale);
+	public PortletURL getURLEdit(
+			T entry, LiferayPortletRequest liferayPortletRequest,
+			LiferayPortletResponse liferayPortletResponse)
+		throws PortalException;
 
 }

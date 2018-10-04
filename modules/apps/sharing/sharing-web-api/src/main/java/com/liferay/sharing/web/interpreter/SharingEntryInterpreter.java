@@ -12,12 +12,12 @@
  * details.
  */
 
-package com.liferay.sharing.interpreter;
+package com.liferay.sharing.web.interpreter;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.sharing.model.SharingEntry;
-import com.liferay.sharing.renderer.SharingEntryEditRenderer;
-import com.liferay.sharing.renderer.SharingEntryViewRenderer;
+import com.liferay.sharing.web.renderer.SharingEntryEditRenderer;
+import com.liferay.sharing.web.renderer.SharingEntryViewRenderer;
 
 import java.util.Locale;
 

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.sharing.renderer;
+package com.liferay.sharing.web.renderer;
 
 import java.io.IOException;
 

@@ -14,11 +14,23 @@
 
 package com.liferay.jenkins.results.parser;
 
+import java.io.File;
+
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * @author Michael Hashimoto
  */
 public class PortalBatchBuildRunner
 	extends BatchBuildRunner<PortalBatchBuildData> {
+
+	@Override
+	public void run() {
+		super.run();
+
+		runBatch();
+	}
 
 	protected PortalBatchBuildRunner(
 		PortalBatchBuildData portalBatchBuildData) {
@@ -37,6 +49,27 @@ public class PortalBatchBuildRunner
 		if (!(workspace instanceof BatchPortalWorkspace)) {
 			throw new RuntimeException("Invalid workspace");
 		}
+
+		_batchPortalWorkspace = (BatchPortalWorkspace)workspace;
 	}
+
+	protected void runBatch() {
+		Map<String, String> parameters = new HashMap<>();
+
+		parameters.put("test.class", "PortalSmoke#Smoke");
+
+		AntUtil.callTarget(
+			_getPrimaryPortalDirectory(), "build-test-batch.xml",
+			getBatchName(), parameters);
+	}
+
+	private File _getPrimaryPortalDirectory() {
+		WorkspaceGitRepository workspaceGitRepository =
+			_batchPortalWorkspace.getPrimaryPortalWorkspaceGitRepository();
+
+		return workspaceGitRepository.getDirectory();
+	}
+
+	private BatchPortalWorkspace _batchPortalWorkspace;
 
 }

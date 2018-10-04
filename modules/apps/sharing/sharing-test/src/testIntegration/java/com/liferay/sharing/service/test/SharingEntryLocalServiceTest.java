@@ -15,6 +15,9 @@
 package com.liferay.sharing.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.document.library.kernel.model.DLFileEntry;
+import com.liferay.document.library.kernel.model.DLFileVersion;
+import com.liferay.document.library.kernel.model.DLFolder;
 import com.liferay.portal.kernel.messaging.Destination;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.MessageBus;
@@ -35,6 +38,7 @@ import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.service.test.ServiceTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portlet.documentlibrary.util.test.DLTestUtil;
 import com.liferay.sharing.exception.InvalidSharingEntryActionException;
 import com.liferay.sharing.exception.InvalidSharingEntryExpirationDateException;
 import com.liferay.sharing.exception.InvalidSharingEntryUserException;
@@ -906,6 +910,150 @@ public class SharingEntryLocalServiceTest {
 			for (User user : users) {
 				UserLocalServiceUtil.deleteUser(user);
 			}
+		}
+	}
+
+	@Test
+	public void testGetUniqueToUserIdSharingEntriesByClassNameId()
+		throws Exception {
+
+		long classNameId = _classNameLocalService.getClassNameId(
+			Group.class.getName());
+		long classPK = _group.getGroupId();
+
+		long classNameId2 = _classNameLocalService.getClassNameId(
+			DLFileVersion.class.getName());
+
+		DLFolder folder = DLTestUtil.addDLFolder(_group.getGroupId());
+
+		DLFileEntry fileEntry = DLTestUtil.addDLFileEntry(folder.getFolderId());
+
+		DLFileVersion fileVersion = fileEntry.getFileVersion();
+
+		long classPK2 = fileVersion.getFileVersionId();
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
+
+		List<User> users = new ArrayList<>();
+
+		try {
+			for (int i = 0; i < 5; i++) {
+				User fromUser = UserTestUtil.addUser();
+
+				users.add(fromUser);
+
+				_sharingEntryLocalService.addSharingEntry(
+					fromUser.getUserId(), _toUser.getUserId(), classNameId,
+					classPK, _group.getGroupId(), true,
+					Arrays.asList(SharingEntryAction.VIEW),
+					Date.from(Instant.now().plus(2, ChronoUnit.DAYS)),
+					serviceContext);
+
+				_sharingEntryLocalService.addSharingEntry(
+					fromUser.getUserId(), _toUser.getUserId(), classNameId2,
+					classPK2, _group.getGroupId(), true,
+					Arrays.asList(SharingEntryAction.VIEW),
+					Date.from(Instant.now().plus(2, ChronoUnit.DAYS)),
+					serviceContext);
+			}
+
+			List<SharingEntry> sharingEntriesForClassNameId =
+				_sharingEntryLocalService.getUniqueToUserSharingEntries(
+					_toUser.getUserId(), classNameId, 0,
+					_sharingEntryLocalService.
+						getUniqueToUserSharingEntriesCount(
+							classNameId, _toUser.getUserId()),
+					new SharingEntryModifiedDateComparator());
+
+			Assert.assertEquals(
+				sharingEntriesForClassNameId.toString(), 1,
+				sharingEntriesForClassNameId.size());
+
+			List<SharingEntry> sharingEntriesForClassNameId2 =
+				_sharingEntryLocalService.getUniqueToUserSharingEntries(
+					_toUser.getUserId(), classNameId, 0,
+					_sharingEntryLocalService.
+						getUniqueToUserSharingEntriesCount(
+							classNameId2, _toUser.getUserId()),
+					new SharingEntryModifiedDateComparator());
+
+			Assert.assertEquals(
+				sharingEntriesForClassNameId2.toString(), 1,
+				sharingEntriesForClassNameId2.size());
+
+			List<SharingEntry> sharingEntriesForAnyClassNameId =
+				_sharingEntryLocalService.getUniqueToUserSharingEntries(
+					_toUser.getUserId(), -1, 0,
+					_sharingEntryLocalService.
+						getUniqueToUserSharingEntriesCount(
+							-1, _toUser.getUserId()),
+					new SharingEntryModifiedDateComparator());
+
+			Assert.assertEquals(
+				sharingEntriesForAnyClassNameId.toString(), 2,
+				sharingEntriesForAnyClassNameId.size());
+		}
+		finally {
+			for (User user : users) {
+				UserLocalServiceUtil.deleteUser(user);
+			}
+		}
+	}
+
+	@Test
+	public void testGetUniqueToUserIdSharingEntriesOrder() throws Exception {
+		Group group2 = GroupTestUtil.addGroup();
+
+		try {
+			long classNameId = _classNameLocalService.getClassNameId(
+				Group.class.getName());
+			long classPK = _group.getGroupId();
+			long classPK2 = group2.getGroupId();
+
+			ServiceContext serviceContext =
+				ServiceContextTestUtil.getServiceContext(_group.getGroupId());
+
+			SharingEntry sharingEntry =
+				_sharingEntryLocalService.addSharingEntry(
+					_fromUser.getUserId(), _toUser.getUserId(), classNameId,
+					classPK, _group.getGroupId(), true,
+					Arrays.asList(SharingEntryAction.VIEW),
+					Date.from(Instant.now().plus(2, ChronoUnit.DAYS)),
+					serviceContext);
+
+			SharingEntry sharingEntry2 =
+				_sharingEntryLocalService.addSharingEntry(
+					_fromUser.getUserId(), _toUser.getUserId(), classNameId,
+					classPK2, _group.getGroupId(), true,
+					Arrays.asList(SharingEntryAction.VIEW),
+					Date.from(Instant.now().plus(2, ChronoUnit.DAYS)),
+					serviceContext);
+
+			List<SharingEntry> ascendingSharingEntries =
+				_sharingEntryLocalService.getUniqueToUserSharingEntries(
+					_toUser.getUserId(), classNameId, 0,
+					_sharingEntryLocalService.
+						getUniqueToUserSharingEntriesCount(
+							classNameId, _toUser.getUserId()),
+					new SharingEntryModifiedDateComparator(true));
+
+			Assert.assertEquals(sharingEntry, ascendingSharingEntries.get(0));
+			Assert.assertEquals(sharingEntry2, ascendingSharingEntries.get(1));
+
+			List<SharingEntry> descendingSharingEntries =
+				_sharingEntryLocalService.getUniqueToUserSharingEntries(
+					_toUser.getUserId(), classNameId, 0,
+					_sharingEntryLocalService.
+						getUniqueToUserSharingEntriesCount(
+							classNameId, _toUser.getUserId()),
+					new SharingEntryModifiedDateComparator(false));
+
+			Assert.assertEquals(sharingEntry2, descendingSharingEntries.get(0));
+			Assert.assertEquals(sharingEntry, descendingSharingEntries.get(1));
+		}
+		finally {
+			_groupLocalService.deleteGroup(group2);
 		}
 	}
 

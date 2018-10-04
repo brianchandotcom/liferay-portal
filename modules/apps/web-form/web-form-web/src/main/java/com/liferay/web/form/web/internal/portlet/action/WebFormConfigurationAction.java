@@ -140,6 +140,7 @@ public class WebFormConfigurationAction extends DefaultConfigurationAction {
 				Map<Locale, String> fieldParagraphMap =
 					LocalizationUtil.getLocalizationMap(
 						actionRequest, "fieldParagraph" + formFieldsIndex);
+
 				String fieldValidationScript = ParamUtil.getString(
 					actionRequest, "fieldValidationScript" + formFieldsIndex);
 				String fieldValidationErrorMessage = ParamUtil.getString(

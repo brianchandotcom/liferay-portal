@@ -88,6 +88,7 @@ public class NodesChecker extends EmptyOnClickRowChecker {
 		}
 
 		String name = WikiNode.class.getSimpleName();
+
 		boolean showInput = false;
 
 		try {

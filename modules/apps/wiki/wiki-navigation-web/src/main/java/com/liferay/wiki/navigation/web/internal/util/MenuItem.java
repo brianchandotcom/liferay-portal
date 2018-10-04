@@ -113,11 +113,12 @@ public class MenuItem implements Serializable {
 				continue;
 			}
 
-			String title = wikiPage.getTitle();
 			WikiNode wikiNode = wikiPage.getNode();
 
 			portletURL.setParameter(
 				"nodeId", String.valueOf(wikiNode.getNodeId()));
+
+			String title = wikiPage.getTitle();
 
 			portletURL.setParameter("title", title);
 

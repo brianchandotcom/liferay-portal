@@ -121,6 +121,7 @@ public class WabProcessorTest {
 		try (Jar jar = new Jar(processedFile)) {
 			Map<String, Map<String, Resource>> directories =
 				jar.getDirectories();
+
 			Map<String, Resource> resources = jar.getResources();
 
 			// Check to see that the right number of resources are in the WAB
@@ -237,6 +238,7 @@ public class WabProcessorTest {
 		try (Jar jar = new Jar(processedFile)) {
 			Map<String, Map<String, Resource>> directories =
 				jar.getDirectories();
+
 			Map<String, Resource> resources = jar.getResources();
 
 			// Check to see that the right number of resources are in the WAB

@@ -447,11 +447,12 @@ public class WikiPageLocalServiceTest {
 		WikiPage[] pages = WikiTestUtil.addTrashedPageWithChildPage(
 			_group.getGroupId(), _node.getNodeId(), true);
 
-		WikiPage parentPage = pages[0];
 		WikiPage childPage = pages[1];
 
 		WikiPageLocalServiceUtil.restorePageFromTrash(
 			TestPropsValues.getUserId(), childPage);
+
+		WikiPage parentPage = pages[0];
 
 		WikiPageLocalServiceUtil.deletePage(parentPage);
 
@@ -477,11 +478,12 @@ public class WikiPageLocalServiceTest {
 		WikiPage[] pages = WikiTestUtil.addRenamedTrashedPage(
 			_group.getGroupId(), _node.getNodeId(), true);
 
-		WikiPage page = pages[0];
 		WikiPage redirectPage = pages[1];
 
 		WikiPageLocalServiceUtil.restorePageFromTrash(
 			TestPropsValues.getUserId(), redirectPage);
+
+		WikiPage page = pages[0];
 
 		WikiPageLocalServiceUtil.deletePage(page);
 

@@ -357,6 +357,7 @@ public class RolesAdminPortlet extends MVCPortlet {
 				resourceActionsMap.entrySet()) {
 
 			String selResource = entry.getKey();
+
 			List<String> actions = entry.getValue();
 
 			actions = ListUtil.sort(

@@ -681,7 +681,7 @@
 
 		<execute function="AssertElementPresent" locator1="SitesEditSite#SITE_ID" />
 
-		<var method="selenium#getElementValue(SitesEditSite#SITE_ID)" name="siteId" />
+		<var method="selenium#getElementValue('SitesEditSite#SITE_ID')" name="siteId" />
 
 		<return value="${siteId}" />
 	</command>

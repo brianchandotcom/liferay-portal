@@ -282,13 +282,13 @@ FragmentEntryLinkList.STATE = {
 	 * @instance
 	 * @memberOf FragmentEntryLinkList
 	 * @review
-	 * @type {{structure: Array<string>}}
+	 * @type {{structure: Array}}
 	 */
 
 	layoutData: Config
 		.shapeOf(
 			{
-				structure: Config.arrayOf(Config.string())
+				structure: Config.array()
 			}
 		)
 		.value(

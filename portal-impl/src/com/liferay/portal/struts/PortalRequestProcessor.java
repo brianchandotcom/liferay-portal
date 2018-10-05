@@ -70,6 +70,7 @@ import com.liferay.portlet.RenderResponseFactory;
 
 import java.io.IOException;
 
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Map;
@@ -113,11 +114,11 @@ public class PortalRequestProcessor extends RequestProcessor {
 
 		// auth.forward.last.path.
 
-		_lastPaths = new HashSet<>();
+		_lastPaths = new HashSet<>(
+			Arrays.asList(
+				PropsUtil.getArray(PropsKeys.AUTH_FORWARD_LAST_PATHS)));
 
 		_lastPaths.add(_PATH_PORTAL_LAYOUT);
-
-		addPaths(_lastPaths, PropsKeys.AUTH_FORWARD_LAST_PATHS);
 
 		// auth.public.path.
 
@@ -138,9 +139,9 @@ public class PortalRequestProcessor extends RequestProcessor {
 		_publicPaths.add(_PATH_PORTAL_VERIFY_EMAIL_ADDRESS);
 		_publicPaths.add(PropsValues.AUTH_LOGIN_DISABLED_PATH);
 
-		_trackerIgnorePaths = new HashSet<>();
-
-		addPaths(_trackerIgnorePaths, PropsKeys.SESSION_TRACKER_IGNORE_PATHS);
+		_trackerIgnorePaths = new HashSet<>(
+			Arrays.asList(
+				PropsUtil.getArray(PropsKeys.SESSION_TRACKER_IGNORE_PATHS)));
 	}
 
 	@Override
@@ -188,14 +189,6 @@ public class PortalRequestProcessor extends RequestProcessor {
 		}
 		catch (Exception e) {
 			_log.error(e, e);
-		}
-	}
-
-	protected void addPaths(Set<String> paths, String propsKey) {
-		String[] pathsArray = PropsUtil.getArray(propsKey);
-
-		for (String path : pathsArray) {
-			paths.add(path);
 		}
 	}
 

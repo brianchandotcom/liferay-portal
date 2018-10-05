@@ -150,15 +150,19 @@ class Layout extends Component {
 
 	_handleDragLayoutColumnItem(eventData) {
 		const sourceColumn = this._getParentColumnByPlid(this.layoutColumns, eventData.sourceItemPlid);
+		const sourceColumnIndex = this.layoutColumns.indexOf(sourceColumn);
 		const sourceItem = this._getLayoutColumnItemByPlid(this.layoutColumns, eventData.sourceItemPlid);
 
 		const targetColumn = this._getParentColumnByPlid(this.layoutColumns, eventData.targetItemPlid);
+		const targetColumnIndex = this.layoutColumns.indexOf(targetColumn);
 		const targetItem = this._getLayoutColumnItemByPlid(this.layoutColumns, eventData.targetItemPlid);
 
 		if (sourceItem != targetItem &&
 			this.layoutColumns.indexOf(targetColumn) != 0 &&
 			!(sourceItem.active && sourceColumn != targetColumn) &&
-			!(sourceItem.active && eventData.position === DRAG_POSITIONS.inside)) {
+			!(sourceItem.active && eventData.position === DRAG_POSITIONS.inside) &&
+			!(targetItem.active && eventData.position === DRAG_POSITIONS.inside &&
+				targetColumnIndex === sourceColumnIndex - 1)) {
 			this._draggingItemPosition = eventData.position;
 			this._hoveredLayoutColumnItemPlid = eventData.targetItemPlid;
 		}

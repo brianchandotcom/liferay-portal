@@ -23,8 +23,9 @@
 			<var name="key_fragmentName" value="${fragmentName}" />
 		</execute>
 
-		<execute function="Click" locator1="Fragment#PAGE_TEMPLATE_FRAGMENT_HEADER">
+		<execute function="Click" locator1="Fragment#PAGE_TEMPLATE_FRAGMENT_EDITABLE_TEXT">
 			<var name="key_fragmentName" value="${fragmentName}" />
+			<var name="key_id" value="${id}" />
 		</execute>
 
 		<execute function="SelectFrame" locator1="IFrame#DIALOG" />

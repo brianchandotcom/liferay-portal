@@ -96,6 +96,7 @@
 		<execute macro="PageEditor#editFragmentImage">
 			<var name="fileName" value="Document_1.png" />
 			<var name="fragmentName" value="Image" />
+			<var name="id" value="image" />
 		</execute>
 	</command>
 

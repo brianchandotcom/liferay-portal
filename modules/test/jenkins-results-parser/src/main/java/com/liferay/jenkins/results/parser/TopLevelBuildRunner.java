@@ -247,9 +247,39 @@ public abstract class TopLevelBuildRunner<T extends TopLevelBuildData>
 		filePropagator.start(_FILE_PROPAGATOR_THREAD_COUNT);
 	}
 
+	protected void updateJenkinsReport() {
+		if (!_allBuildsAreRunning()) {
+			_lastGeneratedReportTime = -1;
+
+			return;
+		}
+
+		long currentTimeMillis = System.currentTimeMillis();
+
+		if (_lastGeneratedReportTime == -1) {
+			_lastGeneratedReportTime = System.currentTimeMillis();
+
+			createJenkinsReport();
+
+			return;
+		}
+
+		if ((_lastGeneratedReportTime + _REPORT_GENERATION_INTERVAL) >
+				currentTimeMillis) {
+
+			return;
+		}
+
+		_lastGeneratedReportTime = System.currentTimeMillis();
+
+		createJenkinsReport();
+	}
+
 	protected void waitForInvokedJobs() {
 		while (true) {
 			_topLevelBuild.update();
+
+			updateJenkinsReport();
 
 			System.out.println(_topLevelBuild.getStatusSummary());
 
@@ -263,6 +293,21 @@ public abstract class TopLevelBuildRunner<T extends TopLevelBuildData>
 			JenkinsResultsParserUtil.sleep(
 				_WAIT_FOR_INVOKED_JOB_DURATION * 1000);
 		}
+	}
+
+	private boolean _allBuildsAreRunning() {
+		List<Build> runningBuilds = new ArrayList<>();
+
+		runningBuilds.addAll(_topLevelBuild.getDownstreamBuilds("running"));
+		runningBuilds.addAll(_topLevelBuild.getDownstreamBuilds("completed"));
+
+		List<Build> totalBuilds = _topLevelBuild.getDownstreamBuilds(null);
+
+		if (runningBuilds.size() >= totalBuilds.size()) {
+			return true;
+		}
+
+		return false;
 	}
 
 	private String _getJenkinsGitHubURL() {
@@ -296,8 +341,11 @@ public abstract class TopLevelBuildRunner<T extends TopLevelBuildData>
 
 	private static final int _FILE_PROPAGATOR_THREAD_COUNT = 1;
 
+	private static final long _REPORT_GENERATION_INTERVAL = 1000 * 60 * 5;
+
 	private static final int _WAIT_FOR_INVOKED_JOB_DURATION = 30;
 
+	private long _lastGeneratedReportTime = -1;
 	private final TopLevelBuild _topLevelBuild;
 
 }

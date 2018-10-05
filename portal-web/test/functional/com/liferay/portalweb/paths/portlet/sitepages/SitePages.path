@@ -51,7 +51,7 @@
 </tr>
 <tr>
 	<td>LIST_GROUP_ITEM_PLUS_ICON</td>
-	<td>//li[contains(@class,'list-group-item')][div/h4[normalize-space()='${key_pageName}']]//a[*[name()='svg'][contains(@class,'icon-plus')]]</td>
+	<td>//li[contains(.,'${key_pageName}')]//*[*[name()='svg'][contains(@class,'icon-plus')]]</td>
 	<td></td>
 </tr>
 <tr>

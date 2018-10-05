@@ -34,7 +34,7 @@ public class AssetListEntryAssetEntryRelLocalServiceImpl
 
 	@Override
 	public AssetListEntryAssetEntryRel addAssetListEntryAssetEntryRel(
-			long assetListEntryId, long assetEntryId,
+			long assetListEntryId, long assetEntryId, int position,
 			ServiceContext serviceContext)
 		throws PortalException {
 
@@ -58,11 +58,22 @@ public class AssetListEntryAssetEntryRelLocalServiceImpl
 			serviceContext.getModifiedDate(new Date()));
 		assetListEntryAssetEntryRel.setAssetListEntryId(assetListEntryId);
 		assetListEntryAssetEntryRel.setAssetEntryId(assetEntryId);
-		assetListEntryAssetEntryRel.setPosition(
-			getAssetListEntryAssetEntryRelsCount(assetListEntryId));
+		assetListEntryAssetEntryRel.setPosition(position);
 
 		return assetListEntryAssetEntryRelPersistence.update(
 			assetListEntryAssetEntryRel);
+	}
+
+	@Override
+	public AssetListEntryAssetEntryRel addAssetListEntryAssetEntryRel(
+			long assetListEntryId, long assetEntryId,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		int position = getAssetListEntryAssetEntryRelsCount(assetListEntryId);
+
+		return addAssetListEntryAssetEntryRel(
+			assetListEntryId, assetEntryId, position, serviceContext);
 	}
 
 	@Override
@@ -90,6 +101,14 @@ public class AssetListEntryAssetEntryRelLocalServiceImpl
 		}
 
 		return assetListEntryAssetEntryRel;
+	}
+
+	@Override
+	public void deleteAssetListEntryAssetEntryRelByAssetListEntryId(
+		long assetListEntryId) {
+
+		assetListEntryAssetEntryRelPersistence.removeByAssetListEntryId(
+			assetListEntryId);
 	}
 
 	@Override
@@ -160,6 +179,26 @@ public class AssetListEntryAssetEntryRelLocalServiceImpl
 
 				return null;
 			});
+
+		return assetListEntryAssetEntryRel;
+	}
+
+	@Override
+	public AssetListEntryAssetEntryRel updateAssetListEntryAssetEntryRel(
+			long assetListEntryAssetEntryRelId, long assetListEntryId,
+			long assetEntryId, int position)
+		throws PortalException {
+
+		AssetListEntryAssetEntryRel assetListEntryAssetEntryRel =
+			assetListEntryAssetEntryRelPersistence.findByPrimaryKey(
+				assetListEntryAssetEntryRelId);
+
+		assetListEntryAssetEntryRel.setAssetListEntryId(assetListEntryId);
+		assetListEntryAssetEntryRel.setAssetEntryId(assetEntryId);
+		assetListEntryAssetEntryRel.setPosition(position);
+
+		assetListEntryAssetEntryRelPersistence.update(
+			assetListEntryAssetEntryRel);
 
 		return assetListEntryAssetEntryRel;
 	}

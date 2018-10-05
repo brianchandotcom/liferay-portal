@@ -1306,19 +1306,17 @@ public class LayoutsAdminDisplayContext {
 				"homePageTitle", _getHomePageTitle(privateLayout));
 			layoutJSONObject.put("plid", layout.getPlid());
 
-			if (childLayoutsCount > 0) {
-				PortletURL portletURL = getPortletURL();
+			PortletURL portletURL = getPortletURL();
 
-				portletURL.setParameter(
-					"selPlid", String.valueOf(layout.getPlid()));
-				portletURL.setParameter(
-					"layoutSetBranchId",
-					String.valueOf(_getActiveLayoutSetBranchId()));
-				portletURL.setParameter(
-					"privateLayout", String.valueOf(layout.isPrivateLayout()));
+			portletURL.setParameter(
+				"selPlid", String.valueOf(layout.getPlid()));
+			portletURL.setParameter(
+				"layoutSetBranchId",
+				String.valueOf(_getActiveLayoutSetBranchId()));
+			portletURL.setParameter(
+				"privateLayout", String.valueOf(layout.isPrivateLayout()));
 
-				layoutJSONObject.put("url", portletURL.toString());
-			}
+			layoutJSONObject.put("url", portletURL.toString());
 
 			layoutJSONObject.put(
 				"title", layout.getName(_themeDisplay.getLocale()));

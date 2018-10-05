@@ -259,6 +259,7 @@
 	</command>
 
 	<command name="AddWithStructure" priority="5">
+		<property name="portal.acceptance" value="true" />
 		<property name="testray.component.names" value="Web Content Display,Training" />
 
 		<execute macro="ProductMenu#gotoPortlet">
@@ -279,6 +280,12 @@
 			<var name="fieldName" value="Text" />
 		</execute>
 
+		<execute macro="DynamicDataMapping#addField">
+			<var name="field" value="Text Box" />
+			<var name="fieldFieldLabel" value="Text Box" />
+			<var name="fieldName" value="TextBox" />
+		</execute>
+
 		<execute macro="WebContentStructures#saveCP">
 			<var name="structureName" value="WC Structure Name" />
 		</execute>
@@ -292,16 +299,21 @@
 		<execute macro="NavItem#gotoTemplates" />
 
 		<execute macro="WebContentTemplates#addCP">
-			<var name="templateFieldNames" value="Text" />
+			<var name="templateFieldNames" value="Text,Text Box" />
 			<var name="templateLanguage" value="ftl" />
 			<var name="templateName" value="WC Template Name" />
 		</execute>
 
 		<execute macro="WebContentTemplates#addStructure">
 			<var name="structureName" value="WC Structure Name" />
-			<var name="templateFieldNames" value="Text" />
+			<var name="templateFieldNames" value="Text,Text Box" />
 			<var name="templateLanguage" value="ftl" />
 		</execute>
+
+		<execute macro="WebContentTemplates#uploadTemplateFile">
+			<var name="templateFile" value="webcontent-acceptance.txt" />
+		</execute>
+
 
 		<execute macro="DDLDataDefinition#save" />
 
@@ -313,9 +325,15 @@
 		<execute macro="WebContent#addStructuredPGViaWCD">
 			<var name="structureFieldName" value="Text" />
 			<var name="structureName" value="WC Structure Name" />
+			<var name="textBoxFieldName" value="TextBox" />
 			<var name="webContentText" value="WC WebContent Text" />
+			<var name="webContentTextBox" value="WC WebContent TextBox" />
 			<var name="webContentTitle" value="WC WebContent Title" />
 		</execute>
+
+		<execute function="AssertElementPresent" locator1="//div[contains(@class,journal-content-article)]//h1[contains(@class,'text')][contains(.,'WC WebContent Text')]" />
+
+		<execute function="AssertElementPresent" locator1="//div[contains(@class,journal-content-article)]//h2[contains(@class,'text-box')][contains(.,'WC WebContent TextBox')]" />
 	</command>
 
 	<command name="AssertExpired" priority="4">

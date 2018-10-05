@@ -348,6 +348,10 @@
 		</if>
 	</command>
 
+	<command name="uploadTemplateFile">
+		<execute function="UploadCommonFile" locator1="DDMEditTemplate#SCRIPT_FILE_FIELD" value1="${templateFile}" />
+	</command>
+
 	<command name="viewTableEntryCP">
 		<var name="key_ddlTemplateName" value="${templateName}" />
 

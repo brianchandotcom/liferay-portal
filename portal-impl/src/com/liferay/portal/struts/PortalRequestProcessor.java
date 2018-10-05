@@ -985,8 +985,6 @@ public class PortalRequestProcessor extends RequestProcessor {
 			HttpServletRequest request, HttpServletResponse response)
 		throws IOException, ServletException {
 
-		request = processMultipart(request);
-
 		String path = processPath(request, response);
 
 		if (path == null) {
@@ -998,10 +996,6 @@ public class PortalRequestProcessor extends RequestProcessor {
 		processContent(request, response);
 
 		processNoCache(request, response);
-
-		if (!processPreprocess(request, response)) {
-			return;
-		}
 
 		processCachedMessages(request, response);
 

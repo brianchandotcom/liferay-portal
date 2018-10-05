@@ -128,10 +128,6 @@ public class PortalRequestProcessor {
 	public PortalRequestProcessor(
 		ActionServlet servlet, ModuleConfig moduleConfig) {
 
-		synchronized (actions) {
-			actions.clear();
-		}
-
 		this.servlet = servlet;
 		this.moduleConfig = moduleConfig;
 
@@ -551,13 +547,6 @@ public class PortalRequestProcessor {
 		}
 
 		return actionMapping;
-	}
-
-	protected HttpServletRequest processMultipart(HttpServletRequest request) {
-
-		// Disable Struts from automatically wrapping a multipart request
-
-		return request;
 	}
 
 	protected String processPath(

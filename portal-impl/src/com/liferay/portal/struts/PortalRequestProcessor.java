@@ -93,8 +93,10 @@ import javax.servlet.jsp.PageContext;
 import org.apache.struts.Globals;
 import org.apache.struts.action.Action;
 import org.apache.struts.action.ActionForm;
+import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionServlet;
+import org.apache.struts.action.InvalidCancelException;
 import org.apache.struts.action.RequestProcessor;
 import org.apache.struts.config.ActionConfig;
 import org.apache.struts.config.ForwardConfig;
@@ -184,7 +186,7 @@ public class PortalRequestProcessor extends RequestProcessor {
 			return;
 		}
 
-		super.process(request, response);
+		_process(request, response);
 
 		try {
 			if (isPortletPath(path)) {
@@ -977,6 +979,84 @@ public class PortalRequestProcessor extends RequestProcessor {
 		}
 
 		return true;
+	}
+
+	private void _process(
+			HttpServletRequest request, HttpServletResponse response)
+		throws IOException, ServletException {
+
+		request = processMultipart(request);
+
+		String path = processPath(request, response);
+
+		if (path == null) {
+			return;
+		}
+
+		processLocale(request, response);
+
+		processContent(request, response);
+
+		processNoCache(request, response);
+
+		if (!processPreprocess(request, response)) {
+			return;
+		}
+
+		processCachedMessages(request, response);
+
+		ActionMapping mapping = processMapping(request, response, path);
+
+		if (mapping == null) {
+			return;
+		}
+
+		if (!processRoles(request, response, mapping)) {
+			return;
+		}
+
+		ActionForm actionForm = processActionForm(request, response, mapping);
+
+		processPopulate(request, response, actionForm, mapping);
+
+		try {
+			if (!processValidate(request, response, actionForm, mapping)) {
+				return;
+			}
+		}
+		catch (InvalidCancelException ice) {
+			ActionForward forward = processException(
+				request, response, ice, actionForm, mapping);
+
+			processForwardConfig(request, response, forward);
+
+			return;
+		}
+		catch (IOException ioe) {
+			throw ioe;
+		}
+		catch (ServletException se) {
+			throw se;
+		}
+
+		if (!processForward(request, response, mapping)) {
+			return;
+		}
+
+		if (!processInclude(request, response, mapping)) {
+			return;
+		}
+
+		Action action = processActionCreate(request, response, mapping);
+
+		if (action == null) {
+			return;
+		}
+
+		ActionForward actionForward = processActionPerform(
+			request, response, action, actionForm, mapping);
+
+		processForwardConfig(request, response, actionForward);
 	}
 
 	private String _processPath(

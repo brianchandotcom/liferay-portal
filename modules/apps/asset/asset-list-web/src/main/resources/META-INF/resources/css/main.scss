@@ -3,10 +3,6 @@
 .portlet-asset-list-web {
 	.timeline-item {
 		&:first-child {
-			.timeline-icon {
-				background-color: #869CAD;
-			}
-
 			.timeline-increment {
 				margin-left: 40px;
 			}
@@ -27,8 +23,6 @@
 		.form-group {
 			display: inline-block;
 			margin: 8px;
-			vertical-align: middle;
-			width: auto;
 
 			&:first-child {
 				margin-left: 0;

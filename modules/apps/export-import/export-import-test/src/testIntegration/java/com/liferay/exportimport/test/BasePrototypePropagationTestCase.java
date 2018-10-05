@@ -44,7 +44,6 @@ import javax.portlet.PortletPreferences;
 
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -93,7 +92,6 @@ public abstract class BasePrototypePropagationTestCase {
 		doTestLayoutTypePropagation(false);
 	}
 
-	@Ignore
 	@Test
 	public void testLayoutTypePropagationWithLinkEnabled() throws Exception {
 		doTestLayoutTypePropagation(true);
@@ -106,7 +104,6 @@ public abstract class BasePrototypePropagationTestCase {
 		doTestPortletPreferencesPropagation(false);
 	}
 
-	@Ignore
 	@Test
 	public void testPortletPreferencesPropagationWithLinkEnabled()
 		throws Exception {

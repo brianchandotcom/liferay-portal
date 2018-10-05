@@ -74,6 +74,8 @@ public class ContainerLPKGUtil {
 	}
 
 	private static boolean _isLPKGContainer(File file) throws IOException {
+		boolean lpkgContainer = false;
+
 		try (ZipFile zipFile = new ZipFile(file)) {
 			Enumeration<? extends ZipEntry> zipEntries = zipFile.entries();
 
@@ -82,13 +84,16 @@ public class ContainerLPKGUtil {
 
 				String name = zipEntry.getName();
 
-				if (!name.endsWith(".lpkg")) {
+				if (name.endsWith(".lpkg")) {
+					lpkgContainer = true;
+				}
+				else {
 					return false;
 				}
 			}
 		}
 
-		return true;
+		return lpkgContainer;
 	}
 
 }

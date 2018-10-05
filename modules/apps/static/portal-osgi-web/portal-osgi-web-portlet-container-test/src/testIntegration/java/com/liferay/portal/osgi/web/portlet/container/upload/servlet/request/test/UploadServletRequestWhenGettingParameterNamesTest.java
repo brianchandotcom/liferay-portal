@@ -52,7 +52,7 @@ public class UploadServletRequestWhenGettingParameterNamesTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_setUp();
+		_fileNameParameter = RandomTestUtil.randomString();
 	}
 
 	@Test
@@ -87,7 +87,7 @@ public class UploadServletRequestWhenGettingParameterNamesTest {
 		List<String> parameterNamesList = Collections.list(parameterNames);
 
 		for (Map.Entry<String, List<String>> entry :
-			regularParameters.entrySet()) {
+				regularParameters.entrySet()) {
 
 			Assert.assertTrue(
 				parameterNamesList.toString(),
@@ -104,5 +104,10 @@ public class UploadServletRequestWhenGettingParameterNamesTest {
 			parameterNamesList.toString(),
 			parameterNamesList.contains(parameter));
 	}
+
+	private static final byte[] _BYTES =
+		"Enterprise. Open Source. For Life.".getBytes();
+
+	private static String _fileNameParameter;
 
 }

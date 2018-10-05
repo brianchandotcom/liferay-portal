@@ -15,6 +15,7 @@
 package com.liferay.portal.osgi.web.portlet.container.upload.servlet.request.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.upload.FileItem;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.upload.LiferayServletRequest;
@@ -49,7 +50,7 @@ public class UploadServletRequestWhenGettingFileNamesTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_setUp();
+		_fileNameParameter = RandomTestUtil.randomString();
 	}
 
 	@Test
@@ -127,5 +128,10 @@ public class UploadServletRequestWhenGettingFileNamesTest {
 
 		Assert.assertNull(uploadServletRequest.getFileNames("nonexistentFile"));
 	}
+
+	private static final byte[] _BYTES =
+		"Enterprise. Open Source. For Life.".getBytes();
+
+	private static String _fileNameParameter;
 
 }

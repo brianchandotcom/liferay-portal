@@ -23,7 +23,6 @@ import java.io.File;
 import java.io.IOException;
 
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -41,11 +40,6 @@ public class UploadServletRequestWhenGettingTempDirTest {
 	@Rule
 	public static final TestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
-
-	@Before
-	public void setUp() throws Exception {
-		_setUp();
-	}
 
 	@Test
 	public void shouldNotReturnPreferencesValueWhenModified()

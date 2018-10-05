@@ -52,7 +52,7 @@ public class UploadServletRequestWhenGettingParameterValuesTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_setUp();
+		_fileNameParameter = RandomTestUtil.randomString();
 	}
 
 	@Test
@@ -80,7 +80,7 @@ public class UploadServletRequestWhenGettingParameterValuesTest {
 				fileParameters, regularParameters);
 
 		for (Map.Entry<String, List<String>> entry :
-			regularParameters.entrySet()) {
+				regularParameters.entrySet()) {
 
 			String key = entry.getKey();
 
@@ -113,5 +113,10 @@ public class UploadServletRequestWhenGettingParameterValuesTest {
 				parameterValuesList.contains(key));
 		}
 	}
+
+	private static final byte[] _BYTES =
+		"Enterprise. Open Source. For Life.".getBytes();
+
+	private static String _fileNameParameter;
 
 }

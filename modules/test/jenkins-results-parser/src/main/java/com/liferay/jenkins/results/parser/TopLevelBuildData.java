@@ -39,6 +39,11 @@ public abstract class TopLevelBuildData extends BaseBuildData {
 		return getJobName();
 	}
 
+	@Override
+	public String getTopLevelMasterHostname() {
+		return getMasterHostname();
+	}
+
 	protected TopLevelBuildData(JSONObject jsonObject) {
 		super(jsonObject);
 

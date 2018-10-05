@@ -45,6 +45,14 @@ public abstract class BaseBuildData implements BuildData {
 	}
 
 	@Override
+	public String getBuildDescription() {
+		return JenkinsResultsParserUtil.combine(
+			"<a href=\"https://", getTopLevelMasterHostname(),
+			".liferay.com/userContent/", getUserContentRelativePath(),
+			"jenkins-report.html\">Jenkins Report</a>");
+	}
+
+	@Override
 	public Integer getBuildNumber() {
 		return getInt("build_number");
 	}

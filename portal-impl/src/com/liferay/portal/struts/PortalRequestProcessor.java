@@ -100,6 +100,7 @@ import org.apache.struts.config.ActionConfig;
 import org.apache.struts.config.ForwardConfig;
 import org.apache.struts.config.ModuleConfig;
 import org.apache.struts.util.MessageResources;
+import org.apache.struts.util.RequestUtils;
 
 /**
  * @author Brian Wing Shun Chan
@@ -865,7 +866,23 @@ public class PortalRequestProcessor extends RequestProcessor {
 			return;
 		}
 
-		super.processPopulate(request, response, actionForm, actionMapping);
+		actionForm.setServlet(servlet);
+		actionForm.reset(actionMapping, request);
+
+		if (actionMapping.getMultipartClass() != null) {
+			request.setAttribute(
+				Globals.MULTIPART_KEY, actionMapping.getMultipartClass());
+		}
+
+		RequestUtils.populate(
+			actionForm, actionMapping.getPrefix(), actionMapping.getSuffix(),
+			request);
+
+		if ((request.getParameter(Globals.CANCEL_PROPERTY) != null) ||
+			(request.getParameter(Globals.CANCEL_PROPERTY_X) != null)) {
+
+			request.setAttribute(Globals.CANCEL_KEY, Boolean.TRUE);
+		}
 	}
 
 	@Override

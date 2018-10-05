@@ -27,6 +27,10 @@
 	<aui:input name="assetListEntryId" type="hidden" value="<%= assetListDisplayContext.getAssetListEntryId() %>" />
 
 	<liferay-frontend:edit-form-body>
+		<h1 class="sheet-title">
+			<liferay-ui:message key="ordering" />
+		</h1>
+
 		<liferay-frontend:fieldset-group>
 			<liferay-frontend:fieldset>
 				<aui:row id="ordering">
@@ -44,18 +48,11 @@
 
 						<aui:field-wrapper cssClass="field-label-inline order-by-type-container">
 							<liferay-ui:icon
-								cssClass='<%= StringUtil.equalsIgnoreCase(editAssetListDisplayContext.getOrderByType1(), "DESC") ? "hide icon" : "icon" %>'
-								icon="angle-up"
+								cssClass='<%= StringUtil.equalsIgnoreCase(editAssetListDisplayContext.getOrderByType1(), "DESC") ? "order-arrow-up-active icon" : "order-arrow-down-active icon" %>'
+								icon="order-arrow"
+								linkCssClass="btn btn-outline-borderless btn-outline-secondary"
 								markupView="lexicon"
 								message="ascending"
-								url="javascript:;"
-							/>
-
-							<liferay-ui:icon
-								cssClass='<%= StringUtil.equalsIgnoreCase(editAssetListDisplayContext.getOrderByType1(), "ASC") ? "hide icon" : "icon" %>'
-								icon="angle-down"
-								markupView="lexicon"
-								message="descending"
 								url="javascript:;"
 							/>
 
@@ -77,18 +74,11 @@
 
 						<aui:field-wrapper cssClass="field-label-inline order-by-type-container">
 							<liferay-ui:icon
-								cssClass='<%= StringUtil.equalsIgnoreCase(editAssetListDisplayContext.getOrderByType2(), "DESC") ? "hide icon" : "icon" %>'
-								icon="angle-up"
+								cssClass='<%= StringUtil.equalsIgnoreCase(editAssetListDisplayContext.getOrderByType2(), "DESC") ? "order-arrow-up-active icon" : "order-arrow-down-active icon" %>'
+								icon="order-arrow"
+								linkCssClass="btn btn-outline-borderless btn-outline-secondary"
 								markupView="lexicon"
 								message="ascending"
-								url="javascript:;"
-							/>
-
-							<liferay-ui:icon
-								cssClass='<%= StringUtil.equalsIgnoreCase(editAssetListDisplayContext.getOrderByType2(), "ASC") ? "hide icon" : "icon" %>'
-								icon="angle-down"
-								markupView="lexicon"
-								message="descending"
 								url="javascript:;"
 							/>
 
@@ -113,9 +103,16 @@
 		function(event) {
 			var currentTarget = event.currentTarget;
 
-			var orderByTypeContainer = currentTarget.ancestor('.order-by-type-container');
+			if (currentTarget.hasClass('order-arrow-down-active')) {
+				currentTarget.addClass('order-arrow-up-active');
+				currentTarget.removeClass('order-arrow-down-active');
+			}
+			else {
+				currentTarget.addClass('order-arrow-down-active');
+				currentTarget.removeClass('order-arrow-up-active');
+			}
 
-			orderByTypeContainer.all('.icon').toggleClass('hide');
+			var orderByTypeContainer = currentTarget.ancestor('.order-by-type-container');
 
 			var orderByTypeField = orderByTypeContainer.one('.order-by-type-field');
 

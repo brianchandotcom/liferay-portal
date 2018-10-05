@@ -38,6 +38,10 @@ PortletURL portletURL = editAssetListDisplayContext.getPortletURL();
 	<aui:input name="groupId" type="hidden" value="" />
 
 	<liferay-frontend:edit-form-body>
+		<h1 class="sheet-title">
+			<liferay-ui:message key="scope" />
+		</h1>
+
 		<liferay-ui:search-container
 			compactEmptyResultsMessage="<%= true %>"
 			emptyResultsMessage="none"
@@ -72,7 +76,7 @@ PortletURL portletURL = editAssetListDisplayContext.getPortletURL();
 					</portlet:actionURL>
 
 					<liferay-ui:icon
-						icon="times"
+						icon="times-circle"
 						markupView="lexicon"
 						url="<%= deleteScopeGroupURL %>"
 					/>

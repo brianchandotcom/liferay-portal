@@ -27,6 +27,7 @@ String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 	creationMenu="<%= journalDisplayContext.getCreationMenu() %>"
 	disabled="<%= journalDisplayContext.isDisabled() %>"
 	filterDropdownItems="<%= journalDisplayContext.getFilterDropdownItems() %>"
+	filterLabelItems="<%= journalDisplayContext.getFilterLabelItems() %>"
 	infoPanelId="infoPanelId"
 	itemsTotal="<%= journalDisplayContext.getTotalItems() %>"
 	searchActionURL="<%= journalDisplayContext.getSearchActionURL() %>"

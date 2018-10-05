@@ -31,6 +31,8 @@ import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerRegistryUtil;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItem;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.SafeConsumer;
@@ -78,6 +80,7 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
@@ -595,6 +598,47 @@ public class JournalDisplayContext {
 								_getOrderByDropdownItems());
 							dropdownGroupItem.setLabel(
 								LanguageUtil.get(_request, "order-by"));
+						});
+				}
+			}
+		};
+	}
+
+	public List<LabelItem> getFilterLabelItems() {
+		return new LabelItemList() {
+			{
+				if (isNavigationMine()) {
+					add(
+						labelItem -> {
+							ThemeDisplay themeDisplay =
+								(ThemeDisplay)_request.getAttribute(
+									WebKeys.THEME_DISPLAY);
+
+							User user = themeDisplay.getUser();
+
+							labelItem.setLabel(
+								LanguageUtil.get(_request, "owner") + ": " +
+									user.getFullName());
+						});
+				}
+
+				if (isNavigationStructure()) {
+					add(
+						labelItem -> {
+							labelItem.setLabel(
+								LanguageUtil.get(_request, "structures") +
+									": " + getDDMStructureName());
+						});
+				}
+
+				int status = getStatus();
+
+				if (status != -1) {
+					add(
+						labelItem -> {
+							labelItem.setLabel(
+								LanguageUtil.get(_request, "status") + ": " +
+									WorkflowConstants.getStatusLabel(status));
 						});
 				}
 			}

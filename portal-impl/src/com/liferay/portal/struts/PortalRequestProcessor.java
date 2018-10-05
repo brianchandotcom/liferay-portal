@@ -541,7 +541,7 @@ public class PortalRequestProcessor extends RequestProcessor {
 		ActionMapping actionMapping = _processMapping(request, response, path);
 
 		if (actionMapping == null) {
-			MessageResources messageResources = getInternal();
+			MessageResources messageResources = servlet.getInternal();
 
 			String msg = messageResources.getMessage("processInvalid");
 
@@ -1075,7 +1075,7 @@ public class PortalRequestProcessor extends RequestProcessor {
 				action = (Action)RequestUtils.applicationInstance(className);
 			}
 			catch (Exception e) {
-				MessageResources messageResources = getInternal();
+				MessageResources messageResources = servlet.getInternal();
 
 				response.sendError(
 					HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
@@ -1286,7 +1286,7 @@ public class PortalRequestProcessor extends RequestProcessor {
 			}
 		}
 
-		MessageResources messageResources = getInternal();
+		MessageResources messageResources = servlet.getInternal();
 
 		response.sendError(
 			HttpServletResponse.SC_NOT_FOUND,
@@ -1333,7 +1333,7 @@ public class PortalRequestProcessor extends RequestProcessor {
 		String prefix = moduleConfig.getPrefix();
 
 		if (!path.startsWith(prefix)) {
-			MessageResources messageResources = getInternal();
+			MessageResources messageResources = servlet.getInternal();
 
 			String message = messageResources.getMessage("processPath");
 
@@ -1384,7 +1384,7 @@ public class PortalRequestProcessor extends RequestProcessor {
 		String input = actionMapping.getInput();
 
 		if (input == null) {
-			MessageResources messageResources = getInternal();
+			MessageResources messageResources = servlet.getInternal();
 
 			response.sendError(
 				HttpServletResponse.SC_INTERNAL_SERVER_ERROR,

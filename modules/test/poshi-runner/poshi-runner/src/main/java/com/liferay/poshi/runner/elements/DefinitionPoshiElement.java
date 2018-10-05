@@ -38,7 +38,7 @@ public abstract class DefinitionPoshiElement extends PoshiElement {
 			String annotation = poshiScriptAnnotationMatcher.group();
 
 			String name = getNameFromAssignment(annotation);
-			String value = getQuotedContent(annotation);
+			String value = getDoubleQuotedContent(annotation);
 
 			addAttribute(name, value);
 		}

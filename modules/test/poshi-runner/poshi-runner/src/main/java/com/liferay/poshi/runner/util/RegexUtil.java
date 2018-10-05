@@ -32,7 +32,7 @@ public class RegexUtil {
 			return matcher.group(group);
 		}
 
-		return null;
+		return "";
 	}
 
 	public static String replace(String content, String regex, String group) {

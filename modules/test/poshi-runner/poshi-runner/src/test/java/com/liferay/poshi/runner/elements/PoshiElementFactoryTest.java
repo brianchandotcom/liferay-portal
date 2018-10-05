@@ -68,11 +68,22 @@ public class PoshiElementFactoryTest {
 			PoshiElement childPoshiElement = (PoshiElement)node;
 
 			Assert.assertEquals(
+				"The the expected line number does not match",
 				expectedLineNumbers[i],
 				childPoshiElement.getPoshiScriptLineNumber());
 
 			i++;
 		}
+	}
+
+	@Test
+	public void testPoshiScriptFunctionToXML() throws Exception {
+		PoshiElement actualElement = _getPoshiElement("PoshiScript.function");
+		Element expectedElement = _getDom4JElement("PoshiSyntax.function");
+
+		_assertEqualElements(
+			actualElement, expectedElement,
+			"Poshi script syntax does not translate to Poshi XML");
 	}
 
 	@Test
@@ -93,7 +104,7 @@ public class PoshiElementFactoryTest {
 					PoshiNode childPoshiNode = (PoshiNode)childNode;
 
 					Assert.assertEquals(
-						"The the expected line number does not match.",
+						"The the expected line number does not match",
 						expectedLineNumbers[i],
 						childPoshiNode.getPoshiScriptLineNumber());
 
@@ -110,7 +121,7 @@ public class PoshiElementFactoryTest {
 
 		_assertEqualElements(
 			actualElement, expectedElement,
-			"Poshi script syntax does not translate to Poshi XML.");
+			"Poshi script syntax does not translate to Poshi XML");
 	}
 
 	@Test
@@ -120,7 +131,20 @@ public class PoshiElementFactoryTest {
 
 		_assertEqualElements(
 			actualElement, expectedElement,
-			"Poshi script syntax does not translate to Poshi XML.");
+			"Poshi script syntax does not translate to Poshi XML");
+	}
+
+	@Test
+	public void testPoshiXMLFunctionToPoshiScript() throws Exception {
+		String expected = FileUtil.read(_BASE_DIR + "PoshiScript.function");
+
+		PoshiElement poshiElement = _getPoshiElement("PoshiSyntax.function");
+
+		String actual = poshiElement.toPoshiScript();
+
+		_assertEqualStrings(
+			actual, expected,
+			"Poshi XML syntax does not translate to Poshi script syntax");
 	}
 
 	@Test
@@ -131,7 +155,7 @@ public class PoshiElementFactoryTest {
 
 		_assertEqualElements(
 			actualElement, expectedElement,
-			"Poshi script syntax does not translate to Poshi XML.");
+			"Poshi script syntax does not translate to Poshi XML");
 	}
 
 	@Test
@@ -174,7 +198,7 @@ public class PoshiElementFactoryTest {
 
 		_assertEqualElements(
 			actualElement, expectedElement,
-			"Poshi XML syntax is not preserved in full translation.");
+			"Poshi XML syntax is not preserved in full translation");
 	}
 
 	@Test
@@ -184,7 +208,7 @@ public class PoshiElementFactoryTest {
 
 		_assertEqualElements(
 			actualElement, expectedElement,
-			"Poshi XML syntax does not translate to XML.");
+			"Poshi XML syntax does not translate to XML");
 	}
 
 	private static void _assertEqualElements(

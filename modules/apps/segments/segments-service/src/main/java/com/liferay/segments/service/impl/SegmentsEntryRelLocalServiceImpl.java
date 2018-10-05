@@ -79,25 +79,6 @@ public class SegmentsEntryRelLocalServiceImpl
 	}
 
 	@Override
-	public int getSegmentsEntryRelsCount(long segmentsEntryId) {
-		return segmentsEntryRelPersistence.countBySegmentsEntryId(
-			segmentsEntryId);
-	}
-
-	@Override
-	public int getSegmentsEntryRelsCount(long classNameId, long classPK) {
-		return segmentsEntryRelPersistence.countByCN_CPK(classNameId, classPK);
-	}
-
-	@Override
-	public int getSegmentsEntryRelsCount(
-		long groupId, long classNameId, long classPK) {
-
-		return segmentsEntryRelPersistence.countByG_CN_CPK(
-			groupId, classNameId, classPK);
-	}
-
-	@Override
 	public List<SegmentsEntryRel> getSegmentsEntryRels(long segmentsEntryId) {
 		return segmentsEntryRelPersistence.findBySegmentsEntryId(
 			segmentsEntryId);
@@ -115,6 +96,25 @@ public class SegmentsEntryRelLocalServiceImpl
 		long groupId, long classNameId, long classPK) {
 
 		return segmentsEntryRelPersistence.findByG_CN_CPK(
+			groupId, classNameId, classPK);
+	}
+
+	@Override
+	public int getSegmentsEntryRelsCount(long segmentsEntryId) {
+		return segmentsEntryRelPersistence.countBySegmentsEntryId(
+			segmentsEntryId);
+	}
+
+	@Override
+	public int getSegmentsEntryRelsCount(long classNameId, long classPK) {
+		return segmentsEntryRelPersistence.countByCN_CPK(classNameId, classPK);
+	}
+
+	@Override
+	public int getSegmentsEntryRelsCount(
+		long groupId, long classNameId, long classPK) {
+
+		return segmentsEntryRelPersistence.countByG_CN_CPK(
 			groupId, classNameId, classPK);
 	}
 

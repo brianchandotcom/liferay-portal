@@ -1117,7 +1117,7 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 
 	@Override
 	public int getElementHeight(String locator) {
-		WebElement webElement = getWebElement(locator, "1");
+		WebElement webElement = getWebElement(locator);
 
 		Dimension dimension = webElement.getSize();
 
@@ -1146,7 +1146,7 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 
 	@Override
 	public int getElementWidth(String locator) {
-		WebElement webElement = getWebElement(locator, "1");
+		WebElement webElement = getWebElement(locator);
 
 		Dimension dimension = webElement.getSize();
 
@@ -1561,7 +1561,7 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 
 	@Override
 	public boolean isChecked(String locator) {
-		WebElement webElement = getWebElement(locator, "1");
+		WebElement webElement = getWebElement(locator);
 
 		scrollWebElementIntoView(webElement);
 
@@ -1599,7 +1599,7 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 
 	@Override
 	public boolean isElementPresent(String locator) {
-		List<WebElement> webElements = getWebElements(locator, "1");
+		List<WebElement> webElements = getWebElements(locator);
 
 		return !webElements.isEmpty();
 	}
@@ -1692,7 +1692,7 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 
 	@Override
 	public boolean isPartialText(String locator, String value) {
-		WebElement webElement = getWebElement(locator, "1");
+		WebElement webElement = getWebElement(locator);
 
 		String text = webElement.getText();
 
@@ -1701,7 +1701,7 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 
 	@Override
 	public boolean isPartialTextAceEditor(String locator, String value) {
-		WebElement webElement = getWebElement(locator, "1");
+		WebElement webElement = getWebElement(locator);
 
 		String text = webElement.getText();
 
@@ -1716,7 +1716,7 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 			return false;
 		}
 
-		return pattern.equals(getSelectedLabel(selectLocator, "1"));
+		return pattern.equals(getSelectedLabel(selectLocator));
 	}
 
 	@Override
@@ -1756,14 +1756,14 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 
 	@Override
 	public boolean isText(String locator, String value) throws Exception {
-		return value.equals(getText(locator, "1"));
+		return value.equals(getText(locator));
 	}
 
 	@Override
 	public boolean isTextCaseInsensitive(String locator, String value)
 		throws Exception {
 
-		String actual = StringUtil.toUpperCase(getText(locator, "1"));
+		String actual = StringUtil.toUpperCase(getText(locator));
 
 		value = StringUtil.toUpperCase(value);
 
@@ -1786,7 +1786,7 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 
 	@Override
 	public boolean isValue(String locator, String value) throws Exception {
-		return value.equals(getElementValue(locator, "1"));
+		return value.equals(getElementValue(locator));
 	}
 
 	@Override
@@ -1796,7 +1796,7 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 
 	@Override
 	public boolean isVisibleInPage(String locator) {
-		WebElement webElement = getWebElement(locator, "1");
+		WebElement webElement = getWebElement(locator);
 
 		scrollWebElementIntoView(webElement);
 
@@ -1805,7 +1805,7 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 
 	@Override
 	public boolean isVisibleInViewport(String locator) {
-		WebElement webElement = getWebElement(locator, "1");
+		WebElement webElement = getWebElement(locator);
 
 		return webElement.isDisplayed();
 	}
@@ -2557,7 +2557,7 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 
 		if (!PropsValues.BROWSER_TYPE.equals("safari")) {
 			timeouts.implicitlyWait(
-				GetterUtil.getInteger(timeout), TimeUnit.MILLISECONDS);
+				GetterUtil.getInteger(timeout), TimeUnit.SECONDS);
 		}
 	}
 
@@ -3778,7 +3778,7 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 	}
 
 	protected int getElementPositionLeft(String locator) {
-		WebElement webElement = getWebElement(locator, "1");
+		WebElement webElement = getWebElement(locator);
 
 		Point point = webElement.getLocation();
 
@@ -3790,7 +3790,7 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 	}
 
 	protected int getElementPositionTop(String locator) {
-		WebElement webElement = getWebElement(locator, "1");
+		WebElement webElement = getWebElement(locator);
 
 		Point point = webElement.getLocation();
 

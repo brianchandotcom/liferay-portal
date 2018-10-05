@@ -21,7 +21,7 @@ definition {
 
 	tearDown {
 		PortalInstances.tearDownCP(
-			testPortalInstance = PropsUtil.get('test.portal.instance')
+			testPortalInstance = PropsUtil.get("test.portal.instance")
 		);
 	}
 
@@ -49,8 +49,8 @@ definition {
 
 		for (var breadcrumbName : list "${breadcrumbListVisible}") {
 			var key_breadcrumbName = "${breadcrumbName}";
-			var breadcrumbNameUppercase = StringUtil.upperCase('${breadcrumbName}');
-			var historyVersion = selenium.getText('Staging#HISTORY_VERSION');
+			var breadcrumbNameUppercase = StringUtil.upperCase("${breadcrumbName}");
+			var historyVersion = selenium.getText("Staging#HISTORY_VERSION");
 
 			AssertTextEquals(
 				locator1 = "Breadcrumb#BREADCRUMB_ENTRY",
@@ -236,7 +236,7 @@ definition {
 			value1 = "Welcome"
 		);
 
-		com.liferay.poshi.runner.util.JSONCurlUtil.delete('${curl}');
+		com.liferay.poshi.runner.util.JSONCurlUtil.delete("${curl}");
 	}
 
 	@description = "Ensure that a user can add multiple Blogs Entries."

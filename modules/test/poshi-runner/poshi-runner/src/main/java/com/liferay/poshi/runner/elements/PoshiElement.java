@@ -241,6 +241,10 @@ public abstract class PoshiElement
 		return sb.toString();
 	}
 
+	protected String doubleQuoteContent(String content) {
+		return "\"" + content + "\"";
+	}
+
 	protected String getBlockContent(String poshiScriptBlock) {
 		String blockName = getBlockName(poshiScriptBlock);
 
@@ -323,10 +327,40 @@ public abstract class PoshiElement
 		return null;
 	}
 
+	protected String getDoubleQuotedContent(String poshiScript) {
+		return RegexUtil.getGroup(poshiScript, ".*?\"(.*)\"", 1);
+	}
+
 	protected String getFileType() {
 		PoshiElement poshiParentElement = (PoshiElement)getParent();
 
 		return poshiParentElement.getFileType();
+	}
+
+	protected List<String> getMethodParameters(String content) {
+		List<String> methodParameters = new ArrayList<>();
+
+		StringBuilder sb = new StringBuilder();
+
+		String methodParameter = sb.toString();
+
+		for (char c : content.toCharArray()) {
+			if ((c == ',') && isBalancedPoshiScript(methodParameter)) {
+				methodParameters.add(methodParameter.trim());
+
+				sb.setLength(0);
+
+				continue;
+			}
+
+			sb.append(c);
+
+			methodParameter = sb.toString();
+		}
+
+		methodParameters.add(methodParameter.trim());
+
+		return methodParameters;
 	}
 
 	protected String getNameFromAssignment(String assignment) {
@@ -476,10 +510,6 @@ public abstract class PoshiElement
 		}
 
 		return poshiScriptSnippets;
-	}
-
-	protected String getQuotedContent(String poshiScript) {
-		return RegexUtil.getGroup(poshiScript, ".*?\"(.*)\"", 1);
 	}
 
 	protected String getSingleQuotedContent(String poshiScript) {
@@ -748,8 +778,8 @@ public abstract class PoshiElement
 		return sb.toString();
 	}
 
-	protected String quoteContent(String content) {
-		return "\"" + content + "\"";
+	protected String singleQuoteContent(String content) {
+		return "'" + content + "'";
 	}
 
 	protected List<PoshiElementAttribute> toPoshiElementAttributes(
@@ -841,11 +871,9 @@ public abstract class PoshiElement
 
 	private String _fixPoshiScript(String poshiScript) {
 		poshiScript = poshiScript.replaceAll("(?s)/\\*.*?\\*/", "/\\*\\*/");
-
-		poshiScript = poshiScript.replaceAll("(?s)\n[\\s]*//.*?\n", "//\n");
-
 		poshiScript = poshiScript.replaceAll(
 			"(?s)\'\'\'.*?\'\'\'", "\'\'\'\'\'\'");
+		poshiScript = poshiScript.replaceAll("(?s)\n[\\s]*//.*?\n", "//\n");
 
 		return poshiScript.trim();
 	}

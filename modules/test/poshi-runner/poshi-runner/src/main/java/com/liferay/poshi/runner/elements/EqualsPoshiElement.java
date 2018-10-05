@@ -52,13 +52,13 @@ public class EqualsPoshiElement extends PoshiElement {
 
 		String arg1 = equalsContentArray[0].trim();
 
-		arg1 = getQuotedContent(arg1);
+		arg1 = getDoubleQuotedContent(arg1);
 
 		addAttribute("arg1", arg1);
 
 		String arg2 = equalsContentArray[1].trim();
 
-		arg2 = getQuotedContent(arg2);
+		arg2 = getDoubleQuotedContent(arg2);
 
 		addAttribute("arg2", arg2);
 	}

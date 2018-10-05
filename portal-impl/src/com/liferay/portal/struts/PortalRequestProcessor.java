@@ -164,7 +164,7 @@ public class PortalRequestProcessor extends RequestProcessor {
 			HttpServletRequest request, HttpServletResponse response)
 		throws IOException, ServletException {
 
-		String path = super.processPath(request, response);
+		String path = _processPath(request, response);
 
 		ActionMapping actionMapping =
 			(ActionMapping)moduleConfig.findActionConfig(path);
@@ -561,8 +561,7 @@ public class PortalRequestProcessor extends RequestProcessor {
 			HttpServletRequest request, HttpServletResponse response)
 		throws IOException {
 
-		String path = GetterUtil.getString(
-			super.processPath(request, response));
+		String path = GetterUtil.getString(_processPath(request, response));
 
 		HttpSession session = request.getSession();
 
@@ -967,6 +966,55 @@ public class PortalRequestProcessor extends RequestProcessor {
 		}
 
 		return true;
+	}
+
+	private String _processPath(
+			HttpServletRequest request, HttpServletResponse response)
+		throws IOException {
+
+		if (request.getAttribute(Globals.ORIGINAL_URI_KEY) == null) {
+			request.setAttribute(
+				Globals.ORIGINAL_URI_KEY, request.getServletPath());
+		}
+
+		String path = (String)request.getAttribute(INCLUDE_PATH_INFO);
+
+		if (path == null) {
+			path = request.getPathInfo();
+		}
+
+		if ((path != null) && (path.length() > 0)) {
+			return path;
+		}
+
+		path = (String)request.getAttribute(INCLUDE_SERVLET_PATH);
+
+		if (path == null) {
+			path = request.getServletPath();
+		}
+
+		String prefix = moduleConfig.getPrefix();
+
+		if (!path.startsWith(prefix)) {
+			MessageResources messageResources = getInternal();
+
+			String message = messageResources.getMessage("processPath");
+
+			response.sendError(HttpServletResponse.SC_BAD_REQUEST, message);
+
+			return null;
+		}
+
+		path = path.substring(prefix.length());
+
+		int slash = path.lastIndexOf(CharPool.SLASH);
+		int period = path.lastIndexOf(CharPool.PERIOD);
+
+		if ((period >= 0) && (period > slash)) {
+			path = path.substring(0, period);
+		}
+
+		return path;
 	}
 
 	private static final String _PATH_C = "/c";

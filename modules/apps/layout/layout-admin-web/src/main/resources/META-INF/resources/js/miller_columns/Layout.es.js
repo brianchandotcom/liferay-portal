@@ -198,35 +198,39 @@ class Layout extends Component {
 	 */
 
 	_handleMoveLayoutColumnItem(eventData) {
-		const layoutColumns = this.layoutColumns.map(
-			layoutColumn => [...layoutColumn]
-		);
-
-		const sourceItemPlid = eventData.sourceItemPlid;
-		const targetItemPlid = eventData.targetItemPlid;
-
-		const sourceItem = this._getLayoutColumnItemByPlid(layoutColumns, sourceItemPlid);
-		const targetItem = this._getLayoutColumnItemByPlid(layoutColumns, targetItemPlid);
-
 		if (this._draggingItemPosition) {
+			const layoutColumns = this.layoutColumns.map(
+				layoutColumn => [...layoutColumn]
+			);
+
+			const sourceItemPlid = eventData.sourceItemPlid;
+			const targetItemPlid = eventData.targetItemPlid;
+
+			const sourceItem = this._getLayoutColumnItemByPlid(layoutColumns, sourceItemPlid);
+			const targetItem = this._getLayoutColumnItemByPlid(layoutColumns, targetItemPlid);
 
 			const sourceColumn = this._getParentColumnByPlid(layoutColumns, sourceItemPlid);
 			const targetColumn = this._getParentColumnByPlid(layoutColumns, targetItemPlid);
 
+			const targetColumnIndex = layoutColumns.indexOf(targetColumn);
+
 			sourceColumn.splice(sourceColumn.indexOf(sourceItem), 1);
+
+			let parentPlid = null;
+			let priority = null;
 
 			if (this._draggingItemPosition === DRAG_POSITIONS.inside) {
 				targetItem.hasChild = true;
-				this._moveLayoutColumnItem(targetItemPlid, sourceItemPlid)
-					.then(
-						() => {
-							this.layoutColumns = layoutColumns;
-							this._initializeLayoutDragDrop();
-						}
-					);
+
+				if (targetItem.active) {
+					const nextColumn = layoutColumns[targetColumnIndex + 1];
+					nextColumn.splice(nextColumn.length, 0, sourceItem);
+				}
+
+				parentPlid = targetItemPlid;
 			}
 			else {
-				let priority = targetColumn.indexOf(targetItem);
+				priority = targetColumn.indexOf(targetItem);
 
 				if (this._draggingItemPosition === DRAG_POSITIONS.bottom) {
 					priority++;
@@ -234,18 +238,16 @@ class Layout extends Component {
 
 				targetColumn.splice(priority, 0, sourceItem);
 
-				const targetColumnIndex = layoutColumns.indexOf(targetColumn);
-
-				const parentPlid = this._getLayoutColumnActiveItem(layoutColumns[targetColumnIndex - 1]);
-
-				this._moveLayoutColumnItem(parentPlid, sourceItemPlid, priority)
-					.then(
-						() => {
-							this.layoutColumns = layoutColumns;
-							this._initializeLayoutDragDrop();
-						}
-					);
+				parentPlid = this._getLayoutColumnActiveItem(layoutColumns[targetColumnIndex - 1]);
 			}
+
+			this._moveLayoutColumnItem(parentPlid, sourceItemPlid, priority)
+				.then(
+					() => {
+						this.layoutColumns = layoutColumns;
+						this._initializeLayoutDragDrop();
+					}
+				);
 		}
 
 		this._resetHoveredData();

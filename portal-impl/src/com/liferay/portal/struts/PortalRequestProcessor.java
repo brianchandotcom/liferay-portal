@@ -1233,17 +1233,6 @@ public class PortalRequestProcessor extends RequestProcessor {
 			return true;
 		}
 
-		if (request.getAttribute(Globals.CANCEL_KEY) != null) {
-			if (actionMapping.getCancellable()) {
-				return true;
-			}
-			else {
-				request.removeAttribute(Globals.CANCEL_KEY);
-
-				throw new InvalidCancelException();
-			}
-		}
-
 		ActionMessages actionMessages = actionForm.validate(
 			actionMapping, request);
 

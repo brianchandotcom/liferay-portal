@@ -78,6 +78,10 @@ public interface AssetListEntryAssetEntryRelLocalService
 		AssetListEntryAssetEntryRel assetListEntryAssetEntryRel);
 
 	public AssetListEntryAssetEntryRel addAssetListEntryAssetEntryRel(
+		long assetListEntryId, long assetEntryId, int position,
+		ServiceContext serviceContext) throws PortalException;
+
+	public AssetListEntryAssetEntryRel addAssetListEntryAssetEntryRel(
 		long assetListEntryId, long assetEntryId, ServiceContext serviceContext)
 		throws PortalException;
 
@@ -115,6 +119,9 @@ public interface AssetListEntryAssetEntryRelLocalService
 	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
 	public AssetListEntryAssetEntryRel deleteAssetListEntryAssetEntryRel(
 		long assetListEntryId, int position) throws PortalException;
+
+	public void deleteAssetListEntryAssetEntryRelByAssetListEntryId(
+		long assetListEntryId);
 
 	/**
 	* @throws PortalException
@@ -311,4 +318,8 @@ public interface AssetListEntryAssetEntryRelLocalService
 	@Indexable(type = IndexableType.REINDEX)
 	public AssetListEntryAssetEntryRel updateAssetListEntryAssetEntryRel(
 		AssetListEntryAssetEntryRel assetListEntryAssetEntryRel);
+
+	public AssetListEntryAssetEntryRel updateAssetListEntryAssetEntryRel(
+		long assetListEntryAssetEntryRelId, long assetListEntryId,
+		long assetEntryId, int position) throws PortalException;
 }

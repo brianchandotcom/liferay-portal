@@ -14,6 +14,10 @@
  */
 --%>
 
+<%
+SegmentsDisplayContext segmentsDisplayContext = (SegmentsDisplayContext)request.getAttribute(SegmentsWebKeys.SEGMENTS_DISPLAY_CONTEXT);
+%>
+
 <%@ include file="/init.jsp" %>
 
 <clay:management-toolbar

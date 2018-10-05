@@ -478,6 +478,63 @@ public interface SegmentsEntryRelPersistence extends BasePersistence<SegmentsEnt
 	public int countByG_CN_CPK(long groupId, long classNameId, long classPK);
 
 	/**
+	* Returns the segments entry rel where segmentsEntryId = &#63; and classNameId = &#63; and classPK = &#63; or throws a {@link NoSuchEntryRelException} if it could not be found.
+	*
+	* @param segmentsEntryId the segments entry ID
+	* @param classNameId the class name ID
+	* @param classPK the class pk
+	* @return the matching segments entry rel
+	* @throws NoSuchEntryRelException if a matching segments entry rel could not be found
+	*/
+	public SegmentsEntryRel findByS_CN_CPK(long segmentsEntryId,
+		long classNameId, long classPK) throws NoSuchEntryRelException;
+
+	/**
+	* Returns the segments entry rel where segmentsEntryId = &#63; and classNameId = &#63; and classPK = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	*
+	* @param segmentsEntryId the segments entry ID
+	* @param classNameId the class name ID
+	* @param classPK the class pk
+	* @return the matching segments entry rel, or <code>null</code> if a matching segments entry rel could not be found
+	*/
+	public SegmentsEntryRel fetchByS_CN_CPK(long segmentsEntryId,
+		long classNameId, long classPK);
+
+	/**
+	* Returns the segments entry rel where segmentsEntryId = &#63; and classNameId = &#63; and classPK = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	*
+	* @param segmentsEntryId the segments entry ID
+	* @param classNameId the class name ID
+	* @param classPK the class pk
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the matching segments entry rel, or <code>null</code> if a matching segments entry rel could not be found
+	*/
+	public SegmentsEntryRel fetchByS_CN_CPK(long segmentsEntryId,
+		long classNameId, long classPK, boolean retrieveFromCache);
+
+	/**
+	* Removes the segments entry rel where segmentsEntryId = &#63; and classNameId = &#63; and classPK = &#63; from the database.
+	*
+	* @param segmentsEntryId the segments entry ID
+	* @param classNameId the class name ID
+	* @param classPK the class pk
+	* @return the segments entry rel that was removed
+	*/
+	public SegmentsEntryRel removeByS_CN_CPK(long segmentsEntryId,
+		long classNameId, long classPK) throws NoSuchEntryRelException;
+
+	/**
+	* Returns the number of segments entry rels where segmentsEntryId = &#63; and classNameId = &#63; and classPK = &#63;.
+	*
+	* @param segmentsEntryId the segments entry ID
+	* @param classNameId the class name ID
+	* @param classPK the class pk
+	* @return the number of matching segments entry rels
+	*/
+	public int countByS_CN_CPK(long segmentsEntryId, long classNameId,
+		long classPK);
+
+	/**
 	* Caches the segments entry rel in the entity cache if it is enabled.
 	*
 	* @param segmentsEntryRel the segments entry rel

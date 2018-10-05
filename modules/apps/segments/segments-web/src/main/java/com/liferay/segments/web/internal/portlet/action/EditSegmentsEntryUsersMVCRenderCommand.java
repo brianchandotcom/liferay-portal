@@ -39,11 +39,12 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + SegmentsPortletKeys.SEGMENTS,
-		"mvc.command.name=editSegmentsEntry"
+		"mvc.command.name=editSegmentsEntryUsers"
 	},
 	service = MVCRenderCommand.class
 )
-public class EditSegmentsEntryMVCRenderCommand implements MVCRenderCommand {
+public class EditSegmentsEntryUsersMVCRenderCommand
+	implements MVCRenderCommand {
 
 	@Override
 	public String render(
@@ -63,7 +64,7 @@ public class EditSegmentsEntryMVCRenderCommand implements MVCRenderCommand {
 			SegmentsWebKeys.EDIT_SEGMENTS_ENTRY_DISPLAY_CONTEXT,
 			editSegmentsEntryDisplayContext);
 
-		return "/edit_segments_entry.jsp";
+		return "/edit_segments_entry_users.jsp";
 	}
 
 	@Reference

@@ -16,9 +16,9 @@ package com.liferay.segments.web.internal.portlet;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.segments.constants.SegmentsPortletKeys;
 import com.liferay.segments.service.SegmentsEntryService;
+import com.liferay.segments.web.internal.constants.SegmentsWebKeys;
 import com.liferay.segments.web.internal.display.context.SegmentsDisplayContext;
 
 import java.io.IOException;
@@ -76,7 +76,7 @@ public class SegmentsPortlet extends MVCPortlet {
 				_segmentsEntryService);
 
 		renderRequest.setAttribute(
-			WebKeys.PORTLET_DISPLAY_CONTEXT, segmentsDisplayContext);
+			SegmentsWebKeys.SEGMENTS_DISPLAY_CONTEXT, segmentsDisplayContext);
 
 		super.render(renderRequest, renderResponse);
 	}

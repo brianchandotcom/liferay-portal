@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.transaction.Propagation;
@@ -189,6 +190,14 @@ public class SegmentsEntryRelPersistenceTest {
 			RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
 
 		_persistence.countByG_CN_CPK(0L, 0L, 0L);
+	}
+
+	@Test
+	public void testCountByS_CN_CPK() throws Exception {
+		_persistence.countByS_CN_CPK(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
+
+		_persistence.countByS_CN_CPK(0L, 0L, 0L);
 	}
 
 	@Test
@@ -413,6 +422,27 @@ public class SegmentsEntryRelPersistenceTest {
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
+	}
+
+	@Test
+	public void testResetOriginalValues() throws Exception {
+		SegmentsEntryRel newSegmentsEntryRel = addSegmentsEntryRel();
+
+		_persistence.clearCache();
+
+		SegmentsEntryRel existingSegmentsEntryRel = _persistence.findByPrimaryKey(newSegmentsEntryRel.getPrimaryKey());
+
+		Assert.assertEquals(Long.valueOf(
+				existingSegmentsEntryRel.getSegmentsEntryId()),
+			ReflectionTestUtil.<Long>invoke(existingSegmentsEntryRel,
+				"getOriginalSegmentsEntryId", new Class<?>[0]));
+		Assert.assertEquals(Long.valueOf(
+				existingSegmentsEntryRel.getClassNameId()),
+			ReflectionTestUtil.<Long>invoke(existingSegmentsEntryRel,
+				"getOriginalClassNameId", new Class<?>[0]));
+		Assert.assertEquals(Long.valueOf(existingSegmentsEntryRel.getClassPK()),
+			ReflectionTestUtil.<Long>invoke(existingSegmentsEntryRel,
+				"getOriginalClassPK", new Class<?>[0]));
 	}
 
 	protected SegmentsEntryRel addSegmentsEntryRel() throws Exception {

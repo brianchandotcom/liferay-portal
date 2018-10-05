@@ -60,6 +60,15 @@ public class SegmentsEntryRelLocalServiceImpl
 	}
 
 	@Override
+	public void deleteSegmentsEntryRel(
+			long segmentsEntryId, long classNameId, long classPK)
+		throws PortalException {
+
+		segmentsEntryRelPersistence.removeByS_CN_CPK(
+			segmentsEntryId, classNameId, classPK);
+	}
+
+	@Override
 	public void deleteSegmentsEntryRels(long segmentsEntryId) {
 		segmentsEntryRelPersistence.removeBySegmentsEntryId(segmentsEntryId);
 	}
@@ -67,6 +76,25 @@ public class SegmentsEntryRelLocalServiceImpl
 	@Override
 	public void deleteSegmentsEntryRels(long classNameId, long classPK) {
 		segmentsEntryRelPersistence.removeByCN_CPK(classNameId, classPK);
+	}
+
+	@Override
+	public int getSegmentsEntryRelCount(long segmentsEntryId) {
+		return segmentsEntryRelPersistence.countBySegmentsEntryId(
+			segmentsEntryId);
+	}
+
+	@Override
+	public int getSegmentsEntryRelCount(long classNameId, long classPK) {
+		return segmentsEntryRelPersistence.countByCN_CPK(classNameId, classPK);
+	}
+
+	@Override
+	public int getSegmentsEntryRelCount(
+		long groupId, long classNameId, long classPK) {
+
+		return segmentsEntryRelPersistence.countByG_CN_CPK(
+			groupId, classNameId, classPK);
 	}
 
 	@Override
@@ -88,6 +116,21 @@ public class SegmentsEntryRelLocalServiceImpl
 
 		return segmentsEntryRelPersistence.findByG_CN_CPK(
 			groupId, classNameId, classPK);
+	}
+
+	@Override
+	public boolean hasSegmentsEntryRel(
+		long segmentsEntryId, long classNameId, long classPK) {
+
+		SegmentsEntryRel segmentsEntryRel =
+			segmentsEntryRelPersistence.fetchByS_CN_CPK(
+				segmentsEntryId, classNameId, classPK);
+
+		if (segmentsEntryRel != null) {
+			return true;
+		}
+
+		return false;
 	}
 
 }

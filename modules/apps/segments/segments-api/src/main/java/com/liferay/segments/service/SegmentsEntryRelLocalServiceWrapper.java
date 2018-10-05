@@ -91,6 +91,14 @@ public class SegmentsEntryRelLocalServiceWrapper
 		return _segmentsEntryRelLocalService.deleteSegmentsEntryRel(segmentsEntryRelId);
 	}
 
+	@Override
+	public void deleteSegmentsEntryRel(long segmentsEntryId, long classNameId,
+		long classPK)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_segmentsEntryRelLocalService.deleteSegmentsEntryRel(segmentsEntryId,
+			classNameId, classPK);
+	}
+
 	/**
 	* Deletes the segments entry rel from the database. Also notifies the appropriate model listeners.
 	*
@@ -247,6 +255,24 @@ public class SegmentsEntryRelLocalServiceWrapper
 		return _segmentsEntryRelLocalService.getSegmentsEntryRel(segmentsEntryRelId);
 	}
 
+	@Override
+	public int getSegmentsEntryRelCount(long segmentsEntryId) {
+		return _segmentsEntryRelLocalService.getSegmentsEntryRelCount(segmentsEntryId);
+	}
+
+	@Override
+	public int getSegmentsEntryRelCount(long classNameId, long classPK) {
+		return _segmentsEntryRelLocalService.getSegmentsEntryRelCount(classNameId,
+			classPK);
+	}
+
+	@Override
+	public int getSegmentsEntryRelCount(long groupId, long classNameId,
+		long classPK) {
+		return _segmentsEntryRelLocalService.getSegmentsEntryRelCount(groupId,
+			classNameId, classPK);
+	}
+
 	/**
 	* Returns a range of all the segments entry rels.
 	*
@@ -292,6 +318,13 @@ public class SegmentsEntryRelLocalServiceWrapper
 	@Override
 	public int getSegmentsEntryRelsCount() {
 		return _segmentsEntryRelLocalService.getSegmentsEntryRelsCount();
+	}
+
+	@Override
+	public boolean hasSegmentsEntryRel(long segmentsEntryId, long classNameId,
+		long classPK) {
+		return _segmentsEntryRelLocalService.hasSegmentsEntryRel(segmentsEntryId,
+			classNameId, classPK);
 	}
 
 	/**

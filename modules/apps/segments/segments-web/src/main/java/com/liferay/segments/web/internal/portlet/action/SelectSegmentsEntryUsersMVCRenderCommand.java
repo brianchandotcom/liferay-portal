@@ -15,13 +15,14 @@
 package com.liferay.segments.web.internal.portlet.action;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.segments.constants.SegmentsPortletKeys;
 import com.liferay.segments.service.SegmentsEntryRelService;
 import com.liferay.segments.service.SegmentsEntryService;
 import com.liferay.segments.web.internal.constants.SegmentsWebKeys;
-import com.liferay.segments.web.internal.display.context.EditSegmentsEntryDisplayContext;
+import com.liferay.segments.web.internal.display.context.SelectSegmentsEntryUsersDisplayContext;
 
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
@@ -39,11 +40,12 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + SegmentsPortletKeys.SEGMENTS,
-		"mvc.command.name=editSegmentsEntry"
+		"mvc.command.name=selectSegmentsEntryUsers"
 	},
 	service = MVCRenderCommand.class
 )
-public class EditSegmentsEntryMVCRenderCommand implements MVCRenderCommand {
+public class SelectSegmentsEntryUsersMVCRenderCommand
+	implements MVCRenderCommand {
 
 	@Override
 	public String render(
@@ -53,18 +55,22 @@ public class EditSegmentsEntryMVCRenderCommand implements MVCRenderCommand {
 		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
 			renderRequest);
 
-		EditSegmentsEntryDisplayContext editSegmentsEntryDisplayContext =
-			new EditSegmentsEntryDisplayContext(
-				httpServletRequest, renderRequest, renderResponse,
-				_segmentsEntryService, _segmentsEntryRelService,
-				_userLocalService);
+		SelectSegmentsEntryUsersDisplayContext
+			selectSegmentsEntryUsersDisplayContext =
+				new SelectSegmentsEntryUsersDisplayContext(
+					httpServletRequest, renderRequest, renderResponse,
+					_groupLocalService, _segmentsEntryService,
+					_segmentsEntryRelService, _userLocalService, _portal);
 
 		renderRequest.setAttribute(
-			SegmentsWebKeys.EDIT_SEGMENTS_ENTRY_DISPLAY_CONTEXT,
-			editSegmentsEntryDisplayContext);
+			SegmentsWebKeys.SELECT_SEGMENTS_ENTRY_USERS_DISPLAY_CONTEXT,
+			selectSegmentsEntryUsersDisplayContext);
 
-		return "/edit_segments_entry.jsp";
+		return "/select_segments_entry_users.jsp";
 	}
+
+	@Reference
+	private GroupLocalService _groupLocalService;
 
 	@Reference
 	private Portal _portal;

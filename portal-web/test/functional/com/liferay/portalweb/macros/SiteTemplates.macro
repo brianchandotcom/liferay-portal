@@ -94,13 +94,6 @@
 			<var name="name" value="${pageName}" />
 		</execute>
 
-		<if>
-			<equals arg1="${hideFromNavMenu}" arg2="true" />
-			<then>
-				<execute function="Uncheck" locator1="Checkbox#ADD_TO_NAVIGATION_MENU" />
-			</then>
-		</if>
-
 		<for list="1,2" param="iteration">
 			<execute macro="Button#click">
 				<var name="button" value="Save" />

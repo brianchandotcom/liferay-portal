@@ -984,10 +984,10 @@ public class SharingEntryLocalServiceTest {
 
 			List<SharingEntry> sharingEntriesForAnyClassNameId =
 				_sharingEntryLocalService.getUniqueToUserSharingEntries(
-					_toUser.getUserId(), -1, 0,
+					_toUser.getUserId(), 0, 0,
 					_sharingEntryLocalService.
 						getUniqueToUserSharingEntriesCount(
-							_toUser.getUserId(), -1),
+							_toUser.getUserId(), 0),
 					new SharingEntryModifiedDateComparator());
 
 			Assert.assertEquals(

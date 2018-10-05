@@ -179,7 +179,7 @@ public class SharedWithMeViewDisplayContext {
 	}
 
 	public void populateResults(SearchContainer<SharingEntry> searchContainer) {
-		long classNameId = -1;
+		long classNameId = 0;
 
 		String className = ParamUtil.getString(_request, "className");
 

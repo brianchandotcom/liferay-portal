@@ -62,7 +62,7 @@ public class SharingEntryFinderImpl
 
 			qPos.add(toUserId);
 
-			if (classNameId > -1) {
+			if (classNameId > 0) {
 				qPos.add(classNameId);
 			}
 
@@ -111,7 +111,7 @@ public class SharingEntryFinderImpl
 
 			qPos.add(toUserId);
 
-			if (classNameId > -1) {
+			if (classNameId > 0) {
 				qPos.add(classNameId);
 			}
 
@@ -127,7 +127,7 @@ public class SharingEntryFinderImpl
 	}
 
 	private String _replaceClassNameIdWhere(String sql, long classNameId) {
-		if (classNameId > -1) {
+		if (classNameId > 0) {
 			sql = StringUtil.replace(
 				sql, "[$CLASS_NAME_ID_WHERE$]",
 				"AND SharingEntry.classNameId = ?");

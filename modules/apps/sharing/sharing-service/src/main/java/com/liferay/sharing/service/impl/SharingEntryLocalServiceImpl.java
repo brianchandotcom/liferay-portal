@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.DateUtil;
+import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.spring.extender.service.ServiceReference;
@@ -493,26 +494,34 @@ public class SharingEntryLocalServiceImpl
 	 * Returns a list of all the sharing entries of a resource that has been
 	 * shared to a user returning at most one per shared model
 	 *
-	 * @param  toUserId the user id*
+	 * @param toUserId the user id
+	 * @param classNameId the classNameId to filter by
+	 * @param orderByComparator the comparator to order the sharing entries
 	 * @return the list of sharing entries
 	 */
 	@Override
 	public List<SharingEntry> getUniqueToUserSharingEntries(
-		long toUserId, int start, int end) {
+		long toUserId, long classNameId, int start, int end,
+		OrderByComparator<SharingEntry> orderByComparator) {
 
-		return sharingEntryFinder.findByToUserId(toUserId, start, end);
+		return sharingEntryFinder.findByToUserId(
+			toUserId, classNameId, start, end, orderByComparator);
 	}
 
 	/**
 	 * Returns the number of sharing entries of a resource that have been shared
 	 * by to user returning at most one per shared model.
 	 *
-	 * @param  toUserId the user id*
+	 *
+	 * @param toUserId the user id
+	 * @param classNameId the classNameId to filter by
 	 * @return the number of sharing entries
 	 */
 	@Override
-	public int getUniqueToUserSharingEntriesCount(long toUserId) {
-		return sharingEntryFinder.countByToUserId(toUserId);
+	public int getUniqueToUserSharingEntriesCount(
+		long toUserId, long classNameId) {
+
+		return sharingEntryFinder.countByToUserId(toUserId, classNameId);
 	}
 
 	/**

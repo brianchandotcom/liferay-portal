@@ -23,5 +23,9 @@
 		<finder name="AssetCategoryId" return-type="Collection">
 			<finder-column name="assetCategoryId" />
 		</finder>
+		<finder name="A_A" return-type="AssetEntryAssetCategoryRel">
+			<finder-column name="assetEntryId" />
+			<finder-column name="assetCategoryId" />
+		</finder>
 	</entity>
 </service-builder>

@@ -41,7 +41,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.segments.retriever.UserRetriever;
-import com.liferay.segments.retriever.UserRetrievingException;
 import com.liferay.structured.content.apio.architect.entity.EntityModel;
 import com.liferay.structured.content.apio.architect.filter.Filter;
 import com.liferay.structured.content.apio.architect.filter.FilterParser;
@@ -68,7 +67,7 @@ public class UserRetrieverImpl implements UserRetriever {
 	public PageItems<User> getUsers(
 			long companyId, String criteria, Locale locale,
 			Pagination pagination)
-		throws UserRetrievingException {
+		throws PortalException {
 
 		try {
 			return _getUsersPageItems(
@@ -76,7 +75,7 @@ public class UserRetrieverImpl implements UserRetriever {
 				pagination);
 		}
 		catch (Exception e) {
-			throw new UserRetrievingException(
+			throw new PortalException(
 				"Unable to retrieve users: " + e.getMessage(), e);
 		}
 	}

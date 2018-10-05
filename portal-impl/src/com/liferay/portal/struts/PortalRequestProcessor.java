@@ -877,12 +877,6 @@ public class PortalRequestProcessor extends RequestProcessor {
 		RequestUtils.populate(
 			actionForm, actionMapping.getPrefix(), actionMapping.getSuffix(),
 			request);
-
-		if ((request.getParameter(Globals.CANCEL_PROPERTY) != null) ||
-			(request.getParameter(Globals.CANCEL_PROPERTY_X) != null)) {
-
-			request.setAttribute(Globals.CANCEL_KEY, Boolean.TRUE);
-		}
 	}
 
 	@Override

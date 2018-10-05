@@ -50,7 +50,7 @@
 					<liferay-ui:message arguments="<%= messageArgument %>" key="only-one-rule-with-the-combination-x-is-supported" translateArguments="<%= false %>" />
 				</liferay-ui:error>
 
-				<label><liferay-ui:message key="displayed-assets-must-match-these-rules" /></label>
+				<p><liferay-ui:message key="displayed-assets-must-match-these-rules" /></p>
 
 				<div id="<portlet:namespace />ConditionForm"></div>
 

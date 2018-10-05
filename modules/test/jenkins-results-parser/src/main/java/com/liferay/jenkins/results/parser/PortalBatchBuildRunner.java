@@ -28,6 +28,8 @@ public class PortalBatchBuildRunner
 
 	@Override
 	public void run() {
+		updateBuildDescription();
+
 		setUpWorkspace();
 
 		runTestBatch();

@@ -38,7 +38,9 @@ public abstract class TopLevelBuildRunner<T extends TopLevelBuildData>
 
 	@Override
 	public void run() {
-		super.run();
+		updateBuildDescription();
+
+		setUpWorkspace();
 
 		propagateDistFilesToDistNodes();
 

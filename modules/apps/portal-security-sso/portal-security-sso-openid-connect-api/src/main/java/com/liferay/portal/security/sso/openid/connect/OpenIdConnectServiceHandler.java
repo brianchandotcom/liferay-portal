@@ -14,6 +14,8 @@
 
 package com.liferay.portal.security.sso.openid.connect;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.exception.PortalException;
 
 import javax.servlet.http.HttpServletRequest;
@@ -23,6 +25,7 @@ import javax.servlet.http.HttpSession;
 /**
  * @author Thuong Dinh
  */
+@ProviderType
 public interface OpenIdConnectServiceHandler {
 
 	public boolean hasValidOpenIdConnectSession(HttpSession httpSession)

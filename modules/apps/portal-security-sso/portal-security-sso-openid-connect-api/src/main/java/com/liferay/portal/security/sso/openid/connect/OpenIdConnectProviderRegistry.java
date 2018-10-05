@@ -14,11 +14,14 @@
 
 package com.liferay.portal.security.sso.openid.connect;
 
+import aQute.bnd.annotation.ProviderType;
+
 import java.util.Collection;
 
 /**
  * @author Thuong Dinh
  */
+@ProviderType
 public interface OpenIdConnectProviderRegistry {
 
 	public OpenIdConnectProvider findOpenIdConnectProvider(String name)

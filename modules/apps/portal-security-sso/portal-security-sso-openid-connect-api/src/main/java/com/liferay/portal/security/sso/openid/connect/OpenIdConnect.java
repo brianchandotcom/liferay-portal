@@ -14,9 +14,12 @@
 
 package com.liferay.portal.security.sso.openid.connect;
 
+import aQute.bnd.annotation.ProviderType;
+
 /**
  * @author Thuong Dinh
  */
+@ProviderType
 public interface OpenIdConnect {
 
 	public boolean isEnabled(long companyId);

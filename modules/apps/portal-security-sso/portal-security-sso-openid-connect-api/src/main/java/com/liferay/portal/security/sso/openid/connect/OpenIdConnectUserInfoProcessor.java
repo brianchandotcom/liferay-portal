@@ -14,6 +14,8 @@
 
 package com.liferay.portal.security.sso.openid.connect;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.exception.PortalException;
 
 import com.nimbusds.openid.connect.sdk.claims.UserInfo;
@@ -21,6 +23,7 @@ import com.nimbusds.openid.connect.sdk.claims.UserInfo;
 /**
  * @author Michael C. Han
  */
+@ProviderType
 public interface OpenIdConnectUserInfoProcessor {
 
 	public long processUserInfo(UserInfo userInfo, long companyId)

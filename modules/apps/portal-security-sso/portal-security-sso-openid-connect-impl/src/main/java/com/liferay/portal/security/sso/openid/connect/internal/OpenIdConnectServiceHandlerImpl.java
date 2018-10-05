@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.security.sso.openid.connect.OpenIdConnectFlowState;
 import com.liferay.portal.security.sso.openid.connect.OpenIdConnectProvider;
 import com.liferay.portal.security.sso.openid.connect.OpenIdConnectProviderRegistry;
 import com.liferay.portal.security.sso.openid.connect.OpenIdConnectServiceException;
@@ -101,7 +102,7 @@ public class OpenIdConnectServiceHandlerImpl
 	public boolean hasValidOpenIdConnectSession(HttpSession httpSession)
 		throws OpenIdConnectServiceException.NoOpenIdConnectSessionException {
 
-		OpenIdConnectSession openIdConnectSession = getOpenIdConnectSession(
+		OpenIdConnectSessionImpl openIdConnectSession = getOpenIdConnectSession(
 			httpSession);
 
 		if (!hasValidAccessToken(openIdConnectSession)) {
@@ -129,7 +130,7 @@ public class OpenIdConnectServiceHandlerImpl
 
 		HttpSession httpSession = httpServletRequest.getSession();
 
-		OpenIdConnectSession openIdConnectSession = getOpenIdConnectSession(
+		OpenIdConnectSessionImpl openIdConnectSession = getOpenIdConnectSession(
 			httpSession);
 
 		if (!OpenIdConnectFlowState.AUTH_REQUESTED.equals(
@@ -184,11 +185,18 @@ public class OpenIdConnectServiceHandlerImpl
 			_openIdConnectProviderRegistry.findOpenIdConnectProvider(
 				openIdConnectProviderName);
 
-		State state = new State();
-		Nonce nonce = new Nonce();
+		HttpSession httpSession = httpServletRequest.getSession();
 
-		OpenIdConnectSession openIdConnectSession = new OpenIdConnectSession(
-			openIdConnectProviderName, nonce, state);
+		OpenIdConnectSessionImpl openIdConnectSession = getOpenIdConnectSession(
+			httpSession, openIdConnectProviderName);
+
+		if (openIdConnectSession == null) {
+			openIdConnectSession = createAndSetOpenIdConnectSession(
+				httpSession, openIdConnectProviderName);
+		}
+
+		State state = openIdConnectSession.getState();
+		Nonce nonce = openIdConnectSession.getNonce();
 
 		Scope scope = Scope.parse(openIdConnectProvider.getScopes());
 
@@ -196,11 +204,6 @@ public class OpenIdConnectServiceHandlerImpl
 
 		URI authenticationRequestURI = getAuthenticationRequestURI(
 			loginRedirectURI, openIdConnectProvider, state, nonce, scope);
-
-		HttpSession httpSession = httpServletRequest.getSession();
-
-		httpSession.setAttribute(
-			OpenIdConnectWebKeys.OPEN_ID_CONNECT_SESSION, openIdConnectSession);
 
 		try {
 			httpServletResponse.sendRedirect(
@@ -213,6 +216,22 @@ public class OpenIdConnectServiceHandlerImpl
 			throw new SystemException(
 				"Unable to send user to OpenId Connect service", ioe);
 		}
+	}
+
+	protected OpenIdConnectSessionImpl createAndSetOpenIdConnectSession(
+		HttpSession httpSession, String openIdConnectProviderName) {
+
+		State state = new State();
+		Nonce nonce = new Nonce();
+
+		OpenIdConnectSessionImpl openIdConnectSession =
+			new OpenIdConnectSessionImpl(
+				openIdConnectProviderName, nonce, state);
+
+		httpSession.setAttribute(
+			OpenIdConnectWebKeys.OPEN_ID_CONNECT_SESSION, openIdConnectSession);
+
+		return openIdConnectSession;
 	}
 
 	protected URI getAuthenticationRequestURI(
@@ -300,13 +319,12 @@ public class OpenIdConnectServiceHandlerImpl
 			secret);
 	}
 
-	protected OpenIdConnectSession getOpenIdConnectSession(
+	protected OpenIdConnectSessionImpl getOpenIdConnectSession(
 			HttpSession httpSession)
 		throws OpenIdConnectServiceException.NoOpenIdConnectSessionException {
 
-		OpenIdConnectSession openIdConnectSession =
-			(OpenIdConnectSession)httpSession.getAttribute(
-				OpenIdConnectWebKeys.OPEN_ID_CONNECT_SESSION);
+		OpenIdConnectSessionImpl openIdConnectSession = getOpenIdConnectSession(
+			httpSession, null);
 
 		if (openIdConnectSession == null) {
 			throw new OpenIdConnectServiceException.
@@ -317,8 +335,31 @@ public class OpenIdConnectServiceHandlerImpl
 		return openIdConnectSession;
 	}
 
+	protected OpenIdConnectSessionImpl getOpenIdConnectSession(
+		HttpSession httpSession, String expectedProviderName) {
+
+		Object openIdConnectSessionObj = httpSession.getAttribute(
+			OpenIdConnectWebKeys.OPEN_ID_CONNECT_SESSION);
+
+		if (openIdConnectSessionObj instanceof OpenIdConnectSessionImpl) {
+			OpenIdConnectSessionImpl openIdConnectSession =
+				(OpenIdConnectSessionImpl)openIdConnectSessionObj;
+
+			String openIdProviderName =
+				openIdConnectSession.getOpenIdProviderName();
+
+			if (Validator.isNull(expectedProviderName) ||
+				expectedProviderName.equals(openIdProviderName)) {
+
+				return openIdConnectSession;
+			}
+		}
+
+		return null;
+	}
+
 	protected boolean hasValidAccessToken(
-		OpenIdConnectSession openIdConnectSession) {
+		OpenIdConnectSessionImpl openIdConnectSession) {
 
 		AccessToken accessToken = openIdConnectSession.getAccessToken();
 
@@ -338,7 +379,7 @@ public class OpenIdConnectServiceHandlerImpl
 	}
 
 	protected void processUserInfo(
-			long companyId, OpenIdConnectSession openIdConnectSession,
+			long companyId, OpenIdConnectSessionImpl openIdConnectSession,
 			OIDCProviderMetadata oidcProviderMetadata)
 		throws PortalException {
 
@@ -354,54 +395,52 @@ public class OpenIdConnectServiceHandlerImpl
 	}
 
 	protected boolean refreshAuthToken(
-			OpenIdConnectSession openIdConnectSession)
+			OpenIdConnectSessionImpl openIdConnectSession)
 		throws OpenIdConnectServiceException {
 
-		synchronized (openIdConnectSession) {
-			if (hasValidAccessToken(openIdConnectSession)) {
-				return true;
-			}
-
-			if (_log.isInfoEnabled()) {
-				_log.info(
-					"User session auth token is invalid, attempting to use " +
-						"refresh token to obtain a valid auth token");
-			}
-
-			RefreshToken refreshToken = openIdConnectSession.getRefreshToken();
-
-			if (refreshToken == null) {
-				if (_log.isInfoEnabled()) {
-					_log.info(
-						"Unable to refresh auth token because no refresh " +
-							"token is supplied");
-				}
-
-				return false;
-			}
-
-			String openIdConnectProviderName =
-				openIdConnectSession.getOpenIdProviderName();
-
-			OpenIdConnectProvider openIdConnectProvider =
-				_openIdConnectProviderRegistry.findOpenIdConnectProvider(
-					openIdConnectProviderName);
-
-			OIDCProviderMetadata oidcProviderMetadata =
-				openIdConnectProvider.getOIDCProviderMetadata();
-
-			OIDCClientInformation oidcClientInformation =
-				getOIDCClientInformation(openIdConnectProvider);
-
-			Tokens tokens = requestRefreshToken(
-				refreshToken, oidcClientInformation, oidcProviderMetadata,
-				openIdConnectSession.getNonce());
-
-			updateSessionTokens(
-				openIdConnectSession, tokens, System.currentTimeMillis());
-
+		if (hasValidAccessToken(openIdConnectSession)) {
 			return true;
 		}
+
+		if (_log.isInfoEnabled()) {
+			_log.info(
+				"User session auth token is invalid, attempting to use " +
+					"refresh token to obtain a valid auth token");
+		}
+
+		RefreshToken refreshToken = openIdConnectSession.getRefreshToken();
+
+		if (refreshToken == null) {
+			if (_log.isInfoEnabled()) {
+				_log.info(
+					"Unable to refresh auth token because no refresh token " +
+						"is supplied");
+			}
+
+			return false;
+		}
+
+		String openIdConnectProviderName =
+			openIdConnectSession.getOpenIdProviderName();
+
+		OpenIdConnectProvider openIdConnectProvider =
+			_openIdConnectProviderRegistry.findOpenIdConnectProvider(
+				openIdConnectProviderName);
+
+		OIDCProviderMetadata oidcProviderMetadata =
+			openIdConnectProvider.getOIDCProviderMetadata();
+
+		OIDCClientInformation oidcClientInformation = getOIDCClientInformation(
+			openIdConnectProvider);
+
+		Tokens tokens = requestRefreshToken(
+			refreshToken, oidcClientInformation, oidcProviderMetadata,
+			openIdConnectSession.getNonce());
+
+		updateSessionTokens(
+			openIdConnectSession, tokens, System.currentTimeMillis());
+
+		return true;
 	}
 
 	protected Tokens requestIdToken(
@@ -530,7 +569,7 @@ public class OpenIdConnectServiceHandlerImpl
 	}
 
 	protected void updateSessionTokens(
-		OpenIdConnectSession session, Tokens tokens, long loginTime) {
+		OpenIdConnectSessionImpl session, Tokens tokens, long loginTime) {
 
 		session.setAccessToken(tokens.getAccessToken());
 		session.setRefreshToken(tokens.getRefreshToken());

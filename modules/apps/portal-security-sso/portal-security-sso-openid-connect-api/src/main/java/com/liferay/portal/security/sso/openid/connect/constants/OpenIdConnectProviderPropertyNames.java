@@ -14,9 +14,12 @@
 
 package com.liferay.portal.security.sso.openid.connect.constants;
 
+import aQute.bnd.annotation.ProviderType;
+
 /**
  * @author Michael C. Han
  */
+@ProviderType
 public class OpenIdConnectProviderPropertyNames {
 
 	public static final String OPEN_ID_CONNECT_ENDPOINT_AUTH =

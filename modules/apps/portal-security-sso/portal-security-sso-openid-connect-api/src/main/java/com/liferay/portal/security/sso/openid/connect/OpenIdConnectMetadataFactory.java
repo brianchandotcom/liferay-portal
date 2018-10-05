@@ -14,12 +14,15 @@
 
 package com.liferay.portal.security.sso.openid.connect;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.nimbusds.openid.connect.sdk.op.OIDCProviderMetadata;
 import com.nimbusds.openid.connect.sdk.rp.OIDCClientMetadata;
 
 /**
  * @author Edward C. Han
  */
+@ProviderType
 public interface OpenIdConnectMetadataFactory {
 
 	public OIDCClientMetadata getOIDCClientMetadata();

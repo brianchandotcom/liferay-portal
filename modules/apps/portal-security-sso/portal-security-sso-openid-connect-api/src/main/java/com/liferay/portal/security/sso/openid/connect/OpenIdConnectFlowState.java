@@ -12,11 +12,14 @@
  * details.
  */
 
-package com.liferay.portal.security.sso.openid.connect.internal;
+package com.liferay.portal.security.sso.openid.connect;
+
+import aQute.bnd.annotation.ProviderType;
 
 /**
  * @author Edward C. Han
  */
+@ProviderType
 public enum OpenIdConnectFlowState {
 
 	AUTH_COMPLETE, AUTH_REQUESTED, INITIALIZED, PORTAL_AUTH_COMPLETE

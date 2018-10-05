@@ -19,12 +19,12 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.BaseFilter;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.security.sso.openid.connect.OpenIdConnect;
+import com.liferay.portal.security.sso.openid.connect.OpenIdConnectFlowState;
 import com.liferay.portal.security.sso.openid.connect.OpenIdConnectServiceException;
 import com.liferay.portal.security.sso.openid.connect.OpenIdConnectServiceHandler;
+import com.liferay.portal.security.sso.openid.connect.OpenIdConnectSession;
 import com.liferay.portal.security.sso.openid.connect.constants.OpenIdConnectConstants;
 import com.liferay.portal.security.sso.openid.connect.constants.OpenIdConnectWebKeys;
-import com.liferay.portal.security.sso.openid.connect.internal.OpenIdConnectFlowState;
-import com.liferay.portal.security.sso.openid.connect.internal.OpenIdConnectSession;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -93,15 +93,19 @@ public class OpenIdConnectFilter extends BaseFilter {
 				throw new OpenIdConnectServiceException.AuthenticationException(
 					"OpenId Connect authentication flow not started");
 			}
-			else if (!OpenIdConnectFlowState.AUTH_REQUESTED.equals(
-						openIdConnectFlowState)) {
+			else if (OpenIdConnectFlowState.AUTH_COMPLETE.equals(
+						openIdConnectFlowState) ||
+					 OpenIdConnectFlowState.PORTAL_AUTH_COMPLETE.equals(
+						 openIdConnectFlowState)) {
 
-				throw new OpenIdConnectServiceException.AuthenticationException(
-					"OpenId Connect session already complete");
+				if (_log.isDebugEnabled()) {
+					_log.debug("User has already been logged in");
+				}
 			}
-
-			_openIdConnectServiceHandler.processAuthenticationResponse(
-				httpServletRequest, httpServletResponse);
+			else {
+				_openIdConnectServiceHandler.processAuthenticationResponse(
+					httpServletRequest, httpServletResponse);
+			}
 		}
 		catch (Exception e) {
 			_log.error("Unable to process the OpenID login", e);

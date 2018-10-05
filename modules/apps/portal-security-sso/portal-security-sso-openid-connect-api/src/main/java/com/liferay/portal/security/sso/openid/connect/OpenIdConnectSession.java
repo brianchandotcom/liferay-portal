@@ -12,26 +12,33 @@
  * details.
  */
 
-package com.liferay.portal.security.sso.openid.connect.constants;
+package com.liferay.portal.security.sso.openid.connect;
 
 import aQute.bnd.annotation.ProviderType;
 
 /**
- * @author Thuong Dinh
+ * @author Jesse Rao
  */
 @ProviderType
-public class OpenIdConnectWebKeys {
+public interface OpenIdConnectSession {
 
-	public static final String OPEN_ID_CONNECT_PROVIDER_NAME =
-		"OPEN_ID_CONNECT_PROVIDER_NAME";
+	public String getAccessTokenString();
 
-	public static final String OPEN_ID_CONNECT_PROVIDER_NAMES =
-		"OPEN_ID_CONNECT_PROVIDER_NAMES";
+	public long getLoginTime();
 
-	public static final String OPEN_ID_CONNECT_REQUEST_ACTION_NAME =
-		"/login/openid_connect_request";
+	public long getLoginUserId();
 
-	public static final String OPEN_ID_CONNECT_SESSION =
-		"OPEN_ID_CONNECT_SESSION";
+	public String getNonceString();
+
+	public OpenIdConnectFlowState getOpenIdConnectFlowState();
+
+	public String getOpenIdProviderName();
+
+	public String getRefreshTokenString();
+
+	public String getStateString();
+
+	public void setOpenIdConnectFlowState(
+		OpenIdConnectFlowState openIdConnectFlowState);
 
 }

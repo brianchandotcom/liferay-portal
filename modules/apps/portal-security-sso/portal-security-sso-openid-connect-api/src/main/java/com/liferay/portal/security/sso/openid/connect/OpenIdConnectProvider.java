@@ -14,6 +14,8 @@
 
 package com.liferay.portal.security.sso.openid.connect;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.nimbusds.openid.connect.sdk.op.OIDCProviderMetadata;
 import com.nimbusds.openid.connect.sdk.rp.OIDCClientMetadata;
 
@@ -21,6 +23,7 @@ import com.nimbusds.openid.connect.sdk.rp.OIDCClientMetadata;
  * @author Thuong Dinh
  * @author Edward C. Han
  */
+@ProviderType
 public class OpenIdConnectProvider {
 
 	public OpenIdConnectProvider(

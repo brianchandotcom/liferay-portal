@@ -17,13 +17,18 @@ package com.liferay.jenkins.results.parser;
 import java.io.File;
 import java.io.IOException;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
+import java.util.concurrent.TimeoutException;
 
+import org.apache.commons.lang.StringEscapeUtils;
 import org.apache.commons.lang.StringUtils;
+
+import org.dom4j.Element;
 
 /**
  * @author Michael Hashimoto
@@ -40,6 +45,8 @@ public abstract class TopLevelBuildRunner<T extends TopLevelBuildData>
 		invokeBatchJobs();
 
 		waitForInvokedJobs();
+
+		createJenkinsReport();
 	}
 
 	protected TopLevelBuildRunner(T topLevelBuildData) {
@@ -54,6 +61,83 @@ public abstract class TopLevelBuildRunner<T extends TopLevelBuildData>
 		}
 
 		_topLevelBuild = (TopLevelBuild)build;
+	}
+
+	protected void createJenkinsReport() {
+		Element jenkinsReportElement = _topLevelBuild.getJenkinsReportElement();
+
+		try {
+			BuildData buildData = getBuildData();
+
+			String jenkinsReportString = StringEscapeUtils.unescapeXml(
+				Dom4JUtil.format(jenkinsReportElement, true));
+
+			File jenkinsReportFile = new File(
+				buildData.getWorkspaceDir(), "jenkins-report.html");
+
+			JenkinsResultsParserUtil.write(
+				jenkinsReportFile, jenkinsReportString);
+
+			if (!JenkinsResultsParserUtil.isCINode()) {
+				return;
+			}
+
+			String userContentRelativePath =
+				buildData.getUserContentRelativePath();
+
+			userContentRelativePath = userContentRelativePath.replace(
+				")", "\\)");
+			userContentRelativePath = userContentRelativePath.replace(
+				"(", "\\(");
+
+			try {
+				String command = JenkinsResultsParserUtil.combine(
+					"ssh -o NumberOfPasswordPrompts=0 ",
+					buildData.getMasterHostname(),
+					" 'mkdir -p /opt/java/jenkins/userContent/",
+					userContentRelativePath, "'");
+
+				JenkinsResultsParserUtil.executeBashCommands(command);
+			}
+			catch (IOException | TimeoutException e) {
+				throw new RuntimeException(e);
+			}
+
+			int maxRetries = 3;
+			int retries = 0;
+
+			while (retries < maxRetries) {
+				try {
+					retries++;
+
+					String command = JenkinsResultsParserUtil.combine(
+						"time rsync -svI --chmod=go=rx --timeout=1200 ",
+						jenkinsReportFile.getCanonicalPath(), " ",
+						buildData.getMasterHostname(), "::usercontent/",
+						userContentRelativePath);
+
+					JenkinsResultsParserUtil.executeBashCommands(command);
+
+					break;
+				}
+				catch (IOException | TimeoutException e) {
+					if (retries == maxRetries) {
+						throw new RuntimeException(
+							"Unable to send the jenkins-report.html", e);
+					}
+
+					System.out.println(
+						"Unable to execute bash commands, retrying... ");
+
+					e.printStackTrace();
+
+					JenkinsResultsParserUtil.sleep(3000);
+				}
+			}
+		}
+		catch (IOException ioe) {
+			throw new RuntimeException(ioe);
+		}
 	}
 
 	protected Set<String> getBatchNames() {

@@ -54,6 +54,20 @@ public class AssetEntryAssetCategoryRelLocalServiceImpl
 	}
 
 	@Override
+	public void deleteAssetEntryAssetCategoryRel(
+		long assetEntryId, long assetCategoryId) {
+
+		AssetEntryAssetCategoryRel assetEntryAssetCategoryRel =
+			assetEntryAssetCategoryRelPersistence.fetchByA_A(
+				assetEntryId, assetCategoryId);
+
+		if (assetEntryAssetCategoryRel != null) {
+			assetEntryAssetCategoryRelPersistence.remove(
+				assetEntryAssetCategoryRel);
+		}
+	}
+
+	@Override
 	public void deleteAssetEntryAssetCategoryRelByAssetCategoryId(
 		long assetCategoryId) {
 
@@ -70,6 +84,14 @@ public class AssetEntryAssetCategoryRelLocalServiceImpl
 	}
 
 	@Override
+	public AssetEntryAssetCategoryRel fetchAssetEntryAssetCategoryRel(
+		long assetEntryId, long assetCategoryId) {
+
+		return assetEntryAssetCategoryRelPersistence.fetchByA_A(
+			assetEntryId, assetCategoryId);
+	}
+
+	@Override
 	public List<AssetEntryAssetCategoryRel>
 		getAssetEntryAssetCategoryRelsByAssetCategoryId(long assetCategoryId) {
 
@@ -82,6 +104,12 @@ public class AssetEntryAssetCategoryRelLocalServiceImpl
 		getAssetEntryAssetCategoryRelsByAssetEntryId(long assetEntryId) {
 
 		return assetEntryAssetCategoryRelPersistence.findByAssetEntryId(
+			assetEntryId);
+	}
+
+	@Override
+	public int getAssetEntryAssetCategoryRelsCount(long assetEntryId) {
+		return assetEntryAssetCategoryRelPersistence.countByAssetEntryId(
 			assetEntryId);
 	}
 

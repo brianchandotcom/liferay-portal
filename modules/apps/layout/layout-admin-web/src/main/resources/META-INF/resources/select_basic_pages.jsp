@@ -140,7 +140,9 @@ SelectLayoutPageTemplateEntryDisplayContext selectLayoutPageTemplateEntryDisplay
 				{
 					dialog: {
 						destroyOnHide: true,
-						resizable: false
+						height: 480,
+						resizable: false,
+						width: 640
 					},
 					dialogIframe: {
 						bodyCssClass: 'dialog-with-footer'

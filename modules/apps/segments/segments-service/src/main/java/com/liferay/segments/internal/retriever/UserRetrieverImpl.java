@@ -88,7 +88,6 @@ public class UserRetrieverImpl implements UserRetriever {
 
 		searchContext.setCompanyId(companyId);
 		searchContext.setEnd(end);
-
 		searchContext.setStart(start);
 
 		QueryConfig queryConfig = searchContext.getQueryConfig();
@@ -128,6 +127,7 @@ public class UserRetrieverImpl implements UserRetriever {
 
 		try {
 			Expression expression = filter.getExpression();
+
 			Format format = FastDateFormatFactoryUtil.getSimpleDateFormat(
 				PropsUtil.get(PropsKeys.INDEX_DATE_FORMAT_PATTERN));
 

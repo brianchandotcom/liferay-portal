@@ -29,7 +29,6 @@ import org.osgi.service.component.annotations.Component;
  * Provides the entity data model from the Indexed Entity (User).
  *
  * @author David Arques
- *
  * @review
  */
 @Component(

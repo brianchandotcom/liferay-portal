@@ -61,11 +61,13 @@ public class IsolationAcrossCompaniesTest extends BaseClientTestCase {
 
 		Assert.assertEquals("everything.read", builder.get(String.class));
 
+		builder = authorize(webTarget.request(), tokenString);
+
 		builder = builder.header("Host", "host2.xyz");
 
 		Response response = builder.get();
 
-		Assert.assertEquals(400, response.getStatus());
+		Assert.assertEquals(403, response.getStatus());
 	}
 
 	public static class IsolationAccrossCompaniesTestPreparatorBundleActivator

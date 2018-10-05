@@ -22,6 +22,7 @@ import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.kernel.service.AssetCategoryLocalServiceWrapper;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.ModelHintsUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -142,6 +143,17 @@ public class AssetEntryAssetCategoryRelAssetCategoryLocalServiceWrapper
 	}
 
 	@Override
+	public List<AssetCategory> getAssetEntryAssetCategories(long entryId) {
+		return _getAssetCategoriesByEntryId(entryId);
+	}
+
+	@Override
+	public int getAssetEntryAssetCategoriesCount(long entryId) {
+		return _assetEntryAssetCategoryRelLocalService.
+			getAssetEntryAssetCategoryRelsCount(entryId);
+	}
+
+	@Override
 	public List<AssetCategory> getCategories(long classNameId, long classPK) {
 		AssetEntry entry = _assetEntryLocalService.fetchEntry(
 			classNameId, classPK);
@@ -235,7 +247,7 @@ public class AssetEntryAssetCategoryRelAssetCategoryLocalServiceWrapper
 		if (assetEntryAssetCategoryRels.isEmpty()) {
 			categories =
 				_assetCategoryLocalService.getAssetEntryAssetCategories(
-					assetEntryId);
+					assetEntryId, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
 			categories.forEach(
 				category -> _assetEntryAssetCategoryRelLocalService.

@@ -5,7 +5,7 @@
 			<var name="portletOption" value="Configuration" />
 		</execute>
 
-		<execute macro ="IFrame#selectModalFrame" />
+		<execute macro="IFrame#selectModalFrame" />
 	</command>
 
 	<command name="selectNavigation">

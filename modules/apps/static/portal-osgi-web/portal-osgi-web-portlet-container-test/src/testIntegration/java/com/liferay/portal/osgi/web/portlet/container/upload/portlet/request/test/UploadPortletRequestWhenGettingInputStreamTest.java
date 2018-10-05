@@ -57,7 +57,7 @@ public class UploadPortletRequestWhenGettingInputStreamTest {
 	}
 
 	@Test
-	public void shouldNotReturnLiferayInputStream() throws Exception {
+	public void testShouldNotReturnLiferayInputStream() throws Exception {
 		LiferayServletRequest liferayServletRequest =
 			PortletContainerTestUtil.getMultipartRequest(
 				_portletNamespace, _BYTES);
@@ -85,7 +85,7 @@ public class UploadPortletRequestWhenGettingInputStreamTest {
 	}
 
 	@Test
-	public void shouldReturnServletInputStreamAdapter() throws Exception {
+	public void testShouldReturnServletInputStreamAdapter() throws Exception {
 		LiferayServletRequest liferayServletRequest =
 			PortletContainerTestUtil.getMultipartRequest(
 				_portletNamespace, _BYTES);

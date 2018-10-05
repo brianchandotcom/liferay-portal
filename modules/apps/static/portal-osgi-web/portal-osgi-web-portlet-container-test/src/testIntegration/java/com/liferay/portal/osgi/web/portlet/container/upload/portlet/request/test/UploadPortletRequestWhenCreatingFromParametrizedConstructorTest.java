@@ -56,7 +56,7 @@ public class UploadPortletRequestWhenCreatingFromParametrizedConstructorTest {
 	}
 
 	@Test
-	public void shouldNotPopulateParametersWithEmptyParameters()
+	public void testShouldNotPopulateParametersWithEmptyParameters()
 		throws Exception {
 
 		Map<String, FileItem[]> fileParameters = Collections.emptyMap();
@@ -88,7 +88,7 @@ public class UploadPortletRequestWhenCreatingFromParametrizedConstructorTest {
 	}
 
 	@Test
-	public void shouldPopulateMultipartParametersWithFileParameters()
+	public void testShouldPopulateMultipartParametersWithFileParameters()
 		throws Exception {
 
 		Map<String, FileItem[]> fileParameters =
@@ -122,7 +122,7 @@ public class UploadPortletRequestWhenCreatingFromParametrizedConstructorTest {
 	}
 
 	@Test
-	public void shouldPopulateRegularParametersWithRegularParameters()
+	public void testShouldPopulateRegularParametersWithRegularParameters()
 		throws Exception {
 
 		Map<String, List<String>> regularParameters =

@@ -58,7 +58,7 @@ public class UploadPortletRequestWhenGettingParameterValuesTest {
 	}
 
 	@Test
-	public void shouldMergeRegularAndRequestParameters() throws Exception {
+	public void testShouldMergeRegularAndRequestParameters() throws Exception {
 		Map<String, FileItem[]> fileParameters =
 			PortletContainerTestUtil.getFileParameters(
 				10, _portletNamespace, _BYTES);

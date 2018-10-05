@@ -55,7 +55,7 @@ public class UploadPortletRequestWhenGettingSizeTest {
 	}
 
 	@Test
-	public void shouldReturnFirstSizeFromFileParameters() throws Exception {
+	public void testShouldReturnFirstSizeFromFileParameters() throws Exception {
 		Map<String, FileItem[]> fileParameters =
 			PortletContainerTestUtil.getFileParameters(
 				1, _portletNamespace, _BYTES);
@@ -90,7 +90,9 @@ public class UploadPortletRequestWhenGettingSizeTest {
 	}
 
 	@Test
-	public void shouldReturnZeroIfFileParametersAreEmpty() throws Exception {
+	public void testShouldReturnZeroIfFileParametersAreEmpty()
+		throws Exception {
+
 		LiferayServletRequest liferayServletRequest =
 			PortletContainerTestUtil.getMultipartRequest(
 				_portletNamespace, _BYTES);
@@ -109,7 +111,9 @@ public class UploadPortletRequestWhenGettingSizeTest {
 	}
 
 	@Test
-	public void shouldReturnZeroIfNameIsNotAFileParameter() throws Exception {
+	public void testShouldReturnZeroIfNameIsNotAFileParameter()
+		throws Exception {
+
 		Map<String, FileItem[]> fileParameters =
 			PortletContainerTestUtil.getFileParameters(
 				1, _portletNamespace, _BYTES);

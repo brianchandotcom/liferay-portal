@@ -56,7 +56,7 @@ public class UploadPortletRequestWhenGettingFileNamesTest {
 	}
 
 	@Test
-	public void shouldReturnFileNamesFromFileParameters() throws Exception {
+	public void testShouldReturnFileNamesFromFileParameters() throws Exception {
 		Map<String, FileItem[]> fileParameters =
 			PortletContainerTestUtil.getFileParameters(
 				10, _portletNamespace, _BYTES);
@@ -100,7 +100,9 @@ public class UploadPortletRequestWhenGettingFileNamesTest {
 	}
 
 	@Test
-	public void shouldReturnNullIfFileParametersAreEmpty() throws Exception {
+	public void testShouldReturnNullIfFileParametersAreEmpty()
+		throws Exception {
+
 		LiferayServletRequest liferayServletRequest =
 			PortletContainerTestUtil.getMultipartRequest(
 				_portletNamespace, _BYTES);
@@ -117,7 +119,9 @@ public class UploadPortletRequestWhenGettingFileNamesTest {
 	}
 
 	@Test
-	public void shouldReturnNullIfNameIsNotAFileParameter() throws Exception {
+	public void testShouldReturnNullIfNameIsNotAFileParameter()
+		throws Exception {
+
 		Map<String, FileItem[]> fileParameters =
 			PortletContainerTestUtil.getFileParameters(
 				1, _portletNamespace, _BYTES);

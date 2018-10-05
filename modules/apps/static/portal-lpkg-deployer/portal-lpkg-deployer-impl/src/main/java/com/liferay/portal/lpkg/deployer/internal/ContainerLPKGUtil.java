@@ -41,16 +41,12 @@ public class ContainerLPKGUtil {
 	public static List<File> deploy(File lpkgFile, BundleContext bundleContext)
 		throws IOException {
 
-		if (!_isLPKGContainer(lpkgFile)) {
-			return null;
-		}
-
-		List<File> lpkgFiles = new ArrayList<>();
-
 		Path deployerDirPath = Paths.get(
 			GetterUtil.getString(
 				bundleContext.getProperty("lpkg.deployer.dir"),
 				PropsValues.MODULE_FRAMEWORK_MARKETPLACE_DIR));
+
+		List<File> lpkgFiles = new ArrayList<>();
 
 		try (ZipFile zipFile = new ZipFile(lpkgFile)) {
 			Enumeration<? extends ZipEntry> zipEntries = zipFile.entries();
@@ -58,7 +54,13 @@ public class ContainerLPKGUtil {
 			while (zipEntries.hasMoreElements()) {
 				ZipEntry zipEntry = zipEntries.nextElement();
 
-				Path lpkgPath = deployerDirPath.resolve(zipEntry.getName());
+				String name = zipEntry.getName();
+
+				if (!name.endsWith(".lpkg")) {
+					return null;
+				}
+
+				Path lpkgPath = deployerDirPath.resolve(name);
 
 				Files.copy(
 					zipFile.getInputStream(zipEntry), lpkgPath,
@@ -68,32 +70,13 @@ public class ContainerLPKGUtil {
 			}
 		}
 
+		if (lpkgFiles.isEmpty()) {
+			return null;
+		}
+
 		lpkgFile.delete();
 
 		return lpkgFiles;
-	}
-
-	private static boolean _isLPKGContainer(File file) throws IOException {
-		boolean lpkgContainer = false;
-
-		try (ZipFile zipFile = new ZipFile(file)) {
-			Enumeration<? extends ZipEntry> zipEntries = zipFile.entries();
-
-			while (zipEntries.hasMoreElements()) {
-				ZipEntry zipEntry = zipEntries.nextElement();
-
-				String name = zipEntry.getName();
-
-				if (name.endsWith(".lpkg")) {
-					lpkgContainer = true;
-				}
-				else {
-					return false;
-				}
-			}
-		}
-
-		return lpkgContainer;
 	}
 
 }

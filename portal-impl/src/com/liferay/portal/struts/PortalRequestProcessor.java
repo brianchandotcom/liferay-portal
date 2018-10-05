@@ -93,8 +93,11 @@ import org.apache.struts.Globals;
 import org.apache.struts.action.Action;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionMapping;
+import org.apache.struts.action.ActionServlet;
+import org.apache.struts.action.RequestProcessor;
 import org.apache.struts.config.ActionConfig;
 import org.apache.struts.config.ForwardConfig;
+import org.apache.struts.config.ModuleConfig;
 import org.apache.struts.util.MessageResources;
 
 /**
@@ -104,7 +107,7 @@ import org.apache.struts.util.MessageResources;
  * @author Mika Koivisto
  * @author Neil Griffin
  */
-public class PortalRequestProcessor extends TilesRequestProcessor {
+public class PortalRequestProcessor extends RequestProcessor {
 
 	public PortalRequestProcessor() {
 
@@ -138,6 +141,18 @@ public class PortalRequestProcessor extends TilesRequestProcessor {
 		_trackerIgnorePaths = new HashSet<>();
 
 		addPaths(_trackerIgnorePaths, PropsKeys.SESSION_TRACKER_IGNORE_PATHS);
+	}
+
+	@Override
+	public void init(ActionServlet servlet, ModuleConfig moduleConfig)
+		throws ServletException {
+
+		super.init(servlet, moduleConfig);
+
+		ServletContext servletContext = getServletContext();
+
+		_definitions = (Map<String, Definition>)
+			servletContext.getAttribute(PortalTilesPlugin.DEFINITIONS);
 	}
 
 	@Override
@@ -439,6 +454,23 @@ public class PortalRequestProcessor extends TilesRequestProcessor {
 		return lastPathSB.toString();
 	}
 
+	@Override
+	protected void internalModuleRelativeForward(
+			String uri, HttpServletRequest request,
+			HttpServletResponse response)
+		throws IOException, ServletException {
+
+		Definition definition = _definitions.get(uri);
+
+		if (definition != null) {
+			request.setAttribute(PortalTilesPlugin.DEFINITION, definition);
+
+			uri = definition.getPath();
+		}
+
+		doForward(uri, request, response);
+	}
+
 	protected boolean isPortletPath(String path) {
 		if ((path != null) && !path.equals(_PATH_C) &&
 			!path.startsWith(_PATH_COMMON) &&
@@ -487,6 +519,19 @@ public class PortalRequestProcessor extends TilesRequestProcessor {
 		}
 
 		return super.processActionCreate(request, response, actionMapping);
+	}
+
+	@Override
+	protected void processForwardConfig(
+			HttpServletRequest request, HttpServletResponse response,
+			ForwardConfig forward)
+		throws IOException, ServletException {
+
+		if (forward == null) {
+			return;
+		}
+
+		internalModuleRelativeForward(forward.getPath(), request, response);
 	}
 
 	@Override
@@ -1030,6 +1075,7 @@ public class PortalRequestProcessor extends TilesRequestProcessor {
 	private static final Log _log = LogFactoryUtil.getLog(
 		PortalRequestProcessor.class);
 
+	private Map<String, Definition> _definitions;
 	private final Set<String> _lastPaths;
 	private final Set<String> _publicPaths;
 	private final Set<String> _trackerIgnorePaths;

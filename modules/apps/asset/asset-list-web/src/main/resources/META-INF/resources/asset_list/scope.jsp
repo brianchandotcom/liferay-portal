@@ -76,7 +76,7 @@ PortletURL portletURL = editAssetListDisplayContext.getPortletURL();
 					</portlet:actionURL>
 
 					<liferay-ui:icon
-						icon="times"
+						icon="times-circle"
 						markupView="lexicon"
 						url="<%= deleteScopeGroupURL %>"
 					/>

@@ -104,6 +104,7 @@ import org.apache.struts.config.ActionConfig;
 import org.apache.struts.config.ControllerConfig;
 import org.apache.struts.config.ForwardConfig;
 import org.apache.struts.config.ModuleConfig;
+import org.apache.struts.upload.MultipartRequestHandler;
 import org.apache.struts.util.MessageResources;
 import org.apache.struts.util.RequestUtils;
 
@@ -1016,7 +1017,7 @@ public class PortalRequestProcessor extends RequestProcessor {
 		processPopulate(request, response, actionForm, mapping);
 
 		try {
-			if (!processValidate(request, response, actionForm, mapping)) {
+			if (!_processValidate(request, response, actionForm, mapping)) {
 				return;
 			}
 		}
@@ -1217,6 +1218,73 @@ public class PortalRequestProcessor extends RequestProcessor {
 		}
 
 		return path;
+	}
+
+	private boolean _processValidate(
+			HttpServletRequest request, HttpServletResponse response,
+			ActionForm actionForm, ActionMapping actionMapping)
+		throws InvalidCancelException, IOException, ServletException {
+
+		if (actionForm == null) {
+			return true;
+		}
+
+		if (!actionMapping.getValidate()) {
+			return true;
+		}
+
+		if (request.getAttribute(Globals.CANCEL_KEY) != null) {
+			if (actionMapping.getCancellable()) {
+				return true;
+			}
+			else {
+				request.removeAttribute(Globals.CANCEL_KEY);
+
+				throw new InvalidCancelException();
+			}
+		}
+
+		ActionMessages actionMessages = actionForm.validate(
+			actionMapping, request);
+
+		if ((actionMessages == null) || actionMessages.isEmpty()) {
+			return true;
+		}
+
+		MultipartRequestHandler multipartRequestHandler =
+			actionForm.getMultipartRequestHandler();
+
+		if (multipartRequestHandler != null) {
+			multipartRequestHandler.rollback();
+		}
+
+		String input = actionMapping.getInput();
+
+		if (input == null) {
+			MessageResources messageResources = getInternal();
+
+			response.sendError(
+				HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
+				messageResources.getMessage(
+					"noInput", actionMapping.getPath()));
+
+			return false;
+		}
+
+		request.setAttribute(Globals.ERROR_KEY, actionMessages);
+
+		ControllerConfig controllerConfig = moduleConfig.getControllerConfig();
+
+		if (controllerConfig.getInputForward()) {
+			ForwardConfig forwardConfig = actionMapping.findForward(input);
+
+			processForwardConfig(request, response, forwardConfig);
+		}
+		else {
+			internalModuleRelativeForward(input, request, response);
+		}
+
+		return false;
 	}
 
 	private static final String _PATH_C = "/c";

@@ -31,7 +31,6 @@ import com.liferay.portal.spring.aop.AnnotationChainableMethodAdvice;
 import java.io.Serializable;
 
 import java.lang.annotation.Annotation;
-import java.lang.reflect.Method;
 
 import java.util.concurrent.Callable;
 
@@ -55,11 +54,9 @@ public class BufferedIncrementAdvice
 
 		String configuration = bufferedIncrement.configuration();
 
-		Method method = methodInvocation.getMethod();
-
 		BufferedIncrementProcessor bufferedIncrementProcessor =
 			BufferedIncrementProcessorUtil.getBufferedIncrementProcessor(
-				configuration, method);
+				configuration);
 
 		if (bufferedIncrementProcessor == null) {
 			return nullResult;

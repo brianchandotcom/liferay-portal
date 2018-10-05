@@ -14,16 +14,12 @@
 
 package com.liferay.portal.internal.increment;
 
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.increment.Increment;
 import com.liferay.portal.kernel.messaging.proxy.ProxyModeThreadLocal;
 import com.liferay.portal.kernel.util.ClassLoaderUtil;
 import com.liferay.portal.kernel.util.NamedThreadFactory;
-import com.liferay.portal.kernel.util.StringBundler;
 
 import java.io.Serializable;
-
-import java.lang.reflect.Method;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.SynchronousQueue;
@@ -38,7 +34,7 @@ public class BufferedIncrementProcessor {
 
 	public BufferedIncrementProcessor(
 		BufferedIncrementConfiguration bufferedIncrementConfiguration,
-		Method method) {
+		String configuration) {
 
 		_bufferedIncrementConfiguration = bufferedIncrementConfiguration;
 
@@ -50,32 +46,10 @@ public class BufferedIncrementProcessor {
 		threadPoolExecutor.setRejectedExecutionHandler(
 			new ThreadPoolExecutor.DiscardPolicy());
 
-		Class<?>[] parameterTypes = method.getParameterTypes();
-
-		StringBundler sb = new StringBundler(parameterTypes.length * 2 + 5);
-
-		sb.append("BufferedIncrement-");
-
-		Class<?> clazz = method.getDeclaringClass();
-
-		sb.append(clazz.getSimpleName());
-
-		sb.append(StringPool.PERIOD);
-		sb.append(method.getName());
-		sb.append(StringPool.OPEN_PARENTHESIS);
-
-		for (Class<?> parameterType : parameterTypes) {
-			sb.append(parameterType.getSimpleName());
-			sb.append(StringPool.COMMA);
-		}
-
-		sb.setIndex(sb.index() - 1);
-		sb.append(StringPool.CLOSE_PARENTHESIS);
-
 		threadPoolExecutor.setThreadFactory(
 			new NamedThreadFactory(
-				sb.toString(), Thread.NORM_PRIORITY,
-				ClassLoaderUtil.getContextClassLoader()));
+				"BufferedIncrement-".concat(configuration),
+				Thread.NORM_PRIORITY, ClassLoaderUtil.getContextClassLoader()));
 
 		_executorService = threadPoolExecutor;
 	}

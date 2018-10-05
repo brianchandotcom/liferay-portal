@@ -14,8 +14,6 @@
 
 package com.liferay.portal.internal.increment;
 
-import java.lang.reflect.Method;
-
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
@@ -26,7 +24,7 @@ import java.util.concurrent.ConcurrentMap;
 public class BufferedIncrementProcessorUtil {
 
 	public static BufferedIncrementProcessor getBufferedIncrementProcessor(
-		String configuration, Method method) {
+		String configuration) {
 
 		BufferedIncrementConfiguration bufferedIncrementConfiguration =
 			_getBufferedIncrementConfiguration(configuration);
@@ -36,9 +34,9 @@ public class BufferedIncrementProcessorUtil {
 		}
 
 		return _bufferedIncrementProcessors.computeIfAbsent(
-			method,
+			configuration,
 			key -> new BufferedIncrementProcessor(
-				bufferedIncrementConfiguration, method));
+				bufferedIncrementConfiguration, configuration));
 	}
 
 	public void destroy() {
@@ -68,7 +66,7 @@ public class BufferedIncrementProcessorUtil {
 
 	private static final Map<String, BufferedIncrementConfiguration>
 		_bufferedIncrementConfigurations = new ConcurrentHashMap<>();
-	private static final ConcurrentMap<Method, BufferedIncrementProcessor>
+	private static final ConcurrentMap<String, BufferedIncrementProcessor>
 		_bufferedIncrementProcessors = new ConcurrentHashMap<>();
 
 }

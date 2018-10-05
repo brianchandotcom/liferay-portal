@@ -90,7 +90,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.webserver.WebServerServletTokenUtil;
 import com.liferay.portal.kernel.xml.SAXReader;
 import com.liferay.portal.struts.Definition;
-import com.liferay.portal.struts.PortalTilesPlugin;
+import com.liferay.portal.struts.TilesUtil;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -867,7 +867,7 @@ public class TemplateContextHelper {
 			WebKeys.THEME_DISPLAY);
 
 		Definition definition = (Definition)request.getAttribute(
-			PortalTilesPlugin.DEFINITION);
+			TilesUtil.DEFINITION);
 
 		if (definition == null) {
 			themeDisplay.setTilesSelectable(true);

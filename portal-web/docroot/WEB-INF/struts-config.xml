@@ -133,8 +133,4 @@
 	<!-- Custom Request Processor -->
 
 	<controller contentType="text/html; charset=UTF-8" processorClass="com.liferay.portal.struts.PortalRequestProcessor" />
-
-	<!-- Tiles Plugin -->
-
-	<plug-in className="com.liferay.portal.struts.PortalTilesPlugin" />
 </struts-config>

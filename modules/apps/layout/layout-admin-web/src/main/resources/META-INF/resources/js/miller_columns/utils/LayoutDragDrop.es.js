@@ -130,8 +130,10 @@ class LayoutDragDrop extends State {
 
 		this._dragDrop = new DragDrop(
 			{
+				autoScroll: true,
 				dragPlaceholder: Drag.Placeholder.CLONE,
 				handles: '.layout-drag-handler',
+				scrollContainers: '.layout-column, .layout-columns',
 				sources: '.drag-layout-column-item',
 				targets: '.layout-drop-target'
 			}

@@ -53,6 +53,10 @@ public class OrganizationScreenNavigationDisplayContext {
 		return _showControls;
 	}
 
+	public boolean isShowTitle() {
+		return _showTitle;
+	}
+
 	public void setBackURL(String backURL) {
 		_backURL = backURL;
 	}
@@ -87,6 +91,10 @@ public class OrganizationScreenNavigationDisplayContext {
 		_showControls = showControls;
 	}
 
+	public void setShowTitle(boolean showTitle) {
+		_showTitle = showTitle;
+	}
+
 	private String _backURL;
 	private String _contactInformationJSRequire;
 	private String _editOrganizationActionURL;
@@ -95,5 +103,6 @@ public class OrganizationScreenNavigationDisplayContext {
 	private Organization _organization;
 	private long _organizationId;
 	private boolean _showControls;
+	private boolean _showTitle;
 
 }

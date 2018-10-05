@@ -77,7 +77,7 @@ if (fileEntryTypeId >= 0) {
 	dlFileEntryType = DLFileEntryTypeLocalServiceUtil.getFileEntryType(fileEntryTypeId);
 }
 
-boolean majorVersion = ParamUtil.getBoolean(request, "majorVersion");
+DLVersionNumberIncrease dlVersionNumberIncrease = DLVersionNumberIncrease.valueOf(ParamUtil.getString(request, "versionIncrease", DLVersionNumberIncrease.NONE.toString()));
 boolean updateVersionDetails = ParamUtil.getBoolean(request, "updateVersionDetails");
 
 long assetClassPK = 0;
@@ -197,7 +197,7 @@ if (portletTitleBasedNavigation) {
 		<aui:input name="fileEntryId" type="hidden" value="<%= fileEntryId %>" />
 
 		<c:if test="<%= (fileEntry != null) && checkedOut %>">
-			<aui:input name="majorVersion" type="hidden" />
+			<aui:input name="versionIncrease" type="hidden" />
 			<aui:input name="changeLog" type="hidden" />
 		</c:if>
 
@@ -432,9 +432,9 @@ if (portletTitleBasedNavigation) {
 						<aui:input label="customize-the-version-number-increment-and-describe-my-changes" name="updateVersionDetails" type="toggle-switch" value="<%= updateVersionDetails %>" />
 
 						<div id="<portlet:namespace />versionDetails" style="<%= updateVersionDetails ? StringPool.BLANK : "display: none" %>">
-							<aui:input checked="<%= majorVersion %>" label="major-version" name="majorVersion" type="radio" value="<%= true %>" />
+							<aui:input checked="<%= dlVersionNumberIncrease == DLVersionNumberIncrease.MAJOR %>" label="major-version" name="versionIncrease" type="radio" value="<%= DLVersionNumberIncrease.MAJOR %>" />
 
-							<aui:input checked="<%= !majorVersion %>" label="minor-version" name="majorVersion" type="radio" value="<%= false %>" />
+							<aui:input checked="<%= dlVersionNumberIncrease == DLVersionNumberIncrease.MINOR %>" label="minor-version" name="versionIncrease" type="radio" value="<%= DLVersionNumberIncrease.MINOR %>" />
 
 							<aui:model-context />
 
@@ -595,9 +595,9 @@ if (portletTitleBasedNavigation) {
 					callback: function(event) {
 						var $ = AUI.$;
 
-						var majorVersionNode = $('input:radio[name="<portlet:namespace />versionDetailsMajorVersion"]:checked');
+						var versionIncreaseNode = $('input:radio[name="<portlet:namespace />versionDetailsVersionIncrease"]:checked');
 
-						form.fm('majorVersion').val(majorVersionNode.val());
+						form.fm('versionIncrease').val(versionIncreaseNode.val());
 
 						var changeLogNode = $('#<portlet:namespace />versionDetailsChangeLog');
 

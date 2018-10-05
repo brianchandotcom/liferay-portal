@@ -12,9 +12,9 @@ Liferay.provide(
 
 					var portletURL = saveURL;
 
-					var majorVersionNode = $("input:radio[name='${namespace}versionDetailsMajorVersion']:checked");
+					var versionIncreaseNode = $("input:radio[name='${namespace}versionDetailsVersionIncrease']:checked");
 
-					portletURL += '&${namespace}majorVersion=' + encodeURIComponent(majorVersionNode.val());
+					portletURL += '&${namespace}versionIncrease=' + encodeURIComponent(versionIncreaseNode.val());
 
 					var changeLogNode = $('#${namespace}versionDetailsChangeLog');
 

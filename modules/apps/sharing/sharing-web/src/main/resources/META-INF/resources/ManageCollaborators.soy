@@ -26,6 +26,8 @@
 							{param user: $user /}
 						{/call}
 					</li>
+				{ifempty}
+					<h5>{msg desc=""}no-collaborators{/msg}</h5>
 				{/foreach}
 			</ul>
 		</div>

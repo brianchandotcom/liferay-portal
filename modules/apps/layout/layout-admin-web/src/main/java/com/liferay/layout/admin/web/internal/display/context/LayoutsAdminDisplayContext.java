@@ -415,6 +415,16 @@ public class LayoutsAdminDisplayContext {
 		return markAsHomePageLayoutURL.toString();
 	}
 
+	public String getMoveLayoutColumnItemURL() {
+		PortletURL deleteLayoutURL = _liferayPortletResponse.createActionURL();
+
+		deleteLayoutURL.setParameter(
+			ActionRequest.ACTION_NAME, "/layout/move_layout");
+		deleteLayoutURL.setParameter("redirect", _themeDisplay.getURLCurrent());
+
+		return deleteLayoutURL.toString();
+	}
+
 	public List<NavigationItem> getNavigationItems() {
 		Group group = _themeDisplay.getScopeGroup();
 

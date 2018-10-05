@@ -58,6 +58,7 @@
 
 			context.put("breadcrumbEntries", layoutsAdminDisplayContext.getBreadcrumbEntriesJSONArray());
 			context.put("layoutColumns", layoutsAdminDisplayContext.getLayoutColumnsJSONArray());
+			context.put("moveLayoutColumnItemURL", layoutsAdminDisplayContext.getMoveLayoutColumnItemURL());
 			context.put("pathThemeImages", themeDisplay.getPathThemeImages());
 			context.put("portletNamespace", renderResponse.getNamespace());
 			context.put("searchContainerId", "pages");

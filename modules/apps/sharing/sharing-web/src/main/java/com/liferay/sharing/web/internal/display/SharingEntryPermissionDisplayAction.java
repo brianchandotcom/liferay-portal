@@ -27,14 +27,14 @@ public enum SharingEntryPermissionDisplayAction {
 
 	COMMENTS(
 		"COMMENTS", "comments", "collaborators-can-comment-on-the-document",
-		SharingEntryAction.ADD_DISCUSSION, SharingEntryAction.VIEW),
+		"comment", SharingEntryAction.ADD_DISCUSSION, SharingEntryAction.VIEW),
 	UPDATE(
 		"UPDATE", "edition",
-		"collaborators-can-view-comment-update-the-document",
+		"collaborators-can-view-comment-update-the-document", "edit",
 		SharingEntryAction.ADD_DISCUSSION, SharingEntryAction.UPDATE,
 		SharingEntryAction.VIEW),
 	VIEW(
-		"VIEW", "view", "collaborators-can-only-view-the-document",
+		"VIEW", "view", "collaborators-can-only-view-the-document", "view",
 		SharingEntryAction.VIEW);
 
 	public static SharingEntryPermissionDisplayAction parseFromActionId(
@@ -69,13 +69,19 @@ public enum SharingEntryPermissionDisplayAction {
 		return _titleKey;
 	}
 
+	public String getVerbKey() {
+		return _verbKey;
+	}
+
 	private SharingEntryPermissionDisplayAction(
-		String actionId, String titleKey, String descriptionKey,
+		String actionId, String titleKey, String descriptionKey, String verbKey,
 		SharingEntryAction... sharingEntryActions) {
 
 		_actionId = actionId;
 		_titleKey = titleKey;
 		_descriptionKey = descriptionKey;
+		_verbKey = verbKey;
+
 		_sharingEntryActions = Arrays.asList(sharingEntryActions);
 	}
 
@@ -83,5 +89,6 @@ public enum SharingEntryPermissionDisplayAction {
 	private final String _descriptionKey;
 	private final List<SharingEntryAction> _sharingEntryActions;
 	private final String _titleKey;
+	private final String _verbKey;
 
 }

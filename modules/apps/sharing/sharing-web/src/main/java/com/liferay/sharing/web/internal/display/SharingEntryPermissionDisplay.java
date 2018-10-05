@@ -90,6 +90,9 @@ public class SharingEntryPermissionDisplay {
 		_description = LanguageUtil.get(
 			resourceBundle,
 			sharingEntryPermissionDisplayAction.getDescriptionKey());
+		_phrase = LanguageUtil.format(
+			resourceBundle, "can-x",
+			sharingEntryPermissionDisplayAction.getVerbKey());
 		_sharingEntryPermissionDisplayActionId =
 			sharingEntryPermissionDisplayAction.getActionId();
 		_title = LanguageUtil.get(
@@ -98,6 +101,10 @@ public class SharingEntryPermissionDisplay {
 
 	public String getDescription() {
 		return _description;
+	}
+
+	public String getPhrase() {
+		return _phrase;
 	}
 
 	public String getSharingEntryPermissionDisplayActionId() {
@@ -114,6 +121,7 @@ public class SharingEntryPermissionDisplay {
 
 	private final String _description;
 	private final boolean _enabled;
+	private final String _phrase;
 	private final String _sharingEntryPermissionDisplayActionId;
 	private final String _title;
 

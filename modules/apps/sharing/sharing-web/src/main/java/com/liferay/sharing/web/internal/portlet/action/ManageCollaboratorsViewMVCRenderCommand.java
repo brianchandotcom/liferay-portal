@@ -192,7 +192,7 @@ public class ManageCollaboratorsViewMVCRenderCommand
 				JSONFactoryUtil.createJSONObject();
 
 			sharingEntryPermissionDisplaySelectOptionJSONObject.put(
-				"label", sharingEntryPermissionDisplay.getTitle());
+				"label", sharingEntryPermissionDisplay.getPhrase());
 
 			String currentSharingEntryPermissionDisplayActionKeyActionId =
 				sharingEntryPermissionDisplay.

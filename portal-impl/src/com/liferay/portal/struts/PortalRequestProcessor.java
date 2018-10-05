@@ -98,10 +98,12 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionMessages;
 import org.apache.struts.action.ActionServlet;
+import org.apache.struts.action.ExceptionHandler;
 import org.apache.struts.action.InvalidCancelException;
 import org.apache.struts.action.RequestProcessor;
 import org.apache.struts.config.ActionConfig;
 import org.apache.struts.config.ControllerConfig;
+import org.apache.struts.config.ExceptionConfig;
 import org.apache.struts.config.ForwardConfig;
 import org.apache.struts.config.ModuleConfig;
 import org.apache.struts.upload.MultipartRequestHandler;
@@ -1022,7 +1024,7 @@ public class PortalRequestProcessor extends RequestProcessor {
 			}
 		}
 		catch (InvalidCancelException ice) {
-			ActionForward forward = processException(
+			ActionForward forward = _processException(
 				request, response, ice, actionForm, mapping);
 
 			processForwardConfig(request, response, forward);
@@ -1087,7 +1089,7 @@ public class PortalRequestProcessor extends RequestProcessor {
 			return action.execute(actionMapping, actionForm, request, response);
 		}
 		catch (Exception e) {
-			return processException(
+			return _processException(
 				request, response, e, actionForm, actionMapping);
 		}
 	}
@@ -1121,6 +1123,41 @@ public class PortalRequestProcessor extends RequestProcessor {
 
 		if (contentType != null) {
 			response.setContentType(contentType);
+		}
+	}
+
+	private ActionForward _processException(
+			HttpServletRequest request, HttpServletResponse response,
+			Exception exception, ActionForm actionForm,
+			ActionMapping actionMapping)
+		throws IOException, ServletException {
+
+		ExceptionConfig exceptionConfig = actionMapping.findException(
+			exception.getClass());
+
+		if (exceptionConfig == null) {
+			if (exception instanceof IOException) {
+				throw (IOException)exception;
+			}
+			else if (exception instanceof ServletException) {
+				throw (ServletException)exception;
+			}
+			else {
+				throw new ServletException(exception);
+			}
+		}
+
+		try {
+			ExceptionHandler exceptionHandler =
+				(ExceptionHandler)RequestUtils.applicationInstance(
+					exceptionConfig.getHandler());
+
+			return exceptionHandler.execute(
+				exception, exceptionConfig, actionMapping, actionForm, request,
+				response);
+		}
+		catch (Exception e) {
+			throw new ServletException(e);
 		}
 	}
 

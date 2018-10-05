@@ -1042,7 +1042,7 @@ public class PortalRequestProcessor extends RequestProcessor {
 			return;
 		}
 
-		if (!processInclude(request, response, mapping)) {
+		if (!_processInclude(request, response, mapping)) {
 			return;
 		}
 
@@ -1180,6 +1180,29 @@ public class PortalRequestProcessor extends RequestProcessor {
 		}
 
 		internalModuleRelativeForward(forward, request, response);
+
+		return false;
+	}
+
+	private boolean _processInclude(
+			HttpServletRequest request, HttpServletResponse response,
+			ActionMapping actionMapping)
+		throws IOException, ServletException {
+
+		String include = actionMapping.getInclude();
+
+		if (include == null) {
+			return true;
+		}
+
+		String actionIdPath = RequestUtils.actionIdURL(
+			include, moduleConfig, servlet);
+
+		if (actionIdPath != null) {
+			include = actionIdPath;
+		}
+
+		internalModuleRelativeInclude(include, request, response);
 
 		return false;
 	}

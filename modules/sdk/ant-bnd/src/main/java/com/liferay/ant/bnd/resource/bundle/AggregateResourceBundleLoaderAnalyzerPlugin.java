@@ -99,7 +99,7 @@ public class AggregateResourceBundleLoaderAnalyzerPlugin
 
 		attrs.put("servlet.context.name", servletContextName);
 
-		attrs.put("service.ranking:Integer", "1");
+		attrs.put("service.ranking", "1");
 
 		Parameters parameters = new Parameters();
 

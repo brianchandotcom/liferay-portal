@@ -26,8 +26,6 @@ public abstract class BaseBuildRunner<T extends BuildData>
 
 	@Override
 	public void run() {
-		initWorkspace();
-
 		setUpWorkspace();
 	}
 
@@ -60,8 +58,6 @@ public abstract class BaseBuildRunner<T extends BuildData>
 
 	@Override
 	public void tearDown() {
-		initWorkspace();
-
 		tearDownWorkspace();
 	}
 
@@ -81,7 +77,7 @@ public abstract class BaseBuildRunner<T extends BuildData>
 
 	protected void setUpWorkspace() {
 		if (workspace == null) {
-			throw new RuntimeException("Workspace is null");
+			initWorkspace();
 		}
 
 		workspace.setUp(getJob());
@@ -89,7 +85,7 @@ public abstract class BaseBuildRunner<T extends BuildData>
 
 	protected void tearDownWorkspace() {
 		if (workspace == null) {
-			throw new RuntimeException("Workspace is null");
+			initWorkspace();
 		}
 
 		workspace.tearDown();

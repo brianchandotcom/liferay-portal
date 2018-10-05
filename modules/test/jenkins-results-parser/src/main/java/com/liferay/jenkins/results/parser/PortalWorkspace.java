@@ -52,7 +52,7 @@ public abstract class PortalWorkspace extends BaseWorkspace {
 
 		_companionPortalWorkspaceGitRepository =
 			WorkspaceUtil.getDependencyWorkspaceGitRepository(
-				"CompanionPortalWorkspaceGitRepository.TYPE",
+				CompanionPortalWorkspaceGitRepository.TYPE,
 				_primaryPortalWorkspaceGitRepository);
 
 		_companionPortalWorkspaceGitRepository.setUp();

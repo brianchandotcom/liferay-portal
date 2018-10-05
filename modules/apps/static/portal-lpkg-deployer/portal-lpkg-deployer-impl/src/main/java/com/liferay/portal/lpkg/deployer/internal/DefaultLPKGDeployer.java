@@ -340,16 +340,16 @@ public class DefaultLPKGDeployer implements LPKGDeployer {
 
 		List<File> explodedLpkgFiles = new ArrayList<>();
 
-		Iterator<File> it = lpkgFiles.iterator();
+		Iterator<File> iterator = lpkgFiles.iterator();
 
-		while (it.hasNext()) {
-			File lpkgFile = it.next();
+		while (iterator.hasNext()) {
+			File lpkgFile = iterator.next();
 
 			List<File> innerLpkgs = ContainerLPKGUtil.deploy(
 				lpkgFile, bundleContext);
 
 			if (innerLpkgs != null) {
-				it.remove();
+				iterator.remove();
 
 				explodedLpkgFiles.addAll(innerLpkgs);
 			}

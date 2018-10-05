@@ -27,8 +27,7 @@ import java.util.Locale;
 public interface UserRetriever {
 
 	public PageItems<User> getUsers(
-			long companyId, String criteria, Locale locale,
-			Pagination pagination)
+			long companyId, String filter, Locale locale, Pagination pagination)
 		throws PortalException;
 
 }

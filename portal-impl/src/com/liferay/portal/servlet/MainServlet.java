@@ -205,9 +205,9 @@ public class MainServlet extends ActionServlet {
 		ModuleConfig moduleConfig = (ModuleConfig)servletContext.getAttribute(
 			Globals.MODULE_KEY);
 
-		_requestProcessor = new PortalRequestProcessor();
+		_portalRequestProcessor = new PortalRequestProcessor();
 
-		_requestProcessor.init(this, moduleConfig);
+		_portalRequestProcessor.init(this, moduleConfig);
 
 		if (_log.isDebugEnabled()) {
 			_log.debug("Verify patch levels");
@@ -1064,7 +1064,7 @@ public class MainServlet extends ActionServlet {
 			HttpServletRequest request, HttpServletResponse response)
 		throws IOException, ServletException {
 
-		_requestProcessor.process(request, response);
+		_portalRequestProcessor.process(request, response);
 	}
 
 	protected boolean processCompanyInactiveRequest(
@@ -1377,7 +1377,7 @@ public class MainServlet extends ActionServlet {
 
 	private ServiceRegistration<ModuleServiceLifecycle>
 		_portalInitializedModuleServiceLifecycleServiceRegistration;
-	private RequestProcessor _requestProcessor;
+	private PortalRequestProcessor _portalRequestProcessor;
 	private ServiceRegistration<ServletContext>
 		_servletContextServiceRegistration;
 	private ServiceRegistration<ModuleServiceLifecycle>

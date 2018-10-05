@@ -101,7 +101,6 @@ import org.apache.struts.action.ActionMessages;
 import org.apache.struts.action.ActionServlet;
 import org.apache.struts.action.ExceptionHandler;
 import org.apache.struts.action.InvalidCancelException;
-import org.apache.struts.action.RequestProcessor;
 import org.apache.struts.config.ActionConfig;
 import org.apache.struts.config.ControllerConfig;
 import org.apache.struts.config.ExceptionConfig;
@@ -118,7 +117,7 @@ import org.apache.struts.util.RequestUtils;
  * @author Mika Koivisto
  * @author Neil Griffin
  */
-public class PortalRequestProcessor extends RequestProcessor {
+public class PortalRequestProcessor {
 
 	public static final String INCLUDE_PATH_INFO =
 		"javax.servlet.include.path_info";
@@ -160,7 +159,6 @@ public class PortalRequestProcessor extends RequestProcessor {
 				PropsUtil.getArray(PropsKeys.SESSION_TRACKER_IGNORE_PATHS)));
 	}
 
-	@Override
 	public void init(ActionServlet servlet, ModuleConfig moduleConfig) {
 		synchronized (actions) {
 			actions.clear();
@@ -175,7 +173,6 @@ public class PortalRequestProcessor extends RequestProcessor {
 			servletContext.getAttribute(TilesUtil.DEFINITIONS);
 	}
 
-	@Override
 	public void process(
 			HttpServletRequest request, HttpServletResponse response)
 		throws IOException, ServletException {
@@ -265,7 +262,6 @@ public class PortalRequestProcessor extends RequestProcessor {
 		request.setAttribute(WebKeys.PORTLET_STRUTS_EXECUTE, Boolean.TRUE);
 	}
 
-	@Override
 	protected void doForward(
 			String uri, HttpServletRequest request,
 			HttpServletResponse response)
@@ -274,7 +270,6 @@ public class PortalRequestProcessor extends RequestProcessor {
 		StrutsUtil.forward(uri, servlet.getServletContext(), request, response);
 	}
 
-	@Override
 	protected void doInclude(
 			String uri, HttpServletRequest request,
 			HttpServletResponse response)
@@ -437,7 +432,6 @@ public class PortalRequestProcessor extends RequestProcessor {
 		return lastPathSB.toString();
 	}
 
-	@Override
 	protected void internalModuleRelativeForward(
 			String uri, HttpServletRequest request,
 			HttpServletResponse response)
@@ -477,7 +471,6 @@ public class PortalRequestProcessor extends RequestProcessor {
 		return false;
 	}
 
-	@Override
 	protected Action processActionCreate(
 			HttpServletRequest request, HttpServletResponse response,
 			ActionMapping actionMapping)
@@ -504,7 +497,6 @@ public class PortalRequestProcessor extends RequestProcessor {
 		return _processActionCreate(response, actionMapping);
 	}
 
-	@Override
 	protected void processForwardConfig(
 			HttpServletRequest request, HttpServletResponse response,
 			ForwardConfig forward)
@@ -517,7 +509,6 @@ public class PortalRequestProcessor extends RequestProcessor {
 		internalModuleRelativeForward(forward.getPath(), request, response);
 	}
 
-	@Override
 	protected ActionMapping processMapping(
 			HttpServletRequest request, HttpServletResponse response,
 			String path)
@@ -563,7 +554,6 @@ public class PortalRequestProcessor extends RequestProcessor {
 		return actionMapping;
 	}
 
-	@Override
 	protected HttpServletRequest processMultipart(HttpServletRequest request) {
 
 		// Disable Struts from automatically wrapping a multipart request
@@ -571,7 +561,6 @@ public class PortalRequestProcessor extends RequestProcessor {
 		return request;
 	}
 
-	@Override
 	protected String processPath(
 			HttpServletRequest request, HttpServletResponse response)
 		throws IOException {
@@ -870,7 +859,6 @@ public class PortalRequestProcessor extends RequestProcessor {
 		return path;
 	}
 
-	@Override
 	protected void processPopulate(
 			HttpServletRequest request, HttpServletResponse response,
 			ActionForm actionForm, ActionMapping actionMapping)
@@ -893,7 +881,6 @@ public class PortalRequestProcessor extends RequestProcessor {
 			request);
 	}
 
-	@Override
 	protected boolean processRoles(
 			HttpServletRequest request, HttpServletResponse response,
 			ActionMapping actionMapping)

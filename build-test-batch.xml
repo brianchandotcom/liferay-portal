@@ -2982,6 +2982,8 @@ log.sanitizer.enabled=false</echo>
 						<prepare-test-build />
 					</else>
 				</if>
+
+				<prepare-database-upgrade-configuration />
 			</test-set-up>
 		</run-batch-test>
 	</target>

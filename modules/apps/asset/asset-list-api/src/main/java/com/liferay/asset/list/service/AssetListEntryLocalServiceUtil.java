@@ -71,6 +71,15 @@ public class AssetListEntryLocalServiceUtil {
 			serviceContext);
 	}
 
+	public static com.liferay.asset.list.model.AssetListEntry addAssetListEntry(
+		long userId, long groupId, String title, int type, String typeSettings,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .addAssetListEntry(userId, groupId, title, type,
+			typeSettings, serviceContext);
+	}
+
 	public static com.liferay.asset.list.model.AssetListEntry addDynamicAssetListEntry(
 		long userId, long groupId, String title, String typeSettings,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
@@ -254,6 +263,11 @@ public class AssetListEntryLocalServiceUtil {
 	public static java.util.List<com.liferay.asset.list.model.AssetListEntry> getAssetListEntries(
 		int start, int end) {
 		return getService().getAssetListEntries(start, end);
+	}
+
+	public static java.util.List<com.liferay.asset.list.model.AssetListEntry> getAssetListEntries(
+		long groupId) {
+		return getService().getAssetListEntries(groupId);
 	}
 
 	/**

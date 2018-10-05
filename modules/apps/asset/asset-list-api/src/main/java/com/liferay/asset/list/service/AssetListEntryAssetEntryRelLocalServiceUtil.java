@@ -56,6 +56,15 @@ public class AssetListEntryAssetEntryRelLocalServiceUtil {
 	}
 
 	public static com.liferay.asset.list.model.AssetListEntryAssetEntryRel addAssetListEntryAssetEntryRel(
+		long assetListEntryId, long assetEntryId, int position,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .addAssetListEntryAssetEntryRel(assetListEntryId,
+			assetEntryId, position, serviceContext);
+	}
+
+	public static com.liferay.asset.list.model.AssetListEntryAssetEntryRel addAssetListEntryAssetEntryRel(
 		long assetListEntryId, long assetEntryId,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -107,6 +116,12 @@ public class AssetListEntryAssetEntryRelLocalServiceUtil {
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .deleteAssetListEntryAssetEntryRel(assetListEntryId, position);
+	}
+
+	public static void deleteAssetListEntryAssetEntryRelByAssetListEntryId(
+		long assetListEntryId) {
+		getService()
+			.deleteAssetListEntryAssetEntryRelByAssetListEntryId(assetListEntryId);
 	}
 
 	/**
@@ -360,6 +375,15 @@ public class AssetListEntryAssetEntryRelLocalServiceUtil {
 		com.liferay.asset.list.model.AssetListEntryAssetEntryRel assetListEntryAssetEntryRel) {
 		return getService()
 				   .updateAssetListEntryAssetEntryRel(assetListEntryAssetEntryRel);
+	}
+
+	public static com.liferay.asset.list.model.AssetListEntryAssetEntryRel updateAssetListEntryAssetEntryRel(
+		long assetListEntryAssetEntryRelId, long assetListEntryId,
+		long assetEntryId, int position)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .updateAssetListEntryAssetEntryRel(assetListEntryAssetEntryRelId,
+			assetListEntryId, assetEntryId, position);
 	}
 
 	public static AssetListEntryAssetEntryRelLocalService getService() {

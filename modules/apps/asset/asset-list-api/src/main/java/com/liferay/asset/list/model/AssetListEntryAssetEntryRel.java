@@ -56,4 +56,6 @@ public interface AssetListEntryAssetEntryRel
 				return AssetListEntryAssetEntryRel.class;
 			}
 		};
+
+	public String getAssetEntryUuid();
 }

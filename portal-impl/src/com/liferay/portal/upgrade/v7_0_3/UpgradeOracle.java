@@ -53,6 +53,7 @@ public class UpgradeOracle extends UpgradeProcess {
 				}
 
 				String columnName = rs.getString(2);
+
 				int dataLength = rs.getInt(3);
 
 				if (buildNumber < ReleaseInfo.RELEASE_6_2_0_BUILD_NUMBER) {

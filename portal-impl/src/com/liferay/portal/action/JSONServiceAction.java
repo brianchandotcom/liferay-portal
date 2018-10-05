@@ -115,6 +115,7 @@ public class JSONServiceAction extends JSONAction {
 		}
 
 		Method method = (Method)methodAndParameterTypes[0];
+
 		Type[] parameterTypes = (Type[])methodAndParameterTypes[1];
 		Object[] args = new Object[serviceParameters.length];
 

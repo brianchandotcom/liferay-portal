@@ -92,6 +92,7 @@ public class ScopeLocatorImpl implements ScopeLocator {
 		PrefixHandlerFactory prefixHandlerFactory =
 			_scopedPrefixHandlerFactories.getService(
 				companyId, applicationName);
+
 		ServiceReference<?> serviceReference =
 			serviceReferenceServiceTuple.getServiceReference();
 
@@ -159,6 +160,7 @@ public class ScopeLocatorImpl implements ScopeLocator {
 
 		ScopeFinder scopeFinder = _scopedScopeFinders.getService(
 			companyId, applicationName);
+
 		ScopeMapper scopeMapper = _scopedScopeMapper.getService(
 			companyId, applicationName);
 		Collection<String> scopes = scopeFinder.findScopes();

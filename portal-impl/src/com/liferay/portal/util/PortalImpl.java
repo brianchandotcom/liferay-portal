@@ -8506,6 +8506,7 @@ public class PortalImpl implements Portal {
 		}
 
 		String canonicalURLPrefix = canonicalURL.substring(0, pos);
+
 		String canonicalURLSuffix = canonicalURL.substring(pos);
 
 		if (PropsValues.LOCALE_PREPEND_FRIENDLY_URL_STYLE == 2) {

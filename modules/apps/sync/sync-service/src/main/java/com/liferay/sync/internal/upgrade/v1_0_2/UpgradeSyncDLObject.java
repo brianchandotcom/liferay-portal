@@ -297,6 +297,7 @@ public class UpgradeSyncDLObject extends UpgradeProcess {
 
 			while (rs.next()) {
 				long folderId = rs.getLong("folderId");
+
 				String name = rs.getString("name");
 
 				String extension = FileUtil.getExtension(name);

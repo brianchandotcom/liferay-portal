@@ -400,6 +400,7 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
 			long liferayRepositoryClassNameId = PortalUtil.getClassNameId(
 				LiferayRepository.class);
+
 			long portletRepositoryClassNameId = PortalUtil.getClassNameId(
 				PortletRepository.class);
 

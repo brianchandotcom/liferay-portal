@@ -60,6 +60,7 @@ public class UpdateLayoutPageTemplateEntryPreviewMVCActionCommand
 
 		long layoutPageTemplateEntryId = ParamUtil.getLong(
 			actionRequest, "layoutPageTemplateEntryId");
+
 		long fileEntryId = ParamUtil.getLong(actionRequest, "fileEntryId");
 
 		FileEntry fileEntry = _dlAppLocalService.getFileEntry(fileEntryId);

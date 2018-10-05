@@ -266,6 +266,7 @@ public class I18nServletTest {
 		throws Exception {
 
 		Locale actualDefaultLocale = _getDefaultLocale(group);
+
 		Locale actualFirstLocale = _getFirstLocale(
 			group, expectedFirstLocale.getLanguage());
 

@@ -324,6 +324,7 @@ public class LayoutFriendlyURLLocalServiceImpl
 
 		for (Locale locale : LanguageUtil.getAvailableLocales(groupId)) {
 			String friendlyURL = friendlyURLMap.get(locale);
+
 			String languageId = LocaleUtil.toLanguageId(locale);
 
 			LayoutFriendlyURL layoutFriendlyURL = layoutFriendlyURLMap.get(

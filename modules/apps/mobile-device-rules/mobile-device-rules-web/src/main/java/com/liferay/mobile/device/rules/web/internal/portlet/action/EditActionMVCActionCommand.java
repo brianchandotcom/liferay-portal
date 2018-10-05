@@ -119,6 +119,7 @@ public class EditActionMVCActionCommand extends BaseMVCActionCommand {
 			actionRequest, "name");
 		Map<Locale, String> descriptionMap =
 			LocalizationUtil.getLocalizationMap(actionRequest, "description");
+
 		String type = ParamUtil.getString(actionRequest, "type");
 
 		ActionHandler actionHandler = ActionHandlerManagerUtil.getActionHandler(

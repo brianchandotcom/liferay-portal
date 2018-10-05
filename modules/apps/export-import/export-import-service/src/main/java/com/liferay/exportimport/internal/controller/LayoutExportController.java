@@ -167,6 +167,7 @@ public class LayoutExportController implements ExportController {
 
 		boolean ignoreLastPublishDate = MapUtil.getBoolean(
 			parameterMap, PortletDataHandlerKeys.IGNORE_LAST_PUBLISH_DATE);
+
 		boolean permissions = MapUtil.getBoolean(
 			parameterMap, PortletDataHandlerKeys.PERMISSIONS);
 

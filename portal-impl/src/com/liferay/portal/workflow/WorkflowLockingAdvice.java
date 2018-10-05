@@ -112,6 +112,7 @@ public class WorkflowLockingAdvice {
 			}
 
 			long userId = (Long)arguments[1];
+
 			String name = (String)arguments[2];
 			Integer version = (Integer)arguments[3];
 

@@ -58,6 +58,7 @@ public class PublishNodeModuleTask extends ExecuteNpmTask {
 		Project project = getProject();
 
 		File npmrcFile = _getNpmrcFile();
+
 		File packageJsonFile = new File(getWorkingDir(), "package.json");
 
 		Path packageJsonPath = packageJsonFile.toPath();

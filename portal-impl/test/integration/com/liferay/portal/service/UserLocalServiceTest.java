@@ -152,6 +152,7 @@ public class UserLocalServiceTest {
 		}
 
 		int uniqueUserGroupUsersCount = 0;
+
 		int userGroupIterations = 3;
 
 		long[] userGroupIds = new long[userGroupIterations];

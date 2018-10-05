@@ -102,6 +102,7 @@ public class MonitoringMessageListener
 	public void setLevels(Map<String, String> levels) {
 		for (Map.Entry<String, String> entry : levels.entrySet()) {
 			String namespace = entry.getKey();
+
 			String levelName = entry.getValue();
 
 			Level level = Level.valueOf(levelName);

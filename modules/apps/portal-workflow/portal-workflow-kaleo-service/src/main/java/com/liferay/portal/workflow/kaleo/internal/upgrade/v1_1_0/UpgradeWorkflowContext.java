@@ -78,6 +78,7 @@ public class UpgradeWorkflowContext extends UpgradeProcess {
 
 			while (rs.next()) {
 				long fieldValue = rs.getLong(fieldName);
+
 				String workflowContextJSON = rs.getString("workflowContext");
 
 				if (Validator.isNull(workflowContextJSON)) {

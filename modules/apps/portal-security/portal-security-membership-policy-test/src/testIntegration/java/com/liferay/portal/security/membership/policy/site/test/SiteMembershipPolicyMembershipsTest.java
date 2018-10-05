@@ -135,6 +135,7 @@ public class SiteMembershipPolicyMembershipsTest
 	@Test
 	public void testAssignUserToRequiredGroups() throws Exception {
 		long[] userIds = addUsers();
+
 		long[] requiredGroupIds = addRequiredGroups();
 
 		int initialGroupUsersCount = UserLocalServiceUtil.getGroupUsersCount(

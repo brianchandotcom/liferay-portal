@@ -153,6 +153,7 @@ public class ExpandoPortlet extends MVCPortlet {
 			actionRequest, "resourcePrimKey");
 
 		String name = ParamUtil.getString(actionRequest, "name");
+
 		int type = ParamUtil.getInteger(actionRequest, "type");
 
 		Serializable defaultValue = getValue(

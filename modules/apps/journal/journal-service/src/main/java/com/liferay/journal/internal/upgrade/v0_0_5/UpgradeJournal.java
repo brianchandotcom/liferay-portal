@@ -174,6 +174,7 @@ public class UpgradeJournal extends UpgradeProcess {
 
 					while (rs.next()) {
 						long structureId = rs.getLong("structureId");
+
 						long id = rs.getLong("id_");
 
 						List<Long> ddmStructureIds = ddmStructureIdsMap.get(id);

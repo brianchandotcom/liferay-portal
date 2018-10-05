@@ -163,6 +163,7 @@ public class UpgradeLayoutType extends UpgradeProcess {
 					long plid = rs.getLong("plid");
 					long groupId = rs.getLong("groupId");
 					long companyId = rs.getLong("companyId");
+
 					String typeSettings = rs.getString("typeSettings");
 
 					String portletId = getPortletId();

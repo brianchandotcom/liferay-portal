@@ -186,6 +186,7 @@ public class UpgradePortletId extends UpgradeProcess {
 
 			while (rs.next()) {
 				long portletPreferencesId = rs.getLong("portletPreferencesId");
+
 				String portletId = rs.getString("portletId");
 
 				String newPortletId = StringUtil.replace(
@@ -277,6 +278,7 @@ public class UpgradePortletId extends UpgradeProcess {
 
 			while (rs.next()) {
 				long layoutRevisionId = rs.getLong("layoutRevisionId");
+
 				String typeSettings = rs.getString("typeSettings");
 
 				String newTypeSettings = getNewTypeSettings(
@@ -302,6 +304,7 @@ public class UpgradePortletId extends UpgradeProcess {
 
 			while (rs.next()) {
 				long plid = rs.getLong("plid");
+
 				String typeSettings = rs.getString("typeSettings");
 
 				String newTypeSettings = getNewTypeSettings(

@@ -2463,6 +2463,7 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 
 			String identifier = publicRenderParameterElement.elementText(
 				"identifier");
+
 			Element qNameElement = publicRenderParameterElement.element(
 				"qname");
 			Element nameElement = publicRenderParameterElement.element("name");

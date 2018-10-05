@@ -94,6 +94,7 @@ public class MDRRuleGroupLocalServiceImpl
 
 		for (Map.Entry<Locale, String> entry : nameMap.entrySet()) {
 			Locale locale = entry.getKey();
+
 			String name = entry.getValue();
 
 			if (Validator.isNull(name)) {

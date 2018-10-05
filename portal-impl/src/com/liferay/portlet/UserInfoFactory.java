@@ -133,6 +133,7 @@ public class UserInfoFactory {
 				customUserAttributesClassNames.entrySet()) {
 
 			String userAttributeName = entry.getKey();
+
 			String customUserAttributesClassName = entry.getValue();
 
 			CustomUserAttributes customUserAttributes =

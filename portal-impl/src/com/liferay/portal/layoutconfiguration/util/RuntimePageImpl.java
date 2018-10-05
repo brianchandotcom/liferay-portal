@@ -697,6 +697,7 @@ public class RuntimePageImpl implements RuntimePage {
 				futures.entrySet()) {
 
 			Future<StringBundler> future = entry.getKey();
+
 			PortletRenderer portletRenderer = entry.getValue();
 
 			Portlet portlet = portletRenderer.getPortlet();

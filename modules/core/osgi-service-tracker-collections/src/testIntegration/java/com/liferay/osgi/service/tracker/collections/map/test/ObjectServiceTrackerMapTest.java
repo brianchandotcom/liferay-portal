@@ -670,6 +670,7 @@ public class ObjectServiceTrackerMapTest {
 
 		ServiceRegistration<TrackedOne> serviceRegistration1 = registerService(
 			new TrackedOne());
+
 		ServiceRegistration<TrackedOne> serviceRegistration2 = registerService(
 			new TrackedOne());
 

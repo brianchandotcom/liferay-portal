@@ -226,6 +226,7 @@ public class JavadocFormatter {
 
 				File javadocsXmlFile = (File)tuple.getObject(1);
 				String oldJavadocsXmlContent = (String)tuple.getObject(2);
+
 				Document javadocsXmlDocument = (Document)tuple.getObject(3);
 
 				Element javadocsXmlRootElement =

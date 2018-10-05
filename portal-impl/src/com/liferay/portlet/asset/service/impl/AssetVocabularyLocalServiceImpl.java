@@ -100,6 +100,7 @@ public class AssetVocabularyLocalServiceImpl
 		// Vocabulary
 
 		User user = userLocalService.getUser(userId);
+
 		String name = titleMap.get(LocaleUtil.getSiteDefault());
 
 		validate(groupId, name);

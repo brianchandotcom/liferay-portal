@@ -76,6 +76,7 @@ public class ActionUtil {
 
 		long nodeId = ParamUtil.getLong(renderRequest, "nodeId");
 		String title = ParamUtil.getString(renderRequest, "title");
+
 		double sourceVersion = ParamUtil.getDouble(
 			renderRequest, "sourceVersion");
 		double targetVersion = ParamUtil.getDouble(

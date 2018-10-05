@@ -87,6 +87,7 @@ public abstract class BaseUpgradeClassNames extends UpgradeProcess {
 
 			while (rs.next()) {
 				long primaryKeyValue = rs.getLong(primaryKeyName);
+
 				String workflowContextJSON = rs.getString("workflowContext");
 
 				if (Validator.isNull(workflowContextJSON)) {

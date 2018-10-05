@@ -37,6 +37,7 @@ public class KBArticleLatestUpgradeColumnImpl extends BaseUpgradeColumnImpl {
 	@Override
 	public Object getNewValue(Object oldValue) throws Exception {
 		Long kbArticleId = (Long)_kbArticleIdColumn.getOldValue();
+
 		Long resourcePrimKey = (Long)_resourcePrimKeyColumn.getOldValue();
 
 		KBArticle kbArticle = KBArticleLocalServiceUtil.getLatestKBArticle(

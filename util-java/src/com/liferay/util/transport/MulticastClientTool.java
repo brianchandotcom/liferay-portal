@@ -52,6 +52,7 @@ public class MulticastClientTool {
 
 		Integer port = (Integer)argsMap.get("port");
 		String host = (String)argsMap.get("host");
+
 		Boolean gzipData = (Boolean)argsMap.get("gzip");
 		Boolean shortData = (Boolean)argsMap.get("short");
 

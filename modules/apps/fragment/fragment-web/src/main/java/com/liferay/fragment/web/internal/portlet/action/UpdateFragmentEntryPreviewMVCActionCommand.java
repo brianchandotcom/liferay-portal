@@ -60,6 +60,7 @@ public class UpdateFragmentEntryPreviewMVCActionCommand
 
 		long fragmentEntryId = ParamUtil.getLong(
 			actionRequest, "fragmentEntryId");
+
 		long fileEntryId = ParamUtil.getLong(actionRequest, "fileEntryId");
 
 		FileEntry fileEntry = _dlAppLocalService.getFileEntry(fileEntryId);

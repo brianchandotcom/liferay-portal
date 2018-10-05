@@ -203,6 +203,7 @@ public class GradleDependencyVersionCheck extends BaseFileCheck {
 
 		for (Map.Entry<String, String> entry : bundleVersionsMap.entrySet()) {
 			String bundleSymbolicName = entry.getKey();
+
 			String bundleVersion = entry.getValue();
 
 			String majorVersion = _getMajorVersion(bundleVersion);

@@ -1036,6 +1036,7 @@ public class LiferayOAuthDataProvider
 		ServerAccessToken serverAccessToken) {
 
 		Client client = serverAccessToken.getClient();
+
 		Date createDate = fromCXFTime(serverAccessToken.getIssuedAt());
 		Date expirationDate = fromCXFTime(
 			serverAccessToken.getIssuedAt() + serverAccessToken.getExpiresIn());

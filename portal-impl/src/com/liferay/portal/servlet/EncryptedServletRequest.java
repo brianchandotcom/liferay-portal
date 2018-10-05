@@ -44,6 +44,7 @@ public class EncryptedServletRequest extends HttpServletRequestWrapper {
 
 		for (Map.Entry<String, String[]> entry : parameters.entrySet()) {
 			String name = entry.getKey();
+
 			String[] values = entry.getValue();
 
 			for (int i = 0; i < values.length; i++) {

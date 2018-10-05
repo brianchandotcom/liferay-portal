@@ -564,6 +564,7 @@ public class ThemeImpl extends PluginBaseImpl implements Theme {
 
 		for (Map.Entry<Object, Object> entry : spriteProperties.entrySet()) {
 			String key = (String)entry.getKey();
+
 			String value = (String)entry.getValue();
 
 			int[] values = StringUtil.split(value, 0);

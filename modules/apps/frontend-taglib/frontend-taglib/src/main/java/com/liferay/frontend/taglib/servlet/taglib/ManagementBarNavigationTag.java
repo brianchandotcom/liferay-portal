@@ -135,6 +135,7 @@ public class ManagementBarNavigationTag extends IncludeTag implements BodyTag {
 
 		for (Map.Entry<String, String> entry : _navigationKeys.entrySet()) {
 			String label = entry.getKey();
+
 			String value = entry.getValue();
 
 			_portletURL.setParameter(_navigationParam, value);

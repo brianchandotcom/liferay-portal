@@ -74,6 +74,7 @@ public class UpgradeImageTypeContent extends UpgradeProcess {
 
 			while (rs1.next()) {
 				long articleImageId = rs1.getLong(1);
+
 				long groupId = rs1.getLong(2);
 				long resourcePrimKey = rs1.getLong(3);
 				long userId = rs1.getLong(4);

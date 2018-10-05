@@ -764,6 +764,7 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 
 		for (Map.Entry<Object, Object> entry : extraProperties.entrySet()) {
 			String key = (String)entry.getKey();
+
 			String value = (String)entry.getValue();
 
 			// We need to support an empty string and a null value distinctly.

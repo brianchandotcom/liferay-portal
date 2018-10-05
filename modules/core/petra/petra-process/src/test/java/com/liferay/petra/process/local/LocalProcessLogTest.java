@@ -39,6 +39,7 @@ public class LocalProcessLogTest {
 	@Test
 	public void testEquals() {
 		String message = "message";
+
 		Throwable throwable = new Throwable();
 
 		LocalProcessLog localProcessLog = new LocalProcessLog(

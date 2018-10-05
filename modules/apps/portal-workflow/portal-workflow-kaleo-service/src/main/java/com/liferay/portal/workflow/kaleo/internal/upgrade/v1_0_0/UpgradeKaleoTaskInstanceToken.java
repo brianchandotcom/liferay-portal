@@ -113,6 +113,7 @@ public class UpgradeKaleoTaskInstanceToken extends UpgradeProcess {
 			while (rs.next()) {
 				long kaleoTaskInstanceTokenId = rs.getLong(
 					"kaleoTaskInstanceTokenId");
+
 				long oldKaleoInstanceTokenId = rs.getLong(
 					"kaleoInstanceTokenId");
 

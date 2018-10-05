@@ -4116,6 +4116,7 @@ public class ProjectTemplatesTest {
 		}
 
 		String stdOutput = null;
+
 		StringWriter stringWriter = new StringWriter();
 
 		if (debug) {

@@ -236,6 +236,7 @@ public class BaseUpgradePortletIdTest extends BaseUpgradePortletId {
 
 		for (String[] renamePortletIds : renamePortletIdsArray) {
 			String oldPortletId = renamePortletIds[0];
+
 			String newPortletId = renamePortletIds[1];
 
 			String newRootPortletId = PortletIdCodec.decodePortletName(

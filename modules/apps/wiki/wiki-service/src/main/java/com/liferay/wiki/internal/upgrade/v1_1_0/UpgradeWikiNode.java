@@ -40,6 +40,7 @@ public class UpgradeWikiNode extends UpgradeProcess {
 
 			while (rs.next()) {
 				long nodeId = rs.getLong("nodeId");
+
 				String name = rs.getString("name");
 
 				if (!Validator.isNumber(name)) {

@@ -90,7 +90,8 @@ public class AssetListEntryImpl extends AssetListEntryBaseImpl {
 			_getAssetTagNames(properties));
 
 		long[] groupIds = GetterUtil.getLongValues(
-			StringUtil.split(properties.getProperty("groupIds", "")));
+			StringUtil.split(
+				properties.getProperty("groupIds", StringPool.BLANK)));
 
 		if (ArrayUtil.isEmpty(groupIds)) {
 			groupIds = new long[] {getGroupId()};

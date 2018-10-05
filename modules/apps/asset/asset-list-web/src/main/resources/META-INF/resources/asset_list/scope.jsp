@@ -17,15 +17,11 @@
 <%@ include file="/init.jsp" %>
 
 <%
-Set<Group> availableGroups = editAssetListDisplayContext.getAvailableGroups();
-
 List<Group> selectedGroups = editAssetListDisplayContext.getSelectedGroups();
-
-PortletURL portletURL = editAssetListDisplayContext.getPortletURL();
 %>
 
 <portlet:actionURL name="/asset_list/add_scope_group" var="addGroupURL">
-	<portlet:param name="redirect" value="<%= portletURL.toString() %>" />
+	<portlet:param name="redirect" value="<%= editAssetListDisplayContext.getPortletURL() %>" />
 	<portlet:param name="assetListEntryId" value="<%= String.valueOf(editAssetListDisplayContext.getAssetListEntryId()) %>" />
 </portlet:actionURL>
 
@@ -98,14 +94,14 @@ PortletURL portletURL = editAssetListDisplayContext.getPortletURL();
 		>
 
 			<%
-			for (Group group : availableGroups) {
+			for (Group group : editAssetListDisplayContext.getAvailableGroups()) {
 				if (selectedGroups.contains(group)) {
 					continue;
 				}
 			%>
 
 				<portlet:actionURL name="/asset_list/add_scope_group" var="addScopeGroupURL">
-					<portlet:param name="redirect" value="<%= portletURL.toString() %>" />
+					<portlet:param name="redirect" value="<%= editAssetListDisplayContext.getPortletURL() %>" />
 					<portlet:param name="assetListEntryId" value="<%= String.valueOf(editAssetListDisplayContext.getAssetListEntryId()) %>" />
 					<portlet:param name="groupId" value="<%= String.valueOf(group.getGroupId()) %>" />
 				</portlet:actionURL>

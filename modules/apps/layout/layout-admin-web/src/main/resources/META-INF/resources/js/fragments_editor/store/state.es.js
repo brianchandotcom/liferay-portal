@@ -149,13 +149,13 @@ const INITIAL_STATE = {
 	 * @default {structure: []}
 	 * @instance
 	 * @review
-	 * @type {{structure: Array<string>}}
+	 * @type {{structure: Array}}
 	 */
 
 	layoutData: Config
 		.shapeOf(
 			{
-				structure: Config.arrayOf(Config.string())
+				structure: Config.array()
 			}
 		)
 		.value(

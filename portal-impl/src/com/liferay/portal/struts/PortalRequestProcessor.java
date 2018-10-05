@@ -995,7 +995,7 @@ public class PortalRequestProcessor extends RequestProcessor {
 
 		_processLocale(request);
 
-		processContent(request, response);
+		_processContent(response);
 
 		processNoCache(request, response);
 
@@ -1053,6 +1053,16 @@ public class PortalRequestProcessor extends RequestProcessor {
 			request, response, action, actionForm, mapping);
 
 		processForwardConfig(request, response, actionForward);
+	}
+
+	private void _processContent(HttpServletResponse response) {
+		ControllerConfig controllerConfig = moduleConfig.getControllerConfig();
+
+		String contentType = controllerConfig.getContentType();
+
+		if (contentType != null) {
+			response.setContentType(contentType);
+		}
 	}
 
 	private void _processLocale(HttpServletRequest request) {

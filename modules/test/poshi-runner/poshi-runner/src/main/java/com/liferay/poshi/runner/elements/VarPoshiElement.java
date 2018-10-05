@@ -104,7 +104,7 @@ public class VarPoshiElement extends PoshiElement {
 		}
 
 		if (value.startsWith("new ")) {
-			addAttribute("from", getQuotedContent(value));
+			addAttribute("from", getDoubleQuotedContent(value));
 
 			value = value.replace("new ", "");
 
@@ -118,7 +118,7 @@ public class VarPoshiElement extends PoshiElement {
 		}
 
 		if (value.endsWith("\"") && value.startsWith("\"")) {
-			value = getQuotedContent(value);
+			value = getDoubleQuotedContent(value);
 
 			if (value.endsWith("}") && value.startsWith("${")) {
 				String bracedContent = getBracedContent(value);
@@ -159,6 +159,13 @@ public class VarPoshiElement extends PoshiElement {
 
 		if (isValidUtilityClassName(value) || value.startsWith("selenium.")) {
 			value = value.replaceFirst("\\.", "#");
+
+			String content = getParentheticalContent(value);
+
+			if (!content.equals("")) {
+				value = value.replace(
+					content, swapParameterQuotations(content));
+			}
 
 			addAttribute("method", value);
 		}
@@ -210,7 +217,7 @@ public class VarPoshiElement extends PoshiElement {
 
 					value = value.replace(innerValue, newInnerValue);
 
-					value = quoteContent(value);
+					value = doubleQuoteContent(value);
 				}
 				else if (attribute("index") != null) {
 					String innerValue = getBracedContent(value);
@@ -220,7 +227,7 @@ public class VarPoshiElement extends PoshiElement {
 
 					value = value.replace(innerValue, newInnerValue);
 
-					value = quoteContent(value);
+					value = doubleQuoteContent(value);
 				}
 				else if (attribute("type") != null) {
 					value = StringUtil.combine(
@@ -232,12 +239,19 @@ public class VarPoshiElement extends PoshiElement {
 					value.startsWith("selenium#")) {
 
 					value = value.replaceFirst("#", ".");
+
+					String content = getParentheticalContent(value);
+
+					if (!content.equals("")) {
+						value = value.replace(
+							content, swapParameterQuotations(content));
+					}
 				}
 			}
 			else {
 				value = StringEscapeUtils.escapeXml10(value);
 
-				value = quoteContent(value);
+				value = doubleQuoteContent(value);
 			}
 		}
 
@@ -326,6 +340,49 @@ public class VarPoshiElement extends PoshiElement {
 		catch (IOException ioe) {
 			throw new IllegalArgumentException("Invalid variable element", ioe);
 		}
+	}
+
+	protected String swapParameterQuotations(String parametersString) {
+		StringBuilder sb = new StringBuilder();
+
+		parametersString = parametersString.trim();
+
+		boolean singleQuote = false;
+
+		if (parametersString.endsWith("'") &&
+			parametersString.startsWith("'")) {
+
+			singleQuote = true;
+		}
+
+		List<String> parameters = getMethodParameters(parametersString);
+
+		for (String parameter : parameters) {
+			if (singleQuote) {
+				parameter = getSingleQuotedContent(parameter);
+
+				parameter = parameter.replace("\\\'", "'");
+				parameter = parameter.replace("\"", "&quot;");
+
+				parameter = doubleQuoteContent(parameter);
+			}
+			else {
+				parameter = getDoubleQuotedContent(parameter);
+
+				parameter = parameter.replace("'", "\\\'");
+				parameter = parameter.replace("&quot;", "\"");
+
+				parameter = singleQuoteContent(parameter);
+			}
+
+			sb.append(parameter);
+
+			sb.append(", ");
+		}
+
+		sb.setLength(sb.length() - 2);
+
+		return sb.toString();
 	}
 
 	protected String valueAttributeName;

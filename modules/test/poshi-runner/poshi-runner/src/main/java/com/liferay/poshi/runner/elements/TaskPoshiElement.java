@@ -57,7 +57,7 @@ public class TaskPoshiElement extends PoshiElement {
 
 		String parentheticalContent = getParentheticalContent(blockName);
 
-		String summary = getQuotedContent(parentheticalContent);
+		String summary = getDoubleQuotedContent(parentheticalContent);
 
 		addAttribute("summary", summary);
 

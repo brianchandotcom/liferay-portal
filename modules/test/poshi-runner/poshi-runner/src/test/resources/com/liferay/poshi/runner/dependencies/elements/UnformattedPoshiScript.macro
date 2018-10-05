@@ -8,7 +8,7 @@ definition {
 	@prose = "I assert the ${breadcrumbName}"
 	macro viewPG {
 		var key_breadcrumbName = "${breadcrumbName}";
-		static var breadcrumbNameUppercase = StringUtil.upperCase('${breadcrumbName}');
+		static var breadcrumbNameUppercase = StringUtil.upperCase("${breadcrumbName}");
 
 		AssertTextEquals(locator1 = "Breadcrumb#BREADCRUMB_ENTRY", value1 = "${breadcrumbNameUppercase}");
 

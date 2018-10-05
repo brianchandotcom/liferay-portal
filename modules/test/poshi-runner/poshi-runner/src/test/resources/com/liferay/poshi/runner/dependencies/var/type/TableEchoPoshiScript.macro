@@ -47,7 +47,7 @@ definition {
 	macro echoTransposedTableUsingPoshiScriptMacro {
 		echo("echoing the transposed raw table contents:");
 
-		var transposedRawData = TableUtil.getTransposedRawDataList('${table}');
+		var transposedRawData = TableUtil.getTransposedRawDataList("${table}");
 
 		var RawTable rawTable = new RawTable("${transposedRawData}");
 

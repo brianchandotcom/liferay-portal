@@ -59,7 +59,7 @@ public class ReturnPoshiElement extends PoshiElement {
 			return;
 		}
 
-		addAttribute("value", getQuotedContent(poshiScript));
+		addAttribute("value", getDoubleQuotedContent(poshiScript));
 	}
 
 	@Override

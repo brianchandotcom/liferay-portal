@@ -102,7 +102,7 @@ public class WhilePoshiElement extends IfPoshiElement {
 				maxIterationsAssignment);
 
 			addAttribute(
-				"max-iterations", getQuotedContent(maxIterationsValue));
+				"max-iterations", getDoubleQuotedContent(maxIterationsValue));
 
 			parentheticalContent = parentheticalContent.substring(0, index);
 		}

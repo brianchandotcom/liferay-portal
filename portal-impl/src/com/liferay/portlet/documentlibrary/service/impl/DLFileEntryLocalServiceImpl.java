@@ -2919,16 +2919,18 @@ public class DLFileEntryLocalServiceImpl
 		// Asset
 
 		AssetEntry latestDLFileVersionAssetEntry =
-			assetEntryLocalService.getEntry(
+			assetEntryLocalService.fetchEntry(
 				DLFileEntryConstants.getClassName(),
 				latestDLFileVersion.getPrimaryKey());
 
-		assetEntryLocalService.updateEntry(
-			lastDLFileVersion.getUserId(), lastDLFileVersion.getGroupId(),
-			DLFileEntryConstants.getClassName(),
-			lastDLFileVersion.getPrimaryKey(),
-			latestDLFileVersionAssetEntry.getCategoryIds(),
-			latestDLFileVersionAssetEntry.getTagNames());
+		if (latestDLFileVersionAssetEntry != null) {
+			assetEntryLocalService.updateEntry(
+				lastDLFileVersion.getUserId(), lastDLFileVersion.getGroupId(),
+				DLFileEntryConstants.getClassName(),
+				lastDLFileVersion.getPrimaryKey(),
+				latestDLFileVersionAssetEntry.getCategoryIds(),
+				latestDLFileVersionAssetEntry.getTagNames());
+		}
 
 		// File
 

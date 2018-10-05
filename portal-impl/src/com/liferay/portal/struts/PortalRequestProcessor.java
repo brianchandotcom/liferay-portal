@@ -73,6 +73,7 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
@@ -99,6 +100,7 @@ import org.apache.struts.action.ActionServlet;
 import org.apache.struts.action.InvalidCancelException;
 import org.apache.struts.action.RequestProcessor;
 import org.apache.struts.config.ActionConfig;
+import org.apache.struts.config.ControllerConfig;
 import org.apache.struts.config.ForwardConfig;
 import org.apache.struts.config.ModuleConfig;
 import org.apache.struts.util.MessageResources;
@@ -991,7 +993,7 @@ public class PortalRequestProcessor extends RequestProcessor {
 			return;
 		}
 
-		processLocale(request, response);
+		_processLocale(request);
 
 		processContent(request, response);
 
@@ -1051,6 +1053,26 @@ public class PortalRequestProcessor extends RequestProcessor {
 			request, response, action, actionForm, mapping);
 
 		processForwardConfig(request, response, actionForward);
+	}
+
+	private void _processLocale(HttpServletRequest request) {
+		ControllerConfig controllerConfig = moduleConfig.getControllerConfig();
+
+		if (!controllerConfig.getLocale()) {
+			return;
+		}
+
+		HttpSession session = request.getSession();
+
+		if (session.getAttribute(Globals.LOCALE_KEY) != null) {
+			return;
+		}
+
+		Locale locale = request.getLocale();
+
+		if (locale != null) {
+			session.setAttribute(Globals.LOCALE_KEY, locale);
+		}
 	}
 
 	private String _processPath(

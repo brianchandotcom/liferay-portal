@@ -513,6 +513,14 @@
 			<var name="siteName" value="Test Site Name" />
 		</execute>
 
+		<execute macro="NavigationMenusWidget#gotoNavigationMenuWidgetConfig" />
+
+		<execute macro="NavigationMenusWidget#selectNavigation">
+			<var name="menuType" value="Primary Navigation" />
+		</execute>
+
+		<execute macro="Portlet#saveAndCloseConfig" />
+
 		<execute macro="Navigator#gotoSitePage">
 			<var name="pageName" value="Site Page Name 3" />
 			<var name="siteName" value="Test Site Name" />

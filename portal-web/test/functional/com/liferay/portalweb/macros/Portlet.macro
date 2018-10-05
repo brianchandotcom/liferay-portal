@@ -314,6 +314,14 @@
 		<execute function="MouseOver" locator1="Portlet#SPECIFIC_TITLE" />
 	</command>
 
+	<command name="saveAndCloseConfig">
+		<execute macro="Button#clickSave" />
+
+		<execute function="Click" locator1="Icon#CLOSE" />
+
+		<execute function="SelectFrameTop" />
+	</command>
+
 	<command name="selectApplicationDecorator">
 		<execute function="Select" locator1="Select#APPLICATION_DECORATORS" value1="${decorator}" />
 	</command>

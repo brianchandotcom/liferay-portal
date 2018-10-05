@@ -1,0 +1,14 @@
+<definition>
+	<command name="gotoNavigationMenuWidgetConfig">
+		<execute macro="Portlet#gotoPortletOptions">
+			<var name="portletName" value="Navigation Menu" />
+			<var name="portletOption" value="Configuration" />
+		</execute>
+
+		<execute macro ="IFrame#selectModalFrame" />
+	</command>
+
+	<command name="selectNavigation">
+		<execute function="Select" locator1="NavigationMenusWidget#SELECT_NAVIGATION" value1="${menuType}" />
+	</command>
+</definition>

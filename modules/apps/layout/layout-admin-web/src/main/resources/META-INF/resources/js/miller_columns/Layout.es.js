@@ -212,6 +212,7 @@ class Layout extends Component {
 			const sourceColumn = this._getParentColumnByPlid(layoutColumns, sourceItemPlid);
 			const targetColumn = this._getParentColumnByPlid(layoutColumns, targetItemPlid);
 
+			const sourceColumnIndex = layoutColumns.indexOf(sourceColumn);
 			const targetColumnIndex = layoutColumns.indexOf(targetColumn);
 
 			sourceColumn.splice(sourceColumn.indexOf(sourceItem), 1);
@@ -239,6 +240,16 @@ class Layout extends Component {
 				targetColumn.splice(priority, 0, sourceItem);
 
 				parentPlid = this._getLayoutColumnActiveItem(layoutColumns[targetColumnIndex - 1]);
+			}
+
+			if (sourceColumn.length == 0) {
+				const previousColumn = layoutColumns[sourceColumnIndex - 1];
+
+				const activeItemPlid = this._getLayoutColumnActiveItem(previousColumn);
+
+				const activeItem = this._getLayoutColumnItemByPlid(layoutColumns, activeItemPlid);
+
+				activeItem.hasChild = false;
 			}
 
 			this._moveLayoutColumnItem(parentPlid, sourceItemPlid, priority)

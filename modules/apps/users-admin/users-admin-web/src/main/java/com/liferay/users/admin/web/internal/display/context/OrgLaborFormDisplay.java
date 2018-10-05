@@ -51,13 +51,13 @@ public class OrgLaborFormDisplay {
 
 		public DayRowDisplay(
 			String longDayName, String shortDayName,
-			List<SelectOptionDisplay> closeSelectDisplay,
-			List<SelectOptionDisplay> openSelectDisplay) {
+			List<SelectOptionDisplay> closeSelectOptionDisplays,
+			List<SelectOptionDisplay> openSelectOptionDisplays) {
 
 			_longDayName = longDayName;
 			_shortDayName = shortDayName;
-			_closeSelectOptionDisplays = closeSelectDisplay;
-			_openSelectOptionDisplays = openSelectDisplay;
+			_closeSelectOptionDisplays = closeSelectOptionDisplays;
+			_openSelectOptionDisplays = openSelectOptionDisplays;
 		}
 
 		public List<SelectOptionDisplay> getCloseSelectOptionDisplays() {

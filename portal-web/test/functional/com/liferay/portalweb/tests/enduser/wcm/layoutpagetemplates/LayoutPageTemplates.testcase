@@ -42,6 +42,7 @@
 	</tear-down>
 
 	<command name="AddLayoutPageTemplateRemoveFragment" priority="5">
+		<description message="Add and remove a fragment in the page editor." />
 		<property name="portal.acceptance" value="true" />
 
 		<execute macro="PageTemplatesAdmin#addCollection">
@@ -73,6 +74,8 @@
 	</command>
 
 	<command name="ChangeEditableImage" priority="5">
+		<description message="Change a fragment's editable image field." />
+
 		<execute macro="PageTemplatesAdmin#addCollection">
 			<var name="collectionName" value="Page Template Collection" />
 		</execute>
@@ -97,6 +100,8 @@
 	</command>
 
 	<command name="ChangeEditableText" priority="5">
+		<description message="Change a fragment's editable text field." />
+
 		<execute macro="PageTemplatesAdmin#addCollection">
 			<var name="collectionName" value="Page Template Collection" />
 		</execute>
@@ -128,6 +133,7 @@
 	</command>
 
 	<command name="DeleteCollection" priority="5">
+		<description message="Delete a page template collection." />
 		<property name="portal.acceptance" value="true" />
 
 		<execute macro="PageTemplatesAdmin#addCollection">
@@ -144,6 +150,7 @@
 	</command>
 
 	<command name="DeletePageTemplate" priority="5">
+		<description message="Delete a page template." />
 		<property name="portal.acceptance" value="true" />
 
 		<execute macro="PageTemplatesAdmin#addCollection">
@@ -176,6 +183,8 @@
 	</command>
 
 	<command name="RenameCollection" priority="4">
+		<description message="Rename a page template collection." />
+
 		<execute macro="PageTemplatesAdmin#addCollection">
 			<var name="collectionDescription" value="Collection Description Original" />
 			<var name="collectionName" value="Collection Name Original" />
@@ -193,6 +202,8 @@
 	</command>
 
 	<command name="RenamePageTemplate" priority="4">
+		<description message="Rename a page template." />
+
 		<execute macro="PageTemplatesAdmin#addCollection">
 			<var name="collectionName" value="Page Template Collection" />
 		</execute>
@@ -224,6 +235,7 @@
 	</command>
 
 	<command name="ReorderFragments" priority="5">
+		<description message="Change the ordering of fragments in the page editor." />
 		<property name="portal.acceptance" value="true" />
 
 		<execute macro="PageTemplatesAdmin#addCollection">
@@ -290,6 +302,8 @@
 	</command>
 
 	<command name="ViewDraftFragmentDoesNotDisplayInSidebar" priority="4">
+		<description message="An unpublished fragment should not show up in the fragments sidebar." />
+
 		<execute macro="FragmentsAdmin#openFragmentsAdmin">
 			<var name="siteURLKey" value="test-site-name" />
 		</execute>

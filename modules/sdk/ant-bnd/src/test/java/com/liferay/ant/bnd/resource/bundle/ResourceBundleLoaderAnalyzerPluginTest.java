@@ -118,8 +118,14 @@ public class ResourceBundleLoaderAnalyzerPluginTest {
 
 			Assert.assertEquals(requires.toString(), 3, requires.size());
 
+			String provideCapabilityProperty = analyzer.getProperty(
+				Constants.PROVIDE_CAPABILITY);
+
+			Assert.assertFalse(
+				provideCapabilityProperty.contains("service.ranking:"));
+
 			Parameters provideCapabilityHeaders = new Parameters(
-				analyzer.getProperty(Constants.PROVIDE_CAPABILITY));
+				provideCapabilityProperty);
 
 			List<Map.Entry<String, Attrs>> provides = new ArrayList<>(
 				provideCapabilityHeaders.entrySet());

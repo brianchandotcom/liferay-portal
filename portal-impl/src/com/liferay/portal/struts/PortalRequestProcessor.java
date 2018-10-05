@@ -162,7 +162,7 @@ public class PortalRequestProcessor extends RequestProcessor {
 		this.servlet = servlet;
 		this.moduleConfig = moduleConfig;
 
-		ServletContext servletContext = getServletContext();
+		ServletContext servletContext = servlet.getServletContext();
 
 		_definitions = (Map<String, Definition>)
 			servletContext.getAttribute(TilesUtil.DEFINITIONS);
@@ -264,7 +264,7 @@ public class PortalRequestProcessor extends RequestProcessor {
 			HttpServletResponse response)
 		throws ServletException {
 
-		StrutsUtil.forward(uri, getServletContext(), request, response);
+		StrutsUtil.forward(uri, servlet.getServletContext(), request, response);
 	}
 
 	@Override
@@ -273,7 +273,7 @@ public class PortalRequestProcessor extends RequestProcessor {
 			HttpServletResponse response)
 		throws ServletException {
 
-		StrutsUtil.include(uri, getServletContext(), request, response);
+		StrutsUtil.include(uri, servlet.getServletContext(), request, response);
 	}
 
 	protected String getFriendlyTrackerPath(

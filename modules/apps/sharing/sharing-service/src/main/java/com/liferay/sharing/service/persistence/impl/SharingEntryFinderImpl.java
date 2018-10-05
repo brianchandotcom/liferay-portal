@@ -14,6 +14,7 @@
 
 package com.liferay.sharing.service.persistence.impl;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.dao.orm.custom.sql.CustomSQL;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -21,6 +22,8 @@ import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.Type;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.sharing.model.SharingEntry;
 import com.liferay.sharing.model.impl.SharingEntryImpl;
@@ -41,13 +44,15 @@ public class SharingEntryFinderImpl
 	public static final String FIND_BY_TO_USER_ID =
 		SharingEntryFinder.class.getName() + ".findByToUserId";
 
-	public int countByToUserId(long toUserId) {
+	public int countByToUserId(long toUserId, long classNameId) {
 		Session session = null;
 
 		try {
 			session = openSession();
 
 			String sql = _customSQL.get(getClass(), COUNT_BY_TO_USER_ID);
+
+			sql = _replaceClassNameIdWhere(sql, classNameId);
 
 			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
@@ -56,6 +61,10 @@ public class SharingEntryFinderImpl
 			QueryPos qPos = QueryPos.getInstance(q);
 
 			qPos.add(toUserId);
+
+			if (classNameId > 0) {
+				qPos.add(classNameId);
+			}
 
 			Iterator<Long> itr = q.iterate();
 
@@ -78,7 +87,8 @@ public class SharingEntryFinderImpl
 	}
 
 	public List<SharingEntry> findByToUserId(
-		long toUserId, int begin, int end) {
+		long toUserId, long classNameId, int begin, int end,
+		OrderByComparator<SharingEntry> orderByComparator) {
 
 		Session session = null;
 
@@ -87,6 +97,12 @@ public class SharingEntryFinderImpl
 
 			String sql = _customSQL.get(getClass(), FIND_BY_TO_USER_ID);
 
+			if (orderByComparator != null) {
+				sql = _customSQL.replaceOrderBy(sql, orderByComparator);
+			}
+
+			sql = _replaceClassNameIdWhere(sql, classNameId);
+
 			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
 			q.addEntity("SharingEntry", SharingEntryImpl.class);
@@ -94,6 +110,10 @@ public class SharingEntryFinderImpl
 			QueryPos qPos = QueryPos.getInstance(q);
 
 			qPos.add(toUserId);
+
+			if (classNameId > 0) {
+				qPos.add(classNameId);
+			}
 
 			return (List<SharingEntry>)QueryUtil.list(
 				q, getDialect(), begin, end);
@@ -104,6 +124,20 @@ public class SharingEntryFinderImpl
 		finally {
 			closeSession(session);
 		}
+	}
+
+	private String _replaceClassNameIdWhere(String sql, long classNameId) {
+		if (classNameId > 0) {
+			sql = StringUtil.replace(
+				sql, "[$CLASS_NAME_ID_WHERE$]",
+				"AND SharingEntry.classNameId = ?");
+		}
+		else {
+			sql = StringUtil.replace(
+				sql, "[$CLASS_NAME_ID_WHERE$]", StringPool.BLANK);
+		}
+
+		return sql;
 	}
 
 	@ServiceReference(type = CustomSQL.class)

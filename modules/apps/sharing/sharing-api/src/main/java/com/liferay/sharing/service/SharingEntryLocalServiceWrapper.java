@@ -627,26 +627,32 @@ public class SharingEntryLocalServiceWrapper implements SharingEntryLocalService
 	* Returns a list of all the sharing entries of a resource that has been
 	* shared to a user returning at most one per shared model
 	*
-	* @param toUserId the user id*
+	* @param toUserId the user id
+	* @param classNameId the classNameId to filter by
+	* @param orderByComparator the comparator to order the sharing entries
 	* @return the list of sharing entries
 	*/
 	@Override
 	public java.util.List<com.liferay.sharing.model.SharingEntry> getUniqueToUserSharingEntries(
-		long toUserId, int start, int end) {
+		long toUserId, long classNameId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.sharing.model.SharingEntry> orderByComparator) {
 		return _sharingEntryLocalService.getUniqueToUserSharingEntries(toUserId,
-			start, end);
+			classNameId, start, end, orderByComparator);
 	}
 
 	/**
 	* Returns the number of sharing entries of a resource that have been shared
 	* by to user returning at most one per shared model.
 	*
-	* @param toUserId the user id*
+	* @param toUserId the user id
+	* @param classNameId the classNameId to filter by
 	* @return the number of sharing entries
 	*/
 	@Override
-	public int getUniqueToUserSharingEntriesCount(long toUserId) {
-		return _sharingEntryLocalService.getUniqueToUserSharingEntriesCount(toUserId);
+	public int getUniqueToUserSharingEntriesCount(long toUserId,
+		long classNameId) {
+		return _sharingEntryLocalService.getUniqueToUserSharingEntriesCount(toUserId,
+			classNameId);
 	}
 
 	/**
